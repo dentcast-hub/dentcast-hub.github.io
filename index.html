@@ -1,67 +1,125 @@
-<!-- rebuild force -->
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
   <meta charset="utf-8">
   <title>DentCast — پادکست علمی دندان‌پزشکی با روایت فواد شهابیان</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <!-- Meta SEO -->
-  <meta name="description" content="پادکست علمی دندان‌پزشکی، روایت فواد شهابیان. مرور و توضیح ساده‌ی تازه‌ترین مقالات، پژوهش‌ها و کنسنسوس‌های علمی حوزه پروتز و دندان‌پزشکی.">
-  <meta name="keywords" content="DentCast, پادکست دندانپزشکی, فواد شهابیان, پروتز دندانی, بورد تخصصی, دانشگاه شهید بهشتی, دانشگاه علوم پزشکی مشهد, digital dentistry, prosthodontics podcast, note cast">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- SEO -->
+  <meta name="description" content="پادکست علمی دندان‌پزشکی با روایت فواد شهابیان. مرور سادهٔ تازه‌ترین مقالات و پژوهش‌های حوزهٔ پروتز و دندان‌پزشکی.">
+  <meta name="keywords" content="DentCast, دنت‌کست, پادکست دندان‌پزشکی, فواد شهابیان, پروتزهای دندانی, بورد تخصصی, دانشگاه شهید بهشتی, دانشگاه علوم پزشکی مشهد, prosthodontics, digital dentistry">
   <meta name="author" content="Foad Shahabian">
-  
-  <!-- Open Graph -->
-  <meta property="og:title" content="DentCast — پادکست علمی دندان‌پزشکی با روایت فواد شهابیان">
-  <meta property="og:description" content="مروری ساده و جذاب بر مقالات علمی، پژوهش‌ها و ایده‌های فلسفی در دندان‌پزشکی مدرن.">
-  <meta property="og:url" content="https://dentcast-hub.github.io">
+  <meta property="og:title" content="DentCast — پادکست علمی دندان‌پزشکی">
+  <meta property="og:description" content="مرور سادهٔ تازه‌ترین مقالات و پژوهش‌های پروتز و دندان‌پزشکی.">
+  <meta property="og:url" content="https://dentcast-hub.github.io/">
   <meta property="og:type" content="website">
-  
+
   <style>
-    body {
+    :root{
+      --blue:#0b5fff;        /* آبی سلطنتی برای تیتر و لینک‌ها */
+      --bg:#0b1220;          /* پس‌زمینه‌ی تیره */
+      --bg2:#121a2b;         /* گرادیان تیره */
+      --text:#e7eaf1;        /* متن روی زمینه‌ی تیره */
+      --card:#ffffff;        /* باکس روشن */
+      --muted:#6f7a90;       /* متن فرعی */
+      --radius:18px;
+      --shadow:0 18px 50px rgba(0,0,0,.35);
+    }
+
+    html,body{height:100%}
+    body{
       font-family: sans-serif;
-      line-height: 1.8;
-      max-width: 850px;
-      margin: 40px auto;
+      margin:0;
+      color:var(--text);
+      background: radial-gradient(1200px 600px at 20% -10%, #1b2640 0%, transparent 60%),
+                  linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+      -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+    }
+
+    .wrap{
+      max-width: 920px;
+      margin: 40px auto 70px;
       padding: 0 20px;
-      background: linear-gradient(180deg, #eaf0ff 0%, #f9fbff 100%);
-      color: #111;
+    }
+
+    h1{
+      margin: 6px 0 22px;
+      font-size: 2.1rem;
+      font-weight: 800;
+      letter-spacing:.2px;
+      color: var(--blue);
       text-align: center;
     }
-    h1 {
-      color: #0066ff;
-      font-size: 2.2em;
-      font-weight: 700;
+
+    .card{
+      background: var(--card);
+      color:#111;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 26px 22px;
+      border: 1px solid rgba(12,20,40,.06);
     }
-    h1 span {
-      color: #0077ff;
+
+    .lead{
+      font-size:1.05rem;
+      line-height:1.9;
+      text-align: justify;
+      margin: 0 0 14px;
     }
-    p {
-      font-size: 1.1em;
-      margin: 10px 0 20px;
+
+    .meta{
+      text-align:center;
+      color:#222;
+      margin:0 0 16px;
+      line-height:1.8;
     }
-    iframe {
-      border: none;
-      width: 100%;
-      height: 600px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+
+    iframe{
+      width:100%;
+      height:600px;
+      border:none;
+      border-radius: calc(var(--radius) - 6px);
+      margin-top:18px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.15);
     }
+
+    .footer{
+      margin-top:16px;
+      color:var(--muted);
+      font-size:.9rem;
+      text-align:center;
+    }
+
+    a{color:var(--blue); text-decoration:none}
+    a:hover{text-decoration:underline}
   </style>
 </head>
 
 <body>
-  <h1>DentCast — <span>دنت‌کست</span> 🎙️</h1>
-  <p>پادکست علمی دندان‌پزشکی، روایت <strong>فواد شهابیان</strong>.<br>
-  متخصص پروتزهای دندانی، فارغ‌التحصیل دانشگاه شهید بهشتی در دوره عمومی<br>
-  و دانشگاه علوم پزشکی مشهد در دوره تخصصی، دارای بورد تخصصی ایران.</p>
+  <div class="wrap">
+    <h1>🎙️ دنت‌کست — DentCast</h1>
 
-  <p>در دنت‌کست با هم مقالات علمی و پژوهش‌های جذاب دندان‌پزشکی را می‌خوانیم،  
-  به زبان ساده توضیح می‌دهیم و ایده‌های علمی و فلسفی را با هم به اشتراک می‌گذاریم.</p>
+    <div class="card">
+      <p class="meta">
+        پادکست علمی دندان‌پزشکی، روایت <strong>فواد شهابیان</strong>.<br>
+        متخصص پروتزهای دندانی، فارغ‌التحصیل دانشگاه شهید بهشتی در دورهٔ عمومی<br>
+        و دانشگاه علوم پزشکی مشهد در دورهٔ تخصصی، دارای بورد تخصصی ایران.
+      </p>
 
-  <iframe src="https://embed.acast.com/624b5545ecc0e600134ea0df?feed=true" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+      <p class="lead">
+        در دنت‌کست با هم تازه‌ترین مقالات علمی و پژوهش‌های جذاب حوزهٔ پروتز و دندان‌پزشکی را می‌خوانیم،
+        به زبان ساده مرورشان می‌کنیم و نکات مهم بالینی را با هم به اشتراک می‌گذاریم.
+      </p>
 
-  <p>© 2025 DentCast — تمام حقوق برای فواد شهابیان محفوظ است.</p>
+      <!-- پلیر رسمی Acast -->
+      <iframe
+        src="https://embed.acast.com/624b5545ecc0e600134ea0df?feed=true"
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+        scrolling="no">
+      </iframe>
+
+      <div class="footer">© 2025 DentCast — All rights reserved.</div>
+    </div>
+  </div>
 </body>
 </html>
-<!--
