@@ -4,42 +4,126 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="بخش NoteCast دنت‌کست – خلاصه‌های نوشتاری اپیزودهای پادکست دنت‌کست">
-  <title>NoteCast | دنت‌کست</title>
+  <title>📝 NoteCast | دنت‌کست</title>
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
+
   <style>
-    body {
-      background-color: #0a0a0a;
-      color: #e0e0e0;
-      font-family: "Vazir", sans-serif;
-      max-width: 800px;
-      margin: 50px auto;
-      padding: 20px;
-      line-height: 1.8;
+    :root{
+      --blue:#0b5fff;
+      --bg:#0b1220;
+      --bg2:#121a2b;
+      --text:#e7eaf1;
+      --muted:#9aa1b3;
+      --radius:18px;
+      --shadow:0 18px 50px rgba(0,0,0,.35);
     }
-    h1 {
-      color: #00a2ff;
-      text-align: center;
+
+    html,body{height:100%; margin:0; padding:0;}
+    body{
+      font-family:'Vazirmatn', sans-serif;
+      background: radial-gradient(1200px 600px at 20% -10%, #1b2640 0%, transparent 60%),
+                  linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+      color: var(--text);
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 40px 20px 80px;
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
     }
-    a {
-      color: #00a2ff;
-      text-decoration: none;
+
+    h1{
+      text-align:center;
+      color:var(--blue);
+      font-weight:800;
+      font-size:2rem;
+      margin-bottom:16px;
     }
-    .intro {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 12px;
-      padding: 20px;
-      margin-top: 20px;
+
+    .intro{
+      background:rgba(255,255,255,0.04);
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:var(--radius);
+      padding:20px 24px;
+      line-height:1.9;
+      font-size:1.05rem;
+      box-shadow:var(--shadow);
+      margin-bottom:30px;
+    }
+
+    h2{
+      color:var(--blue);
+      margin-top:50px;
+      font-size:1.4rem;
+    }
+
+    ul{
+      list-style:none;
+      padding:0;
+      margin-top:20px;
+    }
+
+    li{
+      background:rgba(255,255,255,0.05);
+      border:1px solid rgba(255,255,255,0.1);
+      border-radius:12px;
+      padding:14px 18px;
+      margin-bottom:12px;
+      transition:all .3s ease;
+      box-shadow:0 6px 20px rgba(0,0,0,.15);
+    }
+
+    li:hover{
+      background:rgba(11,95,255,0.1);
+      transform:translateY(-3px);
+    }
+
+    a{
+      color:var(--text);
+      text-decoration:none;
+      font-weight:500;
+      display:block;
+    }
+
+    a:hover{
+      color:var(--blue);
+    }
+
+    .back{
+      display:inline-block;
+      margin-top:50px;
+      color:var(--blue);
+      text-decoration:none;
+      font-weight:600;
+      border:1px solid rgba(255,255,255,0.15);
+      border-radius:12px;
+      padding:10px 20px;
+      background:rgba(255,255,255,0.05);
+      transition:all .3s ease;
+    }
+
+    .back:hover{
+      background:rgba(11,95,255,0.15);
+      transform:scale(1.03);
+    }
+
+    footer{
+      margin-top:60px;
+      text-align:center;
+      color:var(--muted);
+      font-size:.9rem;
     }
   </style>
 </head>
-<body>
 
+<body>
   <h1>📝 دنت‌کست – NoteCast</h1>
 
   <div class="intro">
     <p>
       در این بخش، نسخه‌های نوشتاری و خلاصه‌شده‌ی اپیزودهای پادکست <strong>دنت‌کست</strong> منتشر می‌شوند.
-      هر NoteCast خلاصه‌ای علمی و منظم از یک اپیزود صوتی است، برای مرور سریع مفاهیم، دسترسی آسان به نکات کلیدی، و ایجاد مرجع نوشتاری برای پژوهش‌های آینده.
+      هر NoteCast خلاصه‌ای علمی و منظم از یک اپیزود صوتی است؛ برای مرور سریع مفاهیم، دسترسی آسان به نکات کلیدی و ایجاد مرجع نوشتاری برای پژوهش‌های آینده.
     </p>
     <p>
       NoteCastها به مرور اضافه می‌شوند و به ترتیب شماره اپیزود مرتب خواهند شد.
@@ -47,13 +131,17 @@
   </div>
 
   <h2>📚 فهرست NoteCast‌ها</h2>
-  
-    <ul>
-  <li><a href="episode-2.html">نوت‌کست دوم – راهنمای جامع انتخاب سمان مناسب برای رستوریشن‌های دندانی</a></li>
-</ul>
-  <p style="text-align:center;margin-top:50px;">
-    <a href="../index.html">← بازگشت به صفحه‌ی اصلی دنت‌کست</a>
-  </p>
 
+  <ul>
+    <li><a href="episode-2.html">نوت‌کست دوم – راهنمای جامع انتخاب سمان مناسب برای رستوریشن‌های دندانی</a></li>
+  </ul>
+
+  <div style="text-align:center;">
+    <a class="back" href="../index.html">← بازگشت به صفحه‌ی اصلی دنت‌کست</a>
+  </div>
+
+  <footer>
+    © 2025 DentCast — طراحی و توسعه با ❤️ توسط فواد شهابیان
+  </footer>
 </body>
 </html>
