@@ -1,50 +1,142 @@
-@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700&display=swap');
+/* 🎨 DentCast Global Style - Foad Shahabian */
 
-body {
-  background-color: #0e0e12;       /* پس‌زمینه‌ی تیره */
-  color: #e6e6e6;                  /* متن روشن */
-  font-family: 'Vazirmatn', sans-serif;
-  line-height: 1.8;
-  margin: 0;
-  padding: 0 15px;
-  direction: rtl;
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap');
+
+:root{
+  --blue:#0b5fff;
+  --bg:#0b1220;
+  --bg2:#121a2b;
+  --text:#e7eaf1;
+  --muted:#9aa1b3;
+  --radius:18px;
+  --shadow:0 18px 50px rgba(0,0,0,.35);
 }
 
-h1, h2, h3 {
-  color: #0094ff;                  /* آبی سلطنتی */
-  text-align: center;
-  margin-top: 40px;
+/* 🔹 ساختار پایه */
+html,body{
+  height:100%;
+  margin:0;
+  padding:0;
+  direction:rtl;
+  font-family:'Vazirmatn',sans-serif;
+  color:var(--text);
+  background:radial-gradient(1200px 600px at 20% -10%, #1b2640 0%, transparent 60%),
+             linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
 }
 
-p {
-  text-align: justify;
-  margin: 10px 0;
+/* 🔹 ساختار محتوایی */
+.wrap{
+  max-width:920px;
+  margin:40px auto 70px;
+  padding:0 20px;
 }
 
-a {
-  color: #00a2ff;
-  text-decoration: none;
-  font-weight: 500;
+/* Header */
+header{
+  text-align:center;
+  margin-bottom:40px;
 }
-a:hover {
-  text-decoration: underline;
+header h1{
+  color:var(--blue);
+  font-size:2.2rem;
+  font-weight:800;
+  margin:10px 0;
 }
-
-div, section {
-  margin: 20px auto;
-  max-width: 800px;
-  background: #16161c;             /* باکس تیره‌تر */
-  padding: 25px 30px;
-  border-radius: 12px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.3);
-}
-
-.footer-link {
-  text-align: center;
-  margin: 40px 0;
+header p{
+  color:var(--text);
+  opacity:.85;
+  line-height:1.8;
+  font-size:1.05rem;
 }
 
-iframe {
-  border-radius: 10px;
-  overflow: hidden;
+/* کارت‌ها و بخش‌های محتوا */
+.card, .intro, .audio-box{
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:22px 24px;
+  margin-bottom:30px;
+}
+.card{background:#161a26; color:#e7eaf1;}
+
+.lead{
+  font-size:1.05rem;
+  line-height:1.9;
+  text-align:justify;
+  margin:0 0 20px;
+}
+
+/* لینک‌ها */
+a{
+  color:var(--blue);
+  text-decoration:none;
+  transition:all .3s ease;
+}
+a:hover{
+  text-decoration:underline;
+}
+
+/* لینک نوت‌کست */
+.note-link{
+  display:block;
+  text-align:center;
+  background:rgba(11,95,255,0.15);
+  color:var(--blue);
+  border-radius:12px;
+  padding:12px 20px;
+  font-weight:600;
+  margin:25px auto;
+  width:fit-content;
+}
+.note-link:hover{
+  background:rgba(11,95,255,0.25);
+  transform:scale(1.03);
+}
+
+/* iframe پلیر */
+iframe{
+  width:100%;
+  height:540px;
+  border:none;
+  border-radius:var(--radius);
+  margin-top:18px;
+  box-shadow:0 10px 30px rgba(0,0,0,.15);
+}
+
+/* دکمه‌های برگشت */
+.back{
+  display:inline-block;
+  margin-top:50px;
+  color:var(--blue);
+  font-weight:600;
+  border:1px solid rgba(255,255,255,0.15);
+  border-radius:12px;
+  padding:10px 20px;
+  background:rgba(255,255,255,0.05);
+}
+.back:hover{
+  background:rgba(11,95,255,0.15);
+  transform:scale(1.03);
+}
+
+/* Footer */
+footer{
+  margin-top:60px;
+  text-align:center;
+  color:var(--muted);
+  font-size:.9rem;
+}
+
+/* 📱 موبایل‌فرندلی */
+@media (max-width:768px){
+  .wrap{padding:0 14px; margin:25px auto 60px;}
+  header h1{font-size:1.7rem;}
+  header p{font-size:.95rem; line-height:1.7;}
+  .lead{font-size:.95rem; line-height:1.8;}
+  iframe{height:380px;}
+  .back{font-size:.9rem; padding:8px 16px;}
+  footer{font-size:.8rem; margin-top:50px;}
 }
