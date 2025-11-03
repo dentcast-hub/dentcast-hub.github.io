@@ -29,4 +29,11 @@
     <priority>0.8</priority>
   </url>
 
+  <!-- نوت‌کست چهارم (اپیزود ۴) -->
+  <url>
+    <loc>https://dentcast-hub.github.io/notecast/episode-4.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
 </urlset>
