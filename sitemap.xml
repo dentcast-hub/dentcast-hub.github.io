@@ -3,35 +3,35 @@
 
   <!-- صفحه اصلی سایت -->
   <url>
-    <loc>https://dentcast-hub.github.io/</loc>
+    <loc>https://dentcast.ir/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 
   <!-- صفحه اصلی نوت‌کست‌ها -->
   <url>
-    <loc>https://dentcast-hub.github.io/notecast/</loc>
+    <loc>https://dentcast.ir/notecast/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <!-- نوت‌کست دوم (اپیزود ۲) -->
   <url>
-    <loc>https://dentcast-hub.github.io/notecast/episode-2.html</loc>
+    <loc>https://dentcast.ir/notecast/episode-2.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <!-- نوت‌کست سوم (اپیزود ۳) -->
   <url>
-    <loc>https://dentcast-hub.github.io/notecast/episode-3.html</loc>
+    <loc>https://dentcast.ir/notecast/episode-3.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <!-- نوت‌کست چهارم (اپیزود ۴) -->
   <url>
-    <loc>https://dentcast-hub.github.io/notecast/episode-4.html</loc>
+    <loc>https://dentcast.ir/notecast/episode-4.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
