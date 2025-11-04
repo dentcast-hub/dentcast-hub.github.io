@@ -35,5 +35,10 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-
+<!-- نوت‌کست پنجم (اپیزود ۵) -->
+  <url>
+    <loc>https://dentcast.ir/notecast/episode-5.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>
