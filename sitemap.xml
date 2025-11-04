@@ -41,4 +41,10 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+<!-- نوت‌کست بیست و یکم (اپیزود ۲۱) -->
+  <url>
+    <loc>https://dentcast.ir/notecast/episode-21.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>
