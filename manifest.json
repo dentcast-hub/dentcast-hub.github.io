@@ -1,0 +1,30 @@
+{
+  "name": "DentCast",
+  "short_name": "DentCast",
+  "description": "پادکست علمی دندان‌پزشکی با روایت دکتر فواد شهابیان – مرور پژوهش‌ها و نکات بالینی در پروتز و ایمپلنت",
+  "lang": "fa",
+  "dir": "rtl",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0b1220",
+  "theme_color": "#0b5fff",
+  "icons": [
+    {
+      "src": "/favicon-32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
