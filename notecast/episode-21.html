@@ -4,121 +4,191 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>نوت‌کست ۲۱ – ادامه‌ی قالب‌گیری دو مرحله‌ای | دنت‌کست</title>
-  <meta name="description" content="نوت‌کست بیست‌ویکم دنت‌کست؛ ادامه‌ی بحث قالب‌گیری دو مرحله‌ای و نکات کلینیکی.">
+  <meta name="description" content="نوت‌کست بیست و یکم دنت‌کست؛ ادامه‌ی بحث مهم قالب‌گیری دو مرحله‌ای و نکات کلینیکی.">
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
 
   <style>
-    :root{
-      --blue:#0b5fff;
-      --bg:#0b1220;
-      --bg2:#121a2b;
-      --text:#e7eaf1;
-      --muted:#9aa1b3;
-      --radius:18px;
-      --shadow:0 18px 50px rgba(0,0,0,.35);
+    :root {
+      --blue: #0b5fff;
+      --bg: #0b1220;
+      --bg2: #121a2b;
+      --text: #e7eaf1;
+      --muted: #9aa1b3;
+      --radius: 18px;
+      --shadow: 0 18px 50px rgba(0,0,0,.35);
     }
 
-    html,body{margin:0; padding:0;}
-    body{
-      font-family:'Vazirmatn', sans-serif;
-      background: radial-gradient(1200px 600px at 20% -10%, #1b2640 0%, transparent 60%),
-                  linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+    body {
+      margin: 0;
+      font-family: 'Vazirmatn', sans-serif;
+      background: linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
       color: var(--text);
       max-width: 920px;
       margin: 0 auto;
       padding: 40px 22px 90px;
       line-height: 1.9;
-      -webkit-font-smoothing:antialiased;
-      text-rendering:optimizeLegibility;
     }
 
-    h1{text-align:center;color:var(--blue);font-weight:800;font-size:2rem;margin-bottom:8px;}
-    h2{text-align:center;color:#e7eaf1;font-weight:600;font-size:1.3rem;margin-bottom:30px;}
-    h3{color:var(--blue);margin-top:30px;font-size:1.1rem;}
-    ul{list-style-type:"✦ ";padding-right:20px;margin:10px 0 20px;}
-    li{margin-bottom:10px;}
+    h1 {
+      text-align: center;
+      color: var(--blue);
+      font-weight: 800;
+      font-size: 2rem;
+      margin-bottom: 8px;
+    }
+
+    h2 {
+      text-align: center;
+      color: var(--text);
+      font-weight: 600;
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+    }
 
     .glass-box {
-  background: rgba(255, 255, 255, 0.75);
-  backdrop-filter: blur(10px);
-  border-radius: var(--radius);
-  padding: 20px 25px;
-  margin: 25px 0;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.05), 0 5px 20px rgba(0, 0, 0, 0.3);
-  color: #111;
-  line-height: 1.9;
-}
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(12px);
+      border-radius: var(--radius);
+      padding: 20px 25px;
+      margin: 25px 0;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.25);
+      color: #111;
+      line-height: 1.9;
+    }
 
-    .author{text-align:center;margin-top:40px;font-weight:600;}
-    iframe{width:100%;height:110px;border:none;border-radius:var(--radius);margin-top:15px;box-shadow:0 10px 30px rgba(0,0,0,.2);}
-    .audio-box{margin-top:60px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:var(--radius);padding:20px;text-align:center;box-shadow:var(--shadow);}
-    .back{display:inline-block;margin-top:60px;color:var(--blue);text-decoration:none;font-weight:600;border:1px solid rgba(255,255,255,0.15);border-radius:12px;padding:10px 20px;background:rgba(255,255,255,0.05);transition:all .3s ease;}
-    .back:hover{background:rgba(11,95,255,0.15);transform:scale(1.03);}
-    footer{margin-top:70px;text-align:center;color:var(--muted);font-size:.9rem;}
+    h3 {
+      color: var(--blue);
+      font-weight: 700;
+      margin-top: 25px;
+      font-size: 1.1rem;
+    }
+
+    ul {
+      list-style-type: "✦ ";
+      padding-right: 20px;
+      margin: 10px 0 20px;
+    }
+
+    li {
+      margin-bottom: 10px;
+    }
+
+    .author {
+      text-align: center;
+      margin-top: 40px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    iframe {
+      width: 100%;
+      height: 110px;
+      border: none;
+      border-radius: var(--radius);
+      margin-top: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, .2);
+    }
+
+    .audio-box {
+      margin-top: 60px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius);
+      padding: 20px;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+
+    .back {
+      display: inline-block;
+      margin-top: 60px;
+      color: var(--blue);
+      text-decoration: none;
+      font-weight: 600;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      padding: 10px 20px;
+      background: rgba(255, 255, 255, 0.05);
+      transition: all .3s ease;
+    }
+
+    .back:hover {
+      background: rgba(11, 95, 255, 0.15);
+      transform: scale(1.03);
+    }
+
+    footer {
+      margin-top: 70px;
+      text-align: center;
+      color: var(--muted);
+      font-size: .9rem;
+    }
 
     @media (max-width: 768px) {
-      body {padding: 25px 16px 60px;line-height: 1.8;}
-      h1 {font-size: 1.6rem;}
-      h2 {font-size: 1.1rem;margin-bottom: 24px;}
-      h3 {font-size: 1rem;margin-top: 24px;}
-      ul {padding-right:14px;font-size:.95rem;}
-      .audio-box {margin-top:40px;padding:16px;}
-      .back {font-size:.9rem;padding:8px 16px;margin-top:40px;}
-      footer {font-size:.8rem;margin-top:50px;}
+      body { padding: 25px 16px 60px; line-height: 1.8; }
+      h1 { font-size: 1.6rem; }
+      h2 { font-size: 1rem; margin-bottom: 24px; }
+      h3 { font-size: 1rem; margin-top: 20px; }
+      ul { padding-right: 14px; font-size: .95rem; }
     }
   </style>
 </head>
 <body>
 
   <h1>💎✨ نوت‌کست بیست و یکم ✨💎</h1>
-  <h2>ادامه‌ی قالب‌گیری دو مرحله‌ای</h2>
+  <h2>خلاصه‌ی نوشتاری دنت‌کست بیست و یکم</h2>
 
   <div class="glass-box">
-    <p><strong>مدیریت مواد و چسب‌ها</strong></p>
+    <p>این قسمت ادامه بحث مهم قالب‌گیری دو مرحله‌ای است.</p>
+  </div>
+
+  <div class="glass-box">
+    <h3>📘 مدیریت مواد و چسب‌ها</h3>
     <ul>
       <li>تری ادهزیو (Tray Adhesives): استفاده از چسب تری ضروری است، به‌خصوص در نواحی با آندرکات عمیق، زیرا هنگام خارج کردن تری، فشار زیادی به مواد وارد می‌شود.</li>
       <li>چسب باید مخصوص همان ماده قالب‌گیری (آلژینات، سیلیکون یا پلی‌اتر) باشد.</li>
       <li>پروتکل ایده‌آل این است که پس از اعمال چسب، اجازه دهیم حلال آن تبخیر شود تا حداکثر چسبندگی ایجاد گردد.</li>
       <li>اختلاط ای-سیلیکون (A-Silicone): هنگام استفاده از گان، توصیه می‌شود ۲ تا ۳ سانتی‌متر اول ماده خارج‌شده دور ریخته شود تا نسبت ۱:۱ بیس و کاتالیست یکنواخت باشد.</li>
-      <li>در اختلاط ای-سیلیکون پوتی، دستکش‌های لاتکس ممکن است در فرایند سِت شدن اختلال ایجاد کنند؛ از دستکش‌های وینیل یا نیتریل استفاده شود.</li>
-      <li>اندازه‌گیری سی-سیلیکون: مقدار اکتیواتور باید دقیقاً با قطر پیمانه پوتی هماهنگ باشد.</li>
+      <li>در اختلاط ای-سیلیکون پوتی (Putty)، دستکش‌های لاتکس ممکن است در فرایند سِت شدن اختلال ایجاد کنند. لذا باید از دستکش‌های وینیل یا نیتریل استفاده شود.</li>
+      <li>اندازه‌گیری سی-سیلیکون: مقدار اکتیواتور باید دقیقاً با قطر پیمانه اندازه‌گیری پوتی مطابقت داشته باشد. اگر دو پیمانه پوتی استفاده شود، نوار اکتیواتور باید معادل دو قطر پیمانه باشد.</li>
     </ul>
   </div>
 
   <div class="glass-box">
-    <p><strong>مرحله قالب‌گیری اولیه (پوتی)</strong></p>
+    <h3>📘 مرحله قالب‌گیری اولیه (پوتی)</h3>
     <ul>
-      <li>حذف اسمیر لایر با الکل قبل از قالب‌گیری، برای جلوگیری از اختلال در سِت شدن.</li>
-      <li>نخ‌گذاری لثه قبل از مرحله پوتی انجام شود تا در مرحله واش، ماده به زیر لثه نفوذ کند.</li>
-      <li>تری باید حداقل ۳ میلی‌متر فضا برای ماده فراهم کند و با سطوح اکلوزال تماس نداشته باشد.</li>
+      <li>اگر از بیلدآپ کامپوزیت یا رستوریشن موقت با پایه متاکریلات استفاده شده، اسمیر لایر باید با الکل پاک شود.</li>
+      <li>نخ‌گذاری لثه باید قبل از گرفتن قالب اولیه پوتی انجام شود.</li>
+      <li>تری باید حداقل ۳ میلی‌متر ضخامت مواد در اطراف دندان‌ها داشته باشد و با سطوح اکلوزال تماس نداشته باشد.</li>
+      <li>دهان بیمار باید در حالت نیمه‌باز باشد تا فشار از فک پایین اعمال نشود.</li>
     </ul>
   </div>
 
   <div class="glass-box">
-    <p><strong>آماده‌سازی برای مرحله اصلاحی (واش)</strong></p>
+    <h3>📘 آماده‌سازی برای مرحله اصلاحی (واش)</h3>
     <ul>
-      <li>مواد اضافی لبه‌ی تری حذف شوند (با تیغ شماره ۱۱).</li>
-      <li>در قالب‌های قوس کامل، ناحیه کام باید هموار شود.</li>
-      <li>مواد اینترپروکسیمال حذف شوند اما سطوح اکلوزال حفظ گردند.</li>
+      <li>مواد اضافی لبه تری حذف شوند (با تیغ شماره ۱۱).</li>
+      <li>در قالب‌های قوس کامل، ناحیه کام باید صاف و هموار شود.</li>
+      <li>مواد بین دندانی حذف شوند اما سطوح اکلوزال حفظ گردند.</li>
       <li>ایندکس‌گذاری بین دندان‌ها برای نشاندن صحیح تری انجام شود.</li>
-      <li>ایجاد کانال‌های اسکیپ متقارن روی پوتی برای خروج واش.</li>
+      <li>کانال‌های اسکیپ برای خروج واش ایجاد شوند.</li>
     </ul>
   </div>
 
   <div class="glass-box">
-    <p><strong>قالب‌گیری مرحله دوم (واش)</strong></p>
+    <h3>📘 قالب‌گیری مرحله دوم (واش)</h3>
     <ul>
-      <li>واش داخل پوتی و اطراف دندان‌ها قرار داده شود.</li>
+      <li>ماده واش داخل قالب پوتی و اطراف دندان‌ها قرار گیرد.</li>
       <li>تکنیک من: استفاده از سرنگ هوا برای هدایت واش به سمت خط ختم قبل از نشاندن تری.</li>
     </ul>
   </div>
 
   <div class="glass-box">
-    <p><strong>زمان کار در مقابل زمان سِت شدن</strong></p>
+    <h3>📘 زمان کار در مقابل زمان سِت شدن</h3>
     <ul>
-      <li>زمان کار (WT) قبل از زمان سِت شدن (ST) پایان می‌یابد؛ سِت شدن داخل دهانی پس از WT شروع می‌شود.</li>
-      <li>اگر قبل از پایان WT قالب‌گیری انجام شود، باید زمان باقی‌مانده به ST اضافه گردد.</li>
+      <li>مواد قالب‌گیری دارای زمان کار (WT) و زمان سِت شدن (ST) مشخص هستند. سِت شدن داخل دهانی بعد از WT آغاز می‌شود.</li>
+      <li>اگر قبل از پایان WT قالب‌گیری انجام شود، زمان باقی‌مانده باید به ST اضافه گردد.</li>
     </ul>
   </div>
 
@@ -141,5 +211,6 @@
   <footer>
     © 2025 DentCast — طراحی و توسعه توسط فواد شهابیان
   </footer>
+
 </body>
 </html>
