@@ -5,7 +5,6 @@
   <title>🎙️ دنت‌کست — پادکست علمی دندان‌پزشکی با روایت فواد شهابیان</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- SEO -->
   <meta name="description" content="پادکست علمی دندان‌پزشکی با روایت فواد شهابیان. مرور سادهٔ تازه‌ترین مقالات و پژوهش‌های حوزهٔ پروتز و دندان‌پزشکی.">
   <meta name="keywords" content="DentCast, دنت‌کست, پادکست دندان‌پزشکی, فواد شهابیان, پروتزهای دندانی, بورد تخصصی, دانشگاه شهید بهشتی, دانشگاه علوم پزشکی مشهد, prosthodontics, digital dentistry">
   <meta name="author" content="Foad Shahabian">
@@ -14,7 +13,6 @@
   <meta property="og:url" content="https://dentcast-hub.github.io/">
   <meta property="og:type" content="website">
 
-  <!-- Font -->
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
 
   <style>
@@ -46,15 +44,76 @@
       padding: 0 20px;
     }
 
-    header{
-      text-align:center;
-      margin-bottom:40px;
+    /* 🔹 نوار نصب اپ */
+    .install-banner {
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius);
+      padding: 18px 22px;
+      text-align: center;
+      font-size: .95rem;
+      line-height: 1.9;
+      margin-bottom: 28px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      position: relative;
     }
+    .install-banner strong { color: var(--blue); }
+
+    .install-btn {
+      display: inline-block;
+      margin-top: 10px;
+      background: rgba(11,95,255,0.25);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #fff;
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all .3s ease;
+    }
+    .install-btn:hover {
+      background: rgba(11,95,255,0.35);
+      transform: scale(1.05);
+    }
+
+    /* 🔹 Toast کوچک */
+    #toast {
+      visibility: hidden;
+      min-width: 240px;
+      background-color: rgba(11,95,255,0.9);
+      color: #fff;
+      text-align: center;
+      border-radius: 12px;
+      padding: 12px 16px;
+      position: fixed;
+      z-index: 1000;
+      right: 50%;
+      transform: translateX(50%);
+      bottom: 40px;
+      font-size: .9rem;
+      transition: opacity 0.6s, bottom 0.6s;
+    }
+    #toast.show {
+      visibility: visible;
+      opacity: 1;
+      bottom: 60px;
+    }
+
+    header{text-align:center;margin-bottom:40px;}
     header h1{
       color: var(--blue);
       font-size: 2.2rem;
       margin: 10px 0;
       font-weight:800;
+      line-height: 1.6;
+    }
+    header h1 span {
+      display: block;
+      font-size: 1.1rem;
+      color: var(--text);
+      opacity: .9;
+      margin-top: 4px;
     }
     header p{
       color: var(--text);
@@ -112,7 +171,7 @@
       line-height:1.7;
     }
 
-    /* 📱 بهینه‌سازی موبایل */
+    /* 📱 موبایل */
     @media (max-width: 768px) {
       .wrap {padding: 0 12px; margin: 25px auto 60px;}
       header h1 {font-size: 1.7rem;}
@@ -120,22 +179,33 @@
       .card {padding: 20px 16px;}
       .lead {font-size: .95rem;}
       iframe {height: 380px;}
+      .install-banner {font-size: .9rem; margin-bottom: 24px;}
     }
   </style>
+
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
-<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
-<link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png">
-<link rel="apple-touch-icon" href="/favicon-512.png">
-<meta name="theme-color" content="#0b5fff">
-<link rel="manifest" href="/manifest.json">
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png">
+  <link rel="apple-touch-icon" href="/favicon-512.png">
+  <meta name="theme-color" content="#0b5fff">
+  <link rel="manifest" href="/manifest.json">
 </head>
 
 <body>
   <div class="wrap">
+
+    <div class="install-banner">
+      💡 <strong>دنت‌کست را به صفحهٔ اصلی خود اضافه کنید</strong>  
+      <br>برای دسترسی سریع‌تر، از گزینهٔ <strong>Add to Home Screen</strong> استفاده کنید.
+      <div id="installButton" class="install-btn">📲 نصب دنت‌کست</div>
+    </div>
+
     <header>
-      <h1>🎙️ دنت‌کست — DentCast</h1>
+      <h1>
+        🎙️ دنت‌کست — DentCast
+        <span>پادکست علمی دندان‌پزشکی با روایت دکتر فواد شهابیان</span>
+      </h1>
       <p>
-        پادکست علمی دندان‌پزشکی با روایت <strong>دکتر فواد شهابیان</strong>،  
         متخصص پروتزهای دندانی و ایمپلنت،  
         فارغ‌التحصیل دانشگاه شهید بهشتی و دانشگاه علوم پزشکی مشهد،  
         دارای بورد تخصصی پروتز
@@ -160,12 +230,38 @@
       © 2025 DentCast — طراحی و توسعه توسط فواد شهابیان
     </footer>
   </div>
+
+  <!-- 🔹 Toast نصب -->
+  <div id="toast">در مرورگر Safari یا Chrome گزینهٔ "Add to Home Screen" را انتخاب کنید.</div>
+
   <script>
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/service-worker.js')
-  .then(() => console.log('DentCast service worker registered successfully.'))
-  .catch(err => console.error('Service worker registration failed:', err));
-}
+  let deferredPrompt;
+  const installButton = document.getElementById('installButton');
+  const toast = document.getElementById('toast');
+
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    installButton.style.display = 'inline-block';
+
+    installButton.addEventListener('click', () => {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+          deferredPrompt = null;
+        });
+      } else {
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 4000);
+      }
+    });
+  });
+
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/service-worker.js')
+    .then(() => console.log('DentCast service worker registered successfully.'))
+    .catch(err => console.error('Service worker registration failed:', err));
+  }
   </script>
 </body>
 </html>
