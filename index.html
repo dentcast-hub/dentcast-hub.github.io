@@ -10,7 +10,7 @@
   <meta name="author" content="Foad Shahabian">
   <meta property="og:title" content="DentCast — پادکست علمی دندان‌پزشکی">
   <meta property="og:description" content="مرور سادهٔ تازه‌ترین مقالات و پژوهش‌های پروتز و دندان‌پزشکی.">
-  <meta property="og:url" content="https://dentcast-hub.github.io/">
+  <meta property="og:url" content="https://dentcast.ir/">
   <meta property="og:type" content="website">
 
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
@@ -195,9 +195,9 @@
   <div class="wrap">
 
     <div class="install-banner">
-      💡 <strong>دنت‌کست را به صفحهٔ اصلی خود اضافه کنید</strong>  
-      <br>برای دسترسی سریع‌تر، از گزینهٔ <strong>Add to Home Screen</strong> استفاده کنید.
-      <div id="installButton" class="install-btn">📲 نصب دنت‌کست</div>
+      📲 <strong>اپلیکیشن دنت‌کست</strong> را روی گوشی خود نصب کنید  
+      <br>برای دسترسی سریع و اجرای آفلاین، از گزینهٔ <strong>Add to Home Screen</strong> در مرورگر استفاده کنید.
+      <div id="installButton" class="install-btn">🔹 نصب مستقیم</div>
     </div>
 
     <header>
@@ -247,9 +247,7 @@
     installButton.addEventListener('click', () => {
       if (deferredPrompt) {
         deferredPrompt.prompt();
-        deferredPrompt.userChoice.then((choiceResult) => {
-          deferredPrompt = null;
-        });
+        deferredPrompt.userChoice.then(() => deferredPrompt = null);
       } else {
         toast.classList.add('show');
         setTimeout(() => toast.classList.remove('show'), 4000);
