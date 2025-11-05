@@ -1,50 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
-  <!-- صفحه اصلی سایت -->
+  <!-- 🏠 صفحه اصلی -->
   <url>
     <loc>https://dentcast.ir/</loc>
+    <lastmod>2025-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 
-  <!-- صفحه اصلی نوت‌کست‌ها -->
+  <!-- 📝 صفحه‌ی نوت‌کست‌ها -->
   <url>
-    <loc>https://dentcast.ir/notecast/</loc>
+    <loc>https://dentcast.ir/notecast/index.html</loc>
+    <lastmod>2025-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
 
-  <!-- نوت‌کست دوم (اپیزود ۲) -->
+  <!-- 📸 صفحه‌ی فوتوکست‌ها -->
   <url>
-    <loc>https://dentcast.ir/notecast/episode-2.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <loc>https://dentcast.ir/photocast/index.html</loc>
+    <lastmod>2025-11-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
   </url>
 
-  <!-- نوت‌کست سوم (اپیزود ۳) -->
-  <url>
-    <loc>https://dentcast.ir/notecast/episode-3.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <!-- نوت‌کست چهارم (اپیزود ۴) -->
-  <url>
-    <loc>https://dentcast.ir/notecast/episode-4.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-<!-- نوت‌کست پنجم (اپیزود ۵) -->
-  <url>
-    <loc>https://dentcast.ir/notecast/episode-5.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-<!-- نوت‌کست بیست و یکم (اپیزود ۲۱) -->
-  <url>
-    <loc>https://dentcast.ir/notecast/episode-21.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
 </urlset>
