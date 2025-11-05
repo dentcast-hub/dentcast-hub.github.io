@@ -8,164 +8,242 @@
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
 
   <style>
-    :root{
-      --blue:#0b5fff;
-      --bg:#0b1220;
-      --bg2:#121a2b;
-      --text:#e7eaf1;
-      --muted:#9aa1b3;
-      --radius:18px;
-      --shadow:0 18px 50px rgba(0,0,0,.35);
+    :root {
+      --blue: #0b5fff;
+      --bg: #0b1220;
+      --bg2: #121a2b;
+      --text: #e7eaf1;
+      --muted: #9aa1b3;
+      --radius: 18px;
+      --shadow: 0 18px 50px rgba(0,0,0,.35);
     }
 
-    html,body{margin:0; padding:0;}
-    body{
-      font-family:'Vazirmatn', sans-serif;
-      background: radial-gradient(1200px 600px at 20% -10%, #1b2640 0%, transparent 60%),
-                  linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+    body {
+      margin: 0;
+      font-family: 'Vazirmatn', sans-serif;
+      background: linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
       color: var(--text);
       max-width: 920px;
       margin: 0 auto;
       padding: 40px 22px 90px;
       line-height: 1.9;
-      -webkit-font-smoothing:antialiased;
-      text-rendering:optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
     }
 
-    h1{
-      text-align:center;
-      color:var(--blue);
-      font-weight:800;
-      font-size:2rem;
-      margin-bottom:8px;
+    h1 {
+      text-align: center;
+      color: var(--blue);
+      font-weight: 800;
+      font-size: 2rem;
+      margin-bottom: 8px;
     }
 
-    h2{
-      text-align:center;
-      color:#e7eaf1;
-      font-weight:600;
-      font-size:1.3rem;
-      margin-bottom:30px;
+    h2 {
+      text-align: center;
+      color: var(--text);
+      font-weight: 600;
+      font-size: 1.2rem;
+      margin-bottom: 30px;
     }
 
-    h3{
-      color:var(--blue);
-      margin-top:30px;
-      font-size:1.1rem;
+    .glass-box {
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(12px);
+      border-radius: var(--radius);
+      padding: 20px 25px;
+      margin: 25px 0;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.25);
+      color: #111;
+      line-height: 1.9;
     }
 
-    ul{
-      list-style-type:"✦ ";
-      padding-right:20px;
-      margin:10px 0 20px;
+    h3 {
+      color: var(--blue);
+      font-weight: 700;
+      margin-top: 25px;
+      font-size: 1.1rem;
     }
 
-    li{margin-bottom:10px;}
-
-    .author{
-      text-align:center;
-      margin-top:40px;
-      font-weight:600;
+    ul {
+      list-style-type: "✦ ";
+      padding-right: 20px;
+      margin: 10px 0 20px;
     }
 
-    iframe{
-      width:100%;
-      height:110px;
-      border:none;
-      border-radius:var(--radius);
-      margin-top:15px;
-      box-shadow:0 10px 30px rgba(0,0,0,.2);
+    li {
+      margin-bottom: 10px;
     }
 
-    .audio-box{
-      margin-top:60px;
-      background:rgba(255,255,255,0.04);
-      border:1px solid rgba(255,255,255,0.1);
-      border-radius:var(--radius);
-      padding:20px;
-      text-align:center;
-      box-shadow:var(--shadow);
+    .author {
+      text-align: center;
+      margin-top: 40px;
+      font-weight: 600;
+      color: var(--text);
     }
 
-    .back{
-      display:inline-block;
-      margin-top:60px;
-      color:var(--blue);
-      text-decoration:none;
-      font-weight:600;
-      border:1px solid rgba(255,255,255,0.15);
-      border-radius:12px;
-      padding:10px 20px;
-      background:rgba(255,255,255,0.05);
-      transition:all .3s ease;
+    iframe {
+      width: 100%;
+      height: 110px;
+      border: none;
+      border-radius: var(--radius);
+      margin-top: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, .2);
     }
 
-    .back:hover{
-      background:rgba(11,95,255,0.15);
-      transform:scale(1.03);
+    .audio-box {
+      margin-top: 60px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius);
+      padding: 20px;
+      text-align: center;
+      box-shadow: var(--shadow);
     }
 
-    footer{
-      margin-top:70px;
-      text-align:center;
-      color:var(--muted);
-      font-size:.9rem;
+    .back {
+      display: inline-block;
+      margin-top: 60px;
+      color: var(--blue);
+      text-decoration: none;
+      font-weight: 600;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      padding: 10px 20px;
+      background: rgba(255, 255, 255, 0.05);
+      transition: all .3s ease;
+    }
+
+    .back:hover {
+      background: rgba(11, 95, 255, 0.15);
+      transform: scale(1.03);
+    }
+
+    footer {
+      margin-top: 70px;
+      text-align: center;
+      color: var(--muted);
+      font-size: .9rem;
+    }
+
+    @media (max-width: 768px) {
+      body { padding: 25px 16px 60px; line-height: 1.8; }
+      h1 { font-size: 1.6rem; }
+      h2 { font-size: 1rem; margin-bottom: 24px; }
+      h3 { font-size: 1rem; margin-top: 20px; }
+      ul { padding-right: 14px; font-size: .95rem; }
     }
   </style>
+
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
-<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
-<link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png">
-<link rel="apple-touch-icon" href="/favicon-512.png">
-<meta name="theme-color" content="#0b5fff">
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png">
+  <link rel="apple-touch-icon" href="/favicon-512.png">
+  <meta name="theme-color" content="#0b5fff">
+
+  <!-- ✅ Schema.org structured data for NoteCast 5 -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "PodcastEpisode",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://dentcast.ir/notecast/5.html"
+    },
+    "name": "نوت‌کست ۵ – باندینگ‌های یونیورسال: نکات کلیدی و کاربردی",
+    "description": "نوت‌کست پنجم دنت‌کست؛ خلاصه‌ی نوشتاری اپیزود ۵ درباره‌ی باندینگ‌های یونیورسال و نکات کلیدی کاربردی. روایت دکتر فواد شهابیان، متخصص پروتزهای دندانی و ایمپلنت.",
+    "url": "https://dentcast.ir/notecast/5.html",
+    "partOfSeries": {
+      "@type": "PodcastSeries",
+      "name": "DentCast – پادکست علمی دندان‌پزشکی با روایت دکتر فواد شهابیان",
+      "url": "https://dentcast.ir/"
+    },
+    "author": {
+      "@type": "Person",
+      "name": "دکتر فواد شهابیان",
+      "jobTitle": "متخصص پروتزهای دندانی و ایمپلنت",
+      "url": "https://dentcast.ir/"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "DentCast",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://dentcast.ir/favicon-512.png"
+      }
+    },
+    "inLanguage": "fa-IR",
+    "associatedMedia": {
+      "@type": "AudioObject",
+      "contentUrl": "https://embed.acast.com/624b5545ecc0e600134ea0df/624b554b5af39e00127155e6",
+      "encodingFormat": "audio/mpeg"
+    }
+  }
+  </script>
 </head>
 <body>
 
   <h1>📝 نوت‌کست پنجم</h1>
   <h2>✨ باندینگ‌های یونیورسال: نکات کلیدی و کاربردی ✨</h2>
 
-  <h3>🔹 تعریف و هدف:</h3>
-  <ul>
-    <li>سیستم باندینگ تک‌مرحله‌ای برای جایگزینی نسل‌های قدیمی‌تر (توتال اچ و سلف اچ).</li>
-    <li>هدف: سازگاری با انواع اچینگ (توتال، سلف، سلکتیو)، باند به سطوح مختلف دندانی (مینا، عاج، فلز، سرامیک)، و سازگاری با مواد دوال/سلف کیور (ایده‌آل بدون اکتیویتور).</li>
-    <li>⚠️ توجه: واژه "یونیورسال" کمی گمراه‌کننده است؛ همه محصولات تمام این قابلیت‌ها را ندارند.</li>
-  </ul>
+  <div class="glass-box">
+    <h3>🔹 تعریف و هدف:</h3>
+    <ul>
+      <li>سیستم باندینگ تک‌مرحله‌ای برای جایگزینی نسل‌های قدیمی‌تر (توتال اچ و سلف اچ).</li>
+      <li>هدف: سازگاری با انواع اچینگ (توتال، سلف، سلکتیو)، باند به سطوح مختلف دندانی (مینا، عاج، فلز، سرامیک)، و سازگاری با مواد دوال/سلف کیور (ایده‌آل بدون اکتیویتور).</li>
+      <li>⚠️ توجه: واژه "یونیورسال" کمی گمراه‌کننده است؛ همه محصولات تمام این قابلیت‌ها را ندارند.</li>
+    </ul>
+  </div>
 
-  <h3>🔹 مونومر کلیدی MDP:</h3>
-  <ul>
-    <li>تقریباً در تمام یونیورسال‌ها هست.</li>
-    <li>حیاتی برای باند شیمیایی به اکسیدهای فلزی (مثل زیرکونیا) و هیدروکسی‌آپاتیت دندان.</li>
-    <li>✅ باندینگ‌های حاوی MDP می‌توانند جایگزین پرایمر زیرکونیا شوند (کاهش مراحل).</li>
-  </ul>
+  <div class="glass-box">
+    <h3>🔹 مونومر کلیدی MDP:</h3>
+    <ul>
+      <li>تقریباً در تمام یونیورسال‌ها هست.</li>
+      <li>حیاتی برای باند شیمیایی به اکسیدهای فلزی (مثل زیرکونیا) و هیدروکسی‌آپاتیت دندان.</li>
+      <li>✅ باندینگ‌های حاوی MDP می‌توانند جایگزین پرایمر زیرکونیا شوند (کاهش مراحل).</li>
+    </ul>
+  </div>
 
-  <h3>🔹 مونومر HEMA:</h3>
-  <ul>
-    <li>برای تر شوندگی (Wetting) و باند به عاج مهم است.</li>
-    <li>⚠️ ریسک تغییر رنگ طولانی‌مدت دارد، به‌خصوص در رستوریشن‌های زیبایی (ونیر). در این موارد، باندینگ بدون HEMA ترجیح دارد.</li>
-  </ul>
+  <div class="glass-box">
+    <h3>🔹 مونومر HEMA:</h3>
+    <ul>
+      <li>برای تر شوندگی (Wetting) و باند به عاج مهم است.</li>
+      <li>⚠️ ریسک تغییر رنگ طولانی‌مدت دارد، به‌خصوص در رستوریشن‌های زیبایی (ونیر). در این موارد، باندینگ بدون HEMA ترجیح دارد.</li>
+    </ul>
+  </div>
 
-  <h3>🔹 pH و سازگاری با دوال/سلف کیور:</h3>
-  <ul>
-    <li>پایین بودن pH (اسیدی) ⬅️ می‌تواند آمین‌های نوع سوم (جزء شیمیایی کیورینگ) را غیرفعال کند ⬅️ کاهش سازگاری و نیاز به اکتیویتور جداگانه.</li>
-    <li>اما در pH بالاتر (نزدیک به 3.2 مثل Bisco Universal) ⬅️ سازگاری بهتر بدون اکتیویتور.</li>
-    <li>سیستم‌های دو بطری، اجزای اسیدی و فعال‌کننده را جدا نگه می‌دارند و معمولاً نیاز به اکتیویتور ندارند.</li>
-  </ul>
+  <div class="glass-box">
+    <h3>🔹 pH و سازگاری با دوال/سلف کیور:</h3>
+    <ul>
+      <li>پایین بودن pH (اسیدی) ⬅️ می‌تواند آمین‌های نوع سوم (جزء شیمیایی کیورینگ) را غیرفعال کند ⬅️ کاهش سازگاری و نیاز به اکتیویتور جداگانه.</li>
+      <li>اما در pH بالاتر (نزدیک به 3.2 مثل Bisco Universal) ⬅️ سازگاری بهتر بدون اکتیویتور.</li>
+      <li>سیستم‌های دو بطری، اجزای اسیدی و فعال‌کننده را جدا نگه می‌دارند و معمولاً نیاز به اکتیویتور ندارند.</li>
+    </ul>
+  </div>
 
-  <h3>🔹 باند به سطوح مختلف:</h3>
-  <ul>
-    <li><strong>زیرکونیا:</strong> باند یونیورسال (با MDP) به‌خاطر باند شیمیایی، قابل استفاده است. (مطالعات طولانی‌مدت نتایج متفاوتی دارند، اما اجماع کلی بر استفاده‌پذیری است).</li>
-    <li>‼️ سندبلاست سطح زیرکونیا قبل از باندینگ ضروری است.</li>
-    <li>🚫 تمیز کردن زیرکونیا با اسید فسفریک ممنوع! (یون‌های فسفات با اتصال MDP رقابت می‌کنند).</li>
-    <li><strong>سرامیک‌های سیلیکایی:</strong> مکانیسم اصلی باند، سایلان است. تمیز کردن با اسید فسفریک (فقط در صورت آلودگی با بزاق) مشکلی ندارد.</li>
-  </ul>
+  <div class="glass-box">
+    <h3>🔹 باند به سطوح مختلف:</h3>
+    <ul>
+      <li><strong>زیرکونیا:</strong> باند یونیورسال (با MDP) به‌خاطر باند شیمیایی، قابل استفاده است. (مطالعات طولانی‌مدت نتایج متفاوتی دارند، اما اجماع کلی بر استفاده‌پذیری است).</li>
+      <li>‼️ سندبلاست سطح زیرکونیا قبل از باندینگ ضروری است.</li>
+      <li>🚫 تمیز کردن زیرکونیا با اسید فسفریک ممنوع! (یون‌های فسفات با اتصال MDP رقابت می‌کنند).</li>
+      <li><strong>سرامیک‌های سیلیکایی:</strong> مکانیسم اصلی باند، سایلان است. تمیز کردن با اسید فسفریک (فقط در صورت آلودگی با بزاق) مشکلی ندارد.</li>
+    </ul>
+  </div>
 
-  <h3>🔹 باندینگ‌های یونیورسال با سایلان داخلی:</h3>
-  <ul>
-    <li>ادعا می‌شود نیازی به سایلان جدا نیست.</li>
-    <li>⚠️ نگرانی: pH پایین باندینگ ممکن است سیلان را تخریب (هیدرولیز) و بی‌اثر کند.</li>
-    <li>✅ توصیه فعلی: برای سرامیک‌های سیلیکایی، همچنان از سایلان جداگانه استفاده کنید.</li>
-  </ul>
+  <div class="glass-box">
+    <h3>🔹 باندینگ‌های یونیورسال با سایلان داخلی:</h3>
+    <ul>
+      <li>ادعا می‌شود نیازی به سایلان جدا نیست.</li>
+      <li>⚠️ نگرانی: pH پایین باندینگ ممکن است سیلان را تخریب (هیدرولیز) و بی‌اثر کند.</li>
+      <li>✅ توصیه فعلی: برای سرامیک‌های سیلیکایی، همچنان از سایلان جداگانه استفاده کنید.</li>
+    </ul>
+  </div>
 
-  <p class="author">🌟 دکتر فواد شهابیان<br>متخصص پروتزهای دندانی و ایمپلنت</p>
+  <div class="author">
+    🌟 دکتر فواد شهابیانمتخصص پروتزهای دندانی و ایمپلنت
+  </div>
 
   <div class="audio-box">
     🎧 <strong>نسخه‌ی صوتی این دنت‌کست را بشنوید:</strong>
