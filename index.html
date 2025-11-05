@@ -28,38 +28,13 @@
       -webkit-font-smoothing:antialiased;
       text-rendering:optimizeLegibility;
     }
-.menu-links {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  text-align: center;
-  margin-top: 25px;
-}
 
-.note-link {
-  display: inline-block;
-  background: rgba(255,255,255,0.05);
-  color: #e7eaf1;
-  padding: 10px 18px;
-  border-radius: 12px;
-  text-decoration: none;
-  font-weight: 600;
-  transition: all .3s ease;
-  border: 1px solid rgba(255,255,255,0.1);
-}
-
-.note-link:hover {
-  background: rgba(11,95,255,0.2);
-  color: #fff;
-  transform: scale(1.03);
-}
     .wrap {
       max-width:920px;
       margin:40px auto 70px;
       padding:0 20px;
     }
 
-    /* 🔹 نوار نصب اپ – نسخه‌ی مینیمال */
     .install-banner {
       background:rgba(255,255,255,0.05);
       border:1px solid rgba(255,255,255,0.08);
@@ -91,14 +66,10 @@
       cursor:pointer;
       transition:all .3s ease;
     }
+
     .install-btn:hover {
       background:rgba(11,95,255,0.25);
       transform:scale(1.04);
-    }
-
-    .install-btn span {
-      font-size:.9rem;
-      line-height:1;
     }
 
     header{text-align:center;margin-bottom:36px;}
@@ -114,22 +85,51 @@
     }
 
     .lead{font-size:1.05rem;line-height:1.9;text-align:justify;margin:0 0 20px;}
-    .note-link{
-      display:block;text-align:center;
-      background:rgba(11,95,255,0.15);
-      color:var(--blue);
-      border-radius:10px;
-      padding:10px 18px;
-      font-weight:600;
-      text-decoration:none;
-      margin:20px auto;
-      width:fit-content;
-      transition:all .3s ease;
-      font-size:.95rem;
+
+    /* ✅ منوهای NoteCast و PhotoCast */
+    .menu-links {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      text-align: center;
+      margin-top: 25px;
     }
-    .note-link:hover{background:rgba(11,95,255,0.25);transform:scale(1.03);}
-    iframe{width:100%;height:520px;border:none;border-radius:var(--radius);margin-top:16px;box-shadow:0 10px 25px rgba(0,0,0,.15);}
-    footer{margin-top:28px;color:var(--muted);font-size:.9rem;text-align:center;line-height:1.7;}
+
+    .note-link {
+      display: inline-block;
+      background: rgba(11,95,255,0.15);
+      color: var(--blue);
+      border-radius: 10px;
+      padding: 10px 18px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all .3s ease;
+      border: 1px solid rgba(255,255,255,0.1);
+      font-size: .95rem;
+    }
+
+    .note-link:hover {
+      background: rgba(11,95,255,0.25);
+      transform: scale(1.03);
+    }
+
+    iframe {
+      width:100%;
+      height:520px;
+      border:none;
+      border-radius:var(--radius);
+      margin-top:16px;
+      box-shadow:0 10px 25px rgba(0,0,0,.15);
+    }
+
+    footer {
+      margin-top:28px;
+      color:var(--muted);
+      font-size:.9rem;
+      text-align:center;
+      line-height:1.7;
+    }
 
     @media (max-width:768px){
       .wrap{padding:0 12px;margin:25px auto 60px;}
@@ -150,7 +150,6 @@
   <meta name="theme-color" content="#0b5fff">
   <link rel="manifest" href="/manifest.json">
 
-  <!-- ✅ Schema.org Podcast Structured Data -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -180,11 +179,8 @@
     ]
   }
   </script>
-<!-- RSS Feed for DentCast Podcast -->
-<link rel="alternate" 
-      type="application/rss+xml" 
-      title="DentCast Podcast RSS Feed" 
-      href="https://feeds.acast.com/public/shows/624b5545ecc0e600134ea0df">
+
+  <link rel="alternate" type="application/rss+xml" title="DentCast Podcast RSS Feed" href="https://feeds.acast.com/public/shows/624b5545ecc0e600134ea0df">
 </head>
 
 <body>
@@ -210,9 +206,14 @@
       </p>
 
       <div class="menu-links">
-  <a href="notecast/index.html" class="note-link">📝 مشاهده‌ی NoteCastها (خلاصه‌نویسی اپیزودها)</a>
-  <a href="photocast/index.html" class="note-link">📸 مشاهده‌ی PhotoCastها (آموزش با تصویر)</a>
+        <a href="notecast/index.html" class="note-link">📝 مشاهده‌ی NoteCastها (خلاصه‌نویسی اپیزودها)</a>
+        <a href="photocast/index.html" class="note-link">📸 مشاهده‌ی PhotoCastها (آموزش با تصویر)</a>
       </div>
+
+      <!-- ✅ پلیر Acast -->
+      <iframe src="https://embed.acast.com/624b5545ecc0e600134ea0df?feed=true"
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+        scrolling="no"></iframe>
     </div>
 
     <footer>© 2025 DentCast — طراحی و توسعه توسط فواد شهابیان</footer>
