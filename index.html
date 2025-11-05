@@ -28,7 +28,31 @@
       -webkit-font-smoothing:antialiased;
       text-rendering:optimizeLegibility;
     }
+.menu-links {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: center;
+  margin-top: 25px;
+}
 
+.note-link {
+  display: inline-block;
+  background: rgba(255,255,255,0.05);
+  color: #e7eaf1;
+  padding: 10px 18px;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all .3s ease;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.note-link:hover {
+  background: rgba(11,95,255,0.2);
+  color: #fff;
+  transform: scale(1.03);
+}
     .wrap {
       max-width:920px;
       margin:40px auto 70px;
@@ -185,11 +209,10 @@
         به زبان ساده مرورشان می‌کنیم و نکات مهم بالینی را به اشتراک می‌گذاریم.
       </p>
 
-      <a href="notecast/index.html" class="note-link">📝 مشاهده‌ی NoteCastها (خلاصه‌نویسی اپیزودها)</a><br>
-<a href="photocast/index.html" class="note-link">📸 مشاهده‌ی PhotoCastها (آموزش با تصویر)</a>
-      <iframe src="https://embed.acast.com/624b5545ecc0e600134ea0df?feed=true"
-        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-        scrolling="no"></iframe>
+      <div class="menu-links">
+  <a href="notecast/index.html" class="note-link">📝 مشاهده‌ی NoteCastها (خلاصه‌نویسی اپیزودها)</a>
+  <a href="photocast/index.html" class="note-link">📸 مشاهده‌ی PhotoCastها (آموزش با تصویر)</a>
+      </div>
     </div>
 
     <footer>© 2025 DentCast — طراحی و توسعه توسط فواد شهابیان</footer>
