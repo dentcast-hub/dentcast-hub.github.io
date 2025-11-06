@@ -217,7 +217,25 @@
         scrolling="no"></iframe>
     </div>
 
-    <footer>© 2025 DentCast — طراحی و توسعه توسط فواد شهابیان</footer>
+    <footer>
+      <!-- 🔹 Visitor Counter -->
+<p id="visitor-counter" style="
+  text-align:center;
+  font-size:.85rem;
+  color:#9aa1b3;
+  margin-top:4px;
+">
+  👁️ <span id="visits">...</span>
+</p>
+
+<script>
+fetch('https://api.countapi.xyz/hit/dentcast.ir/visits')
+  .then(res => res.json())
+  .then(res => {
+    document.getElementById('visits').innerText = res.value.toLocaleString('fa-IR');
+  });
+</script>
+      © 2025 DentCast — طراحی و توسعه توسط فواد شهابیان</footer>
   </div>
 
   <script>
