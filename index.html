@@ -95,24 +95,25 @@
       text-align: center;
       margin-top: 25px;
     }
+.note-link {
+  display: inline-block;
+  background: rgba(11,95,255,0.15);
+  color: var(--blue);
+  border-radius: 10px;
+  padding: 10px 18px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all .3s ease;
+  border: 1.5px solid rgba(255, 188, 0, 0.75); /* ✨ حاشیه زرد طلایی */
+  font-size: .95rem;
+  box-shadow: 0 0 12px rgba(255, 188, 0, 0.12); /* هاله‌ی خیلی نرم طلایی */
+}
 
-    .note-link {
-      display: inline-block;
-      background: rgba(11,95,255,0.15);
-      color: var(--blue);
-      border-radius: 10px;
-      padding: 10px 18px;
-      font-weight: 600;
-      text-decoration: none;
-      transition: all .3s ease;
-      border: 1px solid rgba(255,255,255,0.1);
-      font-size: .95rem;
-    }
-
-    .note-link:hover {
-      background: rgba(11,95,255,0.25);
-      transform: scale(1.03);
-    }
+.note-link:hover {
+  background: rgba(11,95,255,0.25);
+  transform: scale(1.03);
+  box-shadow: 0 0 18px rgba(255, 188, 0, 0.25); /* جلوه‌ی طلایی‌تر هنگام hover */
+}
 
     iframe {
       width:100%;
