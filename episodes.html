@@ -73,25 +73,36 @@
       border-radius:var(--radius);
       box-shadow:0 12px 30px rgba(0,0,0,.3);
     }
+}
+.back-home {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 40px auto 0;
+  background: rgba(11,95,255,0.15);
+  color: #3a84ff;
+  border: 1.5px solid rgba(255,188,0,0.7);
+  border-radius: 10px;
+  padding: 10px 18px;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: .95rem;
+  box-shadow: 0 0 12px rgba(255,188,0,0.1);
+  width: fit-content;
+  transition: all .3s ease;
+}
 
-    .back{
-      display:inline-block;
-      margin-top:26px;
-      color:var(--blue);
-      text-decoration:none;
-      font-weight:600;
-      border-radius:10px;
-      padding:8px 16px;
-      border:1px solid rgba(255,255,255,0.18);
-      background:rgba(255,255,255,0.04);
-      transition:all .3s ease;
-    }
+.back-home:hover {
+  background: rgba(11,95,255,0.25);
+  transform: scale(1.03);
+  box-shadow: 0 0 18px rgba(255,188,0,0.25);
+}
 
-    .back:hover{
-      background:rgba(11,95,255,0.18);
-      transform:scale(1.03);
-    }
-
+.back-home-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
     footer{
       margin-top:40px;
       text-align:center;
@@ -135,10 +146,6 @@
         در دنت‌کست تازه‌ترین مقالات علمی و پژوهش‌های حوزهٔ پروتز و دندان‌پزشکی را مرور می‌کنیم؛  
         به زبان ساده درباره‌شان حرف می‌زنیم و روی نکات مهم بالینی و تصمیم‌گیری‌های درمانی تمرکز می‌کنیم.
       </p>
-      <p class="text">
-        در این صفحه می‌توانی تمام اپیزودهای <strong>DentCast</strong> را یک‌جا ببینی و گوش بدهی؛  
-        بدون این‌که لازم باشد بین پلتفرم‌های مختلف جابه‌جا شوی.
-      </p>
 
       <!-- 🎧 پلیر کامل دنت‌کست با فید -->
       <iframe
@@ -147,7 +154,9 @@
         title="همهٔ اپیزودهای دنت‌کست">
       </iframe>
 
-      <a class="back" href="index.html">← بازگشت به صفحهٔ اصلی دنت‌کست</a>
+      <div class="back-home-container">
+  <a href="../index.html" class="back-home">⬅️ بازگشت به صفحه‌ی اصلی</a>
+      </div>
     </div>
 
     <footer>
