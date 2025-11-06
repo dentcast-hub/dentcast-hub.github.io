@@ -2,7 +2,7 @@
 <html lang="fa" dir="rtl">
 <head>
   <meta charset="utf-8">
-  <title>🎙️ دنت‌کست — پادکست علمی دندان‌پزشکی با روایت دکتر فواد شهابیان</title>
+  <title>🎙️ دنت‌کست — پادکست علمی دندان‌پزشکی با روایت فواد شهابیان</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="پادکست علمی دندان‌پزشکی با روایت دکتر فواد شهابیان؛ مرور ساده و تحلیلی تازه‌ترین مقالات حوزهٔ پروتز، ایمپلنت و دندان‌پزشکی ترمیمی.">
   <meta name="keywords" content="دنت‌کست, پادکست دندانپزشکی, فواد شهابیان, پروتز دندانی, ایمپلنت, NoteCast, PhotoCast, Clinical Insight, DentAI">
@@ -39,10 +39,30 @@
       padding:0 20px;
     }
 
-    header{text-align:center;margin-bottom:36px;}
-    header h1{color:var(--blue);font-size:2.1rem;margin:8px 0;font-weight:800;line-height:1.6;}
-    header h1 span{display:block;font-size:1.05rem;color:var(--text);opacity:.9;margin-top:4px;}
-    header p{color:var(--text);opacity:.85;line-height:1.8;font-size:1.05rem;}
+    header{
+      text-align:center;
+      margin-bottom:36px;
+    }
+    header h1{
+      color:var(--blue);
+      font-size:2.1rem;
+      margin:8px 0;
+      font-weight:800;
+      line-height:1.6;
+    }
+    header h1 span{
+      display:block;
+      font-size:1.05rem;
+      color:var(--text);
+      opacity:.9;
+      margin-top:4px;
+    }
+    header p{
+      color:var(--text);
+      opacity:.85;
+      line-height:1.8;
+      font-size:1.05rem;
+    }
 
     .card{
       background:#161a26;
@@ -60,7 +80,6 @@
       opacity:.92;
     }
 
-    /* ✅ لینک‌های اصلی */
     .menu-links {
       display:flex;
       flex-direction:column;
@@ -135,7 +154,7 @@
       header p{font-size:.9rem;line-height:1.7;}
       .card{padding:18px 14px 28px;}
       .lead{font-size:.92rem;}
-      iframe{height:180px;}
+      iframe{height:190px;}
     }
   </style>
 
@@ -144,6 +163,7 @@
   <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png">
   <link rel="apple-touch-icon" href="/favicon-512.png">
   <meta name="theme-color" content="#0b5fff">
+  <link rel="manifest" href="/manifest.json">
 
   <!-- ✅ Structured Data -->
   <script type="application/ld+json">
@@ -181,29 +201,32 @@
       <h1>🎙️ دنت‌کست — DentCast
         <span>پادکست علمی دندان‌پزشکی با روایت دکتر فواد شهابیان</span>
       </h1>
-      <p>متخصص پروتزهای دندانی و ایمپلنت، فارغ‌التحصیل دانشگاه شهید بهشتی و دانشگاه علوم پزشکی مشهد، دارای بورد تخصصی پروتز</p>
+      <p>
+        متخصص پروتزهای دندانی و ایمپلنت، فارغ‌التحصیل دانشگاه شهید بهشتی و دانشگاه علوم پزشکی مشهد،  
+        دارای بورد تخصصی پروتز
+      </p>
     </header>
 
     <div class="card">
       <p class="lead">
-        در دنت‌کست تازه‌ترین مقالات علمی و پژوهش‌های حوزهٔ پروتز و دندان‌پزشکی را مرور می‌کنیم  
-        تا نکات بالینی و تصمیم‌گیری‌های درمانی را به‌روز نگه داریم.
+        در دنت‌کست تازه‌ترین مقالات علمی و پژوهش‌های حوزهٔ پروتز و دندان‌پزشکی را مرور می‌کنیم؛  
+        به زبان ساده درباره‌شان حرف می‌زنیم و روی نکات مهم بالینی و تصمیم‌گیری‌های درمانی تمرکز می‌کنیم.
       </p>
 
       <div class="menu-links">
-        <a href="notecast/index.html" class="note-link">📝 مشاهده‌ی NoteCastها (خلاصه‌نویسی اپیزودها)</a>
+        <a href="notecast/index.html"  class="note-link">📝 مشاهده‌ی NoteCastها (خلاصه‌نویسی اپیزودها)</a>
         <a href="photocast/index.html" class="note-link">📸 مشاهده‌ی PhotoCastها (آموزش با تصویر)</a>
-        <a href="dentai/index.html" class="note-link">🤖 DentAI – خواندن مقاله با هوش مصنوعی</a>
-        <a href="insight/index.html" class="note-link">🩺 Clinical Insight – نکات کلینیکی کاربردی</a>
+        <a href="dentai/index.html"    class="note-link">🤖 DentAI – خواندن مقاله با هوش مصنوعی</a>
+        <a href="insight/index.html"   class="note-link">🩺 Clinical Insight – نکات کلینیکی کاربردی</a>
       </div>
 
       <!-- 🎧 پلیر آخرین اپیزود -->
-      <iframe src="https://embed.acast.com/624b5545ecc0e600134ea0df"
-              frameBorder="0"
-              height="190"
-              title="آخرین اپیزود دنت‌کست"></iframe>
+      <iframe
+        src="https://embed.acast.com/624b5545ecc0e600134ea0df"
+        frameBorder="0"
+        height="190"
+        title="آخرین اپیزود دنت‌کست"></iframe>
 
-      <!-- 🔗 دکمه شنیدن بقیه -->
       <div class="more-episodes">
         <a href="episodes.html">🎧 شنیدن بقیه‌ی اپیزودها</a>
       </div>
@@ -213,7 +236,21 @@
       اهواز – کیانپارس، مطب دکتر فواد شهابیان<br>
       تلفن: 33380090-061 &nbsp; | &nbsp; DentCast © 1404
     </footer>
-
   </div>
+
+  <!-- فقط رجیستر سرویس‌ورکر + آنالیتیکس کلودفلر -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/service-worker.js')
+        .then(() => console.log('DentCast service worker registered.'))
+        .catch(err => console.error('SW registration failed:', err));
+    }
+  </script>
+
+  <!-- Cloudflare Web Analytics -->
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js"
+    data-cf-beacon='{"token":"55c7b3d5b03640d28ab6214541606167"}'></script>
+  <!-- End Cloudflare Web Analytics -->
+
 </body>
 </html>
