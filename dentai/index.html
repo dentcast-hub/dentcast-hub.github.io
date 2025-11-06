@@ -189,10 +189,52 @@ footer {
   <h2>📚 فهرست پرونده‌های DentAI</h2>
 
   <ul>
-    <!-- هر وقت یک پرونده دنت‌ای‌آی آماده کردی، اینجا لینک اضافه می‌کنیم -->
-    <!-- مثال (بعداً):
-    <li><a href="case-1.html">DentAI Case 1 – مرور مقاله درباره‌ی ...</a></li>
-    -->
+    <div class="ai-list">
+  <a href="dentai-1.html" class="ai-item">
+    <div class="ai-title">⚡ مقالهٔ یک – تمایز بین خطوط ترک سنتی و خطوط ترک داخلی در مینای دندان</div>
+    <div class="ai-desc">بررسی تفاوت ساختاری و بالینی دو نوع ترک مینایی و اهمیت تشخیص آن‌ها در درمان‌های ترمیمی</div>
+  </a>
+</div>
+
+<style>
+  .ai-list {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin-top: 30px;
+  }
+
+  .ai-item {
+    display: block;
+    background: rgba(255, 215, 0, 0.08);
+    border: 1px solid rgba(255, 215, 0, 0.25);
+    border-radius: 14px;
+    padding: 16px 22px;
+    color: var(--text);
+    text-decoration: none;
+    box-shadow: 0 8px 25px rgba(255, 200, 0, 0.15);
+    backdrop-filter: blur(10px);
+    transition: all .3s ease;
+  }
+
+  .ai-item:hover {
+    background: rgba(255, 215, 0, 0.18);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px rgba(255, 220, 0, 0.35);
+  }
+
+  .ai-title {
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: #ffd700;
+    margin-bottom: 6px;
+  }
+
+  .ai-desc {
+    font-size: .95rem;
+    color: var(--muted);
+  }
+</style>
   </ul>
 
   <div style="text-align:center;">
