@@ -2,10 +2,13 @@
 <html lang="fa" dir="rtl">
 <head>
   <meta charset="utf-8">
-  <title>🎙️ دنت‌کست — پادکست علمی دندان‌پزشکی با روایت فواد شهابیان</title>
+  <title>🎙️ دنت‌کست — پادکست علمی دندان‌پزشکی با روایت دکتر فواد شهابیان</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="پادکست علمی دندان‌پزشکی با روایت فواد شهابیان. مرور سادهٔ تازه‌ترین مقالات و پژوهش‌های حوزهٔ پروتز و دندان‌پزشکی.">
-<link rel="canonical" href="https://dentcast.ir/">
+  <meta name="description" content="پادکست علمی دندان‌پزشکی با روایت دکتر فواد شهابیان؛ مرور ساده و تحلیلی تازه‌ترین مقالات حوزهٔ پروتز، ایمپلنت و دندان‌پزشکی ترمیمی.">
+  <meta name="keywords" content="دنت‌کست, پادکست دندانپزشکی, فواد شهابیان, پروتز دندانی, ایمپلنت, NoteCast, PhotoCast, Clinical Insight, DentAI">
+  <meta name="author" content="دکتر فواد شهابیان">
+  <link rel="canonical" href="https://dentcast.ir/">
+
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
 
   <style>
@@ -17,6 +20,7 @@
       --muted:#9aa1b3;
       --radius:14px;
       --shadow:0 10px 30px rgba(0,0,0,.3);
+      --gold:rgba(255,188,0,0.75);
     }
 
     body {
@@ -35,43 +39,6 @@
       padding:0 20px;
     }
 
-    .install-banner {
-      background:rgba(255,255,255,0.05);
-      border:1px solid rgba(255,255,255,0.08);
-      border-radius:var(--radius);
-      padding:8px 14px;
-      text-align:center;
-      font-size:.82rem;
-      line-height:1.6;
-      margin-bottom:22px;
-      color:var(--muted);
-      box-shadow:0 6px 18px rgba(0,0,0,.2);
-      backdrop-filter:blur(6px);
-    }
-
-    .install-banner strong { color: var(--blue); font-weight:600; }
-
-    .install-btn {
-      display:inline-flex;
-      align-items:center;
-      gap:4px;
-      margin-right:6px;
-      background:rgba(11,95,255,0.18);
-      border:1px solid rgba(255,255,255,0.1);
-      color:var(--blue);
-      font-weight:600;
-      padding:3px 10px;
-      border-radius:8px;
-      font-size:.8rem;
-      cursor:pointer;
-      transition:all .3s ease;
-    }
-
-    .install-btn:hover {
-      background:rgba(11,95,255,0.25);
-      transform:scale(1.04);
-    }
-
     header{text-align:center;margin-bottom:36px;}
     header h1{color:var(--blue);font-size:2.1rem;margin:8px 0;font-weight:800;line-height:1.6;}
     header h1 span{display:block;font-size:1.05rem;color:var(--text);opacity:.9;margin-top:4px;}
@@ -81,51 +48,81 @@
       background:#161a26;
       border-radius:var(--radius);
       box-shadow:var(--shadow);
-      padding:24px 20px;
+      padding:26px 20px 36px;
     }
 
-    .lead{font-size:1.05rem;line-height:1.9;text-align:justify;margin:0 0 20px;}
+    .lead{
+      font-size:1.03rem;
+      line-height:1.9;
+      text-align:justify;
+      margin:0 0 28px;
+      color:var(--text);
+      opacity:.92;
+    }
 
-    /* ✅ منوهای NoteCast و PhotoCast */
+    /* ✅ لینک‌های اصلی */
     .menu-links {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 12px;
-      text-align: center;
-      margin-top: 25px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:16px;
+      text-align:center;
+      margin-top:20px;
     }
-.note-link {
-  display: inline-block;
-  background: rgba(11,95,255,0.15);
-  color: #3a84ff;
-  border-radius: 10px;
-  padding: 10px 18px;
-  font-weight: 600;
-  text-decoration: none;
-  transition: all .3s ease;
-  border: 1.5px solid rgba(255, 188, 0, 0.75); /* ✨ حاشیه زرد طلایی */
-  font-size: .95rem;
-  box-shadow: 0 0 12px rgba(255, 188, 0, 0.12); /* هاله‌ی خیلی نرم طلایی */
-}
 
-.note-link:hover {
-  background: rgba(11,95,255,0.25);
-  transform: scale(1.03);
-  box-shadow: 0 0 18px rgba(255, 188, 0, 0.25); /* جلوه‌ی طلایی‌تر هنگام hover */
-}
+    .note-link {
+      display:inline-block;
+      background:rgba(11,95,255,0.10);
+      color:#3c81ff;
+      border-radius:10px;
+      padding:10px 18px;
+      font-weight:600;
+      text-decoration:none;
+      transition:all .3s ease;
+      border:1.5px solid var(--gold);
+      font-size:.95rem;
+      box-shadow:0 0 12px rgba(255,188,0,0.10);
+    }
+
+    .note-link:hover {
+      background:rgba(11,95,255,0.22);
+      transform:scale(1.03);
+      box-shadow:0 0 18px rgba(255,188,0,0.25);
+    }
 
     iframe {
       width:100%;
-      height:520px;
       border:none;
       border-radius:var(--radius);
-      margin-top:16px;
       box-shadow:0 10px 25px rgba(0,0,0,.15);
+      margin-top:40px;
+    }
+
+    .more-episodes {
+      text-align:center;
+      margin-top:20px;
+    }
+
+    .more-episodes a {
+      display:inline-block;
+      background:rgba(255,188,0,0.12);
+      color:#ffd46a;
+      border:1px solid rgba(255,188,0,0.45);
+      border-radius:10px;
+      padding:10px 20px;
+      font-weight:600;
+      text-decoration:none;
+      backdrop-filter:blur(8px);
+      transition:all .3s ease;
+    }
+
+    .more-episodes a:hover {
+      background:rgba(255,188,0,0.18);
+      transform:scale(1.03);
     }
 
     footer {
-      margin-top:28px;
+      margin-top:50px;
       color:var(--muted);
       font-size:.9rem;
       text-align:center;
@@ -133,14 +130,12 @@
     }
 
     @media (max-width:768px){
-      .wrap{padding:0 12px;margin:25px auto 60px;}
+      .wrap{padding:0 14px;margin:30px auto 60px;}
       header h1{font-size:1.7rem;}
       header p{font-size:.9rem;line-height:1.7;}
-      .card{padding:18px 14px;}
+      .card{padding:18px 14px 28px;}
       .lead{font-size:.92rem;}
-      iframe{height:360px;}
-      .install-banner{font-size:.78rem;padding:7px 10px;margin-bottom:18px;}
-      .install-btn{font-size:.75rem;padding:3px 8px;}
+      iframe{height:180px;}
     }
   </style>
 
@@ -149,28 +144,25 @@
   <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png">
   <link rel="apple-touch-icon" href="/favicon-512.png">
   <meta name="theme-color" content="#0b5fff">
-  <link rel="manifest" href="/manifest.json">
 
+  <!-- ✅ Structured Data -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "PodcastSeries",
     "name": "DentCast",
     "url": "https://dentcast.ir/",
-    "description": "پادکست علمی دندان‌پزشکی با روایت دکتر فواد شهابیان. مرور سادهٔ تازه‌ترین مقالات و پژوهش‌های حوزهٔ پروتز و دندان‌پزشکی.",
+    "description": "پادکست علمی دندان‌پزشکی با روایت دکتر فواد شهابیان؛ مرور ساده و تحلیلی تازه‌ترین مقالات حوزهٔ پروتز، ایمپلنت و دندان‌پزشکی.",
     "publisher": {
       "@type": "Organization",
       "name": "DentCast",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://dentcast.ir/favicon-512.png"
-      }
+      "logo": {"@type": "ImageObject","url": "https://dentcast.ir/favicon-512.png"}
     },
     "inLanguage": "fa-IR",
     "author": {
       "@type": "Person",
       "name": "دکتر فواد شهابیان",
-      "url": "https://dentcast.ir/"
+      "jobTitle": "متخصص پروتزهای دندانی و ایمپلنت"
     },
     "sameAs": [
       "https://t.me/dentcast",
@@ -180,30 +172,22 @@
     ]
   }
   </script>
-
-  <link rel="alternate" type="application/rss+xml" title="DentCast Podcast RSS Feed" href="https://feeds.acast.com/public/shows/624b5545ecc0e600134ea0df">
 </head>
 
 <body>
   <div class="wrap">
-    <div class="install-banner" id="installBanner">
-      برای دسترسی سریع‌تر، <strong>دنت‌کست</strong> را به صفحهٔ اصلی خود اضافه کنید
-      <div id="installButton" class="install-btn"><span>+</span> افزودن</div>
-    </div>
 
     <header>
       <h1>🎙️ دنت‌کست — DentCast
         <span>پادکست علمی دندان‌پزشکی با روایت دکتر فواد شهابیان</span>
       </h1>
-      <p>متخصص پروتزهای دندانی و ایمپلنت،  
-        فارغ‌التحصیل دانشگاه شهید بهشتی و دانشگاه علوم پزشکی مشهد،  
-        دارای بورد تخصصی پروتز</p>
+      <p>متخصص پروتزهای دندانی و ایمپلنت، فارغ‌التحصیل دانشگاه شهید بهشتی و دانشگاه علوم پزشکی مشهد، دارای بورد تخصصی پروتز</p>
     </header>
 
     <div class="card">
       <p class="lead">
-        در دنت‌کست با هم تازه‌ترین مقالات علمی و پژوهش‌های جذاب حوزهٔ پروتز و دندان‌پزشکی را می‌خوانیم،  
-        به زبان ساده مرورشان می‌کنیم و نکات مهم بالینی را به اشتراک می‌گذاریم.
+        در دنت‌کست تازه‌ترین مقالات علمی و پژوهش‌های حوزهٔ پروتز و دندان‌پزشکی را مرور می‌کنیم  
+        تا نکات بالینی و تصمیم‌گیری‌های درمانی را به‌روز نگه داریم.
       </p>
 
       <div class="menu-links">
@@ -213,87 +197,23 @@
         <a href="insight/index.html" class="note-link">🩺 Clinical Insight – نکات کلینیکی کاربردی</a>
       </div>
 
-<!-- 🎧 Acast Player -->
-      <!-- 🎧 پلیر Acast (کوچک، ۳ اپیزود) -->
-<!-- 🎧 پلیر دنت‌کست (۳ اپیزود آخر) -->
-<iframe 
-  src="https://embed.acast.com/624b5545ecc0e600134ea0df?limit=3&font-family=Vazirmatn&feed=true" 
-  frameBorder="0" 
-  width="100%" 
-  height="280"
-  style="border-radius:14px;box-shadow:0 10px 25px rgba(0,0,0,.15);background:rgba(11,95,255,0.05);">
-</iframe>
-<style>
-  .acast-player {
-    opacity: 0;
-    transform: translateY(10px);
-    transition: opacity 1s ease, transform 1s ease;
-  }
-  .acast-player.loaded {
-    opacity: 1;
-    transform: translateY(0);
-  }
-</style>
+      <!-- 🎧 پلیر آخرین اپیزود -->
+      <iframe src="https://embed.acast.com/624b5545ecc0e600134ea0df"
+              frameBorder="0"
+              height="190"
+              title="آخرین اپیزود دنت‌کست"></iframe>
 
-<script>
-  window.addEventListener('load', () => {
-    const player = document.querySelector('.acast-player');
-    setTimeout(() => player.classList.add('loaded'), 200);
-  });
-</script>
+      <!-- 🔗 دکمه شنیدن بقیه -->
+      <div class="more-episodes">
+        <a href="episodes.html">🎧 شنیدن بقیه‌ی اپیزودها</a>
+      </div>
     </div>
 
     <footer>
-  <div style="
-    display:inline-block;
-    padding:10px 18px;
-    margin-bottom:8px;
-    border-radius:14px;
-    background:rgba(255,188,0,0.12);
-    border:1px solid rgba(255,188,0,0.45);
-    color:#ffd46a;
-    backdrop-filter:blur(10px);
-    font-size:.9rem;
-    line-height:1.8;
-    box-shadow:0 8px 24px rgba(0,0,0,.25);
-  ">
-    اهواز – کیانپارس، مطب دکتر فواد شهابیان<br>
-    تلفن: 33380090-061 &nbsp; | &nbsp; DentCast © 1404
-  </div>
+      اهواز – کیانپارس، مطب دکتر فواد شهابیان<br>
+      تلفن: 33380090-061 &nbsp; | &nbsp; DentCast © 1404
     </footer>
+
   </div>
-
-  <script>
-  const installButton = document.getElementById('installButton');
-  const banner = document.getElementById('installBanner');
-  let deferredPrompt;
-
-  const isiOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
-  if (isiOS) {
-    installButton.style.display = 'none';
-    banner.innerHTML = 'برای نصب دنت‌کست در آیفون: از دکمه‌ی <strong>Share</strong> استفاده کنید و گزینه‌ی <strong>Add to Home Screen</strong> را انتخاب کنید.';
-  }
-
-  window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
-    installButton.addEventListener('click', () => {
-      deferredPrompt.prompt();
-      deferredPrompt.userChoice.then(() => deferredPrompt = null);
-    });
-  });
-
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/service-worker.js')
-      .then(() => console.log('DentCast service worker registered successfully.'))
-      .catch(err => console.error('Service worker registration failed:', err));
-  }
-  </script>
-  ...
-  <!-- Cloudflare Web Analytics -->
-  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' 
-  data-cf-beacon='{"token": "55c7b3d5b03640d28ab6214541606167"}'></script>
-  <!-- End Cloudflare Web Analytics -->
 </body>
 </html>
-
