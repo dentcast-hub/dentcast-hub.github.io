@@ -11,24 +11,38 @@
   <style>
     :root {
       --blue:#0b5fff;
-      --lightglass: rgba(11,95,255,0.07);
-      --darkglass: rgba(11,95,255,0.12);
+      --lightglass: rgba(11,95,255,0.06);
+      --midglass: rgba(11,95,255,0.10);
+      --darkglass: rgba(11,95,255,0.18);
       --text:#111;
-      --muted:#444;
+      --muted:#555;
       --radius:18px;
-      --shadow:0 10px 30px rgba(0,0,0,.25);
+      --shadow:0 10px 28px rgba(0,0,0,.25);
     }
 
     html, body {
       margin:0;
       padding:0;
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
       font-family:'Vazirmatn', sans-serif;
-      background: linear-gradient(180deg, #eaf0ff 0%, #f3f5fa 100%);
+      background: linear-gradient(180deg, #edf3ff 0%, #f7f9fc 100%);
       color:var(--text);
       line-height:1.9;
-      min-height:100vh;
       -webkit-font-smoothing:antialiased;
       text-rendering:optimizeLegibility;
+    }
+
+    main {
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:flex-start;
+      width:100%;
+      padding:40px 20px 60px;
+      box-sizing:border-box;
     }
 
     h1 {
@@ -36,19 +50,20 @@
       color:var(--blue);
       font-weight:800;
       font-size:1.8rem;
-      margin:40px 0 28px;
+      margin:20px 0 28px;
     }
 
     .intro {
       background: var(--lightglass);
-      border:1px solid rgba(255,255,255,0.3);
+      border:1px solid rgba(255,255,255,0.25);
       border-radius:var(--radius);
-      padding:24px 28px;
+      padding:24px 30px;
       margin:0 auto 35px;
       max-width:860px;
       box-shadow: var(--shadow);
-      backdrop-filter:blur(8px);
+      backdrop-filter:blur(10px);
       text-align:justify;
+      color:#222;
     }
 
     .intro strong { color:var(--blue); }
@@ -58,22 +73,23 @@
       padding:0;
       margin:0 auto;
       max-width:860px;
+      width:100%;
     }
 
     li {
-      background: var(--darkglass);
+      background: var(--midglass);
       border-radius: var(--radius);
       padding:18px 22px;
       margin-bottom:18px;
       text-align:center;
-      box-shadow:0 8px 22px rgba(0,0,0,.1);
-      border:1px solid rgba(255,255,255,0.25);
+      border:1px solid rgba(255,255,255,0.3);
       backdrop-filter:blur(10px);
+      box-shadow:0 8px 24px rgba(0,0,0,.1);
       transition:all .3s ease;
     }
 
     li:hover {
-      background: rgba(11,95,255,0.2);
+      background: var(--darkglass);
       transform:translateY(-3px);
     }
 
@@ -104,14 +120,14 @@
     }
 
     footer {
-      margin-top:70px;
       text-align:center;
       color:var(--muted);
       font-size:.9rem;
-      padding-bottom:40px;
+      padding:20px 0 40px;
     }
 
     @media (max-width:768px){
+      main{padding:30px 16px 60px;}
       h1{font-size:1.6rem;}
       .intro{padding:18px 20px;}
       li{padding:14px 18px;}
@@ -121,20 +137,20 @@
 </head>
 
 <body>
-  <h1>🩺 Clinical Insight – بینش‌های بالینی</h1>
+  <main>
+    <h1>🩺 Clinical Insight – بینش‌های بالینی</h1>
 
-  <div class="intro">
-    در <strong>Clinical Insight</strong>، دکتر فواد شهابیان نکات کوتاه و تحلیلی از تجربه‌های بالینی و یافته‌های علمی را مرور می‌کند؛
-    هدف، افزایش دقت در تصمیم‌گیری‌های درمانی و بینش عمیق‌تر در دندان‌پزشکی روزمره است.
-  </div>
+    <div class="intro">
+      در <strong>Clinical Insight</strong>، دکتر فواد شهابیان نکات کوتاه و تحلیلی از تجربه‌های بالینی و یافته‌های علمی را مرور می‌کند؛
+      هدف، افزایش دقت در تصمیم‌گیری‌های درمانی و بینش عمیق‌تر در دندان‌پزشکی روزمره است.
+    </div>
 
-  <ul>
-    <li><a href="insight-1.html">ضخامت کاغذ آرتیکولاسیون مهم‌تر از چیزیه که فکر می‌کنی</a></li>
-  </ul>
+    <ul>
+      <li><a href="insight-1.html">ضخامت کاغذ آرتیکولاسیون مهم‌تر از چیزیه که فکر می‌کنی</a></li>
+    </ul>
 
-  <div style="text-align:center;">
     <a class="back" href="../index.html">← بازگشت به صفحه‌ی اصلی دنت‌کست</a>
-  </div>
+  </main>
 
   <footer>DentCast — Clinical Insight © 2025</footer>
 </body>
