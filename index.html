@@ -53,26 +53,46 @@
       box-shadow:0 6px 18px rgba(0,0,0,.2);
       backdrop-filter:blur(6px);
     }
-    .install-banner strong { color: var(--blue); font-weight:600; }
-    .install-btn {
-      display:inline-flex;
-      align-items:center;
-      gap:4px;
-      margin-right:6px;
-      background:rgba(11,95,255,0.18);
-      border:1px solid rgba(255,255,255,0.1);
-      color:var(--blue);
-      font-weight:600;
-      padding:3px 10px;
-      border-radius:8px;
-      font-size:.8rem;
-      cursor:pointer;
-      transition:all .3s ease;
-    }
-    .install-btn:hover {
-      background:rgba(11,95,255,0.25);
-      transform:scale(1.04);
-    }
+    .install-banner {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: var(--radius);
+  padding: 6px 10px;
+  text-align: center;
+  font-size: .78rem;
+  line-height: 1.5;
+  margin: 10px auto 18px; /* فاصله از بالا کمتر شد */
+  color: var(--muted);
+  box-shadow: 0 4px 12px rgba(0,0,0,.15);
+  backdrop-filter: blur(5px);
+  max-width: 680px; /* ظریف‌تر شد */
+}
+
+.install-banner strong { 
+  color: var(--blue); 
+  font-weight: 600; 
+}
+
+.install-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-right: 6px;
+  background: rgba(11,95,255,0.15);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: var(--blue);
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 8px;
+  font-size: .75rem;
+  cursor: pointer;
+  transition: all .3s ease;
+}
+
+.install-btn:hover {
+  background: rgba(11,95,255,0.22);
+  transform: scale(1.05);
+}
 
     header{text-align:center;margin-bottom:36px;}
     header h1{color:var(--blue);font-size:2.1rem;margin:8px 0;font-weight:800;line-height:1.6;}
