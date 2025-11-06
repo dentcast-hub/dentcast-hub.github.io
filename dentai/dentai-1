@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🤖 DentAI – مقالهٔ ۱: تمایز بین خطوط ترک سنتی و داخلی در مینای دندان | دنت‌کست</title>
+  <meta name="description" content="بررسی تفاوت بین خطوط ترک سنتی و داخلی در مینای دندان، با تحلیل ساختاری، ظاهری و بالینی برای انتخاب درمان مناسب در دندان‌پزشکی ترمیمی. توسط دکتر فواد شهابیان.">
+  <link rel="canonical" href="https://dentcast.ir/dentai/dentai-1.html">
+
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --blue:#0b5fff;
+      --gold:rgba(255,199,44,0.85);
+      --bg:#0b1220;
+      --bg2:#121a2b;
+      --text:#e7eaf1;
+      --muted:#9aa1b3;
+      --radius:18px;
+      --shadow:0 18px 50px rgba(0,0,0,.35);
+    }
+
+    html, body{
+      height:100%;
+      margin:0;
+      padding:0;
+    }
+
+    body{
+      font-family:'Vazirmatn', sans-serif;
+      background: radial-gradient(1200px 600px at 20% -10%, #1b2640 0%, transparent 60%),
+                  linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+      color:var(--text);
+      max-width:920px;
+      margin:0 auto;
+      padding:40px 20px 80px;
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
+      line-height:1.95;
+    }
+
+    h1{
+      text-align:center;
+      color:var(--blue);
+      font-weight:800;
+      font-size:2rem;
+      margin-bottom:16px;
+    }
+
+    .caption{
+      background:rgba(255, 185, 40, 0.15);
+      border:1px solid rgba(255, 220, 100, 0.4);
+      border-radius:var(--radius);
+      backdrop-filter:blur(10px);
+      padding:20px 24px;
+      margin-bottom:35px;
+      box-shadow:0 0 30px rgba(255,200,0,0.1);
+    }
+
+    .caption p{
+      color:var(--gold);
+      font-weight:600;
+      font-size:1.1rem;
+      margin:0;
+      text-align:justify;
+      line-height:1.9;
+    }
+
+    .glass-box{
+      background:rgba(255,255,255,0.08);
+      border:1px solid rgba(255,255,255,0.12);
+      border-radius:var(--radius);
+      padding:22px 26px;
+      margin-bottom:30px;
+      box-shadow:var(--shadow);
+      color:#f5f6fa;
+    }
+
+    h2{
+      color:var(--blue);
+      margin-top:30px;
+      font-size:1.4rem;
+    }
+
+    strong{
+      color:var(--blue);
+    }
+
+    ul{padding-left:20px;}
+
+    .back{
+      display:inline-block;
+      margin-top:50px;
+      color:var(--blue);
+      text-decoration:none;
+      font-weight:600;
+      border:1px solid rgba(255,255,255,0.15);
+      border-radius:12px;
+      padding:10px 20px;
+      background:rgba(255,255,255,0.05);
+      transition:all .3s ease;
+    }
+
+    .back:hover{
+      background:rgba(11,95,255,0.15);
+      transform:scale(1.03);
+    }
+
+    footer{
+      margin-top:60px;
+      text-align:center;
+      color:var(--muted);
+      font-size:.9rem;
+    }
+
+    @media (max-width:768px){
+      body{padding:25px 14px 60px;}
+      h1{font-size:1.7rem;}
+      .caption p{font-size:1rem;}
+      .glass-box{padding:18px 18px;}
+    }
+  </style>
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png">
+  <link rel="apple-touch-icon" href="/favicon-512.png">
+  <meta name="theme-color" content="#0b5fff">
+</head>
+
+<body>
+  <h1>🤖 DentAI – مقالهٔ یک</h1>
+
+  <div class="caption">
+    <p>
+      این مقاله به بررسی و تمایز بین دو نوع خط ترک در مینای دندان، به نام‌های خطوط ترک سنتی و خطوط ترک داخلی می‌پردازد و اهمیت تشخیص آن‌ها در دندانپزشکی ترمیمی را برای انتخاب درمان مناسب و حفظ ساختار دندان بیان می‌کند.
+      با مطالعه این مقاله، با تفاوت‌های ظاهری، ساختاری و بالینی این دو نوع ترک، و همچنین روش‌های تشخیص آن‌ها با استفاده از بزرگنمایی آشنا خواهید شد.
+      <br><br>
+      ⚡⚡⚡ دکتر فواد شهابیان — متخصص پروتزهای دندانی و ایمپلنت
+    </p>
+  </div>
+
+  <div class="glass-box">
+    <h2>🧩 مقدمه</h2>
+    <p>خطوط ترک یا Craze lines در مینای دندان، به خصوص در دندان‌های جلویی یا anterior teeth، رایج هستند و اغلب به عنوان بخشی طبیعی از روند پیری در نظر گرفته می‌شوند. این خطوط معمولاً فقط در مینا یا enamel  دیده می‌شوند و به عاج یا dentin نفوذ نمی‌کنند و عموماً به عنوان غیرساختاری و خوش‌خیم در نظر گرفته می‌شوند...</p>
+
+    <h2>⚙️ روش و مواد</h2>
+    <p>چهار دندان کشیده‌شده که  خطوط ترک  قابل مشاهده و داخلی داشتند، انتخاب و با استفاده از میکروسکوپ استریو برای مشاهده ویژگی‌های ساختاری خطوط مورد بررسی قرار گرفتند...</p>
+
+    <h2>🔬 نتایج</h2>
+    <p>معاینه با میکروسکوپ، دو نوع متمایز از خطوط را نشان داد: خطوط ترک معمولی که از DEJ تا سطح مینا امتداد می‌یابند و خطوط ترک داخلی که در داخل مینا خاتمه می‌یابند...</p>
+
+    <h2>💬 بحث</h2>
+    <p>ظهور بزرگنمایی و عکاسی دندانپزشکی با فناوری پیشرفته، به ویژه در درمان‌های ترمیمی و اندودنتیک یا endodontic treatments، ضروری شده است و امکان مشاهده دقیق ناهنجاری‌های مینا را فراهم می‌کند...</p>
+
+    <h2>📘 نتیجه‌گیری</h2>
+    <p>شناسایی خطوط ترک داخلی در مینای دندان انسان اهمیت بالینی زیادی دارد. تمایز بین خطوط ترک معمولی که از DEJ تا سطح مینا امتداد می‌یابند و خطوط ترک داخلی که در میانه راه از طریق مینا خاتمه می‌یابند، می‌تواند دقت تشخیص را افزایش دهد...</p>
+
+    <p style="margin-top:30px; font-weight:600; color:var(--blue); text-align:center;">
+      ⚡⚡⚡ دکتر فواد شهابیان — متخصص پروتزهای دندانی و ایمپلنت
+    </p>
+  </div>
+
+  <div style="text-align:center;">
+    <a class="back" href="../dentai/index.html">← بازگشت به بخش DentAI</a>
+  </div>
+
+  <footer>
+    © 2025 DentCast — DentAI
+  </footer>
+</body>
+</html>
