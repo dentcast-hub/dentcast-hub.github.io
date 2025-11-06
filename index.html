@@ -211,15 +211,35 @@
         <a href="dentai/index.html" class="note-link">🤖 DentAI – خواندن مقاله با هوش مصنوعی</a>
       </div>
 
-<!-- 🎧 Acast Compact Player -->
+<!-- 🎧 Acast Player -->
 <iframe 
-  src="https://embed.acast.com/624b5545ecc0e600134ea0df?feed=true&theme=dark&size=compact"
-  width="100%"
-  height="160"
-  frameborder="0"
-  scrolling="no"
+  class="acast-player"
+  src="https://embed.acast.com/624b5545ecc0e600134ea0df?feed=true&font-family=Vazirmatn&font-src=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DVazirmatn&theme=dark&size=small"
+  width="100%" 
+  height="180" 
+  frameborder="0" 
+  scrolling="no" 
   allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
 </iframe>
+
+<style>
+  .acast-player {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 1s ease, transform 1s ease;
+  }
+  .acast-player.loaded {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+
+<script>
+  window.addEventListener('load', () => {
+    const player = document.querySelector('.acast-player');
+    setTimeout(() => player.classList.add('loaded'), 200);
+  });
+</script>
     </div>
 
     <footer>
