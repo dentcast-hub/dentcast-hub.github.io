@@ -67,29 +67,36 @@
       line-height:1.9;
     }
 
-    /* کارت شیشه‌ای سفید برای متن علمی */
     .text-box {
-      background: rgba(255, 255, 255, 0.90);
-      border: 1px solid rgba(0, 0, 0, 0.1);
-      border-radius: 20px;
-      padding: 28px 34px;
-      margin: 24px 0;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
-      color: #222;
-      font-size: 1.05rem;
-      line-height: 2;
-    }
+  background: rgba(255, 255, 255, 0.35); /* شفاف‌تر شد */
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 22px;
+  padding: 28px 34px;
+  margin: 24px 0;
+  box-shadow: 0 8px 32px rgba(11, 95, 255, 0.25);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: #e7eaf1; /* روشن‌تر برای تضاد بهتر */
+  font-size: 1.05rem;
+  line-height: 2;
+}
 
-    /* تیترهای بخش‌ها با گرادیان طلایی */
-    h2 {
-      background: linear-gradient(90deg, #ffd700 0%, #ffb300 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      font-weight: 800;
-      font-size: 1.35rem;
-      margin-top: 36px;
-      margin-bottom: 12px;
-    }
+/* تیترها با آبی سلطنتی اصلی دنت‌کست */
+h2 {
+  color: #0b5fff;
+  font-weight: 800;
+  font-size: 1.35rem;
+  margin-top: 36px;
+  margin-bottom: 12px;
+}
+
+/* بولت‌های آبی‌تر */
+ul li::before {
+  content: "• ";
+  color: #0b5fff;
+  font-weight: bold;
+}
+    
 
     /* لیست‌ها داخل متن علمی */
     ul {
