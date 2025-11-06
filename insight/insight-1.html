@@ -10,41 +10,48 @@
   <style>
     :root {
       --blue:#0b5fff;
-      --bg:#0b1220;
-      --bg2:#121a2b;
+      --lightblue:rgba(11,95,255,0.15);
+      --bg1:#eaf1ff;
+      --bg2:#f5f8ff;
       --text:#111;
+      --muted:#444;
       --radius:18px;
-      --shadow:0 18px 50px rgba(0,0,0,.25);
+      --shadow:0 18px 50px rgba(0,0,0,.2);
     }
 
-    html,body {margin:0; padding:0;}
+    html,body {
+      margin:0; padding:0;
+      height: 100%;
+    }
+
     body {
       font-family:'Vazirmatn', sans-serif;
-      background: linear-gradient(180deg, #f4f6fb 0%, #e9ecf4 100%);
+      background: linear-gradient(180deg, var(--bg1) 0%, var(--bg2) 100%);
       color: var(--text);
-      max-width: 880px;
+      max-width: 900px;
       margin: 0 auto;
       padding: 60px 26px 100px;
       line-height: 2;
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
+      min-height: 100vh;
     }
 
     h1 {
       text-align: center;
       color: var(--blue);
       font-weight: 800;
-      font-size: 1.8rem;
+      font-size: 1.9rem;
       margin-bottom: 36px;
     }
 
     .glass-box {
-      background: rgba(255,255,255,0.85);
+      background: rgba(255,255,255,0.35);
+      border: 1px solid rgba(11,95,255,0.25);
       border-radius: var(--radius);
-      border: 1px solid rgba(0,0,0,0.08);
       padding: 28px 36px;
       box-shadow: var(--shadow);
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(12px);
     }
 
     p {
@@ -73,7 +80,7 @@
       text-align: center;
       margin-top: 50px;
       font-weight: 600;
-      color: #333;
+      color: var(--muted);
     }
 
     .back {
@@ -82,29 +89,29 @@
       color:var(--blue);
       text-decoration:none;
       font-weight:600;
-      border:1px solid rgba(0,0,0,0.1);
+      border:1px solid rgba(11,95,255,0.2);
       border-radius:12px;
       padding:10px 22px;
-      background:rgba(255,255,255,0.6);
+      background:rgba(255,255,255,0.5);
       transition:all .3s ease;
     }
 
     .back:hover {
-      background:rgba(11,95,255,0.1);
+      background:rgba(11,95,255,0.2);
       transform:scale(1.03);
     }
 
     footer {
       margin-top:70px;
       text-align:center;
-      color:#555;
+      color:var(--muted);
       font-size:.9rem;
     }
 
     @media (max-width:768px){
       body {padding: 35px 16px 80px;}
       .glass-box {padding: 20px 22px;}
-      h1 {font-size: 1.5rem; margin-bottom: 24px;}
+      h1 {font-size: 1.6rem; margin-bottom: 24px;}
       p {font-size: .98rem; line-height: 1.9;}
     }
   </style>
