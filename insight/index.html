@@ -3,122 +3,103 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Clinical Insight – بینش‌های بالینی دندانی | دنت‌کست</title>
+  <title>Clinical Insight – بینش‌های بالینی | دنت‌کست</title>
   <meta name="description" content="بخش Clinical Insight دنت‌کست؛ نکات کوتاه، تحلیلی و بالینی از دکتر فواد شهابیان دربارهٔ دندان‌پزشکی عملی، اکلوزال و تصمیم‌گیری کلینیکی.">
   <link rel="canonical" href="https://dentcast.ir/insight/index.html">
-  <meta name="keywords" content="دنت‌کست, فواد شهابیان, Clinical Insight, نکات بالینی دندانپزشکی, اکلوزال, تماس اکلوزال, دندان‌پزشکی ترمیمی, تنظیم اکلوزال, فواد شهابیان پروتز">
-  <meta name="author" content="دکتر فواد شهابیان">
-  <meta property="og:title" content="Clinical Insight – بینش‌های بالینی دندانی | دنت‌کست">
-  <meta property="og:description" content="نکات کاربردی، علمی و تحلیلی از دکتر فواد شهابیان برای تصمیم‌گیری بهتر در درمان‌های بالینی دندان‌پزشکی.">
-  <meta property="og:url" content="https://dentcast.ir/insight/index.html">
-  <meta property="og:site_name" content="DentCast">
-  <meta property="og:type" content="website">
-  <meta property="og:locale" content="fa_IR">
-  <meta property="og:image" content="https://dentcast.ir/favicon-512.png">
-
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
 
   <style>
     :root {
       --blue:#0b5fff;
-      --lightblue:rgba(11,95,255,0.15);
-      --bg1:#eaf1ff;
-      --bg2:#f5f8ff;
+      --lightglass: rgba(11,95,255,0.07);
+      --darkglass: rgba(11,95,255,0.12);
       --text:#111;
       --muted:#444;
       --radius:18px;
-      --shadow:0 18px 50px rgba(0,0,0,.2);
+      --shadow:0 10px 30px rgba(0,0,0,.25);
     }
 
     html, body {
-      margin:0; padding:0;
-      height: 100%;
-    }
-
-    body {
+      margin:0;
+      padding:0;
       font-family:'Vazirmatn', sans-serif;
-      background: linear-gradient(180deg, var(--bg1) 0%, var(--bg2) 100%);
-      color: var(--text);
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 60px 26px 100px;
-      line-height: 2;
-      -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeLegibility;
-      min-height: 100vh;
+      background: linear-gradient(180deg, #eaf0ff 0%, #f3f5fa 100%);
+      color:var(--text);
+      line-height:1.9;
+      min-height:100vh;
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
     }
 
     h1 {
       text-align:center;
       color:var(--blue);
       font-weight:800;
-      font-size:1.9rem;
-      margin-bottom:20px;
+      font-size:1.8rem;
+      margin:40px 0 28px;
     }
 
     .intro {
-      background: rgba(255, 255, 255, 0.35);
-      border: 1px solid rgba(11,95,255,0.25);
-      border-radius: var(--radius);
-      padding: 26px 32px;
-      margin-bottom: 40px;
-      text-align: justify;
-      box-shadow: 0 8px 30px rgba(11,95,255,0.08);
-      backdrop-filter: blur(12px);
+      background: var(--lightglass);
+      border:1px solid rgba(255,255,255,0.3);
+      border-radius:var(--radius);
+      padding:24px 28px;
+      margin:0 auto 35px;
+      max-width:860px;
+      box-shadow: var(--shadow);
+      backdrop-filter:blur(8px);
+      text-align:justify;
     }
 
-    .intro strong {
-      color: var(--blue);
-    }
+    .intro strong { color:var(--blue); }
 
     ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
+      list-style:none;
+      padding:0;
+      margin:0 auto;
+      max-width:860px;
     }
 
     li {
-      background: rgba(255,255,255,0.35);
-      border: 1px solid rgba(11,95,255,0.25);
+      background: var(--darkglass);
       border-radius: var(--radius);
-      padding: 18px 24px;
-      margin-bottom: 16px;
-      transition: all .3s ease;
-      box-shadow: 0 6px 25px rgba(11,95,255,0.1);
-      backdrop-filter: blur(10px);
+      padding:18px 22px;
+      margin-bottom:18px;
+      text-align:center;
+      box-shadow:0 8px 22px rgba(0,0,0,.1);
+      border:1px solid rgba(255,255,255,0.25);
+      backdrop-filter:blur(10px);
+      transition:all .3s ease;
     }
 
     li:hover {
-      background: rgba(11,95,255,0.18);
-      transform: translateY(-3px);
+      background: rgba(11,95,255,0.2);
+      transform:translateY(-3px);
     }
 
     a {
-      color: var(--text);
-      text-decoration: none;
-      font-weight: 600;
-      display: block;
-    }
-
-    a:hover {
-      color: var(--blue);
+      text-decoration:none;
+      color:var(--blue);
+      font-weight:600;
     }
 
     .back {
       display:inline-block;
-      margin-top:50px;
+      margin:40px auto 0;
+      text-align:center;
       color:var(--blue);
       text-decoration:none;
       font-weight:600;
-      border:1px solid rgba(11,95,255,0.2);
+      border:1px solid rgba(11,95,255,0.25);
       border-radius:12px;
       padding:10px 22px;
-      background:rgba(255,255,255,0.5);
+      background:rgba(255,255,255,0.4);
+      backdrop-filter:blur(8px);
       transition:all .3s ease;
     }
 
     .back:hover {
-      background:rgba(11,95,255,0.2);
+      background:rgba(11,95,255,0.15);
       transform:scale(1.03);
     }
 
@@ -127,33 +108,24 @@
       text-align:center;
       color:var(--muted);
       font-size:.9rem;
+      padding-bottom:40px;
     }
 
     @media (max-width:768px){
-      body {padding: 35px 16px 80px;}
-      h1 {font-size: 1.6rem;}
-      .intro {padding: 20px 22px; font-size: .97rem;}
-      li {padding: 14px 18px;}
+      h1{font-size:1.6rem;}
+      .intro{padding:18px 20px;}
+      li{padding:14px 18px;}
+      .back{font-size:.9rem;}
     }
   </style>
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
-  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
-  <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png">
-  <link rel="apple-touch-icon" href="/favicon-512.png">
-  <meta name="theme-color" content="#0b5fff">
-
 </head>
 
 <body>
-
   <h1>🩺 Clinical Insight – بینش‌های بالینی</h1>
 
   <div class="intro">
-    <p>
-      در <strong>Clinical Insight</strong>، دکتر فواد شهابیان نکات کوتاه و تحلیلی از تجربه‌های بالینی و یافته‌های علمی را مرور می‌کند؛
-      هدف، افزایش دقت در تصمیم‌گیری‌های درمانی و بینش عمیق‌تر در دندان‌پزشکی روزمره است.
-    </p>
+    در <strong>Clinical Insight</strong>، دکتر فواد شهابیان نکات کوتاه و تحلیلی از تجربه‌های بالینی و یافته‌های علمی را مرور می‌کند؛
+    هدف، افزایش دقت در تصمیم‌گیری‌های درمانی و بینش عمیق‌تر در دندان‌پزشکی روزمره است.
   </div>
 
   <ul>
@@ -164,9 +136,6 @@
     <a class="back" href="../index.html">← بازگشت به صفحه‌ی اصلی دنت‌کست</a>
   </div>
 
-  <footer>
-    © 2025 DentCast — Clinical Insight
-  </footer>
-
+  <footer>DentCast — Clinical Insight © 2025</footer>
 </body>
 </html>
