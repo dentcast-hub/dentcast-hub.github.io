@@ -191,41 +191,42 @@
       .lead{font-size:.92rem;}
       iframe{height:190px;}
     }
-    /* 🌐 نسخه‌ی نهایی برای تطبیق دقیق در دسکتاپ */
+
+    /* 🖥 نسخه تطبیقی هوشمند برای دسکتاپ */
 @media (min-width: 1024px) {
+  html {
+    font-size: 1.05vw; /* بر اساس عرض صفحه */
+  }
+
   body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    padding: 2vh 0;
   }
 
   main {
-    width: 100%;
-    max-width: 1150px;
+    width: 80vw;
+    padding: 4vh 3vw;
     margin: 0 auto;
-    padding: 70px 60px 90px;
-    box-sizing: border-box;
   }
 
   h1 {
-    font-size: 2rem;
+    font-size: 2.2vw;
+    margin-bottom: 2vh;
   }
 
   .intro, ul, .text-box {
-    max-width: 950px;
-    margin: 0 auto 40px;
-  }
-
-  .intro, li, .text-box {
-    font-size: 1.05rem;
+    width: 80%;
+    margin: 0 auto 4vh;
+    font-size: 1.05em;
     line-height: 2;
   }
 
+  li {
+    padding: 1.2vw 1.5vw;
+  }
+
   footer {
-    width: 100%;
-    max-width: 1150px;
-    margin: 60px auto 40px;
-    font-size: 1rem;
+    margin-top: 6vh;
+    font-size: 1vw;
   }
 }
   </style>
