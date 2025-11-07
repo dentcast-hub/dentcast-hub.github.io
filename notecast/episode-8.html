@@ -3,200 +3,265 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>نوت‌کست هشتم | سرامیک‌های دندانی</title>
-  <meta name="description" content="خلاصه‌ی نوشتاری دنت‌کست هشتم با موضوع سرامیک‌های دندانی. دکتر فواد شهابیان - متخصص پروتزهای دندانی و ایمپلنت.">
-  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;700&display=swap" rel="stylesheet">
+  <title>نوت‌کست هشتم – سرامیک‌های دندانی | دنت‌کست</title>
+  <meta name="description" content="نوت‌کست هشتم دنت‌کست؛ بررسی جامع انواع سرامیک‌های دندانی، فازها، دسته‌بندی و کاربردهای کلینیکی آن‌ها.">
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
+
   <style>
-  
-  body {
-    background: linear-gradient(135deg, #0b1220, #121a2b);
-    color: #e7eaf1;
-    font-family: 'Vazirmatn', sans-serif;
-    line-height: 1.9;
-    margin: 0;
-    padding: 0;
-  }
-
-    header {
-      background: rgba(11, 95, 255, 0.15);
-      border-bottom: 1px solid rgba(11, 95, 255, 0.3);
-      padding: 2rem 1.5rem;
-      text-align: center;
+    :root {
+      --blue: #0b5fff;
+      --bg: #0b1220;
+      --bg2: #121a2b;
+      --text: #e7eaf1;
+      --muted: #9aa1b3;
+      --radius: 18px;
+      --shadow: 0 18px 50px rgba(0,0,0,.35);
     }
 
-    header h1 {
-      font-size: 1.8rem;
-      color: #0b5fff;
+    body {
       margin: 0;
+      font-family: 'Vazirmatn', sans-serif;
+      background: linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+      color: var(--text);
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 40px 22px 90px;
+      line-height: 1.9;
     }
 
-    header p {
-      font-size: 1rem;
-      color: #9aa1b3;
-      margin-top: 0.5rem;
-    }
-
-    main {
-      max-width: 800px;
-      margin: 2.5rem auto;
-      padding: 0 1.5rem;
-      background: rgba(18, 26, 43, 0.85);
-      backdrop-filter: blur(15px) saturate(1.2);
-      -webkit-backdrop-filter: blur(15px) saturate(1.2);
-      border-radius: 1rem;
+    h1 {
+      text-align: center;
+      color: var(--blue);
+      font-weight: 800;
+      font-size: 2rem;
+      margin-bottom: 8px;
     }
 
     h2 {
-      color: #0b5fff;
-      font-size: 1.4rem;
-      border-right: 3px solid #0b5fff;
-      padding-right: 0.7rem;
+      text-align: center;
+      color: var(--text);
+      font-weight: 600;
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+    }
+
+    .glass-box {
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(12px);
+      border-radius: var(--radius);
+      padding: 20px 25px;
+      margin: 25px 0;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.25);
+      color: #111;
+      line-height: 1.9;
     }
 
     h3 {
-      color: #e7eaf1;
-      margin-top: 2rem;
+      color: var(--blue);
+      font-weight: 700;
+      margin-top: 25px;
       font-size: 1.1rem;
     }
 
     ul {
-      list-style-type: "🔹 ";
-      margin-right: 1rem;
-      padding-right: 0.5rem;
+      list-style-type: "✦ ";
+      padding-right: 20px;
+      margin: 10px 0 20px;
     }
 
-    li {
-      margin-bottom: 0.6rem;
+    li { margin-bottom: 10px; }
+
+    .author {
+      text-align: center;
+      margin-top: 40px;
+      font-weight: 600;
+      color: var(--text);
     }
 
-    .highlight {
-      background: rgba(11, 95, 255, 0.1);
-      border-right: 3px solid #0b5fff;
-      padding: 0.7rem 1rem;
-      border-radius: 0.7rem;
-      margin: 1.2rem 0;
+    iframe {
+      width: 100%;
+      height: 110px;
+      border: none;
+      border-radius: var(--radius);
+      margin-top: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, .2);
+    }
+
+    .audio-box {
+      margin-top: 60px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius);
+      padding: 20px;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+
+    .back {
+      display: inline-block;
+      margin-top: 60px;
+      color: var(--blue);
+      text-decoration: none;
+      font-weight: 600;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 12px;
+      padding: 10px 20px;
+      background: rgba(255,255,255,0.05);
+      transition: all .3s ease;
+    }
+
+    .back:hover {
+      background: rgba(11,95,255,0.15);
+      transform: scale(1.03);
     }
 
     footer {
+      margin-top: 70px;
       text-align: center;
-      border-top: 1px solid rgba(11, 95, 255, 0.2);
-      margin-top: 4rem;
-      padding: 2rem 0;
-      color: #9aa1b3;
-      font-size: 0.9rem;
+      color: var(--muted);
+      font-size: .9rem;
     }
 
-    a.back-link {
-      display: inline-block;
-      margin-top: 2rem;
-      padding: 0.6rem 1.4rem;
-      border: 1px solid #0b5fff;
-      color: #0b5fff;
-      border-radius: 0.7rem;
-      text-decoration: none;
-      transition: 0.3s ease;
-    }
-
-    a.back-link:hover {
-      background: #0b5fff;
-      color: #fff;
+    @media (max-width: 768px) {
+      body { padding: 25px 16px 60px; line-height: 1.8; }
+      h1 { font-size: 1.6rem; }
+      h2 { font-size: 1rem; margin-bottom: 24px; }
+      h3 { font-size: 1rem; margin-top: 20px; }
+      ul { padding-right: 14px; font-size: .95rem; }
     }
   </style>
+
+  <!-- ✅ Schema Markup -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "PodcastEpisode",
+    "url": "https://dentcast.ir/notecast/episode-8.html",
+    "name": "نوت‌کست هشتم – سرامیک‌های دندانی",
+    "description": "خلاصه‌ی نوشتاری دنت‌کست هشتم؛ بررسی انواع سرامیک‌های دندانی، ویژگی‌های فنی و کاربردهای کلینیکی.",
+    "partOfSeries": {
+      "@type": "PodcastSeries",
+      "name": "DentCast",
+      "url": "https://dentcast.ir"
+    },
+    "author": {
+      "@type": "Person",
+      "name": "دکتر فواد شهابیان",
+      "jobTitle": "متخصص پروتزهای دندانی و ایمپلنت"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "DentCast",
+      "url": "https://dentcast.ir"
+    },
+    "inLanguage": "fa",
+    "datePublished": "2025-11-07"
+  }
+  </script>
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png">
+  <link rel="apple-touch-icon" href="/favicon-512.png">
+  <meta name="theme-color" content="#0b5fff">
 </head>
 
 <body>
-  <header>
-    <h1>🦷✨ نوت‌کست هشتم</h1>
-    <p>خلاصه‌ی نوشتاری دنت‌کست هشتم – سرامیک‌های دندانی</p>
-  </header>
 
-  <main>
-    <h2>سرامیک‌های دندانی</h2>
+  <h1>✨ نوت‌کست هشتم ✨</h1>
+  <h2>🦷 سرامیک‌های دندانی</h2>
 
-    <div class="highlight">
-      <p>🔹 اساس سرامیک‌ها: <strong>فاز گلاس</strong> (زیبایی 💎) و <strong>فاز کریستالی</strong> (استحکام 💪).</p>
-    </div>
-
-    <h3>🔹 دسته‌بندی اصلی:</h3>
+  <div class="glass-box">
     <ul>
-      <li>فلدسپاتیک (پرسلن)</li>
-      <li>گلس سرامیک‌ها</li>
-      <li>پلی‌کریستالین (زیرکونیا و...)</li>
-      <li>هیبریدی‌ها</li>
+      <li>🔹 اساس سرامیک‌ها: فاز گلاس (زیبایی 💎) و فاز کریستالی (استحکام 💪).</li>
+      <li>🔹 دسته‌بندی اصلی:
+        <ul>
+          <li>فلدسپاتیک (پرسلن)</li>
+          <li>گلس سرامیک‌ها</li>
+          <li>پلی‌کریستالین (زیرکونیا و...)</li>
+          <li>هیبریدی‌ها</li>
+        </ul>
+      </li>
     </ul>
+  </div>
 
-    <h3>1️⃣ فلدسپاتیک (پرسلن):</h3>
+  <div class="glass-box">
+    <h3>۱️⃣ فلدسپاتیک (پرسلن):</h3>
     <ul>
       <li>زیبایی فوق‌العاده، شفافیت بالا ✨ | استحکام خمشی بسیار پایین (۷۰–۱۱۰ MPa) 📉</li>
-      <li>کاربرد: ونیر کردن ساب‌استراکچرها، ونیرهای با زیبایی خاص</li>
+      <li>کاربرد: ونیر کردن ساب‌استراکچرها، ونیرهای با زیبایی خاص.</li>
     </ul>
+  </div>
 
-    <h3>2️⃣ گلس سرامیک‌ها (لوسایت، لیتیوم سیلیکات):</h3>
+  <div class="glass-box">
+    <h3>۲️⃣ گلس سرامیک‌ها (لوسایت، لیتیوم سیلیکات):</h3>
     <ul>
-      <li>زیبایی و شفافیت خوب | استحکام خمشی پایین</li>
-      <li>کاربرد: ونیر، اینله/انله، کراون قدامی (مثل IPS Empress)</li>
-      <li>نکته: برخی بلوک‌ها پس از میلینگ نیاز به پخت ندارند</li>
+      <li>زیبایی و شفافیت خوب | استحکام خمشی پایین.</li>
+      <li>کاربرد: ونیر، اینله/انله، کراون قدامی (مثل IPS Empress).</li>
+      <li>نکته: برخی بلوک‌ها پس از میلینگ نیاز به پخت ندارند.</li>
     </ul>
+  </div>
 
-    <h3>3️⃣ هیبریدی‌ها (رزین سرامیک):</h3>
+  <div class="glass-box">
+    <h3>۳️⃣ هیبریدی‌ها (رزین سرامیک):</h3>
     <ul>
-      <li>ترکیب رزین و سرامیک | خواص مکانیکی نزدیک به دندان، شکنندگی کمتر، بدون نیاز به پخت پس از میلینگ</li>
-      <li>کاربرد: کراون، ونیر، اینله/انله</li>
-      <li>مزیت بزرگ: ✅ قابل ترمیم در دهان، سایندگی کمتر (مثل Vita Enamic)</li>
+      <li>ترکیب رزین و سرامیک | خواص مکانیکی نزدیک به دندان، شکنندگی کمتر، بدون نیاز به پخت پس از میلینگ.</li>
+      <li>کاربرد: کراون، ونیر، اینله/انله.</li>
+      <li>مزیت بزرگ: ✅ قابل ترمیم در دهان، سایندگی کمتر (مثل Vita Enamic).</li>
     </ul>
+  </div>
 
-    <h3>4️⃣ ZLS (لیتیوم سیلیکات + ۱۰٪ زیرکونیا):</h3>
+  <div class="glass-box">
+    <h3>۴️⃣ ZLS (لیتیوم سیلیکات + ۱۰٪ زیرکونیا):</h3>
     <ul>
-      <li>میلینگ راحت‌تر در حالت ضعیف ⬅️ پخت کوتاه ⬅️ استحکام ۳۰۰–۴۰۰ MPa</li>
-      <li>پالیش‌پذیری و زیبایی خوب</li>
-      <li>کاربرد: کراون، ونیر، اینله/انله (مثل Vita Suprinity, Celtra Duo)</li>
+      <li>میلینگ راحت‌تر در حالت ضعیف ⬅️ پخت کوتاه ⬅️ استحکام ۳۰۰–۴۰۰ MPa.</li>
+      <li>پالیش‌پذیری و زیبایی خوب.</li>
+      <li>کاربرد: کراون، ونیر، اینله/انله (مثل Vita Suprinity, Celtra Duo).</li>
     </ul>
+  </div>
 
-    <h3>5️⃣ لیتیوم دی‌سیلیکات (مثل IPS e.max):</h3>
+  <div class="glass-box">
+    <h3>۵️⃣ لیتیوم دی‌سیلیکات (مثل IPS e.max):</h3>
     <ul>
       <li>ترکیب عالی از شفافیت بی‌نظیر و استحکام بالا (۲–۳ برابر قوی‌تر از لوسایت) ✨</li>
-      <li>کاربرد: ونیر، کراون، بریج ۳ واحدی قدامی، رستوریشن ایمپلنت</li>
-      <li>نیاز به میلینگ + پخت</li>
+      <li>کاربرد: ونیر، کراون، بریج ۳ واحدی قدامی، رستوریشن ایمپلنت.</li>
+      <li>نیاز به میلینگ + پخت.</li>
     </ul>
+  </div>
 
-    <h3>6️⃣ پلی‌کریستالین (زیرکونیا):</h3>
-    <p>فاقد فاز شیشه‌ای، عموماً اپک</p>
-
+  <div class="glass-box">
+    <h3>۶️⃣ پلی‌کریستالین (زیرکونیا):</h3>
     <ul>
-      <li><strong>الف) زیرکونیای معمولی (Conventional):</strong>
-        <ul>
-          <li>بالاترین استحکام و چقرمگی 💪 | اما اپک</li>
-          <li>کاربرد: کراون، بریج (۳–۶ واحدی)، اباتمنت</li>
-        </ul>
-      </li>
-      <li><strong>ب) زیرکونیای زیبایی (Aesthetic – جدیدتر):</strong>
-        <ul>
-          <li>شفاف‌تر از معمولی | استحکام خمشی کمتر (۵۵۰–۹۰۰ MPa) ولی قوی‌تر از گلس‌سرامیک‌ها</li>
-          <li>کاربرد: کراون، بریج ۳ واحدی</li>
-        </ul>
-      </li>
+      <li>فاقد فاز شیشه‌ای، عموماً اپک.</li>
+      <li><strong>الف) زیرکونیای معمولی (Conventional):</strong> بالاترین استحکام و چقرمگی 💪 | اما اپک. کاربرد: کراون، بریج (۳–۶ واحدی)، اباتمنت.</li>
+      <li><strong>ب) زیرکونیای زیبایی (Aesthetic – جدیدتر):</strong> شفاف‌تر از معمولی | استحکام خمشی کمتر (۵۵۰–۹۰۰ MPa) ولی قوی‌تر از گلس‌سرامیک‌ها. کاربرد: کراون، بریج ۳ واحدی.</li>
     </ul>
+  </div>
 
-    <div class="highlight">
-      <p>💡 <strong>نکته نهایی:</strong> شناخت دقیق انواع سرامیک برای انتخاب صحیح و دستور دقیق به لابراتوار توسط شما (دندان‌پزشک)، که مسئول نهایی درمان هستید، بسیار مهم است.</p>
-    </div>
+  <div class="glass-box">
+    <h3>💡 نکته نهایی:</h3>
+    <ul>
+      <li>شناخت انواع سرامیک برای انتخاب صحیح و دستور دقیق به لابراتوار توسط شما (دندان‌پزشک)، که مسئول نهایی درمان هستید، بسیار مهم است.</li>
+    </ul>
+  </div>
 
-    <p style="text-align:center; margin-top:2rem; color:#e7eaf1;">
-      🌟 <strong>دکتر فواد شهابیان</strong><br>
-      متخصص پروتزهای دندانی و ایمپلنت
-    </p>
+  <div class="author">
+    🌟 دکتر فواد شهابیان<br>متخصص پروتزهای دندانی و ایمپلنت
+  </div>
 
-    <div style="text-align:center; margin:2rem 0;">
-      <iframe src="https://embed.acast.com/624b5545ecc0e600134ea0df/624b554b5af39e00127155e3" frameborder="0" width="100%" height="80px"></iframe>
-    </div>
+  <div class="audio-box">
+    🎧 <strong>نسخه‌ی صوتی این دنت‌کست را بشنوید:</strong>
+    <iframe src="https://embed.acast.com/624b5545ecc0e600134ea0df/624b554b5af39e00127155e3" frameborder="0" width="100%" height="110" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" scrolling="no"></iframe>
+  </div>
 
-    <div style="text-align:center;">
-      <a class="back-link" href="../index.html">بازگشت به فهرست نوت‌کست‌ها</a>
-    </div>
-  </main>
+  <div style="text-align:center;">
+    <a class="back" href="index.html">← بازگشت به فهرست نوت‌کست‌ها</a>
+  </div>
 
   <footer>
-    <p>© تمامی حقوق برای دنت‌کست محفوظ است – ۲۰۲۵</p>
+    © 2025 DentCast — طراحی و توسعه توسط فواد شهابیان
   </footer>
+
 </body>
 </html>
