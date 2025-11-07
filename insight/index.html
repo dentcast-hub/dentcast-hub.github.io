@@ -41,7 +41,7 @@
       align-items:center;
       justify-content:flex-start;
       width:100%;
-      padding:40px 20px 60px;
+      padding:40px 20px 40px;
       box-sizing:border-box;
     }
 
@@ -99,31 +99,12 @@
       font-weight:600;
     }
 
-    .back {
-      display:inline-block;
-      margin:40px auto 0;
-      text-align:center;
-      color:var(--blue);
-      text-decoration:none;
-      font-weight:600;
-      border:1px solid rgba(11,95,255,0.25);
-      border-radius:12px;
-      padding:10px 22px;
-      background:rgba(255,255,255,0.4);
-      backdrop-filter:blur(8px);
-      transition:all .3s ease;
-    }
-
-    .back:hover {
-      background:rgba(11,95,255,0.15);
-      transform:scale(1.03);
-    }
-
     footer {
       text-align:center;
       color:var(--muted);
       font-size:.9rem;
-      padding:20px 0 40px;
+      line-height:1.8;
+      padding:40px 0 40px;
     }
 
     @media (max-width:768px){
@@ -131,7 +112,6 @@
       h1{font-size:1.6rem;}
       .intro{padding:18px 20px;}
       li{padding:14px 18px;}
-      .back{font-size:.9rem;}
     }
   </style>
 </head>
@@ -141,47 +121,61 @@
     <h1>🩺 Clinical Insight – بینش‌های بالینی</h1>
 
     <div class="intro">
-      در این سری
-    نکات کوتاه و تحلیلی از تجربه‌های بالینی و یافته‌های علمی را مرور میکنیم؛
+      در این سری نکات کوتاه و تحلیلی از تجربه‌های بالینی و یافته‌های علمی را مرور می‌کنیم؛
       هدف، افزایش دقت در تصمیم‌گیری‌های درمانی و بینش عمیق‌تر در دندان‌پزشکی روزمره است.
     </div>
 
     <ul>
       <li><a href="insight-1.html">ضخامت کاغذ آرتیکولاسیون مهم‌تر از چیزیه که فکر می‌کنی</a></li>
     </ul>
-
-    <a class="back" href="../index.html">← بازگشت به صفحه‌ی اصلی دنت‌کست</a>
   </main>
-<footer style="text-align:center; margin-top:50px; color:#9aa1b3; font-size:.9rem; line-height:1.8;">
 
-  <!-- لینک درباره -->
-  <div style="margin-bottom:18px;">
-    <a href="../about.html"
-       style="
-         display:inline-block;
-         background:rgba(255,220,80,0.9);
-         color:#111;
-         border:1px solid rgba(255,220,80,0.65);
-         border-radius:10px;
-         padding:8px 18px;
-         font-weight:600;
-         text-decoration:none;
-         font-size:.9rem;
-         box-shadow:0 0 8px rgba(255,220,80,0.15);
-         backdrop-filter:blur(6px);
-         transition:all .25s ease;
-       "
-       onmouseover="this.style.background='rgba(255,235,120,1)';this.style.transform='scale(1.02)';this.style.boxShadow='0 0 14px rgba(255,220,80,0.35)';"
-       onmouseout="this.style.background='rgba(255,220,80,0.9)';this.style.transform='scale(1)';this.style.boxShadow='0 0 8px rgba(255,220,80,0.15)';">
-      💬 درباره‌ی دکتر فواد شهابیان و دنت‌کست
-    </a>
-  </div>
+  <!-- ✅ فوتر جدید و اصلاح‌شده -->
+  <footer>
+    <!-- 🏠 برگشت به صفحه‌ی اصلی -->
+    <div style="margin-bottom:22px;">
+      <a href="https://dentcast.ir/index.html"
+         style="
+           display:inline-block;
+           background:rgba(11,95,255,0.18);
+           color:#3a84ff;
+           border:1.8px solid rgba(11,95,255,0.45);
+           border-radius:12px;
+           padding:12px 42px;
+           font-weight:700;
+           text-decoration:none;
+           font-size:1rem;
+           box-shadow:0 0 14px rgba(11,95,255,0.15);
+           transition:all .25s ease;">
+        🏠 برگشت به صفحه‌ی اصلی
+      </a>
+    </div>
 
-  <!-- متن پایین -->
-  <div>
-    © 2025 DentCast — طراحی و توسعه توسط <strong style="color:#ffd46a;">فواد شهابیان</strong>
-  </div>
+    <!-- 💬 درباره‌ی دکتر فواد شهابیان و دنت‌کست -->
+    <div style="margin-bottom:20px;">
+      <a href="https://dentcast.ir/about.html"
+         style="
+           display:inline-block;
+           background:rgba(255,220,80,0.85);
+           color:#111;
+           border:1px solid rgba(255,220,80,0.55);
+           border-radius:8px;
+           padding:5px 12px;
+           font-weight:500;
+           text-decoration:none;
+           font-size:.8rem;
+           box-shadow:0 0 6px rgba(255,220,80,0.1);
+           backdrop-filter:blur(5px);
+           transition:all .25s ease;">
+        💬 درباره‌ی دکتر فواد شهابیان و دنت‌کست
+      </a>
+    </div>
 
-</footer>
+    <!-- ⚙️ توضیح پایانی -->
+    <div style="margin-top:6px;">
+      © 2025 DentCast — طراحی و توسعه توسط
+      <strong style="color:#ffd46a;">فواد شهابیان</strong>
+    </div>
+  </footer>
 </body>
 </html>
