@@ -26,14 +26,22 @@
     }
 
     body {
-      margin:0;
-      font-family:'Vazirmatn', sans-serif;
-      background: radial-gradient(1200px 600px at 20% -10%, #1b2640 0%, transparent 60%),
-                  linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
-      color:var(--text);
-      -webkit-font-smoothing:antialiased;
-      text-rendering:optimizeLegibility;
-    }
+  margin: 0;
+  font-family: 'Vazirmatn', sans-serif;
+  background: linear-gradient(180deg, #f9e18b 0%, #ffd95a 100%);
+  color: #111; /* متن مشکی ملایم */
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.card {
+  background: rgba(255, 210, 60, 0.85); /* طلایی شیشه‌ای */
+  backdrop-filter: blur(14px);
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  padding: 28px 36px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
 
     .wrap {
       max-width:920px;
