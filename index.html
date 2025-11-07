@@ -191,6 +191,43 @@
       .lead{font-size:.92rem;}
       iframe{height:190px;}
     }
+    /* 🌐 نسخه‌ی نهایی برای تطبیق دقیق در دسکتاپ */
+@media (min-width: 1024px) {
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  main {
+    width: 100%;
+    max-width: 1150px;
+    margin: 0 auto;
+    padding: 70px 60px 90px;
+    box-sizing: border-box;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  .intro, ul, .text-box {
+    max-width: 950px;
+    margin: 0 auto 40px;
+  }
+
+  .intro, li, .text-box {
+    font-size: 1.05rem;
+    line-height: 2;
+  }
+
+  footer {
+    width: 100%;
+    max-width: 1150px;
+    margin: 60px auto 40px;
+    font-size: 1rem;
+  }
+}
   </style>
 
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
