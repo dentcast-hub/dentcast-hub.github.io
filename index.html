@@ -302,50 +302,58 @@
 
 <script>
 (async () => {
+  const span = document.getElementById('update-date');
+  if (!span) return;
+
   try {
-    // ✅ ۱. بررسی آخرین اپیزود RSS از Acast
-    const rssResponse = await fetch('https://feeds.acast.com/public/shows/624b5545ecc0e600134ea0df');
-    const rssText = await rssResponse.text();
-    const rssDoc = new DOMParser().parseFromString(rssText, "application/xml");
-    const pubDate = rssDoc.querySelector("pubDate")?.textContent;
-    const rssDate = pubDate ? new Date(pubDate) : null;
+    // ✅ کمیت‌های ریپوی اصلی دنت‌کست
+    const res = await fetch(
+      'https://api.github.com/repos/dentcast-hub/dentcast-hub.github.io/commits?per_page=20'
+    );
 
-    // ✅ ۲. بررسی GitHub commits فقط برای فایل‌های تازه (added)
-    const gitResponse = await fetch('https://api.github.com/repos/foadshahabian/dentcast-hub/commits?per_page=15');
-    const commits = await gitResponse.json();
+    if (!res.ok) {
+      throw new Error('GitHub status ' + res.status);
+    }
 
+    const commits = await res.json();
+
+    // فقط فولدرهای محتوایی مهم برات
     const contentFolders = ["notecast", "photocast", "dentai", "insight"];
     let latestCreateDate = null;
 
     for (const commit of commits) {
-      const filesResponse = await fetch(commit.url);
-      const filesData = await filesResponse.json();
+      const commitRes = await fetch(commit.url);
+      if (!commitRes.ok) continue;
 
-      const createdFiles = filesData.files?.filter(f =>
+      const commitData = await commitRes.json();
+
+      const createdFiles = commitData.files?.filter(f =>
         f.status === "added" &&
         contentFolders.some(folder => f.filename.startsWith(folder + "/"))
       );
 
-      if (createdFiles?.length > 0) {
-        latestCreateDate = new Date(commit.commit.committer.date);
-        break;
+      if (createdFiles && createdFiles.length > 0) {
+        latestCreateDate = new Date(commitData.commit.committer.date);
+        break; // اولین کمیتی که فایل جدید ساخته، همون آخرین آپدیته
       }
     }
 
-    // ✅ ۳. انتخاب جدیدترین تاریخ بین RSS و فایل‌های تازه GitHub
-    const latestDate = [rssDate, latestCreateDate].filter(Boolean).sort((a, b) => b - a)[0];
-
-    if (latestDate) {
-      const options = { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'Asia/Tehran' };
-      document.getElementById('update-date').textContent =
-        latestDate.toLocaleDateString('fa-IR', options);
+    if (latestCreateDate) {
+      const options = {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        timeZone: 'Asia/Tehran'
+      };
+      span.textContent = latestCreateDate.toLocaleDateString('fa-IR', options);
     } else {
-      document.getElementById('update-date').textContent = 'نامشخص';
+      span.textContent = 'نامشخص';
     }
 
   } catch (err) {
-    console.error(err);
-    document.getElementById('update-date').textContent = 'خطا در دریافت اطلاعات';
+    console.error('Last-update error:', err);
+    // دیگه پیام خطا به کاربر نده؛ فقط خنثی باشه
+    span.textContent = 'نامشخص';
   }
 })();
 </script>
