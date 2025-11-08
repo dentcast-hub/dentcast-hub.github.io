@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Clinical Insight – بینش‌های بالینی | دنت‌کست</title>
+  <title>Clinical Insight – بینش‌ بالینی | دنت‌کست</title>
   <meta name="description" content="بخش Clinical Insight دنت‌کست؛ نکات کوتاه، تحلیلی و بالینی از دکتر فواد شهابیان دربارهٔ دندان‌پزشکی عملی، اکلوزال و تصمیم‌گیری کلینیکی.">
   <link rel="canonical" href="https://dentcast.ir/insight/index.html">
   <script type="application/ld+json">
@@ -38,7 +38,7 @@
       // 3. تعریف صفحه‌ی فهرست Clinical Insight به عنوان مجموعه
       "@type": "CollectionPage",
       "url": "https://dentcast.ir/insight/index.html",
-      "name": "🩺 Clinical Insight – بینش‌های بالینی دکتر فؤاد شهابیان",
+      "name": "🩺 Clinical Insight – بینش‌ بالینی دکتر فؤاد شهابیان",
       "description": "فهرست نکات کوتاه، تحلیلی و بالینی از تجربه‌های دکتر فؤاد شهابیان (متخصص پروتز) در حوزه‌ی دندان‌پزشکی عملی و تصمیم‌گیری‌های کلینیکی.",
       "inLanguage": "fa",
       "isPartOf": {
@@ -96,7 +96,17 @@
       color:var(--blue);
       font-weight:800;
       font-size:1.8rem;
-      margin:20px 0 28px;
+      margin:20px 0 10px; /* کاهش مارجین پایین برای H2 جدید */
+    }
+
+    h2 {
+      /* ✅ استایل H2 جدید برای زیرعنوان توضیحی */
+      color:var(--muted);
+      margin-top:0;
+      font-size:1.1rem;
+      margin-bottom:28px; 
+      font-weight:600;
+      text-align:center;
     }
 
     .intro {
@@ -156,6 +166,7 @@
     @media (max-width:768px){
       main{padding:30px 16px 60px;}
       h1{font-size:1.6rem;}
+      h2{font-size:0.95rem; margin-bottom:20px;} /* ✅ تنظیم H2 در موبایل */
       .intro{padding:18px 20px;}
       li{padding:14px 18px;}
     }
@@ -165,6 +176,8 @@
 <body>
   <main>
     <h1>🩺 Clinical Insight – بینش‌های بالینی</h1>
+    
+    <h2>نکات تحلیلی و تصمیم‌گیری کلینیکی</h2>
 
     <div class="intro">
       در این سری نکات کوتاه و تحلیلی از تجربه‌های بالینی و یافته‌های علمی را مرور می‌کنیم؛
@@ -178,7 +191,6 @@
 
   <footer style="text-align:center; margin-top:45px; color:#9aa1b3; font-size:.9rem; line-height:1.8;">
 
-  <!-- 🏠 برگشت به صفحه‌ی اصلی -->
   <div style="margin-bottom:22px;">
     <a href="https://dentcast.ir/index.html"
        style="
@@ -197,7 +209,6 @@
     </a>
   </div>
 
-  <!-- 💬 درباره‌ی دکتر فواد شهابیان و دنت‌کست -->
   <div style="margin-bottom:20px;">
     <a href="https://dentcast.ir/about.html"
        style="
@@ -217,7 +228,6 @@
     </a>
   </div>
 
-  <!-- ⚙️ توضیح پایانی -->
   <div style="margin-top:6px;">
     © 2025 DentCast — طراحی و توسعه توسط
     <strong style="color:#ffd46a;">فواد شهابیان</strong>
