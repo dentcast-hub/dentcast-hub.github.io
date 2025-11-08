@@ -64,16 +64,16 @@
     }
 
     html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-}
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+    }
 
-footer {
-  margin-top: auto;
-}
+    footer {
+      margin-top: auto;
+    }
 
     body{
       font-family:'Vazirmatn', sans-serif;
@@ -204,6 +204,45 @@ footer {
         margin-top:40px;
       }
     }
+
+    /* ✅ استایل‌های مربوط به لیست DentAI (منتقل‌شده از میان body) */
+    .ai-list {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      margin-top: 30px;
+    }
+
+    .ai-item {
+      display: block;
+      background: rgba(255, 215, 0, 0.08);
+      border: 1px solid rgba(255, 215, 0, 0.25);
+      border-radius: 14px;
+      padding: 16px 22px;
+      color: var(--text);
+      text-decoration: none;
+      box-shadow: 0 8px 25px rgba(255, 200, 0, 0.15);
+      backdrop-filter: blur(10px);
+      transition: all .3s ease;
+    }
+
+    .ai-item:hover {
+      background: rgba(255, 215, 0, 0.18);
+      transform: translateY(-4px);
+      box-shadow: 0 10px 30px rgba(255, 220, 0, 0.35);
+    }
+
+    .ai-title {
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: #ffd700;
+      margin-bottom: 6px;
+    }
+
+    .ai-desc {
+      font-size: .95rem;
+      color: var(--muted);
+    }
   </style>
 
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
@@ -234,60 +273,20 @@ footer {
 
   <ul>
     <div class="ai-list">
-  <a href="dentai-1.html" class="ai-item">
-    <div class="ai-title">⚡ مقالهٔ یک – تمایز بین خطوط ترک سنتی و خطوط ترک داخلی در مینای دندان</div>
-    <div class="ai-desc">بررسی تفاوت ساختاری و بالینی دو نوع ترک مینایی و اهمیت تشخیص آن‌ها در درمان‌های ترمیمی</div>
-  </a>
-<a href="dentai-2.html" class="ai-item">
-    <div class="ai-title">⚡ مقالهٔ دوم – رزین اینفیلتریشن برای درمان لکه‌های سفید دندانی</div>
-    <div class="ai-desc">مرور تکنیک Resin Infiltration به‌عنوان روشی کم‌تهاجمی و مؤثر برای حذف لکه‌های سفید مینایی</div>
-</a>
+      <a href="dentai-1.html" class="ai-item">
+        <div class="ai-title">⚡ مقالهٔ یک – تمایز بین خطوط ترک سنتی و خطوط ترک داخلی در مینای دندان</div>
+        <div class="ai-desc">بررسی تفاوت ساختاری و بالینی دو نوع ترک مینایی و اهمیت تشخیص آن‌ها در درمان‌های ترمیمی</div>
+      </a>
+      <a href="dentai-2.html" class="ai-item">
+        <div class="ai-title">⚡ مقالهٔ دوم – رزین اینفیلتریشن برای درمان لکه‌های سفید دندانی</div>
+        <div class="ai-desc">مرور تکنیک Resin Infiltration به‌عنوان روشی کم‌تهاجمی و مؤثر برای حذف لکه‌های سفید مینایی</div>
+      </a>
     </div>
 
-<style>
-  .ai-list {
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-    margin-top: 30px;
-  }
-
-  .ai-item {
-    display: block;
-    background: rgba(255, 215, 0, 0.08);
-    border: 1px solid rgba(255, 215, 0, 0.25);
-    border-radius: 14px;
-    padding: 16px 22px;
-    color: var(--text);
-    text-decoration: none;
-    box-shadow: 0 8px 25px rgba(255, 200, 0, 0.15);
-    backdrop-filter: blur(10px);
-    transition: all .3s ease;
-  }
-
-  .ai-item:hover {
-    background: rgba(255, 215, 0, 0.18);
-    transform: translateY(-4px);
-    box-shadow: 0 10px 30px rgba(255, 220, 0, 0.35);
-  }
-
-  .ai-title {
-    font-weight: 700;
-    font-size: 1.05rem;
-    color: #ffd700;
-    margin-bottom: 6px;
-  }
-
-  .ai-desc {
-    font-size: .95rem;
-    color: var(--muted);
-  }
-</style>
   </ul>
 
   <footer style="text-align:center; margin-top:45px; color:#9aa1b3; font-size:.9rem; line-height:1.8;">
 
-  <!-- 🏠 برگشت به صفحه‌ی اصلی -->
   <div style="margin-bottom:22px;">
     <a href="https://dentcast.ir/index.html"
        style="
@@ -306,7 +305,6 @@ footer {
     </a>
   </div>
 
-  <!-- 💬 درباره‌ی دکتر فواد شهابیان و دنت‌کست -->
   <div style="margin-bottom:20px;">
     <a href="https://dentcast.ir/about.html"
        style="
@@ -326,7 +324,6 @@ footer {
     </a>
   </div>
 
-  <!-- ⚙️ توضیح پایانی -->
   <div style="margin-top:6px;">
     © 2025 DentCast — طراحی و توسعه توسط
     <strong style="color:#ffd46a;">فواد شهابیان</strong>
