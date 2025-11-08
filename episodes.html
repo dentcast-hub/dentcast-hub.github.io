@@ -126,14 +126,47 @@
 
   <!-- Structured Data -->
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "CollectionPage",
-    "name": "همهٔ اپیزودهای دنت‌کست",
-    "description": "صفحهٔ آرشیو و پخش تمام اپیزودهای پادکست دنت‌کست.",
-    "url": "https://dentcast.ir/episodes.html"
-  }
-  </script>
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      // 1. تعریف مرجع اصلی (شما) با تمام آدرس‌ها برای تقویت E-E-A-T
+      "@type": "Person",
+      "@id": "https://dentcast.ir/#person",
+      "name": "دکتر فؤاد شهابیان",
+      "jobTitle": "متخصص پروتزهای دندانی و ایمپلنت",
+      "url": "https://dentcast.ir/about.html",
+      // شامل تمام آدرس‌های شما، از جمله اینستاگرام و تلگرام
+      "sameAs": [
+        "https://t.me/dentcast",
+        "https://t.me/dent_AI",
+        "https://podcasts.apple.com/us/podcast/dentcast/id1502032364",
+        "https://castbox.fm/va/4889954",
+        "https://www.youtube.com/@Dentcast", 
+        "https://www.instagram.com/dr.foad_shahabian/",
+        "https://dentcast.ir/" // آدرس سایت اصلی
+      ]
+    },
+    {
+      // 2. تعریف سری پادکست و اتصال آن به مرجع اصلی (#person)
+      "@type": "PodcastSeries",
+      "name": "DentCast",
+      "url": "https://dentcast.ir/episodes.html", // آدرس همین صفحه به عنوان مرجع پخش
+      "description": "فهرست کامل اپیزودهای پادکست علمی دندان‌پزشکی (پروتز، ایمپلنت و بالینی) با روایت دکتر فؤاد شهابیان؛ آرشیو کامل برای پخش مستقیم.",
+      "inLanguage": "fa-IR",
+      "author": {
+          "@id": "https://dentcast.ir/#person" 
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DentCast"
+      }
+      // نکته: پلتفرم‌های پخش (اپل، کست‌باکس) دیگر نیازی نیست در اینجا تکرار شوند، چون در بخش person ثبت شده‌اند.
+    }
+  ]
+}
+</script>
+
 </head>
 
 <body>
