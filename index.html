@@ -178,7 +178,7 @@
     @media (max-width:768px){
       .wrap{padding:0 14px;margin:30px auto 60px;}
       header h1{font-size:1.7rem;}
-      header h2{font-size:.9rem;line-height:1.7;} /* ✅ تنظیم H2 در موبایل */
+      header h2{font-size:.9rem;line-height:1.7;} 
       header p{font-size:.9rem;line-height:1.7;}
       .card{padding:18px 14px 28px;}
       .lead{font-size:.92rem;}
@@ -222,6 +222,43 @@
         font-size: 1vw;
       }
     }
+
+    /* استایل‌های مربوط به اعلان آپدیت دستی */
+    #last-update {
+       text-align:center;
+       margin:12px auto 28px;
+       color:#9aa1b3;
+       font-size:.92rem;
+       background:rgba(11,95,255,0.08);
+       border:1px solid rgba(11,95,255,0.25);
+       border-radius:12px;
+       display:inline-block;
+       padding:8px 18px;
+       box-shadow:0 4px 16px rgba(11,95,255,0.15);
+       backdrop-filter:blur(6px);
+       /* استایل‌های مربوط به انیمیشن حذف شدند تا در JS مدیریت شوند */
+     }
+
+     #update-date {
+        /* استایل‌های اصلی تاریخ (برای نمایش بدون انیمیشن) */
+        color: #ffd95e; 
+     }
+
+     /* استایل‌های انیمیشن با JS به عناصر اضافه می‌شوند */
+     .glow {
+        animation: pulseGlow 2.5s ease-in-out infinite alternate;
+      }
+
+      @keyframes pulseGlow {
+        0% {
+          box-shadow: 0 0 10px rgba(11,95,255,0.2);
+          color: #b8c8ff;
+        }
+        100% {
+          box-shadow: 0 0 25px rgba(11,95,255,0.45);
+          color: #e0e6ff;
+        }
+      }
   </style>
 
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
@@ -273,136 +310,12 @@
         فارغ‌التحصیل دانشگاه شهید بهشتی و دانشگاه علوم پزشکی مشهد،  
         دارای بورد تخصصی پروتز</p>
     </header>
-<div id="last-update"
-     style="
-       text-align:center;
-       margin:12px auto 28px;
-       color:#9aa1b3;
-       font-size:.92rem;
-       background:rgba(11,95,255,0.08);
-       border:1px solid rgba(11,95,255,0.25);
-       border-radius:12px;
-       display:inline-block;
-       padding:8px 18px;
-       box-shadow:0 4px 16px rgba(11,95,255,0.15);
-       backdrop-filter:blur(6px);
-     ">
-  🔄 آخرین به‌روزرسانی: 
-  <strong id="update-date" style="color:#ffd95e;">در حال بررسی...</strong>
-</div>
-<script>
-// ✅ اسکریپت در انتهای صفحه (حفظ شد)
-(async () => {
-  const span = document.getElementById('update-date');
-  if (!span) return;
 
-  try {
-    const res = await fetch('https://api.github.com/repos/dentcast-hub/dentcast-hub.github.io/commits?per_page=20');
-    if (!res.ok) throw new Error('GitHub status ' + res.status);
-    const commits = await res.json();
-
-    const contentFolders = ["notecast", "photocast", "dentai", "insight"];
-    let latestInfo = null;
-
-    for (const commit of commits) {
-      const commitRes = await fetch(commit.url);
-      if (!commitRes.ok) continue;
-      const commitData = await commitRes.json();
-
-      const createdFile = commitData.files?.find(f =>
-        f.status === "added" &&
-        contentFolders.some(folder => f.filename.startsWith(folder + "/"))
-      );
-
-      if (createdFile) {
-        const folder = contentFolders.find(folder => createdFile.filename.startsWith(folder + "/"));
-        latestInfo = {
-          folder,
-          date: new Date(commitData.commit.committer.date)
-        };
-        break;
-      }
-    }
-
-    if (latestInfo) {
-      const options = {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-        timeZone: 'Asia/Tehran',
-        calendar: 'persian'
-      };
-      const dateStr = latestInfo.date.toLocaleDateString('fa-IR', options);
-
-      const folderName = {
-        notecast: "NoteCast",
-        photocast: "PhotoCast",
-        dentai: "DentAI",
-        insight: "Clinical Insight"
-      }[latestInfo.folder] || latestInfo.folder;
-
-      span.textContent = `${dateStr} — در فولدر ${folderName} مطلب جدید قرار گرفت`;
-
-      // ✨ افزودن افکت درخشش برای نمایش آپدیت جدید
-      span.classList.add("glow");
-      setTimeout(() => span.classList.remove("glow"), 4000);
-
-    } else {
-      span.textContent = "مطلب جدیدی شناسایی نشد";
-    }
-
-  } catch (err) {
-    console.error('Last-update error:', err);
-    span.textContent = "خطا در بررسی به‌روزرسانی‌ها";
-  }
-})();
-</script>
-
-<style>
-  #update-date {
-    display: inline-block;
-    background: rgba(11,95,255,0.07);
-    border: 1px solid rgba(11,95,255,0.2);
-    color: #a8b7ff;
-    font-size: 0.8rem;
-    border-radius: 8px;
-    padding: 4px 10px;
-    margin-top: 2px;
-    box-shadow: 0 0 6px rgba(11,95,255,0.1);
-    line-height: 1.6;
-    letter-spacing: -0.2px;
-    opacity: 0;
-    animation: fadeIn 0.9s ease forwards;
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-4px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .glow {
-    animation: pulseGlow 2.5s ease-in-out infinite alternate;
-  }
-
-  @keyframes pulseGlow {
-    0% {
-      box-shadow: 0 0 10px rgba(11,95,255,0.2);
-      color: #b8c8ff;
-    }
-    100% {
-      box-shadow: 0 0 25px rgba(11,95,255,0.45);
-      color: #e0e6ff;
-    }
-  }
-
-  @media (max-width: 768px) {
-    #update-date {
-      font-size: 0.74rem;
-      padding: 3px 8px;
-      border-radius: 7px;
-    }
-  }
-</style>
+    <div id="last-update">
+      🔄 آخرین به‌روزرسانی: 
+      <strong id="update-date">در حال بررسی...</strong>
+    </div>
+    
     <div class="card">
       <div class="menu-links">
         <a href="notecast/index.html"  class="note-link">📝 مشاهده‌ی NoteCastها (خلاصه‌نویسی اپیزودها)</a>
@@ -483,5 +396,79 @@
 
   <script defer src="https://static.cloudflareinsights.com/beacon.min.js"
     data-cf-beacon='{"token":"55c7b3d5b03640d28ab6214541606167"}'></script>
+    
+    <script>
+    function updateLastCommit() {
+        const span = document.getElementById('update-date');
+        if (!span) return;
+
+        (async () => {
+          try {
+            // فراخوانی API گیت‌هاب (کد قبلی شما)
+            const res = await fetch('https://api.github.com/repos/dentcast-hub/dentcast-hub.github.io/commits?per_page=20');
+            if (!res.ok) throw new Error('GitHub status ' + res.status);
+            const commits = await res.json();
+
+            const contentFolders = ["notecast", "photocast", "dentai", "insight"];
+            let latestInfo = null;
+
+            for (const commit of commits) {
+              const commitRes = await fetch(commit.url);
+              if (!commitRes.ok) continue;
+              const commitData = await commitRes.json();
+
+              // بررسی فایل‌های اضافه شده (منطق اصلی شما)
+              const createdFile = commitData.files?.find(f =>
+                f.status === "added" &&
+                contentFolders.some(folder => f.filename.startsWith(folder + "/"))
+              );
+
+              if (createdFile) {
+                const folder = contentFolders.find(folder => createdFile.filename.startsWith(folder + "/"));
+                latestInfo = {
+                  folder,
+                  date: new Date(commitData.commit.committer.date)
+                };
+                break;
+              }
+            }
+
+            if (latestInfo) {
+              const options = {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                timeZone: 'Asia/Tehran',
+                calendar: 'persian'
+              };
+              const dateStr = latestInfo.date.toLocaleDateString('fa-IR', options);
+
+              const folderName = {
+                notecast: "NoteCast",
+                photocast: "PhotoCast",
+                dentai: "DentAI",
+                insight: "Clinical Insight"
+              }[latestInfo.folder] || latestInfo.folder;
+
+              span.textContent = `${dateStr} — در فولدر ${folderName} مطلب جدید قرار گرفت`;
+
+              // ✨ افزودن افکت درخشش برای نمایش آپدیت جدید
+              document.getElementById('last-update').classList.add("glow");
+              setTimeout(() => document.getElementById('last-update').classList.remove("glow"), 4000);
+
+            } else {
+              span.textContent = "مطلب جدیدی شناسایی نشد";
+            }
+
+          } catch (err) {
+            console.error('Last-update error:', err);
+            span.textContent = "خطا در بررسی به‌روزرسانی‌ها";
+          }
+        })();
+    }
+
+    // ✅ اجرای اسکریپت با تأخیر ۱.۵ ثانیه
+    setTimeout(updateLastCommit, 1500); 
+  </script>
 </body>
 </html>
