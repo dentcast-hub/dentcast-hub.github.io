@@ -305,8 +305,7 @@
   if (!span) return;
 
   try {
-    // ✅ دریافت کمیت‌ها از ریپوی اصلی دنت‌کست
-    const res = await fetch('https://api.github.com/repos/dentcast-hub/dentcast-hub.github.io/commits?per_page=25');
+    const res = await fetch('https://api.github.com/repos/dentcast-hub/dentcast-hub.github.io/commits?per_page=20');
     if (!res.ok) throw new Error('GitHub status ' + res.status);
     const commits = await res.json();
 
@@ -334,9 +333,14 @@
     }
 
     if (latestInfo) {
-      const faMonths = ["فروردین","اردیبهشت","خرداد","تیر","مرداد","شهریور","مهر","آبان","آذر","دی","بهمن","اسفند"];
-      const d = new Date(latestInfo.date);
-      const dateStr = `${d.getDate()} ${faMonths[d.getMonth()]} ${d.getFullYear() - 621}`; // میلادی به شمسی تقریبی
+      const options = {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        timeZone: 'Asia/Tehran',
+        calendar: 'persian'
+      };
+      const dateStr = latestInfo.date.toLocaleDateString('fa-IR', options);
 
       const folderName = {
         notecast: "NoteCast",
@@ -346,6 +350,11 @@
       }[latestInfo.folder] || latestInfo.folder;
 
       span.textContent = `${dateStr} — در فولدر ${folderName} مطلب جدید قرار گرفت`;
+
+      // ✨ افزودن افکت درخشش برای نمایش آپدیت جدید
+      span.classList.add("glow");
+      setTimeout(() => span.classList.remove("glow"), 4000);
+
     } else {
       span.textContent = "مطلب جدیدی شناسایی نشد";
     }
@@ -356,6 +365,52 @@
   }
 })();
 </script>
+
+<style>
+  #update-date {
+    display: inline-block;
+    background: rgba(11,95,255,0.07);
+    border: 1px solid rgba(11,95,255,0.2);
+    color: #a8b7ff;
+    font-size: 0.8rem;
+    border-radius: 8px;
+    padding: 4px 10px;
+    margin-top: 2px;
+    box-shadow: 0 0 6px rgba(11,95,255,0.1);
+    line-height: 1.6;
+    letter-spacing: -0.2px;
+    opacity: 0;
+    animation: fadeIn 0.9s ease forwards;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .glow {
+    animation: pulseGlow 2.5s ease-in-out infinite alternate;
+  }
+
+  @keyframes pulseGlow {
+    0% {
+      box-shadow: 0 0 10px rgba(11,95,255,0.2);
+      color: #b8c8ff;
+    }
+    100% {
+      box-shadow: 0 0 25px rgba(11,95,255,0.45);
+      color: #e0e6ff;
+    }
+  }
+
+  @media (max-width: 768px) {
+    #update-date {
+      font-size: 0.74rem;
+      padding: 3px 8px;
+      border-radius: 7px;
+    }
+  }
+</style>
     <div class="card">
       <div class="menu-links">
         <a href="notecast/index.html"  class="note-link">📝 مشاهده‌ی NoteCastها (خلاصه‌نویسی اپیزودها)</a>
