@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>فوتوکست‌ها | دنت‌کست</title>
-  <meta name="description" content="فوتوکست‌؛ کیس‌های تصویری کوتاه با توضیحات آموزشی.">
+  <title>📸 فوتوکست‌ها | کیس‌های تصویری و بالینی پروتز | دنت‌کست</title>
+  <meta name="description" content="فهرست کیس‌های تصویری کوتاه با توضیحات آموزشی و بالینی در حوزه‌ی پروتز و دندانپزشکی عملی، توسط دکتر فؤاد شهابیان (متخصص پروتز).">
  <link rel="canonical" href="https://dentcast.ir/photocast/index.html">
   <script type="application/ld+json">
 {
@@ -33,7 +33,7 @@
       "name": "DentCast | پادکست‌های تخصصی دندانپزشکی و پروتز"
     },
     {
-      // 3. تعریف صفحه‌ی فهرست فوتوکست‌ها به عنوان مجموعه
+      // 3. تعریف صفحه‌ی فهرست فوتوکست‌ها به عنوان مجموعه (CollectionPage)
       "@type": "CollectionPage",
       "url": "https://dentcast.ir/photocast/index.html",
       "name": "📸 فوتوکست‌ها | کیس‌های تصویری و بالینی با توضیح آموزشی",
@@ -84,6 +84,7 @@ body {
 
 main {
   flex: 1 0 auto;
+  padding: 40px 22px 0; /* padding بالا از body به main منتقل شد */
 }
 
 footer {
@@ -97,7 +98,7 @@ footer {
       color:var(--text);
       max-width:920px;
       margin:0 auto;
-      padding:40px 22px 90px;
+      padding:0; /* padding از body حذف شد */
       line-height:1.9;
     }
 
@@ -173,6 +174,14 @@ footer {
       color:var(--muted);
       font-size:.9rem;
     }
+
+    @media (max-width:768px){
+      body {padding: 0;} /* padding از body حذف شد */
+      main{padding: 30px 16px 60px;} /* padding به main منتقل شد */
+      h1{font-size:1.6rem;}
+      h2{font-size:1.0rem;}
+      li{padding:14px 18px;}
+    }
   </style>
 
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
@@ -181,66 +190,62 @@ footer {
   <link rel="apple-touch-icon" href="/favicon-512.png">
   <meta name="theme-color" content="#0b5fff">
 </head>
-<main>
-  <body>
+<body>
+  <main> 
+    <h1>📸 فوتوکست‌ </h1>
+    <h2>کیس‌های تصویری کوتاه با توضیح بالینی</h2>
 
-  <h1>📸 فوتوکست‌ </h1>
-  <h2>کیس‌های تصویری کوتاه با توضیح بالینی</h2>
+    <ul>
+      <li>
+        <a href="episode-1.html" class="photo-link">فوتوکست ۱ – کیس درد فک پایین،سمت چپ بعد از روکش تازه</a>
+      </li>
+      </ul>
+  </main>
+  
+  <footer style="text-align:center; margin-top:45px; color:#9aa1b3; font-size:.9rem; line-height:1.8;">
 
-  <ul>
-    <li>
-      <a href="episode-1.html" class="photo-link">فوتوکست ۱ – کیس درد فک پایین،سمت چپ بعد از روکش تازه</a>
-    </li>
-    <!-- بعداً فوتوکست‌های بعدی رو همین‌جا اضافه می‌کنیم -->
-  </ul>
-</main>
-<footer style="text-align:center; margin-top:45px; color:#9aa1b3; font-size:.9rem; line-height:1.8;">
+    <div style="margin-bottom:22px;">
+      <a href="https://dentcast.ir/index.html"
+         style="
+           display:inline-block;
+           background:rgba(11,95,255,0.18);
+           color:#3a84ff;
+           border:1.8px solid rgba(11,95,255,0.45);
+           border-radius:12px;
+           padding:12px 42px;
+           font-weight:700;
+           text-decoration:none;
+           font-size:1rem;
+           box-shadow:0 0 14px rgba(11,95,255,0.15);
+           transition:all .25s ease;">
+        🏠 برگشت به صفحه‌ی اصلی
+      </a>
+    </div>
 
-  <!-- 🏠 برگشت به صفحه‌ی اصلی -->
-  <div style="margin-bottom:22px;">
-    <a href="https://dentcast.ir/index.html"
-       style="
-         display:inline-block;
-         background:rgba(11,95,255,0.18);
-         color:#3a84ff;
-         border:1.8px solid rgba(11,95,255,0.45);
-         border-radius:12px;
-         padding:12px 42px;
-         font-weight:700;
-         text-decoration:none;
-         font-size:1rem;
-         box-shadow:0 0 14px rgba(11,95,255,0.15);
-         transition:all .25s ease;">
-      🏠 برگشت به صفحه‌ی اصلی
-    </a>
-  </div>
+    <div style="margin-bottom:20px;">
+      <a href="https://dentcast.ir/about.html"
+         style="
+           display:inline-block;
+           background:rgba(255,220,80,0.85);
+           color:#111;
+           border:1px solid rgba(255,220,80,0.55);
+           border-radius:8px;
+           padding:5px 12px;
+           font-weight:500;
+           text-decoration:none;
+           font-size:.8rem;
+           box-shadow:0 0 6px rgba(255,220,80,0.1);
+           backdrop-filter:blur(5px);
+           transition:all .25s ease;">
+        💬 درباره‌ی دکتر فواد شهابیان و دنت‌کست
+      </a>
+    </div>
 
-  <!-- 💬 درباره‌ی دکتر فواد شهابیان و دنت‌کست -->
-  <div style="margin-bottom:20px;">
-    <a href="https://dentcast.ir/about.html"
-       style="
-         display:inline-block;
-         background:rgba(255,220,80,0.85);
-         color:#111;
-         border:1px solid rgba(255,220,80,0.55);
-         border-radius:8px;
-         padding:5px 12px;
-         font-weight:500;
-         text-decoration:none;
-         font-size:.8rem;
-         box-shadow:0 0 6px rgba(255,220,80,0.1);
-         backdrop-filter:blur(5px);
-         transition:all .25s ease;">
-      💬 درباره‌ی دکتر فواد شهابیان و دنت‌کست
-    </a>
-  </div>
+    <div style="margin-top:6px;">
+      © 2025 DentCast — طراحی و توسعه توسط
+      <strong style="color:#ffd46a;">فواد شهابیان</strong>
+    </div>
 
-  <!-- ⚙️ توضیح پایانی -->
-  <div style="margin-top:6px;">
-    © 2025 DentCast — طراحی و توسعه توسط
-    <strong style="color:#ffd46a;">فواد شهابیان</strong>
-  </div>
-
-</footer>
+  </footer>
 </body>
 </html>
