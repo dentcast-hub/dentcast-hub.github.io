@@ -5,10 +5,10 @@
   <title>🎙️ دنت‌کست — پادکست علمی دندان‌پزشکی با روایت دکتر فواد شهابیان</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="پادکست علمی دندان‌پزشکی با روایت دکتر فواد شهابیان؛ مرور ساده و تحلیلی تازه‌ترین مقالات حوزهٔ پروتز، ایمپلنت و دندان‌پزشکی ترمیمی.">
-  <meta name="keywords" content="دنت‌کست, پادکست دندانپزشکی, فواد شهابیان, پروتز دندانی, ایمپلنت, NoteCast, PhotoCast, Clinical Insight, DentAI">
   <meta name="author" content="دکتر فواد شهابیان">
   <link rel="canonical" href="https://dentcast.ir/">
 
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" as="style">
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
 
   <style>
@@ -41,62 +41,54 @@
 
     /* 🔵 بنر نصب PWA */
     .install-banner {
-      background:rgba(255,255,255,0.05);
-      border:1px solid rgba(255,255,255,0.08);
-      border-radius:var(--radius);
-      padding:8px 14px;
-      text-align:center;
-      font-size:.82rem;
-      line-height:1.6;
-      margin-bottom:22px;
-      color:var(--muted);
-      box-shadow:0 6px 18px rgba(0,0,0,.2);
-      backdrop-filter:blur(6px);
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: var(--radius);
+      padding: 6px 10px;
+      text-align: center;
+      font-size: .78rem;
+      line-height: 1.5;
+      margin: 10px auto 18px; 
+      color: var(--muted);
+      box-shadow: 0 4px 12px rgba(0,0,0,.15);
+      backdrop-filter: blur(5px);
+      max-width: 680px; 
     }
-    .install-banner {
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: var(--radius);
-  padding: 6px 10px;
-  text-align: center;
-  font-size: .78rem;
-  line-height: 1.5;
-  margin: 10px auto 18px; /* فاصله از بالا کمتر شد */
-  color: var(--muted);
-  box-shadow: 0 4px 12px rgba(0,0,0,.15);
-  backdrop-filter: blur(5px);
-  max-width: 680px; /* ظریف‌تر شد */
-}
 
-.install-banner strong { 
-  color: var(--blue); 
-  font-weight: 600; 
-}
+    .install-banner strong { 
+      color: var(--blue); 
+      font-weight: 600; 
+    }
 
-.install-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  margin-right: 6px;
-  background: rgba(11,95,255,0.15);
-  border: 1px solid rgba(255,255,255,0.08);
-  color: var(--blue);
-  font-weight: 600;
-  padding: 2px 8px;
-  border-radius: 8px;
-  font-size: .75rem;
-  cursor: pointer;
-  transition: all .3s ease;
-}
+    .install-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-right: 6px;
+      background: rgba(11,95,255,0.15);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--blue);
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 8px;
+      font-size: .75rem;
+      cursor: pointer;
+      transition: all .3s ease;
+    }
 
-.install-btn:hover {
-  background: rgba(11,95,255,0.22);
-  transform: scale(1.05);
-}
+    .install-btn:hover {
+      background: rgba(11,95,255,0.22);
+      transform: scale(1.05);
+    }
 
     header{text-align:center;margin-bottom:36px;}
+
+    /* ✅ تنظیم استایل H1 جدید */
     header h1{color:var(--blue);font-size:2.1rem;margin:8px 0;font-weight:800;line-height:1.6;}
-    header h1 span{display:block;font-size:1.05rem;color:var(--text);opacity:.9;margin-top:4px;}
+    
+    /* ✅ تنظیم استایل H2 جدید (زیرعنوان قبلی) */
+    header h2{font-size:1.05rem;color:var(--text);opacity:.9;margin-top:4px;font-weight:600;}
+    
     header p{color:var(--text);opacity:.85;line-height:1.8;font-size:1.05rem;}
 
     .card{
@@ -186,49 +178,50 @@
     @media (max-width:768px){
       .wrap{padding:0 14px;margin:30px auto 60px;}
       header h1{font-size:1.7rem;}
+      header h2{font-size:.9rem;line-height:1.7;} /* ✅ تنظیم H2 در موبایل */
       header p{font-size:.9rem;line-height:1.7;}
       .card{padding:18px 14px 28px;}
       .lead{font-size:.92rem;}
       iframe{height:190px;}
     }
 
-    /* 🖥 نسخه تطبیقی هوشمند برای دسکتاپ */
-@media (min-width: 1024px) {
-  html {
-    font-size: 1.05vw; /* بر اساس عرض صفحه */
-  }
+    /* 🖥 نسخه تطبیقی هوشمند برای دسکتاپ (حفظ شد) */
+    @media (min-width: 1024px) {
+      html {
+        font-size: 1.05vw;
+      }
 
-  body {
-    padding: 2vh 0;
-  }
+      body {
+        padding: 2vh 0;
+      }
 
-  main {
-    width: 80vw;
-    padding: 4vh 3vw;
-    margin: 0 auto;
-  }
+      main {
+        width: 80vw;
+        padding: 4vh 3vw;
+        margin: 0 auto;
+      }
 
-  h1 {
-    font-size: 2.2vw;
-    margin-bottom: 2vh;
-  }
+      h1 {
+        font-size: 2.2vw;
+        margin-bottom: 2vh;
+      }
 
-  .intro, ul, .text-box {
-    width: 80%;
-    margin: 0 auto 4vh;
-    font-size: 1.05em;
-    line-height: 2;
-  }
+      .intro, ul, .text-box {
+        width: 80%;
+        margin: 0 auto 4vh;
+        font-size: 1.05em;
+        line-height: 2;
+      }
 
-  li {
-    padding: 1.2vw 1.5vw;
-  }
+      li {
+        padding: 1.2vw 1.5vw;
+      }
 
-  footer {
-    margin-top: 6vh;
-    font-size: 1vw;
-  }
-}
+      footer {
+        margin-top: 6vh;
+        font-size: 1vw;
+      }
+    }
   </style>
 
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
@@ -274,14 +267,12 @@
     </div>
 
     <header>
-      <h1>🎙️ دنت‌کست — DentCast
-        <span>پادکست علمی دندان‌پزشکی با روایت دکتر فواد شهابیان</span>
-      </h1>
+      <h1>🎙️ دنت‌کست — DentCast</h1>
+      <h2>پادکست علمی دندان‌پزشکی با روایت دکتر فواد شهابیان</h2>
       <p>متخصص پروتزهای دندانی و ایمپلنت،  
         فارغ‌التحصیل دانشگاه شهید بهشتی و دانشگاه علوم پزشکی مشهد،  
         دارای بورد تخصصی پروتز</p>
     </header>
-<!-- 🔹 نمایش تاریخ آخرین به‌روزرسانی (بالای صفحه) -->
 <div id="last-update"
      style="
        text-align:center;
@@ -300,6 +291,7 @@
   <strong id="update-date" style="color:#ffd95e;">در حال بررسی...</strong>
 </div>
 <script>
+// ✅ اسکریپت در انتهای صفحه (حفظ شد)
 (async () => {
   const span = document.getElementById('update-date');
   if (!span) return;
@@ -419,7 +411,6 @@
         <a href="insight/index.html"   class="note-link">🩺 Clinical Insight – نکات کلینیکی کاربردی</a>
       </div>
 
-      <!-- 🎧 پلیر آخرین اپیزود -->
       <iframe
         src="https://embed.acast.com/624b5545ecc0e600134ea0df"
         frameBorder="0"
@@ -463,7 +454,6 @@
     </footer>
   </div>
 
-  <!-- 🧩 نصب به عنوان وب‌اپ -->
   <script>
     const installButton = document.getElementById('installButton');
     const banner = document.getElementById('installBanner');
@@ -491,7 +481,6 @@
     }
   </script>
 
-  <!-- Cloudflare Analytics -->
   <script defer src="https://static.cloudflareinsights.com/beacon.min.js"
     data-cf-beacon='{"token":"55c7b3d5b03640d28ab6214541606167"}'></script>
 </body>
