@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🤖 DentAI – مقالهٔ ۳: اجماع جهانی در اصطلاحات مدیریت ضایعات پوسیدگی (ICCC) | دنت‌کست</title>
+<meta name="description" content="مرور علمی بر توصیه‌های اجماع جهانی ICCC برای یکسان‌سازی اصطلاحات مدیریت و برداشتن ضایعات پوسیدگی دندان، شامل روش‌هایی مانند Selective Removal و No Removal. توسط دکتر فواد شهابیان.">
+<link rel="canonical" href="https://dentcast.ir/dentai/dentai-3.html">
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --blue:#0b5fff;
+      --gold:rgba(255,199,44,0.85);
+      --bg:#0b1220;
+      --bg2:#121a2b;
+      --text:#e7eaf1;
+      --muted:#9aa1b3;
+      --radius:18px;
+      --shadow:0 18px 50px rgba(0,0,0,.35);
+    }
+
+    html, body{
+      height:100%;
+      margin:0;
+      padding:0;
+    }
+
+    body{
+      font-family:'Vazirmatn', sans-serif;
+      background: radial-gradient(1200px 600px at 20% -10%, #1b2640 0%, transparent 60%),
+                  linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+      color:var(--text);
+      max-width:920px;
+      margin:0 auto;
+      padding:40px 20px 80px;
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
+      line-height:1.95;
+    }
+
+    h1{
+      text-align:center;
+      color:var(--blue);
+      font-weight:800;
+      font-size:2rem;
+      margin-bottom:16px;
+    }
+
+    .caption{
+      background:rgba(255, 185, 40, 0.15);
+      border:1px solid rgba(255, 220, 100, 0.4);
+      border-radius:var(--radius);
+      backdrop-filter:blur(10px);
+      padding:20px 24px;
+      margin-bottom:35px;
+      box-shadow:0 0 30px rgba(255,200,0,0.1);
+    }
+
+    .caption p{
+      color:var(--gold);
+      font-weight:600;
+      font-size:1.1rem;
+      margin:0;
+      text-align:justify;
+      line-height:1.9;
+    }
+
+    .text-box {
+  background: rgba(255, 255, 255, 0.85); /* شفاف‌تر شد */
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 22px;
+  padding: 28px 34px;
+  margin: 24px 0;
+  box-shadow: 0 8px 32px rgba(11, 95, 255, 0.25);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: #111;   /* یا اگر خیلی تیره‌ست، #222 */
+  font-size: 1.05rem;
+  line-height: 2;
+}
+
+/* تیترها با آبی سلطنتی اصلی دنت‌کست */
+h2 {
+  color: #08327a; /* سورمه‌ای خوش‌رنگ */
+  font-weight: 800;
+  font-size: 1.35rem;
+  margin-top: 36px;
+  margin-bottom: 12px;
+}
+/* بولت‌های آبی‌تر */
+ul li::before {
+  content: "• ";
+  color: #0b5fff;
+  font-weight: bold;
+}
+    
+
+    /* لیست‌ها داخل متن علمی */
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 10px 0;
+    }
+
+    li {
+      margin-bottom: 10px;
+    }
+
+    ul li::before {
+      content: "• ";
+      color: #caa200;
+      font-weight: bold;
+    }
+
+    .back{
+      display:inline-block;
+      margin-top:50px;
+      color:var(--blue);
+      text-decoration:none;
+      font-weight:600;
+      border:1px solid rgba(255,255,255,0.15);
+      border-radius:12px;
+      padding:10px 20px;
+      background:rgba(255,255,255,0.05);
+      transition:all .3s ease;
+    }
+
+    .back:hover{
+      background:rgba(11,95,255,0.15);
+      transform:scale(1.03);
+    }
+
+    footer{
+      margin-top:60px;
+      text-align:center;
+      color:var(--muted);
+      font-size:.9rem;
+    }
+
+    @media (max-width:768px){
+      body{padding:25px 14px 60px;}
+      h1{font-size:1.7rem;}
+      .caption p{font-size:1rem;}
+      .text-box{padding:20px 18px; font-size:.98rem;}
+    }
+  </style>
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png">
+  <link rel="apple-touch-icon" href="/favicon-512.png">
+  <meta name="theme-color" content="#0b5fff">
+</head>
+
+<body>
+  <h1>🤖 DentAI – مقالهٔ سوم</h1>
+<div class="caption">
+  <p>
+    ⚡مقاله جدید<br><br>
+    این مقاله که توسط گروه **ICCC** (متخصصان پوسیدگی دندان) ارائه شده، بر یکسان‌سازی اصطلاحات مدیریت ضایعات پوسیدگی دندان تمرکز دارد. هدف اصلی، کاهش سردرگمی بین دندانپزشکان، محققان و دانشجویان با تعریف دقیق واژه‌هایی چون **Caries Management** و **Carious Lesion Management** و همچنین روش‌های مختلف برداشتن پوسیدگی است.
+  </p>
+</div>
+
+  <div class="text-box">
+
+  <h2>چرا یکسان‌سازی اصطلاحات مهم است؟</h2>
+  <ul>
+    <li>**شفافیت و دقت در تحقیقات:** اصطلاحات دقیق و استاندارد، نتایج تحقیقات را قابل فهم‌تر و قابل استنادتر می‌کند.</li>
+    <li>**بهبود آموزش:** ایجاد یک زبان مشترک، آموزش مفاهیم مربوط به پوسیدگی دندان به دانشجویان را ساده‌تر و مؤثرتر می‌سازد.</li>
+    <li>**ارتباط بهتر بین دندانپزشکان:** تبادل تجربیات و دانش حرفه‌ای را تسهیل می‌کند.</li>
+    <li>**تصمیم‌گیری بهتر در درمان:** استفاده از زبان مشترک، امکان همفکری برای انتخاب بهترین روش درمانی را فراهم می‌آورد.</li>
+  </ul>
+
+  <h2>اصطلاحات کلیدی:</h2>
+  <ul>
+    <li><strong>Dental Caries:</strong> خود **بیماری** پوسیدگی دندان که در اثر عوامل مختلفی ایجاد می‌شود.</li>
+    <li><strong>Carious Lesion:</strong> **ضایعه** یا آسیبی که در اثر بیماری پوسیدگی در ساختار دندان (مینا، عاج، و در موارد شدیدتر پالپ) ایجاد می‌شود.</li>
+    <li><strong>Caries Management:</strong> **مدیریت کلی بیماری** پوسیدگی در سطح بیمار (شامل آموزش بهداشت دهان، فلوراید درمانی، و رژیم غذایی).</li>
+    <li><strong>Carious Lesion Management:</strong> **مدیریت ضایعه** پوسیدگی در سطح یک دندان خاص (شامل روش‌های مختلف برداشتن پوسیدگی و ترمیم).</li>
+  </ul>
+  <p>
+    **نکته مهم:** این مقاله تاکید می‌کند که اصطلاحات "Dental Caries" و "Carious Lesion" نباید به جای یکدیگر استفاده شوند، چون به دو مفهوم متفاوت (بیماری و ضایعه) اشاره دارند.
+  </p>
+
+  <h2>روش‌های برداشتن ضایعات پوسیدگی:</h2>
+  <ul>
+    <li><strong>No Removal (بدون برداشت):</strong> هیچ بافت پوسیده‌ای برداشته نمی‌شود. از روش‌های غیرتهاجمی برای کنترل ضایعه استفاده می‌شود:
+      <ul>
+        <li>**Hall Technique:** روکش پیش‌ساخته فلزی برای پوشاندن دندان‌های شیری و مهر و موم ضایعه.</li>
+        <li>**Nonrestorative Cavity Control:** تغییر شکل حفره پوسیدگی برای تسهیل تمیز کردن با مسواک.</li>
+        <li>استفاده از سیلانت‌های رزینی یا گلاس یونومر برای مهر و موم و جلوگیری از پیشرفت.</li>
+      </ul>
+    </li>
+    <li><strong>Atraumatic Restorative Treatment (ART):</strong> استفاده از ابزارهای دستی برای برداشتن **فقط بافت‌های پوسیده نرم** و ترمیم نهایی با گلاس یونومر.</li>
+    <li><strong>Selective Removal (برداشت انتخابی):</strong> برداشتن انتخابی بافت پوسیده:
+      <ul>
+        <li>**Selective Removal to Soft Dentine:** برداشتن تا رسیدن به **عاج نرم** (برای ضایعات عمیق، جهت جلوگیری از آسیب پالپ).</li>
+        <li>**Selective Removal to Firm Dentine:** برداشتن تا رسیدن به **عاج سفت** (برای ضایعات سطحی‌تر).</li>
+      </ul>
+    </li>
+    <li><strong>Stepwise Removal (برداشت مرحله‌ای):</strong> برداشتن پوسیدگی در دو مرحله با فاصله زمانی:
+      <ul>
+        <li>**Stage 1:** برداشتن تا عاج نرم و ترمیم موقت.</li>
+        <li>**Stage 2 (۶ تا ۱۲ ماه بعد):** برداشتن ترمیم موقت، برداشتن تا عاج سفت و ترمیم دائمی.</li>
+      </ul>
+    </li>
+    <li><strong>Nonselective Removal to Hard Dentine:</strong> برداشتن **کامل** بافت پوسیده تا رسیدن به عاج سخت. (این روش قدیمی‌تر است و به دلیل احتمال آسیب به پالپ، کمتر توصیه می‌شود).</li>
+  </ul>
+
+  <h2>نتیجه‌گیری:</h2>
+  <p>
+    این مقاله گامی مهم در جهت **استانداردسازی اصطلاحات مدیریت پوسیدگی** است و به پیشرفت تحقیقات، آموزش و درمان در این زمینه کمک می‌کند. روش‌های محافظه‌کارانه‌ای مانند **"No Removal"** و **"Selective Removal"** رویکردهای جدیدی هستند که هدفشان حفظ ساختار دندان و کاهش نیاز به درمان‌های تهاجمی است.
+  </p>
+<div style="
+  display: flex;
+  justify-content: center;
+  margin-top: 28px;
+">
+  <div style="
+    background: rgba(255, 220, 80, 0.07);
+    border: 1px solid rgba(255, 220, 80, 0.18);
+    border-radius: 9px;
+    padding: 8px 14px;
+    text-align: center;
+    font-size: .8rem;
+    color: #0a1638;
+    line-height: 1.55;
+    box-shadow: 0 3px 14px rgba(0,0,0,0.25);
+    backdrop-filter: blur(5px);
+  ">
+    <p style="margin: 0; font-weight: 600; color: #0a1638;">
+      “Managing Carious Lesions: Consensus Recommendations on Terminology”
+    </p>
+    <p style="margin: 2px 0 0 0;">N.P.T. Innes, J.E. Frencken — <em>Adv. Dent. Res. 2016, Vol. 28(2)</em></p>
+    <p style="margin: 0;">DOI: 10.1177/0022034516639276</p>
+  </div>
+</div>
+</div>
+    
+  <p style="margin-top:28px; font-weight:600; color:#0b5fff;">
+    ⚡⚡⚡ دکتر فواد شهابیان — متخصص پروتزهای دندانی
+  </p>
+
+</div>
+  
+  <footer style="text-align:center; margin-top:45px; color:#9aa1b3; font-size:.9rem; line-height:1.8;">
+
+  <div style="margin-bottom:22px;">
+    <a href="index.html"
+       style="
+         display:inline-block;
+         background:rgba(11,95,255,0.18);
+         color:#3a84ff;
+         border:1.8px solid rgba(11,95,255,0.45);
+         border-radius:12px;
+         padding:12px 42px;
+         font-weight:700;
+         text-decoration:none;
+         font-size:1rem;
+         box-shadow:0 0 14px rgba(11,95,255,0.15);
+         transition:all .25s ease;">
+      🔙 برگشت به صفحه‌ی قبل
+    </a>
+  </div>
+
+  <div style="margin-bottom:20px;">
+    <a href="https://dentcast.ir/about.html"
+       style="
+         display:inline-block;
+         background:rgba(255,220,80,0.85);
+         color:#111;
+         border:1px solid rgba(255,220,80,0.55);
+         border-radius:8px;
+         padding:5px 12px;
+         font-weight:500;
+         text-decoration:none;
+         font-size:.8rem;
+         box-shadow:0 0 6px rgba(255,220,80,0.1);
+         backdrop-filter:blur(5px);
+         transition:all .25s ease;">
+      💬 درباره‌ی دکتر فواد شهابیان و دنت‌کست
+    </a>
+  </div>
+
+  <div style="margin-top:6px;">
+    © 2025 DentCast — طراحی و توسعه توسط
+    <strong style="color:#ffd46a;">فواد شهابیان</strong>
+  </div>
+
+  </footer>
+</body>
+</html>
