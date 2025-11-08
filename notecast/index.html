@@ -10,7 +10,53 @@
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
   <title>📝 NoteCast | دنت‌کست</title>
-
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      // 1. تعریف مرجع اصلی (شما) برای تقویت E-E-A-T
+      "@type": "Person",
+      "@id": "https://dentcast.ir/#person",
+      "name": "دکتر فؤاد شهابیان",
+      "jobTitle": "متخصص پروتزهای دندانی و ایمپلنت",
+      "url": "https://dentcast.ir/about.html",
+      // SAMEAS: شامل تمام آدرس‌های شما، از جمله اینستاگرام
+      "sameAs": [
+        "https://t.me/dentcast",
+        "https://t.me/dent_AI",
+        "https://podcasts.apple.com/us/podcast/dentcast/id1502032364",
+        "https://castbox.fm/va/4889954",
+        "https://www.youtube.com/@Dentcast", 
+        "https://dentcast.ir/",
+        "https://www.instagram.com/dr.foad_shahabian/" 
+      ]
+    },
+    {
+      // 2. تعریف برند و وب‌سایت
+      "@type": "WebSite",
+      "@id": "https://dentcast.ir/#website",
+      "url": "https://dentcast.ir/",
+      "name": "DentCast | پادکست‌های تخصصی دندانپزشکی و پروتز"
+    },
+    {
+      // 3. تعریف صفحه‌ی فهرست نوت‌کست‌ها به عنوان مجموعه
+      "@type": "CollectionPage",
+      "url": "https://dentcast.ir/notecast/index.html",
+      "name": "📝 NoteCast | دنت‌کست – فهرست خلاصه‌های نوشتاری تخصصی",
+      "description": "فهرست کامل نسخه‌های نوشتاری و خلاصه‌شده‌ی اپیزودهای پادکست دنت‌کست. مرجع تخصصی پروتزهای دندانی و نکات بالینی توسط دکتر فؤاد شهابیان.",
+      "inLanguage": "fa",
+      "isPartOf": {
+        "@id": "https://dentcast.ir/#website"
+      },
+      "author": {
+        "@id": "https://dentcast.ir/#person" 
+      }
+    }
+  ]
+}
+</script>
+  
   <!-- Font -->
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
 
