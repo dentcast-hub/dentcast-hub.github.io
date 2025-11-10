@@ -1,38 +1,38 @@
 // service-worker.js
 
-// 🚨 بخش جدید فایربیس: Import کردن SDKهای فایربیس
-importScripts('https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js');
-importScripts('https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging-compat.js');
+// 🚨 بخش جدید فایربیس: Import کردن SDKهای فایربیس (نسخه 12.5.0)
+importScripts('https://www.gstatic.com/firebasejs/12.5.0/firebase-app-compat.js');
+importScripts('https://www.gstatic.com/firebasejs/12.5.0/firebase-messaging-compat.js');
 
-// 🔑 تنظیمات فایربیس شما
+// 🔑 تنظیمات فایربیس شما (بر اساس آخرین اطلاعات)
 const firebaseConfig = {
     apiKey: "AIzaSyBEolrSzV6DuvaSX1VQ9zdr8R6Tj7t8uZw",
     authDomain: "dentcast-d2128.firebaseapp.com",
     projectId: "dentcast-d2128",
     storageBucket: "dentcast-d2128.firebasestorage.app",
     messagingSenderId: "663952391293",
-    appId: "1:663952391293:web:d2d61bfcdb63e111b90514"
+    appId: "1:663952391293:web:87b386456860dd17b90514"
 };
 
 // مقداردهی اولیه فایربیس
 firebase.initializeApp(firebaseConfig);
 const messaging = firebase.messaging();
 
-// 🔔 هندل کردن پیام‌های دریافتی در حالت Background (منطق قبلی firebase-messaging-sw.js)
+// 🔔 هندل کردن پیام‌های دریافتی در حالت Background (منطق فایربیس)
 messaging.onBackgroundMessage(function(payload) {
     console.log('[service-worker.js] Received background message ', payload);
     
     const notificationTitle = payload.notification.title;
     const notificationOptions = {
         body: payload.notification.body,
-        icon: '/favicon-192.png' // از یک آیکون موجود استفاده شد
+        icon: '/favicon-192.png'
     };
 
     return self.registration.showNotification(notificationTitle, notificationOptions);
 });
-// 🚨 پایان بخش جدید فایربیس
+// 🚨 پایان بخش فایربیس
 
-// ⚙️ منطق قبلی PWA شما (کش کردن)
+// ⚙️ منطق PWA شما (کش کردن)
 self.addEventListener('install', (event) => {
   console.log('DentCast Service Worker installed.');
   self.skipWaiting();
