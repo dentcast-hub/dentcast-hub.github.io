@@ -1,12 +1,13 @@
-// app.js
+// apps.js
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getMessaging, getToken, onMessage } from "firebase/messaging"; // 👈 ماژول‌های لازم برای پیام‌رسانی
+import { getMessaging, getToken, onMessage } from "firebase/messaging"; // 👈 ماژول‌های لازم
 
-// Your web app's Firebase configuration (بر اساس اطلاعات شما)
+// Your web app's Firebase configuration
 const firebaseConfig = {
+  // ... (تنظیمات فایربیس شما)
   apiKey: "AIzaSyBEolrSzV6DuvaSX1VQ9zdr8R6Tj7t8uZw",
   authDomain: "dentcast-d2128.firebaseapp.com",
   projectId: "dentcast-d2128",
@@ -16,38 +17,33 @@ const firebaseConfig = {
   measurementId: "G-7ECTEMHN8B"
 };
 
-// VAPID Public Key (کلیدی که شما تولید کردید)
+// VAPID Public Key
 const VAPID_PUBLIC_KEY = "BJeETgGZSTEEOuMVbPc2RMy41puVvKPY6gMcersYll_Mguo7vScLEJcAq8Tx0ehGztLc_P8wMoLONDWvtrask_s";
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app); // ابزارهای جانبی
-
-// 🔥 منطق پوش نوتیفیکیشن
 const messaging = getMessaging(app);
 
 // تابع برای درخواست اجازه و گرفتن توکن
 async function requestPermissionAndGetToken() {
     try {
-        // 1. درخواست اجازه نوتیفیکیشن از کاربر
         const permission = await Notification.requestPermission();
 
         if (permission === "granted") {
             console.log("Notification permission granted.");
 
-            // 2. گرفتن توکن دستگاه با استفاده از VAPID Key
+            // 💡 این مهمترین بخش است: به Firebase میگیم سرویس ورکر رو پیدا کنه
             const currentToken = await getToken(messaging, { 
-                vapidKey: VAPID_PUBLIC_KEY 
+                vapidKey: VAPID_PUBLIC_KEY,
+                // ⚠️ به Firebase می‌گیم که سرویس ورکر PWA رو بگیره
+                serviceWorkerRegistration: await navigator.serviceWorker.getRegistration('/service-worker.js')
             });
 
             if (currentToken) {
                 console.log("FCM registration token:", currentToken);
-                
-                // ⚠️ مهم: این توکن (currentToken) را باید به سرور خود بفرستی
-                // تا بعداً بتوانی با استفاده از آن به این دستگاه پیام بفرستی.
-                // مثال: sendTokenToServer(currentToken);
+                // ⚠️ اینجا باید توکن رو به سرور بفرستی 
             } else {
-                console.log("No registration token available. Request permission to generate one.");
+                console.log("No registration token available.");
             }
         } else {
             console.log("Unable to get permission to notify.");
@@ -60,11 +56,8 @@ async function requestPermissionAndGetToken() {
 // 3. هندل کردن پیام‌های دریافتی وقتی کاربر در وبسایت است (Foreground)
 onMessage(messaging, (payload) => {
     console.log("Message received while in foreground: ", payload);
-    // نمایش نوتیفیکیشن داخل خود وبسایت (اختیاری)
     const notificationTitle = payload.notification.title;
-    const notificationOptions = {
-      body: payload.notification.body,
-    };
+    const notificationOptions = { body: payload.notification.body };
     new Notification(notificationTitle, notificationOptions);
 });
 
