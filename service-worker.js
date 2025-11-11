@@ -52,3 +52,12 @@ self.addEventListener('fetch', (event) => {
     })
   );
 });
+
+
+// 🔔 Najva push integration
+try {
+  importScripts('https://van.najva.com/static/js/najva-sw.js');
+  console.log('Najva service worker loaded successfully.');
+} catch (e) {
+  console.error('Najva SW load failed:', e);
+}
