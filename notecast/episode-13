@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>مدیریت تیرگی لثه با روکش زیرکونیا: راه حل اثر چتر (Umbrella Effect) | دنت‌کست</title>
+  <meta name="description" content="این قسمت به دلایل اصلی تیرگی لثه اطراف روکش‌های زیرکونیا و راه حل آن با رعایت مفاهیم عرض بیولوژیک و عرض زیبایی می‌پردازد. بررسی سازوکار اثر چتر (Umbrella Effect).">
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
+
+  <link rel="canonical" href="https://dentcast.ir/notecast/episode-13.html">
+
+  <style>
+    :root {
+      --blue: #0b5fff;
+      --bg: #0b1220;
+      --bg2: #121a2b;
+      --text: #e7eaf1;
+      --muted: #9aa1b3;
+      --radius: 18px;
+      --shadow: 0 18px 50px rgba(0,0,0,.35);
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Vazirmatn', sans-serif;
+      background: linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+      color: var(--text);
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 40px 22px 90px;
+      line-height: 1.9;
+    }
+
+    h1 {
+      text-align: center;
+      color: var(--blue);
+      font-weight: 800;
+      font-size: 2rem;
+      margin-bottom: 8px;
+    }
+
+    h2 {
+      text-align: center;
+      color: var(--text);
+      font-weight: 600;
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+    }
+
+    .glass-box {
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(12px);
+      border-radius: var(--radius);
+      padding: 20px 25px;
+      margin: 25px 0;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.25);
+      color: #111;
+      line-height: 1.9;
+    }
+
+    .glass-box h4 {
+      color: var(--blue);
+      font-weight: 700;
+      margin-top: 25px;
+      font-size: 1.1rem;
+    }
+
+    ul {
+      list-style-type: "✦ ";
+      padding-right: 20px;
+      margin: 10px 0 20px;
+    }
+
+    li { margin-bottom: 10px; }
+
+    .author {
+      text-align: center;
+      margin-top: 40px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    iframe {
+      width: 100%;
+      height: 110px;
+      border: none;
+      border-radius: var(--radius);
+      margin-top: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, .2);
+    }
+
+    .audio-box {
+      margin-top: 60px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius);
+      padding: 20px;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+
+    .back {
+      display: inline-block;
+      margin-top: 60px;
+      color: var(--blue);
+      text-decoration: none;
+      font-weight: 600;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 12px;
+      padding: 10px 20px;
+      background: rgba(255,255,255,0.05);
+      transition: all .3s ease;
+    }
+
+    .back:hover {
+      background: rgba(11,95,255,0.15);
+      transform: scale(1.03);
+    }
+
+    footer {
+      margin-top: 70px;
+      text-align: center;
+      color: var(--muted);
+      font-size: .9rem;
+    }
+
+    @media (max-width: 768px) {
+      body { padding: 25px 16px 60px; line-height: 1.8; }
+      h1 { font-size: 1.6rem; }
+      h2 { font-size: 1rem; margin-bottom: 24px; }
+      .glass-box h4 { font-size: 1rem; margin-top: 20px; }
+      ul { padding-right: 14px; font-size: .95rem; }
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "PodcastEpisode",
+    "url": "https://dentcast.ir/notecast/episode-13.html",
+    "name": "نوت‌کست سیزدهم – مدیریت تیرگی لثه با روکش زیرکونیا: اثر چتر (Umbrella Effect)",
+    "description": "این قسمت به دلایل اصلی تیرگی لثه اطراف روکش‌های زیرکونیا و راه حل آن با رعایت مفاهیم عرض بیولوژیک و عرض زیبایی می‌پردازد. بررسی سازوکار اثر چتر (Umbrella Effect).",
+    "partOfSeries": {
+      "@type": "PodcastSeries",
+      "name": "DentCast",
+      "url": "https://dentcast.ir"
+    },
+    "author": {
+      "@type": "Person",
+      "name": "دکتر فواد شهابیان",
+      "jobTitle": "متخصص پروتزهای دندانی و ایمپلنت"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "DentCast",
+      "url": "https://dentcast.ir"
+    },
+    "inLanguage": "fa",
+    "datePublished": "2025-11-17"
+  }
+  </script>
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png">
+  <link rel="apple-touch-icon" href="/favicon-512.png">
+  <meta name="theme-color" content="#0b5fff">
+</head>
+
+<body>
+
+  <h1>💎✨ نوت‌کست سیزدهم، خلاصه ی نوشتاری دنت‌کست سیزدهم ✨💎</h1>
+  <h2>مدیریت تیرگی لثه با روکش زیرکونیا: راه حل اثر چتر (Umbrella Effect)</h2>
+
+  <div class="glass-box">
+    <h4>مشکل اصلی: تیرگی لثه با روکش زیرکونیا</h4>
+    <ul>
+      <li>چرا لثه‌ها با وجود روکش‌های زیرکونیای بدون فلز، هنگام صحبت کردن **تیره و بد رنگ** به نظر می‌رسند؟</li>
+      <li>این تیرگی حتی در شرایطی که **رادیوگرافی سالم بودن دندان** را نشان می‌دهد، مشاهده می‌شود.</li>
+    </ul>
+  </div>
+
+  <div class="glass-box">
+    <h4>مفاهیم کلیدی برای حل مشکل</h4>
+    
+    <h4>۱. عرض بیولوژیک (Biological Width)</h4>
+    <ul>
+      <li>**تعریف:** به طول واحد دنتوژنژیوال که شامل **اپیتلیوم جانکشنال و اتصال بافت همبند** است، گفته می‌شود.</li>
+      <li>**اهمیت:** رعایت جایگاه صحیح مارجین روکش نسبت به عرض بیولوژیک برای حفظ سلامت بافت لثه و زیبایی پروتز ضروری است.</li>
+      <li>**روش تعیین:** با قرار دادن یک **نخ زیر لثه ای (retraction cord)**، محل صحیح مارجین روکش روی سطح بالایی نخ مشخص می‌شود.</li>
+    </ul>
+
+    <h4>۲. عرض زیبایی (Aesthetic Width)</h4>
+    <ul>
+      <li>**تعریف:** فضایی بین فینیش لاین و انتهای فریم‌ورک (اسکلت) روکش.</li>
+      <li>**اهمیت:** فریم‌ورک (مانند فلز یا زیرکونیا) در ناحیه باکال نباید تا خط ختم روکش ادامه یابد. باید **۱ تا ۱.۵ میلی‌متر بالاتر** از این خط تمام شود. این فضا سپس با **پرسلن مخصوص (porcelain shoulder)** پر می‌شود.</li>
+      <li>این مفهوم به‌ویژه در استفاده از فریم‌ورک‌های **کدر و غیرشفاف** اهمیت دوچندان دارد.</li>
+    </ul>
+  </div>
+
+  <div class="glass-box">
+    <h4>اثر چتر (The Umbrella Effect) – علت اصلی تیرگی</h4>
+    <ul>
+      <li>**سازوکار:** در حین صحبت، لب بالا مانند یک **چتر** عمل کرده و از رسیدن **نور مستقیم** به بافت لثه جلوگیری می‌کند.</li>
+      <li>اگر فریم‌ورک روکش تا انتهای خط ختم ادامه یابد، مانع از عبور **نور غیرمستقیم** از ناحیه سرویکال و پخش شدن آن در بافت‌های زیرین می‌شود. این فقدان نور باعث می‌شود لثه‌ها **تیره** به نظر برسند.</li>
+      <li>**راه حل:** با رعایت **عرض زیبایی** و استفاده از فریم‌ورک کوتاه‌تر، نور می‌تواند به ناحیه سرویکال نفوذ کرده و به‌طور غیرمستقیم در بافت لثه پخش شود. این کار از ایجاد ظاهر تیره جلوگیری کرده و زیبایی طبیعی را به ارمغان می‌آورد.</li>
+    </ul>
+  </div>
+
+  <div class="glass-box">
+    <h4>نکته پایانی</h4>
+    <ul>
+      <li>استفاده از روکش‌های زیرکونیا با **شولدر پرسلنی (porcelain shoulder)**، به‌ویژه در صورت غیرشفاف بودن، برای جلوگیری از **umbrella effect** و تأمین زیبایی لازم است.</li>
+    </ul>
+  </div>
+
+
+  <div class="author">
+    🌟 دکتر فواد شهابیان<br>متخصص پروتزهای دندانی و ایمپلنت
+  </div>
+
+  <div class="audio-box">
+    🎧 <strong>نسخه‌ی صوتی این دنت‌کست را بشنوید:</strong>
+    <iframe src="https://embed.acast.com/624b5545ecc0e600134ea0df/624b554b5af39e00127155de" frameBorder="0" width="100%" height="110px"></iframe>
+  </div>
+
+  <footer style="text-align:center; margin-top:45px; color:#9aa1b3; font-size:.9rem; line-height:1.8;">
+    <div style="margin-bottom:22px;">
+      <a href="index.html"
+         style="display:inline-block;background:rgba(11,95,255,0.18);color:#3a84ff;border:1.8px solid rgba(11,95,255,0.45);
+         border-radius:12px;padding:12px 42px;font-weight:700;text-decoration:none;font-size:1rem;
+         box-shadow:0 0 14px rgba(11,95,255,0.15);transition:all .25s ease;">
+        🔙 برگشت به صفحه‌ی قبل
+      </a>
+    </div>
+    <div style="margin-bottom:20px;">
+      <a href="https://dentcast.ir/about.html"
+         style="display:inline-block;background:rgba(255,220,80,0.85);color:#111;
+         border:1px solid rgba(255,220,80,0.55);border-radius:8px;padding:5px 12px;
+         font-weight:500;text-decoration:none;font-size:.8rem;box-shadow:0 0 6px rgba(255,220,80,0.1);
+         backdrop-filter:blur(5px);transition:all .25s ease;">
+        💬 درباره‌ی دکتر فواد شهابیان و دنت‌کست
+      </a>
+    </div>
+    <div style="margin-top:6px;">
+      © 2025 DentCast — طراحی و توسعه توسط
+      <strong style="color:#ffd46a;">فواد شهابیان</strong>
+    </div>
+  </footer>
+</body>
+</html>
