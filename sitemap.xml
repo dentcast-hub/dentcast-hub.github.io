@@ -17,6 +17,14 @@
     <priority>0.9</priority>
   </url>
 
+  <!-- ✨ صفحه‌ی LiteCast -->
+  <url>
+    <loc>https://dentcast.ir/litecast/index.html</loc>
+    <lastmod>2025-11-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
   <!-- 📸 صفحه‌ی فوتوکست‌ها -->
   <url>
     <loc>https://dentcast.ir/photocast/index.html</loc>
@@ -40,12 +48,13 @@
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
-<!-- ℹ️ صفحه‌ی درباره‌ی دنت‌کست -->
+
+  <!-- ℹ️ صفحه‌ی درباره‌ی دنت‌کست -->
   <url>
     <loc>https://dentcast.ir/about.html</loc>
     <lastmod>2025-11-07</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.8</priority>
   </url>
-  
+
 </urlset>
