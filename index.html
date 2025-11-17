@@ -8,11 +8,11 @@
   <meta name="author" content="دکتر فواد شهابیان">
   <link rel="canonical" href="https://dentcast.ir/">
 
+  <!-- Fonts -->
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" as="style">
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
 
   <style>
-    /* تمام استایل‌ها ۱۰۰٪ بدون تغییر */
     :root {
       --blue:#0b5fff;
       --bg:#0b1220;
@@ -57,7 +57,7 @@
 
     .install-banner strong { 
       color: var(--blue); 
-      font-weight: 600; 
+      font-weight: 600;
     }
 
     .install-btn {
@@ -76,14 +76,8 @@
       transition: all .3s ease;
     }
 
-    .install-btn:hover {
-      background: rgba(11,95,255,0.22);
-      transform: scale(1.05);
-    }
-
     header{text-align:center;margin-bottom:36px;}
-
-    header h1{color:var(--blue);font-size:2.1rem;margin:8px 0;font-weight:800;line-height:1.6;}
+    header h1{color:var(--blue);font-size:2.1rem;margin:8px 0;font-weight:800;}
     header h2{font-size:1.05rem;color:var(--text);opacity:.9;margin-top:4px;font-weight:600;}
     header p{color:var(--text);opacity:.85;line-height:1.8;font-size:1.05rem;}
 
@@ -92,15 +86,6 @@
       border-radius:var(--radius);
       box-shadow:var(--shadow);
       padding:26px 20px 36px;
-    }
-
-    .lead{
-      font-size:1.03rem;
-      line-height:1.9;
-      text-align:justify;
-      margin:0 0 28px;
-      color:var(--text);
-      opacity:.92;
     }
 
     .menu-links {
@@ -119,17 +104,9 @@
       border-radius:10px;
       padding:10px 18px;
       font-weight:600;
+      border:1.5px solid var(--gold);
       text-decoration:none;
       transition:all .3s ease;
-      border:1.5px solid var(--gold);
-      font-size:.95rem;
-      box-shadow:0 0 12px rgba(255,188,0,0.10);
-    }
-
-    .note-link:hover {
-      background:rgba(11,95,255,0.22);
-      transform:scale(1.03);
-      box-shadow:0 0 18px rgba(255,188,0,0.25);
     }
 
     iframe {
@@ -138,59 +115,6 @@
       border-radius:var(--radius);
       box-shadow:0 10px 25px rgba(0,0,0,.15);
       margin-top:40px;
-    }
-
-    .more-episodes {
-      text-align:center;
-      margin-top:20px;
-    }
-
-    .more-episodes a {
-      display:inline-block;
-      background:rgba(255,188,0,0.12);
-      color:#ffd46a;
-      border:1px solid rgba(255,188,0,0.45);
-      border-radius:10px;
-      padding:10px 20px;
-      font-weight:600;
-      text-decoration:none;
-      backdrop-filter:blur(8px);
-      transition:all .3s ease;
-    }
-
-    .more-episodes a:hover {
-      background:rgba(255,188,0,0.18);
-      transform:scale(1.03);
-    }
-
-    footer {
-      margin-top:50px;
-      color:var(--muted);
-      font-size:.9rem;
-      text-align:center;
-      line-height:1.7;
-    }
-
-    @media (max-width:768px){
-      .wrap{padding:0 14px;margin:30px auto 60px;}
-      header h1{font-size:1.7rem;}
-      header h2{font-size:.9rem;line-height:1.7;} 
-      header p{font-size:.9rem;line-height:1.7;}
-      .card{padding:18px 14px 28px;}
-      .lead{font-size:.92rem;}
-      iframe{height:190px;}
-    }
-
-    @media (min-width: 1024px) {
-      html { font-size: 1.05vw; }
-      body { padding: 2vh 0; }
-      main { width: 80vw; padding: 4vh 3vw; margin: 0 auto; }
-      h1 { font-size: 2.2vw; margin-bottom: 2vh; }
-      .intro, ul, .text-box {
-        width: 80%; margin: 0 auto 4vh; font-size: 1.05em; line-height: 2;
-      }
-      li { padding: 1.2vw 1.5vw; }
-      footer { margin-top: 6vh; font-size: 1vw; }
     }
 
     #last-update {
@@ -203,20 +127,10 @@
        border-radius:12px;
        display:inline-block;
        padding:8px 18px;
-       box-shadow:0 4px 16px rgba(11,95,255,0.15);
        backdrop-filter:blur(6px);
      }
 
      #update-date { color: #ffd95e; }
-
-     .glow {
-        animation: pulseGlow 2.5s ease-in-out infinite alternate;
-      }
-
-      @keyframes pulseGlow {
-        0% { box-shadow:0 0 10px rgba(11,95,255,0.2); color:#b8c8ff; }
-        100% { box-shadow:0 0 25px rgba(11,95,255,0.45); color:#e0e6ff; }
-      }
   </style>
 
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
@@ -233,57 +147,19 @@
       "@type": "PodcastSeries",
       "name": "DentCast",
       "url": "https://dentcast.ir/",
-      "description": "پادکست علمی دندان‌پزشکی با روایت دکتر فواد شهابیان؛ مرور ساده و تحلیلی تازه‌ترین مقالات حوزهٔ پروتز، ایمپلنت و دندان‌پزشکی.",
+      "description": "پادکست علمی دندان‌پزشکی...",
       "publisher": {
         "@type": "Organization",
         "name": "DentCast",
         "logo": {"@type": "ImageObject","url": "https://dentcast.ir/favicon-512.png"}
-      },
-      "inLanguage": "fa-IR",
-      "author": {
-        "@type": "Person",
-        "name": "دکتر فواد شهابیان",
-        "jobTitle": "متخصص پروتزهای دندانی و ایمپلنت"
-      },
-      "sameAs": [
-        "https://t.me/dentcast",
-        "https://t.me/dent_AI",
-        "https://podcasts.apple.com/us/podcast/dentcast/id1502032364",
-        "https://castbox.fm/va/4889954"
-      ]
+      }
     }
   </script>
-
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "دکتر فواد شهابیان",
-      "alternateName": "Foad Shahabian",
-      "jobTitle": "متخصص پروتزهای دندانی و ایمپلنت",
-      "description": "متخصص پروتزهای دندانی، ایمپلنت و گوینده پادکست علمی دنت‌کست (DentCast).",
-      "url": "https://dentcast.ir",
-      "image": "https://dentcast.ir/favicon-512.png",
-      "worksFor": {
-        "@type": "Organization",
-        "name": "DentCast",
-        "url": "https://dentcast.ir"
-      },
-      "sameAs": [
-        "https://t.me/dentcast",
-        "https://t.me/dent_AI",
-        "https://podcasts.apple.com/us/podcast/dentcast/id1502032364",
-        "https://castbox.fm/va/4889954"
-      ]
-    }
-  </script>
-
-  <meta name="robots" content="max-image-preview:large">
 </head>
 
 <body>
-  <div class="wrap">
-    <!-- محتوای اصلی بدون تغییر -->
+  <main class="wrap">
+
     <div class="install-banner" id="installBanner">
       برای دسترسی سریع‌تر، <strong>دنت‌کست</strong> را به صفحهٔ اصلی خود اضافه کنید
       <div id="installButton" class="install-btn"><span>+</span> افزودن</div>
@@ -292,29 +168,27 @@
     <header>
       <h1>🎙️ دنت‌کست — DentCast</h1>
       <h2>پادکست علمی دندان‌پزشکی با روایت دکتر فواد شهابیان</h2>
-      <p>متخصص پروتزهای دندانی و ایمپلنت،  
-        فارغ‌التحصیل دانشگاه شهید بهشتی و دانشگاه علوم پزشکی مشهد،  
-        دارای بورد تخصصی پروتز</p>
+      <p>متخصص پروتزهای دندانی و ایمپلنت</p>
     </header>
 
     <div id="last-update">
-      🔄 آخرین به‌روزرسانی: 
-      <strong id="update-date">در حال بررسی...</strong>
+      🔄 آخرین به‌روزرسانی: <strong id="update-date">در حال بررسی...</strong>
     </div>
-    
+
     <div class="card">
       <div class="menu-links">
-        <a href="notecast/index.html"  class="note-link">📝 مشاهده‌ی NoteCastها (خلاصه‌نویسی اپیزودها)</a>
-        <a href="photocast/index.html" class="note-link">📸 مشاهده‌ی PhotoCastها (آموزش با تصویر)</a>
-        <a href="dentai/index.html"    class="note-link">🤖 DentAI – خواندن مقاله با هوش مصنوعی</a>
-        <a href="insight/index.html"   class="note-link">🩺 Clinical Insight – نکات کلینیکی کاربردی</a>
-        <a href="litecast/index.html" class="note-link">✨ LiteCast — دندان‌پزشکی برای همه</a>
+        <a href="notecast/index.html"  class="note-link">📝 NoteCast</a>
+        <a href="photocast/index.html" class="note-link">📸 PhotoCast</a>
+        <a href="dentai/index.html"    class="note-link">🤖 DentAI</a>
+        <a href="insight/index.html"   class="note-link">🩺 Clinical Insight</a>
+        <a href="litecast/index.html"  class="note-link">✨ LiteCast</a>
       </div>
 
       <iframe
         src="https://embed.acast.com/624b5545ecc0e600134ea0df"
-        frameBorder="0"
+        frameborder="0"
         height="190"
+        loading="lazy"
         title="آخرین اپیزود دنت‌کست"></iframe>
 
       <div class="more-episodes">
@@ -324,134 +198,90 @@
 
     <footer>
       اهواز – کیانپارس، مطب دکتر فواد شهابیان<br>
-      تلفن: 33380090-061 &nbsp; | &nbsp; DentCast © 1404
-
-      <div style="margin-top:12px;text-align:center;">
-        <a href="about.html"
-         style="
-           display:inline-block;
-           background:rgba(255,160,0,0.22);
-           color:#ffcc4d;
-           border:1.5px solid rgba(255,180,0,0.8);
-           border-radius:10px;
-           padding:10px 20px;
-           font-weight:700;
-           text-decoration:none;
-           transition:all .15s ease;
-           box-shadow:0 0 18px rgba(255,170,0,0.18);
-           letter-spacing:.2px;
-           text-shadow:0 0 4px rgba(255,200,80,0.3);
-           user-select:none;
-           transform:scale(1);
-         "
-         onmouseover="this.style.background='rgba(255,170,0,0.35)';this.style.boxShadow='0 0 28px rgba(255,180,0,0.45)';this.style.textShadow='0 0 12px rgba(255,220,120,0.9)';"
-         onmouseout="this.style.background='rgba(255,160,0,0.22)';this.style.boxShadow='0 0 18px rgba(255,170,0,0.18)';this.style.textShadow='0 0 4px rgba(255,200,80,0.3)';this.style.transform='scale(1)';"
-         onmousedown="this.style.transform='scale(0.94)';this.style.boxShadow='0 0 12px rgba(255,180,0,0.3)';"
-         onmouseup="this.style.transform='scale(1)';this.style.boxShadow='0 0 28px rgba(255,180,0,0.45)';">
-         ✨ درباره‌ی دکتر فواد شهابیان و دنت‌کست
-        </a>
-      </div>
+      DentCast © 1404
     </footer>
-  </div>
 
-  <!-- اسکریپت‌ها فقط defer/async شده‌اند؛ محتوا ۱۰۰٪ بدون تغییر -->
+  </main>
 
+  <!-- Service Worker -->
   <script defer>
     const installButton = document.getElementById('installButton');
     const banner = document.getElementById('installBanner');
     let deferredPrompt;
 
-    const isiOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
-    if (isiOS) {
-      installButton.style.display = 'none';
-      banner.innerHTML = 'برای نصب دنت‌کست در آیفون: از دکمه‌ی <strong>Share</strong> استفاده کنید و گزینه‌ی <strong>Add to Home Screen</strong> را انتخاب کنید.';
-    }
-
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
       deferredPrompt = e;
-      installButton.addEventListener('click', () => {
+      installButton.onclick = () => {
         deferredPrompt.prompt();
-        deferredPrompt.userChoice.then(() => deferredPrompt = null);
-      });
+        deferredPrompt = null;
+      };
     });
 
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/service-worker.js')
-        .then(() => console.log('DentCast service worker registered.'))
-        .catch(err => console.error('SW registration failed:', err));
+      navigator.serviceWorker.register('/service-worker.js');
     }
   </script>
 
-  <script async>
+  <!-- GitHub Update Checker -->
+  <script defer>
     function updateLastCommit() {
-        const span = document.getElementById('update-date');
-        if (!span) return;
+      const span = document.getElementById('update-date');
+      if (!span) return;
 
-        (async () => {
-          try {
-            const res = await fetch('https://api.github.com/repos/dentcast-hub/dentcast-hub.github.io/commits?per_page=20');
-            if (!res.ok) throw new Error('GitHub status ' + res.status);
-            const commits = await res.json();
+      (async () => {
+        try {
+          const res = await fetch('https://api.github.com/repos/dentcast-hub/dentcast-hub.github.io/commits?per_page=20');
+          const commits = await res.json();
 
-            const contentFolders = ["notecast", "photocast", "dentai", "insight"];
-            let latestInfo = null;
+          const folders = ["notecast", "photocast", "dentai", "insight"];
+          let latest = null;
 
-            for (const commit of commits) {
-              const commitRes = await fetch(commit.url);
-              if (!commitRes.ok) continue;
-              const commitData = await commitRes.json();
-
-              const createdFile = commitData.files?.find(f =>
-                f.status === "added" &&
-                contentFolders.some(folder => f.filename.startsWith(folder + "/"))
-              );
-
-              if (createdFile) {
-                const folder = contentFolders.find(folder => createdFile.filename.startsWith(folder + "/"));
-                latestInfo = {
-                  folder,
-                  date: new Date(commitData.commit.committer.date)
-                };
-                break;
-              }
-            }
-
-            if (latestInfo) {
-              const options = {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-                timeZone: 'Asia/Tehran',
-                calendar: 'persian'
+          for (const commit of commits) {
+            const data = await (await fetch(commit.url)).json();
+            const newFile = data.files?.find(f =>
+              f.status === "added" && folders.some(fd => f.filename.startsWith(fd + "/"))
+            );
+            if (newFile) {
+              latest = {
+                folder: folders.find(fd => newFile.filename.startsWith(fd)),
+                date: new Date(data.commit.committer.date)
               };
-              const dateStr = latestInfo.date.toLocaleDateString('fa-IR', options);
-
-              const folderName = {
-                notecast: "NoteCast",
-                photocast: "PhotoCast",
-                dentai: "DentAI",
-                insight: "Clinical Insight"
-              }[latestInfo.folder] || latestInfo.folder;
-
-              span.textContent = `${dateStr} — در فولدر ${folderName} مطلب جدید قرار گرفت`;
-
-              document.getElementById('last-update').classList.add("glow");
-              setTimeout(() => document.getElementById('last-update').classList.remove("glow"), 4000);
-
-            } else {
-              span.textContent = "مطلب جدیدی شناسایی نشد";
+              break;
             }
-
-          } catch (err) {
-            span.textContent = "خطا در بررسی به‌روزرسانی‌ها";
           }
-        })();
+
+          if (latest) {
+            const options = {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+              timeZone: 'Asia/Tehran',
+              calendar: 'persian'
+            };
+            const dateStr = latest.date.toLocaleDateString('fa-IR', options);
+            const folderName = {
+              notecast: "NoteCast",
+              photocast: "PhotoCast",
+              dentai: "DentAI",
+              insight: "Clinical Insight"
+            }[latest.folder];
+
+            span.textContent = `${dateStr} — در فولدر ${folderName} مطلب جدید قرار گرفت`;
+          } else {
+            span.textContent = "مطلب جدیدی شناسایی نشد";
+          }
+
+        } catch {
+          span.textContent = "خطا در بررسی به‌روزرسانی‌ها";
+        }
+      })();
     }
 
-    setTimeout(updateLastCommit, 500); 
+    setTimeout(updateLastCommit, 400);
   </script>
 
+  <!-- Cloudflare -->
   <script defer src="https://static.cloudflareinsights.com/beacon.min.js"
     data-cf-beacon='{"token":"55c7b3d5b03640d28ab6214541606167"}'></script>
 
