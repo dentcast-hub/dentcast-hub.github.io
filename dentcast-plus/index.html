@@ -7,7 +7,9 @@
   <meta name="description" content="آموزش‌های ویدیویی کوتاه و تخصصی در حوزه پروتز، تراش، ایمپلنت و نکات بالینی — با روایت دکتر فؤاد شهابیان.">
   <link rel="canonical" href="https://dentcast.ir/dentcast-plus/index.html">
 
-  <!-- Schema.org -->
+  <link rel="icon" href="https://dentcast.ir/logo-v2.png" type="image/png" sizes="512x512">
+  <link rel="apple-touch-icon" href="https://dentcast.ir/logo-v2.png">
+
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -18,6 +20,7 @@
         "name": "دکتر فؤاد شهابیان",
         "jobTitle": "متخصص پروتزهای دندانی و ایمپلنت",
         "url": "https://dentcast.ir/about.html",
+        "image": "https://dentcast.ir/logo-v2.png",
         "sameAs": [
           "https://t.me/dentcast",
           "https://t.me/dent_AI",
@@ -44,6 +47,7 @@
   }
   </script>
 
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" as="style">
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
 
   <style>
@@ -59,11 +63,11 @@
     }
 
     html, body {
-      min-height:100%;
+      height: 100%;
+      margin: 0;
     }
 
     body{
-      margin:0;
       font-family:'Vazirmatn',sans-serif;
       background:radial-gradient(900px 500px at 40% -10%, rgba(11,95,255,0.15), transparent),
                  linear-gradient(180deg,var(--bg), var(--bg2));
@@ -75,22 +79,15 @@
       display:flex;
       flex-direction:column;
     }
-html, body {
-  height: 100%;
-}
 
-body {
-  display: flex;
-  flex-direction: column;
-}
+    main {
+      flex: 1 0 auto;
+    }
 
-main {
-  flex: 1 0 auto;
-}
+    footer {
+      flex-shrink: 0;
+    }
 
-footer {
-  flex-shrink: 0;
-}
     h1{
       text-align:center;
       color:var(--blue);
@@ -115,7 +112,6 @@ footer {
       display:flex;
       flex-direction:column;
       gap:24px;
-      flex:1 0 auto;
     }
 
     .video-card{
@@ -151,7 +147,6 @@ footer {
       position:relative;
     }
 
-    /* 🔥 برچسب DentCast+ وسط کارت */
     .center-brand {
       position:absolute;
       font-size:1.4rem;
@@ -171,17 +166,54 @@ footer {
       color:#bcd3ff;
     }
 
+    /* استایل دکمه‌های فوتر (هماهنگ با بقیه سایت) */
+    .btn-home {
+      display:inline-block;
+      background:rgba(11,95,255,0.18);
+      color:#3a84ff;
+      border:1.8px solid rgba(11,95,255,0.45);
+      border-radius:12px;
+      padding:12px 42px;
+      font-weight:700;
+      text-decoration:none;
+      font-size:1rem;
+      box-shadow:0 0 14px rgba(11,95,255,0.15);
+      transition:.25s;
+      margin-bottom: 22px;
+    }
+    .btn-home:hover {
+      background:rgba(11,95,255,0.28);
+      transform: scale(1.02);
+    }
+
+    .btn-about {
+      display:inline-block;
+      background:rgba(255,220,80,0.85);
+      color:#111;
+      border:1px solid rgba(255,220,80,0.55);
+      border-radius:8px;
+      padding:5px 12px;
+      font-weight:500;
+      text-decoration:none;
+      font-size:.8rem;
+      box-shadow:0 0 6px rgba(255,220,80,0.1);
+      backdrop-filter:blur(5px);
+      transition:.25s;
+      margin-bottom: 20px;
+    }
+    .btn-about:hover {
+      background:rgba(255,230,100,0.95);
+      transform: scale(1.02);
+    }
+
     footer{
       margin-top:60px;
       text-align:center;
       color:var(--muted);
       font-size:.9rem;
       line-height:1.8;
-      flex-shrink:0;
     }
   </style>
-
-  <link rel="icon" type="image/png" href="/favicon.png" sizes="32x32">
 </head>
 
 <body>
@@ -201,50 +233,25 @@ footer {
     </li>
   </ul>
 </main>
-  <!-- Footer (دقیقاً نسخه‌ی اصلی) -->
-  <footer style="text-align:center; margin-top:45px; color:#9aa1b3; font-size:.9rem; line-height:1.8;">
 
-  <div style="margin-bottom:22px;">
-    <a href="../index.html"
-   style="
-     display:inline-block;
-     background:rgba(11,95,255,0.18);
-     color:#3a84ff;
-     border:1.8px solid rgba(11,95,255,0.45);
-     border-radius:12px;
-     padding:12px 42px;
-     font-weight:700;
-     text-decoration:none;
-     font-size:1rem;
-     box-shadow:0 0 14px rgba(11,95,255,0.15);
-     transition:.25s;">
-  🔙 بازگشت به صفحهٔ قبل
-    </a>
-  </div>
+  <footer>
 
-  <div style="margin-bottom:20px;">
-    <a href="https://dentcast.ir/about.html"
-       style="
-         display:inline-block;
-         background:rgba(255,220,80,0.85);
-         color:#111;
-         border:1px solid rgba(255,220,80,0.55);
-         border-radius:8px;
-         padding:5px 12px;
-         font-weight:500;
-         text-decoration:none;
-         font-size:.8rem;
-         box-shadow:0 0 6px rgba(255,220,80,0.1);
-         backdrop-filter:blur(5px);
-         transition:.25s;">
-      💬 درباره‌ی دکتر فواد شهابیان و دنت‌کست
-    </a>
-  </div>
+    <div>
+      <a href="https://dentcast.ir/index.html" class="btn-home">
+        🏠 برگشت به صفحه‌ی اصلی
+      </a>
+    </div>
 
-  <div style="margin-top:6px;">
-    © 2025 DentCast — طراحی و توسعه توسط
-    <strong style="color:#ffd46a;">فواد شهابیان</strong>
-  </div>
+    <div>
+      <a href="https://dentcast.ir/about.html" class="btn-about">
+        💬 درباره‌ی دکتر فواد شهابیان و دنت‌کست
+      </a>
+    </div>
+
+    <div style="margin-top:6px;">
+      © 2025 DentCast — طراحی و توسعه توسط
+      <strong style="color:#ffd46a;">فواد شهابیان</strong>
+    </div>
 
   </footer>
 
