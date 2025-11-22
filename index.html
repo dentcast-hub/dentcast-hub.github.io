@@ -411,7 +411,8 @@ color: #e7eaf1;
             if (!res.ok) throw new Error('GitHub status ' + res.status);
             const commits = await res.json();
 
-            const contentFolders = ["notecast", "photocast", "dentai", "insight"];
+            // 🔵 اضافه کردن سکشن DentCast+
+            const contentFolders = ["notecast", "photocast", "dentai", "insight", "dentcast-plus"];
             let latestInfo = null;
 
             for (const commit of commits) {
@@ -444,11 +445,13 @@ color: #e7eaf1;
               };
               const dateStr = latestInfo.date.toLocaleDateString('fa-IR', options);
 
+              // 🔵 اسم انسانی فولدرها
               const folderName = {
                 notecast: "NoteCast",
                 photocast: "PhotoCast",
                 dentai: "DentAI",
-                insight: "Clinical Insight"
+                insight: "Clinical Insight",
+                "dentcast-plus": "DentCast+"
               }[latestInfo.folder] || latestInfo.folder;
 
               span.textContent = `${dateStr} — در فولدر ${folderName} مطلب جدید قرار گرفت`;
