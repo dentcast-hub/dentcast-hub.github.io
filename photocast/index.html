@@ -5,18 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>📸 فوتوکست‌ها | کیس‌های تصویری و بالینی پروتز | دنت‌کست</title>
   <meta name="description" content="فهرست کیس‌های تصویری کوتاه با توضیحات آموزشی و بالینی در حوزه‌ی پروتز و دندانپزشکی عملی، توسط دکتر فؤاد شهابیان (متخصص پروتز).">
- <link rel="canonical" href="https://dentcast.ir/photocast/index.html">
+  <link rel="canonical" href="https://dentcast.ir/photocast/index.html">
+
+  <link rel="icon" href="https://dentcast.ir/logo-v2.png" type="image/png" sizes="512x512">
+  <link rel="apple-touch-icon" href="https://dentcast.ir/logo-v2.png">
+
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" as="style">
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
+
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@graph": [
     {
-      // 1. تعریف مرجع اصلی (شما) برای تقویت E-E-A-T
       "@type": "Person",
       "@id": "https://dentcast.ir/#person",
       "name": "دکتر فؤاد شهابیان",
       "jobTitle": "متخصص پروتزهای دندانی و ایمپلنت",
       "url": "https://dentcast.ir/about.html",
+      "image": "https://dentcast.ir/logo-v2.png",
       "sameAs": [
         "https://t.me/dentcast",
         "https://t.me/dent_AI",
@@ -26,14 +33,12 @@
       ]
     },
     {
-      // 2. تعریف برند و وب‌سایت
       "@type": "WebSite",
       "@id": "https://dentcast.ir/#website",
       "url": "https://dentcast.ir/",
       "name": "DentCast | پادکست‌های تخصصی دندانپزشکی و پروتز"
     },
     {
-      // 3. تعریف صفحه‌ی فهرست فوتوکست‌ها به عنوان مجموعه (CollectionPage)
       "@type": "CollectionPage",
       "url": "https://dentcast.ir/photocast/index.html",
       "name": "📸 فوتوکست‌ها | کیس‌های تصویری و بالینی با توضیح آموزشی",
@@ -49,8 +54,6 @@
   ]
 }
   </script>
-  
-  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
 
   <style>
     :root{
@@ -64,42 +67,33 @@
       --goldglass:rgba(255,200,0,0.1);
       --goldborder:rgba(255,200,0,0.25);
     }
-html {
-  height: 100%;
-}
 
-body {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  margin: 0;
-  font-family: 'Vazirmatn', sans-serif;
-  background: linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
-  color: var(--text);
-  max-width: 920px;
-  margin: 0 auto;
-  padding: 40px 22px 60px; /* کمترش کردیم از 90px */
-  line-height: 1.9;
-}
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
 
-main {
-  flex: 1 0 auto;
-  padding: 40px 22px 0; /* padding بالا از body به main منتقل شد */
-}
+    body {
+      display: flex;
+      flex-direction: column;
+      font-family: 'Vazirmatn', sans-serif;
+      background: linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+      color: var(--text);
+      max-width: 920px;
+      margin: 0 auto;
+      line-height: 1.9;
+      /* پدینگ کلی فقط به بادی داده شد تا یکپارچه باشه */
+      padding: 0 22px; 
+    }
 
-footer {
-  flex-shrink: 0;
-  margin-top: 40px;
-}
-    body{
-      margin:0;
-      font-family:'Vazirmatn',sans-serif;
-      background:linear-gradient(180deg,var(--bg) 0%,var(--bg2) 100%);
-      color:var(--text);
-      max-width:920px;
-      margin:0 auto;
-      padding:0; /* padding از body حذف شد */
-      line-height:1.9;
+    main {
+      flex: 1 0 auto;
+      padding-top: 40px;
+      padding-bottom: 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     h1{
@@ -123,6 +117,7 @@ footer {
       padding:0;
       margin:0 auto 30px;
       text-align:center;
+      width: 100%;
     }
 
     li{
@@ -130,7 +125,7 @@ footer {
     }
 
     .photo-link{
-      display:inline-block;
+      display:block; /* تغییر به بلاک برای کلیک راحت‌تر */
       padding:14px 18px;
       border-radius:14px;
       text-align:center;
@@ -150,45 +145,62 @@ footer {
       transform:scale(1.03);
     }
 
-    .back{
+    /* استایل دکمه‌های فوتر (هماهنگ با بقیه سایت) */
+    .btn-home {
       display:inline-block;
-      margin-top:40px;
-      color:var(--blue);
-      text-decoration:none;
-      font-weight:600;
-      border:1px solid rgba(255,255,255,0.15);
+      background:rgba(11,95,255,0.18);
+      color:#3a84ff;
+      border:1.8px solid rgba(11,95,255,0.45);
       border-radius:12px;
-      padding:10px 20px;
-      background:rgba(255,255,255,0.05);
-      transition:all .3s ease;
+      padding:12px 42px;
+      font-weight:700;
+      text-decoration:none;
+      font-size:1rem;
+      box-shadow:0 0 14px rgba(11,95,255,0.15);
+      transition:all .25s ease;
+      margin-bottom: 22px;
+    }
+    .btn-home:hover {
+      background:rgba(11,95,255,0.28);
+      transform: scale(1.02);
     }
 
-    .back:hover{
-      background:rgba(11,95,255,0.15);
-      transform:scale(1.03);
+    .btn-about {
+      display:inline-block;
+      background:rgba(255,220,80,0.85);
+      color:#111;
+      border:1px solid rgba(255,220,80,0.55);
+      border-radius:8px;
+      padding:5px 12px;
+      font-weight:500;
+      text-decoration:none;
+      font-size:.8rem;
+      box-shadow:0 0 6px rgba(255,220,80,0.1);
+      backdrop-filter:blur(5px);
+      transition:all .25s ease;
+      margin-bottom: 20px;
+    }
+    .btn-about:hover {
+      background:rgba(255,230,100,0.95);
+      transform: scale(1.02);
     }
 
     footer{
-      margin-top:60px;
+      flex-shrink: 0;
+      margin-top: auto;
       text-align:center;
       color:var(--muted);
       font-size:.9rem;
+      padding-bottom: 40px;
     }
 
     @media (max-width:768px){
-      body {padding: 0;} /* padding از body حذف شد */
-      main{padding: 30px 16px 60px;} /* padding به main منتقل شد */
+      body { padding: 0 14px; }
       h1{font-size:1.6rem;}
       h2{font-size:1.0rem;}
-      li{padding:14px 18px;}
+      li{padding:0;}
     }
   </style>
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
-  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
-  <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png">
-  <link rel="apple-touch-icon" href="/favicon-512.png">
-  <meta name="theme-color" content="#0b5fff">
 </head>
 <body>
   <main> 
@@ -197,7 +209,7 @@ footer {
 
     <ul>
       <li>
-  <a href="episode-3.html" class="photo-link">فوتوکست ۳ – دندان ۶ پایین توی زیرِ ۱۸ سال: چه روکشی و کِی؟</a>
+        <a href="episode-3.html" class="photo-link">فوتوکست ۳ – دندان ۶ پایین توی زیرِ ۱۸ سال: چه روکشی و کِی؟</a>
       </li>
       <li>
         <a href="episode-2.html" class="photo-link">فوتوکست ۲ – قانون BULL: اصول طلایی تراش انتخابی در تنظیم اکلوزال</a>
@@ -205,44 +217,19 @@ footer {
       <li>
         <a href="episode-1.html" class="photo-link">فوتوکست ۱ – کیس درد فک پایین،سمت چپ بعد از روکش تازه</a>
       </li>
-      </ul>
+    </ul>
   </main>
   
-  <footer style="text-align:center; margin-top:45px; color:#9aa1b3; font-size:.9rem; line-height:1.8;">
+  <footer>
 
-    <div style="margin-bottom:22px;">
-      <a href="https://dentcast.ir/index.html"
-         style="
-           display:inline-block;
-           background:rgba(11,95,255,0.18);
-           color:#3a84ff;
-           border:1.8px solid rgba(11,95,255,0.45);
-           border-radius:12px;
-           padding:12px 42px;
-           font-weight:700;
-           text-decoration:none;
-           font-size:1rem;
-           box-shadow:0 0 14px rgba(11,95,255,0.15);
-           transition:all .25s ease;">
+    <div>
+      <a href="https://dentcast.ir/index.html" class="btn-home">
         🏠 برگشت به صفحه‌ی اصلی
       </a>
     </div>
 
-    <div style="margin-bottom:20px;">
-      <a href="https://dentcast.ir/about.html"
-         style="
-           display:inline-block;
-           background:rgba(255,220,80,0.85);
-           color:#111;
-           border:1px solid rgba(255,220,80,0.55);
-           border-radius:8px;
-           padding:5px 12px;
-           font-weight:500;
-           text-decoration:none;
-           font-size:.8rem;
-           box-shadow:0 0 6px rgba(255,220,80,0.1);
-           backdrop-filter:blur(5px);
-           transition:all .25s ease;">
+    <div>
+      <a href="https://dentcast.ir/about.html" class="btn-about">
         💬 درباره‌ی دکتر فواد شهابیان و دنت‌کست
       </a>
     </div>
