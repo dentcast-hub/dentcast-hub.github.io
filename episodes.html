@@ -9,6 +9,8 @@
   <meta name="author" content="دکتر فواد شهابیان">
   <link rel="canonical" href="https://dentcast.ir/episodes.html">
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
 
   <style>
@@ -38,19 +40,14 @@
       padding:0 20px;
     }
 
-    /* ** تغییر بهینه سازی سئو: 
-    * 1. H1 را برای عنوان اصلی صفحه تعریف کردیم.
-    * 2. اندازه فونت h1 (برای عنوان اصلی در بدنه) را افزایش دادیم تا بهتر به چشم بیاید.
-    */
     h1 {
       text-align:center;
       color:var(--blue);
       font-weight:800;
-      font-size:2.2rem; /* افزایش داده شد */
+      font-size:2.2rem;
       margin-bottom:10px;
     }
 
-    /* استایل جدید برای H3 ها */
     h3 {
       color:var(--blue);
       font-weight:700;
@@ -69,17 +66,16 @@
 
     .card {
       background:#fff;
-color:#000;
+      color:#000;
       text-align:center;
       border-radius:var(--radius);
       box-shadow:var(--shadow);
       padding:22px 18px 36px;
     }
     
-    /* استایل جدید برای لیست اصلی محتوا */
     .content-list {
-        list-style: disc inside; /* برای نمایش نقطه‌های لیست */
-        padding-right: 20px; /* فاصله از راست برای لیست */
+        list-style: disc inside;
+        padding-right: 20px;
         margin-top: 15px;
         margin-bottom: 25px;
         color: var(--text);
@@ -87,7 +83,7 @@ color:#000;
     }
     
     .content-list li {
-        font-size: .95rem; /* base font size was .95rem */
+        font-size: .95rem;
         line-height: 1.8;
         margin-bottom: 8px;
         color: var(--text);
@@ -114,20 +110,59 @@ color:#000;
       text-align:center;
       color:var(--muted);
       font-size:.85rem;
+      line-height: 1.8;
+    }
+
+    /* استایل دکمه‌های فوتر (تمیز شده) */
+    .btn-home {
+      display:inline-block;
+      background:rgba(11,95,255,0.18);
+      color:#3a84ff;
+      border:1.8px solid rgba(11,95,255,0.45);
+      border-radius:12px;
+      padding:12px 42px;
+      font-weight:700;
+      text-decoration:none;
+      font-size:1rem;
+      box-shadow:0 0 14px rgba(11,95,255,0.15);
+      transition:all .25s ease;
+      margin-bottom: 22px;
+    }
+    .btn-home:hover {
+      background:rgba(11,95,255,0.28);
+      transform: scale(1.02);
+    }
+
+    .btn-about {
+      display:inline-block;
+      background:rgba(255,220,80,0.85);
+      color:#111;
+      border:1px solid rgba(255,220,80,0.55);
+      border-radius:8px;
+      padding:5px 12px;
+      font-weight:500;
+      text-decoration:none;
+      font-size:.8rem;
+      box-shadow:0 0 6px rgba(255,220,80,0.1);
+      backdrop-filter:blur(5px);
+      transition:all .25s ease;
+      margin-bottom: 20px;
+    }
+    .btn-about:hover {
+      background:rgba(255,230,100,0.95);
+      transform: scale(1.02);
     }
 
     @media (max-width:768px){
       .wrap{padding:0 14px;margin:30px auto 60px;}
-      h1{font-size:1.8rem;} /* تغییر سایز برای موبایل */
+      h1{font-size:1.8rem;}
       iframe{height:520px;}
       .lead{font-size:.9rem;}
     }
   </style>
 
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
-  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
-  <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png">
-  <link rel="apple-touch-icon" href="/favicon-512.png">
+  <link rel="icon" href="https://dentcast.ir/logo-v2.png" type="image/png" sizes="512x512">
+  <link rel="apple-touch-icon" href="/logo-v2.png">
   <meta name="theme-color" content="#0b5fff">
 
   
@@ -136,13 +171,12 @@ color:#000;
   "@context": "https://schema.org",
   "@graph": [
     {
-      // 1. تعریف مرجع اصلی (شما) با تمام آدرس‌ها برای تثبیت E-E-A-T
       "@type": "Person",
       "@id": "https://dentcast.ir/#person",
       "name": "دکتر فؤاد شهابیان",
       "jobTitle": "متخصص پروتزهای دندانی و ایمپلنت",
       "url": "https://dentcast.ir/about.html",
-      // شامل تمام آدرس‌های شما (تلگرام، اینستاگرام، پادکست‌ها و...)
+      "image": "https://dentcast.ir/logo-v2.png", 
       "sameAs": [
         "https://t.me/dentcast",
         "https://t.me/dent_AI",
@@ -154,12 +188,10 @@ color:#000;
       ]
     },
     {
-      // 2. تعریف سری پادکست و اتصال آن به مرجع اصلی (#person)
       "@type": "PodcastSeries",
       "name": "DentCast",
       "url": "https://dentcast.ir/episodes.html", 
       "description": "فهرست کامل ۱۵۰ اپیزود پادکست تخصصی دنت‌کست: مرور پروتکل‌های کلینیکی پروتز، ایمپلنت، باندینگ سرامیک، TMD، دندانپزشکی دیجیتال و اباتمنتهای پیشرفته.",
-      // قوی‌ترین Keywords استخراج‌شده از آنالیز ۱۵۰ اپیزود
       "keywords": "پروتزهای دندانی، ایمپلنت، باندینگ سرامیک، سمان رزینی، TMD، زیرکونیا، Zero Bone Loss Concept، ITI، Smart Vent Crown، فایبر پست، اسکنر دیجیتال، لمینیت، DME، IDS، Global Diagnosis، بازسازی خلفی، اباتمنت Ti-base، پروتکل سمان کردن", 
       "inLanguage": "fa-IR",
       "author": {
@@ -167,7 +199,11 @@ color:#000;
       },
       "publisher": {
         "@type": "Organization",
-        "name": "DentCast"
+        "name": "DentCast",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://dentcast.ir/logo-v2.png"
+        }
       }
     }
   ]
@@ -192,7 +228,7 @@ color:#000;
             این مجموعه، گنجینه‌ای از دانش به‌روز کلینیکی است که به‌طور <strong>مداوم در حال گسترش و به‌روزرسانی</strong> است. با گوش دادن به اپیزودهای کامل، دانش شما در حوزه‌های حیاتی زیر به‌طور مستمر تقویت می‌شود:
           </p>
     
-          <ul class="content-list" style="list-style: disc; padding-right: 20px; font-size: 90%;">
+          <ul class="content-list">
               <li>
                 <h3>ایمپلنتولوژی پیشرفته:</h3> شامل مرور کانسپت‌هایی چون <strong>Zero Bone Loss</strong>، پروتکل‌های ایمپلنت فوری (Immediate Load)، انتخاب اباتمنت‌های Ti-base و Multi-unit و مدیریت تحلیل استخوان.
               </li>
@@ -217,49 +253,24 @@ color:#000;
       
     </div>
 
-    <footer style="text-align:center; margin-top:45px; color:#9aa1b3; font-size:.9rem; line-height:1.8;">
+    <footer>
 
-  <div style="margin-bottom:22px;">
-    <a href="https://dentcast.ir/index.html"
-       style="
-         display:inline-block;
-         background:rgba(11,95,255,0.18);
-         color:#3a84ff;
-         border:1.8px solid rgba(11,95,255,0.45);
-         border-radius:12px;
-         padding:12px 42px;
-         font-weight:700;
-         text-decoration:none;
-         font-size:1rem;
-         box-shadow:0 0 14px rgba(11,95,255,0.15);
-         transition:all .25s ease;">
-      🏠 برگشت به صفحه‌ی اصلی
-    </a>
-  </div>
+      <div>
+        <a href="https://dentcast.ir/index.html" class="btn-home">
+          🏠 برگشت به صفحه‌ی اصلی
+        </a>
+      </div>
 
-  <div style="margin-bottom:20px;">
-    <a href="https://dentcast.ir/about.html"
-       style="
-         display:inline-block;
-         background:rgba(255,220,80,0.85);
-         color:#111;
-         border:1px solid rgba(255,220,80,0.55);
-         border-radius:8px;
-         padding:5px 12px;
-         font-weight:500;
-         text-decoration:none;
-         font-size:.8rem;
-         box-shadow:0 0 6px rgba(255,220,80,0.1);
-         backdrop-filter:blur(5px);
-         transition:all .25s ease;">
-      💬 درباره‌ی دکتر فواد شهابیان و دنت‌کست
-    </a>
-  </div>
+      <div>
+        <a href="https://dentcast.ir/about.html" class="btn-about">
+          💬 درباره‌ی دکتر فواد شهابیان و دنت‌کست
+        </a>
+      </div>
 
-  <div style="margin-top:6px;">
-    © 2025 DentCast — طراحی و توسعه توسط
-    <strong style="color:#ffd46a;">فواد شهابیان</strong>
-  </div>
+      <div style="margin-top:6px;">
+        © 2025 DentCast — طراحی و توسعه توسط
+        <strong style="color:#ffd46a;">فواد شهابیان</strong>
+      </div>
 
     </footer>
   </div>
