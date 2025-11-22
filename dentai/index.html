@@ -5,13 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>🤖 DentAI – خواندن مقالات با هوش مصنوعی | دنت‌کست</title>
   <meta name="description" content="بخش DentAI دنت‌کست؛ جایی که دکتر فواد شهابیان با کمک هوش مصنوعی، مقالات و منابع دندان‌پزشکی را می‌خواند، خلاصه می‌کند و نکات کلینیکی را استخراج می‌کند.">
- <link rel="canonical" href="https://dentcast.ir/dentai/index.html">
+  <link rel="canonical" href="https://dentcast.ir/dentai/index.html">
 
-  <!-- 🔵 Preload فونت (افزوده شد) -->
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" as="style">
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
 
-  <!-- 🔵 JSON-LD بدون کامنت (اصلاح شد) -->
+  <link rel="icon" href="https://dentcast.ir/logo-v2.png" type="image/png" sizes="512x512">
+  <link rel="apple-touch-icon" href="https://dentcast.ir/logo-v2.png">
+
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -22,6 +23,7 @@
       "name": "دکتر فؤاد شهابیان",
       "jobTitle": "متخصص پروتزهای دندانی و ایمپلنت",
       "url": "https://dentcast.ir/about.html",
+      "image": "https://dentcast.ir/logo-v2.png",
       "sameAs": [
         "https://t.me/dentcast",
         "https://t.me/dent_AI",
@@ -119,55 +121,46 @@
       color:var(--blue);
     }
 
-    ul{
-      list-style:none;
-      padding:0;
-      margin-top:20px;
-    }
-
-    li{
-      background:rgba(255,255,255,0.05);
-      border:1px solid rgba(255,255,255,0.1);
-      border-radius:12px;
-      padding:14px 18px;
-      margin-bottom:12px;
-      transition:all .3s ease;
-      box-shadow:0 6px 20px rgba(0,0,0,.15);
-    }
-
-    li:hover{
-      background:rgba(11,95,255,0.12);
-      transform:translateY(-3px);
-    }
-
-    a{
-      color:var(--text);
-      text-decoration:none;
-      font-weight:500;
-      display:block;
-    }
-
-    a:hover{
-      color:var(--blue);
-    }
-
-    .back{
+    /* استایل دکمه‌های فوتر (هماهنگ با بقیه سایت) */
+    .btn-home {
       display:inline-block;
-      margin-top:50px;
-      color:var(--blue);
-      text-decoration:none;
-      font-weight:600;
-      border:1px solid rgba(255,255,255,0.15);
+      background:rgba(11,95,255,0.18);
+      color:#3a84ff;
+      border:1.8px solid rgba(11,95,255,0.45);
       border-radius:12px;
-      padding:10px 20px;
-      background:rgba(255,255,255,0.05);
-      transition:all .3s ease;
+      padding:12px 42px;
+      font-weight:700;
+      text-decoration:none;
+      font-size:1rem;
+      box-shadow:0 0 14px rgba(11,95,255,0.15);
+      transition:all .25s ease;
+      margin-bottom: 22px;
+    }
+    .btn-home:hover {
+      background:rgba(11,95,255,0.28);
+      transform: scale(1.02);
     }
 
-    .back:hover{
-      background:rgba(11,95,255,0.15);
-      transform:scale(1.03);
+    .btn-about {
+      display:inline-block;
+      background:rgba(255,220,80,0.85);
+      color:#111;
+      border:1px solid rgba(255,220,80,0.55);
+      border-radius:8px;
+      padding:5px 12px;
+      font-weight:500;
+      text-decoration:none;
+      font-size:.8rem;
+      box-shadow:0 0 6px rgba(255,220,80,0.1);
+      backdrop-filter:blur(5px);
+      transition:all .25s ease;
+      margin-bottom: 20px;
     }
+    .btn-about:hover {
+      background:rgba(255,230,100,0.95);
+      transform: scale(1.02);
+    }
+
 
     footer{
       margin-top:60px;
@@ -191,14 +184,6 @@
       h2{
         font-size:1.2rem;
         margin-top:32px;
-      }
-      li{
-        padding:12px 14px;
-      }
-      .back{
-        font-size:.9rem;
-        padding:8px 16px;
-        margin-top:40px;
       }
       footer{
         font-size:.8rem;
@@ -245,10 +230,6 @@
     }
   </style>
 
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
-  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
-  <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png">
-  <link rel="apple-touch-icon" href="/favicon-512.png">
   <meta name="theme-color" content="#0b5fff">
 </head>
 
@@ -271,8 +252,7 @@
 
   <h2>📚 فهرست پرونده‌های DentAI</h2>
 
-  <ul>
-    <div class="ai-list">
+  <div class="ai-list">
       <a href="dentai-1.html" class="ai-item">
         <div class="ai-title">⚡ مقالهٔ یک – تمایز بین خطوط ترک سنتی و خطوط ترک داخلی در مینای دندان</div>
         <div class="ai-desc">بررسی تفاوت ساختاری و بالینی دو نوع ترک مینایی و اهمیت تشخیص آن‌ها در درمان‌های ترمیمی</div>
@@ -285,53 +265,27 @@
         <div class="ai-title">⚡ مقالهٔ سوم – مدیریت درمان ضایعات پوسیدگی دندانی</div>
         <div class="ai-desc">بررسی راهنمای کامل درمان مرحله به مرحله پوسیدگی‌ها بر اساس عمق و میزان نفوذ</div>
       </a>
-    </div>
-  </ul>
+  </div>
 
   <footer style="text-align:center; margin-top:45px; color:#9aa1b3; font-size:.9rem; line-height:1.8;">
 
-  <div style="margin-bottom:22px;">
-    <a href="https://dentcast.ir/index.html"
-       style="
-         display:inline-block;
-         background:rgba(11,95,255,0.18);
-         color:#3a84ff;
-         border:1.8px solid rgba(11,95,255,0.45);
-         border-radius:12px;
-         padding:12px 42px;
-         font-weight:700;
-         text-decoration:none;
-         font-size:1rem;
-         box-shadow:0 0 14px rgba(11,95,255,0.15);
-         transition:all .25s ease;">
-      🏠 برگشت به صفحه‌ی اصلی
-    </a>
-  </div>
-
-  <div style="margin-bottom:20px;">
-    <a href="https://dentcast.ir/about.html"
-       style="
-         display:inline-block;
-         background:rgba(255,220,80,0.85);
-         color:#111;
-         border:1px solid rgba(255,220,80,0.55);
-         border-radius:8px;
-         padding:5px 12px;
-         font-weight:500;
-         text-decoration:none;
-         font-size:.8rem;
-         box-shadow:0 0 6px rgba(255,220,80,0.1);
-         backdrop-filter:blur(5px);
-         transition:all .25s ease;">
-      💬 درباره‌ی دکتر فواد شهابیان و دنت‌کست
-    </a>
-  </div>
-
-  <div style="margin-top:6px;">
-    © 2025 DentCast — طراحی و توسعه توسط
-    <strong style="color:#ffd46a;">فواد شهابیان</strong>
-  </div>
-
+    <div>
+      <a href="https://dentcast.ir/index.html" class="btn-home">
+        🏠 برگشت به صفحه‌ی اصلی
+      </a>
+    </div>
+  
+    <div>
+      <a href="https://dentcast.ir/about.html" class="btn-about">
+        💬 درباره‌ی دکتر فواد شهابیان و دنت‌کست
+      </a>
+    </div>
+  
+    <div style="margin-top:6px;">
+      © 2025 DentCast — طراحی و توسعه توسط
+      <strong style="color:#ffd46a;">فواد شهابیان</strong>
+    </div>
+  
   </footer>
 
 </body>
