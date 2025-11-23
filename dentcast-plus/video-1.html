@@ -4,13 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>🎬 DentCast+ – نکات شخصی که کیفیت تراش را واقعاً بهتر می‌کنند</title>
+  <title>🎬 DentCast+ – نکات شخصی برای کیفیت تراش بهتر</title>
 
   <meta name="description" content="در این ویدیوی کوتاه، دکتر فؤاد شهابیان سه نکته‌ی کاملاً بالینی و شخصی را توضیح می‌دهد که به‌صورت عملی کیفیت تراش را بهتر و قابل‌پیش‌بینی‌تر می‌کنند.">
 
   <link rel="canonical" href="https://dentcast.ir/dentcast-plus/video-1.html">
 
-  <!-- Schema.org -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -39,96 +38,153 @@
 
   <style>
     :root{
-      --blue:#0b5fff;
-      --bg:#0a0d14;
-      --bg2:#101522;
-      --text:#e7eaf1;
-      --muted:#9aa1b3;
-      --radius:18px;
-      --shadow:0 18px 40px rgba(0,0,40,.45);
+      --blue: #0b5fff;
+      --blue-glow: rgba(11, 95, 255, 0.4);
+      --bg: #0a0d14;
+      --bg2: #101522;
+      --text: #e7eaf1;
+      --muted: #9aa1b3;
+      --radius: 20px;
+      --shadow: 0 20px 50px rgba(0,0,0,0.5);
     }
 
     body{
-      margin:0;
-      font-family:'Vazirmatn',sans-serif;
-      background:radial-gradient(900px 500px at 40% -10%, rgba(11,95,255,0.15), transparent),
-                 linear-gradient(180deg,var(--bg), var(--bg2));
-      color:var(--text);
-      max-width:920px;
-      margin:0 auto;
-      padding:40px 22px 70px;
-      line-height:1.9;
+      margin: 0;
+      font-family: 'Vazirmatn', sans-serif;
+      background: radial-gradient(circle at 50% 0%, rgba(11,95,255,0.12), transparent 70%),
+                  linear-gradient(180deg, var(--bg), var(--bg2));
+      color: var(--text);
+      max-width: 860px; /* عرض بهینه‌تر برای ویدیو */
+      margin: 0 auto;
+      padding: 50px 20px 80px;
+      line-height: 1.9;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
-    h1{
-      text-align:center;
-      color:var(--blue);
-      font-size:1.8rem;
-      font-weight:800;
-      margin-bottom:20px;
-      text-shadow:0 0 18px rgba(11,95,255,0.35);
+    h1 {
+      text-align: center;
+      color: var(--blue);
+      font-size: 1.7rem;
+      font-weight: 800;
+      margin-bottom: 16px;
+      text-shadow: 0 0 25px var(--blue-glow);
     }
 
-    .desc{
-      text-align:center;
-      color:var(--muted);
-      margin:0 auto 35px;
-      font-size:1rem;
-      max-width:720px;
-      line-height:1.9;
+    .desc {
+      text-align: center;
+      color: var(--muted);
+      margin: 0 auto 40px;
+      font-size: 1.05rem;
+      max-width: 680px;
     }
 
-    .video-box{
-      position:relative;
-      width:100%;
-      border-radius:var(--radius);
-      overflow:hidden;
-      background:rgba(30,40,60,0.6);
-      border:1px solid rgba(255,255,255,0.05);
-      backdrop-filter:blur(10px);
-      box-shadow:var(--shadow);
-      margin-bottom:10px;
+    /* کانتینر ویدیو با نسبت تصویر ۱۶:۹ */
+    .video-wrapper {
+      position: relative;
+      width: 100%;
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: #000;
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: var(--shadow);
+      margin-bottom: 24px;
+      aspect-ratio: 16 / 9; /* جادوی ریسپانسیو */
     }
 
-    .video-box iframe{
-      width:100%;
-      height:480px;
-      border:0;
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
     }
 
-    .text-box{
-      background:rgba(255,255,255,0.06);
-      padding:20px 24px;
-      border-radius:var(--radius);
-      border:1px solid rgba(255,255,255,0.08);
-      backdrop-filter:blur(12px);
-      box-shadow:0 4px 20px rgba(0,0,0,0.2);
+    .text-box {
+      background: rgba(255,255,255,0.03);
+      padding: 22px 28px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(255,255,255,0.06);
+      backdrop-filter: blur(10px);
     }
 
-    .text-box p{
-      color:#d9e0f5;
-      margin-bottom:14px;
-      line-height:1.9;
-      font-size:1rem;
+    .text-box p {
+      color: #cbd2e6;
+      margin: 0 0 12px;
+      font-size: 1rem;
+    }
+    .text-box p:last-child { margin-bottom: 0; }
+
+    /* استایل‌های فوتر بهینه شده */
+    footer {
+      margin-top: auto; /* فوتر همیشه پایین می‌چسبد */
+      padding-top: 60px;
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .btn-back {
+      display: inline-block;
+      background: rgba(11,95,255,0.15);
+      color: #4a8dff;
+      border: 1px solid rgba(11,95,255,0.3);
+      border-radius: 12px;
+      padding: 12px 36px;
+      font-weight: 700;
+      text-decoration: none;
+      font-size: 1rem;
+      transition: all .3s ease;
+      margin-bottom: 20px;
+    }
+    .btn-back:hover {
+      background: rgba(11,95,255,0.25);
+      box-shadow: 0 0 15px rgba(11,95,255,0.2);
+      transform: translateY(-2px);
+    }
+
+    .btn-about {
+      display: inline-block;
+      background: rgba(255,220,80,0.9);
+      color: #111;
+      border-radius: 8px;
+      padding: 6px 14px;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 0.85rem;
+      box-shadow: 0 4px 12px rgba(255,220,80,0.15);
+      transition: transform .2s;
+    }
+    .btn-about:hover {
+      transform: scale(1.02);
+      background: #ffdb4d;
+    }
+
+    .copyright {
+      margin-top: 25px;
+      opacity: 0.7;
+      font-size: 0.85rem;
     }
 
     @media(max-width:768px){
-      .video-box iframe{ height:210px; }
-      h1{ font-size:1.4rem; }
-      .desc{ font-size:.92rem; }
+      h1 { font-size: 1.4rem; }
+      body { padding: 30px 16px 60px; }
+      .text-box { padding: 18px 20px; }
     }
   </style>
 </head>
 
 <body>
 
-  <h1>🎬 نکات شخصی که کیفیت تراش  دندان برای روکش را واقعاً بهتر می‌کنند</h1>
+  <h1>🎬 نکات شخصی که کیفیت تراش را واقعاً بهتر می‌کنند</h1>
 
   <div class="desc">
-    چند نکتهٔ کاربردی و شخصی که در کلینیک باعث میشود کیفیت ختم تراش روی دندانها قابل‌پیش‌بینی‌تر شود.
+    چند نکتهٔ کاربردی و شخصی که در کلینیک باعث می‌شود کیفیت ختم تراش روی دندان‌ها قابل‌پیش‌بینی‌تر شود.
   </div>
 
-  <div class="video-box">
+  <div class="video-wrapper">
     <iframe src="https://www.aparat.com/video/video/embed/videohash/qnv5w46/vt/frame?titleShow=true"
     allowfullscreen loading="lazy"></iframe>
   </div>
@@ -138,51 +194,23 @@
     <p>این نکات محصول تجربهٔ کلینیکی واقعی هستند؛ نه ورکشاپ، نه تئوری.</p>
   </div>
 
-  <!-- فوتر اصلی بدون تغییر -->
-  <footer style="text-align:center; margin-top:45px; color:#9aa1b3; font-size:.9rem; line-height:1.8;">
-
-    <div style="margin-bottom:22px;">
-      <a href="index.html"
-         style="
-           display:inline-block;
-           background:rgba(11,95,255,0.18);
-           color:#3a84ff;
-           border:1.8px solid rgba(11,95,255,0.45);
-           border-radius:12px;
-           padding:12px 42px;
-           font-weight:700;
-           text-decoration:none;
-           font-size:1rem;
-           box-shadow:0 0 14px rgba(11,95,255,0.15);
-           transition:all .25s ease;">
-        🔙 برگشت به صفحه‌ی قبل
+  <footer>
+    <div>
+      <a href="index.html" class="btn-back">
+        🔙 برگشت به لیست ویدیوها
       </a>
     </div>
 
-    <div style="margin-bottom:20px;">
-      <a href="https://dentcast.ir/about.html"
-         style="
-           display:inline-block;
-           background:rgba(255,220,80,0.85);
-           color:#111;
-           border:1px solid rgba(255,220,80,0.55);
-           border-radius:8px;
-           padding:5px 12px;
-           font-weight:500;
-           text-decoration:none;
-           font-size:.8rem;
-           box-shadow:0 0 6px rgba(255,220,80,0.1);
-           backdrop-filter:blur(5px);
-           transition:all .25s ease;">
-      💬 درباره‌ی دکتر فواد شهابیان و دنت‌کست
+    <div>
+      <a href="https://dentcast.ir/about.html" class="btn-about">
+        💬 درباره‌ی دکتر فواد شهابیان و دنت‌کست
       </a>
     </div>
 
-    <div style="margin-top:6px;">
+    <div class="copyright">
       © 2025 DentCast — طراحی و توسعه توسط
       <strong style="color:#ffd46a;">فواد شهابیان</strong>
     </div>
-
   </footer>
 
 </body>
