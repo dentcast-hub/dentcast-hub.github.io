@@ -12,7 +12,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
 
   <style>
-    /* تمام استایل‌ها ۱۰۰٪ بدون تغییر */
     :root {
       --blue:#0b5fff;
       --bg:#0b1220;
@@ -94,42 +93,63 @@
       padding:26px 20px 36px;
     }
 
-    .lead{
-      font-size:1.03rem;
-      line-height:1.9;
-      text-align:justify;
-      margin:0 0 28px;
-      color:var(--text);
-      opacity:.92;
-    }
-
+    /* --- تغییرات دکمه‌ها (Grid System) --- */
     .menu-links {
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      gap:16px;
-      text-align:center;
-      margin-top:20px;
+      display: grid;
+      grid-template-columns: 1fr 1fr; /* دو ستون مساوی */
+      gap: 14px;
+      margin-top: 20px;
     }
 
     .note-link {
-      display:inline-block;
-      background:rgba(11,95,255,0.10);
-      color: #f6c65b; /* طلایی گرَم حرفه‌ای */
-      border-radius:10px;
-      padding:10px 18px;
-      font-weight:600;
-      text-decoration:none;
-      transition:all .3s ease;
-      border:1.5px solid var(--gold);
-      font-size:.95rem;
-      box-shadow:0 0 12px rgba(255,188,0,0.10);
+      display: flex; /* برای وسط‌چین کردن متن در دکمه */
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: rgba(11,95,255,0.10);
+      color: #f6c65b;
+      border-radius: 10px;
+      padding: 12px 10px; /* کمی پدینگ عمودی بیشتر */
+      font-weight: 600;
+      text-decoration: none;
+      transition: all .3s ease;
+      border: 1.5px solid var(--gold);
+      font-size: .9rem;
+      box-shadow: 0 0 12px rgba(255,188,0,0.10);
+      height: 100%; /* برای هم‌اندازه شدن باکس‌ها */
+      box-sizing: border-box;
+    }
+
+    /* NoteCast (اولین دکمه) کل عرض را بگیرد */
+    .note-link:first-child {
+      grid-column: span 2;
+      font-size: 1rem; /* کمی بزرگتر چون مهمترینه */
+      padding: 14px;
+    }
+
+    /* LiteCast (آخرین دکمه) کل عرض را بگیرد */
+    .note-link:last-child {
+      grid-column: span 2;
     }
 
     .note-link:hover {
-      background:rgba(11,95,255,0.22);
-      transform:scale(1.03);
-      box-shadow:0 0 18px rgba(255,188,0,0.25);
+      background: rgba(11,95,255,0.22);
+      transform: scale(1.02);
+      box-shadow: 0 0 18px rgba(255,188,0,0.25);
+    }
+
+    /* --- استایل جدید باکس توضیحات (Glass Dark) --- */
+    .episode-box {
+      text-align: right; /* خوانایی بهتر */
+      font-size: .95rem;
+      color: var(--text); /* هماهنگ با تم */
+      margin-top: 14px;
+      line-height: 1.9;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 16px 20px;
+      backdrop-filter: blur(8px);
     }
 
     iframe {
@@ -147,9 +167,9 @@
 
     .more-episodes a {
       display:inline-block;
-      background: rgba(173, 216, 230, 0.15);  /* رنگ sky-blue ملایم */
-border: 1px solid rgba(173, 216, 230, 0.35);
-color: #e7eaf1;
+      background: rgba(173, 216, 230, 0.15);
+      border: 1px solid rgba(173, 216, 230, 0.35);
+      color: #e7eaf1;
       border-radius:10px;
       padding:10px 20px;
       font-weight:600;
@@ -177,7 +197,6 @@ color: #e7eaf1;
       header h2{font-size:.9rem;line-height:1.7;} 
       header p{font-size:.9rem;line-height:1.7;}
       .card{padding:18px 14px 28px;}
-      .lead{font-size:.92rem;}
       iframe{height:190px;}
     }
 
@@ -186,10 +205,6 @@ color: #e7eaf1;
       body { padding: 2vh 0; }
       main { width: 80vw; padding: 4vh 3vw; margin: 0 auto; }
       h1 { font-size: 2.2vw; margin-bottom: 2vh; }
-      .intro, ul, .text-box {
-        width: 80%; margin: 0 auto 4vh; font-size: 1.05em; line-height: 2;
-      }
-      li { padding: 1.2vw 1.5vw; }
       footer { margin-top: 6vh; font-size: 1vw; }
     }
 
@@ -220,12 +235,10 @@ color: #e7eaf1;
   </style>
 
   <link rel="icon" href="https://dentcast.ir/logo-v2.png" type="image/png" sizes="512x512">
-  
-<link rel="apple-touch-icon" href="/logo-v2.png">
+  <link rel="apple-touch-icon" href="/logo-v2.png">
   <meta name="theme-color" content="#0b5fff">
   <link rel="manifest" href="/manifest.json">
 
-  <!-- Schema.org بدون تغییر -->
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -282,7 +295,7 @@ color: #e7eaf1;
 
 <body>
   <div class="wrap">
-    <!-- محتوای اصلی بدون تغییر -->
+    
     <div class="install-banner" id="installBanner">
       برای دسترسی سریع‌تر، <strong>دنت‌کست</strong> را به صفحهٔ اصلی خود اضافه کنید
       <div id="installButton" class="install-btn"><span>+</span> افزودن</div>
@@ -303,38 +316,26 @@ color: #e7eaf1;
     
     <div class="card">
       <div class="menu-links">
-        <a href="notecast/index.html"  class="note-link">📝 مشاهده‌ی NoteCastها (خلاصه‌نویسی اپیزودها)</a>
-        <a href="photocast/index.html" class="note-link">📸 مشاهده‌ی PhotoCastها (آموزش با تصویر)</a>
-        <a href="dentai/index.html"    class="note-link">🤖 DentAI – خواندن مقاله با هوش مصنوعی</a>
-        <a href="insight/index.html"   class="note-link">🩺 Clinical Insight – نکات کلینیکی کاربردی</a>
-        <a href="dentcast-plus/index.html" class="note-link">
-  🎬 +DentCast — آموزش‌های ویدیویی
-        </a>
-        <a href="litecast/index.html" class="note-link">✨ LiteCast — دندان‌پزشکی برای همه</a>
-        
+        <a href="notecast/index.html"      class="note-link">📝 مشاهده‌ی NoteCastها (خلاصه‌نویسی اپیزودها)</a>
+        <a href="photocast/index.html"     class="note-link">📸 مشاهده‌ی PhotoCastها</a>
+        <a href="dentai/index.html"        class="note-link">🤖 DentAI – هوش مصنوعی</a>
+        <a href="insight/index.html"       class="note-link">🩺 Clinical Insight</a>
+        <a href="dentcast-plus/index.html" class="note-link">🎬 +DentCast — ویدیوها</a>
+        <a href="litecast/index.html"      class="note-link">✨ LiteCast — دندان‌پزشکی برای همه</a>
       </div>
-<div class="more-episodes">
+
+      <div class="more-episodes">
         <a href="episodes.html">🎧 شنیدن همه ی اپیزودهای دنت‌کست</a>
-</div>
+      </div>
+
       <iframe
         src="https://embed.acast.com/624b5545ecc0e600134ea0df"
         frameBorder="0"
         height="190"
         title="آخرین اپیزود دنت‌کست"></iframe>
 
-      <p style="
-  text-align:center;
-  font-size:.9rem;
-  color:#000;
-  margin-top:14px;
-  line-height:1.8;
-  background: rgba(135,206,235,0.85); 
-  border: 1px solid rgba(135,206,235,0.85);
-  border-radius: 12px;
-  padding: 10px 16px;
-  backdrop-filter: blur(6px);
-  display:inline-block;
-">این قسمت از «دنتوپدیا» به یک دیالوگ علمی دربارهٔ حفظ دندان‌های پریودنتالی آسیب‌دیده در برابر کشیدن و جایگزینی با ایمپلنت می‌پردازد؛ این‌که در بیماران مختلف کدام گزینه قابل پیش‌بینی‌تر است، چه محدودیت‌هایی وجود دارد، و چگونه شواهد جدید پریودنتال و ایمپلنتولوژی نگاه ما را به تصمیم‌گیری بالینی تغییر داده‌اند. این بحث نتیجهٔ قطعی ندارد و هدف آن ارائهٔ چارچوبی روشن برای انتخاب آگاهانه در شرایط پیچیده است.
+      <p class="episode-box">
+        این قسمت از «دنتوپدیا» به یک دیالوگ علمی دربارهٔ حفظ دندان‌های پریودنتالی آسیب‌دیده در برابر کشیدن و جایگزینی با ایمپلنت می‌پردازد؛ این‌که در بیماران مختلف کدام گزینه قابل پیش‌بینی‌تر است، چه محدودیت‌هایی وجود دارد، و چگونه شواهد جدید پریودنتال و ایمپلنتولوژی نگاه ما را به تصمیم‌گیری بالینی تغییر داده‌اند. این بحث نتیجهٔ قطعی ندارد و هدف آن ارائهٔ چارچوبی روشن برای انتخاب آگاهانه در شرایط پیچیده است.
       </p>
       
     </div>
@@ -370,8 +371,6 @@ color: #e7eaf1;
       </div>
     </footer>
   </div>
-
-  <!-- اسکریپت‌ها فقط defer/async شده‌اند؛ محتوا ۱۰۰٪ بدون تغییر -->
 
   <script defer>
     const installButton = document.getElementById('installButton');
@@ -445,7 +444,6 @@ color: #e7eaf1;
               };
               const dateStr = latestInfo.date.toLocaleDateString('fa-IR', options);
 
-              // 🔵 اسم انسانی فولدرها
               const folderName = {
                 notecast: "NoteCast",
                 photocast: "PhotoCast",
@@ -471,10 +469,6 @@ color: #e7eaf1;
 
     setTimeout(updateLastCommit, 500); 
   </script>
-
-  <script defer src="https://van.najva.com/static/js/main-script.js"
-    id="najva-mini-script"
-    data-najva-id="c8a60c09-e2c3-4669-b775-9fc4d6afb1db"></script>
 
   <script defer src="https://static.cloudflareinsights.com/beacon.min.js"
     data-cf-beacon='{"token":"55c7b3d5b03640d28ab6214541606167"}'></script>
