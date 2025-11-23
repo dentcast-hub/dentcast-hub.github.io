@@ -20,13 +20,7 @@
         "name": "دکتر فؤاد شهابیان",
         "jobTitle": "متخصص پروتزهای دندانی و ایمپلنت",
         "url": "https://dentcast.ir/about.html",
-        "image": "https://dentcast.ir/logo-v2.png",
-        "sameAs": [
-          "https://t.me/dentcast",
-          "https://t.me/dent_AI",
-          "https://podcasts.apple.com/us/podcast/dentcast/id1502032364",
-          "https://www.instagram.com/dr.foad_shahabian/"
-        ]
+        "image": "https://dentcast.ir/logo-v2.png"
       },
       {
         "@type": "WebSite",
@@ -52,166 +46,205 @@
 
   <style>
     :root{
-      --blue:#0b5fff;
-      --bg:#0a0d14;
-      --bg2:#101522;
-      --cardBg:rgba(20,30,50,0.60);
-      --text:#e7eaf1;
-      --muted:#9aa1b3;
-      --radius:18px;
-      --shadow:0 18px 40px rgba(0,0,40,.45);
+      --blue: #0b5fff;
+      --bg: #0a0d14;
+      --bg2: #101522;
+      --cardBg: rgba(30, 40, 60, 0.4);
+      --cardBorder: rgba(255, 255, 255, 0.08);
+      --text: #e7eaf1;
+      --muted: #9aa1b3;
+      --radius: 20px;
+      --shadow: 0 10px 30px rgba(0,0,0,0.4);
+      --hover-shadow: 0 15px 40px rgba(11, 95, 255, 0.25);
     }
 
-    html, body {
-      height: 100%;
+    html, body { height: 100%; margin: 0; }
+
+    body {
+      font-family: 'Vazirmatn', sans-serif;
+      background: radial-gradient(circle at 50% 0%, rgba(11,95,255,0.15), transparent 60%),
+                  linear-gradient(180deg, var(--bg), var(--bg2));
+      color: var(--text);
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 40px 24px 60px;
+      line-height: 1.8;
+      display: flex;
+      flex-direction: column;
+    }
+
+    main { flex: 1 0 auto; width: 100%; box-sizing: border-box; }
+    footer { flex-shrink: 0; }
+
+    h1 {
+      text-align: center;
+      color: var(--blue);
+      font-weight: 800;
+      font-size: 2.2rem;
+      margin-bottom: 8px;
+      text-shadow: 0 0 25px rgba(11, 95, 255, 0.4);
+    }
+
+    h2 {
+      text-align: center;
+      color: var(--muted);
+      font-weight: 500;
+      font-size: 1.1rem;
+      margin-top: 0;
+      margin-bottom: 50px;
+      opacity: 0.8;
+    }
+
+    /* Grid Layout: Responsive automatically */
+    .video-grid {
+      list-style: none;
+      padding: 0;
       margin: 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* جادوی ریسپانسیو */
+      gap: 30px;
     }
 
-    body{
-      font-family:'Vazirmatn',sans-serif;
-      background:radial-gradient(900px 500px at 40% -10%, rgba(11,95,255,0.15), transparent),
-                 linear-gradient(180deg,var(--bg), var(--bg2));
-      color:var(--text);
-      max-width:920px;
-      margin:0 auto;
-      padding:40px 22px 60px;
-      line-height:1.9;
-      display:flex;
-      flex-direction:column;
+    .video-card {
+      display: block;
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: var(--cardBg);
+      border: 1px solid var(--cardBorder);
+      backdrop-filter: blur(12px);
+      box-shadow: var(--shadow);
+      transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+      text-decoration: none;
+      color: var(--text);
+      position: relative;
     }
 
-    main {
-      flex: 1 0 auto;
+    .video-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--hover-shadow);
+      border-color: rgba(11, 95, 255, 0.4);
     }
 
-    footer {
-      flex-shrink: 0;
+    /* Thumbnail Styles */
+    .thumb {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      /* گرادینت زیبا برای زمانی که عکس لود نشده یا وجود ندارد */
+      background: linear-gradient(135deg, #1a2a4a 0%, #0b1526 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .thumb img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0.9;
+        transition: transform 0.6s ease;
     }
 
-    h1{
-      text-align:center;
-      color:var(--blue);
-      font-weight:800;
-      font-size:2rem;
-      margin-bottom:8px;
-      text-shadow:0 0 18px rgba(11,95,255,0.35);
+    /* افکت زوم روی تصویر هنگام هاور */
+    .video-card:hover .thumb img {
+        transform: scale(1.05);
     }
 
-    h2{
-      text-align:center;
-      color:var(--muted);
-      font-weight:600;
-      font-size:1.1rem;
-      margin-bottom:40px;
+    /* Play Button Icon */
+    .play-icon {
+        width: 50px;
+        height: 50px;
+        background: rgba(11, 95, 255, 0.9);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 0 20px rgba(11, 95, 255, 0.6);
+        z-index: 2;
+        transition: transform 0.3s ease, background 0.3s;
+        position: absolute;
+    }
+    
+    .play-icon::before {
+        content: '';
+        display: block;
+        width: 0; 
+        height: 0; 
+        border-top: 8px solid transparent;
+        border-bottom: 8px solid transparent;
+        border-left: 14px solid #fff;
+        margin-left: 4px; /* Centering fix */
     }
 
-    .video-list{
-      list-style:none;
-      padding:0;
-      margin:0;
-      display:flex;
-      flex-direction:column;
-      gap:24px;
+    .video-card:hover .play-icon {
+        transform: scale(1.15);
+        background: #fff;
+    }
+    .video-card:hover .play-icon::before {
+        border-left-color: var(--blue);
     }
 
-    .video-card{
-      display:block;
-      padding:0;
-      border-radius:var(--radius);
-      overflow:hidden;
-      background:var(--cardBg);
-      border:1px solid rgba(255,255,255,0.06);
-      backdrop-filter:blur(10px);
-      box-shadow:var(--shadow);
-      transition:.3s ease;
-      text-decoration:none;
-      color:var(--text);
-      position:relative;
+    .video-info {
+      padding: 20px 24px;
     }
 
-    .video-card:hover{
-      transform:scale(1.02);
-      box-shadow:0 0 28px rgba(11,95,255,0.35);
+    .video-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 8px;
+      line-height: 1.6;
+    }
+    
+    .video-meta {
+        font-size: 0.85rem;
+        color: var(--muted);
     }
 
-    .thumb{
-      width:100%;
-      height:190px;
-      background:#0b5fff22;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      color:#fff;
-      font-size:2.2rem;
-      text-shadow:0 0 12px rgba(11,95,255,0.8);
-      position:relative;
-    }
-
-    .center-brand {
-      position:absolute;
-      font-size:1.4rem;
-      font-weight:800;
-      color:rgba(255,255,255,0.7);
-      text-shadow:0 0 22px rgba(11,95,255,0.6);
-      top:50%;
-      left:50%;
-      transform:translate(-50%, -50%);
-      pointer-events:none;
-    }
-
-    .video-title{
-      padding:16px 20px;
-      font-size:1rem;
-      font-weight:600;
-      color:#bcd3ff;
-    }
-
-    /* استایل دکمه‌های فوتر (هماهنگ با بقیه سایت) */
+    /* Buttons */
     .btn-home {
-      display:inline-block;
-      background:rgba(11,95,255,0.18);
-      color:#3a84ff;
-      border:1.8px solid rgba(11,95,255,0.45);
-      border-radius:12px;
-      padding:12px 42px;
-      font-weight:700;
-      text-decoration:none;
-      font-size:1rem;
-      box-shadow:0 0 14px rgba(11,95,255,0.15);
-      transition:.25s;
+      display: inline-block;
+      background: rgba(11,95,255,0.12);
+      color: #3a84ff;
+      border: 1px solid rgba(11,95,255,0.3);
+      border-radius: 12px;
+      padding: 12px 36px;
+      font-weight: 700;
+      text-decoration: none;
+      font-size: 1rem;
+      transition: all .3s ease;
       margin-bottom: 22px;
     }
     .btn-home:hover {
-      background:rgba(11,95,255,0.28);
-      transform: scale(1.02);
+      background: rgba(11,95,255,0.22);
+      transform: translateY(-2px);
+      box-shadow: 0 0 15px rgba(11, 95, 255, 0.2);
     }
 
     .btn-about {
-      display:inline-block;
-      background:rgba(255,220,80,0.85);
-      color:#111;
-      border:1px solid rgba(255,220,80,0.55);
-      border-radius:8px;
-      padding:5px 12px;
-      font-weight:500;
-      text-decoration:none;
-      font-size:.8rem;
-      box-shadow:0 0 6px rgba(255,220,80,0.1);
-      backdrop-filter:blur(5px);
-      transition:.25s;
+      display: inline-block;
+      background: rgba(255,220,80,0.9);
+      color: #111;
+      border-radius: 8px;
+      padding: 6px 14px;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 0.85rem;
+      box-shadow: 0 4px 12px rgba(255,220,80,0.15);
+      transition: transform .2s;
       margin-bottom: 20px;
     }
     .btn-about:hover {
-      background:rgba(255,230,100,0.95);
-      transform: scale(1.02);
+      transform: scale(1.03);
+      background: #ffdb4d;
     }
 
-    footer{
-      margin-top:60px;
-      text-align:center;
-      color:var(--muted);
-      font-size:.9rem;
-      line-height:1.8;
+    footer {
+      margin-top: 70px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.9rem;
     }
   </style>
 </head>
@@ -221,21 +254,22 @@
   <h1>🎬 DentCast+</h1>
   <h2>آموزش‌های ویدیویی کوتاه و تخصصی</h2>
 
-  <ul class="video-list">
-    <li>
-      <a href="video-1.html" class="video-card">
-        <div class="thumb">
-          <div class="center-brand">DentCast+</div>
-          ▶
-        </div>
+  <div class="video-grid">
+    
+    <a href="video-1.html" class="video-card">
+      <div class="thumb">
+        <div class="play-icon"></div>
+      </div>
+      <div class="video-info">
         <div class="video-title">نکات شخصی که کیفیت تراش را واقعاً بهتر می‌کنند</div>
-      </a>
-    </li>
-  </ul>
+        <div class="video-meta">دکتر فواد شهابیان • ۳ دقیقه</div>
+      </div>
+    </a>
+
+    </div>
 </main>
 
   <footer>
-
     <div>
       <a href="https://dentcast.ir/index.html" class="btn-home">
         🏠 برگشت به صفحه‌ی اصلی
@@ -248,11 +282,10 @@
       </a>
     </div>
 
-    <div style="margin-top:6px;">
+    <div style="margin-top:10px; opacity:0.6; font-size:0.8rem;">
       © 2025 DentCast — طراحی و توسعه توسط
       <strong style="color:#ffd46a;">فواد شهابیان</strong>
     </div>
-
   </footer>
 
 </body>
