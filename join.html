@@ -20,7 +20,7 @@
     body {
       margin: 0;
       font-family: 'Vazirmatn', sans-serif;
-      background: radial-gradient(circle at 50% 0%, rgba(11,95,255,0.2), transparent 70%),
+      background: radial-gradient(circle at 50% 0%, rgba(11,95,255,0.25), transparent 60%),
                   linear-gradient(180deg, var(--bg), var(--bg2));
       color: var(--text);
       min-height: 100vh;
@@ -33,7 +33,7 @@
 
     .container {
       width: 100%;
-      max-width: 450px; /* عرض مناسب موبایل */
+      max-width: 450px;
       text-align: center;
     }
 
@@ -47,41 +47,43 @@
       justify-content: center;
       font-size: 40px;
       margin: 0 auto 25px;
-      box-shadow: 0 0 30px rgba(11,95,255,0.4);
+      box-shadow: 0 0 35px rgba(11,95,255,0.5);
     }
 
     h1 {
-      font-size: 1.6rem;
+      font-size: 1.7rem;
       font-weight: 800;
-      margin-bottom: 10px;
-      background: linear-gradient(to right, #fff, #bcd3ff);
+      margin-bottom: 12px;
+      background: linear-gradient(to right, #ffffff, #dbeafe);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.2);
     }
 
+    /* ✅ اصلاح مهم: رنگ متن توضیحات روشن شد */
     p.subtitle {
-      color: #8890a5;
-      font-size: 0.95rem;
+      color: #e2e8f0; /* سفید یخی */
+      font-size: 1rem;
       line-height: 1.8;
       margin-bottom: 35px;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.5); /* سایه برای خوانایی */
     }
 
-    /* استایل باکس فرم */
     .newsletter-box {
-      background: rgba(30, 40, 60, 0.5);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(30, 40, 60, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.12);
       border-radius: 20px;
       padding: 30px 25px;
-      backdrop-filter: blur(15px);
-      box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.4);
     }
 
     .newsletter-input {
       width: 100%;
       padding: 16px;
       border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.15);
-      background: rgba(0,0,0,0.3);
+      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(0,0,0,0.4);
       color: #fff;
       font-family: 'Vazirmatn', sans-serif;
       font-size: 1rem;
@@ -94,7 +96,12 @@
 
     .newsletter-input:focus {
       border-color: var(--blue);
-      background: rgba(0,0,0,0.5);
+      background: rgba(0,0,0,0.6);
+      box-shadow: 0 0 0 4px rgba(11, 95, 255, 0.2);
+    }
+    
+    .newsletter-input::placeholder {
+      color: #9ca3af; /* رنگ پلیس‌هولدر روشن‌تر */
     }
 
     .newsletter-btn {
@@ -109,12 +116,13 @@
       font-size: 1.1rem;
       cursor: pointer;
       transition: 0.3s;
-      box-shadow: 0 5px 20px rgba(11,95,255,0.3);
+      box-shadow: 0 8px 25px rgba(11,95,255,0.35);
     }
 
     .newsletter-btn:hover {
-      background: #004ad4;
+      background: #256eff;
       transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(11,95,255,0.5);
     }
 
     .success-message {
@@ -126,22 +134,34 @@
       padding: 20px;
     }
 
+    /* ✅ اصلاح مهم: متن قفل امنیتی روشن شد */
     .spam-note {
       margin-top: 20px;
-      font-size: 0.8rem;
-      color: #556075;
+      font-size: 0.85rem;
+      color: #cbd5e1; /* طوسی خیلی روشن */
+      opacity: 0.9;
     }
 
+    /* ✅ اصلاح مهم: لینک پایین صفحه آبی روشن شد */
     .home-link {
       display: block;
       margin-top: 40px;
-      color: #556075;
+      color: #93c5fd; /* آبی آسمانی روشن */
       text-decoration: none;
-      font-size: 0.9rem;
+      font-size: 0.95rem;
+      transition: 0.3s;
+      opacity: 0.9;
+    }
+    
+    .home-link:hover {
+        color: #fff;
+        opacity: 1;
+        text-shadow: 0 0 10px rgba(147, 197, 253, 0.6);
     }
     
     .ml-form-embedSubmitLoad { display: none; }
   </style>
+  
 </head>
 <body>
 
