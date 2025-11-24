@@ -3,14 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>نوت‌کست ۲۳ – اورلود اکلوزالی و تحلیل استخوان در ایمپلنتها| دنت‌کست</title>
+  <title>نوت‌کست ۲۳ – اورلود اکلوزالی و تحلیل استخوان ایمپلنت | دنت‌کست</title>
 
   <meta name="description" content="نوت‌کست بیست و سوم دنت‌کست؛ بررسی سیستماتیک تاثیر اورلود اکلوزالی بر تحلیل استخوان اطراف ایمپلنت. آیا تماس‌های شدید باعث تحلیل استخوان می‌شوند؟ تفکیک بیولوژیک و بیومکانیک.">
 
   <link rel="canonical" href="https://dentcast.ir/notecast/episode-23.html">
-
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
-
 
   <style>
     :root {
@@ -38,16 +36,18 @@
       text-align: center;
       color: var(--blue);
       font-weight: 800;
-      font-size: 2rem;
+      font-size: 1.8rem; /* کمی کوچکتر برای ظرافت */
       margin-bottom: 8px;
+      line-height: 1.4;
     }
 
     h2 {
       text-align: center;
       color: var(--text);
       font-weight: 600;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       margin-bottom: 30px;
+      opacity: 0.9;
     }
 
     .glass-box {
@@ -84,48 +84,71 @@
       margin-top: 40px;
       font-weight: 600;
       color: var(--text);
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+
+    /* استایل جدید پلیر ظریف */
+    .audio-wrapper {
+      margin-top: 50px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 15px; /* پدینگ کمتر */
+      text-align: center;
     }
 
     iframe {
       width: 100%;
       height: 110px;
       border: none;
-      border-radius: var(--radius);
-      margin-top: 15px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, .2);
-    }
-
-    .audio-box {
-      margin-top: 60px;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: var(--radius);
-      padding: 20px;
-      text-align: center;
-      box-shadow: var(--shadow);
-    }
-
-    .back {
-      display: inline-block;
-      margin-top: 60px;
-      color: var(--blue);
-      text-decoration: none;
-      font-weight: 600;
-      border: 1px solid rgba(255, 255, 255, 0.15);
       border-radius: 12px;
-      padding: 10px 20px;
-      background: rgba(255, 255, 255, 0.05);
-      transition: all .3s ease;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, .15);
+    }
+    
+    /* دکمه‌های ظریف */
+    .platform-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        text-decoration: none;
+        color: white;
+        padding: 6px 14px; /* سایز دکمه کوچکتر */
+        border-radius: 50px; /* کاملا گرد */
+        font-size: 0.8rem; /* فونت ریزتر */
+        font-weight: 500;
+        transition: all 0.2s ease;
+        opacity: 0.9;
+    }
+    .platform-link:hover {
+        opacity: 1;
+        transform: translateY(-1px);
     }
 
     footer {
       margin-top: 70px;
       text-align: center;
       color: var(--muted);
-      font-size: .9rem;
+      font-size: .85rem;
+    }
+    
+    /* دکمه بازگشت */
+    .back-btn {
+        display: inline-block; 
+        background: rgba(11,95,255,0.1); 
+        color: #3a84ff; 
+        border: 1px solid rgba(11,95,255,0.3); 
+        border-radius: 50px; 
+        padding: 8px 24px; 
+        font-weight: 600; 
+        text-decoration: none; 
+        font-size: 0.9rem;
+        transition: all 0.3s;
+    }
+    .back-btn:hover {
+        background: rgba(11,95,255,0.2);
     }
   </style>
-
 
   <script type="application/ld+json">
   {
@@ -135,13 +158,17 @@
       "@type": "WebPage",
       "@id": "https://dentcast.ir/notecast/episode-23.html"
     },
-    "name": "نوت‌کست ۲۳ – اورلود اکلوزالی و تحلیل استخوان؛ واقعیت چیست؟",
+    "name": "نوت‌کست ۲۳ – اورلود اکلوزالی و تحلیل استخوان ایمپلنت",
     "description": "بررسی سیستماتیک تاثیر اورلود اکلوزالی بر تحلیل استخوان اطراف ایمپلنت بر اساس مقاله Clinical Oral Implant Research.",
     "url": "https://dentcast.ir/notecast/episode-23.html",
     "partOfSeries": {
       "@type": "PodcastSeries",
       "name": "DentCast – پادکست علمی دندان‌پزشکی",
-      "url": "https://dentcast.ir/"
+      "url": "https://dentcast.ir/",
+      "sameAs": [
+        "https://castbox.fm/vb/483138361",
+        "https://t.me/dentcast/85"
+      ]
     },
     "author": {
       "@type": "Person",
@@ -158,12 +185,7 @@
       }
     },
     "inLanguage": "fa-IR",
-    "datePublished": "2025-11-24",
-    "associatedMedia": {
-      "@type": "AudioObject",
-      "contentUrl": "LINK_TO_NEW_EPISODE_AUDIO",
-      "encodingFormat": "audio/mpeg"
-    }
+    "datePublished": "2025-11-24"
   }
   </script>
 
@@ -172,7 +194,7 @@
 <body>
 
   <h2>✨ نوت‌کست بیست‌وسوم ✨</h2>
-  <h1>اورلود اکلوزالی و تحلیل استخوان اطراف ایمپلنتها؛ واقعیت چیست؟</h1>
+  <h1>اورلود اکلوزالی و تحلیل استخوان اطراف ایمپلنت‌ها؛ واقعیت چیست؟</h1>
 
 
   <div class="glass-box">
@@ -282,51 +304,43 @@
     🌟 دکتر فواد شهابیان<br>متخصص پروتزهای دندانی و ایمپلنت
   </div>
 
-  <div class="audio-box">
-    🎧 <strong>نسخه صوتی این نوت‌کست را بشنوید:</strong>
-      <div class="audio-box">
-    <p style="margin-bottom: 15px; font-size: 1.1rem;">🎧 <strong>نسخه صوتی این نوت‌کست را بشنوید:</strong></p>
+  <div class="audio-wrapper">
+    <div style="font-size: 0.8rem; color: var(--muted); margin-bottom: 8px;">
+        نسخه صوتی این نوت‌کست:
+    </div>
     
-    <iframe src="https://embed.acast.com/624b5545ecc0e600134ea0df/624b554b5af39e00127155d4" frameBorder="0" width="100%" height="110px"></iframe>
+    <iframe src="https://embed.acast.com/624b5545ecc0e600134ea0df/624b554b5af39e00127155d4" frameBorder="0"></iframe>
 
-    <div style="margin-top: 25px; display: flex; flex-wrap: wrap; gap: 12px; justify-content: center;">
+    <div style="margin-top: 15px; display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
       
-      <a href=" https://castbox.fm/vb/483138361" target="_blank" 
-         style="text-decoration: none; background: linear-gradient(135deg, #F55B23 0%, #d14615 100%); color: white; padding: 10px 20px; border-radius: 12px; font-weight: 600; font-size: 0.9rem; box-shadow: 0 4px 15px rgba(245, 91, 35, 0.3); transition: transform 0.2s;"
-         onmouseover="this.style.transform='translateY(-2px)'" 
-         onmouseout="this.style.transform='translateY(0)'">
+      <a href="https://castbox.fm/vb/483138361" target="_blank" class="platform-link" style="background: #F55B23;">
          🎙️ کست‌باکس
       </a>
 
-      <a href=" https://t.me/dentcast/85" target="_blank" 
-         style="text-decoration: none; background: linear-gradient(135deg, #229ED9 0%, #1a7db0 100%); color: white; padding: 10px 20px; border-radius: 12px; font-weight: 600; font-size: 0.9rem; box-shadow: 0 4px 15px rgba(34, 158, 217, 0.3); transition: transform 0.2s;"
-         onmouseover="this.style.transform='translateY(-2px)'" 
-         onmouseout="this.style.transform='translateY(0)'">
+      <a href="https://t.me/dentcast/85" target="_blank" class="platform-link" style="background: #229ED9;">
          ✈️ تلگرام
       </a>
 
     </div>
-      </div>
-    
   </div>
+
 
   <footer>
     <div style="margin-bottom:22px;">
-      <a href="index.html"
-        style="display:inline-block; background:rgba(11,95,255,0.18); color:#3a84ff; border:1.8px solid rgba(11,95,255,0.45); border-radius:12px; padding:12px 42px; font-weight:700; text-decoration:none; font-size:1rem;">
-        🔙 برگشت به صفحه‌ی قبل
+      <a href="index.html" class="back-btn">
+        🔙 لیست نوت‌کست‌ها
       </a>
     </div>
 
     <div style="margin-bottom:20px;">
       <a href="https://dentcast.ir/about.html"
-        style="display:inline-block; background:rgba(255,220,80,0.85); color:#111; border:1px solid rgba(255,220,80,0.55); border-radius:8px; padding:5px 12px; font-weight:500; text-decoration:none; font-size:.8rem;">
-        💬 درباره‌ی دکتر فواد شهابیان و دنت‌کست
+        style="display:inline-block; background:rgba(255,220,80,0.85); color:#111; border:1px solid rgba(255,220,80,0.55); border-radius:8px; padding:4px 10px; font-weight:500; text-decoration:none; font-size:.75rem;">
+        💬 درباره‌ی دنت‌کست
       </a>
     </div>
 
     <div style="margin-top:6px;">
-      © 2025 DentCast — طراحی و توسعه توسط <strong style="color:#ffd46a;">فواد شهابیان</strong>
+      © 2025 DentCast
     </div>
   </footer>
 
