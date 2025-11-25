@@ -39,6 +39,42 @@
       padding:0 20px;
     }
 
+    /* استایل بنر تبلیغاتی جدید */
+    .ad-banner {
+      display: block;
+      margin: 12px auto 28px;
+      text-align: center;
+      text-decoration: none;
+      background: rgba(255, 188, 0, 0.05); /* پس‌زمینه خیلی محو طلایی */
+      border: 1px dashed rgba(255, 188, 0, 0.6); /* حاشیه خط‌چین */
+      border-radius: 12px;
+      padding: 12px 20px;
+      color: #ffd95e;
+      font-size: .95rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      max-width: fit-content;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+
+    .ad-banner strong {
+      font-weight: 800;
+      color: #fff;
+      background: rgba(255, 188, 0, 0.2);
+      padding: 2px 8px;
+      border-radius: 6px;
+      margin-right: 8px;
+    }
+
+    .ad-banner:hover {
+      background: rgba(255, 188, 0, 0.15);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(255, 188, 0, 0.15);
+      border-color: #ffd95e;
+    }
+
     .install-banner {
       background: rgba(255,255,255,0.04);
       border: 1px solid rgba(255,255,255,0.06);
@@ -93,41 +129,38 @@
       padding:26px 20px 36px;
     }
 
-    /* --- تغییرات دکمه‌ها (Grid System) --- */
     .menu-links {
       display: grid;
-      grid-template-columns: 1fr 1fr; /* دو ستون مساوی */
+      grid-template-columns: 1fr 1fr;
       gap: 14px;
       margin-top: 20px;
     }
 
     .note-link {
-      display: flex; /* برای وسط‌چین کردن متن در دکمه */
+      display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
       background: rgba(11,95,255,0.10);
       color: #f6c65b;
       border-radius: 10px;
-      padding: 12px 10px; /* کمی پدینگ عمودی بیشتر */
+      padding: 12px 10px;
       font-weight: 600;
       text-decoration: none;
       transition: all .3s ease;
       border: 1.5px solid var(--gold);
       font-size: .9rem;
       box-shadow: 0 0 12px rgba(255,188,0,0.10);
-      height: 100%; /* برای هم‌اندازه شدن باکس‌ها */
+      height: 100%;
       box-sizing: border-box;
     }
 
-    /* NoteCast (اولین دکمه) کل عرض را بگیرد */
     .note-link:first-child {
       grid-column: span 2;
-      font-size: 1rem; /* کمی بزرگتر چون مهمترینه */
+      font-size: 1rem;
       padding: 14px;
     }
 
-    /* LiteCast (آخرین دکمه) کل عرض را بگیرد */
     .note-link:last-child {
       grid-column: span 2;
     }
@@ -138,11 +171,10 @@
       box-shadow: 0 0 18px rgba(255,188,0,0.25);
     }
 
-    /* --- استایل جدید باکس توضیحات (Glass Dark) --- */
     .episode-box {
-      text-align: right; /* خوانایی بهتر */
+      text-align: right;
       font-size: .95rem;
-      color: var(--text); /* هماهنگ با تم */
+      color: var(--text);
       margin-top: 14px;
       line-height: 1.9;
       background: rgba(255, 255, 255, 0.04);
@@ -198,6 +230,7 @@
       header p{font-size:.9rem;line-height:1.7;}
       .card{padding:18px 14px 28px;}
       iframe{height:190px;}
+      .ad-banner{ width: 90%; font-size: 0.85rem; }
     }
 
     @media (min-width: 1024px) {
@@ -207,31 +240,6 @@
       h1 { font-size: 2.2vw; margin-bottom: 2vh; }
       footer { margin-top: 6vh; font-size: 1vw; }
     }
-
-    #last-update {
-       text-align:center;
-       margin:12px auto 28px;
-       color:#9aa1b3;
-       font-size:.92rem;
-       background:rgba(11,95,255,0.08);
-       border:1px solid rgba(11,95,255,0.25);
-       border-radius:12px;
-       display:inline-block;
-       padding:8px 18px;
-       box-shadow:0 4px 16px rgba(11,95,255,0.15);
-       backdrop-filter:blur(6px);
-     }
-
-     #update-date { color: #ffd95e; }
-
-     .glow {
-        animation: pulseGlow 2.5s ease-in-out infinite alternate;
-      }
-
-      @keyframes pulseGlow {
-        0% { box-shadow:0 0 10px rgba(11,95,255,0.2); color:#b8c8ff; }
-        100% { box-shadow:0 0 25px rgba(11,95,255,0.45); color:#e0e6ff; }
-      }
   </style>
 
   <link rel="icon" href="https://dentcast.ir/logo-v2.png" type="image/png" sizes="512x512">
@@ -245,7 +253,7 @@
       "@type": "PodcastSeries",
       "name": "DentCast",
       "url": "https://dentcast.ir/",
-      "description": "پادکست علمی دندان‌پزشکی با روایت دکتر فواد شهابیان؛ مرور ساده و تحلیلی تازه‌ترین مقالات حوزهٔ پروتز، ایمپلنت و دندان‌پزشکی.",
+      "description": "پادکست علمی دندان‌پزشکی با روایت دکتر فواد شهابیان...",
       "publisher": {
         "@type": "Organization",
         "name": "DentCast",
@@ -309,10 +317,9 @@
         دارای بورد تخصصی پروتز</p>
     </header>
 
-    <div id="last-update">
-      🔄 آخرین به‌روزرسانی: 
-      <strong id="update-date">در حال بررسی...</strong>
-    </div>
+    <a href="https://t.me/dentcast_support" target="_blank" class="ad-banner">
+       📢 معرفی برند شما به جامعه دندان‌پزشکی &nbsp;|&nbsp; <strong>رزرو جایگاه</strong>
+    </a>
     
     <div class="card">
       <div class="menu-links">
@@ -323,165 +330,164 @@
         <a href="dentcast-plus/index.html" class="note-link"> +DentCast <br>ویدیوها</a>
         <a href="litecast/index.html"      class="note-link">✨ LiteCast — دندان‌پزشکی برای همه</a>
       </div>
-<style>
-  .newsletter-wrapper {
-    max-width: 600px; /* عرض کمتر برای ظرافت بیشتر */
-    margin: 30px auto 40px;
-    padding: 0 15px;
-    font-family: 'Vazirmatn', sans-serif;
-    box-sizing: border-box;
-  }
 
-  .newsletter-box {
-    /* شیشه دودی تیره هماهنگ با تم سایت */
-    background: rgba(20, 30, 50, 0.6); 
-    border: 1px solid rgba(255, 255, 255, 0.08); /* حاشیه خیلی محو */
-    border-radius: 16px;
-    padding: 20px 24px; /* ارتفاع کمتر */
-    text-align: center;
-    backdrop-filter: blur(12px);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    position: relative;
-    overflow: hidden;
-  }
+      <style>
+        .newsletter-wrapper {
+          max-width: 600px;
+          margin: 30px auto 40px;
+          padding: 0 15px;
+          font-family: 'Vazirmatn', sans-serif;
+          box-sizing: border-box;
+        }
 
-  /* نوار رنگی باریک بالای باکس برای زیبایی */
-  .newsletter-box::before {
-    content: "";
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, #0b5fff, transparent);
-    opacity: 0.8;
-  }
+        .newsletter-box {
+          background: rgba(20, 30, 50, 0.6); 
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          border-radius: 16px;
+          padding: 20px 24px;
+          text-align: center;
+          backdrop-filter: blur(12px);
+          box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+          position: relative;
+          overflow: hidden;
+        }
 
-  .newsletter-title {
-    font-size: 0.95rem;
-    font-weight: 700;
-    color: #bcd3ff; /* آبی خیلی روشن */
-    margin-bottom: 6px;
-  }
+        .newsletter-box::before {
+          content: "";
+          position: absolute;
+          top: 0; left: 0; right: 0;
+          height: 2px;
+          background: linear-gradient(90deg, transparent, #0b5fff, transparent);
+          opacity: 0.8;
+        }
 
-  .newsletter-text {
-    font-size: 0.8rem;
-    color: #8890a5; /* طوسی ملایم */
-    margin-bottom: 18px;
-    line-height: 1.6;
-  }
+        .newsletter-title {
+          font-size: 0.95rem;
+          font-weight: 700;
+          color: #bcd3ff;
+          margin-bottom: 6px;
+        }
 
-  .newsletter-form-group {
-    display: flex;
-    gap: 8px;
-    position: relative;
-  }
+        .newsletter-text {
+          font-size: 0.8rem;
+          color: #8890a5;
+          margin-bottom: 18px;
+          line-height: 1.6;
+        }
 
-  .newsletter-input {
-    flex: 1;
-    padding: 10px 14px;
-    border-radius: 10px;
-    border: 1px solid rgba(255,255,255,0.1);
-    background: rgba(0, 0, 0, 0.25); /* تیره */
-    color: #fff;
-    font-family: 'Vazirmatn', sans-serif;
-    font-size: 0.85rem;
-    outline: none;
-    transition: all 0.3s;
-  }
+        .newsletter-form-group {
+          display: flex;
+          gap: 8px;
+          position: relative;
+        }
 
-  .newsletter-input:focus {
-    border-color: #0b5fff;
-    background: rgba(0, 0, 0, 0.4);
-  }
-  
-  .newsletter-input::placeholder {
-    color: #556075;
-    font-size: 0.8rem;
-  }
+        .newsletter-input {
+          flex: 1;
+          padding: 10px 14px;
+          border-radius: 10px;
+          border: 1px solid rgba(255,255,255,0.1);
+          background: rgba(0, 0, 0, 0.25);
+          color: #fff;
+          font-family: 'Vazirmatn', sans-serif;
+          font-size: 0.85rem;
+          outline: none;
+          transition: all 0.3s;
+        }
 
-  .newsletter-btn {
-    background: #0b5fff; /* آبی برند */
-    color: white;
-    border: none;
-    padding: 0 20px;
-    border-radius: 10px;
-    font-family: 'Vazirmatn', sans-serif;
-    font-weight: 600;
-    font-size: 0.85rem;
-    cursor: pointer;
-    transition: all 0.3s;
-    white-space: nowrap;
-  }
+        .newsletter-input:focus {
+          border-color: #0b5fff;
+          background: rgba(0, 0, 0, 0.4);
+        }
+        
+        .newsletter-input::placeholder {
+          color: #556075;
+          font-size: 0.8rem;
+        }
 
-  .newsletter-btn:hover {
-    background: #004ad4;
-    box-shadow: 0 0 10px rgba(11, 95, 255, 0.4);
-  }
+        .newsletter-btn {
+          background: #0b5fff;
+          color: white;
+          border: none;
+          padding: 0 20px;
+          border-radius: 10px;
+          font-family: 'Vazirmatn', sans-serif;
+          font-weight: 600;
+          font-size: 0.85rem;
+          cursor: pointer;
+          transition: all 0.3s;
+          white-space: nowrap;
+        }
 
-  .success-message {
-    display: none;
-    background: rgba(16, 185, 129, 0.15);
-    color: #34d399;
-    border: 1px solid rgba(16, 185, 129, 0.2);
-    border-radius: 10px;
-    padding: 12px;
-    margin-top: 10px;
-    font-size: 0.85rem;
-  }
+        .newsletter-btn:hover {
+          background: #004ad4;
+          box-shadow: 0 0 10px rgba(11, 95, 255, 0.4);
+        }
 
-  .ml-form-embedSubmitLoad { display: none; }
+        .success-message {
+          display: none;
+          background: rgba(16, 185, 129, 0.15);
+          color: #34d399;
+          border: 1px solid rgba(16, 185, 129, 0.2);
+          border-radius: 10px;
+          padding: 12px;
+          margin-top: 10px;
+          font-size: 0.85rem;
+        }
 
-  @media (max-width: 480px) {
-    .newsletter-form-group {
-      flex-direction: column;
-    }
-    .newsletter-btn {
-      padding: 10px;
-      width: 100%;
-    }
-  }
-</style>
+        .ml-form-embedSubmitLoad { display: none; }
 
-<div id="mlb2-33724259" class="newsletter-wrapper ml-subscribe-form ml-subscribe-form-33724259">
-  <div class="newsletter-box">
-    
-    <div class="row-form">
-        <div class="newsletter-title">📬 خبرنامه‌ی دنت‌کست</div>
-        <div class="newsletter-text">
-          اطلاع‌رسانی اپیزودها و مطالب جدید (بدون اسپم)
-        </div>
+        @media (max-width: 480px) {
+          .newsletter-form-group {
+            flex-direction: column;
+          }
+          .newsletter-btn {
+            padding: 10px;
+            width: 100%;
+          }
+        }
+      </style>
 
-        <form class="ml-block-form" action="https://assets.mailerlite.com/jsonp/1939653/forms/171891141676893488/subscribe" data-code="" method="post" target="_blank">
+      <div id="mlb2-33724259" class="newsletter-wrapper ml-subscribe-form ml-subscribe-form-33724259">
+        <div class="newsletter-box">
           
-          <div class="newsletter-form-group">
-            <input aria-label="email" aria-required="true" type="email" class="newsletter-input" data-inputmask="" name="fields[email]" placeholder="ایمیل شما..." autocomplete="email" required>
-            
-            <button type="submit" class="newsletter-btn">
-               عضویت
-               <span class="ml-form-embedSubmitLoad">...</span>
-            </button>
+          <div class="row-form">
+              <div class="newsletter-title">📬 خبرنامه‌ی دنت‌کست</div>
+              <div class="newsletter-text">
+                اطلاع‌رسانی اپیزودها و مطالب جدید (بدون اسپم)
+              </div>
+
+              <form class="ml-block-form" action="https://assets.mailerlite.com/jsonp/1939653/forms/171891141676893488/subscribe" data-code="" method="post" target="_blank">
+                
+                <div class="newsletter-form-group">
+                  <input aria-label="email" aria-required="true" type="email" class="newsletter-input" data-inputmask="" name="fields[email]" placeholder="ایمیل شما..." autocomplete="email" required>
+                  
+                  <button type="submit" class="newsletter-btn">
+                     عضویت
+                     <span class="ml-form-embedSubmitLoad">...</span>
+                  </button>
+                </div>
+
+                <input type="hidden" name="ml-submit" value="1">
+                <input type="hidden" name="anticsrf" value="true">
+              </form>
           </div>
 
-          <input type="hidden" name="ml-submit" value="1">
-          <input type="hidden" name="anticsrf" value="true">
-        </form>
-    </div>
+          <div class="row-success success-message">
+              ✅ ایمیل شما با موفقیت ثبت شد.
+          </div>
 
-    <div class="row-success success-message">
-        ✅ ایمیل شما با موفقیت ثبت شد.
-    </div>
+        </div>
+      </div>
 
-  </div>
-</div>
-
-<script>
-    function ml_webform_success_33724259() {
-      var formRow = document.querySelector('.ml-subscribe-form-33724259 .row-form');
-      var successRow = document.querySelector('.ml-subscribe-form-33724259 .row-success');
-      if(formRow) formRow.style.display = 'none';
-      if(successRow) successRow.style.display = 'block';
-    }
-</script>
-<script src="https://groot.mailerlite.com/js/w/webforms.min.js?v176e10baa5e7ed80d35ae235be3d5024" type="text/javascript"></script>
+      <script>
+          function ml_webform_success_33724259() {
+            var formRow = document.querySelector('.ml-subscribe-form-33724259 .row-form');
+            var successRow = document.querySelector('.ml-subscribe-form-33724259 .row-success');
+            if(formRow) formRow.style.display = 'none';
+            if(successRow) successRow.style.display = 'block';
+          }
+      </script>
+      <script src="https://groot.mailerlite.com/js/w/webforms.min.js?v176e10baa5e7ed80d35ae235be3d5024" type="text/javascript"></script>
       
       <div class="more-episodes">
         <a href="episodes.html">🎧 شنیدن همه ی اپیزودهای دنت‌کست</a>
@@ -557,80 +563,5 @@
         .catch(err => console.error('SW registration failed:', err));
     }
   </script>
-
-  <script async>
-    function updateLastCommit() {
-        const span = document.getElementById('update-date');
-        if (!span) return;
-
-        (async () => {
-          try {
-            const res = await fetch('https://api.github.com/repos/dentcast-hub/dentcast-hub.github.io/commits?per_page=20');
-            if (!res.ok) throw new Error('GitHub status ' + res.status);
-            const commits = await res.json();
-
-            // 🔵 اضافه کردن سکشن DentCast+
-            const contentFolders = ["notecast", "photocast", "dentai", "insight", "dentcast-plus"];
-            let latestInfo = null;
-
-            for (const commit of commits) {
-              const commitRes = await fetch(commit.url);
-              if (!commitRes.ok) continue;
-              const commitData = await commitRes.json();
-
-              const createdFile = commitData.files?.find(f =>
-                f.status === "added" &&
-                contentFolders.some(folder => f.filename.startsWith(folder + "/"))
-              );
-
-              if (createdFile) {
-                const folder = contentFolders.find(folder => createdFile.filename.startsWith(folder + "/"));
-                latestInfo = {
-                  folder,
-                  date: new Date(commitData.commit.committer.date)
-                };
-                break;
-              }
-            }
-
-            if (latestInfo) {
-              const options = {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-                timeZone: 'Asia/Tehran',
-                calendar: 'persian'
-              };
-              const dateStr = latestInfo.date.toLocaleDateString('fa-IR', options);
-
-              const folderName = {
-                notecast: "NoteCast",
-                photocast: "PhotoCast",
-                dentai: "DentAI",
-                insight: "Clinical Insight",
-                "dentcast-plus": "DentCast+"
-              }[latestInfo.folder] || latestInfo.folder;
-
-              span.textContent = `${dateStr} — در فولدر ${folderName} مطلب جدید قرار گرفت`;
-
-              document.getElementById('last-update').classList.add("glow");
-              setTimeout(() => document.getElementById('last-update').classList.remove("glow"), 4000);
-
-            } else {
-              span.textContent = "مطلب جدیدی شناسایی نشد";
-            }
-
-          } catch (err) {
-            span.textContent = "خطا در بررسی به‌روزرسانی‌ها";
-          }
-        })();
-    }
-
-    setTimeout(updateLastCommit, 500); 
-  </script>
-
-  <script defer src="https://static.cloudflareinsights.com/beacon.min.js"
-    data-cf-beacon='{"token":"55c7b3d5b03640d28ab6214541606167"}'></script>
-
 </body>
 </html>
