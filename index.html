@@ -323,11 +323,11 @@
     
     <div class="card">
       <div class="menu-links">
-        <a href="notecast/index.html"      class="note-link">📝 مشاهده‌ی NoteCastها (خلاصه‌نویسی اپیزودها)</a>
-        <a href="photocast/index.html"     class="note-link">  Photocast <br> آموزش با تصویر</a>
-        <a href="dentai/index.html"        class="note-link"> DentAI<br> مقاله با هوش مصنوعی</a>
-        <a href="insight/index.html"       class="note-link"> Clinical Insight<br> تجربیات کلینیکی </a>
-        <a href="dentcast-plus/index.html" class="note-link"> +DentCast <br>ویدیوها</a>
+        <a href="notecast/index.html"      class="note-link" id="btn-notecast" onclick="markAsRead('btn-notecast')">📝 مشاهده‌ی NoteCastها (خلاصه‌نویسی اپیزودها)</a>
+        <a href="photocast/index.html"     class="note-link" id="btn-photocast" onclick="markAsRead('btn-photocast')">  Photocast <br> آموزش با تصویر</a>
+        <a href="dentai/index.html"        class="note-link" id="btn-dentai" onclick="markAsRead('btn-dentai')"> DentAI<br> مقاله با هوش مصنوعی</a>
+        <a href="insight/index.html"       class="note-link" id="btn-clinical" onclick="markAsRead('btn-clinical')"> Clinical Insight<br> تجربیات کلینیکی </a>
+        <a href="dentcast-plus/index.html" class="note-link" id="btn-plus" onclick="markAsRead('btn-plus')"> +DentCast <br>ویدیوها</a>
         <a href="litecast/index.html"      class="note-link">✨ LiteCast — دندان‌پزشکی برای همه</a>
       </div>
 
@@ -537,6 +537,74 @@
     </footer>
   </div>
 
+  <style>
+    /* اضافه کردن قابلیت موقعیت‌دهی به دکمه‌ها */
+    .note-link { position: relative; }
+
+    /* ظاهر برچسب جدید */
+    .new-badge::after {
+      content: "جدید";
+      position: absolute;
+      top: -10px; left: -5px;
+      background-color: #ff3b30;
+      color: white;
+      font-size: 0.7rem; 
+      padding: 2px 8px; 
+      border-radius: 10px;
+      box-shadow: 0 0 8px rgba(255, 59, 48, 0.6);
+      border: 2px solid #1a1a1a;
+      animation: bounce 2s infinite;
+      z-index: 100; font-weight: bold;
+      pointer-events: none;
+      font-family: sans-serif;
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+      40% {transform: translateY(-5px);}
+      60% {transform: translateY(-3px);}
+    }
+  </style>
+
+  <script>
+    // ==========================================
+    // پنل مدیریت تاریخ‌های مطالب جدید
+    // فرمت: سال-ماه-روز (میلادی)
+    // ==========================================
+    const contentUpdates = {
+      'btn-notecast':  '2024-01-01', 
+      'btn-photocast': '2024-01-01',
+      'btn-clinical':  '2024-01-01',
+      'btn-dentai':    '2024-01-01',
+      'btn-plus':      '2024-01-01'
+    };
+
+    function checkUpdates() {
+      for (const [btnId, updateDate] of Object.entries(contentUpdates)) {
+        const btn = document.getElementById(btnId);
+        if (!btn) continue;
+
+        const lastVisit = localStorage.getItem('last_visit_' + btnId);
+        const updateTime = new Date(updateDate).getTime();
+        const visitTime = lastVisit ? new Date(lastVisit).getTime() : 0;
+        
+        if (visitTime < updateTime) {
+          btn.classList.add('new-badge');
+        }
+      }
+    }
+
+    function markAsRead(btnId) {
+      const now = new Date();
+      now.setMinutes(now.getMinutes() + 1); 
+      localStorage.setItem('last_visit_' + btnId, now.toISOString());
+      
+      const btn = document.getElementById(btnId);
+      if(btn) btn.classList.remove('new-badge');
+    }
+
+    document.addEventListener('DOMContentLoaded', checkUpdates);
+  </script>
   <script defer>
     const installButton = document.getElementById('installButton');
     const banner = document.getElementById('installBanner');
