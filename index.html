@@ -576,45 +576,53 @@
     }
   </style>
 
-  <script>
+   <script>
     // ==========================================
-    // پنل مدیریت تاریخ‌های مطالب جدید
-    // فرمت: سال-ماه-روز (میلادی)
+    // سیستم مدیریت تاریخ - مدل ساده (String Comparison)
+    // فقط تاریخ را وارد کنید: 'YYYY-MM-DD'
     // ==========================================
     const contentUpdates = {
       'btn-notecast':  '2024-01-01', 
       'btn-photocast': '2024-01-01',
-      'btn-clinical':  '2025-11-28',
+      'btn-clinical':  '2025-11-29', // مثلا امروز مطلب گذاشتی
       'btn-dentai':    '2024-01-01',
       'btn-plus':      '2025-11-27'
     };
 
+    // تابعی که فقط تاریخ امروز رو برمی‌گردونه (بدون ساعت)
+    function getTodayString() {
+       return new Date().toLocaleDateString('en-CA'); // خروجی استاندارد: 2025-11-28
+    }
+
     function checkUpdates() {
+      const today = getTodayString();
+
       for (const [btnId, updateDate] of Object.entries(contentUpdates)) {
         const btn = document.getElementById(btnId);
         if (!btn) continue;
 
-        const lastVisit = localStorage.getItem('last_visit_' + btnId);
-        const updateTime = new Date(updateDate).getTime();
-        const visitTime = lastVisit ? new Date(lastVisit).getTime() : 0;
+        // آخرین باری که کاربر کلیک کرده (اگر نبوده، یه تاریخ خیلی قدیمی می‌ذاریم)
+        const lastVisit = localStorage.getItem('last_visit_' + btnId) || '1900-01-01';
         
-        if (visitTime < updateTime) {
+        // مقایسه متنی ساده: اگر تاریخ آپدیت > تاریخ بازدید
+        if (updateDate > lastVisit) {
           btn.classList.add('new-badge');
         }
       }
     }
 
     function markAsRead(btnId) {
-      const now = new Date();
-      now.setMinutes(now.getMinutes() + 1); 
-      localStorage.setItem('last_visit_' + btnId, now.toISOString());
+      // به محض کلیک، تاریخ امروز رو ذخیره می‌کنیم
+      const today = getTodayString();
+      localStorage.setItem('last_visit_' + btnId, today);
       
       const btn = document.getElementById(btnId);
       if(btn) btn.classList.remove('new-badge');
     }
 
     document.addEventListener('DOMContentLoaded', checkUpdates);
-  </script>
+   </script>
+  
   <script defer>
     const installButton = document.getElementById('installButton');
     const banner = document.getElementById('installBanner');
