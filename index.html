@@ -323,18 +323,36 @@
       transform: translateY(-3px); /* کمی میاد بالا */
       box-shadow: 0 15px 35px rgba(11, 95, 255, 0.45);
     }
-        /* استایل تیتر آخرین اپیزود */
-    .latest-title {
+     /* استایل کانتینر کلی پلیر (قاب سلطنتی) */
+    .player-wrapper {
+      margin-top: 45px;
+      border-radius: var(--radius);
+      overflow: hidden; /* گوشه‌های تیز رو میبره */
+      box-shadow: 0 15px 40px rgba(0,0,0,0.15); /* سایه قوی‌تر */
+      border: 2px solid #b45309; /* حاشیه طلایی/قهوه‌ای دور کل باکس */
+    }
+
+    /* هدرِ سلطنتی (تیتر) */
+    .player-header {
+      background: #1e3a8a; /* سرمه‌ای اشباع و سلطنتی */
+      color: #fff;
+      padding: 12px;
       text-align: center;
-      margin-top: 40px;      /* فاصله از باکس خبرنامه */
-      margin-bottom: 15px;   /* فاصله تا خود پلیر */
-      color: var(--text-main);
-      font-weight: 800;      /* خیلی بولد */
-      font-size: 1rem;
+      font-weight: 800;
+      font-size: 0.95rem;
+      border-bottom: 2px solid #b45309; /* خط طلایی جداکننده */
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
+      gap: 8px;
+    }
+
+    /* تنظیمات جدید برای iframe که بچسبه به هدر */
+    .player-wrapper iframe {
+      margin-top: 0 !important; /* حذف فاصله بالا */
+      border-radius: 0 !important; /* حذف گردی گوشه‌ها چون کانتینر گرد شده */
+      box-shadow: none !important; /* حذف سایه خود پلیر */
+      display: block; /* حذف فضای خالی زیر iframe */
     }
     
   </style>
@@ -463,16 +481,24 @@
       <script src="https://groot.mailerlite.com/js/w/webforms.min.js?v176e10baa5e7ed80d35ae235be3d5024" type="text/javascript"></script>
     
 
-            <div class="latest-title">
-        <span style="color: #ef4444; font-size: 1.5rem; line-height: 0; position: relative; top: 3px; margin-left: 5px;">•</span>
-        آخرین اپیزود منتشر شده
-      </div>
+                  <div class="player-wrapper">
+        
+        <div class="player-header">
+          <span style="color: #fbbf24; font-size: 1.2rem;">★</span>
+          آخرین اپیزود منتشر شده
+          <span style="color: #fbbf24; font-size: 1.2rem;">★</span>
+        </div>
 
-      <iframe
-        src="https://embed.acast.com/624b5545ecc0e600134ea0df"
-        frameBorder="0"
-        height="190"
-        title="آخرین اپیزود دنت‌کست"></iframe>
+        <iframe
+          src="https://embed.acast.com/624b5545ecc0e600134ea0df"
+          frameBorder="0"
+          height="190"
+          title="آخرین اپیزود دنت‌کست"></iframe>
+          
+                  </div>
+      
+
+      
       
 
       <p class="episode-box">
