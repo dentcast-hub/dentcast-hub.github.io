@@ -577,51 +577,76 @@
   </style>
 
    <script>
-    // ==========================================
-    // سیستم مدیریت تاریخ - مدل ساده (String Comparison)
-    // فقط تاریخ را وارد کنید: 'YYYY-MM-DD'
-    // ==========================================
-    const contentUpdates = {
-      'btn-notecast':  '2024-01-01', 
-      'btn-photocast': '2024-01-01',
-      'btn-clinical':  '2025-11-29', // مثلا امروز مطلب گذاشتی
-      'btn-dentai':    '2025-11-30',
-      'btn-plus':      '2025-11-27'
-    };
+// ==================================================
+// SYSTEM: Content Badge Manager (Tehran Timezone Lock)
+// پایدارترین حالت ممکن برای کاربران ایرانی
+// ==================================================
 
-    // تابعی که فقط تاریخ امروز رو برمی‌گردونه (بدون ساعت)
-    function getTodayString() {
-       return new Date().toLocaleDateString('en-CA'); // خروجی استاندارد: 2025-11-28
+// 1. تنظیمات تاریخ آپدیت‌ها (فرمت: YYYY-MM-DD)
+const contentUpdates = {
+  "btn-notecast":  "2024-01-01",
+  "btn-photocast": "2024-01-01",
+  "btn-clinical":  "2025-11-29", // تاریخ تست (مثلاً فردا)
+  "btn-dentai":    "2025-11-30",
+  "btn-plus":      "2025-11-27"
+};
+
+// 2. تابع دریافت تاریخ فقط به وقت ایران (Anti-VPN & Anti-Timezone)
+function getTehranDate() {
+  // این خط جادویی است: تاریخ را مجبور می‌کند به وقت تهران باشد
+  // فرمت en-CA همیشه خروجی YYYY-MM-DD می‌دهد
+  return new Date().toLocaleDateString('en-CA', {
+    timeZone: 'Asia/Tehran'
+  });
+}
+
+// 3. پاکسازی داده‌های خراب قدیمی (Sanitizer)
+function sanitizeStorage(key) {
+  const val = localStorage.getItem(key);
+  if (!val) return null;
+
+  // اگر فرمت تاریخ استاندارد نبود (مثلاً ساعت داشت)، پاکش کن
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(val)) {
+    localStorage.removeItem(key);
+    return null;
+  }
+  return val;
+}
+
+// 4. بررسی وضعیت بج‌ها
+function checkUpdates() {
+  for (const [btnId, updateDate] of Object.entries(contentUpdates)) {
+    const btn = document.getElementById(btnId);
+    if (!btn) continue;
+
+    const key = "last_visit_" + btnId;
+    
+    // دریافت آخرین بازدید (اگر نبود، سال ۱۹۰۰ را در نظر بگیر)
+    const lastVisit = sanitizeStorage(key) || "1900-01-01";
+
+    // مقایسه متنی ساده و دقیق
+    if (updateDate > lastVisit) {
+      btn.classList.add("new-badge");
     }
+  }
+}
 
-    function checkUpdates() {
-      const today = getTodayString();
+// 5. ثبت بازدید (کلیک روی دکمه)
+function markAsRead(btnId) {
+  const today = getTehranDate(); // تاریخ امروز به وقت تهران
+  const key = "last_visit_" + btnId;
+  
+  localStorage.setItem(key, today);
 
-      for (const [btnId, updateDate] of Object.entries(contentUpdates)) {
-        const btn = document.getElementById(btnId);
-        if (!btn) continue;
+  const btn = document.getElementById(btnId);
+  if (btn) btn.classList.remove("new-badge");
+}
 
-        // آخرین باری که کاربر کلیک کرده (اگر نبوده، یه تاریخ خیلی قدیمی می‌ذاریم)
-        const lastVisit = localStorage.getItem('last_visit_' + btnId) || '1900-01-01';
-        
-        // مقایسه متنی ساده: اگر تاریخ آپدیت > تاریخ بازدید
-        if (updateDate > lastVisit) {
-          btn.classList.add('new-badge');
-        }
-      }
-    }
-
-    function markAsRead(btnId) {
-      // به محض کلیک، تاریخ امروز رو ذخیره می‌کنیم
-      const today = getTodayString();
-      localStorage.setItem('last_visit_' + btnId, today);
-      
-      const btn = document.getElementById(btnId);
-      if(btn) btn.classList.remove('new-badge');
-    }
-
-    document.addEventListener('DOMContentLoaded', checkUpdates);
+// اجرای خودکار هنگام لود صفحه
+document.addEventListener("DOMContentLoaded", checkUpdates);
    </script>
+  
+    
   
   <script defer>
     const installButton = document.getElementById('installButton');
