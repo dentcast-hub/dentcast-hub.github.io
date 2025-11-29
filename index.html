@@ -228,14 +228,28 @@
       max-width: 600px;
       margin: 35px auto 40px;
     }
+        /* استایل جدید خبرنامه (آبی یخی) */
     .newsletter-box {
-      background: #fff;
-      border: 1px solid #e2e8f0;
+      background: #eff6ff;       /* آبی خیلی خیلی روشن */
+      border: 1px solid #dbeafe; /* حاشیه آبی ملایم */
+      
       border-radius: 16px;
       padding: 20px;
       text-align: center;
       box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
     }
+    
+    /* تغییر رنگ ورودی متن که روی آبی خوب دیده بشه */
+    .newsletter-input {
+      width: 100%; padding: 12px; border-radius: 10px;
+      border: 1px solid #bfdbfe; 
+      background: #fff;          /* ورودی سفید باشه که تمایز داشته باشه */
+      color: var(--text-main);
+      margin-bottom: 10px; box-sizing: border-box; outline: none;
+    }
+    
     .newsletter-title { color: var(--text-main); font-weight: 800; margin-bottom: 5px;}
     .newsletter-text { color: var(--text-muted); font-size: 0.8rem; margin-bottom: 15px;}
     .newsletter-input {
@@ -243,7 +257,6 @@
       border: 1px solid #cbd5e1; background: #f8fafc; color: var(--text-main);
       margin-bottom: 10px; box-sizing: border-box; outline: none;
     }
-    .newsletter-input:focus { border-color: var(--primary); background: #fff; }
     .newsletter-btn {
       width: 100%; padding: 12px; border-radius: 10px;
       background: var(--primary); color: white; border: none; font-weight: bold; cursor: pointer;
