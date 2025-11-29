@@ -13,15 +13,15 @@
 
   <style>
     :root {
-      /* پالت رنگی جدید و روشن */
-      --bg-body: #F3F5F7;       /* پس‌زمینه کلی: طوسی یخی */
+      /* پالت رنگی جدید (تم روشن) */
+      --bg-body: #F3F5F7;       /* پس‌زمینه کلی: خاکستری خیلی روشن */
       --bg-card: #FFFFFF;       /* رنگ کارت‌ها: سفید */
       --primary: #0b5fff;       /* آبی اصلی برند */
       --text-main: #1e293b;     /* رنگ متن اصلی: سرمه‌ای تیره */
-      --text-muted: #64748b;    /* رنگ متن توضیحات: طوسی */
+      --text-muted: #64748b;    /* رنگ متن‌های توضیحی: طوسی */
       --gold: #d97706;          /* طلایی تیره‌تر برای خوانایی روی سفید */
-      --shadow-soft: 0 8px 20px rgba(148, 163, 184, 0.15);
-      --radius: 18px;
+      --shadow-soft: 0 8px 24px rgba(149, 157, 165, 0.15); /* سایه نرم */
+      --radius: 16px;
     }
 
     body {
@@ -31,153 +31,172 @@
       margin: 0;
       padding: 0;
       -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
     }
 
     .wrap {
       max-width: 800px;
       margin: 0 auto;
-      padding: 20px 20px 60px;
+      padding: 15px 15px 60px;
     }
 
-    /* هدر پروفایلی */
-    header {
+    /* استایل بنر تبلیغاتی */
+    .ad-banner {
+      display: block;
+      margin: 10px auto 25px;
       text-align: center;
-      margin-bottom: 30px;
-      padding-top: 10px;
-    }
-
-    header h1 {
-      color: var(--primary);
-      font-size: 1.8rem;
-      margin: 5px 0;
-      font-weight: 900;
-    }
-
-    header h2 {
-      font-size: 1rem;
-      color: var(--text-main);
-      opacity: 0.9;
-      margin-top: 5px;
-      font-weight: 600;
-    }
-
-    header p {
-      color: var(--text-muted);
-      line-height: 1.7;
-      font-size: 0.9rem;
-      margin-top: 10px;
-    }
-
-    /* بنرهای تبلیغاتی */
-    .install-banner {
-      background: #e0e7ff;
-      border: 1px solid #c7d2fe;
+      text-decoration: none;
+      background: #fffbeb; /* پس‌زمینه زرد خیلی روشن */
+      border: 1px dashed #f59e0b; /* حاشیه زرد/نارنجی */
       border-radius: 12px;
+      padding: 10px 15px;
+      color: #92400e;
+      font-size: .9rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      position: relative;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
+    .ad-banner strong {
+      font-weight: 800;
+      color: #78350f;
+      background: rgba(245, 158, 11, 0.2);
+      padding: 2px 8px;
+      border-radius: 6px;
+      margin-right: 8px;
+    }
+
+    /* بنر نصب */
+    .install-banner {
+      background: #e0e7ff; /* آبی خیلی روشن */
+      border: 1px solid #c7d2fe;
+      border-radius: var(--radius);
       padding: 8px 12px;
       text-align: center;
-      font-size: 0.8rem;
+      font-size: .8rem;
+      line-height: 1.6;
+      margin: 5px auto 15px; 
       color: var(--text-main);
-      margin: 10px auto 20px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-      max-width: 680px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.05);
       display: flex;
-      justify-content: space-between;
+      flex-direction: column;
       align-items: center;
+      gap: 8px;
+    }
+    
+    @media (min-width: 480px) {
+        .install-banner {
+            flex-direction: row;
+            justify-content: space-between;
+            text-align: right;
+        }
+    }
+
+    .install-banner strong { 
+      color: var(--primary); 
+      font-weight: 700; 
     }
 
     .install-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
       background: var(--primary);
-      color: white;
       border: none;
-      padding: 6px 12px;
+      color: #fff;
+      font-weight: 600;
+      padding: 6px 14px;
       border-radius: 8px;
-      font-size: 0.75rem;
-      font-weight: bold;
+      font-size: .75rem;
       cursor: pointer;
+      transition: all .3s ease;
+      white-space: nowrap;
     }
 
-    .ad-banner {
-      display: block;
-      margin: 0 auto 30px;
-      text-align: center;
-      text-decoration: none;
-      background: #fffbeb; /* زرد خیلی روشن */
-      border: 1px dashed #f59e0b;
-      border-radius: 12px;
-      padding: 10px;
-      color: #92400e;
-      font-size: 0.9rem;
-      font-weight: 500;
+    header {text-align:center; margin-bottom:25px; padding-top: 10px;}
+
+    header h1 {
+        color: var(--primary);
+        font-size: 1.8rem;
+        margin: 5px 0;
+        font-weight: 900;
+        line-height: 1.4;
+    }
+    header h2 {
+        font-size: 0.95rem;
+        color: var(--text-main);
+        opacity: 0.9;
+        margin-top: 4px;
+        font-weight: 600;
+    }
+    header p {
+        color: var(--text-muted);
+        opacity: 1;
+        line-height: 1.6;
+        font-size: 0.85rem;
+        margin-top: 8px;
     }
 
-    /* استایل جدید شبکه ای برای دکمه ها */
+    /* کانتینر اصلی کارت‌ها */
     .card {
-      /* حذف کادر کلی برای باز شدن فضا */
-      background: transparent;
-      box-shadow: none;
+      background: transparent; /* حذف پس‌زمینه کلی */
+      box-shadow: none;        /* حذف سایه کلی */
       padding: 0;
+      border-radius: 0;
     }
 
+    /* گرید دو ستونه برای دکمه‌ها */
     .menu-links {
       display: grid;
-      grid-template-columns: 1fr 1fr; /* دو ستونه */
+      grid-template-columns: 1fr 1fr; /* دو ستون مساوی */
       gap: 15px;
       margin-top: 10px;
     }
 
+    /* استایل دکمه‌ها (کارت‌های سفید) */
     .note-link {
       display: flex;
-      flex-direction: column; /* چینش عمودی */
+      flex-direction: column; /* چیدمان عمودی: آیکون بالا، متن پایین */
       align-items: center;
       justify-content: center;
       text-align: center;
       background: var(--bg-card);
-      color: var(--text-main);
+      color: var(--text-main); /* رنگ متن تیره */
       border-radius: var(--radius);
-      padding: 20px 15px;
+      padding: 15px 10px;
+      font-weight: 600;
       text-decoration: none;
-      transition: all .3s ease;
+      transition: all .2s ease;
+      border: 1px solid rgba(226, 232, 240, 0.8); /* خط دور خیلی کمرنگ */
+      font-size: .85rem;
       box-shadow: var(--shadow-soft);
-      border: 1px solid rgba(255,255,255,0.5);
-      height: 100%; /* هم ارتفاع شدن */
-      min-height: 130px;
+      height: 100%; /* ارتفاع پر شود */
+      min-height: 110px; /* حداقل ارتفاع برای یکدستی */
       box-sizing: border-box;
       line-height: 1.5;
-      font-size: 0.9rem;
-      font-weight: 600;
-      position: relative;
     }
 
-    /* تنظیمات اختصاصی برای متن‌های طولانی */
-    .note-link span {
-        display: block;
-    }
-    
-    /* بزرگ کردن آیکون/متن اول */
-    .note-link::first-line {
-        font-size: 1.2rem;
-        line-height: 2;
-    }
-
-    /* دکمه اول تمام عرض */
+    /* اولین دکمه تمام عرض باشد */
     .note-link:first-child {
       grid-column: span 2;
-      flex-direction: row; /* افقی برای دکمه بزرگ */
-      gap: 10px;
+      flex-direction: row;
       min-height: auto;
       padding: 18px;
-      background: #eff6ff; /* آبی خیلی محو برای تمایز */
-      border: 1px solid #dbeafe;
+      background: #eff6ff; /* آبی خیلی خیلی روشن */
+      border-color: #dbeafe;
     }
 
     .note-link:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 25px rgba(11, 95, 255, 0.15);
+      background: #fff;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(11, 95, 255, 0.15);
       border-color: var(--primary);
       color: var(--primary);
     }
 
-    /* دکمه عریض پایین */
+    /* دکمه عریض ارتباط */
     .colleague-wide-btn {
       display: flex;
       justify-content: center;
@@ -185,65 +204,161 @@
       width: 100%;
       box-sizing: border-box;
       margin-top: 25px;
-      padding: 15px;
+      padding: 14px 10px;
       background-color: #fff;
-      border: 1px solid #cbd5e1; 
+      border: 1px solid #cbd5e1;
       color: var(--text-muted);
-      font-size: 0.95rem;
+      font-family: inherit;
+      font-size: 0.9rem;
       font-weight: 600;
       text-decoration: none;
-      border-radius: var(--radius);
+      border-radius: 12px;
       transition: all 0.3s ease;
       box-shadow: var(--shadow-soft);
     }
+
     .colleague-wide-btn:hover {
-        border-color: var(--primary);
-        color: var(--primary);
+      border-color: var(--primary);
+      color: var(--primary);
+      background-color: #fff;
     }
 
-    /* خبرنامه */
+    /* باکس خبرنامه */
     .newsletter-wrapper {
-      max-width: 100%;
-      margin: 40px auto;
+      max-width: 600px;
+      margin: 35px auto 40px;
+      padding: 0;
+      box-sizing: border-box;
     }
+
     .newsletter-box {
-      background: #fff;
+      background: #fff; /* سفید */
       border: 1px solid #e2e8f0;
       border-radius: 16px;
       padding: 20px;
       text-align: center;
       box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
     }
-    .newsletter-title { color: var(--text-main); font-weight: 800; margin-bottom: 5px;}
-    .newsletter-text { color: var(--text-muted); font-size: 0.8rem; margin-bottom: 15px;}
+
+    .newsletter-box::before {
+      background: linear-gradient(90deg, transparent, var(--primary), transparent);
+    }
+
+    .newsletter-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 6px;
+    }
+
+    .newsletter-text {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 15px;
+    }
+
+    .newsletter-form-group {
+      display: flex;
+      gap: 8px;
+    }
+
     .newsletter-input {
-      width: 100%; padding: 12px; border-radius: 10px;
-      border: 1px solid #cbd5e1; background: #f8fafc; color: var(--text-main);
-      margin-bottom: 10px; box-sizing: border-box;
+      flex: 1;
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 1px solid #cbd5e1;
+      background: #f8fafc;
+      color: var(--text-main);
+      font-family: 'Vazirmatn', sans-serif;
+      font-size: 0.85rem;
+      outline: none;
     }
+
+    .newsletter-input:focus {
+      border-color: var(--primary);
+      background: #fff;
+    }
+    
     .newsletter-btn {
-      width: 100%; padding: 12px; border-radius: 10px;
-      background: var(--primary); color: white; border: none; font-weight: bold; cursor: pointer;
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 0 20px;
+      border-radius: 10px;
+      font-family: 'Vazirmatn', sans-serif;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
     }
 
-    iframe {
-      width:100%; border:none; border-radius:var(--radius);
-      box-shadow: var(--shadow-soft); margin-top:40px; background: #fff;
-    }
-
+    /* باکس توضیحات اپیزود */
     .episode-box {
-      background: #fff; border: 1px solid #e2e8f0;
-      border-radius: 12px; padding: 16px 20px;
-      color: var(--text-main); margin-top: 14px; line-height: 1.9; font-size: 0.9rem;
+      text-align: right;
+      font-size: .9rem;
+      color: var(--text-main);
+      margin-top: 15px;
+      line-height: 1.8;
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 16px 20px;
       box-shadow: var(--shadow-soft);
     }
 
-    footer { margin-top:50px; color:var(--text-muted); font-size:.85rem; text-align:center; line-height:1.7;}
-    
+    iframe {
+      width:100%;
+      border:none;
+      border-radius:var(--radius);
+      box-shadow: var(--shadow-soft);
+      margin-top:35px;
+      background: #fff;
+    }
+
+    .more-episodes { text-align:center; margin-top:20px; }
+
+    .more-episodes a {
+      display:inline-block;
+      background: #eff6ff;
+      border: 1px solid #dbeafe;
+      color: var(--primary);
+      border-radius:10px;
+      padding:8px 20px;
+      font-weight:600;
+      text-decoration:none;
+      font-size: 0.85rem;
+    }
+
+    footer {
+      margin-top:50px;
+      color: var(--text-muted);
+      font-size:.85rem;
+      text-align:center;
+      line-height:1.7;
+    }
+
+    @media (max-width:768px){
+      header h1{font-size:1.6rem;}
+      .newsletter-form-group { flex-direction: column; }
+      .newsletter-btn { padding: 10px; width: 100%; }
+    }
+
+    /* استایل بج جدید */
+    .note-link { position: relative; }
     .new-badge::after {
-      content: "جدید"; position: absolute; top: 10px; left: 10px;
-      background-color: #ef4444; color: white; font-size: 0.65rem; 
-      padding: 2px 8px; border-radius: 10px; font-weight: bold;
+      content: "جدید";
+      position: absolute;
+      top: 5px; left: 5px; /* کمی تغییر موقعیت برای گرید */
+      background-color: #ef4444; /* قرمز استاندارد */
+      color: white;
+      font-size: 0.65rem; 
+      padding: 2px 6px; 
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(239, 68, 68, 0.4);
+      border: 2px solid #fff;
+      z-index: 100; font-weight: bold;
+      pointer-events: none;
     }
   </style>
 
@@ -259,12 +374,26 @@
       "name": "DentCast",
       "url": "https://dentcast.ir/",
       "description": "پادکست علمی دندان‌پزشکی با روایت دکتر فواد شهابیان...",
-      "publisher": { "@type": "Organization", "name": "DentCast", "logo": {"@type": "ImageObject","url": "https://dentcast.ir/logo-v2.png"} },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DentCast",
+        "logo": {"@type": "ImageObject","url": "https://dentcast.ir/logo-v2.png"}
+      },
       "inLanguage": "fa-IR",
-      "author": { "@type": "Person", "name": "دکتر فواد شهابیان", "jobTitle": "متخصص پروتزهای دندانی و ایمپلنت" },
-      "sameAs": [ "https://t.me/dentcast", "https://t.me/dent_AI", "https://podcasts.apple.com/us/podcast/dentcast/id1502032364", "https://castbox.fm/va/4889954" ]
+      "author": {
+        "@type": "Person",
+        "name": "دکتر فواد شهابیان",
+        "jobTitle": "متخصص پروتزهای دندانی و ایمپلنت"
+      },
+      "sameAs": [
+        "https://t.me/dentcast",
+        "https://t.me/dent_AI",
+        "https://podcasts.apple.com/us/podcast/dentcast/id1502032364",
+        "https://castbox.fm/va/4889954"
+      ]
     }
   </script>
+
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -275,16 +404,27 @@
       "description": "متخصص پروتزهای دندانی، ایمپلنت و گوینده پادکست علمی دنت‌کست (DentCast).",
       "url": "https://dentcast.ir",
       "image": "https://dentcast.ir/logo-v2.png",
-      "worksFor": { "@type": "Organization", "name": "DentCast", "url": "https://dentcast.ir" }
+      "worksFor": {
+        "@type": "Organization",
+        "name": "DentCast",
+        "url": "https://dentcast.ir"
+      },
+      "sameAs": [
+        "https://t.me/dentcast",
+        "https://t.me/dent_AI",
+        "https://podcasts.apple.com/us/podcast/dentcast/id1502032364",
+        "https://castbox.fm/va/4889954"
+      ]
     }
   </script>
+
   <meta name="robots" content="max-image-preview:large">
 </head>
 <body>
   <div class="wrap">
     
     <div class="install-banner" id="installBanner">
-      <span>برای دسترسی سریع‌تر، <strong>دنت‌کست</strong> را نصب کنید</span>
+      برای دسترسی سریع‌تر، <strong>دنت‌کست</strong> را به صفحهٔ اصلی خود اضافه کنید
       <div id="installButton" class="install-btn"><span>+</span> افزودن</div>
     </div>
 
@@ -303,23 +443,23 @@
     <div class="card">
       <div class="menu-links">
         <a href="notecast/index.html" class="note-link" id="btn-notecast" onclick="markAsRead('btn-notecast')">
-            📝 مشاهده‌ی NoteCastها (خلاصه‌نویسی اپیزودها)
+            📝 مشاهده‌ی NoteCastها <br> (خلاصه‌نویسی اپیزودها)
         </a>
-        
+
         <a href="photocast/index.html" class="note-link" id="btn-photocast" onclick="markAsRead('btn-photocast')">
             Photocast <br> آموزش با تصویر
         </a>
-        
+
         <a href="dentai/index.html" class="note-link" id="btn-dentai" onclick="markAsRead('btn-dentai')">
             DentAI <br> مقاله با هوش مصنوعی
         </a>
-        
+
         <a href="insight/index.html" class="note-link" id="btn-clinical" onclick="markAsRead('btn-clinical')">
             Clinical Insight <br> تجربیات کلینیکی
         </a>
-        
+
         <a href="dentcast-plus/index.html" class="note-link" id="btn-plus" onclick="markAsRead('btn-plus')">
-            +DentCast <br>ویدیوها
+            +DentCast <br> ویدیوها
         </a>
         
         <a href="litecast/index.html" class="note-link">
@@ -337,16 +477,20 @@
           <div class="row-form">
               <div class="newsletter-title">📬 خبرنامه‌ی دنت‌کست</div>
               <div class="newsletter-text">اطلاع‌رسانی اپیزودها و مطالب جدید (بدون اسپم)</div>
+
               <form class="ml-block-form" action="https://assets.mailerlite.com/jsonp/1939653/forms/171891141676893488/subscribe" data-code="" method="post" target="_blank">
                 <div class="newsletter-form-group">
-                  <input aria-label="email" type="email" class="newsletter-input" name="fields[email]" placeholder="ایمیل شما..." required>
-                  <button type="submit" class="newsletter-btn">عضویت</button>
+                  <input aria-label="email" aria-required="true" type="email" class="newsletter-input" data-inputmask="" name="fields[email]" placeholder="ایمیل شما..." autocomplete="email" required>
+                  <button type="submit" class="newsletter-btn">
+                     عضویت <span class="ml-form-embedSubmitLoad">...</span>
+                  </button>
                 </div>
                 <input type="hidden" name="ml-submit" value="1">
                 <input type="hidden" name="anticsrf" value="true">
               </form>
           </div>
-          <div class="row-success success-message" style="display:none; color:green; margin-top:10px;">
+
+          <div class="row-success success-message" style="display:none; background: rgba(16, 185, 129, 0.1); color: #059669; padding: 10px; border-radius: 8px; margin-top: 10px; font-size: 0.85rem;">
               ✅ ایمیل شما با موفقیت ثبت شد.
           </div>
         </div>
@@ -362,8 +506,8 @@
       </script>
       <script src="https://groot.mailerlite.com/js/w/webforms.min.js?v176e10baa5e7ed80d35ae235be3d5024" type="text/javascript"></script>
       
-      <div class="more-episodes" style="text-align:center; margin-top:20px;">
-        <a href="episodes.html" style="color:var(--primary); text-decoration:none; font-weight:700;">🎧 شنیدن همه ی اپیزودهای دنت‌کست</a>
+      <div class="more-episodes">
+        <a href="episodes.html">🎧 شنیدن همه ی اپیزودهای دنت‌کست</a>
       </div>
 
       <iframe
@@ -377,9 +521,12 @@
         کشیدن یا نگه داشتن؟<br>
         این سؤالِ ساده، یکی از پیچیده‌ترین تصمیم‌ها در دندان‌پزشکیه.
         اما چرا بعضی دندون‌ها—even با پریوی خوب—نباید بمونن؟
-        و چرا بعضی دندون‌های «questionable» اتفاقاً باید حفظ بشن؟
+        و چرا بعضی دندون‌های «questionable» اتفاقاً باید حفظ بشن؟<br><br>
+
         در دنتکست جدید، از زاویه‌ای کاملاً متفاوت به موضوع نگاه کردیم:
-        نه از لایهٔ پریو… بلکه از دید سیستمی، زیبایی، فانکشن و مسیر درمان آینده.
+        نه از لایهٔ پریو…
+        بلکه از دید سیستمی، زیبایی، فانکشن و مسیر درمان آینده.
+        این همون جاییه که تصمیم واقعی ساخته میشه.
       </p>
       
     </div>
@@ -388,8 +535,21 @@
       اهواز – کیانپارس، مطب دکتر فواد شهابیان<br>
       تلفن: 33380090-061 &nbsp; | &nbsp; DentCast © 1404
 
-      <div style="margin-top:15px;">
-        <a href="about.html" style="display:inline-block; border:1px solid #cbd5e1; color:var(--text-main); border-radius:50px; padding:6px 16px; font-weight:600; text-decoration:none; font-size:0.8rem; background:#fff;">
+      <div style="margin-top:15px; text-align:center;">
+        <a href="about.html"
+         style="
+           display:inline-block;
+           background: #fff;
+           color: var(--text-main);
+           border: 1px solid #cbd5e1;
+           border-radius: 50px;
+           padding: 8px 20px;
+           font-weight: 600;
+           text-decoration: none;
+           transition: all .2s ease;
+           box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+           font-size: 0.85rem;
+         ">
          ✨ درباره‌ی دکتر فواد شهابیان و دنت‌کست
         </a>
       </div>
@@ -397,6 +557,9 @@
   </div>
 
    <script>
+    // ==================================================
+    // SYSTEM: Content Badge Manager (Tehran Timezone Lock)
+    // ==================================================
     const contentUpdates = {
       "btn-notecast":  "2024-01-01",
       "btn-photocast": "2024-01-01",
@@ -406,13 +569,18 @@
     };
 
     function getTehranDate() {
-      return new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Tehran' });
+      return new Date().toLocaleDateString('en-CA', {
+        timeZone: 'Asia/Tehran'
+      });
     }
 
     function sanitizeStorage(key) {
       const val = localStorage.getItem(key);
       if (!val) return null;
-      if (!/^\d{4}-\d{2}-\d{2}$/.test(val)) return null;
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(val)) {
+        localStorage.removeItem(key);
+        return null;
+      }
       return val;
     }
 
@@ -437,15 +605,17 @@
     }
 
     document.addEventListener("DOMContentLoaded", checkUpdates);
-
+  
     const installButton = document.getElementById('installButton');
     const banner = document.getElementById('installBanner');
     let deferredPrompt;
+
     const isiOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
     if (isiOS) {
       installButton.style.display = 'none';
       banner.innerHTML = 'برای نصب دنت‌کست در آیفون: از دکمه‌ی <strong>Share</strong> استفاده کنید و گزینه‌ی <strong>Add to Home Screen</strong> را انتخاب کنید.';
     }
+
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
       deferredPrompt = e;
@@ -454,8 +624,11 @@
         deferredPrompt.userChoice.then(() => deferredPrompt = null);
       });
     });
+
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/service-worker.js');
+      navigator.serviceWorker.register('/service-worker.js')
+        .then(() => console.log('DentCast service worker registered.'))
+        .catch(err => console.error('SW registration failed:', err));
     }
   </script>
 </body>
