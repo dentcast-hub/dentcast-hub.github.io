@@ -323,6 +323,19 @@
       transform: translateY(-3px); /* کمی میاد بالا */
       box-shadow: 0 15px 35px rgba(11, 95, 255, 0.45);
     }
+        /* استایل تیتر آخرین اپیزود */
+    .latest-title {
+      text-align: center;
+      margin-top: 40px;      /* فاصله از باکس خبرنامه */
+      margin-bottom: 15px;   /* فاصله تا خود پلیر */
+      color: var(--text-main);
+      font-weight: 800;      /* خیلی بولد */
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
     
   </style>
 
@@ -450,11 +463,17 @@
       <script src="https://groot.mailerlite.com/js/w/webforms.min.js?v176e10baa5e7ed80d35ae235be3d5024" type="text/javascript"></script>
     
 
+            <div class="latest-title">
+        <span style="color: #ef4444; font-size: 1.5rem; line-height: 0; position: relative; top: 3px; margin-left: 5px;">•</span>
+        آخرین اپیزود منتشر شده
+      </div>
+
       <iframe
         src="https://embed.acast.com/624b5545ecc0e600134ea0df"
         frameBorder="0"
         height="190"
         title="آخرین اپیزود دنت‌کست"></iframe>
+      
 
       <p class="episode-box">
         ❌❌❌<br>
