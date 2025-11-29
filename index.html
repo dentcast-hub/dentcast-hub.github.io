@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <title>🎙️ دنت‌کست — پادکست علمی دندان‌پزشکی با روایت دکتر فواد شهابیان</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
   <meta name="description" content="پادکست علمی دندان‌پزشکی با روایت دکتر فواد شهابیان؛ مرور ساده و تحلیلی تازه‌ترین مقالات حوزهٔ پروتز، ایمپلنت و دندان‌پزشکی ترمیمی.">
   <meta name="author" content="دکتر فواد شهابیان">
   <link rel="canonical" href="https://dentcast.ir/">
@@ -13,238 +13,243 @@
 
   <style>
     :root {
-      --blue:#0b5fff;
-      --bg:#0b1220;
-      --bg2:#121a2b;
-      --text:#e7eaf1;
-      --muted:#9aa1b3;
-      --radius:14px;
-      --shadow:0 10px 30px rgba(0,0,0,.3);
-      --gold:rgba(255,188,0,0.75);
+      /* پالت رنگی جدید و روشن */
+      --bg-body: #F3F5F7;       /* پس‌زمینه کلی: طوسی یخی */
+      --bg-card: #FFFFFF;       /* رنگ کارت‌ها: سفید */
+      --primary: #0b5fff;       /* آبی اصلی برند */
+      --text-main: #1e293b;     /* رنگ متن اصلی: سرمه‌ای تیره */
+      --text-muted: #64748b;    /* رنگ متن توضیحات: طوسی */
+      --gold: #d97706;          /* طلایی تیره‌تر برای خوانایی روی سفید */
+      --shadow-soft: 0 8px 20px rgba(148, 163, 184, 0.15);
+      --radius: 18px;
     }
 
     body {
-      font-family:'Vazirmatn', sans-serif;
-      background: radial-gradient(1200px 600px at 20% -10%, #1b2640 0%, transparent 60%),
-                  linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
-      color:var(--text);
-      margin:0;
-      -webkit-font-smoothing:antialiased;
-      text-rendering:optimizeLegibility;
+      font-family: 'Vazirmatn', sans-serif;
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
     }
 
     .wrap {
-      max-width:920px;
-      margin:10px auto 70px;
-      padding:0 20px;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px 20px 60px;
     }
 
-    /* استایل بنر تبلیغاتی جدید */
-    .ad-banner {
-      display: block;
-      margin: 12px auto 28px;
+    /* هدر پروفایلی */
+    header {
       text-align: center;
-      text-decoration: none;
-      background: rgba(255, 188, 0, 0.05); /* پس‌زمینه خیلی محو طلایی */
-      border: 1px dashed rgba(255, 188, 0, 0.6); /* حاشیه خط‌چین */
-      border-radius: 12px;
-      padding: 12px 20px;
-      color: #ffd95e;
-      font-size: .95rem;
-      font-weight: 500;
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-      max-width: fit-content;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      margin-bottom: 30px;
+      padding-top: 10px;
     }
 
-    .ad-banner strong {
-      font-weight: 800;
-      color: #fff;
-      background: rgba(255, 188, 0, 0.2);
-      padding: 2px 8px;
-      border-radius: 6px;
-      margin-right: 8px;
+    header h1 {
+      color: var(--primary);
+      font-size: 1.8rem;
+      margin: 5px 0;
+      font-weight: 900;
     }
 
-    .ad-banner:hover {
-      background: rgba(255, 188, 0, 0.15);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(255, 188, 0, 0.15);
-      border-color: #ffd95e;
+    header h2 {
+      font-size: 1rem;
+      color: var(--text-main);
+      opacity: 0.9;
+      margin-top: 5px;
+      font-weight: 600;
     }
 
+    header p {
+      color: var(--text-muted);
+      line-height: 1.7;
+      font-size: 0.9rem;
+      margin-top: 10px;
+    }
+
+    /* بنرهای تبلیغاتی */
     .install-banner {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: var(--radius);
-      padding: 6px 10px;
+      background: #e0e7ff;
+      border: 1px solid #c7d2fe;
+      border-radius: 12px;
+      padding: 8px 12px;
       text-align: center;
-      font-size: .78rem;
-      line-height: 1.5;
-      margin: 10px auto 18px; 
-      color: var(--muted);
-      box-shadow: 0 4px 12px rgba(0,0,0,.15);
-      backdrop-filter: blur(5px);
-      max-width: 680px; 
-    }
-
-    .install-banner strong { 
-      color: var(--blue); 
-      font-weight: 600; 
+      font-size: 0.8rem;
+      color: var(--text-main);
+      margin: 10px auto 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      max-width: 680px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
     .install-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      margin-right: 6px;
-      background: rgba(11,95,255,0.15);
-      border: 1px solid rgba(255,255,255,0.08);
-      color: var(--blue);
-      font-weight: 600;
-      padding: 2px 8px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 6px 12px;
       border-radius: 8px;
-      font-size: .75rem;
+      font-size: 0.75rem;
+      font-weight: bold;
       cursor: pointer;
-      transition: all .3s ease;
     }
 
-    .install-btn:hover {
-      background: rgba(11,95,255,0.22);
-      transform: scale(1.05);
+    .ad-banner {
+      display: block;
+      margin: 0 auto 30px;
+      text-align: center;
+      text-decoration: none;
+      background: #fffbeb; /* زرد خیلی روشن */
+      border: 1px dashed #f59e0b;
+      border-radius: 12px;
+      padding: 10px;
+      color: #92400e;
+      font-size: 0.9rem;
+      font-weight: 500;
     }
 
-    header{text-align:center;margin-bottom:36px;}
-
-    header h1{color:var(--blue);font-size:2.1rem;margin:8px 0;font-weight:800;line-height:1.6;}
-    header h2{font-size:1.05rem;color:var(--text);opacity:.9;margin-top:4px;font-weight:600;}
-    header p{color:var(--text);opacity:.85;line-height:1.8;font-size:1.05rem;}
-
-    .card{
-      background:#161a26;
-      border-radius:var(--radius);
-      box-shadow:var(--shadow);
-      padding:26px 20px 36px;
+    /* استایل جدید شبکه ای برای دکمه ها */
+    .card {
+      /* حذف کادر کلی برای باز شدن فضا */
+      background: transparent;
+      box-shadow: none;
+      padding: 0;
     }
 
     .menu-links {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-      margin-top: 20px;
+      grid-template-columns: 1fr 1fr; /* دو ستونه */
+      gap: 15px;
+      margin-top: 10px;
     }
 
     .note-link {
       display: flex;
+      flex-direction: column; /* چینش عمودی */
       align-items: center;
       justify-content: center;
       text-align: center;
-      background: rgba(11,95,255,0.10);
-      color: #f6c65b;
-      border-radius: 10px;
-      padding: 12px 10px;
-      font-weight: 600;
+      background: var(--bg-card);
+      color: var(--text-main);
+      border-radius: var(--radius);
+      padding: 20px 15px;
       text-decoration: none;
       transition: all .3s ease;
-      border: 1.5px solid var(--gold);
-      font-size: .9rem;
-      box-shadow: 0 0 12px rgba(255,188,0,0.10);
-      height: 100%;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(255,255,255,0.5);
+      height: 100%; /* هم ارتفاع شدن */
+      min-height: 130px;
       box-sizing: border-box;
+      line-height: 1.5;
+      font-size: 0.9rem;
+      font-weight: 600;
+      position: relative;
     }
 
+    /* تنظیمات اختصاصی برای متن‌های طولانی */
+    .note-link span {
+        display: block;
+    }
+    
+    /* بزرگ کردن آیکون/متن اول */
+    .note-link::first-line {
+        font-size: 1.2rem;
+        line-height: 2;
+    }
+
+    /* دکمه اول تمام عرض */
     .note-link:first-child {
       grid-column: span 2;
-      font-size: 1rem;
-      padding: 14px;
-    }
-
-    .note-link:last-child {
-      grid-column: span 2;
+      flex-direction: row; /* افقی برای دکمه بزرگ */
+      gap: 10px;
+      min-height: auto;
+      padding: 18px;
+      background: #eff6ff; /* آبی خیلی محو برای تمایز */
+      border: 1px solid #dbeafe;
     }
 
     .note-link:hover {
-      background: rgba(11,95,255,0.22);
-      transform: scale(1.02);
-      box-shadow: 0 0 18px rgba(255,188,0,0.25);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 25px rgba(11, 95, 255, 0.15);
+      border-color: var(--primary);
+      color: var(--primary);
     }
 
-    .episode-box {
-      text-align: right;
-      font-size: .95rem;
-      color: var(--text);
-      margin-top: 14px;
-      line-height: 1.9;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 12px;
-      padding: 16px 20px;
-      backdrop-filter: blur(8px);
+    /* دکمه عریض پایین */
+    .colleague-wide-btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      box-sizing: border-box;
+      margin-top: 25px;
+      padding: 15px;
+      background-color: #fff;
+      border: 1px solid #cbd5e1; 
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: var(--radius);
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow-soft);
+    }
+    .colleague-wide-btn:hover {
+        border-color: var(--primary);
+        color: var(--primary);
+    }
+
+    /* خبرنامه */
+    .newsletter-wrapper {
+      max-width: 100%;
+      margin: 40px auto;
+    }
+    .newsletter-box {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: var(--shadow-soft);
+    }
+    .newsletter-title { color: var(--text-main); font-weight: 800; margin-bottom: 5px;}
+    .newsletter-text { color: var(--text-muted); font-size: 0.8rem; margin-bottom: 15px;}
+    .newsletter-input {
+      width: 100%; padding: 12px; border-radius: 10px;
+      border: 1px solid #cbd5e1; background: #f8fafc; color: var(--text-main);
+      margin-bottom: 10px; box-sizing: border-box;
+    }
+    .newsletter-btn {
+      width: 100%; padding: 12px; border-radius: 10px;
+      background: var(--primary); color: white; border: none; font-weight: bold; cursor: pointer;
     }
 
     iframe {
-      width:100%;
-      border:none;
-      border-radius:var(--radius);
-      box-shadow:0 10px 25px rgba(0,0,0,.15);
-      margin-top:40px;
+      width:100%; border:none; border-radius:var(--radius);
+      box-shadow: var(--shadow-soft); margin-top:40px; background: #fff;
     }
 
-    .more-episodes {
-      text-align:center;
-      margin-top:20px;
+    .episode-box {
+      background: #fff; border: 1px solid #e2e8f0;
+      border-radius: 12px; padding: 16px 20px;
+      color: var(--text-main); margin-top: 14px; line-height: 1.9; font-size: 0.9rem;
+      box-shadow: var(--shadow-soft);
     }
 
-    .more-episodes a {
-      display:inline-block;
-      background: rgba(173, 216, 230, 0.15);
-      border: 1px solid rgba(173, 216, 230, 0.35);
-      color: #e7eaf1;
-      border-radius:10px;
-      padding:10px 20px;
-      font-weight:600;
-      text-decoration:none;
-      backdrop-filter:blur(8px);
-      transition:all .3s ease;
-    }
-
-    .more-episodes a:hover {
-      background:rgba(255,188,0,0.18);
-      transform:scale(1.03);
-    }
-
-    footer {
-      margin-top:50px;
-      color:var(--muted);
-      font-size:.9rem;
-      text-align:center;
-      line-height:1.7;
-    }
-
-    @media (max-width:768px){
-      .wrap{padding:0 14px;margin:30px auto 60px;}
-      header h1{font-size:1.7rem;}
-      header h2{font-size:.9rem;line-height:1.7;} 
-      header p{font-size:.9rem;line-height:1.7;}
-      .card{padding:18px 14px 28px;}
-      iframe{height:190px;}
-      .ad-banner{ width: 90%; font-size: 0.85rem; }
-    }
-
-    @media (min-width: 1024px) {
-      html { font-size: 1.05vw; }
-      body { padding: 2vh 0; }
-      main { width: 80vw; padding: 4vh 3vw; margin: 0 auto; }
-      h1 { font-size: 2.2vw; margin-bottom: 2vh; }
-      footer { margin-top: 6vh; font-size: 1vw; }
+    footer { margin-top:50px; color:var(--text-muted); font-size:.85rem; text-align:center; line-height:1.7;}
+    
+    .new-badge::after {
+      content: "جدید"; position: absolute; top: 10px; left: 10px;
+      background-color: #ef4444; color: white; font-size: 0.65rem; 
+      padding: 2px 8px; border-radius: 10px; font-weight: bold;
     }
   </style>
 
   <link rel="icon" href="https://dentcast.ir/logo-v2.png" type="image/png" sizes="192x192">
   <link rel="apple-touch-icon" href="/logo-v2.png">
-  <meta name="theme-color" content="#0b5fff">
+  <meta name="theme-color" content="#F3F5F7">
   <link rel="manifest" href="/manifest.json">
 
   <script type="application/ld+json">
@@ -254,26 +259,12 @@
       "name": "DentCast",
       "url": "https://dentcast.ir/",
       "description": "پادکست علمی دندان‌پزشکی با روایت دکتر فواد شهابیان...",
-      "publisher": {
-        "@type": "Organization",
-        "name": "DentCast",
-        "logo": {"@type": "ImageObject","url": "https://dentcast.ir/logo-v2.png"}
-      },
+      "publisher": { "@type": "Organization", "name": "DentCast", "logo": {"@type": "ImageObject","url": "https://dentcast.ir/logo-v2.png"} },
       "inLanguage": "fa-IR",
-      "author": {
-        "@type": "Person",
-        "name": "دکتر فواد شهابیان",
-        "jobTitle": "متخصص پروتزهای دندانی و ایمپلنت"
-      },
-      "sameAs": [
-        "https://t.me/dentcast",
-        "https://t.me/dent_AI",
-        "https://podcasts.apple.com/us/podcast/dentcast/id1502032364",
-        "https://castbox.fm/va/4889954"
-      ]
+      "author": { "@type": "Person", "name": "دکتر فواد شهابیان", "jobTitle": "متخصص پروتزهای دندانی و ایمپلنت" },
+      "sameAs": [ "https://t.me/dentcast", "https://t.me/dent_AI", "https://podcasts.apple.com/us/podcast/dentcast/id1502032364", "https://castbox.fm/va/4889954" ]
     }
   </script>
-
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -284,28 +275,16 @@
       "description": "متخصص پروتزهای دندانی، ایمپلنت و گوینده پادکست علمی دنت‌کست (DentCast).",
       "url": "https://dentcast.ir",
       "image": "https://dentcast.ir/logo-v2.png",
-      "worksFor": {
-        "@type": "Organization",
-        "name": "DentCast",
-        "url": "https://dentcast.ir"
-      },
-      "sameAs": [
-        "https://t.me/dentcast",
-        "https://t.me/dent_AI",
-        "https://podcasts.apple.com/us/podcast/dentcast/id1502032364",
-        "https://castbox.fm/va/4889954"
-      ]
+      "worksFor": { "@type": "Organization", "name": "DentCast", "url": "https://dentcast.ir" }
     }
   </script>
-
   <meta name="robots" content="max-image-preview:large">
 </head>
-
 <body>
   <div class="wrap">
     
     <div class="install-banner" id="installBanner">
-      برای دسترسی سریع‌تر، <strong>دنت‌کست</strong> را به صفحهٔ اصلی خود اضافه کنید
+      <span>برای دسترسی سریع‌تر، <strong>دنت‌کست</strong> را نصب کنید</span>
       <div id="installButton" class="install-btn"><span>+</span> افزودن</div>
     </div>
 
@@ -321,198 +300,55 @@
        📢 معرفی برند شما به جامعه دندان‌پزشکی &nbsp;|&nbsp; <strong>رزرو جایگاه</strong>
     </a>
     
-        <div class="card">
+    <div class="card">
       <div class="menu-links">
-        <a href="notecast/index.html"      class="note-link" id="btn-notecast" onclick="markAsRead('btn-notecast')">📝 مشاهده‌ی NoteCastها (خلاصه‌نویسی اپیزودها)</a>
-        <a href="photocast/index.html"     class="note-link" id="btn-photocast" onclick="markAsRead('btn-photocast')">  Photocast <br> آموزش با تصویر</a>
-        <a href="dentai/index.html"        class="note-link" id="btn-dentai" onclick="markAsRead('btn-dentai')"> DentAI<br> مقاله با هوش مصنوعی</a>
-        <a href="insight/index.html"       class="note-link" id="btn-clinical" onclick="markAsRead('btn-clinical')"> Clinical Insight<br> تجربیات کلینیکی </a>
-        <a href="dentcast-plus/index.html" class="note-link" id="btn-plus" onclick="markAsRead('btn-plus')"> +DentCast <br>ویدیوها</a>
+        <a href="notecast/index.html" class="note-link" id="btn-notecast" onclick="markAsRead('btn-notecast')">
+            📝 مشاهده‌ی NoteCastها (خلاصه‌نویسی اپیزودها)
+        </a>
         
-        <a href="litecast/index.html"      class="note-link">✨ LiteCast — دندان‌پزشکی برای همه</a>
+        <a href="photocast/index.html" class="note-link" id="btn-photocast" onclick="markAsRead('btn-photocast')">
+            Photocast <br> آموزش با تصویر
+        </a>
+        
+        <a href="dentai/index.html" class="note-link" id="btn-dentai" onclick="markAsRead('btn-dentai')">
+            DentAI <br> مقاله با هوش مصنوعی
+        </a>
+        
+        <a href="insight/index.html" class="note-link" id="btn-clinical" onclick="markAsRead('btn-clinical')">
+            Clinical Insight <br> تجربیات کلینیکی
+        </a>
+        
+        <a href="dentcast-plus/index.html" class="note-link" id="btn-plus" onclick="markAsRead('btn-plus')">
+            +DentCast <br>ویدیوها
+        </a>
+        
+        <a href="litecast/index.html" class="note-link">
+            ✨ LiteCast <br> دندان‌پزشکی برای همه
+        </a>
       </div>
+
       <a href="mailto: info@dentcast.ir" class="colleague-wide-btn">
         <span style="margin-left: 8px; font-size: 1.2rem;">✉️</span>
         ارتباط با همکاران و مشاوره
       </a>
-<style>
-  .colleague-wide-btn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    box-sizing: border-box;
-    margin-top: 20px;
-    padding: 12px 10px; /* ارتفاعش رو کمی کمتر کردم */
-    
-    /* تغییرات اصلی اینجاست: */
-    background-color: rgba(255, 255, 255, 0.03); /* خیلی خیلی محو */
-    border: 1px solid rgba(255, 193, 7, 0.3);   /* حاشیه نازک و کم‌رنگ */
-    color: rgba(255, 193, 7, 0.8);               /* رنگ متن ملایم‌تر */
-    
-    font-family: inherit;
-    font-size: 0.95rem;      /* فونت کمی کوچکتر و رسمی‌تر */
-    font-weight: normal;     /* دیگه بولد نیست */
-    text-decoration: none;
-    border-radius: 12px;
-    transition: all 0.3s ease;
-  }
-
-  /* وقتی موس میره روش کمی پررنگ بشه که معلوم بشه دکمه‌ست */
-  .colleague-wide-btn:hover {
-    border-color: #FFC107;
-    color: #FFC107;
-    background-color: rgba(255, 193, 7, 0.05);
-  }
-</style>
-          
-          
-
-      <style>
-        .newsletter-wrapper {
-          max-width: 600px;
-          margin: 30px auto 40px;
-          padding: 0 15px;
-          font-family: 'Vazirmatn', sans-serif;
-          box-sizing: border-box;
-        }
-
-        .newsletter-box {
-          background: rgba(20, 30, 50, 0.6); 
-          border: 1px solid rgba(255, 255, 255, 0.08);
-          border-radius: 16px;
-          padding: 20px 24px;
-          text-align: center;
-          backdrop-filter: blur(12px);
-          box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-          position: relative;
-          overflow: hidden;
-        }
-
-        .newsletter-box::before {
-          content: "";
-          position: absolute;
-          top: 0; left: 0; right: 0;
-          height: 2px;
-          background: linear-gradient(90deg, transparent, #0b5fff, transparent);
-          opacity: 0.8;
-        }
-
-        .newsletter-title {
-          font-size: 0.95rem;
-          font-weight: 700;
-          color: #bcd3ff;
-          margin-bottom: 6px;
-        }
-
-        .newsletter-text {
-          font-size: 0.8rem;
-          color: #8890a5;
-          margin-bottom: 18px;
-          line-height: 1.6;
-        }
-
-        .newsletter-form-group {
-          display: flex;
-          gap: 8px;
-          position: relative;
-        }
-
-        .newsletter-input {
-          flex: 1;
-          padding: 10px 14px;
-          border-radius: 10px;
-          border: 1px solid rgba(255,255,255,0.1);
-          background: rgba(0, 0, 0, 0.25);
-          color: #fff;
-          font-family: 'Vazirmatn', sans-serif;
-          font-size: 0.85rem;
-          outline: none;
-          transition: all 0.3s;
-        }
-
-        .newsletter-input:focus {
-          border-color: #0b5fff;
-          background: rgba(0, 0, 0, 0.4);
-        }
-        
-        .newsletter-input::placeholder {
-          color: #556075;
-          font-size: 0.8rem;
-        }
-
-        .newsletter-btn {
-          background: #0b5fff;
-          color: white;
-          border: none;
-          padding: 0 20px;
-          border-radius: 10px;
-          font-family: 'Vazirmatn', sans-serif;
-          font-weight: 600;
-          font-size: 0.85rem;
-          cursor: pointer;
-          transition: all 0.3s;
-          white-space: nowrap;
-        }
-
-        .newsletter-btn:hover {
-          background: #004ad4;
-          box-shadow: 0 0 10px rgba(11, 95, 255, 0.4);
-        }
-
-        .success-message {
-          display: none;
-          background: rgba(16, 185, 129, 0.15);
-          color: #34d399;
-          border: 1px solid rgba(16, 185, 129, 0.2);
-          border-radius: 10px;
-          padding: 12px;
-          margin-top: 10px;
-          font-size: 0.85rem;
-        }
-
-        .ml-form-embedSubmitLoad { display: none; }
-
-        @media (max-width: 480px) {
-          .newsletter-form-group {
-            flex-direction: column;
-          }
-          .newsletter-btn {
-            padding: 10px;
-            width: 100%;
-          }
-        }
-      </style>
 
       <div id="mlb2-33724259" class="newsletter-wrapper ml-subscribe-form ml-subscribe-form-33724259">
         <div class="newsletter-box">
-          
           <div class="row-form">
               <div class="newsletter-title">📬 خبرنامه‌ی دنت‌کست</div>
-              <div class="newsletter-text">
-                اطلاع‌رسانی اپیزودها و مطالب جدید (بدون اسپم)
-              </div>
-
+              <div class="newsletter-text">اطلاع‌رسانی اپیزودها و مطالب جدید (بدون اسپم)</div>
               <form class="ml-block-form" action="https://assets.mailerlite.com/jsonp/1939653/forms/171891141676893488/subscribe" data-code="" method="post" target="_blank">
-                
                 <div class="newsletter-form-group">
-                  <input aria-label="email" aria-required="true" type="email" class="newsletter-input" data-inputmask="" name="fields[email]" placeholder="ایمیل شما..." autocomplete="email" required>
-                  
-                  <button type="submit" class="newsletter-btn">
-                     عضویت
-                     <span class="ml-form-embedSubmitLoad">...</span>
-                  </button>
+                  <input aria-label="email" type="email" class="newsletter-input" name="fields[email]" placeholder="ایمیل شما..." required>
+                  <button type="submit" class="newsletter-btn">عضویت</button>
                 </div>
-
                 <input type="hidden" name="ml-submit" value="1">
                 <input type="hidden" name="anticsrf" value="true">
               </form>
           </div>
-
-          <div class="row-success success-message">
+          <div class="row-success success-message" style="display:none; color:green; margin-top:10px;">
               ✅ ایمیل شما با موفقیت ثبت شد.
           </div>
-
         </div>
       </div>
 
@@ -526,8 +362,8 @@
       </script>
       <script src="https://groot.mailerlite.com/js/w/webforms.min.js?v176e10baa5e7ed80d35ae235be3d5024" type="text/javascript"></script>
       
-      <div class="more-episodes">
-        <a href="episodes.html">🎧 شنیدن همه ی اپیزودهای دنت‌کست</a>
+      <div class="more-episodes" style="text-align:center; margin-top:20px;">
+        <a href="episodes.html" style="color:var(--primary); text-decoration:none; font-weight:700;">🎧 شنیدن همه ی اپیزودهای دنت‌کست</a>
       </div>
 
       <iframe
@@ -537,17 +373,13 @@
         title="آخرین اپیزود دنت‌کست"></iframe>
 
       <p class="episode-box">
-        ❌❌❌
-کشیدن یا نگه داشتن؟
-این سؤالِ ساده، یکی از پیچیده‌ترین تصمیم‌ها در دندان‌پزشکیه.
-اما چرا بعضی دندون‌ها—even با پریوی خوب—نباید بمونن؟
-و چرا بعضی دندون‌های «questionable» اتفاقاً باید حفظ بشن؟
-
-در دنتکست جدید، از زاویه‌ای کاملاً متفاوت به موضوع نگاه کردیم:
-نه از لایهٔ پریو…
-بلکه از دید سیستمی، زیبایی، فانکشن و مسیر درمان آینده.
-این همون جاییه که تصمیم واقعی ساخته میشه.
-
+        ❌❌❌<br>
+        کشیدن یا نگه داشتن؟<br>
+        این سؤالِ ساده، یکی از پیچیده‌ترین تصمیم‌ها در دندان‌پزشکیه.
+        اما چرا بعضی دندون‌ها—even با پریوی خوب—نباید بمونن؟
+        و چرا بعضی دندون‌های «questionable» اتفاقاً باید حفظ بشن؟
+        در دنتکست جدید، از زاویه‌ای کاملاً متفاوت به موضوع نگاه کردیم:
+        نه از لایهٔ پریو… بلکه از دید سیستمی، زیبایی، فانکشن و مسیر درمان آینده.
       </p>
       
     </div>
@@ -556,146 +388,64 @@
       اهواز – کیانپارس، مطب دکتر فواد شهابیان<br>
       تلفن: 33380090-061 &nbsp; | &nbsp; DentCast © 1404
 
-      <div style="margin-top:12px;text-align:center;">
-        <a href="about.html"
-         style="
-           display:inline-block;
-           background:rgba(255,160,0,0.22);
-           color:#ffcc4d;
-           border:1.5px solid rgba(255,180,0,0.8);
-           border-radius:10px;
-           padding:10px 20px;
-           font-weight:700;
-           text-decoration:none;
-           transition:all .15s ease;
-           box-shadow:0 0 18px rgba(255,170,0,0.18);
-           letter-spacing:.2px;
-           text-shadow:0 0 4px rgba(255,200,80,0.3);
-           user-select:none;
-           transform:scale(1);
-         "
-         onmouseover="this.style.background='rgba(255,170,0,0.35)';this.style.boxShadow='0 0 28px rgba(255,180,0,0.45)';this.style.textShadow='0 0 12px rgba(255,220,120,0.9)';"
-         onmouseout="this.style.background='rgba(255,160,0,0.22)';this.style.boxShadow='0 0 18px rgba(255,170,0,0.18)';this.style.textShadow='0 0 4px rgba(255,200,80,0.3)';this.style.transform='scale(1)';"
-         onmousedown="this.style.transform='scale(0.94)';this.style.boxShadow='0 0 12px rgba(255,180,0,0.3)';"
-         onmouseup="this.style.transform='scale(1)';this.style.boxShadow='0 0 28px rgba(255,180,0,0.45)';">
+      <div style="margin-top:15px;">
+        <a href="about.html" style="display:inline-block; border:1px solid #cbd5e1; color:var(--text-main); border-radius:50px; padding:6px 16px; font-weight:600; text-decoration:none; font-size:0.8rem; background:#fff;">
          ✨ درباره‌ی دکتر فواد شهابیان و دنت‌کست
         </a>
       </div>
     </footer>
   </div>
 
-  <style>
-    /* اضافه کردن قابلیت موقعیت‌دهی به دکمه‌ها */
-    .note-link { position: relative; }
-
-    /* ظاهر برچسب جدید */
-    .new-badge::after {
-      content: "جدید";
-      position: absolute;
-      top: -10px; left: -5px;
-      background-color: #ff3b30;
-      color: white;
-      font-size: 0.7rem; 
-      padding: 2px 8px; 
-      border-radius: 10px;
-      box-shadow: 0 0 8px rgba(255, 59, 48, 0.6);
-      border: 2px solid #1a1a1a;
-      animation: bounce 2s infinite;
-      z-index: 100; font-weight: bold;
-      pointer-events: none;
-      font-family: sans-serif;
-    }
-
-    @keyframes bounce {
-      0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
-      40% {transform: translateY(-5px);}
-      60% {transform: translateY(-3px);}
-    }
-  </style>
-
    <script>
-// ==================================================
-// SYSTEM: Content Badge Manager (Tehran Timezone Lock)
-// پایدارترین حالت ممکن برای کاربران ایرانی
-// ==================================================
+    const contentUpdates = {
+      "btn-notecast":  "2024-01-01",
+      "btn-photocast": "2024-01-01",
+      "btn-clinical":  "2025-11-29",
+      "btn-dentai":    "2025-11-29",
+      "btn-plus":      "2025-11-27"
+    };
 
-// 1. تنظیمات تاریخ آپدیت‌ها (فرمت: YYYY-MM-DD)
-const contentUpdates = {
-  "btn-notecast":  "2024-01-01",
-  "btn-photocast": "2024-01-01",
-  "btn-clinical":  "2025-11-29", // تاریخ تست (مثلاً فردا)
-  "btn-dentai":    "2025-11-29",
-  "btn-plus":      "2025-11-27"
-};
-
-// 2. تابع دریافت تاریخ فقط به وقت ایران (Anti-VPN & Anti-Timezone)
-function getTehranDate() {
-  // این خط جادویی است: تاریخ را مجبور می‌کند به وقت تهران باشد
-  // فرمت en-CA همیشه خروجی YYYY-MM-DD می‌دهد
-  return new Date().toLocaleDateString('en-CA', {
-    timeZone: 'Asia/Tehran'
-  });
-}
-
-// 3. پاکسازی داده‌های خراب قدیمی (Sanitizer)
-function sanitizeStorage(key) {
-  const val = localStorage.getItem(key);
-  if (!val) return null;
-
-  // اگر فرمت تاریخ استاندارد نبود (مثلاً ساعت داشت)، پاکش کن
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(val)) {
-    localStorage.removeItem(key);
-    return null;
-  }
-  return val;
-}
-
-// 4. بررسی وضعیت بج‌ها
-function checkUpdates() {
-  for (const [btnId, updateDate] of Object.entries(contentUpdates)) {
-    const btn = document.getElementById(btnId);
-    if (!btn) continue;
-
-    const key = "last_visit_" + btnId;
-    
-    // دریافت آخرین بازدید (اگر نبود، سال ۱۹۰۰ را در نظر بگیر)
-    const lastVisit = sanitizeStorage(key) || "1900-01-01";
-
-    // مقایسه متنی ساده و دقیق
-    if (updateDate > lastVisit) {
-      btn.classList.add("new-badge");
+    function getTehranDate() {
+      return new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Tehran' });
     }
-  }
-}
 
-// 5. ثبت بازدید (کلیک روی دکمه)
-function markAsRead(btnId) {
-  const today = getTehranDate(); // تاریخ امروز به وقت تهران
-  const key = "last_visit_" + btnId;
-  
-  localStorage.setItem(key, today);
+    function sanitizeStorage(key) {
+      const val = localStorage.getItem(key);
+      if (!val) return null;
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(val)) return null;
+      return val;
+    }
 
-  const btn = document.getElementById(btnId);
-  if (btn) btn.classList.remove("new-badge");
-}
+    function checkUpdates() {
+      for (const [btnId, updateDate] of Object.entries(contentUpdates)) {
+        const btn = document.getElementById(btnId);
+        if (!btn) continue;
+        const key = "last_visit_" + btnId;
+        const lastVisit = sanitizeStorage(key) || "1900-01-01";
+        if (updateDate > lastVisit) {
+          btn.classList.add("new-badge");
+        }
+      }
+    }
 
-// اجرای خودکار هنگام لود صفحه
-document.addEventListener("DOMContentLoaded", checkUpdates);
-   </script>
-  
-    
-  
-  <script defer>
+    function markAsRead(btnId) {
+      const today = getTehranDate();
+      const key = "last_visit_" + btnId;
+      localStorage.setItem(key, today);
+      const btn = document.getElementById(btnId);
+      if (btn) btn.classList.remove("new-badge");
+    }
+
+    document.addEventListener("DOMContentLoaded", checkUpdates);
+
     const installButton = document.getElementById('installButton');
     const banner = document.getElementById('installBanner');
     let deferredPrompt;
-
     const isiOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
     if (isiOS) {
       installButton.style.display = 'none';
       banner.innerHTML = 'برای نصب دنت‌کست در آیفون: از دکمه‌ی <strong>Share</strong> استفاده کنید و گزینه‌ی <strong>Add to Home Screen</strong> را انتخاب کنید.';
     }
-
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
       deferredPrompt = e;
@@ -704,11 +454,8 @@ document.addEventListener("DOMContentLoaded", checkUpdates);
         deferredPrompt.userChoice.then(() => deferredPrompt = null);
       });
     });
-
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/service-worker.js')
-        .then(() => console.log('DentCast service worker registered.'))
-        .catch(err => console.error('SW registration failed:', err));
+      navigator.serviceWorker.register('/service-worker.js');
     }
   </script>
 </body>
