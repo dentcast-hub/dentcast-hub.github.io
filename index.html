@@ -292,6 +292,38 @@
       padding: 2px 6px; border-radius: 6px; font-weight: bold;
       box-shadow: 0 2px 4px rgba(239, 68, 68, 0.2);
     }
+        /* استایل دکمه اپیزودها (آبی سلطنتی - لنگر صفحه) */
+    .episodes-wide-btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      box-sizing: border-box;
+      margin-top: 20px;
+      padding: 15px 10px; /* کمی ارتفاع بیشتر برای ابهت بیشتر */
+      
+      /* رنگ آبی سلطنتی (Royal Blue) */
+      background-color: #0b5fff; /* آبیِ اصلی برندت که روی زمینه روشن عالیه */
+      color: #ffffff;            /* متن سفید */
+      border: none;              /* بوردر نمیخواد چون رنگش قویه */
+
+      font-family: inherit;
+      font-size: 0.95rem;        /* فونت کمی درشت‌تر */
+      font-weight: 800;          /* بولدِ قوی */
+      text-decoration: none;
+      border-radius: 14px;       /* گردی گوشه‌ها */
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      
+      /* سایه رنگی و پخش شده (Glow Effect) */
+      box-shadow: 0 10px 25px rgba(11, 95, 255, 0.35);
+    }
+
+    .episodes-wide-btn:hover {
+      background-color: #004ad4; /* موقع هاور کمی سنگین‌تر میشه */
+      transform: translateY(-3px); /* کمی میاد بالا */
+      box-shadow: 0 15px 35px rgba(11, 95, 255, 0.45);
+    }
+    
   </style>
 
   <link rel="icon" href="https://dentcast.ir/logo-v2.png" type="image/png" sizes="192x192">
@@ -374,7 +406,10 @@
             ✨ LiteCast <br> دندان‌پزشکی برای همه
         </a>
       </div>
-
+      <a href="episodes.html" class="episodes-wide-btn">
+        🎧 شنیدن همه اپیزودهای دنت‌کست
+      </a>
+      
       <a href="mailto: info@dentcast.ir" class="colleague-wide-btn">
         <span style="margin-left: 8px; font-size: 1.2rem;">✉️</span>
         ارتباط با همکاران و مشاوره
@@ -413,10 +448,7 @@
           }
       </script>
       <script src="https://groot.mailerlite.com/js/w/webforms.min.js?v176e10baa5e7ed80d35ae235be3d5024" type="text/javascript"></script>
-      
-      <div class="more-episodes">
-        <a href="episodes.html">🎧 شنیدن همه ی اپیزودهای دنت‌کست</a>
-      </div>
+    
 
       <iframe
         src="https://embed.acast.com/624b5545ecc0e600134ea0df"
