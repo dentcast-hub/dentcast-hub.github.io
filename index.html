@@ -335,33 +335,37 @@
         <span style="margin-left: 8px; font-size: 1.2rem;">✉️</span>
         ارتباط با همکاران و مشاوره
       </a>
+<style>
+  .colleague-wide-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 20px;
+    padding: 12px 10px; /* ارتفاعش رو کمی کمتر کردم */
+    
+    /* تغییرات اصلی اینجاست: */
+    background-color: rgba(255, 255, 255, 0.03); /* خیلی خیلی محو */
+    border: 1px solid rgba(255, 193, 7, 0.3);   /* حاشیه نازک و کم‌رنگ */
+    color: rgba(255, 193, 7, 0.8);               /* رنگ متن ملایم‌تر */
+    
+    font-family: inherit;
+    font-size: 0.95rem;      /* فونت کمی کوچکتر و رسمی‌تر */
+    font-weight: normal;     /* دیگه بولد نیست */
+    text-decoration: none;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+  }
 
-      <style>
-        .colleague-wide-btn {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          width: 100%;
-          box-sizing: border-box;
-          margin-top: 15px;           
-          padding: 15px 10px;
-          background-color: transparent;
-          border: 2px solid #FFC107; 
-          color: #FFC107;
-          font-family: inherit;
-          font-size: 1rem;
-          font-weight: bold;
-          text-decoration: none;
-          border-radius: 12px;       
-          transition: all 0.3s ease;
-        }
-
-        .colleague-wide-btn:hover {
-          background-color: #FFC107; 
-          color: #1a1a2e;             
-          box-shadow: 0 0 12px rgba(255, 193, 7, 0.5); 
-        }
-      </style>
+  /* وقتی موس میره روش کمی پررنگ بشه که معلوم بشه دکمه‌ست */
+  .colleague-wide-btn:hover {
+    border-color: #FFC107;
+    color: #FFC107;
+    background-color: rgba(255, 193, 7, 0.05);
+  }
+</style>
+          
           
 
       <style>
