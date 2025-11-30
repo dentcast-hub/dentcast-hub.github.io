@@ -365,6 +365,40 @@
       padding: 2px 6px; border-radius: 6px; font-weight: bold;
       box-shadow: 0 2px 4px rgba(234, 88, 12, 0.3);
     }
+        /* استایل دکمه کپسولی نویسنده (Author Chip) */
+    .author-chip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      
+      margin-top: 12px;
+      padding: 6px 16px;
+      
+      /* رنگ‌بندی: پس‌زمینه خیلی روشن و خنثی */
+      background-color: #f1f5f9; 
+      color: #475569;            /* متن طوسی تیره */
+      border: 1px solid #e2e8f0; /* حاشیه خیلی ظریف */
+      
+      border-radius: 50px;       /* کاملاً گرد (کپسولی) */
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .author-chip:hover {
+      background-color: #e2e8f0;   /* تیره‌تر موقع هاور */
+      color: #1e293b;
+      transform: translateY(-1px); /* حرکت ریز */
+    }
+    
+    /* یک آیکون ریز برای دکمه نویسنده */
+    .author-icon {
+      font-size: 1rem;
+      opacity: 0.8;
+    }
+    
   </style>
 
   <link rel="icon" href="https://dentcast.ir/logo-v2.png" type="image/png" sizes="192x192">
@@ -409,11 +443,15 @@
     </div>
 
     <header>
+          
       <h1>🎙️ دنت‌کست — DentCast</h1>
-      <h2>پادکست علمی دندان‌پزشکی با روایت دکتر فواد شهابیان</h2>
-      <p>متخصص پروتزهای دندانی و ایمپلنت،  
-        فارغ‌التحصیل دانشگاه شهید بهشتی و دانشگاه علوم پزشکی مشهد،  
-        دارای بورد تخصصی پروتز</p>
+      <h2>پادکست علمی دندان‌پزشکی</h2>
+      
+      <a href="about.html" class="author-chip">
+        <span class="author-icon">👨‍⚕️</span>
+        <span>به روایت دکتر فواد شهابیان</span>
+      </a>
+      
     </header>
 
     <a href="https://t.me/dentcast_support" target="_blank" class="ad-banner">
