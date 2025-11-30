@@ -51,31 +51,45 @@
       margin: 0 auto;
       padding: 15px 15px 60px;
     }
-
-    /* بنر تبلیغاتی (قرمز کمرنگ حفظ شد) */
+    /* استایل بنر تبلیغاتی جدید (مدرن و مینیمال) */
     .ad-banner {
-      display: block;
-      margin: 10px auto 25px;
-      text-align: center;
+      display: flex;                /* برای تراز بهتر متن و آیکون */
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;              /* توی موبایل‌های خیلی کوچیک نشکنه */
+      gap: 10px;                    /* فاصله بین متن و دکمه */
+      
+      margin: 15px auto 30px;
       text-decoration: none;
-      background: #fef2f2;       
-      border: 1px dashed #f87171; 
-      color: #991b1b;            
-      border-radius: 12px;
-      padding: 10px 15px;
+      
+      /* رنگ‌بندی جدید: صورتی رُز خیلی ملایم و شیک */
+      background: #fff1f2;          
+      border: 1px solid #fecdd3;    /* خط دور صاف و ظریف (دیگه خط‌چین نیست) */
+      color: #9f1239;               /* متن زرشکی تیره و باکلاس */
+      
+      border-radius: 16px;          /* گردی گوشه‌ها هماهنگ با بقیه سایت */
+      padding: 12px 20px;
       font-size: .9rem;
       font-weight: 500;
-      transition: all 0.3s ease;
-      position: relative;
+      transition: all 0.2s ease;
     }
+
+    .ad-banner:hover {
+      background: #ffe4e6;          /* هاور خیلی نامحسوس */
+      transform: translateY(-2px);  /* حرکت ریز موقع لمس */
+    }
+
+    /* استایل دکمه‌ی "رزرو جایگاه" داخل بنر */
     .ad-banner strong {
-      font-weight: 800;
-      color: #7f1d1d;
-      background: #fee2e2;       
-      padding: 2px 8px;
-      border-radius: 6px;
-      margin-right: 8px;
+      background: #fb7185;          /* صورتی/قرمز زنده */
+      color: white;                 /* متن سفید */
+      padding: 4px 12px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      box-shadow: 0 2px 4px rgba(251, 113, 133, 0.3); /* سایه رنگی زیر دکمه */
     }
+    
 
     /* بنر نصب اپلیکیشن */
     .install-banner {
@@ -491,8 +505,8 @@
       </div>
 
       <p class="episode-box">
-        ❌❌❌<br>
-        کشیدن یا نگه داشتن؟<br>
+        <br>
+       <strong>کشیدن یا نگهداشتن دندان؟</strong> <br>
         این سؤالِ ساده، یکی از پیچیده‌ترین تصمیم‌ها در دندان‌پزشکیه.
         اما چرا بعضی دندون‌ها—even با پریوی خوب—نباید بمونن؟
         و چرا بعضی دندون‌های «questionable» اتفاقاً باید حفظ بشن؟<br><br>
