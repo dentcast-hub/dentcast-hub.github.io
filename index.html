@@ -10,8 +10,8 @@
 
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" as="style">
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
-
-  <style>
+  
+    <style>
     :root {
       /* --- پالت نهایی: صمیمی اما لوکس --- */
       
@@ -51,45 +51,108 @@
       margin: 0 auto;
       padding: 15px 15px 60px;
     }
-    /* استایل بنر تبلیغاتی جدید (مدرن و مینیمال) */
-    .ad-banner {
-      display: flex;                /* برای تراز بهتر متن و آیکون */
+
+    /* --- شروع تغییرات هدر (فشرده‌سازی) --- */
+    
+    header {
+        text-align: center;
+        /* فاصله از بالای صفحه کمی بیشتر */
+        padding-top: 15px;
+        /* فاصله پایین هدر تا بنر صورتی: کم و متناسب */
+        margin-bottom: 12px; 
+    }
+
+    header h1 {
+        color: var(--primary);
+        font-size: 1.8rem;
+        /* حذف فاصله اضافی پایین تیتر */
+        margin: 0 0 2px 0; 
+        font-weight: 900;
+    }
+
+    header h2 {
+        font-size: 0.95rem;
+        color: var(--text-main);
+        opacity: 0.9;
+        font-weight: 600;
+        /* فاصله کم فقط برای جدا شدن از دکمه نویسنده */
+        margin: 0 0 8px 0; 
+    }
+
+    header p {
+        color: var(--text-muted);
+        line-height: 1.6;
+        font-size: 0.85rem;
+        margin-top: 8px;
+    }
+
+    /* استایل دکمه کپسولی نویسنده (Author Chip) - اصلاح شده برای فشرده‌سازی */
+    .author-chip {
+      display: inline-block; /* تغییر به inline-block برای کنترل بهتر */
       align-items: center;
       justify-content: center;
-      flex-wrap: wrap;              /* توی موبایل‌های خیلی کوچیک نشکنه */
-      gap: 10px;                    /* فاصله بین متن و دکمه */
+      gap: 6px;
       
-      margin: 15px auto 30px;
+      /* حذف مارجین بالا تا بچسبه به h2 */
+      margin-top: 0; 
+      padding: 4px 14px;
+      
+      /* رنگ‌بندی: پس‌زمینه خیلی روشن و خنثی */
+      background-color: #f1f5f9; 
+      color: #64748b;            /* متن طوسی ملایم */
+      border: 1px solid #e2e8f0; /* حاشیه خیلی ظریف */
+      
+      border-radius: 50px;       /* کاملاً گرد (کپسولی) */
+      font-size: 0.75rem;        /* فونت ریز و ظریف */
+      font-weight: 500;
       text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .author-chip:hover {
+      background-color: #e2e8f0;   
+      color: #1e293b;
+      transform: translateY(-1px); 
+    }
+    
+    /* استایل بنر تبلیغاتی جدید (مدرن و مینیمال) - اصلاح شده */
+    .ad-banner {
+      display: flex;               
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;              
+      gap: 10px;                   
       
-      /* رنگ‌بندی جدید: صورتی رُز خیلی ملایم و شیک */
+      /* نکته مهم: مارجین بالا 0 شد تا به هدر بچسبه */
+      margin: 0 auto 25px;
+      
+      text-decoration: none;
       background: #fff1f2;          
-      border: 1px solid #fecdd3;    /* خط دور صاف و ظریف (دیگه خط‌چین نیست) */
-      color: #9f1239;               /* متن زرشکی تیره و باکلاس */
+      border: 1px solid #fecdd3;    
+      color: #9f1239;               
       
-      border-radius: 16px;          /* گردی گوشه‌ها هماهنگ با بقیه سایت */
+      border-radius: 16px;          
       padding: 12px 20px;
       font-size: .9rem;
       font-weight: 500;
       transition: all 0.2s ease;
     }
+    /* --- پایان تغییرات هدر --- */
 
     .ad-banner:hover {
-      background: #ffe4e6;          /* هاور خیلی نامحسوس */
-      transform: translateY(-2px);  /* حرکت ریز موقع لمس */
+      background: #ffe4e6;          
+      transform: translateY(-2px);  
     }
 
-    /* استایل دکمه‌ی "رزرو جایگاه" داخل بنر */
     .ad-banner strong {
-      background: #fb7185;          /* صورتی/قرمز زنده */
-      color: white;                 /* متن سفید */
+      background: #fb7185;          
+      color: white;                 
       padding: 4px 12px;
       border-radius: 8px;
       font-size: 0.8rem;
       font-weight: 700;
-      box-shadow: 0 2px 4px rgba(251, 113, 133, 0.3); /* سایه رنگی زیر دکمه */
+      box-shadow: 0 2px 4px rgba(251, 113, 133, 0.3); 
     }
-    
 
     /* بنر نصب اپلیکیشن */
     .install-banner {
@@ -126,27 +189,6 @@
       white-space: nowrap;
     }
 
-    header {text-align:center; margin-bottom:25px; padding-top: 10px;}
-    header h1 {
-        color: var(--primary);
-        font-size: 1.8rem;
-        margin: 5px 0;
-        font-weight: 900;
-    }
-    header h2 {
-        font-size: 0.95rem;
-        color: var(--text-main);
-        opacity: 0.9;
-        margin-top: 4px;
-        font-weight: 600;
-    }
-    header p {
-        color: var(--text-muted);
-        line-height: 1.6;
-        font-size: 0.85rem;
-        margin-top: 8px;
-    }
-
     .card { background: transparent; box-shadow: none; padding: 0; }
 
     /* شبکه ۶ تایی */
@@ -165,7 +207,7 @@
       justify-content: center;
       text-align: center;
       
-      background: var(--card-bg); /* رنگ جدید */
+      background: var(--card-bg); 
       color: var(--card-text);
       
       border-radius: var(--radius);
@@ -174,7 +216,7 @@
       text-decoration: none;
       transition: all .2s ease;
       
-      border: 1px solid var(--card-border); /* بوردر جدید */
+      border: 1px solid var(--card-border); 
       box-shadow: 0 4px 6px rgba(0,0,0,0.02);
       
       height: 100%;
@@ -195,11 +237,9 @@
     .note-link:hover {
       transform: translateY(-3px);
       box-shadow: 0 8px 25px rgba(0,0,0,0.06);
-      background: #fff; /* سفید مطلق موقع هاور */
+      background: #fff; 
       border-color: var(--primary);
     }
-
-    
 
     /* دکمه اپیزودها (آبی سلطنتی) */
     .episodes-wide-btn {
@@ -230,7 +270,7 @@
       box-shadow: 0 15px 35px rgba(11, 95, 255, 0.45);
     }
 
-        /* 1. استایل دکمه مشاوره (پلاتینی / نقره‌ای مات) */
+    /* استایل دکمه مشاوره (پلاتینی / نقره‌ای مات) */
     .colleague-wide-btn {
       display: flex;
       justify-content: center;
@@ -240,10 +280,9 @@
       margin-top: 20px;
       padding: 14px 10px;
       
-      /* رنگ پلاتینی */
       background-color: #e2e8f0; 
-      color: #334155;            /* متن طوسی سربی (خوانا) */
-      border: 1px solid #cbd5e1; /* حاشیه کمی تیره‌تر */
+      color: #334155;            
+      border: 1px solid #cbd5e1; 
 
       font-family: inherit;
       font-size: 0.9rem;
@@ -254,14 +293,14 @@
     }
 
     .colleague-wide-btn:hover {
-      background-color: #cbd5e1; /* موقع هاور کمی تیره‌تر میشه */
+      background-color: #cbd5e1; 
       transform: translateY(-2px);
     }
 
-      /* استایل کلی باکس خبرنامه */
+    /* استایل کلی باکس خبرنامه */
     .newsletter-box {
-      background: #eff6ff;       /* آبی خیلی روشن */
-      border: 2px solid #60a5fa; /* کادر آبی مشخص */
+      background: #eff6ff;       
+      border: 2px solid #60a5fa; 
       border-radius: 16px;
       padding: 20px;
       text-align: center;
@@ -274,16 +313,16 @@
 
     /* چیدمان خطی فرم (مهم برای هم‌تراز شدن) */
     .newsletter-form-group {
-      display: flex;          /* چیدن کنار هم */
-      align-items: stretch;   /* هم‌ارتفاع کردن */
-      gap: 8px;               /* فاصله بینشون */
+      display: flex;          
+      align-items: stretch;   
+      gap: 8px;               
       width: 100%;
     }
 
     /* فیلد ایمیل */
     .newsletter-input {
-      flex-grow: 1;           /* پر کردن فضای خالی */
-      width: auto;            /* حذف عرض ۱۰۰٪ */
+      flex-grow: 1;           
+      width: auto;            
       padding: 12px; 
       border-radius: 10px;
       border: 1px solid #93c5fd; 
@@ -294,15 +333,15 @@
 
     /* دکمه عضویت (پلاتینی) */
     .newsletter-btn {
-      width: auto;            /* حذف عرض ۱۰۰٪ */
-      padding: 0 20px;        /* عرض مناسب */
+      width: auto;            
+      padding: 0 20px;        
       border-radius: 10px;
-      background: #e2e8f0;    /* پلاتینی */
+      background: #e2e8f0;    
       color: #334155;
       border: 1px solid #cbd5e1;
       font-weight: bold;
       cursor: pointer;
-      white-space: nowrap;    /* جلوگیری از شکستن متن */
+      white-space: nowrap;    
     }
     
     /* استایل کانتینر کلی پلیر (اصلاح شده و لوکس) */
@@ -310,42 +349,33 @@
       margin-top: 45px;
       border-radius: var(--radius);
       overflow: hidden;
-      
-      /* سایه خیلی قوی‌تر برای حس "معلق بودن" و گرانی */
       box-shadow: 0 20px 50px rgba(11, 95, 255, 0.15); 
-      
-      /* تغییر رنگ حاشیه به "سرمه‌ای برند" (یکپارچه با هدر) */
       border: 2px solid #1e3a8a; 
-      background: #1e3a8a; /* پس‌زمینه کلی هم سرمه‌ای شد تا درز سفید نداشته باشه */
+      background: #1e3a8a; 
     }
 
     /* هدرِ سلطنتی */
     .player-header {
-      background: #1e3a8a; /* سرمه‌ای */
+      background: #1e3a8a; 
       color: #fff;
-      padding: 15px;       /* کمی ارتفاع بیشتر */
+      padding: 15px;       
       text-align: center;
       font-weight: 800;
       font-size: 0.95rem;
-      
-      /* خط جداکننده خیلی محو و شیک (به جای طلایی جیغ) */
       border-bottom: 1px solid rgba(255, 255, 255, 0.15); 
-      
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 10px;
     }
 
-    /* فیکس کردن مشکل نصفه بودن */
     .player-wrapper iframe {
-      width: 100% !important; /* این خط مشکل رو حل می‌کنه */
+      width: 100% !important; 
       margin: 0 !important;
       border: none !important;
       display: block;
-      background: #fff; /* محتوای پلیر سفید بمونه */
+      background: #fff; 
     }
-    
     
     .episode-box {
       text-align: right; font-size: .9rem; color: var(--text-main);
@@ -360,46 +390,19 @@
     .note-link { position: relative; }
     .new-badge::after {
       content: "جدید"; position: absolute; top: 8px; left: 8px;
-      background-color: var(--badge-color); /* تغییر رنگ */
+      background-color: var(--badge-color); 
       color: white; font-size: 0.65rem; 
       padding: 2px 6px; border-radius: 6px; font-weight: bold;
       box-shadow: 0 2px 4px rgba(234, 88, 12, 0.3);
     }
-        /* استایل دکمه کپسولی نویسنده (Author Chip) */
-    .author-chip {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      
-      margin-top: 12px;
-      padding: 6px 16px;
-      
-      /* رنگ‌بندی: پس‌زمینه خیلی روشن و خنثی */
-      background-color: #f1f5f9; 
-      color: #475569;            /* متن طوسی تیره */
-      border: 1px solid #e2e8f0; /* حاشیه خیلی ظریف */
-      
-      border-radius: 50px;       /* کاملاً گرد (کپسولی) */
-      font-size: 0.8rem;
-      font-weight: 600;
-      text-decoration: none;
-      transition: all 0.2s ease;
-    }
-
-    .author-chip:hover {
-      background-color: #e2e8f0;   /* تیره‌تر موقع هاور */
-      color: #1e293b;
-      transform: translateY(-1px); /* حرکت ریز */
-    }
     
-    /* یک آیکون ریز برای دکمه نویسنده */
     .author-icon {
       font-size: 1rem;
       opacity: 0.8;
     }
     
-  </style>
+      </style>
+  
 
   <link rel="icon" href="https://dentcast.ir/logo-v2.png" type="image/png" sizes="192x192">
   <link rel="apple-touch-icon" href="/logo-v2.png">
