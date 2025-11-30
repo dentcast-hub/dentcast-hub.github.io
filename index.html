@@ -639,11 +639,20 @@ background: #0b5fff;
     const banner = document.getElementById('installBanner');
     let deferredPrompt;
 
-    const isiOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+        const isiOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
     if (isiOS) {
-      installButton.style.display = 'none';
-      banner.innerHTML = 'برای نصب دنت‌کست در آیفون: از دکمه‌ی <strong>Share</strong> استفاده کنید و گزینه‌ی <strong>Add to Home Screen</strong> را انتخاب کنید.';
+      // حذف دکمه نصب چون تو آیفون کار نمیکنه
+      if(installButton) installButton.style.display = 'none';
+      
+      // تنظیم استایل ساده و وسط‌چین
+      banner.style.display = 'block';
+      banner.style.textAlign = 'center';
+      banner.style.lineHeight = '1.6';
+      
+      // متن خیلی کوتاه و شفاف
+      banner.innerHTML = 'نصب در آیفون: دکمه <strong>Share</strong> و سپس <strong>Add to Home Screen</strong>';
     }
+     
 
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
