@@ -185,32 +185,7 @@
       border-color: var(--primary);
     }
 
-    /* دکمه عریض تماس (نقره‌ای/پلاتینی) */
-    .colleague-wide-btn {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      box-sizing: border-box;
-      margin-top: 20px;
-      padding: 14px 10px;
-      
-      background-color: var(--contact-bg); /* رنگ جدید */
-      color: var(--contact-text);
-      border: 1px solid var(--contact-border);
-
-      font-family: inherit;
-      font-size: 0.9rem;
-      font-weight: 700;
-      text-decoration: none;
-      border-radius: 12px;
-      transition: all 0.3s ease;
-    }
-
-    .colleague-wide-btn:hover {
-      background-color: #cbd5e1; /* کمی تیره‌تر موقع هاور */
-      color: #0f172a;
-    }
+    
 
     /* دکمه اپیزودها (آبی سلطنتی) */
     .episodes-wide-btn {
@@ -241,31 +216,51 @@
       box-shadow: 0 15px 35px rgba(11, 95, 255, 0.45);
     }
 
-    /* خبرنامه (آبی یخی) */
-    .newsletter-wrapper { max-width: 600px; margin: 35px auto 40px; }
+        /* 1. استایل دکمه مشاوره (پلاتینی / نقره‌ای مات) */
+    .colleague-wide-btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      box-sizing: border-box;
+      margin-top: 20px;
+      padding: 14px 10px;
+      
+      /* رنگ پلاتینی */
+      background-color: #e2e8f0; 
+      color: #334155;            /* متن طوسی سربی (خوانا) */
+      border: 1px solid #cbd5e1; /* حاشیه کمی تیره‌تر */
+
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 700;
+      text-decoration: none;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+    }
+
+    .colleague-wide-btn:hover {
+      background-color: #cbd5e1; /* موقع هاور کمی تیره‌تر میشه */
+      transform: translateY(-2px);
+    }
+
+    /* 2. استایل باکس خبرنامه (با کادر مشخص) */
     .newsletter-box {
-      background: #eff6ff;       
-      border: 1px solid #dbeafe; 
+      background: #eff6ff;       /* آبی خیلی روشن */
+      border: 2px solid #93c5fd; /* حاشیه آبی آسمانی (این باعث دیده شدنش میشه) */
+      
       border-radius: 16px;
-      padding: 20px;
+      padding: 25px 20px;
       text-align: center;
-      box-shadow: var(--shadow-soft);
+      
+      /* سایه کمی قوی‌تر */
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      
       position: relative;
       overflow: hidden;
+      margin-top: 35px; /* فاصله بیشتر از دکمه بالا */
     }
-    .newsletter-input {
-      width: 100%; padding: 12px; border-radius: 10px;
-      border: 1px solid #bfdbfe; 
-      background: #fff;          
-      color: var(--text-main);
-      margin-bottom: 10px; box-sizing: border-box; outline: none;
-    }
-    .newsletter-title { color: var(--text-main); font-weight: 800; margin-bottom: 5px;}
-    .newsletter-text { color: var(--text-muted); font-size: 0.8rem; margin-bottom: 15px;}
-    .newsletter-btn {
-      width: 100%; padding: 12px; border-radius: 10px;
-      background: var(--primary); color: white; border: none; font-weight: bold; cursor: pointer;
-    }
+    
     /* استایل کانتینر کلی پلیر (اصلاح شده و لوکس) */
     .player-wrapper {
       margin-top: 45px;
