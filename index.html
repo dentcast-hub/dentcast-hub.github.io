@@ -244,21 +244,51 @@
       transform: translateY(-2px);
     }
 
-    /* 2. استایل باکس خبرنامه (با کادر مشخص) */
+      /* استایل کلی باکس خبرنامه */
     .newsletter-box {
       background: #eff6ff;       /* آبی خیلی روشن */
-      border: 2px solid #93c5fd; /* حاشیه آبی آسمانی (این باعث دیده شدنش میشه) */
-      
+      border: 2px solid #60a5fa; /* کادر آبی مشخص */
       border-radius: 16px;
-      padding: 25px 20px;
+      padding: 20px;
       text-align: center;
-      
-      /* سایه کمی قوی‌تر */
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-      
-      position: relative;
-      overflow: hidden;
-      margin-top: 35px; /* فاصله بیشتر از دکمه بالا */
+      margin-top: 35px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+    }
+    
+    .newsletter-title { color: #1e293b; font-weight: 800; margin-bottom: 5px;}
+    .newsletter-text { color: #64748b; font-size: 0.8rem; margin-bottom: 15px;}
+
+    /* چیدمان خطی فرم (مهم برای هم‌تراز شدن) */
+    .newsletter-form-group {
+      display: flex;          /* چیدن کنار هم */
+      align-items: stretch;   /* هم‌ارتفاع کردن */
+      gap: 8px;               /* فاصله بینشون */
+      width: 100%;
+    }
+
+    /* فیلد ایمیل */
+    .newsletter-input {
+      flex-grow: 1;           /* پر کردن فضای خالی */
+      width: auto;            /* حذف عرض ۱۰۰٪ */
+      padding: 12px; 
+      border-radius: 10px;
+      border: 1px solid #93c5fd; 
+      background: #fff;
+      font-family: inherit;
+      outline: none;
+    }
+
+    /* دکمه عضویت (پلاتینی) */
+    .newsletter-btn {
+      width: auto;            /* حذف عرض ۱۰۰٪ */
+      padding: 0 20px;        /* عرض مناسب */
+      border-radius: 10px;
+      background: #e2e8f0;    /* پلاتینی */
+      color: #334155;
+      border: 1px solid #cbd5e1;
+      font-weight: bold;
+      cursor: pointer;
+      white-space: nowrap;    /* جلوگیری از شکستن متن */
     }
     
     /* استایل کانتینر کلی پلیر (اصلاح شده و لوکس) */
