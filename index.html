@@ -87,26 +87,25 @@
     }
 
     /* استایل دکمه کپسولی نویسنده (Author Chip) - اصلاح شده برای فشرده‌سازی */
+    
+    /* استایل دکمه نویسنده - تنظیم شده برای متن طولانی‌تر */
     .author-chip {
-      display: inline-block; /* تغییر به inline-block برای کنترل بهتر */
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
+      display: inline-block;
+      margin-top: 0;
       
-      /* حذف مارجین بالا تا بچسبه به h2 */
-      margin-top: 0; 
-      padding: 4px 14px;
+      /* پدینگ چپ و راست رو کمی کمتر کردیم که متن جا بشه */
+      padding: 4px 10px; 
       
-      /* رنگ‌بندی: پس‌زمینه خیلی روشن و خنثی */
-      background-color: #f1f5f9; 
-      color: #64748b;            /* متن طوسی ملایم */
-      border: 1px solid #e2e8f0; /* حاشیه خیلی ظریف */
+      background-color: #f8fafc;
+      color: #64748b;
+      border: 1px solid #e2e8f0;
+      border-radius: 50px;
       
-      border-radius: 50px;       /* کاملاً گرد (کپسولی) */
-      font-size: 0.75rem;        /* فونت ریز و ظریف */
-      font-weight: 500;
+      /* فونت رو فیکس نگه داشتیم */
+      font-size: 0.75rem;   
+      font-weight: 600;     /* کمی پررنگ‌تر که "متخصص پروتز" خوب دیده شه */
       text-decoration: none;
-      transition: all 0.2s ease;
+      white-space: nowrap;  /* این خط نمیذاره متن دو خطی بشه */
     }
 
     .author-chip:hover {
@@ -452,7 +451,7 @@
       
       <a href="about.html" class="author-chip">
         <span class="author-icon">👨‍⚕️</span>
-        <span>به روایت دکتر فواد شهابیان</span>
+        <span> به روایت دکتر فواد شهابیان متخصص پروتز</span>
       </a>
       
     </header>
