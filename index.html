@@ -457,25 +457,24 @@ background: #0b5fff;
     position: fixed;
     bottom: 90px;
     right: 25px;
-    
-    /* 👇 عرض ظریف و ثابت */
-    width: 250px !important; 
+    width: 250px !important;
     max-width: 85vw !important;
-    
     height: 480px;
     max-height: 65vh;
+
     background: #ffffff;
     border-radius: 20px;
     box-shadow: 0 10px 40px rgba(0,0,0,0.25);
     z-index: 2147483647;
     flex-direction: column;
     overflow: hidden;
-    font-family: 'Vazirmatn', sans-serif;
+
     border: 1px solid #f0f0f0;
-    animation: dc-slide-up 0.3s ease-out;
+
+    padding: 0;                /* 🔥 مشکل حل شد */
+    padding-bottom: 15px;      /* بقیه بخش‌ها فضای داخلی دارند */
     box-sizing: border-box;
 }
-
 @keyframes dc-slide-up { 
     from { opacity: 0; transform: translateY(20px); } 
     to { opacity: 1; transform: translateY(0); } 
