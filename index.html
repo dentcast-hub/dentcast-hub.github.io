@@ -674,108 +674,170 @@ background: #0b5fff;
         .catch(err => console.error('SW registration failed:', err));
     }
   </script>
-  <div id="dc-widget">
-    
-    <div id="dc-chat-window">
+ 
+  <div id="dentcast-ai-widget" style="font-family: 'Vazirmatn', sans-serif;">
+
+    <style>
+        /* دکمه جدید: مستطیل مینیمال با متن */
+        #dc-text-trigger {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #0b5fff; /* رنگ آبی برند */
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px; /* گوشه‌های کمی گرد */
+            box-shadow: 0 5px 20px rgba(11, 95, 255, 0.3);
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            z-index: 99999;
+            transition: all 0.3s ease;
+            font-family: 'Vazirmatn', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        #dc-text-trigger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(11, 95, 255, 0.4);
+        }
+
+        /* پنجره چت (باکس پاسخ) */
+        #dc-chat-box {
+            display: none; /* پیش‌فرض بسته است */
+            position: fixed;
+            bottom: 80px; /* بالای دکمه متنی */
+            right: 20px;
+            width: 350px;
+            max-width: 90%;
+            height: 480px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            z-index: 99999;
+            flex-direction: column;
+            overflow: hidden;
+            border: 1px solid #f0f0f0;
+            font-family: 'Vazirmatn', sans-serif;
+        }
+
+        /* هدر چت */
+        #dc-header {
+            background: #0b5fff;
+            color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+        }
+        #dc-close-btn {
+            cursor: pointer;
+            font-size: 20px;
+            opacity: 0.8;
+        }
+        #dc-close-btn:hover { opacity: 1; }
+
+        /* پیام‌ها */
+        #dc-messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            background: #f9f9f9;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            font-size: 13px;
+        }
+        .dc-msg { padding: 10px 14px; border-radius: 10px; max-width: 85%; line-height: 1.6; }
+        .dc-bot { background: white; border: 1px solid #eee; align-self: flex-start; color: #333; }
+        .dc-user { background: #0b5fff; color: white; align-self: flex-end; }
+        
+        /* اینپوت */
+        #dc-input-area { padding: 12px; background: white; border-top: 1px solid #eee; display: flex; gap: 8px; }
+        #dc-input { flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 6px; outline: none; font-family: inherit; }
+        #dc-send { background: none; border: none; color: #0b5fff; cursor: pointer; font-size: 18px; }
+        .dc-loading { font-size: 11px; color: #888; text-align: center; margin: 5px 0; display: none; }
+    </style>
+
+    <div id="dc-chat-box">
         <div id="dc-header">
-            <span>✨ دستیار هوشمند دنت‌کست</span>
-            <span onclick="toggleDentCast()" style="cursor: pointer; font-size: 24px;">&times;</span>
+            <span>دستیار هوشمند دنت‌کست</span>
+            <span id="dc-close-btn" onclick="toggleDcChat()">✖</span>
         </div>
         
         <div id="dc-messages">
-            <div style="display:flex; flex-direction:column;">
-                <div class="dc-msg dc-bot">
-                    سلام همکار گرامی! 👋<br>من دستیار هوشمند دکتر شهابیان هستم. تمام محتوای سایت و پادکست‌ها رو خوندم. چه کمکی ازم برمیاد؟
-                </div>
-            </div>
+            <div class="dc-msg dc-bot">سلام! 👋<br>من دستیار هوشمند سایتم. سوالی داری؟</div>
         </div>
-
-        <div id="dc-typing-indicator" class="dc-typing">
-            درحال تایپ <span class="dc-dot"></span><span class="dc-dot"></span><span class="dc-dot"></span>
-        </div>
+        
+        <div id="dc-loading" class="dc-loading">درحال نوشتن...</div>
 
         <div id="dc-input-area">
-            <button id="dc-send-btn" onclick="sendDentCastMsg()">
-                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
-            </button>
-            <input type="text" id="dc-input" placeholder="سوال خود را بنویسید..." onkeypress="handleDentCastEnter(event)">
+            <button id="dc-send" onclick="sendDcMsg()">➤</button>
+            <input type="text" id="dc-input" placeholder="سوال خود را بنویسید..." onkeypress="handleDcEnter(event)">
         </div>
     </div>
 
-    <button id="dc-toggle-btn" onclick="toggleDentCast()">
-        <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"></path></svg>
+    <button id="dc-text-trigger" onclick="toggleDcChat()">
+        سوال از دستیار هوشمند سایت
     </button>
-</div>
 
-<script>
-    // --- منطق جاوااسکریپت ---
-
-    function toggleDentCast() {
-        var win = document.getElementById("dc-chat-window");
-        var isHidden = (win.style.display === "none" || win.style.display === "");
-        win.style.display = isHidden ? "flex" : "none";
-        
-        // فوکوس خودکار روی ورودی متن وقتی باز میشه
-        if (isHidden) {
-            setTimeout(() => document.getElementById("dc-input").focus(), 100);
-        }
-    }
-
-    function handleDentCastEnter(e) {
-        if (e.key === 'Enter') sendDentCastMsg();
-    }
-
-    async function sendDentCastMsg() {
-        var input = document.getElementById("dc-input");
-        var text = input.value.trim();
-        var msgs = document.getElementById("dc-messages");
-        var typing = document.getElementById("dc-typing-indicator");
-        
-        if (!text) return;
-
-        // 1. نمایش پیام کاربر
-        msgs.innerHTML += `<div style="display:flex; flex-direction:column;"><div class="dc-msg dc-user">${text}</div></div>`;
-        input.value = "";
-        msgs.scrollTop = msgs.scrollHeight;
-
-        // 2. نمایش انیمیشن تایپینگ
-        typing.style.display = "block";
-        msgs.scrollTop = msgs.scrollHeight;
-
-        try {
-            // 3. ارسال به سرور کلادفلر
-            const response = await fetch('https://royal-rice-7437.foad-shahabian.workers.dev', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ message: text })
-            });
-
-            const data = await response.json();
-            
-            // مخفی کردن تایپینگ
-            typing.style.display = "none";
-
-            if (data.reply) {
-                // تبدیل متن بولد شده (**متن**) به تگ B HTML
-                let cleanText = data.reply.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
-                cleanText = cleanText.replace(/\n/g, '<br>'); // تبدیل اینتر به خط جدید
-
-                // نمایش جواب ربات
-                msgs.innerHTML += `<div style="display:flex; flex-direction:column;"><div class="dc-msg dc-bot">${cleanText}</div></div>`;
+    <script>
+        function toggleDcChat() {
+            var box = document.getElementById('dc-chat-box');
+            // اگر بسته بود بازش کن، اگه باز بود ببندش
+            if (box.style.display === 'flex') {
+                box.style.display = 'none';
             } else {
-                msgs.innerHTML += `<div style="display:flex; flex-direction:column;"><div class="dc-msg dc-bot" style="color:red; border-color:red;">متاسفانه پاسخی دریافت نشد.</div></div>`;
+                box.style.display = 'flex';
+                setTimeout(() => document.getElementById("dc-input").focus(), 100);
             }
-
-        } catch (error) {
-            typing.style.display = "none";
-            msgs.innerHTML += `<div style="display:flex; flex-direction:column;"><div class="dc-msg dc-bot" style="color:red;">خطا در اتصال به سرور. اینترنت را چک کنید.</div></div>`;
-            console.error(error);
         }
-        
-        // اسکرول به پایین
-        msgs.scrollTop = msgs.scrollHeight;
-    }
-</script>
+
+        function handleDcEnter(e) {
+            if (e.key === 'Enter') sendDcMsg();
+        }
+
+        async function sendDcMsg() {
+            var input = document.getElementById('dc-input');
+            var text = input.value.trim();
+            var msgs = document.getElementById('dc-messages');
+            var loading = document.getElementById('dc-loading');
+
+            if (!text) return;
+
+            msgs.innerHTML += `<div class="dc-msg dc-user">${text}</div>`;
+            input.value = '';
+            msgs.scrollTop = msgs.scrollHeight;
+            loading.style.display = 'block';
+
+            try {
+                // اتصال به کلادفلر
+                const res = await fetch('https://royal-rice-7437.foad-shahabian.workers.dev', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({message: text})
+                });
+                const data = await res.json();
+                
+                loading.style.display = 'none';
+                
+                if (data.reply) {
+                    let clean = data.reply.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>').replace(/\n/g, '<br>');
+                    msgs.innerHTML += `<div class="dc-msg dc-bot">${clean}</div>`;
+                } else {
+                    msgs.innerHTML += `<div class="dc-msg dc-bot" style="color:red">خطا در دریافت پاسخ.</div>`;
+                }
+            } catch (err) {
+                loading.style.display = 'none';
+                msgs.innerHTML += `<div class="dc-msg dc-bot" style="color:red">لطفا اینترنت را چک کنید.</div>`;
+            }
+            msgs.scrollTop = msgs.scrollHeight;
+        }
+    </script>
+  </div>
   
 </body>
 </html>
