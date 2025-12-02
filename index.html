@@ -482,6 +482,7 @@ background: #0b5fff;
 }
 
 /* هدر آبی بالا */
+
 #dc-header-final {
     background: linear-gradient(135deg, #0b5fff, #004ecc);
     color: #fff;
@@ -495,14 +496,15 @@ background: #0b5fff;
     align-items: center;
     flex-wrap: nowrap;
 
-    border-top-left-radius: 20px;   /* ← اضافه کن */
-    border-top-right-radius: 20px;  /* ← برای هماهنگی */
+    width: 100%;                  /* 🔥 کل عرض باکس */
+    box-sizing: border-box;       /* 🔥 حساب‌کردن پدینگ در عرض */
+
+    border-top-left-radius: 20px; 
+    border-top-right-radius: 20px;
 }
 
 #dc-header-final > span:first-child {
-    white-space: nowrap;  /* 🔥 جلوی دوخطی شدن را می‌گیرد */
-    overflow: hidden;
-    text-overflow: ellipsis;  /* زیبایی در صورت اسم طولانی */
+    white-space: nowrap;
 }
 #dc-close-final { cursor: pointer; font-size: 20px; opacity: 0.8; }
 #dc-close-final:hover { opacity: 1; }
