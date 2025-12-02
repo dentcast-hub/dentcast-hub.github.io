@@ -182,7 +182,7 @@ main {
     position: fixed;
     bottom: 95px; /* کمی بالاتر از دکمه */
     right: 25px;
-    width: 350px;
+    width: 290px;
     max-width: 85%; /* تو موبایل از کادر بیرون نزنه */
     height: 500px;
     max-height: 65vh; /* ارتفاع متناسب با صفحه */
