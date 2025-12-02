@@ -678,98 +678,102 @@ background: #0b5fff;
   <div id="dentcast-ai-widget" style="font-family: 'Vazirmatn', sans-serif;">
 
     <style>
-        /* دکمه جدید: مستطیل مینیمال با متن */
+        /* دکمه جدید: نارنجی/زرد شیشه‌ای (Glassmorphism) */
         #dc-text-trigger {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: #0b5fff; /* رنگ آبی برند */
-            color: white;
+            bottom: 25px;
+            right: 25px;
+            
+            /* گرادیانت شیشه‌ای زرد به نارنجی */
+            background: linear-gradient(135deg, rgba(255, 193, 7, 0.85), rgba(255, 111, 0, 0.85));
+            backdrop-filter: blur(10px); /* مات کردن پشت شیشه */
+            -webkit-backdrop-filter: blur(10px); /* برای آیفون */
+            
+            /* متن آبی سرمه‌ای تیره برای خوانایی روی زرد */
+            color: #0b1e42; 
+            
             padding: 12px 24px;
-            border-radius: 8px; /* گوشه‌های کمی گرد */
-            box-shadow: 0 5px 20px rgba(11, 95, 255, 0.3);
-            border: none;
+            border-radius: 12px;
+            
+            /* حاشیه نازک سفید برای حس شیشه‌ای */
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            
+            /* سایه درخشان نارنجی */
+            box-shadow: 0 8px 32px rgba(255, 111, 0, 0.35);
+            
             cursor: pointer;
             font-size: 14px;
-            font-weight: 600;
+            font-weight: 700; /* بولدتر */
             z-index: 99999;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             font-family: 'Vazirmatn', sans-serif;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
+        
         #dc-text-trigger:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(11, 95, 255, 0.4);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 40px rgba(255, 111, 0, 0.5);
+            border-color: rgba(255, 255, 255, 0.8);
         }
 
-        /* پنجره چت (باکس پاسخ) */
+        /* آیکون ایموجی */
+        #dc-emoji-icon {
+            font-size: 18px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+        }
+
+        /* --- بقیه استایل‌های پنجره چت (بدون تغییر) --- */
         #dc-chat-box {
-            display: none; /* پیش‌فرض بسته است */
+            display: none;
             position: fixed;
-            bottom: 80px; /* بالای دکمه متنی */
-            right: 20px;
+            bottom: 90px;
+            right: 25px;
             width: 350px;
             max-width: 90%;
             height: 480px;
             background: #fff;
-            border-radius: 12px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            border-radius: 16px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.2);
             z-index: 99999;
             flex-direction: column;
             overflow: hidden;
             border: 1px solid #f0f0f0;
             font-family: 'Vazirmatn', sans-serif;
+            animation: dc-fade-up 0.3s ease-out;
         }
 
-        /* هدر چت */
+        @keyframes dc-fade-up { from{opacity:0; transform:translateY(20px);} to{opacity:1; transform:translateY(0);} }
+
         #dc-header {
-            background: #0b5fff;
-            color: white;
-            padding: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: bold;
+            background: linear-gradient(135deg, #0b5fff, #004ecc);
+            color: white; padding: 16px; display: flex; justify-content: space-between; align-items: center; font-weight: bold;
         }
-        #dc-close-btn {
-            cursor: pointer;
-            font-size: 20px;
-            opacity: 0.8;
-        }
+        #dc-close-btn { cursor: pointer; font-size: 20px; opacity: 0.8; }
         #dc-close-btn:hover { opacity: 1; }
 
-        /* پیام‌ها */
-        #dc-messages {
-            flex: 1;
-            padding: 15px;
-            overflow-y: auto;
-            background: #f9f9f9;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            font-size: 13px;
-        }
-        .dc-msg { padding: 10px 14px; border-radius: 10px; max-width: 85%; line-height: 1.6; }
-        .dc-bot { background: white; border: 1px solid #eee; align-self: flex-start; color: #333; }
-        .dc-user { background: #0b5fff; color: white; align-self: flex-end; }
+        #dc-messages { flex: 1; padding: 15px; overflow-y: auto; background: #f8f9fc; display: flex; flex-direction: column; gap: 10px; font-size: 13px; }
+        .dc-msg { padding: 10px 14px; border-radius: 12px; max-width: 85%; line-height: 1.6; }
+        .dc-bot { background: white; border: 1px solid #eee; align-self: flex-start; color: #333; box-shadow: 0 2px 5px rgba(0,0,0,0.03); }
+        .dc-user { background: #0b5fff; color: white; align-self: flex-end; box-shadow: 0 4px 10px rgba(11, 95, 255, 0.2); }
         
-        /* اینپوت */
         #dc-input-area { padding: 12px; background: white; border-top: 1px solid #eee; display: flex; gap: 8px; }
-        #dc-input { flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 6px; outline: none; font-family: inherit; }
-        #dc-send { background: none; border: none; color: #0b5fff; cursor: pointer; font-size: 18px; }
+        #dc-input { flex: 1; padding: 10px 15px; border: 1px solid #e1e1e1; border-radius: 20px; outline: none; font-family: inherit; background: #f8f9fa; transition:0.2s; }
+        #dc-input:focus { background: white; border-color: #0b5fff; }
+        #dc-send { background: none; border: none; color: #0b5fff; cursor: pointer; font-size: 20px; padding: 0 5px; transition:0.2s; }
+        #dc-send:hover { transform: scale(1.1); }
         .dc-loading { font-size: 11px; color: #888; text-align: center; margin: 5px 0; display: none; }
     </style>
 
     <div id="dc-chat-box">
         <div id="dc-header">
-            <span>دستیار هوشمند دنت‌کست</span>
+            <span>✨ دستیار هوشمند دنت‌کست</span>
             <span id="dc-close-btn" onclick="toggleDcChat()">✖</span>
         </div>
         
         <div id="dc-messages">
-            <div class="dc-msg dc-bot">سلام! 👋<br>من دستیار هوشمند سایتم. سوالی داری؟</div>
+            <div class="dc-msg dc-bot">سلام دکتر! 👋<br>من تمام محتوای سایت رو خوندم. چطور می‌تونم کمک کنم؟</div>
         </div>
         
         <div id="dc-loading" class="dc-loading">درحال نوشتن...</div>
@@ -781,13 +785,13 @@ background: #0b5fff;
     </div>
 
     <button id="dc-text-trigger" onclick="toggleDcChat()">
-        سوال از دستیار هوشمند سایت
+        <span id="dc-emoji-icon">✨</span>
+        سوال از هوش مصنوعی
     </button>
 
     <script>
         function toggleDcChat() {
             var box = document.getElementById('dc-chat-box');
-            // اگر بسته بود بازش کن، اگه باز بود ببندش
             if (box.style.display === 'flex') {
                 box.style.display = 'none';
             } else {
