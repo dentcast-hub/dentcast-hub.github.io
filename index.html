@@ -409,159 +409,141 @@ background: #0b5fff;
       /* =========================================
    استایل ویجت هوشمند دنت‌کست (نسخه ضد تداخل)
    ========================================= */
-
-/* دکمه شیشه‌ای نارنجی */
 #dc-trigger-final {
     position: fixed;
     bottom: 25px;
     right: 25px;
-    
-    /* گرادیانت شیشه‌ای زرد به نارنجی */
-    background: linear-gradient(135deg, rgba(255, 193, 7, 0.9), rgba(255, 111, 0, 0.9));
+
+    background: linear-gradient(135deg, rgba(255,193,7,0.9), rgba(255,111,0,0.9));
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-    
-    /* متن آبی سرمه‌ای */
+
     color: #0b1e42;
-    
     padding: 12px 24px;
     border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    box-shadow: 0 8px 32px rgba(255, 111, 0, 0.35);
-    
+    border: 1px solid rgba(255,255,255,0.4);
+    box-shadow: 0 8px 32px rgba(255,111,0,0.35);
+
     cursor: pointer;
     font-size: 14px;
     font-weight: 700;
-    z-index: 2147483647; /* بالاترین لایه ممکن */
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    font-family: 'Vazirmatn', sans-serif;
+    font-family: system-ui, sans-serif;
+
     display: flex;
     align-items: center;
     gap: 10px;
-}
 
+    z-index: 2147483647;
+    transition: 0.25s ease;
+}
 #dc-trigger-final:hover {
-    transform: translateY(-3px) scale(1.02);
-    box-shadow: 0 12px 40px rgba(255, 111, 0, 0.5);
-    border-color: rgba(255, 255, 255, 0.9);
+    transform: translateY(-3px) scale(1.03);
 }
 
-#dc-emoji-icon {
-    font-size: 18px;
-    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
-}
-
-/* پنجره چت (باکس سفید) */
 #dc-box-final {
     display: none;
     position: fixed;
     bottom: 90px;
     right: 25px;
-    width: 250px !important;
-    max-width: 85vw !important;
-    height: 480px;
-    max-height: 65vh;
 
-    background: #ffffff;
+    width: 260px;           /* 🔥 عرض استاندارد ویجت موبایل */
+    max-width: 90vw;        /* 🔥 موبایل ریسپانسیو */
+
+    height: 480px;
+    max-height: 70vh;
+
+    background: #fff;
     border-radius: 20px;
     box-shadow: 0 10px 40px rgba(0,0,0,0.25);
-    z-index: 2147483647;
+    border: 1px solid #e5e5e5;
+
+    display: flex;
     flex-direction: column;
     overflow: hidden;
-
-    border: 1px solid #f0f0f0;
-
-    padding: 0;                /* 🔥 مشکل حل شد */
-    padding-bottom: 15px;      /* بقیه بخش‌ها فضای داخلی دارند */
     box-sizing: border-box;
-}
-@keyframes dc-slide-up { 
-    from { opacity: 0; transform: translateY(20px); } 
-    to { opacity: 1; transform: translateY(0); } 
-}
 
-/* هدر آبی بالا */
-
+    z-index: 2147483647;
+}
+      
 #dc-header-final {
     background: linear-gradient(135deg, #0b5fff, #004ecc);
     color: #fff;
 
-    padding: 8px 12px;
+    padding: 10px 15px;
     font-size: 13px;
     font-weight: 700;
 
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-wrap: nowrap;
 
-    width: 100%;                  /* 🔥 کل عرض باکس */
-    box-sizing: border-box;       /* 🔥 حساب‌کردن پدینگ در عرض */
+    width: 100%;
+    box-sizing: border-box;
 
-    border-top-left-radius: 20px; 
+    border-top-left-radius: 20px;
     border-top-right-radius: 20px;
 }
-
-#dc-header-final > span:first-child {
+#dc-header-final span {
     white-space: nowrap;
 }
-#dc-close-final { cursor: pointer; font-size: 20px; opacity: 0.8; }
+#dc-close-final {
+    cursor: pointer;
+    font-size: 20px;
+    opacity: .85;
+}
 #dc-close-final:hover { opacity: 1; }
-
-/* بدنه پیام‌ها */
-#dc-msgs-final {
+      #dc-msgs-final {
     flex: 1;
-    padding: 10px 12px;
+    padding: 12px;
     overflow-y: auto;
     background: #f8f9fc;
     font-size: 13px;
+
     display: flex;
     flex-direction: column;
     gap: 12px;
-}
-
-/* حباب پیام‌ها */
-.dc-msg {
+    box-sizing: border-box;
+      }
+      .dc-msg {
     padding: 12px 16px;
     border-radius: 15px;
-    max-width: 90%;
+    max-width: 85%;
     line-height: 1.6;
     word-wrap: break-word;
-    position: relative;
+    font-family: system-ui, sans-serif;
 }
-.dc-bot { 
-    background: white; 
-    color: #333; 
-    align-self: flex-start; 
-    border: 1px solid #eee; 
-    border-bottom-right-radius: 2px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+.dc-bot {
+    background: white;
+    color: #333;
+    align-self: flex-start;
+    border: 1px solid #eee;
 }
-.dc-user { 
-    background: #0b5fff; 
-    color: white; 
-    align-self: flex-end; 
-    border-bottom-left-radius: 2px;
+.dc-user {
+    background: #0b5fff;
+    color: white;
+    align-self: flex-end;
 }
-
-/* بخش ورودی پایین */
-#dc-input-area {
-    padding: 12px;
+      #dc-input-area {
+    padding: 10px;
     background: white;
     border-top: 1px solid #eee;
+
     display: flex;
     align-items: center;
     gap: 8px;
+    box-sizing: border-box;
 }
 #dc-input-final {
     flex: 1;
-    border: 1px solid #e1e1e1;
-    background: #f8f9fa;
-    border-radius: 25px;
     padding: 10px 15px;
-    outline: none;
+    background: #f8f9fa;
+    border-radius: 20px;
+    border: 1px solid #ddd;
+
     font-size: 13px;
-    direction: rtl;
+    outline: none;
+    font-family: system-ui, sans-serif;
+
     transition: 0.2s;
 }
 #dc-input-final:focus {
@@ -573,58 +555,19 @@ background: #0b5fff;
     border: none;
     color: #0b5fff;
     font-size: 18px;
-    padding: 5px;
     cursor: pointer;
-    transition: 0.2s;
+    padding: 5px;
 }
-#dc-send-final:hover { transform: scale(1.1); }
-
-/* لودینگ */
-.dc-loading { 
-    font-size: 11px; 
-    color: #888; 
-    text-align: center; 
-    margin: 5px 0; 
-    display: none; 
-}
-      /* ================================
-   ویجت AI — فقط فونت سیستم (بدون پرش)
-   ================================ */
-#dc-trigger-final,
+      #dc-trigger-final,
 #dc-box-final,
 #dc-msgs-final,
 #dc-input-final,
 #dc-header-final,
 #dc-send-final,
 .dc-msg {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+    font-family: system-ui, sans-serif !important;
 }
-      /* لایه خارجی */
-#dentcast-ai-widget {
-    padding: 0 !important;
-    margin: 0 !important;
-}
-
-/* باکس سفید */
-#dc-box-final {
-    padding: 0 !important;
-    margin: 0 !important;
-
-    width: 100% !important;
-    max-width: 100% !important;
-
-    box-sizing: border-box !important;
-}
-
-/* هدر آبی */
-#dc-header-final {
-    width: 100% !important;
-    box-sizing: border-box !important;
-    margin: 0 !important;
-
-    border-top-left-radius: 20px !important;
-    border-top-right-radius: 20px !important;
-}
+      
     
       </style>
   
