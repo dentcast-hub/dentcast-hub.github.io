@@ -1,4 +1,4 @@
-/* 🎨 DentCast Global Style - Foad Shahabian */
+/* 🎨 DentCast Global Style - Final Version */
 
 @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap');
 
@@ -51,7 +51,7 @@ header p{
   font-size:1.05rem;
 }
 
-/* کارت‌ها و بخش‌های محتوا */
+/* کارت‌ها */
 .card, .intro, .audio-box{
   background:rgba(255,255,255,0.04);
   border:1px solid rgba(255,255,255,0.08);
@@ -141,7 +141,6 @@ footer{
   footer{font-size:.8rem; margin-top:50px;}
 }
 
-/* تنظیمات Flex برای چسبیدن فوتر به پایین (اختیاری) */
 body {
   display: flex;
   flex-direction: column;
@@ -152,47 +151,73 @@ main {
 }
 
 /* =========================================
-   استایل ویجت هوشمند دنت‌کست (نسخه نهایی)
+   استایل ویجت هوشمند دنت‌کست (نارنجی شیشه‌ای)
    ========================================= */
 
-/* دکمه شناور اصلی (گرد و خوشگل) */
-#dc-widget-btn {
+/* دکمه شیشه‌ای نارنجی */
+#dc-text-trigger {
     position: fixed;
     bottom: 25px;
     right: 25px;
-    width: 60px;
-    height: 60px;
-    background: linear-gradient(135deg, #007bff, #0056b3); /* آبی پزشکی */
-    border-radius: 50%;
-    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4);
-    border: none;
+    
+    /* گرادیانت شیشه‌ای زرد به نارنجی */
+    background: linear-gradient(135deg, rgba(255, 193, 7, 0.85), rgba(255, 111, 0, 0.85));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    
+    /* متن آبی سرمه‌ای */
+    color: #0b1e42;
+    
+    padding: 12px 24px;
+    border-radius: 12px;
+    
+    /* بردر نازک سفید */
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 8px 32px rgba(255, 111, 0, 0.35);
+    
     cursor: pointer;
+    font-size: 14px;
+    font-weight: 700;
     z-index: 99999;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    font-family: 'Vazirmatn', sans-serif;
     display: flex;
     align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
+    gap: 10px;
 }
-#dc-widget-btn:hover { transform: scale(1.1); }
-#dc-widget-btn svg { fill: white; width: 30px; height: 30px; }
+
+#dc-text-trigger:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 12px 40px rgba(255, 111, 0, 0.5);
+    border-color: rgba(255, 255, 255, 0.8);
+}
+
+/* آیکون ایموجی */
+#dc-emoji-icon {
+    font-size: 18px;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+}
 
 /* پنجره چت (باکس سفید) */
 #dc-chat-box {
-    display: none; /* پیش‌فرض مخفی */
+    display: none;
     position: fixed;
-    bottom: 95px; /* کمی بالاتر از دکمه */
+    bottom: 90px;
     right: 25px;
-    width: 290px;
-    max-width: 85%; /* تو موبایل از کادر بیرون نزنه */
-    height: 500px;
-    max-height: 65vh; /* ارتفاع متناسب با صفحه */
+    
+    /* 👇 عرض باکس رو اینجا کم کردم */
+    width: 280px; 
+    
+    max-width: 85%;
+    height: 480px;
+    max-height: 65vh;
     background: #ffffff;
     border-radius: 20px;
     box-shadow: 0 10px 40px rgba(0,0,0,0.2);
     z-index: 99999;
     flex-direction: column;
     overflow: hidden;
-    font-family: 'Vazirmatn', sans-serif; /* هماهنگ با فونت سایت */
+    font-family: 'Vazirmatn', sans-serif;
     border: 1px solid #f0f0f0;
     animation: dc-slide-up 0.3s ease-out;
 }
@@ -204,7 +229,7 @@ main {
 
 /* هدر آبی بالا */
 #dc-header {
-    background: linear-gradient(135deg, #007bff, #0056b3);
+    background: linear-gradient(135deg, #0b5fff, #004ecc);
     color: white;
     padding: 15px 20px;
     font-size: 14px;
@@ -213,6 +238,8 @@ main {
     justify-content: space-between;
     align-items: center;
 }
+#dc-close-btn { cursor: pointer; font-size: 20px; opacity: 0.8; }
+#dc-close-btn:hover { opacity: 1; }
 
 /* بدنه پیام‌ها */
 #dc-messages {
@@ -230,7 +257,7 @@ main {
 .dc-msg {
     padding: 12px 16px;
     border-radius: 15px;
-    max-width: 85%;
+    max-width: 90%;
     line-height: 1.6;
     word-wrap: break-word;
     position: relative;
@@ -244,7 +271,7 @@ main {
     box-shadow: 0 2px 5px rgba(0,0,0,0.03);
 }
 .dc-user { 
-    background: #007bff; 
+    background: #0b5fff; 
     color: white; 
     align-self: flex-end; 
     border-bottom-left-radius: 2px;
@@ -272,12 +299,12 @@ main {
 }
 #dc-input:focus {
     background: white;
-    border-color: #007bff;
+    border-color: #0b5fff;
 }
 #dc-send {
     background: none;
     border: none;
-    color: #007bff;
+    color: #0b5fff;
     font-size: 18px;
     padding: 5px;
     cursor: pointer;
