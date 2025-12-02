@@ -686,24 +686,24 @@ background: #0b5fff;
             
             /* گرادیانت شیشه‌ای زرد به نارنجی */
             background: linear-gradient(135deg, rgba(255, 193, 7, 0.85), rgba(255, 111, 0, 0.85));
-            backdrop-filter: blur(10px); /* مات کردن پشت شیشه */
-            -webkit-backdrop-filter: blur(10px); /* برای آیفون */
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             
-            /* متن آبی سرمه‌ای تیره برای خوانایی روی زرد */
+            /* متن آبی سرمه‌ای تیره */
             color: #0b1e42; 
             
             padding: 12px 24px;
             border-radius: 12px;
             
-            /* حاشیه نازک سفید برای حس شیشه‌ای */
+            /* حاشیه نازک سفید */
             border: 1px solid rgba(255, 255, 255, 0.4);
             
-            /* سایه درخشان نارنجی */
+            /* سایه درخشان */
             box-shadow: 0 8px 32px rgba(255, 111, 0, 0.35);
             
             cursor: pointer;
             font-size: 14px;
-            font-weight: 700; /* بولدتر */
+            font-weight: 700;
             z-index: 99999;
             transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             font-family: 'Vazirmatn', sans-serif;
@@ -724,14 +724,13 @@ background: #0b5fff;
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
         }
 
-        /* --- بقیه استایل‌های پنجره چت (بدون تغییر) --- */
+        /* استایل‌های داخلی چت */
         #dc-chat-box {
             display: none;
             position: fixed;
             bottom: 90px;
             right: 25px;
-            width: 200px;
-            max-width: 90%;
+            /* عرض رو اینجا برداشتم و مستقیم تو تگ پایین گذاشتم */
             height: 480px;
             background: #fff;
             border-radius: 16px;
@@ -754,19 +753,19 @@ background: #0b5fff;
         #dc-close-btn:hover { opacity: 1; }
 
         #dc-messages { flex: 1; padding: 15px; overflow-y: auto; background: #f8f9fc; display: flex; flex-direction: column; gap: 10px; font-size: 13px; }
-        .dc-msg { padding: 10px 14px; border-radius: 12px; max-width: 85%; line-height: 1.6; }
+        .dc-msg { padding: 10px 14px; border-radius: 12px; max-width: 90%; line-height: 1.6; }
         .dc-bot { background: white; border: 1px solid #eee; align-self: flex-start; color: #333; box-shadow: 0 2px 5px rgba(0,0,0,0.03); }
         .dc-user { background: #0b5fff; color: white; align-self: flex-end; box-shadow: 0 4px 10px rgba(11, 95, 255, 0.2); }
         
         #dc-input-area { padding: 12px; background: white; border-top: 1px solid #eee; display: flex; gap: 8px; }
-        #dc-input { flex: 1; padding: 10px 15px; border: 1px solid #e1e1e1; border-radius: 20px; outline: none; font-family: inherit; background: #f8f9fa; transition:0.2s; }
+        #dc-input { flex: 1; padding: 10px 15px; border: 1px solid #e1e1e1; border-radius: 20px; outline: none; font-family: inherit; background: #f8f9fa; transition:0.2s; width: 100%; }
         #dc-input:focus { background: white; border-color: #0b5fff; }
         #dc-send { background: none; border: none; color: #0b5fff; cursor: pointer; font-size: 20px; padding: 0 5px; transition:0.2s; }
         #dc-send:hover { transform: scale(1.1); }
         .dc-loading { font-size: 11px; color: #888; text-align: center; margin: 5px 0; display: none; }
     </style>
 
-    <div id="dc-chat-box">
+    <div id="dc-chat-box" style="width: 280px !important; max-width: 85% !important;">
         <div id="dc-header">
             <span>✨ دستیار هوشمند دنت‌کست</span>
             <span id="dc-close-btn" onclick="toggleDcChat()">✖</span>
@@ -780,7 +779,7 @@ background: #0b5fff;
 
         <div id="dc-input-area">
             <button id="dc-send" onclick="sendDcMsg()">➤</button>
-            <input type="text" id="dc-input" placeholder="سوال خود را بنویسید..." onkeypress="handleDcEnter(event)">
+            <input type="text" id="dc-input" placeholder="سوال..." onkeypress="handleDcEnter(event)">
         </div>
     </div>
 
@@ -842,6 +841,7 @@ background: #0b5fff;
         }
     </script>
   </div>
+  
   
 </body>
 </html>
