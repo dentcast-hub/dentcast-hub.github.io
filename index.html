@@ -484,13 +484,20 @@ background: #0b5fff;
 /* هدر آبی بالا */
 #dc-header-final {
     background: linear-gradient(135deg, #0b5fff, #004ecc);
-    color: white;
-    padding: 15px 20px;
-    font-size: 14px;
-    font-weight: bold;
+    color: #fff;
+
+    padding: 8px 14px;            /* ↓ کمتر → کامپکت و تمیز */
+    font-size: 13px;              /* ↓ 1px کمتر → اندازه درست موبایل */
+    font-weight: 700;
+
+    height: auto;                 /* اجباری برای جلوگیری از باد کردن */
+    min-height: 42px;             /* ارتفاع ثابت و شیک */
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 6px;
 }
 #dc-close-final { cursor: pointer; font-size: 20px; opacity: 0.8; }
 #dc-close-final:hover { opacity: 1; }
@@ -498,7 +505,7 @@ background: #0b5fff;
 /* بدنه پیام‌ها */
 #dc-msgs-final {
     flex: 1;
-    padding: 15px;
+    padding: 10px 12px;
     overflow-y: auto;
     background: #f8f9fc;
     font-size: 13px;
