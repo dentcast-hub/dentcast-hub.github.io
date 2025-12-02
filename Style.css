@@ -151,34 +151,32 @@ main {
 }
 
 /* =========================================
-   استایل ویجت هوشمند دنت‌کست (اصلاح شده)
+   استایل ویجت هوشمند دنت‌کست (نسخه ضد تداخل)
    ========================================= */
 
 /* دکمه شیشه‌ای نارنجی */
-#dc-text-trigger {
+#dc-trigger-final {
     position: fixed;
     bottom: 25px;
     right: 25px;
     
     /* گرادیانت شیشه‌ای زرد به نارنجی */
-    background: linear-gradient(135deg, rgba(255, 193, 7, 0.85), rgba(255, 111, 0, 0.85));
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    background: linear-gradient(135deg, rgba(255, 193, 7, 0.9), rgba(255, 111, 0, 0.9));
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     
     /* متن آبی سرمه‌ای */
     color: #0b1e42;
     
     padding: 12px 24px;
     border-radius: 12px;
-    
-    /* بردر نازک سفید */
-    border: 1px solid rgba(255, 255, 255, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.5);
     box-shadow: 0 8px 32px rgba(255, 111, 0, 0.35);
     
     cursor: pointer;
     font-size: 14px;
     font-weight: 700;
-    z-index: 99999;
+    z-index: 2147483647; /* بالاترین لایه ممکن */
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     font-family: 'Vazirmatn', sans-serif;
     display: flex;
@@ -186,13 +184,137 @@ main {
     gap: 10px;
 }
 
-#dc-text-trigger:hover {
+#dc-trigger-final:hover {
     transform: translateY(-3px) scale(1.02);
     box-shadow: 0 12px 40px rgba(255, 111, 0, 0.5);
-    border-color: rgba(255, 255, 255, 0.8);
+    border-color: rgba(255, 255, 255, 0.9);
 }
 
-/* آیکون ایموجی */
 #dc-emoji-icon {
     font-size: 18px;
     filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+}
+
+/* پنجره چت (باکس سفید) */
+#dc-box-final {
+    display: none;
+    position: fixed;
+    bottom: 90px;
+    right: 25px;
+    
+    /* 👇 عرض ظریف و ثابت */
+    width: 290px !important; 
+    max-width: 85vw !important;
+    
+    height: 480px;
+    max-height: 65vh;
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+    z-index: 2147483647;
+    flex-direction: column;
+    overflow: hidden;
+    font-family: 'Vazirmatn', sans-serif;
+    border: 1px solid #f0f0f0;
+    animation: dc-slide-up 0.3s ease-out;
+    box-sizing: border-box;
+}
+
+@keyframes dc-slide-up { 
+    from { opacity: 0; transform: translateY(20px); } 
+    to { opacity: 1; transform: translateY(0); } 
+}
+
+/* هدر آبی بالا */
+#dc-header-final {
+    background: linear-gradient(135deg, #0b5fff, #004ecc);
+    color: white;
+    padding: 15px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+#dc-close-final { cursor: pointer; font-size: 20px; opacity: 0.8; }
+#dc-close-final:hover { opacity: 1; }
+
+/* بدنه پیام‌ها */
+#dc-msgs-final {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+    background: #f8f9fc;
+    font-size: 13px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* حباب پیام‌ها */
+.dc-msg {
+    padding: 12px 16px;
+    border-radius: 15px;
+    max-width: 90%;
+    line-height: 1.6;
+    word-wrap: break-word;
+    position: relative;
+}
+.dc-bot { 
+    background: white; 
+    color: #333; 
+    align-self: flex-start; 
+    border: 1px solid #eee; 
+    border-bottom-right-radius: 2px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+}
+.dc-user { 
+    background: #0b5fff; 
+    color: white; 
+    align-self: flex-end; 
+    border-bottom-left-radius: 2px;
+}
+
+/* بخش ورودی پایین */
+#dc-input-area {
+    padding: 12px;
+    background: white;
+    border-top: 1px solid #eee;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+#dc-input-final {
+    flex: 1;
+    border: 1px solid #e1e1e1;
+    background: #f8f9fa;
+    border-radius: 25px;
+    padding: 10px 15px;
+    outline: none;
+    font-size: 13px;
+    direction: rtl;
+    transition: 0.2s;
+}
+#dc-input-final:focus {
+    background: white;
+    border-color: #0b5fff;
+}
+#dc-send-final {
+    background: none;
+    border: none;
+    color: #0b5fff;
+    font-size: 18px;
+    padding: 5px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+#dc-send-final:hover { transform: scale(1.1); }
+
+/* لودینگ */
+.dc-loading { 
+    font-size: 11px; 
+    color: #888; 
+    text-align: center; 
+    margin: 5px 0; 
+    display: none; 
+}
