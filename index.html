@@ -484,20 +484,22 @@ background: #0b5fff;
 /* هدر آبی بالا */
 #dc-header-final {
     background: linear-gradient(135deg, #0b5fff, #004ecc);
-    color: #fff;
+    color: white;
 
-    padding: 8px 14px;            /* ↓ کمتر → کامپکت و تمیز */
-    font-size: 13px;              /* ↓ 1px کمتر → اندازه درست موبایل */
+    padding: 8px 12px;
+    font-size: 13px;
     font-weight: 700;
-
-    height: auto;                 /* اجباری برای جلوگیری از باد کردن */
-    min-height: 42px;             /* ارتفاع ثابت و شیک */
-    border-bottom: 1px solid rgba(255,255,255,0.15);
 
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 6px;
+    flex-wrap: nowrap;   /* 🔥 اجازه نمی‌ده بشکنه */
+}
+
+#dc-header-final > span:first-child {
+    white-space: nowrap;  /* 🔥 جلوی دوخطی شدن را می‌گیرد */
+    overflow: hidden;
+    text-overflow: ellipsis;  /* زیبایی در صورت اسم طولانی */
 }
 #dc-close-final { cursor: pointer; font-size: 20px; opacity: 0.8; }
 #dc-close-final:hover { opacity: 1; }
