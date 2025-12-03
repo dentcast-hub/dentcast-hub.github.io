@@ -300,54 +300,90 @@
       background-color: #cbd5e1; 
       transform: translateY(-2px);
     }
+    /* --- استایل کامل و اصلاح شده خبرنامه (نسخه نهایی) --- */
 
-    /* استایل کلی باکس خبرنامه */
-    .newsletter-box {
-      background: #eff6ff;       
-      border: 2px solid #60a5fa; 
-      border-radius: 16px;
-      padding: 20px;
-      text-align: center;
-      margin-top: 35px;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-    }
-    
-    .newsletter-title { color: #1e293b; font-weight: 800; margin-bottom: 5px;}
-    .newsletter-text { color: #64748b; font-size: 0.8rem; margin-bottom: 15px;}
+/* باکس اصلی */
+.newsletter-box {
+  background: #f0f9ff;       /* آبی خیلی خیلی روشن و تمیز */
+  border: 1px solid #bae6fd; /* خط دور ظریف */
+  border-radius: 16px;       /* گوشه‌های گرد */
+  padding: 24px 20px;        /* فضای داخلی باکس */
+  text-align: center;
+  
+  /* --- تنظیم فاصله‌ها (مهم) --- */
+  margin-top: 40px;          /* فاصله از بالا */
+  margin-bottom: 60px;       /* فاصله زیاد از پایین (که نچسبه به پلیر) */
+  
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04); /* سایه نرم */
+}
 
-    /* چیدمان خطی فرم (مهم برای هم‌تراز شدن) */
-    .newsletter-form-group {
-      display: flex;          
-      align-items: stretch;   
-      gap: 8px;               
-      width: 100%;
-    }
+/* تیتر خبرنامه */
+.newsletter-title {
+  color: #0f172a; 
+  font-weight: 800;
+  margin-bottom: 8px;
+  font-size: 1.1rem;
+}
 
-    /* فیلد ایمیل */
-    .newsletter-input {
-      flex-grow: 1;           
-      width: auto;            
-      padding: 12px; 
-      border-radius: 10px;
-      border: 1px solid #93c5fd; 
-      background: #fff;
-      font-family: inherit;
-      outline: none;
-    }
+/* متن توضیحات */
+.newsletter-text {
+  color: #475569;
+  font-size: 0.85rem;
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
 
-    /* دکمه عضویت (پلاتینی) */
-    .newsletter-btn {
-      width: auto;            
-      padding: 0 20px;        
-      border-radius: 10px;
-      background: #e2e8f0;    
-      color: #334155;
-      border: 1px solid #cbd5e1;
-      font-weight: bold;
-      cursor: pointer;
-      white-space: nowrap;    
-    }
-    
+/* چیدمان فرم (اینپوت و دکمه کنار هم) */
+.newsletter-form-group {
+  display: flex;
+  align-items: stretch;
+  gap: 10px; /* فاصله بین دکمه و فیلد ایمیل */
+  width: 100%;
+}
+
+/* فیلد ورودی ایمیل */
+.newsletter-input {
+  flex-grow: 1;           /* پر کردن فضای خالی */
+  width: auto;
+  padding: 12px 15px;
+  border-radius: 12px;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  color: #334155;
+  font-family: inherit;
+  outline: none;
+  transition: border 0.3s ease;
+}
+
+.newsletter-input:focus {
+  border-color: #3b82f6; /* آبی شدن کادر موقع تایپ */
+}
+
+/* دکمه عضویت (اصلاح شده: رنگی و جذاب) */
+.newsletter-btn {
+  width: auto;
+  padding: 0 24px;
+  border-radius: 12px;
+  
+  background: #2563eb;    /* آبی رویال (هم‌رنگ برندت) */
+  color: #ffffff;         /* متن سفید */
+  
+  border: none;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;    /* متن دکمه شکسته نشه */
+  box-shadow: 0 4px 6px rgba(37, 99, 235, 0.25); /* سایه آبی */
+  transition: background 0.2s;
+}
+
+.newsletter-btn:hover {
+  background: #1d4ed8;    /* تیره شدن موقع موس رفتن روش */
+}
+
+.newsletter-btn:active {
+  transform: scale(0.96); /* افکت فشار دادن */
+}
+      
     /* استایل کانتینر کلی پلیر (اصلاح شده و لوکس) */
     .player-wrapper {
       margin-top: 45px;
