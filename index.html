@@ -342,21 +342,33 @@
 }
 
 /* فیلد ایمیل */
+/* فیلد ایمیل با وزن بصری اصلاح شده */
 .newsletter-input {
   flex-grow: 1;
   width: auto;
-  height: 50px; /* ارتفاع ثابت برای تراز شدن با دکمه */
-  padding: 0 15px; /* پدینگ فقط افقی، عمودی با ارتفاع هندل میشه */
+  height: 50px;
+  padding: 0 15px;
   border-radius: 12px;
+  
+  /* تغییرات اینجاست: */
   border: 1px solid #cbd5e1;
   background: #ffffff;
-  color: #0f172a; /* رنگ متن تایپ شده تیره */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.04); /* سایه نرم برای هم‌وزن شدن با دکمه */
+  
+  color: #0f172a;
   font-family: inherit;
   font-size: 0.95rem;
   outline: none;
-  transition: border 0.3s ease;
-  box-sizing: border-box; /* جلوگیری از تغییر سایز با بوردر */
+  transition: all 0.3s ease;
+  box-sizing: border-box;
 }
+
+/* وقتی فوکوس میشه کمی برجسته‌تر بشه */
+.newsletter-input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15); /* سایه آبی موقع تایپ */
+}
+      
 
 /* استایل مخصوص Placeholder (متن پیش‌فرض) */
 .newsletter-input::placeholder {
@@ -365,10 +377,6 @@
   font-weight: 500;
 }
 
-.newsletter-input:focus {
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-}
 
 /* دکمه عضویت (تغییرات: ارتفاع ثابت + رنگ جذاب‌تر) */
 .newsletter-btn {
