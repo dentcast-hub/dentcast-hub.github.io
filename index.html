@@ -300,24 +300,24 @@
       background-color: #cbd5e1; 
       transform: translateY(-2px);
     }
-    /* --- استایل کامل و اصلاح شده خبرنامه (نسخه نهایی) --- */
+
+/* --- استایل نهایی خبرنامه (نسخه ۱۰ از ۱۰) --- */
 
 /* باکس اصلی */
 .newsletter-box {
-  background: #f0f9ff;       /* آبی خیلی خیلی روشن و تمیز */
-  border: 1px solid #bae6fd; /* خط دور ظریف */
-  border-radius: 16px;       /* گوشه‌های گرد */
-  padding: 24px 20px;        /* فضای داخلی باکس */
+  background: #f0f9ff;
+  border: 1px solid #bae6fd;
+  border-radius: 16px;
+  padding: 24px 20px;
   text-align: center;
   
-  /* --- تنظیم فاصله‌ها (مهم) --- */
-  margin-top: 40px;          /* فاصله از بالا */
-  margin-bottom: 60px;       /* فاصله زیاد از پایین (که نچسبه به پلیر) */
+  /* فاصله‌ها */
+  margin-top: 40px;
+  margin-bottom: 60px;
   
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04); /* سایه نرم */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
 }
 
-/* تیتر خبرنامه */
 .newsletter-title {
   color: #0f172a; 
   font-weight: 800;
@@ -325,7 +325,6 @@
   font-size: 1.1rem;
 }
 
-/* متن توضیحات */
 .newsletter-text {
   color: #475569;
   font-size: 0.85rem;
@@ -333,56 +332,80 @@
   line-height: 1.6;
 }
 
-/* چیدمان فرم (اینپوت و دکمه کنار هم) */
+/* --- تغییرات اصلی برای تراز دقیق --- */
 .newsletter-form-group {
   display: flex;
-  align-items: stretch;
-  gap: 10px; /* فاصله بین دکمه و فیلد ایمیل */
+  align-items: center; /* تراز عمودی دقیق */
+  justify-content: center;
+  gap: 10px;
   width: 100%;
 }
 
-/* فیلد ورودی ایمیل */
+/* فیلد ایمیل */
 .newsletter-input {
-  flex-grow: 1;           /* پر کردن فضای خالی */
+  flex-grow: 1;
   width: auto;
-  padding: 12px 15px;
+  height: 50px; /* ارتفاع ثابت برای تراز شدن با دکمه */
+  padding: 0 15px; /* پدینگ فقط افقی، عمودی با ارتفاع هندل میشه */
   border-radius: 12px;
   border: 1px solid #cbd5e1;
   background: #ffffff;
-  color: #334155;
+  color: #0f172a; /* رنگ متن تایپ شده تیره */
   font-family: inherit;
+  font-size: 0.95rem;
   outline: none;
   transition: border 0.3s ease;
+  box-sizing: border-box; /* جلوگیری از تغییر سایز با بوردر */
+}
+
+/* استایل مخصوص Placeholder (متن پیش‌فرض) */
+.newsletter-input::placeholder {
+  color: #64748b; /* رنگ خاکستری تیره‌تر و خوانا */
+  opacity: 1; /* فیکس برای فایرفاکس */
+  font-weight: 500;
 }
 
 .newsletter-input:focus {
-  border-color: #3b82f6; /* آبی شدن کادر موقع تایپ */
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
-/* دکمه عضویت (اصلاح شده: رنگی و جذاب) */
+/* دکمه عضویت (تغییرات: ارتفاع ثابت + رنگ جذاب‌تر) */
 .newsletter-btn {
+  height: 50px; /* دقیقاً هم‌قد اینپوت */
   width: auto;
-  padding: 0 24px;
+  padding: 0 28px; /* عرض دکمه رو بیشتر کردم */
   border-radius: 12px;
   
-  background: #2563eb;    /* آبی رویال (هم‌رنگ برندت) */
-  color: #ffffff;         /* متن سفید */
+  /* گرادینت برای عمق دادن و زنده کردن دکمه */
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  color: #ffffff;
   
   border: none;
-  font-weight: 700;
+  font-weight: 800; /* فونت خیلی ضخیم */
+  font-size: 0.95rem;
   cursor: pointer;
-  white-space: nowrap;    /* متن دکمه شکسته نشه */
-  box-shadow: 0 4px 6px rgba(37, 99, 235, 0.25); /* سایه آبی */
-  transition: background 0.2s;
+  white-space: nowrap;
+  
+  /* فلکس باکس برای سنتر کردن متن داخل دکمه */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3); /* سایه رنگی و زنده */
+  transition: transform 0.1s, box-shadow 0.2s;
 }
 
 .newsletter-btn:hover {
-  background: #1d4ed8;    /* تیره شدن موقع موس رفتن روش */
+  box-shadow: 0 6px 15px rgba(37, 99, 235, 0.4);
+  transform: translateY(-1px);
 }
 
 .newsletter-btn:active {
-  transform: scale(0.96); /* افکت فشار دادن */
+  transform: scale(0.97);
 }
+
+
       
     /* استایل کانتینر کلی پلیر (اصلاح شده و لوکس) */
     .player-wrapper {
