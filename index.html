@@ -261,35 +261,52 @@
   grid-column: auto;
   flex-direction: column;
 }
-   15px
-    /* دکمه اپیزودها (آبی سلطنتی) */
-    .episodes-wide-btn {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      box-sizing: border-box;
-      margin-top: 12px;
-      padding: 15px 10px;
-      
-      background-color: #0b5fff; 
-      color: #ffffff;            
-      border: none;              
+   
+/* دکمه اپیزودها (آبی سلطنتی) - نسخه اصلاح شده و سالم */
+.episodes-wide-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+  
+  /* فاصله از بالا */
+  margin-top: 12px;
+  padding: 15px 10px;
+  
+  /* رنگ و ظاهر */
+  background-color: #0b5fff; 
+  color: #ffffff;            
+  border: none;              
 
-      font-family: inherit;
-      font-size: 0.95rem;        
-      font-weight: 800;          
-      text-decoration: none;
-      border-radius: 14px;       
-      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-      box-shadow: 0 10px 25px rgba(11, 95, 255, 0.35);
-    }
+  /* تایپوگرافی */
+  font-family: inherit;
+  font-size: 0.95rem;        
+  font-weight: 800;          
+  text-decoration: none;
+  
+  /* استایل بدنه */
+  border-radius: 14px;       
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  box-shadow: 0 10px 25px rgba(11, 95, 255, 0.35); /* سایه نئونی جذاب */
+  
+  /* این خط رو اضافه کردم که آیکون نچسبه به متن: */
+  gap: 10px; 
+}
 
-    .episodes-wide-btn:hover {
-      background-color: #004ad4; 
-      transform: translateY(-3px); 
-      box-shadow: 0 15px 35px rgba(11, 95, 255, 0.45);
-    }
+/* هاور دکمه (وقتی موس میره روش) */
+.episodes-wide-btn:hover {
+  background-color: #004ad4; /* کمی تیره‌تر */
+  transform: translateY(-3px); /* پرش به بالا */
+  box-shadow: 0 15px 35px rgba(11, 95, 255, 0.45); /* سایه شدیدتر */
+}
+
+/* اکتیو (وقتی کلیک میشه) */
+.episodes-wide-btn:active {
+  transform: scale(0.97);
+  box-shadow: 0 5px 15px rgba(11, 95, 255, 0.2);
+}
+
 
     /* استایل دکمه مشاوره (پلاتینی / نقره‌ای مات) */
 /* دکمه ارتباط و مشاوره - سبک Ghost (نسخه نهایی) */
