@@ -275,31 +275,52 @@
     }
 
     /* استایل دکمه مشاوره (پلاتینی / نقره‌ای مات) */
-    .colleague-wide-btn {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      box-sizing: border-box;
-      margin-top: 35px;
-      padding: 14px 10px;
+/* دکمه ارتباط و مشاوره - سبک Ghost (نسخه نهایی) */
+.colleague-wide-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+  
+  /* تنظیم فاصله */
+  margin-top: 35px;
+  padding: 14px 10px;
+  
+  /* رنگ‌بندی: سفید با بوردر آبی (تمایز از دکمه‌های پررنگ) */
+  background-color: #ffffff; 
+  color: #2563eb; /* آبی رویال (هم‌رنگ برند) */
+  border: 1.5px solid #2563eb; /* ضخامت ۱.۵ برای اینکه شبیه Input نشه */
+  
+  /* تایپوگرافی */
+  font-family: inherit;
+  font-size: 0.95rem; /* کمی بزرگ‌تر برای خوانایی */
+  font-weight: 700; /* بولد */
+  text-decoration: none;
+  
+  /* استایل بدنه */
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.08); /* سایه خیلی محو آبی */
+  transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1); /* انیمیشن نرم */
+  
+  gap: 8px; /* اگر آیکون کنار متن باشه، فاصله میده */
+}
+
+/* هاور: وقتی موس میره روش */
+.colleague-wide-btn:hover {
+  background-color: #eff6ff; /* آبی خیلی خیلی روشن */
+  border-color: #1d4ed8; /* بوردر کمی تیره‌تر */
+  color: #1d4ed8; /* متن کمی تیره‌تر */
+  transform: translateY(-2px); /* حرکت به بالا */
+  box-shadow: 0 6px 15px rgba(37, 99, 235, 0.15); /* سایه قوی‌تر */
+}
+
+/* کلیک */
+.colleague-wide-btn:active {
+  transform: scale(0.98); /* افکت فنری */
+  box-shadow: 0 2px 5px rgba(37, 99, 235, 0.1);
+}
       
-      background-color: #e2e8f0; 
-      color: #334155;            
-      border: 1px solid #cbd5e1; 
-
-      font-family: inherit;
-      font-size: 0.9rem;
-      font-weight: 700;
-      text-decoration: none;
-      border-radius: 12px;
-      transition: all 0.3s ease;
-    }
-
-    .colleague-wide-btn:hover {
-      background-color: #cbd5e1; 
-      transform: translateY(-2px);
-    }
 
 /* --- استایل نهایی خبرنامه (نسخه ۱۰ از ۱۰) --- */
 
@@ -337,7 +358,7 @@
   display: flex;
   align-items: center; /* تراز عمودی دقیق */
   justify-content: center;
-  gap: 10px;
+  gap: 15px;
   width: 100%;
 }
 
