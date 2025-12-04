@@ -247,6 +247,10 @@
   padding: 14px 18px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   background: rgba(11, 95, 255, 0.14);
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  
 }
 
 .dc-episodes-header h2 {
@@ -309,6 +313,11 @@ body.dc-episodes-open .dc-episodes-overlay {
   opacity: 1;
   pointer-events: auto;
 }
+    body.dc-episodes-open .dc-episodes-trigger {
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.9);
+    }
   </style>
 
   <link rel="icon" href="https://dentcast.ir/logo-v2.png" type="image/png" sizes="512x512">
