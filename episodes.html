@@ -242,11 +242,13 @@
   position: fixed;
   top: 0;
   right: 0;
-
-  height: 100vh;                      /* کل ارتفاع صفحه */
+  height: 68vh;       /* 🔥 حدود دو سوم صفحه */
+  margin-top: 8vh;    /* یک فاصله تمیز از بالا */
+  margin-bottom: 8vh; /* پایین سایدبار فاصله می‌گیره */
+  border-radius: 16px 0 0 16px; /* لبه گرد زیبا */
   width: min(380px, 100%);            /* برای موبایل و دسکتاپ */
   max-width: 100%;
-
+box-shadow: 0 0 35px rgba(0,0,0,0.55);
   background: linear-gradient(135deg, #0b1220, #121a2b);
   box-shadow: -12px 0 35px rgba(0, 0, 0, 0.55);
 
