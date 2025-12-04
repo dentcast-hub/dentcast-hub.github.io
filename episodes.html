@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
   <meta charset="UTF-8">
@@ -17,22 +17,30 @@
 
   <style>
     :root {
-      --blue: #0b5fff;          /* آبی سلطنتی برند */
-      --panel: #e4f1ff;         /* آبی خیلی روشن سایدبار */
-      --panel-dark: #d3e4ff;    /* آبی کمی تیره‌تر برای هدر سایدبار */
-      --panel-soft: #f4f7ff;    /* آبی خیلی ملایم برای فیلد سرچ */
+      --blue: #0b5fff;
 
-      --bg: #0b1220;            /* سرمه‌ای تیره بک‌گراند اصلی */
+      /* 🔵 پالت آبی حرفه‌ای و خوانا */
+      --panel: #e3eeff;        /* آبی روشن */
+      --panel-dark: #d5e3ff;   /* هدر */
+      --panel-soft: #f5f8ff;   /* سرچ */
+
+      --card-light: #eff4ff;   /* کارت اپیزود */
+      --card-light-hover: #e0e9ff;
+
+      --bg: #0b1220;
       --bg2: #121a2b;
-      --text-dark: #111;        /* متن توضیح (مشکی نرم) */
-      --text-navy: #0b1e42;     /* مشکی سرمه‌ای عمیق */
+
+      --text-dark: #000;       /* مشکی واقعی */
+      --text-navy: #0a1d40;    /* سرمه‌ای عمیق */
+
       --muted: #9aa1b3;
+
       --radius: 16px;
       --shadow: 0 12px 32px rgba(0,0,0,.35);
     }
 
     /* ——————————————————————————
-       ۱) پس‌زمینه سایت
+       بک‌گراند سایت
     ——————————————————————————— */
     body {
       margin: 0;
@@ -41,14 +49,14 @@
       background:
         radial-gradient(1100px 600px at 20% -10%, #1b2640 0%, transparent 60%),
         linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
-
       color: #000;
+
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
     }
 
     /* ——————————————————————————
-       ۲) ساختار صفحه اصلی
+       ساختار صفحه
     ——————————————————————————— */
     .wrap {
       max-width: 920px;
@@ -72,7 +80,7 @@
     }
 
     /* ——————————————————————————
-       ۳) کارت اصلی (پلیر + متن)
+       کارت اصلی + سئو
     ——————————————————————————— */
     .card {
       background: rgba(3,7,18,0.92);
@@ -95,7 +103,6 @@
       box-shadow: 0 12px 30px rgba(0,0,0,.3);
     }
 
-    /* بلوک متن سئو (بدون تغییر محتوا) */
     .episodes-seo-block {
       margin-top: 10px;
       padding: 24px 18px 10px;
@@ -117,25 +124,8 @@
       margin-bottom: 4px;
     }
 
-    .content-list {
-      list-style: disc inside;
-      padding-right: 20px;
-      margin-top: 15px;
-      margin-bottom: 25px;
-      color: #d4d9e6;
-      text-align: justify;
-    }
-
-    .content-list li {
-      font-size: .95rem;
-      line-height: 1.9;
-      margin-bottom: 8px;
-      color: #d4d9e6;
-    }
-
     /* ——————————————————————————
-       ۴) دکمه طلایی شناور فهرست اپیزودها
-       (همون CTA طلایی قبلی رو نگه داشتیم)
+       دکمه شناور
     ——————————————————————————— */
     .dc-episodes-trigger {
       position: fixed;
@@ -153,6 +143,7 @@
       font-weight: 800;
 
       box-shadow: 0 12px 28px rgba(0,0,0,0.28);
+
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -160,26 +151,8 @@
       transition: 0.15s ease-out;
     }
 
-    .dc-episodes-trigger:hover {
-      background-color: #ffcc33;
-      transform: translateY(-2px);
-    }
-
-    .dc-episodes-trigger:active {
-      transform: translateY(0);
-    }
-
-    @media (max-width:600px){
-      .dc-episodes-trigger {
-        bottom: 96px;
-        right: 12px;
-        padding: 12px 20px;
-        font-size: .85rem;
-      }
-    }
-
     /* ——————————————————————————
-       ۵) بک‌دراپ
+       بک‌دراپ
     ——————————————————————————— */
     .dc-episodes-overlay {
       position: fixed;
@@ -188,24 +161,23 @@
       opacity: 0;
       pointer-events: none;
       z-index: 58;
-      transition: opacity .2s ease-out;
+      transition: .2s ease-out;
     }
 
     /* ——————————————————————————
-       ۶) سایدبار آبی خیلی روشن
+       سایدبار آبی
     ——————————————————————————— */
     .dc-episodes-sidebar {
       position: fixed;
       top: 0;
       right: 0;
 
+      width: min(340px, 100%);
       height: 70vh;
       margin-top: 7vh;
       margin-bottom: 7vh;
 
-      width: min(380px,100%);
       border-radius: 16px 0 0 16px;
-
       background: var(--panel);
       box-shadow: 0 0 35px rgba(0,0,0,0.55);
 
@@ -218,32 +190,21 @@
       z-index: 59;
     }
 
-    body.dc-episodes-open .dc-episodes-sidebar {
-      transform: translateX(0);
-    }
-
-    body.dc-episodes-open .dc-episodes-overlay {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    body.dc-episodes-open .dc-episodes-trigger {
-      opacity: 0;
-      pointer-events: none;
-      transform: scale(.9);
-    }
+    body.dc-episodes-open .dc-episodes-sidebar { transform: translateX(0); }
+    body.dc-episodes-open .dc-episodes-overlay { opacity:1; pointer-events:auto; }
+    body.dc-episodes-open .dc-episodes-trigger { opacity:0; pointer-events:none; transform:scale(.9); }
 
     /* ——————————————————————————
-       ۷) هدر داخل سایدبار
+       هدر سایدبار
     ——————————————————————————— */
     .dc-episodes-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-
       padding: 14px 18px;
+
       background: var(--panel-dark);
-      border-bottom: 1px solid rgba(0,0,0,0.08);
+      border-bottom: 1px solid rgba(0,0,0,0.07);
 
       position: sticky;
       top: 0;
@@ -266,10 +227,10 @@
     }
 
     /* ——————————————————————————
-       ۸) سرچ
+       سرچ
     ——————————————————————————— */
     .dc-episodes-search {
-      padding: 10px 16px;
+      padding: 12px 16px;
       border-bottom: 1px solid rgba(0,0,0,0.06);
     }
 
@@ -277,7 +238,7 @@
       width: 100%;
       padding: 10px 14px;
 
-      background: var(--panel-soft);
+      background: #ffffff;
       color: var(--text-navy);
 
       border-radius: 10px;
@@ -285,7 +246,6 @@
 
       font-size: .9rem;
       font-weight: 600;
-      font-family: 'Vazirmatn', sans-serif;
     }
 
     #dc-episodes-search-input::placeholder {
@@ -293,7 +253,7 @@
     }
 
     /* ——————————————————————————
-       ۹) لیست اپیزودها
+       لیست اپیزودها
     ——————————————————————————— */
     .dc-episodes-list {
       flex: 1;
@@ -301,26 +261,20 @@
       padding: 14px 16px 18px;
     }
 
-    .dc-episodes-loading {
-      color: var(--text-navy);
-      font-size: .85rem;
-      text-align: center;
-      margin-top: 20px;
-    }
-
     /* کارت اپیزود */
     .dc-episode-item {
-      background: #f5f7ff;
+      background: var(--card-light);
       border: 1px solid rgba(0,0,0,0.08);
       border-radius: 14px;
       padding: 14px 16px;
       margin-bottom: 10px;
-      color: var(--text-dark);
+
       transition: background .2s, box-shadow .2s;
+      color: var(--text-dark);
     }
 
     .dc-episode-item:hover {
-      background: #e7ecff;
+      background: var(--card-light-hover);
       box-shadow: 0 6px 18px rgba(0,0,0,0.10);
     }
 
@@ -329,17 +283,16 @@
       justify-content: space-between;
       align-items: center;
       gap: 8px;
-      margin-bottom: 4px;
     }
 
     .dc-ep-number {
-      color: var(--blue);        /* شماره اپیزود: آبی برند */
+      color: var(--blue);
       font-size: .9rem;
       font-weight: 800;
     }
 
     .dc-ep-title {
-      color: var(--text-navy);   /* عنوان: مشکی سرمه‌ای */
+      color: var(--text-navy);
       font-size: .95rem;
       font-weight: 700;
       text-align: right;
@@ -348,78 +301,19 @@
 
     .dc-episode-body {
       margin-top: 8px;
-      color: var(--text-dark);   /* توضیحات: مشکی نرم */
+      color: var(--text-dark);
       font-size: .85rem;
       line-height: 1.6;
     }
 
     .dc-tag {
-      background: #dde7ff;
+      background: #dce6ff;
+      color: var(--text-navy);
+      font-size: .75rem;
       padding: 3px 8px;
       border-radius: 6px;
-      margin-left: 6px;
-      font-size: .75rem;
-      color: var(--text-navy);
-      display: inline-block;
       margin-top: 6px;
-    }
-
-    /* ——————————————————————————
-       ۱۰) فوتر و دکمه‌ها (بدون تغییر محتوا)
-    ——————————————————————————— */
-    footer {
-      margin-top: 40px;
-      text-align: center;
-      color: var(--muted);
-      font-size: .85rem;
-      line-height: 1.8;
-    }
-
-    .btn-home {
       display: inline-block;
-      background: rgba(11,95,255,0.18);
-      color: #3a84ff;
-      border: 1.8px solid rgba(11,95,255,0.45);
-      border-radius: 12px;
-      padding: 12px 42px;
-      font-weight: 700;
-      text-decoration: none;
-      font-size: 1rem;
-      box-shadow: 0 0 14px rgba(11,95,255,0.15);
-      transition: all .25s ease;
-      margin-bottom: 22px;
-    }
-
-    .btn-home:hover {
-      background: rgba(11,95,255,0.28);
-      transform: scale(1.02);
-    }
-
-    .btn-about {
-      display: inline-block;
-      background: rgba(255,220,80,0.85);
-      color: #111;
-      border: 1px solid rgba(255,220,80,0.55);
-      border-radius: 8px;
-      padding: 5px 12px;
-      font-weight: 500;
-      text-decoration: none;
-      font-size: .8rem;
-      box-shadow: 0 0 6px rgba(255,220,80,0.1);
-      backdrop-filter: blur(5px);
-      transition: all .25s ease;
-      margin-bottom: 20px;
-    }
-
-    .btn-about:hover {
-      background: rgba(255,230,100,0.95);
-      transform: scale(1.02);
-    }
-
-    @media (max-width:768px){
-      .wrap{padding:0 14px;margin:30px auto 110px;}
-      h1{font-size:1.8rem;}
-      iframe{height:520px;}
     }
   </style>
 
