@@ -277,6 +277,8 @@
 
 #dc-episodes-search-input {
   width: 100%;
+  box-sizing: border-box;   /* جلوگیری از خارج‌زدگی */
+
   padding: 9px 12px;
   border-radius: 8px;
   border: 1px solid rgba(231, 234, 241, 0.45);
@@ -288,6 +290,7 @@
 
 #dc-episodes-search-input::placeholder {
   color: #9aa1b3;
+}
 }
 
 /* لیست اپیزودها */
