@@ -17,13 +17,16 @@
 
   <style>
     :root {
-      --blue: #0b5fff;          /* آبی سلطنتی */
-      --gold: #f4d559;          /* طلایی مات */
-      --gold-dark: #e9c84c;     /* طلایی کمی تیره‌تر */
-      --gold-soft: #fff3c2;     /* طلایی کم‌رنگ برای فیلد */
-      --bg: #0b1220;            /* سرمه‌ای تیره */
-      --bg2: #121a2b;           /* سرمه‌ای دوم */
-      --text-dark: #111;        /* متن توضیح */
+      --blue: #0b5fff;          /* آبی سلطنتی برند */
+      --panel: #e4f1ff;         /* آبی خیلی روشن سایدبار */
+      --panel-dark: #d3e4ff;    /* آبی کمی تیره‌تر برای هدر سایدبار */
+      --panel-soft: #f4f7ff;    /* آبی خیلی ملایم برای فیلد سرچ */
+
+      --bg: #0b1220;            /* سرمه‌ای تیره بک‌گراند اصلی */
+      --bg2: #121a2b;
+      --text-dark: #111;        /* متن توضیح (مشکی نرم) */
+      --text-navy: #0b1e42;     /* مشکی سرمه‌ای عمیق */
+      --muted: #9aa1b3;
       --radius: 16px;
       --shadow: 0 12px 32px rgba(0,0,0,.35);
     }
@@ -63,7 +66,7 @@
 
     .subtitle {
       text-align: center;
-      color: #9aa1b3;
+      color: var(--muted);
       font-size: .98rem;
       margin-bottom: 26px;
     }
@@ -92,8 +95,47 @@
       box-shadow: 0 12px 30px rgba(0,0,0,.3);
     }
 
+    /* بلوک متن سئو (بدون تغییر محتوا) */
+    .episodes-seo-block {
+      margin-top: 10px;
+      padding: 24px 18px 10px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background:
+        radial-gradient(circle at 0% 0%, rgba(11,95,255,0.10), transparent 55%),
+        rgba(10,12,24,0.9);
+      text-align: justify;
+      color: #d4d9e6;
+      font-size: 0.92rem;
+    }
+
+    .episodes-seo-block h3 {
+      color: var(--blue);
+      font-weight: 700;
+      font-size: 1.05rem;
+      margin-top: 20px;
+      margin-bottom: 4px;
+    }
+
+    .content-list {
+      list-style: disc inside;
+      padding-right: 20px;
+      margin-top: 15px;
+      margin-bottom: 25px;
+      color: #d4d9e6;
+      text-align: justify;
+    }
+
+    .content-list li {
+      font-size: .95rem;
+      line-height: 1.9;
+      margin-bottom: 8px;
+      color: #d4d9e6;
+    }
+
     /* ——————————————————————————
        ۴) دکمه طلایی شناور فهرست اپیزودها
+       (همون CTA طلایی قبلی رو نگه داشتیم)
     ——————————————————————————— */
     .dc-episodes-trigger {
       position: fixed;
@@ -101,7 +143,7 @@
       right: 16px;
       z-index: 60;
 
-      background: var(--gold);
+      background: #f4d559;
       color: #0b1e42;
       border: 1px solid rgba(255, 215, 48, 0.75);
 
@@ -150,7 +192,7 @@
     }
 
     /* ——————————————————————————
-       ۶) سایدبار طلایی لوکس
+       ۶) سایدبار آبی خیلی روشن
     ——————————————————————————— */
     .dc-episodes-sidebar {
       position: fixed;
@@ -164,7 +206,7 @@
       width: min(380px,100%);
       border-radius: 16px 0 0 16px;
 
-      background: var(--gold);
+      background: var(--panel);
       box-shadow: 0 0 35px rgba(0,0,0,0.55);
 
       display: flex;
@@ -200,8 +242,8 @@
       align-items: center;
 
       padding: 14px 18px;
-      background: var(--gold-dark);
-      border-bottom: 1px solid rgba(0,0,0,0.12);
+      background: var(--panel-dark);
+      border-bottom: 1px solid rgba(0,0,0,0.08);
 
       position: sticky;
       top: 0;
@@ -212,14 +254,14 @@
       margin: 0;
       font-size: 1rem;
       font-weight: 800;
-      color: #0b1e42;
+      color: var(--text-navy);
     }
 
     .dc-episodes-close {
       background: none;
       border: none;
       font-size: 1.7rem;
-      color: #0b1e42;
+      color: var(--text-navy);
       cursor: pointer;
     }
 
@@ -228,25 +270,26 @@
     ——————————————————————————— */
     .dc-episodes-search {
       padding: 10px 16px;
-      border-bottom: 1px solid rgba(0,0,0,0.08);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
     }
 
     #dc-episodes-search-input {
       width: 100%;
       padding: 10px 14px;
 
-      background: var(--gold-soft);
-      color: #0b1e42;
+      background: var(--panel-soft);
+      color: var(--text-navy);
 
       border-radius: 10px;
-      border: 1px solid rgba(0,0,0,0.22);
+      border: 1px solid rgba(0,0,0,0.18);
 
       font-size: .9rem;
       font-weight: 600;
+      font-family: 'Vazirmatn', sans-serif;
     }
 
     #dc-episodes-search-input::placeholder {
-      color: #8b8b8b;
+      color: #7f8aa0;
     }
 
     /* ——————————————————————————
@@ -258,187 +301,250 @@
       padding: 14px 16px 18px;
     }
 
+    .dc-episodes-loading {
+      color: var(--text-navy);
+      font-size: .85rem;
+      text-align: center;
+      margin-top: 20px;
+    }
+
     /* کارت اپیزود */
     .dc-episode-item {
-      background: #ffe899;
-      border: 1px solid rgba(0,0,0,0.12);
+      background: #f5f7ff;
+      border: 1px solid rgba(0,0,0,0.08);
       border-radius: 14px;
       padding: 14px 16px;
       margin-bottom: 10px;
-
-      transition: background .2s;
+      color: var(--text-dark);
+      transition: background .2s, box-shadow .2s;
     }
 
     .dc-episode-item:hover {
-      background: #ffdf7e;
+      background: #e7ecff;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.10);
     }
 
     .dc-episode-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 8px;
+      margin-bottom: 4px;
     }
 
     .dc-ep-number {
-      color: var(--blue);
+      color: var(--blue);        /* شماره اپیزود: آبی برند */
       font-size: .9rem;
       font-weight: 800;
     }
 
     .dc-ep-title {
-      color: var(--blue);
+      color: var(--text-navy);   /* عنوان: مشکی سرمه‌ای */
       font-size: .95rem;
       font-weight: 700;
       text-align: right;
+      flex: 1;
     }
 
     .dc-episode-body {
-      margin-top: 10px;
-      color: var(--text-dark);
+      margin-top: 8px;
+      color: var(--text-dark);   /* توضیحات: مشکی نرم */
       font-size: .85rem;
       line-height: 1.6;
     }
 
     .dc-tag {
-      background: #f7d75d;
+      background: #dde7ff;
       padding: 3px 8px;
       border-radius: 6px;
       margin-left: 6px;
       font-size: .75rem;
-      color: #4a3b00;
+      color: var(--text-navy);
+      display: inline-block;
+      margin-top: 6px;
     }
 
-  </style>
+    /* ——————————————————————————
+       ۱۰) فوتر و دکمه‌ها (بدون تغییر محتوا)
+    ——————————————————————————— */
+    footer {
+      margin-top: 40px;
+      text-align: center;
+      color: var(--muted);
+      font-size: .85rem;
+      line-height: 1.8;
+    }
 
+    .btn-home {
+      display: inline-block;
+      background: rgba(11,95,255,0.18);
+      color: #3a84ff;
+      border: 1.8px solid rgba(11,95,255,0.45);
+      border-radius: 12px;
+      padding: 12px 42px;
+      font-weight: 700;
+      text-decoration: none;
+      font-size: 1rem;
+      box-shadow: 0 0 14px rgba(11,95,255,0.15);
+      transition: all .25s ease;
+      margin-bottom: 22px;
+    }
+
+    .btn-home:hover {
+      background: rgba(11,95,255,0.28);
+      transform: scale(1.02);
+    }
+
+    .btn-about {
+      display: inline-block;
+      background: rgba(255,220,80,0.85);
+      color: #111;
+      border: 1px solid rgba(255,220,80,0.55);
+      border-radius: 8px;
+      padding: 5px 12px;
+      font-weight: 500;
+      text-decoration: none;
+      font-size: .8rem;
+      box-shadow: 0 0 6px rgba(255,220,80,0.1);
+      backdrop-filter: blur(5px);
+      transition: all .25s ease;
+      margin-bottom: 20px;
+    }
+
+    .btn-about:hover {
+      background: rgba(255,230,100,0.95);
+      transform: scale(1.02);
+    }
+
+    @media (max-width:768px){
+      .wrap{padding:0 14px;margin:30px auto 110px;}
+      h1{font-size:1.8rem;}
+      iframe{height:520px;}
+    }
+  </style>
 
   <link rel="icon" href="https://dentcast.ir/logo-v2.png" type="image/png" sizes="512x512">
   <link rel="apple-touch-icon" href="/logo-v2.png">
   <meta name="theme-color" content="#0b5fff">
 
-  
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "Person",
-      "@id": "https://dentcast.ir/#person",
-      "name": "دکتر فؤاد شهابیان",
-      "jobTitle": "متخصص پروتزهای دندانی و ایمپلنت",
-      "url": "https://dentcast.ir/about.html",
-      "image": "https://dentcast.ir/logo-v2.png", 
-      "sameAs": [
-        "https://t.me/dentcast",
-        "https://t.me/dent_AI",
-        "https://podcasts.apple.com/us/podcast/dentcast/id1502032364",
-        "https://castbox.fm/va/4889954",
-        "https://www.youtube.com/@Dentcast", 
-        "https://www.instagram.com/dr.foad_shahabian/",
-        "https://dentcast.ir/" 
-      ]
-    },
-    {
-      "@type": "PodcastSeries",
-      "name": "DentCast",
-      "url": "https://dentcast.ir/episodes.html", 
-      "description": "فهرست کامل ۱۵۰ اپیزود پادکست تخصصی دنت‌کست: مرور پروتکل‌های کلینیکی پروتز، ایمپلنت، باندینگ سرامیک، TMD، دندانپزشکی دیجیتال و اباتمنتهای پیشرفته.",
-      "keywords": "پروتزهای دندانی، ایمپلنت، باندینگ سرامیک، سمان رزینی، TMD، زیرکونیا، Zero Bone Loss Concept، ITI، Smart Vent Crown، فایبر پست، اسکنر دیجیتال، لمینیت، DME، IDS، Global Diagnosis، بازسازی خلفی، اباتمنت Ti-base، پروتکل سمان کردن", 
-      "inLanguage": "fa-IR",
-      "author": {
-          "@id": "https://dentcast.ir/#person" 
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": "https://dentcast.ir/#person",
+        "name": "دکتر فؤاد شهابیان",
+        "jobTitle": "متخصص پروتزهای دندانی و ایمپلنت",
+        "url": "https://dentcast.ir/about.html",
+        "image": "https://dentcast.ir/logo-v2.png",
+        "sameAs": [
+          "https://t.me/dentcast",
+          "https://t.me/dent_AI",
+          "https://podcasts.apple.com/us/podcast/dentcast/id1502032364",
+          "https://castbox.fm/va/4889954",
+          "https://www.youtube.com/@Dentcast",
+          "https://www.instagram.com/dr.foad_shahabian/",
+          "https://dentcast.ir/"
+        ]
       },
-      "publisher": {
-        "@type": "Organization",
+      {
+        "@type": "PodcastSeries",
         "name": "DentCast",
-        "logo": {
+        "url": "https://dentcast.ir/episodes.html",
+        "description": "فهرست کامل ۱۵۰ اپیزود پادکست تخصصی دنت‌کست: مرور پروتکل‌های کلینیکی پروتز، ایمپلنت، باندینگ سرامیک، TMD، دندانپزشکی دیجیتال و اباتمنتهای پیشرفته.",
+        "keywords": "پروتزهای دندانی، ایمپلنت، باندینگ سرامیک، سمان رزینی، TMD، زیرکونیا، Zero Bone Loss Concept، ITI، Smart Vent Crown، فایبر پست، اسکنر دیجیتال، لمینیت، DME، IDS، Global Diagnosis، بازسازی خلفی، اباتمنت Ti-base، پروتکل سمان کردن",
+        "inLanguage": "fa-IR",
+        "author": {
+          "@id": "https://dentcast.ir/#person"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "DentCast",
+          "logo": {
             "@type": "ImageObject",
             "url": "https://dentcast.ir/logo-v2.png"
+          }
         }
       }
-    }
-  ]
-}
-</script>
-  
+    ]
+  }
+  </script>
 </head>
 
 <body>
   <div class="wrap">
-    
     <h1>همهٔ اپیزودهای دنت‌کست</h1>
     <div class="subtitle">مرجع آنلاین پروتکل‌های کلینیکی پروتز و ایمپلنت</div>
     
     <div class="card">
-      
       <div class="episodes-seo-block">
-          <h2 style="color:var(--blue); font-size:1.4rem; font-weight:700; text-align:center; margin-bottom: 20px;">🗺️ نقشه راه علمی شما در دندانپزشکی پروتز و ایمپلنت</h2>
-          
-          <p style="font-size: 90%; line-height: 1.8; margin-bottom: 15px;">
-            <strong>دنت‌کست</strong> پادکست و مرجع آنلاین دکتر <strong>فؤاد شهابیان</strong>، متخصص پروتزهای دندانی، است.
-            این مجموعه، گنجینه‌ای از دانش به‌روز کلینیکی است که به‌طور <strong>مداوم در حال گسترش و به‌روزرسانی</strong> است. با گوش دادن به اپیزودهای کامل، دانش شما در حوزه‌های حیاتی زیر به‌طور مستمر تقویت می‌شود:
-          </p>
-    
-          <ul class="content-list">
-              <li>
-                <h3>ایمپلنتولوژی پیشرفته:</h3> شامل مرور کانسپت‌هایی چون <strong>Zero Bone Loss</strong>، پروتکل‌های ایمپلنت فوری (Immediate Load)، انتخاب اباتمنت‌های Ti-base و Multi-unit و مدیریت تحلیل استخوان.
-              </li>
-              <li>
-                <h3>دندانپزشکی ادهزیو و زیبایی:</h3> گایدلاین‌های بالینی <strong>سمان کردن رزینی</strong>، آماده‌سازی سطح انواع سرامیک (زیرکونیا، لمینیت)، اصول <strong>DME، IDS</strong> و درمان‌های ادهزیو غیرمستقیم.
-              </li>
-              <li>
-                <h3>اکلوژن و مدیریت TMD:</h3> بررسی جامع <strong>اختلالات مفصل گیجگاهی-فکی (TMD)</strong> بر اساس مراجع کلاسیک (مانند داوسون و اوکیسون)، و اصول <strong>تشخیص گلوبال و طرح درمان</strong>.
-              </li>
-              <li>
-                <h3>تکنولوژی و مواد نوین:</h3> کاربرد <strong>دندانپزشکی دیجیتال</strong> (اسکنر سه‌بعدی)، <strong>هوش مصنوعی (AI)</strong> در پروتز، مواد نوین چون **PEEK CAD-CAM** و رستوریشن‌های باکیفیت.
-              </li>
-          </ul>
-    
-          <p style="font-size: 90%; line-height: 1.8; text-align:center; margin-top: 15px;">
-              <strong>هدف DentCast:</strong> ارائه **جدیدترین مقالات و کنسنسوس‌ها** برای تقویت **تصمیم‌گیری‌های بالینی مطمئن** شماست.
-          </p>
+        <h2 style="color:var(--blue); font-size:1.4rem; font-weight:700; text-align:center; margin-bottom: 20px;">🗺️ نقشه راه علمی شما در دندانپزشکی پروتز و ایمپلنت</h2>
+        
+        <p style="font-size: 90%; line-height: 1.8; margin-bottom: 15px;">
+          <strong>دنت‌کست</strong> پادکست و مرجع آنلاین دکتر <strong>فؤاد شهابیان</strong>، متخصص پروتزهای دندانی، است.
+          این مجموعه، گنجینه‌ای از دانش به‌روز کلینیکی است که به‌طور <strong>مداوم در حال گسترش و به‌روزرسانی</strong> است. با گوش دادن به اپیزودهای کامل، دانش شما در حوزه‌های حیاتی زیر به‌طور مستمر تقویت می‌شود:
+        </p>
+  
+        <ul class="content-list">
+          <li>
+            <h3>ایمپلنتولوژی پیشرفته:</h3> شامل مرور کانسپت‌هایی چون <strong>Zero Bone Loss</strong>، پروتکل‌های ایمپلنت فوری (Immediate Load)، انتخاب اباتمنت‌های Ti-base و Multi-unit و مدیریت تحلیل استخوان.
+          </li>
+          <li>
+            <h3>دندانپزشکی ادهزیو و زیبایی:</h3> گایدلاین‌های بالینی <strong>سمان کردن رزینی</strong>، آماده‌سازی سطح انواع سرامیک (زیرکونیا، لمینیت)، اصول <strong>DME، IDS</strong> و درمان‌های ادهزیو غیرمستقیم.
+          </li>
+          <li>
+            <h3>اکلوژن و مدیریت TMD:</h3> بررسی جامع <strong>اختلالات مفصل گیجگاهی-فکی (TMD)</strong> بر اساس مراجع کلاسیک (مانند داوسون و اوکیسون)، و اصول <strong>تشخیص گلوبال و طرح درمان</strong>.
+          </li>
+          <li>
+            <h3>تکنولوژی و مواد نوین:</h3> کاربرد <strong>دندانپزشکی دیجیتال</strong> (اسکنر سه‌بعدی)، <strong>هوش مصنوعی (AI)</strong> در پروتز، مواد نوین چون **PEEK CAD-CAM** و رستوریشن‌های باکیفیت.
+          </li>
+        </ul>
+  
+        <p style="font-size: 90%; line-height: 1.8; text-align:center; margin-top: 15px;">
+          <strong>هدف DentCast:</strong> ارائه **جدیدترین مقالات و کنسنسوس‌ها** برای تقویت **تصمیم‌گیری‌های بالینی مطمئن** شماست.
+        </p>
       </div>
 
       <iframe src="https://embed.acast.com/624b5545ecc0e600134ea0df?font-family=Vazirmatn&font-src=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DVazirmatn&feed=true" frameBorder="0" width="100%" height="630px"></iframe>
-      
     </div>
 
-<!-- 🔊 دکمه‌ی شناور فهرست اپیزودها -->
-<button id="dc-episodes-trigger" class="dc-episodes-trigger">
-  🎧 فهرست اپیزودها
-</button>
-
-<!-- لایه‌ی تار پس‌زمینه هنگام باز بودن سایدبار -->
-<div id="dc-episodes-overlay" class="dc-episodes-overlay"></div>
-
-<!-- سایدبار فهرست اپیزودها -->
-<aside id="dc-episodes-sidebar" class="dc-episodes-sidebar" aria-hidden="true">
-  <header class="dc-episodes-header">
-    <h2>فهرست اپیزودهای دنت‌کست</h2>
-    <button id="dc-episodes-close" class="dc-episodes-close" aria-label="بستن فهرست">
-      ×
+    <!-- 🔊 دکمه‌ی شناور فهرست اپیزودها -->
+    <button id="dc-episodes-trigger" class="dc-episodes-trigger">
+      🎧 فهرست اپیزودها
     </button>
-  </header>
 
-  <!-- باکس سرچ (فعلاً فقط ظاهر) -->
-  <div class="dc-episodes-search">
-    <input
-      id="dc-episodes-search-input"
-      type="text"
-      placeholder="جستجو در عنوان، کپشن، هشتگ‌ها..."
-      autocomplete="off"
-    />
-  </div>
+    <!-- لایه‌ی تار پس‌زمینه هنگام باز بودن سایدبار -->
+    <div id="dc-episodes-overlay" class="dc-episodes-overlay"></div>
 
-  <!-- لیست اپیزودها (در مرحله بعد با JS پر می‌کنیم) -->
-  <div id="dc-episodes-list" class="dc-episodes-list">
-    <p class="dc-episodes-loading">
-      در حال آماده‌سازی فهرست اپیزودها...
-    </p>
-  </div>
-</aside>
+    <!-- سایدبار فهرست اپیزودها -->
+    <aside id="dc-episodes-sidebar" class="dc-episodes-sidebar" aria-hidden="true">
+      <header class="dc-episodes-header">
+        <h2>فهرست اپیزودهای دنت‌کست</h2>
+        <button id="dc-episodes-close" class="dc-episodes-close" aria-label="بستن فهرست">
+          ×
+        </button>
+      </header>
+
+      <!-- باکس سرچ -->
+      <div class="dc-episodes-search">
+        <input
+          id="dc-episodes-search-input"
+          type="text"
+          placeholder="جستجو در عنوان، کپشن، هشتگ‌ها..."
+          autocomplete="off"
+        />
+      </div>
+
+      <!-- لیست اپیزودها (با JS پر می‌شود) -->
+      <div id="dc-episodes-list" class="dc-episodes-list">
+        <p class="dc-episodes-loading">
+          در حال آماده‌سازی فهرست اپیزودها...
+        </p>
+      </div>
+    </aside>
 
     <footer>
-
       <div>
         <a href="https://dentcast.ir/index.html" class="btn-home">
           🏠 برگشت به صفحه‌ی اصلی
@@ -455,9 +561,9 @@
         © 2025 DentCast — طراحی و توسعه توسط
         <strong style="color:#ffd46a;">فواد شهابیان</strong>
       </div>
-
     </footer>
   </div>
+
   <script src="episodes-drawer.js" defer></script>
 </body>
 </html>
