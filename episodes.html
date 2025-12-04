@@ -3,12 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <title>همهٔ اپیزودهای دنت‌کست | DentCast Episodes</title>
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="آرشیو کامل ۱۵۰ اپیزود پادکست تخصصی دنت‌کست: مرور پروتکل‌های کلینیکی پروتز، ایمپلنت (Zero Bone Loss، ITI)، باندینگ سرامیک، TMD، دندانپزشکی دیجیتال و اباتمنتهای پیشرفته. توسط دکتر فؤاد شهابیان.">
-  
+  <meta name="description" content="آرشیو کامل اپیزودهای پادکست تخصصی دنت‌کست: پروتز، ایمپلنت، باندینگ، TMD، سرامیک، دیجیتال، و روایت علمی توسط دکتر فؤاد شهابیان.">
   <meta name="author" content="دکتر فؤاد شهابیان">
+
   <link rel="canonical" href="https://dentcast.ir/episodes.html">
 
+  <!-- فونت وزیرمتن -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
@@ -18,7 +20,6 @@
       --blue:#0b5fff;
       --bg:#0b1220;
       --bg2:#121a2b;
-      --text:#000;
       --muted:#9aa1b3;
       --radius:16px;
       --shadow:0 12px 32px rgba(0,0,0,.35);
@@ -29,14 +30,14 @@
       font-family:'Vazirmatn',sans-serif;
       background: radial-gradient(1100px 600px at 20% -10%, #1b2640 0%, transparent 60%),
                   linear-gradient(180deg,var(--bg) 0%,var(--bg2) 100%);
-      color:var(--text);
+      color:#000;
       -webkit-font-smoothing:antialiased;
       text-rendering:optimizeLegibility;
     }
 
     .wrap {
       max-width:920px;
-      margin:40px auto 110px; /* فاصله‌ی بیشتر از پایین برای نیفتادن دکمه روی فوتر */
+      margin:40px auto 110px;
       padding:0 20px;
     }
 
@@ -48,15 +49,6 @@
       margin-bottom:10px;
     }
 
-    h3 {
-      color:var(--blue);
-      font-weight:700;
-      font-size:1.05rem;
-      margin-top: 25px;
-      margin-bottom: 5px;
-      padding-right: 0;
-    }
-    
     .subtitle {
       text-align:center;
       color:var(--muted);
@@ -64,53 +56,17 @@
       margin-bottom:26px;
     }
 
-    /* کارت اصلی: تیره و پلیر بالا، بلاک سئو پایین */
+    /* کارت اصلی */
     .card {
-      background: rgba(3, 7, 18, 0.92);
+      background: rgba(3,7,18,0.92);
       color:#e7eaf1;
       text-align:center;
       border-radius:var(--radius);
       box-shadow:var(--shadow);
       padding:22px 18px 32px;
       display:flex;
-      flex-direction:column-reverse; /* اول iframe دیده می‌شود، بعد بلاک سئو */
+      flex-direction:column-reverse;
       gap:24px;
-    }
-    
-    .episodes-seo-block {
-      margin-top: 10px;
-      padding: 24px 18px 10px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.08);
-      background: radial-gradient(circle at 0% 0%, rgba(11,95,255,0.10), transparent 55%),
-                  rgba(10,12,24,0.85);
-      text-align:justify;
-      color:#c7cedd;
-      font-size:0.92rem;
-    }
-
-    .content-list {
-        list-style: disc inside;
-        padding-right: 20px;
-        margin-top: 15px;
-        margin-bottom: 25px;
-        color: #d4d9e6;
-        text-align: justify;
-    }
-    
-    .content-list li {
-        font-size: .95rem;
-        line-height: 1.9;
-        margin-bottom: 8px;
-        color: #d4d9e6;
-    }
-
-    .lead {
-      font-size:.98rem;
-      line-height:1.9;
-      text-align:center;
-      margin:0 0 28px;
-      opacity:.92;
     }
 
     iframe {
@@ -121,240 +77,209 @@
       box-shadow:0 12px 30px rgba(0,0,0,.3);
     }
 
-    footer {
-      margin-top:40px;
-      text-align:center;
-      color:var(--muted);
-      font-size:.85rem;
-      line-height: 1.8;
+    /* === دکمه شناور فهرست === */
+    .dc-episodes-trigger {
+      position: fixed;
+      bottom: 110px;
+      right: 16px;
+      z-index: 60;
+
+      background: #ffdd55;
+      color: #0b1e42;
+      border: 1px solid rgba(255, 215, 48, 0.75);
+      border-radius: 999px;
+
+      padding: 16px 28px;
+      font-size: 1rem;
+      font-family: 'Vazirmatn', sans-serif;
+      font-weight: 800;
+
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
+      cursor: pointer;
+
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      transition: 0.15s ease-out;
     }
 
-    /* استایل دکمه‌های فوتر (تمیز شده) */
-    .btn-home {
-      display:inline-block;
-      background:rgba(11,95,255,0.18);
-      color:#3a84ff;
-      border:1.8px solid rgba(11,95,255,0.45);
-      border-radius:12px;
-      padding:12px 42px;
-      font-weight:700;
-      text-decoration:none;
+    .dc-episodes-trigger:hover {
+      background-color: #ffcc33;
+      transform: translateY(-2px);
+    }
+
+    .dc-episodes-trigger:active {
+      transform: translateY(0);
+    }
+
+    @media (max-width: 600px) {
+      .dc-episodes-trigger {
+        bottom: 96px;
+        right: 12px;
+        font-size: 0.85rem;
+        padding: 12px 20px;
+      }
+    }
+
+    /* لایه تاریک پس‌زمینه */
+    .dc-episodes-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.35);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 58;
+      transition: opacity 0.2s ease-out;
+    }
+
+    /* === سایدبار نسخه نهایی بدون شیشه‌ای === */
+    .dc-episodes-sidebar {
+      position: fixed;
+      top: 0;
+      right: 0;
+
+      height: 70vh;
+      margin-top: 7vh;
+      margin-bottom: 7vh;
+
+      width: min(380px, 100%);
+      max-width: 100%;
+      border-radius: 16px 0 0 16px;
+
+      background: #f4d559; /* زرد طلایی مات */
+      box-shadow: 0 0 35px rgba(0,0,0,0.55);
+
+      display:flex;
+      flex-direction:column;
+      overflow:hidden;
+
+      transform: translateX(100%);
+      transition: transform .25s ease-out;
+      z-index:59;
+    }
+
+    body.dc-episodes-open .dc-episodes-sidebar {
+      transform: translateX(0);
+    }
+
+    body.dc-episodes-open .dc-episodes-overlay {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    body.dc-episodes-open .dc-episodes-trigger {
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(.9);
+    }
+
+    /* هدر */
+    .dc-episodes-header {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+
+      padding:14px 18px;
+      background:#f0ca47; /* کمی تیره‌تر */
+      border-bottom:1px solid rgba(0,0,0,0.12);
+
+      position:sticky;
+      top:0;
+      z-index:2;
+    }
+
+    .dc-episodes-header h2 {
+      margin:0;
       font-size:1rem;
-      box-shadow:0 0 14px rgba(11,95,255,0.15);
-      transition:all .25s ease;
-      margin-bottom: 22px;
-    }
-    .btn-home:hover {
-      background:rgba(11,95,255,0.28);
-      transform: scale(1.02);
+      font-weight:800;
+      color:#0b1e42;
     }
 
-    .btn-about {
-      display:inline-block;
-      background:rgba(255,220,80,0.85);
+    .dc-episodes-close {
+      background:none;
+      border:none;
+      font-size:1.7rem;
+      color:#0b1e42;
+      cursor:pointer;
+    }
+
+    /* سرچ */
+    .dc-episodes-search {
+      padding: 10px 16px;
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+    }
+
+    #dc-episodes-search-input {
+      width: 100%;
+      padding: 9px 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(0,0,0,0.25);
+      background:#fff8d7;
+      color:#0b1e42;
+      font-size:.85rem;
+      font-family:'Vazirmatn';
+    }
+
+    #dc-episodes-search-input::placeholder {
+      color:#8f8f8f;
+    }
+
+    /* لیست */
+    .dc-episodes-list {
+      flex:1;
+      overflow-y:auto;
+      padding:12px 14px 18px;
+    }
+
+    /* کارت اپیزود */
+    .dc-episode-item {
+      background:#ffe899;
+      border:1px solid rgba(0,0,0,0.12);
+      border-radius:14px;
+      padding:14px 16px;
+      margin-bottom:10px;
+      transition:background .2s;
+    }
+
+    .dc-episode-item:hover {
+      background:#ffdf7e;
+    }
+
+    .dc-episode-header {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+
+    .dc-ep-number {
+      color:#0b5fff;
+      font-size:.88rem;
+      font-weight:800;
+    }
+
+    .dc-ep-title {
+      color:#0b5fff;
+      font-weight:700;
+      font-size:.95rem;
+    }
+
+    .dc-episode-body {
+      margin-top:10px;
       color:#111;
-      border:1px solid rgba(255,220,80,0.55);
-      border-radius:8px;
-      padding:5px 12px;
-      font-weight:500;
-      text-decoration:none;
-      font-size:.8rem;
-      box-shadow:0 0 6px rgba(255,220,80,0.1);
-      backdrop-filter:blur(5px);
-      transition:all .25s ease;
-      margin-bottom: 20px;
-    }
-    .btn-about:hover {
-      background:rgba(255,230,100,0.95);
-      transform: scale(1.02);
+      font-size:.85rem;
+      line-height:1.6;
     }
 
-    @media (max-width:768px){
-      .wrap{padding:0 14px;margin:30px auto 110px;}
-      h1{font-size:1.8rem;}
-      iframe{height:520px;}
-      .lead{font-size:.9rem;}
+    .dc-tag {
+      background:#f7d75d;
+      padding:3px 8px;
+      border-radius:6px;
+      margin-left:5px;
+      font-size:.75rem;
+      color:#4a3b00;
     }
 
-    /* === دکمه‌ی شناور فهرست اپیزودها === */
-.dc-episodes-trigger {
-  position: fixed;
-  bottom: 110px;          /* فاصله بیشتر از فوتر */
-  right: 16px;
-  z-index: 60;
-
-  background: #ffdd55;   /* طلایی روشن (گزینه A) */
-  color: #0b1e42;
-  border: 1px solid rgba(255, 215, 48, 0.7);
-  border-radius: 18px;
-  padding: 14px 24px;     /* بزرگ‌تر و لوکس‌تر */
-  font-size: 1rem;        /* خواناتر */
-  border-radius: 999px;
-  transform: scale(1.05); /* پیش‌فرض کمی بزرگ‌تر */
-}
-
-  font-family: 'Vazirmatn', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  font-weight: 800;
-
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
-  cursor: pointer;
-
-  display: flex;
-  align-items: center;
-  gap: 8px;
-
-  transition: transform 0.15s ease-out, box-shadow 0.15s ease-out,
-              background-color 0.15s ease-out, opacity 0.15s ease-out;
-}
-
-.dc-episodes-trigger:hover {
-  background-color: #ffcc33;
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35);
-  transform: translateY(-2px);
-}
-
-.dc-episodes-trigger:active {
-  transform: translateY(0);
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.24);
-}
-
-/* روی موبایل کمی کوچیک‌تر بشه */
-@media (max-width: 600px) {
-  .dc-episodes-trigger {
-    bottom: 96px;
-    right: 12px;
-    font-size: 0.85rem;
-    padding: 10px 18px;
-  }
-}
-
-/* === لایه‌ی تار پس‌زمینه === */
-.dc-episodes-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.3);
-  opacity: 0;
-  pointer-events: none;
-  z-index: 58;
-  transition: opacity 0.2s ease-out;
-}
-
-/* === سایدبار فهرست اپیزودها === */
-
-.dc-episodes-sidebar {
-  position: fixed;
-  top: 0;
-  right: 0;
-  box-shadow: 0 0 35px rgba(0,0,0,0.55);
-  height: 68vh;     /* کل ارتفاع صفحه */
-  margin-top: 8vh;    /* یک فاصله تمیز از بالا */
-  margin-bottom: 8vh; /* پایین سایدبار فاصله می‌گیره */
-  border-radius: 16px 0 0 16px; /* لبه گرد زیبا */
-  
-  width: min(380px, 100%);            /* برای موبایل و دسکتاپ */
-  max-width: 100%;
-
-  background:
-  linear-gradient(180deg, rgba(255, 215, 48, 0.48), rgba(255, 215, 48, 0.38)),
-  rgba(255, 215, 48, 0.5);
-
-backdrop-filter: blur(14px);
--webkit-backdrop-filter: blur(14px);
-
-border-left: 1px solid rgba(255, 215, 48, 0.35);
-  /* 🔥 کلید اصلی برای فعال شدن اسکرول داخلی */
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;                   /* اسکرول بیرون را می‌بندد */
-
-  transform: translateX(100%);
-  transition: transform 0.25s ease-out;
-  z-index: 59;
-}
-
-/* هدر سایدبار */
-.dc-episodes-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 14px 18px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  background: rgba(11, 95, 255, 0.14);
-  position: sticky;
-  top: 0;
-  z-index: 2;
-}
-
-.dc-episodes-header h2 {
-  margin: 0;
-  font-size: 1rem;
-  font-weight: 800;
-  color: #e7eaf1;
-}
-
-.dc-episodes-close {
-  background: transparent;
-  border: none;
-  color: #e7eaf1;
-  font-size: 1.8rem;
-  line-height: 1;
-  cursor: pointer;
-}
-
-/* باکس سرچ */
-.dc-episodes-search {
-  padding: 10px 16px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-}
-
-#dc-episodes-search-input {
-  width: 100%;
-  box-sizing: border-box;   /* جلوگیری از خارج‌زدگی */
-
-  padding: 9px 12px;
-  border-radius: 8px;
-  border: 1px solid rgba(231, 234, 241, 0.45);
-  background: rgba(3, 7, 18, 0.8);
-  color: #e7eaf1;
-  font-family: 'Vazirmatn', system-ui, sans-serif;
-  font-size: 0.85rem;
-}
-
-#dc-episodes-search-input::placeholder {
-  color: #9aa1b3;
-}
-
-/* لیست اپیزودها */
-.dc-episodes-list {
-  flex: 1;                            /* فضای باقی‌مانده را پر می‌کند */
-  overflow-y: auto;                   /* اسکرول عمودی فعال */
-  overflow-x: hidden;
-  padding: 10px 12px 16px;
-  -webkit-overflow-scrolling: touch;  /* اسکرول نرم در موبایل */
-}
-
-.dc-episodes-loading {
-  color: #9aa1b3;
-  font-size: 0.85rem;
-  text-align: center;
-  margin-top: 20px;
-}
-
-/* وضعیت باز بودن: روی body کلاس می‌گذاریم */
-body.dc-episodes-open .dc-episodes-sidebar {
-  transform: translateX(0);
-}
-
-body.dc-episodes-open .dc-episodes-overlay {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-body.dc-episodes-open .dc-episodes-trigger {
-  opacity: 0;
-  pointer-events: none;
-  transform: scale(0.9);
-}
   </style>
 
   <link rel="icon" href="https://dentcast.ir/logo-v2.png" type="image/png" sizes="512x512">
