@@ -1,306 +1,129 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <title>همهٔ اپیزودهای دنت‌کست | DentCast Episodes</title>
+<style>
+  :root {
+    --blue: #0b5fff;
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="آرشیو کامل اپیزودهای پادکست تخصصی دنت‌کست: پروتز، ایمپلنت، باندینگ، TMD، سرامیک، دیجیتال، و روایت علمی توسط دکتر فؤاد شهابیان.">
-  <meta name="author" content="دکتر فؤاد شهابیان">
+    /* 🔵 پالت آبی لایت – اصلاح‌شده */
+    --panel: #dbe6ff;            /* کمی تیره‌تر برای کنتراست بهتر */
+    --panel-dark: #c8d8ff;       /* هدر */
+    --panel-soft: #eef3ff;
 
-  <link rel="canonical" href="https://dentcast.ir/episodes.html">
+    --card-light: #e7efff;       /* کارت اپیزود */
+    --card-light-hover: #d8e4ff;
 
-  <!-- فونت وزیرمتن -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
+    --bg: #0b1220;
+    --bg2: #121a2b;
 
-  <style>
-    :root {
-      --blue: #0b5fff;
+    --text-dark: #0a1d40;        /* به‌جای مشکی → ناوی تیره */
+    --text-navy: #062043;
 
-      /* 🔵 پالت آبی لایت برای باکس */
-      --panel: #e3eeff;        
-      --panel-dark: #d5e3ff;
-      --panel-soft: #f5f8ff;
+    --muted: #9aa1b3;
+    --radius: 16px;
+    --shadow: 0 12px 32px rgba(0,0,0,.35);
+  }
 
-      --card-light: #eff4ff;
-      --card-light-hover: #e0e9ff;
+  body {
+    margin: 0;
+    font-family: 'Vazirmatn', sans-serif;
+    background:
+      radial-gradient(1100px 600px at 20% -10%, #1b2640 0%, transparent 60%),
+      linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+    color: #e7eaf1;
+  }
 
-      /* 🎧 تم دارک اصلی */
-      --bg: #0b1220;
-      --bg2: #121a2b;
+  /* ———————————— 🔵 سایدبار اصلاح‌شده */
+  .dc-episodes-sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: min(340px, 100%);
+    height: 70vh;
+    margin-top: 7vh;
+    margin-bottom: 7vh;
+    border-radius: 16px 0 0 16px;
 
-      /* متن‌ها در باکس لایت */
-      --text-dark: #000;
-      --text-navy: #0a1d40;
+    /* ⭐⭐ اصلاح رنگ */
+    background: var(--panel);
+    color: var(--text-dark);
 
-      --muted: #9aa1b3;
+    box-shadow: 0 0 35px rgba(0,0,0,0.55);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transform: translateX(100%);
+    transition: transform .25s ease-out;
+    z-index: 59;
+  }
 
-      --radius: 16px;
-      --shadow: 0 12px 32px rgba(0,0,0,.35);
-    }
+  /* ———————————— 🔵 هدر سایدبار */
+  .dc-episodes-header {
+    padding: 14px 18px;
+    background: var(--panel-dark);
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+  }
 
-    /* ——————————————————————————
-       ۱) بک‌گراند و متن عمومی صفحه دارک
-       بدون رنگ گلوبال → تا تداخلی ایجاد نکند
-    ——————————————————————————— */
-    body {
-      margin: 0;
-      font-family: 'Vazirmatn', sans-serif;
+  .dc-episodes-header h2 {
+    color: var(--text-navy);
+    font-size: 1rem;
+    font-weight: 800;
+  }
 
-      background:
-        radial-gradient(1100px 600px at 20% -10%, #1b2640 0%, transparent 60%),
-        linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+  /* ———————————— 🔵 سرچ — اصلاح شده */
+  .dc-episodes-search {
+    padding: 10px 16px 8px; /* کمی جمع‌تر */
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+  }
 
-      /* ❗ مهم: متن عمومی را سفید نکن
-         چون کارت‌ها و سایدبار هرکدام متن مخصوص دارند */
-      color: #e7eaf1; 
-    }
+  #dc-episodes-search-input {
+    width: 100%;
+    padding: 8px 12px;       /* کوچیک‌تر شد */
+    background: #ffffff;
+    border-radius: 10px;
+    border: 1px solid rgba(0,0,0,0.18);
+    font-size: .85rem;       /* ریزتر شد */
+    font-weight: 600;
+    color: var(--text-navy);
 
-    /* ——————————————————————————
-       ۲) ساختار صفحه
-    ——————————————————————————— */
-    .wrap {
-      max-width: 920px;
-      margin: 40px auto 120px;
-      padding: 0 20px;
-    }
+    /* ⭐ فاصله از دیواره دقیق شد */
+    box-sizing: border-box;
+  }
 
-    h1 {
-      text-align: center;
-      color: var(--blue);
-      font-weight: 800;
-      font-size: 2.2rem;
-      margin-bottom: 10px;
-    }
+  /* ———————————— 🔵 لیست اپیزودها */
+  .dc-episodes-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px 14px 18px; /* جمع‌تر شد */
+  }
 
-    .subtitle {
-      text-align: center;
-      color: var(--muted);
-      font-size: .98rem;
-      margin-bottom: 26px;
-    }
+  .dc-episode-item {
+    background: var(--card-light);
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 14px;
+    padding: 12px 14px;   /* کوچیک‌تر شد */
+    margin-bottom: 10px;
+    color: var(--text-dark);
+    transition: background .2s, box-shadow .2s;
+  }
 
-    /* ——————————————————————————
-       ۳) کارت اصلی + سئو
-    ——————————————————————————— */
-    .card {
-      background: rgba(3,7,18,0.92);
-      color: #e7eaf1;
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 22px 18px 32px;
-      text-align: center;
+  .dc-episode-item:hover {
+    background: var(--card-light-hover);
+  }
 
-      display: flex;
-      flex-direction: column-reverse;
-      gap: 24px;
-    }
+  .dc-ep-number {
+    color: var(--blue);
+    font-size: .85rem;
+    font-weight: 800;
+  }
 
-    iframe {
-      width: 100%;
-      height: 630px;
-      border: none;
-      border-radius: var(--radius);
-      box-shadow: 0 12px 30px rgba(0,0,0,.3);
-    }
-
-    .episodes-seo-block {
-      margin-top: 10px;
-      padding: 24px 18px 10px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.08);
-      background:
-        radial-gradient(circle at 0% 0%, rgba(11,95,255,0.10), transparent 55%),
-        rgba(10,12,24,0.9);
-      text-align: justify;
-      color: #d4d9e6;
-      font-size: 0.92rem;
-    }
-
-    .episodes-seo-block h3 {
-      color: var(--blue);
-      font-weight: 700;
-      font-size: 1.05rem;
-      margin-top: 20px;
-      margin-bottom: 4px;
-    }
-
-    /* ——————————————————————————
-       ۴) دکمه شناور
-    ——————————————————————————— */
-    .dc-episodes-trigger {
-      position: fixed;
-      bottom: 110px;
-      right: 16px;
-      z-index: 60;
-      background: #f4d559;
-      color: #0b1e42;
-      border: 1px solid rgba(255, 215, 48, 0.75);
-      border-radius: 999px;
-      padding: 16px 28px;
-      font-size: 1rem;
-      font-weight: 800;
-      box-shadow: 0 12px 28px rgba(0,0,0,0.28);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      transition: 0.15s ease-out;
-    }
-
-    /* ——————————————————————————
-       ۵) بک‌دراپ
-    ——————————————————————————— */
-    .dc-episodes-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.35);
-      opacity: 0;
-      pointer-events: none;
-      z-index: 58;
-      transition: .2s ease-out;
-    }
-
-    /* ——————————————————————————
-       ۶) سایدبار آبی لایت (بدون تداخل با دارک)
-    ——————————————————————————— */
-    .dc-episodes-sidebar {
-      position: fixed;
-      top: 0;
-      right: 0;
-
-      width: min(340px, 100%);
-      height: 70vh;
-      margin-top: 7vh;
-      margin-bottom: 7vh;
-
-      border-radius: 16px 0 0 16px;
-      background: var(--panel);
-      box-shadow: 0 0 35px rgba(0,0,0,0.55);
-
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-
-      transform: translateX(100%);
-      transition: transform .25s ease-out;
-      z-index: 59;
-
-      /* متن پیش‌فرض داخل باکس */
-      color: var(--text-dark);
-    }
-
-    body.dc-episodes-open .dc-episodes-sidebar { transform: translateX(0); }
-    body.dc-episodes-open .dc-episodes-overlay { opacity:1; pointer-events:auto; }
-    body.dc-episodes-open .dc-episodes-trigger { opacity:0; pointer-events:none; transform:scale(.9); }
-
-    /* ——————————————————————————
-       ۷) هدر سایدبار
-    ——————————————————————————— */
-    .dc-episodes-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 14px 18px;
-      background: var(--panel-dark);
-      border-bottom: 1px solid rgba(0,0,0,0.07);
-    }
-
-    .dc-episodes-header h2 {
-      margin: 0;
-      font-size: 1rem;
-      font-weight: 800;
-      color: var(--text-navy);
-    }
-
-    .dc-episodes-close {
-      background: none;
-      border: none;
-      font-size: 1.7rem;
-      color: var(--text-navy);
-      cursor: pointer;
-    }
-
-    /* ——————————————————————————
-       ۸) سرچ
-    ——————————————————————————— */
-    .dc-episodes-search {
-      padding: 12px 16px;
-      border-bottom: 1px solid rgba(0,0,0,0.06);
-    }
-
-    #dc-episodes-search-input {
-      width: 100%;
-      padding: 10px 14px;
-      background: #ffffff;
-      color: var(--text-navy);
-      border-radius: 10px;
-      border: 1px solid rgba(0,0,0,0.18);
-      font-size: .9rem;
-      font-weight: 600;
-    }
-
-    #dc-episodes-search-input::placeholder {
-      color: #7f8aa0;
-    }
-
-    /* ——————————————————————————
-       ۹) لیست اپیزودها
-    ——————————————————————————— */
-    .dc-episodes-list {
-      flex: 1;
-      overflow-y: auto;
-      padding: 14px 16px 18px;
-    }
-
-    .dc-episode-item {
-      background: var(--card-light);
-      border: 1px solid rgba(0,0,0,0.08);
-      border-radius: 14px;
-      padding: 14px 16px;
-      margin-bottom: 10px;
-      color: var(--text-dark);
-      transition: background .2s, box-shadow .2s;
-    }
-
-    .dc-episode-item:hover {
-      background: var(--card-light-hover);
-      box-shadow: 0 6px 18px rgba(0,0,0,0.10);
-    }
-
-    .dc-ep-number {
-      color: var(--blue);
-      font-size: .9rem;
-      font-weight: 800;
-    }
-
-    .dc-ep-title {
-      color: var(--text-navy);
-      font-size: .95rem;
-      font-weight: 700;
-      text-align: right;
-      flex: 1;
-    }
-
-    .dc-episode-body {
-      margin-top: 8px;
-      color: var(--text-dark);
-      font-size: .85rem;
-      line-height: 1.6;
-    }
-
-    .dc-tag {
-      background: #dce6ff;
-      color: var(--text-navy);
-      font-size: .75rem;
-      padding: 3px 8px;
-      border-radius: 6px;
-      margin-top: 6px;
-      display: inline-block;
-    }
-  </style>
+  .dc-ep-title {
+    color: var(--text-navy);
+    font-size: .9rem;
+    font-weight: 700;
+  }
+</style>
+</head>
   <body>
   <div class="wrap">
     <h1>همهٔ اپیزودهای دنت‌کست</h1>
