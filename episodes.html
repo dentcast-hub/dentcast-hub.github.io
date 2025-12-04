@@ -187,10 +187,13 @@
   color: #0b1e42;
   border: 1px solid rgba(255, 215, 48, 0.7);
   border-radius: 18px;
-  padding: 12px 22px;
+  padding: 14px 24px;     /* بزرگ‌تر و لوکس‌تر */
+  font-size: 1rem;        /* خواناتر */
+  border-radius: 999px;
+  transform: scale(1.05); /* پیش‌فرض کمی بزرگ‌تر */
+}
 
   font-family: 'Vazirmatn', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 0.95rem;
   font-weight: 800;
 
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
@@ -251,7 +254,12 @@
   width: min(380px, 100%);            /* برای موبایل و دسکتاپ */
   max-width: 100%;
 
-  background: linear-gradient(135deg, #0b1220, #121a2b);
+  background:
+  linear-gradient(180deg, rgba(255, 215, 48, 0.22), rgba(255, 215, 48, 0.12)),
+  rgba(255, 215, 48, 0.08);   /* زرد خیلی کمرنگ و شیشه‌ای */
+backdrop-filter: blur(14px);
+-webkit-backdrop-filter: blur(14px);
+border-left: 1px solid rgba(255, 215, 48, 0.35);
   box-shadow: -12px 0 35px rgba(0, 0, 0, 0.55);
 
   /* 🔥 کلید اصلی برای فعال شدن اسکرول داخلی */
