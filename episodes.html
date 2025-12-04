@@ -220,25 +220,28 @@
 }
 
 /* === سایدبار فهرست اپیزودها === */
+
 .dc-episodes-sidebar {
   position: fixed;
   top: 0;
   right: 0;
-  height: 100vh;
-  width: min(380px, 100%);
+
+  height: 100vh;                      /* کل ارتفاع صفحه */
+  width: min(380px, 100%);            /* برای موبایل و دسکتاپ */
   max-width: 100%;
 
   background: linear-gradient(135deg, #0b1220, #121a2b);
   box-shadow: -12px 0 35px rgba(0, 0, 0, 0.55);
 
+  /* 🔥 کلید اصلی برای فعال شدن اسکرول داخلی */
   display: flex;
   flex-direction: column;
+  overflow: hidden;                   /* مهم: اسکرول بیرون را می‌بندد */
 
   transform: translateX(100%);
   transition: transform 0.25s ease-out;
   z-index: 59;
 }
-
 /* هدر سایدبار */
 .dc-episodes-header {
   display: flex;
@@ -295,11 +298,11 @@
 
 /* لیست اپیزودها */
 .dc-episodes-list {
-  flex: 1;
-  overflow-y: auto;
+  flex: 1;                            /* فضای باقی‌مانده را پر می‌کند */
+  overflow-y: auto;                   /* اسکرول عمودی فعال */
   overflow-x: hidden;
   padding: 10px 12px 16px;
-  max-height: calc(100vh - 140px); /* مهم‌ترین خط */
+  -webkit-overflow-scrolling: touch;  /* اسکرول نرم در موبایل */
 }
 
 .dc-episodes-loading {
