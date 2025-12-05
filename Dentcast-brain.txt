@@ -1633,7 +1633,126 @@
     "اندازه ذرات"
   ],
   "page_url": "/dentai/dentai-6.html"
+},
+{
+  "type": "clinical",
+  "id": "clinical-1",
+  "title": "ضخامت کاغذ آرتیکولاسیون مهم‌تر از چیزیه که فکر می‌کنی",
+  "caption": "بررسی علمی تأثیر ضخامت کاغذ اکلوزال بر دقت تشخیص تماس‌ها، کاهش خطاهای false positive و پروتکل صحیح تنظیم اکلوژن.",
+  "hashtags": [
+    "کلینیکال",
+    "بالینی",
+    "اکلوژن",
+    "آرتیکولاسیون",
+    "تنظیم_اکلوژن",
+    "پروتز"
+  ],
+  "keywords": [
+    "occlusion",
+    "articulating paper thickness",
+    "false positive contacts",
+    "occlusal adjustment protocol",
+    "shimstock",
+    "arti fol",
+    "premature contacts",
+    "occlusal analysis",
+    "prosthodontics",
+    "اکلوژن",
+    "تماس_دندانی",
+    "کاغذ_آرتیکولیشن"
+  ],
+  "page_url": "https://dentcast.ir/insight/insight-1"
+},
+{
+  "type": "clinical",
+  "id": "clinical-2",
+  "title": "کراس‌مانت در پروتزهای وسیع: چرا باید موقتی‌ها را جدی بگیریم؟",
+  "caption": "نقش موقتی‌ها به‌عنوان مرجع اکلوژن و زیبایی در بازسازی‌های دو فکی، و اهمیت Cross-Mounting برای حفظ VDO و روابط فکی.",
+  "hashtags": [
+    "کلینیکال",
+    "پروتز",
+    "بازسازی_کامل_دهان",
+    "اکلوژن",
+    "کراس_مانت",
+    "موقتی"
+  ],
+  "keywords": [
+    "cross mounting",
+    "full mouth rehabilitation",
+    "provisional prosthesis",
+    "VDO control",
+    "occlusal stability",
+    "diagnostic provisional",
+    "occlusal reference",
+    "prosthodontic sequencing",
+    "PMMA provisional",
+    "adaptive cross mount",
+    "vertical dimension",
+    "اکلوژن",
+    "طرح_درمانی",
+    "پروتز ثابت"
+  ],
+  "page_url": "https://dentcast.ir/insight/insight-2"
+},
+{
+  "type": "clinical",
+  "id": "clinical-3",
+  "title": "نظم در بستن مجدد هیلینگ‌ها: تفاوت کوچک، راحتی بزرگ",
+  "caption": "اهمیت بازگرداندن هیلینگ‌ها به محل اصلی‌شان برای جلوگیری از درد بیمار و حفظ تطابق بافت نرم در درمان‌های ایمپلنت.",
+  "hashtags": [
+    "کلینیکال",
+    "ایمپلنت",
+    "هیلینگ",
+    "نظم_کلینیکی",
+    "پروتز_ایمپلنت"
+  ],
+  "keywords": [
+    "healing abutment",
+    "soft tissue adaptation",
+    "implant prosthodontics",
+    "healing abutment sequencing",
+    "implant workflow",
+    "abutment mismatch pain",
+    "implant soft tissue management",
+    "نظم در ایمپلنت",
+    "تطابق بافت نرم",
+    "هیلینگ اباتمنت",
+    "workflow ایمپلنت"
+  ],
+  "page_url": "https://dentcast.ir/insight/insight-3"
+},
+{
+  "type": "clinical",
+  "id": "clinical-4",
+  "title": "بیومیمتیک و چالش فرول در دندان‌های قدامی درمان‌شدهٔ اندو",
+  "caption": "بررسی رویکرد بیومیمتیک در تقویت دیواره‌های نازک قدامی و نقش آن در تأمین پایداری فرول بدون حذف اضافی نسج.",
+  "hashtags": [
+    "کلینیکال",
+    "بیومیمتیک",
+    "پروتز",
+    "فرول",
+    "دندان_قدامی",
+    "اندوتراپی",
+    "ترمیم_بیومیمتیک"
+  ],
+  "keywords": [
+    "biomimetic dentistry",
+    "ferrule effect",
+    "endodontically treated anterior teeth",
+    "thin wall reinforcement",
+    "restorative biomechanics",
+    "biomimetic bonding",
+    "ferrule challenge",
+    "anterior tooth rehabilitation",
+    "biomechanical stability",
+    "دیواره نازک",
+    "چالش فرول",
+    "بازسازی قدامی",
+    "باندینگ بیومیمتیک"
+  ],
+  "page_url": "https://dentcast.ir/insight/insight-4"
 }
 ]
+
 
 
