@@ -1848,8 +1848,264 @@
     "predictable treatment planning"
   ],
   "page_url": "https://dentcast.ir/insight/insight-7"
+},
+{
+  "type": "clinical",
+  "id": "clinical-8",
+  "title": "اگر کار می‌کند، دست نزن — تداخل اکلوژنی پایدار بدون علامت",
+  "caption": "بررسی یک تداخل اکلوژنی واضح روی مولر سوم سوپرااِراپت که با وجود غیرایده‌آل بودن، هیچ علامت عضلانی یا مفصلی ایجاد نکرده و سیستم بیمار سال‌ها پایدار مانده است؛ نمونه‌ای از اینکه چرا گاهی بهترین درمان، عدم مداخله است.",
+  "hashtags": [
+    "کلینیکال",
+    "اکلوژن",
+    "تداخل_اکلوژنی",
+    "TMD",
+    "مولر_سوم",
+    "سیستم_پایدار",
+    "عدم_مداخله"
+  ],
+  "keywords": [
+    "occlusal interference",
+    "stable occlusion",
+    "third molar interference",
+    "asymptomatic patient",
+    "no intervention approach",
+    "occlusal awareness risk",
+    "TMD differential",
+    "muscle and joint symptoms",
+    "physiologic adaptation",
+    "occlusion management philosophy"
+  ],
+  "page_url": "https://dentcast.ir/insight/insight-8"
+},
+{
+  "type": "clinical",
+  "id": "clinical-9",
+  "title": "آبسهٔ ایمپلنت در ناحیهٔ زیبایی؛ مقصر پنهان: سمان باقیمانده",
+  "caption": "یک مورد آبسهٔ مکرر در ایمپلنت ناحیهٔ قدامی که با تریس مسیر آبسه مشخص شد منشأ التهاب کانکشن و سمان باقیمانده است؛ نه استخوان و نه خود فیکسچر. حذف سمان مشکل را بدون جراحی و بدون نیاز به خارج‌سازی ایمپلنت برطرف کرد.",
+  "hashtags": [
+    "کلینیکال",
+    "ایمپلنت",
+    "آبسه_ایمپلنت",
+    "سمان_باقیمانده",
+    "پری_ایمپلنت",
+    "کانکشن_ایمپلنت",
+    "ناحیه_زیبایی"
+  ],
+  "keywords": [
+    "peri-implant abscess",
+    "residual cement",
+    "implant connection inflammation",
+    "esthetic zone implant",
+    "cement-induced peri-implantitis",
+    "abutment complications",
+    "prosthetic implant complications",
+    "trace the abscess",
+    "implant restoration failure",
+    "improper cement removal",
+    "biologic complications"
+  ],
+  "page_url": "https://dentcast.ir/insight/insight-9"
+},
+{
+  "type": "clinical",
+  "id": "clinical-10",
+  "title": "مدیریت فضا برای ایمپلنت قدامی در بیمار Deep Bite",
+  "caption": "تحلیل دقیق محدودیت‌های فضا در ایمپلنت سانترال یک بیمار دیپ‌بایت، انتخاب منطقی بین PFM و سرامیک، برتری اتصال پیچ‌شونده با Ti-base در فضاهای ناکافی و نقش اناملوپلاستی خفیف به‌عنوان مداخلهٔ نهایی بدون نیاز به درمان ارتودنسی.",
+  "hashtags": [
+    "کلینیکال",
+    "ایمپلنت",
+    "دیپ_بایت",
+    "مدیریت_فضا",
+    "سانترال",
+    "TiBase",
+    "PFM",
+    "اتصال_پیچ_شونده",
+    "اناملوپلاستی"
+  ],
+  "keywords": [
+    "deep bite implant challenges",
+    "limited restorative space",
+    "anterior implant restoration",
+    "central incisor implant",
+    "PFM vs full ceramic",
+    "metal palatal design",
+    "screw retained restoration",
+    "Ti-base advantages",
+    "digital implant workflow",
+    "space management",
+    "enameloplasty anterior teeth",
+    "functional space limitations"
+  ],
+  "page_url": "https://dentcast.ir/insight/insight-10"
+},
+{
+  "type": "clinical",
+  "id": "clinical-11",
+  "title": "درد مبهم و مرزهای مسئولیت در درمان — تشخیص اندو و مدیریت روکش تازه",
+  "caption": "تشخیص تفاوت بین درد ارجاعی و درد واقعی با تست‌های اندو، پرهیز از افتادن در دام ظاهر دندان‌ها و مدیریت قانونی بیمار دارای روکش تازه؛ چرا تأخیر کوتاه در مداخله و ارجاع برای خارج‌کردن روکش اقدامی حرفه‌ای و محافظتی است.",
+  "hashtags": [
+    "کلینیکال",
+    "اندو",
+    "درد_ارجاعی",
+    "تشخیص_افتراقی",
+    "روکش_تازه",
+    "مسئولیت_حرفه‌ای",
+    "مدیکو_لِگال"
+  ],
+  "keywords": [
+    "referred pain",
+    "endodontic diagnostic tests",
+    "false localization of pain",
+    "crown-related pain",
+    "recent crown legal considerations",
+    "medico-legal protection",
+    "accountability in prosthodontics",
+    "differential diagnosis",
+    "pulp testing",
+    "management of acute dental pain",
+    "risk management in dentistry"
+  ],
+  "page_url": "https://dentcast.ir/insight/insight-11"
+},
+{
+  "type": "clinical",
+  "id": "clinical-12",
+  "title": "بازگرداندن ارتفاع عمودی صحیح در غیاب استاپ خلفی",
+  "caption": "یک رویکرد اصولی برای درمان بیماران با از دست‌رفتن استاپ خلفی: ایجاد ساپورت پایدار، بازگرداندن Vertical Dimension، سپس ورود به بازسازی قدامی‌ها. بازسازی ابتدا با ایمپلنت‌های خلف و سپس تثبیت VDO انجام شد تا محیط اکلوژنی مناسب برای پست‌وکورها فراهم شود.",
+  "hashtags": [
+    "کلینیکال",
+    "پروتز",
+    "اکلوژن",
+    "VDO",
+    "VD",
+    "استاپ_خلفی",
+    "بازسازی_قدام",
+    "پست_و_کور",
+    "ایمپلنت"
+  ],
+  "keywords": [
+    "loss of posterior support",
+    "vertical dimension collapse",
+    "restoring VDO",
+    "anterior overload",
+    "posterior implant support",
+    "functional occlusion",
+    "prosthodontic sequencing",
+    "pulp therapy and post-core",
+    "full mouth rehabilitation",
+    "temporary crowns to reestablish VDO"
+  ],
+  "page_url": "https://dentcast.ir/insight/insight-12"
+},
+{
+  "type": "clinical",
+  "id": "clinical-13",
+  "title": "طرح درمان باید آینده را هم ببیند",
+  "caption": "در این کیس کانین با وجود امکان ظاهریِ بازسازی، به دلیل نبود فرول پالاتال و مزیال، موقعیت بیومکانیکی پرخطر و احتمال شکست حتمی آینده، از طرح درمان حذف شد. بهترین تصمیم، طراحی ایمپلنت‌ها در نواحی ۳ و ۵ بود؛ تصمیمی مبتنی بر پیش‌بینی آیندهٔ فانکشنال، نه وضعیت امروز.",
+  "hashtags": [
+    "کلینیکال",
+    "پروتز",
+    "طرح_درمانی",
+    "کانین",
+    "فرول",
+    "بیومکانیک",
+    "اکلوژن",
+    "ایمپلنت",
+    "تصمیم‌گیری_پروتزی"
+  ],
+  "keywords": [
+    "canine biomechanics",
+    "ferrule effect failure risk",
+    "future functional prognosis",
+    "strategic tooth assessment",
+    "lateral load on canines",
+    "prosthodontic decision making",
+    "implant planning 3 and 5",
+    "endo treated canine prognosis",
+    "periodontal limitations",
+    "predictive treatment planning"
+  ],
+  "page_url": "https://dentcast.ir/insight/insight-13"
+},
+{
+  "type": "clinical",
+  "id": "clinical-14",
+  "title": "ارزیابی واقعی دندان فقط بعد از برداشتن روکش",
+  "caption": "در روکش‌های اسپلینت‌شده، وضعیت واقعی دندان تا لحظه برداشتن روکش مشخص نیست؛ چون ممکن است یک دندان Hopless صرفاً با اتصال به دندان‌های سالم سرپا مانده باشد. ارزیابی واقعی، همیشه پس از برداشتن روکش انجام می‌شود و در اسپلینت‌ها باید برای هر سناریویی آماده بود.",
+  "hashtags": [
+    "کلینیکال",
+    "پروتز",
+    "طرح_درمانی",
+    "روکش_اسپلینت",
+    "ارزیابی_دندان",
+    "هپلس",
+    "تشخیص_سیستمی",
+    "پریودنتال"
+  ],
+  "keywords": [
+    "splinted crowns risk",
+    "hidden hopeless tooth",
+    "prosthodontic assessment",
+    "post-crown removal evaluation",
+    "true ferrule evaluation",
+    "diagnostic uncertainty",
+    "periodontal prognosis",
+    "multiunit bridge risks",
+    "strategic treatment planning"
+  ],
+  "page_url": "https://dentcast.ir/insight/insight-14"
+},
+{
+  "type": "clinical",
+  "id": "clinical-15",
+  "title": "گیر کردن پست‌وکور بعد از ساخت",
+  "caption": "وقتی پست‌وکور به‌دلیل فیت بسیار دقیق گیر می‌کند و با پنس خارج نمی‌شود، می‌توان با یک فرز نایف‌اِج بدون آب وارد بدنهٔ کور شد؛ فرز گیر مکانیکی پیدا می‌کند و مانند یک دستهٔ کمکی، قطعه را بدون اعمال فشار به دندان خارج می‌کند.",
+  "hashtags": [
+    "کلینیکال",
+    "پروتز",
+    "پست_و_کور",
+    "گیر_مکانیکی",
+    "تکنیک_خارجسازی",
+    "نایف_اج"
+  ],
+  "keywords": [
+    "post and core removal",
+    "tight fit post",
+    "mechanical retention trick",
+    "knife edge bur technique",
+    "prosthodontic tips",
+    "core removal method",
+    "minimal stress extraction"
+  ],
+  "page_url": "https://dentcast.ir/insight/insight-15"
+},
+{
+  "type": "clinical",
+  "id": "clinical-16",
+  "title": "مراقبت بیولوژیک در ایمپلنت‌های اسپلینت‌شده",
+  "caption": "در ایمپلنت‌های اسپلینت‌شده، بسته بودن امبراژور می‌تواند مسیر بهداشت را مسدود کند. قبل از تحویل کار، عبور سوند از امبراژور تست می‌شود تا اطمینان یابیم بیمار امکان استفاده از سوپرفلاس یا واترجت را دارد.",
+  "hashtags": [
+    "کلینیکال",
+    "ایمپلنت",
+    "پری_ایمپلنتایتیس",
+    "بهداشت_ایمپلنت",
+    "اسپلینت",
+    "امبراژور",
+    "سلامت_بیولوژیک"
+  ],
+  "keywords": [
+    "splinted implants",
+    "biological complications",
+    "peri-implantitis prevention",
+    "implant hygiene",
+    "embrasure design",
+    "superfloss access",
+    "probe pass test"
+  ],
+  "page_url": "https://dentcast.ir/insight/insight-16"
 }
 ]
+
 
 
 
