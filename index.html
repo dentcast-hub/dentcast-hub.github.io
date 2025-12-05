@@ -865,6 +865,12 @@ background: #0b5fff;
     }
   </script>
 
-  
+  <script>
+  document.querySelectorAll(".dc-filter-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      btn.classList.toggle("active");
+    });
+  });
+  </script>
 </body>
 </html>
