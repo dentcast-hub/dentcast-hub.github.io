@@ -17,6 +17,47 @@
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
   
     <style>
+  .dc-global-filter-box {
+    background: #ffffff;
+    border: 1px solid #e2e6f0;
+    border-radius: 18px;
+    padding: 20px;
+    margin: 40px 0 30px 0;
+    box-shadow: 0 4px 16px rgba(11, 95, 255, 0.08);
+  }
+
+  .dc-global-filter-title {
+    font-weight: 700;
+    font-size: 17px;
+    color: #0b5fff;
+    margin-bottom: 12px;
+    text-align: center;
+  }
+
+  .dc-filter-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+  }
+
+  .dc-filter-btn {
+    padding: 10px 16px;
+    border-radius: 14px;
+    border: 1.5px solid #d3daf3;
+    background: #f7f9ff;
+    color: #0b1d40;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.25s;
+  }
+
+  .dc-filter-btn.active {
+    background: #0b5fff;
+    color: #ffffff;
+    border-color: #0b5fff;
+    box-shadow: 0px 4px 12px rgba(11, 95, 255, 0.25);
+  }
     :root {
       /* --- پالت نهایی: صمیمی اما لوکس --- */
       
@@ -699,7 +740,21 @@ background: #0b5fff;
       </p>
       
     </div>
+<div class="dc-global-filter-box">
+  <div class="dc-global-filter-title">
+    فیلتر جستجوی سراسری دنت‌کست
+  </div>
 
+  <div class="dc-filter-list">
+    <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
+    <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
+    <button class="dc-filter-btn active" data-type="insight">نکات کلینیکی</button>
+    <button class="dc-filter-btn active" data-type="litecast">لایت‌کست</button>
+    <button class="dc-filter-btn active" data-type="photocast">فوتوکست</button>
+    <button class="dc-filter-btn active" data-type="dentcastplus">ویدیوها</button>
+    <button class="dc-filter-btn active" data-type="ai">مقالات</button>
+  </div>
+</div>
     <footer>
       اهواز – کیانپارس، مطب دکتر فواد شهابیان<br>
       تلفن: 33380090-061 &nbsp; | &nbsp; DentCast © 1404
