@@ -121,10 +121,14 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   /* ---------------- 4) اجرای نهایی ---------------- */
-  loadEpisodes().then(episodes => {
-    window.DC_EPISODES = episodes; // اگر بعداً لازم شد
-    renderEpisodes(episodes);
-    setupSearch(episodes);
-  });
+loadEpisodes().then(episodes => {
+
+    // 🔥 بیبی این تنها خطیه که باید اضافه بشه
+    const onlyEpisodes = episodes.filter(ep => ep.episode);
+
+    window.DC_EPISODES = onlyEpisodes; // اگر بعداً لازم شد
+    renderEpisodes(onlyEpisodes);
+    setupSearch(onlyEpisodes);
+});
 
 });
