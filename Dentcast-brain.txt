@@ -2272,8 +2272,680 @@
     "occlusal trauma"
   ],
   "page_url": "https://dentcast.ir/dentcast-plus/video-2"
+},
+{
+  "type": "notecast",
+  "id": "2",
+  "title": "راهنمای جامع انتخاب سمان مناسب برای رستوریشن‌های دندانی",
+  "caption": "خلاصه‌ای از دنت‌کست درباره انتخاب صحیح سمان‌های دندانی در سرامیک‌ها و رستوریشن‌های مختلف.",
+  "hashtags": [
+    "پروتز",
+    "سمان_دندانی",
+    "زیرکونیا",
+    "ادهازیو",
+    "گلاس_آینومر",
+    "انتخاب_سمان",
+    "دندانپزشکی_ترمیمی"
+  ],
+  "keywords": [
+    "سمان",
+    "زیرکونیا",
+    "سمان رزینی",
+    "سلف_ادهزیو",
+    "سمان لمینیت",
+    "چسباندن رستوریشن",
+    "adhesive cement"
+  ],
+  "url": "https://dentcast.ir/notecast/episode-2"
+},
+{
+  "type": "notecast",
+  "id": "3",
+  "title": "سمان‌های رزینی: انواع، ویژگی‌ها، مزایا و معایب",
+  "caption": "خلاصه‌ی دنت‌کست درباره دسته‌بندی سمان‌های رزینی و انتخاب صحیح آن‌ها در رستوریشن‌های سرامیکی و دندانی.",
+  "hashtags": [
+    "پروتز",
+    "سمان_رزینی",
+    "سمان_ادهزیو",
+    "سمان_سلف_ادهزیو",
+    "چسبندگی_سرامیک",
+    "زیرکونیا",
+    "سمان_زیبایی",
+    "انتخاب_سمان",
+    "دندانپزشکی_ترمیمی"
+  ],
+  "keywords": [
+    "resin cement",
+    "self adhesive cement",
+    "adhesive resin",
+    "esthetic resin cement",
+    "Panavia",
+    "سمان لمینیت",
+    "سمان زیرکونیا",
+    "adhesion",
+    "luting"
+  ],
+  "url": "https://dentcast.ir/notecast/episode-3"
+},
+{
+  "type": "notecast",
+  "id": "4",
+  "title": "استراتژی‌های اصلی باندینگ و نسل‌های مختلف ادهزیو",
+  "caption": "خلاصه‌ی دنت‌کست درباره روش‌های توتال‌اچ، سلف‌اچ، نسل‌های باندینگ و کاربردهای کلینیکی آن‌ها.",
+  "hashtags": [
+    "پروتز",
+    "ترمیمی",
+    "باندینگ",
+    "ادهزیو",
+    "توتال_اچ",
+    "سلف_اچ",
+    "باندینگ_نسل_۴",
+    "باندینگ_نسل_۵",
+    "باندینگ_نسل_۶",
+    "باندینگ_نسل_۷",
+    "یونیورسال_باند"
+  ],
+  "keywords": [
+    "etch and rinse",
+    "total etch",
+    "self etch",
+    "adhesive systems",
+    "bonding generations",
+    "universal adhesive",
+    "dentin collagen collapse",
+    "selective etch",
+    "enamel bonding"
+  ],
+  "url": "https://dentcast.ir/notecast/episode-4"
+},
+{
+  "type": "notecast",
+  "id": "5",
+  "title": "باندینگ‌های یونیورسال: نکات کلیدی و کاربردی",
+  "caption": "خلاصه‌ی دنت‌کست پنج درباره ساختار یونیورسال ادهاسیوها، نقش MDP و HEMA، باند به زیرکونیا و سرامیک‌ها، و نکات حیاتی کلینیکی.",
+  "hashtags": [
+    "پروتز",
+    "ترمیمی",
+    "باندینگ",
+    "ادهزیو",
+    "یونیورسال_باند",
+    "MDP",
+    "HEMA",
+    "زیرکونیا",
+    "سرامیک",
+    "باند_شیمیایی",
+    "سلف_اچ",
+    "توتال_اچ"
+  ],
+  "keywords": [
+    "universal adhesive",
+    "MDP monomer",
+    "HEMA free",
+    "dual cure compatibility",
+    "self etch",
+    "total etch",
+    "zirconia bonding",
+    "silane",
+    "ph acidity",
+    "dentin bonding"
+  ],
+  "url": "https://dentcast.ir/notecast/episode-5"
+},
+{
+  "type": "notecast",
+  "id": "6",
+  "title": "سیل کردن فوری دنتین (IDS) — Immediate Dentin Sealing",
+  "caption": "خلاصه‌ی دنت‌کست ششم درباره تکنیک IDS، باندینگ بیومیمتیک، مزایا، مراحل کلینیکی پاسکال مانیه و نکات مهم سمان‌کردن نهایی.",
+  "hashtags": [
+    "پروتز",
+    "ترمیمی",
+    "باندینگ",
+    "بیومیمتیک",
+    "IDS",
+    "Immediate_Dentin_Sealing",
+    "باندینگ_دنتین",
+    "توتال_اچ",
+    "پاسکال_مانیه",
+    "ادهزیو",
+    "سمان_رزینی",
+    "ونیر",
+    "اینله",
+    "آنله"
+  ],
+  "keywords": [
+    "IDS protocol",
+    "Immediate Dentin Sealing",
+    "biomimetic bonding",
+    "Pascal Magne",
+    "total etch",
+    "dentin bonding",
+    "hybrid layer",
+    "oxygen inhibition layer",
+    "temporary restoration",
+    "adhesive resin cement"
+  ],
+  "url": "https://dentcast.ir/notecast/episode-6"
+},
+{
+  "type": "notecast",
+  "id": "7",
+  "title": "تکنیک DME — Deep Margin Elevation",
+  "caption": "خلاصه‌ی دنت‌کست هفت درباره تکنیک DME، بالا آوردن لبه ساب‌جینجیوال، ارتباط با IDS و بیومیمتیک، و نکات کلینیکی برای رستوریشن‌های غیرمستقیم.",
+  "hashtags": [
+    "پروتز",
+    "ترمیمی",
+    "بیومیمتیک",
+    "DME",
+    "Deep_Margin_Elevation",
+    "IDS",
+    "Immediate_Dentin_Sealing",
+    "ایزولاسیون",
+    "رستوریشن_غیرمستقیم",
+    "باندینگ",
+    "سمان_رزینی",
+    "انله",
+    "اینله"
+  ],
+  "keywords": [
+    "Deep Margin Elevation",
+    "DME protocol",
+    "biomimetic dentistry",
+    "IDS combination",
+    "subgingival margin elevation",
+    "Pascal Magne",
+    "indirect restoration isolation",
+    "resin cement cleanup",
+    "matrix adaptation",
+    "endo and DME"
+  ],
+  "url": "https://dentcast.ir/notecast/episode-7"
+},
+{
+  "type": "notecast",
+  "id": "8",
+  "title": "سرامیک‌های دندانی — دسته‌بندی و کاربرد",
+  "caption": "خلاصه‌ی نوشتاری دنت‌کست هشت درباره فاز شیشه‌ای و کریستالی، انواع سرامیک‌ دندانی و کاربرد هرکدام در درمان‌های پروتزی.",
+  "hashtags": [
+    "پروتز",
+    "سرامیک",
+    "بیومیمتیک",
+    "فلدسپاتیک",
+    "گلس_سرامیک",
+    "لیتیوم_دی_سیلیکات",
+    "ZLS",
+    "زیرکونیا",
+    "سرامیک_دندانی",
+    "ترمیم_غیرمستقیم"
+  ],
+  "keywords": [
+    "dental ceramics",
+    "feldspathic porcelain",
+    "lithium disilicate",
+    "ZLS",
+    "zirconia",
+    "hybrid ceramics",
+    "polycrystalline ceramics",
+    "ceramic selection",
+    "biomimetic material choice"
+  ],
+  "url": "https://dentcast.ir/notecast/episode-8"
+},
+{
+  "type": "notecast",
+  "id": "9",
+  "title": "آماده‌سازی سطحی سرامیک — بخش اول",
+  "caption": "خلاصه‌ی نوشتاری دنت‌کست نهم درباره اچ سرامیک‌ها با HF، نکات ایمنی، زمان‌بندی صحیح اچینگ، و مدیریت رسوب سفید برای افزایش قدرت باند.",
+  "hashtags": [
+    "پروتز",
+    "اچ_سرامیک",
+    "HF",
+    "هیدروفلوریک",
+    "لیتیوم_دی_سیلیکات",
+    "فلدسپاتیک",
+    "سرامیک_دندانی",
+    "باندینگ_سرامیک",
+    "ریزتخلخل",
+    "micromechanical_retention"
+  ],
+  "keywords": [
+    "HF etching",
+    "hydrofluoric acid",
+    "ceramic surface conditioning",
+    "lithium disilicate etching",
+    "feldspathic porcelain etching",
+    "over-etching",
+    "white precipitate",
+    "ceramic bonding",
+    "porcelain preparation"
+  ],
+  "url": "https://dentcast.ir/notecast/episode-9"
+},
+{
+  "type": "notecast",
+  "id": "10",
+  "title": "سایلان — پل باندینگ بین سرامیک و رزین",
+  "caption": "خلاصه‌ی نوشتاری دنت‌کست ده درباره نقش سایلان، انواع تک‌بطری و دوباتری، فعال‌سازی، نکات کاربردی و خطاهای رایج در باندینگ سرامیک.",
+  "hashtags": [
+    "پروتز",
+    "سایلان",
+    "باندینگ_سرامیک",
+    "اچ_سرامیک",
+    "HF",
+    "سرامیک_دندانی",
+    "لیتیوم_دی_سیلیکات",
+    "فلدسپاتیک",
+    "biomimetic",
+    "silane_coupling"
+  ],
+  "keywords": [
+    "silane",
+    "ceramic bonding",
+    "silane coupling agent",
+    "single bottle silane",
+    "two bottle silane",
+    "hydrolysis",
+    "heat activation",
+    "porcelain bonding",
+    "HF etching",
+    "ceramic surface treatment"
+  ],
+  "url": "https://dentcast.ir/notecast/episode-10"
+},
+{
+  "type": "notecast",
+  "id": "11",
+  "title": "آماده‌سازی سطح زیرکونیا — از سندبلاست تا باندینگ",
+  "caption": "خلاصه‌ی نوشتاری دنت‌کست یازده درباره آماده‌سازی زیرکونیا، سندبلاست، سیلیکا کوتینگ، پرایمرهای MDP و خطاهای مهم قبل از سمان کردن.",
+  "hashtags": [
+    "پروتز",
+    "زیرکونیا",
+    "سمان_رزینی",
+    "باندینگ_زیرکونیا",
+    "MDP",
+    "سیلیکا_کوتینگ",
+    "سندبلاست",
+    "ترمیم_غیرمستقیم",
+    "biomimetic",
+    "implant_prosthodontics"
+  ],
+  "keywords": [
+    "zirconia bonding",
+    "air abrasion",
+    "silica coating",
+    "zirconia primer",
+    "MDP monomer",
+    "HF resistant ceramics",
+    "zirconia surface treatment",
+    "resin cement bonding",
+    "universal adhesive MDP",
+    "phosphoric acid contraindication"
+  ],
+  "url": "https://dentcast.ir/notecast/episode-11"
+},
+{
+  "type": "notecast",
+  "id": "12",
+  "title": "پاکسازی آلودگی از گلاس‌سرامیک — پروتکل کامل قبل از باندینگ",
+  "caption": "خلاصه‌ی نوشتاری دنت‌کست دوازده درباره پاکسازی آلودگی بزاق، خون و سیلیکون از گلاس‌سرامیک و پروتکل صحیح فسفریک، HF و اعمال مجدد سایلان.",
+  "hashtags": [
+    "پروتز",
+    "سرامیک",
+    "گلاس_سرامیک",
+    "اسید_فسفریک",
+    "HF_اچینگ",
+    "سایلان",
+    "آلودگی_رستوریشن",
+    "پاکسازی_سرامیک",
+    "بیومیمتیک",
+    "ترمیم_غیرمستقیم"
+  ],
+  "keywords": [
+    "glass ceramic contamination",
+    "HF etching",
+    "phosphoric acid cleaning",
+    "silicone residue removal",
+    "saliva decontamination",
+    "IvoClean protocol",
+    "silane reapplication",
+    "resin cement bonding",
+    "ceramic surface treatment",
+    "biomimetic adhesive protocol"
+  ],
+  "url": "https://dentcast.ir/notecast/episode-12"
+},
+{
+  "type": "notecast",
+  "id": "13",
+  "title": "مدیریت تیرگی لثه با روکش زیرکونیا — جلوگیری از اثر چتر",
+  "caption": "خلاصه‌ی نوشتاری دنت‌کست سیزده درباره نقش عرض بیولوژیک، عرض زیبایی و طراحی فریم‌ورک زیرکونیا در پیشگیری از تیرگی لثه (Umbrella Effect).",
+  "hashtags": [
+    "پروتز",
+    "زیرکونیا",
+    "زیبایی",
+    "عرض_بیولوژیک",
+    "عرض_زیبایی",
+    "اثر_چتر",
+    "لثه",
+    "بیومیمتیک",
+    "پرسلنی_شولدر",
+    "طراحی_فریم_ورک"
+  ],
+  "keywords": [
+    "zirconia crown darkness",
+    "umbrella effect gingiva",
+    "biologic width",
+    "aesthetic width",
+    "porcelain shoulder",
+    "zirconia framework design",
+    "cervical translucency",
+    "light transmission gingiva",
+    "prosthodontic gingival esthetics",
+    "biomimetic cervical design"
+  ],
+  "url": "https://dentcast.ir/notecast/episode-13"
+},
+{
+  "type": "notecast",
+  "id": "14",
+  "title": "افزایش بعد عمودی (VD) — دیدگاه داوسون، شواهد جدید و پروتکل درمانی",
+  "caption": "خلاصه‌ی نوشتاری دنت‌کست چهاردهم درباره تعریف VD از دیدگاه داوسون، شواهد جدید در مورد افزایش بعد عمودی و پروتکل درمانی مبتنی بر انطباق بیمار.",
+  "hashtags": [
+    "پروتز",
+    "VD",
+    "بعد_عمودی",
+    "Dawson",
+    "اکلوژن",
+    "رابطه_مرکزی",
+    "Vertical_Dimension",
+    "CR",
+    "افزایش_VD",
+    "پروتز_ثابت",
+    "انطباق_بیمار"
+  ],
+  "keywords": [
+    "vertical dimension",
+    "VD increase",
+    "Dawson theory",
+    "Fradiani",
+    "occlusion",
+    "CR",
+    "comfort zone",
+    "freeway space",
+    "prosthodontics",
+    "VD adaptation protocol"
+  ],
+  "url": "https://dentcast.ir/notecast/episode-14"
+},
+{
+  "type": "notecast",
+  "id": "15",
+  "title": "آنلِی‌های سرامیکی — طول عمر، عوامل موفقیت و دلایل شکست",
+  "caption": "خلاصه‌ی نوشتاری دنت‌کست پانزدهم درباره نتایج یک مرور نظام‌مند JERD در مورد بقا، شکست‌ها و فاکتورهای مؤثر بر موفقیت آنلی‌های سرامیکی.",
+  "hashtags": [
+    "پروتز",
+    "آنلی_سرامیکی",
+    "سرامیک",
+    "ترمیم_غیرمستقیم",
+    "بیومیمتیک",
+    "بقای_رستوریشن",
+    "طول_عمر_سرامیک",
+    "شکست_آنلی",
+    "دباندینگ",
+    "JERD"
+  ],
+  "keywords": [
+    "ceramic onlay longevity",
+    "ceramic onlay survival",
+    "systematic review JERD",
+    "ceramic fracture",
+    "debonding",
+    "marginal integrity",
+    "non-vital tooth onlay",
+    "occlusal ceramic thickness",
+    "biomimetic indirect restorations"
+  ],
+  "url": "https://dentcast.ir/notecast/episode-15"
+},
+{
+  "type": "notecast",
+  "id": "16",
+  "title": "ضرورت یا عدم ضرورت باندینگ روی پرسلن فلدسپاتیک اچ و سایلن‌زده",
+  "caption": "خلاصه‌ی نوشتاری دنت‌کست شانزدهم درباره اینکه آیا پس از اچ و سایلن در سرامیک فلدسپاتیک، استفاده از باندینگ واقعاً ضروری است یا نه.",
+  "hashtags": [
+    "پروتز",
+    "فلدسپاتیک",
+    "سرامیک",
+    "باندینگ",
+    "سمان_رزینی",
+    "بیومیمتیک",
+    "مرجین_سرامیکی",
+    "adhesion",
+    "silane",
+    "HF_etch"
+  ],
+  "keywords": [
+    "feldspathic porcelain bonding",
+    "ceramic silane interface",
+    "resin cement adhesion",
+    "no adhesive layer required",
+    "hydrophilic monomers effect",
+    "marginal discoloration",
+    "bond durability ceramic",
+    "biomimetic ceramic bonding"
+  ],
+  "url": "https://dentcast.ir/notecast/episode-16"
+},
+{
+  "type": "notecast",
+  "id": "17",
+  "title": "فازهای زیرکونیا و تکامل آن — نسل‌های مختلف و خواص فازی",
+  "caption": "خلاصه‌ی نوشتاری دنت‌کست ۱۷ درباره تحول زیرکونیا از فاز تتراگونال تا مکعبی، نقش ایتریوم، خواص مکانیکی و اهمیت transformation toughening.",
+  "hashtags": [
+    "پروتز",
+    "زیرکونیا",
+    "سرامیک_دندانی",
+    "فاز_تتراگونال",
+    "فاز_مکعبی",
+    "Transformation_Toughening",
+    "LTD",
+    "بیومیمتیک",
+    "زیبایی_دندانی",
+    "مواد_دندانی"
+  ],
+  "keywords": [
+    "zirconia phases",
+    "tetragonal zirconia",
+    "cubic zirconia",
+    "yttria stabilized zirconia",
+    "LTD degradation",
+    "transformation toughening",
+    "zirconia translucency",
+    "monoclinic transformation",
+    "dental zirconia generations"
+  ],
+  "url": "https://dentcast.ir/notecast/episode-17"
+},
+{
+  "type": "notecast",
+  "id": "18",
+  "title": "زیرکونیای مکعبی — نکات کلینیکی و لابراتواری",
+  "caption": "خلاصه‌ی نوشتاری دنت‌کست ۱۸ درباره ویژگی‌های زیرکونیای کیوبیک، حساسیت حرارتی، باندینگ، سندبلاست، و نکات مهم کار قبل و بعد از سینتر.",
+  "hashtags": [
+    "پروتز",
+    "زیرکونیا",
+    "زیرکونیای_مکعبی",
+    "مواد_دندانی",
+    "باندینگ",
+    "سندبلاست",
+    "Transformation_Toughening",
+    "بیومیمتیک",
+    "لابراتوار",
+    "ترمیم_غیرمستقیم"
+  ],
+  "keywords": [
+    "cubic zirconia",
+    "zirconia translucency",
+    "yttria stabilized zirconia",
+    "green state zirconia",
+    "zirconia sintering",
+    "zirconia bonding protocol",
+    "silica coated alumina",
+    "MDP primer",
+    "dental ceramics"
+  ],
+  "url": "https://dentcast.ir/notecast/episode-18"
+},
+{
+  "type": "notecast",
+  "id": "19",
+  "title": "پایداری رنگ ونیرهای سرامیکی — JPD 2018",
+  "caption": "خلاصه‌ی نوشتاری دنت‌کست ۱۹ درباره اثر نوع سرامیک و سمان رزینی بر پایداری رنگ ونیرهای سرامیکی و توصیه‌های بالینی مبتنی بر مطالعه JPD 2018.",
+  "hashtags": [
+    "پروتز",
+    "ونیر_سرامیکی",
+    "پایداری_رنگ",
+    "سمان_رزینی",
+    "سرامیک_HT",
+    "لیتوکیمیا",
+    "مقالات_JPD",
+    "بیومیمتیک",
+    "ترمیم_زیبایی",
+    "سرامیک_دندانی"
+  ],
+  "keywords": [
+    "ceramic veneer color stability",
+    "HT ceramics color shift",
+    "resin cement brightness",
+    "dual cure vs light cure",
+    "veneer translucency",
+    "polymer degradation",
+    "accelerated aging",
+    "JPD 2018 study"
+  ],
+  "url": "https://dentcast.ir/notecast/episode-19"
+},
+{
+  "type": "notecast",
+  "id": "20",
+  "title": "نکات قالب‌گیری در پروتز ثابت",
+  "caption": "خلاصه‌ی نوشتاری دنت‌کست ۲۰ درباره تکنیک‌های قالب‌گیری، مدیریت لثه، تری‌ها، نخ‌های زیرلثه‌ای و اصول کلیدی انتقال دقیق مارژین در پروتز ثابت.",
+  "hashtags": [
+    "پروتز",
+    "قالبگیری",
+    "پروتز_ثابت",
+    "کنترل_لثه",
+    "فینیش_لاین",
+    "جینگوالو_ریترکشن",
+    "تری_قالبگیری",
+    "بیومیمتیک",
+    "مارژین_دقیق",
+    "DentalImpression"
+  ],
+  "keywords": [
+    "fixed prosthodontics impression",
+    "two step impression",
+    "one step technique",
+    "monophase impression material",
+    "gingival retraction cord",
+    "double cord technique",
+    "retraction paste",
+    "tray selection prosthodontics",
+    "finish line exposure",
+    "biomimetic soft tissue management"
+  ],
+  "url": "https://dentcast.ir/notecast/episode-20"
+},
+{
+  "type": "notecast",
+  "id": "21",
+  "title": "قالب‌گیری دو‌مرحله‌ای — مدیریت مواد، چسب‌ها و پروتکل دقیق",
+  "caption": "خلاصهٔ نوشتاری دنت‌کست ۲۱ دربارهٔ اصول حیاتی قالب‌گیری دو مرحله‌ای، مدیریت تری‌ادهزیو، کنترل مواد، آماده‌سازی پوتی و اجرای مرحلهٔ اصلاحی برای ثبت دقیق مارژین.",
+  "hashtags": [
+    "پروتز",
+    "قالبگیری",
+    "تری_ادهزیو",
+    "A_silicone",
+    "C_silicone",
+    "پروتز_ثابت",
+    "فینیش_لاین",
+    "بیومیمتیک",
+    "ImpressionTechnique",
+    "DualStepImpression"
+  ],
+  "keywords": [
+    "two step impression",
+    "tray adhesive protocol",
+    "A silicone mixing",
+    "C silicone putty catalyst ratio",
+    "wash impression technique",
+    "gingival displacement",
+    "escape channels impression",
+    "working time vs setting time",
+    "biomimetic accurate transfer",
+    "fixed prosthodontics impression"
+  ],
+  "url": "https://dentcast.ir/notecast/episode-21"
+},
+{
+  "type": "notecast",
+  "id": "22",
+  "title": "سه تداخل دارویی حیاتی در دندان‌پزشکی",
+  "caption": "خلاصهٔ نوشتاری دنت‌کست ۲۲ دربارهٔ سه تداخل خطرناک بین NSAIDها، آنتی‌بیوتیک‌ها و بی‌حسی‌های حاوی اپی‌نفرین با داروهای سیستمیک که می‌تواند بیمار را وارد محدودهٔ خطر کند.",
+  "hashtags": [
+    "تداخل_دارویی",
+    "نسخه_نویسی",
+    "ایمنی_بیمار",
+    "فارماکولوژی_دندانپزشکی",
+    "لیتیوم",
+    "وارفارین",
+    "اپی‌نفرین",
+    "NSAID",
+    "بیومیمتیک_غیرمستقیم",
+    "PatientSafety"
+  ],
+  "keywords": [
+    "lithium toxicity NSAID",
+    "metronidazole warfarin interaction",
+    "fluconazole CYP450 inhibition",
+    "epinephrine propranolol hypertension",
+    "dental drug interactions",
+    "analgesics contraindications",
+    "safe anesthetic dose propranolol",
+    "drug prescription dentistry"
+  ],
+  "url": "https://dentcast.ir/notecast/episode-22"
+},
+{
+  "type": "notecast",
+  "id": "23",
+  "title": "اورلود اکلوزالی و تحلیل استخوان اطراف ایمپلنت‌ها",
+  "caption": "خلاصهٔ نوشتاری دنت‌کست ۲۳ دربارهٔ نقش واقعی نیروهای اکلوزالی در تحلیل استخوان اطراف ایمپلنت‌ها و تمایز بین مشکلات بیولوژیک و بیومکانیکال.",
+  "hashtags": [
+    "ایمپلنت",
+    "پری_ایمپلنتایتیس",
+    "اکلوژن",
+    "اورلود",
+    "تحلیل_استخوان",
+    "ClinicalOralImplantResearch",
+    "بیومکانیک",
+    "بیولوژی_ایمپلنت",
+    "Osseointegration"
+  ],
+  "keywords": [
+    "occlusal overload implant",
+    "bone loss peri implant",
+    "supra occlusal contact implant",
+    "implant biomechanics",
+    "peri implant inflammation",
+    "osseointegration stability",
+    "screw loosening overload",
+    "implant prosthesis cleanable design"
+  ],
+  "url": "https://dentcast.ir/notecast/episode-23"
 }
+
 ]
+
 
 
 
