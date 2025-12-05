@@ -2183,7 +2183,6 @@
   "caption": "تحلیل بالینی کیس با تماس باز پروگزیمال و بازسازی درد با نخ دندان بین دندان‌های ۴ و ۵.",
   "hashtags": ["#فوتوکست", "#تشخیص_کلینیکی", "#تماس_باز", "#درد_دندانی", "#پروتز"],
   "keywords": ["فوتوکست", "تماس باز دندانی", "درد پس از روکش", "کانتکت اشتباه", "تشخیص با نخ دندان", "پروتز دندان", "کلینیک پروتز"],
-  "image_url": "https://dentcast.ir/photocast/episode-1.png",
   "page_url": "https://dentcast.ir/photocast/episode-1"
 },
 {
@@ -2193,7 +2192,6 @@
   "caption": "توضیح علمی قانون BULL برای تنظیم تماس‌های اکلوژنی بدون حذف ارتفاع کاسپ‌های فانکشنال: Buccal Upper و Lower Lingual.",
   "hashtags": ["#فوتوکست", "#اکلوژن", "#تنظیم_اکلوژال", "#قانون_BULL", "#پروتز"],
   "keywords": ["قانون BULL", "تنظیم اکلوزال", "اکلوژن", "Premature Contacts", "کاسپ فانکشنال", "تراش اکلوژال", "پروتز دندانی"],
-  "image_url": "https://dentcast.ir/photocast/episode-2.png",
   "page_url": "https://dentcast.ir/photocast/episode-2"
 },
 {
@@ -2223,10 +2221,60 @@
     "ترمیم MOD وسیع",
     "اندودنتیکس در اطفال"
   ],
-  "image_url": "https://dentcast.ir/photocast/episode-3.png",
   "page_url": "https://dentcast.ir/photocast/episode-3"
+},
+{
+  "type": "dentcast_plus",
+  "video": "1",
+  "title": "نکات شخصی که کیفیت تراش را واقعاً بهتر می‌کنند",
+  "caption": "چند نکتهٔ عملی و تجربه‌محور که در کار کلینیکی باعث می‌شوند کیفیت ختم تراش روی دندان‌ها قابل‌پیش‌بینی‌تر، تمیزتر و استانداردتر شود.",
+  "hashtags": [
+    "#دنتکست_پلاس",
+    "#تراش_دندان",
+    "#پروتز",
+    "#کلینیک_پروتز",
+    "#روکش_دندان",
+    "#تجربه_کلینیکی"
+  ],
+  "keywords": [
+    "تراش دندان",
+    "پروتز ثابت",
+    "ختم تراش",
+    "دندانپزشکی زیبایی",
+    "preparation finish line",
+    "clinical tips",
+    "crown prep"
+  ],
+  "page_url": "https://dentcast.ir/dentcast-plus/video-1"
+},
+{
+  "type": "dentcast_plus",
+  "video": "2",
+  "title": "آخرین مرحله قبل از خداحافظی با بیمار — چک فرمیتوس بعد از تحویل روکش",
+  "caption": "چرا بعد از تحویل روکش، بررسی فرمیتوس ضروری است؟ کاغذ کاربن فقط تماس‌ها را نشان می‌دهد، اما فرمیتوس نشان می‌دهد آیا این تماس‌ها مخرب‌اند یا نه. پروتکل Touch–Tap–Feel تنها راه قطعی برای جلوگیری از لقی، شکست پرسلن و فشار مخرب روی اباتمنت است.",
+  "hashtags": [
+    "#دنتکست_پلاس",
+    "#فرمیتوس",
+    "#اکلوژن",
+    "#تحویل_روکش",
+    "#پروتز",
+    "#چکاپ_اکلوژنی",
+    "#Articulation"
+  ],
+  "keywords": [
+    "فرمیتوس",
+    "occlusal adjustment",
+    "تحویل روکش",
+    "post-op sensitivity",
+    "اکلوژن دندان",
+    "articulating paper",
+    "crown delivery protocol",
+    "occlusal trauma"
+  ],
+  "page_url": "https://dentcast.ir/dentcast-plus/video-2"
 }
 ]
+
 
 
 
