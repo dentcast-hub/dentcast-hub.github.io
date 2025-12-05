@@ -2175,8 +2175,59 @@
   "hashtags": ["#ایمپلنت", "#جراحی_ایمپلنت", "#روکش_دیجیتال", "#اسکن_دهانی", "#اوسئواینتگریشن"],
   "keywords": ["dental implant timeline", "osseointegration period", "digital crown workflow", "immediate provisional implant"],
   "page_url": "https://dentcast.ir/litecast/lite-CAST8"
+},
+{
+  "type": "photocast",
+  "photocast": "1",
+  "title": "بیمار با درد شدید در ناحیهٔ چپ فک پایین پس از روکش تازه",
+  "caption": "تحلیل بالینی کیس با تماس باز پروگزیمال و بازسازی درد با نخ دندان بین دندان‌های ۴ و ۵.",
+  "hashtags": ["#فوتوکست", "#تشخیص_کلینیکی", "#تماس_باز", "#درد_دندانی", "#پروتز"],
+  "keywords": ["فوتوکست", "تماس باز دندانی", "درد پس از روکش", "کانتکت اشتباه", "تشخیص با نخ دندان", "پروتز دندان", "کلینیک پروتز"],
+  "image_url": "https://dentcast.ir/photocast/episode-1.png",
+  "page_url": "https://dentcast.ir/photocast/episode-1"
+},
+{
+  "type": "photocast",
+  "photocast": "2",
+  "title": "قانون BULL در تنظیم اکلوزال",
+  "caption": "توضیح علمی قانون BULL برای تنظیم تماس‌های اکلوژنی بدون حذف ارتفاع کاسپ‌های فانکشنال: Buccal Upper و Lower Lingual.",
+  "hashtags": ["#فوتوکست", "#اکلوژن", "#تنظیم_اکلوژال", "#قانون_BULL", "#پروتز"],
+  "keywords": ["قانون BULL", "تنظیم اکلوزال", "اکلوژن", "Premature Contacts", "کاسپ فانکشنال", "تراش اکلوژال", "پروتز دندانی"],
+  "image_url": "https://dentcast.ir/photocast/episode-2.png",
+  "page_url": "https://dentcast.ir/photocast/episode-2"
+},
+{
+  "type": "photocast",
+  "photocast": "3",
+  "title": "دندان ۶ پایین در زیر ۱۸ سال — چه روکشی و چه زمانی؟",
+  "caption": "تحلیل تصمیم‌گیری در مورد روکش دندان ۶ دائمی در کودکان و نوجوانان؛ زمان مناسب، نوع روکش و معیارهای انتخاب بالینی.",
+  "hashtags": [
+    "#فوتوکست",
+    "#روکش_دندان",
+    "#دندان۶",
+    "#اطفال",
+    "#MIH",
+    "#پروتز",
+    "#اکلوژن",
+    "#اندودنتیکس"
+  ],
+  "keywords": [
+    "دندان ۶",
+    "روکش دندان اطفال",
+    "stainless steel crown",
+    "روکش زیرکونیا کودکان",
+    "MIH",
+    "Molars Restoration",
+    "کلینیک اطفال",
+    "پروتز نوجوانان",
+    "ترمیم MOD وسیع",
+    "اندودنتیکس در اطفال"
+  ],
+  "image_url": "https://dentcast.ir/photocast/episode-3.png",
+  "page_url": "https://dentcast.ir/photocast/episode-3"
 }
 ]
+
 
 
 
