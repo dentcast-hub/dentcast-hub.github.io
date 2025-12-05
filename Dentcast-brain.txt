@@ -1446,7 +1446,194 @@
   "caption": "تحلیل عمیق فرآیند تصمیم‌گیری برای دندان‌های تخریب شده؛ نگاه سیستمی، زیبایی و فانکشنال فراتر از پریو.",
   "hashtags": ["#کشیدن_دندان", "#نگهداری_دندان", "#طرح_درمان_جامع", "#پروتز"],
   "keywords": ["Extraction vs Preservation", "ارزیابی رستوریتیو", "ارزش استراتژیک دندان", "ریسک فاکتورها", "مسیر درمان"]
+},
+{
+  "type": "dentai",
+  "id": "dentai-1",
+  "title": "DentAI — انواع ترک مینایی: تشخیص و درمان ترمیمی",
+  "caption": "تمایز بین ترک‌های مینایی سنتی و ترک‌های داخلی (internal craze lines) و اهمیت تشخیص آنها در درمان‌های ترمیمی.",
+  "hashtags": ["ترمیمی", "مینای_دندان", "ترک_مینایی", "بیومیمتیک", "DentAI"],
+  "keywords": [
+    "craze lines",
+    "internal craze lines",
+    "ترک مینا",
+    "تشخیص ترک دندان",
+    "بزرگنمایی دندانپزشکی",
+    "مینای دندان",
+    "ترمیمی",
+    "بیومیمتیک",
+    "restorative dentistry"
+  ],
+  "page_url": "/dentai/dentai-1.html"
+},
+{
+  "type": "dentai",
+  "id": "dentai-2",
+  "title": "DentAI — درمان لکه‌های سفید مینایی با رزین اینفیلتریشن",
+  "caption": "بررسی علمی و بالینی تکنیک Resin Infiltration برای درمان لکه‌های سفید مینایی ناشی از فلوروزیس، MIH و دمینرالیزاسیون؛ یک روش کم‌تهاجمی با نتایج زیبایی قابل‌توجه.",
+  "hashtags": [
+    "ترمیمی",
+    "زیبایی",
+    "مینای_دندان",
+    "لکه_سفید",
+    "فلوروزیس",
+    "رزین_اینفیلتریشن",
+    "MIH",
+    "DentAI"
+  ],
+  "keywords": [
+    "resin infiltration",
+    "white spot lesions",
+    "TEGMA resin",
+    "15% hydrochloric acid",
+    "fluorosis",
+    "MIH",
+    "enamel hypoplasia",
+    "white lesion treatment",
+    "demineralization",
+    "esthetic dentistry",
+    "minimally invasive dentistry",
+    "ترمیمی",
+    "زیبایی"
+  ],
+  "page_url": "/dentai/dentai-2.html"
+},
+{
+  "type": "dentai",
+  "id": "dentai-3",
+  "title": "DentAI — مدیریت ضایعات پوسیدگی و استانداردسازی اصطلاحات",
+  "caption": "مروری بر توصیه‌های اجماعی ICCC درباره مدیریت ضایعات پوسیدگی، استانداردسازی اصطلاحات و معرفی رویکردهای مختلف برداشت و عدم‌برداشت پوسیدگی برای تصمیم‌گیری دقیق‌تر درمانی.",
+  "hashtags": [
+    "ترمیمی",
+    "پوسیدگی_دندان",
+    "مدیریت_پوسیدگی",
+    "ضایعه_پوسیدگی",
+    "ART",
+    "HallTechnique",
+    "درمان_محافظه‌کارانه",
+    "DentAI"
+  ],
+  "keywords": [
+    "carious lesion management",
+    "ICCC consensus",
+    "dental caries terminology",
+    "selective removal",
+    "nonselective removal",
+    "no removal",
+    "ART technique",
+    "Hall Technique",
+    "stepwise removal",
+    "firm dentine",
+    "soft dentine",
+    "nonrestorative cavity control",
+    "پوسیدگی دندان",
+    "برداشت پوسیدگی",
+    "ترمیمی",
+    "مدیریت ضایعه"
+  ],
+  "page_url": "/dentai/dentai-3.html"
+},
+{
+  "type": "dentai",
+  "id": "dentai-4",
+  "title": "DentAI — اثر محلول تشخیص پوسیدگی بر استحکام باندینگ",
+  "caption": "بررسی علمی تأثیر Caries Detector بر قدرت باندینگ به عاج؛ کاهش باند تنها زمانی رخ می‌دهد که محلول به‌طور کامل شسته نشود.",
+  "hashtags": [
+    "ترمیمی",
+    "باندینگ",
+    "بیومیمتیک",
+    "عاج",
+    "تشخیص_پوسیدگی",
+    "CariesDetector",
+    "قدرت_باند",
+    "DentAI"
+  ],
+  "keywords": [
+    "caries detector",
+    "propylene glycol",
+    "tensile bond strength",
+    "biomimetic dentistry",
+    "biomimetic bonding",
+    "dentin bonding",
+    "adhesive systems",
+    "Clearfil SE Bond",
+    "Single Bond",
+    "contaminated dentin",
+    "adequate rinsing",
+    "استحکام باند",
+    "باندینگ به عاج",
+    "بیومیمتیک"
+  ],
+  "page_url": "/dentai/dentai-4.html"
+},
+{
+  "type": "dentai",
+  "id": "dentai-5",
+  "title": "DentAI — مقایسه ۱۴ ساله باندینگ‌های Self-etch و Etch & Rinse",
+  "caption": "نتایج یک مطالعهٔ ۱۴ ساله نشان می‌دهد باندینگ سلف‌اچ بدون HEMA در ترمیم‌های NCCL عملکردی مشابه باندینگ سه‌مرحله‌ای استاندارد طلایی دارد.",
+  "hashtags": [
+    "ترمیمی",
+    "باندینگ",
+    "بیومیمتیک",
+    "سلف_اچ",
+    "اچ_اند_رینس",
+    "NCCL",
+    "دوام_ترمیم",
+    "DentAI"
+  ],
+  "keywords": [
+    "self-etch adhesive",
+    "etch and rinse",
+    "14-year clinical study",
+    "HEMA-free adhesive",
+    "adhesive longevity",
+    "non-carious cervical lesions",
+    "NCCLs",
+    "retention loss",
+    "marginal deterioration",
+    "bond durability",
+    "biomimetic bonding",
+    "adhesive dentistry",
+    "سلف اچ",
+    "اچ اند رینس",
+    "دوام باند",
+    "ترمیم سرویکال"
+  ],
+  "page_url": "/dentai/dentai-5.html"
+},
+{
+  "type": "dentai",
+  "id": "dentai-6",
+  "title": "DentAI — طبقه‌بندی کامپوزیت‌ها بر اساس اندازه ذرات فیلر",
+  "caption": "مروری بر انواع کامپوزیت‌های دندانی از ماکروفیل تا نانوهیبرید و نقش اندازه ذرات فیلر در استحکام، زیبایی و پولیش‌پذیری.",
+  "hashtags": [
+    "ترمیمی",
+    "کامپوزیت",
+    "مواد_دندانی",
+    "فیلر",
+    "نانو",
+    "ماکروفیل",
+    "نانوهیبرید",
+    "DentAI"
+  ],
+  "keywords": [
+    "dental composite",
+    "filler particle size",
+    "macrofilled",
+    "microfilled",
+    "hybrid composite",
+    "microhybrid",
+    "nanofilled",
+    "nanohybrid",
+    "polishability",
+    "mechanical properties",
+    "composite classification",
+    "مواد ترمیمی",
+    "کامپوزیت دندانی",
+    "اندازه ذرات"
+  ],
+  "page_url": "/dentai/dentai-6.html"
 }
-
 ]
+
 
