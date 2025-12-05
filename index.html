@@ -17,46 +17,87 @@
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
   
     <style>
+  /* جعبه اصلی فیلتر سرچ سراسری */
   .dc-global-filter-box {
     background: #ffffff;
-    border: 1px solid #e2e6f0;
-    border-radius: 18px;
-    padding: 20px;
-    margin: 40px 0 30px 0;
-    box-shadow: 0 4px 16px rgba(11, 95, 255, 0.08);
+    border-radius: 22px;
+    padding: 22px;
+    margin: 40px 0 32px;
+    border: 1px solid #e2e6f3;
+    box-shadow: 0 8px 24px rgba(11, 95, 255, 0.05);
   }
 
   .dc-global-filter-title {
     font-weight: 700;
     font-size: 17px;
     color: #0b5fff;
-    margin-bottom: 12px;
     text-align: center;
+    margin-bottom: 14px;
   }
 
+  /* باکس سرچ */
+  .dc-search-input {
+    width: 100%;
+    padding: 11px 14px;
+    border-radius: 14px;
+    border: 1px solid #d5d9ea;
+    background: #f7f8fc;
+    font-size: 14px;
+    outline: none;
+    margin-bottom: 16px;
+  }
+
+  .dc-search-input::placeholder {
+    color: #9aa1b3;
+    font-size: 13px;
+  }
+
+  /* لیست دکمه‌های فیلتر */
   .dc-filter-list {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 8px;
     justify-content: center;
   }
 
   .dc-filter-btn {
-    padding: 10px 16px;
-    border-radius: 14px;
-    border: 1.5px solid #d3daf3;
-    background: #f7f9ff;
+    padding: 7px 16px;
+    border-radius: 999px;
+    border: 1px solid #d3daf1;
+    background: #eef3ff;
     color: #0b1d40;
-    font-size: 14px;
+    font-size: 13px;
     cursor: pointer;
-    transition: 0.25s;
+    transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    white-space: nowrap;
   }
 
   .dc-filter-btn.active {
     background: #0b5fff;
     color: #ffffff;
     border-color: #0b5fff;
-    box-shadow: 0px 4px 12px rgba(11, 95, 255, 0.25);
+    box-shadow: 0 4px 14px rgba(11, 95, 255, 0.3);
+  }
+
+  /* باکس نتایج */
+  .dc-results-box {
+    margin-top: 18px;
+    padding: 14px 16px;
+    border-radius: 16px;
+    background: #f7f9ff;
+    border: 1px solid #e2e6f3;
+    display: none;
+  }
+
+  .dc-result-item {
+    padding: 8px 0;
+    border-bottom: 1px solid #e3e6f2;
+    font-size: 14px;
+    color: #0b1d40;
+  }
+
+  .dc-result-item:last-child {
+    border-bottom: none;
   }
     :root {
       /* --- پالت نهایی: صمیمی اما لوکس --- */
@@ -740,10 +781,17 @@ background: #0b5fff;
       </p>
       
     </div>
+<!-- این باکس رو بگذار بالای فوتر، داخل main/container اصلی -->
 <div class="dc-global-filter-box">
-  <div class="dc-global-filter-title">
-    فیلتر جستجوی سراسری دنت‌کست
-  </div>
+
+  <div class="dc-global-filter-title">فیلتر جستجوی سراسری دنت‌کست</div>
+
+  <input
+    type="text"
+    class="dc-search-input"
+    id="dcSearch"
+    placeholder="جستجو در همهٔ بخش‌های دنت‌کست..."
+  >
 
   <div class="dc-filter-list">
     <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
@@ -751,11 +799,13 @@ background: #0b5fff;
     <button class="dc-filter-btn active" data-type="insight">نکات کلینیکی</button>
     <button class="dc-filter-btn active" data-type="litecast">لایت‌کست</button>
     <button class="dc-filter-btn active" data-type="photocast">فوتوکست</button>
-    <button class="dc-filter-btn active" data-type="dentcastplus">ویدیوها</button>
-    <button class="dc-filter-btn active" data-type="ai">مقالات</button>
+    <button class="dc-filter-btn active" data-type="video">ویدیوها</button>
+    <button class="dc-filter-btn active" data-type="article">مقالات</button>
   </div>
-</div>
-    <footer>
+
+  <div class="dc-results-box" id="dcResults"></div>
+
+<script    <footer>
       اهواز – کیانپارس، مطب دکتر فواد شهابیان<br>
       تلفن: 33380090-061 &nbsp; | &nbsp; DentCast © 1404
 
@@ -865,12 +915,35 @@ background: #0b5fff;
     }
   </script>
 
-  <script>
-  document.querySelectorAll(".dc-filter-btn").forEach(btn => {
+<script>
+  const dcFilters = document.querySelectorAll(".dc-filter-btn");
+  const dcSearchInput = document.getElementById("dcSearch");
+  const dcResultsBox = document.getElementById("dcResults");
+
+  // روشن/خاموش کردن هر دسته
+  dcFilters.forEach(btn => {
     btn.addEventListener("click", () => {
       btn.classList.toggle("active");
+      // بعداً اینجا روی دیتابیس فیلتر نوع رو اعمال می‌کنیم
     });
   });
-  </script>
+
+  // سرچ نمایشی – فقط برای تست UI
+  dcSearchInput.addEventListener("input", () => {
+    const q = dcSearchInput.value.trim();
+
+    if (q.length < 2) {
+      dcResultsBox.style.display = "none";
+      dcResultsBox.innerHTML = "";
+      return;
+    }
+
+    dcResultsBox.style.display = "block";
+    dcResultsBox.innerHTML = `
+      <div class="dc-result-item">نتیجهٔ نمونه برای «${q}» (فقط تست ظاهر)</div>
+      <div class="dc-result-item">بعداً اینجا لیست واقعی از JSON میاد</div>
+    `;
+  });
+</script>
 </body>
 </html>
