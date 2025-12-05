@@ -1751,8 +1751,106 @@
     "باندینگ بیومیمتیک"
   ],
   "page_url": "https://dentcast.ir/insight/insight-4"
+},
+{
+  "type": "clinical",
+  "id": "clinical-5",
+  "title": "چالش تغییر رنگ روکش‌های سرامیکی پس از سمان دائم",
+  "caption": "بررسی علت تفاوت رنگ روکش‌های سرامیکی بین سمان موقت و دائم، و راهکارهای انتخاب سمان برای حفظ نتیجهٔ زیبایی نهایی.",
+  "hashtags": [
+    "کلینیکال",
+    "پروتز",
+    "سرامیک",
+    "سمان",
+    "زیبایی",
+    "تغییر_رنگ",
+    "زیرکونیا"
+  ],
+  "keywords": [
+    "ceramic restoration color change",
+    "resin cement shade",
+    "temporary vs permanent cement",
+    "zirconia translucency",
+    "cement opacity",
+    "esthetic outcome",
+    "shade matching",
+    "zirconia crowns",
+    "luting agent selection",
+    "تغییر رنگ سمان",
+    "سمان رزینی",
+    "سمان زینک فسفات",
+    "نتیجه زیبایی"
+  ],
+  "page_url": "https://dentcast.ir/insight/insight-5"
+},
+{
+  "type": "clinical",
+  "id": "clinical-6",
+  "title": "تهیهٔ فضا در بیمار فاقد استاپ خلفی — تحلیل تا تصمیم‌گیری",
+  "caption": "فرایند سه‌مرحله‌ای تحلیل، تصمیم‌گیری و اصلاح فردبه‌فرد در بیمارانی که استاپ خلفی خود را از دست داده‌اند و دچار کاهش VDO و برهم‌ریختگی پلان اکلوزال شده‌اند.",
+  "hashtags": [
+    "کلینیکال",
+    "پروتز",
+    "اکلوژن",
+    "VDO",
+    "فضای_ریستوریتیو",
+    "استاپ_خلفی",
+    "سوپرااراپشن",
+    "پلان_اکلوژن"
+  ],
+  "keywords": [
+    "loss of posterior support",
+    "restorative space",
+    "vertical dimension loss",
+    "VDO assessment",
+    "occlusal plane analysis",
+    "restorative dentistry",
+    "supereruption",
+    "space gaining",
+    "full mouth rehabilitation",
+    "anterior wear",
+    "occlusal collapse",
+    "diagnostic simulation",
+    "tooth-by-tooth analysis",
+    "case by case occlusal planning"
+  ],
+  "page_url": "https://dentcast.ir/insight/insight-6"
+},
+{
+  "type": "clinical",
+  "id": "clinical-7",
+  "title": "چرا این دندان امکان بازسازی دائمی ندارد؟ تحلیل ساختاری، پریودنتال و درمانی",
+  "caption": "بررسی دقیق علل غیرقابل‌درمان بودن یک مولر با پوسیدگی عمیق، از دست رفتن BW، خطر درگیری فورکا، ناتوانی در ایجاد فرول و محدودیت‌های RCT — و اینکه چرا ایمپلنت انتخاب منطقی و پایدار است.",
+  "hashtags": [
+    "کلینیکال",
+    "پروتز",
+    "ایمپلنت",
+    "بیولوژیک_ویث",
+    "فورکا",
+    "فرول",
+    "پریودنتال",
+    "اندو",
+    "پوسیدگی_عمیق"
+  ],
+  "keywords": [
+    "biologic width violation",
+    "furcation involvement risk",
+    "deep caries",
+    "non-restorable tooth",
+    "ferrule effect",
+    "periodontal compromise",
+    "endodontic retreatment",
+    "molar reconstruction limits",
+    "prosthodontic decision making",
+    "extraction and implant",
+    "structural loss",
+    "occlusal stability",
+    "predictable treatment planning"
+  ],
+  "page_url": "https://dentcast.ir/insight/insight-7"
 }
 ]
+
 
 
 
