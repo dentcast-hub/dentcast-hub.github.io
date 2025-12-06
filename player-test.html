@@ -15,9 +15,6 @@
       --blue: #0b5fff;
       --blue-soft: #1b3b8f;
       --bg: #020617;
-      --bg2: #020b1f;
-      --card: #071c3b;
-      --card2: #0b2146;
       --text-main: #e7eaf1;
       --text-sub: #9aa1b3;
     }
@@ -29,7 +26,7 @@
       justify-content: center;
       align-items: flex-start;
       background: radial-gradient(circle at top, #082f49, #020617 60%);
-      font-family: "Vazirmatn", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: "Vazirmatn", sans-serif;
       color: var(--text-main);
       padding: 24px 8px;
       box-sizing: border-box;
@@ -40,100 +37,63 @@
       max-width: 480px;
       background: linear-gradient(145deg, rgba(5,21,52,0.95), rgba(3,10,30,0.98));
       border-radius: 24px;
-      box-shadow: 0 24px 60px rgba(0,0,0,0.6);
-      border: 1px solid rgba(11,95,255,0.4);
       overflow: hidden;
+      border: 1px solid rgba(11,95,255,0.4);
     }
 
+    /* ---------------- HEADER ---------------- */
     .dc-header {
       display: flex;
       padding: 16px;
       gap: 12px;
-      background: radial-gradient(circle at top left, rgba(11,95,255,0.35), transparent 55%);
-    }
-
-    .dc-cover {
-      width: 72px;
-      height: 72px;
-      border-radius: 16px;
-      overflow: hidden;
-      flex-shrink: 0;
-      border: 1px solid rgba(255,255,255,0.16);
     }
 
     .dc-cover img {
-      width: 100%;
-      height: 100%;
+      width: 72px;
+      height: 72px;
+      border-radius: 16px;
       object-fit: cover;
-      display: block;
-    }
-
-    .dc-head-text {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      min-width: 0;
-    }
-
-    .dc-show-name {
-      font-size: 13px;
-      opacity: 0.8;
-      margin-bottom: 4px;
+      border: 1px solid rgba(255,255,255,0.2);
     }
 
     .dc-episode-title {
       font-size: 15px;
       font-weight: 600;
-      line-height: 1.35;
-      max-height: 2.7em;
-      overflow: hidden;
-      text-overflow: ellipsis;
       cursor: pointer;
     }
 
-    .dc-episode-desc {
+    #dc-current-desc {
+      display: none;
       margin-top: 6px;
       font-size: 12px;
-      color: var(--text-sub);
+      color: #000;
+      background: #fff;
+      padding: 10px;
+      border-radius: 10px;
       max-height: 150px;
       overflow-y: auto;
-      display: none;
     }
 
-    .dc-episode-desc::-webkit-scrollbar {
-      width: 4px;
-    }
-    .dc-episode-desc::-webkit-scrollbar-thumb {
-      background: rgba(148,163,184,0.6);
-      border-radius: 999px;
-    }
-
+    /* ---------------- PLAYER ---------------- */
     .dc-main-player {
-      padding: 12px 16px 8px;
+      padding: 12px 16px;
       border-top: 1px solid rgba(255,255,255,0.08);
       border-bottom: 1px solid rgba(255,255,255,0.08);
-      background: linear-gradient(180deg, rgba(3,13,35,0.95), rgba(4,16,42,0.98));
     }
 
     .dc-controls-row {
       display: flex;
-      align-items: center;
       justify-content: space-between;
+      align-items: center;
       gap: 8px;
-      margin-bottom: 10px;
     }
 
     .dc-play-btn {
       width: 44px;
       height: 44px;
-      border-radius: 999px;
+      border-radius: 50%;
+      background: var(--blue);
       border: none;
-      background: radial-gradient(circle at 30% 20%, #38bdf8, #0b5fff 55%, #1d4ed8 100%);
-      box-shadow: 0 10px 25px rgba(37,99,235,0.65);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
       color: white;
       font-size: 22px;
     }
@@ -141,171 +101,107 @@
     .dc-jump-btn {
       width: 40px;
       height: 40px;
-      border-radius: 999px;
-      border: 1px solid rgba(148,163,184,0.6);
-      background: radial-gradient(circle at top, #0b2146, #020617);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 13px;
+      border-radius: 50%;
+      background: #0b2146;
+      border: 1px solid rgba(255,255,255,0.3);
       color: var(--text-sub);
+      cursor: pointer;
     }
 
     .dc-speed-box {
       display: flex;
       align-items: center;
       gap: 4px;
-      background: rgba(15,23,42,0.95);
-      border-radius: 999px;
-      padding: 4px 8px;
-      border: 1px solid rgba(148,163,184,0.5);
-    }
-
-    .dc-speed-btn {
-      width: 22px;
-      height: 22px;
-      border-radius: 999px;
-      border: none;
-      background: rgba(15,23,42,0.9);
-      color: var(--text-sub);
-      font-size: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-    }
-
-    .dc-speed-slider {
-      flex: 1;
-      accent-color: var(--blue);
-    }
-
-    .dc-speed-label {
-      font-size: 12px;
-      min-width: 30px;
-      text-align: center;
     }
 
     .dc-range {
       width: 100%;
-      margin: 6px 0;
-      accent-color: var(--blue);
+      margin-top: 10px;
     }
 
-    .dc-time-row {
-      display: flex;
-      justify-content: space-between;
-      font-size: 12px;
-      color: var(--text-sub);
-    }
-
-    .dc-sort-row {
-      padding: 8px 14px 0;
-      display: flex;
-      justify-content: flex-start;
-    }
-
+    /* ---------------- SORT BUTTON ---------------- */
     #dc-sort-btn {
+      margin: 8px 14px;
       padding: 6px 14px;
       border-radius: 999px;
-      border: none;
       background: var(--blue);
+      border: none;
       color: white;
-      font-size: 12px;
       cursor: pointer;
     }
 
+    /* ---------------- EPISODE LIST ---------------- */
     .dc-list {
       max-height: 280px;
       overflow-y: auto;
-      background: radial-gradient(circle at top, #020b1f, #020617 55%);
     }
 
     .dc-episode-item {
+      padding: 12px 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .dc-episode-item-header {
       display: flex;
-      flex-direction: column;  /* ADDED */
-      text-align: left;        /* ADDED */
-      direction: ltr;          /* ADDED */
-      padding: 10px 14px;
-      font-size: 13px;
-      border-bottom: 1px solid rgba(15,23,42,0.95);
+      justify-content: space-between;
+      align-items: center;
       cursor: pointer;
-      transition: background 0.15s ease;
-    }
-
-    .dc-episode-item:hover {
-      background: linear-gradient(90deg, rgba(11,95,255,0.24), transparent);
-    }
-
-    .dc-episode-item.active {
-      background: linear-gradient(90deg, rgba(11,95,255,0.35), rgba(15,23,42,0.9));
     }
 
     .dc-ep-title {
+      font-size: 13px;
+      color: var(--text-main);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      margin-bottom: 4px;
-      text-align: left;  /* ADDED */
     }
 
-    .dc-ep-meta {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      color: var(--text-sub);
-      text-align: left; /* ADDED */
-      direction: ltr;   /* ADDED */
+    .dc-info-btn {
+      font-size: 17px;
+      color: var(--blue);
+      cursor: pointer;
+      padding-left: 6px;
+      padding-right: 6px;
     }
 
-    /* ADDED: توضیح بازشوندهٔ زیر هر اپیزود */
-    .dc-ep-desc-row {
+    .dc-ep-desc {
       display: none;
-      margin-top: 6px;
+      margin-top: 8px;
+      background: #fff;
+      color: #000;
+      padding: 10px;
+      border-radius: 10px;
       font-size: 12px;
-      color: var(--text-sub);
-      direction: ltr;
-      text-align: left;
-      border-left: 2px solid rgba(255,255,255,0.1);
-      padding-left: 8px;
-      max-height: 180px;
-      overflow-y: auto;
+      line-height: 1.6;
     }
-
   </style>
 </head>
 
 <body>
 <div class="dc-wrapper">
+
+  <!-- HEADER -->
   <div class="dc-header">
     <div class="dc-cover">
-      <img id="dc-cover-img" src="https://assets.pippa.io/shows/624b5545ecc0e600134ea0df/show-cover.jpg">
+      <img src="https://assets.pippa.io/shows/624b5545ecc0e600134ea0df/show-cover.jpg">
     </div>
-    <div class="dc-head-text">
-      <div class="dc-show-name">Dentcast</div>
-      <div class="dc-episode-title" id="dc-current-title">در حال بارگذاری اپیزودها...</div>
-      <div class="dc-episode-desc" id="dc-current-desc"></div>
+    <div>
+      <div id="dc-current-title">در حال بارگذاری...</div>
+      <div id="dc-current-desc"></div>
     </div>
   </div>
 
+  <!-- PLAYER -->
   <div class="dc-main-player">
     <audio id="dc-audio"></audio>
 
     <div class="dc-controls-row">
-      <button class="dc-jump-btn" id="dc-back">⟲ 15s</button>
-      <button class="dc-play-btn" id="dc-play">▶</button>
-      <button class="dc-jump-btn" id="dc-forward">15s ⟳</button>
-
-      <div class="dc-speed-box">
-        <button class="dc-speed-btn" id="dc-speed-minus">−</button>
-        <input type="range" min="0.75" max="2" step="0.25" value="1" class="dc-speed-slider" id="dc-speed-slider">
-        <div class="dc-speed-label" id="dc-speed-label">1x</div>
-        <button class="dc-speed-btn" id="dc-speed-plus">+</button>
-      </div>
+      <button id="dc-back" class="dc-jump-btn">⟲ 15s</button>
+      <button id="dc-play" class="dc-play-btn">▶</button>
+      <button id="dc-forward" class="dc-jump-btn">15s ⟳</button>
     </div>
 
-    <input type="range" min="0" max="100" value="0" class="dc-range" id="dc-seek">
+    <input id="dc-seek" type="range" min="0" max="100" value="0" class="dc-range">
 
     <div class="dc-time-row">
       <span id="dc-time-current">00:00</span>
@@ -313,13 +209,11 @@
     </div>
   </div>
 
-  <div class="dc-sort-row">
-    <button id="dc-sort-btn">مرتب‌سازی: جدید → قدیم</button>
-  </div>
+  <button id="dc-sort-btn">مرتب‌سازی: جدید → قدیم</button>
 
+  <!-- EPISODE LIST -->
   <div class="dc-list" id="dc-list"></div>
 
-  
 </div>
 
 <script>
@@ -327,82 +221,76 @@ const JSON_URL = "dentcast.json";
 
 const audio = document.getElementById("dc-audio");
 const listEl = document.getElementById("dc-list");
-const currentTitleEl = document.getElementById("dc-current-title");
-const currentDescEl = document.getElementById("dc-current-desc");
-const sortBtn = document.getElementById("dc-sort-btn");
-
+const titleEl = document.getElementById("dc-current-title");
+const descEl  = document.getElementById("dc-current-desc");
 let episodesRaw = [];
 let episodes = [];
-let currentIndex = 0;
 let sortDescending = true;
+let currentIndex = 0;
 
 function loadEpisode(i){
   const ep = episodes[i];
   currentIndex = i;
-
   audio.src = ep.audio_url;
-  currentTitleEl.textContent = ep.title;
-  currentDescEl.innerHTML = ep.description || "";
-  currentDescEl.style.display = "none";
-
-  [...listEl.children].forEach((el, idx)=>{
-    el.classList.toggle("active", idx===i);
-  });
+  titleEl.textContent = ep.title;
+  descEl.innerHTML = ep.description || "";
+  descEl.style.display = "none";
 }
 
-function createEpisodeRow(ep, index){
+function createRow(ep, i){
   const row = document.createElement("div");
   row.className = "dc-episode-item";
+
+  const header = document.createElement("div");
+  header.className = "dc-episode-item-header";
 
   const title = document.createElement("div");
   title.className = "dc-ep-title";
   title.textContent = ep.title;
 
-  const meta = document.createElement("div");
-  meta.className = "dc-ep-meta";
-  meta.innerHTML = `
-    <span>${ep.duration || ""}</span>
-    <span class="dc-ep-dot"></span>
-    <span>#${ep.episode || ""}</span>
-  `;
+  const info = document.createElement("span");
+  info.className = "dc-info-btn";
+  info.textContent = "🛈";
 
   const desc = document.createElement("div");
-  desc.className = "dc-ep-desc-row";
+  desc.className = "dc-ep-desc";
   desc.innerHTML = ep.description || "";
 
-  row.appendChild(title);
-  row.appendChild(meta);
-  row.appendChild(desc);
-
-  row.addEventListener("click", ()=>{
-    desc.style.display = desc.style.display==="block" ? "none" : "block";
+  header.addEventListener("click", () => {
+    loadEpisode(i);
+    audio.play();
   });
 
+  info.addEventListener("click", (e) => {
+    e.stopPropagation();
+    desc.style.display = desc.style.display === "block" ? "none" : "block";
+  });
+
+  header.appendChild(title);
+  header.appendChild(info);
+  row.appendChild(header);
+  row.appendChild(desc);
   return row;
 }
 
 function renderList(){
   listEl.innerHTML = "";
-  episodes.forEach((ep, i)=>{
-    listEl.appendChild(createEpisodeRow(ep, i));
+  episodes.forEach((ep,i)=>{
+    listEl.appendChild(createRow(ep,i));
   });
 }
 
 function applySorting(){
   episodes = [...episodesRaw].sort((a,b)=>{
-    let A = parseFloat(a.episode);
-    let B = parseFloat(b.episode);
-    return sortDescending ? B-A : A-B;
+    return sortDescending ? b.episode - a.episode : a.episode - b.episode;
   });
   renderList();
 }
 
-sortBtn.addEventListener("click", ()=>{
+document.getElementById("dc-sort-btn").onclick = ()=>{
   sortDescending = !sortDescending;
-  sortBtn.textContent = sortDescending ? "مرتب‌سازی: جدید → قدیم" : "مرتب‌سازی: قدیم → جدید";
   applySorting();
-  loadEpisode(0);
-});
+};
 
 fetch(JSON_URL)
 .then(res=>res.json())
