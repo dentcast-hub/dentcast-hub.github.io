@@ -109,6 +109,19 @@
       cursor: pointer;
     }
 
+    /* ▼▼▼ دکمه انتخاب سرعت ▼▼▼ */
+    .dc-speed-btn {
+      padding: 6px 10px;
+      border-radius: 10px;
+      background: #0b2146;
+      border: 1px solid rgba(255,255,255,0.3);
+      color: #fff;
+      cursor: pointer;
+      font-size: 12px;
+      margin-right: 8px;
+    }
+    /* ▲▲▲ دکمه انتخاب سرعت ▲▲▲ */
+
     .dc-range {
       width: 100%;
       margin-top: 10px;
@@ -139,7 +152,10 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      cursor: pointer;
+
+      /* ✔ لیست اپیزود چپ‌چین شد */
+      direction: ltr;
+      text-align: left;
     }
 
     .dc-ep-title {
@@ -148,6 +164,10 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+
+      /* ✔ چپ‌چین برای متن انگلیسی */
+      direction: ltr;
+      text-align: left;
     }
 
     .dc-info-btn {
@@ -156,9 +176,11 @@
       cursor: pointer;
       padding-left: 6px;
       padding-right: 6px;
+
+      direction: ltr;
     }
 
-    /* ✔ توضیح راست‌چین شد */
+    /* توضیح RTL */
     .dc-ep-desc {
       display: none;
       margin-top: 8px;
@@ -193,9 +215,16 @@
     <audio id="dc-audio"></audio>
 
     <div class="dc-controls-row">
+
       <button id="dc-back" class="dc-jump-btn">⟲ 15s</button>
+
       <button id="dc-play" class="dc-play-btn">▶</button>
+
       <button id="dc-forward" class="dc-jump-btn">15s ⟳</button>
+
+      <!-- دکمه سرعت -->
+      <button id="dc-speed" class="dc-speed-btn">1x</button>
+
     </div>
 
     <input id="dc-seek" type="range" min="0" max="100" value="0" class="dc-range">
@@ -208,7 +237,6 @@
 
   <button id="dc-sort-btn">مرتب‌سازی: جدید → قدیم</button>
 
-  <!-- EPISODE LIST -->
   <div class="dc-list" id="dc-list"></div>
 
 </div>
@@ -222,11 +250,21 @@ const titleEl = document.getElementById("dc-current-title");
 const descEl  = document.getElementById("dc-current-desc");
 const playBtn = document.getElementById("dc-play");
 const seek = document.getElementById("dc-seek");
+const speedBtn = document.getElementById("dc-speed");
 
 let episodesRaw = [];
 let episodes = [];
 let sortDescending = true;
 let currentIndex = 0;
+
+let speeds = [1, 1.25, 1.5, 1.75, 2];
+let speedIndex = 0;
+
+speedBtn.addEventListener("click", () => {
+  speedIndex = (speedIndex + 1) % speeds.length;
+  audio.playbackRate = speeds[speedIndex];
+  speedBtn.textContent = speeds[speedIndex] + "x";
+});
 
 function loadEpisode(i){
   const ep = episodes[i];
