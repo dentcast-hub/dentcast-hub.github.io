@@ -80,12 +80,14 @@
   }
 
   /* کنترل‌ها */
-  .dc-controls-row {
-    display: flex;
-    align-items: center;
-    gap: 6px;           /* ↓ فاصله کمتر */
-    direction: ltr;
-  }
+.dc-controls-row {
+  display: flex;
+  justify-content: center;   /* ⭐ دکمه‌ها دقیقاً وسط */
+  align-items: center;
+  gap: 14px;                 /* فاصله حرفه‌ای */
+  width: 100%;
+  direction: ltr;            /* ترتیب دکمه‌ها درست */
+}
 
   .dc-play-btn {
     width: 40px;        /* ↓ کمتر */
@@ -127,13 +129,26 @@
     direction: ltr;
   }
 
-  .dc-time-row {
-    font-size: 11px;    /* ↓ ریزتر */
-    margin-top: 2px;
-    display: flex;
-    justify-content: space-between;
-  }
+  
+.dc-time-row {
+  display: flex;
+  justify-content: flex-end;   /* ⭐ راست‌چین */
+  align-items: center;
+  gap: 8px;                    /* فاصله بین عناصر */
+  font-size: 12px;
+  color: #9aa1b3;
+  direction: ltr;               /* اعداد زمان صحیح نمایش داده شوند */
+}
 
+.dc-time-row span::after {
+  content: ""; 
+}
+
+.dc-time-row span:first-child::after {
+  content: " | ";               /* ⭐ خط وسط */
+  padding: 0 4px;
+  color: #9aa1b3;
+}
   /* ---------------- SORT BUTTON ---------------- */
   #dc-sort-btn {
     margin: 6px 12px;   /* ↓ کمی کمتر */
