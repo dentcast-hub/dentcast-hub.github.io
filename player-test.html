@@ -141,15 +141,18 @@
     color: #9aa1b3;
   }
 
-  /* SEARCH BOX */
+  /* SEARCH BOX – خاکستری شیشه‌ای */
   .dc-search-box {
     margin: 6px 12px 4px;
     padding: 12px;
     border-radius: 16px;
-    background: #eceff1;           /* 🔹 خاکستری نرم */
+    background: rgba(236,239,241,0.80); /* خاکستری نیمه‌شفاف */
     color: #1a1a1a;
-    border: 2px solid #f4c534;     /* 🔹 فقط بوردر زرد */
+    border: 2px solid #f4c534;         /* فقط بوردر زرد */
     box-sizing: border-box;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    overflow: hidden;                   /* نذاره چیزی از کادر بزنه بیرون */
   }
 
   .dc-search-header {
@@ -167,7 +170,7 @@
     padding: 2px 6px;
     border-radius: 6px;
     background: rgba(0,0,0,0.15);
-    display: none;                 /* 🔹 اول مخفی */
+    display: none;                 /* اول مخفی */
   }
 
   .dc-search-input {
@@ -272,7 +275,7 @@
   .dc-ep-desc {
     display: none;
     margin-top: 6px;
-    background: #fff;
+    background: #fff;   /* توضیحات سفید ساده */
     color: #000;
     padding: 8px;
     border-radius: 8px;
@@ -380,7 +383,7 @@ function loadEpisode(i){
   playBtn.textContent = "▶";
 }
 
-/* ---------------- EPISODE ROW ---------------- */
+/* ---------------- EPISODE ROW (لیست اصلی) ---------------- */
 function createRow(ep, i){
   const row = document.createElement("div");
   row.className = "dc-episode-item";
@@ -409,9 +412,10 @@ function createRow(ep, i){
     });
   });
 
+  /* توضیحات زیر همون اپیزود باز/بسته میشه */
   info.addEventListener("click", (e) => {
     e.stopPropagation();
-    desc.style.display = desc.style.display === "block" ? "none" : "block";
+    desc.style.display = (desc.style.display === "block") ? "none" : "block";
   });
 
   header.appendChild(title);
@@ -489,24 +493,18 @@ function normalizeText(s) {
 closeSearchBtn.addEventListener("click", () => {
   searchInput.value = "";
   searchResults.innerHTML = "";
-  closeSearchBtn.style.display = "none";   // 🔹 بعد از پاک شدن مخفی شود
+  closeSearchBtn.style.display = "none";
 });
 
-/* info button in search */
-function createSearchInfoButton(epIndex, fullEp) {
+/* info button in search – توضیح زیر خود نتیجه */
+function createSearchInfoButton(descDiv) {
   const infoBtn = document.createElement("span");
   infoBtn.className = "dc-search-info-btn";
   infoBtn.textContent = "🛈";
 
   infoBtn.addEventListener("click", (e) => {
     e.stopPropagation();
-    // 🔹 فقط زیر عنوان باز/بسته شود؛ صفحه نپرد بالا
-    if (descEl.style.display === "block") {
-      descEl.style.display = "none";
-    } else {
-      descEl.innerHTML = fullEp.description || "";
-      descEl.style.display = "block";
-    }
+    descDiv.style.display = (descDiv.style.display === "block") ? "none" : "block";
   });
 
   return infoBtn;
@@ -517,7 +515,6 @@ function handleSearch() {
   searchResults.innerHTML = "";
 
   if (!q) {
-    // اگر خالی شد، نتایج و ضربدر رو ببند
     closeSearchBtn.style.display = "none";
     return;
   }
@@ -552,8 +549,6 @@ function handleSearch() {
     const box = document.createElement("div");
     box.className = "dc-search-item";
 
-    box.appendChild(createSearchInfoButton(epIndex, fullEp));
-
     const t = document.createElement("div");
     t.className = "dc-search-item-title";
     t.textContent = `اپیزود ${epNo} — ${item.title || fullEp.title || ""}`;
@@ -562,8 +557,16 @@ function handleSearch() {
     c.className = "dc-search-item-caption";
     c.textContent = item.caption || fullEp.description || "";
 
+    /* توضیح زیر نتیجه سرچ */
+    const desc = document.createElement("div");
+    desc.className = "dc-ep-desc";
+    desc.innerHTML = fullEp.description || "";
+
+    const infoBtn = createSearchInfoButton(desc);
+    box.appendChild(infoBtn);
     box.appendChild(t);
     box.appendChild(c);
+    box.appendChild(desc);
 
     box.addEventListener("click", () => {
       loadEpisode(epIndex);
@@ -572,14 +575,13 @@ function handleSearch() {
         audio.play();
         playBtn.textContent = "⏸";
       });
-      // دیگه اسکرول نمی‌کنیم
     });
 
     searchResults.appendChild(box);
   });
 }
 
-/* 🔹 اینجا هم نمایش/مخفی شدن ضربدر + سرچ */
+/* نمایش/مخفی شدن ضربدر و هندل سرچ */
 searchInput.addEventListener("input", () => {
   if (searchInput.value.trim().length > 0) {
     closeSearchBtn.style.display = "inline-block";
