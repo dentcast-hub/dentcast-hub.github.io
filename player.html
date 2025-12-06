@@ -109,7 +109,6 @@
       cursor: pointer;
     }
 
-    /* ▼▼▼ دکمه انتخاب سرعت ▼▼▼ */
     .dc-speed-btn {
       padding: 6px 10px;
       border-radius: 10px;
@@ -120,7 +119,6 @@
       font-size: 12px;
       margin-right: 8px;
     }
-    /* ▲▲▲ دکمه انتخاب سرعت ▲▲▲ */
 
     .dc-range {
       width: 100%;
@@ -137,7 +135,6 @@
       cursor: pointer;
     }
 
-    /* ---------------- EPISODE LIST ---------------- */
     .dc-list {
       max-height: 280px;
       overflow-y: auto;
@@ -152,8 +149,6 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-
-      /* ✔ لیست اپیزود چپ‌چین شد */
       direction: ltr;
       text-align: left;
     }
@@ -164,8 +159,6 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-
-      /* ✔ چپ‌چین برای متن انگلیسی */
       direction: ltr;
       text-align: left;
     }
@@ -176,11 +169,9 @@
       cursor: pointer;
       padding-left: 6px;
       padding-right: 6px;
-
       direction: ltr;
     }
 
-    /* توضیح RTL */
     .dc-ep-desc {
       display: none;
       margin-top: 8px;
@@ -216,14 +207,17 @@
 
     <div class="dc-controls-row">
 
-      <button id="dc-back" class="dc-jump-btn">⟲ 15s</button>
-
+      <!-- ✔ پلی اولین دکمه -->
       <button id="dc-play" class="dc-play-btn">▶</button>
 
-      <button id="dc-forward" class="dc-jump-btn">15s ⟳</button>
-
-      <!-- دکمه سرعت -->
+      <!-- ✔ دکمه سرعت دوم -->
       <button id="dc-speed" class="dc-speed-btn">1x</button>
+
+      <!-- ✔ 15 ثانیه عقب -->
+      <button id="dc-back" class="dc-jump-btn">⟲ 15s</button>
+
+      <!-- ✔ 15 ثانیه جلو -->
+      <button id="dc-forward" class="dc-jump-btn">15s ⟳</button>
 
     </div>
 
@@ -266,6 +260,7 @@ speedBtn.addEventListener("click", () => {
   speedBtn.textContent = speeds[speedIndex] + "x";
 });
 
+// ---------- LOAD EP ----------
 function loadEpisode(i){
   const ep = episodes[i];
   currentIndex = i;
@@ -276,6 +271,7 @@ function loadEpisode(i){
   playBtn.textContent = "▶";
 }
 
+// ---------- CREATE LIST ROW ----------
 function createRow(ep, i){
   const row = document.createElement("div");
   row.className = "dc-episode-item";
@@ -313,6 +309,7 @@ function createRow(ep, i){
   return row;
 }
 
+// ---------- RENDER LIST ----------
 function renderList(){
   listEl.innerHTML = "";
   episodes.forEach((ep,i)=>{
@@ -320,18 +317,25 @@ function renderList(){
   });
 }
 
+// ---------- SORT FIXED ----------
 function applySorting(){
   episodes = [...episodesRaw].sort((a,b)=>{
-    return sortDescending ? b.episode - a.episode : a.episode - b.episode;
+    return sortDescending ? (b.episode - a.episode) : (a.episode - b.episode);
   });
   renderList();
 }
 
 document.getElementById("dc-sort-btn").onclick = ()=>{
+
   sortDescending = !sortDescending;
+
+  document.getElementById("dc-sort-btn").textContent =
+    sortDescending ? "مرتب‌سازی: جدید → قدیم" : "مرتب‌سازی: قدیم → جدید";
+
   applySorting();
 };
 
+// ---------- PLAY BUTTON ----------
 playBtn.addEventListener("click", ()=>{
   if(audio.paused){
     audio.play();
@@ -342,6 +346,7 @@ playBtn.addEventListener("click", ()=>{
   }
 });
 
+// ---------- TIME DISPLAY ----------
 audio.addEventListener("loadedmetadata", ()=>{
   document.getElementById("dc-time-duration").textContent =
     new Date(audio.duration * 1000).toISOString().substr(14,5);
@@ -357,6 +362,7 @@ seek.addEventListener("input", ()=>{
   audio.currentTime = (seek.value / 100) * audio.duration;
 });
 
+// ---------- LOAD JSON ----------
 fetch(JSON_URL)
 .then(res=>res.json())
 .then(data=>{
@@ -365,14 +371,16 @@ fetch(JSON_URL)
   loadEpisode(0);
 });
 </script>
+
+<!-- AUTO-RESIZE IFRAME SENDER -->
 <script>
 function sendHeight() {
   const h = document.body.scrollHeight;
   window.parent.postMessage({ dcPlayerHeight: h }, "*");
 }
-
 new ResizeObserver(sendHeight).observe(document.body);
 window.addEventListener("load", sendHeight);
 </script>
+
 </body>
 </html>
