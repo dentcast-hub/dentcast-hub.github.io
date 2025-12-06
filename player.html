@@ -96,6 +96,7 @@
       border: none;
       color: white;
       font-size: 22px;
+      cursor: pointer;
     }
 
     .dc-jump-btn {
@@ -108,18 +109,11 @@
       cursor: pointer;
     }
 
-    .dc-speed-box {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-
     .dc-range {
       width: 100%;
       margin-top: 10px;
     }
 
-    /* ---------------- SORT BUTTON ---------------- */
     #dc-sort-btn {
       margin: 8px 14px;
       padding: 6px 14px;
@@ -164,6 +158,7 @@
       padding-right: 6px;
     }
 
+    /* ✔ توضیح راست‌چین شد */
     .dc-ep-desc {
       display: none;
       margin-top: 8px;
@@ -173,6 +168,8 @@
       border-radius: 10px;
       font-size: 12px;
       line-height: 1.6;
+      direction: rtl;
+      text-align: right;
     }
   </style>
 </head>
@@ -217,7 +214,6 @@
 </div>
 
 <script>
-// ------------------ ELEMENTS ------------------
 const JSON_URL = "dentcast.json";
 
 const audio = document.getElementById("dc-audio");
@@ -225,76 +221,24 @@ const listEl = document.getElementById("dc-list");
 const titleEl = document.getElementById("dc-current-title");
 const descEl  = document.getElementById("dc-current-desc");
 const playBtn = document.getElementById("dc-play");
-const backBtn = document.getElementById("dc-back");
-const forwardBtn = document.getElementById("dc-forward");
 const seek = document.getElementById("dc-seek");
-const timeCur = document.getElementById("dc-time-current");
-const timeDur = document.getElementById("dc-time-duration");
 
 let episodesRaw = [];
 let episodes = [];
 let sortDescending = true;
 let currentIndex = 0;
 
-// ------------------ LOAD EPISODE ------------------
-function loadEpisode(i) {
+function loadEpisode(i){
   const ep = episodes[i];
   currentIndex = i;
-
   audio.src = ep.audio_url;
   titleEl.textContent = ep.title;
-
   descEl.innerHTML = ep.description || "";
   descEl.style.display = "none";
-
-  playBtn.textContent = "▶"; // reset play button
-  audio.pause();
+  playBtn.textContent = "▶";
 }
 
-// ------------------ FORMAT TIME ------------------
-function fmt(t) {
-  if (isNaN(t)) return "00:00";
-  const m = Math.floor(t / 60);
-  const s = Math.floor(t % 60);
-  return `${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
-}
-
-// ------------------ PLAYER CONTROLS ------------------
-playBtn.addEventListener("click", () => {
-  if (audio.paused) {
-    audio.play();
-    playBtn.textContent = "⏸";
-  } else {
-    audio.pause();
-    playBtn.textContent = "▶";
-  }
-});
-
-backBtn.addEventListener("click", () => {
-  audio.currentTime = Math.max(0, audio.currentTime - 15);
-});
-
-forwardBtn.addEventListener("click", () => {
-  audio.currentTime = Math.min(audio.duration, audio.currentTime + 15);
-});
-
-// ------------------ UPDATE SEEKBAR ------------------
-audio.addEventListener("loadedmetadata", () => {
-  timeDur.textContent = fmt(audio.duration);
-});
-
-audio.addEventListener("timeupdate", () => {
-  seek.value = (audio.currentTime / audio.duration) * 100;
-  timeCur.textContent = fmt(audio.currentTime);
-});
-
-// drag seeking
-seek.addEventListener("input", () => {
-  audio.currentTime = (seek.value / 100) * audio.duration;
-});
-
-// ------------------ CREATE EPISODE LIST ------------------
-function createRow(ep, i) {
+function createRow(ep, i){
   const row = document.createElement("div");
   row.className = "dc-episode-item";
 
@@ -311,18 +255,14 @@ function createRow(ep, i) {
 
   const desc = document.createElement("div");
   desc.className = "dc-ep-desc";
-  desc.dir = "rtl";
-  desc.style.textAlign = "right";
   desc.innerHTML = ep.description || "";
 
-  // play episode
   header.addEventListener("click", () => {
     loadEpisode(i);
     audio.play();
     playBtn.textContent = "⏸";
   });
 
-  // toggle description
   info.addEventListener("click", (e) => {
     e.stopPropagation();
     desc.style.display = desc.style.display === "block" ? "none" : "block";
@@ -335,34 +275,57 @@ function createRow(ep, i) {
   return row;
 }
 
-function renderList() {
+function renderList(){
   listEl.innerHTML = "";
-  episodes.forEach((ep, i) => {
-    listEl.appendChild(createRow(ep, i));
+  episodes.forEach((ep,i)=>{
+    listEl.appendChild(createRow(ep,i));
   });
 }
 
-// ------------------ SORTING ------------------
-document.getElementById("dc-sort-btn").onclick = () => {
-  sortDescending = !sortDescending;
-  applySorting();
-};
-
-function applySorting() {
-  episodes = [...episodesRaw].sort((a, b) => {
+function applySorting(){
+  episodes = [...episodesRaw].sort((a,b)=>{
     return sortDescending ? b.episode - a.episode : a.episode - b.episode;
   });
   renderList();
 }
 
-// ------------------ LOAD JSON ------------------
+document.getElementById("dc-sort-btn").onclick = ()=>{
+  sortDescending = !sortDescending;
+  applySorting();
+};
+
+playBtn.addEventListener("click", ()=>{
+  if(audio.paused){
+    audio.play();
+    playBtn.textContent = "⏸";
+  } else {
+    audio.pause();
+    playBtn.textContent = "▶";
+  }
+});
+
+audio.addEventListener("loadedmetadata", ()=>{
+  document.getElementById("dc-time-duration").textContent =
+    new Date(audio.duration * 1000).toISOString().substr(14,5);
+});
+
+audio.addEventListener("timeupdate", ()=>{
+  seek.value = (audio.currentTime / audio.duration) * 100;
+  document.getElementById("dc-time-current").textContent =
+    new Date(audio.currentTime * 1000).toISOString().substr(14,5);
+});
+
+seek.addEventListener("input", ()=>{
+  audio.currentTime = (seek.value / 100) * audio.duration;
+});
+
 fetch(JSON_URL)
-  .then(res => res.json())
-  .then(data => {
-    episodesRaw = data;
-    applySorting();
-    loadEpisode(0);
-  });
+.then(res=>res.json())
+.then(data=>{
+  episodesRaw = data;
+  applySorting();
+  loadEpisode(0);
+});
 </script>
 
 </body>
