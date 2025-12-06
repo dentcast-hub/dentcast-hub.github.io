@@ -66,21 +66,19 @@
       overflow-y: auto;
     }
 
-    /* ------------ PLAYER ------------- */
     .dc-main-player {
       padding: 12px 16px;
       border-top: 1px solid rgba(255,255,255,0.08);
       border-bottom: 1px solid rgba(255,255,255,0.08);
     }
 
-    /* ✔️ تغییر: کنترل‌ها تمام‌عرض شوند */
     .dc-controls-row {
       display: flex;
       justify-content: flex-start;
       align-items: center;
       gap: 8px;
       direction: ltr;
-      width: 100%;      /* ⬅️ اضافه شد */
+      width: 100%;
     }
 
     .dc-play-btn {
@@ -115,11 +113,10 @@
       margin-right: 8px;
     }
 
-    /* ✔️ تغییر: جهت اسلایدر برعکس */
     .dc-range {
       width: 100%;
       margin-top: 10px;
-      direction: ltr;   /* ⬅️ اسلایدر برعکس شد */
+      direction: ltr;
     }
 
     #dc-sort-btn {
@@ -276,10 +273,15 @@ function createRow(ep, i){
   desc.className = "dc-ep-desc";
   desc.innerHTML = ep.description || "";
 
+  /* ⭐ تنها بخش اصلاح‌شده */
   header.addEventListener("click", () => {
     loadEpisode(i);
-    audio.play();
-    playBtn.textContent = "⏸";
+
+    audio.addEventListener("canplay", function handler() {
+      audio.removeEventListener("canplay", handler);
+      audio.play();
+      playBtn.textContent = "⏸";
+    });
   });
 
   info.addEventListener("click", (e) => {
