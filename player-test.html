@@ -485,6 +485,8 @@ seek.addEventListener("input", ()=>{
 
 /* ---------------- SEARCH ---------------- */
 
+/* ---------------- SEARCH ---------------- */
+
 function normalizeText(s) {
   return (s || "").toString().toLowerCase();
 }
@@ -496,7 +498,7 @@ closeSearchBtn.addEventListener("click", () => {
   closeSearchBtn.style.display = "none";
 });
 
-/* info button in search – توضیح زیر خود نتیجه */
+/* ساخت دکمه اطلاعات که فقط CAPTION را نشان می‌دهد */
 function createSearchInfoButton(descDiv) {
   const infoBtn = document.createElement("span");
   infoBtn.className = "dc-search-info-btn";
@@ -541,33 +543,34 @@ function handleSearch() {
 
   matches.forEach(item => {
     const epNo = String(item.episode || "").trim();
+
+    /* پیدا کردن اپیزود در لیست اصلی */
     const epIndex = episodes.findIndex(e => String(e.episode) === epNo);
     if (epIndex === -1) return;
-
-    const fullEp = episodes[epIndex];
 
     const box = document.createElement("div");
     box.className = "dc-search-item";
 
+    /* ---------------- عنوان فقط ---------------- */
     const t = document.createElement("div");
     t.className = "dc-search-item-title";
-    t.textContent = `اپیزود ${epNo} — ${item.title || fullEp.title || ""}`;
+    t.textContent = `اپیزود ${epNo} — ${item.title || ""}`;
 
-    const c = document.createElement("div");
-    c.className = "dc-search-item-caption";
-    c.textContent = item.caption || fullEp.description || "";
+    /* ❌ caption در اینجا نمایش داده نمی‌شود */
 
-    /* توضیح زیر نتیجه سرچ */
+    /* ---------------- توضیح CAPTION زیر آیتم (مخفی) ---------------- */
     const desc = document.createElement("div");
     desc.className = "dc-ep-desc";
-    desc.innerHTML = fullEp.description || "";
+    desc.innerHTML = item.caption || "";   // 🔥 فقط CAPTION
 
+    /* دکمه اطلاعات */
     const infoBtn = createSearchInfoButton(desc);
+
     box.appendChild(infoBtn);
     box.appendChild(t);
-    box.appendChild(c);
     box.appendChild(desc);
 
+    /* کلیک روی آیتم → فقط پلی بشه، صفحه نپرد */
     box.addEventListener("click", () => {
       loadEpisode(epIndex);
       audio.addEventListener("canplay", function handler() {
@@ -581,13 +584,13 @@ function handleSearch() {
   });
 }
 
-/* نمایش/مخفی شدن ضربدر و هندل سرچ */
+/* نمایش/مخفی شدن ضربدر و سرچ */
 searchInput.addEventListener("input", () => {
-  if (searchInput.value.trim().length > 0) {
+  if (searchInput.value.trim().length > 0)
     closeSearchBtn.style.display = "inline-block";
-  } else {
+  else
     closeSearchBtn.style.display = "none";
-  }
+
   handleSearch();
 });
 
