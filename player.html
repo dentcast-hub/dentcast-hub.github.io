@@ -10,175 +10,188 @@
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
 
   <style>
-    :root {
-      --blue: #0b5fff;
-      --blue-soft: #1b3b8f;
-      --bg: #020617;
-      --text-main: #e7eaf1;
-      --text-sub: #9aa1b3;
-    }
+  :root {
+    --blue: #0b5fff;
+    --blue-soft: #1b3b8f;
+    --bg: #020617;
+    --text-main: #e7eaf1;
+    --text-sub: #9aa1b3;
+  }
 
-    body {
-      margin: 0;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      background: radial-gradient(circle at top, #082f49, #020617 60%);
-      font-family: "Vazirmatn", sans-serif;
-      color: var(--text-main);
-      padding: 24px 8px;
-      box-sizing: border-box;
-    }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    background: radial-gradient(circle at top, #082f49, #020617 60%);
+    font-family: "Vazirmatn", sans-serif;
+    color: var(--text-main);
+    padding: 16px 6px;    /* ↓ کمی کمتر */
+    box-sizing: border-box;
+  }
 
-    .dc-wrapper {
-      width: 100%;
-      max-width: 480px;
-      background: linear-gradient(145deg, rgba(5,21,52,0.95), rgba(3,10,30,0.98));
-      border-radius: 24px;
-      overflow: hidden;
-      border: 1px solid rgba(11,95,255,0.4);
-    }
+  .dc-wrapper {
+    width: 100%;
+    max-width: 480px;
+    background: linear-gradient(145deg, rgba(5,21,52,0.95), rgba(3,10,30,0.98));
+    border-radius: 20px; /* ↓ کمی کمتر */
+    overflow: hidden;
+    border: 1px solid rgba(11,95,255,0.35);
+  }
 
-    .dc-header {
-      display: flex;
-      padding: 16px;
-      gap: 12px;
-    }
+  /* ---------------- HEADER ---------------- */
+  .dc-header {
+    display: flex;
+    padding: 12px;     /* ↓ کمتر شد */
+    gap: 10px;
+  }
 
-    .dc-cover img {
-      width: 72px;
-      height: 72px;
-      border-radius: 16px;
-      object-fit: cover;
-      border: 1px solid rgba(255,255,255,0.2);
-    }
+  .dc-cover img {
+    width: 60px;       /* ↓ کوچکتر */
+    height: 60px;
+    border-radius: 14px;
+    object-fit: cover;
+    border: 1px solid rgba(255,255,255,0.2);
+  }
 
-    #dc-current-desc {
-      display: none;
-      margin-top: 6px;
-      font-size: 12px;
-      color: #000;
-      background: #fff;
-      padding: 10px;
-      border-radius: 10px;
-      max-height: 150px;
-      overflow-y: auto;
-    }
+  #dc-current-title {
+    font-size: 14px;   /* ↓ ظریف‌تر */
+    line-height: 1.4;
+  }
 
-    .dc-main-player {
-      padding: 12px 16px;
-      border-top: 1px solid rgba(255,255,255,0.08);
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-    }
+  #dc-current-desc {
+    display: none;
+    margin-top: 4px;
+    font-size: 11px;   /* ↓ کوچکتر */
+    color: #000;
+    background: #fff;
+    padding: 8px;
+    border-radius: 8px;
+    max-height: 120px; /* ↓ کمتر */
+    overflow-y: auto;
+  }
 
-    .dc-controls-row {
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      gap: 8px;
-      direction: ltr;
-      width: 100%;
-    }
+  /* ---------------- PLAYER ---------------- */
+  .dc-main-player {
+    padding: 10px 12px; /* ↓ کمی کمتر */
+    border-top: 1px solid rgba(255,255,255,0.06);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
 
-    .dc-play-btn {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      background: var(--blue);
-      border: none;
-      color: white;
-      font-size: 22px;
-      cursor: pointer;
-    }
+  /* کنترل‌ها */
+  .dc-controls-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;           /* ↓ فاصله کمتر */
+    direction: ltr;
+  }
 
-    .dc-jump-btn {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: #0b2146;
-      border: 1px solid rgba(255,255,255,0.3);
-      color: var(--text-sub);
-      cursor: pointer;
-    }
+  .dc-play-btn {
+    width: 40px;        /* ↓ کمتر */
+    height: 40px;
+    border-radius: 50%;
+    background: var(--blue);
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+  }
 
-    .dc-speed-btn {
-      padding: 6px 10px;
-      border-radius: 10px;
-      background: #0b2146;
-      border: 1px solid rgba(255,255,255,0.3);
-      color: #fff;
-      cursor: pointer;
-      font-size: 12px;
-      margin-right: 8px;
-    }
+  .dc-jump-btn {
+    width: 34px;        /* ↓ کوچکتر */
+    height: 34px;
+    border-radius: 50%;
+    background: #0b2146;
+    border: 1px solid rgba(255,255,255,0.25);
+    color: var(--text-sub);
+    cursor: pointer;
+    font-size: 12px;
+  }
 
-    .dc-range {
-      width: 100%;
-      margin-top: 10px;
-      direction: ltr;
-    }
+  .dc-speed-btn {
+    padding: 4px 8px;   /* ↓ کمتر */
+    border-radius: 8px;
+    background: #0b2146;
+    border: 1px solid rgba(255,255,255,0.25);
+    color: #fff;
+    cursor: pointer;
+    font-size: 11px;
+    margin-right: 6px;
+  }
 
-    #dc-sort-btn {
-      margin: 8px 14px;
-      padding: 6px 14px;
-      border-radius: 999px;
-      background: var(--blue);
-      border: none;
-      color: white;
-      cursor: pointer;
-      font-size: 18px;
-      line-height: 1;
-    }
+  /* اسلایدر */
+  .dc-range {
+    width: 100%;
+    margin-top: 8px;    /* ↓ کمتر */
+    direction: ltr;
+  }
 
-    .dc-list {
-      max-height: 280px;
-      overflow-y: auto;
-    }
+  .dc-time-row {
+    font-size: 11px;    /* ↓ ریزتر */
+    margin-top: 2px;
+    display: flex;
+    justify-content: space-between;
+  }
 
-    .dc-episode-item {
-      padding: 12px 14px;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-    }
+  /* ---------------- SORT BUTTON ---------------- */
+  #dc-sort-btn {
+    margin: 6px 12px;   /* ↓ کمی کمتر */
+    padding: 5px 12px;
+    border-radius: 999px;
+    background: var(--blue);
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 1;
+  }
 
-    .dc-episode-item-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      direction: ltr;
-      text-align: left;
-    }
+  /* ---------------- LIST ---------------- */
+  .dc-list {
+    max-height: 240px;  /* ↓ ارتفاع لیست کمتر */
+    overflow-y: auto;
+  }
 
-    .dc-ep-title {
-      font-size: 13px;
-      color: var(--text-main);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
+  .dc-episode-item {
+    padding: 10px 12px; /* ↓ کمی فشرده */
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
 
-    .dc-info-btn {
-      font-size: 17px;
-      color: var(--blue);
-      cursor: pointer;
-      padding-left: 6px;
-      padding-right: 6px;
-      direction: ltr;
-    }
+  .dc-episode-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    direction: ltr;
+    text-align: left;
+  }
 
-    .dc-ep-desc {
-      display: none;
-      margin-top: 8px;
-      background: #fff;
-      color: #000;
-      padding: 10px;
-      border-radius: 10px;
-      font-size: 12px;
-      line-height: 1.6;
-      direction: rtl;
-      text-align: right;
-    }
-  </style>
+  .dc-ep-title {
+    font-size: 12px;    /* ↓ کمی ریزتر */
+    color: var(--text-main);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .dc-info-btn {
+    font-size: 16px;   /* ↓ کمی کمتر */
+    color: var(--blue);
+    cursor: pointer;
+    padding: 0 4px;
+  }
+
+  .dc-ep-desc {
+    display: none;
+    margin-top: 6px;
+    background: #fff;
+    color: #000;
+    padding: 8px;
+    border-radius: 8px;
+    font-size: 11px;
+    line-height: 1.5;
+  }
+</style>
 </head>
 
 <body>
