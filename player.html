@@ -535,7 +535,7 @@ function handleSearch() {
       (item.hashtags || []).join(" ")
     ].join(" ");
     return normalizeText(all).includes(qNorm);
-  }).slice(0, 30);
+  });
 
   if (matches.length === 0) {
     const empty = document.createElement("div");
