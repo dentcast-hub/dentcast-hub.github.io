@@ -1,266 +1,565 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fa" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<title>DentCast Player</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
+  <title>DentCast Player</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;800&display=swap">
+  <!-- فونت وزیرمتن -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
 
-<style>
-body {
-  background: #0b1220;
-  color: #e7eaf1;
-  font-family: Vazirmatn, sans-serif;
-  margin: 0;
-  padding: 20px;
-}
+  <style>
+    :root {
+      --blue: #0b5fff;
+      --blue-soft: #1b3b8f;
+      --bg: #020617;
+      --bg2: #020b1f;
+      --card: #071c3b;
+      --card2: #0b2146;
+      --text-main: #e7eaf1;
+      --text-sub: #9aa1b3;
+    }
 
-/* PLAYER BOX */
-#player-container {
-  width: 100%;
-  max-width: 650px;
-  margin: auto;
-  padding: 20px;
-  border-radius: 24px;
-  background: linear-gradient(135deg, #0b1e42, #0b1220);
-  box-shadow: 0 0 20px rgba(0,0,0,0.4);
-}
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      background: radial-gradient(circle at top, #082f49, #020617 60%);
+      font-family: "Vazirmatn", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--text-main);
+      padding: 24px 8px;
+      box-sizing: border-box;
+    }
 
-/* HEADER */
-#player-header {
-  display: flex;
-  gap: 20px;
-  align-items: center;
-}
+    .dc-wrapper {
+      width: 100%;
+      max-width: 480px;
+      background: linear-gradient(145deg, rgba(5,21,52,0.95), rgba(3,10,30,0.98));
+      border-radius: 24px;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.6);
+      border: 1px solid rgba(11,95,255,0.4);
+      overflow: hidden;
+    }
 
-#player-cover {
-  width: 110px;
-  height: 110px;
-  border-radius: 16px;
-}
+    .dc-header {
+      display: flex;
+      padding: 16px;
+      gap: 12px;
+      background: radial-gradient(circle at top left, rgba(11,95,255,0.35), transparent 55%);
+    }
 
-/* CONTROLS */
-#controls {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 18px 0;
-}
+    .dc-cover {
+      width: 72px;
+      height: 72px;
+      border-radius: 16px;
+      overflow: hidden;
+      flex-shrink: 0;
+      border: 1px solid rgba(255,255,255,0.16);
+    }
 
-.skip-btn {
-  background: #113785;
-  color: white;
-  padding: 12px 20px;
-  border-radius: 22px;
-  border: none;
-  font-size: 1.2em;
-}
+    .dc-cover img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
 
-#play-btn {
-  background: #0b5fff;
-  padding: 16px 28px;
-  border-radius: 26px;
-  border: none;
-  font-size: 1.5em;
-}
+    .dc-head-text {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-width: 0;
+    }
 
-#seek-bar { width: 100%; margin-top: 10px; }
+    .dc-show-name {
+      font-size: 13px;
+      opacity: 0.8;
+      margin-bottom: 4px;
+    }
 
-/* SORT BUTTON */
-#sort-btn {
-  margin-top: 15px;
-  padding: 10px 20px;
-  background: #0b5fff;
-  border: none;
-  border-radius: 14px;
-  font-size: 1em;
-  cursor: pointer;
-}
+    .dc-episode-title {
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 1.35;
+      max-height: 2.7em;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      cursor: pointer;
+    }
 
-/* EPISODE LIST */
-#episode-list {
-  max-height: 260px;   /* فقط ۵–۶ آیتم دیده می‌شه */
-  overflow-y: auto;    /* بقیه اسکرول می‌شن */
-  margin-top: 15px;
-}
+    .dc-episode-desc {
+      margin-top: 6px;
+      font-size: 12px;
+      color: var(--text-sub);
+      max-height: 150px;
+      overflow-y: auto;
+      display: none;
+    }
 
-#episode-list li {
-  background: #121a2b;
-  padding: 12px;
-  border-radius: 14px;
-  margin: 8px 0;
-  cursor: pointer;
-}
+    .dc-episode-desc::-webkit-scrollbar {
+      width: 4px;
+    }
+    .dc-episode-desc::-webkit-scrollbar-thumb {
+      background: rgba(148,163,184,0.6);
+      border-radius: 999px;
+    }
 
-#episode-list li:hover {
-  background: #0b1e42;
-}
+    .dc-main-player {
+      padding: 12px 16px 8px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      background: linear-gradient(180deg, rgba(3,13,35,0.95), rgba(4,16,42,0.98));
+    }
 
-/* MODAL */
-#modal {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.75);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-}
-#modal.hidden { display: none; }
+    .dc-controls-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
 
-#modal-content {
-  width: 95%;
-  max-width: 600px;
-  background: #ffffff;
-  color: #000000;
-  border-radius: 20px;
-  padding: 20px;
-  max-height: 85%;
-  overflow-y: auto;
-}
+    .dc-play-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      border: none;
+      background: radial-gradient(circle at 30% 20%, #38bdf8, #0b5fff 55%, #1d4ed8 100%);
+      box-shadow: 0 10px 25px rgba(37,99,235,0.65);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: white;
+      font-size: 22px;
+    }
 
-#modal-close {
-  float: left;
-  cursor: pointer;
-  font-size: 24px;
-  font-weight: bold;
-}
-</style>
+    .dc-jump-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.6);
+      background: radial-gradient(circle at top, #0b2146, #020617);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 13px;
+      color: var(--text-sub);
+    }
+
+    .dc-speed-box {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: rgba(15,23,42,0.95);
+      border-radius: 999px;
+      padding: 4px 8px;
+      border: 1px solid rgba(148,163,184,0.5);
+    }
+
+    .dc-speed-btn {
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      border: none;
+      background: rgba(15,23,42,0.9);
+      color: var(--text-sub);
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .dc-speed-slider {
+      flex: 1;
+      accent-color: var(--blue);
+    }
+
+    .dc-speed-label {
+      font-size: 12px;
+      min-width: 30px;
+      text-align: center;
+    }
+
+    .dc-range {
+      width: 100%;
+      margin: 6px 0;
+      accent-color: var(--blue);
+    }
+
+    .dc-time-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--text-sub);
+    }
+
+    .dc-sort-row {
+      padding: 8px 14px 0;
+      display: flex;
+      justify-content: flex-start;
+    }
+
+    #dc-sort-btn {
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: none;
+      background: var(--blue);
+      color: white;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .dc-list {
+      max-height: 280px; /* حدوداً ۵ ردیف روی موبایل */
+      overflow-y: auto;
+      background: radial-gradient(circle at top, #020b1f, #020617 55%);
+    }
+
+    .dc-episode-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      font-size: 13px;
+      border-bottom: 1px solid rgba(15,23,42,0.95);
+      cursor: pointer;
+      background: transparent;
+      transition: background 0.15s ease;
+    }
+
+    .dc-episode-item:hover {
+      background: linear-gradient(90deg, rgba(11,95,255,0.24), transparent);
+    }
+
+    .dc-episode-item.active {
+      background: linear-gradient(90deg, rgba(11,95,255,0.35), rgba(15,23,42,0.9));
+    }
+
+    .dc-ep-title {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-left: 8px;
+    }
+
+    .dc-ep-meta {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-sub);
+    }
+
+    .dc-ep-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 999px;
+      background: rgba(148,163,184,0.8);
+    }
+
+    .dc-footer {
+      padding: 6px 12px 10px;
+      font-size: 11px;
+      color: rgba(148,163,184,0.85);
+      text-align: left;
+    }
+
+    .dc-footer a {
+      color: #60a5fa;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    /* اسکرول‌بار لیست اپیزودها */
+    .dc-list::-webkit-scrollbar {
+      width: 6px;
+    }
+    .dc-list::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .dc-list::-webkit-scrollbar-thumb {
+      background: rgba(148,163,184,0.5);
+      border-radius: 999px;
+    }
+  </style>
 </head>
-
 <body>
 
-<div id="player-container">
-
-  <div id="player-header">
-    <img id="player-cover" src="dentcast-cover.png">
-    <div>
-      <h2 id="player-title" style="cursor:pointer;"></h2>
-      <p id="player-duration" style="opacity:0.7;"></p>
+<div class="dc-wrapper">
+  <!-- هدر بالا -->
+  <div class="dc-header">
+    <div class="dc-cover">
+      <!-- اگر در JSON فیلد image داشتی می‌تونیم از اون بخونیم؛ فعلاً این کاور پیش‌فرضه -->
+      <img id="dc-cover-img" src="https://assets.pippa.io/shows/624b5545ecc0e600134ea0df/show-cover.jpg" alt="DentCast cover">
+    </div>
+    <div class="dc-head-text">
+      <div class="dc-show-name">Dentcast</div>
+      <div class="dc-episode-title" id="dc-current-title">
+        در حال بارگذاری اپیزودها...
+      </div>
+      <div class="dc-episode-desc" id="dc-current-desc"></div>
     </div>
   </div>
 
-  <div id="controls">
-    <button class="skip-btn" id="back15">⟲ 15s</button>
-    <button id="play-btn">▶️</button>
-    <button class="skip-btn" id="forward15">15s ⟳</button>
+  <!-- پلیر اصلی -->
+  <div class="dc-main-player">
+    <audio id="dc-audio"></audio>
+
+    <div class="dc-controls-row">
+      <button class="dc-jump-btn" id="dc-back">⟲ 15s</button>
+
+      <button class="dc-play-btn" id="dc-play">▶</button>
+
+      <button class="dc-jump-btn" id="dc-forward">15s ⟳</button>
+
+      <!-- باکس سرعت -->
+      <div class="dc-speed-box">
+        <button class="dc-speed-btn" id="dc-speed-minus">−</button>
+        <input type="range" min="0.75" max="2" step="0.25" value="1"
+               class="dc-speed-slider" id="dc-speed-slider">
+        <div class="dc-speed-label" id="dc-speed-label">1x</div>
+        <button class="dc-speed-btn" id="dc-speed-plus">+</button>
+      </div>
+    </div>
+
+    <input type="range" min="0" max="100" value="0" class="dc-range" id="dc-seek">
+
+    <div class="dc-time-row">
+      <span id="dc-time-current">00:00</span>
+      <span id="dc-time-duration">00:00</span>
+    </div>
   </div>
 
-  <input type="range" id="seek-bar" value="0">
+  <!-- مرتب‌سازی -->
+  <div class="dc-sort-row">
+    <button id="dc-sort-btn">مرتب‌سازی: جدید → قدیم</button>
+  </div>
 
-  <button id="sort-btn">مرتب‌سازی: جدید → قدیم</button>
+  <!-- لیست اپیزودها -->
+  <div class="dc-list" id="dc-list"></div>
 
-  <ul id="episode-list"></ul>
-</div>
-
-<!-- MODAL -->
-<div id="modal" class="hidden">
-  <div id="modal-content">
-    <span id="modal-close">✖</span>
-    <div id="modal-body"></div>
+  <div class="dc-footer">
+    داده‌ها از فایل <code>dentcast.json</code> در روت سایت لود می‌شوند.
   </div>
 </div>
 
 <script>
-let episodes = [];
-let currentIndex = 0;
-let sortDescending = true; // حالت اولیه: جدید → قدیم
+  // به‌جای RSS از فایل dentcast.json در روت
+  const JSON_URL = "dentcast.json";
 
-const audio = document.getElementById("audio");
-const titleEl = document.getElementById("player-title");
-const durationEl = document.getElementById("player-duration");
-const listEl = document.getElementById("episode-list");
-const seek = document.getElementById("seek-bar");
-const modal = document.getElementById("modal");
-const modalBody = document.getElementById("modal-body");
-document.getElementById("modal-close").onclick = () => modal.classList.add("hidden");
+  const audio        = document.getElementById("dc-audio");
+  const playBtn      = document.getElementById("dc-play");
+  const backBtn      = document.getElementById("dc-back");
+  const fwdBtn       = document.getElementById("dc-forward");
+  const seek         = document.getElementById("dc-seek");
+  const tCur         = document.getElementById("dc-time-current");
+  const tDur         = document.getElementById("dc-time-duration");
+  const listEl       = document.getElementById("dc-list");
+  const currentTitleEl = document.getElementById("dc-current-title");
+  const currentDescEl  = document.getElementById("dc-current-desc");
+  const coverImg     = document.getElementById("dc-cover-img");
+  const sortBtn      = document.getElementById("dc-sort-btn");
 
-/* ----------- LOAD JSON FROM ROOT ----------- */
-fetch("dentcast.json")
-  .then(r => r.json())
-  .then(data => {
-    episodes = data;
+  const speedSlider  = document.getElementById("dc-speed-slider");
+  const speedLabel   = document.getElementById("dc-speed-label");
+  const speedMinus   = document.getElementById("dc-speed-minus");
+  const speedPlus    = document.getElementById("dc-speed-plus");
+
+  let episodesRaw = [];
+  let episodes    = [];
+  let currentIndex = 0;
+  let isSeeking    = false;
+  let sortDescending = true; // جدید → قدیم
+  let descVisible    = false;
+
+  function formatTime(sec) {
+    if (!sec || !isFinite(sec)) return "00:00";
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
+  }
+
+  function setSpeed(val) {
+    const v = Math.min(2, Math.max(0.75, parseFloat(val)));
+    audio.playbackRate = v;
+    speedSlider.value = v;
+    speedLabel.textContent = v.toFixed(2).replace(/\.00$/, "") + "x";
+  }
+
+  // کنترل پخش
+  playBtn.addEventListener("click", () => {
+    if (!audio.src) return;
+    if (audio.paused) audio.play();
+    else audio.pause();
+  });
+
+  audio.addEventListener("play", () => {
+    playBtn.textContent = "⏸";
+  });
+
+  audio.addEventListener("pause", () => {
+    playBtn.textContent = "▶";
+  });
+
+  backBtn.addEventListener("click", () => {
+    if (!audio.duration) return;
+    audio.currentTime = Math.max(0, audio.currentTime - 15);
+  });
+
+  fwdBtn.addEventListener("click", () => {
+    if (!audio.duration) return;
+    audio.currentTime = Math.min(audio.duration, audio.currentTime + 15);
+  });
+
+  speedSlider.addEventListener("input", () => setSpeed(speedSlider.value));
+  speedMinus.addEventListener("click", () => setSpeed(parseFloat(speedSlider.value) - 0.25));
+  speedPlus.addEventListener("click", () => setSpeed(parseFloat(speedSlider.value) + 0.25));
+
+  seek.addEventListener("input", () => {
+    if (!audio.duration) return;
+    isSeeking = true;
+    const pct = parseFloat(seek.value) / 100;
+    audio.currentTime = pct * audio.duration;
+  });
+
+  seek.addEventListener("change", () => { isSeeking = false; });
+
+  audio.addEventListener("loadedmetadata", () => {
+    tDur.textContent = formatTime(audio.duration);
+  });
+
+  audio.addEventListener("timeupdate", () => {
+    tCur.textContent = formatTime(audio.currentTime);
+    if (!isSeeking && audio.duration) {
+      seek.value = (audio.currentTime / audio.duration) * 100;
+    }
+  });
+
+  audio.addEventListener("ended", () => {
+    if (currentIndex < episodes.length - 1) {
+      loadEpisode(currentIndex + 1);
+      audio.play();
+    }
+  });
+
+  // باز/بسته کردن توضیح زیر عنوان
+  currentTitleEl.addEventListener("click", () => {
+    descVisible = !descVisible;
+    currentDescEl.style.display = descVisible ? "block" : "none";
+  });
+
+  function loadEpisode(index) {
+    const ep = episodes[index];
+    if (!ep) return;
+    currentIndex = index;
+
+    audio.src = ep.audio_url;
+    currentTitleEl.textContent = ep.title;
+    currentDescEl.innerHTML = ep.description || "";
+    descVisible = false;
+    currentDescEl.style.display = "none";
+
+    // اگر بعدها تو dentcast.json فیلد image اضافه کردی:
+    // const img = ep.image || coverImg.src;
+    // coverImg.src = img;
+    // فعلاً همون کاور پیش‌فرض می‌مونه.
+
+    Array.from(listEl.children).forEach((el, i) => {
+      el.classList.toggle("active", i === index);
+    });
+
+    tCur.textContent = "00:00";
+    tDur.textContent = "00:00";
+    seek.value = 0;
+  }
+
+  function createEpisodeRow(ep, index) {
+    const row = document.createElement("div");
+    row.className = "dc-episode-item";
+
+    const left = document.createElement("div");
+    left.className = "dc-ep-title";
+    left.textContent = ep.title;
+
+    const right = document.createElement("div");
+    right.className = "dc-ep-meta";
+
+    const durSpan = document.createElement("span");
+    durSpan.textContent = ep.duration || "";
+
+    const dot = document.createElement("span");
+    dot.className = "dc-ep-dot";
+
+    const numSpan = document.createElement("span");
+    numSpan.textContent = ep.episode ? `#${ep.episode}` : "";
+
+    right.appendChild(durSpan);
+    right.appendChild(dot);
+    right.appendChild(numSpan);
+
+    row.appendChild(left);
+    row.appendChild(right);
+
+    row.addEventListener("click", () => {
+      loadEpisode(index);
+      audio.play();
+    });
+
+    return row;
+  }
+
+  function renderList() {
+    listEl.innerHTML = "";
+    episodes.forEach((ep, i) => {
+      const row = createEpisodeRow(ep, i);
+      listEl.appendChild(row);
+    });
+  }
+
+  function applySorting() {
+    episodes = [...episodesRaw].sort((a, b) => {
+      const A = parseFloat(a.episode);
+      const B = parseFloat(b.episode);
+      if (isNaN(A) || isNaN(B)) return 0;
+      return sortDescending ? B - A : A - B;
+    });
+    renderList();
+  }
+
+  sortBtn.addEventListener("click", () => {
+    sortDescending = !sortDescending;
+    sortBtn.textContent = sortDescending
+      ? "مرتب‌سازی: جدید → قدیم"
+      : "مرتب‌سازی: قدیم → جدید";
     applySorting();
-    loadEpisode(0);
+    if (episodes.length) loadEpisode(0);
   });
 
-/* ----------- RENDER EPISODE LIST (AFTER SORT) ----------- */
-function renderList() {
-  listEl.innerHTML = "";
-  episodes.forEach((ep, i) => {
-    const li = document.createElement("li");
-    li.innerHTML = `<strong>${ep.episode} — ${ep.title}</strong>`;
-    li.onclick = () => loadEpisode(i);
-    listEl.appendChild(li);
-  });
-}
+  // لود از dentcast.json
+  fetch(JSON_URL)
+    .then(res => res.json())
+    .then(data => {
+      episodesRaw = data;
+      applySorting();
+      if (episodes.length > 0) {
+        loadEpisode(0);
+      } else {
+        currentTitleEl.textContent = "اپیزودی در فایل dentcast.json پیدا نشد.";
+      }
+    })
+    .catch(err => {
+      console.error("JSON error:", err);
+      currentTitleEl.textContent = "خطا در لود فایل dentcast.json.";
+    });
 
-/* ----------- SORTING LOGIC ----------- */
-function applySorting() {
-  episodes.sort((a, b) => {
-    const A = parseFloat(a.episode);
-    const B = parseFloat(b.episode);
-    return sortDescending ? B - A : A - B;
-  });
-  renderList();
-}
-
-document.getElementById("sort-btn").onclick = () => {
-  sortDescending = !sortDescending;
-  applySorting();
-  document.getElementById("sort-btn").innerText =
-    sortDescending ? "مرتب‌سازی: جدید → قدیم" : "مرتب‌سازی: قدیم → جدید";
-};
-
-/* ----------- LOAD SELECTED EPISODE ----------- */
-function loadEpisode(i) {
-  currentIndex = i;
-  const ep = episodes[i];
-
-  const audioEl = document.getElementById("audio") || new Audio();
-  audioEl.id = "audio";
-  document.body.appendChild(audioEl);
-
-  audioEl.src = ep.audio_url;
-  titleEl.innerHTML = `${ep.episode} — ${ep.title}`;
-  durationEl.innerHTML = ep.duration;
-
-  titleEl.onclick = () => {
-    modalBody.innerHTML = ep.description;
-    modal.classList.remove("hidden");
-  };
-}
-
-/* ----------- PLAY / PAUSE ----------- */
-document.getElementById("play-btn").onclick = () => {
-  const audioEl = document.getElementById("audio");
-  if (audioEl.paused) audioEl.play();
-  else audioEl.pause();
-};
-
-/* ----------- SEEK BAR ----------- */
-document.addEventListener("timeupdate", () => {
-  const audioEl = document.getElementById("audio");
-  seek.value = audioEl.currentTime / audioEl.duration * 100;
-});
-
-seek.oninput = () => {
-  const audioEl = document.getElementById("audio");
-  audioEl.currentTime = seek.value / 100 * audioEl.duration;
-};
-
-/* ---------- 15 SEC SKIPS ---------- */
-document.getElementById("back15").onclick = () => {
-  const audioEl = document.getElementById("audio");
-  audioEl.currentTime -= 15;
-};
-
-document.getElementById("forward15").onclick = () => {
-  const audioEl = document.getElementById("audio");
-  audioEl.currentTime += 15;
-};
+  // سرعت پیش‌فرض
+  setSpeed(1);
 </script>
 
 </body>
