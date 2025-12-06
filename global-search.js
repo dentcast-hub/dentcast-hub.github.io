@@ -1,83 +1,103 @@
+/* ============================================================
+   DentCast Global Search Engine — Final Stable Version v4.1
+   Author: ChatGPT (for Dr. Fouad Shahabian)
+   ============================================================ */
+
 document.addEventListener("DOMContentLoaded", () => {
 
+  /* ------------------ ۱) المنت‌ها ------------------ */
   const searchInput = document.getElementById("dcSearch");
   const resultsBox  = document.getElementById("dcResults");
   const filterBtns  = document.querySelectorAll(".dc-filter-btn");
 
+  /* ------------------ ۲) دیتابیس ------------------ */
   let DB = [];
+
+  /* ------------------ ۳) فیلترهای فعال ------------------ */
   let activeFilters = new Set([
-    "dentcast","notecast","insight","litecast","photocast","video","article"
+    "dentcast",
+    "notecast",
+    "clinical",
+    "litecast",
+    "photocast",
+    "dentcast_plus",
+    "dentai"
   ]);
 
-  /* ------------------ ۱) مپ نوع‌ها ------------------ */
-  const typeMap = {
-    dentcast:      "episode",       // اپیزودهای اصلی
-    notecast:      "notecast",
-    insight:       "clinical",
-    litecast:      "litecast",
-    photocast:     "photocast",
-    video:         "dentcast_plus",
-    article:       "dentai"
+  /* ------------------ ۴) مپ نوع‌ها (قطعی و نهایی) ------------------ */
+  const TYPE_MAP = {
+    notecast:       "notecast",
+    clinical:       "clinical",
+    litecast:       "litecast",
+    photocast:      "photocast",
+    dentcast_plus:  "dentcast_plus",
+    dentai:         "dentai"
   };
 
-  /* ------------------ ۲) لود دیتابیس ------------------ */
+  /* ------------------ ۵) لود دیتابیس از فایل اصلی ------------------ */
   async function loadDB() {
     try {
-      const res = await fetch("/Dentcast-brain.txt");
+      const res = await fetch("/Dentcast-brain.txt", { cache: "no-store" });
       DB = await res.json();
+      // در صورت موفقیت، هیچ چاپ در کنسول (پاکیزگی کامل)
     } catch (err) {
-      console.error("Error loading Dentcast-brain.txt", err);
+      console.error("❌ Cannot load Dentcast-brain.txt", err);
     }
   }
 
-  /* ------------------ ۳) فعال/غیرفعال کردن فیلتر ------------------ */
+  /* ------------------ ۶) مدیریت فیلترها ------------------ */
   filterBtns.forEach(btn => {
     btn.addEventListener("click", () => {
-      const t = btn.dataset.type;
+      const key = btn.dataset.type;
 
       if (btn.classList.contains("active")) {
         btn.classList.remove("active");
-        activeFilters.delete(t);
+        activeFilters.delete(key);
       } else {
         btn.classList.add("active");
-        activeFilters.add(t);
+        activeFilters.add(key);
       }
 
       performSearch(searchInput.value.trim());
     });
   });
 
-  /* ------------------ ۴) سرچ زنده ------------------ */
-  searchInput.addEventListener("input", () => {
-    performSearch(searchInput.value.trim());
-  });
+  /* ------------------ ۷) سرچ زنده ------------------ */
+  searchInput.addEventListener("input", () =>
+    performSearch(searchInput.value.trim())
+  );
 
-  /* ------------------ ۵) ساخت HTML آیتم ------------------ */
+  /* ------------------ ۸) تعیین گروه هر آیتم ------------------ */
+  function detectGroup(item) {
+    if (item.episode && !item.type) return "dentcast";
+    if (item.type && TYPE_MAP[item.type]) return item.type;
+    return null;
+  }
+
+  /* ------------------ ۹) ساخت آیتم HTML ------------------ */
   function buildItem(item) {
 
-    // تعیین نوع فارسی
+    const group = item._group;
+    const title = item.title || "";
+
     let label = "";
-    switch (item._group) {
-      case "dentcast": label = "🎙️ دنت‌کست — اپیزود " + item.episode; break;
-      case "notecast": label = "📝 نوت‌کست — " + item.title; break;
-      case "insight":  label = "💡 نکته کلینیکی — " + item.title; break;
-      case "litecast": label = "✨ لایت‌کست — " + item.title; break;
-      case "photocast": label = "📸 فوتوکست — " + item.title; break;
-      case "video": label = "🎬 دنت‌کست+ — " + item.title; break;
-      case "article": label = "📚 مقاله — " + item.title; break;
-    }
 
-    // لینک‌دهی هوشمند
+    const labelMap = {
+      dentcast:      "🎙️ دنت‌کست — اپیزود " + item.episode,
+      notecast:      "📝 نوت‌کست — " + title,
+      clinical:      "💡 نکته کلینیکی — " + title,
+      litecast:      "✨ لایت‌کست — " + title,
+      photocast:     "📸 فوتوکست — " + title,
+      dentcast_plus: "🎬 دنت‌کست+ — " + title,
+      dentai:        "📚 مقاله — " + title
+    };
+
+    label = labelMap[group] || title;
+
     let url = item.page_url || item.url || "";
-    if (!url) {
-      if (item._group === "dentcast") {
-        url = "/episodes.html";
-      }
-    }
 
-    if (!url.startsWith("http")) {
-      url = "https://dentcast.ir" + url;
-    }
+    if (!url && group === "dentcast") url = "/episodes.html";
+    if (!url.startsWith("http")) url = "https://dentcast.ir" + url;
 
     return `
       <a class="dc-result-item" href="${url}" target="_blank">
@@ -86,7 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
   }
 
-  /* ------------------ ۶) الگوریتم سرچ ------------------ */
+  /* ------------------ ۱۰) الگوریتم سرچ ------------------ */
   function performSearch(q) {
 
     if (q.length < 2) {
@@ -95,45 +115,33 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    q = q.toLowerCase();
-
+    const query = q.toLowerCase();
     let results = [];
 
-    DB.forEach(item => {
+    for (const item of DB) {
 
-      /** تشخیص دسته */
-      let group = null;
+      const group = detectGroup(item);
+      if (!group) continue;
 
-      // اپیزودهای اصلی
-      if (item.episode && !item.type) group = "dentcast";
-      else {
-        for (let k in typeMap) {
-          if (item.type === typeMap[k]) group = k;
-        }
-      }
-
-      if (!group) return;
       item._group = group;
 
-      // اگر فیلتر خاموش شده، حذف کن
-      if (!activeFilters.has(group)) return;
+      if (!activeFilters.has(group)) continue;
 
-      // متن قابل جستجو
-      const text = (
+      // ترکیب کامل قابل جستجو
+      const blob = (
         (item.title || "") + " " +
         (item.caption || "") + " " +
         (item.keywords || []).join(" ") + " " +
         (item.hashtags || []).join(" ")
       ).toLowerCase();
 
-      if (text.includes(q)) results.push(item);
-    });
+      if (blob.includes(query)) results.push(item);
+    }
 
-    /* محدود به ۳۰ نتیجه */
+    /* نمایش فقط ۳۰ آیتم اول */
     const more = results.length > 30;
     const visible = results.slice(0, 30);
 
-    /* ساخت HTML */
     resultsBox.style.display = "block";
     resultsBox.innerHTML = `
       <button class="dc-close-results">✖</button>
@@ -141,14 +149,14 @@ document.addEventListener("DOMContentLoaded", () => {
       ${more ? `<div class="dc-more-btn">مشاهده ادامه نتایج… (${results.length})</div>` : ""}
     `;
 
-    /* بستن نتایج */
+    /* بستن */
     document.querySelector(".dc-close-results").onclick = () => {
       resultsBox.style.display = "none";
       resultsBox.innerHTML = "";
     };
   }
 
-  /* ------------------ ۷) اجرای اولیه ------------------ */
+  /* ------------------ ۱۱) اجرای اولیه ------------------ */
   loadDB();
 
 });
