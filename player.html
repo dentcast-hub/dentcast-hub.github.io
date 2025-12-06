@@ -80,53 +80,50 @@
   }
 
   /* کنترل‌ها */
-/* ردیف کنترل‌ها */
+/* ردیف کنترل‌ها — نسخهٔ Grid حرفه‌ای */
 .dc-controls-row {
-  display: flex;
-  justify-content: space-between;   /* ⭐ دکمه‌ها در عرض پخش می‌شن */
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);   /* ⭐ چهار ستون مساوی */
   align-items: center;
+  justify-items: center;                   /* ⭐ دکمه‌ها دقیقاً وسط ستون */
   width: 100%;
-  padding: 0 12px;                  /* فضای تنفسی دو طرف */
+  padding: 0 16px;                         /* فاصلهٔ حرفه‌ای از لبه‌ها */
   direction: ltr;
-  gap: 0;                           /* توزیع دقیق بدون فشار */
 }
 
-/* دکمه پلی — مرکز وزن طراحی */
+/* پلی — کمی بزرگ‌تر و Balanced */
 .dc-play-btn {
-  width: 48px;
-  height: 48px;
+  width: 46px;
+  height: 46px;
   border-radius: 50%;
   background: var(--blue);
   border: none;
   color: white;
   font-size: 22px;
   cursor: pointer;
-  flex-shrink: 0;                    /* ⭐ نذاره کوچک بشه */
 }
 
-/* دکمه‌های ۱۵ ثانیه — سمتین متعادل */
+/* دکمه‌های ۱۵ثانیه */
 .dc-jump-btn {
-  width: 42px;
-  height: 42px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
   background: #0b2146;
-  border: 1px solid rgba(255,255,255,0.25);
+  border: 1px solid rgba(255,255,255,0.22);
   color: var(--text-sub);
+  font-size: 11px;
   cursor: pointer;
-  font-size: 12px;
-  flex-shrink: 0;
 }
 
-/* دکمه سرعت — اندازه کوچیک و بالانس */
+/* دکمه سرعت */
 .dc-speed-btn {
-  padding: 6px 10px;
+  padding: 5px 9px;
   border-radius: 10px;
   background: #0b2146;
-  border: 1px solid rgba(255,255,255,0.25);
+  border: 1px solid rgba(255,255,255,0.22);
   color: #fff;
-  cursor: pointer;
   font-size: 12px;
-  flex-shrink: 0;
+  cursor: pointer;
 }
 
   /* اسلایدر */
