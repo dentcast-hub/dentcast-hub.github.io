@@ -146,9 +146,9 @@
     margin: 6px 12px 4px;
     padding: 12px;
     border-radius: 16px;
-    background: #ffd54f;
+    background: #eceff1;           /* 🔹 خاکستری نرم */
     color: #1a1a1a;
-    border: 2px solid #f4c534;
+    border: 2px solid #f4c534;     /* 🔹 فقط بوردر زرد */
     box-sizing: border-box;
   }
 
@@ -167,6 +167,7 @@
     padding: 2px 6px;
     border-radius: 6px;
     background: rgba(0,0,0,0.15);
+    display: none;                 /* 🔹 اول مخفی */
   }
 
   .dc-search-input {
@@ -216,6 +217,12 @@
     color: #0b5fff;
     cursor: pointer;
     padding: 2px;
+  }
+
+  .dc-search-empty {
+    font-size: 10px;
+    color: #333;
+    opacity: 0.8;
   }
 
   #dc-sort-btn {
@@ -325,7 +332,7 @@
 
 </div>
 
-<!-- ⭐⭐⭐ SCRIPTS ⭐⭐⭐ -->
+<!-- SCRIPTS -->
 <script>
 const JSON_URL = "dentcast.json";
 const BRAIN_URL = "Dentcast-brain.txt";
@@ -482,6 +489,7 @@ function normalizeText(s) {
 closeSearchBtn.addEventListener("click", () => {
   searchInput.value = "";
   searchResults.innerHTML = "";
+  closeSearchBtn.style.display = "none";   // 🔹 بعد از پاک شدن مخفی شود
 });
 
 /* info button in search */
@@ -492,9 +500,13 @@ function createSearchInfoButton(epIndex, fullEp) {
 
   infoBtn.addEventListener("click", (e) => {
     e.stopPropagation();
-    descEl.innerHTML = fullEp.description || "";
-    descEl.style.display = descEl.style.display === "block" ? "none" : "block";
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    // 🔹 فقط زیر عنوان باز/بسته شود؛ صفحه نپرد بالا
+    if (descEl.style.display === "block") {
+      descEl.style.display = "none";
+    } else {
+      descEl.innerHTML = fullEp.description || "";
+      descEl.style.display = "block";
+    }
   });
 
   return infoBtn;
@@ -503,7 +515,12 @@ function createSearchInfoButton(epIndex, fullEp) {
 function handleSearch() {
   const q = searchInput.value.trim();
   searchResults.innerHTML = "";
-  if (!q) return;
+
+  if (!q) {
+    // اگر خالی شد، نتایج و ضربدر رو ببند
+    closeSearchBtn.style.display = "none";
+    return;
+  }
 
   const qNorm = normalizeText(q);
 
@@ -555,14 +572,22 @@ function handleSearch() {
         audio.play();
         playBtn.textContent = "⏸";
       });
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      // دیگه اسکرول نمی‌کنیم
     });
 
     searchResults.appendChild(box);
   });
 }
 
-searchInput.addEventListener("input", handleSearch);
+/* 🔹 اینجا هم نمایش/مخفی شدن ضربدر + سرچ */
+searchInput.addEventListener("input", () => {
+  if (searchInput.value.trim().length > 0) {
+    closeSearchBtn.style.display = "inline-block";
+  } else {
+    closeSearchBtn.style.display = "none";
+  }
+  handleSearch();
+});
 
 /* ---------------- LOAD FILES ---------------- */
 
