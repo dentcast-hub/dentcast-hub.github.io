@@ -5,7 +5,6 @@
   <title>DentCast Player</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- فونت وزیرمتن -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
@@ -67,19 +66,21 @@
       overflow-y: auto;
     }
 
-    /* ---------------- PLAYER ---------------- */
+    /* ------------ PLAYER ------------- */
     .dc-main-player {
       padding: 12px 16px;
       border-top: 1px solid rgba(255,255,255,0.08);
       border-bottom: 1px solid rgba(255,255,255,0.08);
     }
 
+    /* ✔️ تغییر: کنترل‌ها تمام‌عرض شوند */
     .dc-controls-row {
       display: flex;
       justify-content: flex-start;
       align-items: center;
       gap: 8px;
-      direction: ltr;  /* 👈 حالا واقعا از چپ شروع می‌شوند */
+      direction: ltr;
+      width: 100%;      /* ⬅️ اضافه شد */
     }
 
     .dc-play-btn {
@@ -114,9 +115,11 @@
       margin-right: 8px;
     }
 
+    /* ✔️ تغییر: جهت اسلایدر برعکس */
     .dc-range {
       width: 100%;
       margin-top: 10px;
+      direction: rtl;   /* ⬅️ اسلایدر برعکس شد */
     }
 
     #dc-sort-btn {
@@ -155,8 +158,6 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      direction: ltr;
-      text-align: left;
     }
 
     .dc-info-btn {
@@ -200,12 +201,10 @@
     <audio id="dc-audio"></audio>
 
     <div class="dc-controls-row">
-
       <button id="dc-play" class="dc-play-btn">▶</button>
       <button id="dc-speed" class="dc-speed-btn">1x</button>
       <button id="dc-back" class="dc-jump-btn">⟲ 15s</button>
       <button id="dc-forward" class="dc-jump-btn">15s ⟳</button>
-
     </div>
 
     <input id="dc-seek" type="range" min="0" max="100" value="0" class="dc-range">
