@@ -83,7 +83,7 @@
 
     .dc-controls-row {
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-start;  /* 👈 از چپ شروع می‌شوند */
       align-items: center;
       gap: 8px;
     }
@@ -133,6 +133,8 @@
       border: none;
       color: white;
       cursor: pointer;
+      font-size: 18px;
+      line-height: 1;
     }
 
     .dc-list {
@@ -207,16 +209,16 @@
 
     <div class="dc-controls-row">
 
-      <!-- ✔ پلی اولین دکمه -->
+      <!-- پلی -->
       <button id="dc-play" class="dc-play-btn">▶</button>
 
-      <!-- ✔ دکمه سرعت دوم -->
+      <!-- سرعت -->
       <button id="dc-speed" class="dc-speed-btn">1x</button>
 
-      <!-- ✔ 15 ثانیه عقب -->
+      <!-- 15 ثانیه عقب -->
       <button id="dc-back" class="dc-jump-btn">⟲ 15s</button>
 
-      <!-- ✔ 15 ثانیه جلو -->
+      <!-- 15 ثانیه جلو -->
       <button id="dc-forward" class="dc-jump-btn">15s ⟳</button>
 
     </div>
@@ -229,7 +231,8 @@
     </div>
   </div>
 
-  <button id="dc-sort-btn">مرتب‌سازی: جدید → قدیم</button>
+  <!-- دکمه مرتب‌سازی فقط با فلش -->
+  <button id="dc-sort-btn">↓</button>
 
   <div class="dc-list" id="dc-list"></div>
 
@@ -245,10 +248,11 @@ const descEl  = document.getElementById("dc-current-desc");
 const playBtn = document.getElementById("dc-play");
 const seek = document.getElementById("dc-seek");
 const speedBtn = document.getElementById("dc-speed");
+const sortBtn = document.getElementById("dc-sort-btn");
 
 let episodesRaw = [];
 let episodes = [];
-let sortDescending = true;
+let sortDescending = true; // ↓ یعنی جدید به قدیم
 let currentIndex = 0;
 
 let speeds = [1, 1.25, 1.5, 1.75, 2];
@@ -317,7 +321,7 @@ function renderList(){
   });
 }
 
-// ---------- SORT FIXED ----------
+// ---------- SORT ----------
 function applySorting(){
   episodes = [...episodesRaw].sort((a,b)=>{
     return sortDescending ? (b.episode - a.episode) : (a.episode - b.episode);
@@ -325,13 +329,10 @@ function applySorting(){
   renderList();
 }
 
-document.getElementById("dc-sort-btn").onclick = ()=>{
-
+// دکمه مرتب‌سازی: ↓ = جدید→قدیم ، ↑ = قدیم→جدید
+sortBtn.onclick = ()=>{
   sortDescending = !sortDescending;
-
-  document.getElementById("dc-sort-btn").textContent =
-    sortDescending ? "مرتب‌سازی: جدید → قدیم" : "مرتب‌سازی: قدیم → جدید";
-
+  sortBtn.textContent = sortDescending ? "↓" : "↑";
   applySorting();
 };
 
