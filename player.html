@@ -41,7 +41,6 @@
       border: 1px solid rgba(11,95,255,0.4);
     }
 
-    /* ---------------- HEADER ---------------- */
     .dc-header {
       display: flex;
       padding: 16px;
@@ -54,12 +53,6 @@
       border-radius: 16px;
       object-fit: cover;
       border: 1px solid rgba(255,255,255,0.2);
-    }
-
-    .dc-episode-title {
-      font-size: 15px;
-      font-weight: 600;
-      cursor: pointer;
     }
 
     #dc-current-desc {
@@ -83,9 +76,10 @@
 
     .dc-controls-row {
       display: flex;
-      justify-content: flex-start;  /* 👈 از چپ شروع می‌شوند */
+      justify-content: flex-start;
       align-items: center;
       gap: 8px;
+      direction: ltr;  /* 👈 حالا واقعا از چپ شروع می‌شوند */
     }
 
     .dc-play-btn {
@@ -192,7 +186,6 @@
 <body>
 <div class="dc-wrapper">
 
-  <!-- HEADER -->
   <div class="dc-header">
     <div class="dc-cover">
       <img src="https://assets.pippa.io/shows/624b5545ecc0e600134ea0df/show-cover.jpg">
@@ -203,22 +196,14 @@
     </div>
   </div>
 
-  <!-- PLAYER -->
   <div class="dc-main-player">
     <audio id="dc-audio"></audio>
 
     <div class="dc-controls-row">
 
-      <!-- پلی -->
       <button id="dc-play" class="dc-play-btn">▶</button>
-
-      <!-- سرعت -->
       <button id="dc-speed" class="dc-speed-btn">1x</button>
-
-      <!-- 15 ثانیه عقب -->
       <button id="dc-back" class="dc-jump-btn">⟲ 15s</button>
-
-      <!-- 15 ثانیه جلو -->
       <button id="dc-forward" class="dc-jump-btn">15s ⟳</button>
 
     </div>
@@ -231,7 +216,6 @@
     </div>
   </div>
 
-  <!-- دکمه مرتب‌سازی فقط با فلش -->
   <button id="dc-sort-btn">↓</button>
 
   <div class="dc-list" id="dc-list"></div>
@@ -252,7 +236,7 @@ const sortBtn = document.getElementById("dc-sort-btn");
 
 let episodesRaw = [];
 let episodes = [];
-let sortDescending = true; // ↓ یعنی جدید به قدیم
+let sortDescending = true;
 let currentIndex = 0;
 
 let speeds = [1, 1.25, 1.5, 1.75, 2];
@@ -264,7 +248,6 @@ speedBtn.addEventListener("click", () => {
   speedBtn.textContent = speeds[speedIndex] + "x";
 });
 
-// ---------- LOAD EP ----------
 function loadEpisode(i){
   const ep = episodes[i];
   currentIndex = i;
@@ -275,7 +258,6 @@ function loadEpisode(i){
   playBtn.textContent = "▶";
 }
 
-// ---------- CREATE LIST ROW ----------
 function createRow(ep, i){
   const row = document.createElement("div");
   row.className = "dc-episode-item";
@@ -313,7 +295,6 @@ function createRow(ep, i){
   return row;
 }
 
-// ---------- RENDER LIST ----------
 function renderList(){
   listEl.innerHTML = "";
   episodes.forEach((ep,i)=>{
@@ -321,7 +302,6 @@ function renderList(){
   });
 }
 
-// ---------- SORT ----------
 function applySorting(){
   episodes = [...episodesRaw].sort((a,b)=>{
     return sortDescending ? (b.episode - a.episode) : (a.episode - b.episode);
@@ -329,14 +309,12 @@ function applySorting(){
   renderList();
 }
 
-// دکمه مرتب‌سازی: ↓ = جدید→قدیم ، ↑ = قدیم→جدید
 sortBtn.onclick = ()=>{
   sortDescending = !sortDescending;
   sortBtn.textContent = sortDescending ? "↓" : "↑";
   applySorting();
 };
 
-// ---------- PLAY BUTTON ----------
 playBtn.addEventListener("click", ()=>{
   if(audio.paused){
     audio.play();
@@ -347,7 +325,6 @@ playBtn.addEventListener("click", ()=>{
   }
 });
 
-// ---------- TIME DISPLAY ----------
 audio.addEventListener("loadedmetadata", ()=>{
   document.getElementById("dc-time-duration").textContent =
     new Date(audio.duration * 1000).toISOString().substr(14,5);
@@ -363,7 +340,6 @@ seek.addEventListener("input", ()=>{
   audio.currentTime = (seek.value / 100) * audio.duration;
 });
 
-// ---------- LOAD JSON ----------
 fetch(JSON_URL)
 .then(res=>res.json())
 .then(data=>{
@@ -373,7 +349,6 @@ fetch(JSON_URL)
 });
 </script>
 
-<!-- AUTO-RESIZE IFRAME SENDER -->
 <script>
 function sendHeight() {
   const h = document.body.scrollHeight;
