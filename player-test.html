@@ -174,12 +174,14 @@
   }
 
   .dc-search-input {
-    width: 100%;
-    border: none;
-    border-radius: 999px;
-    padding: 6px 10px;
-    font-size: 11px;
-    outline: none;
+  width: 100%;
+  border: none;
+  border-radius: 999px;
+  padding: 6px 16px;     /* ← این خط فاصله‌ی چپ/راست را زیاد می‌کند */
+  box-sizing: border-box; /* ← این اجازه نمی‌دهد input از باکس بیرون بزند */
+  font-size: 11px;
+  outline: none;
+    
   }
 
   .dc-search-results {
