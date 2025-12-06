@@ -511,5 +511,13 @@ body.dc-episodes-open .dc-episodes-trigger {
     </footer>
   </div>
   <script src="episodes-drawer.js" defer></script>
+<script>
+window.addEventListener("message", (event) => {
+  if (event.data.dcPlayerHeight) {
+    document.getElementById("dc-player-frame").style.height =
+      event.data.dcPlayerHeight + "px";
+  }
+});
+</script>
 </body>
 </html>
