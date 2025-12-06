@@ -402,8 +402,10 @@ function createRow(ep, i){
   info.textContent = "🛈";
 
   const desc = document.createElement("div");
-  desc.className = "dc-ep-desc";
-  desc.innerHTML = ep.description || "";
+desc.className = "dc-ep-desc";
+
+const brainMatch = brainData.find(b => String(b.episode) === String(ep.episode));
+desc.innerHTML = brainMatch?.caption || ep.description || "";
 
   header.addEventListener("click", () => {
     loadEpisode(i);
