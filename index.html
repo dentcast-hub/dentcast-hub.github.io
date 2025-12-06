@@ -17,6 +17,40 @@
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
   
     <style>
+      .dc-result-item {
+  display:block;
+  padding:10px 12px;
+  border-bottom:1px solid #e5e7eb;
+  color:#0b1d40;
+  text-decoration:none;
+  font-size:14px;
+}
+
+.dc-result-item:hover {
+  background:#eef3ff;
+}
+
+.dc-close-results {
+  background:#fee2e2;
+  border:none;
+  color:#b91c1c;
+  float:left;
+  margin:5px;
+  padding:4px 8px;
+  border-radius:6px;
+  cursor:pointer;
+}
+
+.dc-more-btn {
+  background:#e0f2fe;
+  padding:10px 15px;
+  margin-top:8px;
+  border-radius:10px;
+  text-align:center;
+  cursor:pointer;
+  color:#075985;
+  font-weight:600;
+}
   /* جعبه اصلی فیلتر سرچ سراسری */
   .dc-global-filter-box {
     background: #ffffff;
@@ -786,28 +820,32 @@ background: #0b5fff;
       
     </div>
 <!-- این باکس رو بگذار بالای فوتر، داخل main/container اصلی -->
+
 <div class="dc-global-filter-box">
 
-  <div class="dc-global-filter-title"> جستجوی سراسری دنت‌کست</div>
+    <h2 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h2>
 
-  <input
-    type="text"
-    class="dc-search-input"
-    id="dcSearch"
-    placeholder="جستجو در همهٔ بخش‌های دنت‌کست..."
-  >
+    <input id="dcSearch" class="dc-search-input"
+           placeholder="جستجو در همهٔ بخش‌های دنت‌کست…">
 
-<div class="dc-filter-list">
-    <button class="dc-filter-btn active" data-type="episode">دنت‌کست</button>
-    <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
-    <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
-    <button class="dc-filter-btn active" data-type="litecast">لایت‌کست</button>
-    <button class="dc-filter-btn active" data-type="photocast">فوتوکست</button>
-    <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
-    <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
+    <div class="dc-filter-list">
+
+        <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
+        <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
+        <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
+        <button class="dc-filter-btn active" data-type="litecast">لایت‌کست</button>
+        <button class="dc-filter-btn active" data-type="photocast">فوتوکست</button>
+        <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
+        <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
+
+    </div>
+
+    <div class="dc-results-box" id="dcResults"></div>
+
 </div>
 
-  <div class="dc-results-box" id="dcResults"></div>
+
+  
 
 <script    <footer>
       اهواز – کیانپارس، مطب دکتر فواد شهابیان<br>
