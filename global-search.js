@@ -1,19 +1,19 @@
 /* ============================================================
-   DentCast Global Search Engine — Final Stable Version v4.1
-   Author: ChatGPT (for Dr. Fouad Shahabian)
+   DentCast Global Search Engine — Final Stable Version v5.0
+   Author: ChatGPT for Dr. Fouad Shahabian
    ============================================================ */
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  /* ------------------ ۱) المنت‌ها ------------------ */
+  /* ------------ DOM ------------- */
   const searchInput = document.getElementById("dcSearch");
   const resultsBox  = document.getElementById("dcResults");
   const filterBtns  = document.querySelectorAll(".dc-filter-btn");
 
-  /* ------------------ ۲) دیتابیس ------------------ */
+  /* ------------ DB --------------- */
   let DB = [];
 
-  /* ------------------ ۳) فیلترهای فعال ------------------ */
+  /* ------------ فیلترهای فعال -------------- */
   let activeFilters = new Set([
     "dentcast",
     "notecast",
@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
     "dentai"
   ]);
 
-  /* ------------------ ۴) مپ نوع‌ها (قطعی و نهایی) ------------------ */
+  /* ------------ مپ نوع‌ها --------------- */
   const TYPE_MAP = {
     notecast:       "notecast",
     clinical:       "clinical",
@@ -34,18 +34,17 @@ document.addEventListener("DOMContentLoaded", () => {
     dentai:         "dentai"
   };
 
-  /* ------------------ ۵) لود دیتابیس از فایل اصلی ------------------ */
+  /* ------------ لود دیتابیس ---------------- */
   async function loadDB() {
     try {
       const res = await fetch("/Dentcast-brain.txt", { cache: "no-store" });
       DB = await res.json();
-      // در صورت موفقیت، هیچ چاپ در کنسول (پاکیزگی کامل)
     } catch (err) {
-      console.error("❌ Cannot load Dentcast-brain.txt", err);
+      console.error("❌ Error loading Dentcast-brain.txt", err);
     }
   }
 
-  /* ------------------ ۶) مدیریت فیلترها ------------------ */
+  /* ------------ مدیریت فیلترها -------------- */
   filterBtns.forEach(btn => {
     btn.addEventListener("click", () => {
       const key = btn.dataset.type;
@@ -62,25 +61,22 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  /* ------------------ ۷) سرچ زنده ------------------ */
-  searchInput.addEventListener("input", () =>
-    performSearch(searchInput.value.trim())
-  );
+  /* ------------ سرچ زنده ----------------- */
+  searchInput.addEventListener("input", () => {
+    performSearch(searchInput.value.trim());
+  });
 
-  /* ------------------ ۸) تعیین گروه هر آیتم ------------------ */
+  /* ------------ تشخیص گروه ---------------- */
   function detectGroup(item) {
     if (item.episode && !item.type) return "dentcast";
     if (item.type && TYPE_MAP[item.type]) return item.type;
     return null;
   }
 
-  /* ------------------ ۹) ساخت آیتم HTML ------------------ */
+  /* ------------ ساخت یک آیتم HTML ---------- */
   function buildItem(item) {
-
     const group = item._group;
     const title = item.title || "";
-
-    let label = "";
 
     const labelMap = {
       dentcast:      "🎙️ دنت‌کست — اپیزود " + item.episode,
@@ -92,21 +88,18 @@ document.addEventListener("DOMContentLoaded", () => {
       dentai:        "📚 مقاله — " + title
     };
 
-    label = labelMap[group] || title;
-
     let url = item.page_url || item.url || "";
-
     if (!url && group === "dentcast") url = "/episodes.html";
     if (!url.startsWith("http")) url = "https://dentcast.ir" + url;
 
     return `
       <a class="dc-result-item" href="${url}" target="_blank">
-        ${label}
+        ${labelMap[group] || title}
       </a>
     `;
   }
 
-  /* ------------------ ۱۰) الگوریتم سرچ ------------------ */
+  /* ------------ الگوریتم اصلی سرچ ------------ */
   function performSearch(q) {
 
     if (q.length < 2) {
@@ -119,7 +112,6 @@ document.addEventListener("DOMContentLoaded", () => {
     let results = [];
 
     for (const item of DB) {
-
       const group = detectGroup(item);
       if (!group) continue;
 
@@ -127,7 +119,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (!activeFilters.has(group)) continue;
 
-      // ترکیب کامل قابل جستجو
       const blob = (
         (item.title || "") + " " +
         (item.caption || "") + " " +
@@ -138,7 +129,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (blob.includes(query)) results.push(item);
     }
 
-    /* نمایش فقط ۳۰ آیتم اول */
+    /* --- نمایش ۳۰ تای اول --- */
     const more = results.length > 30;
     const visible = results.slice(0, 30);
 
@@ -149,14 +140,29 @@ document.addEventListener("DOMContentLoaded", () => {
       ${more ? `<div class="dc-more-btn">مشاهده ادامه نتایج… (${results.length})</div>` : ""}
     `;
 
-    /* بستن */
-    document.querySelector(".dc-close-results").onclick = () => {
+    /* ------------ بستن نتایج ------------- */
+    resultsBox.querySelector(".dc-close-results").onclick = () => {
       resultsBox.style.display = "none";
       resultsBox.innerHTML = "";
     };
+
+    /* ------------ دکمه ادامه نتایج ----------- */
+    const moreBtn = resultsBox.querySelector(".dc-more-btn");
+    if (moreBtn) {
+      moreBtn.onclick = () => {
+        resultsBox.innerHTML =
+          `<button class="dc-close-results">✖</button>` +
+          results.map(buildItem).join("");
+
+        resultsBox.querySelector(".dc-close-results").onclick = () => {
+          resultsBox.style.display = "none";
+          resultsBox.innerHTML = "";
+        };
+      };
+    }
   }
 
-  /* ------------------ ۱۱) اجرای اولیه ------------------ */
+  /* ------------ اجرای سیستم ---------------- */
   loadDB();
 
 });
