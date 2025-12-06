@@ -365,6 +365,14 @@ fetch(JSON_URL)
   loadEpisode(0);
 });
 </script>
+<script>
+function sendHeight() {
+  const h = document.body.scrollHeight;
+  window.parent.postMessage({ dcPlayerHeight: h }, "*");
+}
 
+new ResizeObserver(sendHeight).observe(document.body);
+window.addEventListener("load", sendHeight);
+</script>
 </body>
 </html>
