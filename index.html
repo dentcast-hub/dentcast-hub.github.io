@@ -920,34 +920,209 @@ background: #0b5fff;
   </script>
 
 <script>
-  const dcFilters = document.querySelectorAll(".dc-filter-btn");
+document.addEventListener('DOMContentLoaded', function () {
+  const dcFilters    = document.querySelectorAll(".dc-filter-btn");
   const dcSearchInput = document.getElementById("dcSearch");
-  const dcResultsBox = document.getElementById("dcResults");
+  const dcResultsBox  = document.getElementById("dcResults");
 
-  // روشن/خاموش کردن هر دسته
+  let DC_ALL_ITEMS = [];   // کل دیتابیس
+  let DC_ACTIVE_TYPES = new Set(); // تایپ‌های فعال (بر اساس تیک‌ها)
+
+  // 🚩 ۱) مَپ کردن type به لیبل فارسی برای نمایش قشنگ
+  const TYPE_LABELS = {
+    "episode":       "دنت‌کست",
+    "notecast":      "نوت‌کست",
+    "clinical":      "نکات کلینیکی",
+    "litecast":      "لایت‌کست",
+    "photocast":     "فوتوکست",
+    "dentcast_plus": "ویدیوها",
+    "dentai":        "مقالات"
+  };
+
+  // 🚩 ۲) مقدار اولیهٔ Set بر اساس دکمه‌هایی که active هستن
+  dcFilters.forEach(btn => {
+    const t = btn.dataset.type;
+    if (btn.classList.contains('active') && t) {
+      DC_ACTIVE_TYPES.add(t);
+    }
+  });
+
+  // کمک‌تابع: اگر همه تیک‌ها خاموش شد، یعنی «همه روشن»
+  function normalizeActiveTypes() {
+    if (DC_ACTIVE_TYPES.size === 0) {
+      // همه را فعال فرض کن
+      dcFilters.forEach(btn => {
+        const t = btn.dataset.type;
+        if (t) DC_ACTIVE_TYPES.add(t);
+      });
+      // از نظر UI نمی‌خوایم زورکی کلاس active اضافه کنیم؛
+      // فقط سطح لاجیک سرچ اینطوری عمل می‌کنه.
+    }
+  }
+
+  // 🚩 ۳) تیک زدن/برداشتن دسته‌ها
   dcFilters.forEach(btn => {
     btn.addEventListener("click", () => {
+      const t = btn.dataset.type;
+      if (!t) return;
+
       btn.classList.toggle("active");
-      // بعداً اینجا روی دیتابیس فیلتر نوع رو اعمال می‌کنیم
+
+      if (btn.classList.contains("active")) {
+        DC_ACTIVE_TYPES.add(t);
+      } else {
+        DC_ACTIVE_TYPES.delete(t);
+      }
+
+      normalizeActiveTypes();
+      runSearch(); // هر تغییر فیلتر → سرچ دوباره
     });
   });
 
-  // سرچ نمایشی – فقط برای تست UI
-  dcSearchInput.addEventListener("input", () => {
-    const q = dcSearchInput.value.trim();
+  // 🚩 ۴) لود دیتابیس از Dentcast-brain.txt
+  async function loadDentcastBrain() {
+    try {
+      const res  = await fetch('/Dentcast-brain.txt');
+      const text = await res.text();
+      const data = JSON.parse(text);
 
+      if (Array.isArray(data)) {
+        DC_ALL_ITEMS = data;
+      } else {
+        console.error("Dentcast-brain.txt must be a JSON array");
+        DC_ALL_ITEMS = [];
+      }
+    } catch (err) {
+      console.error("Error loading Dentcast-brain.txt:", err);
+      DC_ALL_ITEMS = [];
+      dcResultsBox.style.display = "block";
+      dcResultsBox.innerHTML = '<div class="dc-result-item" style="color:#e11d48;">خطا در لود دیتابیس جستجو</div>';
+    }
+  }
+
+  // 🚩 ۵) لاجیک اصلی سرچ
+  function runSearch() {
+    const q = (dcSearchInput.value || "").trim().toLowerCase();
+
+    // اگر هیچ چیزی تو سرچ نیست یا خیلی کوتاهه
     if (q.length < 2) {
       dcResultsBox.style.display = "none";
       dcResultsBox.innerHTML = "";
       return;
     }
 
+    normalizeActiveTypes();
+
+    const results = DC_ALL_ITEMS.filter(item => {
+      const t = item.type || "";
+      if (!DC_ACTIVE_TYPES.has(t)) return false;
+
+      const title    = (item.title    || "").toLowerCase();
+      const caption  = (item.caption  || "").toLowerCase();
+      const keywords = Array.isArray(item.keywords) ? item.keywords.join(" ").toLowerCase() : "";
+      const hashtags = Array.isArray(item.hashtags) ? item.hashtags.join(" ").toLowerCase() : "";
+
+      const bigText = title + " " + caption + " " + keywords + " " + hashtags;
+      return bigText.includes(q);
+    });
+
+    renderResults(results, q);
+  }
+
+  // 🚩 ۶) ساخت HTML نتایج
+  function renderResults(results, query) {
+    if (!results || results.length === 0) {
+      dcResultsBox.style.display = "block";
+      dcResultsBox.innerHTML = `
+        <div class="dc-result-item" style="text-align:center; color:#64748b;">
+          موردی برای «${escapeHtml(query)}» پیدا نشد.
+        </div>
+      `;
+      return;
+    }
+
+    let html = "";
+
+    results.forEach(item => {
+      const type   = item.type || "";
+      const label  = TYPE_LABELS[type] || type || "مورد دیگر";
+      const title  = item.title   || "بدون عنوان";
+      const cap    = item.caption || "";
+      const epNum  = item.episode || null;
+
+      // 🔗 تعیین مقصد لینک
+      let url = "";
+      if (item.url && typeof item.url === "string" && item.url.trim() !== "") {
+        url = item.url.trim();
+      } else if (type === "episode") {
+        // اگر URL نداشت و دنت‌کست بود → صفحهٔ اپیزودها
+        url = "/episodes.html";
+      } else {
+        url = "#";
+      }
+
+      html += `
+        <a class="dc-result-item" href="${escapeAttr(url)}">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+            <span style="
+              display:inline-block;
+              background:#e0edff;
+              color:#1d4ed8;
+              padding:2px 8px;
+              border-radius:999px;
+              font-size:0.7rem;
+              font-weight:700;
+              margin-left:6px;
+            ">
+              ${escapeHtml(label)}
+            </span>
+            <span style="font-weight:700; font-size:0.9rem; color:#0b1d40;">
+              ${epNum ? `اپیزود ${escapeHtml(String(epNum))} — ` : ""}${escapeHtml(title)}
+            </span>
+          </div>
+          ${cap ? `
+          <div style="font-size:0.8rem; color:#4b5563; line-height:1.6; margin-top:2px;">
+            ${escapeHtml(shorten(cap, 140))}
+          </div>
+          ` : ""}
+        </a>
+      `;
+    });
+
     dcResultsBox.style.display = "block";
-    dcResultsBox.innerHTML = `
-      <div class="dc-result-item">نتیجهٔ نمونه برای «${q}» (فقط تست ظاهر)</div>
-      <div class="dc-result-item">بعداً اینجا لیست واقعی از JSON میاد</div>
-    `;
+    dcResultsBox.innerHTML = html;
+  }
+
+  // 🚩 ۷) کمک‌تابع‌ها: امن‌سازی HTML و کوتاه کردن متن
+  function escapeHtml(str) {
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+
+  function escapeAttr(str) {
+    return escapeHtml(str);
+  }
+
+  function shorten(str, maxLen) {
+    if (!str) return "";
+    if (str.length <= maxLen) return str;
+    return str.slice(0, maxLen - 1) + "…";
+  }
+
+  // 🚩 ۸) هندلینگ input (با یک دی‌بونس ساده)
+  let searchTimeout = null;
+  dcSearchInput.addEventListener("input", function () {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(runSearch, 220); // تاخیر کوچیک برای تایپ
   });
-</script>
+
+  // 🚩 ۹) شروع کار: اول دیتابیس رو لود کن
+  loadDentcastBrain();
+});
+      </script>
 </body>
 </html>
