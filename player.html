@@ -80,47 +80,54 @@
   }
 
   /* کنترل‌ها */
+/* ردیف کنترل‌ها */
 .dc-controls-row {
   display: flex;
-  justify-content: center;   /* ⭐ دکمه‌ها دقیقاً وسط */
+  justify-content: space-between;   /* ⭐ دکمه‌ها در عرض پخش می‌شن */
   align-items: center;
-  gap: 24px;                 /* فاصله حرفه‌ای */
   width: 100%;
-  direction: ltr;            /* ترتیب دکمه‌ها درست */
+  padding: 0 12px;                  /* فضای تنفسی دو طرف */
+  direction: ltr;
+  gap: 0;                           /* توزیع دقیق بدون فشار */
 }
 
-  .dc-play-btn {
-    width: 40px;        /* ↓ کمتر */
-    height: 40px;
-    border-radius: 50%;
-    background: var(--blue);
-    border: none;
-    color: white;
-    font-size: 20px;
-    cursor: pointer;
-  }
+/* دکمه پلی — مرکز وزن طراحی */
+.dc-play-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--blue);
+  border: none;
+  color: white;
+  font-size: 22px;
+  cursor: pointer;
+  flex-shrink: 0;                    /* ⭐ نذاره کوچک بشه */
+}
 
-  .dc-jump-btn {
-    width: 34px;        /* ↓ کوچکتر */
-    height: 34px;
-    border-radius: 50%;
-    background: #0b2146;
-    border: 1px solid rgba(255,255,255,0.25);
-    color: var(--text-sub);
-    cursor: pointer;
-    font-size: 12px;
-  }
+/* دکمه‌های ۱۵ ثانیه — سمتین متعادل */
+.dc-jump-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #0b2146;
+  border: 1px solid rgba(255,255,255,0.25);
+  color: var(--text-sub);
+  cursor: pointer;
+  font-size: 12px;
+  flex-shrink: 0;
+}
 
-  .dc-speed-btn {
-    padding: 4px 8px;   /* ↓ کمتر */
-    border-radius: 8px;
-    background: #0b2146;
-    border: 1px solid rgba(255,255,255,0.25);
-    color: #fff;
-    cursor: pointer;
-    font-size: 11px;
-    margin-right: 6px;
-  }
+/* دکمه سرعت — اندازه کوچیک و بالانس */
+.dc-speed-btn {
+  padding: 6px 10px;
+  border-radius: 10px;
+  background: #0b2146;
+  border: 1px solid rgba(255,255,255,0.25);
+  color: #fff;
+  cursor: pointer;
+  font-size: 12px;
+  flex-shrink: 0;
+}
 
   /* اسلایدر */
   .dc-range {
