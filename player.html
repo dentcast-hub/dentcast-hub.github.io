@@ -27,7 +27,7 @@
     background: radial-gradient(circle at top, #082f49, #020617 60%);
     font-family: "Vazirmatn", sans-serif;
     color: var(--text-main);
-    padding: 16px 6px;    /* ↓ کمی کمتر */
+    padding: 16px 6px;
     box-sizing: border-box;
   }
 
@@ -35,7 +35,7 @@
     width: 100%;
     max-width: 480px;
     background: linear-gradient(145deg, rgba(5,21,52,0.95), rgba(3,10,30,0.98));
-    border-radius: 20px; /* ↓ کمی کمتر */
+    border-radius: 20px;
     overflow: hidden;
     border: 1px solid rgba(11,95,255,0.35);
   }
@@ -43,12 +43,12 @@
   /* ---------------- HEADER ---------------- */
   .dc-header {
     display: flex;
-    padding: 12px;     /* ↓ کمتر شد */
+    padding: 12px;
     gap: 10px;
   }
 
   .dc-cover img {
-    width: 60px;       /* ↓ کوچکتر */
+    width: 60px;
     height: 60px;
     border-radius: 14px;
     object-fit: cover;
@@ -56,106 +56,168 @@
   }
 
   #dc-current-title {
-    font-size: 14px;   /* ↓ ظریف‌تر */
+    font-size: 14px;
     line-height: 1.4;
   }
 
   #dc-current-desc {
     display: none;
     margin-top: 4px;
-    font-size: 11px;   /* ↓ کوچکتر */
+    font-size: 11px;
     color: #000;
     background: #fff;
     padding: 8px;
     border-radius: 8px;
-    max-height: 120px; /* ↓ کمتر */
+    max-height: 120px;
     overflow-y: auto;
   }
 
   /* ---------------- PLAYER ---------------- */
   .dc-main-player {
-    padding: 10px 12px; /* ↓ کمی کمتر */
+    padding: 10px 12px;
     border-top: 1px solid rgba(255,255,255,0.06);
     border-bottom: 1px solid rgba(255,255,255,0.06);
   }
 
-  /* کنترل‌ها */
-/* ردیف کنترل‌ها — نسخهٔ Grid حرفه‌ای */
-.dc-controls-row {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);   /* ⭐ چهار ستون مساوی */
-  align-items: center;
-  justify-items: center;                   /* ⭐ دکمه‌ها دقیقاً وسط ستون */
-  width: 100%;
-  padding: 0 16px;                         /* فاصلهٔ حرفه‌ای از لبه‌ها */
-  direction: ltr;
-}
-
-/* پلی — کمی بزرگ‌تر و Balanced */
-.dc-play-btn {
-  width: 46px;
-  height: 46px;
-  border-radius: 50%;
-  background: var(--blue);
-  border: none;
-  color: white;
-  font-size: 22px;
-  cursor: pointer;
-}
-
-/* دکمه‌های ۱۵ثانیه */
-.dc-jump-btn {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  background: #0b2146;
-  border: 1px solid rgba(255,255,255,0.22);
-  color: var(--text-sub);
-  font-size: 11px;
-  cursor: pointer;
-}
-
-/* دکمه سرعت */
-.dc-speed-btn {
-  padding: 5px 9px;
-  border-radius: 10px;
-  background: #0b2146;
-  border: 1px solid rgba(255,255,255,0.22);
-  color: #fff;
-  font-size: 12px;
-  cursor: pointer;
-}
-
-  /* اسلایدر */
-  .dc-range {
+  /* ردیف کنترل‌ها — Grid */
+  .dc-controls-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    align-items: center;
+    justify-items: center;
     width: 100%;
-    margin-top: 8px;    /* ↓ کمتر */
+    padding: 0 16px;
     direction: ltr;
   }
 
-  
-.dc-time-row {
-  display: flex;
-  justify-content: flex-end;   /* ⭐ راست‌چین */
-  align-items: center;
-  gap: 8px;                    /* فاصله بین عناصر */
-  font-size: 12px;
-  color: #9aa1b3;
-  direction: ltr;               /* اعداد زمان صحیح نمایش داده شوند */
-}
+  .dc-play-btn {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: var(--blue);
+    border: none;
+    color: white;
+    font-size: 22px;
+    cursor: pointer;
+  }
 
-.dc-time-row span::after {
-  content: ""; 
-}
+  .dc-jump-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #0b2146;
+    border: 1px solid rgba(255,255,255,0.22);
+    color: var(--text-sub);
+    font-size: 11px;
+    cursor: pointer;
+  }
 
-.dc-time-row span:first-child::after {
-  content: " | ";               /* ⭐ خط وسط */
-  padding: 0 4px;
-  color: #9aa1b3;
-}
+  .dc-speed-btn {
+    padding: 5px 9px;
+    border-radius: 10px;
+    background: #0b2146;
+    border: 1px solid rgba(255,255,255,0.22);
+    color: #fff;
+    font-size: 12px;
+    cursor: pointer;
+  }
+
+  .dc-range {
+    width: 100%;
+    margin-top: 8px;
+    direction: ltr;
+  }
+
+  .dc-time-row {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: #9aa1b3;
+    direction: ltr;
+  }
+
+  .dc-time-row span::after {
+    content: "";
+  }
+
+  .dc-time-row span:first-child::after {
+    content: " | ";
+    padding: 0 4px;
+    color: #9aa1b3;
+  }
+
+  /* ---------------- SEARCH BOX (جدید) ---------------- */
+  .dc-search-box {
+    margin: 6px 12px 4px;
+    padding: 10px 12px;
+    border-radius: 16px;
+    background: #ffd54f;
+    color: #1a1a1a;
+  }
+
+  .dc-search-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  .dc-search-header span:last-child {
+    font-size: 10px;
+    opacity: 0.8;
+  }
+
+  .dc-search-input {
+    width: 100%;
+    border: none;
+    border-radius: 999px;
+    padding: 6px 10px;
+    font-size: 11px;
+    outline: none;
+  }
+
+  .dc-search-results {
+    margin-top: 6px;
+    max-height: 160px;
+    overflow-y: auto;
+  }
+
+  .dc-search-item {
+    background: rgba(255,255,255,0.9);
+    border-radius: 10px;
+    padding: 6px 8px;
+    margin-bottom: 4px;
+    cursor: pointer;
+  }
+
+  .dc-search-item-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 2px;
+  }
+
+  .dc-search-item-caption {
+    font-size: 10px;
+    color: #333;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .dc-search-empty {
+    font-size: 10px;
+    color: #333;
+    opacity: 0.8;
+  }
+
   /* ---------------- SORT BUTTON ---------------- */
   #dc-sort-btn {
-    margin: 6px 12px;   /* ↓ کمی کمتر */
+    margin: 6px 12px;
     padding: 5px 12px;
     border-radius: 999px;
     background: var(--blue);
@@ -168,12 +230,12 @@
 
   /* ---------------- LIST ---------------- */
   .dc-list {
-    max-height: 240px;  /* ↓ ارتفاع لیست کمتر */
+    max-height: 240px;
     overflow-y: auto;
   }
 
   .dc-episode-item {
-    padding: 10px 12px; /* ↓ کمی فشرده */
+    padding: 10px 12px;
     border-bottom: 1px solid rgba(255,255,255,0.06);
   }
 
@@ -186,7 +248,7 @@
   }
 
   .dc-ep-title {
-    font-size: 12px;    /* ↓ کمی ریزتر */
+    font-size: 12px;
     color: var(--text-main);
     white-space: nowrap;
     overflow: hidden;
@@ -194,7 +256,7 @@
   }
 
   .dc-info-btn {
-    font-size: 16px;   /* ↓ کمی کمتر */
+    font-size: 16px;
     color: var(--blue);
     cursor: pointer;
     padding: 0 4px;
@@ -244,6 +306,18 @@
     </div>
   </div>
 
+  <!-- 🔶 باکس زرد فهرست/سرچ -->
+  <div class="dc-search-box">
+    <div class="dc-search-header">
+      <span>فهرست اپیزودها 🎧</span>
+      <span>با هشتگ یا کلمه بگردید</span>
+    </div>
+    <input id="dc-search-input" class="dc-search-input"
+           type="text"
+           placeholder="#سمان ، #ایمپلنت ، ریشه ...">
+    <div id="dc-search-results" class="dc-search-results"></div>
+  </div>
+
   <button id="dc-sort-btn">↓</button>
 
   <div class="dc-list" id="dc-list"></div>
@@ -252,6 +326,7 @@
 
 <script>
 const JSON_URL = "dentcast.json";
+const BRAIN_URL = "Dentcast-brain.txt";
 
 const audio = document.getElementById("dc-audio");
 const listEl = document.getElementById("dc-list");
@@ -264,10 +339,15 @@ const sortBtn = document.getElementById("dc-sort-btn");
 const backBtn = document.getElementById("dc-back");
 const fwdBtn  = document.getElementById("dc-forward");
 
+const searchInput   = document.getElementById("dc-search-input");
+const searchResults = document.getElementById("dc-search-results");
+
 let episodesRaw = [];
 let episodes = [];
 let sortDescending = true;
 let currentIndex = 0;
+
+let brainData = [];   // ← دیتابیس هشتگ‌ها
 
 let speeds = [1, 1.25, 1.5, 1.75, 2];
 let speedIndex = 0;
@@ -280,6 +360,7 @@ speedBtn.addEventListener("click", () => {
 
 function loadEpisode(i){
   const ep = episodes[i];
+  if (!ep) return;
   currentIndex = i;
   audio.src = ep.audio_url;
   titleEl.textContent = ep.title;
@@ -358,15 +439,13 @@ playBtn.addEventListener("click", ()=>{
   }
 });
 
-/* ⭐⭐ دکمه‌های ۱۵ ثانیه — تنها بخش جدید ⭐⭐ */
 backBtn.addEventListener("click", () => {
   audio.currentTime = Math.max(0, audio.currentTime - 15);
 });
 
 fwdBtn.addEventListener("click", () => {
-  audio.currentTime = Math.min(audio.duration, audio.currentTime + 15);
+  audio.currentTime = Math.min(audio.duration || 0, audio.currentTime + 15);
 });
-/* ⭐⭐ پایان اصلاح ⭐⭐ */
 
 audio.addEventListener("loadedmetadata", ()=>{
   document.getElementById("dc-time-duration").textContent =
@@ -374,14 +453,88 @@ audio.addEventListener("loadedmetadata", ()=>{
 });
 
 audio.addEventListener("timeupdate", ()=>{
+  if (!audio.duration) return;
   seek.value = (audio.currentTime / audio.duration) * 100;
   document.getElementById("dc-time-current").textContent =
     new Date(audio.currentTime * 1000).toISOString().substr(14,5);
 });
 
 seek.addEventListener("input", ()=>{
+  if (!audio.duration) return;
   audio.currentTime = (seek.value / 100) * audio.duration;
 });
+
+/* --------- سرچ بر اساس Dentcast-brain.txt + dentcast.json --------- */
+
+function normalizeText(s) {
+  return (s || "").toString().toLowerCase();
+}
+
+function handleSearch() {
+  const q = searchInput.value.trim();
+  searchResults.innerHTML = "";
+  if (!q) return;
+
+  const qNorm = normalizeText(q);
+
+  const matches = brainData.filter(item => {
+    const all = [
+      item.title || "",
+      item.caption || "",
+      (item.keywords || []).join(" "),
+      (item.hashtags || []).join(" ")
+    ].join(" ");
+    return normalizeText(all).includes(qNorm);
+  }).slice(0, 30); // حداکثر ۳۰ نتیجه
+
+  if (matches.length === 0) {
+    const empty = document.createElement("div");
+    empty.className = "dc-search-empty";
+    empty.textContent = "چیزی پیدا نشد.";
+    searchResults.appendChild(empty);
+    return;
+  }
+
+  matches.forEach(item => {
+    const epNo = String(item.episode || "").trim();
+
+    const epIndex = episodes.findIndex(e => String(e.episode) === epNo);
+    if (epIndex === -1) return; // اگر تو dentcast.json نبود، ردش کن
+
+    const fullEp = episodes[epIndex];
+
+    const box = document.createElement("div");
+    box.className = "dc-search-item";
+
+    const t = document.createElement("div");
+    t.className = "dc-search-item-title";
+    t.textContent = `اپیزود ${epNo} — ${item.title || fullEp.title || ""}`;
+
+    const c = document.createElement("div");
+    c.className = "dc-search-item-caption";
+    c.textContent = item.caption || fullEp.description || "";
+
+    box.appendChild(t);
+    box.appendChild(c);
+
+    box.addEventListener("click", () => {
+      loadEpisode(epIndex);
+      audio.addEventListener("canplay", function handler() {
+        audio.removeEventListener("canplay", handler);
+        audio.play();
+        playBtn.textContent = "⏸";
+      });
+      // اسکرول تا بالای پلیر (داخل iframe)
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    searchResults.appendChild(box);
+  });
+}
+
+searchInput.addEventListener("input", handleSearch);
+
+/* --------- لود فایل‌ها --------- */
 
 fetch(JSON_URL)
 .then(res=>res.json())
@@ -389,7 +542,15 @@ fetch(JSON_URL)
   episodesRaw = data;
   applySorting();
   loadEpisode(0);
-});
+})
+.catch(err => console.error("dentcast.json error", err));
+
+fetch(BRAIN_URL)
+.then(res=>res.json())
+.then(data=>{
+  brainData = data;
+})
+.catch(err => console.error("Dentcast-brain.txt error", err));
 </script>
 
 <script>
