@@ -12,6 +12,7 @@
   <style>
   :root {
     --blue: #0b5fff;
+    --blue-soft: #1b3b8f;
     --bg: #020617;
     --text-main: #e7eaf1;
     --text-sub: #9aa1b3;
@@ -39,7 +40,6 @@
     border: 1px solid rgba(11,95,255,0.35);
   }
 
-  /* ---------------- HEADER ---------------- */
   .dc-header {
     display: flex;
     padding: 12px;
@@ -71,7 +71,6 @@
     overflow-y: auto;
   }
 
-  /* ---------------- PLAYER CONTROLS ---------------- */
   .dc-main-player {
     padding: 10px 12px;
     border-top: 1px solid rgba(255,255,255,0.06);
@@ -129,21 +128,28 @@
   .dc-time-row {
     display: flex;
     justify-content: flex-end;
+    align-items: center;
     gap: 8px;
     font-size: 12px;
     color: #9aa1b3;
     direction: ltr;
   }
 
-  /* ---------------- SEARCH BOX ---------------- */
+  .dc-time-row span:first-child::after {
+    content: " | ";
+    padding: 0 4px;
+    color: #9aa1b3;
+  }
+
+  /* SEARCH BOX */
   .dc-search-box {
     margin: 6px 12px 4px;
-    padding: 10px 12px;
+    padding: 12px;
     border-radius: 16px;
     background: #ffd54f;
     color: #1a1a1a;
-    box-shadow: 0 2px 6px rgba(255, 193, 7, 0.35);
-    border: 1px solid rgba(255,255,255,0.4);
+    border: 2px solid #f4c534;
+    box-sizing: border-box;
   }
 
   .dc-search-header {
@@ -155,10 +161,12 @@
     margin-bottom: 6px;
   }
 
-  #dc-search-close {
+  .dc-close-search {
     font-size: 14px;
     cursor: pointer;
     padding: 2px 6px;
+    border-radius: 6px;
+    background: rgba(0,0,0,0.15);
   }
 
   .dc-search-input {
@@ -182,44 +190,34 @@
     padding: 6px 8px;
     margin-bottom: 4px;
     cursor: pointer;
-  }
-
-  .dc-search-item-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    position: relative;
   }
 
   .dc-search-item-title {
     font-size: 11px;
     font-weight: 700;
     color: #111;
+    margin-bottom: 2px;
   }
 
-  .dc-info-icon {
-    font-size: 14px;
-    cursor: pointer;
-    padding: 0 4px;
-    color: #0b5fff;
-  }
-
-  .dc-search-item-desc {
-    display: none;
-    margin-top: 4px;
-    background: #fff;
-    padding: 6px;
-    border-radius: 8px;
-    font-size: 10px;
-    color: #222;
-  }
-
-  .dc-search-empty {
+  .dc-search-item-caption {
     font-size: 10px;
     color: #333;
-    opacity: 0.8;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
-  /* ---------------- SORT BUTTON ---------------- */
+  .dc-search-info-btn {
+    position: absolute;
+    left: 6px;
+    top: 6px;
+    font-size: 14px;
+    color: #0b5fff;
+    cursor: pointer;
+    padding: 2px;
+  }
+
   #dc-sort-btn {
     margin: 6px 12px;
     padding: 5px 12px;
@@ -229,6 +227,7 @@
     color: white;
     cursor: pointer;
     font-size: 16px;
+    line-height: 1;
   }
 
   .dc-list {
@@ -239,6 +238,39 @@
   .dc-episode-item {
     padding: 10px 12px;
     border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .dc-episode-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    direction: ltr;
+  }
+
+  .dc-ep-title {
+    font-size: 12px;
+    color: var(--text-main);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .dc-info-btn {
+    font-size: 16px;
+    color: var(--blue);
+    cursor: pointer;
+    padding: 0 4px;
+  }
+
+  .dc-ep-desc {
+    display: none;
+    margin-top: 6px;
+    background: #fff;
+    color: #000;
+    padding: 8px;
+    border-radius: 8px;
+    font-size: 11px;
+    line-height: 1.5;
   }
   </style>
 </head>
@@ -274,11 +306,10 @@
     </div>
   </div>
 
-  <!-- SEARCH BOX -->
   <div class="dc-search-box">
     <div class="dc-search-header">
       <span>فهرست اپیزودها 🎧</span>
-      <span id="dc-search-close">✕</span>
+      <span class="dc-close-search" id="dc-close-search">×</span>
     </div>
 
     <input id="dc-search-input" class="dc-search-input"
@@ -289,10 +320,12 @@
   </div>
 
   <button id="dc-sort-btn">↓</button>
+
   <div class="dc-list" id="dc-list"></div>
 
 </div>
 
+<!-- ⭐⭐⭐ SCRIPTS ⭐⭐⭐ -->
 <script>
 const JSON_URL = "dentcast.json";
 const BRAIN_URL = "Dentcast-brain.txt";
@@ -310,7 +343,7 @@ const fwdBtn  = document.getElementById("dc-forward");
 
 const searchInput   = document.getElementById("dc-search-input");
 const searchResults = document.getElementById("dc-search-results");
-const searchClose   = document.getElementById("dc-search-close");
+const closeSearchBtn = document.getElementById("dc-close-search");
 
 let episodesRaw = [];
 let episodes = [];
@@ -318,14 +351,20 @@ let brainData = [];
 let sortDescending = true;
 let currentIndex = 0;
 
-/* ---------------- CLOSE SEARCH ---------------- */
-searchClose.addEventListener("click", () => {
-  searchInput.value = "";
-  searchResults.innerHTML = "";
+let speeds = [1, 1.25, 1.5, 1.75, 2];
+let speedIndex = 0;
+
+/* ---------------- SPEED ---------------- */
+speedBtn.addEventListener("click", () => {
+  speedIndex = (speedIndex + 1) % speeds.length;
+  audio.playbackRate = speeds[speedIndex];
+  speedBtn.textContent = speeds[speedIndex] + "x";
 });
 
+/* ---------------- LOAD EPISODE ---------------- */
 function loadEpisode(i){
   const ep = episodes[i];
+  if (!ep) return;
   currentIndex = i;
   audio.src = ep.audio_url;
   titleEl.textContent = ep.title;
@@ -334,73 +373,188 @@ function loadEpisode(i){
   playBtn.textContent = "▶";
 }
 
-function normalize(s){ return (s || "").toString().toLowerCase(); }
+/* ---------------- EPISODE ROW ---------------- */
+function createRow(ep, i){
+  const row = document.createElement("div");
+  row.className = "dc-episode-item";
 
-/* ---------------- SEARCH FUNCTION ---------------- */
+  const header = document.createElement("div");
+  header.className = "dc-episode-item-header";
+
+  const title = document.createElement("div");
+  title.className = "dc-ep-title";
+  title.textContent = ep.title;
+
+  const info = document.createElement("span");
+  info.className = "dc-info-btn";
+  info.textContent = "🛈";
+
+  const desc = document.createElement("div");
+  desc.className = "dc-ep-desc";
+  desc.innerHTML = ep.description || "";
+
+  header.addEventListener("click", () => {
+    loadEpisode(i);
+    audio.addEventListener("canplay", function handler() {
+      audio.removeEventListener("canplay", handler);
+      audio.play();
+      playBtn.textContent = "⏸";
+    });
+  });
+
+  info.addEventListener("click", (e) => {
+    e.stopPropagation();
+    desc.style.display = desc.style.display === "block" ? "none" : "block";
+  });
+
+  header.appendChild(title);
+  header.appendChild(info);
+  row.appendChild(header);
+  row.appendChild(desc);
+  return row;
+}
+
+/* ---------------- RENDER LIST ---------------- */
+function renderList(){
+  listEl.innerHTML = "";
+  episodes.forEach((ep,i)=>{
+    listEl.appendChild(createRow(ep,i));
+  });
+}
+
+/* ---------------- SORTING ---------------- */
+function applySorting(){
+  episodes = [...episodesRaw].sort((a,b)=>{
+    return sortDescending ? (b.episode - a.episode) : (a.episode - b.episode);
+  });
+  renderList();
+}
+
+sortBtn.onclick = ()=>{
+  sortDescending = !sortDescending;
+  sortBtn.textContent = sortDescending ? "↓" : "↑";
+  applySorting();
+};
+
+/* ---------------- PLAYER BUTTONS ---------------- */
+playBtn.addEventListener("click", ()=>{
+  if(audio.paused){
+    audio.play();
+    playBtn.textContent = "⏸";
+  } else {
+    audio.pause();
+    playBtn.textContent = "▶";
+  }
+});
+
+backBtn.addEventListener("click", () => {
+  audio.currentTime = Math.max(0, audio.currentTime - 15);
+});
+
+fwdBtn.addEventListener("click", () => {
+  audio.currentTime = Math.min(audio.duration || 0, audio.currentTime + 15);
+});
+
+audio.addEventListener("loadedmetadata", ()=>{
+  document.getElementById("dc-time-duration").textContent =
+    new Date(audio.duration * 1000).toISOString().substr(14,5);
+});
+
+audio.addEventListener("timeupdate", ()=>{
+  if (!audio.duration) return;
+  seek.value = (audio.currentTime / audio.duration) * 100;
+  document.getElementById("dc-time-current").textContent =
+    new Date(audio.currentTime * 1000).toISOString().substr(14,5);
+});
+
+seek.addEventListener("input", ()=>{
+  if (!audio.duration) return;
+  audio.currentTime = (seek.value / 100) * audio.duration;
+});
+
+/* ---------------- SEARCH ---------------- */
+
+function normalizeText(s) {
+  return (s || "").toString().toLowerCase();
+}
+
+/* × close button */
+closeSearchBtn.addEventListener("click", () => {
+  searchInput.value = "";
+  searchResults.innerHTML = "";
+});
+
+/* info button in search */
+function createSearchInfoButton(epIndex, fullEp) {
+  const infoBtn = document.createElement("span");
+  infoBtn.className = "dc-search-info-btn";
+  infoBtn.textContent = "🛈";
+
+  infoBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    descEl.innerHTML = fullEp.description || "";
+    descEl.style.display = descEl.style.display === "block" ? "none" : "block";
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+
+  return infoBtn;
+}
+
 function handleSearch() {
   const q = searchInput.value.trim();
   searchResults.innerHTML = "";
   if (!q) return;
 
-  const qn = normalize(q);
+  const qNorm = normalizeText(q);
 
   const matches = brainData.filter(item => {
     const all = [
-      item.title,
-      item.caption,
-      (item.hashtags || []).join(" "),
-      (item.keywords || []).join(" ")
+      item.title || "",
+      item.caption || "",
+      (item.keywords || []).join(" "),
+      (item.hashtags || []).join(" ")
     ].join(" ");
-    return normalize(all).includes(qn);
-  });
+    return normalizeText(all).includes(qNorm);
+  }).slice(0, 30);
 
   if (matches.length === 0) {
-    const d = document.createElement("div");
-    d.className = "dc-search-empty";
-    d.textContent = "چیزی پیدا نشد.";
-    searchResults.appendChild(d);
+    const empty = document.createElement("div");
+    empty.className = "dc-search-empty";
+    empty.textContent = "چیزی پیدا نشد.";
+    searchResults.appendChild(empty);
     return;
   }
 
   matches.forEach(item => {
-    const epNo = String(item.episode).trim();
+    const epNo = String(item.episode || "").trim();
     const epIndex = episodes.findIndex(e => String(e.episode) === epNo);
     if (epIndex === -1) return;
 
-    const ep = episodes[epIndex];
+    const fullEp = episodes[epIndex];
 
     const box = document.createElement("div");
     box.className = "dc-search-item";
 
-    const header = document.createElement("div");
-    header.className = "dc-search-item-header";
+    box.appendChild(createSearchInfoButton(epIndex, fullEp));
 
     const t = document.createElement("div");
     t.className = "dc-search-item-title";
-    t.textContent = `اپیزود ${epNo} — ${ep.title}`;
+    t.textContent = `اپیزود ${epNo} — ${item.title || fullEp.title || ""}`;
 
-    const info = document.createElement("span");
-    info.className = "dc-info-icon";
-    info.textContent = "🛈";
+    const c = document.createElement("div");
+    c.className = "dc-search-item-caption";
+    c.textContent = item.caption || fullEp.description || "";
 
-    const desc = document.createElement("div");
-    desc.className = "dc-search-item-desc";
-    desc.innerHTML = ep.description || item.caption || "";
-
-    info.addEventListener("click", e => {
-      e.stopPropagation();
-      desc.style.display = desc.style.display === "block" ? "none" : "block";
-    });
-
-    header.appendChild(t);
-    header.appendChild(info);
-    box.appendChild(header);
-    box.appendChild(desc);
+    box.appendChild(t);
+    box.appendChild(c);
 
     box.addEventListener("click", () => {
       loadEpisode(epIndex);
-      audio.play();
-      playBtn.textContent = "⏸";
+      audio.addEventListener("canplay", function handler() {
+        audio.removeEventListener("canplay", handler);
+        audio.play();
+        playBtn.textContent = "⏸";
+      });
       window.scrollTo({ top: 0, behavior: "smooth" });
     });
 
@@ -411,22 +565,24 @@ function handleSearch() {
 searchInput.addEventListener("input", handleSearch);
 
 /* ---------------- LOAD FILES ---------------- */
+
 fetch(JSON_URL)
-.then(r => r.json())
-.then(data => {
+.then(res=>res.json())
+.then(data=>{
   episodesRaw = data;
-  episodes = [...episodesRaw].sort((a,b)=>
-    b.episode - a.episode
-  );
+  applySorting();
   loadEpisode(0);
 });
 
 fetch(BRAIN_URL)
-.then(r => r.json())
-.then(data => brainData = data);
+.then(res=>res.json())
+.then(data=>{
+  brainData = data;
+});
 </script>
 
 <script>
+/* iframe resize */
 function sendHeight() {
   const h = document.body.scrollHeight;
   window.parent.postMessage({ dcPlayerHeight: h }, "*");
