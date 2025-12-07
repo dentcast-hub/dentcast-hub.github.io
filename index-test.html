@@ -412,30 +412,49 @@
 <script>
   const tabContainer = document.querySelector('.dc-tabs');
   const tabs = Array.from(document.querySelectorAll('.dc-tab'));
-
-  function scrollToTab(index) {
-    if (index < 0 || index >= tabs.length) return;
-
-    const tab = tabs[index];
-    const offset = tab.offsetLeft - (tabContainer.clientWidth / 2) + (tab.clientWidth / 2);
-
-    tabContainer.scrollTo({
-      left: offset,
-      behavior: 'smooth'
-    });
-  }
+  const panels = document.querySelectorAll('.dc-panel');
 
   // پیدا کردن شماره تب فعال
   function activeIndex() {
     return tabs.findIndex(t => t.classList.contains('active'));
   }
 
+  // فعال‌سازی تب + فعال‌سازی پنل + اسکرول به مرکز
+  function activateTab(index) {
+    if (index < 0 || index >= tabs.length) return;
+
+    // حذف active قبلی
+    tabs.forEach(t => t.classList.remove('active'));
+    panels.forEach(p => p.classList.remove('active'));
+
+    // فعال کردن تب جدید
+    const newTab = tabs[index];
+    newTab.classList.add('active');
+
+    // فعال کردن پنل متناظر
+    const targetId = newTab.getAttribute('data-target');
+    document.getElementById(targetId).classList.add('active');
+
+    // اسکرول به مرکز تب جدید
+    const offset = newTab.offsetLeft - (tabContainer.clientWidth / 2) + (newTab.clientWidth / 2);
+    tabContainer.scrollTo({ left: offset, behavior: 'smooth' });
+  }
+
+  // کلیک روی فلش چپ
   document.getElementById('scrollLeft').addEventListener('click', () => {
-    scrollToTab(activeIndex() - 1);
+    activateTab(activeIndex() - 1);
   });
 
+  // کلیک روی فلش راست
   document.getElementById('scrollRight').addEventListener('click', () => {
-    scrollToTab(activeIndex() + 1);
+    activateTab(activeIndex() + 1);
+  });
+
+  // کلیک روی خود تب‌ها
+  tabs.forEach((tab, i) => {
+    tab.addEventListener('click', () => {
+      activateTab(i);
+    });
   });
 </script>
 </body>
