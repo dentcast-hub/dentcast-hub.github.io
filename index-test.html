@@ -2,19 +2,34 @@
 <html lang="fa" dir="rtl">
 <head>
   <meta charset="utf-8">
-  <title>DentCast Hub – Test</title>
+  <title>DentCast – ناوبری شبیه تلگرام</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- فونت وزیرمتن -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --blue: #0b5fff;        /* آبی اصلی دنت‌کست */
-      --blue-soft: #2563eb;   /* آبی متن‌ها/هاور */
-      --bg: #f3f6ff;          /* پس‌زمینه اصلی صفحه */
-      --card-bg: #fff7ed;     /* باکس‌های کهربایی نرم */
-      --card-border: #ffe4c4;
-      --text-main: #0f172a;
-      --text-sub: #6b7280;
-      --silver-blue: #cbd5e1; /* رنگ تب‌های غیرفعال */
+      /* پالت برگرفته از صفحهٔ اصلی */
+      --primary: #0b5fff;
+      --bg: #F3F5F7;          /* پس‌زمینهٔ عمومی */
+      --card-bg: #FDFCF8;     /* کارت استخوانی */
+      --card-border: #E5E5E5;
+      --text-main: #1e293b;
+      --text-sub: #64748b;
+
+      /* هدر و تب‌ها */
+      --header-bg: #ffffff;
+      --header-border: #e2e8f0;
+      --header-text: #1e293b;
+
+      --tab-bg: #e5e7eb;
+      --tab-text: #64748b;
+      --tab-bg-active: #0b5fff;
+      --tab-text-active: #ffffff;
+      --tab-counter-bg: rgba(15,23,42,0.06);
     }
 
     * {
@@ -23,39 +38,66 @@
 
     body {
       margin: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-family: "Vazirmatn", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       background: var(--bg);
       color: var(--text-main);
     }
 
-    /* هدر ساده شبیه صفحه اصلی فعلی */
-    .hero {
-      padding: 1.5rem 1rem 1rem;
-      text-align: center;
+    /* نوار بالای شبیه تلگرام */
+    .dc-header {
+      background: var(--header-bg);
+      color: var(--header-text);
+      padding: 0.6rem 1rem 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--header-border);
     }
 
-    .hero-title {
-      font-size: 1.5rem;
+    .dc-header-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .hamburger {
+      width: 24px;
+      height: 18px;
+      display: inline-flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .hamburger span {
+      display: block;
+      height: 2px;
+      border-radius: 999px;
+      background: var(--header-text);
+    }
+
+    .dc-title {
       font-weight: 800;
-      color: var(--blue);
-      margin-bottom: 0.25rem;
+      font-size: 0.95rem;
     }
 
-    .hero-subtitle {
-      font-size: 0.9rem;
-      color: var(--text-sub);
-      margin-bottom: 0.25rem;
+    .dc-header-right {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
     }
 
-    .hero-caption {
-      font-size: 0.78rem;
-      color: var(--text-sub);
+    .dc-header-icon {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 2px solid rgba(148,163,184,0.7);
     }
 
-    /* تب‌های مادر – استایل تلگرامی + Silver Blue */
+    /* ردیف تب‌های بالایی (شبیه All / Unread / Contacts) */
     .dc-tabs-wrapper {
-      padding: 0.35rem 0.5rem 0.7rem;
-      background: transparent;
+      background: var(--header-bg);
+      padding: 0 0.5rem 0.6rem;
+      box-shadow: 0 4px 12px rgba(15,23,42,0.08);
     }
 
     .dc-tabs {
@@ -71,44 +113,110 @@
 
     .dc-tab {
       flex: 0 0 auto;
-      padding: 0.45rem 0.9rem;
+      padding: 0.25rem 0.9rem;
       border-radius: 999px;
-      background: var(--silver-blue);
-      color: #111827;
+      border: 1px solid #d4d4d8;
+      background: var(--tab-bg);
+      color: var(--tab-text);
       font-size: 0.8rem;
-      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
       cursor: pointer;
       white-space: nowrap;
-      transition: background 0.18s ease-out, color 0.18s ease-out, transform 0.12s;
+      transition: all 0.18s ease-out;
+    }
+
+    .dc-tab-count {
+      padding: 0.05rem 0.5rem;
+      border-radius: 999px;
+      background: var(--tab-counter-bg);
+      font-size: 0.75rem;
     }
 
     .dc-tab.active {
-      background: var(--blue);
-      color: #fff;
-      transform: translateY(-1px);
+      background: var(--tab-bg-active);
+      color: var(--tab-text-active);
+      border-color: var(--tab-bg-active);
     }
 
-    /* بدنه زیر تب‌ها */
+    .dc-tab.active .dc-tab-count {
+      background: rgba(255,255,255,0.16);
+      color: var(--tab-text-active);
+    }
+
+    /* بدنهٔ صفحه زیر تب‌ها */
     .dc-main {
-      padding: 0.5rem 1rem 1.75rem;
-      max-width: 720px;
+      padding: 0.75rem 0.75rem 1.5rem;
+      max-width: 640px;
       margin: 0 auto;
     }
 
-    .section-title {
-      font-size: 0.98rem;
+    .dc-section-title {
+      font-size: 0.9rem;
       font-weight: 700;
-      margin: 0.6rem 0 0.15rem;
-      text-align: right;
+      margin: 0.6rem 0 0.25rem;
     }
 
-    .section-sub {
-      font-size: 0.8rem;
+    .dc-section-sub {
+      font-size: 0.78rem;
       color: var(--text-sub);
-      margin-bottom: 0.9rem;
-      text-align: right;
+      margin-bottom: 0.75rem;
     }
 
+    .dc-card-list {
+      display: flex;
+      flex-direction: column; /* مهم: شبیه لیست چت تلگرام، همه زیر هم */
+      gap: 0.6rem;
+    }
+
+    .dc-card {
+      background: var(--card-bg);
+      border-radius: 0.9rem;
+      border: 1px solid var(--card-border);
+      padding: 0.7rem 0.75rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+      transition: box-shadow 0.18s ease-out, transform 0.12s ease-out, border-color 0.18s ease-out, background 0.18s ease-out;
+    }
+
+    .dc-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 7px 18px rgba(0,0,0,0.06);
+      border-color: rgba(11,95,255,0.35);
+      background: #ffffff;
+    }
+
+    .dc-card-main {
+      display: flex;
+      flex-direction: column;
+      gap: 0.12rem;
+    }
+
+    .dc-card-title {
+      font-size: 0.86rem;
+      font-weight: 600;
+    }
+
+    .dc-card-caption {
+      font-size: 0.75rem;
+      color: var(--text-sub);
+    }
+
+    .dc-chip {
+      font-size: 0.7rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 999px;
+      background: rgba(11,95,255,0.06);
+      color: #1d4ed8;
+      border: 1px solid rgba(59,130,246,0.35);
+      white-space: nowrap;
+    }
+
+    /* مخفی/نمایش سکشن‌ها */
     .dc-panel {
       display: none;
     }
@@ -116,184 +224,186 @@
       display: block;
     }
 
-    /* کارت‌ها – شبیه باکس‌های کهربایی صفحه فعلی */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
-      gap: 0.75rem;
-    }
-
-    .card {
-      background: var(--card-bg);
-      border-radius: 1rem;
-      border: 1px solid var(--card-border);
-      padding: 0.9rem 0.8rem;
-      font-size: 0.85rem;
-      cursor: pointer;
-      box-shadow: 0 6px 16px rgba(15,23,42,0.03);
-      transition: transform 0.15s ease-out, box-shadow 0.15s ease-out, border-color 0.15s ease-out;
-    }
-
-    .card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 22px rgba(15,23,42,0.06);
-      border-color: #fed7aa;
-    }
-
-    .card-title {
-      font-weight: 600;
-      margin-bottom: 0.3rem;
-      color: #1f2933;
-    }
-
-    .card-sub {
-      font-size: 0.78rem;
-      color: var(--text-sub);
-    }
-
-    /* دکمه فهرست اپیزودها – فقط برای تست پایین صفحه */
-    .episodes-btn {
-      margin-top: 1.4rem;
-      text-align: center;
-    }
-
-    .episodes-btn a {
-      display: inline-block;
-      padding: 0.6rem 1.4rem;
-      border-radius: 999px;
-      background: var(--blue);
-      color: #fff;
-      font-size: 0.9rem;
-      text-decoration: none;
-      font-weight: 600;
-    }
-
-    .episodes-btn a span {
-      margin-right: 0.35rem;
+    @media (min-width: 768px) {
+      .dc-main {
+        padding: 1rem 1.25rem 2rem;
+      }
+      .dc-card {
+        padding: 0.8rem 0.9rem;
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- هدر شبیه صفحه اصلی فعلی -->
-  <header class="hero">
-    <h1 class="hero-title">DentCast — دنت‌کست 🎙</h1>
-    <p class="hero-subtitle">پادکست علمی دندان‌پزشکی</p>
-    <p class="hero-caption">به روایت دکتر فؤاد شهابیان، متخصص پروتز</p>
+  <!-- نوار بالای شبیه تلگرام -->
+  <header class="dc-header">
+    <div class="dc-header-left">
+      <button class="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="dc-title">DentCast Hub</div>
+    </div>
+    <div class="dc-header-right">
+      <!-- آیکون پروفایل نمایشی -->
+      <div class="dc-header-icon"></div>
+    </div>
   </header>
 
-  <!-- تب‌های مادر با Silver Blue -->
+  <!-- تب‌های اصلی بالا -->
   <div class="dc-tabs-wrapper">
     <div class="dc-tabs" id="dcTabs">
-      <div class="dc-tab active" data-target="panel-studio">DentCast Studio</div>
-      <div class="dc-tab" data-target="panel-litecast">LiteCast ✨</div>
-      <div class="dc-tab" data-target="panel-info">Info &amp; Tools</div>
+      <div class="dc-tab active" data-target="panel-studio">
+        <span>دنت‌کست استودیو</span>
+        <span class="dc-tab-count">۶</span>
+      </div>
+      <div class="dc-tab" data-target="panel-patient">
+        <span>برای غیر دندان‌پزشکان</span>
+        <span class="dc-tab-count">۲</span>
+      </div>
+      <div class="dc-tab" data-target="panel-site">
+        <span>اینفو و ابزار سایت</span>
+        <span class="dc-tab-count">۴</span>
+      </div>
     </div>
   </div>
 
+  <!-- محتوای هر تب -->
   <main class="dc-main">
-
-    <!-- پنل استودیو -->
+    <!-- Panel 1: DentCast Studio -->
     <section class="dc-panel active" id="panel-studio">
-      <h2 class="section-title">DentCast Studio</h2>
-      <p class="section-sub">تمام محصولات علمی دنت‌کست در یک نگاه.</p>
+      <h2 class="dc-section-title">ماژول‌های دنت‌کست استودیو</h2>
+      <p class="dc-section-sub">بخش‌های علمی و تخصصی دنت‌کست برای دندان‌پزشکان.</p>
 
-      <div class="grid">
-        <div class="card" onclick="location.href='/episodes.html'">
-          <div class="card-title">DentCast 🎙</div>
-          <div class="card-sub">پادکست اصلی دنت‌کست</div>
-        </div>
+      <div class="dc-card-list">
+        <article class="dc-card">
+          <div class="dc-card-main">
+            <div class="dc-card-title">فهرست و شنیدن اپیزودهای دنت‌کست 🎧</div>
+            <div class="dc-card-caption">آرشیو کامل اپیزودهای صوتی دنت‌کست.</div>
+          </div>
+          <span class="dc-chip">DentCast</span>
+        </article>
 
-        <div class="card" onclick="location.href='/notecast/'">
-          <div class="card-title">NoteCast 📝</div>
-          <div class="card-sub">خلاصه‌نویسی اپیزودها</div>
-        </div>
+        <article class="dc-card">
+          <div class="dc-card-main">
+            <div class="dc-card-title">Photocast 🖼 آموزش با تصویر</div>
+            <div class="dc-card-caption">سناریوهای تصویری و فوتوکست‌های آموزشی.</div>
+          </div>
+          <span class="dc-chip">PhotoCast</span>
+        </article>
 
-        <div class="card" onclick="location.href='/photocast/'">
-          <div class="card-title">PhotoCast 🖼</div>
-          <div class="card-sub">آموزش با تصویر</div>
-        </div>
+        <article class="dc-card">
+          <div class="dc-card-main">
+            <div class="dc-card-title">مشاهدهٔ NoteCastها 📝</div>
+            <div class="dc-card-caption">(خلاصه‌نویسی اپیزودها برای مرور سریع محتوا)</div>
+          </div>
+          <span class="dc-chip">NoteCast</span>
+        </article>
 
-        <div class="card" onclick="location.href='/insight/'">
-          <div class="card-title">Clinical Insight 💡</div>
-          <div class="card-sub">تجربیات کلینیکی</div>
-        </div>
+        <article class="dc-card">
+          <div class="dc-card-main">
+            <div class="dc-card-title">Clinical Insight 💡 تجربیات کلینیکی</div>
+            <div class="dc-card-caption">نکات کاربردی و تصمیم‌گیری در کیس‌های واقعی.</div>
+          </div>
+          <span class="dc-chip">Insight</span>
+        </article>
 
-        <div class="card" onclick="location.href='/dentai/'">
-          <div class="card-title">DentAI 🤖</div>
-          <div class="card-sub">مقاله و ابزار هوش مصنوعی</div>
-        </div>
+        <article class="dc-card">
+          <div class="dc-card-main">
+            <div class="dc-card-title">DentAI 🤖 مقاله با هوش مصنوعی</div>
+            <div class="dc-card-caption">مرور مقالات و تحلیل‌ها با کمک DentAI.</div>
+          </div>
+          <span class="dc-chip">DentAI</span>
+        </article>
 
-        <div class="card" onclick="location.href='/dentcastplus/'">
-          <div class="card-title">DentCast+ 🎥</div>
-          <div class="card-sub">ویدیوها و محتوای تکمیلی</div>
-        </div>
-      </div>
-
-      <div class="episodes-btn">
-        <a href="/episodes.html">
-          <span>🎧</span>فهرست و شنیدن اپیزودها
-        </a>
-      </div>
-    </section>
-
-    <!-- پنل LiteCast -->
-    <section class="dc-panel" id="panel-litecast">
-      <h2 class="section-title">LiteCast ✨</h2>
-      <p class="section-sub">مطالب ساده و قابل‌فهم برای بیماران.</p>
-
-      <div class="grid">
-        <div class="card" onclick="location.href='/litecast/index.html'">
-          <div class="card-title">فهرست کامل LiteCast</div>
-          <div class="card-sub">همهٔ قسمت‌های آموزشی برای عموم.</div>
-        </div>
-
-        <div class="card">
-          <div class="card-title">راهنمای شروع</div>
-          <div class="card-sub">در آینده می‌تونی اینجا متن راهنما یا لینک جدا بذاری.</div>
-        </div>
+        <article class="dc-card">
+          <div class="dc-card-main">
+            <div class="dc-card-title">DentCast+ 🎥 ویدیوها</div>
+            <div class="dc-card-caption">ویدیوهای تکمیلی، تحلیلی و آموزشی.</div>
+          </div>
+          <span class="dc-chip">DentCast+</span>
+        </article>
       </div>
     </section>
 
-    <!-- پنل Info & Tools -->
-    <section class="dc-panel" id="panel-info">
-      <h2 class="section-title">Info &amp; Tools</h2>
-      <p class="section-sub">بخش‌های سرویس و اطلاعات سایت.</p>
+    <!-- Panel 2: برای غیر دندان‌پزشکان -->
+    <section class="dc-panel" id="panel-patient">
+      <h2 class="dc-section-title">دندان‌پزشکی برای غیر دندان‌پزشکان</h2>
+      <p class="dc-section-sub">مخصوص بیماران و مخاطبان عمومی دنت‌کست.</p>
 
-      <div class="grid">
-        <div class="card" onclick="location.href='/search.html'">
-          <div class="card-title">جستجوی سراسری 🔎</div>
-          <div class="card-sub">جستجو در همهٔ بخش‌های دنت‌کست.</div>
-        </div>
+      <div class="dc-card-list">
+        <article class="dc-card">
+          <div class="dc-card-main">
+            <div class="dc-card-title">✨ LiteCast — دندان‌پزشکی برای همه</div>
+            <div class="dc-card-caption">محتوای ساده و قابل فهم برای بیماران و عموم مردم.</div>
+          </div>
+          <span class="dc-chip">LiteCast</span>
+        </article>
 
-        <div class="card" onclick="location.href='/contact.html'">
-          <div class="card-title">ارتباط و مشاوره 📬</div>
-          <div class="card-sub">ایمیل، فرم تماس، اطلاعات مطب.</div>
-        </div>
-
-        <div class="card" onclick="location.href='/about.html'">
-          <div class="card-title">دربارهٔ دنت‌کست ✨</div>
-          <div class="card-sub">داستان شکل‌گیری و هدف‌ها.</div>
-        </div>
+        <article class="dc-card">
+          <div class="dc-card-main">
+            <div class="dc-card-title">مشاوره و ویزیت آنلاین 📞</div>
+            <div class="dc-card-caption">درخواست نوبت، مشاوره و راهنمایی درمانی از راه دور.</div>
+          </div>
+          <span class="dc-chip">Consult</span>
+        </article>
       </div>
     </section>
 
+    <!-- Panel 3: اینفو و ابزار سایت -->
+    <section class="dc-panel" id="panel-site">
+      <h2 class="dc-section-title">اینفو و ابزار سایت دنت‌کست</h2>
+      <p class="dc-section-sub">اطلاعات، جستجو و مسیرهای ارتباطی.</p>
+
+      <div class="dc-card-list">
+        <article class="dc-card">
+          <div class="dc-card-main">
+            <div class="dc-card-title">جستجوی سراسری دنت‌کست 🔎</div>
+            <div class="dc-card-caption">سرچ در اپیزودها، نوت‌کست‌ها، اینسایت‌ها و لایت‌کست.</div>
+          </div>
+          <span class="dc-chip">Search</span>
+        </article>
+
+        <article class="dc-card">
+          <div class="dc-card-main">
+            <div class="dc-card-title">خبرنامهٔ دنت‌کست 📬</div>
+            <div class="dc-card-caption">عضویت برای اطلاع از اپیزودها و مطالب جدید (بدون اسپم).</div>
+          </div>
+          <span class="dc-chip">Newsletter</span>
+        </article>
+
+        <article class="dc-card">
+          <div class="dc-card-main">
+            <div class="dc-card-title">ارتباط و مشاوره با دکتر شهابیان 📞</div>
+            <div class="dc-card-caption">ایمیل و مسیرهای تماس رسمی با مطب.</div>
+          </div>
+          <span class="dc-chip">Contact</span>
+        </article>
+
+        <article class="dc-card">
+          <div class="dc-card-main">
+            <div class="dc-card-title">دربارهٔ دنت‌کست و فؤاد شهابیان ✨</div>
+            <div class="dc-card-caption">معرفی دنت‌کست، مسیر شکل‌گیری و هدف‌ها.</div>
+          </div>
+          <span class="dc-chip">About</span>
+        </article>
+      </div>
+    </section>
   </main>
 
   <script>
-    // سوئیچ تب‌ها و پنل‌ها + حفظ اسکرول افقی
-    const tabs = document.querySelectorAll('.dc-tab');
+    // سوییچ بین تب‌ها مثل تلگرام
+    const tabs   = document.querySelectorAll('.dc-tab');
     const panels = document.querySelectorAll('.dc-panel');
 
     tabs.forEach(tab => {
       tab.addEventListener('click', () => {
         const targetId = tab.getAttribute('data-target');
-        if (!targetId) return;
 
         tabs.forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
-
         panels.forEach(p => p.classList.remove('active'));
+
+        tab.classList.add('active');
         document.getElementById(targetId).classList.add('active');
       });
     });
