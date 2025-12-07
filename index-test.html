@@ -13,7 +13,7 @@
   <style>
     :root {
       --primary: #0b5fff;
-      --bg: #FAFAFA;   /* یا هر رنگی از بالا */
+      --bg: #FAFAFA;
       --card-bg: #FDFCF8;
       --card-border: #E5E5E5;
       --text-main: #1e293b;
@@ -34,12 +34,12 @@
 
     body {
       margin: 0;
-      font-family: "Vazirmatn", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-family: "Vazirmatn", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI";
       background: var(--bg);
       color: var(--text-main);
     }
 
-    /* ------------------------- هــدر اصلی دنت‌کست ------------------------- */
+    /* ------------------------- هــدر اصلی ------------------------- */
 
     .main-header {
       text-align: center;
@@ -71,13 +71,8 @@
       text-decoration: none;
       white-space: nowrap;
     }
-    .author-chip:hover {
-      background-color: #e2e8f0;
-      color: #1e293b;
-      transform: translateY(-1px);
-    }
 
-    /* ------------------------- هدر تلگرامی Hub ------------------------- */
+    /* ------------------------- هدر Hub ------------------------- */
 
     .dc-header {
       background: var(--header-bg);
@@ -92,9 +87,7 @@
     .hamburger { width: 24px; height: 18px; display: inline-flex; flex-direction: column; justify-content: space-between; }
     .hamburger span { height: 2px; background: var(--header-text); border-radius: 999px; }
     .dc-title { font-weight: 800; font-size: 0.95rem; }
-    .dc-header-right { display: flex; align-items: center; gap: .75rem; }
 
-    /* hint arrows */
     .dc-nav-hint {
       display: flex;
       align-items: center;
@@ -104,21 +97,8 @@
       background: rgba(0,0,0,0.05);
       border: 1px solid rgba(0,0,0,0.08);
     }
-    .dc-nav-hint .line {
-      display: block;
-      width: 40px;
-      height: 2px;
-      background: rgba(0,0,0,0.35);
-      border-radius: 4px;
-    }
-    .dc-nav-hint .arrow {
-      font-size: 16px;
-      color: rgba(0,0,0,0.45);
-      font-weight: 600;
-      line-height: 1;
-      cursor: pointer;
-      user-select: none;
-    }
+    .dc-nav-hint .line { width: 40px; height: 2px; background: rgba(0,0,0,0.35); border-radius: 4px; }
+    .dc-nav-hint .arrow { font-size: 16px; color: rgba(0,0,0,0.45); cursor: pointer; }
 
     /* ------------------------- تب‌ها ------------------------- */
 
@@ -134,7 +114,6 @@
       padding-inline: 0.25rem;
       scrollbar-width: none;
     }
-    .dc-tabs::-webkit-scrollbar { display: none; }
     .dc-tab {
       flex: 0 0 auto;
       padding: 0.25rem 0.9rem;
@@ -144,10 +123,8 @@
       color: var(--tab-text);
       font-size: 0.8rem;
       display: inline-flex;
-      align-items: center;
       gap: 0.35rem;
       cursor: pointer;
-      white-space: nowrap;
       transition: all 0.18s ease-out;
     }
     .dc-tab.active {
@@ -191,8 +168,17 @@
       transition: 0.18s;
     }
 
+    /* --------------- 👑 کارت ویژه شنیدن اپیزودها ---------------- */
+
+    .dc-card.featured-card {
+      background: #FFFDF5 !important;        /* کمی گرم‌تر و متفاوت */
+      border: 2px solid #f4c56a !important;  /* ضخیم‌تر و طلایی ملایم */
+      box-shadow: 0 4px 14px rgba(0,0,0,0.10) !important;
+    }
+
     .dc-card-title   { font-size: .86rem; font-weight: 600; }
     .dc-card-caption { font-size: .75rem; color: var(--text-sub); }
+
     .dc-chip {
       font-size: .7rem;
       padding: .15rem .5rem;
@@ -212,7 +198,6 @@
 </head>
 <body>
 
-<!-- هدر اصلی -->
 <header class="main-header">
   <h1>🎙️ دنت‌کست — DentCast</h1>
   <h2>پادکست علمی دندان‌پزشکی</h2>
@@ -221,12 +206,12 @@
   </a>
 </header>
 
-<!-- هدر هاب -->
 <header class="dc-header">
   <div class="dc-header-left">
     <button class="hamburger"><span></span><span></span><span></span></button>
     <div class="dc-title">DentCast Hub</div>
   </div>
+
   <div class="dc-header-right">
     <div class="dc-nav-hint">
       <span class="arrow left" id="scrollLeft">‹</span>
@@ -236,7 +221,6 @@
   </div>
 </header>
 
-<!-- تب‌ها -->
 <div class="dc-tabs-wrapper">
   <div class="dc-tabs" id="dcTabs">
     <div class="dc-tab active" data-target="panel-studio">
@@ -251,18 +235,18 @@
   </div>
 </div>
 
-<!-- محتوای تب‌ها ← این بخش قبلاً حذف شده بود، الان کامل برگشته -->
-
 <main class="dc-main">
 
   <!-- Panel 1 -->
   <section class="dc-panel active" id="panel-studio">
+
     <h2 class="dc-section-title">ماژول‌های دنت‌کست استودیو</h2>
     <p class="dc-section-sub">بخش‌های علمی و تخصصی دنت‌کست برای دندان‌پزشکان.</p>
 
     <div class="dc-card-list">
 
-      <article class="dc-card">
+      <!-- 👑 کارت برجسته -->
+      <article class="dc-card featured-card">
         <div class="dc-card-main">
           <div class="dc-card-title">فهرست و شنیدن اپیزودهای دنت‌کست 🎧</div>
           <div class="dc-card-caption">آرشیو کامل اپیزودهای صوتی دنت‌کست.</div>
@@ -270,6 +254,7 @@
         <span class="dc-chip">DentCast</span>
       </article>
 
+      <!-- بقیه کارت‌ها بدون تغییر -->
       <article class="dc-card">
         <div class="dc-card-main">
           <div class="dc-card-title">Photocast 🖼 آموزش با تصویر</div>
