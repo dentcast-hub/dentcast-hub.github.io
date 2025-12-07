@@ -189,7 +189,33 @@
       height: 140px;
       background: linear-gradient(to bottom, transparent, #f3f5f7);
     }
+.dc-nav-hint {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  background: rgba(0,0,0,0.05);
+  border: 1px solid rgba(0,0,0,0.08);
+}
 
+.dc-nav-hint .line {
+  display: block;
+  width: 40px;
+  height: 2px;
+  background: rgba(0,0,0,0.35);
+  border-radius: 4px;
+}
+
+.dc-nav-hint .arrow {
+  font-size: 16px;
+  color: rgba(0,0,0,0.45);
+  font-weight: 600;
+  line-height: 1;
+}
+
+.dc-nav-hint .arrow.left { margin-right: 2px; }
+.dc-nav-hint .arrow.right { margin-left: 2px; }
   </style>
 </head>
 <body>
@@ -210,8 +236,12 @@
       <div class="dc-title">DentCast Hub</div>
     </div>
     <div class="dc-header-right">
-      <div class="dc-header-icon"></div>
-    </div>
+  <div class="dc-nav-hint">
+    <span class="arrow left">‹</span>
+    <span class="line"></span>
+    <span class="arrow right">›</span>
+  </div>
+</div>
   </header>
 
   <!-- تب‌ها -->
