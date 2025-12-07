@@ -2942,9 +2942,41 @@
     "implant prosthesis cleanable design"
   ],
   "url": "https://dentcast.ir/notecast/episode-23"
+},
+{
+  "type": "notecast",
+  "id": "24",
+  "title": "نسبت تاج به ایمپلنت (C/I Ratio) و تحلیل استخوان",
+  "caption": "خلاصهٔ نوشتاری دنت‌کست ۲۴ دربارهٔ شواهد واقعی تأثیر Crown-to-Implant Ratio بر تحلیل استخوان و مرزبندی دقیق بین پیامدهای بیولوژیک و بیومکانیکال.",
+  "hashtags": [
+    "ایمپلنت",
+    "Crown_Implant_Ratio",
+    "C_I_Ratio",
+    "تحلیل_استخوان",
+    "ایمپلنت_کوتاه",
+    "بیومکانیک",
+    "بیولوژی_ایمپلنت",
+    "JournalOfPeriodontology",
+    "Occlusion",
+    "Implant_Prosthesis"
+  ],
+  "keywords": [
+    "crown to implant ratio bone loss",
+    "short implant biomechanical risk",
+    "implant crown height ratio",
+    "c i ratio systematic review",
+    "implant biomechanics stress",
+    "bone loss crest implant",
+    "mechanical complications implant",
+    "screw loosening crown height",
+    "short implant limitations",
+    "peri implant bone behavior"
+  ],
+  "url": "https://dentcast.ir/notecast/episode-24"
 }
 
 ]
+
 
 
 
