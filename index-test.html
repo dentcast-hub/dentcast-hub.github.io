@@ -189,7 +189,35 @@
       height: 140px;
       background: linear-gradient(to bottom, transparent, #f3f5f7);
     }
+/* --- Fade Gradient برای تب‌ها --- */
+.dc-tabs-wrapper {
+  position: relative;
+  overflow: hidden;
+}
 
+/* گرادیان سمت راست */
+.dc-tabs-wrapper::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 36px; 
+  height: 100%;
+  pointer-events: none;
+  background: linear-gradient(to left, rgba(255,220,120,0.42), rgba(255,220,120,0));
+}
+
+/* گرادیان سمت چپ */
+.dc-tabs-wrapper::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 36px;
+  height: 100%;
+  pointer-events: none;
+  background: linear-gradient(to right, rgba(255,220,120,0.42), rgba(255,220,120,0));
+}
   </style>
 </head>
 <body>
