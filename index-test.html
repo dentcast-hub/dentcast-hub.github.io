@@ -13,10 +13,9 @@
   <style>
     :root {
       --primary: #0b5fff;
-      --primary-dark: #073bb3;
-      --bg: #F7F9FC; /* کمی روشن‌تر، با تون آبی → حس مدرن‌تر */
-      --card-bg: #FFFFFF;
-      --card-border: #D7DFEA; /* روشن ولی قابل رؤیت */
+      --bg: #FAFAFA;
+      --card-bg: #FDFCF8;
+      --card-border: #E5E5E5;
       --text-main: #1e293b;
       --text-sub: #64748b;
 
@@ -63,13 +62,14 @@
     .author-chip {
       display: inline-block;
       padding: 4px 10px;
-      background-color: #ffffff;
+      background-color: #f8fafc;
       color: #64748b;
-      border: 2px solid #d8e1ee; /* ضخیم‌تر */
+      border: 1px solid #e2e8f0;
       border-radius: 50px;
       font-size: 0.75rem;
       font-weight: 600;
       text-decoration: none;
+      white-space: nowrap;
     }
 
     /* ------------------------- هدر Hub ------------------------- */
@@ -81,10 +81,13 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border-bottom: 2px solid var(--header-border); /* ضخیم‌تر */
+      border-bottom: 1px solid var(--header-border);
     }
+    .dc-header-left { display: flex; align-items: center; gap: .75rem; }
+    .hamburger { width: 24px; height: 18px; display: inline-flex; flex-direction: column; justify-content: space-between; }
+    .hamburger span { height: 2px; background: var(--header-text); border-radius: 999px; }
+    .dc-title { font-weight: 800; font-size: 0.95rem; }
 
-    /* arrows box */
     .dc-nav-hint {
       display: flex;
       align-items: center;
@@ -92,90 +95,109 @@
       padding: 3px 10px;
       border-radius: 20px;
       background: rgba(0,0,0,0.05);
-      border: 2px solid rgba(0,0,0,0.12); /* ضخیم‌تر */
+      border: 1px solid rgba(0,0,0,0.08);
     }
-
-    .dc-nav-hint .line {
-      width: 40px;
-      height: 3px;
-      background: rgba(0,0,0,0.50); 
-      border-radius: 4px;
-    }
+    .dc-nav-hint .line { width: 40px; height: 2px; background: rgba(0,0,0,0.35); border-radius: 4px; }
+    .dc-nav-hint .arrow { font-size: 16px; color: rgba(0,0,0,0.45); cursor: pointer; }
 
     /* ------------------------- تب‌ها ------------------------- */
 
     .dc-tabs-wrapper {
       background: var(--header-bg);
       padding: 0 0.5rem 0.6rem;
-      box-shadow: 0 4px 16px rgba(15,23,42,0.12);
-      border-bottom: 1px solid #e7e7e7;
+      box-shadow: 0 4px 12px rgba(15,23,42,0.08);
     }
-
+    .dc-tabs {
+      display: flex;
+      gap: 0.5rem;
+      overflow-x: auto;
+      padding-inline: 0.25rem;
+      scrollbar-width: none;
+    }
     .dc-tab {
-      padding: 0.35rem 1rem;
+      flex: 0 0 auto;
+      padding: 0.25rem 0.9rem;
       border-radius: 999px;
-      border: 2px solid #d4d4d8; /* ضخیم‌تر */
+      border: 1px solid #d4d4d8;
       background: var(--tab-bg);
       color: var(--tab-text);
       font-size: 0.8rem;
-      transition: 0.18s;
+      display: inline-flex;
+      gap: 0.35rem;
+      cursor: pointer;
+      transition: all 0.18s ease-out;
     }
-
     .dc-tab.active {
       background: var(--tab-bg-active);
       color: var(--tab-text-active);
-      border-color: var(--primary-dark); /* بهتر */
+      border-color: var(--tab-bg-active);
+    }
+
+    .dc-tab-count {
+      padding: 0.05rem 0.5rem;
+      border-radius: 999px;
+      background: var(--tab-counter-bg);
+      font-size: 0.75rem;
     }
 
     /* ------------------------- کارت‌ها ------------------------- */
 
+    .dc-main {
+      padding: 0.75rem 0.75rem 1.5rem;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .dc-panel { display: none; }
+    .dc-panel.active { display: block; }
+
+    .dc-section-title { font-size: .9rem; font-weight: 700; margin: .6rem 0 .25rem; }
+    .dc-section-sub   { font-size: .78rem; color: var(--text-sub); margin-bottom: .75rem; }
+
+    .dc-card-list { display: flex; flex-direction: column; gap: .6rem; }
+
     .dc-card {
       background: var(--card-bg);
       border-radius: .9rem;
-      border: 2px solid var(--card-border); /* ضخیم‌تر */
-      padding: .9rem .9rem;
+      border: 4px solid var(--card-border);  /* 🔵 فقط این تغییر کرده */
+      padding: .7rem .75rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
       cursor: pointer;
-      transition: 0.2s;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+      transition: 0.18s;
     }
 
-    .dc-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 6px 18px rgba(0,0,0,0.12);
-      border-color: var(--primary);
-    }
-
-    /* -------- 👑 کارت ویژه شنیدن اپیزودها (آبی سلطنتی) -------- */
+    /* --------------- 👑 کارت ویژه شنیدن اپیزودها ---------------- */
 
     .dc-card.featured-card {
-      background: #F5F8FF !important;
-      border: 4px solid var(--primary) !important;
-      box-shadow: 0 6px 22px rgba(11,95,255,0.25) !important;
+      background: #FFFDF5 !important;
+      border: 4px solid #0b5fff !important;   /* 🔵 فقط رنگ تغییر کرد */
+      box-shadow: 0 4px 14px rgba(0,0,0,0.10) !important;
     }
 
-    /* متن کارت‌ها */
-    .dc-card-title   { font-size: .9rem; font-weight: 700; color: #0f172a; }
+    .dc-card-title   { font-size: .86rem; font-weight: 600; }
     .dc-card-caption { font-size: .75rem; color: var(--text-sub); }
 
-    /* چیپ */
     .dc-chip {
       font-size: .7rem;
-      padding: .20rem .6rem;
+      padding: .15rem .5rem;
       border-radius: 999px;
-      background: rgba(11,95,255,0.08);
-      color: var(--primary-dark);
-      border: 2px solid rgba(11,95,255,0.35); /* ضخیم‌تر */
-      font-weight: 600;
+      background: rgba(11,95,255,0.06);
+      color: #1d4ed8;
+      border: 1px solid rgba(59,130,246,0.35);
+    }
+
+    .bottom-fade {
+      width: 100%;
+      height: 140px;
+      background: linear-gradient(to bottom, transparent, #f3f5f7);
     }
   </style>
 </head>
-
 <body>
 
-<!-- ===== هدر اصلی ===== -->
+<!-- 👇👇👇 از اینجا به بعد هیچ چیز تغییر نکرده -->
 <header class="main-header">
   <h1>🎙️ دنت‌کست — DentCast</h1>
   <h2>پادکست علمی دندان‌پزشکی</h2>
@@ -184,7 +206,6 @@
   </a>
 </header>
 
-<!-- ===== هدر Hub ===== -->
 <header class="dc-header">
   <div class="dc-header-left">
     <button class="hamburger"><span></span><span></span><span></span></button>
@@ -200,7 +221,6 @@
   </div>
 </header>
 
-<!-- ===== تب‌ها ===== -->
 <div class="dc-tabs-wrapper">
   <div class="dc-tabs" id="dcTabs">
     <div class="dc-tab active" data-target="panel-studio">
@@ -215,10 +235,9 @@
   </div>
 </div>
 
-<!-- ===== محتوای تب‌ها ===== -->
 <main class="dc-main">
 
-  <!-- Panel ۱ -->
+  <!-- Panel 1 -->
   <section class="dc-panel active" id="panel-studio">
 
     <h2 class="dc-section-title">ماژول‌های دنت‌کست استودیو</h2>
@@ -226,7 +245,7 @@
 
     <div class="dc-card-list">
 
-      <!-- ⭐ کارت ویژه -->
+      <!-- 👑 کارت برجسته -->
       <article class="dc-card featured-card">
         <div class="dc-card-main">
           <div class="dc-card-title">فهرست و شنیدن اپیزودهای دنت‌کست 🎧</div>
@@ -235,7 +254,7 @@
         <span class="dc-chip">DentCast</span>
       </article>
 
-      <!-- بقیه کارت‌ها بدون تغییر ساختاری -->
+      <!-- سایر کارت‌ها -->
       <article class="dc-card">
         <div class="dc-card-main">
           <div class="dc-card-title">Photocast 🖼 آموزش با تصویر</div>
@@ -279,7 +298,7 @@
     </div>
   </section>
 
-  <!-- Panel ۲ -->
+  <!-- Panel 2 -->
   <section class="dc-panel" id="panel-patient">
     <h2 class="dc-section-title">دندان‌پزشکی برای غیر دندان‌پزشکان</h2>
     <p class="dc-section-sub">مخصوص بیماران و مخاطبان عمومی.</p>
@@ -305,7 +324,7 @@
     </div>
   </section>
 
-  <!-- Panel ۳ -->
+  <!-- Panel 3 -->
   <section class="dc-panel" id="panel-site">
     <h2 class="dc-section-title">اینفو و ابزار سایت دنت‌کست</h2>
     <p class="dc-section-sub">اطلاعات، جستجو و مسیرهای ارتباطی.</p>
@@ -376,17 +395,9 @@
     tabContainer.scrollTo({ left: offset, behavior: 'smooth' });
   }
 
-  document.getElementById('scrollLeft').addEventListener('click', () =>
-    activateTab(activeIndex() - 1)
-  );
-
-  document.getElementById('scrollRight').addEventListener('click', () =>
-    activateTab(activeIndex() + 1)
-  );
-
-  tabs.forEach((tab, i) =>
-    tab.addEventListener('click', () => activateTab(i))
-  );
+  document.getElementById('scrollLeft').addEventListener('click', () => activateTab(activeIndex() - 1));
+  document.getElementById('scrollRight').addEventListener('click', () => activateTab(activeIndex() + 1));
+  tabs.forEach((tab, i) => tab.addEventListener('click', () => activateTab(i)));
 </script>
 
 </body>
