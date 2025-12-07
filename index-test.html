@@ -237,9 +237,9 @@
     </div>
     <div class="dc-header-right">
   <div class="dc-nav-hint">
-    <span class="arrow left">‹</span>
-    <span class="line"></span>
-    <span class="arrow right">›</span>
+    <span class="arrow left" id="scrollLeft">‹</span>
+<span class="line"></span>
+<span class="arrow right" id="scrollRight">›</span>
   </div>
 </div>
   </header>
@@ -409,6 +409,34 @@
       });
     });
   </script>
+<script>
+  const tabContainer = document.querySelector('.dc-tabs');
+  const tabs = Array.from(document.querySelectorAll('.dc-tab'));
 
+  function scrollToTab(index) {
+    if (index < 0 || index >= tabs.length) return;
+
+    const tab = tabs[index];
+    const offset = tab.offsetLeft - (tabContainer.clientWidth / 2) + (tab.clientWidth / 2);
+
+    tabContainer.scrollTo({
+      left: offset,
+      behavior: 'smooth'
+    });
+  }
+
+  // پیدا کردن شماره تب فعال
+  function activeIndex() {
+    return tabs.findIndex(t => t.classList.contains('active'));
+  }
+
+  document.getElementById('scrollLeft').addEventListener('click', () => {
+    scrollToTab(activeIndex() - 1);
+  });
+
+  document.getElementById('scrollRight').addEventListener('click', () => {
+    scrollToTab(activeIndex() + 1);
+  });
+</script>
 </body>
 </html>
