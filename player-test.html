@@ -10,17 +10,16 @@
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
 
   <style>
+  /* فقط استایل لایت شده؛ هیچ چیز دیگری تغییر نکرد */
+
   :root {
     --blue: #0b5fff;
     --blue-soft: #1b3b8f;
 
-    /* 🎨 تم لایت جدید */
-    --bg: #f6f7fb;
-    --bg-card: #ffffff;
-    --border: rgba(0,0,0,0.12);
-
+    /* لایت */
+    --bg: #f5f7fc;
     --text-main: #0f1a2e;
-    --text-sub: #394865;
+    --text-sub: #3c4a63;
   }
 
   body {
@@ -29,7 +28,8 @@
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    background: linear-gradient(180deg,#f1f4fa,#ffffff);
+
+    background: linear-gradient(to bottom, #ffffff, #e9edf5);
     font-family: "Vazirmatn", sans-serif;
     color: var(--text-main);
     padding: 16px 6px;
@@ -40,12 +40,11 @@
     width: 100%;
     max-width: 480px;
 
-    /* 🔵 کارت روشن */
-    background: var(--bg-card);
+    background: #ffffff;
     border-radius: 20px;
     overflow: hidden;
-    border: 1px solid var(--border);
-    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    border: 1px solid rgba(0,0,0,0.12);
+    box-shadow: 0 4px 18px rgba(0,0,0,0.06);
   }
 
   .dc-header {
@@ -59,7 +58,7 @@
     height: 60px;
     border-radius: 14px;
     object-fit: cover;
-    border: 1px solid rgba(0,0,0,0.1);
+    border: 1px solid rgba(0,0,0,0.12);
   }
 
   #dc-current-title {
@@ -83,9 +82,9 @@
 
   .dc-main-player {
     padding: 10px 12px;
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    background: #f9fafc;
+    border-top: 1px solid rgba(0,0,0,0.08);
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    background: #f7f9fc;
   }
 
   .dc-controls-row {
@@ -152,20 +151,15 @@
     color: var(--text-sub);
   }
 
-  /* SEARCH BOX – لایت */
   .dc-search-box {
     margin: 6px 12px 4px;
     padding: 12px;
     border-radius: 16px;
-
-    background: #ffffffcc;
+    background: rgba(255,255,255,0.95);
     color: #1a1a1a;
-
     border: 2px solid #f4c534;
     box-sizing: border-box;
-
     backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
     overflow: hidden;
   }
 
@@ -184,7 +178,7 @@
     cursor: pointer;
     padding: 2px 6px;
     border-radius: 6px;
-    background: rgba(0,0,0,0.15);
+    background: rgba(0,0,0,0.1);
     color: var(--text-main);
     display: none;
   }
@@ -197,7 +191,7 @@
     box-sizing: border-box;
     font-size: 11px;
     outline: none;
-    background: #f1f3f7;
+    background: #f0f3f7;
     color: var(--text-main);
   }
 
@@ -214,7 +208,7 @@
     margin-bottom: 4px;
     cursor: pointer;
     position: relative;
-    border: 1px solid rgba(0,0,0,0.1);
+    border: 1px solid rgba(0,0,0,0.12);
   }
 
   .dc-search-item-title {
@@ -267,8 +261,8 @@
 
   .dc-episode-item {
     padding: 10px 12px;
-    border-bottom: 1px solid var(--border);
-    background: #fff;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    background: #ffffff;
   }
 
   .dc-episode-item-header {
@@ -302,27 +296,321 @@
     border-radius: 8px;
     font-size: 11px;
     line-height: 1.5;
-    border: 1px solid rgba(0,0,0,0.1);
+    border: 1px solid rgba(0,0,0,0.12);
   }
   </style>
 </head>
 
 <body>
+
 <div class="dc-wrapper">
 
-  <!-- ✨ بقیهٔ HTML بدون تغییر ✨ -->
-  <!-- ✨ فقط استایل لایت شده است ✨ -->
+  <div class="dc-header">
+    <div class="dc-cover">
+      <img src="https://assets.pippa.io/shows/624b5545ecc0e600134ea0df/show-cover.jpg">
+    </div>
+    <div>
+      <div id="dc-current-title">در حال بارگذاری...</div>
+      <div id="dc-current-desc"></div>
+    </div>
+  </div>
 
-  <!-- ... کل HTML + JS دقیقاً مثل نسخهٔ تو ... -->
+  <div class="dc-main-player">
+    <audio id="dc-audio"></audio>
+
+    <div class="dc-controls-row">
+      <button id="dc-play" class="dc-play-btn">▶</button>
+      <button id="dc-speed" class="dc-speed-btn">1x</button>
+      <button id="dc-back" class="dc-jump-btn">⟲ 15s</button>
+      <button id="dc-forward" class="dc-jump-btn">15s ⟳</button>
+    </div>
+
+    <input id="dc-seek" type="range" min="0" max="100" value="0" class="dc-range">
+
+    <div class="dc-time-row">
+      <span id="dc-time-current">00:00</span>
+      <span id="dc-time-duration">00:00</span>
+    </div>
+  </div>
+
+  <div class="dc-search-box">
+    <div class="dc-search-header">
+      <span>جستجو در دنت‌کست  🎧</span>
+      <span class="dc-close-search" id="dc-close-search">×</span>
+    </div>
+
+    <input id="dc-search-input" class="dc-search-input"
+      type="text"
+      placeholder="#سمان ، #ایمپلنت ، ریشه ...">
+
+    <div id="dc-search-results" class="dc-search-results"></div>
+  </div>
+
+  <button id="dc-sort-btn">↓</button>
+  <div class="dc-list" id="dc-list"></div>
 
 </div>
 
-<!--  SCRIPTS (بدون تغییر کامل) -->
+<!--  SCRIPTS -->
 <script>
-/* تمام اسکریپت‌های تو بدون هیچ تغییری اینجا می‌مانند */
+const JSON_URL = "dentcast.json";
+const BRAIN_URL = "Dentcast-brain.txt";
+
+const audio = document.getElementById("dc-audio");
+const listEl = document.getElementById("dc-list");
+const titleEl = document.getElementById("dc-current-title");
+const descEl  = document.getElementById("dc-current-desc");
+const playBtn = document.getElementById("dc-play");
+const seek = document.getElementById("dc-seek");
+const speedBtn = document.getElementById("dc-speed");
+const sortBtn = document.getElementById("dc-sort-btn");
+const backBtn = document.getElementById("dc-back");
+const fwdBtn  = document.getElementById("dc-forward");
+
+const searchInput   = document.getElementById("dc-search-input");
+const searchResults = document.getElementById("dc-search-results");
+const closeSearchBtn = document.getElementById("dc-close-search");
+
+let episodesRaw = [];
+let episodes = [];
+let brainData = [];
+let sortDescending = true;
+let currentIndex = 0;
+
+let speeds = [1, 1.25, 1.5, 1.75, 2];
+let speedIndex = 0;
+
+/* SPEED */
+speedBtn.addEventListener("click", () => {
+  speedIndex = (speedIndex + 1) % speeds.length;
+  audio.playbackRate = speeds[speedIndex];
+  speedBtn.textContent = speeds[speedIndex] + "x";
+});
+
+/* LOAD EPISODE */
+function loadEpisode(i){
+  const ep = episodes[i];
+  if (!ep) return;
+  currentIndex = i;
+  audio.src = ep.audio_url;
+  titleEl.textContent = ep.title;
+  descEl.innerHTML = ep.description || "";
+  descEl.style.display = "none";
+  playBtn.textContent = "▶";
+}
+
+/* LIST ROW */
+function createRow(ep, i){
+  const row = document.createElement("div");
+  row.className = "dc-episode-item";
+
+  const header = document.createElement("div");
+  header.className = "dc-episode-item-header";
+
+  const title = document.createElement("div");
+  title.className = "dc-ep-title";
+  title.textContent = ep.title;
+
+  const info = document.createElement("span");
+  info.className = "dc-info-btn";
+  info.textContent = "🛈";
+
+  const desc = document.createElement("div");
+  desc.className = "dc-ep-desc";
+
+  const brainMatch = brainData.find(b => String(b.episode) === String(ep.episode));
+  desc.innerHTML = brainMatch?.caption || ep.description || "";
+
+  header.addEventListener("click", () => {
+    loadEpisode(i);
+    audio.addEventListener("canplay", function handler() {
+      audio.removeEventListener("canplay", handler);
+      audio.play();
+      playBtn.textContent = "⏸";
+    });
+  });
+
+  info.addEventListener("click", (e) => {
+    e.stopPropagation();
+    desc.style.display = (desc.style.display === "block") ? "none" : "block";
+  });
+
+  header.appendChild(title);
+  header.appendChild(info);
+  row.appendChild(header);
+  row.appendChild(desc);
+  return row;
+}
+
+/* RENDER LIST */
+function renderList(){
+  listEl.innerHTML = "";
+  episodes.forEach((ep,i)=>{
+    listEl.appendChild(createRow(ep,i));
+  });
+}
+
+/* SORT */
+function applySorting(){
+  episodes = [...episodesRaw].sort((a,b)=>{
+    return sortDescending ? (b.episode - a.episode) : (a.episode - b.episode);
+  });
+  renderList();
+}
+
+sortBtn.onclick = ()=>{
+  sortDescending = !sortDescending;
+  sortBtn.textContent = sortDescending ? "↓" : "↑";
+  applySorting();
+};
+
+/* PLAYER BUTTONS */
+playBtn.addEventListener("click", ()=>{
+  if(audio.paused){
+    audio.play();
+    playBtn.textContent = "⏸";
+  } else {
+    audio.pause();
+    playBtn.textContent = "▶";
+  }
+});
+
+backBtn.addEventListener("click", () => {
+  audio.currentTime = Math.max(0, audio.currentTime - 15);
+});
+
+fwdBtn.addEventListener("click", () => {
+  audio.currentTime = Math.min(audio.duration || 0, audio.currentTime + 15);
+});
+
+audio.addEventListener("loadedmetadata", ()=>{
+  document.getElementById("dc-time-duration").textContent =
+    new Date(audio.duration * 1000).toISOString().substr(14,5);
+});
+
+audio.addEventListener("timeupdate", ()=>{
+  if (!audio.duration) return;
+  seek.value = (audio.currentTime / audio.duration) * 100;
+  document.getElementById("dc-time-current").textContent =
+    new Date(audio.currentTime * 1000).toISOString().substr(14,5);
+});
+
+seek.addEventListener("input", ()=>{
+  if (!audio.duration) return;
+  audio.currentTime = (seek.value / 100) * audio.duration;
+});
+
+/* SEARCH */
+function normalizeText(s) {
+  return (s || "").toString().toLowerCase();
+}
+
+closeSearchBtn.addEventListener("click", () => {
+  searchInput.value = "";
+  searchResults.innerHTML = "";
+  closeSearchBtn.style.display = "none";
+});
+
+function createSearchInfoButton(descDiv) {
+  const infoBtn = document.createElement("span");
+  infoBtn.className = "dc-search-info-btn";
+  infoBtn.textContent = "🛈";
+
+  infoBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    descDiv.style.display = (descDiv.style.display === "block") ? "none" : "block";
+  });
+
+  return infoBtn;
+}
+
+function handleSearch() {
+  const q = searchInput.value.trim();
+  searchResults.innerHTML = "";
+
+  if (!q) {
+    closeSearchBtn.style.display = "none";
+    return;
+  }
+
+  const qNorm = normalizeText(q);
+
+  const matches = brainData.filter(item => {
+    const all = [
+      item.title || "",
+      item.caption || "",
+      (item.keywords || []).join(" "),
+      (item.hashtags || []).join(" ")
+    ].join(" ");
+    return normalizeText(all).includes(qNorm);
+  });
+
+  if (matches.length === 0) {
+    const empty = document.createElement("div");
+    empty.className = "dc-search-empty";
+    empty.textContent = "چیزی پیدا نشد.";
+    searchResults.appendChild(empty);
+    return;
+  }
+
+  matches.forEach(item => {
+    const epNo = String(item.episode || "").trim();
+    const epIndex = episodes.findIndex(e => String(e.episode) === epNo);
+    if (epIndex === -1) return;
+
+    const box = document.createElement("div");
+    box.className = "dc-search-item";
+
+    const t = document.createElement("div");
+    t.className = "dc-search-item-title";
+    t.textContent = `اپیزود ${epNo} — ${item.title || ""}`;
+
+    const desc = document.createElement("div");
+    desc.className = "dc-ep-desc";
+    desc.innerHTML = item.caption || "";
+
+    const infoBtn = createSearchInfoButton(desc);
+
+    box.appendChild(infoBtn);
+    box.appendChild(t);
+    box.appendChild(desc);
+
+    box.addEventListener("click", () => {
+      loadEpisode(epIndex);
+      audio.addEventListener("canplay", function handler() {
+        audio.removeEventListener("canplay", handler);
+        audio.play();
+        playBtn.textContent = "⏸";
+      });
+    });
+
+    searchResults.appendChild(box);
+  });
+}
+
+searchInput.addEventListener("input", () => {
+  closeSearchBtn.style.display = searchInput.value.trim() ? "inline-block" : "none";
+  handleSearch();
+});
+
+/* LOAD FILES */
+fetch(JSON_URL)
+.then(res=>res.json())
+.then(data=>{
+  episodesRaw = data;
+  applySorting();
+  loadEpisode(0);
+});
+
+fetch(BRAIN_URL)
+.then(res=>res.json())
+.then(data=>{
+  brainData = data;
+});
 </script>
 
 <script>
+/* iframe resize */
 function sendHeight() {
   const h = document.body.scrollHeight;
   window.parent.postMessage({ dcPlayerHeight: h }, "*");
