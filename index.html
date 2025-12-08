@@ -532,59 +532,58 @@
       margin-bottom: 0;  
         }  
     /* کارت تبلیغاتی هماهنگ با استایل دنت‌کست */
-.dc-card.ad-card {
-  background: #fff7f8 !important;   /* قبلاً #fff1f2 بود → این خیلی ملایم‌تره */
-  border: 1px solid #f5c2c7 !important;
+
+    .dc-card.ad-card {
+  background: #fff9fa !important;  /* رنگ بسیار نرم و غیرجیغ */
+  border: 1px solid #f3cbd1 !important;
   border-radius: 1rem;
-  box-shadow: 0 2px 6px rgba(255, 0, 43, 0.08);
-  padding: 0; /* چون لینک خودش پدینگ دارد */
+  box-shadow: 0 2px 4px rgba(255, 0, 43, 0.04);
+  padding: 0;
+  margin-top: 22px !important;   /* فاصله بیشتر از بالا */
   transition: 0.18s;
-  margin-top: 14px !important;  /* 🔥 فاصله از کارت‌های بالایی */
-  
 }
 
 .dc-card.ad-card:hover {
-  background: #ffe4e6 !important;
-  transform: translateY(-3px);
+  background: #fff3f5 !important;
+  transform: translateY(-2px);
 }
 
-/* لینک داخلی کارت */
-
-    /* لینک اصلی تبلیغ داخل کارت */
+/* لینک داخل کارت */
 .ad-card .ad-link {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 6px;
-  padding: 10px 10px;
+  padding: 12px 12px;
   width: 100%;
   text-decoration: none;
-  color: #9f1239;
+  color: #7f1d1d;          /* 🔥 نوشته‌ها تیره‌تر و غیرجیغ */
 }
 
-/* عنوان و کپشن تبلیغی */
+/* عنوان تبلیغ */
 .ad-card .dc-card-title {
-  color: #9f1239;
+  color: #7f1d1d;          /* ملایم‌تر از قبل */
   font-weight: 700;
 }
 
+/* کپشن تبلیغ */
 .ad-card .dc-card-caption {
-  color: #b91c1c;
+  color: #9f2d2d;          /* جیغ نیست */
 }
 
-/* دکمه Strong داخل کارت */
+/* دکمه کوچک‌تر و ملایم‌تر */
 .ad-strong {
-  background: #fb7185;
+  background: #fda4af;     /* صورتی بسیار ملایم */
   color: white;
-  padding: 5px 12px;
+  padding: 4px 10px;       /* 🔥 عرض کمتر شد */
   border-radius: 8px;
-  font-size: 0.78rem;
+  font-size: 0.72rem;      /* 🔥 کوچک‌تر */
   font-weight: 700;
   white-space: nowrap;
-  box-shadow: 0 2px 4px rgba(251, 113, 133, 0.25);
+  box-shadow: 0 1px 3px rgba(251, 113, 133, 0.25);
+  min-width: 68px;         /* 🔥 دکمه کوچک‌تر و جمع‌وجورتر */
+  text-align: center;
 }
-    
-    
 
       
   </style>    <link rel="icon" href="https://dentcast.ir/logo-v2.png" type="image/png" sizes="192x192">  
