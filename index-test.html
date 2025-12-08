@@ -415,7 +415,7 @@
     const dy = t.clientY - touchStartY;
 
     // حساسیت بالا + فیلتر حرکت عمودی
-    if (Math.abs(dx) > Math.abs(dy) * 1.05 && Math.abs(dx) > 5) {
+    if (Math.abs(dx) > Math.abs(dy) * 1.05 && Math.abs(dx) > 2) {
       isSwiping = true;
       e.preventDefault();
     }
@@ -426,7 +426,7 @@
     const dx = e.changedTouches[0].clientX - touchStartX;
 
     // 🔵 حساس‌تر: فقط 5px جابه‌جایی هم کافیه
-    if (Math.abs(dx) > 5) {
+    if (Math.abs(dx) > 2) {
       if (dx < 0) {
         activateTab(activeIndex() + 1);
       } else {
