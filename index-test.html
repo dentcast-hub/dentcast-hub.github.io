@@ -367,7 +367,10 @@
 
 <div class="bottom-fade"></div>
 
+
 <script>
+  /* ---------------- سیستم تب‌ها ---------------- */
+
   const tabContainer = document.querySelector('.dc-tabs');
   const tabs = Array.from(document.querySelectorAll('.dc-tab'));
   const panels = document.querySelectorAll('.dc-panel');
@@ -405,12 +408,10 @@
   tabs.forEach((tab, i) =>
     tab.addEventListener("click", () => activateTab(i))
   );
-</script>
 
-<script>
-  /* ---------------- سوایپ روی کل محتوای پایین برای عوض‌کردن تب ---------------- */
+  /* ---------------- سوایپ روی کل محتوای پایین ---------------- */
 
-  const swipeArea = document.querySelector(".dc-main");  /* قبلاً فقط کارت‌ها → حالا کل محتوای پایین */
+  const swipeArea = document.querySelector(".dc-main");
 
   let touchStartX = 0;
   let touchStartY = 0;
@@ -428,10 +429,9 @@
     const dx = t.clientX - touchStartX;
     const dy = t.clientY - touchStartY;
 
-    // تشخیص حرکت افقی نرم‌تر و سریع‌تر
     if (Math.abs(dx) > Math.abs(dy) * 1.1 && Math.abs(dx) > 10) {
       horizontal = true;
-      e.preventDefault();  // جلوگیری از اسکرول عمودی وقتی gesture افقیه
+      e.preventDefault();
     }
   }, { passive: false });
 
@@ -441,12 +441,11 @@
     const t = e.changedTouches[0];
     const dx = t.clientX - touchStartX;
 
-    // حساسیت بهتر (۱۵px → ۱۰px)
     if (Math.abs(dx) > 10) {
       if (dx < 0) {
-        activateTab(activeIndex() + 1);  // سوایپ به چپ → تب بعدی
+        activateTab(activeIndex() + 1);
       } else {
-        activateTab(activeIndex() - 1);  // سوایپ به راست → تب قبلی
+        activateTab(activeIndex() - 1);
       }
     }
   }, { passive: true });
