@@ -523,33 +523,26 @@
     }
 
     /* --- فوتر (از ایندکس اصلی) --- */
-        footer {
-  margin-top: auto;
-  padding: 20px 0 30px;
+        /* فوتر چسبنده به پایین */
+footer {
+  margin-top: auto;       /* فوتر را می‌فرستد ته صفحه */
+  padding: 25px 0 30px;   /* فاصله داخلی */
   text-align: center;
-  background: transparent;
+  background: transparent; 
+  flex-shrink: 0;         /* جلوگیری از جمع شدن فوتر */
 }
 
-.ad-banner {
-  display: block;
-  margin-bottom: 18px;
-  background: #ffe4e4;
-  color: #b73131;
-  padding: 14px;
-  border-radius: 14px;
-  font-weight: 600;
-  border: 1px solid #f4bcbc;
-  text-decoration: none;
-}
-
+/* متن فوتر */
 .footer-text {
   color: var(--text-muted);
-  font-size: .85rem;
-  margin-bottom: 15px;
+  font-size: 0.85rem;
+  margin-bottom: 18px;   /* فاصله بین متن و دکمه */
+  line-height: 1.6;
 }
 
+/* دکمه‌ی درباره */
 .footer-about .about-btn {
-  display:inline-block;
+  display: inline-block;
   background: #fff;
   color: var(--text-main);
   border: 1px solid #cbd5e1;
@@ -557,26 +550,16 @@
   padding: 8px 20px;
   font-weight: 600;
   text-decoration: none;
+  font-size: 0.85rem;
   box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  transition: all .2s ease;
 }
-    
-    /* --- پایان تغییرات هدر --- */
 
-    .ad-banner:hover {
-      background: #ffe4e6;          
-      transform: translateY(-2px);  
-    }
-
-    .ad-banner strong {
-      background: #fb7185;          
-      color: white;                 
-      padding: 4px 12px;
-      border-radius: 8px;
-      font-size: 0.8rem;
-      font-weight: 700;
-      box-shadow: 0 2px 4px rgba(251, 113, 133, 0.3); 
-    }
-    
+/* افکت هاور */
+.footer-about .about-btn:hover {
+  background: #f1f5f9;
+  transform: translateY(-2px);
+}
   </style>
 
   <link rel="icon" href="https://dentcast.ir/logo-v2.png" type="image/png" sizes="192x192">
