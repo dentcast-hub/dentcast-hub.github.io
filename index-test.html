@@ -381,47 +381,32 @@
 
   function activateTab(index) {
     if (index < 0 || index >= tabs.length) return;
-
     tabs.forEach(t => t.classList.remove('active'));
     panels.forEach(p => p.classList.remove('active'));
-
     const newTab = tabs[index];
     newTab.classList.add('active');
-
     const target = newTab.getAttribute('data-target');
     document.getElementById(target).classList.add('active');
-
-    const offset =
-      newTab.offsetLeft -
-      tabContainer.clientWidth / 2 +
-      newTab.clientWidth / 2;
-
+    const offset = newTab.offsetLeft - tabContainer.clientWidth / 2 + newTab.clientWidth / 2;
     tabContainer.scrollTo({ left: offset, behavior: "smooth" });
   }
 
   document.getElementById("scrollLeft")
     .addEventListener("click", () => activateTab(activeIndex() - 1));
-
   document.getElementById("scrollRight")
     .addEventListener("click", () => activateTab(activeIndex() + 1));
+  tabs.forEach((tab, i) => tab.addEventListener("click", () => activateTab(i)));
 
-  tabs.forEach((tab, i) =>
-    tab.addEventListener("click", () => activateTab(i))
-  );
+  /* ---------------- سوایپ روی کل فضای پایین ---------------- */
 
-  /* ---------------- سوایپ روی کل محتوای پایین ---------------- */
-
-  const swipeArea = document.querySelector(".dc-main");
-
-  let touchStartX = 0;
-  let touchStartY = 0;
-  let horizontal = false;
+  const swipeArea = document.body; // 🔥 حالا کل بدنه حساسه، نه فقط کارت‌ها
+  let touchStartX = 0, touchStartY = 0, isSwiping = false;
 
   swipeArea.addEventListener("touchstart", (e) => {
     const t = e.touches[0];
     touchStartX = t.clientX;
     touchStartY = t.clientY;
-    horizontal = false;
+    isSwiping = false;
   }, { passive: true });
 
   swipeArea.addEventListener("touchmove", (e) => {
@@ -429,19 +414,19 @@
     const dx = t.clientX - touchStartX;
     const dy = t.clientY - touchStartY;
 
-    if (Math.abs(dx) > Math.abs(dy) * 1.1 && Math.abs(dx) > 10) {
-      horizontal = true;
+    // حساسیت بالا + فیلتر حرکت عمودی
+    if (Math.abs(dx) > Math.abs(dy) * 1.05 && Math.abs(dx) > 5) {
+      isSwiping = true;
       e.preventDefault();
     }
   }, { passive: false });
 
   swipeArea.addEventListener("touchend", (e) => {
-    if (!horizontal) return;
+    if (!isSwiping) return;
+    const dx = e.changedTouches[0].clientX - touchStartX;
 
-    const t = e.changedTouches[0];
-    const dx = t.clientX - touchStartX;
-
-    if (Math.abs(dx) > 10) {
+    // 🔵 حساس‌تر: فقط 5px جابه‌جایی هم کافیه
+    if (Math.abs(dx) > 5) {
       if (dx < 0) {
         activateTab(activeIndex() + 1);
       } else {
