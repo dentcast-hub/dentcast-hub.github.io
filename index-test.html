@@ -427,7 +427,7 @@
     const dy = t.clientY - touchStartY;
 
     // حرکت افقی غالب باشه و حداقل ۴۰px جابه‌جایی داشته باشه
-    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) {
+    if (Math.abs(dx) > Math.abs(dy) * 1.2 && Math.abs(dx) > 15) {
       if (dx < 0) {
         // سوایپ به چپ → تب بعدی
         activateTab(activeIndex() + 1);
