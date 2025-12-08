@@ -531,6 +531,54 @@
       padding-bottom: 30px;   
       margin-bottom: 0;  
         }  
+    /* کارت تبلیغاتی هماهنگ با استایل دنت‌کست */
+.dc-card.ad-card {
+  background: #fff1f2 !important;
+  border: 1px solid #fecdd3 !important;
+  border-radius: 1rem;
+  box-shadow: 0 2px 6px rgba(255, 0, 43, 0.08);
+  padding: 0; /* چون لینک خودش پدینگ دارد */
+  transition: 0.18s;
+}
+
+.dc-card.ad-card:hover {
+  background: #ffe4e6 !important;
+  transform: translateY(-3px);
+}
+
+/* لینک داخلی کارت */
+.ad-card .ad-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  width: 100%;
+  text-decoration: none;
+  color: #9f1239;
+}
+
+/* عنوان و کپشن تبلیغی */
+.ad-card .dc-card-title {
+  color: #9f1239;
+  font-weight: 700;
+}
+
+.ad-card .dc-card-caption {
+  color: #b91c1c;
+}
+
+/* دکمه Strong داخل کارت */
+.ad-strong {
+  background: #fb7185;
+  color: white;
+  padding: 5px 12px;
+  border-radius: 8px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  white-space: nowrap;
+  box-shadow: 0 2px 4px rgba(251, 113, 133, 0.25);
+}
       
   </style>    <link rel="icon" href="https://dentcast.ir/logo-v2.png" type="image/png" sizes="192x192">  
   <link rel="apple-touch-icon" href="/logo-v2.png">  
@@ -661,6 +709,21 @@
     </div>  
     <span class="dc-chip">DentCast+</span>  
   </article>  
+      <article class="dc-card ad-card" id="card-ad-orange">
+  <a href="https://godza.ir/product/orangedental-loupes/"
+     class="ad-link"
+     target="_blank"
+     rel="sponsored noopener">
+     
+    <div class="dc-card-main">
+      <div class="dc-card-title">خرید لوپ Orange Dental 🎯</div>
+      <div class="dc-card-caption">از شرکت گادزا – ارسال سریع و گارانتی</div>
+    </div>
+
+    <strong class="ad-strong">کلیک کنید</strong>
+
+  </a>
+      </article>
 
 </div>
 
