@@ -547,27 +547,55 @@
 }
 
 /* لینک داخلی کارت */
-.ad-banner {
-  display: block;
-  background: #ffeef0;            /* قرمز خیلی خیلی ملایم */
-  border: 1px solid #ffc8ce;      /* خط مرزی نرم */
-  color: #c73541;                 /* متن قرمزِ ظریف */
-  padding: 14px 18px;             /* سایز فعلی حفظ شده */
-  border-radius: 16px;
-  font-size: 1rem;
-  text-align: center;
+
+    /* لینک اصلی تبلیغ داخل کارت */
+.ad-card .ad-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  padding: 14px 14px;         /* کمی نرم‌تر و جاافتاده‌تر */
+  width: 100%;
   text-decoration: none;
-  margin-top: 42px;               /* فاصله بیشتر از بالا */
+  color: #b8405a;             /* قرمز ملایم به‌جای قرمز تیز */
+  background: #fff1f3;        /* پس‌زمینه بسیار لطیف */
+  border: 1px solid #ffdbe1;  /* مرز ملایم */
+  border-radius: 16px;
+  margin-top: 42px;           /* فاصله بیشتر از بالا */
   transition: 0.25s ease;
 }
 
-.ad-banner strong {
-  margin-right: 6px;
+.ad-card .ad-link:hover {
+  background: #ffe4e8;        /* تأکید نرم در هاور */
+  border-color: #ffccd4;
 }
 
-.ad-banner:hover {
-  background: #ffe1e5;            /* فقط کمی تأکید در هاور */
-  border-color: #ffb5bc;
+/* عنوان تبلیغ */
+.ad-card .dc-card-title {
+  color: #b91c4a;             /* رنگ عنوان کمی قوی‌تر ولی همچنان نرم */
+  font-weight: 700;
+}
+
+/* کپشن تبلیغ */
+.ad-card .dc-card-caption {
+  color: #c2414f;             /* متن ملایم‌تر و غیرتهاجمی */
+}
+
+/* دکمه Strong داخل کارت */
+.ad-strong {
+  background: #fda4af;        /* نسخه‌ی پاستلی رنگ قبلی */
+  color: white;
+  padding: 5px 12px;
+  border-radius: 8px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  white-space: nowrap;
+  box-shadow: 0 2px 4px rgba(253, 164, 175, 0.25);
+  transition: 0.25s ease;
+}
+
+.ad-strong:hover {
+  background: #fb7185;        /* در هاور کمی پررنگ‌تر */
 }
       
   </style>    <link rel="icon" href="https://dentcast.ir/logo-v2.png" type="image/png" sizes="192x192">  
