@@ -486,6 +486,38 @@
       line-height: 1.7;
       padding-bottom: 90px;
     }
+    /* ==== اسلایدر کشویی برای سرچ و خبرنامه ==== */
+.dc-slidebox {
+  display: none;           /* در حالت عادی بسته */
+  max-height: 0;           /* برای انیمیشن کشویی */
+  overflow: hidden;
+  transition: max-height 0.35s ease;
+  margin-top: 8px;
+}
+
+/* ردیف هدر داخلی با عنوان + ضربدر */
+.dc-slidebox-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+/* دکمه ضربدر برای بستن کشوها (سرچ و خبرنامه) */
+.dc-close-toggle {
+  background: #fee2e2;
+  border: none;
+  color: #b91c1c;
+  border-radius: 999px;
+  padding: 2px 10px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.dc-close-toggle:hover {
+  background: #fecaca;
+}
   </style>
 
   <link rel="icon" href="https://dentcast.ir/logo-v2.png" type="image/png" sizes="192x192">
@@ -719,51 +751,143 @@
 
     </div>
 
-    <!-- جستجوی سراسری (همان باکس اصلی، فقط حالا با toggle) -->
-    <div class="dc-global-filter-box" id="dcGlobalBox">
-      <h2 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h2>
+<!-- Panel 3: اینفو و ابزار سایت -->
+  <section class="dc-panel" id="panel-site">
+    <h2 class="dc-section-title">اینفو و ابزار سایت دنت‌کست</h2>
+    <p class="dc-section-sub">اطلاعات، جستجو و مسیرهای ارتباطی.</p>
 
-      <input id="dcSearch" class="dc-search-input"
-             placeholder="جستجو در همهٔ بخش‌های دنت‌کست…">
+    <div class="dc-card-list">
 
-      <div class="dc-filter-list">
-        <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
-        <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
-        <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
-        <button class="dc-filter-btn active" data-type="litecast">لایت‌کست</button>
-        <button class="dc-filter-btn active" data-type="photocast">فوتوکست</button>
-        <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
-        <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
+      <!-- کارت PWA (فقط تریگر نصب، کشویی نمی‌خوایم فعلاً) -->
+      <article class="dc-card" id="card-pwa" style="border-color:#0b5fff30; background:#f5f8ff;">
+        <div class="dc-card-main">
+          <div class="dc-card-title">نصب نسخهٔ سریع دنت‌کست 📱</div>
+          <div class="dc-card-caption">آفلاین، سریع، با آیکون اختصاصی.</div>
+        </div>
+        <span class="dc-chip" style="background:#0b5fff12; border-color:#0b5fff40; color:#0b5fff;">
+          PWA
+        </span>
+      </article>
+
+      <!-- کارت سرچ سراسری -->
+      <article class="dc-card" id="card-search">
+        <div class="dc-card-main">
+          <div class="dc-card-title">جستجوی سراسری دنت‌کست 🔎</div>
+          <div class="dc-card-caption">سرچ در اپیزودها و نوت‌کست‌ها.</div>
+        </div>
+        <span class="dc-chip">Search</span>
+      </article>
+
+      <!-- باکس کشویی مخصوص سرچ گلوبال (اول بسته است) -->
+      <div id="dcSearchBox" class="dc-slidebox">
+        <div class="dc-global-filter-box" id="dcGlobalBox">
+          <div class="dc-slidebox-header">
+            <h2 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h2>
+            <!-- ضربدر بستن سرچ -->
+            <button type="button"
+                    class="dc-close-toggle"
+                    data-target="search">
+              ✕
+            </button>
+          </div>
+
+          <input id="dcSearch" class="dc-search-input"
+                 placeholder="جستجو در همهٔ بخش‌های دنت‌کست…">
+
+          <div class="dc-filter-list">
+            <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
+            <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
+            <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
+            <button class="dc-filter-btn active" data-type="litecast">لایت‌کست</button>
+            <button class="dc-filter-btn active" data-type="photocast">فوتوکست</button>
+            <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
+            <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
+          </div>
+
+          <div class="dc-results-box" id="dcResults"></div>
+        </div>
       </div>
 
-      <div class="dc-results-box" id="dcResults"></div>
-    </div>
+      <!-- کارت خبرنامه -->
+      <article class="dc-card" id="card-newsletter">
+        <div class="dc-card-main">
+          <div class="dc-card-title">خبرنامهٔ دنت‌کست 📬</div>
+          <div class="dc-card-caption">اطلاع سریع از اپیزودهای جدید.</div>
+        </div>
+        <span class="dc-chip">Newsletter</span>
+      </article>
 
-    <!-- خبرنامه دنت‌کست -->
-    <div id="mlb2-33724259" class="newsletter-wrapper ml-subscribe-form ml-subscribe-form-33724259">
-      <div class="newsletter-box">
-        <div class="row-form">
-          <div class="newsletter-title">📬 خبرنامه‌ی دنت‌کست</div>
-          <div class="newsletter-text">اطلاع‌رسانی اپیزودها و مطالب جدید (بدون اسپم)</div>
-
-          <form class="ml-block-form" action="https://assets.mailerlite.com/jsonp/1939653/forms/171891141676893488/subscribe" data-code="" method="post" target="_blank">
-            <div class="newsletter-form-group">
-              <input aria-label="email" aria-required="true" type="email" class="newsletter-input" data-inputmask="" name="fields[email]" placeholder="ایمیل شما..." autocomplete="email" required>
-              <button type="submit" class="newsletter-btn">
-                عضویت <span class="ml-form-embedSubmitLoad">...</span>
+      <!-- باکس کشویی خبرنامه (داخلش همان newsletter-box اصلی) -->
+      <div id="dcNewsletterBox" class="dc-slidebox">
+        <div id="mlb2-33724259" class="newsletter-wrapper ml-subscribe-form ml-subscribe-form-33724259">
+          <div class="newsletter-box">
+            <div class="dc-slidebox-header" style="margin-bottom:8px;">
+              <div>
+                <div class="newsletter-title">📬 خبرنامه‌ی دنت‌کست</div>
+                <div class="newsletter-text">اطلاع‌رسانی اپیزودها و مطالب جدید (بدون اسپم)</div>
+              </div>
+              <!-- ضربدر بستن خبرنامه -->
+              <button type="button"
+                      class="dc-close-toggle"
+                      data-target="newsletter">
+                ✕
               </button>
             </div>
-            <input type="hidden" name="ml-submit" value="1">
-            <input type="hidden" name="anticsrf" value="true">
-          </form>
-        </div>
 
-        <div class="row-success success-message" style="display:none; background: rgba(16, 185, 129, 0.1); color: #059669; padding: 10px; border-radius: 8px; margin-top: 10px; font-size: 0.85rem;">
-          ✅ ایمیل شما با موفقیت ثبت شد.
+            <div class="row-form">
+              <form class="ml-block-form"
+                    action="https://assets.mailerlite.com/jsonp/1939653/forms/171891141676893488/subscribe"
+                    data-code=""
+                    method="post"
+                    target="_blank">
+
+                <div class="newsletter-form-group">
+                  <input aria-label="email"
+                         aria-required="true"
+                         type="email"
+                         class="newsletter-input"
+                         data-inputmask=""
+                         name="fields[email]"
+                         placeholder="ایمیل شما..."
+                         autocomplete="email"
+                         required>
+                  <button type="submit" class="newsletter-btn">
+                    عضویت <span class="ml-form-embedSubmitLoad">...</span>
+                  </button>
+                </div>
+
+                <input type="hidden" name="ml-submit" value="1">
+                <input type="hidden" name="anticsrf" value="true">
+              </form>
+            </div>
+
+            <div class="row-success success-message"
+                 style="display:none; background: rgba(16, 185, 129, 0.1); color: #059669; padding: 10px; border-radius: 8px; margin-top: 10px; font-size: 0.85rem;">
+              ✅ ایمیل شما با موفقیت ثبت شد.
+            </div>
+          </div>
         </div>
       </div>
-    </div>
 
+      <!-- کارت ارتباط و مشاوره -->
+      <article class="dc-card" id="card-contact-info">
+        <div class="dc-card-main">
+          <div class="dc-card-title">ارتباط و مشاوره با دکتر شهابیان 📞</div>
+          <div class="dc-card-caption">راه‌های تماس رسمی.</div>
+        </div>
+        <span class="dc-chip">Contact</span>
+      </article>
+
+      <!-- کارت درباره دنت‌کست -->
+      <article class="dc-card" id="card-about-info">
+        <div class="dc-card-main">
+          <div class="dc-card-title">دربارهٔ دنت‌کست ✨</div>
+          <div class="dc-card-caption">معرفی مسیر و اهداف دنت‌کست.</div>
+        </div>
+        <span class="dc-chip">About</span>
+      </article>
+
+    </div>
   </section>
 
 </main>
@@ -1078,6 +1202,62 @@ if ('serviceWorker' in navigator) {
     .catch(err => console.error('SW registration failed:', err));
 }
 </script>
+<script>
+/* =========================================================================
+   🔥 اسلایدر کشویی برای سرچ سراسری و خبرنامه – Toggle بدون هیچ تداخل
+   ========================================================================= */
 
+function toggleSlide(id) {
+  const box = document.getElementById(id);
+  if (!box) return;
+
+  if (box.style.display === "block") {
+    // بستن
+    box.style.maxHeight = "0px";
+    setTimeout(() => { box.style.display = "none"; }, 300);
+  } else {
+    // باز شدن
+    box.style.display = "block";
+    box.style.maxHeight = box.scrollHeight + "px";
+  }
+}
+
+/* ================
+   سرچ سراسری
+   ================ */
+
+const cardSearch = document.getElementById("card-search");
+const searchBox  = document.getElementById("dcSearchBox");
+
+cardSearch.addEventListener("click", () => {
+  toggleSlide("dcSearchBox");
+});
+
+/* بستن سرچ با ضربدر */
+document.querySelector("[data-target='search']")
+  .addEventListener("click", (e) => {
+    e.stopPropagation();   // جلوگیری از اجرای دوباره‌ کلیک روی کارت
+    toggleSlide("dcSearchBox");
+  });
+
+/* ================
+   خبرنامه
+   ================ */
+
+const cardNewsletter = document.getElementById("card-newsletter");
+const newsletterBox  = document.getElementById("dcNewsletterBox");
+
+cardNewsletter.addEventListener("click", () => {
+  toggleSlide("dcNewsletterBox");
+});
+
+/* بستن خبرنامه با ضربدر */
+document.querySelector("[data-target='newsletter']")
+  .addEventListener("click", (e) => {
+    e.stopPropagation();
+    toggleSlide("dcNewsletterBox");
+  });
+
+</script>
 </body>
 </html>
