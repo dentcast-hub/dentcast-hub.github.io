@@ -1,5 +1,4 @@
 <!doctype html>
-
 <html lang="fa" dir="rtl">  
 <head>  
   <meta charset="utf-8">  
@@ -160,11 +159,8 @@
     .dc-card {
       background: var(--card-bg);
       border-radius: .9rem;
-
-      /* 🔵 نسخه درست‌شده — مطابق سایت اصلی */
       border: 1px solid var(--card-border);
       box-shadow: 0 2px 6px rgba(0,0,0,0.06);
-
       padding: .7rem .75rem;
       display: flex;
       justify-content: space-between;
@@ -173,12 +169,13 @@
       transition: 0.18s;
     }
 
-  .dc-card.featured-card {
-  background: #fffef9 !important;               /* کمی روشن‌تر از بقیه کارت‌ها */
-  border: none !important;                      /* حذف استروک آبی ضخیم */
-  border-radius: 1.05rem !important;            /* یه ذره گردتر از کارت‌های معمولی */
-  box-shadow: 0 4px 14px -1px rgba(11, 95, 255, 0.22) !important;  /* سایه آبی نرم و شیک */
-  }
+    .dc-card.featured-card {
+      background: #fffef9 !important;
+      border: none !important;
+      border-radius: 1.05rem !important;
+      box-shadow: 0 4px 14px -1px rgba(11, 95, 255, 0.22) !important;
+    }
+
     .dc-card-title   { font-size: .86rem; font-weight: 700; }
     .dc-card-caption { font-size: .75rem; color: var(--text-sub); }
 
@@ -201,7 +198,6 @@
 
 <body>
 
-<!-- 👇 از اینجا به پایین هیچ چیز تغییر نکرده -->
 <header class="main-header">
   <h1>🎙️ دنت‌کست — DentCast</h1>
   <h2>پادکست علمی دندان‌پزشکی</h2>
@@ -243,13 +239,11 @@
 
   <!-- Panel 1 -->
   <section class="dc-panel active" id="panel-studio">
-
     <h2 class="dc-section-title">ماژول‌های دنت‌کست استودیو</h2>
     <p class="dc-section-sub">بخش‌های علمی و تخصصی دنت‌کست برای دندان‌پزشکان.</p>
 
     <div class="dc-card-list">
 
-      <!-- 👑 کارت ویژه -->
       <article class="dc-card featured-card">
         <div class="dc-card-main">
           <div class="dc-card-title">فهرست و شنیدن اپیزودهای دنت‌کست 🎧</div>
@@ -412,68 +406,38 @@
     tab.addEventListener("click", () => activateTab(i))
   );
 </script>
+
 <script>
-/* ----------------------- سوایپ افقی برای اسکرول تب‌ها ----------------------- */
+  /* ---------------- سوایپ روی محتوای پایین برای عوض‌کردن تب ---------------- */
 
-const dcMain = document.querySelector(".dc-main");
+  const dcMain = document.querySelector(".dc-main");
 
-let startX = 0;
-let startY = 0;
-let lastDX = 0;
-let isHorizontal = false;
-let animationFrame;
+  let touchStartX = 0;
+  let touchStartY = 0;
 
-dcMain.addEventListener(
-  "touchstart",
-  (e) => {
-    startX = e.touches[0].clientX;
-    startY = e.touches[0].clientY;
-    lastDX = 0;
-    isHorizontal = false;
+  dcMain.addEventListener("touchstart", (e) => {
+    const t = e.touches[0];
+    touchStartX = t.clientX;
+    touchStartY = t.clientY;
+  }, { passive: true });
 
-    if (animationFrame) cancelAnimationFrame(animationFrame);
-  },
-  { passive: true }
-);
+  dcMain.addEventListener("touchend", (e) => {
+    const t = e.changedTouches[0];
+    const dx = t.clientX - touchStartX;
+    const dy = t.clientY - touchStartY;
 
-dcMain.addEventListener(
-  "touchmove",
-  (e) => {
-    const currentX = e.touches[0].clientX;
-    const currentY = e.touches[0].clientY;
-
-    const dx = currentX - startX;
-    const dy = currentY - startY;
-
-    if (Math.abs(dx) > Math.abs(dy)) {
-      e.preventDefault();
-      isHorizontal = true;
-
-      tabContainer.scrollLeft -= dx * 0.5;
-      lastDX = dx;
-
-      startX = currentX;
+    // حرکت افقی غالب باشه و حداقل ۴۰px جابه‌جایی داشته باشه
+    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) {
+      if (dx < 0) {
+        // سوایپ به چپ → تب بعدی
+        activateTab(activeIndex() + 1);
+      } else {
+        // سوایپ به راست → تب قبلی
+        activateTab(activeIndex() - 1);
+      }
     }
-  },
-  { passive: false }
-);
-
-dcMain.addEventListener("touchend", () => {
-  if (!isHorizontal) return;
-
-  let velocity = lastDX * 0.35;
-
-  function inertiaScroll() {
-    if (Math.abs(velocity) < 0.5) return;
-
-    tabContainer.scrollLeft -= velocity;
-    velocity *= 0.92;
-
-    animationFrame = requestAnimationFrame(inertiaScroll);
-  }
-
-  inertiaScroll();
-});
+  }, { passive: true });
 </script>
+
 </body>
 </html>
