@@ -369,71 +369,119 @@
 
 
 <script>
-  /* ---------------- سیستم تب‌ها ---------------- */
+/* ---------------- سیستم تب‌ها ---------------- */
 
-  const tabContainer = document.querySelector('.dc-tabs');
-  const tabs = Array.from(document.querySelectorAll('.dc-tab'));
-  const panels = document.querySelectorAll('.dc-panel');
+const tabContainer = document.querySelector('.dc-tabs');
+const tabs = Array.from(document.querySelectorAll('.dc-tab'));
+const panels = document.querySelectorAll('.dc-panel');
 
-  function activeIndex() {
-    return tabs.findIndex(t => t.classList.contains('active'));
+function activeIndex() {
+  return tabs.findIndex(t => t.classList.contains('active'));
+}
+
+function activateTab(index) {
+  if (index < 0 || index >= tabs.length) return;
+
+  tabs.forEach(t => t.classList.remove('active'));
+  panels.forEach(p => p.classList.remove('active'));
+
+  const newTab = tabs[index];
+  newTab.classList.add('active');
+
+  const target = newTab.getAttribute('data-target');
+  document.getElementById(target).classList.add('active');
+
+  const offset =
+    newTab.offsetLeft -
+    tabContainer.clientWidth / 2 +
+    newTab.clientWidth / 2;
+
+  tabContainer.scrollTo({ left: offset, behavior: "smooth" });
+}
+
+document.getElementById("scrollLeft")
+  .addEventListener("click", () => activateTab(activeIndex() - 1));
+
+document.getElementById("scrollRight")
+  .addEventListener("click", () => activateTab(activeIndex() + 1));
+
+tabs.forEach((tab, i) =>
+  tab.addEventListener("click", () => activateTab(i))
+);
+
+
+/* ----------------------------------------------------
+   🔥 سوایپ روی کل صفحه (بدنه) با:
+   - جهت برعکس دقیقاً مثل تلگرام
+   - اینرسی واقعی (momentum)
+   - Threshold هوشمند سرعت + فاصله
+----------------------------------------------------- */
+
+const swipeArea = document.body;
+
+let startX = 0;
+let startY = 0;
+let startTime = 0;
+let isHorizontal = false;
+
+swipeArea.addEventListener("touchstart", (e) => {
+  const t = e.touches[0];
+  startX = t.clientX;
+  startY = t.clientY;
+  startTime = Date.now();
+  isHorizontal = false;
+}, { passive: true });
+
+swipeArea.addEventListener("touchmove", (e) => {
+  const t = e.touches[0];
+  const dx = t.clientX - startX;
+  const dy = t.clientY - startY;
+
+  // جلوگیری از حرکت عمودی + حساسیت بالا
+  if (Math.abs(dx) > Math.abs(dy) * 1.05 && Math.abs(dx) > 5) {
+    isHorizontal = true;
+    e.preventDefault();
+  }
+}, { passive: false });
+
+swipeArea.addEventListener("touchend", (e) => {
+  if (!isHorizontal) return;
+
+  const t = e.changedTouches[0];
+  const dx = t.clientX - startX;
+  const dt = Date.now() - startTime;
+
+  const speed = Math.abs(dx) / dt; // سرعت در px/ms
+
+  const MIN_DISTANCE = 12;    // فاصله لازم برای سوایپ آرام
+  const MIN_SPEED = 0.25;     // سرعت لازم برای سوایپ سریع (تلگرامی)
+
+  const shouldSwipe =
+    Math.abs(dx) > MIN_DISTANCE || speed > MIN_SPEED;
+
+  if (shouldSwipe) {
+    if (dx < 0) {
+      // 🔄 جهت برعکس: چپ → تب قبلی
+      activateTab(activeIndex() - 1);
+    } else {
+      // 🔄 راست → تب بعدی
+      activateTab(activeIndex() + 1);
+    }
   }
 
-  function activateTab(index) {
-    if (index < 0 || index >= tabs.length) return;
-    tabs.forEach(t => t.classList.remove('active'));
-    panels.forEach(p => p.classList.remove('active'));
-    const newTab = tabs[index];
-    newTab.classList.add('active');
-    const target = newTab.getAttribute('data-target');
-    document.getElementById(target).classList.add('active');
-    const offset = newTab.offsetLeft - tabContainer.clientWidth / 2 + newTab.clientWidth / 2;
-    tabContainer.scrollTo({ left: offset, behavior: "smooth" });
+  // 🔥 اینرسی نرم (momentum effect)
+  let momentum = dx * 0.15;
+  let current = momentum;
+
+  function inertia() {
+    if (Math.abs(current) < 0.5) return;
+    current *= 0.85;
+    requestAnimationFrame(inertia);
   }
+  inertia();
 
-  document.getElementById("scrollLeft")
-    .addEventListener("click", () => activateTab(activeIndex() - 1));
-  document.getElementById("scrollRight")
-    .addEventListener("click", () => activateTab(activeIndex() + 1));
-  tabs.forEach((tab, i) => tab.addEventListener("click", () => activateTab(i)));
+}, { passive: true });
 
-  /* ---------------- سوایپ روی کل فضای پایین ---------------- */
-
-  const swipeArea = document.body; // 🔥 حالا کل بدنه حساسه، نه فقط کارت‌ها
-  let touchStartX = 0, touchStartY = 0, isSwiping = false;
-
-  swipeArea.addEventListener("touchstart", (e) => {
-    const t = e.touches[0];
-    touchStartX = t.clientX;
-    touchStartY = t.clientY;
-    isSwiping = false;
-  }, { passive: true });
-
-  swipeArea.addEventListener("touchmove", (e) => {
-    const t = e.touches[0];
-    const dx = t.clientX - touchStartX;
-    const dy = t.clientY - touchStartY;
-
-    // حساسیت بالا + فیلتر حرکت عمودی
-    if (Math.abs(dx) > Math.abs(dy) * 1.05 && Math.abs(dx) > 2) {
-      isSwiping = true;
-      e.preventDefault();
-    }
-  }, { passive: false });
-
-  swipeArea.addEventListener("touchend", (e) => {
-    if (!isSwiping) return;
-    const dx = e.changedTouches[0].clientX - touchStartX;
-
-    // 🔵 حساس‌تر: فقط 5px جابه‌جایی هم کافیه
-    if (Math.abs(dx) > 2) {
-      if (dx < 0) {
-        activateTab(activeIndex() + 1);
-      } else {
-        activateTab(activeIndex() - 1);
-      }
-    }
-  }, { passive: true });
 </script>
 
 </body>
