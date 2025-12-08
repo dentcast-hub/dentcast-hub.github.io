@@ -15,6 +15,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
 
   <style>
+    /* 👈 استایل جدید برای Sticky Footer اضافه شد */
+    #content-wrap {
+      flex-grow: 1; 
+    }
+    
     /* ---------- استایل جستجوی سراسری (از ایندکس اصلی) ---------- */
     .dc-result-item {
       display: block;
@@ -173,18 +178,15 @@
     * { box-sizing: border-box; }
 
     body {
-  margin: 0;
-  font-family: "Vazirmatn", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI";
-  background: var(--bg);
-  color: var(--text-main);
-  
-  /* 👈 --- این سه خط رو اضافه کن --- */
-  min-height: 100vh; 
-  display: flex;
-  flex-direction: column; 
-  /* -------------------------------- */
+      margin: 0;
+      font-family: "Vazirmatn", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI";
+      background: var(--bg);
+      color: var(--text-main);
+      min-height: 100vh;
+      /* 👈 این دو خط برای Flexbox اضافه شدند */
+      display: flex;
+      flex-direction: column; 
     }
-    
 
     /* ------------------------- هدر اصلی ------------------------- */
 
@@ -330,7 +332,6 @@
       padding: 0.75rem 0.75rem 1.5rem;
       max-width: 640px;
       margin: 0 auto;
-      flex-grow: 1; 
     }
 
     .dc-panel { display: none; }
@@ -523,7 +524,7 @@
     /* --- فوتر (از ایندکس اصلی) --- */
         footer {
       /* 👇 اصلاح: این خط فوتر را به پایین‌ترین نقطه هل می‌دهد */
-    
+      margin-top: auto; 
       color: var(--text-muted);
       font-size: .85rem;
       text-align: center;
@@ -593,7 +594,7 @@
 </head>
 <body>
 
-<header class="main-header">
+<div id="content-wrap"> <header class="main-header">
   <h1>🎙️ دنت‌کست — DentCast</h1>
   <h2>پادکست علمی دندان‌پزشکی</h2>
   <a href="about.html" class="author-chip">
@@ -808,7 +809,7 @@
 
 </main>
 
-<footer>
+</div> <footer>
   اهواز – کیانپارس، مطب دکتر فواد شهابیان<br>
   تلفن: 33380090-061 &nbsp; | &nbsp; DentCast © 1404
 
