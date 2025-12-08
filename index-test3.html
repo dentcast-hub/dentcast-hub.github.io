@@ -333,18 +333,19 @@
     }
 
     /* 👇 اصلاح: پنل‌ها هم باید Flexbox باشند و فضای عمودی را پر کنند */
-    .dc-panel { 
+
+        .dc-panel { 
       display: none; 
       flex-grow: 1;
-      display: flex; /* باید داخل flexbox باشد */
-      flex-direction: column; /* محتویات را ستونی نگه می‌دارد */
+      display: flex; /* ❌ این خط باعث میشه پنل بسته نشه! */
+      flex-direction: column; 
     }
     
     .dc-panel.active { 
-      display: flex; /* باید فعال باشد */
+      display: flex; 
       flex-grow: 1;
     }
-    
+
     .dc-section-title {
       font-size: .9rem;
       font-weight: 700;
