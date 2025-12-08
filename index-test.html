@@ -408,32 +408,45 @@
 </script>
 
 <script>
-  /* ---------------- سوایپ روی محتوای پایین برای عوض‌کردن تب ---------------- */
+  /* ---------------- سوایپ روی کل محتوای پایین برای عوض‌کردن تب ---------------- */
 
-  const dcMain = document.querySelector(".dc-main");
+  const swipeArea = document.querySelector(".dc-main");  /* قبلاً فقط کارت‌ها → حالا کل محتوای پایین */
 
   let touchStartX = 0;
   let touchStartY = 0;
+  let horizontal = false;
 
-  dcMain.addEventListener("touchstart", (e) => {
+  swipeArea.addEventListener("touchstart", (e) => {
     const t = e.touches[0];
     touchStartX = t.clientX;
     touchStartY = t.clientY;
+    horizontal = false;
   }, { passive: true });
 
-  dcMain.addEventListener("touchend", (e) => {
-    const t = e.changedTouches[0];
+  swipeArea.addEventListener("touchmove", (e) => {
+    const t = e.touches[0];
     const dx = t.clientX - touchStartX;
     const dy = t.clientY - touchStartY;
 
-    // حرکت افقی غالب باشه و حداقل ۴۰px جابه‌جایی داشته باشه
-    if (Math.abs(dx) > Math.abs(dy) * 1.2 && Math.abs(dx) > 15) {
+    // تشخیص حرکت افقی نرم‌تر و سریع‌تر
+    if (Math.abs(dx) > Math.abs(dy) * 1.1 && Math.abs(dx) > 10) {
+      horizontal = true;
+      e.preventDefault();  // جلوگیری از اسکرول عمودی وقتی gesture افقیه
+    }
+  }, { passive: false });
+
+  swipeArea.addEventListener("touchend", (e) => {
+    if (!horizontal) return;
+
+    const t = e.changedTouches[0];
+    const dx = t.clientX - touchStartX;
+
+    // حساسیت بهتر (۱۵px → ۱۰px)
+    if (Math.abs(dx) > 10) {
       if (dx < 0) {
-        // سوایپ به چپ → تب بعدی
-        activateTab(activeIndex() + 1);
+        activateTab(activeIndex() + 1);  // سوایپ به چپ → تب بعدی
       } else {
-        // سوایپ به راست → تب قبلی
-        activateTab(activeIndex() - 1);
+        activateTab(activeIndex() - 1);  // سوایپ به راست → تب قبلی
       }
     }
   }, { passive: true });
