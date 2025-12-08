@@ -825,151 +825,320 @@
 <div class="bottom-fade"></div>
 
 <script>
-  // 1. منطق اصلی جابجایی پنل‌ها (Tab Switching Logic)
-  const tabs = document.querySelectorAll('.dc-tab');
-  const panels = document.querySelectorAll('.dc-panel');
-  const dcTabs = document.getElementById('dcTabs');
+/* ------------------------------------------------------
+   سیستم تب‌ها و سوایپ تلگرامی
+------------------------------------------------------ */
+const tabContainer = document.querySelector('.dc-tabs');
+const tabs = Array.from(document.querySelectorAll('.dc-tab'));
+const panels = document.querySelectorAll('.dc-panel');
+const dcTabs = document.getElementById('dcTabs');
 
-  tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      // حذف کلاس active از همه تب‌ها و پنل‌ها
-      tabs.forEach(t => t.classList.remove('active'));
-      panels.forEach(p => p.classList.remove('active'));
+function activeIndex() {
+  return tabs.findIndex(t => t.classList.contains('active'));
+}
 
-      // اضافه کردن کلاس active به تب فعلی
-      tab.classList.add('active');
+function activateTab(index) {
+  if (index < 0 || index >= tabs.length) return;
 
-      // نمایش پنل هدف
-      const targetId = tab.getAttribute('data-target');
-      document.getElementById(targetId).classList.add('active');
+  tabs.forEach(t => t.classList.remove('active'));
+  panels.forEach(p => p.classList.remove('active'));
 
-      // اسکرول کردن تب فعال به وسط دید
-      tab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-    });
-  });
+  const newTab = tabs[index];
+  newTab.classList.add('active');
 
-  // 2. منطق اسکرول افقی برای تب‌ها (Horizontal Scroll Hints)
-  const scrollLeftBtn = document.getElementById('scrollLeft');
-  const scrollRightBtn = document.getElementById('scrollRight');
+  const target = newTab.getAttribute('data-target');
+  document.getElementById(target).classList.add('active');
 
-  // اسکرول به راست
-  scrollRightBtn.addEventListener('click', () => {
-    dcTabs.scrollBy({ left: 100, behavior: 'smooth' });
-  });
+  const offset =
+    newTab.offsetLeft -
+    tabContainer.clientWidth / 2 +
+    newTab.clientWidth / 2;
 
-  // اسکرول به چپ
-  scrollLeftBtn.addEventListener('click', () => {
-    dcTabs.scrollBy({ left: -100, behavior: 'smooth' });
-  });
+  tabContainer.scrollTo({ left: offset, behavior: "smooth" });
+}
 
-  // 3. منطق باز و بسته کردن (Toggle / Accordion) برای کارت‌ها
-  const toggleCards = document.querySelectorAll('[data-toggle-target]');
+document.getElementById("scrollLeft")
+  .addEventListener("click", () => activateTab(activeIndex() - 1));
 
-  toggleCards.forEach(card => {
-    card.addEventListener('click', function(event) {
-      event.preventDefault();
+document.getElementById("scrollRight")
+  .addEventListener("click", () => activateTab(activeIndex() + 1));
 
-      const targetId = this.getAttribute('data-toggle-target');
-      const targetElement = document.getElementById(targetId);
+tabs.forEach((tab, i) =>
+  tab.addEventListener("click", () => activateTab(i))
+);
 
-      if (!targetElement) return;
+/* ------------------------------------------------------
+   سوایپ تلگرامی با اینرسی (کد اصلی شما)
+------------------------------------------------------ */
+const swipeArea = document.body;
+let startX = 0;
+let startY = 0;
+let startTime = 0;
+let isHorizontal = false;
 
-      // بررسی وضعیت فعلی المان هدف
-      const isCurrentlyOpen = targetElement.classList.contains('open');
+swipeArea.addEventListener("touchstart", (e) => {
+  const t = e.touches[0];
+  startX = t.clientX;
+  startY = t.clientY;
+  startTime = Date.now();
+  isHorizontal = false;
+}, { passive: true });
 
-      // قبل از باز کردن جدید، همه المان‌های باز شده را ببند
-      toggleCards.forEach(c => c.classList.remove('active-toggle'));
-      document.querySelectorAll('.dc-global-filter-box, .newsletter-wrapper').forEach(el => {
-        if (el !== targetElement) {
-          el.classList.remove('open');
-        }
-      });
+swipeArea.addEventListener("touchmove", (e) => {
+  const t = e.touches[0];
+  const dx = t.clientX - startX;
+  const dy = t.clientY - startY;
 
-      // اگر الان باز است، آن را ببند
-      if (isCurrentlyOpen) {
-        targetElement.classList.remove('open');
-        this.classList.remove('active-toggle');
-      }
-      // اگر بسته است، آن را باز کن
-      else {
-        targetElement.classList.add('open');
-        this.classList.add('active-toggle');
-        
-        // اسکرول به سمت کارت یا سکشن باز شده
-        setTimeout(() => {
-             targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 300); // 300 میلی‌ثانیه برای تکمیل شدن انیمیشن
-      }
-    });
-  });
+  if (Math.abs(dx) > Math.abs(dy) * 1.05 && Math.abs(dx) > 5) {
+    isHorizontal = true;
+    e.preventDefault();
+  }
+}, { passive: false });
 
+swipeArea.addEventListener("touchend", (e) => {
+  if (!isHorizontal) return;
 
-  // 4. منطق لینک برای سایر کارت‌ها (Card Linking Logic)
-  // این کد صرفاً برای تغییر مسیر کارت‌هایی است که حالت Toggle ندارند.
-  const linkCard = (id, url) => {
-    const card = document.getElementById(id);
-    if (card) {
-      // مطمئن می شویم کارت Toggle نیست
-      if (!card.hasAttribute('data-toggle-target')) {
-        card.addEventListener('click', () => {
-          window.location.href = url;
-        });
-      }
+  const t = e.changedTouches[0];
+  const dx = t.clientX - startX;
+  const dt = Date.now() - startTime;
+
+  const speed = Math.abs(dx) / dt;
+  const MIN_DISTANCE = 12;
+  const MIN_SPEED = 0.25;
+
+  const shouldSwipe =
+    Math.abs(dx) > MIN_DISTANCE || speed > MIN_SPEED;
+
+  if (shouldSwipe) {
+    if (dx < 0) {
+      activateTab(activeIndex() - 1);
+    } else {
+      activateTab(activeIndex() + 1);
     }
-  };
-
-  // تعریف مسیرها برای کارت‌های باقی‌مانده (به جز سرچ و خبرنامه)
-  linkCard('card-episodes', 'https://dentcast.ir/episodes.html');
-  linkCard('btn-photocast', 'https://t.me/dentcast_photocast');
-  linkCard('btn-notecast', 'https://dentcast.ir/notecast');
-  linkCard('btn-clinical', 'https://t.me/dentcast_clinical');
-  linkCard('btn-dentai', 'https://t.me/dent_AI');
-  linkCard('btn-plus', 'https://www.aparat.com/dentcast');
-
-  linkCard('card-litecast', 'https://dentcast.ir/litecast');
-  linkCard('card-consult-patient', 'https://dentcast.ir/consult');
-
-  linkCard('card-pwa', 'https://dentcast.ir/pwa-info'); // احتمالا یک صفحه راهنما برای نصب PWA
-  linkCard('card-contact-info', 'https://dentcast.ir/contact');
-  linkCard('card-about-info', 'https://dentcast.ir/about');
-
-  
-  // 5. منطق جستجوی سراسری (در صورت نیاز)
-  // اگر نیاز به پیاده‌سازی تابع جستجوی سراسری داری، باید تابع `performSearch` را اینجا تعریف کنی.
-  // در غیر این صورت، کارت جستجو فقط باز و بسته خواهد شد.
-  
-  // مثال (این قسمت فقط برای نمایش جایگاه تابع جستجو است):
-  // document.getElementById('dcSearch').addEventListener('input', function() {
-  //    if (this.value.length > 2) {
-  //        performSearch(this.value, getActiveFilters());
-  //    } else {
-  //        document.getElementById('dcResults').style.display = 'none';
-  //    }
-  // });
-  
-  // document.querySelectorAll('.dc-filter-btn').forEach(btn => {
-  //    btn.addEventListener('click', function() {
-  //        this.classList.toggle('active');
-  //        const currentQuery = document.getElementById('dcSearch').value;
-  //        if (currentQuery.length > 2) {
-  //             performSearch(currentQuery, getActiveFilters());
-  //        }
-  //    });
-  // });
-  
-  // function getActiveFilters() {
-  //    return Array.from(document.querySelectorAll('.dc-filter-btn.active')).map(btn => btn.getAttribute('data-type'));
-  // }
-  
-  // function performSearch(query, filters) {
-  //    // اینجا منطق API Call یا AJAX برای جستجو پیاده‌سازی می‌شود
-  //    console.log(`Searching for: ${query} with filters: ${filters.join(', ')}`);
-  //    // پس از دریافت نتیجه:
-  //    // document.getElementById('dcResults').style.display = 'block';
-  //    // document.getElementById('dcResults').innerHTML = resultsHtml;
-  // }
-
-
+  }
+}, { passive: true });
 </script>
+
+<script>
+/* ==================================================
+   Badge System (Tehran Timezone Lock) — کد اصلی شما
+================================================== */
+const contentUpdates = {
+  "btn-notecast":  "2025-12-08",
+  "btn-photocast": "2024-01-01",
+  "btn-clinical":  "2025-12-04",
+  "btn-dentai":    "2025-12-03",
+  "btn-plus":      "2025-11-27"
+};
+
+function getTehranDate() {
+  return new Date().toLocaleDateString('en-CA', {
+    timeZone: 'Asia/Tehran'
+  });
+}
+
+function sanitizeStorage(key) {
+  const val = localStorage.getItem(key);
+  if (!val) return null;
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(val)) {
+    localStorage.removeItem(key);
+    return null;
+  }
+  return val;
+}
+
+function checkUpdates() {
+  for (const [btnId, updateDate] of Object.entries(contentUpdates)) {
+    const btn = document.getElementById(btnId);
+    if (!btn) continue;
+    const key = "last_visit_" + btnId;
+    const lastVisit = sanitizeStorage(key) || "1900-01-01";
+    if (updateDate > lastVisit) {
+      btn.classList.add("new-badge");
+    }
+  }
+}
+
+function markAsRead(btnId) {
+  const today = getTehranDate();
+  const key = "last_visit_" + btnId;
+  localStorage.setItem(key, today);
+  const btn = document.getElementById(btnId);
+  if (btn) btn.classList.remove("new-badge");
+}
+
+document.addEventListener("DOMContentLoaded", checkUpdates);
+</script>
+
+<script>
+/* ==================================================
+   PWA Install — از روی کارت PWA
+================================================== */
+let deferredPrompt = null;
+
+window.addEventListener("beforeinstallprompt", (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+});
+
+const isiOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+
+const pwaCard = document.getElementById("card-pwa");
+if (pwaCard) {
+  pwaCard.addEventListener("click", async () => {
+    if (isiOS) {
+      alert("برای نصب در آیفون: دکمه Share و سپس Add to Home Screen را بزنید.");
+      return;
+    }
+    if (!deferredPrompt) {
+      alert("در حال حاضر امکان نمایش پیام نصب خودکار وجود ندارد.");
+      return;
+    }
+    deferredPrompt.prompt();
+    await deferredPrompt.userChoice;
+    deferredPrompt = null;
+  });
+}
+</script>
+
+<script>
+/* ==================================================
+   منطق باز و بسته کردن (Toggle / Accordion)
+================================================== */
+const toggleCards = document.querySelectorAll('[data-toggle-target]');
+const globalBox = document.getElementById("dcGlobalBox");
+const resultsBox = document.getElementById("dcResults");
+
+toggleCards.forEach(card => {
+  card.addEventListener('click', function(event) {
+    event.preventDefault();
+
+    const targetId = this.getAttribute('data-toggle-target');
+    const targetElement = document.getElementById(targetId);
+
+    if (!targetElement) return;
+    
+    // اگر کارت جستجو بسته شده باشد، نتایج آن را هم ببند
+    if (targetId === 'dcGlobalBox' && targetElement.classList.contains('open') && resultsBox) {
+        resultsBox.style.display = "none";
+    }
+
+    const isCurrentlyOpen = targetElement.classList.contains('open');
+
+    // قبل از باز کردن جدید، همه المان‌های باز شده را ببند
+    toggleCards.forEach(c => c.classList.remove('active-toggle'));
+    document.querySelectorAll('.dc-global-filter-box, .newsletter-wrapper').forEach(el => {
+      if (el !== targetElement) {
+        el.classList.remove('open');
+      }
+    });
+
+    if (isCurrentlyOpen) {
+      targetElement.classList.remove('open');
+      this.classList.remove('active-toggle');
+    } else {
+      targetElement.classList.add('open');
+      this.classList.add('active-toggle');
+      
+      setTimeout(() => {
+           targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 300);
+    }
+  });
+});
+
+/* بستن باکس سرچ با کلیک روی دکمه ضربدر */
+document.addEventListener("click", (e) => {
+  if (e.target && e.target.classList.contains("dc-close-results")) {
+    if (globalBox) {
+        globalBox.classList.remove("open");
+        const searchCard = document.getElementById("card-search");
+        if(searchCard) searchCard.classList.remove('active-toggle');
+    }
+  }
+}, true);
+</script>
+
+<script>
+/* ==================================================
+   ناوبری کارت‌ها + اتصال به markAsRead (اصلاح شده)
+================================================== */
+function linkCard(id, url, badgeId) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  
+  // فقط برای کارت‌هایی که خاصیت data-toggle-target ندارند
+  if (!el.hasAttribute('data-toggle-target')) {
+      el.addEventListener("click", () => {
+        if (badgeId) markAsRead(badgeId);
+        window.location.href = url;
+      });
+  }
+}
+
+/* تب استودیو (لینک‌های اصلی شما) */
+linkCard("card-episodes",   "https://dentcast.ir/episodes");
+linkCard("btn-photocast",   "https://dentcast.ir/photocast/",   "btn-photocast");
+linkCard("btn-notecast",    "https://dentcast.ir/notecast/",    "btn-notecast");
+linkCard("btn-clinical",    "https://dentcast.ir/insight/",     "btn-clinical");
+linkCard("btn-dentai",      "https://dentcast.ir/dentai/",      "btn-dentai");
+linkCard("btn-plus",        "https://dentcast.ir/dentcast-plus/","btn-plus");
+
+/* تب بیماران (لینک‌های اصلی شما) */
+linkCard("card-litecast",        "https://dentcast.ir/litecast/");
+// این کارت مستقیماً به ایمیل هدایت می‌شود
+const consultPatient = document.getElementById("card-consult-patient");
+if (consultPatient) {
+  consultPatient.addEventListener("click", () => {
+    window.location.href = "mailto:info@dentcast.ir";
+  });
+}
+
+/* تب اینفو و ابزار (لینک‌های اصلی شما) */
+const contactInfo = document.getElementById("card-contact-info");
+if (contactInfo) {
+  contactInfo.addEventListener("click", () => {
+    window.location.href = "mailto:info@dentcast.ir";
+  });
+}
+
+const aboutInfo = document.getElementById("card-about-info");
+if (aboutInfo) {
+  aboutInfo.addEventListener("click", () => {
+    window.location.href = "https://dentcast.ir/about.html";
+  });
+}
+
+// کارت PWA (کد آن در بالاتر محفوظ ماند)
+// کارت‌های Search و Newsletter هم با منطق Toggle مدیریت می‌شوند و نیازی به این تابع ندارند.
+</script>
+
+<script>
+/* ==================================================
+   MailerLite callback (از ایندکس اصلی)
+================================================== */
+function ml_webform_success_33724259() {
+  var formRow = document.querySelector('.ml-subscribe-form-33724259 .row-form');
+  var successRow = document.querySelector('.ml-subscribe-form-33724259 .row-success');
+  if(formRow) formRow.style.display = 'none';
+  if(successRow) successRow.style.display = 'block';
+}
+</script>
+<script src="https://groot.mailerlite.com/js/w/webforms.min.js?v176e10baa5e7ed80d35ae235be3d5024" type="text/javascript"></script>
+
+<script src="/global-search.js?v=2"></script>
+
+<script>
+/* ==================================================
+   Service Worker ثبت
+================================================== */
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/service-worker.js')
+    .then(() => console.log('DentCast service worker registered.'))
+    .catch(err => console.error('SW registration failed:', err));
+}
+</script>
+  
+
 </body>
 </html>
