@@ -514,17 +514,19 @@
     }
 
     /* --- فوتر (از ایندکس اصلی) --- */
-    footer {
-      margin-top: 50px;
+        footer {
+      /* 👇 اصلاح: این خط فوتر را به پایین‌ترین نقطه هل می‌دهد */
+      margin-top: auto; 
       color: var(--text-muted);
       font-size: .85rem;
       text-align: center;
       line-height: 1.7;
-      padding-bottom: 90px;
       
-      /* 👇 تغییر اصلی برای فاصله گرفتن فوتر */
-      margin-bottom: 100px;
-    }
+      /* 👇 استاندارد کردن پدینگ پایین */
+      padding-bottom: 30px; 
+      margin-bottom: 0;
+        }
+    
   </style>
 
   <link rel="icon" href="https://dentcast.ir/logo-v2.png" type="image/png" sizes="192x192">
