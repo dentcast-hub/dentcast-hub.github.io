@@ -412,6 +412,95 @@
     tab.addEventListener("click", () => activateTab(i))
   );
 </script>
+<script>
+  const tabContainer = document.querySelector('.dc-tabs');
+  const tabs = Array.from(document.querySelectorAll('.dc-tab'));
+  const panels = document.querySelectorAll('.dc-panel');
 
+  function activeIndex() {
+    return tabs.findIndex(t => t.classList.contains('active'));
+  }
+
+  function activateTab(index) {
+    if (index < 0 || index >= tabs.length) return;
+
+    tabs.forEach(t => t.classList.remove('active'));
+    panels.forEach(p => p.classList.remove('active'));
+
+    const newTab = tabs[index];
+    newTab.classList.add('active');
+
+    const target = newTab.getAttribute('data-target');
+    document.getElementById(target).classList.add('active');
+
+    const offset = newTab.offsetLeft - (tabContainer.clientWidth / 2) + (newTab.clientWidth / 2);
+    tabContainer.scrollTo({ left: offset, behavior: 'smooth' });
+  }
+
+  document.getElementById('scrollLeft').addEventListener('click', () => activateTab(activeIndex() - 1));
+  document.getElementById('scrollRight').addEventListener('click', () => activateTab(activeIndex() + 1));
+  tabs.forEach((tab, i) => tab.addEventListener('click', () => activateTab(i)));
+
+
+
+
+  /* ----------------------------------------------------
+     🔥 iOS-like Inertia Scroll برای کل بخش کارت‌ها
+     ---------------------------------------------------- */
+
+  const dcMain = document.querySelector('.dc-main');
+
+  let startX = 0;
+  let startY = 0;
+  let lastDX = 0;
+  let isHorizontal = false;
+  let animationFrame;
+
+  dcMain.addEventListener('touchstart', (e) => {
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+    lastDX = 0;
+    isHorizontal = false;
+
+    if (animationFrame) cancelAnimationFrame(animationFrame);
+  }, { passive: true });
+
+  dcMain.addEventListener('touchmove', (e) => {
+    const currentX = e.touches[0].clientX;
+    const currentY = e.touches[0].clientY;
+
+    const dx = currentX - startX;
+    const dy = currentY - startY;
+
+    // اگر حرکت افقی بیشتر بود → یعنی قصد اسکرول تب‌هاست
+    if (Math.abs(dx) > Math.abs(dy)) {
+      e.preventDefault();
+
+      isHorizontal = true;
+      lastDX = dx;
+
+      tabContainer.scrollLeft -= dx * 0.5;  // سرعت نرم
+
+      startX = currentX;
+    }
+  }, { passive: false });
+
+  dcMain.addEventListener('touchend', () => {
+    if (!isHorizontal) return;
+
+    let velocity = lastDX * 0.35; // شدت اینرسی
+
+    function inertiaScroll() {
+      if (Math.abs(velocity) < 0.5) return;
+
+      tabContainer.scrollLeft -= velocity;
+      velocity *= 0.92; // کاهش تدریجی نرم
+
+      animationFrame = requestAnimationFrame(inertiaScroll);
+    }
+
+    inertiaScroll();
+  });
+</script>
 </body>
 </html>
