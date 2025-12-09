@@ -53,20 +53,28 @@
   
     /* 👇 این باکس سرچ حالا به صورت تکی مدیریت می‌شود و دیگر `display: none` ندارد */  
     .dc-global-filter-box {  
-      background: #ffffff;  
-      border-radius: 22px;  
-      padding: 22px;  
-      margin: 20px 0 32px; /* Margin بالا کمی کمتر شد */  
-      border: 1px solid #e2e6f3;  
-      box-shadow: 0 8px 24px rgba(11, 95, 255, 0.05);  
-        
-      /* 👇 استایل جدید برای باز و بسته شدن توسط JS */  
-      max-height: 0;  
-      overflow: hidden;  
-      opacity: 0;  
-      visibility: hidden;  
-      transition: all 0.3s ease-in-out;  
-    }  
+  background: #ffffff;  
+  border-radius: 22px;  
+  padding: 22px;  
+  margin: 20px 0 32px;  
+  border: 1px solid #e2e6f3;  
+  box-shadow: 0 8px 24px rgba(11, 95, 255, 0.05);
+
+  /* --- حالت بسته (همان‌طور که خودت داشتی) --- */
+  max-height: 0;
+  opacity: 0;
+  visibility: hidden;
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+}
+
+/* --- حالت باز: دقیقاً همان سه‌تا property + قابلیت اسکرول --- */
+.dc-global-filter-box.open {
+  max-height: 85vh !important;  /* به جای 1000px → حالت ریسپانسیو واقعی */
+  opacity: 1;
+  visibility: visible;
+  overflow-y: auto;              /* ❤️ این مهم‌ترین قسمت است */
+}
   
     .dc-global-filter-box.open {  
       max-height: 1000px; /* یک مقدار بزرگ برای اینکه محتوا جا بگیرد */  
