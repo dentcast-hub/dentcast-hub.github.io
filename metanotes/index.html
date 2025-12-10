@@ -169,22 +169,23 @@
     /* استایل دکمه‌های فوتر (دقیقاً همان ساختار، فقط لایت) */
  .btn-home {
   display:inline-block;
-  background:rgba(11,95,255,0.12);        /* پررنگ‌تر شد */
-  color:#0b3fbf;                           /* آبی تیره‌تر برای خوانایی */
-  border:1.8px solid rgba(11,95,255,0.28); /* کنتراست بیشتر */
+  background:#0b5fff;                      /* رنگ برند، CTA واقعی */
+  color:#ffffff;                            /* کنتراست عالی */
+  border:1.8px solid #0a4de0;               /* مرز قوی‌تر */
   border-radius:12px;
   padding:12px 42px;
-  font-weight:700;
+  font-weight:700;                          /* وزن فونت بالا */
   text-decoration:none;
-  font-size:1rem;
-  box-shadow:0 0 14px rgba(15, 23, 42, 0.08);
+  font-size:1.05rem;                        /* فقط 1px بزرگ‌تر */
+  box-shadow:0 6px 18px rgba(11,95,255,0.25); /* سایه واقعی CTA */
   transition:all .25s ease;
-  margin-bottom: 22px;
+  margin-bottom:22px;
 }
 
 .btn-home:hover {
-  background:rgba(11,95,255,0.22);         /* هاور محسوس */
-  transform: scale(1.02);
+  background:#004ad4;
+  transform: translateY(-2px);             /* هاور لوکشری */
+  box-shadow:0 10px 28px rgba(11,95,255,0.35);
 }
 
     .btn-about {
