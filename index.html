@@ -755,17 +755,15 @@
   </section>  
 <section class="dc-panel" id="panel-sharehub">
   <h3 class="dc-section-title">Share Hub</h3>
-
-  <!-- SubCaption hidden (برای حفظ فاصله و نظم چیدمان) -->
-  <p class="dc-section-sub" style="visibility: hidden;">‎</p>
+  <p class="dc-section-sub" style="visibility:hidden;">‎</p>
 
   <div class="dc-card-list">
 
     <!-- Meta Notes -->
     <article class="dc-card" id="btn-metanote">
       <div class="dc-card-main">
-        <div class="dc-card-title">مدل‌ها و مفاهیم</div>
-        <div class="dc-card-caption">ایده‌ها و چارچوب‌های تحلیلی</div>
+        <div class="dc-card-title">Meta Note</div>
+        <div class="dc-card-caption">مدل‌ها و چارچوب‌ها.</div>
       </div>
       <span class="dc-chip">Meta</span>
     </article>
@@ -1220,5 +1218,11 @@ if ('serviceWorker' in navigator) {
     .then(() => console.log('DentCast service worker registered.'))  
     .catch(err => console.error('SW registration failed:', err));  
 }  
-</script>  </body>  
+</script> 
+<script>
+  document.getElementById("btn-metanote")?.addEventListener("click", function () {
+    window.location.href = "metanotes/index.html";
+  });
+</script>
+</body>  
 </html>  
