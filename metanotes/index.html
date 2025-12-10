@@ -126,26 +126,28 @@
     ul { list-style:none; padding:0; margin-top:20px; }
     li { margin-bottom:12px; }
 
-    a {
-      display:flex;
-      align-items:center;
-      background:#f9faff;
-      border:1px solid #e2e7f4;
-      border-radius:12px;
-      padding:16px;
-      text-decoration:none;
-      color:#3c4356;
-      font-weight:500;
-      transition:.3s;
-    }
+ a {
+  display: flex;
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid rgba(11,95,255,0.18);
+  border-radius: 14px;
+  padding: 16px 18px;
+  text-decoration: none;
+  color: #0b5fff;            /* رنگ لینک → آبی برند، پرانرژی */
+  font-weight: 600;          /* ضخیم‌تر مثل دکمه‌های دنت‌کست */
+  transition: all .25s ease;
+  line-height: 1.7;
+  box-shadow: 0 4px 14px rgba(11,95,255,0.06);
+}
 
-    a:hover {
-      background:#eef3ff;
-      border-color:rgba(11,95,255,0.35);
-      color:#0b5fff;
-      transform:translateX(-5px);
-      box-shadow:0 4px 15px rgba(15,23,42,0.10);
-    }
+a:hover {
+  background: #eef3ff;
+  border-color: rgba(11,95,255,0.35);
+  color: #004ad4;
+  transform: translateX(-4px);
+  box-shadow: 0 6px 20px rgba(11,95,255,0.12);
+}
 
     /* ========== دکمهٔ صحیح و کاملاً دیده‌شونده (CTA) ========== */
     .btn-home {
