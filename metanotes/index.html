@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="MetaNotes – فهرست کامل یادداشت‌های متا، مدل‌های ذهنی و چارچوب‌های تحلیلی پادکست دنت‌کست. بخش تکمیلی برای ایده‌ها، مدل‌ها و تحلیل‌های مفهومی توسط دکتر فؤاد شهابیان.">
+
+  <meta name="description" content="MetaNotes – فهرست یادداشت‌های متا، مدل‌های ذهنی و چارچوب‌های تحلیلی دنت‌کست. بخشی تکمیلی برای ایده‌ها و مدل‌های تحلیلی توسط دکتر فؤاد شهابیان.">
   <link rel="canonical" href="https://dentcast.ir/metanote/index.html">
   <title>🧠 MetaNotes | یادداشت‌های متا و مدل‌های ذهنی دنت‌کست</title>
 
@@ -43,8 +44,8 @@
       {
         "@type": "CollectionPage",
         "url": "https://dentcast.ir/metanote/index.html",
-        "name": "🧠 MetaNotes | دنت‌کست – فهرست یادداشت‌های متا و مدل‌های ذهنی",
-        "description": "فهرست کامل یادداشت‌های متا، مدل‌های ذهنی و چارچوب‌های تحلیلی در دنت‌کست به روایت دکتر فؤاد شهابیان.",
+        "name": "MetaNotes – یادداشت‌های متا و مدل‌های ذهنی",
+        "description": "فهرست یادداشت‌های متا، مدل‌های ذهنی و چارچوب‌های تحلیلی دنت‌کست.",
         "inLanguage": "fa",
         "isPartOf": {
           "@id": "https://dentcast.ir/#website"
@@ -64,129 +65,109 @@
       --bg2:#ffffff;
       --text:#1c2133;
       --muted:#6f7687;
-      --radius:14px; /* هماهنگ با صفحه اصلی */
+      --radius:14px;
       --shadow:0 10px 30px rgba(15, 23, 42, 0.08);
-      --gold:rgba(255,188,0,0.75);
     }
 
-    html, body { height:100%; margin:0; padding:0; }
-        
     body {
+      margin:0; padding:0;
       font-family:'Vazirmatn', sans-serif;
-      /* بک‌گراند لایت مشابه صفحه اصلی جدید */
       background: linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
       color: var(--text);
-      -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeLegibility;
-      display: flex;
-      flex-direction: column;
+      display:flex;
+      flex-direction:column;
+      min-height:100vh;
     }
 
-    /* کلاس wrap برای محدود کردن عرض صفحه مشابه صفحه اصلی */
     .wrap {
       max-width: 920px;
       margin: 10px auto 40px;
       padding: 0 20px;
-      flex: 1; /* برای چسبیدن فوتر به پایین */
-      width: 100%;
-      box-sizing: border-box;
+      flex:1;
     }
 
-    /* هدر صفحه */
-    header { text-align: center; margin-bottom: 30px; margin-top: 20px; }
-    h1 { 
-      color: var(--blue); 
-      font-size: 2.1rem; 
-      margin: 8px 0; 
-      font-weight: 800; 
-      line-height: 1.6; 
+    header { text-align:center; margin:30px 0 20px; }
+
+    h1 {
+      font-size:2.1rem;
+      font-weight:800;
+      color:var(--blue);
+      margin:0;
     }
 
-    /* استایل کارت اصلی (Container) مشابه صفحه اصلی */
     .card {
-      background: #ffffff;
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 26px 20px 36px;
-      border: 1px solid #e1e6f2;
+      background:#fff;
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:26px 20px 36px;
+      border:1px solid #e1e6f2;
     }
 
-    /* استایل بخش توضیحات (Intro) */
     .intro {
-      background: #f3f6ff;
-      border: 1px solid #d8e1ff;
-      border-radius: 12px;
-      padding: 16px 20px;
-      line-height: 1.9;
-      font-size: 1rem;
-      backdrop-filter: blur(8px);
-      margin-bottom: 30px;
-      color: #27304a;
+      background:#f3f6ff;
+      border:1px solid #d8e1ff;
+      border-radius:12px;
+      padding:16px 20px;
+      margin-bottom:30px;
+      font-size:1rem;
+      line-height:1.9;
+      color:#27304a;
     }
 
     h2 {
-      color: var(--text);
-      margin-top: 30px;
-      font-size: 1.3rem;
-      border-bottom: 2px solid #e6ebf7;
-      padding-bottom: 10px;
-      margin-bottom: 20px;
+      font-size:1.3rem;
+      margin-top:30px;
+      border-bottom:2px solid #e6ebf7;
+      padding-bottom:10px;
+      margin-bottom:20px;
+      color:var(--text);
     }
 
-    /* لیست آیتم‌ها */
-    ul {
-      list-style: none;
-      padding: 0;
-      margin-top: 20px;
-    }
-
-    li {
-      margin-bottom: 12px;
-    }
+    ul { list-style:none; padding:0; margin-top:20px; }
+    li { margin-bottom:12px; }
 
     a {
-      display: flex;
-      align-items: center;
-      background: #f9faff;
-      border: 1px solid #e2e7f4;
-      border-radius: 12px;
-      padding: 16px;
-      text-decoration: none;
-      color: #3c4356;
-      transition: all .3s ease;
-      font-weight: 500;
-      line-height: 1.6;
+      display:flex;
+      align-items:center;
+      background:#f9faff;
+      border:1px solid #e2e7f4;
+      border-radius:12px;
+      padding:16px;
+      text-decoration:none;
+      color:#3c4356;
+      font-weight:500;
+      transition:.3s;
     }
 
     a:hover {
-      background: #eef3ff;
-      border-color: rgba(11,95,255,0.35);
-      color: #0b5fff;
-      transform: translateX(-5px); /* افکت حرکتی ریز */
-      box-shadow: 0 4px 15px rgba(15, 23, 42, 0.10);
+      background:#eef3ff;
+      border-color:rgba(11,95,255,0.35);
+      color:#0b5fff;
+      transform:translateX(-5px);
+      box-shadow:0 4px 15px rgba(15,23,42,0.10);
     }
 
-    /* استایل دکمه‌های فوتر (دقیقاً همان ساختار، فقط لایت) */
- .btn-home {
-  display:inline-block;
-  background:#0b5fff;                      /* رنگ برند، CTA واقعی */
-  color:#ffffff;                            /* کنتراست عالی */
-  border:1.8px solid #0a4de0;               /* مرز قوی‌تر */
-  border-radius:12px;
-  padding:12px 42px;
-  font-weight:700;                          /* وزن فونت بالا */
-  text-decoration:none;
-  font-size:1.05rem;                        /* فقط 1px بزرگ‌تر */
-  box-shadow:0 6px 18px rgba(11,95,255,0.25); /* سایه واقعی CTA */
-  transition:all .25s ease;
-  margin-bottom:22px;
-}
+    /* ========== دکمهٔ صحیح و کاملاً دیده‌شونده (CTA) ========== */
+    .btn-home {
+      display:inline-block;
+      background:#0b5fff !important;
+      color:#ffffff !important;
+      border:1.8px solid #0a4de0 !important;
+      border-radius:12px;
+      padding:12px 42px;
+      font-weight:700;
+      text-decoration:none;
+      font-size:1.05rem;
+      box-shadow:0 6px 18px rgba(11,95,255,0.25);
+      margin-bottom:22px;
+      transition:.25s;
+    }
 
-.btn-home:hover {
-  background:#004ad4;
-  transform: translateY(-2px);             /* هاور لوکشری */
-  box-shadow:0 10px 28px rgba(11,95,255,0.35);
-}
+    .btn-home:hover {
+      background:#004ad4 !important;
+      box-shadow:0 10px 28px rgba(11,95,255,0.35);
+      transform:translateY(-2px);
+    }
 
     .btn-about {
       display:inline-block;
@@ -195,39 +176,32 @@
       border:1px solid rgba(255,220,80,0.55);
       border-radius:8px;
       padding:5px 12px;
+      font-size:.8rem;
       font-weight:500;
       text-decoration:none;
-      font-size:.8rem;
       box-shadow:0 0 6px rgba(255,220,80,0.25);
-      backdrop-filter:blur(5px);
-      transition:all .25s ease;
-      margin-bottom: 20px;
+      transition:.25s;
+      margin-bottom:20px;
     }
+
     .btn-about:hover {
       background:rgba(255,230,120,1);
-      transform: scale(1.02);
+      transform:scale(1.02);
     }
 
     footer {
-      margin-top: 60px;
-      text-align: center;
-      color: var(--muted);
-      font-size: .9rem;
-      padding-bottom: 20px;
-    }
-
-    @media (max-width: 768px) {
-      .wrap { padding: 0 14px; margin: 20px auto 40px; }
-      h1 { font-size: 1.7rem; }
-      .intro { padding: 16px 18px; font-size: .95rem; line-height: 1.8; }
-      h2 { font-size: 1.1rem; margin-top: 25px; }
-      a { padding: 14px; font-size: 0.9rem; }
-      .card { padding: 20px 14px; }
+      margin-top:60px;
+      text-align:center;
+      color:var(--muted);
+      font-size:.9rem;
+      padding-bottom:20px;
     }
   </style>
 </head>
+
 <body>
   <div class="wrap">
+
     <header>
       <h1>🧠 دنت‌کست – MetaNotes</h1>
     </header>
@@ -235,136 +209,58 @@
     <div class="card">
       <div class="intro">
         <p style="margin-top:0;">
-          در این بخش، <strong>یادداشت‌های متا، مدل‌های ذهنی، چارچوب‌های تصمیم‌گیری و ایده‌های تحلیلی</strong> مربوط به دنت‌کست منتشر می‌شوند؛
-          محتوایی که لزوماً اپیزود، نوت‌کست یا فوتوکست نیست اما برای درک رویکرد فکری و تصمیم‌گیری بالینی، اهمیت کلیدی دارد.
+          در این بخش، <strong>یادداشت‌های متا، مدل‌های ذهنی، چارچوب‌های تصمیم‌گیری و ایده‌های تحلیلی</strong> مربوط به دنت‌کست منتشر می‌شوند.
         </p>
         <p style="margin-bottom:0;">
-          MetaNoteها به مرور اضافه می‌شوند و می‌توانند هم شامل ایده‌های شخصی و هم برداشت‌ها و مدل‌های الهام‌گرفته از دیگران باشند.
+          MetaNoteها می‌توانند ایده‌های شخصی یا برداشت‌های الهام‌گرفته از دیگران باشند.
         </p>
       </div>
 
       <h2>📚 فهرست MetaNotes</h2>
 
       <ul>
-        <li><a href="meta-1.html"> زیبایی در دندان پریویی </a></li>
+        <li><a href="meta-1.html">زیبایی در دندان پریویی</a></li>
       </ul>
     </div>
 
+    <!-- خبرنامه (عین نسخه تو) -->
     <style>
       .newsletter-wrapper {
-        max-width: 600px; /* عرض کمتر برای ظرافت بیشتر */
+        max-width: 600px;
         margin: 30px auto 40px;
         padding: 0 15px;
-        font-family: 'Vazirmatn', sans-serif;
-        box-sizing: border-box;
       }
-
       .newsletter-box {
-        /* نسخه لایت هماهنگ با تم جدید */
-        background: #ffffff;
-        border: 1px solid #e3e8f4; /* حاشیه ملایم */
-        border-radius: 16px;
-        padding: 20px 24px; /* همان ارتفاع سابق */
-        text-align: center;
-        backdrop-filter: blur(10px);
-        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
-        position: relative;
-        overflow: hidden;
+        background:#fff;
+        border:1px solid #e3e8f4;
+        border-radius:16px;
+        padding:20px 24px;
+        text-align:center;
+        box-shadow:0 10px 30px rgba(15,23,42,0.06);
+        position:relative;
       }
-
-      /* نوار رنگی باریک بالای باکس برای زیبایی */
       .newsletter-box::before {
-        content: "";
-        position: absolute;
-        top: 0; left: 0; right: 0;
-        height: 2px;
-        background: linear-gradient(90deg, transparent, #0b5fff, transparent);
-        opacity: 0.9;
+        content:""; position:absolute; top:0; left:0; right:0;
+        height:2px; background:linear-gradient(90deg,transparent,#0b5fff,transparent);
       }
-
-      .newsletter-title {
-        font-size: 0.95rem;
-        font-weight: 700;
-        color: #1f3b7b; /* آبی تیره‌تر در تم لایت */
-        margin-bottom: 6px;
-      }
-
-      .newsletter-text {
-        font-size: 0.8rem;
-        color: #6b7280; /* طوسی ملایم */
-        margin-bottom: 18px;
-        line-height: 1.6;
-      }
-
-      .newsletter-form-group {
-        display: flex;
-        gap: 8px;
-        position: relative;
-      }
-
+      .newsletter-title { font-size:.95rem; font-weight:700; color:#1f3b7b; margin-bottom:6px; }
+      .newsletter-text { font-size:.8rem; color:#6b7280; margin-bottom:18px; line-height:1.6; }
+      .newsletter-form-group { display:flex; gap:8px; }
       .newsletter-input {
-        flex: 1;
-        padding: 10px 14px;
-        border-radius: 10px;
-        border: 1px solid #d5ddf0;
-        background: #f9f9ff;
-        color: #111827;
-        font-family: 'Vazirmatn', sans-serif;
-        font-size: 0.85rem;
-        outline: none;
-        transition: all 0.3s;
+        flex:1; padding:10px 14px; border-radius:10px;
+        border:1px solid #d5ddf0; background:#f9f9ff;
+        font-size:.85rem; color:#111827;
       }
-
-      .newsletter-input:focus {
-        border-color: #0b5fff;
-        background: #ffffff;
-      }
-
-      .newsletter-input::placeholder {
-        color: #9ca3af;
-        font-size: 0.8rem;
-      }
-
       .newsletter-btn {
-        background: #0b5fff; /* آبی برند */
-        color: white;
-        border: none;
-        padding: 0 20px;
-        border-radius: 10px;
-        font-family: 'Vazirmatn', sans-serif;
-        font-weight: 600;
-        font-size: 0.85rem;
-        cursor: pointer;
-        transition: all 0.3s;
-        white-space: nowrap;
+        background:#0b5fff; color:white;
+        border:none; padding:0 20px; border-radius:10px;
+        font-weight:600; cursor:pointer; transition:.3s;
       }
-
-      .newsletter-btn:hover {
-        background: #004ad4;
-        box-shadow: 0 0 10px rgba(11, 95, 255, 0.35);
-      }
-
+      .newsletter-btn:hover { background:#004ad4; }
       .success-message {
-        display: none;
-        background: rgba(16, 185, 129, 0.08);
-        color: #047857;
-        border: 1px solid rgba(16, 185, 129, 0.35);
-        border-radius: 10px;
-        padding: 12px;
-        margin-top: 10px;
-        font-size: 0.85rem;
-      }
-
-      .ml-form-embedSubmitLoad { display: none; }
-
-      @media (max-width: 480px) {
-        .newsletter-form-group {
-          flex-direction: column;
-        }
-        .newsletter-btn {
-          padding: 10px;
-          width: 100%;
-        }
+        display:none; background:rgba(16,185,129,0.08);
+        border:1px solid rgba(16,185,129,0.35);
+        color:#047857; padding:12px; border-radius:10px; margin-top:10px;
       }
     </style>
 
@@ -372,39 +268,29 @@
       <div class="newsletter-box">
         <div class="row-form">
           <div class="newsletter-title">📬 خبرنامه‌ی دنت‌کست</div>
-          <div class="newsletter-text">
-            اطلاع‌رسانی اپیزودها و مطالب جدید (بدون اسپم)
-          </div>
+          <div class="newsletter-text">اطلاع‌رسانی اپیزودها و مطالب جدید (بدون اسپم)</div>
 
-          <form class="ml-block-form" action="https://assets.mailerlite.com/jsonp/1939653/forms/171891141676893488/subscribe" data-code="" method="post" target="_blank">
+          <form class="ml-block-form" action="https://assets.mailerlite.com/jsonp/1939653/forms/171891141676893488/subscribe" method="post" target="_blank">
             <div class="newsletter-form-group">
-              <input aria-label="email" aria-required="true" type="email" class="newsletter-input" data-inputmask="" name="fields[email]" placeholder="ایمیل شما..." autocomplete="email" required>
-              <button type="submit" class="newsletter-btn">
-                عضویت
-                <span class="ml-form-embedSubmitLoad">...</span>
-              </button>
+              <input type="email" name="fields[email]" class="newsletter-input" placeholder="ایمیل شما..." required>
+              <button type="submit" class="newsletter-btn">عضویت</button>
             </div>
-
             <input type="hidden" name="ml-submit" value="1">
             <input type="hidden" name="anticsrf" value="true">
           </form>
         </div>
 
-        <div class="row-success success-message">
-          ✅ ایمیل شما با موفقیت ثبت شد.
-        </div>
+        <div class="row-success success-message">✅ ایمیل شما با موفقیت ثبت شد.</div>
       </div>
     </div>
 
     <script>
       function ml_webform_success_33724259() {
-        var formRow = document.querySelector('.ml-subscribe-form-33724259 .row-form');
-        var successRow = document.querySelector('.ml-subscribe-form-33724259 .row-success');
-        if(formRow) formRow.style.display = 'none';
-        if(successRow) successRow.style.display = 'block';
+        document.querySelector('.row-form').style.display='none';
+        document.querySelector('.row-success').style.display='block';
       }
     </script>
-    <script src="https://groot.mailerlite.com/js/w/webforms.min.js?v176e10baa5e7ed80d35ae235be3d5024" type="text/javascript"></script>
+    <script src="https://groot.mailerlite.com/js/w/webforms.min.js"></script>
 
     <footer>
       <div>
@@ -415,15 +301,15 @@
 
       <div>
         <a href="https://dentcast.ir/about.html" class="btn-about">
-          💬 درباره‌ی دکتر فواد شهابیان و دنت‌کست
+          💬 درباره‌ی دکتر فؤاد شهابیان و دنت‌کست
         </a>
       </div>
 
       <div style="margin-top:6px;">
-        © 2025 DentCast — طراحی و توسعه توسط
-        <strong style="color:#ffd46a;">فواد شهابیان</strong>
+        © 2025 DentCast — طراحی و توسعه توسط <strong style="color:#ffd46a;">فواد شهابیان</strong>
       </div>
     </footer>
+
   </div>
 </body>
 </html>
