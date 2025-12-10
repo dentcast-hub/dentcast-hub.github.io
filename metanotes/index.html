@@ -1,53 +1,143 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-  <meta charset="utf-8">
-  <title>Meta Note — دنت‌کست</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="MetaNotes – مجموعه‌ای از یادداشت‌های متا، مدل‌های ذهنی و چارچوب‌های تحلیلی دکتر فؤاد شهابیان.">
+  <link rel="canonical" href="https://dentcast.ir/metanote/index.html">
+  <title>🧠 MetaNotes | یادداشت‌های متا و مدل‌های ذهنی دنت‌کست</title>
 
-  <!-- استایل اصلی سایت -->
-  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="https://dentcast.ir/logo-v2.png" type="image/png" sizes="512x512">
+  <link rel="apple-touch-icon" href="https://dentcast.ir/logo-v2.png">
+
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" as="style">
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --blue:#0b5fff;
+      --text:#1a1a1a;
+      --muted:#6c7280;
+      --radius:14px;
+      --shadow:0 0 20px rgba(0,0,0,0.06);
+      --bg-light:#f8faff;
+      --card-bg:#ffffff;
+      --border:#e5e9f5;
+    }
+
+    body {
+      margin:0; padding:0;
+      font-family:'Vazirmatn', sans-serif;
+      background: var(--bg-light);
+      color: var(--text);
+    }
+
+    .wrap {
+      max-width: 920px;
+      margin: 20px auto 40px;
+      padding: 0 20px;
+    }
+
+    header { text-align:center; margin-bottom:30px; }
+    h1 {
+      color: var(--blue);
+      font-size: 2rem;
+      font-weight: 800;
+      margin: 0;
+    }
+
+    /* کارت اصلی */
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      padding: 28px 22px 36px;
+      box-shadow: var(--shadow);
+    }
+
+    .intro {
+      background: #f4f7ff;
+      border: 1px solid #dce4ff;
+      border-radius: 12px;
+      padding: 16px 20px;
+      line-height: 1.9;
+      font-size: 1rem;
+      margin-bottom: 30px;
+      color: #2a2f44;
+    }
+
+    h2 {
+      font-size: 1.25rem;
+      color: #1c1f2e;
+      border-bottom: 2px solid #eef1fb;
+      padding-bottom: 10px;
+      margin-top: 30px;
+      margin-bottom: 20px;
+    }
+
+    ul { list-style:none; padding:0; margin:0; }
+    li { margin-bottom: 12px; }
+
+    a {
+      display:flex;
+      align-items:center;
+      background:#f9faff;
+      border:1px solid #e3e7f4;
+      padding:16px;
+      border-radius:12px;
+      text-decoration:none;
+      color:#3b4354;
+      font-weight:500;
+      transition:.25s;
+    }
+
+    a:hover {
+      background:#eef3ff;
+      border-color:#b7c8ff;
+      transform:translateX(-5px);
+      color:#0b5fff;
+      box-shadow:0 2px 12px rgba(11,95,255,0.08);
+    }
+
+    footer {
+      margin-top:50px;
+      text-align:center;
+      color: var(--muted);
+      font-size:.9rem;
+      padding-bottom:20px;
+    }
+  </style>
 </head>
 
 <body>
+  <div class="wrap">
 
-  <main class="dc-main">
+    <header>
+      <h1>🧠 دنت‌کست – MetaNotes</h1>
+    </header>
 
-    <!-- عنوان -->
-    <h3 class="dc-section-title">Meta Note</h3>
-    <p class="dc-section-sub">بخش تکمیلی دنت‌کست</p>
+    <div class="card">
 
-    <!-- لیست کارت‌ها دقیقا مثل UI صفحه اصلی -->
-    <div class="dc-card-list">
+      <div class="intro">
+        مجموعه‌ای از <strong>مدل‌های ذهنی، یادداشت‌های متا، چارچوب‌های تصمیم‌گیری و ایده‌های تحلیلی</strong>  
+        که در هیچ‌کدام از قالب‌های دیگر دنت‌کست جا نمی‌گیرند.  
+        این بخش «بخش تکمیلی» دنت‌کست است؛ جایی برای مفاهیم ناب، ایده‌های تخصصی و برداشت‌های شخصی.
+      </div>
 
-      <!-- کارت نمونه -->
-      <article class="dc-card">
-        <div class="dc-card-main">
-          <div class="dc-card-title">Meta Decision Model</div>
-          <div class="dc-card-caption">مدل اصلی تصمیم‌گیری در استیج دوم.</div>
-        </div>
-        <span class="dc-chip">Meta</span>
-      </article>
+      <h2>📚 فهرست MetaNotes</h2>
 
-      <!-- کارت دوم -->
-      <article class="dc-card">
-        <div class="dc-card-main">
-          <div class="dc-card-title">Dynamic Prognosis Layers</div>
-          <div class="dc-card-caption">لایه‌بندی پویا در تحلیل آینده دندان.</div>
-        </div>
-        <span class="dc-chip">Meta</span>
-      </article>
-
-      <!-- کارت سوم -->
-      <article class="dc-card">
-        <div class="dc-card-main">
-          <div class="dc-card-title">Semantic Clinical Mapping</div>
-          <div class="dc-card-caption">نقشه‌برداری معنایی برای تصمیم‌سازی بهتر.</div>
-        </div>
-        <span class="dc-chip">Meta</span>
-      </article>
+      <ul>
+        <li><a href="meta-1.html">Meta Decision Model — چارچوب تصمیم‌گیری مرحله دوم</a></li>
+        <li><a href="meta-2.html">Semantic Layers — لایه‌های معنایی تحلیل درمان</a></li>
+        <li><a href="meta-3.html">Dynamic Prognosis Map — نقشهٔ پویای پروگنوز</a></li>
+      </ul>
 
     </div>
-  </main>
+
+    <footer>
+      © 2025 DentCast — توسعه توسط <strong style="color:#0b5fff;">فواد شهابیان</strong>
+    </footer>
+
+  </div>
 </body>
 </html>
