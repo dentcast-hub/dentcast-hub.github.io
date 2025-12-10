@@ -3,8 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="MetaNotes – مجموعه‌ای از یادداشت‌های متا، مدل‌های ذهنی و چارچوب‌های تحلیلی دکتر فؤاد شهابیان.">
+
+  <meta name="description" content="MetaNotes — فهرست کامل یادداشت‌های متا، مدل‌های ذهنی، چارچوب‌های تحلیلی و ایده‌های تکمیلی دنت‌کست.">
   <link rel="canonical" href="https://dentcast.ir/metanote/index.html">
+
   <title>🧠 MetaNotes | یادداشت‌های متا و مدل‌های ذهنی دنت‌کست</title>
 
   <link rel="icon" href="https://dentcast.ir/logo-v2.png" type="image/png" sizes="512x512">
@@ -13,94 +15,159 @@
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" as="style">
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
 
+  <!-- Schema Updated -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": "https://dentcast.ir/#person",
+        "name": "دکتر فؤاد شهابیان",
+        "jobTitle": "متخصص پروتزهای دندانی و ایمپلنت",
+        "url": "https://dentcast.ir/about.html",
+        "image": "https://dentcast.ir/logo-v2.png",
+        "sameAs": [
+          "https://t.me/dentcast",
+          "https://t.me/dent_AI",
+          "https://podcasts.apple.com/us/podcast/dentcast/id1502032364",
+          "https://castbox.fm/va/4889954",
+          "https://www.youtube.com/@Dentcast",
+          "https://dentcast.ir/",
+          "https://www.instagram.com/dr.foad_shahabian/"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://dentcast.ir/#website",
+        "url": "https://dentcast.ir/",
+        "name": "DentCast | پادکست‌های تخصصی دندانپزشکی و پروتز"
+      },
+      {
+        "@type": "CollectionPage",
+        "url": "https://dentcast.ir/metanote/index.html",
+        "name": "🧠 MetaNotes | فهرست یادداشت‌های متا و مدل‌های ذهنی",
+        "description": "فهرست کامل یادداشت‌های متا و مدل‌های تحلیلی در دنت‌کست.",
+        "inLanguage": "fa",
+        "isPartOf": {
+          "@id": "https://dentcast.ir/#website"
+        },
+        "author": {
+          "@id": "https://dentcast.ir/#person"
+        }
+      }
+    ]
+  }
+  </script>
+
   <style>
     :root {
       --blue:#0b5fff;
-      --text:#1a1a1a;
-      --muted:#6c7280;
+      --text:#1c1f29;
+      --muted:#6d7385;
       --radius:14px;
-      --shadow:0 0 20px rgba(0,0,0,0.06);
-      --bg-light:#f8faff;
+      --shadow:0 10px 30px rgba(0,0,0,.08);
+
+      --bg:#f6f8fc;
+      --bg2:#ffffff;
+
       --card-bg:#ffffff;
-      --border:#e5e9f5;
+      --card-border:#e4e8f1;
+
+      --intro-bg:#f2f6ff;
+      --intro-border:#d7e1ff;
+
+      --link-bg:#fafbff;
+      --link-border:#e3e8f3;
+      --link-hover:#eef3ff;
     }
 
+    html, body { height:100%; margin:0; padding:0; }
+
     body {
-      margin:0; padding:0;
       font-family:'Vazirmatn', sans-serif;
-      background: var(--bg-light);
+      background: linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
       color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      flex-direction: column;
     }
 
     .wrap {
       max-width: 920px;
-      margin: 20px auto 40px;
+      margin: 10px auto 40px;
       padding: 0 20px;
+      flex:1;
     }
 
-    header { text-align:center; margin-bottom:30px; }
+    header {
+      text-align:center;
+      margin-top:20px;
+      margin-bottom:30px;
+    }
+
     h1 {
       color: var(--blue);
-      font-size: 2rem;
-      font-weight: 800;
-      margin: 0;
+      font-size: 2.1rem;
+      font-weight:800;
+      margin: 8px 0;
+      line-height:1.6;
     }
 
-    /* کارت اصلی */
     .card {
       background: var(--card-bg);
       border-radius: var(--radius);
-      border: 1px solid var(--border);
-      padding: 28px 22px 36px;
       box-shadow: var(--shadow);
+      border:1px solid var(--card-border);
+      padding:26px 20px 36px;
     }
 
     .intro {
-      background: #f4f7ff;
-      border: 1px solid #dce4ff;
-      border-radius: 12px;
-      padding: 16px 20px;
-      line-height: 1.9;
-      font-size: 1rem;
-      margin-bottom: 30px;
-      color: #2a2f44;
+      background: var(--intro-bg);
+      border:1px solid var(--intro-border);
+      border-radius:12px;
+      padding:16px 20px;
+      color:#2d3550;
+      line-height:1.9;
+      font-size:1rem;
+      margin-bottom:30px;
     }
 
     h2 {
-      font-size: 1.25rem;
-      color: #1c1f2e;
-      border-bottom: 2px solid #eef1fb;
-      padding-bottom: 10px;
-      margin-top: 30px;
-      margin-bottom: 20px;
+      color: var(--text);
+      margin-top:30px;
+      font-size:1.3rem;
+      border-bottom:2px solid #e9edf6;
+      padding-bottom:10px;
+      margin-bottom:20px;
     }
 
-    ul { list-style:none; padding:0; margin:0; }
-    li { margin-bottom: 12px; }
+    ul { list-style:none; padding:0; margin-top:20px; }
+    li { margin-bottom:12px; }
 
     a {
       display:flex;
       align-items:center;
-      background:#f9faff;
-      border:1px solid #e3e7f4;
       padding:16px;
+      background: var(--link-bg);
       border-radius:12px;
+      border:1px solid var(--link-border);
       text-decoration:none;
-      color:#3b4354;
+      color:#444d60;
       font-weight:500;
-      transition:.25s;
+      transition:.3s;
     }
 
     a:hover {
-      background:#eef3ff;
+      background: var(--link-hover);
       border-color:#b7c8ff;
+      color: var(--blue);
       transform:translateX(-5px);
-      color:#0b5fff;
-      box-shadow:0 2px 12px rgba(11,95,255,0.08);
+      box-shadow:0 4px 15px rgba(11,95,255,0.08);
     }
 
     footer {
-      margin-top:50px;
+      margin-top:60px;
       text-align:center;
       color: var(--muted);
       font-size:.9rem;
@@ -119,9 +186,13 @@
     <div class="card">
 
       <div class="intro">
-        مجموعه‌ای از <strong>مدل‌های ذهنی، یادداشت‌های متا، چارچوب‌های تصمیم‌گیری و ایده‌های تحلیلی</strong>  
-        که در هیچ‌کدام از قالب‌های دیگر دنت‌کست جا نمی‌گیرند.  
-        این بخش «بخش تکمیلی» دنت‌کست است؛ جایی برای مفاهیم ناب، ایده‌های تخصصی و برداشت‌های شخصی.
+        <p style="margin-top:0;">
+          در این بخش، <strong>مدل‌های ذهنی، چارچوب‌های تحلیلی، ایده‌ها و یادداشت‌های متا</strong> منتشر می‌شوند؛
+          مواردی که در هیچ‌یک از قالب‌های رسمی دنت‌کست قرار نمی‌گیرند اما برای درک بهتر درمان و تصمیم‌گیری اهمیت اساسی دارند.
+        </p>
+        <p style="margin-bottom:0;">
+          MetaNoteها به مرور اضافه می‌شوند و به ترتیب موضوع دسته‌بندی خواهند شد.
+        </p>
       </div>
 
       <h2>📚 فهرست MetaNotes</h2>
@@ -135,7 +206,8 @@
     </div>
 
     <footer>
-      © 2025 DentCast — توسعه توسط <strong style="color:#0b5fff;">فواد شهابیان</strong>
+      © 2025 DentCast — طراحی و توسعه توسط
+      <strong style="color:#0b5fff;">فواد شهابیان</strong>
     </footer>
 
   </div>
