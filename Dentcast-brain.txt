@@ -2973,9 +2973,45 @@
     "peri implant bone behavior"
   ],
   "url": "https://dentcast.ir/notecast/episode-24"
+},
+{
+  "type": "notecast",
+  "id": "25",
+  "title": "ایمپلنت کوتاه یا سینوس لیفت؟",
+  "caption": "خلاصهٔ نوشتاری نوت‌کست ۲۵ دنت‌کست دربارهٔ مقایسهٔ ایمپلنت‌های کوتاه ۶ میلی‌متری با سینوس لیفت لترال و ایمپلنت‌های بلند در ناحیه خلفی فک بالای بی‌دندان؛ بر اساس یک کارآزمایی بالینی تصادفی‌شده با پیگیری سه‌ساله و تمرکز بر بقا، عوارض، هزینه و اهمیت ثبات اولیه.",
+  "hashtags": [
+    "ایمپلنت_کوتاه",
+    "سینوس_لیفت",
+    "فک_بالای_بی_دندان",
+    "خلف_فک_بالا",
+    "بقای_ایمپلنت",
+    "ثبات_اولیه_ایمپلنت",
+    "ISQ",
+    "RFA",
+    "کارآزمایی_بالینی_تصادفی",
+    "مجله_Clinical_Oral_Implants_Research",
+    "Short_Implant",
+    "Sinus_Lift",
+    "Posterior_Maxilla",
+    "Implant_Survival"
+  ],
+  "keywords": [
+    "short implant vs sinus lift",
+    "posterior maxilla edentulous",
+    "6 mm short implant survival",
+    "sinus lift complications implant",
+    "randomized clinical trial implant",
+    "implant stability ISQ RFA",
+    "marginal bone loss short implant",
+    "implant survival posterior maxilla",
+    "cost effective implant treatment",
+    "initial stability implant"
+  ],
+  "url": "https://dentcast.ir/notecast/episode-25"
 }
 
 ]
+
 
 
 
