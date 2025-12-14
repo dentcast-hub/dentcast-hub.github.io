@@ -3033,9 +3033,129 @@
     "piezo length"
   ],
   "page_url": "https://dentcast.ir/insight/insight-17"
+},
+{
+  "type": "meta",
+  "id": "meta-01",
+  "title": "چرا پیش‌آگهی‌های مقالات پریو برای تصمیم‌گیری زیبایی قابل اتکا نیستند؟",
+  "caption": "تحلیلی دربارهٔ محدودیت اتکای پیش‌آگهی‌های درمان پریودنتال در تصمیم‌گیری‌های زیبایی و تغییر رفتار بیولوژیک دندان پس از مداخلات استتیک.",
+  "hashtags": [
+    "متانوت",
+    "پریودنتال",
+    "زیبایی",
+    "پیش_آگهی",
+    "تصمیم_درمانی",
+    "ونیر",
+    "لمینیت"
+  ],
+  "keywords": [
+    "periodontal prognosis",
+    "esthetic dentistry decision",
+    "periodontal treated teeth",
+    "veneers in perio patients",
+    "biologic behavior of teeth"
+  ],
+  "page_url": "https://dentcast.ir/metanotes/meta-1"
+},
+{
+  "type": "meta",
+  "id": "meta-02",
+  "title": "نقش رفتار بیمار در درمان پریو و ایمپلنت",
+  "caption": "بررسی نقش رفتار و الگوی پیگیری بیمار در پیش‌بینی‌پذیری نتایج درمان‌های پریودنتال و ایمپلنت و تأثیر آن در تصمیم‌گیری درمانی بلندمدت.",
+  "hashtags": [
+    "متانوت",
+    "پریودنتال",
+    "ایمپلنت",
+    "رفتار_بیمار",
+    "SPT",
+    "پیش_آگهی",
+    "تصمیم_درمانی"
+  ],
+  "keywords": [
+    "patient behavior",
+    "periodontal prognosis",
+    "implant maintenance",
+    "supportive periodontal therapy",
+    "treatment compliance",
+    "long term outcome dentistry"
+  ],
+  "page_url": "https://dentcast.ir/metanotes/meta-2"
+},
+{
+  "type": "meta",
+  "id": "meta-03",
+  "title": "بازی Success و Survival در دندان پریویی و ایمپلنت",
+  "caption": "تحلیلی دربارهٔ تفاوت مفهومی Success و Survival در ارزیابی نتایج دندان‌های پریودنتال درمان‌شده و ایمپلنت‌ها و نقش بازی‌های واژگانی در قضاوت‌های بالینی.",
+  "hashtags": [
+    "متانوت",
+    "پریودنتال",
+    "ایمپلنت",
+    "Success",
+    "Survival",
+    "پیش_آگهی",
+    "تصمیم_درمانی",
+    "تحلیل_مفهومی"
+  ],
+  "keywords": [
+    "success vs survival",
+    "periodontal teeth prognosis",
+    "implant survival rate",
+    "clinical outcome definitions",
+    "periodontal maintenance",
+    "implant evaluation"
+  ],
+  "page_url": "https://dentcast.ir/metanotes/meta-3"
+},
+{
+  "type": "meta",
+  "id": "meta-04",
+  "title": "آیا ایمپلنت را باید مثل دندان قضاوت کرد؟ (مطالعه Rasperini)",
+  "caption": "تحلیلی دربارهٔ محدودیت مقایسهٔ مستقیم دندان و ایمپلنت در مطالعات طولانی‌مدت پریودنتال و تفاوت‌های بیولوژیک و درمانی آن‌ها در تفسیر نتایج بالینی.",
+  "hashtags": [
+    "متانوت",
+    "پریودنتال",
+    "ایمپلنت",
+    "Rasperini",
+    "تحلیل_مطالعه",
+    "تحلیل_استخوان",
+    "تصمیم_درمانی"
+  ],
+  "keywords": [
+    "Rasperini study",
+    "periodontal vs implant comparison",
+    "marginal bone loss",
+    "implant biology",
+    "periodontal maintenance",
+    "implant self-protective concept"
+  ],
+  "page_url": "https://dentcast.ir/metanotes/meta-4"
+},
+{
+  "type": "meta",
+  "id": "meta-05",
+  "title": "Self-defensive design و راه درست مقایسه ایمپلنت",
+  "caption": "تحلیلی دربارهٔ مفهوم self-defensive design در ایمپلنت و نقش آن در تفسیر صحیح نتایج مطالعات و مقایسهٔ منصفانهٔ ایمپلنت با دندان طبیعی.",
+  "hashtags": [
+    "متانوت",
+    "ایمپلنت",
+    "Self_defensive",
+    "طراحی_خودمحافظ",
+    "پروتز",
+    "تحلیل_مطالعه",
+    "تصمیم_درمانی"
+  ],
+  "keywords": [
+    "self defensive implant design",
+    "implant biology",
+    "prosthetic design implants",
+    "implant comparison studies",
+    "marginal bone preservation",
+    "implant risk management"
+  ],
+  "page_url": "https://dentcast.ir/metanotes/meta-5"
 }
-
 ]
+
 
 
 
