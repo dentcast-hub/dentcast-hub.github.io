@@ -3,28 +3,38 @@
 ================================================== */
 
 /* کانتینر اصلی سرچ (Bottom Sheet) */
+/* کانتینر اصلی سرچ (Bottom Sheet) */
 #dcGlobalBox.dc-global-filter-box {
   background: #ffffff;
-  border-radius: 22px;
+  border-radius: 22px 22px 0 0; /* گوشه‌های پایین را صاف می‌کنیم */
   padding: 22px;
-  margin: 20px 0 32px;
   border: 1px solid #e2e6f3;
-  box-shadow: 0 8px 24px rgba(11, 95, 255, 0.05);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
+  
+  /* --- موقعیت دهی Fixed و حالت بسته --- */
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999; 
 
-  max-height: 0;
-  opacity: 0;
+  max-height: 85vh;
+  overflow-y: auto;
+  
+  /* حالت بسته: از دید خارج می‌شود */
   visibility: hidden;
-  overflow: hidden;
-  transition: all 0.3s ease-in-out;
+  opacity: 0;
+  transform: translateY(100%); /* باکس را کاملاً به پایین می‌فرستد */
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 /* حالت باز */
 #dcGlobalBox.dc-global-filter-box.open {
-  max-height: 85vh;
-  opacity: 1;
   visibility: visible;
-  overflow-y: auto;
+  opacity: 1;
+  transform: translateY(0); /* باکس را به بالا می‌آورد */
 }
+
 
 /* عنوان سرچ */
 #dcGlobalBox .dc-global-filter-title {
@@ -109,16 +119,15 @@
 }
 
 /* دکمه بستن */
+/* دکمه بستن (موقعیت دهی برای Fixed Box) */
 #dcGlobalBox .dc-close-results {
-  background: #fee2e2;
-  border: none;
-  color: #b91c1c;
-  float: left;
-  margin: 5px;
-  padding: 4px 8px;
-  border-radius: 6px;
-  cursor: pointer;
+  position: absolute; 
+  top: 15px; /* فاصله از بالا */
+  right: 15px; /* فاصله از راست */
+  z-index: 10000;
+  /* ... بقیه استایل‌های این کلاس را دست نزنید ... */
 }
+
 
 /* دکمه More */
 #dcGlobalBox .dc-more-btn {
