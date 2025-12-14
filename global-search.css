@@ -1,0 +1,133 @@
+/* ==================================================
+   DentCast Global Search — CSS (Scoped)
+================================================== */
+
+/* کانتینر اصلی سرچ (Bottom Sheet) */
+#dcGlobalBox.dc-global-filter-box {
+  background: #ffffff;
+  border-radius: 22px;
+  padding: 22px;
+  margin: 20px 0 32px;
+  border: 1px solid #e2e6f3;
+  box-shadow: 0 8px 24px rgba(11, 95, 255, 0.05);
+
+  max-height: 0;
+  opacity: 0;
+  visibility: hidden;
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+}
+
+/* حالت باز */
+#dcGlobalBox.dc-global-filter-box.open {
+  max-height: 85vh;
+  opacity: 1;
+  visibility: visible;
+  overflow-y: auto;
+}
+
+/* عنوان سرچ */
+#dcGlobalBox .dc-global-filter-title {
+  font-weight: 700;
+  font-size: 20px;
+  color: #0b5fff;
+  text-align: center;
+  margin-bottom: 14px;
+}
+
+/* اینپوت سرچ */
+#dcGlobalBox .dc-search-input {
+  width: 100%;
+  padding: 11px 14px;
+  border-radius: 14px;
+  border: 1px solid #d5d9ea;
+  background: #f7f8fc;
+  font-size: 14px;
+  outline: none;
+  margin-bottom: 16px;
+}
+
+#dcGlobalBox .dc-search-input::placeholder {
+  color: #9aa1b3;
+  font-size: 13px;
+}
+
+/* فیلترها */
+#dcGlobalBox .dc-filter-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+#dcGlobalBox .dc-filter-btn {
+  padding: 7px 16px;
+  border-radius: 999px;
+  border: 1px solid #d3daf1;
+  background: #eef3ff;
+  color: #0b1d40;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+#dcGlobalBox .dc-filter-btn.active {
+  background: #0b5fff;
+  color: #ffffff;
+  border-color: #0b5fff;
+  box-shadow: 0 4px 14px rgba(11, 95, 255, 0.3);
+}
+
+/* نتایج */
+#dcResults.dc-results-box {
+  margin-top: 18px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: #f7f9ff;
+  border: 1px solid #e2e6f3;
+  display: none;
+  max-height: 60vh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+#dcResults .dc-result-item {
+  display: block;
+  padding: 8px 0;
+  border-bottom: 1px solid #e3e6f2;
+  font-size: 14px;
+  color: #0b1d40;
+  text-decoration: none;
+}
+
+#dcResults .dc-result-item:last-child {
+  border-bottom: none;
+}
+
+#dcResults .dc-result-item:hover {
+  background: #eef3ff;
+}
+
+/* دکمه بستن */
+#dcGlobalBox .dc-close-results {
+  background: #fee2e2;
+  border: none;
+  color: #b91c1c;
+  float: left;
+  margin: 5px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* دکمه More */
+#dcGlobalBox .dc-more-btn {
+  background: #e0f2fe;
+  padding: 10px 15px;
+  margin-top: 8px;
+  border-radius: 10px;
+  text-align: center;
+  cursor: pointer;
+  color: #075985;
+  font-weight: 600;
+}
