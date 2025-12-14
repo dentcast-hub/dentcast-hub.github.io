@@ -1,25 +1,37 @@
 /* ==================================================
-   DentCast Global Search — JS (Universal)
+   DentCast Global Search — JS (Universal / Safe)
 ================================================== */
 (function () {
   const globalBox = document.getElementById("dcGlobalBox");
-  const searchCard = document.getElementById("card-search");
   const resultsBox = document.getElementById("dcResults");
+  const searchCard = document.getElementById("card-search"); // ممکن است نباشد
 
-  if (!globalBox || !searchCard) return;
+  if (!globalBox) return; // فقط این حیاتی است
 
   function openSearch() {
     globalBox.classList.add("open");
-    searchCard.classList.add("active-toggle");
+
+    if (searchCard) {
+      searchCard.classList.add("active-toggle");
+    }
 
     const input = globalBox.querySelector(".dc-search-input");
-    if (input) setTimeout(() => input.focus(), 200);
+    if (input) {
+      setTimeout(() => input.focus(), 200);
+    }
   }
 
   function closeSearch() {
     globalBox.classList.remove("open");
-    searchCard.classList.remove("active-toggle");
-    if (resultsBox) resultsBox.style.display = "none";
+
+    if (searchCard) {
+      searchCard.classList.remove("active-toggle");
+    }
+
+    if (resultsBox) {
+      resultsBox.style.display = "none";
+      resultsBox.innerHTML = "";
+    }
   }
 
   // بستن با دکمه ضربدر
@@ -29,9 +41,12 @@
     }
   }, true);
 
-  // اکسپورت گلوبال
+  // API گلوبال
   window.dcSearch = {
     open: openSearch,
-    close: closeSearch
+    close: closeSearch,
+    toggle() {
+      globalBox.classList.toggle("open");
+    }
   };
 })();
