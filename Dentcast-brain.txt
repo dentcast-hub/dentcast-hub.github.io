@@ -3008,9 +3008,35 @@
     "initial stability implant"
   ],
   "url": "https://dentcast.ir/notecast/episode-25"
+},
+{
+  "type": "clinical",
+  "id": "clinical-17",
+  "title": "اعداد و اندازه‌هایی که بهتر است حفظ کنیم",
+  "caption": "در استفاده از پیزو برای دسترسی کانال در درمان‌های پست‌و‌کور و آماده‌سازی‌های مرتبط با روکش، دانستن طول واقعی ابزار اهمیت بالینی دارد. طول قسمت برنده پیزو حدود ۹ میلی‌متر است و خالی‌کردن کانال از اوریفیس تا این عمق، در اغلب موارد یک Safe Zone محسوب می‌شود.",
+  "hashtags": [
+    "کلینیکال",
+    "پیزو",
+    "پست_و_کور",
+    "دسترسی_کانال",
+    "اندودانتیکس",
+    "روکش",
+    "کنترل_عمق"
+  ],
+  "keywords": [
+    "piezo tips",
+    "post and core",
+    "canal access",
+    "safe zone endodontics",
+    "post space preparation",
+    "depth control",
+    "piezo length"
+  ],
+  "page_url": "https://dentcast.ir/insight/insight-17"
 }
 
 ]
+
 
 
 
