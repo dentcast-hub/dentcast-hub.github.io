@@ -12,7 +12,9 @@
 
   <link rel="icon" href="https://dentcast.ir/logo-v2.png" type="image/png" sizes="512x512">
   <link rel="apple-touch-icon" href="https://dentcast.ir/logo-v2.png">
-<link rel="stylesheet" href="/global-search.css?v=1">
+
+  <link rel="stylesheet" href="/global-search.css?v=1">
+
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -44,56 +46,54 @@
       "name": "🤖 DentAI – فهرست مقالات خوانده شده با هوش مصنوعی",
       "description": "فهرست خلاصه‌های مقالات علمی دندان‌پزشکی که توسط دکتر فؤاد شهابیان با کمک هوش مصنوعی تحلیل و نکات کلینیکی آن‌ها استخراج شده است.",
       "inLanguage": "fa",
-      "isPartOf": {
-        "@id": "https://dentcast.ir/#website"
-      },
-      "author": {
-        "@id": "https://dentcast.ir/#person"
-      }
+      "isPartOf": { "@id": "https://dentcast.ir/#website" },
+      "author": { "@id": "https://dentcast.ir/#person" }
     }
   ]
 }
   </script>
 
   <style>
-    
-          :root {
+    :root{
       --blue:#0b5fff;
       --bg:#f6f8fc;
       --bg2:#ffffff;
       --text:#1c2133;
       --muted:#6f7687;
       --radius:14px;
-      --shadow:0 10px 30px rgba(15, 23, 42, 0.08);
+      --shadow:0 10px 30px rgba(15,23,42,.08);
     }
 
-    body {
-      margin:0; padding:0;
-      font-family:'Vazirmatn', sans-serif;
-      background: linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
-      color: var(--text);
+    body{
+      margin:0;
+      font-family:'Vazirmatn',sans-serif;
+      background:linear-gradient(180deg,var(--bg) 0%,var(--bg2) 100%);
+      color:var(--text);
       display:flex;
       flex-direction:column;
       min-height:100vh;
     }
 
-    .wrap {
-      max-width: 920px;
-      margin: 10px auto 40px;
-      padding: 0 20px;
+    .wrap{
+      max-width:920px;
+      margin:10px auto 40px;
+      padding:0 20px;
       flex:1;
     }
 
-    header { text-align:center; margin:30px 0 20px; }
+    header{
+      text-align:center;
+      margin:30px 0 20px;
+    }
 
-    h1 {
+    h1{
       font-size:2.1rem;
       font-weight:800;
       color:var(--blue);
       margin:0;
     }
 
-    .card {
+    .card{
       background:#fff;
       border-radius:var(--radius);
       box-shadow:var(--shadow);
@@ -101,160 +101,92 @@
       border:1px solid #e1e6f2;
     }
 
-    .intro {
+    .intro{
       background:#f3f6ff;
       border:1px solid #d8e1ff;
       border-radius:12px;
       padding:16px 20px;
       margin-bottom:30px;
-      font-size:1rem;
       line-height:1.9;
       color:#27304a;
     }
 
-    h2 {
+    h2{
       font-size:1.3rem;
       margin-top:30px;
       border-bottom:2px solid #e6ebf7;
       padding-bottom:10px;
       margin-bottom:20px;
-      color:var(--text);
     }
 
-    ul { list-style:none; padding:0; margin-top:20px; }
-    li { margin-bottom:12px; }
-
-    a {
-      display: flex;
-      align-items: center;
-      background: #ffffff;
-      border: 1px solid rgba(11,95,255,0.18);
-      border-radius: 14px;
-      padding: 16px 18px;
-      text-decoration: none;
-      color: #2458d3;
-      font-weight: 700;
-      transition: all .25s ease;
-      line-height: 1.7;
-      box-shadow: 0 4px 14px rgba(11,95,255,0.06);
+    .ai-list{
+      display:flex;
+      flex-direction:column;
+      gap:18px;
+      margin-top:30px;
     }
 
-    a:hover {
-      background: #eef3ff;
-      border-color: rgba(11,95,255,0.35);
-      color: #004ad4;
-      transform: translateX(-4px);
-      box-shadow: 0 6px 20px rgba(11,95,255,0.12);
+    .ai-item{
+      display:block;
+      background:rgba(255,215,0,.08);
+      border:1px solid rgba(255,215,0,.25);
+      border-radius:14px;
+      padding:16px 22px;
+      text-decoration:none;
+      box-shadow:0 8px 25px rgba(255,200,0,.15);
+      transition:.3s;
     }
 
-    .btn-home {
+    .ai-item:hover{
+      transform:translateY(-4px);
+      box-shadow:0 10px 30px rgba(255,220,0,.35);
+    }
+
+    .ai-title{
+      font-weight:700;
+      font-size:1.05rem;
+      color:#c9a400;
+      margin-bottom:6px;
+    }
+
+    .ai-desc{
+      font-size:.95rem;
+      color:var(--muted);
+    }
+
+    footer{
+      margin-top:45px;
+      text-align:center;
+      color:#9aa1b3;
+      font-size:.9rem;
+      line-height:1.8;
+      padding-bottom:20px;
+    }
+
+    .btn-home{
       display:inline-block;
-      background:#0b5fff !important;
-      color:#ffffff !important;
-      border:1.8px solid #0a4de0 !important;
+      background:#0b5fff;
+      color:#fff;
       border-radius:12px;
       padding:12px 42px;
       font-weight:700;
       text-decoration:none;
-      font-size:1.05rem;
-      box-shadow:0 6px 18px rgba(11,95,255,0.25);
       margin-bottom:22px;
-      transition:.25s;
     }
 
-    .btn-home:hover {
-      background:#004ad4 !important;
-      box-shadow:0 10px 28px rgba(11,95,255,0.35);
-      transform:translateY(-2px);
-    }
-
-    .btn-about {
+    .btn-about{
       display:inline-block;
-      background:rgba(255,220,80,0.95);
+      background:rgba(255,220,80,.95);
       color:#111;
-      border:1px solid rgba(255,220,80,0.55);
       border-radius:8px;
       padding:5px 12px;
       font-size:.8rem;
-      font-weight:500;
       text-decoration:none;
-      box-shadow:0 0 6px rgba(255,220,80,0.25);
-      transition:.25s;
-      margin-bottom:20px;
     }
 
-    .btn-about:hover {
-      background:rgba(255,230,120,1);
-      transform:scale(1.02);
-    }
-
-    footer {
-      margin-top:60px;
-      text-align:center;
-      color:var(--muted);
-      font-size:.9rem;
-      padding-bottom:20px;
-    }
-    
-
-    @media (max-width: 768px){
-      body{
-        padding:25px 14px 60px;
-      }
-      h1{
-        font-size:1.7rem;
-      }
-      .intro{
-        padding:16px 18px;
-        font-size:.95rem;
-        line-height:1.8;
-      }
-      h2{
-        font-size:1.2rem;
-        margin-top:32px;
-      }
-      footer{
-        font-size:.8rem;
-        margin-top:40px;
-      }
-    }
-
-    .ai-list {
-      display: flex;
-      flex-direction: column;
-      gap: 18px;
-      margin-top: 30px;
-    }
-
-    .ai-item {
-      display: block;
-      background: rgba(255, 215, 0, 0.08);
-      border: 1px solid rgba(255, 215, 0, 0.25);
-      border-radius: 14px;
-      padding: 16px 22px;
-      color: var(--text);
-      text-decoration: none;
-      box-shadow: 0 8px 25px rgba(255, 200, 0, 0.15);
-      backdrop-filter: blur(10px);
-      transition: all .3s ease;
-    }
-
-    .ai-item:hover {
-      background: rgba(255, 215, 0, 0.18);
-      transform: translateY(-4px);
-      box-shadow: 0 10px 30px rgba(255, 220, 0, 0.35);
-    }
-
-    .ai-title {
-      font-weight: 700;
-      font-size: 1.05rem;
-      color: #ffd700;
-      margin-bottom: 6px;
-    }
-
-    .ai-desc {
-      font-size: .95rem;
-      color: var(--muted);
+    @media(max-width:768px){
+      h1{font-size:1.7rem}
+      .wrap{padding:0 14px}
     }
   </style>
 
@@ -262,19 +194,20 @@
 </head>
 
 <body>
+
+<div class="wrap">
+
+<header>
   <h1>🤖 DentAI – دنت‌ای‌آی</h1>
-  <div class="dc-global-filter-box" id="dcGlobalBox">
+</header>
 
+<div class="card">
+
+<!-- 🔍 Global Search -->
+<div class="dc-global-filter-box" id="dcGlobalBox">
   <button class="dc-close-results">✖</button>
-
   <h3 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h3>
-
-  <input
-    id="dcSearch"
-    class="dc-search-input"
-    placeholder="جستجو در همهٔ بخش‌های دنت‌کست…"
-  >
-
+  <input id="dcSearch" class="dc-search-input" placeholder="جستجو در همهٔ بخش‌های دنت‌کست…">
   <div class="dc-filter-list">
     <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
     <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
@@ -284,246 +217,118 @@
     <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
     <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
   </div>
-
   <div class="dc-results-box" id="dcResults"></div>
+</div>
 
-  </div>
-  
+<div class="intro">
+  <p>
+    در بخش <strong>DentAI</strong>، ما همراه با هوش مصنوعی، مقالات و منابع علمی دندان‌پزشکی را می‌خوانیم،
+    خلاصه می‌کنیم و نکات مهم بالینی و پژوهشی را از دل آن‌ها بیرون می‌کشیم.
+  </p>
+  <p>
+    اینجا جایی است برای ترکیب <strong>علم دندان‌پزشکی</strong> با <strong>هوش مصنوعی</strong>؛
+    برای این‌که مطالعهٔ مقالات سنگین، سریع‌تر، هدفمندتر و کاربردی‌تر بشود.
+  </p>
+  <p>
+    به‌مرور، پروندهٔ هر مقاله (یا مجموعه مقالات) با نام، رفرنس و نکات کلیدی در این صفحه اضافه خواهد شد.
+  </p>
+</div>
 
-  <div class="intro">
-    <p>
-      در بخش <strong>DentAI</strong>، ما همراه با هوش مصنوعی، مقالات و منابع علمی دندان‌پزشکی را می‌خوانیم،  
-      خلاصه می‌کنیم و نکات مهم بالینی و پژوهشی را از دل آن‌ها بیرون می‌کشیم.
-    </p>
-    <p>
-      اینجا جایی است برای ترکیب <strong>علم دندان‌پزشکی</strong> با <strong>هوش مصنوعی</strong>؛  
-      برای این‌که مطالعهٔ مقالات سنگین، سریع‌تر، هدفمندتر و کاربردی‌تر بشود.
-    </p>
-    <p>
-      به‌مرور، پروندهٔ هر مقاله (یا مجموعه مقالات) با نام، رفرنس و نکات کلیدی در این صفحه اضافه خواهد شد.
-    </p>
-  </div>
+<h2>📚 فهرست پرونده‌های DentAI</h2>
 
-  <h2>📚 فهرست پرونده‌های DentAI</h2>
+<div class="ai-list">
 
-  <div class="ai-list">
-          
-    
-      <a href="dentai-1.html" class="ai-item">
-        <div class="ai-title">⚡ مقالهٔ یک – تمایز بین خطوط ترک سنتی و خطوط ترک داخلی در مینای دندان</div>
-        <div class="ai-desc">بررسی تفاوت ساختاری و بالینی دو نوع ترک مینایی و اهمیت تشخیص آن‌ها در درمان‌های ترمیمی</div>
-      </a>
-      <a href="dentai-2.html" class="ai-item">
-        <div class="ai-title">⚡ مقالهٔ دوم – رزین اینفیلتریشن برای درمان لکه‌های سفید دندانی</div>
-        <div class="ai-desc">مرور تکنیک Resin Infiltration به‌عنوان روشی کم‌تهاجمی و مؤثر برای حذف لکه‌های سفید مینایی</div>
-      </a>
-      <a href="dentai-3.html" class="ai-item">
-        <div class="ai-title">⚡ مقالهٔ سوم – مدیریت درمان ضایعات پوسیدگی دندانی</div>
-        <div class="ai-desc">بررسی راهنمای کامل درمان مرحله به مرحله پوسیدگی‌ها بر اساس عمق و میزان نفوذ</div>
-      </a>
-    <a href="dentai-4.html" class="ai-item">
-        <div class="ai-title">⚡ مقالهٔ چهارم – اثر Caries Detector بر استحکام باند</div>
-        <div class="ai-desc">بررسی تاثیر محلول‌های تشخیص پوسیدگی بر استحکام باندینگ و اهمیت شستشوی کامل آن</div>
-    </a>
-        <a href="dentai-5.html" class="ai-item">
-      <div class="ai-title">⚡ مقالهٔ پنجم – مقایسه دو باندینگ: استاندارد طلایی و سلف‌اچ</div>
-      <div class="ai-desc">بررسی بلندمدت و ۱۴ سالهٔ عملکرد یک باندینگ سلف‌اچ در برابر باندینگ استاندارد طلایی (Etch & Rinse)</div>
-        </a>
-        <a href="dentai-6.html" class="ai-item">
-      <div class="ai-title">⚡ مقالهٔ ششم – طبقه‌بندی کامپوزیت‌ها بر اساس اندازه ذرات</div>
-      <div class="ai-desc">بررسی تفاوت‌های ساختاری و کاربردی انواع کامپوزیت (ماکروفیل، میکروفیل، هیبرید، نانو) بر اساس سایز فیلرها</div>
-        </a>
-    
-  </div>
-<style>
-  .newsletter-wrapper {
-    max-width: 600px; /* عرض کمتر برای ظرافت بیشتر */
-    margin: 30px auto 40px;
-    padding: 0 15px;
-    font-family: 'Vazirmatn', sans-serif;
-    box-sizing: border-box;
-  }
+  <a href="dentai-1.html" class="ai-item">
+    <div class="ai-title">⚡ مقالهٔ یک – تمایز بین خطوط ترک سنتی و خطوط ترک داخلی در مینای دندان</div>
+    <div class="ai-desc">بررسی تفاوت ساختاری و بالینی دو نوع ترک مینایی و اهمیت تشخیص آن‌ها در درمان‌های ترمیمی</div>
+  </a>
 
-  .newsletter-box {
-    /* شیشه دودی تیره هماهنگ با تم سایت */
-    background: rgba(20, 30, 50, 0.6); 
-    border: 1px solid rgba(255, 255, 255, 0.08); /* حاشیه خیلی محو */
-    border-radius: 16px;
-    padding: 20px 24px; /* ارتفاع کمتر */
-    text-align: center;
-    backdrop-filter: blur(12px);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    position: relative;
-    overflow: hidden;
-  }
+  <a href="dentai-2.html" class="ai-item">
+    <div class="ai-title">⚡ مقالهٔ دوم – رزین اینفیلتریشن برای درمان لکه‌های سفید دندانی</div>
+    <div class="ai-desc">مرور تکنیک Resin Infiltration به‌عنوان روشی کم‌تهاجمی و مؤثر برای حذف لکه‌های سفید مینایی</div>
+  </a>
 
-  /* نوار رنگی باریک بالای باکس برای زیبایی */
-  .newsletter-box::before {
-    content: "";
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, #0b5fff, transparent);
-    opacity: 0.8;
-  }
+  <a href="dentai-3.html" class="ai-item">
+    <div class="ai-title">⚡ مقالهٔ سوم – مدیریت درمان ضایعات پوسیدگی دندانی</div>
+    <div class="ai-desc">بررسی راهنمای کامل درمان مرحله به مرحله پوسیدگی‌ها بر اساس عمق و میزان نفوذ</div>
+  </a>
 
-  .newsletter-title {
-    font-size: 0.95rem;
-    font-weight: 700;
-    color: #bcd3ff; /* آبی خیلی روشن */
-    margin-bottom: 6px;
-  }
+  <a href="dentai-4.html" class="ai-item">
+    <div class="ai-title">⚡ مقالهٔ چهارم – اثر Caries Detector بر استحکام باند</div>
+    <div class="ai-desc">بررسی تاثیر محلول‌های تشخیص پوسیدگی بر استحکام باندینگ و اهمیت شستشوی کامل آن</div>
+  </a>
 
-  .newsletter-text {
-    font-size: 0.8rem;
-    color: #8890a5; /* طوسی ملایم */
-    margin-bottom: 18px;
-    line-height: 1.6;
-  }
+  <a href="dentai-5.html" class="ai-item">
+    <div class="ai-title">⚡ مقالهٔ پنجم – مقایسه دو باندینگ: استاندارد طلایی و سلف‌اچ</div>
+    <div class="ai-desc">بررسی بلندمدت و ۱۴ سالهٔ عملکرد یک باندینگ سلف‌اچ در برابر باندینگ استاندارد طلایی</div>
+  </a>
 
-  .newsletter-form-group {
-    display: flex;
-    gap: 8px;
-    position: relative;
-  }
+  <a href="dentai-6.html" class="ai-item">
+    <div class="ai-title">⚡ مقالهٔ ششم – طبقه‌بندی کامپوزیت‌ها بر اساس اندازه ذرات</div>
+    <div class="ai-desc">بررسی تفاوت‌های ساختاری و کاربردی انواع کامپوزیت بر اساس سایز فیلرها</div>
+  </a>
 
-  .newsletter-input {
-    flex: 1;
-    padding: 10px 14px;
-    border-radius: 10px;
-    border: 1px solid rgba(255,255,255,0.1);
-    background: rgba(0, 0, 0, 0.25); /* تیره */
-    color: #fff;
-    font-family: 'Vazirmatn', sans-serif;
-    font-size: 0.85rem;
-    outline: none;
-    transition: all 0.3s;
-  }
+</div>
 
-  .newsletter-input:focus {
-    border-color: #0b5fff;
-    background: rgba(0, 0, 0, 0.4);
-  }
-  
-  .newsletter-input::placeholder {
-    color: #556075;
-    font-size: 0.8rem;
-  }
+</div>
+</div>
 
-  .newsletter-btn {
-    background: #0b5fff; /* آبی برند */
-    color: white;
-    border: none;
-    padding: 0 20px;
-    border-radius: 10px;
-    font-family: 'Vazirmatn', sans-serif;
-    font-weight: 600;
-    font-size: 0.85rem;
-    cursor: pointer;
-    transition: all 0.3s;
-    white-space: nowrap;
-  }
-
-  .newsletter-btn:hover {
-    background: #004ad4;
-    box-shadow: 0 0 10px rgba(11, 95, 255, 0.4);
-  }
-
-  .success-message {
-    display: none;
-    background: rgba(16, 185, 129, 0.15);
-    color: #34d399;
-    border: 1px solid rgba(16, 185, 129, 0.2);
-    border-radius: 10px;
-    padding: 12px;
-    margin-top: 10px;
-    font-size: 0.85rem;
-  }
-
-  .ml-form-embedSubmitLoad { display: none; }
-
-  @media (max-width: 480px) {
-    .newsletter-form-group {
-      flex-direction: column;
-    }
-    .newsletter-btn {
-      padding: 10px;
-      width: 100%;
-    }
-  }
-</style>
-
+<!-- 📬 Newsletter -->
 <div id="mlb2-33724259" class="newsletter-wrapper ml-subscribe-form ml-subscribe-form-33724259">
   <div class="newsletter-box">
-    
+
     <div class="row-form">
-        <div class="newsletter-title">📬 خبرنامه‌ی دنت‌کست</div>
-        <div class="newsletter-text">
-          اطلاع‌رسانی اپیزودها و مطالب جدید (بدون اسپم)
+      <div class="newsletter-title">📬 خبرنامه‌ی دنت‌کست</div>
+      <div class="newsletter-text">
+        اطلاع‌رسانی اپیزودها و مطالب جدید (بدون اسپم)
+      </div>
+
+      <form class="ml-block-form" action="https://assets.mailerlite.com/jsonp/1939653/forms/171891141676893488/subscribe" method="post" target="_blank">
+        <div class="newsletter-form-group">
+          <input type="email" class="newsletter-input" name="fields[email]" placeholder="ایمیل شما..." required>
+          <button type="submit" class="newsletter-btn">
+            عضویت
+            <span class="ml-form-embedSubmitLoad">...</span>
+          </button>
         </div>
-
-        <form class="ml-block-form" action="https://assets.mailerlite.com/jsonp/1939653/forms/171891141676893488/subscribe" data-code="" method="post" target="_blank">
-          
-          <div class="newsletter-form-group">
-            <input aria-label="email" aria-required="true" type="email" class="newsletter-input" data-inputmask="" name="fields[email]" placeholder="ایمیل شما..." autocomplete="email" required>
-            
-            <button type="submit" class="newsletter-btn">
-               عضویت
-               <span class="ml-form-embedSubmitLoad">...</span>
-            </button>
-          </div>
-
-          <input type="hidden" name="ml-submit" value="1">
-          <input type="hidden" name="anticsrf" value="true">
-        </form>
+        <input type="hidden" name="ml-submit" value="1">
+        <input type="hidden" name="anticsrf" value="true">
+      </form>
     </div>
 
     <div class="row-success success-message">
-        ✅ ایمیل شما با موفقیت ثبت شد.
+      ✅ ایمیل شما با موفقیت ثبت شد.
     </div>
 
   </div>
 </div>
 
 <script>
-    function ml_webform_success_33724259() {
-      var formRow = document.querySelector('.ml-subscribe-form-33724259 .row-form');
-      var successRow = document.querySelector('.ml-subscribe-form-33724259 .row-success');
-      if(formRow) formRow.style.display = 'none';
-      if(successRow) successRow.style.display = 'block';
-    }
+function ml_webform_success_33724259() {
+  var formRow = document.querySelector('.ml-subscribe-form-33724259 .row-form');
+  var successRow = document.querySelector('.ml-subscribe-form-33724259 .row-success');
+  if(formRow) formRow.style.display='none';
+  if(successRow) successRow.style.display='block';
+}
 </script>
-<script src="https://groot.mailerlite.com/js/w/webforms.min.js?v176e10baa5e7ed80d35ae235be3d5024" type="text/javascript"></script>
-  
-  <footer style="text-align:center; margin-top:45px; color:#9aa1b3; font-size:.9rem; line-height:1.8;">
+<script src="https://groot.mailerlite.com/js/w/webforms.min.js?v176e10baa5e7ed80d35ae235be3d5024"></script>
 
-    <div>
-      <a href="https://dentcast.ir/index.html" class="btn-home">
-        🏠 برگشت به صفحه‌ی اصلی
-      </a>
-    </div>
-  
-    <div>
-      <a href="https://dentcast.ir/about.html" class="btn-about">
-        💬 درباره‌ی دکتر فواد شهابیان و دنت‌کست
-      </a>
-    </div>
-  
-    <div style="margin-top:6px;">
-      © 2025 DentCast — طراحی و توسعه توسط
-      <strong style="color:#ffd46a;">فواد شهابیان</strong>
-    </div>
-  
-  </footer>
-  <!-- 🧠 موتور سرچ -->
+<footer>
+  <div>
+    <a href="https://dentcast.ir/index.html" class="btn-home">🏠 برگشت به صفحه‌ی اصلی</a>
+  </div>
+  <div>
+    <a href="https://dentcast.ir/about.html" class="btn-about">💬 درباره‌ی دکتر فواد شهابیان و دنت‌کست</a>
+  </div>
+  <div style="margin-top:6px;">
+    © 2025 DentCast — طراحی و توسعه توسط
+    <strong style="color:#ffd46a;">فواد شهابیان</strong>
+  </div>
+</footer>
+
 <script src="/global-search.js?v=5"></script>
-
-<!-- 🎛️ باز/بسته + UI -->
 <script src="/global-search-ui.js?v=1"></script>
-
-<!-- 📱 شیک گوشی -->
 <script src="/shake-search.js?v=1"></script>
-  
 
 </body>
 </html>
