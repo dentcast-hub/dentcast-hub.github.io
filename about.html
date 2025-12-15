@@ -23,7 +23,7 @@
 
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-
+<link rel="stylesheet" href="/global-search.css?v=1">
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" as="style">
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
   <noscript>
@@ -181,6 +181,31 @@
 <body>
   <div class="wrap">
     <h1>👨‍⚕️ دربارهٔ دکتر فواد شهابیان مقدم</h1>
+    <div class="dc-global-filter-box" id="dcGlobalBox">
+
+  <button class="dc-close-results">✖</button>
+
+  <h3 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h3>
+
+  <input
+    id="dcSearch"
+    class="dc-search-input"
+    placeholder="جستجو در همهٔ بخش‌های دنت‌کست…"
+  >
+
+  <div class="dc-filter-list">
+    <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
+    <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
+    <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
+    <button class="dc-filter-btn active" data-type="litecast">لایت‌کست</button>
+    <button class="dc-filter-btn active" data-type="photocast">فوتوکست</button>
+    <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
+    <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
+  </div>
+
+  <div class="dc-results-box" id="dcResults"></div>
+
+    </div>
 
     <div class="card">
       <p>
@@ -233,5 +258,13 @@
       DentCast © 2025 — طراحی و نگارش توسط دکتر فواد شهابیان مقدم
     </footer>
   </div>
+  <!-- 🧠 موتور سرچ -->
+<script src="/global-search.js?v=5"></script>
+
+<!-- 🎛️ کنترل باز/بسته -->
+<script src="/global-search-ui.js?v=1"></script>
+
+<!-- 📱 شیک گوشی -->
+<script src="/shake-search.js?v=1"></script>
 </body>
 </html>
