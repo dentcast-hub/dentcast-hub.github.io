@@ -12,7 +12,7 @@
 
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" as="style">
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
-
+<link rel="stylesheet" href="/global-search.css?v=1">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -215,8 +215,33 @@
 
 <body>
   <main>
-    <h1>✨ LiteCast – دنت‌کست عمومی</h1>
-    <h2>پرسش‌های روزمره، پاسخ‌های علمی</h2>
+    <h2>✨ LiteCast – دنت‌کست عمومی</h2>
+    <h1>پرسش‌های روزمره دندانپزشکی، پاسخ‌های علمی</h1>
+    <div class="dc-global-filter-box" id="dcGlobalBox">
+
+  <button class="dc-close-results">✖</button>
+
+  <h3 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h3>
+
+  <input
+    id="dcSearch"
+    class="dc-search-input"
+    placeholder="جستجو در همهٔ بخش‌های دنت‌کست…"
+  >
+
+  <div class="dc-filter-list">
+    <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
+    <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
+    <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
+    <button class="dc-filter-btn active" data-type="litecast">لایت‌کست</button>
+    <button class="dc-filter-btn active" data-type="photocast">فوتوکست</button>
+    <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
+    <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
+  </div>
+
+  <div class="dc-results-box" id="dcResults"></div>
+
+    </div>
 
     <div class="intro">
       این بخش برای <strong>افراد غیر دندان‌پزشک</strong> طراحی شده؛  
@@ -427,5 +452,13 @@
       <strong style="color:#ffd046;">فؤاد شهابیان</strong>
     </div>
   </footer>
+  <!-- 🧠 موتور سرچ -->
+<script src="/global-search.js?v=5"></script>
+
+<!-- 🎛️ کنترل باز/بسته -->
+<script src="/global-search-ui.js?v=1"></script>
+
+<!-- 📱 شیک گوشی -->
+<script src="/shake-search.js?v=1"></script>
 </body>
 </html>
