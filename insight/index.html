@@ -57,152 +57,144 @@
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
 
   <style>
-    :root {
+        :root {
       --blue:#0b5fff;
-      --lightglass: rgba(11,95,255,0.06);
-      --midglass: rgba(11,95,255,0.10);
-      --darkglass: rgba(11,95,255,0.18);
-      --text:#111;
-      --muted:#555;
-      --radius:18px;
-      --shadow:0 10px 28px rgba(0,0,0,.25);
+      --bg:#f6f8fc;
+      --bg2:#ffffff;
+      --text:#1c2133;
+      --muted:#6f7687;
+      --radius:14px;
+      --shadow:0 10px 30px rgba(15, 23, 42, 0.08);
     }
 
-    html, body {
-      margin:0;
-      padding:0;
-      min-height:100vh;
-      display:flex;
-      flex-direction:column;
+    body {
+      margin:0; padding:0;
       font-family:'Vazirmatn', sans-serif;
-      background: linear-gradient(180deg, #edf3ff 0%, #f7f9fc 100%);
-      color:var(--text);
-      line-height:1.9;
-      -webkit-font-smoothing:antialiased;
-      text-rendering:optimizeLegibility;
-    }
-
-    main {
-      flex:1;
+      background: linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+      color: var(--text);
       display:flex;
       flex-direction:column;
-      align-items:center;
-      justify-content:flex-start;
-      width:100%;
-      padding:40px 20px 40px;
-      box-sizing:border-box;
+      min-height:100vh;
     }
+
+    .wrap {
+      max-width: 920px;
+      margin: 10px auto 40px;
+      padding: 0 20px;
+      flex:1;
+    }
+
+    header { text-align:center; margin:30px 0 20px; }
 
     h1 {
-      text-align:center;
-      color:var(--blue);
+      font-size:2.1rem;
       font-weight:800;
-      font-size:1.8rem;
-      margin:20px 0 10px;
+      color:var(--blue);
+      margin:0;
     }
 
-    h2 {
-      color:var(--muted);
-      margin-top:0;
-      font-size:1.1rem;
-      margin-bottom:28px; 
-      font-weight:600;
-      text-align:center;
+    .card {
+      background:#fff;
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:26px 20px 36px;
+      border:1px solid #e1e6f2;
     }
 
     .intro {
-      background: var(--lightglass);
-      border:1px solid rgba(255,255,255,0.25);
-      border-radius:var(--radius);
-      padding:24px 30px;
-      margin:0 auto 35px;
-      max-width:860px;
-      box-shadow: var(--shadow);
-      backdrop-filter:blur(10px);
-      text-align:justify;
-      color:#222;
+      background:#f3f6ff;
+      border:1px solid #d8e1ff;
+      border-radius:12px;
+      padding:16px 20px;
+      margin-bottom:30px;
+      font-size:1rem;
+      line-height:1.9;
+      color:#27304a;
     }
 
-    .intro strong { color:var(--blue); }
-
-    ul {
-      list-style:none;
-      padding:0;
-      margin:0 auto;
-      max-width:860px;
-      width:100%;
+    h2 {
+      font-size:1.3rem;
+      margin-top:30px;
+      border-bottom:2px solid #e6ebf7;
+      padding-bottom:10px;
+      margin-bottom:20px;
+      color:var(--text);
     }
 
-    li {
-      background: var(--midglass);
-      border-radius: var(--radius);
-      padding:18px 22px;
-      margin-bottom:18px;
-      text-align:center;
-      border:1px solid rgba(255,255,255,0.3);
-      backdrop-filter:blur(10px);
-      box-shadow:0 8px 24px rgba(0,0,0,.1);
-      transition:all .3s ease;
-    }
+    ul { list-style:none; padding:0; margin-top:20px; }
+    li { margin-bottom:12px; }
 
-    li:hover {
-      background: var(--darkglass);
-      transform:translateY(-3px);
-    }
+ a {
+  display: flex;
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid rgba(11,95,255,0.18);
+  border-radius: 14px;
+  padding: 16px 18px;
+  text-decoration: none;
+  color: #2458d3;            /* رنگ لینک → آبی برند، پرانرژی */
+  font-weight: 700;          /* ضخیم‌تر مثل دکمه‌های دنت‌کست */
+  transition: all .25s ease;
+  line-height: 1.7;
+  box-shadow: 0 4px 14px rgba(11,95,255,0.06);
+}
 
-    a {
-      text-decoration:none;
-      color:var(--blue);
-      font-weight:600;
-    }
+a:hover {
+  background: #eef3ff;
+  border-color: rgba(11,95,255,0.35);
+  color: #004ad4;
+  transform: translateX(-4px);
+  box-shadow: 0 6px 20px rgba(11,95,255,0.12);
+}
 
-    /* استایل دکمه‌های فوتر (هماهنگ با تم روشن) */
+    /* ========== دکمهٔ صحیح و کاملاً دیده‌شونده (CTA) ========== */
     .btn-home {
       display:inline-block;
-      background:rgba(11,95,255,0.12); /* کمی روشن‌تر برای تم سفید */
-      color:#3a84ff;
-      border:1.8px solid rgba(11,95,255,0.45);
+      background:#0b5fff !important;
+      color:#ffffff !important;
+      border:1.8px solid #0a4de0 !important;
       border-radius:12px;
       padding:12px 42px;
       font-weight:700;
       text-decoration:none;
-      font-size:1rem;
-      box-shadow:0 0 14px rgba(11,95,255,0.1);
-      transition:all .25s ease;
-      margin-bottom: 22px;
+      font-size:1.05rem;
+      box-shadow:0 6px 18px rgba(11,95,255,0.25);
+      margin-bottom:22px;
+      transition:.25s;
     }
+
     .btn-home:hover {
-      background:rgba(11,95,255,0.22);
-      transform: scale(1.02);
+      background:#004ad4 !important;
+      box-shadow:0 10px 28px rgba(11,95,255,0.35);
+      transform:translateY(-2px);
     }
 
     .btn-about {
       display:inline-block;
-      background:rgba(255,220,80,0.85);
+      background:rgba(255,220,80,0.95);
       color:#111;
       border:1px solid rgba(255,220,80,0.55);
       border-radius:8px;
       padding:5px 12px;
+      font-size:.8rem;
       font-weight:500;
       text-decoration:none;
-      font-size:.8rem;
-      box-shadow:0 0 6px rgba(255,220,80,0.1);
-      backdrop-filter:blur(5px);
-      transition:all .25s ease;
-      margin-bottom: 20px;
+      box-shadow:0 0 6px rgba(255,220,80,0.25);
+      transition:.25s;
+      margin-bottom:20px;
     }
+
     .btn-about:hover {
-      background:rgba(255,230,100,0.95);
-      transform: scale(1.02);
+      background:rgba(255,230,120,1);
+      transform:scale(1.02);
     }
 
     footer {
+      margin-top:60px;
       text-align:center;
       color:var(--muted);
       font-size:.9rem;
-      line-height:1.8;
-      padding:40px 0 40px;
-    }
+      padding-bottom:20px;
 
     @media (max-width:768px){
       main{padding:30px 16px 60px;}
