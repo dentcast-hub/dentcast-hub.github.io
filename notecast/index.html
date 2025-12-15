@@ -12,7 +12,10 @@
 
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" as="style">
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/global-search.css?v=1">
+
+  <link rel="stylesheet" href="/global-search.css?v=1">
+
+  <!-- Schema (unchanged) -->
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -29,9 +32,9 @@
         "https://t.me/dent_AI",
         "https://podcasts.apple.com/us/podcast/dentcast/id1502032364",
         "https://castbox.fm/va/4889954",
-        "https://www.youtube.com/@Dentcast", 
+        "https://www.youtube.com/@Dentcast",
         "https://dentcast.ir/",
-        "https://www.instagram.com/dr.foad_shahabian/" 
+        "https://www.instagram.com/dr.foad_shahabian/"
       ]
     },
     {
@@ -44,201 +47,170 @@
       "@type": "CollectionPage",
       "url": "https://dentcast.ir/notecast/index.html",
       "name": "📝 NoteCast | دنت‌کست – فهرست خلاصه‌های نوشتاری تخصصی",
-      "description": "فهرست کامل نسخه‌های نوشتاری و خلاصه‌شده‌ی اپیزودهای پادکست دنت‌کست. مرجع تخصصی پروتزهای دندانی و نکات بالینی توسط دکتر فؤاد شهابیان.",
+      "description": "فهرست کامل نسخه‌های نوشتاری و خلاصه‌شده‌ی اپیزودهای پادکست دنت‌کست.",
       "inLanguage": "fa",
-      "isPartOf": {
-        "@id": "https://dentcast.ir/#website"
-      },
-      "author": {
-        "@id": "https://dentcast.ir/#person" 
-      }
+      "isPartOf": { "@id": "https://dentcast.ir/#website" },
+      "author": { "@id": "https://dentcast.ir/#person" }
     }
   ]
 }
 </script>
 
-  <style>
-    :root {
-      --blue:#0b5fff;
-      --bg:#0b1220;
-      --bg2:#121a2b;
-      --text:#e7eaf1;
-      --muted:#9aa1b3;
-      --radius:14px; /* هماهنگ با صفحه اصلی */
-      --shadow:0 10px 30px rgba(0,0,0,.3);
-      --gold:rgba(255,188,0,0.75);
-    }
+<style>
+/* =========================
+   DentCast — LIGHT THEME
+========================= */
 
-    html, body { height:100%; margin:0; padding:0; }
-    
-    body {
-      font-family:'Vazirmatn', sans-serif;
-      /* بک‌گراند دقیقاً مشابه صفحه اصلی */
-      background: radial-gradient(1200px 600px at 20% -10%, #1b2640 0%, transparent 60%),
-                  linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
-      color: var(--text);
-      -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeLegibility;
-      display: flex;
-      flex-direction: column;
-    }
+:root{
+  --blue:#0b5fff;
+  --bg:#f7f9fc;
+  --bg2:#ffffff;
+  --card:#ffffff;
+  --border:#dfe5f1;
+  --text:#1f2937;
+  --muted:#6b7280;
+  --radius:14px;
+  --shadow:0 8px 24px rgba(0,0,0,.06);
+}
 
-    /* کلاس wrap برای محدود کردن عرض صفحه مشابه صفحه اصلی */
-    .wrap {
-      max-width: 920px;
-      margin: 10px auto 40px;
-      padding: 0 20px;
-      flex: 1; /* برای چسبیدن فوتر به پایین */
-      width: 100%;
-      box-sizing: border-box;
-    }
+html,body{
+  margin:0;
+  padding:0;
+  height:100%;
+}
 
-    /* هدر صفحه */
-    header { text-align: center; margin-bottom: 30px; margin-top: 20px; }
-    h1 { 
-      color: var(--blue); 
-      font-size: 2.1rem; 
-      margin: 8px 0; 
-      font-weight: 800; 
-      line-height: 1.6; 
-    }
+body{
+  font-family:'Vazirmatn', sans-serif;
+  background:linear-gradient(180deg,var(--bg),var(--bg2));
+  color:var(--text);
+  display:flex;
+  flex-direction:column;
+}
 
-    /* استایل کارت اصلی (Container) مشابه صفحه اصلی */
-    .card {
-      background: #161a26;
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 26px 20px 36px;
-      border: 1px solid rgba(255,255,255,0.03);
-    }
+.wrap{
+  max-width:920px;
+  margin:20px auto 40px;
+  padding:0 20px;
+  flex:1;
+  width:100%;
+  box-sizing:border-box;
+}
 
-    /* استایل بخش توضیحات (Intro) */
-    .intro {
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 12px;
-      padding: 16px 20px;
-      line-height: 1.9;
-      font-size: 1rem;
-      backdrop-filter: blur(8px);
-      margin-bottom: 30px;
-      color: #dbe4ff;
-    }
+header{
+  text-align:center;
+  margin-bottom:24px;
+}
 
-    h2 {
-      color: var(--text);
-      margin-top: 30px;
-      font-size: 1.3rem;
-      border-bottom: 2px solid rgba(255,255,255,0.05);
-      padding-bottom: 10px;
-      margin-bottom: 20px;
-    }
+h1{
+  color:var(--blue);
+  font-size:2rem;
+  font-weight:800;
+  margin:12px 0;
+}
 
-    /* لیست اپیزودها */
-    ul {
-      list-style: none;
-      padding: 0;
-      margin-top: 20px;
-    }
+.card{
+  background:var(--card);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  border:1px solid var(--border);
+  padding:28px 22px 36px;
+}
 
-    li {
-      margin-bottom: 12px;
-    }
+.intro{
+  background:#f3f6fd;
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:18px 22px;
+  line-height:1.9;
+  color:#1f2a44;
+  margin-bottom:30px;
+}
 
-    a {
-      display: flex;
-      align-items: center;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 12px;
-      padding: 16px;
-      text-decoration: none;
-      color: #c5cad3;
-      transition: all .3s ease;
-      font-weight: 500;
-      line-height: 1.6;
-    }
+h2{
+  font-size:1.3rem;
+  margin:32px 0 18px;
+  border-bottom:2px solid var(--border);
+  padding-bottom:10px;
+}
 
-    a:hover {
-      background: rgba(11,95,255,0.1);
-      border-color: rgba(11,95,255,0.3);
-      color: #fff;
-      transform: translateX(-5px); /* افکت حرکتی ریز */
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    }
+ul{
+  list-style:none;
+  padding:0;
+  margin:0;
+}
 
-    /* استایل دکمه‌های فوتر (دقیقاً کد خودت) */
-    .btn-home {
-      display:inline-block;
-      background:rgba(11,95,255,0.18);
-      color:#3a84ff;
-      border:1.8px solid rgba(11,95,255,0.45);
-      border-radius:12px;
-      padding:12px 42px;
-      font-weight:700;
-      text-decoration:none;
-      font-size:1rem;
-      box-shadow:0 0 14px rgba(11,95,255,0.15);
-      transition:all .25s ease;
-      margin-bottom: 22px;
-    }
-    .btn-home:hover {
-      background:rgba(11,95,255,0.28);
-      transform: scale(1.02);
-    }
+li{
+  margin-bottom:12px;
+}
 
-    .btn-about {
-      display:inline-block;
-      background:rgba(255,220,80,0.85);
-      color:#111;
-      border:1px solid rgba(255,220,80,0.55);
-      border-radius:8px;
-      padding:5px 12px;
-      font-weight:500;
-      text-decoration:none;
-      font-size:.8rem;
-      box-shadow:0 0 6px rgba(255,220,80,0.1);
-      backdrop-filter:blur(5px);
-      transition:all .25s ease;
-      margin-bottom: 20px;
-    }
-    .btn-about:hover {
-      background:rgba(255,230,100,0.95);
-      transform: scale(1.02);
-    }
+a{
+  display:flex;
+  align-items:center;
+  padding:14px 16px;
+  border-radius:12px;
+  border:1px solid var(--border);
+  background:#ffffff;
+  color:#1f2937;
+  text-decoration:none;
+  font-weight:500;
+  transition:.25s;
+}
 
-    footer {
-      margin-top: 60px;
-      text-align: center;
-      color: var(--muted);
-      font-size: .9rem;
-      padding-bottom: 20px;
-    }
+a:hover{
+  background:#eef4ff;
+  border-color:var(--blue);
+  color:var(--blue);
+  transform:translateX(-4px);
+}
 
-    @media (max-width: 768px) {
-      .wrap { padding: 0 14px; margin: 20px auto 40px; }
-      h1 { font-size: 1.7rem; }
-      .intro { padding: 16px 18px; font-size: .95rem; line-height: 1.8; }
-      h2 { font-size: 1.1rem; margin-top: 25px; }
-      a { padding: 14px; font-size: 0.9rem; }
-      .card { padding: 20px 14px; }
-    }
-  </style>
+footer{
+  margin-top:50px;
+  text-align:center;
+  color:var(--muted);
+  font-size:.9rem;
+}
+
+.btn-home{
+  display:inline-block;
+  background:#eef4ff;
+  color:var(--blue);
+  border:1.5px solid #c7d7ff;
+  border-radius:12px;
+  padding:12px 42px;
+  font-weight:700;
+  text-decoration:none;
+  margin-bottom:22px;
+  transition:.25s;
+}
+.btn-home:hover{
+  background:#dfe9ff;
+}
+
+.btn-about{
+  display:inline-block;
+  background:#ffeaa7;
+  color:#111;
+  border:1px solid #f6d365;
+  border-radius:8px;
+  padding:6px 14px;
+  font-size:.8rem;
+  text-decoration:none;
+}
+
+@media(max-width:768px){
+  h1{font-size:1.7rem}
+  .wrap{padding:0 14px}
+}
+</style>
 </head>
 
 <body>
-  <div class="dc-global-filter-box" id="dcGlobalBox">
 
+<!-- 🔍 Global Search UI (unchanged) -->
+<div class="dc-global-filter-box" id="dcGlobalBox">
   <button class="dc-close-results">✖</button>
-
   <h3 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h3>
-
-  <input
-    id="dcSearch"
-    class="dc-search-input"
-    placeholder="جستجو در همهٔ بخش‌های دنت‌کست…"
-  >
-
+  <input id="dcSearch" class="dc-search-input" placeholder="جستجو در همهٔ بخش‌های دنت‌کست…">
   <div class="dc-filter-list">
     <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
     <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
@@ -248,20 +220,16 @@
     <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
     <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
   </div>
-     <div class="dc-results-box" id="dcResults"></div>
-    
-  <div class="wrap">
-      
-      <header>
-        <h1>📝 دنت‌کست – NoteCast</h1>
-        
+  <div class="dc-results-box" id="dcResults"></div>
+</div>
 
- 
-        </div>
-      </header>
+<div class="wrap">
+  <header>
+    <h1>📝 دنت‌کست – NoteCast</h1>
+  </header>
 
-      <div class="card">
-        <div class="intro">
+  <div class="card">
+    <div class="intro">
           <p style="margin-top:0;">
             در این بخش، نسخه‌های نوشتاری و خلاصه‌شده‌ی اپیزودهای پادکست <strong>دنت‌کست</strong> منتشر می‌شوند.
             هر NoteCast خلاصه‌ای علمی و منظم از یک اپیزود صوتی است؛ برای مرور سریع مفاهیم، دسترسی آسان به نکات کلیدی و ایجاد مرجع نوشتاری برای پژوهش‌های آینده.
@@ -318,193 +286,25 @@
   </a>
           </li>
         </ul>
-      </div> 
-      <style>
-  .newsletter-wrapper {
-    max-width: 600px; /* عرض کمتر برای ظرافت بیشتر */
-    margin: 30px auto 40px;
-    padding: 0 15px;
-    font-family: 'Vazirmatn', sans-serif;
-    box-sizing: border-box;
-  }
-
-  .newsletter-box {
-    /* شیشه دودی تیره هماهنگ با تم سایت */
-    background: rgba(20, 30, 50, 0.6); 
-    border: 1px solid rgba(255, 255, 255, 0.08); /* حاشیه خیلی محو */
-    border-radius: 16px;
-    padding: 20px 24px; /* ارتفاع کمتر */
-    text-align: center;
-    backdrop-filter: blur(12px);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    position: relative;
-    overflow: hidden;
-  }
-
-  /* نوار رنگی باریک بالای باکس برای زیبایی */
-  .newsletter-box::before {
-    content: "";
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, #0b5fff, transparent);
-    opacity: 0.8;
-  }
-
-  .newsletter-title {
-    font-size: 0.95rem;
-    font-weight: 700;
-    color: #bcd3ff; /* آبی خیلی روشن */
-    margin-bottom: 6px;
-  }
-
-  .newsletter-text {
-    font-size: 0.8rem;
-    color: #8890a5; /* طوسی ملایم */
-    margin-bottom: 18px;
-    line-height: 1.6;
-  }
-
-  .newsletter-form-group {
-    display: flex;
-    gap: 8px;
-    position: relative;
-  }
-
-  .newsletter-input {
-    flex: 1;
-    padding: 10px 14px;
-    border-radius: 10px;
-    border: 1px solid rgba(255,255,255,0.1);
-    background: rgba(0, 0, 0, 0.25); /* تیره */
-    color: #fff;
-    font-family: 'Vazirmatn', sans-serif;
-    font-size: 0.85rem;
-    outline: none;
-    transition: all 0.3s;
-  }
-
-  .newsletter-input:focus {
-    border-color: #0b5fff;
-    background: rgba(0, 0, 0, 0.4);
-  }
-  
-  .newsletter-input::placeholder {
-    color: #556075;
-    font-size: 0.8rem;
-  }
-
-  .newsletter-btn {
-    background: #0b5fff; /* آبی برند */
-    color: white;
-    border: none;
-    padding: 0 20px;
-    border-radius: 10px;
-    font-family: 'Vazirmatn', sans-serif;
-    font-weight: 600;
-    font-size: 0.85rem;
-    cursor: pointer;
-    transition: all 0.3s;
-    white-space: nowrap;
-  }
-
-  .newsletter-btn:hover {
-    background: #004ad4;
-    box-shadow: 0 0 10px rgba(11, 95, 255, 0.4);
-  }
-
-  .success-message {
-    display: none;
-    background: rgba(16, 185, 129, 0.15);
-    color: #34d399;
-    border: 1px solid rgba(16, 185, 129, 0.2);
-    border-radius: 10px;
-    padding: 12px;
-    margin-top: 10px;
-    font-size: 0.85rem;
-  }
-
-  .ml-form-embedSubmitLoad { display: none; }
-
-  @media (max-width: 480px) {
-    .newsletter-form-group {
-      flex-direction: column;
-    }
-    .newsletter-btn {
-      padding: 10px;
-      width: 100%;
-    }
-  }
-</style>
-
-<div id="mlb2-33724259" class="newsletter-wrapper ml-subscribe-form ml-subscribe-form-33724259">
-  <div class="newsletter-box">
-    
-    <div class="row-form">
-        <div class="newsletter-title">📬 خبرنامه‌ی دنت‌کست</div>
-        <div class="newsletter-text">
-          اطلاع‌رسانی اپیزودها و مطالب جدید (بدون اسپم)
-        </div>
-
-        <form class="ml-block-form" action="https://assets.mailerlite.com/jsonp/1939653/forms/171891141676893488/subscribe" data-code="" method="post" target="_blank">
-          
-          <div class="newsletter-form-group">
-            <input aria-label="email" aria-required="true" type="email" class="newsletter-input" data-inputmask="" name="fields[email]" placeholder="ایمیل شما..." autocomplete="email" required>
-            
-            <button type="submit" class="newsletter-btn">
-               عضویت
-               <span class="ml-form-embedSubmitLoad">...</span>
-            </button>
-          </div>
-
-          <input type="hidden" name="ml-submit" value="1">
-          <input type="hidden" name="anticsrf" value="true">
-        </form>
-    </div>
-
-    <div class="row-success success-message">
-        ✅ ایمیل شما با موفقیت ثبت شد.
-    </div>
-
-  </div>
 </div>
 
-<script>
-    function ml_webform_success_33724259() {
-      var formRow = document.querySelector('.ml-subscribe-form-33724259 .row-form');
-      var successRow = document.querySelector('.ml-subscribe-form-33724259 .row-success');
-      if(formRow) formRow.style.display = 'none';
-      if(successRow) successRow.style.display = 'block';
-    }
-</script>
-<script src="https://groot.mailerlite.com/js/w/webforms.min.js?v176e10baa5e7ed80d35ae235be3d5024" type="text/javascript"></script>
-      
-    <footer>
-        <div>
-          <a href="https://dentcast.ir/index.html" class="btn-home">
-            🏠 برگشت به صفحه‌ی اصلی
-          </a>
-        </div>
-
-        <div>
-          <a href="https://dentcast.ir/about.html" class="btn-about">
-            💬 درباره‌ی دکتر فواد شهابیان و دنت‌کست
-          </a>
-        </div>
-
-        <div style="margin-top:6px;">
-          © 2025 DentCast — طراحی و توسعه توسط
-          <strong style="color:#ffd46a;">فواد شهابیان</strong>
-        </div>
-    </footer>
+<footer>
+  <div>
+    <a href="https://dentcast.ir/index.html" class="btn-home">🏠 برگشت به صفحه‌ی اصلی</a>
   </div>
-  <!-- 🧠 موتور سرچ -->
+  <div>
+    <a href="https://dentcast.ir/about.html" class="btn-about">💬 درباره‌ی دکتر فواد شهابیان و دنت‌کست</a>
+  </div>
+  <div style="margin-top:6px;">
+    © 2025 DentCast — طراحی و توسعه توسط
+    <strong style="color:#b45309;">فواد شهابیان</strong>
+  </div>
+</footer>
+
+<!-- JS (unchanged) -->
 <script src="/global-search.js?v=5"></script>
-
-<!-- 🎛️ کنترل باز/بسته -->
 <script src="/global-search-ui.js?v=1"></script>
-
-<!-- 📱 شیک گوشی -->
 <script src="/shake-search.js?v=1"></script>
+
 </body>
 </html>
