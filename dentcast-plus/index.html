@@ -9,7 +9,8 @@
 
   <link rel="icon" href="https://dentcast.ir/logo-v2.png" type="image/png" sizes="512x512">
   <link rel="apple-touch-icon" href="https://dentcast.ir/logo-v2.png">
-<link rel="stylesheet" href="/global-search.css?v=1">
+  <link rel="stylesheet" href="/global-search.css?v=1">
+
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -73,6 +74,17 @@
       flex-direction: column;
     }
 
+    body.search-open #page-content {
+      filter: blur(8px);
+      pointer-events: none;
+      user-select: none;
+      transition: filter .25s ease;
+    }
+
+    #page-content {
+      transition: filter .25s ease;
+    }
+
     main { flex: 1 0 auto; width: 100%; box-sizing: border-box; }
     footer { flex-shrink: 0; }
 
@@ -95,13 +107,12 @@
       opacity: 0.8;
     }
 
-    /* Grid Layout: Responsive automatically */
     .video-grid {
       list-style: none;
       padding: 0;
       margin: 0;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* جادوی ریسپانسیو */
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 30px;
     }
 
@@ -125,11 +136,9 @@
       border-color: rgba(11, 95, 255, 0.4);
     }
 
-    /* Thumbnail Styles */
     .thumb {
       width: 100%;
       aspect-ratio: 16 / 9;
-      /* گرادینت زیبا برای زمانی که عکس لود نشده یا وجود ندارد */
       background: linear-gradient(135deg, #1a2a4a 0%, #0b1526 100%);
       display: flex;
       align-items: center;
@@ -137,52 +146,26 @@
       position: relative;
       overflow: hidden;
     }
-    
-    .thumb img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        opacity: 0.9;
-        transition: transform 0.6s ease;
-    }
 
-    /* افکت زوم روی تصویر هنگام هاور */
-    .video-card:hover .thumb img {
-        transform: scale(1.05);
-    }
-
-    /* Play Button Icon */
     .play-icon {
-        width: 50px;
-        height: 50px;
-        background: rgba(11, 95, 255, 0.9);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 0 20px rgba(11, 95, 255, 0.6);
-        z-index: 2;
-        transition: transform 0.3s ease, background 0.3s;
-        position: absolute;
-    }
-    
-    .play-icon::before {
-        content: '';
-        display: block;
-        width: 0; 
-        height: 0; 
-        border-top: 8px solid transparent;
-        border-bottom: 8px solid transparent;
-        border-left: 14px solid #fff;
-        margin-left: 4px; /* Centering fix */
+      width: 50px;
+      height: 50px;
+      background: rgba(11, 95, 255, 0.9);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
     }
 
-    .video-card:hover .play-icon {
-        transform: scale(1.15);
-        background: #fff;
-    }
-    .video-card:hover .play-icon::before {
-        border-left-color: var(--blue);
+    .play-icon::before {
+      content: '';
+      width: 0;
+      height: 0;
+      border-top: 8px solid transparent;
+      border-bottom: 8px solid transparent;
+      border-left: 14px solid #fff;
+      margin-left: 4px;
     }
 
     .video-info {
@@ -196,76 +179,20 @@
       margin-bottom: 8px;
       line-height: 1.6;
     }
-    
+
     .video-meta {
-        font-size: 0.85rem;
-        color: var(--muted);
-    }
-
-    /* Buttons */
-    .btn-home {
-      display: inline-block;
-      background: rgba(11,95,255,0.12);
-      color: #3a84ff;
-      border: 1px solid rgba(11,95,255,0.3);
-      border-radius: 12px;
-      padding: 12px 36px;
-      font-weight: 700;
-      text-decoration: none;
-      font-size: 1rem;
-      transition: all .3s ease;
-      margin-bottom: 22px;
-    }
-    .btn-home:hover {
-      background: rgba(11,95,255,0.22);
-      transform: translateY(-2px);
-      box-shadow: 0 0 15px rgba(11, 95, 255, 0.2);
-    }
-
-    .btn-about {
-      display: inline-block;
-      background: rgba(255,220,80,0.9);
-      color: #111;
-      border-radius: 8px;
-      padding: 6px 14px;
-      font-weight: 600;
-      text-decoration: none;
       font-size: 0.85rem;
-      box-shadow: 0 4px 12px rgba(255,220,80,0.15);
-      transition: transform .2s;
-      margin-bottom: 20px;
-    }
-    .btn-about:hover {
-      transform: scale(1.03);
-      background: #ffdb4d;
-    }
-
-    footer {
-      margin-top: 70px;
-      text-align: center;
       color: var(--muted);
-      font-size: 0.9rem;
     }
   </style>
 </head>
 
 <body>
-<main>
-  <h2>🎬 DentCast+</h2>
-  
-  <h1>آموزش‌های ویدیویی کوتاه و تخصصی دندانپزشکی</h1>
+
 <div class="dc-global-filter-box" id="dcGlobalBox">
-
   <button class="dc-close-results">✖</button>
-
   <h3 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h3>
-
-  <input
-    id="dcSearch"
-    class="dc-search-input"
-    placeholder="جستجو در همهٔ بخش‌های دنت‌کست…"
-  >
-
+  <input id="dcSearch" class="dc-search-input" placeholder="جستجو در همهٔ بخش‌های دنت‌کست…">
   <div class="dc-filter-list">
     <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
     <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
@@ -275,218 +202,39 @@
     <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
     <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
   </div>
-
   <div class="dc-results-box" id="dcResults"></div>
-
 </div>
+
+<div id="page-content">
+
+<main>
+  <h2>🎬 DentCast+</h2>
+  <h1>آموزش‌های ویدیویی کوتاه و تخصصی دندانپزشکی</h1>
+
   <div class="video-grid">
-        <a href="video-2.html" class="video-card">
-      <div class="thumb">
-        <div class="play-icon"></div>
-      </div>
+    <a href="video-2.html" class="video-card">
+      <div class="thumb"><div class="play-icon"></div></div>
       <div class="video-info">
         <div class="video-title">آخرین مرحله قبل از خداحافظی با بیمار</div>
         <div class="video-meta">دکتر فواد شهابیان • پروتکل چک فرمیتوس</div>
       </div>
-        </a>
-    
+    </a>
+
     <a href="video-1.html" class="video-card">
-      <div class="thumb">
-        <div class="play-icon"></div>
-      </div>
+      <div class="thumb"><div class="play-icon"></div></div>
       <div class="video-info">
         <div class="video-title">نکات شخصی که کیفیت تراش را واقعاً بهتر می‌کنند</div>
         <div class="video-meta">دکتر فواد شهابیان • ۳ دقیقه</div>
       </div>
     </a>
-
-    </div>
-</main>
-<style>
-  .newsletter-wrapper {
-    max-width: 600px; /* عرض کمتر برای ظرافت بیشتر */
-    margin: 30px auto 40px;
-    padding: 0 15px;
-    font-family: 'Vazirmatn', sans-serif;
-    box-sizing: border-box;
-  }
-
-  .newsletter-box {
-    /* شیشه دودی تیره هماهنگ با تم سایت */
-    background: rgba(20, 30, 50, 0.6); 
-    border: 1px solid rgba(255, 255, 255, 0.08); /* حاشیه خیلی محو */
-    border-radius: 16px;
-    padding: 20px 24px; /* ارتفاع کمتر */
-    text-align: center;
-    backdrop-filter: blur(12px);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    position: relative;
-    overflow: hidden;
-  }
-
-  /* نوار رنگی باریک بالای باکس برای زیبایی */
-  .newsletter-box::before {
-    content: "";
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, #0b5fff, transparent);
-    opacity: 0.8;
-  }
-
-  .newsletter-title {
-    font-size: 0.95rem;
-    font-weight: 700;
-    color: #bcd3ff; /* آبی خیلی روشن */
-    margin-bottom: 6px;
-  }
-
-  .newsletter-text {
-    font-size: 0.8rem;
-    color: #8890a5; /* طوسی ملایم */
-    margin-bottom: 18px;
-    line-height: 1.6;
-  }
-
-  .newsletter-form-group {
-    display: flex;
-    gap: 8px;
-    position: relative;
-  }
-
-  .newsletter-input {
-    flex: 1;
-    padding: 10px 14px;
-    border-radius: 10px;
-    border: 1px solid rgba(255,255,255,0.1);
-    background: rgba(0, 0, 0, 0.25); /* تیره */
-    color: #fff;
-    font-family: 'Vazirmatn', sans-serif;
-    font-size: 0.85rem;
-    outline: none;
-    transition: all 0.3s;
-  }
-
-  .newsletter-input:focus {
-    border-color: #0b5fff;
-    background: rgba(0, 0, 0, 0.4);
-  }
-  
-  .newsletter-input::placeholder {
-    color: #556075;
-    font-size: 0.8rem;
-  }
-
-  .newsletter-btn {
-    background: #0b5fff; /* آبی برند */
-    color: white;
-    border: none;
-    padding: 0 20px;
-    border-radius: 10px;
-    font-family: 'Vazirmatn', sans-serif;
-    font-weight: 600;
-    font-size: 0.85rem;
-    cursor: pointer;
-    transition: all 0.3s;
-    white-space: nowrap;
-  }
-
-  .newsletter-btn:hover {
-    background: #004ad4;
-    box-shadow: 0 0 10px rgba(11, 95, 255, 0.4);
-  }
-
-  .success-message {
-    display: none;
-    background: rgba(16, 185, 129, 0.15);
-    color: #34d399;
-    border: 1px solid rgba(16, 185, 129, 0.2);
-    border-radius: 10px;
-    padding: 12px;
-    margin-top: 10px;
-    font-size: 0.85rem;
-  }
-
-  .ml-form-embedSubmitLoad { display: none; }
-
-  @media (max-width: 480px) {
-    .newsletter-form-group {
-      flex-direction: column;
-    }
-    .newsletter-btn {
-      padding: 10px;
-      width: 100%;
-    }
-  }
-</style>
-
-<div id="mlb2-33724259" class="newsletter-wrapper ml-subscribe-form ml-subscribe-form-33724259">
-  <div class="newsletter-box">
-    
-    <div class="row-form">
-        <div class="newsletter-title">📬 خبرنامه‌ی دنت‌کست</div>
-        <div class="newsletter-text">
-          اطلاع‌رسانی اپیزودها و مطالب جدید (بدون اسپم)
-        </div>
-
-        <form class="ml-block-form" action="https://assets.mailerlite.com/jsonp/1939653/forms/171891141676893488/subscribe" data-code="" method="post" target="_blank">
-          
-          <div class="newsletter-form-group">
-            <input aria-label="email" aria-required="true" type="email" class="newsletter-input" data-inputmask="" name="fields[email]" placeholder="ایمیل شما..." autocomplete="email" required>
-            
-            <button type="submit" class="newsletter-btn">
-               عضویت
-               <span class="ml-form-embedSubmitLoad">...</span>
-            </button>
-          </div>
-
-          <input type="hidden" name="ml-submit" value="1">
-          <input type="hidden" name="anticsrf" value="true">
-        </form>
-    </div>
-
-    <div class="row-success success-message">
-        ✅ ایمیل شما با موفقیت ثبت شد.
-    </div>
-
   </div>
+</main>
+
 </div>
 
-<script>
-    function ml_webform_success_33724259() {
-      var formRow = document.querySelector('.ml-subscribe-form-33724259 .row-form');
-      var successRow = document.querySelector('.ml-subscribe-form-33724259 .row-success');
-      if(formRow) formRow.style.display = 'none';
-      if(successRow) successRow.style.display = 'block';
-    }
-</script>
-<script src="https://groot.mailerlite.com/js/w/webforms.min.js?v176e10baa5e7ed80d35ae235be3d5024" type="text/javascript"></script>
-  
-  <footer>
-    <div>
-      <a href="https://dentcast.ir/index.html" class="btn-home">
-        🏠 برگشت به صفحه‌ی اصلی
-      </a>
-    </div>
-
-    <div>
-      <a href="https://dentcast.ir/about.html" class="btn-about">
-        💬 درباره‌ی دکتر فواد شهابیان و دنت‌کست
-      </a>
-    </div>
-
-    <div style="margin-top:10px; opacity:0.6; font-size:0.8rem;">
-      © 2025 DentCast — طراحی و توسعه توسط
-      <strong style="color:#ffd46a;">فواد شهابیان</strong>
-    </div>
-  </footer>
-<!-- 🧠 موتور سرچ -->
 <script src="/global-search.js?v=5"></script>
-
-<!-- 🎛️ کنترل باز/بسته -->
 <script src="/global-search-ui.js?v=1"></script>
-
-<!-- 📱 شیک گوشی -->
 <script src="/shake-search.js?v=1"></script>
+
 </body>
 </html>
