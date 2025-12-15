@@ -9,7 +9,9 @@
 
   <link rel="icon" href="https://dentcast.ir/logo-v2.png" type="image/png" sizes="512x512">
   <link rel="apple-touch-icon" href="https://dentcast.ir/logo-v2.png">
-<link rel="stylesheet" href="/global-search.css?v=1">
+
+  <link rel="stylesheet" href="/global-search.css?v=1">
+
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -52,12 +54,12 @@
   ]
 }
   </script>
-  
+
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" as="style">
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
 
   <style>
-        :root {
+    :root {
       --blue:#0b5fff;
       --bg:#f6f8fc;
       --bg2:#ffffff;
@@ -124,30 +126,29 @@
     ul { list-style:none; padding:0; margin-top:20px; }
     li { margin-bottom:12px; }
 
- a {
-  display: flex;
-  align-items: center;
-  background: #ffffff;
-  border: 1px solid rgba(11,95,255,0.18);
-  border-radius: 14px;
-  padding: 16px 18px;
-  text-decoration: none;
-  color: #2458d3;            /* رنگ لینک → آبی برند، پرانرژی */
-  font-weight: 700;          /* ضخیم‌تر مثل دکمه‌های دنت‌کست */
-  transition: all .25s ease;
-  line-height: 1.7;
-  box-shadow: 0 4px 14px rgba(11,95,255,0.06);
-}
+    a {
+      display: flex;
+      align-items: center;
+      background: #ffffff;
+      border: 1px solid rgba(11,95,255,0.18);
+      border-radius: 14px;
+      padding: 16px 18px;
+      text-decoration: none;
+      color: #2458d3;
+      font-weight: 700;
+      transition: all .25s ease;
+      line-height: 1.7;
+      box-shadow: 0 4px 14px rgba(11,95,255,0.06);
+    }
 
-a:hover {
-  background: #eef3ff;
-  border-color: rgba(11,95,255,0.35);
-  color: #004ad4;
-  transform: translateX(-4px);
-  box-shadow: 0 6px 20px rgba(11,95,255,0.12);
-}
+    a:hover {
+      background: #eef3ff;
+      border-color: rgba(11,95,255,0.35);
+      color: #004ad4;
+      transform: translateX(-4px);
+      box-shadow: 0 6px 20px rgba(11,95,255,0.12);
+    }
 
-    /* ========== دکمهٔ صحیح و کاملاً دیده‌شونده (CTA) ========== */
     .btn-home {
       display:inline-block;
       background:#0b5fff !important;
@@ -195,240 +196,238 @@ a:hover {
       color:var(--muted);
       font-size:.9rem;
       padding-bottom:20px;
+    }
 
     @media (max-width:768px){
-      main{padding:30px 16px 60px;}
       h1{font-size:1.6rem;}
       h2{font-size:0.95rem; margin-bottom:20px;}
       .intro{padding:18px 20px;}
-      li{padding:14px 18px;}
+      .wrap{padding:0 14px;}
     }
   </style>
 </head>
 
 <body>
-  <main>
-    <h1>🩺 Clinical Insight – بینش‌های بالینی</h1>
-    <div class="dc-global-filter-box" id="dcGlobalBox">
 
-  <button class="dc-close-results">✖</button>
+  <div class="wrap">
 
-  <h3 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h3>
+    <header>
+      <h1>🩺 Clinical Insight – بینش‌های بالینی</h1>
+    </header>
 
-  <input
-    id="dcSearch"
-    class="dc-search-input"
-    placeholder="جستجو در همهٔ بخش‌های دنت‌کست…"
-  >
+    <div class="card">
 
-  <div class="dc-filter-list">
-    <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
-    <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
-    <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
-    <button class="dc-filter-btn active" data-type="litecast">لایت‌کست</button>
-    <button class="dc-filter-btn active" data-type="photocast">فوتوکست</button>
-    <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
-    <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
+      <div class="dc-global-filter-box" id="dcGlobalBox">
+
+        <button class="dc-close-results">✖</button>
+
+        <h3 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h3>
+
+        <input
+          id="dcSearch"
+          class="dc-search-input"
+          placeholder="جستجو در همهٔ بخش‌های دنت‌کست…"
+        >
+
+        <div class="dc-filter-list">
+          <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
+          <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
+          <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
+          <button class="dc-filter-btn active" data-type="litecast">لایت‌کست</button>
+          <button class="dc-filter-btn active" data-type="photocast">فوتوکست</button>
+          <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
+          <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
+        </div>
+
+        <div class="dc-results-box" id="dcResults"></div>
+
+      </div>
+
+      <h2>نکات تحلیلی و تصمیم‌گیری کلینیکی</h2>
+
+      <div class="intro">
+        در این سری نکات کوتاه و تحلیلی از تجربه‌های بالینی و یافته‌های علمی را مرور می‌کنیم؛
+        هدف، افزایش دقت در تصمیم‌گیری‌های درمانی و بینش عمیق‌تر در دندان‌پزشکی روزمره است.
+      </div>
+
+      <ul>
+        <li><a href="insight-17.html">اعداد و اندازه‌هایی که بهتر است حفظ کنیم</a></li>
+        <li><a href="insight-16.html">مراقبت بیولوژیک در ایمپلنت‌های اسپلینت‌شده؛ تست عبور سوند</a></li>
+        <li><a href="insight-15.html">گیر کردن پست‌وکور بعد از ساخت؛ یک ترفند ساده برای خارج‌سازی بدون تنش</a></li>
+        <li><a href="insight-14.html">ارزیابی واقعی دندان فقط بعد از برداشتن روکش — احتیاط در اسپلینت‌ها</a></li>
+        <li><a href="insight-13.html">طرح درمان باید آینده را هم ببیند — تصمیم‌گیری بر اساس پیش‌بینی شکست</a></li>
+        <li><a href="insight-12.html">بازگرداندن ارتفاع عمودی صحیح در بیماری با از دست‌دادن ساپورت خلفی</a></li>
+        <li><a href="insight-11.html">درد مبهم و مرزهای مسئولیت در درمان (پروتز و اندو)</a></li>
+        <li><a href="insight-10.html">مدیریت فضا در ایمپلنت سانترال در بیمار Deep Bite</a></li>
+        <li><a href="insight-9.html">آبسه‌ی ایمپلنت در ناحیه‌ی زیبایی — مقصر پنهان: سمان باقیمانده</a></li>
+        <li><a href="insight-8.html">اگر کار می‌کنه، بذار کار کنه — تداخل اکلوژنی در بیمار بی‌علامت</a></li>
+        <li><a href="insight-7.html">چرا این دندان امکان بازسازی دائمی ندارد؟ — تحلیل و انتخاب ایمپلنت</a></li>
+        <li><a href="insight-6.html">تهیهٔ فضا در بیمار فاقد استاپ خلفی — تحلیل تا تصمیم‌گیری</a></li>
+        <li><a href="insight-5.html">چالش تغییر رنگ روکش‌های سرامیکی پس از سمان دائم</a></li>
+        <li><a href="insight-4.html">فرول بیومیمتیک؛ وقتی دیواره نازک حذف نمی‌شود</a></li>
+        <li><a href="insight-3.html">نظم در بستن مجدد هیلینگ‌ها: تفاوت کوچک، راحتی بزرگ</a></li>
+        <li><a href="insight-2.html">کراس‌مانت (Cross-Mounting) در پروتزهای وسیع: چرا باید موقتی‌ها را جدی بگیریم؟</a></li>
+        <li><a href="insight-1.html">ضخامت کاغذ آرتیکولاسیون مهم‌تر از چیزیه که فکر می‌کنی</a></li>
+      </ul>
+
+    </div>
   </div>
 
-  <div class="dc-results-box" id="dcResults"></div>
+  <style>
+    .newsletter-wrapper {
+      max-width: 600px;
+      margin: 40px auto 40px;
+      padding: 0 15px;
+      font-family: 'Vazirmatn', sans-serif;
+      box-sizing: border-box;
+    }
 
-    </div>
-    <h2>نکات تحلیلی و تصمیم‌گیری کلینیکی</h2>
+    .newsletter-box {
+      background: rgba(255, 255, 255, 0.6);
+      border: 1px solid rgba(11, 95, 255, 0.25);
+      border-radius: 18px;
+      padding: 24px 28px;
+      text-align: center;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 10px 40px rgba(11, 95, 255, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
 
-    <div class="intro">
-      در این سری نکات کوتاه و تحلیلی از تجربه‌های بالینی و یافته‌های علمی را مرور می‌کنیم؛
-      هدف، افزایش دقت در تصمیم‌گیری‌های درمانی و بینش عمیق‌تر در دندان‌پزشکی روزمره است.
-    </div>
+    .newsletter-box::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #0b5fff, transparent);
+      opacity: 0.6;
+    }
 
-    <ul>
-      <li><a href="insight-17.html">اعداد و اندازه‌هایی که بهتر است حفظ کنیم</a></li>
-      <li><a href="insight-16.html">مراقبت بیولوژیک در ایمپلنت‌های اسپلینت‌شده؛ تست عبور سوند</a></li>
-      
-      <li><a href="insight-15.html">گیر کردن پست‌وکور بعد از ساخت؛ یک ترفند ساده برای خارج‌سازی بدون تنش</a></li>
-      
-      <li><a href="insight-14.html">ارزیابی واقعی دندان فقط بعد از برداشتن روکش — احتیاط در اسپلینت‌ها</a></li>
-      
-      <li><a href="insight-13.html">طرح درمان باید آینده را هم ببیند — تصمیم‌گیری بر اساس پیش‌بینی شکست</a></li>
-      
-      <li><a href="insight-12.html">بازگرداندن ارتفاع عمودی صحیح در بیماری با از دست‌دادن ساپورت خلفی</a></li>
-      
-     <li><a href="insight-11.html">درد مبهم و مرزهای مسئولیت در درمان (پروتز و اندو)</a></li>
-      
-      <li><a href="insight-10.html">مدیریت فضا در ایمپلنت سانترال در بیمار Deep Bite</a></li>
-      
-      <li><a href="insight-9.html">آبسه‌ی ایمپلنت در ناحیه‌ی زیبایی — مقصر پنهان: سمان باقیمانده</a></li>
-      <li><a href="insight-8.html">اگر کار می‌کنه، بذار کار کنه — تداخل اکلوژنی در بیمار بی‌علامت</a></li>
-     <li><a href="insight-7.html">چرا این دندان امکان بازسازی دائمی ندارد؟ — تحلیل و انتخاب ایمپلنت</a></li>
-      <li><a href="insight-6.html">تهیهٔ فضا در بیمار فاقد استاپ خلفی — تحلیل تا تصمیم‌گیری</a></li>
-      <li><a href="insight-5.html">چالش تغییر رنگ روکش‌های سرامیکی پس از سمان دائم</a></li>
-      <li><a href="insight-4.html">فرول بیومیمتیک؛ وقتی دیواره نازک حذف نمی‌شود</a></li>
-      <li><a href="insight-3.html">نظم در بستن مجدد هیلینگ‌ها: تفاوت کوچک، راحتی بزرگ</a></li>
-      <li><a href="insight-2.html">کراس‌مانت (Cross-Mounting) در پروتزهای وسیع: چرا باید موقتی‌ها را جدی بگیریم؟</a></li>
-      <li><a href="insight-1.html">ضخامت کاغذ آرتیکولاسیون مهم‌تر از چیزیه که فکر می‌کنی</a></li>
-    </ul>
-  </main>
-<style>
-  .newsletter-wrapper {
-    max-width: 600px;
-    margin: 40px auto 40px;
-    padding: 0 15px;
-    font-family: 'Vazirmatn', sans-serif;
-    box-sizing: border-box;
-  }
+    .newsletter-title {
+      font-size: 1rem;
+      font-weight: 800;
+      color: #0b5fff;
+      margin-bottom: 8px;
+    }
 
-  .newsletter-box {
-    /* شیشه روشن و تمیز */
-    background: rgba(255, 255, 255, 0.6); 
-    border: 1px solid rgba(11, 95, 255, 0.25); /* حاشیه آبی کمرنگ */
-    border-radius: 18px;
-    padding: 24px 28px;
-    text-align: center;
-    backdrop-filter: blur(12px);
-    box-shadow: 0 10px 40px rgba(11, 95, 255, 0.1);
-    position: relative;
-    overflow: hidden;
-  }
+    .newsletter-text {
+      font-size: 0.85rem;
+      color: #555;
+      margin-bottom: 20px;
+      line-height: 1.7;
+    }
 
-  .newsletter-box::before {
-    content: "";
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, transparent, #0b5fff, transparent);
-    opacity: 0.6;
-  }
-
-  .newsletter-title {
-    font-size: 1rem;
-    font-weight: 800;
-    color: #0b5fff; /* آبی تیره برند */
-    margin-bottom: 8px;
-  }
-
-  .newsletter-text {
-    font-size: 0.85rem;
-    color: #555; /* طوسی تیره */
-    margin-bottom: 20px;
-    line-height: 1.7;
-  }
-
-  .newsletter-form-group {
-    display: flex;
-    gap: 10px;
-    position: relative;
-  }
-
-  .newsletter-input {
-    flex: 1;
-    padding: 10px 14px;
-    border-radius: 12px;
-    border: 1px solid #dae1e7;
-    background: #fff; /* سفید */
-    color: #333;
-    font-family: 'Vazirmatn', sans-serif;
-    font-size: 0.9rem;
-    outline: none;
-    transition: all 0.3s;
-  }
-
-  .newsletter-input:focus {
-    border-color: #0b5fff;
-    box-shadow: 0 0 0 4px rgba(11,95,255,0.1);
-  }
-  
-  .newsletter-input::placeholder {
-    color: #999;
-    font-size: 0.85rem;
-  }
-
-  .newsletter-btn {
-    background: #0b5fff;
-    color: white;
-    border: none;
-    padding: 0 24px;
-    border-radius: 12px;
-    font-family: 'Vazirmatn', sans-serif;
-    font-weight: 700;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: all 0.3s;
-    white-space: nowrap;
-    box-shadow: 0 4px 12px rgba(11,95,255,0.25);
-  }
-
-  .newsletter-btn:hover {
-    background: #004ad4;
-    transform: translateY(-2px);
-  }
-
-  .success-message {
-    display: none;
-    background: rgba(16, 185, 129, 0.1);
-    color: #047857;
-    border: 1px solid rgba(16, 185, 129, 0.3);
-    border-radius: 12px;
-    padding: 15px;
-    margin-top: 15px;
-    font-weight: 600;
-    font-size: 0.9rem;
-  }
-
-  .ml-form-embedSubmitLoad { display: none; }
-
-  @media (max-width: 480px) {
     .newsletter-form-group {
-      flex-direction: column;
+      display: flex;
+      gap: 10px;
+      position: relative;
     }
-    .newsletter-btn {
-      padding: 12px;
-      width: 100%;
-    }
-  }
-</style>
 
-<div id="mlb2-33724259" class="newsletter-wrapper ml-subscribe-form ml-subscribe-form-33724259">
-  <div class="newsletter-box">
-    
-    <div class="row-form">
+    .newsletter-input {
+      flex: 1;
+      padding: 10px 14px;
+      border-radius: 12px;
+      border: 1px solid #dae1e7;
+      background: #fff;
+      color: #333;
+      font-family: 'Vazirmatn', sans-serif;
+      font-size: 0.9rem;
+      outline: none;
+      transition: all 0.3s;
+    }
+
+    .newsletter-input:focus {
+      border-color: #0b5fff;
+      box-shadow: 0 0 0 4px rgba(11,95,255,0.1);
+    }
+
+    .newsletter-input::placeholder {
+      color: #999;
+      font-size: 0.85rem;
+    }
+
+    .newsletter-btn {
+      background: #0b5fff;
+      color: white;
+      border: none;
+      padding: 0 24px;
+      border-radius: 12px;
+      font-family: 'Vazirmatn', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      white-space: nowrap;
+      box-shadow: 0 4px 12px rgba(11,95,255,0.25);
+    }
+
+    .newsletter-btn:hover {
+      background: #004ad4;
+      transform: translateY(-2px);
+    }
+
+    .success-message {
+      display: none;
+      background: rgba(16, 185, 129, 0.1);
+      color: #047857;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: 12px;
+      padding: 15px;
+      margin-top: 15px;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .ml-form-embedSubmitLoad { display: none; }
+
+    @media (max-width: 480px) {
+      .newsletter-form-group { flex-direction: column; }
+      .newsletter-btn { padding: 12px; width: 100%; }
+    }
+  </style>
+
+  <div id="mlb2-33724259" class="newsletter-wrapper ml-subscribe-form ml-subscribe-form-33724259">
+    <div class="newsletter-box">
+
+      <div class="row-form">
         <div class="newsletter-title">📬 خبرنامه‌ی دنت‌کست</div>
         <div class="newsletter-text">
           برای اطلاع از تحلیل‌های جدید کلینیکی و مطالب آموزشی، ایمیل‌تان را ثبت کنید.
         </div>
 
         <form class="ml-block-form" action="https://assets.mailerlite.com/jsonp/1939653/forms/171891141676893488/subscribe" data-code="" method="post" target="_blank">
-          
+
           <div class="newsletter-form-group">
             <input aria-label="email" aria-required="true" type="email" class="newsletter-input" data-inputmask="" name="fields[email]" placeholder="ایمیل شما..." autocomplete="email" required>
-            
+
             <button type="submit" class="newsletter-btn">
-               عضویت
-               <span class="ml-form-embedSubmitLoad">...</span>
+              عضویت
+              <span class="ml-form-embedSubmitLoad">...</span>
             </button>
           </div>
 
           <input type="hidden" name="ml-submit" value="1">
           <input type="hidden" name="anticsrf" value="true">
         </form>
-    </div>
+      </div>
 
-    <div class="row-success success-message">
+      <div class="row-success success-message">
         ✅ ایمیل شما با موفقیت ثبت شد.
+      </div>
+
     </div>
-
   </div>
-</div>
 
-<script>
+  <script>
     function ml_webform_success_33724259() {
       var formRow = document.querySelector('.ml-subscribe-form-33724259 .row-form');
       var successRow = document.querySelector('.ml-subscribe-form-33724259 .row-success');
       if(formRow) formRow.style.display = 'none';
       if(successRow) successRow.style.display = 'block';
     }
-</script>
-<script src="https://groot.mailerlite.com/js/w/webforms.min.js?v176e10baa5e7ed80d35ae235be3d5024" type="text/javascript"></script>
-  
+  </script>
+  <script src="https://groot.mailerlite.com/js/w/webforms.min.js?v176e10baa5e7ed80d35ae235be3d5024" type="text/javascript"></script>
+
   <footer>
 
     <div>
@@ -449,13 +448,15 @@ a:hover {
     </div>
 
   </footer>
+
   <!-- 🧠 موتور سرچ -->
-<script src="/global-search.js?v=5"></script>
+  <script src="/global-search.js?v=5"></script>
 
-<!-- 🎛️ کنترل باز/بسته -->
-<script src="/global-search-ui.js?v=1"></script>
+  <!-- 🎛️ کنترل باز/بسته -->
+  <script src="/global-search-ui.js?v=1"></script>
 
-<!-- 📱 شیک گوشی -->
-<script src="/shake-search.js?v=1"></script>
+  <!-- 📱 شیک گوشی -->
+  <script src="/shake-search.js?v=1"></script>
+
 </body>
 </html>
