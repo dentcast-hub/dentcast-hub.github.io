@@ -10,7 +10,7 @@
 
   function openSearch() {
     globalBox.classList.add("open");
-    document.body.classList.add("search-open");
+    //document.body.classList.add("search-open");
     if (searchCard) {
       searchCard.classList.add("active-toggle");
     }
@@ -23,7 +23,7 @@
 
   function closeSearch() {
     globalBox.classList.remove("open");
-document.body.classList.remove("search-open");
+//document.body.classList.remove("search-open");
     if (searchCard) {
       searchCard.classList.remove("active-toggle");
     }
