@@ -141,3 +141,23 @@
   color: #075985;
   font-weight: 600;
 }
+/* ====== Blur پس‌زمینه بدون دستکاری HTML ====== */
+body.search-open > *:not(#dcGlobalBox) {
+  filter: blur(10px);
+  transition: filter 0.2s ease;
+}
+
+/* جلوگیری از blur روی خود سرچ */
+#dcGlobalBox {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+}
+
+/* قفل اسکرول وقتی سرچ بازه */
+body.search-open {
+  overflow: hidden;
+  height: 100vh;
+}
