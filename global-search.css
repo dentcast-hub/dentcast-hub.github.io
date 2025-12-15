@@ -19,6 +19,7 @@
   z-index: 9999; 
 
   max-height: 50vh;
+   max-height: 50dvh;
   overflow-y: auto;
   
   /* حالت بسته: از دید خارج می‌شود */
