@@ -287,6 +287,124 @@ footer{
           </li>
         </ul>
 </div>
+  <style>
+  .newsletter-wrapper {
+    max-width: 600px;
+    margin: 40px auto 40px;
+    padding: 0 15px;
+    font-family: 'Vazirmatn', sans-serif;
+    box-sizing: border-box;
+  }
+
+  .newsletter-box {
+    /* شیشه روشن و تمیز */
+    background: rgba(255, 255, 255, 0.6); 
+    border: 1px solid rgba(11, 95, 255, 0.25); /* حاشیه آبی کمرنگ */
+    border-radius: 18px;
+    padding: 24px 28px;
+    text-align: center;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 10px 40px rgba(11, 95, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .newsletter-box::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #0b5fff, transparent);
+    opacity: 0.6;
+  }
+
+  .newsletter-title {
+    font-size: 1rem;
+    font-weight: 800;
+    color: #0b5fff; /* آبی تیره برند */
+    margin-bottom: 8px;
+  }
+
+  .newsletter-text {
+    font-size: 0.85rem;
+    color: #555; /* طوسی تیره */
+    margin-bottom: 20px;
+    line-height: 1.7;
+  }
+
+  .newsletter-form-group {
+    display: flex;
+    gap: 10px;
+    position: relative;
+  }
+
+  .newsletter-input {
+    flex: 1;
+    padding: 10px 14px;
+    border-radius: 12px;
+    border: 1px solid #dae1e7;
+    background: #fff; /* سفید */
+    color: #333;
+    font-family: 'Vazirmatn', sans-serif;
+    font-size: 0.9rem;
+    outline: none;
+    transition: all 0.3s;
+  }
+
+  .newsletter-input:focus {
+    border-color: #0b5fff;
+    box-shadow: 0 0 0 4px rgba(11,95,255,0.1);
+  }
+  
+  .newsletter-input::placeholder {
+    color: #999;
+    font-size: 0.85rem;
+  }
+
+  .newsletter-btn {
+    background: #0b5fff;
+    color: white;
+    border: none;
+    padding: 0 24px;
+    border-radius: 12px;
+    font-family: 'Vazirmatn', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    white-space: nowrap;
+    box-shadow: 0 4px 12px rgba(11,95,255,0.25);
+  }
+
+  .newsletter-btn:hover {
+    background: #004ad4;
+    transform: translateY(-2px);
+  }
+
+  .success-message {
+    display: none;
+    background: rgba(16, 185, 129, 0.1);
+    color: #047857;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    border-radius: 12px;
+    padding: 15px;
+    margin-top: 15px;
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+
+  .ml-form-embedSubmitLoad { display: none; }
+
+  @media (max-width: 480px) {
+    .newsletter-form-group {
+      flex-direction: column;
+    }
+    .newsletter-btn {
+      padding: 12px;
+      width: 100%;
+    }
+  }
+  </style>
 <div id="mlb2-33724259" class="newsletter-wrapper ml-subscribe-form ml-subscribe-form-33724259">
   <div class="newsletter-box">
     
