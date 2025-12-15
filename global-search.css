@@ -18,7 +18,7 @@
   right: 0;
   z-index: 9999; 
 
-  max-height: 40vh;
+  max-height: 50vh;
   overflow-y: auto;
   
   /* حالت بسته: از دید خارج می‌شود */
@@ -96,7 +96,7 @@
   background: #f7f9ff;
   border: 1px solid #e2e6f3;
   display: none;
-  max-height: 15vh;
+  max-height: 25vh;
   overflow-y: auto;
   overscroll-behavior: contain;
 }
