@@ -61,7 +61,144 @@
    DentCast — LIGHT THEME
 ========================= */
 
+    :root {
+      --blue:#0b5fff;
+      --bg:#f6f8fc;
+      --bg2:#ffffff;
+      --text:#1c2133;
+      --muted:#6f7687;
+      --radius:14px;
+      --shadow:0 10px 30px rgba(15, 23, 42, 0.08);
+    }
 
+    body {
+      margin:0; padding:0;
+      font-family:'Vazirmatn', sans-serif;
+      background: linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+      color: var(--text);
+      display:flex;
+      flex-direction:column;
+      min-height:100vh;
+    }
+
+    .wrap {
+      max-width: 920px;
+      margin: 10px auto 40px;
+      padding: 0 20px;
+      flex:1;
+    }
+
+    header { text-align:center; margin:30px 0 20px; }
+
+    h1 {
+      font-size:2.1rem;
+      font-weight:800;
+      color:var(--blue);
+      margin:0;
+    }
+
+    .card {
+      background:#fff;
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:26px 20px 36px;
+      border:1px solid #e1e6f2;
+    }
+
+    .intro {
+      background:#f3f6ff;
+      border:1px solid #d8e1ff;
+      border-radius:12px;
+      padding:16px 20px;
+      margin-bottom:30px;
+      font-size:1rem;
+      line-height:1.9;
+      color:#27304a;
+    }
+
+    h2 {
+      font-size:1.3rem;
+      margin-top:30px;
+      border-bottom:2px solid #e6ebf7;
+      padding-bottom:10px;
+      margin-bottom:20px;
+      color:var(--text);
+    }
+
+    ul { list-style:none; padding:0; margin-top:20px; }
+    li { margin-bottom:12px; }
+
+ a {
+  display: flex;
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid rgba(11,95,255,0.18);
+  border-radius: 14px;
+  padding: 16px 18px;
+  text-decoration: none;
+  color: #2458d3;            /* رنگ لینک → آبی برند، پرانرژی */
+  font-weight: 700;          /* ضخیم‌تر مثل دکمه‌های دنت‌کست */
+  transition: all .25s ease;
+  line-height: 1.7;
+  box-shadow: 0 4px 14px rgba(11,95,255,0.06);
+}
+
+a:hover {
+  background: #eef3ff;
+  border-color: rgba(11,95,255,0.35);
+  color: #004ad4;
+  transform: translateX(-4px);
+  box-shadow: 0 6px 20px rgba(11,95,255,0.12);
+}
+
+    /* ========== دکمهٔ صحیح و کاملاً دیده‌شونده (CTA) ========== */
+    .btn-home {
+      display:inline-block;
+      background:#0b5fff !important;
+      color:#ffffff !important;
+      border:1.8px solid #0a4de0 !important;
+      border-radius:12px;
+      padding:12px 42px;
+      font-weight:700;
+      text-decoration:none;
+      font-size:1.05rem;
+      box-shadow:0 6px 18px rgba(11,95,255,0.25);
+      margin-bottom:22px;
+      transition:.25s;
+    }
+
+    .btn-home:hover {
+      background:#004ad4 !important;
+      box-shadow:0 10px 28px rgba(11,95,255,0.35);
+      transform:translateY(-2px);
+    }
+
+    .btn-about {
+      display:inline-block;
+      background:rgba(255,220,80,0.95);
+      color:#111;
+      border:1px solid rgba(255,220,80,0.55);
+      border-radius:8px;
+      padding:5px 12px;
+      font-size:.8rem;
+      font-weight:500;
+      text-decoration:none;
+      box-shadow:0 0 6px rgba(255,220,80,0.25);
+      transition:.25s;
+      margin-bottom:20px;
+    }
+
+    .btn-about:hover {
+      background:rgba(255,230,120,1);
+      transform:scale(1.02);
+    }
+
+    footer {
+      margin-top:60px;
+      text-align:center;
+      color:var(--muted);
+      font-size:.9rem;
+      padding-bottom:20px;
 
 @media(max-width:768px){
   h1{font-size:1.7rem}
