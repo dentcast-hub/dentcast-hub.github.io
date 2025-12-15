@@ -96,7 +96,7 @@
   background: #f7f9ff;
   border: 1px solid #e2e6f3;
   display: none;
-  max-height: 60vh;
+  max-height: 35vh;
   overflow-y: auto;
   overscroll-behavior: contain;
 }
