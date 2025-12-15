@@ -9,7 +9,7 @@
 
   <link rel="icon" href="https://dentcast.ir/logo-v2.png" type="image/png" sizes="512x512">
   <link rel="apple-touch-icon" href="https://dentcast.ir/logo-v2.png">
-
+<link rel="stylesheet" href="/global-search.css?v=1">
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -217,7 +217,31 @@
 <body>
   <main>
     <h1>🩺 Clinical Insight – بینش‌های بالینی</h1>
-    
+    <div class="dc-global-filter-box" id="dcGlobalBox">
+
+  <button class="dc-close-results">✖</button>
+
+  <h3 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h3>
+
+  <input
+    id="dcSearch"
+    class="dc-search-input"
+    placeholder="جستجو در همهٔ بخش‌های دنت‌کست…"
+  >
+
+  <div class="dc-filter-list">
+    <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
+    <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
+    <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
+    <button class="dc-filter-btn active" data-type="litecast">لایت‌کست</button>
+    <button class="dc-filter-btn active" data-type="photocast">فوتوکست</button>
+    <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
+    <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
+  </div>
+
+  <div class="dc-results-box" id="dcResults"></div>
+
+    </div>
     <h2>نکات تحلیلی و تصمیم‌گیری کلینیکی</h2>
 
     <div class="intro">
@@ -433,5 +457,13 @@
     </div>
 
   </footer>
+  <!-- 🧠 موتور سرچ -->
+<script src="/global-search.js?v=5"></script>
+
+<!-- 🎛️ کنترل باز/بسته -->
+<script src="/global-search-ui.js?v=1"></script>
+
+<!-- 📱 شیک گوشی -->
+<script src="/shake-search.js?v=1"></script>
 </body>
 </html>
