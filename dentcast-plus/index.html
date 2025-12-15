@@ -21,7 +21,15 @@
         "name": "دکتر فؤاد شهابیان",
         "jobTitle": "متخصص پروتزهای دندانی و ایمپلنت",
         "url": "https://dentcast.ir/about.html",
-        "image": "https://dentcast.ir/logo-v2.png"
+        "image": "https://dentcast.ir/logo-v2.png",
+        "sameAs": [
+          "https://t.me/dentcast",
+          "https://t.me/dent_AI",
+          "https://podcasts.apple.com/us/podcast/dentcast/id1502032364",
+          "https://castbox.fm/va/4889954",
+          "https://www.youtube.com/@Dentcast",
+          "https://www.instagram.com/dr.foad_shahabian/"
+        ]
       },
       {
         "@type": "WebSite",
@@ -42,152 +50,214 @@
   }
   </script>
 
-  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" as="style">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
 
   <style>
     :root{
-      --blue: #0b5fff;
-      --bg: #0a0d14;
-      --bg2: #101522;
-      --cardBg: rgba(30, 40, 60, 0.4);
-      --cardBorder: rgba(255, 255, 255, 0.08);
-      --text: #e7eaf1;
-      --muted: #9aa1b3;
-      --radius: 20px;
-      --shadow: 0 10px 30px rgba(0,0,0,0.4);
-      --hover-shadow: 0 15px 40px rgba(11, 95, 255, 0.25);
+      --blue:#0b5fff;
+      --bg:#0a0d14;
+      --bg2:#101522;
+      --cardBg:rgba(30,40,60,.4);
+      --cardBorder:rgba(255,255,255,.08);
+      --text:#e7eaf1;
+      --muted:#9aa1b3;
+      --radius:20px;
+      --shadow:0 10px 30px rgba(0,0,0,.4);
     }
 
-    html, body { height: 100%; margin: 0; }
-
-    body {
-      font-family: 'Vazirmatn', sans-serif;
-      background: radial-gradient(circle at 50% 0%, rgba(11,95,255,0.15), transparent 60%),
-                  linear-gradient(180deg, var(--bg), var(--bg2));
-      color: var(--text);
-      max-width: 1000px;
-      margin: 0 auto;
-      padding: 40px 24px 60px;
-      line-height: 1.8;
-      display: flex;
-      flex-direction: column;
+    html,body{
+      margin:0;
+      height:100%;
+      font-family:'Vazirmatn',sans-serif;
+      background:radial-gradient(circle at 50% 0%, rgba(11,95,255,.15), transparent 60%),
+                 linear-gradient(180deg,var(--bg),var(--bg2));
+      color:var(--text);
     }
 
-    body.search-open #page-content {
-      filter: blur(8px);
-      pointer-events: none;
-      user-select: none;
-      transition: filter .25s ease;
+    body{
+      display:flex;
+      justify-content:center;
     }
 
-    #page-content {
-      transition: filter .25s ease;
+    #page-content{
+      width:100%;
+      max-width:1000px;
+      padding:40px 24px 60px;
+      transition:filter .25s ease;
     }
 
-    main { flex: 1 0 auto; width: 100%; box-sizing: border-box; }
-    footer { flex-shrink: 0; }
-
-    h1 {
-      text-align: center;
-      color: var(--blue);
-      font-weight: 800;
-      font-size: 2.2rem;
-      margin-bottom: 8px;
-      text-shadow: 0 0 25px rgba(11, 95, 255, 0.4);
+    body.search-open #page-content{
+      filter:blur(8px);
+      pointer-events:none;
+      user-select:none;
     }
 
-    h2 {
-      text-align: center;
-      color: var(--muted);
-      font-weight: 500;
-      font-size: 1.1rem;
-      margin-top: 0;
-      margin-bottom: 50px;
-      opacity: 0.8;
+    h1{
+      text-align:center;
+      color:var(--blue);
+      font-weight:800;
+      font-size:2.2rem;
+      margin:10px 0;
     }
 
-    .video-grid {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 30px;
+    h2{
+      text-align:center;
+      color:var(--muted);
+      font-weight:500;
+      margin:0 0 40px;
     }
 
-    .video-card {
-      display: block;
-      border-radius: var(--radius);
-      overflow: hidden;
-      background: var(--cardBg);
-      border: 1px solid var(--cardBorder);
-      backdrop-filter: blur(12px);
-      box-shadow: var(--shadow);
-      transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-      text-decoration: none;
-      color: var(--text);
-      position: relative;
+    .video-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+      gap:30px;
+      margin-top:40px;
     }
 
-    .video-card:hover {
-      transform: translateY(-8px);
-      box-shadow: var(--hover-shadow);
-      border-color: rgba(11, 95, 255, 0.4);
+    .video-card{
+      background:var(--cardBg);
+      border:1px solid var(--cardBorder);
+      border-radius:var(--radius);
+      overflow:hidden;
+      text-decoration:none;
+      color:var(--text);
+      box-shadow:var(--shadow);
+      transition:.3s;
     }
 
-    .thumb {
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      background: linear-gradient(135deg, #1a2a4a 0%, #0b1526 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      overflow: hidden;
+    .video-card:hover{
+      transform:translateY(-6px);
+      border-color:rgba(11,95,255,.4);
     }
 
-    .play-icon {
-      width: 50px;
-      height: 50px;
-      background: rgba(11, 95, 255, 0.9);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: absolute;
+    .thumb{
+      aspect-ratio:16/9;
+      background:linear-gradient(135deg,#1a2a4a,#0b1526);
+      display:flex;
+      align-items:center;
+      justify-content:center;
     }
 
-    .play-icon::before {
-      content: '';
-      width: 0;
-      height: 0;
-      border-top: 8px solid transparent;
-      border-bottom: 8px solid transparent;
-      border-left: 14px solid #fff;
-      margin-left: 4px;
+    .play-icon{
+      width:50px;
+      height:50px;
+      border-radius:50%;
+      background:#0b5fff;
+      position:relative;
     }
 
-    .video-info {
-      padding: 20px 24px;
+    .play-icon::before{
+      content:"";
+      position:absolute;
+      left:20px;
+      top:17px;
+      width:0;
+      height:0;
+      border-top:8px solid transparent;
+      border-bottom:8px solid transparent;
+      border-left:14px solid #fff;
     }
 
-    .video-title {
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: #fff;
-      margin-bottom: 8px;
-      line-height: 1.6;
+    .video-info{
+      padding:20px 24px;
     }
 
-    .video-meta {
-      font-size: 0.85rem;
-      color: var(--muted);
+    .video-title{
+      font-weight:700;
+      margin-bottom:6px;
+    }
+
+    .video-meta{
+      font-size:.85rem;
+      color:var(--muted);
+    }
+
+    .newsletter-wrapper{
+      max-width:600px;
+      margin:60px auto;
+      padding:0 15px;
+    }
+
+    .newsletter-box{
+      background:rgba(20,30,50,.6);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:16px;
+      padding:24px;
+      text-align:center;
+      backdrop-filter:blur(12px);
+    }
+
+    .newsletter-title{
+      font-weight:700;
+      color:#bcd3ff;
+      margin-bottom:6px;
+    }
+
+    .newsletter-text{
+      font-size:.85rem;
+      color:#8890a5;
+      margin-bottom:18px;
+    }
+
+    .newsletter-form-group{
+      display:flex;
+      gap:8px;
+    }
+
+    .newsletter-input{
+      flex:1;
+      padding:10px 14px;
+      border-radius:10px;
+      border:1px solid rgba(255,255,255,.1);
+      background:rgba(0,0,0,.25);
+      color:#fff;
+    }
+
+    .newsletter-btn{
+      background:#0b5fff;
+      border:none;
+      border-radius:10px;
+      padding:0 20px;
+      color:#fff;
+      font-weight:600;
+      cursor:pointer;
+    }
+
+    footer{
+      text-align:center;
+      color:var(--muted);
+      margin-top:60px;
+      font-size:.85rem;
+    }
+
+    .btn-home,.btn-about{
+      display:inline-block;
+      margin:10px;
+      text-decoration:none;
+      font-weight:600;
+    }
+
+    .btn-home{
+      color:#3a84ff;
+    }
+
+    .btn-about{
+      color:#111;
+      background:#ffdb4d;
+      padding:6px 14px;
+      border-radius:8px;
     }
   </style>
 </head>
 
 <body>
+
+<div id="page-content">
+
+<h2>🎬 DentCast+</h2>
+<h1>آموزش‌های ویدیویی کوتاه و تخصصی دندانپزشکی</h1>
 
 <div class="dc-global-filter-box" id="dcGlobalBox">
   <button class="dc-close-results">✖</button>
@@ -205,30 +275,48 @@
   <div class="dc-results-box" id="dcResults"></div>
 </div>
 
-<div id="page-content">
+<div class="video-grid">
+  <a href="video-2.html" class="video-card">
+    <div class="thumb"><div class="play-icon"></div></div>
+    <div class="video-info">
+      <div class="video-title">آخرین مرحله قبل از خداحافظی با بیمار</div>
+      <div class="video-meta">دکتر فواد شهابیان • پروتکل چک فرمیتوس</div>
+    </div>
+  </a>
 
-<main>
-  <h2>🎬 DentCast+</h2>
-  <h1>آموزش‌های ویدیویی کوتاه و تخصصی دندانپزشکی</h1>
+  <a href="video-1.html" class="video-card">
+    <div class="thumb"><div class="play-icon"></div></div>
+    <div class="video-info">
+      <div class="video-title">نکات شخصی که کیفیت تراش را واقعاً بهتر می‌کنند</div>
+      <div class="video-meta">دکتر فواد شهابیان • ۳ دقیقه</div>
+    </div>
+  </a>
+</div>
 
-  <div class="video-grid">
-    <a href="video-2.html" class="video-card">
-      <div class="thumb"><div class="play-icon"></div></div>
-      <div class="video-info">
-        <div class="video-title">آخرین مرحله قبل از خداحافظی با بیمار</div>
-        <div class="video-meta">دکتر فواد شهابیان • پروتکل چک فرمیتوس</div>
+<div class="newsletter-wrapper">
+  <div class="newsletter-box">
+    <div class="newsletter-title">📬 خبرنامه‌ی دنت‌کست</div>
+    <div class="newsletter-text">اطلاع‌رسانی اپیزودها و مطالب جدید (بدون اسپم)</div>
+    <form class="ml-block-form" action="https://assets.mailerlite.com/jsonp/1939653/forms/171891141676893488/subscribe" method="post" target="_blank">
+      <div class="newsletter-form-group">
+        <input type="email" class="newsletter-input" name="fields[email]" placeholder="ایمیل شما..." required>
+        <button type="submit" class="newsletter-btn">عضویت</button>
       </div>
-    </a>
-
-    <a href="video-1.html" class="video-card">
-      <div class="thumb"><div class="play-icon"></div></div>
-      <div class="video-info">
-        <div class="video-title">نکات شخصی که کیفیت تراش را واقعاً بهتر می‌کنند</div>
-        <div class="video-meta">دکتر فواد شهابیان • ۳ دقیقه</div>
-      </div>
-    </a>
+      <input type="hidden" name="ml-submit" value="1">
+      <input type="hidden" name="anticsrf" value="true">
+    </form>
   </div>
-</main>
+</div>
+
+<footer>
+  <div>
+    <a href="https://dentcast.ir/index.html" class="btn-home">🏠 برگشت به صفحه‌ی اصلی</a>
+  </div>
+  <div>
+    <a href="https://dentcast.ir/about.html" class="btn-about">💬 درباره‌ی دکتر فواد شهابیان و دنت‌کست</a>
+  </div>
+  <div>© 2025 DentCast — طراحی و توسعه توسط <strong style="color:#ffd46a;">فواد شهابیان</strong></div>
+</footer>
 
 </div>
 
