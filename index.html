@@ -1237,6 +1237,8 @@ linkCard("btn-notecast",    "https://dentcast.ir/notecast/",    "btn-notecast");
 linkCard("btn-clinical",    "https://dentcast.ir/insight/",     "btn-clinical");  
 linkCard("btn-dentai",      "https://dentcast.ir/dentai/",      "btn-dentai");  
 linkCard("btn-plus",        "https://dentcast.ir/dentcast-plus/","btn-plus");  
+// ✨ خط جدید و درست برای متانوت
+linkCard("btn-metanote",    "metanotes/index.html",             "btn-metanote"); 
   
 /* تب بیماران (لینک‌های اصلی شما) */  
 linkCard("card-litecast",        "https://dentcast.ir/litecast/");  
@@ -1285,10 +1287,5 @@ if ('serviceWorker' in navigator) {
     .catch(err => console.error('SW registration failed:', err));  
 }  
 </script> 
-<script>
-  document.getElementById("btn-metanote")?.addEventListener("click", function () {
-    window.location.href = "metanotes/index.html";
-  });
-</script>
 </body>  
 </html>  
