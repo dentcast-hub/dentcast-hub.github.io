@@ -3153,8 +3153,34 @@
     "implant risk management"
   ],
   "page_url": "https://dentcast.ir/metanotes/meta-5"
+},
+{
+  "type": "clinical",
+  "id": "clinical-18",
+  "title": "فینیش‌لاین عمودی؛ Finish Zone Concept وقتی «خط» وجود ندارد",
+  "caption": "در برخی شرایط ترمیمی، به‌ویژه در حضور ترمیم‌های ساب‌جینجیوال یا آمالگام‌های قدیمی، تعریف فینیش‌لاین کلاسیک ممکن نیست. Finish Zone Concept با الهام از منطق BOPT، به‌جای یک خط ثابت، محدوده‌ای قابل تفسیر در اختیار لابراتوار قرار می‌دهد تا بدون بیش‌تراشی یا violation بیولوژیک، transition نهایی به‌صورت منطقی تعیین شود.",
+  "hashtags": [
+    "کلینیکال",
+    "فینیش_لاین",
+    "Finish_Zone",
+    "BOPT",
+    "تراش_عمودی",
+    "knife_edge",
+    "پروتز_ثابت"
+  ],
+  "keywords": [
+    "finish zone concept",
+    "vertical finish line",
+    "BOPT logic",
+    "knife edge preparation",
+    "subgingival restoration",
+    "prosthodontic margins",
+    "adaptive preparation"
+  ],
+  "page_url": "https://dentcast.ir/insight/insight-18"
 }
 ]
+
 
 
 
