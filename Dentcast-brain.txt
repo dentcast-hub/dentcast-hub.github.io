@@ -3178,8 +3178,33 @@
     "adaptive preparation"
   ],
   "page_url": "https://dentcast.ir/insight/insight-18"
+},
+{
+  "type": "meta",
+  "id": "meta-06",
+  "title": "Meta Decision Method — چطور تصمیم بگیریم؟",
+  "caption": "معرفی Meta Decision Method؛ روشی برای تصمیم‌گیری بالینی میان حفظ دندان یا جایگزینی با ایمپلنت بر اساس ویژگی غالب شرایط، نه سردرگمی میان مقالات.",
+  "hashtags": [
+    "متانوت",
+    "تصمیم_درمانی",
+    "Meta_Decision",
+    "حفظ_دندان",
+    "ایمپلنت",
+    "تفکر_بالینی",
+    "مدل_تصمیم"
+  ],
+  "keywords": [
+    "meta decision method",
+    "clinical decision making dentistry",
+    "tooth versus implant decision",
+    "prosthodontic decision model",
+    "biologic vs biomechanical analysis",
+    "evidence based clinical reasoning"
+  ],
+  "page_url": "https://dentcast.ir/metanotes/meta-6"
 }
 ]
+
 
 
 
