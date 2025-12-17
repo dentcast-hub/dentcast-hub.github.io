@@ -3222,8 +3222,32 @@
     "prosthodontic workflow"
   ],
   "page_url": "https://dentcast.ir/insight/insight-19"
+},
+{
+  "type": "dentcast_plus",
+  "video": "3",
+  "title": "وقتی روکش راک دارد؛ ترتیب بررسی مهم است",
+  "caption": "راک‌داشتن روکش همیشه به تراش یا ساخت مربوط نیست؛ قبل از هر قضاوتی، بررسی کانتکت‌ها به‌عنوان اولین عامل خارجی ضروری است.",
+  "hashtags": [
+    "#دنتکست_پلاس",
+    "#راک_روکش",
+    "#کانتکت",
+    "#تحویل_روکش",
+    "#پروتز",
+    "#اکلوژن"
+  ],
+  "keywords": [
+    "راک روکش",
+    "crown rocking",
+    "proximal contact",
+    "crown seating",
+    "resistance form",
+    "occlusion"
+  ],
+  "page_url": "https://dentcast.ir/dentcast-plus/video-3"
 }
 ]
+
 
 
 
