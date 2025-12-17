@@ -3202,8 +3202,29 @@
     "evidence based clinical reasoning"
   ],
   "page_url": "https://dentcast.ir/metanotes/meta-6"
+},
+{
+  "type": "clinical",
+  "id": "clinical-19",
+  "title": "ارزیابی فضای بازسازی در درمان ارتودنسی–پروتزی",
+  "caption": "گاهی برای تصمیم‌گیری دقیق، دیدن نتیجه‌ی نهایی قبل از پایان درمان ضروری است.",
+  "hashtags": [
+    "کلینیکال",
+    "ارتودنسی",
+    "پروتز",
+    "درمان_ترکیبی",
+    "طرح_درمان"
+  ],
+  "keywords": [
+    "interdisciplinary treatment",
+    "orthodontic prosthetic planning",
+    "space evaluation",
+    "prosthodontic workflow"
+  ],
+  "page_url": "https://dentcast.ir/insight/insight-19"
 }
 ]
+
 
 
 
