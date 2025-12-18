@@ -144,31 +144,55 @@
   </style>
 
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "PodcastEpisode",
-    "url": "https://dentcast.ir/notecast/episode-10.html",
-    "name": "نوت‌کست دهم – سایلان‌ها و کاربرد در آماده‌سازی سطح سرامیک",
-    "description": "خلاصه‌ی نوشتاری دنت‌کست دهم؛ سایلان‌ها، فعال‌سازی، انواع و تکنیک‌های مهم کاربردی آن‌ها در باندینگ پرسلن.",
-    "partOfSeries": {
-      "@type": "PodcastSeries",
-      "name": "DentCast",
-      "url": "https://dentcast.ir"
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Dentist",
+      "@id": "https://dentcast.ir/#person",
+      "name": "دکتر فؤاد شهابیان",
+      "jobTitle": "متخصص پروتزهای دندانی و ایمپلنت",
+      "url": "https://dentcast.ir/about.html",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Ahvaz",
+        "addressRegion": "Khuzestan",
+        "addressCountry": "IR"
+      },
+      "sameAs": [
+        "https://t.me/dentcast",
+        "https://t.me/dent_AI",
+        "https://podcasts.apple.com/us/podcast/dentcast/id1502032364",
+        "https://www.instagram.com/dr.foad_shahabian/"
+      ]
     },
-    "author": {
-      "@type": "Person",
-      "name": "دکتر فواد شهابیان",
-      "jobTitle": "متخصص پروتزهای دندانی و ایمپلنت"
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "DentCast",
-      "url": "https://dentcast.ir"
-    },
-    "inLanguage": "fa",
-    "datePublished": "2025-11-08"
-  }
-  </script>
+    {
+      "@type": "PodcastEpisode",
+      "@id": "https://dentcast.ir/notecast/episode-10.html#episode",
+      "url": "https://dentcast.ir/notecast/episode-10.html",
+      "name": "نوت‌کست ۱۰ – سایلان‌ها و کاربرد در آماده‌سازی سطح سرامیک",
+      "headline": "پروتکل استفاده از سایلان در باندینگ پرسلن - دکتر فؤاد شهابیان",
+      "description": "خلاصه‌ی نوشتاری دنت‌کست دهم؛ بررسی انواع سایلان، روش‌های فعال‌سازی و تکنیک‌های کاربردی در باندینگ رستوریشن‌های سرامیکی توسط متخصص پروتز در اهواز.",
+      "inLanguage": "fa",
+      "datePublished": "2025-11-08", 
+      "duration": "PT15M",
+      "image": "https://dentcast.ir/favicon.png",
+      "author": { "@id": "https://dentcast.ir/#person" },
+      "partOfSeries": {
+        "@type": "PodcastSeries",
+        "name": "DentCast",
+        "url": "https://dentcast.ir/"
+      },
+      "associatedMedia": {
+        "@type": "AudioObject",
+        "contentUrl": "https://embed.acast.com/624b5545ecc0e600134ea0df/624b554b5af39e00127155e1", 
+        "duration": "PT15M"
+      }
+    }
+  ]
+}
+</script>
+
 
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
   <link rel="icon" type="image/png" sizes="192x192" href="/favicon.png">
