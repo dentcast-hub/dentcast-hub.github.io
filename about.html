@@ -151,30 +151,69 @@
   <link rel="icon" href="https://dentcast.ir/logo-v2.png" type="image/png" sizes="512x512">
   <link rel="apple-touch-icon" href="/logo-v2.png">
   
-  <script defer type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "AboutPage",
-    "name": "دربارهٔ دنت‌کست و دکتر فواد شهابیان مقدم",
-    "url": "https://dentcast.ir/about.html",
-    "inLanguage": "fa-IR",
-    "author": {
-      "@type": "Person",
-      "name": "دکتر فواد شهابیان مقدم",
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "AboutPage",
+      "@id": "https://dentcast.ir/about.html#webpage",
+      "url": "https://dentcast.ir/about.html",
+      "name": "درباره دکتر فؤاد شهابیان و دنت‌کست",
+      "description": "معرفی دکتر فؤاد شهابیان، متخصص پروتزهای دندانی و ایمپلنت در اهواز، بنیان‌گذار پادکست تخصصی دنت‌کست و مدرس مباحث نوین دندانپزشکی.",
+      "mainEntity": { "@id": "https://dentcast.ir/#person" }
+    },
+    {
+      "@type": "Dentist",
+      "@id": "https://dentcast.ir/#person",
+      "name": "دکتر فؤاد شهابیان",
+      "url": "https://dentcast.ir/about.html",
+      "image": "https://dentcast.ir/favicon.png",
       "jobTitle": "متخصص پروتزهای دندانی و ایمپلنت",
+      "medicalCode": "114707",
+      "telephone": "+986133380090",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "کیانپارس، خیابان ۶ غربی، مجتمع ایران نگین، ورودی اول، طبقه ۴، واحد ۱",
+        "addressLocality": "Ahvaz",
+        "addressRegion": "Khuzestan",
+        "postalCode": "6155836857",
+        "addressCountry": "IR"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 31.3449817,
+        "longitude": 48.6000736
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday"],
+          "opens": "13:30",
+          "closes": "20:00"
+        }
+      ],
       "alumniOf": [
-        "دانشگاه علوم پزشکی شهید بهشتی",
-        "دانشگاه علوم پزشکی مشهد"
-      ]
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "DentCast",
-      "url": "https://dentcast.ir/"
-    },
-    "description": "صفحهٔ معرفی دکتر فواد شهابیان مقدم، متخصص پروتزهای دندانی و ایمپلنت و بنیان‌گذار پادکست دنت‌کست."
-  }
-  </script>
+        {
+          "@type": "EducationalOrganization",
+          "name": "دانشگاه علوم پزشکی شهید بهشتی"
+        },
+        {
+          "@type": "EducationalOrganization",
+          "name": "دانشگاه علوم پزشکی مشهد"
+        }
+      ],
+      "sameAs": [
+        "https://www.instagram.com/dr.foad_shahabian/",
+        "https://t.me/dentcast",
+        "https://podcasts.apple.com/us/podcast/dentcast/id1502032364"
+      ],
+      "knowsAbout": ["Prosthodontics", "Dental Implants", "Digital Dentistry", "Dental Materials"]
+    }
+  ]
+}
+</script>
+
 
 </head>
 
