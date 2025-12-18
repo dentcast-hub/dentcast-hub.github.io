@@ -143,32 +143,56 @@
     }
   </style>
 
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "PodcastEpisode",
-    "url": "https://dentcast.ir/notecast/episode-6.html",
-    "name": "نوت‌کست ۶ – سیل کردن فوری دنتین (IDS)",
-    "description": "خلاصه‌ی نوشتاری دنت‌کست ششم؛ بررسی کامل تکنیک IDS یا Immediate Dentin Sealing بر اساس پروتکل پاسکال مانیه.",
-    "partOfSeries": {
-      "@type": "PodcastSeries",
-      "name": "DentCast",
-      "url": "https://dentcast.ir"
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Dentist",
+      "@id": "https://dentcast.ir/#person",
+      "name": "دکتر فؤاد شهابیان",
+      "jobTitle": "متخصص پروتزهای دندانی و ایمپلنت",
+      "url": "https://dentcast.ir/about.html",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Ahvaz",
+        "addressRegion": "Khuzestan",
+        "addressCountry": "IR"
+      },
+      "sameAs": [
+        "https://t.me/dentcast",
+        "https://t.me/dent_AI",
+        "https://podcasts.apple.com/us/podcast/dentcast/id1502032364",
+        "https://www.instagram.com/dr.foad_shahabian/"
+      ]
     },
-    "author": {
-      "@type": "Person",
-      "name": "دکتر فواد شهابیان",
-      "jobTitle": "متخصص پروتزهای دندانی و ایمپلنت"
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "DentCast",
-      "url": "https://dentcast.ir"
-    },
-    "inLanguage": "fa",
-    "datePublished": "2025-11-05"
-  }
-  </script>
+    {
+      "@type": "PodcastEpisode",
+      "@id": "https://dentcast.ir/notecast/episode-6.html#episode",
+      "url": "https://dentcast.ir/notecast/episode-6.html",
+      "name": "نوت‌کست ۶ – سیل کردن فوری دنتین (IDS) طبق پروتکل پاسکال مانیه",
+      "headline": "آموزش تکنیک IDS و پروتکل سیل کردن فوری عاج - دکتر فؤاد شهابیان",
+      "description": "خلاصه‌ی نوشتاری دنت‌کست ششم؛ بررسی کامل تکنیک IDS یا Immediate Dentin Sealing جهت افزایش قدرت باند و کاهش حساسیت دندان توسط متخصص پروتز در اهواز.",
+      "inLanguage": "fa",
+      "datePublished": "2025-11-05", 
+      "duration": "PT22M",
+      "image": "https://dentcast.ir/favicon.png",
+      "author": { "@id": "https://dentcast.ir/#person" },
+      "partOfSeries": {
+        "@type": "PodcastSeries",
+        "name": "DentCast",
+        "url": "https://dentcast.ir/"
+      },
+      "associatedMedia": {
+        "@type": "AudioObject",
+        "contentUrl": "https://embed.acast.com/624b5545ecc0e600134ea0df/624b554b5af39e00127155e5", 
+        "duration": "PT22M"
+      }
+    }
+  ]
+}
+</script>
+  
 
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
   <link rel="icon" type="image/png" sizes="192x192" href="/favico.png">
