@@ -18,12 +18,18 @@
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": "Person",
+        "@type": "Dentist",
         "@id": "https://dentcast.ir/#person",
         "name": "دکتر فؤاد شهابیان",
         "jobTitle": "متخصص پروتزهای دندانی و ایمپلنت",
         "url": "https://dentcast.ir/about.html",
         "image": "https://dentcast.ir/logo-v2.png",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Ahvaz",
+          "addressRegion": "Khuzestan",
+          "addressCountry": "IR"
+        },
         "sameAs": [
           "https://t.me/dentcast",
           "https://t.me/dent_AI",
@@ -37,20 +43,39 @@
         "@type": "WebSite",
         "@id": "https://dentcast.ir/#website",
         "url": "https://dentcast.ir/",
-        "name": "DentCast | پادکست‌های تخصصی دندانپزشکی و پروتز"
+        "name": "دنت‌کست (DentCast)",
+        "publisher": { "@id": "https://dentcast.ir/#person" }
       },
       {
         "@type": "CollectionPage",
+        "@id": "https://dentcast.ir/litecast/index.html#webpage",
         "url": "https://dentcast.ir/litecast/index.html",
-        "name": "✨ LiteCast – دنت‌کست عمومی",
-        "description": "مطالب آموزشی عمومی درباره‌ی سلامت دهان و دندان برای عموم مردم، توسط دکتر فؤاد شهابیان.",
+        "name": "لایت‌کست (LiteCast) | آموزش عمومی سلامت دهان و دندان",
+        "description": "مجموعه پادکست‌ها و مطالب آموزشی دکتر فؤاد شهابیان (متخصص پروتز در اهواز) درباره ایمپلنت، زیبایی و مراقبت‌های دندانپزشکی برای عموم.",
         "inLanguage": "fa",
         "isPartOf": { "@id": "https://dentcast.ir/#website" },
-        "author": { "@id": "https://dentcast.ir/#person" }
+        "about": { "@id": "https://dentcast.ir/#person" },
+        "breadcrumb": {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "دنت‌کست",
+              "item": "https://dentcast.ir/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "لایت‌کست"
+            }
+          ]
+        }
       }
     ]
   }
   </script>
+  
 
   <style>
     :root {
