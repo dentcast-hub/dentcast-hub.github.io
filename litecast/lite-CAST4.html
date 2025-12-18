@@ -12,11 +12,17 @@
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type": "Person",
+      "@type": "Dentist",
       "@id": "https://dentcast.ir/#person",
       "name": "دکتر فؤاد شهابیان",
       "jobTitle": "متخصص پروتزهای دندانی و ایمپلنت",
       "url": "https://dentcast.ir/about.html",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Ahvaz",
+        "addressRegion": "Khuzestan",
+        "addressCountry": "IR"
+      },
       "sameAs": [
         "https://t.me/dentcast",
         "https://t.me/dent_AI",
@@ -28,20 +34,30 @@
       "@type": "WebSite",
       "@id": "https://dentcast.ir/#website",
       "url": "https://dentcast.ir/",
-      "name": "DentCast | پادکست‌های تخصصی و عمومی دندان‌پزشکی"
+      "name": "دنت‌کست | مرجع تخصصی پروتز و ایمپلنت"
     },
     {
-      "@type": "Article",
+      "@type": "MedicalWebPage",
+      "@id": "https://dentcast.ir/litecast/lite-CAST4.html#webpage",
       "url": "https://dentcast.ir/litecast/lite-CAST4.html",
+      "name": "مزایای ایمپلنت برای دارندگان دندان مصنوعی در اهواز | دکتر فؤاد شهابیان",
       "headline": "آیا ایمپلنت برای کسانی که دندان مصنوعی کامل دارند، مزیتی دارد؟",
-      "description": "مزایای ایمپلنت برای بیماران بی‌دندان از نظر حفظ استخوان فک و قدرت عضلات جویدن؛ توضیح ساده، بالینی و قابل‌درک برای بیمار.",
+      "description": "بررسی بالینی مزایای کاشت ایمپلنت در بیماران بی‌دندان؛ حفظ استخوان فک، تقویت قدرت جویدن و ثبات پروتز در اهواز توسط متخصص پروتز.",
       "inLanguage": "fa",
       "author": { "@id": "https://dentcast.ir/#person" },
-      "isPartOf": { "@id": "https://dentcast.ir/#website" }
+      "isPartOf": { "@id": "https://dentcast.ir/#website" },
+      "about": [
+        { "@type": "Thing", "name": "ایمپلنت دندان اهواز" },
+        { "@type": "Thing", "name": "دندان مصنوعی کامل" },
+        { "@type": "Thing", "name": "Overdenture" },
+        { "@type": "Thing", "name": "پروتز دندان" }
+      ],
+      "mainEntityOfPage": { "@id": "https://dentcast.ir/litecast/lite-CAST4.html#webpage" }
     }
   ]
 }
   </script>
+  
 
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
 
