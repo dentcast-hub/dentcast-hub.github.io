@@ -144,31 +144,55 @@
   </style>
 
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "PodcastEpisode",
-    "url": "https://dentcast.ir/notecast/episode-8.html",
-    "name": "نوت‌کست هشتم – سرامیک‌های دندانی",
-    "description": "خلاصه‌ی نوشتاری دنت‌کست هشتم؛ بررسی انواع سرامیک‌های دندانی، ویژگی‌های فنی و کاربردهای کلینیکی.",
-    "partOfSeries": {
-      "@type": "PodcastSeries",
-      "name": "DentCast",
-      "url": "https://dentcast.ir"
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Dentist",
+      "@id": "https://dentcast.ir/#person",
+      "name": "دکتر فؤاد شهابیان",
+      "jobTitle": "متخصص پروتزهای دندانی و ایمپلنت",
+      "url": "https://dentcast.ir/about.html",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Ahvaz",
+        "addressRegion": "Khuzestan",
+        "addressCountry": "IR"
+      },
+      "sameAs": [
+        "https://t.me/dentcast",
+        "https://t.me/dent_AI",
+        "https://podcasts.apple.com/us/podcast/dentcast/id1502032364",
+        "https://www.instagram.com/dr.foad_shahabian/"
+      ]
     },
-    "author": {
-      "@type": "Person",
-      "name": "دکتر فواد شهابیان",
-      "jobTitle": "متخصص پروتزهای دندانی و ایمپلنت"
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "DentCast",
-      "url": "https://dentcast.ir"
-    },
-    "inLanguage": "fa",
-    "datePublished": "2025-11-07"
-  }
+    {
+      "@type": "PodcastEpisode",
+      "@id": "https://dentcast.ir/notecast/episode-8.html#episode",
+      "url": "https://dentcast.ir/notecast/episode-8.html",
+      "name": "نوت‌کست ۸ – راهنمای جامع سرامیک‌های دندانی",
+      "headline": "بررسی انواع، ویژگی‌ها و کاربرد سرامیک‌های دندانی - دکتر فؤاد شهابیان",
+      "description": "خلاصه‌ی نوشتاری دنت‌کست هشتم؛ تحلیل فنی انواع سرامیک‌های دندانی (سیلیکاتی، اکسیدی و...) و انتخاب متریال مناسب در پروتز توسط متخصص پروتز در اهواز.",
+      "inLanguage": "fa",
+      "datePublished": "2025-11-07", 
+      "duration": "PT25M",
+      "image": "https://dentcast.ir/favicon.png",
+      "author": { "@id": "https://dentcast.ir/#person" },
+      "partOfSeries": {
+        "@type": "PodcastSeries",
+        "name": "DentCast",
+        "url": "https://dentcast.ir/"
+      },
+      "associatedMedia": {
+        "@type": "AudioObject",
+        "contentUrl": "https://embed.acast.com/624b5545ecc0e600134ea0df/624b554b5af39e00127155e3", 
+        "duration": "PT25M"
+      }
+    }
+  ]
+}
   </script>
+  
 
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
   <link rel="icon" type="image/png" sizes="192x192" href="/favicon.png">
