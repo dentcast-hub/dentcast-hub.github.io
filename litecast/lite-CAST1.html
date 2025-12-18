@@ -12,11 +12,17 @@
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type": "Person",
+      "@type": "Dentist",
       "@id": "https://dentcast.ir/#person",
       "name": "دکتر فؤاد شهابیان",
       "jobTitle": "متخصص پروتزهای دندانی و ایمپلنت",
       "url": "https://dentcast.ir/about.html",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Ahvaz",
+        "addressRegion": "Khuzestan",
+        "addressCountry": "IR"
+      },
       "sameAs": [
         "https://t.me/dentcast",
         "https://t.me/dent_AI",
@@ -28,24 +34,30 @@
       "@type": "WebSite",
       "@id": "https://dentcast.ir/#website",
       "url": "https://dentcast.ir/",
-      "name": "DentCast | پادکست‌های تخصصی و عمومی دندان‌پزشکی"
+      "name": "دنت‌کست | مرجع تخصصی پروتز و ایمپلنت"
     },
     {
-      "@type": "Article",
+      "@type": "MedicalWebPage",
+      "@id": "https://dentcast.ir/litecast/lite-CAST1.html#webpage",
       "url": "https://dentcast.ir/litecast/lite-CAST1.html",
-      "headline": "قانون ۲-۲-۲ در دندان‌پزشکی",
-      "description": "بر اساس قانون ۲-۲-۲، باید دو بار در روز هر بار دو دقیقه مسواک بزنید و دو بار در سال به دندان‌پزشک مراجعه کنید. توضیح از دکتر فؤاد شهابیان.",
+      "name": "قانون ۲-۲-۲ در سلامت دهان و دندان | دکتر فؤاد شهابیان",
+      "headline": "قانون ۲-۲-۲ در دندان‌پزشکی چیست؟ فرمول ساده مسواک زدن و چکاپ",
+      "description": "آموزش قانون ۲-۲-۲ برای حفظ سلامت دندان‌ها: ۲ بار مسواک، ۲ دقیقه زمان و ۲ چکاپ سالانه. توصیه‌های پیشگیرانه دکتر فؤاد شهابیان متخصص پروتز در اهواز.",
       "inLanguage": "fa",
-      "author": {
-        "@id": "https://dentcast.ir/#person"
-      },
-      "isPartOf": {
-        "@id": "https://dentcast.ir/#website"
-      }
+      "author": { "@id": "https://dentcast.ir/#person" },
+      "isPartOf": { "@id": "https://dentcast.ir/#website" },
+      "about": [
+        { "@type": "Thing", "name": "بهداشت دهان و دندان" },
+        { "@type": "Thing", "name": "مسواک زدن صحیح" },
+        { "@type": "Thing", "name": "دندانپزشکی پیشگیرانه" },
+        { "@type": "Thing", "name": "اهواز" }
+      ],
+      "mainEntityOfPage": { "@id": "https://dentcast.ir/litecast/lite-CAST1.html#webpage" }
     }
   ]
 }
   </script>
+  
 
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
 
