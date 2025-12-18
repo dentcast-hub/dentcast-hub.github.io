@@ -12,11 +12,17 @@
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type": "Person",
+      "@type": "Dentist",
       "@id": "https://dentcast.ir/#person",
       "name": "دکتر فؤاد شهابیان",
       "jobTitle": "متخصص پروتزهای دندانی و ایمپلنت",
       "url": "https://dentcast.ir/about.html",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Ahvaz",
+        "addressRegion": "Khuzestan",
+        "addressCountry": "IR"
+      },
       "sameAs": [
         "https://t.me/dentcast",
         "https://t.me/dent_AI",
@@ -28,20 +34,30 @@
       "@type": "WebSite",
       "@id": "https://dentcast.ir/#website",
       "url": "https://dentcast.ir/",
-      "name": "DentCast | پادکست‌های تخصصی و عمومی دندان‌پزشکی"
+      "name": "دنت‌کست | مرجع تخصصی پروتز و ایمپلنت"
     },
     {
-      "@type": "Article",
+      "@type": "MedicalWebPage",
+      "@id": "https://dentcast.ir/litecast/lite-CAST2.html#webpage",
       "url": "https://dentcast.ir/litecast/lite-CAST2.html",
-      "headline": "چرا دنچر(دندان مصنوعی)پایین لق می‌شود؟",
-      "description": "راه‌حل علمی و ساده برای مشکل لق بودن دندان مصنوعی پایین و افزایش پایداری با ایمپلنت.",
+      "name": "علت لق شدن دندان مصنوعی پایین و درمان آن در اهواز",
+      "headline": "چرا دنچر (دندان مصنوعی) پایین لق می‌شود؟ راه‌حل متخصص پروتز",
+      "description": "بررسی دلایل علمی لقی دندان مصنوعی فک پایین و معرفی درمان‌های نوین مثل اوردنچر و ایمپلنت جهت افزایش ثبات پروتز در اهواز توسط دکتر فؤاد شهابیان.",
       "inLanguage": "fa",
       "author": { "@id": "https://dentcast.ir/#person" },
-      "isPartOf": { "@id": "https://dentcast.ir/#website" }
+      "isPartOf": { "@id": "https://dentcast.ir/#website" },
+      "about": [
+        { "@type": "Thing", "name": "لقی دندان مصنوعی" },
+        { "@type": "Thing", "name": "ایمپلنت دندان اهواز" },
+        { "@type": "Thing", "name": "Lower Denture Stability" },
+        { "@type": "Thing", "name": "پروتز دندان" }
+      ],
+      "mainEntityOfPage": { "@id": "https://dentcast.ir/litecast/lite-CAST2.html#webpage" }
     }
   ]
 }
   </script>
+  
 
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
 
