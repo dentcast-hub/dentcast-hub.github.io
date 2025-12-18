@@ -144,32 +144,56 @@
     }
   </style>
 
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "PodcastEpisode",
-    "url": "https://dentcast.ir/notecast/episode-7.html",
-    "name": "نوت‌کست ۷ – تکنیک DME (Deep Margin Elevation)",
-    "description": "خلاصه‌ی نوشتاری دنت‌کست هفتم؛ توضیح کامل تکنیک DME، مزایا، مراحل کلینیکی، و نکات مربوط به نوار ماتریکس.",
-    "partOfSeries": {
-      "@type": "PodcastSeries",
-      "name": "DentCast",
-      "url": "https://dentcast.ir"
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Dentist",
+      "@id": "https://dentcast.ir/#person",
+      "name": "دکتر فؤاد شهابیان",
+      "jobTitle": "متخصص پروتزهای دندانی و ایمپلنت",
+      "url": "https://dentcast.ir/about.html",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Ahvaz",
+        "addressRegion": "Khuzestan",
+        "addressCountry": "IR"
+      },
+      "sameAs": [
+        "https://t.me/dentcast",
+        "https://t.me/dent_AI",
+        "https://podcasts.apple.com/us/podcast/dentcast/id1502032364",
+        "https://www.instagram.com/dr.foad_shahabian/"
+      ]
     },
-    "author": {
-      "@type": "Person",
-      "name": "دکتر فواد شهابیان",
-      "jobTitle": "متخصص پروتزهای دندانی و ایمپلنت"
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "DentCast",
-      "url": "https://dentcast.ir"
-    },
-    "inLanguage": "fa",
-    "datePublished": "2025-11-06"
-  }
-  </script>
+    {
+      "@type": "PodcastEpisode",
+      "@id": "https://dentcast.ir/notecast/episode-7.html#episode",
+      "url": "https://dentcast.ir/notecast/episode-7.html",
+      "name": "نوت‌کست ۷ – تکنیک DME (Deep Margin Elevation) در دندانپزشکی",
+      "headline": "آموزش گام‌به‌گام تکنیک DME و مدیریت مارجین‌های عمیق - دکتر فؤاد شهابیان",
+      "description": "خلاصه‌ی نوشتاری دنت‌کست هفتم؛ بررسی کلینیکی تکنیک Deep Margin Elevation، مزایا، مراحل اجرا و انتخاب نوار ماتریکس مناسب توسط متخصص پروتز در اهواز.",
+      "inLanguage": "fa",
+      "datePublished": "2025-11-06", 
+      "duration": "PT20M",
+      "image": "https://dentcast.ir/favicon.png",
+      "author": { "@id": "https://dentcast.ir/#person" },
+      "partOfSeries": {
+        "@type": "PodcastSeries",
+        "name": "DentCast",
+        "url": "https://dentcast.ir/"
+      },
+      "associatedMedia": {
+        "@type": "AudioObject",
+        "contentUrl": "https://embed.acast.com/624b5545ecc0e600134ea0df/624b554b5af39e00127155e4", 
+        "duration": "PT20M"
+      }
+    }
+  ]
+}
+</script>
+  
 
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
   <link rel="icon" type="image/png" sizes="192x192" href="/favicon.png">
