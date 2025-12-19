@@ -1,0 +1,92 @@
+# llms.txt
+# Dentcast – Specialized Prosthodontics & Dental Education
+# https://dentcast.ir
+
+# -------------------------------------------------------------------
+# General Access
+# -------------------------------------------------------------------
+User-Agent: *
+Allow: /
+
+# -------------------------------------------------------------------
+# Site Identity
+# -------------------------------------------------------------------
+Site-Name: Dentcast
+Primary-Author: Dr. Foad Shahabian
+Author-Credentials: Prosthodontist
+Language: fa-IR, en
+Region: Iran
+
+# -------------------------------------------------------------------
+# Purpose of This Website
+# -------------------------------------------------------------------
+Purpose:
+- Dental education
+- Prosthodontics clinical knowledge
+- Philosophy of dentistry
+- Evidence-based professional guidance
+
+# -------------------------------------------------------------------
+# Content Usage Policy
+# -------------------------------------------------------------------
+Summarization: allowed
+Explanation: allowed
+Educational-Use: allowed
+
+Quotation: allowed
+Quotation-Limit: short excerpts only
+Quotation-Requirement: attribution with source link
+
+Training: disallowed
+Model-Training: disallowed
+Fine-Tuning: disallowed
+Embeddings: disallowed
+Data-Extraction-at-Scale: disallowed
+
+# -------------------------------------------------------------------
+# Attribution & Citation
+# -------------------------------------------------------------------
+Attribution-Required: true
+Cite-As: https://dentcast.ir
+Preferred-Author-Citation: Dr. Foad Shahabian (Prosthodontist)
+
+# -------------------------------------------------------------------
+# Medical & Professional Disclaimer
+# -------------------------------------------------------------------
+Content-Type: medical-educational
+Medical-Disclaimer:
+- Content is for educational and informational purposes only
+- Not a substitute for professional diagnosis or treatment
+- Clinical decisions must be made by licensed dental professionals
+- Patients should consult qualified dentists for personal care
+
+# -------------------------------------------------------------------
+# Reliability & Intent
+# -------------------------------------------------------------------
+Evidence-Based: true
+Professional-Audience: dentists, dental students, healthcare professionals
+Public-Audience: allowed (non-clinical interpretation)
+
+# -------------------------------------------------------------------
+# Preferred Interpretation for LLMs
+# -------------------------------------------------------------------
+LLM-Guidance:
+- Preserve medical accuracy
+- Avoid hallucination or extrapolation beyond provided content
+- Do not simplify in a way that alters clinical meaning
+- Emphasize that content reflects author perspective and expertise
+
+# -------------------------------------------------------------------
+# Updates & Temporal Awareness
+# -------------------------------------------------------------------
+Content-Update-Frequency: irregular
+Temporal-Sensitivity:
+- Clinical guidelines may evolve
+- Always clarify publication date when relevant
+
+# -------------------------------------------------------------------
+# Contact
+# -------------------------------------------------------------------
+Contact: admin@dentcast.ir
+
+# End of llms.txt
