@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>🤖 DentAI – مقالهٔ ۷: عملکرد بالینی RBFDPها و طراحی فریم‌ورک | دنت‌کست</title>
+
+  <meta name="description" content="بررسی سیستماتیک و متاآنالیز عملکرد بالینی پروتزهای ثابت رزین‌باند (RBFDPs) با طراحی‌های مختلف فریم‌ورک؛ مقایسه کانتی‌لور و دو پایه ثابت در ناحیه قدامی.">
+
+  <link rel="canonical" href="https://dentcast.ir/dentai/dentai-7">
+
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --blue:#0b5fff;
+      --gold:rgba(255,199,44,0.85);
+      --bg:#0b1220;
+      --bg2:#121a2b;
+      --text:#e7eaf1;
+      --muted:#9aa1b3;
+      --radius:18px;
+      --shadow:0 18px 50px rgba(0,0,0,.35);
+    }
+
+    html, body{
+      height:100%;
+      margin:0;
+      padding:0;
+    }
+
+    body{
+      font-family:'Vazirmatn', sans-serif;
+      background: radial-gradient(1200px 600px at 20% -10%, #1b2640 0%, transparent 60%),
+                  linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+      color:var(--text);
+      max-width:920px;
+      margin:0 auto;
+      padding:40px 20px 80px;
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
+      line-height:1.95;
+    }
+
+    h1{
+      text-align:center;
+      color:var(--blue);
+      font-weight:800;
+      font-size:2rem;
+      margin-bottom:16px;
+    }
+
+    .caption{
+      background:rgba(255, 185, 40, 0.15);
+      border:1px solid rgba(255, 220, 100, 0.4);
+      border-radius:var(--radius);
+      backdrop-filter:blur(10px);
+      padding:20px 24px;
+      margin-bottom:35px;
+      box-shadow:0 0 30px rgba(255,200,0,0.1);
+    }
+
+    .caption p{
+      color:var(--gold);
+      font-weight:600;
+      font-size:1.1rem;
+      margin:0;
+      text-align:justify;
+      line-height:1.9;
+    }
+
+    .text-box {
+      background: rgba(255, 255, 255, 0.99);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 22px;
+      padding: 28px 34px;
+      margin: 24px 0;
+      box-shadow: 0 8px 32px rgba(11, 95, 255, 0.25);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      color: #111;
+      font-size: 1.05rem;
+      line-height: 2;
+    }
+
+    h2{
+      color:#08327a;
+      font-weight:800;
+      font-size:1.35rem;
+      margin-top:36px;
+      margin-bottom:12px;
+    }
+
+    ul{
+      list-style:none;
+      padding:0;
+      margin:0 0 14px 0;
+    }
+
+    ul li{
+      margin-bottom:10px;
+    }
+
+    ul li::before{
+      content:"• ";
+      color:#0b5fff;
+      font-weight:bold;
+    }
+
+    footer{
+      margin-top:60px;
+      text-align:center;
+      color:var(--muted);
+      font-size:.9rem;
+    }
+
+    @media (max-width:768px){
+      body{padding:25px 14px 60px;}
+      h1{font-size:1.7rem;}
+      .caption p{font-size:1rem;}
+      .text-box{padding:20px 18px; font-size:.98rem;}
+    }
+  </style>
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://dentcast.ir/dentai/dentai-7#article",
+      "headline": "عملکرد بالینی پروتزهای ثابت رزین‌باند قدامی با طراحی‌های مختلف فریم‌ورک",
+      "description": "مرور سیستماتیک و متاآنالیز شواهد مربوط به تأثیر طراحی فریم‌ورک در بقای بالینی RBFDPهای قدامی.",
+      "image": "https://dentcast.ir/favicon.png",
+      "datePublished": "2025-12-19T16:00:00+03:30",
+      "dateModified": "2025-12-19T16:00:00+03:30",
+      "author": { "@id": "https://dentcast.ir/#person" },
+      "publisher": { "@id": "https://dentcast.ir/#organization" },
+      "mainEntityOfPage": { "@id": "https://dentcast.ir/dentai/dentai-7" }
+    },
+    {
+      "@type": "Dentist",
+      "@id": "https://dentcast.ir/#person",
+      "name": "دکتر فؤاد شهابیان",
+      "url": "https://dentcast.ir/about",
+      "image": "https://dentcast.ir/favicon.png",
+      "jobTitle": "متخصص پروتزهای دندانی و ایمپلنت"
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://dentcast.ir/#organization",
+      "name": "دنت‌کست",
+      "url": "https://dentcast.ir",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://dentcast.ir/favicon.png",
+        "width": 512,
+        "height": 512
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "کدام طراحی فریم‌ورک در RBFDPهای قدامی بقای بیشتری دارد؟",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "بر اساس این متاآنالیز، RBFDPهای کانتی‌لور با یک پایه ثابت بقای بالینی بیشتری نسبت به طراحی‌های دو پایه ثابت دارند."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+
+  <link rel="icon" href="/logo-v2.png" type="image/png" sizes="192x192">
+  <link rel="apple-touch-icon" href="/logo-v2.png">
+  <meta name="theme-color" content="#0b5fff">
+</head>
+
+<body>
+
+<h1>🤖 DentAI – عملکرد بالینی RBFDPها و طراحی فریم‌ورک</h1>
+
+<div class="caption">
+  <p>
+    ⚡ مقالهٔ هفتم<br><br>
+    مرور سیستماتیک و متاآنالیز عملکرد بالینی <strong>Resin-Bonded Fixed Dental Prostheses (RBFDPs)</strong> در ناحیه قدامی، با تمرکز بر تأثیر طراحی فریم‌ورک، نوع اتصال و جنس مواد.
+  </p>
+</div>
+
+<div class="text-box">
+
+<h2>مقدمه</h2>
+<p>
+پروتزهای ثابت دندانی متکی بر رزین (<strong>RBFDPs</strong>) از دهه ۱۹۷۰ به عنوان یک روش درمانی محافظه‌کارانه برای جایگزینی دندان‌های قدامی از دست رفته مورد استفاده قرار گرفته‌اند. این پروتزها می‌توانند جایگزین مناسبی برای ایمپلنت‌های دندانی در مواردی باشند که محدودیت‌های آناتومیکی، پزشکی یا اقتصادی وجود دارد.
+</p>
+<p>
+هدف این مقاله، بررسی سیستماتیک مقالات موجود و ارزیابی شواهد در مورد تأثیر طرح‌های مختلف فریم‌ورک RBFDPs بر بقای بالینی این ترمیم‌ها است.
+</p>
+
+<h2>بحث</h2>
+<ul>
+  <li><strong>عملکرد بهتر کانتی‌لور:</strong> نتایج این متاآنالیز نشان داد که RBFDPهای کانتی‌لور با فقط یک پایه، در مقایسه با RBFDPهای دو پایه ثابت، میزان بقای بیشتری دارند.</li>
+
+  <li><strong>تأثیر تحرک دندان‌های پایه:</strong> دلیل بالاتر بودن میزان شکست در RBFDPهای دو پایه ثابت می‌تواند به تحرک و جابجایی متفاوت دندان‌های پایه در هنگام عملکرد مربوط باشد. در RBFDPهای کانتی‌لور، پونتیک همیشه همراه با دندان پایه حرکت می‌کند و این موضوع احتمال شکست را کاهش می‌دهد.</li>
+
+  <li><strong>اهمیت انتخاب جنس:</strong> در RBFDPهای تمام سرامیک، به دلیل محدودیت استحکام و toughness سرامیک‌های سیلیکاتی، ابعاد اتصال و کانکتور باید بزرگ‌تر از سرامیک‌های با استحکام بالاتر باشد. شکستگی اتصال در RBFDPهای متال–سرامیک شایع نیست.</li>
+</ul>
+
+<h2>آماده‌سازی سطح</h2>
+<ul>
+  <li>روش‌های آماده‌سازی سطح می‌توانند بر استحکام باند و بقای RBFDPها تأثیرگذار باشند.</li>
+  <li>سایش با ذرات آلومینای ۵۰ میکرومتری با فشار ۱.۰ تا ۲.۵ بار و استفاده از سمان کامپوزیت رزین حاوی مونومر فسفات، به عنوان روش‌های اتصال ترجیحی برای سرامیک‌ها ذکر شده‌اند.</li>
+</ul>
+
+<h2>تأثیر نوع جنس سرامیک</h2>
+<ul>
+  <li>نوع جنس سرامیک می‌تواند در شکست RBFDPها نقش داشته باشد.</li>
+  <li>سرامیک‌های سیلیکاتی مانند <strong>IPS Empress</strong> و <strong>IPS e.max Press</strong> به دلیل محدودیت استحکام و toughness، به ابعاد اتصال بزرگ‌تری نسبت به سرامیک‌های با استحکام بالاتر نیاز دارند.</li>
+  <li>سرامیک <strong>In-Ceram Zirconia</strong> که حدود ۲۶٪ زیرکونیا دارد، در یک مطالعه ۱۰ ساله میزان بقای ۹۴.۴٪ را نشان داده است.</li>
+</ul>
+
+<h2>نتایج</h2>
+<ul>
+  <li>میزان شکست RBFDPهای کانتی‌لور با یک پایه ثابت کمتر از RBFDPهای دو پایه ثابت بود.</li>
+  <li>در RBFDPهای متال–سرامیک تفاوتی در میزان شکست بین طراحی کانتی‌لور و دو پایه ثابت مشاهده نشد.</li>
+</ul>
+
+<p>
+به طور خلاصه، <strong>RBFDPهای کانتی‌لور در ناحیه قدامی دهان شکست بالینی کمتری</strong> نسبت به RBFDPهای دو پایه نشان می‌دهند. همچنین شکست RBFDPهای متال–سرامیک مستقل از طراحی فریم‌ورک است.
+</p>
+
+<h2>نکات مهم در مورد رست لینگوال</h2>
+<ul>
+  <li><strong>آماده‌سازی مناسب دندان:</strong> آماده‌سازی محافظه‌کارانه با حفظ مینا می‌تواند بقای RBFDPها را افزایش دهد.</li>
+  <li><strong>رست لینگوال برای قرارگیری دقیق:</strong> اگرچه در اتصال با سمان‌های رزینی الزام به فرم نگهدارنده وجود ندارد، اما استفاده از رست لینگوال به طور کلی برای قرارگیری دقیق RBFDP توصیه می‌شود.</li>
+</ul>
+
+</div>
+
+<p style="margin-top:28px; font-weight:600; color:#0b5fff;">
+⚡⚡⚡ دکتر فواد شهابیان — متخصص پروتزهای دندانی
+</p>
+
+<footer style="text-align:center; margin-top:45px; color:#9aa1b3; font-size:.9rem; line-height:1.8;">
+
+  <div style="margin-bottom:22px;">
+    <a href="index.html"
+       style="
+         display:inline-block;
+         background:rgba(11,95,255,0.18);
+         color:#3a84ff;
+         border:1.8px solid rgba(11,95,255,0.45);
+         border-radius:12px;
+         padding:12px 42px;
+         font-weight:700;
+         text-decoration:none;
+         font-size:1rem;
+         box-shadow:0 0 14px rgba(11,95,255,0.15);
+         transition:all .25s ease;">
+      🔙 برگشت به صفحه‌ی قبل
+    </a>
+  </div>
+
+  <div style="margin-bottom:20px;">
+    <a href="https://dentcast.ir/about"
+       style="
+         display:inline-block;
+         background:rgba(255,220,80,0.85);
+         color:#111;
+         border:1px solid rgba(255,220,80,0.55);
+         border-radius:8px;
+         padding:5px 12px;
+         font-weight:500;
+         text-decoration:none;
+         font-size:.8rem;
+         box-shadow:0 0 6px rgba(255,220,80,0.1);
+         backdrop-filter:blur(5px);
+         transition:all .25s ease;">
+      💬 درباره‌ی دکتر فواد شهابیان و دنت‌کست
+    </a>
+  </div>
+
+  <div style="margin-top:6px;">
+    © 2025 DentCast — طراحی و توسعه توسط
+    <strong style="color:#ffd46a;">فواد شهابیان</strong>
+  </div>
+
+</footer>
+
+</body>
+</html>
