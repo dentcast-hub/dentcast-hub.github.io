@@ -3,7 +3,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />  <title>دانشنامه دنت‌کست | Template</title>  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700&display=swap" rel="stylesheet">  <style>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;800&display=swap" rel="stylesheet">  <style>
     :root {
       --bg: #f5f7fb;
       --card-bg: #ffffff;
@@ -30,7 +30,10 @@
       padding: 56px 20px 80px;
     }
 
-    header { margin-bottom: 24px; }
+    header {
+      margin-bottom: 28px;
+      text-align: center;
+    }
 
     h1 {
       font-size: 2rem;
@@ -47,7 +50,7 @@
       background: var(--card-bg);
       border: 1px solid var(--border);
       border-radius: 18px;
-      padding: 28px 24px;
+      padding: 30px 26px;
     }
 
     section { margin-bottom: 28px; }
@@ -61,8 +64,8 @@
     p { margin: 0 0 14px 0; }
 
     footer {
-      margin-top: 36px;
-      padding-top: 24px;
+      margin-top: 40px;
+      padding-top: 26px;
       border-top: 1px solid var(--border);
       text-align: center;
     }
@@ -76,7 +79,7 @@
 
     .btn {
       display: inline-block;
-      padding: 10px 16px;
+      padding: 10px 18px;
       border-radius: 12px;
       text-decoration: none;
       font-weight: 500;
@@ -93,12 +96,20 @@
 
     .btn-primary:hover { opacity: .9; }
 
-    .btn-secondary {
-      background: var(--accent-soft);
-      color: var(--accent);
+    .about-link {
+      margin-top: 16px;
+      font-size: 0.9rem;
     }
 
-    .btn-secondary:hover { background: rgba(11,95,255,0.14); }
+    .about-link a {
+      color: var(--text-muted);
+      text-decoration: none;
+    }
+
+    .about-link a:hover {
+      color: var(--accent);
+      text-decoration: underline;
+    }
 
     @media (max-width: 480px) {
       h1 { font-size: 1.7rem; }
@@ -111,34 +122,41 @@
 
 <div class="content-box">
 
-<section>
-  <h2>تعریف</h2>
-  <p>
-    این بخش بعداً با متن تعریف پر می‌شود. تعریف باید کلی، مفهومی و مستقل از کیس باشد؛
-    به‌گونه‌ای که بدون ارجاع به مثال بالینی نیز قابل فهم باشد.
-  </p>
-</section>
+  <section>
+    <h2>تعریف</h2>
+    <p>
+      این بخش بعداً با متن تعریف پر می‌شود. تعریف باید کلی، مفهومی و مستقل از کیس باشد؛
+      به‌گونه‌ای که بدون ارجاع به مثال بالینی نیز قابل فهم باشد.
+    </p>
+  </section>
 
-<section>
-  <h2>مرز مفهوم</h2>
-  <p>
-    در این قسمت مشخص می‌شود این مفهوم چیست و چه چیزی نیست، و با کدام برداشت‌های
-    اشتباه یا استفاده‌های نادرست قاطی می‌شود.
-  </p>
-</section>
+  <section>
+    <h2>مرز مفهوم</h2>
+    <p>
+      در این قسمت مشخص می‌شود این مفهوم چیست و چه چیزی نیست، و با کدام برداشت‌های
+      اشتباه یا استفاده‌های نادرست قاطی می‌شود.
+    </p>
+  </section>
 
-<section>
-  <h2>نقش در تصمیم‌گیری درمانی</h2>
-  <p>
-    این بخش به توضیح جایگاه این مفهوم در انتخاب درمان، طراحی پروتزی یا تصمیم‌گیری
-    بالینی اختصاص دارد.
-  </p>
-</section>
+  <section>
+    <h2>نقش در تصمیم‌گیری درمانی</h2>
+    <p>
+      این بخش به توضیح جایگاه این مفهوم در انتخاب درمان، طراحی پروتزی یا تصمیم‌گیری
+      بالینی اختصاص دارد.
+    </p>
+  </section>
 
-</div><footer>
-      <div class="footer-actions">
-        <a class="btn btn-primary" href="/glossary/">بازگشت به صفحهٔ اصلی دانشنامه</a>
-        <a class="btn btn-secondary" href="https://dentcast.ir/about">دربارهٔ دکتر فواد شهابیان</a>
-      </div>
-    </footer>  </main></body>
+</div>
+
+<footer>
+  <div class="footer-actions">
+    <a class="btn btn-primary" href="/glossary/">بازگشت به صفحهٔ اصلی دانشنامه</a>
+  </div>
+
+  <div class="about-link">
+    <a href="https://dentcast.ir/about">دربارهٔ دکتر فواد شهابیان</a>
+  </div>
+</footer>
+
+  </main></body>
 </html>
