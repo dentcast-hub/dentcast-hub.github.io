@@ -142,31 +142,60 @@ ul li::before {
       .text-box{padding:20px 18px; font-size:.98rem;}
     }
   </style>
-  <script type="application/ld+json">
+<script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@graph": [
     {
       "@type": "TechArticle",
-      "@id": "https://dentcast.ir/dentai/dentai-4#article",
       "headline": "اثر محلول تشخیص پوسیدگی (Caries Detector) بر استحکام باندینگ",
-      "description": "تحلیل تخصصی اثر آشکارسازهای پوسیدگی بر استحکام باند کششی (Tensile Bond Strength) سیستم‌های ادهسیو و نقش پروپیلن گلیکول در باندینگ توسط دکتر فؤاد شهابیان.",
+      "description": "تحلیل تخصصی اثر آشکارسازهای پوسیدگی بر استحکام باند کششی سیستم‌های ادهسیو توسط دکتر فؤاد شهابیان.",
       "image": "https://dentcast.ir/favicon.png",
       "datePublished": "2025-12-19T15:00:00+03:30",
-      "dateModified": "2025-12-19T15:00:00+03:30",
-      "author": { "@id": "https://dentcast.ir/#person" },
-      "publisher": { "@id": "https://dentcast.ir/#organization" },
-      "mainEntityOfPage": { "@id": "https://dentcast.ir/dentai/dentai-4" },
-      "abstract": "این گزارش خلاصه یک مطالعه علمی درباره تأثیر رنگ‌های آشکارساز پوسیدگی بر باندینگ است و نشان می‌دهد که شستشوی کامل، کلید حفظ استحکام باند است.",
-      "keywords": "Caries Detector, آشکارساز پوسیدگی, استحکام باند, دندانپزشکی ترمیمی اهواز, دکتر فؤاد شهابیان, پروپیلن گلیکول"
+      "author": {
+        "@type": "Person",
+        "name": "دکتر فؤاد شهابیان",
+        "url": "https://dentcast.ir/about"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "دنت‌کست",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dentcast.ir/favicon.png"
+        }
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://dentcast.ir/dentai/dentai-4"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "آیا Caries Detector باعث ضعیف شدن باند کامپوزیت می‌شود؟",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "خیر، در صورتی که محلول پس از استفاده کاملاً با آب شسته شود، تأثیر منفی بر استحکام باند نخواهد داشت."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "کدام ماده در آشکارساز پوسیدگی مانع باندینگ است؟",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "پروپیلن گلیکول موجود در این محلول‌ها اگر به خوبی شسته نشود، می‌تواند استحکام باند را کاهش دهد."
+          }
+        }
+      ]
     },
     {
       "@type": "Dentist",
-      "@id": "https://dentcast.ir/#person",
       "name": "دکتر فؤاد شهابیان",
-      "url": "https://dentcast.ir/about",
       "image": "https://dentcast.ir/favicon.png",
-      "jobTitle": "متخصص پروتزهای دندانی و ایمپلنت",
+      "telephone": "+986133380090",
       "medicalCode": "114707",
       "address": {
         "@type": "PostalAddress",
@@ -175,48 +204,12 @@ ul li::before {
         "addressRegion": "Khuzestan",
         "addressCountry": "IR"
       }
-    },
-    {
-      "@type": "Organization",
-      "@id": "https://dentcast.ir/#organization",
-      "name": "دنت‌کست",
-      "alternateName": "DentCast",
-      "url": "https://dentcast.ir",
-      "logo": {
-        "@type": "ImageObject",
-        "@id": "https://dentcast.ir/#logo",
-        "url": "https://dentcast.ir/favicon.png",
-        "contentUrl": "https://dentcast.ir/favicon.png",
-        "width": 512,
-        "height": 512,
-        "caption": "DentCast Logo"
-      },
-      "image": { "@id": "https://dentcast.ir/#logo" }
-    },
-    {
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "آیا استفاده از Caries Detector باعث ضعیف شدن باند کامپوزیت می‌شود؟",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "اگر محلول بعد از استفاده کاملاً با آب شسته شود، تأثیر منفی بر استحکام باند ندارد. اما باقی ماندن پروپیلن گلیکول روی عاج می‌تواند باند را به شدت تضعیف کند."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "کدام ماده در محلول‌های تشخیص پوسیدگی مانع باندینگ صحیح است؟",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "پروپیلن گلیکول (Propylene Glycol) موجود در این محلول‌ها ماده اصلی است که در صورت عدم شستشوی کافی، استحکام باند کششی را کاهش می‌دهد."
-          }
-        }
-      ]
     }
   ]
 }
-  </script>
+</script>
+  
+
   
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
   <link rel="icon" type="image/png" sizes="192x192" href="/favicon.png">
