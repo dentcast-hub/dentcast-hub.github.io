@@ -3278,8 +3278,59 @@
     "طراحی فریم ورک"
   ],
   "page_url": "/dentai/dentai-7.html"
+},
+{
+  "type": "litecast",
+  "id": "litecast-10",
+  "title": "چرا روکش بعضی از ایمپلنت‌ها شل می‌شود؟",
+  "caption": "توضیح ساده و بیمارمحور درباره شل شدن روکش‌های ایمپلنتی، تفاوت شل شدن سمان و شل شدن پیچ پایه، و اهمیت مراجعه و پیگیری به‌موقع.",
+  "hashtags": [
+    "#ایمپلنت",
+    "#روکش_ایمپلنت",
+    "#شل_شدن_روکش",
+    "#پیچ_ایمپلنت",
+    "#اباتمنت",
+    "#فالوآپ_ایمپلنت"
+  ],
+  "keywords": [
+    "loose implant crown",
+    "implant screw loosening",
+    "cement retained implant crown",
+    "implant abutment screw",
+    "implant crown mobility",
+    "implant follow up",
+    "implant maintenance",
+    "implant mechanical complications"
+  ],
+  "page_url": "https://dentcast.ir/litecast/lite-CAST10"
+},
+{
+  "type": "litecast",
+  "id": "litecast-9",
+  "title": "ایمپلنت دیجیتال یعنی چی؟ (جراحی و پروتز با طراحی کامپیوتری)",
+  "caption": "توضیح ساده و بیمارمحور ایمپلنت دیجیتال؛ تفاوت آن با روش معمول، نقش طراحی کامپیوتری در جراحی و پروتز، و تأثیر آن بر دقت درمان و راحتی بیمار.",
+  "hashtags": [
+    "#ایمپلنت_دیجیتال",
+    "#ایمپلنت",
+    "#جراحی_دیجیتال",
+    "#اسکن_دهانی",
+    "#پروتز_دیجیتال",
+    "#دندانپزشکی_دیجیتال"
+  ],
+  "keywords": [
+    "digital dental implant",
+    "computer guided implant surgery",
+    "digital implant workflow",
+    "intraoral scanner",
+    "digital prosthodontics",
+    "guided implant placement",
+    "digital crown",
+    "patient comfort in implant dentistry"
+  ],
+  "page_url": "https://dentcast.ir/litecast/lite-CAST9"
 }
 ]
+
 
 
 
