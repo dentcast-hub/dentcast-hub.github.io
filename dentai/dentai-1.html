@@ -159,39 +159,67 @@
     }
   </style>
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "ScholarlyArticle",
-    "headline": "🤖 DentAI: تمایز بین خطوط ترک سنتی و داخلی در مینای دندان",
-    "description": "تحلیل هوش مصنوعی و بررسی بالینی تفاوت‌های ساختاری، ظاهری و درمانی بین Traditional Craze Lines و Internal Craze Lines در دندانپزشکی ترمیمی.",
-    "image": "https://dentcast.ir/favicon.png",
-    "author": {
-      "@type": "Dentist",
-      "name": "دکتر فؤاد شهابیان",
-      "url": "https://dentcast.ir/about",
-      "medicalCode": "114707"
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "DentCast - DentAI Series",
-      "url": "https://dentcast.ir",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://dentcast.ir/favicon.png"
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://dentcast.ir/dentai/dentai-1#article",
+      "headline": "🤖 DentAI: تمایز بین خطوط ترک سنتی و داخلی در مینای دندان",
+      "description": "بازخوانی و خلاصه فارسی مقاله تشخیص تفاوت‌های ساختاری بین Traditional و Internal Craze Lines توسط دکتر فؤاد شهابیان در دنت‌کست.",
+      "image": "https://dentcast.ir/favicon.png",
+      "datePublished": "2025-12-19T15:00:00+03:30",
+      "author": {
+        "@type": "Person",
+        "name": "دکتر فؤاد شهابیان",
+        "url": "https://dentcast.ir/about"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://dentcast.ir/#organization",
+        "name": "دنت‌کست",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dentcast.ir/favicon.png",
+          "width": 512,
+          "height": 512
+        }
+      },
+      "isBasedOn": {
+        "@type": "CreativeWork",
+        "name": "Differentiation between traditional and internal craze lines in human enamel",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://dentcast.ir/dentai/dentai-1"
       }
     },
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": "https://dentcast.ir/dentai/dentai-1"
-    },
-    "url": "https://dentcast.ir/dentai/dentai-1",
-    "articleSection": "Restorative Dentistry / AI-Assisted Research",
-    "keywords": "خطوط ترک مینا, Craze Lines, ترک داخلی دندان, تشخیص با میکروسکوپ دندانپزشکی, دنت‌آی, متخصص پروتز اهواز",
-    "inLanguage": "fa-IR",
-    "educationalLevel": "Professional",
-    "isAccessibleForFree": "True"
-  }
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "تفاوت اصلی خطوط ترک سنتی و داخلی چیست؟",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "خطوط سنتی از DEJ تا سطح مینا امتداد دارند و رنگ می‌پذیرند، اما خطوط داخلی در میانه راه مینا متوقف شده و به دلیل عدم دسترسی به سطح، رنگ نمی‌گیرند."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "آیا ترانسیلومینیشن برای تشخیص نوع ترک دندان مناسب است؟",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "خیر، ترانسیلومینیشن باعث برجسته شدن تمام ترک‌ها می‌شود و نمی‌تواند بین ترک‌های خوش‌خیم و ساختاری تمایز ایجاد کند؛ برای این کار بزرگنمایی میکروسکوپی لازم است."
+          }
+        }
+      ]
+    }
+  ]
+}
   </script>
+  
   
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
   <link rel="icon" type="image/png" sizes="192x192" href="/favicon.png">
