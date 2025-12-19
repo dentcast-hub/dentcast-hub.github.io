@@ -143,35 +143,79 @@ ul li::before {
     }
   </style>
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "ScholarlyArticle",
-    "headline": "🤖 DentAI – مقاله ۴: اثر Caries Detector بر استحکام باند | دنت‌کست",
-    "description": "بررسی علمی اثر محلول‌های تشخیص پوسیدگی بر استحکام باند سیستم‌های ادهسیو و نقش پروپیلن گلیکول در کاهش قدرت باندینگ توسط دکتر فواد شهابیان.",
-    "image": "https://dentcast.ir/favicon.png",
-    "author": {
-      "@type": "Dentist",
-      "name": "دکتر فؤاد شهابیان",
-      "url": "https://dentcast.ir/about"
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "@id": "https://dentcast.ir/dentai/dentai-4#article",
+      "headline": "اثر محلول تشخیص پوسیدگی (Caries Detector) بر استحکام باندینگ",
+      "description": "تحلیل تخصصی اثر آشکارسازهای پوسیدگی بر استحکام باند کششی (Tensile Bond Strength) سیستم‌های ادهسیو و نقش پروپیلن گلیکول در باندینگ توسط دکتر فؤاد شهابیان.",
+      "image": "https://dentcast.ir/favicon.png",
+      "datePublished": "2025-12-19T15:00:00+03:30",
+      "dateModified": "2025-12-19T15:00:00+03:30",
+      "author": { "@id": "https://dentcast.ir/#person" },
+      "publisher": { "@id": "https://dentcast.ir/#organization" },
+      "mainEntityOfPage": { "@id": "https://dentcast.ir/dentai/dentai-4" },
+      "abstract": "این گزارش خلاصه یک مطالعه علمی درباره تأثیر رنگ‌های آشکارساز پوسیدگی بر باندینگ است و نشان می‌دهد که شستشوی کامل، کلید حفظ استحکام باند است.",
+      "keywords": "Caries Detector, آشکارساز پوسیدگی, استحکام باند, دندانپزشکی ترمیمی اهواز, دکتر فؤاد شهابیان, پروپیلن گلیکول"
     },
-    "publisher": {
-      "@type": "Organization",
-      "name": "DentCast",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://dentcast.ir/logo-v2.png"
+    {
+      "@type": "Dentist",
+      "@id": "https://dentcast.ir/#person",
+      "name": "دکتر فؤاد شهابیان",
+      "url": "https://dentcast.ir/about",
+      "image": "https://dentcast.ir/favicon.png",
+      "jobTitle": "متخصص پروتزهای دندانی و ایمپلنت",
+      "medicalCode": "114707",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "کیانپارس، خیابان ۶ غربی، مجتمع ایران نگین",
+        "addressLocality": "Ahvaz",
+        "addressRegion": "Khuzestan",
+        "addressCountry": "IR"
       }
     },
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": "https://dentcast.ir/dentai/dentai-4"
+    {
+      "@type": "Organization",
+      "@id": "https://dentcast.ir/#organization",
+      "name": "دنت‌کست",
+      "alternateName": "DentCast",
+      "url": "https://dentcast.ir",
+      "logo": {
+        "@type": "ImageObject",
+        "@id": "https://dentcast.ir/#logo",
+        "url": "https://dentcast.ir/favicon.png",
+        "contentUrl": "https://dentcast.ir/favicon.png",
+        "width": 512,
+        "height": 512,
+        "caption": "DentCast Logo"
+      },
+      "image": { "@id": "https://dentcast.ir/#logo" }
     },
-    "url": "https://dentcast.ir/dentai/dentai-4",
-    "articleSection": "Adhesive Dentistry",
-    "keywords": "آشکارساز پوسیدگی, Caries Detector, استحکام باند, پروپیلن گلیکول, دندانپزشکی ترمیمی, دنت‌کست",
-    "inLanguage": "fa-IR",
-    "proficiencyLevel": "Professional"
-  }
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "آیا استفاده از Caries Detector باعث ضعیف شدن باند کامپوزیت می‌شود؟",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "اگر محلول بعد از استفاده کاملاً با آب شسته شود، تأثیر منفی بر استحکام باند ندارد. اما باقی ماندن پروپیلن گلیکول روی عاج می‌تواند باند را به شدت تضعیف کند."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "کدام ماده در محلول‌های تشخیص پوسیدگی مانع باندینگ صحیح است؟",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "پروپیلن گلیکول (Propylene Glycol) موجود در این محلول‌ها ماده اصلی است که در صورت عدم شستشوی کافی، استحکام باند کششی را کاهش می‌دهد."
+          }
+        }
+      ]
+    }
+  ]
+}
   </script>
   
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
