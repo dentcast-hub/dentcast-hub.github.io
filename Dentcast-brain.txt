@@ -3245,8 +3245,42 @@
     "occlusion"
   ],
   "page_url": "https://dentcast.ir/dentcast-plus/video-3"
+},
+{
+  "type": "dentai",
+  "id": "dentai-7",
+  "title": "DentAI — عملکرد بالینی RBFDPهای قدامی و طراحی فریم‌ورک",
+  "caption": "مرور سیستماتیک و متاآنالیز شواهد مربوط به تأثیر طراحی فریم‌ورک در بقای بالینی پروتزهای ثابت رزین‌باند قدامی، با تمرکز بر مقایسه طراحی کانتی‌لور و دو پایه ثابت.",
+  "hashtags": [
+    "پروتز_ثابت",
+    "RBFDP",
+    "کانتی_لور",
+    "پروتز_قدامی",
+    "رزین_باند",
+    "طراحی_فریم_ورک",
+    "متاآنالیز",
+    "DentAI"
+  ],
+  "keywords": [
+    "resin-bonded fixed dental prosthesis",
+    "RBFDP",
+    "cantilever RBFDP",
+    "two-retainer RBFDP",
+    "anterior fixed prosthesis",
+    "framework design",
+    "clinical survival",
+    "systematic review",
+    "meta-analysis",
+    "prosthodontics",
+    "پروتز رزین باند",
+    "کانتی لور",
+    "پروتز قدامی",
+    "طراحی فریم ورک"
+  ],
+  "page_url": "/dentai/dentai-7.html"
 }
 ]
+
 
 
 
