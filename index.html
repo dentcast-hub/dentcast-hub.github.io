@@ -600,115 +600,72 @@
   </style>    <link rel="icon" href="https://dentcast.ir/logo-v2.png" type="image/png" sizes="192x192">  
   <link rel="apple-touch-icon" href="/logo-v2.png">  
   <meta name="theme-color" content="#F3F5F7">  
-  <link rel="manifest" href="/manifest.json">    <script type="application/ld+json">  
-    {  
-      "@context": "https://schema.org",  
-      "@type": "PodcastSeries",  
-      "name": "DentCast",  
-      "url": "https://dentcast.ir/",  
-      "description": "پادکست علمی دندان‌پزشکی با روایت دکتر فواد شهابیان...",  
-      "publisher": {  
-        "@type": "Organization",  
-        "name": "DentCast",  
-        "logo": {  
-          "@type": "ImageObject",  
-          "url": "https://dentcast.ir/logo-v2.png"  
-        }  
-      },  
-      "inLanguage": "fa-IR",  
-      "author": {  
-        "@type": "Person",  
-        "name": "دکتر فواد شهابیان",  
-        "jobTitle": "متخصص پروتزهای دندانی و ایمپلنت"  
-      },  
-      "sameAs": [  
-        "https://t.me/dentcast",  
-        "https://t.me/dent_AI",  
-        "https://podcasts.apple.com/us/podcast/dentcast/id1502032364",  
-        "https://castbox.fm/va/4889954"  
-      ]  
-    }  
-  </script>    <script type="application/ld+json">  
-    {  
-      "@context": "https://schema.org",  
-      "@type": "Person",  
-      "name": "دکتر فواد شهابیان",  
-      "alternateName": "Foad Shahabian",  
-      "jobTitle": "متخصص پروتزهای دندانی و ایمپلنت",  
-      "description": "متخصص پروتزهای دندانی، ایمپلنت و گوینده پادکست علمی دنت‌کست (DentCast).",  
-      "url": "https://dentcast.ir",  
-      "image": "https://dentcast.ir/dentcast-cover.png",  
-      "worksFor": {  
-        "@type": "Organization",  
-        "name": "DentCast",  
-        "url": "https://dentcast.ir"  
-      }  
-    }  
-  </script>   
+  <link rel="manifest" href="/manifest.json">    
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": "DentCast",
-  "url": "https://dentcast.ir",
-  "keywords": [
-    "ایمپلنت اهواز",
-    "ایمپلنت دندان",
-    "ایمپلنت دیجیتال",
-    "ایمپلنت فوری",
-    "قیمت ایمپلنت دندان",
-    "دکتر ایمپلنت اهواز",
-    "متخصص ایمپلنت",
-    "بهترین دکتر ایمپلنت",
-    "کلینیک ایمپلنت",
-    "کاشت دندان",
-
-    "دندانپزشک اهواز",
-    "بهترین دندانپزشک اهواز",
-    "دندانپزشکی زیبایی",
-    "جراح دندان",
-    "دندان‌پزشکی نادری اهواز",
-    "درمان ریشه",
-    "جرمگیری دندان",
-    "روکش دندان",
-    "روکش تمام سرامیک",
-    "تمام سرامیک دندان",
-
-    "لمینیت دندان",
-    "لامینیت دندان",
-    "کامپوزیت دندان",
-    "پر کردن دندان",
-    "آمالکام دندان",
-    "گارد نرم",
-    "گارد سخت",
-    "بایت گارد",
-
-    "پروتز دندانی",
-    "پروتز لب",
-    "دندان مصنوعی",
-    "دندان مصنوعی برای افراد جوان",
-
-    "اصلاح طرح لبخند",
-    "درمان‌های زیبایی دندان",
-
-    "درد فک",
-    "درد فک و دندان",
-    "درد دندان",
-
-    "دکتر فواد شهابیان",
-    "فواد شهابیان اهواز",
-    "دکتر شهابیان دندانپزشک اهواز",
-    "فواد شهابیان پروتز",
-
-    "ایمپلنت چقدر طول میکشد",
-    "هزینه ایمپلنت چقدر است",
-    "درد ایمپلنت دندان",
-    "برای عفونت دندان چه بخوریم",
-    "بهترین روش جایگزینی دندان",
-    "ایمپلنت یا دندان مصنوعی"
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://dentcast.ir/#website",
+      "url": "https://dentcast.ir/",
+      "name": "دنت‌کست | DentCast",
+      "publisher": { "@id": "https://dentcast.ir/#person" },
+      "description": "مرجع تخصصی آموزش دندانپزشکی، پادکست‌های علمی و خدمات تخصصی پروتز و ایمپلنت توسط دکتر فؤاد شهابیان."
+    },
+    {
+      "@type": "PodcastSeries",
+      "@id": "https://dentcast.ir/#podcast",
+      "name": "دنت‌کست (DentCast)",
+      "url": "https://dentcast.ir/",
+      "description": "پادکست علمی دندان‌پزشکی با روایت دکتر فواد شهابیان؛ بررسی چالش‌های کلینیکی پروتز و ایمپلنت.",
+      "webcast": "https://podcasts.apple.com/us/podcast/dentcast/id1502032364",
+      "inLanguage": "fa-IR",
+      "author": { "@id": "https://dentcast.ir/#person" },
+      "sameAs": [
+        "https://t.me/dentcast",
+        "https://podcasts.apple.com/us/podcast/dentcast/id1502032364",
+        "https://castbox.fm/va/4889954"
+      ]
+    },
+    {
+      "@type": ["Dentist", "Person"],
+      "@id": "https://dentcast.ir/#person",
+      "name": "دکتر فؤاد شهابیان",
+      "alternateName": "Dr. Foad Shahabian",
+      "jobTitle": "متخصص پروتزهای دندانی و ایمپلنت",
+      "url": "https://dentcast.ir",
+      "image": "https://dentcast.ir/dentcast-cover.png",
+      "medicalCode": "114707",
+      "address": [
+        {
+          "@type": "PostalAddress",
+          "streetAddress": "اهواز، کیانپارس، خیابان ۶ غربی، مجتمع ایران نگین",
+          "addressLocality": "Ahvaz",
+          "addressRegion": "Khuzestan",
+          "addressCountry": "IR"
+        },
+        {
+          "@type": "PostalAddress",
+          "addressLocality": "Tehran",
+          "addressRegion": "Tehran",
+          "addressCountry": "IR",
+          "description": "خدمات تخصصی ایمپلنت و پروتز در تهران و اهواز"
+        }
+      ],
+      "knowsAbout": [
+        "Dental Implants", "Prosthodontics", "Digital Dentistry", "Cosmetic Dentistry",
+        "ایمپلنت فوری", "لمینیت دندان", "پروتز دندان", "طرح لبخند"
+      ],
+      "sameAs": [
+        "https://www.instagram.com/dr.foad_shahabian/",
+        "https://t.me/dent_AI"
+      ]
+    }
   ]
 }
   </script>
+  
   <meta name="robots" content="max-image-preview:large">  
 </head>  
 <body>  <div id="content-wrap"> <header class="main-header">  
