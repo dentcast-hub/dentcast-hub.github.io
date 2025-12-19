@@ -5,39 +5,37 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700&display=swap" rel="stylesheet">  <style>
     :root {
-      --bg: #ffffff;
-      --text-main: #1f2937; /* تیره، بدون سیاهی آزاردهنده */
+      --bg: #f5f7fb;
+      --card-bg: #ffffff;
+      --text-main: #1f2937;
       --text-muted: #6b7280;
-      --accent: #0b5fff; /* Royal Blue دنت‌کست */
+      --accent: #0b5fff;
+      --accent-soft: rgba(11,95,255,0.08);
       --border: #e5e7eb;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
       font-family: 'Vazirmatn', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
       background: var(--bg);
       color: var(--text-main);
-      line-height: 1.85;
+      line-height: 1.9;
     }
 
     .page {
-      max-width: 720px; /* عرض مطالعه کتابی */
+      max-width: 760px;
       margin: 0 auto;
-      padding: 48px 20px 64px;
+      padding: 56px 20px 80px;
     }
 
-    header {
-      margin-bottom: 32px;
-    }
+    header { margin-bottom: 24px; }
 
     h1 {
-      font-size: 1.9rem;
-      font-weight: 700;
-      margin: 0 0 8px 0;
+      font-size: 2rem;
+      font-weight: 800;
+      margin: 0 0 6px 0;
     }
 
     .subtitle {
@@ -45,52 +43,65 @@
       color: var(--text-muted);
     }
 
-    hr {
-      border: none;
-      border-top: 1px solid var(--border);
-      margin: 32px 0;
+    .content-box {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 28px 24px;
     }
 
-    section {
-      margin-bottom: 32px;
-    }
+    section { margin-bottom: 28px; }
 
     h2 {
-      font-size: 1.1rem;
-      font-weight: 600;
-      margin-bottom: 12px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 10px;
     }
 
-    p {
-      margin: 0 0 14px 0;
-    }
-
-    .note {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-    }
+    p { margin: 0 0 14px 0; }
 
     footer {
-      margin-top: 48px;
+      margin-top: 36px;
       padding-top: 24px;
       border-top: 1px solid var(--border);
+      text-align: center;
     }
 
-    .back-link {
+    .footer-actions {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
       display: inline-block;
-      color: var(--accent);
+      padding: 10px 16px;
+      border-radius: 12px;
       text-decoration: none;
       font-weight: 500;
+      font-size: 0.95rem;
+      border: 1px solid var(--border);
+      transition: .2s;
     }
 
-    .back-link:hover {
-      text-decoration: underline;
+    .btn-primary {
+      background: var(--accent);
+      color: #ffffff;
+      border-color: var(--accent);
     }
+
+    .btn-primary:hover { opacity: .9; }
+
+    .btn-secondary {
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+
+    .btn-secondary:hover { background: rgba(11,95,255,0.14); }
 
     @media (max-width: 480px) {
-      h1 {
-        font-size: 1.6rem;
-      }
+      h1 { font-size: 1.7rem; }
     }
   </style></head>
 <body>  <main class="page"><header>
@@ -98,7 +109,7 @@
   <div class="subtitle">سمان رزینی ادهزیو</div>
 </header>
 
-<hr />
+<div class="content-box">
 
 <section>
   <h2>تعریف</h2>
@@ -124,12 +135,10 @@
   </p>
 </section>
 
-<footer>
-  <a class="back-link" href="#">← بازگشت به صفحهٔ اصلی دانشنامه</a>
-  <div class="note" style="margin-top:12px;">
-    دربارهٔ <a href="https://dentcast.ir/about" class="back-link" style="font-weight:400;">دکتر فواد شهابیان</a>
-  </div>
-</footer>
-
-  </main></body>
+</div><footer>
+      <div class="footer-actions">
+        <a class="btn btn-primary" href="/glossary/">بازگشت به صفحهٔ اصلی دانشنامه</a>
+        <a class="btn btn-secondary" href="https://dentcast.ir/about">دربارهٔ دکتر فواد شهابیان</a>
+      </div>
+    </footer>  </main></body>
 </html>
