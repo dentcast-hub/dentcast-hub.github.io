@@ -9,6 +9,13 @@
   </url>
 
   <url>
+    <loc>https://dentcast.ir/glossary/</loc>
+    <lastmod>2025-11-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
     <loc>https://dentcast.ir/notecast/index.html</loc>
     <lastmod>2025-11-06</lastmod>
     <changefreq>weekly</changefreq>
@@ -44,23 +51,24 @@
   </url>
 
   <url>
-    <loc>https://dentcast.ir/about.html</loc>
-    <lastmod>2025-11-07</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.8</priority>
-  </url>
- 
-  <url>
     <loc>https://dentcast.ir/dentcast-plus/index.html</loc>
     <lastmod>2025-11-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
+
   <url>
     <loc>https://dentcast.ir/metanotes/index.html</loc>
     <lastmod>2025-11-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://dentcast.ir/about.html</loc>
+    <lastmod>2025-11-07</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
   </url>
 
 </urlset>
