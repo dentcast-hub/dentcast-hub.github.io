@@ -248,21 +248,35 @@
       line-height:1.8;
     }
 
-    .footer{
-      margin-top:16px;
-      padding:14px 6px 0;
-      color:var(--dc-muted);
-      font-size:12.5px;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:12px;
-      flex-wrap:wrap;
-    }
-    .footer a{
-      color:var(--dc-muted);
-      border-bottom:1px dotted rgba(154,161,179,.45);
-    }
+   .footer{
+  margin-top:auto;              /* 👈 این خط حیاتی */
+  padding:16px 14px 24px;
+  font-size:12.5px;
+  color:var(--dc-muted);
+
+  display:flex;
+  flex-direction:column;        /* 👈 موبایل‌محور */
+  gap:8px;
+  text-align:center;
+
+  border-top:1px solid rgba(255,255,255,.08);
+  background: linear-gradient(
+    180deg,
+    rgba(18,26,43,.6),
+    rgba(18,26,43,.9)
+  );
+}
+
+.footer a{
+  color:var(--dc-muted);
+  text-decoration:none;
+  border-bottom:1px dotted rgba(154,161,179,.45);
+}
+
+.footer a:hover{
+  color:var(--dc-text);
+}
+
    .nav-back {
   margin-bottom: 12px;
 }
@@ -286,6 +300,11 @@
   border-color: rgba(255,255,255,.18);
 }
 
+@media (max-width: 640px) {
+  .top {
+    position: relative; /* ❗️ sticky خاموش */
+  }
+}
 
   </style>
   <script type="application/ld+json">
@@ -350,10 +369,11 @@
     
 
   </main>
-<div class="footer">
-      <div>© 2025 DentCast</div>
-      <div><a href="https://dentcast.ir/about">دربارهٔ دکتر فؤاد شهابیان</a></div>
-    </div>
+<footer class="footer">
+  <div>© 2025 DentCast</div>
+  <div><a href="https://dentcast.ir/about">دربارهٔ دکتر فؤاد شهابیان</a></div>
+</footer>
+
   <script>
     const GLOSSARY_JSON_URL = "glossary.json"; // same folder: /glossary/glossary.json
 
