@@ -263,14 +263,29 @@
       color:var(--dc-muted);
       border-bottom:1px dotted rgba(154,161,179,.45);
     }
-    .nav-back .chip{
-  cursor:pointer;
-  transition:background .15s ease, border-color .15s ease;
+   .nav-back {
+  margin-bottom: 12px;
 }
-.nav-back .chip:hover{
-  background:rgba(255,255,255,.08);
-  border-color:rgba(255,255,255,.18);
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 12.5px;
+  color: var(--dc-muted);
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.10);
+  transition: all .15s ease;
 }
+
+.back-link:hover {
+  color: var(--dc-text);
+  background: rgba(255,255,255,.07);
+  border-color: rgba(255,255,255,.18);
+}
+
 
   </style>
   <script type="application/ld+json">
@@ -306,9 +321,9 @@
 
     <div class="top">
       <div class="hero">
-        <div class="nav-back" style="display:flex; gap:10px; flex-wrap:wrap;">
-  <a href="https://dentcast.ir/" class="chip">← صفحهٔ اصلی</a>
-  <a href="https://dentcast.ir/#hub" class="chip">DentCast Hub</a>
+       
+<div class="nav-back">
+  <a href="https://dentcast.ir/" class="back-link">← بازگشت به صفحهٔ اصلی دنت‌کست</a>
 </div>
 
         <div class="title"><span class="dot"></span>دانشنامهٔ دنت‌کست</div>
