@@ -1,0 +1,52 @@
+{
+  "glossary": [
+    {
+      "slug": "dental-cement",
+      "title": "Dental Cement",
+      "fa_title": "سمان دندانی",
+      "url": "https://dentcast.ir/glossary/dental-cement.html"
+    },
+    {
+      "slug": "traditional-cements",
+      "title": "Traditional Cements",
+      "fa_title": "سمان‌های تردیشنال (سنتی)",
+      "url": "https://dentcast.ir/glossary/traditional-cements.html"
+    },
+    {
+      "slug": "resin-cements",
+      "title": "Resin Cements",
+      "fa_title": "سمان‌های رزینی",
+      "url": "https://dentcast.ir/glossary/resin-cements.html"
+    },
+    {
+      "slug": "self-adhesive-cements",
+      "title": "Self-Adhesive Cements",
+      "fa_title": "سمان‌های سلف‌ادهزیو",
+      "url": "https://dentcast.ir/glossary/self-adhesive-cements.html"
+    },
+    {
+      "slug": "adhesive-resin-cements",
+      "title": "Adhesive Resin Cements",
+      "fa_title": "سمان‌های ادهزیو رزین",
+      "url": "https://dentcast.ir/glossary/adhesive-resin-cements.html"
+    },
+    {
+      "slug": "esthetic-resin-cements",
+      "title": "Esthetic Resin Cements",
+      "fa_title": "سمان‌های استتیک رزین",
+      "url": "https://dentcast.ir/glossary/esthetic-resin-cements.html"
+    },
+    {
+      "slug": "retention",
+      "title": "Retention",
+      "fa_title": "گیر (Retention)",
+      "url": "https://dentcast.ir/glossary/retention.html"
+    },
+    {
+      "slug": "resistance",
+      "title": "Resistance",
+      "fa_title": "مقاومت (Resistance)",
+      "url": "https://dentcast.ir/glossary/resistance.html"
+    }
+  ]
+}
