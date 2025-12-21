@@ -20,19 +20,25 @@
       --radius:18px;
     }
     *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family: Vazirmatn, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      color:var(--dc-text);
-      background: linear-gradient(160deg,var(--dc-bg1),var(--dc-bg2));
-      min-height:100vh;
-    }
+   body{
+  margin:0;
+  font-family: Vazirmatn, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color:var(--dc-text);
+  background: linear-gradient(160deg,var(--dc-bg1),var(--dc-bg2));
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+}
+
+
     a{color:inherit;text-decoration:none}
     .page{
-      max-width:900px;
-      margin:0 auto;
-      padding:18px 14px 44px;
-    }
+  max-width:900px;
+  margin:0 auto;
+  padding:18px 14px 44px;
+  flex:1;               /* 👈 این خط کلیدیه */
+}
+
     .top{
       position:sticky;
       top:0;
@@ -257,6 +263,15 @@
       color:var(--dc-muted);
       border-bottom:1px dotted rgba(154,161,179,.45);
     }
+    .nav-back .chip{
+  cursor:pointer;
+  transition:background .15s ease, border-color .15s ease;
+}
+.nav-back .chip:hover{
+  background:rgba(255,255,255,.08);
+  border-color:rgba(255,255,255,.18);
+}
+
   </style>
   <script type="application/ld+json">
 {
@@ -291,6 +306,11 @@
 
     <div class="top">
       <div class="hero">
+        <div class="nav-back" style="display:flex; gap:10px; flex-wrap:wrap;">
+  <a href="https://dentcast.ir/" class="chip">← صفحهٔ اصلی</a>
+  <a href="https://dentcast.ir/#hub" class="chip">DentCast Hub</a>
+</div>
+
         <div class="title"><span class="dot"></span>دانشنامهٔ دنت‌کست</div>
         <div class="subtitle">فقط عنوان‌ها. مرتب‌شده A–Z. جستجوی زنده + پرش الفبایی.</div>
       </div>
@@ -312,13 +332,13 @@
       <!-- sections injected here -->
     </div>
 
-    <div class="footer">
+    
+
+  </main>
+<div class="footer">
       <div>© 2025 DentCast</div>
       <div><a href="https://dentcast.ir/about">دربارهٔ دکتر فؤاد شهابیان</a></div>
     </div>
-
-  </main>
-
   <script>
     const GLOSSARY_JSON_URL = "glossary.json"; // same folder: /glossary/glossary.json
 
