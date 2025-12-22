@@ -296,6 +296,29 @@
 .back-link:hover {
   color: #e7eaf1;
 }
+section[id^="sec-"] {
+  scroll-margin-top: 160px;
+}
+
+@media (max-width: 640px) {
+  section[id^="sec-"] {
+    scroll-margin-top: 120px;
+  }
+}
+.alphaNav {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;      /* Firefox */
+}
+
+.alphaNav::-webkit-scrollbar {
+  display: none;              /* Chrome / Safari */
+}
+/* اجازه بده اسکرول عمودی صفحه طبیعی بمونه */
+body { touch-action: pan-y; }
 
 
   </style>
@@ -559,6 +582,101 @@
     elSearch.addEventListener("input", onSearch);
 
     init();
+    (function enableGlobalHorizontalSwipeForAlphaNav(){
+  const nav = document.getElementById("alphaNav");
+  const wrap = document.getElementById("listWrap"); // پایین صفحه (لیست + مدخل‌ها)
+  const search = document.getElementById("search");
+  if (!nav || !wrap) return;
+
+  let startX = 0, startY = 0;
+  let startScrollLeft = 0;
+  let swiping = false;
+  let moved = false;
+  let suppressClickUntil = 0;
+
+  const THRESHOLD = 10; // px
+  const SPEED = 1.0;    // 1 = طبیعی، 1.2 تندتر
+
+  // جلوگیری از کلیک ناخواسته بعد از سوایپ روی لینک‌ها
+  document.addEventListener("click", (e) => {
+    if (Date.now() < suppressClickUntil) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  }, true);
+
+  function isInsideSearch(e){
+    return e.target === search || (search && search.contains(e.target));
+  }
+
+  function onStart(e){
+    if (!e.touches || e.touches.length !== 1) return;
+
+    // روی سرچ، اصلاً سوایپ رو فعال نکن
+    if (isInsideSearch(e)) return;
+
+    const t = e.touches[0];
+    startX = t.clientX;
+    startY = t.clientY;
+    startScrollLeft = nav.scrollLeft;
+    swiping = false;
+    moved = false;
+  }
+
+  function onMove(e){
+    if (!e.touches || e.touches.length !== 1) return;
+    if (isInsideSearch(e)) return;
+
+    const t = e.touches[0];
+    const dx = t.clientX - startX;
+    const dy = t.clientY - startY;
+
+    // هنوز تصمیم نگرفتیم: افقیه یا عمودی؟
+    if (!swiping) {
+      // اگر حرکت عمدتاً عمودیه، بیخیال (صفحه خودش اسکرول بشه)
+      if (Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > THRESHOLD) return;
+
+      // اگر افقیه، سوایپ رو روشن کن
+      if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > THRESHOLD) {
+        swiping = true;
+      } else {
+        return;
+      }
+    }
+
+    // از اینجا به بعد افقی قطعی شد → اسکرول نوار حروف
+    moved = true;
+
+    // خیلی مهم: جلوگیری از اسکرول/کلیک پیش‌فرض وقتی داریم سوایپ افقی می‌کنیم
+    e.preventDefault();
+
+    // جهت معکوس: انگشت چپ → نوار راست
+    nav.scrollLeft = startScrollLeft - (dx * SPEED);
+  }
+
+  function onEnd(){
+    if (moved) {
+      // بعد از سوایپ، تاچ نباید لینک باز کنه
+      suppressClickUntil = Date.now() + 350;
+    }
+    swiping = false;
+    moved = false;
+  }
+
+  // روی کل پایین صفحه کار کنه (لیست)
+  wrap.addEventListener("touchstart", onStart, { passive: true });
+  wrap.addEventListener("touchmove", onMove, { passive: false });
+  wrap.addEventListener("touchend", onEnd, { passive: true });
+  wrap.addEventListener("touchcancel", onEnd, { passive: true });
+
+  // و برای اینکه “هرجای صفحه پایین” دقیقاً پوشش داده بشه،
+  // روی خود document هم می‌ذاریم، ولی سرچ رو استثنا می‌کنیم
+  document.addEventListener("touchstart", onStart, { passive: true });
+  document.addEventListener("touchmove", onMove, { passive: false });
+  document.addEventListener("touchend", onEnd, { passive: true });
+  document.addEventListener("touchcancel", onEnd, { passive: true });
+})();
+
   </script>
 </body>
 </html>
