@@ -133,11 +133,21 @@
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type": "Dentist",
+      "@type": "Person",
       "@id": "https://dentcast.ir/#person",
       "name": "دکتر فؤاد شهابیان",
       "jobTitle": "متخصص پروتزهای دندانی و ایمپلنت",
       "url": "https://dentcast.ir/about"
+    },
+    {
+      "@type": "PodcastSeries",
+      "@id": "https://dentcast.ir/#podcast",
+      "name": "DentCast",
+      "url": "https://dentcast.ir/",
+      "inLanguage": "fa",
+      "publisher": {
+        "@id": "https://dentcast.ir/#person"
+      }
     },
     {
       "@type": "PodcastEpisode",
@@ -149,11 +159,11 @@
       "inLanguage": "fa",
       "datePublished": "2025-12-22",
       "image": "https://dentcast.ir/favicon.png",
-      "author": { "@id": "https://dentcast.ir/#person" },
+      "author": {
+        "@id": "https://dentcast.ir/#person"
+      },
       "partOfSeries": {
-        "@type": "PodcastSeries",
-        "name": "DentCast",
-        "url": "https://dentcast.ir/"
+        "@id": "https://dentcast.ir/#podcast"
       },
       "associatedMedia": {
         "@type": "AudioObject",
