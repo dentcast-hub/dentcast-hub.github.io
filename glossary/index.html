@@ -439,32 +439,49 @@ body { touch-action: pan-y; }
     }
 
     function buildAlphaNav(enabledLetters){
-      elAlphaNav.innerHTML = "";
-      ALPHABET.forEach(letter=>{
-        const btn = document.createElement("button");
-        btn.type = "button";
-        btn.className = "alphaBtn" + (enabledLetters.has(letter) ? "" : " disabled");
-        btn.textContent = letter;
+  elAlphaNav.innerHTML = "";
 
-        if (enabledLetters.has(letter)){
-          btn.addEventListener("click", ()=>{
-            const target = document.getElementById("sec-" + letter);
-            if (target){
-              target.scrollIntoView({behavior:"smooth", block:"start"});
-              // active state
-              [...elAlphaNav.querySelectorAll(".alphaBtn")].forEach(b=>b.classList.remove("active"));
-              btn.classList.add("active");
-              // remove active after short time
-              setTimeout(()=>btn.classList.remove("active"), 1200);
-            }
-          });
-        } else {
-          btn.setAttribute("aria-disabled","true");
-        }
+  ALPHABET.forEach(letter => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "alphaBtn" + (enabledLetters.has(letter) ? "" : " disabled");
+    btn.textContent = letter;
 
-        elAlphaNav.appendChild(btn);
+    if (enabledLetters.has(letter)) {
+      btn.addEventListener("click", () => {
+        const target = document.getElementById("sec-" + letter);
+        if (!target) return;
+
+        const topBar = document.querySelector(".top");
+        const offset = topBar ? topBar.offsetHeight + 8 : 0;
+
+        const y =
+          target.getBoundingClientRect().top +
+          window.pageYOffset -
+          offset;
+
+        window.scrollTo({
+          top: y,
+          behavior: "smooth"
+        });
+
+        // active state
+        [...elAlphaNav.querySelectorAll(".alphaBtn")]
+          .forEach(b => b.classList.remove("active"));
+
+        btn.classList.add("active");
+
+        // remove active after short time
+        setTimeout(() => btn.classList.remove("active"), 1200);
       });
+    } else {
+      btn.setAttribute("aria-disabled", "true");
     }
+
+    elAlphaNav.appendChild(btn);
+  });
+}
+
 
     function renderSections(items){
       if (!items.length){
