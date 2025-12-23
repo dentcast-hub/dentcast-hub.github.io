@@ -3328,8 +3328,51 @@
     "patient comfort in implant dentistry"
   ],
   "page_url": "https://dentcast.ir/litecast/lite-CAST9"
+},
+{
+  "type": "notecast",
+  "id": "26",
+  "title": "زمان لود ایمپلنت و Marginal Bone Loss",
+  "caption": "خلاصهٔ نوشتاری نوت‌کست ۲۶ دنت‌کست دربارهٔ بررسی تأثیر زمان لود ایمپلنت (Immediate، Early و Conventional) بر میزان تحلیل استخوان کرستال (Marginal Bone Loss)؛ بر اساس مرور سیستماتیک منتشرشده در Journal of Periodontology (2013) با تمرکز بر نرخ بقا، الگوی تحلیل استخوان و نقش تعیین‌کنندهٔ ثبات اولیه.",
+  "hashtags": [
+    "زمان_لود_ایمپلنت",
+    "لود_فوری_ایمپلنت",
+    "لود_زودهنگام_ایمپلنت",
+    "لود_کلاسیک_ایمپلنت",
+    "تحلیل_استخوان_کرستال",
+    "تحلیل_استخوان_حاشیه‌ای",
+    "ثبات_اولیه",
+    "تورک_اینسرشن",
+    "اسئواینتگریشن",
+    "اسپلینت_ایمپلنت",
+    "بقای_ایمپلنت",
+    "مرور_سیستماتیک",
+    "کارآزمایی_بالینی_تصادفی",
+    "Immediate_Loading",
+    "Early_Loading",
+    "Conventional_Loading",
+    "Marginal_Bone_Loss",
+    "Primary_Stability",
+    "Insertion_Torque",
+    "Implant_Survival",
+    "Journal_of_Periodontology"
+  ],
+  "keywords": [
+    "implant loading protocol",
+    "immediate loading implant",
+    "early loading implant",
+    "conventional loading implant",
+    "marginal bone loss implant",
+    "MBL implant studies",
+    "primary stability insertion torque",
+    "implant survival loading time",
+    "systematic review implant loading",
+    "Journal of Periodontology 2013"
+  ],
+  "url": "https://dentcast.ir/notecast/episode-26"
 }
 ]
+
 
 
 
