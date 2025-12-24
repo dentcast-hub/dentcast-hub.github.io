@@ -132,18 +132,24 @@
 /* ===============================
    Hero Header — Laptop Optimization
 =============================== */
+
+/* ===============================
+   Hero Header — Laptop FIX (No Crop)
+=============================== */
 @media (min-width: 1024px) {
   .hero-header {
-    max-width: 960px;
-    height: 220px;
+    max-width: 880px;
+    height: 200px;
     margin: 24px auto 0;
     border-radius: 18px;
 
-    background-size: cover;
+    background-size: contain;
+    background-repeat: no-repeat;
     background-position: center;
+
+    background-color: #f5f7fb; /* بک نرم برای فضای خالی اطراف */
   }
 }
-
 
   </style>
 </head>
