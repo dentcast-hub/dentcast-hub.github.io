@@ -130,34 +130,24 @@
   margin-bottom: 0.5rem;
 }
 /* ===============================
-   Hero Header — Laptop Optimization
+   HERO HEADER — Tablet & Laptop
+   Full image, no crop, max size
 =============================== */
-
-/* ===============================
-   Hero Header — Laptop FIX (No Crop)
-=============================== */
-/* ===============================
-   Hero Header — Laptop Balanced
-=============================== */
-/* ===============================
-   Hero Header — Laptop FINAL (Larger & Balanced)
-=============================== */
-@media (min-width: 1024px) {
+@media (min-width: 768px) {
   .hero-header {
-    max-width: 1180px;                 /* بزرگ‌تر از تب‌ها */
-    height: clamp(320px, 32vw, 380px); /* هدر واقعی، نه فینگیلی */
+    max-width: 1200px;
     margin: 24px auto 0;
-    border-radius: 20px;
 
-    background-size: contain;          /* X کامل */
+    aspect-ratio: 16 / 9;   /* اگر نسبت دقیق عکس رو می‌دونی، عوضش کن */
+    height: auto;
+
+    background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
 
     background-color: #f5f7fb;
   }
 }
-
-
 
   </style>
 </head>
