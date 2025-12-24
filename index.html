@@ -971,97 +971,103 @@
     </a>  
   </div>  
 </footer>  <div class="bottom-fade"></div>  
-<script>  
-/* ------------------------------------------------------  
-   سیستم تب‌ها و سوایپ تلگرامی  
------------------------------------------------------- */  
-const tabContainer = document.querySelector('.dc-tabs');  
-const tabs = Array.from(document.querySelectorAll('.dc-tab'));  
-const panels = document.querySelectorAll('.dc-panel');  
-const dcTabs = document.getElementById('dcTabs');  function activeIndex() {
-return tabs.findIndex(t => t.classList.contains('active'));
+<script>
+/* ------------------------------------------------------
+   سیستم تب‌ها و سوایپ تلگرامی (نسخه اصلاح‌شده)
+------------------------------------------------------ */
+
+const tabContainer = document.querySelector('.dc-tabs');
+const tabs = Array.from(document.querySelectorAll('.dc-tab'));
+const panels = document.querySelectorAll('.dc-panel');
+
+function activeIndex() {
+  return tabs.findIndex(t => t.classList.contains('active'));
 }
 
 function activateTab(index) {
-if (index < 0 || index >= tabs.length) return;
+  if (index < 0 || index >= tabs.length) return;
 
-tabs.forEach(t => t.classList.remove('active'));
-panels.forEach(p => p.classList.remove('active'));
+  tabs.forEach(t => t.classList.remove('active'));
+  panels.forEach(p => p.classList.remove('active'));
 
-const newTab = tabs[index];
-newTab.classList.add('active');
+  const newTab = tabs[index];
+  newTab.classList.add('active');
 
-const target = newTab.getAttribute('data-target');
-document.getElementById(target).classList.add('active');
+  const target = newTab.getAttribute('data-target');
+  document.getElementById(target).classList.add('active');
 
-const offset =
-newTab.offsetLeft -
-tabContainer.clientWidth / 2 +
-newTab.clientWidth / 2;
+  const offset =
+    newTab.offsetLeft -
+    tabContainer.clientWidth / 2 +
+    newTab.clientWidth / 2;
 
-tabContainer.scrollTo({ left: offset, behavior: "smooth" });
+  tabContainer.scrollTo({ left: offset, behavior: "smooth" });
 }
 
-document.getElementById("scrollLeft")
-.addEventListener("click", () => activateTab(activeIndex() - 1));
-
-document.getElementById("scrollRight")
-.addEventListener("click", () => activateTab(activeIndex() + 1));
-
-tabs.forEach((tab, i) =>
-tab.addEventListener("click", () => activateTab(i))
-);
+/* ------------------------------
+   کلیک روی تب‌ها
+------------------------------ */
+tabs.forEach((tab, i) => {
+  tab.addEventListener("click", () => activateTab(i));
+});
 
 /* ------------------------------------------------------
-سوایپ تلگرامی با اینرسی (کد اصلی شما)
+   سوایپ تلگرامی (فقط روی نوار تب‌ها)
 ------------------------------------------------------ */
-const swipeArea = document.querySelector('.dc-tabs');
+const swipeArea = tabContainer;
+
 let startX = 0;
 let startY = 0;
 let startTime = 0;
 let isHorizontal = false;
 
 swipeArea.addEventListener("touchstart", (e) => {
-const t = e.touches[0];
-startX = t.clientX;
-startY = t.clientY;
-startTime = Date.now();
-isHorizontal = false;
+  const t = e.touches[0];
+  startX = t.clientX;
+  startY = t.clientY;
+  startTime = Date.now();
+  isHorizontal = false;
 }, { passive: true });
 
 swipeArea.addEventListener("touchmove", (e) => {
-const t = e.touches[0];
-const dx = t.clientX - startX;
-const dy = t.clientY - startY;
+  const t = e.touches[0];
+  const dx = t.clientX - startX;
+  const dy = t.clientY - startY;
 
-if (Math.abs(dx) > Math.abs(dy) * 1.05 && Math.abs(dx) > 5) {
-isHorizontal = true;
-e.preventDefault();
-}
+  // تشخیص حرکت افقی واقعی
+  if (Math.abs(dx) > Math.abs(dy) * 1.2 && Math.abs(dx) > 8) {
+    isHorizontal = true;
+    e.preventDefault(); // فقط اینجا اسکرول عمودی قفل می‌شود
+  }
 }, { passive: false });
 
 swipeArea.addEventListener("touchend", (e) => {
-if (!isHorizontal) return;
+  if (!isHorizontal) return;
 
-const t = e.changedTouches[0];
-const dx = t.clientX - startX;
-const dt = Date.now() - startTime;
+  const t = e.changedTouches[0];
+  const dx = t.clientX - startX;
+  const dt = Date.now() - startTime;
 
-const speed = Math.abs(dx) / dt;
-const MIN_DISTANCE = 12;
-const MIN_SPEED = 0.25;
+  // اگر حرکت خیلی کوتاه بوده → کلیک محسوب شود
+  if (Math.abs(dx) < 15) return;
 
-const shouldSwipe =
-Math.abs(dx) > MIN_DISTANCE || speed > MIN_SPEED;
+  const speed = Math.abs(dx) / dt;
 
-if (shouldSwipe) {
-if (dx < 0) {
-activateTab(activeIndex() - 1);
-} else {
-activateTab(activeIndex() + 1);
-}
-}
+  const MIN_DISTANCE = 18;
+  const MIN_SPEED = 0.25;
+
+  const shouldSwipe =
+    Math.abs(dx) > MIN_DISTANCE || speed > MIN_SPEED;
+
+  if (!shouldSwipe) return;
+
+  if (dx < 0) {
+    activateTab(activeIndex() + 1);
+  } else {
+    activateTab(activeIndex() - 1);
+  }
 }, { passive: true });
+
 </script>
 
 <script>  
