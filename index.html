@@ -596,6 +596,46 @@
   text-align: center;
   box-shadow: 0 1px 2px rgba(11, 95, 255, 0.10); /* 🔵 سایه کمتر */
 }
+    /* ================= HERO HEADER (IMAGE ONLY) ================= */
+
+.hero-header {
+  position: relative;
+  width: 100%;
+  height: 260px;
+  background-image: url("/header.webp");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* دکمه CTA */
+.hero-cta {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+
+  padding: 8px 18px;
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.85);
+  color: #0a1a33;
+
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  backdrop-filter: blur(6px);
+
+  transition: all 0.2s ease;
+}
+
+.hero-cta:hover {
+  background: #ffffff;
+  transform: translateY(-1px);
+}
+
       
   </style>    <link rel="icon" href="https://dentcast.ir/logo-v2.png" type="image/png" sizes="192x192">  
   <link rel="apple-touch-icon" href="/logo-v2.png">  
@@ -668,13 +708,14 @@
   
   <meta name="robots" content="max-image-preview:large">  
 </head>  
-<body>  <div id="content-wrap"> <header class="main-header">  
-  <h1>🎙️ دنت‌کست — DentCast</h1>  
-  <h2>پادکست علمی دندان‌پزشکی</h2>  
-  <a href="about.html" class="author-chip">  
-    <span>به روایت دکتر فواد شهابیان متخصص پروتز</span>  
-  </a>  
-</header>  <header class="dc-header">  
+<body>  <div id="content-wrap"> 
+  <header class="hero-header">
+  <a href="about.html" class="hero-cta">
+    زیر نظر دکتر فواد شهابیان
+  </a>
+</header>
+
+  <header class="dc-header">  
   <div class="dc-header-left">  
     <button class="hamburger"><span></span><span></span><span></span></button>  
     <div class="dc-title">DentCast Hub</div>  
