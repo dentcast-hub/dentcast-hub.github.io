@@ -364,88 +364,161 @@ if (consultPatient) {
   اهواز – کیانپارس، مطب دکتر فواد شهابیان<br>
   تلفن: 33380090-061 &nbsp; | &nbsp; DentCast © 1404
 </footer>
-<div class="bottom-fade"></div>
-
 <script>
 /* ------------------------------------------------------
-   سیستم تب‌ها و سوایپ تلگرامی
+   Tabs + Center Scroll
 ------------------------------------------------------ */
 const tabContainer = document.querySelector('.dc-tabs');
 const tabs = Array.from(document.querySelectorAll('.dc-tab'));
 const panels = document.querySelectorAll('.dc-panel');
-const dcTabs = document.getElementById('dcTabs');
 
-function activeIndex() { return tabs.findIndex(t => t.classList.contains('active')); }
+function activeIndex() {
+  return tabs.findIndex(t => t.classList.contains('active'));
+}
 
 function activateTab(index) {
   if (index < 0 || index >= tabs.length) return;
+
   tabs.forEach(t => t.classList.remove('active'));
   panels.forEach(p => p.classList.remove('active'));
-  
-  const newTab = tabs[index];
-  newTab.classList.add('active');
-  document.getElementById(newTab.getAttribute('data-target')).classList.add('active');
 
-  const offset = newTab.offsetLeft - tabContainer.clientWidth / 2 + newTab.clientWidth / 2;
+  const tab = tabs[index];
+  tab.classList.add('active');
+
+  const target = document.getElementById(tab.dataset.target);
+  if (target) target.classList.add('active');
+
+  const offset =
+    tab.offsetLeft -
+    tabContainer.clientWidth / 2 +
+    tab.clientWidth / 2;
+
   tabContainer.scrollTo({ left: offset, behavior: "smooth" });
 }
 
-tabs.forEach((tab, i) => tab.addEventListener("click", () => activateTab(i)));
+tabs.forEach((tab, i) =>
+  tab.addEventListener('click', () => activateTab(i))
+);
+</script>
 
+<script>
 /* ------------------------------------------------------
-   سوایپ (Inertia Swipe)
+   Swipe with Inertia
 ------------------------------------------------------ */
-const swipeArea = document.body;
-let startX = 0;
-let startY = 0;
-let startTime = 0;
-let isHorizontal = false;
+let startX = 0, startY = 0, startTime = 0, isHorizontal = false;
 
-swipeArea.addEventListener("touchstart", (e) => {
+document.body.addEventListener("touchstart", e => {
   const t = e.touches[0];
-  startX = t.clientX; startY = t.clientY; startTime = Date.now(); isHorizontal = false;
+  startX = t.clientX;
+  startY = t.clientY;
+  startTime = Date.now();
+  isHorizontal = false;
 }, { passive: true });
 
-swipeArea.addEventListener("touchmove", (e) => {
+document.body.addEventListener("touchmove", e => {
   const t = e.touches[0];
-  const dx = t.clientX - startX; const dy = t.clientY - startY;
-  if (Math.abs(dx) > Math.abs(dy) * 1.05 && Math.abs(dx) > 5) { isHorizontal = true; }
+  const dx = t.clientX - startX;
+  const dy = t.clientY - startY;
+
+  if (Math.abs(dx) > Math.abs(dy) * 1.05 && Math.abs(dx) > 5) {
+    isHorizontal = true;
+    e.preventDefault();
+  }
 }, { passive: false });
 
-swipeArea.addEventListener("touchend", (e) => {
+document.body.addEventListener("touchend", e => {
   if (!isHorizontal) return;
-  const t = e.changedTouches[0];
-  const dx = t.clientX - startX;
+
+  const dx = e.changedTouches[0].clientX - startX;
   const dt = Date.now() - startTime;
   const speed = Math.abs(dx) / dt;
+
   if (Math.abs(dx) > 30 || speed > 0.25) {
-    if (dx < 0) { activateTab(activeIndex() - 1); } else { activateTab(activeIndex() + 1); }
+    dx < 0
+      ? activateTab(activeIndex() - 1)
+      : activateTab(activeIndex() + 1);
   }
 }, { passive: true });
+</script>
 
+<script>
 /* ==================================================
-   Toggle Search & Newsletter
+   Toggle Search & Newsletter (Safe / Exclusive)
 ================================================== */
-document.addEventListener('click', function(e) {
-  const toggleBtn = e.target.closest('[data-toggle-target]');
-  if (toggleBtn) {
-    const targetId = toggleBtn.getAttribute('data-toggle-target');
-    const targetEl = document.getElementById(targetId);
-    if (targetEl) {
-         targetEl.classList.toggle('open');
-         toggleBtn.classList.toggle('active-toggle');
+const toggleCards = document.querySelectorAll('[data-toggle-target]');
+const globalBox = document.getElementById('dcGlobalBox');
+const resultsBox = document.getElementById('dcResults');
+
+toggleCards.forEach(card => {
+  card.addEventListener('click', e => {
+    e.preventDefault();
+
+    const targetId = card.dataset.toggleTarget;
+    const target = document.getElementById(targetId);
+    if (!target) return;
+
+    const isOpen = target.classList.contains('open');
+
+    // close everything first
+    toggleCards.forEach(c => c.classList.remove('active-toggle'));
+    document
+      .querySelectorAll('.dc-global-filter-box, .newsletter-wrapper')
+      .forEach(el => el.classList.remove('open'));
+
+    if (!isOpen) {
+      target.classList.add('open');
+      card.classList.add('active-toggle');
+
+      setTimeout(() => {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 250);
+    } else if (targetId === 'dcGlobalBox' && resultsBox) {
+      resultsBox.style.display = 'none';
     }
-  }
+  });
 });
 </script>
-  <script>
-/* ===============================
-   PWA Install (Android / iOS)
-=============================== */
 
+<script>
+/* ------------------------------------------------------
+   Close Search Results (×)
+------------------------------------------------------ */
+document.addEventListener('click', e => {
+  if (e.target.classList.contains('dc-close-results')) {
+    const searchCard = document.getElementById('card-search');
+    if (globalBox) globalBox.classList.remove('open');
+    if (searchCard) searchCard.classList.remove('active-toggle');
+    if (resultsBox) resultsBox.style.display = 'none';
+  }
+}, true);
+</script>
+
+<script>
+/* ------------------------------------------------------
+   Contact Cards (mailto)
+------------------------------------------------------ */
+const consultPatient = document.getElementById("card-consult-patient");
+if (consultPatient) {
+  consultPatient.addEventListener("click", () => {
+    window.location.href = "mailto:info@dentcast.ir";
+  });
+}
+
+const contactInfo = document.getElementById("card-contact-info");
+if (contactInfo) {
+  contactInfo.addEventListener("click", () => {
+    window.location.href = "mailto:info@dentcast.ir";
+  });
+}
+</script>
+
+<script>
+/* ==================================================
+   PWA Install
+================================================== */
 let deferredPrompt = null;
 
-window.addEventListener("beforeinstallprompt", (e) => {
+window.addEventListener("beforeinstallprompt", e => {
   e.preventDefault();
   deferredPrompt = e;
 });
@@ -455,37 +528,21 @@ const pwaCard = document.getElementById("card-pwa");
 
 if (pwaCard) {
   pwaCard.addEventListener("click", async () => {
-
-    // iOS → راهنمای دستی
     if (isiOS) {
-      alert("برای نصب در آیفون: دکمه Share و سپس Add to Home Screen را بزنید.");
+      alert("برای نصب در آیفون: Share → Add to Home Screen");
       return;
     }
-
-    // Android ولی هنوز prompt آماده نیست
     if (!deferredPrompt) {
-      alert("در حال حاضر امکان نمایش نصب خودکار وجود ندارد.");
+      alert("در حال حاضر امکان نصب خودکار وجود ندارد.");
       return;
     }
-
-    // Android → نصب واقعی
     deferredPrompt.prompt();
     await deferredPrompt.userChoice;
     deferredPrompt = null;
   });
 }
 </script>
-<script src="/global-search.js?v=2"></script>
-document.addEventListener("click", (e) => {
-  if (e.target && e.target.classList.contains("dc-close-results")) {
-    const globalBox = document.getElementById("dcGlobalBox");
-    if (globalBox) {
-      globalBox.classList.remove("open");
-      document.getElementById("card-search").classList.remove('active-toggle');
-      document.getElementById("dcResults").style.display = "none";
-    }
-  }
-}, true);
 
+<script src="/global-search.js?v=2"></script>
 </body>
 </html>
