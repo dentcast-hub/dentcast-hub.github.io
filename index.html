@@ -129,35 +129,7 @@
 #panel-site .dc-card {
   margin-bottom: 0.5rem;
 }
-/* ===============================
-   HERO HEADER — Tablet & Laptop
-   Full image, no crop, max size
-=============================== */
-/* فقط لپ‌تاپ‌ها – تبلت و موبایل دست نخورده */
-@media (min-width: 1024px) {
-  .hero-header {
-    max-width: 1200px;
-    margin: 12px auto 0;
-
-    height: clamp(160px, 18vw, 220px);
-    /* 👆
-       14 اینچ ≈ 160–180
-       15 اینچ ≈ 180–200
-       16 اینچ ≈ 200–220
-    */
-
-    aspect-ratio: unset;
-
-    background-size: 42%;
-    background-repeat: no-repeat;
-    background-position: center;
-
-    background-color: #f5f7fb;
-  }
-}
-
-
-@media (min-width: 768px) {
+@media (min-width: 768px) and (max-width: 1023px) {
   .hero-header {
     max-width: 1200px;
     margin: 24px auto 0;
@@ -165,13 +137,28 @@
     aspect-ratio: 16 / 9;
     height: auto;
 
-    background-size: 60%;   /* 👈 30٪ کوچک‌تر */
+    background-size: 60%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: #f5f7fb;
+  }
+}
+@media (min-width: 1024px) {
+  .hero-header {
+    max-width: 1200px;
+    margin: 12px auto 0;
+
+    height: clamp(150px, 16vw, 210px);
+    aspect-ratio: unset;
+
+    background-size: 40%;
     background-repeat: no-repeat;
     background-position: center;
 
     background-color: #f5f7fb;
   }
 }
+
 
   </style>
 </head>
