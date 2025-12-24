@@ -133,15 +133,16 @@
    HERO HEADER — Tablet & Laptop
    Full image, no crop, max size
 =============================== */
+
 @media (min-width: 768px) {
   .hero-header {
     max-width: 1200px;
     margin: 24px auto 0;
 
-    aspect-ratio: 16 / 9;   /* اگر نسبت دقیق عکس رو می‌دونی، عوضش کن */
+    aspect-ratio: 16 / 9;
     height: auto;
 
-    background-size: contain;
+    background-size: 70%;   /* 👈 30٪ کوچک‌تر */
     background-repeat: no-repeat;
     background-position: center;
 
