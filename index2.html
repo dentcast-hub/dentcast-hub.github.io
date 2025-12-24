@@ -286,8 +286,6 @@ if (consultPatient) {
 </article>
 
           </div>
-          <span class="dc-chip" style="background:#0b5fff12; border-color:#0b5fff40; color:#0b5fff;">PWA</span>
-        </article>
 
         <article class="dc-card" id="card-search" data-toggle-target="dcGlobalBox">
           <div class="dc-card-main">
@@ -305,7 +303,7 @@ if (consultPatient) {
           <span class="dc-chip">Newsletter</span>
         </article>
 
-        <article class="dc-card" id="card-consult-patient">
+       <article class="dc-card" id="card-consult-info">
   <div class="dc-card-main">
     <div class="dc-card-title">ارتباط و مشاوره با دکتر شهابیان 📞</div>
     <div class="dc-card-caption">درخواست مشاوره</div>
@@ -495,21 +493,20 @@ document.addEventListener('click', e => {
 
 <script>
 /* ------------------------------------------------------
-   Contact Cards (mailto)
+   Contact Cards (mailto) — FIXED
 ------------------------------------------------------ */
-const consultPatient = document.getElementById("card-consult-patient");
-if (consultPatient) {
-  consultPatient.addEventListener("click", () => {
-    window.location.href = "mailto:info@dentcast.ir";
-  });
-}
-
-const contactInfo = document.getElementById("card-contact-info");
-if (contactInfo) {
-  contactInfo.addEventListener("click", () => {
-    window.location.href = "mailto:info@dentcast.ir";
-  });
-}
+[
+  "card-consult-patient",
+  "card-consult-info",
+  "card-contact-info"
+].forEach(id => {
+  const el = document.getElementById(id);
+  if (el) {
+    el.addEventListener("click", () => {
+      window.location.href = "mailto:info@dentcast.ir";
+    });
+  }
+});
 </script>
 
 <script>
