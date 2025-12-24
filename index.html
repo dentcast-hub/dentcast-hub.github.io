@@ -972,9 +972,9 @@
   </div>  
 </footer>  <div class="bottom-fade"></div>  
 <script>
-/* ------------------------------------------------------
-   سیستم تب‌ها و سوایپ تلگرامی (نسخه اصلاح‌شده)
------------------------------------------------------- */
+/* ======================================================
+   Telegram-style Global Swipe Tabs (BODY WIDE)
+====================================================== */
 
 const tabContainer = document.querySelector('.dc-tabs');
 const tabs = Array.from(document.querySelectorAll('.dc-tab'));
@@ -1004,71 +1004,81 @@ function activateTab(index) {
   tabContainer.scrollTo({ left: offset, behavior: "smooth" });
 }
 
-/* ------------------------------
-   کلیک روی تب‌ها
------------------------------- */
+/* ----------------------------
+   Click on Tabs
+---------------------------- */
 tabs.forEach((tab, i) => {
   tab.addEventListener("click", () => activateTab(i));
 });
 
-/* ------------------------------------------------------
-   سوایپ تلگرامی (فقط روی نوار تب‌ها)
------------------------------------------------------- */
-const swipeArea = tabContainer;
+/* ======================================================
+   GLOBAL TELEGRAM-LIKE SWIPE (BODY)
+====================================================== */
 
 let startX = 0;
 let startY = 0;
-let startTime = 0;
+let currentX = 0;
 let isHorizontal = false;
+let dragging = false;
 
-swipeArea.addEventListener("touchstart", (e) => {
+document.addEventListener("touchstart", (e) => {
   const t = e.touches[0];
   startX = t.clientX;
   startY = t.clientY;
-  startTime = Date.now();
+  currentX = startX;
   isHorizontal = false;
+  dragging = false;
 }, { passive: true });
 
-swipeArea.addEventListener("touchmove", (e) => {
+document.addEventListener("touchmove", (e) => {
   const t = e.touches[0];
   const dx = t.clientX - startX;
   const dy = t.clientY - startY;
 
-  // تشخیص حرکت افقی واقعی
-  if (Math.abs(dx) > Math.abs(dy) * 1.2 && Math.abs(dx) > 8) {
-    isHorizontal = true;
-    e.preventDefault(); // فقط اینجا اسکرول عمودی قفل می‌شود
+  // تشخیص افقی واقعی
+  if (!isHorizontal) {
+    if (Math.abs(dx) > Math.abs(dy) * 1.3 && Math.abs(dx) > 6) {
+      isHorizontal = true;
+      dragging = true;
+    } else {
+      return; // اسکرول عمودی آزاد
+    }
   }
+
+  if (!dragging) return;
+
+  e.preventDefault(); // فقط وقتی افقی شد
+
+  currentX = t.clientX;
+
+  // 👈 Drag visual (Telegram style)
+  tabContainer.style.transition = "none";
+  tabContainer.style.transform = `translateX(${dx * 0.35}px)`;
+
 }, { passive: false });
 
-swipeArea.addEventListener("touchend", (e) => {
-  if (!isHorizontal) return;
+document.addEventListener("touchend", () => {
+  if (!dragging) return;
 
-  const t = e.changedTouches[0];
-  const dx = t.clientX - startX;
-  const dt = Date.now() - startTime;
+  const dx = currentX - startX;
 
-  // اگر حرکت خیلی کوتاه بوده → کلیک محسوب شود
-  if (Math.abs(dx) < 15) return;
+  tabContainer.style.transition = "transform 0.25s ease";
+  tabContainer.style.transform = "translateX(0)";
 
-  const speed = Math.abs(dx) / dt;
+  const MIN_DISTANCE = 50;
 
-  const MIN_DISTANCE = 18;
-  const MIN_SPEED = 0.25;
-
-  const shouldSwipe =
-    Math.abs(dx) > MIN_DISTANCE || speed > MIN_SPEED;
-
-  if (!shouldSwipe) return;
-
-  if (dx < 0) {
-    activateTab(activeIndex() + 1);
-  } else {
-    activateTab(activeIndex() - 1);
+  if (Math.abs(dx) > MIN_DISTANCE) {
+    if (dx < 0) {
+      activateTab(activeIndex() + 1);
+    } else {
+      activateTab(activeIndex() - 1);
+    }
   }
-}, { passive: true });
 
+  dragging = false;
+}, { passive: true });
 </script>
+
 
 <script>  
 /* ==================================================  
