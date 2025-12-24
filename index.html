@@ -973,12 +973,13 @@
 </footer>  <div class="bottom-fade"></div>  
 <script>
 /* ======================================================
-   Telegram-style Global Swipe Tabs (BODY WIDE)
+   Unified Telegram-style Swipe (Tabs + Content Together)
 ====================================================== */
 
 const tabContainer = document.querySelector('.dc-tabs');
 const tabs = Array.from(document.querySelectorAll('.dc-tab'));
 const panels = document.querySelectorAll('.dc-panel');
+const swipeContainer = document.getElementById('content-wrap');
 
 function activeIndex() {
   return tabs.findIndex(t => t.classList.contains('active'));
@@ -1004,30 +1005,28 @@ function activateTab(index) {
   tabContainer.scrollTo({ left: offset, behavior: "smooth" });
 }
 
-/* ----------------------------
-   Click on Tabs
----------------------------- */
+/* ---------------- Click Tabs ---------------- */
 tabs.forEach((tab, i) => {
   tab.addEventListener("click", () => activateTab(i));
 });
 
 /* ======================================================
-   GLOBAL TELEGRAM-LIKE SWIPE (BODY)
+   REAL TELEGRAM FEEL SWIPE
 ====================================================== */
 
 let startX = 0;
 let startY = 0;
 let currentX = 0;
-let isHorizontal = false;
 let dragging = false;
+let isHorizontal = false;
 
 document.addEventListener("touchstart", (e) => {
   const t = e.touches[0];
   startX = t.clientX;
   startY = t.clientY;
   currentX = startX;
-  isHorizontal = false;
   dragging = false;
+  isHorizontal = false;
 }, { passive: true });
 
 document.addEventListener("touchmove", (e) => {
@@ -1035,9 +1034,8 @@ document.addEventListener("touchmove", (e) => {
   const dx = t.clientX - startX;
   const dy = t.clientY - startY;
 
-  // تشخیص افقی واقعی
   if (!isHorizontal) {
-    if (Math.abs(dx) > Math.abs(dy) * 1.3 && Math.abs(dx) > 6) {
+    if (Math.abs(dx) > Math.abs(dy) * 1.3 && Math.abs(dx) > 8) {
       isHorizontal = true;
       dragging = true;
     } else {
@@ -1047,14 +1045,12 @@ document.addEventListener("touchmove", (e) => {
 
   if (!dragging) return;
 
-  e.preventDefault(); // فقط وقتی افقی شد
+  e.preventDefault();
 
   currentX = t.clientX;
 
-  // 👈 Drag visual (Telegram style)
-  tabContainer.style.transition = "none";
-  tabContainer.style.transform = `translateX(${dx * 0.35}px)`;
-
+  swipeContainer.style.transition = "none";
+  swipeContainer.style.transform = `translateX(${dx * 0.35}px)`;
 }, { passive: false });
 
 document.addEventListener("touchend", () => {
@@ -1062,10 +1058,10 @@ document.addEventListener("touchend", () => {
 
   const dx = currentX - startX;
 
-  tabContainer.style.transition = "transform 0.25s ease";
-  tabContainer.style.transform = "translateX(0)";
+  swipeContainer.style.transition = "transform 0.28s cubic-bezier(.22,.61,.36,1)";
+  swipeContainer.style.transform = "translateX(0)";
 
-  const MIN_DISTANCE = 50;
+  const MIN_DISTANCE = 60;
 
   if (Math.abs(dx) > MIN_DISTANCE) {
     if (dx < 0) {
