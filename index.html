@@ -995,7 +995,8 @@
 const tabContainer = document.querySelector('.dc-tabs');
 const tabs = Array.from(document.querySelectorAll('.dc-tab'));
 const panels = document.querySelectorAll('.dc-panel');
-const swipeContainer = document.getElementById('content-wrap');
+const swipeContainer = document.getElementById('swipe-body');
+
 
 function activeIndex() {
   return tabs.findIndex(t => t.classList.contains('active'));
