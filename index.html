@@ -2,6 +2,20 @@
 <html lang="fa" dir="rtl">
 <head>
   <meta charset="utf-8">
+  <!-- Favicon / App Icons -->
+<link rel="icon" href="/logo-v2.png" type="image/png" sizes="192x192">
+<link rel="icon" href="/logo-v2.png" type="image/png" sizes="512x512">
+<link rel="apple-touch-icon" href="/logo-v2.png">
+<meta name="theme-color" content="#F3F5F7">
+<link rel="canonical" href="https://dentcast.ir/">
+<meta name="author" content="دکتر فواد شهابیان">
+<meta name="robots" content="max-image-preview:large">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://dentcast.ir/dentcast-cover.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+
   <title>🎙️ دنت‌کست — پادکست علمی دندان‌پزشکی با روایت دکتر فواد شهابیان</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
   <meta name="description" content="پادکست علمی دندان‌پزشکی با روایت دکتر فواد شهابیان؛ مرور ساده و تحلیلی تازه‌ترین مقالات حوزهٔ پروتز، ایمپلنت و دندان‌پزشکی ترمیمی.">
@@ -699,7 +713,81 @@ if (pwaCard) {
   });
 }
 </script>
+<script>
+/* ==================================================
+   Badge System (Tehran Timezone Lock)
+================================================== */
+const contentUpdates = {
+  "card-episodes": "2025-12-15",
+  "btn-notecast":  "2025-12-23",
+  "btn-photocast": "2024-01-01",
+  "btn-clinical":  "2025-12-18",
+  "btn-dentai":    "2025-12-20",
+  "btn-plus":      "2025-12-18",
+  "btn-metanote":  "2025-12-17",
+  "btn-sharehub":  "2025-12-17",
+  "btn-glossary":  "2025-12-17"
+};
+
+function getTehranDate() {
+  return new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Tehran' });
+}
+
+function sanitizeStorage(key) {
+  const val = localStorage.getItem(key);
+  if (!val) return null;
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(val)) {
+    localStorage.removeItem(key);
+    return null;
+  }
+  return val;
+}
+
+function checkUpdates() {
+  for (const [btnId, updateDate] of Object.entries(contentUpdates)) {
+    const btn = document.getElementById(btnId);
+    if (!btn) continue;
+
+    const key = "last_visit_" + btnId;
+    const lastVisit = sanitizeStorage(key) || "1900-01-01";
+
+    if (updateDate > lastVisit) {
+      btn.classList.add("new-badge");
+    }
+  }
+}
+
+function markAsRead(btnId) {
+  const today = getTehranDate();
+  localStorage.setItem("last_visit_" + btnId, today);
+
+  const btn = document.getElementById(btnId);
+  if (btn) btn.classList.remove("new-badge");
+}
+
+document.addEventListener("DOMContentLoaded", checkUpdates);
+</script>
+<script>
+/* ==================================================
+   Mark badges as read on click (works with onclick too)
+================================================== */
+Object.keys(contentUpdates).forEach(id => {
+  const el = document.getElementById(id);
+  if (!el) return;
+
+  el.addEventListener("click", () => {
+    markAsRead(id);
+  }, { capture: true });
+});
+</script>
 
 <script src="/global-search.js?v=2"></script>
+  <script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/service-worker.js')
+    .catch(() => {});
+}
+</script>
+
 </body>
 </html>
