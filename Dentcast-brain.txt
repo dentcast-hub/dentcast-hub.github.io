@@ -3370,8 +3370,41 @@
     "Journal of Periodontology 2013"
   ],
   "url": "https://dentcast.ir/notecast/episode-26"
+},
+{
+  "type": "sharehub",
+  "id": "1",
+  "title": "پیچ هرز شده در پروتزهای متکی بر ایمپلنت",
+  "caption": "مطلبی منتخب از نوشته‌های دیگران در Share Hub دنت‌کست؛ پرداختن به یکی از چالش‌های مهم در پروتزهای متکی بر ایمپلنت، با ذکر منبع و رفرنس شفاف. این محتوا تولید دنت‌کست نیست و به‌صورت curated منتشر شده است.",
+  "author": "دکتر مهدی جوان",
+  "source": "https://instagram.com/mehdijavaninsta",
+  "hashtags": [
+    "پیچ_ایمپلنت",
+    "پیچ_هرز_شده",
+    "پروتز_متکی_بر_ایمپلنت",
+    "کامپلیکیشن_ایمپلنت",
+    "تحویل_پروتز",
+    "تورک_پیچ",
+    "ابزار_ایمپلنت",
+    "Share_Hub",
+    "Curated_Content",
+    "Implant_Prosthetics",
+    "Implant_Complications"
+  ],
+  "keywords": [
+    "implant screw complication",
+    "stripped implant screw",
+    "implant prosthesis complications",
+    "implant screw torque",
+    "implant prosthetic maintenance",
+    "implant tools wear",
+    "curated dental content"
+  ],
+  "url": "https://dentcast.ir/sharehub/share-1.html"
 }
+
 ]
+
 
 
 
