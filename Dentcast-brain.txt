@@ -3408,9 +3408,44 @@
   "caption": "ادامهٔ تحلیل عمیق فرآیند تصمیم‌گیری برای دندان‌های تخریب‌شده؛ همان نگاه سیستمی، زیبایی و فانکشنال فراتر از پریو، این‌بار در لایه‌های بعدی تشخیص و انتخاب بالینی. این قسمت ادامهٔ مستقیم قسمت اول است.",
   "hashtags": ["#کشیدن_دندان", "#نگهداری_دندان", "#ایمپلنت", "#پروتز"],
   "keywords": ["Extraction vs Preservation", "ارزیابی رستوریتیو", "ارزش استراتژیک دندان", "ریسک فاکتورها", "مسیر درمان"]
+},
+{
+  "type": "sharehub",
+  "id": "2",
+  "title": "بهینه‌سازی دقت اسکن داخل دهانی ایمپلنت",
+  "caption": "مطلبی منتخب از نوشته‌های دیگران در Share Hub دنت‌کست؛ مروری بر عوامل مؤثر بر دقت اسکن داخل دهانی ایمپلنت شامل نحوه اسکن، محدوده برداشت، نور محیط، فاصله تیپ، نوع اسکن‌بادی و کنترل رطوبت، با استناد به مقاله مروری Çise Özal. این محتوا تولید دنت‌کست نیست و به‌صورت curated منتشر شده است.",
+  "author": "دکتر علیرضا شیخ‌فرشی",
+  "source": "https://www.instagram.com/alirezafarshii",
+  "hashtags": [
+    "اسکن",
+    "اسکنر",
+    "اسکن_داخل_دهانی",
+    "دقت_اسکن",
+    "ایمپلنت_دیجیتال",
+    "اسکنر_داخل_دهانی",
+    "خطای_اسکن",
+    "Distortion",
+    "Scan_Body",
+    "Digital_Dentistry",
+    "Share_Hub",
+    "Curated_Content",
+    "Intraoral_Scanner",
+    "Intraoral_Scanning"
+  ],
+  "keywords": [
+    "intraoral scanner",
+    "intraoral scan accuracy",
+    "implant digital impression",
+    "scan distortion",
+    "scan body accuracy",
+    "implant digital workflow",
+    "optimize intraoral scan",
+    "dental scanner"
+  ],
+  "url": "https://dentcast.ir/sharehub/share-2.html"
 }
-
 ]
+
 
 
 
