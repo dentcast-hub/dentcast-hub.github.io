@@ -3475,9 +3475,37 @@
     "کیور کامپوزیت"
   ],
   "page_url": "/dentai/dentai-8.html"
+},
+{
+  "type": "litecast",
+  "id": "litecast-11",
+  "title": "بهترین دکتر، بهترین متخصص پروتز یا بهترین کلینیک؟ معیار درست انتخاب چیست؟",
+  "caption": "بررسی اینکه مفهوم «بهترین دکتر» یا «بهترین کلینیک دندانپزشکی» واقعاً چه معنایی دارد، چرا این عناوین تعریف مطلق ندارند و چگونه می‌توان بر اساس شرایط فردی، انتخابی آگاهانه و قابل‌اعتماد انجام داد.",
+  "hashtags": [
+    "#بهترین_دکتر",
+    "#بهترین_کلینیک",
+    "#انتخاب_دندانپزشک",
+    "#متخصص_پروتز",
+    "#ایمپلنت",
+    "#تصمیم_درمانی",
+    "#آگاهی_درمانی"
+  ],
+  "keywords": [
+    "best dentist",
+    "best dental clinic",
+    "choosing a dentist",
+    "prosthodontist selection",
+    "implant dentist",
+    "dental decision making",
+    "patient centered care",
+    "how to choose a dentist"
+  ],
+  "page_url": "https://dentcast.ir/litecast/lite-CAST11.html"
 }
 
+
 ]
+
 
 
 
