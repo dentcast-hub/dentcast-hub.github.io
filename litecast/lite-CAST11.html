@@ -85,6 +85,31 @@
       color: var(--muted);
       font-size: .9rem;
     }
+    article img{
+  display:block;
+  width:100%;
+  max-width:680px;       /* سقف اندازه عکس */
+  height:auto;
+  margin: 0 auto 18px;   /* وسط + فاصله با متن */
+  border-radius: 16px;
+}
+@media (max-width: 520px){
+  body{
+    padding: 26px 16px 52px;
+  }
+  article{
+    padding: 20px 16px;
+  }
+  article img{
+    max-width: 100%;
+    margin-bottom: 14px;
+    border-radius: 14px;
+  }
+}
+figure.hero{
+  margin: 0 0 18px;
+}
+
   </style>
 <script type="application/ld+json">
 {
@@ -190,7 +215,10 @@
   <h1>بهترین دکتر، بهترین متخصص پروتز یا بهترین کلینیک؟ معیار درست انتخاب چیست؟</h1>
 
   <article>
-<img src="litecast1.webp" alt="LiteCast – انتخاب بهترین دکتر یا کلینیک دندانپزشکی" />
+<figure class="hero">
+  <img src="litecast1.webp" alt="LiteCast – انتخاب بهترین دکتر یا کلینیک دندانپزشکی" />
+</figure>
+
     <p>
       بسیاری از کاربران وقتی با یک مشکل دندانی روبه‌رو می‌شوند، اولین چیزی که در گوگل جست‌وجو می‌کنند عباراتی مثل
       «بهترین دکتر»، «بهترین متخصص پروتز»، «بهترین دکتر ایمپلنت» یا «بهترین کلینیک دندانپزشکی» است.
