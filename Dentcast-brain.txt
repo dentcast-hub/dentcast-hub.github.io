@@ -3443,8 +3443,42 @@
     "dental scanner"
   ],
   "url": "https://dentcast.ir/sharehub/share-2.html"
+},
+{
+  "type": "dentai",
+  "id": "dentai-8",
+  "title": "DentAI — کیور کردن یا نکردن باندینگ قبل از کامپوزیت",
+  "caption": "بررسی تحلیلی مزایا و معایب کیور کردن باندینگ پیش از قرار دادن کامپوزیت، با تمرکز بر استحکام باند، لایه مهارکننده اکسیژن، کنترل رطوبت و پیامدهای بالینی.",
+  "hashtags": [
+    "ترمیمی",
+    "باندینگ",
+    "کامپوزیت",
+    "مواد_دندانی",
+    "adhesive",
+    "bonding",
+    "DentAI",
+    "لایه_مهارکننده",
+    "کیور"
+  ],
+  "keywords": [
+    "dental bonding",
+    "adhesive systems",
+    "oxygen inhibition layer",
+    "light curing",
+    "bond strength",
+    "composite resin",
+    "adhesive dentistry",
+    "polymerization",
+    "curing protocol",
+    "مواد ترمیمی",
+    "باندینگ دندانی",
+    "کیور کامپوزیت"
+  ],
+  "page_url": "/dentai/dentai-8.html"
 }
+
 ]
+
 
 
 
