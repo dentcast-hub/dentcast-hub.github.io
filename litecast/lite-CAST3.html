@@ -93,52 +93,56 @@
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
 
   <style>
-    :root {
-      --gold: #FFD95E;
-      --gold-soft: #FFF5CC;
-      --blue: #0B5FFF;
-      --text: #1C1C2E;
-      --muted: #606070;
-      --radius: 18px;
-      --shadow: 0 10px 30px rgba(0,0,0,.08);
-    }
+   :root {
+  --gold: #FFD95E;
+  --gold-soft: #FFF5CC;
+  --blue: #0B5FFF;
+  --text: #1C1C2E;
+  --muted: #606070;
 
-    body {
-      margin: 0;
-      font-family: 'Vazirmatn', sans-serif;
-      background: linear-gradient(180deg, #FFFDEE 0%, #FFFFFF 100%);
-      color: var(--text);
-      max-width: 920px;
-      margin: 0 auto;
-      padding: 40px 22px 60px;
-      line-height: 1.9;
-    }
+  --radius: 18px;
+  --shadow: 0 14px 42px rgba(0,0,0,0.14);
+}
 
-    h1 {
-      text-align: center;
-      color: var(--blue);
-      font-weight: 800;
-      font-size: 2rem;
-      margin-bottom: 8px;
-    }
+/* ===== صفحه ===== */
 
-    h2 {
-      text-align: center;
-      color: var(--text);
-      font-weight: 600;
-      font-size: 1.1rem;
-      margin-bottom: 24px;
-    }
+body {
+  margin: 0;
+  font-family: 'Vazirmatn', sans-serif;
+  background: #fff2b8;
+  color: var(--text);
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 42px 22px 64px;
+  line-height: 1.9;
+}
+/* ===== تیترها ===== */
+h1 {
+  text-align: center;
+  color: var(--blue);
+  font-weight: 800;
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
 
-    article {
-      background: var(--gold-soft);
-      border: 1.5px solid rgba(255,217,94,0.6);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 28px 24px;
-      color: var(--text);
-      line-height: 2;
-    }
+h2 {
+  text-align: center;
+  color: var(--text);
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-bottom: 26px;
+}
+
+/* ===== باکس اصلی محتوا ===== */
+article {
+  background: #ffffff;
+  border-radius: var(--radius);
+  border: 1px solid rgba(0,0,0,0.06);
+  box-shadow: var(--shadow);
+  padding: 30px 26px;
+  color: var(--text);
+  line-height: 2;
+}
 
     strong {
       color: var(--blue);
