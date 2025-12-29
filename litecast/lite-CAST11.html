@@ -16,121 +16,167 @@
   <!-- ⚠️ استایل بدون هیچ تغییری -->
   <style>
     :root {
-      --gold: #FFD95E;
-      --gold-soft: #FFF5CC;
-      --blue: #0B5FFF;
-      --text: #1C1C2E;
-      --muted: #606070;
-      --radius: 18px;
-      --shadow: 0 10px 30px rgba(0,0,0,.08);
-    }
-    body {
-      margin: 0;
-      font-family: 'Vazirmatn', sans-serif;
-      background: linear-gradient(180deg, #FFFDEE 0%, #FFFFFF 100%);
-      color: var(--text);
-      max-width: 920px;
-      margin: 0 auto;
-      padding: 40px 22px 60px;
-      line-height: 1.9;
-    }
-    h1 {
-      text-align: center;
-      color: var(--blue);
-      font-weight: 800;
-      font-size: 2rem;
-      margin-bottom: 8px;
-    }
-    h2 {
-      text-align: center;
-      color: var(--text);
-      font-weight: 600;
-      font-size: 1.1rem;
-      margin-bottom: 24px;
-    }
-    article {
-      background: var(--gold-soft);
-      border: 1.5px solid rgba(255,217,94,0.6);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 28px 24px;
-      color: var(--text);
-      line-height: 2;
-    }
-    strong { color: var(--blue); }
-    .cta-container { margin-top: 40px; text-align: center; }
-    .cta-text { font-weight: bold; margin-bottom: 15px; }
-    .cta-button {
-      display: inline-block;
-      background: #0b5fff;
-      color: white;
-      padding: 14px 30px;
-      border-radius: 50px;
-      font-weight: 700;
-      text-decoration: none;
-    }
-    .back-btn {
-      display: inline-block;
-      background: rgba(11,95,255,0.18);
-      color: #3a84ff;
-      border: 1.8px solid rgba(11,95,255,0.45);
-      border-radius: 12px;
-      padding: 12px 42px;
-      font-weight: 700;
-      text-decoration: none;
-    }
-    footer {
-      margin-top: 50px;
-      text-align: center;
-      color: var(--muted);
-      font-size: .9rem;
-    }
-    article img{
-  display:block;
-  width:100%;
-  max-width:680px;       /* سقف اندازه عکس */
-  height:auto;
-  margin: 0 auto 18px;   /* وسط + فاصله با متن */
+  --gold: #FFD95E;
+  --gold-soft: #FFF5CC;
+  --blue: #0B5FFF;
+  --text: #1C1C2E;
+  --muted: #606070;
+
+  --radius: 18px;
+  --shadow: 0 14px 42px rgba(0,0,0,0.14);
+}
+
+/* ===== صفحه ===== */
+body {
+  margin: 0;
+  font-family: 'Vazirmatn', sans-serif;
+  background: linear-gradient(180deg, #FFD95E 0%, #FFF3C6 100%);
+  color: var(--text);
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 42px 22px 64px;
+  line-height: 1.9;
+}
+
+/* ===== تیترها ===== */
+h1 {
+  text-align: center;
+  color: var(--blue);
+  font-weight: 800;
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+h2 {
+  text-align: center;
+  color: var(--text);
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-bottom: 26px;
+}
+
+/* ===== باکس اصلی محتوا ===== */
+article {
+  background: #ffffff;
+  border-radius: var(--radius);
+  border: 1px solid rgba(0,0,0,0.06);
+  box-shadow: var(--shadow);
+  padding: 30px 26px;
+  color: var(--text);
+  line-height: 2;
+}
+
+/* تاکیدها */
+strong {
+  color: var(--blue);
+  font-weight: 700;
+}
+
+/* ===== تصاویر ===== */
+article img {
+  display: block;
+  width: 100%;
+  max-width: 680px;
+  height: auto;
+  margin: 0 auto 18px;
   border-radius: 16px;
 }
-@media (max-width: 520px){
-  body{
+
+/* hero */
+figure.hero {
+  margin: 0 0 20px;
+}
+
+/* ===== CTA ===== */
+.cta-container {
+  margin-top: 44px;
+  text-align: center;
+}
+
+.cta-text {
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.cta-button {
+  display: inline-block;
+  background: #0b5fff;
+  color: #ffffff;
+  padding: 14px 34px;
+  border-radius: 50px;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 8px 20px rgba(11,95,255,0.35);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.cta-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(11,95,255,0.45);
+}
+
+/* ===== دکمه برگشت ===== */
+.back-btn {
+  display: inline-block;
+  background: rgba(11,95,255,0.15);
+  color: #2f6fff;
+  border: 1.6px solid rgba(11,95,255,0.45);
+  border-radius: 14px;
+  padding: 12px 44px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all .2s ease;
+}
+
+.back-btn:hover {
+  background: rgba(11,95,255,0.25);
+  transform: translateY(-1px);
+}
+
+/* ===== فوتر ===== */
+footer {
+  margin-top: 52px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+footer a {
+  background: rgba(11,95,255,0.85);
+  color: #fff;
+  border: 1px solid rgba(11,95,255,0.5);
+  border-radius: 10px;
+  padding: 6px 14px;
+  font-weight: 500;
+  text-decoration: none;
+  box-shadow: 0 0 8px rgba(11,95,255,0.18);
+  transition: all .25s ease;
+}
+
+footer a:hover {
+  background: rgba(11,95,255,1);
+  transform: scale(1.04);
+}
+
+/* ===== موبایل ===== */
+@media (max-width: 520px) {
+  body {
     padding: 26px 16px 52px;
   }
-  article{
-    padding: 20px 16px;
-    font-size: 1.08rem;    /* یک کوچولو بزرگ‌تر */
-  max-width: 760px;      /* متن خیلی پهن نشه */
-  margin: 0 auto;        /* وسط */
+
+  article {
+    padding: 22px 18px;
+    font-size: 1.08rem;
+    max-width: 760px;
+    margin: 0 auto;
   }
-  article img{
-    max-width: 90%;
+
+  article img {
+    max-width: 92%;
     margin-bottom: 14px;
     border-radius: 14px;
   }
 }
-figure.hero{
-  margin: 0 0 18px;
-}
-    footer a {
-      background: rgba(11,95,255,0.85);
-      color: #fff;
-      border: 1px solid rgba(11,95,255,0.5);
-      border-radius: 8px;
-      padding: 6px 14px;
-      font-weight: 500;
-      text-decoration: none;
-      font-size: .8rem;
-      box-shadow: 0 0 6px rgba(11,95,255,0.15);
-      backdrop-filter: blur(4px);
-      transition: all .25s ease;
-    }
-
-    footer a:hover {
-      background: rgba(11,95,255,1);
-      transform: scale(1.03);
-    }
-
   </style>
 <script type="application/ld+json">
 {
