@@ -3501,10 +3501,41 @@
     "how to choose a dentist"
   ],
   "page_url": "https://dentcast.ir/litecast/lite-CAST11.html"
+},
+{
+  "type": "clinical",
+  "id": "clinical-20",
+  "title": "وقتی به درمان ریشه مطمئن نیستیم؛ طراحی کور و پست به‌عنوان تصمیم درمانی",
+  "caption": "تحلیل بالینی تصمیم‌گیری در شرایطی که کیفیت درمان ریشه قابل اطمینان نیست؛ جایی که طراحی کور و پست به ابزاری برای حفظ امکان درمان مجدد و مدیریت ریسک آینده تبدیل می‌شود.",
+  "hashtags": [
+    "کلینیکال",
+    "درمان_ریشه",
+    "پست_و_کور",
+    "ریتریتمنت",
+    "تصمیم_درمانی",
+    "مدیریت_ریسک",
+    "پروتز",
+    "درمان_محافظه_کارانه"
+  ],
+  "keywords": [
+    "endodontic uncertainty",
+    "post and core design",
+    "retreatment access",
+    "risk management in prosthodontics",
+    "clinical decision making",
+    "restorative planning",
+    "coronal reconstruction",
+    "tooth preservation",
+    "reversible treatment strategy",
+    "case-based prosthodontics"
+  ],
+  "page_url": "https://dentcast.ir/insight/insight-20"
 }
 
 
+
 ]
+
 
 
 
