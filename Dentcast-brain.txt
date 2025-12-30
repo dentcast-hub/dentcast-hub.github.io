@@ -3592,10 +3592,38 @@
     "patient education implant"
   ],
   "page_url": "https://dentcast.ir/litecast/lite-CAST12.html"
+},
+{
+  "type": "litecast",
+  "id": "litecast-13",
+  "title": "مراحل ایمپلنت",
+  "caption": "مراحل انجام ایمپلنت دندانی از بررسی اولیه تا دوره ترمیم و بارگذاری نهایی؛ توضیح ساده و قابل فهم از روند درمان ایمپلنت برای بیماران.",
+  "hashtags": [
+    "#مراحل_ایمپلنت",
+    "#ایمپلنت",
+    "#درمان_ایمپلنت",
+    "#جراحی_ایمپلنت",
+    "#بارگذاری_ایمپلنت",
+    "#ایمپلنت_فوری",
+    "#آگاهی_درمانی"
+  ],
+  "keywords": [
+    "implant steps",
+    "dental implant procedure",
+    "implant treatment stages",
+    "implant process",
+    "implant surgery steps",
+    "implant timeline",
+    "implant healing",
+    "patient guide implant"
+  ],
+  "page_url": "https://dentcast.ir/litecast/lite-CAST13.html"
 }
 
 
+
 ]
+
 
 
 
