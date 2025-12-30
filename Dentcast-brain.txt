@@ -3530,11 +3530,46 @@
     "case-based prosthodontics"
   ],
   "page_url": "https://dentcast.ir/insight/insight-20"
-}
-
-
+},
+{
+  "type": "notecast",
+  "id": "27",
+  "title": "بار–کلیپ یا بال–اورینگ؟ کدوم بهتره؟",
+  "caption": "خلاصهٔ نوشتاری نوت‌کست ۲۷ دنت‌کست درباره مقایسهٔ بیومکانیکی و بالینی سیستم‌های Bar–Clip و Ball–O-ring در اوردنچرهای ایمپلنت‌ساپورت؛ با تمرکز بر رتینشن، فاصله بین ایمپلنت‌ها، تحلیل استخوان، رضایت بیمار و ملاحظات بهداشتی بر اساس مرورهای سیستماتیک.",
+  "hashtags": [
+    "اوردنچر",
+    "اتچمنت_اوردنچر",
+    "بار_کلیپ",
+    "بال_اورینگ",
+    "Bar_Clip",
+    "Ball_O_Ring",
+    "Implant_Overdenture",
+    "Overdenture_Attachment",
+    "Retention",
+    "Biomechanics",
+    "Interimplant_Distance",
+    "Bone_Loss",
+    "Patient_Satisfaction",
+    "Prosthodontics",
+    "Systematic_Review"
+  ],
+  "keywords": [
+    "bar clip overdenture",
+    "ball o ring overdenture",
+    "implant overdenture attachment",
+    "bar versus ball attachment",
+    "overdenture biomechanics",
+    "interimplant distance overdenture",
+    "retention of overdenture attachments",
+    "bone loss overdenture",
+    "patient satisfaction overdenture",
+    "systematic review overdenture"
+  ],
+  "url": "https://dentcast.ir/notecast/episode-27"
+},
 
 ]
+
 
 
 
