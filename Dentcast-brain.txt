@@ -3567,8 +3567,36 @@
   ],
   "url": "https://dentcast.ir/notecast/episode-27"
 },
+{
+  "type": "litecast",
+  "id": "litecast-12",
+  "title": "ایمپلنت چیست؟",
+  "caption": "ایمپلنت دندانی چیست، چه کاربردی دارد، از چه جنسی ساخته می‌شود و در چه شرایطی برای جایگزینی دندان از دست‌رفته استفاده می‌شود؛ توضیح ساده و قابل فهم برای عموم.",
+  "hashtags": [
+    "#ایمپلنت",
+    "#ایمپلنت_دندانی",
+    "#کاشت_دندان",
+    "#جایگزینی_دندان",
+    "#درمان_ایمپلنت",
+    "#روکش_ایمپلنت",
+    "#آگاهی_درمانی"
+  ],
+  "keywords": [
+    "dental implant",
+    "what is dental implant",
+    "tooth replacement",
+    "implant dentistry",
+    "dental implant basics",
+    "implant treatment",
+    "implant explanation",
+    "patient education implant"
+  ],
+  "page_url": "https://dentcast.ir/litecast/lite-CAST12.html"
+}
+
 
 ]
+
 
 
 
