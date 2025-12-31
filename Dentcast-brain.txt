@@ -3618,11 +3618,46 @@
     "patient guide implant"
   ],
   "page_url": "https://dentcast.ir/litecast/lite-CAST13.html"
+},
+{
+  "type": "sharehub",
+  "id": "3",
+  "title": "ایمپلنت در ناحیه قدام: جای دندان ۱ یا ۲؟",
+  "caption": "مطلبی منتخب از نوشته‌های دیگران در Share Hub دنت‌کست؛ بررسی منطق طراحی پروتز در بازسازی چهار دندان قدامی با دو ایمپلنت، با تمرکز بر فاصله بین ایمپلنت‌ها، چالش‌های زیبایی، تشکیل پاپیلا، نقش پونتیک و حذف کانتی‌لیور در تصمیم‌گیری درمانی. این محتوا تولید دنت‌کست نیست و به‌صورت curated منتشر شده است.",
+  "author": "دکتر فرزاد ستایش",
+  "source": "https://www.instagram.com/dr_farzad_setayesh",
+  "hashtags": [
+    "ایمپلنت_قدامی",
+    "دندان_۱_و_۲",
+    "زیبایی_ایمپلنت",
+    "پاپیلا",
+    "پونتیک",
+    "کانتی_لیور",
+    "طراحی_پروتز",
+    "Anterior_Implant",
+    "Implant_Esthetics",
+    "Prosthetic_Design",
+    "Share_Hub",
+    "Curated_Content"
+  ],
+  "keywords": [
+    "anterior implant placement",
+    "implant position central vs lateral",
+    "implant esthetics",
+    "papilla formation",
+    "pontic design",
+    "cantilever in implant prosthodontics",
+    "prosthetic planning anterior",
+    "implant treatment planning"
+  ],
+  "url": "https://dentcast.ir/sharehub/share-3.html"
 }
 
 
 
+
 ]
+
 
 
 
