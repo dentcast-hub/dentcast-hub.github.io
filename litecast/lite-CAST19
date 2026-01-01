@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>فالوآپ ایمپلنت چیست؟ | Lite-CAST</title>
+
+<meta name="description" content="فالوآپ ایمپلنت به بررسی‌های دوره‌ای پس از درمان ایمپلنت گفته می‌شود که برای کنترل سلامت لثه، وضعیت روکش و پایداری درمان انجام می‌گیرد. پیگیری منظم نقش مهمی در موفقیت بلندمدت ایمپلنت دارد.">
+
+<link rel="canonical" href="https://dentcast.ir/litecast/lite-CAST19">
+
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
+
+  <!-- ⚠️ استایل بدون هیچ تغییری -->
+  <style>
+    :root {
+  --gold: #FFD95E;
+  --gold-soft: #FFF5CC;
+  --blue: #0B5FFF;
+  --text: #1C1C2E;
+  --muted: #606070;
+
+  --radius: 18px;
+  --shadow: 0 14px 42px rgba(0,0,0,0.14);
+}
+
+/* ===== صفحه ===== */
+
+body {
+  margin: 0;
+  font-family: 'Vazirmatn', sans-serif;
+  background: #fff2b8;
+  color: var(--text);
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 42px 22px 64px;
+  line-height: 1.9;
+}
+/* ===== تیترها ===== */
+h1 {
+  text-align: center;
+  color: var(--blue);
+  font-weight: 800;
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+h2 {
+  text-align: center;
+  color: var(--text);
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-bottom: 26px;
+}
+
+/* ===== باکس اصلی محتوا ===== */
+article {
+  background: #ffffff;
+  border-radius: var(--radius);
+  border: 1px solid rgba(0,0,0,0.06);
+  box-shadow: var(--shadow);
+  padding: 30px 26px;
+  color: var(--text);
+  line-height: 2;
+}
+
+/* تاکیدها */
+strong {
+  color: var(--blue);
+  font-weight: 700;
+}
+
+/* ===== تصاویر ===== */
+article img {
+  display: block;
+  width: 100%;
+  max-width: 680px;
+  height: auto;
+  margin: 0 auto 18px;
+  border-radius: 16px;
+}
+
+/* hero */
+figure.hero {
+  margin: 0 0 20px;
+}
+
+/* ===== CTA ===== */
+.cta-container {
+  margin-top: 44px;
+  text-align: center;
+}
+
+.cta-text {
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.cta-button {
+  display: inline-block;
+  background: #0b5fff;
+  color: #ffffff;
+  padding: 14px 34px;
+  border-radius: 50px;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 8px 20px rgba(11,95,255,0.35);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.cta-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(11,95,255,0.45);
+}
+
+/* ===== دکمه برگشت ===== */
+.back-btn {
+  display: inline-block;
+  background: rgba(11,95,255,0.15);
+  color: #2f6fff;
+  border: 1.6px solid rgba(11,95,255,0.45);
+  border-radius: 14px;
+  padding: 12px 44px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all .2s ease;
+}
+
+.back-btn:hover {
+  background: rgba(11,95,255,0.25);
+  transform: translateY(-1px);
+}
+
+/* ===== فوتر ===== */
+footer {
+  margin-top: 52px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+footer a {
+  background: rgba(11,95,255,0.85);
+  color: #fff;
+  border: 1px solid rgba(11,95,255,0.5);
+  border-radius: 10px;
+  padding: 6px 14px;
+  font-weight: 500;
+  text-decoration: none;
+  box-shadow: 0 0 8px rgba(11,95,255,0.18);
+  transition: all .25s ease;
+}
+
+footer a:hover {
+  background: rgba(11,95,255,1);
+  transform: scale(1.04);
+}
+
+/* ===== موبایل ===== */
+@media (max-width: 520px) {
+  body {
+    padding: 26px 16px 52px;
+  }
+
+  article {
+    padding: 22px 18px;
+    font-size: 1.08rem;
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  article img {
+    max-width: 92%;
+    margin-bottom: 14px;
+    border-radius: 14px;
+  }
+}
+  </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://dentcast.ir/#person",
+      "name": "دکتر فؤاد شهابیان",
+      "jobTitle": "متخصص پروتزهای دندانی و ایمپلنت",
+      "url": "https://dentcast.ir/about.html",
+      "sameAs": [
+        "https://t.me/dentcast",
+        "https://t.me/dent_AI",
+        "https://podcasts.apple.com/us/podcast/dentcast/id1502032364",
+        "https://www.instagram.com/dr.foad_shahabian/"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://dentcast.ir/#website",
+      "url": "https://dentcast.ir/",
+      "name": "DentCast | پادکست‌های تخصصی و عمومی دندان‌پزشکی",
+      "publisher": {
+        "@id": "https://dentcast.ir/#person"
+      }
+    },
+    {
+      "@type": "Article",
+      "@id": "https://dentcast.ir/litecast/lite-CAST19#article",
+      "url": "https://dentcast.ir/litecast/lite-CAST19",
+      "headline": "فالوآپ ایمپلنت چیست؟",
+      "description": "فالوآپ ایمپلنت به بررسی‌های دوره‌ای پس از درمان ایمپلنت گفته می‌شود که با هدف کنترل سلامت لثه، وضعیت روکش و پایداری درمان انجام می‌شود.",
+      "inLanguage": "fa",
+      "author": {
+        "@id": "https://dentcast.ir/#person"
+      },
+      "publisher": {
+        "@id": "https://dentcast.ir/#person"
+      },
+      "isPartOf": {
+        "@id": "https://dentcast.ir/#website"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://dentcast.ir/litecast/lite-CAST19"
+      },
+      "datePublished": "2026-01-01",
+      "dateModified": "2026-01-01",
+      "keywords": "فالوآپ ایمپلنت, پیگیری ایمپلنت, مراقبت بعد از ایمپلنت, بررسی ایمپلنت, درمان ایمپلنت, دکتر فؤاد شهابیان"
+    }
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "فالوآپ ایمپلنت چیست؟",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "فالوآپ ایمپلنت به بررسی‌های دوره‌ای پس از درمان ایمپلنت گفته می‌شود که با هدف ارزیابی سلامت لثه، وضعیت روکش و عملکرد ایمپلنت انجام می‌شود."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "در فالوآپ ایمپلنت چه مواردی بررسی می‌شود؟",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "در فالوآپ ایمپلنت وضعیت لثه اطراف ایمپلنت، تمیزی ناحیه، ثبات روکش، وجود درد یا لقی و در صورت نیاز تصاویر رادیوگرافی بررسی می‌شود."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "چرا فالوآپ ایمپلنت اهمیت دارد؟",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "فالوآپ منظم کمک می‌کند تغییرات یا مشکلات احتمالی زود تشخیص داده شوند و از تبدیل شدن آن‌ها به مشکلات جدی‌تر جلوگیری شود."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "هر چند وقت یک‌بار باید فالوآپ ایمپلنت انجام شود؟",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "زمان‌بندی فالوآپ به شرایط هر فرد و نظر دندان‌پزشک بستگی دارد، اما معمولاً این بررسی‌ها به‌صورت دوره‌ای انجام می‌شوند."
+      }
+    }
+  ]
+}
+</script>
+
+
+
+
+
+
+</head>
+
+<body>
+<main>
+
+  <h2>🦷 Lite-CAST</h2>
+
+<h1>فالوآپ ایمپلنت چیست؟</h1>
+
+<article>
+
+  <p>
+    فالوآپ ایمپلنت به معنی بررسی‌های دوره‌ای بعد از انجام درمان ایمپلنت است.
+    هدف از این مراجعات، اطمینان از سلامت ایمپلنت، لثه اطراف آن و عملکرد صحیح روکش است.
+  </p>
+
+  <p>
+    به زبان ساده، فالوآپ یعنی چک‌کردن منظم ایمپلنت بعد از پایان درمان تا اگر تغییری ایجاد شد،
+    زود تشخیص داده شود.
+  </p>
+
+  <h2>در فالوآپ ایمپلنت چه چیزهایی بررسی می‌شود؟</h2>
+
+  <p>
+    در جلسات فالوآپ، دندان‌پزشک بخش‌های مختلف اطراف ایمپلنت را ارزیابی می‌کند، از جمله:
+  </p>
+
+  <ul>
+    <li>وضعیت لثه اطراف ایمپلنت</li>
+    <li>تمیزی ناحیه و میزان تجمع پلاک</li>
+    <li>ثبات روکش و اجزای متصل به آن</li>
+    <li>وجود یا نبود درد، لقی یا ناراحتی</li>
+    <li>بررسی رادیوگرافی در صورت نیاز</li>
+  </ul>
+
+  <h2>چرا فالوآپ ایمپلنت اهمیت دارد؟</h2>
+
+  <p>
+    حتی اگر ایمپلنت بدون مشکل کار کند، بررسی دوره‌ای باعث می‌شود تغییرات جزئی قبل از تبدیل شدن
+    به مشکل جدی شناسایی شوند.
+  </p>
+
+  <p>
+    فالوآپ منظم کمک می‌کند:
+  </p>
+
+  <ul>
+    <li>مشکلات احتمالی در مراحل اولیه تشخیص داده شوند</li>
+    <li>سلامت لثه و استخوان اطراف ایمپلنت حفظ شود</li>
+    <li>عملکرد و دوام درمان در بلندمدت بهتر باقی بماند</li>
+  </ul>
+
+  <h2>هر چند وقت یک‌بار باید فالوآپ انجام شود؟</h2>
+
+  <p>
+    زمان‌بندی فالوآپ برای هر فرد می‌تواند متفاوت باشد و به شرایط دهان، نوع درمان و نظر دندان‌پزشک بستگی دارد.
+  </p>
+
+  <p>
+    به‌طور معمول، این بررسی‌ها در فواصل مشخص و منظم انجام می‌شوند تا وضعیت ایمپلنت تحت کنترل باقی بماند.
+  </p>
+
+  <h2>جمع‌بندی</h2>
+
+  <p>
+    فالوآپ بخش مهمی از درمان ایمپلنت است و نقش مهمی در حفظ سلامت، عملکرد و ماندگاری آن دارد.
+    پیگیری منظم باعث می‌شود مشکلات احتمالی زودتر شناسایی و ساده‌تر برطرف شوند.
+  </p>
+
+</article>
+
+
+
+
+
+
+
+
+  <div class="cta-container">
+    <p class="cta-text">برای درمان ایمپلنت با ما تماس بگیرید</p>
+    <a href="tel:06133380090" class="cta-button">📞 تماس با مطب و نوبت‌دهی</a>
+  </div>
+
+</main>
+
+<div style="text-align:center; margin-top:40px;">
+  <a href="javascript:history.back()" class="back-btn">🔙 برگشت به صفحه‌ی قبل</a>
+</div>
+
+<footer>
+  <div style="margin-top:20px;">
+    <a href="https://dentcast.ir/about.html">💬 درباره‌ی دکتر فؤاد شهابیان و دنت‌کست</a>
+  </div>
+  <div style="margin-top:10px;">
+    © 2025 Lite-CAST — طراحی و توسعه توسط <strong style="color:#0B5FFF;">فواد شهابیان</strong>
+  </div>
+</footer>
+
+</body>
+</html>
