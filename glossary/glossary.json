@@ -137,6 +137,27 @@
   "title": "Dentinal Tubules",
   "fa_title": "توبول‌های عاجی",
   "url": "https://dentcast.ir/glossary/dentinal-tubules.html"
+},
+   {
+  "slug": "universal-adhesive",
+  "title": "Universal Adhesive",
+  "fa_title": "باندینگ یونیورسال",
+  "url": "https://dentcast.ir/glossary/universal-adhesive.html"
+},
+    {
+  "slug": "mdp",
+  "title": "MDP (10-MDP Monomer)",
+  "fa_title": "مونومر MDP",
+  "url": "https://dentcast.ir/glossary/mdp.html"
+},
+    {
+  "slug": "hema",
+  "title": "HEMA (Hydroxyethyl Methacrylate)",
+  "fa_title": "مونومر HEMA",
+  "url": "https://dentcast.ir/glossary/hema.html"
 }
+
+
+ 
   ]
 }
