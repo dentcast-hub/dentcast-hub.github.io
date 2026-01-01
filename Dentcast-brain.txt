@@ -3755,11 +3755,39 @@
     "dental implant treatment"
   ],
   "page_url": "https://dentcast.ir/litecast/lite-CAST17.html"
+},
+{
+  "type": "litecast",
+  "id": "litecast-18",
+  "title": "اباتمنت چیست؟",
+  "caption": "اباتمنت بخشی از ساختار ایمپلنت است که روی پایه ایمپلنت قرار می‌گیرد و محل اتصال روکش دندان را فراهم می‌کند. انتخاب صحیح اباتمنت نقش مهمی در زیبایی و عملکرد نهایی درمان دارد.",
+  "hashtags": [
+    "#اباتمنت",
+    "#ایمپلنت",
+    "#اجزای_ایمپلنت",
+    "#روکش_ایمپلنت",
+    "#پروتز_دندانی",
+    "#دندانپزشکی",
+    "#آگاهی_درمانی"
+  ],
+  "keywords": [
+    "abutment",
+    "dental abutment",
+    "implant abutment",
+    "implant components",
+    "implant prosthetics",
+    "implant restoration",
+    "prosthodontics",
+    "dental implant treatment"
+  ],
+  "page_url": "https://dentcast.ir/litecast/lite-CAST18.html"
 }
 
 
 
+
 ]
+
 
 
 
