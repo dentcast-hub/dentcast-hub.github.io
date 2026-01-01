@@ -3781,12 +3781,42 @@
     "dental implant treatment"
   ],
   "page_url": "https://dentcast.ir/litecast/lite-CAST18.html"
+},
+{
+  "type": "litecast",
+  "id": "litecast-19",
+  "title": "فالوآپ ایمپلنت چیست؟",
+  "caption": "فالوآپ ایمپلنت به بررسی‌های دوره‌ای پس از درمان گفته می‌شود که برای کنترل سلامت لثه، وضعیت روکش و پایداری ایمپلنت انجام می‌گیرد. پیگیری منظم نقش مهمی در موفقیت بلندمدت درمان دارد.",
+  "hashtags": [
+    "#فالوآپ_ایمپلنت",
+    "#مراقبت_بعد_از_ایمپلنت",
+    "#پیگیری_ایمپلنت",
+    "#ایمپلنت",
+    "#درمان_ایمپلنت",
+    "#سلامت_دهان",
+    "#آگاهی_درمانی"
+  ],
+  "keywords": [
+    "implant follow-up",
+    "implant maintenance",
+    "dental implant follow up",
+    "implant check-up",
+    "post implant care",
+    "implant monitoring",
+    "implant aftercare",
+    "dental implant maintenance"
+  ],
+  "page_url": "https://dentcast.ir/litecast/lite-CAST19.html"
 }
 
 
 
 
+
+
+
 ]
+
 
 
 
