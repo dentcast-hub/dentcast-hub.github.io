@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
+
 Sitemap: https://dentcast.ir/sitemap.xml
-# AI policy
-https://dentcast.ir/llms.txt
