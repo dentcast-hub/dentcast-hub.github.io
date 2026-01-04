@@ -3807,6 +3807,30 @@
     "dental implant maintenance"
   ],
   "page_url": "https://dentcast.ir/litecast/lite-CAST19.html"
+},
+{
+  "type": "meta",
+  "id": "meta-07",
+  "title": "فایبر پست؛ مسئله‌ای که بیش از حد جدی گرفته شد",
+  "caption": "تحلیل انتقادی نقش فایبر پست در دندان‌های اندوتراشده؛ از چالش‌های باندینگ به ریشه و ایزولاسیون تا شکنندگی سیستم و مقایسهٔ بالینی با پست فلزی در تصمیم‌گیری پروتزی.",
+  "hashtags": [
+    "متانوت",
+    "فایبر_پست",
+    "پست_فلزی",
+    "کور_دندانی",
+    "اندودنتیکس_ترمیمی",
+    "پروتز",
+    "تفکر_بالینی"
+  ],
+  "keywords": [
+    "fiber post",
+    "metal post",
+    "post and core dentistry",
+    "bonding to root dentin",
+    "prosthodontic clinical decision",
+    "endodontically treated teeth"
+  ],
+  "page_url": "https://dentcast.ir/metanotes/meta-7"
 }
 
 
@@ -3816,6 +3840,7 @@
 
 
 ]
+
 
 
 
