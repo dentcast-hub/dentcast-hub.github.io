@@ -209,12 +209,9 @@
 
   <h2>🧠 MetaNote 01</h2>
   <h1>چرا پیش‌آگهی‌های ذکر شده در مقالات برای دندانهای درمان پریو شده، برای تصمیم‌گیری زیبایی قابل اتکا نیستند؟</h1>
-<button id="readMetaNote"
-        style="margin-bottom:12px; font-size:14px; cursor:pointer;">
-▶ خواندن صوتی
-</button>
 
-<div class="text-box" id="metaText">
+
+<div class="text-box">
 
 <p>
 تو دندان پریویی، مشکلاتی مثل <strong>migration، black triangle، بی‌نظمی لثه و طول کرون زیاد</strong>  
@@ -283,42 +280,8 @@
     <strong style="color:#ffd46a;">فواد شهابیان</strong>
   </div>
 </footer>
-<script>
-const btn = document.getElementById("readMetaNote");
-const textBox = document.getElementById("metaText");
 
-let utterance = null;
-let playing = false;
 
-btn.addEventListener("click", () => {
-
-  // اگر در حال پخش است → Pause
-  if (playing) {
-    speechSynthesis.pause();
-    btn.innerText = "▶ ادامه";
-    playing = false;
-    return;
-  }
-
-  // اگر قبلاً ساخته نشده → بساز
-  if (!utterance) {
-    utterance = new SpeechSynthesisUtterance(textBox.innerText);
-    utterance.lang = "fa-IR";
-    utterance.rate = 1;
-    utterance.pitch = 1;
-
-    utterance.onend = () => {
-      playing = false;
-      btn.innerText = "▶ خواندن صوتی";
-      utterance = null;
-    };
-  }
-
-  speechSynthesis.speak(utterance);
-  btn.innerText = "⏸ توقف";
-  playing = true;
-});
-</script>
 
 </body>
 </html>
