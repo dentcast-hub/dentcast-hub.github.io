@@ -144,6 +144,28 @@ ul li::before {
       .caption p{font-size:1rem;}
       .text-box{padding:20px 18px; font-size:.98rem;}
     }
+    .text-box{
+  position: relative;
+}
+
+.listen-btn{
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  background: rgba(255,255,255,0.9);
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 12px;
+  padding: 6px 12px;
+  font-size: 13px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+  backdrop-filter: blur(6px);
+}
+
+.listen-btn:hover{
+  background: #fff;
+}
+
   </style>
   <script type="application/ld+json">
 {
@@ -225,6 +247,14 @@ ul li::before {
 </div>
 
   <div class="text-box">
+<!-- 🔊 Listen button -->
+<button class="listen-btn" aria-label="شنیدن متن">
+  🔊 شنیدن متن
+</button>
+
+<audio id="dentai-audio" preload="none">
+  <source src="https://sphinx.acast.com/p/open/s/671fc6259b2f915baeb24936/e/6720725da73223e19bf716c8/media.mp3" type="audio/mpeg">
+</audio>
 
   <h2>مقدمه:</h2>
   <p>
@@ -354,5 +384,20 @@ ul li::before {
   </div>
 
   </footer>
+  <script>
+const btn = document.querySelector('.listen-btn');
+const audio = document.getElementById('dentai-audio');
+
+btn.addEventListener('click', () => {
+  if (audio.paused) {
+    audio.play();
+    btn.textContent = '⏸ توقف';
+  } else {
+    audio.pause();
+    btn.textContent = '🔊 شنیدن متن';
+  }
+});
+</script>
+
 </body>
 </html>
