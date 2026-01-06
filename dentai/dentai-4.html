@@ -331,5 +331,20 @@ ul li::before {
   </div>
 
   </footer>
+  <script>
+const btn = document.querySelector('.listen-btn');
+const audio = document.getElementById('dentai-audio');
+
+btn.addEventListener('click', () => {
+  if (audio.paused) {
+    audio.play();
+    btn.textContent = '⏸ توقف';
+  } else {
+    audio.pause();
+    btn.textContent = '🔊 شنیدن متن';
+  }
+});
+</script>
+
 </body>
 </html>
