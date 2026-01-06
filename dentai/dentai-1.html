@@ -157,6 +157,28 @@
       h2{font-size:1.15rem; margin-top:28px;}
       h3{font-size:1.15rem; margin-top:28px;} /* Mobile H3 matches H2 */
     }
+    .text-box{
+  position: relative;
+}
+
+.listen-btn{
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  background: rgba(255,255,255,0.9);
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 12px;
+  padding: 6px 12px;
+  font-size: 13px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+  backdrop-filter: blur(6px);
+}
+
+.listen-btn:hover{
+  background: #fff;
+}
+
   </style>
   <script type="application/ld+json">
 {
@@ -214,6 +236,14 @@
   </div>
 
   <div class="text-box">
+    <!-- 🔊 Listen button -->
+  <button class="listen-btn" aria-label="شنیدن متن">
+    🔊 شنیدن متن
+  </button>
+
+  <audio id="dentai-audio" preload="none">
+    <source src="https://sphinx.acast.com/p/open/s/671fc6259b2f915baeb24936/e/67206f7efab47fdf26eb9ddf/media.mp3" type="audio/mpeg">
+  </audio>
     <h2>مقدمه :</h2>
     <ul>
       <li>خطوط ترک یا Craze lines  در مینای دندان، به خصوص در دندان‌های جلویی یا anterior teeth، رایج هستند و اغلب به عنوان بخشی طبیعی از روند پیری در نظر گرفته می‌شوند.</li>
@@ -339,5 +369,20 @@
   </div>
 
   </footer>
+  <script>
+const btn = document.querySelector('.listen-btn');
+const audio = document.getElementById('dentai-audio');
+
+btn.addEventListener('click', () => {
+  if (audio.paused) {
+    audio.play();
+    btn.textContent = '⏸ توقف';
+  } else {
+    audio.pause();
+    btn.textContent = '🔊 شنیدن متن';
+  }
+});
+</script>
+
 </body>
 </html>
