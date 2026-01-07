@@ -3831,6 +3831,38 @@
     "endodontically treated teeth"
   ],
   "page_url": "https://dentcast.ir/metanotes/meta-7"
+},
+{
+  "type": "dentai",
+  "id": "dentai-9",
+  "title": "DentAI — تکنیک Snow Plow در ترمیم‌های کامپوزیتی",
+  "caption": "بررسی تکنیک Snow Plow در درمان ترمیمی با کامپوزیت؛ روشی مبتنی بر استفاده همزمان از کامپوزیت flowable و معمولی با هدف کاهش ریزنشت، بهبود تطابق با دیواره‌های حفره و تحلیل مزایا و معایب بالینی.",
+  "hashtags": [
+    "Snow_Plow",
+    "ترمیم_کامپوزیتی",
+    "کامپوزیت",
+    "کامپوزیت_فلو",
+    "ریز_نشت",
+    "باندینگ",
+    "ترمیم_دندان",
+    "DentAI"
+  ],
+  "keywords": [
+    "Snow Plow technique",
+    "composite restoration",
+    "flowable composite",
+    "conventional composite",
+    "microleakage",
+    "composite bonding",
+    "restorative dentistry",
+    "direct composite restoration",
+    "ترمیم کامپوزیتی",
+    "کامپوزیت فلو",
+    "تکنیک اسنوپلاو",
+    "ریز نشت",
+    "باندینگ دندانی"
+  ],
+  "page_url": "/dentai/dentai-9.html"
 }
 
 
@@ -3839,7 +3871,9 @@
 
 
 
+
 ]
+
 
 
 
