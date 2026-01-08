@@ -3863,6 +3863,30 @@
     "باندینگ دندانی"
   ],
   "page_url": "/dentai/dentai-9.html"
+},
+{
+  "type": "dentcast_plus",
+  "video": "4",
+  "title": "یک تست ساده قبل از سمان؛ جلوی افتادن‌های بعدی را می‌گیرد",
+  "caption": "بررسی بالینی ثبات و عدم چرخش روکش روی اباتمنت قبل از سمان کردن و توضیح اینکه چرا نبود anti-rotation باعث انتقال نیروی shear به سمان و دباندینگ می‌شود.",
+  "hashtags": [
+    "#دنتکست_پلاس",
+    "#ایمپلنت",
+    "#روکش_ایمپلنت",
+    "#اباتمنت",
+    "#سمان",
+    "#پروتز"
+  ],
+  "keywords": [
+    "anti-rotation",
+    "implant abutment",
+    "cement-retained crown",
+    "shear force",
+    "debonding",
+    "prosthodontics",
+    "implant crown stability"
+  ],
+  "page_url": "https://dentcast.ir/dentcast-plus/video-4"
 }
 
 
@@ -3872,7 +3896,9 @@
 
 
 
+
 ]
+
 
 
 
