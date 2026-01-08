@@ -3887,17 +3887,41 @@
     "implant crown stability"
   ],
   "page_url": "https://dentcast.ir/dentcast-plus/video-4"
+},
+{
+  "type": "notecast",
+  "id": "28",
+  "title": "اصول آنالیز و طراحی لبخند؛ قوانین McLaren",
+  "caption": "خلاصه‌ای از دنت‌کست درباره اصول آنالیز و طراحی لبخند بر اساس قوانین McLaren؛ از ماکروآنالیز صورت و تعیین لبه اینسایزال تا آنالیز دنتوجینجیوال و تناسبات زیبایی دندان‌های قدامی.",
+  "hashtags": [
+    "طراحی_لبخند",
+    "زیبایی_دندان",
+    "پروتز",
+    "SmileDesign",
+    "McLaren",
+    "McLaren_Law",
+    "مکلارن",
+    "قانون_مکلارن",
+    "آنالیز_لبخند"
+  ],
+  "keywords": [
+    "طراحی لبخند",
+    "آنالیز لبخند",
+    "McLaren",
+    "مکلارن",
+    "قانون 4-2-2",
+    "تناسبات دندانی",
+    "ماکروآنالیز صورت",
+    "incisal edge position"
+  ],
+  "url": "https://dentcast.ir/notecast/episode-28"
 }
 
 
 
 
-
-
-
-
-
 ]
+
 
 
 
