@@ -2,7 +2,7 @@ name: Deploy DentCast to Arvan Object Storage
 
 on:
   push:
-    branches: ["main"]   # اگر برنچت master است، همین را به master تغییر بده
+    branches: ["main"]   # اگر master است، بنویس master
 
 jobs:
   deploy:
@@ -12,10 +12,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install AWS CLI
+      - name: Install AWS CLI via pip
         run: |
-          sudo apt-get update
-          sudo apt-get install -y awscli
+          python3 -m pip install --upgrade pip
+          pip install awscli
 
       - name: Sync site to Arvan S3
         env:
