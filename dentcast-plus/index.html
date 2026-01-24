@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎬 DentCast+ | آموزش‌های ویدیویی دندان‌پزشکی</title>
+  <meta name="description" content="آموزش‌های ویدیویی کوتاه و تخصصی در حوزه پروتز، تراش، ایمپلنت و نکات بالینی — با روایت دکتر فؤاد شهابیان.">
+  <link rel="canonical" href="https://dentcast.ir/dentcast-plus/index.html">
+
+  <link rel="icon" href="https://dentcast.ir/logo-v2.png" type="image/png" sizes="512x512">
+  <link rel="apple-touch-icon" href="https://dentcast.ir/logo-v2.png">
+  <link rel="stylesheet" href="/global-search.css?v=1">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": "https://dentcast.ir/#person",
+        "name": "دکتر فؤاد شهابیان",
+        "jobTitle": "متخصص پروتزهای دندانی و ایمپلنت",
+        "url": "https://dentcast.ir/about.html",
+        "image": "https://dentcast.ir/logo-v2.png",
+        "sameAs": [
+          "https://t.me/dentcast",
+          "https://t.me/dent_AI",
+          "https://podcasts.apple.com/us/podcast/dentcast/id1502032364",
+          "https://castbox.fm/va/4889954",
+          "https://www.youtube.com/@Dentcast",
+          "https://www.instagram.com/dr.foad_shahabian/"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://dentcast.ir/#website",
+        "url": "https://dentcast.ir/",
+        "name": "DentCast"
+      },
+      {
+        "@type": "CollectionPage",
+        "@id": "https://dentcast.ir/dentcast-plus/index.html",
+        "name": "DentCast+ — آموزش‌های ویدیویی",
+        "description": "فهرست ویدیوهای آموزشی کوتاه و تخصصی در حوزه دندان‌پزشکی عملی.",
+        "inLanguage": "fa",
+        "isPartOf": { "@id": "https://dentcast.ir/#website" },
+        "author": { "@id": "https://dentcast.ir/#person" }
+      }
+    ]
+  }
+  </script>
+
+
+
+  <style>
+    :root{
+      --blue:#0b5fff;
+      --bg:#0a0d14;
+      --bg2:#101522;
+      --cardBg:rgba(30,40,60,.4);
+      --cardBorder:rgba(255,255,255,.08);
+      --text:#e7eaf1;
+      --muted:#9aa1b3;
+      --radius:20px;
+      --shadow:0 10px 30px rgba(0,0,0,.4);
+    }
+
+    html,body{
+      margin:0;
+      height:100%;
+      font-family:'Vazirmatn',sans-serif;
+      background:radial-gradient(circle at 50% 0%, rgba(11,95,255,.15), transparent 60%),
+                 linear-gradient(180deg,var(--bg),var(--bg2));
+      color:var(--text);
+    }
+
+    body{
+      display:flex;
+      justify-content:center;
+    }
+
+    #page-content{
+      width:100%;
+      max-width:1000px;
+      padding:40px 24px 60px;
+      transition:filter .25s ease;
+    }
+
+    body.search-open #page-content{
+      filter:blur(8px);
+      pointer-events:none;
+      user-select:none;
+    }
+
+    h1{
+      text-align:center;
+      color:var(--blue);
+      font-weight:800;
+      font-size:2.2rem;
+      margin:10px 0;
+    }
+
+    h2{
+      text-align:center;
+      color:var(--muted);
+      font-weight:500;
+      margin:0 0 40px;
+    }
+
+    .video-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+      gap:30px;
+      margin-top:40px;
+    }
+
+    .video-card{
+      background:var(--cardBg);
+      border:1px solid var(--cardBorder);
+      border-radius:var(--radius);
+      overflow:hidden;
+      text-decoration:none;
+      color:var(--text);
+      box-shadow:var(--shadow);
+      transition:.3s;
+    }
+
+    .video-card:hover{
+      transform:translateY(-6px);
+      border-color:rgba(11,95,255,.4);
+    }
+
+    .thumb{
+      aspect-ratio:16/9;
+      background:linear-gradient(135deg,#1a2a4a,#0b1526);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .play-icon{
+      width:50px;
+      height:50px;
+      border-radius:50%;
+      background:#0b5fff;
+      position:relative;
+    }
+
+    .play-icon::before{
+      content:"";
+      position:absolute;
+      left:20px;
+      top:17px;
+      width:0;
+      height:0;
+      border-top:8px solid transparent;
+      border-bottom:8px solid transparent;
+      border-left:14px solid #fff;
+    }
+
+    .video-info{
+      padding:20px 24px;
+    }
+
+    .video-title{
+      font-weight:700;
+      margin-bottom:6px;
+    }
+
+    .video-meta{
+      font-size:.85rem;
+      color:var(--muted);
+    }
+
+    .newsletter-wrapper{
+      max-width:600px;
+      margin:60px auto;
+      padding:0 15px;
+    }
+
+    .newsletter-box{
+      background:rgba(20,30,50,.6);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:16px;
+      padding:24px;
+      text-align:center;
+      backdrop-filter:blur(12px);
+    }
+
+    .newsletter-title{
+      font-weight:700;
+      color:#bcd3ff;
+      margin-bottom:6px;
+    }
+
+    .newsletter-text{
+      font-size:.85rem;
+      color:#8890a5;
+      margin-bottom:18px;
+    }
+
+    .newsletter-form-group{
+      display:flex;
+      gap:8px;
+    }
+
+    .newsletter-input{
+      flex:1;
+      padding:10px 14px;
+      border-radius:10px;
+      border:1px solid rgba(255,255,255,.1);
+      background:rgba(0,0,0,.25);
+      color:#fff;
+    }
+
+    .newsletter-btn{
+      background:#0b5fff;
+      border:none;
+      border-radius:10px;
+      padding:0 20px;
+      color:#fff;
+      font-weight:600;
+      cursor:pointer;
+    }
+
+    footer{
+      text-align:center;
+      color:var(--muted);
+      margin-top:60px;
+      font-size:.85rem;
+    }
+
+    .btn-home,.btn-about{
+      display:inline-block;
+      margin:10px;
+      text-decoration:none;
+      font-weight:600;
+    }
+
+    .btn-home{
+      color:#3a84ff;
+    }
+
+    .btn-about{
+      color:#111;
+      background:#ffdb4d;
+      padding:6px 14px;
+      border-radius:8px;
+    }
+  </style>
+  <script>
+    !function (t, e, n) {
+        t.yektanetAnalyticsObject = n, t[n] = t[n] || function () {
+            t[n].q.push(arguments)
+        }, t[n].q = t[n].q || [];
+        var a = new Date, r = a.getFullYear().toString() + "0" + a.getMonth() + "0" + a.getDate() + "0" + a.getHours(),
+            c = e.getElementsByTagName("script")[0], s = e.createElement("script");
+        s.id = "ua-script-nzlddHSQ"; s.dataset.analyticsobject = n;
+        s.async = 1; s.type = "text/javascript";
+        s.src = "https://cdn.yektanet.com/rg_woebegone/scripts_v3/nzlddHSQ/rg.complete.js?v=" + r, c.parentNode.insertBefore(s, c)
+    }(window, document, "yektanet");
+</script>
+</head>
+
+<body>
+
+<div id="page-content">
+
+<h2>🎬 DentCast+</h2>
+<h1>آموزش‌های ویدیویی کوتاه و تخصصی دندانپزشکی</h1>
+
+<div class="dc-global-filter-box" id="dcGlobalBox">
+  <button class="dc-close-results">✖</button>
+  <h3 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h3>
+  <input id="dcSearch" class="dc-search-input" placeholder="جستجو در همهٔ بخش‌های دنت‌کست…">
+  <div class="dc-filter-list">
+    <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
+    <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
+    <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
+    <button class="dc-filter-btn active" data-type="litecast">لایت‌کست</button>
+    <button class="dc-filter-btn active" data-type="photocast">فوتوکست</button>
+    <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
+    <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
+  </div>
+  <div class="dc-results-box" id="dcResults"></div>
+</div>
+
+<div class="video-grid">
+  <a href="video-4.html" class="video-card">
+  <div class="thumb">
+    <div class="play-icon"></div>
+  </div>
+  <div class="video-info">
+    <div class="video-title">یک تست ساده قبل از سمان؛ جلوی افتادن‌های بعدی را می‌گیرد</div>
+    <div class="video-meta">دکتر فواد شهابیان • DentCast+</div>
+  </div>
+</a>
+
+  <a href="video-3.html" class="video-card">
+  <div class="thumb">
+    <div class="play-icon"></div>
+  </div>
+  <div class="video-info">
+    <div class="video-title">وقتی روکش راک دارد؛ ترتیب بررسی مهم است</div>
+    <div class="video-meta">دکتر فواد شهابیان • DentCast+</div>
+  </div>
+  </a>
+  <a href="video-2.html" class="video-card">
+    <div class="thumb"><div class="play-icon"></div></div>
+    <div class="video-info">
+      <div class="video-title">آخرین مرحله قبل از خداحافظی با بیمار</div>
+      <div class="video-meta">دکتر فواد شهابیان • پروتکل چک فرمیتوس</div>
+    </div>
+  </a>
+
+  <a href="video-1.html" class="video-card">
+    <div class="thumb"><div class="play-icon"></div></div>
+    <div class="video-info">
+      <div class="video-title">نکات شخصی که کیفیت تراش را واقعاً بهتر می‌کنند</div>
+      <div class="video-meta">دکتر فواد شهابیان • ۳ دقیقه</div>
+    </div>
+  </a>
+</div>
+
+
+<footer>
+  <div>
+    <a href="https://dentcast.ir/index.html" class="btn-home">🏠 برگشت به صفحه‌ی اصلی</a>
+  </div>
+  <div>
+    <a href="https://dentcast.ir/about.html" class="btn-about">💬 درباره‌ی دکتر فواد شهابیان و دنت‌کست</a>
+  </div>
+  <div>© 2025 DentCast — طراحی و توسعه توسط <strong style="color:#ffd46a;">فواد شهابیان</strong></div>
+</footer>
+
+</div>
+
+<script src="/global-search.js?v=5"></script>
+<script src="/global-search-ui.js?v=1"></script>
+<script src="/shake-search.js?v=1"></script>
+
+</body>
+</html>
