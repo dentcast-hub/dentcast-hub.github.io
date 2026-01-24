@@ -12,14 +12,13 @@
 <meta name="robots" content="max-image-preview:large">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://dentcast.ir/dentcast-cover.webp">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
 
 
   <title>🎙️ دنت‌کست — پادکست علمی دندان‌پزشکی با روایت دکتر فواد شهابیان</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
   <meta name="description" content="پادکست علمی دندان‌پزشکی با روایت دکتر فواد شهابیان؛ مرور ساده و تحلیلی تازه‌ترین مقالات حوزهٔ پروتز، ایمپلنت و دندان‌پزشکی ترمیمی.">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap">
+ 
  <meta property="og:type" content="website">
 <meta property="og:title" content="DentCast — پادکست علمی دندان‌پزشکی">
 <meta property="og:description" content="پلتفرم آموزشی دنت‌کست؛ مرور تحلیلی مقالات پروتز، ایمپلنت و تصمیم‌گیری بالینی.">
@@ -54,7 +53,7 @@
     body { margin: 0; font-family: "Vazirmatn", sans-serif; background: var(--bg); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; }
 
     /* ------------------------- تب‌ها ------------------------- */
-    .dc-tabs-wrapper { background: var(--header-bg); padding: 0.8rem 0.5rem 0.6rem; box-shadow: 0 4px 12px rgba(15,23,42,0.08); position: sticky; top: 0; z-index: 10; }
+    .dc-tabs-wrapper { background: var(--header-bg); padding: 0.8rem 0.5rem 0.6rem; box-shadow: 0 4px 12px rgba(15,23,42,0.08); position: sticky; top: 0; }
     .dc-tabs { display: flex; gap: 0.5rem; overflow-x: auto; padding-inline: 0.25rem; scrollbar-width: none; }
     .dc-tab { flex: 0 0 auto; padding: 0.25rem 0.9rem; border-radius: 999px; border: 1px solid #d4d4d8; background: var(--tab-bg); color: var(--tab-text); font-size: 0.8rem; display: inline-flex; gap: 0.35rem; cursor: pointer; transition: all 0.18s ease-out; }
     .dc-tab.active { background: var(--tab-bg-active); color: var(--tab-text-active); border-color: var(--tab-bg-active); }
@@ -68,7 +67,7 @@
 
     .dc-section-title { font-size: .99rem; font-weight: 800; margin: .6rem 0 .25rem; }
     .dc-section-sub { font-size: .78rem; color: var(--text-sub); margin-bottom: .75rem; }
-    .dc-card-list { display: flex; flex-direction: column; gap: .4rem; }
+    .dc-card-list { display: flex; flex-direction: column; gap: 0.7rem; }
 
     .dc-card {
       background: var(--card-bg); border-radius: .9rem; border: 1px solid var(--card-border);
@@ -193,8 +192,130 @@
   border: 0;
 }
 
+.banner {
+    background-color: hsla(0, 0%, 3%, 0.85);
+    padding: 20;
+    text-align: center;
+    border: none;
+    border-radius: 1px;
+    position: relative;
+ width: 100%;
+ height: 100%;
+}
+.banner h3{
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #ff0404;
+  margin: 0;
+}
 
+.banner p {
+    font-size: 14px;
+    margin-top: 0px;
+    color: white;
+    padding-top: 35px;
+    padding-right:20px;
+    text-align: right;
+}
+.banner a {
+    color: #007bff;
+    text-decoration: underline;
+}
+.banner a:hover {
+  text-decoration: underline;
+}
 
+.close{
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #fa0a0a;
+    cursor: pointer;
+}
+.closee{
+    position: absolute;
+    top: 50px;
+    right: 30px;
+    font-size: 3.5rem;
+    font-weight: bold;
+    color: #fa0a0a;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.listen-btn{
+  position: absolute;
+  bottom: 18px;
+  left: 14px;
+  background: rgba(110, 193, 232, 0.9);
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 12px;
+  padding: 3px 6px;
+  font-size: 12px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+  backdrop-filter: blur(6px);
+}
+
+.listen-btn:hover{
+  background: rgba(110, 193, 232, 0.9);
+}
+.banner h4 {
+    font-size: 14px;
+    margin-top: 0px;
+    color: rgb(110, 193, 232);
+    padding-right:20px;
+    text-align: right;
+}
+/* ---------- thumbnail ---------- */
+.thumb{
+    width: 50px;          /* عرض دلخواه برای کوچک نمایش */
+    cursor: pointer;
+    transition: opacity .2s;
+    position: absolute;
+    left: 20px;
+    top:100px;
+}
+.thumb:hover{opacity:.8;}
+
+/* ---------- lightbox (پوشش تمام صفحه) ---------- */
+.lightbox{
+    position: fixed;
+    inset: 0;                     /* top‑right‑bottom‑left: 0 */
+    background: rgba(0,0,0,.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity .3s, visibility .3s;
+    z-index: 10;
+}
+.lightbox.show{
+    visibility: visible;
+    opacity: 1;
+}
+
+/* تصویر بزرگ داخل لایت‌باکس */
+.lightbox .big{
+    max-width: 90vw;
+    max-height: 90vh;
+    transform: scale(0.9);
+    transition: transform .2s;
+}
+.lightbox.show .big{
+  transform: scale(1);
+}
+body.modal-open{
+  overflow: hidden;
+}
+
+ 
   </style>
   <script type="application/ld+json">
 {
@@ -287,9 +408,21 @@
   ]
 }
 </script>
-
+<script>
+    !function (t, e, n) {
+        t.yektanetAnalyticsObject = n, t[n] = t[n] || function () {
+            t[n].q.push(arguments)
+        }, t[n].q = t[n].q || [];
+        var a = new Date, r = a.getFullYear().toString() + "0" + a.getMonth() + "0" + a.getDate() + "0" + a.getHours(),
+            c = e.getElementsByTagName("script")[0], s = e.createElement("script");
+        s.id = "ua-script-nzlddHSQ"; s.dataset.analyticsobject = n;
+        s.async = 1; s.type = "text/javascript";
+        s.src = "https://cdn.yektanet.com/rg_woebegone/scripts_v3/nzlddHSQ/rg.complete.js?v=" + r, c.parentNode.insertBefore(s, c)
+    }(window, document, "yektanet");
+</script>
 </head>
 <body>
+  
   <h1 class="visually-hidden">
   دنت‌کست — پادکست علمی دندان‌پزشکی با روایت دکتر فواد شهابیان
 </h1>
@@ -299,6 +432,29 @@
     <a href="about.html" class="hero-cta">
       زیر نظر دکتر فواد شهابیان
     </a>
+    <div class="banner">
+      <h3>پالس</h3>
+    <span class="close" onclick="this.parentNode.style.display='none'">&times;</span>
+     <button class="listen-btn" aria-label="شنیدن موسیقی">
+     شنیدن آخرین قفلی
+  </button>
+
+  <audio id="dentai-audio" preload="none">
+    <source src="https://ghofli.s3.ir-thr-at1.arvanstorage.ir/ghofli3.mp3?versionId=" type="audio/mpeg">
+  </audio>
+    <p> همه <strong>اپیزودهای اصلی و فرعی </strong>دنت کست  از طریق سایت قابل شنیدن هستن<br>صوت همه ی نوت کستها درست شد</p>
+
+<img src="https://pulsee.s3.ir-thr-at1.arvanstorage.ir/pulse3.png?versionId="
+     alt="عکس نمونه"
+     class="thumb"
+     id="thumb">
+
+<!-- لایت‌باکس برای نمایش بزرگ -->
+
+    <h4>:دو سه ساعت نت وصل شد در حد دو  تا استوری<br> و دانلود اپیزودهای دنتکست که نداشتم و تمام <br>:گوگل دسترسی به سایت نداره دیگه ایندکس نیستیم <br> با سرچ پیدا نمیشیم  <br>موسیقی قفلی:من دلم نمیخواست هر روز باشم از استرس فردا بیقرار<br>من دلم نمیخواست بشه این , یه زندگی داره بهم ایران  بدهی</h4>
+
+</div>
+   
   </header>
 
   <div class="dc-tabs-wrapper">
@@ -320,8 +476,7 @@
 
   <main class="dc-main">
     <section class="dc-panel active" id="panel-studio">
-      <h3 class="dc-section-title">دنت‌کست برای دندانپزشکان</h3>
-      <p class="dc-section-sub" style="visibility:hidden;">‎</p>
+      <h3 class="dc-section-title">‎</p>
       <div class="dc-card-list">
         
         <article class="dc-card featured-card" id="card-episodes" onclick="window.location.href='episodes.html'">
@@ -381,11 +536,13 @@
           </a>
         </article>
       </div>
+      
+      <p class="dc-section-sub" style="visibility:hidden;">‎</p>
     </section>
 
     <section class="dc-panel" id="panel-sharehub">
-      <h3 class="dc-section-title">بخش تکمیلی</h3>
-      <p class="dc-section-sub" style="visibility:hidden;">‎</p>
+      <h3 class="dc-section-title">‎</p>
+      
       <div class="dc-card-list">
        <article class="dc-card" id="btn-sharehub" onclick="window.location.href='https://dentcast.ir/sharehub/'">
   <div class="dc-card-main">
@@ -411,11 +568,12 @@
           <span class="dc-chip">Glossary</span>
         </article>
       </div>
+      <p class="dc-section-sub" style="visibility:hidden;">‎</p>
     </section>
 
     <section class="dc-panel" id="panel-patient">
-      <h3 class="dc-section-title"> مخصوص مخاطبان غیر دندانپزشک </h3>
-      <p class="dc-section-sub" style="visibility:hidden;">‎</p>
+      <h3 class="dc-section-title">‎</p>
+     
       <div class="dc-card-list">
         <article class="dc-card" id="card-litecast" onclick="window.location.href='https://dentcast.ir/litecast/'">
           <div class="dc-card-main">
@@ -443,11 +601,12 @@ if (consultPatient) {
 </script>
 
       </div>
+       <p class="dc-section-sub" style="visibility:hidden;">‎</p>
     </section>
 
     <section class="dc-panel" id="panel-site">
-      <h3 class="dc-section-title"> اطلاعات و ابزارها </h3>
-      <p class="dc-section-sub" style="visibility:hidden;">‎</p>
+      <h3 class="dc-section-title">‎</p>
+      
       <div class="dc-card-list">
        <article class="dc-card" id="card-pwa" style="border-color:#0b5fff30; background:#f5f8ff;">
   <div class="dc-card-main">
@@ -513,30 +672,7 @@ if (consultPatient) {
 
       </div>
 
-     <div id="mlb2-33724259" class="newsletter-wrapper ml-subscribe-form ml-subscribe-form-33724259">  
-  <div class="newsletter-box">  
-    <div class="row-form">  
-      <div class="newsletter-title">📬 خبرنامه‌ی دنت‌کست</div>  
-      <div class="newsletter-text">اطلاع‌رسانی اپیزودها و مطالب جدید (بدون اسپم)</div>  
-
-      <form class="ml-block-form" action="https://assets.mailerlite.com/jsonp/1939653/forms/171891141676893488/subscribe" data-code="" method="post" target="_blank">  
-        <div class="newsletter-form-group">  
-          <input aria-label="email" aria-required="true" type="email" class="newsletter-input" data-inputmask="" name="fields[email]" placeholder="ایمیل شما..." autocomplete="email" required>  
-          <button type="submit" class="newsletter-btn">  
-            عضویت <span class="ml-form-embedSubmitLoad">...</span>  
-          </button>  
-        </div>  
-        <input type="hidden" name="ml-submit" value="1">  
-        <input type="hidden" name="anticsrf" value="true">  
-      </form>  
-    </div>  
-
-    <div class="row-success success-message" style="display:none; background: rgba(16, 185, 129, 0.1); color: #059669; padding: 10px; border-radius: 8px; margin-top: 10px; font-size: 0.85rem;">  
-      ✅ ایمیل شما با موفقیت ثبت شد.  
-    </div>  
-  </div>  
-</div>
-    </section>
+    
   </main>
 </div>
 
@@ -544,6 +680,7 @@ if (consultPatient) {
   اهواز – کیانپارس، مطب دکتر فواد شهابیان<br>
   تلفن: 33380090-061 &nbsp; | &nbsp; DentCast © 1404
 </footer>
+
 <script>
 /* ------------------------------------------------------
    Tabs + Center Scroll
@@ -737,56 +874,56 @@ const contentUpdates = {
   "btn-glossary":  "2025-12-17"
 };
 
-function getTehranDate() {
-  return new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Tehran' });
-}
+//** function getTehranDate() {
+ //** return new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Tehran' });
+//** }
 
-function sanitizeStorage(key) {
-  const val = localStorage.getItem(key);
-  if (!val) return null;
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(val)) {
-    localStorage.removeItem(key);
-    return null;
-  }
-  return val;
-}
+//**function sanitizeStorage(key) {
+  //const val = localStorage.getItem(key);
+  //if (!val) return null;
+  //if (!/^\d{4}-\d{2}-\d{2}$/.test(val)) {
+    //localStorage.removeItem(key);
+    //return null;
+  //}
+ // return val;
+//}
 
-function checkUpdates() {
-  for (const [btnId, updateDate] of Object.entries(contentUpdates)) {
-    const btn = document.getElementById(btnId);
-    if (!btn) continue;
+//function checkUpdates() {
+ // for (const [btnId, updateDate] of Object.entries(contentUpdates)) {
+  //  const btn = document.getElementById(btnId);
+  //  if (!btn) continue;
 
-    const key = "last_visit_" + btnId;
-    const lastVisit = sanitizeStorage(key) || "1900-01-01";
+   // const key = "last_visit_" + btnId;
+   // const lastVisit = sanitizeStorage(key) || "1900-01-01";
 
-    if (updateDate > lastVisit) {
-      btn.classList.add("new-badge");
-    }
-  }
-}
+    //if (updateDate > lastVisit) {
+   //   btn.classList.add("new-badge");
+   // }
+ // }
+//}
 
-function markAsRead(btnId) {
-  const today = getTehranDate();
-  localStorage.setItem("last_visit_" + btnId, today);
+//function markAsRead(btnId) {
+ // const today = getTehranDate();
+ // localStorage.setItem("last_visit_" + btnId, today);
 
-  const btn = document.getElementById(btnId);
-  if (btn) btn.classList.remove("new-badge");
-}
+ // const btn = document.getElementById(btnId);
+ // if (btn) btn.classList.remove("new-badge");
+//}
 
-document.addEventListener("DOMContentLoaded", checkUpdates);
+//document.addEventListener("DOMContentLoaded", checkUpdates);
 </script>
 <script>
 /* ==================================================
    Mark badges as read on click (works with onclick too)
 ================================================== */
-Object.keys(contentUpdates).forEach(id => {
-  const el = document.getElementById(id);
-  if (!el) return;
+//Object.keys(contentUpdates).forEach(id => {
+ // const el = document.getElementById(id);
+  //if (!el) return;
 
-  el.addEventListener("click", () => {
-    markAsRead(id);
-  }, { capture: true });
-});
+ // el.addEventListener("click", () => {
+  //  markAsRead(id);
+ // }, { capture: true });
+//});
 </script>
 
 <script src="/global-search.js?v=2"></script>
@@ -797,14 +934,57 @@ if ('serviceWorker' in navigator) {
 }
 </script>
 <script>
-function ml_webform_success_33724259() {
-  const formRow = document.querySelector('.ml-subscribe-form-33724259 .row-form');
-  const successRow = document.querySelector('.ml-subscribe-form-33724259 .row-success');
+//function ml_webform_success_33724259() {
+ // const formRow = document.querySelector('.ml-subscribe-form-33724259 .row-form');
+ // const successRow = document.querySelector('.ml-subscribe-form-33724259 .row-success');
 
-  if (formRow) formRow.style.display = 'none';
-  if (successRow) successRow.style.display = 'block';
-}
+ // if (formRow) formRow.style.display = 'none';
+ // if (successRow) successRow.style.display = 'block';
+//}
 </script>
-<script src="https://groot.mailerlite.com/js/w/webforms.min.js?v176e10baa5e7ed80d35ae235be3d5024" type="text/javascript"></script>
+<script>
+const btn = document.querySelector('.listen-btn');
+const audio = document.getElementById('dentai-audio');
+
+btn.addEventListener('click', () => {
+  if (audio.paused) {
+    audio.play();
+    btn.textContent = '⏸ توقف';
+  } else {
+    audio.pause();
+    btn.textContent ='شنیدن آخرین قفلی'  ;
+  }
+});
+</script>
+<div class="lightbox" id="lightbox">
+    <span class="closee" id="closeBtn">&times;</span>
+    <img src="https://pulsee.s3.ir-thr-at1.arvanstorage.ir/pulse3.png?versionId="
+         alt="عکس بزرگ"
+         class="big">
+</div>
+<script>
+const thumb     = document.getElementById('thumb');
+const lightbox  = document.getElementById('lightbox');
+const closeBtn  = document.getElementById('closeBtn');
+
+thumb.addEventListener('click', () => {
+    lightbox.classList.add('show');
+    document.body.classList.add('modal-open');   // غیرفعال کردن اسکرول
+});
+
+closeBtn.addEventListener('click', () => {
+    lightbox.classList.remove('show');
+    document.body.classList.remove('modal-open');
+});
+
+// بستن هم با کلیک روی پس‌زمینه (خارج از تصویر)
+lightbox.addEventListener('click', e => {
+    if (e.target === lightbox) {
+        lightbox.classList.remove('show');
+        document.body.classList.remove('modal-open');
+    }
+});
+</script>
+
 </body>
 </html>

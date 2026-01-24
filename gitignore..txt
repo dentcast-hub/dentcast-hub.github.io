@@ -1,0 +1,7 @@
+.DS_store
+Thumbs.db
+node_modules/
+.env
+.vscode/
+dist/
+build/

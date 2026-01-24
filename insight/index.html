@@ -55,8 +55,7 @@
 }
   </script>
 
-  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" as="style">
-  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
+
 
   <style>
     :root {
@@ -205,6 +204,18 @@
       .wrap{padding:0 14px;}
     }
   </style>
+  <script>
+    !function (t, e, n) {
+        t.yektanetAnalyticsObject = n, t[n] = t[n] || function () {
+            t[n].q.push(arguments)
+        }, t[n].q = t[n].q || [];
+        var a = new Date, r = a.getFullYear().toString() + "0" + a.getMonth() + "0" + a.getDate() + "0" + a.getHours(),
+            c = e.getElementsByTagName("script")[0], s = e.createElement("script");
+        s.id = "ua-script-nzlddHSQ"; s.dataset.analyticsobject = n;
+        s.async = 1; s.type = "text/javascript";
+        s.src = "https://cdn.yektanet.com/rg_woebegone/scripts_v3/nzlddHSQ/rg.complete.js?v=" + r, c.parentNode.insertBefore(s, c)
+    }(window, document, "yektanet");
+</script>
 </head>
 
 <body>
@@ -277,161 +288,7 @@
     </div>
   </div>
 
-  <style>
-    .newsletter-wrapper {
-      max-width: 600px;
-      margin: 40px auto 40px;
-      padding: 0 15px;
-      font-family: 'Vazirmatn', sans-serif;
-      box-sizing: border-box;
-    }
-
-    .newsletter-box {
-      background: rgba(255, 255, 255, 0.6);
-      border: 1px solid rgba(11, 95, 255, 0.25);
-      border-radius: 18px;
-      padding: 24px 28px;
-      text-align: center;
-      backdrop-filter: blur(12px);
-      box-shadow: 0 10px 40px rgba(11, 95, 255, 0.1);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .newsletter-box::before {
-      content: "";
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, transparent, #0b5fff, transparent);
-      opacity: 0.6;
-    }
-
-    .newsletter-title {
-      font-size: 1rem;
-      font-weight: 800;
-      color: #0b5fff;
-      margin-bottom: 8px;
-    }
-
-    .newsletter-text {
-      font-size: 0.85rem;
-      color: #555;
-      margin-bottom: 20px;
-      line-height: 1.7;
-    }
-
-    .newsletter-form-group {
-      display: flex;
-      gap: 10px;
-      position: relative;
-    }
-
-    .newsletter-input {
-      flex: 1;
-      padding: 10px 14px;
-      border-radius: 12px;
-      border: 1px solid #dae1e7;
-      background: #fff;
-      color: #333;
-      font-family: 'Vazirmatn', sans-serif;
-      font-size: 0.9rem;
-      outline: none;
-      transition: all 0.3s;
-    }
-
-    .newsletter-input:focus {
-      border-color: #0b5fff;
-      box-shadow: 0 0 0 4px rgba(11,95,255,0.1);
-    }
-
-    .newsletter-input::placeholder {
-      color: #999;
-      font-size: 0.85rem;
-    }
-
-    .newsletter-btn {
-      background: #0b5fff;
-      color: white;
-      border: none;
-      padding: 0 24px;
-      border-radius: 12px;
-      font-family: 'Vazirmatn', sans-serif;
-      font-weight: 700;
-      font-size: 0.9rem;
-      cursor: pointer;
-      transition: all 0.3s;
-      white-space: nowrap;
-      box-shadow: 0 4px 12px rgba(11,95,255,0.25);
-    }
-
-    .newsletter-btn:hover {
-      background: #004ad4;
-      transform: translateY(-2px);
-    }
-
-    .success-message {
-      display: none;
-      background: rgba(16, 185, 129, 0.1);
-      color: #047857;
-      border: 1px solid rgba(16, 185, 129, 0.3);
-      border-radius: 12px;
-      padding: 15px;
-      margin-top: 15px;
-      font-weight: 600;
-      font-size: 0.9rem;
-    }
-
-    .ml-form-embedSubmitLoad { display: none; }
-
-    @media (max-width: 480px) {
-      .newsletter-form-group { flex-direction: column; }
-      .newsletter-btn { padding: 12px; width: 100%; }
-    }
-  </style>
-
-  <div id="mlb2-33724259" class="newsletter-wrapper ml-subscribe-form ml-subscribe-form-33724259">
-    <div class="newsletter-box">
-
-      <div class="row-form">
-        <div class="newsletter-title">📬 خبرنامه‌ی دنت‌کست</div>
-        <div class="newsletter-text">
-          برای اطلاع از تحلیل‌های جدید کلینیکی و مطالب آموزشی، ایمیل‌تان را ثبت کنید.
-        </div>
-
-        <form class="ml-block-form" action="https://assets.mailerlite.com/jsonp/1939653/forms/171891141676893488/subscribe" data-code="" method="post" target="_blank">
-
-          <div class="newsletter-form-group">
-            <input aria-label="email" aria-required="true" type="email" class="newsletter-input" data-inputmask="" name="fields[email]" placeholder="ایمیل شما..." autocomplete="email" required>
-
-            <button type="submit" class="newsletter-btn">
-              عضویت
-              <span class="ml-form-embedSubmitLoad">...</span>
-            </button>
-          </div>
-
-          <input type="hidden" name="ml-submit" value="1">
-          <input type="hidden" name="anticsrf" value="true">
-        </form>
-      </div>
-
-      <div class="row-success success-message">
-        ✅ ایمیل شما با موفقیت ثبت شد.
-      </div>
-
-    </div>
-  </div>
-
-  <script>
-    function ml_webform_success_33724259() {
-      var formRow = document.querySelector('.ml-subscribe-form-33724259 .row-form');
-      var successRow = document.querySelector('.ml-subscribe-form-33724259 .row-success');
-      if(formRow) formRow.style.display = 'none';
-      if(successRow) successRow.style.display = 'block';
-    }
-  </script>
-  <script src="https://groot.mailerlite.com/js/w/webforms.min.js?v176e10baa5e7ed80d35ae235be3d5024" type="text/javascript"></script>
-
+  
   <footer>
 
     <div>

@@ -636,7 +636,33 @@
   transform: translateY(-1px);
 }
 
-      
+  .banner {
+    background-color: #f0f0f0;
+    padding: 20px;
+    text-align: center;
+    border: 1px solid #ccc;
+    position: relative;
+
+}
+.banner p {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+.banner a {
+    color: #007bff;
+    text-decoration: underline;
+}
+
+.close{
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+}
+    
   </style>    <link rel="icon" href="https://dentcast.ir/logo-v2.png" type="image/png" sizes="192x192">  
   <link rel="apple-touch-icon" href="/logo-v2.png">  
   <meta name="theme-color" content="#F3F5F7">  
@@ -708,7 +734,14 @@
   
   <meta name="robots" content="max-image-preview:large">  
 </head>  
-<body>  <div id="content-wrap"> 
+<body>
+  
+  <div class="banner">
+    <span class="close" onclick="this.parentNode.style.display='none'">&times;</span>
+    <p> سلام با توجه به وضعیت اینترنت به جهت افزایش کارایی خبرنامه و اطلاع رسانی مطالب جدید با برچسب از سایت حذف شد،اپیزودهای اصلی دنتکست از آخر تا شماره ی ۶۲ از طریق سایت در دسترس است،</p>
+</div>
+
+<div id="content-wrap"> 
   <header class="hero-header">
   <a href="about.html" class="hero-cta">
     زیر نظر دکتر فواد شهابیان
