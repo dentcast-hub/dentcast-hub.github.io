@@ -3945,7 +3945,132 @@
     "البو زون"
   ],
   "page_url": "/dentai/dentai-10.html"
+},
+{
+  "type": "notecast",
+  "id": "29",
+  "title": "دسته‌بندی سرامیک‌های دندانی بر اساس فاز و ترکیب شیمیایی",
+  "caption": "خلاصه‌ای از دنت‌کست درباره دسته‌بندی سرامیک‌های دندانی به سه گروه اصلی گلاس ماتریکس، پلی‌کریستالین و رزین ماتریکس؛ با تمرکز بر ترکیب شیمیایی، وجود یا عدم وجود فاز گلاس، و تفاوت در حساسیت به اچ با HF و روش‌های آماده‌سازی سطح.",
+  "hashtags": [
+    "سرامیک_دندانی",
+    "DentalCeramics",
+    "گلاس_ماتریکس",
+    "پلی_کریستالین",
+    "رزین_ماتریکس",
+    "HF_etching",
+    "پروتز",
+    "مواد_دندانی"
+  ],
+  "keywords": [
+    "سرامیک دندانی",
+    "glass matrix ceramics",
+    "polycrystalline ceramics",
+    "resin matrix ceramics",
+    "HF etching",
+    "IPS e.max",
+    "feldspathic ceramic",
+    "lithium disilicate",
+    "zirconia reinforced lithium disilicate",
+    "Vita In-Ceram",
+    "fluorapatite glass ceramic"
+  ],
+  "page_url": "https://dentcast.ir/notecast/episode-29"
+},
+{
+  "type": "clinical",
+  "id": "clinical-21",
+  "title": "تأمین موقت ساپورت خلفی در بازسازی‌های وسیع؛ محافظت از قدام تا تحویل موقت‌ها",
+  "caption": "نکتهٔ بالینی درباره اهمیت استاپ خلفی قبل از بازسازی قدام: وقتی ساپورت خلفی نداریم، تماس‌های سنگین قدامی می‌تواند باعث شکست دندان‌ها/پست‌و‌کورها شود. راه‌حل: ایجاد موقت استاپ خلفی با باند کامپوزیت روی دندان‌های خلفی منتخب در VD مناسب تا زمان آماده شدن روکش‌های موقت.",
+  "hashtags": [
+    "کلینیکال",
+    "ساپورت_خلفی",
+    "استاپ_خلفی",
+    "بازسازی_وسیع",
+    "پست_و_کور",
+    "روکش_موقت",
+    "اکلوژن",
+    "مدیریت_ریسک"
+  ],
+  "keywords": [
+    "posterior support",
+    "posterior stop",
+    "full mouth rehabilitation",
+    "interim stabilization",
+    "temporary occlusal stop",
+    "anterior overload",
+    "post and core",
+    "provisional crowns",
+    "vertical dimension",
+    "bonding composite to metal core"
+  ],
+  "page_url": "https://dentcast.ir/insight/insight-21"
+},
+{
+  "type": "sharehub",
+  "id": "4",
+  "title": "راه‌ها و تکنیک‌های جلوگیری از باقی ماندن بقایای سمان در روکش‌های سمان‌شونده",
+  "caption": "مطلبی منتخب در Share Hub دنت‌کست درباره راه‌ها و تکنیک‌های جلوگیری از باقی ماندن بقایای سمان در روکش‌های سمنتد. این محتوا به بررسی روش‌هایی مانند استفاده از نخ زیرلثه، رابردم، سیلیکون رپلیکا، ونت اکلوزالی، کنترل حجم سمان، مدیریت فضای اباتمنت و رستوریشن‌های اسکرو-سمنتد می‌پردازد. این محتوا تولید دنت‌کست نیست و به‌صورت curated منتشر شده است.",
+  "author": "دکتر مهدی جوان",
+  "source": "https://instagram.com/mehdijavaninsta",
+  "hashtags": [
+    "سمان_دندانی",
+    "سمان_اضافی",
+    "روکش_ایمپلنت",
+    "پروتز_ایمپلنت",
+    "سمان_کردن",
+    "سیلیکون_رپلیکا",
+    "رابردم",
+    "اسکرو_سمنتد",
+    "Dental_Cement",
+    "Implant_Prosthetics",
+    "Cement_Retained",
+    "Share_Hub",
+    "Curated_Content"
+  ],
+  "keywords": [
+    "excess cement",
+    "cement retained crown",
+    "implant cementation",
+    "silicone replica technique",
+    "rubber dam cementation",
+    "screw cemented restoration",
+    "implant prosthetic complications",
+    "peri-implantitis prevention"
+  ],
+  "url": "https://dentcast.ir/sharehub/share-4.html"
+},
+{
+  "type": "clinical",
+  "id": "clinical-22",
+  "title": "خارج کردن پیچ شکستهٔ اباتمنت در شکست‌های ثانویه",
+  "caption": "تجربهٔ کلینیکی در مدیریت شکست ثانویه پیچ اباتمنت؛ در مواردی که پیچ ابتدا شل شده و سپس تحت بارهای تکراری شکسته است، به‌دلیل عدم وقوع cold welding، خارج کردن باقی‌ماندهٔ پیچ معمولاً با چالش کمتری همراه بوده و بدون نیاز به ابزارهای خاص قابل انجام است.",
+  "hashtags": [
+    "کلینیکال",
+    "پیچ_اباتمنت",
+    "شکست_پیچ",
+    "ایمپلنت",
+    "عوارض_ایمپلنت",
+    "پروتز_ایمپلنت",
+    "مدیریت_ریسک",
+    "تجربه_کلینیکی"
+  ],
+  "keywords": [
+    "abutment screw fracture",
+    "secondary screw fracture",
+    "loose abutment screw",
+    "cold welding",
+    "implant complications",
+    "implant prosthodontics",
+    "retrieving broken screw",
+    "clinical decision making",
+    "implant maintenance"
+  ],
+  "page_url": "https://dentcast.ir/insight/insight-22"
 }
+
+
+
+
 
 ]
 

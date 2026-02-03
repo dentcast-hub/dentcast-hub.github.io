@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>جستجوی سراسری | DentCast</title>
+  <style>
+    body{
+      margin:0;
+      font-family: "Vazirmatn", sans-serif;
+      background:#f3f5f7;
+      color:#0a1a33;
+    }
+    .wrap{
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 18px 14px 28px;
+    }
+    .box{
+      background:#fff;
+      border:1px solid rgba(15,23,42,0.10);
+      border-radius: 18px;
+      box-shadow: 0 10px 25px rgba(2,6,23,0.08);
+      padding: 18px 16px;
+    }
+    .title{
+      font-weight: 900;
+      font-size: 18px;
+      margin: 4px 0 12px;
+      color:#0b5fff;
+      text-align:center;
+    }
+    .dc-search-input{
+      width:100%;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid #d5d9ea;
+      background: #f7f8fc;
+      font-size: 14px;
+      outline: none;
+      box-sizing: border-box;
+      margin-bottom: 12px;
+    }
+    .dc-filter-list{
+      display:flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 12px;
+    }
+    .dc-filter-btn{
+      padding: 7px 14px;
+      border-radius: 999px;
+      border: 1px solid #d3daf1;
+      background: #eef3ff;
+      color: #0b1d40;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .dc-filter-btn.active{
+      background: #0b5fff;
+      color:#fff;
+      border-color:#0b5fff;
+      box-shadow: 0 4px 14px rgba(11,95,255,0.3);
+    }
+    .dc-results-box{
+      margin-top: 10px;
+      padding: 10px 10px;
+      border-radius: 16px;
+      background: #f7f9ff;
+      border: 1px solid #e2e6f3;
+      display: none;
+      max-height: 70vh;
+      overflow:auto;
+      position: relative;
+    }
+    .dc-result-item{
+      display:block;
+      padding: 10px 12px;
+      border-bottom: 1px solid #e5e7eb;
+      color:#0b1d40;
+      text-decoration:none;
+      font-size:14px;
+    }
+    .dc-result-item:hover{ background:#eef3ff; }
+
+    .dc-close-results{
+      position:absolute;
+      top: 10px;
+      left: 10px;
+      width: 28px; height: 28px;
+      border:none;
+      border-radius:50%;
+      background:#fee2e2;
+      color:#b91c1c;
+      font-size:18px;
+      font-weight:700;
+      line-height:1;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+  </style>
+  <base target="_self">
+
+</head>
+<body>
+  <div class="wrap">
+    <div class="box">
+      <div class="title">جستجوی سراسری دنت‌کست</div>
+
+      <input id="dcSearch" class="dc-search-input" placeholder="جستجو در همهٔ بخش‌ها…" />
+
+      <div class="dc-filter-list">
+        <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
+        <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
+        <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
+        <button class="dc-filter-btn active" data-type="litecast">لایت‌کست</button>
+        <button class="dc-filter-btn active" data-type="photocast">فوتوکست</button>
+        <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
+        <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
+      </div>
+
+      <div class="dc-results-box" id="dcResults">
+        <button class="dc-close-results" aria-label="بستن">×</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/global-search.js?v=2"></script>
+  <script>
+    // بستن نتایج
+    document.addEventListener("click", (e) => {
+      if (e.target.classList.contains("dc-close-results")) {
+        const box = document.getElementById("dcResults");
+        if (box) box.style.display = "none";
+      }
+    }, true);
+  </script>
+</body>
+</html>

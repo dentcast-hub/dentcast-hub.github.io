@@ -75,29 +75,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /* ------------ ساخت یک آیتم HTML ---------- */
   function buildItem(item) {
-    const group = item._group;
-    const title = item.title || "";
+  const group = item._group;
+  const title = item.title || "";
 
-    const labelMap = {
-      dentcast:      "🎙️ دنت‌کست — اپیزود " + item.episode,
-      notecast:      "📝 نوت‌کست — " + title,
-      clinical:      "💡 نکته کلینیکی — " + title,
-      litecast:      "✨ لایت‌کست — " + title,
-      photocast:     "📸 فوتوکست — " + title,
-      dentcast_plus: "🎬 دنت‌کست+ — " + title,
-      dentai:        "📚 مقاله — " + title
-    };
+  const labelMap = {
+    dentcast:      "🎙️ دنت‌کست — اپیزود " + item.episode,
+    notecast:      "📝 نوت‌کست — " + title,
+    clinical:      "💡 نکته کلینیکی — " + title,
+    litecast:      "✨ لایت‌کست — " + title,
+    photocast:     "📸 فوتوکست — " + title,
+    dentcast_plus: "🎬 دنت‌کست+ — " + title,
+    dentai:        "📚 مقاله — " + title
+  };
 
-    let url = item.page_url || item.url || "";
-    if (!url && group === "dentcast") url = "/episodes.html";
-    if (!url.startsWith("http")) url = "https://dentcast.ir" + url;
+  let url = item.page_url || item.url || "";
+  if (!url && group === "dentcast") url = "/episodes.html";
+  if (!url.startsWith("http")) url = "https://dentcast.ir" + url;
 
-    return `
-      <a class="dc-result-item" href="${url}" target="_blank">
-        ${labelMap[group] || title}
-      </a>
-    `;
-  }
+  return `
+    <div class="dc-result-item"
+         role="button"
+         tabindex="0"
+         onclick="window.location.href='${url}'">
+      ${labelMap[group] || title}
+    </div>
+  `;
+}
+
 
   /* ------------ الگوریتم اصلی سرچ ------------ */
   function performSearch(q) {
