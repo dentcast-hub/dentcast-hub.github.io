@@ -2,7 +2,7 @@ name: Deploy DentCast to Arvan Object Storage
 
 on:
   push:
-    branches: ["main"]   # اگر master است، بنویس master
+    branches: ["main"]
 
 jobs:
   deploy:
@@ -12,7 +12,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-        - name: Generate XML Sitemap
+      # ۱. ساخت خودکار سیت‌مپ قبل از آپلود
+      - name: Generate XML Sitemap
         uses: cicirello/generate-sitemap@v1
         with:
           base-url-path: https://dentcast.ir/
@@ -38,6 +39,8 @@ jobs:
             --delete \
             --exclude ".git/*" \
             --exclude ".github/*"
-            - name: Notify Google
+
+      # ۲. خبر دادن به گوگل بعد از اتمام آپلود به آروان
+      - name: Notify Google
         run: |
           curl "https://www.google.com/ping?sitemap=https://dentcast.ir/sitemap.xml"
