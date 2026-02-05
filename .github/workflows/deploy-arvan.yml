@@ -1,23 +1,32 @@
-name: Deploy DentCast to Arvan Object Storage
+name: Deploy DentCast to Arvan with Sitemap
 
 on:
   push:
-    branches: ["main"]   # اگر master است، بنویس master
+    branches: ["main"]   # اگر اسم برنچ اصلی master است، به master تغییر بده
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: 1. Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install AWS CLI via pip
+      - name: 2. Create Sitemap Manually
+        run: |
+          echo '<?xml version="1.0" encoding="UTF-8"?>' > sitemap.xml
+          echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' >> sitemap.xml
+          # پیدا کردن تمام فایل‌های html و ساخت لینک‌ها
+          find . -name "*.html" ! -name "404.html" -not -path '*/.*' | sed 's|^\./||' | sed "s|^|  <url><loc>https://dentcast.ir/|" | sed "s|$|</loc></url>|" >> sitemap.xml
+          echo '</urlset>' >> sitemap.xml
+          echo "Sitemap created in workspace."
+
+      - name: 3. Install AWS CLI via pip
         run: |
           python3 -m pip install --upgrade pip
           pip install awscli
 
-      - name: Sync site to Arvan S3
+      - name: 4. Sync site to Arvan S3 (Including Sitemap)
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.ARVAN_ACCESS_KEY }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.ARVAN_SECRET_KEY }}
@@ -25,8 +34,15 @@ jobs:
           ARVAN_BUCKET: ${{ secrets.ARVAN_BUCKET }}
           ARVAN_ENDPOINT: ${{ secrets.ARVAN_ENDPOINT }}
         run: |
+          # آپلود کل فایل‌ها + سیت‌مپ جدید به روت باکت
           aws s3 sync . "s3://$ARVAN_BUCKET" \
             --endpoint-url "$ARVAN_ENDPOINT" \
             --delete \
             --exclude ".git/*" \
-            --exclude ".github/*"
+            --exclude ".github/*" \
+            --acl public-read
+
+      - name: 5. Ping Google Search Console
+        run: |
+          curl "https://www.google.com/ping?sitemap=https://dentcast.ir/sitemap.xml"
+          echo "Google has been notified!"
