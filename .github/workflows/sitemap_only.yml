@@ -1,12 +1,16 @@
-name: Generate and Push Sitemap
+name: Generate, Push and Ping Sitemap
 
 on:
   push:
-    branches: ["main"] # اگر اسم برنچ اصلی تو master است، این را به master تغییر بده
+    branches: ["main"] # اگه مستر هستی بکنش master
 
 jobs:
   sitemap_job:
     runs-on: ubuntu-latest
+    
+    permissions:
+      contents: write
+      
     steps:
       - name: 1. Checkout Code
         uses: actions/checkout@v4
@@ -15,33 +19,21 @@ jobs:
         run: |
           echo '<?xml version="1.0" encoding="UTF-8"?>' > sitemap.xml
           echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' >> sitemap.xml
-          # پیدا کردن تمام فایل‌های html و ساخت لینک‌های کامل
           find . -name "*.html" ! -name "404.html" -not -path '*/.*' | sed 's|^\./||' | sed "s|^|  <url><loc>https://dentcast.ir/|" | sed "s|$|</loc></url>|" >> sitemap.xml
           echo '</urlset>' >> sitemap.xml
-          echo "Sitemap generated successfully."
-          cat sitemap.xml
+          echo "Sitemap created!"
 
-      - name: 3. Install AWS CLI
+      - name: 3. Commit and Push Sitemap to GitHub
         run: |
-          pip install awscli
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add sitemap.xml
+          # استفاده از [skip ci] برای جلوگیری از حلقه تکرار اکشن
+          git commit -m "Auto-generated sitemap [skip ci]" || echo "No changes to commit"
+          git push origin main # اگه مستر هستی بکنش master
 
-      - name: 4. Upload to Arvan Root
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.ARVAN_ACCESS_KEY }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.ARVAN_SECRET_KEY }}
-          AWS_EC2_METADATA_DISABLED: "true"
-          ARVAN_BUCKET: ${{ secrets.ARVAN_BUCKET }}
-          ARVAN_ENDPOINT: ${{ secrets.ARVAN_ENDPOINT }}
+      - name: 4. Ping Google Search Console
         run: |
-          # آپلود فایل دقیقا در ریشه باکت با مشخصات کامل فنی
-          aws s3 cp sitemap.xml "s3://$ARVAN_BUCKET/sitemap.xml" \
-            --endpoint-url "$ARVAN_ENDPOINT" \
-            --acl public-read \
-            --cache-control "no-cache" \
-            --content-type "application/xml"
-          
-          echo "آپلود با موفقیت در روت باکت انجام شد."
-
-      - name: 5. Force Google Ping
-        run: |
+          # پینگ کردن گوگل برای اطلاع‌رسانی از تغییر سیت‌مپ
           curl "https://www.google.com/ping?sitemap=https://dentcast.ir/sitemap.xml"
+          echo "Google has been notified!"
