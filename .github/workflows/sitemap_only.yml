@@ -2,7 +2,7 @@ name: Generate and Push Sitemap
 
 on:
   push:
-    branches: ["main"] # اگر اسم برنچ اصلی‌ت master هست، این رو بکن master
+    branches: ["main"] # اگر مستر هستی بکن master
 
 jobs:
   sitemap_job:
@@ -15,20 +15,18 @@ jobs:
         run: |
           echo '<?xml version="1.0" encoding="UTF-8"?>' > sitemap.xml
           echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' >> sitemap.xml
-          # پیدا کردن تمام فایل‌های html و ساخت تگ‌های loc
           find . -name "*.html" ! -name "404.html" -not -path '*/.*' | sed 's|^\./||' | sed "s|^|  <url><loc>https://dentcast.ir/|" | sed "s|$|</loc></url>|" >> sitemap.xml
           echo '</urlset>' >> sitemap.xml
-          echo "ساختار فایل سیت‌مپ ساخته شده:"
+          echo "--- محتوای فایل ساخته شده ---"
           cat sitemap.xml
-          echo "لیست فایل‌های موجود در پوشه:"
-          ls -lh sitemap.xml
+          echo "--- چک کردن وجود فایل در حافظه موقت ---"
+          ls -l sitemap.xml
 
       - name: 3. Install AWS CLI
         run: |
-          python3 -m pip install --upgrade pip
           pip install awscli
 
-      - name: 4. Upload Sitemap to Arvan
+      - name: 4. Upload and Debug
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.ARVAN_ACCESS_KEY }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.ARVAN_SECRET_KEY }}
@@ -36,10 +34,17 @@ jobs:
           ARVAN_BUCKET: ${{ secrets.ARVAN_BUCKET }}
           ARVAN_ENDPOINT: ${{ secrets.ARVAN_ENDPOINT }}
         run: |
-          # آپلود تک فایل سیت‌مپ با دسترسی عمومی
+          # تست اول: ببینیم اصلا میتونه لیست فایل‌های باکت رو بگیره؟
+          echo "تست اتصال به باکت آروان..."
+          aws s3 ls "s3://$ARVAN_BUCKET" --endpoint-url "$ARVAN_ENDPOINT"
+          
+          # آپلود فایل
+          echo "در حال آپلود سیت‌مپ..."
           aws s3 cp sitemap.xml "s3://$ARVAN_BUCKET/sitemap.xml" \
             --endpoint-url "$ARVAN_ENDPOINT" \
             --acl public-read
+          
+          echo "آپلود تمام شد."
 
       - name: 5. Ping Google
         run: |
