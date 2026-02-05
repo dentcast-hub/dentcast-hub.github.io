@@ -2,7 +2,7 @@ name: Generate and Push Sitemap
 
 on:
   push:
-    branches: ["main"] # اگر مستر هستی بکن master
+    branches: ["main"] # اگر اسم برنچ اصلی تو master است، این را به master تغییر بده
 
 jobs:
   sitemap_job:
@@ -15,18 +15,17 @@ jobs:
         run: |
           echo '<?xml version="1.0" encoding="UTF-8"?>' > sitemap.xml
           echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' >> sitemap.xml
+          # پیدا کردن تمام فایل‌های html و ساخت لینک‌های کامل
           find . -name "*.html" ! -name "404.html" -not -path '*/.*' | sed 's|^\./||' | sed "s|^|  <url><loc>https://dentcast.ir/|" | sed "s|$|</loc></url>|" >> sitemap.xml
           echo '</urlset>' >> sitemap.xml
-          echo "--- محتوای فایل ساخته شده ---"
+          echo "Sitemap generated successfully."
           cat sitemap.xml
-          echo "--- چک کردن وجود فایل در حافظه موقت ---"
-          ls -l sitemap.xml
 
       - name: 3. Install AWS CLI
         run: |
           pip install awscli
 
-      - name: 4. Upload and Debug
+      - name: 4. Upload to Arvan Root
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.ARVAN_ACCESS_KEY }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.ARVAN_SECRET_KEY }}
@@ -34,18 +33,15 @@ jobs:
           ARVAN_BUCKET: ${{ secrets.ARVAN_BUCKET }}
           ARVAN_ENDPOINT: ${{ secrets.ARVAN_ENDPOINT }}
         run: |
-          # تست اول: ببینیم اصلا میتونه لیست فایل‌های باکت رو بگیره؟
-          echo "تست اتصال به باکت آروان..."
-          aws s3 ls "s3://$ARVAN_BUCKET" --endpoint-url "$ARVAN_ENDPOINT"
-          
-          # آپلود فایل
-          echo "در حال آپلود سیت‌مپ..."
+          # آپلود فایل دقیقا در ریشه باکت با مشخصات کامل فنی
           aws s3 cp sitemap.xml "s3://$ARVAN_BUCKET/sitemap.xml" \
             --endpoint-url "$ARVAN_ENDPOINT" \
-            --acl public-read
+            --acl public-read \
+            --cache-control "no-cache" \
+            --content-type "application/xml"
           
-          echo "آپلود تمام شد."
+          echo "آپلود با موفقیت در روت باکت انجام شد."
 
-      - name: 5. Ping Google
+      - name: 5. Force Google Ping
         run: |
           curl "https://www.google.com/ping?sitemap=https://dentcast.ir/sitemap.xml"
