@@ -1,32 +1,23 @@
-name: DentCast Auto Deploy 2026
+name: Deploy DentCast to Arvan Object Storage
 
 on:
   push:
-    branches: ["main"]
+    branches: ["main"]   # اگر master است، بنویس master
 
 jobs:
-  full_deploy_process:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 1. Fetch Code
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: 2. Create Fresh Sitemap
-        run: |
-          echo '<?xml version="1.0" encoding="UTF-8"?>' > sitemap.xml
-          echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' >> sitemap.xml
-          find . -name "*.html" ! -name "404.html" | sed 's|^\./||' | sed "s|^|  <url><loc>https://dentcast.ir/|" | sed "s|$|</loc></url>|" >> sitemap.xml
-          echo '</urlset>' >> sitemap.xml
-          echo "Sitemap generated successfully!"
-          ls -l sitemap.xml
-
-      - name: 3. Setup AWS CLI
+      - name: Install AWS CLI via pip
         run: |
           python3 -m pip install --upgrade pip
           pip install awscli
 
-      - name: 4. Upload Everything to Arvan
+      - name: Sync site to Arvan S3
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.ARVAN_ACCESS_KEY }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.ARVAN_SECRET_KEY }}
@@ -39,7 +30,3 @@ jobs:
             --delete \
             --exclude ".git/*" \
             --exclude ".github/*"
-
-      - name: 5. Ping Google Search Console
-        run: |
-          curl "https://www.google.com/ping?sitemap=https://dentcast.ir/sitemap.xml"

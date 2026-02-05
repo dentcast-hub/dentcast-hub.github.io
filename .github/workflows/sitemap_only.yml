@@ -1,0 +1,35 @@
+name: Generate and Push Sitemap
+
+on:
+  push:
+    branches: ["main"] # اگر اسم برنچت master هست، بذار master
+
+jobs:
+  sitemap_job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Create Sitemap Manually
+        run: |
+          echo '<?xml version="1.0" encoding="UTF-8"?>' > sitemap.xml
+          echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' >> sitemap.xml
+          find . -name "*.html" ! -name "404.html" | sed 's|^\./||' | sed "s|^|  <url><loc>https://dentcast.ir/|" | sed "s|$|</loc></url>|" >> sitemap.xml
+          echo '</urlset>' >> sitemap.xml
+          echo "Sitemap created!"
+
+      # حالا باید سیت‌مپ ساخته شده رو به آروان بفرسته
+      - name: Upload Sitemap to Arvan
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.ARVAN_ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.ARVAN_SECRET_KEY }}
+          AWS_EC2_METADATA_DISABLED: "true"
+          ARVAN_BUCKET: ${{ secrets.ARVAN_BUCKET }}
+          ARVAN_ENDPOINT: ${{ secrets.ARVAN_ENDPOINT }}
+        run: |
+          pip install awscli
+          aws s3 cp sitemap.xml "s3://$ARVAN_BUCKET/sitemap.xml" --endpoint-url "$ARVAN_ENDPOINT"
+
+      - name: Ping Google
+        run: curl "https://www.google.com/ping?sitemap=https://dentcast.ir/sitemap.xml"
