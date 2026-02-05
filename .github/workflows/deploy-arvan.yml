@@ -12,12 +12,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # ۱. ساخت خودکار سیت‌مپ قبل از آپلود
+      # مرحله ساخت سیت‌مپ - دقت کن که زیر مجموعه steps باشد
       - name: Generate XML Sitemap
         uses: cicirello/generate-sitemap@v1
         with:
           base-url-path: https://dentcast.ir/
-          path-to-root: .
           sitemap-format: xml
           additional-extensions: html
 
@@ -40,7 +39,6 @@ jobs:
             --exclude ".git/*" \
             --exclude ".github/*"
 
-      # ۲. خبر دادن به گوگل بعد از اتمام آپلود به آروان
       - name: Notify Google
         run: |
           curl "https://www.google.com/ping?sitemap=https://dentcast.ir/sitemap.xml"
