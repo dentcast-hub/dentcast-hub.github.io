@@ -1,0 +1,39 @@
+name: Generate, Push and Ping Sitemap
+
+on:
+  push:
+    branches: ["main"] # اگه مستر هستی بکنش master
+
+jobs:
+  sitemap_job:
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: write
+      
+    steps:
+      - name: 1. Checkout Code
+        uses: actions/checkout@v4
+
+      - name: 2. Create Sitemap Manually
+        run: |
+          echo '<?xml version="1.0" encoding="UTF-8"?>' > sitemap.xml
+          echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' >> sitemap.xml
+          find . -name "*.html" ! -name "404.html" -not -path '*/.*' | sed 's|^\./||' | sed "s|^|  <url><loc>https://dentcast.ir/|" | sed "s|$|</loc></url>|" >> sitemap.xml
+          echo '</urlset>' >> sitemap.xml
+          echo "Sitemap created!"
+
+      - name: 3. Commit and Push Sitemap to GitHub
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add sitemap.xml
+          # استفاده از [skip ci] برای جلوگیری از حلقه تکرار اکشن
+          git commit -m "Auto-generated sitemap [skip ci]" || echo "No changes to commit"
+          git push origin main # اگه مستر هستی بکنش master
+
+      - name: 4. Ping Google Search Console
+        run: |
+          # پینگ کردن گوگل برای اطلاع‌رسانی از تغییر سیت‌مپ
+          curl "https://www.google.com/ping?sitemap=https://dentcast.ir/sitemap.xml"
+          echo "Google has been notified!"
