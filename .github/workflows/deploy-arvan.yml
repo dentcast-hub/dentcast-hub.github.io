@@ -12,6 +12,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+        - name: Generate XML Sitemap
+        uses: cicirello/generate-sitemap@v1
+        with:
+          base-url-path: https://dentcast.ir/
+          path-to-root: .
+          sitemap-format: xml
+          additional-extensions: html
+
       - name: Install AWS CLI via pip
         run: |
           python3 -m pip install --upgrade pip
@@ -30,3 +38,6 @@ jobs:
             --delete \
             --exclude ".git/*" \
             --exclude ".github/*"
+            - name: Notify Google
+        run: |
+          curl "https://www.google.com/ping?sitemap=https://dentcast.ir/sitemap.xml"
