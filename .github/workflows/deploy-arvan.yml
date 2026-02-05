@@ -11,14 +11,21 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # اضافه شد برای دقت بیشتر در ساخت سیت‌مپ
 
-      # مرحله ساخت سیت‌مپ - دقت کن که زیر مجموعه steps باشد
       - name: Generate XML Sitemap
         uses: cicirello/generate-sitemap@v1
         with:
           base-url-path: https://dentcast.ir/
           sitemap-format: xml
           additional-extensions: html
+
+      # مرحله تست: اگر سیت‌مپ ساخته نشه، اینجا قرمز می‌شه و به آروان نمیره
+      - name: Check sitemap exists
+        run: |
+          ls -la
+          test -f sitemap.xml && echo "OK: sitemap built successfully" || (echo "ERROR: sitemap was not generated" && exit 1)
 
       - name: Install AWS CLI via pip
         run: |
