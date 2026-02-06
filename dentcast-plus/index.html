@@ -106,8 +106,7 @@
       font-weight:500;
       margin:0 0 40px;
     }
-
-    .video-grid{
+ .video-grid{
       display:grid;
       grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
       gap:30px;
@@ -132,18 +131,28 @@
 
     .thumb{
       aspect-ratio:16/9;
-      background:linear-gradient(135deg,#1a2a4a,#0b1526);
+      background-size:cover;
+      background-position:center;
       display:flex;
       align-items:center;
       justify-content:center;
+      position:relative;
+    }
+
+    .thumb::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(180deg,rgba(0,0,0,.15),rgba(0,0,0,.4));
     }
 
     .play-icon{
-      width:50px;
-      height:50px;
+      width:52px;
+      height:52px;
       border-radius:50%;
       background:#0b5fff;
       position:relative;
+      z-index:1;
     }
 
     .play-icon::before{
@@ -171,6 +180,7 @@
       font-size:.85rem;
       color:var(--muted);
     }
+
 
     .newsletter-wrapper{
       max-width:600px;
@@ -286,40 +296,47 @@
 </div>
 
 <div class="video-grid">
+
   <a href="video-4.html" class="video-card">
-  <div class="thumb">
-    <div class="play-icon"></div>
-  </div>
-  <div class="video-info">
-    <div class="video-title">یک تست ساده قبل از سمان؛ جلوی افتادن‌های بعدی را می‌گیرد</div>
-    <div class="video-meta">دکتر فواد شهابیان • DentCast+</div>
-  </div>
-</a>
+    <div class="thumb" style="background-image:url('https://dentcast.arvanvod.ir/vkxeWA47OD/G6rJ5g1bz9/thumbnail.jpg');">
+      <div class="play-icon"></div>
+    </div>
+    <div class="video-info">
+      <div class="video-title">یک تست ساده قبل از سمان؛ جلوی افتادن‌های بعدی را می‌گیرد</div>
+      <div class="video-meta">دکتر فواد شهابیان • DentCast+</div>
+    </div>
+  </a>
 
   <a href="video-3.html" class="video-card">
-  <div class="thumb">
-    <div class="play-icon"></div>
-  </div>
-  <div class="video-info">
-    <div class="video-title">وقتی روکش راک دارد؛ ترتیب بررسی مهم است</div>
-    <div class="video-meta">دکتر فواد شهابیان • DentCast+</div>
-  </div>
+    <div class="thumb" style="background-image:url('https://dentcast.arvanvod.ir/vkxeWA47OD/kVMBp6ldP6/thumbnail.jpg');">
+      <div class="play-icon"></div>
+    </div>
+    <div class="video-info">
+      <div class="video-title">وقتی روکش راک دارد؛ ترتیب بررسی مهم است</div>
+      <div class="video-meta">دکتر فواد شهابیان • DentCast+</div>
+    </div>
   </a>
+
   <a href="video-2.html" class="video-card">
-    <div class="thumb"><div class="play-icon"></div></div>
+    <div class="thumb" style="background-image:url('https://dentcast.arvanvod.ir/vkxeWA47OD/6myAq4edLp/thumbnail.jpg');">
+      <div class="play-icon"></div>
+    </div>
     <div class="video-info">
       <div class="video-title">آخرین مرحله قبل از خداحافظی با بیمار</div>
-      <div class="video-meta">دکتر فواد شهابیان • پروتکل چک فرمیتوس</div>
+      <div class="video-meta">دکتر فواد شهابیان • DentCast+</div>
     </div>
   </a>
 
   <a href="video-1.html" class="video-card">
-    <div class="thumb"><div class="play-icon"></div></div>
+    <div class="thumb" style="background-image:url('https://dentcast.arvanvod.ir/vkxeWA47OD/An53wApKV2/thumbnail.jpg');">
+      <div class="play-icon"></div>
+    </div>
     <div class="video-info">
       <div class="video-title">نکات شخصی که کیفیت تراش را واقعاً بهتر می‌کنند</div>
-      <div class="video-meta">دکتر فواد شهابیان • ۳ دقیقه</div>
+      <div class="video-meta">دکتر فواد شهابیان • DentCast+</div>
     </div>
   </a>
+
 </div>
 
 
