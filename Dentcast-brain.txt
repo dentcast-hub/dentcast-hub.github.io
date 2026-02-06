@@ -4066,6 +4066,36 @@
     "implant maintenance"
   ],
   "page_url": "https://dentcast.ir/insight/insight-22.html"
+},
+{
+  "type": "notecast",
+  "id": "30",
+  "title": "سرامیک‌های پلی‌کریستالاین و هیبرید (رزین‌ماتریکس)",
+  "caption": "خلاصه‌ی نوت‌کست درباره سرامیک‌های پلی‌کریستالاین و سرامیک‌های هیبرید رزین‌ماتریکس با تمرکز بر ساختار، خواص مکانیکی و کاربردهای بالینی آن‌ها.",
+  "hashtags": [
+    "پروتز",
+    "سرامیک",
+    "پلی_کریستالاین",
+    "زیرکونیا",
+    "آلومینا",
+    "سرامیک_هیبرید",
+    "رزین_ماتریکس",
+    "PICN",
+    "RNC",
+    "ایمپلنت"
+  ],
+  "keywords": [
+    "polycrystalline ceramics",
+    "zirconia",
+    "alumina",
+    "resin matrix ceramics",
+    "hybrid ceramics",
+    "PICN",
+    "resin nano ceramic",
+    "implant supported restorations",
+    "shock absorption"
+  ],
+  "url": "https://dentcast.ir/notecast/episode-30.html"
 }
 
 
