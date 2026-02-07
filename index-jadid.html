@@ -699,6 +699,30 @@ body.dc-desktop-ui #dc-desktop-root .dc-desk-app{
     overflow: visible !important;
     margin: 0 !important;
   }
+  /* تو سرچ مود، اسکرول اصلی روی خود نتایج باشه نه روی overlay body */
+  body.dc-search-mode .dc-search-overlay-body{
+    overflow: hidden !important;
+    height: calc(100vh - 76px);
+  }
+
+  /* globalBox کل ارتفاع رو بگیره و ستونی بچینه */
+  body.dc-search-mode #dcGlobalBox{
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important; /* جلوگیری از nested scroll */
+  }
+
+  /* خود لیست نتایج: اسکرول واقعی */
+  body.dc-search-mode #dcResults{
+    display: block !important;
+    flex: 1 1 auto !important;
+    max-height: none !important;
+    overflow: auto !important;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    padding-bottom: 24px; /* ته لیست زیر انگشت نره */
+  }
 }
 
   </style>
