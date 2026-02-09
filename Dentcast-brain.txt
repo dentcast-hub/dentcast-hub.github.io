@@ -4096,9 +4096,30 @@
     "shock absorption"
   ],
   "url": "https://dentcast.ir/notecast/episode-30.html"
+},
+{
+  "type": "meta",
+  "id": "meta-08",
+  "title": "یک روش حداقلی برای خارج کردن پیچ شکسته ایمپلنت",
+  "caption": "شرح یک رویکرد حداقلی و محافظه‌کارانه برای خارج کردن پیچ شکسته ایمپلنت با تمرکز بر حفظ اینترنال ایمپلنت، کنترل نیرو و اجتناب از مداخلات تهاجمی در تصمیم‌گیری پروتزی.",
+  "hashtags": [
+    "متانوت",
+    "پیچ_شکسته_ایمپلنت",
+    "پروتز_ایمپلنت",
+    "اباتمنت",
+    "حداقل_مداخله",
+    "تصمیم_بالینی"
+  ],
+  "keywords": [
+    "broken implant screw",
+    "abutment screw fracture",
+    "implant prosthodontics",
+    "broken screw retrieval",
+    "minimal intervention dentistry",
+    "prosthodontic clinical decision"
+  ],
+  "page_url": "https://dentcast.ir/metanotes/meta-8.html"
 }
-
-
 
 
 
