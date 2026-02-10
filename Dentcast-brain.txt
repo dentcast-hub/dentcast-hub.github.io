@@ -4119,7 +4119,33 @@
     "prosthodontic clinical decision"
   ],
   "page_url": "https://dentcast.ir/metanotes/meta-8.html"
+},
+{
+  "type": "chairside",
+  "id": "chairside-01",
+  "title": "تصمیم‌گیری زیبایی در حضور دیاستم قدامی",
+  "caption": "تحلیل یک ویزیت روزمره درباره‌ی بستن دیاستم با لمینیت در ناحیه قدامی و پیامدهای آن بر عرض دندان‌ها، تناسب بصری و سلامت بیولوژیک؛ با تأکید بر محدودیت‌های درمان زیبایی بدون اصلاح ارتودنتیک.",
+  "hashtags": [
+    "چیرساید",
+    "ویزیت_کلینیکی",
+    "دیاستم",
+    "لمینیت",
+    "زیبایی_قدامی",
+    "تصمیم_درمانی",
+    "ارتودنسی_پیش_از_زیبایی"
+  ],
+  "keywords": [
+    "anterior diastema",
+    "esthetic decision making",
+    "chairside dentistry",
+    "laminate veneers",
+    "tooth proportion",
+    "orthodontic pre-prosthetic treatment",
+    "clinical esthetic analysis"
+  ],
+  "page_url": "https://dentcast.ir/chairside/chairside-1.html"
 }
+
 
 
 
