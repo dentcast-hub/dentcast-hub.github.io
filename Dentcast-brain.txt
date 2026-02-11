@@ -4144,6 +4144,32 @@
     "clinical esthetic analysis"
   ],
   "page_url": "https://dentcast.ir/chairside/chairside-1.html"
+},
+{
+  "episode": "154",
+  "title": "Vertical Dimension of Occlusion – Myth 1",
+  "caption": "بررسی انتقادی یکی از باورهای رایج درباره افزایش VDO و ضرورت دوره آزمایشی طولانی، بر اساس یک مقاله علمی جدید در حوزه بازسازی‌های پروتزی.",
+  "hashtags": [
+    "#VDO",
+    "#VD",
+    "#VerticalDimension",
+    "#پروتز",
+    "#اکلوژن",
+    "#TMD",
+    "#دنتکست"
+  ],
+  "keywords": [
+    "Vertical Dimension of Occlusion",
+    "افزایش VDO",
+    "تغییر بعد عمودی",
+    "بازسازی کامل فک",
+    "پروتز ثابت",
+    "اکلوژن",
+    "TMD",
+    "پادکست پروتز"
+  ],
+  "audio_url": "",
+  "page_url": ""
 }
 
 
