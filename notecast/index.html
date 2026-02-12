@@ -204,47 +204,55 @@ a:hover {
   .wrap{padding:0 14px}
 }
 /* ===== Jump Button (DentCast) ===== */
+/* ===== Floating Jump Button (DentCast) ===== */
 .dc-jump {
   position: fixed;
-  left: 18px;
-  bottom: 18px;
-  width: 44px;
-  height: 44px;
+  right: 18px;           /* بهتر از چپ: کمتر می‌افته روی لینک‌های فوتر */
+  left: auto;
+  bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+
+  width: 46px;
+  height: 46px;
   border-radius: 999px;
 
-  /* solid but translucent */
-  background: rgba(11, 95, 255, 0.22);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  /* solid but translucent - ولی نه اونقدر مات */
+  background: rgba(11, 95, 255, 0.42);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.22);
 
   display: grid;
   place-items: center;
 
-  opacity: 0.55;               /* always visible but not shouting */
+  opacity: 0.85; /* همیشه دیده بشه و کمرنگ نباشه */
   transition: opacity .2s ease, transform .2s ease;
   cursor: pointer;
   z-index: 9999;
 }
 
-.dc-jump:hover { opacity: 0.85; transform: translateY(-1px); }
-.dc-jump:active { transform: translateY(0px) scale(0.98); }
-.dc-jump:focus-visible { outline: 2px solid rgba(231, 234, 241, 0.75); outline-offset: 3px; }
+.dc-jump:hover { opacity: 1; transform: translateY(-1px); }
+.dc-jump:active { transform: translateY(0) scale(0.98); }
+.dc-jump:focus-visible {
+  outline: 2px solid rgba(231, 234, 241, 0.9);
+  outline-offset: 3px;
+}
 
 .dc-jump svg {
   width: 18px;
   height: 18px;
-  fill: rgba(231, 234, 241, 0.92);
-  transition: transform .25s ease;
+  fill: rgba(231, 234, 241, 0.95); /* آیکن روشن، نه مشکی */
+  transition: transform .28s ease;
 }
 
-/* When state is UP, rotate arrow */
+/* وقتی حالت UP شد فلش می‌چرخه */
 .dc-jump.is-up svg { transform: rotate(180deg); }
 
-/* Optional: if page isn't scrollable, keep it extra subtle */
-.dc-jump.is-short { opacity: 0.28; }
+/* اگر خواستی روی موبایل یه ذره از فوتر فاصله بگیره */
+@media (max-width: 640px) {
+  .dc-jump { bottom: calc(22px + env(safe-area-inset-bottom, 0px)); }
+}
 
 </style>
 <script>
@@ -265,18 +273,9 @@ a:hover {
   <!-- Put this at the very top of the page (right after <body>) -->
 <div id="dc-top"></div>
 
-<!-- ... your page content ... -->
 
-<!-- Put this right AFTER the end of your index list (before footer is perfect) -->
-<div id="dc-list-end"></div>
 
-<!-- Floating jump button (anywhere inside body; typically near end) -->
-<button id="dcJumpBtn" class="dc-jump" type="button" aria-label="Jump">
-  <!-- Simple arrow icon -->
-  <svg viewBox="0 0 24 24" aria-hidden="true">
-    <path d="M12 16.5c-.3 0-.6-.1-.8-.3l-6-6a1.1 1.1 0 0 1 1.6-1.6L12 13.8l5.2-5.2a1.1 1.1 0 0 1 1.6 1.6l-6 6c-.2.2-.5.3-.8.3z"/>
-  </svg>
-</button>
+
 
 
 <!-- 🔍 Global Search UI (unchanged) -->
@@ -389,6 +388,16 @@ a:hover {
    
 
 </div>
+<!-- Put this right AFTER the end of your index list (before footer is perfect) -->
+<div id="dc-list-end"></div>
+
+<!-- Floating jump button (anywhere inside body; typically near end) -->
+<button id="dcJumpBtn" class="dc-jump" type="button" aria-label="Jump">
+  <!-- Simple arrow icon -->
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M12 16.5c-.3 0-.6-.1-.8-.3l-6-6a1.1 1.1 0 0 1 1.6-1.6L12 13.8l5.2-5.2a1.1 1.1 0 0 1 1.6 1.6l-6 6c-.2.2-.5.3-.8.3z"/>
+  </svg>
+</button>
  <footer>
   <div>
     <a href="https://dentcast.ir/index.html" class="btn-home">🏠 برگشت به صفحه‌ی اصلی</a>
