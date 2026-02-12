@@ -725,6 +725,9 @@ body.dc-desktop-ui #dc-desktop-root .dc-desk-app{
     padding-bottom: 124px; /* ته لیست زیر انگشت نره */
   }
 }
+body.dc-desktop-ui #dcDeskViewEmpty{
+  background: url("/logo-v2.png") center 35% / 140px no-repeat;
+}
 
   </style>
   <script type="application/ld+json">
@@ -1297,10 +1300,10 @@ if (consultPatient) {
           referrerpolicy="no-referrer"
         ></iframe>
 
-        <div class="dc-desk-view-empty" id="dcDeskViewEmpty">
-          یک بخش را از ستون راست انتخاب کنید
-        </div>
-      </div>
+       <div class="dc-desk-view-empty" id="dcDeskViewEmpty">
+  <div id="dcDeskEmptySlot"></div>
+</div>
+
     </section>
 
   </div>
@@ -1718,6 +1721,11 @@ lightbox.addEventListener('click', e => {
   const viewTitle = document.getElementById("dcDeskViewTitle");
   const viewMeta  = document.getElementById("dcDeskViewMeta");
   const viewer    = document.getElementById("dcDeskViewer");
+  const emptySlot = document.getElementById("dcDeskEmptySlot");
+
+  const bannerEl = document.querySelector("#content-wrap .banner");
+  const bannerHomeParent = bannerEl ? bannerEl.parentElement : null;
+  const bannerHomeNext = bannerEl ? bannerEl.nextElementSibling : null;
 
   let desktopEnabled = false;
 
@@ -1764,27 +1772,23 @@ function openViewerEmpty() {
   viewTitle.textContent = "نمایش";
   viewMeta.textContent = "—";
 
-  // ✅ بنر موبایل رو داخل ویوئر خالی نشون بده
-  const emptyBox = document.getElementById("dcDeskViewEmpty");
-  if (!emptyBox) return;
-
-  emptyBox.innerHTML = ""; // پاکسازی قبلی
-
-  const banner = document.querySelector("#content-wrap .banner");
-  if (banner) {
-    const clone = banner.cloneNode(true);
-
-    // نکته: چون clone میشه، onclick های inline مثل close کار میکنن.
-    // ولی id تکراری هم نداریم چون داخل clone فقط همون عناصره.
-    emptyBox.appendChild(clone);
-  } else {
-    emptyBox.textContent = "یک بخش را از ستون راست انتخاب کنید";
+  // ✅ بنر واقعی رو بیار تو صفحه‌ی خالی ویوئر (همه event ها کار می‌کنن)
+  if (emptySlot && bannerEl) {
+    emptySlot.innerHTML = "";
+    emptySlot.appendChild(bannerEl);
   }
 }
 
 
+
   function openInViewer(url, label) {
     const abs = normalizeUrl(url);
+        // قبل از باز کردن هر صفحه، بنر رو برگردون جای اصلیش
+    if (bannerEl && bannerHomeParent) {
+      if (bannerHomeNext) bannerHomeParent.insertBefore(bannerEl, bannerHomeNext);
+      else bannerHomeParent.appendChild(bannerEl);
+    }
+
 
     // ❌ root/empty => empty view
     if (!abs || isRootUrl(abs)) {
