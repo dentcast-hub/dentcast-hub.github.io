@@ -228,6 +228,20 @@
 .banner a:hover {
   text-decoration: underline;
 }
+/* ===== فقط وقتی دسکتاپ فعاله ===== */
+body.dc-desktop-ui .banner h2{
+  font-size: clamp(28px, 3vw, 44px);
+}
+
+body.dc-desktop-ui .banner p{
+  font-size: clamp(16px, 1.4vw, 22px);
+}
+
+/* اگر متن دیگه‌ای هم داخل بنر داری */
+body.dc-desktop-ui .banner{
+  line-height: 1.5;
+}
+
 
 .close{
     position: absolute;
