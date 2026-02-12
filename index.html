@@ -939,7 +939,7 @@ body.dc-desktop-ui #dc-desktop-root .dc-desk-app{
         <article class="dc-card" id="btn-notecast" onclick="window.location.href='https://dentcast.ir/notecast/'">
           <div class="dc-card-main">
             <div class="dc-card-title"> NoteCastها</div>
-            <div class="dc-card-caption">(خلاصه‌نویسی اپیزودها )</div>
+            <div class="dc-card-caption">خلاصه نویسی اپیزودها</div>
           </div>
           <span class="dc-chip">NoteCast</span>
         </article>
@@ -1013,7 +1013,7 @@ body.dc-desktop-ui #dc-desktop-root .dc-desk-app{
         <article class="dc-card" id="btn-glossary" onclick="window.location.href='https://dentcast.ir/glossary/'">
           <div class="dc-card-main">
             <div class="dc-card-title">دانشنامه دنت‌کست</div>
-            <div class="dc-card-caption">مفاهیم تصمیم‌ساز دندان‌پزشکی (A–Z)</div>
+            <div class="dc-card-caption">مفاهیم تصمیم‌ساز دندان‌پزشکی </div>
           </div>
           <span class="dc-chip">Glossary</span>
         </article>
@@ -1149,7 +1149,8 @@ if (consultPatient) {
                 data-desk-section="episodes"
                 data-desk-index-src="episodes.html">
           <span class="dc-desk-ico">🎧</span>
-          <span class="dc-desk-txt">اپیزودها</span>
+          <span class="dc-desk-txt">فهرست و شنیدن اپیزودهای دنتکست</span>
+          <span class="dc-desk-txt small">همه ی اپیزودهای اصلی و فرعی</span>
         </button>
 
         <button class="dc-desk-nav-item" type="button"
@@ -1157,6 +1158,7 @@ if (consultPatient) {
                 data-desk-index-src="https://dentcast.ir/photocast/">
           <span class="dc-desk-ico">🖼️</span>
           <span class="dc-desk-txt">Photocast</span>
+           <span class="dc-desk-txt small">آموزش با تصویر </span>
         </button>
 
         <button class="dc-desk-nav-item" type="button"
@@ -1164,6 +1166,7 @@ if (consultPatient) {
                 data-desk-index-src="https://dentcast.ir/notecast/">
           <span class="dc-desk-ico">📝</span>
           <span class="dc-desk-txt">NoteCast</span>
+           <span class="dc-desk-txt small">خلاصه نویسی اپیزودها</span>
         </button>
 
         <button class="dc-desk-nav-item" type="button"
@@ -1171,6 +1174,7 @@ if (consultPatient) {
                 data-desk-index-src="https://dentcast.ir/insight/">
           <span class="dc-desk-ico">🧠</span>
           <span class="dc-desk-txt">Clinical Insight</span>
+          <span class="dc-desk-txt small">تجربیات کلینیکی</span>
         </button>
 
         <button class="dc-desk-nav-item" type="button"
@@ -1178,6 +1182,7 @@ if (consultPatient) {
                 data-desk-index-src="https://dentcast.ir/dentai/">
           <span class="dc-desk-ico">🤖</span>
           <span class="dc-desk-txt">DentAI</span>
+         <span class="dc-desk-txt small">مرور مقالات با هوش مصنوعی</span>
         </button>
 
         <button class="dc-desk-nav-item" type="button"
@@ -1185,6 +1190,7 @@ if (consultPatient) {
                 data-desk-index-src="https://dentcast.ir/dentcast-plus/">
           <span class="dc-desk-ico">▶</span>
           <span class="dc-desk-txt">DentCast+</span>
+          <span class="dc-desk-txt small">آموزش با ویدیو</span>
         </button>
 
         <div class="dc-desk-divider" role="separator" aria-hidden="true"></div>
@@ -1194,6 +1200,14 @@ if (consultPatient) {
                 data-desk-index-src="https://dentcast.ir/sharehub/">
           <span class="dc-desk-ico">🔗</span>
           <span class="dc-desk-txt">Share Hub</span>
+          <span class="dc-desk-txt small">مطالب دیگران باذکر منبع و رفرنس</span>
+        </button>
+
+        <button class="dc-desk-nav-item" type="button"
+                data-desk-section="chairside"
+                data-desk-index-src="https://dentcast.ir/chairside/">
+          <span class="dc-desk-txt">Chairside</span>
+          <span class="dc-desk-txt small">نکاتی از ویزیت های روزانه</span>
         </button>
 
         <button class="dc-desk-nav-item" type="button"
@@ -1201,6 +1215,7 @@ if (consultPatient) {
                 data-desk-index-src="https://dentcast.ir/metanotes/">
           <span class="dc-desk-ico">🧩</span>
           <span class="dc-desk-txt">Meta Note</span>
+          <span class="dc-desk-txt small">ایده ها و مدلهای تحلیلی خارج از چارچوب </span>
         </button>
 
         <button class="dc-desk-nav-item" type="button"
@@ -1208,6 +1223,7 @@ if (consultPatient) {
                 data-desk-index-src="https://dentcast.ir/glossary/">
           <span class="dc-desk-ico">📚</span>
           <span class="dc-desk-txt">Glossary</span>
+          <span class="dc-desk-txt small">مفاهیم تصمیم‌ساز دندانپزشکی</span>
         </button>
 
         <div class="dc-desk-divider" role="separator" aria-hidden="true"></div>
@@ -1217,6 +1233,7 @@ if (consultPatient) {
                 data-desk-index-src="https://dentcast.ir/litecast/">
           <span class="dc-desk-ico">👤</span>
           <span class="dc-desk-txt">LiteCast</span>
+          <span class="dc-desk-txt small">محتوای ساده و غیر تخصصی برای بیماران</span>
         </button>
 
         <div class="dc-desk-divider" role="separator" aria-hidden="true"></div>
@@ -1227,6 +1244,7 @@ if (consultPatient) {
         data-desk-action="pwa">
   <span class="dc-desk-ico">📱</span>
   <span class="dc-desk-txt">نصب نسخهٔ سریع (PWA)</span>
+  <span class="dc-desk-txt small">آفلاین سریع  با آیکون اختصاصی</span>
 </button>
 
 <button class="dc-desk-nav-item" type="button"
@@ -1234,6 +1252,7 @@ if (consultPatient) {
         data-desk-action="search">
   <span class="dc-desk-ico">🔎</span>
   <span class="dc-desk-txt">جستجوی سراسری</span>
+  <span class="dc-desk-txt small">سرچ در تمام اپیزودها و تمام محتواهای علمی</span>
 </button>
 
 <button class="dc-desk-nav-item" type="button"
@@ -1241,6 +1260,7 @@ if (consultPatient) {
         data-desk-index-src="/join.html">
   <span class="dc-desk-ico">📬</span>
   <span class="dc-desk-txt">خبرنامه</span>
+  <span class="dc-desk-txt small">اطلاع سریع از اپیزودهای دنتکست</span>
 </button>
 
 <button class="dc-desk-nav-item" type="button"
@@ -1248,13 +1268,15 @@ if (consultPatient) {
         data-desk-index-src="mailto:info@dentcast.ir">
   <span class="dc-desk-ico">📞</span>
   <span class="dc-desk-txt">مشاوره</span>
+  <span class="dc-desk-txt small">درخواست مشاوره</span>
 </button>
 
 <button class="dc-desk-nav-item" type="button"
         data-desk-section="tools-about"
         data-desk-index-src="about.html">
   <span class="dc-desk-ico">✨</span>
-  <span class="dc-desk-txt">درباره</span>
+  <span class="dc-desk-txt">درباره دنتکست</span>
+  <span class="dc-desk-txt small">معرفی مسیر و اهداف دنتکست</span>
 </button>
 
       </nav>
