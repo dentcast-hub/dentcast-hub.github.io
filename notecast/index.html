@@ -406,70 +406,83 @@ a:hover {
 <script src="/global-search.js?v=5"></script>
 <script src="/global-search-ui.js?v=1"></script>
 <script src="/shake-search.js?v=1"></script>
-(() => {
-  const btn = document.getElementById("dcJumpBtn");
-  if (!btn) return;
+<script>
+document.addEventListener("DOMContentLoaded", function () {
 
+  const btn = document.getElementById("dcJumpBtn");
   const topEl = document.getElementById("dc-top");
   const endEl = document.getElementById("dc-list-end");
 
-  // Behavior thresholds
-  const BOTTOM_SWITCH_RATIO = 0.85; // when reaching ~85% of page, switch to UP
-  const TOP_RESET_PX = 12;          // only switch back to DOWN when truly near top
+  if (!btn) return;
+
+  const BOTTOM_RATIO = 0.85;   // 85% پایین صفحه
+  const TOP_RESET = 20;        // نزدیک بالای صفحه
 
   let isUp = false;
 
-  function isScrollable() {
-    return document.documentElement.scrollHeight > (window.innerHeight + 8);
+  function pageHeight() {
+    return document.documentElement.scrollHeight;
+  }
+
+  function viewportHeight() {
+    return window.innerHeight;
+  }
+
+  function scrollY() {
+    return window.pageYOffset || document.documentElement.scrollTop;
   }
 
   function nearBottom() {
-    const y = window.scrollY || window.pageYOffset;
-    const h = window.innerHeight;
-    const total = document.documentElement.scrollHeight;
-    return (y + h) >= total * BOTTOM_SWITCH_RATIO;
+    return (scrollY() + viewportHeight()) >= pageHeight() * BOTTOM_RATIO;
   }
 
-  function update() {
-    // Always visible, but if page is short make it more subtle
-    btn.classList.toggle("is-short", !isScrollable());
+  function updateState() {
 
-    // Stable behavior:
-    // - Switch to UP only when reaching near bottom
-    // - Switch back to DOWN only when you're back at top
+    // اگر صفحه اسکرول نداشته باشد
+    if (pageHeight() <= viewportHeight() + 10) {
+      btn.style.opacity = "0.28";
+      return;
+    } else {
+      btn.style.opacity = "0.55";
+    }
+
+    // تبدیل به بالا وقتی نزدیک پایین رسیدیم
     if (!isUp && nearBottom()) {
       isUp = true;
       btn.classList.add("is-up");
-      return;
     }
 
-    if (isUp && (window.scrollY || 0) <= TOP_RESET_PX) {
+    // فقط وقتی کاملاً به بالا برگشتیم برگردد به ↓
+    if (isUp && scrollY() <= TOP_RESET) {
       isUp = false;
       btn.classList.remove("is-up");
     }
   }
 
-  function smoothScrollToTop() {
-    if (topEl) topEl.scrollIntoView({ behavior: "smooth", block: "start" });
-    else window.scrollTo({ top: 0, behavior: "smooth" });
-  }
-
-  function smoothScrollToEnd() {
-    if (endEl) endEl.scrollIntoView({ behavior: "smooth", block: "end" });
-    else window.scrollTo({ top: document.documentElement.scrollHeight, behavior: "smooth" });
-  }
-
-  btn.addEventListener("click", () => {
-    if (isUp) smoothScrollToTop();
-    else smoothScrollToEnd();
+  btn.addEventListener("click", function () {
+    if (isUp) {
+      if (topEl) {
+        topEl.scrollIntoView({ behavior: "smooth" });
+      } else {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    } else {
+      if (endEl) {
+        endEl.scrollIntoView({ behavior: "smooth" });
+      } else {
+        window.scrollTo({ top: pageHeight(), behavior: "smooth" });
+      }
+    }
   });
 
-  window.addEventListener("scroll", update, { passive: true });
-  window.addEventListener("resize", update);
+  window.addEventListener("scroll", updateState);
+  window.addEventListener("resize", updateState);
 
-  // initial state
-  update();
-})();
+  updateState(); // اجرا در شروع
+
+});
+</script>
+
 
 </body>
 </html>
