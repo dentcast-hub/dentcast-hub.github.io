@@ -238,16 +238,23 @@
     color: #f81f2d;
     cursor: pointer;
 }
+/* ضربدر لایت‌باکس: همیشه گوشه‌ی صفحه، ریسپانسیو */
 .closee{
-    position: absolute;
-    top: 50px;
-    right: 30px;
-    font-size: 3.5rem;
-    font-weight: bold;
-    color: #f81f2d;
-    cursor: pointer;
-    z-index: 10;
+  position: fixed;                 /* ✅ مهم */
+  top: max(12px, env(safe-area-inset-top));
+  right: max(12px, env(safe-area-inset-right));
+  font-size: clamp(28px, 3.2vw, 48px);  /* ✅ بین موبایل/دسکتاپ نرمال */
+  font-weight: 900;
+  color: #f81f2d;
+  cursor: pointer;
+  z-index: 99999;                  /* بالاتر از عکس */
+  line-height: 1;
+  padding: 6px 10px;
+  border-radius: 12px;
+  background: rgba(0,0,0,0.35);    /* روی عکس خوانا */
+  backdrop-filter: blur(6px);
 }
+
 
 .listen-btn{
   position: absolute;
@@ -295,7 +302,7 @@
     visibility: hidden;
     opacity: 0;
     transition: opacity .3s, visibility .3s;
-    z-index: 10;
+    z-index: 1000;
 }
 .lightbox.show{
     visibility: visible;
