@@ -239,21 +239,48 @@
     cursor: pointer;
 }
 /* ضربدر لایت‌باکس: همیشه گوشه‌ی صفحه، ریسپانسیو */
-.closee{
-  position: fixed;                 /* ✅ مهم */
-  top: max(12px, env(safe-area-inset-top));
-  right: max(12px, env(safe-area-inset-right));
-  font-size: clamp(28px, 3.2vw, 48px);  /* ✅ بین موبایل/دسکتاپ نرمال */
-  font-weight: 900;
-  color: #f81f2d;
-  cursor: pointer;
-  z-index: 99999;                  /* بالاتر از عکس */
-  line-height: 1;
-  padding: 6px 10px;
-  border-radius: 12px;
-  background: rgba(0,0,0,0.35);    /* روی عکس خوانا */
-  backdrop-filter: blur(6px);
+/* ضربدر لایت‌باکس: بچسب به خود عکس (نه به صفحه) */
+.lightbox-content{
+  position: relative;
+  display: inline-block;
+  max-width: 90vw;
+  max-height: 90vh;
 }
+
+.closee{
+  position: absolute;         /* ✅ روی خود عکس */
+  top: 10px;
+  right: 10px;
+
+  width: 40px;
+  height: 40px;
+
+  border: none;
+  border-radius: 12px;
+
+  font-size: 28px;
+  font-weight: 900;
+  line-height: 1;
+
+  color: #f81f2d;
+  background: rgba(0,0,0,0.35);
+  backdrop-filter: blur(6px);
+
+  cursor: pointer;
+  z-index: 5;
+}
+
+/* روی موبایل کمی جمع‌وجورتر */
+@media (max-width: 480px){
+  .closee{
+    width: 36px;
+    height: 36px;
+    font-size: 26px;
+    top: 8px;
+    right: 8px;
+  }
+}
+
 
 
 .listen-btn{
@@ -311,11 +338,13 @@
 
 /* تصویر بزرگ داخل لایت‌باکس */
 .lightbox .big{
-    max-width: 90vw;
-    max-height: 90vh;
-    transform: scale(0.9);
-    transition: transform .2s;
+  display: block;
+  max-width: 90vw;
+  max-height: 90vh;
+  transform: scale(0.9);
+  transition: transform .2s;
 }
+
 .lightbox.show .big{
   transform: scale(1);
 }
@@ -1711,11 +1740,17 @@ btn.addEventListener('click', () => {
 });
 </script>
 <div class="lightbox" id="lightbox">
-    <span class="closee" id="closeBtn">&times;</span>
-    <img src="https://pulsee.s3.ir-thr-at1.arvanstorage.ir/pulse8.webp?versionId="
-         alt="عکس بزرگ"
-         class="big">
+  <div class="lightbox-content">
+    <button class="closee" id="closeBtn" type="button" aria-label="بستن">&times;</button>
+
+    <img
+      src="https://pulsee.s3.ir-thr-at1.arvanstorage.ir/pulse8.webp?versionId="
+      alt="عکس بزرگ"
+      class="big"
+    >
+  </div>
 </div>
+
 <script>
 const thumb     = document.getElementById('thumb');
 const lightbox  = document.getElementById('lightbox');
@@ -1817,12 +1852,15 @@ function openViewerEmpty() {
   viewTitle.textContent = "نمایش";
   viewMeta.textContent = "—";
 
-  // ✅ بنر واقعی رو بیار تو صفحه‌ی خالی ویوئر (همه event ها کار می‌کنن)
+  // ✅ فقط وقتی دسکتاپ واقعاً فعاله، بنر رو منتقل کن
+  if (!desktopEnabled) return;
+
   if (emptySlot && bannerEl) {
     emptySlot.innerHTML = "";
     emptySlot.appendChild(bannerEl);
   }
 }
+
 
 
 
@@ -1861,12 +1899,20 @@ function openViewerEmpty() {
     openViewerEmpty();
   }
 
-  function disableDesktop() {
-    desktopEnabled = false;
-    document.body.classList.remove("dc-desktop-ui");
-    desktopRoot.setAttribute("aria-hidden", "true");
-    openViewerEmpty();
+function disableDesktop() {
+  desktopEnabled = false;
+  document.body.classList.remove("dc-desktop-ui");
+  desktopRoot.setAttribute("aria-hidden", "true");
+
+  // ✅ بنر رو برگردون جای اصلیش برای موبایل/تبلت
+  if (bannerEl && bannerHomeParent) {
+    if (bannerHomeNext) bannerHomeParent.insertBefore(bannerEl, bannerHomeNext);
+    else bannerHomeParent.appendChild(bannerEl);
   }
+
+  // اینجا دیگه openViewerEmpty لازم نیست
+}
+
 
   function syncDesktopMode() {
     if (isDesktopLike()) enableDesktop();
