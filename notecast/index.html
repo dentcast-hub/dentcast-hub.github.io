@@ -203,6 +203,49 @@ a:hover {
   h1{font-size:1.7rem}
   .wrap{padding:0 14px}
 }
+/* ===== Jump Button (DentCast) ===== */
+.dc-jump {
+  position: fixed;
+  left: 18px;
+  bottom: 18px;
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+
+  /* solid but translucent */
+  background: rgba(11, 95, 255, 0.22);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.18);
+
+  display: grid;
+  place-items: center;
+
+  opacity: 0.55;               /* always visible but not shouting */
+  transition: opacity .2s ease, transform .2s ease;
+  cursor: pointer;
+  z-index: 9999;
+}
+
+.dc-jump:hover { opacity: 0.85; transform: translateY(-1px); }
+.dc-jump:active { transform: translateY(0px) scale(0.98); }
+.dc-jump:focus-visible { outline: 2px solid rgba(231, 234, 241, 0.75); outline-offset: 3px; }
+
+.dc-jump svg {
+  width: 18px;
+  height: 18px;
+  fill: rgba(231, 234, 241, 0.92);
+  transition: transform .25s ease;
+}
+
+/* When state is UP, rotate arrow */
+.dc-jump.is-up svg { transform: rotate(180deg); }
+
+/* Optional: if page isn't scrollable, keep it extra subtle */
+.dc-jump.is-short { opacity: 0.28; }
+
 </style>
 <script>
     !function (t, e, n) {
@@ -219,6 +262,22 @@ a:hover {
 </head>
 
 <body>
+  <!-- Put this at the very top of the page (right after <body>) -->
+<div id="dc-top"></div>
+
+<!-- ... your page content ... -->
+
+<!-- Put this right AFTER the end of your index list (before footer is perfect) -->
+<div id="dc-list-end"></div>
+
+<!-- Floating jump button (anywhere inside body; typically near end) -->
+<button id="dcJumpBtn" class="dc-jump" type="button" aria-label="Jump">
+  <!-- Simple arrow icon -->
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M12 16.5c-.3 0-.6-.1-.8-.3l-6-6a1.1 1.1 0 0 1 1.6-1.6L12 13.8l5.2-5.2a1.1 1.1 0 0 1 1.6 1.6l-6 6c-.2.2-.5.3-.8.3z"/>
+  </svg>
+</button>
+
 
 <!-- 🔍 Global Search UI (unchanged) -->
 <div class="dc-global-filter-box" id="dcGlobalBox">
@@ -347,6 +406,70 @@ a:hover {
 <script src="/global-search.js?v=5"></script>
 <script src="/global-search-ui.js?v=1"></script>
 <script src="/shake-search.js?v=1"></script>
+(() => {
+  const btn = document.getElementById("dcJumpBtn");
+  if (!btn) return;
+
+  const topEl = document.getElementById("dc-top");
+  const endEl = document.getElementById("dc-list-end");
+
+  // Behavior thresholds
+  const BOTTOM_SWITCH_RATIO = 0.85; // when reaching ~85% of page, switch to UP
+  const TOP_RESET_PX = 12;          // only switch back to DOWN when truly near top
+
+  let isUp = false;
+
+  function isScrollable() {
+    return document.documentElement.scrollHeight > (window.innerHeight + 8);
+  }
+
+  function nearBottom() {
+    const y = window.scrollY || window.pageYOffset;
+    const h = window.innerHeight;
+    const total = document.documentElement.scrollHeight;
+    return (y + h) >= total * BOTTOM_SWITCH_RATIO;
+  }
+
+  function update() {
+    // Always visible, but if page is short make it more subtle
+    btn.classList.toggle("is-short", !isScrollable());
+
+    // Stable behavior:
+    // - Switch to UP only when reaching near bottom
+    // - Switch back to DOWN only when you're back at top
+    if (!isUp && nearBottom()) {
+      isUp = true;
+      btn.classList.add("is-up");
+      return;
+    }
+
+    if (isUp && (window.scrollY || 0) <= TOP_RESET_PX) {
+      isUp = false;
+      btn.classList.remove("is-up");
+    }
+  }
+
+  function smoothScrollToTop() {
+    if (topEl) topEl.scrollIntoView({ behavior: "smooth", block: "start" });
+    else window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  function smoothScrollToEnd() {
+    if (endEl) endEl.scrollIntoView({ behavior: "smooth", block: "end" });
+    else window.scrollTo({ top: document.documentElement.scrollHeight, behavior: "smooth" });
+  }
+
+  btn.addEventListener("click", () => {
+    if (isUp) smoothScrollToTop();
+    else smoothScrollToEnd();
+  });
+
+  window.addEventListener("scroll", update, { passive: true });
+  window.addEventListener("resize", update);
+
+  // initial state
+  update();
+})();
 
 </body>
 </html>
