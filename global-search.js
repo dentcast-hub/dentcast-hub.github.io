@@ -14,25 +14,29 @@ document.addEventListener("DOMContentLoaded", () => {
   let DB = [];
 
   /* ------------ فیلترهای فعال -------------- */
-  let activeFilters = new Set([
-    "dentcast",
-    "notecast",
-    "clinical",
-    "litecast",
-    "photocast",
-    "dentcast_plus",
-    "dentai"
-  ]);
+ let activeFilters = new Set([
+  "dentcast",
+  "notecast",
+  "clinical",
+  "dentcast_plus",
+  "dentai",
+  "meta",
+  "chairside",
+  "sharehub"
+]);
+
 
   /* ------------ مپ نوع‌ها --------------- */
-  const TYPE_MAP = {
-    notecast:       "notecast",
-    clinical:       "clinical",
-    litecast:       "litecast",
-    photocast:      "photocast",
-    dentcast_plus:  "dentcast_plus",
-    dentai:         "dentai"
-  };
+const TYPE_MAP = {
+  notecast:       "notecast",
+  clinical:       "clinical",
+  dentcast_plus:  "dentcast_plus",
+  dentai:         "dentai",
+  meta:           "meta",
+  chairside:      "chairside",
+  sharehub:       "sharehub"
+};
+
 
   /* ------------ لود دیتابیس ---------------- */
   async function loadDB() {
@@ -78,15 +82,17 @@ document.addEventListener("DOMContentLoaded", () => {
   const group = item._group;
   const title = item.title || "";
 
-  const labelMap = {
-    dentcast:      "🎙️ دنت‌کست — اپیزود " + item.episode,
-    notecast:      "📝 نوت‌کست — " + title,
-    clinical:      "💡 نکته کلینیکی — " + title,
-    litecast:      "✨ لایت‌کست — " + title,
-    photocast:     "📸 فوتوکست — " + title,
-    dentcast_plus: "🎬 دنت‌کست+ — " + title,
-    dentai:        "📚 مقاله — " + title
-  };
+ const labelMap = {
+  dentcast:      "🎙️ دنت‌کست — اپیزود " + item.episode,
+  notecast:      "📝 نوت‌کست — " + title,
+  clinical:      "💡 نکته کلینیکی — " + title,
+  dentcast_plus: "🎬 دنت‌کست+ — " + title,
+  dentai:        "📚 مقاله — " + title,
+  meta:          "🧩 متانوت — " + title,
+  chairside:     "🪑 چرساید — " + title,
+  sharehub:      "🔗 Share Hub — " + title
+};
+
 
   let url = item.page_url || item.url || "";
   if (!url && group === "dentcast") url = "/episodes.html";
