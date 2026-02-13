@@ -197,6 +197,57 @@ a:hover {
       font-size:.9rem;
       padding-bottom:20px;
     }
+    /* ===== Jump Button (DentCast) ===== */
+/* ===== Floating Jump Button (DentCast) ===== */
+.dc-jump {
+  position: fixed;
+  right: 18px;           /* بهتر از چپ: کمتر می‌افته روی لینک‌های فوتر */
+  left: auto;
+  bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+
+  width: 46px;
+  height: 46px;
+  border-radius: 999px;
+
+  /* solid but translucent - ولی نه اونقدر مات */
+  background: rgba(1, 19, 57, 0.8);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.22);
+
+  display: grid;
+  place-items: center;
+
+  opacity: 0.85; /* همیشه دیده بشه و کمرنگ نباشه */
+  transition: opacity .2s ease, transform .2s ease;
+  cursor: pointer;
+  z-index: 9999;
+}
+
+.dc-jump:hover { opacity: 1; transform: translateY(-1px); }
+.dc-jump:active { transform: translateY(0) scale(0.98); }
+.dc-jump:focus-visible {
+  outline: 2px solid rgba(231, 234, 241, 0.9);
+  outline-offset: 3px;
+}
+
+.dc-jump svg {
+  width: 18px;
+  height: 18px;
+  fill: rgba(231, 234, 241, 0.95); /* آیکن روشن، نه مشکی */
+  transition: transform .28s ease;
+}
+
+/* وقتی حالت UP شد فلش می‌چرخه */
+.dc-jump.is-up svg { transform: rotate(180deg); }
+
+/* اگر خواستی روی موبایل یه ذره از فوتر فاصله بگیره */
+@media (max-width: 640px) {
+  .dc-jump { bottom: calc(22px + env(safe-area-inset-bottom, 0px)); }
+}
+
   </style>
  <script>
     !function (t, e, n) {
@@ -213,6 +264,9 @@ a:hover {
 </head>
 
 <body>
+   <!-- Put this at the very top of the page (right after <body>) -->
+<div id="dc-top"></div>
+
   <div class="wrap">
 
     <header>
@@ -275,7 +329,16 @@ a:hover {
 </li>
 
 </ul>
+<!-- Put this right AFTER the end of your index list (before footer is perfect) -->
+<div id="dc-list-end"></div>
 
+<!-- Floating jump button (anywhere inside body; typically near end) -->
+<button id="dcJumpBtn" class="dc-jump" type="button" aria-label="Jump">
+  <!-- Simple arrow icon -->
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M12 16.5c-.3 0-.6-.1-.8-.3l-6-6a1.1 1.1 0 0 1 1.6-1.6L12 13.8l5.2-5.2a1.1 1.1 0 0 1 1.6 1.6l-6 6c-.2.2-.5.3-.8.3z"/>
+  </svg>
+</button>
    
        <footer>
       <div>
@@ -304,5 +367,83 @@ a:hover {
 
 <!-- 📱 شیک گوشی -->
 <script src="/shake-search.js?v=1"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+  const btn = document.getElementById("dcJumpBtn");
+  const topEl = document.getElementById("dc-top");
+  const endEl = document.getElementById("dc-list-end");
+
+  if (!btn) return;
+
+  const BOTTOM_RATIO = 0.85;   // 85% پایین صفحه
+  const TOP_RESET = 20;        // نزدیک بالای صفحه
+
+  let isUp = false;
+
+  function pageHeight() {
+    return document.documentElement.scrollHeight;
+  }
+
+  function viewportHeight() {
+    return window.innerHeight;
+  }
+
+  function scrollY() {
+    return window.pageYOffset || document.documentElement.scrollTop;
+  }
+
+  function nearBottom() {
+    return (scrollY() + viewportHeight()) >= pageHeight() * BOTTOM_RATIO;
+  }
+
+  function updateState() {
+
+    // اگر صفحه اسکرول نداشته باشد
+    if (pageHeight() <= viewportHeight() + 10) {
+      btn.style.opacity = "0.28";
+      return;
+    } else {
+      btn.style.opacity = "0.55";
+    }
+
+    // تبدیل به بالا وقتی نزدیک پایین رسیدیم
+    if (!isUp && nearBottom()) {
+      isUp = true;
+      btn.classList.add("is-up");
+    }
+
+    // فقط وقتی کاملاً به بالا برگشتیم برگردد به ↓
+    if (isUp && scrollY() <= TOP_RESET) {
+      isUp = false;
+      btn.classList.remove("is-up");
+    }
+  }
+
+  btn.addEventListener("click", function () {
+    if (isUp) {
+      if (topEl) {
+        topEl.scrollIntoView({ behavior: "smooth" });
+      } else {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    } else {
+      if (endEl) {
+        endEl.scrollIntoView({ behavior: "smooth" });
+      } else {
+        window.scrollTo({ top: pageHeight(), behavior: "smooth" });
+      }
+    }
+  });
+
+  window.addEventListener("scroll", updateState);
+  window.addEventListener("resize", updateState);
+
+  updateState(); // اجرا در شروع
+
+});
+</script>
+
 </body>
 </html>
