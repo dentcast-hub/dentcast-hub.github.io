@@ -680,35 +680,35 @@ body.dc-desktop-ui #dc-desktop-root .dc-desk-app{
 
   /* Sticky bar زیر تب‌ها */
  /* خود کارت استیکی */
+ /* کارت سرچِ استیکی: هم‌رنگ زمینه، با کادر واضح‌تر */
   #dcStickySearch{
     position: sticky;
-    top: 62px;               /* اگر لازم بود تنظیمش می‌کنیم */
+    top: 62px;                 /* همون فعلی */
     z-index: 50;
-    padding: 10px 12px !important;
+
+    background: var(--bg) !important;                  /* ✅ هم‌رنگ پس زمینه */
+    border: 1px solid rgba(2,35,96,0.28) !important;   /* ✅ کادر پررنگ‌تر از بک‌گراند */
+    box-shadow: 0 10px 22px rgba(2,35,96,0.06) !important; /* ✅ شکیل ولی نرم */
+
+    border-radius: 18px !important;
+
+    /* ✅ فاصله برای “بلوک جداکننده” */
+    margin: 12px 0 14px !important;
+    padding: 12px 14px !important;
   }
 
-  /* دکمه داخل کارت: مثل محتوا، نه مثل یک باکس جدا */
+  /* دکمه داخلش: بدون بک‌گراند جدا، داخل کارت حل بشه */
   #dcStickySearch .dc-sticky-search-btn{
-    width: 100%;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-
-    padding: 0;              /* چون خود کارت padding دارد */
-    border: none;
-    background: transparent; /* کارت خودش بک‌گراند دارد */
-    box-shadow: none;
-    backdrop-filter: none;
-
-    font-family: inherit;
-    cursor: pointer;
-    text-align: right;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
   }
 
+  /* اگر می‌خوای متن/آیکن یک ذره جدی‌تر دیده بشه */
   #dcStickySearch .dc-sticky-txt{
-    font-size: 0.86rem;
-    font-weight: 800;
-    color: #0b1d40;
+    font-weight: 850;
+    opacity: .92;
   }
 
   #dcStickySearch .dc-sticky-ico{
