@@ -69,34 +69,65 @@
     .dc-section-sub { font-size: .78rem; color: var(--text-sub); margin-bottom: .75rem; }
     .dc-card-list { display: flex; flex-direction: column; gap: 0.7rem; }
 /* ==== 2×2 Square Grid for bottom cards (Home / Studio) ==== */
+/* ================================
+   Compact 2×2 Rectangles (Home only)
+   ✅ paste AFTER your .dc-square-grid {...} line
+   (You already removed: aspect-ratio + space-between)
+================================ */
+
+/* گرید: دو ستون، فاصله منطقی */
 .dc-square-grid{
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
+  gap: 10px;
   margin-top: 10px;
 }
-.dc-square-grid .dc-card{
-  aspect-ratio: 1 / 1;
-  padding: 14px !important;
 
+/* کارت‌های داخل گرید: مستطیلِ کم‌ارتفاع + متن وسط */
+.dc-square-grid .dc-card{
+  height: 124px;                 /* ✅ ارتفاع منطقی (می‌تونی 112–140 تست کنی) */
+  padding: 12px !important;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-start;
-}
-.dc-square-grid .dc-card-title{
-  font-size: .9rem;
-  font-weight: 800;
+  justify-content: center;        /* ✅ متن‌ها وسط کارت */
+  align-items: center;            /* ✅ وسط‌چین افقی */
+  text-align: center;             /* ✅ عنوان/کپشن وسط */
 }
 
+/* عنوان کمی بولدتر و جمع‌وجورتر */
+.dc-square-grid .dc-card-title{
+  font-size: 0.92rem;
+  font-weight: 900;
+  line-height: 1.25;
+  margin: 0;
+}
+
+/* کپشن یک خط، جمع‌وجور */
 .dc-square-grid .dc-card-caption{
-  font-size: .78rem;
+  margin-top: 6px;
+  font-size: 0.78rem;
+  line-height: 1.35;
   color: var(--text-sub);
+
   display: -webkit-box;
-  -webkit-line-clamp: 1;
+  -webkit-line-clamp: 1;          /* ✅ فقط یک خط */
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+/* چیپ‌ها: چون الان وسط‌چین کردیم، چیپ پایین صفحه فضا رو خراب می‌کنه.
+   ✅ اینجا مخفی‌ش می‌کنیم فقط برای این ۴ کارت.
+   اگر خواستی نگهش داری بهم بگو تا نسخه‌ی گوشه‌ای (absolute) بدم.
+*/
+.dc-square-grid .dc-chip{
+  display: none !important;
+}
+
+/* گوشی‌های خیلی باریک: ارتفاع کمتر */
+@media (max-width: 380px){
+  .dc-square-grid .dc-card{ height: 112px; }
+}
+
 
     .dc-card {
       background: var(--card-bg); border-radius: .9rem; border: 1px solid var(--card-border);
