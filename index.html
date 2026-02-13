@@ -68,6 +68,35 @@
     .dc-section-title { font-size: .99rem; font-weight: 800; margin: .6rem 0 .25rem; }
     .dc-section-sub { font-size: .78rem; color: var(--text-sub); margin-bottom: .75rem; }
     .dc-card-list { display: flex; flex-direction: column; gap: 0.7rem; }
+/* ==== 2×2 Square Grid for bottom cards (Home / Studio) ==== */
+.dc-square-grid{
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 10px;
+}
+.dc-square-grid .dc-card{
+  aspect-ratio: 1 / 1;
+  padding: 14px !important;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.dc-square-grid .dc-card-title{
+  font-size: .9rem;
+  font-weight: 800;
+}
+
+.dc-square-grid .dc-card-caption{
+  font-size: .78rem;
+  color: var(--text-sub);
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
 
     .dc-card {
       background: var(--card-bg); border-radius: .9rem; border: 1px solid var(--card-border);
@@ -1118,6 +1147,8 @@ body.dc-desktop-ui #dc-desktop-root .dc-desk-sidebar{
           </div>
           <span class="dc-chip">PhotoCast</span>
         </article>-->
+        <div class="dc-square-grid">
+
 
         <article class="dc-card" id="btn-notecast" onclick="window.location.href='https://dentcast.ir/notecast/'">
           <div class="dc-card-main">
@@ -1150,6 +1181,7 @@ body.dc-desktop-ui #dc-desktop-root .dc-desk-sidebar{
           </div>
           <span class="dc-chip">DentCast+</span>
         </article>
+</div>
 
         <article class="dc-card ad-card" id="card-ad-orange">
           <a href="https://godza.ir/product/orangedental-loupes/" class="ad-link" target="_blank" rel="sponsored noopener">
