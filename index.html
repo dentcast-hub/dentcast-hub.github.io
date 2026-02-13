@@ -71,7 +71,8 @@
 
     .dc-card {
       background: var(--card-bg); border-radius: .9rem; border: 1px solid var(--card-border);
-      box-shadow: 0 2px 6px rgba(0,0,0,0.06); padding: .3rem .33rem;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+       padding: .3rem .33rem;
       display: flex; justify-content: space-between; align-items: center;
       cursor: pointer; transition: 0.18s; position: relative;
     }
@@ -79,6 +80,32 @@
     
     .dc-card.active-toggle { border-color: var(--primary); box-shadow: 0 4px 10px rgba(11, 95, 255, 0.15); background: #f7f9ff; }
     .dc-card.featured-card { background: #eef3ff!important; border: none !important; border-radius: 1.05rem !important; box-shadow: 0 4px 14px -1px rgba(11, 95, 255, 0.22) !important; }
+/* ✅ CTA اصلی: DentCast Episodes */
+#card-episodes{
+  padding: 14px 14px !important;
+  border-radius: 18px !important;
+  border: 1px solid rgba(2,35,96,0.18) !important;
+  background: linear-gradient(135deg, rgba(11,95,255,0.10), rgba(2,35,96,0.06)) !important;
+  box-shadow: 0 14px 30px rgba(2,35,96,0.10) !important;
+}
+
+#card-episodes .dc-card-title{
+  font-size: 0.95rem !important;
+  font-weight: 900 !important;
+  letter-spacing: -0.2px;
+}
+
+#card-episodes .dc-card-caption{
+  font-size: 0.78rem !important;
+  opacity: 0.9;
+}
+
+/* چیپ DentCast هم کمی پخته‌تر */
+#card-episodes .dc-chip{
+  background: rgba(2,35,96,0.10) !important;
+  border-color: rgba(2,35,96,0.22) !important;
+  font-weight: 800 !important;
+}
 
     .dc-card-title { font-size: .86rem; font-weight: 700; }
     .dc-card-caption { font-size: .75rem; color: var(--text-sub); }
@@ -660,22 +687,31 @@ body.dc-desktop-ui #dc-desktop-root .dc-desk-app{
     background: var(--bg);
     pointer-events: none; /* خود کانتینر بی‌اثر */
   }
-  .dc-sticky-search-btn{
-    width: 100%;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 12px 14px;
-    border-radius: 14px;
-    border: 1px solid #e2e6f3;
-    background: rgba(243, 245, 247, 0.95);
-    backdrop-filter: blur(10px);
-    box-shadow: 0 6px 18px rgba(11, 95, 255, 0.06);
-    pointer-events: auto; /* فقط دکمه فعال */
-    font-family: inherit;
-  }
-  .dc-sticky-ico{ opacity: .7; }
-  .dc-sticky-txt{ opacity: .75; font-size: 14px; }
+ .dc-sticky-search-btn{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 14px;            /* ⬅️ یه ذره نفس بیشتر */
+  border-radius: 16px;           /* ⬅️ نرم‌تر */
+  border: 1px solid rgba(2,35,96,0.18);  /* ⬅️ مرز آبی خیلی ملایم */
+  background: rgba(243, 245, 247, 0.98); /* ⬅️ همون خاکستری، کمی تمیزتر */
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 26px rgba(2,35,96,0.06); /* ⬅️ حضور بیشتر */
+  pointer-events: auto;
+  font-family: inherit;
+}
+
+ .dc-sticky-txt{
+  opacity: .88;          /* ⬅️ پررنگ‌تر */
+  font-size: 14px;
+  font-weight: 800;      /* ⬅️ بولد واقعی */
+  color: #0b1d40;
+}
+
+.dc-sticky-ico{
+  opacity: .9;           /* ⬅️ آیکن هم واضح‌تر */
+}
 
   /* Overlay تمام صفحه */
   .dc-search-overlay{
@@ -1646,12 +1682,16 @@ document.body.addEventListener("touchend", e => {
 ------------------------------------------------------ */
 document.addEventListener('click', e => {
   if (e.target.classList.contains('dc-close-results')) {
+    const globalBox = document.getElementById('dcGlobalBox');
+    const resultsBox = document.getElementById('dcResults');
     const searchCard = document.getElementById('card-search');
+
     if (globalBox) globalBox.classList.remove('open');
     if (searchCard) searchCard.classList.remove('active-toggle');
     if (resultsBox) resultsBox.style.display = 'none';
   }
 }, true);
+
 </script>
 
 <script>
