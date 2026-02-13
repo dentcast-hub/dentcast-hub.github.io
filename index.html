@@ -679,39 +679,41 @@ body.dc-desktop-ui #dc-desktop-root .dc-desk-app{
 @media (max-width: 1023px) {
 
   /* Sticky bar زیر تب‌ها */
-  .dc-sticky-search{
+ /* خود کارت استیکی */
+  #dcStickySearch{
     position: sticky;
-    top: 62px; /* اگر ارتفاع تب‌بارت فرق داره، این رو تنظیم می‌کنیم */
-   /* z-index: 60;*/
-    padding: 10px 12px 6px;
-    background: var(--bg);
-    pointer-events: none; /* خود کانتینر بی‌اثر */
+    top: 62px;               /* اگر لازم بود تنظیمش می‌کنیم */
+    z-index: 50;
+    padding: 10px 12px !important;
   }
- .dc-sticky-search-btn{
-  width: 100%;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 13px 14px;            /* ⬅️ یه ذره نفس بیشتر */
-  border-radius: 16px;           /* ⬅️ نرم‌تر */
-  border: 1px solid rgba(2,35,96,0.18);  /* ⬅️ مرز آبی خیلی ملایم */
-  background: rgba(243, 245, 247, 0.98); /* ⬅️ همون خاکستری، کمی تمیزتر */
-  backdrop-filter: blur(10px);
-  box-shadow: 0 10px 26px rgba(2,35,96,0.06); /* ⬅️ حضور بیشتر */
-  pointer-events: auto;
-  font-family: inherit;
-}
 
- .dc-sticky-txt{
-  opacity: .88;          /* ⬅️ پررنگ‌تر */
-  font-size: 14px;
-  font-weight: 800;      /* ⬅️ بولد واقعی */
-  color: #0b1d40;
-}
+  /* دکمه داخل کارت: مثل محتوا، نه مثل یک باکس جدا */
+  #dcStickySearch .dc-sticky-search-btn{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 
-.dc-sticky-ico{
-  opacity: .9;           /* ⬅️ آیکن هم واضح‌تر */
-}
+    padding: 0;              /* چون خود کارت padding دارد */
+    border: none;
+    background: transparent; /* کارت خودش بک‌گراند دارد */
+    box-shadow: none;
+    backdrop-filter: none;
+
+    font-family: inherit;
+    cursor: pointer;
+    text-align: right;
+  }
+
+  #dcStickySearch .dc-sticky-txt{
+    font-size: 0.86rem;
+    font-weight: 800;
+    color: #0b1d40;
+  }
+
+  #dcStickySearch .dc-sticky-ico{
+    opacity: .9;
+  }
 
   /* Overlay تمام صفحه */
   .dc-search-overlay{
@@ -1101,12 +1103,14 @@ body.dc-desktop-ui #dc-desktop-root .dc-desk-sidebar{
           <span class="dc-chip">DentCast</span>
         </article>
   <!-- ✅ اینجا بچسبون -->
-  <div id="dcStickySearch" class="dc-sticky-search" aria-label="Search">
-    <button type="button" id="dcOpenSearch" class="dc-sticky-search-btn" aria-label="جستجو">
-      <span class="dc-sticky-ico">🔍</span>
-      <span class="dc-sticky-txt"> جستجو در همه ی مطالب علمی </span>
-    </button>
-  </div>
+  <article class="dc-card featured-card" id="dcStickySearch">
+  <button type="button" id="dcOpenSearch" class="dc-sticky-search-btn" aria-label="جستجو">
+    <span class="dc-sticky-ico">🔍</span>
+    <span class="dc-sticky-txt">جستجو در همه‌ی مطالب علمی</span>
+  </button>
+  <span class="dc-chip">Search</span>
+</article>
+
        <!-- <article class="dc-card" id="btn-photocast" onclick="window.location.href='https://dentcast.ir/photocast/'">
           <div class="dc-card-main">
             <div class="dc-card-title">Photocast </div>
