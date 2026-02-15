@@ -2425,8 +2425,8 @@ function disableDesktop() {
       // اگر تاریخ داریم مرتب کن؛ اگر نداریم، فرض: ترتیب فایل = قدیمی -> جدید
       const hasDates = arr.some(x => x.d > 0);
       const picked = hasDates
-        ? arr.sort((a,b) => b.d - a.d).slice(0,3)
-        : arr.slice(-3).reverse();
+        ? arr.sort((a,b) => b.d - a.d).slice(0,5)
+        : arr.slice(-5).reverse();
 
       render(picked);
     })
