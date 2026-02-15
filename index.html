@@ -786,6 +786,17 @@ body.dc-desktop-ui #dc-desktop-root .dc-desk-app{
 #dcStickySearch2 .dc-sticky-ico{
   opacity: .9;
 }
+/* ✅ کل کارت سرچ کلیک‌پذیر بشه چون خود button تمام عرض رو می‌گیره */
+#dcStickySearch .dcOpenSearch,
+#dcStickySearch2 .dcOpenSearch{
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-align: right;
+  cursor: pointer;
+}
 
   /* Overlay تمام صفحه */
   .dc-search-overlay{
