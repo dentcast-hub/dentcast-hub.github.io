@@ -988,7 +988,7 @@ body.dc-desktop-ui #dcDeskViewEmpty .banner .thumb{
   border-top: 2px solid #02236068;
   border-radius: .9rem;
   overflow: hidden;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   padding-bottom: 10px;
   border-bottom: 1px solid rgba(2,35,96,0.12);
 
@@ -1036,8 +1036,8 @@ body.dc-desktop-ui #dcDeskViewEmpty .banner .thumb{
 
   /* لینک‌ها هم تو همون حال‌وهوای کارت، ولی خیلی مینیمال */
   color: rgba(9, 37, 164, 0.893);
-  font-size: .73rem;
-  line-height: 1.5;
+  font-size: .9rem;
+  line-height: 1.7;
 
   padding: .38rem .45rem;
   border-radius: .65rem;
@@ -1123,7 +1123,8 @@ body.dc-desktop-ui #dcDeskViewEmpty .banner .thumb{
 /* ===== Consult Card Priority ===== */
 
 .dc-card--consult{
-  border: 2px solid rgba(11,95,255,0.35);
+  border-top: 2px solid rgba(11,95,255,0.35);
+  border-right: 2px solid rgba(11,95,255,0.35);
   box-shadow: 0 12px 26px rgba(0,0,0,0.12);
   transform: scale(1.02);
 }
@@ -1479,7 +1480,7 @@ body.dc-desktop-ui #dcDeskViewEmpty .banner .thumb{
        <article class="dc-card dc-card--consult" id="card-consult-patient">
   <div class="dc-card-main">
     <div class="dc-card-title">مشاوره و ویزیت آنلاین 📞</div>
-   <div class="dc-card-caption">مشاوره قبل از مراجعه</div>
+   <div class="dc-card-caption">مشاوره ی مستقیم با دکتر شهابیان   </div>
   </div>
   <span class="dc-chip">Consult</span>
 </article>
@@ -1502,9 +1503,9 @@ if (consultPatient) {
       
       <div class="dc-card-list">
 
-    <article class="dc-monitor" aria-label="سه تغییر آخر دنت‌کست">
+    <article class="dc-monitor" aria-label="هفت تغییر آخر دنت‌کست">
   <div class="dc-monitor-inner">
-    <div class="dc-monitor-title">سه تغییر آخر دنت‌کست</div>
+    <div class="dc-monitor-title">هفت تغییر آخر دنت‌کست</div>
     <ul class="dc-monitor-list" id="dcLast3Updates"></ul>
   </div>
 </article>
@@ -2425,8 +2426,8 @@ function disableDesktop() {
       // اگر تاریخ داریم مرتب کن؛ اگر نداریم، فرض: ترتیب فایل = قدیمی -> جدید
       const hasDates = arr.some(x => x.d > 0);
       const picked = hasDates
-        ? arr.sort((a,b) => b.d - a.d).slice(0,5)
-        : arr.slice(-5).reverse();
+        ? arr.sort((a,b) => b.d - a.d).slice(0,7)
+        : arr.slice(-7).reverse();
 
       render(picked);
     })
