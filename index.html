@@ -1154,6 +1154,45 @@ body.dc-desktop-ui #dcDeskViewEmpty .banner .thumb{
   color: #fff;
   border: none;
 }
+/* ===== Consult Card (Patient) — bigger, centered, spaced ===== */
+#panel-patient #card-consult-patient{
+  margin-top: 14px;              /* ✅ فاصله از کارت LiteCast */
+}
+
+#panel-patient #card-consult-patient.dc-card--consult{
+  min-height: 110px;             /* ✅ کمی بلندتر */
+  padding: 14px 14px !important;
+
+  justify-content: center;       /* ✅ وسط‌چین عمودی (چون dc-card فلکسه) */
+  text-align: center;            /* ✅ وسط‌چین متن‌ها */
+}
+
+#panel-patient #card-consult-patient.dc-card--consult .dc-card-main{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;           /* ✅ وسط‌چین افقی */
+  gap: 6px;
+}
+
+/* فونت بزرگ‌تر و بولدتر */
+#panel-patient #card-consult-patient.dc-card--consult .dc-card-title{
+  font-size: 1.02rem;            /* ✅ بزرگ‌تر */
+  font-weight: 900;
+  line-height: 1.25;
+}
+
+#panel-patient #card-consult-patient.dc-card--consult .dc-card-caption{
+  font-size: 0.86rem;            /* ✅ بزرگ‌تر */
+  opacity: 0.92;
+}
+
+/* چیپ: چون کارت وسط‌چینه، بهتره چیپ بره گوشه (یا اگر خواستی مخفی شه بگو) */
+#panel-patient #card-consult-patient.dc-card--consult .dc-chip{
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
 
   </style>
   <script type="application/ld+json">
