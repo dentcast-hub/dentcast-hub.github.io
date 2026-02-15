@@ -767,22 +767,25 @@ body.dc-desktop-ui #dc-desktop-root .dc-desk-app{
   }
 
   /* دکمه داخلش: بدون بک‌گراند جدا، داخل کارت حل بشه */
-  #dcStickySearch .dc-sticky-search-btn{
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-    padding: 0 !important;
-  }
+#dcStickySearch .dc-sticky-search-btn,
+#dcStickySearch2 .dc-sticky-search-btn{
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
 
-  /* اگر می‌خوای متن/آیکن یک ذره جدی‌تر دیده بشه */
-  #dcStickySearch .dc-sticky-txt{
-    font-weight: 850;
-    opacity: .92;
-  }
+/* اگر می‌خوای متن/آیکن یک ذره جدی‌تر دیده بشه */
+#dcStickySearch .dc-sticky-txt,
+#dcStickySearch2 .dc-sticky-txt{
+  font-weight: 850;
+  opacity: .92;
+}
 
-  #dcStickySearch .dc-sticky-ico{
-    opacity: .9;
-  }
+#dcStickySearch .dc-sticky-ico,
+#dcStickySearch2 .dc-sticky-ico{
+  opacity: .9;
+}
 
   /* Overlay تمام صفحه */
   .dc-search-overlay{
