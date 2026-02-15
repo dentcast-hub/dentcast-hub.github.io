@@ -1977,34 +1977,46 @@ document.addEventListener('click', e => {
 
 <script>
 /* ==================================================
-   PWA Install
+   PWA Install — bound to Tools Island button
 ================================================== */
 let deferredPrompt = null;
 
-window.addEventListener("beforeinstallprompt", e => {
+window.addEventListener("beforeinstallprompt", (e) => {
   e.preventDefault();
   deferredPrompt = e;
 });
 
 const isiOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
-const pwaCard = document.getElementById("card-pwa");
 
-if (pwaCard) {
-  pwaCard.addEventListener("click", async () => {
-    if (isiOS) {
-      alert("برای نصب در آیفون: Share → Add to Home Screen");
-      return;
-    }
-    if (!deferredPrompt) {
-      alert("در حال حاضر امکان نصب خودکار وجود ندارد.");
-      return;
-    }
-    deferredPrompt.prompt();
-    await deferredPrompt.userChoice;
+function handlePWAInstall() {
+  if (isiOS) {
+    alert("برای نصب در آیفون: Share → Add to Home Screen");
+    return;
+  }
+
+  if (!deferredPrompt) {
+    alert("در حال حاضر امکان نصب خودکار وجود ندارد. (قبلاً نصب شده یا مرورگر اجازه نمی‌دهد)");
+    return;
+  }
+
+  deferredPrompt.prompt();
+  deferredPrompt.userChoice.finally(() => {
     deferredPrompt = null;
   });
 }
+
+/* ===== Tools Island Actions ===== */
+document.getElementById("tool-pwa")?.addEventListener("click", handlePWAInstall);
+
+document.getElementById("tool-consult")?.addEventListener("click", () => {
+  window.location.href = "mailto:info@dentcast.ir";
+});
+
+document.getElementById("tool-about")?.addEventListener("click", () => {
+  window.location.href = "about.html";
+});
 </script>
+
 <script>
 /* ==================================================
    Badge System (Tehran Timezone Lock)
