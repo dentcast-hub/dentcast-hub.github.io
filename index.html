@@ -1234,8 +1234,8 @@ body.dc-desktop-ui #dcDeskViewEmpty .banner .thumb{
           <span class="dc-chip">DentCast</span>
         </article>
  <!-- ✅ اینجا بچسبون -->
-  <article class="dc-card featured-card" id="dcStickySearch">
-  <button type="button" id="dcOpenSearch" class="dc-sticky-search-btn" aria-label="جستجو">
+  <article class="dc-card featured-card dcStickySearch">
+  <button type="button" class="dcOpenSearch dc-sticky-search-btn" aria-label="جستجو">
     <span class="dc-sticky-ico">🔍</span>
     <span class="dc-sticky-txt">جستجو در همه‌ی مطالب علمی</span>
   </button> 
@@ -1317,9 +1317,9 @@ body.dc-desktop-ui #dcDeskViewEmpty .banner .thumb{
           </div>
           <span class="dc-chip">Glossary</span>
         </article>-->
-        
-  <article class="dc-card featured-card" id="dcStickySearch">
-  <button type="button" id="dcOpenSearch" class="dc-sticky-search-btn" aria-label="جستجو">
+
+  <article class="dc-card featured-card dcStickySearch">
+  <button type="button" class="dcOpenSearch dc-sticky-search-btn" aria-label="جستجو">
     <span class="dc-sticky-ico">🔍</span>
     <span class="dc-sticky-txt">جستجو در همه‌ی مطالب علمی</span>
   </button> 
@@ -1758,7 +1758,7 @@ document.body.addEventListener("touchend", e => {
 (function () {
   const overlay = document.getElementById('dcSearchOverlay');
   const overlayBody = document.getElementById('dcSearchOverlayBody');
-  const openBtn = document.getElementById('dcOpenSearch');
+const openBtns = document.querySelectorAll('.dcOpenSearch');
   const closeBtn = document.getElementById('dcCloseSearchOverlay');
 
   const globalBox = document.getElementById('dcGlobalBox');     // سرچ فعلی خودت
@@ -1826,7 +1826,7 @@ document.body.addEventListener("touchend", e => {
   }
 
   // کلیک روی sticky bar
-  openBtn && openBtn.addEventListener('click', () => openSearch(true));
+ openBtns.forEach(btn => btn.addEventListener('click', () => openSearch(true)));
 
   // ضربدر بالا
   closeBtn && closeBtn.addEventListener('click', () => closeSearch(false));
