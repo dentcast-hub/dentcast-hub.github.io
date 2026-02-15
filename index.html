@@ -963,84 +963,77 @@ body.dc-desktop-ui #dcDeskViewEmpty .banner .thumb{
   top: 110px;
 }
 /* ===== Desktop Sidebar Color ===== */
-body.dc-desktop-ui #dc-desktop-root .dc-desk-sidebar{
-  background: #04142c !important;
-  color: #ffffff !important;
-}
+/* === Monitor Card: make it INSET (pressed) like other cards === */
 .dc-monitor{
-  width: 100%;
-  border-radius: 18px;
-  border: 1px solid rgba(2,35,96,0.22);
-  background: linear-gradient(180deg, rgba(2,35,96,0.08), rgba(2,35,96,0.04));
-  box-shadow: 0 10px 26px rgba(2,6,23,0.08), inset 0 2px 0 rgba(255,255,255,0.55);
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-right: 2px solid #02236068;  /* همون DNA کارت‌ها */
+  border-top: 2px solid #02236068;
+  border-radius: .9rem;
   overflow: hidden;
+
+  /* ❌ سایه بیرونی رو بردار */
+  box-shadow: none;
+
+  /* ✅ سایه داخلی: راست/پایین تیره + بالا/چپ روشن */
+  box-shadow:
+    inset -10px -10px 18px rgba(2, 6, 23, 0.10),   /* داخلِ راست/پایین (تو رفته) */
+    inset  10px  10px 18px rgba(255, 255, 255, 0.80); /* داخلِ بالا/چپ (هایلایت) */
 }
 
+/* داخلش هم ساده و هم‌استایل کارت‌ها */
 .dc-monitor-inner{
   position: relative;
-  padding: 14px 14px 12px;
-  background: radial-gradient(120% 120% at 50% 10%, rgba(255,255,255,0.55), rgba(255,255,255,0.16) 42%, rgba(2,35,96,0.06) 100%);
-  box-shadow: inset 0 14px 26px rgba(2,6,23,0.10), inset 0 -10px 18px rgba(255,255,255,0.35);
+  padding: .55rem .6rem .55rem;  /* نزدیک به پدینگ کارت‌های شما */
+  background: transparent;
+  box-shadow: none;              /* هرچی قبلاً داشت رو خنثی کن */
 }
 
+/* scanlines/vignette قبلی رو خاموش کن که دقیقاً شبیه کارت‌ها بمونه */
 .dc-monitor-inner::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:
-    radial-gradient(120% 90% at 50% 30%, transparent 0 55%, rgba(2,6,23,0.14) 100%),
-    repeating-linear-gradient(
-      to bottom,
-      rgba(2,35,96,0.06) 0px,
-      rgba(2,35,96,0.06) 1px,
-      transparent 2px,
-      transparent 5px
-    );
-  opacity: 0.55;
-  pointer-events:none;
-  mix-blend-mode: multiply;
+  display: none !important;
 }
 
 .dc-monitor-title{
-  position: relative;
-  font-size: 0.78rem;
-  font-weight: 900;
-  color: #022360;
-  margin-bottom: 8px;
-  letter-spacing: -0.2px;
+  font-size: .78rem;
+  font-weight: 800;
+  color: var(--text-main);
+  margin: 0 0 .45rem 0;
 }
 
 .dc-monitor-list{
-  position: relative;
   margin: 0;
   padding: 0;
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-}
-
-.dc-monitor-list li{
-  font-size: 0.72rem;
-  line-height: 1.55;
+  gap: .45rem;
 }
 
 .dc-monitor-list a{
   display: block;
   text-decoration: none;
-  color: rgba(2,35,96,0.92);
-  padding: 8px 10px;
-  border-radius: 14px;
-  border: 1px solid rgba(2,35,96,0.14);
-  background: rgba(255,255,255,0.55);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.8);
+
+  /* لینک‌ها هم تو همون حال‌وهوای کارت، ولی خیلی مینیمال */
+  color: var(--text-sub);
+  font-size: .73rem;
+  line-height: 1.5;
+
+  padding: .38rem .45rem;
+  border-radius: .65rem;
+  border: 1px solid rgba(208,213,221,0.55);
+  background: rgba(247, 248, 252, 0.85);
+
+  /* ✅ اینا هم inset باشن، نه برجسته */
+  box-shadow:
+    inset -6px -6px 10px rgba(2, 6, 23, 0.08),
+    inset  6px  6px 10px rgba(255,255,255,0.85);
 }
 
 .dc-monitor-list a:active{
-  transform: scale(0.99);
-  background: rgba(240,244,255,0.9);
+  transform: scale(0.995);
+  background: rgba(240, 244, 255, 0.95);
 }
-
 
 
   </style>
