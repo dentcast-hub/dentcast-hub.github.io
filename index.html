@@ -1041,6 +1041,71 @@ body.dc-desktop-ui #dcDeskViewEmpty .banner .thumb{
   transform: scale(0.995);
   background: rgba(240, 244, 255, 0.95);
 }
+/* =========================
+   Tools Island (3-part)
+========================= */
+.dc-tools-island{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-radius: 16px;
+  overflow: hidden;
+
+  background: rgba(255,255,255,0.9);
+  border: 1px solid rgba(2,35,96,0.14);
+
+  /* حس جزیره: بیرون خیلی نرم، داخل گود */
+  box-shadow:
+    0 10px 22px rgba(2,6,23,0.06),
+    inset -10px -10px 18px rgba(2,6,23,0.08),
+    inset 10px 10px 18px rgba(255,255,255,0.85);
+
+  margin-top: 10px;   /* اگر خواستی از مانیتور فاصله بگیره */
+}
+
+.dc-tool-seg{
+  appearance: none;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+
+  padding: 14px 6px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+
+  color: var(--text-main);
+  font-family: inherit;
+}
+
+.dc-tool-seg:not(:last-child){
+  border-left: 1px solid rgba(2,35,96,0.10); /* جداکننده ظریف */
+}
+
+.dc-tool-ico{
+  font-size: 20px;
+  line-height: 1;
+  opacity: 0.95;
+}
+
+.dc-tool-txt{
+  font-size: 12px;
+  font-weight: 800;
+  color: rgba(2,35,96,0.92);
+}
+
+/* Interaction */
+.dc-tool-seg:active{
+  background: rgba(2,35,96,0.06);
+}
+
+/* موبایل خیلی باریک */
+@media (max-width: 360px){
+  .dc-tool-seg{ padding: 12px 4px 10px; }
+  .dc-tool-ico{ font-size: 18px; }
+  .dc-tool-txt{ font-size: 11px; }
+}
 
 
   </style>
@@ -1405,8 +1470,27 @@ if (consultPatient) {
     <ul class="dc-monitor-list" id="dcLast3Updates"></ul>
   </div>
 </article>
+<!-- ✅ Tools Island (3-part segmented) -->
+<div class="dc-tools-island" role="navigation" aria-label="ابزارهای دنت‌کست">
 
+  <button class="dc-tool-seg" type="button" id="tool-pwa">
+    <span class="dc-tool-ico">📱</span>
+    <span class="dc-tool-txt">نصب</span>
+  </button>
 
+  <button class="dc-tool-seg" type="button" id="tool-consult">
+    <span class="dc-tool-ico">📞</span>
+    <span class="dc-tool-txt">مشاوره</span>
+  </button>
+
+  <button class="dc-tool-seg" type="button" id="tool-about">
+    <span class="dc-tool-ico">✨</span>
+    <span class="dc-tool-txt">درباره</span>
+  </button>
+
+</div>
+
+<!--
        <article class="dc-card" id="card-pwa" style="border-color:#0b5fff30; background:#f5f8ff; margin: top 30px !important;">
   <div class="dc-card-main">
     <div class="dc-card-title">نصب نسخهٔ سریع دنت‌کست 📱</div>
@@ -1418,7 +1502,7 @@ if (consultPatient) {
 </article>
 
 
-      <!-- <article class="dc-card" id="card-search">
+       <article class="dc-card" id="card-search">
           <div class="dc-card-main">
             <div class="dc-card-title">جستجوی سراسری دنت‌کست 🔎</div>
             <div class="dc-card-caption">سرچ در تمام اپیزودها و تمام محتوای علمی جدید</div>
@@ -1432,7 +1516,7 @@ if (consultPatient) {
     <div class="dc-card-caption">اطلاع سریع از اپیزودهای جدید</div>
   </div>
   <span class="dc-chip">Newsletter</span>
-</article>--> 
+</article> 
 
 
        <article class="dc-card" id="card-consult-info">
@@ -1450,7 +1534,7 @@ if (consultPatient) {
           </div>
           <span class="dc-chip">About</span>
         </article>
-      </div>
+      </div>-->
 
       <div class="dc-global-filter-box" id="dcGlobalBox">
         <h3 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h3> 
@@ -2300,6 +2384,21 @@ function disableDesktop() {
 })();
 </script>
 
+<script>
+/* ===== Tools Island Actions ===== */
+document.getElementById("tool-pwa")?.addEventListener("click", () => {
+  document.getElementById("card-pwa")?.click(); // اگر هنوز کارت پوا رو نگه داشتی
+  // اگر کارت پوا رو حذف کردی، اینجا مستقیم همون کد PWA رو می‌ذاریم (بگو)
+});
+
+document.getElementById("tool-consult")?.addEventListener("click", () => {
+  window.location.href = "mailto:info@dentcast.ir";
+});
+
+document.getElementById("tool-about")?.addEventListener("click", () => {
+  window.location.href = "about.html";
+});
+</script>
 
 
 </body>
