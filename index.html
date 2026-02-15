@@ -1120,6 +1120,31 @@ body.dc-desktop-ui #dcDeskViewEmpty .banner .thumb{
   .dc-tool-txt{ font-size: 11px; }
 }
 
+/* ===== Consult Card Priority ===== */
+
+.dc-card--consult{
+  border: 2px solid rgba(11,95,255,0.35);
+  box-shadow: 0 12px 26px rgba(0,0,0,0.12);
+  transform: scale(1.02);
+}
+
+/* عنوان واضح‌تر */
+.dc-card--consult .dc-card-title{
+  font-weight: 700;
+}
+
+/* کپشن کاربردی‌تر */
+.dc-card--consult .dc-card-caption{
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+/* چیپ واضح‌تر */
+.dc-card--consult .dc-chip{
+  background: var(--blue);
+  color: #fff;
+  border: none;
+}
 
   </style>
   <script type="application/ld+json">
@@ -1451,10 +1476,10 @@ body.dc-desktop-ui #dcDeskViewEmpty .banner .thumb{
           <span class="dc-chip">LiteCast</span>
         </article>
 
-       <article class="dc-card" id="card-consult-patient">
+       <article class="dc-card dc-card--consult" id="card-consult-patient">
   <div class="dc-card-main">
     <div class="dc-card-title">مشاوره و ویزیت آنلاین 📞</div>
-    <div class="dc-card-caption">درخواست مشاوره</div>
+   <div class="dc-card-caption">مشاوره قبل از مراجعه</div>
   </div>
   <span class="dc-chip">Consult</span>
 </article>
