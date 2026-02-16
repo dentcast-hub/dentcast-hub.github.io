@@ -1208,6 +1208,55 @@ body.dc-desktop-ui #dcDeskViewEmpty .banner .thumb{
 #panel-sharehub #dcStickySearch2{
   margin-bottom: 14px !important;
 }
+/* =========================
+   Location Card (compact)
+========================= */
+.dc-location{
+  margin-top: 10px;      /* فاصله از LiteCast کمتر */
+}
+
+.dc-location .dc-monitor-inner{
+  padding: 10px 12px;    /* حاشیه‌های چپ/راست کمتر */
+}
+
+.dc-location .dc-monitor-title{
+  margin-bottom: 8px;
+}
+
+/* لینک دور عکس */
+.dc-location-link{
+  display: block;
+  margin-top: 6px;
+}
+
+/* عکس: فول عرض + ارتفاع کم (برای عکس افقی عالیه) */
+.dc-location-img{
+  width: 100% !important;
+  max-width: 100% !important;
+
+  height: 140px;         /* ✅ ارتفاع کم */
+  object-fit: cover;     /* ✅ کراپ تمیز */
+  object-position: center;
+
+  border-radius: 14px;
+  display: block;
+  margin: 0 auto;
+}
+
+/* متن راهنما */
+.dc-location-hint{
+  margin-top: 8px;
+  font-size: .78rem;
+  color: var(--text-sub);
+  line-height: 1.7;
+  text-align: center;
+}
+
+/* CTA داخل همین کارت: فاصله کم و خوش‌فرم */
+#panel-patient .dc-location .dc-cta-row{
+  margin-top: 10px;   /* قبلاً 14px بود */
+  gap: 10px;
+}
 
 
   </style>
@@ -1538,7 +1587,8 @@ body.dc-desktop-ui #dcDeskViewEmpty .banner .thumb{
         </article>
 
     <!-- Location Map Card -->
-<article class="dc-monitor" aria-label="موقعیت مطب">
+
+<article class="dc-monitor dc-location" aria-label="موقعیت مطب">
   <div class="dc-monitor-inner">
 
     <div class="dc-monitor-title">موقعیت مطب</div>
@@ -1547,45 +1597,36 @@ body.dc-desktop-ui #dcDeskViewEmpty .banner .thumb{
        target="_blank"
        rel="noopener"
        aria-label="مسیریابی با نشان"
-       style="display:block; margin-top:10px;">
+       class="dc-location-link">
 
       <img
-  src="/clinic-map.webp"
-  alt="موقعیت مطب روی نقشه نشان"
-  style="
-    width:60%;
-    max-width:260px;
-    border-radius:12px;
-    display:block;
-    margin:0 auto;
-  "
-  loading="lazy"
->
-
+        src="/clinic-map.webp"
+        alt="موقعیت مطب روی نقشه نشان"
+        class="dc-location-img"
+        loading="lazy"
+      >
     </a>
 
-    <div style="
-      margin-top:8px;
-      font-size:.78rem;
-      color: var(--text-sub);
-      line-height:1.8;
-      text-align:center;
-    ">
+    <div class="dc-location-hint">
       برای مسیریابی در اپلیکیشن نشان روی نقشه کلیک کنید
+    </div>
+
+    <!-- ✅ CTA ها آمدن داخل کارت -->
+    <div class="dc-cta-row" aria-label="مشاوره و تماس">
+      <a class="dc-cta-btn dc-cta-consult" href="mailto:info@dentcast.ir">
+        مشاوره آنلاین ✉️
+      </a>
+
+      <a class="dc-cta-btn dc-cta-call" href="tel:+986133380090">
+        تماس با مطب 📞
+      </a>
     </div>
 
   </div>
 </article>
 
-<div class="dc-cta-row" aria-label="مشاوره و تماس">
-  <a class="dc-cta-btn dc-cta-consult" href="mailto:info@dentcast.ir">
-    مشاوره آنلاین ✉️
-  </a>
 
-  <a class="dc-cta-btn dc-cta-call" href="tel:+986133380090">
-    تماس با مطب 📞
-  </a>
-</div>
+
 
 <!-- ✅ Patient TV (3 random from separate JSON) -->
 <article class="dc-monitor" aria-label="سه پیشنهاد رندوم برای غیر دندانپزشکان">
