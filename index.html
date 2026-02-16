@@ -1123,76 +1123,51 @@ body.dc-desktop-ui #dcDeskViewEmpty .banner .thumb{
 /* ===== Consult Card Priority ===== */
 
 /* ===== Consult Card Priority ===== */
-.dc-card--consult{
-  min-height: 80px;                 /* ✅ ارتفاع بیشتر (تست: 88 تا 112) */
-  padding-top: 10px !important;     /* ✅ فضای داخلی بیشتر */
-  padding-bottom: 10px !important;
-
-  border-top: 2px solid #02236068;  /* ✅ اصلاح شد */
-  border-right: 2px solid #02236068;/* ✅ اصلاح شد */
-
-  box-shadow: 0 12px 26px rgba(0,0,0,0.12);
-  transform: scale(1.02);
-}
-.dc-card--consult{ min-height: 80px; }
-
-
-/* عنوان واضح‌تر */
-.dc-card--consult .dc-card-title{
-  font-weight: 700;
+/* ===== Patient CTA Row (2 buttons side-by-side) ===== */
+#panel-patient .dc-cta-row{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 14px;      /* فاصله از LiteCast */
 }
 
-/* کپشن کاربردی‌تر */
-.dc-card--consult .dc-card-caption{
-  font-size: 0.95rem;
-  opacity: 0.9;
-}
-
-/* چیپ واضح‌تر */
-.dc-card--consult .dc-chip{
-  background: var(--blue);
-  color: #fff;
-  border: none;
-}
-/* ===== Consult Card (Patient) — bigger, centered, spaced ===== */
-#panel-patient #card-consult-patient{
-  margin-top: 20px;              /* ✅ فاصله از کارت LiteCast */
-}
-
-#panel-patient #card-consult-patient.dc-card--consult{
-  min-height: 110px;             /* ✅ کمی بلندتر */
-  padding: 14px 14px !important;
-
-  justify-content: center;       /* ✅ وسط‌چین عمودی (چون dc-card فلکسه) */
-  text-align: center;            /* ✅ وسط‌چین متن‌ها */
-}
-
-#panel-patient #card-consult-patient.dc-card--consult .dc-card-main{
-  width: 90%;
+#panel-patient .dc-cta-btn{
   display: flex;
-  flex-direction: column;
-  align-items: center;           /* ✅ وسط‌چین افقی */
-  gap: 6px;
-}
+  align-items: center;
+  justify-content: center;
 
-/* فونت بزرگ‌تر و بولدتر */
-#panel-patient #card-consult-patient.dc-card--consult .dc-card-title{
-  font-size: 1.2rem;            /* ✅ بزرگ‌تر */
+  width: 100%;
+  padding: 14px 10px;
+  border-radius: 16px;
+
+  font-size: 0.92rem;
   font-weight: 900;
-  line-height: 1.25;
+  text-decoration: none;
+
+  border: 1px solid rgba(2,35,96,0.18);
+  box-shadow: 0 10px 22px rgba(2,6,23,0.08);
+
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
-#panel-patient #card-consult-patient.dc-card--consult .dc-card-caption{
-  font-size: 0.8rem;            /* ✅ بزرگ‌تر */
-  opacity: 0.92;
+#panel-patient .dc-cta-btn:active{
+  transform: scale(0.985);
 }
 
-/* چیپ: چون کارت وسط‌چینه، بهتره چیپ بره گوشه (یا اگر خواستی مخفی شه بگو) */
-#panel-patient #card-consult-patient.dc-card--consult .dc-chip{
-  position: absolute;
-  top: 10px;
-  left: 10px;
+/* مشاوره: هم‌خانواده برند */
+#panel-patient .dc-cta-consult{
+  background: #eef3ff;
+  color: #022360;
 }
+
+/* تماس: کمی متمایز، ولی جیغ نه */
+#panel-patient .dc-cta-call{
+  background: #022360;
+  color: #ffffff;
+  border-color: #022360;
+}
+
 
   </style>
   <script type="application/ld+json">
@@ -1522,22 +1497,18 @@ body.dc-desktop-ui #dcDeskViewEmpty .banner .thumb{
           <span class="dc-chip">LiteCast</span>
         </article>
 
-       <article class="dc-card dc-card--consult" id="card-consult-patient">
-  <div class="dc-card-main">
-    <div class="dc-card-title">مشاوره و ویزیت آنلاین 📞</div>
-   <div class="dc-card-caption">مشاوره ی مستقیم با دکتر شهابیان   </div>
-  </div>
-  <span class="dc-chip">Consult</span>
-</article>
+    
+<div class="dc-cta-row" aria-label="مشاوره و تماس">
+  <a class="dc-cta-btn dc-cta-consult" href="mailto:info@dentcast.ir">
+    مشاوره آنلاین ✉️
+  </a>
 
-<script>
-const consultPatient = document.getElementById("card-consult-patient");
-if (consultPatient) {
-  consultPatient.addEventListener("click", () => {
-    window.location.href = "mailto:info@dentcast.ir";
-  });
-}
-</script>
+  <a class="dc-cta-btn dc-cta-call" href="tel:+986133380090">
+    تماس با مطب 📞
+  </a>
+</div>
+
+
 
       </div>
 
