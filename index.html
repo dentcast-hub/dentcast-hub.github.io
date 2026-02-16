@@ -1170,6 +1170,44 @@ body.dc-desktop-ui #dcDeskViewEmpty .banner .thumb{
   border-top: 2px solid #02236068;
    border-right: 2px solid #02236068;
 }
+/* =========================
+   Meta Base: fix last 3 cards (ShareHub / Chairside / MetaNote)
+========================= */
+#panel-sharehub .dc-metabase-card{
+  min-height: 78px;
+  padding: 12px 14px !important;
+  border-radius: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+#panel-sharehub .dc-metabase-card .dc-card-main{
+  width: 100%;
+}
+
+#panel-sharehub .dc-metabase-card .dc-card-title{
+  font-size: 0.95rem;
+  font-weight: 900;
+  margin: 0;
+}
+
+#panel-sharehub .dc-metabase-card .dc-card-caption{
+  font-size: 0.78rem;
+  margin-top: 6px;
+  opacity: 0.92;
+}
+
+/* چیپ خوش‌فرم‌تر */
+#panel-sharehub .dc-metabase-card .dc-chip{
+  font-weight: 800;
+  background: rgba(2,35,96,0.10);
+  border-color: rgba(2,35,96,0.22);
+}
+#panel-sharehub #dcStickySearch2{
+  margin-bottom: 14px !important;
+}
 
 
   </style>
@@ -1458,14 +1496,14 @@ body.dc-desktop-ui #dcDeskViewEmpty .banner .thumb{
 </article>
 
 
-       <article class="dc-card" id="btn-sharehub" onclick="window.location.href='https://dentcast.ir/sharehub/'">
+       <article class="dc-card" dc-metabase-card id="btn-sharehub" onclick="window.location.href='https://dentcast.ir/sharehub/'">
   <div class="dc-card-main">
     <div class="dc-card-title">Share Hub</div>
     <div class="dc-card-caption">مطالبِ دیگران با ذکر منبع و رفرنس</div>
   </div>
   <span class="dc-chip">Share</span>
 </article>
-<article class="dc-card" id="btn-chairside" onclick="window.location.href='https://dentcast.ir/chairside/'">
+<article class="dc-card" dc-metabase-card id="btn-chairside" onclick="window.location.href='https://dentcast.ir/chairside/'">
   <div class="dc-card-main">
     <div class="dc-card-title">Chairside</div>
     <div class="dc-card-caption">
@@ -1475,7 +1513,7 @@ body.dc-desktop-ui #dcDeskViewEmpty .banner .thumb{
   <span class="dc-chip">Visit</span>
 </article>
 
-        <article class="dc-card" id="btn-metanote" onclick="window.location.href='https://dentcast.ir/metanotes/'">
+        <article class="dc-card" dc-metabase-card id="btn-metanote" onclick="window.location.href='https://dentcast.ir/metanotes/'">
           <div class="dc-card-main">
             <div class="dc-card-title">Meta Note</div>
             <div class="dc-card-caption"> ایده‌ها و مدل‌های تحلیلی خارج از چارچوب </div>
