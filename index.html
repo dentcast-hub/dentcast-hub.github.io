@@ -1548,6 +1548,13 @@ body.dc-desktop-ui #dcDeskViewEmpty .banner .thumb{
   </a>
 </div>
 
+<!-- ✅ Patient TV (3 random from separate JSON) -->
+<article class="dc-monitor" aria-label="سه پیشنهاد رندوم برای غیر دندانپزشکان">
+  <div class="dc-monitor-inner">
+    <div class="dc-monitor-title">۳ مطلب رندوم برای غیر دندانپزشکان</div>
+    <ul class="dc-monitor-list" id="dcPatientRandom3"></ul>
+  </div>
+</article>
 
 
       </div>
@@ -2505,6 +2512,67 @@ document.getElementById("tool-consult")?.addEventListener("click", () => {
 document.getElementById("tool-about")?.addEventListener("click", () => {
   window.location.href = "about.html";
 });
+</script>
+<script>
+(function(){
+  const FEED_URL = "/litecast/lite-glossary.json";  // ✅ مسیر فایل JSON جدیدت
+  const el = document.getElementById("dcPatientRandom3");
+  if (!el) return;
+
+  function extractArray(json){
+    if (Array.isArray(json)) return json;
+    const cands = [json?.items, json?.data, json?.entries, json?.feed].filter(Boolean);
+    for (const c of cands) if (Array.isArray(c)) return c;
+    for (const k in (json || {})){
+      const v = json[k];
+      if (Array.isArray(v)) return v;
+      if (v && typeof v === "object" && Array.isArray(v.items)) return v.items;
+    }
+    return [];
+  }
+
+  function toItem(x){
+    const title = (x?.title || x?.name || "").toString().trim();
+    const url = (x?.page_url || x?.url || x?.link || "").toString().trim();
+    if (!title || !url) return null;
+    return { title, url };
+  }
+
+  function pickRandomUnique(arr, n){
+    // اگر کمتر از n بود همونقدر برگردون
+    const a = arr.slice();
+    // Fisher-Yates shuffle
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a.slice(0, Math.min(n, a.length));
+  }
+
+  function render(items){
+    el.innerHTML = "";
+    items.forEach(it => {
+      const li = document.createElement("li");
+      const a  = document.createElement("a");
+      a.href = it.url;
+      a.textContent = it.title;
+      li.appendChild(a);
+      el.appendChild(li);
+    });
+  }
+
+  fetch(FEED_URL, { cache: "no-store" })
+    .then(r => r.ok ? r.json() : Promise.reject())
+    .then(json => {
+      const arr = extractArray(json).map(toItem).filter(Boolean);
+
+      // ✅ ۳ تا رندوم (نه آخری‌ها)
+      const picked = pickRandomUnique(arr, 3);
+
+      render(picked);
+    })
+    .catch(() => { el.innerHTML = ""; });
+})();
 </script>
 
 
