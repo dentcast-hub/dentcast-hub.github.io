@@ -1257,6 +1257,23 @@ body.dc-desktop-ui #dcDeskViewEmpty .banner .thumb{
   margin-top: 10px;   /* قبلاً 14px بود */
   gap: 10px;
 }
+/* =========================
+   Make Location Card 70% width + shorter
+========================= */
+#panel-patient .dc-location{
+  width: 70%;
+  max-width: 420px;     /* روی موبایل‌های بزرگ هم خیلی گنده نشه */
+  margin: 10px auto 0;  /* وسط‌چین */
+}
+
+#panel-patient .dc-location .dc-monitor-inner{
+  padding: 8px 10px;    /* حاشیه‌های داخلی کمتر => ارتفاع کمتر */
+}
+
+/* عکس هم کوتاه‌تر بشه تا ارتفاع کارت کم بشه */
+#panel-patient .dc-location .dc-location-img{
+  height: 110px;        /* قبلاً مثلاً 140 بود */
+}
 
 
   </style>
