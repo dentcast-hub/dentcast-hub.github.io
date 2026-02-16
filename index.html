@@ -1275,6 +1275,55 @@ body.dc-desktop-ui #dcDeskViewEmpty .banner .thumb{
   height: 110px;        /* قبلاً مثلاً 140 بود */
 }
 
+/* =========================
+   Patient: Location + CTA compact pack (FULL width, less height)
+========================= */
+#panel-patient .dc-locpack{
+  margin-top: 8px !important;
+  margin-bottom: 10px !important;
+  width: 100% !important;              /* ✅ تمام عرض */
+}
+
+#panel-patient .dc-locpack-inner{
+  padding: 10px 10px 12px !important;  /* ✅ کناره‌ها کمتر => ارتفاع کمتر */
+}
+
+/* لینک و فاصله‌ها */
+#panel-patient .dc-locpack-link{
+  display: block;
+  margin-top: 6px;
+}
+
+/* عکس: تمام عرض، کوتاه‌تر (افقی خوشگل) */
+#panel-patient .dc-locpack-img{
+  width: 100% !important;
+  height: 120px;                       /* ✅ ارتفاع کم؛ 95 تا 140 قابل بازی */
+  object-fit: cover;
+  border-radius: 12px;
+  display: block;
+}
+
+/* متن زیر عکس جمع‌وجور */
+#panel-patient .dc-locpack-hint{
+  margin-top: 6px;
+  font-size: .76rem;
+  color: var(--text-sub);
+  line-height: 1.6;
+  text-align: center;
+}
+
+/* CTAها داخل همین باکس: فاصله خیلی کم */
+#panel-patient .dc-cta-row-compact{
+  margin-top: 10px !important;         /* ✅ فاصله کم از نقشه */
+  gap: 10px;
+}
+
+/* دکمه‌ها کم‌ارتفاع‌تر */
+#panel-patient .dc-cta-row-compact .dc-cta-btn{
+  padding: 12px 10px !important;       /* ✅ ارتفاع کمتر */
+  border-radius: 14px;
+  box-shadow: 0 8px 18px rgba(2,6,23,0.07);
+}
 
   </style>
   <script type="application/ld+json">
@@ -1605,42 +1654,7 @@ body.dc-desktop-ui #dcDeskViewEmpty .banner .thumb{
 
     <!-- Location Map Card -->
 
-<article class="dc-monitor dc-location" aria-label="موقعیت مطب">
-  <div class="dc-monitor-inner">
 
-    <div class="dc-monitor-title">موقعیت مطب</div>
-
-    <a href="https://nshn.ir/32sbkzKEOBbXR4"
-       target="_blank"
-       rel="noopener"
-       aria-label="مسیریابی با نشان"
-       class="dc-location-link">
-
-      <img
-        src="/clinic-map.webp"
-        alt="موقعیت مطب روی نقشه نشان"
-        class="dc-location-img"
-        loading="lazy"
-      >
-    </a>
-
-    <div class="dc-location-hint">
-      برای مسیریابی در اپلیکیشن نشان روی نقشه کلیک کنید
-    </div>
-
-    <!-- ✅ CTA ها آمدن داخل کارت -->
-    <div class="dc-cta-row" aria-label="مشاوره و تماس">
-      <a class="dc-cta-btn dc-cta-consult" href="mailto:info@dentcast.ir">
-        مشاوره آنلاین ✉️
-      </a>
-
-      <a class="dc-cta-btn dc-cta-call" href="tel:+986133380090">
-        تماس با مطب 📞
-      </a>
-    </div>
-
-  </div>
-</article>
 
 
 
@@ -1650,6 +1664,43 @@ body.dc-desktop-ui #dcDeskViewEmpty .banner .thumb{
   <div class="dc-monitor-inner">
     <div class="dc-monitor-title">۳ مطلب رندوم برای غیر دندانپزشکان</div>
     <ul class="dc-monitor-list" id="dcPatientRandom3"></ul>
+  </div>
+</article>
+<!-- ✅ Location + CTA PACK (one compact full-width box) -->
+<article class="dc-monitor dc-locpack" aria-label="موقعیت مطب و تماس">
+  <div class="dc-monitor-inner dc-locpack-inner">
+
+    <div class="dc-monitor-title">موقعیت مطب</div>
+
+    <a href="https://nshn.ir/32sbkzKEOBbXR4"
+       target="_blank"
+       rel="noopener"
+       aria-label="مسیریابی با نشان"
+       class="dc-locpack-link">
+
+      <img
+        src="/clinic-map.webp"
+        alt="موقعیت مطب روی نقشه نشان"
+        class="dc-locpack-img"
+        loading="lazy"
+      >
+    </a>
+
+    <div class="dc-locpack-hint">
+      برای مسیریابی در اپلیکیشن نشان روی نقشه کلیک کنید
+    </div>
+
+    <!-- ✅ CTA inside same box -->
+    <div class="dc-cta-row dc-cta-row-compact" aria-label="مشاوره و تماس">
+      <a class="dc-cta-btn dc-cta-consult" href="mailto:info@dentcast.ir">
+        مشاوره آنلاین ✉️
+      </a>
+
+      <a class="dc-cta-btn dc-cta-call" href="tel:+986133380090">
+        تماس با مطب 📞
+      </a>
+    </div>
+
   </div>
 </article>
 
