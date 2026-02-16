@@ -4146,6 +4146,8 @@
   "page_url": "https://dentcast.ir/chairside/chairside-1.html"
 },
 {
+  "type": "dentcast",
+  "id": "dentcast-154",
   "episode": "154",
   "title": "Vertical Dimension of Occlusion – Myth 1",
   "caption": "بررسی انتقادی یکی از باورهای رایج درباره افزایش VDO و ضرورت دوره آزمایشی طولانی، بر اساس یک مقاله علمی جدید در حوزه بازسازی‌های پروتزی.",
@@ -4169,7 +4171,7 @@
     "پادکست پروتز"
   ],
   "audio_url": "",
-  "page_url": ""
+  "page_url": "https://dentcast.ir/episodes.html"
 },
 {
   "type": "chairside",
