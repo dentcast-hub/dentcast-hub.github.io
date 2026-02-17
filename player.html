@@ -294,6 +294,24 @@
     line-height: 1.5;
     border: 1px solid rgba(0,0,0,0.12);
   }
+  .dc-download-btn{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: #ffffff;
+  border: 1px solid rgba(0,0,0,0.12);
+  color: var(--blue);
+  font-weight: 800;
+  font-size: 12px;
+  text-decoration: none;
+  cursor: pointer;
+}
+.dc-download-btn:active{ transform: scale(0.99); }
+
   </style>
 </head>
 
@@ -328,6 +346,9 @@
       <span id="dc-time-duration">00:00</span>
     </div>
   </div>
+<a id="dc-download" class="dc-download-btn" href="#" target="_blank" rel="noopener" download>
+  ⬇ دانلود اپیزود
+</a>
 
   <div class="dc-search-box">
     <div class="dc-search-header">
@@ -362,7 +383,7 @@ const speedBtn = document.getElementById("dc-speed");
 const sortBtn = document.getElementById("dc-sort-btn");
 const backBtn = document.getElementById("dc-back");
 const fwdBtn  = document.getElementById("dc-forward");
-
+const downloadBtn = document.getElementById("dc-download");
 const searchInput   = document.getElementById("dc-search-input");
 const searchResults = document.getElementById("dc-search-results");
 const closeSearchBtn = document.getElementById("dc-close-search");
@@ -389,6 +410,9 @@ function loadEpisode(i){
   if (!ep) return;
   currentIndex = i;
   audio.src = ep.audio_url;
+  downloadBtn.href = ep.audio_url;
+downloadBtn.setAttribute("download", "");
+
   titleEl.textContent = ep.title;
   descEl.innerHTML = ep.description || "";
   descEl.style.display = "none";
