@@ -4255,7 +4255,33 @@
     "adaptive occlusion"
   ],
   "page_url": "https://dentcast.ir/chairside/chairside-3.html"
+},
+{
+  "type": "chairside",
+  "id": "chairside-04",
+  "title": "تحلیل سرویکال دندان قدامی؛ وقتی حفظ دندان هنوز امکان‌پذیر است",
+  "caption": "روایت یک ویزیت کلینیکی درباره External Cervical Resorption در دندان قدامی، بررسی امکان حفظ دندان به جای کشیدن، درمان با MTA و دبریدمان جراحی و اهمیت پیگیری در توقف روند تحلیل.",
+  "hashtags": [
+    "چیرساید",
+    "ویزیت_کلینیکی",
+    "تحلیل_سرویکال",
+    "حفظ_دندان",
+    "دندان_قدامی",
+    "درمان_ریشه",
+    "تصمیم_درمانی"
+  ],
+  "keywords": [
+    "external cervical resorption",
+    "anterior tooth preservation",
+    "MTA obturation",
+    "root resorption management",
+    "endodontic surgical debridement",
+    "tooth extraction alternative",
+    "prosthetic decision making"
+  ],
+  "page_url": "https://dentcast.ir/chairside/chairside-4.html"
 }
+
 
 
 
