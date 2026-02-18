@@ -4280,6 +4280,31 @@
     "prosthetic decision making"
   ],
   "page_url": "https://dentcast.ir/chairside/chairside-4.html"
+},
+{
+  "type": "meta",
+  "id": "meta-09",
+  "title": "چرا تحویل همزمان پست‌و‌کور و روکش، تصمیم دقیقی نیست",
+  "caption": "نقد یک میان‌بُر رایج در پروتز ثابت: قالب‌گیری همزمان با ساخت پست‌و‌کور ریختگی و تحویل روکش در جلسه بعد. بررسی اینکه چگونه تغییرات ناشی از ریختگی، رفتار investment و اثر sprue می‌توانند موقعیت کور را تغییر دهند و تطابق مارژینال را به خطر بیندازند.",
+  "hashtags": [
+    "متانوت",
+    "پست_و_کور",
+    "پروتز_ثابت",
+    "تطابق_مارژینال",
+    "دقت_پروتزی",
+    "قالبگیری",
+    "تصمیم_درمانی"
+  ],
+  "keywords": [
+    "cast post and core",
+    "marginal fit",
+    "prosthodontic accuracy",
+    "investment casting dentistry",
+    "sprue effect casting",
+    "crown marginal adaptation",
+    "fixed prosthodontics precision"
+  ],
+  "page_url": "https://dentcast.ir/metanotes/meta-9.html"
 }
 
 
