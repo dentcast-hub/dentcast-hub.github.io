@@ -4305,7 +4305,34 @@
     "fixed prosthodontics precision"
   ],
   "page_url": "https://dentcast.ir/metanotes/meta-9.html"
+},
+{
+  "type": "meta",
+  "id": "meta-10",
+  "title": "Smart Vent Crown (SVC) و Shahabian Concept",
+  "caption": "معرفی Smart Vent Crown (SVC) بر پایه Shahabian Concept: روکش سمان‌شونده اصلاح‌شده با سوراخ کوچک روی حفره پیچ که مسیر خروج سمان اضافی را فراهم می‌کند، سمان باقیمانده را کاهش می‌دهد و دسترسی آینده به پیچ را بدون آسیب به زیبایی و استحکام روکش حفظ می‌کند.",
+  "hashtags": [
+    "متانوت",
+    "روکش_ایمپلنت",
+    "ایمپلنت",
+    "SmartVentCrown",
+    "ShahabianConcept",
+    "خروج_سمان",
+    "پروتز_ایمپلنت",
+    "دقت_پروتزی"
+  ],
+  "keywords": [
+    "Smart Vent Crown",
+    "Shahabian Concept",
+    "implant crown design",
+    "cement retained crown vent hole",
+    "implant screw access marker",
+    "prosthodontics innovation",
+    "implant prosthodontics"
+  ],
+  "page_url": "https://dentcast.ir/metanotes/meta-10.html"
 }
+
 
 
 
