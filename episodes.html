@@ -11,172 +11,194 @@
   <link rel="stylesheet" href="/global-search.css?v=1">
   
   <style>
-    :root {
-      --blue:#0b5fff;
-      --bg:#0b1220;
-      --bg2:#121a2b;
-      --text:#000;
-      --muted:#9aa1b3;
-      --radius:16px;
-      --shadow:0 12px 32px rgba(0,0,0,.35);
-  --card-bg: #ffffff;
-  --card-border: #d4e2ff;
-  --primary: #0b5fff;
+    :root{
+  --blue:#0b5fff;
+  --bg:#0b1220;
+  --bg2:#121a2b;
+  --text:#000;
+  --muted:#9aa1b3;
+  --radius:16px;
+  --shadow:0 12px 32px rgba(0,0,0,.35);
+}
 
+body{
+  margin:0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; /* بدون لود فونت */
+  background:
+    radial-gradient(1100px 600px at 20% -10%, #1b2640 0%, transparent 60%),
+    linear-gradient(180deg,var(--bg) 0%,var(--bg2) 100%);
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
 
-    }
+/* ✅ فقط محتوای صفحه blur می‌شود */
+body.search-open #page-content{
+  filter: blur(8px);
+  pointer-events: none;
+  user-select: none;
+  transition: filter .25s ease;
+}
+#page-content{ transition: filter .25s ease; }
 
-    body {
-      margin:0;
-      font-family:'Vazirmatn',sans-serif;
-      background: radial-gradient(1100px 600px at 20% -10%, #1b2640 0%, transparent 60%),
-                  linear-gradient(180deg,var(--bg) 0%,var(--bg2) 100%);
-      -webkit-font-smoothing:antialiased;
-      text-rendering:optimizeLegibility;
-    }
+.wrap{
+  max-width:920px;
+  margin:40px auto 110px;
+  padding:0 20px;
+}
 
-    /* ✅ فقط محتوای صفحه blur می‌شود */
-    body.search-open #page-content {
-      filter: blur(8px);
-      pointer-events: none;
-      user-select: none;
-      transition: filter .25s ease;
-    }
+h1{
+  text-align:center;
+  color:var(--blue);
+  font-weight:800;
+  font-size:2.2rem;
+  margin-bottom:10px;
+}
 
-    #page-content {
-      transition: filter .25s ease;
-    }
+h3{
+  color:var(--blue);
+  font-weight:700;
+  font-size:1.05rem;
+  margin-top:25px;
+  margin-bottom:5px;
+}
 
-    .wrap {
-      max-width:920px;
-      margin:40px auto 110px;
-      padding:0 20px;
-    }
+.subtitle{
+  text-align:center;
+  color:var(--muted);
+  font-size:.98rem;
+  margin-bottom:26px;
+}
 
-    h1 {
-      text-align:center;
-      color:var(--blue);
-      font-weight:800;
-      font-size:2.2rem;
-      margin-bottom:10px;
-    }
+/* کارت اصلی صفحه */
+.card{
+  background: rgba(3, 7, 18, 0.92);
+  color:#e7eaf1;
+  text-align:center;
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:22px 18px 32px;
+  display:flex;
+  flex-direction: column;
+  gap:24px;
+}
 
-    h3 {
-      color:var(--blue);
-      font-weight:700;
-      font-size:1.05rem;
-      margin-top:25px;
-      margin-bottom:5px;
-    }
+/* بلوک متن SEO */
+.episodes-seo-block{
+  margin-top:10px;
+  padding:24px 18px 10px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,0.08);
+  background:
+    radial-gradient(circle at 0% 0%, rgba(11,95,255,0.10), transparent 55%),
+    rgba(10,12,24,0.85);
+  text-align:justify;
+  color:#c7cedd;
+  font-size:0.92rem;
+}
 
-    .subtitle {
-      text-align:center;
-      color:var(--muted);
-      font-size:.98rem;
-      margin-bottom:26px;
-    }
+.content-list{
+  list-style:disc inside;
+  padding-right:20px;
+  margin:15px 0 25px;
+  color:#d4d9e6;
+}
+.content-list li{
+  font-size:.95rem;
+  line-height:1.9;
+  margin-bottom:8px;
+}
 
-    .card {
-      background: rgba(3, 7, 18, 0.92);
-      color:#e7eaf1;
-      text-align:center;
-      border-radius:var(--radius);
-      box-shadow:var(--shadow);
-      padding:22px 18px 32px;
-      display:flex;
-      flex-direction:column-reverse;
-      gap:24px;
-    }
+/* پلیر */
+iframe{
+  width:100%;
+  max-width:480px;
+  height:500px;
+  border:none;
+  border-radius:20px;
+  margin:0 auto;
+  display:block;
+  background:#000;
+}
 
-    .episodes-seo-block {
-      margin-top:10px;
-      padding:24px 18px 10px;
-      border-radius:14px;
-      border:1px solid rgba(255,255,255,0.08);
-      background:
-        radial-gradient(circle at 0% 0%, rgba(11,95,255,0.10), transparent 55%),
-        rgba(10,12,24,0.85);
-      text-align:justify;
-      color:#c7cedd;
-      font-size:0.92rem;
-    }
+/* کارت معرفی برند (بدون تداخل با هیچ کارت دیگری) */
+.ad-card{
+  width:100%;
+  background:#f7faff;
+  border:1px solid #d4e2ff;
+  border-radius:16px;
+  overflow:hidden;
+}
 
-    .content-list {
-      list-style:disc inside;
-      padding-right:20px;
-      margin:15px 0 25px;
-      color:#d4d9e6;
-    }
+.ad-card .ad-link{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:12px 14px;
+  width:100%;
+  text-decoration:none;
+  color:#2b4da8;
+}
 
-    .content-list li {
-      font-size:.95rem;
-      line-height:1.9;
-      margin-bottom:8px;
-    }
+.ad-card .dc-card-title{
+  font-weight:800;
+  font-size:.95rem;
+  line-height:1.55;
+  text-align:right;
+}
 
-    iframe {
-      width:100%;
-      max-width:480px;
-      height:500px;
-      border:none;
-      border-radius:20px;
-      margin:0 auto;
-      display:block;
-      background:#000;
-    }
+.ad-card .ad-strong{
+  background:#e8effd;
+  color:#022360;
+  padding:2px 8px;
+  border-radius:10px;
+  font-size:.75rem;
+  min-width:64px;
+  text-align:center;
+  white-space:nowrap;
+}
 
-    footer {
-      margin-top:40px;
-      text-align:center;
-      color:var(--muted);
-      font-size:.85rem;
-      line-height:1.8;
-    }
+.ad-card:active{
+  transform:scale(0.985);
+  background:#f0f4ff;
+}
 
-    .btn-home {
-      display:inline-block;
-      background:rgba(11,95,255,0.18);
-      color:#3a84ff;
-      border:1.8px solid rgba(11,95,255,0.45);
-      border-radius:12px;
-      padding:12px 42px;
-      font-weight:700;
-      text-decoration:none;
-      font-size:1rem;
-      box-shadow:0 0 14px rgba(11,95,255,0.15);
-      transition:all .25s ease;
-      margin-bottom:22px;
-    }
+/* فوتر و دکمه‌ها */
+footer{
+  margin-top:40px;
+  text-align:center;
+  color:var(--muted);
+  font-size:.85rem;
+  line-height:1.8;
+}
 
-    .btn-about {
-      display:inline-block;
-      background:rgba(255,220,80,0.85);
-      color:#111;
-      border:1px solid rgba(255,220,80,0.55);
-      border-radius:8px;
-      padding:5px 12px;
-      font-weight:500;
-      text-decoration:none;
-      font-size:.8rem;
-      margin-bottom:20px;
-    }
-      /* کارت تبلیغاتی */
-    .dc-card.ad-card { background: #f7faff !important; border: 1px solid #d4e2ff !important; border-radius: 1rem; padding: 4px 0 !important; margin-top: 36px !important; width: 100%; }
-    .ad-card .ad-link { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 12px 12px; width: 100%; text-decoration: none; color: #3a5fbf; }
-    .ad-strong { background: #e8effd; color: #022360; padding: 1px 6px; border-radius: 8px; font-size: 0.70rem; min-width: 48px; text-align: center; }
- .dc-card {
-      background: var(--card-bg); border-radius: .9rem; border: 1px solid var(--card-border);
-      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
-       padding: .3rem .33rem;
-      display: flex; justify-content: space-between; align-items: center;
-      cursor: pointer; transition: 0.18s; position: relative;
-        border-right: 2px solid #02236068;
-  overflow: hidden;
-    }
-    .dc-card:active { transform: scale(0.98); background: #f0f4ff; } /* افکت کلیک */
-    
-    .dc-card.active-toggle { border-color: var(--primary); box-shadow: 0 4px 10px rgba(11, 95, 255, 0.15); background: #f7f9ff; }
-    .dc-card.featured-card { background: #eef3ff!important; border: none !important; border-radius: 1.05rem !important; box-shadow: 0 4px 14px -1px rgba(11, 95, 255, 0.22) !important; }
+.btn-home{
+  display:inline-block;
+  background:rgba(11,95,255,0.18);
+  color:#3a84ff;
+  border:1.8px solid rgba(11,95,255,0.45);
+  border-radius:12px;
+  padding:12px 42px;
+  font-weight:700;
+  text-decoration:none;
+  font-size:1rem;
+  box-shadow:0 0 14px rgba(11,95,255,0.15);
+  transition:all .25s ease;
+  margin-bottom:22px;
+}
+
+.btn-about{
+  display:inline-block;
+  background:rgba(255,220,80,0.85);
+  color:#111;
+  border:1px solid rgba(255,220,80,0.55);
+  border-radius:8px;
+  padding:5px 12px;
+  font-weight:500;
+  text-decoration:none;
+  font-size:.8rem;
+  margin-bottom:20px;
+}
 
   </style>
   <script type="application/ld+json">
@@ -254,20 +276,36 @@
 <div id="page-content">
   <div class="wrap">
 
+    <!-- 1) پلیر -->
+    <iframe src="/player.html" loading="lazy" allow="autoplay"></iframe>
+
+    <!-- 2) باکس تبلیغ -->
+    <article class="ad-card" id="card-ad-contact">
+      <a href="mailto:info@dentcast.ir?subject=درخواست معرفی برند در دنت‌کست" class="ad-link">
+        <div class="dc-card-main">
+          <div class="dc-card-title">
+            اینجا محل معرفی برند شما به جامعه دندانپزشکیست.
+          </div>
+        </div>
+        <strong class="ad-strong">تماس بگیرید</strong>
+      </a>
+    </article>
+
+    <!-- 3) نوشته‌ها -->
     <h1>همهٔ اپیزودهای دنت‌کست</h1>
     <div class="subtitle">مرجع آنلاین پروتکل‌های کلینیکی پروتز و ایمپلنت</div>
 
-        <div class="card">
-      
+    <div class="card">
       <div class="episodes-seo-block">
-        <h2 style="color:var(--blue); font-size:1.4rem; font-weight:700; text-align:center; margin-bottom: 20px;">🗺️ نقشه راه علمی شما در دندانپزشکی پروتز و ایمپلنت</h2>
-        
+        <h2 style="color:var(--blue); font-size:1.4rem; font-weight:700; text-align:center; margin-bottom: 20px;">
+          🗺️ نقشه راه علمی شما در دندانپزشکی پروتز و ایمپلنت
+        </h2>
 
         <p style="font-size: 90%; line-height: 1.8; margin-bottom: 15px;">
           <strong>دنت‌کست</strong> پادکست و مرجع آنلاین دکتر <strong>فؤاد شهابیان</strong>، متخصص پروتزهای دندانی، است.
           این مجموعه، گنجینه‌ای از دانش به‌روز کلینیکی است که به‌طور <strong>مداوم در حال گسترش و به‌روزرسانی</strong> است. با گوش دادن به اپیزودهای کامل، دانش شما در حوزه‌های حیاتی زیر به‌طور مستمر تقویت می‌شود:
         </p>
-  
+
         <ul class="content-list">
           <li>
             <h3>ایمپلنتولوژی پیشرفته:</h3> شامل مرور کانسپت‌هایی چون <strong>Zero Bone Loss</strong>، پروتکل‌های ایمپلنت فوری (Immediate Load)، انتخاب اباتمنت‌های Ti-base و Multi-unit و مدیریت تحلیل استخوان.
@@ -282,26 +320,15 @@
             <h3>تکنولوژی و مواد نوین:</h3> کاربرد <strong>دندانپزشکی دیجیتال</strong> (اسکنر سه‌بعدی)، <strong>هوش مصنوعی (AI)</strong> در پروتز، مواد نوین چون <strong>PEEK CAD-CAM</strong> و رستوریشن‌های باکیفیت.
           </li>
         </ul>
-  
+
         <p style="font-size: 90%; line-height: 1.8; text-align:center; margin-top: 15px;">
           <strong>هدف DentCast:</strong> ارائه <strong>جدیدترین مقالات و کنسنسوس‌ها</strong> برای تقویت <strong>تصمیم‌گیری‌های بالینی مطمئن</strong> شماست.
         </p>
       </div>
-      <iframe src="/player.html" loading="lazy" allow="autoplay"></iframe>
-<article class="dc-card ad-card" id="card-ad-contact">
-  <a href="mailto:info@dentcast.ir?subject=درخواست معرفی برند در دنت‌کست"
-     class="ad-link">
-     
-    <div class="dc-card-main">
-      <div class="dc-card-title">
-        اینجا محل معرفی برند شما به جامعه دندانپزشکیست.
-      </div>
     </div>
 
-    <strong class="ad-strong">تماس بگیرید</strong>
-  </a>
-</article>
-    </div>
+  </div>
+</div>
 
     <footer>
       <div>
