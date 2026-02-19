@@ -2621,7 +2621,7 @@ function disableDesktop() {
 
   function toItem(x){
     const title = (x?.title || "").toString().trim();
-    const url = (x?.page_url || "").toString().trim();
+    const url = (x?.page_url || x?.url || x?.link || "").toString().trim();
     if (!title || !url) return null;
     return { title, url, d: parseDate(x) };
   }
