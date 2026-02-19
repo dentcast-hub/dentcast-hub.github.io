@@ -4331,7 +4331,33 @@
     "implant prosthodontics"
   ],
   "page_url": "https://dentcast.ir/metanotes/meta-10.html"
+},
+{
+  "type": "notecast",
+  "id": "31",
+  "title": "رستوریشن‌های ایمپلنتی اسکروسمنت و روش‌های اتصال روکش",
+  "caption": "مروری بر روکش‌های پیچ‌شونده و سمان‌شونده، معرفی رستوریشن‌های Hybrid (Screw-Cemented) و نقش آن‌ها در افزایش دوام، کاهش سمان باقیمانده و بهبود نگهداری درمان‌های ایمپلنت.",
+  "hashtags": [
+    "ایمپلنت",
+    "اسکروسمنت",
+    "پروتز_ایمپلنت",
+    "پیچ_شونده",
+    "سمان_شونده",
+    "peri_implantitis",
+    "implant_restoration"
+  ],
+  "keywords": [
+    "screw retained",
+    "cement retained",
+    "screw cemented restoration",
+    "implant crown",
+    "hybrid restoration",
+    "implant prosthesis",
+    "access hole"
+  ],
+  "url": "https://dentcast.ir/notecast/episode-31.html"
 }
+
 
 
 
