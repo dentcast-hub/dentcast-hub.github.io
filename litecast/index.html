@@ -77,213 +77,163 @@
   
 
   <style>
-    :root {
-      --gold:#ffd046;
-      --blue:#0b5fff;
-      --lightglass: rgba(255,220,80,0.15);
-      --midglass: rgba(255,220,80,0.22);
-      --darkglass: rgba(255,220,80,0.30);
-      --text:#111;
-      --muted:#555;
-      --radius:18px;
-      --shadow:0 10px 28px rgba(0,0,0,.25);
-    }
+:root {
+  --blue:#0b5fff;
+  --gold:#ffd046;
 
-    html, body {
-      margin:0;
-      padding:0;
-      min-height:100vh;
-      display:flex;
-      flex-direction:column;
-      font-family:'Vazirmatn', sans-serif;
-      background: linear-gradient(180deg, #fff9e8 0%, #fefdf8 100%);
-      color:var(--text);
-      line-height:1.9;
-      -webkit-font-smoothing:antialiased;
-      text-rendering:optimizeLegibility;
-    }
+  --bg1:#fffaf0;
+  --bg2:#ffffff;
 
-    main {
-      flex:1;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:flex-start;
-      width:100%;
-      padding:40px 20px 40px;
-      box-sizing:border-box;
-    }
+  --text:#111;
+  --muted:#666;
 
-    h1 {
-      text-align:center;
-      color:var(--blue);
-      font-weight:800;
-      font-size:1.9rem;
-      margin:20px 0 10px;
-    }
+  --glass: rgba(255,220,80,0.12);
+  --glass-border: rgba(255,220,80,0.28);
 
-    h2 {
-      color:var(--muted);
-      margin-top:0;
-      font-size:1.1rem;
-      margin-bottom:28px;
-      font-weight:600;
-      text-align:center;
-    }
+  --radius:16px;
+  --shadow:0 10px 28px rgba(0,0,0,.08);
 
-    .intro {
-      background: var(--lightglass);
-      border:1px solid rgba(255,220,80,0.35);
-      border-radius:var(--radius);
-      padding:24px 30px;
-      margin:0 auto 35px;
-      max-width:860px;
-      box-shadow: var(--shadow);
-      backdrop-filter:blur(10px);
-      text-align:justify;
-      color:#222;
-    }
-
-    .intro strong { color:var(--blue); }
-
-    ul {
-      list-style:none;
-      padding:0;
-      margin:0 auto;
-      max-width:860px;
-      width:100%;
-    }
-
-    li {
-      background: var(--midglass);
-      border-radius: var(--radius);
-      padding:18px 22px;
-      margin-bottom:18px;
-      text-align:center;
-      border:1px solid rgba(255,220,80,0.35);
-      backdrop-filter:blur(10px);
-      box-shadow:0 8px 24px rgba(0,0,0,.1);
-      transition:all .3s ease;
-    }
-
-    li:hover {
-      background: var(--darkglass);
-      transform:translateY(-3px);
-    }
-
-    a {
-      text-decoration:none;
-      color:var(--blue);
-      font-weight:600;
-    }
-
-    /* استایل دکمه‌های فوتر (تمیز شده) */
-    .btn-home {
-      display:inline-block;
-      background:rgba(11,95,255,0.12);
-      color:#3a84ff;
-      border:1.8px solid rgba(11,95,255,0.45);
-      border-radius:12px;
-      padding:12px 42px;
-      font-weight:700;
-      text-decoration:none;
-      font-size:1rem;
-      box-shadow:0 0 14px rgba(11,95,255,0.15);
-      transition:all .25s ease;
-      margin-bottom: 22px;
-    }
-    .btn-home:hover {
-      background:rgba(11,95,255,0.22);
-      transform: scale(1.02);
-    }
-
-    .btn-about {
-      display:inline-block;
-      background:rgba(11,95,255,0.18);
-      color:#0b5fff;
-      border:1px solid rgba(255,200,80,0.55);
-      border-radius:10px;
-      padding:8px 18px;
-      font-weight:600;
-      text-decoration:none;
-      font-size:.88rem;
-      box-shadow:0 0 14px rgba(11,95,255,0.25);
-      backdrop-filter:blur(6px);
-      transition:all .25s ease;
-      text-shadow:0 0 6px rgba(11,95,255,0.45);
-      margin-bottom: 20px;
-    }
-    .btn-about:hover {
-      background:rgba(11,95,255,0.28);
-      color:#3a84ff;
-      box-shadow:0 0 20px rgba(11,95,255,0.55);
-    }
-
-    footer {
-      text-align:center;
-      color:var(--muted);
-      font-size:.9rem;
-      line-height:1.8;
-      padding:40px 0 40px;
-    }
-
-    @media (max-width:768px){
-      main{padding:30px 16px 60px;}
-      h1{font-size:1.6rem;}
-      h2{font-size:0.95rem; margin-bottom:20px;}
-      .intro{padding:18px 20px;}
-      li{padding:14px 18px;}
-    }
-    /* ===== Jump Button (DentCast) ===== */
-/* ===== Floating Jump Button (DentCast) ===== */
-.dc-jump {
-  position: fixed;
-  right: 18px;           /* بهتر از چپ: کمتر می‌افته روی لینک‌های فوتر */
-  left: auto;
-  bottom: calc(18px + env(safe-area-inset-bottom, 0px));
-
-  width: 46px;
-  height: 46px;
-  border-radius: 999px;
-
-  /* solid but translucent - ولی نه اونقدر مات */
-  background: rgba(1, 19, 57, 0.8);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.22);
-
-  display: grid;
-  place-items: center;
-
-  opacity: 0.85; /* همیشه دیده بشه و کمرنگ نباشه */
-  transition: opacity .2s ease, transform .2s ease;
-  cursor: pointer;
-  z-index: 9999;
+  --ease: cubic-bezier(.2,.8,.2,1);
 }
 
-.dc-jump:hover { opacity: 1; transform: translateY(-1px); }
-.dc-jump:active { transform: translateY(0) scale(0.98); }
-.dc-jump:focus-visible {
-  outline: 2px solid rgba(231, 234, 241, 0.9);
-  outline-offset: 3px;
+/* ===== Base ===== */
+html,body{
+  margin:0;
+  padding:0;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  font-family:'Vazirmatn', sans-serif;
+  background: linear-gradient(180deg,var(--bg1),var(--bg2));
+  color:var(--text);
+  line-height:1.9;
 }
 
-.dc-jump svg {
-  width: 18px;
-  height: 18px;
-  fill: rgba(231, 234, 241, 0.95); /* آیکن روشن، نه مشکی */
-  transition: transform .28s ease;
+/* ===== Layout ===== */
+main{
+  flex:1;
+  max-width:860px;
+  margin:auto;
+  padding:40px 20px;
 }
 
-/* وقتی حالت UP شد فلش می‌چرخه */
-.dc-jump.is-up svg { transform: rotate(180deg); }
-
-/* اگر خواستی روی موبایل یه ذره از فوتر فاصله بگیره */
-@media (max-width: 640px) {
-  .dc-jump { bottom: calc(22px + env(safe-area-inset-bottom, 0px)); }
+/* ===== Titles ===== */
+h1{
+  text-align:center;
+  color:var(--blue);
+  font-weight:800;
+  font-size:1.9rem;
+  margin:20px 0 10px;
 }
+
+h2{
+  text-align:center;
+  color:var(--muted);
+  font-size:1rem;
+  margin-bottom:28px;
+  font-weight:600;
+}
+
+/* ===== Intro (Glass Accent) ===== */
+.intro{
+  background:var(--glass);
+  border:1px solid var(--glass-border);
+  border-radius:var(--radius);
+  padding:22px 26px;
+  margin-bottom:32px;
+  box-shadow:var(--shadow);
+  backdrop-filter: blur(8px);
+}
+
+.intro strong{
+  color:var(--blue);
+}
+
+/* ===== List ===== */
+ul{
+  list-style:none;
+  padding:0;
+  margin:0;
+}
+
+/* cleaner cards */
+li{
+  background:#fff;
+  border-radius:var(--radius);
+  padding:18px 20px;
+  margin-bottom:14px;
+  border:1px solid rgba(11,95,255,.12);
+  box-shadow:0 6px 18px rgba(11,95,255,.06);
+  transition: all .25s var(--ease);
+}
+
+li:hover{
+  transform:translateY(-2px);
+  border-color: rgba(11,95,255,.28);
+  box-shadow:0 10px 26px rgba(11,95,255,.12);
+}
+
+/* ===== Links ===== */
+li a{
+  text-decoration:none;
+  color:var(--blue);
+  font-weight:700;
+  display:block;
+}
+
+/* ===== Footer Buttons ===== */
+.btn-home{
+  display:inline-block;
+  background:rgba(11,95,255,0.12);
+  color:var(--blue);
+  border:1.6px solid rgba(11,95,255,0.35);
+  border-radius:12px;
+  padding:12px 38px;
+  font-weight:700;
+  text-decoration:none;
+  box-shadow:0 6px 16px rgba(11,95,255,0.12);
+  transition:.25s var(--ease);
+  margin-bottom:20px;
+}
+
+.btn-home:hover{
+  background:rgba(11,95,255,0.20);
+  transform:translateY(-1px);
+}
+
+/* subtle gold chip */
+.btn-about{
+  display:inline-block;
+  background:rgba(255,220,80,0.20);
+  color:#8a6a00;
+  border:1px solid rgba(255,220,80,0.45);
+  border-radius:10px;
+  padding:7px 16px;
+  font-weight:600;
+  text-decoration:none;
+  font-size:.85rem;
+  transition:.25s;
+}
+
+.btn-about:hover{
+  background:rgba(255,220,80,0.35);
+}
+
+/* ===== Footer ===== */
+footer{
+  text-align:center;
+  color:var(--muted);
+  font-size:.9rem;
+  padding:36px 0 40px;
+}
+
+/* ===== Responsive ===== */
+@media(max-width:768px){
+  main{padding:30px 16px;}
+  h1{font-size:1.6rem;}
+  .intro{padding:18px 20px;}
+}
+
   </style>
   <script>
     !function (t, e, n) {
