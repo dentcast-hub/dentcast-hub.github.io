@@ -133,30 +133,37 @@
   margin-bottom: 150px; /* 👈 فاصلهٔ اصلی از خبرنامه */
 }
 
-    li { margin-bottom:12px; }
+ /* cleaner cards */
+li{
+  background:#fff;
+  border-radius:16px;
+  padding:18px 20px;
+  margin-bottom:14px;
 
- a {
-  display: flex;
-  align-items: center;
-  background: #ffffff;
-  border: 1px solid rgba(11,95,255,0.18);
-  border-radius: 14px;
-  padding: 16px 18px;
-  text-decoration: none;
-  color: #2458d3;            /* رنگ لینک → آبی برند، پرانرژی */
-  font-weight: 700;          /* ضخیم‌تر مثل دکمه‌های دنت‌کست */
-  transition: all .25s ease;
-  line-height: 1.7;
-  box-shadow: 0 4px 14px rgba(11,95,255,0.06);
+  border-top: 2px solid rgba(11,95,255,.35);
+  border-right: 2px solid rgba(11,95,255,.35);
+
+  border-left: 1px solid rgba(11,95,255,.10);
+  border-bottom: 1px solid rgba(11,95,255,.10);
+
+  box-shadow: 0 6px 16px rgba(11,95,255,.06);
+background: linear-gradient(#fff, #fcfdff);
+
+  transition: all .22s ease;
 }
 
-a:hover {
-  background: #eef3ff;
-  border-color: rgba(11,95,255,0.35);
-  color: #004ad4;
-  transform: none;
-  box-shadow: 0 6px 20px rgba(11,95,255,0.12);
+
+li:hover{
+  transform: translateY(-2px);
+
+  border-top-color: rgba(11,95,255,.65);
+  border-right-color: rgba(11,95,255,.65);
+
+  box-shadow: 0 10px 22px rgba(11,95,255,.12);
 }
+
+
+/* ===== Links ===== */
 
     /* ========== دکمهٔ صحیح و کاملاً دیده‌شونده (CTA) ========== */
     .btn-home {
