@@ -4356,6 +4356,38 @@
     "access hole"
   ],
   "url": "https://dentcast.ir/notecast/episode-31.html"
+},
+{
+  "type": "sharehub",
+  "id": "5",
+  "title": "چرا گاهی اصلاح فضا به قیمت از دست رفتن رابطه کانینی کلاس I انجام نمی‌شود؟,"
+  "caption": "مطلبی منتخب از نوشته‌های دیگران در Share Hub دنت‌کست؛ بررسی اهمیت حفظ رابطه کانینی کلاس I و نقش آن در هدایت فانکشنال و اکلوژن هنگام اصلاح فضا. این محتوا تولید دنت‌کست نیست و به‌صورت curated منتشر شده است.",
+  "author": "نقل از همکار ارتودنتیست",
+  "source": "",
+  "hashtags": [
+    "رابطه_کانینی",
+    "کلاس_یک",
+    "ارتودنسی",
+    "گوران",
+    "اصلاح_فضا",
+    "اکلوژن",
+    "گایدنس_کانین",
+    "میدلاین",
+    "Share_Hub",
+    "Curated_Content",
+    "Orthodontics",
+    "Occlusion"
+  ],
+  "keywords": [
+    "class I canine relationship",
+    "canine guidance",
+    "orthodontic space management",
+    "occlusal function",
+    "midline discrepancy",
+    "functional occlusion",
+    "curated dental content"
+  ],
+  "url": "https://dentcast.ir/sharehub/share-5.html"
 }
 
 
