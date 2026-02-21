@@ -1,339 +1,637 @@
 {
   "glossary": [
     {
-      "slug": "dental-cement",
-      "title": "Dental Cement",
-      "fa_title": "سمان دندانی",
-      "url": "https://dentcast.ir/glossary/dental-cement.html"
-    },
-    {
-      "slug": "traditional-cements",
-      "title": "Traditional Cements",
-      "fa_title": "سمان‌های تردیشنال (سنتی)",
-      "url": "https://dentcast.ir/glossary/traditional-cements.html"
-    },
-    {
-      "slug": "resin-cements",
-      "title": "Resin Cements",
-      "fa_title": "سمان‌های رزینی",
-      "url": "https://dentcast.ir/glossary/resin-cements.html"
-    },
-    {
-      "slug": "self-adhesive-cements",
-      "title": "Self-Adhesive Cements",
-      "fa_title": "سمان‌های سلف‌ادهزیو",
-      "url": "https://dentcast.ir/glossary/self-adhesive-cements.html"
-    },
-    {
-      "slug": "adhesive-resin-cements",
-      "title": "Adhesive Resin Cements",
-      "fa_title": "سمان‌های ادهزیو رزین",
-      "url": "https://dentcast.ir/glossary/adhesive-resin-cements.html"
-    },
-    {
-      "slug": "esthetic-resin-cements",
-      "title": "Esthetic Resin Cements",
-      "fa_title": "سمان‌های استتیک رزین",
-      "url": "https://dentcast.ir/glossary/esthetic-resin-cements.html"
-    },
-    {
-      "slug": "retention",
-      "title": "Retention",
-      "fa_title": "گیر (Retention)",
-      "url": "https://dentcast.ir/glossary/retention.html"
-    },
-    {
-      "slug": "resistance",
-      "title": "Resistance",
-      "fa_title": "مقاومت (Resistance)",
-      "url": "https://dentcast.ir/glossary/resistance.html"
-    },
-    {
+  "slug": "dental-cement",
+  "title": "Dental Cement",
+  "fa_title": "سمان دندانی",
+  "synonyms": [
+    "سمان دندانپزشکی",
+    "سمان دندان",
+    "cement dental"
+  ],
+  "url": "https://dentcast.ir/glossary/dental-cement.html"
+},
+{
+  "slug": "traditional-cements",
+  "title": "Traditional Cements",
+  "fa_title": "سمان‌های تردیشنال (سنتی)",
+  "synonyms": [
+    "سمان‌های سنتی",
+    "سمان گلاس آینومر",
+    "سمان زینک فسفات",
+    "سمان پلی‌کربوکسیلات",
+    "conventional cements"
+  ],
+  "url": "https://dentcast.ir/glossary/traditional-cements.html"
+},
+{
+  "slug": "resin-cements",
+  "title": "Resin Cements",
+  "fa_title": "سمان‌های رزینی",
+  "synonyms": [
+    "سمان رزینی",
+    "رزین سمان",
+    "سمان کامپوزیتی",
+    "resin cement"
+  ],
+  "url": "https://dentcast.ir/glossary/resin-cements.html"
+},
+{
+  "slug": "self-adhesive-cements",
+  "title": "Self-Adhesive Cements",
+  "fa_title": "سمان‌های سلف‌ادهزیو",
+  "synonyms": [
+    "سمان خودچسب",
+    "سمان سلف ادهزیو",
+    "self adhesive cement"
+  ],
+  "url": "https://dentcast.ir/glossary/self-adhesive-cements.html"
+},
+{
+  "slug": "adhesive-resin-cements",
+  "title": "Adhesive Resin Cements",
+  "fa_title": "سمان‌های ادهزیو رزین",
+  "synonyms": [
+    "سمان رزینی باندشونده",
+    "سمان رزینی ادهزیو",
+    "bonded resin cement"
+  ],
+  "url": "https://dentcast.ir/glossary/adhesive-resin-cements.html"
+},
+{
+  "slug": "esthetic-resin-cements",
+  "title": "Esthetic Resin Cements",
+  "fa_title": "سمان‌های استتیک رزین",
+  "synonyms": [
+    "سمان رزینی زیبایی",
+    "سمان رزینی استتیک",
+    "esthetic cement"
+  ],
+  "url": "https://dentcast.ir/glossary/esthetic-resin-cements.html"
+},
+{
+  "slug": "retention",
+  "title": "Retention",
+  "fa_title": "گیر (Retention)",
+  "synonyms": [
+    "گیر مکانیکی",
+    "قدرت گیر",
+    "retentive form",
+    "retention form"
+  ],
+  "url": "https://dentcast.ir/glossary/retention.html"
+},
+{
+  "slug": "resistance",
+  "title": "Resistance",
+  "fa_title": "مقاومت (Resistance)",
+  "synonyms": [
+    "مقاومت در برابر جابجایی",
+    "resistance form",
+    "structural resistance"
+  ],
+  "url": "https://dentcast.ir/glossary/resistance.html"
+},
+{
   "slug": "bond-strength",
   "title": "Bond Strength",
   "fa_title": "استحکام باند",
+  "synonyms": [
+    "قدرت باند",
+    "استحکام اتصال",
+    "adhesive strength"
+  ],
   "url": "https://dentcast.ir/glossary/bond-strength.html"
 },
- {
+{
   "slug": "bonding-protocol",
   "title": "Bonding / Bonding Protocol",
   "fa_title": "باندینگ / پروتکل باندینگ",
+  "synonyms": [
+    "پروتکل باندینگ",
+    "مراحل باندینگ",
+    "bonding procedure",
+    "adhesive protocol"
+  ],
   "url": "https://dentcast.ir/glossary/bonding-protocol.html"
 },
-    {
+   {
   "slug": "isolation",
   "title": "Isolation",
   "fa_title": "ایزولاسیون",
+  "synonyms": [
+    "ایزوله کردن",
+    "کنترل رطوبت",
+    "خشک نگه داشتن محیط",
+    "moisture control",
+    "field isolation"
+  ],
   "url": "https://dentcast.ir/glossary/isolation.html"
 },
-   {
+{
   "slug": "light-cure-resin-cement",
   "title": "Light-Cure Resin Cement",
   "fa_title": "سمان رزینی لایت‌کیور",
+  "synonyms": [
+    "سمان لایت کیور",
+    "لایت کیور سمان",
+    "light cure cement"
+  ],
   "url": "https://dentcast.ir/glossary/light-cure-resin-cement.html"
 },
-   {
+{
   "slug": "dual-cure-resin-cement",
   "title": "Dual-Cure Resin Cement",
   "fa_title": "سمان رزینی دوال‌کیور",
+  "synonyms": [
+    "سمان دوال کیور",
+    "دوال کیور سمان",
+    "dual cure cement"
+  ],
   "url": "https://dentcast.ir/glossary/dual-cure-resin-cement.html"
 },
-    {
+{
   "slug": "self-cure-resin-cement",
   "title": "Self-Cure Resin Cement (Chemical-Cure)",
   "fa_title": "سمان رزینی سلف‌کیور / کیور شیمیایی",
+  "synonyms": [
+    "سمان سلف کیور",
+    "سمان کیور شیمیایی",
+    "chemical cure cement",
+    "auto-cure cement"
+  ],
   "url": "https://dentcast.ir/glossary/self-cure-resin-cement.html"
 },
-    {
+{
   "slug": "bonding-strategy",
   "title": "Bonding Strategy",
   "fa_title": "استراتژی باندینگ",
+  "synonyms": [
+    "استراتژی ادهزیو",
+    "روش باندینگ",
+    "adhesive strategy",
+    "bonding approach"
+  ],
   "url": "https://dentcast.ir/glossary/bonding-strategy.html"
 },
-    {
+{
   "slug": "etch-and-rinse",
   "title": "Etch and Rinse",
   "fa_title": "اچ و شستشو (توتال اچ)",
+  "synonyms": [
+    "توتال اچ",
+    "total etch",
+    "etch & rinse",
+    "total-etch technique"
+  ],
   "url": "https://dentcast.ir/glossary/etch-and-rinse.html"
 },
-    {
+{
   "slug": "self-etch",
   "title": "Self-Etch",
   "fa_title": "سلف اچ",
+  "synonyms": [
+    "self etch",
+    "self-etch adhesive",
+    "اچ خودکار"
+  ],
   "url": "https://dentcast.ir/glossary/self-etch.html"
 },
-    {
+{
   "slug": "selective-etch",
   "title": "Selective Etch",
   "fa_title": "اچ انتخابی",
+  "synonyms": [
+    "selective enamel etch",
+    "اچ انتخابی انامل",
+    "enamel selective etch"
+  ],
   "url": "https://dentcast.ir/glossary/selective-etch.html"
 },
-    {
+{
   "slug": "bonding-generations",
   "title": "Bonding Generations",
   "fa_title": "نسل‌های باندینگ",
+  "synonyms": [
+    "نسل باندینگ",
+    "generation bonding",
+    "adhesive generations",
+    "dentin bonding generations"
+  ],
   "url": "https://dentcast.ir/glossary/bonding-generations.html"
 },
-    {
+{
   "slug": "smear-layer",
   "title": "Smear Layer",
   "fa_title": "لایه اسمیر",
+  "synonyms": [
+    "اسمیر لیر",
+    "smear layer dentin",
+    "debris layer"
+  ],
   "url": "https://dentcast.ir/glossary/smear-layer.html"
 },
     {
   "slug": "collagen-fibers",
   "title": "Collagen Fibers",
   "fa_title": "فیبرهای کلاژن",
+  "synonyms": [
+    "الیاف کلاژن",
+    "کلاژن دنتین",
+    "collagen fibrils"
+  ],
   "url": "https://dentcast.ir/glossary/collagen-fibers.html"
 },
-    {
+{
   "slug": "collagen-collapse",
   "title": "Collagen Collapse",
   "fa_title": "کلاپس کلاژن",
+  "synonyms": [
+    "فروپاشی کلاژن",
+    "کلاپس شبکه کلاژن",
+    "collapse of collagen network"
+  ],
   "url": "https://dentcast.ir/glossary/collagen-collapse.html"
 },
-    {
+{
   "slug": "dentinal-tubules",
   "title": "Dentinal Tubules",
   "fa_title": "توبول‌های عاجی",
+  "synonyms": [
+    "توبول عاجی",
+    "کانال‌های عاجی",
+    "dentinal tubule"
+  ],
   "url": "https://dentcast.ir/glossary/dentinal-tubules.html"
 },
-   {
+{
   "slug": "universal-adhesive",
   "title": "Universal Adhesive",
   "fa_title": "باندینگ یونیورسال",
+  "synonyms": [
+    "ادهزیو یونیورسال",
+    "باند یونیورسال",
+    "universal bonding",
+    "multi-mode adhesive"
+  ],
   "url": "https://dentcast.ir/glossary/universal-adhesive.html"
 },
-    {
+{
   "slug": "mdp",
   "title": "MDP (10-MDP Monomer)",
   "fa_title": "مونومر MDP",
+  "synonyms": [
+    "10-MDP",
+    "MDP monomer",
+    "functional monomer MDP"
+  ],
   "url": "https://dentcast.ir/glossary/mdp.html"
 },
-    {
+{
   "slug": "hema",
   "title": "HEMA (Hydroxyethyl Methacrylate)",
   "fa_title": "مونومر HEMA",
+  "synonyms": [
+    "HEMA",
+    "hydroxyethyl methacrylate",
+    "HEMA monomer"
+  ],
   "url": "https://dentcast.ir/glossary/hema.html"
 },
-    {
+{
   "slug": "silane",
   "title": "Silane (Silane Coupling Agent)",
   "fa_title": "سایلان",
+  "synonyms": [
+    "silane coupling agent",
+    "عامل کوپلینگ سایلان",
+    "silane primer"
+  ],
   "url": "https://dentcast.ir/glossary/silane.html"
 },
 {
   "slug": "zirconia-primer",
   "title": "Zirconia Primer",
   "fa_title": "پرایمر زیرکونیا",
+  "synonyms": [
+    "پرایمر MDP زیرکونیا",
+    "zirconia bonding primer",
+    "primer for zirconia"
+  ],
   "url": "https://dentcast.ir/glossary/zirconia-primer.html"
 },
-    {
+{
   "slug": "zirconia",
   "title": "Zirconia (Zirconium Oxide)",
   "fa_title": "زیرکونیا",
+  "synonyms": [
+    "zirconium oxide",
+    "zirconia ceramic",
+    "zirconia restoration"
+  ],
   "url": "https://dentcast.ir/glossary/zirconia.html"
 },
-    {
+{
   "slug": "sandblasting",
   "title": "Sandblasting (Air Abrasion)",
   "fa_title": "سندبلاست / آماده‌سازی مکانیکی سطح",
+  "synonyms": [
+    "ایر ابریژن",
+    "air abrasion",
+    "surface sandblasting",
+    "mechanical surface roughening"
+  ],
   "url": "https://dentcast.ir/glossary/sandblasting.html"
 },
-    {
+  {
   "slug": "silica-based-ceramics",
   "title": "Silica-Based Ceramics",
   "fa_title": "سرامیک‌های سیلیکا‌بیس",
+  "synonyms": [
+    "سرامیک‌های شیشه‌ای",
+    "glass ceramics",
+    "silica ceramics",
+    "feldspathic ceramics"
+  ],
   "url": "https://dentcast.ir/glossary/silica-based-ceramics.html"
 },
-    {
+{
   "slug": "ph-of-adhesive-systems",
   "title": "pH of Adhesive Systems",
   "fa_title": "pH سیستم‌های باندینگ",
+  "synonyms": [
+    "اسیدیته باندینگ",
+    "pH ادهزیو",
+    "adhesive acidity",
+    "adhesive pH"
+  ],
   "url": "https://dentcast.ir/glossary/ph-of-adhesive-systems.html"
 },
-    {
+{
   "slug": "tertiary-amines",
   "title": "Tertiary Amines",
   "fa_title": "آمین‌های نوع سوم",
+  "synonyms": [
+    "آمین نوع سوم",
+    "amine co-initiator",
+    "tertiary amine initiator"
+  ],
   "url": "https://dentcast.ir/glossary/tertiary-amines.html"
 },
-    {
+{
   "slug": "activator",
   "title": "Activator (Dual- / Self-Cure Activator)",
   "fa_title": "اکتیویتور کیور شیمیایی / دوال‌کیور",
+  "synonyms": [
+    "اکتیویتور دوال کیور",
+    "chemical cure activator",
+    "self cure activator",
+    "initiator activator"
+  ],
   "url": "https://dentcast.ir/glossary/activator.html"
 },
-    {
+{
   "slug": "two-bottle-adhesive-systems",
   "title": "Two-Bottle Adhesive Systems",
   "fa_title": "سیستم‌های باندینگ دو بطری",
+  "synonyms": [
+    "باندینگ دو بطری",
+    "two step adhesive",
+    "two-component adhesive",
+    "primer + adhesive system"
+  ],
   "url": "https://dentcast.ir/glossary/two-bottle-adhesive-systems.html"
 },
-    {
+{
   "slug": "phosphoric-acid-contamination",
   "title": "Phosphoric Acid Contamination",
   "fa_title": "آلودگی با اسید فسفریک",
+  "synonyms": [
+    "آلودگی اسید فسفریک",
+    "phosphoric acid residue",
+    "acid contamination"
+  ],
   "url": "https://dentcast.ir/glossary/phosphoric-acid-contamination.html"
 },
-    {
+{
   "slug": "freshly-cut-dentin",
   "title": "Freshly Cut Dentin",
   "fa_title": "دنتین تازه تراش‌خورده",
+  "synonyms": [
+    "دنتین تازه تراش",
+    "fresh dentin",
+    "newly cut dentin"
+  ],
   "url": "https://dentcast.ir/glossary/freshly-cut-dentin.html"
 },
 {
   "slug": "dentin-sealing",
   "title": "Dentin Sealing",
   "fa_title": "سیل دنتین",
+  "synonyms": [
+    "سیلینگ دنتین",
+    "dentinal sealing",
+    "dentin seal"
+  ],
   "url": "https://dentcast.ir/glossary/dentin-sealing.html"
 },
 {
   "slug": "hybrid-layer",
   "title": "Hybrid Layer",
   "fa_title": "لایه هیبرید",
+  "synonyms": [
+    "hybrid zone",
+    "resin–dentin hybrid layer",
+    "لایه هیبرید رزین-دنتین"
+  ],
   "url": "https://dentcast.ir/glossary/hybrid-layer.html"
 },
-   {
+{
   "slug": "microleakage",
   "title": "Microleakage",
   "fa_title": "میکرولیکیج (نشتی میکروسکوپی)",
+  "synonyms": [
+    "نشتی میکروسکوپی",
+    "leakage marginal",
+    "marginal leakage"
+  ],
   "url": "https://dentcast.ir/glossary/microleakage.html"
-},
+} ,
     {
   "slug": "temporary-cement-contamination",
   "title": "Temporary Cement Contamination",
   "fa_title": "آلودگی دنتین با سمان موقت",
+  "synonyms": [
+    "آلودگی سمان موقت",
+    "residual temporary cement",
+    "temporary cement residue"
+  ],
   "url": "https://dentcast.ir/glossary/temporary-cement-contamination.html"
 },
-    {
+{
   "slug": "three-step-adhesive-system",
   "title": "Three-Step Adhesive System",
   "fa_title": "سیستم ادهزیو سه‌مرحله‌ای",
+  "synonyms": [
+    "باندینگ سه مرحله‌ای",
+    "three step bonding",
+    "etch prime bond system"
+  ],
   "url": "https://dentcast.ir/glossary/three-step-adhesive-system.html"
 },
-    {
+{
   "slug": "oxygen-inhibition-layer",
   "title": "Oxygen Inhibition Layer",
   "fa_title": "لایه مهار اکسیژن",
+  "synonyms": [
+    "لایه مهاری اکسیژن",
+    "oxygen inhibited layer",
+    "OIL layer"
+  ],
   "url": "https://dentcast.ir/glossary/oxygen-inhibition-layer.html"
 },
-    {
+{
   "slug": "unfilled-resin",
   "title": "Unfilled Resin",
   "fa_title": "رزین بدون فیلر",
+  "synonyms": [
+    "رزین بدون فیل",
+    "bonding resin",
+    "low viscosity resin"
+  ],
   "url": "https://dentcast.ir/glossary/unfilled-resin.html"
 },
-    {
+{
   "slug": "flowable-resin",
   "title": "Flowable Resin",
   "fa_title": "رزین فلو (کم‌ویسکوز)",
+  "synonyms": [
+    "کامپوزیت فلو",
+    "فلو",
+    "flowable composite",
+    "low viscosity composite"
+  ],
   "url": "https://dentcast.ir/glossary/flowable-resin.html"
 },
-    {
+{
   "slug": "phosphoric-acid",
   "title": "Phosphoric Acid",
   "fa_title": "اسید فسفوریک",
+  "synonyms": [
+    "اسید اچ",
+    "acid etchant",
+    "etching acid",
+    "37% phosphoric acid"
+  ],
   "url": "https://dentcast.ir/glossary/phosphoric-acid"
 },
-    {
+{
   "slug": "two-step-adhesive-system",
   "title": "Two-Step Adhesive System",
   "fa_title": "سیستم ادهزیو دو‌مرحله‌ای",
+  "synonyms": [
+    "باندینگ دو مرحله‌ای",
+    "two step bonding",
+    "self-etch adhesive system"
+  ],
   "url": "https://dentcast.ir/glossary/two-step-adhesive-system.html"
 },
 {
   "slug": "deep-margin-elevation",
   "title": "Deep Margin Elevation (DME)",
   "fa_title": "بالا آوردن لبه عمقی تراش (DME)",
+  "synonyms": [
+    "بالا آوردن مارجین",
+    "margin elevation",
+    "DME technique"
+  ],
   "url": "https://dentcast.ir/glossary/deep-margin-elevation.html"
 },
 {
   "slug": "immediate-dentin-sealing",
   "title": "Immediate Dentin Sealing (IDS)",
   "fa_title": "سیل فوری دنتین (IDS)",
+  "synonyms": [
+    "IDS",
+    "immediate sealing",
+    "pre-bonding dentin sealing"
+  ],
   "url": "https://dentcast.ir/glossary/immediate-dentin-sealing.html"
 },
 {
   "slug": "crown-lengthening",
   "title": "Crown Lengthening",
   "fa_title": "جراحی افزایش طول تاج",
+  "synonyms": [
+    "افزایش طول تاج",
+    "clinical crown lengthening",
+    "periodontal crown lengthening"
+  ],
   "url": "https://dentcast.ir/glossary/crown-lengthening.html"
 },
 {
   "slug": "subgingival-margin",
   "title": "Subgingival Margin",
   "fa_title": "مارژین ساب‌جینجیوال",
+  "synonyms": [
+    "مارجین زیر لثه",
+    "margin below gingiva",
+    "subgingival finish line"
+  ],
   "url": "https://dentcast.ir/glossary/subgingival-margin.html"
 },
 {
   "slug": "matrix-in-matrix",
   "title": "Matrix-in-Matrix Technique",
   "fa_title": "تکنیک ماتریکس در ماتریکس",
+  "synonyms": [
+    "double matrix technique",
+    "deep matrix technique"
+  ],
   "url": "https://dentcast.ir/glossary/matrix-in-matrix.html"
 },
 {
   "slug": "rubber-dam",
   "title": "Rubber Dam",
   "fa_title": "رابردم",
+  "synonyms": [
+    "رابر دم",
+    "dental dam",
+    "rubber dam isolation"
+  ],
   "url": "https://dentcast.ir/glossary/rubber-dam.html"
 },
 {
   "slug": "undercut",
   "title": "Undercut",
   "fa_title": "آندرکات",
+  "synonyms": [
+    "undercut area",
+    "گیر منفی",
+    "mechanical undercut"
+  ],
   "url": "https://dentcast.ir/glossary/undercut.html"
 },
 {
   "slug": "emergence-profile",
   "title": "Emergence Profile",
   "fa_title": "ایمرجنس پروفایل",
+  "synonyms": [
+    "پروفایل خروجی",
+    "profile emergence",
+    "gingival emergence profile"
+  ],
   "url": "https://dentcast.ir/glossary/emergence-profile.html"
 },
 {
   "slug": "cuspal-coverage",
   "title": "Cuspal Coverage",
   "fa_title": "پوشش کاسپ (Cuspal Coverage)",
+  "synonyms": [
+    "پوشش کاسپ‌ها",
+    "cusp coverage",
+    "full cuspal coverage"
+  ],
   "url": "https://dentcast.ir/glossary/cuspal-coverage.html"
 }
 
