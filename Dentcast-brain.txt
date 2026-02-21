@@ -4387,6 +4387,34 @@
     "curated dental content"
   ],
   "url": "https://dentcast.ir/sharehub/share-5.html"
+},
+{
+  "type": "clinical",
+  "id": "clinical-23",
+  "title": "وقتی رادیولوسنسی زیر ترمیم، پوسیدگی نیست",
+  "caption": "تجربهٔ کلینیکی در تفسیر رادیولوسنسی منظم زیر ترمیم‌های دندانی؛ الگویی که به‌دلیل وجود لاینرها یا کامپوزیت‌های رادیولوسنت ایجاد می‌شود و با پوسیدگی ثانویه اشتباه گرفته می‌شود. شناخت این الگو از درمان‌های غیرضروری و برداشت ترمیم سالم جلوگیری می‌کند.",
+  "hashtags": [
+    "کلینیکال",
+    "رادیوگرافی_دندان",
+    "پوسیدگی_ثانویه",
+    "تشخیص_افتراقی",
+    "کامپوزیت",
+    "لاینر",
+    "تصمیم_درمانی",
+    "تجربه_کلینیکی"
+  ],
+  "keywords": [
+    "radiolucency under restoration",
+    "secondary caries differential diagnosis",
+    "radiolucent liner",
+    "flowable composite base",
+    "bitewing interpretation",
+    "dental radiographic diagnosis",
+    "restoration base materials",
+    "clinical decision making",
+    "prevent overtreatment"
+  ],
+  "page_url": "https://dentcast.ir/insight/insight-23.html"
 }
 
 
