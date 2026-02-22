@@ -633,6 +633,47 @@
     "full cuspal coverage"
   ],
   "url": "https://dentcast.ir/glossary/cuspal-coverage.html"
+},
+{
+  "slug": "dental-ceramics",
+  "title": "Dental Ceramics",
+  "fa_title": "سرامیک‌های دندانی",
+  "synonyms": [
+    "سرامیک دندانی",
+    "مواد سرامیکی دندانپزشکی",
+    "مواد سرامیکی",
+    "رستوریشن سرامیکی",
+    "رستوریشن‌های سرامیکی",
+    "ceramic dental materials",
+    "ceramic restorations"
+  ],
+  "url": "https://dentcast.ir/glossary/dental-ceramics.html"
+},
+{
+  "slug": "glass-phase",
+  "title": "Glass Phase",
+  "fa_title": "فاز گلاس",
+  "synonyms": [
+    "فاز شیشه‌ای",
+    "بخش شیشه‌ای سرامیک",
+    "glass phase in ceramics",
+    "glassy phase",
+    "ceramic glass phase"
+  ],
+  "url": "https://dentcast.ir/glossary/glass-phase.html"
+},
+{
+  "slug": "crystalline-phase",
+  "title": "Crystalline Phase",
+  "fa_title": "فاز کریستالی",
+  "synonyms": [
+    "فاز بلوری",
+    "بخش کریستالی سرامیک",
+    "crystalline structure in ceramics",
+    "ceramic crystalline phase",
+    "crystal phase"
+  ],
+  "url": "https://dentcast.ir/glossary/crystalline-phase.html"
 }
 
 
