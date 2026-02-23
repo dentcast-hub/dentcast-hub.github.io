@@ -4443,6 +4443,42 @@
     "long term stability"
   ],
   "page_url": "https://dentcast.ir/insight/insight-24.html"
+},
+{
+  "type": "dentai",
+  "id": "dentai-11",
+  "title": "DentAI — Peripheral Seal Zone (PSZ) و CRE در برداشت پوسیدگی",
+  "caption": "توضیح مفهوم Peripheral Seal Zone (PSZ) به‌عنوان ناحیهٔ ضروری برای برداشت کامل پوسیدگی در محیط حفره و معرفی Caries Removal Endpoint (CRE) برای مدیریت کنترل‌شده پوسیدگی عمیق نزدیک پالپ و جلوگیری از اکسپوز پالپ.",
+  "hashtags": [
+    "برداشت_پوسیدگی",
+    "PSZ",
+    "CRE",
+    "Deep_Caries",
+    "حفظ_پالپ",
+    "بیومیمتیک",
+    "biomimetic",
+    "ترمیم_بیومیمتیک",
+    "Restorative_Dentistry",
+    "DentAI"
+  ],
+  "keywords": [
+    "Peripheral Seal Zone",
+    "PSZ dentistry",
+    "Caries Removal Endpoint",
+    "CRE caries removal",
+    "Central Stop Zone",
+    "CSZ dentistry",
+    "deep caries management",
+    "selective caries removal",
+    "caries detector dye",
+    "biomimetic restoration",
+    "pulp preservation dentistry",
+    "برداشت پوسیدگی عمیق",
+    "مدیریت پوسیدگی نزدیک پالپ",
+    "حفظ پالپ",
+    "ترمیم بیومیمتیک"
+  ],
+  "page_url": "/dentai/dentai-11.html"
 }
 
 
