@@ -4447,7 +4447,7 @@
 {
   "type": "dentai",
   "id": "dentai-11",
-  "title": "DentAI — Peripheral Seal Zone (PSZ) و CRE در برداشت پوسیدگی",
+  "title": "Peripheral Seal Zone (PSZ) و CRE در برداشت پوسیدگی",
   "caption": "توضیح مفهوم Peripheral Seal Zone (PSZ) به‌عنوان ناحیهٔ ضروری برای برداشت کامل پوسیدگی در محیط حفره و معرفی Caries Removal Endpoint (CRE) برای مدیریت کنترل‌شده پوسیدگی عمیق نزدیک پالپ و جلوگیری از اکسپوز پالپ.",
   "hashtags": [
     "برداشت_پوسیدگی",
@@ -4515,6 +4515,7 @@
 
 
 ]
+
 
 
 
