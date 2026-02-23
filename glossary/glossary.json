@@ -674,8 +674,33 @@
     "crystal phase"
   ],
   "url": "https://dentcast.ir/glossary/crystalline-phase.html"
+},
+{
+  "slug": "feldspathic-porcelain",
+  "title": "Feldspathic Porcelain",
+  "fa_title": "فلدسپاتیک (پرسلن)",
+  "synonyms": [
+    "پرسلن فلدسپاتیک",
+    "سرامیک فلدسپاتیک",
+    "فلدسپاتیک پرسلن",
+    "feldspathic ceramic",
+    "feldspathic dental porcelain"
+  ],
+  "url": "https://dentcast.ir/glossary/feldspathic-porcelain.html"
+},
+{
+  "slug": "glass-ceramics",
+  "title": "Glass Ceramics",
+  "fa_title": "گلس‌سرامیک‌ها",
+  "synonyms": [
+    "سرامیک‌های شیشه‌ای",
+    "سرامیک شیشه‌ای تقویت‌شده",
+    "glass ceramic",
+    "glass ceramic materials",
+    "silica-based glass ceramics"
+  ],
+  "url": "https://dentcast.ir/glossary/glass-ceramics.html"
 }
-
 
 
 
