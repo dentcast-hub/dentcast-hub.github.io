@@ -4447,7 +4447,7 @@
 {
   "type": "dentai",
   "id": "dentai-11",
-  "title": "DentAI — Peripheral Seal Zone (PSZ) و CRE در برداشت پوسیدگی",
+  "title": "Peripheral Seal Zone (PSZ) و CRE در برداشت پوسیدگی",
   "caption": "توضیح مفهوم Peripheral Seal Zone (PSZ) به‌عنوان ناحیهٔ ضروری برای برداشت کامل پوسیدگی در محیط حفره و معرفی Caries Removal Endpoint (CRE) برای مدیریت کنترل‌شده پوسیدگی عمیق نزدیک پالپ و جلوگیری از اکسپوز پالپ.",
   "hashtags": [
     "برداشت_پوسیدگی",
@@ -4479,6 +4479,34 @@
     "ترمیم بیومیمتیک"
   ],
   "page_url": "/dentai/dentai-11.html"
+},
+{
+  "type": "clinical",
+  "id": "clinical-25",
+  "title": "وقتی دندان مجاور نیست، روکش بزرگ‌تر به نظر می‌رسد",
+  "caption": "تجربهٔ کلینیکی در ادراک بزرگ‌تر دیده شدن روکش در فقدان دندان مجاور. افزایش سطح قابل رؤیت تاج می‌تواند باعث برداشت اشتباه از حجم روکش شود و با اورکانتور واقعی اشتباه گرفته شود؛ شناخت این پدیده از اصلاحات غیرضروری و آسیب به کانتور فانکشنال جلوگیری می‌کند.",
+  "hashtags": [
+    "کلینیکال",
+    "پروتز_ثابت",
+    "روکش_دندانی",
+    "ادراک_بصری",
+    "اورکانتور",
+    "تشخیص_افتراقی",
+    "تصمیم_درمانی",
+    "تجربه_کلینیکی"
+  ],
+  "keywords": [
+    "crown contour perception",
+    "missing adjacent tooth",
+    "dental crown width perception",
+    "overcontour diagnosis",
+    "prosthodontic contour",
+    "visual perception in dentistry",
+    "crown emergence profile",
+    "clinical decision making",
+    "functional contour preservation"
+  ],
+  "page_url": "https://dentcast.ir/insight/insight-25.html"
 }
 
 
@@ -4487,6 +4515,8 @@
 
 
 ]
+
+
 
 
 
