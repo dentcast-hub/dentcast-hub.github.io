@@ -700,6 +700,57 @@
     "silica-based glass ceramics"
   ],
   "url": "https://dentcast.ir/glossary/glass-ceramics.html"
+},
+{
+  "slug": "lithium-disilicate",
+  "title": "Lithium Disilicate",
+  "fa_title": "لیتیوم دی‌سیلیکات",
+  "synonyms": [
+    "سرامیک لیتیوم دی‌سیلیکات",
+    "گلس‌سرامیک لیتیوم دی‌سیلیکات",
+    "lithium disilicate ceramic",
+    "lithium disilicate glass ceramic"
+  ],
+  "url": "https://dentcast.ir/glossary/lithium-disilicate.html"
+},
+{
+  "slug": "zls",
+  "title": "Zirconia-Reinforced Lithium Silicate (ZLS)",
+  "fa_title": "لیتیوم سیلیکات تقویت‌شده با زیرکونیا (ZLS)",
+  "synonyms": [
+    "ZLS",
+    "سرامیک ZLS",
+    "گلس‌سرامیک تقویت‌شده با زیرکونیا",
+    "zirconia reinforced lithium silicate",
+    "ZLS ceramic"
+  ],
+  "url": "https://dentcast.ir/glossary/zls.html"
+},
+{
+  "slug": "hybrid-ceramics",
+  "title": "Hybrid Ceramics (Resin-Matrix Ceramics)",
+  "fa_title": "سرامیک‌های هیبریدی (رزین-ماتریکس سرامیک)",
+  "synonyms": [
+    "Hybrid Ceramics",
+    "Resin-Matrix Ceramics",
+    "سرامیک هیبریدی",
+    "رزین ماتریکس سرامیک",
+    "CAD/CAM hybrid ceramics"
+  ],
+  "url": "https://dentcast.ir/glossary/hybrid-ceramics.html"
+},
+{
+  "slug": "polycrystalline-ceramics",
+  "title": "Polycrystalline Ceramics",
+  "fa_title": "سرامیک‌های پلی‌کریستالین",
+  "synonyms": [
+    "Polycrystalline Ceramic",
+    "سرامیک پلی‌کریستالین",
+    "سرامیک‌های کاملاً کریستالی",
+    "non-silica ceramics",
+    "polycrystalline dental ceramics"
+  ],
+  "url": "https://dentcast.ir/glossary/polycrystalline-ceramics.html"
 }
 
 
