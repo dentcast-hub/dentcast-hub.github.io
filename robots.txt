@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://dentcast.ir/sitemap.xml
+Sitemap: https://backup.dentcast.ir/sitemap.xml
