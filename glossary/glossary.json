@@ -751,8 +751,59 @@
     "polycrystalline dental ceramics"
   ],
   "url": "https://dentcast.ir/glossary/polycrystalline-ceramics.html"
+},
+{
+  "slug": "flexural-strength",
+  "title": "Flexural Strength",
+  "fa_title": "استحکام خمشی",
+  "synonyms": [
+    "استحکام در خمش",
+    "مقاومت خمشی",
+    "bend strength",
+    "bending strength",
+    "modulus of rupture"
+  ],
+  "url": "https://dentcast.ir/glossary/flexural-strength.html"
+},
+{
+  "slug": "translucency",
+  "title": "Translucency",
+  "fa_title": "شفافیت (ترنسلوسنسی)",
+  "synonyms": [
+    "ترنسلوسنسی",
+    "میزان عبور نور",
+    "رفتار نوری ماده",
+    "optical translucency",
+    "light transmission in materials"
+  ],
+  "url": "https://dentcast.ir/glossary/translucency.html"
+},
+{
+  "slug": "sintering",
+  "title": "Sintering (Firing)",
+  "fa_title": "پخت (سینترینگ)",
+  "synonyms": [
+    "سینترینگ",
+    "پخت حرارتی",
+    "فرآیند پخت",
+    "ceramic firing",
+    "thermal densification"
+  ],
+  "url": "https://dentcast.ir/glossary/sintering.html"
+},
+{
+  "slug": "milling",
+  "title": "Milling",
+  "fa_title": "میلینگ (فرآیند تراش CAD/CAM)",
+  "synonyms": [
+    "فرآیند میلینگ",
+    "تراش CAD/CAM",
+    "subtractive manufacturing",
+    "CAD/CAM milling",
+    "digital milling"
+  ],
+  "url": "https://dentcast.ir/glossary/milling.html"
 }
-
 
 
   ]
