@@ -4507,6 +4507,34 @@
     "functional contour preservation"
   ],
   "page_url": "https://dentcast.ir/insight/insight-25.html"
+},
+{
+  "type": "clinical",
+  "id": "clinical-26",
+  "title": "انتقال صحیح اطلاعات Scan Body؛ یکی از ارکان موفقیت پروتز ایمپلنتی",
+  "caption": "تجربهٔ کلینیکی در پروتز ایمپلنتی دیجیتال که نشان می‌دهد خطا در انتقال اطلاعات Scan Body یا انتخاب فایل کتابخانه‌ای می‌تواند به ساخت اباتمنت نامتناسب، عدم نشستن کامل روکش و افزایش ریسک شکست در کانکتور منجر شود. توجه به این مرحله از بروز تنش‌های پنهان و شکست‌های دیرهنگام جلوگیری می‌کند.",
+  "hashtags": [
+    "کلینیکال",
+    "ایمپلنت",
+    "پروتز_ایمپلنت",
+    "اسکن_دیجیتال",
+    "ScanBody",
+    "خطای_لابراتوار",
+    "فیت_پروتز",
+    "تصمیم_درمانی"
+  ],
+  "keywords": [
+    "scan body implant dentistry",
+    "digital implant workflow errors",
+    "implant crown misfit",
+    "library file mismatch implant",
+    "abutment height discrepancy",
+    "splinted implant crowns failure",
+    "connector fracture implant prosthesis",
+    "implant prosthodontics accuracy",
+    "clinical decision making implant"
+  ],
+  "page_url": "https://dentcast.ir/insight/insight-26.html"
 }
 
 
