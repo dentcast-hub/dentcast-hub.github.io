@@ -9,7 +9,7 @@
     "سمان دندان",
     "cement dental"
   ],
-  "url": "/dental-cement.html"
+  "url": "/glossary/dental-cement.html"
 },
 {
   "slug": "traditional-cements",
@@ -22,7 +22,7 @@
     "سمان پلی‌کربوکسیلات",
     "conventional cements"
   ],
-  "url": "/traditional-cements.html"
+  "url": "/glossary/traditional-cements.html"
 },
 {
   "slug": "resin-cements",
@@ -34,7 +34,7 @@
     "سمان کامپوزیتی",
     "resin cement"
   ],
-  "url": "/resin-cements.html"
+  "url": "/glossary/resin-cements.html"
 },
 {
   "slug": "self-adhesive-cements",
@@ -45,7 +45,7 @@
     "سمان سلف ادهزیو",
     "self adhesive cement"
   ],
-  "url": "/self-adhesive-cements.html"
+  "url": "/glossary/self-adhesive-cements.html"
 },
 {
   "slug": "adhesive-resin-cements",
@@ -56,7 +56,7 @@
     "سمان رزینی ادهزیو",
     "bonded resin cement"
   ],
-  "url": "/adhesive-resin-cements.html"
+  "url": "/glossary/adhesive-resin-cements.html"
 },
 {
   "slug": "esthetic-resin-cements",
@@ -67,7 +67,7 @@
     "سمان رزینی استتیک",
     "esthetic cement"
   ],
-  "url": "/esthetic-resin-cements.html"
+  "url": "/glossary/esthetic-resin-cements.html"
 },
 {
   "slug": "retention",
@@ -79,7 +79,7 @@
     "retentive form",
     "retention form"
   ],
-  "url": "/retention.html"
+  "url": "/glossary/retention.html"
 },
 {
   "slug": "resistance",
@@ -90,7 +90,7 @@
     "resistance form",
     "structural resistance"
   ],
-  "url": "/resistance.html"
+  "url": "/glossary/resistance.html"
 },
 {
   "slug": "bond-strength",
@@ -101,7 +101,7 @@
     "استحکام اتصال",
     "adhesive strength"
   ],
-  "url": "/bond-strength.html"
+  "url": "/glossary/bond-strength.html"
 },
 {
   "slug": "bonding-protocol",
@@ -113,7 +113,7 @@
     "bonding procedure",
     "adhesive protocol"
   ],
-  "url": "/bonding-protocol.html"
+  "url": "/glossary/bonding-protocol.html"
 },
    {
   "slug": "isolation",
@@ -126,7 +126,7 @@
     "moisture control",
     "field isolation"
   ],
-  "url": "/isolation.html"
+  "url": "/glossary/isolation.html"
 },
 {
   "slug": "light-cure-resin-cement",
@@ -137,7 +137,7 @@
     "لایت کیور سمان",
     "light cure cement"
   ],
-  "url": "/light-cure-resin-cement.html"
+  "url": "/glossary/light-cure-resin-cement.html"
 },
 {
   "slug": "dual-cure-resin-cement",
@@ -148,7 +148,7 @@
     "دوال کیور سمان",
     "dual cure cement"
   ],
-  "url": "/dual-cure-resin-cement.html"
+  "url": "/glossary/dual-cure-resin-cement.html"
 },
 {
   "slug": "self-cure-resin-cement",
@@ -160,7 +160,7 @@
     "chemical cure cement",
     "auto-cure cement"
   ],
-  "url": "/self-cure-resin-cement.html"
+  "url": "/glossary/self-cure-resin-cement.html"
 },
 {
   "slug": "bonding-strategy",
@@ -172,7 +172,7 @@
     "adhesive strategy",
     "bonding approach"
   ],
-  "url": "/bonding-strategy.html"
+  "url": "/glossary/bonding-strategy.html"
 },
 {
   "slug": "etch-and-rinse",
@@ -184,7 +184,7 @@
     "etch & rinse",
     "total-etch technique"
   ],
-  "url": "/etch-and-rinse.html"
+  "url": "/glossary/etch-and-rinse.html"
 },
 {
   "slug": "self-etch",
@@ -195,7 +195,7 @@
     "self-etch adhesive",
     "اچ خودکار"
   ],
-  "url": "/self-etch.html"
+  "url": "/glossary/self-etch.html"
 },
 {
   "slug": "selective-etch",
@@ -206,7 +206,7 @@
     "اچ انتخابی انامل",
     "enamel selective etch"
   ],
-  "url": "/selective-etch.html"
+  "url": "/glossary/selective-etch.html"
 },
 {
   "slug": "bonding-generations",
@@ -218,7 +218,7 @@
     "adhesive generations",
     "dentin bonding generations"
   ],
-  "url": "/bonding-generations.html"
+  "url": "/glossary/bonding-generations.html"
 },
 {
   "slug": "smear-layer",
@@ -229,7 +229,7 @@
     "smear layer dentin",
     "debris layer"
   ],
-  "url": "/smear-layer.html"
+  "url": "/glossary/smear-layer.html"
 },
     {
   "slug": "collagen-fibers",
@@ -240,7 +240,7 @@
     "کلاژن دنتین",
     "collagen fibrils"
   ],
-  "url": "/collagen-fibers.html"
+  "url": "/glossary/collagen-fibers.html"
 },
 {
   "slug": "collagen-collapse",
@@ -251,7 +251,7 @@
     "کلاپس شبکه کلاژن",
     "collapse of collagen network"
   ],
-  "url": "/collagen-collapse.html"
+  "url": "/glossary/collagen-collapse.html"
 },
 {
   "slug": "dentinal-tubules",
@@ -262,7 +262,7 @@
     "کانال‌های عاجی",
     "dentinal tubule"
   ],
-  "url": "/dentinal-tubules.html"
+  "url": "/glossary/dentinal-tubules.html"
 },
 {
   "slug": "universal-adhesive",
@@ -274,7 +274,7 @@
     "universal bonding",
     "multi-mode adhesive"
   ],
-  "url": "/universal-adhesive.html"
+  "url": "/glossary/universal-adhesive.html"
 },
 {
   "slug": "mdp",
@@ -285,7 +285,7 @@
     "MDP monomer",
     "functional monomer MDP"
   ],
-  "url": "/mdp.html"
+  "url": "/glossary/mdp.html"
 },
 {
   "slug": "hema",
@@ -296,7 +296,7 @@
     "hydroxyethyl methacrylate",
     "HEMA monomer"
   ],
-  "url": "/hema.html"
+  "url": "/glossary/hema.html"
 },
 {
   "slug": "silane",
@@ -307,7 +307,7 @@
     "عامل کوپلینگ سایلان",
     "silane primer"
   ],
-  "url": "/silane.html"
+  "url": "/glossary/silane.html"
 },
 {
   "slug": "zirconia-primer",
@@ -318,7 +318,7 @@
     "zirconia bonding primer",
     "primer for zirconia"
   ],
-  "url": "/zirconia-primer.html"
+  "url": "/glossary/zirconia-primer.html"
 },
 {
   "slug": "zirconia",
@@ -329,7 +329,7 @@
     "zirconia ceramic",
     "zirconia restoration"
   ],
-  "url": "/zirconia.html"
+  "url": "/glossary/zirconia.html"
 },
 {
   "slug": "sandblasting",
@@ -341,7 +341,7 @@
     "surface sandblasting",
     "mechanical surface roughening"
   ],
-  "url": "/sandblasting.html"
+  "url": "/glossary/sandblasting.html"
 },
   {
   "slug": "silica-based-ceramics",
@@ -353,7 +353,7 @@
     "silica ceramics",
     "feldspathic ceramics"
   ],
-  "url": "/silica-based-ceramics.html"
+  "url": "/glossary/silica-based-ceramics.html"
 },
 {
   "slug": "ph-of-adhesive-systems",
@@ -365,7 +365,7 @@
     "adhesive acidity",
     "adhesive pH"
   ],
-  "url": "/ph-of-adhesive-systems.html"
+  "url": "/glossary/ph-of-adhesive-systems.html"
 },
 {
   "slug": "tertiary-amines",
@@ -376,7 +376,7 @@
     "amine co-initiator",
     "tertiary amine initiator"
   ],
-  "url": "/tertiary-amines.html"
+  "url": "/glossary/tertiary-amines.html"
 },
 {
   "slug": "activator",
@@ -388,7 +388,7 @@
     "self cure activator",
     "initiator activator"
   ],
-  "url": "/activator.html"
+  "url": "/glossary/activator.html"
 },
 {
   "slug": "two-bottle-adhesive-systems",
@@ -400,7 +400,7 @@
     "two-component adhesive",
     "primer + adhesive system"
   ],
-  "url": "/two-bottle-adhesive-systems.html"
+  "url": "/glossary/two-bottle-adhesive-systems.html"
 },
 {
   "slug": "phosphoric-acid-contamination",
@@ -411,7 +411,7 @@
     "phosphoric acid residue",
     "acid contamination"
   ],
-  "url": "/phosphoric-acid-contamination.html"
+  "url": "/glossary/phosphoric-acid-contamination.html"
 },
 {
   "slug": "freshly-cut-dentin",
@@ -422,7 +422,7 @@
     "fresh dentin",
     "newly cut dentin"
   ],
-  "url": "/freshly-cut-dentin.html"
+  "url": "/glossary/freshly-cut-dentin.html"
 },
 {
   "slug": "dentin-sealing",
@@ -433,7 +433,7 @@
     "dentinal sealing",
     "dentin seal"
   ],
-  "url": "/dentin-sealing.html"
+  "url": "/glossary/dentin-sealing.html"
 },
 {
   "slug": "hybrid-layer",
@@ -444,7 +444,7 @@
     "resin–dentin hybrid layer",
     "لایه هیبرید رزین-دنتین"
   ],
-  "url": "/hybrid-layer.html"
+  "url": "/glossary/hybrid-layer.html"
 },
 {
   "slug": "microleakage",
@@ -455,7 +455,7 @@
     "leakage marginal",
     "marginal leakage"
   ],
-  "url": "/microleakage.html"
+  "url": "/glossary/microleakage.html"
 } ,
     {
   "slug": "temporary-cement-contamination",
@@ -466,7 +466,7 @@
     "residual temporary cement",
     "temporary cement residue"
   ],
-  "url": "/temporary-cement-contamination.html"
+  "url": "/glossary/temporary-cement-contamination.html"
 },
 {
   "slug": "three-step-adhesive-system",
@@ -477,7 +477,7 @@
     "three step bonding",
     "etch prime bond system"
   ],
-  "url": "/three-step-adhesive-system.html"
+  "url": "/glossary/three-step-adhesive-system.html"
 },
 {
   "slug": "oxygen-inhibition-layer",
@@ -488,7 +488,7 @@
     "oxygen inhibited layer",
     "OIL layer"
   ],
-  "url": "/oxygen-inhibition-layer.html"
+  "url": "/glossary/oxygen-inhibition-layer.html"
 },
 {
   "slug": "unfilled-resin",
@@ -499,7 +499,7 @@
     "bonding resin",
     "low viscosity resin"
   ],
-  "url": "/unfilled-resin.html"
+  "url": "/glossary/unfilled-resin.html"
 },
 {
   "slug": "flowable-resin",
@@ -511,7 +511,7 @@
     "flowable composite",
     "low viscosity composite"
   ],
-  "url": "/flowable-resin.html"
+  "url": "/glossary/flowable-resin.html"
 },
 {
   "slug": "phosphoric-acid",
@@ -523,7 +523,7 @@
     "etching acid",
     "37% phosphoric acid"
   ],
-  "url": "/phosphoric-acid"
+  "url": "/glossary/phosphoric-acid"
 },
 {
   "slug": "two-step-adhesive-system",
@@ -534,7 +534,7 @@
     "two step bonding",
     "self-etch adhesive system"
   ],
-  "url": "/two-step-adhesive-system.html"
+  "url": "/glossary/two-step-adhesive-system.html"
 },
 {
   "slug": "deep-margin-elevation",
@@ -545,7 +545,7 @@
     "margin elevation",
     "DME technique"
   ],
-  "url": "/deep-margin-elevation.html"
+  "url": "/glossary/deep-margin-elevation.html"
 },
 {
   "slug": "immediate-dentin-sealing",
@@ -556,7 +556,7 @@
     "immediate sealing",
     "pre-bonding dentin sealing"
   ],
-  "url": "/immediate-dentin-sealing.html"
+  "url": "/glossary/immediate-dentin-sealing.html"
 },
 {
   "slug": "crown-lengthening",
@@ -567,7 +567,7 @@
     "clinical crown lengthening",
     "periodontal crown lengthening"
   ],
-  "url": "/crown-lengthening.html"
+  "url": "/glossary/crown-lengthening.html"
 },
 {
   "slug": "subgingival-margin",
@@ -578,7 +578,7 @@
     "margin below gingiva",
     "subgingival finish line"
   ],
-  "url": "/subgingival-margin.html"
+  "url": "/glossary/subgingival-margin.html"
 },
 {
   "slug": "matrix-in-matrix",
@@ -588,7 +588,7 @@
     "double matrix technique",
     "deep matrix technique"
   ],
-  "url": "/matrix-in-matrix.html"
+  "url": "/glossary/matrix-in-matrix.html"
 },
 {
   "slug": "rubber-dam",
@@ -599,7 +599,7 @@
     "dental dam",
     "rubber dam isolation"
   ],
-  "url": "/rubber-dam.html"
+  "url": "/glossary/rubber-dam.html"
 },
 {
   "slug": "undercut",
@@ -610,7 +610,7 @@
     "گیر منفی",
     "mechanical undercut"
   ],
-  "url": "/undercut.html"
+  "url": "/glossary/undercut.html"
 },
 {
   "slug": "emergence-profile",
@@ -621,7 +621,7 @@
     "profile emergence",
     "gingival emergence profile"
   ],
-  "url": "/emergence-profile.html"
+  "url": "/glossary/emergence-profile.html"
 },
 {
   "slug": "cuspal-coverage",
@@ -632,7 +632,7 @@
     "cusp coverage",
     "full cuspal coverage"
   ],
-  "url": "/cuspal-coverage.html"
+  "url": "/glossary/cuspal-coverage.html"
 },
 {
   "slug": "dental-ceramics",
@@ -647,7 +647,7 @@
     "ceramic dental materials",
     "ceramic restorations"
   ],
-  "url": "/dental-ceramics.html"
+  "url": "/glossary/dental-ceramics.html"
 },
 {
   "slug": "glass-phase",
@@ -660,7 +660,7 @@
     "glassy phase",
     "ceramic glass phase"
   ],
-  "url": "/glass-phase.html"
+  "url": "/glossary/glass-phase.html"
 },
 {
   "slug": "crystalline-phase",
@@ -673,7 +673,7 @@
     "ceramic crystalline phase",
     "crystal phase"
   ],
-  "url": "/crystalline-phase.html"
+  "url": "/glossary/crystalline-phase.html"
 },
 {
   "slug": "feldspathic-porcelain",
@@ -686,7 +686,7 @@
     "feldspathic ceramic",
     "feldspathic dental porcelain"
   ],
-  "url": "/feldspathic-porcelain.html"
+  "url": "/glossary/feldspathic-porcelain.html"
 },
 {
   "slug": "glass-ceramics",
@@ -699,7 +699,7 @@
     "glass ceramic materials",
     "silica-based glass ceramics"
   ],
-  "url": "/glass-ceramics.html"
+  "url": "/glossary/glass-ceramics.html"
 },
 {
   "slug": "lithium-disilicate",
@@ -711,7 +711,7 @@
     "lithium disilicate ceramic",
     "lithium disilicate glass ceramic"
   ],
-  "url": "/lithium-disilicate.html"
+  "url": "/glossary/lithium-disilicate.html"
 },
 {
   "slug": "zls",
@@ -724,7 +724,7 @@
     "zirconia reinforced lithium silicate",
     "ZLS ceramic"
   ],
-  "url": "/zls.html"
+  "url": "/glossary/zls.html"
 },
 {
   "slug": "hybrid-ceramics",
@@ -737,7 +737,7 @@
     "رزین ماتریکس سرامیک",
     "CAD/CAM hybrid ceramics"
   ],
-  "url": "/hybrid-ceramics.html"
+  "url": "/glossary/hybrid-ceramics.html"
 },
 {
   "slug": "polycrystalline-ceramics",
@@ -750,7 +750,7 @@
     "non-silica ceramics",
     "polycrystalline dental ceramics"
   ],
-  "url": "/polycrystalline-ceramics.html"
+  "url": "/glossary/polycrystalline-ceramics.html"
 },
 {
   "slug": "flexural-strength",
@@ -763,7 +763,7 @@
     "bending strength",
     "modulus of rupture"
   ],
-  "url": "/flexural-strength.html"
+  "url": "/glossary/flexural-strength.html"
 },
 {
   "slug": "translucency",
@@ -776,7 +776,7 @@
     "optical translucency",
     "light transmission in materials"
   ],
-  "url": "/translucency.html"
+  "url": "/glossary/translucency.html"
 },
 {
   "slug": "sintering",
@@ -789,7 +789,7 @@
     "ceramic firing",
     "thermal densification"
   ],
-  "url": "/sintering.html"
+  "url": "/glossary/sintering.html"
 },
 {
   "slug": "milling",
@@ -802,7 +802,7 @@
     "CAD/CAM milling",
     "digital milling"
   ],
-  "url": "/milling.html"
+  "url": "/glossary/milling.html"
 }
 
 
