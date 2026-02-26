@@ -4535,6 +4535,34 @@
     "clinical decision making implant"
   ],
   "page_url": "https://dentcast.ir/insight/insight-26.html"
+},
+{
+  "type": "dentcast",
+  "id": "dentcast-155",
+  "episode": "155",
+  "title": "Vertical Dimension of Occlusion – Myths & Evidence (Part 2)",
+  "caption": "جمع‌بندی نهایی بحث تغییر Vertical Dimension of Occlusion با تمرکز بر تطابق بیماران، ریسک‌های واقعی و موارد نیازمند احتیاط و همکاری بین‌رشته‌ای، بر اساس شواهد علمی در بازسازی‌های پروتزی.",
+  "hashtags": [
+    "#VDO",
+    "#VD",
+    "#VerticalDimension",
+    "#پروتز",
+    "#اکلوژن",
+    "#FullMouthRehabilitation",
+    "#دنتکست"
+  ],
+  "keywords": [
+    "Vertical Dimension of Occlusion",
+    "تغییر بعد عمودی",
+    "افزایش VDO",
+    "بازسازی کامل دهان",
+    "پروتز ثابت",
+    "اکلوژن",
+    "تطابق بیمار",
+    "پادکست پروتز"
+  ],
+  "audio_url": "https://episodes.s3.ir-thr-at1.arvanstorage.ir/dentcast155%20.mp3?versionId=",
+  "page_url": "https://dentcast.ir/episodes.html"
 }
 
 
@@ -4543,6 +4571,7 @@
 
 
 ]
+
 
 
 
