@@ -270,46 +270,36 @@
       mozallowfullscreen="true"></iframe>
   </div>
 <div class="yt-container">
-  <button id="yt-btn" class="capsule-btn">
-  <div class="yt-container">
-
-  <button id="yt-btn-short" class="capsule-btn">
+  <button id="yt-btn-short" type="button" class="capsule-btn">
     🎥 مشاهده ویدیو در یوتیوب (پلیر خارجی)
   </button>
 
-  <div id="yt-wrap-short" hidden style="margin-top:16px;">
-    
-    <button id="yt-close-short"
-            style="background:none;border:none;color:#9aa1b3;
-                   font-family:Vazirmatn,sans-serif;
-                   cursor:pointer;margin-bottom:10px;">
+  <div id="yt-wrap-short" class="yt-wrap" hidden>
+    <button id="yt-close-short" type="button" class="yt-close">
       ✕ بستن ویدیو
     </button>
 
     <div id="yt-holder-short"></div>
-
   </div>
-
 </div>
 
 <script>
 (function(){
-  const btn   = document.getElementById("yt-btn-short");
-  const wrap  = document.getElementById("yt-wrap-short");
-  const close = document.getElementById("yt-close-short");
-  const holder= document.getElementById("yt-holder-short");
+  const btn    = document.getElementById("yt-btn-short");
+  const wrap   = document.getElementById("yt-wrap-short");
+  const close  = document.getElementById("yt-close-short");
+  const holder = document.getElementById("yt-holder-short");
 
   let iframe = null;
 
   btn.addEventListener("click", function(){
-
     btn.style.display = "none";
     wrap.hidden = false;
 
     iframe = document.createElement("iframe");
     iframe.src = "https://www.youtube.com/embed/KAFdvCvkg8g";
     iframe.width = "100%";
-    iframe.height = "640";   // چون Shorts عمودی هست
+    iframe.height = "640";
     iframe.frameBorder = "0";
     iframe.loading = "lazy";
     iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
@@ -329,7 +319,6 @@
       iframe = null;
     }
   });
-
 })();
 </script>
   <div class="text-box">
