@@ -205,6 +205,49 @@ footer{
   text-align:center;   /* سنتر */
   margin: 22px 0 8px;  /* فاصله از بالا و پایین */
 }
+  /* Capsule button */
+  .capsule-btn{
+    appearance: none;
+    border: 0;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px 18px;
+    border-radius: 999px;
+    font-family: Vazirmatn, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    font-size: 0.98rem;
+    font-weight: 700;
+    line-height: 1;
+    color: #e7eaf1;
+    background: rgba(11, 95, 255, 0.22);
+    border: 1px solid rgba(11, 95, 255, 0.38);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.18);
+    transition: transform 140ms ease, background 140ms ease, border-color 140ms ease, box-shadow 140ms ease;
+    user-select: none;
+  }
+  .capsule-btn:hover{
+    transform: translateY(-1px);
+    background: rgba(11, 95, 255, 0.28);
+    border-color: rgba(11, 95, 255, 0.55);
+    box-shadow: 0 14px 30px rgba(0,0,0,0.22);
+  }
+  .capsule-btn:active{
+    transform: translateY(0px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.18);
+  }
+  .capsule-btn:focus-visible{
+    outline: 3px solid rgba(11,95,255,0.45);
+    outline-offset: 3px;
+  }
+
+  /* Wrapper for spacing */
+  .acast-wrap{
+    margin-top: 14px;
+    border-radius: 18px;
+    overflow: hidden; /* تا گوشه‌های iframe رُند به نظر بیاد */
+  }
 
   </style>
   <script type="application/ld+json">
@@ -284,7 +327,48 @@ footer{
 
     <!-- 1) پلیر -->
     <iframe src="/player.html" loading="lazy" allow="autoplay"></iframe>
+<!-- Acast fallback button (loads on click) -->
+<button id="acast-btn" type="button" class="capsule-btn">
+  🎧 پخش با پلیر خارجی (Acast)
+</button>
 
+<div id="acast-wrap" class="acast-wrap" hidden></div>
+
+<script>
+  (function () {
+    const btn = document.getElementById("acast-btn");
+    const wrap = document.getElementById("acast-wrap");
+
+    const ACAST_URL = "https://embed.acast.com/624b5545ecc0e600134ea0df?theme=light&feed=true";
+
+    let loaded = false;
+
+    btn.addEventListener("click", function () {
+      if (loaded) return;
+
+      // اگر خواستی بعد از کلیک متن دکمه عوض شه
+      btn.textContent = "در حال بارگذاری پلیر خارجی…";
+
+      const iframe = document.createElement("iframe");
+      iframe.src = ACAST_URL;
+      iframe.frameBorder = "0";
+      iframe.width = "100%";
+      iframe.height = "380";
+      iframe.loading = "lazy";
+      iframe.allow = "autoplay; encrypted-media";
+      iframe.style.border = "0";
+      iframe.title = "Acast Player";
+
+      wrap.hidden = false;
+      wrap.appendChild(iframe);
+
+      // دکمه بعد از لود مخفی شه
+      btn.style.display = "none";
+
+      loaded = true;
+    });
+  })();
+</script>
     <!-- 2) باکس تبلیغ -->
     <article class="ad-card" id="card-ad-contact">
       <a href="mailto:info@dentcast.ir?subject=درخواست معرفی برند در دنت‌کست" class="ad-link">
