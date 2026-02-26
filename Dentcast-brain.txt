@@ -1661,7 +1661,7 @@
     "تماس_دندانی",
     "کاغذ_آرتیکولیشن"
   ],
-  "page_url": "https://dentcast.ir/insight/insight-1.html"
+  "page_url": "/insight/insight-1.html"
 },
 {
   "type": "clinical",
@@ -1692,7 +1692,7 @@
     "طرح_درمانی",
     "پروتز ثابت"
   ],
-  "page_url": "https://dentcast.ir/insight/insight-2.html"
+  "page_url": "/insight/insight-2.html"
 },
 {
   "type": "clinical",
@@ -1719,7 +1719,7 @@
     "هیلینگ اباتمنت",
     "workflow ایمپلنت"
   ],
-  "page_url": "https://dentcast.ir/insight/insight-3.html"
+  "page_url": "/insight/insight-3.html"
 },
 {
   "type": "clinical",
@@ -1750,7 +1750,7 @@
     "بازسازی قدامی",
     "باندینگ بیومیمتیک"
   ],
-  "page_url": "https://dentcast.ir/insight/insight-4.html"
+  "page_url": "/insight/insight-4.html"
 },
 {
   "type": "clinical",
@@ -1781,7 +1781,7 @@
     "سمان زینک فسفات",
     "نتیجه زیبایی"
   ],
-  "page_url": "https://dentcast.ir/insight/insight-5.html"
+  "page_url": "/insight/insight-5.html"
 },
 {
   "type": "clinical",
@@ -1814,7 +1814,7 @@
     "tooth-by-tooth analysis",
     "case by case occlusal planning"
   ],
-  "page_url": "https://dentcast.ir/insight/insight-6.html"
+  "page_url": "/insight/insight-6.html"
 },
 {
   "type": "clinical",
@@ -1847,7 +1847,7 @@
     "occlusal stability",
     "predictable treatment planning"
   ],
-  "page_url": "https://dentcast.ir/insight/insight-7.html"
+  "page_url": "/insight/insight-7.html"
 },
 {
   "type": "clinical",
@@ -1875,7 +1875,7 @@
     "physiologic adaptation",
     "occlusion management philosophy"
   ],
-  "page_url": "https://dentcast.ir/insight/insight-8.html"
+  "page_url": "/insight/insight-8.html"
 },
 {
   "type": "clinical",
@@ -1904,7 +1904,7 @@
     "improper cement removal",
     "biologic complications"
   ],
-  "page_url": "https://dentcast.ir/insight/insight-9.html"
+  "page_url": "/insight/insight-9.html"
 },
 {
   "type": "clinical",
@@ -1936,7 +1936,7 @@
     "enameloplasty anterior teeth",
     "functional space limitations"
   ],
-  "page_url": "https://dentcast.ir/insight/insight-10.html"
+  "page_url": "/insight/insight-10.html"
 },
 {
   "type": "clinical",
@@ -1965,7 +1965,7 @@
     "management of acute dental pain",
     "risk management in dentistry"
   ],
-  "page_url": "https://dentcast.ir/insight/insight-11.html"
+  "page_url": "/insight/insight-11.html"
 },
 {
   "type": "clinical",
@@ -1995,7 +1995,7 @@
     "full mouth rehabilitation",
     "temporary crowns to reestablish VDO"
   ],
-  "page_url": "https://dentcast.ir/insight/insight-12.html"
+  "page_url": "/insight/insight-12.html"
 },
 {
   "type": "clinical",
@@ -2025,7 +2025,7 @@
     "periodontal limitations",
     "predictive treatment planning"
   ],
-  "page_url": "https://dentcast.ir/insight/insight-13.html"
+  "page_url": "/insight/insight-13.html"
 },
 {
   "type": "clinical",
@@ -2053,7 +2053,7 @@
     "multiunit bridge risks",
     "strategic treatment planning"
   ],
-  "page_url": "https://dentcast.ir/insight/insight-14.html"
+  "page_url": "/insight/insight-14.html"
 },
 {
   "type": "clinical",
@@ -2077,7 +2077,7 @@
     "core removal method",
     "minimal stress extraction"
   ],
-  "page_url": "https://dentcast.ir/insight/insight-15.html"
+  "page_url": "/insight/insight-15.html"
 },
 {
   "type": "clinical",
@@ -2102,7 +2102,7 @@
     "superfloss access",
     "probe pass test"
   ],
-  "page_url": "https://dentcast.ir/insight/insight-16.html"
+  "page_url": "/insight/insight-16.html"
 },
 {
   "type": "litecast",
@@ -2111,7 +2111,7 @@
   "caption": "توضیح ساده و کاربردی درباره‌ی قانون ۲-۲-۲؛ دو بار مسواک در روز، دو دقیقه، و دو بار مراجعه سالانه به دندان‌پزشک.",
   "hashtags": ["#مسواک", "#سلامت_دهان", "#بهداشت_دهان", "#پیشگیری", "#دندانپزشکی", "#قانون_۲۲۲"],
   "keywords": ["oral hygiene", "2-2-2 rule", "tooth brushing", "prevention", "dental care"],
-  "page_url": "https://dentcast.ir/litecast/lite-CAST1.html"
+  "page_url": "/litecast/lite-CAST1.html"
 },
 {
   "type": "litecast",
@@ -2120,7 +2120,7 @@
   "caption": "توضیح روشن دربارهٔ علت لق شدن دنچر پایین و اینکه چرا دو ایمپلنت بهترین روش برای افزایش پایداری آن است.",
   "hashtags": ["#دنچر", "#اوردنچر", "#ایمپلنت", "#پروتز_کامل", "#پایداری_دنچر", "#دندان_مصنوعی"],
   "keywords": ["lower denture", "overdenture", "implant retained denture", "dentures", "prosthodontics"],
-  "page_url": "https://dentcast.ir/litecast/lite-CAST2.html"
+  "page_url": "/litecast/lite-CAST2.html"
 },
 {
   "type": "litecast",
@@ -2129,7 +2129,7 @@
   "caption": "توضیح ساده و علمی دربارهٔ پیامدهای جایگزین نکردن دندان و اینکه چه تغییراتی ممکن است در دهان رخ دهد.",
   "hashtags": ["#دندان_از_دست_رفته", "#تحلیل_استخوان", "#ایمپلنت", "#پروتز", "#سلامت_دهان"],
   "keywords": ["missing tooth", "bone resorption", "tooth shifting", "implant consultation"],
-  "page_url": "https://dentcast.ir/litecast/lite-CAST3.html"
+  "page_url": "/litecast/lite-CAST3.html"
 },
 {
   "type": "litecast",
@@ -2138,7 +2138,7 @@
   "caption": "پاسخ ساده و علمی به اینکه ایمپلنت چه مزایایی برای افراد دارای دنچر کامل دارد و چرا معمولاً عملکرد جویدن بهتر می‌شود.",
   "hashtags": ["#اوردنچر", "#ایمپلنت", "#دندان_مصنوعی", "#تحلیل_استخوان", "#قدرت_جویدن"],
   "keywords": ["overdenture", "full denture implant benefits", "bone preservation", "chewing efficiency"],
-  "page_url": "https://dentcast.ir/litecast/lite-CAST4.html"
+  "page_url": "/litecast/lite-CAST4.html"
 },
 {
   "type": "litecast",
@@ -2147,7 +2147,7 @@
   "caption": "مقایسهٔ علمی و ساده بین پلاک متحرک پارسیل و بریج ثابت روی ایمپلنت؛ تمرکز بر سلامت بلندمدت و حفاظت از دندان‌های سالم.",
   "hashtags": ["#ایمپلنت", "#بریج_ثابت", "#دندان_مصنوعی_متحرک", "#سلامت_دهان", "#پلاک_پارسیل"],
   "keywords": ["partial denture", "implant bridge", "removable vs fixed", "abutment tooth risk"],
-  "page_url": "https://dentcast.ir/litecast/lite-CAST5.html"
+  "page_url": "/litecast/lite-CAST5.html"
 },
 {
   "type": "litecast",
@@ -2156,7 +2156,7 @@
   "caption": "چرا درمان‌های دندانپزشکی هنگام تبخال فعال ممنوع است، چه زمانی مراجعه بی‌خطر است، و در شرایط اورژانسی چه باید کرد.",
   "hashtags": ["#تبخال", "#HSV1", "#بهداشت_دهان", "#اقدامات_اورژانسی", "#پیشگیری_از_انتقال"],
   "keywords": ["herpes simplex", "active cold sore", "dental treatment contraindication", "cross-contamination risk"],
-  "page_url": "https://dentcast.ir/litecast/lite-CAST6.html"
+  "page_url": "/litecast/lite-CAST6.html"
 },
 {
   "type": "litecast",
@@ -2165,7 +2165,7 @@
   "caption": "مقایسهٔ علمی و کاربردی کامپوزیت و لمینت سرامیکی از نظر جنس، دوام، تغییر رنگ، تراش دندان و انتخاب درمان.",
   "hashtags": ["#لمینت", "#کامپوزیت", "#طراحی_لبخند", "#زیبایی_دندان", "#ونیر_سرامیکی"],
   "keywords": ["ceramic veneers", "composite bonding", "aesthetic dentistry", "porcelain laminate", "color stability"],
-  "page_url": "https://dentcast.ir/litecast/lite-CAST7.html"
+  "page_url": "/litecast/lite-CAST7.html"
 },
 {
   "type": "litecast",
@@ -2174,7 +2174,7 @@
   "caption": "مرور ساده و کاربردی مراحل ایمپلنت: از جراحی توسط متخصص لثه تا اسکن دیجیتال و تحویل روکش نهایی.",
   "hashtags": ["#ایمپلنت", "#جراحی_ایمپلنت", "#روکش_دیجیتال", "#اسکن_دهانی", "#اوسئواینتگریشن"],
   "keywords": ["dental implant timeline", "osseointegration period", "digital crown workflow", "immediate provisional implant"],
-  "page_url": "https://dentcast.ir/litecast/lite-CAST8.html"
+  "page_url": "/litecast/lite-CAST8.html"
 },
 {
   "type": "photocast",
@@ -2183,7 +2183,7 @@
   "caption": "تحلیل بالینی کیس با تماس باز پروگزیمال و بازسازی درد با نخ دندان بین دندان‌های ۴ و ۵.",
   "hashtags": ["#فوتوکست", "#تشخیص_کلینیکی", "#تماس_باز", "#درد_دندانی", "#پروتز"],
   "keywords": ["فوتوکست", "تماس باز دندانی", "درد پس از روکش", "کانتکت اشتباه", "تشخیص با نخ دندان", "پروتز دندان", "کلینیک پروتز"],
-  "page_url": "https://dentcast.ir/photocast/episode-1.html"
+  "page_url": "/photocast/episode-1.html"
 },
 {
   "type": "photocast",
@@ -2192,7 +2192,7 @@
   "caption": "توضیح علمی قانون BULL برای تنظیم تماس‌های اکلوژنی بدون حذف ارتفاع کاسپ‌های فانکشنال: Buccal Upper و Lower Lingual.",
   "hashtags": ["#فوتوکست", "#اکلوژن", "#تنظیم_اکلوژال", "#قانون_BULL", "#پروتز"],
   "keywords": ["قانون BULL", "تنظیم اکلوزال", "اکلوژن", "Premature Contacts", "کاسپ فانکشنال", "تراش اکلوژال", "پروتز دندانی"],
-  "page_url": "https://dentcast.ir/photocast/episode-2.html"
+  "page_url": "/photocast/episode-2.html"
 },
 {
   "type": "photocast",
@@ -2221,7 +2221,7 @@
     "ترمیم MOD وسیع",
     "اندودنتیکس در اطفال"
   ],
-  "page_url": "https://dentcast.ir/photocast/episode-3.html"
+  "page_url": "/photocast/episode-3.html"
 },
 {
   "type": "dentcast_plus",
@@ -2245,7 +2245,7 @@
     "clinical tips",
     "crown prep"
   ],
-  "page_url": "https://dentcast.ir/dentcast-plus/video-1.html"
+  "page_url": "/dentcast-plus/video-1.html"
 },
 {
   "type": "dentcast_plus",
@@ -2271,7 +2271,7 @@
     "crown delivery protocol",
     "occlusal trauma"
   ],
-  "page_url": "https://dentcast.ir/dentcast-plus/video-2.html"
+  "page_url": "/dentcast-plus/video-2.html"
 },
 {
   "type": "notecast",
@@ -2296,7 +2296,7 @@
     "چسباندن رستوریشن",
     "adhesive cement"
   ],
-  "url": "https://dentcast.ir/notecast/episode-2.html"
+  "url": "/notecast/episode-2.html"
 },
 {
   "type": "notecast",
@@ -2325,7 +2325,7 @@
     "adhesion",
     "luting"
   ],
-  "url": "https://dentcast.ir/notecast/episode-3.html"
+  "url": "/notecast/episode-3.html"
 },
 {
   "type": "notecast",
@@ -2356,7 +2356,7 @@
     "selective etch",
     "enamel bonding"
   ],
-  "url": "https://dentcast.ir/notecast/episode-4.html"
+  "url": "/notecast/episode-4.html"
 },
 {
   "type": "notecast",
@@ -2389,7 +2389,7 @@
     "ph acidity",
     "dentin bonding"
   ],
-  "url": "https://dentcast.ir/notecast/episode-5.html"
+  "url": "/notecast/episode-5.html"
 },
 {
   "type": "notecast",
@@ -2424,7 +2424,7 @@
     "temporary restoration",
     "adhesive resin cement"
   ],
-  "url": "https://dentcast.ir/notecast/episode-6.html"
+  "url": "/notecast/episode-6.html"
 },
 {
   "type": "notecast",
@@ -2458,7 +2458,7 @@
     "matrix adaptation",
     "endo and DME"
   ],
-  "url": "https://dentcast.ir/notecast/episode-7.html"
+  "url": "/notecast/episode-7.html"
 },
 {
   "type": "notecast",
@@ -2488,7 +2488,7 @@
     "ceramic selection",
     "biomimetic material choice"
   ],
-  "url": "https://dentcast.ir/notecast/episode-8.html"
+  "url": "/notecast/episode-8.html"
 },
 {
   "type": "notecast",
@@ -2518,7 +2518,7 @@
     "ceramic bonding",
     "porcelain preparation"
   ],
-  "url": "https://dentcast.ir/notecast/episode-9.html"
+  "url": "/notecast/episode-9.html"
 },
 {
   "type": "notecast",
@@ -2549,7 +2549,7 @@
     "HF etching",
     "ceramic surface treatment"
   ],
-  "url": "https://dentcast.ir/notecast/episode-10.html"
+  "url": "/notecast/episode-10.html"
 },
 {
   "type": "notecast",
@@ -2580,7 +2580,7 @@
     "universal adhesive MDP",
     "phosphoric acid contraindication"
   ],
-  "url": "https://dentcast.ir/notecast/episode-11.html"
+  "url": "/notecast/episode-11.html"
 },
 {
   "type": "notecast",
@@ -2611,7 +2611,7 @@
     "ceramic surface treatment",
     "biomimetic adhesive protocol"
   ],
-  "url": "https://dentcast.ir/notecast/episode-12.html"
+  "url": "/notecast/episode-12.html"
 },
 {
   "type": "notecast",
@@ -2642,7 +2642,7 @@
     "prosthodontic gingival esthetics",
     "biomimetic cervical design"
   ],
-  "url": "https://dentcast.ir/notecast/episode-13.html"
+  "url": "/notecast/episode-13.html"
 },
 {
   "type": "notecast",
@@ -2674,7 +2674,7 @@
     "prosthodontics",
     "VD adaptation protocol"
   ],
-  "url": "https://dentcast.ir/notecast/episode-14.html"
+  "url": "/notecast/episode-14.html"
 },
 {
   "type": "notecast",
@@ -2704,7 +2704,7 @@
     "occlusal ceramic thickness",
     "biomimetic indirect restorations"
   ],
-  "url": "https://dentcast.ir/notecast/episode-15.html"
+  "url": "/notecast/episode-15.html"
 },
 {
   "type": "notecast",
@@ -2733,7 +2733,7 @@
     "bond durability ceramic",
     "biomimetic ceramic bonding"
   ],
-  "url": "https://dentcast.ir/notecast/episode-16.html"
+  "url": "/notecast/episode-16.html"
 },
 {
   "type": "notecast",
@@ -2763,7 +2763,7 @@
     "monoclinic transformation",
     "dental zirconia generations"
   ],
-  "url": "https://dentcast.ir/notecast/episode-17.html"
+  "url": "/notecast/episode-17.html"
 },
 {
   "type": "notecast",
@@ -2793,7 +2793,7 @@
     "MDP primer",
     "dental ceramics"
   ],
-  "url": "https://dentcast.ir/notecast/episode-18.html"
+  "url": "/notecast/episode-18.html"
 },
 {
   "type": "notecast",
@@ -2822,7 +2822,7 @@
     "accelerated aging",
     "JPD 2018 study"
   ],
-  "url": "https://dentcast.ir/notecast/episode-19.html"
+  "url": "/notecast/episode-19.html"
 },
 {
   "type": "notecast",
@@ -2853,7 +2853,7 @@
     "finish line exposure",
     "biomimetic soft tissue management"
   ],
-  "url": "https://dentcast.ir/notecast/episode-20.html"
+  "url": "/notecast/episode-20.html"
 },
 {
   "type": "notecast",
@@ -2884,7 +2884,7 @@
     "biomimetic accurate transfer",
     "fixed prosthodontics impression"
   ],
-  "url": "https://dentcast.ir/notecast/episode-21.html"
+  "url": "/notecast/episode-21.html"
 },
 {
   "type": "notecast",
@@ -2913,7 +2913,7 @@
     "safe anesthetic dose propranolol",
     "drug prescription dentistry"
   ],
-  "url": "https://dentcast.ir/notecast/episode-22.html"
+  "url": "/notecast/episode-22.html"
 },
 {
   "type": "notecast",
@@ -2941,7 +2941,7 @@
     "screw loosening overload",
     "implant prosthesis cleanable design"
   ],
-  "url": "https://dentcast.ir/notecast/episode-23.html"
+  "url": "/notecast/episode-23.html"
 },
 {
   "type": "notecast",
@@ -2972,7 +2972,7 @@
     "short implant limitations",
     "peri implant bone behavior"
   ],
-  "url": "https://dentcast.ir/notecast/episode-24.html"
+  "url": "/notecast/episode-24.html"
 },
 {
   "type": "notecast",
@@ -3007,7 +3007,7 @@
     "cost effective implant treatment",
     "initial stability implant"
   ],
-  "url": "https://dentcast.ir/notecast/episode-25.html"
+  "url": "/notecast/episode-25.html"
 },
 {
   "type": "clinical",
@@ -3032,7 +3032,7 @@
     "depth control",
     "piezo length"
   ],
-  "page_url": "https://dentcast.ir/insight/insight-17.html"
+  "page_url": "/insight/insight-17.html"
 },
 {
   "type": "meta",
@@ -3055,7 +3055,7 @@
     "veneers in perio patients",
     "biologic behavior of teeth"
   ],
-  "page_url": "https://dentcast.ir/metanotes/meta-1.html"
+  "page_url": "/metanotes/meta-1.html"
 },
 {
   "type": "meta",
@@ -3079,7 +3079,7 @@
     "treatment compliance",
     "long term outcome dentistry"
   ],
-  "page_url": "https://dentcast.ir/metanotes/meta-2.html"
+  "page_url": "/metanotes/meta-2.html"
 },
 {
   "type": "meta",
@@ -3104,7 +3104,7 @@
     "periodontal maintenance",
     "implant evaluation"
   ],
-  "page_url": "https://dentcast.ir/metanotes/meta-3.html"
+  "page_url": "/metanotes/meta-3.html"
 },
 {
   "type": "meta",
@@ -3128,7 +3128,7 @@
     "periodontal maintenance",
     "implant self-protective concept"
   ],
-  "page_url": "https://dentcast.ir/metanotes/meta-4.html"
+  "page_url": "/metanotes/meta-4.html"
 },
 {
   "type": "meta",
@@ -3152,7 +3152,7 @@
     "marginal bone preservation",
     "implant risk management"
   ],
-  "page_url": "https://dentcast.ir/metanotes/meta-5.html"
+  "page_url": "/metanotes/meta-5.html"
 },
 {
   "type": "clinical",
@@ -3177,7 +3177,7 @@
     "prosthodontic margins",
     "adaptive preparation"
   ],
-  "page_url": "https://dentcast.ir/insight/insight-18.html"
+  "page_url": "/insight/insight-18.html"
 },
 {
   "type": "meta",
@@ -3201,7 +3201,7 @@
     "biologic vs biomechanical analysis",
     "evidence based clinical reasoning"
   ],
-  "page_url": "https://dentcast.ir/metanotes/meta-6.html"
+  "page_url": "/metanotes/meta-6.html"
 },
 {
   "type": "clinical",
@@ -3221,7 +3221,7 @@
     "space evaluation",
     "prosthodontic workflow"
   ],
-  "page_url": "https://dentcast.ir/insight/insight-19.html"
+  "page_url": "/insight/insight-19.html"
 },
 {
   "type": "dentcast_plus",
@@ -3244,7 +3244,7 @@
     "resistance form",
     "occlusion"
   ],
-  "page_url": "https://dentcast.ir/dentcast-plus/video-3.html"
+  "page_url": "/dentcast-plus/video-3.html"
 },
 {
   "type": "dentai",
@@ -3302,7 +3302,7 @@
     "implant maintenance",
     "implant mechanical complications"
   ],
-  "page_url": "https://dentcast.ir/litecast/lite-CAST10.html"
+  "page_url": "/litecast/lite-CAST10.html"
 },
 {
   "type": "litecast",
@@ -3327,7 +3327,7 @@
     "digital crown",
     "patient comfort in implant dentistry"
   ],
-  "page_url": "https://dentcast.ir/litecast/lite-CAST9.html"
+  "page_url": "/litecast/lite-CAST9.html"
 },
 {
   "type": "notecast",
@@ -3369,7 +3369,7 @@
     "systematic review implant loading",
     "Journal of Periodontology 2013"
   ],
-  "url": "https://dentcast.ir/notecast/episode-26.html"
+  "url": "/notecast/episode-26.html"
 },
 {
   "type": "sharehub",
@@ -3400,7 +3400,7 @@
     "implant tools wear",
     "curated dental content"
   ],
-  "url": "https://dentcast.ir/sharehub/share-1.html"
+  "url": "/sharehub/share-1.html"
 },
 {
   "episode": "152",
@@ -3442,7 +3442,7 @@
     "optimize intraoral scan",
     "dental scanner"
   ],
-  "url": "https://dentcast.ir/sharehub/share-2.html"
+  "url": "/sharehub/share-2.html"
 },
 {
   "type": "dentai",
@@ -3500,7 +3500,7 @@
     "patient centered care",
     "how to choose a dentist"
   ],
-  "page_url": "https://dentcast.ir/litecast/lite-CAST11.html"
+  "page_url": "/litecast/lite-CAST11.html"
 },
 {
   "type": "clinical",
@@ -3529,7 +3529,7 @@
     "reversible treatment strategy",
     "case-based prosthodontics"
   ],
-  "page_url": "https://dentcast.ir/insight/insight-20.html"
+  "page_url": "/insight/insight-20.html"
 },
 {
   "type": "notecast",
@@ -3565,7 +3565,7 @@
     "patient satisfaction overdenture",
     "systematic review overdenture"
   ],
-  "url": "https://dentcast.ir/notecast/episode-27.html"
+  "url": "/notecast/episode-27.html"
 },
 {
   "type": "litecast",
@@ -3591,7 +3591,7 @@
     "implant explanation",
     "patient education implant"
   ],
-  "page_url": "https://dentcast.ir/litecast/lite-CAST12.html"
+  "page_url": "/litecast/lite-CAST12.html"
 },
 {
   "type": "litecast",
@@ -3617,7 +3617,7 @@
     "implant healing",
     "patient guide implant"
   ],
-  "page_url": "https://dentcast.ir/litecast/lite-CAST13.html"
+  "page_url": "/litecast/lite-CAST13.html"
 },
 {
   "type": "sharehub",
@@ -3650,7 +3650,7 @@
     "prosthetic planning anterior",
     "implant treatment planning"
   ],
-  "url": "https://dentcast.ir/sharehub/share-3.html"
+  "url": "/sharehub/share-3.html"
 },
 {
   "type": "litecast",
@@ -3676,7 +3676,7 @@
     "implant patient guide",
     "digital dentistry"
   ],
-  "page_url": "https://dentcast.ir/litecast/lite-CAST14.html"
+  "page_url": "/litecast/lite-CAST14.html"
 },
 {
   "type": "litecast",
@@ -3702,7 +3702,7 @@
     "implant treatment",
     "dental implant"
   ],
-  "page_url": "https://dentcast.ir/litecast/lite-CAST15.html"
+  "page_url": "/litecast/lite-CAST15.html"
 },
 {
   "type": "litecast",
@@ -3728,7 +3728,7 @@
     "implant treatment",
     "prosthodontics"
   ],
-  "page_url": "https://dentcast.ir/litecast/lite-CAST16.html"
+  "page_url": "/litecast/lite-CAST16.html"
 },
 {
   "type": "litecast",
@@ -3754,7 +3754,7 @@
     "prosthodontics",
     "dental implant treatment"
   ],
-  "page_url": "https://dentcast.ir/litecast/lite-CAST17.html"
+  "page_url": "/litecast/lite-CAST17.html"
 },
 {
   "type": "litecast",
@@ -3780,7 +3780,7 @@
     "prosthodontics",
     "dental implant treatment"
   ],
-  "page_url": "https://dentcast.ir/litecast/lite-CAST18.html"
+  "page_url": "/litecast/lite-CAST18.html"
 },
 {
   "type": "litecast",
@@ -3806,7 +3806,7 @@
     "implant aftercare",
     "dental implant maintenance"
   ],
-  "page_url": "https://dentcast.ir/litecast/lite-CAST19.html"
+  "page_url": "/litecast/lite-CAST19.html"
 },
 {
   "type": "meta",
@@ -3830,7 +3830,7 @@
     "prosthodontic clinical decision",
     "endodontically treated teeth"
   ],
-  "page_url": "https://dentcast.ir/metanotes/meta-7.html"
+  "page_url": "/metanotes/meta-7.html"
 },
 {
   "type": "dentai",
@@ -3886,7 +3886,7 @@
     "prosthodontics",
     "implant crown stability"
   ],
-  "page_url": "https://dentcast.ir/dentcast-plus/video-4.html"
+  "page_url": "/dentcast-plus/video-4.html"
 },
 {
   "type": "notecast",
@@ -3914,7 +3914,7 @@
     "ماکروآنالیز صورت",
     "incisal edge position"
   ],
-  "page_url": "https://dentcast.ir/notecast/episode-28.html"
+  "page_url": "/notecast/episode-28.html"
 },
 {
   "episode": "153",
@@ -3974,7 +3974,7 @@
     "Vita In-Ceram",
     "fluorapatite glass ceramic"
   ],
-  "page_url": "https://dentcast.ir/notecast/episode-29.html"
+  "page_url": "/notecast/episode-29.html"
 },
 {
   "type": "clinical",
@@ -4003,7 +4003,7 @@
     "vertical dimension",
     "bonding composite to metal core"
   ],
-  "page_url": "https://dentcast.ir/insight/insight-21.html"
+  "page_url": "/insight/insight-21.html"
 },
 {
   "type": "sharehub",
@@ -4037,7 +4037,7 @@
     "implant prosthetic complications",
     "peri-implantitis prevention"
   ],
-  "url": "https://dentcast.ir/sharehub/share-4.html"
+  "url": "/sharehub/share-4.html"
 },
 {
   "type": "clinical",
@@ -4065,7 +4065,7 @@
     "clinical decision making",
     "implant maintenance"
   ],
-  "page_url": "https://dentcast.ir/insight/insight-22.html"
+  "page_url": "/insight/insight-22.html"
 },
 {
   "type": "notecast",
@@ -4095,7 +4095,7 @@
     "implant supported restorations",
     "shock absorption"
   ],
-  "url": "https://dentcast.ir/notecast/episode-30.html"
+  "url": "/notecast/episode-30.html"
 },
 {
   "type": "meta",
@@ -4118,7 +4118,7 @@
     "minimal intervention dentistry",
     "prosthodontic clinical decision"
   ],
-  "page_url": "https://dentcast.ir/metanotes/meta-8.html"
+  "page_url": "/metanotes/meta-8.html"
 },
 {
   "type": "chairside",
@@ -4143,7 +4143,7 @@
     "orthodontic pre-prosthetic treatment",
     "clinical esthetic analysis"
   ],
-  "page_url": "https://dentcast.ir/chairside/chairside-1.html"
+  "page_url": "/chairside/chairside-1.html"
 },
 {
   "type": "dentcast",
@@ -4171,7 +4171,7 @@
     "پادکست پروتز"
   ],
   "audio_url": "",
-  "page_url": "https://dentcast.ir/episodes.html"
+  "page_url": "/episodes.html"
 },
 {
   "type": "chairside",
@@ -4196,7 +4196,7 @@
     "tooth width discrepancy",
     "esthetic posterior design"
   ],
-  "page_url": "https://dentcast.ir/chairside/chairside-2.html"
+  "page_url": "/chairside/chairside-2.html"
 },
 {
   "type": "dentcast_plus",
@@ -4228,7 +4228,7 @@
     "prosthodontics",
     "implant crown stability"
   ],
-  "page_url": "https://dentcast.ir/dentcast-plus/video-5.html",
+  "page_url": "/dentcast-plus/video-5.html",
   "text": "حرکتی که در این ویدیو می‌بینید، مربوط به قبل از سمان کردن روکش است.\nروکش هنوز سمان نشده و روی اباتمنت قرار داده شده، اما در همین مرحله دچار حرکت چرخشی و بی‌ثباتی است.\n\n❓ چرا این مرحله مهم است؟\n\nقبل از سمان کردن، باید ثبات و عدم چرخش روکش روی اباتمنت بررسی شود.\nاین یک مرحله‌ی کلیدی در تحویل کار است، نه یک نکته‌ی اختیاری.\n\nاگر روکش در این مرحله:\n🔹 حتی کوچک‌ترین حرکت چرخشی داشته باشد\n🔹 یا روی اباتمنت anti-rotation مؤثر نداشته باشد و بی‌ثبات باشد\n\nاین یعنی طراحی مکانیکی از ابتدا دچار مشکل است.\n\n⚠️ پیام این حرکت چرخشی چیست؟\n\nاین حرکت ساده به ما می‌گوید که:\n🔹 نیروهای عملکردی آینده پس از وارد شدن به روکش\n🔹 مستقیماً به سمان منتقل خواهند شد\n\nدر حالی که سمان:\n❌ برای تحمل نیروی shear طراحی نشده\n❌ نقش آن فقط کمک به retention است، نه تأمین ثبات\n\n🔻 نتیجه‌ی قابل پیش‌بینی:\n\nاگر این مرحله نادیده گرفته شود:\n🔹 بعد از سمان، روکش ممکن است در ابتدا ثابت به نظر برسد\n🔹 اما با شروع عملکرد فانکشنال، نیروی shear به سمان وارد می‌شود\n🔹 و debonding اجتناب‌ناپذیر خواهد بود\n\n🔻 تصمیم درمانی در این کیس:\n\n🔹 این روکش با این وضعیت قابل تحویل نیست\n🔹 باید تکرار شود\n🔹 طراحی اباتمنت و فضای سمان باید مجدداً اصلاح و کنترل شود\n🔹 ثبات مکانیکی باید قبل از سمان، به‌صورت قطعی تأمین گردد\n\n🧠 جمع‌بندی بالینی:\nعدم چرخش باید قبل از سمان تأمین شود\nاگر روکش قبل از سمان می‌چرخد،\nسمان در آینده قربانی یک طراحی نادرست خواهد شد."
 },
 {
@@ -4254,7 +4254,7 @@
     "implant necessity evaluation",
     "adaptive occlusion"
   ],
-  "page_url": "https://dentcast.ir/chairside/chairside-3.html"
+  "page_url": "/chairside/chairside-3.html"
 },
 {
   "type": "chairside",
@@ -4279,7 +4279,7 @@
     "tooth extraction alternative",
     "prosthetic decision making"
   ],
-  "page_url": "https://dentcast.ir/chairside/chairside-4.html"
+  "page_url": "/chairside/chairside-4.html"
 },
 {
   "type": "meta",
@@ -4304,7 +4304,7 @@
     "crown marginal adaptation",
     "fixed prosthodontics precision"
   ],
-  "page_url": "https://dentcast.ir/metanotes/meta-9.html"
+  "page_url": "/metanotes/meta-9.html"
 },
 {
   "type": "meta",
@@ -4330,7 +4330,7 @@
     "prosthodontics innovation",
     "implant prosthodontics"
   ],
-  "page_url": "https://dentcast.ir/metanotes/meta-10.html"
+  "page_url": "/metanotes/meta-10.html"
 },
 {
   "type": "notecast",
@@ -4355,7 +4355,7 @@
     "implant prosthesis",
     "access hole"
   ],
-  "url": "https://dentcast.ir/notecast/episode-31.html"
+  "url": "/notecast/episode-31.html"
 },
 {
   "type": "sharehub",
@@ -4386,7 +4386,7 @@
     "functional occlusion",
     "curated dental content"
   ],
-  "url": "https://dentcast.ir/sharehub/share-5.html"
+  "url": "/sharehub/share-5.html"
 },
 {
   "type": "clinical",
@@ -4414,7 +4414,7 @@
     "clinical decision making",
     "prevent overtreatment"
   ],
-  "page_url": "https://dentcast.ir/insight/insight-23.html"
+  "page_url": "/insight/insight-23.html"
 },
 {
   "type": "clinical",
@@ -4442,7 +4442,7 @@
     "clinical decision making",
     "long term stability"
   ],
-  "page_url": "https://dentcast.ir/insight/insight-24.html"
+  "page_url": "/insight/insight-24.html"
 },
 {
   "type": "dentai",
@@ -4506,7 +4506,7 @@
     "clinical decision making",
     "functional contour preservation"
   ],
-  "page_url": "https://dentcast.ir/insight/insight-25.html"
+  "page_url": "/insight/insight-25.html"
 },
 {
   "type": "clinical",
@@ -4534,7 +4534,7 @@
     "implant prosthodontics accuracy",
     "clinical decision making implant"
   ],
-  "page_url": "https://dentcast.ir/insight/insight-26.html"
+  "page_url": "/insight/insight-26.html"
 },
 {
   "type": "dentcast",
@@ -4562,7 +4562,7 @@
     "پادکست پروتز"
   ],
   "audio_url": "https://episodes.s3.ir-thr-at1.arvanstorage.ir/dentcast155%20.mp3?versionId=",
-  "page_url": "https://dentcast.ir/episodes.html"
+  "page_url": "/episodes.html"
 }
 
 
