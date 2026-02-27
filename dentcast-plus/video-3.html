@@ -159,72 +159,89 @@
     }
     .r1_iframe_embed {position: relative; overflow: hidden; width: 100%; height: auto; padding-top: 56.25%; }
     .r1_iframe_embed iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
-  .yt-container{
+ /* =========================
+   YouTube External Player
+   ========================= */
+
+.yt-container{
   text-align: center;
-  margin-top: 10px;     /* فاصله از بالا */
-  margin-bottom: 30px;  /* فاصله از پایین */
+  margin-top: 10px;
+  margin-bottom: 30px;
 }
 
+/* دکمه ظریف و مدرن */
 .capsule-btn{
-  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 8px;
 
-  padding: 14px 32px;
+  padding: 10px 22px;
   border-radius: 999px;
 
-  font-family: Vazirmatn, sans-serif;
-  font-weight: 700;
-  font-size: 1rem;
-  letter-spacing: 0.3px;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-weight: 600;
+  font-size: 0.9rem;
 
   color: #ffffff;
-  background: linear-gradient(135deg, #0b5fff 0%, #003bb5 100%);
+  background: linear-gradient(135deg, #0b5fff, #003bb5);
 
-  border: none;
+  border: 1px solid rgba(255,255,255,0.08);
   cursor: pointer;
 
-  box-shadow:
-    0 12px 28px rgba(11,95,255,0.35),
-    0 4px 10px rgba(0,0,0,0.25);
-
-  transition: all 250ms cubic-bezier(.2,.8,.2,1);
-  overflow: hidden;
+  box-shadow: 0 6px 16px rgba(11,95,255,0.25);
+  transition: all 180ms ease;
 }
 
-/* نور ملایم داخلی */
-.capsule-btn::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  border-radius:999px;
-  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.4), transparent 60%);
-  opacity:0.25;
-  pointer-events:none;
-}
-
-/* Hover نرم و حرفه‌ای */
 .capsule-btn:hover{
-  transform: translateY(-4px) scale(1.02);
-  box-shadow:
-    0 18px 40px rgba(11,95,255,0.45),
-    0 6px 16px rgba(0,0,0,0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(11,95,255,0.3);
 }
 
-/* Active */
 .capsule-btn:active{
-  transform: translateY(0px) scale(0.98);
-  box-shadow:
-    0 8px 18px rgba(11,95,255,0.35);
+  transform: translateY(0);
+  box-shadow: 0 5px 14px rgba(11,95,255,0.25);
 }
 
-/* Focus */
 .capsule-btn:focus-visible{
-  outline: 3px solid rgba(11,95,255,0.45);
-  outline-offset: 4px;
-}</style>
+  outline: 2px solid rgba(11,95,255,0.4);
+  outline-offset: 3px;
+}
+
+/* Wrapper ویدیو */
+.yt-wrap{
+  margin-top: 18px;
+}
+
+/* iframe کنترل‌شده برای Shorts */
+.yt-wrap iframe{
+  width: 100%;
+  aspect-ratio: 9 / 16;   /* نسبت عمودی */
+  max-width: 380px;       /* اندازه منطقی دسکتاپ */
+  display: block;
+  margin: 0 auto;
+  border-radius: 18px;
+  border: 0;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+}
+
+/* دکمه بستن */
+.yt-close{
+  display: inline-block;
+  margin-bottom: 14px;
+  background: transparent;
+  border: none;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-size: 0.85rem;
+  color: #9aa1b3;
+  cursor: pointer;
+  transition: color .2s ease;
+}
+
+.yt-close:hover{
+  color: #e7eaf1;
+}
+ </style>
 </head>
 
 <body>
@@ -234,7 +251,63 @@
   <div class="r1_iframe_embed">
     <iframe src="https://player.arvancloud.ir/index.html?config=https://dentcast.arvanvod.ir/vkxeWA47OD/kVMBp6ldP6/origin_config.json" style="border:0 #ffffff none;" name="PXL_20251217_144611082~3.mp4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"></iframe>
   </div>
+<div class="yt-container">
 
+  <button id="yt-btn-v3" type="button" class="capsule-btn">
+    🎥 مشاهده ویدیو در یوتیوب (پلیر خارجی)
+  </button>
+
+  <div id="yt-wrap-v3" class="yt-wrap" hidden>
+
+    <button id="yt-close-v3" type="button" class="yt-close">
+      ✕ بستن ویدیو
+    </button>
+
+    <div id="yt-holder-v3"></div>
+
+  </div>
+
+</div>
+
+<script>
+(function(){
+
+  const btn    = document.getElementById("yt-btn-v3");
+  const wrap   = document.getElementById("yt-wrap-v3");
+  const close  = document.getElementById("yt-close-v3");
+  const holder = document.getElementById("yt-holder-v3");
+
+  let iframe = null;
+
+  btn.addEventListener("click", function(){
+
+    btn.style.display = "none";
+    wrap.hidden = false;
+
+    iframe = document.createElement("iframe");
+    iframe.src = "https://www.youtube.com/embed/E8Anp5aAOzU";
+    iframe.frameBorder = "0";
+    iframe.loading = "lazy";
+    iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+    iframe.allowFullscreen = true;
+
+    holder.appendChild(iframe);
+  });
+
+  close.addEventListener("click", function(){
+
+    wrap.hidden = true;
+    btn.style.display = "inline-flex";
+
+    if (iframe){
+      iframe.remove();
+      iframe = null;
+    }
+
+  });
+
+})();
+</script>
   <div class="text-box">
     <p>راک‌داشتن روکش می‌تواند علل مختلفی داشته باشد.<br>
     اگر مطمئن هستیم تراش صحیح است و فرم رزیستنس وجود دارد، باید مرحله‌به‌مرحله جلو برویم.</p>
