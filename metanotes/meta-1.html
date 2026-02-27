@@ -245,9 +245,7 @@
 
 <div class="text-box">
    <!-- 🌐 English Version (SEO-friendly link) -->
-  <a class="lang-btn"
-     href="https://dentcast.org/metanotes/en/meta-1.html"
-     rel="noopener">
+ <a id="enLink" href="https://dentcast.org/metanotes/en/meta-1.html">
     🌐 English
   </a>
 
@@ -321,7 +319,17 @@
   </div>
 </footer>
 
+<script>
+(function () {
+  const link = document.getElementById('enLink');
+  if (!link) return;
 
+  // فقط روی دامنه .ir پارامتر اضافه کن
+  if (location.hostname.includes('dentcast.ir')) {
+    link.href = 'https://dentcast.org/metanotes/en/meta-1.html?from=ir';
+  }
+})();
+</script>
 
 </body>
 </html>
