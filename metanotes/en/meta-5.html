@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MetaNote 05 — Self-Defensive Design and the Proper Way to Compare Implants | DentCast</title>
+
+<meta name="description" content="A clinical reflection by Dr. Foad Shahabian on the concept of self-defensive implant design and why implants must be evaluated according to their intrinsic biological logic rather than compared directly to natural teeth.">
+
+<link rel="canonical" href="https://dentcast.org/metanotes/en/meta-5.html">
+
+<meta name="robots" content="index, follow">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="MetaNote 05 — Self-Defensive Design and the Proper Way to Compare Implants">
+<meta property="og:description" content="Why meaningful comparison requires evaluating implants according to self-defensive design principles rather than applying tooth-based biological assumptions.">
+<meta property="og:url" content="https://dentcast.org/metanotes/en/meta-5.html">
+<meta property="og:site_name" content="DentCast">
+<meta property="og:image" content="https://dentcast.org/favicon.png">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="MetaNote 05 — Self-Defensive Design and the Proper Way to Compare Implants">
+<meta name="twitter:description" content="A clinical analysis on self-defensive implant design and the limitations of direct implant-tooth comparison in long-term evaluation.">
+<meta name="twitter:image" content="https://dentcast.org/favicon.png">
+  <style>
+    :root{
+      --blue:#0b5fff;
+      --bg:#0b1220;
+      --bg2:#121a2b;
+      --text:#e7eaf1;
+      --muted:#9aa1b3;
+      --radius:18px;
+      --shadow:0 18px 50px rgba(0,0,0,.35);
+    }
+
+    html,body{margin:0; padding:0;}
+    body{
+      font-family:'Vazirmatn', sans-serif;
+      background: radial-gradient(1200px 600px at 20% -10%, #1b2640 0%, transparent 60%),
+                  linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+      color: var(--text);
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 40px 22px 90px;
+      line-height: 1.9;
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
+    }
+
+    h1{
+      text-align:center;
+      color: #ffffff;
+      font-weight:800;
+      font-size:2rem;
+      margin-bottom:8px;
+    }
+
+    h2{
+      text-align:center;
+      color:#e7eaf1;
+      font-weight:600;
+      font-size:1.3rem;
+      margin-bottom:30px;
+    }
+
+    h3{
+      color:var(--text);
+      margin-top:30px;
+      font-size:1.2rem;
+      font-weight:700;
+    }
+
+    .text-box h4 {
+      color:var(--blue);
+      margin-top:30px;
+      font-size:1.1rem;
+      font-weight:700;
+    }
+
+    ul{
+      list-style-type:"✦ ";
+      padding-right:20px;
+      margin:10px 0 20px;
+    }
+
+    li{
+      margin-bottom:10px;
+    }
+
+    .author{
+      text-align:center;
+      margin-top:40px;
+      font-weight:600;
+    }
+
+    .text-box {
+      background:#fff;
+      color:#111;
+      border-radius:18px;
+      padding:26px 32px;
+      margin:28px 0;
+      box-shadow:0 8px 30px rgba(0,0,0,0.15);
+      backdrop-filter:blur(8px);
+      line-height:1.9;
+    }
+
+    .back{
+      display:inline-block;
+      margin-top:60px;
+      color:var(--blue);
+      text-decoration:none;
+      font-weight:600;
+      border:1px solid rgba(255,255,255,0.15);
+      border-radius:12px;
+      padding:10px 20px;
+      background:rgba(255,255,255,0.05);
+      transition:all .3s ease;
+    }
+
+    .back:hover{
+      background:rgba(11,95,255,0.15);
+      transform:scale(1.03);
+    }
+
+    footer{
+      margin-top:70px;
+      text-align:center;
+      color:var(--muted);
+      font-size:.9rem;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 25px 16px 60px;
+        line-height: 1.8;
+      }
+      h1 {
+        font-size: 1.6rem;
+      }
+      h2 {
+        font-size: 1.1rem;
+        margin-bottom: 24px;
+      }
+      .text-box h4 {
+        font-size:1rem;
+        margin-top:24px;
+      }
+      .back {
+        font-size:.9rem;
+        padding:8px 16px;
+        margin-top:40px;
+      }
+      footer {
+        font-size:.8rem;
+        margin-top:50px;
+      }
+    }
+  
+.lang-btn{
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  background: rgba(255,255,255,0.92);
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 12px;
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #0b5fff;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  cursor: pointer;
+  transition: transform .18s ease, background .18s ease;
+}
+
+
+
+  </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+
+    {
+      "@type": "TechArticle",
+      "@id": "https://dentcast.org/metanotes/en/meta-5.html#article",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://dentcast.org/metanotes/en/meta-5.html"
+      },
+      "headline": "Self-Defensive Design and the Proper Way to Compare Implants",
+      "description": "A clinical reflection by Dr. Foad Shahabian on the concept of self-defensive implant design and why implants must be evaluated according to their intrinsic biological logic rather than compared directly to natural teeth.",
+      "image": "https://dentcast.org/favicon.png",
+      "datePublished": "2026-02-28T11:00:00+01:00",
+      "dateModified": "2026-02-28T11:00:00+01:00",
+      "inLanguage": "en",
+      "articleSection": "MetaNote",
+      "author": {
+        "@id": "https://dentcast.org/#person"
+      },
+      "publisher": {
+        "@id": "https://dentcast.org/#organization"
+      },
+      "keywords": [
+        "Self-Defensive Implant Design",
+        "Implant Biology",
+        "Peri-implant Stability",
+        "Bone Preservation",
+        "Implant vs Natural Tooth",
+        "Prosthetic Design",
+        "Biomechanical Control",
+        "Prosthodontics"
+      ]
+    },
+
+    {
+      "@type": "Person",
+      "@id": "https://dentcast.org/#person",
+      "name": "Dr. Foad Shahabian",
+      "url": "https://dentcast.org/metanotes/en/about.html",
+      "image": "https://dentcast.org/favicon.png",
+      "jobTitle": "Prosthodontist",
+      "sameAs": [
+        "https://www.instagram.com/dr.foad_shahabian/",
+        "https://t.me/dentcast"
+      ]
+    },
+
+    {
+      "@type": "Organization",
+      "@id": "https://dentcast.org/#organization",
+      "name": "DentCast",
+      "url": "https://dentcast.org/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://dentcast.org/favicon.png"
+      }
+    }
+
+  ]
+}
+</script>
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png">
+  <link rel="apple-touch-icon" href="/favicon-512.png">
+  <meta name="theme-color" content="#0b5fff">
+</head>
+<body>
+<h2>🧠 MetaNote 05</h2>
+<h1>Self-Defensive Design and the Proper Way to Compare Implants</h1>
+
+<div class="text-box">
+
+<p>
+An implant is a system without intrinsic biological protection. The body does not defend it in the same way it protects a natural tooth. For this reason, if long-term stability is expected, the implant must be treated from the outset as a <strong>self-defensive system</strong>.
+</p>
+
+<p>
+Self-defensive design means:
+</p>
+
+<ul>
+  <li>Surgical planning aimed at preserving bone — not merely placing an implant</li>
+  <li>Prosthetic design that actively controls load, micromovement, and inflammatory risk</li>
+  <li>Clinical decision-making that recognizes the implant has minimal tolerance for error</li>
+</ul>
+
+<p>
+From this perspective, an important principle in interpreting clinical studies becomes clear:
+</p>
+
+<p>
+🔵 <strong>A comparison is meaningful only when each system is used according to its intrinsic biological logic.</strong>
+</p>
+
+<p>
+If an implant placed without self-defensive design is evaluated alongside a natural tooth that benefits from biological support, what is being compared is not simply “implant versus tooth,” but two systems with fundamentally different levels of inherent protection.
+</p>
+
+<p>
+Therefore, before focusing on percentages and statistical outcomes, a more fundamental question must be asked:
+</p>
+
+<p>
+Was the implant in this study managed according to the logic of a self-defensive system — or was it treated as if it were biologically equivalent to a tooth?
+</p>
+
+<p>
+If this distinction is not clearly addressed, the numbers themselves may be accurate — yet the clinical interpretation may be misleading.
+</p>
+
+</div>
+<div class="author">
+  ✍️ Dr. Foad Shahabian Prosthodontist
+  <br>
+  <br>
+  <a href="https://dentcast.org/metanotes/en/about.html" 
+     style="color:inherit; text-decoration:none; font-weight:600;">
+    About <strong>Dr. Foad Shahabian </strong>
+  </a><br>
+  
+</div>
+<footer>
+  <div style="margin:28px 0;">
+    <a href="https://dentcast.ir/metanotes/meta-5.html"
+       style="
+         display:inline-block;
+         background:rgba(11,95,255,0.18);
+         color:#3a84ff;
+         border:1.8px solid rgba(11,95,255,0.45);
+         border-radius:12px;
+         padding:12px 42px;
+         font-weight:700;
+         text-decoration:none;
+         font-size:1rem;
+         box-shadow:0 0 14px rgba(11,95,255,0.15);
+         transition:all .25s ease;">
+      🔙 View Persian Version
+    </a>
+  </div>
+</footer>
+
+
+
+</body>
+</html>
