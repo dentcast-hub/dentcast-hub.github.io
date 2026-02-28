@@ -4563,6 +4563,34 @@
   ],
   "audio_url": "https://episodes.s3.ir-thr-at1.arvanstorage.ir/dentcast155%20.mp3?versionId=",
   "page_url": "/episodes.html"
+},
+{
+  "type": "clinical",
+  "id": "clinical-27",
+  "title": "Low Temperature Degradation در زیرکونیا؛ یک تغییر آهسته اما واقعی",
+  "caption": "مرور کلینیکی درباره Low Temperature Degradation (LTD) در زیرکونیا؛ پدیده‌ای مرتبط با رطوبت دهان که از سطح آغاز می‌شود و در صورت پرداخت نامناسب، ضخامت کم یا نیروهای بالا می‌تواند در بلندمدت اهمیت بالینی پیدا کند. توجه به polishing صحیح، انتخاب نوع زیرکونیا و طراحی مناسب، نقش مهمی در مدیریت این ریسک دارد.",
+  "hashtags": [
+    "کلینیکال",
+    "زیرکونیا",
+    "LTD",
+    "LowTemperatureDegradation",
+    "پروتز_ثابت",
+    "اکلوژن",
+    "براکسیسم",
+    "تصمیم_درمانی"
+  ],
+  "keywords": [
+    "low temperature degradation zirconia",
+    "zirconia aging in oral environment",
+    "hydrothermal aging dental zirconia",
+    "3Y vs 5Y zirconia clinical differences",
+    "zirconia polishing importance",
+    "occlusal adjustment zirconia",
+    "bruxism zirconia crown risk",
+    "zirconia phase transformation monoclinic",
+    "clinical considerations zirconia restorations"
+  ],
+  "page_url": "/insight/insight-27.html"
 }
 
 
