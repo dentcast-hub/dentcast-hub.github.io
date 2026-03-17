@@ -2282,7 +2282,7 @@
     "پروتز",
     "سمان_دندانی",
     "زیرکونیا",
-    "ادهازیو",
+    "ادهزیو",
     "گلاس_آینومر",
     "انتخاب_سمان",
     "دندانپزشکی_ترمیمی"
@@ -4312,14 +4312,15 @@
   "title": "Smart Vent Crown (SVC) و Shahabian Concept",
   "caption": "معرفی Smart Vent Crown (SVC) بر پایه Shahabian Concept: روکش سمان‌شونده اصلاح‌شده با سوراخ کوچک روی حفره پیچ که مسیر خروج سمان اضافی را فراهم می‌کند، سمان باقیمانده را کاهش می‌دهد و دسترسی آینده به پیچ را بدون آسیب به زیبایی و استحکام روکش حفظ می‌کند.",
   "hashtags": [
-    "متانوت",
+    "ونت",
     "روکش_ایمپلنت",
     "ایمپلنت",
     "SmartVentCrown",
     "ShahabianConcept",
     "خروج_سمان",
+    "شهابیان",
     "پروتز_ایمپلنت",
-    "دقت_پروتزی"
+    "اسمارت"
   ],
   "keywords": [
     "Smart Vent Crown",
@@ -4591,9 +4592,277 @@
     "clinical considerations zirconia restorations"
   ],
   "page_url": "/insight/insight-27.html"
+},
+{
+  "type": "dentcast_plus",
+  "video": "6",
+  "title": "تداخل کارگر در گروپ فانکشن",
+  "caption": "در این ویدیو در مورد گروپ فانکشن صحبت می شود و به تداخل سمت کارگر اشاره میشود ",
+  "hashtags": [
+    "#دنتکست_پلاس",
+    "#اکلوژن",
+    "#تداخل",
+    "#اینترفیرنس",
+    "#روکش",
+    "#پروتز",
+    "#کاسپ",
+    "#تنظیم-اکلوژن"
+  ],
+  "keywords": [
+    "cusp-incline",
+    "interference",
+    "working ",
+    "group function",
+    "canine",
+    "buccal"
+  ],
+  "page_url": "/dentcast-plus/video-6.html"
+},
+{
+  "type": "clinical",
+  "id": "clinical-28",
+  "title": "  راهکار مقابله با ته رنگ خاکستری روکش ",
+  "caption":"برای پوشاندن رنگ کور راهکارهای مختلفی پیشنهاد شده که ما به یکی میپردازیم.",
+  "hashtags": [
+    " روکش_سرامیکی",
+    "زیرکونیا",
+    "پست و کور",
+    "رنگ",
+    "پروتز_ثابت",
+    "زیبایی",
+    "خاکستری",
+    "تصمیم_درمانی"
+  ],
+  "keywords": [
+    "ceramic crown ",
+    "dental post and core",
+    "opaquer composite",
+    "bond to metal",
+    "zirconia ",
+    "esthetics",
+    "clinical considerations zirconia restorations"
+  ],
+  "page_url": "/insight/insight-28.html"
+},
+{
+  "type": "meta",
+  "id": "meta-11",
+  "title": "در باره ی اهمیت گپ بین گوتای باقیمانده و پست   ",
+  "caption": "تحلیلی درباره ی بزرگنمایی اهمیت گپ بین گوتای باقیمانده و پست.",
+  "hashtags": [
+    "پست و کور",
+    "درمان ریشه",
+    "گپ",
+    "فاصله",
+    "اندو",
+    "بیومکانیک"
+  ],
+  "keywords": [
+    "biomechanic",
+    "dental post",
+    "root canal therapy",
+    "گوتا پرکا",
+    "post and core"
+   
+  ],
+  "page_url": "/metanotes/meta-11.html"
+},
+{
+  "type": "dentai",
+  "id": "dentai-12",
+  "title": "   در مورد استفاده از  CDD  در دندانپزشکی بیومیمتیک ",
+  "caption": "نحوه ی استفاده و کاربرد محلولهای تشخیص پوسیدگی.",
+  "hashtags": ["ترمیمی", "پوسیدگی", "CDD", "بیومیمتیک", "DentAI"],
+  "keywords": [
+    "caries detector dye",
+    "cdd",
+    " پوسیدگی",
+    "تشخیص پوسیدگی دندان",
+    "محلول تشخیص پوسیدگی ",
+    "ترمیمی",
+    "بیومیمتیک",
+    "restorative dentistry"
+  ],
+  "page_url": "/dentai/dentai-12.html"
+},
+{
+  "type": "dentai",
+  "id": "dentai-13",
+  "title": " تشخیص آسیبهای ساختاری دندان ",
+  "caption": "هدف اصلی این تشخیص، رفتن به سمت درمان آسیب‌های ساختاری دندان به روشی است که تا حد امکان ساختار طبیعی دندان حفظ شود و از بروز مشکلات بعدی مانند شکستگی، پوسیدگی و آسیب به پالپ جلوگیری شود.",
+  "hashtags": ["ایسموس", "ترک عاجی", "ایستموس", "بیومیمتیک", "biorim","rainey ridge","prf","peripheral rim fracture"],
+  "keywords": [
+    "peripheral rim fracture",
+    "prf",
+    " biorim",
+    " rainey ridge ",
+    "enamel crack",
+    "isthmus",
+    "بیومیمتیک",
+    "restorative dentistry"
+  ],
+  "page_url": "/dentai/dentai-13.html"
+},
+{
+  "type": "dentai",
+  "id": "dentai-14",
+  "title": " انواع ترک دندان و نحوه ی تشخیص  ",
+  "caption": " در این قسمت در مورد ترکهای دندان و تشخیص اونها صحبت میکنیم.",
+  "hashtags": ["ترک مینایی", "ترک عاجی", "بیومیمتیک","prf","peripheral rim fracture"],
+  "keywords": [
+    "peripheral rim fracture",
+    "prf",
+    " biorim",
+    "enamel crack",
+    "بیومیمتیک",
+    "restorative dentistry"
+  ],
+  "page_url": "/dentai/dentai-14.html"
+},
+{
+  "type": "clinical",
+  "id": "clinical-29",
+  "title": " راهکار سمان کردن برای مدیریت کانتکت بین روکشهای شش و هفت  ",
+  "caption":"خیلی وقتها تماس و کانتکت بین روکشهای شش و هفت باز میشه و اینجا یه راهکار برای مدیریت این مساله میگیم",
+  "hashtags": [
+    " روکش_سرامیکی",
+    "زیرکونیا",
+    "  کانتکت",
+    "تماس_باز",
+    "پروتز_ثابت",
+    "تماس_دندانی",
+    "پروگزیمال",
+    "تصمیم_درمانی"
+  ],
+  "keywords": [
+    "ceramic crown ",
+    "proximal contact",
+    "open contact",
+    "molar tooth",
+    "zirconia ",
+    "دندان مولر",
+    "cementation"
+  ],
+  "page_url": "/insight/insight-29.html"
+},
+{
+  "type": "notecast",
+  "id": "32",
+  "title": " اسنپ آن اسمایل قسمت اول",
+  "caption": "در نوت‌کست ۳۲  در مورد اسنپ آن اسمایل و کاربردهاش با هم صحبت میکنیم.  .",
+  "hashtags": [
+    "پارسیل",
+    "زیبایی",
+    "اسنپ آن اسمایل",
+    "cosmetic rpd",
+    "snap-on-smile",
+    "snap on smile",
+    "استیل رزین"
+  ],
+  "keywords": [
+    "زیبایی",
+    "ایمپلنت",
+    "vd افزایش ",
+    "پارسیل",
+    " رستوریشن موقتی",
+    " فرم دادن لثه",
+    "cosmetic rpd "
+  ],
+  "url": "/notecast/episode-32.html"
+},
+{
+  "type": "meta",
+  "id": "meta-12",
+  "title": " یه نکته ی مهم در مدیریت کانتکت بین دندانهای ۶ و ۷",
+  "caption": "در باز شدن کانتکت فقط تماس روی شیب کاسپی مهم نیست.",
+  "hashtags": [
+    "متانوت",
+    "کانتکت",
+    "روکش",
+    "تماس باز",
+    "شیب کاسپی",
+    "نیروی وج",
+    "تماس پروگزیمال"
+  ],
+  "keywords": [
+    "proximal contact",
+    "open contact",
+    "food impaction",
+    "tooth migration",
+    "biologic behavior of teeth"
+  ],
+  "page_url": "/metanotes/meta-12.html"
+},
+{
+  "type": "dentai",
+  "id": "dentai-15",
+  "title": "تشریح ترک دندان و نقاط پایانی حذف ترک (CrRE)",
+  "caption": "در این قسمت به Crack Dissection و تعیین نقاط پایانی حذف ترک (CrRE) در دندانپزشکی بیومیمتیک می‌پردازیم.",
+  "hashtags": ["CrRE", "crack dissection", "PSZ", "CSZ", "بیومیمتیک"],
+  "keywords": [
+    "crack removal endpoint",
+    "CrRE",
+    "crack dissection",
+    "peripheral seal zone",
+    "central stop zone",
+    "ribbond fiber",
+    "biomimetic dentistry",
+    "ترمیم بیومیمتیک"
+  ],
+  "page_url": "/dentai/dentai-15.html"
+},
+{
+  "type": "chairside",
+  "id": "chairside-05",
+  "title": "پست خم شد؛ همان جایی که فرول وجود ندارد",
+  "caption": "روایت یک ویزیت کلینیکی درباره خارج شدن روکش همراه با پست خم‌شده از کانال و نقش حیاتی فرول در توزیع نیروهای عملکردی؛ بررسی اینکه چگونه نبود فرول می‌تواند باعث خم شدن پست یا حتی شکست ریشه شود.",
+  "hashtags": [
+    "چیرساید",
+    "ویزیت_کلینیکی",
+    "فرول",
+    "شکست_پست",
+    "پست_و_کور",
+    "پروتز_دندانی",
+    "تحلیل_درمانی"
+  ],
+  "keywords": [
+    "ferrule effect",
+    "post and core failure",
+    "bent dental post",
+    "prosthodontic biomechanics",
+    "ferrule absence",
+    "root fracture risk",
+    "prosthetic treatment planning"
+  ],
+  "page_url": "/chairside/chairside-5.html"
+},
+{
+  "type": "clinical",
+  "id": "clinical-30",
+  "title": "بررسی محل اسپرو در اباتمنت‌های Premill هنگام عدم نشست  روکش ایمپلنتی",
+  "caption": "گاهی عدم نشست  کامل روکش ایمپلنتی روی اباتمنت Premill به دلیل باقی ماندن برجستگی کوچک در محل اتصال اسپرو بعد از میلینگ است.",
+  "hashtags": [
+    "ایمپلنت",
+    "اباتمنت_پریمیل",
+    "CAD_CAM",
+    "اسپرو",
+    "روکش_ایمپلنت",
+    "عدم نشست",
+    "پروتز_ایمپلنت",
+    "نشست روکش",
+    "نکته_کلینیکی"
+  ],
+  "keywords": [
+    "Premill abutment",
+    "implant crown seating",
+    "sprue connection",
+    "CAD CAM abutment",
+    "implant prosthodontics",
+    "implant crown",
+    "abutment finishing"
+  ],
+  "page_url": "/insight/insight-30.html"
 }
-
-
 
 
 
