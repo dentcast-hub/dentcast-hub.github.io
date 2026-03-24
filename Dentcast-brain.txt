@@ -4862,7 +4862,121 @@
     "abutment finishing"
   ],
   "page_url": "/insight/insight-30.html"
+},
+{
+  "type": "clinical",
+  "id": "clinical-31",
+  "title": "آیا اسکن‌بادی و Ti‑Base باید از یک برند باشند؟",
+  "caption": "در طراحی دیجیتال ایمپلنت، عدم هماهنگی بین اسکن‌بادی، لایبرری نرم‌افزار و Ti‑Base می‌تواند باعث فیت نامناسب روکش و خطای موقعیتی اباتمنت شود. در این نکته کلینیکی به اهمیت انتخاب برندهای سازگار می‌پردازیم.",
+  "hashtags": [
+    "ایمپلنت",
+    "اسکن‌بادی",
+    "TiBase",
+    "لایبرری_ایمپلنت",
+    "exocad",
+    "digital",
+    "دیجیتال",
+    "فیت_ایمپلنت",
+    "CAD_CAM",
+    "پروتز_ایمپلنت",
+    "نکته_کلینیکی"
+  ],
+  "keywords": [
+    "scanbody",
+    "Ti-Base",
+    "implant library",
+    "digital implant workflow",
+    "exocad",
+    "implant CAD CAM",
+    "implant prosthodontics",
+    "abutment position accuracy"
+  ],
+  "page_url": "/insight/insight-31.html"
+},
+{
+  "type": "chairside",
+  "id": "chairside-06",
+  "title": "وقتی فرول وجود ندارد؛ محدودیت‌های واقعی طرح درمان",
+  "caption": "روایت یک ویزیت کلینیکی درباره دندان ۶ پایین با بیلدآپ نامناسب، پوسیدگی عودکننده و فقدان کامل فرول؛ بررسی اینکه چرا در برخی شرایط حتی افزایش طول تاج یا درمان مجدد ریشه نیز پیش‌آگهی قابل قبولی ایجاد نمی‌کند و گاهی کشیدن دندان و جایگزینی ایمپلنت انتخاب منطقی‌تری است.",
+  "hashtags": [
+    "روکش",
+    "افزایش طول تاج",
+    "فرول",
+    "نبود_فرول",
+    "پوسیدگی_عودکننده",
+    "طرح_درمان",
+    "ایمپلنت"
+  ],
+  "keywords": [
+    "ferrule effect",
+    "absence of ferrule",
+    "recurrent caries under crown",
+    "prosthodontic treatment planning",
+    "crown failure",
+    "crown lengthening limitations",
+    "implant vs tooth preservation"
+  ],
+  "page_url": "/chairside/chairside-6.html"
+},
+{
+  "type": "chairside",
+  "id": "chairside-07",
+  "title": "وقتی درد مبهم است؛ کانتور ترمیم و احتمال تجاوز به بیولوژیک ویدث در دندان ۶ بالا",
+  "caption": "روایت یک ویزیت کلینیکی درباره بیمار با درد مبهم بین‌دندانی در ناحیه مزیال دندان ۶ بالا. بررسی اینکه چگونه کانتور نامناسب ترمیم می‌تواند التهاب مزمن پریودنتال ایجاد کند و در صورت تجاوز به بیولوژیک ویدث (Biological Width) تشخیص و درمان را دشوار سازد؛ مرور گزینه‌ها شامل برداشت ترمیم و ارزیابی دقیق بیولوژیک ویدث و تصمیم‌گیری درمانی برای رسیدن به پیش‌آگهی بهتر.",
+  "hashtags": [
+    "درد_مبهم",
+    "درد_بین_دندانی",
+    "کانتور_ترمیم",
+    "بیولوژیک_ویدث",
+    "تجاوز_به_بیولوژیک_ویدث",
+    "برداشت_ترمیم",
+    "پریودنتال"
+  ],
+  "keywords": [
+    "vague tooth pain",
+    "interdental pain",
+    "biological width violation",
+    "biological width",
+    "restoration contour",
+    "overhang restoration",
+    "periodontal inflammation",
+    "crown margin correction",
+    "interproximal assessment"
+  ],
+  "page_url": "/chairside/chairside-7.html"
+},
+{
+  "type": "clinical",
+  "id": "clinical-32",
+  "title": "کانتور مقعر در روکش سرامیکی",
+  "caption": "در این نکته کلینیکی، مشکل کانتور مقعر در روکش سرامیکی و تأثیر آن بر تجمع پلاک، التهاب لثه و مشکلات پریودنتال بررسی می‌شود. همچنین عدم تطابق مارژین‌ها روی کست از دلایل بازگرداندن روکش برای اصلاح است.",
+  "hashtags": [
+    "روکش_سرامیکی",
+    "کانتور",
+    "کانتور_مقعر",
+    "امبراژور",
+    "پریودنتال",
+    "پروتز_ثابت",
+    "دندانپزشکی",
+    "نکته_کلینیکی",
+    "DentalContour",
+    "CrownDesign"
+  ],
+  "keywords": [
+    "ceramic crown",
+    "concave contour",
+    "crown contour",
+    "embrasure design",
+    "gingival health",
+    "crown margin accuracy",
+    "dental prosthodontics",
+    "ceramic restoration evaluation"
+  ],
+  "page_url": "/insight/insight-32.html"
 }
+
+
+
 
 
 

@@ -288,7 +288,7 @@ table {
 
     /* ================= HERO HEADER ================= */
     .hero-header { position: relative; width: 100%; height: 260px; background-image: url("/header.webp"); background-size: cover; background-position: center; background-repeat: no-repeat; }
-    .hero-cta { position: absolute; bottom: 20px; right: 20px; padding: 8px 18px; border-radius: 999px; background: rgba(255, 255, 255, 0.85); color: #0a1a33; font-size: 0.75rem; font-weight: 600; text-decoration: none; backdrop-filter: blur(6px); transition: all 0.2s ease; }
+    .hero-cta { position: absolute; bottom: 20px; right: 20px; padding: 4px 9px; border-radius: 999px; background: rgba(255, 255, 255, 0.85); color: #0a1a33; font-size: 0.75rem; font-weight: 600; text-decoration: none; backdrop-filter: blur(6px); transition: all 0.2s ease; }
  .dc-results-box {
   position: relative;
 }
@@ -375,7 +375,7 @@ table {
 }
 
 .banner {
-    background-color: hsla(0, 0%, 3%, 0.85);
+    background-color: hsla(0, 0%, 3%, 0.88);
     padding: 5px;
     text-align: center;
     border: none;
@@ -393,23 +393,41 @@ table {
   color: #ff0404;
   margin: 0;
 }
+.banner ul{
+    font-size: 15px;
+    margin-top: 0;
+    color: rgb(232, 235, 235);
+    padding-top: 35px;
+    padding-right:20px;
+    text-align: right;
+    list-style: none;
+    margin:0;
+}
+
+.banner li{
+    position: relative;
+    padding-right:18px;
+    line-height:1.55;
+    margin-bottom:4px;
+}
+
+.banner li::before{
+    content: "●";
+    position: absolute;
+    font-weight:bold;
+    right:2px;
+    font-size:12px;
+}
+
 
 .banner p {
     font-size: 15px;
     margin-top: 0px;
-    color: rgb(230, 195, 2);
+    color: rgb(157, 160, 160);
     padding-top: 35px;
     padding-right:20px;
     text-align: right;
 }
-.banner p li{
-margin-bottom:10px;
-}
-.banner p li::before{
-      content:"• ";
-      color:#d3f707;
-      font-weight:bold;
-    }
 .banner a {
     color: #007bff;
     text-decoration: underline;
@@ -494,7 +512,7 @@ body.dc-desktop-ui .banner{
   border: 1px solid rgba(0,0,0,0.1);
   border-radius: 12px;
   padding: 3px 6px;
-  font-size: 12px;
+  font-size: 10px;
   cursor: pointer;
   box-shadow: 0 4px 14px rgba(0,0,0,0.12);
   backdrop-filter: blur(6px);
@@ -503,13 +521,24 @@ body.dc-desktop-ui .banner{
 .listen-btn:hover{
   background: rgba(110, 193, 232, 0.9);
 }
-.banner h4 {
-    font-size: 14px;
-    margin-top: 0px;
-    color: rgb(110, 193, 232);
-    padding-right:20px;
-    text-align: right;
+.banner h4{
+    font-size:14px;
+    margin-right:22px;
+    color:rgb(110, 193, 232);
+    padding-right:18px;
+    text-align:right;
+    position:relative;
 }
+
+.banner h4::before{
+    content:"●";
+    position:absolute;
+    right:0;
+    top:0;
+    font-size:12px;
+    color:rgb(110, 193, 232);
+}
+
 /* ---------- thumbnail ---------- */
 .thumb{
     width: 50px;          /* عرض دلخواه برای کوچک نمایش */
@@ -1433,7 +1462,7 @@ body.dc-desktop-ui #dcDeskViewEmpty .banner .thumb{
 /* کارت معرفی برند (بدون تداخل با هیچ کارت دیگری) */
 /* ===== Ad Contact Card ===== */
 .add-card{
-background-color: hsla(0, 0%, 3%, 0.2) !important; border: 1px solid #f5a20886 !important; border-radius: 1rem; padding: 1px 0 !important; margin-top: 10px !important; width: 100%;
+background-color: hsla(0, 0%, 3%, 0.2) !important; border: 1px solid #f5a20886 !important; border-radius: 1rem; padding: 1px 0 !important; margin-top: 15px !important ;margin-bottom: 15px !important; width: 100%;
 }
 
 /* لینک داخل کارت */
@@ -1450,14 +1479,14 @@ background-color: hsla(0, 0%, 3%, 0.2) !important; border: 1px solid #f5a20886 !
 .add-card .dc-card-title{
   font-weight:450;
   font-size:.9rem;
-  color:#f5a208;
+    color:#caa15a; /* طلایی خاکی ملایم */
   line-height:1;
 }
 
 /* دکمه */
 .add-card .ad-strong{
-  background:#f5a2084a;
-  color:#f5a208;
+  background:#f5a2082c;
+    color:#caa15a; /* طلایی خاکی ملایم */
   padding:3px 5px;
   border-radius:10px;
   font-size:.72rem;
@@ -1469,6 +1498,30 @@ background-color: hsla(0, 0%, 3%, 0.2) !important; border: 1px solid #f5a20886 !
   transform:scale(.985);
   background:#f7faff;
 }
+.add-card ul{
+  list-style:none;
+  margin:0;
+  padding:0;
+}
+
+.add-card li{
+  position:relative;
+  padding-right:16px;
+  font-size:.9rem;
+  color:#f5a208;
+  line-height:1.4;
+}
+
+.add-card li::before{
+  content:"●";
+  position:absolute;
+  right:0;
+  top:0;
+  font-size:13px;
+  font-weight:bold;
+  color:#f5a208;
+}
+
 /* --- استایل پایه Overlay رادار --- */
 .radar-overlay {
   position: fixed;
@@ -1791,13 +1844,18 @@ body.dc-radar-mode {
       <audio id="dentai-audio" preload="none">
         <source src="https://ghofli.s3.ir-thr-at1.arvanstorage.ir/ghofli7.mp3?versionId=" type="audio/mpeg">
       </audio>
-      <p> پایین سایت بخش رادار دنتکست راه اندازی شد<br>
-        فعلا محدوده اما در نبود گوگل به پیدا کردن سایت های  دندانپزشکی کمک می‌کنه
-        <br>
-         
-         لینک <strong>30</strong> مطلب <strong>جدید و آخر</strong> رو از بخش ابزارها ببین
-<br>
-        </p>
+      <ul>
+       <li>۳ فروردین: یه روایت ویزیت به بخش  <a href="https://dentcast.ir/chairside/chairside-7"><em>Chairside</em></a>    اضافه شد   </li> 
+       <li>۱ فروردین: یه روایت ویزیت به بخش  <a href="https://dentcast.ir/chairside/chairside-6"><em>Chairside</em></a>    اضافه شد   </li> 
+
+<li>
+
+   از    <a href="https://dentcast.ir/#radar"><strong> رادار دنتکست</strong></a> در پایین صفحه برای پیدا کردن سایتها؛ استفاده کنید.
+
+   </li>
+      
+        
+        </ul>
           <!-- 2) باکس تبلیغ -->
     <article class="add-card" id="card-ad-contact">
       <a href="https://deventapp.ir" class="ad-link" target="_blank" rel="sponsored noopener">
@@ -1812,8 +1870,7 @@ body.dc-radar-mode {
        
       
 <h4> 
-<br>
-  <strong> آهنگ قفلی</strong> :  این ترانه یه زواله این صدا؛صدای من نیست
+<strong>در وهله ی اول پایان سال ۱۴۰۴ و بعد آغاز سال جدید؛ برهمه مبارک</strong>
 </h4>
      <!-- <img
         src="https://pulsee.s3.ir-thr-at1.arvanstorage.ir/pulse.webp?versionId="
@@ -1874,7 +1931,7 @@ body.dc-radar-mode {
   <article class="dc-card dcStickySearch" id="dcStickySearch">
   <button type="button" class="dcOpenSearch dc-sticky-search-btn" aria-label="جستجو">
     <span class="dc-sticky-ico">🔍</span>
-    <span class="dc-sticky-txt">جستجو در همه‌ی مطالب علمی</span>
+    <span class="dc-sticky-txt">جستجو در همه‌ی مطالب علمی  سایت دنتکست</span>
   </button> 
   <span class="dc-chip">Search</span>
 </article>
@@ -1929,11 +1986,11 @@ body.dc-radar-mode {
     <!-- بخش متن و توضیحات -->
     <div class="dc-card-main" style="display: flex; flex-direction: column; gap: 2px;">
       <div class="dc-card-title" style="font-size: 0.95rem; font-weight: bold; color: var(--primary);">رادار دنت‌کست 📡</div>
-      <span style="font-size: 0.75rem; color: #777;">جستجوگر سایت‌های دندانپزشکی</span>
+      <span style="font-size: 0.65rem; color: #777;">جستجوگر سایت‌های دندانپزشکی </span>
     </div>
 
     <!-- دکمه جستجو (ملایم‌تر) -->
-    <strong class="ad-strong" style="background: #f0f4ff; color: var(--primary); padding: 0.25rem 0.8rem; border-radius: 1rem; font-size: 0.8rem; border: 1px solid #d6e4ff; font-weight: normal;">
+    <strong class="ad-strong" style="background: #f0f4ff; color: var(--primary); padding: 0.25rem 0.7rem; border-radius: 1rem; font-size: 0.7rem; border: 1px solid #d6e4ff; font-weight: normal;">
       جستجو
     </strong>
     
@@ -1971,7 +2028,7 @@ body.dc-radar-mode {
   <article class="dc-card dcStickySearch" id="dcStickySearch2">
   <button type="button" class="dcOpenSearch dc-sticky-search-btn" aria-label="جستجو">
     <span class="dc-sticky-ico">🔍</span>
-    <span class="dc-sticky-txt">جستجو در همه‌ی مطالب علمی</span>
+    <span class="dc-sticky-txt">جستجو در همه‌ی مطالب علمی سایت دنتکست</span>
   </button> 
   <span class="dc-chip">Search</span>
 </article>
@@ -3095,7 +3152,7 @@ document.getElementById("tool-about")?.addEventListener("click", () => {
 <div id="dcRadarOverlay" class="radar-overlay" aria-hidden="true">
   <div class="radar-overlay-header">
     <button id="dcCloseRadarOverlay" class="radar-close-btn">&times;</button>
-    <div class="radar-header-title">رادار دنت‌کست</div>
+    <div class="radar-header-title">رادار دنت‌کست (جایگزین گوگل)</div>
   </div>
   
   <div class="radar-overlay-body" id="dcRadarOverlayBody">
@@ -3141,7 +3198,7 @@ document.getElementById("tool-about")?.addEventListener("click", () => {
 
     // بارگذاری داده‌ها (فقط یکبار)
     if (!isDataLoaded) {
-      fetch('/radar.json?v=6', { cache: "no-store" })
+      fetch('/radar.json?v=1', { cache: "no-store" })
         .then(response => response.json())
         .then(data => {
           radarData = data;
@@ -3180,10 +3237,29 @@ document.getElementById("tool-about")?.addEventListener("click", () => {
   function handleSearch() {
     const query = searchInput.value.trim().toLowerCase();
     
-    if (query.length === 0) {
-      resultsContainer.innerHTML = '<div class="radar-initial-msg">برای جستجو در بین سایت‌های دندانپزشکی، تایپ کنید...</div>';
-      return;
-    }
+   if (query.length === 0) {
+  resultsContainer.innerHTML = `
+    <div class="radar-initial-msg" style="text-align:center">
+      برای جستجو در بین سایت‌های دندانپزشکی، تایپ کنید...
+      <div style="
+        font-size:0.8rem;
+        color:#666;
+        margin-top:16px;
+        text-align:center;
+        border-top:1px dashed #eee;
+        padding-top:10px;
+      ">
+        سایتی مدنظرته که تو سرچ نیست؟
+        <a href="https://survey.porsline.ir/s/TA5qoIDQ" target="_blank" rel="noopener"
+           style="color:#034ad6;font-weight:500">
+          برای اضافه شدن به رادار پیشنهادش کنید
+        </a>
+      </div>
+    </div>
+  `;
+  return;
+}
+
 
     if (!isDataLoaded) return; // صبر برای لود دیتا
 
@@ -3217,10 +3293,22 @@ document.getElementById("tool-about")?.addEventListener("click", () => {
 
   // ۴. تولید HTML نتایج 
   function renderResults(results) {
-    if (results.length === 0) {
-      resultsContainer.innerHTML = '<div class="radar-no-results">متأسفانه نتیجه‌ای یافت نشد. کلمات دیگری را امتحان کنید.</div>';
-      return;
-    }
+  if (results.length === 0) {
+  resultsContainer.innerHTML = `
+    <div class="radar-no-results" style="text-align:center">
+      متأسفانه نتیجه‌ای یافت نشد.
+      <br>
+      کلمات دیگری را امتحان کنید.
+      
+      <a href="https://survey.porsline.ir/s/TA5qoIDQ" target="_blank" rel="noopener"
+         style="display:block;margin-top:14px;color:#034ad6;font-weight:500">
+        سایت مرتبطی می‌شناسید؟ برای اضافه شدن به رادار پیشنهادش کنید 
+      </a>
+    </div>
+  `;
+  return;
+}
+
 
     let html = '';
     results.forEach(item => {
@@ -3251,6 +3339,24 @@ document.getElementById("tool-about")?.addEventListener("click", () => {
         </a>
       `;
     });
+html += `
+  <div style="
+    font-size:0.8rem;
+    color:#666;
+    margin-top:16px;
+    text-align:center;
+    border-top:1px dashed #eee;
+    padding-top:10px;
+  ">
+    سایتی جا افتاده؟
+    <a href="https://survey.porsline.ir/s/TA5qoIDQ" target="_blank" rel="noopener"
+   style="color:#034ad6;font-weight:500">
+    برای اضافه شدن به رادار پیشنهادش کنید 
+</a>
+
+  </div>
+`;
+
 
     resultsContainer.innerHTML = html;
   }
