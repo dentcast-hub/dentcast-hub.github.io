@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://dentcast.ir/metanotes/meta-3.html</loc></url>
+  <url><loc>https://dentcast.ir/metanotes/meta-13.html</loc></url>
   <url><loc>https://dentcast.ir/metanotes/meta-8.html</loc></url>
   <url><loc>https://dentcast.ir/metanotes/meta-12.html</loc></url>
   <url><loc>https://dentcast.ir/metanotes/index.html</loc></url>
   <url><loc>https://dentcast.ir/metanotes/meta-7.html</loc></url>
+<<<<<<< HEAD
   <url><loc>https://dentcast.ir/metanotes/meta-13.html</loc></url>
+=======
+>>>>>>> f1bde3b9d10ed22d939bd628a9f60f4e7c9c6c4e
   <url><loc>https://dentcast.ir/metanotes/meta-2.html</loc></url>
   <url><loc>https://dentcast.ir/metanotes/meta-6.html</loc></url>
   <url><loc>https://dentcast.ir/metanotes/meta-10.html</loc></url>
