@@ -4973,7 +4973,35 @@
     "ceramic restoration evaluation"
   ],
   "page_url": "/insight/insight-32.html"
+},
+{
+  "type": "chairside",
+  "id": "chairside-08",
+  "title": "نمای بیش‌ازحد ریج در بیمار بی‌دندان؛ چالش استتیک در طراحی دنچر",
+  "caption": "روایت یک ویزیت کلینیکی درباره بیمار بی‌دندانی که حتی در حالت استراحت لب، چند میلی‌متر از ریج فک بالا قابل مشاهده است. بررسی پیامدهای این وضعیت در طراحی پروتز متحرک و اینکه چگونه اضافه شدن بیس آکریلی می‌تواند باعث ایجاد نمای bulky و غیرطبیعی شود. مرور اهمیت ارزیابی بستر پروتزی و در صورت نیاز مشاوره جراحی برای کاهش و فرم‌دهی ریج (استئوپلاستی) پیش از ساخت دنچر.",
+  "hashtags": [
+    "نمای_ریج",
+    "گامی اسمایل",
+    "دنچر",
+    "پروتز_متحرک",
+    "استئوپلاستی",
+    "کاهش_ریج",
+    "اوردنچر"
+  ],
+  "keywords": [
+    "excessive ridge display",
+    "edentulous patient",
+    "removable denture esthetics",
+    "alveolar ridge reduction",
+    "osteoplasty",
+    "denture flange bulkiness",
+    "prosthodontic treatment planning",
+    "high lip line edentulous",
+    "ridge contour correction"
+  ],
+  "page_url": "/chairside/chairside-8.html"
 }
+
 
 
 
