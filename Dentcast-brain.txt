@@ -5000,7 +5000,35 @@
     "ridge contour correction"
   ],
   "page_url": "/chairside/chairside-8.html"
+},
+{
+  "type": "chairside",
+  "id": "chairside-09",
+  "title": "تصمیم‌گیری در دندان با پروگنوز نامشخص پیش از درمان قطعی",
+  "caption": "روایت یک کیس کلینیکی درباره دندانی با روکش قدیمی و احتمال نیاز به درمان مجدد ریشه که وضعیت واقعی آن زیر لایه‌های روکش و پوسیدگی پنهان شده بود. توضیح اینکه چرا پیش از هر تصمیم قطعی باید روکش خارج، پوسیدگی‌ها و ترمیم‌های قبلی کاملاً حذف و میزان نسج سالم، وجود فرول و ارزش حفظ دندان ارزیابی شود. این رویکرد مانع انجام درمان‌های غیرضروری و صرف هزینه برای دندانی با پیش‌آگهی ضعیف می‌شود.",
+  "hashtags": [
+    "پروگنوز_دندان",
+    "درمان_مجدد_ریشه",
+    "روکش",
+    "فرول",
+    "برداشت پوسیدگی",
+    "پوسیدگی",
+    "ارزیابی_دندان"
+  ],
+  "keywords": [
+    "uncertain tooth prognosis",
+    "tooth structure assessment",
+    "crown removal diagnosis",
+    "ferrule evaluation",
+    "endodontic retreatment decision",
+    "caries removal exposure",
+    "prosthodontic treatment planning",
+    "remaining tooth structure",
+    "diagnostic crown removal"
+  ],
+  "page_url": "/chairside/chairside-9.html"
 }
+
 
 
 
