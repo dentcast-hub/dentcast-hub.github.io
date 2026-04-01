@@ -5027,7 +5027,35 @@
     "diagnostic crown removal"
   ],
   "page_url": "/chairside/chairside-9.html"
+},
+{
+  "type": "chairside",
+  "id": "chairside-10",
+  "title": "قرارگیری عمیق ایمپلنت در فرش ساکت؛ خطایی که در مرحله پروتز آشکار می‌شود",
+  "caption": "روایت یک کیس کلینیکی درباره ایمپلنتی که در ساکت تازه (Fresh Socket) قرار داده شده اما پلتفرم آن چند میلی‌متر پایین‌تر از سطح استخوان قرار گرفته است. هرچند استئواینتگریشن ایمپلنت قابل قبول به نظر می‌رسد، اما موقعیت بسیار اپیکال پلتفرم در مرحله پروتز مشکلاتی مانند دسترسی محدود به مارجین، دشواری کنترل سمنت و طراحی emergence profile با overcontour ایجاد می‌کند. این کیس نشان می‌دهد که موفقیت جراحی به‌تنهایی تضمین‌کننده امکان بازسازی پروتزی نیست و موقعیت سه‌بعدی ایمپلنت باید از ابتدا بر اساس نیازهای پروتزی برنامه‌ریزی شود.",
+  "hashtags": [
+    "ایمپلنت",
+    "فرش_ساکت",
+    "جایگذاری_ایمپلنت",
+    "پروتز_ایمپلنت",
+    "امرجنس_پروفایل",
+    "سمنت_ایمپلنت",
+    "برنامه_ریزی_پروتزی"
+  ],
+  "keywords": [
+    "deep implant placement",
+    "fresh socket implant",
+    "apical implant platform",
+    "implant prosthetic complications",
+    "emergence profile overcontour",
+    "cement retention implant crown",
+    "prosthetic driven implant placement",
+    "implant biomechanics complications",
+    "implant prosthodontics case"
+  ],
+  "page_url": "/chairside/chairside-10.html"
 }
+
 
 
 
