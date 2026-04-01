@@ -394,7 +394,7 @@ table {
   margin: 0;
 }
 .banner ul{
-    font-size: 15px;
+    font-size: 14px;
     margin-top: 0;
     color: rgb(232, 235, 235);
     padding-top: 35px;
@@ -416,7 +416,7 @@ table {
     position: absolute;
     font-weight:bold;
     right:2px;
-    font-size:12px;
+    font-size:11px;
 }
 
 
@@ -522,7 +522,7 @@ body.dc-desktop-ui .banner{
   background: rgba(110, 193, 232, 0.9);
 }
 .banner h4{
-    font-size:14px;
+    font-size:13px;
     margin-right:22px;
     color:rgb(110, 193, 232);
     padding-right:18px;
@@ -535,7 +535,7 @@ body.dc-desktop-ui .banner{
     position:absolute;
     right:0;
     top:0;
-    font-size:12px;
+    font-size:11px;
     color:rgb(110, 193, 232);
 }
 
@@ -1837,19 +1837,15 @@ body.dc-radar-mode {
         &times;
       </span>
 
-      <button class="listen-btn" aria-label="شنیدن موسیقی" aria-controls="dentai-audio">
+     <!-- <button class="listen-btn" aria-label="شنیدن موسیقی" aria-controls="dentai-audio">
         شنیدن آخرین قفلی
-      </button>
+      </button>  -->
 
       <audio id="dentai-audio" preload="none">
         <source src="https://ghofli.s3.ir-thr-at1.arvanstorage.ir/ghofli7.mp3?versionId=" type="audio/mpeg">
       </audio>
       <ul>
-         <li>۱۰ فروردین: یه روایت ویزیت به بخش  <a href="https://dentcast.ir/chairside/chairside-9"><em>Chairside</em></a>    اضافه شد   </li> 
-       
-        <li>۷ فروردین: یه روایت ویزیت به بخش  <a href="https://dentcast.ir/chairside/chairside-8"><em>Chairside</em></a>    اضافه شد   </li> 
-       
-
+       <li> <strong> همه ی اپیزودهای پادکست دنتکست الان در دسترسه</strong></li>
 <li>
 
    از    <a href="https://dentcast.ir/#radar"><strong> راداردنتکست</strong></a> در پایین صفحه برای پیدا کردن سایتها؛ استفاده کنید.
@@ -1872,7 +1868,6 @@ body.dc-radar-mode {
        
       
 <h4> 
-<strong>در وهله ی اول پایان سال ۱۴۰۴ و بعد آغاز سال جدید؛ برهمه مبارک</strong>
 </h4>
      <!-- <img
         src="https://pulsee.s3.ir-thr-at1.arvanstorage.ir/pulse.webp?versionId="
@@ -1922,7 +1917,7 @@ body.dc-radar-mode {
     
       <div class="dc-card-list">
         
-        <article class="dc-card featured-card" id="card-episodes" onclick="window.location.href='episodes.html'">
+        <article class="dc-card featured-card" id="card-episodes" onclick="window.location.href='episodes.html?v=1'">
           <div class="dc-card-main">
             <div class="dc-card-title">فهرست و شنیدن اپیزودهای دنت‌کست 🎧</div>
             <div class="dc-card-caption">همه ی اپیزودهای اصلی و فرعی</div>
@@ -3200,7 +3195,7 @@ document.getElementById("tool-about")?.addEventListener("click", () => {
 
     // بارگذاری داده‌ها (فقط یکبار)
     if (!isDataLoaded) {
-      fetch('/radar.json?v=3', { cache: "no-store" })
+      fetch('/radar.json?v=4', { cache: "no-store" })
         .then(response => response.json())
         .then(data => {
           radarData = data;
