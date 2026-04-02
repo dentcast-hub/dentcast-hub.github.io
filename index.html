@@ -3196,7 +3196,7 @@ document.getElementById("tool-about")?.addEventListener("click", () => {
 
     // بارگذاری داده‌ها (فقط یکبار)
     if (!isDataLoaded) {
-      fetch('/radar.json?v=4', { cache: "no-store" })
+      fetch('/radar.json?v=5', { cache: "no-store" })
         .then(response => response.json())
         .then(data => {
           radarData = data;
