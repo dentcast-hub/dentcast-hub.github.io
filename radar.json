@@ -946,7 +946,71 @@
   "featured": false,
   "credit": false,
   "iran_server": true
+},
+{
+  "id": "lab-053",
+  "name": "لابراتوار تخصصی آرمان سلامت",
+  "url": "https://armansalamatlab.com/",
+  "desc": "لابراتوار تخصصی آرمان سلامت ارائه‌دهنده خدمات ساخت پروتزهای دندانی با استفاده از تجهیزات دیجیتال و فناوری CAD/CAM.",
+  "keywords": ["لابراتوار", "آرمان سلامت", "armansalamat", "پروتز دندانی", "دندان", "cadcam", "کدکم", "پروتز", "دیجیتال"],
+  "priority": 10,
+  "featured": false,
+  "credit": false,
+  "iran_server": true
+},
+{
+  "id": "lab-054",
+  "name": "لابراتوار دندانی لکسوس",
+  "url": "https://lexusdentallab.com/",
+  "desc": "لابراتوار لکسوس ارائه‌دهنده خدمات ساخت پروتزهای دندانی با فناوری دیجیتال و سیستم‌های CAD/CAM.",
+  "keywords": [
+    "لابراتوار", 
+    "لکسوس", 
+    "نکسوس", 
+    "هخامنش", 
+    "مسعودی زاده",
+    "lexus",
+    "nexus",
+    "hakhamaneshi",
+    "masoudizadeh",
+    "پروتز دندانی",
+    "cadcam",
+    "کدکم"
+  ],
+  "priority": 10,
+  "featured": false,
+  "credit": false,
+  "iran_server": true
+},
+{
+  "id": "lab-055",
+  "name": "لابراتوار دندانی های‌دنت",
+  "url": "https://highdentlab.com/",
+  "desc": "لابراتوار دندانی های‌دنت ارائه‌دهنده خدمات ساخت انواع پروتزهای دندانی ثابت و متحرک با بهره‌گیری از فناوری‌های دیجیتال و سیستم‌های CAD/CAM.",
+  "keywords": [
+    "لابراتوار",
+    "لابراتوار دندانی",
+    "های دنت",
+    "های‌دنت",
+    "high dent",
+    "highdent",
+    "پروتز دندانی",
+    "پروتز ثابت",
+    "پروتز متحرک",
+    "سرامیک دندانی",
+    "زیرکونیا",
+    "cadcam",
+    "کدکم",
+    "دیجیتال دنتیستری"
+  ],
+  "priority": 10,
+  "featured": false,
+  "credit": false,
+  "iran_server": true
 }
+
+
+
 
 
 

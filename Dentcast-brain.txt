@@ -5054,6 +5054,35 @@
     "implant prosthodontics case"
   ],
   "page_url": "/chairside/chairside-10.html"
+},
+{
+  "type": "clinical",
+  "id": "clinical-33",
+  "title": "گسترش هدفمند اسکن برای رسیدن به فرم بهتر",
+  "caption": "در این نکته کلینیکی، گسترش آگاهانه محدوده اسکن داخل دهانی جهت دستیابی به یک مرجع آناتومیک سالم برای طراحی دقیق‌تر فرم تاج ایمپلنت بررسی می‌شود. این روش در مواردی که دندان‌های مجاور فرم مناسبی ندارند، به طراحی زیباتر کمک می‌کند.",
+  "hashtags": [
+    "اسکن_داخل_دهانی",
+    "دندانپزشکی_دیجیتال",
+    "ایمپلنت_دندان",
+    "طراحی_تاج",
+    "نکته_کلینیکی",
+    "اسکن_دیجیتال",
+    "پروتز_دندان",
+    "IntraoralScan",
+    "DigitalDentistry",
+    "ImplantDesign"
+  ],
+  "keywords": [
+    "intraoral scanning",
+    "scan expansion",
+    "digital impression accuracy",
+    "anatomical reference",
+    "implant crown design",
+    "stitching errors",
+    "digital dentistry",
+    "dental CAD"
+  ],
+  "page_url": "/insight/insight-33.html"
 }
 
 
