@@ -5083,7 +5083,35 @@
     "dental CAD"
   ],
   "page_url": "/insight/insight-33.html"
+},
+{
+  "type": "chairside",
+  "id": "chairside-11",
+  "title": "نبود اکلوژن خلفی؛ مانعی پنهان برای اوردنچر فک بالا",
+  "caption": "روایت یک کیس کلینیکی درباره بیماری که برای دریافت اوردنچر فک بالا مراجعه کرده بود، اما در بررسی اکلوژن مشخص شد در فک پایین ساپورت خلفی مؤثری وجود ندارد. در چنین شرایطی نیروهای اکلوزالی عمدتاً در ناحیه قدامی متمرکز می‌شوند و می‌توانند باعث شل شدن اتچمنت‌ها، افزایش استرس روی ایمپلنت‌ها و حتی شکست پروتز شوند. این کیس نشان می‌دهد که پیش از ورود به فاز پروتز، ارزیابی دقیق اکلوژن و وجود ساپورت خلفی در فک مقابل برای پیش‌بینی‌پذیری درمان اوردنچر ضروری است.",
+  "hashtags": [
+    "اوردنچر",
+    "اکلوژن",
+    "ساپورت_خلفی",
+    "پروتز_ایمپلنت",
+    "بیومکانیک_اوردنچر",
+    "طرح_درمان",
+    "پروتز_دندانی"
+  ],
+  "keywords": [
+    "maxillary overdenture occlusion problem",
+    "lack of posterior occlusion overdenture",
+    "posterior occlusal support prosthodontics",
+    "implant overdenture complications",
+    "overdenture biomechanics",
+    "implant overdenture treatment planning",
+    "occlusal support in prosthodontics",
+    "prosthetic considerations overdenture",
+    "implant overdenture case"
+  ],
+  "page_url": "/chairside/chairside-11.html"
 }
+
 
 
 
