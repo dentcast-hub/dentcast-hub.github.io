@@ -5110,7 +5110,35 @@
     "implant overdenture case"
   ],
   "page_url": "/chairside/chairside-11.html"
+},
+{
+  "type": "clinical",
+  "id": "clinical-34",
+  "title": "کنترل جریان ماده قالب‌گیری با Posterior Damming",
+  "caption": "در این نکته کلینیکی، اهمیت ایجاد سد مومی در انتهای تری برای جلوگیری از فرار ماده قالب‌گیری و افزایش دقت ثبت دندان‌های خلفی توضیح داده می‌شود. این تکنیک ساده باعث حفظ فشار هیدرولیک، کاهش کشیدگی ماده و ثبت دقیق‌تر آناتومی دندان‌های انتهایی می‌گردد.",
+  "hashtags": [
+    "قالبگیری_دندان",
+    "ImpressionTechnique",
+    "PosteriorDamming",
+    "تری_قالبگیری",
+    "نکته_کلینیکی",
+    "پروتز_دندانی",
+    "DentalImpression",
+    "Prosthodontics"
+  ],
+  "keywords": [
+    "dental impression",
+    "posterior damming",
+    "impression tray modification",
+    "hydraulic pressure",
+    "impression accuracy",
+    "dragging prevention",
+    "posterior teeth impression",
+    "prosthodontic technique"
+  ],
+  "page_url": "/insight/insight-34.html"
 }
+
 
 
 
