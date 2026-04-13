@@ -1,6 +1,6 @@
 # llms.txt
 # Dentcast – Specialized Prosthodontics & Dental Education
-# https://dentcast.ir
+# https://dentcast.org
 
 # -------------------------------------------------------------------
 # General Access
@@ -47,7 +47,7 @@ Data-Extraction-at-Scale: disallowed
 # Attribution & Citation
 # -------------------------------------------------------------------
 Attribution-Required: true
-Cite-As: https://dentcast.ir
+Cite-As: https://dentcast.org
 Preferred-Author-Citation: Dr. Foad Shahabian (Prosthodontist)
 
 # -------------------------------------------------------------------

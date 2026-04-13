@@ -96,7 +96,7 @@ const TYPE_MAP = {
 
   let url = item.page_url || item.url || "";
   if (!url && group === "dentcast") url = "/episodes.html";
-  if (!url.startsWith("http")) url = "https://dentcast.ir" + url;
+  if (!url.startsWith("http")) url = "https://dentcast.org" + url;
 
   return `
     <div class="dc-result-item"

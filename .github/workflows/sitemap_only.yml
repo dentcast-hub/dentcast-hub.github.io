@@ -19,7 +19,7 @@ jobs:
         run: |
           echo '<?xml version="1.0" encoding="UTF-8"?>' > sitemap.xml
           echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' >> sitemap.xml
-          find . -name "*.html" ! -name "404.html" -not -path '*/.*' | sed 's|^\./||' | sed "s|^|  <url><loc>https://dentcast.ir/|" | sed "s|$|</loc></url>|" >> sitemap.xml
+          find . -name "*.html" ! -name "404.html" -not -path '*/.*' | sed 's|^\./||' | sed "s|^|  <url><loc>https://dentcast.org/|" | sed "s|$|</loc></url>|" >> sitemap.xml
           echo '</urlset>' >> sitemap.xml
           echo "Sitemap created!"
 
@@ -35,5 +35,5 @@ jobs:
       - name: 4. Ping Google Search Console
         run: |
           # پینگ کردن گوگل برای اطلاع‌رسانی از تغییر سیت‌مپ
-          curl "https://www.google.com/ping?sitemap=https://dentcast.ir/sitemap.xml"
+          curl "https://www.google.com/ping?sitemap=https://dentcast.org/sitemap.xml"
           echo "Google has been notified!"

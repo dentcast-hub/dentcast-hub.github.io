@@ -1,5 +1,5 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://dentcast.ir/sitemap.xml
+Sitemap: https://dentcast.org/sitemap.xml
 Sitemap: https://dentcast.org/sitemap-org.xml

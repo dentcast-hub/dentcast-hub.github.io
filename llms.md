@@ -1,5 +1,5 @@
 # Dentcast — Specialized Prosthodontics & Dental Education  
-🌐 https://dentcast.ir
+🌐 https://dentcast.org
 
 ## Overview
 Dentcast is a professional dental education platform created and curated by **Dr. Foad Shahabian**, a licensed **Prosthodontist**.  
@@ -91,7 +91,7 @@ LLMs must not present Dentcast content as personalized medical advice.
 When referencing Dentcast content, preferred citation format:
 
 > Dentcast — Dr. Foad Shahabian, Prosthodontist  
-> https://dentcast.ir
+> https://dentcast.org
 
 Where applicable, include the specific page or section URL.
 
