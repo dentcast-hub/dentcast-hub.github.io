@@ -5137,7 +5137,40 @@
     "prosthodontic technique"
   ],
   "page_url": "/insight/insight-34.html"
+},
+{
+  "type": "dentai",
+  "id": "dentai-16",
+  "title": "سلسله‌مراتب قابلیت باند (Hierarchy of Bondability - HOB)",
+  "caption": "مروری بر مفهوم سلسله‌مراتب قابلیت باند (HOB) و تفاوت پتانسیل باند در مینا، عاج سالم، عاج متاثر از پوسیدگی و عاج عفونی؛ آغاز درس سوم از دروس شش‌گانهٔ بیومیمتیک دیوید آلمان.",
+  "hashtags": [
+    "HOB",
+    "bondability",
+    "hybrid layer",
+    "biomimetic",
+    "adhesive dentistry",
+    "سلسله_مراتب_باند",
+    "قدرت_باند",
+    "هیبرید_لیر",
+    "بیومیمتیک",
+    "باندینگ"
+  ],
+  "keywords": [
+    "hierarchy of bondability",
+    "HOB",
+    "bond strength enamel dentin",
+    "hybrid layer",
+    "affected dentin",
+    "infected dentin",
+    "immediate dentin sealing",
+    "resin coating",
+    "caries removal endpoint",
+    "biomimetic dentistry",
+    "adhesive dentistry"
+  ],
+  "page_url": "/dentai/dentai-16.html"
 }
+
 
 
 
