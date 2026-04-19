@@ -5169,6 +5169,33 @@
     "adhesive dentistry"
   ],
   "page_url": "/dentai/dentai-16.html"
+},
+{
+  "type": "chairside",
+  "id": "chairside-12",
+  "title": "فاصله فینیش‌لاین از مارجین روکش؛ خطایی که دیر دیده می‌شود",
+  "caption": "روایت یک کیس کلینیکی درباره روکش ایمپلنتی در ناحیه قدامی که در بررسی رادیوگرافی اختلاف قابل توجهی بین فینیش‌لاین اباتمنت و مارجین روکش مشاهده شد. مارجین روکش پایین‌تر از فینیش‌لاین قرار گرفته و فاصله عمودی ایجاد کرده بود. شواهد نشان می‌داد روکش از ابتدا کوتاه‌تر از فینیش‌لاین ساخته شده است که احتمالاً ناشی از ثبت ناقص فینیش‌لاین در مرحله قالب‌گیری بوده است. این خطا می‌تواند باعث تجمع پلاک، التهاب بافت نرم و کاهش پیش‌بینی‌پذیری درمان در رستوریشن‌های ایمپلنتی شود و اهمیت دقت در ثبت فینیش‌لاین را نشان می‌دهد.",
+  "hashtags": [
+    "ایمپلنت",
+    "فینیش_لاین",
+    "مارجین_روکش",
+    "خطای_قالبگیری",
+    "پروتز_ایمپلنت",
+    "طرح_درمان",
+    "پروتز_دندانی"
+  ],
+  "keywords": [
+    "implant crown margin discrepancy",
+    "finish line implant crown error",
+    "implant crown margin gap",
+    "implant impression error crown margin",
+    "prosthetic accuracy implant restoration",
+    "implant prosthodontics complication",
+    "implant crown fit problem",
+    "dental implant prosthetic margin error",
+    "implant crown laboratory error"
+  ],
+  "page_url": "/chairside/chairside-12.html"
 }
 
 
