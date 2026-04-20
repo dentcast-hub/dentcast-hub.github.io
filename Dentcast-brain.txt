@@ -5196,6 +5196,33 @@
     "implant crown laboratory error"
   ],
   "page_url": "/chairside/chairside-12.html"
+},
+{
+  "type": "clinical",
+  "id": "clinical-35",
+  "title": "کوتاه دیده شدن اباتمنت در دهان؛ مشکل از دیتا یا ساخت؟",
+  "caption": "در این نکته کلینیکی با مقایسه اباتمنت داخل دهان و نسخه پرینت‌شده روی کست، مشخص می‌شود که کوتاه دیده شدن اباتمنت معمولاً ناشی از خطای ساخت در لابراتوار است نه مشکل در اسکن. این ارزیابی ساده کمک می‌کند بدون تکرار اسکن، منشأ خطا به‌صورت دقیق تشخیص داده شود.",
+  "hashtags": [
+    "اباتمنت",
+    "DentalImplant",
+    "AbutmentError",
+    "اسکن_بادی",
+    "نکته_کلینیکی",
+    "پروتز_ایمپلنت",
+    "ImplantProsthesis",
+    "دیجیتال"
+  ],
+  "keywords": [
+    "dental implant abutment",
+    "abutment height discrepancy",
+    "scan body error",
+    "implant library mismatch",
+    "abutment manufacturing error",
+    "sprue removal issue",
+    "printed cast comparison",
+    "implant prosthodontics"
+  ],
+  "page_url": "/insight/insight-35.html"
 }
 
 
