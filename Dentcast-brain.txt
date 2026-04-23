@@ -5275,7 +5275,36 @@
     "prosthetic appliance"
   ],
   "url": "/notecast/episode-33.html"
+},
+{
+  "type": "dentcast",
+  "id": "dentcast-156",
+  "episode": "156",
+  "title": "Bio‑Restorative Concept in Implant Dentistry",
+  "caption": "ورود به کانسپت جدید Bio‑Restorative Concept؛ رویکردی که جراحی و پروتز را از هم جدا نمی‌بیند و از همان ابتدای پلنینگ، بیولوژی بافت و رستوریشن نهایی را در کنار هم قرار می‌دهد. بررسی تغییر نگاه از «کجا ایمپلنت بگذاریم» به «چه رستوریشنی می‌خواهیم تحویل دهیم و چطور به آن برسیم».",
+  "hashtags": [
+    "#BioRestorative",
+    "#ImplantDentistry",
+    "#ImplantPlanning",
+    "#DigitalDentistry",
+    "#Prosthodontics",
+    "#Implant",
+    "#دنتکست"
+  ],
+  "keywords": [
+    "Bio‑Restorative Concept",
+    "ایمپلنتولوژی",
+    "پلنینگ ایمپلنت",
+    "طرح درمان دیجیتال",
+    "هماهنگی جراحی و پروتز",
+    "رستوریشن نهایی",
+    "آناتومی بافت نرم و سخت",
+    "پادکست دندانپزشکی"
+  ],
+  "audio_url": "https://episodes.s3.ir-thr-at1.arvanstorage.ir/dentcast156%20.mp3?versionId=",
+  "page_url": "/episodes.html"
 }
+
 
 
 
