@@ -5280,7 +5280,7 @@
   "type": "dentcast",
   "id": "dentcast-156",
   "episode": "156",
-  "title": "Bio‑Restorative Concept in Implant Dentistry",
+  "title": "Bio‑Restorative Concept in Implant Dentistry :part1",
   "caption": "ورود به کانسپت جدید Bio‑Restorative Concept؛ رویکردی که جراحی و پروتز را از هم جدا نمی‌بیند و از همان ابتدای پلنینگ، بیولوژی بافت و رستوریشن نهایی را در کنار هم قرار می‌دهد. بررسی تغییر نگاه از «کجا ایمپلنت بگذاریم» به «چه رستوریشنی می‌خواهیم تحویل دهیم و چطور به آن برسیم».",
   "hashtags": [
     "#BioRestorative",
