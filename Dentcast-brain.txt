@@ -5303,7 +5303,35 @@
   ],
   "audio_url": "https://episodes.s3.ir-thr-at1.arvanstorage.ir/dentcast156%20.mp3?versionId=",
   "page_url": "/episodes.html"
+},
+{
+  "type": "clinical",
+  "id": "clinical-37",
+  "title": "پریدگی دیستال لمینیت لترال: تداخل فانکشنال پنهان در حرکات پروتروزیو",
+  "caption": "یکی از علل پریدگی دیستال لمینیت ۲، تداخل فانکشنال پنهان در حرکات پروتروزیو است. اگر هدایت قدامی به‌درستی تنظیم نشود یا دیستال لترال دارای over-contour باشد، کانین پایین در مسیر حرکتی با سرامیک تماس پیدا می‌کند و نیرو مستقیماً به لبه نازک لمینیت منتقل می‌شود.",
+  "hashtags": [
+    "تداخل_فانکشنال",
+    "اکلوژن",
+    "LaminateVeneer",
+    "AnteriorGuidance",
+    "ProtrusiveMovement",
+    "لمینیت",
+    "DentalTips",
+    "Prosthodontics"
+  ],
+  "keywords": [
+    "functional interference",
+    "distal veneer chipping",
+    "lateral incisor veneer fracture",
+    "anterior guidance adjustment",
+    "protrusive interference",
+    "canine guidance",
+    "veneer failure analysis",
+    "prosthodontics"
+  ],
+  "page_url": "/insight/insight-37.html"
 }
+
 
 
 
