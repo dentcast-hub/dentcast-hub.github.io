@@ -5330,8 +5330,34 @@
     "prosthodontics"
   ],
   "page_url": "/insight/insight-37.html"
+},
+{
+  "type": "clinical",
+  "id": "clinical-38",
+  "title": "حل معادله درمان بین‌رشته‌ای ایمپلنت و ارتودنسی: تعیین مرجع ثابت",
+  "caption": "در کیس‌های ترکیبی ایمپلنت و ارتودنسی، انتخاب ایمپلنت به‌عنوان مرجع ثابت و طراحی روکش موقت PMMA با ابعاد نرمال سانترال، مبنای اصلاح ابعاد دندانی و تنظیم فضاها را مشخص می‌کند و درمان را از حالت حدسی به مسیر قابل پیش‌بینی هدایت می‌کند.",
+  "hashtags": [
+    "ایمپلنت",
+    "ارتودنسی",
+    "InterdisciplinaryDentistry",
+    "PMMA",
+    "TreatmentPlanning",
+    "Prosthodontics",
+    "DigitalDentistry",
+    "DentalWorkflow"
+  ],
+  "keywords": [
+    "implant reference",
+    "interdisciplinary treatment planning",
+    "orthodontic space management",
+    "PMMA provisional crown",
+    "midline alignment implant",
+    "prosthetic guidance",
+    "digital scan dentistry",
+    "prosthodontics"
+  ],
+  "page_url": "/insight/insight-38.html"
 }
-
 
 
 
