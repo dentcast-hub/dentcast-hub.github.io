@@ -5357,6 +5357,34 @@
     "prosthodontics"
   ],
   "page_url": "/insight/insight-38.html"
+},
+{
+  "type": "chairside",
+  "id": "chairside-13",
+  "title": "از تصویر تا واقعیت؛ وقتی زمان، دادهٔ تشخیصی تولید می‌کند",
+  "caption": "روایت یک کیس کلینیکی درباره دندانی که بر اساس رادیوگرافی پانورامیک، پیشنهاد کشیدن و جایگزینی با ایمپلنت برای آن مطرح شده بود. بیمار به‌دلیل چیپینگ پرسلن و نمای فلزی روکش تمایل به تعویض داشت. در بررسی پری‌اپیکال، نشانه‌ای از پوسیدگی ثانویه گسترده یا ضایعه اپیکالی مشاهده نشد. با وجود عدم دسترسی مستقیم به وضعیت دیواره‌ها و فرول، بقای عملکردی دندان طی ۱۵ سال به‌عنوان یک داده کلینیکی واقعی می‌تواند در بهبود پروگنوز نگهداری دندان مؤثر باشد و تفاوت ارزش تصمیم‌سازی بین پانورامیک و پری‌اپیکال و نقش زمان به‌عنوان یک شاخص عملکردی را نشان می‌دهد.",
+  "hashtags": [
+    "تصمیم_گیری_درمان",
+    "نگهداری_دندان",
+    "کشیدن_یا_نگه_داشتن",
+    "تفاوت_پانورامیک_پری_اپیکال",
+    "زمان",
+    "بقای_دندان",
+    "شواهد_کلینیکی_واقعی",
+    "پروگنوز"
+  ],
+  "keywords": [
+    "panoramic vs periapical dentistry",
+    "tooth prognosis long term survival crown",
+    "retain vs extract tooth decision dentistry",
+    "clinical evidence time based prognosis dentistry",
+    "PFM crown chipping metal exposure",
+    "dental crown longevity clinical insight",
+    "real world evidence dentistry tooth survival",
+    "prosthodontic decision making tooth retention",
+    "crown survival long term dental prosthesis"
+  ],
+  "page_url": "/chairside/chairside-13.html"
 }
 
 
