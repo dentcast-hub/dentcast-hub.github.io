@@ -5385,8 +5385,34 @@
     "crown survival long term dental prosthesis"
   ],
   "page_url": "/chairside/chairside-13.html"
+},
+{
+  "type": "chairside",
+  "id": "chairside-14",
+  "title": "درخواست ونیر کامپوزیت در دندان‌های پریودنتالی؛ یک سرنخ تشخیصی، نه یک پاسخ درمانی",
+  "caption": "روایت یک کیس کلینیکی درباره بیماری با شکایت زیبایی در دندان‌های قدامی فک بالا که درخواست ونیر کامپوزیت داشت. در ارزیابی کلینیکی، دندان‌ها دارای پروکلاین، کاهش ساپورت پریودنتال و وضعیت بیولوژیک شکننده بودند. ونیر کامپوزیت در چنین شرایطی نه‌تنها قادر به اصلاح موقعیت و پروفایل دندان‌ها نیست، بلکه با ایجاد اورکانتور می‌تواند کنترل پلاک را دشوارتر کرده و ریسک التهاب و تخریب بیشتر را افزایش دهد. این درخواست به‌عنوان یک سرنخ تشخیصی، نشان‌دهنده ناهماهنگی بین انتظارات زیبایی و محدودیت‌های بیولوژیک و موقعیتی بود و در نهایت تصمیم درمانی به سمت فول اکسترکشن و بازسازی ایمپلنت‌محور هدایت شد.",
+  "hashtags": [
+    "ونیر_کامپوزیت",
+    "پریودنتال",
+    "زیبایی",
+    "تصمیم_درمانی",
+    "اکسترکشن",
+    "ایمپلنت",
+    "تحلیل_استخوان",
+    "پروگنوز"
+  ],
+  "keywords": [
+    "composite veneer periodontally compromised teeth",
+    "veneer contraindications periodontal disease",
+    "esthetic demand unstable dentition",
+    "full extraction implant decision dentistry",
+    "periodontal bone loss veneer limitation",
+    "treatment planning esthetics vs prognosis",
+    "prosthodontic decision making full mouth extraction",
+    "implant based rehabilitation compromised dentition"
+  ],
+  "page_url": "/chairside/chairside-14.html"
 }
-
 
 
 
