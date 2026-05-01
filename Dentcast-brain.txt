@@ -5412,6 +5412,33 @@
     "implant based rehabilitation compromised dentition"
   ],
   "page_url": "/chairside/chairside-14.html"
+},
+{
+  "type": "clinical",
+  "id": "clinical-39",
+  "title": "خروج از تونل کانال در دندان‌های C-Shape: وقتی پست‌و‌کور تنها مسیر نیست",
+  "caption": "در دندان‌های C-shape که امکان استفاده از کانال برای پست وجود ندارد، تمرکز بر پست‌و‌کور می‌تواند تصمیم‌گیری را محدود کند. در این رویکرد پروتزی، با حذف نگاه تونلی به کانال، بازسازی بر اساس ساختار تاجی و انتخاب‌هایی مانند core build-up، onlay یا endocrown انجام می‌شود تا درمان به مسیری قابل پیش‌بینی هدایت شود.",
+  "hashtags": [
+    "سی_شیپ",
+    "اندودانتیکس",
+    "پروتز",
+    "پست_و_کور",
+    "اندوکران",
+    "آنلی",
+    "کور_بیلدآپ",
+    "تصمیم_گیری_درمان"
+  ],
+  "keywords": [
+    "C-shape canal",
+    "post and core limitation",
+    "endocrown",
+    "cuspal coverage",
+    "core build-up",
+    "prosthetic decision making",
+    "dental restoration strategy",
+    "prosthodontics"
+  ],
+  "page_url": "/insight/insight-39.html"
 }
 
 
