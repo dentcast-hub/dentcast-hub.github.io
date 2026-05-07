@@ -1,0 +1,1853 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <title>🎙️ دنت‌کست — پادکست علمی دندان‌پزشکی</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+  <meta name="description" content="پادکست علمی دندان‌پزشکی با روایت دکتر فواد شهابیان؛ مرور ساده و تحلیلی تازه‌ترین مقالات حوزهٔ پروتز، ایمپلنت و دندان‌پزشکی ترمیمی.">
+  <link rel="icon" href="/logo-v2.png" type="image/png">
+  <link rel="apple-touch-icon" href="/logo-v2.png">
+  <meta name="theme-color" content="#0a1628">
+  <link rel="canonical" href="https://dentcast.org/">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="DentCast — پادکست علمی دندان‌پزشکی">
+  <meta property="og:description" content="پلتفرم آموزشی دنت‌کست؛ مرور تحلیلی مقالات پروتز، ایمپلنت و تصمیم‌گیری بالینی.">
+  <meta property="og:url" content="https://dentcast.org/">
+  <meta property="og:image" content="/dentcast-cover.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="/dentcast-cover.webp">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    /* =============================================
+       RESET
+    ============================================= */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; width: 100%; overflow-x: hidden; }
+    img, video, svg { display: block; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+    button, input, textarea, select { font: inherit; color: inherit; background: none; border: none; outline: none; cursor: pointer; }
+    ul, ol { list-style: none; }
+    h1,h2,h3,h4,h5,h6 { font-weight: inherit; font-size: inherit; }
+    [hidden] { display: none !important; }
+
+    /* =============================================
+       DESIGN TOKENS
+    ============================================= */
+    :root {
+      /* Brand */
+      --brand: #022360;
+      --brand-mid: #0d3a8e;
+      --brand-light: #1a56c4;
+      --brand-glow: rgba(2,35,96,0.18);
+
+      /* BG layers */
+      --bg-base: #0e1621;
+      --bg-sidebar: #17212b;
+      --bg-topbar: #17212b;
+      --bg-card: #1e2c3a;
+      --bg-card-hover: #243444;
+      --bg-input: #243444;
+      --bg-viewer: #0e1621;
+
+      /* Text */
+      --text-primary: #e8edf2;
+      --text-secondary: #8da0b3;
+      --text-muted: #5a7387;
+      --text-accent: #5ba3d9;
+      --text-brand: #7eb8f7;
+
+      /* Borders */
+      --border: rgba(255,255,255,0.06);
+      --border-active: rgba(91,163,217,0.35);
+
+      /* Radius */
+      --r-sm: 8px;
+      --r-md: 12px;
+      --r-lg: 16px;
+      --r-xl: 20px;
+      --r-pill: 999px;
+
+      /* Shadows */
+      --shadow-card: 0 2px 8px rgba(0,0,0,0.3);
+      --shadow-active: 0 4px 20px rgba(2,35,96,0.4);
+      --shadow-float: 0 8px 32px rgba(0,0,0,0.4);
+
+      /* Spacing */
+      --sidebar-w: 280px;
+      --topbar-h: 56px;
+      --bottomnav-h: 60px;
+
+      /* Transitions */
+      --t: 0.18s ease;
+    }
+
+    /* =============================================
+       BASE
+    ============================================= */
+    body {
+      font-family: "Vazirmatn", sans-serif;
+      background: var(--bg-base);
+      color: var(--text-primary);
+      min-height: 100vh;
+      direction: rtl;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* =============================================
+       LAYOUT — MOBILE (default)
+    ============================================= */
+    .dc-app {
+      display: flex;
+      flex-direction: column;
+      height: 100dvh;
+      overflow: hidden;
+    }
+
+    /* ---- Top Bar (mobile) ---- */
+    .dc-topbar {
+      height: var(--topbar-h);
+      background: var(--bg-topbar);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 14px;
+      gap: 12px;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 10;
+    }
+
+    .dc-topbar-logo {
+      font-size: 17px;
+      font-weight: 900;
+      color: var(--text-brand);
+      letter-spacing: -0.3px;
+      flex: 1;
+    }
+    .dc-topbar-logo span {
+      color: var(--text-secondary);
+      font-weight: 400;
+      font-size: 13px;
+      display: block;
+      margin-top: -2px;
+    }
+
+    .dc-topbar-btn {
+      width: 36px; height: 36px;
+      border-radius: var(--r-md);
+      background: var(--bg-card);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 17px;
+      color: var(--text-secondary);
+      transition: var(--t);
+      flex-shrink: 0;
+    }
+    .dc-topbar-btn:active { background: var(--bg-card-hover); transform: scale(0.93); }
+
+    /* ---- Content Area ---- */
+    .dc-content {
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+      padding: 10px 10px 80px;
+    }
+    .dc-content::-webkit-scrollbar { display: none; }
+
+    /* ---- Bottom Nav (mobile) ---- */
+    .dc-bottomnav {
+      height: var(--bottomnav-h);
+      background: var(--bg-topbar);
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: stretch;
+      flex-shrink: 0;
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+
+    .dc-nav-item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      padding: 4px 2px;
+      border-radius: 0;
+      transition: var(--t);
+      position: relative;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .dc-nav-item .ico { font-size: 19px; line-height: 1; transition: transform var(--t); }
+    .dc-nav-item .lbl { font-size: 10px; font-weight: 600; color: var(--text-muted); transition: color var(--t); white-space: nowrap; }
+    .dc-nav-item.active .lbl { color: var(--text-brand); }
+    .dc-nav-item.active .ico { transform: scale(1.12); }
+    .dc-nav-item.active::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 15%; right: 15%;
+      height: 2px;
+      border-radius: var(--r-pill);
+      background: var(--text-brand);
+    }
+    .dc-nav-item:active { background: rgba(91,163,217,0.08); }
+
+    /* ---- Panel ---- */
+    .dc-panel { display: none; }
+    .dc-panel.active { display: block; animation: fadeUp 0.22s ease; }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* =============================================
+       CARDS
+    ============================================= */
+    .dc-card-list { display: flex; flex-direction: column; gap: 6px; }
+
+    .dc-section-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      padding: 14px 4px 6px;
+    }
+
+    /* Base card */
+    .dc-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      transition: background var(--t), transform var(--t), border-color var(--t);
+      position: relative;
+      overflow: hidden;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+    .dc-card:active { background: var(--bg-card-hover); transform: scale(0.985); }
+    .dc-card:hover { background: var(--bg-card-hover); }
+
+    /* Card icon badge */
+    .dc-card-ico {
+      width: 42px; height: 42px;
+      border-radius: var(--r-md);
+      background: rgba(91,163,217,0.12);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .dc-card-body { flex: 1; min-width: 0; }
+    .dc-card-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.3;
+    }
+    .dc-card-sub {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-top: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .dc-card-badge {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: var(--r-pill);
+      background: rgba(91,163,217,0.15);
+      color: var(--text-accent);
+      border: 1px solid rgba(91,163,217,0.25);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* Featured (hero) card */
+    .dc-card.hero {
+      background: linear-gradient(135deg, rgba(2,35,96,0.55), rgba(13,58,142,0.35));
+      border-color: rgba(91,163,217,0.3);
+      box-shadow: var(--shadow-active);
+      padding: 16px;
+    }
+    .dc-card.hero .dc-card-title { font-size: 15px; }
+    .dc-card.hero .dc-card-ico {
+      width: 48px; height: 48px;
+      background: rgba(91,163,217,0.2);
+      font-size: 24px;
+    }
+
+    /* Grid 2-col */
+    .dc-grid2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+    }
+    .dc-grid2 .dc-card {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 14px 12px 12px;
+      gap: 8px;
+    }
+    .dc-grid2 .dc-card .dc-card-ico {
+      width: 36px; height: 36px;
+      font-size: 18px;
+    }
+    .dc-grid2 .dc-card .dc-card-title { font-size: 13px; }
+    .dc-grid2 .dc-card .dc-card-sub { font-size: 11px; white-space: normal; }
+    .dc-grid2 .dc-card .dc-card-badge { display: none; }
+
+    /* Radar card (centered pill) */
+    .dc-card.radar-card {
+      justify-content: center;
+      text-align: center;
+      padding: 10px 18px;
+      background: transparent;
+      border-color: rgba(91,163,217,0.2);
+      border-style: dashed;
+      gap: 8px;
+    }
+    .dc-card.radar-card .dc-card-title { font-size: 13px; color: var(--text-accent); }
+
+    /* Ad card */
+    .dc-adcard {
+      background: rgba(245,162,8,0.06);
+      border: 1px solid rgba(245,162,8,0.2);
+      border-radius: var(--r-lg);
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 4px;
+    }
+    .dc-adcard a { display: flex; align-items: center; gap: 10px; width: 100%; text-decoration: none; }
+    .dc-adcard .ad-ico { font-size: 18px; flex-shrink: 0; }
+    .dc-adcard .ad-body { flex: 1; font-size: 12px; color: #c9a24a; line-height: 1.4; }
+    .dc-adcard .ad-btn {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: var(--r-pill);
+      background: rgba(245,162,8,0.15);
+      color: #e0b94a;
+      border: 1px solid rgba(245,162,8,0.3);
+      flex-shrink: 0;
+    }
+
+    /* Pulse banner */
+    .dc-pulse {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 12px 14px 10px;
+      margin-bottom: 10px;
+      position: relative;
+    }
+    .dc-pulse-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+    .dc-pulse-title {
+      font-size: 11px;
+      font-weight: 800;
+      color: #e05454;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .dc-pulse-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #e05454;
+      animation: blink 1.2s infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+    .dc-pulse-close {
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      background: var(--bg-card-hover);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px;
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+    .dc-pulse-list { list-style: none; }
+    .dc-pulse-list li {
+      font-size: 12px;
+      color: var(--text-secondary);
+      padding: 5px 0;
+      border-bottom: 1px solid var(--border);
+      line-height: 1.5;
+    }
+    .dc-pulse-list li:last-child { border-bottom: none; }
+    .dc-pulse-list a { color: var(--text-accent); }
+    .dc-pulse-list a:hover { text-decoration: underline; }
+
+    /* Monitor list (last 30 updates, patient TV) */
+    .dc-monitor {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      overflow: hidden;
+      margin-bottom: 6px;
+    }
+    .dc-monitor-header {
+      padding: 10px 14px 8px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-secondary);
+      border-bottom: 1px solid var(--border);
+    }
+    .dc-monitor-list {
+      max-height: 260px;
+      overflow-y: auto;
+      padding: 4px 0;
+    }
+    .dc-monitor-list::-webkit-scrollbar { width: 4px; }
+    .dc-monitor-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: var(--r-pill); }
+    .dc-monitor-list a {
+      display: block;
+      padding: 8px 14px;
+      font-size: 13px;
+      color: var(--text-accent);
+      border-bottom: 1px solid var(--border);
+      transition: background var(--t);
+      line-height: 1.4;
+    }
+    .dc-monitor-list a:last-child { border-bottom: none; }
+    .dc-monitor-list a:hover { background: var(--bg-card-hover); }
+
+    /* Location + CTA */
+    .dc-locpack {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      overflow: hidden;
+      margin-bottom: 6px;
+    }
+    .dc-locpack-img {
+      width: 100%;
+      height: 110px;
+      object-fit: cover;
+      display: block;
+    }
+    .dc-locpack-body { padding: 10px 14px 12px; }
+    .dc-locpack-hint {
+      font-size: 12px;
+      color: var(--text-secondary);
+      text-align: center;
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
+    .dc-cta-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .dc-cta-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 8px;
+      border-radius: var(--r-md);
+      font-size: 13px;
+      font-weight: 700;
+      background: rgba(91,163,217,0.12);
+      color: var(--text-brand);
+      border: 1px solid rgba(91,163,217,0.2);
+      transition: var(--t);
+      text-decoration: none;
+    }
+    .dc-cta-btn:active { background: rgba(91,163,217,0.2); transform: scale(0.97); }
+
+    /* Tools island */
+    .dc-tools-island {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      overflow: hidden;
+      margin-top: 6px;
+    }
+    .dc-tool-seg {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      padding: 14px 6px;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      transition: background var(--t);
+      position: relative;
+    }
+    .dc-tool-seg:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      left: 0; top: 20%; bottom: 20%;
+      width: 1px;
+      background: var(--border);
+    }
+    .dc-tool-seg:active { background: var(--bg-card-hover); }
+    .dc-tool-ico { font-size: 20px; line-height: 1; }
+    .dc-tool-txt { font-size: 11px; font-weight: 700; color: var(--text-secondary); }
+
+    /* =============================================
+       SEARCH CARD (sticky)
+    ============================================= */
+    .dc-search-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 11px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      margin-bottom: 6px;
+      transition: var(--t);
+    }
+    .dc-search-card:active { background: var(--bg-card-hover); }
+    .dc-search-icon { font-size: 16px; color: var(--text-muted); }
+    .dc-search-placeholder {
+      flex: 1;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* =============================================
+       SEARCH OVERLAY
+    ============================================= */
+    .dc-search-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: var(--bg-base);
+      display: flex;
+      flex-direction: column;
+      transform: translateY(100%);
+      transition: transform 0.25s cubic-bezier(0.4,0,0.2,1);
+    }
+    .dc-search-overlay.open { transform: translateY(0); }
+
+    .dc-search-overlay-head {
+      padding: 10px 12px 8px;
+      background: var(--bg-topbar);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .dc-search-input-wrap {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 8px 12px;
+    }
+    .dc-search-input-wrap input {
+      flex: 1;
+      font-size: 14px;
+      color: var(--text-primary);
+      background: transparent;
+    }
+    .dc-search-input-wrap input::placeholder { color: var(--text-muted); }
+    .dc-search-close-btn {
+      width: 36px; height: 36px;
+      border-radius: var(--r-md);
+      background: var(--bg-card);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; font-weight: 700;
+      color: var(--text-secondary);
+      flex-shrink: 0;
+    }
+    .dc-search-close-btn:active { background: var(--bg-card-hover); }
+
+    .dc-search-filter-row {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding: 8px 12px;
+      scrollbar-width: none;
+      background: var(--bg-topbar);
+      border-bottom: 1px solid var(--border);
+    }
+    .dc-search-filter-row::-webkit-scrollbar { display: none; }
+    .dc-filter-pill {
+      flex-shrink: 0;
+      padding: 5px 12px;
+      border-radius: var(--r-pill);
+      font-size: 11px;
+      font-weight: 700;
+      background: var(--bg-card);
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: var(--t);
+    }
+    .dc-filter-pill.active {
+      background: rgba(2,35,96,0.5);
+      color: var(--text-brand);
+      border-color: rgba(91,163,217,0.35);
+    }
+
+    .dc-search-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 10px;
+      -webkit-overflow-scrolling: touch;
+    }
+    .dc-search-body::-webkit-scrollbar { display: none; }
+
+    .dc-result-item {
+      display: block;
+      padding: 10px 12px;
+      border-radius: var(--r-md);
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+      font-size: 13px;
+      margin-bottom: 6px;
+      line-height: 1.4;
+      transition: var(--t);
+    }
+    .dc-result-item:hover { background: var(--bg-card-hover); }
+
+    /* =============================================
+       RADAR OVERLAY
+    ============================================= */
+    .dc-radar-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: var(--bg-base);
+      display: flex;
+      flex-direction: column;
+      transform: translateY(100%);
+      transition: transform 0.25s cubic-bezier(0.4,0,0.2,1);
+    }
+    .dc-radar-overlay.open { transform: translateY(0); }
+
+    .dc-radar-head {
+      padding: 10px 12px 8px;
+      background: var(--bg-topbar);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .dc-radar-title { flex: 1; font-size: 15px; font-weight: 800; color: var(--text-primary); }
+    .dc-radar-input-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 9px 14px;
+      margin: 8px 12px;
+    }
+    .dc-radar-input-wrap input {
+      flex: 1;
+      font-size: 14px;
+      color: var(--text-primary);
+      background: transparent;
+    }
+    .dc-radar-input-wrap input::placeholder { color: var(--text-muted); }
+
+    .dc-radar-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 0 10px 10px;
+      -webkit-overflow-scrolling: touch;
+    }
+    .dc-radar-body::-webkit-scrollbar { display: none; }
+
+    .dc-radar-result-item {
+      display: block;
+      padding: 12px 14px;
+      border-radius: var(--r-md);
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      margin-bottom: 6px;
+      text-decoration: none;
+      transition: var(--t);
+    }
+    .dc-radar-result-item:hover { background: var(--bg-card-hover); border-color: var(--border-active); }
+    .dc-radar-item-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-accent);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .dc-radar-item-url { font-size: 11px; color: #4caf7d; margin: 3px 0 5px; direction: ltr; text-align: left; }
+    .dc-radar-item-desc { font-size: 12px; color: var(--text-secondary); line-height: 1.5;
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+    .dc-radar-badge {
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 700;
+    }
+    .dc-radar-badge.featured { background: rgba(255,193,7,0.15); color: #ffc107; border: 1px solid rgba(255,193,7,0.25); }
+    .dc-radar-badge.credit { background: rgba(76,175,125,0.15); color: #4caf7d; border: 1px solid rgba(76,175,125,0.25); }
+
+    .dc-radar-suggest-link {
+      text-align: center;
+      padding: 12px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .dc-radar-suggest-link a { color: var(--text-accent); }
+
+    /* =============================================
+       DESKTOP LAYOUT (≥1024px + fine pointer)
+    ============================================= */
+    @media (min-width: 1024px) {
+
+      body.dc-desktop-ui .dc-app {
+        flex-direction: row;
+        height: 100vh;
+      }
+
+      /* Sidebar */
+      body.dc-desktop-ui .dc-sidebar {
+        width: var(--sidebar-w);
+        flex-shrink: 0;
+        background: var(--bg-sidebar);
+        border-left: 1px solid var(--border);
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      body.dc-desktop-ui .dc-sidebar-brand {
+        padding: 18px 16px 12px;
+        border-bottom: 1px solid var(--border);
+        flex-shrink: 0;
+      }
+      body.dc-desktop-ui .dc-sidebar-brand .brand-name {
+        font-size: 20px;
+        font-weight: 900;
+        color: var(--text-brand);
+      }
+      body.dc-desktop-ui .dc-sidebar-brand .brand-sub {
+        font-size: 11px;
+        color: var(--text-muted);
+        margin-top: 2px;
+      }
+
+      /* Search in sidebar */
+      body.dc-desktop-ui .dc-sidebar-search {
+        padding: 10px 12px 6px;
+        flex-shrink: 0;
+      }
+      body.dc-desktop-ui .dc-sidebar-search-box {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--bg-input);
+        border: 1px solid var(--border);
+        border-radius: var(--r-lg);
+        padding: 8px 12px;
+        cursor: pointer;
+        transition: var(--t);
+      }
+      body.dc-desktop-ui .dc-sidebar-search-box:hover { border-color: rgba(91,163,217,0.3); }
+      body.dc-desktop-ui .dc-sidebar-search-box span { font-size: 12px; color: var(--text-muted); flex: 1; }
+
+      /* Nav list */
+      body.dc-desktop-ui .dc-sidebar-nav {
+        flex: 1;
+        overflow-y: auto;
+        padding: 6px 8px 12px;
+        scrollbar-width: thin;
+        scrollbar-color: rgba(255,255,255,0.1) transparent;
+      }
+      body.dc-desktop-ui .dc-sidebar-nav::-webkit-scrollbar { width: 4px; }
+      body.dc-desktop-ui .dc-sidebar-nav::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 999px; }
+
+      body.dc-desktop-ui .dc-nav-group-label {
+        font-size: 10px;
+        font-weight: 700;
+        color: var(--text-muted);
+        letter-spacing: 0.7px;
+        padding: 10px 8px 4px;
+      }
+
+      body.dc-desktop-ui .dc-desk-nav-btn {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 9px 10px;
+        border-radius: var(--r-md);
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        text-align: right;
+        transition: background var(--t);
+        -webkit-tap-highlight-color: transparent;
+      }
+      body.dc-desktop-ui .dc-desk-nav-btn:hover { background: var(--bg-card); }
+      body.dc-desktop-ui .dc-desk-nav-btn.is-active { background: rgba(2,35,96,0.5); }
+      body.dc-desktop-ui .dc-desk-nav-btn.is-active .nav-label { color: var(--text-brand); }
+      body.dc-desktop-ui .dc-desk-nav-btn:active { transform: scale(0.98); }
+
+      body.dc-desktop-ui .nav-ico {
+        width: 32px; height: 32px;
+        border-radius: var(--r-sm);
+        background: var(--bg-card);
+        display: flex; align-items: center; justify-content: center;
+        font-size: 15px;
+        flex-shrink: 0;
+        transition: background var(--t);
+      }
+      body.dc-desktop-ui .dc-desk-nav-btn.is-active .nav-ico { background: rgba(91,163,217,0.15); }
+      body.dc-desktop-ui .nav-texts { display: flex; flex-direction: column; gap: 1px; }
+      body.dc-desktop-ui .nav-label { font-size: 13px; font-weight: 700; color: var(--text-secondary); }
+      body.dc-desktop-ui .nav-hint { font-size: 10px; color: var(--text-muted); }
+
+      body.dc-desktop-ui .dc-nav-divider {
+        height: 1px;
+        background: var(--border);
+        margin: 6px 8px;
+      }
+
+      /* === Main area (right side in RTL = left visually) === */
+      body.dc-desktop-ui .dc-main-area {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        overflow: hidden;
+        min-width: 0;
+      }
+
+      /* Viewer */
+      body.dc-desktop-ui .dc-viewer-wrap {
+        flex: 1;
+        position: relative;
+        overflow: hidden;
+      }
+      body.dc-desktop-ui #dcDeskViewer {
+        width: 100%;
+        height: 100%;
+        border: 0;
+        background: #fff;
+        display: none;
+      }
+      body.dc-desktop-ui .dc-viewer-empty {
+        position: absolute;
+        inset: 0;
+        background: url("/header.webp") center/cover no-repeat;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      body.dc-desktop-ui .dc-viewer-empty-inner {
+        background: rgba(14,22,33,0.85);
+        backdrop-filter: blur(10px);
+        border-radius: var(--r-xl);
+        border: 1px solid rgba(255,255,255,0.08);
+        padding: 28px 32px;
+        max-width: 480px;
+        text-align: center;
+      }
+      body.dc-desktop-ui .dc-viewer-empty-inner .e-logo { font-size: 32px; font-weight: 900; color: var(--text-brand); margin-bottom: 6px; }
+      body.dc-desktop-ui .dc-viewer-empty-inner .e-sub { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+
+      /* When live */
+      body.dc-desktop-ui.dc-viewer-live #dcDeskViewer { display: block; }
+      body.dc-desktop-ui.dc-viewer-live .dc-viewer-empty { display: none; }
+
+      /* Search overlay on desktop: slide from top */
+      body.dc-desktop-ui .dc-search-overlay {
+        position: absolute;
+        inset: auto 0 0 0;
+        top: 0;
+        border-radius: 0;
+        transform: translateY(-100%);
+      }
+      body.dc-desktop-ui .dc-search-overlay.open { transform: translateY(0); }
+
+      /* Radar overlay on desktop */
+      body.dc-desktop-ui .dc-radar-overlay {
+        position: absolute;
+        inset: 0;
+        border-radius: 0;
+        transform: translateY(-100%);
+      }
+      body.dc-desktop-ui .dc-radar-overlay.open { transform: translateY(0); }
+
+      /* Hide mobile-only elements */
+      body.dc-desktop-ui .dc-topbar { display: none; }
+      body.dc-desktop-ui .dc-bottomnav { display: none; }
+      body.dc-desktop-ui .mobile-only { display: none !important; }
+      body.dc-desktop-ui .dc-content { display: none !important; }
+
+      body.dc-desktop-ui { overflow: hidden; }
+
+      /* Desktop search within sidebar */
+      body.dc-desktop-ui .dc-sidebar-search-box.active-input {
+        border-color: rgba(91,163,217,0.35);
+      }
+    }
+
+    /* =============================================
+       VISUALLY HIDDEN (SEO)
+    ============================================= */
+    .sr-only {
+      position: absolute; width: 1px; height: 1px;
+      padding: 0; margin: -1px; overflow: hidden;
+      clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+    }
+
+    /* =============================================
+       UTILS
+    ============================================= */
+    .mt6 { margin-top: 6px; }
+    .mt12 { margin-top: 12px; }
+    .mt16 { margin-top: 16px; }
+
+    /* Shine animation for radar card */
+    .radar-shine-card { position: relative; overflow: hidden; }
+    .radar-shine-card::after {
+      content: "";
+      position: absolute;
+      top: -60%; right: -80%;
+      width: 55%; height: 220%;
+      background: linear-gradient(90deg, transparent 0%, rgba(91,163,217,0.12) 30%, rgba(91,163,217,0.45) 50%, rgba(91,163,217,0.12) 70%, transparent 100%);
+      transform: rotate(22deg);
+      opacity: 0;
+      pointer-events: none;
+    }
+    .radar-shine-card.shining::after { animation: cardShine 1s ease-out forwards; }
+    @keyframes cardShine {
+      0%  { right: -80%; opacity: 0; }
+      25% { opacity: 0.7; }
+      100%{ right: 130%; opacity: 0; }
+    }
+
+    /* Prevent flash on desktop before JS runs */
+    @media (min-width: 1024px) and (hover: hover) {
+      .dc-topbar, .dc-bottomnav, .dc-content { visibility: hidden; }
+    }
+  </style>
+</head>
+<body>
+
+<h1 class="sr-only">دنت‌کست — مرجع آموزش دندانپزشکی به زبان فارسی</h1>
+
+<!-- =============================================
+     MOBILE APP SHELL
+============================================= -->
+<div class="dc-app" id="dcApp">
+
+  <!-- Top Bar (mobile) -->
+  <header class="dc-topbar">
+    <div class="dc-topbar-logo">
+      DentCast
+      <span>دکتر فواد شهابیان</span>
+    </div>
+    <button class="dc-topbar-btn" id="mobileSearchBtn" aria-label="جستجو">🔍</button>
+  </header>
+
+  <!-- Scrollable content area (mobile) -->
+  <main class="dc-content" id="dcMobileContent">
+    <!-- Panels injected here via JS tabs -->
+    <section class="dc-panel active" id="panel-studio"></section>
+    <section class="dc-panel" id="panel-meta"></section>
+    <section class="dc-panel" id="panel-patient"></section>
+    <section class="dc-panel" id="panel-site"></section>
+  </main>
+
+  <!-- Bottom Nav (mobile) -->
+  <nav class="dc-bottomnav" aria-label="ناوبری اصلی">
+    <div class="dc-nav-item active" data-panel="panel-studio">
+      <span class="ico">🎙️</span>
+      <span class="lbl">استودیو</span>
+    </div>
+    <div class="dc-nav-item" data-panel="panel-meta">
+      <span class="ico">📚</span>
+      <span class="lbl">متابیس</span>
+    </div>
+    <div class="dc-nav-item" data-panel="panel-patient">
+      <span class="ico">👤</span>
+      <span class="lbl">بیماران</span>
+    </div>
+    <div class="dc-nav-item" data-panel="panel-site">
+      <span class="ico">⚙️</span>
+      <span class="lbl">ابزار</span>
+    </div>
+  </nav>
+</div>
+
+<!-- =============================================
+     DESKTOP SHELL
+============================================= -->
+<div id="dcDesktopShell" style="display:none; position:fixed; inset:0; flex-direction:row;">
+
+  <!-- Sidebar (right in RTL) -->
+  <aside class="dc-sidebar" aria-label="ناوبری دسکتاپ">
+    <div class="dc-sidebar-brand">
+      <div class="brand-name">DentCast</div>
+      <div class="brand-sub">دکتر فواد شهابیان — پادکست علمی دندان‌پزشکی</div>
+    </div>
+
+    <div class="dc-sidebar-search">
+      <div class="dc-sidebar-search-box" id="deskSearchTrigger">
+        <span>🔍</span>
+        <span>جستجو در سایت...</span>
+      </div>
+    </div>
+
+    <nav class="dc-sidebar-nav" aria-label="بخش‌های سایت">
+      <div class="dc-nav-group-label">محتوا</div>
+
+      <button class="dc-desk-nav-btn" type="button" data-src="episodes.html" data-label="اپیزودهای دنت‌کست">
+        <span class="nav-ico">🎧</span>
+        <span class="nav-texts"><span class="nav-label">اپیزودها</span><span class="nav-hint">همه اپیزودهای اصلی و فرعی</span></span>
+      </button>
+      <button class="dc-desk-nav-btn" type="button" data-src="/notecast/" data-label="NoteCast">
+        <span class="nav-ico">📝</span>
+        <span class="nav-texts"><span class="nav-label">NoteCast</span><span class="nav-hint">خلاصه‌نویسی اپیزودها</span></span>
+      </button>
+      <button class="dc-desk-nav-btn" type="button" data-src="/dentai/" data-label="DentAI">
+        <span class="nav-ico">🤖</span>
+        <span class="nav-texts"><span class="nav-label">DentAI</span><span class="nav-hint">مرور مقالات با هوش مصنوعی</span></span>
+      </button>
+      <button class="dc-desk-nav-btn" type="button" data-src="/dentcast-plus/" data-label="DentCast+">
+        <span class="nav-ico">▶️</span>
+        <span class="nav-texts"><span class="nav-label">DentCast+</span><span class="nav-hint">آموزش با ویدیو</span></span>
+      </button>
+      <button class="dc-desk-nav-btn" type="button" data-src="/photocast/" data-label="Photocast">
+        <span class="nav-ico">🖼️</span>
+        <span class="nav-texts"><span class="nav-label">Photocast</span><span class="nav-hint">آموزش با تصویر</span></span>
+      </button>
+
+      <div class="dc-nav-divider"></div>
+      <div class="dc-nav-group-label">متابیس</div>
+
+      <button class="dc-desk-nav-btn" type="button" data-src="/glossary/" data-label="دانشنامه">
+        <span class="nav-ico">📚</span>
+        <span class="nav-texts"><span class="nav-label">دانشنامه</span><span class="nav-hint">مفاهیم تصمیم‌ساز دندانپزشکی</span></span>
+      </button>
+      <button class="dc-desk-nav-btn" type="button" data-src="/insight/" data-label="Clinical Insight">
+        <span class="nav-ico">🧠</span>
+        <span class="nav-texts"><span class="nav-label">Clinical Insight</span><span class="nav-hint">بینش کلینیکی</span></span>
+      </button>
+      <button class="dc-desk-nav-btn" type="button" data-src="/sharehub/" data-label="Share Hub">
+        <span class="nav-ico">🔗</span>
+        <span class="nav-texts"><span class="nav-label">Share Hub</span><span class="nav-hint">مطالب دیگران با ذکر منبع</span></span>
+      </button>
+      <button class="dc-desk-nav-btn" type="button" data-src="/chairside/" data-label="Chairside">
+        <span class="nav-ico">🦷</span>
+        <span class="nav-texts"><span class="nav-label">Chairside</span><span class="nav-hint">نکات ویزیت روزانه</span></span>
+      </button>
+      <button class="dc-desk-nav-btn" type="button" data-src="/metanotes/" data-label="Meta Note">
+        <span class="nav-ico">🧩</span>
+        <span class="nav-texts"><span class="nav-label">Meta Note</span><span class="nav-hint">ایده‌های خارج از چارچوب</span></span>
+      </button>
+
+      <div class="dc-nav-divider"></div>
+      <div class="dc-nav-group-label">برای بیماران</div>
+
+      <button class="dc-desk-nav-btn" type="button" data-src="/litecast/" data-label="LiteCast">
+        <span class="nav-ico">👤</span>
+        <span class="nav-texts"><span class="nav-label">LiteCast</span><span class="nav-hint">محتوای غیر تخصصی برای بیماران</span></span>
+      </button>
+
+      <div class="dc-nav-divider"></div>
+      <div class="dc-nav-group-label">ابزار سایت</div>
+
+      <button class="dc-desk-nav-btn" type="button" data-action="pwa">
+        <span class="nav-ico">📱</span>
+        <span class="nav-texts"><span class="nav-label">نصب PWA</span><span class="nav-hint">آفلاین، سریع، با آیکون اختصاصی</span></span>
+      </button>
+      <button class="dc-desk-nav-btn" type="button" data-action="search">
+        <span class="nav-ico">🔎</span>
+        <span class="nav-texts"><span class="nav-label">جستجوی سراسری</span><span class="nav-hint">سرچ در تمام محتوا</span></span>
+      </button>
+      <button class="dc-desk-nav-btn" type="button" data-src="/join.html" data-label="خبرنامه">
+        <span class="nav-ico">📬</span>
+        <span class="nav-texts"><span class="nav-label">خبرنامه</span><span class="nav-hint">اطلاع از اپیزودهای جدید</span></span>
+      </button>
+      <button class="dc-desk-nav-btn" type="button" data-action="consult">
+        <span class="nav-ico">📞</span>
+        <span class="nav-texts"><span class="nav-label">مشاوره</span><span class="nav-hint">درخواست مشاوره آنلاین</span></span>
+      </button>
+      <button class="dc-desk-nav-btn" type="button" data-src="about.html" data-label="درباره دنتکست">
+        <span class="nav-ico">✨</span>
+        <span class="nav-texts"><span class="nav-label">درباره</span><span class="nav-hint">معرفی مسیر و اهداف</span></span>
+      </button>
+    </nav>
+  </aside>
+
+  <!-- Main/Viewer area -->
+  <div class="dc-main-area">
+    <div class="dc-viewer-wrap" id="dcViewerWrap">
+      <iframe id="dcDeskViewer" title="DentCast Viewer" loading="lazy" referrerpolicy="no-referrer"></iframe>
+      <div class="dc-viewer-empty" id="dcViewerEmpty">
+        <div class="dc-viewer-empty-inner">
+          <div class="e-logo">DentCast</div>
+          <div class="e-sub">برای مشاهده محتوا، یک بخش را از منوی کنار انتخاب کنید.<br>پادکست علمی دندان‌پزشکی — دکتر فواد شهابیان</div>
+        </div>
+      </div>
+
+      <!-- Desktop search overlay (inside viewer area) -->
+      <div class="dc-search-overlay" id="dcDesktopSearchOverlay">
+        <div class="dc-search-overlay-head">
+          <div class="dc-search-input-wrap">
+            <span>🔍</span>
+            <input type="text" id="dcDesktopSearchInput" placeholder="جستجو در همه مطالب علمی دنتکست…" autocomplete="off">
+          </div>
+          <button class="dc-search-close-btn" id="closeDesktopSearch">×</button>
+        </div>
+        <div class="dc-search-filter-row" id="dcDesktopFilters">
+          <div class="dc-filter-pill active" data-type="dentcast">دنت‌کست</div>
+          <div class="dc-filter-pill active" data-type="notecast">نوت‌کست</div>
+          <div class="dc-filter-pill active" data-type="clinical">نکات کلینیکی</div>
+          <div class="dc-filter-pill active" data-type="dentcast_plus">ویدیوها</div>
+          <div class="dc-filter-pill active" data-type="dentai">مقالات</div>
+          <div class="dc-filter-pill active" data-type="meta">metanote</div>
+          <div class="dc-filter-pill active" data-type="chairside">chairside</div>
+          <div class="dc-filter-pill active" data-type="sharehub">Share Hub</div>
+        </div>
+        <div class="dc-search-body" id="dcDesktopResults"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- =============================================
+     MOBILE SEARCH OVERLAY
+============================================= -->
+<div class="dc-search-overlay" id="dcMobileSearchOverlay">
+  <div class="dc-search-overlay-head">
+    <div class="dc-search-input-wrap">
+      <span>🔍</span>
+      <input type="text" id="dcMobileSearchInput" placeholder="جستجو در همه مطالب…" autocomplete="off">
+    </div>
+    <button class="dc-search-close-btn" id="closeMobileSearch">×</button>
+  </div>
+  <div class="dc-search-filter-row" id="dcMobileFilters">
+    <div class="dc-filter-pill active" data-type="dentcast">دنت‌کست</div>
+    <div class="dc-filter-pill active" data-type="notecast">نوت‌کست</div>
+    <div class="dc-filter-pill active" data-type="clinical">نکات کلینیکی</div>
+    <div class="dc-filter-pill active" data-type="dentcast_plus">ویدیوها</div>
+    <div class="dc-filter-pill active" data-type="dentai">مقالات</div>
+    <div class="dc-filter-pill active" data-type="meta">metanote</div>
+    <div class="dc-filter-pill active" data-type="chairside">chairside</div>
+    <div class="dc-filter-pill active" data-type="sharehub">Share Hub</div>
+  </div>
+  <div class="dc-search-body" id="dcMobileResults"></div>
+</div>
+
+<!-- =============================================
+     RADAR OVERLAY (shared mobile + desktop)
+============================================= -->
+<div class="dc-radar-overlay" id="dcRadarOverlay">
+  <div class="dc-radar-head">
+    <button class="dc-search-close-btn" id="closeRadar" style="margin-left:0;margin-right:0;">×</button>
+    <div class="dc-radar-title">رادار دنت‌کست 📡</div>
+  </div>
+  <div class="dc-radar-input-wrap">
+    <span>🔍</span>
+    <input type="text" id="dcRadarInput" placeholder="نام سایت، زمینه فعالیت یا کلمه کلیدی…" autocomplete="off">
+  </div>
+  <div class="dc-radar-body" id="dcRadarResults">
+    <div class="dc-radar-suggest-link">برای جستجو تایپ کنید…<br><br>
+      <a href="https://survey.porsline.ir/s/TA5qoIDQ" target="_blank" rel="noopener">سایتی پیشنهاد دهید</a>
+    </div>
+  </div>
+</div>
+
+<!-- =============================================
+     SCRIPTS
+============================================= -->
+
+<!-- Global search engine (existing) -->
+<script src="/global-search.js?v=2"></script>
+
+<script>
+/* =============================================
+   PANEL CONTENT BUILDER
+============================================= */
+const PANELS = {
+  'panel-studio': buildStudio,
+  'panel-meta': buildMeta,
+  'panel-patient': buildPatient,
+  'panel-site': buildSite,
+};
+
+function buildStudio(el) {
+  el.innerHTML = `
+    <!-- Pulse -->
+    <div class="dc-pulse" id="dcPulse">
+      <div class="dc-pulse-head">
+        <div class="dc-pulse-title"><span class="dc-pulse-dot"></span> پالس</div>
+        <div class="dc-pulse-close" onclick="document.getElementById('dcPulse').style.display='none'">×</div>
+      </div>
+      <ul class="dc-pulse-list">
+        <li><a href="/insight/insight-40">یه تجربه‌ی کلینیکی</a> در بخش insight قرار داده شد — ۱۷ اردیبهشت</li>
+        <li><a href="/episodes.html">دنتکست ۱۵۶</a> در بخش اپیزودها قرار داده شد — ۳ اردیبهشت</li>
+        <li><a href="https://dentcast.ir/#radar">رادار دنتکست</a> با بیش از ۷۰ سایت تجاری و علمی آپدیت شد</li>
+      </ul>
+      <div class="dc-adcard mt6">
+        <a href="https://deventapp.ir" target="_blank" rel="sponsored noopener">
+          <span class="ad-ico">📢</span>
+          <span class="ad-body"><strong>دیونت</strong> — پلتفرم آگهی تجهیزات کارکرده و خدمات تخصصی دندانپزشکی</span>
+          <span class="ad-btn">کلیک کنید</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Hero card -->
+    <div class="dc-card-list">
+      <article class="dc-card hero" onclick="location.href='episodes.html?v=1'">
+        <div class="dc-card-ico">🎧</div>
+        <div class="dc-card-body">
+          <div class="dc-card-title">فهرست و شنیدن اپیزودهای دنت‌کست</div>
+          <div class="dc-card-sub">همه اپیزودهای اصلی و فرعی</div>
+        </div>
+        <span class="dc-card-badge">DentCast</span>
+      </article>
+
+      <!-- Search card -->
+      <div class="dc-search-card dcOpenSearch">
+        <span class="dc-search-icon">🔍</span>
+        <span class="dc-search-placeholder">جستجو در همه مطالب علمی سایت…</span>
+        <span class="dc-card-badge">Search</span>
+      </div>
+
+      <!-- 2×2 Grid -->
+      <div class="dc-grid2">
+        <article class="dc-card" onclick="location.href='/notecast/'">
+          <div class="dc-card-ico">📝</div>
+          <div class="dc-card-body"><div class="dc-card-title">NoteCast</div><div class="dc-card-sub">خلاصه‌نویسی اپیزودها</div></div>
+        </article>
+        <article class="dc-card" onclick="location.href='/sharehub/'">
+          <div class="dc-card-ico">🔗</div>
+          <div class="dc-card-body"><div class="dc-card-title">Share Hub</div><div class="dc-card-sub">مطالب دیگران با ذکر منبع</div></div>
+        </article>
+        <article class="dc-card" onclick="location.href='/dentai/'">
+          <div class="dc-card-ico">🤖</div>
+          <div class="dc-card-body"><div class="dc-card-title">DentAI</div><div class="dc-card-sub">مرور مقالات با هوش مصنوعی</div></div>
+        </article>
+        <article class="dc-card" onclick="location.href='/dentcast-plus/'">
+          <div class="dc-card-ico">▶️</div>
+          <div class="dc-card-body"><div class="dc-card-title">DentCast+</div><div class="dc-card-sub">آموزش با ویدیو</div></div>
+        </article>
+      </div>
+
+      <!-- Radar card -->
+      <article class="dc-card radar-card radar-shine-card" id="radarCardMobile">
+        <a href="#" id="btnOpenRadarMobile" style="display:flex;align-items:center;gap:10px;width:100%;text-decoration:none;">
+          <span style="font-size:20px;">📡</span>
+          <span style="flex:1;">
+            <span class="dc-card-title" style="color:var(--text-accent);">رادار دنت‌کست</span>
+            <span class="dc-card-sub">جستجوگر سایت‌های دندانپزشکی</span>
+          </span>
+          <span class="dc-card-badge">جستجو</span>
+        </a>
+      </article>
+    </div>
+  `;
+}
+
+function buildMeta(el) {
+  el.innerHTML = `
+    <div class="dc-card-list">
+      <article class="dc-card hero" onclick="location.href='/glossary/'">
+        <div class="dc-card-ico">📚</div>
+        <div class="dc-card-body">
+          <div class="dc-card-title">دانشنامه دنت‌کست</div>
+          <div class="dc-card-sub">مفاهیم تصمیم‌ساز دندان‌پزشکی</div>
+        </div>
+        <span class="dc-card-badge">Glossary</span>
+      </article>
+
+      <div class="dc-search-card dcOpenSearch">
+        <span class="dc-search-icon">🔍</span>
+        <span class="dc-search-placeholder">جستجو در همه مطالب علمی سایت…</span>
+        <span class="dc-card-badge">Search</span>
+      </div>
+
+      <article class="dc-card" onclick="location.href='/insight/'">
+        <div class="dc-card-ico">🧠</div>
+        <div class="dc-card-body"><div class="dc-card-title">Clinical Insight</div><div class="dc-card-sub">بینش کلینیکی</div></div>
+        <span class="dc-card-badge">Insight</span>
+      </article>
+      <article class="dc-card" onclick="location.href='/chairside/'">
+        <div class="dc-card-ico">🦷</div>
+        <div class="dc-card-body"><div class="dc-card-title">Chairside</div><div class="dc-card-sub">نکاتی از ویزیت‌های روزانه</div></div>
+        <span class="dc-card-badge">Visit</span>
+      </article>
+      <article class="dc-card" onclick="location.href='/metanotes/'">
+        <div class="dc-card-ico">🧩</div>
+        <div class="dc-card-body"><div class="dc-card-title">Meta Note</div><div class="dc-card-sub">ایده‌ها و مدل‌های تحلیلی خارج از چارچوب</div></div>
+        <span class="dc-card-badge">Meta</span>
+      </article>
+    </div>
+  `;
+}
+
+function buildPatient(el) {
+  el.innerHTML = `
+    <div class="dc-card-list">
+      <article class="dc-card hero" onclick="location.href='/litecast/'">
+        <div class="dc-card-ico">✨</div>
+        <div class="dc-card-body">
+          <div class="dc-card-title">LiteCast — دندان‌پزشکی برای همه</div>
+          <div class="dc-card-sub">محتوای ساده و غیر تخصصی برای بیماران</div>
+        </div>
+        <span class="dc-card-badge">LiteCast</span>
+      </article>
+
+      <div class="dc-monitor">
+        <div class="dc-monitor-header">📖 سه پیشنهاد رندوم برای مطالعه</div>
+        <ul class="dc-monitor-list" id="dcPatientRandom3"></ul>
+      </div>
+
+      <div class="dc-locpack">
+        <a href="https://nshn.ir/32sbkzKEOBbXR4" target="_blank" rel="noopener">
+          <img src="/clinic-map.webp" alt="موقعیت مطب روی نقشه" class="dc-locpack-img" loading="lazy">
+        </a>
+        <div class="dc-locpack-body">
+          <div class="dc-locpack-hint">برای مسیریابی <strong>مطب</strong> در اپ <strong>نشان</strong> روی نقشه کلیک کنید</div>
+          <div class="dc-cta-row">
+            <a class="dc-cta-btn" href="mailto:info@dentcast.ir">مشاوره آنلاین ✉️</a>
+            <a class="dc-cta-btn" href="tel:+986133380090">تماس با مطب 📞</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+  loadPatientRandom();
+}
+
+function buildSite(el) {
+  el.innerHTML = `
+    <div class="dc-card-list">
+      <div class="dc-monitor">
+        <div class="dc-monitor-header">🕑 سی مطلب جدید و آخر دنت‌کست</div>
+        <ul class="dc-monitor-list" id="dcLast3Updates"></ul>
+      </div>
+
+      <div class="dc-tools-island" role="navigation" aria-label="ابزارهای دنت‌کست">
+        <button class="dc-tool-seg" type="button" id="tool-pwa">
+          <span class="dc-tool-ico">📱</span>
+          <span class="dc-tool-txt">نصب</span>
+        </button>
+        <button class="dc-tool-seg" type="button" id="tool-consult">
+          <span class="dc-tool-ico">📧</span>
+          <span class="dc-tool-txt">مشاوره</span>
+        </button>
+        <button class="dc-tool-seg" type="button" id="tool-about">
+          <span class="dc-tool-ico">✨</span>
+          <span class="dc-tool-txt">درباره</span>
+        </button>
+      </div>
+    </div>
+  `;
+
+  document.getElementById('tool-pwa')?.addEventListener('click', handlePWAInstall);
+  document.getElementById('tool-consult')?.addEventListener('click', () => location.href = 'mailto:info@dentcast.ir');
+  document.getElementById('tool-about')?.addEventListener('click', () => location.href = 'about.html');
+
+  loadLast30();
+}
+
+/* Build all panels on load */
+document.addEventListener('DOMContentLoaded', () => {
+  Object.entries(PANELS).forEach(([id, fn]) => {
+    const el = document.getElementById(id);
+    if (el) fn(el);
+  });
+  initRadarShine();
+  initRadarOverlay();
+  initSearchOverlays();
+  initBottomNav();
+  initSwipe();
+  initDesktop();
+  initPWA();
+  loadSearchIntoGlobalBoxes();
+});
+</script>
+
+<script>
+/* =============================================
+   BOTTOM NAV TABS
+============================================= */
+function initBottomNav() {
+  const navItems = document.querySelectorAll('.dc-nav-item[data-panel]');
+  const panels = document.querySelectorAll('.dc-panel');
+
+  navItems.forEach((item, i) => {
+    item.addEventListener('click', () => {
+      navItems.forEach(n => n.classList.remove('active'));
+      panels.forEach(p => p.classList.remove('active'));
+      item.classList.add('active');
+      const target = document.getElementById(item.dataset.panel);
+      if (target) target.classList.add('active');
+    });
+  });
+}
+</script>
+
+<script>
+/* =============================================
+   SWIPE GESTURE
+============================================= */
+function initSwipe() {
+  const navItems = Array.from(document.querySelectorAll('.dc-nav-item[data-panel]'));
+  let sx = 0, sy = 0, st = 0, isH = false;
+
+  document.body.addEventListener('touchstart', e => {
+    sx = e.touches[0].clientX; sy = e.touches[0].clientY;
+    st = Date.now(); isH = false;
+  }, { passive: true });
+
+  document.body.addEventListener('touchmove', e => {
+    const dx = e.touches[0].clientX - sx;
+    const dy = e.touches[0].clientY - sy;
+    if (Math.abs(dx) > Math.abs(dy) * 1.1 && Math.abs(dx) > 6) { isH = true; e.preventDefault(); }
+  }, { passive: false });
+
+  document.body.addEventListener('touchend', e => {
+    if (!isH) return;
+    const dx = e.changedTouches[0].clientX - sx;
+    const speed = Math.abs(dx) / (Date.now() - st);
+    if (Math.abs(dx) < 30 && speed < 0.22) return;
+
+    const active = navItems.findIndex(n => n.classList.contains('active'));
+    const next = dx < 0 ? active + 1 : active - 1;
+    if (next >= 0 && next < navItems.length) navItems[next].click();
+  }, { passive: true });
+}
+</script>
+
+<script>
+/* =============================================
+   SEARCH OVERLAYS (mobile + desktop)
+============================================= */
+function initSearchOverlays() {
+  // Mobile
+  const mOverlay = document.getElementById('dcMobileSearchOverlay');
+  const mInput   = document.getElementById('dcMobileSearchInput');
+  const mResults = document.getElementById('dcMobileResults');
+  const mFilters = document.getElementById('dcMobileFilters');
+  const mClose   = document.getElementById('closeMobileSearch');
+  const mBtn     = document.getElementById('mobileSearchBtn');
+
+  // Desktop
+  const dOverlay = document.getElementById('dcDesktopSearchOverlay');
+  const dInput   = document.getElementById('dcDesktopSearchInput');
+  const dResults = document.getElementById('dcDesktopResults');
+  const dFilters = document.getElementById('dcDesktopFilters');
+  const dClose   = document.getElementById('closeDesktopSearch');
+  const dTrigger = document.getElementById('deskSearchTrigger');
+
+  function isDesktop() { return document.body.classList.contains('dc-desktop-ui'); }
+
+  function openSearch(push=true) {
+    const overlay = isDesktop() ? dOverlay : mOverlay;
+    if (!overlay) return;
+    overlay.classList.add('open');
+    document.body.classList.add('dc-search-mode');
+    setTimeout(() => (isDesktop() ? dInput : mInput)?.focus(), 50);
+    if (push) history.pushState({ dcSearch: true }, '');
+  }
+
+  function closeSearch(fromPop=false) {
+    [mOverlay, dOverlay].forEach(o => o?.classList.remove('open'));
+    document.body.classList.remove('dc-search-mode');
+    [mInput, dInput].forEach(i => { if(i) i.value=''; });
+    [mResults, dResults].forEach(r => { if(r) r.innerHTML=''; });
+    if (!fromPop && history.state?.dcSearch) history.back();
+  }
+
+  // Trigger open
+  document.addEventListener('click', e => {
+    if (e.target.closest('.dcOpenSearch') || e.target.closest('#mobileSearchBtn') || e.target.closest('#deskSearchTrigger')) {
+      e.preventDefault();
+      openSearch();
+    }
+    if (e.target.closest('#closeMobileSearch') || e.target.closest('#closeDesktopSearch')) {
+      closeSearch(false);
+    }
+  });
+
+  // Filter pills toggle
+  [mFilters, dFilters].forEach(filtersEl => {
+    filtersEl?.querySelectorAll('.dc-filter-pill').forEach(pill => {
+      pill.addEventListener('click', () => pill.classList.toggle('active'));
+    });
+  });
+
+  // Input handler
+  function handleInput(inputEl, resultsEl, filtersEl) {
+    const q = inputEl.value.trim().toLowerCase();
+    if (!q) { resultsEl.innerHTML = ''; return; }
+
+    const activeTypes = Array.from(filtersEl.querySelectorAll('.dc-filter-pill.active')).map(p => p.dataset.type);
+
+    // Delegate to existing global-search.js logic if available
+    if (typeof window.dcSearch === 'function') {
+      window.dcSearch(q, activeTypes, resultsEl);
+    } else {
+      resultsEl.innerHTML = `<div style="padding:14px;color:var(--text-muted);font-size:13px;">در حال بارگذاری…</div>`;
+    }
+  }
+
+  mInput?.addEventListener('input', () => handleInput(mInput, mResults, mFilters));
+  dInput?.addEventListener('input', () => handleInput(dInput, dResults, dFilters));
+
+  window.addEventListener('popstate', () => {
+    if (document.body.classList.contains('dc-search-mode')) closeSearch(true);
+  });
+}
+
+/* Expose helper for global-search.js to call */
+window.dcRenderResults = function(items, container) {
+  if (!container) return;
+  if (!items.length) { container.innerHTML = `<div style="padding:14px;color:var(--text-muted);font-size:13px;">نتیجه‌ای یافت نشد.</div>`; return; }
+  container.innerHTML = items.map(i =>
+    `<a class="dc-result-item" href="${i.url}">${i.title}</a>`
+  ).join('');
+};
+
+function loadSearchIntoGlobalBoxes() {
+  // Compatibility: old global-search.js writes to #dcResults → redirect to active results container
+  const legacy = document.getElementById('dcResults');
+  // We handle it natively above; just ensure legacy box doesn't break anything
+}
+</script>
+
+<script>
+/* =============================================
+   RADAR OVERLAY
+============================================= */
+function initRadarOverlay() {
+  const overlay  = document.getElementById('dcRadarOverlay');
+  const input    = document.getElementById('dcRadarInput');
+  const results  = document.getElementById('dcRadarResults');
+  const closeBtn = document.getElementById('closeRadar');
+
+  let data = [], loaded = false;
+
+  function open(push=true) {
+    overlay.classList.add('open');
+    document.body.classList.add('dc-radar-mode');
+    setTimeout(() => input.focus(), 50);
+    if (push) history.pushState({ dcRadar: true }, '', '#radar');
+    if (!loaded) loadData();
+  }
+
+  function close(fromPop=false) {
+    overlay.classList.remove('open');
+    document.body.classList.remove('dc-radar-mode');
+    input.value = '';
+    results.innerHTML = `<div class="dc-radar-suggest-link">برای جستجو تایپ کنید…<br><br><a href="https://survey.porsline.ir/s/TA5qoIDQ" target="_blank" rel="noopener">سایتی پیشنهاد دهید</a></div>`;
+    if (!fromPop) {
+      if (history.state?.dcRadar) history.back();
+      else if (location.hash === '#radar') history.replaceState(null, '', location.pathname + location.search);
+    }
+  }
+
+  function loadData() {
+    fetch('/radar.json?v=12', { cache: 'no-store' })
+      .then(r => r.json())
+      .then(d => { data = d; loaded = true; handleSearch(); })
+      .catch(() => { results.innerHTML = `<div class="dc-radar-suggest-link" style="color:#e05454;">خطا در اتصال به رادار</div>`; });
+  }
+
+  function handleSearch() {
+    const q = input.value.trim().toLowerCase();
+    if (!q) { results.innerHTML = `<div class="dc-radar-suggest-link">برای جستجو تایپ کنید…<br><br><a href="https://survey.porsline.ir/s/TA5qoIDQ" target="_blank" rel="noopener">سایتی پیشنهاد دهید</a></div>`; return; }
+    if (!loaded) return;
+
+    let filtered = data.filter(item => {
+      const s = [item.name, item.desc, ...(item.keywords||[])].join(' ').toLowerCase();
+      return s.includes(q);
+    });
+
+    // shuffle then sort by priority
+    for (let i = filtered.length-1; i>0; i--) { const j=Math.floor(Math.random()*(i+1)); [filtered[i],filtered[j]]=[filtered[j],filtered[i]]; }
+    filtered.sort((a,b) => (+(a.priority||10))-(+(b.priority||10)));
+
+    if (!filtered.length) {
+      results.innerHTML = `<div class="dc-radar-suggest-link">نتیجه‌ای یافت نشد.<br><br><a href="https://survey.porsline.ir/s/TA5qoIDQ" target="_blank" rel="noopener">سایتی پیشنهاد دهید</a></div>`;
+      return;
+    }
+
+    results.innerHTML = filtered.map(item => {
+      const isFeatured = item.featured === true || String(item.featured) === 'true';
+      const isCredit   = item.credit   === true || String(item.credit)   === 'true';
+      return `
+        <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="dc-radar-result-item">
+          <div class="dc-radar-item-name">
+            ${item.name}
+            ${isCredit   ? `<span class="dc-radar-badge credit">🤝 حامی</span>` : ''}
+            ${isFeatured && !isCredit ? `<span class="dc-radar-badge featured">⭐ پیشنهاد</span>` : ''}
+          </div>
+          <div class="dc-radar-item-url">${item.url}</div>
+          <div class="dc-radar-item-desc">${item.desc}</div>
+        </a>`;
+    }).join('') + `<div class="dc-radar-suggest-link">سایتی جا افتاده؟ <a href="https://survey.porsline.ir/s/TA5qoIDQ" target="_blank" rel="noopener">پیشنهاد دهید</a></div>`;
+  }
+
+  closeBtn?.addEventListener('click', () => close(false));
+  input.addEventListener('input', handleSearch);
+
+  // Open triggers
+  document.addEventListener('click', e => {
+    if (e.target.closest('#btnOpenRadarMobile') || e.target.closest('#btnOpenRadarDesk')) {
+      e.preventDefault(); open();
+    }
+  });
+
+  window.addEventListener('popstate', () => { if (document.body.classList.contains('dc-radar-mode')) close(true); });
+  window.addEventListener('hashchange', () => { if (location.hash === '#radar') open(false); });
+  if (location.hash === '#radar') open(false);
+}
+</script>
+
+<script>
+/* =============================================
+   RADAR SHINE
+============================================= */
+function initRadarShine() {
+  function shine() {
+    document.querySelectorAll('.radar-shine-card').forEach(el => {
+      el.classList.remove('shining');
+      void el.offsetWidth;
+      el.classList.add('shining');
+    });
+  }
+  setTimeout(shine, 1200);
+  setInterval(shine, 4000);
+}
+</script>
+
+<script>
+/* =============================================
+   DESKTOP SHELL
+============================================= */
+function initDesktop() {
+  function isDesktopLike() {
+    return window.matchMedia('(min-width:1024px)').matches &&
+           (window.matchMedia('(pointer:fine)').matches || window.matchMedia('(hover:hover)').matches);
+  }
+
+  const shell  = document.getElementById('dcDesktopShell');
+  const viewer = document.getElementById('dcDeskViewer');
+  const empty  = document.getElementById('dcViewerEmpty');
+  const navBtns = document.querySelectorAll('.dc-desk-nav-btn');
+
+  function isRoot(url) {
+    if (!url) return true;
+    try {
+      const u = new URL(url, location.origin);
+      if (u.origin !== location.origin) return false;
+      const p = u.pathname.toLowerCase();
+      return p === '/' || p === '' || p === '/index.html' || p === '/index.htm';
+    } catch { return true; }
+  }
+
+  function setActive(btn) {
+    navBtns.forEach(b => b.classList.remove('is-active'));
+    btn?.classList.add('is-active');
+  }
+
+  function loadInViewer(src, btn) {
+    if (!src || isRoot(src)) { clearViewer(btn); return; }
+    if (/^(mailto:|tel:)/i.test(src)) { location.href = src; return; }
+
+    setActive(btn);
+    viewer.src = src;
+    document.body.classList.add('dc-viewer-live');
+  }
+
+  function clearViewer(btn) {
+    setActive(btn || null);
+    document.body.classList.remove('dc-viewer-live');
+    try { viewer.src = 'about:blank'; } catch {}
+  }
+
+  function enableDesktop() {
+    document.body.classList.add('dc-desktop-ui');
+    shell.style.display = 'flex';
+    // also build panels inside desktop (they aren't rendered there yet)
+    // Desktop uses the iframe viewer, so panels are mobile-only
+  }
+
+  function disableDesktop() {
+    document.body.classList.remove('dc-desktop-ui', 'dc-viewer-live');
+    shell.style.display = 'none';
+    document.querySelectorAll('.dc-topbar,.dc-bottomnav,.dc-content').forEach(e => e.style.visibility = '');
+  }
+
+  function sync() {
+    if (isDesktopLike()) enableDesktop();
+    else disableDesktop();
+  }
+
+  navBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const action = btn.dataset.action;
+      const src    = btn.dataset.src;
+
+      if (action === 'pwa')     { handlePWAInstall(); return; }
+      if (action === 'search')  {
+        const o = document.getElementById('dcDesktopSearchOverlay');
+        if (o) { o.classList.add('open'); document.getElementById('dcDesktopSearchInput')?.focus(); }
+        return;
+      }
+      if (action === 'consult') { location.href = 'mailto:info@dentcast.ir'; return; }
+      if (src) loadInViewer(src, btn);
+    });
+  });
+
+  // Desktop search trigger in sidebar
+  document.getElementById('deskSearchTrigger')?.addEventListener('click', () => {
+    const o = document.getElementById('dcDesktopSearchOverlay');
+    if (o) { o.classList.add('open'); document.getElementById('dcDesktopSearchInput')?.focus(); }
+  });
+
+  sync();
+  window.addEventListener('resize', sync);
+
+  viewer.addEventListener('load', () => {
+    try { if (isRoot(viewer.contentWindow.location.href)) clearViewer(null); }
+    catch {}
+  });
+}
+</script>
+
+<script>
+/* =============================================
+   PWA INSTALL
+============================================= */
+let deferredPrompt = null;
+window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferredPrompt = e; });
+
+function handlePWAInstall() {
+  if (/iphone|ipad|ipod/i.test(navigator.userAgent)) {
+    alert('برای نصب در آیفون: Share → Add to Home Screen');
+    return;
+  }
+  if (!deferredPrompt) {
+    alert('در حال حاضر امکان نصب خودکار وجود ندارد.');
+    return;
+  }
+  deferredPrompt.prompt();
+  deferredPrompt.userChoice.finally(() => { deferredPrompt = null; });
+}
+</script>
+
+<script>
+/* =============================================
+   LAST 30 UPDATES
+============================================= */
+function loadLast30() {
+  const el = document.getElementById('dcLast3Updates');
+  if (!el) return;
+  fetch('/Dentcast-brain.txt?v=7', { cache: 'no-store' })
+    .then(r => r.ok ? r.json() : Promise.reject())
+    .then(json => {
+      const arr = extractArr(json).map(toItem).filter(Boolean);
+      const hasDates = arr.some(x => x.d > 0);
+      const picked = hasDates ? arr.sort((a,b)=>b.d-a.d).slice(0,30) : arr.slice(-30).reverse();
+      el.innerHTML = picked.map(i => `<li><a href="${i.url}">${i.title}</a></li>`).join('');
+    })
+    .catch(() => { el.innerHTML = ''; });
+}
+
+function loadPatientRandom() {
+  const el = document.getElementById('dcPatientRandom3');
+  if (!el) return;
+  fetch('/litecast/lite-glossary.json', { cache: 'no-store' })
+    .then(r => r.ok ? r.json() : Promise.reject())
+    .then(json => {
+      const arr = extractArr(json).map(toItem).filter(Boolean);
+      const picked = shuffle(arr).slice(0, 3);
+      el.innerHTML = picked.map(i => `<li><a href="${i.url}">${i.title}</a></li>`).join('');
+    })
+    .catch(() => { el.innerHTML = ''; });
+}
+
+function extractArr(json) {
+  if (Array.isArray(json)) return json;
+  for (const k of ['items','data','entries','feed']) if (Array.isArray(json?.[k])) return json[k];
+  for (const k in (json||{})) {
+    if (Array.isArray(json[k])) return json[k];
+    if (Array.isArray(json[k]?.items)) return json[k].items;
+  }
+  return [];
+}
+function toItem(x) {
+  const title = (x?.title||'').toString().trim();
+  const url   = (x?.page_url||x?.url||x?.link||'').toString().trim();
+  if (!title||!url) return null;
+  const d = Date.parse((x?.datePublished||x?.date||x?.updated||'').toString().trim());
+  return { title, url, d: isNaN(d)?0:d };
+}
+function shuffle(a) {
+  const b = a.slice();
+  for (let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}
+  return b;
+}
+</script>
+
+<script>
+/* Service Worker */
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/service-worker.js').catch(()=>{});
+}
+</script>
+
+<!-- Yektanet analytics -->
+<script>
+!function(t,e,n){t.yektanetAnalyticsObject=n,t[n]=t[n]||function(){t[n].q.push(arguments)},t[n].q=t[n].q||[];var a=new Date,r=a.getFullYear().toString()+"0"+a.getMonth()+"0"+a.getDate()+"0"+a.getHours(),c=e.getElementsByTagName("script")[0],s=e.createElement("script");s.id="ua-script-nzlddHSQ";s.dataset.analyticsobject=n;s.async=1;s.type="text/javascript";s.src="https://cdn.yektanet.com/rg_woebegone/scripts_v3/nzlddHSQ/rg.complete.js?v="+r,c.parentNode.insertBefore(s,c)}(window,document,"yektanet");
+</script>
+
+<!-- Schema.org JSON-LD -->
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://dentcast.org/#website","url":"https://dentcast.org/","name":"DentCast","publisher":{"@id":"https://dentcast.org/#organization"},"inLanguage":"fa"},{"@type":"Organization","@id":"https://dentcast.org/#organization","name":"DentCast","url":"https://dentcast.org/","founder":{"@id":"https://dentcast.org/#person"}},{"@type":"Person","@id":"https://dentcast.org/#person","name":"Foad Shahabian","jobTitle":"Prosthodontist","sameAs":["https://www.instagram.com/dr.foad_shahabian/","https://t.me/dentcast"]}]}
+</script>
+
+</body>
+</html>
