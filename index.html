@@ -173,9 +173,12 @@ body{
   transition:color var(--tr2);
 }
 .dc-topbar-brand-sub{
-  font-size:.70rem; color:var(--txt3);
-  transition:color var(--tr2);
+  font-size:.70rem; color:var(--ac);
+  text-decoration:none;
+  transition:opacity var(--tr);
+  opacity:0.8;
 }
+.dc-topbar-brand-sub:active{ opacity:0.5; }
 
 .dc-topbar-actions{
   display:flex; align-items:center; gap:8px;
@@ -1039,7 +1042,7 @@ body.dc-desktop-ui #dcDeskViewEmpty .banner{
     </div>
     <div class="dc-topbar-brand">
       <div class="dc-topbar-brand-name">DentCast</div>
-      <div class="dc-topbar-brand-sub">دکتر فواد شهابیان</div>
+      <a href="about.html" class="dc-topbar-brand-sub">دکتر فواد شهابیان ↗</a>
     </div>
   </header>
 
