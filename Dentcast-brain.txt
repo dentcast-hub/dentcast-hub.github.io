@@ -5439,8 +5439,34 @@
     "prosthodontics"
   ],
   "page_url": "/insight/insight-39.html"
+},
+{
+  "type": "clinical",
+  "id": "clinical-40",
+  "title": "مدیریت خونریزی پیش از اسکن: پیش‌نیاز ثبت دقیق مارجین",
+  "caption": "در اسکن داخل دهانی، کنترل خونریزی نقش مهمی در ثبت دقیق مارجین و کاهش خطای اسکن دارد. این رویکرد به مدیریت خونریزی پیش از اسکن، استفاده از نخ آغشته به ماده هموستاتیک، تکنیک double cord، محدودیت‌های بافتی و روش مرحله‌ای اسکن در نواحی خونریزی‌دهنده می‌پردازد.",
+  "hashtags": [
+    "اسکن_داخل_دهانی",
+    "کنترل_خونریزی",
+    "دندانپزشکی_دیجیتال",
+    "نخ_زیرلثه",
+    "دابل_کورد",
+    "هموستاتیک",
+    "مدیریت_بافت_نرم",
+    "دیجیتال_دنتیستری"
+  ],
+  "keywords": [
+    "intraoral scanning",
+    "bleeding control",
+    "gingival retraction",
+    "double cord technique",
+    "hemostatic agent",
+    "digital impression accuracy",
+    "scan margin accuracy",
+    "digital dentistry"
+  ],
+  "page_url": "/insight/insight-40.html"
 }
-
 
 
 
