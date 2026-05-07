@@ -1460,8 +1460,8 @@ scrollBody.addEventListener('touchend',e=>{
   if(Math.abs(dx)<28&&sp<0.22) return;
   // finger swipes RIGHT → go to PREVIOUS panel (تب کمتر = سمت راست در RTL)
   // finger swipes LEFT  → go to NEXT panel
-  if(dx>0 && curIdx<panelOrder.length-1) showPanel(panelOrder[curIdx+1],'left');
-  else if(dx<0 && curIdx>0)              showPanel(panelOrder[curIdx-1],'right');
+  if(dx>0 && curIdx<panelOrder.length-1) showPanel(panelOrder[curIdx+1],'right');
+  else if(dx<0 && curIdx>0)              showPanel(panelOrder[curIdx-1],'left');
 },{passive:true});
 </script>
 
