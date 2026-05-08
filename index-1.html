@@ -21,8 +21,6 @@
   <meta property="og:image" content="/dentcast-cover.webp">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-
-  <!-- Theme init — no flash -->
   <script>
     (function(){
       const s=localStorage.getItem('dc-theme');
@@ -30,28 +28,20 @@
       if(s==='dark'||(s===null&&d)) document.documentElement.setAttribute('data-theme','dark');
     })();
   </script>
-
   <style>
-/* =====================================================
-   CSS VARIABLES
-===================================================== */
 :root{
   --pr:#022360; --pr-rgb:2,35,96;
   --ac:#0b5fff; --ac-rgb:11,95,255;
-
   --bg:#f0f2f5;
   --surface:#ffffff;
   --surface2:#f4f6fb;
   --surface3:#eaecf5;
   --border:rgba(2,35,96,.10);
   --border2:rgba(2,35,96,.06);
-
   --txt:#0a1a33;
   --txt2:#4a5f85;
   --txt3:#8a9cbe;
   --txt-inv:#ffffff;
-
-  /* sidebar / desktop */
   --sb:#17212b; --sb2:#1e2c3a;
   --sb-item:rgba(255,255,255,.06);
   --sb-hover:rgba(255,255,255,.10);
@@ -59,60 +49,40 @@
   --sb-txt:#e8f0ff;
   --sb-txt2:rgba(232,240,255,.55);
   --sb-div:rgba(255,255,255,.08);
-
-  /* bottom nav */
   --bn-bg:#ffffff;
   --bn-border:rgba(2,35,96,.10);
   --bn-txt:#8a9cbe;
   --bn-active:#022360;
-
   --card-bg:#ffffff;
   --card-border:rgba(2,35,96,.09);
   --card-sh:0 1px 3px rgba(2,35,96,.07),0 4px 14px rgba(2,35,96,.04);
   --card-sh2:0 4px 18px rgba(2,35,96,.13),0 1px 4px rgba(2,35,96,.07);
-
   --chip-bg:rgba(11,95,255,.08);
   --chip-bd:rgba(11,95,255,.20);
   --chip-txt:#022360;
-
   --pulse-bg:#17212b;
   --pulse-border:rgba(255,80,80,.30);
-
   --monitor-sh:inset -6px -6px 14px rgba(2,6,23,.06),inset 6px 6px 14px rgba(255,255,255,.80);
-
   --tr:.17s cubic-bezier(.4,0,.2,1);
   --tr2:.26s cubic-bezier(.4,0,.2,1);
-
   --r-sm:10px; --r-md:14px; --r-lg:18px; --r-xl:22px; --r-f:999px;
 }
-
 [data-theme="dark"]{
   --pr:#5b9cf6; --pr-rgb:91,156,246;
   --ac:#5b9cf6; --ac-rgb:91,156,246;
-
   --bg:#0e1621;
   --surface:#17212b; --surface2:#1e2c3a; --surface3:#232e3c;
   --border:rgba(255,255,255,.08); --border2:rgba(255,255,255,.04);
-
   --txt:#e8f0ff; --txt2:#8aaac8; --txt3:#4a6a88;
-
   --bn-bg:#17212b; --bn-border:rgba(255,255,255,.08);
   --bn-txt:rgba(232,240,255,.45); --bn-active:#5b9cf6;
-
   --card-bg:#1e2c3a; --card-border:rgba(255,255,255,.07);
   --card-sh:0 1px 3px rgba(0,0,0,.22),0 4px 14px rgba(0,0,0,.14);
   --card-sh2:0 4px 18px rgba(0,0,0,.28);
-
   --chip-bg:rgba(91,156,246,.12); --chip-bd:rgba(91,156,246,.24); --chip-txt:#8ab4f8;
-
   --pulse-bg:#0e1621; --pulse-border:rgba(255,80,80,.25);
-
   --monitor-sh:inset -6px -6px 12px rgba(0,0,0,.22),inset 6px 6px 12px rgba(255,255,255,.03);
 }
-
-/* =====================================================
-   RESET
-===================================================== */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{height:100%;width:100%;}
 body{height:100%;width:100%;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
@@ -124,7 +94,6 @@ ul,ol{list-style:none;}
 h1,h2,h3,h4,h5,h6{font-weight:inherit;font-size:inherit;}
 [hidden]{display:none!important;}
 ::selection{background:rgba(11,95,255,.15);}
-
 body{
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
   font-size:16px; line-height:1.5;
@@ -132,23 +101,16 @@ body{
   min-height:100vh; display:flex; flex-direction:column;
   transition:background var(--tr2),color var(--tr2);
 }
-
 .visually-hidden,.sr-only{
   position:absolute;width:1px;height:1px;padding:0;
   margin:-1px;overflow:hidden;clip:rect(0,0,0,0);
   white-space:nowrap;border:0;
 }
-
-/* =====================================================
-   MOBILE LAYOUT SHELL
-===================================================== */
 #mobile-shell{
   display:flex; flex-direction:column;
   min-height:100%;
   min-height:100dvh;
 }
-
-/* ── TOP BAR ── */
 .dc-topbar{
   position:sticky; top:0; z-index:200;
   display:flex; align-items:center;
@@ -160,7 +122,6 @@ body{
   transition:background var(--tr2),border-color var(--tr2);
   gap:10px;
 }
-
 .dc-topbar-brand{
   display:flex; flex-direction:column;
   align-items:flex-end; gap:1px;
@@ -178,7 +139,6 @@ body{
   opacity:0.8;
 }
 .dc-topbar-brand-sub:active{ opacity:0.5; }
-
 .dc-topbar-actions{
   display:flex; align-items:center; gap:8px;
 }
@@ -194,7 +154,7 @@ body{
 }
 .dc-topbar-btn:active{transform:scale(.88); background:var(--surface3);}
 
-/* ── TOOLBAR DRAWER ── */
+/* TOOLBAR DRAWER */
 .dc-toolbar-drawer{
   overflow:hidden;
   max-height:0;
@@ -224,9 +184,8 @@ body{
   font-weight:800;
   color:var(--txt3);
   white-space:nowrap;
-  padding-left:10px;
-  border-left:1px solid var(--border);
-  margin-left:6px;
+  padding:0 8px 0 12px;
+  letter-spacing:.04em;
   flex-shrink:0;
 }
 .dc-drawer-tool-seg{
@@ -236,27 +195,27 @@ body{
   justify-content:center;
   gap:4px;
   padding:8px 14px;
-  font-family:inherit;
   cursor:pointer;
   background:transparent;
   border:none;
+  font-family:inherit;
   color:var(--txt);
-  flex-shrink:0;
   transition:background var(--tr);
-  border-radius:var(--r-sm);
+  border-radius:var(--r-md);
+  flex-shrink:0;
 }
-.dc-drawer-tool-seg:active{ background:rgba(var(--pr-rgb),.06); }
+.dc-drawer-tool-seg:active{ background:rgba(var(--pr-rgb),.08); }
 .dc-drawer-tool-ico{ font-size:20px; line-height:1; }
 .dc-drawer-tool-txt{ font-size:11px; font-weight:800; color:var(--txt2); white-space:nowrap; }
 
-/* ── SCROLL BODY ── */
+/* monitor secondary spacing */
+.dc-monitor.dc-monitor-secondary{ margin-top:20px; }
+
 #mobile-body{
   flex:1; overflow-y:auto;
   padding:12px 12px 80px;
   -webkit-overflow-scrolling:touch;
 }
-
-/* ── BOTTOM NAV ── */
 .dc-bottom-nav{
   position:fixed; bottom:0; left:0; right:0;
   z-index:300;
@@ -267,7 +226,6 @@ body{
   padding-bottom:env(safe-area-inset-bottom);
   transition:background var(--tr2),border-color var(--tr2);
 }
-
 .dc-bn-item{
   display:flex; flex-direction:column;
   align-items:center; justify-content:center;
@@ -297,21 +255,14 @@ body{
   transition:background var(--tr2);
 }
 .dc-bn-item:active .dc-bn-ico{transform:scale(.85);}
-
-/* ── PANELS ── */
 .dc-panel{ display:none; }
 .dc-panel.active{ display:block; }
 .dc-panel.anim-right{ animation:slideR 0.32s cubic-bezier(0.25,0.46,0.45,0.94) both; }
 .dc-panel.anim-left { animation:slideL 0.32s cubic-bezier(0.25,0.46,0.45,0.94) both; }
 .dc-panel.anim-fade { animation:fadeUp 0.28s cubic-bezier(0.25,0.46,0.45,0.94) both; }
-
 @keyframes slideR{ from{opacity:0;transform:translateX(-28px)} to{opacity:1;transform:translateX(0)} }
 @keyframes slideL{ from{opacity:0;transform:translateX(28px)}  to{opacity:1;transform:translateX(0)} }
 @keyframes fadeUp { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
-
-/* =====================================================
-   PULSE CARD
-===================================================== */
 .dc-pulse{
   background:var(--pulse-bg);
   border:1px solid var(--pulse-border);
@@ -324,7 +275,6 @@ body{
   box-shadow:0 4px 18px rgba(0,0,0,.16);
   transition:background var(--tr2),border-color var(--tr2);
 }
-
 .dc-pulse-head{
   display:flex; align-items:center;
   justify-content:space-between;
@@ -343,7 +293,6 @@ body{
   flex-shrink:0;
 }
 @keyframes pulseDot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.65)}}
-
 .dc-pulse-close{
   width:26px; height:26px; border-radius:50%;
   background:rgba(255,255,255,.10);
@@ -353,7 +302,6 @@ body{
   transition:all var(--tr);
 }
 .dc-pulse-close:active{ background:rgba(255,80,80,.25); color:#ff5252; }
-
 .dc-pulse-list{
   list-style:none; margin:0; padding:0;
   display:flex; flex-direction:column; gap:5px;
@@ -371,8 +319,6 @@ body{
 }
 .dc-pulse-list a{ color:#7aacff; }
 .dc-pulse-list strong{ color:rgba(235,243,255,.95); }
-
-/* Ad inside pulse */
 .dc-pulse-ad{
   margin-top:10px;
   background:rgba(245,162,8,.07);
@@ -395,13 +341,7 @@ body{
   border:1px solid rgba(245,162,8,.22);
   white-space:nowrap; flex-shrink:0;
 }
-
-/* =====================================================
-   SEARCH CARD (sticky)
-===================================================== */
-.dc-search-wrap{
-  /* no sticky — moves naturally with content */
-}
+.dc-search-wrap{}
 .dc-search-card{
   display:flex; align-items:center;
   justify-content:space-between;
@@ -432,10 +372,6 @@ body{
   white-space:nowrap; flex-shrink:0;
   transition:all var(--tr2);
 }
-
-/* =====================================================
-   EPISODES HERO CARD
-===================================================== */
 .dc-hero-card{
   display:flex; align-items:center;
   justify-content:space-between;
@@ -483,16 +419,11 @@ body{
   white-space:nowrap; align-self:flex-start;
   margin-top:2px;
 }
-
-/* =====================================================
-   2x2 GRID CARDS
-===================================================== */
 .dc-grid{
   display:grid;
   grid-template-columns:repeat(2,minmax(0,1fr));
   gap:8px; margin-bottom:10px;
 }
-
 .dc-grid-card{
   background:var(--card-bg);
   border:1px solid var(--card-border);
@@ -510,7 +441,6 @@ body{
   border-top:2px solid rgba(var(--pr-rgb),.14);
 }
 .dc-grid-card:active{ transform:scale(.96); background:var(--surface2); box-shadow:var(--card-sh2); }
-
 .dc-grid-ico{
   width:40px; height:40px;
   border-radius:var(--r-md);
@@ -521,7 +451,6 @@ body{
   transition:all var(--tr);
 }
 .dc-grid-card:active .dc-grid-ico{ transform:scale(.92); }
-
 .dc-grid-title{
   font-size:.86rem; font-weight:800;
   color:var(--txt); line-height:1.25;
@@ -530,10 +459,6 @@ body{
   font-size:.70rem; color:var(--txt2);
   line-height:1.3;
 }
-
-/* =====================================================
-   RADAR CARD (pill bottom)
-===================================================== */
 .dc-radar-pill{
   display:flex; align-items:center;
   justify-content:space-between;
@@ -560,8 +485,6 @@ body{
   white-space:nowrap; flex-shrink:0;
   transition:all var(--tr);
 }
-
-/* Radar shine */
 .radar-shine-card{ position:relative!important; overflow:hidden!important; }
 .radar-shine-card>*{ position:relative; z-index:1; }
 .radar-shine-card::after{
@@ -574,10 +497,6 @@ body{
 @keyframes radarShine{
   0%{right:-80%;opacity:0} 25%{opacity:.75} 100%{right:130%;opacity:0}
 }
-
-/* =====================================================
-   LIST CARD (regular)
-===================================================== */
 .dc-list-card{
   display:flex; align-items:center;
   justify-content:space-between;
@@ -597,8 +516,6 @@ body{
 .dc-list-card-main{ flex:1; min-width:0; }
 .dc-list-card-title{ font-size:.875rem; font-weight:700; color:var(--txt); line-height:1.3; }
 .dc-list-card-sub{ font-size:.74rem; color:var(--txt2); margin-top:3px; }
-
-/* featured list card */
 .dc-list-card.featured{
   background:linear-gradient(135deg,rgba(var(--ac-rgb),.07),rgba(var(--pr-rgb),.04));
   border:1px solid rgba(var(--ac-rgb),.16)!important;
@@ -606,34 +523,6 @@ body{
   box-shadow:0 6px 22px rgba(var(--ac-rgb),.10),var(--card-sh)!important;
 }
 .dc-list-card.featured .dc-list-card-title{ font-size:.92rem; font-weight:900; }
-
-/* Glossary featured — یک گام روشن‌تر از hero، margin-bottom هم‌اندازه hero */
-#panel-sharehub .dc-list-card.featured:first-child{
-  background:linear-gradient(135deg,rgba(var(--pr-rgb),.18),rgba(var(--ac-rgb),.10));
-  border:1px solid rgba(var(--pr-rgb),.28)!important;
-  border-right:3px solid rgba(var(--pr-rgb),.55)!important;
-  box-shadow:0 8px 24px rgba(var(--pr-rgb),.18),var(--card-sh)!important;
-  margin-bottom:20px;
-}
-[data-theme="dark"] #panel-sharehub .dc-list-card.featured:first-child{
-  background:linear-gradient(135deg,rgba(var(--pr-rgb),.22),rgba(var(--ac-rgb),.12));
-}
-
-/* LiteCast featured — یک گام روشن‌تر از Glossary، margin-bottom هم‌اندازه hero */
-#panel-patient .dc-list-card.featured:first-child{
-  background:linear-gradient(135deg,rgba(var(--pr-rgb),.13),rgba(var(--ac-rgb),.07));
-  border:1px solid rgba(var(--pr-rgb),.22)!important;
-  border-right:3px solid rgba(var(--pr-rgb),.42)!important;
-  box-shadow:0 8px 24px rgba(var(--pr-rgb),.13),var(--card-sh)!important;
-  margin-bottom:20px;
-}
-[data-theme="dark"] #panel-patient .dc-list-card.featured:first-child{
-  background:linear-gradient(135deg,rgba(var(--pr-rgb),.17),rgba(var(--ac-rgb),.09));
-}
-
-/* =====================================================
-   MONITOR (list widget)
-===================================================== */
 .dc-monitor{
   background:var(--card-bg);
   border:1px solid var(--card-border);
@@ -651,7 +540,7 @@ body{
 }
 .dc-monitor-list{
   display:flex; flex-direction:column; gap:3px;
-  max-height:173px; overflow-y:auto;
+  max-height:260px; overflow-y:auto;
 }
 .dc-monitor-list a{
   display:block; text-decoration:none;
@@ -665,13 +554,6 @@ body{
 }
 [data-theme="dark"] .dc-monitor-list a{ color:rgba(91,156,246,.88); }
 .dc-monitor-list a:active{ background:var(--surface3); }
-
-/* secondary monitor — extra top margin to visually separate */
-.dc-monitor.dc-monitor-secondary{ margin-top:20px; }
-
-/* =====================================================
-   TOOLS ISLAND
-===================================================== */
 .dc-tools-island{
   display:grid; grid-template-columns:repeat(3,minmax(0,1fr));
   border-radius:var(--r-lg); overflow:hidden;
@@ -701,10 +583,6 @@ body{
 .dc-tool-seg:active{ background:rgba(var(--pr-rgb),.06); }
 .dc-tool-ico{ font-size:21px; line-height:1; }
 .dc-tool-txt{ font-size:11.5px; font-weight:800; color:var(--txt2); }
-
-/* =====================================================
-   LOCATION / CONTACT
-===================================================== */
 .dc-locpack-img{
   width:100%; height:95px;
   object-fit:cover; border-radius:var(--r-md);
@@ -732,10 +610,6 @@ body{
 }
 [data-theme="dark"] .dc-cta-btn{ color:#8ab4f8; border-color:rgba(91,156,246,.20); border-top-color:rgba(91,156,246,.30); }
 .dc-cta-btn:active{ transform:scale(.975); background:var(--surface3); }
-
-/* =====================================================
-   GLOBAL SEARCH BOX
-===================================================== */
 .dc-global-filter-box{
   background:var(--card-bg);
   border-radius:var(--r-xl); padding:18px 16px;
@@ -779,7 +653,6 @@ body{
   box-shadow:0 3px 10px rgba(var(--pr-rgb),.26);
 }
 [data-theme="dark"] .dc-filter-btn.active{ background:#2b5278; border-color:#2b5278; }
-
 .dc-results-box{
   margin-top:12px; padding:10px 12px;
   border-radius:var(--r-md);
@@ -802,10 +675,6 @@ body{
   transition:all var(--tr);
 }
 [data-theme="dark"] .dc-close-results{ color:#5b9cf6; }
-
-/* =====================================================
-   MOBILE SEARCH OVERLAY
-===================================================== */
 @media(max-width:1023px){
   .dc-search-overlay{
     position:fixed; inset:0; z-index:999;
@@ -858,10 +727,6 @@ body{
     overscroll-behavior:contain; padding-bottom:120px;
   }
 }
-
-/* =====================================================
-   RADAR OVERLAY
-===================================================== */
 .radar-overlay{
   position:fixed; top:0; left:0; width:100%; height:100%;
   background:var(--bg); z-index:99999;
@@ -872,7 +737,6 @@ body{
 }
 .radar-overlay[aria-hidden="false"]{ opacity:1; visibility:visible; }
 body.dc-radar-mode{ overflow:hidden; }
-
 .radar-overlay-header{
   display:flex; align-items:center;
   padding:13px 18px;
@@ -889,7 +753,6 @@ body.dc-radar-mode{ overflow:hidden; }
 }
 .radar-close-btn:hover{ color:#ff4646; }
 .radar-header-title{ font-weight:800; font-size:15px; color:var(--txt); flex-grow:1; }
-
 .radar-overlay-body{
   flex-grow:1; padding:16px;
   overflow-y:auto; max-width:800px;
@@ -908,7 +771,6 @@ body.dc-radar-mode{ overflow:hidden; }
   border-color:rgba(var(--ac-rgb),.60);
   box-shadow:0 4px 18px rgba(var(--ac-rgb),.15);
 }
-
 .radar-results{ display:flex; flex-direction:column; gap:10px; }
 .radar-initial-msg,.radar-no-results{
   text-align:center; color:var(--txt3); margin-top:30px; font-size:13.5px;
@@ -933,10 +795,6 @@ body.dc-radar-mode{ overflow:hidden; }
   display:-webkit-box; -webkit-line-clamp:3; line-clamp:3;
   -webkit-box-orient:vertical; overflow:hidden;
 }
-
-/* =====================================================
-   DARK/LIGHT FLOAT BTN
-===================================================== */
 #dc-theme-toggle{
   position:fixed; bottom:76px; left:14px; z-index:250;
   width:42px; height:42px; border-radius:var(--r-f);
@@ -948,10 +806,6 @@ body.dc-radar-mode{ overflow:hidden; }
   transition:all var(--tr);
 }
 #dc-theme-toggle:active{ transform:scale(.86); }
-
-/* =====================================================
-   FOOTER
-===================================================== */
 footer{
   color:var(--txt3); font-size:.78rem;
   text-align:center; line-height:1.8;
@@ -959,16 +813,10 @@ footer{
   border-top:1px solid var(--border2);
   transition:all var(--tr2);
 }
-
-/* =====================================================
-   DESKTOP SHELL  (>=1024px)
-===================================================== */
 #dc-desktop-root{ display:none; }
-
 body.dc-desktop-ui #mobile-shell,
 body.dc-desktop-ui footer{ display:none!important; }
 body.dc-desktop-ui #dc-desktop-root{ display:block; }
-
 body.dc-desktop-ui{
   height:100vh!important; overflow:hidden!important;
 }
@@ -979,7 +827,6 @@ body.dc-desktop-ui #dc-desktop-root{
 body.dc-desktop-ui #dc-theme-toggle{
   left:unset; right:16px; bottom:20px; z-index:400;
 }
-
 .dc-desk-app{
   display:grid;
   grid-template-columns:clamp(240px,20vw,310px) 1fr;
@@ -988,7 +835,6 @@ body.dc-desktop-ui #dc-theme-toggle{
 @media(min-width:1600px){ .dc-desk-app{ max-width:1600px; margin:0 auto; grid-template-columns:clamp(280px,18vw,360px) 1fr; } }
 @media(min-width:1200px) and (max-width:1599px){ .dc-desk-app{ grid-template-columns:clamp(270px,20vw,320px) 1fr; } }
 @media(min-width:1024px) and (max-width:1199px){ .dc-desk-app{ grid-template-columns:clamp(220px,22vw,270px) 1fr; } }
-
 .dc-desk-sidebar{
   display:flex; flex-direction:column;
   background:var(--sb); overflow:hidden;
@@ -1002,7 +848,6 @@ body.dc-desktop-ui #dc-theme-toggle{
 }
 .dc-desk-logo{ font-weight:900; font-size:17px; color:var(--sb-txt); }
 .dc-desk-sub{ font-size:11px; color:var(--sb-txt2); }
-
 .dc-desk-nav{
   display:flex; flex-direction:column; gap:2px;
   overflow-y:auto; padding:10px 8px 16px; flex:1;
@@ -1010,9 +855,7 @@ body.dc-desktop-ui #dc-theme-toggle{
 }
 .dc-desk-nav::-webkit-scrollbar{ width:3px; }
 .dc-desk-nav::-webkit-scrollbar-thumb{ background:rgba(255,255,255,.10); border-radius:999px; }
-
 .dc-desk-divider{ height:1px; background:var(--sb-div); margin:5px 8px; }
-
 .dc-desk-nav-item{
   display:flex; align-items:center; gap:10px;
   width:100%; border:1px solid transparent;
@@ -1040,7 +883,6 @@ body.dc-desktop-ui #dc-theme-toggle{
 .dc-desk-txt span.small{
   font-size:10px; font-weight:400; color:var(--sb-txt2);
 }
-
 .dc-desk-view{
   display:flex; flex-direction:column;
   background:var(--surface); overflow:hidden;
@@ -1063,8 +905,6 @@ body.dc-desktop-ui #dcDeskViewEmpty .banner{
 }
 #dc-desktop-root.is-live #dcDeskViewer{ display:block; }
 #dc-desktop-root.is-live .dc-desk-view-empty{ display:none; }
-
-/* desktop reuse pulse banner */
 .banner{
   position:relative; width:100%; height:100%;
   background:rgba(14,22,33,.90);
@@ -1093,13 +933,10 @@ body.dc-desktop-ui #dcDeskViewEmpty .banner{
   font-size:1.4rem; font-weight:bold;
   color:rgba(255,80,80,.75); cursor:pointer; line-height:1;
 }
-
-/* flash prevention */
 @media(min-width:1024px) and (hover:hover){
   #mobile-shell,footer{ visibility:hidden; }
 }
   </style>
-
   <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://dentcast.org/#website","url":"https://dentcast.org/","name":"DentCast","description":"DentCast is a scientific dental education platform and podcast focusing on prosthodontics, dental implants, and evidence-based clinical dentistry.","publisher":{"@id":"https://dentcast.org/#organization"},"inLanguage":"fa"},{"@type":"WebPage","@id":"https://dentcast.org/#homepage","url":"https://dentcast.org/","name":"DentCast — Scientific Dental Podcast and Education Platform","isPartOf":{"@id":"https://dentcast.org/#website"},"about":{"@id":"https://dentcast.org/#organization"},"primaryImageOfPage":{"@type":"ImageObject","url":"https://dentcast.org/header.webp"}},{"@type":"Organization","@id":"https://dentcast.org/#organization","name":"DentCast","url":"https://dentcast.org/","logo":{"@type":"ImageObject","url":"https://dentcast.org/logo-v2.png"},"description":"DentCast is a Persian-language dental education platform and podcast focused on prosthodontics, implants, and clinical decision-making.","founder":{"@id":"https://dentcast.org/#person"}},{"@type":"Person","@id":"https://dentcast.org/#person","name":"Foad Shahabian","alternateName":"Dr. Foad Shahabian","url":"https://dentcast.org/about.html","jobTitle":"Prosthodontist","description":"Prosthodontist and founder of DentCast.","knowsAbout":["Prosthodontics","Dental Implants","Occlusion","Dental Materials","Clinical Decision Making","Digital Dentistry"],"affiliation":{"@id":"https://dentcast.org/#organization"},"sameAs":["https://www.instagram.com/dr.foad_shahabian/","https://t.me/dentcast","https://podcasts.apple.com/us/podcast/dentcast/id1502032364"]},{"@type":"PodcastSeries","@id":"https://dentcast.org/#podcast","name":"DentCast","url":"https://dentcast.org/episodes.html","description":"DentCast is a scientific dental podcast.","publisher":{"@id":"https://dentcast.org/#organization"},"inLanguage":"fa","host":{"@id":"https://dentcast.org/#person"}}]}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"رادار دنت کست چیست و چه کمکی می کند؟","acceptedAnswer":{"@type":"Answer","text":"رادار دنت کست یک ابزار جستجوی اختصاصی برای پیدا کردن وب‌سایت رسمی شرکت‌های دندانپزشکی در ایران است."}}]}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"رادار دنت‌کست","url":"https://dentcast.org/#radar","applicationCategory":"UtilitiesApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"IRR"}}</script>
@@ -1118,11 +955,8 @@ body.dc-desktop-ui #dcDeskViewEmpty .banner{
   <!-- TOP BAR -->
   <header class="dc-topbar">
     <div class="dc-topbar-actions">
-      <!-- ۱) همبرگری — اول -->
       <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="ابزارها" aria-expanded="false">☰</button>
-      <!-- ۲) سرچ — دوم -->
       <button class="dc-topbar-btn dcOpenSearch" aria-label="جستجو">🔍</button>
-      <!-- ۳) رادار — سوم -->
       <button class="dc-topbar-btn" id="btn-radar-topbar" aria-label="رادار">📡</button>
     </div>
     <div class="dc-topbar-brand">
@@ -1131,7 +965,7 @@ body.dc-desktop-ui #dcDeskViewEmpty .banner{
     </div>
   </header>
 
-  <!-- TOOLBAR DRAWER — زیر هدر، پیش‌فرض بسته -->
+  <!-- TOOLBAR DRAWER -->
   <div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">
     <div class="dc-toolbar-drawer-inner">
       <span class="dc-toolbar-drawer-label">ابزارها</span>
@@ -1255,7 +1089,6 @@ body.dc-desktop-ui #dcDeskViewEmpty .banner{
         <span class="dc-chip">Meta</span>
       </div>
 
-      <!-- باکس «سی مطلب جدید» — منتقل‌شده از تب ابزارها، با فاصله بیشتر -->
       <article class="dc-monitor dc-monitor-secondary" aria-label="آخرین مطالب">
         <div class="dc-monitor-inner">
           <div class="dc-monitor-title">سی مطلب جدید و آخر دنت‌کست (اسکرول کنید)</div>
@@ -1298,7 +1131,7 @@ body.dc-desktop-ui #dcDeskViewEmpty .banner{
 
     </section>
 
-    <!-- ── PANEL: ابزار ── (محتوا منتقل شد؛ فقط سرچ‌باکس باقی‌ست برای overlay) -->
+    <!-- ── PANEL: ابزار ── -->
     <section class="dc-panel" id="panel-site">
 
       <!-- Global search box (moved to overlay on mobile) -->
@@ -1324,7 +1157,7 @@ body.dc-desktop-ui #dcDeskViewEmpty .banner{
 
   </main>
 
-  <!-- BOTTOM NAV — سه‌تایی -->
+  <!-- BOTTOM NAV -->
   <nav class="dc-bottom-nav" id="dcBottomNav" aria-label="ناوبری اصلی">
     <div class="dc-bn-item active" data-panel="panel-studio">
       <span class="dc-bn-ico">🎙</span>
@@ -1559,21 +1392,6 @@ themeBtn.addEventListener('click',()=>{
 </script>
 
 <script>
-/* ── TOOLBAR DRAWER TOGGLE ── */
-(function(){
-  const btn = document.getElementById('btn-toolbar-toggle');
-  const drawer = document.getElementById('dcToolbarDrawer');
-  if(!btn || !drawer) return;
-  btn.addEventListener('click', function(){
-    const isOpen = drawer.classList.contains('open');
-    drawer.classList.toggle('open', !isOpen);
-    btn.setAttribute('aria-expanded', String(!isOpen));
-    drawer.setAttribute('aria-hidden', String(isOpen));
-  });
-})();
-</script>
-
-<script>
 /* ── MOBILE SEARCH OVERLAY ── */
 (function(){
   const overlay=document.getElementById('dcSearchOverlay');
@@ -1637,6 +1455,21 @@ function handlePWAInstall(){
 document.getElementById('tool-pwa')?.addEventListener('click',handlePWAInstall);
 document.getElementById('tool-consult')?.addEventListener('click',()=>{window.location.href='mailto:info@dentcast.ir';});
 document.getElementById('tool-about')?.addEventListener('click',()=>{window.location.href='about.html';});
+</script>
+
+<script>
+/* ── TOOLBAR DRAWER TOGGLE ── */
+(function(){
+  const btn = document.getElementById('btn-toolbar-toggle');
+  const drawer = document.getElementById('dcToolbarDrawer');
+  if(!btn||!drawer) return;
+  btn.addEventListener('click', function(){
+    const isOpen = drawer.classList.contains('open');
+    drawer.classList.toggle('open', !isOpen);
+    btn.setAttribute('aria-expanded', String(!isOpen));
+    drawer.setAttribute('aria-hidden', String(isOpen));
+  });
+})();
 </script>
 
 <script src="/global-search.js?v=2"></script>
