@@ -176,38 +176,166 @@ body:has(.dc-topbar) small {
 }
 
 /* =====================================================
-   FOOTER — INTERNAL PAGES
+   FOOTER — UNIFIED ACROSS ALL INTERNAL PAGES
+   Matches index.html footer style:
+   simple, text-only look with top border
 ===================================================== */
-body:has(.dc-topbar) footer {
-  color: var(--txt3);
-  border-top: 1px solid var(--border2);
-  background: transparent;
+body:has(.dc-topbar) footer,
+body:has(.dc-topbar) .dc-site-footer {
+  color: var(--txt3) !important;
+  border-top: 1px solid var(--border2) !important;
+  background: transparent !important;
+  text-align: center !important;
+  font-size: .82rem !important;
+  line-height: 1.9 !important;
+  padding: 22px 18px 90px !important;   /* 90px bottom = room above toggle btn */
+  margin-top: 40px !important;
   transition: color var(--tr2), border-color var(--tr2);
+  /* Reset any gradient/dark background some pages set */
+  background-image: none !important;
 }
 
-/* Footer nav buttons (back/home links used in section pages) */
+/* Copyright line */
+body:has(.dc-topbar) footer .footer-copy,
+body:has(.dc-topbar) footer .footer-copy strong,
+body:has(.dc-topbar) footer > div:last-child,
+body:has(.dc-topbar) footer > p:last-child {
+  color: var(--txt3) !important;
+  font-size: .78rem !important;
+}
+
+body:has(.dc-topbar) footer .footer-copy strong {
+  color: var(--ac) !important;
+}
+
+/* ── BACK / HOME BUTTON ── */
 body:has(.dc-topbar) footer .btn-home,
-body:has(.dc-topbar) footer .btn-about,
 body:has(.dc-topbar) .btn-home,
-body:has(.dc-topbar) .btn-about {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 16px;
-  border-radius: var(--r-md);
-  background: var(--surface2);
-  color: var(--txt2);
-  border: 1px solid var(--border);
-  font-size: .85rem;
-  font-weight: 600;
-  text-decoration: none;
-  transition: all var(--tr);
+body:has(.dc-topbar) footer a[href="/"],
+body:has(.dc-topbar) footer a[href="/index.html"],
+body:has(.dc-topbar) footer a[href="index.html"],
+body:has(.dc-topbar) footer a[href="../"],
+body:has(.dc-topbar) footer a[href="../../"] {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  padding: 10px 22px !important;
+  border-radius: var(--r-f) !important;
+  background: var(--pr) !important;
+  color: #ffffff !important;
+  border: none !important;
+  font-size: .88rem !important;
+  font-weight: 700 !important;
+  text-decoration: none !important;
+  box-shadow: 0 4px 14px rgba(var(--pr-rgb),.28) !important;
+  transition: all var(--tr) !important;
+  margin: 6px 4px !important;
 }
 
-body:has(.dc-topbar) .btn-home:hover,
-body:has(.dc-topbar) .btn-about:hover {
-  background: var(--surface3);
-  color: var(--pr);
+body:has(.dc-topbar) footer .btn-home:hover,
+body:has(.dc-topbar) footer a[href="/"]:hover,
+body:has(.dc-topbar) footer a[href="/index.html"]:hover,
+body:has(.dc-topbar) footer a[href="index.html"]:hover {
+  opacity: .88 !important;
+  transform: translateY(-1px) !important;
+}
+
+/* ── ABOUT BUTTON ── */
+body:has(.dc-topbar) footer .btn-about,
+body:has(.dc-topbar) .btn-about,
+body:has(.dc-topbar) footer a[href="/about.html"] {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  padding: 10px 22px !important;
+  border-radius: var(--r-f) !important;
+  background: var(--surface2) !important;
+  color: var(--txt2) !important;
+  border: 1px solid var(--border) !important;
+  font-size: .88rem !important;
+  font-weight: 600 !important;
+  text-decoration: none !important;
+  box-shadow: var(--card-sh) !important;
+  transition: all var(--tr) !important;
+  margin: 6px 4px !important;
+}
+
+body:has(.dc-topbar) footer .btn-about:hover,
+body:has(.dc-topbar) footer a[href="/about.html"]:hover {
+  background: var(--surface3) !important;
+  color: var(--pr) !important;
+}
+
+/* ── GLOSSARY .btn back button ── */
+body:has(.dc-topbar) footer .btn,
+body:has(.dc-topbar) .term-footer .btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  padding: 10px 22px !important;
+  border-radius: var(--r-f) !important;
+  background: var(--surface2) !important;
+  color: var(--txt2) !important;
+  border: 1px solid var(--border) !important;
+  font-size: .88rem !important;
+  font-weight: 600 !important;
+  text-decoration: none !important;
+  box-shadow: var(--card-sh) !important;
+  transition: all var(--tr) !important;
+  margin: 6px 4px !important;
+}
+
+body:has(.dc-topbar) footer .btn:hover,
+body:has(.dc-topbar) .term-footer .btn:hover {
+  background: var(--surface3) !important;
+  color: var(--pr) !important;
+}
+
+/* ── GENERIC BACK LINK IN FOOTER (notecast/insight inline style links) ──
+   Targets the first <a> in a <footer> that goes "back"
+   (href doesn't start with # or mailto and isn't /about.html)
+   We can't use :not() with compound selectors in older engines,
+   so we style ALL footer a's then override the about one above.
+── */
+body:has(.dc-topbar) footer a {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  padding: 10px 22px !important;
+  border-radius: var(--r-f) !important;
+  background: var(--surface2) !important;
+  color: var(--txt2) !important;
+  border: 1px solid var(--border) !important;
+  font-size: .88rem !important;
+  font-weight: 600 !important;
+  text-decoration: none !important;
+  box-shadow: var(--card-sh) !important;
+  transition: all var(--tr) !important;
+  margin: 6px 4px !important;
+  /* Reset all inline-style colours */
+  background-color: var(--surface2) !important;
+  background-image: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+body:has(.dc-topbar) footer a:hover {
+  background: var(--surface3) !important;
+  color: var(--pr) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* ── Footer copyright / about-link text ── */
+body:has(.dc-topbar) .term-footer .about-link,
+body:has(.dc-topbar) footer .about-link {
+  font-size: .80rem !important;
+  color: var(--txt3) !important;
+  margin-top: 10px !important;
+}
+
+body:has(.dc-topbar) footer strong {
+  color: var(--txt2) !important;
+  font-weight: 700 !important;
 }
 
 /* =====================================================
@@ -226,37 +354,35 @@ body:has(.dc-topbar) .wrap > ol li {
 
 /* =====================================================
    DARK / LIGHT MODE FLOAT TOGGLE BUTTON
-   Same position across ALL pages:
-   fixed bottom-left, same size & style as index.html
+   Matches index.html: bottom:76px left:14px
+   (76px clears any bottom browser UI bar on mobile)
 ===================================================== */
 #dc-theme-toggle {
-  position: fixed;
-  bottom: 20px;
-  left: 14px;
+  position: fixed !important;
+  bottom: 76px !important;
+  left: 14px !important;
+  right: auto !important;
+  top: auto !important;
   z-index: 250;
   width: 42px;
   height: 42px;
   border-radius: var(--r-f);
-  background: var(--surface);
-  color: var(--txt2);
-  border: 1px solid var(--border);
-  box-shadow: 0 4px 16px rgba(0,0,0,.14);
+  background: #17212b;
+  color: #e8f0ff;
+  border: 1px solid rgba(255,255,255,.12);
+  box-shadow: 0 4px 16px rgba(0,0,0,.28);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 19px;
   cursor: pointer;
   transition: all var(--tr);
-  /* override any old position from page-specific CSS */
-  right: auto !important;
-  top: auto !important;
 }
 
 [data-theme="dark"] #dc-theme-toggle {
-  background: var(--surface2);
-  color: var(--txt);
-  border-color: var(--border);
-  box-shadow: 0 4px 16px rgba(0,0,0,.30);
+  background: #1e2c3a;
+  border-color: rgba(255,255,255,.10);
+  box-shadow: 0 4px 16px rgba(0,0,0,.36);
 }
 
 #dc-theme-toggle:active {
@@ -269,7 +395,7 @@ body:has(.dc-topbar) .wrap > ol li {
 body:has(.dc-topbar) .dc-jump,
 body:has(.dc-topbar) #dcJumpBtn {
   position: fixed;
-  bottom: 74px;
+  bottom: 126px;   /* above theme toggle (76px + 42px + 8px) */
   left: 14px;
   z-index: 249;
   width: 42px;
