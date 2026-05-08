@@ -2,14 +2,14 @@
 <html lang="fa" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
   <title>🎬 DentCast+ | آموزش‌های ویدیویی دندان‌پزشکی</title>
   <meta name="description" content="آموزش‌های ویدیویی کوتاه و تخصصی در حوزه پروتز، تراش، ایمپلنت و نکات بالینی — با روایت دکتر فؤاد شهابیان.">
   <link rel="canonical" href="https://dentcast.org/dentcast-plus/index.html">
-
   <link rel="icon" href="/logo-v2.png" type="image/png" sizes="512x512">
   <link rel="apple-touch-icon" href="/logo-v2.png">
   <link rel="stylesheet" href="/global-search.css?v=1">
+  <meta name="theme-color" content="#F3F5F7">
 
   <script type="application/ld+json">
   {
@@ -50,470 +50,499 @@
   }
   </script>
 
-
+  <!-- Theme init — no flash -->
+  <script>
+    (function(){
+      const s=localStorage.getItem('dc-theme');
+      const d=window.matchMedia('(prefers-color-scheme:dark)').matches;
+      if(s==='dark'||(s===null&&d)) document.documentElement.setAttribute('data-theme','dark');
+    })();
+  </script>
 
   <style>
-    :root{
-      --blue:#0b5fff;
-      --bg:#0a0d14;
-      --bg2:#101522;
-      --cardBg:rgba(30,40,60,.4);
-      --cardBorder:rgba(255,255,255,.08);
-      --text:#e7eaf1;
-      --muted:#9aa1b3;
-      --radius:20px;
-      --shadow:0 10px 30px rgba(0,0,0,.4);
-    }
+/* =====================================================
+   CSS VARIABLES — مطابق index.html
+===================================================== */
+:root{
+  --pr:#022360; --pr-rgb:2,35,96;
+  --ac:#0b5fff; --ac-rgb:11,95,255;
 
-    html,body{
-      margin:0;
-      height:100%;
-      font-family:'Vazirmatn',sans-serif;
-      background:radial-gradient(circle at 50% 0%, rgba(11,95,255,.15), transparent 60%),
-                 linear-gradient(180deg,var(--bg),var(--bg2));
-      color:var(--text);
-    }
+  --bg:#f0f2f5;
+  --surface:#ffffff;
+  --surface2:#f4f6fb;
+  --surface3:#eaecf5;
+  --border:rgba(2,35,96,.10);
+  --border2:rgba(2,35,96,.06);
 
-    body{
-      display:flex;
-      justify-content:center;
-    }
+  --txt:#0a1a33;
+  --txt2:#4a5f85;
+  --txt3:#8a9cbe;
 
-    #page-content{
-      width:100%;
-      max-width:1000px;
-      padding:40px 24px 60px;
-      transition:filter .25s ease;
-    }
+  --card-bg:#ffffff;
+  --card-border:rgba(2,35,96,.09);
+  --card-sh:0 1px 3px rgba(2,35,96,.07),0 4px 14px rgba(2,35,96,.04);
+  --card-sh2:0 4px 18px rgba(2,35,96,.13),0 1px 4px rgba(2,35,96,.07);
 
-    body.search-open #page-content{
-      filter:blur(8px);
-      pointer-events:none;
-      user-select:none;
-    }
-
-    h1{
-      text-align:center;
-      color:var(--blue);
-      font-weight:800;
-      font-size:2.2rem;
-      margin:10px 0;
-    }
-
-    h2{
-      text-align:center;
-      color:var(--muted);
-      font-weight:500;
-      margin:0 0 40px;
-    }
- .video-grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-      gap:30px;
-      margin-top:40px;
-    }
-
-    .video-card{
-      background:var(--cardBg);
-      border:1px solid var(--cardBorder);
-      border-radius:var(--radius);
-      overflow:hidden;
-      text-decoration:none;
-      color:var(--text);
-      box-shadow:var(--shadow);
-      transition:.3s;
-    }
-
-    .video-card:hover{
-      transform:translateY(-6px);
-      border-color:rgba(11,95,255,.4);
-    }
-
-    .thumb{
-      aspect-ratio:16/9;
-      background-size:cover;
-      background-position:center;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      position:relative;
-    }
-
-    .thumb::after{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:linear-gradient(180deg,rgba(0,0,0,.15),rgba(0,0,0,.4));
-    }
-
-    .play-icon{
-      width:52px;
-      height:52px;
-      border-radius:50%;
-      background:#0b5fff;
-      position:relative;
-      z-index:1;
-    }
-
-    .play-icon::before{
-      content:"";
-      position:absolute;
-      left:20px;
-      top:17px;
-      width:0;
-      height:0;
-      border-top:8px solid transparent;
-      border-bottom:8px solid transparent;
-      border-left:14px solid #fff;
-    }
-
-    .video-info{
-      padding:20px 24px;
-    }
-
-    .video-title{
-      font-weight:700;
-      margin-bottom:6px;
-    }
-
-    .video-meta{
-      font-size:.85rem;
-      color:var(--muted);
-    }
-
-
-    .newsletter-wrapper{
-      max-width:600px;
-      margin:60px auto;
-      padding:0 15px;
-    }
-
-    .newsletter-box{
-      background:rgba(20,30,50,.6);
-      border:1px solid rgba(255,255,255,.08);
-      border-radius:16px;
-      padding:24px;
-      text-align:center;
-      backdrop-filter:blur(12px);
-    }
-
-    .newsletter-title{
-      font-weight:700;
-      color:#bcd3ff;
-      margin-bottom:6px;
-    }
-
-    .newsletter-text{
-      font-size:.85rem;
-      color:#8890a5;
-      margin-bottom:18px;
-    }
-
-    .newsletter-form-group{
-      display:flex;
-      gap:8px;
-    }
-
-    .newsletter-input{
-      flex:1;
-      padding:10px 14px;
-      border-radius:10px;
-      border:1px solid rgba(255,255,255,.1);
-      background:rgba(0,0,0,.25);
-      color:#fff;
-    }
-
-    .newsletter-btn{
-      background:#0b5fff;
-      border:none;
-      border-radius:10px;
-      padding:0 20px;
-      color:#fff;
-      font-weight:600;
-      cursor:pointer;
-    }
-
-    footer{
-      text-align:center;
-      color:var(--muted);
-      margin-top:60px;
-      font-size:.85rem;
-    }
-
-    .btn-home,.btn-about{
-      display:inline-block;
-      margin:10px;
-      text-decoration:none;
-      font-weight:600;
-    }
-
-    .btn-home{
-      color:#3a84ff;
-    }
-
-    .btn-about{
-      color:#111;
-      background:#ffdb4d;
-      padding:6px 14px;
-      border-radius:8px;
-    }
-    /* ===== Jump Button (DentCast) ===== */
-/* ===== Floating Jump Button (DentCast) ===== */
-.dc-jump {
-  position: fixed;
-  right: 18px;           /* بهتر از چپ: کمتر می‌افته روی لینک‌های فوتر */
-  left: auto;
-  bottom: calc(18px + env(safe-area-inset-bottom, 0px));
-
-  width: 46px;
-  height: 46px;
-  border-radius: 999px;
-
-  /* solid but translucent - ولی نه اونقدر مات */
-  background: rgba(1, 19, 57, 0.8);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.22);
-
-  display: grid;
-  place-items: center;
-
-  opacity: 0.85; /* همیشه دیده بشه و کمرنگ نباشه */
-  transition: opacity .2s ease, transform .2s ease;
-  cursor: pointer;
-  z-index: 9999;
+  --tr:.17s cubic-bezier(.4,0,.2,1);
+  --tr2:.26s cubic-bezier(.4,0,.2,1);
+  --r-sm:10px; --r-md:14px; --r-lg:18px; --r-xl:22px; --r-f:999px;
 }
 
-.dc-jump:hover { opacity: 1; transform: translateY(-1px); }
-.dc-jump:active { transform: translateY(0) scale(0.98); }
-.dc-jump:focus-visible {
-  outline: 2px solid rgba(231, 234, 241, 0.9);
-  outline-offset: 3px;
+[data-theme="dark"]{
+  --pr:#5b9cf6; --pr-rgb:91,156,246;
+  --ac:#5b9cf6; --ac-rgb:91,156,246;
+
+  --bg:#0e1621;
+  --surface:#17212b; --surface2:#1e2c3a; --surface3:#232e3c;
+  --border:rgba(255,255,255,.08); --border2:rgba(255,255,255,.04);
+
+  --txt:#e8f0ff; --txt2:#8aaac8; --txt3:#4a6a88;
+
+  --card-bg:#1e2c3a; --card-border:rgba(255,255,255,.07);
+  --card-sh:0 1px 3px rgba(0,0,0,.22),0 4px 14px rgba(0,0,0,.14);
+  --card-sh2:0 4px 18px rgba(0,0,0,.28);
 }
 
-.dc-jump svg {
-  width: 18px;
-  height: 18px;
-  fill: rgba(231, 234, 241, 0.95); /* آیکن روشن، نه مشکی */
-  transition: transform .28s ease;
+/* =====================================================
+   RESET
+===================================================== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{height:100%;width:100%;}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+  font-size:16px; line-height:1.5;
+  background:var(--bg); color:var(--txt);
+  min-height:100vh;
+  display:flex; flex-direction:column;
+  -webkit-font-smoothing:antialiased;
+  transition:background var(--tr2),color var(--tr2);
+}
+a{text-decoration:none;color:inherit;cursor:pointer;}
+button,input{font:inherit;color:inherit;background:none;border:none;outline:none;cursor:pointer;}
+[hidden]{display:none!important;}
+
+/* =====================================================
+   LAYOUT
+===================================================== */
+#page-content{
+  width:100%;
+  max-width:760px;
+  margin:0 auto;
+  padding:20px 14px 100px;
+  flex:1;
+  transition:filter .25s ease;
 }
 
-/* وقتی حالت UP شد فلش می‌چرخه */
-.dc-jump.is-up svg { transform: rotate(180deg); }
-
-/* اگر خواستی روی موبایل یه ذره از فوتر فاصله بگیره */
-@media (max-width: 640px) {
-  .dc-jump { bottom: calc(22px + env(safe-area-inset-bottom, 0px)); }
+body.search-open #page-content{
+  filter:blur(8px);
+  pointer-events:none;
+  user-select:none;
 }
 
+/* =====================================================
+   هدر صفحه
+===================================================== */
+.page-header{
+  text-align:center;
+  padding:28px 0 20px;
+}
+.page-header h2{
+  font-size:.82rem;
+  font-weight:700;
+  color:var(--txt3);
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  margin-bottom:6px;
+  transition:color var(--tr2);
+}
+.page-header h1{
+  font-size:1.4rem;
+  font-weight:900;
+  color:var(--pr);
+  letter-spacing:-.3px;
+  transition:color var(--tr2);
+}
+
+/* =====================================================
+   گرید ویدیو
+===================================================== */
+.video-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:14px;
+  margin-top:20px;
+}
+
+.video-card{
+  background:var(--card-bg);
+  border:1px solid var(--card-border);
+  border-radius:var(--r-xl);
+  overflow:hidden;
+  text-decoration:none;
+  color:var(--txt);
+  box-shadow:var(--card-sh);
+  transition:all var(--tr);
+  -webkit-tap-highlight-color:transparent;
+  display:block;
+}
+.video-card:hover{
+  transform:translateY(-3px);
+  box-shadow:var(--card-sh2);
+  border-color:rgba(var(--ac-rgb),.30);
+}
+.video-card:active{
+  transform:scale(.985);
+}
+
+/* thumbnail */
+.thumb{
+  aspect-ratio:16/9;
+  background-size:cover;
+  background-position:center;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+}
+.thumb::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg,rgba(0,0,0,.08),rgba(0,0,0,.35));
+  transition:background var(--tr);
+}
+.video-card:hover .thumb::after{
+  background:linear-gradient(180deg,rgba(0,0,0,.04),rgba(0,0,0,.25));
+}
+
+/* play icon */
+.play-icon{
+  width:48px;
+  height:48px;
+  border-radius:50%;
+  background:var(--ac);
+  position:relative;
+  z-index:1;
+  box-shadow:0 4px 16px rgba(var(--ac-rgb),.45);
+  transition:transform var(--tr), box-shadow var(--tr);
+}
+.video-card:hover .play-icon{
+  transform:scale(1.08);
+  box-shadow:0 6px 22px rgba(var(--ac-rgb),.55);
+}
+.play-icon::before{
+  content:"";
+  position:absolute;
+  left:19px; top:16px;
+  width:0; height:0;
+  border-top:8px solid transparent;
+  border-bottom:8px solid transparent;
+  border-left:14px solid #fff;
+}
+
+/* اطلاعات ویدیو */
+.video-info{
+  padding:14px 16px;
+}
+.video-title{
+  font-weight:700;
+  font-size:.88rem;
+  color:var(--txt);
+  margin-bottom:5px;
+  line-height:1.45;
+  transition:color var(--tr);
+}
+.video-card:hover .video-title{ color:var(--ac); }
+[data-theme="dark"] .video-card:hover .video-title{ color:#8ab4f8; }
+
+.video-meta{
+  font-size:.76rem;
+  color:var(--txt3);
+  transition:color var(--tr2);
+}
+
+/* =====================================================
+   فوتر و دکمه‌ها
+===================================================== */
+footer{
+  text-align:center;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:10px;
+  margin-top:40px;
+  padding-bottom:20px;
+}
+
+.btn-home{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  background:var(--pr);
+  color:#fff;
+  border-radius:var(--r-md);
+  padding:12px 32px;
+  font-weight:800;
+  font-size:.92rem;
+  box-shadow:0 4px 14px rgba(var(--pr-rgb),.28);
+  transition:all var(--tr);
+  text-decoration:none;
+}
+.btn-home:hover{ transform:translateY(-1px); box-shadow:0 6px 20px rgba(var(--pr-rgb),.34); }
+.btn-home:active{ transform:scale(.97); }
+[data-theme="dark"] .btn-home{ background:#2b5278; box-shadow:0 4px 14px rgba(0,0,0,.28); }
+
+.btn-about{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  background:var(--surface2);
+  color:var(--txt2);
+  border:1px solid var(--border);
+  border-radius:var(--r-f);
+  padding:7px 18px;
+  font-weight:600;
+  font-size:.80rem;
+  text-decoration:none;
+  transition:all var(--tr);
+}
+.btn-about:hover{ background:var(--surface3); }
+.btn-about:active{ transform:scale(.97); }
+
+.footer-copy{
+  font-size:.76rem;
+  color:var(--txt3);
+  margin-top:4px;
+}
+.footer-copy strong{ color:var(--ac); }
+[data-theme="dark"] .footer-copy strong{ color:#8ab4f8; }
+
+/* =====================================================
+   دکمه Jump — راست
+===================================================== */
+.dc-jump{
+  position:fixed;
+  right:18px;
+  left:auto;
+  bottom:calc(18px + env(safe-area-inset-bottom, 0px));
+  width:42px; height:42px;
+  border-radius:var(--r-f);
+  background:var(--surface);
+  border:1px solid var(--border);
+  box-shadow:0 4px 16px rgba(var(--pr-rgb),.18);
+  display:grid;
+  place-items:center;
+  opacity:0.75;
+  transition:opacity .2s ease, transform .2s ease, background var(--tr2);
+  cursor:pointer;
+  z-index:9999;
+}
+.dc-jump:hover{ opacity:1; transform:translateY(-1px); }
+.dc-jump:active{ transform:scale(.92); }
+.dc-jump svg{
+  width:20px; height:20px;
+  fill:var(--pr);
+  transition:fill var(--tr2), transform .2s ease;
+}
+.dc-jump.is-up svg{ transform:rotate(180deg); }
+
+@media(max-width:640px){
+  .dc-jump{ bottom:calc(22px + env(safe-area-inset-bottom, 0px)); }
+}
+
+/* =====================================================
+   تم تاگل — چپ
+===================================================== */
+#dc-theme-toggle{
+  position:fixed; bottom:20px; left:14px; z-index:250;
+  width:42px; height:42px; border-radius:var(--r-f);
+  background:#17212b; color:#e8f0ff;
+  border:1px solid rgba(255,255,255,.12);
+  box-shadow:0 4px 16px rgba(0,0,0,.28);
+  display:flex; align-items:center; justify-content:center;
+  font-size:19px; cursor:pointer;
+  transition:all var(--tr);
+}
+#dc-theme-toggle:active{ transform:scale(.86); }
+
+@media(max-width:768px){
+  .page-header h1{ font-size:1.2rem; }
+  #page-content{ padding:16px 12px 100px; }
+  .video-grid{ grid-template-columns:1fr; gap:10px; }
+}
   </style>
-  <script>
-    !function (t, e, n) {
-        t.yektanetAnalyticsObject = n, t[n] = t[n] || function () {
-            t[n].q.push(arguments)
-        }, t[n].q = t[n].q || [];
-        var a = new Date, r = a.getFullYear().toString() + "0" + a.getMonth() + "0" + a.getDate() + "0" + a.getHours(),
-            c = e.getElementsByTagName("script")[0], s = e.createElement("script");
-        s.id = "ua-script-nzlddHSQ"; s.dataset.analyticsobject = n;
-        s.async = 1; s.type = "text/javascript";
-        s.src = "https://cdn.yektanet.com/rg_woebegone/scripts_v3/nzlddHSQ/rg.complete.js?v=" + r, c.parentNode.insertBefore(s, c)
-    }(window, document, "yektanet");
-</script>
+
+  <script>!function(t,e,n){t.yektanetAnalyticsObject=n,t[n]=t[n]||function(){t[n].q.push(arguments)},t[n].q=t[n].q||[];var a=new Date,r=a.getFullYear().toString()+"0"+a.getMonth()+"0"+a.getDate()+"0"+a.getHours(),c=e.getElementsByTagName("script")[0],s=e.createElement("script");s.id="ua-script-nzlddHSQ";s.dataset.analyticsobject=n;s.async=1;s.type="text/javascript";s.src="https://cdn.yektanet.com/rg_woebegone/scripts_v3/nzlddHSQ/rg.complete.js?v="+r,c.parentNode.insertBefore(s,c)}(window,document,"yektanet");</script>
 </head>
 
 <body>
- <!-- Put this at the very top of the page (right after <body>) -->
 <div id="dc-top"></div>
 
 <div id="page-content">
 
-<h2>🎬 DentCast+</h2>
-<h1>آموزش‌های ویدیویی کوتاه و تخصصی دندانپزشکی</h1>
-
-<div class="dc-global-filter-box" id="dcGlobalBox">
-  <button class="dc-close-results">✖</button>
-  <h3 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h3>
-  <input id="dcSearch" class="dc-search-input" placeholder="جستجو در همهٔ بخش‌های دنت‌کست…">
-  <div class="dc-filter-list">
-    <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
-    <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
-    <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
-   <!-- <button class="dc-filter-btn active" data-type="litecast">لایت‌کست</button>-->
-   <!-- <button class="dc-filter-btn active" data-type="photocast">فوتوکست</button>-->
-    <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
-    <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
-    <button class="dc-filter-btn active" data-type="meta">metanote</button>
-<button class="dc-filter-btn active" data-type="chairside">chairside</button>
-<button class="dc-filter-btn active" data-type="sharehub">Share Hub</button>
-
-</div>
-  <div class="dc-results-box" id="dcResults"></div>
-</div>
-
-<div class="video-grid">
-   <a href="video-6.html" class="video-card">
-  <div class="thumb" style="background-image:url('https://dentcast.arvanvod.ir/vkxeWA47OD/p80L07Wyrd/thumbnail.jpg');">
-    <div class="play-icon"></div>
+  <div class="page-header">
+    <h2>🎬 DentCast+</h2>
+    <h1>آموزش‌های ویدیویی کوتاه و تخصصی دندانپزشکی</h1>
   </div>
-  <div class="video-info">
-    <div class="video-title">در گروپ فانکشن حواستون به تداخل سمت کارگر باشه</div>
-    <div class="video-meta">دکتر فواد شهابیان • DentCast+</div>
+
+  <!-- 🔍 Global Search -->
+  <div class="dc-global-filter-box" id="dcGlobalBox">
+    <button class="dc-close-results">✖</button>
+    <h3 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h3>
+    <input id="dcSearch" class="dc-search-input" placeholder="جستجو در همهٔ بخش‌های دنت‌کست…">
+    <div class="dc-filter-list">
+      <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
+      <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
+      <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
+      <!-- <button class="dc-filter-btn active" data-type="litecast">لایت‌کست</button>-->
+      <!-- <button class="dc-filter-btn active" data-type="photocast">فوتوکست</button>-->
+      <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
+      <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
+      <button class="dc-filter-btn active" data-type="meta">metanote</button>
+      <button class="dc-filter-btn active" data-type="chairside">chairside</button>
+      <button class="dc-filter-btn active" data-type="sharehub">Share Hub</button>
+    </div>
+    <div class="dc-results-box" id="dcResults"></div>
   </div>
-</a>
-  <a href="video-5.html" class="video-card">
-  <div class="thumb" style="background-image:url('https://dentcast.arvanvod.ir/vkxeWA47OD/gjwlopDY7e/thumbnail.jpg');">
-    <div class="play-icon"></div>
+
+  <div class="video-grid">
+
+    <a href="video-6.html" class="video-card">
+      <div class="thumb" style="background-image:url('https://dentcast.arvanvod.ir/vkxeWA47OD/p80L07Wyrd/thumbnail.jpg');">
+        <div class="play-icon"></div>
+      </div>
+      <div class="video-info">
+        <div class="video-title">در گروپ فانکشن حواستون به تداخل سمت کارگر باشه</div>
+        <div class="video-meta">دکتر فواد شهابیان • DentCast+</div>
+      </div>
+    </a>
+
+    <a href="video-5.html" class="video-card">
+      <div class="thumb" style="background-image:url('https://dentcast.arvanvod.ir/vkxeWA47OD/gjwlopDY7e/thumbnail.jpg');">
+        <div class="play-icon"></div>
+      </div>
+      <div class="video-info">
+        <div class="video-title">وقتی که روکش ایمپلنت را باید تکرار بزنید</div>
+        <div class="video-meta">دکتر فواد شهابیان • DentCast+</div>
+      </div>
+    </a>
+
+    <a href="video-4.html" class="video-card">
+      <div class="thumb" style="background-image:url('https://dentcast.arvanvod.ir/vkxeWA47OD/G6rJ5g1bz9/thumbnail.jpg');">
+        <div class="play-icon"></div>
+      </div>
+      <div class="video-info">
+        <div class="video-title">یک تست ساده قبل از سمان؛ جلوی افتادن‌های بعدی را می‌گیرد</div>
+        <div class="video-meta">دکتر فواد شهابیان • DentCast+</div>
+      </div>
+    </a>
+
+    <a href="video-3.html" class="video-card">
+      <div class="thumb" style="background-image:url('https://dentcast.arvanvod.ir/vkxeWA47OD/kVMBp6ldP6/thumbnail.jpg');">
+        <div class="play-icon"></div>
+      </div>
+      <div class="video-info">
+        <div class="video-title">وقتی روکش راک دارد؛ ترتیب بررسی مهم است</div>
+        <div class="video-meta">دکتر فواد شهابیان • DentCast+</div>
+      </div>
+    </a>
+
+    <a href="video-2.html" class="video-card">
+      <div class="thumb" style="background-image:url('https://dentcast.arvanvod.ir/vkxeWA47OD/6myAq4edLp/thumbnail.jpg');">
+        <div class="play-icon"></div>
+      </div>
+      <div class="video-info">
+        <div class="video-title">آخرین مرحله قبل از خداحافظی با بیمار</div>
+        <div class="video-meta">دکتر فواد شهابیان • DentCast+</div>
+      </div>
+    </a>
+
+    <a href="video-1.html" class="video-card">
+      <div class="thumb" style="background-image:url('https://dentcast.arvanvod.ir/vkxeWA47OD/An53wApKV2/thumbnail.jpg');">
+        <div class="play-icon"></div>
+      </div>
+      <div class="video-info">
+        <div class="video-title">نکات شخصی که کیفیت تراش را واقعاً بهتر می‌کنند</div>
+        <div class="video-meta">دکتر فواد شهابیان • DentCast+</div>
+      </div>
+    </a>
+
   </div>
-  <div class="video-info">
-    <div class="video-title">وقتی که روکش ایمپلنت را باید تکرار بزنید</div>
-    <div class="video-meta">دکتر فواد شهابیان • DentCast+</div>
-  </div>
-</a>
 
-  <a href="video-4.html" class="video-card">
-    <div class="thumb" style="background-image:url('https://dentcast.arvanvod.ir/vkxeWA47OD/G6rJ5g1bz9/thumbnail.jpg');">
-      <div class="play-icon"></div>
-    </div>
-    <div class="video-info">
-      <div class="video-title">یک تست ساده قبل از سمان؛ جلوی افتادن‌های بعدی را می‌گیرد</div>
-      <div class="video-meta">دکتر فواد شهابیان • DentCast+</div>
-    </div>
-  </a>
+  <div id="dc-list-end"></div>
 
-  <a href="video-3.html" class="video-card">
-    <div class="thumb" style="background-image:url('https://dentcast.arvanvod.ir/vkxeWA47OD/kVMBp6ldP6/thumbnail.jpg');">
-      <div class="play-icon"></div>
-    </div>
-    <div class="video-info">
-      <div class="video-title">وقتی روکش راک دارد؛ ترتیب بررسی مهم است</div>
-      <div class="video-meta">دکتر فواد شهابیان • DentCast+</div>
-    </div>
-  </a>
+  <button id="dcJumpBtn" class="dc-jump" type="button" aria-label="Jump">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 16.5c-.3 0-.6-.1-.8-.3l-6-6a1.1 1.1 0 0 1 1.6-1.6L12 13.8l5.2-5.2a1.1 1.1 0 0 1 1.6 1.6l-6 6c-.2.2-.5.3-.8.3z"/>
+    </svg>
+  </button>
 
-  <a href="video-2.html" class="video-card">
-    <div class="thumb" style="background-image:url('https://dentcast.arvanvod.ir/vkxeWA47OD/6myAq4edLp/thumbnail.jpg');">
-      <div class="play-icon"></div>
-    </div>
-    <div class="video-info">
-      <div class="video-title">آخرین مرحله قبل از خداحافظی با بیمار</div>
-      <div class="video-meta">دکتر فواد شهابیان • DentCast+</div>
-    </div>
-  </a>
-
-  <a href="video-1.html" class="video-card">
-    <div class="thumb" style="background-image:url('https://dentcast.arvanvod.ir/vkxeWA47OD/An53wApKV2/thumbnail.jpg');">
-      <div class="play-icon"></div>
-    </div>
-    <div class="video-info">
-      <div class="video-title">نکات شخصی که کیفیت تراش را واقعاً بهتر می‌کنند</div>
-      <div class="video-meta">دکتر فواد شهابیان • DentCast+</div>
-    </div>
-  </a>
-
-</div>
-<!-- Put this right AFTER the end of your index list (before footer is perfect) -->
-<div id="dc-list-end"></div>
-
-<!-- Floating jump button (anywhere inside body; typically near end) -->
-<button id="dcJumpBtn" class="dc-jump" type="button" aria-label="Jump">
-  <!-- Simple arrow icon -->
-  <svg viewBox="0 0 24 24" aria-hidden="true">
-    <path d="M12 16.5c-.3 0-.6-.1-.8-.3l-6-6a1.1 1.1 0 0 1 1.6-1.6L12 13.8l5.2-5.2a1.1 1.1 0 0 1 1.6 1.6l-6 6c-.2.2-.5.3-.8.3z"/>
-  </svg>
-</button>
-
-<footer>
-  <div>
+  <footer>
     <a href="/index.html" class="btn-home">🏠 برگشت به صفحه‌ی اصلی</a>
-  </div>
-  <div>
     <a href="/about.html" class="btn-about">💬 درباره‌ی دکتر فواد شهابیان و دنت‌کست</a>
-  </div>
-  <div>© 2025 DentCast — طراحی و توسعه توسط <strong style="color:#ffd46a;">فواد شهابیان</strong></div>
-</footer>
+    <div class="footer-copy">© 2025 DentCast — طراحی و توسعه توسط <strong>فواد شهابیان</strong></div>
+  </footer>
 
 </div>
 
+<!-- تم تاگل -->
+<button id="dc-theme-toggle" aria-label="تغییر تم">🌙</button>
+
+<script>
+/* ── THEME TOGGLE ── */
+const themeBtn = document.getElementById('dc-theme-toggle');
+function applyTheme(dark){
+  document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+  themeBtn.textContent = dark ? '☀️' : '🌙';
+  localStorage.setItem('dc-theme', dark ? 'dark' : 'light');
+}
+(function(){
+  const s = localStorage.getItem('dc-theme');
+  const d = window.matchMedia('(prefers-color-scheme:dark)').matches;
+  applyTheme(s === 'dark' || (s === null && d));
+})();
+themeBtn.addEventListener('click', () => {
+  applyTheme(document.documentElement.getAttribute('data-theme') !== 'dark');
+});
+</script>
+
+<!-- JS (unchanged) -->
 <script src="/global-search.js?v=5"></script>
 <script src="/global-search-ui.js?v=1"></script>
 <script src="/shake-search.js?v=1"></script>
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-
   const btn = document.getElementById("dcJumpBtn");
   const topEl = document.getElementById("dc-top");
   const endEl = document.getElementById("dc-list-end");
-
   if (!btn) return;
-
-  const BOTTOM_RATIO = 0.85;   // 85% پایین صفحه
-  const TOP_RESET = 20;        // نزدیک بالای صفحه
-
+  const BOTTOM_RATIO = 0.85;
+  const TOP_RESET = 20;
   let isUp = false;
-
-  function pageHeight() {
-    return document.documentElement.scrollHeight;
-  }
-
-  function viewportHeight() {
-    return window.innerHeight;
-  }
-
-  function scrollY() {
-    return window.pageYOffset || document.documentElement.scrollTop;
-  }
-
-  function nearBottom() {
-    return (scrollY() + viewportHeight()) >= pageHeight() * BOTTOM_RATIO;
-  }
-
+  function pageHeight() { return document.documentElement.scrollHeight; }
+  function viewportHeight() { return window.innerHeight; }
+  function scrollY() { return window.pageYOffset || document.documentElement.scrollTop; }
+  function nearBottom() { return (scrollY() + viewportHeight()) >= pageHeight() * BOTTOM_RATIO; }
   function updateState() {
-
-    // اگر صفحه اسکرول نداشته باشد
-    if (pageHeight() <= viewportHeight() + 10) {
-      btn.style.opacity = "0.28";
-      return;
-    } else {
-      btn.style.opacity = "0.55";
-    }
-
-    // تبدیل به بالا وقتی نزدیک پایین رسیدیم
-    if (!isUp && nearBottom()) {
-      isUp = true;
-      btn.classList.add("is-up");
-    }
-
-    // فقط وقتی کاملاً به بالا برگشتیم برگردد به ↓
-    if (isUp && scrollY() <= TOP_RESET) {
-      isUp = false;
-      btn.classList.remove("is-up");
-    }
+    if (pageHeight() <= viewportHeight() + 10) { btn.style.opacity = "0.28"; return; }
+    else { btn.style.opacity = "0.55"; }
+    if (!isUp && nearBottom()) { isUp = true; btn.classList.add("is-up"); }
+    if (isUp && scrollY() <= TOP_RESET) { isUp = false; btn.classList.remove("is-up"); }
   }
-
   btn.addEventListener("click", function () {
     if (isUp) {
-      if (topEl) {
-        topEl.scrollIntoView({ behavior: "smooth" });
-      } else {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      }
+      if (topEl) topEl.scrollIntoView({ behavior: "smooth" });
+      else window.scrollTo({ top: 0, behavior: "smooth" });
     } else {
-      if (endEl) {
-        endEl.scrollIntoView({ behavior: "smooth" });
-      } else {
-        window.scrollTo({ top: pageHeight(), behavior: "smooth" });
-      }
+      if (endEl) endEl.scrollIntoView({ behavior: "smooth" });
+      else window.scrollTo({ top: pageHeight(), behavior: "smooth" });
     }
   });
-
   window.addEventListener("scroll", updateState);
   window.addEventListener("resize", updateState);
-
-  updateState(); // اجرا در شروع
-
+  updateState();
 });
 </script>
+
 </body>
 </html>
