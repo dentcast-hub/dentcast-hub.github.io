@@ -1,0 +1,375 @@
+/* =====================================================
+   dc-theme.css — DentCast Unified Design System
+   Design tokens + page-level overrides for all
+   internal pages. Loaded on every page with dc-topbar.
+   index.html has its own inline system (do not touch).
+===================================================== */
+
+/* =====================================================
+   DESIGN TOKENS — LIGHT MODE
+===================================================== */
+:root {
+  --pr: #022360;     --pr-rgb: 2,35,96;
+  --ac: #0b5fff;     --ac-rgb: 11,95,255;
+
+  --bg: #f0f2f5;
+  --surface:  #ffffff;
+  --surface2: #f4f6fb;
+  --surface3: #eaecf5;
+  --border:   rgba(2,35,96,.10);
+  --border2:  rgba(2,35,96,.06);
+
+  --txt:     #0a1a33;
+  --txt2:    #4a5f85;
+  --txt3:    #8a9cbe;
+  --txt-inv: #ffffff;
+
+  --card-bg:     #ffffff;
+  --card-border: rgba(2,35,96,.09);
+  --card-sh:  0 1px 3px rgba(2,35,96,.07), 0 4px 14px rgba(2,35,96,.04);
+  --card-sh2: 0 4px 18px rgba(2,35,96,.13), 0 1px 4px rgba(2,35,96,.07);
+
+  --chip-bg:  rgba(11,95,255,.08);
+  --chip-bd:  rgba(11,95,255,.20);
+  --chip-txt: #022360;
+
+  --tr:  .17s cubic-bezier(.4,0,.2,1);
+  --tr2: .26s cubic-bezier(.4,0,.2,1);
+
+  --r-sm: 10px;  --r-md: 14px;  --r-lg: 18px;
+  --r-xl: 22px;  --r-f:  999px;
+}
+
+/* =====================================================
+   DESIGN TOKENS — DARK MODE
+===================================================== */
+[data-theme="dark"] {
+  --pr: #5b9cf6;     --pr-rgb: 91,156,246;
+  --ac: #5b9cf6;     --ac-rgb: 91,156,246;
+
+  --bg: #0e1621;
+  --surface:  #17212b;
+  --surface2: #1e2c3a;
+  --surface3: #232e3c;
+  --border:   rgba(255,255,255,.08);
+  --border2:  rgba(255,255,255,.04);
+
+  --txt:  #e8f0ff;
+  --txt2: #8aaac8;
+  --txt3: #4a6a88;
+
+  --card-bg:     #1e2c3a;
+  --card-border: rgba(255,255,255,.07);
+  --card-sh:  0 1px 3px rgba(0,0,0,.22), 0 4px 14px rgba(0,0,0,.14);
+  --card-sh2: 0 4px 18px rgba(0,0,0,.28);
+
+  --chip-bg:  rgba(91,156,246,.12);
+  --chip-bd:  rgba(91,156,246,.24);
+  --chip-txt: #8ab4f8;
+}
+
+/* =====================================================
+   BODY — UNIFIED BACKGROUND & TEXT
+   body:has(.dc-topbar) specificity = 0,1,1
+   overrides any page-level body { } at 0,0,1
+===================================================== */
+body:has(.dc-topbar) {
+  background: var(--bg);
+  color: var(--txt);
+  transition: background var(--tr2), color var(--tr2);
+}
+
+/* Override gradient backgrounds applied to html too */
+html:has(body .dc-topbar) {
+  background: var(--bg);
+  transition: background var(--tr2);
+}
+
+/* =====================================================
+   CONTENT BOXES — UNIFIED CARD APPEARANCE
+   Targets the common content-wrapper classes used
+   across all internal page types:
+   notecast/metanotes → .text-box
+   glossary           → .content-box
+   insight            → .glass-box
+   Style.css pages    → .card / .intro / .audio-box
+===================================================== */
+body:has(.dc-topbar) .text-box,
+body:has(.dc-topbar) .content-box,
+body:has(.dc-topbar) .glass-box,
+body:has(.dc-topbar) .card,
+body:has(.dc-topbar) .intro,
+body:has(.dc-topbar) .audio-box,
+body:has(.dc-topbar) .dc-article-box {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  box-shadow: var(--card-sh);
+  color: var(--txt);
+  /* remove glass / blur effects — not aligned with design system */
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border-image: none;
+  transition: background var(--tr2), border-color var(--tr2),
+              box-shadow var(--tr2), color var(--tr2);
+}
+
+/* Glossary-specific term container */
+body:has(.dc-topbar) .content-box {
+  border-radius: var(--r-lg);
+}
+
+/* Insight glass boxes — keep full border from general rule above */
+body:has(.dc-topbar) .glass-box {
+  border-radius: var(--r-lg);
+}
+
+/* =====================================================
+   HEADINGS — DARK MODE ADAPTION
+   Prevent pages' hardcoded heading colours from
+   clashing with the dark background in [data-theme=dark]
+===================================================== */
+[data-theme="dark"] body:has(.dc-topbar) h1,
+[data-theme="dark"] body:has(.dc-topbar) h2,
+[data-theme="dark"] body:has(.dc-topbar) h3,
+[data-theme="dark"] body:has(.dc-topbar) h4,
+[data-theme="dark"] body:has(.dc-topbar) h5,
+[data-theme="dark"] body:has(.dc-topbar) h6 {
+  color: var(--txt);
+}
+
+/* Primary headings keep accent tint in both modes */
+[data-theme="dark"] body:has(.dc-topbar) h1 {
+  color: var(--pr);
+}
+
+/* =====================================================
+   LINKS — CONTENT AREAS ONLY
+   Exclude all navigation / topbar / radar elements
+===================================================== */
+body:has(.dc-topbar) article a,
+body:has(.dc-topbar) main a,
+body:has(.dc-topbar) .text-box a,
+body:has(.dc-topbar) .content-box a,
+body:has(.dc-topbar) .glass-box a,
+body:has(.dc-topbar) .intro a,
+body:has(.dc-topbar) .card a,
+body:has(.dc-topbar) .wrap > ul a,
+body:has(.dc-topbar) .wrap > ol a {
+  color: var(--ac);
+  transition: color var(--tr);
+}
+
+body:has(.dc-topbar) article a:hover,
+body:has(.dc-topbar) main a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* =====================================================
+   MUTED / SECONDARY TEXT
+===================================================== */
+body:has(.dc-topbar) .muted,
+body:has(.dc-topbar) [class*="muted"],
+body:has(.dc-topbar) small {
+  color: var(--txt3);
+  transition: color var(--tr2);
+}
+
+/* =====================================================
+   FOOTER — INTERNAL PAGES
+===================================================== */
+body:has(.dc-topbar) footer {
+  color: var(--txt3);
+  border-top: 1px solid var(--border2);
+  background: transparent;
+  transition: color var(--tr2), border-color var(--tr2);
+}
+
+/* Footer nav buttons (back/home links used in section pages) */
+body:has(.dc-topbar) footer .btn-home,
+body:has(.dc-topbar) footer .btn-about,
+body:has(.dc-topbar) .btn-home,
+body:has(.dc-topbar) .btn-about {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: var(--r-md);
+  background: var(--surface2);
+  color: var(--txt2);
+  border: 1px solid var(--border);
+  font-size: .85rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all var(--tr);
+}
+
+body:has(.dc-topbar) .btn-home:hover,
+body:has(.dc-topbar) .btn-about:hover {
+  background: var(--surface3);
+  color: var(--pr);
+}
+
+/* =====================================================
+   SECTION LIST ITEMS — Chairside / Notecast / etc.
+===================================================== */
+body:has(.dc-topbar) .wrap > ul li,
+body:has(.dc-topbar) .wrap > ol li {
+  color: var(--txt);
+  transition: color var(--tr2);
+}
+
+/* =====================================================
+   SELECTION
+===================================================== */
+::selection { background: rgba(11,95,255,.15); }
+
+/* =====================================================
+   DARK / LIGHT MODE FLOAT TOGGLE BUTTON
+   Same position across ALL pages:
+   fixed bottom-left, same size & style as index.html
+===================================================== */
+#dc-theme-toggle {
+  position: fixed;
+  bottom: 20px;
+  left: 14px;
+  z-index: 250;
+  width: 42px;
+  height: 42px;
+  border-radius: var(--r-f);
+  background: var(--surface);
+  color: var(--txt2);
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 16px rgba(0,0,0,.14);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 19px;
+  cursor: pointer;
+  transition: all var(--tr);
+  /* override any old position from page-specific CSS */
+  right: auto !important;
+  top: auto !important;
+}
+
+[data-theme="dark"] #dc-theme-toggle {
+  background: var(--surface2);
+  color: var(--txt);
+  border-color: var(--border);
+  box-shadow: 0 4px 16px rgba(0,0,0,.30);
+}
+
+#dc-theme-toggle:active {
+  transform: scale(.86);
+}
+
+/* =====================================================
+   JUMP / SCROLL BUTTON (used in Chairside, etc.)
+===================================================== */
+body:has(.dc-topbar) .dc-jump,
+body:has(.dc-topbar) #dcJumpBtn {
+  position: fixed;
+  bottom: 74px;
+  left: 14px;
+  z-index: 249;
+  width: 42px;
+  height: 42px;
+  border-radius: var(--r-f);
+  background: var(--surface2);
+  color: var(--txt3);
+  border: 1px solid var(--border);
+  box-shadow: var(--card-sh);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--tr);
+}
+
+body:has(.dc-topbar) .dc-jump:active,
+body:has(.dc-topbar) #dcJumpBtn:active {
+  transform: scale(.88);
+}
+
+body:has(.dc-topbar) #dcJumpBtn svg {
+  width: 20px;
+  height: 20px;
+  fill: var(--txt3);
+}
+
+/* =====================================================
+   CONTENT PAGE WRAPPER — MAX-WIDTH STANDARDIZATION
+   Max-width follows index.html spirit:
+   articles ≤ 720px, listings ≤ 860px
+===================================================== */
+body:has(.dc-topbar) .wrap {
+  max-width: 860px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 18px;
+  padding-right: 18px;
+  background: transparent;
+}
+
+/* Narrower for single-article pages */
+body:has(.dc-topbar) main.page,
+body:has(.dc-topbar) main.article-page {
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* =====================================================
+   SMOOTH PAGE TRANSITIONS
+===================================================== */
+body:has(.dc-topbar),
+body:has(.dc-topbar) *:not(img):not(video) {
+  transition-timing-function: cubic-bezier(.4,0,.2,1);
+}
+
+/* =====================================================
+   GLOBAL SEARCH BOX — DARK MODE
+   (global-search.css uses hardcoded whites)
+===================================================== */
+[data-theme="dark"] #dcGlobalBox.dc-global-filter-box {
+  background: var(--surface);
+  border-color: var(--border);
+  color: var(--txt);
+}
+
+[data-theme="dark"] #dcGlobalBox .dc-global-filter-title {
+  color: var(--txt);
+}
+
+[data-theme="dark"] #dcGlobalBox .dc-search-input {
+  background: var(--surface2);
+  border-color: var(--border);
+  color: var(--txt);
+}
+
+[data-theme="dark"] #dcGlobalBox .dc-filter-btn {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--txt2);
+}
+
+[data-theme="dark"] #dcGlobalBox .dc-filter-btn.active {
+  background: rgba(91,156,246,.15);
+  border-color: rgba(91,156,246,.35);
+  color: var(--ac);
+}
+
+[data-theme="dark"] #dcGlobalBox .dc-results-box,
+[data-theme="dark"] #dcGlobalBox .dc-result-item {
+  background: var(--surface2);
+  border-color: var(--border);
+  color: var(--txt);
+}
+
+[data-theme="dark"] #dcGlobalBox .dc-result-title {
+  color: var(--ac);
+}
+
+[data-theme="dark"] #dcGlobalBox .dc-result-meta {
+  color: var(--txt3);
+}
