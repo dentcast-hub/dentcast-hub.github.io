@@ -1118,12 +1118,16 @@ body.dc-desktop-ui #dcDeskViewEmpty .banner{
   <!-- TOP BAR -->
   <header class="dc-topbar">
     <div class="dc-topbar-actions">
-      <!-- ۱) همبرگری — اول -->
+      <!-- ۱) لوگو — اول -->
+      <a href="/" aria-label="صفحه اصلی دنت‌کست" style="display:flex;align-items:center;margin-left:8px;flex-shrink:0;">
+        <img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;">
+      </a>
+      <!-- ۲) همبرگری — دوم -->
       <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="ابزارها" aria-expanded="false">☰</button>
-      <!-- ۲) سرچ — دوم -->
-      <button class="dc-topbar-btn dcOpenSearch" aria-label="جستجو">🔍</button>
       <!-- ۳) رادار — سوم -->
       <button class="dc-topbar-btn" id="btn-radar-topbar" aria-label="رادار">📡</button>
+      <!-- ۴) سرچ — چهارم -->
+      <button class="dc-topbar-btn dcOpenSearch" aria-label="جستجو">🔍</button>
     </div>
     <div class="dc-topbar-brand">
       <div class="dc-topbar-brand-name">DentCast</div>
