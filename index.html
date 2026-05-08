@@ -26,8 +26,7 @@
   <script>
     (function(){
       const s=localStorage.getItem('dc-theme');
-      const d=window.matchMedia('(prefers-color-scheme:dark)').matches;
-      if(s==='dark'||(s===null&&d)) document.documentElement.setAttribute('data-theme','dark');
+      if(s==='dark') document.documentElement.setAttribute('data-theme','dark');
     })();
   </script>
 
