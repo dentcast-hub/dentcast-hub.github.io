@@ -2296,7 +2296,10 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
     contentArea.innerHTML = '';
     /* Enter viewer mode */
     colCEl.classList.add('is-viewer');
-    pageViewer.src = url;
+    /* Append ?view=content so dc-nav.js hides the page's own header
+       preventing a double-header inside the iframe */
+    var sep = url.includes('?') ? '&' : '?';
+    pageViewer.src = url + sep + 'view=content';
   }
 
   /* ══════════════════════════════════════════════
