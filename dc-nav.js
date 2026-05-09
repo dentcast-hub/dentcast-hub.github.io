@@ -7,6 +7,14 @@
 (function () {
   'use strict';
 
+  /* ── CONTENT-ONLY MODE (?view=content) ────────────
+     When loaded in the desktop iframe, hide all chrome
+     so only the article content is displayed.
+  ─────────────────────────────────────────────────── */
+  if (new URLSearchParams(window.location.search).get('view') === 'content') {
+    document.body.classList.add('dc-content-only');
+  }
+
   /* ── THEME TOGGLE ─────────────────────────────────
      If the page already has #dc-theme-toggle in HTML
      (section index pages with inline JS), we only sync

@@ -6,6 +6,38 @@
 ===================================================== */
 
 /* =====================================================
+   CONTENT-ONLY MODE (?view=content)
+   When a page is loaded inside the desktop iframe viewer,
+   dc-nav.js adds dc-content-only to body.
+   This hides all navigation chrome so only the article
+   content is visible.
+===================================================== */
+body.dc-content-only .dc-topbar,
+body.dc-content-only #dcToolbarDrawer,
+body.dc-content-only #dcRadarOverlay,
+body.dc-content-only #dcGlobalBox,
+body.dc-content-only footer,
+body.dc-content-only .dc-site-footer,
+body.dc-content-only #dc-theme-toggle,
+body.dc-content-only .dc-bottom-nav,
+body.dc-content-only #dcSearchOverlay {
+  display: none !important;
+}
+body.dc-content-only {
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+  min-height: auto !important;
+}
+body.dc-content-only .wrap {
+  margin-top: 0;
+  padding-top: 24px;
+}
+body.dc-content-only main.page,
+body.dc-content-only main.article-page {
+  padding-top: 24px;
+}
+
+/* =====================================================
    DESIGN TOKENS — LIGHT MODE
 ===================================================== */
 :root {
