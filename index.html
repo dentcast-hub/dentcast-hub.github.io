@@ -960,140 +960,528 @@ footer{
 }
 
 /* =====================================================
-   DESKTOP SHELL  (>=1024px)
+   DESKTOP APP — 3-Column Telegram-style layout
+   Activates on ≥1024px pointer:fine
 ===================================================== */
+
+/* ── ACTIVATION ── */
 #dc-desktop-root{ display:none; }
-
 body.dc-desktop-ui #mobile-shell,
-body.dc-desktop-ui footer{ display:none!important; }
-body.dc-desktop-ui #dc-desktop-root{ display:block; }
-
-body.dc-desktop-ui{
-  height:100vh!important; overflow:hidden!important;
-}
+body.dc-desktop-ui footer,
+body.dc-desktop-ui #dc-theme-toggle,
+body.dc-desktop-ui .dc-search-overlay,
+body.dc-desktop-ui #dcRadarOverlay{ display:none!important; }
+body.dc-desktop-ui{ height:100vh!important; overflow:hidden!important; }
 body.dc-desktop-ui #dc-desktop-root{
-  position:fixed!important; inset:0!important;
-  display:block!important;
-}
-body.dc-desktop-ui #dc-theme-toggle{
-  left:unset; right:16px; bottom:20px; z-index:400;
+  display:flex; position:fixed; inset:0; z-index:100;
 }
 
-.dc-desk-app{
+/* ── APP SHELL ── */
+.dcd-app{
   display:grid;
-  grid-template-columns:clamp(240px,20vw,310px) 1fr;
-  height:100vh;
+  grid-template-columns:270px 1fr 280px;
+  grid-template-rows:100vh;
+  width:100%; height:100vh;
+  overflow:hidden;
+  background:var(--bg);
+  transition:background var(--tr2);
 }
-@media(min-width:1600px){ .dc-desk-app{ max-width:1600px; margin:0 auto; grid-template-columns:clamp(280px,18vw,360px) 1fr; } }
-@media(min-width:1200px) and (max-width:1599px){ .dc-desk-app{ grid-template-columns:clamp(270px,20vw,320px) 1fr; } }
-@media(min-width:1024px) and (max-width:1199px){ .dc-desk-app{ grid-template-columns:clamp(220px,22vw,270px) 1fr; } }
+@media(min-width:1600px){ .dcd-app{ grid-template-columns:300px 1fr 300px; } }
+@media(max-width:1380px){ .dcd-app{ grid-template-columns:255px 1fr; } .dcd-right{ display:none!important; } }
+@media(max-width:1100px){ .dcd-app{ grid-template-columns:230px 1fr; } }
 
-.dc-desk-sidebar{
+/* ── LEFT SIDEBAR ── */
+.dcd-sidebar{
   display:flex; flex-direction:column;
-  background:var(--sb); overflow:hidden;
+  background:var(--sb); height:100vh; overflow:hidden;
   border-left:1px solid var(--sb-div);
   transition:background var(--tr2);
 }
-.dc-desk-brand{
-  display:flex; flex-direction:column; gap:2px;
-  padding:20px 18px 14px;
+
+/* Brand */
+.dcd-brand{
+  display:flex; align-items:center; gap:11px;
+  padding:16px 14px 13px;
   border-bottom:1px solid var(--sb-div);
+  flex-shrink:0; text-decoration:none;
 }
-.dc-desk-logo{ font-weight:900; font-size:17px; color:var(--sb-txt); }
-.dc-desk-sub{ font-size:11px; color:var(--sb-txt2); }
+.dcd-brand img{
+  width:36px; height:36px;
+  object-fit:contain; border-radius:9px; flex-shrink:0;
+}
+.dcd-brand-name{
+  font-size:14.5px; font-weight:900;
+  color:var(--sb-txt); letter-spacing:-.2px; line-height:1.2;
+}
+.dcd-brand-sub{
+  font-size:10px; color:var(--sb-txt2);
+  display:block; margin-top:2px;
+}
 
-.dc-desk-nav{
-  display:flex; flex-direction:column; gap:2px;
-  overflow-y:auto; padding:10px 8px 16px; flex:1;
-  scrollbar-width:thin;
+/* Sidebar search */
+.dcd-sb-search{
+  padding:8px 10px; flex-shrink:0;
 }
-.dc-desk-nav::-webkit-scrollbar{ width:3px; }
-.dc-desk-nav::-webkit-scrollbar-thumb{ background:rgba(255,255,255,.10); border-radius:999px; }
+.dcd-sb-search-bar{
+  display:flex; align-items:center; gap:7px;
+  background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:var(--r-md);
+  padding:6px 11px;
+  cursor:text;
+  transition:all var(--tr);
+}
+.dcd-sb-search-bar:focus-within{
+  background:rgba(255,255,255,.11);
+  border-color:rgba(255,255,255,.16);
+}
+.dcd-sb-search-ico{ font-size:13px; opacity:.55; flex-shrink:0; }
+.dcd-sb-search-input{
+  flex:1; background:transparent;
+  border:none; outline:none;
+  color:var(--sb-txt); font-size:12.5px;
+  font-family:inherit; min-width:0;
+}
+.dcd-sb-search-input::placeholder{ color:var(--sb-txt2); }
 
-.dc-desk-divider{ height:1px; background:var(--sb-div); margin:5px 8px; }
-
-.dc-desk-nav-item{
-  display:flex; align-items:center; gap:10px;
-  width:100%; border:1px solid transparent;
-  background:transparent; color:var(--sb-txt);
-  padding:9px 12px; border-radius:var(--r-md);
-  font-family:inherit; font-size:13.5px; cursor:pointer;
-  transition:all var(--tr); text-align:right;
-}
-.dc-desk-nav-item:hover{ background:var(--sb-hover); }
-.dc-desk-nav-item:active{ transform:scale(.985); }
-.dc-desk-nav-item.is-active{
-  background:var(--sb-active);
-  border-color:rgba(255,255,255,.05);
-}
-.dc-desk-ico{
-  width:28px; height:28px;
-  display:flex; align-items:center; justify-content:center;
-  border-radius:9px; background:rgba(255,255,255,.07);
-  font-size:15px; flex-shrink:0;
-}
-.dc-desk-txt{
+/* Nav scroll area */
+.dcd-nav{
+  flex:1; overflow-y:auto;
+  padding:6px 8px 8px;
   display:flex; flex-direction:column; gap:1px;
-  line-height:1.25; flex:1; min-width:0;
+  scrollbar-width:thin;
+  scrollbar-color:rgba(255,255,255,.10) transparent;
 }
-.dc-desk-txt span.small{
-  font-size:10px; font-weight:400; color:var(--sb-txt2);
+.dcd-nav::-webkit-scrollbar{ width:3px; }
+.dcd-nav::-webkit-scrollbar-thumb{ background:rgba(255,255,255,.10); border-radius:999px; }
+
+/* Group labels */
+.dcd-nav-group-lbl{
+  font-size:9px; font-weight:800;
+  text-transform:uppercase; letter-spacing:.10em;
+  color:var(--sb-txt2); padding:10px 10px 3px;
+  flex-shrink:0;
 }
 
-.dc-desk-view{
+/* Nav item */
+.dcd-nav-item{
+  display:flex; align-items:center; gap:9px;
+  width:100%; padding:7px 10px;
+  border-radius:var(--r-md);
+  background:transparent; border:1px solid transparent;
+  color:var(--sb-txt); font-family:inherit;
+  font-size:12.5px; cursor:pointer;
+  transition:all var(--tr); text-align:right;
+  text-decoration:none;
+}
+.dcd-nav-item:hover{ background:var(--sb-hover); }
+.dcd-nav-item:active{ transform:scale(.975); }
+.dcd-nav-item.active{
+  background:var(--sb-active);
+  border-color:rgba(255,255,255,.06);
+}
+
+/* Icon bubble */
+.dcd-nav-ico{
+  width:29px; height:29px;
+  border-radius:8px; background:rgba(255,255,255,.07);
+  display:flex; align-items:center; justify-content:center;
+  font-size:14px; flex-shrink:0;
+  transition:background var(--tr);
+}
+.dcd-nav-item.active .dcd-nav-ico{ background:rgba(255,255,255,.15); }
+
+/* Label + sub */
+.dcd-nav-txt{ display:flex; flex-direction:column; gap:1px; flex:1; min-width:0; }
+.dcd-nav-txt-main{ font-size:12.5px; font-weight:600; line-height:1.25; }
+.dcd-nav-txt-sub{ font-size:10px; color:var(--sb-txt2); font-weight:400; }
+
+/* Divider */
+.dcd-divider{ height:1px; background:var(--sb-div); margin:5px 6px; flex-shrink:0; }
+
+/* Sidebar footer (theme + about) */
+.dcd-sb-footer{
+  padding:8px 10px;
+  border-top:1px solid var(--sb-div);
+  display:flex; align-items:center; gap:5px; flex-shrink:0;
+}
+.dcd-sb-footer-btn{
+  flex:1; display:flex; align-items:center; justify-content:center;
+  gap:5px; padding:7px 8px;
+  border-radius:var(--r-md);
+  background:transparent; border:1px solid rgba(255,255,255,.08);
+  color:var(--sb-txt2); font-size:11px; cursor:pointer;
+  font-family:inherit; transition:all var(--tr);
+  text-decoration:none; white-space:nowrap;
+}
+.dcd-sb-footer-btn:hover{ background:rgba(255,255,255,.07); color:var(--sb-txt); }
+
+/* ── CENTER MAIN ── */
+.dcd-main{
   display:flex; flex-direction:column;
-  background:var(--surface); overflow:hidden;
+  height:100vh; overflow:hidden;
+  background:var(--bg);
   transition:background var(--tr2);
 }
-.dc-desk-view-head{
-  padding:12px 16px 10px; border-bottom:1px solid var(--border);
-  background:var(--surface); display:none;
+
+/* Center header bar */
+.dcd-main-header{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:13px 20px 11px;
+  background:var(--surface);
+  border-bottom:1px solid var(--border);
+  box-shadow:0 1px 6px rgba(2,35,96,.04);
+  flex-shrink:0;
+  transition:background var(--tr2),border-color var(--tr2);
 }
-.dc-desk-view-body{ position:relative; flex:1; background:var(--surface2); }
-#dcDeskViewer{ width:100%; height:100%; border:0; background:#fff; display:none; }
-.dc-desk-view-empty{
-  position:absolute; inset:0;
+.dcd-main-title{
+  font-size:14.5px; font-weight:800;
+  color:var(--pr); letter-spacing:-.2px;
+}
+.dcd-main-sub{ font-size:10.5px; color:var(--txt3); margin-top:1px; }
+.dcd-main-header-actions{ display:flex; align-items:center; gap:6px; }
+.dcd-header-btn{
+  width:32px; height:32px; border-radius:var(--r-f);
+  background:var(--surface2); border:1px solid var(--border);
   display:flex; align-items:center; justify-content:center;
-  background:url("/header.webp") center/cover no-repeat;
+  font-size:15px; cursor:pointer;
+  transition:all var(--tr); color:var(--txt2);
 }
-#dcDeskEmptySlot{ width:min(960px,100%); height:100%; display:flex; }
-body.dc-desktop-ui #dcDeskViewEmpty .banner{
-  width:100%; min-height:240px; height:auto; border-radius:0; overflow:hidden;
-}
-#dc-desktop-root.is-live #dcDeskViewer{ display:block; }
-#dc-desktop-root.is-live .dc-desk-view-empty{ display:none; }
+.dcd-header-btn:hover{ background:var(--surface3); color:var(--pr); }
 
-/* desktop reuse pulse banner */
-.banner{
-  position:relative; width:100%; height:100%;
-  background:rgba(14,22,33,.90);
-  padding:10px 12px;
+/* Center scrollable body */
+.dcd-main-body{
+  flex:1; overflow-y:auto;
+  padding:20px;
+  scrollbar-width:thin;
+  scrollbar-color:var(--border) transparent;
 }
-.banner h3{
-  position:absolute; top:10px; left:10px;
-  font-size:15px; font-weight:800; color:#ff5252; margin:0;
+.dcd-main-body::-webkit-scrollbar{ width:5px; }
+.dcd-main-body::-webkit-scrollbar-thumb{ background:var(--border); border-radius:999px; }
+
+/* Content width constraint */
+.dcd-feed{
+  max-width:680px; margin:0 auto;
+  display:flex; flex-direction:column; gap:14px;
 }
-.banner ul{
-  font-size:13px; color:rgba(220,230,245,.88);
-  padding-top:34px; padding-right:14px;
-  text-align:right; list-style:none;
+
+/* Views */
+.dcd-view{ display:none; }
+.dcd-view.active{ display:flex; flex-direction:column; gap:14px; }
+
+/* ── CENTER CARDS ── */
+
+/* Pulse — slightly enhanced desktop */
+.dcd-pulse{
+  background:var(--pulse-bg);
+  border:1px solid var(--pulse-border);
+  border-radius:var(--r-lg);
+  padding:15px 18px;
+  position:relative;
+  box-shadow:0 4px 18px rgba(0,0,0,.16);
+  transition:background var(--tr2);
 }
-.banner li{
-  position:relative; padding-right:16px;
-  line-height:1.6; margin-bottom:3px;
+.dcd-pulse-head{
+  display:flex; align-items:center;
+  justify-content:space-between; margin-bottom:10px;
 }
-.banner li::before{
+.dcd-pulse-title{
+  display:flex; align-items:center; gap:6px;
+  font-size:.80rem; font-weight:800; color:#ff5252;
+}
+.dcd-pulse-dot{
+  width:7px; height:7px; border-radius:50%;
+  background:#ff5252;
+  animation:pulseDot 1.3s ease-in-out infinite;
+}
+.dcd-pulse-close{
+  width:24px; height:24px; border-radius:50%;
+  background:rgba(255,255,255,.10); color:rgba(255,255,255,.6);
+  font-size:15px; display:flex; align-items:center; justify-content:center;
+  cursor:pointer; border:none; line-height:1; padding:0;
+  transition:all var(--tr);
+}
+.dcd-pulse-close:hover{ background:rgba(255,80,80,.25); color:#ff5252; }
+.dcd-pulse-list{ list-style:none; display:flex; flex-direction:column; gap:5px; }
+.dcd-pulse-list li{
+  font-size:.79rem; color:rgba(225,235,255,.85);
+  padding-right:13px; position:relative; line-height:1.55;
+}
+.dcd-pulse-list li::before{
   content:"●"; position:absolute; right:0;
-  font-size:10px; color:rgba(91,156,246,.70);
+  font-size:8px; color:rgba(91,156,246,.70); top:4px;
 }
-.banner a{ color:#7aacff; }
-.banner .close{
-  position:absolute; top:8px; right:12px;
-  font-size:1.4rem; font-weight:bold;
-  color:rgba(255,80,80,.75); cursor:pointer; line-height:1;
+.dcd-pulse-list a{ color:#7aacff; }
+.dcd-pulse-list strong{ color:rgba(235,243,255,.95); }
+
+/* Episodes hero (desktop-sized) */
+.dcd-hero{
+  display:flex; align-items:center;
+  background:var(--pr); border-radius:var(--r-xl);
+  padding:18px 22px; cursor:pointer;
+  box-shadow:0 8px 28px rgba(var(--pr-rgb),.28);
+  transition:all var(--tr); position:relative; overflow:hidden;
+  gap:14px; text-decoration:none;
+}
+.dcd-hero::before{
+  content:""; position:absolute; inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.08),transparent);
+  pointer-events:none;
+}
+.dcd-hero:hover{ transform:translateY(-1px); box-shadow:0 12px 36px rgba(var(--pr-rgb),.34); }
+.dcd-hero:active{ transform:scale(.985); }
+.dcd-hero-ico{
+  width:42px; height:42px; border-radius:var(--r-md);
+  background:rgba(255,255,255,.15); border:1px solid rgba(255,255,255,.18);
+  display:flex; align-items:center; justify-content:center;
+  font-size:20px; flex-shrink:0;
+}
+.dcd-hero-main{ flex:1; min-width:0; }
+.dcd-hero-title{
+  font-size:1rem; font-weight:900; color:#fff;
+  letter-spacing:-.2px; line-height:1.3;
+}
+.dcd-hero-sub{ font-size:.74rem; color:rgba(255,255,255,.70); margin-top:3px; }
+.dcd-hero-chip{
+  font-size:.64rem; font-weight:800; padding:3px 10px;
+  border-radius:var(--r-f);
+  background:rgba(255,255,255,.15); color:rgba(255,255,255,.90);
+  border:1px solid rgba(255,255,255,.22); flex-shrink:0;
 }
 
-/* flash prevention */
+/* 2×2 Grid */
+.dcd-grid{
+  display:grid; grid-template-columns:repeat(2,1fr);
+  gap:10px;
+}
+.dcd-grid-card{
+  background:var(--card-bg); border:1px solid var(--card-border);
+  border-radius:var(--r-lg); padding:18px 16px;
+  cursor:pointer; transition:all var(--tr);
+  box-shadow:var(--card-sh);
+}
+.dcd-grid-card:hover{
+  transform:translateY(-2px); box-shadow:var(--card-sh2);
+  border-color:rgba(var(--ac-rgb),.15);
+}
+.dcd-grid-card:active{ transform:scale(.97); }
+.dcd-grid-ico{ font-size:24px; margin-bottom:8px; }
+.dcd-grid-title{
+  font-size:.88rem; font-weight:800;
+  color:var(--pr); line-height:1.25; margin-bottom:3px;
+}
+.dcd-grid-sub{ font-size:.73rem; color:var(--txt3); }
+
+/* Radar pill */
+.dcd-radar-pill{
+  display:flex; align-items:center; justify-content:space-between;
+  background:var(--card-bg); border:1px solid var(--card-border);
+  border-radius:var(--r-lg); padding:14px 18px;
+  cursor:pointer; transition:all var(--tr); box-shadow:var(--card-sh);
+}
+.dcd-radar-pill:hover{ transform:translateY(-1px); box-shadow:var(--card-sh2); }
+.dcd-radar-pill-txt{ font-size:.88rem; font-weight:800; color:var(--pr); }
+.dcd-radar-pill-sub{ font-size:.63rem; color:var(--txt3); margin-top:2px; }
+.dcd-radar-pill-btn{
+  background:rgba(var(--pr-rgb),.08); color:var(--pr);
+  padding:6px 16px; border-radius:var(--r-f);
+  font-size:.73rem; font-weight:700;
+  border:1px solid rgba(var(--pr-rgb),.16);
+}
+
+/* List cards (Meta Base) */
+.dcd-list-card{
+  display:flex; align-items:center; justify-content:space-between;
+  background:var(--card-bg); border:1px solid var(--card-border);
+  border-radius:var(--r-lg); padding:15px 18px;
+  cursor:pointer; transition:all var(--tr); box-shadow:var(--card-sh);
+  text-decoration:none; gap:12px;
+}
+.dcd-list-card:hover{ transform:translateY(-1px); box-shadow:var(--card-sh2); }
+.dcd-list-card:active{ transform:scale(.98); }
+.dcd-list-card.featured{
+  background:linear-gradient(135deg,rgba(var(--pr-rgb),.06),rgba(var(--ac-rgb),.04));
+  border-color:rgba(var(--ac-rgb),.18);
+}
+.dcd-list-card-title{ font-size:.90rem; font-weight:800; color:var(--txt); line-height:1.3; }
+.dcd-list-card-sub{ font-size:.73rem; color:var(--txt3); margin-top:2px; }
+
+/* Monitor / updates box */
+.dcd-monitor{
+  background:var(--card-bg); border:1px solid var(--card-border);
+  border-radius:var(--r-lg); overflow:hidden;
+  box-shadow:var(--card-sh);
+}
+.dcd-monitor-head{
+  padding:12px 16px 10px;
+  border-bottom:1px solid var(--border2);
+  font-size:.80rem; font-weight:800; color:var(--txt2);
+}
+.dcd-monitor-list{
+  list-style:none; padding:8px 0; max-height:260px; overflow-y:auto;
+  scrollbar-width:thin; scrollbar-color:var(--border) transparent;
+}
+.dcd-monitor-list li{ border-bottom:1px solid var(--border2); }
+.dcd-monitor-list li:last-child{ border-bottom:none; }
+.dcd-monitor-list a{
+  display:block; padding:7px 16px;
+  font-size:.80rem; color:var(--txt);
+  text-decoration:none; line-height:1.5;
+  transition:background var(--tr),color var(--tr);
+}
+.dcd-monitor-list a:hover{ background:var(--surface2); color:var(--ac); }
+
+/* Map + contact */
+.dcd-locpack{ padding:14px; }
+.dcd-locpack-img{
+  width:100%; border-radius:var(--r-md);
+  display:block; margin-bottom:10px;
+}
+.dcd-locpack-hint{
+  font-size:.79rem; color:var(--txt3);
+  text-align:center; margin-bottom:10px;
+}
+.dcd-cta-row{ display:flex; gap:8px; }
+.dcd-cta-btn{
+  flex:1; display:flex; align-items:center; justify-content:center;
+  gap:6px; padding:9px 12px; border-radius:var(--r-md);
+  background:var(--surface2); border:1px solid var(--border);
+  color:var(--txt2); font-size:.80rem; font-weight:600;
+  text-decoration:none; transition:all var(--tr);
+}
+.dcd-cta-btn:hover{ background:var(--pr); color:#fff; border-color:transparent; }
+
+/* Chip reuse */
+.dcd-chip{
+  font-size:.63rem; font-weight:700;
+  padding:3px 9px; border-radius:var(--r-f);
+  background:var(--chip-bg); color:var(--chip-txt);
+  border:1px solid var(--chip-bd); flex-shrink:0;
+}
+
+/* ── RIGHT PANEL ── */
+.dcd-right{
+  display:flex; flex-direction:column;
+  height:100vh; overflow:hidden;
+  background:var(--surface);
+  border-right:1px solid var(--border);
+  transition:background var(--tr2),border-color var(--tr2);
+}
+.dcd-right-head{
+  padding:14px 14px 11px;
+  border-bottom:1px solid var(--border);
+  flex-shrink:0;
+}
+.dcd-right-head-title{
+  font-size:11.5px; font-weight:800; color:var(--txt); letter-spacing:-.1px;
+}
+.dcd-right-body{
+  flex:1; overflow-y:auto;
+  scrollbar-width:thin; scrollbar-color:var(--border) transparent;
+}
+.dcd-right-body::-webkit-scrollbar{ width:3px; }
+.dcd-right-body::-webkit-scrollbar-thumb{ background:var(--border); border-radius:999px; }
+
+.dcd-right-section{
+  padding:11px 14px;
+  border-bottom:1px solid var(--border2);
+}
+.dcd-right-section:last-child{ border-bottom:none; }
+.dcd-right-section-title{
+  font-size:9.5px; font-weight:800;
+  text-transform:uppercase; letter-spacing:.08em;
+  color:var(--txt3); margin-bottom:8px;
+}
+
+/* Right panel updates list */
+.dcd-updates-list{ list-style:none; }
+.dcd-updates-list li{ border-bottom:1px solid var(--border2); }
+.dcd-updates-list li:last-child{ border-bottom:none; }
+.dcd-updates-list a{
+  display:block; padding:6px 0;
+  font-size:11.5px; color:var(--txt);
+  text-decoration:none; line-height:1.5;
+  transition:color var(--tr);
+}
+.dcd-updates-list a:hover{ color:var(--ac); }
+
+/* Right panel radar widget */
+.dcd-rdr-input{
+  width:100%; padding:7px 11px;
+  border-radius:var(--r-md);
+  border:1.5px solid rgba(var(--ac-rgb),.22);
+  background:var(--surface2); color:var(--txt);
+  font-size:12px; outline:none;
+  font-family:inherit; transition:all var(--tr);
+  box-sizing:border-box; direction:rtl;
+}
+.dcd-rdr-input:focus{
+  border-color:rgba(var(--ac-rgb),.50);
+  background:var(--surface);
+}
+.dcd-rdr-results{
+  margin-top:8px;
+  display:flex; flex-direction:column; gap:5px;
+  max-height:220px; overflow-y:auto;
+}
+.dcd-rdr-item{
+  display:block; padding:7px 9px;
+  background:var(--surface2); border:1px solid var(--card-border);
+  border-radius:var(--r-sm); text-decoration:none;
+  color:inherit; transition:all var(--tr);
+}
+.dcd-rdr-item:hover{ background:var(--surface3); }
+.dcd-rdr-item-name{ font-size:11.5px; font-weight:700; color:var(--ac); }
+.dcd-rdr-item-desc{
+  font-size:10.5px; color:var(--txt3); margin-top:2px;
+  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
+}
+.dcd-rdr-initial{
+  font-size:11px; color:var(--txt3); text-align:center; padding:10px 0;
+}
+
+/* Right panel CTA buttons */
+.dcd-right-btn{
+  display:flex; align-items:center; gap:7px;
+  width:100%; padding:8px 11px; margin-bottom:5px;
+  border-radius:var(--r-md);
+  background:var(--surface2); border:1px solid var(--border);
+  color:var(--txt2); font-size:11.5px; font-weight:600;
+  cursor:pointer; font-family:inherit;
+  text-decoration:none; transition:all var(--tr);
+}
+.dcd-right-btn:hover{ background:var(--surface3); color:var(--pr); }
+.dcd-right-btn:last-child{ margin-bottom:0; }
+.dcd-right-btn.primary{
+  background:var(--pr); color:#fff; border-color:transparent;
+}
+.dcd-right-btn.primary:hover{ opacity:.88; }
+
+/* Search view */
+.dcd-search-view{ display:flex; flex-direction:column; gap:14px; }
+.dcd-search-header{ font-size:.88rem; color:var(--txt2); }
+#dcdSearchBox{
+  width:100%; padding:10px 14px;
+  border-radius:var(--r-md); border:1.5px solid var(--border);
+  background:var(--surface); color:var(--txt);
+  font-size:14px; outline:none; font-family:inherit;
+  transition:all var(--tr); direction:rtl;
+}
+#dcdSearchBox:focus{
+  border-color:rgba(var(--ac-rgb),.35);
+  box-shadow:0 0 0 3px rgba(var(--ac-rgb),.08);
+}
+#dcdSearchResults{
+  background:var(--card-bg); border:1px solid var(--card-border);
+  border-radius:var(--r-lg); overflow:hidden;
+  box-shadow:var(--card-sh);
+}
+.dcd-search-filter-row{
+  display:flex; gap:5px; flex-wrap:wrap; padding:10px 14px;
+  border-bottom:1px solid var(--border2);
+}
+
+/* Flash prevention — hide mobile until desktop JS decides */
 @media(min-width:1024px) and (hover:hover){
   #mobile-shell,footer{ visibility:hidden; }
 }
@@ -1346,101 +1734,346 @@ body.dc-desktop-ui #dcDeskViewEmpty .banner{
 </div><!-- /mobile-shell -->
 
 <!-- ══════════════════════════════════════════════
-     DESKTOP SHELL
+     DESKTOP SHELL — 3-Column App Layout
 ══════════════════════════════════════════════ -->
 <section id="dc-desktop-root" aria-hidden="true">
-  <div class="dc-desk-app">
+<div class="dcd-app">
 
-    <aside class="dc-desk-sidebar" aria-label="DentCast Sections">
-      <div class="dc-desk-brand">
-        <div class="dc-desk-logo">🎙 DentCast</div>
-        <div class="dc-desk-sub">دکتر فواد شهابیان</div>
+  <!-- ── LEFT SIDEBAR ── -->
+  <aside class="dcd-sidebar" aria-label="ناوبری DentCast">
+
+    <!-- Brand -->
+    <a class="dcd-brand" href="/">
+      <img src="/logo-v2.png" alt="DentCast" width="36" height="36">
+      <div>
+        <div class="dcd-brand-name">DentCast</div>
+        <span class="dcd-brand-sub">دکتر فواد شهابیان</span>
       </div>
-      <nav class="dc-desk-nav" aria-label="Main Navigation">
-        <button class="dc-desk-nav-item" type="button" data-desk-section="episodes" data-desk-index-src="episodes.html">
-          <span class="dc-desk-ico">🎧</span>
-          <span class="dc-desk-txt">فهرست اپیزودها<span class="small">همه ی اپیزودهای اصلی و فرعی</span></span>
-        </button>
-        <button class="dc-desk-nav-item" type="button" data-desk-section="notecast" data-desk-index-src="/notecast/">
-          <span class="dc-desk-ico">📝</span>
-          <span class="dc-desk-txt">NoteCast<span class="small">خلاصه نویسی اپیزودها</span></span>
-        </button>
-        <button class="dc-desk-nav-item" type="button" data-desk-section="photocast" data-desk-index-src="/photocast/">
-          <span class="dc-desk-ico">🖼️</span>
-          <span class="dc-desk-txt">Photocast<span class="small">آموزش با تصویر</span></span>
-        </button>
-        <button class="dc-desk-nav-item" type="button" data-desk-section="insight" data-desk-index-src="/insight/">
-          <span class="dc-desk-ico">🧠</span>
-          <span class="dc-desk-txt">Clinical Insight<span class="small">تجربیات کلینیکی</span></span>
-        </button>
-        <button class="dc-desk-nav-item" type="button" data-desk-section="dentai" data-desk-index-src="/dentai/">
-          <span class="dc-desk-ico">🤖</span>
-          <span class="dc-desk-txt">DentAI<span class="small">مرور مقالات با هوش مصنوعی</span></span>
-        </button>
-        <button class="dc-desk-nav-item" type="button" data-desk-section="plus" data-desk-index-src="/dentcast-plus/">
-          <span class="dc-desk-ico">▶</span>
-          <span class="dc-desk-txt">DentCast+<span class="small">آموزش با ویدیو</span></span>
-        </button>
-        <div class="dc-desk-divider"></div>
-        <button class="dc-desk-nav-item" type="button" data-desk-section="sharehub" data-desk-index-src="/sharehub/">
-          <span class="dc-desk-ico">🔗</span>
-          <span class="dc-desk-txt">Share Hub<span class="small">مطالب دیگران با ذکر منبع</span></span>
-        </button>
-        <button class="dc-desk-nav-item" type="button" data-desk-section="chairside" data-desk-index-src="/chairside/">
-          <span class="dc-desk-ico">🦷</span>
-          <span class="dc-desk-txt">Chairside<span class="small">نکاتی از ویزیت‌های روزانه</span></span>
-        </button>
-        <button class="dc-desk-nav-item" type="button" data-desk-section="metanotes" data-desk-index-src="/metanotes/">
-          <span class="dc-desk-ico">🧩</span>
-          <span class="dc-desk-txt">Meta Note<span class="small">ایده‌ها و مدل‌های تحلیلی</span></span>
-        </button>
-        <button class="dc-desk-nav-item" type="button" data-desk-section="glossary" data-desk-index-src="/glossary/">
-          <span class="dc-desk-ico">📚</span>
-          <span class="dc-desk-txt">Glossary<span class="small">مفاهیم تصمیم‌ساز دندانپزشکی</span></span>
-        </button>
-        <div class="dc-desk-divider"></div>
-        <button class="dc-desk-nav-item" type="button" data-desk-section="litecast" data-desk-index-src="/litecast/">
-          <span class="dc-desk-ico">👤</span>
-          <span class="dc-desk-txt">LiteCast<span class="small">محتوای ساده برای بیماران</span></span>
-        </button>
-        <div class="dc-desk-divider"></div>
-        <button class="dc-desk-nav-item" type="button" data-desk-action="pwa">
-          <span class="dc-desk-ico">📱</span>
-          <span class="dc-desk-txt">نصب PWA<span class="small">آفلاین، سریع، آیکون اختصاصی</span></span>
-        </button>
-        <button class="dc-desk-nav-item" type="button" data-desk-action="search">
-          <span class="dc-desk-ico">🔎</span>
-          <span class="dc-desk-txt">جستجوی سراسری<span class="small">سرچ در تمام محتوا</span></span>
-        </button>
-        <button class="dc-desk-nav-item" type="button" data-desk-section="newsletter" data-desk-index-src="/join.html">
-          <span class="dc-desk-ico">📬</span>
-          <span class="dc-desk-txt">خبرنامه<span class="small">اطلاع از اپیزودهای جدید</span></span>
-        </button>
-        <button class="dc-desk-nav-item" type="button" data-desk-section="consult" data-desk-index-src="mailto:info@dentcast.ir">
-          <span class="dc-desk-ico">📞</span>
-          <span class="dc-desk-txt">مشاوره<span class="small">درخواست مشاوره</span></span>
-        </button>
-        <button class="dc-desk-nav-item" type="button" data-desk-section="about" data-desk-index-src="about.html">
-          <span class="dc-desk-ico">✨</span>
-          <span class="dc-desk-txt">درباره دنتکست<span class="small">معرفی مسیر و اهداف</span></span>
-        </button>
-      </nav>
-    </aside>
+    </a>
 
-    <section class="dc-desk-view" aria-label="Content Viewer">
-      <header class="dc-desk-view-head">
-        <div id="dcDeskViewTitle">نمایش</div>
-        <div id="dcDeskViewMeta">—</div>
-      </header>
-      <div class="dc-desk-view-body">
-        <iframe id="dcDeskViewer" title="DentCast Viewer" loading="lazy" referrerpolicy="no-referrer"></iframe>
-        <div class="dc-desk-view-empty" id="dcDeskViewEmpty">
-          <div id="dcDeskEmptySlot"></div>
+    <!-- Sidebar search -->
+    <div class="dcd-sb-search">
+      <div class="dcd-sb-search-bar">
+        <span class="dcd-sb-search-ico">🔍</span>
+        <input class="dcd-sb-search-input" id="dcdSidebarSearch"
+               type="text" placeholder="جستجو در دنت‌کست…" autocomplete="off">
+      </div>
+    </div>
+
+    <!-- Nav -->
+    <nav class="dcd-nav" aria-label="Main navigation">
+
+      <!-- Main sections -->
+      <span class="dcd-nav-group-lbl">بخش اصلی</span>
+      <button class="dcd-nav-item active" type="button" data-dcd-view="studio">
+        <span class="dcd-nav-ico">🎙️</span>
+        <span class="dcd-nav-txt"><span class="dcd-nav-txt-main">استودیو</span><span class="dcd-nav-txt-sub">پادکست و محتوای اصلی</span></span>
+      </button>
+      <button class="dcd-nav-item" type="button" data-dcd-view="metabase">
+        <span class="dcd-nav-ico">🧠</span>
+        <span class="dcd-nav-txt"><span class="dcd-nav-txt-main">Meta Base</span><span class="dcd-nav-txt-sub">دانش‌نامه و تحلیل</span></span>
+      </button>
+      <button class="dcd-nav-item" type="button" data-dcd-view="patients">
+        <span class="dcd-nav-ico">👤</span>
+        <span class="dcd-nav-txt"><span class="dcd-nav-txt-main">بیماران</span><span class="dcd-nav-txt-sub">LiteCast و اطلاعات مطب</span></span>
+      </button>
+
+      <div class="dcd-divider"></div>
+
+      <!-- Content sections (direct links) -->
+      <span class="dcd-nav-group-lbl">محتوا</span>
+      <a class="dcd-nav-item" href="/episodes.html">
+        <span class="dcd-nav-ico">🎧</span>
+        <span class="dcd-nav-txt"><span class="dcd-nav-txt-main">اپیزودها</span></span>
+      </a>
+      <a class="dcd-nav-item" href="/notecast/">
+        <span class="dcd-nav-ico">📝</span>
+        <span class="dcd-nav-txt"><span class="dcd-nav-txt-main">NoteCast</span></span>
+      </a>
+      <a class="dcd-nav-item" href="/dentcast-plus/">
+        <span class="dcd-nav-ico">▶️</span>
+        <span class="dcd-nav-txt"><span class="dcd-nav-txt-main">DentCast+</span></span>
+      </a>
+      <a class="dcd-nav-item" href="/dentai/">
+        <span class="dcd-nav-ico">🤖</span>
+        <span class="dcd-nav-txt"><span class="dcd-nav-txt-main">DentAI</span></span>
+      </a>
+      <a class="dcd-nav-item" href="/insight/">
+        <span class="dcd-nav-ico">🧠</span>
+        <span class="dcd-nav-txt"><span class="dcd-nav-txt-main">Clinical Insight</span></span>
+      </a>
+      <a class="dcd-nav-item" href="/chairside/">
+        <span class="dcd-nav-ico">🦷</span>
+        <span class="dcd-nav-txt"><span class="dcd-nav-txt-main">Chairside</span></span>
+      </a>
+      <a class="dcd-nav-item" href="/glossary/">
+        <span class="dcd-nav-ico">📚</span>
+        <span class="dcd-nav-txt"><span class="dcd-nav-txt-main">Glossary</span></span>
+      </a>
+      <a class="dcd-nav-item" href="/metanotes/">
+        <span class="dcd-nav-ico">🧩</span>
+        <span class="dcd-nav-txt"><span class="dcd-nav-txt-main">Meta Note</span></span>
+      </a>
+      <a class="dcd-nav-item" href="/sharehub/">
+        <span class="dcd-nav-ico">🔗</span>
+        <span class="dcd-nav-txt"><span class="dcd-nav-txt-main">Share Hub</span></span>
+      </a>
+      <a class="dcd-nav-item" href="/litecast/">
+        <span class="dcd-nav-ico">✨</span>
+        <span class="dcd-nav-txt"><span class="dcd-nav-txt-main">LiteCast</span></span>
+      </a>
+      <a class="dcd-nav-item" href="/photocast/">
+        <span class="dcd-nav-ico">🖼️</span>
+        <span class="dcd-nav-txt"><span class="dcd-nav-txt-main">Photocast</span></span>
+      </a>
+
+      <div class="dcd-divider"></div>
+
+      <!-- Tools -->
+      <span class="dcd-nav-group-lbl">ابزارها</span>
+      <button class="dcd-nav-item" type="button" data-dcd-view="search">
+        <span class="dcd-nav-ico">🔎</span>
+        <span class="dcd-nav-txt"><span class="dcd-nav-txt-main">جستجوی سراسری</span></span>
+      </button>
+      <button class="dcd-nav-item" type="button" id="dcdPwaBtn">
+        <span class="dcd-nav-ico">📱</span>
+        <span class="dcd-nav-txt"><span class="dcd-nav-txt-main">نصب برنامه</span><span class="dcd-nav-txt-sub">PWA · آفلاین</span></span>
+      </button>
+      <a class="dcd-nav-item" href="/join.html">
+        <span class="dcd-nav-ico">📬</span>
+        <span class="dcd-nav-txt"><span class="dcd-nav-txt-main">خبرنامه</span></span>
+      </a>
+      <a class="dcd-nav-item" href="/about.html">
+        <span class="dcd-nav-ico">🙂</span>
+        <span class="dcd-nav-txt"><span class="dcd-nav-txt-main">درباره دنت‌کست</span></span>
+      </a>
+
+    </nav>
+
+    <!-- Footer: theme + contact -->
+    <div class="dcd-sb-footer">
+      <button class="dcd-sb-footer-btn" id="dcdThemeBtn" aria-label="تغییر تم">
+        <span>🌙</span><span>تم</span>
+      </button>
+      <a class="dcd-sb-footer-btn" href="mailto:info@dentcast.ir">
+        <span>📧</span><span>مشاوره</span>
+      </a>
+    </div>
+
+  </aside>
+
+  <!-- ── CENTER MAIN ── -->
+  <main class="dcd-main" aria-label="محتوای اصلی">
+
+    <!-- Header bar -->
+    <header class="dcd-main-header">
+      <div>
+        <div class="dcd-main-title" id="dcdMainTitle">استودیو</div>
+        <div class="dcd-main-sub" id="dcdMainSub">پادکست و محتوای دنت‌کست</div>
+      </div>
+      <div class="dcd-main-header-actions">
+        <button class="dcd-header-btn" id="dcdDeskRadarBtn" aria-label="رادار">📡</button>
+        <button class="dcd-header-btn dcOpenSearchDesk" aria-label="جستجو">🔍</button>
+      </div>
+    </header>
+
+    <!-- Scrollable body -->
+    <div class="dcd-main-body">
+
+      <!-- ── VIEW: STUDIO ── -->
+      <div class="dcd-view active" id="dcd-view-studio" role="region" aria-label="استودیو">
+        <div class="dcd-feed">
+
+          <!-- Pulse -->
+          <div class="dcd-pulse" id="dcdPulse">
+            <div class="dcd-pulse-head">
+              <div class="dcd-pulse-title"><span class="dcd-pulse-dot"></span>پالس · آخرین اخبار دنت‌کست</div>
+              <button class="dcd-pulse-close" onclick="document.getElementById('dcdPulse').style.display='none'">×</button>
+            </div>
+            <ul class="dcd-pulse-list">
+              <li><a href="/insight/insight-40"><strong>یه تجربه ی کلینیکی</strong></a> در بخش Insight قرار داده شد · 17 اردیبهشت</li>
+              <li><a href="/episodes.html"><strong>دنتکست ۱۵۶</strong></a> در بخش اپیزودها قرار داده شد · ۳ اردیبهشت</li>
+              <li><a href="https://dentcast.ir/#radar"><strong>رادار دنت‌کست</strong></a> با بیش از ۷۰ سایت دندانپزشکی آپدیت شد</li>
+            </ul>
+          </div>
+
+          <!-- Episodes hero -->
+          <a class="dcd-hero" href="/episodes.html">
+            <div class="dcd-hero-ico">🎧</div>
+            <div class="dcd-hero-main">
+              <div class="dcd-hero-title">فهرست و شنیدن اپیزودهای دنت‌کست</div>
+              <div class="dcd-hero-sub">همه‌ی اپیزودهای اصلی و فرعی</div>
+            </div>
+            <span class="dcd-hero-chip">DentCast</span>
+          </a>
+
+          <!-- 2×2 Grid -->
+          <div class="dcd-grid">
+            <div class="dcd-grid-card" onclick="location.href='/sharehub/'">
+              <div class="dcd-grid-ico">🔗</div>
+              <div class="dcd-grid-title">Share Hub</div>
+              <div class="dcd-grid-sub">مطالب با ذکر منبع</div>
+            </div>
+            <div class="dcd-grid-card" onclick="location.href='/notecast/'">
+              <div class="dcd-grid-ico">📝</div>
+              <div class="dcd-grid-title">NoteCast</div>
+              <div class="dcd-grid-sub">خلاصه‌نویسی اپیزودها</div>
+            </div>
+            <div class="dcd-grid-card" onclick="location.href='/dentcast-plus/'">
+              <div class="dcd-grid-ico">▶️</div>
+              <div class="dcd-grid-title">DentCast+</div>
+              <div class="dcd-grid-sub">آموزش با ویدیو</div>
+            </div>
+            <div class="dcd-grid-card" onclick="location.href='/dentai/'">
+              <div class="dcd-grid-ico">🤖</div>
+              <div class="dcd-grid-title">DentAI</div>
+              <div class="dcd-grid-sub">مرور با هوش مصنوعی</div>
+            </div>
+          </div>
+
+          <!-- Radar pill -->
+          <div class="dcd-radar-pill" id="dcdRadarPillDesk">
+            <div>
+              <div class="dcd-radar-pill-txt">رادار دنت‌کست 📡</div>
+              <div class="dcd-radar-pill-sub">جستجوگر سایت‌های دندانپزشکی</div>
+            </div>
+            <span class="dcd-radar-pill-btn">جستجو در پانل</span>
+          </div>
+
+        </div>
+      </div><!-- /studio -->
+
+      <!-- ── VIEW: META BASE ── -->
+      <div class="dcd-view" id="dcd-view-metabase" role="region" aria-label="Meta Base">
+        <div class="dcd-feed">
+
+          <a class="dcd-list-card featured" href="/glossary/">
+            <div><div class="dcd-list-card-title">دانشنامه دنت‌کست 📚</div><div class="dcd-list-card-sub">مفاهیم تصمیم‌ساز دندان‌پزشکی</div></div>
+            <span class="dcd-chip">Glossary</span>
+          </a>
+          <a class="dcd-list-card" href="/insight/">
+            <div><div class="dcd-list-card-title">Clinical Insight 🧠</div><div class="dcd-list-card-sub">بینش کلینیکی</div></div>
+            <span class="dcd-chip">Insight</span>
+          </a>
+          <a class="dcd-list-card" href="/chairside/">
+            <div><div class="dcd-list-card-title">Chairside 🦷</div><div class="dcd-list-card-sub">نکاتی از ویزیت‌های روزانه</div></div>
+            <span class="dcd-chip">Visit</span>
+          </a>
+          <a class="dcd-list-card" href="/metanotes/">
+            <div><div class="dcd-list-card-title">Meta Note 🧩</div><div class="dcd-list-card-sub">ایده‌ها و مدل‌های تحلیلی</div></div>
+            <span class="dcd-chip">Meta</span>
+          </a>
+          <a class="dcd-list-card" href="/dentai/">
+            <div><div class="dcd-list-card-title">DentAI 🤖</div><div class="dcd-list-card-sub">مرور مقالات با هوش مصنوعی</div></div>
+            <span class="dcd-chip">AI</span>
+          </a>
+
+          <!-- Last 30 updates -->
+          <div class="dcd-monitor">
+            <div class="dcd-monitor-head">سی مطلب جدید و آخر دنت‌کست</div>
+            <ul class="dcd-monitor-list" id="dcDeskLast30"></ul>
+          </div>
+
+        </div>
+      </div><!-- /metabase -->
+
+      <!-- ── VIEW: PATIENTS ── -->
+      <div class="dcd-view" id="dcd-view-patients" role="region" aria-label="بیماران">
+        <div class="dcd-feed">
+
+          <a class="dcd-hero" href="/litecast/">
+            <div class="dcd-hero-ico">✨</div>
+            <div class="dcd-hero-main">
+              <div class="dcd-hero-title">LiteCast — دندان‌پزشکی برای همه</div>
+              <div class="dcd-hero-sub">محتوای ساده و غیر تخصصی برای بیماران</div>
+            </div>
+            <span class="dcd-hero-chip">LiteCast</span>
+          </a>
+
+          <div class="dcd-monitor">
+            <div class="dcd-monitor-head">پیشنهادهای رندوم برای مطالعه</div>
+            <ul class="dcd-monitor-list" id="dcDeskRandom3"></ul>
+          </div>
+
+          <div class="dcd-monitor">
+            <div class="dcd-locpack">
+              <a href="https://nshn.ir/32sbkzKEOBbXR4" target="_blank" rel="noopener">
+                <img src="/clinic-map.webp" alt="موقعیت مطب روی نقشه" class="dcd-locpack-img" loading="lazy">
+              </a>
+              <div class="dcd-locpack-hint">برای مسیریابی <strong>مطب</strong> در اپ <strong>نشان</strong> کلیک کنید</div>
+              <div class="dcd-cta-row">
+                <a class="dcd-cta-btn" href="mailto:info@dentcast.ir">مشاوره آنلاین ✉️</a>
+                <a class="dcd-cta-btn" href="tel:+986133380090">تماس با مطب 📞</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div><!-- /patients -->
+
+      <!-- ── VIEW: SEARCH ── -->
+      <div class="dcd-view" id="dcd-view-search" role="search" aria-label="جستجو">
+        <div class="dcd-feed">
+          <p class="dcd-search-header">جستجو در همهٔ بخش‌های دنت‌کست</p>
+          <div class="dcd-global-filter-box" id="dcGlobalBox" style="position:static;visibility:visible;opacity:1;transform:none;border-radius:var(--r-lg);max-height:none;">
+            <input id="dcSearch" class="dc-search-input" placeholder="جستجو در همهٔ بخش‌های دنت‌کست…" style="margin-bottom:12px;">
+            <div class="dc-filter-list" style="margin-bottom:12px;flex-wrap:wrap;gap:6px;">
+              <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
+              <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
+              <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
+              <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
+              <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
+              <button class="dc-filter-btn active" data-type="meta">metanote</button>
+              <button class="dc-filter-btn active" data-type="chairside">chairside</button>
+              <button class="dc-filter-btn active" data-type="sharehub">Share Hub</button>
+            </div>
+            <div class="dc-results-box" id="dcResults" style="position:static;max-height:50vh;overflow-y:auto;"></div>
+          </div>
+        </div>
+      </div><!-- /search -->
+
+    </div><!-- /dcd-main-body -->
+  </main>
+
+  <!-- ── RIGHT PANEL ── -->
+  <aside class="dcd-right" aria-label="ابزارها و آخرین مطالب">
+
+    <div class="dcd-right-head">
+      <div class="dcd-right-head-title">آخرین مطالب دنت‌کست</div>
+    </div>
+
+    <div class="dcd-right-body">
+
+      <!-- Latest updates list -->
+      <div class="dcd-right-section">
+        <ul class="dcd-updates-list" id="dcDeskUpdates"></ul>
+      </div>
+
+      <!-- Radar widget -->
+      <div class="dcd-right-section">
+        <div class="dcd-right-section-title">📡 رادار دنت‌کست</div>
+        <div class="dcd-radar-widget">
+          <input class="dcd-rdr-input" id="dcdRdrInput"
+                 type="text" placeholder="نام سایت یا کلمه کلیدی…" autocomplete="off">
+          <div class="dcd-rdr-results" id="dcdRdrResults">
+            <div class="dcd-rdr-initial">برای جستجو تایپ کنید…</div>
+          </div>
         </div>
       </div>
-    </section>
 
-  </div>
+      <!-- CTAs -->
+      <div class="dcd-right-section">
+        <div class="dcd-right-section-title">ارتباط</div>
+        <a class="dcd-right-btn primary" href="mailto:info@dentcast.ir">📧 درخواست مشاوره</a>
+        <a class="dcd-right-btn" href="tel:+986133380090">📞 تماس با مطب</a>
+        <a class="dcd-right-btn" href="/about.html">✨ درباره دکتر شهابیان</a>
+        <a class="dcd-right-btn" href="/join.html">📬 خبرنامه</a>
+      </div>
+
+    </div><!-- /dcd-right-body -->
+  </aside>
+
+</div><!-- /dcd-app -->
 </section>
 
 <!-- SEARCH OVERLAY (mobile) -->
@@ -1777,63 +2410,225 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 </script>
 
 <script>
-/* ── DESKTOP SHELL ── */
+/* ══════════════════════════════════════════════
+   DESKTOP APP SHELL — v2
+══════════════════════════════════════════════ */
 (function(){
-  const MIN=1024;
+  'use strict';
+
+  /* ── Detection ── */
   function isDesk(){
-    return window.matchMedia(`(min-width:${MIN}px)`).matches &&
-           (window.matchMedia('(pointer:fine)').matches || window.matchMedia('(hover:hover)').matches);
+    return window.matchMedia('(min-width:1024px)').matches &&
+           (window.matchMedia('(pointer:fine)').matches ||
+            window.matchMedia('(hover:hover)').matches);
   }
-  const root=document.getElementById('dc-desktop-root');
+
+  const root = document.getElementById('dc-desktop-root');
   if(!root) return;
-  const navItems=Array.from(root.querySelectorAll('[data-desk-section],[data-desk-action]'));
-  const viewer=document.getElementById('dcDeskViewer');
-  const emptySlot=document.getElementById('dcDeskEmptySlot');
-  const pulseEl=document.querySelector('#mobile-shell .dc-pulse');
-  const pulseParent=pulseEl?.parentElement;
-  const pulseNext=pulseEl?.nextElementSibling;
-  let enabled=false;
+  let enabled = false;
 
-  function isRoot(url){
-    if(!url) return true;
-    try{const u=new URL(url,location.origin);if(u.origin!==location.origin)return false;const p=(u.pathname||'/').toLowerCase();return p==='/'||p===''||p==='/index.html'||p==='/index.htm';}catch{return true;}
-  }
-  function norm(src){if(!src||src==='__EMPTY__')return'';try{return new URL(src,location.origin).toString();}catch{return src;}}
-  function setActive(sec){navItems.forEach(b=>b.classList.toggle('is-active',b.dataset.deskSection===sec));}
+  /* ── View switching ── */
+  const VIEW_META = {
+    studio:   { title:'استودیو',   sub:'پادکست و محتوای دنت‌کست' },
+    metabase: { title:'Meta Base', sub:'دانش‌نامه، تحلیل و محتوای علمی' },
+    patients: { title:'بیماران',   sub:'LiteCast و اطلاعات مطب' },
+    search:   { title:'جستجو',     sub:'جستجوی سراسری در همهٔ محتوا' }
+  };
+  const titleEl = document.getElementById('dcdMainTitle');
+  const subEl   = document.getElementById('dcdMainSub');
 
-  function openEmpty(){
-    root.classList.remove('is-live');
-    try{viewer.src='about:blank';}catch{}
-    if(!enabled) return;
-    if(emptySlot&&pulseEl){emptySlot.innerHTML='';emptySlot.appendChild(pulseEl);}
-  }
-  function openViewer(url,label){
-    const abs=norm(url);
-    if(pulseEl&&pulseParent){if(pulseNext)pulseParent.insertBefore(pulseEl,pulseNext);else pulseParent.appendChild(pulseEl);}
-    if(!abs||isRoot(abs)){openEmpty();return;}
-    if(/^(mailto:|tel:)/i.test(abs)){location.href=abs;return;}
-    root.classList.add('is-live');
-    viewer.src=abs;
-  }
-  function onNavClick(btn){
-    const sec=btn.dataset.deskSection;
-    const action=btn.dataset.deskAction||'';
-    const src=btn.dataset.deskIndexSrc||'';
-    const label=btn.querySelector('.dc-desk-txt')?.textContent?.trim()||'';
-    if(action==='pwa'){handlePWAInstall();return;}
-    if(action==='search'){openViewer('/search.html','جستجو');return;}
-    setActive(sec); openViewer(src,label);
-  }
-  navItems.forEach(b=>b.addEventListener('click',()=>onNavClick(b)));
-  viewer.addEventListener('load',()=>{if(!enabled)return;try{if(isRoot(viewer.contentWindow.location.href))openEmpty();}catch{}});
+  function switchView(viewId){
+    /* deactivate all views */
+    root.querySelectorAll('.dcd-view').forEach(v => v.classList.remove('active'));
+    root.querySelectorAll('.dcd-nav-item[data-dcd-view]')
+        .forEach(b => b.classList.remove('active'));
 
-  function enable(){enabled=true;document.body.classList.add('dc-desktop-ui');root.setAttribute('aria-hidden','false');openEmpty();}
+    const view = document.getElementById('dcd-view-' + viewId);
+    if(view) view.classList.add('active');
+
+    /* activate sidebar item */
+    const btn = root.querySelector(`.dcd-nav-item[data-dcd-view="${viewId}"]`);
+    if(btn) btn.classList.add('active');
+
+    /* update header */
+    const m = VIEW_META[viewId] || {};
+    if(titleEl) titleEl.textContent = m.title || viewId;
+    if(subEl)   subEl.textContent   = m.sub   || '';
+
+    /* scroll center to top */
+    const body = root.querySelector('.dcd-main-body');
+    if(body) body.scrollTop = 0;
+
+    /* focus search input if switching to search */
+    if(viewId === 'search'){
+      setTimeout(() => document.getElementById('dcSearch')?.focus(), 50);
+    }
+  }
+
+  /* Bind sidebar nav buttons */
+  root.querySelectorAll('.dcd-nav-item[data-dcd-view]').forEach(btn => {
+    btn.addEventListener('click', () => switchView(btn.dataset.dcdView));
+  });
+
+  /* Sidebar search → switch to search view + populate input */
+  const sidebarSearch = document.getElementById('dcdSidebarSearch');
+  if(sidebarSearch){
+    sidebarSearch.addEventListener('input', function(){
+      if(!enabled) return;
+      const mainSearch = document.getElementById('dcSearch');
+      if(mainSearch){
+        mainSearch.value = this.value;
+        mainSearch.dispatchEvent(new Event('input'));
+      }
+      if(this.value.length > 0) switchView('search');
+    });
+    sidebarSearch.addEventListener('focus', () => {
+      if(enabled && sidebarSearch.value.length === 0) switchView('search');
+    });
+  }
+
+  /* Header search button → switch to search view */
+  root.querySelectorAll('.dcOpenSearchDesk').forEach(btn => {
+    btn.addEventListener('click', () => switchView('search'));
+  });
+
+  /* Header radar button → right panel input focus */
+  document.getElementById('dcdDeskRadarBtn')?.addEventListener('click', () => {
+    const inp = document.getElementById('dcdRdrInput');
+    if(inp){ inp.focus(); inp.scrollIntoView({behavior:'smooth'}); }
+  });
+
+  /* Radar pill in studio → focus right panel radar */
+  document.getElementById('dcdRadarPillDesk')?.addEventListener('click', () => {
+    const inp = document.getElementById('dcdRdrInput');
+    if(inp){ inp.focus(); inp.scrollIntoView({behavior:'smooth'}); }
+  });
+
+  /* PWA install button */
+  document.getElementById('dcdPwaBtn')?.addEventListener('click', handlePWAInstall);
+
+  /* Theme toggle in sidebar */
+  const dcdThemeBtn = document.getElementById('dcdThemeBtn');
+  if(dcdThemeBtn){
+    /* sync icon to current theme */
+    function syncDcdThemeIcon(){
+      const dark = document.documentElement.getAttribute('data-theme') === 'dark';
+      dcdThemeBtn.innerHTML = '<span>' + (dark ? '☀️' : '🌙') + '</span><span>تم</span>';
+    }
+    syncDcdThemeIcon();
+    dcdThemeBtn.addEventListener('click', () => {
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      applyTheme(!isDark);
+      syncDcdThemeIcon();
+    });
+  }
+
+  /* ── RIGHT PANEL — Latest updates ── */
+  function loadDeskUpdates(){
+    const el = document.getElementById('dcDeskUpdates');
+    if(!el || el.dataset.loaded) return;
+    el.dataset.loaded = '1';
+    fetch('/Dentcast-brain.txt?v=7', {cache:'no-store'})
+      .then(r => r.ok ? r.json() : Promise.reject())
+      .then(json => {
+        let arr = (Array.isArray(json) ? json : Object.values(json).find(Array.isArray) || []);
+        arr = arr.map(x => ({
+          title: (x?.title || '').trim(),
+          url:   (x?.page_url || x?.url || x?.link || '').trim(),
+          d:     Date.parse(x?.datePublished || x?.date || '') || 0
+        })).filter(x => x.title && x.url);
+        if(arr.some(x => x.d > 0)) arr.sort((a,b) => b.d - a.d);
+        arr = arr.slice(0, 30);
+        el.innerHTML = arr.map(x =>
+          `<li><a href="${x.url}">${x.title}</a></li>`).join('');
+        /* also populate metabase monitor */
+        const mb = document.getElementById('dcDeskLast30');
+        if(mb) mb.innerHTML = el.innerHTML;
+      }).catch(() => {});
+  }
+
+  /* ── RIGHT PANEL — Random 3 for Patients ── */
+  function loadDeskRandom3(){
+    const el = document.getElementById('dcDeskRandom3');
+    if(!el || el.dataset.loaded) return;
+    el.dataset.loaded = '1';
+    fetch('/litecast/lite-glossary.json', {cache:'no-store'})
+      .then(r => r.ok ? r.json() : Promise.reject())
+      .then(json => {
+        let arr = (Array.isArray(json) ? json :
+                   Object.values(json).find(Array.isArray) || [])
+          .map(x => ({
+            title: (x?.title || x?.name || '').trim(),
+            url:   (x?.page_url || x?.url || '').trim()
+          })).filter(x => x.title && x.url);
+        /* shuffle */
+        for(let i = arr.length - 1; i > 0; i--){
+          const j = Math.floor(Math.random() * (i+1));
+          [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        el.innerHTML = arr.slice(0, 3).map(x =>
+          `<li><a href="${x.url}">${x.title}</a></li>`).join('');
+      }).catch(() => {});
+  }
+
+  /* ── RIGHT PANEL — Radar mini widget ── */
+  (function initRdr(){
+    const inp = document.getElementById('dcdRdrInput');
+    const box = document.getElementById('dcdRdrResults');
+    if(!inp || !box) return;
+    let data = [], loaded = false;
+
+    function loadRdr(){
+      if(loaded) return;
+      loaded = true;
+      fetch('/radar.json?v=12', {cache:'no-store'})
+        .then(r => r.json())
+        .then(d => { data = d; handleRdr(); })
+        .catch(() => {});
+    }
+
+    function handleRdr(){
+      const q = inp.value.trim().toLowerCase();
+      if(!q){ box.innerHTML = '<div class="dcd-rdr-initial">برای جستجو تایپ کنید…</div>'; return; }
+      if(!loaded){ loadRdr(); return; }
+      let f = data.filter(x =>
+        x.name.toLowerCase().includes(q) ||
+        x.desc.toLowerCase().includes(q) ||
+        (x.keywords||[]).some(k => k.toLowerCase().includes(q)));
+      f.sort((a,b) => Number(a.priority??10) - Number(b.priority??10));
+      f = f.slice(0, 8);
+      if(!f.length){ box.innerHTML = '<div class="dcd-rdr-initial">نتیجه‌ای یافت نشد</div>'; return; }
+      box.innerHTML = f.map(x =>
+        `<a class="dcd-rdr-item" href="${x.url}" target="_blank" rel="noopener">
+           <div class="dcd-rdr-item-name">${x.name}</div>
+           <div class="dcd-rdr-item-desc">${x.desc}</div>
+         </a>`).join('');
+    }
+
+    inp.addEventListener('focus', loadRdr);
+    inp.addEventListener('input', handleRdr);
+  })();
+
+  /* ── ENABLE / DISABLE ── */
+  function enable(){
+    if(enabled) return;
+    enabled = true;
+    document.body.classList.add('dc-desktop-ui');
+    root.setAttribute('aria-hidden', 'false');
+    loadDeskUpdates();
+    loadDeskRandom3();
+  }
+
   function disable(){
-    enabled=false;document.body.classList.remove('dc-desktop-ui');root.setAttribute('aria-hidden','true');
-    if(pulseEl&&pulseParent){if(pulseNext)pulseParent.insertBefore(pulseEl,pulseNext);else pulseParent.appendChild(pulseEl);}
+    if(!enabled) return;
+    enabled = false;
+    document.body.classList.remove('dc-desktop-ui');
+    root.setAttribute('aria-hidden', 'true');
   }
-  function sync(){isDesk()?enable():disable();}
-  sync(); window.addEventListener('resize',sync);
+
+  function sync(){ isDesk() ? enable() : disable(); }
+  sync();
+  window.addEventListener('resize', sync);
 })();
 </script>
 
