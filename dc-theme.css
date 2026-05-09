@@ -322,14 +322,15 @@ body:has(.dc-topbar) footer a[href="/about.html"]:hover {
 
 /* ── GLOSSARY .btn back button ── */
 body:has(.dc-topbar) footer .btn,
-body:has(.dc-topbar) .term-footer .btn {
+body:has(.dc-topbar) .term-footer .btn,
+body:has(.dc-topbar) a.btn {
   display: inline-flex !important;
   align-items: center !important;
   gap: 6px !important;
   padding: 10px 22px !important;
   border-radius: var(--r-f) !important;
   background: var(--surface2) !important;
-  color: var(--txt2) !important;
+  color: var(--txt) !important;          /* --txt نه --txt2 برای کنتراست بیشتر */
   border: 1px solid var(--border) !important;
   font-size: .88rem !important;
   font-weight: 600 !important;
