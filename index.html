@@ -1235,11 +1235,27 @@ body.dc-desktop-ui #dc-desktop-root{
 .dcd-col-c-scroll::-webkit-scrollbar{ width:5px; }
 .dcd-col-c-scroll::-webkit-scrollbar-thumb{ background:var(--border); border-radius:999px; }
 
-/* Welcome default state (pulse + hero only) */
-.dcd-welcome{ padding:22px; }
+/* Welcome default state — cover image background + pulse on top */
+.dcd-welcome{
+  padding:0;
+  position:relative;
+  min-height:100%;
+  background:url('/dentcast-cover.webp') center center / cover no-repeat;
+  display:flex; flex-direction:column; justify-content:flex-start;
+}
+/* Dark overlay so Pulse text stays readable over the image */
+.dcd-welcome::before{
+  content:"";
+  position:absolute; inset:0;
+  background:rgba(0,0,0,.45);
+  pointer-events:none;
+}
 .dcd-welcome-feed{
+  position:relative; z-index:1;
   max-width:680px; margin:0 auto;
   display:flex; flex-direction:column; gap:14px;
+  padding:28px 22px;
+  width:100%;
 }
 
 /* Content area for fetched articles */
