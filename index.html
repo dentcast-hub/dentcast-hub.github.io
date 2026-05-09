@@ -1204,6 +1204,17 @@ body.dc-desktop-ui #dc-desktop-root{
   padding:60px 20px; color:var(--txt3); font-size:13px;
 }
 
+/* Full-page viewer iframe (Episodes, Glossary) */
+.dcd-page-viewer{
+  display:none; width:100%; border:none; min-height:0;
+  background:var(--surface); flex-shrink:0;
+}
+/* Viewer mode: hide scroll area, show iframe */
+.dcd-col-c.is-viewer .dcd-col-c-scroll{ display:none; }
+.dcd-col-c.is-viewer .dcd-page-viewer{
+  display:block; flex:1; min-height:0;
+}
+
 /* Fetched content styling — extracted from article pages */
 .dcd-content-area .article-content-wrap,
 .dcd-content-area .wrap,
@@ -1597,11 +1608,11 @@ body.dc-desktop-ui #dc-desktop-root{
           <span class="dcd-group-hdr-arr">▶</span>
         </button>
         <div class="dcd-group-items">
-          <button class="dcd-subitem" data-type="notecast" data-label="NoteCast" data-src="brain"><span class="dcd-subitem-ico">📝</span><span class="dcd-subitem-lbl">NoteCast</span></button>
+          <button class="dcd-subitem" data-type="notecast" data-label="NoteCast" data-src="notecast"><span class="dcd-subitem-ico">📝</span><span class="dcd-subitem-lbl">NoteCast</span></button>
           <button class="dcd-subitem" data-type="dentcast_plus" data-label="DentCast+" data-src="brain"><span class="dcd-subitem-ico">▶️</span><span class="dcd-subitem-lbl">DentCast+</span></button>
           <button class="dcd-subitem" data-type="dentai" data-label="DentAI" data-src="brain"><span class="dcd-subitem-ico">🤖</span><span class="dcd-subitem-lbl">DentAI</span></button>
-          <button class="dcd-subitem" data-type="sharehub" data-label="Share Hub" data-src="brain"><span class="dcd-subitem-ico">🔗</span><span class="dcd-subitem-lbl">Share Hub</span></button>
-          <button class="dcd-subitem" data-type="episodes" data-label="اپیزودها" data-src="dentcast"><span class="dcd-subitem-ico">🎧</span><span class="dcd-subitem-lbl">اپیزودها</span></button>
+          <button class="dcd-subitem" data-type="sharehub" data-label="Share Hub" data-src="sharehub"><span class="dcd-subitem-ico">🔗</span><span class="dcd-subitem-lbl">Share Hub</span></button>
+          <button class="dcd-subitem" data-mode="viewer" data-viewer-url="/episodes.html" data-label="اپیزودها"><span class="dcd-subitem-ico">🎧</span><span class="dcd-subitem-lbl">اپیزودها</span></button>
         </div>
       </div>
 
@@ -1613,7 +1624,7 @@ body.dc-desktop-ui #dc-desktop-root{
           <span class="dcd-group-hdr-arr">▶</span>
         </button>
         <div class="dcd-group-items">
-          <button class="dcd-subitem" data-type="glossary" data-label="Glossary" data-src="glossary"><span class="dcd-subitem-ico">📚</span><span class="dcd-subitem-lbl">Glossary</span></button>
+          <button class="dcd-subitem" data-mode="viewer" data-viewer-url="/glossary/" data-label="Glossary"><span class="dcd-subitem-ico">📚</span><span class="dcd-subitem-lbl">Glossary</span></button>
           <button class="dcd-subitem" data-type="clinical" data-label="Clinical Insight" data-src="brain"><span class="dcd-subitem-ico">🧠</span><span class="dcd-subitem-lbl">Clinical Insight</span></button>
           <button class="dcd-subitem" data-type="meta" data-label="Meta Note" data-src="brain"><span class="dcd-subitem-ico">🧩</span><span class="dcd-subitem-lbl">Meta Note</span></button>
           <button class="dcd-subitem" data-type="chairside" data-label="Chairside" data-src="brain"><span class="dcd-subitem-ico">🦷</span><span class="dcd-subitem-lbl">Chairside</span></button>
@@ -1629,7 +1640,6 @@ body.dc-desktop-ui #dc-desktop-root{
         </button>
         <div class="dcd-group-items">
           <button class="dcd-subitem" data-type="litecast" data-label="LiteCast" data-src="litecast"><span class="dcd-subitem-ico">✨</span><span class="dcd-subitem-lbl">LiteCast</span></button>
-          <button class="dcd-subitem" data-type="photocast" data-label="Photocast" data-src="hardcode"><span class="dcd-subitem-ico">🖼️</span><span class="dcd-subitem-lbl">Photocast</span></button>
         </div>
       </div>
 
@@ -1715,6 +1725,12 @@ body.dc-desktop-ui #dc-desktop-root{
       <div class="dcd-content-area" id="dcd-content-area"></div>
 
     </div><!-- /dcd-col-c-scroll -->
+
+    <!-- Full-page viewer iframe (Episodes, Glossary, etc.) -->
+    <iframe class="dcd-page-viewer" id="dcd-page-viewer"
+            title="DentCast Page Viewer"
+            sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-top-navigation-by-user-activation">
+    </iframe>
 
   </div><!-- /dcd-col-c -->
 
@@ -2079,8 +2095,10 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
   const colB        = document.getElementById('dcd-b-list');
   const colBTitle   = document.getElementById('dcd-b-title');
   const colBCount   = document.getElementById('dcd-b-count');
+  const colCEl      = document.getElementById('dcd-col-c');
   const colCScroll  = document.getElementById('dcd-col-c-scroll');
   const contentArea = document.getElementById('dcd-content-area');
+  const pageViewer  = document.getElementById('dcd-page-viewer');
 
   /* ── Public helper (used in HTML onclick) ── */
   window.dcdOpen = function(url, title){ openContent(url, title); };
@@ -2106,7 +2124,17 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
     btn.addEventListener('click', () => {
       root.querySelectorAll('.dcd-subitem').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-      loadList(btn.dataset.type, btn.dataset.label, btn.dataset.src);
+
+      if(btn.dataset.mode === 'viewer'){
+        /* Full-page viewer mode: show iframe in col-C, col-B stays empty */
+        colBTitle.textContent = btn.dataset.label || '';
+        colBCount.textContent = '';
+        colB.innerHTML = '<div class="dcd-col-b-empty"><div class="dcd-col-b-empty-ico">🌐</div><div>صفحه در ستون سوم باز است</div></div>';
+        openPageViewer(btn.dataset.viewerUrl);
+      } else {
+        /* Normal list mode */
+        loadList(btn.dataset.type, btn.dataset.label, btn.dataset.src);
+      }
     });
   });
 
@@ -2134,7 +2162,25 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 
     let items = [];
     try{
-      if(src === 'hardcode'){
+      if(src === 'notecast'){
+        /* Fetch notecast index page and extract all episode links */
+        const resp = await fetch('/notecast/', {cache:'no-store'});
+        const html = await resp.text();
+        const doc2 = new DOMParser().parseFromString(html, 'text/html');
+        items = Array.from(doc2.querySelectorAll('ul li a')).map(a => ({
+          title: a.textContent.trim(),
+          url:   '/notecast/' + (a.getAttribute('href') || '').replace(/^\/notecast\//,'').replace(/^\//,'')
+        })).filter(x => x.title && x.url && !x.url.match(/index/i));
+      } else if(src === 'sharehub'){
+        /* Fetch sharehub index page and extract all share links */
+        const resp = await fetch('/sharehub/', {cache:'no-store'});
+        const html = await resp.text();
+        const doc2 = new DOMParser().parseFromString(html, 'text/html');
+        items = Array.from(doc2.querySelectorAll('ul li a')).map(a => ({
+          title: a.textContent.trim(),
+          url:   '/sharehub/' + (a.getAttribute('href') || '').replace(/^\/sharehub\//,'').replace(/^\//,'')
+        })).filter(x => x.title && x.url && !x.url.match(/index/i));
+      } else if(src === 'hardcode'){
         items = PHOTOCAST_ITEMS;
       } else if(src === 'glossary'){
         const d = await fetch('/glossary.json',{cache:'no-store'}).then(r=>r.json());
@@ -2193,6 +2239,20 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
   }
 
   /* ══════════════════════════════════════════════
+     COL-C: FULL-PAGE VIEWER (iframe mode)
+     For Episodes, Glossary — shows the full page.
+  ══════════════════════════════════════════════ */
+  function openPageViewer(url){
+    if(!url || !pageViewer || !colCEl) return;
+    /* Exit article-content mode */
+    colCScroll.classList.remove('has-content');
+    contentArea.innerHTML = '';
+    /* Enter viewer mode */
+    colCEl.classList.add('is-viewer');
+    pageViewer.src = url;
+  }
+
+  /* ══════════════════════════════════════════════
      COL-C: FETCH + EXTRACT CONTENT
      Uses fetch to load page, extracts only the
      article-content-wrap (or fallback selectors).
@@ -2200,6 +2260,10 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
   ══════════════════════════════════════════════ */
   async function openContent(url, title){
     if(!url) return;
+
+    /* Exit viewer mode if active */
+    if(colCEl) colCEl.classList.remove('is-viewer');
+    if(pageViewer) pageViewer.src = 'about:blank';
 
     /* Show loading */
     colCScroll.classList.add('has-content');
