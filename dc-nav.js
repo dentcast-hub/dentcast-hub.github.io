@@ -54,11 +54,30 @@
   var drawerBtn = document.getElementById('btn-toolbar-toggle');
   var drawer    = document.getElementById('dcToolbarDrawer');
   if (drawerBtn && drawer) {
+    /* Ensure drawer has base styles so the animation works
+       regardless of any conflicting page CSS */
+    drawer.style.overflow   = 'hidden';
+    drawer.style.transition = 'max-height .28s cubic-bezier(.4,0,.2,1), opacity .22s ease';
+    drawer.style.maxHeight  = '0';
+    drawer.style.opacity    = '0';
+
     drawerBtn.addEventListener('click', function () {
       var isOpen = drawer.classList.contains('open');
-      drawer.classList.toggle('open', !isOpen);
-      drawerBtn.setAttribute('aria-expanded', String(!isOpen));
-      drawer.setAttribute('aria-hidden', String(isOpen));
+      if (!isOpen) {
+        /* OPEN */
+        drawer.classList.add('open');
+        drawer.style.maxHeight = '80px';
+        drawer.style.opacity   = '1';
+        drawerBtn.setAttribute('aria-expanded', 'true');
+        drawer.setAttribute('aria-hidden', 'false');
+      } else {
+        /* CLOSE */
+        drawer.classList.remove('open');
+        drawer.style.maxHeight = '0';
+        drawer.style.opacity   = '0';
+        drawerBtn.setAttribute('aria-expanded', 'false');
+        drawer.setAttribute('aria-hidden', 'true');
+      }
     });
   }
 
