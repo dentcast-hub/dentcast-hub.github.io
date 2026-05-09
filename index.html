@@ -966,6 +966,62 @@ body.dc-desktop-ui #mobile-shell,
 body.dc-desktop-ui footer,
 body.dc-desktop-ui #dc-theme-toggle,
 body.dc-desktop-ui .dc-search-overlay{ display:none!important; }
+
+/* ── HAMBURGER: collapse col-A sidebar ── */
+.dcd-app.col-a-hidden{
+  grid-template-columns:0px 270px 1fr !important;
+}
+.dcd-app.col-a-hidden .dcd-col-a{
+  overflow:hidden; pointer-events:none;
+}
+@media(max-width:1024px){
+  .dcd-app.col-a-hidden{ grid-template-columns:0px 1fr !important; }
+}
+
+/* ── DESKTOP SEARCH OVERLAY ──
+   The search overlay CSS lives inside @media(max-width:1023px)
+   so it has no styles on desktop. Override here to make it
+   show as a full-screen modal when dc-search-mode is active.
+── */
+body.dc-desktop-ui.dc-search-mode .dc-search-overlay,
+body.dc-desktop-ui.dc-search-mode #dcSearchOverlay{
+  display:block !important;
+  position:fixed !important;
+  inset:0 !important;
+  z-index:99998 !important;
+  background:var(--bg) !important;
+  opacity:1 !important;
+  pointer-events:auto !important;
+  transform:none !important;
+  overflow:hidden !important;
+}
+body.dc-desktop-ui.dc-search-mode .dc-search-overlay-head{
+  position:sticky; top:0; z-index:2;
+  padding:10px 12px 8px;
+  background:var(--surface);
+  border-bottom:1px solid var(--border);
+}
+body.dc-desktop-ui.dc-search-mode .dc-search-overlay-bar{
+  display:flex; align-items:center;
+  justify-content:space-between; gap:10px;
+  padding:9px 14px; border-radius:var(--r-md);
+  border:1px solid var(--border); background:var(--surface2);
+}
+body.dc-desktop-ui.dc-search-mode .dc-search-overlay-body{
+  height:calc(100vh - 68px); overflow:auto; padding:12px;
+}
+body.dc-desktop-ui.dc-search-mode .dc-global-filter-box{
+  max-height:unset !important; opacity:1 !important;
+  visibility:visible !important; overflow:visible !important; margin:0 !important;
+}
+body.dc-desktop-ui.dc-search-mode #dcGlobalBox{
+  height:100% !important; display:flex !important;
+  flex-direction:column !important; overflow:hidden !important;
+}
+body.dc-desktop-ui.dc-search-mode #dcResults{
+  display:block !important; flex:1 1 auto !important;
+  max-height:none !important; overflow:auto !important;
+}
 body.dc-desktop-ui{ height:100vh!important; overflow:hidden!important; }
 body.dc-desktop-ui #dc-desktop-root{
   display:flex; position:fixed; inset:0; z-index:100;
@@ -1709,15 +1765,6 @@ body.dc-desktop-ui #dc-desktop-root{
             </ul>
           </div>
 
-          <a class="dcd-hero" href="#" onclick="dcdOpen('/episodes.html','اپیزودهای دنت‌کست');return false;">
-            <div class="dcd-hero-ico">🎧</div>
-            <div class="dcd-hero-main">
-              <div class="dcd-hero-title">فهرست و شنیدن اپیزودهای دنت‌کست</div>
-              <div class="dcd-hero-sub">همه‌ی اپیزودهای اصلی و فرعی</div>
-            </div>
-            <span class="dcd-hero-chip">DentCast</span>
-          </a>
-
         </div>
       </div>
 
@@ -2336,12 +2383,13 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 
   /* ── Col-C header buttons ── */
 
-  /* Hamburger → opens toolbar drawer (existing mobile drawer is hidden, this is col-c header) */
+  /* Hamburger → collapse/expand col-A sidebar */
   document.getElementById('dcd-hdr-hamburger')?.addEventListener('click', () => {
-    const drawer = document.getElementById('dcToolbarDrawer');
-    if(!drawer) return;
-    const isOpen = drawer.classList.contains('open');
-    drawer.classList.toggle('open', !isOpen);
+    const app = root.querySelector('.dcd-app');
+    if(!app) return;
+    const isHidden = app.classList.toggle('col-a-hidden');
+    document.getElementById('dcd-hdr-hamburger')
+      ?.setAttribute('aria-expanded', String(!isHidden));
   });
 
   /* Radar → open radar overlay */
@@ -2356,19 +2404,45 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
   }
   document.getElementById('dcd-hdr-radar')?.addEventListener('click', openRadarOverlay);
 
-  /* Search → open search overlay */
-  document.getElementById('dcd-hdr-search')?.addEventListener('click', () => {
-    const overlay = document.getElementById('dcSearchOverlay');
-    if(overlay){
-      const overlayBody = document.getElementById('dcSearchOverlayBody');
-      const globalBox   = document.getElementById('dcGlobalBox');
-      if(overlayBody && globalBox) overlayBody.appendChild(globalBox);
-      document.body.classList.add('dc-search-mode');
-      overlay.setAttribute('aria-hidden','false');
-      globalBox?.classList.add('open');
-      setTimeout(() => document.getElementById('dcSearch')?.focus(), 0);
-      history.pushState({dcSearch:true},'');
+  /* Search → open search overlay (desktop-aware) */
+  function deskOpenSearch(){
+    const overlay     = document.getElementById('dcSearchOverlay');
+    const overlayBody = document.getElementById('dcSearchOverlayBody');
+    const globalBox   = document.getElementById('dcGlobalBox');
+    if(!overlay || !overlayBody || !globalBox) return;
+    overlayBody.appendChild(globalBox);
+    document.body.classList.add('dc-search-mode');
+    overlay.setAttribute('aria-hidden','false');
+    globalBox.classList.add('open');
+    setTimeout(() => document.getElementById('dcSearch')?.focus(), 0);
+    history.pushState({dcSearch:true},'');
+  }
+  function deskCloseSearch(){
+    const overlay   = document.getElementById('dcSearchOverlay');
+    const globalBox = document.getElementById('dcGlobalBox');
+    const results   = document.getElementById('dcResults');
+    const origParent = document.getElementById('dcd-welcome')
+                       ?.querySelector('.dcd-welcome-feed') || document.body;
+    document.body.classList.remove('dc-search-mode');
+    overlay?.setAttribute('aria-hidden','true');
+    globalBox?.classList.remove('open');
+    if(results) results.style.display = 'none';
+    const searchInp = document.getElementById('dcSearch');
+    if(searchInp){ searchInp.value=''; searchInp.dispatchEvent(new Event('input')); }
+    /* Return globalBox to its original location */
+    if(globalBox && !document.getElementById('dcd-col-c-scroll')?.contains(globalBox)){
+      const feed = document.querySelector('#dcd-welcome .dcd-welcome-feed');
+      if(feed && !feed.contains(globalBox)) feed.appendChild(globalBox);
     }
+  }
+  document.getElementById('dcd-hdr-search')?.addEventListener('click', deskOpenSearch);
+  /* Close button works on both mobile and desktop */
+  document.getElementById('dcCloseSearchOverlay')?.addEventListener('click', () => {
+    if(document.body.classList.contains('dc-desktop-ui')) deskCloseSearch();
+  });
+  window.addEventListener('popstate', () => {
+    if(document.body.classList.contains('dc-desktop-ui') &&
+       document.body.classList.contains('dc-search-mode')) deskCloseSearch();
   });
 
   /* Theme toggle in col-a footer */
