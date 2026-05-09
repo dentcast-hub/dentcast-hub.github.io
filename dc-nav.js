@@ -22,8 +22,9 @@
   }
 
   var existingToggle = document.getElementById('dc-theme-toggle');
+  var noToggle = document.body.dataset.noThemeToggle === '1';
 
-  if (!existingToggle) {
+  if (!existingToggle && !noToggle) {
     /* Create and append the toggle button */
     var toggleBtn = document.createElement('button');
     toggleBtn.id = 'dc-theme-toggle';
@@ -35,7 +36,7 @@
     toggleBtn.addEventListener('click', function () {
       applyTheme(document.documentElement.getAttribute('data-theme') !== 'dark');
     });
-  } else {
+  } else if (existingToggle) {
     /* Button exists — sync icon only, do not add another click handler */
     existingToggle.textContent =
       document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
