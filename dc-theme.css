@@ -38,6 +38,14 @@
 
   --r-sm: 10px;  --r-md: 14px;  --r-lg: 18px;
   --r-xl: 22px;  --r-f:  999px;
+
+  /* ── Alias older page variables to readable values ──
+     Pages using var(--text) or var(--muted) from their
+     own dark-bg :root get these accessible overrides.
+     dc-theme.css loads after inline <style> → wins. */
+  --text:  #0a1a33;   /* was #e7eaf1 on dark pages → now readable */
+  --muted: #4a5f85;   /* was #9aa1b3 (3:1) → now ~6:1 on white  */
+  --blue2: #022360;   /* darker accent alias used by some pages   */
 }
 
 /* =====================================================
@@ -62,6 +70,10 @@
   --card-border: rgba(255,255,255,.07);
   --card-sh:  0 1px 3px rgba(0,0,0,.22), 0 4px 14px rgba(0,0,0,.14);
   --card-sh2: 0 4px 18px rgba(0,0,0,.28);
+
+  /* Dark mode aliases */
+  --text:  #e8f0ff;   /* readable on dark bg */
+  --muted: #8aaac8;   /* soft muted on dark   */
 
   --chip-bg:  rgba(91,156,246,.12);
   --chip-bd:  rgba(91,156,246,.24);
@@ -124,23 +136,33 @@ body:has(.dc-topbar) .glass-box {
 }
 
 /* =====================================================
-   HEADINGS — DARK MODE ADAPTION
-   Prevent pages' hardcoded heading colours from
-   clashing with the dark background in [data-theme=dark]
+   HEADINGS — FULL LIGHT + DARK CONTRAST FIX
+   Many dark-bg pages have:
+     h1 { color: #ffffff }   → invisible on light bg
+     h2 { color: #e7eaf1 }   → near-invisible on light bg
+     h3 { color: var(--text)} → same, since --text=#e7eaf1
+   Specificity 0,1,2 beats page's 0,0,1 → no !important needed.
 ===================================================== */
-[data-theme="dark"] body:has(.dc-topbar) h1,
-[data-theme="dark"] body:has(.dc-topbar) h2,
-[data-theme="dark"] body:has(.dc-topbar) h3,
-[data-theme="dark"] body:has(.dc-topbar) h4,
-[data-theme="dark"] body:has(.dc-topbar) h5,
-[data-theme="dark"] body:has(.dc-topbar) h6 {
-  color: var(--txt);
-}
 
-/* Primary headings keep accent tint in both modes */
-[data-theme="dark"] body:has(.dc-topbar) h1 {
-  color: var(--pr);
-}
+/* LIGHT MODE */
+body:has(.dc-topbar) h1 { color: var(--pr); }
+body:has(.dc-topbar) h2 { color: var(--txt); }
+body:has(.dc-topbar) h3,
+body:has(.dc-topbar) h4 { color: var(--txt2); }
+body:has(.dc-topbar) h5,
+body:has(.dc-topbar) h6 { color: var(--txt3); }
+
+/* DARK MODE — same rules, variables resolve to dark-friendly values */
+[data-theme="dark"] body:has(.dc-topbar) h1 { color: var(--pr); }
+[data-theme="dark"] body:has(.dc-topbar) h2 { color: var(--txt); }
+[data-theme="dark"] body:has(.dc-topbar) h3,
+[data-theme="dark"] body:has(.dc-topbar) h4 { color: var(--txt2); }
+[data-theme="dark"] body:has(.dc-topbar) h5,
+[data-theme="dark"] body:has(.dc-topbar) h6 { color: var(--txt3); }
+
+/* Exception: headings inside content boxes that intentionally
+   use an accent color (e.g. glossary term h2 with accent border).
+   Those use var(--accent) / var(--blue) which stay readable. */
 
 /* =====================================================
    LINKS — CONTENT AREAS ONLY
@@ -182,7 +204,7 @@ body:has(.dc-topbar) small {
 ===================================================== */
 body:has(.dc-topbar) footer,
 body:has(.dc-topbar) .dc-site-footer {
-  color: var(--txt3) !important;
+  color: var(--txt2) !important;
   border-top: 1px solid var(--border2) !important;
   background: transparent !important;
   text-align: center !important;
@@ -336,6 +358,68 @@ body:has(.dc-topbar) footer .about-link {
 body:has(.dc-topbar) footer strong {
   color: var(--txt2) !important;
   font-weight: 700 !important;
+}
+
+/* =====================================================
+   CONTRAST FIXES — LIGHT MODE
+   Pages designed for dark bg (DentAI, DentCast+)
+   had light/gold text. After dc-theme forces light bg
+   these become unreadable. Fix per class below.
+===================================================== */
+
+/* ── DentCast+ : .text-box paragraph text ──────────
+   Original: color:#cbd2e6  (light blue-gray, dark-bg only)
+   Light fix: var(--txt)    (#0a1a33, high contrast)
+   Dark keep: #cbd2e6       (original, fine on dark card)
+─────────────────────────────────────────────────── */
+body:has(.dc-topbar) .text-box p,
+body:has(.dc-topbar) .text-box li,
+body:has(.dc-topbar) .text-box span:not([class*="badge"]):not([class*="tag"]) {
+  color: var(--txt) !important;
+}
+
+[data-theme="dark"] body:has(.dc-topbar) .text-box p,
+[data-theme="dark"] body:has(.dc-topbar) .text-box li {
+  color: #cbd2e6 !important;
+}
+
+/* ── DentAI : .caption (gold/yellow text on light bg) ──
+   Original: color:rgba(255,199,44,0.85) = near-invisible on white
+   Light fix: #7a5500 (dark amber) — contrast ratio ~7:1 on white
+   Dark keep: original gold — fine on dark background
+─────────────────────────────────────────────────── */
+body:has(.dc-topbar) .caption {
+  background: rgba(180,120,0,.08) !important;
+  border-color: rgba(180,120,0,.22) !important;
+}
+
+body:has(.dc-topbar) .caption p,
+body:has(.dc-topbar) .caption li,
+body:has(.dc-topbar) .caption strong,
+body:has(.dc-topbar) .caption b {
+  color: #7a5500 !important;
+}
+
+body:has(.dc-topbar) .caption ul li::before,
+body:has(.dc-topbar) .caption ol li::before {
+  color: #9a6a00 !important;
+}
+
+[data-theme="dark"] body:has(.dc-topbar) .caption {
+  background: rgba(255,185,40,.15) !important;
+  border-color: rgba(255,220,100,.40) !important;
+}
+
+[data-theme="dark"] body:has(.dc-topbar) .caption p,
+[data-theme="dark"] body:has(.dc-topbar) .caption li,
+[data-theme="dark"] body:has(.dc-topbar) .caption strong,
+[data-theme="dark"] body:has(.dc-topbar) .caption b {
+  color: rgba(255,199,44,.90) !important;
+}
+
+[data-theme="dark"] body:has(.dc-topbar) .caption ul li::before,
+[data-theme="dark"] body:has(.dc-topbar) .caption ol li::before {
+  color: #caa200 !important;
 }
 
 /* =====================================================
