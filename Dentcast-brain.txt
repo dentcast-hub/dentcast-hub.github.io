@@ -5466,6 +5466,33 @@
     "digital dentistry"
   ],
   "page_url": "/insight/insight-40.html"
+},
+{
+  "type": "clinical",
+  "id": "clinical-41",
+  "title": "ترتیب تراش در پست و کور: وقتی دسترسی مسیر را تعیین می‌کند",
+  "caption": "در آماده‌سازی پست و کور، ترتیب تراش همیشه ثابت نیست. این رویکرد به نقش دسترسی، دید، محدودیت بازشدن دهان و مدیریت مرحله‌ای فضا در انتخاب بین کاهش ارتفاع یا فرم‌دهی دیواره‌ها می‌پردازد و نشان می‌دهد که ترتیب تراش می‌تواند بخشی از استراتژی درمان باشد.",
+  "hashtags": [
+    "پست_و_کور",
+    "تراش_پروتزی",
+    "پروتز",
+    "کاهش_ارتفاع",
+    "مدیریت_دسترسی",
+    "مولر_سوم",
+    "بازشدن_محدود_دهان",
+    "پروتز_دندانی"
+  ],
+  "keywords": [
+    "post and core preparation",
+    "prosthodontic strategy",
+    "access management",
+    "occlusal reduction",
+    "wall preparation",
+    "limited mouth opening",
+    "prosthodontics",
+    "crown preparation sequence"
+  ],
+  "page_url": "/insight/insight-41.html"
 }
 
 
