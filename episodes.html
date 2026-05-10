@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>همهٔ اپیزودهای دنت‌کست | DentCast Episodes</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="آرشیو کامل ۱۵۰ اپیزود پادکست تخصصی دنت‌کست: مرور پروتکل‌های کلینیکی پروتز، ایمپلنت (Zero Bone Loss، ITI)، باندینگ سرامیک، TMD، دندانپزشکی دیجیتال و اباتمنتهای پیشرفته. توسط دکتر فؤاد شهابیان.">
   <meta name="author" content="دکتر فؤاد شهابیان">
   <link rel="canonical" href="https://dentcast.org/episodes.html">
@@ -401,6 +401,7 @@ body.search-open #page-content{
   <meta name="twitter:title" content="همهٔ اپیزودهای دنت‌کست | DentCast Episodes">
   <meta name="twitter:description" content="آرشیو کامل ۱۵۰ اپیزود پادکست تخصصی دنت‌کست: مرور پروتکل‌های کلینیکی پروتز، ایمپلنت (Zero Bone Loss، ITI)، باندینگ سرامیک، TMD، دندانپزشکی دیجیتال و اباتمنتهای پیشرفته. توسط دکتر فؤاد شهابیان.">
   <meta name="twitter:image" content="https://dentcast.org/dentcast-cover.webp">
+  <meta name="robots" content="index, follow, max-image-preview:large">
 </head>
 
 <body>
@@ -459,7 +460,7 @@ body.search-open #page-content{
 </div>
 
 <!-- محتوای اصلی صفحه -->
-<div id="page-content">
+<main id="page-content" aria-label="فهرست اپیزودهای دنت‌کست">
   <div class="wrap">
 
     <div class="page-header">
@@ -558,7 +559,7 @@ body.search-open #page-content{
     </footer>
 
   </div>
-</div>
+</main>
 
 <!-- تم تاگل -->
 <button id="dc-theme-toggle" aria-label="تغییر تم">🌙</button>
@@ -581,11 +582,9 @@ themeBtn.addEventListener('click', () => {
 });
 </script>
 
-<script src="/global-search.js?v=5"></script>
-<script src="/global-search-ui.js?v=1"></script>
-<script src="/shake-search.js?v=1"></script>
-
-<script src="/global-search.js?v=2"></script>
-<script src="/dc-nav.js"></script>
+<script src="/global-search.js?v=5" defer></script>
+<script src="/global-search-ui.js?v=1" defer></script>
+<script src="/shake-search.js?v=1" defer></script>
+<script src="/dc-nav.js" defer></script>
 </body>
 </html>

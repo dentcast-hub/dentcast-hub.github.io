@@ -293,6 +293,7 @@ footer{
     <link rel="stylesheet" href="/dc-theme.css">
 <link rel="stylesheet" href="/dc-nav.css">
   <script>(function(){var s=localStorage.getItem('dc-theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme','dark');})()</script>
+  <meta name="robots" content="index, follow, max-image-preview:large">
 </head>
 
 <body>
@@ -332,7 +333,7 @@ footer{
   </div>
 </div>
 
-  <div class="wrap">
+  <main class="wrap" id="main-content">
     <h1>👨‍⚕️ دربارهٔ دکتر فواد شهابیان مقدم</h1>
     <div class="dc-global-filter-box" id="dcGlobalBox">
 
@@ -417,16 +418,10 @@ footer{
     <footer class="dc-site-footer">
       DentCast © 2025 — طراحی و نگارش توسط دکتر فواد شهابیان مقدم
     </footer>
-  </div>
-  <!-- 🧠 موتور سرچ -->
-<script src="/global-search.js?v=5"></script>
-
-<!-- 🎛️ کنترل باز/بسته -->
-<script src="/global-search-ui.js?v=1"></script>
-
-<!-- 📱 شیک گوشی -->
-<script src="/shake-search.js?v=1"></script>
-<script src="/global-search.js?v=2"></script>
-<script src="/dc-nav.js"></script>
+  </main>
+<script src="/global-search.js?v=5" defer></script>
+<script src="/global-search-ui.js?v=1" defer></script>
+<script src="/shake-search.js?v=1" defer></script>
+<script src="/dc-nav.js" defer></script>
 </body>
 </html>
