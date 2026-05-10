@@ -34,11 +34,10 @@ document.addEventListener('DOMContentLoaded', function () {
   /* ---------------- 1) لود JSON از فایل ---------------- */
   async function loadEpisodes() {
     try {
-      const res = await fetch('/Dentcast-brain.txt');
-      const text = await res.text();
-      return JSON.parse(text); // چون کل فایل JSON خالصه
+      const res = await fetch('/dentcast-brain.json');
+      return await res.json();
     } catch (err) {
-      console.error("Error loading Dentcast-brain.txt", err);
+      console.error("Error loading dentcast-brain.json", err);
       listContainer.innerHTML = `<p style="color:#f88; text-align:center;">خطا در لود اپیزودها</p>`;
       return [];
     }

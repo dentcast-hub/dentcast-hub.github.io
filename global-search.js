@@ -41,10 +41,10 @@ const TYPE_MAP = {
   /* ------------ لود دیتابیس ---------------- */
   async function loadDB() {
     try {
-      const res = await fetch("/Dentcast-brain.txt", { cache: "no-store" });
+      const res = await fetch("/dentcast-brain.json", { cache: "no-store" });
       DB = await res.json();
     } catch (err) {
-      console.error("❌ Error loading Dentcast-brain.txt", err);
+      console.error("❌ Error loading dentcast-brain.json", err);
     }
   }
 

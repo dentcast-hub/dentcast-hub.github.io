@@ -1,7 +1,7 @@
 // service-worker.js
 // DentCast PWA — Safe Content Strategy
 
-const CACHE_NAME = 'dentcast-assets-v2';
+const CACHE_NAME = 'dentcast-assets-v3';
 
 /* نصب */
 self.addEventListener('install', (event) => {
@@ -43,7 +43,7 @@ self.addEventListener('fetch', (event) => {
   }
 
   // ❌ این فایل هرگز نباید کش شود
-if (event.request.url.includes('Dentcast-brain.txt')) {
+if (event.request.url.includes('dentcast-brain.json')) {
   event.respondWith(fetch(event.request, { cache: "no-store" }));
   return;
 }
