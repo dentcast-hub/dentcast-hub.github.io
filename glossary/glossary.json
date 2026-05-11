@@ -815,6 +815,123 @@
     "ferrule effect endodontic"
   ],
   "url": "/glossary/ferrule-effect.html"
+},
+{
+  "slug": "ti-base",
+  "title": "Ti-Base",
+  "fa_title": "تای‌بیس / تیتانیوم بیس ابatment",
+  "synonyms": [
+    "تای بیس",
+    "titanium base",
+    "titanium base abutment",
+    "تیتانیوم بیس",
+    "ti base implant"
+  ],
+  "url": "/glossary/ti-base.html"
+},
+{
+  "slug": "scan-body",
+  "title": "Scan Body",
+  "fa_title": "اسکن بادی",
+  "synonyms": [
+    "scan body implant",
+    "اسکن بادی ایمپلنت",
+    "scan flag",
+    "digital impression body",
+    "ثبت دیجیتال ایمپلنت"
+  ],
+  "url": "/glossary/scan-body.html"
+},
+{
+  "slug": "fiber-post",
+  "title": "Fiber Post",
+  "fa_title": "پست فایبر",
+  "synonyms": [
+    "پست فایبرگلاس",
+    "glass fiber post",
+    "carbon fiber post",
+    "پست داخل‌کانالی",
+    "endodontic post"
+  ],
+  "url": "/glossary/fiber-post.html"
+},
+{
+  "slug": "biological-width",
+  "title": "Biological Width",
+  "fa_title": "عرض بیولوژیک",
+  "synonyms": [
+    "biologic width",
+    "supracrestal tissue attachment",
+    "اتصال سوپراکرستال",
+    "عرض بیولوژیک دندان",
+    "junctional epithelium"
+  ],
+  "url": "/glossary/biological-width.html"
+},
+{
+  "slug": "peri-implantitis",
+  "title": "Peri-implantitis",
+  "fa_title": "پری‌ایمپلنتیتیس",
+  "synonyms": [
+    "periimplantitis",
+    "التهاب اطراف ایمپلنت",
+    "تحلیل استخوان ایمپلنت",
+    "peri implant bone loss",
+    "عفونت ایمپلنت"
+  ],
+  "url": "/glossary/peri-implantitis.html"
+},
+{
+  "slug": "vertical-dimension-of-occlusion",
+  "title": "Vertical Dimension of Occlusion",
+  "fa_title": "بعد عمودی اکلوژن (VDO)",
+  "synonyms": [
+    "VDO",
+    "occlusal vertical dimension",
+    "OVD",
+    "بعد عمودی",
+    "ارتفاع اکلوزال"
+  ],
+  "url": "/glossary/vertical-dimension-of-occlusion.html"
+},
+{
+  "slug": "platform-switch",
+  "title": "Platform Switch",
+  "fa_title": "پلتفرم سوئیچ",
+  "synonyms": [
+    "platform switching",
+    "platform mismatch",
+    "پلتفرم سوییچینگ",
+    "crestal bone preservation",
+    "حفظ استخوان کرستال"
+  ],
+  "url": "/glossary/platform-switch.html"
+},
+{
+  "slug": "zero-bone-loss",
+  "title": "Zero Bone Loss",
+  "fa_title": "زیرو بون لاس (ZBL)",
+  "synonyms": [
+    "ZBL",
+    "zero crestal bone loss",
+    "حفظ استخوان ایمپلنت",
+    "Linkevicius bone preservation",
+    "صفر تحلیل استخوان"
+  ],
+  "url": "/glossary/zero-bone-loss.html"
+},
+{
+  "slug": "crown-to-implant-ratio",
+  "title": "Crown-to-Implant Ratio",
+  "fa_title": "نسبت کراون به ایمپلنت",
+  "synonyms": [
+    "crown implant ratio",
+    "C/I ratio",
+    "نسبت تاج به ایمپلنت",
+    "implant crown ratio",
+    "biomechanical implant ratio"
+  ],
+  "url": "/glossary/crown-to-implant-ratio.html"
 }
 
 
