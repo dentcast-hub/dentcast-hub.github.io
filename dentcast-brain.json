@@ -13,7 +13,7 @@
       "مقدمه پادکست"
     ],
     "audio_url": "",
-    "page_url": ""
+    "page_url": "/episodes/episode-1.html"
   },
   {
     "episode": "2",
@@ -29,7 +29,7 @@
       "انتخاب سمان"
     ],
     "audio_url": "",
-    "page_url": ""
+    "page_url": "/episodes/episode-2.html"
   },
   {
     "episode": "3",
@@ -44,7 +44,7 @@
       "سمان رزینی"
     ],
     "audio_url": "",
-    "page_url": ""
+    "page_url": "/episodes/episode-3.html"
   },
   {
     "episode": "4",
@@ -62,7 +62,7 @@
       "مواد ادهزیو"
     ],
     "audio_url": "",
-    "page_url": ""
+    "page_url": "/episodes/episode-4.html"
   },
   {
     "episode": "5",
@@ -79,7 +79,7 @@
       "ادهزیو دندانی"
     ],
     "audio_url": "",
-    "page_url": ""
+    "page_url": "/episodes/episode-5.html"
   },
   {
     "episode": "6",
@@ -95,7 +95,7 @@
       "ترمیم غیرمستقیم"
     ],
     "audio_url": "",
-    "page_url": ""
+    "page_url": "/episodes/episode-6.html"
   },
   {
     "episode": "7",
@@ -112,7 +112,7 @@
       "ایزولیشن"
     ],
     "audio_url": "",
-    "page_url": ""
+    "page_url": "/episodes/episode-7.html"
   },
   {
     "episode": "8",
@@ -128,7 +128,7 @@
       "روکش دندانی"
     ],
     "audio_url": "",
-    "page_url": ""
+    "page_url": "/episodes/episode-8.html"
   },
   {
     "episode": "9",
@@ -146,7 +146,7 @@
       "surface treatment"
     ],
     "audio_url": "",
-    "page_url": ""
+    "page_url": "/episodes/episode-9.html"
   },
   {
     "episode": "10",
@@ -163,7 +163,7 @@
       "اچ سرامیک"
     ],
     "audio_url": "",
-    "page_url": ""
+    "page_url": "/episodes/episode-10.html"
   },
   {
     "episode": "11",
@@ -179,7 +179,7 @@
       "مواد سمان"
     ],
     "audio_url": "",
-    "page_url": ""
+    "page_url": "/episodes/episode-11.html"
   },
   {
     "episode": "12",
@@ -196,7 +196,7 @@
       "پروتکل باند"
     ],
     "audio_url": "",
-    "page_url": ""
+    "page_url": "/episodes/episode-12.html"
   },
   {
     "episode": "13",
@@ -211,7 +211,7 @@
       "آمبرلا افکت"
     ],
     "audio_url": "",
-    "page_url": ""
+    "page_url": "/episodes/episode-13.html"
   },
   {
     "episode": "14",
@@ -226,7 +226,7 @@
       "طرح درمان پروتز"
     ],
     "audio_url": "",
-    "page_url": ""
+    "page_url": "/episodes/episode-14.html"
   },
   {
     "episode": "15",
@@ -241,7 +241,7 @@
       "ترمیم غیرمستقیم"
     ],
     "audio_url": "",
-    "page_url": ""
+    "page_url": "/episodes/episode-15.html"
   },
   {
     "episode": "16",
@@ -258,7 +258,7 @@
       "آماده سازی پرسلن"
     ],
     "audio_url": "",
-    "page_url": ""
+    "page_url": "/episodes/episode-16.html"
   },
   {
     "episode": "17",
@@ -273,7 +273,7 @@
       "سرامیک های جدید"
     ],
     "audio_url": "",
-    "page_url": ""
+    "page_url": "/episodes/episode-17.html"
   },
   {
     "episode": "18",
@@ -289,7 +289,7 @@
       "انتخاب مواد"
     ],
     "audio_url": "",
-    "page_url": ""
+    "page_url": "/episodes/episode-18.html"
   },
   {
     "episode": "19",
@@ -304,7 +304,7 @@
       "سمان رزینی"
     ],
     "audio_url": "",
-    "page_url": ""
+    "page_url": "/episodes/episode-19.html"
   },
   {
     "episode": "20",
@@ -319,7 +319,7 @@
       "تکنیک قالبگیری"
     ],
     "audio_url": "",
-    "page_url": ""
+    "page_url": "/episodes/episode-20.html"
   },
   {
     "episode": "21",
@@ -333,7 +333,8 @@
       "قالب گیری دو مرحله‌ای",
       "نکات قالبگیری",
       "پروتز ثابت"
-    ]
+    ],
+    "page_url": "/episodes/episode-21.html"
   },
   {
     "episode": "22",
@@ -347,7 +348,8 @@
       "تداخل دارویی",
       "داروهای خطرناک",
       "ایمنی بیمار"
-    ]
+    ],
+    "page_url": "/episodes/episode-22.html"
   },
   {
     "episode": "23",
@@ -362,7 +364,8 @@
       "اورلود اکلوزالی",
       "تحلیل استخوان",
       "نیروهای ایمپلنت"
-    ]
+    ],
+    "page_url": "/episodes/episode-23.html"
   },
   {
     "episode": "24",
@@ -376,7 +379,8 @@
       "نسبت تاج به ایمپلنت",
       "CIR",
       "تحلیل استخوان ایمپلنت"
-    ]
+    ],
+    "page_url": "/episodes/episode-24.html"
   },
   {
     "episode": "25",
@@ -390,7 +394,8 @@
       "ایمپلنت کوتاه",
       "سینوس لیفت",
       "انتخاب درمان خلف فک بالا"
-    ]
+    ],
+    "page_url": "/episodes/episode-25.html"
   },
   {
     "episode": "26",
@@ -405,7 +410,8 @@
       "بارگذاری ایمپلنت",
       "تحلیل استخوان",
       "مرحله لود"
-    ]
+    ],
+    "page_url": "/episodes/episode-26.html"
   },
   {
     "episode": "27",
@@ -419,7 +425,8 @@
       "اتچمنت اوردنچر",
       "اوردنچر دو اتچمنت",
       "پایداری پروتز"
-    ]
+    ],
+    "page_url": "/episodes/episode-27.html"
   },
   {
     "episode": "28",
@@ -433,7 +440,8 @@
       "قوانین مک لارن",
       "طراحی لبخند",
       "اصول زیبایی دندانی"
-    ]
+    ],
+    "page_url": "/episodes/episode-28.html"
   },
   {
     "episode": "29",
@@ -446,7 +454,8 @@
       "طبقه بندی سرامیک",
       "سرامیک دندانی",
       "انتخاب سرامیک"
-    ]
+    ],
+    "page_url": "/episodes/episode-29.html"
   },
   {
     "episode": "30",
@@ -459,7 +468,8 @@
       "سرامیک پلی کریستالین",
       "سرامیک رزینی",
       "انتخاب سرامیک"
-    ]
+    ],
+    "page_url": "/episodes/episode-30.html"
   },
   {
     "episode": "31",
@@ -474,7 +484,8 @@
       "رستوریشن ایمپلنتی",
       "کنترل سمان",
       "پروتز ایمپلنت"
-    ]
+    ],
+    "page_url": "/episodes/episode-31.html"
   },
   {
     "episode": "32",
@@ -488,7 +499,8 @@
       "اسنپ آن اسمایل",
       "اپلاینس موقت",
       "درمان زیبایی بدون تراش"
-    ]
+    ],
+    "page_url": "/episodes/episode-32.html"
   },
   {
     "episode": "33",
@@ -502,7 +514,8 @@
       "اپلاینس اسنپ آن",
       "اندیکاسیون اسنپ آن",
       "مقایسه اپلاینس‌های زیبایی"
-    ]
+    ],
+    "page_url": "/episodes/episode-33.html"
   },
   {
     "episode": "34",
@@ -516,7 +529,8 @@
       "Dahl Concept",
       "درمان سایش دندان",
       "بالابردن عمودی بدون تراش"
-    ]
+    ],
+    "page_url": "/episodes/episode-34.html"
   },
   {
     "episode": "35",
@@ -531,7 +545,8 @@
       "دال کانسپت",
       "بازسازی VD",
       "اصلاح اکلوزال تدریجی"
-    ]
+    ],
+    "page_url": "/episodes/episode-35.html"
   },
   {
     "episode": "36",
@@ -545,7 +560,8 @@
       "باند به عاج ریشه",
       "باندینگ پست",
       "مشکلات ترمیم ریشه"
-    ]
+    ],
+    "page_url": "/episodes/episode-36.html"
   },
   {
     "episode": "37",
@@ -560,7 +576,8 @@
       "باز کردن کانتکت",
       "تراش لمینیت",
       "اندیکاسیون زیبایی"
-    ]
+    ],
+    "page_url": "/episodes/episode-37.html"
   },
   {
     "episode": "38",
@@ -575,7 +592,8 @@
       "تراش لمینیت",
       "تراش بر اساس ماکاپ",
       "پیش‌بینی‌پذیری درمان زیبایی"
-    ]
+    ],
+    "page_url": "/episodes/episode-38.html"
   },
   {
     "episode": "39",
@@ -590,7 +608,8 @@
       "بلک تراینگل",
       "اصلاح فاصله لثه‌ای",
       "درمان زیبایی پیشرفته"
-    ]
+    ],
+    "page_url": "/episodes/episode-39.html"
   },
   {
     "episode": "40",
@@ -603,7 +622,8 @@
       "اندوکراون",
       "بازسازی دندان اندوتریت",
       "رستوریشن‌های مدرن"
-    ]
+    ],
+    "page_url": "/episodes/episode-40.html"
   },
   {
     "episode": "41",
@@ -617,7 +637,8 @@
       "مواد مناسب اندوکراون",
       "موفقیت اندوکراون",
       "رستوریشن های اندودنتیک"
-    ]
+    ],
+    "page_url": "/episodes/episode-41.html"
   },
   {
     "episode": "42",
@@ -631,7 +652,8 @@
       "آماده سازی فایبرپست",
       "استحکام باند پست",
       "باندینگ رزینی"
-    ]
+    ],
+    "page_url": "/episodes/episode-42.html"
   },
   {
     "episode": "43",
@@ -646,7 +668,8 @@
       "سمان سلف ادهزیو",
       "آماده‌سازی فایبرپست",
       "اتصال پست"
-    ]
+    ],
+    "page_url": "/episodes/episode-43.html"
   },
   {
     "episode": "44",
@@ -660,7 +683,8 @@
       "باند به کامپوزیت قدیمی",
       "ترمیم ثانویه",
       "افزایش چسبندگی"
-    ]
+    ],
+    "page_url": "/episodes/episode-44.html"
   },
   {
     "episode": "45",
@@ -676,7 +700,8 @@
       "ارلی لود",
       "بارگذاری ایمپلنت",
       "ثبات اولیه"
-    ]
+    ],
+    "page_url": "/episodes/episode-45.html"
   },
   {
     "episode": "46",
@@ -691,7 +716,8 @@
       "فیشیال فلو",
       "هماهنگی صورت و لبخند",
       "طراحی لبخند"
-    ]
+    ],
+    "page_url": "/episodes/episode-46.html"
   },
   {
     "episode": "47",
@@ -705,7 +731,8 @@
       "Ferrule Effect",
       "اهمیت فرول",
       "پایداری رستوریشن"
-    ]
+    ],
+    "page_url": "/episodes/episode-47.html"
   },
   {
     "episode": "48",
@@ -719,7 +746,8 @@
       "فرول",
       "ابعاد بیومکانیکی",
       "تقویت دندان"
-    ]
+    ],
+    "page_url": "/episodes/episode-48.html"
   },
   {
     "episode": "49",
@@ -733,7 +761,8 @@
       "Ferrule",
       "طراحی رستوریشن",
       "تقویت ساختار دندان"
-    ]
+    ],
+    "page_url": "/episodes/episode-49.html"
   },
   {
     "episode": "50",
@@ -747,7 +776,8 @@
       "انتخاب اتچمنت",
       "اوردنچر دو ایمپلنتی",
       "طراحی پروتز"
-    ]
+    ],
+    "page_url": "/episodes/episode-50.html"
   },
   {
     "episode": "51",
@@ -761,7 +791,8 @@
       "انتخاب اتچمنت",
       "اوردنچر ایمپلنتی",
       "learning pathway پروتز"
-    ]
+    ],
+    "page_url": "/episodes/episode-51.html"
   },
   {
     "episode": "52",
@@ -776,7 +807,8 @@
       "Immediate Loading",
       "Early Loading",
       "بارگذاری ایمپلنت اوردنچر"
-    ]
+    ],
+    "page_url": "/episodes/episode-52.html"
   },
   {
     "episode": "53",
@@ -789,7 +821,8 @@
       "بیومیمتیک دنتیستری",
       "اصول بیومیمتیک",
       "مقاومت دندانی"
-    ]
+    ],
+    "page_url": "/episodes/episode-53.html"
   },
   {
     "episode": "54",
@@ -802,7 +835,8 @@
       "بیومیمتیک",
       "تقویت دندان",
       "اصول ترمیم محافظه‌کارانه"
-    ]
+    ],
+    "page_url": "/episodes/episode-54.html"
   },
   {
     "episode": "55",
@@ -817,7 +851,8 @@
       "آماده سازی اورلی",
       "اورلی باند شونده",
       "ترمیم سرامیکی"
-    ]
+    ],
+    "page_url": "/episodes/episode-55.html"
   },
   {
     "episode": "56",
@@ -831,7 +866,8 @@
       "طراحی اورلی",
       "پروتکل آماده سازی",
       "ترمیم باند شونده"
-    ]
+    ],
+    "page_url": "/episodes/episode-56.html"
   },
   {
     "episode": "57",
@@ -846,7 +882,8 @@
       "پروتکل عملی اورلی",
       "آماده سازی کلینیکی",
       "ترمیم‌های محافظه‌کارانه"
-    ]
+    ],
+    "page_url": "/episodes/episode-57.html"
   },
   {
     "episode": "58",
@@ -860,7 +897,8 @@
       "اورلی سرامیکی",
       "نکات عملی اورلی",
       "موفقیت بالینی ترمیم"
-    ]
+    ],
+    "page_url": "/episodes/episode-58.html"
   },
   {
     "episode": "59",
@@ -875,7 +913,8 @@
       "تحلیل استخوان مارژینال",
       "MBL",
       "عوامل مؤثر بر تحلیل استخوان"
-    ]
+    ],
+    "page_url": "/episodes/episode-59.html"
   },
   {
     "episode": "60",
@@ -889,7 +928,8 @@
       "اکلوژن ایمپلنت",
       "بیومکانیک ایمپلنت",
       "تماس‌های اکلوزال"
-    ]
+    ],
+    "page_url": "/episodes/episode-60.html"
   },
   {
     "episode": "61",
@@ -905,7 +945,8 @@
       "internal bleaching",
       "درمان‌های زیبایی",
       "تغییر رنگ دندان"
-    ]
+    ],
+    "page_url": "/episodes/episode-61.html"
   },
   {
     "episode": "62",
@@ -919,7 +960,8 @@
       "تغییرات فکی",
       "نتایج بلندمدت ایمپلنت",
       "ثبات ایمپلنت"
-    ]
+    ],
+    "page_url": "/episodes/episode-62.html"
   },
   {
     "episode": "63",
@@ -934,7 +976,8 @@
       "رشد فکی",
       "حرکت دندانی",
       "تحلیل نتایج ایمپلنت"
-    ]
+    ],
+    "page_url": "/episodes/episode-63.html"
   },
   {
     "episode": "64",
@@ -949,7 +992,8 @@
       "تغییرات فکی",
       "پیامدهای اسکلتی",
       "ریسک درمان ایمپلنت"
-    ]
+    ],
+    "page_url": "/episodes/episode-64.html"
   },
   {
     "episode": "65",
@@ -963,7 +1007,8 @@
       "peripheral seal zone",
       "برداشت پوسیدگی",
       "ترمیم‌های محافظه‌کارانه"
-    ]
+    ],
+    "page_url": "/episodes/episode-65.html"
   },
   {
     "episode": "66",
@@ -977,7 +1022,8 @@
       "برداشت پوسیدگی عمیق",
       "PSZ",
       "بیومیمتیک دنتیستری"
-    ]
+    ],
+    "page_url": "/episodes/episode-66.html"
   },
   {
     "episode": "67",
@@ -991,7 +1037,8 @@
       "ضایعات عمیق",
       "کنترل پوسیدگی",
       "ترمیم‌های بیومیمتیک"
-    ]
+    ],
+    "page_url": "/episodes/episode-67.html"
   },
   {
     "episode": "68",
@@ -1007,7 +1054,8 @@
       "فاکتورهای رنگ",
       "درمان‌های زیبایی",
       "shade selection"
-    ]
+    ],
+    "page_url": "/episodes/episode-68.html"
   },
   {
     "episode": "69",
@@ -1021,7 +1069,8 @@
       "اینگات ایمکس",
       "سرامیک لیتیوم دی‌سیلیکات",
       "انتخاب مواد زیبایی"
-    ]
+    ],
+    "page_url": "/episodes/episode-69.html"
   },
   {
     "episode": "70",
@@ -1037,7 +1086,8 @@
       "home bleach",
       "تفاوت بلیچینگ",
       "درمان زیبایی"
-    ]
+    ],
+    "page_url": "/episodes/episode-70.html"
   },
   {
     "episode": "71",
@@ -1052,7 +1102,8 @@
       "باند به فلز",
       "ادهزیو دنتیستری",
       "سطوح فلزی"
-    ]
+    ],
+    "page_url": "/episodes/episode-71.html"
   },
   {
     "episode": "72",
@@ -1067,7 +1118,8 @@
       "بیومیمتیک",
       "کاهش تنش",
       "ترمیم‌های محافظه‌کارانه"
-    ]
+    ],
+    "page_url": "/episodes/episode-72.html"
   },
   {
     "episode": "73",
@@ -1081,7 +1133,8 @@
       "کاهش تنش",
       "بیومیمتیک دنتیستری",
       "استرس ترمیمی"
-    ]
+    ],
+    "page_url": "/episodes/episode-73.html"
   },
   {
     "episode": "74",
@@ -1095,7 +1148,8 @@
       "decoupling concept",
       "تنش ترمیمی",
       "بیومیمتیک"
-    ]
+    ],
+    "page_url": "/episodes/episode-74.html"
   },
   {
     "episode": "75",
@@ -1112,7 +1166,8 @@
       "crown lengthening",
       "DME",
       "ترمیم‌های عمقی"
-    ]
+    ],
+    "page_url": "/episodes/episode-75.html"
   },
   {
     "episode": "76",
@@ -1128,7 +1183,8 @@
       "افزایش طول تاج",
       "deep margin elevation",
       "طرح درمان ترمیمی"
-    ]
+    ],
+    "page_url": "/episodes/episode-76.html"
   },
   {
     "episode": "77",
@@ -1143,7 +1199,8 @@
       "طبقه‌بندی ضایعات",
       "DME vs CL",
       "ترمیم‌های خلفی"
-    ]
+    ],
+    "page_url": "/episodes/episode-77.html"
   },
   {
     "episode": "78",
@@ -1157,7 +1214,8 @@
       "ضایعات زیرلثه‌ای",
       "تعیین طرح درمان",
       "بیومیمتیک ترمیمی"
-    ]
+    ],
+    "page_url": "/episodes/episode-78.html"
   },
   {
     "episode": "79",
@@ -1172,7 +1230,8 @@
       "آماده‌سازی پست",
       "باند به پست",
       "ترمیم ریشه"
-    ]
+    ],
+    "page_url": "/episodes/episode-79.html"
   },
   {
     "episode": "80",
@@ -1188,7 +1247,8 @@
       "اباتمنت",
       "فیکسچر",
       "انواع کانکشن"
-    ]
+    ],
+    "page_url": "/episodes/episode-80.html"
   },
   {
     "episode": "81",
@@ -1204,7 +1264,8 @@
       "انواع اتصال اباتمنت",
       "ایمپلنتولوژی",
       "پروتز ایمپلنت"
-    ]
+    ],
+    "page_url": "/episodes/episode-81.html"
   },
   {
     "episode": "82",
@@ -1219,7 +1280,8 @@
       "استخوان مارژینال",
       "ایمپلنت",
       "طراحی پلتفرم"
-    ]
+    ],
+    "page_url": "/episodes/episode-82.html"
   },
   {
     "episode": "83",
@@ -1235,7 +1297,8 @@
       "bone preservation",
       "اباتمنت",
       "ایمپلنت دندانی"
-    ]
+    ],
+    "page_url": "/episodes/episode-83.html"
   },
   {
     "episode": "84",
@@ -1250,7 +1313,8 @@
       "abutment screw",
       "گشتاور پیچ",
       "اتصال پروتزی"
-    ]
+    ],
+    "page_url": "/episodes/episode-84.html"
   },
   {
     "episode": "85",
@@ -1266,7 +1330,8 @@
       "اختلالات عضلانی",
       "افتراق دردهای فکی",
       "درد اوروفاسیال"
-    ]
+    ],
+    "page_url": "/episodes/episode-85.html"
   },
   {
     "episode": "86",
@@ -1283,7 +1348,8 @@
       "TMD داخل کپسولی",
       "Clicking",
       "Jaw pain"
-    ]
+    ],
+    "page_url": "/episodes/episode-86.html"
   },
   {
     "episode": "87",
@@ -1297,7 +1363,8 @@
       "Zirconia",
       "پروتز ثابت",
       "سرامیک"
-    ]
+    ],
+    "page_url": "/episodes/episode-87.html"
   },
   {
     "episode": "88",
@@ -1312,7 +1379,8 @@
       "translucent zirconia",
       "mechanical properties",
       "پروتز"
-    ]
+    ],
+    "page_url": "/episodes/episode-88.html"
   },
   {
     "episode": "89",
@@ -1327,7 +1395,8 @@
       "دوام سرامیک",
       "zirconia longevity",
       "clinical decision"
-    ]
+    ],
+    "page_url": "/episodes/episode-89.html"
   },
   {
     "episode": "90",
@@ -1342,7 +1411,8 @@
       "Pascal Magne",
       "ترمیم‌های محافظه‌کارانه",
       "اصول بیومیمتیک"
-    ]
+    ],
+    "page_url": "/episodes/episode-90.html"
   },
   {
     "episode": "91",
@@ -1358,7 +1428,8 @@
       "ترمیم محافظه‌کارانه",
       "اصول بیومیمتیک",
       "restorative dentistry"
-    ]
+    ],
+    "page_url": "/episodes/episode-91.html"
   },
   {
     "episode": "92",
@@ -1372,7 +1443,8 @@
       "ساختار دندان",
       "ترمیم محافظه‌کارانه",
       "اصول مانیه"
-    ]
+    ],
+    "page_url": "/episodes/episode-92.html"
   },
   {
     "episode": "93",
@@ -1387,7 +1459,8 @@
       "تحلیل بافت",
       "اصول محافظه‌کارانه",
       "کتاب بیومیمتیک"
-    ]
+    ],
+    "page_url": "/episodes/episode-93.html"
   },
   {
     "episode": "94",
@@ -1402,7 +1475,8 @@
       "جمع‌بندی اصول بیومیمتیک",
       "ترمیم دندانی",
       "بیومیمتیک"
-    ]
+    ],
+    "page_url": "/episodes/episode-94.html"
   },
   {
     "episode": "95",
@@ -1419,7 +1493,8 @@
       "پروتز بدون شانه",
       "بیولوژی لثه",
       "پریودنتال"
-    ]
+    ],
+    "page_url": "/episodes/episode-95.html"
   },
   {
     "episode": "96",
@@ -1436,7 +1511,8 @@
       "CAD CAM",
       "مواد پیشرفته",
       "پروتز سبک"
-    ]
+    ],
+    "page_url": "/episodes/episode-96.html"
   },
   {
     "episode": "97",
@@ -1451,7 +1527,8 @@
       "مزایای PEEK",
       "خواص مکانیکی",
       "طرحواره‌های پروتزی"
-    ]
+    ],
+    "page_url": "/episodes/episode-97.html"
   },
   {
     "episode": "98",
@@ -1466,7 +1543,8 @@
       "اندیکاسیون پروتزی",
       "دیجیتال دنستیستری",
       "مواد نوین"
-    ]
+    ],
+    "page_url": "/episodes/episode-98.html"
   },
   {
     "episode": "99",
@@ -1483,7 +1561,8 @@
       "ضایعات سفید",
       "ترمیم کم‌تهاجمی",
       "محافظه‌کارانه"
-    ]
+    ],
+    "page_url": "/episodes/episode-99.html"
   },
   {
     "episode": "100",
@@ -1498,7 +1577,8 @@
       "صدمین اپیزود",
       "تجربه دنتکست",
       "پروتز"
-    ]
+    ],
+    "page_url": "/episodes/episode-100.html"
   },
   {
     "episode": "101",
@@ -1515,7 +1595,8 @@
       "Root Dentin Bonding",
       "درمان ادهزیو",
       "پروتکل باندینگ"
-    ]
+    ],
+    "page_url": "/episodes/episode-101.html"
   },
   {
     "episode": "102",
@@ -1533,7 +1614,8 @@
       "پروتز ایمپلنت",
       "معیارهای انتخاب",
       "اباتمنت پیش‌ساخته"
-    ]
+    ],
+    "page_url": "/episodes/episode-102.html"
   },
   {
     "episode": "103",
@@ -1550,7 +1632,8 @@
       "Abutment Selection",
       "بافت نرم اطراف ایمپلنت",
       "طرح درمان ایمپلنت"
-    ]
+    ],
+    "page_url": "/episodes/episode-103.html"
   },
   {
     "episode": "104",
@@ -1568,7 +1651,8 @@
       "اباتمنت Ti-Base",
       "پروتز دیجیتال ایمپلنت",
       "چسباندن روکش ایمپلنت"
-    ]
+    ],
+    "page_url": "/episodes/episode-104.html"
   },
   {
     "episode": "105",
@@ -1585,7 +1669,8 @@
       "طراحی دیجیتال",
       "اتصال اباتمنت",
       "روکش زیرکونیا ایمپلنت"
-    ]
+    ],
+    "page_url": "/episodes/episode-105.html"
   },
   {
     "episode": "106",
@@ -1602,7 +1687,8 @@
       "مقایسه اباتمنت‌ها",
       "موفقیت درمان ایمپلنت",
       "قطعات پروتزی"
-    ]
+    ],
+    "page_url": "/episodes/episode-106.html"
   },
   {
     "episode": "106.1",
@@ -1620,7 +1706,8 @@
       "برگشت مایعات",
       "آنتی ریترکشن",
       "بهداشت مطب"
-    ]
+    ],
+    "page_url": "/episodes/episode-106-1.html"
   },
   {
     "episode": "106.2",
@@ -1639,7 +1726,8 @@
       "اسکنر داخل دهانی",
       "فایل رنگی اسکن",
       "Intraoral Scanner"
-    ]
+    ],
+    "page_url": "/episodes/episode-106-2.html"
   },
   {
     "episode": "107",
@@ -1655,7 +1743,8 @@
       "زیرکونیای چند لایه",
       "زیبایی دندان",
       "مواد سرامیکی نوین"
-    ]
+    ],
+    "page_url": "/episodes/episode-107.html"
   },
   {
     "episode": "107.1",
@@ -1673,7 +1762,8 @@
       "نوار سبز آنگل",
       "سرعت هندپیس",
       "نسبت دور موتور"
-    ]
+    ],
+    "page_url": "/episodes/episode-107-1.html"
   },
   {
     "episode": "108",
@@ -1691,7 +1781,8 @@
       "ایمپلنت تمام فک",
       "پروتز اسکرو ریتین",
       "تصحیح زاویه ایمپلنت"
-    ]
+    ],
+    "page_url": "/episodes/episode-108.html"
   },
   {
     "episode": "109",
@@ -1709,7 +1800,8 @@
       "Deep Learning",
       "تشخیص با AI",
       "آینده دندانپزشکی"
-    ]
+    ],
+    "page_url": "/episodes/episode-109.html"
   },
   {
     "episode": "109.1",
@@ -1727,7 +1819,8 @@
       "Magnification",
       "میدان دید",
       "عمق میدان"
-    ]
+    ],
+    "page_url": "/episodes/episode-109-1.html"
   },
   {
     "episode": "109.2",
@@ -1745,7 +1838,8 @@
       "AI Research",
       "دیتاساینس",
       "مصاحبه دندانپزشکی"
-    ]
+    ],
+    "page_url": "/episodes/episode-109-2.html"
   },
   {
     "episode": "110",
@@ -1763,7 +1857,8 @@
       "طراحی پروتز ایمپلنت",
       "Linkevicius",
       "ثبات بافت سخت"
-    ]
+    ],
+    "page_url": "/episodes/episode-110.html"
   },
   {
     "episode": "110.1",
@@ -1781,7 +1876,8 @@
       "دکتر طایفی",
       "تجهیزات مطب",
       "تشخیص دقیق"
-    ]
+    ],
+    "page_url": "/episodes/episode-110-1.html"
   },
   {
     "episode": "111",
@@ -1799,7 +1895,8 @@
       "پروتز ایمپلنت",
       "ثبات استخوان",
       "Supracrestal tissue"
-    ]
+    ],
+    "page_url": "/episodes/episode-111.html"
   },
   {
     "episode": "111.1",
@@ -1817,7 +1914,8 @@
       "دندانپزشکی اطفال",
       "رزین سیلانت",
       "ایزولاسیون"
-    ]
+    ],
+    "page_url": "/episodes/episode-111-1.html"
   },
   {
     "episode": "112",
@@ -1835,7 +1933,8 @@
       "زیرو بون لاس",
       "فشار پروتزی",
       "تحلیل استخوان"
-    ]
+    ],
+    "page_url": "/episodes/episode-112.html"
   },
   {
     "episode": "113",
@@ -1853,7 +1952,8 @@
       "گیر و ثبات",
       "Total Occlusal Convergence",
       "گایدلاین پروتزی"
-    ]
+    ],
+    "page_url": "/episodes/episode-113.html"
   },
   {
     "episode": "114",
@@ -1870,7 +1970,8 @@
       "Finish Line",
       "حفظ ساختار دندان",
       "آماده‌سازی پروتز"
-    ]
+    ],
+    "page_url": "/episodes/episode-114.html"
   },
   {
     "episode": "115",
@@ -1888,7 +1989,8 @@
       "Biocompatibility",
       "زیرو بون لاس",
       "اتصال اباتمنت"
-    ]
+    ],
+    "page_url": "/episodes/episode-115.html"
   },
   {
     "episode": "116",
@@ -1906,7 +2008,8 @@
       "طرح درمان زیبایی",
       "تشخیص گلوبال",
       "آنالیز دنتو‌فاشیال"
-    ]
+    ],
+    "page_url": "/episodes/episode-116.html"
   },
   {
     "episode": "117",
@@ -1924,7 +2027,8 @@
       "آنالیز صورت",
       "تشخیص افتراقی",
       "طرح درمان"
-    ]
+    ],
+    "page_url": "/episodes/episode-117.html"
   },
   {
     "episode": "118",
@@ -1942,7 +2046,8 @@
       "زیبایی دندان",
       "تناسبات دندانی",
       "لثه و زیبایی"
-    ]
+    ],
+    "page_url": "/episodes/episode-118.html"
   },
   {
     "episode": "118.1",
@@ -1959,7 +2064,8 @@
       "دست دندان",
       "پروتز کامل",
       "زیبایی دنچر"
-    ]
+    ],
+    "page_url": "/episodes/episode-118-1.html"
   },
   {
     "episode": "119",
@@ -1977,7 +2083,8 @@
       "آنالیز دنتوفاشیال",
       "روند تشخیص",
       "J. William Robbins"
-    ]
+    ],
+    "page_url": "/episodes/episode-119.html"
   },
   {
     "episode": "119.1",
@@ -1995,7 +2102,8 @@
       "FPD vs Implant",
       "جایگزینی دندان",
       "پروتز ثابت"
-    ]
+    ],
+    "page_url": "/episodes/episode-119-1.html"
   },
   {
     "episode": "120",
@@ -2013,7 +2121,8 @@
       "زیبایی دندانپزشکی",
       "Core Questions",
       "ارزیابی بیمار"
-    ]
+    ],
+    "page_url": "/episodes/episode-120.html"
   },
   {
     "episode": "120.1",
@@ -2030,7 +2139,8 @@
       "طول دندان",
       "پروتز قدامی",
       "دکتر نشاطی"
-    ]
+    ],
+    "page_url": "/episodes/episode-120-1.html"
   },
   {
     "episode": "121",
@@ -2048,7 +2158,8 @@
       "تخریب دندان",
       "طرح درمان خلفی",
       "بیومیمتیک"
-    ]
+    ],
+    "page_url": "/episodes/episode-121.html"
   },
   {
     "episode": "121.1",
@@ -2066,7 +2177,8 @@
       "کانتکت ایمپلنت",
       "پروگزیمال کانتکت",
       "باز شدن کنتاکت"
-    ]
+    ],
+    "page_url": "/episodes/episode-121-1.html"
   },
   {
     "episode": "122",
@@ -2083,7 +2195,8 @@
       "بیومکانیک دندان",
       "انتخاب ماده",
       "حفظ نسج"
-    ]
+    ],
+    "page_url": "/episodes/episode-122.html"
   },
   {
     "episode": "122.1",
@@ -2101,7 +2214,8 @@
       "باقی‌مانده سمان",
       "التهاب لثه ایمپلنت",
       "Peri-implant disease"
-    ]
+    ],
+    "page_url": "/episodes/episode-122-1.html"
   },
   {
     "episode": "122.2",
@@ -2119,7 +2233,8 @@
       "دیجیتال ایمپلنت",
       "خطای اسکن",
       "مدت زمان اسکن"
-    ]
+    ],
+    "page_url": "/episodes/episode-122-2.html"
   },
   {
     "episode": "122.3",
@@ -2137,7 +2252,8 @@
       "Endodontically treated teeth",
       "باندینگ سرامیک",
       "استحکام ونیر"
-    ]
+    ],
+    "page_url": "/episodes/episode-122-3.html"
   },
   {
     "episode": "122.4",
@@ -2155,7 +2271,8 @@
       "آنستزی دندانپزشکی",
       "مدیریت بیمار",
       "تکنیک تزریق"
-    ]
+    ],
+    "page_url": "/episodes/episode-122-4.html"
   },
   {
     "episode": "122.5",
@@ -2173,7 +2290,8 @@
       "Grit size",
       "هندپیس الکتریکی",
       "کارایی فرز"
-    ]
+    ],
+    "page_url": "/episodes/episode-122-5.html"
   },
   {
     "episode": "122.6",
@@ -2191,7 +2309,8 @@
       "التهاب لثه ایمپلنت",
       "Cytotoxicity",
       "انتخاب سمان ایمپلنت"
-    ]
+    ],
+    "page_url": "/episodes/episode-122-6.html"
   },
   {
     "episode": "123",
@@ -2209,7 +2328,8 @@
       "Onlay vs Crown",
       "حفاظت از کاسپ",
       "Structural Compromise"
-    ]
+    ],
+    "page_url": "/episodes/episode-123.html"
   },
   {
     "episode": "123.1",
@@ -2227,7 +2347,8 @@
       "قالبگیری سنتی",
       "Marginal Gap",
       "کدکم"
-    ]
+    ],
+    "page_url": "/episodes/episode-123-1.html"
   },
   {
     "episode": "123.2",
@@ -2245,7 +2366,8 @@
       "لمس با انگشت",
       "تماس زودرس",
       "پروتز قدامی"
-    ]
+    ],
+    "page_url": "/episodes/episode-123-2.html"
   },
   {
     "episode": "123.3",
@@ -2263,7 +2385,8 @@
       "مقاومت به شکست",
       "ترمیم وسیع کامپوزیت",
       "دندانپزشکی محافظه‌کارانه"
-    ]
+    ],
+    "page_url": "/episodes/episode-123-3.html"
   },
   {
     "episode": "123.4",
@@ -2281,7 +2404,8 @@
       "Monolithic Zirconia",
       "زیبایی پروتز کامل",
       "استحکام پروتز"
-    ]
+    ],
+    "page_url": "/episodes/episode-123-4.html"
   },
   {
     "episode": "123.5",
@@ -2299,7 +2423,8 @@
       "Loaded vs Sleeping",
       "ساپورت پروتز",
       "طرح درمان احتیاطی"
-    ]
+    ],
+    "page_url": "/episodes/episode-123-5.html"
   },
   {
     "episode": "123.6",
@@ -2317,7 +2442,8 @@
       "گشتاور پیچ",
       "موفقیت پروتز ایمپلنت",
       "مشکلات مکانیکی ایمپلنت"
-    ]
+    ],
+    "page_url": "/episodes/episode-123-6.html"
   },
   {
     "episode": "124",
@@ -2335,7 +2461,8 @@
       "Decision Making",
       "بیومیمتیک",
       "طول عمر رستوریشن"
-    ]
+    ],
+    "page_url": "/episodes/episode-124.html"
   },
   {
     "episode": "124.1",
@@ -2353,7 +2480,8 @@
       "تعویض لمینیت",
       "خارج کردن روکش",
       "دندانپزشکی کم‌تهاجمی"
-    ]
+    ],
+    "page_url": "/episodes/episode-124-1.html"
   },
   {
     "episode": "125",
@@ -2370,7 +2498,8 @@
       "اروزیون و سایش",
       "دکتر Goodacre",
       "حساسیت طوق"
-    ]
+    ],
+    "page_url": "/episodes/episode-125.html"
   },
   {
     "episode": "125.1",
@@ -2388,7 +2517,8 @@
       "چیپینگ پرسلن",
       "ایمپلنت خلفی",
       "استحکام روکش"
-    ]
+    ],
+    "page_url": "/episodes/episode-125-1.html"
   },
   {
     "episode": "125.2",
@@ -2406,7 +2536,8 @@
       "بافت نرم ایمپلنت",
       "زیبایی ایمپلنت",
       "Immediate Loading"
-    ]
+    ],
+    "page_url": "/episodes/episode-125-2.html"
   },
   {
     "episode": "125.3",
@@ -2424,7 +2555,8 @@
       "توزیع نیرو",
       "پست ریختگی",
       "مدول الاستیسیته"
-    ]
+    ],
+    "page_url": "/episodes/episode-125-3.html"
   },
   {
     "episode": "126",
@@ -2442,7 +2574,8 @@
       "ترمیم کلاس ۵",
       "تشخیص NCCL",
       "بیومکانیک طوق"
-    ]
+    ],
+    "page_url": "/episodes/episode-126.html"
   },
   {
     "episode": "126.1",
@@ -2460,7 +2593,8 @@
       "طول عمر دندان",
       "تحلیل بقا",
       "انتخاب پروتز"
-    ]
+    ],
+    "page_url": "/episodes/episode-126-1.html"
   },
   {
     "episode": "127",
@@ -2476,7 +2610,8 @@
       "مانیتورینگ ضایعه",
       "ترمیم کامپوزیت",
       "پیوند لثه"
-    ]
+    ],
+    "page_url": "/episodes/episode-127.html"
   },
   {
     "episode": "128",
@@ -2494,7 +2629,8 @@
       "باندینگ داخل کانال",
       "استحکام دندان",
       "پست و کور"
-    ]
+    ],
+    "page_url": "/episodes/episode-128.html"
   },
   {
     "episode": "128.1",
@@ -2512,7 +2648,8 @@
       "اسکنر دیجیتال",
       "دقت ابعادی",
       "پروتز ثابت"
-    ]
+    ],
+    "page_url": "/episodes/episode-128-1.html"
   },
   {
     "episode": "128.2",
@@ -2530,7 +2667,8 @@
       "کامپوزیت خلفی",
       "مولر تخریب شده",
       "ترمیم وسیع"
-    ]
+    ],
+    "page_url": "/episodes/episode-128-2.html"
   },
   {
     "episode": "129",
@@ -2547,7 +2685,8 @@
       "آماده‌سازی کانال",
       "بیومکانیک ریشه",
       "Adhesive Cementation"
-    ]
+    ],
+    "page_url": "/episodes/episode-129.html"
   },
   {
     "episode": "130",
@@ -2565,7 +2704,8 @@
       "Bone Stability",
       "زیرو بون لاس",
       "بافت نرم ایمپلنت"
-    ]
+    ],
+    "page_url": "/episodes/episode-130.html"
   },
   {
     "episode": "130.1",
@@ -2583,7 +2723,8 @@
       "عوامل خطر",
       "Osseointegration",
       "JPD"
-    ]
+    ],
+    "page_url": "/episodes/episode-130-1.html"
   },
   {
     "episode": "131",
@@ -2600,7 +2741,8 @@
       "بازسازی کامل دهان",
       "طرح درمان پروتز",
       "حرکت طرفی"
-    ]
+    ],
+    "page_url": "/episodes/episode-131.html"
   },
   {
     "episode": "132",
@@ -2618,7 +2760,8 @@
       "تداخلات طرفی",
       "بازسازی فول ماوس",
       "تنظیم اکلوژن"
-    ]
+    ],
+    "page_url": "/episodes/episode-132.html"
   },
   {
     "episode": "133",
@@ -2636,7 +2779,8 @@
       "دقت قالبگیری دیجیتال",
       "استراتژی اسکن",
       "Intraoral Scan"
-    ]
+    ],
+    "page_url": "/episodes/episode-133.html"
   },
   {
     "episode": "134",
@@ -2653,7 +2797,8 @@
       "مدیریت پوسیدگی",
       "Caries Management",
       "دندانپزشکی محافظه‌کارانه"
-    ]
+    ],
+    "page_url": "/episodes/episode-134.html"
   },
   {
     "episode": "135",
@@ -2670,7 +2815,8 @@
       "تراش محافظه‌کارانه",
       "Caries Removal",
       "پروتکل درمان"
-    ]
+    ],
+    "page_url": "/episodes/episode-135.html"
   },
   {
     "episode": "136",
@@ -2688,7 +2834,8 @@
       "سایلن",
       "گلاس سرامیک",
       "پروتکل باندینگ"
-    ]
+    ],
+    "page_url": "/episodes/episode-136.html"
   },
   {
     "episode": "137",
@@ -2706,7 +2853,8 @@
       "باندینگ خلفی",
       "پروتز ثابت",
       "Adhesive Dentistry"
-    ]
+    ],
+    "page_url": "/episodes/episode-137.html"
   },
   {
     "episode": "138",
@@ -2722,7 +2870,8 @@
       "آنله سرامیکی",
       "Posterior Restoration",
       "ایزولاسیون"
-    ]
+    ],
+    "page_url": "/episodes/episode-138.html"
   },
   {
     "episode": "139",
@@ -2740,7 +2889,8 @@
       "Biocompatibility",
       "روکش ایمپلنت",
       "لینکوییسیوس"
-    ]
+    ],
+    "page_url": "/episodes/episode-139.html"
   },
   {
     "episode": "140",
@@ -2758,7 +2908,8 @@
       "Implant Restoration",
       "متریال اباتمنت",
       "بیولوژی ایمپلنت"
-    ]
+    ],
+    "page_url": "/episodes/episode-140.html"
   },
   {
     "episode": "141",
@@ -2776,7 +2927,8 @@
       "پلاک باکتریایی",
       "تحلیل کرستال",
       "طراحی پروتز"
-    ]
+    ],
+    "page_url": "/episodes/episode-141.html"
   },
   {
     "episode": "142",
@@ -2794,7 +2946,8 @@
       "جفری اوکیسون",
       "فلسفه اکلوژن",
       "Temporomandibular Disorder"
-    ]
+    ],
+    "page_url": "/episodes/episode-142.html"
   },
   {
     "episode": "143",
@@ -2811,7 +2964,8 @@
       "Centric Relation",
       "تطابق اکلوژنی",
       "مدیریت بیمار"
-    ]
+    ],
+    "page_url": "/episodes/episode-143.html"
   },
   {
     "episode": "143.1",
@@ -2829,7 +2983,8 @@
       "پرسونال برندینگ",
       "بازاریابی پزشکی",
       "Dental Marketing"
-    ]
+    ],
+    "page_url": "/episodes/episode-143-1.html"
   },
   {
     "episode": "144",
@@ -2847,7 +3002,8 @@
       "درمان TMD",
       "فلسفه اکلوژن",
       "پروتز و اکلوژن"
-    ]
+    ],
+    "page_url": "/episodes/episode-144.html"
   },
   {
     "episode": "144.1",
@@ -2865,7 +3021,8 @@
       "بی‌دندانی کامل",
       "Tilted Implants",
       "بازسازی فک"
-    ]
+    ],
+    "page_url": "/episodes/episode-144-1.html"
   },
   {
     "episode": "144.2",
@@ -2883,7 +3040,8 @@
       "Full Arch Scan",
       "قالبگیری دیجیتال ایمپلنت",
       "PIC system"
-    ]
+    ],
+    "page_url": "/episodes/episode-144-2.html"
   },
   {
     "episode": "145",
@@ -2901,7 +3059,8 @@
       "مدیریت دندان‌قروچه",
       "براکسیسم",
       "تفاوت اسپلینت‌ها"
-    ]
+    ],
+    "page_url": "/episodes/episode-145.html"
   },
   {
     "episode": "146",
@@ -2919,7 +3078,8 @@
       "استحکام روکش",
       "انتخاب ماده",
       "کتاب لینکوییسیوس"
-    ]
+    ],
+    "page_url": "/episodes/episode-146.html"
   },
   {
     "episode": "147",
@@ -2937,7 +3097,8 @@
       "پلیش پذیری",
       "زیبایی پروتز",
       "دوام رستوریشن"
-    ]
+    ],
+    "page_url": "/episodes/episode-147.html"
   },
   {
     "episode": "147.1",
@@ -2955,7 +3116,8 @@
       "قالبگیری فانکشنال",
       "رکوردگیری دقیق",
       "کیفیت دنچر"
-    ]
+    ],
+    "page_url": "/episodes/episode-147-1.html"
   },
   {
     "episode": "147.2",
@@ -2973,7 +3135,8 @@
       "Smoking effects",
       "کانسنسوس ITI",
       "بیماری لثه"
-    ]
+    ],
+    "page_url": "/episodes/episode-147-2.html"
   },
   {
     "episode": "147.3",
@@ -2991,7 +3154,8 @@
       "ترمیم کلاس ۱ و ۲",
       "SDI",
       "مواد ترمیمی جدید"
-    ]
+    ],
+    "page_url": "/episodes/episode-147-3.html"
   },
   {
     "episode": "147.4",
@@ -3009,7 +3173,8 @@
       "کامپوزیت یونیورسال",
       "انتخاب شید",
       "زیبایی طبیعی"
-    ]
+    ],
+    "page_url": "/episodes/episode-147-4.html"
   },
   {
     "episode": "147.5",
@@ -3027,7 +3192,8 @@
       "Rigid connector",
       "تفاوت موبیلیتی",
       "طرح درمان ایمپلنت"
-    ]
+    ],
+    "page_url": "/episodes/episode-147-5.html"
   },
   {
     "episode": "147.6",
@@ -3045,7 +3211,8 @@
       "Bar attachment",
       "تعداد ایمپلنت",
       "ساپورت و ریتنشن"
-    ]
+    ],
+    "page_url": "/episodes/episode-147-6.html"
   },
   {
     "episode": "147.7",
@@ -3063,7 +3230,8 @@
       "ریباند",
       "فرول افکت",
       "Cast Post"
-    ]
+    ],
+    "page_url": "/episodes/episode-147-7.html"
   },
   {
     "episode": "147.8",
@@ -3081,7 +3249,8 @@
       "آتروفی ماگزیلا",
       "بازسازی فک",
       "Quad Zygoma"
-    ]
+    ],
+    "page_url": "/episodes/episode-147-8.html"
   },
   {
     "episode": "147.9",
@@ -3099,7 +3268,8 @@
       "Implant PSI",
       "تحلیل شدید استخوان",
       "تکنولوژی نوین"
-    ]
+    ],
+    "page_url": "/episodes/episode-147-9.html"
   },
   {
     "episode": "148",
@@ -3117,7 +3287,8 @@
       "Light Cure vs Dual Cure",
       "ثبات رنگ",
       "باندینگ سرامیک"
-    ]
+    ],
+    "page_url": "/episodes/episode-148.html"
   },
   {
     "episode": "148.1",
@@ -3135,7 +3306,8 @@
       "Bone Loss",
       "عوامل بیولوژیک",
       "موفقیت درازمدت"
-    ]
+    ],
+    "page_url": "/episodes/episode-148-1.html"
   },
   {
     "episode": "148.2",
@@ -3153,7 +3325,8 @@
       "Vent hole",
       "SVC Technique",
       "پروتز ایمپلنت"
-    ]
+    ],
+    "page_url": "/episodes/episode-148-2.html"
   },
   {
     "episode": "149",
@@ -3170,7 +3343,8 @@
       "ضخامت سرامیک",
       "Try-in paste",
       "تکنیک سمان کردن"
-    ]
+    ],
+    "page_url": "/episodes/episode-149.html"
   },
   {
     "episode": "149.1",
@@ -3188,7 +3362,8 @@
       "تشخیص پوسیدگی با AI",
       "آینده دندانپزشکی",
       "تکنولوژی"
-    ]
+    ],
+    "page_url": "/episodes/episode-149-1.html"
   },
   {
     "episode": "149.2",
@@ -3206,7 +3381,8 @@
       "CAD/CAM",
       "تجهیزات مطب دیجیتال",
       "گردش کار"
-    ]
+    ],
+    "page_url": "/episodes/episode-149-2.html"
   },
   {
     "episode": "150",
@@ -3224,7 +3400,8 @@
       "انتخاب بیمار",
       "بافت سخت و نرم",
       "تایمینگ ایمپلنت"
-    ]
+    ],
+    "page_url": "/episodes/episode-150.html"
   },
   {
     "episode": "150.1",
@@ -3242,7 +3419,8 @@
       "تلفیق داده‌ها",
       "برنامه‌ریزی درمان",
       "شبیه‌سازی دیجیتال"
-    ]
+    ],
+    "page_url": "/episodes/episode-150-1.html"
   },
   {
     "episode": "150.2",
@@ -3260,7 +3438,8 @@
       "تصمیم‌گیری درمان",
       "هزینه بیولوژیک",
       "پروگنوز دندان"
-    ]
+    ],
+    "page_url": "/episodes/episode-150-2.html"
   },
   {
     "episode": "151",
@@ -3277,7 +3456,8 @@
       "ارزش استراتژیک دندان",
       "نگاه سیستمی به تصمیم‌گیری",
       "تحلیل فراتر از پریو"
-    ]
+    ],
+    "page_url": "/episodes/episode-151.html"
   },
   {
     "type": "dentai",
@@ -5300,7 +5480,8 @@
       "انتخاب بالینی پیچیده",
       "ریسک فاکتورهای رستوریتیو",
       "تصمیم‌گیری چند‌بعدی"
-    ]
+    ],
+    "page_url": "/episodes/episode-152.html"
   },
   {
     "type": "sharehub",
@@ -5813,7 +5994,8 @@
       "نتیجه‌گیری درمانی",
       "مسیر درمان نهایی",
       "پروگنوز بلندمدت دندان"
-    ]
+    ],
+    "page_url": "/episodes/episode-153.html"
   },
   {
     "type": "dentai",
