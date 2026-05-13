@@ -359,6 +359,21 @@ body {
   border: none;
 }
 
+.dc-ep-page-link {
+  display: inline-block;
+  margin-top: 5px;
+  font-size: 10px;
+  color: var(--accent);
+  text-decoration: none;
+  opacity: 0.7;
+  transition: opacity 0.15s;
+}
+
+.dc-ep-page-link:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
+
   
   </style>
     <link rel="stylesheet" href="/dc-theme.css">
@@ -497,6 +512,9 @@ let currentIndex = 0;
 let speeds = [1, 1.25, 1.5, 1.75, 2];
 let speedIndex = 0;
 
+/* اپیزودهایی که صفحه اختصاصی دارند */
+const EPISODE_PAGES = new Set([1, 11, 12, 13, 14, 15, 16, 150, 153, 154]);
+
 /* SPEED */
 speedBtn.addEventListener("click", () => {
   speedIndex = (speedIndex + 1) % speeds.length;
@@ -559,6 +577,16 @@ function createRow(ep, i){
   header.appendChild(info);
   row.appendChild(header);
   row.appendChild(desc);
+
+  const epNum = Number(ep.episode);
+  if (EPISODE_PAGES.has(epNum)) {
+    const pageLink = document.createElement("a");
+    pageLink.className = "dc-ep-page-link";
+    pageLink.href = `/episodes/episode-${epNum}.html`;
+    pageLink.textContent = "صفحه اپیزود ↗";
+    row.appendChild(pageLink);
+  }
+
   return row;
 }
 
