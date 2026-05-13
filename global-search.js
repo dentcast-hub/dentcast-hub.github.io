@@ -95,7 +95,10 @@ const TYPE_MAP = {
 
 
   let url = item.page_url || item.url || "";
-  if (!url && group === "dentcast") url = "/episodes.html";
+  if (!url && group === "dentcast" && item.episode) {
+    const slug = String(item.episode).replace(".", "-");
+    url = `/episodes/episode-${slug}.html`;
+  }
   if (!url.startsWith("http")) url = "https://dentcast.org" + url;
 
   return `
