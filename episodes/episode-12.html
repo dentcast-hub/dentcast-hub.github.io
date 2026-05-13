@@ -7,8 +7,10 @@
   <meta name="description" content="تحلیل پروتکل‌های معتبر پاک‌سازی سطح سرامیک برای افزایش کیفیت باند و اطمینان بالینی.">
   <link rel="canonical" href="https://dentcast.org/episodes/episode-12.html">
   <meta name="author" content="دکتر فواد شهابیان">
-  <meta name="robots" content="index, follow">
+  <meta name="robots" content="index, follow, max-image-preview:large">
   <meta property="og:type" content="article">
+  <meta property="og:locale" content="fa_IR">
+  <meta property="og:site_name" content="DentCast">
   <meta property="og:title" content="تمیز کردن سطح آلودهٔ رستوریشن‌های سرامیکی | دنت‌کست">
   <meta property="og:description" content="تحلیل پروتکل‌های معتبر پاک‌سازی سطح سرامیک برای افزایش کیفیت باند و اطمینان بالینی.">
   <meta property="og:url" content="https://dentcast.org/episodes/episode-12.html">
@@ -16,6 +18,9 @@
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="تمیز کردن سطح آلودهٔ رستوریشن‌های سرامیکی | دنت‌کست">
+  <meta name="twitter:description" content="تحلیل پروتکل‌های معتبر پاک‌سازی سطح سرامیک برای افزایش کیفیت باند و اطمینان بالینی.">
+  <meta name="twitter:image" content="https://dentcast.org/dentcast-cover.webp">
   <script type="application/ld+json">{
   "@context": "https://schema.org",
   "@graph": [
@@ -27,8 +32,13 @@
       "episodeNumber": 12,
       "description": "تحلیل پروتکل‌های معتبر پاک‌سازی سطح سرامیک برای افزایش کیفیت باند و اطمینان بالینی.",
       "duration": "PT13M14S",
-      "datePublished": "Tue, 22 Oct 2019",
+      "datePublished": "Tue, 22 Oct 2019 21:06:06 GMT",
       "inLanguage": "fa",
+      "associatedMedia": {
+        "@type": "AudioObject",
+        "contentUrl": "https://episodes.s3.ir-thr-at1.arvanstorage.ir/dentcast12.mp3?versionId=",
+        "encodingFormat": "audio/mpeg"
+      },
       "partOfSeries": {
         "@type": "PodcastSeries",
         "name": "دنت‌کست",
@@ -49,24 +59,9 @@
     {
       "@type": "BreadcrumbList",
       "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "name": "DentCast",
-          "item": "https://dentcast.org/"
-        },
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "name": "اپیزودها",
-          "item": "https://dentcast.org/episodes.html"
-        },
-        {
-          "@type": "ListItem",
-          "position": 3,
-          "name": "اپیزود 12",
-          "item": "https://dentcast.org/episodes/episode-12.html"
-        }
+        {"@type":"ListItem","position":1,"name":"DentCast","item":"https://dentcast.org/"},
+        {"@type":"ListItem","position":2,"name":"اپیزودها","item":"https://dentcast.org/episodes/"},
+        {"@type":"ListItem","position":3,"name":"اپیزود 12","item":"https://dentcast.org/episodes/episode-12.html"}
       ]
     }
   ]
@@ -78,249 +73,128 @@
   <link rel="icon" href="/logo-v2.png" type="image/png" sizes="512x512">
   <meta name="theme-color" content="#F3F5F7">
   <style>
-/* ── Vazirmatn ── */
 @font-face{font-family:'Vazirmatn';src:url('/fonts/Vazirmatn[wght].woff2') format('woff2');font-display:swap;}
+body{font-family:'Vazirmatn',system-ui,-apple-system,sans-serif;}
 
-/* ── Page layout ── */
-.ep-main{
-  max-width:720px;
-  margin:0 auto;
-  padding:28px 18px 80px;
-  font-family:'Vazirmatn',system-ui,sans-serif;
+.ep-page{max-width:760px;margin:0 auto;padding:40px 20px 80px;}
+
+.ep-back{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:.85rem;color:var(--txt3);
+  text-decoration:none;margin-bottom:28px;
+  transition:color .15s;
 }
+.ep-back:hover{color:var(--ac);}
 
-/* ── Breadcrumb ── */
-.ep-breadcrumb{
-  display:flex;
-  align-items:center;
-  gap:6px;
-  font-size:.82rem;
-  color:var(--txt3);
-  margin-bottom:22px;
-  flex-wrap:wrap;
-}
-.ep-breadcrumb a{color:var(--txt3);text-decoration:none;}
-.ep-breadcrumb a:hover{color:var(--ac);}
-
-/* ── Episode card ── */
-.ep-card{
+.ep-box{
   background:var(--card-bg);
   border:1px solid var(--card-border);
-  border-radius:var(--r-xl);
+  border-radius:18px;
   box-shadow:var(--card-sh);
   overflow:hidden;
   margin-bottom:20px;
 }
 
-/* ── Card header band ── */
-.ep-card-head{
-  padding:24px 24px 0;
-}
+.ep-box-head{padding:28px 28px 20px;border-bottom:1px solid var(--card-border);}
 .ep-badge{
-  display:inline-flex;
-  align-items:center;
-  background:var(--chip-bg);
-  border:1px solid var(--chip-bd);
-  color:var(--chip-txt);
-  font-size:.75rem;
-  font-weight:700;
-  padding:3px 12px;
-  border-radius:var(--r-f);
-  margin-bottom:14px;
-  letter-spacing:.02em;
+  display:inline-flex;align-items:center;
+  background:var(--chip-bg);border:1px solid var(--chip-bd);color:var(--chip-txt);
+  font-size:.72rem;font-weight:700;
+  padding:3px 12px;border-radius:50px;
+  margin-bottom:14px;letter-spacing:.03em;
 }
-.ep-title{
-  font-size:1.55rem;
-  font-weight:800;
-  color:var(--txt);
-  line-height:1.4;
-  margin:0 0 10px;
-}
-.ep-meta{
-  display:flex;
-  gap:16px;
-  font-size:.82rem;
-  color:var(--txt3);
-  margin-bottom:18px;
-  flex-wrap:wrap;
-}
-.ep-caption{
-  font-size:.97rem;
-  color:var(--txt2);
-  line-height:1.85;
-  margin:0 0 24px;
-  padding:16px 18px;
-  background:var(--surface2);
-  border-radius:var(--r-md);
-  border-right:3px solid var(--ac);
-}
+.ep-title{font-size:1.55rem;font-weight:800;color:var(--txt);line-height:1.45;margin:0 0 12px;}
+.ep-meta{display:flex;gap:18px;font-size:.8rem;color:var(--txt3);flex-wrap:wrap;}
 
-/* ── Inline player ── */
+.ep-section{padding:22px 28px 0;}
+.ep-section:last-child{padding-bottom:28px;}
+.ep-section-label{
+  font-size:1rem;font-weight:700;
+  color:var(--ac);
+  border-right:4px solid var(--ac);
+  padding-right:12px;
+  margin-bottom:14px;
+}
+.ep-caption{font-size:.95rem;color:var(--txt2);line-height:1.9;margin:0;}
+
 .ep-player-wrap{
-  margin:0 24px 24px;
   background:var(--surface);
   border:1px solid var(--border);
-  border-radius:var(--r-lg);
-  overflow:hidden;
-  box-shadow:0 2px 12px rgba(2,35,96,.06);
-}
-.ep-player-inner{
+  border-radius:14px;
   padding:16px 18px;
-  direction:ltr;
 }
-.ep-player-controls{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  margin-bottom:10px;
-  direction:ltr;
-}
+.ep-player-controls{display:flex;align-items:center;gap:10px;margin-bottom:10px;direction:ltr;}
 .ep-play-btn{
-  width:46px;height:46px;
-  border-radius:50%;
-  background:var(--ac);
-  border:none;
-  color:#fff;
-  font-size:18px;
-  display:flex;align-items:center;justify-content:center;
-  cursor:pointer;
-  transition:all var(--tr);
-  flex-shrink:0;
+  width:46px;height:46px;border-radius:50%;
+  background:var(--ac);border:none;color:#fff;
+  font-size:18px;display:flex;align-items:center;justify-content:center;
+  cursor:pointer;flex-shrink:0;transition:transform .1s;
 }
 .ep-play-btn:active{transform:scale(.9);}
 .ep-jump-btn{
-  width:34px;height:34px;
-  border:none;background:var(--surface2);
-  border-radius:var(--r-f);
-  color:var(--txt2);
-  font-size:11px;font-weight:600;
+  width:34px;height:34px;border:none;background:var(--surface2);
+  border-radius:8px;color:var(--txt2);font-size:11px;font-weight:600;
   cursor:pointer;display:flex;align-items:center;justify-content:center;
-  transition:all var(--tr);
 }
-.ep-jump-btn:active{background:var(--surface3);}
 .ep-speed-btn{
-  padding:5px 9px;
-  border:1px solid var(--border);
-  background:var(--surface2);
-  color:var(--txt2);
-  border-radius:var(--r-sm);
-  font-size:11px;font-weight:700;
-  cursor:pointer;
-  margin-right:auto;
+  padding:5px 9px;border:1px solid var(--border);
+  background:var(--surface2);color:var(--txt2);
+  border-radius:8px;font-size:11px;font-weight:700;
+  cursor:pointer;margin-right:auto;
 }
 .ep-download-btn{
-  font-size:11px;font-weight:600;
-  color:var(--txt2);
-  text-decoration:none;
-  padding:5px 9px;
-  border:1px solid var(--border);
-  border-radius:var(--r-sm);
-  background:var(--surface2);
-  white-space:nowrap;
+  font-size:11px;font-weight:600;color:var(--txt2);
+  text-decoration:none;padding:5px 9px;
+  border:1px solid var(--border);border-radius:8px;
+  background:var(--surface2);white-space:nowrap;
   display:flex;align-items:center;gap:4px;
 }
 .ep-range{
-  -webkit-appearance:none;
-  width:100%;height:4px;
-  background:var(--border);
-  border-radius:2px;
-  outline:none;
-  direction:ltr;
-  margin:0 0 6px;
+  -webkit-appearance:none;width:100%;height:4px;
+  background:var(--border);border-radius:2px;
+  outline:none;direction:ltr;margin:0 0 6px;
 }
 .ep-range::-webkit-slider-thumb{
-  -webkit-appearance:none;
-  width:13px;height:13px;
-  border-radius:50%;
-  background:var(--ac);
-  cursor:pointer;
+  -webkit-appearance:none;width:13px;height:13px;
+  border-radius:50%;background:var(--ac);cursor:pointer;
   box-shadow:0 0 0 2px var(--surface);
 }
-.ep-time-row{
-  display:flex;
-  justify-content:space-between;
-  font-size:10px;
-  color:var(--txt3);
-  direction:ltr;
-}
+.ep-time-row{display:flex;justify-content:space-between;font-size:10px;color:var(--txt3);direction:ltr;}
 
-/* ── Keywords & Tags ── */
-.ep-section{padding:0 24px 20px;}
-.ep-section-label{
-  font-size:.75rem;font-weight:700;
-  color:var(--txt3);
-  text-transform:uppercase;
-  letter-spacing:.06em;
-  margin-bottom:10px;
-}
 .ep-chips{display:flex;flex-wrap:wrap;gap:8px;}
 .ep-chip{
-  background:var(--chip-bg);
-  border:1px solid var(--chip-bd);
-  color:var(--chip-txt);
-  font-size:.8rem;
-  padding:4px 12px;
-  border-radius:var(--r-f);
-  font-weight:600;
+  background:var(--chip-bg);border:1px solid var(--chip-bd);
+  color:var(--chip-txt);font-size:.78rem;
+  padding:4px 12px;border-radius:50px;
 }
-a.ep-chip-link{text-decoration:none;transition:all var(--tr);}
-a.ep-chip-link:hover{background:var(--ac);color:#fff;border-color:var(--ac);}
-.ep-tag{
-  font-size:.78rem;
-  color:var(--txt3);
-  padding:3px 10px;
-  background:var(--surface2);
-  border-radius:var(--r-f);
-}
+.ep-chip-link{text-decoration:none;transition:background .15s,color .15s;}
+.ep-chip-link:hover{background:var(--ac);color:#fff;border-color:var(--ac);}
+.ep-tags{display:flex;flex-wrap:wrap;gap:8px;}
+.ep-hashtag{font-size:.8rem;color:var(--ac);font-weight:600;}
 
-/* ── Related ── */
-.ep-related{
-  margin:0 24px 24px;
-  border:1px solid var(--border);
-  border-radius:var(--r-md);
-  overflow:hidden;
+.ep-related-link{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:.87rem;font-weight:600;
+  color:var(--ac);text-decoration:none;
+  padding:8px 16px;border:1px solid var(--ac);
+  border-radius:10px;transition:background .15s,color .15s;
 }
-.ep-related-label{
-  font-size:.72rem;font-weight:700;
-  color:var(--txt3);
-  text-transform:uppercase;
-  letter-spacing:.05em;
-  padding:8px 14px;
-  background:var(--surface2);
-  border-bottom:1px solid var(--border2);
-}
-.ep-related-item{
-  display:flex;align-items:center;gap:10px;
-  padding:12px 14px;
-  text-decoration:none;
-  color:var(--txt);
-  font-size:.88rem;font-weight:600;
-  transition:background var(--tr);
-}
-.ep-related-item:hover{background:var(--surface2);}
-.ep-related-ico{font-size:1.1rem;}
-.ep-related-arr{margin-right:auto;color:var(--txt3);}
+.ep-related-link:hover{background:var(--ac);color:#fff;}
 
-/* ── Prev/Next ── */
-.ep-prevnext{
-  display:flex;
-  justify-content:space-between;
-  gap:12px;
-}
+.ep-nav{display:flex;justify-content:space-between;gap:12px;margin-top:28px;}
 .ep-nav-btn{
-  flex:1;
-  display:flex;align-items:center;justify-content:center;
-  padding:12px 16px;
-  background:var(--card-bg);
-  border:1px solid var(--card-border);
-  border-radius:var(--r-md);
-  color:var(--txt2);
-  text-decoration:none;
-  font-size:.85rem;font-weight:600;
-  transition:all var(--tr);
-  box-shadow:var(--card-sh);
+  flex:1;text-align:center;padding:12px 16px;
+  border:1px solid var(--card-border);border-radius:12px;
+  text-decoration:none;font-size:.85rem;font-weight:600;
+  color:var(--txt2);background:var(--card-bg);transition:all .15s;
 }
-.ep-nav-btn:hover{background:var(--surface2);color:var(--ac);}
+.ep-nav-btn:hover{border-color:var(--ac);color:var(--ac);}
+.ep-nav-empty{cursor:default;opacity:.3;pointer-events:none;}
+
+@media(max-width:480px){
+  .ep-title{font-size:1.25rem;}
+  .ep-box-head,.ep-section{padding-right:18px;padding-left:18px;}
+}
   </style>
 </head>
 <body>
@@ -339,7 +213,6 @@ a.ep-chip-link:hover{background:var(--ac);color:#fff;border-color:var(--ac);}
     <a href="/about.html" class="dc-topbar-brand-sub">دکتر فواد شهابیان ↗</a>
   </div>
 </header>
-
 <div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">
   <div class="dc-toolbar-drawer-inner">
     <span class="dc-toolbar-drawer-label">ابزارها</span>
@@ -348,111 +221,134 @@ a.ep-chip-link:hover{background:var(--ac);color:#fff;border-color:var(--ac);}
     <button class="dc-drawer-tool-seg" type="button" id="tool-about"><span class="dc-drawer-tool-ico">✨</span><span class="dc-drawer-tool-txt">درباره</span></button>
   </div>
 </div>
+<div id="dcRadarOverlay" class="radar-overlay" aria-hidden="true">
+  <div class="radar-overlay-header">
+    <button id="dcCloseRadarOverlay" class="radar-close-btn">&times;</button>
+    <div class="radar-header-title">رادار دنت‌کست (جایگزین گوگل)</div>
+  </div>
+  <div class="radar-overlay-body">
+    <div class="radar-search-box">
+      <input type="text" id="dcRadarInput" placeholder="نام سایت، زمینه فعالیت یا کلمه کلیدی..." autocomplete="off">
+    </div>
+    <div id="dcRadarResults" class="radar-results">
+      <div class="radar-initial-msg">برای جستجو در بین سایت‌های دندانپزشکی، تایپ کنید...</div>
+    </div>
+  </div>
+</div>
 
-<main class="ep-main">
+<main class="ep-page">
 
-  <nav class="ep-breadcrumb" aria-label="مسیر">
-    <a href="/">دنت‌کست</a><span>›</span>
-    <a href="/episodes.html">اپیزودها</a><span>›</span>
-    <span>اپیزود 12</span>
-  </nav>
+  <a href="/episodes/" class="ep-back">← بازگشت به اپیزودها</a>
 
-  <article class="ep-card" itemscope itemtype="https://schema.org/PodcastEpisode">
+  <div class="ep-box">
 
-    <div class="ep-card-head">
-      <div class="ep-badge">🎙️ اپیزود 12</div>
-      <h1 class="ep-title" itemprop="name">تمیز کردن سطح آلودهٔ رستوریشن‌های سرامیکی</h1>
+    <div class="ep-box-head">
+      <div class="ep-badge">اپیزود 12</div>
+      <h1 class="ep-title">تمیز کردن سطح آلودهٔ رستوریشن‌های سرامیکی</h1>
       <div class="ep-meta">
+        <span>🎙 دنت‌کست</span>
         <span>⏱ 13:14</span>
-        <span>📅 22 دی 2019</span>
+        <span>📅 Tue, 22 Oct 2019 21:06:06 GMT</span>
       </div>
-      <p class="ep-caption">تحلیل پروتکل‌های معتبر پاک‌سازی سطح سرامیک برای افزایش کیفیت باند و اطمینان بالینی.</p>
     </div>
 
-    <!-- Player -->
-    <div class="ep-player-wrap">
-      <div class="ep-player-inner">
-        <audio id="ep-audio" src="https://episodes.s3.ir-thr-at1.arvanstorage.ir/dentcast12.mp3?versionId=" preload="metadata"></audio>
+    <div class="ep-section">
+      <div class="ep-section-label">درباره این اپیزود</div>
+      <div class="ep-caption">تحلیل پروتکل‌های معتبر پاک‌سازی سطح سرامیک برای افزایش کیفیت باند و اطمینان بالینی.</div>
+    </div>
+
+    <div class="ep-section">
+      <div class="ep-section-label">پخش اپیزود</div>
+      <div class="ep-player-wrap">
+        <audio id="ep-audio" src="https://episodes.s3.ir-thr-at1.arvanstorage.ir/dentcast12.mp3?versionId=" preload="none"></audio>
         <div class="ep-player-controls">
-          <button class="ep-jump-btn" id="ep-back" title="۱۵ ثانیه عقب">⟲15</button>
-          <button class="ep-play-btn" id="ep-play" aria-label="پخش">▶</button>
-          <button class="ep-jump-btn" id="ep-fwd" title="۱۵ ثانیه جلو">15⟳</button>
-          <button class="ep-speed-btn" id="ep-speed">1×</button>
-          <a class="ep-download-btn" href="https://episodes.s3.ir-thr-at1.arvanstorage.ir/dentcast12.mp3?versionId=" download title="دانلود">⬇ دانلود</a>
+          <button id="ep-play" class="ep-play-btn" aria-label="پخش">▶</button>
+          <button id="ep-back" class="ep-jump-btn" aria-label="۱۵ ثانیه به عقب">⟲ 15</button>
+          <button id="ep-fwd"  class="ep-jump-btn" aria-label="۱۵ ثانیه به جلو">15 ⟳</button>
+          <button id="ep-speed" class="ep-speed-btn">1×</button>
+          <a id="ep-dl" class="ep-download-btn" href="https://episodes.s3.ir-thr-at1.arvanstorage.ir/dentcast12.mp3?versionId=" download target="_blank" rel="noopener">⬇ دانلود</a>
         </div>
-        <input class="ep-range" id="ep-seek" type="range" min="0" max="100" value="0">
+        <input id="ep-seek" type="range" min="0" max="100" value="0" class="ep-range">
         <div class="ep-time-row">
           <span id="ep-cur">00:00</span>
-          <span id="ep-dur">00:00</span>
+          <span id="ep-dur">13:14</span>
         </div>
       </div>
     </div>
 
-    <div class="ep-section"><div class="ep-section-label">مفاهیم کلیدی</div><div class="ep-chips"><span class="ep-chip">تمیز کردن سرامیک</span>
-<a href="/glossary/immediate-dentin-sealing.html" class="ep-chip ep-chip-link">دی‌کانتامیناسیون</a>
-<a href="/glossary/bonding-protocol.html" class="ep-chip ep-chip-link">پروتکل باند</a>
-</div></div>
-    <div class="ep-section"><div class="ep-chips"><span class="ep-tag">#سرامیک</span> <span class="ep-tag">#لمینیت</span> <span class="ep-tag">#اینله</span></div></div>
-
-    
-      <div class="ep-related">
-        <div class="ep-related-label">محتوای مرتبط</div>
-        <a href="/notecast/episode-12.html" class="ep-related-item">
-          <span class="ep-related-ico">📝</span>
-          <span>NoteCast — خلاصه‌نویسی این اپیزود</span>
-          <span class="ep-related-arr">←</span>
-        </a>
+    <div class="ep-section">
+      <div class="ep-section-label">کلیدواژه‌ها</div>
+      <div class="ep-chips">
+        <span class="ep-chip">تمیز کردن سرامیک</span>
+        <span class="ep-chip">دی‌کانتامیناسیون</span>
+        <span class="ep-chip">پروتکل باند</span>
       </div>
+    </div>
 
-  </article>
+    <div class="ep-section">
+      <div class="ep-section-label">برچسب‌ها</div>
+      <div class="ep-tags"><span class="ep-hashtag">#سرامیک</span><span class="ep-hashtag">#لمینیت</span><span class="ep-hashtag">#اینله</span></div>
+    </div>
 
-  <nav class="ep-prevnext" aria-label="اپیزودهای مجاور"><a href="/episodes/episode-11.html" class="ep-nav-btn ep-prev">← اپیزود 11</a><a href="/episodes/episode-13.html" class="ep-nav-btn ep-next">اپیزود 13 →</a></nav>
+    <div class="ep-section">
+      <div class="ep-section-label">محتوای مرتبط</div>
+      <a href="/notecast/episode-12.html" class="ep-related-link">📝 نوت‌کست این اپیزود ↗</a>
+    </div>
+
+  </div>
+
+  <div class="ep-nav">
+    <a href="/episodes/episode-11.html" class="ep-nav-btn">← اپیزود 11</a>
+    <a href="/episodes/episode-13.html" class="ep-nav-btn">اپیزود 13 →</a>
+  </div>
 
 </main>
 
-<script src="/dc-nav.js"></script>
-<script src="/global-search.js"></script>
-<script src="/global-search-ui.js"></script>
+<div class="dc-global-filter-box" id="dcGlobalBox">
+  <button class="dc-close-results">✖</button>
+  <h3 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h3>
+  <input id="dcSearch" class="dc-search-input" placeholder="جستجو در همهٔ بخش‌های دنت‌کست…">
+  <div class="dc-filter-list">
+    <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
+    <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
+    <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
+    <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
+    <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
+    <button class="dc-filter-btn active" data-type="meta">metanote</button>
+    <button class="dc-filter-btn active" data-type="chairside">chairside</button>
+    <button class="dc-filter-btn active" data-type="sharehub">Share Hub</button>
+  </div>
+  <div class="dc-results-box" id="dcResults"></div>
+</div>
+
 <script>
-(function(){
-  const audio = document.getElementById('ep-audio');
-  const playBtn = document.getElementById('ep-play');
-  const seek = document.getElementById('ep-seek');
-  const curEl = document.getElementById('ep-cur');
-  const durEl = document.getElementById('ep-dur');
-  const speedBtn = document.getElementById('ep-speed');
-  const backBtn = document.getElementById('ep-back');
-  const fwdBtn  = document.getElementById('ep-fwd');
-  const speeds = [1,1.25,1.5,1.75,2];
+(function() {
+  const aud   = document.getElementById('ep-audio');
+  const play  = document.getElementById('ep-play');
+  const back  = document.getElementById('ep-back');
+  const fwd   = document.getElementById('ep-fwd');
+  const spd   = document.getElementById('ep-speed');
+  const seek  = document.getElementById('ep-seek');
+  const cur   = document.getElementById('ep-cur');
+  const dur   = document.getElementById('ep-dur');
+  const speeds = [1, 1.25, 1.5, 1.75, 2];
   let si = 0;
-
-  function fmt(s){
-    const m=Math.floor(s/60), sec=Math.floor(s%60);
-    return (m<10?'0'+m:m)+':'+(sec<10?'0'+sec:sec);
-  }
-
-  playBtn.addEventListener('click',()=>{
-    if(audio.paused){audio.play();playBtn.textContent='⏸';}
-    else{audio.pause();playBtn.textContent='▶';}
+  const fmt = s => new Date(s * 1000).toISOString().substr(14, 5);
+  play.onclick = () => { if (aud.paused) { aud.play(); play.textContent = '⏸'; } else { aud.pause(); play.textContent = '▶'; } };
+  back.onclick = () => { aud.currentTime = Math.max(0, aud.currentTime - 15); };
+  fwd.onclick  = () => { aud.currentTime = Math.min(aud.duration || 0, aud.currentTime + 15); };
+  spd.onclick  = () => { si = (si + 1) % speeds.length; aud.playbackRate = speeds[si]; spd.textContent = speeds[si] + '×'; };
+  seek.oninput = () => { if (aud.duration) aud.currentTime = (seek.value / 100) * aud.duration; };
+  aud.addEventListener('loadedmetadata', () => { dur.textContent = fmt(aud.duration); });
+  aud.addEventListener('timeupdate', () => {
+    if (!aud.duration) return;
+    seek.value = (aud.currentTime / aud.duration) * 100;
+    cur.textContent = fmt(aud.currentTime);
   });
-  backBtn.addEventListener('click',()=>audio.currentTime=Math.max(0,audio.currentTime-15));
-  fwdBtn.addEventListener('click',()=>audio.currentTime=Math.min(audio.duration||0,audio.currentTime+15));
-  speedBtn.addEventListener('click',()=>{
-    si=(si+1)%speeds.length;
-    audio.playbackRate=speeds[si];
-    speedBtn.textContent=speeds[si]+'×';
-  });
-  audio.addEventListener('timeupdate',()=>{
-    curEl.textContent=fmt(audio.currentTime);
-    if(audio.duration)seek.value=(audio.currentTime/audio.duration)*100;
-  });
-  audio.addEventListener('loadedmetadata',()=>durEl.textContent=fmt(audio.duration));
-  audio.addEventListener('ended',()=>playBtn.textContent='▶');
-  seek.addEventListener('input',()=>{
-    if(audio.duration)audio.currentTime=(seek.value/100)*audio.duration;
-  });
+  aud.addEventListener('ended', () => { play.textContent = '▶'; });
 })();
 </script>
-
+<script src="/global-search.js?v=2" defer></script>
+<script src="/dc-nav.js" defer></script>
 </body>
 </html>

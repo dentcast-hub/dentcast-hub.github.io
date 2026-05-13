@@ -583,6 +583,8 @@ function createRow(ep, i){
     const pageLink = document.createElement("a");
     pageLink.className = "dc-ep-page-link";
     pageLink.href = `/episodes/episode-${epNum}.html`;
+    pageLink.target = "_blank";
+    pageLink.rel = "noopener";
     pageLink.textContent = "صفحه اپیزود ↗";
     row.appendChild(pageLink);
   }
