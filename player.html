@@ -512,8 +512,8 @@ let currentIndex = 0;
 let speeds = [1, 1.25, 1.5, 1.75, 2];
 let speedIndex = 0;
 
-/* اپیزودهایی که صفحه اختصاصی دارند */
-const EPISODE_PAGES = new Set([1, 11, 12, 13, 14, 15, 16, 150, 153, 154]);
+/* تبدیل شماره اپیزود به slug فایل (106.1 → 106-1) */
+function epSlug(n) { return String(n).replace('.', '-'); }
 
 /* SPEED */
 speedBtn.addEventListener("click", () => {
@@ -578,11 +578,10 @@ function createRow(ep, i){
   row.appendChild(header);
   row.appendChild(desc);
 
-  const epNum = Number(ep.episode);
-  if (EPISODE_PAGES.has(epNum)) {
+  if (ep.episode) {
     const pageLink = document.createElement("a");
     pageLink.className = "dc-ep-page-link";
-    pageLink.href = `/episodes/episode-${epNum}.html`;
+    pageLink.href = `/episodes/episode-${epSlug(ep.episode)}.html`;
     pageLink.target = "_blank";
     pageLink.rel = "noopener";
     pageLink.textContent = "صفحه اپیزود ↗";
