@@ -842,6 +842,7 @@ body{
   body.dc-search-mode #dcSearchOverlayBody{
     display:flex!important; flex-direction:column!important;
     overflow:hidden!important; padding:12px 16px 0!important;
+    min-height:0!important;
   }
   body.dc-search-mode #dcGlobalBox{
     flex:1 1 0!important; display:flex!important;
@@ -2218,7 +2219,11 @@ themeBtn.addEventListener('click',()=>{
     overlay.setAttribute('aria-hidden','false');
     globalBox.classList.add('open');
     setTimeout(()=>searchInput.focus(),0);
-    if(term){ searchInput.value=term; searchInput.dispatchEvent(new Event('input')); }
+    if(term){
+      searchInput.value=term;
+      /* use setTimeout(0) so Chrome finalises DOM move before event fires */
+      setTimeout(()=>searchInput.dispatchEvent(new InputEvent('input',{bubbles:true})),0);
+    }
     if(push){
       const hash=term?'#search:'+encodeURIComponent(term):'#search';
       history.pushState({dcSearch:true,q:term},'',hash);

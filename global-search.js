@@ -44,7 +44,14 @@ const TYPE_MAP = {
       const res = await fetch("/dentcast-brain.json", { cache: "no-store" });
       DB = await res.json();
       /* اگه کاربر قبل از لود دیتابیس سرچ کرده بود (مثلاً از URL) */
-      if (searchInput.value.trim()) performSearch(searchInput.value.trim());
+      if (searchInput.value.trim()) {
+        performSearch(searchInput.value.trim());
+      } else {
+        /* DB خیلی سریع لود شد (مثلاً Chrome) — صبر کن شاید openS هنوز نرسیده */
+        setTimeout(() => {
+          if (searchInput.value.trim()) performSearch(searchInput.value.trim());
+        }, 150);
+      }
     } catch (err) {
       console.error("❌ Error loading dentcast-brain.json", err);
     }
