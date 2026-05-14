@@ -2437,13 +2437,22 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
         old.replaceWith(neu);
       });
 
-      /* Re-execute inline scripts (needed for YouTube buttons, etc.)
-         innerHTML injection doesn't run <script> tags by design. */
+      /* Re-execute inline scripts inside the injected content */
       contentArea.querySelectorAll('script').forEach(old => {
-        if(old.src) return;               // skip external scripts
+        if(old.src) return;
         const s = document.createElement('script');
         s.textContent = old.textContent;
         old.replaceWith(s);
+      });
+
+      /* Also run inline scripts that live OUTSIDE .article-content-wrap
+         in the fetched page (e.g. the episode audio-player script).
+         External scripts and chrome scripts are already stripped above. */
+      doc.querySelectorAll('body script:not([src])').forEach(ps => {
+        if(extract.contains(ps)) return;   // already handled above
+        const s = document.createElement('script');
+        s.textContent = ps.textContent;
+        contentArea.appendChild(s);
       });
 
       /* Scroll col-c to top */
