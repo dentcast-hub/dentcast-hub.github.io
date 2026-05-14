@@ -838,14 +838,20 @@ body{
     box-shadow:none!important; padding:0!important; border-radius:0!important;
   }
   body.dc-search-mode .dc-global-filter-title{ display:none!important; }
+  /* make overlay body a flex column so #dcGlobalBox flex:1 works */
+  body.dc-search-mode #dcSearchOverlayBody{
+    display:flex!important; flex-direction:column!important;
+    overflow:hidden!important; padding:12px 16px 0!important;
+  }
   body.dc-search-mode #dcGlobalBox{
-    flex:1 1 auto!important; display:flex!important;
+    flex:1 1 0!important; display:flex!important;
     flex-direction:column!important; overflow:hidden!important;
-    width:100%;
+    min-height:0!important; width:100%;
   }
   body.dc-search-mode #dcResults{
-    display:block!important; flex:1 1 auto!important;
-    max-height:none!important; overflow:auto!important;
+    display:block!important; flex:1 1 0!important;
+    max-height:none!important; overflow-y:auto!important;
+    min-height:0!important;
     -webkit-overflow-scrolling:touch;
     overscroll-behavior:contain; padding-bottom:env(safe-area-inset-bottom,20px);
   }
@@ -2203,6 +2209,8 @@ themeBtn.addEventListener('click',()=>{
   if(!overlay||!overlayBody||!globalBox||!searchInput) return;
   function isMob(){return window.matchMedia('(max-width:1023px)').matches;}
 
+  let _searchPushed = false;
+
   function openS(push=true, term=''){
     if(!isMob()) return;
     overlayBody.appendChild(globalBox);
@@ -2214,6 +2222,7 @@ themeBtn.addEventListener('click',()=>{
     if(push){
       const hash=term?'#search:'+encodeURIComponent(term):'#search';
       history.pushState({dcSearch:true,q:term},'',hash);
+      _searchPushed = true;
     }
   }
 
@@ -2226,10 +2235,11 @@ themeBtn.addEventListener('click',()=>{
     searchInput.value=''; searchInput.dispatchEvent(new Event('input'));
     if(origParent){if(origNext) origParent.insertBefore(globalBox,origNext); else origParent.appendChild(globalBox);}
     if(!fromPop){
-      if(history.state&&history.state.dcSearch) history.back();
+      if(_searchPushed) history.back();
       else if(window.location.hash.startsWith('#search'))
         history.replaceState(null,'',window.location.pathname+window.location.search);
     }
+    _searchPushed = false;
   }
 
   openBtns.forEach(b=>b.addEventListener('click',()=>openS(true)));
