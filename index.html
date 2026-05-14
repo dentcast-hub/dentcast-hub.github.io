@@ -1497,32 +1497,22 @@ body.dc-desktop-ui #dc-desktop-root{
   margin-top:5px;
   text-shadow:0 1px 6px rgba(0,0,0,.4);
 }
-/* scroll hint arrow */
-.dc-scrolly-hint{
-  position:absolute;
-  bottom:18px; left:50%; transform:translateX(-50%);
-  display:flex; flex-direction:column; align-items:center; gap:3px;
-  pointer-events:none;
+/* scroll hint card */
+.dc-scrolly-hint-card{
   transition:opacity .3s ease;
-}
-.dc-scrolly-hint-txt{
-  color:rgba(255,255,255,.75);
-  font-size:.65rem;
-  font-weight:700;
-  letter-spacing:.06em;
-  text-shadow:0 1px 4px rgba(0,0,0,.5);
+  margin-bottom:6px;
 }
 .dc-scrolly-hint-arrow{
-  width:22px; height:22px;
-  border-right:2px solid rgba(255,255,255,.80);
-  border-bottom:2px solid rgba(255,255,255,.80);
+  width:14px; height:14px;
+  border-right:2px solid var(--txt3);
+  border-bottom:2px solid var(--txt3);
   transform:rotate(45deg);
   animation:scrolly-bounce .9s ease-in-out infinite;
-  filter:drop-shadow(0 1px 3px rgba(0,0,0,.4));
+  flex-shrink:0;
 }
 @keyframes scrolly-bounce{
   0%,100%{ transform:rotate(45deg) translateY(0); }
-  50%     { transform:rotate(45deg) translateY(5px); }
+  50%     { transform:rotate(45deg) translateY(4px); }
 }
 /* CTA overlay */
 .dc-scrolly-cta{
@@ -1767,16 +1757,18 @@ body.dc-desktop-ui #dc-desktop-root{
 
       <!-- ── SCROLLYTELLING ── -->
       <div class="dc-scrolly-wrap">
+        <div class="dc-monitor dc-scrolly-hint-card" id="scrolly-hint">
+          <div class="dc-monitor-inner" style="display:flex;align-items:center;justify-content:center;gap:10px;padding:10px 14px;">
+            <span style="font-size:.82rem;font-weight:700;color:var(--txt2);">برای دیدن فضای مطب اسکرول کنید</span>
+            <div class="dc-scrolly-hint-arrow"></div>
+          </div>
+        </div>
         <div class="dc-scrolly-track" id="scrolly-track">
           <div class="dc-scrolly-sticky">
             <canvas id="scrolly-canvas" aria-label="فضای کلینیک دکتر فواد شهابیان"></canvas>
             <div class="dc-scrolly-intro" id="scrolly-intro">
               <div class="dc-scrolly-intro-name">دکتر فواد شهابیان</div>
               <div class="dc-scrolly-intro-spec">متخصص پروتز</div>
-            </div>
-            <div class="dc-scrolly-hint" id="scrolly-hint">
-              <div class="dc-scrolly-hint-txt">اسکرول کنید</div>
-              <div class="dc-scrolly-hint-arrow"></div>
             </div>
             <div class="dc-scrolly-cta" id="scrolly-cta">
               <div class="dc-scrolly-cta-title">برای هماهنگی وقت معاینه</div>
