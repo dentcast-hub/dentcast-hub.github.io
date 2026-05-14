@@ -43,6 +43,8 @@ const TYPE_MAP = {
     try {
       const res = await fetch("/dentcast-brain.json", { cache: "no-store" });
       DB = await res.json();
+      /* اگه کاربر قبل از لود دیتابیس سرچ کرده بود (مثلاً از URL) */
+      if (searchInput.value.trim()) performSearch(searchInput.value.trim());
     } catch (err) {
       console.error("❌ Error loading dentcast-brain.json", err);
     }
@@ -68,6 +70,11 @@ const TYPE_MAP = {
   /* ------------ سرچ زنده ----------------- */
   searchInput.addEventListener("input", () => {
     performSearch(searchInput.value.trim());
+  });
+
+  /* ------------ Enter key --------------- */
+  searchInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") performSearch(searchInput.value.trim());
   });
 
   /* ------------ تشخیص گروه ---------------- */
