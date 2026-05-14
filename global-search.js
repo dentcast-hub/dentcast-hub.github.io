@@ -108,9 +108,9 @@ const TYPE_MAP = {
   }
   if (!url.startsWith("http")) url = "https://dentcast.org" + url;
 
-  /* On desktop, open content in col-C via dcdOpen if available; otherwise navigate */
+  /* On desktop (≥1024px), open content in col-C via dcdOpen; on mobile navigate directly */
   const escapedTitle = title.replace(/'/g, "\\'");
-  const clickHandler = `(window.dcdOpen ? window.dcdOpen('${url}','${escapedTitle}') : (window.location.href='${url}'))`;
+  const clickHandler = `(window.innerWidth>=1024&&window.dcdOpen ? window.dcdOpen('${url}','${escapedTitle}') : (window.location.href='${url}'))`;
 
   return `
     <div class="dc-result-item"
