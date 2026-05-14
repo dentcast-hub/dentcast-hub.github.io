@@ -1477,9 +1477,9 @@ body.dc-desktop-ui #dc-desktop-root{
 /* Intro overlay */
 .dc-scrolly-intro{
   position:absolute;
-  bottom:0; left:0; right:0;
-  padding:60px 20px 28px;
-  background:linear-gradient(to bottom,transparent,rgba(0,0,0,.78));
+  top:0; left:0; right:0;
+  padding:22px 20px 50px;
+  background:linear-gradient(to top,transparent,rgba(0,0,0,.72));
   text-align:center;
   pointer-events:none;
 }
@@ -2857,10 +2857,6 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
       const f = frames[idx];
       if(f && f.complete && f.naturalWidth) drawFrame(f);
     }
-
-    /* intro: از ۰ تا ۲۵٪ محو میشه */
-    const introP = Math.max(0, 1 - progress / 0.25);
-    introEl.style.opacity = introP;
 
     /* CTA از ۷۵٪ به بعد */
     const ctaP = Math.max(0, (progress - 0.75) / 0.25);
