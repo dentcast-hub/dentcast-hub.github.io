@@ -1444,6 +1444,69 @@ body.dc-desktop-ui #dc-desktop-root{
 @media(min-width:768px) and (hover:hover){
   #mobile-shell,footer{ visibility:hidden; }
 }
+
+/* =====================================================
+   SCROLLYTELLING — بیماران (موبایل only)
+===================================================== */
+@media(min-width:768px){
+  .dc-scrolly-wrap{ display:none!important; }
+}
+.dc-scrolly-wrap{
+  margin:8px -12px 8px;
+  position:relative;
+}
+.dc-scrolly-track{
+  position:relative;
+  height:calc(100dvh - 113px + 480px);
+}
+.dc-scrolly-sticky{
+  position:sticky;
+  top:-12px;
+  height:calc(100dvh - 113px);
+  width:100%;
+  overflow:hidden;
+  background:#000;
+}
+#scrolly-frame{
+  width:100%; height:100%;
+  object-fit:cover;
+  object-position:center top;
+  display:block;
+}
+.dc-scrolly-cta{
+  position:absolute;
+  bottom:0; left:0; right:0;
+  padding:70px 20px 32px;
+  background:linear-gradient(to bottom,transparent,rgba(0,0,0,.75));
+  opacity:0;
+  pointer-events:none;
+}
+.dc-scrolly-cta-title{
+  color:#fff;
+  font-size:1rem;
+  font-weight:800;
+  text-align:center;
+  margin-bottom:14px;
+  text-shadow:0 1px 6px rgba(0,0,0,.4);
+}
+.dc-scrolly-cta .dc-cta-row{
+  display:flex; gap:8px; justify-content:center;
+}
+.dc-scrolly-cta .dc-cta-btn{
+  background:rgba(255,255,255,.15);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,.35);
+  color:#fff!important;
+  padding:10px 20px;
+  border-radius:999px;
+  font-size:.85rem;
+  font-weight:700;
+  text-decoration:none;
+}
+.dc-scrolly-cta .dc-cta-btn:active{
+  background:rgba(255,255,255,.28);
+}
   </style>
 
 
@@ -1628,6 +1691,23 @@ body.dc-desktop-ui #dc-desktop-root{
         <span class="dc-chip">LiteCast</span>
       </div>
 
+
+      <!-- ── SCROLLYTELLING ── -->
+      <div class="dc-scrolly-wrap">
+        <div class="dc-scrolly-track" id="scrolly-track">
+          <div class="dc-scrolly-sticky">
+            <img id="scrolly-frame" src="/patients/frames/f001.webp" alt="فضای کلینیک دکتر فواد شهابیان" loading="eager" decoding="async">
+            <div class="dc-scrolly-cta" id="scrolly-cta">
+              <div class="dc-scrolly-cta-title">برای هماهنگی وقت معاینه</div>
+              <div class="dc-cta-row">
+                <a class="dc-cta-btn" href="tel:+986133380090">تماس با مطب 📞</a>
+                <a class="dc-cta-btn" href="https://nshn.ir/32sbkzKEOBbXR4" target="_blank" rel="noopener">مسیریابی 📍</a>
+              </div>
+            </div>
+          </div>
+          <div style="height:480px"></div>
+        </div>
+      </div>
       <article class="dc-monitor" aria-label="پیشنهادهای رندوم">
         <div class="dc-monitor-inner">
           <div class="dc-monitor-title">سه پیشنهاد رندوم برای مطالعه</div>
@@ -2693,6 +2773,55 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 })();
 </script>
 
+<script>
+/* ── SCROLLYTELLING — بیماران ── */
+(function(){
+  const FRAME_COUNT = 60;
+  const track    = document.getElementById('scrolly-track');
+  const frameImg = document.getElementById('scrolly-frame');
+  const ctaEl    = document.getElementById('scrolly-cta');
+  const body     = document.getElementById('mobile-body');
+  if(!track || !frameImg || !body) return;
+
+  /* preload all frames */
+  const frames = [];
+  for(let i=1; i<=FRAME_COUNT; i++){
+    const img = new Image();
+    img.src = '/patients/frames/f' + String(i).padStart(3,'0') + '.webp';
+    frames.push(img);
+  }
+
+  let lastIdx = -1;
+
+  body.addEventListener('scroll', function(){
+    if(!document.getElementById('panel-patient').classList.contains('active')) return;
+
+    const bodyRect  = body.getBoundingClientRect();
+    const trackRect = track.getBoundingClientRect();
+    const scrolled  = bodyRect.top - trackRect.top;
+    const total     = track.offsetHeight - body.offsetHeight;
+    if(total <= 0) return;
+
+    const progress = Math.max(0, Math.min(1, scrolled / total));
+    const idx      = Math.round(progress * (FRAME_COUNT - 1));
+
+    if(idx !== lastIdx){
+      lastIdx = idx;
+      const f = frames[idx];
+      if(f && f.complete && f.naturalWidth){
+        frameImg.src = f.src;
+      } else if(f){
+        f.onload = function(){ frameImg.src = f.src; };
+      }
+    }
+
+    /* CTA fade in از ۷۵٪ پیشرفت به بعد */
+    const ctaP = Math.max(0, (progress - 0.75) / 0.25);
+    ctaEl.style.opacity       = ctaP;
+    ctaEl.style.pointerEvents = ctaP > 0.05 ? 'auto' : 'none';
+  }, { passive: true });
+})();
+</script>
 </body>
 </html>
            
