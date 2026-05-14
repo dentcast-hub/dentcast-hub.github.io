@@ -34,6 +34,22 @@
 /* =====================================================
    CSS VARIABLES
 ===================================================== */
+@font-face{
+  font-family:'Vazirmatn';
+  src:url('/fonts/Vazirmatn-Regular.woff2') format('woff2');
+  font-weight:400; font-display:swap;
+}
+@font-face{
+  font-family:'Vazirmatn';
+  src:url('/fonts/Vazirmatn-SemiBold.woff2') format('woff2');
+  font-weight:600; font-display:swap;
+}
+@font-face{
+  font-family:'Vazirmatn';
+  src:url('/fonts/Vazirmatn-ExtraBold.woff2') format('woff2');
+  font-weight:800; font-display:swap;
+}
+
 :root{
   --pr:#022360; --pr-rgb:2,35,96;
   --ac:#0b5fff; --ac-rgb:11,95,255;
@@ -1457,18 +1473,19 @@ body.dc-desktop-ui #dc-desktop-root{
 }
 .dc-scrolly-track{
   position:relative;
-  height:calc(100dvh - 113px + 1800px);
+  height:calc(100svh - 113px + 1800px);
 }
 .dc-scrolly-sticky{
   position:sticky;
   top:0;
-  height:calc(100dvh - 170px);
+  height:calc(100svh - 113px);
   width:100%;
   overflow:hidden;
   background:#000;
   border-radius:var(--r-lg);
   box-shadow:var(--card-sh2);
   border:1px solid var(--card-border);
+  z-index:10;
 }
 #scrolly-canvas{
   width:100%; height:100%;
@@ -1484,17 +1501,26 @@ body.dc-desktop-ui #dc-desktop-root{
   pointer-events:none;
 }
 .dc-scrolly-intro-name{
+  font-family:'Vazirmatn',system-ui,sans-serif;
   color:#fff;
-  font-size:1.15rem;
-  font-weight:900;
-  text-shadow:0 1px 8px rgba(0,0,0,.5);
-  letter-spacing:.01em;
+  font-size:1.55rem;
+  font-weight:800;
+  letter-spacing:-.01em;
+  text-shadow:0 2px 16px rgba(0,0,0,.55),0 1px 4px rgba(0,0,0,.4);
+  line-height:1.2;
+}
+.dc-scrolly-intro-divider{
+  width:32px; height:1.5px;
+  background:rgba(255,255,255,.45);
+  border-radius:999px;
+  margin:8px auto;
 }
 .dc-scrolly-intro-spec{
-  color:rgba(255,255,255,.82);
-  font-size:.82rem;
+  font-family:'Vazirmatn',system-ui,sans-serif;
+  color:rgba(255,255,255,.78);
+  font-size:.78rem;
   font-weight:600;
-  margin-top:5px;
+  letter-spacing:.04em;
   text-shadow:0 1px 6px rgba(0,0,0,.4);
 }
 /* scroll hint card */
@@ -1792,6 +1818,7 @@ body.dc-desktop-ui #dc-desktop-root{
             <canvas id="scrolly-canvas" aria-label="فضای کلینیک دکتر فواد شهابیان"></canvas>
             <div class="dc-scrolly-intro" id="scrolly-intro">
               <div class="dc-scrolly-intro-name">دکتر فواد شهابیان</div>
+              <div class="dc-scrolly-intro-divider"></div>
               <div class="dc-scrolly-intro-spec">متخصص پروتز</div>
             </div>
             <div class="dc-scrolly-cta" id="scrolly-cta">
