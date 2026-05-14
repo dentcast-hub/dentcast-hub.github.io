@@ -1467,10 +1467,8 @@ body.dc-desktop-ui #dc-desktop-root{
   overflow:hidden;
   background:#000;
 }
-#scrolly-frame{
+#scrolly-canvas{
   width:100%; height:100%;
-  object-fit:cover;
-  object-position:center top;
   display:block;
 }
 .dc-scrolly-cta{
@@ -1692,22 +1690,6 @@ body.dc-desktop-ui #dc-desktop-root{
       </div>
 
 
-      <!-- ── SCROLLYTELLING ── -->
-      <div class="dc-scrolly-wrap">
-        <div class="dc-scrolly-track" id="scrolly-track">
-          <div class="dc-scrolly-sticky">
-            <img id="scrolly-frame" src="/patients/frames/f001.webp" alt="فضای کلینیک دکتر فواد شهابیان" loading="eager" decoding="async">
-            <div class="dc-scrolly-cta" id="scrolly-cta">
-              <div class="dc-scrolly-cta-title">برای هماهنگی وقت معاینه</div>
-              <div class="dc-cta-row">
-                <a class="dc-cta-btn" href="tel:+986133380090">تماس با مطب 📞</a>
-                <a class="dc-cta-btn" href="https://nshn.ir/32sbkzKEOBbXR4" target="_blank" rel="noopener">مسیریابی 📍</a>
-              </div>
-            </div>
-          </div>
-          <div style="height:480px"></div>
-        </div>
-      </div>
       <article class="dc-monitor" aria-label="پیشنهادهای رندوم">
         <div class="dc-monitor-inner">
           <div class="dc-monitor-title">سه پیشنهاد رندوم برای مطالعه</div>
@@ -1727,6 +1709,24 @@ body.dc-desktop-ui #dc-desktop-root{
           </div>
         </div>
       </article>
+
+
+      <!-- ── SCROLLYTELLING ── -->
+      <div class="dc-scrolly-wrap">
+        <div class="dc-scrolly-track" id="scrolly-track">
+          <div class="dc-scrolly-sticky">
+            <canvas id="scrolly-canvas" aria-label="فضای کلینیک دکتر فواد شهابیان"></canvas>
+            <div class="dc-scrolly-cta" id="scrolly-cta">
+              <div class="dc-scrolly-cta-title">برای هماهنگی وقت معاینه</div>
+              <div class="dc-cta-row">
+                <a class="dc-cta-btn" href="tel:+986133380090">تماس با مطب 📞</a>
+                <a class="dc-cta-btn" href="https://nshn.ir/32sbkzKEOBbXR4" target="_blank" rel="noopener">مسیریابی 📍</a>
+              </div>
+            </div>
+          </div>
+          <div style="height:480px"></div>
+        </div>
+      </div>
 
     </section>
 
@@ -2777,48 +2777,63 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 /* ── SCROLLYTELLING — بیماران ── */
 (function(){
   const FRAME_COUNT = 60;
-  const track    = document.getElementById('scrolly-track');
-  const frameImg = document.getElementById('scrolly-frame');
-  const ctaEl    = document.getElementById('scrolly-cta');
-  const body     = document.getElementById('mobile-body');
-  if(!track || !frameImg || !body) return;
+  const track  = document.getElementById('scrolly-track');
+  const canvas = document.getElementById('scrolly-canvas');
+  const ctaEl  = document.getElementById('scrolly-cta');
+  const body   = document.getElementById('mobile-body');
+  if(!track || !canvas || !body) return;
 
-  /* preload all frames */
+  const ctx = canvas.getContext('2d');
+  canvas.width  = 540;
+  canvas.height = 960;
+
+  /* draw با cover-fit */
+  function drawFrame(img){
+    if(!img || !img.naturalWidth) return;
+    const cw = canvas.width, ch = canvas.height;
+    const scale = Math.max(cw / img.naturalWidth, ch / img.naturalHeight);
+    const sw = img.naturalWidth  * scale;
+    const sh = img.naturalHeight * scale;
+    ctx.drawImage(img, (cw - sw) / 2, (ch - sh) / 2, sw, sh);
+  }
+
+  /* preload همه فریم‌ها */
   const frames = [];
-  for(let i=1; i<=FRAME_COUNT; i++){
+  for(let i = 1; i <= FRAME_COUNT; i++){
     const img = new Image();
     img.src = '/patients/frames/f' + String(i).padStart(3,'0') + '.webp';
+    img.onload = function(){ if(i === 1) drawFrame(img); };
     frames.push(img);
   }
 
   let lastIdx = -1;
+  let ticking = false;
 
-  body.addEventListener('scroll', function(){
+  function update(){
+    ticking = false;
     if(!document.getElementById('panel-patient').classList.contains('active')) return;
-
-    const bodyRect  = body.getBoundingClientRect();
-    const trackRect = track.getBoundingClientRect();
-    const scrolled  = bodyRect.top - trackRect.top;
-    const total     = track.offsetHeight - body.offsetHeight;
+    const bRect = body.getBoundingClientRect();
+    const tRect = track.getBoundingClientRect();
+    const total = track.offsetHeight - body.offsetHeight;
     if(total <= 0) return;
 
-    const progress = Math.max(0, Math.min(1, scrolled / total));
-    const idx      = Math.round(progress * (FRAME_COUNT - 1));
+    const progress = Math.max(0, Math.min(1, (bRect.top - tRect.top) / total));
+    const idx = Math.round(progress * (FRAME_COUNT - 1));
 
     if(idx !== lastIdx){
       lastIdx = idx;
       const f = frames[idx];
-      if(f && f.complete && f.naturalWidth){
-        frameImg.src = f.src;
-      } else if(f){
-        f.onload = function(){ frameImg.src = f.src; };
-      }
+      if(f && f.complete && f.naturalWidth) drawFrame(f);
     }
 
-    /* CTA fade in از ۷۵٪ پیشرفت به بعد */
+    /* CTA از ۷۵٪ به بعد */
     const ctaP = Math.max(0, (progress - 0.75) / 0.25);
     ctaEl.style.opacity       = ctaP;
     ctaEl.style.pointerEvents = ctaP > 0.05 ? 'auto' : 'none';
+  }
+
+  body.addEventListener('scroll', function(){
+    if(!ticking){ ticking = true; requestAnimationFrame(update); }
   }, { passive: true });
 })();
 </script>
