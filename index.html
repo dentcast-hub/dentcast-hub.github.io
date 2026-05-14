@@ -1816,9 +1816,9 @@ body.dc-desktop-ui #dc-desktop-root{
               <button class="dcd-pulse-close" onclick="document.getElementById('dcdPulse').style.display='none'">×</button>
             </div>
             <ul class="dcd-pulse-list">
-              <li><a href="#" onclick="dcdOpen('/episodes/episode-156.html','دنتکست ۱۵۶');return false;"><strong>دنتکست ۱۵۶</strong></a> صفحه‌ی اختصاصی · ۱۴ اردیبهشت</li>
-              <li><a href="#" onclick="dcdOpen('/insight/insight-40.html','یه تجربه ی کلینیکی');return false;"><strong>یه تجربه ی کلینیکی</strong></a> در بخش Insight · 17 اردیبهشت</li>
-              <li><a href="#" onclick="dcdOpen('/episodes.html','اپیزودها');return false;"><strong>همه اپیزودها</strong></a> صفحه‌ی اختصاصی شدند · ۲۳ اردیبهشت</li>
+              <li><a href="#" onclick="dcdOpen('/episodes/episode-1.html','اپیزود ۱');return false;"><strong>تمام اپیزودهای دنت‌کست</strong></a> دارای صفحه‌ی اختصاصی شدند · ۲۳ اردیبهشت</li>
+              <li>ده کلمه‌ی جدید به بخش <a href="#" onclick="dcdOpenViewer('/glossary/');return false;"><strong>دانشنامه</strong></a> اضافه شد · ۲۱ اردیبهشت</li>
+              <li><a href="#" onclick="dcdOpen('/episodes/episode-156.html','دنتکست ۱۵۶');return false;"><strong>دنتکست ۱۵۶</strong></a> در بخش اپیزودها قرار داده شد · ۳ اردیبهشت</li>
             </ul>
           </div>
 
@@ -2204,8 +2204,9 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
   const contentArea = document.getElementById('dcd-content-area');
   const pageViewer  = document.getElementById('dcd-page-viewer');
 
-  /* ── Public helper (used in HTML onclick) ── */
-  window.dcdOpen = function(url, title){ openContent(url, title); };
+  /* ── Public helpers (used in HTML onclick) ── */
+  window.dcdOpen       = function(url, title){ openContent(url, title); };
+  window.dcdOpenViewer = function(url){ openPageViewer(url); };
 
   /* ══════════════════════════════════════════════
      COL-A: CATEGORY GROUP EXPAND / COLLAPSE
