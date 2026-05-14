@@ -2202,15 +2202,21 @@ themeBtn.addEventListener('click',()=>{
   const origNext=globalBox.nextElementSibling;
   if(!overlay||!overlayBody||!globalBox||!searchInput) return;
   function isMob(){return window.matchMedia('(max-width:1023px)').matches;}
-  function openS(push=true){
+
+  function openS(push=true, term=''){
     if(!isMob()) return;
     overlayBody.appendChild(globalBox);
     document.body.classList.add('dc-search-mode');
     overlay.setAttribute('aria-hidden','false');
     globalBox.classList.add('open');
     setTimeout(()=>searchInput.focus(),0);
-    if(push) history.pushState({dcSearch:true},'');
+    if(term){ searchInput.value=term; searchInput.dispatchEvent(new Event('input')); }
+    if(push){
+      const hash=term?'#search:'+encodeURIComponent(term):'#search';
+      history.pushState({dcSearch:true,q:term},'',hash);
+    }
   }
+
   function closeS(fromPop=false){
     if(!isMob()) return;
     document.body.classList.remove('dc-search-mode');
@@ -2219,11 +2225,38 @@ themeBtn.addEventListener('click',()=>{
     if(resultsBox) resultsBox.style.display='none';
     searchInput.value=''; searchInput.dispatchEvent(new Event('input'));
     if(origParent){if(origNext) origParent.insertBefore(globalBox,origNext); else origParent.appendChild(globalBox);}
-    if(!fromPop){if(history.state&&history.state.dcSearch) history.back();}
+    if(!fromPop){
+      if(history.state&&history.state.dcSearch) history.back();
+      else if(window.location.hash.startsWith('#search'))
+        history.replaceState(null,'',window.location.pathname+window.location.search);
+    }
   }
+
   openBtns.forEach(b=>b.addEventListener('click',()=>openS(true)));
   closeBtn&&closeBtn.addEventListener('click',()=>closeS(false));
-  window.addEventListener('popstate',()=>{if(document.body.classList.contains('dc-search-mode')) closeS(true);});
+
+  /* آپدیت hash هنگام تایپ */
+  searchInput.addEventListener('input',function(){
+    if(!document.body.classList.contains('dc-search-mode')) return;
+    const q=searchInput.value.trim();
+    history.replaceState({dcSearch:true,q},'',q?'#search:'+encodeURIComponent(q):'#search');
+  });
+
+  window.addEventListener('popstate',()=>{
+    if(document.body.classList.contains('dc-search-mode')) closeS(true);
+    else if(window.location.hash.startsWith('#search')){
+      const h=window.location.hash;
+      const term=h.startsWith('#search:')?decodeURIComponent(h.slice(8)):'';
+      openS(false,term);
+    }
+  });
+
+  /* باز شدن مستقیم از URL */
+  if(window.location.hash.startsWith('#search')){
+    const h=window.location.hash;
+    const term=h.startsWith('#search:')?decodeURIComponent(h.slice(8)):'';
+    setTimeout(()=>openS(false,term),80);
+  }
 })();
 </script>
 
@@ -2783,44 +2816,52 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
   document.getElementById('dcd-hdr-radar')?.addEventListener('click', openRadarOverlay);
 
   /* Search → open search overlay (desktop-aware) */
-  function deskOpenSearch(){
+  function deskOpenSearch(term=''){
     const overlay     = document.getElementById('dcSearchOverlay');
     const overlayBody = document.getElementById('dcSearchOverlayBody');
     const globalBox   = document.getElementById('dcGlobalBox');
+    const searchInp   = document.getElementById('dcSearch');
     if(!overlay || !overlayBody || !globalBox) return;
     overlayBody.appendChild(globalBox);
     document.body.classList.add('dc-search-mode');
     overlay.setAttribute('aria-hidden','false');
     globalBox.classList.add('open');
-    setTimeout(() => document.getElementById('dcSearch')?.focus(), 0);
-    history.pushState({dcSearch:true},'');
+    setTimeout(() => searchInp?.focus(), 0);
+    if(term && searchInp){ searchInp.value=term; searchInp.dispatchEvent(new Event('input')); }
+    const hash=term?'#search:'+encodeURIComponent(term):'#search';
+    history.pushState({dcSearch:true,q:term},'',hash);
   }
   function deskCloseSearch(){
     const overlay   = document.getElementById('dcSearchOverlay');
     const globalBox = document.getElementById('dcGlobalBox');
     const results   = document.getElementById('dcResults');
-    const origParent = document.getElementById('dcd-welcome')
-                       ?.querySelector('.dcd-welcome-feed') || document.body;
     document.body.classList.remove('dc-search-mode');
     overlay?.setAttribute('aria-hidden','true');
     globalBox?.classList.remove('open');
     if(results) results.style.display = 'none';
     const searchInp = document.getElementById('dcSearch');
     if(searchInp){ searchInp.value=''; searchInp.dispatchEvent(new Event('input')); }
-    /* Return globalBox to its original location */
     if(globalBox && !document.getElementById('dcd-col-c-scroll')?.contains(globalBox)){
       const feed = document.querySelector('#dcd-welcome .dcd-welcome-feed');
       if(feed && !feed.contains(globalBox)) feed.appendChild(globalBox);
     }
+    if(history.state&&history.state.dcSearch) history.back();
+    else if(window.location.hash.startsWith('#search'))
+      history.replaceState(null,'',window.location.pathname+window.location.search);
   }
-  document.getElementById('dcd-hdr-search')?.addEventListener('click', deskOpenSearch);
-  /* Close button works on both mobile and desktop */
+  document.getElementById('dcd-hdr-search')?.addEventListener('click', ()=>deskOpenSearch());
   document.getElementById('dcCloseSearchOverlay')?.addEventListener('click', () => {
     if(document.body.classList.contains('dc-desktop-ui')) deskCloseSearch();
   });
   window.addEventListener('popstate', () => {
     if(document.body.classList.contains('dc-desktop-ui') &&
        document.body.classList.contains('dc-search-mode')) deskCloseSearch();
+    else if(document.body.classList.contains('dc-desktop-ui') &&
+            window.location.hash.startsWith('#search')){
+      const h=window.location.hash;
+      const term=h.startsWith('#search:')?decodeURIComponent(h.slice(8)):'';
+      deskOpenSearch(term);
+    }
   });
 
   /* Theme toggle in col-a footer */
