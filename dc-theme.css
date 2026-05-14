@@ -20,7 +20,8 @@ body.dc-content-only footer,
 body.dc-content-only .dc-site-footer,
 body.dc-content-only #dc-theme-toggle,
 body.dc-content-only .dc-bottom-nav,
-body.dc-content-only #dcSearchOverlay {
+body.dc-content-only #dcSearchOverlay,
+body.dc-content-only .ep-back {
   display: none !important;
 }
 body.dc-content-only {

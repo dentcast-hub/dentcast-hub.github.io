@@ -101,11 +101,16 @@ const TYPE_MAP = {
   }
   if (!url.startsWith("http")) url = "https://dentcast.org" + url;
 
+  /* On desktop, open episodes in col-C viewer; everything else follows dcdOpen if available */
+  const clickHandler = group === 'dentcast'
+    ? `(window.dcdViewerOpen||function(u){window.location.href=u})('${url}')`
+    : `(window.dcdOpen ? window.dcdOpen('${url}','${title.replace(/'/g,"\\'")}') : (window.location.href='${url}'))`;
+
   return `
     <div class="dc-result-item"
          role="button"
          tabindex="0"
-         onclick="window.location.href='${url}'">
+         onclick="${clickHandler}">
       ${labelMap[group] || title}
     </div>
   `;

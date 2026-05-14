@@ -2041,7 +2041,7 @@ document.getElementById('tool-consult')?.addEventListener('click',()=>{window.lo
 document.getElementById('tool-about')?.addEventListener('click',()=>{window.location.href='about.html';});
 </script>
 
-<script src="/global-search.js?v=3"></script>
+<script src="/global-search.js?v=5"></script>
 <script>if('serviceWorker'in navigator){navigator.serviceWorker.register('/service-worker.js').catch(()=>{});}</script>
 
 <script>
@@ -2204,8 +2204,9 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
   const contentArea = document.getElementById('dcd-content-area');
   const pageViewer  = document.getElementById('dcd-page-viewer');
 
-  /* ── Public helper (used in HTML onclick) ── */
-  window.dcdOpen = function(url, title){ openContent(url, title); };
+  /* ── Public helpers (used in HTML onclick + global-search.js) ── */
+  window.dcdOpen       = function(url, title){ openContent(url, title); };
+  window.dcdViewerOpen = function(url){ openPageViewer(url); };
 
   /* ══════════════════════════════════════════════
      COL-A: CATEGORY GROUP EXPAND / COLLAPSE
@@ -2307,8 +2308,9 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
           const u=x.page_url||'';
           return u && !u.startsWith('http') && u!=='/' && u!=='';
         }).map(x=>({
-          title: (x.title||'').replace(/^\d+[-–.\s]+/,'').trim(),
-          url:   x.page_url
+          title:  (x.title||'').replace(/^\d+[-–.\s]+/,'').trim(),
+          url:    x.page_url,
+          viewer: true
         })).filter(x=>x.title&&x.url);
       } else {
         /* brain.txt by type */
@@ -2328,7 +2330,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 
     colBCount.textContent = items.length + ' مطلب';
     colB.innerHTML = items.map(it =>
-      `<div class="dcd-item" data-url="${h(it.url)}" data-title="${h(it.title)}">
+      `<div class="dcd-item" data-url="${h(it.url)}" data-title="${h(it.title)}" ${it.viewer?'data-open="viewer"':''}>
          <div class="dcd-item-title">${h(it.title)}</div>
        </div>`
     ).join('');
@@ -2337,7 +2339,11 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
       el.addEventListener('click', () => {
         colB.querySelectorAll('.dcd-item').forEach(x=>x.classList.remove('active'));
         el.classList.add('active');
-        openContent(el.dataset.url, el.dataset.title);
+        if(el.dataset.open === 'viewer'){
+          openPageViewer(el.dataset.url);
+        } else {
+          openContent(el.dataset.url, el.dataset.title);
+        }
       });
     });
   }
@@ -2551,17 +2557,4 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 
   function disable(){
     if(!enabled) return;
-    enabled = false;
-    document.body.classList.remove('dc-desktop-ui');
-    root.setAttribute('aria-hidden', 'true');
-  }
-
-  function sync(){ isDesk() ? enable() : disable(); }
-  sync();
-  window.addEventListener('resize', sync);
-})();
-</script>
-
-</body>
-</html>
-           
+    enable
