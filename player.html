@@ -586,27 +586,18 @@ function createRow(ep, i){
     pageLink.rel = "noopener";
     pageLink.textContent = "صفحه اپیزود ↗";
     pageLink.addEventListener("click", function(e) {
-      /* When nested inside any iframe, send postMessage to the top frame.
-         index.html (desktop shell) listens for dcd-episode-open and loads
-         the episode in col-C.  If no handler exists (mobile / standalone),
-         the message is ignored and we fall back to opening a new tab. */
-      if (window.self !== window.top) {
+      /* Desktop shell: player.html is 2 levels deep (index → episodes → player).
+         window.top !== window.parent only when there is an intermediate frame,
+         i.e. exactly the 3-column desktop context.
+         On mobile/standalone episodes.html is top, so window.top === window.parent
+         and we fall through to the default _blank behaviour. */
+      if (window.top !== window.parent) {
         e.preventDefault();
         window.top.postMessage({
           type:  "dcd-episode-open",
           url:   pageLink.href,
           title: ep.title || ""
         }, "*");
-        /* Fallback: if top frame doesn't ack within 300ms, open normally */
-        var ackTimer = setTimeout(function() {
-          window.open(pageLink.href, "_blank");
-        }, 300);
-        window.addEventListener("message", function onAck(ev) {
-          if (ev.data && ev.data.type === "dcd-episode-ack") {
-            clearTimeout(ackTimer);
-            window.removeEventListener("message", onAck);
-          }
-        });
       }
     });
     row.appendChild(pageLink);

@@ -2501,8 +2501,6 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
     var path;
     try{ path = new URL(url, location.origin).pathname; }catch(x){ return; }
     if(EP_PAGE_RE.test(path)){
-      /* Ack back so player.html cancels its fallback timer */
-      try{ ev.source.postMessage({type:'dcd-episode-ack'}, '*'); }catch(x){}
       openContent(path, ev.data.title || '');
     }
   });
