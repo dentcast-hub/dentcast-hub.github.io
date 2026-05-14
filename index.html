@@ -2412,8 +2412,14 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
         });
       });
 
-      /* Inject content */
-      contentArea.innerHTML = extract.innerHTML;
+      /* Inject content.
+         Also prepend any <style> blocks from the fetched page's <head>
+         so page-specific CSS (e.g. episode player layout) renders correctly.
+         They live inside contentArea and are auto-removed on next content load. */
+      const headStyleText = Array.from(doc.querySelectorAll('head style'))
+        .map(s => s.textContent).join('\n');
+      contentArea.innerHTML = (headStyleText ? `<style>${headStyleText}</style>` : '')
+                              + extract.innerHTML;
 
       /* Rebuild audio elements so they work in the new DOM.
          Copy all original attributes (id, src, preload, controls…) so
