@@ -2494,7 +2494,20 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
     });
   }
 
-  /* 2. If a link to an individual episode page is clicked inside the
+  /* 2. postMessage from player.html (nested inside episodes viewer iframe) */
+  window.addEventListener('message', function(ev){
+    if(!ev.data || ev.data.type !== 'dcd-episode-open') return;
+    var url = ev.data.url || '';
+    var path;
+    try{ path = new URL(url, location.origin).pathname; }catch(x){ return; }
+    if(EP_PAGE_RE.test(path)){
+      /* Ack back so player.html cancels its fallback timer */
+      try{ ev.source.postMessage({type:'dcd-episode-ack'}, '*'); }catch(x){}
+      openContent(path, ev.data.title || '');
+    }
+  });
+
+  /* 3. If a link to an individual episode page is clicked inside the
         fetched content area, load it via openContent (not full-page). */
   if(contentArea){
     contentArea.addEventListener('click', function(e){
