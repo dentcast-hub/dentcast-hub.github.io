@@ -1452,7 +1452,7 @@ body.dc-desktop-ui #dc-desktop-root{
   .dc-scrolly-wrap{ display:none!important; }
 }
 .dc-scrolly-wrap{
-  margin:8px -12px 8px;
+  margin:8px 0;
   position:relative;
 }
 .dc-scrolly-track{
@@ -1461,20 +1461,47 @@ body.dc-desktop-ui #dc-desktop-root{
 }
 .dc-scrolly-sticky{
   position:sticky;
-  top:-12px;
-  height:calc(100dvh - 113px);
+  top:0;
+  height:calc(100dvh - 170px);
   width:100%;
   overflow:hidden;
   background:#000;
+  border-radius:var(--r-lg);
+  box-shadow:var(--card-sh2);
+  border:1px solid var(--card-border);
 }
 #scrolly-canvas{
   width:100%; height:100%;
   display:block;
 }
+/* Intro overlay */
+.dc-scrolly-intro{
+  position:absolute;
+  bottom:0; left:0; right:0;
+  padding:60px 20px 28px;
+  background:linear-gradient(to bottom,transparent,rgba(0,0,0,.78));
+  text-align:center;
+  pointer-events:none;
+}
+.dc-scrolly-intro-name{
+  color:#fff;
+  font-size:1.15rem;
+  font-weight:900;
+  text-shadow:0 1px 8px rgba(0,0,0,.5);
+  letter-spacing:.01em;
+}
+.dc-scrolly-intro-spec{
+  color:rgba(255,255,255,.82);
+  font-size:.82rem;
+  font-weight:600;
+  margin-top:5px;
+  text-shadow:0 1px 6px rgba(0,0,0,.4);
+}
+/* CTA overlay */
 .dc-scrolly-cta{
   position:absolute;
   bottom:0; left:0; right:0;
-  padding:70px 20px 32px;
+  padding:60px 20px 28px;
   background:linear-gradient(to bottom,transparent,rgba(0,0,0,.75));
   opacity:0;
   pointer-events:none;
@@ -1716,6 +1743,10 @@ body.dc-desktop-ui #dc-desktop-root{
         <div class="dc-scrolly-track" id="scrolly-track">
           <div class="dc-scrolly-sticky">
             <canvas id="scrolly-canvas" aria-label="فضای کلینیک دکتر فواد شهابیان"></canvas>
+            <div class="dc-scrolly-intro" id="scrolly-intro">
+              <div class="dc-scrolly-intro-name">دکتر فواد شهابیان</div>
+              <div class="dc-scrolly-intro-spec">متخصص پروتز</div>
+            </div>
             <div class="dc-scrolly-cta" id="scrolly-cta">
               <div class="dc-scrolly-cta-title">برای هماهنگی وقت معاینه</div>
               <div class="dc-cta-row">
@@ -2777,10 +2808,11 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 /* ── SCROLLYTELLING — بیماران ── */
 (function(){
   const FRAME_COUNT = 60;
-  const track  = document.getElementById('scrolly-track');
-  const canvas = document.getElementById('scrolly-canvas');
-  const ctaEl  = document.getElementById('scrolly-cta');
-  const body   = document.getElementById('mobile-body');
+  const track    = document.getElementById('scrolly-track');
+  const canvas   = document.getElementById('scrolly-canvas');
+  const ctaEl    = document.getElementById('scrolly-cta');
+  const introEl  = document.getElementById('scrolly-intro');
+  const body     = document.getElementById('mobile-body');
   if(!track || !canvas || !body) return;
 
   const ctx = canvas.getContext('2d');
@@ -2825,6 +2857,10 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
       const f = frames[idx];
       if(f && f.complete && f.naturalWidth) drawFrame(f);
     }
+
+    /* intro: از ۰ تا ۲۵٪ محو میشه */
+    const introP = Math.max(0, 1 - progress / 0.25);
+    introEl.style.opacity = introP;
 
     /* CTA از ۷۵٪ به بعد */
     const ctaP = Math.max(0, (progress - 0.75) / 0.25);
