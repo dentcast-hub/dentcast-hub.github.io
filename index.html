@@ -2450,6 +2450,44 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
     }
   }
 
+  /* ══════════════════════════════════════════════
+     EPISODE PAGE INTERCEPTS
+     Individual /episodes/episode-*.html pages are
+     treated as normal article content pages, not
+     as full-page or iframe navigations.
+  ══════════════════════════════════════════════ */
+  const EP_PAGE_RE = /^\/episodes\/episode-[^/]+\.html$/;
+
+  /* 1. If the viewer iframe navigates to an individual episode page,
+        switch out of viewer mode and load it via openContent instead. */
+  if(pageViewer){
+    pageViewer.addEventListener('load', function(){
+      try{
+        const path = pageViewer.contentWindow.location.pathname;
+        if(EP_PAGE_RE.test(path)){
+          const title = pageViewer.contentDocument.title || path;
+          openContent(path, title);
+        }
+      } catch(e){}
+    });
+  }
+
+  /* 2. If a link to an individual episode page is clicked inside the
+        fetched content area, load it via openContent (not full-page). */
+  if(contentArea){
+    contentArea.addEventListener('click', function(e){
+      if(!document.body.classList.contains('dc-desktop-ui')) return;
+      const a = e.target.closest('a[href]');
+      if(!a) return;
+      let path;
+      try{ path = new URL(a.href, location.origin).pathname; }catch(x){ return; }
+      if(EP_PAGE_RE.test(path)){
+        e.preventDefault();
+        openContent(path, a.textContent.trim() || path);
+      }
+    });
+  }
+
   /* ── Col-C header buttons ── */
 
   /* Hamburger → collapse/expand col-A sidebar */
