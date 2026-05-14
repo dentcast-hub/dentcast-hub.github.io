@@ -2415,10 +2415,12 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
       /* Inject content */
       contentArea.innerHTML = extract.innerHTML;
 
-      /* Rebuild audio elements so they work in the new DOM */
+      /* Rebuild audio elements so they work in the new DOM.
+         Copy all original attributes (id, src, preload, controls…) so
+         custom-player scripts can still find elements by id. */
       contentArea.querySelectorAll('audio').forEach(old => {
         const neu = document.createElement('audio');
-        neu.controls = true;
+        Array.from(old.attributes).forEach(a => neu.setAttribute(a.name, a.value));
         neu.style.cssText = old.style.cssText;
         old.querySelectorAll('source').forEach(s => {
           const ns = document.createElement('source');
@@ -2514,9 +2516,16 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
       if(!a) return;
       let path;
       try{ path = new URL(a.href, location.origin).pathname; }catch(x){ return; }
+      /* Individual episode page → load in col-C */
       if(EP_PAGE_RE.test(path)){
         e.preventDefault();
         openContent(path, a.textContent.trim() || path);
+        return;
+      }
+      /* Back-to-episodes link → reopen the episodes viewer */
+      if(path === '/episodes/' || path === '/episodes/index.html' || path === '/episodes.html'){
+        e.preventDefault();
+        openPageViewer('/episodes.html');
       }
     });
   }
