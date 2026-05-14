@@ -1348,42 +1348,6 @@ body.dc-desktop-ui #dc-desktop-root{
 }
 .dcd-content-area .yt-close:hover{ color:var(--txt); }
 
-/* ── EPISODE PAGE STYLES (ep-*) — rendered inside col-C via openContent ── */
-.dcd-content-area .ep-page{ max-width:100%; margin:0; padding:0; background:transparent; }
-.dcd-content-area .ep-back{ display:none; }
-.dcd-content-area .ep-box{ background:var(--card-bg); border:1px solid var(--card-border); border-radius:var(--r-lg); box-shadow:var(--card-sh); overflow:hidden; margin-bottom:16px; }
-.dcd-content-area .ep-box-head{ padding:22px 22px 16px; border-bottom:1px solid var(--card-border); }
-.dcd-content-area .ep-badge{ display:inline-flex; align-items:center; background:var(--chip-bg); border:1px solid var(--chip-bd); color:var(--chip-txt); font-size:.72rem; font-weight:700; padding:3px 12px; border-radius:var(--r-f); margin-bottom:10px; letter-spacing:.03em; }
-.dcd-content-area .ep-badge.sub{ background:var(--surface2); color:var(--txt3); }
-.dcd-content-area .ep-title{ font-size:1.25rem; font-weight:800; color:var(--txt); line-height:1.45; margin:0 0 10px; }
-.dcd-content-area .ep-meta{ display:flex; gap:14px; font-size:.78rem; color:var(--txt3); flex-wrap:wrap; }
-.dcd-content-area .ep-section{ padding:18px 22px 0; }
-.dcd-content-area .ep-section:last-child{ padding-bottom:22px; }
-.dcd-content-area .ep-section-label{ font-size:.9rem; font-weight:700; color:var(--ac); border-right:4px solid var(--ac); padding-right:10px; margin-bottom:12px; }
-.dcd-content-area .ep-caption{ font-size:.9rem; color:var(--txt2); line-height:1.85; margin:0; }
-.dcd-content-area .ep-player-wrap{ background:var(--surface2); border:1px solid var(--border); border-radius:var(--r-md); padding:14px 16px; }
-.dcd-content-area .ep-player-controls{ display:flex; align-items:center; gap:8px; margin-bottom:10px; direction:ltr; }
-.dcd-content-area .ep-play-btn{ width:42px; height:42px; border-radius:50%; background:var(--ac); border:none; color:#fff; font-size:17px; display:flex; align-items:center; justify-content:center; cursor:pointer; flex-shrink:0; transition:transform .1s; }
-.dcd-content-area .ep-play-btn:active{ transform:scale(.9); }
-.dcd-content-area .ep-jump-btn{ width:32px; height:32px; border:none; background:var(--surface); border-radius:8px; color:var(--txt2); font-size:11px; font-weight:600; cursor:pointer; display:flex; align-items:center; justify-content:center; }
-.dcd-content-area .ep-speed-btn{ padding:4px 8px; border:1px solid var(--border); background:var(--surface); color:var(--txt2); border-radius:8px; font-size:11px; font-weight:700; cursor:pointer; margin-right:auto; }
-.dcd-content-area .ep-download-btn{ font-size:11px; font-weight:600; color:var(--txt2); text-decoration:none; padding:4px 8px; border:1px solid var(--border); border-radius:8px; background:var(--surface); white-space:nowrap; display:flex; align-items:center; gap:4px; }
-.dcd-content-area .ep-range{ -webkit-appearance:none; width:100%; height:4px; background:var(--border); border-radius:2px; outline:none; direction:ltr; margin:0 0 6px; }
-.dcd-content-area .ep-range::-webkit-slider-thumb{ -webkit-appearance:none; width:13px; height:13px; border-radius:50%; background:var(--ac); cursor:pointer; }
-.dcd-content-area .ep-time-row{ display:flex; justify-content:space-between; font-size:10px; color:var(--txt3); direction:ltr; }
-.dcd-content-area .ep-chips{ display:flex; flex-wrap:wrap; gap:6px; }
-.dcd-content-area .ep-chip{ display:inline-block; background:var(--chip-bg); border:1px solid var(--chip-bd); color:var(--chip-txt); font-size:.76rem; padding:3px 10px; border-radius:var(--r-f); }
-.dcd-content-area a.ep-chip-link{ text-decoration:none; transition:background .15s; }
-.dcd-content-area a.ep-chip-link:hover{ background:rgba(var(--ac-rgb),.15); }
-.dcd-content-area .ep-hashtag{ display:inline-block; background:var(--surface2); border:1px solid var(--border); color:var(--txt3); font-size:.76rem; padding:3px 10px; border-radius:var(--r-f); margin:2px; }
-.dcd-content-area .ep-tags{ display:flex; flex-wrap:wrap; gap:4px; }
-.dcd-content-area .ep-nav{ display:flex; justify-content:space-between; gap:10px; margin-top:14px; }
-.dcd-content-area .ep-nav-btn{ flex:1; text-align:center; padding:10px 14px; border:1px solid var(--card-border); border-radius:var(--r-sm); text-decoration:none; font-size:.82rem; font-weight:600; color:var(--txt2); background:var(--card-bg); transition:all .15s; }
-.dcd-content-area .ep-nav-btn:hover{ border-color:var(--ac); color:var(--ac); }
-.dcd-content-area .ep-nav-empty{ cursor:default; opacity:.3; pointer-events:none; }
-.dcd-content-area .ep-sub-parent{ font-size:.8rem; color:var(--txt3); margin-bottom:8px; }
-.dcd-content-area .ep-sub-parent a{ color:var(--ac); text-decoration:none; }
-
 /* ── WELCOME CONTENT COMPONENTS ── */
 .dcd-pulse{
   background:var(--pulse-bg); border:1px solid var(--pulse-border);
@@ -2077,7 +2041,7 @@ document.getElementById('tool-consult')?.addEventListener('click',()=>{window.lo
 document.getElementById('tool-about')?.addEventListener('click',()=>{window.location.href='about.html';});
 </script>
 
-<script src="/global-search.js?v=5"></script>
+<script src="/global-search.js?v=3"></script>
 <script>if('serviceWorker'in navigator){navigator.serviceWorker.register('/service-worker.js').catch(()=>{});}</script>
 
 <script>
@@ -2240,9 +2204,8 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
   const contentArea = document.getElementById('dcd-content-area');
   const pageViewer  = document.getElementById('dcd-page-viewer');
 
-  /* ── Public helpers (used in HTML onclick + global-search.js) ── */
-  window.dcdOpen       = function(url, title){ openContent(url, title); };
-  window.dcdViewerOpen = function(url){ openPageViewer(url); };
+  /* ── Public helper (used in HTML onclick) ── */
+  window.dcdOpen = function(url, title){ openContent(url, title); };
 
   /* ══════════════════════════════════════════════
      COL-A: CATEGORY GROUP EXPAND / COLLAPSE
@@ -2475,17 +2438,6 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
         old.replaceWith(s);
       });
 
-      /* Intercept episode nav / glossary-chip links → load in col-C instead of navigating */
-      contentArea.querySelectorAll('a.ep-nav-btn, a.ep-chip-link').forEach(a => {
-        if(a.classList.contains('ep-nav-empty')) return;
-        a.addEventListener('click', e => {
-          const href = a.getAttribute('href');
-          if(!href || href.startsWith('#') || href.startsWith('mailto')) return;
-          e.preventDefault();
-          try{ openContent(new URL(href, location.origin).href, a.textContent.trim()); }catch(_){}
-        });
-      });
-
       /* Scroll col-c to top */
       colCScroll.scrollTo(0, 0);
 
@@ -2599,4 +2551,17 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 
   function disable(){
     if(!enabled) return;
-    enable
+    enabled = false;
+    document.body.classList.remove('dc-desktop-ui');
+    root.setAttribute('aria-hidden', 'true');
+  }
+
+  function sync(){ isDesk() ? enable() : disable(); }
+  sync();
+  window.addEventListener('resize', sync);
+})();
+</script>
+
+</body>
+</html>
+           
