@@ -1497,6 +1497,33 @@ body.dc-desktop-ui #dc-desktop-root{
   margin-top:5px;
   text-shadow:0 1px 6px rgba(0,0,0,.4);
 }
+/* scroll hint arrow */
+.dc-scrolly-hint{
+  position:absolute;
+  bottom:18px; left:50%; transform:translateX(-50%);
+  display:flex; flex-direction:column; align-items:center; gap:3px;
+  pointer-events:none;
+  transition:opacity .3s ease;
+}
+.dc-scrolly-hint-txt{
+  color:rgba(255,255,255,.75);
+  font-size:.65rem;
+  font-weight:700;
+  letter-spacing:.06em;
+  text-shadow:0 1px 4px rgba(0,0,0,.5);
+}
+.dc-scrolly-hint-arrow{
+  width:22px; height:22px;
+  border-right:2px solid rgba(255,255,255,.80);
+  border-bottom:2px solid rgba(255,255,255,.80);
+  transform:rotate(45deg);
+  animation:scrolly-bounce .9s ease-in-out infinite;
+  filter:drop-shadow(0 1px 3px rgba(0,0,0,.4));
+}
+@keyframes scrolly-bounce{
+  0%,100%{ transform:rotate(45deg) translateY(0); }
+  50%     { transform:rotate(45deg) translateY(5px); }
+}
 /* CTA overlay */
 .dc-scrolly-cta{
   position:absolute;
@@ -1746,6 +1773,10 @@ body.dc-desktop-ui #dc-desktop-root{
             <div class="dc-scrolly-intro" id="scrolly-intro">
               <div class="dc-scrolly-intro-name">دکتر فواد شهابیان</div>
               <div class="dc-scrolly-intro-spec">متخصص پروتز</div>
+            </div>
+            <div class="dc-scrolly-hint" id="scrolly-hint">
+              <div class="dc-scrolly-hint-txt">اسکرول کنید</div>
+              <div class="dc-scrolly-hint-arrow"></div>
             </div>
             <div class="dc-scrolly-cta" id="scrolly-cta">
               <div class="dc-scrolly-cta-title">برای هماهنگی وقت معاینه</div>
@@ -2812,6 +2843,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
   const canvas   = document.getElementById('scrolly-canvas');
   const ctaEl    = document.getElementById('scrolly-cta');
   const introEl  = document.getElementById('scrolly-intro');
+  const hintEl   = document.getElementById('scrolly-hint');
   const body     = document.getElementById('mobile-body');
   if(!track || !canvas || !body) return;
 
@@ -2857,6 +2889,9 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
       const f = frames[idx];
       if(f && f.complete && f.naturalWidth) drawFrame(f);
     }
+
+    /* hint: با شروع اسکرول محو میشه */
+    hintEl.style.opacity = Math.max(0, 1 - progress / 0.08);
 
     /* CTA از ۷۵٪ به بعد */
     const ctaP = Math.max(0, (progress - 0.75) / 0.25);
