@@ -585,6 +585,15 @@ function createRow(ep, i){
     pageLink.target = "_blank";
     pageLink.rel = "noopener";
     pageLink.textContent = "صفحه اپیزود ↗";
+    pageLink.addEventListener("click", function(e) {
+      /* If running inside the 3-column desktop shell, load in col-C instead of new tab */
+      try {
+        if (typeof window.top.dcdOpen === "function") {
+          e.preventDefault();
+          window.top.dcdOpen(pageLink.href, ep.title || pageLink.textContent);
+        }
+      } catch(_) {}
+    });
     row.appendChild(pageLink);
   }
 

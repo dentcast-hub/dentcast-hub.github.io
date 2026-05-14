@@ -2459,15 +2459,37 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
   const EP_PAGE_RE = /^\/episodes\/episode-[^/]+\.html$/;
 
   /* 1. If the viewer iframe navigates to an individual episode page,
-        switch out of viewer mode and load it via openContent instead. */
+        switch out of viewer mode and load it via openContent instead.
+        Also inject a click interceptor into the iframe document so that
+        links with target="_blank" (or any target) are caught before the
+        browser opens a new window. */
   if(pageViewer){
     pageViewer.addEventListener('load', function(){
       try{
-        const path = pageViewer.contentWindow.location.pathname;
+        const iWin = pageViewer.contentWindow;
+        const iDoc = pageViewer.contentDocument;
+        const path  = iWin.location.pathname;
+
+        /* If the iframe itself landed on an episode page, pull it into col-C */
         if(EP_PAGE_RE.test(path)){
-          const title = pageViewer.contentDocument.title || path;
-          openContent(path, title);
+          openContent(path, iDoc.title || path);
+          return;
         }
+
+        /* Otherwise attach a capture-phase click guard to the iframe document
+           so episode-page links are intercepted before any navigation or popup */
+        iDoc.addEventListener('click', function(ev){
+          const a = ev.target.closest('a[href]');
+          if(!a) return;
+          let p;
+          try{ p = new URL(a.href, location.origin).pathname; }catch(x){ return; }
+          if(EP_PAGE_RE.test(p)){
+            ev.preventDefault();
+            ev.stopImmediatePropagation();
+            openContent(p, a.textContent.trim() || p);
+          }
+        }, true /* capture — runs before iframe's own handlers */);
+
       } catch(e){}
     });
   }
