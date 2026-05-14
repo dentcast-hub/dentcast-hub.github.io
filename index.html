@@ -1816,9 +1816,9 @@ body.dc-desktop-ui #dc-desktop-root{
               <button class="dcd-pulse-close" onclick="document.getElementById('dcdPulse').style.display='none'">×</button>
             </div>
             <ul class="dcd-pulse-list">
+              <li><a href="#" onclick="dcdOpen('/episodes/episode-156.html','دنتکست ۱۵۶');return false;"><strong>دنتکست ۱۵۶</strong></a> صفحه‌ی اختصاصی · ۱۴ اردیبهشت</li>
               <li><a href="#" onclick="dcdOpen('/insight/insight-40.html','یه تجربه ی کلینیکی');return false;"><strong>یه تجربه ی کلینیکی</strong></a> در بخش Insight · 17 اردیبهشت</li>
-              <li><a href="#" onclick="dcdOpen('/episodes.html','اپیزودها');return false;"><strong>دنتکست ۱۵۶</strong></a> در بخش اپیزودها · ۳ اردیبهشت</li>
-              <li><a href="https://dentcast.ir/#radar" target="_blank"><strong>رادار دنت‌کست</strong></a> با بیش از ۷۰ سایت آپدیت شد</li>
+              <li><a href="#" onclick="dcdOpen('/episodes.html','اپیزودها');return false;"><strong>همه اپیزودها</strong></a> صفحه‌ی اختصاصی شدند · ۲۳ اردیبهشت</li>
             </ul>
           </div>
 
@@ -2412,17 +2412,26 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
         });
       });
 
-      /* Inject content.
-         Also prepend any <style> blocks from the fetched page's <head>
-         so page-specific CSS (e.g. episode player layout) renders correctly.
-         They live inside contentArea and are auto-removed on next content load. */
+      /* Collect page-specific <style> blocks from <head> */
       const headStyleText = Array.from(doc.querySelectorAll('head style'))
-        .map(s => s.textContent).join('\n');
+        .map(st => st.textContent).join('\n');
+
+      /* Collect inline <script> blocks that sit OUTSIDE .article-content-wrap
+         in the fetched body (e.g. the episode audio-player script).
+         Chrome/nav scripts were already removed from doc above. */
+      const extraScripts = Array.from(doc.querySelectorAll('body script:not([src])'))
+        .filter(ps => !extract.contains(ps))
+        .map(ps => `<script>${ps.textContent}<\/script>`)
+        .join('');
+
+      /* Inject: head styles + content + any extra scripts.
+         Scripts inside innerHTML don't auto-run; the loop below re-executes them. */
       contentArea.innerHTML = (headStyleText ? `<style>${headStyleText}</style>` : '')
-                              + extract.innerHTML;
+                              + extract.innerHTML
+                              + extraScripts;
 
       /* Rebuild audio elements so they work in the new DOM.
-         Copy all original attributes (id, src, preload, controls…) so
+         Copy all original attributes (id, src, preload…) so
          custom-player scripts can still find elements by id. */
       contentArea.querySelectorAll('audio').forEach(old => {
         const neu = document.createElement('audio');
@@ -2437,22 +2446,13 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
         old.replaceWith(neu);
       });
 
-      /* Re-execute inline scripts inside the injected content */
+      /* Re-execute ALL inline scripts now inside contentArea
+         (both from .article-content-wrap and the extra scripts appended above) */
       contentArea.querySelectorAll('script').forEach(old => {
         if(old.src) return;
         const s = document.createElement('script');
         s.textContent = old.textContent;
         old.replaceWith(s);
-      });
-
-      /* Also run inline scripts that live OUTSIDE .article-content-wrap
-         in the fetched page (e.g. the episode audio-player script).
-         External scripts and chrome scripts are already stripped above. */
-      doc.querySelectorAll('body script:not([src])').forEach(ps => {
-        if(extract.contains(ps)) return;   // already handled above
-        const s = document.createElement('script');
-        s.textContent = ps.textContent;
-        contentArea.appendChild(s);
       });
 
       /* Scroll col-c to top */
