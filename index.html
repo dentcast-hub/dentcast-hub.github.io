@@ -413,6 +413,69 @@ body{
 }
 
 /* =====================================================
+   BRAND IDENTITY CARD
+===================================================== */
+.dc-identity-card{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  background:#0a1628;
+  border:1px solid rgba(11,95,255,.22);
+  border-radius:var(--r-lg);
+  padding:16px 18px;
+  margin-bottom:18px;
+  box-shadow:0 2px 14px rgba(0,0,0,.30),inset 0 0 0 1px rgba(11,95,255,.07);
+  direction:rtl;
+  user-select:none;
+}
+.dc-identity-logo{
+  flex-shrink:0;
+  width:46px; height:46px;
+  border-radius:var(--r-md);
+  background:rgba(11,95,255,.10);
+  border:1px solid rgba(11,95,255,.22);
+  display:flex; align-items:center; justify-content:center;
+  padding:5px; overflow:hidden;
+}
+.dc-identity-logo img{
+  width:36px; height:36px;
+  object-fit:contain; display:block;
+}
+.dc-identity-text{ flex:1; min-width:0; }
+.dc-identity-main{
+  font-size:.88rem; font-weight:700;
+  color:#ffffff;
+  line-height:1.55; letter-spacing:-.1px;
+  font-family:'Vazirmatn',sans-serif;
+}
+/* shimmer — فقط روی span.dc-shimmer-word اعمال می‌شه */
+.dc-shimmer-word{
+  display:inline;
+  background:linear-gradient(
+    105deg,
+    #ffffff 28%,
+    #7ab4ff 46%,
+    #c0d9ff 53%,
+    #ffffff 70%
+  );
+  background-size:400% 100%;
+  background-position:100% 0;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  animation:dcShimmer 5s ease-in-out infinite;
+}
+@keyframes dcShimmer{
+  0%,55%,100%{ background-position:100% 0; }
+  22%,42%    { background-position:-100% 0; }
+}
+@media(max-width:380px){
+  .dc-identity-main{ font-size:.82rem; }
+  .dc-identity-logo{ width:40px; height:40px; }
+  .dc-identity-logo img{ width:30px; height:30px; }
+}
+
+/* =====================================================
    SEARCH CARD (sticky)
 ===================================================== */
 
@@ -1697,6 +1760,16 @@ body.dc-desktop-ui #dc-desktop-root{
 
     <!-- ── PANEL: استودیو ── -->
     <section class="dc-panel active" id="panel-studio">
+
+      <!-- Brand Identity Card -->
+      <div class="dc-identity-card" aria-label="معرفی دنت‌کست">
+        <div class="dc-identity-logo">
+          <img src="/logo-v2.png" alt="DentCast" width="36" height="36" loading="eager" draggable="false">
+        </div>
+        <div class="dc-identity-text">
+          <div class="dc-identity-main">دنت‌کست — <span class="dc-shimmer-word">جامع‌ترین</span> منبع پروتز و ایمپلنت به زبان فارسی</div>
+        </div>
+      </div>
 
       <!-- Pulse -->
       <div class="dc-pulse" id="dcPulseCard">
