@@ -443,9 +443,12 @@ body{
 }
 .dc-identity-text{ flex:1; min-width:0; }
 .dc-identity-main{
-  font-size:.88rem; font-weight:700;
+  font-size:clamp(.65rem,3.2vw,.88rem);
+  font-weight:700;
   color:#ffffff;
-  line-height:1.55; letter-spacing:-.1px;
+  white-space:nowrap;
+  overflow:hidden;
+  letter-spacing:-.1px;
   font-family:'Vazirmatn',sans-serif;
 }
 /* shimmer — فقط روی span.dc-shimmer-word اعمال می‌شه */
@@ -470,7 +473,6 @@ body{
   22%,42%    { background-position:-100% 0; }
 }
 @media(max-width:380px){
-  .dc-identity-main{ font-size:.82rem; }
   .dc-identity-logo{ width:40px; height:40px; }
   .dc-identity-logo img{ width:30px; height:30px; }
 }
@@ -1767,7 +1769,7 @@ body.dc-desktop-ui #dc-desktop-root{
           <img src="/logo-v2.png" alt="DentCast" width="36" height="36" loading="eager" draggable="false">
         </div>
         <div class="dc-identity-text">
-          <div class="dc-identity-main">دنت‌کست — <span class="dc-shimmer-word">جامع‌ترین</span> منبع پروتز و ایمپلنت به زبان فارسی</div>
+          <div class="dc-identity-main">دنتکست <span class="dc-shimmer-word">جامعترین</span> منبع فارسی پروتز و ایمپلنت</div>
         </div>
       </div>
 
