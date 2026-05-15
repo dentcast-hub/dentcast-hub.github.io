@@ -1,92 +1,52 @@
-# llms.txt
-# Dentcast – Specialized Prosthodontics & Dental Education
-# https://dentcast.org
+# DentCast — پادکست علمی دندانپزشکی
 
-# -------------------------------------------------------------------
-# General Access
-# -------------------------------------------------------------------
-User-Agent: *
-Allow: /
+> DentCast is a Persian-language scientific dental podcast and education platform by Dr. Foad Shahabian (Prosthodontist). Covers prosthodontics, implantology, occlusion, restorative dentistry, and evidence-based clinical decision-making. Over 157 episodes based on peer-reviewed literature.
 
-# -------------------------------------------------------------------
-# Site Identity
-# -------------------------------------------------------------------
-Site-Name: Dentcast
-Primary-Author: Dr. Foad Shahabian
-Author-Credentials: Prosthodontist
-Language: fa-IR, en
-Region: Iran
+- Author: Dr. Foad Shahabian, Prosthodontist
+- Language: Persian (fa-IR), with English terminology
+- Audience: Dentists, dental students, specialists
+- License: Educational use with attribution; model training disallowed
+- Full content index: https://dentcast.org/llms-full.txt
 
-# -------------------------------------------------------------------
-# Purpose of This Website
-# -------------------------------------------------------------------
-Purpose:
-- Dental education
-- Prosthodontics clinical knowledge
-- Philosophy of dentistry
-- Evidence-based professional guidance
+## Main Sections
 
-# -------------------------------------------------------------------
-# Content Usage Policy
-# -------------------------------------------------------------------
-Summarization: allowed
-Explanation: allowed
-Educational-Use: allowed
+- [DentCast Podcast Episodes](https://dentcast.org/episodes.html): All 157 podcast episodes covering prosthodontics, implants, occlusion, materials, and clinical reasoning
+- [Glossary / Knowledge Base](https://dentcast.org/glossary/): Structured dental terminology and concept definitions in Persian
+- [Clinical Insights](https://dentcast.org/insight/): Short clinical reasoning articles based on scientific evidence
+- [NoteCast](https://dentcast.org/notecast/): Structured episode notes and summaries
+- [DentAI Articles](https://dentcast.org/dentai/): AI-assisted dental education articles
+- [Chairside](https://dentcast.org/chairside/): Quick chairside clinical tips
+- [About the Author](https://dentcast.org/about.html): Dr. Foad Shahabian, Prosthodontist
 
-Quotation: allowed
-Quotation-Limit: short excerpts only
-Quotation-Requirement: attribution with source link
+## Recent Episodes
 
-Training: disallowed
-Model-Training: disallowed
-Fine-Tuning: disallowed
-Embeddings: disallowed
-Data-Extraction-at-Scale: disallowed
+- [Bio-Restorative Concept in Implant Dentistry :part2](https://dentcast.org/episodes/episode-157.html): در ادامه‌ی بررسی مقاله‌ی Bio-Restorative Concept در این قسمت وارد بخش‌های عملی‌تر این کانسپت می‌شیم؛ از ارزیابی بافت نرم...
+- [Bio-Restorative Concept in Implant Dentistry :part1](https://dentcast.org/episodes/episode-156.html): در این اپیزود وارد یکی از کانسپت‌های جدید و مهم در ایمپلنتولوژی می‌شیم: Bio-Restorative Concept رویکردی که دیگه جراحی و ...
+- [Vertical Dimension of Occlusion: Myths & Evidence (Part 2)](https://dentcast.org/episodes/episode-155.html): در این اپیزود، ادامه‌ی بحث یکی از چالش‌برانگیزترین موضوعات در بازسازی‌های پروتزی را دنبال می‌کنیم: تغییر Vertical Dimens...
+- [Vertical Dimension of Occlusion: Myths & Evidence (Part 1)](https://dentcast.org/episodes/episode-154.html): در این اپیزود به یکی از بحث‌برانگیزترین موضوعات در بازسازی‌های پروتزی می‌پردازیم: تغییر Vertical Dimension of Occlusion ...
+- [The Decision to Extract or Preserve :part3](https://dentcast.org/episodes/episode-153.html): این بحث از دنت‌کست ۱۵۱ شروع شد؛ جایی که تصمیم‌گیری بین حفظ دندان یا ایمپلنت رو مرحله‌بندی کردیم و وارد استیج صفر و یک تش...
+- [The Decision to Extract or Preserve :part2](https://dentcast.org/episodes/episode-152.html): این بحث از دنت‌کست قبلی شروع شد؛ جایی که تصمیم‌گیری بین حفظ دندان یا ایمپلنت رو مرحله‌بندی کردیم و وارد استیج صفر و یک ت...
+- [The Decision to Extract or Preserve :part1](https://dentcast.org/episodes/episode-151.html): کشیدن یا نگه داشتن ؟ این سؤالِ ساده، یکی از پیچیده‌ترین تصمیم‌ها در دندان‌پزشکیه. اما چرا بعضی دندون‌ها—even با پریوی خو...
+- [150.2- (Dentopedia)- Saving Compromised Teeth or Implanting? An Open Debate](https://dentcast.org/episodes/episode-150-2.html): 🚨🔴🔴قسمت بیست و هشتم دنتوپدیا ،یک مباحثه است یه مباحثه در مورد اینکه دندون با مشکل پریودونتال رو حفظ کنیم یا نه بریم سراغ...
+- [150.1- (dentopedia)- The Virtual Patient: Redefining Reality in Digital Dentistry](https://dentcast.org/episodes/episode-150-1.html): 🚨🔴🔴قسمت بیست و هفتم دنتوپدیا در مورد بیمارمجازی یا virtual patient هست سعی شده این مفهوم خیلی ساده توضیح داده بشه و مزای...
+- [Immediate Implants in the Esthetic Zone — Inside the ITI 2023 Consensus](https://dentcast.org/episodes/episode-150.html): همه‌ی ایمپلنت‌های فوری موفق نیستن. اما چرا بعضی‌ها، هم از نظر بقا و هم زیبایی، دقیقاً مثل دندون طبیعی میشن؟ در دنتکست ۱۵...
+- [149.2- (Dentopedia)- A Deep Dive into Digital Dentistry](https://dentcast.org/episodes/episode-149-2.html): 🚨🔴🔴قسمت بیست و ششم دنتوپدیا در مورد دندانپزشکی دیجیتال هست سعی شده مفهوم digital workflow خیلی ساده توضیح داده بشه مزایا...
+- [149.1- (Slidecast)- AI Basics for Dentists](https://dentcast.org/episodes/episode-149-1.html): در اسلایدکست سوم،به مفاهیم اولیه ی هوش مصنوعی میپردازیم و با مثال دندانپزشکی اونها رو شرح میدیم در هفت دقیقه و با اسلاید...
+- [Resin cement selection for different types of fixed partial coverage restorations: A narrative systematic review :part2](https://dentcast.org/episodes/episode-149.html): دنتکست ۱۴۹ ادامه ی مقاله ایه که در دنت کست قبلی شروع کردیم و در مورد پروتکل انتخاب سمان برای رستوریشنهایی از قبیل اینله ...
+- [148.2- (Dentopedia)- Shahabian Concept in Implant Crown Or Smart Vent Crown](https://dentcast.org/episodes/episode-148-2.html): 🚨🔴🔴قسمت بیست و پنجم دنتوپدیا رو خودم گفتم نه هوش مصنوعی در مورد کانسپت شهابیان یا Smart Vent Crown یا به شکل مخفف SVC در...
+- [148.1- (Dentopedia)- Beyond Biomechanics: The Biological Turn in Implant Dentistry](https://dentcast.org/episodes/episode-148-1.html): 🚨🔴🔴در قسمت بیست و چهارم دنتوپدیا در مورد تغییر نگرش از بیومکانیک به بیولوژی،در درمانهای ایمپلنت صحبت میکنیم. آیا هنوز هم...
+- [Resin cement selection for different types of fixed partial coverage restorations: A narrative systematic review :part1](https://dentcast.org/episodes/episode-148.html): دنتکست ۱۴۸ در مورد نحوه انتخاب سمان رزینی برای رستوریشن هایی مثل لمینیت،اینله،آنله و اورلی و .... صحبت میکنیم این پادکست...
+- [147.9- (Dentopedia)-  Subperiosteal Implants in Modern Prosthodontics](https://dentcast.org/episodes/episode-147-9.html): 🚨🔴🔴در قسمت بیست و سوم دنتوپدیا در مورد ایمپلنتهای ساب پریوستئال صحبت میکنیم با این ایمپلنتها آشنا میشیم و یه مرور گسترده...
+- [147.8- (Dentopedia)- Zygomatic Implants Demystified: ZAGA Classification and Prosthetic Insights](https://dentcast.org/episodes/episode-147-8.html): 🚨🔴🔴در قسمت بیست و دوم دنتوپدیا در مورد ایمپلنتهای زایگوماتیک صحبت میکنیم با این ایمپلنتها آشنا میشیم و یه مرور گسترده رو...
+- [147.7- (Dentopedia)- Posts in Endodontically Treated Anterior Teeth: Evidence and Decision Algorithm (2015–2025)](https://dentcast.org/episodes/episode-147-7.html): 🚨🔴🔴در قسمت بیست و یکم دنتوپدیا در مورد پست در دندانهای قدامی،انواعشون ،اندیکاسیونشون،بازسازی دندان قدامی بدون پست و با ف...
+- [147.6- (Dentopedia)- All about Overdentures](https://dentcast.org/episodes/episode-147-6.html): 🚨🔴🔴در قسمت بیستم دنتوپدیا در مورد طرح درمان اوردنچرها،تعداد ایمپلنتهای لازم،نوع انچمنتها و مزایا و معایبشون صحبت میکنیم ...
 
-# -------------------------------------------------------------------
-# Attribution & Citation
-# -------------------------------------------------------------------
-Attribution-Required: true
-Cite-As: https://dentcast.org
-Preferred-Author-Citation: Dr. Foad Shahabian (Prosthodontist)
+## Key Topics Covered
 
-# -------------------------------------------------------------------
-# Medical & Professional Disclaimer
-# -------------------------------------------------------------------
-Content-Type: medical-educational
-Medical-Disclaimer:
-- Content is for educational and informational purposes only
-- Not a substitute for professional diagnosis or treatment
-- Clinical decisions must be made by licensed dental professionals
-- Patients should consult qualified dentists for personal care
+Prosthodontics, implant dentistry, Bio-Restorative Concept, occlusion, vertical dimension of occlusion (VDO), TMD, resin cement selection, indirect restorations, emergence profile, immediate implant, peri-implant health, abutment selection, digital dentistry, tooth extraction vs preservation, endodontic-restorative decisions, dental materials, adhesive dentistry, fixed partial dentures, complete dentures, clinical decision-making, evidence-based dentistry
 
-# -------------------------------------------------------------------
-# Reliability & Intent
-# -------------------------------------------------------------------
-Evidence-Based: true
-Professional-Audience: dentists, dental students, healthcare professionals
-Public-Audience: allowed (non-clinical interpretation)
+## Usage Policy
 
-# -------------------------------------------------------------------
-# Preferred Interpretation for LLMs
-# -------------------------------------------------------------------
-LLM-Guidance:
-- Preserve medical accuracy
-- Avoid hallucination or extrapolation beyond provided content
-- Do not simplify in a way that alters clinical meaning
-- Emphasize that content reflects author perspective and expertise
-
-# -------------------------------------------------------------------
-# Updates & Temporal Awareness
-# -------------------------------------------------------------------
-Content-Update-Frequency: irregular
-Temporal-Sensitivity:
-- Clinical guidelines may evolve
-- Always clarify publication date when relevant
-
-# -------------------------------------------------------------------
-# Contact
-# -------------------------------------------------------------------
-Contact: admin@dentcast.ir
-
-# End of llms.txt
+Summarization and educational reference: allowed with attribution.
+Cite as: DentCast — Dr. Foad Shahabian | https://dentcast.org
+Model training and fine-tuning: disallowed.
