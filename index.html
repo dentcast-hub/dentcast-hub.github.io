@@ -443,7 +443,7 @@ body{
 }
 .dc-identity-text{ flex:1; min-width:0; }
 .dc-identity-main{
-  font-size:clamp(.65rem,3.2vw,.88rem);
+  font-size:clamp(0.47rem,2.35vw,0.66rem);
   font-weight:800;
   color:#ffffff;
   white-space:nowrap;
@@ -1705,6 +1705,82 @@ body.dc-desktop-ui #dc-desktop-root{
 .dc-scrolly-cta .dc-cta-btn:active{
   background:rgba(255,255,255,.28);
 }
+
+/* =====================================================
+   PROMPT 2 — Episodes hero card: double size
+===================================================== */
+#card-episodes{
+  min-height:150px;
+  padding:24px 20px;
+  align-items:center;
+}
+#card-episodes .dc-hero-card-title{
+  font-size:1.22rem; font-weight:900; line-height:1.4;
+}
+#card-episodes .dc-hero-card-sub{
+  font-size:.90rem; margin-top:6px;
+}
+#card-episodes .dc-hero-card-ico{
+  width:56px; height:56px; font-size:28px;
+  border-radius:var(--r-lg);
+}
+
+/* =====================================================
+   PROMPT 3 — Bottom nav: darker bg + Studio prominence
+===================================================== */
+/* Override --bn-bg inline via class */
+.dc-bottom-nav{
+  background:#dde3f0;
+}
+[data-theme="dark"] .dc-bottom-nav{
+  background:#0b1420;
+}
+/* Studio tab always bolder than peers */
+.dc-bn-item[data-panel="panel-studio"] .dc-bn-ico{
+  font-size:27px;
+}
+.dc-bn-item[data-panel="panel-studio"] .dc-bn-lbl{
+  font-size:.72rem; font-weight:900; color:var(--pr);
+}
+[data-theme="dark"] .dc-bn-item[data-panel="panel-studio"] .dc-bn-lbl{
+  color:var(--ac);
+}
+
+/* =====================================================
+   PROMPT 4 — Glossary card in Meta Base: double size
+===================================================== */
+#panel-sharehub .dc-list-card.featured:first-child{
+  min-height:114px;
+  padding:20px 16px;
+  align-items:center;
+}
+#panel-sharehub .dc-list-card.featured:first-child .dc-list-card-title{
+  font-size:1.16rem; font-weight:900;
+}
+#panel-sharehub .dc-list-card.featured:first-child .dc-list-card-sub{
+  font-size:.86rem; margin-top:5px;
+}
+#panel-sharehub .dc-list-card.featured:first-child .dc-chip{
+  font-size:.76rem; padding:5px 14px;
+}
+
+/* =====================================================
+   PROMPT 5 — LiteCast card in patient panel: double size
+===================================================== */
+#card-litecast{
+  min-height:114px;
+  padding:20px 16px;
+  align-items:center;
+}
+#card-litecast .dc-list-card-title{
+  font-size:1.16rem; font-weight:900;
+}
+#card-litecast .dc-list-card-sub{
+  font-size:.86rem; margin-top:5px;
+}
+#card-litecast .dc-chip{
+  font-size:.76rem; padding:5px 14px;
+}
   </style>
 
 
@@ -1771,7 +1847,7 @@ body.dc-desktop-ui #dc-desktop-root{
           <img src="/logo-v2.png" alt="DentCast" width="36" height="36" loading="eager" draggable="false">
         </div>
         <div class="dc-identity-text">
-          <h1 class="dc-identity-main">دنتکست -<span class="dc-shimmer-word">جامع ترین</span> منبع فارسی پروتز و ایمپلنت</h1>
+          <h1 class="dc-identity-main">دنتکست · <span class="dc-shimmer-word">جامع‌ترین</span> منبع فارسی پروتز و ایمپلنت · مبتنی بر شواهد</h1>
         </div>
       </div>
 
@@ -1925,7 +2001,7 @@ body.dc-desktop-ui #dc-desktop-root{
       <div class="dc-scrolly-wrap">
         <div class="dc-monitor dc-scrolly-hint-card" id="scrolly-hint">
           <div class="dc-monitor-inner" style="display:flex;align-items:center;justify-content:center;gap:10px;padding:10px 14px;">
-            <span style="font-size:.82rem;font-weight:700;color:var(--txt2);">اینجاست که درمان شروع میشه (اسکرول کنید)</span>
+            <span style="font-size:.82rem;font-weight:900;color:var(--txt2);">اینجاست که درمان شروع میشه (اسکرول کنید)</span>
             <div class="dc-scrolly-hint-arrow"></div>
           </div>
         </div>
