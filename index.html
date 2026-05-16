@@ -1707,22 +1707,16 @@ body.dc-desktop-ui #dc-desktop-root{
 }
 
 /* =====================================================
-   PROMPT 2 — Episodes hero card: double size
+   PROMPT 2 — Episodes hero card: double height only
 ===================================================== */
 #card-episodes{
-  min-height:150px;
-  padding:24px 20px;
-  align-items:center;
+  min-height:110px;
 }
 #card-episodes .dc-hero-card-title{
-  font-size:1.22rem; font-weight:900; line-height:1.4;
-}
-#card-episodes .dc-hero-card-sub{
-  font-size:.90rem; margin-top:6px;
-}
-#card-episodes .dc-hero-card-ico{
-  width:56px; height:56px; font-size:28px;
-  border-radius:var(--r-lg);
+  font-size:1.05rem;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
 }
 
 /* =====================================================
@@ -1747,21 +1741,10 @@ body.dc-desktop-ui #dc-desktop-root{
 }
 
 /* =====================================================
-   PROMPT 4 — Glossary card in Meta Base: double size
+   PROMPT 4 — Glossary card in Meta Base: taller only
 ===================================================== */
 #panel-sharehub .dc-list-card.featured:first-child{
-  min-height:114px;
-  padding:20px 16px;
-  align-items:center;
-}
-#panel-sharehub .dc-list-card.featured:first-child .dc-list-card-title{
-  font-size:1.16rem; font-weight:900;
-}
-#panel-sharehub .dc-list-card.featured:first-child .dc-list-card-sub{
-  font-size:.86rem; margin-top:5px;
-}
-#panel-sharehub .dc-list-card.featured:first-child .dc-chip{
-  font-size:.76rem; padding:5px 14px;
+  min-height:110px;
 }
 
 /* =====================================================
@@ -2001,7 +1984,7 @@ body.dc-desktop-ui #dc-desktop-root{
       <div class="dc-scrolly-wrap">
         <div class="dc-monitor dc-scrolly-hint-card" id="scrolly-hint">
           <div class="dc-monitor-inner" style="display:flex;align-items:center;justify-content:center;gap:10px;padding:10px 14px;">
-            <span style="font-size:.82rem;font-weight:900;color:var(--txt2);">اینجاست که درمان شروع میشه (اسکرول کنید)</span>
+            <span style="font-size:.90rem;font-weight:700;color:var(--txt2);">اینجاست که درمان شروع میشه (اسکرول کنید)</span>
             <div class="dc-scrolly-hint-arrow"></div>
           </div>
         </div>
