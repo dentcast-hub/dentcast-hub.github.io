@@ -7480,33 +7480,6 @@
     "page_url": "/chairside/chairside-14.html"
   },
   {
-    "type": "chairside",
-    "id": "chairside-15",
-    "title": "اکلوژن کانین‌رایز در یک سمت، گروپ‌فانکشن در سمت مقابل؛ وقتی ناهماهنگی الگوی طرفی، علامت‌دار می‌شود",
-    "caption": "روایت یک کیس کلینیکی درباره بیماری که پس از دریافت روکش جدید برای دندان ۶ بالا چپ، از تماس آزاردهنده دندان‌های نیش در حرکات طرفی شکایت داشت. بررسی کلینیکی نشان داد یک سمت فک با الگوی کانین‌رایز و سمت مقابل با گروپ‌فانکشن کار می‌کند. این ناهماهنگی پس از ساخت روکشی که تماس طرفی آن حذف شده بود به اختلال در ورودی‌های پروپریوسپتیو و ظهور آگاهی اکلوزال منجر شد. اکلوژن نه‌فقط یک پدیده بیومکانیکی بلکه یک پدیده ادراکی است و هر تغییر در الگوی آشنا می‌تواند نقشه پروپریوسپتیو کل قوس را به هم بزند. تصمیم درمانی بازسازی مجدد روکش با بازگرداندن الگوی گروپ‌فانکشن بود تا سیستم عصبی اکلوژن را دوباره به ناخودآگاه بسپارد.",
-    "hashtags": [
-      "#اکلوژن",
-      "#کانین_رایز",
-      "#گروپ_فانکشن",
-      "#پروپریوسپشن",
-      "#آگاهی_اکلوزال",
-      "#هدایت_طرفی",
-      "#روکش",
-      "#نوروماسکولار"
-    ],
-    "keywords": [
-      "canine rise occlusion lateral guidance",
-      "group function lateral occlusion scheme",
-      "asymmetric lateral occlusion crown restoration",
-      "occlusal proprioception neuromuscular dentistry",
-      "occlusal awareness single unit crown",
-      "lateral excursion contacts posterior crown",
-      "occlusion perceptual biomechanical prosthodontics",
-      "crown occlusion neuromuscular pattern disruption"
-    ],
-    "page_url": "/chairside/chairside-15.html"
-  },
-  {
     "type": "clinical",
     "id": "clinical-39",
     "title": "خروج از تونل کانال در دندان‌های C-Shape: وقتی پست‌و‌کور تنها مسیر نیست",
@@ -7653,5 +7626,32 @@
     ],
     "audio_url": "https://episodes.s3.ir-thr-at1.arvanstorage.ir/dentcast157%20.mp3?versionId=",
     "page_url": "/episodes/episode-157.html"
+  },
+  {
+    "type": "chairside",
+    "id": "chairside-15",
+    "title": "اکلوژن کانین‌رایز در یک سمت، گروپ‌فانکشن در سمت مقابل؛ وقتی ناهماهنگی الگوی طرفی، علامت‌دار می‌شود",
+    "caption": "روایت یک کیس کلینیکی درباره بیماری که پس از دریافت روکش جدید برای دندان ۶ بالا چپ، از تماس آزاردهنده دندان‌های نیش در حرکات طرفی شکایت داشت. بررسی کلینیکی نشان داد یک سمت فک با الگوی کانین‌رایز و سمت مقابل با گروپ‌فانکشن کار می‌کند. این ناهماهنگی پس از ساخت روکشی که تماس طرفی آن حذف شده بود به اختلال در ورودی‌های پروپریوسپتیو و ظهور آگاهی اکلوزال منجر شد. اکلوژن نه‌فقط یک پدیده بیومکانیکی بلکه یک پدیده ادراکی است و هر تغییر در الگوی آشنا می‌تواند نقشه پروپریوسپتیو کل قوس را به هم بزند. تصمیم درمانی بازسازی مجدد روکش با بازگرداندن الگوی گروپ‌فانکشن بود تا سیستم عصبی اکلوژن را دوباره به ناخودآگاه بسپارد.",
+    "hashtags": [
+      "#اکلوژن",
+      "#کانین_رایز",
+      "#گروپ_فانکشن",
+      "#پروپریوسپشن",
+      "#آگاهی_اکلوزال",
+      "#هدایت_طرفی",
+      "#روکش",
+      "#نوروماسکولار"
+    ],
+    "keywords": [
+      "canine rise occlusion lateral guidance",
+      "group function lateral occlusion scheme",
+      "asymmetric lateral occlusion crown restoration",
+      "occlusal proprioception neuromuscular dentistry",
+      "occlusal awareness single unit crown",
+      "lateral excursion contacts posterior crown",
+      "occlusion perceptual biomechanical prosthodontics",
+      "crown occlusion neuromuscular pattern disruption"
+    ],
+    "page_url": "/chairside/chairside-15.html"
   }
 ]
