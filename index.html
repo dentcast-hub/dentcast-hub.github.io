@@ -3384,4 +3384,28 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
     const progress = Math.max(0, Math.min(1, (bRect.top - tRect.top) / total));
     const idx = Math.round(progress * (FRAME_COUNT - 1));
 
-    if(idx !== la
+    if(idx !== lastIdx){
+      lastIdx = idx;
+      const f = frames[idx];
+      if(f && f.complete && f.naturalWidth) drawFrame(f);
+    }
+
+    /* progress bar */
+    fillEl.style.height = (progress * 100) + '%';
+
+    /* hint: با شروع اسکرول محو میشه */
+    hintEl.style.opacity = Math.max(0, 1 - progress / 0.08);
+
+    /* CTA از ۷۵٪ به بعد */
+    const ctaP = Math.max(0, (progress - 0.75) / 0.25);
+    ctaEl.style.opacity       = ctaP;
+    ctaEl.style.pointerEvents = ctaP > 0.05 ? 'auto' : 'none';
+  }
+
+  body.addEventListener('scroll', function(){
+    if(!ticking){ ticking = true; requestAnimationFrame(update); }
+  }, { passive: true });
+})();
+</script>
+</body>
+</html>
