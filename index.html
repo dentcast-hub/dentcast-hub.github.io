@@ -700,16 +700,29 @@ body{
   background:linear-gradient(135deg,rgba(var(--pr-rgb),.22),rgba(var(--ac-rgb),.12));
 }
 
-/* LiteCast featured — یک گام روشن‌تر از Glossary، margin-bottom هم‌اندازه hero */
+/* LiteCast featured — hero card */
 #panel-patient .dc-list-card.featured:first-child{
-  background:linear-gradient(135deg,rgba(var(--pr-rgb),.13),rgba(var(--ac-rgb),.07));
-  border:1px solid rgba(var(--pr-rgb),.22)!important;
-  border-right:3px solid rgba(var(--pr-rgb),.42)!important;
-  box-shadow:0 8px 24px rgba(var(--pr-rgb),.13),var(--card-sh)!important;
+  background:linear-gradient(135deg,var(--pr) 0%,rgba(var(--ac-rgb),1) 100%);
+  border:none!important;
+  border-top:none!important;
+  border-right:none!important;
+  box-shadow:0 8px 28px rgba(var(--pr-rgb),.32),0 2px 6px rgba(var(--pr-rgb),.18)!important;
   margin-bottom:20px;
 }
+#panel-patient .dc-list-card.featured:first-child .lc-category{ color:rgba(255,255,255,.65); }
+#panel-patient .dc-list-card.featured:first-child .lc-title{ color:#ffffff; }
+#panel-patient .dc-list-card.featured:first-child .lc-sub{ color:rgba(255,255,255,.75); }
+#panel-patient .dc-list-card.featured:first-child .lc-ico{
+  background:rgba(255,255,255,.15);
+  border-color:rgba(255,255,255,.25);
+}
+#panel-patient .dc-list-card.featured:first-child .dc-chip{
+  background:rgba(255,255,255,.18);
+  border-color:rgba(255,255,255,.30);
+  color:#ffffff;
+}
 [data-theme="dark"] #panel-patient .dc-list-card.featured:first-child{
-  background:linear-gradient(135deg,rgba(var(--pr-rgb),.17),rgba(var(--ac-rgb),.09));
+  background:linear-gradient(135deg,rgba(var(--pr-rgb),.55) 0%,rgba(var(--ac-rgb),.40) 100%);
 }
 
 /* =====================================================
@@ -1638,10 +1651,10 @@ body.dc-desktop-ui #dc-desktop-root{
 .dc-scrolly-hint-card{
   transition:opacity .3s ease;
   margin-bottom:6px;
-  background:linear-gradient(135deg,rgba(var(--pr-rgb),.11),rgba(var(--ac-rgb),.06))!important;
-  border:1px solid rgba(var(--pr-rgb),.20)!important;
-  border-right:3px solid rgba(var(--pr-rgb),.40)!important;
-  box-shadow:0 8px 24px rgba(var(--pr-rgb),.11),var(--card-sh)!important;
+  background:linear-gradient(135deg,rgba(var(--pr-rgb),.09),rgba(var(--ac-rgb),.05))!important;
+  border:1px solid rgba(var(--pr-rgb),.18)!important;
+  border-right:4px solid var(--ac)!important;
+  box-shadow:0 8px 24px rgba(var(--pr-rgb),.13),var(--card-sh)!important;
 }
 .dc-scrolly-hint-card .dc-monitor-inner{
   display:flex !important;
@@ -2201,7 +2214,7 @@ body.dc-desktop-ui #dc-desktop-root{
       <div class="dc-scrolly-wrap">
         <div class="dc-monitor dc-scrolly-hint-card" id="scrolly-hint">
           <div class="dc-monitor-inner">
-            <div class="dc-scrolly-hint-label">اینجاست که درمان شروع میشه</div>
+            <div class="dc-scrolly-hint-label">🧭 اینجاست که درمان شروع میشه</div>
             <div class="dc-scrolly-hint-sub">برای تماس و مسیریابی مطب اسکرول کنید</div>
             <div class="dc-scrolly-hint-arrow"></div>
           </div>
