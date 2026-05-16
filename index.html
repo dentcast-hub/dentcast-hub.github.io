@@ -1707,34 +1707,74 @@ body.dc-desktop-ui #dc-desktop-root{
 }
 
 /* =====================================================
-   PROMPT 2 — Episodes hero card: column layout
+   EPISODES CARD — redesigned layout
 ===================================================== */
 #card-episodes{
-  min-height:110px;
   flex-direction:column;
   align-items:stretch;
+  padding:16px 18px 14px;
+  gap:0;
+  min-height:0;
 }
-.dc-hero-ep-top{
+
+/* Row 1 — eyebrow: icon + category label */
+.ep-eyebrow-row{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  margin-bottom:11px;
+}
+.ep-ico{
+  width:32px; height:32px;
+  background:rgba(255,255,255,.16);
+  border:1px solid rgba(255,255,255,.20);
+  border-radius:9px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:16px;
+  flex-shrink:0;
+}
+.ep-category{
+  font-size:.65rem;
+  font-weight:700;
+  color:rgba(255,255,255,.55);
+  letter-spacing:.06em;
+}
+
+/* Row 2 — main title */
+.ep-title{
+  font-size:1.06rem;
+  font-weight:900;
+  color:#fff;
+  letter-spacing:-.25px;
+  line-height:1.35;
+  margin-bottom:8px;
+}
+
+/* Row 3 — footer: sub + chip */
+.ep-footer{
   display:flex;
   align-items:center;
   justify-content:space-between;
-  gap:8px;
-  margin-bottom:4px;
+  gap:10px;
 }
-.dc-hero-ep-top .dc-hero-card-ico{
-  margin-right:0;
-  flex-shrink:0;
-}
-#card-episodes .dc-hero-card-title{
-  font-size:1.05rem;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
+.ep-sub{
+  font-size:.71rem;
+  color:rgba(255,255,255,.58);
+  line-height:1.4;
   flex:1;
+  min-width:0;
 }
-#card-episodes .dc-hero-chip{
-  align-self:flex-end;
-  margin-top:10px;
+.ep-chip{
+  font-size:.62rem;
+  font-weight:800;
+  padding:4px 11px;
+  border-radius:999px;
+  background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.22);
+  color:rgba(255,255,255,.88);
+  white-space:nowrap;
+  flex-shrink:0;
+  letter-spacing:.02em;
 }
 
 /* =====================================================
@@ -1778,10 +1818,57 @@ body.dc-desktop-ui #dc-desktop-root{
 }
 
 /* =====================================================
-   PROMPT 4 — Glossary card in Meta Base: taller only
+   GLOSSARY CARD — redesigned layout
 ===================================================== */
-#panel-sharehub .dc-list-card.featured:first-child{
-  min-height:110px;
+#card-glossary{
+  flex-direction:column;
+  align-items:stretch;
+  padding:16px 18px 14px;
+  gap:0;
+  min-height:0;
+  border-right:1px solid rgba(var(--pr-rgb),.28)!important;
+  border-top:3px solid rgba(var(--pr-rgb),.55)!important;
+}
+.gls-eyebrow-row{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  margin-bottom:10px;
+}
+.gls-ico{
+  width:30px; height:30px;
+  background:rgba(var(--pr-rgb),.10);
+  border:1px solid rgba(var(--pr-rgb),.18);
+  border-radius:8px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:15px;
+  flex-shrink:0;
+}
+.gls-category{
+  font-size:.63rem;
+  font-weight:700;
+  color:var(--txt3);
+  letter-spacing:.05em;
+}
+.gls-title{
+  font-size:1.06rem;
+  font-weight:900;
+  color:var(--pr);
+  letter-spacing:-.2px;
+  line-height:1.3;
+  margin-bottom:8px;
+}
+.gls-footer{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+.gls-sub{
+  font-size:.71rem;
+  color:var(--txt2);
+  flex:1;
+  min-width:0;
 }
 
 /* =====================================================
@@ -1896,12 +1983,15 @@ body.dc-desktop-ui #dc-desktop-root{
 
       <!-- Episodes hero -->
       <div class="dc-hero-card" id="card-episodes" onclick="window.location.href='episodes.html?v=1'">
-        <div class="dc-hero-ep-top">
-          <div class="dc-hero-card-title">فهرست و شنیدن اپیزودهای دنت‌کست</div>
-          <div class="dc-hero-card-ico">🎧</div>
+        <div class="ep-eyebrow-row">
+          <div class="ep-ico">🎧</div>
+          <span class="ep-category">پادکست · اپیزودها</span>
         </div>
-        <div class="dc-hero-card-sub">همه ی اپیزودهای اصلی و فرعی</div>
-        <span class="dc-hero-chip">DentCast</span>
+        <div class="ep-title">فهرست و شنیدن اپیزودهای دنت‌کست</div>
+        <div class="ep-footer">
+          <span class="ep-sub">همه‌ی اپیزودهای اصلی و فرعی</span>
+          <span class="ep-chip">DentCast ◂</span>
+        </div>
       </div>
 
       <!-- 2×2 Grid -->
@@ -1942,12 +2032,16 @@ body.dc-desktop-ui #dc-desktop-root{
     <!-- ── PANEL: Meta Base ── -->
     <section class="dc-panel" id="panel-sharehub">
 
-      <div class="dc-list-card featured" onclick="window.location.href='/glossary/'">
-        <div class="dc-list-card-main">
-          <div class="dc-list-card-title">دانشنامه دنت‌کست 📚</div>
-          <div class="dc-list-card-sub">مفاهیم تصمیم‌ساز دندان‌پزشکی</div>
+      <div class="dc-list-card featured" id="card-glossary" onclick="window.location.href='/glossary/'">
+        <div class="gls-eyebrow-row">
+          <div class="gls-ico">📚</div>
+          <span class="gls-category">Meta Base · دانشنامه</span>
         </div>
-        <span class="dc-chip">Glossary</span>
+        <div class="gls-title">دانشنامه دنت‌کست</div>
+        <div class="gls-footer">
+          <span class="gls-sub">مفاهیم تصمیم‌ساز دندان‌پزشکی</span>
+          <span class="dc-chip">Glossary ◂</span>
+        </div>
       </div>
 
       <div class="dc-list-card" onclick="window.location.href='/insight/'">
@@ -1989,7 +2083,7 @@ body.dc-desktop-ui #dc-desktop-root{
 
       <div class="dc-list-card featured" id="card-litecast" onclick="window.location.href='/litecast/'">
         <div class="dc-list-card-main">
-          <div class="dc-list-card-title" style="display:flex;align-items:center;justify-content:space-between;gap:6px;"><span>LiteCast — دندان‌پزشکی برای همه</span><span>✨</span></div>
+          <div class="dc-list-card-title" style="display:flex;align-items:center;justify-content:space-between;gap:6px;"><span>LiteCast — دندان‌پزشکی برای همه✨</span></div>
           <div class="dc-list-card-sub">محتوای ساده و غیر تخصصی برای بیماران</div>
         </div>
         <span class="dc-chip">LiteCast</span>
