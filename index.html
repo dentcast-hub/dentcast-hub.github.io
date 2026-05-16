@@ -2070,6 +2070,7 @@ body.dc-desktop-ui #dc-desktop-root{
           <button class="dc-pulse-close" onclick="document.getElementById('dcPulseCard').style.display='none'" aria-label="بستن">×</button>
         </div>
         <ul class="dc-pulse-list">
+          <li><a href="/chairside/chairside-15.html"><strong>Chairside 15</strong></a> وقتی یک روکش، نقشهٔ ادراکی بیمار از فکش را به هم می‌زند · ۲۷ اردیبهشت</li>
           <li><a href="/episodes/episode-157.html"><strong>دنتکست ۱۵۷</strong></a> منتشر شد · ۲۵ اردیبهشت</li>
 
           <li><a href="https://dentcast.ir/#radar"><strong>رادار دنت‌کست</strong></a> با بیش از ۷۰ سایت دندانپزشکی آپدیت شد</li>
@@ -3383,29 +3384,4 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
     const progress = Math.max(0, Math.min(1, (bRect.top - tRect.top) / total));
     const idx = Math.round(progress * (FRAME_COUNT - 1));
 
-    if(idx !== lastIdx){
-      lastIdx = idx;
-      const f = frames[idx];
-      if(f && f.complete && f.naturalWidth) drawFrame(f);
-    }
-
-    /* progress bar */
-    fillEl.style.height = (progress * 100) + '%';
-
-    /* hint: با شروع اسکرول محو میشه */
-    hintEl.style.opacity = Math.max(0, 1 - progress / 0.08);
-
-    /* CTA از ۷۵٪ به بعد */
-    const ctaP = Math.max(0, (progress - 0.75) / 0.25);
-    ctaEl.style.opacity       = ctaP;
-    ctaEl.style.pointerEvents = ctaP > 0.05 ? 'auto' : 'none';
-  }
-
-  body.addEventListener('scroll', function(){
-    if(!ticking){ ticking = true; requestAnimationFrame(update); }
-  }, { passive: true });
-})();
-</script>
-</body>
-</html>
-           
+    if(idx !== la
