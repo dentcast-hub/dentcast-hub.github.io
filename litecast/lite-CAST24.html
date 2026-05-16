@@ -88,21 +88,28 @@ figure.hero {
 .cta-container {
   margin-top: 40px;
   padding: 22px 20px;
-  background: rgba(2,35,96,.05);
-  border: 1px solid rgba(2,35,96,.12);
+  background: var(--surface2, #f4f6fb);
+  border: 1px solid var(--card-border, rgba(2,35,96,.09));
+  border-right: 3px solid rgba(2,35,96,.28);
   border-radius: 16px;
   text-align: center;
+  box-shadow: var(--card-sh, 0 1px 3px rgba(2,35,96,.07),0 4px 14px rgba(2,35,96,.04));
+}
+[data-theme="dark"] .cta-container {
+  border-right-color: rgba(91,156,246,.35);
 }
 .cta-text {
   font-weight: 700;
   font-size: .93rem;
-  color: #0a1a33;
+  color: var(--txt, #0a1a33);
   margin: 0 0 16px;
   line-height: 1.5;
 }
 .cta-button {
-  display: inline-block;
-  background: #022360;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--pr, #022360);
   color: #ffffff;
   text-decoration: none;
   padding: 13px 28px;
@@ -113,6 +120,10 @@ figure.hero {
   box-shadow: 0 6px 20px rgba(2,35,96,.28);
   transition: transform .18s ease, box-shadow .18s ease;
 }
+[data-theme="dark"] .cta-button {
+  background: var(--ac, #5b9cf6);
+  box-shadow: 0 6px 20px rgba(91,156,246,.25);
+}
 .cta-button:hover {
   transform: translateY(-2px);
   box-shadow: 0 10px 28px rgba(2,35,96,.40);
@@ -122,22 +133,31 @@ figure.hero {
 }
 /* ===== دکمه برگشت ===== */
 .back-btn {
-  display: inline-block;
-  background: rgba(11,95,255,0.15);
-  color: #2f6fff;
-  border: 1.6px solid rgba(11,95,255,0.45);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface2, #f4f6fb);
+  color: var(--pr, #022360);
+  border: 1px solid var(--card-border, rgba(2,35,96,.09));
+  border-top: 2px solid rgba(2,35,96,.28);
   border-radius: 14px;
-  padding: 12px 44px;
+  padding: 13px 44px;
   font-weight: 700;
   text-decoration: none;
+  font-size: .92rem;
+  box-shadow: var(--card-sh, 0 1px 3px rgba(2,35,96,.07),0 4px 14px rgba(2,35,96,.04));
   transition: all .2s ease;
+  min-height: 48px;
 }
-
-.back-btn:hover {
-  background: rgba(11,95,255,0.25);
-  transform: translateY(-1px);
+[data-theme="dark"] .back-btn {
+  color: var(--ac, #5b9cf6);
+  border-color: rgba(255,255,255,.08);
+  border-top-color: rgba(91,156,246,.30);
 }
-
+.back-btn:active {
+  transform: scale(.975);
+  background: var(--surface3, #eaecf5);
+}
 /* ===== فوتر ===== */
 footer {
   margin-top: 52px;
@@ -362,8 +382,10 @@ footer a:hover {
 
 </main>
 
-<div style="text-align:center; margin-top:40px;">
-  <a href="javascript:history.back()" class="back-btn">🔙 برگشت به صفحه‌ی قبل</a>
+<div style="text-align:center; margin-top:36px; margin-bottom:4px;">
+  <a href="javascript:history.back()" class="back-btn">
+    ← برگشت به صفحه‌ی قبل
+  </a>
 </div>
 
 <footer class="dc-site-footer">

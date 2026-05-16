@@ -725,10 +725,11 @@ body{
   overflow:hidden;
   transition:all var(--tr2);
 }
-.dc-monitor-inner{ padding:12px 14px; }
+#panel-patient .dc-monitor{ margin-bottom:12px; }
+.dc-monitor-inner{ padding:14px 16px; }
 .dc-monitor-title{
-  font-size:.80rem; font-weight:800;
-  color:var(--txt); margin:0 0 9px;
+  font-size:.82rem; font-weight:800;
+  color:var(--txt); margin:0 0 10px;
 }
 .dc-monitor-list{
   display:flex; flex-direction:column; gap:3px;
@@ -787,22 +788,22 @@ body{
    LOCATION / CONTACT
 ===================================================== */
 .dc-locpack-img{
-  width:100%; height:95px;
+  width:100%; height:150px;
   object-fit:cover; border-radius:var(--r-md);
   display:block; border:1px solid var(--border);
 }
 .dc-locpack-hint{
-  margin-top:6px; font-size:.74rem;
-  color:var(--txt2); line-height:1.6; text-align:center;
+  margin-top:8px; font-size:.78rem;
+  color:var(--txt2); line-height:1.65; text-align:center;
 }
 .dc-cta-row{
   display:grid; grid-template-columns:1fr 1fr;
-  gap:8px; margin-top:10px;
+  gap:10px; margin-top:14px;
 }
 .dc-cta-btn{
   display:flex; align-items:center; justify-content:center;
-  padding:11px 8px; border-radius:var(--r-md);
-  font-size:.85rem; font-weight:800;
+  padding:14px 10px; border-radius:var(--r-md);
+  font-size:.88rem; font-weight:800;
   text-decoration:none;
   background:var(--surface2);
   border:1px solid var(--border);
@@ -810,6 +811,7 @@ body{
   color:var(--pr);
   box-shadow:var(--card-sh);
   transition:all var(--tr);
+  min-height:48px;
 }
 [data-theme="dark"] .dc-cta-btn{ color:#8ab4f8; border-color:rgba(91,156,246,.20); border-top-color:rgba(91,156,246,.30); }
 .dc-cta-btn:active{ transform:scale(.975); background:var(--surface3); }
@@ -1636,15 +1638,35 @@ body.dc-desktop-ui #dc-desktop-root{
 .dc-scrolly-hint-card{
   transition:opacity .3s ease;
   margin-bottom:6px;
-  background:linear-gradient(135deg,rgba(var(--pr-rgb),.13),rgba(var(--ac-rgb),.07))!important;
-  border:1px solid rgba(var(--pr-rgb),.22)!important;
-  border-right:3px solid rgba(var(--pr-rgb),.42)!important;
-  box-shadow:0 8px 24px rgba(var(--pr-rgb),.13),var(--card-sh)!important;
+  background:linear-gradient(135deg,rgba(var(--pr-rgb),.11),rgba(var(--ac-rgb),.06))!important;
+  border:1px solid rgba(var(--pr-rgb),.20)!important;
+  border-right:3px solid rgba(var(--pr-rgb),.40)!important;
+  box-shadow:0 8px 24px rgba(var(--pr-rgb),.11),var(--card-sh)!important;
+}
+.dc-scrolly-hint-card .dc-monitor-inner{
+  display:flex !important;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  padding:18px 20px !important;
+  text-align:center;
+}
+.dc-scrolly-hint-label{
+  font-size:.95rem;
+  font-weight:800;
+  color:var(--pr);
+  line-height:1.4;
+}
+.dc-scrolly-hint-sub{
+  font-size:.72rem;
+  color:var(--txt2);
+  line-height:1.5;
 }
 .dc-scrolly-hint-arrow{
-  width:14px; height:14px;
-  border-right:2px solid var(--txt3);
-  border-bottom:2px solid var(--txt3);
+  width:16px; height:16px;
+  border-right:2.5px solid rgba(var(--pr-rgb),.45);
+  border-bottom:2.5px solid rgba(var(--pr-rgb),.45);
   transform:rotate(45deg);
   animation:scrolly-bounce .9s ease-in-out infinite;
   flex-shrink:0;
@@ -1877,40 +1899,42 @@ body.dc-desktop-ui #dc-desktop-root{
 #card-litecast{
   flex-direction:column;
   align-items:stretch;
-  padding:16px 18px 14px;
+  padding:22px 22px 18px;
   gap:0;
   min-height:0;
   border-right:1px solid rgba(var(--pr-rgb),.22)!important;
   border-top:3px solid rgba(var(--pr-rgb),.42)!important;
+  cursor:pointer;
 }
 .lc-eyebrow-row{
   display:flex;
   align-items:center;
-  gap:9px;
-  margin-bottom:10px;
+  gap:11px;
+  margin-bottom:14px;
 }
 .lc-ico{
-  width:30px; height:30px;
+  width:40px; height:40px;
   background:rgba(var(--pr-rgb),.08);
-  border:1px solid rgba(var(--pr-rgb),.14);
-  border-radius:8px;
+  border:1px solid rgba(var(--pr-rgb),.16);
+  border-radius:10px;
   display:flex; align-items:center; justify-content:center;
-  font-size:15px;
+  font-size:20px;
   flex-shrink:0;
 }
 .lc-category{
-  font-size:.63rem;
+  font-size:.68rem;
   font-weight:700;
   color:var(--txt3);
-  letter-spacing:.05em;
+  letter-spacing:.06em;
+  text-transform:uppercase;
 }
 .lc-title{
-  font-size:1.06rem;
+  font-size:1.30rem;
   font-weight:900;
   color:var(--pr);
-  letter-spacing:-.2px;
-  line-height:1.3;
-  margin-bottom:8px;
+  letter-spacing:-.3px;
+  line-height:1.25;
+  margin-bottom:12px;
 }
 .lc-footer{
   display:flex;
@@ -1919,10 +1943,41 @@ body.dc-desktop-ui #dc-desktop-root{
   gap:10px;
 }
 .lc-sub{
-  font-size:.71rem;
+  font-size:.76rem;
   color:var(--txt2);
+  line-height:1.55;
   flex:1;
   min-width:0;
+}
+
+/* ── Patient section labels ── */
+.dc-patient-section-label{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin:0 0 10px;
+  padding:0 2px;
+}
+.dc-patient-section-label-txt{
+  font-size:.68rem;
+  font-weight:800;
+  color:var(--txt3);
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  white-space:nowrap;
+}
+.dc-patient-section-label-line{
+  flex:1;
+  height:1px;
+  background:var(--border);
+}
+
+/* ── Patient intent groups ── */
+.dc-patient-group{
+  margin-bottom:28px;
+}
+.dc-patient-group:last-child{
+  margin-bottom:0;
 }
   </style>
 
@@ -2117,45 +2172,60 @@ body.dc-desktop-ui #dc-desktop-root{
     <!-- ── PANEL: بیماران ── -->
     <section class="dc-panel" id="panel-patient">
 
-      <div class="dc-list-card featured" id="card-litecast" onclick="window.location.href='/litecast/'">
-        <div class="lc-eyebrow-row">
-          <div class="lc-ico">✨</div>
-          <span class="lc-category">بیماران · LiteCast</span>
+      <!-- گروه اول: محتوای آموزشی -->
+      <div class="dc-patient-group">
+        <div class="dc-patient-section-label">
+          <span class="dc-patient-section-label-txt">محتوای آموزشی</span>
+          <span class="dc-patient-section-label-line"></span>
         </div>
-        <div class="lc-title">دندان‌پزشکی برای همه</div>
-        <div class="lc-footer">
-          <span class="lc-sub">محتوای ساده و غیر تخصصی برای بیماران</span>
-          <span class="dc-chip">LiteCast ◂</span>
-        </div>
-      </div>
 
-
-      <article class="dc-monitor" aria-label="پیشنهادهای رندوم">
-        <div class="dc-monitor-inner">
-          <div class="dc-monitor-title">سه پیشنهاد رندوم برای مطالعه</div>
-          <ul class="dc-monitor-list" id="dcPatientRandom3"></ul>
-        </div>
-      </article>
-
-      <article class="dc-monitor" aria-label="موقعیت مطب">
-        <div class="dc-monitor-inner">
-          <a href="https://nshn.ir/32sbkzKEOBbXR4" target="_blank" rel="noopener" aria-label="مسیریابی با نشان">
-            <img src="/clinic-map.webp" alt="موقعیت مطب روی نقشه" class="dc-locpack-img" loading="lazy">
-          </a>
-          <div class="dc-locpack-hint">برای مسیریابی <strong>مطب</strong> در اپ <strong>نشان</strong> کلیک کنید</div>
-          <div class="dc-cta-row">
-            <a class="dc-cta-btn" href="mailto:info@dentcast.ir">مشاوره آنلاین ✉️</a>
-            <a class="dc-cta-btn" href="tel:+986133380090">تماس با مطب 📞</a>
+        <div class="dc-list-card featured" id="card-litecast" onclick="window.location.href='/litecast/'">
+          <div class="lc-eyebrow-row">
+            <div class="lc-ico">✨</div>
+            <span class="lc-category">بیماران · LiteCast</span>
+          </div>
+          <div class="lc-title">دندان‌پزشکی برای همه</div>
+          <div class="lc-footer">
+            <span class="lc-sub">محتوای ساده و غیر تخصصی برای بیماران</span>
+            <span class="dc-chip">LiteCast ◂</span>
           </div>
         </div>
-      </article>
 
+        <article class="dc-monitor" aria-label="پیشنهادهای رندوم">
+          <div class="dc-monitor-inner">
+            <div class="dc-monitor-title">سه پیشنهاد رندوم برای مطالعه</div>
+            <ul class="dc-monitor-list" id="dcPatientRandom3"></ul>
+          </div>
+        </article>
+      </div>
+
+      <!-- گروه دوم: ارتباط با مطب -->
+      <div class="dc-patient-group">
+        <div class="dc-patient-section-label">
+          <span class="dc-patient-section-label-txt">ارتباط با مطب</span>
+          <span class="dc-patient-section-label-line"></span>
+        </div>
+
+        <article class="dc-monitor" aria-label="موقعیت مطب">
+          <div class="dc-monitor-inner">
+            <a href="https://nshn.ir/32sbkzKEOBbXR4" target="_blank" rel="noopener" aria-label="مسیریابی با نشان">
+              <img src="/clinic-map.webp" alt="موقعیت مطب روی نقشه" class="dc-locpack-img" loading="lazy">
+            </a>
+            <div class="dc-locpack-hint">برای مسیریابی <strong>مطب</strong> در اپ <strong>نشان</strong> کلیک کنید</div>
+            <div class="dc-cta-row">
+              <a class="dc-cta-btn" href="mailto:info@dentcast.ir">مشاوره آنلاین ✉️</a>
+              <a class="dc-cta-btn" href="tel:+986133380090">تماس با مطب 📞</a>
+            </div>
+          </div>
+        </article>
+      </div>
 
       <!-- ── SCROLLYTELLING ── -->
       <div class="dc-scrolly-wrap">
         <div class="dc-monitor dc-scrolly-hint-card" id="scrolly-hint">
-          <div class="dc-monitor-inner" style="display:flex;align-items:center;justify-content:center;gap:10px;padding:10px 14px;">
-            <span style="font-size:.90rem;font-weight:700;color:var(--txt2);">اینجاست که درمان شروع میشه (اسکرول کنید)</span>
+          <div class="dc-monitor-inner">
+            <div class="dc-scrolly-hint-label">اینجاست که درمان شروع میشه</div>
+            <div class="dc-scrolly-hint-sub">برای آشنایی با فضای مطب، اسکرول کنید</div>
             <div class="dc-scrolly-hint-arrow"></div>
           </div>
         </div>
