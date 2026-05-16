@@ -1872,21 +1872,57 @@ body.dc-desktop-ui #dc-desktop-root{
 }
 
 /* =====================================================
-   PROMPT 5 — LiteCast card in patient panel: double size
+   LITECAST CARD — redesigned layout
 ===================================================== */
 #card-litecast{
-  min-height:114px;
-  padding:20px 16px;
+  flex-direction:column;
+  align-items:stretch;
+  padding:16px 18px 14px;
+  gap:0;
+  min-height:0;
+  border-right:1px solid rgba(var(--pr-rgb),.22)!important;
+  border-top:3px solid rgba(var(--pr-rgb),.42)!important;
+}
+.lc-eyebrow-row{
+  display:flex;
   align-items:center;
+  gap:9px;
+  margin-bottom:10px;
 }
-#card-litecast .dc-list-card-title{
-  font-size:1.16rem; font-weight:900;
+.lc-ico{
+  width:30px; height:30px;
+  background:rgba(var(--pr-rgb),.08);
+  border:1px solid rgba(var(--pr-rgb),.14);
+  border-radius:8px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:15px;
+  flex-shrink:0;
 }
-#card-litecast .dc-list-card-sub{
-  font-size:.86rem; margin-top:5px;
+.lc-category{
+  font-size:.63rem;
+  font-weight:700;
+  color:var(--txt3);
+  letter-spacing:.05em;
 }
-#card-litecast .dc-chip{
-  font-size:.76rem; padding:5px 14px;
+.lc-title{
+  font-size:1.06rem;
+  font-weight:900;
+  color:var(--pr);
+  letter-spacing:-.2px;
+  line-height:1.3;
+  margin-bottom:8px;
+}
+.lc-footer{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+.lc-sub{
+  font-size:.71rem;
+  color:var(--txt2);
+  flex:1;
+  min-width:0;
 }
   </style>
 
@@ -2082,11 +2118,15 @@ body.dc-desktop-ui #dc-desktop-root{
     <section class="dc-panel" id="panel-patient">
 
       <div class="dc-list-card featured" id="card-litecast" onclick="window.location.href='/litecast/'">
-        <div class="dc-list-card-main">
-          <div class="dc-list-card-title" style="display:flex;align-items:center;justify-content:space-between;gap:6px;"><span>LiteCast — دندان‌پزشکی برای همه✨</span></div>
-          <div class="dc-list-card-sub">محتوای ساده و غیر تخصصی برای بیماران</div>
+        <div class="lc-eyebrow-row">
+          <div class="lc-ico">✨</div>
+          <span class="lc-category">بیماران · LiteCast</span>
         </div>
-        <span class="dc-chip">LiteCast</span>
+        <div class="lc-title">دندان‌پزشکی برای همه</div>
+        <div class="lc-footer">
+          <span class="lc-sub">محتوای ساده و غیر تخصصی برای بیماران</span>
+          <span class="dc-chip">LiteCast ◂</span>
+        </div>
       </div>
 
 

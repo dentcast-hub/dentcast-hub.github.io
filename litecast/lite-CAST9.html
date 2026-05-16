@@ -90,17 +90,36 @@ article {
 }
 
     strong { color: var(--blue); }
-    .cta-container { margin-top: 40px; text-align: center; }
-    .cta-text { font-weight: bold; margin-bottom: 15px; }
+        .cta-container {
+      margin-top: 40px;
+      padding: 22px 20px;
+      background: rgba(2,35,96,.05);
+      border: 1px solid rgba(2,35,96,.12);
+      border-radius: 16px;
+      text-align: center;
+    }
+    .cta-text {
+      font-weight: 700;
+      font-size: .93rem;
+      color: #0a1a33;
+      margin: 0 0 16px;
+      line-height: 1.5;
+    }
     .cta-button {
       display: inline-block;
-      background: #0b5fff;
-      color: white;
-      padding: 14px 30px;
-      border-radius: 50px;
-      font-weight: 700;
+      background: #022360;
+      color: #ffffff;
       text-decoration: none;
+      padding: 13px 28px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: .90rem;
+      letter-spacing: .01em;
+      box-shadow: 0 6px 20px rgba(2,35,96,.28);
+      transition: transform .18s ease, box-shadow .18s ease;
     }
+    .cta-button:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(2,35,96,.40); }
+    .cta-button:active { transform: scale(.97); }
     .back-btn {
       display: inline-block;
       background: rgba(11,95,255,0.18);
