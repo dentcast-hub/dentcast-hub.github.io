@@ -3474,4 +3474,32 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
     if(enabled) return;
     enabled = true;
     document.body.classList.add('dc-desktop-ui');
-    root.setAttr
+    root.setAttribute('aria-hidden', 'false');
+    syncThemeIcon();
+    syncDesktopPulse();
+    /* make radar overlay visible above desktop when opened */
+    const radarOverlay = document.getElementById('dcRadarOverlay');
+    if(radarOverlay) radarOverlay.style.removeProperty('display');
+    /* Auto-load first sub-item (NoteCast) */
+    const first = root.querySelector('.dcd-subitem');
+    if(first && !first.dataset.autoloaded){
+      first.dataset.autoloaded = '1';
+      first.click();
+    }
+  }
+
+  function disable(){
+    if(!enabled) return;
+    enabled = false;
+    document.body.classList.remove('dc-desktop-ui');
+    root.setAttribute('aria-hidden', 'true');
+  }
+
+  function sync(){ isDesk() ? enable() : disable(); }
+  sync();
+  window.addEventListener('resize', sync);
+})();
+</script>
+
+</body>
+</html>
