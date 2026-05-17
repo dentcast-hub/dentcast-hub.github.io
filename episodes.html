@@ -346,23 +346,26 @@ body.search-open #page-content{
   "@graph": [
     {
       "@type": "PodcastSeries",
-      "@id": "https://dentcast.org/episodes.html#podcast",
+      "@id": "https://dentcast.org/#podcast",
       "name": "دنت‌کست | DentCast",
       "description": "مرجع آنلاین و پادکست تخصصی پروتکل‌های کلینیکی پروتز و ایمپلنت. شامل بیش از ۱۵۰ اپیزود آموزشی در حوزه‌های Zero Bone Loss، مدیریت TMD و دندانپزشکی دیجیتال.",
       "url": "https://dentcast.org/episodes.html",
       "image": "https://dentcast.org/logo-v2.png",
       "inLanguage": "fa",
-      "author": { "@id": "https://dentcast.org/#person" },
-      "publisher": { "@id": "https://dentcast.org/#person" }
+      "author": {
+        "@id": "https://dentcast.org/#person"
+      },
+      "publisher": {
+        "@id": "https://dentcast.org/#person"
+      }
     },
     {
-      "@type": "Dentist",
+      "@type": "Person",
       "@id": "https://dentcast.org/#person",
       "name": "دکتر فؤاد شهابیان",
       "url": "https://dentcast.org/about.html",
       "image": "https://dentcast.org/logo-v2.png",
       "jobTitle": "متخصص پروتزهای دندانی و ایمپلنت",
-      "medicalCode": "114707",
       "telephone": "+986133380090",
       "address": {
         "@type": "PostalAddress",
@@ -373,10 +376,23 @@ body.search-open #page-content{
         "addressCountry": "IR"
       },
       "alumniOf": [
-        { "@type": "EducationalOrganization", "name": "دانشگاه علوم پزشکی شهید بهشتی" },
-        { "@type": "EducationalOrganization", "name": "دانشگاه علوم پزشکی مشهد" }
+        {
+          "@type": "EducationalOrganization",
+          "name": "دانشگاه علوم پزشکی شهید بهشتی"
+        },
+        {
+          "@type": "EducationalOrganization",
+          "name": "دانشگاه علوم پزشکی مشهد"
+        }
       ],
-      "knowsAbout": ["Prosthodontics", "Dental Implants", "Digital Dentistry", "Dental Materials", "TMD", "Occlusion"],
+      "knowsAbout": [
+        "Prosthodontics",
+        "Dental Implants",
+        "Digital Dentistry",
+        "Dental Materials",
+        "TMD",
+        "Occlusion"
+      ],
       "sameAs": [
         "https://www.instagram.com/dr.foad_shahabian/",
         "https://t.me/dentcast",
@@ -386,7 +402,7 @@ body.search-open #page-content{
     }
   ]
 }
-  </script>
+</script>
 
   <script type="application/ld+json">
 {
@@ -583,37 +599,4 @@ body.search-open #page-content{
     <!-- فوتر -->
     <footer class="page-footer dc-site-footer">
       <a href="/index.html" class="btn-home">🏠 برگشت به صفحه‌ی اصلی</a>
-      <a href="/about.html" class="btn-about">💬 درباره‌ی دکتر فواد شهابیان</a>
-      <div class="footer-copy">© 2025 DentCast — طراحی و توسعه توسط <strong>فواد شهابیان</strong></div>
-    </footer>
-
-  </div>
-</main>
-
-<!-- تم تاگل -->
-<button id="dc-theme-toggle" aria-label="تغییر تم">🌙</button>
-
-<script>
-/* ── THEME TOGGLE ── */
-const themeBtn = document.getElementById('dc-theme-toggle');
-function applyTheme(dark){
-  document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
-  themeBtn.textContent = dark ? '☀️' : '🌙';
-  localStorage.setItem('dc-theme', dark ? 'dark' : 'light');
-}
-(function(){
-  const s = localStorage.getItem('dc-theme');
-  const d = window.matchMedia('(prefers-color-scheme:dark)').matches;
-  applyTheme(s === 'dark' || (s === null && d));
-})();
-themeBtn.addEventListener('click', () => {
-  applyTheme(document.documentElement.getAttribute('data-theme') !== 'dark');
-});
-</script>
-
-<script src="/global-search.js?v=5" defer></script>
-<script src="/global-search-ui.js?v=1" defer></script>
-<script src="/shake-search.js?v=1" defer></script>
-<script src="/dc-nav.js" defer></script>
-</body>
-</html>
+      <a href="             
