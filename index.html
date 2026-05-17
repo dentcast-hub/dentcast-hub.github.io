@@ -12,7 +12,7 @@
   <link rel="llms" type="text/plain" href="https://dentcast.org/llms.txt" title="LLM Content Index">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="/dentcast-cover.webp">
-  <title>🎙️ دنت‌کست — پادکست علمی دندان‌پزشکی با روایت دکتر فواد شهابیان</title>
+  <title>دنت‌کست | پادکست تخصصی پروتز و ایمپلنت — دکتر فواد شهابیان</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
   <meta name="description" content="پادکست علمی دندان‌پزشکی با روایت دکتر فواد شهابیان؛ مرور ساده و تحلیلی تازه‌ترین مقالات حوزهٔ پروتز، ایمپلنت و دندان‌پزشکی ترمیمی.">
   <meta property="og:type" content="website">
@@ -1346,6 +1346,19 @@ body.dc-desktop-ui #dc-desktop-root{
 }
 .dcd-col-b-empty-ico{ font-size:32px; opacity:.4; }
 
+/* Domain notice — mobile topbar */
+.dc-domain-notice{
+  font-size:9px; color:var(--txt3); line-height:1.4; margin-top:1px;
+}
+.dc-domain-notice a{ color:var(--txt3); text-decoration:none; }
+
+/* Domain notice — desktop sidebar */
+.dcd-domain-notice{
+  font-size:9.5px; color:var(--sb-txt2); padding:3px 14px 6px;
+  line-height:1.5;
+}
+.dcd-domain-notice a{ color:var(--sb-txt2); text-decoration:none; }
+
 /* ══════════════════════════════════════════════
    COL-C — ARTICLE VIEWER (left, widest)
    Header (topbar) always at top.
@@ -2000,7 +2013,7 @@ body.dc-desktop-ui #dc-desktop-root{
 </head>
 <body>
 
-<h1 class="visually-hidden">دنت‌کست — مرجع آموزش دندانپزشکی به زبان فارسی — داخل ایران: dentcast.ir | خارج ایران: dentcast.org</h1>
+<div class="sr-only">دنت‌کست — مرجع آموزش دندانپزشکی به زبان فارسی — داخل ایران: dentcast.ir | خارج ایران: dentcast.org</div>
 <div class="sr-only"><h2>رادار دنت‌کست ؛ موتورجستجوی شرکت‌های تجهیزات دندانپزشکی</h2><p>رادار دنت‌کست ابزاری برای دسترسی پایدار به سایت شرکت‌های دندانپزشکی در ایران.</p></div>
 
 <!-- ══════════════════════════════════════════════
@@ -2025,6 +2038,7 @@ body.dc-desktop-ui #dc-desktop-root{
     <div class="dc-topbar-brand">
       <div class="dc-topbar-brand-name">DentCast</div>
       <a href="about.html" class="dc-topbar-brand-sub">دکتر فواد شهابیان ↗</a>
+      <div class="dc-domain-notice">داخل ایران: <a href="https://dentcast.ir" rel="alternate">dentcast.ir</a> · خارج ایران: dentcast.org</div>
     </div>
   </header>
 
@@ -2056,7 +2070,7 @@ body.dc-desktop-ui #dc-desktop-root{
           <img src="/logo-v2.png" alt="DentCast" width="36" height="36" loading="eager" draggable="false">
         </div>
         <div class="dc-identity-text">
-          <h1 class="dc-identity-main">دنتکست · <span class="dc-shimmer-word">جامع‌ترین</span> منبع فارسی پروتز و ایمپلنت · مبتنی بر شواهد</h1>
+          <h1 class="dc-identity-main">دنت‌کست — <span class="dc-shimmer-word">جامع‌ترین</span> منبع فارسی پروتز و ایمپلنت مبتنی بر شواهد</h1>
         </div>
       </div>
 
@@ -2304,6 +2318,7 @@ body.dc-desktop-ui #dc-desktop-root{
         <span class="dcd-brand-sub">دکتر فواد شهابیان</span>
       </div>
     </a>
+    <div class="dcd-domain-notice">داخل ایران: <a href="https://dentcast.ir" rel="alternate">dentcast.ir</a> · خارج ایران: dentcast.org</div>
 
     <div class="dcd-tree">
 
@@ -2370,7 +2385,7 @@ body.dc-desktop-ui #dc-desktop-root{
     </div>
 
     <div class="dcd-col-b-list" id="dcd-b-list">
-      <div class="dcd-col-b-empty">
+      <div class="dcd-col-b-empty" style="display:none" aria-hidden="true">
         <div class="dcd-col-b-empty-ico">📂</div>
         <div>یک بخش را از منوی سمت راست انتخاب کنید</div>
       </div>
