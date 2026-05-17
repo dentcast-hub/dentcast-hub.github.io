@@ -2376,19 +2376,37 @@ body.dc-desktop-ui #dc-desktop-root{
         </article>
       </div>
 
-      <!-- ── موقعیت مطب ── -->
-      <article class="dc-monitor" aria-label="موقعیت مطب">
-        <div class="dc-monitor-inner">
-          <a href="https://nshn.ir/32sbkzKEOBbXR4" target="_blank" rel="noopener" aria-label="مسیریابی با نشان">
-            <img src="/clinic-map.webp" alt="موقعیت مطب روی نقشه" class="dc-locpack-img" loading="lazy">
-          </a>
-          <div class="dc-locpack-hint">برای مسیریابی <strong>مطب</strong> در اپ <strong>نشان</strong> کلیک کنید</div>
-          <div class="dc-cta-row">
-            <a class="dc-cta-btn" href="mailto:info@dentcast.ir">مشاوره آنلاین ✉️</a>
-            <a class="dc-cta-btn" href="tel:+986133380090">تماس با مطب 📞</a>
+      <!-- ── SCROLLYTELLING ── -->
+      <div class="dc-scrolly-wrap">
+        <div class="dc-monitor dc-scrolly-hint-card" id="scrolly-hint">
+          <div class="dc-monitor-inner">
+            <div class="dc-scrolly-hint-label">🧭 اینجاست که درمان شروع میشه</div>
+            <div class="dc-scrolly-hint-sub">برای تماس و مسیریابی مطب اسکرول کنید</div>
+            <div class="dc-scrolly-hint-arrow"></div>
           </div>
         </div>
-      </article>
+        <div class="dc-scrolly-track" id="scrolly-track">
+          <div class="dc-scrolly-sticky">
+            <div class="dc-scrolly-progress">
+              <div class="dc-scrolly-progress-fill" id="scrolly-progress-fill"></div>
+            </div>
+            <canvas id="scrolly-canvas" aria-label="فضای کلینیک دکتر فواد شهابیان"></canvas>
+            <div class="dc-scrolly-intro" id="scrolly-intro">
+              <div class="dc-scrolly-intro-name">دکتر فواد شهابیان</div>
+              <div class="dc-scrolly-intro-divider"></div>
+              <div class="dc-scrolly-intro-spec">متخصص پروتز</div>
+            </div>
+            <div class="dc-scrolly-cta" id="scrolly-cta">
+              <div class="dc-scrolly-cta-title">برای هماهنگی وقت معاینه</div>
+              <div class="dc-cta-row">
+                <a class="dc-cta-btn" href="tel:+986133380090">تماس با مطب 📞</a>
+                <a class="dc-cta-btn" href="https://nshn.ir/32sbkzKEOBbXR4" target="_blank" rel="noopener">مسیریابی 📍</a>
+              </div>
+            </div>
+          </div>
+          <div style="height:1800px"></div>
+        </div>
+      </div>
 
     </section>
 
