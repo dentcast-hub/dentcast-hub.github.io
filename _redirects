@@ -1,1 +1,3 @@
 https://dentcast-hub.github.io/*    https://dentcast.org/:splat    301!
+/episodes/                          /episodes.html                 301!
+/episodes                           /episodes.html                 301!
