@@ -271,4 +271,13 @@ body{font-family:'Vazirmatn',system-ui,-apple-system,sans-serif;}
   aud.addEventListener('loadedmetadata', function() { dur.textContent = fmt(aud.duration); });
   aud.addEventListener('timeupdate', function() {
     if (!aud.duration) return;
-    seek.value = (aud.currentTi
+    seek.value = (aud.currentTime / aud.duration) * 100;
+    cur.textContent = fmt(aud.currentTime);
+  });
+  aud.addEventListener('ended', function() { play.textContent = '▶'; });
+})();
+</script>
+<script src="/global-search.js?v=5" defer></script>
+<script src="/dc-nav.js" defer></script>
+</body>
+</html>

@@ -263,3 +263,26 @@ body{font-family:'Vazirmatn',system-ui,-apple-system,sans-serif;}
   var fwd   = document.getElementById('ep-fwd');
   var spd   = document.getElementById('ep-speed');
   var seek  = document.getElementById('ep-seek');
+  var cur   = document.getElementById('ep-cur');
+  var dur   = document.getElementById('ep-dur');
+  var speeds = [1, 1.25, 1.5, 1.75, 2];
+  var si = 0;
+  function fmt(s) { return new Date(s * 1000).toISOString().substr(14, 5); }
+  play.onclick = function() { if (aud.paused) { aud.play(); play.textContent = '⏸'; } else { aud.pause(); play.textContent = '▶'; } };
+  back.onclick = function() { aud.currentTime = Math.max(0, aud.currentTime - 15); };
+  fwd.onclick  = function() { aud.currentTime = Math.min(aud.duration || 0, aud.currentTime + 15); };
+  spd.onclick  = function() { si = (si + 1) % speeds.length; aud.playbackRate = speeds[si]; spd.textContent = speeds[si] + '×'; };
+  seek.oninput = function() { if (aud.duration) aud.currentTime = (seek.value / 100) * aud.duration; };
+  aud.addEventListener('loadedmetadata', function() { dur.textContent = fmt(aud.duration); });
+  aud.addEventListener('timeupdate', function() {
+    if (!aud.duration) return;
+    seek.value = (aud.currentTime / aud.duration) * 100;
+    cur.textContent = fmt(aud.currentTime);
+  });
+  aud.addEventListener('ended', function() { play.textContent = '▶'; });
+})();
+</script>
+<script src="/global-search.js?v=5" defer></script>
+<script src="/dc-nav.js" defer></script>
+</body>
+</html>

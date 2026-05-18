@@ -497,4 +497,15 @@ document.addEventListener("DOMContentLoaded", function () {
       else window.scrollTo({ top: 0, behavior: "smooth" });
     } else {
       if (endEl) endEl.scrollIntoView({ behavior: "smooth" });
-      else window.scrollTo({ top: 
+      else window.scrollTo({ top: pageHeight(), behavior: "smooth" });
+    }
+  });
+
+  window.addEventListener("scroll", updateState);
+  window.addEventListener("resize", updateState);
+  updateState();
+});
+</script>
+<script src="/dc-nav.js" defer></script>
+</body>
+</html>
