@@ -260,7 +260,158 @@
 <body>
 <!-- DC NAV: TOP BAR -->
 <header class="dc-topbar">
-  <div style="margin-top:6px;">
+  <div class="dc-topbar-actions">
+    <a href="/" aria-label="صفحه اصلی دنت‌کست" style="display:flex;align-items:center;margin-left:8px;flex-shrink:0;"><img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;"></a>
+    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="ابزارها" aria-expanded="false">☰</button>
+    <button class="dc-topbar-btn" id="btn-radar-topbar" aria-label="رادار">📡</button>
+    <button class="dc-topbar-btn dcOpenSearch" aria-label="جستجو">🔍</button>
+  </div>
+  <div class="dc-topbar-brand">
+    <div class="dc-topbar-brand-name">DentCast</div>
+    
+  </div>
+</header>
+<div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">
+  <div class="dc-toolbar-drawer-inner">
+    <span class="dc-toolbar-drawer-label">ابزارها</span>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa"><span class="dc-drawer-tool-ico">📱</span><span class="dc-drawer-tool-txt">نصب</span></button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-consult"><span class="dc-drawer-tool-ico">📧</span><span class="dc-drawer-tool-txt">مشاوره</span></button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-about"><span class="dc-drawer-tool-ico">✨</span><span class="dc-drawer-tool-txt">درباره</span></button>
+  </div>
+</div>
+<div id="dcRadarOverlay" class="radar-overlay" aria-hidden="true">
+  <div class="radar-overlay-header">
+    <button id="dcCloseRadarOverlay" class="radar-close-btn">&times;</button>
+    <div class="radar-header-title">رادار دنت‌کست (جایگزین گوگل)</div>
+  </div>
+  <div class="radar-overlay-body">
+    <div class="radar-search-box">
+      <input type="text" id="dcRadarInput" placeholder="نام سایت، زمینه فعالیت یا کلمه کلیدی..." autocomplete="off">
+    </div>
+    <div id="dcRadarResults" class="radar-results">
+      <div class="radar-initial-msg">برای جستجو در بین سایت‌های دندانپزشکی، تایپ کنید...</div>
+    </div>
+  </div>
+</div>
+
+
+<main class="article-content-wrap">
+  <h2>📝 نوت‌کست دوم</h2>
+  <h1>راهنمای جامع انتخاب سمان مناسب برای رستوریشن‌های دندانی</h1>
+  <div class="dc-trustline" aria-label="اطلاعات نویسنده و بازبینی">
+    <span>تاریخ انتشار: <time datetime="2025-02-10">2025-02-10</time></span>
+    <span>آخرین بازبینی: <time datetime="2025-02-10">2025-02-10</time></span>
+  </div>
+
+
+  <div class="text-box">
+    <h4>مقدمه:</h4>
+    <ul>
+      <li>با پیشرفت علم دندان‌پزشکی و ظهور سرامیک‌های نوین، انتخاب و استفاده از <a href="/glossary/dental-cement">سمان‌های دندانی</a> مناسب اهمیت فزاینده‌ای یافته است.</li>
+      <li>سمان‌ها نقش حیاتی در استحکام، دوام و زیبایی ترمیم‌های دندانی ایفا می‌کنند.</li>
+    </ul>
+
+    <h4>دسته‌بندی سمان‌های دندانی:</h4>
+    <ul>
+      <li>
+        <strong><a href="/glossary/traditional-cements.html">سمان‌های سنتی (Traditional)</a>:</strong>
+        شامل زینک فسفات، زینک پلی‌کربوکسیلات، گلاس آینومر و رزین‌مودیفاید گلاس آینومر.
+        عملکرد اصلی: پر کردن فضاهای خالی و ایجاد گیر میکرومکانیکال.
+        کاربرد فراوان به علت قدمت و آشنایی بیشتر پزشکان.
+      </li>
+      <li>
+        <strong><a href="/glossary/resin-cements.html">سمان‌های رزینی</a>:</strong>
+        شامل سمان‌های <a href="/glossary/self-adhesive-cements.html">سلف‌ادهزیو</a>،
+        <a href="/glossary/adhesive-resin-cements.html">ادهزیو رزین</a>
+        و <a href="/glossary/esthetic-resin-cements.html">استتیک رزین</a>.
+        کاربرد رو به افزایش، به‌ویژه برای ترمیم‌های نیازمند استحکام بالا.
+      </li>
+    </ul>
+
+    <h4>عوامل مؤثر در انتخاب سمان:</h4>
+    <ul>
+      <li>
+        <strong>استحکام سرامیک رستوریشن:</strong>
+        سرامیک‌های با استحکام بالا مانند زیرکونیا نیاز به سمان‌های تقویت‌کننده ندارند.
+      </li>
+      <li>
+        <strong>میزان <a href="/glossary/retention.html">گیر (Retention)</a> تراش دندان:</strong>
+        تراش‌های دارای گیر کافی اجازه استفاده از سمان‌های ساده‌تر را می‌دهند.
+      </li>
+    </ul>
+
+    <h4>راهنمای انتخاب سمان:</h4>
+    <ul>
+      <li>
+        <strong>رستوریشن‌های زیرکونیا:</strong>
+        در صورت وجود گیر کافی، می‌توان از سمان‌های گلاس آینومر،
+        رزین‌مودیفاید گلاس آینومر یا سلف‌ادهزیو رزین استفاده کرد.
+      </li>
+      <li>
+        <strong>سمان‌های سلف‌ادهزیو:</strong>
+        بدون نیاز به باند و سایلان؛ مشابه سمان‌های تردیشنال.
+        مناسب برای موارد با نیاز استحکام پایین‌تر.
+      </li>
+      <li>
+        <strong>سمان‌های ادهزیو رزین:</strong>
+        نیازمند باند و سایلان؛ مناسب برای رستوریشن‌های نیازمند استحکام بالا
+        و تراش‌های کم‌گیر (مثل Panavia F).
+      </li>
+      <li>
+        <strong>لمینیت‌ها:</strong>
+        نیازمند سمان‌های ادهزیو رزین به دلیل استحکام پایین لمینیت و گیر کم.
+        عدم استفاده از گلاس آینومرها و سلف‌ادهزیوها.
+      </li>
+    </ul>
+
+    <h4>نکات کلیدی:</h4>
+    <ul>
+      <li>
+        سمان‌های تردیشنال و سلف‌ادهزیو، استحکام رستوریشن سرامیکی را افزایش نمی‌دهند.
+      </li>
+      <li>
+        انتخاب سمان مناسب بستگی به نوع سرامیک و میزان گیر تراش دندان دارد.
+      </li>
+      <li>
+        انتخاب اشتباه سمان می‌تواند سبب شکست درمان گردد.
+      </li>
+    </ul>
+
+  <!-- TODO: Add references section if this page cites scientific literature. -->
+  <p class="dc-disclaimer">محتوای این صفحه برای استفادهٔ آموزشی دندان‌پزشکان و دانشجویان دندان‌پزشکی تهیه شده است.</p>
+</div>
+
+  🎧 <strong>نسخه‌ی صوتی این دنت‌کست را بشنوید:</strong><br>
+    <div class="author-note">
+  <a href="/about.html" class="author-link">دکتر فواد شهابیان</a>
+  <span class="author-role">متخصص پروتزهای دندانی و ایمپلنت</span>
+</div>
+
+<audio controls preload="none" style ="width: 100%;
+    margin-top: 12px;">
+  <source src="https://episodes.s3.ir-thr-at1.arvanstorage.ir/dentcast2.m4a?versionId=" type="audio/mpeg"></audio>
+
+  <footer class="dc-site-footer" style="text-align:center; margin-top:45px; color:#9aa1b3; font-size:.9rem; line-height:1.8;">
+
+    <div style="margin-bottom:22px;">
+      <a href="index.html"
+         style="
+           display:inline-block;
+           background:rgba(11,95,255,0.18);
+           color:#3a84ff;
+           border:1.8px solid rgba(11,95,255,0.45);
+           border-radius:12px;
+           padding:12px 42px;
+           font-weight:700;
+           text-decoration:none;
+           font-size:1rem;
+           box-shadow:0 0 14px rgba(11,95,255,0.15);
+           transition:all .25s ease;">
+        🔙 برگشت به صفحه‌ی قبل
+      </a>
+    </div>
+
+    <div style="margin-top:6px;">
       © 2025 DentCast — طراحی و توسعه توسط
       
     </div>
@@ -285,10 +436,6 @@
 </div>
 <script src="/global-search.js?v=5" defer></script>
 <script src="/dc-nav.js" defer></script>
-<div class="author-note">
-  <a href="/about.html" class="author-link">دکتر فواد شهابیان</a>
-  <span class="author-role">متخصص پروتزهای دندانی و ایمپلنت</span>
-</div>
 </body>
 
 </html>

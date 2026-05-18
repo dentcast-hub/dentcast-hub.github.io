@@ -240,7 +240,105 @@
 <body>
 <!-- DC NAV: TOP BAR -->
 <header class="dc-topbar">
-  <div style="margin-top:6px;">
+  <div class="dc-topbar-actions">
+    <a href="/" aria-label="صفحه اصلی دنت‌کست" style="display:flex;align-items:center;margin-left:8px;flex-shrink:0;"><img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;"></a>
+    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="ابزارها" aria-expanded="false">☰</button>
+    <button class="dc-topbar-btn" id="btn-radar-topbar" aria-label="رادار">📡</button>
+    <button class="dc-topbar-btn dcOpenSearch" aria-label="جستجو">🔍</button>
+  </div>
+  <div class="dc-topbar-brand">
+    <div class="dc-topbar-brand-name">DentCast</div>
+    
+  </div>
+</header>
+<div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">
+  <div class="dc-toolbar-drawer-inner">
+    <span class="dc-toolbar-drawer-label">ابزارها</span>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa"><span class="dc-drawer-tool-ico">📱</span><span class="dc-drawer-tool-txt">نصب</span></button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-consult"><span class="dc-drawer-tool-ico">📧</span><span class="dc-drawer-tool-txt">مشاوره</span></button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-about"><span class="dc-drawer-tool-ico">✨</span><span class="dc-drawer-tool-txt">درباره</span></button>
+  </div>
+</div>
+<div id="dcRadarOverlay" class="radar-overlay" aria-hidden="true">
+  <div class="radar-overlay-header">
+    <button id="dcCloseRadarOverlay" class="radar-close-btn">&times;</button>
+    <div class="radar-header-title">رادار دنت‌کست (جایگزین گوگل)</div>
+  </div>
+  <div class="radar-overlay-body">
+    <div class="radar-search-box">
+      <input type="text" id="dcRadarInput" placeholder="نام سایت، زمینه فعالیت یا کلمه کلیدی..." autocomplete="off">
+    </div>
+    <div id="dcRadarResults" class="radar-results">
+      <div class="radar-initial-msg">برای جستجو در بین سایت‌های دندانپزشکی، تایپ کنید...</div>
+    </div>
+  </div>
+</div>
+
+
+<main class="article-content-wrap">
+  <h1>چالش تغییر رنگ روکش‌های سرامیکی پس از سمان دائم</h1>
+  <div class="dc-trustline" aria-label="اطلاعات نویسنده و بازبینی">
+    <span>تاریخ انتشار: <time datetime="2025-11-19">2025-11-19</time></span>
+    <span>آخرین بازبینی: <time datetime="2025-12-19">2025-12-19</time></span>
+  </div>
+
+
+  <div class="glass-box">
+
+    <img src="insight5.png" alt="تصویری شماتیک از تفاوت رنگ در روکش‌های سرامیکی بین سمان موقت و سمان دائم" loading="lazy">
+
+    <h3>🔹 چالش بالینی</h3>
+    <p>در برخی موارد، پس از تحویل روکش‌های سرامیکی (به‌ویژه <a href="/glossary/zirconia.html" class="glossary-link">زیرکونیا</a>) با سمان موقت، از نظر رنگ و شفافیت نتیجه‌ی نهایی بسیار مطلوب به‌نظر می‌رسد و بیمار هم از ظاهر روکش رضایت کامل دارد.</p>
+    <p>اما هنگامی که نوبت به سمان دائم می‌رسد، تفاوت رنگ و ترانسلوسنسی میان سمان موقت و دائم باعث می‌شود رنگ نهایی روکش تغییر کند و بیمار آن را نپسندد.</p>
+
+    <hr class="text-divider">
+
+    <h3>🔹 تحلیل مسئله</h3>
+    <p>این تغییر ظاهری معمولاً به دلیل تفاوت در اپسیتی و تون رنگی سمان دائم نسبت به سمان موقت است.</p>
+    <p>در روکش‌های با ضخامت کم یا ترانسلوسنسی بالا، این اختلاف بیشتر خود را نشان می‌دهد و حتی در مواردی باعث می‌شود نتیجه‌ی زیبایی‌شناختی اولیه از بین برود.</p>
+
+    <hr class="text-divider">
+
+    <h3>🔹 رویکرد پیشنهادی</h3>
+    <p>برای پیشگیری از این تغییر رنگ، دو مسیر وجود دارد:</p>
+
+    <ul>
+      <li>اگر از <a href="/glossary/resin-cements.html" class="glossary-link">سمان‌های رزینی دائم</a> استفاده می‌کنید، انتخاب نوعی که دارای رنگ‌بندی و درجات ترانسلوسنسی مختلف است (<strong>Shade-matched resin cements</strong>)، می‌تواند اختلاف رنگ را به حداقل برساند.</li>
+      <li>اما در صورتی که تصمیم دارید از سمان‌های کانوشنال استفاده کنید، بهتر است سمانی انتخاب شود که از نظر اپسیتی و رنگ به سمان موقت نزدیک‌تر باشد.</li>
+      <li>در این حالت، سمان <strong>زینک‌فسفات</strong> گزینه‌ای مناسب است؛ زیرا از نظر رنگ و شفافیت، شباهت بیشتری به سمان‌های موقت دارد و احتمال تغییر ظاهری را کاهش می‌دهد.</li>
+    </ul>
+
+
+  <!-- TODO: Add references section if this page cites scientific literature. -->
+  <p class="dc-disclaimer">محتوای این صفحه برای استفادهٔ آموزشی دندان‌پزشکان و دانشجویان دندان‌پزشکی تهیه شده است.</p>
+</div>
+
+  <div class="author-note">
+  <a href="/about.html" class="author-link">دکتر فواد شهابیان</a>
+  <span class="author-role">متخصص پروتزهای دندانی و ایمپلنت</span>
+</div>
+
+<footer class="dc-site-footer" style="text-align:center; margin-top:45px; color:#9aa1b3; font-size:.9rem; line-height:1.8;">
+
+    <div style="margin-bottom:22px;">
+      <a href="index.html"
+         style="
+           display:inline-block;
+           background:rgba(11,95,255,0.18);
+           color:#3a84ff;
+           border:1.8px solid rgba(11,95,255,0.45);
+           border-radius:12px;
+           padding:12px 42px;
+           font-weight:700;
+           text-decoration:none;
+           font-size:1rem;
+           box-shadow:0 0 14px rgba(11,95,255,0.15);
+           transition:all .25s ease;">
+        🔙 برگشت به صفحه‌ی قبل
+      </a>
+    </div>
+
+    <div style="margin-top:6px;">
       © 2025 DentCast — طراحی و توسعه توسط
       
     </div>
@@ -265,9 +363,5 @@
 </div>
 <script src="/global-search.js?v=5" defer></script>
 <script src="/dc-nav.js" defer></script>
-<div class="author-note">
-  <a href="/about.html" class="author-link">دکتر فواد شهابیان</a>
-  <span class="author-role">متخصص پروتزهای دندانی و ایمپلنت</span>
-</div>
 </body>
 </html>

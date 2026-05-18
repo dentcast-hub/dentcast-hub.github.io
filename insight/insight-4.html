@@ -281,6 +281,112 @@
 <body>
 <!-- DC NAV: TOP BAR -->
 <header class="dc-topbar">
+  <div class="dc-topbar-actions">
+    <a href="/" aria-label="صفحه اصلی دنت‌کست" style="display:flex;align-items:center;margin-left:8px;flex-shrink:0;"><img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;"></a>
+    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="ابزارها" aria-expanded="false">☰</button>
+    <button class="dc-topbar-btn" id="btn-radar-topbar" aria-label="رادار">📡</button>
+    <button class="dc-topbar-btn dcOpenSearch" aria-label="جستجو">🔍</button>
+  </div>
+  <div class="dc-topbar-brand">
+    <div class="dc-topbar-brand-name">DentCast</div>
+    
+  </div>
+</header>
+<div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">
+  <div class="dc-toolbar-drawer-inner">
+    <span class="dc-toolbar-drawer-label">ابزارها</span>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa"><span class="dc-drawer-tool-ico">📱</span><span class="dc-drawer-tool-txt">نصب</span></button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-consult"><span class="dc-drawer-tool-ico">📧</span><span class="dc-drawer-tool-txt">مشاوره</span></button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-about"><span class="dc-drawer-tool-ico">✨</span><span class="dc-drawer-tool-txt">درباره</span></button>
+  </div>
+</div>
+<div id="dcRadarOverlay" class="radar-overlay" aria-hidden="true">
+  <div class="radar-overlay-header">
+    <button id="dcCloseRadarOverlay" class="radar-close-btn">&times;</button>
+    <div class="radar-header-title">رادار دنت‌کست (جایگزین گوگل)</div>
+  </div>
+  <div class="radar-overlay-body">
+    <div class="radar-search-box">
+      <input type="text" id="dcRadarInput" placeholder="نام سایت، زمینه فعالیت یا کلمه کلیدی..." autocomplete="off">
+    </div>
+    <div id="dcRadarResults" class="radar-results">
+      <div class="radar-initial-msg">برای جستجو در بین سایت‌های دندانپزشکی، تایپ کنید...</div>
+    </div>
+  </div>
+</div>
+
+
+<main class="article-content-wrap">
+  <h1>بیومیمتیک و چالش فرول در دندان‌های قدامی درمان‌شدهٔ اندو</h1>
+  <div class="dc-trustline" aria-label="اطلاعات نویسنده و بازبینی">
+    <span>تاریخ انتشار: <time datetime="2025-11-19">2025-11-19</time></span>
+    <span>آخرین بازبینی: <time datetime="2025-12-19">2025-12-19</time></span>
+  </div>
+
+
+  <div class="glass-box">
+
+    <img src="insight4.webp" alt="تصویری شماتیک از مفهوم بیومیمتیک و اتصال کامپوزیت به نسج دندان" loading="lazy">
+
+    <h3>🦷 بیومیمتیک؛ پیوند دوبارهٔ ماده و دندان</h3>
+    <p>در نگاه بیومیمتیک، هدف از ترمیم صرفاً جایگزینی بافت از‌دست‌رفته نیست،
+بلکه بازگرداندن رفتار طبیعی دندان است — به‌گونه‌ای که مادهٔ ترمیمی و نسج باقی‌مانده به‌صورت یک واحد هماهنگ عمل کنند.</p>
+    <p>وقتی اصول باندینگ در این رویکرد رعایت شوند، اتصال بین کامپوزیت و نسج دندانی به سطحی از استحکام می‌رسد که از نظر عملکرد مکانیکی،
+تقریباً مشابه خود دندان است.
+بر اساس این مفهوم، ترمیم دیگر جسمی چسبیده بر دندان نیست،
+بلکه ادامه‌ی طبیعی ساختار آن به‌شمار می‌آید.</p>
+
+    <hr class="text-divider">
+
+    <h3>⚙️ فرول و چالش دیواره‌های نازک</h3>
+    <p>در دندان‌های قدامی درمان‌شدهٔ اندو، پس از تراش و آماده‌سازی، گاهی یکی از دیواره‌ها به‌صورت نازک و کاسه‌مانند باقی می‌ماند.
+طبق اصول کلاسیک پروتز، چنین دیواره‌ای نمی‌تواند <a href="/glossary/ferrule-effect.html" class="glossary-link">فرول مؤثر</a> ایجاد کند،
+زیرا ضخامت کمتر از یک میلی‌متر در برابر نیروهای کششی و خمشی دوام کافی ندارد.</p>
+    <p>از سوی دیگر، کوتاه‌کردن یا حذف این دیواره برای تأمین ضخامت، در ناحیهٔ قدامی باعث افت زیبایی و کاهش طول کلینیکی می‌شود —
+و دندان را میان دو انتخاب دشوار قرار می‌دهد: <strong>حفظ نسج یا تأمین <a href="/episodes/episode-47.html" class="episode-link">فرول</a>.</strong></p>
+
+    <hr class="text-divider">
+
+    <h3>💡 نتیجه و رویکرد مودیفاید</h3>
+    <p>در این کیس، با تکیه بر همان فلسفهٔ بیومیمتیک و قدرت باند بالای آن و با توجه به محدود بودن نازکی دیواره فقط به یک دیواره،</p>
+    <ul>
+      <li>به‌جای کوتاه‌کردن دیوارهٔ ضعیف، تصمیم گرفته شد آن دیواره بازسازی و تقویت شود تا بتواند عملکرد خود را به‌عنوان بخشی از ساختار دندان بازیابد.</li>
+      <li><strong>پایداری عملکردی:</strong> به این ترتیب، دیواره‌ای که از نظر کلاسیک برای فرول مناسب نبود،
+به‌صورت بیومیمتیکی و عملکردی به نسج دندانی متصل شد و نقش خود را در ایجاد پایداری کلی ایفا کرد.</li>
+    </ul>
+
+    <p>این رویکرد مودیفاید، ترکیبی بود از اصول محافظه‌کارانه و عملکرد مکانیکی مؤثر —
+    تا در نهایت بتوان بر پایه‌ای مستحکم و هماهنگ، پست کور نهایی را با اطمینان کامل اجرا کرد.</p>
+
+  <!-- TODO: Add references section if this page cites scientific literature. -->
+  <p class="dc-disclaimer">محتوای این صفحه برای استفادهٔ آموزشی دندان‌پزشکان و دانشجویان دندان‌پزشکی تهیه شده است.</p>
+</div>
+
+  <div class="author-note">
+  <a href="/about.html" class="author-link">دکتر فواد شهابیان</a>
+  <span class="author-role">متخصص پروتزهای دندانی و ایمپلنت</span>
+</div>
+
+<footer class="dc-site-footer" style="text-align:center; margin-top:45px; color:#9aa1b3; font-size:.9rem; line-height:1.8;">
+
+  <div style="margin-bottom:22px;">
+    <a href="index.html"
+       style="
+         display:inline-block;
+         background:rgba(11,95,255,0.18);
+         color:#3a84ff;
+         border:1.8px solid rgba(11,95,255,0.45);
+         border-radius:12px;
+         padding:12px 42px;
+         font-weight:700;
+         text-decoration:none;
+         font-size:1rem;
+         box-shadow:0 0 14px rgba(11,95,255,0.15);
+         transition:all .25s ease;">
+      🔙 برگشت به صفحه‌ی قبل
+    </a>
+  </div>
+
   <div style="margin-top:6px;">
     © 2025 DentCast — طراحی و توسعه توسط
     
@@ -306,9 +412,5 @@
 </div>
 <script src="/global-search.js?v=5" defer></script>
 <script src="/dc-nav.js" defer></script>
-<div class="author-note">
-  <a href="/about.html" class="author-link">دکتر فواد شهابیان</a>
-  <span class="author-role">متخصص پروتزهای دندانی و ایمپلنت</span>
-</div>
 </body>
 </html>

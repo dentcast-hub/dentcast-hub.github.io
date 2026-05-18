@@ -289,6 +289,160 @@
 <body>
 <!-- DC NAV: TOP BAR -->
 <header class="dc-topbar">
+  <div class="dc-topbar-actions">
+    <a href="/" aria-label="صفحه اصلی دنت‌کست" style="display:flex;align-items:center;margin-left:8px;flex-shrink:0;"><img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;"></a>
+    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="ابزارها" aria-expanded="false">☰</button>
+    <button class="dc-topbar-btn" id="btn-radar-topbar" aria-label="رادار">📡</button>
+    <button class="dc-topbar-btn dcOpenSearch" aria-label="جستجو">🔍</button>
+  </div>
+  <div class="dc-topbar-brand">
+    <div class="dc-topbar-brand-name">DentCast</div>
+    
+  </div>
+</header>
+<div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">
+  <div class="dc-toolbar-drawer-inner">
+    <span class="dc-toolbar-drawer-label">ابزارها</span>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa"><span class="dc-drawer-tool-ico">📱</span><span class="dc-drawer-tool-txt">نصب</span></button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-consult"><span class="dc-drawer-tool-ico">📧</span><span class="dc-drawer-tool-txt">مشاوره</span></button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-about"><span class="dc-drawer-tool-ico">✨</span><span class="dc-drawer-tool-txt">درباره</span></button>
+  </div>
+</div>
+<div id="dcRadarOverlay" class="radar-overlay" aria-hidden="true">
+  <div class="radar-overlay-header">
+    <button id="dcCloseRadarOverlay" class="radar-close-btn">&times;</button>
+    <div class="radar-header-title">رادار دنت‌کست (جایگزین گوگل)</div>
+  </div>
+  <div class="radar-overlay-body">
+    <div class="radar-search-box">
+      <input type="text" id="dcRadarInput" placeholder="نام سایت، زمینه فعالیت یا کلمه کلیدی..." autocomplete="off">
+    </div>
+    <div id="dcRadarResults" class="radar-results">
+      <div class="radar-initial-msg">برای جستجو در بین سایت‌های دندانپزشکی، تایپ کنید...</div>
+    </div>
+  </div>
+</div>
+
+
+<main class="article-content-wrap">
+<h1>🤖 DentAI – عملکرد بالینی رستوریشنهای رزین باندد و طراحی فریم‌ورک</h1>
+
+<div class="caption">
+  <p>
+    ⚡ مقالهٔ هفتم<br><br>
+    مرور سیستماتیک و متاآنالیز عملکرد بالینی <strong>Resin-Bonded Fixed Dental Prostheses (RBFDPs)</strong> در ناحیه قدامی، با تمرکز بر تأثیر طراحی فریم‌ورک، نوع اتصال و جنس مواد.
+  </p>
+</div>
+
+<div class="text-box">
+<!-- 🔊 Listen button -->
+  <button class="listen-btn" aria-label="شنیدن متن">
+    🔊 شنیدن متن
+  </button>
+
+  <audio id="dentai-audio" preload="none">
+    <source src="https://denai.s3.ir-thr-at1.arvanstorage.ir/denai7%20.mp3?versionId=" type="audio/mpeg">
+  </audio>
+<h2>مقدمه</h2>
+<p>
+پروتزهای ثابت دندانی متکی بر رزین (<strong>RBFDPs</strong>) از دهه ۱۹۷۰ به عنوان یک روش درمانی محافظه‌کارانه برای جایگزینی دندان‌های قدامی از دست رفته مورد استفاده قرار گرفته‌اند. این پروتزها می‌توانند جایگزین مناسبی برای ایمپلنت‌های دندانی در مواردی باشند که محدودیت‌های آناتومیکی، پزشکی یا اقتصادی وجود دارد.
+</p>
+<p>
+هدف این مقاله، بررسی سیستماتیک مقالات موجود و ارزیابی شواهد در مورد تأثیر طرح‌های مختلف فریم‌ورک RBFDPs بر بقای بالینی این ترمیم‌ها است.
+</p>
+
+<h2>بحث</h2>
+<ul>
+  <li><strong>عملکرد بهتر کانتی‌لور:</strong> نتایج این متاآنالیز نشان داد که RBFDPهای کانتی‌لور با فقط یک پایه، در مقایسه با RBFDPهای دو پایه ثابت، میزان بقای بیشتری دارند.</li>
+
+  <li><strong>تأثیر تحرک دندان‌های پایه:</strong> دلیل بالاتر بودن میزان شکست در RBFDPهای دو پایه ثابت می‌تواند به تحرک و جابجایی متفاوت دندان‌های پایه در هنگام عملکرد مربوط باشد. در RBFDPهای کانتی‌لور، پونتیک همیشه همراه با دندان پایه حرکت می‌کند و این موضوع احتمال شکست را کاهش می‌دهد.</li>
+
+  <li><strong>اهمیت انتخاب جنس:</strong> در RBFDPهای تمام سرامیک، به دلیل محدودیت استحکام و toughness سرامیک‌های سیلیکاتی، ابعاد اتصال و کانکتور باید بزرگ‌تر از سرامیک‌های با استحکام بالاتر باشد. شکستگی اتصال در RBFDPهای متال–سرامیک شایع نیست.</li>
+</ul>
+
+<h2>آماده‌سازی سطح</h2>
+<ul>
+  <li>روش‌های آماده‌سازی سطح می‌توانند بر استحکام باند و بقای RBFDPها تأثیرگذار باشند.</li>
+  <li><a href="/glossary/sandblasting.html" class="glossary-link">سایش با ذرات آلومینای ۵۰ میکرومتری</a> با فشار ۱.۰ تا ۲.۵ بار و استفاده از سمان کامپوزیت رزین حاوی <a href="/glossary/mdp.html" class="glossary-link">مونومر فسفات</a>، به عنوان روش‌های اتصال ترجیحی برای سرامیک‌ها ذکر شده‌اند.</li>
+</ul>
+
+<h2>تأثیر نوع جنس سرامیک</h2>
+<ul>
+  <li>نوع جنس سرامیک می‌تواند در شکست RBFDPها نقش داشته باشد.</li>
+  <li><a href="/glossary/silica-based-ceramics.html" class="glossary-link">سرامیک‌های سیلیکاتی</a> مانند <strong>IPS Empress</strong> و <strong>IPS e.max Press</strong> به دلیل محدودیت استحکام و toughness، به ابعاد اتصال بزرگ‌تری نسبت به سرامیک‌های با استحکام بالاتر نیاز دارند.</li>
+  <li>سرامیک <strong>In-Ceram Zirconia</strong> که حدود ۲۶٪ زیرکونیا دارد، در یک مطالعه ۱۰ ساله میزان بقای ۹۴.۴٪ را نشان داده است.</li>
+</ul>
+
+<h2>نتایج</h2>
+<ul>
+  <li>میزان شکست RBFDPهای کانتی‌لور با یک پایه ثابت کمتر از RBFDPهای دو پایه ثابت بود.</li>
+  <li>در RBFDPهای متال–سرامیک تفاوتی در میزان شکست بین طراحی کانتی‌لور و دو پایه ثابت مشاهده نشد.</li>
+</ul>
+
+<p>
+به طور خلاصه، <strong>RBFDPهای کانتی‌لور در ناحیه قدامی دهان شکست بالینی کمتری</strong> نسبت به RBFDPهای دو پایه نشان می‌دهند. همچنین شکست RBFDPهای متال–سرامیک مستقل از طراحی فریم‌ورک است.
+</p>
+
+<h2>نکات مهم در مورد رست لینگوال</h2>
+<ul>
+  <li><strong>آماده‌سازی مناسب دندان:</strong> آماده‌سازی محافظه‌کارانه با حفظ مینا می‌تواند بقای RBFDPها را افزایش دهد.</li>
+  <li><strong>رست لینگوال برای قرارگیری دقیق:</strong> اگرچه در اتصال با سمان‌های رزینی الزام به فرم نگهدارنده وجود ندارد، اما استفاده از رست لینگوال به طور کلی برای قرارگیری دقیق RBFDP توصیه می‌شود.</li>
+</ul>
+<div style="
+  display: flex;
+  justify-content: center;
+  margin-top: 32px;
+">
+  <div style="
+    background: rgba(255, 220, 80, 0.07);
+    border: 1px solid rgba(255, 220, 80, 0.18);
+    border-radius: 9px;
+    padding: 10px 16px;
+    text-align: center;
+    font-size: .8rem;
+    color: #0a1638;
+    line-height: 1.6;
+    box-shadow: 0 3px 14px rgba(0,0,0,0.25);
+    backdrop-filter: blur(5px);
+  ">
+    <p style="margin: 0; font-weight: 600; color: #0a1638;">
+      Clinical performance of anterior resin-bonded fixed dental prostheses with different framework designs
+    </p>
+    <p style="margin: 4px 0 0 0;">
+      A systematic review and meta-analysis
+    </p>
+    <p style="margin: 6px 0 0 0; font-size: .75rem; opacity: .85;">
+      Ya-Ru Wei, Xiao-Dong Wang, Qin Zhang, Xiang-Xia Li, Markus B. Blatz
+    </p>
+  </div>
+</div>
+</div>
+
+<div class="author-note">
+  <a href="/about.html" class="author-link">دکتر فواد شهابیان</a>
+  <span class="author-role">متخصص پروتزهای دندانی و ایمپلنت</span>
+</div>
+
+<footer class="dc-site-footer" style="text-align:center; margin-top:45px; color:#9aa1b3; font-size:.9rem; line-height:1.8;">
+
+  <div style="margin-bottom:22px;">
+    <a href="index.html"
+       style="
+         display:inline-block;
+         background:rgba(11,95,255,0.18);
+         color:#3a84ff;
+         border:1.8px solid rgba(11,95,255,0.45);
+         border-radius:12px;
+         padding:12px 42px;
+         font-weight:700;
+         text-decoration:none;
+         font-size:1rem;
+         box-shadow:0 0 14px rgba(11,95,255,0.15);
+         transition:all .25s ease;">
+      🔙 برگشت به صفحه‌ی قبل
+    </a>
+  </div>
+
   <div style="margin-top:6px;">
     © 2025 DentCast — طراحی و توسعه توسط
     
@@ -329,9 +483,5 @@ btn.addEventListener('click', () => {
 </div>
 <script src="/global-search.js?v=5" defer></script>
 <script src="/dc-nav.js" defer></script>
-<div class="author-note">
-  <a href="/about.html" class="author-link">دکتر فواد شهابیان</a>
-  <span class="author-role">متخصص پروتزهای دندانی و ایمپلنت</span>
-</div>
 </body>
 </html>

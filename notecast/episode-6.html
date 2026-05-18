@@ -230,6 +230,164 @@
 <body>
 <!-- DC NAV: TOP BAR -->
 <header class="dc-topbar">
+  <div class="dc-topbar-actions">
+    <a href="/" aria-label="صفحه اصلی دنت‌کست" style="display:flex;align-items:center;margin-left:8px;flex-shrink:0;"><img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;"></a>
+    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="ابزارها" aria-expanded="false">☰</button>
+    <button class="dc-topbar-btn" id="btn-radar-topbar" aria-label="رادار">📡</button>
+    <button class="dc-topbar-btn dcOpenSearch" aria-label="جستجو">🔍</button>
+  </div>
+  <div class="dc-topbar-brand">
+    <div class="dc-topbar-brand-name">DentCast</div>
+    
+  </div>
+</header>
+<div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">
+  <div class="dc-toolbar-drawer-inner">
+    <span class="dc-toolbar-drawer-label">ابزارها</span>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa"><span class="dc-drawer-tool-ico">📱</span><span class="dc-drawer-tool-txt">نصب</span></button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-consult"><span class="dc-drawer-tool-ico">📧</span><span class="dc-drawer-tool-txt">مشاوره</span></button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-about"><span class="dc-drawer-tool-ico">✨</span><span class="dc-drawer-tool-txt">درباره</span></button>
+  </div>
+</div>
+<div id="dcRadarOverlay" class="radar-overlay" aria-hidden="true">
+  <div class="radar-overlay-header">
+    <button id="dcCloseRadarOverlay" class="radar-close-btn">&times;</button>
+    <div class="radar-header-title">رادار دنت‌کست (جایگزین گوگل)</div>
+  </div>
+  <div class="radar-overlay-body">
+    <div class="radar-search-box">
+      <input type="text" id="dcRadarInput" placeholder="نام سایت، زمینه فعالیت یا کلمه کلیدی..." autocomplete="off">
+    </div>
+    <div id="dcRadarResults" class="radar-results">
+      <div class="radar-initial-msg">برای جستجو در بین سایت‌های دندانپزشکی، تایپ کنید...</div>
+    </div>
+  </div>
+</div>
+
+
+<main class="article-content-wrap">
+ <h2>✨ نوت‌کست ششم ✨</h2>
+<h1>سیل کردن فوری دنتین یا IDS</h1>
+  <div class="dc-trustline" aria-label="اطلاعات نویسنده و بازبینی">
+    <span>تاریخ انتشار: <time datetime="2025-11-05">2025-11-05</time></span>
+    <span>آخرین بازبینی: <time datetime="2025-11-05">2025-11-05</time></span>
+  </div>
+
+
+<div class="glass-box">
+  <h4>۱. تکنیک IDS چیست؟ 🤔</h4>
+  <ul>
+    <li>ایده اصلی: بلافاصله بعد از تراش دندان برای رستوریشن غیرمستقیم (مثل ونیر، اینله، انله)، سطح عاج (<a href="https://dentcast.org/glossary/dentin-sealing">دنتین</a>) اکسپوز شده رو با باندینگ قبل از قالب‌گیری سیل کنیم.</li>
+  </ul>
+</div>
+
+<div class="glass-box">
+  <h4>۲. چرا IDS انجام دهیم؟ (مزایا) ✅</h4>
+  <ul>
+    <li>افزایش چشمگیر قدرت باند.</li>
+    <li>کاهش ایجاد <a href="/glossary/microleakage.html">لیکیج</a> و نشتی باکتریایی.</li>
+    <li>کاهش حساسیت دندان و افزایش راحتی بیمار.</li>
+    <li>بهبود بقای طولانی‌مدت رستوریشن‌ها.</li>
+    <li><strong>نکته مهم:</strong> <a href="/glossary/freshly-cut-dentin.html">دنتین تازه تراش‌خورده</a> بهترین سطح برای <a href="https://dentcast.org/glossary/bonding-protocol">باندینگ</a> است و IDS از آلودگی آن در مرحله تمپوراری (با <a href="https://dentcast.org/glossary/dental-cement">سمان</a> موقت، بزاق و...) جلوگیری می‌کند.</li>
+  </ul>
+</div>
+
+<div class="glass-box">
+  <h4>۳. مراحل کلیدی کلینیکی IDS (بر اساس تکنیک Total-Etch پاسکال مانیه):</h4>
+  <ul>
+    <li>شناسایی دنتین: اچ کوتاه (۲–۳ ثانیه)، شستشو و خشک کردن. مینای اچ شده مشخص می‌شود. سپس سطح دنتین دوباره تازه (Re-freshen) شود.</li>
+    <li>اچ دنتین: با <a href="/glossary/phosphoric-acid.html">اسید فسفریک</a> (۵ تا ۱۵ ثانیه) بلافاصله پس از تراش.</li>
+    <li>شستشو: کامل و دقیق.</li>
+    <li>خشک کردن: بسیار مهم! آب اضافه با ساکشن گرفته شود. از باد هوا استفاده نکنید. نه خیلی خشک (<a href="https://dentcast.org/glossary/collagen-collapse">کلاپس کلاژن</a>)، نه خیلی مرطوب (باند ضعیف).</li>
+    <li>باندینگ:
+      <ul>
+        <li>پرایمر (در سیستم <a href="/glossary/three-step-adhesive-system.html">۳ مرحله‌ای</a>) یا ادهزیو Self-priming (در سیستم <a href="https://dentcast.org/glossary/two-step-adhesive-system.">۲ مرحله‌ای</a>). (سیستم ۳ مرحله‌ای اغلب پایدارتر در نظر گرفته می‌شود).</li>
+        <li>اپلای دقیق <a href="/glossary/adhesive-resin-cements.html">ادهزیو رزین</a> فقط روی دنتین.</li>
+        <li>لایت کیور ادهزیو (مثلاً ۲۰ ثانیه).</li>
+      </ul>
+    </li>
+    <li>لایه گلیسرین: اپلای یک لایه گلیسرین (برای <a href="/glossary/oxygen-inhibition-layer.html">مهار اکسیژن</a>).</li>
+    <li>کیور نهایی: لایت کیور لایه گلیسرین (مثلاً ۱۰ ثانیه).</li>
+  </ul>
+</div>
+
+<div class="glass-box">
+  <h4>۴. تمپوراری پس از IDS:</h4>
+  <ul>
+    <li>روکش موقت کامپوزیتی ممکن است به لایه IDS بچسبد. از ماده جداکننده (مثل وازلین) استفاده کنید یا از تمپوراری غیرکامپوزیتی بهره ببرید.</li>
+  </ul>
+</div>
+
+<div class="glass-box">
+  <h4>۵. سمان کردن نهایی رستوریشن (بسیار مهم!):</h4>
+  <ul>
+    <li>سطح لایه IDS کیور شده روی دندان باید حتماً خراشیده/زبر شود (با فرز دایاموند Coarse دور پایین یا <a href="https://dentcast.org/glossary/sandblasting">سندبلاست</a>).</li>
+    <li>پس از خراشیدن، سطح دندان مثل مینا تلقی می‌شود:
+      <ul>
+        <li>اچ با اسید فسفریک (مثلاً ۳۰ ثانیه)، شستشو و خشک کردن.</li>
+        <li>اپلای ادهزیو رزین نهایی، اما قبل از نشاندن رستوریشن، آن را کیور نکنید تا از نشستن کامل رستوریشن مطمئن شوید.</li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div class="glass-box">
+  <h4>۶. نکات مربوط به مواد:</h4>
+  <ul>
+    <li><a href="/glossary/unfilled-resin.html">رزین ان‌فیلد (Unfilled)</a>: لایه هیبرید نازک‌تری می‌دهد. اگر برای IDS استفاده شد، موقع سمان کردن بجای خراشیدن با فرز/سندبلاست، با برس نرم و پامیس تمیز شود.</li>
+    <li><a href="/glossary/flowable-resin.html">رزین فلو (Flowable)</a>: در حفرات عمیق، می‌توان لایه نازکی از آن را روی ادهزیو IDS زد، اما نمی‌تواند جایگزین ادهزیو شود (فیلر بالا مانع نفوذ خوب و تشکیل <a href="https://dentcast.org/glossary/hybrid-layer">لایه هیبرید</a> مناسب می‌شود).</li>
+  </ul>
+</div>
+
+<div class="glass-box">
+  <h4>۷. مدیریت آندرکات‌ها و حفرات عمیق:</h4>
+  <ul>
+    <li>پس از IDS در تراش انله، آندرکات‌ها بلافاصله با کامپوزیت یا فلو مسدود می‌شوند.</li>
+    <li>در حفرات عمیق ممکن است کف حفره بالا آورده شود.</li>
+    <li>سپس لبه مینایی با فرز اصلاح شده و بعد قالب‌گیری انجام می‌شود.</li>
+  </ul>
+</div>
+
+<div class="glass-box">
+  <h4>۸. زمان‌بندی IDS:</h4>
+  <ul>
+    <li>پاسکال مانیه IDS را قبل از قالب‌گیری توصیه می‌کند (مزایای بیشتری دارد).</li>
+  </ul>
+
+  <!-- TODO: Add references section if this page cites scientific literature. -->
+  <p class="dc-disclaimer">محتوای این صفحه برای استفادهٔ آموزشی دندان‌پزشکان و دانشجویان دندان‌پزشکی تهیه شده است.</p>
+</div>
+
+  🎧 <strong>نسخه‌ی صوتی این دنت‌کست را بشنوید:</strong><br>
+    <div class="author-note">
+  <a href="/about.html" class="author-link">دکتر فواد شهابیان</a>
+  <span class="author-role">متخصص پروتزهای دندانی و ایمپلنت</span>
+</div>
+
+<audio controls preload="none" style ="width: 100%;
+    margin-top: 12px;">
+  <source src="https://episodes.s3.ir-thr-at1.arvanstorage.ir/dentcast6.m4a?versionId=" type="audio/mpeg"></audio>
+
+  <footer class="dc-site-footer" style="text-align:center; margin-top:45px; color:#9aa1b3; font-size:.9rem; line-height:1.8;">
+
+  <div style="margin-bottom:22px;">
+    <a href="index.html"
+       style="
+         display:inline-block;
+         background:rgba(11,95,255,0.18);
+         color:#3a84ff;
+         border:1.8px solid rgba(11,95,255,0.45);
+         border-radius:12px;
+         padding:12px 42px;
+         font-weight:700;
+         text-decoration:none;
+         font-size:1rem;
+         box-shadow:0 0 14px rgba(11,95,255,0.15);
+         transition:all .25s ease;">
+      🔙 برگشت به صفحه‌ی قبل
+    </a>
+  </div>
+
   <div style="margin-top:6px;">
     © 2025 DentCast — طراحی و توسعه توسط
     
@@ -256,9 +414,5 @@
 </div>
 <script src="/global-search.js?v=5" defer></script>
 <script src="/dc-nav.js" defer></script>
-<div class="author-note">
-  <a href="/about.html" class="author-link">دکتر فواد شهابیان</a>
-  <span class="author-role">متخصص پروتزهای دندانی و ایمپلنت</span>
-</div>
 </body>
 </html>

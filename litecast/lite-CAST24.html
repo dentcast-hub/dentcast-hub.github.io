@@ -341,9 +341,125 @@ footer a:hover {
 <body>
 <!-- DC NAV: TOP BAR -->
 <header class="dc-topbar">
-  </main>
+  <div class="dc-topbar-actions">
+    <a href="/" aria-label="صفحه اصلی دنت‌کست" style="display:flex;align-items:center;margin-left:8px;flex-shrink:0;"><img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;"></a>
+    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="ابزارها" aria-expanded="false">☰</button>
+    <button class="dc-topbar-btn" id="btn-radar-topbar" aria-label="رادار">📡</button>
+    <button class="dc-topbar-btn dcOpenSearch" aria-label="جستجو">🔍</button>
+  </div>
+  <div class="dc-topbar-brand">
+    <div class="dc-topbar-brand-name">DentCast</div>
+    
+  </div>
+</header>
+<div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">
+  <div class="dc-toolbar-drawer-inner">
+    <span class="dc-toolbar-drawer-label">ابزارها</span>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa"><span class="dc-drawer-tool-ico">📱</span><span class="dc-drawer-tool-txt">نصب</span></button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-consult"><span class="dc-drawer-tool-ico">📧</span><span class="dc-drawer-tool-txt">مشاوره</span></button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-about"><span class="dc-drawer-tool-ico">✨</span><span class="dc-drawer-tool-txt">درباره</span></button>
+  </div>
+</div>
+<div id="dcRadarOverlay" class="radar-overlay" aria-hidden="true">
+  <div class="radar-overlay-header">
+    <button id="dcCloseRadarOverlay" class="radar-close-btn">&times;</button>
+    <div class="radar-header-title">رادار دنت‌کست (جایگزین گوگل)</div>
+  </div>
+  <div class="radar-overlay-body">
+    <div class="radar-search-box">
+      <input type="text" id="dcRadarInput" placeholder="نام سایت، زمینه فعالیت یا کلمه کلیدی..." autocomplete="off">
+    </div>
+    <div id="dcRadarResults" class="radar-results">
+      <div class="radar-initial-msg">برای جستجو در بین سایت‌های دندانپزشکی، تایپ کنید...</div>
+    </div>
+  </div>
+</div>
 
-<div style="margin-top:10px;">
+<main class="article-content-wrap">
+<main>
+
+
+<h2>🦷 Lite-CAST</h2>
+
+<h1>اگر روی دندان عصب‌کشی شده روکش نگذاریم چه می‌شود؟</h1>
+  <div class="dc-trustline" aria-label="اطلاعات نویسنده و بازبینی">
+    <span>تاریخ انتشار: <time datetime="2026-05-18">2026-05-18</time></span>
+    <span>آخرین بازبینی: <time datetime="2026-05-18">2026-05-18</time></span>
+  </div>
+
+
+<article>
+
+  <p>
+    همیشه لازم نیست روی دندان عصب‌کشی شده روکش گذاشته شود.
+    اما اگر بخش زیادی از ساختار دندان از دست رفته باشد،
+    محافظت نکردن از آن می‌تواند خطر ترک یا شکستگی را افزایش دهد.
+  </p>
+
+  <p>
+    تصمیم برای محافظت بیشتر به میزان بافت باقی‌مانده دندان
+    و نوع نیروهایی که هنگام جویدن یا گاز زدن به آن وارد می‌شود بستگی دارد.
+  </p>
+
+  <h2>در صورت محافظت نکردن از دندان چه اتفاقی ممکن است بیفتد؟</h2>
+
+  <ul>
+    <li>ایجاد ترک‌های ریز در دیواره‌های دندان</li>
+    <li>شکستگی هنگام جویدن یا گاز زدن غذاهای سفت</li>
+    <li>از دست رفتن بخشی از تاج دندان</li>
+    <li>نیاز به درمان‌های پیچیده‌تر در آینده</li>
+  </ul>
+
+  <h2>آیا نوع نیروهای واردشده اهمیت دارد؟</h2>
+
+  <p>
+    بله. برخی دندان‌ها بیشتر تحت فشار مستقیم جویدن قرار می‌گیرند،
+    در حالی‌که برخی دیگر هنگام گاز زدن نیروهای مایل و برشی را تحمل می‌کنند.
+    اگر ساختار دندان تضعیف شده باشد،
+    هر یک از این نیروها می‌توانند به ایجاد ترک یا شکستگی کمک کنند.
+  </p>
+
+  <h2>اگر بعداً تصمیم به محافظت از دندان بگیریم چه می‌شود؟</h2>
+
+  <p>
+    در بسیاری از موارد می‌توان در آینده نیز دندان را محافظت کرد،
+    اما اگر دندان دچار شکستگی شود،
+    ممکن است گزینه‌های درمانی محدودتر شوند.
+  </p>
+
+  <h2>جمع‌بندی</h2>
+
+  <p>
+    روکش همیشه ضروری نیست،
+    اما در دندان‌هایی که ساختار زیادی از دست داده‌اند،
+    محافظت مناسب می‌تواند خطر شکستگی را کاهش دهد
+    و عمر دندان را افزایش دهد.
+  </p>
+  <p class="dc-disclaimer">این محتوا صرفاً جنبهٔ آموزشی دارد و جایگزین تشخیص یا درمان حرفه‌ای نیست.</p>
+</article>
+
+
+
+  <div class="cta-container">
+    <p class="cta-text">برای درمان  با ما تماس بگیرید</p>
+    <a href="tel:06133380090" class="cta-button">📞 تماس با مطب و نوبت‌دهی</a>
+  </div>
+
+</main>
+
+<div style="text-align:center; margin-top:36px; margin-bottom:4px;">
+  <a href="javascript:history.back()" class="back-btn">
+    ← برگشت به صفحه‌ی قبل
+  </a>
+</div>
+
+<div class="author-note">
+  <a href="/about.html" class="author-link">دکتر فواد شهابیان</a>
+  <span class="author-role">متخصص پروتزهای دندانی و ایمپلنت</span>
+</div>
+
+<footer class="dc-site-footer">
+  <div style="margin-top:10px;">
     © 2025 Lite-CAST — طراحی و توسعه توسط 
   </div>
 </footer>
@@ -367,9 +483,5 @@ footer a:hover {
 </div>
 <script src="/global-search.js?v=5" defer></script>
 <script src="/dc-nav.js" defer></script>
-<div class="author-note">
-  <a href="/about.html" class="author-link">دکتر فواد شهابیان</a>
-  <span class="author-role">متخصص پروتزهای دندانی و ایمپلنت</span>
-</div>
 </body>
 </html>
