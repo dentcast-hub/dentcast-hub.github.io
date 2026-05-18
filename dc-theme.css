@@ -231,6 +231,80 @@ body:has(.dc-topbar) small {
 }
 
 /* =====================================================
+   E-E-A-T MICRO-SIGNALS
+   Compact authorship, dates, references, and disclaimers.
+   These are intentionally quiet so content pages keep the
+   DentCast knowledge-base feel rather than a magazine layout.
+===================================================== */
+body:has(.dc-topbar) .dc-trustline {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 6px 10px;
+  margin: -6px auto 22px;
+  color: var(--txt3);
+  font-size: .78rem;
+  line-height: 1.8;
+  text-align: center;
+}
+
+body:has(.dc-topbar) .dc-trustline a,
+body:has(.dc-topbar) .dc-author-link {
+  color: var(--txt2);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+body:has(.dc-topbar) .dc-trustline a:hover,
+body:has(.dc-topbar) .dc-author-link:hover {
+  color: var(--ac);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+body:has(.dc-topbar) .author {
+  color: var(--txt3);
+  font-size: .86rem;
+  line-height: 1.8;
+}
+
+body:has(.dc-topbar) .dc-disclaimer {
+  margin: 28px 0 0;
+  padding-top: 14px;
+  border-top: 1px solid var(--border2);
+  color: var(--txt3);
+  font-size: .82rem;
+  line-height: 1.9;
+  text-align: center;
+}
+
+body:has(.dc-topbar) .dc-references {
+  margin-top: 30px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border2);
+  color: var(--txt2);
+  font-size: .86rem;
+  line-height: 1.9;
+}
+
+body:has(.dc-topbar) .dc-references h2,
+body:has(.dc-topbar) .dc-references h3,
+body:has(.dc-topbar) .dc-references h4 {
+  margin-top: 0;
+  color: var(--txt2);
+  font-size: .95rem;
+  border: 0;
+  padding: 0;
+}
+
+body:has(.dc-topbar) .dc-references ol,
+body:has(.dc-topbar) .dc-references ul {
+  margin: 10px 0 0;
+  padding-right: 20px;
+}
+
+/* =====================================================
    FOOTER — UNIFIED ACROSS ALL INTERNAL PAGES
    Matches index.html footer style:
    simple, text-only look with top border
