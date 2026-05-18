@@ -701,31 +701,6 @@ body{
   background:linear-gradient(135deg,rgba(var(--pr-rgb),.22),rgba(var(--ac-rgb),.12));
 }
 
-/* LiteCast featured — hero card */
-#panel-patient .dc-list-card.featured:first-child{
-  background:linear-gradient(135deg,var(--pr) 0%,rgba(var(--ac-rgb),1) 100%);
-  border:none!important;
-  border-top:none!important;
-  border-right:none!important;
-  box-shadow:0 8px 28px rgba(var(--pr-rgb),.32),0 2px 6px rgba(var(--pr-rgb),.18)!important;
-  margin-bottom:20px;
-}
-#panel-patient .dc-list-card.featured:first-child .lc-category{ color:rgba(255,255,255,.65); }
-#panel-patient .dc-list-card.featured:first-child .lc-title{ color:#ffffff; }
-#panel-patient .dc-list-card.featured:first-child .lc-sub{ color:rgba(255,255,255,.75); }
-#panel-patient .dc-list-card.featured:first-child .lc-ico{
-  background:rgba(255,255,255,.15);
-  border-color:rgba(255,255,255,.25);
-}
-#panel-patient .dc-list-card.featured:first-child .dc-chip{
-  background:rgba(255,255,255,.18);
-  border-color:rgba(255,255,255,.30);
-  color:#ffffff;
-}
-[data-theme="dark"] #panel-patient .dc-list-card.featured:first-child{
-  background:linear-gradient(135deg,rgba(var(--pr-rgb),.55) 0%,rgba(var(--ac-rgb),.40) 100%);
-}
-
 /* =====================================================
    MONITOR (list widget)
 ===================================================== */
@@ -739,7 +714,7 @@ body{
   overflow:hidden;
   transition:all var(--tr2);
 }
-#panel-patient .dc-monitor{ margin-bottom:12px; }
+
 .dc-monitor-inner{ padding:14px 16px; }
 .dc-monitor-title{
   font-size:.82rem; font-weight:800;
@@ -1600,20 +1575,20 @@ body.dc-desktop-ui #dc-desktop-root{
 }
 
 /* =====================================================
-   SCROLLYTELLING — بیماران (موبایل only)
+   CINEMATIC PATIENTS — unified scrollytelling
 ===================================================== */
 @media(min-width:768px){
-  .dc-scrolly-wrap{ display:none!important; }
+  .pt-wrap{ display:none!important; }
 }
-.dc-scrolly-wrap{
-  margin:8px 0;
+.pt-wrap{
   position:relative;
+  margin:0 0 8px;
 }
-.dc-scrolly-track{
+.pt-track{
   position:relative;
-  height:calc(100svh - 113px + 1800px);
+  height:calc(100svh - 113px + 3200px);
 }
-.dc-scrolly-sticky{
+.pt-sticky{
   position:sticky;
   top:0;
   height:calc(100svh - 113px);
@@ -1625,136 +1600,327 @@ body.dc-desktop-ui #dc-desktop-root{
   border:1px solid var(--card-border);
   z-index:10;
 }
-#scrolly-canvas{
+/* canvas */
+#pt-canvas{
+  position:absolute;
+  inset:0;
   width:100%; height:100%;
   display:block;
 }
-/* Intro overlay */
-.dc-scrolly-intro{
+/* gradient overlays */
+.pt-grad-top{
   position:absolute;
   top:0; left:0; right:0;
-  padding:22px 20px 50px;
-  background:linear-gradient(to top,transparent,rgba(0,0,0,.72));
-  text-align:center;
+  height:52%;
+  background:linear-gradient(to bottom,rgba(0,0,0,.72) 0%,rgba(0,0,0,.28) 55%,transparent 100%);
   pointer-events:none;
+  z-index:2;
 }
-.dc-scrolly-intro-name{
-  font-family:'Vazirmatn',system-ui,sans-serif;
-  color:#fff;
-  font-size:1.55rem;
-  font-weight:800;
-  letter-spacing:-.01em;
-  text-shadow:0 2px 16px rgba(0,0,0,.55),0 1px 4px rgba(0,0,0,.4);
-  line-height:1.2;
-}
-.dc-scrolly-intro-divider{
-  width:32px; height:1.5px;
-  background:rgba(255,255,255,.45);
-  border-radius:999px;
-  margin:8px auto;
-}
-.dc-scrolly-intro-spec{
-  font-family:'Vazirmatn',system-ui,sans-serif;
-  color:rgba(255,255,255,.78);
-  font-size:.78rem;
-  font-weight:600;
-  letter-spacing:.04em;
-  text-shadow:0 1px 6px rgba(0,0,0,.4);
-}
-/* scroll hint card */
-.dc-scrolly-hint-card{
-  transition:opacity .3s ease;
-  margin-bottom:6px;
-  background:linear-gradient(135deg,rgba(var(--pr-rgb),.09),rgba(var(--ac-rgb),.05))!important;
-  border:1px solid rgba(var(--pr-rgb),.18)!important;
-  border-right:4px solid var(--ac)!important;
-  box-shadow:0 8px 24px rgba(var(--pr-rgb),.13),var(--card-sh)!important;
-}
-.dc-scrolly-hint-card .dc-monitor-inner{
-  display:flex !important;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:10px;
-  padding:18px 20px !important;
-  text-align:center;
-}
-.dc-scrolly-hint-label{
-  font-size:.95rem;
-  font-weight:800;
-  color:var(--pr);
-  line-height:1.4;
-}
-.dc-scrolly-hint-sub{
-  font-size:.80rem;
-  color:var(--txt2);
-  line-height:1.5;
-  font-weight:600;
-}
-.dc-scrolly-hint-arrow{
-  width:16px; height:16px;
-  border-right:2.5px solid rgba(var(--pr-rgb),.45);
-  border-bottom:2.5px solid rgba(var(--pr-rgb),.45);
-  transform:rotate(45deg);
-  animation:scrolly-bounce .9s ease-in-out infinite;
-  flex-shrink:0;
-}
-@keyframes scrolly-bounce{
-  0%,100%{ transform:rotate(45deg) translateY(0); }
-  50%     { transform:rotate(45deg) translateY(4px); }
-}
-/* progress bar */
-.dc-scrolly-progress{
-  position:absolute;
-  top:10px; right:10px;
-  width:3px;
-  height:calc(100% - 20px);
-  background:rgba(255,255,255,.18);
-  border-radius:999px;
-  overflow:hidden;
-}
-.dc-scrolly-progress-fill{
-  width:100%;
-  height:0%;
-  background:rgba(255,255,255,.80);
-  border-radius:999px;
-  transition:height .05s linear;
-}
-/* CTA overlay */
-.dc-scrolly-cta{
+.pt-grad-bottom{
   position:absolute;
   bottom:0; left:0; right:0;
-  padding:60px 20px 28px;
-  background:linear-gradient(to bottom,transparent,rgba(0,0,0,.75));
+  height:68%;
+  background:linear-gradient(to top,rgba(0,0,0,.92) 0%,rgba(0,0,0,.50) 42%,transparent 100%);
+  pointer-events:none;
+  z-index:2;
+  opacity:0;
+}
+.pt-vignette{
+  position:absolute;
+  inset:0;
+  background:radial-gradient(ellipse at center,transparent 52%,rgba(0,0,0,.28) 100%);
+  pointer-events:none;
+  z-index:2;
+}
+/* progress bar */
+.pt-progress{
+  position:absolute;
+  top:12px; right:10px;
+  width:2.5px;
+  height:calc(100% - 24px);
+  background:rgba(255,255,255,.14);
+  border-radius:999px;
+  overflow:hidden;
+  z-index:20;
+}
+.pt-progress-fill{
+  width:100%;
+  height:0%;
+  background:rgba(255,255,255,.72);
+  border-radius:999px;
+  will-change:height;
+}
+/* scenes — shared base */
+.pt-scene{
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
   opacity:0;
   pointer-events:none;
+  z-index:5;
+  will-change:opacity,transform;
 }
-.dc-scrolly-cta-title{
+/* scene: hero */
+.pt-scene-hero{
+  justify-content:flex-start;
+  padding:26px 24px 0;
+}
+.pt-hero-eyebrow{
+  font-family:'Vazirmatn',system-ui,sans-serif;
+  font-size:.64rem;
+  font-weight:700;
+  color:rgba(255,255,255,.55);
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  margin-bottom:12px;
+  text-shadow:0 1px 8px rgba(0,0,0,.5);
+}
+.pt-hero-name{
+  font-family:'Vazirmatn',system-ui,sans-serif;
   color:#fff;
-  font-size:1rem;
-  font-weight:800;
+  font-size:1.65rem;
+  font-weight:900;
+  letter-spacing:-.015em;
+  text-shadow:0 2px 20px rgba(0,0,0,.65),0 1px 4px rgba(0,0,0,.45);
+  line-height:1.18;
   text-align:center;
-  margin-bottom:14px;
-  text-shadow:0 1px 6px rgba(0,0,0,.4);
 }
-.dc-scrolly-cta .dc-cta-row{
-  display:flex; gap:8px; justify-content:center;
+.pt-hero-divider{
+  width:28px; height:1.5px;
+  background:rgba(255,255,255,.38);
+  border-radius:999px;
+  margin:11px auto;
 }
-.dc-scrolly-cta .dc-cta-btn{
-  background:rgba(255,255,255,.15);
+.pt-hero-spec{
+  font-family:'Vazirmatn',system-ui,sans-serif;
+  color:rgba(255,255,255,.68);
+  font-size:.80rem;
+  font-weight:600;
+  letter-spacing:.03em;
+  text-shadow:0 1px 8px rgba(0,0,0,.45);
+  text-align:center;
+}
+.pt-scroll-hint{
+  position:absolute;
+  bottom:26px;
+  left:50%;
+  transform:translateX(-50%);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:7px;
+  will-change:opacity;
+}
+.pt-hint-text{
+  font-family:'Vazirmatn',system-ui,sans-serif;
+  font-size:.68rem;
+  font-weight:700;
+  color:rgba(255,255,255,.50);
+  letter-spacing:.07em;
+}
+.pt-hint-chevron{
+  width:13px; height:13px;
+  border-right:2px solid rgba(255,255,255,.42);
+  border-bottom:2px solid rgba(255,255,255,.42);
+  transform:rotate(45deg);
+  animation:pt-bounce .9s ease-in-out infinite;
+}
+@keyframes pt-bounce{
+  0%,100%{ transform:rotate(45deg) translateY(0); }
+  50%     { transform:rotate(45deg) translateY(5px); }
+}
+/* scene: knowledge (litecast) */
+.pt-scene-knowledge{
+  justify-content:flex-start;
+  padding:20px 15px 0;
+  gap:0;
+}
+.pt-scene-label{
+  font-family:'Vazirmatn',system-ui,sans-serif;
+  font-size:.60rem;
+  font-weight:800;
+  color:rgba(255,255,255,.42);
+  letter-spacing:.15em;
+  text-transform:uppercase;
+  margin-bottom:11px;
+  align-self:flex-start;
+  padding:0 2px;
+}
+.pt-lc-cards{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  width:100%;
+}
+.pt-lc-card{
+  background:rgba(255,255,255,.09);
+  backdrop-filter:blur(20px) saturate(1.5);
+  -webkit-backdrop-filter:blur(20px) saturate(1.5);
+  border:1px solid rgba(255,255,255,.16);
+  border-radius:14px;
+  padding:13px 15px;
+  display:flex;
+  flex-direction:column;
+  gap:5px;
+  text-decoration:none;
+  opacity:0;
+  transform:translateY(16px);
+  will-change:opacity,transform;
+  box-shadow:0 4px 28px rgba(0,0,0,.22),0 1px 6px rgba(0,0,0,.18);
+  -webkit-tap-highlight-color:transparent;
+}
+.pt-lc-card:active{
+  background:rgba(255,255,255,.17);
+}
+.pt-lc-card-cat{
+  font-size:.60rem;
+  font-weight:700;
+  color:rgba(255,255,255,.48);
+  letter-spacing:.09em;
+  text-transform:uppercase;
+}
+.pt-lc-card-title{
+  font-family:'Vazirmatn',system-ui,sans-serif;
+  font-size:.90rem;
+  font-weight:800;
+  color:#fff;
+  line-height:1.40;
+  text-shadow:0 1px 6px rgba(0,0,0,.28);
+}
+.pt-lc-cta-link{
+  display:inline-block;
+  margin-top:13px;
+  font-family:'Vazirmatn',system-ui,sans-serif;
+  font-size:.74rem;
+  font-weight:700;
+  color:rgba(255,255,255,.62);
+  text-decoration:none;
+  letter-spacing:.02em;
+  padding:7px 15px;
+  border:1px solid rgba(255,255,255,.20);
+  border-radius:999px;
+  background:rgba(255,255,255,.07);
   backdrop-filter:blur(10px);
   -webkit-backdrop-filter:blur(10px);
-  border:1px solid rgba(255,255,255,.35);
-  color:#fff!important;
-  padding:10px 20px;
-  border-radius:999px;
-  font-size:.85rem;
-  font-weight:700;
+  align-self:flex-start;
+  opacity:0;
+  transform:translateY(8px);
+  will-change:opacity,transform;
+  -webkit-tap-highlight-color:transparent;
+}
+/* scene: articles */
+.pt-scene-articles{
+  justify-content:flex-start;
+  padding:20px 15px 0;
+}
+.pt-articles-list{
+  list-style:none;
+  padding:0; margin:0;
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+  width:100%;
+}
+.pt-article-item{
+  opacity:0;
+  transform:translateX(14px);
+  will-change:opacity,transform;
+}
+.pt-article-item a{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  padding:12px 14px;
+  background:rgba(255,255,255,.08);
+  backdrop-filter:blur(18px) saturate(1.4);
+  -webkit-backdrop-filter:blur(18px) saturate(1.4);
+  border:1px solid rgba(255,255,255,.13);
+  border-radius:12px;
   text-decoration:none;
+  -webkit-tap-highlight-color:transparent;
 }
-.dc-scrolly-cta .dc-cta-btn:active{
-  background:rgba(255,255,255,.28);
+.pt-article-item a:active{
+  background:rgba(255,255,255,.16);
 }
+.pt-article-dot{
+  width:5px; height:5px;
+  border-radius:50%;
+  background:rgba(255,255,255,.48);
+  flex-shrink:0;
+}
+.pt-article-title{
+  font-family:'Vazirmatn',system-ui,sans-serif;
+  font-size:.84rem;
+  font-weight:700;
+  color:#fff;
+  line-height:1.42;
+  text-shadow:0 1px 4px rgba(0,0,0,.28);
+}
+/* scene: CTA — decision mode */
+.pt-scene-cta{
+  justify-content:flex-end;
+  padding:0 18px 26px;
+}
+.pt-cta-tagline{
+  font-family:'Vazirmatn',system-ui,sans-serif;
+  font-size:.78rem;
+  font-weight:600;
+  color:rgba(255,255,255,.62);
+  text-align:center;
+  margin-bottom:5px;
+  letter-spacing:.02em;
+}
+.pt-cta-name{
+  font-family:'Vazirmatn',system-ui,sans-serif;
+  font-size:1.12rem;
+  font-weight:900;
+  color:#fff;
+  text-align:center;
+  margin-bottom:18px;
+  text-shadow:0 2px 14px rgba(0,0,0,.55);
+  letter-spacing:-.01em;
+}
+.pt-cta-actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  width:100%;
+}
+.pt-cta-btn{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  padding:13px 10px;
+  border-radius:12px;
+  text-decoration:none;
+  font-family:'Vazirmatn',system-ui,sans-serif;
+  font-size:.84rem;
+  font-weight:800;
+  min-height:48px;
+  -webkit-tap-highlight-color:transparent;
+  will-change:transform;
+}
+.pt-cta-btn:active{
+  transform:scale(.96);
+}
+.pt-cta-btn-primary{
+  background:rgba(255,255,255,.94);
+  color:#022360;
+  border:none;
+  grid-column:1/-1;
+  box-shadow:0 4px 20px rgba(0,0,0,.38);
+}
+.pt-cta-btn-secondary{
+  background:rgba(255,255,255,.11);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  border:1px solid rgba(255,255,255,.26);
+  color:#fff;
+}
+.pt-btn-ico{ font-size:1.05rem; line-height:1; }
 
 /* =====================================================
    EPISODES CARD — redesigned layout
@@ -1975,35 +2141,6 @@ body.dc-desktop-ui #dc-desktop-root{
   min-width:0;
 }
 
-/* ── Patient section labels ── */
-.dc-patient-section-label{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  margin:0 0 10px;
-  padding:0 2px;
-}
-.dc-patient-section-label-txt{
-  font-size:.68rem;
-  font-weight:800;
-  color:var(--txt3);
-  letter-spacing:.08em;
-  text-transform:uppercase;
-  white-space:nowrap;
-}
-.dc-patient-section-label-line{
-  flex:1;
-  height:1px;
-  background:var(--border);
-}
-
-/* ── Patient intent groups ── */
-.dc-patient-group{
-  margin-bottom:28px;
-}
-.dc-patient-group:last-child{
-  margin-bottom:0;
-}
   </style>
 
 
@@ -2351,62 +2488,74 @@ body.dc-desktop-ui #dc-desktop-root{
     <!-- ── PANEL: بیماران ── -->
     <section class="dc-panel" id="panel-patient">
 
-      <!-- گروه اول: محتوای آموزشی -->
-      <div class="dc-patient-group">
-        <div class="dc-patient-section-label">
-          <span class="dc-patient-section-label-txt">محتوای آموزشی</span>
-          <span class="dc-patient-section-label-line"></span>
-        </div>
+      <!-- ── CINEMATIC SCROLL EXPERIENCE ── -->
+      <div class="pt-wrap">
+        <div class="pt-track" id="pt-track">
+          <div class="pt-sticky">
 
-        <div class="dc-list-card featured" id="card-litecast" onclick="window.location.href='/litecast/'">
-          <div class="lc-eyebrow-row">
-            <div class="lc-ico">✨</div>
-            <span class="lc-category">بیماران · LiteCast</span>
-          </div>
-          <div class="lc-title">دندان‌پزشکی برای همه</div>
-          <div class="lc-footer">
-            <span class="lc-sub">محتوای ساده و غیر تخصصی برای بیماران</span>
-            <span class="dc-chip">LiteCast ◂</span>
-          </div>
-        </div>
+            <!-- CINEMATIC FRAME CANVAS -->
+            <canvas id="pt-canvas" aria-label="کلینیک دکتر فواد شهابیان"></canvas>
 
-        <article class="dc-monitor" aria-label="پیشنهادهای رندوم">
-          <div class="dc-monitor-inner">
-            <div class="dc-monitor-title">سه پیشنهاد رندوم برای مطالعه</div>
-            <ul class="dc-monitor-list" id="dcPatientRandom3"></ul>
-          </div>
-        </article>
-      </div>
+            <!-- GRADIENT OVERLAYS -->
+            <div class="pt-grad-top"></div>
+            <div class="pt-grad-bottom" id="pt-grad-bottom"></div>
+            <div class="pt-vignette"></div>
 
-      <!-- ── SCROLLYTELLING ── -->
-      <div class="dc-scrolly-wrap">
-        <div class="dc-monitor dc-scrolly-hint-card" id="scrolly-hint">
-          <div class="dc-monitor-inner">
-            <div class="dc-scrolly-hint-label">🧭 اینجاست که درمان شروع میشه</div>
-            <div class="dc-scrolly-hint-sub">برای تماس و مسیریابی مطب اسکرول کنید</div>
-            <div class="dc-scrolly-hint-arrow"></div>
-          </div>
-        </div>
-        <div class="dc-scrolly-track" id="scrolly-track">
-          <div class="dc-scrolly-sticky">
-            <div class="dc-scrolly-progress">
-              <div class="dc-scrolly-progress-fill" id="scrolly-progress-fill"></div>
+            <!-- PROGRESS BAR -->
+            <div class="pt-progress">
+              <div class="pt-progress-fill" id="pt-progress-fill"></div>
             </div>
-            <canvas id="scrolly-canvas" aria-label="فضای کلینیک دکتر فواد شهابیان"></canvas>
-            <div class="dc-scrolly-intro" id="scrolly-intro">
-              <div class="dc-scrolly-intro-name">دکتر فواد شهابیان</div>
-              <div class="dc-scrolly-intro-divider"></div>
-              <div class="dc-scrolly-intro-spec">متخصص پروتز</div>
-            </div>
-            <div class="dc-scrolly-cta" id="scrolly-cta">
-              <div class="dc-scrolly-cta-title">برای هماهنگی وقت معاینه</div>
-              <div class="dc-cta-row">
-                <a class="dc-cta-btn" href="tel:+986133380090">تماس با مطب 📞</a>
-                <a class="dc-cta-btn" href="https://nshn.ir/32sbkzKEOBbXR4" target="_blank" rel="noopener">مسیریابی 📍</a>
+
+            <!-- SCENE 1: HERO -->
+            <div class="pt-scene pt-scene-hero" id="pt-scene-hero">
+              <div class="pt-hero-eyebrow">دندان‌پزشکی متخصص</div>
+              <div class="pt-hero-name">دکتر فواد شهابیان</div>
+              <div class="pt-hero-divider"></div>
+              <div class="pt-hero-spec">متخصص پروتز · زیبایی · ایمپلنت</div>
+              <div class="pt-scroll-hint" id="pt-scroll-hint">
+                <span class="pt-hint-text">اسکرول کنید</span>
+                <div class="pt-hint-chevron"></div>
               </div>
             </div>
+
+            <!-- SCENE 2: LITECAST KNOWLEDGE CARDS -->
+            <div class="pt-scene pt-scene-knowledge" id="pt-scene-knowledge">
+              <div class="pt-scene-label">آموزش · LiteCast</div>
+              <div class="pt-lc-cards" id="pt-lc-cards">
+                <!-- JS populated -->
+              </div>
+              <a class="pt-lc-cta-link" id="pt-lc-cta-link" href="/litecast/">مشاهده همه مطالب آموزشی ◂</a>
+            </div>
+
+            <!-- SCENE 3: CONTEXTUAL ARTICLES -->
+            <div class="pt-scene pt-scene-articles" id="pt-scene-articles">
+              <div class="pt-scene-label">پیشنهاد مطالعه</div>
+              <ul class="pt-articles-list" id="pt-articles-list">
+                <!-- JS populated -->
+              </ul>
+            </div>
+
+            <!-- SCENE 4: CTA — DECISION MODE -->
+            <div class="pt-scene pt-scene-cta" id="pt-scene-cta">
+              <div class="pt-cta-tagline">برای هماهنگی وقت معاینه</div>
+              <div class="pt-cta-name">دکتر فواد شهابیان</div>
+              <div class="pt-cta-actions">
+                <a class="pt-cta-btn pt-cta-btn-primary" href="tel:+986133380090">
+                  <span class="pt-btn-ico">📞</span>
+                  <span>تماس با مطب</span>
+                </a>
+                <a class="pt-cta-btn pt-cta-btn-secondary" href="https://nshn.ir/32sbkzKEOBbXR4" target="_blank" rel="noopener">
+                  <span class="pt-btn-ico">📍</span>
+                  <span>مسیریابی</span>
+                </a>
+                <a class="pt-cta-btn pt-cta-btn-secondary" href="https://www.instagram.com/dr.foad_shahabian/" target="_blank" rel="noopener">
+                  <span class="pt-btn-ico">📅</span>
+                  <span>رزرو وقت</span>
+                </a>
+              </div>
+            </div>
+
           </div>
-          <div style="height:1800px"></div>
         </div>
       </div>
 
@@ -2960,16 +3109,45 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 </script>
 
 <script>
-/* ── PATIENT RANDOM 3 ── */
+/* ── CINEMATIC PATIENTS — data loader ── */
 (function(){
+  'use strict';
   const FEED_URL='/litecast/lite-glossary.json';
-  const el=document.getElementById('dcPatientRandom3');
-  if(!el) return;
-  function extractArray(json){if(Array.isArray(json))return json;const cands=[json?.items,json?.data,json?.entries,json?.feed].filter(Boolean);for(const c of cands)if(Array.isArray(c))return c;for(const k in(json||{})){const v=json[k];if(Array.isArray(v))return v;if(v&&typeof v==='object'&&Array.isArray(v.items))return v.items;}return[];}
-  function toItem(x){const title=(x?.title||x?.name||'').toString().trim();const url=(x?.page_url||x?.url||x?.link||'').toString().trim();if(!title||!url)return null;return{title,url};}
   function shuffle(arr,n){const a=arr.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a.slice(0,Math.min(n,a.length));}
-  function render(items){el.innerHTML='';items.forEach(it=>{const li=document.createElement('li');const a=document.createElement('a');a.href=it.url;a.textContent=it.title;li.appendChild(a);el.appendChild(li);});}
-  fetch(FEED_URL,{cache:'no-store'}).then(r=>r.ok?r.json():Promise.reject()).then(json=>{render(shuffle(extractArray(json).map(toItem).filter(Boolean),3));}).catch(()=>{el.innerHTML='';});
+  fetch(FEED_URL,{cache:'no-store'})
+    .then(r=>r.ok?r.json():Promise.reject())
+    .then(json=>{
+      const items=Array.isArray(json.LightGlossary)?json.LightGlossary:[];
+      if(!items.length) return;
+      const picked=shuffle(items,6);
+      /* LiteCast floating cards — scene 2 */
+      const lcBox=document.getElementById('pt-lc-cards');
+      if(lcBox){
+        lcBox.innerHTML='';
+        picked.slice(0,3).forEach(it=>{
+          const a=document.createElement('a');
+          a.className='pt-lc-card';
+          a.href='/'+(it.page_url||'litecast/');
+          a.innerHTML='<span class="pt-lc-card-cat">LiteCast · بیماران</span><span class="pt-lc-card-title">'+it.title+'</span>';
+          lcBox.appendChild(a);
+        });
+      }
+      /* contextual article items — scene 3 */
+      const artBox=document.getElementById('pt-articles-list');
+      if(artBox){
+        artBox.innerHTML='';
+        picked.slice(3,6).forEach(it=>{
+          const li=document.createElement('li');
+          li.className='pt-article-item';
+          const a=document.createElement('a');
+          a.href='/'+(it.page_url||'litecast/');
+          a.innerHTML='<span class="pt-article-dot"></span><span class="pt-article-title">'+it.title+'</span>';
+          li.appendChild(a);
+          artBox.appendChild(li);
+        });
+      }
+    })
+    .catch(()=>{});
 })();
 </script>
 
@@ -3504,76 +3682,134 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 </script>
 
 <script>
-/* ── SCROLLYTELLING — بیماران ── */
+/* ── CINEMATIC PATIENTS — scroll engine ── */
 (function(){
+  'use strict';
   const FRAME_COUNT = 60;
-  const track    = document.getElementById('scrolly-track');
-  const canvas   = document.getElementById('scrolly-canvas');
-  const ctaEl    = document.getElementById('scrolly-cta');
-  const introEl  = document.getElementById('scrolly-intro');
-  const hintEl   = document.getElementById('scrolly-hint');
-  const fillEl   = document.getElementById('scrolly-progress-fill');
-  const body     = document.getElementById('mobile-body');
+
+  const track     = document.getElementById('pt-track');
+  const canvas    = document.getElementById('pt-canvas');
+  const fillEl    = document.getElementById('pt-progress-fill');
+  const gradBot   = document.getElementById('pt-grad-bottom');
+  const heroScene = document.getElementById('pt-scene-hero');
+  const lcScene   = document.getElementById('pt-scene-knowledge');
+  const artScene  = document.getElementById('pt-scene-articles');
+  const ctaScene  = document.getElementById('pt-scene-cta');
+  const hintEl    = document.getElementById('pt-scroll-hint');
+  const lcCtaLink = document.getElementById('pt-lc-cta-link');
+  const body      = document.getElementById('mobile-body');
+
   if(!track || !canvas || !body) return;
 
   const ctx = canvas.getContext('2d');
   canvas.width  = 540;
   canvas.height = 960;
 
-  /* draw با cover-fit */
+  /* cover-fit draw */
   function drawFrame(img){
     if(!img || !img.naturalWidth) return;
-    const cw = canvas.width, ch = canvas.height;
-    const scale = Math.max(cw / img.naturalWidth, ch / img.naturalHeight);
-    const sw = img.naturalWidth  * scale;
-    const sh = img.naturalHeight * scale;
-    ctx.drawImage(img, (cw - sw) / 2, (ch - sh) / 2, sw, sh);
+    const cw=canvas.width, ch=canvas.height;
+    const scale=Math.max(cw/img.naturalWidth, ch/img.naturalHeight);
+    ctx.drawImage(img,(cw-img.naturalWidth*scale)/2,(ch-img.naturalHeight*scale)/2,img.naturalWidth*scale,img.naturalHeight*scale);
   }
 
-  /* preload همه فریم‌ها */
-  const frames = [];
-  for(let i = 1; i <= FRAME_COUNT; i++){
-    const img = new Image();
-    img.src = '/patients/frames/f' + String(i).padStart(3,'0') + '.webp';
-    img.onload = function(){ if(i === 1) drawFrame(img); };
+  /* preload all frames */
+  const frames=[];
+  for(let i=1;i<=FRAME_COUNT;i++){
+    const img=new Image();
+    img.src='/patients/frames/f'+String(i).padStart(3,'0')+'.webp';
+    img.onload=function(){ if(i===1) drawFrame(img); };
     frames.push(img);
   }
 
-  let lastIdx = -1;
-  let ticking = false;
+  /* helpers */
+  function rng(p,a,b){ return Math.max(0,Math.min(1,(p-a)/(b-a))); }
+  function ease(t){ return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2; }
+  function setO(el,v){ if(el) el.style.opacity=v; }
+  function setPE(el,on){ if(el) el.style.pointerEvents=on?'auto':'none'; }
+
+  /* show hero at start */
+  if(heroScene){ heroScene.style.opacity='1'; heroScene.style.pointerEvents='auto'; }
+
+  let lastIdx=-1, ticking=false;
 
   function update(){
-    ticking = false;
-    if(!document.getElementById('panel-patient').classList.contains('active')) return;
-    const bRect = body.getBoundingClientRect();
-    const tRect = track.getBoundingClientRect();
-    const total = track.offsetHeight - body.offsetHeight;
-    if(total <= 0) return;
+    ticking=false;
+    const panel=document.getElementById('panel-patient');
+    if(!panel||!panel.classList.contains('active')) return;
 
-    const progress = Math.max(0, Math.min(1, (bRect.top - tRect.top) / total));
-    const idx = Math.round(progress * (FRAME_COUNT - 1));
+    const total=track.offsetHeight-body.clientHeight;
+    if(total<=0) return;
+    const p=Math.max(0,Math.min(1,(body.scrollTop-track.offsetTop)/total));
 
-    if(idx !== lastIdx){
-      lastIdx = idx;
-      const f = frames[idx];
-      if(f && f.complete && f.naturalWidth) drawFrame(f);
+    /* === FRAMES === */
+    const idx=Math.round(p*(FRAME_COUNT-1));
+    if(idx!==lastIdx){
+      lastIdx=idx;
+      const f=frames[idx];
+      if(f&&f.complete&&f.naturalWidth) drawFrame(f);
     }
 
-    /* progress bar */
-    fillEl.style.height = (progress * 100) + '%';
+    /* === PROGRESS BAR === */
+    if(fillEl) fillEl.style.height=(p*100)+'%';
 
-    /* hint: با شروع اسکرول محو میشه */
-    hintEl.style.opacity = Math.max(0, 1 - progress / 0.08);
+    /* === SCENE 1: HERO (fades out 0.08 → 0.22) === */
+    const heroO=ease(1-rng(p,0.08,0.22));
+    setO(heroScene,heroO);
+    setPE(heroScene,heroO>0.04);
+    if(hintEl) hintEl.style.opacity=Math.max(0,1-p/0.07);
 
-    /* CTA از ۷۵٪ به بعد */
-    const ctaP = Math.max(0, (progress - 0.75) / 0.25);
-    ctaEl.style.opacity       = ctaP;
-    ctaEl.style.pointerEvents = ctaP > 0.05 ? 'auto' : 'none';
+    /* === SCENE 2: LITECAST (0.18 → 0.58) === */
+    const lcO=Math.min(ease(rng(p,0.18,0.27)),ease(1-rng(p,0.50,0.58)));
+    setO(lcScene,lcO);
+    setPE(lcScene,lcO>0.05);
+    const lcCards=document.querySelectorAll('.pt-lc-card');
+    [[0,0.21,0.29],[1,0.27,0.35],[2,0.33,0.41]].forEach(function(d){
+      var c=lcCards[d[0]]; if(!c) return;
+      var t=ease(rng(p,d[1],d[2]))*Math.min(1,lcO*4);
+      c.style.opacity=t;
+      c.style.transform='translateY('+(1-t)*15+'px)';
+    });
+    if(lcCtaLink){
+      var lt=ease(rng(p,0.41,0.49))*Math.min(1,lcO*4);
+      lcCtaLink.style.opacity=lt;
+      lcCtaLink.style.transform='translateY('+(1-lt)*8+'px)';
+    }
+
+    /* === SCENE 3: ARTICLES (0.52 → 0.74) === */
+    const artO=Math.min(ease(rng(p,0.52,0.60)),ease(1-rng(p,0.66,0.74)));
+    setO(artScene,artO);
+    setPE(artScene,artO>0.05);
+    const artItems=document.querySelectorAll('.pt-article-item');
+    [[0,0.54,0.62],[1,0.59,0.67],[2,0.64,0.72]].forEach(function(d){
+      var c=artItems[d[0]]; if(!c) return;
+      var t=ease(rng(p,d[1],d[2]))*Math.min(1,artO*4);
+      c.style.opacity=t;
+      c.style.transform='translateX('+(1-t)*12+'px)';
+    });
+
+    /* === SCENE 4: CTA (0.76 → 0.90 full) === */
+    const ctaO=ease(rng(p,0.76,0.90));
+    setO(ctaScene,ctaO);
+    setPE(ctaScene,ctaO>0.08);
+
+    /* === BOTTOM GRADIENT — decision mode === */
+    if(gradBot) gradBot.style.opacity=ease(rng(p,0.62,0.80));
   }
 
-  body.addEventListener('scroll', function(){
-    if(!ticking){ ticking = true; requestAnimationFrame(update); }
-  }, { passive: true });
+  body.addEventListener('scroll',function(){
+    if(!ticking){ ticking=true; requestAnimationFrame(update); }
+  },{passive:true});
+
+  /* re-run when panel activates */
+  const panelEl=document.getElementById('panel-patient');
+  if(panelEl){
+    new MutationObserver(function(muts){
+      if(muts.some(function(m){ return m.attributeName==='class'; })){
+        if(panelEl.classList.contains('active')) setTimeout(update,40);
+      }
+    }).observe(panelEl,{attributes:true});
+  }
 })();
 </script>
 </body>
