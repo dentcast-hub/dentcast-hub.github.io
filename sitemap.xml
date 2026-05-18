@@ -1489,6 +1489,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://dentcast.org/episodes/index.html</loc>
+    <lastmod>2026-05-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://dentcast.org/glossary/activator.html</loc>
     <lastmod>2026-01-05</lastmod>
     <changefreq>monthly</changefreq>
