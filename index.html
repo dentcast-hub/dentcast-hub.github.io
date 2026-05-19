@@ -1703,7 +1703,7 @@ body.dc-desktop-ui #dc-desktop-root{
   0%,100%{ transform:translateY(0); }
   50%     { transform:translateY(5px); }
 }
-/* doctor identity — pinned to bottom */
+/* doctor identity — independent parallax layer, slides up with scroll */
 .pt-hero-bottom{
   position:absolute;
   bottom:28px;
@@ -1712,6 +1712,9 @@ body.dc-desktop-ui #dc-desktop-root{
   flex-direction:column;
   align-items:center;
   padding:0 24px;
+  z-index:6;
+  will-change:transform;
+  pointer-events:none;
 }
 .pt-hero-name{
   font-family:'Vazirmatn',system-ui,sans-serif;
@@ -2513,6 +2516,13 @@ body.dc-desktop-ui #dc-desktop-root{
               <div class="pt-progress-fill" id="pt-progress-fill"></div>
             </div>
 
+            <!-- DOCTOR IDENTITY — parallax, slides up with scroll -->
+            <div class="pt-hero-bottom" id="pt-hero-bottom">
+              <div class="pt-hero-name">دکتر فواد شهابیان</div>
+              <div class="pt-hero-divider"></div>
+              <div class="pt-hero-spec">متخصص پروتز · زیبایی · ایمپلنت</div>
+            </div>
+
             <!-- SCENE 1: HERO -->
             <div class="pt-scene pt-scene-hero" id="pt-scene-hero">
               <!-- TOP: tagline + scroll cue -->
@@ -2520,12 +2530,6 @@ body.dc-desktop-ui #dc-desktop-root{
               <div class="pt-scroll-hint" id="pt-scroll-hint">
                 <span class="pt-hint-text">اسکرول کنید</span>
                 <span class="pt-hint-ico">↓</span>
-              </div>
-              <!-- BOTTOM: doctor identity -->
-              <div class="pt-hero-bottom">
-                <div class="pt-hero-name">دکتر فواد شهابیان</div>
-                <div class="pt-hero-divider"></div>
-                <div class="pt-hero-spec">متخصص پروتز · زیبایی · ایمپلنت</div>
               </div>
             </div>
 
@@ -3708,6 +3712,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
   const ctaScene  = document.getElementById('pt-scene-cta');
   const hintEl    = document.getElementById('pt-scroll-hint');
   const lcCtaLink = document.getElementById('pt-lc-cta-link');
+  const heroBot   = document.getElementById('pt-hero-bottom');
   const body      = document.getElementById('mobile-body');
 
   if(!track || !canvas || !body) return;
@@ -3763,6 +3768,12 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 
     /* === PROGRESS BAR === */
     if(fillEl) fillEl.style.height=(p*100)+'%';
+
+    /* === DOCTOR IDENTITY — parallax up, like painted on the frame === */
+    if(heroBot){
+      const shift = ease(rng(p,0,0.44)) * (body.clientHeight + 60);
+      heroBot.style.transform = 'translateY(-'+shift+'px)';
+    }
 
     /* === SCENE 1: HERO (fades out 0.08 → 0.22) === */
     const heroO=ease(1-rng(p,0.08,0.22));
