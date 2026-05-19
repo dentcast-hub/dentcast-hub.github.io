@@ -2019,12 +2019,12 @@ body.dc-desktop-ui #dc-desktop-root{
 }
 
 /* =====================================================
-   GRID CARDS — two-thirds height scaling
+   GRID CARDS — breathing-room scaling
 ===================================================== */
 .dc-grid .dc-grid-card{
-  min-height:68px;
-  padding:10px 8px 9px;
-  gap:5px;
+  min-height:96px;
+  padding:16px 14px 15px;
+  gap:7px;
 }
 .dc-grid .dc-grid-ico{
   width:28px; height:28px;
@@ -2035,6 +2035,34 @@ body.dc-desktop-ui #dc-desktop-root{
 }
 .dc-grid .dc-grid-sub{
   font-size:.62rem;
+}
+
+/* Primary content destinations — subtle hierarchy cue
+   (NoteCast, DentCast+). Utility cards (Share Hub, DentAI)
+   keep the clean white look. */
+.dc-grid .dc-grid-card--primary{
+  background:
+    linear-gradient(180deg,
+      rgba(var(--pr-rgb),.045) 0%,
+      rgba(var(--pr-rgb),.012) 55%,
+      var(--card-bg) 100%);
+  border-top-color:rgba(var(--pr-rgb),.32);
+}
+.dc-grid .dc-grid-card--primary .dc-grid-ico{
+  background:rgba(var(--pr-rgb),.07);
+  border-color:rgba(var(--pr-rgb),.16);
+}
+[data-theme="dark"] .dc-grid .dc-grid-card--primary{
+  background:
+    linear-gradient(180deg,
+      rgba(var(--pr-rgb),.10) 0%,
+      rgba(var(--pr-rgb),.03) 55%,
+      var(--card-bg) 100%);
+  border-top-color:rgba(var(--pr-rgb),.42);
+}
+[data-theme="dark"] .dc-grid .dc-grid-card--primary .dc-grid-ico{
+  background:rgba(var(--pr-rgb),.14);
+  border-color:rgba(var(--pr-rgb),.22);
 }
 
 /* =====================================================
@@ -2455,7 +2483,7 @@ body.dc-desktop-ui #dc-desktop-root{
             <div class="dc-grid-title">Share Hub</div>
             <div class="dc-grid-sub">مطالب با ذکر منبع</div>
           </div>
-          <div class="dc-grid-card" onclick="window.location.href='/notecast/'">
+          <div class="dc-grid-card dc-grid-card--primary" onclick="window.location.href='/notecast/'">
             <div class="dc-grid-ico">📝</div>
             <div class="dc-grid-title">NoteCast</div>
             <div class="dc-grid-sub">خلاصه‌نویسی اپیزودها</div>
@@ -2465,7 +2493,7 @@ body.dc-desktop-ui #dc-desktop-root{
       <div class="dc-card-group">
         <span class="dc-card-group-label">ابزار و ویدیو</span>
         <div class="dc-grid">
-          <div class="dc-grid-card" onclick="window.location.href='/dentcast-plus/'">
+          <div class="dc-grid-card dc-grid-card--primary" onclick="window.location.href='/dentcast-plus/'">
             <div class="dc-grid-ico">▶️</div>
             <div class="dc-grid-title">DentCast+</div>
             <div class="dc-grid-sub">آموزش با ویدیو</div>
