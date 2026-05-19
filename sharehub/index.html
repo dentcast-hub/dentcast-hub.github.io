@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
   <meta charset="UTF-8">
@@ -234,8 +234,8 @@ footer{
 <header class="dc-topbar">
   <div class="dc-topbar-actions">
     <a href="/" aria-label="صفحه اصلی دنت‌کست" style="display:flex;align-items:center;margin-left:8px;flex-shrink:0;"><img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;"></a>
-    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="ابزارها" aria-expanded="false">☰</button>
-    <button class="dc-topbar-btn dcOpenSearch" aria-label="جستجو">🔍</button>
+    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="ابزارها" aria-expanded="false"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="/dc-icons.svg#dc-i-menu"></use></svg></button>
+    <button class="dc-topbar-btn dcOpenSearch" aria-label="جستجو"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="/dc-icons.svg#dc-i-search"></use></svg></button>
   </div>
   <div class="dc-topbar-brand">
     <div class="dc-topbar-brand-name">DentCast</div>
@@ -245,9 +245,9 @@ footer{
 <div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">
   <div class="dc-toolbar-drawer-inner">
     <span class="dc-toolbar-drawer-label">ابزارها</span>
-    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa"><span class="dc-drawer-tool-ico">📱</span><span class="dc-drawer-tool-txt">نصب</span></button>
-    <button class="dc-drawer-tool-seg" type="button" id="tool-consult"><span class="dc-drawer-tool-ico">📧</span><span class="dc-drawer-tool-txt">مشاوره</span></button>
-    <button class="dc-drawer-tool-seg" type="button" id="tool-about"><span class="dc-drawer-tool-ico">✨</span><span class="dc-drawer-tool-txt">درباره</span></button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="/dc-icons.svg#dc-i-phone-install"></use></svg></span><span class="dc-drawer-tool-txt">نصب</span></button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-consult"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="/dc-icons.svg#dc-i-mail"></use></svg></span><span class="dc-drawer-tool-txt">مشاوره</span></button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-about"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="/dc-icons.svg#dc-i-sparkle"></use></svg></span><span class="dc-drawer-tool-txt">درباره</span></button>
   </div>
 </div>
 <div id="dcRadarOverlay" class="radar-overlay" aria-hidden="true">
@@ -270,12 +270,12 @@ footer{
 <div class="wrap">
 
   <header>
-    <h1>🔗 دنت‌کست – Share Hub</h1>
+    <h1 class="dc-has-ui-icon">
   </header>
 
   <!-- 🔍 Global Search -->
   <div class="dc-global-filter-box" id="dcGlobalBox">
-    <button class="dc-close-results">✖</button>
+    <button class="dc-close-results"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="/dc-icons.svg#dc-i-x"></use></svg></button>
     <h3 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h3>
     <input id="dcSearch" class="dc-search-input" placeholder="جستجو در همهٔ بخش‌های دنت‌کست…">
     <div class="dc-filter-list">
@@ -298,7 +298,7 @@ footer{
     <p>تمام محتواها با <strong>ذکر منبع و رفرنس شفاف</strong> ارائه می‌شوند و تولید مستقیم دنت‌کست نیستند.</p>
   </div>
 
-  <h2>📂 فهرست مطالب Share Hub</h2>
+  <h2 class="dc-has-ui-icon">
 
   <ul>
     <li><a href="share-5.html">چرا اگر اصلاح فضا منجر به رابطه ی کانینی غیر کلاس ۱ شود باید تامل بیشتری کرد (مطلبی از دکتر مرتضی گوران)</a></li>
@@ -317,15 +317,15 @@ footer{
   </button>
 
   <footer class="dc-site-footer">
-    <a href="/index.html" class="btn-home">🏠 برگشت به صفحه‌ی اصلی</a>
-    <a href="/about.html" class="btn-about">💬 درباره‌ی دکتر فؤاد شهابیان و دنت‌کست</a>
+    <a href="/index.html" class="btn-home"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="/dc-icons.svg#dc-i-home"></use></svg> برگشت به صفحه‌ی اصلی</a>
+    <a href="/about.html" class="btn-about"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="/dc-icons.svg#dc-i-message"></use></svg> درباره‌ی دکتر فؤاد شهابیان و دنت‌کست</a>
     <div class="footer-copy">© 2025 DentCast — طراحی و توسعه توسط <strong>فواد شهابیان</strong></div>
   </footer>
 
 </div>
 
 <!-- تم تاگل -->
-<button id="dc-theme-toggle" aria-label="تغییر تم">🌙</button>
+<button id="dc-theme-toggle" aria-label="تغییر تم"><svg class="dc-svg-icon dc-theme-moon" viewBox="0 0 24 24" aria-hidden="true"><use href="/dc-icons.svg#dc-i-moon"></use></svg><svg class="dc-svg-icon dc-theme-sun" viewBox="0 0 24 24" aria-hidden="true"><use href="/dc-icons.svg#dc-i-sun"></use></svg></button>
 
 <script>
 const themeBtn = document.getElementById('dc-theme-toggle');

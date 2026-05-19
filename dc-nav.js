@@ -130,7 +130,7 @@
     document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
     localStorage.setItem('dc-theme', dark ? 'dark' : 'light');
     var btn = document.getElementById('dc-theme-toggle');
-    if (btn) setDcIcon(btn, dark ? 'sun' : 'moon');
+    if (btn) btn.setAttribute('aria-pressed', dark ? 'true' : 'false');
   }
 
   var existingToggle = document.getElementById('dc-theme-toggle');
@@ -142,28 +142,16 @@
     toggleBtn.id = 'dc-theme-toggle';
     toggleBtn.setAttribute('aria-label', 'تغییر تم');
     var _isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-    setDcIcon(toggleBtn, _isDark ? 'sun' : 'moon');
+    toggleBtn.setAttribute('aria-pressed', _isDark ? 'true' : 'false');
+    toggleBtn.innerHTML = '<svg class="dc-svg-icon dc-theme-moon" viewBox="0 0 24 24" aria-hidden="true"><use href="/dc-icons.svg#dc-i-moon"></use></svg><svg class="dc-svg-icon dc-theme-sun" viewBox="0 0 24 24" aria-hidden="true"><use href="/dc-icons.svg#dc-i-sun"></use></svg>';
     document.body.appendChild(toggleBtn);
 
     toggleBtn.addEventListener('click', function () {
       applyTheme(document.documentElement.getAttribute('data-theme') !== 'dark');
     });
   } else if (existingToggle) {
-    /* Button exists — sync icon only, do not add another click handler */
-    setDcIcon(existingToggle, document.documentElement.getAttribute('data-theme') === 'dark' ? 'sun' : 'moon');
+    existingToggle.setAttribute('aria-pressed', document.documentElement.getAttribute('data-theme') === 'dark' ? 'true' : 'false');
   }
-
-  hydrateUiIcons(document);
-
-  new MutationObserver(function (muts) {
-    muts.forEach(function (m) {
-      if (m.target && m.target.nodeType === 1) hydrateUiIcons(m.target);
-      if (m.target && m.target.nodeType === 3 && m.target.parentElement) hydrateUiIcons(m.target.parentElement);
-      m.addedNodes.forEach(function (node) {
-        if (node.nodeType === 1) hydrateUiIcons(node);
-      });
-    });
-  }).observe(document.documentElement, { childList: true, characterData: true, subtree: true });
 
   /* ── TOOLBAR DRAWER TOGGLE ── */
   var drawerBtn = document.getElementById('btn-toolbar-toggle');
