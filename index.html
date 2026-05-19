@@ -3853,4 +3853,55 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
     const artItems=document.querySelectorAll('.pt-article-item');
     [[0,0.54,0.62],[1,0.59,0.67],[2,0.64,0.72]].forEach(function(d){
       var c=artItems[d[0]]; if(!c) return;
-      var t=
+      var t=ease(rng(p,d[1],d[2]))*Math.min(1,artO*4);
+      c.style.opacity=t;
+      c.style.transform='translateX('+(1-t)*12+'px)';
+    });
+
+    /* === SCENE 4: CTA (0.76 → 0.90 full) === */
+    const ctaO=ease(rng(p,0.76,0.90));
+    setO(ctaScene,ctaO);
+    setPE(ctaScene,ctaO>0.05);
+
+    /* === BOTTOM GRADIENT === */
+    if(gradBot) gradBot.style.opacity=ease(rng(p,0.62,0.80));
+  }
+
+  /* scroll listener */
+  body.addEventListener('scroll',function(){
+    if(!ticking){ ticking=true; requestAnimationFrame(update); }
+  },{passive:true});
+
+  /* panel activation — double rAF ensures layout is computed after display:none→block */
+  const panelEl=document.getElementById('panel-patient');
+  if(panelEl){
+    new MutationObserver(function(muts){
+      if(muts.some(function(m){ return m.attributeName==='class'; })){
+        if(panelEl.classList.contains('active')){
+          requestAnimationFrame(function(){
+            requestAnimationFrame(function(){
+              update();
+              /* fallback: if canvas still blank, draw first loaded frame */
+              if(lastIdx===-1){
+                for(var fi=0;fi<frames.length;fi++){
+                  if(frames[fi]&&frames[fi].complete&&frames[fi].naturalWidth){
+                    ctx.clearRect(0,0,canvas.width,canvas.height);
+                    drawFrame(frames[fi]);
+                    lastIdx=fi;
+                    break;
+                  }
+                }
+              }
+            });
+          });
+        }
+      }
+    }).observe(panelEl,{attributes:true});
+  }
+
+})();
+</script>
+
+</body>
+</html>
+    
