@@ -197,7 +197,7 @@ body{
 .dc-topbar-brand-sub:active{ opacity:0.5; }
 
 .dc-topbar-actions{
-  display:flex; align-items:center; gap:5px;
+  display:flex; align-items:center; gap:8px;
 }
 .dc-topbar-btn{
   width:34px; height:34px;
@@ -414,49 +414,44 @@ body{
 }
 
 /* =====================================================
-   BRAND IDENTITY CARD
+   BRAND SUBTITLE — typographic, no box
 ===================================================== */
 .dc-identity-card{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  background:#0a1628;
-  border:1px solid rgba(11,95,255,.22);
-  border-radius:var(--r-lg);
-  padding:10px 14px;
-  margin-bottom:18px;
-  box-shadow:0 2px 14px rgba(0,0,0,.30),inset 0 0 0 1px rgba(11,95,255,.07);
   direction:rtl;
   user-select:none;
+  padding:14px 4px 16px;
+  margin-bottom:14px;
 }
-.dc-identity-logo{
-  flex-shrink:0;
-  width:36px; height:36px;
-  border-radius:var(--r-sm);
-  background:rgba(11,95,255,.10);
-  border:1px solid rgba(11,95,255,.22);
-  display:flex; align-items:center; justify-content:center;
-  padding:4px; overflow:hidden;
-}
-.dc-identity-logo img{
-  width:28px; height:28px;
-  object-fit:contain; display:block;
-}
-.dc-identity-text{ flex:1; min-width:0; }
 .dc-identity-main{
-  font-size:clamp(0.47rem,2.35vw,0.66rem);
+  font-size:clamp(.82rem,3.6vw,1.02rem);
   font-weight:800;
-  color:#ffffff;
-  white-space:nowrap;
-  overflow:hidden;
-  letter-spacing:.02em;
+  color:var(--pr);
+  letter-spacing:-.1px;
   font-family:'Vazirmatn',sans-serif;
-  margin:0; padding:0; line-height:1;
+  margin:0; padding:0;
+  line-height:1.55;
+  text-align:right;
+  text-wrap:balance;
 }
 /* shimmer — فقط روی span.dc-shimmer-word اعمال می‌شه */
 .dc-shimmer-word{
   display:inline;
   font-weight:900;
+  background:linear-gradient(
+    105deg,
+    var(--pr) 28%,
+    #4a78c4 46%,
+    #8eb1e6 53%,
+    var(--pr) 70%
+  );
+  background-size:400% 100%;
+  background-position:100% 0;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  animation:dcShimmer 5s ease-in-out infinite;
+}
+[data-theme="dark"] .dc-shimmer-word{
   background:linear-gradient(
     105deg,
     #ffffff 28%,
@@ -469,15 +464,10 @@ body{
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
   background-clip:text;
-  animation:dcShimmer 5s ease-in-out infinite;
 }
 @keyframes dcShimmer{
   0%,55%,100%{ background-position:100% 0; }
   22%,42%    { background-position:-100% 0; }
-}
-@media(max-width:380px){
-  .dc-identity-logo{ width:32px; height:32px; }
-  .dc-identity-logo img{ width:24px; height:24px; }
 }
 
 /* =====================================================
@@ -626,7 +616,98 @@ body{
 }
 
 /* =====================================================
-   RADAR CARD (pill bottom)
+   RADAR HERO CARD — main tool of the site
+===================================================== */
+.dc-radar-hero{
+  display:flex; align-items:center;
+  gap:14px;
+  background:
+    radial-gradient(120% 140% at 100% 0%,
+      rgba(var(--pr-rgb),.18) 0%,
+      rgba(var(--pr-rgb),.06) 45%,
+      var(--card-bg) 100%);
+  border:1px solid rgba(var(--pr-rgb),.18);
+  border-top:2px solid rgba(var(--pr-rgb),.42);
+  border-radius:var(--r-xl);
+  padding:18px 18px;
+  margin:0 0 22px;
+  min-height:84px;
+  box-shadow:0 6px 22px rgba(var(--pr-rgb),.14), var(--card-sh);
+  cursor:pointer;
+  transition:all var(--tr);
+  -webkit-tap-highlight-color:transparent;
+  position:relative; overflow:hidden;
+  direction:rtl;
+}
+.dc-radar-hero:active{
+  transform:scale(.985);
+  box-shadow:0 3px 14px rgba(var(--pr-rgb),.12), var(--card-sh);
+}
+.dc-radar-hero-ico{
+  flex-shrink:0;
+  width:52px; height:52px;
+  border-radius:var(--r-md);
+  background:rgba(var(--pr-rgb),.10);
+  border:1px solid rgba(var(--pr-rgb),.22);
+  display:flex; align-items:center; justify-content:center;
+  font-size:26px;
+  box-shadow:inset 0 0 0 1px rgba(var(--pr-rgb),.05);
+}
+.dc-radar-hero-main{ flex:1; min-width:0; }
+.dc-radar-hero-txt{
+  font-size:1.02rem; font-weight:900;
+  color:var(--pr); letter-spacing:-.2px;
+  line-height:1.25;
+}
+.dc-radar-hero-sub{
+  font-size:.74rem; color:var(--txt2);
+  margin-top:3px;
+  line-height:1.35;
+}
+.dc-radar-hero-btn{
+  flex-shrink:0;
+  background:var(--pr);
+  color:#fff;
+  padding:9px 18px;
+  border-radius:var(--r-f);
+  font-size:.82rem; font-weight:800;
+  border:1px solid rgba(var(--pr-rgb),.28);
+  box-shadow:0 4px 14px rgba(var(--pr-rgb),.32);
+  white-space:nowrap;
+  transition:all var(--tr);
+  letter-spacing:.01em;
+}
+.dc-radar-hero:active .dc-radar-hero-btn{
+  box-shadow:0 2px 8px rgba(var(--pr-rgb),.22);
+}
+[data-theme="dark"] .dc-radar-hero{
+  background:
+    radial-gradient(120% 140% at 100% 0%,
+      rgba(var(--pr-rgb),.22) 0%,
+      rgba(var(--pr-rgb),.08) 45%,
+      var(--card-bg) 100%);
+  border-color:rgba(var(--pr-rgb),.28);
+  border-top-color:rgba(var(--pr-rgb),.55);
+}
+[data-theme="dark"] .dc-radar-hero-ico{
+  background:rgba(var(--pr-rgb),.16);
+  border-color:rgba(var(--pr-rgb),.32);
+}
+[data-theme="dark"] .dc-radar-hero-btn{
+  color:#0a1628;
+  background:var(--pr);
+  border-color:rgba(255,255,255,.18);
+  box-shadow:0 4px 14px rgba(var(--pr-rgb),.42);
+}
+@media(max-width:360px){
+  .dc-radar-hero{ padding:16px 14px; gap:11px; }
+  .dc-radar-hero-ico{ width:46px; height:46px; font-size:23px; }
+  .dc-radar-hero-txt{ font-size:.95rem; }
+  .dc-radar-hero-btn{ padding:8px 14px; font-size:.76rem; }
+}
+
+/* =====================================================
+   RADAR PILL — legacy (kept for non-homepage usages)
 ===================================================== */
 .dc-radar-pill{
   display:flex; align-items:center;
@@ -2385,9 +2466,7 @@ body.dc-desktop-ui #dc-desktop-root{
       </a>
       <!-- ۲) همبرگری — دوم -->
       <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="ابزارها" aria-expanded="false">☰</button>
-      <!-- ۳) رادار — سوم -->
-      <button class="dc-topbar-btn" id="btn-radar-topbar" aria-label="رادار">📡</button>
-      <!-- ۴) سرچ — چهارم -->
+      <!-- ۳) سرچ — سوم -->
       <button class="dc-topbar-btn dcOpenSearch" aria-label="جستجو">🔍</button>
     </div>
     <div class="dc-topbar-brand">
@@ -2418,14 +2497,19 @@ body.dc-desktop-ui #dc-desktop-root{
     <!-- ── PANEL: استودیو ── -->
     <section class="dc-panel active" id="panel-studio">
 
-      <!-- Brand Identity Card -->
+      <!-- Brand Subtitle — typographic, no box -->
       <div class="dc-identity-card" aria-label="معرفی دنت‌کست">
-        <div class="dc-identity-logo">
-          <img src="/logo-v2.png" alt="DentCast" width="36" height="36" loading="eager" draggable="false">
+        <h1 class="dc-identity-main">دنت‌کست — <span class="dc-shimmer-word">جامع‌ترین</span> منبع فارسی پروتز و ایمپلنت مبتنی بر شواهد</h1>
+      </div>
+
+      <!-- Radar hero — main tool of the site -->
+      <div class="dc-radar-hero radar-shine-card" id="btnOpenRadarMob" role="button" aria-label="رادار دنت‌کست">
+        <div class="dc-radar-hero-ico" aria-hidden="true">📡</div>
+        <div class="dc-radar-hero-main">
+          <div class="dc-radar-hero-txt">رادار دنت‌کست</div>
+          <div class="dc-radar-hero-sub">جستجوگر سایت‌های دندانپزشکی</div>
         </div>
-        <div class="dc-identity-text">
-          <h1 class="dc-identity-main">دنت‌کست — <span class="dc-shimmer-word">جامع‌ترین</span> منبع فارسی پروتز و ایمپلنت مبتنی بر شواهد</h1>
-        </div>
+        <span class="dc-radar-hero-btn">جستجو</span>
       </div>
 
       <!-- Pulse -->
@@ -2463,15 +2547,6 @@ body.dc-desktop-ui #dc-desktop-root{
           <span class="ep-sub">همه‌ی اپیزودهای اصلی و فرعی</span>
           <span class="ep-chip">DentCast ◂</span>
         </div>
-      </div>
-
-      <!-- Radar pill — پرچمدار، قبل از کارت‌های ویژگی -->
-      <div class="dc-radar-pill radar-shine-card" id="btnOpenRadarMob">
-        <div>
-          <div class="dc-radar-pill-txt">رادار دنت‌کست 📡</div>
-          <div class="dc-radar-pill-sub">جستجوگر سایت‌های دندانپزشکی</div>
-        </div>
-        <span class="dc-radar-pill-btn">جستجو</span>
       </div>
 
       <!-- Feature cards — دو گروه با برچسب -->
@@ -3078,14 +3153,7 @@ document.getElementById('tool-about')?.addEventListener('click',()=>{window.loca
 <script>if('serviceWorker'in navigator){navigator.serviceWorker.register('/service-worker.js').catch(()=>{});}</script>
 
 <script>
-/* ── RADAR TOPBAR BTN ── */
-document.getElementById('btn-radar-topbar')?.addEventListener('click',()=>{
-  document.getElementById('dcRadarOverlay')?.setAttribute('aria-hidden','false');
-  document.body.classList.add('dc-radar-mode');
-  setTimeout(()=>document.getElementById('dcRadarInput')?.focus(),100);
-  history.pushState({dcRadar:true},'','#radar');
-  if(!isRadarLoaded) loadRadarData();
-});
+/* ── RADAR HERO CARD ── */
 document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
   e.preventDefault();
   document.getElementById('dcRadarOverlay')?.setAttribute('aria-hidden','false');
