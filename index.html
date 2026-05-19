@@ -2197,13 +2197,11 @@ body.dc-desktop-ui #dc-desktop-root{
 /* Meta Base SVG icon color tracking */
 .dc-bn-item[data-panel="panel-sharehub"] .dc-bn-ico{
   display:flex; align-items:center; justify-content:center;
-  color:var(--bn-txt); transition:color var(--tr);
-}
-.dc-bn-item[data-panel="panel-sharehub"].active .dc-bn-ico{
-  color:var(--bn-active);
+  transition:transform var(--tr);
 }
 .dc-bn-item[data-panel="panel-sharehub"] .dc-bn-ico svg{
-  stroke:currentColor; transition:stroke var(--tr);
+  width:1em; height:1em;
+  stroke:currentColor;
 }
 
 /* Studio tab always bolder than peers */
