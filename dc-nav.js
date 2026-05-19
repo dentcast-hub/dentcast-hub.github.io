@@ -7,6 +7,76 @@
 (function () {
   'use strict';
 
+  function dcSvgIcon(name) {
+    var icons = {
+      menu: '<line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/>',
+      radar: '<path d="M12 19v-6"/><path d="M8 13a4 4 0 0 1 8 0"/><path d="M5 10a8 8 0 0 1 14 0"/><path d="M2 7a12 12 0 0 1 20 0"/><circle cx="12" cy="19" r="2"/>',
+      search: '<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>',
+      phoneInstall: '<rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M10 18h4"/><path d="M12 7v6"/><path d="m9.5 10.5 2.5 2.5 2.5-2.5"/>',
+      mail: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>',
+      sparkle: '<path d="M12 3l1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/>',
+      x: '<path d="M18 6 6 18"/><path d="m6 6 12 12"/>',
+      moon: '<path d="M20.5 14.2A8.2 8.2 0 0 1 9.8 3.5 8.8 8.8 0 1 0 20.5 14.2z"/>',
+      sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.9 4.9 1.4 1.4"/><path d="m17.7 17.7 1.4 1.4"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m4.9 19.1 1.4-1.4"/><path d="m17.7 6.3 1.4-1.4"/>',
+      home: '<path d="m3 11 9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/>',
+      message: '<path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"/>',
+      back: '<path d="M19 12H5"/><path d="m12 19-7-7 7-7"/>',
+      volume: '<path d="M4 10v4h4l5 4V6l-5 4H4z"/><path d="M16 9a4 4 0 0 1 0 6"/><path d="M19 6a8 8 0 0 1 0 12"/>',
+      info: '<circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/>',
+      globe: '<circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20"/><path d="M12 2a15 15 0 0 0 0 20"/>',
+      pin: '<path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0z"/><circle cx="12" cy="10" r="3"/>',
+      phone: '<path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.4 19.4 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.4 2.1L8.1 10a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.9.6 2.9.7a2 2 0 0 1 1.6 1.9z"/>',
+      camera: '<path d="M14.5 4 16 7h3a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h3l1.5-3z"/><circle cx="12" cy="13" r="4"/>',
+      send: '<path d="m22 2-7 20-4-9-9-4z"/><path d="M22 2 11 13"/>',
+      flag: '<path d="M5 21V4"/><path d="M5 4h13l-2 4 2 4H5"/>',
+      play: '<circle cx="12" cy="12" r="10"/><path d="m10 8 6 4-6 4z"/>',
+      pause: '<circle cx="12" cy="12" r="10"/><path d="M10 8v8"/><path d="M14 8v8"/>'
+    };
+    if (!icons[name]) return '';
+    return '<svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true">' + icons[name] + '</svg>';
+  }
+
+  function setDcIcon(el, name, label) {
+    if (!el || !name) return;
+    el.innerHTML = dcSvgIcon(name) + (label ? '<span>' + label + '</span>' : '');
+  }
+
+  function iconNameFromEmoji(txt) {
+    txt = (txt || '').replace(/\ufe0f/g, '').trim();
+    return {
+      '☰': 'menu', '📡': 'radar', '🔍': 'search', '📱': 'phoneInstall',
+      '📧': 'mail', '✨': 'sparkle', '✖': 'x', '✕': 'x', '×': 'x',
+      '🌙': 'moon', '☀': 'sun', '🏠': 'home', '💬': 'message',
+      '🔙': 'back', '🔊': 'volume', '🛈': 'info', '🌐': 'globe',
+      '📍': 'pin', '☎': 'phone', '📞': 'phone', '📷': 'camera',
+      '✈': 'send', '🇮🇷': 'flag', '▶': 'play', '⏸': 'pause'
+    }[txt];
+  }
+
+  function hydrateUiIcons(root) {
+    root = root || document;
+    var iconSelector = '.dc-topbar-btn,.dc-drawer-tool-ico,.about-contact-ico,.dc-info-btn,.dc-search-info-btn,.dc-close-results,#dc-theme-toggle';
+    var iconNodes = Array.prototype.slice.call(root.querySelectorAll(iconSelector));
+    if (root.nodeType === 1 && root.matches(iconSelector)) iconNodes.unshift(root);
+    iconNodes.forEach(function (el) {
+      var name = iconNameFromEmoji(el.textContent);
+      if (name) setDcIcon(el, name);
+    });
+    var leadingSelector = '.btn-home,.btn-about,.btn-back,.acast-close,button';
+    var leadingNodes = Array.prototype.slice.call(root.querySelectorAll(leadingSelector));
+    if (root.nodeType === 1 && root.matches(leadingSelector)) leadingNodes.unshift(root);
+    leadingNodes.forEach(function (el) {
+      var txt = el.textContent.trim();
+      var m = txt.match(/^(\S+)\s*(.*)$/);
+      if (!m) return;
+      var name = iconNameFromEmoji(m[1]);
+      if (name) setDcIcon(el, name, m[2]);
+    });
+  }
+
+  window.dcSvgIcon = dcSvgIcon;
+  window.dcHydrateUiIcons = hydrateUiIcons;
+
   /* ── CONTENT-ONLY MODE (?view=content) ────────────
      When loaded in the desktop iframe, hide all chrome
      so only the article content is displayed.
@@ -26,7 +96,7 @@
     document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
     localStorage.setItem('dc-theme', dark ? 'dark' : 'light');
     var btn = document.getElementById('dc-theme-toggle');
-    if (btn) btn.textContent = dark ? '☀️' : '🌙';
+    if (btn) setDcIcon(btn, dark ? 'sun' : 'moon');
   }
 
   var existingToggle = document.getElementById('dc-theme-toggle');
@@ -38,7 +108,7 @@
     toggleBtn.id = 'dc-theme-toggle';
     toggleBtn.setAttribute('aria-label', 'تغییر تم');
     var _isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-    toggleBtn.textContent = _isDark ? '☀️' : '🌙';
+    setDcIcon(toggleBtn, _isDark ? 'sun' : 'moon');
     document.body.appendChild(toggleBtn);
 
     toggleBtn.addEventListener('click', function () {
@@ -46,9 +116,19 @@
     });
   } else if (existingToggle) {
     /* Button exists — sync icon only, do not add another click handler */
-    existingToggle.textContent =
-      document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+    setDcIcon(existingToggle, document.documentElement.getAttribute('data-theme') === 'dark' ? 'sun' : 'moon');
   }
+
+  hydrateUiIcons(document);
+
+  new MutationObserver(function (muts) {
+    muts.forEach(function (m) {
+      if (m.target && m.target.nodeType === 1) hydrateUiIcons(m.target);
+      m.addedNodes.forEach(function (node) {
+        if (node.nodeType === 1) hydrateUiIcons(node);
+      });
+    });
+  }).observe(document.documentElement, { childList: true, characterData: true, subtree: true });
 
   /* ── TOOLBAR DRAWER TOGGLE ── */
   var drawerBtn = document.getElementById('btn-toolbar-toggle');

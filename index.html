@@ -211,6 +211,37 @@ body{
 }
 .dc-topbar-btn:active{transform:scale(.88); background:var(--surface3);}
 
+.dc-svg-icon{
+  width:1em;
+  height:1em;
+  display:inline-block;
+  vertical-align:-.125em;
+  color:currentColor;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:2;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  flex-shrink:0;
+}
+.dc-topbar-btn .dc-svg-icon,
+.dc-drawer-tool-ico .dc-svg-icon,
+.dc-close-results .dc-svg-icon,
+.dc-bn-ico .dc-svg-icon,
+.dc-radar-hero-ico .dc-svg-icon,
+.ep-ico .dc-svg-icon,
+.gls-ico .dc-svg-icon,
+.dc-grid-ico .dc-svg-icon,
+.pt-btn-ico .dc-svg-icon,
+.dcd-group-hdr-ico .dc-svg-icon,
+.dcd-subitem-ico .dc-svg-icon,
+.dcd-a-footer-btn .dc-svg-icon,
+.dcd-col-b-empty-ico .dc-svg-icon,
+#dc-theme-toggle .dc-svg-icon{
+  width:1em;
+  height:1em;
+}
+
 /* ── TOOLBAR DRAWER ── */
 .dc-toolbar-drawer{
   overflow:hidden;
@@ -2956,6 +2987,62 @@ body.dc-desktop-ui #dc-desktop-root{
 ══════════════════════════════════════════════ -->
 <script>
 /* ── BOTTOM NAV + SWIPE ── */
+/* UI SVG icon migration — decorative interface icons only */
+(function(){
+  'use strict';
+  const paths={
+    menu:'<line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/>',
+    search:'<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>',
+    radar:'<path d="M12 19v-6"/><path d="M8 13a4 4 0 0 1 8 0"/><path d="M5 10a8 8 0 0 1 14 0"/><path d="M2 7a12 12 0 0 1 20 0"/><circle cx="12" cy="19" r="2"/>',
+    phoneInstall:'<rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M10 18h4"/><path d="M12 7v6"/><path d="m9.5 10.5 2.5 2.5 2.5-2.5"/>',
+    mail:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>',
+    sparkle:'<path d="M12 3l1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/>',
+    x:'<path d="M18 6 6 18"/><path d="m6 6 12 12"/>',
+    moon:'<path d="M20.5 14.2A8.2 8.2 0 0 1 9.8 3.5 8.8 8.8 0 1 0 20.5 14.2z"/>',
+    sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.9 4.9 1.4 1.4"/><path d="m17.7 17.7 1.4 1.4"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m4.9 19.1 1.4-1.4"/><path d="m17.7 6.3 1.4-1.4"/>',
+    mic:'<path d="M12 14a4 4 0 0 0 4-4V6a4 4 0 1 0-8 0v4a4 4 0 0 0 4 4z"/><path d="M19 10a7 7 0 0 1-14 0"/><path d="M12 17v4"/><path d="M8 21h8"/>',
+    user:'<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>',
+    note:'<path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M8 13h8"/><path d="M8 17h5"/>',
+    play:'<circle cx="12" cy="12" r="10"/><path d="m10 8 6 4-6 4z"/>',
+    bot:'<rect x="5" y="8" width="14" height="10" rx="3"/><path d="M12 8V4"/><circle cx="9" cy="13" r="1"/><circle cx="15" cy="13" r="1"/><path d="M9 18v2"/><path d="M15 18v2"/>',
+    link:'<path d="M10 13a5 5 0 0 0 7.1 0l2-2a5 5 0 0 0-7.1-7.1l-1.1 1.1"/><path d="M14 11a5 5 0 0 0-7.1 0l-2 2A5 5 0 0 0 12 20.1l1.1-1.1"/>',
+    headphones:'<path d="M3 14a9 9 0 0 1 18 0"/><path d="M5 14h3v7H5a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2z"/><path d="M19 14h-3v7h3a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2z"/>',
+    book:'<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"/>',
+    brain:'<path d="M9 4a3 3 0 0 0-3 3v1a3 3 0 0 0-2 5.2A3.5 3.5 0 0 0 8 19h1"/><path d="M15 4a3 3 0 0 1 3 3v1a3 3 0 0 1 2 5.2A3.5 3.5 0 0 1 16 19h-1"/><path d="M12 4v17"/><path d="M8 9h2"/><path d="M14 9h2"/><path d="M8 14h2"/><path d="M14 14h2"/>',
+    puzzle:'<path d="M8 3h4v4h3a2 2 0 1 1 0 4h-3v3h3a2 2 0 1 1 0 4h-3v3H8v-3H5a2 2 0 1 1 0-4h3v-3H5a2 2 0 1 1 0-4h3z"/>',
+    tooth:'<path d="M8.5 3.5c1.2 0 2 .6 3.5.6s2.3-.6 3.5-.6c2 0 3.5 1.6 3.5 4 0 2.8-1.5 4.4-2.2 7.4-.7 3-1.4 5.6-3 5.6-1.2 0-1.1-3.5-1.8-3.5s-.6 3.5-1.8 3.5c-1.6 0-2.3-2.6-3-5.6C6.5 11.9 5 10.3 5 7.5c0-2.4 1.5-4 3.5-4z"/>',
+    phone:'<path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.4 19.4 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.4 2.1L8.1 10a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.9.6 2.9.7a2 2 0 0 1 1.6 1.9z"/>',
+    pin:'<path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0z"/><circle cx="12" cy="10" r="3"/>',
+    camera:'<path d="M14.5 4 16 7h3a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h3l1.5-3z"/><circle cx="12" cy="13" r="4"/>',
+    folder:'<path d="M3 7a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',
+    globe:'<circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20"/><path d="M12 2a15 15 0 0 0 0 20"/>',
+    ban:'<circle cx="12" cy="12" r="10"/><path d="m4.9 4.9 14.2 14.2"/>',
+    hourglass:'<path d="M6 2h12"/><path d="M6 22h12"/><path d="M7 2v6l5 4-5 4v6"/><path d="M17 2v6l-5 4 5 4v6"/>'
+  };
+  const emojiMap={'☰':'menu','🔍':'search','📡':'radar','📱':'phoneInstall','📧':'mail','✨':'sparkle','✖':'x','✕':'x','×':'x','🌙':'moon','☀':'sun','🎙':'mic','👤':'user','📝':'note','▶':'play','🤖':'bot','🔗':'link','🎧':'headphones','📚':'book','🧠':'brain','🧩':'puzzle','🦷':'tooth','📞':'phone','📍':'pin','📸':'camera','📂':'folder','🌐':'globe','🚫':'ban','⏳':'hourglass'};
+  function icon(name){ return paths[name]?'<svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true">'+paths[name]+'</svg>':''; }
+  function key(txt){ return (txt||'').replace(/\ufe0f/g,'').trim(); }
+  function setIcon(el,name){ if(el&&name) el.innerHTML=icon(name); }
+  function hydrate(root){
+    root=root||document;
+    const iconSelector='.dc-topbar-btn,.dc-drawer-tool-ico,.dc-close-results,.dc-radar-hero-ico,.ep-ico,.dc-grid-ico,.gls-ico,.pt-btn-ico,.dc-bn-ico,.dcd-group-hdr-ico,.dcd-subitem-ico,.dcd-a-footer-btn>span:first-child,.dcd-col-b-empty-ico,#dc-theme-toggle';
+    const iconNodes=[...root.querySelectorAll(iconSelector)];
+    if(root.nodeType===1 && root.matches(iconSelector)) iconNodes.unshift(root);
+    iconNodes.forEach(el=>setIcon(el,emojiMap[key(el.textContent)]));
+    const titleNodes=[...root.querySelectorAll('.dc-list-card-title')];
+    if(root.nodeType===1 && root.matches('.dc-list-card-title')) titleNodes.unshift(root);
+    titleNodes.forEach(el=>{
+      const txt=el.textContent.trim();
+      const m=txt.match(/^(.*)\s+(🧠|🦷|🧩)$/u);
+      if(m) el.innerHTML=m[1]+' '+icon(emojiMap[m[2]]);
+    });
+  }
+  window.dcSvgIcon=icon;
+  window.dcHydrateUiIcons=hydrate;
+  hydrate(document);
+  new MutationObserver(muts=>muts.forEach(m=>m.addedNodes.forEach(n=>{ if(n.nodeType===1) hydrate(n); }))).observe(document.documentElement,{childList:true,subtree:true});
+})();
+
 const panels   = Array.from(document.querySelectorAll('.dc-panel'));
 const bnItems  = Array.from(document.querySelectorAll('.dc-bn-item'));
 let curIdx = 0;
@@ -3021,7 +3108,7 @@ scrollBody.addEventListener('touchend',e=>{
 const themeBtn=document.getElementById('dc-theme-toggle');
 function applyTheme(dark){
   document.documentElement.setAttribute('data-theme',dark?'dark':'light');
-  themeBtn.textContent=dark?'☀️':'🌙';
+  themeBtn.innerHTML=window.dcSvgIcon ? window.dcSvgIcon(dark?'sun':'moon') : (dark?'☀️':'🌙');
   localStorage.setItem('dc-theme',dark?'dark':'light');
 }
 (function(){
@@ -3759,7 +3846,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
   const themeBtn = document.getElementById('dcdThemeBtn');
   function syncThemeIcon(){
     const dk = document.documentElement.getAttribute('data-theme') === 'dark';
-    if(themeBtn) themeBtn.innerHTML = '<span>'+(dk?'☀️':'🌙')+'</span><span>تم</span>';
+    if(themeBtn) themeBtn.innerHTML = '<span>'+(window.dcSvgIcon ? window.dcSvgIcon(dk?'sun':'moon') : (dk?'☀️':'🌙'))+'</span><span>تم</span>';
   }
   syncThemeIcon();
   themeBtn?.addEventListener('click', () => {
