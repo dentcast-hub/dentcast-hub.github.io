@@ -30,7 +30,20 @@
       send: '<path d="m22 2-7 20-4-9-9-4z"/><path d="M22 2 11 13"/>',
       flag: '<path d="M5 21V4"/><path d="M5 4h13l-2 4 2 4H5"/>',
       play: '<circle cx="12" cy="12" r="10"/><path d="m10 8 6 4-6 4z"/>',
-      pause: '<circle cx="12" cy="12" r="10"/><path d="M10 8v8"/><path d="M14 8v8"/>'
+      pause: '<circle cx="12" cy="12" r="10"/><path d="M10 8v8"/><path d="M14 8v8"/>',
+      mic: '<path d="M12 14a4 4 0 0 0 4-4V6a4 4 0 1 0-8 0v4a4 4 0 0 0 4 4z"/><path d="M19 10a7 7 0 0 1-14 0"/><path d="M12 17v4"/><path d="M8 21h8"/>',
+      user: '<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>',
+      note: '<path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M8 13h8"/><path d="M8 17h5"/>',
+      bot: '<rect x="5" y="8" width="14" height="10" rx="3"/><path d="M12 8V4"/><circle cx="9" cy="13" r="1"/><circle cx="15" cy="13" r="1"/><path d="M9 18v2"/><path d="M15 18v2"/>',
+      link: '<path d="M10 13a5 5 0 0 0 7.1 0l2-2a5 5 0 0 0-7.1-7.1l-1.1 1.1"/><path d="M14 11a5 5 0 0 0-7.1 0l-2 2A5 5 0 0 0 12 20.1l1.1-1.1"/>',
+      headphones: '<path d="M3 14a9 9 0 0 1 18 0"/><path d="M5 14h3v7H5a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2z"/><path d="M19 14h-3v7h3a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2z"/>',
+      book: '<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"/>',
+      brain: '<path d="M9 4a3 3 0 0 0-3 3v1a3 3 0 0 0-2 5.2A3.5 3.5 0 0 0 8 19h1"/><path d="M15 4a3 3 0 0 1 3 3v1a3 3 0 0 1 2 5.2A3.5 3.5 0 0 1 16 19h-1"/><path d="M12 4v17"/><path d="M8 9h2"/><path d="M14 9h2"/><path d="M8 14h2"/><path d="M14 14h2"/>',
+      puzzle: '<path d="M8 3h4v4h3a2 2 0 1 1 0 4h-3v3h3a2 2 0 1 1 0 4h-3v3H8v-3H5a2 2 0 1 1 0-4h3v-3H5a2 2 0 1 1 0-4h3z"/>',
+      tooth: '<path d="M8.5 3.5c1.2 0 2 .6 3.5.6s2.3-.6 3.5-.6c2 0 3.5 1.6 3.5 4 0 2.8-1.5 4.4-2.2 7.4-.7 3-1.4 5.6-3 5.6-1.2 0-1.1-3.5-1.8-3.5s-.6 3.5-1.8 3.5c-1.6 0-2.3-2.6-3-5.6C6.5 11.9 5 10.3 5 7.5c0-2.4 1.5-4 3.5-4z"/>',
+      folder: '<path d="M3 7a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',
+      ban: '<circle cx="12" cy="12" r="10"/><path d="m4.9 4.9 14.2 14.2"/>',
+      hourglass: '<path d="M6 2h12"/><path d="M6 22h12"/><path d="M7 2v6l5 4-5 4v6"/><path d="M17 2v6l-5 4 5 4v6"/>'
     };
     if (!icons[name]) return '';
     return '<svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true">' + icons[name] + '</svg>';
@@ -49,13 +62,17 @@
       '🌙': 'moon', '☀': 'sun', '🏠': 'home', '💬': 'message',
       '🔙': 'back', '🔊': 'volume', '🛈': 'info', '🌐': 'globe',
       '📍': 'pin', '☎': 'phone', '📞': 'phone', '📷': 'camera',
-      '✈': 'send', '🇮🇷': 'flag', '▶': 'play', '⏸': 'pause'
+      '✈': 'send', '🇮🇷': 'flag', '▶': 'play', '⏸': 'pause',
+      '🎙': 'mic', '👤': 'user', '📝': 'note', '🤖': 'bot',
+      '🔗': 'link', '🎧': 'headphones', '📚': 'book', '🧠': 'brain',
+      '🧩': 'puzzle', '🦷': 'tooth', '📸': 'camera', '📂': 'folder',
+      '🚫': 'ban', '⏳': 'hourglass'
     }[txt];
   }
 
   function hydrateUiIcons(root) {
     root = root || document;
-    var iconSelector = '.dc-topbar-btn,.dc-drawer-tool-ico,.about-contact-ico,.dc-info-btn,.dc-search-info-btn,.dc-close-results,#dc-theme-toggle';
+    var iconSelector = '.dc-topbar-btn,.dc-drawer-tool-ico,.about-contact-ico,.dc-info-btn,.dc-search-info-btn,.dc-close-results,.dc-radar-hero-ico,.ep-ico,.dc-grid-ico,.gls-ico,.pt-btn-ico,.dc-bn-ico,.dcd-group-hdr-ico,.dcd-subitem-ico,.dcd-a-footer-btn>span:first-child,.dcd-col-b-empty-ico,#dc-theme-toggle';
     var iconNodes = Array.prototype.slice.call(root.querySelectorAll(iconSelector));
     if (root.nodeType === 1 && root.matches(iconSelector)) iconNodes.unshift(root);
     iconNodes.forEach(function (el) {
@@ -71,6 +88,13 @@
       if (!m) return;
       var name = iconNameFromEmoji(m[1]);
       if (name) setDcIcon(el, name, m[2]);
+    });
+    var titleNodes = Array.prototype.slice.call(root.querySelectorAll('.dc-list-card-title'));
+    if (root.nodeType === 1 && root.matches('.dc-list-card-title')) titleNodes.unshift(root);
+    titleNodes.forEach(function (el) {
+      var txt = el.textContent.trim();
+      var m = txt.match(/^(.*)\s+(🧠|🦷|🧩)$/u);
+      if (m) el.innerHTML = m[1] + ' ' + dcSvgIcon(iconNameFromEmoji(m[2]));
     });
   }
 
@@ -124,6 +148,7 @@
   new MutationObserver(function (muts) {
     muts.forEach(function (m) {
       if (m.target && m.target.nodeType === 1) hydrateUiIcons(m.target);
+      if (m.target && m.target.nodeType === 3 && m.target.parentElement) hydrateUiIcons(m.target.parentElement);
       m.addedNodes.forEach(function (node) {
         if (node.nodeType === 1) hydrateUiIcons(node);
       });

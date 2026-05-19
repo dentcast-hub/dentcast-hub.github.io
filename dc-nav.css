@@ -41,7 +41,7 @@ body:has(.dc-topbar) {
 .dc-topbar-actions {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 8px;
 }
 
 .dc-topbar-btn {
@@ -88,6 +88,16 @@ body:has(.dc-topbar) {
 .dc-info-btn .dc-svg-icon,
 .dc-search-info-btn .dc-svg-icon,
 .dc-close-results .dc-svg-icon,
+.dc-radar-hero-ico .dc-svg-icon,
+.ep-ico .dc-svg-icon,
+.dc-grid-ico .dc-svg-icon,
+.gls-ico .dc-svg-icon,
+.pt-btn-ico .dc-svg-icon,
+.dc-bn-ico .dc-svg-icon,
+.dcd-group-hdr-ico .dc-svg-icon,
+.dcd-subitem-ico .dc-svg-icon,
+.dcd-a-footer-btn .dc-svg-icon,
+.dcd-col-b-empty-ico .dc-svg-icon,
 #dc-theme-toggle .dc-svg-icon {
   width: 18px;
   height: 18px;
