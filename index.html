@@ -3758,7 +3758,9 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 
     const total=track.offsetHeight-body.clientHeight;
     if(total<=0) return;
-    const p=Math.max(0,Math.min(1,(body.scrollTop-track.offsetTop)/total));
+    const bRect=body.getBoundingClientRect();
+    const tRect=track.getBoundingClientRect();
+    const p=Math.max(0,Math.min(1,(bRect.top-tRect.top)/total));
 
     /* === FRAMES — sharp, clean per-frame draw === */
     const idx=Math.round(p*(FRAME_COUNT-1));
@@ -3776,7 +3778,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 
     /* === DOCTOR IDENTITY — parallax up, like painted on the frame === */
     if(heroBot){
-      const shift = ease(rng(p,0,0.44)) * (body.clientHeight + 60);
+      const shift = ease(rng(p,0,0.44)) * (body.clientHeight + 80);
       heroBot.style.transform = 'translateY(-'+shift+'px)';
     }
 
