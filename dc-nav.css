@@ -103,6 +103,20 @@ body:has(.dc-topbar) {
   height: 18px;
 }
 
+.dc-has-ui-icon > .dc-svg-icon {
+  margin-left: .35em;
+}
+
+.ai-title .dc-svg-icon,
+.header-sub .dc-svg-icon,
+.page-header h2 .dc-svg-icon,
+.wrap > header h1 .dc-svg-icon,
+.wrap > h2 .dc-svg-icon,
+main > h2 .dc-svg-icon {
+  width: .95em;
+  height: .95em;
+}
+
 .dc-topbar-brand {
   display: flex;
   flex-direction: column;

@@ -66,20 +66,27 @@
       '🎙': 'mic', '👤': 'user', '📝': 'note', '🤖': 'bot',
       '🔗': 'link', '🎧': 'headphones', '📚': 'book', '🧠': 'brain',
       '🧩': 'puzzle', '🦷': 'tooth', '📸': 'camera', '📂': 'folder',
-      '🚫': 'ban', '⏳': 'hourglass'
+      '🚫': 'ban', '⏳': 'hourglass', '🎬': 'play', '🩺': 'brain',
+      '⚡': 'sparkle', '📬': 'mail', '⌕': 'search'
     }[txt];
+  }
+
+  function escapeHTML(s) {
+    return (s || '').replace(/[&<>"']/g, function (ch) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch];
+    });
   }
 
   function hydrateUiIcons(root) {
     root = root || document;
-    var iconSelector = '.dc-topbar-btn,.dc-drawer-tool-ico,.about-contact-ico,.dc-info-btn,.dc-search-info-btn,.dc-close-results,.dc-radar-hero-ico,.ep-ico,.dc-grid-ico,.gls-ico,.pt-btn-ico,.dc-bn-ico,.dcd-group-hdr-ico,.dcd-subitem-ico,.dcd-a-footer-btn>span:first-child,.dcd-col-b-empty-ico,#dc-theme-toggle';
+    var iconSelector = '.dc-topbar-btn,.dc-drawer-tool-ico,.about-contact-ico,.dc-info-btn,.dc-search-info-btn,.dc-close-results,.dc-radar-hero-ico,.ep-ico,.dc-grid-ico,.gls-ico,.pt-btn-ico,.dc-bn-ico,.dcd-group-hdr-ico,.dcd-subitem-ico,.dcd-a-footer-btn>span:first-child,.dcd-col-b-empty-ico,.logo,.searchIcon,#dc-theme-toggle';
     var iconNodes = Array.prototype.slice.call(root.querySelectorAll(iconSelector));
     if (root.nodeType === 1 && root.matches(iconSelector)) iconNodes.unshift(root);
     iconNodes.forEach(function (el) {
       var name = iconNameFromEmoji(el.textContent);
       if (name) setDcIcon(el, name);
     });
-    var leadingSelector = '.btn-home,.btn-about,.btn-back,.acast-close,button';
+    var leadingSelector = '.btn-home,.btn-about,.btn-back,.dc-ui-link-icon,.acast-close,.ai-title,.header-sub,.capsule-btn,.wrap>header h1,.wrap>h2,#page-content .page-header h2,main>h2,button';
     var leadingNodes = Array.prototype.slice.call(root.querySelectorAll(leadingSelector));
     if (root.nodeType === 1 && root.matches(leadingSelector)) leadingNodes.unshift(root);
     leadingNodes.forEach(function (el) {
@@ -87,7 +94,10 @@
       var m = txt.match(/^(\S+)\s*(.*)$/);
       if (!m) return;
       var name = iconNameFromEmoji(m[1]);
-      if (name) setDcIcon(el, name, m[2]);
+      if (name) {
+        el.classList.add('dc-has-ui-icon');
+        setDcIcon(el, name, escapeHTML(m[2]));
+      }
     });
     var titleNodes = Array.prototype.slice.call(root.querySelectorAll('.dc-list-card-title'));
     if (root.nodeType === 1 && root.matches('.dc-list-card-title')) titleNodes.unshift(root);
