@@ -3749,7 +3749,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
   /* show hero at start */
   if(heroScene){ heroScene.style.opacity='1'; heroScene.style.pointerEvents='auto'; }
 
-  let lastIdx=-1, ticking=false;
+  let lastRaw=-1, ticking=false;
 
   function update(){
     ticking=false;
@@ -3760,12 +3760,24 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
     if(total<=0) return;
     const p=Math.max(0,Math.min(1,(body.scrollTop-track.offsetTop)/total));
 
-    /* === FRAMES === */
-    const idx=Math.round(p*(FRAME_COUNT-1));
-    if(idx!==lastIdx){
-      lastIdx=idx;
-      const f=frames[idx];
-      if(f&&f.complete&&f.naturalWidth) drawFrame(f);
+    /* === FRAMES — interpolated blend for smooth motion === */
+    const rawIdx = p*(FRAME_COUNT-1);
+    if(Math.abs(rawIdx-lastRaw) > 0.004){
+      lastRaw=rawIdx;
+      const loIdx = Math.floor(rawIdx);
+      const hiIdx = Math.min(loIdx+1, FRAME_COUNT-1);
+      const blend = rawIdx-loIdx;
+      const fLo   = frames[loIdx];
+      const fHi   = frames[hiIdx];
+      if(fLo&&fLo.complete&&fLo.naturalWidth){
+        ctx.globalAlpha=1;
+        drawFrame(fLo);
+        if(blend>0.01&&fHi&&fHi.complete&&fHi.naturalWidth){
+          ctx.globalAlpha=blend;
+          drawFrame(fHi);
+        }
+        ctx.globalAlpha=1;
+      }
     }
 
     /* === PROGRESS BAR === */
