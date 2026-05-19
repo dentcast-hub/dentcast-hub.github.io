@@ -93,7 +93,7 @@
   --chip-txt:#022360;
 
   --pulse-bg:#17212b;
-  --pulse-border:rgba(255,80,80,.30);
+  --pulse-border:rgba(245,162,8,.28);
 
   --monitor-sh:inset -6px -6px 14px rgba(2,6,23,.06),inset 6px 6px 14px rgba(255,255,255,.80);
 
@@ -122,7 +122,7 @@
 
   --chip-bg:rgba(91,156,246,.12); --chip-bd:rgba(91,156,246,.24); --chip-txt:#8ab4f8;
 
-  --pulse-bg:#0e1621; --pulse-border:rgba(255,80,80,.25);
+  --pulse-bg:#0e1621; --pulse-border:rgba(245,162,8,.20);
 
   --monitor-sh:inset -6px -6px 12px rgba(0,0,0,.22),inset 6px 6px 12px rgba(255,255,255,.03);
 }
@@ -197,15 +197,15 @@ body{
 .dc-topbar-brand-sub:active{ opacity:0.5; }
 
 .dc-topbar-actions{
-  display:flex; align-items:center; gap:8px;
+  display:flex; align-items:center; gap:5px;
 }
 .dc-topbar-btn{
-  width:38px; height:38px;
+  width:34px; height:34px;
   border-radius:var(--r-f);
   background:var(--surface2);
-  border:1px solid var(--border);
+  border:1px solid var(--border2);
   display:flex; align-items:center; justify-content:center;
-  font-size:18px;
+  font-size:16px;
   transition:all var(--tr);
   color:var(--txt2);
 }
@@ -334,7 +334,7 @@ body{
   border:1px solid var(--pulse-border);
   border-radius:var(--r-lg);
   padding:14px 16px 14px;
-  margin-bottom:18px;
+  margin-bottom:24px;
   position:relative;
   overflow:visible;
   height:auto;
@@ -350,12 +350,12 @@ body{
 .dc-pulse-title{
   display:flex; align-items:center; gap:6px;
   font-size:.82rem; font-weight:800;
-  color:#ff5252;
+  color:#c49820;
   letter-spacing:.02em;
 }
 .dc-pulse-dot{
   width:8px; height:8px; border-radius:50%;
-  background:#ff5252;
+  background:#c49820;
   animation:pulseDot 1.3s ease-in-out infinite;
   flex-shrink:0;
 }
@@ -369,17 +369,17 @@ body{
   display:flex; align-items:center; justify-content:center;
   transition:all var(--tr);
 }
-.dc-pulse-close:active{ background:rgba(255,80,80,.25); color:#ff5252; }
+.dc-pulse-close:active{ background:rgba(245,162,8,.18); color:#c49820; }
 
 .dc-pulse-list{
   list-style:none; margin:0; padding:0;
-  display:flex; flex-direction:column; gap:5px;
+  display:flex; flex-direction:column; gap:8px;
 }
 .dc-pulse-list li{
   font-size:.80rem;
   color:rgba(225,235,255,.85);
   padding-right:14px; position:relative;
-  line-height:1.55;
+  line-height:1.75;
 }
 .dc-pulse-list li::before{
   content:"●"; position:absolute; right:0;
@@ -524,7 +524,7 @@ body{
   background:var(--pr);
   border-radius:var(--r-xl);
   padding:16px 18px;
-  margin-bottom:20px;
+  margin-bottom:26px;
   cursor:pointer;
   box-shadow:0 8px 28px rgba(var(--pr-rgb),.28);
   transition:all var(--tr);
@@ -567,6 +567,18 @@ body{
 }
 
 /* =====================================================
+   CARD GROUP LABELS (feature card pairs)
+===================================================== */
+.dc-card-group{ margin-bottom:6px; }
+.dc-card-group-label{
+  font-size:.65rem; font-weight:700;
+  color:var(--txt3); letter-spacing:.06em;
+  padding:0 3px; margin-bottom:6px;
+  display:block;
+  text-transform:uppercase;
+}
+
+/* =====================================================
    2x2 GRID CARDS
 ===================================================== */
 .dc-grid{
@@ -580,7 +592,7 @@ body{
   border:1px solid var(--card-border);
   border-radius:var(--r-lg);
   box-shadow:var(--card-sh);
-  padding:16px 12px 14px;
+  padding:18px 14px 16px;
   display:flex; flex-direction:column;
   align-items:center; justify-content:center;
   text-align:center; gap:8px;
@@ -621,11 +633,12 @@ body{
   justify-content:space-between;
   background:var(--card-bg);
   border:1px solid var(--card-border);
+  border-top:2px solid rgba(var(--pr-rgb),.22);
   border-radius:14px 14px 36px 36px;
-  padding:11px 18px;
-  margin:4px auto 0;
-  width:74%; max-width:420px;
-  box-shadow:var(--card-sh);
+  padding:13px 20px;
+  margin:0 auto 24px;
+  width:88%; max-width:480px;
+  box-shadow:var(--card-sh2);
   cursor:pointer;
   transition:all var(--tr);
   -webkit-tap-highlight-color:transparent;
@@ -1052,15 +1065,15 @@ body.dc-radar-mode{ overflow:hidden; }
 ===================================================== */
 #dc-theme-toggle{
   position:fixed; bottom:76px; left:14px; z-index:250;
-  width:42px; height:42px; border-radius:var(--r-f);
-  background:var(--sb); color:var(--sb-txt);
-  border:1px solid rgba(255,255,255,.12);
-  box-shadow:0 4px 16px rgba(0,0,0,.28);
+  width:40px; height:40px; border-radius:var(--r-md);
+  background:var(--card-bg); color:var(--txt2);
+  border:1px solid var(--card-border);
+  box-shadow:var(--card-sh);
   display:flex; align-items:center; justify-content:center;
-  font-size:19px; cursor:pointer;
+  font-size:17px; cursor:pointer;
   transition:all var(--tr);
 }
-#dc-theme-toggle:active{ transform:scale(.86); }
+#dc-theme-toggle:active{ transform:scale(.86); background:var(--surface2); }
 
 /* =====================================================
    FOOTER
@@ -2034,6 +2047,18 @@ body.dc-desktop-ui #dc-desktop-root{
 [data-theme="dark"] .dc-bottom-nav{
   background:#0b1420;
 }
+/* Meta Base SVG icon color tracking */
+.dc-bn-item[data-panel="panel-sharehub"] .dc-bn-ico{
+  display:flex; align-items:center; justify-content:center;
+  color:var(--bn-txt); transition:color var(--tr);
+}
+.dc-bn-item[data-panel="panel-sharehub"].active .dc-bn-ico{
+  color:var(--bn-active);
+}
+.dc-bn-item[data-panel="panel-sharehub"] .dc-bn-ico svg{
+  stroke:currentColor; transition:stroke var(--tr);
+}
+
 /* Studio tab always bolder than peers */
 .dc-bn-item[data-panel="panel-studio"] .dc-bn-ico{
   font-size:27px;
@@ -2339,8 +2364,7 @@ body.dc-desktop-ui #dc-desktop-root{
     </div>
     <div class="dc-topbar-brand">
       <div class="dc-topbar-brand-name">DentCast</div>
-      <a href="about.html" class="dc-topbar-brand-sub">دکتر فواد شهابیان ↗</a>
-      <div class="dc-domain-notice">داخل ایران: <a href="https://dentcast.ir" rel="alternate">dentcast.ir</a> · خارج ایران: dentcast.org</div>
+      <a href="about.html" class="dc-topbar-brand-sub">دکتر فواد شهابیان</a>
     </div>
   </header>
 
@@ -2413,37 +2437,45 @@ body.dc-desktop-ui #dc-desktop-root{
         </div>
       </div>
 
-      <!-- 2×2 Grid -->
-      <div class="dc-grid">
-        <div class="dc-grid-card" onclick="window.location.href='/sharehub/'">
-          <div class="dc-grid-ico">🔗</div>
-          <div class="dc-grid-title">Share Hub</div>
-          <div class="dc-grid-sub">مطالب با ذکر منبع</div>
-        </div>
-        <div class="dc-grid-card" onclick="window.location.href='/notecast/'">
-          <div class="dc-grid-ico">📝</div>
-          <div class="dc-grid-title">NoteCast</div>
-          <div class="dc-grid-sub">خلاصه‌نویسی اپیزودها</div>
-        </div>
-        <div class="dc-grid-card" onclick="window.location.href='/dentcast-plus/'">
-          <div class="dc-grid-ico">▶️</div>
-          <div class="dc-grid-title">DentCast+</div>
-          <div class="dc-grid-sub">آموزش با ویدیو</div>
-        </div>
-        <div class="dc-grid-card" onclick="window.location.href='/dentai/'">
-          <div class="dc-grid-ico">🤖</div>
-          <div class="dc-grid-title">DentAI</div>
-          <div class="dc-grid-sub">مرور با هوش مصنوعی</div>
-        </div>
-      </div>
-
-      <!-- Radar pill -->
+      <!-- Radar pill — پرچمدار، قبل از کارت‌های ویژگی -->
       <div class="dc-radar-pill radar-shine-card" id="btnOpenRadarMob">
         <div>
           <div class="dc-radar-pill-txt">رادار دنت‌کست 📡</div>
           <div class="dc-radar-pill-sub">جستجوگر سایت‌های دندانپزشکی</div>
         </div>
         <span class="dc-radar-pill-btn">جستجو</span>
+      </div>
+
+      <!-- Feature cards — دو گروه با برچسب -->
+      <div class="dc-card-group">
+        <span class="dc-card-group-label">محتوای متنی</span>
+        <div class="dc-grid">
+          <div class="dc-grid-card" onclick="window.location.href='/sharehub/'">
+            <div class="dc-grid-ico">🔗</div>
+            <div class="dc-grid-title">Share Hub</div>
+            <div class="dc-grid-sub">مطالب با ذکر منبع</div>
+          </div>
+          <div class="dc-grid-card" onclick="window.location.href='/notecast/'">
+            <div class="dc-grid-ico">📝</div>
+            <div class="dc-grid-title">NoteCast</div>
+            <div class="dc-grid-sub">خلاصه‌نویسی اپیزودها</div>
+          </div>
+        </div>
+      </div>
+      <div class="dc-card-group">
+        <span class="dc-card-group-label">ابزار و ویدیو</span>
+        <div class="dc-grid">
+          <div class="dc-grid-card" onclick="window.location.href='/dentcast-plus/'">
+            <div class="dc-grid-ico">▶️</div>
+            <div class="dc-grid-title">DentCast+</div>
+            <div class="dc-grid-sub">آموزش با ویدیو</div>
+          </div>
+          <div class="dc-grid-card" onclick="window.location.href='/dentai/'">
+            <div class="dc-grid-ico">🤖</div>
+            <div class="dc-grid-title">DentAI</div>
+            <div class="dc-grid-sub">مرور با هوش مصنوعی</div>
+          </div>
+        </div>
       </div>
 
     </section>
@@ -2611,7 +2643,16 @@ body.dc-desktop-ui #dc-desktop-root{
       <span class="dc-bn-lbl">استودیو</span>
     </div>
     <div class="dc-bn-item" data-panel="panel-sharehub">
-      <span class="dc-bn-ico">🧠</span>
+      <span class="dc-bn-ico">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="4.5" r="2.2"/>
+          <circle cx="4.5" cy="18.5" r="2.2"/>
+          <circle cx="19.5" cy="18.5" r="2.2"/>
+          <line x1="10.2" y1="6.2" x2="5.9" y2="16.5"/>
+          <line x1="13.8" y1="6.2" x2="18.1" y2="16.5"/>
+          <line x1="6.6" y1="18.5" x2="17.4" y2="18.5"/>
+        </svg>
+      </span>
       <span class="dc-bn-lbl">Meta Base</span>
     </div>
     <div class="dc-bn-item" data-panel="panel-patient">
@@ -2638,7 +2679,7 @@ body.dc-desktop-ui #dc-desktop-root{
         <span class="dcd-brand-sub">دکتر فواد شهابیان</span>
       </div>
     </a>
-    <div class="dcd-domain-notice">داخل ایران: <a href="https://dentcast.ir" rel="alternate">dentcast.ir</a> · خارج ایران: dentcast.org</div>
+    <!-- domain notice moved to about.html -->
 
     <div class="dcd-tree">
 
@@ -2728,7 +2769,7 @@ body.dc-desktop-ui #dc-desktop-root{
       </div>
       <div class="dc-topbar-brand">
         <div class="dc-topbar-brand-name">DentCast</div>
-        <a href="/about.html" class="dc-topbar-brand-sub">دکتر فواد شهابیان ↗</a>
+        <a href="/about.html" class="dc-topbar-brand-sub">دکتر فواد شهابیان</a>
       </div>
     </header>
 
@@ -3456,7 +3497,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
       contentArea.innerHTML =
         '<div class="dcd-loading" style="flex-direction:column;gap:8px;">' +
         '<span style="font-size:24px">⚠️</span>' +
-        '<span>خطا در بارگذاری. <a href="'+url+'" target="_blank" style="color:var(--ac);">باز کردن در تب جدید ↗</a></span>' +
+        '<span>خطا در بارگذاری. <a href="'+url+'" target="_blank" style="color:var(--ac);">باز کردن در تب جدید</a></span>' +
         '</div>';
     }
   }
@@ -3812,55 +3853,4 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
     const artItems=document.querySelectorAll('.pt-article-item');
     [[0,0.54,0.62],[1,0.59,0.67],[2,0.64,0.72]].forEach(function(d){
       var c=artItems[d[0]]; if(!c) return;
-      var t=ease(rng(p,d[1],d[2]))*Math.min(1,artO*4);
-      c.style.opacity=t;
-      c.style.transform='translateX('+(1-t)*12+'px)';
-    });
-
-    /* === SCENE 4: CTA (0.76 → 0.90 full) === */
-    const ctaO=ease(rng(p,0.76,0.90));
-    setO(ctaScene,ctaO);
-    setPE(ctaScene,ctaO>0.05);
-
-    /* === BOTTOM GRADIENT === */
-    if(gradBot) gradBot.style.opacity=ease(rng(p,0.62,0.80));
-  }
-
-  /* scroll listener */
-  body.addEventListener('scroll',function(){
-    if(!ticking){ ticking=true; requestAnimationFrame(update); }
-  },{passive:true});
-
-  /* panel activation — double rAF ensures layout is computed after display:none→block */
-  const panelEl=document.getElementById('panel-patient');
-  if(panelEl){
-    new MutationObserver(function(muts){
-      if(muts.some(function(m){ return m.attributeName==='class'; })){
-        if(panelEl.classList.contains('active')){
-          requestAnimationFrame(function(){
-            requestAnimationFrame(function(){
-              update();
-              /* fallback: if canvas still blank, draw first loaded frame */
-              if(lastIdx===-1){
-                for(var fi=0;fi<frames.length;fi++){
-                  if(frames[fi]&&frames[fi].complete&&frames[fi].naturalWidth){
-                    ctx.clearRect(0,0,canvas.width,canvas.height);
-                    drawFrame(frames[fi]);
-                    lastIdx=fi;
-                    break;
-                  }
-                }
-              }
-            });
-          });
-        }
-      }
-    }).observe(panelEl,{attributes:true});
-  }
-
-})();
-</script>
-
-</body>
-</html>
-    
+      var t=
