@@ -3702,7 +3702,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 /* ── CINEMATIC PATIENTS — scroll engine ── */
 (function(){
   'use strict';
-  const FRAME_COUNT = 60;
+  const FRAME_COUNT = 277;
 
   const track     = document.getElementById('pt-track');
   const canvas    = document.getElementById('pt-canvas');
@@ -3818,26 +3818,4 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
     /* === SCENE 4: CTA (0.76 → 0.90 full) === */
     const ctaO=ease(rng(p,0.76,0.90));
     setO(ctaScene,ctaO);
-    setPE(ctaScene,ctaO>0.08);
-
-    /* === BOTTOM GRADIENT — decision mode === */
-    if(gradBot) gradBot.style.opacity=ease(rng(p,0.62,0.80));
-  }
-
-  body.addEventListener('scroll',function(){
-    if(!ticking){ ticking=true; requestAnimationFrame(update); }
-  },{passive:true});
-
-  /* re-run when panel activates */
-  const panelEl=document.getElementById('panel-patient');
-  if(panelEl){
-    new MutationObserver(function(muts){
-      if(muts.some(function(m){ return m.attributeName==='class'; })){
-        if(panelEl.classList.contains('active')) setTimeout(update,40);
-      }
-    }).observe(panelEl,{attributes:true});
-  }
-})();
-</script>
-</body>
-</html>
+    setPE(ctaSce
