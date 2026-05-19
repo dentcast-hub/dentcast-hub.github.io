@@ -1665,71 +1665,78 @@ body.dc-desktop-ui #dc-desktop-root{
 /* scene: hero */
 .pt-scene-hero{
   justify-content:flex-start;
-  padding:26px 24px 0;
+  padding:28px 24px 0;
 }
-.pt-hero-eyebrow{
-  font-family:'Vazirmatn',system-ui,sans-serif;
-  font-size:.64rem;
-  font-weight:700;
-  color:rgba(255,255,255,.55);
-  letter-spacing:.14em;
-  text-transform:uppercase;
-  margin-bottom:12px;
-  text-shadow:0 1px 8px rgba(0,0,0,.5);
-}
-.pt-hero-name{
+.pt-hero-tagline{
   font-family:'Vazirmatn',system-ui,sans-serif;
   color:#fff;
-  font-size:1.65rem;
+  font-size:1.45rem;
   font-weight:900;
-  letter-spacing:-.015em;
+  letter-spacing:-.01em;
   text-shadow:0 2px 20px rgba(0,0,0,.65),0 1px 4px rgba(0,0,0,.45);
-  line-height:1.18;
+  line-height:1.25;
   text-align:center;
-}
-.pt-hero-divider{
-  width:28px; height:1.5px;
-  background:rgba(255,255,255,.38);
-  border-radius:999px;
-  margin:11px auto;
-}
-.pt-hero-spec{
-  font-family:'Vazirmatn',system-ui,sans-serif;
-  color:rgba(255,255,255,.68);
-  font-size:.80rem;
-  font-weight:600;
-  letter-spacing:.03em;
-  text-shadow:0 1px 8px rgba(0,0,0,.45);
-  text-align:center;
+  margin-bottom:14px;
 }
 .pt-scroll-hint{
-  position:absolute;
-  bottom:26px;
-  left:50%;
-  transform:translateX(-50%);
   display:flex;
   flex-direction:column;
   align-items:center;
-  gap:7px;
+  gap:6px;
   will-change:opacity;
 }
 .pt-hint-text{
   font-family:'Vazirmatn',system-ui,sans-serif;
-  font-size:.68rem;
-  font-weight:700;
-  color:rgba(255,255,255,.50);
-  letter-spacing:.07em;
+  font-size:.70rem;
+  font-weight:600;
+  color:rgba(255,255,255,.48);
+  letter-spacing:.05em;
 }
-.pt-hint-chevron{
-  width:13px; height:13px;
-  border-right:2px solid rgba(255,255,255,.42);
-  border-bottom:2px solid rgba(255,255,255,.42);
-  transform:rotate(45deg);
-  animation:pt-bounce .9s ease-in-out infinite;
+.pt-hint-ico{
+  font-size:1.1rem;
+  color:rgba(255,255,255,.55);
+  animation:pt-bounce .95s ease-in-out infinite;
+  display:block;
+  line-height:1;
 }
 @keyframes pt-bounce{
-  0%,100%{ transform:rotate(45deg) translateY(0); }
-  50%     { transform:rotate(45deg) translateY(5px); }
+  0%,100%{ transform:translateY(0); }
+  50%     { transform:translateY(5px); }
+}
+/* doctor identity — pinned to bottom */
+.pt-hero-bottom{
+  position:absolute;
+  bottom:28px;
+  left:0; right:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:0 24px;
+}
+.pt-hero-name{
+  font-family:'Vazirmatn',system-ui,sans-serif;
+  color:#fff;
+  font-size:1.20rem;
+  font-weight:900;
+  letter-spacing:-.01em;
+  text-shadow:0 2px 16px rgba(0,0,0,.60),0 1px 4px rgba(0,0,0,.40);
+  line-height:1.2;
+  text-align:center;
+}
+.pt-hero-divider{
+  width:24px; height:1.5px;
+  background:rgba(255,255,255,.35);
+  border-radius:999px;
+  margin:8px auto;
+}
+.pt-hero-spec{
+  font-family:'Vazirmatn',system-ui,sans-serif;
+  color:rgba(255,255,255,.62);
+  font-size:.76rem;
+  font-weight:600;
+  letter-spacing:.03em;
+  text-shadow:0 1px 8px rgba(0,0,0,.40);
+  text-align:center;
 }
 /* scene: knowledge (litecast) */
 .pt-scene-knowledge{
@@ -2508,13 +2515,17 @@ body.dc-desktop-ui #dc-desktop-root{
 
             <!-- SCENE 1: HERO -->
             <div class="pt-scene pt-scene-hero" id="pt-scene-hero">
-              <div class="pt-hero-eyebrow">دندان‌پزشکی متخصص</div>
-              <div class="pt-hero-name">دکتر فواد شهابیان</div>
-              <div class="pt-hero-divider"></div>
-              <div class="pt-hero-spec">متخصص پروتز · زیبایی · ایمپلنت</div>
+              <!-- TOP: tagline + scroll cue -->
+              <div class="pt-hero-tagline">درمان از اینجا شروع میشه</div>
               <div class="pt-scroll-hint" id="pt-scroll-hint">
                 <span class="pt-hint-text">اسکرول کنید</span>
-                <div class="pt-hint-chevron"></div>
+                <span class="pt-hint-ico">↓</span>
+              </div>
+              <!-- BOTTOM: doctor identity -->
+              <div class="pt-hero-bottom">
+                <div class="pt-hero-name">دکتر فواد شهابیان</div>
+                <div class="pt-hero-divider"></div>
+                <div class="pt-hero-spec">متخصص پروتز · زیبایی · ایمپلنت</div>
               </div>
             </div>
 
