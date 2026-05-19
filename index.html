@@ -423,15 +423,22 @@ body{
   margin-bottom:14px;
 }
 .dc-identity-main{
-  font-size:clamp(.82rem,3.6vw,1.02rem);
+  font-size:clamp(.82rem,3.25vw,1.02rem);
   font-weight:800;
   color:var(--pr);
   letter-spacing:-.1px;
   font-family:'Vazirmatn',sans-serif;
   margin:0; padding:0;
-  line-height:1.55;
-  text-align:right;
-  text-wrap:balance;
+  line-height:1.45;
+  text-align:center;
+  white-space:nowrap;
+  max-width:100%;
+}
+@media(max-width:340px){
+  .dc-identity-main{
+    white-space:normal;
+    text-wrap:balance;
+  }
 }
 /* shimmer — فقط روی span.dc-shimmer-word اعمال می‌شه */
 .dc-shimmer-word{
