@@ -107,18 +107,6 @@ body:has(.dc-topbar) {
   margin-left: .35em;
 }
 
-#dc-theme-toggle .dc-theme-sun {
-  display: none;
-}
-
-[data-theme="dark"] #dc-theme-toggle .dc-theme-moon {
-  display: none;
-}
-
-[data-theme="dark"] #dc-theme-toggle .dc-theme-sun {
-  display: block;
-}
-
 .ai-title .dc-svg-icon,
 .header-sub .dc-svg-icon,
 .page-header h2 .dc-svg-icon,
