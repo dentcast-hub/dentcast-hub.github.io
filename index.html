@@ -2553,8 +2553,7 @@ body.dc-desktop-ui #dc-desktop-root{
           <button class="dc-pulse-close" onclick="document.getElementById('dcPulseCard').style.display='none'" aria-label="بستن"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
         </div>
         <ul class="dc-pulse-list">
-          <li>تجربهٔ یک ویزیت در <a href="/chairside/chairside-16.html"><strong>Chairside 16</strong></a> منتشر شد · ۲۸ اردیبهشت</li>
-          <li>تجربهٔ یک ویزیت در <a href="/chairside/chairside-15.html"><strong>Chairside 15</strong></a> منتشر شد · ۲۷ اردیبهشت</li>
+          <li>ShareHub <a href="/sharehub/share-6.html"><strong>ششم</strong></a> با مطلبی از دکتر نشاطی در سایت قرار گرفت · ۳۰ اردیبهشت</li>
           <li><a href="/episodes/episode-157.html"><strong>دنتکست ۱۵۷</strong></a> منتشر شد · ۲۵ اردیبهشت</li>
 
           <li><a href="https://dentcast.ir/#radar"><strong>رادار دنت‌کست</strong></a> با بیش از ۷۰ سایت دندانپزشکی آپدیت شد</li>
@@ -3336,7 +3335,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
   };
   function detectCategory(url){
     if(/\/episodes\//.test(url)) return 'episodes';
-    if(/\/(?:notecast|litecast|photocast|dentai|dentcast-plus)\//.test(url)) return 'studio';
+    if(/\/(?:notecast|litecast|photocast|dentai|dentcast-plus|sharehub)\//.test(url)) return 'studio';
     if(/\/(?:insight|chairside|metanotes)\//.test(url)) return 'metabase';
     return null;
   }
