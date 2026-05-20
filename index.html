@@ -361,16 +361,19 @@ body{
    PULSE CARD
 ===================================================== */
 .dc-pulse{
-  background:var(--pulse-bg);
-  border:1px solid var(--pulse-border);
+  background:var(--card-bg);
+  border:1px solid rgba(245,162,8,.45);
   border-radius:var(--r-lg);
   padding:14px 16px 14px;
   margin-bottom:24px;
   position:relative;
   overflow:visible;
   height:auto;
-  box-shadow:0 4px 18px rgba(0,0,0,.16);
+  box-shadow:var(--card-sh);
   transition:background var(--tr2),border-color var(--tr2);
+}
+[data-theme="dark"] .dc-pulse{
+  border-color:rgba(245,162,8,.32);
 }
 
 .dc-pulse-head{
@@ -394,8 +397,8 @@ body{
 
 .dc-pulse-close{
   width:26px; height:26px; border-radius:50%;
-  background:rgba(255,255,255,.10);
-  color:rgba(255,255,255,.6);
+  background:var(--border);
+  color:var(--txt2);
   font-size:16px; font-weight:700;
   display:flex; align-items:center; justify-content:center;
   transition:all var(--tr);
@@ -408,23 +411,23 @@ body{
 }
 .dc-pulse-list li{
   font-size:.80rem;
-  color:rgba(225,235,255,.85);
+  color:var(--txt2);
   padding-right:14px; position:relative;
   line-height:1.75;
 }
 .dc-pulse-list li::before{
   content:"●"; position:absolute; right:0;
-  font-size:9px; color:rgba(91,156,246,.70);
+  font-size:9px; color:#c49820;
   top:3px;
 }
-.dc-pulse-list a{ color:#7aacff; }
-.dc-pulse-list strong{ color:rgba(235,243,255,.95); }
+.dc-pulse-list a{ color:var(--ac); }
+.dc-pulse-list strong{ font-weight:800; color:inherit; }
 
 /* Ad inside pulse */
 .dc-pulse-ad{
   margin-top:10px;
-  background:rgba(245,162,8,.07);
-  border:1px solid rgba(245,162,8,.25);
+  background:rgba(245,162,8,.10);
+  border:1px solid rgba(245,162,8,.32);
   border-radius:var(--r-md);
   overflow:hidden;
 }
@@ -592,18 +595,6 @@ body{
   border:1px solid rgba(255,255,255,.22);
   white-space:nowrap; align-self:flex-start;
   margin-top:2px;
-}
-
-/* =====================================================
-   CARD GROUP LABELS (feature card pairs)
-===================================================== */
-.dc-card-group{ margin-bottom:6px; }
-.dc-card-group-label{
-  font-size:.65rem; font-weight:700;
-  color:var(--txt3); letter-spacing:.06em;
-  padding:0 3px; margin-bottom:6px;
-  display:block;
-  text-transform:uppercase;
 }
 
 /* =====================================================
@@ -812,6 +803,30 @@ body{
 .dc-list-card-title{ font-size:.875rem; font-weight:700; color:var(--txt); line-height:1.3; }
 .dc-list-card-sub{ font-size:.74rem; color:var(--txt2); margin-top:3px; }
 
+/* Meta Base — per-card accent identities (Insight / Chairside / Meta Note) */
+.dc-list-card--insight   { --accent: 30, 124, 138; }   /* teal */
+.dc-list-card--chairside { --accent: 186, 110, 94; }   /* muted coral */
+.dc-list-card--meta      { --accent: 91, 107, 140; }   /* indigo-slate */
+[data-theme="dark"] .dc-list-card--insight   { --accent: 100, 196, 210; }
+[data-theme="dark"] .dc-list-card--chairside { --accent: 224, 161, 142; }
+[data-theme="dark"] .dc-list-card--meta      { --accent: 150, 169, 200; }
+
+.dc-list-card--insight,
+.dc-list-card--chairside,
+.dc-list-card--meta{
+  border-right:5px solid rgba(var(--accent),.55);
+  background:
+    linear-gradient(to left, rgba(var(--accent),.055), rgba(var(--accent),0) 55%),
+    var(--card-bg);
+}
+.dc-list-card--insight   .dc-list-card-title .dc-svg-icon,
+.dc-list-card--chairside .dc-list-card-title .dc-svg-icon,
+.dc-list-card--meta      .dc-list-card-title .dc-svg-icon{
+  color: rgb(var(--accent));
+  width: 1.5em;
+  height: 1.5em;
+}
+
 /* featured list card */
 .dc-list-card.featured{
   background:linear-gradient(135deg,rgba(var(--ac-rgb),.07),rgba(var(--pr-rgb),.04));
@@ -852,12 +867,18 @@ body{
   font-size:.82rem; font-weight:800;
   color:var(--txt); margin:0 0 10px;
 }
+.dc-monitor-hint{
+  font-size:.66rem; font-weight:500;
+  color:var(--txt3);
+  margin:-7px 0 9px;
+}
 .dc-monitor-list{
   display:flex; flex-direction:column; gap:3px;
   max-height:173px; overflow-y:auto;
 }
 .dc-monitor-list a{
-  display:block; text-decoration:none;
+  display:flex; align-items:center; gap:8px;
+  text-decoration:none;
   color:rgba(var(--pr-rgb),.85);
   font-size:.82rem; line-height:1.60;
   padding:4px 8px;
@@ -868,6 +889,17 @@ body{
 }
 [data-theme="dark"] .dc-monitor-list a{ color:rgba(91,156,246,.88); }
 .dc-monitor-list a:active{ background:var(--surface3); }
+
+/* Category icon + title slots inside each list item */
+.dc-mlist-ico{
+  display:inline-flex; flex-shrink:0;
+  font-size:1.25em; line-height:1;
+}
+.dc-mlist-title{ flex:1; min-width:0; }
+.dc-mlist-ico--episodes{ color:var(--pr); }
+.dc-mlist-ico--studio  { color:#c49820; }
+.dc-mlist-ico--metabase{ color:#3a8da5; }
+[data-theme="dark"] .dc-mlist-ico--metabase{ color:#7fbbcf; }
 
 /* secondary monitor — extra top margin to visually separate */
 .dc-monitor.dc-monitor-secondary{ margin-top:20px; }
@@ -2141,9 +2173,9 @@ body.dc-desktop-ui #dc-desktop-root{
    GRID CARDS — breathing-room scaling
 ===================================================== */
 .dc-grid .dc-grid-card{
-  min-height:96px;
-  padding:16px 14px 15px;
-  gap:7px;
+  min-height:124px;
+  padding:24px 18px 22px;
+  gap:10px;
 }
 .dc-grid .dc-grid-ico{
   width:28px; height:28px;
@@ -2154,34 +2186,6 @@ body.dc-desktop-ui #dc-desktop-root{
 }
 .dc-grid .dc-grid-sub{
   font-size:.62rem;
-}
-
-/* Primary content destinations — subtle hierarchy cue
-   (NoteCast, DentCast+). Utility cards (Share Hub, DentAI)
-   keep the clean white look. */
-.dc-grid .dc-grid-card--primary{
-  background:
-    linear-gradient(180deg,
-      rgba(var(--pr-rgb),.045) 0%,
-      rgba(var(--pr-rgb),.012) 55%,
-      var(--card-bg) 100%);
-  border-top-color:rgba(var(--pr-rgb),.32);
-}
-.dc-grid .dc-grid-card--primary .dc-grid-ico{
-  background:rgba(var(--pr-rgb),.07);
-  border-color:rgba(var(--pr-rgb),.16);
-}
-[data-theme="dark"] .dc-grid .dc-grid-card--primary{
-  background:
-    linear-gradient(180deg,
-      rgba(var(--pr-rgb),.10) 0%,
-      rgba(var(--pr-rgb),.03) 55%,
-      var(--card-bg) 100%);
-  border-top-color:rgba(var(--pr-rgb),.42);
-}
-[data-theme="dark"] .dc-grid .dc-grid-card--primary .dc-grid-ico{
-  background:rgba(var(--pr-rgb),.14);
-  border-color:rgba(var(--pr-rgb),.22);
 }
 
 /* =====================================================
@@ -2234,19 +2238,10 @@ body.dc-desktop-ui #dc-desktop-root{
   margin-bottom:10px;
 }
 .gls-ico{
-  width:30px; height:30px;
-  background:rgba(var(--pr-rgb),.10);
-  border:1px solid rgba(var(--pr-rgb),.18);
-  border-radius:8px;
-  display:flex; align-items:center; justify-content:center;
-  font-size:15px;
+  display:flex; align-items:center;
+  font-size:22px;
+  color:var(--pr);
   flex-shrink:0;
-}
-.gls-category{
-  font-size:.63rem;
-  font-weight:700;
-  color:var(--txt3);
-  letter-spacing:.05em;
 }
 .gls-title{
   font-size:1.06rem;
@@ -2585,35 +2580,27 @@ body.dc-desktop-ui #dc-desktop-root{
         </div>
       </div>
 
-      <!-- Feature cards — دو گروه با برچسب -->
-      <div class="dc-card-group">
-        <span class="dc-card-group-label">محتوای متنی</span>
-        <div class="dc-grid">
-          <div class="dc-grid-card" onclick="window.location.href='/sharehub/'">
-            <div class="dc-grid-ico">🔗</div>
-            <div class="dc-grid-title">Share Hub</div>
-            <div class="dc-grid-sub">مطالب با ذکر منبع</div>
-          </div>
-          <div class="dc-grid-card dc-grid-card--primary" onclick="window.location.href='/notecast/'">
-            <div class="dc-grid-ico">📝</div>
-            <div class="dc-grid-title">NoteCast</div>
-            <div class="dc-grid-sub">خلاصه‌نویسی اپیزودها</div>
-          </div>
+      <!-- Feature cards — 2x2 grid, hierarchy by position (top row = flagship) -->
+      <div class="dc-grid">
+        <div class="dc-grid-card" onclick="window.location.href='/notecast/'">
+          <div class="dc-grid-ico">📝</div>
+          <div class="dc-grid-title">NoteCast</div>
+          <div class="dc-grid-sub">خلاصه‌نویسی اپیزودها</div>
         </div>
-      </div>
-      <div class="dc-card-group">
-        <span class="dc-card-group-label">ابزار و ویدیو</span>
-        <div class="dc-grid">
-          <div class="dc-grid-card dc-grid-card--primary" onclick="window.location.href='/dentcast-plus/'">
-            <div class="dc-grid-ico">▶️</div>
-            <div class="dc-grid-title">DentCast+</div>
-            <div class="dc-grid-sub">آموزش با ویدیو</div>
-          </div>
-          <div class="dc-grid-card" onclick="window.location.href='/dentai/'">
-            <div class="dc-grid-ico">🤖</div>
-            <div class="dc-grid-title">DentAI</div>
-            <div class="dc-grid-sub">مرور با هوش مصنوعی</div>
-          </div>
+        <div class="dc-grid-card" onclick="window.location.href='/dentai/'">
+          <div class="dc-grid-ico">🤖</div>
+          <div class="dc-grid-title">DentAI</div>
+          <div class="dc-grid-sub">مرور با هوش مصنوعی</div>
+        </div>
+        <div class="dc-grid-card" onclick="window.location.href='/sharehub/'">
+          <div class="dc-grid-ico">🔗</div>
+          <div class="dc-grid-title">Share Hub</div>
+          <div class="dc-grid-sub">مطالب با ذکر منبع</div>
+        </div>
+        <div class="dc-grid-card" onclick="window.location.href='/dentcast-plus/'">
+          <div class="dc-grid-ico">▶️</div>
+          <div class="dc-grid-title">DentCast+</div>
+          <div class="dc-grid-sub">آموزش با ویدیو</div>
         </div>
       </div>
 
@@ -2625,7 +2612,6 @@ body.dc-desktop-ui #dc-desktop-root{
       <div class="dc-list-card featured" id="card-glossary" onclick="window.location.href='/glossary/'">
         <div class="gls-eyebrow-row">
           <div class="gls-ico">📚</div>
-          <span class="gls-category">Meta Base · دانشنامه</span>
         </div>
         <div class="gls-title">دانشنامه دنت‌کست</div>
         <div class="gls-footer">
@@ -2634,34 +2620,32 @@ body.dc-desktop-ui #dc-desktop-root{
         </div>
       </div>
 
-      <div class="dc-list-card" onclick="window.location.href='/insight/'">
+      <div class="dc-list-card dc-list-card--insight" onclick="window.location.href='/insight/'">
         <div class="dc-list-card-main">
           <div class="dc-list-card-title">Clinical Insight 🧠</div>
           <div class="dc-list-card-sub">بینش کلینیکی</div>
         </div>
-        <span class="dc-chip">Insight</span>
       </div>
 
-      <div class="dc-list-card" onclick="window.location.href='/chairside/'">
+      <div class="dc-list-card dc-list-card--chairside" onclick="window.location.href='/chairside/'">
         <div class="dc-list-card-main">
           <div class="dc-list-card-title">Chairside 🦷</div>
           <div class="dc-list-card-sub">نکاتی از ویزیت‌های روزانه</div>
         </div>
-        <span class="dc-chip">Visit</span>
       </div>
 
-      <div class="dc-list-card" onclick="window.location.href='/metanotes/'">
+      <div class="dc-list-card dc-list-card--meta" onclick="window.location.href='/metanotes/'">
         <div class="dc-list-card-main">
           <div class="dc-list-card-title">Meta Note 🧩</div>
           <div class="dc-list-card-sub">ایده‌ها و مدل‌های تحلیلی</div>
         </div>
-        <span class="dc-chip">Meta</span>
       </div>
 
-      <!-- باکس «سی مطلب جدید» — منتقل‌شده از تب ابزارها، با فاصله بیشتر -->
+      <!-- باکس «تازه‌ترین مطالب» — منتقل‌شده از تب ابزارها، با فاصله بیشتر -->
       <article class="dc-monitor dc-monitor-secondary" aria-label="آخرین مطالب">
         <div class="dc-monitor-inner">
-          <div class="dc-monitor-title">سی مطلب جدید و آخر دنت‌کست (اسکرول کنید)</div>
+          <div class="dc-monitor-title">تازه‌ترین مطالب دنت‌کست</div>
+          <div class="dc-monitor-hint">برای دیدن همه اسکرول کنید</div>
           <ul class="dc-monitor-list" id="dcLast3Updates"></ul>
         </div>
       </article>
@@ -2783,7 +2767,7 @@ body.dc-desktop-ui #dc-desktop-root{
     </div>
     <div class="dc-bn-item" data-panel="panel-sharehub">
       <span class="dc-bn-ico">
-        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true">
           <circle cx="12" cy="4.5" r="2.2"/>
           <circle cx="4.5" cy="18.5" r="2.2"/>
           <circle cx="19.5" cy="18.5" r="2.2"/>
@@ -2991,7 +2975,7 @@ body.dc-desktop-ui #dc-desktop-root{
   const paths={
     menu:'<line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/>',
     search:'<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>',
-    radar:'<path d="M12 19v-6"/><path d="M8 13a4 4 0 0 1 8 0"/><path d="M5 10a8 8 0 0 1 14 0"/><path d="M2 7a12 12 0 0 1 20 0"/><circle cx="12" cy="19" r="2"/>',
+    radar:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="m12 12 7-7"/><path d="M12 12h.01"/>',
     phoneInstall:'<rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M10 18h4"/><path d="M12 7v6"/><path d="m9.5 10.5 2.5 2.5 2.5-2.5"/>',
     mail:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>',
     sparkle:'<path d="M12 3l1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/>',
@@ -3345,7 +3329,38 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
   function extractArray(json){if(Array.isArray(json))return json;const cands=[json?.items,json?.data,json?.entries,json?.feed].filter(Boolean);for(const c of cands)if(Array.isArray(c))return c;for(const k in(json||{})){const v=json[k];if(Array.isArray(v))return v;if(v&&typeof v==='object'&&Array.isArray(v.items))return v.items;}return[];}
   function parseDate(x){const s=(x?.datePublished||x?.date||x?.updated||x?.time||'').toString().trim();if(!s)return 0;const t=Date.parse(s);return isNaN(t)?0:t;}
   function toItem(x){const title=(x?.title||'').toString().trim();const url=(x?.page_url||x?.url||x?.link||'').toString().trim();if(!title||!url)return null;return{title,url,d:parseDate(x)};}
-  function render(items){el.innerHTML='';items.forEach(it=>{const li=document.createElement('li');const a=document.createElement('a');a.href=it.url;a.textContent=it.title;li.appendChild(a);el.appendChild(li);});}
+  const ICON_PATHS={
+    episodes:'<path d="M3 14a9 9 0 0 1 18 0"/><path d="M5 14h3v7H5a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2z"/><path d="M19 14h-3v7h3a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2z"/>',
+    studio:'<path d="M12 14a4 4 0 0 0 4-4V6a4 4 0 1 0-8 0v4a4 4 0 0 0 4 4z"/><path d="M19 10a7 7 0 0 1-14 0"/><path d="M12 17v4"/><path d="M8 21h8"/>',
+    metabase:'<circle cx="12" cy="4.5" r="2.2"/><circle cx="4.5" cy="18.5" r="2.2"/><circle cx="19.5" cy="18.5" r="2.2"/><line x1="10.2" y1="6.2" x2="5.9" y2="16.5"/><line x1="13.8" y1="6.2" x2="18.1" y2="16.5"/><line x1="6.6" y1="18.5" x2="17.4" y2="18.5"/>'
+  };
+  function detectCategory(url){
+    if(/\/episodes\//.test(url)) return 'episodes';
+    if(/\/(?:notecast|litecast|photocast|dentai|dentcast-plus)\//.test(url)) return 'studio';
+    if(/\/(?:insight|chairside|metanotes)\//.test(url)) return 'metabase';
+    return null;
+  }
+  function render(items){
+    el.innerHTML='';
+    items.forEach(it=>{
+      const li=document.createElement('li');
+      const a=document.createElement('a');
+      a.href=it.url;
+      const cat=detectCategory(it.url);
+      if(cat){
+        const ico=document.createElement('span');
+        ico.className='dc-mlist-ico dc-mlist-ico--'+cat;
+        ico.innerHTML='<svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true">'+ICON_PATHS[cat]+'</svg>';
+        a.appendChild(ico);
+      }
+      const t=document.createElement('span');
+      t.className='dc-mlist-title';
+      t.textContent=it.title;
+      a.appendChild(t);
+      li.appendChild(a);
+      el.appendChild(li);
+    });
+  }
   fetch(FEED_URL,{cache:'no-store'}).then(r=>r.ok?r.json():Promise.reject()).then(json=>{
     const arr=extractArray(json).map(toItem).filter(Boolean);
     const hasDates=arr.some(x=>x.d>0);

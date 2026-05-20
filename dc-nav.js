@@ -10,7 +10,7 @@
   function dcSvgIcon(name) {
     var icons = {
       menu: '<line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/>',
-      radar: '<path d="M12 19v-6"/><path d="M8 13a4 4 0 0 1 8 0"/><path d="M5 10a8 8 0 0 1 14 0"/><path d="M2 7a12 12 0 0 1 20 0"/><circle cx="12" cy="19" r="2"/>',
+      radar: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="m12 12 7-7"/><path d="M12 12h.01"/>',
       search: '<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>',
       phoneInstall: '<rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M10 18h4"/><path d="M12 7v6"/><path d="m9.5 10.5 2.5 2.5 2.5-2.5"/>',
       mail: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>',
