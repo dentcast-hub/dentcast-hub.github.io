@@ -195,7 +195,7 @@ body{font-family:'Vazirmatn',system-ui,-apple-system,sans-serif;}
       <div class="ep-player-wrap">
         <audio id="ep-audio" src="https://dentopedia.s3.ir-thr-at1.arvanstorage.ir/dentopedia5%20.mp3?versionId=" preload="none"></audio>
         <div class="ep-player-controls">
-          <button id="ep-play" class="ep-play-btn" aria-label="پخش">&#9654;</button>
+          <button id="ep-play" class="ep-play-btn" aria-label="پخش"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="10"/><path d="m10 8 6 4-6 4z"/></svg></button>
           <button id="ep-back" class="ep-jump-btn" aria-label="15 ثانیه به عقب">&#8635; 15</button>
           <button id="ep-fwd"  class="ep-jump-btn" aria-label="15 ثانیه به جلو">15 &#8634;</button>
           <button id="ep-speed" class="ep-speed-btn">1&times;</button>
@@ -264,7 +264,7 @@ body{font-family:'Vazirmatn',system-ui,-apple-system,sans-serif;}
   var speeds = [1, 1.25, 1.5, 1.75, 2];
   var si = 0;
   function fmt(s) { return new Date(s * 1000).toISOString().substr(14, 5); }
-  play.onclick = function() { if (aud.paused) { aud.play(); play.textContent = '⏸'; } else { aud.pause(); play.textContent = '▶'; } };
+  play.onclick = function() { if (aud.paused) { aud.play(); play.innerHTML = '<svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="10"/><path d="M10 8v8"/><path d="M14 8v8"/></svg>'; } else { aud.pause(); play.innerHTML = '<svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="10"/><path d="m10 8 6 4-6 4z"/></svg>'; } };
   back.onclick = function() { aud.currentTime = Math.max(0, aud.currentTime - 15); };
   fwd.onclick  = function() { aud.currentTime = Math.min(aud.duration || 0, aud.currentTime + 15); };
   spd.onclick  = function() { si = (si + 1) % speeds.length; aud.playbackRate = speeds[si]; spd.textContent = speeds[si] + '×'; };
@@ -275,7 +275,7 @@ body{font-family:'Vazirmatn',system-ui,-apple-system,sans-serif;}
     seek.value = (aud.currentTime / aud.duration) * 100;
     cur.textContent = fmt(aud.currentTime);
   });
-  aud.addEventListener('ended', function() { play.textContent = '▶'; });
+  aud.addEventListener('ended', function() { play.innerHTML = '<svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="10"/><path d="m10 8 6 4-6 4z"/></svg>'; });
 })();
 </script>
 <script src="/global-search.js?v=5" defer></script>

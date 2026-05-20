@@ -401,9 +401,9 @@ body {
 <header class="dc-topbar">
   <div class="dc-topbar-actions">
     <a href="/" aria-label="صفحه اصلی دنت‌کست" style="display:flex;align-items:center;margin-left:8px;flex-shrink:0;"><img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;"></a>
-    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="ابزارها" aria-expanded="false">☰</button>
-    <button class="dc-topbar-btn" id="btn-radar-topbar" aria-label="رادار">📡</button>
-    <button class="dc-topbar-btn dcOpenSearch" aria-label="جستجو">🔍</button>
+    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="ابزارها" aria-expanded="false"><svg class="dc-icon" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em"><use href="/assets/icons/icons.svg#icon-menu"/></svg></button>
+    <button class="dc-topbar-btn" id="btn-radar-topbar" aria-label="رادار"><svg class="dc-icon" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em"><use href="/assets/icons/icons.svg#icon-radar"/></svg></button>
+    <button class="dc-topbar-btn dcOpenSearch" aria-label="جستجو"><svg class="dc-icon" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em"><use href="/assets/icons/icons.svg#icon-search"/></svg></button>
   </div>
   <div class="dc-topbar-brand">
     <div class="dc-topbar-brand-name">DentCast</div>
@@ -413,9 +413,9 @@ body {
 <div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">
   <div class="dc-toolbar-drawer-inner">
     <span class="dc-toolbar-drawer-label">ابزارها</span>
-    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa"><span class="dc-drawer-tool-ico">📱</span><span class="dc-drawer-tool-txt">نصب</span></button>
-    <button class="dc-drawer-tool-seg" type="button" id="tool-consult"><span class="dc-drawer-tool-ico">📧</span><span class="dc-drawer-tool-txt">مشاوره</span></button>
-    <button class="dc-drawer-tool-seg" type="button" id="tool-about"><span class="dc-drawer-tool-ico">✨</span><span class="dc-drawer-tool-txt">درباره</span></button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa"><span class="dc-drawer-tool-ico"><svg class="dc-icon" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em"><use href="/assets/icons/icons.svg#icon-phone-install"/></svg></span><span class="dc-drawer-tool-txt">نصب</span></button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-consult"><span class="dc-drawer-tool-ico"><svg class="dc-icon" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em"><use href="/assets/icons/icons.svg#icon-mail"/></svg></span><span class="dc-drawer-tool-txt">مشاوره</span></button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-about"><span class="dc-drawer-tool-ico"><svg class="dc-icon" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em"><use href="/assets/icons/icons.svg#icon-sparkle"/></svg></span><span class="dc-drawer-tool-txt">درباره</span></button>
   </div>
 </div>
 <div id="dcRadarOverlay" class="radar-overlay" aria-hidden="true">
@@ -451,10 +451,10 @@ body {
 
       <div class="dc-controls-row">
       <button id="dc-speed" class="dc-speed-btn">1x</button>
-      <button id="dc-back" class="dc-jump-btn">⟲ 15s</button>
-      <button id="dc-play" class="dc-play-btn">▶</button>
-      <button id="dc-forward" class="dc-jump-btn">15s ⟳</button>
-      <a id="dc-download" class="dc-download-btn" href="#" target="_blank" rel="noopener" download>⬇ دانلود</a>
+      <button id="dc-back" class="dc-jump-btn"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg> 15s</button>
+      <button id="dc-play" class="dc-play-btn"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="10"/><path d="m10 8 6 4-6 4z"/></svg></button>
+      <button id="dc-forward" class="dc-jump-btn">15s <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg></button>
+      <a id="dc-download" class="dc-download-btn" href="#" target="_blank" rel="noopener" download><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></svg> دانلود</a>
     </div>
 
     <input id="dc-seek" type="range" min="0" max="100" value="0" class="dc-range">
@@ -468,8 +468,8 @@ body {
 
   <div class="dc-search-box">
     <div class="dc-search-header">
-      <span>جستجو در دنت‌کست  🎧</span>
-      <span class="dc-close-search" id="dc-close-search">×</span>
+      <span>جستجو در دنت‌کست  <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M3 14a9 9 0 0 1 18 0"/><path d="M5 14h3v7H5a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2z"/><path d="M19 14h-3v7h3a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2z"/></svg></span>
+      <span class="dc-close-search" id="dc-close-search"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></span>
     </div>
 
     <input id="dc-search-input" class="dc-search-input"
@@ -552,7 +552,7 @@ function createRow(ep, i){
 
   const info = document.createElement("span");
   info.className = "dc-info-btn";
-  info.textContent = "🛈";
+  info.innerHTML = '<svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>';
 
   const desc = document.createElement("div");
   desc.className = "dc-ep-desc";
@@ -565,7 +565,7 @@ function createRow(ep, i){
     audio.addEventListener("canplay", function handler() {
       audio.removeEventListener("canplay", handler);
       audio.play();
-      playBtn.textContent = "⏸";
+      playBtn.innerHTML = '<svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
     });
   });
 
@@ -633,10 +633,10 @@ sortBtn.onclick = ()=>{
 playBtn.addEventListener("click", ()=>{
   if(audio.paused){
     audio.play();
-    playBtn.textContent = "⏸";
+    playBtn.innerHTML = '<svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
   } else {
     audio.pause();
-    playBtn.textContent = "▶";
+    playBtn.innerHTML = '<svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="10"/><path d="m10 8 6 4-6 4z"/></svg>';
   }
 });
 
@@ -679,7 +679,7 @@ closeSearchBtn.addEventListener("click", () => {
 function createSearchInfoButton(descDiv) {
   const infoBtn = document.createElement("span");
   infoBtn.className = "dc-search-info-btn";
-  infoBtn.textContent = "🛈";
+  infoBtn.innerHTML = '<svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>';
 
   infoBtn.addEventListener("click", (e) => {
     e.stopPropagation();
@@ -745,7 +745,7 @@ function handleSearch() {
       audio.addEventListener("canplay", function handler() {
         audio.removeEventListener("canplay", handler);
         audio.play();
-        playBtn.textContent = "⏸";
+        playBtn.innerHTML = '<svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
       });
     });
 
@@ -785,22 +785,10 @@ window.addEventListener("load", sendHeight);
 </script>
 
 <div class="dc-global-filter-box" id="dcGlobalBox">
-  <button class="dc-close-results">✖</button>
+  <button class="dc-close-results"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
   <h3 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h3>
   <input id="dcSearch" class="dc-search-input" placeholder="جستجو در همهٔ بخش‌های دنت‌کست…">
   <div class="dc-filter-list">
     <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
     <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
-    <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
-    <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
-    <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
-    <button class="dc-filter-btn active" data-type="meta">metanote</button>
-    <button class="dc-filter-btn active" data-type="chairside">chairside</button>
-    <button class="dc-filter-btn active" data-type="sharehub">Share Hub</button>
-  </div>
-  <div class="dc-results-box" id="dcResults"></div>
-</div>
-<script src="/global-search.js?v=2" defer></script>
-<script src="/dc-nav.js" defer></script>
-</body>
-</html>
+    <button class="dc-filter-btn acti

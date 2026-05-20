@@ -161,7 +161,7 @@ These are the icons that represent the four content domains of the site. **Alway
 
 ### Editorial — callouts & emphasis
 
-Added for migrating in-body emoji like 💡 ✔ ⚠ ⚡ 🎯 ⭐ 📊 📈 📏 🟦 used in Insight and Chairside articles.
+Added for migrating in-body emoji like <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7c.8.8 1 1.5 1 2.3h6c0-.8.2-1.5 1-2.3A7 7 0 0 0 12 2z"/></svg> <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="m5 12 5 5L20 7"/></svg> <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M10.3 3.9 2.4 18a2 2 0 0 0 1.7 3h15.8a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v5"/><path d="M12 18h.01"/></svg> <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg> <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg> <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="m12 2 3 7h7l-5.5 4.5L19 21l-7-4.5L5 21l2.5-7.5L2 9h7z"/></svg> <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M3 3v18h18"/><rect x="7" y="13" width="3" height="6"/><rect x="12" y="9" width="3" height="10"/><rect x="17" y="5" width="3" height="14"/></svg> <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 5-7"/></svg> <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="2" y="9" width="20" height="6" rx="1"/><path d="M6 9v3"/><path d="M10 9v4"/><path d="M14 9v3"/><path d="M18 9v4"/></svg> (blue square section marker) used in Insight and Chairside articles — replaced by `icon-bookmark`.
 
 | Symbol id            | Visual                      | Intent                                |
 |----------------------|-----------------------------|---------------------------------------|
@@ -178,6 +178,39 @@ Added for migrating in-body emoji like 💡 ✔ ⚠ ⚡ 🎯 ⭐ 📊 📈 📏 
 | `icon-ruler`         | Ruler                       | Measurement / dimension               |
 | `icon-bookmark`      | Bookmark                    | Section marker (replaces 🟦)           |
 
+### Interface — state & action (added in emoji-migration pass)
+
+| Symbol id          | Visual                      | Intent                                      |
+|--------------------|-----------------------------|---------------------------------------------|
+| `icon-x-circle`    | X inside a circle           | Error state / dismiss / invalid             |
+| `icon-help-circle` | ? inside a circle           | Help / FAQ / tooltip trigger                |
+| `icon-refresh`     | CCW circular arrow          | Reload / repeat / update                    |
+| `icon-download`    | Tray with down-arrow        | Save / download action                      |
+| `icon-monitor`     | Screen + stand              | Display / screen / desktop context          |
+| `icon-plus`        | Plus / cross                | Add / expand / new item                     |
+
+### Concept icons (added in emoji-migration pass)
+
+| Symbol id       | Visual                    | Intent                                          |
+|-----------------|---------------------------|-------------------------------------------------|
+| `icon-heart`    | Heart shape               | Favorite / liked / care                         |
+| `icon-scale`    | Balance scale             | Evidence balance / judgment / comparison        |
+| `icon-gear`     | Gear with spokes          | Settings / mechanism / technique                |
+| `icon-key`      | Key                       | Access / authentication / concept key           |
+| `icon-lock`     | Padlock                   | Security / restricted / protected               |
+| `icon-diamond`  | Gem shape                 | Premium / featured / high-value                 |
+| `icon-shield`   | Shield                    | Protection / safety / prevention                |
+| `icon-sprout`   | Organic leaf + stem       | Growth / natural / regeneration                 |
+| `icon-wrench`   | Wrench                    | Tools / repair / clinical technique             |
+| `icon-bullet`   | Small filled circle       | Inline list bullet / separator                  |
+
+### Scientific & dental (added in emoji-migration pass)
+
+| Symbol id         | Visual                            | Intent                                   |
+|-------------------|-----------------------------------|------------------------------------------|
+| `icon-microbe`    | Spiky circle (8 radial spikes)    | Microorganism / pathogen / infection     |
+| `icon-microscope` | Microscope body + arm + lens      | Research / lab / evidence / science      |
+
 ### Editorial — direction
 
 These are **physical-direction** glyphs. The library does not auto-mirror — pick the visual you want.
@@ -188,6 +221,8 @@ These are **physical-direction** glyphs. The library does not auto-mirror — pi
 | `icon-chevron-down`    | Chevron pointing down   | Direction-neutral                  |
 | `icon-chevron-left`    | Chevron pointing left   | "Next" in RTL · "Previous" in LTR  |
 | `icon-chevron-right`   | Chevron pointing right  | "Previous" in RTL · "Next" in LTR  |
+| `icon-arrow-right`     | Arrow pointing right    | Forward / next in LTR              |
+| `icon-arrow-left`      | Arrow pointing left     | Back / previous in LTR             |
 
 For `icon-back`: the glyph points left. In RTL contexts, "back" usually means moving forward visually-right, so prefer `icon-chevron-right` for the back button on RTL pages instead of `icon-back`.
 

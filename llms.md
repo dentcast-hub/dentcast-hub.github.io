@@ -1,5 +1,5 @@
 # Dentcast — Specialized Prosthodontics & Dental Education  
-🌐 https://dentcast.org
+<svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20"/><path d="M12 2a15 15 0 0 0 0 20"/></svg> https://dentcast.org
 
 ## Overview
 Dentcast is a professional dental education platform created and curated by **Dr. Foad Shahabian**, a licensed **Prosthodontist**.  
@@ -22,24 +22,24 @@ All content reflects the professional interpretation, clinical reasoning, and in
 ## Core Domains of Content
 Dentcast content generally falls into the following domains:
 
-### 🦷 Prosthodontics & Restorative Dentistry
+### <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M8.5 3.5c1.2 0 2 .6 3.5.6s2.3-.6 3.5-.6c2 0 3.5 1.6 3.5 4 0 2.8-1.5 4.4-2.2 7.4-.7 3-1.4 5.6-3 5.6-1.2 0-1.1-3.5-1.8-3.5s-.6 3.5-1.8 3.5c-1.6 0-2.3-2.6-3-5.6C6.5 11.9 5 10.3 5 7.5c0-2.4 1.5-4 3.5-4z"/></svg> Prosthodontics & Restorative Dentistry
 - Fixed and removable prosthodontics  
 - Occlusion, vertical dimension, and functional analysis  
 - Tooth preservation vs implant-based solutions  
 - Material science and restorative decision logic  
 
-### 🧠 Clinical Decision-Making
+### <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M9 4a3 3 0 0 0-3 3v1a3 3 0 0 0-2 5.2A3.5 3.5 0 0 0 8 19h1"/><path d="M15 4a3 3 0 0 1 3 3v1a3 3 0 0 1 2 5.2A3.5 3.5 0 0 1 16 19h-1"/><path d="M12 4v17"/><path d="M8 9h2"/><path d="M14 9h2"/><path d="M8 14h2"/><path d="M14 14h2"/></svg> Clinical Decision-Making
 - Risk–benefit analysis in dentistry  
 - Long-term prognosis vs short-term success  
 - Systemic, biological, mechanical, and patient-related factors  
 - Avoidance of oversimplified clinical algorithms  
 
-### 📚 Evidence-Based Interpretation
+### <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"/></svg> Evidence-Based Interpretation
 - Critical reading of scientific literature  
 - Differentiation between **survival**, **success**, and **clinical relevance**  
 - Contextual limitations of studies and meta-analyses  
 
-### 🧩 Philosophy of Dentistry
+### <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M8 3h4v4h3a2 2 0 1 1 0 4h-3v3h3a2 2 0 1 1 0 4h-3v3H8v-3H5a2 2 0 1 1 0-4h3v-3H5a2 2 0 1 1 0-4h3z"/></svg> Philosophy of Dentistry
 - Dentistry as a decision science  
 - Ethical and conceptual boundaries of treatment choices  
 - The role of uncertainty, judgment, and responsibility  
