@@ -241,7 +241,7 @@
 
   /* ── CLOSE RESULTS ── */
   document.addEventListener('click', function (e) {
-    if (e.target.classList.contains('dc-close-results')) {
+    if (e.target.closest('.dc-close-results')) {
       var g = document.getElementById('dcGlobalBox');
       var r = document.getElementById('dcResults');
       if (g) g.classList.remove('open');
