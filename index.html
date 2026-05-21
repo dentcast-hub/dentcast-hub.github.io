@@ -1763,13 +1763,10 @@ body.dc-desktop-ui #dc-desktop-root{
   height:calc(100svh - 165px + 3200px);
 }
 .pt-sticky{
-  /* fixed in viewport — box never scrolls up; scene engine still driven by .pt-track scroll */
-  position:fixed;
-  top:68px;          /* below dc-topbar + #mobile-body top padding */
-  left:12px;
-  right:12px;
+  position:sticky;
+  top:0;
   height:calc(100svh - 165px);
-  width:auto;
+  width:100%;
   overflow:hidden;
   background:#000;
   border-radius:var(--r-lg);
