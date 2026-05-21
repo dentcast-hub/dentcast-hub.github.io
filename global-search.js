@@ -122,7 +122,7 @@ const TYPE_MAP = {
     const slug = String(item.episode).replace(".", "-");
     url = `/episodes/episode-${slug}.html`;
   }
-  if (!url.startsWith("http")) url = "https://dentcast.org" + url;
+  if (!url.startsWith("http")) url = location.origin + url;
 
   /* On desktop (≥1024px), open content in col-C via dcdOpen; on mobile navigate directly */
   const escapedTitle = title.replace(/'/g, "\\'");

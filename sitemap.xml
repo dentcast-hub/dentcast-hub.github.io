@@ -4,13 +4,19 @@
     <loc>https://dentcast.org/</loc>
     <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
+    <priority>0.6</priority>
   </url>
   <url>
     <loc>https://dentcast.org/about.html</loc>
     <lastmod>2025-11-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://dentcast.org/chairside/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://dentcast.org/chairside/chairside-1.html</loc>
@@ -109,8 +115,8 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://dentcast.org/chairside/index.html</loc>
-    <lastmod>2026-02-10</lastmod>
+    <loc>https://dentcast.org/dentai/</loc>
+    <lastmod>2025-11-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -211,13 +217,7 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://dentcast.org/dentai/index.html</loc>
-    <lastmod>2025-11-06</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://dentcast.org/dentcast-plus/index.html</loc>
+    <loc>https://dentcast.org/dentcast-plus/</loc>
     <lastmod>2025-11-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
@@ -1495,10 +1495,10 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://dentcast.org/episodes/index.html</loc>
-    <lastmod>2026-05-13</lastmod>
+    <loc>https://dentcast.org/glossary/</loc>
+    <lastmod>2025-12-21</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://dentcast.org/glossary/activator.html</loc>
@@ -1703,12 +1703,6 @@
     <lastmod>2026-02-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://dentcast.org/glossary/index.html</loc>
-    <lastmod>2025-12-21</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://dentcast.org/glossary/isolation.html</loc>
@@ -1981,7 +1975,7 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://dentcast.org/insight/index.html</loc>
+    <loc>https://dentcast.org/insight/</loc>
     <lastmod>2025-11-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
@@ -2233,13 +2227,7 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://dentcast.org/join.html</loc>
-    <lastmod>2025-11-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://dentcast.org/litecast/index.html</loc>
+    <loc>https://dentcast.org/litecast/</loc>
     <lastmod>2025-11-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
@@ -2395,6 +2383,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://dentcast.org/metanotes/</loc>
+    <lastmod>2025-12-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>https://dentcast.org/metanotes/en/about.html</loc>
     <lastmod>2026-02-27</lastmod>
     <changefreq>monthly</changefreq>
@@ -2429,12 +2423,6 @@
     <lastmod>2026-02-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://dentcast.org/metanotes/index.html</loc>
-    <lastmod>2025-12-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://dentcast.org/metanotes/meta-1.html</loc>
@@ -2507,6 +2495,12 @@
     <lastmod>2026-02-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://dentcast.org/notecast/</loc>
+    <lastmod>2025-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://dentcast.org/notecast/episode-10.html</loc>
@@ -2701,8 +2695,8 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://dentcast.org/notecast/index.html</loc>
-    <lastmod>2025-11-02</lastmod>
+    <loc>https://dentcast.org/photocast/</loc>
+    <lastmod>2025-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -2725,19 +2719,7 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://dentcast.org/photocast/index.html</loc>
-    <lastmod>2025-11-05</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://dentcast.org/search.html</loc>
-    <lastmod>2026-02-03</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://dentcast.org/sharehub/index.html</loc>
+    <loc>https://dentcast.org/sharehub/</loc>
     <lastmod>2025-12-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>

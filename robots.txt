@@ -36,4 +36,3 @@ User-agent: Applebot-Extended
 Allow: /
 
 Sitemap: https://dentcast.org/sitemap.xml
-Sitemap: https://dentcast.org/sitemap-org.xml
