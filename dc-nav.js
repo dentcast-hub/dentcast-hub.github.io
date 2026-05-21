@@ -120,37 +120,58 @@
   }
 
   /* ── THEME TOGGLE ─────────────────────────────────
-     If the page already has #dc-theme-toggle in HTML
-     (section index pages with inline JS), we only sync
-     the icon and leave the existing click handler alone.
-     If the button is absent, we create it dynamically
-     so every page gets a consistent toggle.
+     Single source of truth for theme behavior.
+     Pages should include <button id="dc-theme-toggle">
+     in markup (no popping in). If absent, we create it.
+     The click handler is ALWAYS bound here; pages must
+     NOT bind their own.
   ─────────────────────────────────────────────────── */
   function applyTheme(dark) {
     document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
     localStorage.setItem('dc-theme', dark ? 'dark' : 'light');
     var btn = document.getElementById('dc-theme-toggle');
     if (btn) setDcIcon(btn, dark ? 'sun' : 'moon');
+    var drawerBtn = document.getElementById('dcdThemeBtn');
+    if (drawerBtn) drawerBtn.innerHTML =
+      '<span>' + dcSvgIcon(dark ? 'sun' : 'moon') + '</span><span>تم</span>';
   }
+  window.dcApplyTheme = applyTheme;
+
+  /* First-visit resolution: write localStorage so cross-
+     page navigation is deterministic (matches the old
+     inline body-end behavior of the index page). */
+  (function () {
+    var stored = localStorage.getItem('dc-theme');
+    var osDark = window.matchMedia('(prefers-color-scheme:dark)').matches;
+    applyTheme(stored === 'dark' || (stored === null && osDark));
+  })();
 
   var existingToggle = document.getElementById('dc-theme-toggle');
   var noToggle = document.body.dataset.noThemeToggle === '1';
 
   if (!existingToggle && !noToggle) {
-    /* Create and append the toggle button */
+    /* Legacy fallback: page has no inline button, create one */
     var toggleBtn = document.createElement('button');
     toggleBtn.id = 'dc-theme-toggle';
     toggleBtn.setAttribute('aria-label', 'تغییر تم');
-    var _isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-    setDcIcon(toggleBtn, _isDark ? 'sun' : 'moon');
     document.body.appendChild(toggleBtn);
+    existingToggle = toggleBtn;
+  }
 
-    toggleBtn.addEventListener('click', function () {
+  if (existingToggle) {
+    setDcIcon(existingToggle,
+      document.documentElement.getAttribute('data-theme') === 'dark' ? 'sun' : 'moon');
+    existingToggle.addEventListener('click', function () {
       applyTheme(document.documentElement.getAttribute('data-theme') !== 'dark');
     });
-  } else if (existingToggle) {
-    /* Button exists — sync icon only, do not add another click handler */
-    setDcIcon(existingToggle, document.documentElement.getAttribute('data-theme') === 'dark' ? 'sun' : 'moon');
+  }
+
+  /* Desktop drawer toggle (#dcdThemeBtn) — same handler */
+  var themeDrawerBtn = document.getElementById('dcdThemeBtn');
+  if (themeDrawerBtn) {
+    themeDrawerBtn.addEventListener('click', function () {
+      applyTheme(document.documentElement.getAttribute('data-theme') !== 'dark');
+    });
   }
 
   hydrateUiIcons(document);

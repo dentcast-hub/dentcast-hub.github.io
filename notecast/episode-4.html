@@ -5,454 +5,240 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>نوت‌کست ۴ – باندینگ و نسل‌های ادهزیو | دنت‌کست</title>
   <meta name="description" content="نوت‌کست چهارم دنت‌کست؛ خلاصه‌ی نوشتاری دنت‌کست چهار درباره‌ی استراتژی‌های اصلی باندینگ و نسل‌های مختلف عوامل باندینگ.">
-  <link rel="canonical" href="https://dentcast.org/notecast/episode-4.html">
-  <link rel="alternate" hreflang="fa-IR" href="https://dentcast.ir/notecast/episode-4.html">
-  <link rel="alternate" hreflang="fa" href="https://dentcast.org/notecast/episode-4.html">
-  <link rel="alternate" hreflang="x-default" href="https://dentcast.org/notecast/episode-4.html">
-
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
 
   <style>
-    :root {
-      --blue: #0b5fff;
-      --bg: #0b1220;
-      --bg2: #121a2b;
-      --text: #e7eaf1;
-      --muted: #9aa1b3;
-      --radius: 18px;
-      --shadow: 0 18px 50px rgba(0,0,0,.35);
+    :root{
+      --blue:#0b5fff;
+      --bg:#0b1220;
+      --bg2:#121a2b;
+      --text:#e7eaf1;
+      --muted:#9aa1b3;
+      --radius:18px;
+      --shadow:0 18px 50px rgba(0,0,0,.35);
     }
 
-    body {
-      margin: 0;
-      font-family: 'Vazirmatn', sans-serif;
-      background: linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+    html,body{margin:0; padding:0;}
+    body{
+      font-family:'Vazirmatn', sans-serif;
+      background: radial-gradient(1200px 600px at 20% -10%, #1b2640 0%, transparent 60%),
+                  linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
       color: var(--text);
       max-width: 920px;
       margin: 0 auto;
       padding: 40px 22px 90px;
       line-height: 1.9;
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
     }
 
-    h1 {
-      text-align: center;
-      color: var(--blue);
-      font-weight: 800;
-      font-size: 2rem;
-      margin-bottom: 8px;
+    h1{
+      text-align:center;
+      color:var(--blue);
+      font-weight:800;
+      font-size:2rem;
+      margin-bottom:8px;
     }
 
-    h2 {
-      text-align: center;
-      color: var(--text);
-      font-weight: 600;
-      font-size: 1.2rem;
-      margin-bottom: 30px;
+    h2{
+      text-align:center;
+      color:#e7eaf1;
+      font-weight:600;
+      font-size:1.3rem;
+      margin-bottom:30px;
     }
 
-    .glass-box {
-      background: rgba(255, 255, 255, 0.99);
-      backdrop-filter: blur(12px);
-      border-radius: var(--radius);
-      padding: 20px 25px;
-      margin: 25px 0;
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.25);
-      color: #111;
-      line-height: 1.9;
+    h3{
+      color:var(--blue);
+      margin-top:30px;
+      font-size:1.1rem;
     }
 
-    /* ** تغییرات سئو: استایل H3 و H4 برای رعایت سلسله مراتب ** */
-    /* H3 برای تیترهای اصلی مقاله */
-    h3 {
-      color: #0b5fff; /* رنگ H3 قبلی حفظ شد */
-      font-weight: 700;
-      margin-top: 38px; /* کمی فاصله بیشتر از H4 برای تمایز */
-      font-size: 1.15rem; /* کمی بزرگتر از H4 برای تمایز */
+    p{margin:8px 0 10px;}
+
+    ul{
+      list-style-type:"✦ ";
+      padding-right:20px;
+      margin:10px 0 20px;
+    }
+    li{margin-bottom:10px;}
+    ul ul{
+      list-style-type:"• ";
+      margin-top:6px;
     }
 
-    /* H4 برای زیرعناوین مقاله (جایگزین H3 قبلی در محتوا) */
-    .glass-box h4 {
-      color: var(--blue); /* رنگ H3 قبلی حفظ شد */
-      font-weight: 700;
-      margin-top: 25px;
-      font-size: 1.1rem; /* اندازه H3 قبلی حفظ شد */
-      margin-bottom: 10px;
+    .author{
+      text-align:center;
+      margin-top:28px;
+      font-weight:600;
     }
 
-    ul {
-      list-style-type: "✦ ";
-      padding-right: 20px;
-      margin: 10px 0 20px;
+    .audio-box{
+      margin-top:40px;
+      background:rgba(255,255,255,0.04);
+      border:1px solid rgba(255,255,255,0.1);
+      border-radius:var(--radius);
+      padding:18px;
+      text-align:center;
+      box-shadow:var(--shadow);
+    }
+    iframe{
+      width:100%;
+      height:110px;
+      border:none;
+      border-radius:var(--radius);
+      margin-top:12px;
+      box-shadow:0 10px 30px rgba(0,0,0,.2);
     }
 
-    li { margin-bottom: 10px; }
-
-    .author-note{
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  align-items:center;
-  gap:6px 10px;
-  margin:2.5rem auto 1rem;
-  padding-top:1.25rem;
-  border-top:1px solid rgba(120,140,170,0.18);
-  color:var(--txt3);
-  font-size:.78rem;
-}
-.author-note .author-link{
-  color:var(--txt2);
-  font-weight:600;
-  text-decoration:none;
-}
-.author-note .author-link:hover{
-  color:var(--ac);
-  text-decoration:underline;
-  text-underline-offset:3px;
-}
-.author-note .author-role{
-  color:var(--txt3);
-}
-
-    iframe {
-      width: 100%;
-      height: 110px;
-      border: none;
-      border-radius: var(--radius);
-      margin-top: 15px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, .2);
+    .back{
+      display:inline-block;
+      margin-top:50px;
+      color:var(--blue);
+      text-decoration:none;
+      font-weight:600;
+      border:1px solid rgba(255,255,255,0.15);
+      border-radius:12px;
+      padding:10px 20px;
+      background:rgba(255,255,255,0.05);
+      transition:all .3s ease;
+    }
+    .back:hover{
+      background:rgba(11,95,255,0.15);
+      transform:scale(1.03);
     }
 
-    .audio-box {
-      margin-top: 60px;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: var(--radius);
-      padding: 20px;
-      text-align: center;
-      box-shadow: var(--shadow);
+    footer{
+      margin-top:60px;
+      text-align:center;
+      color:var(--muted);
+      font-size:.9rem;
     }
 
-    .back {
-      display: inline-block;
-      margin-top: 60px;
-      color: var(--blue);
-      text-decoration: none;
-      font-weight: 600;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 12px;
-      padding: 10px 20px;
-      background: rgba(255, 255, 255, 0.05);
-      transition: all .3s ease;
-    }
-
-    .back:hover {
-      background: rgba(11, 95, 255, 0.15);
-      transform: scale(1.03);
-    }
-
-    footer {
-      margin-top: 70px;
-      text-align: center;
-      color: var(--muted);
-      font-size: .9rem;
-    }
-
-    @media (max-width: 768px) {
-      body { padding: 25px 16px 60px; line-height: 1.8; }
-      h1 { font-size: 1.6rem; }
-      h2 { font-size: 1rem; margin-bottom: 24px; }
-      h3 { font-size: 1.05rem; margin-top: 25px; } /* تنظیم برای موبایل */
-      .glass-box h4 { font-size: 1rem; margin-top: 20px; } /* تنظیم برای موبایل */
-      ul { padding-right: 14px; font-size: .95rem; }
+    @media (max-width: 560px){
+      body{padding:28px 16px 70px; line-height:1.85;}
+      h1{font-size:1.7rem;}
+      h2{font-size:1.05rem;}
+      h3{font-size:1.05rem;}
     }
   </style>
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
-  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
-  <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png">
-  <link rel="apple-touch-icon" href="/favicon-512.png">
-  <meta name="theme-color" content="#0b5fff">
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "PodcastEpisode",
-      "@id": "https://dentcast.org/notecast/episode-4.html#episode",
-      "url": "https://dentcast.org/notecast/episode-4.html",
-      "name": "نوت‌کست ۴ – باندینگ و نسل‌های ادهزیو در دندانپزشکی",
-      "headline": "استراتژی‌های باندینگ و بررسی نسل‌های ادهزیو - دکتر فؤاد شهابیان",
-      "description": "خلاصه اپیزود چهارم دنت‌کست؛ تحلیل علمی استراتژی‌های باندینگ و تفاوت نسل‌های مختلف ادهزیو توسط متخصص پروتز دندان در اهواز.",
-      "inLanguage": "fa",
-      "datePublished": "2025-02-20",
-      "dateModified": "2025-02-20",
-      "lastReviewed": "2025-02-20",
-      "duration": "PT20M",
-      "image": "https://dentcast.org/logo-v2.png",
-      "author": {
-        "@id": "https://dentcast.org/about.html#person-fouad-shahabian"
-      },
-      "reviewedBy": { "@id": "https://dentcast.org/about.html#person-fouad-shahabian" },
-      "publisher": { "@id": "https://dentcast.org/about.html#person-fouad-shahabian" },
-      "partOfSeries": {
-        "@type": "PodcastSeries",
-        "name": "DentCast",
-        "url": "https://dentcast.org/"
-      },
-      "associatedMedia": {
-        "@type": "AudioObject",
-        "contentUrl": "https://embed.acast.com/624b5545ecc0e600134ea0df/624b554b5af39e00127155e7",
-        "duration": "PT20M"
-      }
-    }
-  ]
-}
-</script>
-
-    <link rel="stylesheet" href="/dc-theme.css">
-<link rel="stylesheet" href="/dc-nav.css">
-  <link rel="stylesheet" href="/global-search.css?v=1">
-  <script>(function(){var s=localStorage.getItem('dc-theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme','dark');})()</script>
-  <meta property="og:type" content="article">
-  <meta property="og:locale" content="fa_IR">
-  <meta property="og:site_name" content="DentCast">
-  <meta property="og:title" content="نوت‌کست ۴ – باندینگ و نسل‌های ادهزیو | دنت‌کست">
-  <meta property="og:description" content="نوت‌کست چهارم دنت‌کست؛ خلاصه‌ی نوشتاری دنت‌کست چهار درباره‌ی استراتژی‌های اصلی باندینگ و نسل‌های مختلف عوامل باندینگ.">
-  <meta property="og:url" content="https://dentcast.org/notecast/episode-4.html">
-  <meta property="og:image" content="https://dentcast.org/dentcast-cover.webp">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="نوت‌کست ۴ – باندینگ و نسل‌های ادهزیو | دنت‌کست">
-  <meta name="twitter:description" content="نوت‌کست چهارم دنت‌کست؛ خلاصه‌ی نوشتاری دنت‌کست چهار درباره‌ی استراتژی‌های اصلی باندینگ و نسل‌های مختلف عوامل باندینگ.">
-  <meta name="twitter:image" content="https://dentcast.org/dentcast-cover.webp">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    { "@type": "ListItem", "position": 1, "name": "DentCast", "item": "https://dentcast.org/" },
-    { "@type": "ListItem", "position": 2, "name": "NoteCast", "item": "https://dentcast.org/notecast/" },
-    { "@type": "ListItem", "position": 3, "name": "نوت‌کست ۴ – باندینگ و نسل‌های ادهزیو | دنت‌کست", "item": "https://dentcast.org/notecast/episode-4.html" }
-  ]
-}
-</script>
-  <meta name="robots" content="index, follow, max-image-preview:large">
+  <script>(function(){var s=localStorage.getItem('dc-theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme','dark');})();</script>
+  <link rel="stylesheet" href="/dc-theme.css">
+  <link rel="stylesheet" href="/dc-nav.css">
 </head>
-
 <body>
-<!-- DC NAV: TOP BAR -->
-<header class="dc-topbar">
-  <div class="dc-topbar-actions">
-    <a href="/" aria-label="صفحه اصلی دنت‌کست" style="display:flex;align-items:center;margin-left:8px;flex-shrink:0;"><img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;"></a>
-    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="ابزارها" aria-expanded="false"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
-    <button class="dc-topbar-btn" id="btn-radar-topbar" aria-label="رادار"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="m12 12 7-7"/><path d="M12 12h.01"/></svg></button>
-    <button class="dc-topbar-btn dcOpenSearch" aria-label="جستجو"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
-  </div>
-  <div class="dc-topbar-brand">
-    <div class="dc-topbar-brand-name">DentCast</div>
-    <a href="/about.html" class="dc-topbar-brand-sub">دکتر فواد شهابیان</a>
-  </div>
-</header>
-<div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">
-  <div class="dc-toolbar-drawer-inner">
-    <span class="dc-toolbar-drawer-label">ابزارها</span>
-    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M10 18h4"/><path d="M12 7v6"/><path d="m9.5 10.5 2.5 2.5 2.5-2.5"/></svg></span><span class="dc-drawer-tool-txt">نصب</span></button>
-    <button class="dc-drawer-tool-seg" type="button" id="tool-consult"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span class="dc-drawer-tool-txt">مشاوره</span></button>
-    <button class="dc-drawer-tool-seg" type="button" id="tool-about"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M12 3l1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></svg></span><span class="dc-drawer-tool-txt">درباره</span></button>
-  </div>
-</div>
-<div id="dcRadarOverlay" class="radar-overlay" aria-hidden="true">
-  <div class="radar-overlay-header">
-    <button id="dcCloseRadarOverlay" class="radar-close-btn">&times;</button>
-    <div class="radar-header-title">رادار دنت‌کست (جایگزین گوگل)</div>
-  </div>
-  <div class="radar-overlay-body">
-    <div class="radar-search-box">
-      <input type="text" id="dcRadarInput" placeholder="نام سایت، زمینه فعالیت یا کلمه کلیدی..." autocomplete="off">
-    </div>
-    <div id="dcRadarResults" class="radar-results">
-      <div class="radar-initial-msg">برای جستجو در بین سایت‌های دندانپزشکی، تایپ کنید...</div>
-    </div>
-  </div>
-</div>
 
-<main class="article-content-wrap">
-  <h2><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M8 13h8"/><path d="M8 17h5"/></svg> نوت‌کست چهارم</h2>
-  <h1>خلاصه‌ی نوشتاری دنت‌کست چهار — استراتژی‌های اصلی باندینگ و نسل‌های مختلف عوامل باندینگ</h1>
-  <div class="dc-trustline" aria-label="اطلاعات نویسنده و بازبینی">
-    <span>تاریخ انتشار: <time datetime="2025-02-20">2025-02-20</time></span>
-    <span>آخرین بازبینی: <time datetime="2025-02-20">2025-02-20</time></span>
-  </div>
+  <h1>📝 نوت‌کست چهارم</h1>
+  <h2>خلاصه‌ی نوشتاری دنت‌کست چهار — استراتژی‌های اصلی باندینگ و نسل‌های مختلف عوامل باندینگ</h2>
 
+  <p><strong>نوت کست چهارم  خلاصه ی نوشتاری دنت‌کست چهار</strong></p>
 
-  <div class="glass-box">
-    <p><strong>نوت کست چهارم  خلاصه ی نوشتاری دنت‌کست چهار</strong></p>
+  <h3>استراتژی‌های اصلی باندینگ:</h3>
 
-    <h3>استراتژی‌های اصلی باندینگ</h3>
-<ul>
-  <li>
-    <h4>روش (Etch and Rinse) یا توتال اچ:</h4>
-    <ul>
-      <li>این تکنیک شامل اعمال یک اسید به سطح دندان است.</li>
-      <li>
-        اسید برای حذف
-        <a href="/glossary/smear-layer.html">لایه اسمیر</a>
-        و دبری‌ها و باز کردن
-        <a href="/glossary/dentinal-tubules.html">توبول‌های عاجی</a>
-        در عاج به کار می‌رود.
-      </li>
-      <li>
-        نکته: این روش
-        <a href="/glossary/collagen-fibers.html">فیبرهای کلاژن</a>
-        در عاج زیرین را نیز اکسپوز می‌کند.
-      </li>
-      <li>پس از اچ، اسید کاملاً شسته شده و سپس دندان قبل از اعمال باندینگ خشک می‌شود.</li>
-      <li><strong>معایب:</strong>
-        <ul>
-          <li>
-            خشک کردن بیش از حد عاج اچ شده می‌تواند منجر به
-            <a href="/glossary/collagen-collapse.html">کلاپس فیبرهای کلاژن</a>
-            شود.
-          </li>
-          <li>
-            اگر کلاژن کلاپس کند، رزین باندینگ ممکن است نتواند به‌طور کافی نفوذ کند،
-            که منجر به باند ضعیف‌تر و افزایش حساسیت پس از درمان می‌شود.
-          </li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-</ul>
+  <ul>
+    <li><strong>روش (Etch and Rinse) یا توتال اچ</strong>
+      <ul>
+        <li>این تکنیک شامل اعمال یک اسید به سطح دندان است.</li>
+        <li>اسید برای حذف لایه اسمیر  و دبری‌ها  و باز کردن توبول‌های عاجی در عاج به کار می‌رود.</li>
+        <li>نکته : این روش فیبرهای کلاژن در عاج زیرین را نیز اکسپوز می‌کند.</li>
+        <li>پس از اچ، اسید کاملاً شسته شده و سپس دندان قبل از اعمال  باندینگ خشک می‌شود.</li>
+        <li><strong>معایب:</strong>
+          <ul>
+            <li>خشک کردن بیش از حد  عاج اچ شده می‌تواند منجر به کلاپس فیبرهای کلاژن شود.</li>
+            <li>اگر کلاژن کلاپس کند، رزین باندینگ ممکن است نتواند به طور کافی به درون عاج دمینرالیزه شده نفوذ کند، که منجر به باند ضعیف‌تر و افزایش احتمال حساسیت پس از درمان می‌شود.</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
 
-<ul>
-  <li>
-    <h4>سلف اچ:</h4>
-    <ul>
-      <li>
-        این استراتژی مرحله جداگانه
-        <a href="/glossary/etch-and-rinse.html">اچینگ</a>
-        با اسید فسفریک و شستشو را حذف می‌کند.
-      </li>
-      <li>
-        در عوض، خود پرایمر حاوی مونومرهای اسیدی است که به‌طور همزمان سطح دندان را اچ و پرایم می‌کنند.
-      </li>
-      <li>
-        پس از اعمال پرایمر اسیدی، سطح با هوا خشک شده و سپس رزین باندینگ اعمال می‌شود.
-      </li>
-      <li><strong>مزایا:</strong>
-        <ul>
-          <li>
-            از کلاپس کلاژن مرتبط با عاج اچ‌شده خشک جلوگیری می‌کند،
-            که منجر به باندینگ بهتر می‌شود.
-          </li>
-        </ul>
-      </li>
-      <li><strong>معایب:</strong>
-        <ul>
-          <li>
-            ممکن است مینا را به‌طور مؤثر اچ نکند،
-            که می‌تواند <a href="/glossary/bond-strength.html">استحکام باند</a> به مینا را به خطر اندازد.
-          </li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-</ul>
+  <ul>
+    <li><strong>سلف اچ :</strong>
+      <ul>
+        <li>این استراتژی مرحله جداگانه اچینگ با اسید فسفریک و شستشو را حذف می‌کند.</li>
+        <li>در عوض، خود پرایمر حاوی مونومرهای اسیدی است که به طور همزمان سطح دندان را اچ و پرایم می‌کنند.</li>
+        <li>پس از اعمال پرایمر اسیدی، سطح به آرامی با هوا خشک شده و سپس رزین باندینگ اعمال می‌شود.</li>
+        <li><strong>مزایا:</strong>
+          <ul>
+            <li> از کلاپس کلاژن مرتبط با عاج اچ شده خشک در تکنیک اچ و رینز جلوگیری می‌کنند، که منجر به باندینگ خوب به عاج می‌شود.</li>
+          </ul>
+        </li>
+        <li><strong>معایب:</strong>
+          <ul>
+            <li> محدودیت سیستم‌های سلف اچ این است که ممکن است مینا را به طور مؤثر اچ نکنند، که می‌تواند استحکام باند به مینا را به خطر بیندازد.</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
 
-<h3>نسل‌های مختلف عوامل باندینگ</h3>
-<ul>
-  <li>
-    <h4>نسل ۴ و ۵ (سیستم‌های توتال اچ):</h4>
-    <ul>
-      <li>نسل ۴: سیستم دو بطری با پرایمر و ادهزیو جداگانه.</li>
-      <li>نسل ۵: سیستم تک بطری با پرایمر و ادهزیو ترکیب‌شده.</li>
-      <li><strong>نکات بالینی نسل ۵:</strong>
-        <ul>
-          <li>برای مینا: اچینگ ۳۰ ثانیه.</li>
-          <li>برای عاج: ۱۰ تا ۱۵ ثانیه.</li>
-          <li>خشک‌کردن ملایم عاج و عدم خشک‌کردن بیش از حد.</li>
-          <li>در صورت خشکی زیاد عاج، استفاده از کلرهگزیدین ۲٪ برای ۳۰ ثانیه.</li>
-          <li>اعمال بیش از یک لایه باندینگ توصیه می‌شود.</li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-</ul>
+  <h3>نسل‌های مختلف عوامل باندینگ :</h3>
 
-<ul>
-  <li>
-    <h4>نسل ۶ و ۷ (سیستم‌های سلف اچ):</h4>
-    <ul>
-      <li>نسل ۶: سیستم دو بطری با پرایمر و ادهزیو جداگانه یا ترکیب‌شده، حلال آب و مناسب عاج.</li>
-      <li>نسل ۷: سیستم تک بطری با پرایمر و ادهزیو ترکیب‌شده.</li>
-    </ul>
-  </li>
-</ul>
+  <ul>
+    <li><strong>نسل ۴ و ۵ (سیستم‌های توتال اچ):</strong>
+      <ul>
+        <li>نسل ۴: یک سیستم دو بطری است که پرایمر در یک بطری و رزین ادهزیو در بطری دیگر قرار دارد.</li>
+        <li>نسل ۵: یک سیستم تک بطری است که پرایمر و ادهزیو در یک محلول واحد ترکیب شده‌اند. این‌ها به عنوان ادهزیوهای "تک بطری" نیز شناخته می‌شوند. حلال‌ها در این سیستم‌های توتال اچ معمولاً استون یا اتانول هستند.</li>
+        <li><strong>نکات بالینی نسل ۵:</strong>
+          <ul>
+            <li>اگر حفره عمدتاً از مینا تشکیل شده باشد، زمان اچینگ با اسید فسفریک باید حدود ۳۰ ثانیه باشد.</li>
+            <li>اما اگر عاج درگیر باشد، زمان اچینگ برای عاج باید کوتاه‌تر، بین ۱۰ تا ۱۵ ثانیه باشد.</li>
+            <li>هنگام خشک کردن پس از اچینگ، مینا باید با هوا خشک شود، در حالی که عاج باید به آرامی با یک پلت پنبه‌ای خشک شود تا از خشک شدن بیش از حد و کلاپس کلاژن جلوگیری شود.</li>
+            <li>اگر عاج به طور تصادفی بیش از حد خشک شود، می‌توان از کلرهگزیدین ۲٪ به مدت ۳۰ ثانیه استفاده کرد و نیازی به شستشو ندارد.</li>
+            <li>همچنین توصیه می‌شود که بیش از یک لایه از عامل باندینگ اعمال شود تا از استحکام باند بهتر اطمینان حاصل گردد.</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
 
-<h3>ادهزیوهای یونیورسال</h3>
-<ul>
-  <li>به نسل خاصی وابسته نیستند.</li>
-  <li>
-    قابل استفاده با هر دو تکنیک
-    <a href="/glossary/etch-and-rinse.html">توتال اچ</a>
-    و
-    <a href="/glossary/self-etch.html">سلف اچ</a>
-    هستند.
-  </li>
-</ul>
+  <ul>
+    <li><strong>نسل ۶ و ۷ (سیستم‌های سلف اچ): (نیازی به اچینگ جداگانه با اسید فسفریک ندارند)</strong>
+      <ul>
+        <li>نسل ۶: معمولاً یک سیستم دو بطری است، با یک پرایمر اسیدی در یک بطری و رزین ادهزیو در بطری دیگر. با این حال، دو نوع ادهزیو نسل ۶ نیز وجود دارد: یکی که در آن ابتدا پرایمر اعمال می‌شود و سپس ادهزیو، و دیگری که در آن دو مایع قبل از اعمال با هم مخلوط می‌شوند. حلال‌ها در این سیستم‌های سلف اچ معمولاً آب هستند، این سیستم‌ها لایت کیور شونده بوده و با کامپوزیت‌های سلف کیور  سازگار هستند. نسل ۶ اغلب در شرایطی که عاج سوبسترای غالب باشد، ترجیح داده می‌شود.</li>
+      </ul>
+    </li>
+  </ul>
 
-<h3>رویکردهای باندینگ تخصصی</h3>
-<ul>
-  <li>
-    <h4>روش Selective Etch:</h4>
-    <ul>
-      <li>
-        در حفرات شامل مینا و عاج، مارجین‌های مینایی ۳۰ ثانیه اچ شوند
-        سپس
-        <a href="/glossary/self-etch.html">ادهزیو سلف اچ</a>
-        به کل حفره اعمال گردد.
-      </li>
-    </ul>
-  </li>
-</ul>
+  <p>* نکات بالینی نسل ۶ (نوع دو بطری با اعمال جداگانه): پرایمر اسیدی برای حدود ۱۵ ثانیه اعمال می‌شود، سپس خشک کردن ملایم با هوا انجام شده و بعد ادهزیو برای حدود ۲۰ ثانیه اعمال می‌شود. ذکر شده است که بین اعمال پرایمر و ادهزیو، شستشو انجام نمی‌شود. </p>
 
-<div class="author-note">
-  <a href="/about.html" class="author-link">دکتر فواد شهابیان</a>
-  <span class="author-role">متخصص پروتزهای دندانی و ایمپلنت</span>
-</div>
+  <p>   * نسل ۷: یک سیستم سلف اچ تک بطری است که پرایمر اسیدی و ادهزیو در یک محلول واحد ترکیب شده‌اند. این‌ها به عنوان ادهزیوهای سلف اچ "تک بطری" نیز شناخته می‌شوند.</p>
 
-<svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M3 14a9 9 0 0 1 18 0"/><path d="M5 14h3v7H5a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2z"/><path d="M19 14h-3v7h3a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2z"/></svg> <strong>نسخه‌ی صوتی این دنت‌کست را بشنوید:</strong><br>
-    <audio controls preload="none" style ="width: 100%;
-    margin-top: 12px;">
-  <source src="https://episodes.s3.ir-thr-at1.arvanstorage.ir/dentcast4.m4a?versionId=" type="audio/mpeg"></audio>
+  <h3>ادهزیوهای یونیورسال :</h3>
+  <ul>
+    <li>به طور خاص به یک نسل واحد وابسته نیستند.</li>
+    <li>انعطاف‌پذیری استفاده با هر دو تکنیک توتال اچ و سلف اچ را ارائه می‌دهند</li>
+  </ul>
 
+  <h3>روش (Selective Etch):</h3>
+  <ul>
+    <li>   * در شرایطی که حفره شامل مینا و عاج است، هنگام استفاده از یک ادهزیو سلف اچ (مانند نسل ۶)، می‌توان از این تکنیک استفاده کرد.</li>
+    <li>   * این تکنیک شامل اچ کردن فقط مارجین‌های مینایی با اسید فسفریک برای حدود ۳۰ ثانیه، قبل از اعمال ادهزیو سلف اچ به کل حفره است.</li>
+  </ul>
 
+  <h3>رویکرد توتال اچ با ادهزیو نسل ۶ (برای ترمیم‌های تماماً روی مینا):</h3>
+  <ul>
+    <li>   * برای مواردی که تهیه (تراش) کاملاً روی مینا است (مانند ونیرهای کامپوزیتی) و از یک ادهزیو نسل ۶ (که معمولاً مینا را به خوبی اچ نمی‌کند) استفاده می‌شود، می‌توان یک رویکرد توتال اچ انجام داد.</li>
+    <li>   * در این سناریو، مینا با اسید فسفریک اچ می‌شود  و سپس ادهزیو نسل ۶ اعمال می‌شود، با حذف مرحله اعمال جداگانه پرایمر، زیرا  محدود به مینا است.</li>
+  </ul>
 
-  <!-- TODO: Add references section if this page cites scientific literature. -->
-  <p class="dc-disclaimer">محتوای این صفحه برای استفادهٔ آموزشی دندان‌پزشکان و دانشجویان دندان‌پزشکی تهیه شده است.</p>
-<footer class="dc-site-footer" style="text-align:center; margin-top:45px; color:#9aa1b3; font-size:.9rem; line-height:1.8;">
+  <p class="author">.🌟دکتر فواد شهابیان<br>متخصص پروتزهای دندانی و ایمپلنت</p>
 
-  <div style="margin-bottom:22px;">
-    <a href="index.html"
-       style="
-         display:inline-block;
-         background:rgba(11,95,255,0.18);
-         color:var(--link);
-         border:1.8px solid rgba(var(--link-rgb),0.45);
-         border-radius:12px;
-         padding:12px 42px;
-         font-weight:700;
-         text-decoration:none;
-         font-size:1rem;
-         box-shadow:0 0 14px rgba(11,95,255,0.15);
-         transition:all .25s ease;">
-      <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg> برگشت به صفحه‌ی قبل
-    </a>
+  <div class="audio-box">
+    🎧 <strong>نسخه‌ی صوتی این دنت‌کست را بشنوید:</strong>
+    <iframe src="https://embed.acast.com/624b5545ecc0e600134ea0df/624b554b5af39e00127155e7"
+            frameBorder="0"
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+            scrolling="no"></iframe>
   </div>
 
-  <div style="margin-top:6px;">
-    © 2025 DentCast
+  <div style="text-align:center;">
+    <a class="back" href="index.html">← بازگشت به فهرست نوت‌کست‌ها</a>
   </div>
+
+  <footer>
+    © 2025 DentCast — طراحی و توسعه با ❤️ توسط فواد شهابیان
   </footer>
+<script src="/dc-nav.js" defer></script>
+</body>
+</html>

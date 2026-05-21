@@ -4,14 +4,11 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>نوت کست بیست و نهم: طبقه بندی سرامیکها قسمت یک</title>
+<title>نوت کست بیست و نهم: طبقه بندی سرامیکها قسمت یک</title>  
 
 <meta name="description" content="نوت‌کست ۲۹ دنت‌کست؛ طبقه بندی سرامیکها قسمت یک شامل دسته بندی کلی  و توضیح گلس سرامیکها.">
 
-<link rel="canonical" href="https://dentcast.org/notecast/episode-29.html">
-<link rel="alternate" hreflang="fa-IR" href="https://dentcast.ir/notecast/episode-29.html">
-<link rel="alternate" hreflang="fa" href="https://dentcast.org/notecast/episode-29.html">
-<link rel="alternate" hreflang="x-default" href="https://dentcast.org/notecast/episode-29.html">
+<link rel="canonical" href="https://dentcast.ir/notecast/episode-29">
 
 
 
@@ -84,31 +81,14 @@
       margin-bottom: 10px;
     }
 
-    .author-note{
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  align-items:center;
-  gap:6px 10px;
-  margin:2.5rem auto 1rem;
-  padding-top:1.25rem;
-  border-top:1px solid rgba(120,140,170,0.18);
-  color:var(--txt3);
-  font-size:.78rem;
-}
-.author-note .author-link{
-  color:var(--txt2);
-  font-weight:600;
-  text-decoration:none;
-}
-.author-note .author-link:hover{
-  color:var(--ac);
-  text-decoration:underline;
-  text-underline-offset:3px;
-}
-.author-note .author-role{
-  color:var(--txt3);
-}
+    .author {
+      text-align: center;
+      margin-top: 40px;
+      font-weight: 600;
+      color: var(--text);
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
 
     .audio-wrapper {
       margin-top: 50px;
@@ -154,33 +134,37 @@
   "@context": "https://schema.org",
   "@graph": [
     {
+      "@type": "Person",
+      "@id": "https://dentcast.ir/#person",
+      "name": "دکتر فواد شهابیان",
+      "jobTitle": "متخصص پروتزهای دندانی و ایمپلنت",
+      "url": "https://dentcast.ir/about"
+    },
+    {
       "@type": "PodcastSeries",
-      "@id": "https://dentcast.org/#podcast",
+      "@id": "https://dentcast.ir/#podcast",
       "name": "DentCast",
-      "url": "https://dentcast.org/",
+      "url": "https://dentcast.ir/",
       "inLanguage": "fa",
       "publisher": {
-        "@id": "https://dentcast.org/about.html#person-fouad-shahabian"
+        "@id": "https://dentcast.ir/#person"
       }
     },
     {
       "@type": "PodcastEpisode",
-      "@id": "https://dentcast.org/notecast/episode-29.html#episode",
-      "url": "https://dentcast.org/notecast/episode-29.html",
+      "@id": "https://dentcast.ir/notecast/episode-29#episode",
+      "url": "https://dentcast.ir/notecast/episode-29",
       "name": "نوت‌کست ۲۹ – طبقه‌بندی سرامیک‌ها (قسمت ۱)",
       "headline": "طبقه‌بندی سرامیک‌های دندانی بر اساس فاز و ترکیب شیمیایی؛ مرور گروه‌های اصلی و زیرگروه‌های glass-matrix",
       "description": "سرامیک‌های دندانی به سه گروه اصلی تقسیم می‌شوند: گلاس‌ماتریکس‌ها (دارای فاز گلاس)، پلی‌کریستالین‌ها (بدون فاز گلاس) و رزین‌ماتریکس‌ها (دارای ماتریکس پلیمری). به‌علت تفاوت در ترکیب شیمیایی، حساسیت به اچ با HF و روش‌های آماده‌سازی سطحی بین گروه‌ها متفاوت است. در این قسمت، زیرگروه‌های glass-matrix شامل فلدسپاتیک، سرامیک‌های تقویت‌شده (لوسایت/لیتیوم دی‌سیلیکات/ZR-LDS)، glass-infiltration و گلاس‌سرامیک‌های فلورآپاتیت مرور می‌شود.",
       "inLanguage": "fa",
       "datePublished": "2026-01-08",
-      "dateModified": "2026-01-08",
-      "lastReviewed": "2026-01-08",
-      "image": "https://dentcast.org/logo-v2.png",
+      "image": "https://dentcast.ir/favicon.png",
       "author": {
-        "@id": "https://dentcast.org/about.html#person-fouad-shahabian"
+        "@id": "https://dentcast.ir/#person"
       },
-      "reviewedBy": { "@id": "https://dentcast.org/about.html#person-fouad-shahabian" },
       "partOfSeries": {
-        "@id": "https://dentcast.org/#podcast"
+        "@id": "https://dentcast.ir/#podcast"
       },
       "associatedMedia": {
         "@type": "AudioObject",
@@ -192,97 +176,29 @@
 </script>
 
 
-    <link rel="stylesheet" href="/dc-theme.css">
-<link rel="stylesheet" href="/dc-nav.css">
-  <link rel="stylesheet" href="/global-search.css?v=1">
-  <script>(function(){var s=localStorage.getItem('dc-theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme','dark');})()</script>
-  <meta property="og:type" content="article">
-  <meta property="og:locale" content="fa_IR">
-  <meta property="og:site_name" content="DentCast">
-  <meta property="og:title" content="نوت کست بیست و نهم: طبقه بندی سرامیکها قسمت یک">
-  <meta property="og:description" content="نوت‌کست ۲۹ دنت‌کست؛ طبقه بندی سرامیکها قسمت یک شامل دسته بندی کلی  و توضیح گلس سرامیکها.">
-  <meta property="og:url" content="https://dentcast.org/notecast/episode-29.html">
-  <meta property="og:image" content="https://dentcast.org/dentcast-cover.webp">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="نوت کست بیست و نهم: طبقه بندی سرامیکها قسمت یک">
-  <meta name="twitter:description" content="نوت‌کست ۲۹ دنت‌کست؛ طبقه بندی سرامیکها قسمت یک شامل دسته بندی کلی  و توضیح گلس سرامیکها.">
-  <meta name="twitter:image" content="https://dentcast.org/dentcast-cover.webp">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    { "@type": "ListItem", "position": 1, "name": "DentCast", "item": "https://dentcast.org/" },
-    { "@type": "ListItem", "position": 2, "name": "NoteCast", "item": "https://dentcast.org/notecast/" },
-    { "@type": "ListItem", "position": 3, "name": "نوت کست بیست و نهم: طبقه بندی سرامیکها قسمت یک", "item": "https://dentcast.org/notecast/episode-29.html" }
-  ]
-}
-</script>
-  <meta name="robots" content="index, follow, max-image-preview:large">
+  <script>(function(){var s=localStorage.getItem('dc-theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme','dark');})();</script>
+  <link rel="stylesheet" href="/dc-theme.css">
+  <link rel="stylesheet" href="/dc-nav.css">
 </head>
 
 <body>
-<!-- DC NAV: TOP BAR -->
-<header class="dc-topbar">
-  <div class="dc-topbar-actions">
-    <a href="/" aria-label="صفحه اصلی دنت‌کست" style="display:flex;align-items:center;margin-left:8px;flex-shrink:0;"><img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;"></a>
-    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="ابزارها" aria-expanded="false"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
-    <button class="dc-topbar-btn" id="btn-radar-topbar" aria-label="رادار"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="m12 12 7-7"/><path d="M12 12h.01"/></svg></button>
-    <button class="dc-topbar-btn dcOpenSearch" aria-label="جستجو"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
-  </div>
-  <div class="dc-topbar-brand">
-    <div class="dc-topbar-brand-name">DentCast</div>
-    <a href="/about.html" class="dc-topbar-brand-sub">دکتر فواد شهابیان</a>
-  </div>
-</header>
-<div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">
-  <div class="dc-toolbar-drawer-inner">
-    <span class="dc-toolbar-drawer-label">ابزارها</span>
-    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M10 18h4"/><path d="M12 7v6"/><path d="m9.5 10.5 2.5 2.5 2.5-2.5"/></svg></span><span class="dc-drawer-tool-txt">نصب</span></button>
-    <button class="dc-drawer-tool-seg" type="button" id="tool-consult"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span class="dc-drawer-tool-txt">مشاوره</span></button>
-    <button class="dc-drawer-tool-seg" type="button" id="tool-about"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M12 3l1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></svg></span><span class="dc-drawer-tool-txt">درباره</span></button>
-  </div>
-</div>
-<div id="dcRadarOverlay" class="radar-overlay" aria-hidden="true">
-  <div class="radar-overlay-header">
-    <button id="dcCloseRadarOverlay" class="radar-close-btn">&times;</button>
-    <div class="radar-header-title">رادار دنت‌کست (جایگزین گوگل)</div>
-  </div>
-  <div class="radar-overlay-body">
-    <div class="radar-search-box">
-      <input type="text" id="dcRadarInput" placeholder="نام سایت، زمینه فعالیت یا کلمه کلیدی..." autocomplete="off">
-    </div>
-    <div id="dcRadarResults" class="radar-results">
-      <div class="radar-initial-msg">برای جستجو در بین سایت‌های دندانپزشکی، تایپ کنید...</div>
-    </div>
-  </div>
-</div>
 
-
-<main class="article-content-wrap">
-<h2><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M12 3l1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></svg> نوت‌کست بیست‌ونهم <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M12 3l1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></svg></h2>
+<h2>✨ نوت‌کست بیست‌ونهم ✨</h2>
 <h1>طبقه بندی سرامیکها قسمت یک</h1>
-  <div class="dc-trustline" aria-label="اطلاعات نویسنده و بازبینی">
-    <span>تاریخ انتشار: <time datetime="2026-01-08">2026-01-08</time></span>
-    <span>آخرین بازبینی: <time datetime="2026-01-08">2026-01-08</time></span>
-  </div>
-
 
 <div class="glass-box">
 <p>
 سرامیک ها سه دسته ی اصلی هستند:
 <br>
-<h4>یک:</h4>
+<h4>یک:</h4> 
 گلاس ماتریکسها:
-سرامیک های غیر ارگانیک با <a href="/glossary/glass-phase.html" class="glossary-link">فاز گلاس</a>
+سرامیک های غیر ارگانیک با فاز گلاس
 
 <h4>دو:</h4>
-<a href="/glossary/polycrystalline-ceramics.html" class="glossary-link">سرامیکهای پلی کریستالین</a>:
+سرامیکهای پلی کریستالین:
 سرامیکهای غیر ارگانیک بدون فاز گلاس
 
-<h4>سه:</h4>
+<h4>سه:</h4> 
 رزین ماتریکسها:
 دارای ماتریکس پلیمری هستند
 </p>
@@ -296,19 +212,19 @@
 </div>
 
 <div class="glass-box">
-<h4><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="4"/></svg> دسته ی یک یا  glass matrix ها چهار دسته دارند:</h4>
+<h4>🔹 دسته ی یک یا  glass matrix ها چهار دسته دارند:</h4>
 <p>
 <h4>الف:</h4>
-<a href="/glossary/feldspathic-porcelain.html" class="glossary-link">سرامیکهای فلدسپاتیک</a>
+سرامیکهای فلدسپاتیک
 فرم سنتی و قدیمی،بر مبنای فلدسپار و آلومینا و کائولین <br> از نظر اچ شوندگی عالی هستن
 </p>
 </div>
 <div class="glass-box">
 <p>
 <h4>ب:</h4>
-<br>سرامیکهای سنتتیک در اینها نسبت به گروه قبل <a href="/glossary/crystalline-phase.html">فاز کریستالی</a> بزرگ‌تری داریم و همین احتمال ایجاد ترک را کم میکند
+<br>سرامیکهای سنتتیک در اینها نسبت به گروه قبل فاز کریستالی بزرگ‌تری داریم و همین احتمال ایجاد ترک را کم میکند
 از این گروه:lucite reinforced ها مثل ips empress<br>
-<a href="/glossary/lithium-disilicate.html" class="glossary-link">لیتیوم دیسیلیکات</a> ها مثل IPS  emax<br>
+لیتیوم دیسیلیکات ها مثل IPS  emax<br>
 و zirconia reinforced lithium disilicate ها مثل celtra duo مثلا یا vita supernity
 <br>
 همه ی موارد ذکر شده باHF اچ می شوند
@@ -330,39 +246,46 @@ Vita inceram alumina
 <p>
 <h4>ت:</h4>
 گلاس سرامیکهای دارای فلور آپاتیت
-مثل IPS EMAX CERAM وIPS EMAX ZIRPRESS
+مثل IPS EMAX CERAM وIPS EMAX ZIRPRESS 
 <br>
 حاوی فلورآپاتیت در ماتریکس شیشه ای
 استحکام پایینه  و ساب استراکچر نمیتونن باشن
 </p>
-
-  <!-- TODO: Add references section if this page cites scientific literature. -->
-  <p class="dc-disclaimer">محتوای این صفحه برای استفادهٔ آموزشی دندان‌پزشکان و دانشجویان دندان‌پزشکی تهیه شده است.</p>
 </div>
 
-<div class="author-note">
-  <a href="/about.html" class="author-link">دکتر فواد شهابیان</a>
-  <span class="author-role">متخصص پروتزهای دندانی و ایمپلنت</span>
+
+
+
+
+<div class="author">
+🌟 دکتر فواد شهابیان<br>
+متخصص پروتزهای دندانی و ایمپلنت
 </div>
 
-<svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M3 14a9 9 0 0 1 18 0"/><path d="M5 14h3v7H5a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2z"/><path d="M19 14h-3v7h3a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2z"/></svg> <strong>نسخه‌ی صوتی این دنت‌کست را بشنوید:</strong><br>
+🎧 <strong>نسخه‌ی صوتی این دنت‌کست را بشنوید:</strong><br>
     <audio controls preload="none" style ="width: 100%;
     margin-top: 12px;">
   <source src="https://episodes.s3.ir-thr-at1.arvanstorage.ir/dentcast29.m4a?versionId=" type="audio/mpeg"></audio>
 
 
-<footer class="dc-site-footer">
+<footer>
 <div style="margin-bottom:22px;">
-<a href="index.html" style="display:inline-block;background:rgba(11,95,255,0.18);color:var(--link);border:1.8px solid rgba(var(--link-rgb),0.45);border-radius:12px;padding:12px 42px;font-weight:700;text-decoration:none;font-size:1rem;">
-<svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg> برگشت به صفحه‌ی قبل
+<a href="index.html" style="display:inline-block;background:rgba(11,95,255,0.18);color:#3a84ff;border:1.8px solid rgba(11,95,255,0.45);border-radius:12px;padding:12px 42px;font-weight:700;text-decoration:none;font-size:1rem;">
+🔙 برگشت به صفحه‌ی قبل
+</a>
+</div>
+
+<div style="margin-bottom:20px;">
+<a href="https://dentcast.ir/about" style="display:inline-block;background:rgba(255,220,80,0.85);color:#111;border:1px solid rgba(255,220,80,0.55);border-radius:8px;padding:5px 12px;font-weight:500;text-decoration:none;font-size:.8rem;">
+💬 درباره‌ی دکتر فواد شهابیان و دنت‌کست
 </a>
 </div>
 
 <div style="margin-top:6px;">
-  © 2025 DentCast
+© 2025 DentCast — طراحی و توسعه توسط <strong style="color:#ffd46a;">فواد شهابیان</strong>
 </div>
 </footer>
 
-</main>
-<div class="dc-global-filter-box" id="dcGlobalBox">
-  <b                                                                         
+<script src="/dc-nav.js" defer></script>
+</body>
+</html>

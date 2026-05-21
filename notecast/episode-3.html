@@ -3,13 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>نوت‌کست ۳ – سمان‌های رزینی: انواع، ویژگی‌ها، مزایا و معایب | دنت‌کست</title>
-  <meta name="description" content="نوت‌کست سوم دنت‌کست؛ خلاصه‌ی نوشتاری اپیزود ۳ درباره‌ی انواع سمان‌های رزینی، ویژگی‌ها، مزایا، معایب و کاربردهای بالینی.">
-  <link rel="canonical" href="https://dentcast.org/notecast/episode-3.html">
-  <link rel="alternate" hreflang="fa-IR" href="https://dentcast.ir/notecast/episode-3.html">
-  <link rel="alternate" hreflang="fa" href="https://dentcast.org/notecast/episode-3.html">
-  <link rel="alternate" hreflang="x-default" href="https://dentcast.org/notecast/episode-3.html">
-
+  <title>نوت‌کست ۳ – خلاصهٔ نوشتاری دنت‌کست سه | دنت‌کست</title>
+  <meta name="description" content="نوت‌کست سوم دنت‌کست؛ خلاصهٔ نوشتاری اپیزود ۳ دربارهٔ دسته‌بندی سمان‌های رزینی و نکات بالینی.">
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
 
   <style>
     :root{
@@ -44,88 +40,35 @@
       margin-bottom:8px;
     }
 
-    h2{
-      text-align:center;
-      color:#e7eaf1;
-      font-weight:600;
-      font-size:1.3rem;
-      margin-bottom:30px;
-    }
-
-    /* استایل H3 برای معرفی بخش اصلی مقاله */
-    h3{
-      color:var(--blue); /* رنگ به متن اصلی نزدیک‌تر شد */
-      margin-top:20px;
-      font-size:1.2rem;
-      font-weight:600;
-      text-align:center;
-    }
-
-    /* استایل H4 (جایگزین H3 قبلی) برای زیرعناوین داخل text-box */
-    h4{
-      color:var(--blue); /* رنگ H3 قبلی حفظ شد */
-      margin-top:30px;
-      font-size:1.1rem;
-      font-weight:600;
-      margin-bottom:8px;
-    }
-
-    ul{
-      list-style-type:"✦ ";
-      padding-right:20px;
-      margin:10px 0 20px;
-    }
-
-    li{margin-bottom:10px;}
-
-    .author-note{
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  align-items:center;
-  gap:6px 10px;
-  margin:2.5rem auto 1rem;
-  padding-top:1.25rem;
-  border-top:1px solid rgba(120,140,170,0.18);
-  color:var(--txt3);
-  font-size:.78rem;
-}
-.author-note .author-link{
-  color:var(--txt2);
-  font-weight:600;
-  text-decoration:none;
-}
-.author-note .author-link:hover{
-  color:var(--ac);
-  text-decoration:underline;
-  text-underline-offset:3px;
-}
-.author-note .author-role{
-  color:var(--txt3);
-}
-
-    iframe{
-      width:100%;
-      height:110px;
-      border:none;
-      border-radius:var(--radius);
-      margin-top:15px;
-      box-shadow:0 10px 30px rgba(0,0,0,.2);
-    }
-
-    .audio-box{
-      margin-top:60px;
+    .content{
       background:rgba(255,255,255,0.04);
       border:1px solid rgba(255,255,255,0.1);
       border-radius:var(--radius);
-      padding:20px;
-      text-align:center;
+      padding:22px;
+      box-shadow:var(--shadow);
+      margin-top:18px;
+    }
+    .content pre{
+      margin:0;
+      white-space:pre-wrap;
+      word-wrap:break-word;
+      font-family:'Vazirmatn', sans-serif;
+      font-size:1.05rem;
+      line-height:1.95;
+      color:var(--text);
+    }
+
+    iframe{
+      margin-top:24px;
+      width:100%;
+      border:none;
+      border-radius:var(--radius);
       box-shadow:var(--shadow);
     }
 
     .back{
       display:inline-block;
-      margin-top:60px;
+      margin-top:40px;
       color:var(--blue);
       text-decoration:none;
       font-weight:600;
@@ -135,317 +78,45 @@
       background:rgba(255,255,255,0.05);
       transition:all .3s ease;
     }
-
-    .back:hover{background:rgba(11,95,255,0.15);transform:scale(1.03);}
+    .back:hover{
+      background:rgba(11,95,255,0.15);
+      transform:scale(1.03);
+    }
 
     footer{
-      margin-top:70px;
+      margin-top:60px;
       text-align:center;
       color:var(--muted);
       font-size:.9rem;
     }
 
-    .text-box {
-      background: rgba(255, 255, 255, 0.99);
-      color: #111;
-      border-radius: 18px;
-      padding: 26px 32px;
-      margin: 28px 0;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-      backdrop-filter: blur(8px);
-    }
-
-    /* حذف استایل h3 از داخل text-box و اضافه شدن استایل h4 جدید */
-    .text-box h4 { color: #0b5fff; margin-top:30px; }
-
-    @media (max-width: 768px) {
-      body {padding: 25px 16px 60px; line-height: 1.8;}
-      h1 {font-size: 1.6rem;}
-      h2 {font-size: 1.1rem; margin-bottom: 24px;}
-      h3 {font-size: 1.05rem; margin-top: 20px;}
-      h4 {font-size: 1rem; margin-top: 24px;} /* اندازه H4 در موبایل */
-      ul {padding-right:14px; font-size:.95rem;}
-      .audio-box {margin-top:40px; padding:16px;}
-      .back {font-size:.9rem; padding:8px 16px; margin-top:40px;}
-      footer {font-size:.8rem; margin-top:50px;}
+    @media (max-width: 640px){
+      body{ padding:28px 16px 70px; }
+      h1{ font-size:1.6rem; }
+      .content pre{ font-size:1rem; line-height:1.9; }
     }
   </style>
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
-  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
-  <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png">
-  <link rel="apple-touch-icon" href="/favicon-512.png">
-  <meta name="theme-color" content="#0b5fff">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "PodcastEpisode",
-      "@id": "https://dentcast.org/notecast/episode-3.html#episode",
-      "url": "https://dentcast.org/notecast/episode-3.html",
-      "name": "نوت‌کست ۳ – راهنمای سمان‌های رزینی در دندانپزشکی",
-      "headline": "انواع، مزایا و معایب سمان‌های رزینی - دکتر فؤاد شهابیان",
-      "description": "خلاصه اپیزود سوم دنت‌کست؛ بررسی تخصصی سمان‌های سلف‌ادهزیو و ادهزیو برای رستوریشن‌های سرامیکی و زیرکونیا توسط متخصص پروتز در اهواز.",
-      "inLanguage": "fa",
-      "datePublished": "2025-02-15",
-      "dateModified": "2025-02-15",
-      "lastReviewed": "2025-02-15",
-      "duration": "PT25M",
-      "image": "https://dentcast.org/logo-v2.png",
-      "author": {
-        "@id": "https://dentcast.org/about.html#person-fouad-shahabian"
-      },
-      "reviewedBy": { "@id": "https://dentcast.org/about.html#person-fouad-shahabian" },
-      "publisher": { "@id": "https://dentcast.org/about.html#person-fouad-shahabian" },
-      "partOfSeries": {
-        "@type": "PodcastSeries",
-        "name": "DentCast",
-        "url": "https://dentcast.org/"
-      },
-      "associatedMedia": {
-        "@type": "AudioObject",
-        "contentUrl": "https://embed.acast.com/624b5545ecc0e600134ea0df/624b554b5af39e00127155e8",
-        "duration": "PT25M"
-      }
-    }
-  ]
-}
-</script>
-
-    <link rel="stylesheet" href="/dc-theme.css">
-<link rel="stylesheet" href="/dc-nav.css">
-  <link rel="stylesheet" href="/global-search.css?v=1">
-  <script>(function(){var s=localStorage.getItem('dc-theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme','dark');})()</script>
-  <meta property="og:type" content="article">
-  <meta property="og:locale" content="fa_IR">
-  <meta property="og:site_name" content="DentCast">
-  <meta property="og:title" content="نوت‌کست ۳ – سمان‌های رزینی: انواع، ویژگی‌ها، مزایا و معایب | دنت‌کست">
-  <meta property="og:description" content="نوت‌کست سوم دنت‌کست؛ خلاصه‌ی نوشتاری اپیزود ۳ درباره‌ی انواع سمان‌های رزینی، ویژگی‌ها، مزایا، معایب و کاربردهای بالینی.">
-  <meta property="og:url" content="https://dentcast.org/notecast/episode-3.html">
-  <meta property="og:image" content="https://dentcast.org/dentcast-cover.webp">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="نوت‌کست ۳ – سمان‌های رزینی: انواع، ویژگی‌ها، مزایا و معایب | دنت‌کست">
-  <meta name="twitter:description" content="نوت‌کست سوم دنت‌کست؛ خلاصه‌ی نوشتاری اپیزود ۳ درباره‌ی انواع سمان‌های رزینی، ویژگی‌ها، مزایا، معایب و کاربردهای بالینی.">
-  <meta name="twitter:image" content="https://dentcast.org/dentcast-cover.webp">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    { "@type": "ListItem", "position": 1, "name": "DentCast", "item": "https://dentcast.org/" },
-    { "@type": "ListItem", "position": 2, "name": "NoteCast", "item": "https://dentcast.org/notecast/" },
-    { "@type": "ListItem", "position": 3, "name": "نوت‌کست ۳ – سمان‌های رزینی: انواع، ویژگی‌ها، مزایا و معایب | دنت‌کست", "item": "https://dentcast.org/notecast/episode-3.html" }
-  ]
-}
-</script>
-  <meta name="robots" content="index, follow, max-image-preview:large">
+  <script>(function(){var s=localStorage.getItem('dc-theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme','dark');})();</script>
+  <link rel="stylesheet" href="/dc-theme.css">
+  <link rel="stylesheet" href="/dc-nav.css">
 </head>
-
 <body>
-<!-- DC NAV: TOP BAR -->
-<header class="dc-topbar">
-  <div class="dc-topbar-actions">
-    <a href="/" aria-label="صفحه اصلی دنت‌کست" style="display:flex;align-items:center;margin-left:8px;flex-shrink:0;"><img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;"></a>
-    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="ابزارها" aria-expanded="false"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
-    <button class="dc-topbar-btn" id="btn-radar-topbar" aria-label="رادار"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="m12 12 7-7"/><path d="M12 12h.01"/></svg></button>
-    <button class="dc-topbar-btn dcOpenSearch" aria-label="جستجو"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
-  </div>
-  <div class="dc-topbar-brand">
-    <div class="dc-topbar-brand-name">DentCast</div>
-    <a href="/about.html" class="dc-topbar-brand-sub">دکتر فواد شهابیان</a>
-  </div>
-</header>
-<div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">
-  <div class="dc-toolbar-drawer-inner">
-    <span class="dc-toolbar-drawer-label">ابزارها</span>
-    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M10 18h4"/><path d="M12 7v6"/><path d="m9.5 10.5 2.5 2.5 2.5-2.5"/></svg></span><span class="dc-drawer-tool-txt">نصب</span></button>
-    <button class="dc-drawer-tool-seg" type="button" id="tool-consult"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span class="dc-drawer-tool-txt">مشاوره</span></button>
-    <button class="dc-drawer-tool-seg" type="button" id="tool-about"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M12 3l1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></svg></span><span class="dc-drawer-tool-txt">درباره</span></button>
-  </div>
-</div>
-<div id="dcRadarOverlay" class="radar-overlay" aria-hidden="true">
-  <div class="radar-overlay-header">
-    <button id="dcCloseRadarOverlay" class="radar-close-btn">&times;</button>
-    <div class="radar-header-title">رادار دنت‌کست (جایگزین گوگل)</div>
-  </div>
-  <div class="radar-overlay-body">
-    <div class="radar-search-box">
-      <input type="text" id="dcRadarInput" placeholder="نام سایت، زمینه فعالیت یا کلمه کلیدی..." autocomplete="off">
-    </div>
-    <div id="dcRadarResults" class="radar-results">
-      <div class="radar-initial-msg">برای جستجو در بین سایت‌های دندانپزشکی، تایپ کنید...</div>
-    </div>
-  </div>
-</div>
 
-<main class="article-content-wrap">
-  <h2><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M8 13h8"/><path d="M8 17h5"/></svg> نوت‌کست سوم</h2>
+  <h1>📝 نوت‌کست سوم</h1>
 
-  <h1>سمان‌های رزینی: انواع، ویژگی‌ها، مزایا و معایب</h1>
-  <div class="dc-trustline" aria-label="اطلاعات نویسنده و بازبینی">
-    <span>تاریخ انتشار: <time datetime="2025-02-15">2025-02-15</time></span>
-    <span>آخرین بازبینی: <time datetime="2025-02-15">2025-02-15</time></span>
+  <div class="content">
+    <pre>**نوت کست سوم خلاصه ی نوشتاری دنت‌کست سه**در این قسمت، انواع دسته بندی سمانهای رزینی ویژگیها و مزایا و معایب آنها بررسی می شود.به طور کلی سه دسته اصلی سمان رزینی در پادکست مورد بحث قرار گرفت:1. **سمان‌های رزینی سلف ادهزیو(Self-Adhesive Resin Cements):** * **ویژگی‌ها**:   * استفاده آسان.   * قدرت باند متوسط تا کم **(4 تا 16 مگاپاسکال)** به ساختار دندان.   * **مزیت اصلی**: معمولاً نیاز به باندینگ جداگانه روی دندان ندارند (اگرچه برخی تولیدکنندگان استفاده از باندینگ مخصوص خود را برای سازگاری بهتر توصیه می‌کنند).   * احتمال کمتر حساسیت پس از سمان کردن، به خصوص در دندان‌های زنده. * **مزایا**:   * سهولت استفاده (بدون نیاز به اچ و پرایمر).   * حساسیت تکنیکی کمتر.   * حساسیت کمتر بعد از سمان کردن.   * پاکسازی آسان اضافات سمان.   * قابلیت دوال کیور (Dual-cure)هم دارند * **معایب**:   * احتمال تغییر رنگ در طول زمان (**برای بعضی از انواع).**   * پاکسازی دشوار اضافات سمان در **برخی** از انواع، پس از سفت شدن کامل.   * همچنان به رطوبت و آلودگی حساس هستند. * **نکات مهم**:   * برای پاکسازی آسان، قبل از سفت شدن کامل سمان، از یک **کیور کوتاه (tack cure)** استفاده کنید.   * اگر در مورد گیر رستوریشن تردید دارید، سطح داخلی رستوریشن را زبر کرده و از پرایمر (برای فلز یا زیرکونیا) و باندینگ استفاده کنید.   * ایزولاسیون مناسب بسیار مهم است. * محصولات:   * Panavia SA Luting Cement (کوراری): یکی از بهترین سمان‌های سلف-اد، دوال کیور، آزادکننده فلوراید، سازگار با سطوح مرطوب و خشک. **قدرت باند بسیار بالاتر به زیرکونیا و لیتیوم دی‌سیلیکات (بیش از 50 مگاپاسکال) و 26 مگاپاسکال به عاج اچ نشده (بسیار بالاتر از حد معمول سمان‌های سلف-اد).** (دسترسی و قیمت آن در بازار ایران دشوار شده است.)دکتر فواد شهابیان 2. **سمان‌های رزینی ادهزیو (Adhesive Resin Cements):** * **ویژگی‌ها**:   * قدرت باند **متوسط تا بالا.**   * مناسب برای رستوریشن‌هایی با گیر مشکوک.   * تفاوت با سلف-ادهزیو : نیاز به باندینگ جداگانه دارند (برخی تولیدکنندگان باند یونیورسال را در بسته‌بندی قرار می‌دهند). * دوآل کیور هستند. * کاربردها:   * کراون و بریج‌های تمام سرامیک.   * اینله و آنله.   * سرامیک‌های با **استحکام بالا** مانند زیرکونیا.   * بریج‌های مریلند (به طور ویژه توصیه می‌شود).   * انواع پست (فلزی یا فایبر). * مزایا:   * سازگاری با انواع مواد رستوریشن (با آماده‌سازی مناسب سطح).   * تنوع رنگ.   * قابلیت دوال کیور. * **معایب**:   * احتمال تغییر رنگ در طول زمان (به دلیل دوال کیور بودن).   * احتمال دشواری در پاکسازی اضافات سمان.   * نیاز به ایزولاسیون برای جلوگیری از رطوبت و آلودگی.     *سمان  Panavia V5 : سمان رزینی ادهزیو شناخته شده، دوال کیور، آزادکننده فلوراید. **نکته مهم**: با وجود دوال کیور بودن، رنگ پایداری دارد و اغلب در یک کیت جامع عرضه می‌شود. به دلیل پایداری رنگ، به طور گسترده برای سمان کردن ونیرها استفاده می‌شود.3. **سمان‌های رزینی زیبایی (Esthetic Resin Cements):** * **ویژگی‌ها**:   * عمدتاً لایت کیور هستند (اگرچه برخی ممکن است دوال کیور باشند).   * برای رستوریشن‌های زیبایی استفاده می‌شوند.   * مزیت لایت کیور: رنگ پایدار، زیرا فاقد کاتالیست آمین هستند که می‌تواند باعث تغییر رنگ سمان‌های دوال کیور در طول زمان شود.   * استفاده شامل اچ کردن دندان و استفاده از باندینگ، همراه با آماده‌سازی رستوریشن است.   * در طیف‌های رنگی مختلف موجود هستند.   * ایده‌آل برای رستوریشن‌های زیبایی..* **مزایا**:   * زیبایی عالی، به ویژه برای رستوریشن‌های زیبایی.   * موجود در گزینه‌های لایت کیور و دوال کیور.   * زمان کار طولانی‌تر.   * پایداری رنگ (به خصوص در انواع لایت کیور).   * بالاترین قدرت باند به مینا و عاج (با استفاده از باندینگ مناسب).   * طیف گسترده‌ای از رنگ‌ها.   * تولیدکنندگان اغلب خمیر Try-in (برای پیش‌نمایش تأثیر سمان بر رنگ نهایی رستوریشن) ارائه می‌دهند.**سمان کردن رستوریشن‌های زیرکونیا**:* زیرکونیا به دلیل استحکام ذاتی، لزوماً برای پشتیبانی به قدرت باند سمان نیاز ندارد.* اگر **تراش دندان گیر خوبی** داشته باشد، می‌توان از سمان‌هایی با قدرت باند کمتر مانند سمان‌های رزینی ادهزیو یا سمان‌های سنتی مانند گلاس آینومر استفاده کرد.* اما **اگر رستوریشن زیرکونیا گیر خوبی** نداشته باشد، استفاده از سمان‌های رزینی ادهزیو همراه با پرایمینگ و باندینگ ضروری است.🌟دکتر فواد شهابیانمتخصص پروتزهای دندانی و ایمپلنت⚡⚡⚡⚡</pre>
   </div>
 
+  <iframe src="https://embed.acast.com/624b5545ecc0e600134ea0df/624b554b5af39e00127155e8" frameBorder="0" width="100%" height="110px"></iframe>
 
-  <div class="text-box">
-
-    <h3>
-      انواع، ویژگی‌ها و کاربردهای
-      <a href="/glossary/resin-cements.html">
-        سمان‌های رزینی
-      </a>
-    </h3>
-
-    <p>
-      <strong>نوت‌کست سوم خلاصه‌ی نوشتاری دنت‌کست سه:</strong>
-      در این قسمت، انواع دسته‌بندی سمان‌های رزینی، ویژگی‌ها و مزایا و معایب آن‌ها بررسی می‌شود.
-    </p>
-
-    <h4>
-      ۱.
-      <a href="/glossary/self-adhesive-cements.html">
-        سمان‌های رزینی سلف ادهزیو
-      </a>
-      (Self-Adhesive Resin Cements)
-    </h4>
-    <ul>
-      <li><strong>ویژگی‌ها:</strong> استفاده آسان، قدرت باند متوسط تا کم (۴ تا ۱۶ مگاپاسکال) به ساختار دندان.</li>
-      <li>
-        <strong>مزیت اصلی:</strong>
-        معمولاً نیاز به
-        <a href="/glossary/bonding-protocol.html">باندینگ</a>
-        جداگانه ندارند (گرچه برخی شرکت‌ها باند مخصوص خود را توصیه می‌کنند).
-      </li>
-      <li>
-        <strong>مزایا:</strong>
-        سهولت استفاده، حساسیت تکنیکی کمتر، پاکسازی آسان،
-        قابلیت
-        <a href="/glossary/dual-cure-resin-cement.html">
-          دوال‌کیور
-        </a>،
-        احتمال کمتر حساسیت پس از سمان کردن.
-      </li>
-      <li><strong>معایب:</strong> احتمال تغییر رنگ در طول زمان، دشواری پاکسازی در برخی انواع، حساسیت به رطوبت و آلودگی.</li>
-      <li>
-        <strong>نکات مهم:</strong>
-        برای پاکسازی آسان، قبل از سفت شدن کامل، از <em>tack cure</em> کوتاه استفاده کنید.
-        در موارد گیر مشکوک، سطح داخلی را زبر و از پرایمر و باند استفاده کنید.
-        <a href="/glossary/isolation.html">ایزولاسیون</a>
-        مناسب ضروری است.
-      </li>
-      <li>
-        <strong>نمونه محصول:</strong>
-        Panavia SA Luting Cement (کوراری) — دوال‌کیور، آزادکننده فلوراید،
-        قدرت باند بالا به <a href="/glossary/zirconia.html">زیرکونیا</a> و <a href="/glossary/lithium-disilicate.html">لیتیوم دی‌سیلیکات</a> (بیش از ۵۰ مگاپاسکال)
-        و به عاج اچ‌نشده حدود ۲۶ مگاپاسکال.
-      </li>
-    </ul>
-
-    <h4>
-      ۲.
-      <a href="/glossary/adhesive-resin-cements.html">
-        سمان‌های رزینی ادهزیو
-      </a>
-      (Adhesive Resin Cements)
-    </h4>
-    <ul>
-      <li>
-        <strong>ویژگی‌ها:</strong>
-        قدرت باند متوسط تا بالا، مناسب برای رستوریشن‌های با
-        <a href="/glossary/retention.html">گیر</a>
-        کم یا مشکوک، نیاز به باندینگ جداگانه.
-      </li>
-      <li><strong>کاربردها:</strong> کراون و بریج تمام‌سرامیک، اینله، آنله، زیرکونیا، بریج مریلند و انواع پست.</li>
-      <li><strong>مزایا:</strong> سازگاری با انواع مواد، تنوع رنگ، قابلیت دوال‌کیور.</li>
-      <li><strong>معایب:</strong> احتمال تغییر رنگ، دشواری در پاکسازی، نیاز به ایزولاسیون کامل.</li>
-      <li><strong>نمونه محصول:</strong> Panavia V5 — دوال‌کیور، آزادکننده فلوراید، رنگ پایدار و مناسب برای ونیرها.</li>
-    </ul>
-
-    <h4>
-      ۳.
-      <a href="/glossary/esthetic-resin-cements.html">
-        سمان‌های رزینی زیبایی
-      </a>
-      (Esthetic Resin Cements)
-    </h4>
-    <ul>
-      <li>
-        <strong>ویژگی‌ها:</strong>
-        اغلب
-        <a href="/glossary/light-cure-resin-cement.html">
-          لایت‌کیور
-        </a>،
-        مناسب رستوریشن‌های زیبایی، رنگ پایدار (فاقد آمین).
-      </li>
-      <li>
-        <strong>مزایا:</strong>
-        زیبایی عالی، پایداری رنگ، زمان کار طولانی،
-        قدرت باند بالا به مینا و عاج با باندینگ مناسب،
-        تنوع رنگ، ارائه خمیر Try-in برای تست رنگ.
-      </li>
-    </ul>
-
-    <h4>سمان کردن رستوریشن‌های زیرکونیا</h4>
-    <ul>
-      <li>
-        زیرکونیا به دلیل استحکام بالا، همیشه نیاز به
-        <a href="/glossary/bond-strength.html">
-          باند قوی
-        </a>
-        ندارد.
-      </li>
-      <li>
-        اگر تراش دندان گیر کافی داشته باشد،
-        می‌توان از سمان‌های با قدرت باند کمتر
-        مانند گلاس آینومر یا رزینی ادهزیو استفاده کرد.
-      </li>
-      <li>
-        در موارد گیر کم، استفاده از سمان‌های رزینی ادهزیو
-        همراه با پرایمر و باندینگ الزامی است.
-      </li>
-    </ul>
+  <div style="text-align:center;">
+    <a class="back" href="index.html">← بازگشت به فهرست نوت‌کست‌ها</a>
   </div>
 
-<div class="author-note">
-  <a href="/about.html" class="author-link">دکتر فواد شهابیان</a>
-  <span class="author-role">متخصص پروتزهای دندانی و ایمپلنت</span>
-</div>
-
-<svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M3 14a9 9 0 0 1 18 0"/><path d="M5 14h3v7H5a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2z"/><path d="M19 14h-3v7h3a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2z"/></svg> <strong>نسخه‌ی صوتی این دنت‌کست را بشنوید:</strong><br>
-    <audio controls preload="none" style ="width: 100%;
-    margin-top: 12px;">
-  <source src="https://episodes.s3.ir-thr-at1.arvanstorage.ir/dentcast3.m4a?versionId=" type="audio/mpeg"></audio>
-
-
-  <!-- TODO: Add references section if this page cites scientific literature. -->
-  <p class="dc-disclaimer">محتوای این صفحه برای استفادهٔ آموزشی دندان‌پزشکان و دانشجویان دندان‌پزشکی تهیه شده است.</p>
-<footer class="dc-site-footer" style="text-align:center; margin-top:45px; color:#9aa1b3; font-size:.9rem; line-height:1.8;">
-
-  <div style="margin-bottom:22px;">
-    <a href="index.html"
-       style="
-         display:inline-block;
-         background:rgba(11,95,255,0.18);
-         color:var(--link);
-         border:1.8px solid rgba(var(--link-rgb),0.45);
-         border-radius:12px;
-         padding:12px 42px;
-         font-weight:700;
-         text-decoration:none;
-         font-size:1rem;
-         box-shadow:0 0 14px rgba(11,95,255,0.15);
-         transition:all .25s ease;">
-      <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg> برگشت به صفحه‌ی قبل
-    </a>
-  </div>
-
-  <div style="margin-top:6px;">
-    © 2025 DentCast
-  </div>
+  <footer>
+    © 2025 DentCast — طراحی و توسعه توسط فواد شهابیان
   </footer>
-
-</mai
+<script src="/dc-nav.js" defer></script>
+</body>
+</html>

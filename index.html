@@ -29,8 +29,9 @@
   <!-- Theme init — no flash -->
   <script>
     (function(){
-      const s=localStorage.getItem('dc-theme');
-      if(s==='dark') document.documentElement.setAttribute('data-theme','dark');
+      var s=localStorage.getItem('dc-theme');
+      var d=window.matchMedia('(prefers-color-scheme:dark)').matches;
+      if(s==='dark'||(s===null&&d)) document.documentElement.setAttribute('data-theme','dark');
     })();
   </script>
 
@@ -3094,23 +3095,8 @@ scrollBody.addEventListener('touchend',e=>{
 },{passive:true});
 </script>
 
-<script>
-/* ── THEME TOGGLE ── */
-const themeBtn=document.getElementById('dc-theme-toggle');
-function applyTheme(dark){
-  document.documentElement.setAttribute('data-theme',dark?'dark':'light');
-  themeBtn.innerHTML=window.dcSvgIcon ? window.dcSvgIcon(dark?'sun':'moon') : (dark?'☀️':'🌙');
-  localStorage.setItem('dc-theme',dark?'dark':'light');
-}
-(function(){
-  const s=localStorage.getItem('dc-theme');
-  const d=window.matchMedia('(prefers-color-scheme:dark)').matches;
-  applyTheme(s==='dark'||(s===null&&d));
-})();
-themeBtn.addEventListener('click',()=>{
-  applyTheme(document.documentElement.getAttribute('data-theme')!=='dark');
-});
-</script>
+<!-- Theme toggle behavior moved to /dc-nav.js (single source) -->
+<script src="/dc-nav.js" defer></script>
 
 <script>
 /* ── TOOLBAR DRAWER TOGGLE ── */
@@ -3864,17 +3850,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
     }
   });
 
-  /* Theme toggle in col-a footer */
-  const themeBtn = document.getElementById('dcdThemeBtn');
-  function syncThemeIcon(){
-    const dk = document.documentElement.getAttribute('data-theme') === 'dark';
-    if(themeBtn) themeBtn.innerHTML = '<span>'+(window.dcSvgIcon ? window.dcSvgIcon(dk?'sun':'moon') : (dk?'☀️':'🌙'))+'</span><span>تم</span>';
-  }
-  syncThemeIcon();
-  themeBtn?.addEventListener('click', () => {
-    applyTheme(document.documentElement.getAttribute('data-theme') !== 'dark');
-    syncThemeIcon();
-  });
+  /* Theme toggle in col-a footer (#dcdThemeBtn) is owned by /dc-nav.js */
 
   /* PWA */
   document.getElementById('dcdPwaBtn')?.addEventListener('click', handlePWAInstall);
