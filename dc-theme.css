@@ -750,3 +750,9 @@ body:has(.dc-topbar) .back {
 body:has(.dc-topbar) .back:hover {
   background: var(--chip-bd);
 }
+
+/* DentAI 11-16: embedded styles use background:#fff !important on .text-box.
+   Override only in dark mode so the box flips with the theme. */
+[data-theme="dark"] body:has(.dc-topbar) .text-box {
+  background: var(--card-bg) !important;
+}

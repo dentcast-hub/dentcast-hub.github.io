@@ -782,7 +782,7 @@ body{
 .radar-shine-card::after{
   content:""; position:absolute; top:-60%; right:-80%;
   width:55%; height:220%; z-index:2; pointer-events:none;
-  background:linear-gradient(90deg,transparent 0%,rgba(252,247,206,.08) 30%,rgba(252,247,206,.70) 50%,rgba(252,247,206,.08) 70%,transparent 100%);
+  background:linear-gradient(90deg,transparent 0%,rgba(255,255,255,.08) 30%,rgba(255,255,255,.70) 50%,rgba(255,255,255,.08) 70%,transparent 100%);
   transform:rotate(22deg); opacity:0;
 }
 .radar-shine-card.radar-shine-on::after{ animation:radarShine 1s ease-out forwards; }
@@ -3098,20 +3098,7 @@ scrollBody.addEventListener('touchend',e=>{
 <!-- Theme toggle behavior moved to /dc-nav.js (single source) -->
 <script src="/dc-nav.js" defer></script>
 
-<script>
-/* ── TOOLBAR DRAWER TOGGLE ── */
-(function(){
-  const btn = document.getElementById('btn-toolbar-toggle');
-  const drawer = document.getElementById('dcToolbarDrawer');
-  if(!btn || !drawer) return;
-  btn.addEventListener('click', function(){
-    const isOpen = drawer.classList.contains('open');
-    drawer.classList.toggle('open', !isOpen);
-    btn.setAttribute('aria-expanded', String(!isOpen));
-    drawer.setAttribute('aria-hidden', String(isOpen));
-  });
-})();
-</script>
+<!-- Toolbar drawer toggle is handled by /dc-nav.js (single source) -->
 
 <script>
 /* ── MOBILE SEARCH OVERLAY ── */
