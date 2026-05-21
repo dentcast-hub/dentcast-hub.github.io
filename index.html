@@ -2564,6 +2564,7 @@ body.dc-desktop-ui #dc-desktop-root{
           <button class="dc-pulse-close" onclick="document.getElementById('dcPulseCard').style.display='none'" aria-label="بستن"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
         </div>
         <ul class="dc-pulse-list">
+          <li>یه <a href="/chairside/chairside-17.html"><strong>تجربه‌ی ویزیت</strong></a> در بخش chairside قرار داده شد · ۳۱ اردیبهشت</li>
           <li>ShareHub <a href="/sharehub/share-6.html"><strong>ششم</strong></a> با مطلبی از دکتر نشاطی در سایت قرار گرفت · ۳۰ اردیبهشت</li>
           <li><a href="/episodes/episode-157.html"><strong>دنتکست ۱۵۷</strong></a> منتشر شد · ۲۵ اردیبهشت</li>
 
@@ -4021,8 +4022,8 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
       lcCtaLink.style.transform='translateY('+(1-lt)*8+'px)';
     }
 
-    /* === SCENE 3: ARTICLES (0.52 → 0.74) === */
-    const artO=Math.min(ease(rng(p,0.52,0.60)),ease(1-rng(p,0.66,0.74)));
+    /* === SCENE 3: ARTICLES (0.52 → 0.82) — fade-out delayed so the 3rd suggestion lingers === */
+    const artO=Math.min(ease(rng(p,0.52,0.60)),ease(1-rng(p,0.74,0.82)));
     setO(artScene,artO);
     setPE(artScene,artO>0.05);
     const artItems=document.querySelectorAll('.pt-article-item');
@@ -4033,8 +4034,8 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
       c.style.transform='translateX('+(1-t)*12+'px)';
     });
 
-    /* === SCENE 4: CTA (0.76 → 0.90 full) === */
-    const ctaO=ease(rng(p,0.76,0.90));
+    /* === SCENE 4: CTA (0.83 → 0.94 full) — shifted to make room for extended Scene 3 === */
+    const ctaO=ease(rng(p,0.83,0.94));
     setO(ctaScene,ctaO);
     setPE(ctaScene,ctaO>0.05);
 
