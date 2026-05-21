@@ -79,6 +79,15 @@ body.dc-content-only main.article-page {
   --text:  #0a1a33;   /* was #e7eaf1 on dark pages → now readable */
   --muted: #4a5f85;   /* was #9aa1b3 (3:1) → now ~6:1 on white  */
   --blue2: #022360;   /* darker accent alias used by some pages   */
+
+  /* ── Semantic role tokens (link + heading) ──
+     Added 2026-05-21 to consolidate drifted link blues
+     and the dentai heading blue into named roles.
+     Brand tokens (--ac, --pr) remain unchanged. */
+  --link:       #0b5fff;        /* default link, light mode = brand --ac */
+  --link-hover: #003bd1;        /* hover/active link, light mode        */
+  --link-rgb:   11, 95, 255;    /* rgb triplet for rgba() use           */
+  --heading:    #08327a;        /* deep heading accent, light mode      */
 }
 
 /* =====================================================
@@ -111,6 +120,12 @@ body.dc-content-only main.article-page {
   --chip-bg:  rgba(91,156,246,.12);
   --chip-bd:  rgba(91,156,246,.24);
   --chip-txt: #8ab4f8;
+
+  /* ── Semantic role tokens (link + heading) — dark mode ── */
+  --link:       #7ab4ff;        /* default link, dark mode             */
+  --link-hover: #a8c8ff;        /* hover/active link, dark mode        */
+  --link-rgb:   122, 180, 255;  /* rgb triplet for rgba() use          */
+  --heading:    #8ab4f8;        /* heading accent, dark mode           */
 }
 
 /* =====================================================

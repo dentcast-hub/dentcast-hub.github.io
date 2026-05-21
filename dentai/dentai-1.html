@@ -86,7 +86,7 @@
 
     /* تیترهای اصلی مقاله (H2) */
     h2 {
-      color: #08327a; /* سورمه‌ای خوش‌رنگ */
+      color:var(--heading); /* سورمه‌ای خوش‌رنگ */
       font-weight: 800;
       font-size: 1.35rem;
       margin-top: 36px;
@@ -95,7 +95,7 @@
 
     /* ** SEO Change: H3 for sub-sections (to look like the original H2 in the final summary) ** */
     h3 {
-      color: #08327a; /* رنگ H2 حفظ شد */
+      color:var(--heading); /* رنگ H2 حفظ شد */
       font-weight: 800; /* ضخامت H2 حفظ شد */
       font-size: 1.35rem; /* اندازه H2 حفظ شد */
       margin-top: 36px;
@@ -425,8 +425,8 @@
        style="
          display:inline-block;
          background:rgba(11,95,255,0.18);
-         color:#3a84ff;
-         border:1.8px solid rgba(11,95,255,0.45);
+         color:var(--link);
+         border:1.8px solid rgba(var(--link-rgb),0.45);
          border-radius:12px;
          padding:12px 42px;
          font-weight:700;

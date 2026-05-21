@@ -104,6 +104,9 @@
   --tr2:.26s cubic-bezier(.4,0,.2,1);
 
   --r-sm:10px; --r-md:14px; --r-lg:18px; --r-xl:22px; --r-f:999px;
+
+  /* Semantic link tokens (light mode) — added 2026-05-21 */
+  --link:#0b5fff; --link-hover:#003bd1; --link-rgb:11,95,255; --heading:#08327a;
 }
 
 [data-theme="dark"]{
@@ -128,6 +131,9 @@
   --pulse-bg:#0e1621; --pulse-border:rgba(245,162,8,.20);
 
   --monitor-sh:inset -6px -6px 12px rgba(0,0,0,.22),inset 6px 6px 12px rgba(255,255,255,.03);
+
+  /* Semantic link tokens (dark mode) — added 2026-05-21 */
+  --link:#7ab4ff; --link-hover:#a8c8ff; --link-rgb:122,180,255; --heading:#8ab4f8;
 }
 
 /* =====================================================
@@ -423,7 +429,7 @@ body{
   font-size:9px; color:#c49820;
   top:3px;
 }
-.dc-pulse-list a{ color:var(--ac); }
+.dc-pulse-list a{ color:var(--link); }
 .dc-pulse-list strong{ font-weight:800; color:inherit; }
 
 /* Ad inside pulse */
@@ -1677,7 +1683,7 @@ body.dc-desktop-ui #dc-desktop-root{
   content:"●"; position:absolute; right:0;
   font-size:8px; color:rgba(91,156,246,.70); top:4px;
 }
-.dcd-pulse-list a{ color:#7aacff; text-decoration:none; }
+.dcd-pulse-list a{ color:var(--link); text-decoration:none; }
 .dcd-pulse-list strong{ color:rgba(235,243,255,.95); }
 
 .dcd-hero{

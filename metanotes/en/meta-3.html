@@ -35,6 +35,10 @@
       --muted:#9aa1b3;
       --radius:18px;
       --shadow:0 18px 50px rgba(0,0,0,.35);
+      /* Semantic link tokens (dark-bg context) */
+      --link:#7ab4ff;
+      --link-hover:#a8c8ff;
+      --link-rgb:122,180,255;
     }
 
     html,body{margin:0; padding:0;}
@@ -322,8 +326,8 @@ At this point, the distinction between “success” and “survival” becomes 
        style="
          display:inline-block;
          background:rgba(11,95,255,0.18);
-         color:#3a84ff;
-         border:1.8px solid rgba(11,95,255,0.45);
+         color:var(--link);
+         border:1.8px solid rgba(var(--link-rgb),0.45);
          border-radius:12px;
          padding:12px 42px;
          font-weight:700;
