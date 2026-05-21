@@ -1756,22 +1756,25 @@ body.dc-desktop-ui #dc-desktop-root{
 }
 .pt-wrap{
   position:relative;
-  margin:0 0 8px;
+  /* pull out of #mobile-body padding (12px sides, 12px top, 80px bottom) so the box fills the viewport edge-to-edge */
+  margin:-12px -12px 8px -12px;
 }
 .pt-track{
   position:relative;
-  height:calc(100svh - 165px + 3200px);
+  /* sticky box is full viewport; track extends an extra 3200px to drive scene progression */
+  height:calc(100svh + 3200px);
 }
 .pt-sticky{
   position:sticky;
   top:0;
-  height:calc(100svh - 165px);
+  /* full viewport height — box no longer scrolls away or leaves room for top/bottom chrome */
+  height:100svh;
   width:100%;
   overflow:hidden;
   background:#000;
-  border-radius:var(--r-lg);
+  border-radius:0;
   box-shadow:var(--card-sh2);
-  border:1px solid var(--card-border);
+  border:none;
   z-index:10;
 }
 /* canvas */
