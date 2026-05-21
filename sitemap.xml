@@ -253,12 +253,6 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://dentcast.org/dentcast-plus/video-6.html</loc>
-    <lastmod>2026-03-17</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://dentcast.org/episodes.html</loc>
     <lastmod>2025-11-07</lastmod>
     <changefreq>monthly</changefreq>
@@ -2503,170 +2497,14 @@
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://dentcast.org/notecast/episode-10.html</loc>
-    <lastmod>2025-11-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://dentcast.org/notecast/episode-11.html</loc>
-    <lastmod>2025-11-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://dentcast.org/notecast/episode-12.html</loc>
-    <lastmod>2025-11-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://dentcast.org/notecast/episode-13.html</loc>
-    <lastmod>2025-11-12</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://dentcast.org/notecast/episode-14.html</loc>
-    <lastmod>2025-11-13</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://dentcast.org/notecast/episode-15.html</loc>
-    <lastmod>2025-11-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://dentcast.org/notecast/episode-16.html</loc>
-    <lastmod>2025-11-17</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://dentcast.org/notecast/episode-17.html</loc>
-    <lastmod>2025-11-18</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://dentcast.org/notecast/episode-18.html</loc>
-    <lastmod>2025-11-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://dentcast.org/notecast/episode-19.html</loc>
-    <lastmod>2025-11-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://dentcast.org/notecast/episode-2.html</loc>
     <lastmod>2025-11-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://dentcast.org/notecast/episode-20.html</loc>
-    <lastmod>2025-11-23</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://dentcast.org/notecast/episode-21.html</loc>
-    <lastmod>2025-11-04</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://dentcast.org/notecast/episode-22.html</loc>
-    <lastmod>2025-11-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://dentcast.org/notecast/episode-23.html</loc>
-    <lastmod>2025-11-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://dentcast.org/notecast/episode-24.html</loc>
-    <lastmod>2025-12-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://dentcast.org/notecast/episode-25.html</loc>
-    <lastmod>2025-12-12</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://dentcast.org/notecast/episode-26.html</loc>
-    <lastmod>2025-12-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://dentcast.org/notecast/episode-27.html</loc>
-    <lastmod>2025-12-30</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://dentcast.org/notecast/episode-28.html</loc>
-    <lastmod>2026-01-08</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://dentcast.org/notecast/episode-29.html</loc>
-    <lastmod>2026-02-03</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://dentcast.org/notecast/episode-3.html</loc>
-    <lastmod>2025-11-03</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://dentcast.org/notecast/episode-30.html</loc>
-    <lastmod>2026-02-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://dentcast.org/notecast/episode-31.html</loc>
-    <lastmod>2026-02-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://dentcast.org/notecast/episode-32.html</loc>
-    <lastmod>2026-03-17</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://dentcast.org/notecast/episode-33.html</loc>
     <lastmod>2026-04-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://dentcast.org/notecast/episode-4.html</loc>
-    <lastmod>2025-11-03</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://dentcast.org/notecast/episode-5.html</loc>
-    <lastmod>2025-11-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -2679,18 +2517,6 @@
   <url>
     <loc>https://dentcast.org/notecast/episode-7.html</loc>
     <lastmod>2025-11-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://dentcast.org/notecast/episode-8.html</loc>
-    <lastmod>2025-11-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://dentcast.org/notecast/episode-9.html</loc>
-    <lastmod>2025-11-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
