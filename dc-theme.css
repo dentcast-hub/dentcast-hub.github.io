@@ -561,40 +561,19 @@ body:has(.dc-topbar) .wrap > ol li {
 
 /* =====================================================
    DARK / LIGHT MODE FLOAT TOGGLE BUTTON
-   Matches index.html: bottom:76px left:14px
-   (76px clears any bottom browser UI bar on mobile)
+   Ported 1:1 from index.html so every page matches.
 ===================================================== */
-#dc-theme-toggle {
-  position: fixed !important;
-  bottom: 76px !important;
-  left: 14px !important;
-  right: auto !important;
-  top: auto !important;
-  z-index: 250;
-  width: 42px;
-  height: 42px;
-  border-radius: var(--r-f);
-  background: #17212b;
-  color: #e8f0ff;
-  border: 1px solid rgba(255,255,255,.12);
-  box-shadow: 0 4px 16px rgba(0,0,0,.28);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 19px;
-  cursor: pointer;
-  transition: all var(--tr);
+#dc-theme-toggle{
+  position:fixed; bottom:76px; left:14px; z-index:250;
+  width:40px; height:40px; border-radius:var(--r-md);
+  background:var(--card-bg); color:var(--txt2);
+  border:1px solid var(--card-border);
+  box-shadow:var(--card-sh);
+  display:flex; align-items:center; justify-content:center;
+  font-size:17px; cursor:pointer;
+  transition:all var(--tr);
 }
-
-[data-theme="dark"] #dc-theme-toggle {
-  background: #1e2c3a;
-  border-color: rgba(255,255,255,.10);
-  box-shadow: 0 4px 16px rgba(0,0,0,.36);
-}
-
-#dc-theme-toggle:active {
-  transform: scale(.86);
-}
+#dc-theme-toggle:active{ transform:scale(.86); background:var(--surface2); }
 
 /* =====================================================
    JUMP / SCROLL BUTTON (used in Chairside, etc.)
