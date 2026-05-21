@@ -7682,33 +7682,6 @@
     "page_url": "/chairside/chairside-16.html"
   },
   {
-    "type": "chairside",
-    "id": "chairside-17",
-    "title": "وقتی قبل از شروع درمان، باید به جراحیِ قبلی شک کرد",
-    "caption": "روایت یک کیس بالینی درباره بیماری با شکایت از افتادن مکرر روکش ایمپلنت که توسط دندانپزشک دیگری ساخته شده بود. کیفیت تطابق و طراحی پروتز به‌قدری ضعیف بود که حتی نسبت به جراحی، پوزیشن ایمپلنت و انتخاب سیستم هم نمی‌شد با اطمینان فرض کرد همه‌چیز درست انجام شده. این یادداشت درباره‌ی شناسایی برند ایمپلنت پیش از هر تصمیم، نقش CBCT به‌عنوان ابزار تصمیم‌گیری (نه صرفاً تشخیص)، و مهم‌ترین مهارت در درمان ایمپلنت‌های ریفرال است: توانایی «شروع نکردن» بعضی درمان‌ها.",
-    "hashtags": [
-      "#ایمپلنت_ریفرال",
-      "#روکش_ایمپلنت",
-      "#برند_ایمپلنت",
-      "#CBCT",
-      "#شروع_نکردن_درمان",
-      "#کیس_ریفرال",
-      "#تصمیم_بالینی",
-      "#پروتز_ایمپلنت"
-    ],
-    "keywords": [
-      "referral implant case management",
-      "failed implant crown repeatedly loose",
-      "unknown implant brand identification",
-      "implant system compatibility components availability",
-      "CBCT pre-treatment decision making implant",
-      "referral implant prosthetic restart",
-      "when not to start dental treatment",
-      "inheriting another dentist implant work"
-    ],
-    "page_url": "/chairside/chairside-17.html"
-  },
-  {
     "type": "sharehub",
     "id": "6",
     "title": "نحوه تنظیم اکلوژن در لامینیت‌های سرامیکی",
@@ -7744,5 +7717,32 @@
       "curated dental content"
     ],
     "url": "/sharehub/share-6.html"
+  },
+  {
+    "type": "chairside",
+    "id": "chairside-17",
+    "title": "وقتی قبل از شروع درمان، باید به جراحیِ قبلی شک کرد",
+    "caption": "روایت یک کیس بالینی درباره بیماری با شکایت از افتادن مکرر روکش ایمپلنت که توسط دندانپزشک دیگری ساخته شده بود. کیفیت تطابق و طراحی پروتز به‌قدری ضعیف بود که حتی نسبت به جراحی، پوزیشن ایمپلنت و انتخاب سیستم هم نمی‌شد با اطمینان فرض کرد همه‌چیز درست انجام شده. این یادداشت درباره‌ی شناسایی برند ایمپلنت پیش از هر تصمیم، نقش CBCT به‌عنوان ابزار تصمیم‌گیری (نه صرفاً تشخیص)، و مهم‌ترین مهارت در درمان ایمپلنت‌های ریفرال است: توانایی «شروع نکردن» بعضی درمان‌ها.",
+    "hashtags": [
+      "#ایمپلنت_ریفرال",
+      "#روکش_ایمپلنت",
+      "#برند_ایمپلنت",
+      "#CBCT",
+      "#شروع_نکردن_درمان",
+      "#کیس_ریفرال",
+      "#تصمیم_بالینی",
+      "#پروتز_ایمپلنت"
+    ],
+    "keywords": [
+      "referral implant case management",
+      "failed implant crown repeatedly loose",
+      "unknown implant brand identification",
+      "implant system compatibility components availability",
+      "CBCT pre-treatment decision making implant",
+      "referral implant prosthetic restart",
+      "when not to start dental treatment",
+      "inheriting another dentist implant work"
+    ],
+    "page_url": "/chairside/chairside-17.html"
   }
 ]
