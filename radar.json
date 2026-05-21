@@ -1658,7 +1658,7 @@
       "ملکی",
       "کسب و کار"
     ],
-    "priority": 10,
+    "priority": 5,
     "featured": false,
     "credit": false,
     "iran_server": true
@@ -1677,7 +1677,7 @@
       "Journal of Mashhad Dental School",
       "تحقیقاتی"
     ],
-    "priority": 10,
+    "priority": 5,
     "featured": false,
     "credit": false,
     "iran_server": true
@@ -1696,7 +1696,7 @@
       "Isfahan Dental School",
       "تحقیقاتی"
     ],
-    "priority": 10,
+    "priority": 5,
     "featured": false,
     "credit": false,
     "iran_server": true
@@ -1716,7 +1716,7 @@
       "انگلیسی",
       "research"
     ],
-    "priority": 10,
+    "priority": 5,
     "featured": false,
     "credit": false,
     "iran_server": true
@@ -1734,7 +1734,7 @@
       "جامعه اسلامی دندانپزشکان",
       "IDA"
     ],
-    "priority": 10,
+    "priority": 5,
     "featured": false,
     "credit": false,
     "iran_server": true
@@ -1752,7 +1752,7 @@
       "پایگاه",
       "research"
     ],
-    "priority": 10,
+    "priority": 5,
     "featured": false,
     "credit": false,
     "iran_server": true
@@ -1872,7 +1872,7 @@
       "endodontics",
       "کنگره"
     ],
-    "priority": 10,
+    "priority": 8,
     "featured": false,
     "credit": false,
     "iran_server": true
@@ -1891,7 +1891,7 @@
       "کاشت دندان",
       "کنگره"
     ],
-    "priority": 10,
+    "priority": 8,
     "featured": false,
     "credit": false,
     "iran_server": true
@@ -1907,6 +1907,251 @@
       "laser",
       "ISLAD",
       "دندانپزشکی لیزر"
+    ],
+    "priority": 8,
+    "featured": false,
+    "credit": false,
+    "iran_server": true
+  },
+  {
+    "id": "com-091",
+    "name": "درین کاشت مانا (ایمپلنت 3A)",
+    "url": "https://dorinkasht.com",
+    "desc": "تولیدکننده ایرانی ایمپلنت دندانی تحت برندهای 3A، DPI و ARIO؛ دارای ISO 9001 و 13485.",
+    "keywords": [
+      "درین کاشت",
+      "3A",
+      "DPI",
+      "ARIO",
+      "ایمپلنت ایرانی",
+      "فیکسچر",
+      "تولید داخل"
+    ],
+    "priority": 10,
+    "featured": false,
+    "credit": false,
+    "iran_server": true
+  },
+  {
+    "id": "com-092",
+    "name": "نرم‌افزار تیام (پارس تیام)",
+    "url": "https://parstiam.com",
+    "desc": "نرم‌افزار مدیریت کلینیک و مطب دندانپزشکی با پرونده تخصصی، نوبت‌دهی، باشگاه مشتریان و حسابداری.",
+    "keywords": [
+      "تیام",
+      "پارس تیام",
+      "نرم‌افزار مطب",
+      "مدیریت کلینیک",
+      "نوبت دهی",
+      "حسابداری دندانپزشکی"
+    ],
+    "priority": 10,
+    "featured": false,
+    "credit": false,
+    "iran_server": true
+  },
+  {
+    "id": "com-093",
+    "name": "نرم‌افزار مینادنت",
+    "url": "https://minadent.ir",
+    "desc": "نرم‌افزار مدیریت مطب دندانپزشکی با امکانات پرونده، نوبت‌دهی، انبار و پیامک.",
+    "keywords": [
+      "مینادنت",
+      "minadent",
+      "نرم‌افزار دندانپزشکی",
+      "نوبت دهی",
+      "مدیریت مطب"
+    ],
+    "priority": 10,
+    "featured": false,
+    "credit": false,
+    "iran_server": true
+  },
+  {
+    "id": "com-094",
+    "name": "نرم‌افزار مینامدیکال",
+    "url": "http://www.minamedical.ir",
+    "desc": "نرم‌افزار مدیریت مطب و کلینیک دندانپزشکی با نسخه اپلیکیشن و ارتباط با پیام‌رسان‌ها.",
+    "keywords": [
+      "مینامدیکال",
+      "minamedical",
+      "نرم‌افزار کلینیک",
+      "نرم‌افزار مطب",
+      "مدیریت"
+    ],
+    "priority": 10,
+    "featured": false,
+    "credit": false,
+    "iran_server": true
+  },
+  {
+    "id": "com-095",
+    "name": "نرم‌افزار مطب آنلاین",
+    "url": "https://matabeonline.ir",
+    "desc": "نرم‌افزار آنلاین مدیریت مطب دندانپزشکی با چارت تصویری، EHR و نوبت‌دهی اینترنتی.",
+    "keywords": [
+      "مطب آنلاین",
+      "matabeonline",
+      "نرم‌افزار دندانپزشکی",
+      "EHR",
+      "پرونده الکترونیک",
+      "چارت"
+    ],
+    "priority": 10,
+    "featured": false,
+    "credit": false,
+    "iran_server": true
+  },
+  {
+    "id": "com-096",
+    "name": "نرم‌افزار ژنیک",
+    "url": "https://zhenic.ir",
+    "desc": "نرم‌افزار ابری مدیریت کلینیک و مطب دندانپزشکی با دسترسی تحت وب.",
+    "keywords": [
+      "ژنیک",
+      "zhenic",
+      "نرم‌افزار ابری",
+      "نرم‌افزار مطب",
+      "کلینیک"
+    ],
+    "priority": 10,
+    "featured": false,
+    "credit": false,
+    "iran_server": true
+  },
+  {
+    "id": "com-097",
+    "name": "نرم‌افزار روزنه",
+    "url": "https://rozanehgroup.ir",
+    "desc": "نرم‌افزار جامع مدیریت مراکز دندانپزشکی با پشتیبانی از بیمه‌های اولیه و تکمیلی.",
+    "keywords": [
+      "روزنه",
+      "rozaneh",
+      "نرم‌افزار جامع",
+      "مدیریت مرکز دندانپزشکی",
+      "بیمه"
+    ],
+    "priority": 10,
+    "featured": false,
+    "credit": false,
+    "iran_server": true
+  },
+  {
+    "id": "com-098",
+    "name": "عاج طب کالا (دنتال سنتر)",
+    "url": "https://ajtebkala.com",
+    "desc": "تولید و عرضه یونیت‌های دندانپزشکی برند کارن و سایر تجهیزات دندانپزشکی از سال ۱۳۶۸.",
+    "keywords": [
+      "عاج طب",
+      "ajtebkala",
+      "یونیت کارن",
+      "Karen",
+      "یونیت دندانپزشکی",
+      "دنتال سنتر"
+    ],
+    "priority": 10,
+    "featured": false,
+    "credit": false,
+    "iran_server": true
+  },
+  {
+    "id": "com-099",
+    "name": "کادنت",
+    "url": "https://kadent.net",
+    "desc": "فروشگاه تخصصی مواد و تجهیزات دندانپزشکی با تنوع کامپوزیت، سیلر و مواد مصرفی.",
+    "keywords": [
+      "کادنت",
+      "kadent",
+      "مواد دندانپزشکی",
+      "تجهیزات",
+      "کامپوزیت",
+      "سیلر"
+    ],
+    "priority": 10,
+    "featured": false,
+    "credit": false,
+    "iran_server": true
+  },
+  {
+    "id": "com-100",
+    "name": "شاپ دنت",
+    "url": "https://shopdent.net",
+    "desc": "فروشگاه اینترنتی تجهیزات دندانپزشکی، دندانسازی و مواد مصرفی.",
+    "keywords": [
+      "شاپ دنت",
+      "shopdent",
+      "فروشگاه دندانپزشکی",
+      "تجهیزات",
+      "دندانسازی"
+    ],
+    "priority": 10,
+    "featured": false,
+    "credit": false,
+    "iran_server": true
+  },
+  {
+    "id": "com-101",
+    "name": "پارتاک دنتال",
+    "url": "https://partakdental.com",
+    "desc": "فروشگاه تجهیزات دندانپزشکی با تخصص قطعات یدکی یونیت‌های مختلف ایرانی و خارجی.",
+    "keywords": [
+      "پارتاک",
+      "partakdental",
+      "قطعات یدکی",
+      "یونیت",
+      "لوازم یدکی صندلی",
+      "تعمیرات"
+    ],
+    "priority": 10,
+    "featured": false,
+    "credit": false,
+    "iran_server": true
+  },
+  {
+    "id": "com-102",
+    "name": "جهان دنتال",
+    "url": "https://jahandental.com",
+    "desc": "نمایندگی رسمی برندهای یونیت دندانپزشکی ایرانی و خارجی با خدمات پس از فروش.",
+    "keywords": [
+      "جهان دنتال",
+      "jahandental",
+      "یونیت دندانپزشکی",
+      "نمایندگی",
+      "فخر سینا"
+    ],
+    "priority": 10,
+    "featured": false,
+    "credit": false,
+    "iran_server": true
+  },
+  {
+    "id": "com-103",
+    "name": "آوادنتال",
+    "url": "https://avadental.ir",
+    "desc": "فروش انواع یونیت‌ها و تجهیزات دندانپزشکی برندهای ایرانی و خارجی به‌صورت نقد و اقساط.",
+    "keywords": [
+      "آوادنتال",
+      "avadental",
+      "یونیت دندانپزشکی",
+      "تجهیزات",
+      "اقساط"
+    ],
+    "priority": 10,
+    "featured": false,
+    "credit": false,
+    "iran_server": true
+  },
+  {
+    "id": "com-104",
+    "name": "دندان‌لاین",
+    "url": "https://dandanline.ir",
+    "desc": "پلتفرم تخصصی مشاوره آنلاین دندانپزشکی و معرفی دندانپزشک بر اساس مشکل، محله و بیمه.",
+    "keywords": [
+      "دندان لاین",
+      "dandanline",
+      "مشاوره دندانپزشکی",
+      "نوبت دهی تخصصی",
+      "پلتفرم دندانپزشکی"
     ],
     "priority": 10,
     "featured": false,
