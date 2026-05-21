@@ -685,3 +685,68 @@ body:has(.dc-topbar) *:not(img):not(video) {
 [data-theme="dark"] #dcGlobalBox .dc-result-meta {
   color: var(--txt3);
 }
+
+/* =====================================================
+   LEGACY NOTECAST PAGES — theme-responsive overrides
+   notecast/episode-* pages have no .dc-topbar so the
+   existing body:has(.dc-topbar) rules above don't apply.
+   These mirror rules flip body bg/text and the embedded
+   .glass-box / .audio-box / .back panels with the theme.
+   Added 2026-05-21 — colors only, no structural change.
+===================================================== */
+body:not(:has(.dc-topbar)) {
+  background: var(--bg);
+  color: var(--text);
+  transition: background var(--tr2), color var(--tr2);
+}
+
+body:not(:has(.dc-topbar)) .glass-box,
+body:not(:has(.dc-topbar)) .text-box {
+  background: var(--card-bg);
+  color: var(--text);
+  border: 1px solid var(--card-border);
+  box-shadow: var(--card-sh);
+}
+
+body:not(:has(.dc-topbar)) .glass-box h1,
+body:not(:has(.dc-topbar)) .glass-box h2,
+body:not(:has(.dc-topbar)) .glass-box h3,
+body:not(:has(.dc-topbar)) .glass-box h4,
+body:not(:has(.dc-topbar)) .glass-box p,
+body:not(:has(.dc-topbar)) .glass-box li,
+body:not(:has(.dc-topbar)) .text-box p,
+body:not(:has(.dc-topbar)) .text-box li {
+  color: var(--text);
+}
+
+body:not(:has(.dc-topbar)) .audio-box {
+  background: var(--surface2);
+  color: var(--text);
+  border: 1px solid var(--border);
+  box-shadow: var(--card-sh);
+}
+
+body:not(:has(.dc-topbar)) .back,
+body:not(:has(.dc-topbar)) .back-link {
+  background: var(--chip-bg);
+  color: var(--link);
+  border: 1px solid var(--chip-bd);
+}
+body:not(:has(.dc-topbar)) .back:hover,
+body:not(:has(.dc-topbar)) .back-link:hover {
+  background: var(--chip-bd);
+}
+
+body:not(:has(.dc-topbar)) footer {
+  color: var(--muted);
+}
+
+/* DentAI .back button — same theme-aware treatment */
+body:has(.dc-topbar) .back {
+  background: var(--chip-bg);
+  color: var(--link);
+  border: 1px solid var(--chip-bd);
+}
+body:has(.dc-topbar) .back:hover {
+  background: var(--chip-bd);
+}
