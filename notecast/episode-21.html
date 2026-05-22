@@ -3,98 +3,382 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>نوت‌کست بیست و یکم | DentCast</title>
-  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600&display=swap" rel="stylesheet">
+  <title>نوت‌کست ۲۱ – ادامه‌ی قالب‌گیری دو مرحله‌ای | دنت‌کست</title>
+  <meta name="description" content="نوت‌کست بیست و یکم دنت‌کست؛ ادامه‌ی بحث مهم قالب‌گیری دو مرحله‌ای و نکات کلینیکی.">
+ <link rel="canonical" href="https://dentcast.org/notecast/episode-21.html">
+ <link rel="alternate" hreflang="fa-IR" href="https://dentcast.ir/notecast/episode-21.html">
+ <link rel="alternate" hreflang="fa" href="https://dentcast.org/notecast/episode-21.html">
+ <link rel="alternate" hreflang="x-default" href="https://dentcast.org/notecast/episode-21.html">
+
+
   <style>
+    :root {
+      --blue: #0b5fff;
+      --bg: #0b1220;
+      --bg2: #121a2b;
+      --text: #e7eaf1;
+      --muted: #9aa1b3;
+      --radius: 18px;
+      --shadow: 0 18px 50px rgba(0,0,0,.35);
+    }
+
     body {
-      font-family: 'Vazirmatn', sans-serif;
-      background: linear-gradient(160deg, #0b1220, #121a2b);
-      color: #e7eaf1;
-      line-height: 1.9;
       margin: 0;
-      padding: 20px;
-      direction: rtl;
+      font-family: 'Vazirmatn', sans-serif;
+      background: linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+      color: var(--text);
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 40px 22px 90px;
+      line-height: 1.9;
     }
-    h1, h2, h3 {
-      color: #0b5fff;
+
+    h1 {
       text-align: center;
+      color: var(--blue);
+      font-weight: 800;
+      font-size: 2rem;
+      margin-bottom: 8px;
     }
-    .section {
-      margin-top: 24px;
-      border-right: 3px solid #0b5fff;
-      padding-right: 15px;
+
+    h2 {
+      text-align: center;
+      color: var(--text);
+      font-weight: 600;
+      font-size: 1.2rem;
+      margin-bottom: 30px;
     }
-    .highlight {
-      color: #9aa1b3;
-      font-style: italic;
+
+    .glass-box {
+      background: rgba(255, 255, 255, 0.99);
+      backdrop-filter: blur(12px);
+      border-radius: var(--radius);
+      padding: 20px 25px;
+      margin: 25px 0;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.25);
+      color: #111;
+      line-height: 1.9;
     }
+
+    /* Neutral H3 */
+    h3 {
+      color: var(--text);
+      font-weight: 700;
+      margin-top: 30px;
+      font-size: 1.2rem;
+    }
+
+    /* ** SEO Change: H4 used for main content sections to respect H1/H2 hierarchy ** */
+    /* New H4 style to match the original H3 style */
+    .glass-box h4 {
+      color: var(--blue);
+      font-weight: 700;
+      margin-top: 25px;
+      font-size: 1.1rem;
+    }
+
+    ul {
+      list-style-type: "✦ ";
+      padding-right: 20px;
+      margin: 10px 0 20px;
+    }
+
+    li {
+      margin-bottom: 10px;
+    }
+
+    .author-note{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  align-items:center;
+  gap:6px 10px;
+  margin:2.5rem auto 1rem;
+  padding-top:1.25rem;
+  border-top:1px solid rgba(120,140,170,0.18);
+  color:var(--txt3);
+  font-size:.78rem;
+}
+.author-note .author-link{
+  color:var(--txt2);
+  font-weight:600;
+  text-decoration:none;
+}
+.author-note .author-link:hover{
+  color:var(--ac);
+  text-decoration:underline;
+  text-underline-offset:3px;
+}
+.author-note .author-role{
+  color:var(--txt3);
+}
+
     iframe {
-      display: block;
-      margin: 30px auto;
-      border-radius: 12px;
+      width: 100%;
+      height: 110px;
+      border: none;
+      border-radius: var(--radius);
+      margin-top: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, .2);
     }
-    .footer {
-      margin-top: 40px;
+
+    .audio-box {
+      margin-top: 60px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius);
+      padding: 20px;
       text-align: center;
-      font-size: 0.9rem;
-      color: #9aa1b3;
+      box-shadow: var(--shadow);
+    }
+
+    .back {
+      display: inline-block;
+      margin-top: 60px;
+      color: var(--blue);
+      text-decoration: none;
+      font-weight: 600;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      padding: 10px 20px;
+      background: rgba(255, 255, 255, 0.05);
+      transition: all .3s ease;
+    }
+
+    .back:hover {
+      background: rgba(11, 95, 255, 0.15);
+      transform: scale(1.03);
+    }
+
+    footer {
+      margin-top: 70px;
+      text-align: center;
+      color: var(--muted);
+      font-size: .9rem;
+    }
+
+    @media (max-width: 768px) {
+      body { padding: 25px 16px 60px; line-height: 1.8; }
+      h1 { font-size: 1.6rem; }
+      h2 { font-size: 1rem; margin-bottom: 24px; }
+      .glass-box h4 { font-size: 1rem; margin-top: 20px; } /* H4 mobile style to match old H3 */
+      ul { padding-right: 14px; font-size: .95rem; }
     }
   </style>
-  <script>(function(){var s=localStorage.getItem('dc-theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme','dark');})();</script>
-  <link rel="stylesheet" href="/dc-theme.css">
-  <link rel="stylesheet" href="/dc-nav.css">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png">
+  <link rel="apple-touch-icon" href="/favicon-512.png">
+  <meta name="theme-color" content="#0b5fff">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "PodcastEpisode",
+      "@id": "https://dentcast.org/notecast/episode-21.html#episode",
+      "url": "https://dentcast.org/notecast/episode-21.html",
+      "name": "نوت‌کست ۲۱ – ادامه‌ی قالب‌گیری دو مرحله‌ای در پروتز ثابت",
+      "headline": "نکات کلینیکی قالب‌گیری دو مرحله‌ای (Two-Step Putty/Wash) - دکتر فؤاد شهابیان",
+      "description": "نوت‌کست بیست و یکم دنت‌کست؛ بررسی عمیق و کلینیکی تکنیک قالب‌گیری دو مرحله‌ای و نکات مدیریت متریال توسط متخصص پروتز در اهواز.",
+      "inLanguage": "fa",
+      "datePublished": "2025-11-05",
+      "dateModified": "2025-11-05",
+      "lastReviewed": "2025-11-05",
+      "duration": "PT20M",
+      "image": "https://dentcast.org/logo-v2.png",
+      "author": {
+        "@id": "https://dentcast.org/about.html#person-fouad-shahabian"
+      },
+      "reviewedBy": { "@id": "https://dentcast.org/about.html#person-fouad-shahabian" },
+      "publisher": { "@id": "https://dentcast.org/about.html#person-fouad-shahabian" },
+      "partOfSeries": {
+        "@type": "PodcastSeries",
+        "name": "DentCast",
+        "url": "https://dentcast.org/"
+      },
+      "associatedMedia": {
+        "@type": "AudioObject",
+        "contentUrl": "https://embed.acast.com/624b5545ecc0e600134ea0df/624b554b5af39e00127155d6",
+        "duration": "PT20M"
+      }
+    }
+  ]
+}
+</script>
+
+
+    <link rel="stylesheet" href="/dc-theme.css">
+<link rel="stylesheet" href="/dc-nav.css">
+  <link rel="stylesheet" href="/global-search.css?v=1">
+  <script>(function(){var s=localStorage.getItem('dc-theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme','dark');})()</script>
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="fa_IR">
+  <meta property="og:site_name" content="DentCast">
+  <meta property="og:title" content="نوت‌کست ۲۱ – ادامه‌ی قالب‌گیری دو مرحله‌ای | دنت‌کست">
+  <meta property="og:description" content="نوت‌کست بیست و یکم دنت‌کست؛ ادامه‌ی بحث مهم قالب‌گیری دو مرحله‌ای و نکات کلینیکی.">
+  <meta property="og:url" content="https://dentcast.org/notecast/episode-21.html">
+  <meta property="og:image" content="https://dentcast.org/dentcast-cover.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="نوت‌کست ۲۱ – ادامه‌ی قالب‌گیری دو مرحله‌ای | دنت‌کست">
+  <meta name="twitter:description" content="نوت‌کست بیست و یکم دنت‌کست؛ ادامه‌ی بحث مهم قالب‌گیری دو مرحله‌ای و نکات کلینیکی.">
+  <meta name="twitter:image" content="https://dentcast.org/dentcast-cover.webp">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "DentCast", "item": "https://dentcast.org/" },
+    { "@type": "ListItem", "position": 2, "name": "NoteCast", "item": "https://dentcast.org/notecast/" },
+    { "@type": "ListItem", "position": 3, "name": "نوت‌کست ۲۱ – ادامه‌ی قالب‌گیری دو مرحله‌ای | دنت‌کست", "item": "https://dentcast.org/notecast/episode-21.html" }
+  ]
+}
+</script>
+  <meta name="robots" content="index, follow, max-image-preview:large">
 </head>
 <body>
+<!-- DC NAV: TOP BAR -->
+<header class="dc-topbar">
+  <div class="dc-topbar-actions">
+    <a href="/" aria-label="صفحه اصلی دنت‌کست" style="display:flex;align-items:center;margin-left:8px;flex-shrink:0;"><img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;"></a>
+    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="ابزارها" aria-expanded="false"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
+    <button class="dc-topbar-btn" id="btn-radar-topbar" aria-label="رادار"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="m12 12 7-7"/><path d="M12 12h.01"/></svg></button>
+    <button class="dc-topbar-btn dcOpenSearch" aria-label="جستجو"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+  </div>
+  <div class="dc-topbar-brand">
+    <div class="dc-topbar-brand-name">DentCast</div>
+    <a href="/about.html" class="dc-topbar-brand-sub">دکتر فواد شهابیان</a>
+  </div>
+</header>
+<div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">
+  <div class="dc-toolbar-drawer-inner">
+    <span class="dc-toolbar-drawer-label">ابزارها</span>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M10 18h4"/><path d="M12 7v6"/><path d="m9.5 10.5 2.5 2.5 2.5-2.5"/></svg></span><span class="dc-drawer-tool-txt">نصب</span></button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-consult"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span class="dc-drawer-tool-txt">مشاوره</span></button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-about"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M12 3l1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></svg></span><span class="dc-drawer-tool-txt">درباره</span></button>
+  </div>
+</div>
+<div id="dcRadarOverlay" class="radar-overlay" aria-hidden="true">
+  <div class="radar-overlay-header">
+    <button id="dcCloseRadarOverlay" class="radar-close-btn">&times;</button>
+    <div class="radar-header-title">رادار دنت‌کست (جایگزین گوگل)</div>
+  </div>
+  <div class="radar-overlay-body">
+    <div class="radar-search-box">
+      <input type="text" id="dcRadarInput" placeholder="نام سایت، زمینه فعالیت یا کلمه کلیدی..." autocomplete="off">
+    </div>
+    <div id="dcRadarResults" class="radar-results">
+      <div class="radar-initial-msg">برای جستجو در بین سایت‌های دندانپزشکی، تایپ کنید...</div>
+    </div>
+  </div>
+</div>
 
-  <h1>💎✨ نوت‌کست بیست و یکم ✨💎</h1>
-  <h2>خلاصه‌ی نوشتاری دنت‌کست بیست و یکم</h2>
-  <p class="highlight">ادامه‌ی بحث قالب‌گیری دو مرحله‌ای</p>
 
-  <div class="section">
-    <h3>مدیریت مواد و چسب‌ها</h3>
+<main class="article-content-wrap">
+  <h2><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M6 3h12l4 6-10 13L2 9z"/><path d="M2 9h20"/><path d="m6 3 4 6"/><path d="m18 3-4 6"/></svg><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M12 3l1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></svg> نوت‌کست بیست و یکم <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M12 3l1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></svg><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M6 3h12l4 6-10 13L2 9z"/><path d="M2 9h20"/><path d="m6 3 4 6"/><path d="m18 3-4 6"/></svg></h2>
+  <h1>خلاصه‌ی نوشتاری دنت‌کست بیست و یکم</h1>
+  <div class="dc-trustline" aria-label="اطلاعات نویسنده و بازبینی">
+    <span>تاریخ انتشار: <time datetime="2025-11-05">2025-11-05</time></span>
+    <span>آخرین بازبینی: <time datetime="2025-11-05">2025-11-05</time></span>
+  </div>
+
+
+  <div class="glass-box">
+    <p>این قسمت ادامه بحث مهم قالب‌گیری دو مرحله‌ای است.</p>
+  </div>
+
+  <div class="glass-box">
+    <h4><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"/></svg> مدیریت مواد و چسب‌ها</h4>
     <ul>
-      <li><b>تری ادهزیو (Tray Adhesives):</b> استفاده از چسب سینی ضروری است، به‌خصوص در نواحی با آندرکات عمیق. چسب باید مخصوص همان ماده قالب‌گیری باشد. اجازه دهید حلال آن تبخیر شود تا حداکثر چسبندگی ایجاد گردد.</li>
-      <li><b>اختلاط ای-سیلیکون (A-Silicone):</b> ۲ تا ۳ سانتی‌متر اول ماده خارج‌شده دور ریخته شود تا نسبت بیس و کاتالیست یکنواخت باشد. برای پاتی، از دستکش وینیل یا نیتریل استفاده شود.</li>
-      <li><b>اندازه‌گیری سی-سیلیکون:</b> مقدار اکتیواتور باید با قطر پیمانه پاتی مطابقت داشته باشد (برای دو پیمانه، دو قطر اکتیواتور).</li>
+      <li>تری ادهزیو (Tray Adhesives): استفاده از چسب تری ضروری است، به‌خصوص در نواحی با <a href="/glossary/undercut.html" class="glossary-link">آندرکات عمیق</a>، زیرا هنگام خارج کردن تری، فشار زیادی به مواد وارد می‌شود.</li>
+      <li>چسب باید مخصوص همان ماده قالب‌گیری (آلژینات، سیلیکون یا پلی‌اتر) باشد.</li>
+      <li>پروتکل ایده‌آل این است که پس از اعمال چسب، اجازه دهیم حلال آن تبخیر شود تا حداکثر چسبندگی ایجاد گردد.</li>
+      <li>اختلاط ای-سیلیکون (A-Silicone): هنگام استفاده از گان، توصیه می‌شود ۲ تا ۳ سانتی‌متر اول ماده خارج‌شده دور ریخته شود تا نسبت ۱:۱ بیس و کاتالیست یکنواخت باشد.</li>
+      <li>در اختلاط ای-سیلیکون پوتی (Putty)، دستکش‌های لاتکس ممکن است در فرایند سِت شدن اختلال ایجاد کنند. لذا باید از دستکش‌های وینیل یا نیتریل استفاده شود.</li>
+      <li>اندازه‌گیری سی-سیلیکون: مقدار اکتیواتور باید دقیقاً با قطر پیمانه اندازه‌گیری پوتی مطابقت داشته باشد. اگر دو پیمانه پوتی استفاده شود، نوار اکتیواتور باید معادل دو قطر پیمانه باشد.</li>
     </ul>
   </div>
 
-  <div class="section">
-    <h3>مرحله قالب‌گیری اولیه (پاتی)</h3>
+  <div class="glass-box">
+    <h4><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"/></svg> مرحله قالب‌گیری اولیه (پوتی)</h4>
     <ul>
-      <li><b>حذف اسمیر لایر:</b> سطوح متاکریلاتی را با الکل تمیز کنید تا اختلالی در ست شدن ایجاد نشود.</li>
-      <li><b>زمان‌بندی نخگذاری:</b> نخ ریترکشن باید پیش از قالب‌گیری پاتی گذاشته شود و تا مرحله دوم باقی بماند.</li>
-      <li><b>نشاندن تری:</b> ضخامت مواد حداقل ۳ میلی‌متر باشد و دهان در حالت نیمه‌باز قرار گیرد.</li>
+      <li>اگر از بیلدآپ کامپوزیت یا رستوریشن موقت با پایه متاکریلات استفاده شده، <a href="/glossary/smear-layer.html" class="glossary-link">اسمیر لایر</a> باید با الکل پاک شود.</li>
+      <li>نخ‌گذاری لثه باید قبل از گرفتن قالب اولیه پوتی انجام شود.</li>
+      <li>تری باید حداقل ۳ میلی‌متر ضخامت مواد در اطراف دندان‌ها داشته باشد و با سطوح اکلوزال تماس نداشته باشد.</li>
+      <li>دهان بیمار باید در حالت نیمه‌باز باشد تا فشار از فک پایین اعمال نشود.</li>
     </ul>
   </div>
 
-  <div class="section">
-    <h3>آماده‌سازی برای مرحله اصلاحی (واش)</h3>
+  <div class="glass-box">
+    <h4><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"/></svg> آماده‌سازی برای مرحله اصلاحی (واش)</h4>
     <ul>
-      <li>مواد اضافی بیرون‌زده حذف شوند (تیغ بیستوری شماره ۱۱).</li>
-      <li>در قالب‌های قوس کامل، ناحیه کام باید صاف شود.</li>
-      <li>مواد بین دندانی برداشته شوند ولی سطوح راهنما حفظ گردد.</li>
-      <li>ایندکس‌گذاری بین دندان‌های سانترال انجام شود.</li>
-      <li>ایجاد کانال‌های اسکیپ متقارن برای فرار ماده واش توصیه می‌شود.</li>
+      <li>مواد اضافی لبه تری حذف شوند (با تیغ شماره ۱۱).</li>
+      <li>در قالب‌های قوس کامل، ناحیه کام باید صاف و هموار شود.</li>
+      <li>مواد بین دندانی حذف شوند اما سطوح اکلوزال حفظ گردند.</li>
+      <li>ایندکس‌گذاری بین دندان‌ها برای نشاندن صحیح تری انجام شود.</li>
+      <li>کانال‌های اسکیپ برای خروج واش ایجاد شوند.</li>
     </ul>
   </div>
 
-  <div class="section">
-    <h3>قالب‌گیری مرحله دوم (واش)</h3>
-    <p>ماده واش باید داخل قالب پاتی و اطراف دندان‌ها قرار گیرد. تکنیک توصیه‌شده: ابتدا واش را روی پاتی بگذارید، سپس اطراف دندان‌ها اعمال کنید و از سرنگ هوا برای هدایت ماده به زیر لثه استفاده کنید.</p>
+  <div class="glass-box">
+    <h4><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"/></svg> قالب‌گیری مرحله دوم (واش)</h4>
+    <ul>
+      <li>ماده واش داخل قالب پوتی و اطراف دندان‌ها قرار گیرد.</li>
+      <li>تکنیک من: استفاده از سرنگ هوا برای هدایت واش به سمت خط ختم قبل از نشاندن تری.</li>
+    </ul>
   </div>
 
-  <div class="section">
-    <h3>زمان کار و زمان سِت شدن</h3>
-    <p>مواد قالب‌گیری دارای دو زمان‌اند: <b>زمان کار (WT)</b> و <b>زمان سِت شدن (ST)</b>. زمان ست شدن داخل دهانی پس از پایان WT شروع می‌شود. اگر قالب‌گیری زودتر آغاز شود، زمان باقیماندهٔ WT باید به ST افزوده شود تا خروج قالب پیش از ست کامل رخ ندهد.</p>
+  <div class="glass-box">
+    <h4><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"/></svg> زمان کار در مقابل زمان سِت شدن</h4>
+    <ul>
+      <li>مواد قالب‌گیری دارای زمان کار (WT) و زمان سِت شدن (ST) مشخص هستند. سِت شدن داخل دهانی بعد از WT آغاز می‌شود.</li>
+      <li>اگر قبل از پایان WT قالب‌گیری انجام شود، زمان باقی‌مانده باید به ST اضافه گردد.</li>
+    </ul>
+
+  <!-- TODO: Add references section if this page cites scientific literature. -->
+  <p class="dc-disclaimer">محتوای این صفحه برای استفادهٔ آموزشی دندان‌پزشکان و دانشجویان دندان‌پزشکی تهیه شده است.</p>
+</div>
+
+<div class="author-note">
+  <a href="/about.html" class="author-link">دکتر فواد شهابیان</a>
+  <span class="author-role">متخصص پروتزهای دندانی و ایمپلنت</span>
+</div>
+
+<svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M3 14a9 9 0 0 1 18 0"/><path d="M5 14h3v7H5a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2z"/><path d="M19 14h-3v7h3a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2z"/></svg> <strong>نسخه‌ی صوتی این دنت‌کست را بشنوید:</strong><br>
+    <audio controls preload="none" style ="width: 100%;
+    margin-top: 12px;">
+  <source src="https://episodes.s3.ir-thr-at1.arvanstorage.ir/dentcast21.mp3?versionId=" type="audio/mpeg"></audio>
+
+
+
+  <footer class="dc-site-footer" style="text-align:center; margin-top:45px; color:#9aa1b3; font-size:.9rem; line-height:1.8;">
+
+  <div style="margin-bottom:22px;">
+    <a href="index.html"
+       style="
+         display:inline-block;
+         background:rgba(11,95,255,0.18);
+         color:var(--link);
+         border:1.8px solid rgba(var(--link-rgb),0.45);
+         border-radius:12px;
+         padding:12px 42px;
+         font-weight:700;
+         text-decoration:none;
+         font-size:1rem;
+         box-shadow:0 0 14px rgba(11,95,255,0.15);
+         transition:all .25s ease;">
+      <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg> برگشت به صفحه‌ی قبل
+    </a>
   </div>
 
-  <iframe src="https://embed.acast.com/624b5545ecc0e600134ea0df/624b554b5af39e00127155d6" frameBorder="0" width="100%" height="110px"></iframe>
-
-  <div class="footer">
-    🌟 دکتر فواد شهابیان — متخصص پروتزهای دندانی و ایمپلنت 🌟
+  <div style="margin-top:6px;">
+    © 2025 DentCast
   </div>
+  </footer>
 
-<script src="/dc-nav.js" defer></script>
-</body>
-</html>
+</main>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
