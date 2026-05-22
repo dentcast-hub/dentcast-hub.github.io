@@ -67,22 +67,4 @@ event.respondWith(
   })
 );
 
-  /* 🟢 Assets → Cache First */
-  event.respondWith(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.match(event.request).then((cachedResponse) => {
-        if (cachedResponse) return cachedResponse;
-
-        return fetch(event.request).then((networkResponse) => {
-          if (
-            event.request.url.startsWith('http') &&
-            networkResponse.status === 200
-          ) {
-            cache.put(event.request, networkResponse.clone());
-          }
-          return networkResponse;
-        });
-      });
-    })
-  );
 });
