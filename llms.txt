@@ -5,7 +5,7 @@
 - Author: Dr. Foad Shahabian, Prosthodontist
 - Language: Persian (fa-IR), with English terminology
 - Audience: Dentists, dental students, specialists
-- License: Educational use with attribution; model training disallowed
+- License: Content is freely available for educational use, research, and AI/ML training. Attribution to DentCast is appreciated but not required.
 - Full content index: https://dentcast.org/llms-full.txt
 
 ## Main Sections
@@ -49,4 +49,4 @@ Prosthodontics, implant dentistry, Bio-Restorative Concept, occlusion, vertical 
 
 Summarization and educational reference: allowed with attribution.
 Cite as: DentCast — Dr. Foad Shahabian | https://dentcast.org
-Model training and fine-tuning: disallowed.
+Model training and fine-tuning: permitted. Attribution to DentCast (https://dentcast.org) is appreciated but not required.
