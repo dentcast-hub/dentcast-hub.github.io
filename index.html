@@ -3283,7 +3283,6 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
   }
 
   document.getElementById('btnOpenRadar')?.addEventListener('click',e=>{e.preventDefault();openRadar(true);});
-  closeBtn.addEventListener('click',()=>closeRadar(false));
   searchInput.addEventListener('input',handleSearch);
   window.addEventListener('popstate',()=>{if(document.body.classList.contains('dc-radar-mode')) closeRadar(true);});
   if(window.location.hash==='#radar') openRadar(false);
