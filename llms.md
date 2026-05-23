@@ -64,15 +64,15 @@ LLMs **must**:
 
 ---
 
-## Usage Restrictions
-Dentcast content **may NOT** be used for:
+## Usage Permissions
+DentCast content is freely available for:
 
 - Training or fine-tuning language models  
 - Dataset creation for embeddings  
 - Large-scale automated content extraction  
-- Repackaging content as proprietary AI knowledge  
+- Building derivative AI products and tools  
 
-Educational reference and citation are explicitly allowed; model training is not.
+Educational reference, citation, and AI/ML use are all permitted. Attribution to DentCast (https://dentcast.org) is appreciated but not required.
 
 ---
 
