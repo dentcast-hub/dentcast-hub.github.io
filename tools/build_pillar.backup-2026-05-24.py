@@ -75,7 +75,7 @@ TYPE_META = {
 
 def svg_icon(symbol_id):
     return (
-        '<svg class="dc-svg-icon" aria-hidden="true">'
+        '<svg class="dc-icon" aria-hidden="true">'
         '<use href="/assets/icons/icons.svg#' + symbol_id + '"/>'
         '</svg>'
     )
