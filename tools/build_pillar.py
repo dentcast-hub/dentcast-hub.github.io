@@ -582,11 +582,10 @@ INDEX_INTRO_HTML = (
 INDEX_INLINE_STYLE = (
     "<style>\n"
     "/* Pillar index — visual sibling of Glossary index.\n"
-    "   Teal accent palette mirrors Glossary's blue at equal intensity:\n"
-    "     light primary teal: #1e5a6a (rgb 30,90,106)  — mirrors --pr (#022360)\n"
-    "     light accent teal:  #1c8a9a (rgb 28,138,154) — mirrors --ac (#0b5fff)\n"
-    "     dark accent teal:   #6ab5c4 (rgb 106,181,196)\n"
-    "   Spacing/typography mirror Glossary verbatim. */\n"
+    "   Teal palette mirrors Glossary's blue at equivalent intensity:\n"
+    "     light primary teal: #2d6a7a — mirrors --pr (#022360)\n"
+    "     dark primary teal:  #4a9aab — mirrors dark --pr (#5b9cf6)\n"
+    "   Opacities mirror Glossary's. */\n"
     "\n"
     "/* Page container */\n"
     ".pillar-index .page { max-width: 680px; margin: 0 auto; padding: 0 14px 60px; }\n"
@@ -596,58 +595,60 @@ INDEX_INLINE_STYLE = (
     ".pillar-index .nav-back { margin-bottom: 8px; }\n"
     ".pillar-index .back-link { display: inline-flex; align-items: center; gap: 4px; font-size: .78rem; font-weight: 600; color: var(--txt3); transition: color var(--tr); }\n"
     ".pillar-index .back-link::before { content: \"\\2190 \\00A0\"; }\n"
-    ".pillar-index .back-link:hover { color: #1c8a9a; }\n"
-    "[data-theme=\"dark\"] .pillar-index .back-link:hover { color: #6ab5c4; }\n"
+    ".pillar-index .back-link:hover { color: #2d6a7a; }\n"
+    "[data-theme=\"dark\"] .pillar-index .back-link:hover { color: #4a9aab; }\n"
     "\n"
     ".pillar-index .hero { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }\n"
-    ".pillar-index .title { font-size: 1.1rem; font-weight: 900; color: #1e5a6a; display: flex; gap: 8px; align-items: center; transition: color var(--tr2); margin: 0; }\n"
-    ".pillar-index .title .dot { width: 9px; height: 9px; border-radius: var(--r-f); background: #1c8a9a; box-shadow: 0 0 0 4px rgba(28,138,154,.15); flex-shrink: 0; }\n"
+    ".pillar-index .title { font-size: 1.1rem; font-weight: 900; color: #2d6a7a; display: flex; gap: 8px; align-items: center; transition: color var(--tr2); margin: 0; }\n"
+    ".pillar-index .title .dot { width: 9px; height: 9px; border-radius: var(--r-f); background: #2d6a7a; box-shadow: 0 0 0 4px rgba(45,106,122,.15); flex-shrink: 0; }\n"
     ".pillar-index .subtitle { color: var(--txt3); font-size: .80rem; line-height: 1.6; transition: color var(--tr2); }\n"
-    "[data-theme=\"dark\"] .pillar-index .title { color: #6ab5c4; }\n"
-    "[data-theme=\"dark\"] .pillar-index .title .dot { background: #6ab5c4; box-shadow: 0 0 0 4px rgba(106,181,196,.15); }\n"
+    "[data-theme=\"dark\"] .pillar-index .title { color: #4a9aab; }\n"
+    "[data-theme=\"dark\"] .pillar-index .title .dot { background: #4a9aab; box-shadow: 0 0 0 4px rgba(74,154,171,.15); }\n"
     "\n"
-    "/* Intro paragraph (override site-wide .intro card styling — pillar intro is free-flowing text) */\n"
+    "/* Intro paragraph — free-flowing text */\n"
     "body:has(.dc-topbar) .pillar-intro { background: transparent; border: 0; box-shadow: none; padding: 0; backdrop-filter: none; -webkit-backdrop-filter: none; margin: 6px 0 14px; }\n"
     ".pillar-intro p { color: var(--txt2); font-size: .82rem; line-height: 1.85; margin: 0; }\n"
     ".pillar-intro p strong { color: var(--txt); }\n"
     "\n"
-    "/* Stats chip row */\n"
-    ".pillar-index .metaRow { display: flex; justify-content: flex-start; align-items: center; gap: 10px; margin-top: 4px; margin-bottom: 12px; }\n"
-    ".pillar-index .stats-chip { padding: 5px 10px; border-radius: var(--r-f); border: 1px solid var(--border); background: var(--surface2); font-size: .76rem; color: var(--txt3); user-select: none; white-space: nowrap; transition: all var(--tr2); font-feature-settings: \"tnum\"; }\n"
+    "/* Stats — three separate chips */\n"
+    ".pillar-index-stats { display: flex; flex-direction: row; gap: 10px; justify-content: center; flex-wrap: wrap; margin: 16px 0; }\n"
+    ".pillar-index-stat-chip { display: inline-flex; align-items: baseline; gap: 6px; padding: 8px 16px; border-radius: 22px; background: rgba(45,106,122,.10); border: 1px solid rgba(45,106,122,.25); }\n"
+    ".pillar-index-stat-chip .stat-value { font-size: 16px; font-weight: 700; color: #2d6a7a; font-feature-settings: \"tnum\"; font-variant-numeric: tabular-nums; }\n"
+    ".pillar-index-stat-chip .stat-label { font-size: 13px; color: var(--txt3); }\n"
+    "[data-theme=\"dark\"] .pillar-index-stat-chip { background: rgba(74,154,171,.15); border-color: rgba(74,154,171,.35); }\n"
+    "[data-theme=\"dark\"] .pillar-index-stat-chip .stat-value { color: #4a9aab; }\n"
     "\n"
     "/* List wrap (outer card frame, same as Glossary's .listWrap) */\n"
     ".pillar-index .listWrap { margin-top: 4px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: var(--r-xl); overflow: hidden; box-shadow: var(--card-sh); transition: all var(--tr2); }\n"
     "\n"
-    "/* Pillar card row — analogous to Glossary's .term but richer */\n"
-    ".pillar-card-row { display: flex; align-items: stretch; gap: 12px; padding: 14px 14px; margin: 6px 6px; border-radius: var(--r-md); background: var(--surface2); border: 1px solid var(--border2); transition: all var(--tr); -webkit-tap-highlight-color: transparent; color: inherit; text-decoration: none; }\n"
-    ".pillar-card-row:hover { background: var(--surface3); border-color: var(--border); transform: translateX(-2px); }\n"
+    "/* Pillar card row */\n"
+    ".pillar-card-row { display: flex; align-items: stretch; gap: 12px; padding: 14px 14px; margin: 6px 6px; border-radius: var(--r-md); background: var(--surface2); border: 1px solid rgba(45,106,122,.25); transition: all var(--tr); -webkit-tap-highlight-color: transparent; color: inherit; text-decoration: none; }\n"
+    ".pillar-card-row:hover { background: var(--surface3); border-color: rgba(45,106,122,.35); transform: translateX(-2px); }\n"
     ".pillar-card-row:active { transform: scale(.99); }\n"
+    "[data-theme=\"dark\"] .pillar-card-row { border-color: rgba(74,154,171,.30); }\n"
+    "[data-theme=\"dark\"] .pillar-card-row:hover { border-color: rgba(74,154,171,.45); }\n"
     "\n"
     ".pillar-card-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px; }\n"
     ".pillar-card-header { display: flex; align-items: center; gap: 8px; }\n"
-    ".pillar-card-icon { font-size: 1.1rem; line-height: 1; color: #1e5a6a; flex-shrink: 0; display: inline-flex; align-items: center; }\n"
+    ".pillar-card-icon { font-size: 1.1rem; line-height: 1; color: #2d6a7a; flex-shrink: 0; display: inline-flex; align-items: center; }\n"
     ".pillar-card-icon .dc-svg-icon { width: 1.2em; height: 1.2em; }\n"
-    "[data-theme=\"dark\"] .pillar-card-icon { color: #6ab5c4; }\n"
+    "[data-theme=\"dark\"] .pillar-card-icon { color: #4a9aab; }\n"
     ".pillar-card-name { margin: 0; font-size: .95rem; font-weight: 800; color: var(--txt); letter-spacing: -.2px; }\n"
     ".pillar-card-subtitle { margin: 0; font-size: .78rem; color: var(--txt2); line-height: 1.5; }\n"
     ".pillar-card-meta { margin: 0; font-size: .7rem; color: var(--txt3); font-feature-settings: \"tnum\"; }\n"
     "\n"
+    "/* Subtopic list — label on right (RTL), small teal chip on left */\n"
     ".pillar-card-subtopics { list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-direction: column; gap: 0; font-size: .78rem; color: var(--txt2); }\n"
-    ".pillar-card-subtopics li { padding: 5px 0; border-bottom: 1px solid var(--border2); display: flex; justify-content: space-between; align-items: center; gap: 8px; }\n"
+    ".pillar-card-subtopics li { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 6px 0; border-bottom: 1px solid var(--border2); }\n"
     ".pillar-card-subtopics li:last-child { border-bottom: 0; }\n"
-    ".pillar-card-subtopics .subtopic-count { color: var(--txt3); font-size: .7rem; font-feature-settings: \"tnum\"; }\n"
+    ".subtopic-label { font-size: .82rem; color: var(--txt); }\n"
+    ".subtopic-chip { display: inline-flex; align-items: center; justify-content: center; min-width: 28px; height: 22px; padding: 0 8px; border-radius: 11px; background: rgba(45,106,122,.10); color: #2d6a7a; font-size: 12px; font-weight: 600; font-feature-settings: \"tnum\"; font-variant-numeric: tabular-nums; }\n"
+    "[data-theme=\"dark\"] .subtopic-chip { background: rgba(74,154,171,.18); color: #4a9aab; }\n"
     "\n"
-    "/* Arrow (chevron) on the LEFT in RTL (body first, arrow last in DOM) */\n"
-    ".pillar-card-arrow { width: 30px; height: 30px; border-radius: var(--r-sm); display: grid; place-items: center; background: rgba(28,138,154,.08); border: 1px solid rgba(28,138,154,.18); color: #1c8a9a; flex-shrink: 0; align-self: center; transition: all var(--tr2); }\n"
+    "/* Arrow (chevron) on the LEFT in RTL */\n"
+    ".pillar-card-arrow { width: 30px; height: 30px; border-radius: var(--r-sm); display: grid; place-items: center; background: rgba(45,106,122,.10); border: 1px solid rgba(45,106,122,.25); color: #2d6a7a; flex-shrink: 0; align-self: center; transition: all var(--tr2); }\n"
     ".pillar-card-arrow .dc-svg-icon { width: 1em; height: 1em; }\n"
-    "[data-theme=\"dark\"] .pillar-card-arrow { background: rgba(106,181,196,.12); border-color: rgba(106,181,196,.30); color: #6ab5c4; }\n"
-    "\n"
-    "/* Sticky footer chain — preserved from prior op */\n"
-    "html, body { min-height: 100vh; }\n"
-    "body { display: flex; flex-direction: column; }\n"
-    "body > .wrap { flex: 1 0 auto; display: flex; flex-direction: column; }\n"
-    ".wrap > main { flex: 1 0 auto; }\n"
-    ".wrap > .dc-site-footer, .wrap > footer { flex-shrink: 0; }\n"
+    "[data-theme=\"dark\"] .pillar-card-arrow { background: rgba(74,154,171,.15); border-color: rgba(74,154,171,.35); color: #4a9aab; }\n"
     "\n"
     "@media (max-width: 480px) {\n"
     "  .pillar-card-row { padding: 12px 12px; }\n"
@@ -692,7 +693,7 @@ def build_index():
             "slug": slug,
             "h1_fa": cfg["h1_fa"],
             "subtitle_fa_short": cfg["subtitle_fa_short"],
-            "icon": cfg["icon"],
+            "icon": cfg["icon"],   # kept for reference; index uses icon-target uniformly
             "items": items,
             "subtopics": subs,
             "subtopic_list": subtopic_list,
@@ -714,16 +715,23 @@ def build_index():
 
 
 def _render_index_card(info):
-    """Render one pillar card: header (icon + title), subtitle, meta, subtopic list, left-side chevron."""
+    """Render one pillar card. Uses icon-target uniformly (the icon represents
+    'this is a pillar entry' rather than the pillar's subject — keeps the
+    index visually cohesive even as new pillars get added with different
+    subject icons). The pillar's own subject icon (info["icon"]) is still
+    used inside the pillar's own page header."""
     subtopic_lis = "".join(
-        '          <li>' + esc(s["title_fa"]) + ' <span class="subtopic-count">(' + fa_digits(s["count"]) + ')</span></li>\n'
+        '          <li>\n'
+        '            <span class="subtopic-label">' + esc(s["title_fa"]) + '</span>\n'
+        '            <span class="subtopic-chip">' + fa_digits(s["count"]) + '</span>\n'
+        '          </li>\n'
         for s in info["subtopic_list"]
     )
     return (
         '      <a class="pillar-card-row" href="/pillar/' + esc(info["slug"]) + '/">\n'
         '        <div class="pillar-card-body">\n'
         '          <div class="pillar-card-header">\n'
-        '            <span class="pillar-card-icon" aria-hidden="true">' + svg_icon(info["icon"]) + '</span>\n'
+        '            <span class="pillar-card-icon" aria-hidden="true">' + svg_icon("icon-target") + '</span>\n'
         '            <h2 class="pillar-card-name">' + esc(info["h1_fa"]) + '</h2>\n'
         '          </div>\n'
         '          <p class="pillar-card-subtitle">' + esc(info["subtitle_fa_short"]) + '</p>\n'
@@ -750,10 +758,13 @@ def _render_index_page(pillars_info, cards_html):
     total_pillars   = len(pillars_info)
     total_items     = sum(p["items"] for p in pillars_info)
     total_subtopics = sum(p["subtopics"] for p in pillars_info)
-    stats_text = (
-        fa_digits(total_pillars) + " موضوع · "
-        + fa_digits(total_items) + " مطلب · "
-        + fa_digits(total_subtopics) + " زیرموضوع"
+
+    stats_html = (
+        '      <div class="pillar-index-stats">\n'
+        '        <span class="pillar-index-stat-chip"><span class="stat-value">' + fa_digits(total_pillars)   + '</span><span class="stat-label">موضوع</span></span>\n'
+        '        <span class="pillar-index-stat-chip"><span class="stat-value">' + fa_digits(total_items)     + '</span><span class="stat-label">مطلب</span></span>\n'
+        '        <span class="pillar-index-stat-chip"><span class="stat-value">' + fa_digits(total_subtopics) + '</span><span class="stat-label">زیرموضوع</span></span>\n'
+        '      </div>\n'
     )
 
     head = (
@@ -880,9 +891,7 @@ def _render_index_page(pillars_info, cards_html):
         '        <p>' + INDEX_INTRO_HTML + '</p>\n'
         '      </section>\n'
         '\n'
-        '      <div class="metaRow">\n'
-        '        <div class="stats-chip" id="statsChip">' + stats_text + '</div>\n'
-        '      </div>\n'
+        + stats_html +
         '    </div>\n'
         '\n'
         '    <div class="listWrap">\n'
@@ -890,12 +899,6 @@ def _render_index_page(pillars_info, cards_html):
         '    </div>\n'
         '\n'
         '  </main>\n'
-        '\n'
-        '  <footer class="dc-site-footer">\n'
-        '    <a href="/index.html" class="btn-home"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="m3 11 9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg> برگشت به صفحه‌ی اصلی</a>\n'
-        '    <a href="/about.html" class="btn-about"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"/></svg> درباره‌ی دکتر فواد شهابیان و دنت‌کست</a>\n'
-        '    <div class="footer-copy">© 2025 DentCast — طراحی و توسعه توسط <strong>دکتر فواد شهابیان</strong></div>\n'
-        '  </footer>\n'
         '\n'
         '</div>\n'
         '\n'
@@ -912,6 +915,7 @@ def _render_index_page(pillars_info, cards_html):
         '</html>\n'
     )
     return head + body
+
 
 
 

@@ -65,11 +65,10 @@
 
   <style>
 /* Pillar index — visual sibling of Glossary index.
-   Teal accent palette mirrors Glossary's blue at equal intensity:
-     light primary teal: #1e5a6a (rgb 30,90,106)  — mirrors --pr (#022360)
-     light accent teal:  #1c8a9a (rgb 28,138,154) — mirrors --ac (#0b5fff)
-     dark accent teal:   #6ab5c4 (rgb 106,181,196)
-   Spacing/typography mirror Glossary verbatim. */
+   Teal palette mirrors Glossary's blue at equivalent intensity:
+     light primary teal: #2d6a7a — mirrors --pr (#022360)
+     dark primary teal:  #4a9aab — mirrors dark --pr (#5b9cf6)
+   Opacities mirror Glossary's. */
 
 /* Page container */
 .pillar-index .page { max-width: 680px; margin: 0 auto; padding: 0 14px 60px; }
@@ -79,58 +78,60 @@
 .pillar-index .nav-back { margin-bottom: 8px; }
 .pillar-index .back-link { display: inline-flex; align-items: center; gap: 4px; font-size: .78rem; font-weight: 600; color: var(--txt3); transition: color var(--tr); }
 .pillar-index .back-link::before { content: "\2190 \00A0"; }
-.pillar-index .back-link:hover { color: #1c8a9a; }
-[data-theme="dark"] .pillar-index .back-link:hover { color: #6ab5c4; }
+.pillar-index .back-link:hover { color: #2d6a7a; }
+[data-theme="dark"] .pillar-index .back-link:hover { color: #4a9aab; }
 
 .pillar-index .hero { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
-.pillar-index .title { font-size: 1.1rem; font-weight: 900; color: #1e5a6a; display: flex; gap: 8px; align-items: center; transition: color var(--tr2); margin: 0; }
-.pillar-index .title .dot { width: 9px; height: 9px; border-radius: var(--r-f); background: #1c8a9a; box-shadow: 0 0 0 4px rgba(28,138,154,.15); flex-shrink: 0; }
+.pillar-index .title { font-size: 1.1rem; font-weight: 900; color: #2d6a7a; display: flex; gap: 8px; align-items: center; transition: color var(--tr2); margin: 0; }
+.pillar-index .title .dot { width: 9px; height: 9px; border-radius: var(--r-f); background: #2d6a7a; box-shadow: 0 0 0 4px rgba(45,106,122,.15); flex-shrink: 0; }
 .pillar-index .subtitle { color: var(--txt3); font-size: .80rem; line-height: 1.6; transition: color var(--tr2); }
-[data-theme="dark"] .pillar-index .title { color: #6ab5c4; }
-[data-theme="dark"] .pillar-index .title .dot { background: #6ab5c4; box-shadow: 0 0 0 4px rgba(106,181,196,.15); }
+[data-theme="dark"] .pillar-index .title { color: #4a9aab; }
+[data-theme="dark"] .pillar-index .title .dot { background: #4a9aab; box-shadow: 0 0 0 4px rgba(74,154,171,.15); }
 
-/* Intro paragraph (override site-wide .intro card styling — pillar intro is free-flowing text) */
+/* Intro paragraph — free-flowing text */
 body:has(.dc-topbar) .pillar-intro { background: transparent; border: 0; box-shadow: none; padding: 0; backdrop-filter: none; -webkit-backdrop-filter: none; margin: 6px 0 14px; }
 .pillar-intro p { color: var(--txt2); font-size: .82rem; line-height: 1.85; margin: 0; }
 .pillar-intro p strong { color: var(--txt); }
 
-/* Stats chip row */
-.pillar-index .metaRow { display: flex; justify-content: flex-start; align-items: center; gap: 10px; margin-top: 4px; margin-bottom: 12px; }
-.pillar-index .stats-chip { padding: 5px 10px; border-radius: var(--r-f); border: 1px solid var(--border); background: var(--surface2); font-size: .76rem; color: var(--txt3); user-select: none; white-space: nowrap; transition: all var(--tr2); font-feature-settings: "tnum"; }
+/* Stats — three separate chips */
+.pillar-index-stats { display: flex; flex-direction: row; gap: 10px; justify-content: center; flex-wrap: wrap; margin: 16px 0; }
+.pillar-index-stat-chip { display: inline-flex; align-items: baseline; gap: 6px; padding: 8px 16px; border-radius: 22px; background: rgba(45,106,122,.10); border: 1px solid rgba(45,106,122,.25); }
+.pillar-index-stat-chip .stat-value { font-size: 16px; font-weight: 700; color: #2d6a7a; font-feature-settings: "tnum"; font-variant-numeric: tabular-nums; }
+.pillar-index-stat-chip .stat-label { font-size: 13px; color: var(--txt3); }
+[data-theme="dark"] .pillar-index-stat-chip { background: rgba(74,154,171,.15); border-color: rgba(74,154,171,.35); }
+[data-theme="dark"] .pillar-index-stat-chip .stat-value { color: #4a9aab; }
 
 /* List wrap (outer card frame, same as Glossary's .listWrap) */
 .pillar-index .listWrap { margin-top: 4px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: var(--r-xl); overflow: hidden; box-shadow: var(--card-sh); transition: all var(--tr2); }
 
-/* Pillar card row — analogous to Glossary's .term but richer */
-.pillar-card-row { display: flex; align-items: stretch; gap: 12px; padding: 14px 14px; margin: 6px 6px; border-radius: var(--r-md); background: var(--surface2); border: 1px solid var(--border2); transition: all var(--tr); -webkit-tap-highlight-color: transparent; color: inherit; text-decoration: none; }
-.pillar-card-row:hover { background: var(--surface3); border-color: var(--border); transform: translateX(-2px); }
+/* Pillar card row */
+.pillar-card-row { display: flex; align-items: stretch; gap: 12px; padding: 14px 14px; margin: 6px 6px; border-radius: var(--r-md); background: var(--surface2); border: 1px solid rgba(45,106,122,.25); transition: all var(--tr); -webkit-tap-highlight-color: transparent; color: inherit; text-decoration: none; }
+.pillar-card-row:hover { background: var(--surface3); border-color: rgba(45,106,122,.35); transform: translateX(-2px); }
 .pillar-card-row:active { transform: scale(.99); }
+[data-theme="dark"] .pillar-card-row { border-color: rgba(74,154,171,.30); }
+[data-theme="dark"] .pillar-card-row:hover { border-color: rgba(74,154,171,.45); }
 
 .pillar-card-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px; }
 .pillar-card-header { display: flex; align-items: center; gap: 8px; }
-.pillar-card-icon { font-size: 1.1rem; line-height: 1; color: #1e5a6a; flex-shrink: 0; display: inline-flex; align-items: center; }
+.pillar-card-icon { font-size: 1.1rem; line-height: 1; color: #2d6a7a; flex-shrink: 0; display: inline-flex; align-items: center; }
 .pillar-card-icon .dc-svg-icon { width: 1.2em; height: 1.2em; }
-[data-theme="dark"] .pillar-card-icon { color: #6ab5c4; }
+[data-theme="dark"] .pillar-card-icon { color: #4a9aab; }
 .pillar-card-name { margin: 0; font-size: .95rem; font-weight: 800; color: var(--txt); letter-spacing: -.2px; }
 .pillar-card-subtitle { margin: 0; font-size: .78rem; color: var(--txt2); line-height: 1.5; }
 .pillar-card-meta { margin: 0; font-size: .7rem; color: var(--txt3); font-feature-settings: "tnum"; }
 
+/* Subtopic list — label on right (RTL), small teal chip on left */
 .pillar-card-subtopics { list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-direction: column; gap: 0; font-size: .78rem; color: var(--txt2); }
-.pillar-card-subtopics li { padding: 5px 0; border-bottom: 1px solid var(--border2); display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.pillar-card-subtopics li { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 6px 0; border-bottom: 1px solid var(--border2); }
 .pillar-card-subtopics li:last-child { border-bottom: 0; }
-.pillar-card-subtopics .subtopic-count { color: var(--txt3); font-size: .7rem; font-feature-settings: "tnum"; }
+.subtopic-label { font-size: .82rem; color: var(--txt); }
+.subtopic-chip { display: inline-flex; align-items: center; justify-content: center; min-width: 28px; height: 22px; padding: 0 8px; border-radius: 11px; background: rgba(45,106,122,.10); color: #2d6a7a; font-size: 12px; font-weight: 600; font-feature-settings: "tnum"; font-variant-numeric: tabular-nums; }
+[data-theme="dark"] .subtopic-chip { background: rgba(74,154,171,.18); color: #4a9aab; }
 
-/* Arrow (chevron) on the LEFT in RTL (body first, arrow last in DOM) */
-.pillar-card-arrow { width: 30px; height: 30px; border-radius: var(--r-sm); display: grid; place-items: center; background: rgba(28,138,154,.08); border: 1px solid rgba(28,138,154,.18); color: #1c8a9a; flex-shrink: 0; align-self: center; transition: all var(--tr2); }
+/* Arrow (chevron) on the LEFT in RTL */
+.pillar-card-arrow { width: 30px; height: 30px; border-radius: var(--r-sm); display: grid; place-items: center; background: rgba(45,106,122,.10); border: 1px solid rgba(45,106,122,.25); color: #2d6a7a; flex-shrink: 0; align-self: center; transition: all var(--tr2); }
 .pillar-card-arrow .dc-svg-icon { width: 1em; height: 1em; }
-[data-theme="dark"] .pillar-card-arrow { background: rgba(106,181,196,.12); border-color: rgba(106,181,196,.30); color: #6ab5c4; }
-
-/* Sticky footer chain — preserved from prior op */
-html, body { min-height: 100vh; }
-body { display: flex; flex-direction: column; }
-body > .wrap { flex: 1 0 auto; display: flex; flex-direction: column; }
-.wrap > main { flex: 1 0 auto; }
-.wrap > .dc-site-footer, .wrap > footer { flex-shrink: 0; }
+[data-theme="dark"] .pillar-card-arrow { background: rgba(74,154,171,.15); border-color: rgba(74,154,171,.35); color: #4a9aab; }
 
 @media (max-width: 480px) {
   .pillar-card-row { padding: 12px 12px; }
@@ -221,8 +222,10 @@ body > .wrap { flex: 1 0 auto; display: flex; flex-direction: column; }
         <p>دنت‌کست در طول سال‌ها به شبکه‌ای از اپیزود، گلاسری، نوت‌کست و یادداشت بالینی تبدیل شده. هر <strong>موضوع</strong> اینجا یک نقطه‌ی ورود است به این شبکه — مفاهیم پایه تا چالش‌های پیشرفته، با لینک به منبع کامل. نقشه به‌مرور رشد می‌کند.</p>
       </section>
 
-      <div class="metaRow">
-        <div class="stats-chip" id="statsChip">۱ موضوع · ۸۳ مطلب · ۵ زیرموضوع</div>
+      <div class="pillar-index-stats">
+        <span class="pillar-index-stat-chip"><span class="stat-value">۱</span><span class="stat-label">موضوع</span></span>
+        <span class="pillar-index-stat-chip"><span class="stat-value">۸۳</span><span class="stat-label">مطلب</span></span>
+        <span class="pillar-index-stat-chip"><span class="stat-value">۵</span><span class="stat-label">زیرموضوع</span></span>
       </div>
     </div>
 
@@ -230,17 +233,32 @@ body > .wrap { flex: 1 0 auto; display: flex; flex-direction: column; }
       <a class="pillar-card-row" href="/pillar/bonding/">
         <div class="pillar-card-body">
           <div class="pillar-card-header">
-            <span class="pillar-card-icon" aria-hidden="true"><svg class="dc-svg-icon" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-tooth"/></svg></span>
+            <span class="pillar-card-icon" aria-hidden="true"><svg class="dc-svg-icon" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-target"/></svg></span>
             <h2 class="pillar-card-name">باندینگ</h2>
           </div>
           <p class="pillar-card-subtitle">از شیمی سطح تا چالش‌های بالینی</p>
           <p class="pillar-card-meta">۸۳ مطلب · ۵ زیرموضوع</p>
           <ul class="pillar-card-subtopics">
-          <li>مفاهیم پایه <span class="subtopic-count">(۶)</span></li>
-          <li>مواد و شیمی <span class="subtopic-count">(۱۰)</span></li>
-          <li>استراتژی‌ها و نسل‌ها <span class="subtopic-count">(۲۳)</span></li>
-          <li>کاربردهای بالینی <span class="subtopic-count">(۲۳)</span></li>
-          <li>موضوعات پیشرفته <span class="subtopic-count">(۲۱)</span></li>
+          <li>
+            <span class="subtopic-label">مفاهیم پایه</span>
+            <span class="subtopic-chip">۶</span>
+          </li>
+          <li>
+            <span class="subtopic-label">مواد و شیمی</span>
+            <span class="subtopic-chip">۱۰</span>
+          </li>
+          <li>
+            <span class="subtopic-label">استراتژی‌ها و نسل‌ها</span>
+            <span class="subtopic-chip">۲۳</span>
+          </li>
+          <li>
+            <span class="subtopic-label">کاربردهای بالینی</span>
+            <span class="subtopic-chip">۲۳</span>
+          </li>
+          <li>
+            <span class="subtopic-label">موضوعات پیشرفته</span>
+            <span class="subtopic-chip">۲۱</span>
+          </li>
           </ul>
         </div>
         <div class="pillar-card-arrow" aria-hidden="true">
@@ -250,12 +268,6 @@ body > .wrap { flex: 1 0 auto; display: flex; flex-direction: column; }
     </div>
 
   </main>
-
-  <footer class="dc-site-footer">
-    <a href="/index.html" class="btn-home"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="m3 11 9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg> برگشت به صفحه‌ی اصلی</a>
-    <a href="/about.html" class="btn-about"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"/></svg> درباره‌ی دکتر فواد شهابیان و دنت‌کست</a>
-    <div class="footer-copy">© 2025 DentCast — طراحی و توسعه توسط <strong>دکتر فواد شهابیان</strong></div>
-  </footer>
 
 </div>
 
