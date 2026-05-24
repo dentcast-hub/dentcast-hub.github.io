@@ -62,7 +62,7 @@
   ],
   "url": "/glossary/self-adhesive-cements.html",
   "pillar": {
-    "primary": "resin-cements",
+    "primary": "bonding",
     "secondary": [],
     "subtopic": null
   }
@@ -78,7 +78,7 @@
   ],
   "url": "/glossary/adhesive-resin-cements.html",
   "pillar": {
-    "primary": "resin-cements",
+    "primary": "bonding",
     "secondary": [],
     "subtopic": null
   }
@@ -604,9 +604,9 @@
   ],
   "url": "/glossary/freshly-cut-dentin.html",
   "pillar": {
-    "primary": "bonding",
+    "primary": "operative",
     "secondary": [],
-    "subtopic": "basics"
+    "subtopic": null
   }
 },
 {
@@ -947,7 +947,7 @@
   ],
   "url": "/glossary/glass-phase.html",
   "pillar": {
-    "primary": "ceramics",
+    "primary": "bonding",
     "secondary": [],
     "subtopic": null
   }

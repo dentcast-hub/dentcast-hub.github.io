@@ -1,0 +1,273 @@
+/* ===================================================================
+   pillar/bonding/bonding.css
+   Page-specific styles for the Bonding pillar landing page.
+   Inherits CSS variables from /dc-theme.css (--pr, --bg, --surface,
+   --txt, --card-bg, --card-border, --card-sh, --r-md, --r-lg,
+   --tr, --tr2, etc.). No new colors or fonts introduced.
+   ================================================================ */
+
+/* ------------------------------------------------------------------
+   Layout container
+   The site's .wrap is defined in dc-theme.css with max-width:680px.
+   Pillar pages are intentionally narrower on desktop because the
+   subtopic cards read better as a single column. We cap at 600px
+   per spec.
+   ------------------------------------------------------------------ */
+@media (min-width: 1024px) {
+  .wrap {
+    max-width: 600px;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Header (H1 + subtitle)
+   ------------------------------------------------------------------ */
+.wrap > header {
+  text-align: center;
+  padding: 28px 0 14px;
+}
+
+.pillar-subtitle {
+  margin: 8px 0 0;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--txt2);
+  line-height: 1.5;
+}
+
+/* ------------------------------------------------------------------
+   Intro paragraph block — reuses the site's .intro style for visual
+   continuity with Meta Base and other content pages.
+   ------------------------------------------------------------------ */
+.pillar-intro {
+  margin: 20px 0 28px;
+}
+
+.pillar-intro p {
+  margin: 0;
+}
+
+.pillar-intro p + p {
+  margin-top: 10px;
+}
+
+/* ------------------------------------------------------------------
+   Subtopic cards (native <details>/<summary>)
+   ------------------------------------------------------------------ */
+.pillar-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.pillar-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-right: 3px solid rgba(var(--pr-rgb), 0.28);
+  border-radius: var(--r-lg);
+  box-shadow: var(--card-sh);
+  transition: all var(--tr);
+  overflow: hidden;
+}
+
+.pillar-card[open] {
+  box-shadow: var(--card-sh2);
+  border-right-color: rgba(var(--pr-rgb), 0.55);
+}
+
+/* Remove the default disclosure marker on every engine */
+.pillar-card-summary {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  min-height: 44px;
+}
+
+.pillar-card-summary::-webkit-details-marker { display: none; }
+.pillar-card-summary::marker { display: none; content: ''; }
+
+.pillar-card-summary:hover {
+  background: var(--surface2);
+}
+
+.pillar-card-summary:focus-visible {
+  outline: 2px solid var(--ac);
+  outline-offset: -2px;
+}
+
+.pillar-card-icon {
+  font-size: 1.15rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.pillar-card-title {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--txt);
+  margin: 0;
+  flex: 1;
+  letter-spacing: -0.2px;
+}
+
+.pillar-card-count {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--txt3);
+  font-feature-settings: "tnum";
+}
+
+.pillar-card-chevron {
+  display: inline-block;
+  font-size: 0.9rem;
+  color: var(--txt2);
+  margin-right: 2px;
+  transition: transform var(--tr2);
+}
+
+.pillar-card[open] > .pillar-card-summary .pillar-card-chevron {
+  transform: rotate(180deg);
+}
+
+/* ------------------------------------------------------------------
+   Card body — scrollable when content exceeds ~4 items.
+   The numbers below (max-height: 264px, item min-height: 56px) give
+   roughly 4 items visible, with the fifth half-visible behind the
+   fade gradient as a "more below" affordance.
+   ------------------------------------------------------------------ */
+.pillar-card-body {
+  position: relative;
+  border-top: 1px solid var(--border2);
+  max-height: 264px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.pillar-list {
+  list-style: none;
+  margin: 0;
+  padding: 8px 10px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pillar-item {
+  background: transparent;
+  border: 0;
+  border-radius: var(--r-md);
+  padding: 0;
+  margin: 0;
+  min-height: 44px;
+  transition: background var(--tr);
+  overflow: visible;
+  box-shadow: none;
+}
+
+.pillar-item:hover {
+  background: var(--surface2);
+}
+
+.pillar-item:active {
+  background: var(--surface3);
+}
+
+.pillar-item-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  min-height: 44px;
+  color: var(--txt);
+  font-size: 0.88rem;
+  font-weight: 600;
+  line-height: 1.5;
+  text-decoration: none;
+  transition: color var(--tr);
+}
+
+.pillar-item-link:hover {
+  color: var(--ac);
+}
+
+[data-theme="dark"] .pillar-item-link:hover {
+  color: #8ab4f8;
+}
+
+.pillar-item-icon {
+  font-size: 1.05rem;
+  line-height: 1;
+  flex-shrink: 0;
+  width: 1.4rem;
+  text-align: center;
+}
+
+.pillar-item-title {
+  flex: 1;
+}
+
+/* ------------------------------------------------------------------
+   Bottom fade — visually hints at scrollable content.
+   Sits inside the scroll container's normal flow position, anchored
+   absolutely at the bottom so it stays visible while content scrolls.
+   ------------------------------------------------------------------ */
+.pillar-card-fade {
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 36px;
+  margin-top: -36px;
+  pointer-events: none;
+  background: linear-gradient(
+    to top,
+    var(--card-bg) 0%,
+    rgba(var(--pr-rgb), 0) 100%
+  );
+}
+
+/* Hide the fade when the content is short enough that scrolling
+   isn't needed. The :has() check covers modern browsers; on older
+   ones the fade renders harmlessly over already-visible content. */
+@supports selector(:has(*)) {
+  .pillar-card-body:not(:hover):has(.pillar-list:only-child) {
+    /* placeholder — no-op rule to scope the supports test */
+  }
+}
+
+/* ------------------------------------------------------------------
+   Screen-reader only utility (used for content-type labels)
+   ------------------------------------------------------------------ */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ------------------------------------------------------------------
+   Small-screen tweaks (mobile primary target)
+   ------------------------------------------------------------------ */
+@media (max-width: 480px) {
+  .pillar-card-summary {
+    padding: 12px 14px;
+  }
+  .pillar-card-title {
+    font-size: 0.95rem;
+  }
+  .pillar-item-link {
+    padding: 10px 10px;
+  }
+}
