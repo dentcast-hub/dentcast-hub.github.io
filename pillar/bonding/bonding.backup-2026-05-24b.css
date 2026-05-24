@@ -51,18 +51,6 @@
   margin-top: 10px;
 }
 
-/* Override the global .intro card styling for pillar pages.
-   The intro on a pillar should read as free-flowing text,
-   not as a bordered content card. */
-body:has(.dc-topbar) .pillar-intro {
-  background: transparent;
-  border: 0;
-  box-shadow: none;
-  padding: 0;
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-}
-
 /* ------------------------------------------------------------------
    Subtopic cards (native <details>/<summary>)
    ------------------------------------------------------------------ */
