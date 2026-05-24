@@ -2369,10 +2369,10 @@ body.dc-desktop-ui #dc-desktop-root{
 
 /* Pillar — teal palette mirroring Glossary's blue treatment */
 #panel-sharehub .dc-list-card.featured.dc-list-card--pillar {
-  background: linear-gradient(135deg, rgba(45,106,122,.18), rgba(74,154,171,.10)) !important;
-  border: 1px solid rgba(45,106,122,.28) !important;
-  border-right: 3px solid rgba(45,106,122,.55) !important;
-  box-shadow: 0 8px 24px rgba(45,106,122,.18), var(--card-sh) !important;
+  background: linear-gradient(135deg, rgba(30,90,106,.18), rgba(45,135,148,.10)) !important;
+  border: 1px solid rgba(30,90,106,.28) !important;
+  border-right: 3px solid rgba(30,90,106,.55) !important;
+  box-shadow: 0 8px 24px rgba(30,90,106,.18), var(--card-sh) !important;
 }
 [data-theme="dark"] #panel-sharehub .dc-list-card.featured.dc-list-card--pillar {
   background: linear-gradient(135deg, rgba(74,154,171,.22), rgba(106,181,196,.12)) !important;
@@ -2388,8 +2388,8 @@ body.dc-desktop-ui #dc-desktop-root{
   padding: 16px 18px 14px;
   gap: 0;
   min-height: 0;
-  border-right: 1px solid rgba(45,106,122,.28) !important;
-  border-top: 3px solid rgba(45,106,122,.55) !important;
+  border-right: 1px solid rgba(30,90,106,.28) !important;
+  border-top: 3px solid rgba(30,90,106,.55) !important;
 }
 [data-theme="dark"] #card-pillar {
   border-right: 1px solid rgba(74,154,171,.28) !important;
@@ -2399,7 +2399,7 @@ body.dc-desktop-ui #dc-desktop-root{
 /* Pillar text colors mirror Glossary's var(--pr) for icon + title */
 .dc-list-card--pillar .gls-ico,
 .dc-list-card--pillar .gls-title {
-  color: #2d6a7a;
+  color: #1e5a6a;
 }
 [data-theme="dark"] .dc-list-card--pillar .gls-ico,
 [data-theme="dark"] .dc-list-card--pillar .gls-title {
@@ -2412,6 +2412,26 @@ a.dc-list-card--pillar {
   color: inherit;
   display: flex;
   flex-direction: column;
+}
+
+/* Pillar icon — saturated teal (mirrors Glossary's var(--pr) on its icon) */
+.dc-list-card--pillar .gls-ico {
+  color: #1e5a6a;
+}
+[data-theme="dark"] .dc-list-card--pillar .gls-ico {
+  color: #6ab5c4;
+}
+
+/* Pillar chip — distinct teal, overriding the site-wide blue chip */
+.dc-list-card--pillar .dc-chip {
+  color: #1e5a6a;
+  background: rgba(30,90,106,.10);
+  border-color: rgba(30,90,106,.30);
+}
+[data-theme="dark"] .dc-list-card--pillar .dc-chip {
+  color: #6ab5c4;
+  background: rgba(74,154,171,.15);
+  border-color: rgba(74,154,171,.40);
 }
   </style>
 
