@@ -2328,56 +2328,6 @@ body.dc-desktop-ui #dc-desktop-root{
   min-width:0;
 }
 
-
-/* ------------------------------------------------------------------
-   Meta Base panel — side-by-side cards (Glossary + Pillar)
-   Added 2026-05-24 to host the new Pillar landing link next to the
-   existing Glossary card. Uses CSS color-mix() for tinting; modern
-   browser support (Chrome 111+, Firefox 113+, Safari 16.2+).
-   ------------------------------------------------------------------ */
-.dc-list-card-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin-bottom: 14px;
-}
-
-@media (max-width: 380px) {
-  .dc-list-card-row {
-    grid-template-columns: 1fr;
-  }
-}
-
-.dc-list-card--pillar {
-  --gls-accent: #2d6a7a;
-  background: linear-gradient(135deg,
-    color-mix(in srgb, #2d6a7a 8%, var(--card-bg, #fff)) 0%,
-    color-mix(in srgb, #2d6a7a 3%, var(--card-bg, #fff)) 100%);
-  border-color: color-mix(in srgb, #2d6a7a 28%, transparent);
-}
-
-[data-theme="dark"] .dc-list-card--pillar {
-  background: linear-gradient(135deg,
-    color-mix(in srgb, #4a9aab 12%, var(--card-bg, #1a1a1a)) 0%,
-    color-mix(in srgb, #4a9aab 4%, var(--card-bg, #1a1a1a)) 100%);
-  border-color: color-mix(in srgb, #4a9aab 35%, transparent);
-}
-
-.dc-list-card--pillar .gls-ico,
-.dc-list-card--pillar .dc-chip {
-  color: #2d6a7a;
-}
-
-[data-theme="dark"] .dc-list-card--pillar .gls-ico,
-[data-theme="dark"] .dc-list-card--pillar .dc-chip {
-  color: #6ab5c4;
-}
-
-a.dc-list-card {
-  text-decoration: none;
-  color: inherit;
-  display: block;
-}
   </style>
 
 
@@ -2670,7 +2620,6 @@ a.dc-list-card {
     <!-- ── PANEL: Meta Base ── -->
     <section class="dc-panel" id="panel-sharehub">
 
-      <div class="dc-list-card-row">
       <div class="dc-list-card featured" id="card-glossary" onclick="window.location.href='/glossary/'">
         <div class="gls-eyebrow-row">
           <div class="gls-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"/></svg></div>
@@ -2680,18 +2629,6 @@ a.dc-list-card {
           <span class="gls-sub">مفاهیم تصمیم‌ساز دندان‌پزشکی</span>
           <span class="dc-chip">Glossary <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="m9 6 6 6-6 6"/></svg></span>
         </div>
-      </div>
-
-      <a class="dc-list-card featured dc-list-card--pillar" id="card-pillar" href="/pillar/">
-        <div class="gls-eyebrow-row">
-          <div class="gls-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><use href="/assets/icons/icons.svg#icon-target"/></svg></div>
-        </div>
-        <div class="gls-title">فهرست موضوعی</div>
-        <div class="gls-footer">
-          <span class="gls-sub">نقشه‌ی موضوعی دنت‌کست</span>
-          <span class="dc-chip">Pillar <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="m9 6 6 6-6 6"/></svg></span>
-        </div>
-      </a>
       </div>
 
       <div class="dc-list-card dc-list-card--insight" onclick="window.location.href='/insight/'">
