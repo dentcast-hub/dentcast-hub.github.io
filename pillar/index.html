@@ -64,27 +64,78 @@
   <link rel="stylesheet" href="/global-search.css?v=1">
 
   <style>
-/* Pillar index card styles — inline; inherits CSS vars from /dc-theme.css */
-.pillar-index-list { display: flex; flex-direction: column; gap: 12px; margin: 8px 0 28px; list-style: none; padding: 0; }
-.pillar-index-card { display: flex; align-items: center; gap: 14px; padding: 16px 18px; background: var(--card-bg); border: 1px solid var(--card-border); border-right: 3px solid rgba(var(--pr-rgb), 0.28); border-radius: var(--r-lg); box-shadow: var(--card-sh); text-decoration: none; color: var(--txt); transition: transform var(--tr), box-shadow var(--tr), border-color var(--tr); }
-.pillar-index-card:hover { transform: translateY(-2px); box-shadow: var(--card-sh2); border-right-color: rgba(var(--pr-rgb), 0.55); }
-.pillar-index-card:active { transform: scale(.985); }
-.pillar-index-card-icon { font-size: 1.6rem; line-height: 1; color: var(--pr); width: 2.2rem; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.pillar-index-card-icon .dc-svg-icon { width: 1.6rem; height: 1.6rem; }
-.pillar-index-card-body { flex: 1; min-width: 0; }
-.pillar-index-card-title { margin: 0 0 4px; font-size: 1.05rem; font-weight: 800; color: var(--pr); letter-spacing: -0.2px; }
-.pillar-index-card-subtitle { margin: 0 0 4px; font-size: .9rem; color: var(--txt2); line-height: 1.5; }
-.pillar-index-card-meta { margin: 0; font-size: .78rem; color: var(--txt3); font-feature-settings: "tnum"; }
+/* Pillar index — visual sibling of Glossary index.
+   Teal accent palette mirrors Glossary's blue at equal intensity:
+     light primary teal: #1e5a6a (rgb 30,90,106)  — mirrors --pr (#022360)
+     light accent teal:  #1c8a9a (rgb 28,138,154) — mirrors --ac (#0b5fff)
+     dark accent teal:   #6ab5c4 (rgb 106,181,196)
+   Spacing/typography mirror Glossary verbatim. */
+
+/* Page container */
+.pillar-index .page { max-width: 680px; margin: 0 auto; padding: 0 14px 60px; }
+
+/* Hero / title */
+.pillar-index .top { padding: 12px 0 10px; }
+.pillar-index .nav-back { margin-bottom: 8px; }
+.pillar-index .back-link { display: inline-flex; align-items: center; gap: 4px; font-size: .78rem; font-weight: 600; color: var(--txt3); transition: color var(--tr); }
+.pillar-index .back-link::before { content: "\2190 \00A0"; }
+.pillar-index .back-link:hover { color: #1c8a9a; }
+[data-theme="dark"] .pillar-index .back-link:hover { color: #6ab5c4; }
+
+.pillar-index .hero { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+.pillar-index .title { font-size: 1.1rem; font-weight: 900; color: #1e5a6a; display: flex; gap: 8px; align-items: center; transition: color var(--tr2); margin: 0; }
+.pillar-index .title .dot { width: 9px; height: 9px; border-radius: var(--r-f); background: #1c8a9a; box-shadow: 0 0 0 4px rgba(28,138,154,.15); flex-shrink: 0; }
+.pillar-index .subtitle { color: var(--txt3); font-size: .80rem; line-height: 1.6; transition: color var(--tr2); }
+[data-theme="dark"] .pillar-index .title { color: #6ab5c4; }
+[data-theme="dark"] .pillar-index .title .dot { background: #6ab5c4; box-shadow: 0 0 0 4px rgba(106,181,196,.15); }
+
+/* Intro paragraph (override site-wide .intro card styling — pillar intro is free-flowing text) */
+body:has(.dc-topbar) .pillar-intro { background: transparent; border: 0; box-shadow: none; padding: 0; backdrop-filter: none; -webkit-backdrop-filter: none; margin: 6px 0 14px; }
+.pillar-intro p { color: var(--txt2); font-size: .82rem; line-height: 1.85; margin: 0; }
 .pillar-intro p strong { color: var(--txt); }
-@media (max-width: 480px) { .pillar-index-card { padding: 14px 14px; gap: 12px; } .pillar-index-card-title { font-size: 1rem; } }
-/* Override the global .intro card styling for pillar index — free-flowing text */
-body:has(.dc-topbar) .pillar-intro { background: transparent; border: 0; box-shadow: none; padding: 0; backdrop-filter: none; -webkit-backdrop-filter: none; }
-/* Sticky footer: pin footer to bottom of viewport when content is short. Adapted to actual DOM where footer lives inside .wrap. */
+
+/* Stats chip row */
+.pillar-index .metaRow { display: flex; justify-content: flex-start; align-items: center; gap: 10px; margin-top: 4px; margin-bottom: 12px; }
+.pillar-index .stats-chip { padding: 5px 10px; border-radius: var(--r-f); border: 1px solid var(--border); background: var(--surface2); font-size: .76rem; color: var(--txt3); user-select: none; white-space: nowrap; transition: all var(--tr2); font-feature-settings: "tnum"; }
+
+/* List wrap (outer card frame, same as Glossary's .listWrap) */
+.pillar-index .listWrap { margin-top: 4px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: var(--r-xl); overflow: hidden; box-shadow: var(--card-sh); transition: all var(--tr2); }
+
+/* Pillar card row — analogous to Glossary's .term but richer */
+.pillar-card-row { display: flex; align-items: stretch; gap: 12px; padding: 14px 14px; margin: 6px 6px; border-radius: var(--r-md); background: var(--surface2); border: 1px solid var(--border2); transition: all var(--tr); -webkit-tap-highlight-color: transparent; color: inherit; text-decoration: none; }
+.pillar-card-row:hover { background: var(--surface3); border-color: var(--border); transform: translateX(-2px); }
+.pillar-card-row:active { transform: scale(.99); }
+
+.pillar-card-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px; }
+.pillar-card-header { display: flex; align-items: center; gap: 8px; }
+.pillar-card-icon { font-size: 1.1rem; line-height: 1; color: #1e5a6a; flex-shrink: 0; display: inline-flex; align-items: center; }
+.pillar-card-icon .dc-svg-icon { width: 1.2em; height: 1.2em; }
+[data-theme="dark"] .pillar-card-icon { color: #6ab5c4; }
+.pillar-card-name { margin: 0; font-size: .95rem; font-weight: 800; color: var(--txt); letter-spacing: -.2px; }
+.pillar-card-subtitle { margin: 0; font-size: .78rem; color: var(--txt2); line-height: 1.5; }
+.pillar-card-meta { margin: 0; font-size: .7rem; color: var(--txt3); font-feature-settings: "tnum"; }
+
+.pillar-card-subtopics { list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-direction: column; gap: 0; font-size: .78rem; color: var(--txt2); }
+.pillar-card-subtopics li { padding: 5px 0; border-bottom: 1px solid var(--border2); display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.pillar-card-subtopics li:last-child { border-bottom: 0; }
+.pillar-card-subtopics .subtopic-count { color: var(--txt3); font-size: .7rem; font-feature-settings: "tnum"; }
+
+/* Arrow (chevron) on the LEFT in RTL (body first, arrow last in DOM) */
+.pillar-card-arrow { width: 30px; height: 30px; border-radius: var(--r-sm); display: grid; place-items: center; background: rgba(28,138,154,.08); border: 1px solid rgba(28,138,154,.18); color: #1c8a9a; flex-shrink: 0; align-self: center; transition: all var(--tr2); }
+.pillar-card-arrow .dc-svg-icon { width: 1em; height: 1em; }
+[data-theme="dark"] .pillar-card-arrow { background: rgba(106,181,196,.12); border-color: rgba(106,181,196,.30); color: #6ab5c4; }
+
+/* Sticky footer chain — preserved from prior op */
 html, body { min-height: 100vh; }
 body { display: flex; flex-direction: column; }
 body > .wrap { flex: 1 0 auto; display: flex; flex-direction: column; }
 .wrap > main { flex: 1 0 auto; }
 .wrap > .dc-site-footer, .wrap > footer { flex-shrink: 0; }
+
+@media (max-width: 480px) {
+  .pillar-card-row { padding: 12px 12px; }
+  .pillar-card-name { font-size: .92rem; }
+}
 </style>
 
   <!-- Theme init verbatim from metanotes/index.html -->
@@ -96,7 +147,7 @@ body > .wrap { flex: 1 0 auto; display: flex; flex-direction: column; }
     })();
   </script>
 </head>
-<body>
+<body class="pillar-index">
 
 <header class="dc-topbar">
   <div class="dc-topbar-actions">
@@ -137,10 +188,6 @@ body > .wrap { flex: 1 0 auto; display: flex; flex-direction: column; }
 
 <div class="wrap">
 
-  <header>
-    <h1>فهرست موضوعی</h1>
-  </header>
-
   <!-- 🔍 Global Search -->
   <div class="dc-global-filter-box" id="dcGlobalBox">
     <button class="dc-close-results"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
@@ -150,8 +197,6 @@ body > .wrap { flex: 1 0 auto; display: flex; flex-direction: column; }
       <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
       <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
       <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
-      <!-- <button class="dc-filter-btn active" data-type="litecast">لایت‌کست</button>-->
-      <!-- <button class="dc-filter-btn active" data-type="photocast">فوتوکست</button>-->
       <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
       <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
       <button class="dc-filter-btn active" data-type="meta">metanote</button>
@@ -161,21 +206,49 @@ body > .wrap { flex: 1 0 auto; display: flex; flex-direction: column; }
     <div class="dc-results-box" id="dcResults"></div>
   </div>
 
-  <main>
-    <section class="intro pillar-intro" aria-label="مقدمه">
-      <p>دنت‌کست در طول سال‌ها به شبکه‌ای از اپیزود، گلاسری، نوت‌کست و یادداشت بالینی تبدیل شده. هر <strong>موضوع</strong> اینجا یک نقطه‌ی ورود است به این شبکه — مفاهیم پایه تا چالش‌های پیشرفته، با لینک به منبع کامل. نقشه به‌مرور رشد می‌کند.</p>
-    </section>
+  <main class="page">
 
-    <nav class="pillar-index-list" aria-label="فهرست pillar‌ها">
-  <a class="pillar-index-card" href="/pillar/bonding/">
-    <span class="pillar-index-card-icon" aria-hidden="true"><svg class="dc-svg-icon" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-tooth"/></svg></span>
-    <span class="pillar-index-card-body">
-      <h2 class="pillar-index-card-title">باندینگ</h2>
-      <p class="pillar-index-card-subtitle">از شیمی سطح تا چالش‌های بالینی</p>
-      <p class="pillar-index-card-meta">۸۳ مطلب · ۵ زیرموضوع</p>
-    </span>
-  </a>
-    </nav>
+    <div class="top">
+      <div class="hero">
+        <div class="nav-back">
+          <a href="/index.html" class="back-link">بازگشت به صفحهٔ اصلی دنت‌کست</a>
+        </div>
+        <h1 class="title"><span class="dot" aria-hidden="true"></span>فهرست موضوعی</h1>
+        <div class="subtitle">نقشه‌ی موضوعی دنت‌کست</div>
+      </div>
+
+      <section class="intro pillar-intro" aria-label="مقدمه">
+        <p>دنت‌کست در طول سال‌ها به شبکه‌ای از اپیزود، گلاسری، نوت‌کست و یادداشت بالینی تبدیل شده. هر <strong>موضوع</strong> اینجا یک نقطه‌ی ورود است به این شبکه — مفاهیم پایه تا چالش‌های پیشرفته، با لینک به منبع کامل. نقشه به‌مرور رشد می‌کند.</p>
+      </section>
+
+      <div class="metaRow">
+        <div class="stats-chip" id="statsChip">۱ موضوع · ۸۳ مطلب · ۵ زیرموضوع</div>
+      </div>
+    </div>
+
+    <div class="listWrap">
+      <a class="pillar-card-row" href="/pillar/bonding/">
+        <div class="pillar-card-body">
+          <div class="pillar-card-header">
+            <span class="pillar-card-icon" aria-hidden="true"><svg class="dc-svg-icon" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-tooth"/></svg></span>
+            <h2 class="pillar-card-name">باندینگ</h2>
+          </div>
+          <p class="pillar-card-subtitle">از شیمی سطح تا چالش‌های بالینی</p>
+          <p class="pillar-card-meta">۸۳ مطلب · ۵ زیرموضوع</p>
+          <ul class="pillar-card-subtopics">
+          <li>مفاهیم پایه <span class="subtopic-count">(۶)</span></li>
+          <li>مواد و شیمی <span class="subtopic-count">(۱۰)</span></li>
+          <li>استراتژی‌ها و نسل‌ها <span class="subtopic-count">(۲۳)</span></li>
+          <li>کاربردهای بالینی <span class="subtopic-count">(۲۳)</span></li>
+          <li>موضوعات پیشرفته <span class="subtopic-count">(۲۱)</span></li>
+          </ul>
+        </div>
+        <div class="pillar-card-arrow" aria-hidden="true">
+          <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6"/></svg>
+        </div>
+      </a>
+    </div>
+
   </main>
 
   <footer class="dc-site-footer">

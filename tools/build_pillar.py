@@ -581,39 +581,113 @@ INDEX_INTRO_HTML = (
 
 INDEX_INLINE_STYLE = (
     "<style>\n"
-    "/* Pillar index card styles — inline; inherits CSS vars from /dc-theme.css */\n"
-    ".pillar-index-list { display: flex; flex-direction: column; gap: 12px; margin: 8px 0 28px; list-style: none; padding: 0; }\n"
-    ".pillar-index-card { display: flex; align-items: center; gap: 14px; padding: 16px 18px; background: var(--card-bg); border: 1px solid var(--card-border); border-right: 3px solid rgba(var(--pr-rgb), 0.28); border-radius: var(--r-lg); box-shadow: var(--card-sh); text-decoration: none; color: var(--txt); transition: transform var(--tr), box-shadow var(--tr), border-color var(--tr); }\n"
-    ".pillar-index-card:hover { transform: translateY(-2px); box-shadow: var(--card-sh2); border-right-color: rgba(var(--pr-rgb), 0.55); }\n"
-    ".pillar-index-card:active { transform: scale(.985); }\n"
-    ".pillar-index-card-icon { font-size: 1.6rem; line-height: 1; color: var(--pr); width: 2.2rem; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }\n"
-    ".pillar-index-card-icon .dc-svg-icon { width: 1.6rem; height: 1.6rem; }\n"
-    ".pillar-index-card-body { flex: 1; min-width: 0; }\n"
-    ".pillar-index-card-title { margin: 0 0 4px; font-size: 1.05rem; font-weight: 800; color: var(--pr); letter-spacing: -0.2px; }\n"
-    ".pillar-index-card-subtitle { margin: 0 0 4px; font-size: .9rem; color: var(--txt2); line-height: 1.5; }\n"
-    ".pillar-index-card-meta { margin: 0; font-size: .78rem; color: var(--txt3); font-feature-settings: \"tnum\"; }\n"
+    "/* Pillar index — visual sibling of Glossary index.\n"
+    "   Teal accent palette mirrors Glossary's blue at equal intensity:\n"
+    "     light primary teal: #1e5a6a (rgb 30,90,106)  — mirrors --pr (#022360)\n"
+    "     light accent teal:  #1c8a9a (rgb 28,138,154) — mirrors --ac (#0b5fff)\n"
+    "     dark accent teal:   #6ab5c4 (rgb 106,181,196)\n"
+    "   Spacing/typography mirror Glossary verbatim. */\n"
+    "\n"
+    "/* Page container */\n"
+    ".pillar-index .page { max-width: 680px; margin: 0 auto; padding: 0 14px 60px; }\n"
+    "\n"
+    "/* Hero / title */\n"
+    ".pillar-index .top { padding: 12px 0 10px; }\n"
+    ".pillar-index .nav-back { margin-bottom: 8px; }\n"
+    ".pillar-index .back-link { display: inline-flex; align-items: center; gap: 4px; font-size: .78rem; font-weight: 600; color: var(--txt3); transition: color var(--tr); }\n"
+    ".pillar-index .back-link::before { content: \"\\2190 \\00A0\"; }\n"
+    ".pillar-index .back-link:hover { color: #1c8a9a; }\n"
+    "[data-theme=\"dark\"] .pillar-index .back-link:hover { color: #6ab5c4; }\n"
+    "\n"
+    ".pillar-index .hero { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }\n"
+    ".pillar-index .title { font-size: 1.1rem; font-weight: 900; color: #1e5a6a; display: flex; gap: 8px; align-items: center; transition: color var(--tr2); margin: 0; }\n"
+    ".pillar-index .title .dot { width: 9px; height: 9px; border-radius: var(--r-f); background: #1c8a9a; box-shadow: 0 0 0 4px rgba(28,138,154,.15); flex-shrink: 0; }\n"
+    ".pillar-index .subtitle { color: var(--txt3); font-size: .80rem; line-height: 1.6; transition: color var(--tr2); }\n"
+    "[data-theme=\"dark\"] .pillar-index .title { color: #6ab5c4; }\n"
+    "[data-theme=\"dark\"] .pillar-index .title .dot { background: #6ab5c4; box-shadow: 0 0 0 4px rgba(106,181,196,.15); }\n"
+    "\n"
+    "/* Intro paragraph (override site-wide .intro card styling — pillar intro is free-flowing text) */\n"
+    "body:has(.dc-topbar) .pillar-intro { background: transparent; border: 0; box-shadow: none; padding: 0; backdrop-filter: none; -webkit-backdrop-filter: none; margin: 6px 0 14px; }\n"
+    ".pillar-intro p { color: var(--txt2); font-size: .82rem; line-height: 1.85; margin: 0; }\n"
     ".pillar-intro p strong { color: var(--txt); }\n"
-    "@media (max-width: 480px) { .pillar-index-card { padding: 14px 14px; gap: 12px; } .pillar-index-card-title { font-size: 1rem; } }\n"
-    "/* Override the global .intro card styling for pillar index — free-flowing text */\n"
-    "body:has(.dc-topbar) .pillar-intro { background: transparent; border: 0; box-shadow: none; padding: 0; backdrop-filter: none; -webkit-backdrop-filter: none; }\n"
-    "/* Sticky footer: pin footer to bottom of viewport when content is short. Adapted to actual DOM where footer lives inside .wrap. */\n"
+    "\n"
+    "/* Stats chip row */\n"
+    ".pillar-index .metaRow { display: flex; justify-content: flex-start; align-items: center; gap: 10px; margin-top: 4px; margin-bottom: 12px; }\n"
+    ".pillar-index .stats-chip { padding: 5px 10px; border-radius: var(--r-f); border: 1px solid var(--border); background: var(--surface2); font-size: .76rem; color: var(--txt3); user-select: none; white-space: nowrap; transition: all var(--tr2); font-feature-settings: \"tnum\"; }\n"
+    "\n"
+    "/* List wrap (outer card frame, same as Glossary's .listWrap) */\n"
+    ".pillar-index .listWrap { margin-top: 4px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: var(--r-xl); overflow: hidden; box-shadow: var(--card-sh); transition: all var(--tr2); }\n"
+    "\n"
+    "/* Pillar card row — analogous to Glossary's .term but richer */\n"
+    ".pillar-card-row { display: flex; align-items: stretch; gap: 12px; padding: 14px 14px; margin: 6px 6px; border-radius: var(--r-md); background: var(--surface2); border: 1px solid var(--border2); transition: all var(--tr); -webkit-tap-highlight-color: transparent; color: inherit; text-decoration: none; }\n"
+    ".pillar-card-row:hover { background: var(--surface3); border-color: var(--border); transform: translateX(-2px); }\n"
+    ".pillar-card-row:active { transform: scale(.99); }\n"
+    "\n"
+    ".pillar-card-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px; }\n"
+    ".pillar-card-header { display: flex; align-items: center; gap: 8px; }\n"
+    ".pillar-card-icon { font-size: 1.1rem; line-height: 1; color: #1e5a6a; flex-shrink: 0; display: inline-flex; align-items: center; }\n"
+    ".pillar-card-icon .dc-svg-icon { width: 1.2em; height: 1.2em; }\n"
+    "[data-theme=\"dark\"] .pillar-card-icon { color: #6ab5c4; }\n"
+    ".pillar-card-name { margin: 0; font-size: .95rem; font-weight: 800; color: var(--txt); letter-spacing: -.2px; }\n"
+    ".pillar-card-subtitle { margin: 0; font-size: .78rem; color: var(--txt2); line-height: 1.5; }\n"
+    ".pillar-card-meta { margin: 0; font-size: .7rem; color: var(--txt3); font-feature-settings: \"tnum\"; }\n"
+    "\n"
+    ".pillar-card-subtopics { list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-direction: column; gap: 0; font-size: .78rem; color: var(--txt2); }\n"
+    ".pillar-card-subtopics li { padding: 5px 0; border-bottom: 1px solid var(--border2); display: flex; justify-content: space-between; align-items: center; gap: 8px; }\n"
+    ".pillar-card-subtopics li:last-child { border-bottom: 0; }\n"
+    ".pillar-card-subtopics .subtopic-count { color: var(--txt3); font-size: .7rem; font-feature-settings: \"tnum\"; }\n"
+    "\n"
+    "/* Arrow (chevron) on the LEFT in RTL (body first, arrow last in DOM) */\n"
+    ".pillar-card-arrow { width: 30px; height: 30px; border-radius: var(--r-sm); display: grid; place-items: center; background: rgba(28,138,154,.08); border: 1px solid rgba(28,138,154,.18); color: #1c8a9a; flex-shrink: 0; align-self: center; transition: all var(--tr2); }\n"
+    ".pillar-card-arrow .dc-svg-icon { width: 1em; height: 1em; }\n"
+    "[data-theme=\"dark\"] .pillar-card-arrow { background: rgba(106,181,196,.12); border-color: rgba(106,181,196,.30); color: #6ab5c4; }\n"
+    "\n"
+    "/* Sticky footer chain — preserved from prior op */\n"
     "html, body { min-height: 100vh; }\n"
     "body { display: flex; flex-direction: column; }\n"
     "body > .wrap { flex: 1 0 auto; display: flex; flex-direction: column; }\n"
     ".wrap > main { flex: 1 0 auto; }\n"
     ".wrap > .dc-site-footer, .wrap > footer { flex-shrink: 0; }\n"
+    "\n"
+    "@media (max-width: 480px) {\n"
+    "  .pillar-card-row { padding: 12px 12px; }\n"
+    "  .pillar-card-name { font-size: .92rem; }\n"
+    "}\n"
     "</style>"
 )
 
 
+def _count_per_subtopic(slug, brain, gloss):
+    """Return dict {subtopic_slug: count} for one pillar."""
+    counts = defaultdict(int)
+    for e in brain:
+        p = e.get("pillar")
+        if isinstance(p, dict) and p.get("primary") == slug:
+            sub = p.get("subtopic")
+            if sub:
+                counts[sub] += 1
+    for e in gloss:
+        p = e.get("pillar")
+        if isinstance(p, dict) and p.get("primary") == slug:
+            sub = p.get("subtopic")
+            if sub:
+                counts[sub] += 1
+    return counts
+
+
 def build_index():
-    """Build pillar/index.html — the landing page for all pillars."""
+    """Build pillar/index.html — landing page that lists every registered pillar."""
     brain = json.loads(BRAIN_PATH.read_text(encoding="utf-8"))
     gloss = json.loads(GLOSS_PATH.read_text(encoding="utf-8"))["glossary"]
 
     pillars_info = []
     for slug, cfg in PILLARS.items():
         items, subs = _count_pillar(slug, brain, gloss)
+        per_sub = _count_per_subtopic(slug, brain, gloss)
+        subtopic_list = [
+            {"slug": s_slug, "title_fa": s_title, "count": per_sub.get(s_slug, 0)}
+            for (s_slug, s_title, _icon) in cfg["subtopics"]
+        ]
         pillars_info.append({
             "slug": slug,
             "h1_fa": cfg["h1_fa"],
@@ -621,6 +695,7 @@ def build_index():
             "icon": cfg["icon"],
             "items": items,
             "subtopics": subs,
+            "subtopic_list": subtopic_list,
         })
 
     cards_html = "".join(_render_index_card(info) for info in pillars_info)
@@ -639,15 +714,28 @@ def build_index():
 
 
 def _render_index_card(info):
+    """Render one pillar card: header (icon + title), subtitle, meta, subtopic list, left-side chevron."""
+    subtopic_lis = "".join(
+        '          <li>' + esc(s["title_fa"]) + ' <span class="subtopic-count">(' + fa_digits(s["count"]) + ')</span></li>\n'
+        for s in info["subtopic_list"]
+    )
     return (
-        '  <a class="pillar-index-card" href="/pillar/' + esc(info["slug"]) + '/">\n'
-        '    <span class="pillar-index-card-icon" aria-hidden="true">' + svg_icon(info["icon"]) + '</span>\n'
-        '    <span class="pillar-index-card-body">\n'
-        '      <h2 class="pillar-index-card-title">' + esc(info["h1_fa"]) + '</h2>\n'
-        '      <p class="pillar-index-card-subtitle">' + esc(info["subtitle_fa_short"]) + '</p>\n'
-        '      <p class="pillar-index-card-meta">' + fa_digits(info["items"]) + ' مطلب · ' + fa_digits(info["subtopics"]) + ' زیرموضوع</p>\n'
-        '    </span>\n'
-        '  </a>\n'
+        '      <a class="pillar-card-row" href="/pillar/' + esc(info["slug"]) + '/">\n'
+        '        <div class="pillar-card-body">\n'
+        '          <div class="pillar-card-header">\n'
+        '            <span class="pillar-card-icon" aria-hidden="true">' + svg_icon(info["icon"]) + '</span>\n'
+        '            <h2 class="pillar-card-name">' + esc(info["h1_fa"]) + '</h2>\n'
+        '          </div>\n'
+        '          <p class="pillar-card-subtitle">' + esc(info["subtitle_fa_short"]) + '</p>\n'
+        '          <p class="pillar-card-meta">' + fa_digits(info["items"]) + ' مطلب · ' + fa_digits(info["subtopics"]) + ' زیرموضوع</p>\n'
+        '          <ul class="pillar-card-subtopics">\n'
+        + subtopic_lis +
+        '          </ul>\n'
+        '        </div>\n'
+        '        <div class="pillar-card-arrow" aria-hidden="true">\n'
+        '          <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6"/></svg>\n'
+        '        </div>\n'
+        '      </a>\n'
     )
 
 
@@ -655,7 +743,18 @@ def _render_index_page(pillars_info, cards_html):
     canonical = "https://dentcast.org/pillar/"
     page_title = "فهرست موضوعی / دنت‌کست"
     h1_fa = "فهرست موضوعی"
+    subtitle_fa = "نقشه‌ی موضوعی دنت‌کست"
     jsonld_body = build_jsonld_index(canonical, pillars_info)
+
+    # Aggregate stats across all pillars (future-proof: scales with len(PILLARS))
+    total_pillars   = len(pillars_info)
+    total_items     = sum(p["items"] for p in pillars_info)
+    total_subtopics = sum(p["subtopics"] for p in pillars_info)
+    stats_text = (
+        fa_digits(total_pillars) + " موضوع · "
+        + fa_digits(total_items) + " مطلب · "
+        + fa_digits(total_subtopics) + " زیرموضوع"
+    )
 
     head = (
         '<!DOCTYPE html>\n'
@@ -707,7 +806,7 @@ def _render_index_page(pillars_info, cards_html):
     )
 
     body = (
-        '<body>\n'
+        '<body class="pillar-index">\n'
         '\n'
         '<header class="dc-topbar">\n'
         '  <div class="dc-topbar-actions">\n'
@@ -748,10 +847,6 @@ def _render_index_page(pillars_info, cards_html):
         '\n'
         '<div class="wrap">\n'
         '\n'
-        '  <header>\n'
-        '    <h1>' + esc(h1_fa) + '</h1>\n'
-        '  </header>\n'
-        '\n'
         '  <!-- 🔍 Global Search -->\n'
         '  <div class="dc-global-filter-box" id="dcGlobalBox">\n'
         '    <button class="dc-close-results"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>\n'
@@ -761,8 +856,6 @@ def _render_index_page(pillars_info, cards_html):
         '      <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>\n'
         '      <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>\n'
         '      <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>\n'
-        '      <!-- <button class="dc-filter-btn active" data-type="litecast">لایت‌کست</button>-->\n'
-        '      <!-- <button class="dc-filter-btn active" data-type="photocast">فوتوکست</button>-->\n'
         '      <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>\n'
         '      <button class="dc-filter-btn active" data-type="dentai">مقالات</button>\n'
         '      <button class="dc-filter-btn active" data-type="meta">metanote</button>\n'
@@ -772,14 +865,30 @@ def _render_index_page(pillars_info, cards_html):
         '    <div class="dc-results-box" id="dcResults"></div>\n'
         '  </div>\n'
         '\n'
-        '  <main>\n'
-        '    <section class="intro pillar-intro" aria-label="مقدمه">\n'
-        '      <p>' + INDEX_INTRO_HTML + '</p>\n'
-        '    </section>\n'
+        '  <main class="page">\n'
         '\n'
-        '    <nav class="pillar-index-list" aria-label="فهرست pillar‌ها">\n'
+        '    <div class="top">\n'
+        '      <div class="hero">\n'
+        '        <div class="nav-back">\n'
+        '          <a href="/index.html" class="back-link">بازگشت به صفحهٔ اصلی دنت‌کست</a>\n'
+        '        </div>\n'
+        '        <h1 class="title"><span class="dot" aria-hidden="true"></span>' + esc(h1_fa) + '</h1>\n'
+        '        <div class="subtitle">' + esc(subtitle_fa) + '</div>\n'
+        '      </div>\n'
+        '\n'
+        '      <section class="intro pillar-intro" aria-label="مقدمه">\n'
+        '        <p>' + INDEX_INTRO_HTML + '</p>\n'
+        '      </section>\n'
+        '\n'
+        '      <div class="metaRow">\n'
+        '        <div class="stats-chip" id="statsChip">' + stats_text + '</div>\n'
+        '      </div>\n'
+        '    </div>\n'
+        '\n'
+        '    <div class="listWrap">\n'
         + cards_html +
-        '    </nav>\n'
+        '    </div>\n'
+        '\n'
         '  </main>\n'
         '\n'
         '  <footer class="dc-site-footer">\n'
@@ -803,6 +912,7 @@ def _render_index_page(pillars_info, cards_html):
         '</html>\n'
     )
     return head + body
+
 
 
 # -------------------------------------------------------------------
