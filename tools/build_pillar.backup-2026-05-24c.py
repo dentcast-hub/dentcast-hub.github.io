@@ -370,12 +370,6 @@ def render_page(cfg, intro_html, cards_html, flat_ordered):
         '\n'
         '</div>\n'
         '\n'
-        '<!-- تم تاگل -->\n'
-        '<button id="dc-theme-toggle" aria-label="تغییر تم"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M20.5 14.2A8.2 8.2 0 0 1 9.8 3.5 8.8 8.8 0 1 0 20.5 14.2z"/></svg></button>\n'
-        '\n'
-        '<!-- Theme toggle behavior moved to /dc-nav.js (single source) -->\n'
-        '<script src="/dc-nav.js" defer></script>\n'
-        '\n'
         '</body>\n'
         '</html>\n'
     )
