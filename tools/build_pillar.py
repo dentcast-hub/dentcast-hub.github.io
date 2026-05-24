@@ -45,8 +45,11 @@ PILLARS = {
         "h1_fa":        "باندینگ",
         "subtitle_fa":  "نقشه‌ی موضوعی دنت‌کست",
         "intro_paragraphs": [
-            'باندینگ مدرن، یکی از معدود نقاطی است که دندان\u200cپزشکی واقعاً تبدیل به یک رشته\u200cی مولکولی می\u200cشود. این\u200cجا دیگر فقط با شکل و فرم سر و کار نداریم؛ با شیمی سطح، با ساختار کلاژن، با لایه\u200cهایی به ضخامت چند میکرون که تعیین می\u200cکنند یک ترمیم پنج سال دوام می\u200cآورد یا پنج ماه.',
-            'پشت هر تصمیم باندینگ، یک زنجیره از مفاهیم نشسته است: substrate ای که می\u200cخواهیم به آن باند شویم چیست — مینای پریزماتیک، عاج با توبول\u200cهای باز، سرامیک سیلیکا\u200cبیس، زیرکونیا، فلز؟ چه استراتژی\u200cای متناسب با این substrate است؟ چه ماده\u200cای، با چه pH، در چه ترتیبی روی آن می\u200cنشیند؟ و در نهایت، باند ایجاد شده در شرایط بالینی واقعی — رطوبت، آلودگی، فشار اکلوزال، گذر زمان — چقدر پایدار می\u200cماند؟',
+            'باندینگ مدرن، یکی از معدود نقاطی است که دندان\u200cپزشکی واقعاً تبدیل به یک <strong>رشته\u200cی مولکولی</strong> می\u200cشود. این\u200cجا دیگر فقط با شکل و فرم سر و کار نداریم؛ با شیمی سطح، با ساختار کلاژن، با لایه\u200cهایی به ضخامت چند میکرون که تعیین می\u200cکنند یک ترمیم <strong>پنج سال</strong> دوام می\u200cآورد یا <strong>پنج ماه</strong>.',
+            'پشت هر تصمیم باندینگ، یک زنجیره از مفاهیم نشسته است:',
+            '<strong>substrate</strong> ای که می\u200cخواهیم به آن باند شویم چیست؟ — مینای پریزماتیک، عاج با توبول\u200cهای باز، سرامیک سیلیکا\u200cبیس، زیرکونیا، فلز.',
+            'چه <strong>استراتژی</strong>\u200cای متناسب با این substrate است؟ چه ماده\u200cای، با چه <strong>pH</strong>، در چه ترتیبی روی آن می\u200cنشیند؟',
+            'و در نهایت، باند ایجاد شده در شرایط بالینی واقعی — رطوبت، آلودگی، فشار اکلوزال، گذر زمان — چقدر <strong>پایدار</strong> می\u200cماند؟',
             'این صفحه یک نقشه\u200cی موضوعی برای ورود به این جهان است. مطالب در پنج لایه دسته\u200cبندی شده\u200cاند، از مفاهیم پایه تا چالش\u200cهای پیشرفته. اگر تازه با باندینگ آشنا می\u200cشوید، از بالا شروع کنید. اگر دنبال یک مفهوم خاص یا یک تصمیم بالینی مشخص هستید، مستقیم به دسته\u200cی مرتبط بروید. هر مورد به منبع کاملش در دنت\u200cکست لینک شده — اپیزود پادکست، نوت\u200cکست، گلاسری، یا یادداشت بالینی.',
         ],
         "subtopics": [
@@ -260,8 +263,9 @@ def build_pillar(slug):
         flat_ordered.extend(items)
     cards_html = "".join(cards_html_parts)
 
+    # intro paragraphs may contain inline <strong> markup; emit as-is (PILLARS is trusted).
     intro_html = "\n".join(
-        '      <p>' + esc(p) + '</p>' for p in cfg["intro_paragraphs"]
+        '      <p>' + p + '</p>' for p in cfg["intro_paragraphs"]
     )
 
     page = render_page(cfg, intro_html, cards_html, flat_ordered)
@@ -478,6 +482,12 @@ INDEX_INLINE_STYLE = (
     "@media (max-width: 480px) { .pillar-index-card { padding: 14px 14px; gap: 12px; } .pillar-index-card-title { font-size: 1rem; } }\n"
     "/* Override the global .intro card styling for pillar index — free-flowing text */\n"
     "body:has(.dc-topbar) .pillar-intro { background: transparent; border: 0; box-shadow: none; padding: 0; backdrop-filter: none; -webkit-backdrop-filter: none; }\n"
+    "/* Sticky footer: pin footer to bottom of viewport when content is short. Adapted to actual DOM where footer lives inside .wrap. */\n"
+    "html, body { min-height: 100vh; }\n"
+    "body { display: flex; flex-direction: column; }\n"
+    "body > .wrap { flex: 1 0 auto; display: flex; flex-direction: column; }\n"
+    ".wrap > main { flex: 1 0 auto; }\n"
+    ".wrap > .dc-site-footer, .wrap > footer { flex-shrink: 0; }\n"
     "</style>"
 )
 
