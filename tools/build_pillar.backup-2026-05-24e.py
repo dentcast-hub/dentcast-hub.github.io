@@ -365,7 +365,7 @@ def render_page(cfg, intro_html, cards_html, flat_ordered):
         '  </main>\n'
         '\n'
         '  <footer class="dc-site-footer">\n'
-        '    <a href="../" class="btn-home"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="m3 11 9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg> بازگشت به فهرست موضوعی</a>\n'
+        '    <a href="/index.html" class="btn-home"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="m3 11 9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg> برگشت به صفحه‌ی اصلی</a>\n'
         '    <a href="/about.html" class="btn-about"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"/></svg> درباره‌ی دکتر فواد شهابیان و دنت‌کست</a>\n'
         '    <div class="footer-copy">© 2025 DentCast — طراحی و توسعه توسط <strong>دکتر فواد شهابیان</strong></div>\n'
         '  </footer>\n'
@@ -476,8 +476,6 @@ INDEX_INLINE_STYLE = (
     ".pillar-index-card-meta { margin: 0; font-size: .78rem; color: var(--txt3); font-feature-settings: \"tnum\"; }\n"
     ".pillar-intro p strong { color: var(--txt); }\n"
     "@media (max-width: 480px) { .pillar-index-card { padding: 14px 14px; gap: 12px; } .pillar-index-card-title { font-size: 1rem; } }\n"
-    "/* Override the global .intro card styling for pillar index — free-flowing text */\n"
-    "body:has(.dc-topbar) .pillar-intro { background: transparent; border: 0; box-shadow: none; padding: 0; backdrop-filter: none; -webkit-backdrop-filter: none; }\n"
     "</style>"
 )
 
