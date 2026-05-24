@@ -311,7 +311,7 @@
   <symbol id="icon-target" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <circle cx="12" cy="12" r="9"/>
     <circle cx="12" cy="12" r="5"/>
-    <circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/>
+    <circle cx="12" cy="12" r="1.5" style="fill:currentColor" stroke="none"/>
   </symbol>
 
   <symbol id="icon-star" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
