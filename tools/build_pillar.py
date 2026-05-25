@@ -32,8 +32,8 @@ from pathlib import Path
 
 # -------------------------------------------------------------------
 # Pillar-specific copy & metadata.
-# Currently only "bonding" is defined. Add a new entry to PILLARS to
-# build a new pillar page; the rest of the script is data-driven.
+# Add a new entry to PILLARS to build a new pillar page; the rest of
+# the script is data-driven.
 # -------------------------------------------------------------------
 PILLARS = {
     "bonding": {
@@ -45,19 +45,41 @@ PILLARS = {
         "h1_fa":        "باندینگ",
         "subtitle_fa":  "نقشه‌ی موضوعی دنت‌کست",
         "intro_paragraphs": [
-            'باندینگ مدرن، یکی از معدود نقاطی است که دندان\u200cپزشکی واقعاً تبدیل به یک <strong>رشته\u200cی مولکولی</strong> می\u200cشود. این\u200cجا دیگر فقط با شکل و فرم سر و کار نداریم؛ با شیمی سطح، با ساختار کلاژن، با لایه\u200cهایی به ضخامت چند میکرون که تعیین می\u200cکنند یک ترمیم <strong>پنج سال</strong> دوام می\u200cآورد یا <strong>پنج ماه</strong>.',
+            'باندینگ مدرن، یکی از معدود نقاطی است که دندان‌پزشکی واقعاً تبدیل به یک <strong>رشته‌ی مولکولی</strong> می‌شود. این‌جا دیگر فقط با شکل و فرم سر و کار نداریم؛ با شیمی سطح، با ساختار کلاژن، با لایه‌هایی به ضخامت چند میکرون که تعیین می‌کنند یک ترمیم <strong>پنج سال</strong> دوام می‌آورد یا <strong>پنج ماه</strong>.',
             'پشت هر تصمیم باندینگ، یک زنجیره از مفاهیم نشسته است:',
-            '<strong>substrate</strong> ای که می\u200cخواهیم به آن باند شویم چیست؟ — مینای پریزماتیک، عاج با توبول\u200cهای باز، سرامیک سیلیکا\u200cبیس، زیرکونیا، فلز.',
-            'چه <strong>استراتژی</strong>\u200cای متناسب با این substrate است؟ چه ماده\u200cای، با چه <strong>pH</strong>، در چه ترتیبی روی آن می\u200cنشیند؟',
-            'و در نهایت، باند ایجاد شده در شرایط بالینی واقعی — رطوبت، آلودگی، فشار اکلوزال، گذر زمان — چقدر <strong>پایدار</strong> می\u200cماند؟',
-            'این صفحه یک نقشه\u200cی موضوعی برای ورود به این جهان است. مطالب در پنج لایه دسته\u200cبندی شده\u200cاند، از مفاهیم پایه تا چالش\u200cهای پیشرفته. اگر تازه با باندینگ آشنا می\u200cشوید، از بالا شروع کنید. اگر دنبال یک مفهوم خاص یا یک تصمیم بالینی مشخص هستید، مستقیم به دسته\u200cی مرتبط بروید. هر مورد به منبع کاملش در دنت\u200cکست لینک شده — اپیزود پادکست، نوت\u200cکست، گلاسری، یا یادداشت بالینی.',
+            '<strong>substrate</strong> ای که می‌خواهیم به آن باند شویم چیست؟ — مینای پریزماتیک، عاج با توبول‌های باز، سرامیک سیلیکا‌بیس، زیرکونیا، فلز.',
+            'چه <strong>استراتژی</strong>‌ای متناسب با این substrate است؟ چه ماده‌ای، با چه <strong>pH</strong>، در چه ترتیبی روی آن می‌نشیند؟',
+            'و در نهایت، باند ایجاد شده در شرایط بالینی واقعی — رطوبت، آلودگی، فشار اکلوزال، گذر زمان — چقدر <strong>پایدار</strong> می‌ماند؟',
+            'این صفحه یک نقشه‌ی موضوعی برای ورود به این جهان است. مطالب در پنج لایه دسته‌بندی شده‌اند، از مفاهیم پایه تا چالش‌های پیشرفته. اگر تازه با باندینگ آشنا می‌شوید، از بالا شروع کنید. اگر دنبال یک مفهوم خاص یا یک تصمیم بالینی مشخص هستید، مستقیم به دسته‌ی مرتبط بروید. هر مورد به منبع کاملش در دنت‌کست لینک شده — اپیزود پادکست، نوت‌کست، گلاسری، یا یادداشت بالینی.',
         ],
         "subtopics": [
-            ("basics",     "مفاهیم پایه",     "icon-book"),
-            ("materials",  "مواد و شیمی",  "icon-flask"),
-            ("strategies", "استراتژی‌ها و نسل‌ها", "icon-compass"),
-            ("clinical",   "کاربردهای بالینی",   "icon-tooth"),
-            ("advanced",   "موضوعات پیشرفته",   "icon-target"),
+            {"slug": "basics",     "title_fa": "مفاهیم پایه",     "icon": "icon-book",    "intro_fa": ""},
+            {"slug": "materials",  "title_fa": "مواد و شیمی",  "icon": "icon-flask",   "intro_fa": ""},
+            {"slug": "strategies", "title_fa": "استراتژی‌ها و نسل‌ها", "icon": "icon-compass", "intro_fa": ""},
+            {"slug": "clinical",   "title_fa": "کاربردهای بالینی",   "icon": "icon-tooth",   "intro_fa": ""},
+            {"slug": "advanced",   "title_fa": "موضوعات پیشرفته",   "icon": "icon-target",  "intro_fa": ""},
+        ],
+    },
+    "ceramics": {
+        "title_fa": "سرامیک",
+        "icon":             "icon-flask",
+        "subtitle_fa_short": "از شیمی ماده تا انتخاب بالینی",
+        "page_title":       "فهرست موضوعی سرامیک / دنت‌کست",
+        "meta_description": "نقشه‌ی موضوعی سرامیک در دندان‌پزشکی — از شیمی ماده و انواع سرامیک‌ها تا آماده‌سازی سطح، اندیکاسیون‌های بالینی، و الگوهای شکست. مجموعه‌ای از اپیزودها، گلاسری، نوت‌کست‌ها و یادداشت‌های بالینی دنت‌کست در یک ساختار واحد.",
+        "h1_fa":        "سرامیک",
+        "subtitle_fa":  "نقشه‌ی موضوعی دنت‌کست",
+        "intro_paragraphs": [
+            'سرامیک در دندان‌پزشکی یک ماده نیست. یک <strong>خانواده</strong> است. فلدسپاتیک، لیتیوم دی‌سیلیکات، زیرکونیا، هیبریدهای رزین‌ماتریکس — هر کدام یک شیمی، یک ساختار کریستالی، یک رفتار مکانیکی، و یک محدوده‌ی بالینی متفاوت دارد.',
+            'این تنوع، یک تنش بالینی واقعی می‌سازد. <strong>برای این بیمار، این دندان، این جایگاه، چه سرامیکی؟</strong> پاسخ به این سؤال نه از کاتالوگ سازنده می‌آید نه از تجربه‌ی تنها. از فهم بنیادین این که چرا فلدسپاتیک شفاف‌تر است ولی شکننده‌تر، چرا زیرکونیا قوی‌تر است ولی <strong>کدرتر</strong>، چرا لیتیوم دی‌سیلیکات تعادلی بین این دو می‌سازد، و چرا هیچ‌کدام «بهترین» نیست.',
+            'پشت هر تصمیم سرامیک، چند لایه نشسته است. ساختار ماده. روش پردازش. <strong>آماده‌سازی سطح</strong>. اندیکاسیون بالینی. و در نهایت، مکانیسم‌های شکست که گاهی سال‌ها بعد از سمان شدن خود را نشان می‌دهند.',
+            'این صفحه یک نقشه‌ی موضوعی برای ورود به این جهان است. مطالب در <strong>پنج لایه دسته‌بندی شده‌اند</strong>، از مفاهیم پایه و انواع مواد تا چالش‌های آماده‌سازی سطح، کاربردهای بالینی، و الگوهای شکست. اگر تازه با سرامیک‌ها آشنا می‌شوید، از بالا شروع کنید. اگر دنبال یک ماده‌ی خاص یا یک تصمیم بالینی مشخص هستید، مستقیم به دسته‌ی مرتبط بروید. هر مورد به منبع کاملش در دنت‌کست لینک شده.',
+        ],
+        "subtopics": [
+            {"slug": "basics",       "title_fa": "مفاهیم پایه",     "icon": "icon-book",    "intro_fa": ""},
+            {"slug": "types",        "title_fa": "انواع سرامیک",    "icon": "icon-diamond", "intro_fa": ""},
+            {"slug": "surface-prep", "title_fa": "آماده‌سازی سطح", "icon": "icon-wrench",  "intro_fa": "آماده‌سازی سطح سرامیک، آغاز یک زنجیره است. مرحله‌ی بعدی، یعنی پروتکل باند به دندان و انتخاب adhesive و رزین سمنت، در Pillar باندینگ به تفصیل آمده."},
+            {"slug": "indications",  "title_fa": "کاربردهای بالینی", "icon": "icon-tooth",   "intro_fa": "انتخاب ماده‌ی سرامیک، نیمی از تصمیم است. نیمه‌ی دیگر، یعنی پروتکل سمان کردن و adhesive interface، در Pillar باندینگ بحث شده."},
+            {"slug": "failures",     "title_fa": "چالش‌ها و شکست",   "icon": "icon-warning", "intro_fa": ""},
         ],
     },
 }
@@ -86,15 +108,6 @@ def svg_icon(symbol_id):
     )
 
 
-# -------------------------------------------------------------------
-# Nav-shell sibling blocks + asset references — byte-identical copies
-# from metanotes/index.html. The pillar topbar's hamburger and search
-# buttons depend on these elements existing in the DOM; without them,
-# dc-nav.js silently no-ops. Keep in sync with Meta Base.
-# -------------------------------------------------------------------
-# Module-level constants — byte-identical copies of the four sibling blocks
-# from metanotes/index.html (the canonical reference for the site nav shell).
-# These must NOT diverge from Meta Base; if Meta Base changes, sync these.
 TOOLBAR_DRAWER_HTML = (
     '<div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">\n'
     '  <div class="dc-toolbar-drawer-inner">\n'
@@ -220,9 +233,13 @@ def fa_digits(n):
     return str(n).translate(table)
 
 
-def render_subtopic_card(sub_slug, sub_title, sub_symbol_id, items):
+def render_subtopic_card(sub_slug, sub_title, sub_symbol_id, items, intro_fa=""):
     count = len(items)
     items_html = "".join(render_item(it["entry"], it["source"]) for it in items)
+    intro_html = (
+        '      <p class="pillar-subtopic-intro">' + intro_fa + '</p>\n'
+        if intro_fa else ''
+    )
     return (
         '  <details class="pillar-card" data-subtopic="' + esc(sub_slug) + '">\n'
         '    <summary class="pillar-card-summary">\n'
@@ -233,6 +250,7 @@ def render_subtopic_card(sub_slug, sub_title, sub_symbol_id, items):
         '      <span class="pillar-card-chevron" aria-hidden="true">▾</span>\n'
         '    </summary>\n'
         '    <div class="pillar-card-body">\n'
+        + intro_html +
         '      <ul class="pillar-list">\n'
         + items_html +
         '      </ul>\n'
@@ -291,8 +309,13 @@ def build_jsonld(cfg, canonical, flat_ordered):
     return json.dumps(data, ensure_ascii=False, indent=2)
 
 
-HERE = Path(__file__).resolve().parent
-ROOT = HERE.parent
+# ROOT path is set via env var for portable execution.
+_root_env = os.environ.get("DENTCAST_ROOT")
+if _root_env:
+    ROOT = Path(_root_env).resolve()
+else:
+    HERE = Path(__file__).resolve().parent
+    ROOT = HERE.parent
 BRAIN_PATH = ROOT / "dentcast-brain.json"
 GLOSS_PATH = ROOT / "glossary" / "glossary.json"
 
@@ -323,19 +346,22 @@ def build_pillar(slug):
     cards_html_parts = []
     counts = {}
     flat_ordered = []
-    for sub_slug, sub_title, sub_icon in cfg["subtopics"]:
+    for sub in cfg["subtopics"]:
+        sub_slug  = sub["slug"]
+        sub_title = sub["title_fa"]
+        sub_icon  = sub["icon"]
+        sub_intro = sub.get("intro_fa", "")
         items = sort_items(groups.get(sub_slug, []))
         counts[sub_slug] = len(items)
-        cards_html_parts.append(render_subtopic_card(sub_slug, sub_title, sub_icon, items))
+        cards_html_parts.append(render_subtopic_card(sub_slug, sub_title, sub_icon, items, sub_intro))
         flat_ordered.extend(items)
     cards_html = "".join(cards_html_parts)
 
-    # intro paragraphs may contain inline <strong> markup; emit as-is (PILLARS is trusted).
     intro_html = "\n".join(
         '      <p>' + p + '</p>' for p in cfg["intro_paragraphs"]
     )
 
-    page = render_page(cfg, intro_html, cards_html, flat_ordered)
+    page = render_page(slug, cfg, intro_html, cards_html, flat_ordered)
 
     out_dir = ROOT / "pillar" / slug
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -344,13 +370,13 @@ def build_pillar(slug):
 
     print("Built " + str(out_path.relative_to(ROOT)))
     print("Total items: " + str(sum(counts.values())))
-    for sub_slug, _, _ in cfg["subtopics"]:
-        print("  " + sub_slug.ljust(11) + " " + str(counts[sub_slug]))
+    for sub in cfg["subtopics"]:
+        print("  " + sub["slug"].ljust(11) + " " + str(counts[sub["slug"]]))
     return out_path
 
 
-def render_page(cfg, intro_html, cards_html, flat_ordered):
-    canonical = "https://dentcast.org/pillar/bonding/"
+def render_page(slug, cfg, intro_html, cards_html, flat_ordered):
+    canonical = "https://dentcast.org/pillar/" + slug + "/"
     jsonld_body = build_jsonld(cfg, canonical, flat_ordered)
 
     head = (
@@ -362,9 +388,9 @@ def render_page(cfg, intro_html, cards_html, flat_ordered):
         '  <title>' + esc(cfg["page_title"]) + '</title>\n'
         '  <meta name="description" content="' + esc(cfg["meta_description"]) + '">\n'
         '  <link rel="canonical" href="' + canonical + '">\n'
-        '  <link rel="alternate" hreflang="fa-IR" href="https://dentcast.ir/pillar/bonding/">\n'
-        '  <link rel="alternate" hreflang="fa"    href="https://dentcast.org/pillar/bonding/">\n'
-        '  <link rel="alternate" hreflang="x-default" href="https://dentcast.org/pillar/bonding/">\n'
+        '  <link rel="alternate" hreflang="fa-IR" href="https://dentcast.ir/pillar/' + slug + '/">\n'
+        '  <link rel="alternate" hreflang="fa"    href="https://dentcast.org/pillar/' + slug + '/">\n'
+        '  <link rel="alternate" hreflang="x-default" href="https://dentcast.org/pillar/' + slug + '/">\n'
         '  <link rel="icon" href="/logo-v2.png" type="image/png" sizes="512x512">\n'
         '  <link rel="apple-touch-icon" href="/logo-v2.png">\n'
         '  <meta name="theme-color" content="#F3F5F7">\n'
@@ -390,6 +416,27 @@ def render_page(cfg, intro_html, cards_html, flat_ordered):
         '  <link rel="stylesheet" href="/global-search.css?v=1">\n'
         '\n'
         '  <link rel="stylesheet" href="/pillar/bonding/bonding.css">\n'
+        '\n'
+        '  <style>\n'
+        '    /* Optional intro paragraph at the top of a subtopic card body.\n'
+        '       Rendered only when a subtopic defines a non-empty intro_fa\n'
+        '       in PILLARS. Calm muted block, RTL accent on the right. */\n'
+        '    .pillar-subtopic-intro {\n'
+        '      margin: 0 0 16px 0;\n'
+        '      padding: 12px 16px;\n'
+        '      background: rgba(45, 106, 122, 0.06);\n'
+        '      border-right: 3px solid rgba(45, 106, 122, 0.35);\n'
+        '      border-radius: 6px;\n'
+        '      font-size: 14px;\n'
+        '      line-height: 1.7;\n'
+        '      color: var(--text, #333);\n'
+        '    }\n'
+        '    [data-theme="dark"] .pillar-subtopic-intro {\n'
+        '      background: rgba(74, 154, 171, 0.10);\n'
+        '      border-right-color: rgba(74, 154, 171, 0.45);\n'
+        '      color: var(--text, #ddd);\n'
+        '    }\n'
+        '  </style>\n'
         '\n'
         "  <!-- Theme init verbatim from metanotes/index.html -->\n"
         "  <script>\n"
@@ -503,16 +550,7 @@ def render_page(cfg, intro_html, cards_html, flat_ordered):
     return head + body
 
 
-# -------------------------------------------------------------------
-# Index page builder.
-# Generates pillar/index.html — the landing page that lists every
-# registered pillar. Counts are computed from the JSON sources so
-# adding a new pillar to PILLARS (with valid `icon` and
-# `subtitle_fa_short` fields) is enough to update the index next
-# build. No manual edits elsewhere.
-# -------------------------------------------------------------------
 def _count_pillar(slug, brain, gloss):
-    """Return (total_items, distinct_subtopics) for a pillar slug."""
     items = 0
     subs = set()
     for e in brain:
@@ -529,7 +567,6 @@ def _count_pillar(slug, brain, gloss):
 
 
 def build_jsonld_index(canonical, pillars_info):
-    """JSON-LD for the index page — CollectionPage + mainEntity ItemList."""
     items = []
     for i, info in enumerate(pillars_info, start=1):
         items.append({
@@ -561,7 +598,6 @@ def build_jsonld_index(canonical, pillars_info):
     return json.dumps(data, ensure_ascii=False, indent=2)
 
 
-# Module-level constants used by the index page.
 INDEX_META_DESCRIPTION = (
     "نقشه‌ی موضوعی دنت‌کست — "
     "مجموعه‌ای از pillar‌های دندان‌پزشکی که "
@@ -660,7 +696,6 @@ INDEX_INLINE_STYLE = (
 
 
 def _count_per_subtopic(slug, brain, gloss):
-    """Return dict {subtopic_slug: count} for one pillar."""
     counts = defaultdict(int)
     for e in brain:
         p = e.get("pillar")
@@ -678,7 +713,6 @@ def _count_per_subtopic(slug, brain, gloss):
 
 
 def build_index():
-    """Build pillar/index.html — landing page that lists every registered pillar."""
     brain = json.loads(BRAIN_PATH.read_text(encoding="utf-8"))
     gloss = json.loads(GLOSS_PATH.read_text(encoding="utf-8"))["glossary"]
 
@@ -687,14 +721,14 @@ def build_index():
         items, subs = _count_pillar(slug, brain, gloss)
         per_sub = _count_per_subtopic(slug, brain, gloss)
         subtopic_list = [
-            {"slug": s_slug, "title_fa": s_title, "count": per_sub.get(s_slug, 0)}
-            for (s_slug, s_title, _icon) in cfg["subtopics"]
+            {"slug": sub["slug"], "title_fa": sub["title_fa"], "count": per_sub.get(sub["slug"], 0)}
+            for sub in cfg["subtopics"]
         ]
         pillars_info.append({
             "slug": slug,
             "h1_fa": cfg["h1_fa"],
             "subtitle_fa_short": cfg["subtitle_fa_short"],
-            "icon": cfg["icon"],   # kept for reference; index uses icon-target uniformly
+            "icon": cfg["icon"],
             "items": items,
             "subtopics": subs,
             "subtopic_list": subtopic_list,
@@ -716,11 +750,6 @@ def build_index():
 
 
 def _render_index_card(info):
-    """Render one pillar card. Uses icon-target uniformly (the icon represents
-    'this is a pillar entry' rather than the pillar's subject — keeps the
-    index visually cohesive even as new pillars get added with different
-    subject icons). The pillar's own subject icon (info["icon"]) is still
-    used inside the pillar's own page header."""
     subtopic_lis = "".join(
         '          <li>\n'
         '            <span class="subtopic-label">' + esc(s["title_fa"]) + '</span>\n'
@@ -755,7 +784,6 @@ def _render_index_page(pillars_info, cards_html):
     subtitle_fa = "نقشه‌ی موضوعی دنت‌کست"
     jsonld_body = build_jsonld_index(canonical, pillars_info)
 
-    # Aggregate stats across all pillars (future-proof: scales with len(PILLARS))
     total_pillars   = len(pillars_info)
     total_items     = sum(p["items"] for p in pillars_info)
     total_subtopics = sum(p["subtopics"] for p in pillars_info)
@@ -918,15 +946,10 @@ def _render_index_page(pillars_info, cards_html):
     return head + body
 
 
-
-
-# -------------------------------------------------------------------
-# CLI dispatch — supports: <pillar-slug> | index | all
-# -------------------------------------------------------------------
 if __name__ == "__main__":
     args = sys.argv[1:]
     if not args:
-        print("Usage: python tools/build_pillar.py <target>", file=sys.stderr)
+        print("Usage: python build_pillar.py <target>", file=sys.stderr)
         print("Targets: " + ", ".join(list(PILLARS.keys()) + ["index", "all"]), file=sys.stderr)
         sys.exit(1)
     target = args[0]

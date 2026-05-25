@@ -167,7 +167,7 @@
     "pillar": {
       "primary": "ceramics",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "types"
     }
   },
   {
@@ -190,7 +190,7 @@
     "pillar": {
       "primary": "ceramics",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "surface-prep"
     }
   },
   {
@@ -212,7 +212,7 @@
     "pillar": {
       "primary": "ceramics",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "surface-prep"
     }
   },
   {
@@ -233,7 +233,7 @@
     "pillar": {
       "primary": "ceramics",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "surface-prep"
     }
   },
   {
@@ -255,7 +255,7 @@
     "pillar": {
       "primary": "ceramics",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "surface-prep"
     }
   },
   {
@@ -315,7 +315,7 @@
     "pillar": {
       "primary": "ceramics",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "indications"
     }
   },
   {
@@ -335,9 +335,9 @@
     "audio_url": "",
     "page_url": "/episodes/episode-16.html",
     "pillar": {
-      "primary": "bonding",
+      "primary": "ceramics",
       "secondary": [],
-      "subtopic": "clinical"
+      "subtopic": "surface-prep"
     }
   },
   {
@@ -357,7 +357,7 @@
     "pillar": {
       "primary": "ceramics",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "types"
     }
   },
   {
@@ -378,7 +378,7 @@
     "pillar": {
       "primary": "ceramics",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "types"
     }
   },
   {
@@ -396,9 +396,9 @@
     "audio_url": "",
     "page_url": "/episodes/episode-19.html",
     "pillar": {
-      "primary": "resin-cements",
+      "primary": "ceramics",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "failures"
     }
   },
   {
@@ -599,7 +599,7 @@
     "pillar": {
       "primary": "ceramics",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "types"
     }
   },
   {
@@ -618,7 +618,7 @@
     "pillar": {
       "primary": "ceramics",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "types"
     }
   },
   {
@@ -1124,9 +1124,9 @@
     ],
     "page_url": "/episodes/episode-55.html",
     "pillar": {
-      "primary": "fixed-pros",
+      "primary": "ceramics",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "indications"
     }
   },
   {
@@ -1144,9 +1144,9 @@
     ],
     "page_url": "/episodes/episode-56.html",
     "pillar": {
-      "primary": "fixed-pros",
+      "primary": "ceramics",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "indications"
     }
   },
   {
@@ -1165,9 +1165,9 @@
     ],
     "page_url": "/episodes/episode-57.html",
     "pillar": {
-      "primary": "fixed-pros",
+      "primary": "ceramics",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "indications"
     }
   },
   {
@@ -1185,9 +1185,9 @@
     ],
     "page_url": "/episodes/episode-58.html",
     "pillar": {
-      "primary": "fixed-pros",
+      "primary": "ceramics",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "indications"
     }
   },
   {
@@ -1412,9 +1412,9 @@
     ],
     "page_url": "/episodes/episode-69.html",
     "pillar": {
-      "primary": "esthetic",
+      "primary": "ceramics",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "types"
     }
   },
   {
@@ -1798,7 +1798,7 @@
     "pillar": {
       "primary": "ceramics",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "types"
     }
   },
   {
@@ -1819,7 +1819,7 @@
     "pillar": {
       "primary": "ceramics",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "basics"
     }
   },
   {
@@ -1840,7 +1840,7 @@
     "pillar": {
       "primary": "ceramics",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "indications"
     }
   },
   {
@@ -2288,7 +2288,7 @@
     "pillar": {
       "primary": "ceramics",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "types"
     }
   },
   {
@@ -2930,9 +2930,9 @@
     ],
     "page_url": "/episodes/episode-122-3.html",
     "pillar": {
-      "primary": "endo",
+      "primary": "ceramics",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "indications"
     }
   },
   {
@@ -2980,7 +2980,7 @@
     "pillar": {
       "primary": "ceramics",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "indications"
     }
   },
   {
@@ -3124,7 +3124,7 @@
     "pillar": {
       "primary": "ceramics",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "indications"
     }
   },
   {
@@ -3267,7 +3267,7 @@
     "pillar": {
       "primary": "ceramics",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "indications"
     }
   },
   {
@@ -3667,9 +3667,9 @@
     ],
     "page_url": "/episodes/episode-136.html",
     "pillar": {
-      "primary": "bonding",
+      "primary": "ceramics",
       "secondary": [],
-      "subtopic": "clinical"
+      "subtopic": "surface-prep"
     }
   },
   {
@@ -3978,7 +3978,7 @@
     "pillar": {
       "primary": "ceramics",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "indications"
     }
   },
   {
@@ -4833,9 +4833,9 @@
     ],
     "page_url": "/insight/insight-5.html",
     "pillar": {
-      "primary": "resin-cements",
+      "primary": "ceramics",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "indications"
     }
   },
   {
@@ -5370,9 +5370,9 @@
     ],
     "page_url": "/litecast/lite-CAST7.html",
     "pillar": {
-      "primary": "esthetic",
+      "primary": "ceramics",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "indications"
     }
   },
   {
@@ -5782,7 +5782,7 @@
     "pillar": {
       "primary": "ceramics",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "types"
     }
   },
   {
@@ -5816,7 +5816,7 @@
     "pillar": {
       "primary": "ceramics",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "surface-prep"
     }
   },
   {
@@ -5849,9 +5849,9 @@
     ],
     "url": "/notecast/episode-10.html",
     "pillar": {
-      "primary": "bonding",
+      "primary": "ceramics",
       "secondary": [],
-      "subtopic": "clinical"
+      "subtopic": "surface-prep"
     }
   },
   {
@@ -5884,9 +5884,9 @@
     ],
     "url": "/notecast/episode-11.html",
     "pillar": {
-      "primary": "bonding",
+      "primary": "ceramics",
       "secondary": [],
-      "subtopic": "clinical"
+      "subtopic": "surface-prep"
     }
   },
   {
@@ -5919,9 +5919,9 @@
     ],
     "url": "/notecast/episode-12.html",
     "pillar": {
-      "primary": "bonding",
+      "primary": "ceramics",
       "secondary": [],
-      "subtopic": "clinical"
+      "subtopic": "surface-prep"
     }
   },
   {
@@ -5956,7 +5956,7 @@
     "pillar": {
       "primary": "ceramics",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "indications"
     }
   },
   {
@@ -6026,7 +6026,7 @@
     "pillar": {
       "primary": "ceramics",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "indications"
     }
   },
   {
@@ -6057,9 +6057,9 @@
     ],
     "url": "/notecast/episode-16.html",
     "pillar": {
-      "primary": "bonding",
+      "primary": "ceramics",
       "secondary": [],
-      "subtopic": "clinical"
+      "subtopic": "surface-prep"
     }
   },
   {
@@ -6092,7 +6092,7 @@
     "pillar": {
       "primary": "ceramics",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "basics"
     }
   },
   {
@@ -6125,7 +6125,7 @@
     "pillar": {
       "primary": "ceramics",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "types"
     }
   },
   {
@@ -6158,7 +6158,7 @@
     "pillar": {
       "primary": "ceramics",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "failures"
     }
   },
   {
@@ -7489,9 +7489,9 @@
     ],
     "page_url": "/dentai/dentai-10.html",
     "pillar": {
-      "primary": "esthetic",
+      "primary": "ceramics",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "indications"
     }
   },
   {
@@ -7524,7 +7524,7 @@
     "pillar": {
       "primary": "ceramics",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "types"
     }
   },
   {
@@ -7661,7 +7661,7 @@
     "pillar": {
       "primary": "ceramics",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "types"
     }
   },
   {
@@ -8234,7 +8234,7 @@
     "pillar": {
       "primary": "ceramics",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "failures"
     }
   },
   {
@@ -8291,9 +8291,9 @@
     ],
     "page_url": "/insight/insight-28.html",
     "pillar": {
-      "primary": "fixed-pros",
+      "primary": "ceramics",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "indications"
     }
   },
   {
@@ -8436,7 +8436,7 @@
     ],
     "page_url": "/insight/insight-29.html",
     "pillar": {
-      "primary": "ceramics",
+      "primary": "resin-cements",
       "secondary": [],
       "subtopic": null
     }
@@ -9128,9 +9128,9 @@
     ],
     "page_url": "/insight/insight-37.html",
     "pillar": {
-      "primary": "fixed-pros",
+      "primary": "ceramics",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "failures"
     }
   },
   {
