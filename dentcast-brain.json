@@ -9534,5 +9534,40 @@
       "secondary": [],
       "subtopic": null
     }
+  },
+  {
+    "type": "clinical",
+    "id": "clinical-42",
+    "title": "روکش روی دندان تحت درمان ارتودنسی: وقتی ترتیب درمان، انتخاب متریال را تعیین می‌کند",
+    "caption": "وقتی دندانی در میانهٔ درمان ارتو نیاز به روکش پیدا می‌کند، انتخاب متریال، قابلیت باندینگ براکت، تحمل در برابر نیروهای ارتودنسی و ناپایداری مرجع رنگی، تعیین می‌کنند که روکش دائم زودهنگام ساخته شود یا یک روکش موقت تا پایان ارتو حفظ شود. این رویکرد ملاحظات انتخاب پرسلن فلدسپاتیک در برابر زیرکونیای مونولیتیک، ریسک دیباندینگ مکرر و نقش استراتژیک روکش موقت در حفظ ثبات میدان بالینی را بررسی می‌کند.",
+    "hashtags": [
+      "#روکش_در_ارتو",
+      "#روکش_موقت",
+      "#پرسلن_فلدسپاتیک",
+      "#زیرکونیا_مونولیتیک",
+      "#باندینگ_براکت",
+      "#انتخاب_shade",
+      "#پروتز_و_ارتو",
+      "#ترتیب_درمان"
+    ],
+    "keywords": [
+      "crown selection orthodontic patient",
+      "bracket bonding on crown",
+      "feldspathic porcelain bracket bonding",
+      "zirconia monolithic debonding risk",
+      "hydrofluoric acid etching ceramics",
+      "silane coupling agent",
+      "temporary crown orthodontic treatment",
+      "shade selection during orthodontics",
+      "interdisciplinary prosthodontics orthodontics",
+      "prosthodontics"
+    ],
+    "page_url": "/insight/insight-42.html",
+    "pillar": {
+      "primary": "fixed-pros",
+      "secondary": [],
+      "subtopic": null
+    },
+    "pillar_rationale": "تصمیم محور در انتخاب جنس روکش است (پرسلن فلدسپاتیک در برابر زیرکونیای مونولیتیک، و روکش موقت در برابر دائم)؛ ارتو، سرامیک و باندینگ به‌عنوان شرایط مرزی روی این تصمیم پروتزی اثر می‌گذارند."
   }
 ]
