@@ -273,9 +273,9 @@
     "audio_url": "",
     "page_url": "/episodes/episode-13.html",
     "pillar": {
-      "primary": "esthetic",
+      "primary": "ceramics",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "indications"
     }
   },
   {
@@ -357,7 +357,7 @@
     "pillar": {
       "primary": "ceramics",
       "secondary": [],
-      "subtopic": "types"
+      "subtopic": "basics"
     }
   },
   {
@@ -2597,7 +2597,7 @@
     ],
     "page_url": "/episodes/episode-115.html",
     "pillar": {
-      "primary": "implant-pros",
+      "primary": "implantology",
       "secondary": [],
       "subtopic": null
     }
@@ -3502,7 +3502,7 @@
     ],
     "page_url": "/episodes/episode-130.html",
     "pillar": {
-      "primary": "implant-pros",
+      "primary": "implantology",
       "secondary": [],
       "subtopic": null
     }
@@ -6226,9 +6226,9 @@
     ],
     "url": "/notecast/episode-21.html",
     "pillar": {
-      "primary": "bonding",
+      "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": "strategies"
+      "subtopic": null
     }
   },
   {
@@ -8712,9 +8712,9 @@
     ],
     "page_url": "/insight/insight-32.html",
     "pillar": {
-      "primary": "fixed-pros",
+      "primary": "ceramics",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "failures"
     }
   },
   {
@@ -9498,7 +9498,7 @@
     ],
     "url": "/sharehub/share-6.html",
     "pillar": {
-      "primary": "occlusion",
+      "primary": "esthetic",
       "secondary": [],
       "subtopic": null
     }
