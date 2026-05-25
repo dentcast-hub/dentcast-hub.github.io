@@ -1819,7 +1819,7 @@
     "pillar": {
       "primary": "ceramics",
       "secondary": [],
-      "subtopic": "basics"
+      "subtopic": "types"
     }
   },
   {
@@ -1840,7 +1840,7 @@
     "pillar": {
       "primary": "ceramics",
       "secondary": [],
-      "subtopic": "indications"
+      "subtopic": "types"
     }
   },
   {
@@ -3976,9 +3976,9 @@
     ],
     "page_url": "/episodes/episode-146.html",
     "pillar": {
-      "primary": "ceramics",
+      "primary": "implantology",
       "secondary": [],
-      "subtopic": "indications"
+      "subtopic": null
     }
   },
   {
@@ -4000,7 +4000,7 @@
     ],
     "page_url": "/episodes/episode-147.html",
     "pillar": {
-      "primary": "esthetic",
+      "primary": "implantology",
       "secondary": [],
       "subtopic": null
     }
