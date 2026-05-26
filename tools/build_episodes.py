@@ -705,8 +705,8 @@ INLINE_CSS = (
     '.episode-list[data-collapsed="true"] > li:nth-child(n+' + str(INITIAL_CHUNK + 1) + '){ display:none; }\n'
     '\n'
     '.episode-item{\n'
-    '  display:grid; grid-template-columns:42px 1fr auto;\n'
-    '  align-items:start; gap:12px;\n'
+    '  display:flex; flex-direction:row;\n'
+    '  align-items:flex-start; gap:14px;\n'
     '  padding:18px 4px;\n'
     '  border-bottom:1px solid var(--border2);\n'
     '  color:var(--txt);\n'
@@ -715,6 +715,31 @@ INLINE_CSS = (
     '}\n'
     '.episode-item:hover{ background:var(--surface2); padding-inline-start:10px; padding-inline-end:10px; }\n'
     '.episode-item:focus-visible{ outline:2px solid var(--ac); outline-offset:2px; border-radius:8px; }\n'
+    '\n'
+    '/* Logo thumbnail — same /logo-v2.png the topbar already cached.\n'
+    '   Decorative (empty alt); explicit width/height attrs in HTML prevent\n'
+    '   layout shift. Shrinks on narrow screens to keep the title row readable. */\n'
+    '.episode-item .ep-logo{\n'
+    '  flex-shrink:0;\n'
+    '  width:44px; height:44px;\n'
+    '  border-radius:10px;\n'
+    '  border:1px solid var(--border);\n'
+    '  object-fit:contain;\n'
+    '  background:var(--surface);\n'
+    '  display:block;\n'
+    '}\n'
+    '@media (max-width:480px){\n'
+    '  .episode-item .ep-logo{ width:36px; height:36px; border-radius:9px; }\n'
+    '}\n'
+    '\n'
+    '/* Text column — takes the remaining width; preserves the original\n'
+    '   3-column grid (ep-num | body | chev) so caption and chips align\n'
+    '   to the start of the text column, not under the logo. */\n'
+    '.episode-item .ep-content{\n'
+    '  flex:1 1 auto; min-width:0;\n'
+    '  display:grid; grid-template-columns:42px 1fr auto;\n'
+    '  align-items:start; gap:12px;\n'
+    '}\n'
     '.episode-item .ep-num{\n'
     '  font-size:.95rem; font-weight:700; color:var(--txt3);\n'
     '  font-variant-numeric:tabular-nums; letter-spacing:-.2px;\n'
@@ -1011,7 +1036,7 @@ def render_episode_li(ep, brain_entry):
     caption_html = ""
     if caption_raw:
         caption_html = (
-            '              <p class="ep-caption">' + esc(caption_raw) + '</p>\n'
+            '                <p class="ep-caption">' + esc(caption_raw) + '</p>\n'
         )
 
     # Hashtags — first MAX_TAGS_PER_ITEM only, preserve order, keep "#".
@@ -1022,32 +1047,39 @@ def render_episode_li(ep, brain_entry):
         tags = tags[:MAX_TAGS_PER_ITEM]
         if tags:
             chips = "".join(
-                '                <span class="ep-tag">' + esc(t) + '</span>\n'
+                '                  <span class="ep-tag">' + esc(t) + '</span>\n'
                 for t in tags
             )
             tags_html = (
-                '              <div class="ep-tags" aria-hidden="true">\n'
+                '                <div class="ep-tags" aria-hidden="true">\n'
                 + chips +
-                '              </div>\n'
+                '                </div>\n'
             )
 
+    # Logo thumbnail — re-uses the topbar's /logo-v2.png (already cached
+    # by the time the archive renders). Decorative; empty alt is correct.
+    # Explicit width/height attrs prevent layout shift even though the
+    # image is in the browser's memory cache after the first request.
     return (
         '        <li>\n'
         '          <a class="episode-item" href="' + esc(href) + '" aria-label="' + esc(aria) + '">\n'
-        '            <span class="ep-num">' + num + '</span>\n'
-        '            <div class="ep-body">\n'
-        '              <div class="ep-title">' + esc(title) + '</div>\n'
-        '              <div class="ep-meta">\n'
-        '                <span>' + esc(dur) + '</span>\n'
-        '                <span class="dot"></span>\n'
-        '                <span>' + esc(date) + '</span>\n'
-        '              </div>\n'
+        '            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">\n'
+        '            <div class="ep-content">\n'
+        '              <span class="ep-num">' + num + '</span>\n'
+        '              <div class="ep-body">\n'
+        '                <div class="ep-title">' + esc(title) + '</div>\n'
+        '                <div class="ep-meta">\n'
+        '                  <span>' + esc(dur) + '</span>\n'
+        '                  <span class="dot"></span>\n'
+        '                  <span>' + esc(date) + '</span>\n'
+        '                </div>\n'
         + caption_html
         + tags_html +
+        '              </div>\n'
+        '              <span class="ep-chev" aria-hidden="true">\n'
+        '                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>\n'
+        '              </span>\n'
         '            </div>\n'
-        '            <span class="ep-chev" aria-hidden="true">\n'
-        '              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>\n'
-        '            </span>\n'
         '          </a>\n'
         '        </li>\n'
     )
@@ -1285,6 +1317,51 @@ def build():
     ep_count = len(episodes_sorted)
     total_sec = sum(duration_to_seconds(e.get("duration", "")) for e in episodes_sorted)
     hours = math.ceil(total_sec / 3600)
+    today = datetime.date.today()
+    days_active = max(0, (today - PROJECT_START).days)
+    years = math.ceil(days_active / 365.25)
+
+    head = build_head(ep_count)
+    body = build_body(ep_count, hours, years, featured, episodes_sorted, brain_by_ep)
+    page = head + body
+
+    OUT_PATH.write_text(page, encoding="utf-8", newline="\n")
+
+    # Brain coverage + taxonomy guard
+    matched = sum(1 for e in episodes_sorted if str(e.get("episode")) in brain_by_ep)
+    missing = ep_count - matched
+
+    counts = pillar_counts(brain_by_ep)
+    top5 = {name for name, _ in counts.most_common(5)}
+
+    print(
+        "Built episodes.html — "
+        + fa_digits(ep_count) + " اپیزود، "
+        + fa_digits(hours) + " ساعت، "
+        + fa_digits(years) + " سال."
+    )
+    print(
+        "Brain join: " + fa_digits(matched) + "/" + fa_digits(ep_count)
+        + " episodes matched"
+        + (" (" + fa_digits(missing) + " without brain entry)" if missing else "")
+        + "."
+    )
+    if top5 != EXPECTED_TOP_PILLARS:
+        added   = top5 - EXPECTED_TOP_PILLARS
+        dropped = EXPECTED_TOP_PILLARS - top5
+        print(
+            "WARNING: top-5 pillars drifted — SEO prose may be stale.\n"
+            "  expected: " + ", ".join(sorted(EXPECTED_TOP_PILLARS)) + "\n"
+            "  current:  " + ", ".join(sorted(top5))
+            + (("\n  added: " + ", ".join(sorted(added))) if added else "")
+            + (("\n  dropped: " + ", ".join(sorted(dropped))) if dropped else "")
+        )
+
+
+if __name__ == "__main__":
+    build()
+
+l_sec / 3600)
     today = datetime.date.today()
     days_active = max(0, (today - PROJECT_START).days)
     years = math.ceil(days_active / 365.25)
