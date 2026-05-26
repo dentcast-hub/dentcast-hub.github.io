@@ -25,7 +25,7 @@
 
   <style>
 /* =====================================================
-   CSS VARIABLES — مطابق index.html
+   CSS VARIABLES — مطابق index.html  (LOCKED)
 ===================================================== */
 :root{
   --pr:#022360; --pr-rgb:2,35,96;
@@ -87,20 +87,17 @@ body{
   transition:background var(--tr2),color var(--tr2);
 }
 a{text-decoration:none;color:inherit;cursor:pointer;}
-button,input{font:inherit;color:inherit;background:none;border:none;outline:none;cursor:pointer;}
+button{font:inherit;color:inherit;background:none;border:none;outline:none;cursor:pointer;}
 ul,ol{list-style:none;}
 [hidden]{display:none!important;}
 
-/* visually-hidden — برای محتوای SEO-only */
 .visually-hidden{
   position:absolute;width:1px;height:1px;padding:0;
   margin:-1px;overflow:hidden;clip:rect(0,0,0,0);
   white-space:nowrap;border:0;
 }
 
-/* =====================================================
-   BLUR روی محتوا هنگام سرچ
-===================================================== */
+/* بلر روی محتوای صفحه هنگام باز بودن سرچ */
 body.search-open #page-content{
   filter:blur(8px);
   pointer-events:none;
@@ -113,63 +110,280 @@ body.search-open #page-content{
    LAYOUT
 ===================================================== */
 .wrap{
-  max-width:680px;
+  max-width:760px;
   margin:0 auto;
-  padding:20px 14px 100px;
+  padding:18px 18px 96px;
+}
+@media (min-width:720px){
+  .wrap{ padding:32px 28px 120px; }
+}
+
+/* فاصله‌های یکدست بین سکشن‌ها */
+.section + .section{ margin-top:44px; }
+@media (min-width:720px){
+  .section + .section{ margin-top:64px; }
 }
 
 /* =====================================================
-   هدر صفحه
+   1) HERO  — معرفی کوتاه دنت‌کست
 ===================================================== */
-.page-header{
-  text-align:center;
-  padding:28px 0 20px;
+.dc-hero{
+  padding:36px 0 8px;
+  text-align:start;
 }
-.page-header h1{
-  font-size:1.45rem;
-  font-weight:900;
-  color:var(--pr);
-  letter-spacing:-.3px;
-  margin-bottom:8px;
-  transition:color var(--tr2);
+.dc-hero .eyebrow{
+  display:inline-block;
+  font-size:.72rem;
+  letter-spacing:.6px;
+  font-weight:700;
+  color:var(--ac);
+  padding:5px 12px;
+  background:var(--chip-bg);
+  border:1px solid var(--chip-bd);
+  border-radius:var(--r-f);
+  margin-bottom:18px;
 }
-.page-header .subtitle{
-  font-size:.82rem;
+.dc-hero h1{
+  font-size:1.85rem;
+  font-weight:800;
+  color:var(--txt);
+  letter-spacing:-.4px;
+  line-height:1.4;
+  margin-bottom:14px;
+}
+.dc-hero .hero-lede{
+  font-size:1rem;
   color:var(--txt2);
-  line-height:1.7;
+  line-height:1.85;
+  max-width:62ch;
+  margin-bottom:22px;
+}
+@media (min-width:720px){
+  .dc-hero{ padding:48px 0 12px; }
+  .dc-hero h1{ font-size:2.25rem; line-height:1.35; }
+  .dc-hero .hero-lede{ font-size:1.05rem; }
+}
+
+/* ردیف آمار محتاطانه */
+.hero-stats{
+  display:flex;
+  flex-wrap:wrap;
+  gap:22px 32px;
+  padding:18px 0;
+  border-top:1px solid var(--border2);
+  border-bottom:1px solid var(--border2);
+  margin-bottom:24px;
+}
+.hero-stat{ display:flex; flex-direction:column; gap:3px; }
+.hero-stat .v{
+  font-size:1.05rem;
+  font-weight:700;
+  color:var(--txt);
+  letter-spacing:-.2px;
+  font-variant-numeric:tabular-nums;
+}
+.hero-stat .k{
+  font-size:.74rem;
+  color:var(--txt3);
+  letter-spacing:.3px;
+}
+
+/* CTA اصلی */
+.hero-cta{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:13px 26px;
+  border-radius:var(--r-f);
+  background:var(--pr);
+  color:#fff;
+  font-weight:700;
+  font-size:.95rem;
+  border:1px solid transparent;
+  transition:transform var(--tr), box-shadow var(--tr), background var(--tr);
+  box-shadow:0 2px 10px rgba(var(--pr-rgb),.18);
+}
+.hero-cta:hover{ transform:translateY(-1px); box-shadow:0 4px 16px rgba(var(--pr-rgb),.22); }
+.hero-cta:active{ transform:scale(.98); }
+.hero-cta svg{ width:1em; height:1em; }
+[data-theme="dark"] .hero-cta{
+  background:#2b5278; color:#e8f0ff;
 }
 
 /* =====================================================
-   کارت پلیر اصلی
+   2) FEATURED — کارت آخرین اپیزود
 ===================================================== */
-.player-card{
+.dc-featured .featured-label{
+  font-size:.74rem;
+  letter-spacing:.6px;
+  font-weight:700;
+  color:var(--txt3);
+  text-transform:none;
+  margin-bottom:12px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.dc-featured .featured-label::before{
+  content:"";
+  width:18px; height:1px;
+  background:var(--txt3);
+  display:inline-block;
+}
+
+.featured-card{
+  display:block;
   background:var(--card-bg);
   border:1px solid var(--card-border);
   border-radius:var(--r-xl);
+  padding:24px 22px;
   box-shadow:var(--card-sh);
+  transition:transform var(--tr), box-shadow var(--tr2), border-color var(--tr);
+  position:relative;
   overflow:hidden;
-  margin-bottom:12px;
-  transition:all var(--tr2);
+  min-height:200px; /* جلوگیری از پرش لی‌اوت */
+}
+.featured-card:hover{
+  transform:translateY(-1px);
+  box-shadow:var(--card-sh2);
+  border-color:rgba(var(--pr-rgb),.20);
+}
+@media (min-width:720px){
+  .featured-card{ padding:30px 30px; }
 }
 
-.player-card iframe{
-  width:100%;
-  max-width:100%;
-  height:80%;
-  min-height:560px;
-  border:none;
-  display:block;
-  background:var(--surface2);
+.featured-num{
+  display:inline-flex;
+  align-items:baseline;
+  gap:4px;
+  font-size:.78rem;
+  color:var(--ac);
+  font-weight:700;
+  letter-spacing:.2px;
+  margin-bottom:12px;
+}
+.featured-num .hash{ color:var(--txt3); font-weight:500; }
+
+.featured-title{
+  font-size:1.25rem;
+  font-weight:800;
+  line-height:1.55;
+  color:var(--txt);
+  letter-spacing:-.2px;
+  margin-bottom:12px;
+}
+@media (min-width:720px){
+  .featured-title{ font-size:1.4rem; line-height:1.5; }
+}
+
+.featured-excerpt{
+  font-size:.93rem;
+  color:var(--txt2);
+  line-height:1.85;
+  margin-bottom:18px;
+}
+
+.featured-meta{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:10px 14px;
+  font-size:.78rem;
+  color:var(--txt3);
+  padding-top:14px;
+  border-top:1px solid var(--border2);
+}
+.featured-meta .dot{
+  width:3px; height:3px; border-radius:50%;
+  background:var(--txt3); opacity:.55;
+  display:inline-block;
+}
+.featured-meta .more{
+  margin-inline-start:auto;
+  color:var(--ac);
+  font-weight:700;
+  font-size:.82rem;
+  display:inline-flex; align-items:center; gap:4px;
+}
+.featured-meta .more svg{
+  width:.95em; height:.95em;
+  transform:scaleX(-1); /* فلش رو به چپ در RTL */
+}
+
+/* اسکلتون فیچرد */
+.featured-card.skel .skel-line{
+  height:14px; border-radius:6px;
+  background:linear-gradient(90deg,var(--surface2),var(--surface3),var(--surface2));
+  background-size:200% 100%;
+  animation:shimmer 1.4s ease-in-out infinite;
+  margin-bottom:12px;
+}
+.featured-card.skel .skel-line.t{ width:55%; height:22px; }
+.featured-card.skel .skel-line.s{ width:90%; }
+.featured-card.skel .skel-line.s2{ width:70%; }
+@keyframes shimmer{
+  0%{ background-position:200% 0; }
+  100%{ background-position:-200% 0; }
 }
 
 /* =====================================================
-   دکمه پلیر خارجی (Acast)
+   3) LISTEN — دو پلیر تاشده، کنار هم
 ===================================================== */
-.acast-container{
-  text-align:center;
-  margin:12px 0;
+.dc-listen .section-head{
+  display:flex; align-items:baseline;
+  gap:10px; margin-bottom:14px;
+}
+.section-title{
+  font-size:1.02rem;
+  font-weight:700;
+  color:var(--txt);
+  letter-spacing:-.1px;
+}
+.section-note{
+  font-size:.78rem;
+  color:var(--txt3);
 }
 
+.player-grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:12px;
+}
+@media (min-width:640px){
+  .player-grid{ grid-template-columns:1fr 1fr; gap:14px; }
+}
+
+.player-cell{
+  background:var(--card-bg);
+  border:1px solid var(--card-border);
+  border-radius:var(--r-lg);
+  padding:18px 18px;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  transition:border-color var(--tr), box-shadow var(--tr2);
+}
+.player-cell:hover{
+  border-color:rgba(var(--pr-rgb),.18);
+}
+.player-cell .pc-title{
+  font-size:.92rem;
+  font-weight:700;
+  color:var(--txt);
+}
+.player-cell .pc-note{
+  font-size:.78rem;
+  color:var(--txt3);
+  line-height:1.7;
+  margin-bottom:6px;
+  min-height:2.7em; /* یکسان شدن دو سلول */
+}
+.player-cell .capsule-btn{
+  align-self:flex-start;
+  margin-top:auto;
+}
+
+/* کپسول دکمه — همان الگوی فعلی، با تنظیم دقیق */
 .capsule-btn{
   appearance:none;
   border:1.5px solid rgba(var(--pr-rgb),.25);
@@ -177,45 +391,43 @@ body.search-open #page-content{
   display:inline-flex;
   align-items:center;
   justify-content:center;
-  gap:6px;
-  padding:11px 22px;
+  gap:7px;
+  padding:10px 18px;
   border-radius:var(--r-f);
   font-family:inherit;
   font-weight:700;
-  font-size:.88rem;
+  font-size:.85rem;
   color:var(--pr);
   background:rgba(var(--pr-rgb),.06);
-  transition:all var(--tr);
+  transition:background var(--tr), transform var(--tr), border-color var(--tr);
 }
 .capsule-btn:hover{
-  background:rgba(var(--pr-rgb),.12);
+  background:rgba(var(--pr-rgb),.11);
   transform:translateY(-1px);
 }
-.capsule-btn:active{
-  transform:scale(.97);
-}
+.capsule-btn:active{ transform:scale(.97); }
+.capsule-btn svg{ width:1em; height:1em; }
 [data-theme="dark"] .capsule-btn{
   color:#8ab4f8;
   border-color:rgba(91,156,246,.25);
   background:rgba(91,156,246,.08);
 }
 
-.acast-wrap{
-  margin-top:10px;
+/* سلول پلیر گسترش‌یافته */
+.player-wrap{
+  margin-top:12px;
   border-radius:var(--r-lg);
   overflow:hidden;
   background:var(--card-bg);
   border:1px solid var(--card-border);
   box-shadow:var(--card-sh);
-  transition:all var(--tr2);
 }
-
-.acast-close{
+.player-close{
   display:block;
   width:100%;
   padding:9px 14px;
   text-align:center;
-  font-size:.80rem;
+  font-size:.78rem;
   font-weight:600;
   color:var(--txt3);
   background:var(--surface2);
@@ -223,48 +435,225 @@ body.search-open #page-content{
   cursor:pointer;
   transition:color var(--tr);
 }
-.acast-close:hover{ color:var(--txt); }
+.player-close:hover{ color:var(--txt); }
+.player-close svg{
+  width:.9em; height:.9em;
+  vertical-align:-.15em;
+  margin-inline-start:3px;
+}
+.player-frame-holder iframe{
+  width:100%;
+  max-width:100%;
+  border:none;
+  display:block;
+  background:var(--surface2);
+}
+.player-frame-holder.internal iframe{ min-height:560px; height:560px; }
+.player-frame-holder.acast iframe{ height:380px; }
 
 /* =====================================================
-   کارت تبلیغ
+   4) ARCHIVE — لیست همهٔ اپیزودها
+===================================================== */
+.dc-archive .archive-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:18px;
+}
+.dc-archive .archive-head .lhs{
+  display:flex; flex-direction:column; gap:3px;
+}
+.dc-archive .count{
+  font-size:.76rem; color:var(--txt3);
+  font-variant-numeric:tabular-nums;
+}
+
+.sort-btn{
+  display:inline-flex; align-items:center; gap:6px;
+  padding:7px 14px;
+  border-radius:var(--r-f);
+  border:1px solid var(--border);
+  background:var(--surface);
+  color:var(--txt2);
+  font-size:.78rem;
+  font-weight:600;
+  transition:all var(--tr);
+  white-space:nowrap;
+}
+.sort-btn:hover{ color:var(--txt); border-color:rgba(var(--pr-rgb),.20); }
+.sort-btn svg{ width:.95em; height:.95em; }
+
+/* لیست اپیزودها — تک ستونه و کشیده، خوانش ادیتوریال */
+.episode-list{
+  display:flex;
+  flex-direction:column;
+  border-top:1px solid var(--border2);
+}
+.episode-item{
+  display:grid;
+  grid-template-columns:42px 1fr auto;
+  align-items:center;
+  gap:12px;
+  padding:18px 4px;
+  border-bottom:1px solid var(--border2);
+  color:var(--txt);
+  transition:background var(--tr), padding var(--tr);
+  position:relative;
+}
+.episode-item:hover{
+  background:var(--surface2);
+  padding-inline-start:10px;
+  padding-inline-end:10px;
+}
+.episode-item:focus-visible{
+  outline:2px solid var(--ac);
+  outline-offset:2px;
+  border-radius:8px;
+}
+.episode-item .ep-num{
+  font-size:.95rem;
+  font-weight:700;
+  color:var(--txt3);
+  font-variant-numeric:tabular-nums;
+  letter-spacing:-.2px;
+  text-align:start;
+  white-space:nowrap;
+}
+.episode-item:hover .ep-num{ color:var(--ac); }
+
+.episode-item .ep-body{
+  display:flex; flex-direction:column; gap:6px;
+  min-width:0;
+}
+.episode-item .ep-title{
+  font-size:.97rem;
+  font-weight:600;
+  line-height:1.65;
+  color:var(--txt);
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+}
+.episode-item .ep-meta{
+  font-size:.74rem;
+  color:var(--txt3);
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-variant-numeric:tabular-nums;
+}
+.episode-item .ep-meta .dot{
+  width:2.5px; height:2.5px; border-radius:50%;
+  background:var(--txt3); opacity:.55;
+  display:inline-block;
+}
+
+.episode-item .ep-chev{
+  color:var(--txt3);
+  opacity:.7;
+  transition:opacity var(--tr), transform var(--tr), color var(--tr);
+}
+.episode-item .ep-chev svg{
+  width:18px; height:18px;
+  transform:scaleX(-1); /* RTL */
+}
+.episode-item:hover .ep-chev{
+  opacity:1;
+  color:var(--ac);
+  transform:translateX(-2px); /* در RTL یعنی حرکت به سمت چپ */
+}
+
+/* انیمیشن لطیف ظاهر شدن آیتم‌ها */
+.episode-item.appear{
+  animation:fadeUp .35s ease-out both;
+}
+@keyframes fadeUp{
+  from{ opacity:0; transform:translateY(4px); }
+  to  { opacity:1; transform:translateY(0); }
+}
+
+.show-more-wrap{
+  display:flex; justify-content:center;
+  margin-top:24px;
+}
+.show-more{
+  padding:11px 26px;
+  border-radius:var(--r-f);
+  border:1px solid var(--border);
+  background:var(--surface);
+  color:var(--txt2);
+  font-size:.85rem;
+  font-weight:600;
+  transition:all var(--tr);
+}
+.show-more:hover{
+  color:var(--txt);
+  border-color:rgba(var(--pr-rgb),.22);
+  background:var(--surface2);
+}
+
+/* وضعیت لودینگ/خطا */
+.list-status{
+  padding:30px 0;
+  text-align:center;
+  font-size:.86rem;
+  color:var(--txt3);
+}
+.list-status.err{ color:#c1502c; }
+[data-theme="dark"] .list-status.err{ color:#e08a6a; }
+
+/* اسکلتون چند ردیف اپیزود */
+.ep-skel{
+  display:grid;
+  grid-template-columns:42px 1fr;
+  gap:12px;
+  padding:18px 4px;
+  border-bottom:1px solid var(--border2);
+}
+.ep-skel .b{
+  height:12px; border-radius:6px;
+  background:linear-gradient(90deg,var(--surface2),var(--surface3),var(--surface2));
+  background-size:200% 100%;
+  animation:shimmer 1.4s ease-in-out infinite;
+}
+.ep-skel .b.t{ height:14px; width:80%; margin-bottom:8px; }
+.ep-skel .b.m{ width:45%; }
+.ep-skel .b.n{ width:32px; }
+
+/* =====================================================
+   5) AD CARD — حفظ مفهوم، استایل آرام‌تر
 ===================================================== */
 .ad-card{
   background:var(--card-bg);
   border:1px solid var(--card-border);
-  border-right:3px solid rgba(245,162,8,.55);
+  border-inline-end:3px solid rgba(245,162,8,.55);
   border-radius:var(--r-lg);
   box-shadow:var(--card-sh);
   overflow:hidden;
-  margin:14px 0;
-  transition:all var(--tr);
+  transition:transform var(--tr), background var(--tr);
 }
-.ad-card:active{
-  transform:scale(.985);
-  background:var(--surface2);
-}
-
+.ad-card:active{ transform:scale(.99); background:var(--surface2); }
 .ad-card .ad-link{
   display:flex;
   align-items:center;
   justify-content:space-between;
   gap:12px;
-  padding:13px 16px;
-  text-decoration:none;
+  padding:14px 18px;
 }
-
 .ad-card .dc-card-title{
   font-weight:600;
-  font-size:.87rem;
+  font-size:.88rem;
   color:var(--txt2);
-  line-height:1.6;
+  line-height:1.7;
 }
-
 .ad-card .ad-strong{
   background:rgba(245,162,8,.10);
   color:#b07d00;
-  padding:5px 12px;
+  padding:6px 14px;
   border-radius:var(--r-f);
-  font-size:.70rem;
+  font-size:.72rem;
   font-weight:700;
   border:1px solid rgba(245,162,8,.25);
   white-space:nowrap;
@@ -274,10 +663,10 @@ body.search-open #page-content{
 [data-theme="dark"] .ad-card .ad-strong{ color:#c49820; background:rgba(245,162,8,.08); }
 
 /* =====================================================
-   فوتر و دکمه‌ها
+   6) FOOTER  (دکمه‌ها) — مطابق ساختار قبلی
 ===================================================== */
 .page-footer{
-  margin-top:32px;
+  margin-top:48px;
   text-align:center;
   display:flex;
   flex-direction:column;
@@ -285,7 +674,6 @@ body.search-open #page-content{
   gap:10px;
   padding-bottom:20px;
 }
-
 .btn-home{
   display:inline-flex;
   align-items:center;
@@ -328,7 +716,7 @@ body.search-open #page-content{
 [data-theme="dark"] .footer-copy strong{ color:#8ab4f8; }
 
 /* =====================================================
-   تم تاگل (مطابق index.html)
+   THEME TOGGLE  (مطابق index.html)
 ===================================================== */
 #dc-theme-toggle{
   position:fixed; bottom:20px; left:14px; z-index:250;
@@ -466,85 +854,149 @@ body.search-open #page-content{
 </div>
 
 <!-- محتوای اصلی صفحه -->
-<main id="page-content" aria-label="فهرست اپیزودهای دنت‌کست">
+<main id="page-content" aria-label="صفحهٔ اصلی اپیزودهای دنت‌کست">
   <div class="wrap">
 
-    <div class="page-header">
-      <h1>همهٔ اپیزودهای دنت‌کست</h1>
-      <p class="subtitle">دقت کنید پلیر اصلی روی سرور داخلیست<br>
-        اگر خارج از کشورید در شرایط ملی شدن نت از دکمه‌ی شنیدن با پلیر خارجی استفاده کنید</p>
-    </div>
+    <!-- ============================================================
+         SECTION 1 — HERO
+    ============================================================ -->
+    <section class="section dc-hero" aria-labelledby="heroTitle">
+      <span class="eyebrow">دنت‌کست | پادکست تخصصی دندانپزشکی</span>
+      <h1 id="heroTitle">خوانش دقیق مقاله‌ها،<br>برای تصمیم‌های بالینی روشن‌تر.</h1>
+      <p class="hero-lede">
+        دنت‌کست جایی‌ست برای مرور آرام و مستندِ پروتکل‌های کلینیکی، خواندن مقاله‌های مرجع و گفت‌وگو درباره‌ی مفاهیمی که در کارِ روزانه‌ی پروتز، ایمپلنت، اکلوژن و دندانپزشکی ادهزیو به آن‌ها برمی‌خوریم. بدون شعار، بدون قطعیتِ زودهنگام.
+      </p>
 
-    <!-- ۱) پلیر اصلی -->
-    <div class="player-card">
-      <iframe src="/player.html?v=3" loading="lazy" allow="autoplay"></iframe>
-    </div>
-
-    <!-- ۲) پلیر خارجی Acast -->
-    <div class="acast-container">
-      <button id="acast-btn" type="button" class="capsule-btn">
-        <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M3 14a9 9 0 0 1 18 0"/><path d="M5 14h3v7H5a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2z"/><path d="M19 14h-3v7h3a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2z"/></svg> پخش با پلیر خارجی (Acast)
-      </button>
-
-      <div id="acast-wrap" class="acast-wrap" hidden>
-        <button id="acast-close" class="acast-close"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg> بستن پلیر</button>
-        <div id="acast-frame-holder"></div>
+      <div class="hero-stats" role="list" aria-label="آمار پادکست">
+        <div class="hero-stat" role="listitem">
+          <span class="v" id="statEpCount">—</span>
+          <span class="k">اپیزود</span>
+        </div>
+        <div class="hero-stat" role="listitem">
+          <span class="v" id="statHours">—</span>
+          <span class="k">ساعت محتوا</span>
+        </div>
+        <div class="hero-stat" role="listitem">
+          <span class="v" id="statYears">—</span>
+          <span class="k">سال فعالیت</span>
+        </div>
       </div>
-    </div>
 
-    <script>
-  (function () {
-    const btn = document.getElementById("acast-btn");
-    const wrap = document.getElementById("acast-wrap");
-    const closeBtn = document.getElementById("acast-close");
-    const holder = document.getElementById("acast-frame-holder");
+      <button class="hero-cta" id="heroPlayLatest" type="button" aria-controls="internalPlayerWrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+        گوش دادن به آخرین اپیزود
+      </button>
+    </section>
 
-    const ACAST_URL = "https://embed.acast.com/624b5545ecc0e600134ea0df?theme=light&feed=true";
+    <!-- ============================================================
+         SECTION 2 — FEATURED / LATEST EPISODE
+    ============================================================ -->
+    <section class="section dc-featured" aria-labelledby="featuredLabel">
+      <div class="featured-label" id="featuredLabel">آخرین اپیزود</div>
+      <a class="featured-card skel" id="featuredCard" href="#" aria-label="آخرین اپیزود دنت‌کست">
+        <div class="skel-line t" aria-hidden="true"></div>
+        <div class="skel-line s" aria-hidden="true"></div>
+        <div class="skel-line s2" aria-hidden="true"></div>
+      </a>
+    </section>
 
-    let iframe = null;
+    <!-- ============================================================
+         SECTION 3 — LISTEN (دو پلیر تاشده، انتخاب کاربر)
+    ============================================================ -->
+    <section class="section dc-listen" aria-labelledby="listenTitle">
+      <div class="section-head">
+        <h2 class="section-title" id="listenTitle">گوش دادن آنلاین</h2>
+        <span class="section-note">دو مسیر موازی — مطابق وضعیت اینترنت‌تان انتخاب کنید</span>
+      </div>
 
-    btn.addEventListener("click", function () {
-      btn.style.display = "none";
-      wrap.hidden = false;
+      <div class="player-grid">
 
-      iframe = document.createElement("iframe");
-      iframe.src = ACAST_URL;
-      iframe.width = "100%";
-      iframe.height = "380";
-      iframe.frameBorder = "0";
-      iframe.loading = "lazy";
-      iframe.allow = "autoplay; encrypted-media";
-      iframe.style.border = "0";
-      iframe.title = "Acast Player";
+        <!-- پلیر داخلی (سرور ایران) — تاشده، با لیزی‌ماونت -->
+        <div class="player-cell">
+          <div class="pc-title">پلیر داخلی دنت‌کست</div>
+          <div class="pc-note">میزبانی روی سرور ایران؛ سریع‌ترین حالت برای شنوندگان داخل کشور.</div>
+          <button id="internalBtn" type="button" class="capsule-btn" aria-expanded="false" aria-controls="internalPlayerWrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+            پخش با پلیر داخلی
+          </button>
 
-      holder.appendChild(iframe);
-    });
-
-    closeBtn.addEventListener("click", function () {
-      wrap.hidden = true;
-      btn.style.display = "inline-flex";
-
-      if (iframe) {
-        iframe.remove();
-        iframe = null;
-      }
-    });
-  })();
-    </script>
-
-    <!-- ۳) کارت تبلیغ -->
-    <article class="ad-card" id="card-ad-contact">
-      <a href="mailto:info@dentcast.ir?subject=درخواست معرفی برند در دنت‌کست" class="ad-link">
-        <div class="dc-card-main">
-          <div class="dc-card-title">
-            اینجا محل معرفی برند شما به جامعه دندانپزشکیست.
+          <div id="internalPlayerWrap" class="player-wrap" hidden>
+            <button id="internalClose" class="player-close" type="button">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+              بستن پلیر داخلی
+            </button>
+            <div id="internalFrameHolder" class="player-frame-holder internal"></div>
           </div>
         </div>
-        <strong class="ad-strong">تماس بگیرید</strong>
-      </a>
-    </article>
 
-    <!-- ۴) محتوای SEO — فقط گوگل می‌بینه -->
+        <!-- پلیر Acast — تاشده، با همان الگوی لیزی‌ماونت قبلی -->
+        <div class="player-cell">
+          <div class="pc-title">پلیر Acast</div>
+          <div class="pc-note">پلتفرم خارجی؛ گزینه‌ی پشتیبان در زمان محدودیت‌های شبکه‌ی ملی.</div>
+          <button id="acast-btn" type="button" class="capsule-btn" aria-expanded="false" aria-controls="acast-wrap">
+            <svg class="dc-svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 14a9 9 0 0 1 18 0"/><path d="M5 14h3v7H5a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2z"/><path d="M19 14h-3v7h3a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2z"/></svg>
+            پخش با پلیر Acast
+          </button>
+
+          <div id="acast-wrap" class="player-wrap" hidden>
+            <button id="acast-close" class="player-close" type="button">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+              بستن پلیر Acast
+            </button>
+            <div id="acast-frame-holder" class="player-frame-holder acast"></div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SECTION 4 — ARCHIVE (لیست همهٔ اپیزودها)
+    ============================================================ -->
+    <section class="section dc-archive" aria-labelledby="archiveTitle">
+      <div class="archive-head">
+        <div class="lhs">
+          <h2 class="section-title" id="archiveTitle">آرشیو اپیزودها</h2>
+          <span class="count" id="archiveCount">در حال بارگذاری…</span>
+        </div>
+        <button id="sortToggle" class="sort-btn" type="button" aria-pressed="false" aria-label="تغییر ترتیب اپیزودها">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h13"/><path d="M3 12h9"/><path d="M3 18h5"/><path d="m17 8 3 3-3 3"/><path d="M20 11h-7"/></svg>
+          <span id="sortLabel">قدیمی‌ترین اول</span>
+        </button>
+      </div>
+
+      <ol class="episode-list" id="episodeList" aria-live="polite">
+        <!-- اسکلتون اولیه — به محض fetch جایگزین می‌شود -->
+        <li class="ep-skel" aria-hidden="true"><div><div class="b n"></div></div><div><div class="b t"></div><div class="b m"></div></div></li>
+        <li class="ep-skel" aria-hidden="true"><div><div class="b n"></div></div><div><div class="b t"></div><div class="b m"></div></div></li>
+        <li class="ep-skel" aria-hidden="true"><div><div class="b n"></div></div><div><div class="b t"></div><div class="b m"></div></div></li>
+        <li class="ep-skel" aria-hidden="true"><div><div class="b n"></div></div><div><div class="b t"></div><div class="b m"></div></div></li>
+      </ol>
+
+      <div class="show-more-wrap" id="showMoreWrap" hidden>
+        <button id="showMoreBtn" class="show-more" type="button">نمایش بیشتر</button>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SECTION 5 — AD CARD (حفظ مفهوم و mailto)
+    ============================================================ -->
+    <section class="section">
+      <article class="ad-card" id="card-ad-contact">
+        <a href="mailto:info@dentcast.ir?subject=درخواست معرفی برند در دنت‌کست" class="ad-link">
+          <div class="dc-card-main">
+            <div class="dc-card-title">
+              اینجا محل معرفی برند شما به جامعه دندانپزشکیست.
+            </div>
+          </div>
+          <strong class="ad-strong">تماس بگیرید</strong>
+        </a>
+      </article>
+    </section>
+
+    <!-- ============================================================
+         SECTION 6 — SEO HIDDEN BLOCK  (LOCKED CONTENT)
+    ============================================================ -->
     <div class="visually-hidden" aria-hidden="true">
       <h2>نقشه راه علمی شما در دندانپزشکی پروتز و ایمپلنت</h2>
       <p>دنت‌کست پادکست و مرجع آنلاین دکتر فؤاد شهابیان، متخصص پروتزهای دندانی، است. این مجموعه، گنجینه‌ای از دانش به‌روز کلینیکی است که به‌طور مداوم در حال گسترش و به‌روزرسانی است. با گوش دادن به اپیزودهای کامل، دانش شما در حوزه‌های حیاتی زیر به‌طور مستمر تقویت می‌شود:</p>
@@ -557,7 +1009,9 @@ body.search-open #page-content{
       <p>هدف DentCast: ارائه جدیدترین مقالات و کنسنسوس‌ها برای تقویت تصمیم‌گیری‌های بالینی مطمئن شماست.</p>
     </div>
 
-    <!-- فوتر -->
+    <!-- ============================================================
+         SECTION 7 — FOOTER  (LOCKED)
+    ============================================================ -->
     <footer class="page-footer dc-site-footer">
       <a href="/index.html" class="btn-home"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="m3 11 9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg> برگشت به صفحه‌ی اصلی</a>
       <a href="/about.html" class="btn-about"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"/></svg> درباره‌ی دکتر فواد شهابیان</a>
@@ -569,6 +1023,335 @@ body.search-open #page-content{
 
 <!-- تم تاگل -->
 <button id="dc-theme-toggle" aria-label="تغییر تم"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M20.5 14.2A8.2 8.2 0 0 1 9.8 3.5 8.8 8.8 0 1 0 20.5 14.2z"/></svg></button>
+
+<!-- ============================================================
+     PAGE BEHAVIOR — fetch, render, sort, paginate, lazy players
+============================================================ -->
+<script>
+(function(){
+  'use strict';
+
+  // ---------- helpers ----------
+  const FA_DIGITS = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
+  const FA_MONTHS = ['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند'];
+
+  function toFa(n){
+    return String(n).replace(/\d/g, d => FA_DIGITS[+d]);
+  }
+
+  // تبدیل میلادی به جلالی (الگوریتم استاندارد)
+  function gregToJalali(gy, gm, gd){
+    const g_d_m = [0,31,59,90,120,151,181,212,243,273,304,334];
+    let jy = (gy <= 1600) ? 0 : 979;
+    gy -= (gy <= 1600) ? 621 : 1600;
+    const gy2 = (gm > 2) ? (gy + 1) : gy;
+    let days = (365 * gy) + Math.floor((gy2 + 3) / 4) - Math.floor((gy2 + 99) / 100) + Math.floor((gy2 + 399) / 400) - 80 + gd + g_d_m[gm - 1];
+    jy += 33 * Math.floor(days / 12053);
+    days %= 12053;
+    jy += 4 * Math.floor(days / 1461);
+    days %= 1461;
+    if (days > 365){
+      jy += Math.floor((days - 1) / 365);
+      days = (days - 1) % 365;
+    }
+    const jm = (days < 186) ? 1 + Math.floor(days / 31) : 7 + Math.floor((days - 186) / 30);
+    const jd = 1 + ((days < 186) ? (days % 31) : ((days - 186) % 30));
+    return { jy, jm, jd };
+  }
+
+  function formatJalali(isoOrRfc){
+    const d = new Date(isoOrRfc);
+    if (isNaN(d.getTime())) return '';
+    const { jy, jm, jd } = gregToJalali(d.getUTCFullYear(), d.getUTCMonth()+1, d.getUTCDate());
+    return `${toFa(jd)} ${FA_MONTHS[jm-1]} ${toFa(jy)}`;
+  }
+
+  function getYear(isoOrRfc){
+    const d = new Date(isoOrRfc);
+    return isNaN(d.getTime()) ? null : d.getUTCFullYear();
+  }
+
+  function cleanTitle(t){
+    // حذف پیشوند "N- " از ابتدای عنوان
+    return (t || '').replace(/^[\d.]+\s*[-–]\s*/, '').trim();
+  }
+
+  function stripHtml(html){
+    if (!html) return '';
+    const div = document.createElement('div');
+    div.innerHTML = html;
+    return (div.textContent || div.innerText || '').replace(/\s+/g, ' ').trim();
+  }
+
+  function excerpt(text, max){
+    if (text.length <= max) return text;
+    const cut = text.slice(0, max);
+    const lastSpace = cut.lastIndexOf(' ');
+    return (lastSpace > max * 0.6 ? cut.slice(0, lastSpace) : cut) + '…';
+  }
+
+  function durationToSeconds(d){
+    if (!d) return 0;
+    const p = d.split(':').map(Number);
+    if (p.some(isNaN)) return 0;
+    if (p.length === 2) return p[0]*60 + p[1];
+    if (p.length === 3) return p[0]*3600 + p[1]*60 + p[2];
+    return 0;
+  }
+
+  // ---------- state ----------
+  let allEpisodes = [];
+  let sortDesc = true;     // پیش‌فرض: جدیدترین اول
+  let visible  = 0;
+  const CHUNK  = 30;
+
+  // ---------- DOM ----------
+  const $list        = document.getElementById('episodeList');
+  const $count       = document.getElementById('archiveCount');
+  const $sortBtn     = document.getElementById('sortToggle');
+  const $sortLabel   = document.getElementById('sortLabel');
+  const $more        = document.getElementById('showMoreBtn');
+  const $moreWrap    = document.getElementById('showMoreWrap');
+  const $featured    = document.getElementById('featuredCard');
+  const $statEp      = document.getElementById('statEpCount');
+  const $statHr      = document.getElementById('statHours');
+  const $statYr      = document.getElementById('statYears');
+  const $heroPlay    = document.getElementById('heroPlayLatest');
+
+  // ---------- rendering ----------
+  function renderFeatured(latest){
+    if (!latest){
+      $featured.innerHTML = '<div class="featured-title">اپیزودی برای نمایش پیدا نشد.</div>';
+      $featured.removeAttribute('href');
+      return;
+    }
+    const title = cleanTitle(latest.title);
+    const desc  = excerpt(stripHtml(latest.description), 170);
+    const date  = formatJalali(latest.published);
+    const num   = toFa(latest.episode);
+
+    $featured.classList.remove('skel');
+    $featured.setAttribute('href', latest.page_url || '#');
+    $featured.setAttribute('aria-label', `آخرین اپیزود: ${title}`);
+    $featured.innerHTML = `
+      <div class="featured-num"><span class="hash">اپیزود</span> ${num}</div>
+      <div class="featured-title">${escapeHtml(title)}</div>
+      <p class="featured-excerpt">${escapeHtml(desc)}</p>
+      <div class="featured-meta">
+        <span>${latest.duration || ''}</span>
+        <span class="dot"></span>
+        <span>${date}</span>
+        <span class="more">ادامه
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+        </span>
+      </div>
+    `;
+  }
+
+  function escapeHtml(s){
+    return String(s)
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+  }
+
+  function sortedEpisodes(){
+    const arr = allEpisodes.slice();
+    arr.sort((a,b) => {
+      const av = parseFloat(a.episode) || 0;
+      const bv = parseFloat(b.episode) || 0;
+      return sortDesc ? (bv - av) : (av - bv);
+    });
+    return arr;
+  }
+
+  function renderList(reset){
+    const data = sortedEpisodes();
+    if (reset){
+      $list.innerHTML = '';
+      visible = 0;
+    }
+    const next = Math.min(visible + CHUNK, data.length);
+    const frag = document.createDocumentFragment();
+    for (let i = visible; i < next; i++){
+      const ep = data[i];
+      const li = document.createElement('li');
+      li.className = 'appear';
+      li.style.animationDelay = ((i - visible) * 18) + 'ms';
+      const a = document.createElement('a');
+      a.className = 'episode-item';
+      a.href = ep.page_url || '#';
+      a.setAttribute('aria-label', `اپیزود ${toFa(ep.episode)}: ${cleanTitle(ep.title)}`);
+      a.innerHTML = `
+        <span class="ep-num">${toFa(ep.episode)}</span>
+        <div class="ep-body">
+          <div class="ep-title">${escapeHtml(cleanTitle(ep.title))}</div>
+          <div class="ep-meta">
+            <span>${ep.duration || ''}</span>
+            <span class="dot"></span>
+            <span>${formatJalali(ep.published)}</span>
+          </div>
+        </div>
+        <span class="ep-chev" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+        </span>
+      `;
+      li.appendChild(a);
+      frag.appendChild(li);
+    }
+    $list.appendChild(frag);
+    visible = next;
+
+    if (visible >= data.length){
+      $moreWrap.hidden = true;
+    } else {
+      $moreWrap.hidden = false;
+      $more.textContent = `نمایش بیشتر (${toFa(data.length - visible)})`;
+    }
+  }
+
+  function renderStats(){
+    const epCount = allEpisodes.length;
+    const totalSec = allEpisodes.reduce((s,e)=> s + durationToSeconds(e.duration), 0);
+    const hours = Math.round(totalSec / 3600);
+    const years = (() => {
+      const ys = allEpisodes.map(e => getYear(e.published)).filter(Boolean);
+      if (!ys.length) return '—';
+      const span = Math.max(...ys) - Math.min(...ys) + 1;
+      return toFa(span);
+    })();
+    $statEp.textContent = toFa(epCount);
+    $statHr.textContent = toFa(hours);
+    $statYr.textContent = years;
+    $count.textContent = `${toFa(epCount)} اپیزود`;
+  }
+
+  function showListError(msg){
+    $list.innerHTML = `<li class="list-status err">${escapeHtml(msg)}</li>`;
+    $moreWrap.hidden = true;
+    $count.textContent = '—';
+  }
+
+  // ---------- fetch ----------
+  fetch('/dentcast.json?v=' + Date.now(), { cache: 'no-cache' })
+    .then(r => {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    })
+    .then(data => {
+      if (!Array.isArray(data) || !data.length){
+        showListError('فهرست اپیزودها خالی است.');
+        renderFeatured(null);
+        return;
+      }
+      allEpisodes = data;
+      // latest = بزرگ‌ترین شماره‌ی اپیزود
+      const latest = allEpisodes.slice().sort((a,b)=> parseFloat(b.episode) - parseFloat(a.episode))[0];
+      renderFeatured(latest);
+      renderStats();
+      renderList(true);
+    })
+    .catch(err => {
+      console.error('episodes fetch failed:', err);
+      showListError('بارگذاری اپیزودها با مشکل مواجه شد. لطفاً اتصال اینترنت یا تنظیمات DNS را بررسی کرده و دوباره تلاش کنید.');
+      $featured.classList.remove('skel');
+      $featured.innerHTML = '<div class="featured-title">اپیزود در دسترس نیست.</div><p class="featured-excerpt">امکان دریافت فهرست اپیزودها در این لحظه وجود ندارد.</p>';
+      $featured.removeAttribute('href');
+      $statEp.textContent = '—';
+      $statHr.textContent = '—';
+      $statYr.textContent = '—';
+    });
+
+  // ---------- sort toggle ----------
+  $sortBtn.addEventListener('click', () => {
+    sortDesc = !sortDesc;
+    $sortBtn.setAttribute('aria-pressed', String(!sortDesc));
+    $sortLabel.textContent = sortDesc ? 'قدیمی‌ترین اول' : 'جدیدترین اول';
+    renderList(true);
+  });
+
+  // ---------- show more ----------
+  $more.addEventListener('click', () => renderList(false));
+
+  // ---------- internal player (lazy mount /player.html) ----------
+  (function(){
+    const btn   = document.getElementById('internalBtn');
+    const wrap  = document.getElementById('internalPlayerWrap');
+    const close = document.getElementById('internalClose');
+    const hold  = document.getElementById('internalFrameHolder');
+    let iframe = null;
+
+    function mount(){
+      if (iframe) return;
+      iframe = document.createElement('iframe');
+      iframe.src = '/player.html?v=3';
+      iframe.title = 'پلیر داخلی دنت‌کست';
+      iframe.loading = 'lazy';
+      iframe.allow = 'autoplay';
+      hold.appendChild(iframe);
+    }
+    function open(scroll){
+      btn.style.display = 'none';
+      wrap.hidden = false;
+      btn.setAttribute('aria-expanded', 'true');
+      mount();
+      if (scroll){
+        // اسکرول نرم تا پلیر در دید کاربر قرار بگیرد
+        setTimeout(() => wrap.scrollIntoView({ behavior:'smooth', block:'center' }), 30);
+      }
+    }
+    function unmount(){
+      wrap.hidden = true;
+      btn.style.display = 'inline-flex';
+      btn.setAttribute('aria-expanded', 'false');
+      if (iframe){ iframe.remove(); iframe = null; }
+    }
+
+    btn.addEventListener('click', () => open(false));
+    close.addEventListener('click', unmount);
+
+    // CTA هیرو → باز کردن پلیر داخلی + اسکرول
+    if ($heroPlay){
+      $heroPlay.addEventListener('click', () => open(true));
+    }
+  })();
+
+  // ---------- Acast player (lazy mount — same pattern as before) ----------
+  (function(){
+    const btn   = document.getElementById('acast-btn');
+    const wrap  = document.getElementById('acast-wrap');
+    const close = document.getElementById('acast-close');
+    const hold  = document.getElementById('acast-frame-holder');
+    const URL_  = 'https://embed.acast.com/624b5545ecc0e600134ea0df?theme=light&feed=true';
+    let iframe = null;
+
+    btn.addEventListener('click', () => {
+      btn.style.display = 'none';
+      wrap.hidden = false;
+      btn.setAttribute('aria-expanded', 'true');
+      if (!iframe){
+        iframe = document.createElement('iframe');
+        iframe.src = URL_;
+        iframe.width = '100%';
+        iframe.height = '380';
+        iframe.frameBorder = '0';
+        iframe.loading = 'lazy';
+        iframe.allow = 'autoplay; encrypted-media';
+        iframe.style.border = '0';
+        iframe.title = 'Acast Player';
+        hold.appendChild(iframe);
+      }
+    });
+
+    close.addEventListener('click', () => {
+      wrap.hidden = true;
+      btn.style.display = 'inline-flex';
+      btn.setAttribute('aria-expanded', 'false');
+      if (iframe){ iframe.remove(); iframe = null; }
+    });
+  })();
+
+})();
+</script>
 
 <!-- Theme toggle behavior moved to /dc-nav.js (single source) -->
 <script src="/global-search.js?v=5" defer></script>
