@@ -222,42 +222,48 @@ body.search-open #page-content{
 .player-cell .pc-note{ font-size:.78rem; color:var(--txt3); line-height:1.7; margin-bottom:6px; min-height:2.7em; }
 .player-cell .capsule-btn{ align-self:flex-start; margin-top:auto; }
 
-/* پلیر داخلی — پس‌زمینه‌ی برند توپر، اندازه‌ی بزرگ، متن سفید، دکمه‌ی اکسنت پُر */
+/* پلیر داخلی — پس‌زمینه‌ی نرم با گرادیان برند، حاشیه‌ی برند، متن تیره، دکمه‌ی برند پُر */
 .player-cell:has(#internalBtn){
-  background:var(--pr);
-  border:1px solid rgba(var(--ac-rgb),.55);
+  background:linear-gradient(135deg,
+    rgba(var(--pr-rgb),.15) 0%,
+    rgba(var(--pr-rgb),.04) 60%,
+    #fff 100%);
+  border:1px solid var(--pr);
   box-shadow:
-    0 10px 36px rgba(var(--pr-rgb),.26),
-    0 2px 6px rgba(var(--pr-rgb),.12);
+    0 8px 28px rgba(var(--pr-rgb),.14),
+    0 1px 4px rgba(var(--pr-rgb),.08);
   padding:32px 28px;
 }
 @media (min-width:720px){
   .player-cell:has(#internalBtn){ padding:40px 36px; }
 }
 [data-theme="dark"] .player-cell:has(#internalBtn){
-  background:#0d1e3a;
-  border:1px solid rgba(var(--ac-rgb),.55);
+  background:linear-gradient(135deg,
+    rgba(var(--ac-rgb),.22) 0%,
+    rgba(var(--ac-rgb),.08) 60%,
+    var(--surface) 100%);
+  border:1px solid var(--pr);
   box-shadow:
-    0 10px 36px rgba(0,0,0,.50),
-    0 2px 6px rgba(0,0,0,.30);
+    0 8px 28px rgba(0,0,0,.40),
+    0 1px 4px rgba(0,0,0,.25);
 }
-.player-cell:has(#internalBtn) .pc-title{ color:#fff; }
-.player-cell:has(#internalBtn) .pc-note{ color:rgba(255,255,255,.72); }
+.player-cell:has(#internalBtn) .pc-note{ color:var(--txt2); }
 .player-cell:has(#internalBtn) .capsule-btn{
-  background:var(--ac);
+  background:var(--pr);
   color:#fff;
-  border:1px solid var(--ac);
+  border:1px solid var(--pr);
 }
 .player-cell:has(#internalBtn) .capsule-btn:hover{
-  filter:brightness(1.06);
+  filter:brightness(1.10);
   transform:translateY(-1px);
 }
 .player-cell:has(#internalBtn) .capsule-btn:active{
   transform:scale(.97);
 }
 [data-theme="dark"] .player-cell:has(#internalBtn) .capsule-btn{
-  background:#1a4ec6;
-  border:1px solid #1a4ec6;
+  background:#0d2855;
+  color:#fff;
+  border:1px solid #0d2855;
 }
 
 /* پلیر Acast — هم‌اندازه‌ی کارت Featured، گرادیان بسیار محو (پشتیبان، نه رقیب) */
@@ -266,7 +272,7 @@ body.search-open #page-content{
     rgba(var(--ac-rgb),.04) 0%,
     rgba(var(--ac-rgb),.01) 60%,
     #fff 100%);
-  border:1px solid rgba(var(--ac-rgb),.10);
+  border:1px solid var(--pr);
   box-shadow:var(--card-sh);
   padding:6px;
 }
@@ -275,7 +281,7 @@ body.search-open #page-content{
     rgba(var(--ac-rgb),.06) 0%,
     rgba(var(--ac-rgb),.02) 60%,
     var(--surface) 100%);
-  border:1px solid rgba(var(--ac-rgb),.12);
+  border:1px solid var(--pr);
   box-shadow:var(--card-sh);
 }
 
@@ -330,7 +336,7 @@ body.search-open #page-content{
   display:flex; flex-direction:row;
   align-items:flex-start; gap:14px;
   padding:18px 4px;
-  border-bottom:1px solid var(--border2);
+  border-bottom:1px solid var(--pr);
   color:var(--txt);
   transition:background var(--tr), padding var(--tr);
   position:relative;
