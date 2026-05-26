@@ -44,8 +44,9 @@ else:
     HERE = Path(__file__).resolve().parent
     ROOT = HERE.parent
 
-JSON_PATH = ROOT / "dentcast.json"
-OUT_PATH  = ROOT / "episodes.html"
+JSON_PATH  = ROOT / "dentcast.json"
+BRAIN_PATH = ROOT / "dentcast-brain.json"
+OUT_PATH   = ROOT / "episodes.html"
 
 # Project epoch — first DentCast episode published 17 Jul 2019, but the
 # user's stated reference for "years active" is 31 Aug 2019.
@@ -55,6 +56,16 @@ PROJECT_START = datetime.date(2019, 8, 31)
 # the same <ol> (so crawlers see them) and are hidden with a CSS rule
 # keyed on the data-collapsed attribute.
 INITIAL_CHUNK = 30
+
+# Hard cap on hashtag chips rendered per archive row. Brain entries
+# sometimes carry 20+ tags; the spec says max 3, in array order.
+MAX_TAGS_PER_ITEM = 3
+
+# Taxonomy guard — the SEO prose downstream is anchored to these five
+# clusters. If the live top-5 pillars in brain drift from this set, the
+# build still succeeds but stdout carries a warning so the prose can be
+# revisited by hand.
+EXPECTED_TOP_PILLARS = {"implantology", "bonding", "ceramics", "esthetic", "occlusion"}
 
 
 # -------------------------------------------------------------------
@@ -180,6 +191,38 @@ def parse_episode_num(s):
         return 0.0
 
 
+def load_brain(path):
+    """dentcast-brain.json is a JSON array, occasionally with trailing
+    NUL bytes from filesystem padding — strip them before parsing.
+    Returns a dict keyed by str(episode), holding only episode-shaped
+    entries (those with caption + hashtags + pillar)."""
+    raw = path.read_bytes().rstrip(b"\x00").rstrip()
+    data = json.loads(raw.decode("utf-8"))
+    by_ep = {}
+    for entry in data:
+        if not isinstance(entry, dict):
+            continue
+        ep = entry.get("episode")
+        if ep is None:
+            continue
+        if "caption" not in entry or "hashtags" not in entry or "pillar" not in entry:
+            continue
+        by_ep[str(ep)] = entry
+    return by_ep
+
+
+def pillar_counts(brain_by_ep):
+    from collections import Counter
+    counter = Counter()
+    for b in brain_by_ep.values():
+        p = b.get("pillar") or {}
+        if isinstance(p, dict):
+            prim = p.get("primary")
+            if prim:
+                counter[prim] += 1
+    return counter
+
+
 # -------------------------------------------------------------------
 # Locked HTML chunks — copied byte-for-byte from the existing page so
 # the build script never has to think about them again.
@@ -270,22 +313,72 @@ EXTERNAL_SCRIPTS_HTML = (
     '<script src="/dc-nav.js" defer></script>\n'
 )
 
-SEO_HIDDEN_BLOCK_HTML = (
-    '    <!-- ============================================================\n'
-    '         SECTION 6 — SEO HIDDEN BLOCK  (LOCKED CONTENT)\n'
-    '    ============================================================ -->\n'
-    '    <div class="visually-hidden" aria-hidden="true">\n'
-    '      <h2>نقشه راه علمی شما در دندانپزشکی پروتز و ایمپلنت</h2>\n'
-    '      <p>دنت‌کست پادکست و مرجع آنلاین دکتر فؤاد شهابیان، متخصص پروتزهای دندانی، است. این مجموعه، گنجینه‌ای از دانش به‌روز کلینیکی است که به‌طور مداوم در حال گسترش و به‌روزرسانی است. با گوش دادن به اپیزودهای کامل، دانش شما در حوزه‌های حیاتی زیر به‌طور مستمر تقویت می‌شود:</p>\n'
-    '      <ul>\n'
-    '        <li>ایمپلنتولوژی پیشرفته: شامل مرور کانسپت‌هایی چون <a href="/glossary/zero-bone-loss.html">Zero Bone Loss</a>، پروتکل‌های ایمپلنت فوری (Immediate Load)، انتخاب اباتمنت‌های <a href="/glossary/ti-base.html">Ti-base</a> و Multi-unit و مدیریت تحلیل استخوان.</li>\n'
-    '        <li>دندانپزشکی ادهزیو و زیبایی: گایدلاین‌های بالینی سمان کردن رزینی، آماده‌سازی سطح انواع سرامیک (زیرکونیا، لمینیت)، اصول DME، IDS و درمان‌های ادهزیو غیرمستقیم.</li>\n'
-    '        <li>اکلوژن و مدیریت TMD: بررسی جامع اختلالات مفصل گیجگاهی-فکی (TMD) بر اساس مراجع کلاسیک (مانند داوسون و اوکیسون)، و اصول تشخیص گلوبال و طرح درمان.</li>\n'
-    '        <li>تکنولوژی و مواد نوین: کاربرد دندانپزشکی دیجیتال (اسکنر سه‌بعدی)، هوش مصنوعی (AI) در پروتز، مواد نوین چون PEEK CAD-CAM و رستوریشن‌های باکیفیت.</li>\n'
-    '      </ul>\n'
-    '      <p>هدف DentCast: ارائه جدیدترین مقالات و کنسنسوس‌ها برای تقویت تصمیم‌گیری‌های بالینی مطمئن شماست.</p>\n'
-    '    </div>\n'
-)
+def render_seo_block(ep_count, hours, years):
+    """SEO hidden block — 6 paragraphs of natural Persian prose anchored
+    to the actual pillar+hashtag taxonomy of dentcast-brain.json. The
+    paragraphs are hardcoded for editorial quality; only the count/years
+    are templated. The taxonomy-drift guard in build() warns if the
+    top-5 pillars stop matching what these paragraphs assume."""
+    n  = fa_digits(ep_count)
+    yr = fa_digits(years)
+    hr = fa_digits(hours)
+
+    paragraphs = [
+        # P1 — what DentCast is
+        "دنت‌کست پادکست تخصصی دندان‌پزشکی به زبان فارسی است که توسط دکتر فؤاد شهابیان، "
+        "متخصص پروتزهای دندانی، تولید می‌شود. در حال حاضر " + n + " اپیزود و حدود "
+        + hr + " ساعت محتوای علمی در طول " + yr + " سال فعالیت در دسترس قرار دارد. "
+        "ساختار اپیزودها بر پایه‌ی مرور مقاله‌های مرجع و بررسی کانسپت‌های بالینی پروتز و "
+        "ایمپلنت بنا شده است؛ نه برای سرگرمی، نه به قصد آموزش سطحی، بلکه برای روشن‌تر شدن "
+        "منطق پشت تصمیم‌های کلینیکی روزانه.",
+
+        # P2 — implantology cluster (largest pillar, 39 episodes)
+        "بزرگ‌ترین خوشه‌ی محتوایی دنت‌کست به ایمپلنتولوژی اختصاص دارد. در این بخش، کانسپت‌های "
+        "کلیدی مثل Zero Bone Loss و رویکرد Bio-Restorative پشت آن، انتخاب اباتمنت "
+        "(Ti-base، Multi-unit، Healing Abutment)، پلنینگ سه‌بعدی ایمپلنت، Emergence Profile، "
+        "مدیریت بافت نرم اطراف ایمپلنت و پروتکل‌های ایمپلنت فوری اپیزود به اپیزود از روی "
+        "مقالات اصلی مرور شده‌اند. تمرکز روی همان نقطه‌ای است که جراحی و پروتز به هم می‌رسند: "
+        "ایمپلنت به‌عنوان بخشی از یک سیستم بیولوژیک و پروتزی واحد، نه صرفاً یک فیکسچر داخل "
+        "استخوان.",
+
+        # P3 — bonding + ceramics + adhesive (32 + 27 episodes)
+        "خوشه‌ی بعدی شامل دندان‌پزشکی ادهزیو، باندینگ و سرامیک‌هاست. اینجا از شیمی سطح مینا و "
+        "عاج، انتخاب رزین سمنت و آماده‌سازی سطح سرامیک‌های مختلف بحث می‌شود؛ از لیتیوم دی‌سیلیکات "
+        "و فلدسپاتیک تا زیرکونیا و انواع لمینیت. کانسپت‌هایی مثل IDS و DME، رویکرد بیومیمتیک "
+        "در ترمیم، و پروتکل سمان رزینی روی سرامیک‌های سیلیکا-بیس و زیرکونیا با ارجاع مستقیم به "
+        "منابع پایه دنبال شده‌اند.",
+
+        # P4 — esthetic + occlusion + TMD (19 + 14 episodes + treatment planning)
+        "خوشه‌ی زیبایی و خوشه‌ی اکلوژن دو مسیر مستقل اما به‌هم پیوسته‌اند. طراحی لبخند، "
+        "اصلاح بُعد عمودی و انتخاب درمان زیبایی در کنار مرور کانسپت‌های کلاسیک اکلوژن از "
+        "مراجعی مثل داوسون و اوکیسون، تشخیص گلوبال، رابطه‌ی اکلوژن با درمان‌های پروتزی پیچیده و "
+        "مدیریت بیماران با اختلال مفصل گیجگاهی-فکی (TMD) در اپیزودهای متعدد دنبال می‌شود. "
+        "اینجا منطق «از کجا تشخیص آغاز می‌شود» مهم‌تر از فهرست‌کردن علائم است.",
+
+        # P5 — digital + fixed/removable pros + materials (smaller but distinct)
+        "خوشه‌های کوچک‌تر اما متمایز شامل دندان‌پزشکی دیجیتال (اسکنر داخل دهانی، طراحی CAD-CAM، "
+        "نقش هوش مصنوعی در پروتز)، پروتزهای ثابت و متحرک، اوردنچر، پست و کور و انتخاب مواد "
+        "است. این بخش‌ها لزوماً پر-اپیزود نیستند ولی تصمیم‌های بالینی واقعی را پوشش می‌دهند و "
+        "حلقه‌های میانی بین سایر خوشه‌ها را کامل می‌کنند.",
+
+        # P6 — editorial stance
+        "دنت‌کست در همه‌ی این حوزه‌ها روی یک رویکرد ثابت ایستاده: تکیه بر مقاله‌ی منبع، طرح "
+        "صریح اختلاف‌نظرها، و پرهیز از قطعیتِ زودهنگام. هدف، نه ارائه‌ی «بهترین پروتکل»، "
+        "بلکه روشن‌تر کردن منطق پشت تصمیم بالینی است.",
+    ]
+
+    body = "".join('      <p>' + esc(p) + '</p>\n' for p in paragraphs)
+    return (
+        '    <!-- ============================================================\n'
+        '         SECTION 6 — SEO HIDDEN BLOCK\n'
+        '         Anchored to live pillar/hashtag taxonomy in brain.json.\n'
+        '         Top-5 pillars expected: ' + ", ".join(sorted(EXPECTED_TOP_PILLARS)) + '\n'
+        '    ============================================================ -->\n'
+        '    <div class="visually-hidden" aria-hidden="true">\n'
+        '      <h2>حوزه‌های پوشش دنت‌کست</h2>\n'
+        + body +
+        '    </div>\n'
+    )
 
 FOOTER_HTML = (
     '    <!-- ============================================================\n'
@@ -613,7 +706,7 @@ INLINE_CSS = (
     '\n'
     '.episode-item{\n'
     '  display:grid; grid-template-columns:42px 1fr auto;\n'
-    '  align-items:center; gap:12px;\n'
+    '  align-items:start; gap:12px;\n'
     '  padding:18px 4px;\n'
     '  border-bottom:1px solid var(--border2);\n'
     '  color:var(--txt);\n'
@@ -626,9 +719,10 @@ INLINE_CSS = (
     '  font-size:.95rem; font-weight:700; color:var(--txt3);\n'
     '  font-variant-numeric:tabular-nums; letter-spacing:-.2px;\n'
     '  text-align:start; white-space:nowrap;\n'
+    '  padding-top:2px;\n'
     '}\n'
     '.episode-item:hover .ep-num{ color:var(--ac); }\n'
-    '.episode-item .ep-body{ display:flex; flex-direction:column; gap:6px; min-width:0; }\n'
+    '.episode-item .ep-body{ display:flex; flex-direction:column; gap:8px; min-width:0; }\n'
     '.episode-item .ep-title{\n'
     '  font-size:.97rem; font-weight:600; line-height:1.65; color:var(--txt);\n'
     '  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;\n'
@@ -637,9 +731,44 @@ INLINE_CSS = (
     '  font-size:.74rem; color:var(--txt3);\n'
     '  display:flex; align-items:center; gap:8px;\n'
     '  font-variant-numeric:tabular-nums;\n'
+    '  margin-top:-2px;\n'
     '}\n'
     '.episode-item .ep-meta .dot{ width:2.5px; height:2.5px; border-radius:50%; background:var(--txt3); opacity:.55; display:inline-block; }\n'
-    '.episode-item .ep-chev{ color:var(--txt3); opacity:.7; transition:opacity var(--tr), transform var(--tr), color var(--tr); }\n'
+    '\n'
+    '/* Caption — subtle one-liner from brain.caption */\n'
+    '.episode-item .ep-caption{\n'
+    '  font-size:.82rem; color:var(--txt2);\n'
+    '  line-height:1.7; margin:0;\n'
+    '  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;\n'
+    '}\n'
+    '\n'
+    '/* Hashtag chips — restrained, non-interactive */\n'
+    '.episode-item .ep-tags{\n'
+    '  display:flex; flex-wrap:wrap; gap:6px;\n'
+    '  margin-top:2px;\n'
+    '}\n'
+    '.episode-item .ep-tag{\n'
+    '  display:inline-flex; align-items:center;\n'
+    '  font-size:.7rem; font-weight:600; line-height:1;\n'
+    '  padding:4px 10px;\n'
+    '  border-radius:var(--r-f);\n'
+    '  background:var(--chip-bg);\n'
+    '  color:var(--chip-txt);\n'
+    '  border:1px solid var(--chip-bd);\n'
+    '  white-space:nowrap;\n'
+    '  transition:background var(--tr), color var(--tr), border-color var(--tr);\n'
+    '}\n'
+    '.episode-item:hover .ep-tag{\n'
+    '  background:rgba(var(--ac-rgb),.10);\n'
+    '  border-color:rgba(var(--ac-rgb),.25);\n'
+    '}\n'
+    '[data-theme="dark"] .episode-item .ep-tag{ color:#8ab4f8; }\n'
+    '\n'
+    '.episode-item .ep-chev{\n'
+    '  color:var(--txt3); opacity:.7;\n'
+    '  transition:opacity var(--tr), transform var(--tr), color var(--tr);\n'
+    '  padding-top:2px;\n'
+    '}\n'
     '.episode-item .ep-chev svg{ width:18px; height:18px; transform:scaleX(-1); }\n'
     '.episode-item:hover .ep-chev{ opacity:1; color:var(--ac); transform:translateX(-2px); }\n'
     '\n'
@@ -867,13 +996,41 @@ def render_featured(ep):
     )
 
 
-def render_episode_li(ep):
+def render_episode_li(ep, brain_entry):
     num   = fa_digits(ep.get("episode", ""))
     title = clean_title(ep.get("title", ""))
     href  = ep.get("page_url") or "#"
     dur   = ep.get("duration") or ""
     date  = format_jalali_date(ep.get("published", ""))
     aria  = "اپیزود " + num + ": " + title
+
+    # Caption — optional. Trim and skip placeholders.
+    caption_raw = ""
+    if brain_entry:
+        caption_raw = (brain_entry.get("caption") or "").strip()
+    caption_html = ""
+    if caption_raw:
+        caption_html = (
+            '              <p class="ep-caption">' + esc(caption_raw) + '</p>\n'
+        )
+
+    # Hashtags — first MAX_TAGS_PER_ITEM only, preserve order, keep "#".
+    tags_html = ""
+    if brain_entry:
+        tags = brain_entry.get("hashtags") or []
+        tags = [t for t in tags if isinstance(t, str) and t.strip()]
+        tags = tags[:MAX_TAGS_PER_ITEM]
+        if tags:
+            chips = "".join(
+                '                <span class="ep-tag">' + esc(t) + '</span>\n'
+                for t in tags
+            )
+            tags_html = (
+                '              <div class="ep-tags" aria-hidden="true">\n'
+                + chips +
+                '              </div>\n'
+            )
+
     return (
         '        <li>\n'
         '          <a class="episode-item" href="' + esc(href) + '" aria-label="' + esc(aria) + '">\n'
@@ -885,6 +1042,8 @@ def render_episode_li(ep):
         '                <span class="dot"></span>\n'
         '                <span>' + esc(date) + '</span>\n'
         '              </div>\n'
+        + caption_html
+        + tags_html +
         '            </div>\n'
         '            <span class="ep-chev" aria-hidden="true">\n'
         '              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>\n'
@@ -894,8 +1053,10 @@ def render_episode_li(ep):
     )
 
 
-def render_archive(episodes_sorted):
-    items_html = "".join(render_episode_li(e) for e in episodes_sorted)
+def render_archive(episodes_sorted, brain_by_ep):
+    items_html = "".join(
+        render_episode_li(e, brain_by_ep.get(str(e.get("episode")))) for e in episodes_sorted
+    )
     total = len(episodes_sorted)
     hidden = max(0, total - INITIAL_CHUNK)
 
@@ -1053,7 +1214,7 @@ def build_head(ep_count):
     )
 
 
-def build_body(ep_count, hours, years, featured_ep, episodes_sorted):
+def build_body(ep_count, hours, years, featured_ep, episodes_sorted, brain_by_ep):
     return (
         '<body>\n'
         + TOPBAR_HTML
@@ -1074,9 +1235,9 @@ def build_body(ep_count, hours, years, featured_ep, episodes_sorted):
         '\n'
         + LISTEN_SECTION_HTML +
         '\n'
-        + render_archive(episodes_sorted) +
+        + render_archive(episodes_sorted, brain_by_ep) +
         '\n'
-        + SEO_HIDDEN_BLOCK_HTML +
+        + render_seo_block(ep_count, hours, years) +
         '\n'
         + FOOTER_HTML +
         '\n'
@@ -1102,10 +1263,14 @@ def build_body(ep_count, hours, years, featured_ep, episodes_sorted):
 def build():
     if not JSON_PATH.exists():
         raise SystemExit("Source not found: " + str(JSON_PATH))
+    if not BRAIN_PATH.exists():
+        raise SystemExit("Source not found: " + str(BRAIN_PATH))
 
     episodes = json.loads(JSON_PATH.read_text(encoding="utf-8"))
     if not isinstance(episodes, list) or not episodes:
         raise SystemExit("dentcast.json is empty or malformed.")
+
+    brain_by_ep = load_brain(BRAIN_PATH)
 
     # Sort descending by parseFloat(episode); this is the single,
     # authoritative order baked into the page.
@@ -1125,10 +1290,17 @@ def build():
     years = math.ceil(days_active / 365.25)
 
     head = build_head(ep_count)
-    body = build_body(ep_count, hours, years, featured, episodes_sorted)
+    body = build_body(ep_count, hours, years, featured, episodes_sorted, brain_by_ep)
     page = head + body
 
     OUT_PATH.write_text(page, encoding="utf-8", newline="\n")
+
+    # Brain coverage + taxonomy guard
+    matched = sum(1 for e in episodes_sorted if str(e.get("episode")) in brain_by_ep)
+    missing = ep_count - matched
+
+    counts = pillar_counts(brain_by_ep)
+    top5 = {name for name, _ in counts.most_common(5)}
 
     print(
         "Built episodes.html — "
@@ -1136,6 +1308,22 @@ def build():
         + fa_digits(hours) + " ساعت، "
         + fa_digits(years) + " سال."
     )
+    print(
+        "Brain join: " + fa_digits(matched) + "/" + fa_digits(ep_count)
+        + " episodes matched"
+        + (" (" + fa_digits(missing) + " without brain entry)" if missing else "")
+        + "."
+    )
+    if top5 != EXPECTED_TOP_PILLARS:
+        added   = top5 - EXPECTED_TOP_PILLARS
+        dropped = EXPECTED_TOP_PILLARS - top5
+        print(
+            "WARNING: top-5 pillars drifted — SEO prose may be stale.\n"
+            "  expected: " + ", ".join(sorted(EXPECTED_TOP_PILLARS)) + "\n"
+            "  current:  " + ", ".join(sorted(top5))
+            + (("\n  added: " + ", ".join(sorted(added))) if added else "")
+            + (("\n  dropped: " + ", ".join(sorted(dropped))) if dropped else "")
+        )
 
 
 if __name__ == "__main__":
