@@ -495,20 +495,6 @@ INLINE_CSS = (
     '.hero-stat .v{ font-size:1.05rem; font-weight:700; color:var(--txt); letter-spacing:-.2px; font-variant-numeric:tabular-nums; }\n'
     '.hero-stat .k{ font-size:.74rem; color:var(--txt3); letter-spacing:.3px; }\n'
     '\n'
-    '.hero-cta{\n'
-    '  display:inline-flex; align-items:center; gap:8px;\n'
-    '  padding:13px 26px; border-radius:var(--r-f);\n'
-    '  background:var(--pr); color:#fff;\n'
-    '  font-weight:700; font-size:.95rem;\n'
-    '  border:1px solid transparent;\n'
-    '  transition:transform var(--tr), box-shadow var(--tr), background var(--tr);\n'
-    '  box-shadow:0 2px 10px rgba(var(--pr-rgb),.18);\n'
-    '}\n'
-    '.hero-cta:hover{ transform:translateY(-1px); box-shadow:0 4px 16px rgba(var(--pr-rgb),.22); }\n'
-    '.hero-cta:active{ transform:scale(.98); }\n'
-    '.hero-cta svg{ width:1em; height:1em; }\n'
-    '[data-theme="dark"] .hero-cta{ background:#2b5278; color:#e8f0ff; }\n'
-    '\n'
     '/* FEATURED */\n'
     '.dc-featured .featured-label{\n'
     '  font-size:.74rem; letter-spacing:.6px; font-weight:700;\n'
@@ -771,10 +757,6 @@ INLINE_BEHAVIOR_JS = (
     "  iBtn.addEventListener('click', function(){ openInternal(false); });\n"
     "  iClose.addEventListener('click', closeInternal);\n"
     '\n'
-    '  // Hero CTA → open internal player and scroll to it\n'
-    "  var heroBtn = document.getElementById('heroPlayLatest');\n"
-    "  if (heroBtn){ heroBtn.addEventListener('click', function(){ openInternal(true); }); }\n"
-    '\n'
     '  // ---------- Acast player (lazy mount, same pattern) ----------\n'
     "  var aBtn   = document.getElementById('acast-btn');\n"
     "  var aWrap  = document.getElementById('acast-wrap');\n"
@@ -850,11 +832,6 @@ def render_hero(ep_count, hours, years):
         '          <span class="k">سال فعالیت</span>\n'
         '        </div>\n'
         '      </div>\n'
-        '\n'
-        '      <button class="hero-cta" id="heroPlayLatest" type="button" aria-controls="internalPlayerWrap">\n'
-        '        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>\n'
-        '        گوش دادن به آخرین اپیزود\n'
-        '      </button>\n'
         '    </section>\n'
     )
 

@@ -146,20 +146,6 @@ body.search-open #page-content{
 .hero-stat .v{ font-size:1.05rem; font-weight:700; color:var(--txt); letter-spacing:-.2px; font-variant-numeric:tabular-nums; }
 .hero-stat .k{ font-size:.74rem; color:var(--txt3); letter-spacing:.3px; }
 
-.hero-cta{
-  display:inline-flex; align-items:center; gap:8px;
-  padding:13px 26px; border-radius:var(--r-f);
-  background:var(--pr); color:#fff;
-  font-weight:700; font-size:.95rem;
-  border:1px solid transparent;
-  transition:transform var(--tr), box-shadow var(--tr), background var(--tr);
-  box-shadow:0 2px 10px rgba(var(--pr-rgb),.18);
-}
-.hero-cta:hover{ transform:translateY(-1px); box-shadow:0 4px 16px rgba(var(--pr-rgb),.22); }
-.hero-cta:active{ transform:scale(.98); }
-.hero-cta svg{ width:1em; height:1em; }
-[data-theme="dark"] .hero-cta{ background:#2b5278; color:#e8f0ff; }
-
 /* FEATURED */
 .dc-featured .featured-label{
   font-size:.74rem; letter-spacing:.6px; font-weight:700;
@@ -550,11 +536,6 @@ body.search-open #page-content{
           <span class="k">سال فعالیت</span>
         </div>
       </div>
-
-      <button class="hero-cta" id="heroPlayLatest" type="button" aria-controls="internalPlayerWrap">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
-        گوش دادن به آخرین اپیزود
-      </button>
     </section>
 
     <!-- ============================================================
@@ -4009,10 +3990,6 @@ body.search-open #page-content{
   }
   iBtn.addEventListener('click', function(){ openInternal(false); });
   iClose.addEventListener('click', closeInternal);
-
-  // Hero CTA → open internal player and scroll to it
-  var heroBtn = document.getElementById('heroPlayLatest');
-  if (heroBtn){ heroBtn.addEventListener('click', function(){ openInternal(true); }); }
 
   // ---------- Acast player (lazy mount, same pattern) ----------
   var aBtn   = document.getElementById('acast-btn');
