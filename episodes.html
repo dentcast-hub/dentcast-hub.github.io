@@ -160,7 +160,7 @@ body.search-open #page-content{
   display:block; background:var(--card-bg);
   border:1px solid var(--card-border);
   border-radius:var(--r-xl);
-  padding:24px 22px;
+  padding:6px;
   box-shadow:var(--card-sh);
   transition:transform var(--tr), box-shadow var(--tr2), border-color var(--tr);
   position:relative; overflow:hidden;
@@ -170,7 +170,6 @@ body.search-open #page-content{
   box-shadow:var(--card-sh2);
   border-color:rgba(var(--pr-rgb),.20);
 }
-@media (min-width:720px){ .featured-card{ padding:30px 30px; } }
 .featured-num{
   display:inline-flex; align-items:baseline; gap:4px;
   font-size:.78rem; color:var(--ac); font-weight:700;
@@ -223,41 +222,46 @@ body.search-open #page-content{
 .player-cell .pc-note{ font-size:.78rem; color:var(--txt3); line-height:1.7; margin-bottom:6px; min-height:2.7em; }
 .player-cell .capsule-btn{ align-self:flex-start; margin-top:auto; }
 
-/* پلیر داخلی — پررنگ و برندی (قاب آبیِ پُر، دکمه‌ی فیلد، متن سفید) */
+/* پلیر داخلی — قاب ادیتوریال بزرگ، گرادیان نرم برندی (متن‌ها و دکمه به پیش‌فرض برمی‌گردند) */
 .player-cell:has(#internalBtn){
-  background:var(--pr);
-  border:1px solid rgba(var(--ac-rgb),.55);
+  background:linear-gradient(to bottom left,
+    rgba(var(--pr-rgb),.12) 0%,
+    rgba(var(--pr-rgb),.04) 60%,
+    #fff 100%);
+  border:1px solid rgba(var(--ac-rgb),.22);
   box-shadow:
-    0 8px 28px rgba(var(--pr-rgb),.22),
-    0 1px 4px rgba(var(--pr-rgb),.10);
-  padding:6px;
+    0 6px 22px rgba(var(--pr-rgb),.10),
+    0 1px 4px rgba(var(--pr-rgb),.06);
+  padding:24px 22px;
+}
+@media (min-width:720px){
+  .player-cell:has(#internalBtn){ padding:30px 30px; }
 }
 [data-theme="dark"] .player-cell:has(#internalBtn){
-  background:#0d1e3a;
-  border:1px solid rgba(var(--ac-rgb),.55);
+  background:linear-gradient(to bottom left,
+    rgba(var(--ac-rgb),.20) 0%,
+    rgba(var(--ac-rgb),.08) 60%,
+    var(--surface) 100%);
+  border:1px solid rgba(var(--ac-rgb),.35);
   box-shadow:
-    0 8px 30px rgba(0,0,0,.45),
-    0 1px 4px rgba(0,0,0,.30);
+    0 6px 22px rgba(0,0,0,.35),
+    0 1px 4px rgba(0,0,0,.22);
 }
-[data-theme="dark"] .player-cell:has(#internalBtn) .capsule-btn{
-  background:#1a4ec6; border:1px solid #1a4ec6;
-}
-.player-cell:has(#internalBtn) .pc-title{ color:#fff; }
-.player-cell:has(#internalBtn) .pc-note{ color:rgba(255,255,255,.72); }
-.player-cell:has(#internalBtn) .capsule-btn{
-  background:var(--ac); color:#fff; border:1px solid var(--ac);
-}
-.player-cell:has(#internalBtn) .capsule-btn:hover{ filter:brightness(1.06); transform:translateY(-1px); }
-.player-cell:has(#internalBtn) .capsule-btn:active{ transform:scale(.97); }
 
-/* پلیر Acast — تأکید آرام (همان درمانی که قبلاً روی پلیر داخلی بود) */
+/* پلیر Acast — تینت اکسنت ملایم (گزینه‌ی پشتیبان، اما واضح متمایز) */
 .player-cell:not(:has(#internalBtn)){
-  background:rgba(var(--ac-rgb),.06);
+  background:rgba(var(--ac-rgb),.04);
   border:1px solid rgba(var(--ac-rgb),.18);
-  box-shadow:var(--card-sh2);
+  box-shadow:
+    0 4px 16px rgba(var(--ac-rgb),.08),
+    0 1px 4px rgba(var(--pr-rgb),.05);
 }
 [data-theme="dark"] .player-cell:not(:has(#internalBtn)){
-  background:rgba(var(--ac-rgb),.10);
+  background:rgba(var(--ac-rgb),.08);
+  border:1px solid rgba(var(--ac-rgb),.24);
+  box-shadow:
+    0 4px 16px rgba(0,0,0,.30),
+    0 1px 4px rgba(0,0,0,.18);
 }
 
 .capsule-btn{
@@ -470,6 +474,17 @@ body.search-open #page-content{
   transition:all var(--tr);
 }
 #dc-theme-toggle:active{ transform:scale(.86); }
+
+/* BACK LINK — mirrored from glossary/index.html for cross-page consistency */
+.nav-back{ margin-bottom:8px; }
+.back-link{
+  display:inline-flex; align-items:center; gap:4px;
+  font-size:.78rem; font-weight:600;
+  color:var(--txt3);
+  transition:color var(--tr);
+}
+.back-link::before{ content:"← "; }
+.back-link:hover{ color:var(--ac); }
   </style>
 
   <script type="application/ld+json">
@@ -617,6 +632,10 @@ body.search-open #page-content{
 <!-- محتوای اصلی صفحه -->
 <main id="page-content" aria-label="صفحهٔ اصلی اپیزودهای دنت‌کست">
   <div class="wrap">
+
+    <div class="nav-back">
+      <a href="/index.html" class="back-link">بازگشت به صفحهٔ اصلی دنت‌کست</a>
+    </div>
 
     <!-- ============================================================
          SECTION 1 — HERO
