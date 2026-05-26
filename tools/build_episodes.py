@@ -1039,6 +1039,80 @@ INLINE_BEHAVIOR_JS = (
 
 
 # -------------------------------------------------------------------
+# Inline JS — recommended-episode card. Fetches dentcast.json on load,
+# picks a weighted-random episode (80% integer-numbered, 20% decimal),
+# and fills the skeleton from render_featured(). On any failure the
+# placeholder text stays put. Persian digits + Jalali date are computed
+# in-browser; nothing here is shared with the Python build.
+# -------------------------------------------------------------------
+FEATURED_RANDOM_JS = (
+    '(function(){\n'
+    "  var card = document.getElementById('featured-episode');\n"
+    '  if (!card) return;\n'
+    '\n'
+    "  fetch('/dentcast.json', { cache: 'no-store' })\n"
+    '    .then(function(r){ return r.json(); })\n'
+    '    .then(function(eps){\n'
+    '      if (!Array.isArray(eps) || eps.length === 0) return;\n'
+    '\n'
+    '      var integers = [];\n'
+    '      var decimals = [];\n'
+    '      eps.forEach(function(ep){\n'
+    "        var n = String(ep.episode || '').trim();\n"
+    "        if (n.indexOf('.') === -1) integers.push(ep);\n"
+    '        else decimals.push(ep);\n'
+    '      });\n'
+    '\n'
+    '      var pool;\n'
+    '      var roll = Math.random();\n'
+    '      if (roll < 0.8 && integers.length > 0) pool = integers;\n'
+    '      else if (decimals.length > 0) pool = decimals;\n'
+    '      else pool = integers.length > 0 ? integers : eps;\n'
+    '\n'
+    '      var pick = pool[Math.floor(Math.random() * pool.length)];\n'
+    '      if (!pick) return;\n'
+    '\n'
+    "      var tmp = document.createElement('div');\n"
+    "      tmp.innerHTML = pick.description || '';\n"
+    "      var text = (tmp.textContent || '').trim();\n"
+    "      var excerpt = text.length > 170 ? text.slice(0, 170).trim() + '\\u2026' : text;\n"
+    '\n'
+    "      var title = (pick.title || '').replace(/^\\s*[\\d.]+\\s*[-\\u2013]\\s*/, '');\n"
+    '\n'
+    "      var faDigits = ['\\u06f0','\\u06f1','\\u06f2','\\u06f3','\\u06f4','\\u06f5','\\u06f6','\\u06f7','\\u06f8','\\u06f9'];\n"
+    '      var epNumFa = String(pick.episode).replace(/\\d/g, function(d){ return faDigits[+d]; });\n'
+    '\n'
+    "      var dateStr = '';\n"
+    '      if (pick.published) {\n'
+    '        try {\n'
+    '          var d = new Date(pick.published);\n'
+    '          if (!isNaN(d.getTime())) {\n'
+    "            dateStr = new Intl.DateTimeFormat('fa-IR-u-ca-persian',\n"
+    "              { year:'numeric', month:'long', day:'numeric' }).format(d);\n"
+    '          }\n'
+    '        } catch (e) {}\n'
+    '      }\n'
+    '\n'
+    "      card.href = pick.page_url || '#';\n"
+    '      var setText = function(sel, val){\n'
+    '        var el = card.querySelector(sel);\n'
+    '        if (el != null) el.textContent = val;\n'
+    '      };\n'
+    "      setText('.featured-num-val', epNumFa);\n"
+    "      setText('.featured-title', title);\n"
+    "      setText('.featured-excerpt', excerpt);\n"
+    "      setText('.featured-duration', pick.duration || '');\n"
+    "      setText('.featured-date', dateStr);\n"
+    '\n'
+    "      card.setAttribute('data-state', 'ready');\n"
+    "      card.removeAttribute('aria-busy');\n"
+    '    })\n'
+    '    .catch(function(){});\n'
+    '})();\n'
+)
+
+
+# -------------------------------------------------------------------
 # Per-section render helpers
 # -------------------------------------------------------------------
 def render_hero(ep_count, hours, years):
@@ -1071,28 +1145,28 @@ def render_hero(ep_count, hours, years):
     )
 
 
-def render_featured(ep):
-    title = clean_title(ep.get("title", ""))
-    desc  = excerpt(strip_html(ep.get("description", "")), 170)
-    date  = format_jalali_date(ep.get("published", ""))
-    num   = fa_digits(ep.get("episode", ""))
-    href  = ep.get("page_url") or "#"
-    dur   = ep.get("duration") or ""
-
+def render_featured():
+    """Skeleton placeholder for the recommended-episode card. The card is
+    populated client-side on every page load by FEATURED_RANDOM_JS, which
+    fetches dentcast.json and picks a weighted-random episode. Before that
+    JS runs (or if it fails / is disabled), the placeholder text stays.
+    The DOM structure mirrors the populated card exactly so the existing
+    .featured-* CSS applies unchanged."""
     return (
         '    <!-- ============================================================\n'
-        '         SECTION 3 — FEATURED / LATEST EPISODE  (static)\n'
+        '         SECTION 3 — FEATURED / RECOMMENDED EPISODE\n'
+        '         Skeleton only; populated client-side (see FEATURED_RANDOM_JS).\n'
         '    ============================================================ -->\n'
         '    <section class="section dc-featured" aria-labelledby="featuredLabel">\n'
-        '      <div class="featured-label" id="featuredLabel">آخرین اپیزود</div>\n'
-        '      <a class="featured-card" href="' + esc(href) + '" aria-label="' + esc("آخرین اپیزود: " + title) + '">\n'
-        '        <div class="featured-num"><span class="hash">اپیزود</span> ' + num + '</div>\n'
-        '        <div class="featured-title">' + esc(title) + '</div>\n'
-        '        <p class="featured-excerpt">' + esc(desc) + '</p>\n'
+        '      <div class="featured-label" id="featuredLabel">اپیزود پیشنهادی</div>\n'
+        '      <a class="featured-card" id="featured-episode" href="#" data-state="loading" aria-busy="true" aria-label="اپیزود پیشنهادی">\n'
+        '        <div class="featured-num"><span class="hash">اپیزود</span> <span class="featured-num-val">—</span></div>\n'
+        '        <div class="featured-title">در حال بارگذاری اپیزود پیشنهادی...</div>\n'
+        '        <p class="featured-excerpt"></p>\n'
         '        <div class="featured-meta">\n'
-        '          <span>' + esc(dur) + '</span>\n'
+        '          <span class="featured-duration"></span>\n'
         '          <span class="dot"></span>\n'
-        '          <span>' + esc(date) + '</span>\n'
+        '          <span class="featured-date"></span>\n'
         '          <span class="more">ادامه\n'
         '            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>\n'
         '          </span>\n'
@@ -1327,7 +1401,7 @@ def build_head(ep_count):
     )
 
 
-def build_body(ep_count, hours, years, featured_ep, episodes_sorted, brain_by_ep):
+def build_body(ep_count, hours, years, episodes_sorted, brain_by_ep):
     return (
         '<body>\n'
         + TOPBAR_HTML
@@ -1348,7 +1422,7 @@ def build_body(ep_count, hours, years, featured_ep, episodes_sorted, brain_by_ep
         '\n'
         + AD_CARD_HTML +
         '\n'
-        + render_featured(featured_ep) +
+        + render_featured() +
         '\n'
         + LISTEN_SECTION_HTML +
         '\n'
@@ -1366,6 +1440,11 @@ def build_body(ep_count, hours, years, featured_ep, episodes_sorted, brain_by_ep
         '<!-- UI behavior — player toggles + show more -->\n'
         '<script>\n'
         + INLINE_BEHAVIOR_JS +
+        '</script>\n'
+        '\n'
+        '<!-- Recommended episode — weighted-random client-side pick -->\n'
+        '<script>\n'
+        + FEATURED_RANDOM_JS +
         '</script>\n'
         '\n'
         + EXTERNAL_SCRIPTS_HTML +
@@ -1396,7 +1475,6 @@ def build():
         key=lambda e: parse_episode_num(e.get("episode")),
         reverse=True,
     )
-    featured = episodes_sorted[0]
 
     # Stats
     ep_count = len(episodes_sorted)
@@ -1407,7 +1485,7 @@ def build():
     years = math.ceil(days_active / 365.25)
 
     head = build_head(ep_count)
-    body = build_body(ep_count, hours, years, featured, episodes_sorted, brain_by_ep)
+    body = build_body(ep_count, hours, years, episodes_sorted, brain_by_ep)
     page = head + body
 
     OUT_PATH.write_text(page, encoding="utf-8", newline="\n")
