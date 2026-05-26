@@ -215,14 +215,21 @@ body.search-open #page-content{
 .player-cell .pc-note{ font-size:.78rem; color:var(--txt3); line-height:1.7; margin-bottom:6px; min-height:2.7em; }
 .player-cell .capsule-btn{ align-self:flex-start; margin-top:auto; }
 
-/* پلیر داخلی — برتری بصری آرام (تنها تفاوت رنگ/سایه، بدون تغییر چینش) */
+/* پلیر داخلی — برتری بصری روشن‌تر (قاب رنگی، هاله‌ی محو، فاصله‌ی نفس‌کشی) */
 .player-cell:has(#internalBtn){
-  background:rgba(var(--ac-rgb),.04);
-  border:1px solid rgba(var(--ac-rgb),.18);
-  box-shadow:var(--card-sh2);
+  background:rgba(var(--ac-rgb),.06);
+  border:1px solid rgba(var(--ac-rgb),.38);
+  box-shadow:
+    0 6px 22px rgba(var(--ac-rgb),.12),
+    0 1px 4px rgba(var(--pr-rgb),.06);
+  padding:6px;
 }
 [data-theme="dark"] .player-cell:has(#internalBtn){
-  background:rgba(var(--ac-rgb),.06);
+  background:rgba(var(--ac-rgb),.10);
+  border:1px solid rgba(var(--ac-rgb),.42);
+  box-shadow:
+    0 6px 24px rgba(var(--ac-rgb),.18),
+    0 1px 4px rgba(0,0,0,.30);
 }
 
 .capsule-btn{
