@@ -657,6 +657,16 @@ INLINE_CSS = (
     '.player-cell .pc-note{ font-size:.78rem; color:var(--txt3); line-height:1.7; margin-bottom:6px; min-height:2.7em; }\n'
     '.player-cell .capsule-btn{ align-self:flex-start; margin-top:auto; }\n'
     '\n'
+    '/* پلیر داخلی — برتری بصری آرام (تنها تفاوت رنگ/سایه، بدون تغییر چینش) */\n'
+    '.player-cell:has(#internalBtn){\n'
+    '  background:rgba(var(--ac-rgb),.04);\n'
+    '  border:1px solid rgba(var(--ac-rgb),.18);\n'
+    '  box-shadow:var(--card-sh2);\n'
+    '}\n'
+    '[data-theme="dark"] .player-cell:has(#internalBtn){\n'
+    '  background:rgba(var(--ac-rgb),.06);\n'
+    '}\n'
+    '\n'
     '.capsule-btn{\n'
     '  appearance:none; border:1.5px solid rgba(var(--pr-rgb),.25);\n'
     '  cursor:pointer; display:inline-flex; align-items:center; justify-content:center;\n'
@@ -1317,51 +1327,6 @@ def build():
     ep_count = len(episodes_sorted)
     total_sec = sum(duration_to_seconds(e.get("duration", "")) for e in episodes_sorted)
     hours = math.ceil(total_sec / 3600)
-    today = datetime.date.today()
-    days_active = max(0, (today - PROJECT_START).days)
-    years = math.ceil(days_active / 365.25)
-
-    head = build_head(ep_count)
-    body = build_body(ep_count, hours, years, featured, episodes_sorted, brain_by_ep)
-    page = head + body
-
-    OUT_PATH.write_text(page, encoding="utf-8", newline="\n")
-
-    # Brain coverage + taxonomy guard
-    matched = sum(1 for e in episodes_sorted if str(e.get("episode")) in brain_by_ep)
-    missing = ep_count - matched
-
-    counts = pillar_counts(brain_by_ep)
-    top5 = {name for name, _ in counts.most_common(5)}
-
-    print(
-        "Built episodes.html — "
-        + fa_digits(ep_count) + " اپیزود، "
-        + fa_digits(hours) + " ساعت، "
-        + fa_digits(years) + " سال."
-    )
-    print(
-        "Brain join: " + fa_digits(matched) + "/" + fa_digits(ep_count)
-        + " episodes matched"
-        + (" (" + fa_digits(missing) + " without brain entry)" if missing else "")
-        + "."
-    )
-    if top5 != EXPECTED_TOP_PILLARS:
-        added   = top5 - EXPECTED_TOP_PILLARS
-        dropped = EXPECTED_TOP_PILLARS - top5
-        print(
-            "WARNING: top-5 pillars drifted — SEO prose may be stale.\n"
-            "  expected: " + ", ".join(sorted(EXPECTED_TOP_PILLARS)) + "\n"
-            "  current:  " + ", ".join(sorted(top5))
-            + (("\n  added: " + ", ".join(sorted(added))) if added else "")
-            + (("\n  dropped: " + ", ".join(sorted(dropped))) if dropped else "")
-        )
-
-
-if __name__ == "__main__":
-    build()
-
-l_sec / 3600)
     today = datetime.date.today()
     days_active = max(0, (today - PROJECT_START).days)
     years = math.ceil(days_active / 365.25)
