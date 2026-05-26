@@ -701,18 +701,19 @@ body.search-open #page-content{
     </section>
 
     <!-- ============================================================
-         SECTION 3 — FEATURED / LATEST EPISODE  (static)
+         SECTION 3 — FEATURED / RECOMMENDED EPISODE
+         Skeleton only; populated client-side (see FEATURED_RANDOM_JS).
     ============================================================ -->
     <section class="section dc-featured" aria-labelledby="featuredLabel">
-      <div class="featured-label" id="featuredLabel">آخرین اپیزود</div>
-      <a class="featured-card" href="/episodes/episode-157.html" aria-label="آخرین اپیزود: Bio-Restorative Concept in Implant Dentistry :part2">
-        <div class="featured-num"><span class="hash">اپیزود</span> ۱۵۷</div>
-        <div class="featured-title">Bio-Restorative Concept in Implant Dentistry :part2</div>
-        <p class="featured-excerpt">❌❌❌در ادامه‌ی بررسی مقاله‌ی Bio-Restorative Concept در این قسمت وارد بخش‌های عملی‌تر این کانسپت می‌شیم؛ از ارزیابی بافت نرم و سخت اطراف ایمپلنت، تا انتخاب طول، قطر و…</p>
+      <div class="featured-label" id="featuredLabel">اپیزود پیشنهادی</div>
+      <a class="featured-card" id="featured-episode" href="#" data-state="loading" aria-busy="true" aria-label="اپیزود پیشنهادی">
+        <div class="featured-num"><span class="hash">اپیزود</span> <span class="featured-num-val">—</span></div>
+        <div class="featured-title">در حال بارگذاری اپیزود پیشنهادی...</div>
+        <p class="featured-excerpt"></p>
         <div class="featured-meta">
-          <span>29:15</span>
+          <span class="featured-duration"></span>
           <span class="dot"></span>
-          <span>۲۵ اردیبهشت ۱۴۰۵</span>
+          <span class="featured-date"></span>
           <span class="more">ادامه
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
           </span>
@@ -5941,6 +5942,73 @@ body.search-open #page-content{
     });
   }
 
+})();
+</script>
+
+<!-- Recommended episode — weighted-random client-side pick -->
+<script>
+(function(){
+  var card = document.getElementById('featured-episode');
+  if (!card) return;
+
+  fetch('/dentcast.json', { cache: 'no-store' })
+    .then(function(r){ return r.json(); })
+    .then(function(eps){
+      if (!Array.isArray(eps) || eps.length === 0) return;
+
+      var integers = [];
+      var decimals = [];
+      eps.forEach(function(ep){
+        var n = String(ep.episode || '').trim();
+        if (n.indexOf('.') === -1) integers.push(ep);
+        else decimals.push(ep);
+      });
+
+      var pool;
+      var roll = Math.random();
+      if (roll < 0.8 && integers.length > 0) pool = integers;
+      else if (decimals.length > 0) pool = decimals;
+      else pool = integers.length > 0 ? integers : eps;
+
+      var pick = pool[Math.floor(Math.random() * pool.length)];
+      if (!pick) return;
+
+      var tmp = document.createElement('div');
+      tmp.innerHTML = pick.description || '';
+      var text = (tmp.textContent || '').trim();
+      var excerpt = text.length > 170 ? text.slice(0, 170).trim() + '\u2026' : text;
+
+      var title = (pick.title || '').replace(/^\s*[\d.]+\s*[-\u2013]\s*/, '');
+
+      var faDigits = ['\u06f0','\u06f1','\u06f2','\u06f3','\u06f4','\u06f5','\u06f6','\u06f7','\u06f8','\u06f9'];
+      var epNumFa = String(pick.episode).replace(/\d/g, function(d){ return faDigits[+d]; });
+
+      var dateStr = '';
+      if (pick.published) {
+        try {
+          var d = new Date(pick.published);
+          if (!isNaN(d.getTime())) {
+            dateStr = new Intl.DateTimeFormat('fa-IR-u-ca-persian',
+              { year:'numeric', month:'long', day:'numeric' }).format(d);
+          }
+        } catch (e) {}
+      }
+
+      card.href = pick.page_url || '#';
+      var setText = function(sel, val){
+        var el = card.querySelector(sel);
+        if (el != null) el.textContent = val;
+      };
+      setText('.featured-num-val', epNumFa);
+      setText('.featured-title', title);
+      setText('.featured-excerpt', excerpt);
+      setText('.featured-duration', pick.duration || '');
+      setText('.featured-date', dateStr);
+
+      card.setAttribute('data-state', 'ready');
+      card.removeAttribute('aria-busy');
+    })
+    .catch(function(){});
 })();
 </script>
 
