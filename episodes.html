@@ -143,13 +143,16 @@ body.search-open #page-content{
    کارت پلیر اصلی
 ===================================================== */
 .player-card{
-  background:var(--card-bg);
-  border:1px solid var(--card-border);
+  background:rgba(var(--ac-rgb),.04);
+  border:1px solid rgba(var(--ac-rgb),.18);
   border-radius:var(--r-xl);
-  box-shadow:var(--card-sh);
+  box-shadow:var(--card-sh2);
   overflow:hidden;
   margin-bottom:12px;
   transition:all var(--tr2);
+}
+[data-theme="dark"] .player-card{
+  background:rgba(var(--ac-rgb),.06);
 }
 
 .player-card iframe{
