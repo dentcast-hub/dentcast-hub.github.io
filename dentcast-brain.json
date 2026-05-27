@@ -5218,7 +5218,7 @@
     ],
     "page_url": "/litecast/lite-CAST1.html",
     "pillar": {
-      "primary": "patient-education",
+      "primary": null,
       "secondary": [],
       "subtopic": null
     }
@@ -6830,7 +6830,7 @@
     ],
     "url": "/sharehub/share-1.html",
     "pillar": {
-      "primary": "curated",
+      "primary": "implant-pros",
       "secondary": [],
       "subtopic": null
     }
@@ -8002,7 +8002,7 @@
     ],
     "url": "/sharehub/share-5.html",
     "pillar": {
-      "primary": "curated",
+      "primary": "occlusion",
       "secondary": [],
       "subtopic": null
     }
