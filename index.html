@@ -2649,6 +2649,98 @@ a.dc-list-card--pillar {
         <h1 class="dc-identity-main">دنت‌کست — <span class="dc-shimmer-word">جامع‌ترین</span> منبع فارسی پروتز و ایمپلنت مبتنی بر شواهد</h1>
       </div>
 
+      <!-- ===== Homepage stats counters — numbers maintained by tools/update-homepage-counters.py =====
+           CSS/JS copied bit-for-bit from episodes.html (CSS 138–175, JS 5990–6020). -->
+      <style>
+.hero-stats{
+  display:flex; align-items:stretch;
+  padding:34px 0;
+  border-top:1px solid var(--border2);
+  border-bottom:1px solid var(--border2);
+  margin-bottom:24px;
+}
+.hero-stat{
+  flex:1 1 0; position:relative;
+  display:flex; flex-direction:column; align-items:center;
+  text-align:center; padding:0 10px;
+}
+/* brand accent dot above each number */
+.hero-stat::before{
+  content:""; width:5px; height:5px; border-radius:50%;
+  background:rgb(245,162,8); margin-bottom:18px;
+}
+/* thin divider between counters (sits on inline-start edge of items 2 & 3) */
+.hero-stat + .hero-stat::after{
+  content:""; position:absolute; inset-inline-start:0; top:50%;
+  transform:translateY(-50%); width:1px; height:50%;
+  background:var(--txt); opacity:.15;
+}
+.hero-stat .v{
+  font-size:clamp(4rem,10vw,8rem); font-weight:200; line-height:1;
+  color:var(--txt); letter-spacing:-.02em; font-variant-numeric:tabular-nums;
+}
+.hero-stat .k{
+  margin-top:18px; font-size:clamp(.8rem,2.2vw,1rem);
+  font-weight:400; color:var(--txt3); letter-spacing:.3px;
+}
+@media (max-width:560px){
+  .hero-stats{ padding:24px 0; }
+  .hero-stat{ padding:0 4px; }
+  .hero-stat::before{ margin-bottom:10px; }
+  .hero-stat .v{ font-size:clamp(2.3rem,13vw,4rem); }
+  .hero-stat .k{ margin-top:10px; font-size:.72rem; }
+}
+      </style>
+      <div class="hero-stats" role="list" aria-label="آمار دنت‌کست">
+        <div class="hero-stat" role="listitem">
+          <span class="v"><!-- COUNTER:YEARS:START -->۷<!-- COUNTER:YEARS:END --></span>
+          <span class="k">سال فعالیت</span>
+        </div>
+        <div class="hero-stat" role="listitem">
+          <span class="v"><!-- COUNTER:HOURS:START -->۶۹<!-- COUNTER:HOURS:END --></span>
+          <span class="k">ساعت محتوای صوتی</span>
+        </div>
+        <div class="hero-stat" role="listitem">
+          <span class="v"><!-- COUNTER:CONTENT:START -->۳۶۰<!-- COUNTER:CONTENT:END --></span>
+          <span class="k">محتوای آنلاین</span>
+        </div>
+      </div>
+      <script>
+(function(){
+  // ---------- Stat count-up (IntersectionObserver, runs once) ----------
+  var FA = '۰۱۲۳۴۵۶۷۸۹';
+  function toFa(n){
+    return String(n).replace(/[0-9]/g, function(d){ return FA[+d]; });
+  }
+  var statWrap = document.querySelector('.hero-stats');
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (statWrap && !reduce && 'IntersectionObserver' in window){
+    var vals = [].slice.call(statWrap.querySelectorAll('.hero-stat .v'));
+    var targets = vals.map(function(el){
+      return parseInt(el.textContent.replace(/[۰-۹]/g, function(d){ return FA.indexOf(d); }), 10) || 0;
+    });
+    var ran = false;
+    function animate(){
+      if (ran) return; ran = true;
+      var dur = 2000, start = null;
+      function step(ts){
+        if (start === null) start = ts;
+        var p = Math.min((ts - start) / dur, 1);
+        var eased = 1 - Math.pow(1 - p, 3);
+        vals.forEach(function(el, i){ el.textContent = toFa(Math.round(targets[i] * eased)); });
+        if (p < 1) requestAnimationFrame(step);
+        else vals.forEach(function(el, i){ el.textContent = toFa(targets[i]); });
+      }
+      requestAnimationFrame(step);
+    }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if (e.isIntersecting){ animate(); io.disconnect(); } });
+    }, { threshold: 0.4 });
+    io.observe(statWrap);
+  }
+})();
+      </script>
+
       <!-- Radar hero — main tool of the site -->
       <div class="dc-radar-hero radar-shine-card" id="btnOpenRadarMob" role="button" aria-label="رادار دنت‌کست">
         <div class="dc-radar-hero-ico" aria-hidden="true"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="m12 12 7-7"/><path d="M12 12h.01"/></svg></div>
