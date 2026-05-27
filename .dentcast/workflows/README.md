@@ -3,8 +3,8 @@
 ## Hard rules
 
 1. **Brain is the source of truth.** Every content type's structure, required fields, schema, directory, URL pattern, image/audio/video requirements — all of it is inferable from `dentcast-brain.json`. Read it first.
-2. **Categories are isolated.** Never use one category's entry as a template for another. Never append a new entry into the wrong section.
-3. **New entries go to the END** of their category in the brain, because the latest-content widget reads the tail.
+2. **Categories are isolated.** Never use one category's entry as a template for another. Never borrow another type's schema shape.
+3. **New entries go to the absolute END of the flat `dentcast-brain.json` array.** The latest-content widget reads the last 30 entries across all types, so physical tail position is what matters. The brain is a single flat array (no per-type sections) — the new entry becomes the last element of the whole file, regardless of type.
 4. **Auto-discover first, ask second.** Only ask the user for things you cannot infer.
 5. **Don't invent fields.** A new brain entry must have the same keys as previous same-category entries — no more, no less.
 
@@ -100,21 +100,24 @@ Recompute SHA-256 of the template page. Must match step 1. If not, stop and repo
 
 ### 5. Brain entry
 
-Read `dentcast-brain.json`. Locate the LOCKED category's section. Take the most recent entry in that section as the schema template.
+`dentcast-brain.json` is a **single flat array of all entries — there are no per-type sections.** Read it. Find the most recent entry of the LOCKED category and use it as the **schema template**.
 
-Build the new entry with **identical keys, nesting, and ordering** as the previous entry. Fill all fields based on new content + today's date + new URL.
+**Schema templating stays category-locked, even though physical placement does not.** Match the locked category by its `type` field — or, for the core podcast episodes, by the **absence of a `type` field** (the 202 episode entries have no `type` key at all). Don't confuse "where to put it" (end of the whole array) with "what shape to give it" (the most recent same-category entry).
+
+Build the new entry with **identical keys, nesting, and ordering** as the previous same-category entry. Fill all fields based on new content + today's date + new URL.
 
 **Critical constraints:**
 - Do NOT add any field that doesn't exist on the previous same-category entry.
 - Do NOT remove any field that exists on the previous entry — every key must be present.
+- **Episode entries have NO `type` field.** When the user picks "Episode", treat absence of `type` as the category marker. Do NOT invent a `type: "episode"` field — that would break schema parity with the previous 202 episode entries.
 - If the category's schema has a `pillar` field, fill it with the assigned pillar value only. Do NOT add reasoning, notes, justifications, or any extra commentary field. The JSON shape must remain identical to the previous entry.
 
-**Append the new entry at the END of the locked category's section.** This is non-negotiable — the latest-content widget depends on it.
+**Append the new entry at the absolute END of the flat `dentcast-brain.json` array** — it becomes the last element of the whole file, regardless of type. This is non-negotiable — the latest-content widget reads the last 30 entries globally, so physical tail position is what makes the new entry visible.
 
 Re-read the file and confirm:
-- Entry is in the correct category section.
-- It's at the very end of that section.
+- Entry is the **last element of the array**.
 - It has exactly the same set of keys as the previous same-category entry — no extras, no missing.
+- For episode entries: confirm **no `type` field was added**.
 - It's well-formed and contains no stale data from previous entries.
 
 ### 6. Pulse update
@@ -142,7 +145,7 @@ Find the Python script in `tools/` that builds the main index. Run it from the p
 - Template page path + SHA-256 before/after (must match)
 - Media sources gathered (and which were auto-fetched vs asked)
 - Audit table after fixes (all OK)
-- New brain entry (printed as it now exists in the correct category section) — and a confirmation that its key set matches the previous entry exactly
+- New brain entry (printed as it now exists at the end of the flat array) — confirmation that it's the last element, that its key set matches the previous same-category entry exactly, and (for episodes) that no `type` field was added
 - Pulse: which line was removed (the bottom one), and where the new line was inserted (one above the new bottom), with before/after diff
 - Python builder path + full run output
 - Confirmation the new entry appears in the latest-content widget data
