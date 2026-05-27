@@ -86,6 +86,21 @@ def fa_digits(n):
     return str(n).translate(FA_DIGITS_TABLE)
 
 
+def round_to_half(value):
+    """Round to the nearest 0.5 with half-up tie-breaking."""
+    return math.floor(value * 2 + 0.5) / 2
+
+
+def persian_half(value):
+    """Format a round-to-half value as a Persian-digit string. Whole values
+    render without a decimal (۷۰); halves use U+066B ARABIC DECIMAL SEPARATOR
+    (۶۹٫۵)."""
+    rounded = round_to_half(value)
+    whole = int(rounded)
+    s = str(whole) if rounded == whole else str(whole) + ".5"
+    return s.translate(str.maketrans("0123456789", "۰۱۲۳۴۵۶۷۸۹")).replace(".", "٫")
+
+
 def greg_to_jalali(gy, gm, gd):
     """Standard Hijri-Shamsi conversion (same algorithm as v1 JS)."""
     g_d_m = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334]
@@ -1089,6 +1104,7 @@ INLINE_BEHAVIOR_JS = (
     "window.matchMedia('(prefers-reduced-motion: reduce)').matches;\n"
     "  if (statWrap && !reduce && 'IntersectionObserver' in window){\n"
     "    var vals = [].slice.call(statWrap.querySelectorAll('.hero-stat .v'));\n"
+    '    var finals = vals.map(function(el){ return el.textContent; });\n'
     '    var targets = vals.map(function(el){\n'
     "      return parseInt(el.textContent.replace(/[۰-۹]/g, function(d){ return FA.indexOf(d); }), 10) || 0;\n"
     '    });\n'
@@ -1102,7 +1118,7 @@ INLINE_BEHAVIOR_JS = (
     '        var eased = 1 - Math.pow(1 - p, 3);\n'
     '        vals.forEach(function(el, i){ el.textContent = toFa(Math.round(targets[i] * eased)); });\n'
     '        if (p < 1) requestAnimationFrame(step);\n'
-    '        else vals.forEach(function(el, i){ el.textContent = toFa(targets[i]); });\n'
+    '        else vals.forEach(function(el, i){ el.textContent = finals[i]; });\n'
     '      }\n'
     '      requestAnimationFrame(step);\n'
     '    }\n'
@@ -1557,10 +1573,10 @@ def build():
     # Stats
     ep_count = len(episodes_sorted)
     total_sec = sum(duration_to_seconds(e.get("duration", "")) for e in episodes_sorted)
-    hours = math.ceil(total_sec / 3600)
+    hours = persian_half(total_sec / 3600)
     today = datetime.date.today()
     days_active = max(0, (today - PROJECT_START).days)
-    years = math.ceil(days_active / 365.25)
+    years = persian_half(days_active / 365.25)
 
     head = build_head(ep_count)
     body = build_body(ep_count, hours, years, episodes_sorted, brain_by_ep)

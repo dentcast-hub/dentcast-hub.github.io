@@ -2693,11 +2693,11 @@ a.dc-list-card--pillar {
       </style>
       <div class="hero-stats" role="list" aria-label="آمار دنت‌کست">
         <div class="hero-stat" role="listitem">
-          <span class="v"><!-- COUNTER:YEARS:START -->۷<!-- COUNTER:YEARS:END --></span>
+          <span class="v"><!-- COUNTER:YEARS:START -->۶٫۵<!-- COUNTER:YEARS:END --></span>
           <span class="k">سال فعالیت</span>
         </div>
         <div class="hero-stat" role="listitem">
-          <span class="v"><!-- COUNTER:HOURS:START -->۶۹<!-- COUNTER:HOURS:END --></span>
+          <span class="v"><!-- COUNTER:HOURS:START -->۶۹٫۵<!-- COUNTER:HOURS:END --></span>
           <span class="k">ساعت محتوای صوتی</span>
         </div>
         <div class="hero-stat" role="listitem">
@@ -2716,6 +2716,7 @@ a.dc-list-card--pillar {
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (statWrap && !reduce && 'IntersectionObserver' in window){
     var vals = [].slice.call(statWrap.querySelectorAll('.hero-stat .v'));
+    var finals = vals.map(function(el){ return el.textContent; });
     var targets = vals.map(function(el){
       return parseInt(el.textContent.replace(/[۰-۹]/g, function(d){ return FA.indexOf(d); }), 10) || 0;
     });
@@ -2729,7 +2730,7 @@ a.dc-list-card--pillar {
         var eased = 1 - Math.pow(1 - p, 3);
         vals.forEach(function(el, i){ el.textContent = toFa(Math.round(targets[i] * eased)); });
         if (p < 1) requestAnimationFrame(step);
-        else vals.forEach(function(el, i){ el.textContent = toFa(targets[i]); });
+        else vals.forEach(function(el, i){ el.textContent = finals[i]; });
       }
       requestAnimationFrame(step);
     }
