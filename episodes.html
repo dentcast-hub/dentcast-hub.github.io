@@ -206,6 +206,23 @@ body.search-open #page-content{
 .dc-listen .section-head{ display:flex; align-items:baseline; gap:10px; margin-bottom:14px; flex-wrap:wrap; }
 .section-title{ font-size:1.02rem; font-weight:700; color:var(--txt); letter-spacing:-.1px; }
 .section-note{ font-size:.78rem; color:var(--txt3); }
+.listen-badge{
+  display:inline-flex; align-items:center;
+  padding:4px 14px;
+  border:1.5px solid var(--pr);
+  border-radius:999px;
+  color:var(--pr);
+  font-weight:700; font-size:.95rem; line-height:1.4; letter-spacing:.01em;
+  background:transparent;
+  animation:dc-pulse-attention 2.4s ease-in-out infinite;
+}
+@keyframes dc-pulse-attention{
+  0%, 100%{ opacity:1; }
+  50%{ opacity:.55; }
+}
+@media (prefers-reduced-motion: reduce){
+  .listen-badge{ animation:none; }
+}
 
 .player-grid{ display:grid; grid-template-columns:1fr; gap:12px; }
 @media (min-width:640px){ .player-grid{ grid-template-columns:1fr 1fr; gap:14px; } }
@@ -726,8 +743,8 @@ body.search-open #page-content{
     ============================================================ -->
     <section class="section dc-listen" aria-labelledby="listenTitle">
       <div class="section-head">
-        <h2 class="section-title" id="listenTitle">گوش دادن آنلاین</h2>
-        <span class="section-note">دو مسیر موازی — مطابق وضعیت اینترنت‌تان انتخاب کنید</span>
+        <h2 class="section-title" id="listenTitle"><span class="listen-badge">شنیدن همه‌ی اپیزودها</span></h2>
+        <span class="section-note">— مطابق وضعیت اینترنت‌تان انتخاب کنید</span>
       </div>
 
       <div class="player-grid">
