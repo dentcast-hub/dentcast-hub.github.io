@@ -16,6 +16,8 @@ ROOT = Path(__file__).resolve().parent.parent
 INDEX = ROOT / "index.html"
 EPISODES_JSON = ROOT / "dentcast.json"
 BRAIN_JSON = ROOT / "dentcast-brain.json"
+GLOSSARY_JSON = ROOT / "glossary" / "glossary.json"
+LITE_GLOSSARY_JSON = ROOT / "litecast" / "lite-glossary.json"
 
 ACTIVITY_START = date(2019, 9, 1)  # September 2019 / شهریور ۱۳۹۸
 
@@ -70,7 +72,12 @@ def compute_hours():
 
 
 def compute_content():
-    return len(json.loads(BRAIN_JSON.read_text(encoding="utf-8")))
+    """Total online content = brain entries + full glossary + lite glossary.
+    Returns (total, brain_count, glossary_count, lite_count)."""
+    brain_count = len(json.loads(BRAIN_JSON.read_text(encoding="utf-8")))
+    glossary_count = len(json.loads(GLOSSARY_JSON.read_text(encoding="utf-8"))["glossary"])
+    lite_count = len(json.loads(LITE_GLOSSARY_JSON.read_text(encoding="utf-8"))["LightGlossary"])
+    return brain_count + glossary_count + lite_count, brain_count, glossary_count, lite_count
 
 
 def replace_marker(html, name, new_fa):
@@ -92,10 +99,11 @@ def replace_marker(html, name, new_fa):
 def main():
     html = INDEX.read_text(encoding="utf-8")
 
+    content_total, brain_count, glossary_count, lite_count = compute_content()
     values = {
         "YEARS": persian_half(compute_years()),
         "HOURS": persian_half(compute_hours()),
-        "CONTENT": to_fa(compute_content()),
+        "CONTENT": to_fa(content_total),
     }
 
     changes = []
@@ -105,6 +113,10 @@ def main():
 
     INDEX.write_text(html, encoding="utf-8")
     print("Updated homepage counters — " + ", ".join(changes))
+    print(
+        f"  CONTENT breakdown: brain={brain_count} + glossary={glossary_count}"
+        f" + lite={lite_count} = {content_total}"
+    )
 
 
 if __name__ == "__main__":
