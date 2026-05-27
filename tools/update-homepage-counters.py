@@ -34,9 +34,24 @@ def fa_to_int(s):
     return int(digits) if digits else 0
 
 
+def round_to_half(value):
+    """Round to the nearest 0.5 with half-up tie-breaking."""
+    return math.floor(value * 2 + 0.5) / 2
+
+
+def persian_half(value):
+    """Format a round-to-half value as a Persian-digit string. Whole values
+    render without a decimal (۷۰); halves use U+066B ARABIC DECIMAL SEPARATOR
+    (۶۹٫۵)."""
+    rounded = round_to_half(value)
+    whole = int(rounded)
+    s = str(whole) if rounded == whole else str(whole) + ".5"
+    return s.translate(str.maketrans("0123456789", "۰۱۲۳۴۵۶۷۸۹")).replace(".", "٫")
+
+
 def compute_years(today=None):
     today = today or date.today()
-    return round((today - ACTIVITY_START).days / 365.25)
+    return (today - ACTIVITY_START).days / 365.25
 
 
 def compute_hours():
@@ -51,7 +66,7 @@ def compute_hours():
         else:
             h, m, s = 0, 0, 0
         total_seconds += h * 3600 + m * 60 + s
-    return math.floor(total_seconds / 3600)
+    return total_seconds / 3600
 
 
 def compute_content():
@@ -78,14 +93,13 @@ def main():
     html = INDEX.read_text(encoding="utf-8")
 
     values = {
-        "YEARS": compute_years(),
-        "HOURS": compute_hours(),
-        "CONTENT": compute_content(),
+        "YEARS": persian_half(compute_years()),
+        "HOURS": persian_half(compute_hours()),
+        "CONTENT": to_fa(compute_content()),
     }
 
     changes = []
-    for name, value in values.items():
-        new_fa = to_fa(value)
+    for name, new_fa in values.items():
         html, old_fa = replace_marker(html, name, new_fa)
         changes.append(f"{name}: {old_fa or '∅'} → {new_fa}")
 
