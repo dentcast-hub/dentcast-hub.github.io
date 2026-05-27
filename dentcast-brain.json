@@ -9568,5 +9568,41 @@
       "secondary": [],
       "subtopic": null
     }
+  },
+  {
+    "type": "clinical",
+    "id": "clinical-43",
+    "title": "بازسازی VD در بیماری که استاپ خلفی ندارد: وقتی تغییر تماس قدامی، یک سرنخ است، نه یک مشکل",
+    "caption": "وقتی در بیماری بدون استاپ‌های اکلوزال خلفی، VD را بازپس می‌گیریم و تماس دندان‌های قدامی تغییر می‌کند، باید بین دو سناریو تمایز قائل شد. در دندان‌های سایشی، از دست رفتن تماس قابل انتظار است؛ اما در دندان‌های بدون سایش، این تغییر می‌تواند آشکار شدن یک مال‌اکلوژن پنهان (مثل Class II div 1) باشد، نه نتیجهٔ خطای درمانی. این رویکرد به تمایز میان «افزایش VD» و «بازپس‌گیری VD»، طراحی شیب کاسپی و انتخاب الگوی اکلوزال نهایی در بایت فروریخته می‌پردازد.",
+    "hashtags": [
+      "#بازپس_گیری_VD",
+      "#افزایش_VD",
+      "#استاپ_خلفی",
+      "#بایت_فروریخته",
+      "#مال_اکلوژن_پنهان",
+      "#Class_II_div_1",
+      "#شیب_کاسپی",
+      "#تداخل_طرفی",
+      "#اکلوژن",
+      "#بازسازی_فول_ماوث"
+    ],
+    "keywords": [
+      "vertical dimension regain",
+      "posterior occlusal stop loss",
+      "collapsed bite Class II div 1",
+      "hidden malocclusion unmasking VD",
+      "increase versus regain VD",
+      "cusp slope design lateral excursion",
+      "posterior restoration without posterior stop",
+      "full mouth rehabilitation occlusion",
+      "occlusion",
+      "prosthodontics"
+    ],
+    "page_url": "/insight/insight-43.html",
+    "pillar": {
+      "primary": "occlusion",
+      "secondary": ["fixed-pros"],
+      "subtopic": null
+    }
   }
 ]
