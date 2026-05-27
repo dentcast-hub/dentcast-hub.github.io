@@ -19,6 +19,7 @@ Before asking the user anything other than "what type is this":
    - The schema shape (which fields exist, what they mean).
    - Which media fields the type uses: text body, image, audio, video link, external link, transcript, etc.
    - Whether previous entries link to a page file on disk (e.g., `/notecast/episode-33.html`) — if yes, that page is the structural HTML template.
+4. For NoteCast type specifically, the workflow must also touch the matching parent episode page in `/episodes/` to add a related-content link back to the new NoteCast.
 
 ## Phase B — Intake
 
@@ -98,6 +99,24 @@ Resolve today's date in every format the template uses. Audit every meta/OG/Twit
 
 Recompute SHA-256 of the template page. Must match step 1. If not, stop and report.
 
+### 4.5. Update parent episode's related content (NoteCast only)
+
+Only when the locked category is **NoteCast**. Skip entirely for every other type.
+
+After the new NoteCast page is built and verified, locate the parent episode page at `/episodes/episode-XX.html` (same XX as the NoteCast). Open it and find the related-content block.
+
+**If a related-content block exists in the parent episode:**
+- If it already links to `/notecast/episode-XX.html` → leave it alone, just confirm.
+- If it doesn't link to the new NoteCast yet → add the link, matching the exact HTML structure, classes, and labeling used by the same block in the **previous episode's page** (`/episodes/episode-(XX-1).html`). Use the previous episode's NoteCast-related-content markup as the template — only swap the URL and any episode number references.
+
+**If no related-content block exists in the parent episode at all:**
+- Pull the entire block from `/episodes/episode-(XX-1).html` and insert it at the same structural position in `/episodes/episode-XX.html`. Swap URL and number references.
+
+**If the previous episode also has no related-content block:**
+- Stop and ask the user where the block should go and what markup to use. Don't improvise.
+
+Hash the parent episode page before editing and after. Report both. The only diff allowed is the related-content insertion.
+
 ### 5. Brain entry
 
 `dentcast-brain.json` is a **single flat array of all entries — there are no per-type sections.** Read it. Find the most recent entry of the LOCKED category and use it as the **schema template**.
@@ -147,6 +166,7 @@ Find the Python script in `tools/` that builds the main index. Run it from the p
 - Audit table after fixes (all OK)
 - New brain entry (printed as it now exists at the end of the flat array) — confirmation that it's the last element, that its key set matches the previous same-category entry exactly, and (for episodes) that no `type` field was added
 - Pulse: which line was removed (the bottom one), and where the new line was inserted (one above the new bottom), with before/after diff
+- For NoteCast: parent episode page path; whether the related-content block existed already or was created; before/after hash of the parent episode page; diff of the inserted markup
 - Python builder path + full run output
 - Confirmation the new entry appears in the latest-content widget data
 - List of all modified file paths
