@@ -372,13 +372,46 @@ body.search-open #page-content{
 .dc-archive .lhs{ display:flex; flex-direction:column; gap:3px; }
 .dc-archive .count{ font-size:.76rem; color:var(--txt3); font-variant-numeric:tabular-nums; }
 
+/* Sort-order toggle (newest⇄oldest) — navy accent, matches .dc-jump */
+.archive-sort{
+  display:inline-flex; align-items:center; gap:9px;
+  padding:7px 15px 7px 9px; border-radius:var(--r-f);
+  border:1px solid var(--border); background:var(--surface);
+  color:var(--txt2); font:inherit; font-size:.8rem; font-weight:600;
+  line-height:1; cursor:pointer; min-height:38px;
+  transition:color var(--tr), border-color var(--tr), background var(--tr), transform var(--tr);
+  -webkit-tap-highlight-color:transparent;
+}
+.archive-sort:hover{ color:var(--txt); border-color:rgba(var(--pr-rgb),.28); background:var(--surface2); }
+.archive-sort:active{ transform:scale(.97); }
+.archive-sort:focus-visible{ outline:2px solid rgba(var(--pr-rgb),.5); outline-offset:2px; }
+.archive-sort-ico-wrap{
+  display:grid; place-items:center; flex:0 0 auto;
+  width:24px; height:24px; border-radius:50%;
+  background:#022360; box-shadow:0 2px 7px rgba(var(--pr-rgb),.22);
+}
+.archive-sort-ico{ width:14px; height:14px; stroke:#fff; transition:transform var(--tr2); }
+.archive-sort.is-asc .archive-sort-ico{ transform:rotate(180deg); }
+.archive-sort-label{ font-variant-numeric:tabular-nums; white-space:nowrap; }
+
 .episode-list{
   display:flex; flex-direction:column;
   border-top:1px solid var(--border2);
 }
-/* Crawlable but visually clipped: items past INITIAL_CHUNK hidden
-   only when data-collapsed is true. JS removes the attribute on click. */
-.episode-list[data-collapsed="true"] > li:nth-child(n+31){ display:none; }
+/* Anti-flash + no-JS fallback: before JS boots, show only the first batch
+   (newest-first). JS adds .ep-js and then drives visibility via .ep-hidden. */
+.episode-list:not(.ep-js) > li:nth-child(n+11){ display:none; }
+.episode-list > li.ep-hidden{ display:none; }
+/* Tasteful reveal: items fade/slide in as batches are shown */
+.episode-list > li{
+  transition:opacity .42s cubic-bezier(.4,0,.2,1), transform .42s cubic-bezier(.4,0,.2,1);
+}
+.episode-list > li.ep-reveal{ opacity:0; transform:translateY(10px); }
+@media (prefers-reduced-motion: reduce){
+  .episode-list > li{ transition:none; }
+  .episode-list > li.ep-reveal{ opacity:1; transform:none; }
+  .archive-sort, .archive-sort-ico, .ep-more{ transition:none; }
+}
 
 .episode-item{
   display:flex; flex-direction:row;
@@ -473,14 +506,26 @@ body.search-open #page-content{
 .episode-item .ep-chev svg{ width:18px; height:18px; transform:scaleX(-1); }
 .episode-item:hover .ep-chev{ opacity:1; color:var(--ac); transform:translateX(-2px); }
 
-.show-more-wrap{ display:flex; justify-content:center; margin-top:24px; }
-.show-more{
-  padding:11px 26px; border-radius:var(--r-f);
-  border:1px solid var(--border); background:var(--surface);
-  color:var(--txt2); font-size:.85rem; font-weight:600;
-  transition:all var(--tr);
+/* "Next 10" pagination CTA — navy fill on hover, matches .dc-jump */
+.ep-more-wrap{ display:flex; justify-content:center; margin-top:26px; }
+.ep-more{
+  display:inline-flex; align-items:center; gap:10px;
+  padding:12px 24px; border-radius:var(--r-f);
+  border:1px solid rgba(var(--pr-rgb),.22); background:var(--surface);
+  color:var(--pr); font:inherit; font-size:.86rem; font-weight:700;
+  line-height:1; cursor:pointer; min-height:44px;
+  transition:color var(--tr), border-color var(--tr), background var(--tr), transform var(--tr), box-shadow var(--tr);
+  -webkit-tap-highlight-color:transparent;
 }
-.show-more:hover{ color:var(--txt); border-color:rgba(var(--pr-rgb),.22); background:var(--surface2); }
+.ep-more:hover{ background:#022360; border-color:#022360; color:#fff; transform:translateY(-1px); box-shadow:0 6px 18px rgba(var(--pr-rgb),.22); }
+.ep-more:active{ transform:scale(.98); }
+.ep-more:focus-visible{ outline:2px solid rgba(var(--pr-rgb),.5); outline-offset:2px; }
+.ep-more-count{
+  font-size:.72rem; font-weight:600; padding:2px 9px; border-radius:var(--r-f);
+  background:rgba(var(--pr-rgb),.08); color:inherit; opacity:.9;
+  font-variant-numeric:tabular-nums; white-space:nowrap;
+}
+.ep-more:hover .ep-more-count{ background:rgba(255,255,255,.18); }
 
 /* AD CARD */
 .ad-card{
@@ -847,9 +892,15 @@ body.search-open #page-content{
           <h2 class="section-title" id="archiveTitle">آرشیو اپیزودها</h2>
           <span class="count">۲۰۵ اپیزود</span>
         </div>
+        <button id="archiveSortBtn" class="archive-sort" type="button" aria-pressed="false" aria-label="تغییر ترتیب نمایش اپیزودها">
+          <span class="archive-sort-ico-wrap" aria-hidden="true">
+            <svg class="archive-sort-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m6 13 6 6 6-6"/></svg>
+          </span>
+          <span id="archiveSortLabel" class="archive-sort-label">جدیدترین اول</span>
+        </button>
       </div>
 
-      <ol class="episode-list" id="episodeList" data-collapsed="true">
+      <ol class="episode-list" id="episodeList">
         <li>
           <a class="episode-item" href="/episodes/episode-157.html" aria-label="اپیزود ۱۵۷: Bio-Restorative Concept in Implant Dentistry :part2">
             <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
@@ -5893,8 +5944,11 @@ body.search-open #page-content{
           </a>
         </li>
       </ol>
-      <div class="show-more-wrap" id="showMoreWrap">
-        <button id="showMoreBtn" class="show-more" type="button">نمایش بیشتر (۱۷۵ مورد دیگر)</button>
+      <div class="ep-more-wrap" id="archiveMoreWrap">
+        <button id="archiveMoreBtn" class="ep-more" type="button">
+          <span class="ep-more-text" id="archiveMoreText">نمایش ۱۰ مورد بعدی</span>
+          <span class="ep-more-count" id="archiveMoreCount"></span>
+        </button>
       </div>
     </section>
 
@@ -6005,15 +6059,102 @@ body.search-open #page-content{
     if (aFrame){ aFrame.remove(); aFrame = null; }
   });
 
-  // ---------- Show more (reveal hidden archive items) ----------
-  var list = document.getElementById('episodeList');
-  var more = document.getElementById('showMoreBtn');
-  var moreWrap = document.getElementById('showMoreWrap');
-  if (more && list){
-    more.addEventListener('click', function(){
-      list.removeAttribute('data-collapsed');
-      moreWrap.hidden = true;
-    });
+  // ---------- Archive: sort order + 10-at-a-time pagination ----------
+  // Single shared "visible-set" controller. State = current sort order
+  // (newestFirst) + how many items are shown. Both the sort toggle and the
+  // "next 10" button read/write this one source of truth.
+  var archiveList = document.getElementById('episodeList');
+  if (archiveList){
+    var ARCH_BATCH = 10;
+    var archItems  = [].slice.call(archiveList.children); // DOM order = newest→oldest
+    var archTotal  = archItems.length;
+    var sortBtn    = document.getElementById('archiveSortBtn');
+    var sortLabel  = document.getElementById('archiveSortLabel');
+    var moreBtn    = document.getElementById('archiveMoreBtn');
+    var moreWrap   = document.getElementById('archiveMoreWrap');
+    var moreText   = document.getElementById('archiveMoreText');
+    var moreCount  = document.getElementById('archiveMoreCount');
+    var archReduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    var newestFirst = true;                          // default = current DOM order
+    var shown = Math.min(ARCH_BATCH, archTotal);
+
+    // Take over visibility from the CSS anti-flash guard.
+    archiveList.classList.add('ep-js');
+
+    function archFa(n){
+      return String(n).replace(/[0-9]/g, function(d){ return '۰۱۲۳۴۵۶۷۸۹'[+d]; });
+    }
+    // Active order: reverse the captured DOM nodes when oldest-first.
+    function archOrdered(){ return newestFirst ? archItems : archItems.slice().reverse(); }
+
+    // The floating quick-scroll computes stops from page height; nudge it so
+    // its stops stay accurate after the list height changes.
+    function nudgeQuickScroll(){ try { window.dispatchEvent(new Event('resize')); } catch(e){} }
+
+    function archRender(revealFrom, revealTo){
+      var seq = archOrdered();
+      var i, li;
+      // 1) Reorder the DOM <li> nodes to match the active sort.
+      for (i = 0; i < seq.length; i++){ archiveList.appendChild(seq[i]); }
+      // 2) Apply current-page visibility.
+      for (i = 0; i < seq.length; i++){
+        li = seq[i];
+        if (i < shown) li.classList.remove('ep-hidden');
+        else li.classList.add('ep-hidden');
+      }
+      // 3) Animate just the freshly revealed slice (skip if reduced motion).
+      if (!archReduce && typeof revealFrom === 'number'){
+        for (i = revealFrom; i < revealTo && i < seq.length; i++){ seq[i].classList.add('ep-reveal'); }
+        void archiveList.offsetHeight; // commit opacity:0 before releasing
+        requestAnimationFrame(function(){
+          for (var k = revealFrom; k < revealTo && k < seq.length; k++){ seq[k].classList.remove('ep-reveal'); }
+        });
+      }
+      // 4) Update the "next 10" button + dynamic remaining count.
+      var remaining = archTotal - shown;
+      if (remaining > 0){
+        moreWrap.hidden = false;
+        moreBtn.disabled = false;
+        moreText.textContent = 'نمایش ' + archFa(Math.min(ARCH_BATCH, remaining)) + ' مورد بعدی';
+        moreCount.textContent = archFa(remaining) + ' باقی‌مانده';
+      } else {
+        moreWrap.hidden = true;
+      }
+      // 5) Keep the quick-scroll stops accurate.
+      nudgeQuickScroll();
+    }
+
+    function updateSortUi(){
+      if (newestFirst){
+        sortBtn.classList.remove('is-asc');
+        sortBtn.setAttribute('aria-pressed', 'false');
+        sortLabel.textContent = 'جدیدترین اول';
+      } else {
+        sortBtn.classList.add('is-asc');
+        sortBtn.setAttribute('aria-pressed', 'true');
+        sortLabel.textContent = 'قدیمی‌ترین اول';
+      }
+    }
+
+    if (sortBtn){
+      sortBtn.addEventListener('click', function(){
+        newestFirst = !newestFirst;
+        shown = Math.min(ARCH_BATCH, archTotal); // reset pagination to first batch
+        updateSortUi();
+        archRender(0, shown);                    // fade in the new first batch
+      });
+    }
+    if (moreBtn){
+      moreBtn.addEventListener('click', function(){
+        var from = shown;
+        shown = Math.min(shown + ARCH_BATCH, archTotal);
+        archRender(from, shown);
+      });
+    }
+
+    updateSortUi();
+    archRender(); // initial paint: first batch, newest-first, no animation
   }
 
   // ---------- Stat count-up (IntersectionObserver, runs once) ----------
