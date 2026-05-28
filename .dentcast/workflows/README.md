@@ -9,6 +9,7 @@
 5. **Don't invent fields.** A new brain entry must have the same keys as previous same-category entries — no more, no less.
 6. **Pillar is set at entry creation; never re-decided later.** Every entry's `pillar` object is populated when the brain entry is built (step 5). The classification phase (step 5.5) reads that pillar — it does NOT re-classify, re-guess, or overwrite it under any circumstance.
 7. **Structured-pillar list is live, never hardcoded.** Only some pillars are *structured* — meaning `tools/build_pillar.py` generates a topical-index page for them. The structured set grows over time and MUST be read live from `PILLARS` in `tools/build_pillar.py` on every run. Subtopics are meaningful only for structured pillars; non-structured pillars get no subtopic. Do NOT bake pillar slugs, subtopic slugs, or Persian titles into this workflow. A new subtopic is created only on explicit user confirmation; a new pillar is never created in step 5.5.
+8. **`main` is authoritative for taxonomy and builders.** The authoritative source for pillars/subtopics — and for the build scripts in general — is always the `main` branch. Before reading `PILLARS` or running any builder, ensure the working state reflects `main` (run from `main`, or merge `main` into the working branch first). Never trust a feature branch's `tools/build_pillar.py` as the taxonomy source of truth.
 
 ## Phase A — Discover
 
@@ -152,7 +153,7 @@ Read `pillar.primary` from the new brain entry as it was just written in step 5.
 
 #### Step 2 — Determine if that pillar is structured
 
-At runtime, read the live structured-pillar set from `tools/build_pillar.py`'s `PILLARS` dict (and any data file it reads). The structured set is exactly `list(PILLARS.keys())`. Read it live every time — never bake a copy into this workflow — so newly structured pillars are picked up automatically. One-liner:
+At runtime, read the live structured-pillar set from `tools/build_pillar.py`'s `PILLARS` dict (and any data file it reads). The structured set is exactly `list(PILLARS.keys())`. Read it live every time — never bake a copy into this workflow — so newly structured pillars are picked up automatically. **Per Hard Rule 8, read `PILLARS` only from a working state that reflects `main`** (run from `main`, or merge `main` into the working branch first). A feature branch's `tools/build_pillar.py` may be stale and must not be trusted as the taxonomy source. One-liner:
 
 ```bash
 python -c "import sys; sys.path.insert(0,'tools'); from build_pillar import PILLARS; import json; print(json.dumps({k:[s['slug'] for s in v['subtopics']] for k,v in PILLARS.items()}, ensure_ascii=False))"
@@ -207,16 +208,18 @@ Use the sentence + hyperlink word from intake Question 5.
 
 ### 7. Cache-bust the latest-content widget
 
-Find the «آخرین مطالب دنت‌کست» widget. Add cache-busting to its `dentcast-brain.json` fetch (`?v=<today's-date>` or `{ cache: 'no-store' }` — whichever fits the existing code). Confirm the new entry shows up in the widget's resolved data (it should, since it's now the newest of its category and one of the last entries overall).
+The latest-content widget automatically displays the last 30 entries of `dentcast-brain.json`; no logic changes needed. Only do this: find where `dentcast-brain.json` is fetched with a version query string (`?v=<N>`) and increment it (e.g. `?v=5` → `?v=6`) so the cache serves the fresh file. If there's no version param, leave it. Nothing else in this step.
 
 ### 8. Rebuild
 
-Run both builders from the project root, in this order. Capture stdout/stderr for each. If either errors, stop and report the failing command's output verbatim.
+**Per Hard Rule 8, run these builders only from a working state that reflects `main`** (run from `main`, or merge `main` into the working branch first) — a feature branch's builder scripts may be stale.
 
-1. **Main index builder.** Find the Python script in `tools/` that builds the main index (the one referenced by previous publishing runs). Run it. Verify the Pulse changes appear in the generated output.
-2. **Pillar builder — always run `all`.** Run `python tools/build_pillar.py all` (this rebuilds every `/pillar/<slug>/index.html` plus the pillar landing page). Run unconditionally, regardless of whether the new content's pillar is structured or not — the call is cheap, idempotent, and catches cross-pillar effects.
+Run both builders from the project root, in this order. Capture stdout/stderr for both; on error, stop and report verbatim.
 
-If a single tool covers both, note that and run once. After the pillar builder finishes, verify:
+1. **Homepage / main-index builder.** Run `python tools/update-homepage-counters.py`.
+2. **Pillar builder — always run `all`.** Run `python tools/build_pillar.py all` (rebuilds every `/pillar/<slug>/index.html` plus the pillar landing page). Run unconditionally, regardless of whether the new content's pillar is structured or not — the call is cheap, idempotent, and catches cross-pillar effects.
+
+After the pillar builder finishes, verify:
 - **When the entry's pillar is structured:** the new content appears under the correct pillar + subtopic in the regenerated `/pillar/<pillar.primary>/index.html`. Report the section it landed in.
 - **When the entry's pillar is not structured:** confirm explicitly that the entry was **not** forced into any pillar page (it has no structured pillar to belong to, and `pillar.subtopic` is `null`). Note this in the report rather than skipping the check.
 
@@ -231,6 +234,6 @@ If a single tool covers both, note that and run once. After the pillar builder f
 - Pulse: which line was removed (the bottom one), and where the new line was inserted (one above the new bottom), with before/after diff
 - For NoteCast: parent episode page path; whether the related-content block existed already or was created; before/after hash of the parent episode page; diff of the inserted markup
 - Pillar/subtopic classification: the entry's `pillar.primary` (set in step 5, untouched in step 5.5); live structured-pillar set read from `PILLARS` at runtime; whether the pillar is structured or not; resulting `pillar.subtopic` (slug if structured, `null` if not); whether a new subtopic was added to `PILLARS` on this run (and confirmed by the user); confirmation that no new keys were added to the `pillar` object or as siblings, and that the `subtopic` key is present in both cases
-- Builder runs: each command + full stdout/stderr (main index builder and `python tools/build_pillar.py all`); confirmation that the new content appears in the regenerated pillar page when a structured pillar was assigned
+- Builder runs: each command + full stdout/stderr (`python tools/update-homepage-counters.py` and `python tools/build_pillar.py all`); confirmation that the new content appears in the regenerated pillar page when a structured pillar was assigned
 - Confirmation the new entry appears in the latest-content widget data
 - List of all modified file paths
