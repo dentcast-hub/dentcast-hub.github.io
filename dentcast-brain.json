@@ -36,9 +36,9 @@
     "audio_url": "",
     "page_url": "/episodes/episode-2.html",
     "pillar": {
-      "primary": "resin-cements",
+      "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "cementation"
     }
   },
   {
@@ -56,9 +56,9 @@
     "audio_url": "",
     "page_url": "/episodes/episode-3.html",
     "pillar": {
-      "primary": "resin-cements",
+      "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "cementation"
     }
   },
   {
@@ -313,9 +313,9 @@
     "audio_url": "",
     "page_url": "/episodes/episode-15.html",
     "pillar": {
-      "primary": "ceramics",
+      "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": "indications"
+      "subtopic": "preparation"
     }
   },
   {
@@ -418,7 +418,7 @@
     "pillar": {
       "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "impression"
     }
   },
   {
@@ -438,7 +438,7 @@
     "pillar": {
       "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "impression"
     }
   },
   {
@@ -740,9 +740,9 @@
     ],
     "page_url": "/episodes/episode-36.html",
     "pillar": {
-      "primary": "bonding",
+      "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": "advanced"
+      "subtopic": "post-and-core"
     }
   },
   {
@@ -761,9 +761,9 @@
     ],
     "page_url": "/episodes/episode-37.html",
     "pillar": {
-      "primary": "esthetic",
+      "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "preparation"
     }
   },
   {
@@ -782,9 +782,9 @@
     ],
     "page_url": "/episodes/episode-38.html",
     "pillar": {
-      "primary": "esthetic",
+      "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "preparation"
     }
   },
   {
@@ -862,9 +862,9 @@
     ],
     "page_url": "/episodes/episode-42.html",
     "pillar": {
-      "primary": "bonding",
+      "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": "advanced"
+      "subtopic": "post-and-core"
     }
   },
   {
@@ -883,9 +883,9 @@
     ],
     "page_url": "/episodes/episode-43.html",
     "pillar": {
-      "primary": "bonding",
+      "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": "advanced"
+      "subtopic": "post-and-core"
     }
   },
   {
@@ -968,7 +968,7 @@
     "pillar": {
       "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "post-and-core"
     }
   },
   {
@@ -988,7 +988,7 @@
     "pillar": {
       "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "post-and-core"
     }
   },
   {
@@ -1008,7 +1008,7 @@
     "pillar": {
       "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "post-and-core"
     }
   },
   {
@@ -1126,9 +1126,9 @@
     ],
     "page_url": "/episodes/episode-55.html",
     "pillar": {
-      "primary": "ceramics",
+      "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": "indications"
+      "subtopic": "preparation"
     }
   },
   {
@@ -1146,9 +1146,9 @@
     ],
     "page_url": "/episodes/episode-56.html",
     "pillar": {
-      "primary": "ceramics",
+      "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": "indications"
+      "subtopic": "preparation"
     }
   },
   {
@@ -1167,9 +1167,9 @@
     ],
     "page_url": "/episodes/episode-57.html",
     "pillar": {
-      "primary": "ceramics",
+      "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": "indications"
+      "subtopic": "preparation"
     }
   },
   {
@@ -1187,9 +1187,9 @@
     ],
     "page_url": "/episodes/episode-58.html",
     "pillar": {
-      "primary": "ceramics",
+      "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": "indications"
+      "subtopic": "preparation"
     }
   },
   {
@@ -1352,9 +1352,9 @@
     ],
     "page_url": "/episodes/episode-66.html",
     "pillar": {
-      "primary": "bonding",
+      "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": "clinical"
+      "subtopic": "preparation"
     }
   },
   {
@@ -1372,9 +1372,9 @@
     ],
     "page_url": "/episodes/episode-67.html",
     "pillar": {
-      "primary": "bonding",
+      "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": "clinical"
+      "subtopic": "preparation"
     }
   },
   {
@@ -1627,7 +1627,7 @@
     "pillar": {
       "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "post-and-core"
     }
   },
   {
@@ -2100,9 +2100,9 @@
     ],
     "page_url": "/episodes/episode-101.html",
     "pillar": {
-      "primary": "bonding",
+      "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": "clinical"
+      "subtopic": "post-and-core"
     }
   },
   {
@@ -2815,7 +2815,7 @@
     "pillar": {
       "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "crowns-onlays"
     }
   },
   {
@@ -2839,7 +2839,7 @@
     "pillar": {
       "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "crowns-onlays"
     }
   },
   {
@@ -2862,7 +2862,7 @@
     "pillar": {
       "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "crowns-onlays"
     }
   },
   {
@@ -3004,7 +3004,7 @@
     ],
     "page_url": "/episodes/episode-122-6.html",
     "pillar": {
-      "primary": "resin-cements",
+      "primary": "implant-pros",
       "secondary": [],
       "subtopic": null
     }
@@ -3030,7 +3030,7 @@
     "pillar": {
       "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "crowns-onlays"
     }
   },
   {
@@ -3054,7 +3054,7 @@
     "pillar": {
       "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "crowns-onlays"
     }
   },
   {
@@ -3124,9 +3124,9 @@
     ],
     "page_url": "/episodes/episode-123-4.html",
     "pillar": {
-      "primary": "ceramics",
+      "primary": "implant-pros",
       "secondary": [],
-      "subtopic": "indications"
+      "subtopic": null
     }
   },
   {
@@ -3267,9 +3267,9 @@
     ],
     "page_url": "/episodes/episode-125-1.html",
     "pillar": {
-      "primary": "ceramics",
+      "primary": "implant-pros",
       "secondary": [],
-      "subtopic": "indications"
+      "subtopic": null
     }
   },
   {
@@ -3317,7 +3317,7 @@
     "pillar": {
       "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "post-and-core"
     }
   },
   {
@@ -3411,7 +3411,7 @@
     "pillar": {
       "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "post-and-core"
     }
   },
   {
@@ -3435,7 +3435,7 @@
     "pillar": {
       "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "impression"
     }
   },
   {
@@ -3480,9 +3480,9 @@
     ],
     "page_url": "/episodes/episode-129.html",
     "pillar": {
-      "primary": "bonding",
+      "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": "advanced"
+      "subtopic": "post-and-core"
     }
   },
   {
@@ -3693,9 +3693,9 @@
     ],
     "page_url": "/episodes/episode-137.html",
     "pillar": {
-      "primary": "bonding",
+      "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": "strategies"
+      "subtopic": "cementation"
     }
   },
   {
@@ -3715,9 +3715,9 @@
     ],
     "page_url": "/episodes/episode-138.html",
     "pillar": {
-      "primary": "resin-cements",
+      "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "cementation"
     }
   },
   {
@@ -4172,7 +4172,7 @@
     "pillar": {
       "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "post-and-core"
     }
   },
   {
@@ -4242,9 +4242,9 @@
     ],
     "page_url": "/episodes/episode-148.html",
     "pillar": {
-      "primary": "resin-cements",
+      "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "cementation"
     }
   },
   {
@@ -4313,9 +4313,9 @@
     ],
     "page_url": "/episodes/episode-149.html",
     "pillar": {
-      "primary": "resin-cements",
+      "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "cementation"
     }
   },
   {
@@ -4737,9 +4737,9 @@
     ],
     "page_url": "/insight/insight-2.html",
     "pillar": {
-      "primary": "occlusion",
+      "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "crowns-onlays"
     }
   },
   {
@@ -4802,9 +4802,9 @@
     ],
     "page_url": "/insight/insight-4.html",
     "pillar": {
-      "primary": "bonding",
+      "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": "clinical"
+      "subtopic": "post-and-core"
     }
   },
   {
@@ -4835,9 +4835,9 @@
     ],
     "page_url": "/insight/insight-5.html",
     "pillar": {
-      "primary": "ceramics",
+      "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": "indications"
+      "subtopic": "cementation"
     }
   },
   {
@@ -4909,7 +4909,7 @@
     "pillar": {
       "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "failures"
     }
   },
   {
@@ -5140,7 +5140,7 @@
     "pillar": {
       "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "failures"
     }
   },
   {
@@ -5167,7 +5167,7 @@
     "pillar": {
       "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "post-and-core"
     }
   },
   {
@@ -5426,7 +5426,7 @@
     "pillar": {
       "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "failures"
     }
   },
   {
@@ -5570,9 +5570,9 @@
     ],
     "url": "/notecast/episode-2.html",
     "pillar": {
-      "primary": "resin-cements",
+      "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "cementation"
     }
   },
   {
@@ -5603,9 +5603,9 @@
     ],
     "url": "/notecast/episode-3.html",
     "pillar": {
-      "primary": "resin-cements",
+      "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "cementation"
     }
   },
   {
@@ -6195,7 +6195,7 @@
     "pillar": {
       "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "impression"
     }
   },
   {
@@ -6230,7 +6230,7 @@
     "pillar": {
       "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "impression"
     }
   },
   {
@@ -6402,7 +6402,7 @@
     "pillar": {
       "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "crowns-onlays"
     }
   },
   {
@@ -6653,7 +6653,7 @@
     "pillar": {
       "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "failures"
     }
   },
   {
@@ -6691,7 +6691,7 @@
     "pillar": {
       "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "crowns-onlays"
     }
   },
   {
@@ -6995,7 +6995,7 @@
     "pillar": {
       "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "post-and-core"
     }
   },
   {
@@ -7346,7 +7346,7 @@
     "pillar": {
       "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "post-and-core"
     }
   },
   {
@@ -7557,9 +7557,9 @@
     ],
     "page_url": "/insight/insight-21.html",
     "pillar": {
-      "primary": "occlusion",
+      "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "crowns-onlays"
     }
   },
   {
@@ -7596,9 +7596,9 @@
     ],
     "url": "/sharehub/share-4.html",
     "pillar": {
-      "primary": "resin-cements",
+      "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "cementation"
     }
   },
   {
@@ -7908,7 +7908,7 @@
     "pillar": {
       "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "post-and-core"
     }
   },
   {
@@ -7940,7 +7940,7 @@
     "pillar": {
       "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "crowns-onlays"
     }
   },
   {
@@ -8140,7 +8140,7 @@
     "pillar": {
       "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "crowns-onlays"
     }
   },
   {
@@ -8293,9 +8293,9 @@
     ],
     "page_url": "/insight/insight-28.html",
     "pillar": {
-      "primary": "ceramics",
+      "primary": "esthetic",
       "secondary": [],
-      "subtopic": "indications"
+      "subtopic": null
     }
   },
   {
@@ -8438,9 +8438,9 @@
     ],
     "page_url": "/insight/insight-29.html",
     "pillar": {
-      "primary": "resin-cements",
+      "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "cementation"
     }
   },
   {
@@ -8498,7 +8498,7 @@
     "pillar": {
       "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "crowns-onlays"
     }
   },
   {
@@ -8557,7 +8557,7 @@
     "pillar": {
       "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "post-and-core"
     }
   },
   {
@@ -8652,7 +8652,7 @@
     "pillar": {
       "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "post-and-core"
     }
   },
   {
@@ -8714,7 +8714,7 @@
     ],
     "page_url": "/insight/insight-32.html",
     "pillar": {
-      "primary": "ceramics",
+      "primary": "fixed-pros",
       "secondary": [],
       "subtopic": "failures"
     }
@@ -8780,7 +8780,7 @@
     "pillar": {
       "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "failures"
     }
   },
   {
@@ -8908,7 +8908,7 @@
     "pillar": {
       "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "impression"
     }
   },
   {
@@ -9039,7 +9039,7 @@
     "pillar": {
       "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "cementation"
     }
   },
   {
@@ -9130,9 +9130,9 @@
     ],
     "page_url": "/insight/insight-37.html",
     "pillar": {
-      "primary": "ceramics",
+      "primary": "esthetic",
       "secondary": [],
-      "subtopic": "failures"
+      "subtopic": null
     }
   },
   {
@@ -9197,7 +9197,7 @@
     "pillar": {
       "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "failures"
     }
   },
   {
@@ -9259,7 +9259,7 @@
     "pillar": {
       "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "post-and-core"
     }
   },
   {
@@ -9322,7 +9322,7 @@
     "pillar": {
       "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "post-and-core"
     }
   },
   {
@@ -9460,7 +9460,7 @@
     "pillar": {
       "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "failures"
     }
   },
   {
@@ -9568,7 +9568,7 @@
     "pillar": {
       "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "crowns-onlays"
     }
   },
   {
@@ -9602,9 +9602,9 @@
     ],
     "page_url": "/insight/insight-43.html",
     "pillar": {
-      "primary": "occlusion",
+      "primary": "fixed-pros",
       "secondary": ["fixed-pros"],
-      "subtopic": null
+      "subtopic": "crowns-onlays"
     }
   },
   {
