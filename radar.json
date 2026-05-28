@@ -2157,5 +2157,46 @@
     "featured": false,
     "credit": false,
     "iran_server": true
+  },
+  {
+    "id": "com-105",
+    "name": "دیجی‌دنت ایکس (DigiDentX)",
+    "url": "https://digidentx.com",
+    "desc": "شرکت ماد مدیسا مهر سینا، فعال در زمینه عرضه محصولات و تجهیزات دندانپزشکی دیجیتال از سال ۱۳۹۳.",
+    "keywords": [
+      "دیجی دنت ایکس",
+      "DigiDentX",
+      "digidentx",
+      "ماد مدیسا مهر سینا",
+      "تجهیزات دندانپزشکی دیجیتال",
+      "محصولات دندانپزشکی",
+      "Digital Dentistry",
+      "Dental Equipment Iran"
+    ],
+    "priority": 10,
+    "featured": false,
+    "credit": false,
+    "iran_server": true
+  },
+  {
+    "id": "edu-106",
+    "name": "دنتال شاپ (Dental-Shop)",
+    "url": "https://dental-shop.ir/",
+    "desc": "مجموعه آموزشی در حوزه دندانپزشکی دیجیتال برای دندانپزشکان، تکنسین‌های لابراتوار و طراحان دیجیتال؛ شامل آموزش کار با نرم‌افزارها و فناوری‌های مرتبط.",
+    "keywords": [
+      "دنتال شاپ",
+      "dental-shop",
+      "dental shop",
+      "آموزش دندانپزشکی دیجیتال",
+      "آموزش نرم‌افزار دندانپزشکی",
+      "تکنسین لابراتوار",
+      "طراحی دیجیتال دندانپزشکی",
+      "Digital Dentistry Education",
+      "CAD/CAM آموزش"
+    ],
+    "priority": 10,
+    "featured": false,
+    "credit": false,
+    "iran_server": true
   }
 ]
