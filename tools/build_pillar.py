@@ -26,6 +26,7 @@ from __future__ import annotations
 import html
 import json
 import os
+import re
 import sys
 from collections import defaultdict
 from pathlib import Path
@@ -1017,22 +1018,773 @@ def _render_index_page(pillars_info, cards_html):
     return head + body
 
 
+# =====================================================
+# Glossary index builder
+# =====================================================
+# Generates glossary/index.html from glossary/glossary.json.
+# Static markup + hydration JS. Replaces the previous
+# client-side fetch+render model. Source of truth: glossary.json.
+# Per-letter badges use ASCII digits; #countChip uses Persian digits.
+# JSON-LD DefinedTermSet is regenerated alphabetically.
+
+_GLOSSARY_ALPHABET = list("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+
+
+def _glossary_first_letter(title):
+    m = re.search(r"[A-Za-z]", (title or "").strip())
+    return m.group(0).upper() if m else "#"
+
+
+def _glossary_sort_key(entry):
+    return (entry.get("title") or "").lower()
+
+
+def _render_glossary_term(entry):
+    title = entry.get("title") or ""
+    fa = entry.get("fa_title") or ""
+    slug = entry.get("slug") or ""
+    url = entry.get("url") or "#"
+    return (
+        '        <a class="term" href="' + esc(url) + '"'
+        ' data-en="' + esc(title.lower()) + '"'
+        ' data-fa="' + esc(fa.lower()) + '"'
+        ' data-slug="' + esc(slug.lower()) + '">\n'
+        '          <div class="left">\n'
+        '            <div class="en">' + esc(title) + '</div>\n'
+        '            <div class="fa">' + esc(fa) + '</div>\n'
+        '          </div>\n'
+        '          <div class="arrow">›</div>\n'
+        '        </a>\n'
+    )
+
+
+def _render_glossary_section(letter, items):
+    rows = "".join(_render_glossary_term(e) for e in items)
+    return (
+        '      <section id="sec-' + esc(letter) + '">\n'
+        '        <div class="sectionHeader">\n'
+        '          <h2>' + esc(letter) + ' <span class="badge">' + str(len(items)) + '</span></h2><span class="badge">A–Z</span>\n'
+        '        </div>\n'
+        '        <div class="items">\n'
+        + rows +
+        '        </div>\n'
+        '      </section>\n'
+    )
+
+
+def _render_glossary_alpha_nav(enabled):
+    parts = []
+    for L in _GLOSSARY_ALPHABET:
+        if L in enabled:
+            parts.append('        <button type="button" class="alphaBtn">' + L + '</button>\n')
+        else:
+            parts.append(
+                '        <button type="button" class="alphaBtn disabled" aria-disabled="true">'
+                + L + '</button>\n'
+            )
+    return "".join(parts)
+
+
+def _build_glossary_jsonld(terms_sorted):
+    defined_terms = []
+    for e in terms_sorted:
+        url = e.get("url") or ""
+        url_abs = ("https://dentcast.org" + url) if url.startswith("/") else url
+        defined_terms.append({
+            "@type": "DefinedTerm",
+            "@id": url_abs + "#term",
+            "name": e.get("fa_title") or e.get("title") or "",
+            "url": url_abs,
+        })
+    doc = {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "@id": "https://dentcast.org/glossary/#collection",
+        "name": "دانشنامه دنت‌کست",
+        "description": "دانشنامهٔ مفاهیم تصمیم‌ساز در دندان‌پزشکی و پروتز.",
+        "url": "https://dentcast.org/glossary/",
+        "isPartOf": {"@id": "https://dentcast.org/#website"},
+        "about": {"@id": "https://dentcast.org/about.html#person-fouad-shahabian"},
+        "hasPart": {
+            "@type": "DefinedTermSet",
+            "name": "DentCast Glossary Terms",
+            "description": "مجموعه‌ای از مفاهیم تعریف‌شده مرتبط با تصمیم‌گیری پروتزی و دندان‌پزشکی.",
+            "@id": "https://dentcast.org/glossary/#termset",
+            "url": "https://dentcast.org/glossary/",
+            "inLanguage": "fa",
+            "hasDefinedTerm": defined_terms,
+        },
+    }
+    return json.dumps(doc, ensure_ascii=False, indent=2)
+
+
+_GLOSSARY_HEAD_TOP = """<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>دانشنامه | DentCast</title>
+  <meta name="description" content="دانشنامهٔ دنت‌کست: مفاهیم تصمیم‌ساز در دندان‌پزشکی. جستجوی زنده + فهرست الفبایی A–Z." />
+  <link rel="canonical" href="https://dentcast.org/glossary/" />
+  <link rel="alternate" hreflang="fa-IR" href="https://dentcast.ir/glossary/">
+  <link rel="alternate" hreflang="fa" href="https://dentcast.org/glossary/">
+  <link rel="alternate" hreflang="x-default" href="https://dentcast.org/glossary/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="fa_IR">
+  <meta property="og:site_name" content="DentCast">
+  <meta property="og:title" content="دانشنامه | DentCast">
+  <meta property="og:description" content="دانشنامهٔ دنت‌کست: مفاهیم تصمیم‌ساز در دندان‌پزشکی. جستجوی زنده + فهرست الفبایی A–Z.">
+  <meta property="og:url" content="https://dentcast.org/glossary/">
+  <meta property="og:image" content="https://dentcast.org/dentcast-cover.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="دانشنامه | DentCast">
+  <meta name="twitter:description" content="دانشنامهٔ دنت‌کست: مفاهیم تصمیم‌ساز در دندان‌پزشکی. جستجوی زنده + فهرست الفبایی A–Z.">
+  <meta name="twitter:image" content="https://dentcast.org/dentcast-cover.webp">
+  <link rel="icon" href="/logo-v2.png" type="image/png" sizes="512x512">
+  <link rel="apple-touch-icon" href="/logo-v2.png">
+  <meta name="theme-color" content="#F3F5F7">
+
+  <script type="application/ld+json">
+"""
+
+_GLOSSARY_HEAD_AFTER_JSONLD = """</script>
+
+  <script>
+    (function(){
+      const s=localStorage.getItem('dc-theme');
+      const d=window.matchMedia('(prefers-color-scheme:dark)').matches;
+      if(s==='dark'||(s===null&&d)) document.documentElement.setAttribute('data-theme','dark');
+    })();
+  </script>
+
+  <style>
+:root{
+  --pr:#022360; --pr-rgb:2,35,96;
+  --ac:#0b5fff; --ac-rgb:11,95,255;
+  --bg:#f0f2f5;
+  --surface:#ffffff;
+  --surface2:#f4f6fb;
+  --surface3:#eaecf5;
+  --border:rgba(2,35,96,.10);
+  --border2:rgba(2,35,96,.06);
+  --txt:#0a1a33;
+  --txt2:#4a5f85;
+  --txt3:#8a9cbe;
+  --card-bg:#ffffff;
+  --card-border:rgba(2,35,96,.09);
+  --card-sh:0 1px 3px rgba(2,35,96,.07),0 4px 14px rgba(2,35,96,.04);
+  --card-sh2:0 4px 18px rgba(2,35,96,.13),0 1px 4px rgba(2,35,96,.07);
+  --tr:.17s cubic-bezier(.4,0,.2,1);
+  --tr2:.26s cubic-bezier(.4,0,.2,1);
+  --r-sm:10px; --r-md:14px; --r-lg:18px; --r-xl:22px; --r-f:999px;
+}
+[data-theme="dark"]{
+  --pr:#5b9cf6; --pr-rgb:91,156,246;
+  --ac:#5b9cf6; --ac-rgb:91,156,246;
+  --bg:#0e1621;
+  --surface:#17212b; --surface2:#1e2c3a; --surface3:#232e3c;
+  --border:rgba(255,255,255,.08); --border2:rgba(255,255,255,.04);
+  --txt:#e8f0ff; --txt2:#8aaac8; --txt3:#4a6a88;
+  --card-bg:#1e2c3a; --card-border:rgba(255,255,255,.07);
+  --card-sh:0 1px 3px rgba(0,0,0,.22),0 4px 14px rgba(0,0,0,.14);
+  --card-sh2:0 4px 18px rgba(0,0,0,.28);
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+html{height:100%;width:100%;}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+  font-size:16px; line-height:1.5;
+  background:var(--bg); color:var(--txt);
+  min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+  touch-action:pan-y;
+  transition:background var(--tr2),color var(--tr2);
+}
+a{color:inherit;text-decoration:none;}
+
+.page{
+  max-width:680px;
+  margin:0 auto;
+  padding:0 14px 60px;
+}
+
+/* ── STICKY TOP ── */
+.top{
+  position:sticky; top:0; z-index:20;
+  padding:12px 0 10px;
+  background:var(--surface);
+  border-bottom:1px solid var(--border);
+  box-shadow:0 2px 10px rgba(var(--pr-rgb),.06);
+  transition:background var(--tr2),border-color var(--tr2);
+}
+
+.nav-back{ margin-bottom:8px; }
+.back-link{
+  display:inline-flex; align-items:center; gap:4px;
+  font-size:.78rem; font-weight:600;
+  color:var(--txt3);
+  transition:color var(--tr);
+}
+.back-link::before{ content:"← "; }
+.back-link:hover{ color:var(--ac); }
+
+.hero{ display:flex; flex-direction:column; gap:6px; margin-bottom:10px; }
+
+.title{
+  font-size:1.1rem; font-weight:900;
+  color:var(--pr);
+  display:flex; gap:8px; align-items:center;
+  transition:color var(--tr2);
+}
+.title .dot{
+  width:9px; height:9px; border-radius:var(--r-f);
+  background:var(--ac);
+  box-shadow:0 0 0 4px rgba(var(--ac-rgb),.15);
+  flex-shrink:0;
+}
+.subtitle{
+  color:var(--txt3); font-size:.80rem; line-height:1.6;
+  transition:color var(--tr2);
+}
+
+/* سرچ */
+.searchWrap{
+  background:var(--surface2);
+  border:1px solid var(--border);
+  border-radius:var(--r-lg);
+  padding:8px 10px;
+  display:flex; gap:10px; align-items:center;
+  transition:all var(--tr2);
+}
+.searchWrap:focus-within{
+  border-color:rgba(var(--ac-rgb),.35);
+  box-shadow:0 0 0 3px rgba(var(--ac-rgb),.08);
+}
+.searchIcon{
+  width:34px; height:34px;
+  border-radius:var(--r-md);
+  background:rgba(var(--ac-rgb),.08);
+  border:1px solid rgba(var(--ac-rgb),.18);
+  display:grid; place-items:center;
+  flex-shrink:0; color:var(--ac);
+  font-weight:900; font-size:16px;
+  transition:all var(--tr2);
+}
+#search{
+  width:100%; border:0; outline:0;
+  background:transparent; color:var(--txt);
+  font-size:14px; font-family:inherit;
+  padding:6px 4px;
+}
+#search::placeholder{ color:var(--txt3); }
+
+.metaRow{
+  display:flex; justify-content:space-between;
+  align-items:center; gap:10px;
+  margin-top:8px; font-size:.76rem;
+}
+.chip{
+  padding:5px 10px; border-radius:var(--r-f);
+  border:1px solid var(--border);
+  background:var(--surface2);
+  font-size:.72rem; color:var(--txt3);
+  user-select:none; white-space:nowrap;
+  transition:all var(--tr2);
+}
+
+/* alpha nav */
+.alphaNav{
+  margin-top:8px;
+  display:flex; gap:6px;
+  overflow-x:auto; overflow-y:hidden;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
+  padding:4px 2px 2px;
+}
+.alphaNav::-webkit-scrollbar{ display:none; }
+
+.alphaBtn{
+  flex:0 0 auto; min-width:32px; height:32px;
+  border-radius:var(--r-sm);
+  border:1px solid var(--border);
+  background:var(--surface2);
+  display:grid; place-items:center;
+  font-weight:700; font-size:.80rem;
+  color:var(--txt2); cursor:pointer;
+  user-select:none;
+  transition:all var(--tr);
+}
+.alphaBtn:active{ transform:scale(.95); }
+.alphaBtn.disabled{ opacity:.3; cursor:default; }
+.alphaBtn.active{
+  background:rgba(var(--ac-rgb),.12);
+  border-color:rgba(var(--ac-rgb),.30);
+  color:var(--ac);
+}
+
+/* ── LIST WRAP ── */
+.listWrap{
+  margin-top:12px;
+  background:var(--card-bg);
+  border:1px solid var(--card-border);
+  border-radius:var(--r-xl);
+  overflow:hidden;
+  box-shadow:var(--card-sh);
+  transition:all var(--tr2);
+}
+
+.sectionHeader{
+  display:flex; justify-content:space-between;
+  align-items:center; gap:10px;
+  padding:10px 14px;
+  background:var(--surface2);
+  border-bottom:1px solid var(--border2);
+  transition:background var(--tr2);
+}
+.sectionHeader h2{
+  margin:0; font-size:.82rem; font-weight:800;
+  color:var(--txt2); letter-spacing:.04em;
+  display:flex; align-items:center; gap:8px;
+  transition:color var(--tr2);
+}
+.sectionHeader .badge{
+  font-size:.68rem; color:var(--txt3);
+  border:1px solid var(--border);
+  background:var(--surface);
+  padding:3px 8px; border-radius:var(--r-f);
+  transition:all var(--tr2);
+}
+
+.items{ padding:8px 6px 10px; }
+
+.term{
+  display:flex; justify-content:space-between;
+  align-items:center; gap:10px;
+  padding:10px 12px; margin:4px 4px;
+  border-radius:var(--r-md);
+  background:var(--surface2);
+  border:1px solid var(--border2);
+  transition:all var(--tr);
+  -webkit-tap-highlight-color:transparent;
+}
+.term:hover{
+  background:var(--surface3);
+  border-color:var(--border);
+  transform:translateX(-2px);
+}
+.term:active{ transform:scale(.99); }
+
+.term .left{
+  display:flex; flex-direction:column;
+  gap:2px; min-width:0;
+}
+.en{
+  font-weight:700; font-size:.88rem; color:var(--txt);
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  transition:color var(--tr2);
+}
+.fa{
+  color:var(--txt3); font-size:.78rem;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  transition:color var(--tr2);
+}
+.arrow{
+  width:30px; height:30px; border-radius:var(--r-sm);
+  display:grid; place-items:center;
+  background:rgba(var(--ac-rgb),.08);
+  border:1px solid rgba(var(--ac-rgb),.18);
+  color:var(--ac); flex-shrink:0;
+  font-weight:900; font-size:16px;
+  transition:all var(--tr2);
+}
+
+.empty{
+  padding:24px 16px; color:var(--txt3);
+  font-size:.86rem; line-height:1.9; text-align:center;
+}
+
+section[id^="sec-"]{ scroll-margin-top:160px; }
+@media(max-width:640px){
+  section[id^="sec-"]{ scroll-margin-top:120px; }
+}
+
+/* فوتر */
+.footer{
+  margin-top:16px; padding:14px 6px 0;
+  color:var(--txt3); font-size:.76rem;
+  display:flex; justify-content:space-between;
+  align-items:center; gap:12px; flex-wrap:wrap;
+  transition:color var(--tr2);
+}
+.footer a{
+  color:var(--txt3);
+  border-bottom:1px dotted var(--border);
+  transition:color var(--tr);
+}
+.footer a:hover{ color:var(--ac); }
+
+@media(max-width:640px){
+  .footer{
+    margin-top:24px; padding:18px 12px 28px;
+    flex-direction:column; justify-content:center;
+    align-items:center; gap:10px;
+    text-align:center; border-top:1px solid var(--border);
+  }
+  .footer a{
+    display:inline-block; padding:6px 14px;
+    border-radius:var(--r-f);
+    background:var(--surface2); border:1px solid var(--border);
+  }
+}
+
+/* تم تاگل */
+#dc-theme-toggle{
+  position:fixed; bottom:20px; left:14px; z-index:250;
+  width:42px; height:42px; border-radius:var(--r-f);
+  background:#17212b; color:#e8f0ff;
+  border:1px solid rgba(255,255,255,.12);
+  box-shadow:0 4px 16px rgba(0,0,0,.28);
+  display:flex; align-items:center; justify-content:center;
+  font-size:19px; cursor:pointer;
+  transition:all var(--tr);
+}
+#dc-theme-toggle:active{ transform:scale(.86); }
+  </style>
+    <link rel="stylesheet" href="/dc-theme.css">
+<link rel="stylesheet" href="/dc-nav.css">
+  <link rel="stylesheet" href="/global-search.css?v=1">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "دنت‌کست", "item": "https://dentcast.org/" },
+    { "@type": "ListItem", "position": 2, "name": "Glossary", "item": "https://dentcast.org/glossary/" }
+  ]
+}
+  </script>
+</head>
+
+<body>
+<!-- DC NAV: TOP BAR -->
+<header class="dc-topbar">
+  <div class="dc-topbar-actions">
+    <a href="/" aria-label="صفحه اصلی دنت‌کست" style="display:flex;align-items:center;margin-left:8px;flex-shrink:0;"><img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;"></a>
+    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="ابزارها" aria-expanded="false"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
+    <button class="dc-topbar-btn dcOpenSearch" aria-label="جستجو"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+  </div>
+  <div class="dc-topbar-brand">
+    <div class="dc-topbar-brand-name">DentCast</div>
+    <a href="/about.html" class="dc-topbar-brand-sub">دکتر فواد شهابیان</a>
+  </div>
+</header>
+<div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">
+  <div class="dc-toolbar-drawer-inner">
+    <span class="dc-toolbar-drawer-label">ابزارها</span>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M10 18h4"/><path d="M12 7v6"/><path d="m9.5 10.5 2.5 2.5 2.5-2.5"/></svg></span><span class="dc-drawer-tool-txt">نصب</span></button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-consult"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span class="dc-drawer-tool-txt">مشاوره</span></button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-about"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M12 3l1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></svg></span><span class="dc-drawer-tool-txt">درباره</span></button>
+  </div>
+</div>
+<div id="dcRadarOverlay" class="radar-overlay" aria-hidden="true">
+  <div class="radar-overlay-header">
+    <button id="dcCloseRadarOverlay" class="radar-close-btn">&times;</button>
+    <div class="radar-header-title">رادار دنت‌کست (جایگزین گوگل)</div>
+  </div>
+  <div class="radar-overlay-body">
+    <div class="radar-search-box">
+      <input type="text" id="dcRadarInput" placeholder="نام سایت، زمینه فعالیت یا کلمه کلیدی..." autocomplete="off">
+    </div>
+    <div id="dcRadarResults" class="radar-results">
+      <div class="radar-initial-msg">برای جستجو در بین سایت‌های دندانپزشکی، تایپ کنید...</div>
+    </div>
+  </div>
+</div>
+
+  <main class="page">
+
+    <div class="top">
+      <div class="hero">
+        <div class="nav-back">
+          <a href="/index.html" class="back-link">بازگشت به صفحهٔ اصلی دنت‌کست</a>
+        </div>
+        <h1 class="title"><span class="dot"></span>دانشنامهٔ دنت‌کست</h1>
+        <div class="subtitle">مفاهیم کلیدی دندانپزشکی</div>
+      </div>
+
+      <div class="searchWrap">
+        <div class="searchIcon"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></div>
+        <input id="search" type="search" placeholder="جستجو: ..." autocomplete="off" />
+      </div>
+
+      <div class="metaRow">
+"""
+
+_GLOSSARY_BETWEEN_CHIP_AND_ALPHANAV = """        <div class="chip" id="hintChip">برای پرش، حروف A–Z رو بزن</div>
+      </div>
+
+      <div class="alphaNav" id="alphaNav" aria-label="Alphabet navigation">
+"""
+
+_GLOSSARY_BETWEEN_ALPHANAV_AND_LISTWRAP = """      </div>
+    </div>
+
+    <div class="listWrap" id="listWrap">
+"""
+
+_GLOSSARY_EMPTY_STATE = (
+    '      <div class="empty" id="emptyState" hidden>موردی پیدا نشد. '
+    '<br>املا رو چک کنید یا عبارت کوتاه‌تری بزنید.</div>\n'
+)
+
+_GLOSSARY_AFTER_LISTWRAP = """    </div>
+
+  </main>
+
+  <footer class="footer dc-site-footer">
+    <div>© 2025 DentCast</div>
+    <div><a href="/about.html">دربارهٔ دکتر فؤاد شهابیان</a></div>
+  </footer>
+
+  <button id="dc-theme-toggle" aria-label="تغییر تم"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M20.5 14.2A8.2 8.2 0 0 1 9.8 3.5 8.8 8.8 0 1 0 20.5 14.2z"/></svg></button>
+
+  <!-- Theme toggle behavior moved to /dc-nav.js (single source) -->
+"""
+
+_GLOSSARY_HYDRATION_SCRIPT = """  <script>
+    const elListWrap = document.getElementById("listWrap");
+    const elSearch = document.getElementById("search");
+    const elCountChip = document.getElementById("countChip");
+    const elAlphaNav = document.getElementById("alphaNav");
+    const elEmpty = document.getElementById("emptyState");
+
+    const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+
+    function normalize(str){
+      return (str || "").toString().trim().toLowerCase().replace(/\\s+/g, " ");
+    }
+
+    function debounce(fn, wait){
+      let t;
+      return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), wait); };
+    }
+
+    function faDigits(n){
+      return String(n).replace(/\\d/g, d => "۰۱۲۳۴۵۶۷۸۹"[d]);
+    }
+
+    const allSections = Array.from(elListWrap.querySelectorAll('section[id^="sec-"]'));
+    const TOTAL = elListWrap.querySelectorAll(".term").length;
+    const sectionInfo = allSections.map(sec => ({
+      el: sec,
+      letter: sec.id.replace(/^sec-/, ""),
+      terms: Array.from(sec.querySelectorAll(".term")),
+      badge: sec.querySelector(".sectionHeader h2 .badge"),
+      initialCount: sec.querySelectorAll(".term").length,
+    }));
+
+    function applyFilter(q){
+      const enabled = new Set();
+      let visible = 0;
+      if (!q){
+        sectionInfo.forEach(s => {
+          s.el.hidden = false;
+          s.terms.forEach(t => { t.hidden = false; });
+          if (s.badge) s.badge.textContent = String(s.initialCount);
+          if (ALPHABET.includes(s.letter)) enabled.add(s.letter);
+        });
+        visible = TOTAL;
+        elEmpty.hidden = true;
+      } else {
+        sectionInfo.forEach(s => {
+          let n = 0;
+          s.terms.forEach(t => {
+            const hit = (t.dataset.en || "").includes(q)
+                     || (t.dataset.fa || "").includes(q)
+                     || (t.dataset.slug || "").includes(q);
+            t.hidden = !hit;
+            if (hit) n++;
+          });
+          s.el.hidden = (n === 0);
+          if (s.badge) s.badge.textContent = String(n);
+          if (n > 0 && ALPHABET.includes(s.letter)) enabled.add(s.letter);
+          visible += n;
+        });
+        elEmpty.hidden = (visible > 0);
+      }
+      elCountChip.textContent = faDigits(visible) + " عنوان";
+      elAlphaNav.querySelectorAll(".alphaBtn").forEach(btn => {
+        const on = enabled.has(btn.textContent);
+        btn.classList.toggle("disabled", !on);
+        if (on) btn.removeAttribute("aria-disabled");
+        else    btn.setAttribute("aria-disabled", "true");
+      });
+    }
+
+    elAlphaNav.querySelectorAll(".alphaBtn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        if (btn.classList.contains("disabled")) return;
+        const target = document.getElementById("sec-" + btn.textContent);
+        if (!target) return;
+        const topBar = document.querySelector(".top");
+        const offset = topBar ? topBar.offsetHeight + 8 : 0;
+        const y = target.getBoundingClientRect().top + window.pageYOffset - offset;
+        window.scrollTo({ top: y, behavior: "smooth" });
+        elAlphaNav.querySelectorAll(".alphaBtn").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        setTimeout(() => btn.classList.remove("active"), 1200);
+      });
+    });
+
+    elSearch.addEventListener("input", debounce(() => applyFilter(normalize(elSearch.value)), 120));
+
+    (function enableGlobalHorizontalSwipeForAlphaNav(){
+      const nav = document.getElementById("alphaNav");
+      const wrap = document.getElementById("listWrap");
+      const search = document.getElementById("search");
+      if (!nav || !wrap) return;
+      let startX=0, startY=0, startScrollLeft=0, swiping=false, moved=false, suppressClickUntil=0;
+      const THRESHOLD=10, SPEED=1.0;
+      document.addEventListener("click", (e) => {
+        if (Date.now() < suppressClickUntil){ e.preventDefault(); e.stopPropagation(); }
+      }, true);
+      function isInsideSearch(e){ return e.target === search || (search && search.contains(e.target)); }
+      function onStart(e){
+        if (!e.touches || e.touches.length !== 1) return;
+        if (isInsideSearch(e)) return;
+        const t = e.touches[0];
+        startX=t.clientX; startY=t.clientY;
+        startScrollLeft=nav.scrollLeft; swiping=false; moved=false;
+      }
+      function onMove(e){
+        if (!e.touches || e.touches.length !== 1) return;
+        if (isInsideSearch(e)) return;
+        const t=e.touches[0];
+        const dx=t.clientX-startX, dy=t.clientY-startY;
+        if (!swiping){
+          if (Math.abs(dy)>Math.abs(dx) && Math.abs(dy)>THRESHOLD) return;
+          if (Math.abs(dx)>Math.abs(dy) && Math.abs(dx)>THRESHOLD){ swiping=true; } else { return; }
+        }
+        moved=true;
+        e.preventDefault();
+        nav.scrollLeft=startScrollLeft-(dx*SPEED);
+      }
+      function onEnd(){
+        if (moved){ suppressClickUntil=Date.now()+350; }
+        swiping=false; moved=false;
+      }
+      wrap.addEventListener("touchstart", onStart, {passive:true});
+      wrap.addEventListener("touchmove", onMove, {passive:false});
+      wrap.addEventListener("touchend", onEnd, {passive:true});
+      wrap.addEventListener("touchcancel", onEnd, {passive:true});
+      document.addEventListener("touchstart", onStart, {passive:true});
+      document.addEventListener("touchmove", onMove, {passive:false});
+      document.addEventListener("touchend", onEnd, {passive:true});
+      document.addEventListener("touchcancel", onEnd, {passive:true});
+    })();
+  </script>
+"""
+
+_GLOSSARY_TAIL = """<div class="dc-global-filter-box" id="dcGlobalBox">
+  <button class="dc-close-results"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+  <h3 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h3>
+  <input id="dcSearch" class="dc-search-input" placeholder="جستجو در همهٔ بخش‌های دنت‌کست…">
+  <div class="dc-filter-list">
+    <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
+    <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
+    <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
+    <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
+    <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
+    <button class="dc-filter-btn active" data-type="meta">metanote</button>
+    <button class="dc-filter-btn active" data-type="chairside">chairside</button>
+    <button class="dc-filter-btn active" data-type="sharehub">Share Hub</button>
+  </div>
+  <div class="dc-results-box" id="dcResults"></div>
+</div>
+<script src="/global-search.js?v=5" defer></script>
+<script src="/dc-nav.js" defer></script>
+</body>
+</html>
+"""
+
+
+def _render_glossary_page(*, jsonld_body, count_chip_text, alpha_nav_html, sections_html):
+    count_chip_html = '        <div class="chip" id="countChip">' + count_chip_text + '</div>\n'
+    return (
+        _GLOSSARY_HEAD_TOP
+        + jsonld_body + '\n'
+        + _GLOSSARY_HEAD_AFTER_JSONLD
+        + count_chip_html
+        + _GLOSSARY_BETWEEN_CHIP_AND_ALPHANAV
+        + alpha_nav_html
+        + _GLOSSARY_BETWEEN_ALPHANAV_AND_LISTWRAP
+        + sections_html
+        + _GLOSSARY_EMPTY_STATE
+        + _GLOSSARY_AFTER_LISTWRAP
+        + _GLOSSARY_HYDRATION_SCRIPT
+        + _GLOSSARY_TAIL
+    )
+
+
+def build_glossary():
+    gloss_doc = json.loads(GLOSS_PATH.read_text(encoding="utf-8"))
+    items = gloss_doc.get("glossary", [])
+    sorted_items = sorted(items, key=_glossary_sort_key)
+
+    groups = defaultdict(list)
+    for e in sorted_items:
+        groups[_glossary_first_letter(e.get("title"))].append(e)
+
+    ordered_keys = [L for L in _GLOSSARY_ALPHABET if L in groups] + sorted(
+        k for k in groups.keys() if k not in _GLOSSARY_ALPHABET
+    )
+    enabled_letters = {k for k in groups.keys() if k in _GLOSSARY_ALPHABET}
+
+    sections_html = "".join(_render_glossary_section(L, groups[L]) for L in ordered_keys)
+    alpha_nav_html = _render_glossary_alpha_nav(enabled_letters)
+    total = sum(len(v) for v in groups.values())
+    count_chip_text = fa_digits(total) + " عنوان"
+    jsonld_body = _build_glossary_jsonld(sorted_items)
+
+    page = _render_glossary_page(
+        jsonld_body=jsonld_body,
+        count_chip_text=count_chip_text,
+        alpha_nav_html=alpha_nav_html,
+        sections_html=sections_html,
+    )
+
+    out_path = ROOT / "glossary" / "index.html"
+    out_path.write_text(page, encoding="utf-8")
+
+    print("Built " + str(out_path.relative_to(ROOT)))
+    print("Total terms: " + str(total))
+    for L in ordered_keys:
+        print("  " + L + " " + str(len(groups[L])))
+    return out_path
+
+
 if __name__ == "__main__":
     args = sys.argv[1:]
     if not args:
         print("Usage: python build_pillar.py <target>", file=sys.stderr)
-        print("Targets: " + ", ".join(list(PILLARS.keys()) + ["index", "all"]), file=sys.stderr)
+        print("Targets: " + ", ".join(list(PILLARS.keys()) + ["index", "glossary", "all"]), file=sys.stderr)
         sys.exit(1)
     target = args[0]
     if target == "index":
         build_index()
+    elif target == "glossary":
+        build_glossary()
     elif target == "all":
         for slug in PILLARS.keys():
             build_pillar(slug)
         build_index()
+        build_glossary()
     elif target in PILLARS:
         build_pillar(target)
     else:
         print("Unknown target: " + target, file=sys.stderr)
-        print("Targets: " + ", ".join(list(PILLARS.keys()) + ["index", "all"]), file=sys.stderr)
+        print("Targets: " + ", ".join(list(PILLARS.keys()) + ["index", "glossary", "all"]), file=sys.stderr)
         sys.exit(1)

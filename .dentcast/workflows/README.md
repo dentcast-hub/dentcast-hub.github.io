@@ -217,7 +217,7 @@ The latest-content widget automatically displays the last 30 entries of `dentcas
 Run both builders from the project root, in this order. Capture stdout/stderr for both; on error, stop and report verbatim.
 
 1. **Homepage / main-index builder.** Run `python tools/update-homepage-counters.py`.
-2. **Pillar builder — always run `all`.** Run `python tools/build_pillar.py all` (rebuilds every `/pillar/<slug>/index.html` plus the pillar landing page). Run unconditionally, regardless of whether the new content's pillar is structured or not — the call is cheap, idempotent, and catches cross-pillar effects.
+2. **Pillar builder — always run `all`.** Run `python tools/build_pillar.py all` (rebuilds every `/pillar/<slug>/index.html`, the pillar landing page, AND `/glossary/index.html`). Run unconditionally, regardless of whether the new content's pillar is structured or not — the call is cheap, idempotent, and catches cross-pillar effects. The `glossary` target is part of `all`; if you ever touch `glossary/glossary.json` directly (adding/editing a term, fixing a URL, etc.) you MUST re-run at minimum `python tools/build_pillar.py glossary` — the page is no longer client-rendered, so a JSON edit alone will not surface on the live page until the build runs. Never hand-edit `/glossary/index.html`; it is generated. Other build targets: `python tools/build_pillar.py <pillar-slug>` (single pillar), `python tools/build_pillar.py index` (pillar landing only), `python tools/build_pillar.py glossary` (glossary only).
 
 After the pillar builder finishes, verify:
 - **When the entry's pillar is structured:** the new content appears under the correct pillar + subtopic in the regenerated `/pillar/<pillar.primary>/index.html`. Report the section it landed in.
