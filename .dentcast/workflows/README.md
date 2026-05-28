@@ -95,9 +95,9 @@ Clone the previous same-category page exactly — identical HTML tree, CSS class
 
 If the category has no on-disk page (data-only), skip this and go to step 4.
 
-### 2.5. Inject the "محتوای مرتبط" capsule section (site-wide nav)
+### 2.5. Inject the "کاوش بیشتر" capsule section (site-wide nav)
 
-After the new page is cloned and field values are swapped (step 2), inject the site-wide "محتوای مرتبط" block on the **new** page. This is separate from step 4.5, which mutates a different page (the parent episode) and uses the per-episode `ep-*` classes; this step always uses the site-wide `dc-related-*` classes defined in `dc-theme.css`.
+After the new page is cloned and field values are swapped (step 2), inject the site-wide "کاوش بیشتر" block on the **new** page. This is separate from step 4.5, which mutates a different page (the parent episode) and uses the per-episode `ep-*` classes; this step always uses the site-wide `dc-related-*` classes defined in `dc-theme.css`.
 
 **Conditional — based on the locked category from Phase B Question 1:**
 
@@ -113,7 +113,7 @@ The conditional is binary skip-or-include, decided by where the locked category 
 
 ```html
 <div class="dc-related-section">
-  <h2 class="dc-related-label">محتوای مرتبط</h2>
+  <h2 class="dc-related-label">کاوش بیشتر</h2>
   <div class="dc-related-capsules">
     <a href="/glossary/" class="dc-related-capsule">دانشنامه</a>
     <a href="/pillar/" class="dc-related-capsule">فهرست موضوعی</a>
@@ -123,7 +123,7 @@ The conditional is binary skip-or-include, decided by where the locked category 
 
 For glossary term pages, omit the first `<a>` (the دانشنامه capsule) — they ARE the glossary.
 
-**Placement on the new page:** at the bottom of the main content area — after the body content and before any next/prev navigation or footer. If the cloned template already has a "محتوای مرتبط" section (rare for non-episode types — most don't), insert the capsules **into that existing section** alongside whatever's already there, rather than creating a duplicate. Never remove anything pre-existing in that section.
+**Placement on the new page:** at the bottom of the main content area — after the body content and before any next/prev navigation or footer. If the cloned template already has a "کاوش بیشتر" section (rare for non-episode types — most don't), insert the capsules **into that existing section** alongside whatever's already there, rather than creating a duplicate. Never remove anything pre-existing in that section.
 
 **Why this is step 2.5 and not later:** the capsule injection mutates the new page itself, so it belongs adjacent to step 2 (the clone-and-swap) and before step 3 (the date audit then sees the final page state including the section).
 
@@ -268,7 +268,7 @@ After the pillar builder finishes, verify:
 - Template page path + SHA-256 before/after (must match)
 - Media sources gathered (and which were auto-fetched vs asked)
 - Audit table after fixes (all OK)
-- "محتوای مرتبط" capsule injection (step 2.5): which branch fired (typed-brain → 2 capsules / glossary → 1 capsule / core episode → skipped); the exact `<div class="dc-related-section">…</div>` block inserted (or "skipped"); confirmation that `dc-related-*` classes were used (not `ep-*`) and that no other diff was introduced beyond step 2's swaps
+- "کاوش بیشتر" capsule injection (step 2.5): which branch fired (typed-brain → 2 capsules / glossary → 1 capsule / core episode → skipped); the exact `<div class="dc-related-section">…</div>` block inserted (or "skipped"); confirmation that `dc-related-*` classes were used (not `ep-*`) and that no other diff was introduced beyond step 2's swaps
 - New brain entry (printed as it now exists at the end of the flat array) — confirmation that it's the last element, that its key set matches the previous same-category entry exactly, and (for episodes) that no `type` field was added
 - Pulse: which line was removed (the bottom one), and where the new line was inserted (one above the new bottom), with before/after diff
 - For NoteCast: parent episode page path; whether the related-content block existed already or was created; before/after hash of the parent episode page; diff of the inserted markup
