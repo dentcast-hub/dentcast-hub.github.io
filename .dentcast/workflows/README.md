@@ -7,7 +7,8 @@
 3. **New entries go to the absolute END of the flat `dentcast-brain.json` array.** The latest-content widget reads the last 30 entries across all types, so physical tail position is what matters. The brain is a single flat array (no per-type sections) — the new entry becomes the last element of the whole file, regardless of type.
 4. **Auto-discover first, ask second.** Only ask the user for things you cannot infer.
 5. **Don't invent fields.** A new brain entry must have the same keys as previous same-category entries — no more, no less.
-6. **Taxonomy is live, never hardcoded.** Pillars and subtopics can grow over time. The workflow re-reads the current taxonomy at runtime from the authoritative source (`tools/build_pillar.py`'s `PILLARS` dict) plus the distinct `pillar.primary` values already present in `dentcast-brain.json`. Do NOT bake pillar slugs, subtopic slugs, or Persian titles into this workflow. New pillars and new subtopics are created ONLY on explicit user instruction — silent invention is forbidden.
+6. **Pillar is set at entry creation; never re-decided later.** Every entry's `pillar` object is populated when the brain entry is built (step 5). The classification phase (step 5.5) reads that pillar — it does NOT re-classify, re-guess, or overwrite it under any circumstance.
+7. **Structured-pillar list is live, never hardcoded.** Only some pillars are *structured* — meaning `tools/build_pillar.py` generates a topical-index page for them. The structured set grows over time and MUST be read live from `PILLARS` in `tools/build_pillar.py` on every run. Subtopics are meaningful only for structured pillars; non-structured pillars get no subtopic. Do NOT bake pillar slugs, subtopic slugs, or Persian titles into this workflow. A new subtopic is created only on explicit user confirmation; a new pillar is never created in step 5.5.
 
 ## Phase A — Discover
 
@@ -21,7 +22,7 @@ Before asking the user anything other than "what type is this":
    - Which media fields the type uses: text body, image, audio, video link, external link, transcript, etc.
    - Whether previous entries link to a page file on disk (e.g., `/notecast/episode-33.html`) — if yes, that page is the structural HTML template.
 4. For NoteCast type specifically, the workflow must also touch the matching parent episode page in `/episodes/` to add a related-content link back to the new NoteCast.
-5. Read the **live pillar/subtopic taxonomy** at runtime — never from memory and never from a list written into this workflow. Authoritative source: the `PILLARS` dict in `tools/build_pillar.py` (structured pillars with subtopic slugs) **plus** the union of distinct `pillar.primary` values present in `dentcast-brain.json` (loose pillars without a subtopic structure). Both must be re-derived on every run so that newly added pillars and subtopics are picked up automatically. A practical way to read the structured taxonomy live: `python -c "import sys; sys.path.insert(0,'tools'); from build_pillar import PILLARS; import json; print(json.dumps({k:[s['slug'] for s in v['subtopics']] for k,v in PILLARS.items()}, ensure_ascii=False))"`.
+5. Read the **live structured-pillar set** at runtime — never from memory and never from a list written into this workflow. Authoritative source: the `PILLARS` dict in `tools/build_pillar.py`. Its keys are the slugs of the pillars that get a built topical-index page, and `PILLARS[slug]['subtopics']` is the live subtopic list for each. Re-derive on every run so newly structured pillars are picked up automatically. A practical one-liner: `python -c "import sys; sys.path.insert(0,'tools'); from build_pillar import PILLARS; import json; print(json.dumps({k:[s['slug'] for s in v['subtopics']] for k,v in PILLARS.items()}, ensure_ascii=False))"`. The entry's pillar itself (`pillar.primary`) is set during brain-entry creation, not in the classification phase.
 
 ## Phase B — Intake
 
@@ -125,7 +126,7 @@ Hash the parent episode page before editing and after. Report both. The only dif
 
 **Schema templating stays category-locked, even though physical placement does not.** Match the locked category by its `type` field — or, for the core podcast episodes, by the **absence of a `type` field** (the 202 episode entries have no `type` key at all). Don't confuse "where to put it" (end of the whole array) with "what shape to give it" (the most recent same-category entry).
 
-Build the new entry with **identical keys, nesting, and ordering** as the previous same-category entry. Fill all fields based on new content + today's date + new URL — **except `pillar.primary` and `pillar.subtopic`**, which are deliberately left for step 5.5 (those require live taxonomy lookup + user choice and must not be guessed here).
+Build the new entry with **identical keys, nesting, and ordering** as the previous same-category entry. Fill all fields based on new content + today's date + new URL — including the entire `pillar` object: `pillar.primary` (the assigned pillar slug), `pillar.secondary` (matches previous entries' shape — usually `[]`), and `pillar.subtopic` initialized to `null`. The `subtopic` key is **always present** under `pillar` (that is the brain's convention — never omit it). If the entry's pillar turns out to be structured, step 5.5 may overwrite `pillar.subtopic` with a real slug; if not, it stays `null`.
 
 **Critical constraints:**
 - Do NOT add any field that doesn't exist on the previous same-category entry.
@@ -143,60 +144,56 @@ Re-read the file and confirm:
 
 ### 5.5. Pillar & subtopic classification (dynamic)
 
-The brain entry is now complete except for `pillar.primary` and `pillar.subtopic`. Fill them in via the procedure below. **Re-derive the taxonomy at runtime every time — never use a list cached in memory or written into this workflow.**
+The brain entry's `pillar` object is already written (step 5). The pillar is **not** re-decided here. The only thing this phase may change is `pillar.subtopic`, and only when the pillar is structured.
 
-#### Step 1 — Load current taxonomy fresh
+#### Step 1 — Read the existing pillar (do not change it)
 
-At execution time, build the live taxonomy by combining two sources:
+Read `pillar.primary` from the new brain entry as it was just written in step 5. Treat it as authoritative. **Do NOT re-classify, re-guess, or overwrite it under any circumstance**, including if it looks wrong — that is a separate concern handled outside this workflow.
 
-1. **Structured pillars** — the `PILLARS` dict in `tools/build_pillar.py`. Read it live, e.g.:
-   ```bash
-   python -c "import sys; sys.path.insert(0,'tools'); from build_pillar import PILLARS; import json; print(json.dumps({k:[s['slug'] for s in v['subtopics']] for k,v in PILLARS.items()}, ensure_ascii=False))"
-   ```
-   Each key is a pillar slug; each value is the live list of subtopic slugs for that pillar. The Persian title for a pillar slug is `PILLARS[slug]['title_fa']`; for a subtopic, `PILLARS[slug]['subtopics'][i]['title_fa']`.
-2. **Loose pillars** — the set of distinct `pillar.primary` values present in `dentcast-brain.json` that are **not** keys of `PILLARS`. These are real pillars that have entries assigned to them but no structured subtopic taxonomy yet. They are valid choices for new content; their subtopic will be `null`.
+#### Step 2 — Determine if that pillar is structured
 
-The live taxonomy for this run is the **union** of (1) and (2). Never bake it into the workflow.
+At runtime, read the live structured-pillar set from `tools/build_pillar.py`'s `PILLARS` dict (and any data file it reads). The structured set is exactly `list(PILLARS.keys())`. Read it live every time — never bake a copy into this workflow — so newly structured pillars are picked up automatically. One-liner:
 
-#### Step 2 — Determine the pillar
+```bash
+python -c "import sys; sys.path.insert(0,'tools'); from build_pillar import PILLARS; import json; print(json.dumps({k:[s['slug'] for s in v['subtopics']] for k,v in PILLARS.items()}, ensure_ascii=False))"
+```
 
-- Analyze the new content's topic/text.
-- Compare against the live pillar list built in Step 1.
-- If it fits exactly one pillar → propose that pillar and ask the user to confirm.
-- If it plausibly fits more than one → present the candidate pillars (mix of structured and loose) and ask the user to pick.
-- If it fits none → tell the user «با هیچ پیلار موجودی نمی‌خوره» and ask how to proceed: assign to closest existing pillar, leave unclassified (`pillar.primary: null`), or name a new pillar. **Never invent a new pillar silently.** If the user names a new pillar, ask whether it should be added to `PILLARS` (structured, with subtopics) or used loosely (no subtopic structure).
+Compare the entry's `pillar.primary` against this live structured list:
 
-#### Step 3 — Present subtopic options for the chosen pillar
+- **Pillar IS structured** (`pillar.primary in PILLARS`) → go to Step 3.
+- **Pillar is NOT structured** → skip subtopic entirely. The brain convention is: the `subtopic` key remains present under `pillar` with value `null` (which is already how step 5 initialized it). Do NOT remove the key, do NOT invent a value, do NOT add a new key. Tell the user:
+  > پیلار «[X]» فعلاً جزو پیلارهای ساختاریافته نیست — ساب‌تاپیک خالی موند، بعداً دستی اضافه‌ش کن.
+  Then proceed to the rebuild step. Classification is done.
 
-Once the pillar is settled, look up that pillar's current subtopics from the live taxonomy:
+#### Step 3 — Present subtopic options (structured pillars only)
 
-- **If the chosen pillar is structured** (a key of `PILLARS`): list its subtopics from `PILLARS[slug]['subtopics']` as a numbered choice menu, e.g.:
+Look up the chosen pillar's current subtopics from the live taxonomy: `PILLARS[pillar.primary]['subtopics']`. Each is `{"slug": ..., "title_fa": ..., ...}`. Present them as a numbered choice list, using the live `title_fa` values (never hardcoded):
 
-  > پیلار: [chosen pillar — `title_fa` from `PILLARS`]
-  > ساب‌تاپیک‌های موجود این پیلار:
-  > 1. [subtopic A — `title_fa`]
-  > 2. [subtopic B — `title_fa`]
-  > 3. [subtopic C — `title_fa`]
-  > 4. پیشنهاد یه ساب‌تاپیک جدید (اگه هیچ‌کدوم نمی‌خوره)
-  >
-  > کدوم؟
+> پیلار: «[PILLARS[primary]['title_fa']]»
+> ساب‌تاپیک‌های موجود این پیلار:
+> 1. [subtopics[0]['title_fa']]
+> 2. [subtopics[1]['title_fa']]
+> 3. [subtopics[2]['title_fa']]
+> …
+> N. پیشنهاد یه ساب‌تاپیک جدید
+>
+> کدوم؟
 
-  The user picks a number. If an existing subtopic → use its slug exactly as stored in `PILLARS`. If "new" → propose a new subtopic slug + `title_fa` written in the same style as that pillar's existing subtopics, flag it clearly as NEW, and ask the user to confirm or edit the wording before adding it.
+#### Step 4 — Resolve the choice
 
-- **If the chosen pillar is loose** (in the brain but not in `PILLARS`): there is no subtopic taxonomy. Set `pillar.subtopic` to `null` and tell the user: «این پیلار هنوز ساب‌تاپیک ساختاریافته نداره؛ subtopic = null می‌مونه. اگه می‌خوای، می‌تونیم همین الان به `PILLARS` اضافه‌اش کنیم با ساب‌تاپیک‌های دل‌خواه.»
+- **User picks an existing subtopic** → use its slug **exactly** as stored in `PILLARS[primary]['subtopics'][i]['slug']`. Same spelling, spacing, format — no normalization, no re-casing.
+- **User picks "new"** → propose a new subtopic name (slug + `title_fa`) written in the same style and convention as that pillar's existing subtopics (look at the slugs already there — kebab-case English, short noun phrases — and match). Clearly flag it as **NEW**. Ask the user to confirm the wording or edit it. **Do not finalize a new subtopic without explicit confirmation.** Once confirmed, add it to `PILLARS[primary]['subtopics']` in `tools/build_pillar.py` (copy the shape of an existing sibling subtopic exactly — do not improvise the schema) before writing the brain entry.
 
-#### Step 4 — Confirm before writing
+#### Step 5 — Write
 
-Do NOT write `pillar.primary` or `pillar.subtopic` into the brain entry until the user has explicitly chosen/confirmed both. After confirmation, write them using the **exact existing field names and formatting** in the brain (`pillar.primary` string, `pillar.subtopic` string-or-null, `pillar.secondary` empty array unless previous same-category entries populate it). **Do not add any extra key to the `pillar` object or any sibling key like `pillar_reasoning`** — keep the entry's key set identical to the previous same-category entry's.
-
-If the user agreed to create a new structured pillar or a new subtopic in Step 2/3, edit `tools/build_pillar.py` to add the new entry to `PILLARS` (and, for a new pillar, all the surrounding metadata that existing `PILLARS` entries have — copy a sibling entry and adapt, do not improvise the schema). Confirm the new slug is now visible in the live taxonomy before the brain write happens.
+Write the confirmed subtopic slug into the brain entry's `pillar.subtopic` field, overwriting the `null` placeholder set in step 5. Use the **exact existing field name** — `pillar.subtopic` — and the **exact slug** chosen, with no extra keys added to the `pillar` object and no sibling keys (no `pillar_reasoning`, no `subtopic_reasoning`, no notes). The rest of the entry stays untouched.
 
 #### Verify after write
 
 Re-read the brain entry and confirm:
-- `pillar.primary` matches what the user chose (a key of the live taxonomy union).
-- `pillar.subtopic` is either a valid subtopic slug for that pillar in the live taxonomy, or `null` if the pillar is loose.
-- The entry's key set is **unchanged** from before this step — no new top-level keys, no new keys under `pillar`.
+- `pillar.primary` is **identical** to its value before this phase (untouched).
+- `pillar.subtopic` is either a valid subtopic slug for `pillar.primary` in the live `PILLARS` taxonomy (when the pillar is structured), or `null` (when the pillar is not structured) — and the `subtopic` key is present in both cases.
+- The entry's key set is **unchanged** from end-of-step-5 — no new top-level keys, no new keys under `pillar`.
 
 ### 6. Pulse update
 
@@ -217,9 +214,11 @@ Find the «آخرین مطالب دنت‌کست» widget. Add cache-busting to 
 Run both builders from the project root, in this order. Capture stdout/stderr for each. If either errors, stop and report the failing command's output verbatim.
 
 1. **Main index builder.** Find the Python script in `tools/` that builds the main index (the one referenced by previous publishing runs). Run it. Verify the Pulse changes appear in the generated output.
-2. **Pillar builder — always run `all`.** Run `python tools/build_pillar.py all` (this rebuilds every `/pillar/<slug>/index.html` plus the pillar landing page). Run unconditionally, regardless of whether the new content was assigned a structured or loose pillar — the call is cheap, idempotent, and catches cross-pillar effects.
+2. **Pillar builder — always run `all`.** Run `python tools/build_pillar.py all` (this rebuilds every `/pillar/<slug>/index.html` plus the pillar landing page). Run unconditionally, regardless of whether the new content's pillar is structured or not — the call is cheap, idempotent, and catches cross-pillar effects.
 
-If a single tool covers both, note that and run once. After the pillar builder finishes, confirm the new content appears under the correct pillar/subtopic in the regenerated `/pillar/<slug>/index.html` (only meaningful when a structured pillar was assigned; for loose pillars there is no per-pillar page to verify against — say so explicitly in the report).
+If a single tool covers both, note that and run once. After the pillar builder finishes, verify:
+- **When the entry's pillar is structured:** the new content appears under the correct pillar + subtopic in the regenerated `/pillar/<pillar.primary>/index.html`. Report the section it landed in.
+- **When the entry's pillar is not structured:** confirm explicitly that the entry was **not** forced into any pillar page (it has no structured pillar to belong to, and `pillar.subtopic` is `null`). Note this in the report rather than skipping the check.
 
 ## Final output summary
 
@@ -231,7 +230,7 @@ If a single tool covers both, note that and run once. After the pillar builder f
 - New brain entry (printed as it now exists at the end of the flat array) — confirmation that it's the last element, that its key set matches the previous same-category entry exactly, and (for episodes) that no `type` field was added
 - Pulse: which line was removed (the bottom one), and where the new line was inserted (one above the new bottom), with before/after diff
 - For NoteCast: parent episode page path; whether the related-content block existed already or was created; before/after hash of the parent episode page; diff of the inserted markup
-- Pillar/subtopic classification: live taxonomy snapshot used (structured pillars from `PILLARS` + loose pillars from brain), chosen pillar (and whether structured or loose), chosen subtopic (or `null`), whether any new pillar or subtopic was added on this run (and to which file), confirmation that no new keys were added to the `pillar` object or as siblings
+- Pillar/subtopic classification: the entry's `pillar.primary` (set in step 5, untouched in step 5.5); live structured-pillar set read from `PILLARS` at runtime; whether the pillar is structured or not; resulting `pillar.subtopic` (slug if structured, `null` if not); whether a new subtopic was added to `PILLARS` on this run (and confirmed by the user); confirmation that no new keys were added to the `pillar` object or as siblings, and that the `subtopic` key is present in both cases
 - Builder runs: each command + full stdout/stderr (main index builder and `python tools/build_pillar.py all`); confirmation that the new content appears in the regenerated pillar page when a structured pillar was assigned
 - Confirmation the new entry appears in the latest-content widget data
 - List of all modified file paths
