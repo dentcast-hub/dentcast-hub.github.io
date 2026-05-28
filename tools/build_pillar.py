@@ -442,7 +442,10 @@ def render_page(slug, cfg, intro_html, cards_html, flat_ordered):
         '  <style>\n'
         '    /* Optional intro paragraph at the top of a subtopic card body.\n'
         '       Rendered only when a subtopic defines a non-empty intro_fa\n'
-        '       in PILLARS. Calm muted block, RTL accent on the right. */\n'
+        '       in PILLARS. Calm muted block, RTL accent on the right.\n'
+        '       Default palette (used by bonding) matches the pillar-index\n'
+        '       default teal; per-pillar overrides below stay scoped via\n'
+        '       [data-pillar="..."] on <body>. */\n'
         '    .pillar-subtopic-intro {\n'
         '      margin: 0 0 16px 0;\n'
         '      padding: 12px 16px;\n'
@@ -458,6 +461,15 @@ def render_page(slug, cfg, intro_html, cards_html, flat_ordered):
         '      border-right-color: rgba(74, 154, 171, 0.45);\n'
         '      color: var(--text, #ddd);\n'
         '    }\n'
+        '    /* ceramics — turquoise: #1ca5a5 light / #3dd6c4 dark */\n'
+        '    [data-pillar="ceramics"] .pillar-subtopic-intro {\n'
+        '      background: rgba(28, 165, 165, 0.07);\n'
+        '      border-right-color: rgba(28, 165, 165, 0.40);\n'
+        '    }\n'
+        '    [data-theme="dark"] [data-pillar="ceramics"] .pillar-subtopic-intro {\n'
+        '      background: rgba(61, 214, 196, 0.10);\n'
+        '      border-right-color: rgba(61, 214, 196, 0.45);\n'
+        '    }\n'
         '  </style>\n'
         '\n'
         "  <!-- Theme init verbatim from metanotes/index.html -->\n"
@@ -472,7 +484,7 @@ def render_page(slug, cfg, intro_html, cards_html, flat_ordered):
     )
 
     body = (
-        '<body>\n'
+        '<body data-pillar="' + esc(slug) + '">\n'
         '\n'
         '<header class="dc-topbar">\n'
         '  <div class="dc-topbar-actions">\n'
@@ -713,6 +725,25 @@ INDEX_INLINE_STYLE = (
     "  .pillar-card-row { padding: 12px 12px; }\n"
     "  .pillar-card-name { font-size: .92rem; }\n"
     "}\n"
+    "\n"
+    "/* Per-pillar accent — ceramics uses turquoise in place of the\n"
+    "   default teal. Same mechanism, same places as the default above;\n"
+    "   selectors are scoped to [data-pillar=\"ceramics\"] so bonding\n"
+    "   keeps the default.\n"
+    "     light primary turquoise: #1ca5a5\n"
+    "     dark primary turquoise:  #3dd6c4 */\n"
+    ".pillar-card-row[data-pillar=\"ceramics\"] { border-color: rgba(28,165,165,.25); }\n"
+    ".pillar-card-row[data-pillar=\"ceramics\"]:hover { border-color: rgba(28,165,165,.35); }\n"
+    ".pillar-card-row[data-pillar=\"ceramics\"] .pillar-card-icon { color: #1ca5a5; }\n"
+    ".pillar-card-row[data-pillar=\"ceramics\"] .pillar-card-name { color: #1ca5a5; }\n"
+    ".pillar-card-row[data-pillar=\"ceramics\"] .subtopic-chip { background: rgba(28,165,165,.10); color: #1ca5a5; }\n"
+    ".pillar-card-row[data-pillar=\"ceramics\"] .pillar-card-arrow { background: rgba(28,165,165,.10); border-color: rgba(28,165,165,.25); color: #1ca5a5; }\n"
+    "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"ceramics\"] { border-color: rgba(61,214,196,.30); }\n"
+    "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"ceramics\"]:hover { border-color: rgba(61,214,196,.45); }\n"
+    "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"ceramics\"] .pillar-card-icon { color: #3dd6c4; }\n"
+    "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"ceramics\"] .pillar-card-name { color: #3dd6c4; }\n"
+    "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"ceramics\"] .subtopic-chip { background: rgba(61,214,196,.18); color: #3dd6c4; }\n"
+    "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"ceramics\"] .pillar-card-arrow { background: rgba(61,214,196,.15); border-color: rgba(61,214,196,.35); color: #3dd6c4; }\n"
     "\n"
     "/* Per-pillar accent — fixed-pros uses warm brown in place of teal.\n"
     "   Same mechanism, same places as the default teal above; selectors\n"

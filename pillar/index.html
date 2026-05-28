@@ -153,6 +153,25 @@ body:has(.dc-topbar) .pillar-intro { background: transparent; border: 0; box-sha
   .pillar-card-name { font-size: .92rem; }
 }
 
+/* Per-pillar accent — ceramics uses turquoise in place of the
+   default teal. Same mechanism, same places as the default above;
+   selectors are scoped to [data-pillar="ceramics"] so bonding
+   keeps the default.
+     light primary turquoise: #1ca5a5
+     dark primary turquoise:  #3dd6c4 */
+.pillar-card-row[data-pillar="ceramics"] { border-color: rgba(28,165,165,.25); }
+.pillar-card-row[data-pillar="ceramics"]:hover { border-color: rgba(28,165,165,.35); }
+.pillar-card-row[data-pillar="ceramics"] .pillar-card-icon { color: #1ca5a5; }
+.pillar-card-row[data-pillar="ceramics"] .pillar-card-name { color: #1ca5a5; }
+.pillar-card-row[data-pillar="ceramics"] .subtopic-chip { background: rgba(28,165,165,.10); color: #1ca5a5; }
+.pillar-card-row[data-pillar="ceramics"] .pillar-card-arrow { background: rgba(28,165,165,.10); border-color: rgba(28,165,165,.25); color: #1ca5a5; }
+[data-theme="dark"] .pillar-card-row[data-pillar="ceramics"] { border-color: rgba(61,214,196,.30); }
+[data-theme="dark"] .pillar-card-row[data-pillar="ceramics"]:hover { border-color: rgba(61,214,196,.45); }
+[data-theme="dark"] .pillar-card-row[data-pillar="ceramics"] .pillar-card-icon { color: #3dd6c4; }
+[data-theme="dark"] .pillar-card-row[data-pillar="ceramics"] .pillar-card-name { color: #3dd6c4; }
+[data-theme="dark"] .pillar-card-row[data-pillar="ceramics"] .subtopic-chip { background: rgba(61,214,196,.18); color: #3dd6c4; }
+[data-theme="dark"] .pillar-card-row[data-pillar="ceramics"] .pillar-card-arrow { background: rgba(61,214,196,.15); border-color: rgba(61,214,196,.35); color: #3dd6c4; }
+
 /* Per-pillar accent — fixed-pros uses warm brown in place of teal.
    Same mechanism, same places as the default teal above; selectors
    are scoped to [data-pillar="fixed-pros"] so other cards stay teal.

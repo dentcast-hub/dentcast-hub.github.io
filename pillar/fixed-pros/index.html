@@ -571,7 +571,10 @@
   <style>
     /* Optional intro paragraph at the top of a subtopic card body.
        Rendered only when a subtopic defines a non-empty intro_fa
-       in PILLARS. Calm muted block, RTL accent on the right. */
+       in PILLARS. Calm muted block, RTL accent on the right.
+       Default palette (used by bonding) matches the pillar-index
+       default teal; per-pillar overrides below stay scoped via
+       [data-pillar="..."] on <body>. */
     .pillar-subtopic-intro {
       margin: 0 0 16px 0;
       padding: 12px 16px;
@@ -587,6 +590,15 @@
       border-right-color: rgba(74, 154, 171, 0.45);
       color: var(--text, #ddd);
     }
+    /* ceramics — turquoise: #1ca5a5 light / #3dd6c4 dark */
+    [data-pillar="ceramics"] .pillar-subtopic-intro {
+      background: rgba(28, 165, 165, 0.07);
+      border-right-color: rgba(28, 165, 165, 0.40);
+    }
+    [data-theme="dark"] [data-pillar="ceramics"] .pillar-subtopic-intro {
+      background: rgba(61, 214, 196, 0.10);
+      border-right-color: rgba(61, 214, 196, 0.45);
+    }
   </style>
 
   <!-- Theme init verbatim from metanotes/index.html -->
@@ -598,7 +610,7 @@
     })();
   </script>
 </head>
-<body>
+<body data-pillar="fixed-pros">
 
 <header class="dc-topbar">
   <div class="dc-topbar-actions">
