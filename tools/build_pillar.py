@@ -1592,7 +1592,7 @@ _GLOSSARY_HYDRATION_SCRIPT = """  <script>
       if (!q){
         sectionInfo.forEach(s => {
           s.el.hidden = false;
-          s.terms.forEach(t => { t.hidden = false; });
+          s.terms.forEach(t => { t.style.display = ""; });
           if (s.badge) s.badge.textContent = String(s.initialCount);
           if (ALPHABET.includes(s.letter)) enabled.add(s.letter);
         });
@@ -1605,7 +1605,7 @@ _GLOSSARY_HYDRATION_SCRIPT = """  <script>
             const hit = (t.dataset.en || "").includes(q)
                      || (t.dataset.fa || "").includes(q)
                      || (t.dataset.slug || "").includes(q);
-            t.hidden = !hit;
+            t.style.display = hit ? "" : "none";
             if (hit) n++;
           });
           s.el.hidden = (n === 0);
