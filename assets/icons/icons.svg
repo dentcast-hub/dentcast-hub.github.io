@@ -538,4 +538,9 @@
     <path d="m16.24 7.76-2.12 6.36-6.36 2.12 2.12-6.36 6.36-2.12z"/>
   </symbol>
 
+  <symbol id="icon-crown" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7z"/>
+    <path d="M5 21h14"/>
+  </symbol>
+
 </svg>

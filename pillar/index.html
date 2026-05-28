@@ -43,7 +43,7 @@
       },
       "mainEntity": {
         "@type": "ItemList",
-        "numberOfItems": 2,
+        "numberOfItems": 3,
         "itemListElement": [
           {
             "@type": "ListItem",
@@ -58,6 +58,13 @@
             "name": "سرامیک",
             "url": "https://dentcast.org/pillar/ceramics/",
             "description": "از شیمی ماده تا انتخاب بالینی"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "پروتز ثابت",
+            "url": "https://dentcast.org/pillar/fixed-pros/",
+            "description": "از تراش تا سمان — زنجیره‌ی بازسازی"
           }
         ]
       }
@@ -145,6 +152,24 @@ body:has(.dc-topbar) .pillar-intro { background: transparent; border: 0; box-sha
   .pillar-card-row { padding: 12px 12px; }
   .pillar-card-name { font-size: .92rem; }
 }
+
+/* Per-pillar accent — fixed-pros uses warm brown in place of teal.
+   Same mechanism, same places as the default teal above; selectors
+   are scoped to [data-pillar="fixed-pros"] so other cards stay teal.
+     light primary brown: #9a6a2d
+     dark primary brown:  #c89456 */
+.pillar-card-row[data-pillar="fixed-pros"] { border-color: rgba(154,106,45,.25); }
+.pillar-card-row[data-pillar="fixed-pros"]:hover { border-color: rgba(154,106,45,.35); }
+.pillar-card-row[data-pillar="fixed-pros"] .pillar-card-icon { color: #9a6a2d; }
+.pillar-card-row[data-pillar="fixed-pros"] .pillar-card-name { color: #9a6a2d; }
+.pillar-card-row[data-pillar="fixed-pros"] .subtopic-chip { background: rgba(154,106,45,.10); color: #9a6a2d; }
+.pillar-card-row[data-pillar="fixed-pros"] .pillar-card-arrow { background: rgba(154,106,45,.10); border-color: rgba(154,106,45,.25); color: #9a6a2d; }
+[data-theme="dark"] .pillar-card-row[data-pillar="fixed-pros"] { border-color: rgba(200,148,86,.30); }
+[data-theme="dark"] .pillar-card-row[data-pillar="fixed-pros"]:hover { border-color: rgba(200,148,86,.45); }
+[data-theme="dark"] .pillar-card-row[data-pillar="fixed-pros"] .pillar-card-icon { color: #c89456; }
+[data-theme="dark"] .pillar-card-row[data-pillar="fixed-pros"] .pillar-card-name { color: #d8a570; }
+[data-theme="dark"] .pillar-card-row[data-pillar="fixed-pros"] .subtopic-chip { background: rgba(200,148,86,.18); color: #c89456; }
+[data-theme="dark"] .pillar-card-row[data-pillar="fixed-pros"] .pillar-card-arrow { background: rgba(200,148,86,.15); border-color: rgba(200,148,86,.35); color: #c89456; }
 </style>
 
   <!-- Theme init verbatim from metanotes/index.html -->
@@ -231,21 +256,21 @@ body:has(.dc-topbar) .pillar-intro { background: transparent; border: 0; box-sha
       </section>
 
       <div class="pillar-index-stats">
-        <span class="pillar-index-stat-chip"><span class="stat-value">۲</span><span class="stat-label">موضوع</span></span>
-        <span class="pillar-index-stat-chip"><span class="stat-value">۱۳۸</span><span class="stat-label">مطلب</span></span>
-        <span class="pillar-index-stat-chip"><span class="stat-value">۱۰</span><span class="stat-label">زیرموضوع</span></span>
+        <span class="pillar-index-stat-chip"><span class="stat-value">۳</span><span class="stat-label">موضوع</span></span>
+        <span class="pillar-index-stat-chip"><span class="stat-value">۲۰۳</span><span class="stat-label">مطلب</span></span>
+        <span class="pillar-index-stat-chip"><span class="stat-value">۱۶</span><span class="stat-label">زیرموضوع</span></span>
       </div>
     </div>
 
     <div class="listWrap">
-      <a class="pillar-card-row" href="/pillar/bonding/">
+      <a class="pillar-card-row" data-pillar="bonding" href="/pillar/bonding/">
         <div class="pillar-card-body">
           <div class="pillar-card-header">
             <span class="pillar-card-icon" aria-hidden="true"><svg class="dc-svg-icon" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-target"/></svg></span>
             <h2 class="pillar-card-name">باندینگ</h2>
           </div>
           <p class="pillar-card-subtitle">از شیمی سطح تا چالش‌های بالینی</p>
-          <p class="pillar-card-meta">۷۳ مطلب · ۵ زیرموضوع</p>
+          <p class="pillar-card-meta">۶۴ مطلب · ۵ زیرموضوع</p>
           <ul class="pillar-card-subtopics">
           <li>
             <span class="subtopic-label">مفاهیم پایه</span>
@@ -257,15 +282,15 @@ body:has(.dc-topbar) .pillar-intro { background: transparent; border: 0; box-sha
           </li>
           <li>
             <span class="subtopic-label">استراتژی‌ها و نسل‌ها</span>
-            <span class="subtopic-chip">۲۲</span>
+            <span class="subtopic-chip">۲۱</span>
           </li>
           <li>
             <span class="subtopic-label">کاربردهای بالینی</span>
-            <span class="subtopic-chip">۱۶</span>
+            <span class="subtopic-chip">۱۲</span>
           </li>
           <li>
             <span class="subtopic-label">موضوعات پیشرفته</span>
-            <span class="subtopic-chip">۲۱</span>
+            <span class="subtopic-chip">۱۷</span>
           </li>
           </ul>
         </div>
@@ -273,14 +298,14 @@ body:has(.dc-topbar) .pillar-intro { background: transparent; border: 0; box-sha
           <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6"/></svg>
         </div>
       </a>
-      <a class="pillar-card-row" href="/pillar/ceramics/">
+      <a class="pillar-card-row" data-pillar="ceramics" href="/pillar/ceramics/">
         <div class="pillar-card-body">
           <div class="pillar-card-header">
             <span class="pillar-card-icon" aria-hidden="true"><svg class="dc-svg-icon" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-target"/></svg></span>
             <h2 class="pillar-card-name">سرامیک</h2>
           </div>
           <p class="pillar-card-subtitle">از شیمی ماده تا انتخاب بالینی</p>
-          <p class="pillar-card-meta">۶۵ مطلب · ۵ زیرموضوع</p>
+          <p class="pillar-card-meta">۵۴ مطلب · ۵ زیرموضوع</p>
           <ul class="pillar-card-subtopics">
           <li>
             <span class="subtopic-label">مفاهیم پایه</span>
@@ -296,11 +321,50 @@ body:has(.dc-topbar) .pillar-intro { background: transparent; border: 0; box-sha
           </li>
           <li>
             <span class="subtopic-label">کاربردهای بالینی</span>
-            <span class="subtopic-chip">۱۶</span>
+            <span class="subtopic-chip">۷</span>
           </li>
           <li>
             <span class="subtopic-label">چالش‌ها و شکست</span>
-            <span class="subtopic-chip">۵</span>
+            <span class="subtopic-chip">۳</span>
+          </li>
+          </ul>
+        </div>
+        <div class="pillar-card-arrow" aria-hidden="true">
+          <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6"/></svg>
+        </div>
+      </a>
+      <a class="pillar-card-row" data-pillar="fixed-pros" href="/pillar/fixed-pros/">
+        <div class="pillar-card-body">
+          <div class="pillar-card-header">
+            <span class="pillar-card-icon" aria-hidden="true"><svg class="dc-svg-icon" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-target"/></svg></span>
+            <h2 class="pillar-card-name">پروتز ثابت</h2>
+          </div>
+          <p class="pillar-card-subtitle">از تراش تا سمان — زنجیره‌ی بازسازی</p>
+          <p class="pillar-card-meta">۸۵ مطلب · ۶ زیرموضوع</p>
+          <ul class="pillar-card-subtopics">
+          <li>
+            <span class="subtopic-label">پست و کور</span>
+            <span class="subtopic-chip">۲۳</span>
+          </li>
+          <li>
+            <span class="subtopic-label">آماده‌سازی و تراش</span>
+            <span class="subtopic-chip">۹</span>
+          </li>
+          <li>
+            <span class="subtopic-label">قالب‌گیری</span>
+            <span class="subtopic-chip">۶</span>
+          </li>
+          <li>
+            <span class="subtopic-label">روکش و اینله/اونله</span>
+            <span class="subtopic-chip">۱۶</span>
+          </li>
+          <li>
+            <span class="subtopic-label">سمان‌کردن</span>
+            <span class="subtopic-chip">۲۳</span>
+          </li>
+          <li>
+            <span class="subtopic-label">شکست و عوارض</span>
+            <span class="subtopic-chip">۸</span>
           </li>
           </ul>
         </div>

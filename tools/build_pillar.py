@@ -82,6 +82,31 @@ PILLARS = {
             {"slug": "failures",     "title_fa": "چالش‌ها و شکست",   "icon": "icon-warning", "intro_fa": ""},
         ],
     },
+    "fixed-pros": {
+        "title_fa": "پروتز ثابت",
+        "icon":             "icon-crown",
+        "subtitle_fa_short": "از تراش تا سمان — زنجیره‌ی بازسازی",
+        "page_title":       "فهرست موضوعی پروتز ثابت / دنت‌کست",
+        "meta_description": "نقشه‌ی موضوعی پروتز ثابت در دندان‌پزشکی — از پست و کور و آماده‌سازی، تا قالب‌گیری، روکش و اینله/اونله، سمان‌کردن و الگوهای شکست. زنجیره‌ی بازسازی به‌صورت ساختارمند، با لینک به اپیزودها، گلاسری، نوت‌کست‌ها و یادداشت‌های بالینی دنت‌کست.",
+        "h1_fa":        "پروتز ثابت",
+        "subtitle_fa":  "نقشه‌ی موضوعی دنت‌کست",
+        "intro_paragraphs": [
+            'پروتز ثابت، یک ترمیم نیست. یک <strong>زنجیره</strong> از تصمیم‌های وابسته است. از لحظه‌ای که می‌فهمیم یک دندان به ترمیم غیرمستقیم نیاز دارد، تا روزی که آن ترمیم سال‌ها بعد بی‌عارضه باقی می‌ماند یا در یک نقطه‌ی خاص می‌شکند، یک رشته‌ی پیوسته از انتخاب‌های بالینی شکل گرفته که هر حلقه‌اش، حلقه‌ی بعدی را محدود کرده است.',
+            'این زنجیره از <strong>بازسازی ساختار باقی‌مانده</strong> شروع می‌شود — جایی که فرول، ضخامت دیواره‌ها و طراحی پست و کور تعیین می‌کند آیا اصلاً پایه‌ای برای ترمیم وجود دارد یا نه. تصمیم درباره‌ی <strong>پست فایبر</strong> در برابر پست فلزی، یا حذف کامل پست، در همین مرحله گرفته می‌شود — و هر خطایی اینجا، تمام مراحل بعد را روی بنیان لرزان قرار می‌دهد.',
+            'پس از تثبیت بنیان، نوبت <strong>تراش</strong> است. هر دهم میلی‌متر کاهش، یک معامله‌ی کنترل‌شده است: حفظ بافت سالم در برابر فضای کافی برای ماده‌ی ترمیمی. تراش ناکافی، ترمیم را در ضخامت مرزی شکست می‌دهد؛ تراش بیش از حد، پایه‌ی پروتزی را تضعیف می‌کند. در همین مرحله است که <strong>تطابق مارجینال</strong>، زاویه‌ی کانورژنس و پایداری اکلوزال تعریف می‌شود.',
+            '<strong>قالب‌گیری</strong> پل میان دهان و لابراتوار است — و این پل فقط به اندازه‌ی دقیق‌ترین لحظه‌اش قابل اعتماد است. خونریزی لثه، رطوبت سولکوس، یا کنترل ناکافی مواد قالب‌گیری می‌توانند ساعت‌ها تراش دقیق را در یک نقص میکروسکوپی هدر بدهند. انتخاب بین <strong>قالب‌گیری معمولی</strong> و <strong>اسکن دیجیتال</strong> دیگر سلیقه‌ای نیست؛ شرایط بافت، گستره‌ی تراش و دقت موردنیاز این انتخاب را دیکته می‌کند.',
+            'ترمیم نهایی — <strong>روکش، اینله، اونله، یا بریج چندواحدی</strong> — صرفاً قطعه‌ای سرامیکی یا فلزی نیست؛ ادامه‌ی همان زنجیره است. اگر مراحل قبل با دقت طی شده باشند، اینجا فقط نوبت انتخاب ماده‌ی متناسب با اندیکاسیون است؛ اگر نه، ترمیم وارد دهان می‌شود تا حلقه‌ی ضعیف زنجیره را بپوشاند، و این پنهان‌سازی در میان‌مدت همیشه شکست می‌خورد.',
+            'و در نهایت <strong>سمان‌کردن</strong> — آخرین فرصت برای پیوند زنجیره به دندان. انتخاب رزین سمنت، آماده‌سازی سطح ترمیم و سطح دندان، کنترل آلودگی، و حذف کامل اضافات سمان، هرکدام نقاط شکست بالقوه‌ای هستند که سال‌ها بعد به‌شکل <strong>پوسیدگی ثانویه</strong>، التهاب لثه‌ی پیرامون یا جداشدگی روکش خود را نشان می‌دهند. این صفحه نقشه‌ای از کل این زنجیره است — هر بخش یک حلقه، با لینک به منبع کاملش در دنت‌کست.',
+        ],
+        "subtopics": [
+            {"slug": "post-and-core", "title_fa": "پست و کور",           "icon": "icon-key",     "intro_fa": "اولین حلقه‌ی زنجیره. تصمیم درباره‌ی پست و کور — یا گاهی پرهیز از آن — تعیین می‌کند آیا اصلاً پایه‌ای برای ترمیم وجود دارد. <strong>فرول</strong> کافی، آماده‌سازی صحیح دنتین ریشه، و انتخاب جنس پست، شالوده‌ی همه‌ی مراحل بعدی است."},
+            {"slug": "preparation",   "title_fa": "آماده‌سازی و تراش",   "icon": "icon-ruler",   "intro_fa": "تراش، گام عملی پس از تعیین بنیان است. هر دهم میلی‌متر، یک معامله بین حفظ بافت و فضای کافی برای ماده‌ی ترمیمی است. کیفیت تراش، حد بالایی برای دقت قالب‌گیری، <strong>تطابق مارجینال</strong> و طول عمر نهایی ترمیم می‌سازد."},
+            {"slug": "impression",    "title_fa": "قالب‌گیری",            "icon": "icon-camera",  "intro_fa": "وقتی تراش تمام شد، قالب‌گیری پل میان دهان و لابراتوار است. دقت این مرحله — معمولی یا <strong>اسکن دیجیتال</strong> — حد بالایی برای تطابق نهایی ترمیم تعیین می‌کند. هیچ ترمیمی از قالبِ ناقص بهتر در نمی‌آید."},
+            {"slug": "crowns-onlays", "title_fa": "روکش و اینله/اونله",   "icon": "icon-shield",  "intro_fa": "ترمیم نهایی — تک‌واحدی، چندواحدی، اینله یا اونله — حلقه‌ای است که حلقه‌های قبلی را به‌هم می‌رساند. انتخاب نوع و ماده‌ی ترمیم باید با <strong>بنیان ساخته‌شده</strong>، نوع تراش و شرایط اکلوزال هماهنگ باشد."},
+            {"slug": "cementation",   "title_fa": "سمان‌کردن",            "icon": "icon-link",    "intro_fa": "آخرین حلقه‌ی زنجیره — اتصال نهایی ترمیم به دندان. انتخاب <strong>رزین سمنت</strong>، آماده‌سازی سطوح، کنترل آلودگی، و حذف کامل اضافات سمان، نقاطی هستند که موفقیت همه‌ی مراحل قبل به آن‌ها وابسته می‌شود."},
+            {"slug": "failures",      "title_fa": "شکست و عوارض",         "icon": "icon-warning", "intro_fa": "وقتی زنجیره می‌شکند. الگوهای شکست — از جداشدگی روکش و فرکچر تا <strong>پوسیدگی ثانویه</strong> — معمولاً به یک حلقه‌ی ضعیف در ابتدای راه برمی‌گردند. درس گرفتن از شکست‌ها، طراحی بهتر زنجیره‌ی بعدی است."},
+        ],
+    },
 }
 
 TYPE_META = {
@@ -691,6 +716,24 @@ INDEX_INLINE_STYLE = (
     "  .pillar-card-row { padding: 12px 12px; }\n"
     "  .pillar-card-name { font-size: .92rem; }\n"
     "}\n"
+    "\n"
+    "/* Per-pillar accent — fixed-pros uses warm brown in place of teal.\n"
+    "   Same mechanism, same places as the default teal above; selectors\n"
+    "   are scoped to [data-pillar=\"fixed-pros\"] so other cards stay teal.\n"
+    "     light primary brown: #9a6a2d\n"
+    "     dark primary brown:  #c89456 */\n"
+    ".pillar-card-row[data-pillar=\"fixed-pros\"] { border-color: rgba(154,106,45,.25); }\n"
+    ".pillar-card-row[data-pillar=\"fixed-pros\"]:hover { border-color: rgba(154,106,45,.35); }\n"
+    ".pillar-card-row[data-pillar=\"fixed-pros\"] .pillar-card-icon { color: #9a6a2d; }\n"
+    ".pillar-card-row[data-pillar=\"fixed-pros\"] .pillar-card-name { color: #9a6a2d; }\n"
+    ".pillar-card-row[data-pillar=\"fixed-pros\"] .subtopic-chip { background: rgba(154,106,45,.10); color: #9a6a2d; }\n"
+    ".pillar-card-row[data-pillar=\"fixed-pros\"] .pillar-card-arrow { background: rgba(154,106,45,.10); border-color: rgba(154,106,45,.25); color: #9a6a2d; }\n"
+    "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"fixed-pros\"] { border-color: rgba(200,148,86,.30); }\n"
+    "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"fixed-pros\"]:hover { border-color: rgba(200,148,86,.45); }\n"
+    "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"fixed-pros\"] .pillar-card-icon { color: #c89456; }\n"
+    "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"fixed-pros\"] .pillar-card-name { color: #d8a570; }\n"
+    "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"fixed-pros\"] .subtopic-chip { background: rgba(200,148,86,.18); color: #c89456; }\n"
+    "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"fixed-pros\"] .pillar-card-arrow { background: rgba(200,148,86,.15); border-color: rgba(200,148,86,.35); color: #c89456; }\n"
     "</style>"
 )
 
@@ -758,7 +801,7 @@ def _render_index_card(info):
         for s in info["subtopic_list"]
     )
     return (
-        '      <a class="pillar-card-row" href="/pillar/' + esc(info["slug"]) + '/">\n'
+        '      <a class="pillar-card-row" data-pillar="' + esc(info["slug"]) + '" href="/pillar/' + esc(info["slug"]) + '/">\n'
         '        <div class="pillar-card-body">\n'
         '          <div class="pillar-card-header">\n'
         '            <span class="pillar-card-icon" aria-hidden="true">' + svg_icon("icon-target") + '</span>\n'
