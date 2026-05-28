@@ -278,7 +278,7 @@ footer{
   box-shadow:0 4px 16px rgba(var(--pr-rgb),.18);
   display:grid;
   place-items:center;
-  opacity:0.75;
+  opacity:1;
   transition:opacity .2s ease, transform .2s ease, background var(--tr2);
   cursor:pointer;
   z-index:9999;
@@ -469,10 +469,11 @@ document.addEventListener("DOMContentLoaded", function () {
   function nearBottom() { return (scrollY() + viewportHeight()) >= pageHeight() * BOTTOM_RATIO; }
 
   function updateState() {
-    if (pageHeight() <= viewportHeight() + 10) { btn.style.opacity = "0.28"; return; }
-    else { btn.style.opacity = "0.55"; }
-    if (!isUp && nearBottom()) { isUp = true; btn.classList.add("is-up"); }
-    if (isUp && scrollY() <= TOP_RESET) { isUp = false; btn.classList.remove("is-up"); }
+    if (pageHeight() <= viewportHeight() + 10) { btn.style.opacity = "0.4"; return; }
+    else { btn.style.opacity = "1"; }
+    isUp = nearBottom();
+    btn.classList.toggle("is-up", isUp);
+
   }
 
   btn.addEventListener("click", function () {
