@@ -319,7 +319,10 @@ body.search-open #page-content{
     #fff 100%);
   border:1px solid var(--pr);
   box-shadow:var(--card-sh);
-  padding:6px;
+  padding:32px 28px;
+}
+@media (min-width:720px){
+  .player-cell:not(:has(#internalBtn)){ padding:40px 36px; }
 }
 [data-theme="dark"] .player-cell:not(:has(#internalBtn)){
   background:linear-gradient(135deg,
