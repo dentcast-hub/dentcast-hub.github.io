@@ -756,3 +756,16 @@ body:has(.dc-topbar) .back:hover {
 [data-theme="dark"] body:has(.dc-topbar) .text-box {
   background: var(--card-bg) !important;
 }
+
+/* Site-wide "محتوای مرتبط" section. Globalized counterpart of the per-episode
+   ep-section / ep-section-label / ep-related-link rules (inlined in each
+   /episodes/*.html), so typed-brain pages and glossary pages can render the
+   same blue-accent section + outline capsule without each page redefining the
+   rules. Visual values mirror ep-* verbatim. */
+.dc-related-section{padding:22px 28px 0;}
+.dc-related-section:last-child{padding-bottom:28px;}
+.dc-related-label{font-size:1rem;font-weight:700;color:var(--ac);border-right:4px solid var(--ac);padding-right:12px;margin-bottom:14px;}
+.dc-related-capsules{display:flex;flex-wrap:wrap;gap:8px;}
+.dc-related-capsule{display:inline-flex;align-items:center;gap:6px;font-size:.87rem;font-weight:600;color:var(--ac);text-decoration:none;padding:8px 16px;border:1px solid var(--ac);border-radius:10px;transition:background .15s,color .15s;}
+.dc-related-capsule:hover{background:var(--ac);color:#fff;}
+@media(max-width:480px){.dc-related-section{padding-right:18px;padding-left:18px;}}
