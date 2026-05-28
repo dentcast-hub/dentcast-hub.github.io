@@ -95,6 +95,44 @@ Clone the previous same-category page exactly — identical HTML tree, CSS class
 
 If the category has no on-disk page (data-only), skip this and go to step 4.
 
+### 2.5. Inject the "محتوای مرتبط" capsule section (site-wide nav)
+
+After the new page is cloned and field values are swapped (step 2), inject the site-wide "محتوای مرتبط" block on the **new** page. This is separate from step 4.5, which mutates a different page (the parent episode) and uses the per-episode `ep-*` classes; this step always uses the site-wide `dc-related-*` classes defined in `dc-theme.css`.
+
+**Conditional — based on the locked category from Phase B Question 1:**
+
+| Locked category source | What goes in the section |
+|---|---|
+| Typed brain entry (any entry in `dentcast-brain.json` with a `type` field — NoteCast, Insight, Clinical, Chairside, LiteCast, DentAI, MetaNote, PhotoCast, ShareHub, DentCast+, DentCast, …) | **Both** capsules: دانشنامه + فهرست موضوعی |
+| Glossary term page (sourced from `glossary/glossary.json`, not from the brain) | **Only** the فهرست موضوعی capsule |
+| Core podcast episode (no `type` field — `/episodes/episode-XX.html`) | **Skip** entirely. Do NOT add this section to core episode pages. |
+
+The conditional is binary skip-or-include, decided by where the locked category came from. The capsule link targets are **fixed sitewide** (`/glossary/` and `/pillar/`) — never per-pillar, never per-subtopic, no dependency on `pillar.primary` or `pillar.subtopic`.
+
+**Markup to inject** (use the global classes — NOT `ep-*`, which are inlined per-episode and not styled on other page types):
+
+```html
+<div class="dc-related-section">
+  <h2 class="dc-related-label">محتوای مرتبط</h2>
+  <div class="dc-related-capsules">
+    <a href="/glossary/" class="dc-related-capsule">دانشنامه</a>
+    <a href="/pillar/" class="dc-related-capsule">فهرست موضوعی</a>
+  </div>
+</div>
+```
+
+For glossary term pages, omit the first `<a>` (the دانشنامه capsule) — they ARE the glossary.
+
+**Placement on the new page:** at the bottom of the main content area — after the body content and before any next/prev navigation or footer. If the cloned template already has a "محتوای مرتبط" section (rare for non-episode types — most don't), insert the capsules **into that existing section** alongside whatever's already there, rather than creating a duplicate. Never remove anything pre-existing in that section.
+
+**Why this is step 2.5 and not later:** the capsule injection mutates the new page itself, so it belongs adjacent to step 2 (the clone-and-swap) and before step 3 (the date audit then sees the final page state including the section).
+
+**Verify after injection:**
+- The section appears once on the new page (no duplicate).
+- The correct number of capsules is present for the locked category (2 for typed-brain, 1 for glossary, 0 for core episode — but core episodes hit the skip branch, so this case never reaches verification).
+- The page uses `dc-related-*` classes only — never `ep-*` — to avoid relying on episode-only inline styles.
+- The injection is the only diff vs the cloned template, beyond the swaps already specified in step 2.
+
 ### 3. Date / meta double-check
 
 Resolve today's date in every format the template uses. Audit every meta/OG/Twitter/JSON-LD field and visible body dates. Flag STALE / DIVERGENT / MISSING. Print audit table before & after. Set `datePublished` and `dateModified` to today. Fix everything until all rows = OK.
@@ -230,6 +268,7 @@ After the pillar builder finishes, verify:
 - Template page path + SHA-256 before/after (must match)
 - Media sources gathered (and which were auto-fetched vs asked)
 - Audit table after fixes (all OK)
+- "محتوای مرتبط" capsule injection (step 2.5): which branch fired (typed-brain → 2 capsules / glossary → 1 capsule / core episode → skipped); the exact `<div class="dc-related-section">…</div>` block inserted (or "skipped"); confirmation that `dc-related-*` classes were used (not `ep-*`) and that no other diff was introduced beyond step 2's swaps
 - New brain entry (printed as it now exists at the end of the flat array) — confirmation that it's the last element, that its key set matches the previous same-category entry exactly, and (for episodes) that no `type` field was added
 - Pulse: which line was removed (the bottom one), and where the new line was inserted (one above the new bottom), with before/after diff
 - For NoteCast: parent episode page path; whether the related-content block existed already or was created; before/after hash of the parent episode page; diff of the inserted markup
