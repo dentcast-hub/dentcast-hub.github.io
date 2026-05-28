@@ -589,7 +589,7 @@ body:has(.dc-topbar) #dcJumpBtn {
   border-radius: var(--r-f);
   background: var(--surface2);
   color: var(--txt3);
-  border: 1px solid var(--border);
+  border: 1px solid #022360;
   box-shadow: var(--card-sh);
   display: flex;
   align-items: center;
