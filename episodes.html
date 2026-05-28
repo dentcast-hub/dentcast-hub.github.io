@@ -551,6 +551,25 @@ body.search-open #page-content{
 }
 .back-link::before{ content:"← "; }
 .back-link:hover{ color:var(--ac); }
+
+/* =====================================================
+   دکمه Jump — هم‌خوان با تم (deep navy)
+===================================================== */
+.dc-jump{
+  position:fixed; right:18px; left:auto;
+  bottom:calc(18px + env(safe-area-inset-bottom, 0px));
+  width:42px; height:42px; border-radius:var(--r-f);
+  background:#022360; border:1px solid #022360;
+  box-shadow:0 4px 16px rgba(var(--pr-rgb),.18);
+  display:grid; place-items:center; opacity:.85;
+  transition:opacity .2s ease, transform .2s ease, background var(--tr2);
+  cursor:pointer; z-index:9999;
+}
+.dc-jump:hover{ opacity:1; transform:translateY(-1px); }
+.dc-jump:active{ transform:scale(.92); }
+.dc-jump svg{ width:20px; height:20px; fill:#fff; transition:fill var(--tr2), transform .2s ease; }
+.dc-jump.is-up svg{ transform:rotate(180deg); }
+@media(max-width:640px){ .dc-jump{ bottom:calc(22px + env(safe-area-inset-bottom, 0px)); } }
   </style>
 
   <script type="application/ld+json">
@@ -5891,6 +5910,13 @@ body.search-open #page-content{
       <p>دنت‌کست در همه‌ی این حوزه‌ها روی یک رویکرد ثابت ایستاده: تکیه بر مقاله‌ی منبع، طرح صریح اختلاف‌نظرها، و پرهیز از قطعیتِ زودهنگام. هدف، نه ارائه‌ی «بهترین پروتکل»، بلکه روشن‌تر کردن منطق پشت تصمیم بالینی است.</p>
     </div>
 
+    <!-- Floating jump button -->
+    <button id="dcJumpBtn" class="dc-jump" type="button" aria-label="Jump">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 16.5c-.3 0-.6-.1-.8-.3l-6-6a1.1 1.1 0 0 1 1.6-1.6L12 13.8l5.2-5.2a1.1 1.1 0 0 1 1.6 1.6l-6 6c-.2.2-.5.3-.8.3z"/>
+      </svg>
+    </button>
+
     <!-- ============================================================
          SECTION 7 — FOOTER  (LOCKED)
     ============================================================ -->
@@ -6095,5 +6121,70 @@ body.search-open #page-content{
 <script src="/global-search-ui.js?v=1" defer></script>
 <script src="/shake-search.js?v=1" defer></script>
 <script src="/dc-nav.js" defer></script>
+<!-- Quick-scroll (multi-stop: top -> listen/player box -> bottom) -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const btn = document.getElementById("dcJumpBtn");
+  if (!btn) return;
+
+  const listenEl = document.querySelector(".dc-listen");
+  const topbarEl = document.querySelector(".dc-topbar");
+  const EDGE = 4;
+
+  function scrollY() { return window.pageYOffset || document.documentElement.scrollTop; }
+  function pageHeight() { return document.documentElement.scrollHeight; }
+  function viewportHeight() { return window.innerHeight; }
+  function maxScroll() { return Math.max(0, pageHeight() - viewportHeight()); }
+  function topbarOffset() { return topbarEl ? topbarEl.getBoundingClientRect().height : 57; }
+
+  // Position so the listen/player box top sits just below the fixed topbar.
+  function playerStop() {
+    if (!listenEl) return 0;
+    const y = listenEl.getBoundingClientRect().top + scrollY() - topbarOffset();
+    return Math.max(0, Math.min(y, maxScroll()));
+  }
+
+  // Ascending stops: top, player box, bottom.
+  function stops() { return [0, playerStop(), maxScroll()]; }
+
+  let goingUp = false;
+
+  function atTop() { return scrollY() <= topbarOffset() + EDGE; }
+  function atBottom() { return scrollY() >= maxScroll() - EDGE; }
+
+  // Direction is derived from current scroll position and self-corrects at
+  // both extremes, so it can never get stuck mid-toggle.
+  function updateState() {
+    if (maxScroll() <= 10) { btn.style.opacity = "0.4"; return; }
+    else { btn.style.opacity = ".85"; }
+    if (atBottom()) goingUp = true;
+    else if (atTop()) goingUp = false;
+    btn.classList.toggle("is-up", goingUp);
+  }
+
+  btn.addEventListener("click", function () {
+    const y = scrollY();
+    const s = stops();
+    let target;
+    if (goingUp) {
+      // nearest stop strictly below the current position
+      target = s[0];
+      for (let i = 0; i < s.length; i++) { if (s[i] < y - EDGE) target = s[i]; }
+      if (target <= s[0] + EDGE) goingUp = false; // reached the top
+    } else {
+      // nearest stop strictly above the current position
+      target = s[s.length - 1];
+      for (let i = s.length - 1; i >= 0; i--) { if (s[i] > y + EDGE) target = s[i]; }
+      if (target >= maxScroll() - EDGE) goingUp = true; // reached the bottom
+    }
+    window.scrollTo({ top: target, behavior: "smooth" });
+    btn.classList.toggle("is-up", goingUp);
+  });
+
+  window.addEventListener("scroll", updateState);
+  window.addEventListener("resize", updateState);
+  updateState();
+});
+</script>
 </body>
 </html>

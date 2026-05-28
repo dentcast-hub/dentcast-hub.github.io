@@ -280,12 +280,12 @@ footer{
   bottom:calc(18px + env(safe-area-inset-bottom, 0px));
   width:42px; height:42px;
   border-radius:var(--r-f);
-  background:var(--surface);
-  border:1px solid var(--border);
+  background:#022360;
+  border:1px solid #022360;
   box-shadow:0 4px 16px rgba(var(--pr-rgb),.18);
   display:grid;
   place-items:center;
-  opacity:1;
+  opacity:.85;
   transition:opacity .2s ease, transform .2s ease, background var(--tr2);
   cursor:pointer;
   z-index:9999;
@@ -294,7 +294,7 @@ footer{
 .dc-jump:active{ transform:scale(.92); }
 .dc-jump svg{
   width:20px; height:20px;
-  fill:var(--pr);
+  fill:#fff;
   transition:fill var(--tr2), transform .2s ease;
 }
 .dc-jump.is-up svg{ transform:rotate(180deg); }
@@ -532,7 +532,7 @@ document.addEventListener("DOMContentLoaded", function () {
   function nearBottom() { return (scrollY() + viewportHeight()) >= pageHeight() * BOTTOM_RATIO; }
   function updateState() {
     if (pageHeight() <= viewportHeight() + 10) { btn.style.opacity = "0.4"; return; }
-    else { btn.style.opacity = "1"; }
+    else { btn.style.opacity = ".85"; }
     isUp = nearBottom();
     btn.classList.toggle("is-up", isUp);
 
