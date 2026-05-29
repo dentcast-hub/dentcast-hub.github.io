@@ -37,6 +37,7 @@
       bot: '<rect x="5" y="8" width="14" height="10" rx="3"/><path d="M12 8V4"/><circle cx="9" cy="13" r="1"/><circle cx="15" cy="13" r="1"/><path d="M9 18v2"/><path d="M15 18v2"/>',
       link: '<path d="M10 13a5 5 0 0 0 7.1 0l2-2a5 5 0 0 0-7.1-7.1l-1.1 1.1"/><path d="M14 11a5 5 0 0 0-7.1 0l-2 2A5 5 0 0 0 12 20.1l1.1-1.1"/>',
       headphones: '<path d="M3 14a9 9 0 0 1 18 0"/><path d="M5 14h3v7H5a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2z"/><path d="M19 14h-3v7h3a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2z"/>',
+      musicNote: '<ellipse cx="8" cy="17.4" rx="3.3" ry="2.5" transform="rotate(-22 8 17.4)"/><path d="M10.7 16.2V6.2h1.7v10z"/><path d="M12.4 6.2c0-1.6 1.6-2.4 3.4-3.2 1.8-.8 2.2.2 2.2 1.6 0 1.8-2 2.8-3.6 3.6-1 .5-2 1-2 2.2z"/>',
       book: '<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"/>',
       brain: '<path d="M9 4a3 3 0 0 0-3 3v1a3 3 0 0 0-2 5.2A3.5 3.5 0 0 0 8 19h1"/><path d="M15 4a3 3 0 0 1 3 3v1a3 3 0 0 1 2 5.2A3.5 3.5 0 0 1 16 19h-1"/><path d="M12 4v17"/><path d="M8 9h2"/><path d="M14 9h2"/><path d="M8 14h2"/><path d="M14 14h2"/>',
       puzzle: '<path d="M8 3h4v4h3a2 2 0 1 1 0 4h-3v3h3a2 2 0 1 1 0 4h-3v3H8v-3H5a2 2 0 1 1 0-4h3v-3H5a2 2 0 1 1 0-4h3z"/>',
@@ -161,11 +162,12 @@
 '    <a href="/" aria-label="صفحه اصلی دنت‌کست" style="display:flex;align-items:center;margin-left:8px;flex-shrink:0;"><img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;"></a>' +
 '    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="ابزارها" aria-expanded="false"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>' +
 '    <button class="dc-topbar-btn dcOpenSearch" aria-label="جستجو"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>' +
-/* Music player trigger. Its icon is ALWAYS the equalizer bars: static when
-   idle, animating + glowing when playing (driven by the .is-playing class).
+/* Music player trigger. Base icon is a simple music note (always shown). When
+   playing, the equalizer animation + a soft glow activate within the icon area
+   (the note stays); idle shows just the note. Driven by the .is-playing class.
    The button ONLY toggles #dcMusicPanel via delegation — it never affects
    playback (play/pause is a separate control inside the panel). */
-'    <button class="dc-topbar-btn dc-music-trigger" id="btn-music-toggle" aria-label="موسیقی" aria-expanded="false"><span class="dc-music-eq" aria-hidden="true"><i></i><i></i><i></i></span></button>' +
+'    <button class="dc-topbar-btn dc-music-trigger" id="btn-music-toggle" aria-label="موسیقی" aria-expanded="false">' + dcSvgIcon('musicNote') + '<span class="dc-music-eq" aria-hidden="true"><i></i><i></i><i></i></span></button>' +
 '  </div>' +
 '  <div class="dc-topbar-brand">' +
 '    <div class="dc-topbar-brand-name">DentCast</div>' +
@@ -258,14 +260,18 @@
 '.dc-music-channel .dc-music-ext{width:.78em;height:.78em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;opacity:.7;}' +
 /* Unavailable state: dim the (disabled) controls, leave the message clean. */
 '.dc-music-panel.is-unavailable .dc-music-playpause{opacity:.3;}' +
-/* "Now playing" equalizer inside the header trigger (transform-based). */
-/* The trigger's icon is ALWAYS the equalizer bars (no separate clef/note). */
+/* Header trigger: a music note is the permanent base icon; the equalizer is an
+   overlay that appears only while playing, beside the (centered) note. */
 '.dc-music-trigger{position:relative;}' +
-'.dc-music-eq{display:inline-flex;align-items:flex-end;justify-content:center;gap:2px;width:1em;height:1em;vertical-align:-.15em;}' +
-/* Idle: bars rest static at a low, even height (calm, no motion). The transform
-   transition lets them settle smoothly when playback stops. */
-'.dc-music-eq i{display:block;width:3px;height:100%;border-radius:1px;background:currentColor;transform:scaleY(.4);transform-origin:bottom;transition:transform .3s ease;}' +
-/* Playing: the existing equalizer motion (unchanged) — staggered rise/fall. */
+/* The note is filled (override the registry's default stroke styling). */
+'.dc-music-trigger .dc-svg-icon{fill:currentColor;stroke:none;}' +
+/* Equalizer overlay at the trailing edge of the icon. Hidden when idle (only
+   the note shows); absolutely positioned so the note stays centered and there
+   is no layout shift when it appears. */
+'.dc-music-eq{position:absolute;right:3px;top:50%;transform:translateY(-50%);display:inline-flex;align-items:flex-end;gap:1.5px;width:8px;height:10px;opacity:0;transition:opacity .3s ease;pointer-events:none;}' +
+'.dc-music-eq i{display:block;width:2px;height:100%;border-radius:1px;background:var(--ac);transform:scaleY(.35);transform-origin:bottom;transition:transform .3s ease;}' +
+/* Playing: the equalizer fades in and runs the existing motion (unchanged). */
+'.dc-music-trigger.is-playing .dc-music-eq{opacity:1;}' +
 '.dc-music-trigger.is-playing .dc-music-eq i{animation:dcEq .9s ease-in-out infinite;}' +
 '.dc-music-trigger.is-playing .dc-music-eq i:nth-child(2){animation-delay:.25s;}' +
 '.dc-music-trigger.is-playing .dc-music-eq i:nth-child(3){animation-delay:.5s;}' +
