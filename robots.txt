@@ -1,5 +1,7 @@
 User-agent: *
 Allow: /
+# Music player track metadata/links — keep out of search results
+Disallow: /dentcast-music.json
 
 # AI Crawlers — explicitly allowed
 User-agent: GPTBot
