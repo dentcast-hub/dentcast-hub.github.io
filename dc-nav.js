@@ -119,6 +119,115 @@
     document.body.classList.add('dc-content-only');
   }
 
+  /* ── SHARED HEADER — SINGLE SOURCE OF TRUTH ───────
+     The dc-topbar header used to be copy-pasted into every
+     page. It now lives here, once, and is injected at runtime
+     so header changes (and the upcoming global music player,
+     which lives in the header) reach every page without
+     editing hundreds of files.
+
+     Strategy — REPLACE-IN-PLACE, scoped to the header element:
+       1. Replace ONLY the page's own <header.dc-topbar> with the
+          canonical one, at its original position. Pages keep their
+          static header as a no-JS/SEO fallback; we swap it at load.
+       2. The toolbar drawer (#dcToolbarDrawer) and radar overlay
+          (#dcRadarOverlay) are injected ONLY IF the page lacks them.
+          We never replace existing ones, so page-owned logic that
+          holds a reference to them (e.g. index.html's inline radar)
+          keeps working untouched. The radar overlay MUST end up
+          present either way: the radar block further below does an
+          early `return` from this IIFE if its elements are missing,
+          which would kill every binding defined after that point.
+
+     Scope guarantees (header-contract):
+       • We target ONLY the page's mobile header, never the desktop
+         app-shell header (.dcd-col-c-topbar inside .dcd-app, in
+         index.html) — that shell is owned elsewhere and untouched.
+       • Pages whose header is a different localized variant opt out
+         via <html data-dc-no-header> and keep their own markup.
+       • Deliberately chrome-less pages (no header at all, e.g. the
+         embedded player) have nothing to replace, so nothing is
+         injected — they stay as-is.
+
+     Timing: this runs synchronously during dc-nav.js's deferred
+     execution, BEFORE DOMContentLoaded. Consumers that read header
+     elements inside a DOMContentLoaded handler — notably
+     global-search.js, which binds #dcSearch with no null guard —
+     therefore always find the injected elements already present.
+  ─────────────────────────────────────────────────── */
+  var DC_TOPBAR_HTML =
+'<header class="dc-topbar">' +
+'  <div class="dc-topbar-actions">' +
+'    <a href="/" aria-label="صفحه اصلی دنت‌کست" style="display:flex;align-items:center;margin-left:8px;flex-shrink:0;"><img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;"></a>' +
+'    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="ابزارها" aria-expanded="false"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>' +
+'    <button class="dc-topbar-btn" id="btn-radar-topbar" aria-label="رادار"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="m12 12 7-7"/><path d="M12 12h.01"/></svg></button>' +
+'    <button class="dc-topbar-btn dcOpenSearch" aria-label="جستجو"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>' +
+'  </div>' +
+'  <div class="dc-topbar-brand">' +
+'    <div class="dc-topbar-brand-name">DentCast</div>' +
+'    <a href="/about.html" class="dc-topbar-brand-sub">دکتر فواد شهابیان</a>' +
+'  </div>' +
+'</header>';
+
+  var DC_DRAWER_HTML =
+'<div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">' +
+'  <div class="dc-toolbar-drawer-inner">' +
+'    <span class="dc-toolbar-drawer-label">ابزارها</span>' +
+'    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M10 18h4"/><path d="M12 7v6"/><path d="m9.5 10.5 2.5 2.5 2.5-2.5"/></svg></span><span class="dc-drawer-tool-txt">نصب</span></button>' +
+'    <button class="dc-drawer-tool-seg" type="button" id="tool-consult"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span class="dc-drawer-tool-txt">مشاوره</span></button>' +
+'    <button class="dc-drawer-tool-seg" type="button" id="tool-about"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M12 3l1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></svg></span><span class="dc-drawer-tool-txt">درباره</span></button>' +
+'  </div>' +
+'</div>';
+
+  var DC_RADAR_HTML =
+'<div id="dcRadarOverlay" class="radar-overlay" aria-hidden="true">' +
+'  <div class="radar-overlay-header">' +
+'    <button id="dcCloseRadarOverlay" class="radar-close-btn">&times;</button>' +
+'    <div class="radar-header-title">رادار دنت‌کست (جایگزین گوگل)</div>' +
+'  </div>' +
+'  <div class="radar-overlay-body">' +
+'    <div class="radar-search-box">' +
+'      <input type="text" id="dcRadarInput" placeholder="نام سایت، زمینه فعالیت یا کلمه کلیدی..." autocomplete="off">' +
+'    </div>' +
+'    <div id="dcRadarResults" class="radar-results">' +
+'      <div class="radar-initial-msg">برای جستجو در بین سایت‌های دندانپزشکی، تایپ کنید...</div>' +
+'    </div>' +
+'  </div>' +
+'</div>';
+
+  (function injectSharedHeader() {
+    /* Opt-out: localized/non-standard pages keep their own header. This
+       is an opt-OUT, so a forgotten flag fails loud (a visible wrong
+       header), never as a silent dead button. */
+    if (document.documentElement.hasAttribute('data-dc-no-header')) return;
+    if (!document.body) return;
+
+    /* Find the page's OWN mobile header — never the desktop app-shell
+       header (.dcd-col-c-topbar, inside .dcd-app in index.html). */
+    var existing = null;
+    var candidates = document.querySelectorAll('header.dc-topbar:not(.dcd-col-c-topbar)');
+    for (var i = 0; i < candidates.length; i++) {
+      if (!candidates[i].closest('.dcd-app')) { existing = candidates[i]; break; }
+    }
+    /* No header to replace → deliberately chrome-less page. Inject nothing. */
+    if (!existing) return;
+
+    /* 1) Replace ONLY the header element, in place. */
+    var headerFrag = document.createRange().createContextualFragment(DC_TOPBAR_HTML);
+    var newHeader  = headerFrag.firstElementChild;
+    existing.parentNode.replaceChild(headerFrag, existing);
+
+    /* 2) Drawer + radar overlay: inject ONLY if the page lacks them, so we
+          never disturb page-owned siblings (e.g. index.html's inline radar
+          references). The overlay is required for the radar block below. */
+    if (!document.getElementById('dcToolbarDrawer')) {
+      newHeader.insertAdjacentHTML('afterend', DC_DRAWER_HTML);
+    }
+    if (!document.getElementById('dcRadarOverlay')) {
+      document.body.insertAdjacentHTML('beforeend', DC_RADAR_HTML);
+    }
+  })();
+
   /* ── THEME TOGGLE ─────────────────────────────────
      Single source of truth for theme behavior.
      Pages should include <button id="dc-theme-toggle">
@@ -186,35 +295,43 @@
     });
   }).observe(document.documentElement, { childList: true, characterData: true, subtree: true });
 
-  /* ── TOOLBAR DRAWER TOGGLE ── */
-  var drawerBtn = document.getElementById('btn-toolbar-toggle');
-  var drawer    = document.getElementById('dcToolbarDrawer');
-  if (drawerBtn && drawer) {
-    /* Ensure drawer has base styles so the animation works
-       regardless of any conflicting page CSS */
+  /* ── TOOLBAR DRAWER ───────────────────────────────
+     Toggling is delegated (see HEADER EVENT DELEGATION below) so it
+     survives the header being injected/replaced. Here we only apply the
+     drawer's defensive base styles once at load — preserving the original
+     behavior of forcing the closed state regardless of conflicting page
+     CSS. Runs against whatever #dcToolbarDrawer exists (injected or static). */
+  (function normalizeToolbarDrawer() {
+    var drawer = document.getElementById('dcToolbarDrawer');
+    if (!drawer) return;
     drawer.style.overflow   = 'hidden';
     drawer.style.transition = 'max-height .28s cubic-bezier(.4,0,.2,1), opacity .22s ease';
     drawer.style.maxHeight  = '0';
     drawer.style.opacity    = '0';
+  })();
 
-    drawerBtn.addEventListener('click', function () {
-      var isOpen = drawer.classList.contains('open');
-      if (!isOpen) {
-        /* OPEN */
-        drawer.classList.add('open');
-        drawer.style.maxHeight = '80px';
-        drawer.style.opacity   = '1';
-        drawerBtn.setAttribute('aria-expanded', 'true');
-        drawer.setAttribute('aria-hidden', 'false');
-      } else {
-        /* CLOSE */
-        drawer.classList.remove('open');
-        drawer.style.maxHeight = '0';
-        drawer.style.opacity   = '0';
-        drawerBtn.setAttribute('aria-expanded', 'false');
-        drawer.setAttribute('aria-hidden', 'true');
-      }
-    });
+  /* Toggle logic — invoked by the delegated click handler. Reads its
+     elements fresh on each call, so injection/replacement is transparent. */
+  function toggleToolbarDrawer() {
+    var drawerBtn = document.getElementById('btn-toolbar-toggle');
+    var drawer    = document.getElementById('dcToolbarDrawer');
+    if (!drawerBtn || !drawer) return;
+    var isOpen = drawer.classList.contains('open');
+    if (!isOpen) {
+      /* OPEN */
+      drawer.classList.add('open');
+      drawer.style.maxHeight = '80px';
+      drawer.style.opacity   = '1';
+      drawerBtn.setAttribute('aria-expanded', 'true');
+      drawer.setAttribute('aria-hidden', 'false');
+    } else {
+      /* CLOSE */
+      drawer.classList.remove('open');
+      drawer.style.maxHeight = '0';
+      drawer.style.opacity   = '0';
+      drawerBtn.setAttribute('aria-expanded', 'false');
+      drawer.setAttribute('aria-hidden', 'true');
+    }
   }
 
   /* ── TOOL BUTTONS ── */
@@ -225,39 +342,46 @@
     deferredPrompt = e;
   });
 
-  var pwaBtn = document.getElementById('tool-pwa');
-  if (pwaBtn) {
-    pwaBtn.addEventListener('click', function () {
-      if (isiOS) { alert('برای نصب در آیفون: Share → Add to Home Screen'); return; }
-      if (!deferredPrompt) { alert('امکان نصب خودکار در حال حاضر موجود نیست.'); return; }
-      deferredPrompt.prompt();
-      deferredPrompt.userChoice.finally(function () { deferredPrompt = null; });
-    });
+  /* PWA install — invoked by the delegated click handler. */
+  function handlePwaInstall() {
+    if (isiOS) { alert('برای نصب در آیفون: Share → Add to Home Screen'); return; }
+    if (!deferredPrompt) { alert('امکان نصب خودکار در حال حاضر موجود نیست.'); return; }
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.finally(function () { deferredPrompt = null; });
   }
 
-  var consultBtn = document.getElementById('tool-consult');
-  if (consultBtn) {
-    consultBtn.addEventListener('click', function () {
-      window.location.href = 'mailto:info@dentcast.ir';
-    });
+  /* ── SEARCH OPEN — invoked by the delegated click handler ── */
+  function openGlobalSearch() {
+    var box = document.getElementById('dcGlobalBox');
+    if (!box) return;
+    box.classList.add('open');
+    var inp = document.getElementById('dcSearch');
+    if (inp) setTimeout(function () { inp.focus(); }, 0);
   }
 
-  var aboutBtn = document.getElementById('tool-about');
-  if (aboutBtn) {
-    aboutBtn.addEventListener('click', function () {
-      window.location.href = '/about.html';
-    });
-  }
-
-  /* ── SEARCH BUTTON → OPEN dcGlobalBox ── */
-  document.querySelectorAll('.dcOpenSearch').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      var box = document.getElementById('dcGlobalBox');
-      if (!box) return;
-      box.classList.add('open');
-      var inp = document.getElementById('dcSearch');
-      if (inp) setTimeout(function () { inp.focus(); }, 0);
-    });
+  /* ── HEADER EVENT DELEGATION ───────────────────────
+     Header button handlers are bound ONCE on document, not on the buttons.
+     Because document always exists, it doesn't matter WHEN a button enters
+     the DOM — static markup, injected at load, or replaced later all behave
+     identically. This eliminates the old bind-time `if (el) el.addEventListener`
+     lookups that silently no-op'd when an element was missing or renamed (the
+     dead-button failure mode), and lets the header be re-injected (e.g. for the
+     music player) without rebinding. Handler LOGIC is unchanged — only the
+     binding mechanism moved from per-element to delegation. (The radar button
+     is delegated separately, inside the radar block, after openRadar exists.) */
+  document.addEventListener('click', function (e) {
+    var t = e.target;
+    if (!t || !t.closest) return;
+    /* Mobile tool drawer. NOTE: #btn-toolbar-toggle is the mobile tool
+       drawer — NOT #dcd-hdr-hamburger (desktop sidebar collapse in
+       index.html). Never conflate the two. */
+    if (t.closest('#btn-toolbar-toggle')) { toggleToolbarDrawer(); return; }
+    /* Search trigger — a CLASS; the search button has no id. */
+    if (t.closest('.dcOpenSearch'))       { openGlobalSearch();    return; }
+    /* Drawer tool buttons. */
+    if (t.closest('#tool-pwa'))     { handlePwaInstall(); return; }
+    if (t.closest('#tool-consult')) { window.location.href = 'mailto:info@dentcast.ir'; return; }
+    if (t.closest('#tool-about'))   { window.location.href = '/about.html'; return; }
   });
 
   /* ── CLOSE RESULTS ── */
@@ -372,10 +496,13 @@
     radarResults.innerHTML = h;
   }
 
-  var radarTopbarBtn = document.getElementById('btn-radar-topbar');
-  if (radarTopbarBtn) {
-    radarTopbarBtn.addEventListener('click', function () { openRadar(true); });
-  }
+  /* Radar open button — delegated so it survives header injection/replacement
+     (the button lives in the injected header cluster). This runs only when the
+     radar block was reached, i.e. the overlay is present; the overlay-internal
+     binds below stay direct, as those elements are present by now. */
+  document.addEventListener('click', function (e) {
+    if (e.target && e.target.closest && e.target.closest('#btn-radar-topbar')) openRadar(true);
+  });
 
   if (radarCloseBtn) {
     radarCloseBtn.addEventListener('click', function () { closeRadar(false); });
