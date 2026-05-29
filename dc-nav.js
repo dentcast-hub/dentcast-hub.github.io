@@ -160,7 +160,6 @@
 '  <div class="dc-topbar-actions">' +
 '    <a href="/" aria-label="صفحه اصلی دنت‌کست" style="display:flex;align-items:center;margin-left:8px;flex-shrink:0;"><img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;"></a>' +
 '    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="ابزارها" aria-expanded="false"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>' +
-'    <button class="dc-topbar-btn" id="btn-radar-topbar" aria-label="رادار"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="m12 12 7-7"/><path d="M12 12h.01"/></svg></button>' +
 '    <button class="dc-topbar-btn dcOpenSearch" aria-label="جستجو"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>' +
 '  </div>' +
 '  <div class="dc-topbar-brand">' +
@@ -195,6 +194,14 @@
 '  </div>' +
 '</div>';
 
+  /* Radar trigger as a drawer tool button (Change A): the radar used to sit
+     in the top bar; it now lives in the drawer alongside tool-pwa/consult/
+     about. Same sacred id (#btn-radar-topbar) and same delegated wiring to
+     openRadar(true) — only its location changed. Styled like the other
+     drawer tools so it's native and RTL-correct. */
+  var DC_DRAWER_RADAR_BTN =
+'<button class="dc-drawer-tool-seg" type="button" id="btn-radar-topbar" aria-label="رادار"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="m12 12 7-7"/><path d="M12 12h.01"/></svg></span><span class="dc-drawer-tool-txt">رادار</span></button>';
+
   (function injectSharedHeader() {
     /* Opt-out: localized/non-standard pages keep their own header. This
        is an opt-OUT, so a forgotten flag fails loud (a visible wrong
@@ -225,6 +232,15 @@
     }
     if (!document.getElementById('dcRadarOverlay')) {
       document.body.insertAdjacentHTML('beforeend', DC_RADAR_HTML);
+    }
+
+    /* 3) Place the radar trigger INSIDE the drawer (Change A). We ONLY add the
+          button to the existing drawer; we never rebuild it or touch the other
+          tool buttons. Idempotent via the id check. The button's delegated
+          handler (further below) is unchanged, so its wiring is preserved. */
+    if (!document.getElementById('btn-radar-topbar')) {
+      var drawerInner = document.querySelector('#dcToolbarDrawer .dc-toolbar-drawer-inner');
+      if (drawerInner) drawerInner.insertAdjacentHTML('beforeend', DC_DRAWER_RADAR_BTN);
     }
   })();
 

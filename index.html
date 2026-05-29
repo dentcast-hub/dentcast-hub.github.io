@@ -3348,7 +3348,6 @@ scrollBody.addEventListener('touchend',e=>{
 (function(){
   const overlay=document.getElementById('dcSearchOverlay');
   const overlayBody=document.getElementById('dcSearchOverlayBody');
-  const openBtns=document.querySelectorAll('.dcOpenSearch');
   const closeBtn=document.getElementById('dcCloseSearchOverlay');
   const globalBox=document.getElementById('dcGlobalBox');
   const searchInput=document.getElementById('dcSearch');
@@ -3395,7 +3394,13 @@ scrollBody.addEventListener('touchend',e=>{
     _searchPushed = false;
   }
 
-  openBtns.forEach(b=>b.addEventListener('click',()=>openS(true)));
+  /* Delegated on document so it catches the search button even after dc-nav
+     replaces the static header at load. (Binding directly to .dcOpenSearch
+     here used to break: dc-nav's replace-in-place discarded the original
+     button this was bound to, orphaning the handler — that was the bug.) */
+  document.addEventListener('click',function(e){
+    if(e.target.closest && e.target.closest('.dcOpenSearch')) openS(true);
+  });
   closeBtn&&closeBtn.addEventListener('click',()=>closeS(false));
 
   /* آپدیت hash هنگام تایپ */
