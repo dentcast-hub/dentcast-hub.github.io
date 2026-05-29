@@ -37,7 +37,7 @@
       bot: '<rect x="5" y="8" width="14" height="10" rx="3"/><path d="M12 8V4"/><circle cx="9" cy="13" r="1"/><circle cx="15" cy="13" r="1"/><path d="M9 18v2"/><path d="M15 18v2"/>',
       link: '<path d="M10 13a5 5 0 0 0 7.1 0l2-2a5 5 0 0 0-7.1-7.1l-1.1 1.1"/><path d="M14 11a5 5 0 0 0-7.1 0l-2 2A5 5 0 0 0 12 20.1l1.1-1.1"/>',
       headphones: '<path d="M3 14a9 9 0 0 1 18 0"/><path d="M5 14h3v7H5a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2z"/><path d="M19 14h-3v7h3a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2z"/>',
-      treble: '<path d="M13 22c1.8 0 3-1.2 3-3 0-1.6-1.2-2.7-2.8-2.7-1.3 0-2.2.9-2.2 2"/><path d="M13 19V8c0-2.4 1-4 2.6-4.6 1.2-.5 2.1.4 1.8 1.7-.5 2.2-3 3.6-5.5 3.8-3 .3-4.9 2-4.9 4.3 0 2.1 1.7 3.6 3.8 3.6"/>',
+      treble: '<path d="M10.5 14.8L10.7 14.9L11 14.9L11.2 14.8L11.5 14.7L11.7 14.5L11.9 14.2L12 13.8L12 13.4L11.9 13.1L11.7 12.7L11.4 12.4L11 12.1L10.5 12L10 11.9L9.5 12L9 12.2L8.5 12.6L8.2 13.1L7.9 13.6L7.8 14.3L7.9 14.9L8.1 15.6L8.5 16.2L9 16.7L9.7 17L10.4 17.2L11.2 17.2L12 17.1L12.8 16.7L13.4 16.1C13.4 12.9 12.7 7.5 13 3.5c1.7 -0.1 2.3 1.2 1.5 2.6C12.9 9.5 12.5 13.6 12.5 20.6c-0.1 1.3 -1.2 1.9 -2.3 1.5"/>',
       book: '<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"/>',
       brain: '<path d="M9 4a3 3 0 0 0-3 3v1a3 3 0 0 0-2 5.2A3.5 3.5 0 0 0 8 19h1"/><path d="M15 4a3 3 0 0 1 3 3v1a3 3 0 0 1 2 5.2A3.5 3.5 0 0 1 16 19h-1"/><path d="M12 4v17"/><path d="M8 9h2"/><path d="M14 9h2"/><path d="M8 14h2"/><path d="M14 14h2"/>',
       puzzle: '<path d="M8 3h4v4h3a2 2 0 1 1 0 4h-3v3h3a2 2 0 1 1 0 4h-3v3H8v-3H5a2 2 0 1 1 0-4h3v-3H5a2 2 0 1 1 0-4h3z"/>',
@@ -209,19 +209,21 @@
 
   /* ── MUSIC PLAYER — panel markup ──────────────────
      A dropdown panel that mirrors #dcToolbarDrawer's open/close pattern.
-     Shows the current track's title/artist/description, a play/pause control
-     at the bottom (SEPARATE from the trigger), and a link to the channel.
-     The play/pause button starts disabled and is enabled once tracks load. */
+     Compact: the play/pause control and the channel link sit UP on the title
+     row, flanking the track info (no separate bottom band). Play/pause is the
+     primary affordance (SEPARATE from the header trigger); قفلی‌ها is a subtle
+     secondary link. The play/pause button starts disabled, enabled once tracks
+     load. */
   var DC_MUSIC_PANEL_HTML =
 '<div id="dcMusicPanel" class="dc-music-panel" aria-hidden="true">' +
 '  <div class="dc-music-inner">' +
-'    <div class="dc-music-meta">' +
-'      <div class="dc-music-title" id="dcMusicTitle">در حال بارگذاری…</div>' +
-'      <div class="dc-music-artist" id="dcMusicArtist"></div>' +
-'      <div class="dc-music-desc" id="dcMusicDesc"></div>' +
-'    </div>' +
-'    <div class="dc-music-controls">' +
+'    <div class="dc-music-head">' +
 '      <button class="dc-music-playpause" id="dc-music-playpause" type="button" aria-label="پخش" aria-pressed="false" disabled><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button>' +
+'      <div class="dc-music-text">' +
+'        <div class="dc-music-title" id="dcMusicTitle">در حال بارگذاری…</div>' +
+'        <div class="dc-music-artist" id="dcMusicArtist"></div>' +
+'        <div class="dc-music-desc" id="dcMusicDesc"></div>' +
+'      </div>' +
 '      <a class="dc-music-channel" id="dcMusicChannel" href="#" target="_blank" rel="noopener" hidden><span>قفلی‌ها</span><svg class="dc-music-ext" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg></a>' +
 '    </div>' +
 '  </div>' +
@@ -233,27 +235,29 @@
   var DC_MUSIC_CSS =
 /* Panel — mirrors the tool drawer's max-height/opacity dropdown; themed. */
 '.dc-music-panel{overflow:hidden;max-height:0;opacity:0;background:var(--surface2);border-bottom:1px solid var(--border);transition:max-height .28s cubic-bezier(.4,0,.2,1),opacity .22s ease;}' +
-'.dc-music-inner{padding:16px 16px 14px;display:flex;flex-direction:column;gap:7px;}' +
-/* Visual hierarchy — light and understated: title, accent artist, one-line desc. */
-'.dc-music-title{font-size:.95rem;font-weight:700;line-height:1.4;color:var(--txt);}' +
-'.dc-music-artist{font-size:.72rem;font-weight:600;color:var(--ac);}' +
+'.dc-music-inner{padding:12px 14px;}' +
+/* Compact head row: play/pause (primary) + text block + channel (secondary),
+   all pulled up together — no separate bottom band. */
+'.dc-music-head{display:flex;align-items:center;gap:10px;}' +
+'.dc-music-text{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px;}' +
+/* Light hierarchy: title, accent artist, one-line concept description. */
+'.dc-music-title{font-size:.9rem;font-weight:700;line-height:1.35;color:var(--txt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}' +
+'.dc-music-artist{font-size:.7rem;font-weight:600;color:var(--ac);}' +
 '.dc-music-artist:empty{display:none;}' +
-/* Description is capped to a single line (ellipsis if longer). */
-'.dc-music-desc{font-size:.72rem;line-height:1.6;color:var(--txt3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}' +
+'.dc-music-desc{font-size:.7rem;line-height:1.5;color:var(--txt3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}' +
 '.dc-music-desc:empty{display:none;}' +
-/* Controls row: delicate play/pause + subtle channel link, thin divider. */
-'.dc-music-controls{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:6px;padding-top:12px;border-top:1px solid var(--border);}' +
-/* Play/pause: minimal — small accent icon, transparent, but a 44px touch target. */
+/* Play/pause: small refined accent icon, transparent, 44px touch target. */
 '.dc-music-playpause{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border:0;border-radius:999px;background:transparent;color:var(--ac);cursor:pointer;flex-shrink:0;transition:transform .12s ease,background .15s ease;-webkit-tap-highlight-color:transparent;}' +
-'.dc-music-playpause .dc-svg-icon{width:24px;height:24px;fill:currentColor;stroke:none;animation:dcMusicPop .18s ease;}' +
+'.dc-music-playpause .dc-svg-icon{width:20px;height:20px;fill:currentColor;stroke:none;animation:dcMusicPop .18s ease;}' +
 '.dc-music-playpause[disabled]{opacity:.35;cursor:default;}' +
 '.dc-music-playpause:not([disabled]):hover{background:rgba(var(--ac-rgb),.10);}' +
-'.dc-music-playpause:not([disabled]):active{transform:scale(.88);}' +
-'.dc-music-channel{display:inline-flex;align-items:center;gap:5px;font-size:.74rem;font-weight:600;color:var(--txt3);text-decoration:none;transition:color .15s ease;}' +
+'.dc-music-playpause:not([disabled]):active{transform:scale(.86);}' +
+/* Channel: tiny, subtle secondary action with an external-link cue. */
+'.dc-music-channel{display:inline-flex;align-items:center;gap:4px;flex-shrink:0;font-size:.7rem;font-weight:600;color:var(--txt3);text-decoration:none;transition:color .15s ease;}' +
 '.dc-music-channel:hover{color:var(--ac);}' +
-'.dc-music-channel .dc-music-ext{width:.8em;height:.8em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;opacity:.7;}' +
+'.dc-music-channel .dc-music-ext{width:.78em;height:.78em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;opacity:.7;}' +
 /* Unavailable state: dim the (disabled) controls, leave the message clean. */
-'.dc-music-panel.is-unavailable .dc-music-controls{opacity:.5;}' +
+'.dc-music-panel.is-unavailable .dc-music-playpause{opacity:.3;}' +
 /* "Now playing" equalizer inside the header trigger (transform-based). */
 '.dc-music-eq{display:none;align-items:flex-end;justify-content:center;gap:2px;width:1em;height:1em;vertical-align:-.15em;}' +
 '.dc-music-trigger.is-playing .dc-svg-icon{display:none;}' +
