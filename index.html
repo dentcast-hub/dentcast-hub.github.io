@@ -337,7 +337,8 @@ body{
 }
 .dc-bn-ico{
   font-size:22px; line-height:1;
-  transition:transform var(--tr);
+  color:var(--bn-txt);
+  transition:transform var(--tr),color var(--tr);
 }
 .dc-bn-lbl{
   font-size:.66rem; font-weight:700;
@@ -2218,15 +2219,42 @@ body.dc-desktop-ui #dc-desktop-root{
   stroke:currentColor;
 }
 
-/* Studio tab always bolder than peers */
+/* Studio tab always bolder than peers (size emphasis only — color/active
+   logic is shared with the other tabs, no per-tab exception) */
 .dc-bn-item[data-panel="panel-studio"] .dc-bn-ico{
   font-size:27px;
 }
 .dc-bn-item[data-panel="panel-studio"] .dc-bn-lbl{
-  font-size:.72rem; font-weight:900; color:var(--pr);
+  font-size:.72rem; font-weight:900;
 }
-[data-theme="dark"] .dc-bn-item[data-panel="panel-studio"] .dc-bn-lbl{
-  color:var(--ac);
+
+/* ── BOTTOM-NAV "LIVING NEON" GLOW ──────────────────────────────
+   Each tab carries its own brand-color triad (sourced from the
+   "تازه‌ترین مطالب" list icons). Only the ACTIVE tab's icon glows;
+   inactive tabs stay muted with no glow. */
+.dc-bn-item[data-panel="panel-studio"]  { --bn-glow:196,152,32; }  /* gold  #c49820 */
+.dc-bn-item[data-panel="panel-sharehub"]{ --bn-glow:58,141,165; }  /* blue  #3a8da5 */
+.dc-bn-item[data-panel="panel-patient"] { --bn-glow:226,87,76; }   /* coral #e2574c */
+[data-theme="dark"] .dc-bn-item[data-panel="panel-studio"]  { --bn-glow:227,185,74; }
+[data-theme="dark"] .dc-bn-item[data-panel="panel-sharehub"]{ --bn-glow:127,187,207; }
+[data-theme="dark"] .dc-bn-item[data-panel="panel-patient"] { --bn-glow:240,131,122; }
+
+/* Active icon: tinted to its brand color + soft pulsing outer glow.
+   Only opacity/filter animate — never layout-triggering props. */
+.dc-bn-item.active .dc-bn-ico{
+  color:rgb(var(--bn-glow));
+  animation:bnNeonPulse 7s ease-in-out infinite;
+}
+@keyframes bnNeonPulse{
+  0%,100%{ filter:drop-shadow(0 0 2px rgba(var(--bn-glow),.30)); }
+  50%    { filter:drop-shadow(0 0 8px rgba(var(--bn-glow),.85)); }
+}
+/* Reduced motion: steady static glow, no pulse */
+@media (prefers-reduced-motion: reduce){
+  .dc-bn-item.active .dc-bn-ico{
+    animation:none;
+    filter:drop-shadow(0 0 5px rgba(var(--bn-glow),.55));
+  }
 }
 
 /* =====================================================
