@@ -145,10 +145,36 @@ TYPE_META = {
 }
 
 
+# Icons are emitted INLINE, not via <use href="external.svg#id">.
+# External SVG sprite references are not rendered by several browsers
+# (notably Safari/iOS), which left every pillar icon blank. Each symbol's
+# markup is read once from the sprite and inlined — matching the inline
+# <svg> pattern used everywhere else on the site. Sizing/fill/stroke come
+# from the .dc-svg-icon CSS class exactly as before.
+_ICON_CACHE = None
+
+
+def _load_icons():
+    global _ICON_CACHE
+    if _ICON_CACHE is None:
+        import re
+        sprite = (ROOT / "assets" / "icons" / "icons.svg").read_text(encoding="utf-8")
+        _ICON_CACHE = {}
+        for m in re.finditer(r'<symbol id="([^"]+)"([^>]*)>(.*?)</symbol>', sprite, re.S):
+            sid, attrs, inner = m.group(1), m.group(2), m.group(3)
+            vb = re.search(r'viewBox="([^"]+)"', attrs)
+            _ICON_CACHE[sid] = (vb.group(1) if vb else "0 0 24 24", " ".join(inner.split()))
+    return _ICON_CACHE
+
+
 def svg_icon(symbol_id):
+    icons = _load_icons()
+    if symbol_id not in icons:
+        raise KeyError("icon symbol not found in sprite: " + symbol_id)
+    viewbox, inner = icons[symbol_id]
     return (
-        '<svg class="dc-svg-icon" aria-hidden="true">'
-        '<use href="/assets/icons/icons.svg#' + symbol_id + '"/>'
+        '<svg class="dc-svg-icon" viewBox="' + viewbox + '" aria-hidden="true">'
+        + inner +
         '</svg>'
     )
 
