@@ -255,8 +255,8 @@
 '.dc-music-playpause:not([disabled]):hover{background:rgba(var(--ac-rgb),.10);}' +
 '.dc-music-playpause:not([disabled]):active{transform:scale(.86);}' +
 /* Channel: tiny, subtle secondary action with an external-link cue. */
-'.dc-music-channel{display:inline-flex;align-items:center;gap:4px;flex-shrink:0;font-size:.7rem;font-weight:600;color:var(--txt3);text-decoration:none;transition:color .15s ease;}' +
-'.dc-music-channel:hover{color:var(--ac);}' +
+'.dc-music-channel{display:inline-flex;align-items:center;gap:4px;flex-shrink:0;font-size:.7rem;font-weight:600;color:#c49820;text-decoration:none;transition:color .15s ease;}' +
+'.dc-music-channel:hover{color:#c49820;}' +
 '.dc-music-channel .dc-music-ext{width:.78em;height:.78em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;opacity:.7;}' +
 /* Unavailable state: dim the (disabled) controls, leave the message clean. */
 '.dc-music-panel.is-unavailable .dc-music-playpause{opacity:.3;}' +
