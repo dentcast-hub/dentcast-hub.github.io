@@ -2246,15 +2246,17 @@ body.dc-desktop-ui #dc-desktop-root{
 }
 
 /* ── BOTTOM-NAV "LIVING NEON" GLOW ──────────────────────────────
-   Each tab carries its own brand-color triad (sourced from the
-   "تازه‌ترین مطالب" list icons). Only the ACTIVE tab's icon glows;
-   inactive tabs stay muted with no glow. */
-.dc-bn-item[data-panel="panel-studio"]  { --bn-glow:196,152,32; }  /* gold  #c49820 */
-.dc-bn-item[data-panel="panel-sharehub"]{ --bn-glow:58,141,165; }  /* blue  #3a8da5 */
-.dc-bn-item[data-panel="panel-patient"] { --bn-glow:124,92,214; }  /* violet #7c5cd6 */
-[data-theme="dark"] .dc-bn-item[data-panel="panel-studio"]  { --bn-glow:227,185,74; }
-[data-theme="dark"] .dc-bn-item[data-panel="panel-sharehub"]{ --bn-glow:127,187,207; }
-[data-theme="dark"] .dc-bn-item[data-panel="panel-patient"] { --bn-glow:157,134,239; }
+   Each tab carries its own --bn-glow RGB triad that drives BOTH the icon
+   color and its neon glow. Hues are warm/bright and well spread on the wheel
+   (gold ~44°, teal ~173°, coral ~352°) so every one pops on the cool navy
+   frosted-glass footer — cool colors blended into the navy, so blue→teal and
+   violet→coral. Only the ACTIVE tab's icon glows; inactive tabs stay muted. */
+.dc-bn-item[data-panel="panel-studio"]  { --bn-glow:196,152,32; }  /* gold  #c49820 (~44°) */
+.dc-bn-item[data-panel="panel-sharehub"]{ --bn-glow:79,209,197; }  /* teal  #4fd1c5 (~173°) */
+.dc-bn-item[data-panel="panel-patient"] { --bn-glow:245,106,121; } /* coral #f56a79 (~352°) */
+[data-theme="dark"] .dc-bn-item[data-panel="panel-studio"]  { --bn-glow:227,185,74; }  /* gold  #e3b94a */
+[data-theme="dark"] .dc-bn-item[data-panel="panel-sharehub"]{ --bn-glow:95,224,211; }  /* teal  #5fe0d3 */
+[data-theme="dark"] .dc-bn-item[data-panel="panel-patient"] { --bn-glow:255,122,138; } /* coral #ff7a8a */
 
 /* Active icon: tinted to its brand color + soft pulsing outer glow.
    Only opacity/filter animate — never layout-triggering props. */
