@@ -81,11 +81,13 @@
   --sb-txt2:rgba(232,240,255,.55);
   --sb-div:rgba(255,255,255,.08);
 
-  /* bottom nav — deep-navy footer derived from --pr (#022360), darkened
-     so the active-tab neon icon glow reads against a dark surface */
-  --bn-bg:#04122c;
+  /* bottom nav — mid-navy footer set to the brand navy --pr (#022360), the
+     same navy as the episodes/podcast hero card, so the footer belongs to the
+     page instead of reading as a near-black patch. Active-tab neon icon glow
+     still reads against it. */
+  --bn-bg:#022360;
   --bn-border:rgba(125,160,230,.22);
-  --bn-txt:#8ea4cc;
+  --bn-txt:#a8bcdc;
   --bn-active:#eef3ff;
 
   --card-bg:#ffffff;
@@ -121,10 +123,11 @@
 
   --txt:#e8f0ff; --txt2:#8aaac8; --txt3:#4a6a88;
 
-  /* same deep-navy footer; sits darker than the dark body (--bg #0e1621)
-     so it never merges into the page, with a light top edge for separation */
-  --bn-bg:#04122c; --bn-border:rgba(125,160,230,.22);
-  --bn-txt:#8ea4cc; --bn-active:#eef3ff;
+  /* same mid-navy footer (#022360) as the episodes card; still sits as its
+     own surface against the dark body (--bg #0e1621), with a light top edge
+     for separation */
+  --bn-bg:#022360; --bn-border:rgba(125,160,230,.22);
+  --bn-txt:#a8bcdc; --bn-active:#eef3ff;
 
   --card-bg:#1e2c3a; --card-border:rgba(255,255,255,.07);
   --card-sh:0 1px 3px rgba(0,0,0,.22),0 4px 14px rgba(0,0,0,.14);
@@ -2254,8 +2257,11 @@ body.dc-desktop-ui #dc-desktop-root{
   animation:bnNeonPulse 7s ease-in-out infinite;
 }
 @keyframes bnNeonPulse{
-  0%,100%{ filter:drop-shadow(0 0 2px rgba(var(--bn-glow),.12)); }
-  50%    { filter:drop-shadow(0 0 8px rgba(var(--bn-glow),.97)); }
+  /* Wide opacity swing for an obvious breath: dims to a faint trace (.08)
+     then rises to full (1.0). Same 7s ease-in-out cycle, same filter-only
+     blur radii — only the min/max intensity gap widened. */
+  0%,100%{ filter:drop-shadow(0 0 2px rgba(var(--bn-glow),.08)); }
+  50%    { filter:drop-shadow(0 0 8px rgba(var(--bn-glow),1)); }
 }
 /* Reduced motion: steady static glow, no pulse */
 @media (prefers-reduced-motion: reduce){
