@@ -37,6 +37,7 @@
       bot: '<rect x="5" y="8" width="14" height="10" rx="3"/><path d="M12 8V4"/><circle cx="9" cy="13" r="1"/><circle cx="15" cy="13" r="1"/><path d="M9 18v2"/><path d="M15 18v2"/>',
       link: '<path d="M10 13a5 5 0 0 0 7.1 0l2-2a5 5 0 0 0-7.1-7.1l-1.1 1.1"/><path d="M14 11a5 5 0 0 0-7.1 0l-2 2A5 5 0 0 0 12 20.1l1.1-1.1"/>',
       headphones: '<path d="M3 14a9 9 0 0 1 18 0"/><path d="M5 14h3v7H5a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2z"/><path d="M19 14h-3v7h3a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2z"/>',
+      treble: '<path d="M13 22c1.8 0 3-1.2 3-3 0-1.6-1.2-2.7-2.8-2.7-1.3 0-2.2.9-2.2 2"/><path d="M13 19V8c0-2.4 1-4 2.6-4.6 1.2-.5 2.1.4 1.8 1.7-.5 2.2-3 3.6-5.5 3.8-3 .3-4.9 2-4.9 4.3 0 2.1 1.7 3.6 3.8 3.6"/>',
       book: '<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"/>',
       brain: '<path d="M9 4a3 3 0 0 0-3 3v1a3 3 0 0 0-2 5.2A3.5 3.5 0 0 0 8 19h1"/><path d="M15 4a3 3 0 0 1 3 3v1a3 3 0 0 1 2 5.2A3.5 3.5 0 0 1 16 19h-1"/><path d="M12 4v17"/><path d="M8 9h2"/><path d="M14 9h2"/><path d="M8 14h2"/><path d="M14 14h2"/>',
       puzzle: '<path d="M8 3h4v4h3a2 2 0 1 1 0 4h-3v3h3a2 2 0 1 1 0 4h-3v3H8v-3H5a2 2 0 1 1 0-4h3v-3H5a2 2 0 1 1 0-4h3z"/>',
@@ -161,10 +162,10 @@
 '    <a href="/" aria-label="صفحه اصلی دنت‌کست" style="display:flex;align-items:center;margin-left:8px;flex-shrink:0;"><img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;"></a>' +
 '    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="ابزارها" aria-expanded="false"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>' +
 '    <button class="dc-topbar-btn dcOpenSearch" aria-label="جستجو"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>' +
-/* Music player trigger (headphones icon). ONLY toggles #dcMusicPanel open/
-   closed via delegation — it never affects playback (play/pause is a separate
-   control inside the panel). */
-'    <button class="dc-topbar-btn dc-music-trigger" id="btn-music-toggle" aria-label="موسیقی" aria-expanded="false"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M3 14a9 9 0 0 1 18 0"/><path d="M5 14h3v7H5a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2z"/><path d="M19 14h-3v7h3a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2z"/></svg><span class="dc-music-eq" aria-hidden="true"><i></i><i></i><i></i></span></button>' +
+/* Music player trigger (treble-clef icon from the registry). ONLY toggles
+   #dcMusicPanel open/closed via delegation — it never affects playback
+   (play/pause is a separate control inside the panel). */
+'    <button class="dc-topbar-btn dc-music-trigger" id="btn-music-toggle" aria-label="موسیقی" aria-expanded="false">' + dcSvgIcon('treble') + '<span class="dc-music-eq" aria-hidden="true"><i></i><i></i><i></i></span></button>' +
 '  </div>' +
 '  <div class="dc-topbar-brand">' +
 '    <div class="dc-topbar-brand-name">DentCast</div>' +
@@ -221,7 +222,7 @@
 '    </div>' +
 '    <div class="dc-music-controls">' +
 '      <button class="dc-music-playpause" id="dc-music-playpause" type="button" aria-label="پخش" aria-pressed="false" disabled><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button>' +
-'      <a class="dc-music-channel" id="dcMusicChannel" href="#" target="_blank" rel="noopener" hidden><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M3 14a9 9 0 0 1 18 0"/><path d="M5 14h3v7H5a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2z"/><path d="M19 14h-3v7h3a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2z"/></svg><span>کانال موسیقی</span><svg class="dc-music-ext" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg></a>' +
+'      <a class="dc-music-channel" id="dcMusicChannel" href="#" target="_blank" rel="noopener" hidden><span>قفلی‌ها</span><svg class="dc-music-ext" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg></a>' +
 '    </div>' +
 '  </div>' +
 '</div>';
@@ -232,22 +233,24 @@
   var DC_MUSIC_CSS =
 /* Panel — mirrors the tool drawer's max-height/opacity dropdown; themed. */
 '.dc-music-panel{overflow:hidden;max-height:0;opacity:0;background:var(--surface2);border-bottom:1px solid var(--border);transition:max-height .28s cubic-bezier(.4,0,.2,1),opacity .22s ease;}' +
-'.dc-music-inner{padding:14px 16px;display:flex;flex-direction:column;gap:10px;}' +
-/* Visual hierarchy: title prominent, artist accent, description muted. */
-'.dc-music-title{font-size:1rem;font-weight:800;line-height:1.45;color:var(--txt);}' +
-'.dc-music-artist{font-size:.78rem;font-weight:700;color:var(--ac);}' +
+'.dc-music-inner{padding:16px 16px 14px;display:flex;flex-direction:column;gap:7px;}' +
+/* Visual hierarchy — light and understated: title, accent artist, one-line desc. */
+'.dc-music-title{font-size:.95rem;font-weight:700;line-height:1.4;color:var(--txt);}' +
+'.dc-music-artist{font-size:.72rem;font-weight:600;color:var(--ac);}' +
 '.dc-music-artist:empty{display:none;}' +
-'.dc-music-desc{font-size:.76rem;line-height:1.8;color:var(--txt3);}' +
+/* Description is capped to a single line (ellipsis if longer). */
+'.dc-music-desc{font-size:.72rem;line-height:1.6;color:var(--txt3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}' +
 '.dc-music-desc:empty{display:none;}' +
-/* Controls row: play/pause primary, channel secondary, separated by a rule. */
-'.dc-music-controls{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:2px;padding-top:10px;border-top:1px solid var(--border);}' +
-'.dc-music-playpause{display:inline-flex;align-items:center;justify-content:center;width:46px;height:46px;border:0;border-radius:999px;background:var(--ac);color:var(--txt-inv,#fff);cursor:pointer;flex-shrink:0;transition:transform .12s ease;-webkit-tap-highlight-color:transparent;}' +
-'.dc-music-playpause .dc-svg-icon{width:22px;height:22px;fill:currentColor;stroke:none;animation:dcMusicPop .18s ease;}' +
-'.dc-music-playpause[disabled]{opacity:.4;cursor:default;}' +
-'.dc-music-playpause:not([disabled]):active{transform:scale(.9);}' +
-'.dc-music-channel{display:inline-flex;align-items:center;gap:6px;font-size:.78rem;font-weight:600;color:var(--txt3);text-decoration:none;transition:color .15s ease;}' +
+/* Controls row: delicate play/pause + subtle channel link, thin divider. */
+'.dc-music-controls{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:6px;padding-top:12px;border-top:1px solid var(--border);}' +
+/* Play/pause: minimal — small accent icon, transparent, but a 44px touch target. */
+'.dc-music-playpause{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border:0;border-radius:999px;background:transparent;color:var(--ac);cursor:pointer;flex-shrink:0;transition:transform .12s ease,background .15s ease;-webkit-tap-highlight-color:transparent;}' +
+'.dc-music-playpause .dc-svg-icon{width:24px;height:24px;fill:currentColor;stroke:none;animation:dcMusicPop .18s ease;}' +
+'.dc-music-playpause[disabled]{opacity:.35;cursor:default;}' +
+'.dc-music-playpause:not([disabled]):hover{background:rgba(var(--ac-rgb),.10);}' +
+'.dc-music-playpause:not([disabled]):active{transform:scale(.88);}' +
+'.dc-music-channel{display:inline-flex;align-items:center;gap:5px;font-size:.74rem;font-weight:600;color:var(--txt3);text-decoration:none;transition:color .15s ease;}' +
 '.dc-music-channel:hover{color:var(--ac);}' +
-'.dc-music-channel .dc-svg-icon{width:1.05em;height:1.05em;}' +
 '.dc-music-channel .dc-music-ext{width:.8em;height:.8em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;opacity:.7;}' +
 /* Unavailable state: dim the (disabled) controls, leave the message clean. */
 '.dc-music-panel.is-unavailable .dc-music-controls{opacity:.5;}' +
