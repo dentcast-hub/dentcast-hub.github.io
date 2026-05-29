@@ -340,40 +340,8 @@ footer{
 </head>
 
 <body>
-<!-- DC NAV: TOP BAR -->
-<header class="dc-topbar">
-  <div class="dc-topbar-actions">
-    <a href="/" aria-label="صفحه اصلی دنت‌کست" style="display:flex;align-items:center;margin-left:8px;flex-shrink:0;"><img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;"></a>
-    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="ابزارها" aria-expanded="false">☰</button>
-    <button class="dc-topbar-btn dcOpenSearch" aria-label="جستجو">🔍</button>
-  </div>
-  <div class="dc-topbar-brand">
-    <div class="dc-topbar-brand-name">DentCast</div>
-    <a href="/about.html" class="dc-topbar-brand-sub">دکتر فواد شهابیان</a>
-  </div>
-</header>
-<div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">
-  <div class="dc-toolbar-drawer-inner">
-    <span class="dc-toolbar-drawer-label">ابزارها</span>
-    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa"><span class="dc-drawer-tool-ico">📱</span><span class="dc-drawer-tool-txt">نصب</span></button>
-    <button class="dc-drawer-tool-seg" type="button" id="tool-consult"><span class="dc-drawer-tool-ico">📧</span><span class="dc-drawer-tool-txt">مشاوره</span></button>
-    <button class="dc-drawer-tool-seg" type="button" id="tool-about"><span class="dc-drawer-tool-ico">✨</span><span class="dc-drawer-tool-txt">درباره</span></button>
-  </div>
-</div>
-<div id="dcRadarOverlay" class="radar-overlay" aria-hidden="true">
-  <div class="radar-overlay-header">
-    <button id="dcCloseRadarOverlay" class="radar-close-btn">&times;</button>
-    <div class="radar-header-title">رادار دنت‌کست (جایگزین گوگل)</div>
-  </div>
-  <div class="radar-overlay-body">
-    <div class="radar-search-box">
-      <input type="text" id="dcRadarInput" placeholder="نام سایت، زمینه فعالیت یا کلمه کلیدی..." autocomplete="off">
-    </div>
-    <div id="dcRadarResults" class="radar-results">
-      <div class="radar-initial-msg">برای جستجو در بین سایت‌های دندانپزشکی، تایپ کنید...</div>
-    </div>
-  </div>
-</div>
+<!-- DC NAV: header is injected by dc-nav.js, loaded synchronously here so it is in place before first paint -->
+<script src="/dc-nav.js"></script>
 
 <div id="dc-top"></div>
 
@@ -551,6 +519,5 @@ document.addEventListener("DOMContentLoaded", function () {
   updateState();
 });
 </script>
-<script src="/dc-nav.js" defer></script>
 </body>
 </html>

@@ -7,6 +7,17 @@
 (function () {
   'use strict';
 
+  /* Our own <script> element, captured synchronously. Used as the header
+     injection anchor: the cluster is inserted right before this script, i.e.
+     exactly where the static header used to sit. Valid only while this script
+     runs synchronously (a sync script positioned in-place on a real page);
+     it is null for deferred scripts, which lines up with the no-inject path. */
+  var dcCurrentScript = document.currentScript;
+
+  /* True once we've injected the header on this page. Gates the deferred
+     radar-overlay injection in dcInitRest so header-less pages never get one. */
+  var dcHeaderInjected = false;
+
   function dcSvgIcon(name) {
     var icons = {
       menu: '<line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/>',
@@ -120,47 +131,48 @@
   }
 
   /* ── SHARED HEADER — SINGLE SOURCE OF TRUTH ───────
-     The dc-topbar header used to be copy-pasted into every
-     page. It now lives here, once, and is injected at runtime
-     so header changes (and the upcoming global music player,
-     which lives in the header) reach every page without
-     editing hundreds of files.
+     The dc-topbar header (header + tool drawer + radar overlay) lives
+     here, once, and is injected fresh at runtime. The static markup has
+     been removed from the pages, so there is NOTHING for the browser to
+     paint before injection — no old header, no jump, zero flash.
 
-     Strategy — REPLACE-IN-PLACE, scoped to the header element:
-       1. Replace ONLY the page's own <header.dc-topbar> with the
-          canonical one, at its original position. Pages keep their
-          static header as a no-JS/SEO fallback; we swap it at load.
-       2. The toolbar drawer (#dcToolbarDrawer) and radar overlay
-          (#dcRadarOverlay) are injected ONLY IF the page lacks them.
-          We never replace existing ones, so page-owned logic that
-          holds a reference to them (e.g. index.html's inline radar)
-          keeps working untouched. The radar overlay MUST end up
-          present either way: the radar block further below does an
-          early `return` from this IIFE if its elements are missing,
-          which would kill every binding defined after that point.
+     Strategy — INJECT-FRESH at this script's position, before first paint:
+       On a real page, dc-nav.js is loaded as a SYNCHRONOUS (non-defer)
+       <script> placed exactly where the header belongs. While the parser
+       is blocked on us, we insert the cluster immediately BEFORE this very
+       <script> (its original position) — so the header is in the DOM before
+       the browser paints anything below it, and at the right spot: no
+       header-less frame and no layout shift. The parent differs (<body> on
+       internal pages, #mobile-shell on index.html) — the script-anchor
+       handles both automatically.
+
+     Gating (which pages get a header) — no per-page marker needed:
+       • document.readyState === 'loading'  ⇒ running synchronously mid-parse
+         (a migrated, header-bearing page). INJECT.
+       • readyState 'interactive'/'complete' ⇒ ran deferred at end of body
+         (a deliberately header-less page, e.g. the embedded player, which
+         still loads dc-nav for theme/search). Do NOT inject — it has no
+         header by design and we must not add one.
+       • <html data-dc-no-header>            ⇒ opt-out page (its own localized
+         header). Skip.
 
      Scope guarantees (header-contract):
-       • We target ONLY the page's mobile header, never the desktop
-         app-shell header (.dcd-col-c-topbar inside .dcd-app, in
-         index.html) — that shell is owned elsewhere and untouched.
-       • Pages whose header is a different localized variant opt out
-         via <html data-dc-no-header> and keep their own markup.
-       • Deliberately chrome-less pages (no header at all, e.g. the
-         embedded player) have nothing to replace, so nothing is
-         injected — they stay as-is.
-
-     Timing: this runs synchronously during dc-nav.js's deferred
-     execution, BEFORE DOMContentLoaded. Consumers that read header
-     elements inside a DOMContentLoaded handler — notably
-     global-search.js, which binds #dcSearch with no null guard —
-     therefore always find the injected elements already present.
+       • We never touch the desktop app-shell header (.dcd-col-c-topbar
+         inside .dcd-app, in index.html) — only the page's own header slot.
+       • All sacred elements (#dcRadarOverlay + children, #dcToolbarDrawer,
+         header buttons, the relocated #btn-radar-topbar) exist from this
+         instant — before any end-of-body script and before DOMContentLoaded.
+         The radar block's early `return` (overlay missing) can never trip on
+         a header page, because that block runs later, in dcInitRest @ DCL.
+       • #dcSearch / #dcResults / #dcGlobalBox are NOT part of this cluster —
+         they stay page-owned static markup, so global-search.js (which binds
+         #dcSearch with no guard) is unaffected.
   ─────────────────────────────────────────────────── */
   var DC_TOPBAR_HTML =
 '<header class="dc-topbar">' +
 '  <div class="dc-topbar-actions">' +
 '    <a href="/" aria-label="صفحه اصلی دنت‌کست" style="display:flex;align-items:center;margin-left:8px;flex-shrink:0;"><img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;"></a>' +
 '    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="ابزارها" aria-expanded="false"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>' +
-'    <button class="dc-topbar-btn" id="btn-radar-topbar" aria-label="رادار"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="m12 12 7-7"/><path d="M12 12h.01"/></svg></button>' +
 '    <button class="dc-topbar-btn dcOpenSearch" aria-label="جستجو"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>' +
 '  </div>' +
 '  <div class="dc-topbar-brand">' +
@@ -176,6 +188,10 @@
 '    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M10 18h4"/><path d="M12 7v6"/><path d="m9.5 10.5 2.5 2.5 2.5-2.5"/></svg></span><span class="dc-drawer-tool-txt">نصب</span></button>' +
 '    <button class="dc-drawer-tool-seg" type="button" id="tool-consult"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span class="dc-drawer-tool-txt">مشاوره</span></button>' +
 '    <button class="dc-drawer-tool-seg" type="button" id="tool-about"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M12 3l1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></svg></span><span class="dc-drawer-tool-txt">درباره</span></button>' +
+/* Radar trigger — relocated from the top bar into the drawer (Change 2). It
+   keeps its sacred id (#btn-radar-topbar) and its delegated binding to
+   openRadar(true); only its DOM location changed. Styled as a drawer tool. */
+'    <button class="dc-drawer-tool-seg" type="button" id="btn-radar-topbar" aria-label="رادار"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="m12 12 7-7"/><path d="M12 12h.01"/></svg></span><span class="dc-drawer-tool-txt">رادار</span></button>' +
 '  </div>' +
 '</div>';
 
@@ -196,37 +212,45 @@
 '</div>';
 
   (function injectSharedHeader() {
-    /* Opt-out: localized/non-standard pages keep their own header. This
-       is an opt-OUT, so a forgotten flag fails loud (a visible wrong
-       header), never as a silent dead button. */
+    /* Opt-out page keeps its own (localized) header. */
     if (document.documentElement.hasAttribute('data-dc-no-header')) return;
-    if (!document.body) return;
-
-    /* Find the page's OWN mobile header — never the desktop app-shell
-       header (.dcd-col-c-topbar, inside .dcd-app in index.html). */
-    var existing = null;
-    var candidates = document.querySelectorAll('header.dc-topbar:not(.dcd-col-c-topbar)');
-    for (var i = 0; i < candidates.length; i++) {
-      if (!candidates[i].closest('.dcd-app')) { existing = candidates[i]; break; }
-    }
-    /* No header to replace → deliberately chrome-less page. Inject nothing. */
-    if (!existing) return;
-
-    /* 1) Replace ONLY the header element, in place. */
-    var headerFrag = document.createRange().createContextualFragment(DC_TOPBAR_HTML);
-    var newHeader  = headerFrag.firstElementChild;
-    existing.parentNode.replaceChild(headerFrag, existing);
-
-    /* 2) Drawer + radar overlay: inject ONLY if the page lacks them, so we
-          never disturb page-owned siblings (e.g. index.html's inline radar
-          references). The overlay is required for the radar block below. */
-    if (!document.getElementById('dcToolbarDrawer')) {
-      newHeader.insertAdjacentHTML('afterend', DC_DRAWER_HTML);
-    }
-    if (!document.getElementById('dcRadarOverlay')) {
-      document.body.insertAdjacentHTML('beforeend', DC_RADAR_HTML);
-    }
+    /* Only inject when running synchronously mid-parse — i.e. loaded as a
+       sync <script> at the header's slot on a header-bearing page. When
+       dc-nav is loaded deferred (deliberately header-less pages), readyState
+       is no longer 'loading' by the time we run, so we add no header. */
+    if (document.readyState !== 'loading') return;
+    /* Idempotent: never create a second header. (At this point only markup
+       ABOVE this script is parsed, so a header here means we already ran.) */
+    if (document.querySelector('header.dc-topbar:not(.dcd-col-c-topbar)')) return;
+    /* Anchor = this very <script>. Insert the cluster immediately before it —
+       exactly where the static header used to live — so it lands in the right
+       place (works whether the parent is <body> or #mobile-shell) and before
+       the browser paints anything below. */
+    if (!dcCurrentScript || !dcCurrentScript.parentNode) return;
+    /* Header + drawer are injected here (synchronously, before paint). The
+       radar overlay is injected later in dcInitRest: it is hidden, so it
+       needs no pre-paint, and deferring it lets us skip pages that already
+       own a shared overlay (e.g. index.html, whose desktop shell uses it). */
+    dcCurrentScript.insertAdjacentHTML('beforebegin', DC_TOPBAR_HTML + DC_DRAWER_HTML);
+    dcHeaderInjected = true;
   })();
+
+  /* ── EVERYTHING BELOW runs after the DOM is parsed ────────────────
+     The header is already in the DOM (injected synchronously above). The
+     setup here needs the full document, so it is deferred to DOMContentLoaded
+     — which matches the prior (deferred) timing and avoids, e.g., creating a
+     duplicate theme toggle on pages whose static #dc-theme-toggle parses
+     after this script. Delegation is bound on `document`, so behavior is
+     identical regardless of when this runs. */
+  function dcInitRest() {
+
+  /* Radar overlay: inject now (post-parse) only if we injected a header on
+     this page AND the page doesn't already own one. Header-less pages never
+     get it; pages with a shared static overlay (index.html, whose desktop
+     shell uses it) keep theirs. It's present before the radar block below. */
+  if (dcHeaderInjected && document.body && !document.getElementById('dcRadarOverlay')) {
+    document.body.insertAdjacentHTML('beforeend', DC_RADAR_HTML);
+  }
 
   /* ── THEME TOGGLE ─────────────────────────────────
      Single source of truth for theme behavior.
@@ -518,5 +542,16 @@
   window.addEventListener('hashchange', function () {
     if (window.location.hash === '#radar') openRadar(false);
   });
+
+  } /* ── end dcInitRest ──────────────────────────── */
+
+  /* If the DOM is already parsed (deferred / header-less pages), run now;
+     otherwise wait for DOMContentLoaded (header pages, where this script ran
+     synchronously mid-parse and the rest of the body isn't parsed yet). */
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', dcInitRest);
+  } else {
+    dcInitRest();
+  }
 
 })();

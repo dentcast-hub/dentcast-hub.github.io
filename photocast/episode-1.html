@@ -180,41 +180,8 @@
 </head>
 
 <body>
-<!-- DC NAV: TOP BAR -->
-<header class="dc-topbar">
-  <div class="dc-topbar-actions">
-    <a href="/" aria-label="صفحه اصلی دنت‌کست" style="display:flex;align-items:center;margin-left:8px;flex-shrink:0;"><img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;"></a>
-    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="ابزارها" aria-expanded="false"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
-    <button class="dc-topbar-btn" id="btn-radar-topbar" aria-label="رادار"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="m12 12 7-7"/><path d="M12 12h.01"/></svg></button>
-    <button class="dc-topbar-btn dcOpenSearch" aria-label="جستجو"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
-  </div>
-  <div class="dc-topbar-brand">
-    <div class="dc-topbar-brand-name">DentCast</div>
-    <a href="/about.html" class="dc-topbar-brand-sub">دکتر فواد شهابیان</a>
-  </div>
-</header>
-<div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">
-  <div class="dc-toolbar-drawer-inner">
-    <span class="dc-toolbar-drawer-label">ابزارها</span>
-    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M10 18h4"/><path d="M12 7v6"/><path d="m9.5 10.5 2.5 2.5 2.5-2.5"/></svg></span><span class="dc-drawer-tool-txt">نصب</span></button>
-    <button class="dc-drawer-tool-seg" type="button" id="tool-consult"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span class="dc-drawer-tool-txt">مشاوره</span></button>
-    <button class="dc-drawer-tool-seg" type="button" id="tool-about"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M12 3l1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></svg></span><span class="dc-drawer-tool-txt">درباره</span></button>
-  </div>
-</div>
-<div id="dcRadarOverlay" class="radar-overlay" aria-hidden="true">
-  <div class="radar-overlay-header">
-    <button id="dcCloseRadarOverlay" class="radar-close-btn">&times;</button>
-    <div class="radar-header-title">رادار دنت‌کست (جایگزین گوگل)</div>
-  </div>
-  <div class="radar-overlay-body">
-    <div class="radar-search-box">
-      <input type="text" id="dcRadarInput" placeholder="نام سایت، زمینه فعالیت یا کلمه کلیدی..." autocomplete="off">
-    </div>
-    <div id="dcRadarResults" class="radar-results">
-      <div class="radar-initial-msg">برای جستجو در بین سایت‌های دندانپزشکی، تایپ کنید...</div>
-    </div>
-  </div>
-</div>
+<!-- DC NAV: header is injected by dc-nav.js, loaded synchronously here so it is in place before first paint -->
+<script src="/dc-nav.js"></script>
 
 
 <main class="article-content-wrap">
@@ -315,7 +282,6 @@
   <div class="dc-results-box" id="dcResults"></div>
 </div>
 <script src="/global-search.js?v=5" defer></script>
-<script src="/dc-nav.js" defer></script>
 </body>
 </html>
                                                                                                                                                                                                                                                                                                                                                                                                                                         
