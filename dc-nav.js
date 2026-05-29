@@ -37,7 +37,6 @@
       bot: '<rect x="5" y="8" width="14" height="10" rx="3"/><path d="M12 8V4"/><circle cx="9" cy="13" r="1"/><circle cx="15" cy="13" r="1"/><path d="M9 18v2"/><path d="M15 18v2"/>',
       link: '<path d="M10 13a5 5 0 0 0 7.1 0l2-2a5 5 0 0 0-7.1-7.1l-1.1 1.1"/><path d="M14 11a5 5 0 0 0-7.1 0l-2 2A5 5 0 0 0 12 20.1l1.1-1.1"/>',
       headphones: '<path d="M3 14a9 9 0 0 1 18 0"/><path d="M5 14h3v7H5a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2z"/><path d="M19 14h-3v7h3a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2z"/>',
-      treble: '<path d="M10.5 14.8L10.7 14.9L11 14.9L11.2 14.8L11.5 14.7L11.7 14.5L11.9 14.2L12 13.8L12 13.4L11.9 13.1L11.7 12.7L11.4 12.4L11 12.1L10.5 12L10 11.9L9.5 12L9 12.2L8.5 12.6L8.2 13.1L7.9 13.6L7.8 14.3L7.9 14.9L8.1 15.6L8.5 16.2L9 16.7L9.7 17L10.4 17.2L11.2 17.2L12 17.1L12.8 16.7L13.4 16.1C13.4 12.9 12.7 7.5 13 3.5c1.7 -0.1 2.3 1.2 1.5 2.6C12.9 9.5 12.5 13.6 12.5 20.6c-0.1 1.3 -1.2 1.9 -2.3 1.5"/>',
       book: '<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"/>',
       brain: '<path d="M9 4a3 3 0 0 0-3 3v1a3 3 0 0 0-2 5.2A3.5 3.5 0 0 0 8 19h1"/><path d="M15 4a3 3 0 0 1 3 3v1a3 3 0 0 1 2 5.2A3.5 3.5 0 0 1 16 19h-1"/><path d="M12 4v17"/><path d="M8 9h2"/><path d="M14 9h2"/><path d="M8 14h2"/><path d="M14 14h2"/>',
       puzzle: '<path d="M8 3h4v4h3a2 2 0 1 1 0 4h-3v3h3a2 2 0 1 1 0 4h-3v3H8v-3H5a2 2 0 1 1 0-4h3v-3H5a2 2 0 1 1 0-4h3z"/>',
@@ -162,10 +161,11 @@
 '    <a href="/" aria-label="صفحه اصلی دنت‌کست" style="display:flex;align-items:center;margin-left:8px;flex-shrink:0;"><img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;"></a>' +
 '    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="ابزارها" aria-expanded="false"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>' +
 '    <button class="dc-topbar-btn dcOpenSearch" aria-label="جستجو"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>' +
-/* Music player trigger (treble-clef icon from the registry). ONLY toggles
-   #dcMusicPanel open/closed via delegation — it never affects playback
-   (play/pause is a separate control inside the panel). */
-'    <button class="dc-topbar-btn dc-music-trigger" id="btn-music-toggle" aria-label="موسیقی" aria-expanded="false">' + dcSvgIcon('treble') + '<span class="dc-music-eq" aria-hidden="true"><i></i><i></i><i></i></span></button>' +
+/* Music player trigger. Its icon is ALWAYS the equalizer bars: static when
+   idle, animating + glowing when playing (driven by the .is-playing class).
+   The button ONLY toggles #dcMusicPanel via delegation — it never affects
+   playback (play/pause is a separate control inside the panel). */
+'    <button class="dc-topbar-btn dc-music-trigger" id="btn-music-toggle" aria-label="موسیقی" aria-expanded="false"><span class="dc-music-eq" aria-hidden="true"><i></i><i></i><i></i></span></button>' +
 '  </div>' +
 '  <div class="dc-topbar-brand">' +
 '    <div class="dc-topbar-brand-name">DentCast</div>' +
@@ -259,15 +259,24 @@
 /* Unavailable state: dim the (disabled) controls, leave the message clean. */
 '.dc-music-panel.is-unavailable .dc-music-playpause{opacity:.3;}' +
 /* "Now playing" equalizer inside the header trigger (transform-based). */
-'.dc-music-eq{display:none;align-items:flex-end;justify-content:center;gap:2px;width:1em;height:1em;vertical-align:-.15em;}' +
-'.dc-music-trigger.is-playing .dc-svg-icon{display:none;}' +
-'.dc-music-trigger.is-playing .dc-music-eq{display:inline-flex;}' +
-'.dc-music-eq i{display:block;width:3px;height:100%;border-radius:1px;background:currentColor;transform:scaleY(.4);transform-origin:bottom;animation:dcEq .9s ease-in-out infinite;}' +
-'.dc-music-eq i:nth-child(2){animation-delay:.25s;}' +
-'.dc-music-eq i:nth-child(3){animation-delay:.5s;}' +
+/* The trigger's icon is ALWAYS the equalizer bars (no separate clef/note). */
+'.dc-music-trigger{position:relative;}' +
+'.dc-music-eq{display:inline-flex;align-items:flex-end;justify-content:center;gap:2px;width:1em;height:1em;vertical-align:-.15em;}' +
+/* Idle: bars rest static at a low, even height (calm, no motion). The transform
+   transition lets them settle smoothly when playback stops. */
+'.dc-music-eq i{display:block;width:3px;height:100%;border-radius:1px;background:currentColor;transform:scaleY(.4);transform-origin:bottom;transition:transform .3s ease;}' +
+/* Playing: the existing equalizer motion (unchanged) — staggered rise/fall. */
+'.dc-music-trigger.is-playing .dc-music-eq i{animation:dcEq .9s ease-in-out infinite;}' +
+'.dc-music-trigger.is-playing .dc-music-eq i:nth-child(2){animation-delay:.25s;}' +
+'.dc-music-trigger.is-playing .dc-music-eq i:nth-child(3){animation-delay:.5s;}' +
+/* Playing: a soft, slow pulsing accent glow that quietly breathes (not a hard
+   blink). Fades in/out via the button's existing transition when is-playing
+   toggles. Accent color → theme-correct in light + dark. */
+'.dc-music-trigger.is-playing{animation:dcGlow 2.6s ease-in-out infinite;}' +
 '@keyframes dcEq{0%,100%{transform:scaleY(.35);}50%{transform:scaleY(1);}}' +
+'@keyframes dcGlow{0%,100%{box-shadow:0 0 0 0 rgba(var(--ac-rgb),0);}50%{box-shadow:0 0 9px 1px rgba(var(--ac-rgb),.45);}}' +
 '@keyframes dcMusicPop{from{opacity:.4;transform:scale(.82);}to{opacity:1;transform:scale(1);}}' +
-'@media (prefers-reduced-motion: reduce){.dc-music-eq i{animation:none;transform:scaleY(.7);}.dc-music-playpause .dc-svg-icon{animation:none;}.dc-music-panel{transition:none;}}';
+'@media (prefers-reduced-motion: reduce){.dc-music-trigger.is-playing .dc-music-eq i{animation:none;}.dc-music-trigger.is-playing{animation:none;}.dc-music-playpause .dc-svg-icon{animation:none;}.dc-music-panel{transition:none;}}';
 
   (function injectSharedHeader() {
     /* Opt-out: localized/non-standard pages keep their own header. This
