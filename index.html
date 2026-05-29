@@ -81,11 +81,13 @@
   --sb-txt2:rgba(232,240,255,.55);
   --sb-div:rgba(255,255,255,.08);
 
-  /* bottom nav — mid-navy footer set to the brand navy --pr (#022360), the
-     same navy as the episodes/podcast hero card, so the footer belongs to the
-     page instead of reading as a near-black patch. Active-tab neon icon glow
-     still reads against it. */
-  --bn-bg:#022360;
+  /* bottom nav — frosted-glass footer in the brand navy family (same hue as
+     the episodes/podcast hero card). --bn-bg is the solid fallback (a navy a
+     touch lighter than the old #022360); --bn-bg-glass is the translucent
+     layer used with backdrop-filter so the page shows through softly. Active-
+     tab neon icon glow still reads against it. */
+  --bn-bg:#0a2c6e;
+  --bn-bg-glass:rgba(7,33,82,.72);
   --bn-border:rgba(125,160,230,.22);
   --bn-txt:#a8bcdc;
   --bn-active:#eef3ff;
@@ -123,10 +125,11 @@
 
   --txt:#e8f0ff; --txt2:#8aaac8; --txt3:#4a6a88;
 
-  /* same mid-navy footer (#022360) as the episodes card; still sits as its
-     own surface against the dark body (--bg #0e1621), with a light top edge
-     for separation */
-  --bn-bg:#022360; --bn-border:rgba(125,160,230,.22);
+  /* frosted-glass footer in the navy family; against the dark body (--bg
+     #0e1621) the translucent --bn-bg-glass layer sits a touch lighter/bluer
+     than the body so it stays its own glass zone, with a light top edge for
+     separation. --bn-bg is the solid fallback when backdrop-filter is absent. */
+  --bn-bg:#0a2c6e; --bn-bg-glass:rgba(18,46,106,.58); --bn-border:rgba(125,160,230,.22);
   --bn-txt:#a8bcdc; --bn-active:#eef3ff;
 
   --card-bg:#1e2c3a; --card-border:rgba(255,255,255,.07);
@@ -2208,17 +2211,20 @@ body.dc-desktop-ui #dc-desktop-root{
 }
 
 /* =====================================================
-   PROMPT 3 — Bottom nav: darker bg + Studio prominence
+   PROMPT 3 — Bottom nav: frosted-glass bg + Studio prominence
 ===================================================== */
-/* Deep-navy footer in BOTH themes — a darkened cousin of brand navy
-   (#022360), not neutral black, so it stays in the site's color family.
-   Light theme: a distinct anchored dark zone. Dark theme: deeper than the
-   body so it reads as its own surface. Active-tab icon glow pops against it. */
-.dc-bottom-nav{
-  background:var(--bn-bg);
-}
-[data-theme="dark"] .dc-bottom-nav{
-  background:var(--bn-bg);
+/* Frosted-glass footer: where backdrop-filter is supported, the solid navy
+   gives way to a semi-transparent navy layer that blurs the page scrolling
+   behind it, so the bar reads as a light floating glass panel. Both --bn-bg
+   (solid fallback) and --bn-bg-glass (translucent) are theme-driven, so this
+   one selector covers light + dark. The top border + upward shadow from the
+   base rule keep the glass reading as its own zone in both themes. */
+@supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))){
+  .dc-bottom-nav{
+    background:var(--bn-bg-glass);
+    -webkit-backdrop-filter:blur(16px) saturate(140%);
+    backdrop-filter:blur(16px) saturate(140%);
+  }
 }
 /* Meta Base SVG icon color tracking */
 .dc-bn-item[data-panel="panel-sharehub"] .dc-bn-ico{
