@@ -2257,16 +2257,18 @@ body.dc-desktop-ui #dc-desktop-root{
   animation:bnNeonPulse 7s ease-in-out infinite;
 }
 @keyframes bnNeonPulse{
-  /* Wide opacity swing for an obvious breath: dims to a faint trace (.08)
-     then rises to full (1.0). Same 7s ease-in-out cycle, same filter-only
-     blur radii — only the min/max intensity gap widened. */
-  0%,100%{ filter:drop-shadow(0 0 2px rgba(var(--bn-glow),.08)); }
-  50%    { filter:drop-shadow(0 0 8px rgba(var(--bn-glow),1)); }
+  /* Combined breath: the icon GLYPH and its outer glow swell and fade as one.
+     At the low point the glyph drops to 50% opacity while the glow nearly
+     vanishes (.08); at the peak the glyph is full (1) and the glow is at max.
+     Same 7s ease-in-out cycle — only opacity + filter animate, no layout. */
+  0%,100%{ opacity:.5; filter:drop-shadow(0 0 2px rgba(var(--bn-glow),.08)); }
+  50%    { opacity:1;  filter:drop-shadow(0 0 8px rgba(var(--bn-glow),1)); }
 }
 /* Reduced motion: steady static glow, no pulse */
 @media (prefers-reduced-motion: reduce){
   .dc-bn-item.active .dc-bn-ico{
     animation:none;
+    opacity:1;
     filter:drop-shadow(0 0 5px rgba(var(--bn-glow),.55));
   }
 }
