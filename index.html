@@ -81,11 +81,12 @@
   --sb-txt2:rgba(232,240,255,.55);
   --sb-div:rgba(255,255,255,.08);
 
-  /* bottom nav */
-  --bn-bg:#ffffff;
-  --bn-border:rgba(2,35,96,.10);
-  --bn-txt:#8a9cbe;
-  --bn-active:#022360;
+  /* bottom nav — deep-navy footer derived from --pr (#022360), darkened
+     so the active-tab neon icon glow reads against a dark surface */
+  --bn-bg:#04122c;
+  --bn-border:rgba(125,160,230,.22);
+  --bn-txt:#8ea4cc;
+  --bn-active:#eef3ff;
 
   --card-bg:#ffffff;
   --card-border:rgba(2,35,96,.09);
@@ -120,8 +121,10 @@
 
   --txt:#e8f0ff; --txt2:#8aaac8; --txt3:#4a6a88;
 
-  --bn-bg:#17212b; --bn-border:rgba(255,255,255,.08);
-  --bn-txt:rgba(232,240,255,.45); --bn-active:#5b9cf6;
+  /* same deep-navy footer; sits darker than the dark body (--bg #0e1621)
+     so it never merges into the page, with a light top edge for separation */
+  --bn-bg:#04122c; --bn-border:rgba(125,160,230,.22);
+  --bn-txt:#8ea4cc; --bn-active:#eef3ff;
 
   --card-bg:#1e2c3a; --card-border:rgba(255,255,255,.07);
   --card-sh:0 1px 3px rgba(0,0,0,.22),0 4px 14px rgba(0,0,0,.14);
@@ -321,7 +324,9 @@ body{
   display:grid; grid-template-columns:repeat(3,1fr);
   background:var(--bn-bg);
   border-top:1px solid var(--bn-border);
-  box-shadow:0 -4px 20px rgba(2,35,96,.08);
+  /* upward cast lifts the footer off the body; inset hairline gives the
+     dark zone a crisp lit top edge so it never dissolves into the page */
+  box-shadow:0 -6px 24px rgba(1,8,28,.5), inset 0 1px 0 rgba(140,170,235,.12);
   padding-bottom:env(safe-area-inset-bottom);
   transition:background var(--tr2),border-color var(--tr2);
 }
@@ -2202,12 +2207,15 @@ body.dc-desktop-ui #dc-desktop-root{
 /* =====================================================
    PROMPT 3 — Bottom nav: darker bg + Studio prominence
 ===================================================== */
-/* Override --bn-bg inline via class */
+/* Deep-navy footer in BOTH themes — a darkened cousin of brand navy
+   (#022360), not neutral black, so it stays in the site's color family.
+   Light theme: a distinct anchored dark zone. Dark theme: deeper than the
+   body so it reads as its own surface. Active-tab icon glow pops against it. */
 .dc-bottom-nav{
-  background:#dde3f0;
+  background:var(--bn-bg);
 }
 [data-theme="dark"] .dc-bottom-nav{
-  background:#0b1420;
+  background:var(--bn-bg);
 }
 /* Meta Base SVG icon color tracking */
 .dc-bn-item[data-panel="panel-sharehub"] .dc-bn-ico{
