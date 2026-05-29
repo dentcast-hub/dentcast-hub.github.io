@@ -2254,14 +2254,15 @@ body.dc-desktop-ui #dc-desktop-root{
    Only opacity/filter animate — never layout-triggering props. */
 .dc-bn-item.active .dc-bn-ico{
   color:rgb(var(--bn-glow));
-  animation:bnNeonPulse 7s ease-in-out infinite;
+  animation:bnNeonPulse 5s ease-in-out infinite;
 }
 @keyframes bnNeonPulse{
   /* Combined breath: the icon GLYPH and its outer glow swell and fade as one.
-     At the low point the glyph drops to 50% opacity while the glow nearly
-     vanishes (.08); at the peak the glyph is full (1) and the glow is at max.
-     Same 7s ease-in-out cycle — only opacity + filter animate, no layout. */
-  0%,100%{ opacity:.5; filter:drop-shadow(0 0 2px rgba(var(--bn-glow),.08)); }
+     At the low point the glyph eases back to 80% opacity (a gentle dip, never
+     faded) while the glow nearly vanishes (.08); at the peak the glyph is full
+     (1) and the glow is at max. 5s ease-in-out cycle — only opacity + filter
+     animate, no layout. */
+  0%,100%{ opacity:.8; filter:drop-shadow(0 0 2px rgba(var(--bn-glow),.08)); }
   50%    { opacity:1;  filter:drop-shadow(0 0 8px rgba(var(--bn-glow),1)); }
 }
 /* Reduced motion: steady static glow, no pulse */
