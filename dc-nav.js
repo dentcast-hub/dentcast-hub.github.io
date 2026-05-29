@@ -164,7 +164,7 @@
 /* Music player trigger (headphones icon). ONLY toggles #dcMusicPanel open/
    closed via delegation — it never affects playback (play/pause is a separate
    control inside the panel). */
-'    <button class="dc-topbar-btn" id="btn-music-toggle" aria-label="موسیقی" aria-expanded="false"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M3 14a9 9 0 0 1 18 0"/><path d="M5 14h3v7H5a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2z"/><path d="M19 14h-3v7h3a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2z"/></svg></button>' +
+'    <button class="dc-topbar-btn dc-music-trigger" id="btn-music-toggle" aria-label="موسیقی" aria-expanded="false"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M3 14a9 9 0 0 1 18 0"/><path d="M5 14h3v7H5a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2z"/><path d="M19 14h-3v7h3a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2z"/></svg><span class="dc-music-eq" aria-hidden="true"><i></i><i></i><i></i></span></button>' +
 '  </div>' +
 '  <div class="dc-topbar-brand">' +
 '    <div class="dc-topbar-brand-name">DentCast</div>' +
@@ -220,8 +220,8 @@
 '      <div class="dc-music-desc" id="dcMusicDesc"></div>' +
 '    </div>' +
 '    <div class="dc-music-controls">' +
-'      <button class="dc-music-playpause" id="dc-music-playpause" type="button" aria-label="پخش / مکث" disabled><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="10"/><path d="m10 8 6 4-6 4z"/></svg></button>' +
-'      <a class="dc-music-channel" id="dcMusicChannel" href="#" target="_blank" rel="noopener" hidden><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M10 13a5 5 0 0 0 7.1 0l2-2a5 5 0 0 0-7.1-7.1l-1.1 1.1"/><path d="M14 11a5 5 0 0 0-7.1 0l-2 2A5 5 0 0 0 12 20.1l1.1-1.1"/></svg><span>کانال موسیقی</span></a>' +
+'      <button class="dc-music-playpause" id="dc-music-playpause" type="button" aria-label="پخش" aria-pressed="false" disabled><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button>' +
+'      <a class="dc-music-channel" id="dcMusicChannel" href="#" target="_blank" rel="noopener" hidden><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M3 14a9 9 0 0 1 18 0"/><path d="M5 14h3v7H5a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2z"/><path d="M19 14h-3v7h3a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2z"/></svg><span>کانال موسیقی</span><svg class="dc-music-ext" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg></a>' +
 '    </div>' +
 '  </div>' +
 '</div>';
@@ -230,17 +230,37 @@
      whether a page loads dc-nav.css). Reuses the theme's CSS variables and
      mirrors the tool-drawer dropdown look. */
   var DC_MUSIC_CSS =
-'.dc-music-panel{overflow:hidden;max-height:0;opacity:0;background:var(--surface2,#f4f6fb);border-bottom:1px solid var(--border,rgba(2,35,96,.10));transition:max-height .28s cubic-bezier(.4,0,.2,1),opacity .22s ease;}' +
-'.dc-music-inner{padding:12px 14px;display:flex;flex-direction:column;gap:8px;}' +
-'.dc-music-title{font-size:.92rem;font-weight:800;color:var(--txt1,#16213a);}' +
-'.dc-music-artist{font-size:.74rem;font-weight:700;color:var(--ac,#a334d4);}' +
-'.dc-music-desc{font-size:.74rem;line-height:1.7;color:var(--txt2,#5a6b8c);}' +
-'.dc-music-controls{display:flex;align-items:center;gap:12px;margin-top:4px;}' +
-'.dc-music-playpause{display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;border:0;border-radius:999px;background:var(--ac,#a334d4);color:#fff;cursor:pointer;font-size:22px;flex-shrink:0;}' +
-'.dc-music-playpause[disabled]{opacity:.45;cursor:default;}' +
-'.dc-music-playpause:active{transform:scale(.92);}' +
-'.dc-music-channel{display:inline-flex;align-items:center;gap:6px;font-size:.78rem;font-weight:700;color:var(--ac,#a334d4);text-decoration:none;}' +
-'.dc-music-channel .dc-svg-icon{width:1em;height:1em;}';
+/* Panel — mirrors the tool drawer's max-height/opacity dropdown; themed. */
+'.dc-music-panel{overflow:hidden;max-height:0;opacity:0;background:var(--surface2);border-bottom:1px solid var(--border);transition:max-height .28s cubic-bezier(.4,0,.2,1),opacity .22s ease;}' +
+'.dc-music-inner{padding:14px 16px;display:flex;flex-direction:column;gap:10px;}' +
+/* Visual hierarchy: title prominent, artist accent, description muted. */
+'.dc-music-title{font-size:1rem;font-weight:800;line-height:1.45;color:var(--txt);}' +
+'.dc-music-artist{font-size:.78rem;font-weight:700;color:var(--ac);}' +
+'.dc-music-artist:empty{display:none;}' +
+'.dc-music-desc{font-size:.76rem;line-height:1.8;color:var(--txt3);}' +
+'.dc-music-desc:empty{display:none;}' +
+/* Controls row: play/pause primary, channel secondary, separated by a rule. */
+'.dc-music-controls{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:2px;padding-top:10px;border-top:1px solid var(--border);}' +
+'.dc-music-playpause{display:inline-flex;align-items:center;justify-content:center;width:46px;height:46px;border:0;border-radius:999px;background:var(--ac);color:var(--txt-inv,#fff);cursor:pointer;flex-shrink:0;transition:transform .12s ease;-webkit-tap-highlight-color:transparent;}' +
+'.dc-music-playpause .dc-svg-icon{width:22px;height:22px;fill:currentColor;stroke:none;animation:dcMusicPop .18s ease;}' +
+'.dc-music-playpause[disabled]{opacity:.4;cursor:default;}' +
+'.dc-music-playpause:not([disabled]):active{transform:scale(.9);}' +
+'.dc-music-channel{display:inline-flex;align-items:center;gap:6px;font-size:.78rem;font-weight:600;color:var(--txt3);text-decoration:none;transition:color .15s ease;}' +
+'.dc-music-channel:hover{color:var(--ac);}' +
+'.dc-music-channel .dc-svg-icon{width:1.05em;height:1.05em;}' +
+'.dc-music-channel .dc-music-ext{width:.8em;height:.8em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;opacity:.7;}' +
+/* Unavailable state: dim the (disabled) controls, leave the message clean. */
+'.dc-music-panel.is-unavailable .dc-music-controls{opacity:.5;}' +
+/* "Now playing" equalizer inside the header trigger (transform-based). */
+'.dc-music-eq{display:none;align-items:flex-end;justify-content:center;gap:2px;width:1em;height:1em;vertical-align:-.15em;}' +
+'.dc-music-trigger.is-playing .dc-svg-icon{display:none;}' +
+'.dc-music-trigger.is-playing .dc-music-eq{display:inline-flex;}' +
+'.dc-music-eq i{display:block;width:3px;height:100%;border-radius:1px;background:currentColor;transform:scaleY(.4);transform-origin:bottom;animation:dcEq .9s ease-in-out infinite;}' +
+'.dc-music-eq i:nth-child(2){animation-delay:.25s;}' +
+'.dc-music-eq i:nth-child(3){animation-delay:.5s;}' +
+'@keyframes dcEq{0%,100%{transform:scaleY(.35);}50%{transform:scaleY(1);}}' +
+'@keyframes dcMusicPop{from{opacity:.4;transform:scale(.82);}to{opacity:1;transform:scale(1);}}' +
+'@media (prefers-reduced-motion: reduce){.dc-music-eq i{animation:none;transform:scaleY(.7);}.dc-music-playpause .dc-svg-icon{animation:none;}.dc-music-panel{transition:none;}}';
 
   (function injectSharedHeader() {
     /* Opt-out: localized/non-standard pages keep their own header. This
@@ -455,15 +475,25 @@
     p.style.opacity   = '0';
   })();
 
-  var DC_ICON_PLAY  = '<svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="10"/><path d="m10 8 6 4-6 4z"/></svg>';
-  var DC_ICON_PAUSE = '<svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="10"/><path d="M10 8v8"/><path d="M14 8v8"/></svg>';
+  /* Filled icons (the play button overrides .dc-svg-icon to fill, not stroke);
+     sized by CSS, so no inline width that would beat the stylesheet. */
+  var DC_ICON_PLAY  = '<svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>';
+  var DC_ICON_PAUSE = '<svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h3v14H7zM14 5h3v14h-3z"/></svg>';
 
-  /* Make the play/pause icon reflect the TRUE audio state (never changes it). */
+  /* Reflect the TRUE audio state on the play/pause control (icon + aria) AND
+     on the header trigger's "now playing" equalizer. NEVER changes playback —
+     called from the play/pause events, panel-open, and track changes. */
   function syncMusicPlayPauseIcon() {
+    var playing = !!(dcAudio && !dcAudio.paused && !dcAudio.ended);
     var btn = document.getElementById('dc-music-playpause');
-    if (!btn) return;
-    var playing = dcAudio && !dcAudio.paused && !dcAudio.ended;
-    btn.innerHTML = playing ? DC_ICON_PAUSE : DC_ICON_PLAY;
+    if (btn) {
+      btn.innerHTML = playing ? DC_ICON_PAUSE : DC_ICON_PLAY;
+      btn.setAttribute('aria-pressed', playing ? 'true' : 'false');
+      btn.setAttribute('aria-label', playing ? 'مکث' : 'پخش');
+    }
+    /* Equalizer indicator on the closed-state trigger icon. */
+    var trigger = document.getElementById('btn-music-toggle');
+    if (trigger) trigger.classList.toggle('is-playing', playing);
   }
 
   /* Trigger handler — ONLY opens/closes the panel. Mirrors toggleToolbarDrawer.
@@ -520,6 +550,9 @@
     if (t) t.textContent = track ? (track.title  || '') : 'موسیقی در دسترس نیست';
     if (a) a.textContent = track ? (track.artist || '') : '';
     if (d) d.textContent = track ? (track.description || '') : '';
+    /* Flag the unavailable state so CSS can dim the (disabled) controls. */
+    var panel = document.getElementById('dcMusicPanel');
+    if (panel) panel.classList.toggle('is-unavailable', !track);
   }
 
   function dcRandomIndex() {
