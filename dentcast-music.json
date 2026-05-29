@@ -1,11 +1,11 @@
 {
-  "channel_url": "",
+  "channel_url": "https://t.me/ghoflihaa",
   "tracks": [
     {
       "id": "track-001",
       "title": "City Walls",
       "artist": "Archive",
-      "description": "قطعه‌ای اتمسفریک و رؤیاگون از گروه بریتانیایی Archive در ریمیکس Pye Corner Audio؛ لایه‌های الکترونیکِ مه‌آلود با حال‌وهوایی ملنکولیک و سینمایی.",
+      "description": "ریمیکسی اتمسفریک و ملنکولیک از Archive",
       "src": "https://ghofli.s3.ir-thr-at1.arvanstorage.ir/1.mp3?versionId="
     }
   ]
