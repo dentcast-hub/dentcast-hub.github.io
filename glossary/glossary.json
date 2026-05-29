@@ -893,9 +893,9 @@
       ],
       "url": "/glossary/emergence-profile.html",
       "pillar": {
-        "primary": "implant-pros",
+        "primary": "implantology",
         "secondary": [],
-        "subtopic": null
+        "subtopic": "restoration-design"
       }
     },
     {
@@ -1179,9 +1179,9 @@
       ],
       "url": "/glossary/ti-base.html",
       "pillar": {
-        "primary": "implant-pros",
+        "primary": "implantology",
         "secondary": [],
-        "subtopic": null
+        "subtopic": "prosthetic-components"
       }
     },
     {
@@ -1197,9 +1197,9 @@
       ],
       "url": "/glossary/scan-body.html",
       "pillar": {
-        "primary": "implant-pros",
+        "primary": "implantology",
         "secondary": [],
-        "subtopic": null
+        "subtopic": "prosthetic-components"
       }
     },
     {
@@ -1253,7 +1253,7 @@
       "pillar": {
         "primary": "implantology",
         "secondary": [],
-        "subtopic": null
+        "subtopic": "peri-implant-health"
       }
     },
     {
@@ -1287,9 +1287,9 @@
       ],
       "url": "/glossary/platform-switch.html",
       "pillar": {
-        "primary": "implant-pros",
+        "primary": "implantology",
         "secondary": [],
-        "subtopic": null
+        "subtopic": "prosthetic-components"
       }
     },
     {
@@ -1307,7 +1307,7 @@
       "pillar": {
         "primary": "implantology",
         "secondary": [],
-        "subtopic": null
+        "subtopic": "peri-implant-health"
       }
     },
     {
@@ -1325,7 +1325,7 @@
       "pillar": {
         "primary": "implantology",
         "secondary": [],
-        "subtopic": null
+        "subtopic": "peri-implant-health"
       }
     }
   ]

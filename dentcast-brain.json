@@ -479,7 +479,7 @@
     "pillar": {
       "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "peri-implant-health"
     }
   },
   {
@@ -499,7 +499,7 @@
     "pillar": {
       "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "peri-implant-health"
     }
   },
   {
@@ -519,7 +519,7 @@
     "pillar": {
       "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "surgical-planning"
     }
   },
   {
@@ -540,7 +540,7 @@
     "pillar": {
       "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "surgical-planning"
     }
   },
   {
@@ -639,7 +639,7 @@
     "pillar": {
       "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "restoration-design"
     }
   },
   {
@@ -927,7 +927,7 @@
     "pillar": {
       "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "surgical-planning"
     }
   },
   {
@@ -1210,7 +1210,7 @@
     "pillar": {
       "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "peri-implant-health"
     }
   },
   {
@@ -1228,9 +1228,9 @@
     ],
     "page_url": "/episodes/episode-60.html",
     "pillar": {
-      "primary": "occlusion",
+      "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "peri-implant-health"
     }
   },
   {
@@ -1272,7 +1272,7 @@
     "pillar": {
       "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "surgical-planning"
     }
   },
   {
@@ -1293,7 +1293,7 @@
     "pillar": {
       "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "surgical-planning"
     }
   },
   {
@@ -1314,7 +1314,7 @@
     "pillar": {
       "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "surgical-planning"
     }
   },
   {
@@ -1649,7 +1649,7 @@
     "pillar": {
       "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "prosthetic-components"
     }
   },
   {
@@ -1669,9 +1669,9 @@
     ],
     "page_url": "/episodes/episode-81.html",
     "pillar": {
-      "primary": "implant-pros",
+      "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "prosthetic-components"
     }
   },
   {
@@ -1692,7 +1692,7 @@
     "pillar": {
       "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "prosthetic-components"
     }
   },
   {
@@ -1712,9 +1712,9 @@
     ],
     "page_url": "/episodes/episode-83.html",
     "pillar": {
-      "primary": "implant-pros",
+      "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "prosthetic-components"
     }
   },
   {
@@ -1733,9 +1733,9 @@
     ],
     "page_url": "/episodes/episode-84.html",
     "pillar": {
-      "primary": "implant-pros",
+      "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "prosthetic-components"
     }
   },
   {
@@ -2124,9 +2124,9 @@
     ],
     "page_url": "/episodes/episode-102.html",
     "pillar": {
-      "primary": "implant-pros",
+      "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "prosthetic-components"
     }
   },
   {
@@ -2147,9 +2147,9 @@
     ],
     "page_url": "/episodes/episode-103.html",
     "pillar": {
-      "primary": "implant-pros",
+      "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "prosthetic-components"
     }
   },
   {
@@ -2171,9 +2171,9 @@
     ],
     "page_url": "/episodes/episode-104.html",
     "pillar": {
-      "primary": "implant-pros",
+      "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "prosthetic-components"
     }
   },
   {
@@ -2194,9 +2194,9 @@
     ],
     "page_url": "/episodes/episode-105.html",
     "pillar": {
-      "primary": "implant-pros",
+      "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "prosthetic-components"
     }
   },
   {
@@ -2217,9 +2217,9 @@
     ],
     "page_url": "/episodes/episode-106.html",
     "pillar": {
-      "primary": "implant-pros",
+      "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "prosthetic-components"
     }
   },
   {
@@ -2338,7 +2338,7 @@
     "pillar": {
       "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "prosthetic-components"
     }
   },
   {
@@ -2434,7 +2434,7 @@
     "pillar": {
       "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "restoration-design"
     }
   },
   {
@@ -2482,7 +2482,7 @@
     "pillar": {
       "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "restoration-design"
     }
   },
   {
@@ -2530,7 +2530,7 @@
     "pillar": {
       "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "restoration-design"
     }
   },
   {
@@ -2601,7 +2601,7 @@
     "pillar": {
       "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "restoration-design"
     }
   },
   {
@@ -2744,7 +2744,7 @@
     "pillar": {
       "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "surgical-planning"
     }
   },
   {
@@ -2886,7 +2886,7 @@
     "pillar": {
       "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "restoration-design"
     }
   },
   {
@@ -3004,9 +3004,9 @@
     ],
     "page_url": "/episodes/episode-122-6.html",
     "pillar": {
-      "primary": "implant-pros",
+      "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "peri-implant-health"
     }
   },
   {
@@ -3124,9 +3124,9 @@
     ],
     "page_url": "/episodes/episode-123-4.html",
     "pillar": {
-      "primary": "implant-pros",
+      "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "restoration-design"
     }
   },
   {
@@ -3150,7 +3150,7 @@
     "pillar": {
       "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "surgical-planning"
     }
   },
   {
@@ -3172,9 +3172,9 @@
     ],
     "page_url": "/episodes/episode-123-6.html",
     "pillar": {
-      "primary": "implant-pros",
+      "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "prosthetic-components"
     }
   },
   {
@@ -3267,9 +3267,9 @@
     ],
     "page_url": "/episodes/episode-125-1.html",
     "pillar": {
-      "primary": "implant-pros",
+      "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "restoration-design"
     }
   },
   {
@@ -3365,7 +3365,7 @@
     "pillar": {
       "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "surgical-planning"
     }
   },
   {
@@ -3506,7 +3506,7 @@
     "pillar": {
       "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "restoration-design"
     }
   },
   {
@@ -3530,7 +3530,7 @@
     "pillar": {
       "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "peri-implant-health"
     }
   },
   {
@@ -3601,7 +3601,7 @@
     "pillar": {
       "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "prosthetic-components"
     }
   },
   {
@@ -3741,7 +3741,7 @@
     "pillar": {
       "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "restoration-design"
     }
   },
   {
@@ -3765,7 +3765,7 @@
     "pillar": {
       "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "restoration-design"
     }
   },
   {
@@ -3789,7 +3789,7 @@
     "pillar": {
       "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "restoration-design"
     }
   },
   {
@@ -3908,7 +3908,7 @@
     "pillar": {
       "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "surgical-planning"
     }
   },
   {
@@ -3930,9 +3930,9 @@
     ],
     "page_url": "/episodes/episode-144-2.html",
     "pillar": {
-      "primary": "digital",
+      "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "prosthetic-components"
     }
   },
   {
@@ -3980,7 +3980,7 @@
     "pillar": {
       "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "restoration-design"
     }
   },
   {
@@ -4004,7 +4004,7 @@
     "pillar": {
       "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "restoration-design"
     }
   },
   {
@@ -4052,7 +4052,7 @@
     "pillar": {
       "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "peri-implant-health"
     }
   },
   {
@@ -4124,7 +4124,7 @@
     "pillar": {
       "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "surgical-planning"
     }
   },
   {
@@ -4196,7 +4196,7 @@
     "pillar": {
       "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "surgical-planning"
     }
   },
   {
@@ -4220,7 +4220,7 @@
     "pillar": {
       "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "surgical-planning"
     }
   },
   {
@@ -4268,7 +4268,7 @@
     "pillar": {
       "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "peri-implant-health"
     }
   },
   {
@@ -4290,9 +4290,9 @@
     ],
     "page_url": "/episodes/episode-148-2.html",
     "pillar": {
-      "primary": "implant-pros",
+      "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "restoration-design"
     }
   },
   {
@@ -4387,7 +4387,7 @@
     "pillar": {
       "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "surgical-planning"
     }
   },
   {
@@ -4435,7 +4435,7 @@
     "pillar": {
       "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "surgical-planning"
     }
   },
   {
@@ -4770,7 +4770,7 @@
     "pillar": {
       "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "prosthetic-components"
     }
   },
   {
@@ -4974,7 +4974,7 @@
     "pillar": {
       "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "restoration-design"
     }
   },
   {
@@ -5010,7 +5010,7 @@
     "pillar": {
       "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "restoration-design"
     }
   },
   {
@@ -5196,7 +5196,7 @@
     "pillar": {
       "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "peri-implant-health"
     }
   },
   {
@@ -5273,7 +5273,7 @@
     "pillar": {
       "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "fundamentals"
     }
   },
   {
@@ -5323,7 +5323,7 @@
     "pillar": {
       "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "fundamentals"
     }
   },
   {
@@ -5399,7 +5399,7 @@
     "pillar": {
       "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "fundamentals"
     }
   },
   {
@@ -6297,7 +6297,7 @@
     "pillar": {
       "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "peri-implant-health"
     }
   },
   {
@@ -6333,7 +6333,7 @@
     "pillar": {
       "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "peri-implant-health"
     }
   },
   {
@@ -6373,7 +6373,7 @@
     "pillar": {
       "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "surgical-planning"
     }
   },
   {
@@ -6456,9 +6456,9 @@
     ],
     "page_url": "/metanotes/meta-2.html",
     "pillar": {
-      "primary": "perio",
+      "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "peri-implant-health"
     }
   },
   {
@@ -6486,9 +6486,9 @@
     ],
     "page_url": "/metanotes/meta-3.html",
     "pillar": {
-      "primary": "perio",
+      "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "peri-implant-health"
     }
   },
   {
@@ -6517,7 +6517,7 @@
     "pillar": {
       "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "peri-implant-health"
     }
   },
   {
@@ -6545,7 +6545,7 @@
     "pillar": {
       "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "peri-implant-health"
     }
   },
   {
@@ -6603,7 +6603,7 @@
     "pillar": {
       "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "surgical-planning"
     }
   },
   {
@@ -6719,9 +6719,9 @@
     ],
     "page_url": "/litecast/lite-CAST10.html",
     "pillar": {
-      "primary": "implant-pros",
+      "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "fundamentals"
     }
   },
   {
@@ -6751,7 +6751,7 @@
     "pillar": {
       "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "fundamentals"
     }
   },
   {
@@ -6798,7 +6798,7 @@
     "pillar": {
       "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "surgical-planning"
     }
   },
   {
@@ -6832,9 +6832,9 @@
     ],
     "url": "/sharehub/share-1.html",
     "pillar": {
-      "primary": "implant-pros",
+      "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "prosthetic-components"
     }
   },
   {
@@ -6895,9 +6895,9 @@
     ],
     "url": "/sharehub/share-2.html",
     "pillar": {
-      "primary": "digital",
+      "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "prosthetic-components"
     }
   },
   {
@@ -7067,7 +7067,7 @@
     "pillar": {
       "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "fundamentals"
     }
   },
   {
@@ -7098,7 +7098,7 @@
     "pillar": {
       "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "fundamentals"
     }
   },
   {
@@ -7136,7 +7136,7 @@
     "pillar": {
       "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "surgical-planning"
     }
   },
   {
@@ -7167,7 +7167,7 @@
     "pillar": {
       "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "fundamentals"
     }
   },
   {
@@ -7197,7 +7197,7 @@
     "pillar": {
       "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "fundamentals"
     }
   },
   {
@@ -7225,9 +7225,9 @@
     ],
     "page_url": "/litecast/lite-CAST16.html",
     "pillar": {
-      "primary": "implant-pros",
+      "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "fundamentals"
     }
   },
   {
@@ -7257,7 +7257,7 @@
     "pillar": {
       "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "fundamentals"
     }
   },
   {
@@ -7285,9 +7285,9 @@
     ],
     "page_url": "/litecast/lite-CAST18.html",
     "pillar": {
-      "primary": "implant-pros",
+      "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "fundamentals"
     }
   },
   {
@@ -7318,7 +7318,7 @@
     "pillar": {
       "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "fundamentals"
     }
   },
   {
@@ -7409,9 +7409,9 @@
     ],
     "page_url": "/dentcast-plus/video-4.html",
     "pillar": {
-      "primary": "implant-pros",
+      "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "restoration-design"
     }
   },
   {
@@ -7596,9 +7596,9 @@
     ],
     "url": "/sharehub/share-4.html",
     "pillar": {
-      "primary": "fixed-pros",
+      "primary": "implantology",
       "secondary": [],
-      "subtopic": "cementation"
+      "subtopic": "restoration-design"
     }
   },
   {
@@ -7627,9 +7627,9 @@
     ],
     "page_url": "/insight/insight-22.html",
     "pillar": {
-      "primary": "implant-pros",
+      "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "prosthetic-components"
     }
   },
   {
@@ -7691,7 +7691,7 @@
     "pillar": {
       "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "prosthetic-components"
     }
   },
   {
@@ -7816,9 +7816,9 @@
     "page_url": "/dentcast-plus/video-5.html",
     "text": "حرکتی که در این ویدیو می‌بینید، مربوط به قبل از سمان کردن روکش است.\nروکش هنوز سمان نشده و روی اباتمنت قرار داده شده، اما در همین مرحله دچار حرکت چرخشی و بی‌ثباتی است.\n\n❓ چرا این مرحله مهم است؟\n\nقبل از سمان کردن، باید ثبات و عدم چرخش روکش روی اباتمنت بررسی شود.\nاین یک مرحله‌ی کلیدی در تحویل کار است، نه یک نکته‌ی اختیاری.\n\nاگر روکش در این مرحله:\n🔹 حتی کوچک‌ترین حرکت چرخشی داشته باشد\n🔹 یا روی اباتمنت anti-rotation مؤثر نداشته باشد و بی‌ثبات باشد\n\nاین یعنی طراحی مکانیکی از ابتدا دچار مشکل است.\n\n⚠️ پیام این حرکت چرخشی چیست؟\n\nاین حرکت ساده به ما می‌گوید که:\n🔹 نیروهای عملکردی آینده پس از وارد شدن به روکش\n🔹 مستقیماً به سمان منتقل خواهند شد\n\nدر حالی که سمان:\n❌ برای تحمل نیروی shear طراحی نشده\n❌ نقش آن فقط کمک به retention است، نه تأمین ثبات\n\n🔻 نتیجه‌ی قابل پیش‌بینی:\n\nاگر این مرحله نادیده گرفته شود:\n🔹 بعد از سمان، روکش ممکن است در ابتدا ثابت به نظر برسد\n🔹 اما با شروع عملکرد فانکشنال، نیروی shear به سمان وارد می‌شود\n🔹 و debonding اجتناب‌ناپذیر خواهد بود\n\n🔻 تصمیم درمانی در این کیس:\n\n🔹 این روکش با این وضعیت قابل تحویل نیست\n🔹 باید تکرار شود\n🔹 طراحی اباتمنت و فضای سمان باید مجدداً اصلاح و کنترل شود\n🔹 ثبات مکانیکی باید قبل از سمان، به‌صورت قطعی تأمین گردد\n\n🧠 جمع‌بندی بالینی:\nعدم چرخش باید قبل از سمان تأمین شود\nاگر روکش قبل از سمان می‌چرخد،\nسمان در آینده قربانی یک طراحی نادرست خواهد شد.",
     "pillar": {
-      "primary": "implant-pros",
+      "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "restoration-design"
     }
   },
   {
@@ -7938,9 +7938,9 @@
     ],
     "page_url": "/metanotes/meta-10.html",
     "pillar": {
-      "primary": "fixed-pros",
+      "primary": "implantology",
       "secondary": [],
-      "subtopic": "crowns-onlays"
+      "subtopic": "restoration-design"
     }
   },
   {
@@ -7968,9 +7968,9 @@
     ],
     "url": "/notecast/episode-31.html",
     "pillar": {
-      "primary": "implant-pros",
+      "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "restoration-design"
     }
   },
   {
@@ -8068,7 +8068,7 @@
     "pillar": {
       "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "surgical-planning"
     }
   },
   {
@@ -8170,9 +8170,9 @@
     ],
     "page_url": "/insight/insight-26.html",
     "pillar": {
-      "primary": "implant-pros",
+      "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "prosthetic-components"
     }
   },
   {
@@ -8586,9 +8586,9 @@
     ],
     "page_url": "/insight/insight-30.html",
     "pillar": {
-      "primary": "implant-pros",
+      "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "prosthetic-components"
     }
   },
   {
@@ -8620,9 +8620,9 @@
     ],
     "page_url": "/insight/insight-31.html",
     "pillar": {
-      "primary": "implant-pros",
+      "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "prosthetic-components"
     }
   },
   {
@@ -8812,7 +8812,7 @@
     "pillar": {
       "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "surgical-planning"
     }
   },
   {
@@ -8843,9 +8843,9 @@
     ],
     "page_url": "/insight/insight-33.html",
     "pillar": {
-      "primary": "digital",
+      "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "prosthetic-components"
     }
   },
   {
@@ -8975,9 +8975,9 @@
     ],
     "page_url": "/chairside/chairside-12.html",
     "pillar": {
-      "primary": "implant-pros",
+      "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "prosthetic-components"
     }
   },
   {
@@ -9006,9 +9006,9 @@
     ],
     "page_url": "/insight/insight-35.html",
     "pillar": {
-      "primary": "implant-pros",
+      "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "prosthetic-components"
     }
   },
   {
@@ -9100,7 +9100,7 @@
     "pillar": {
       "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "surgical-planning"
     }
   },
   {
@@ -9164,7 +9164,7 @@
     "pillar": {
       "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "surgical-planning"
     }
   },
   {
@@ -9396,7 +9396,7 @@
     "pillar": {
       "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "surgical-planning"
     }
   },
   {
@@ -9534,7 +9534,7 @@
     "pillar": {
       "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "surgical-planning"
     }
   },
   {
