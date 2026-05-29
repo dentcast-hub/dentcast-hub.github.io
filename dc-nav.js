@@ -161,6 +161,10 @@
 '    <a href="/" aria-label="صفحه اصلی دنت‌کست" style="display:flex;align-items:center;margin-left:8px;flex-shrink:0;"><img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;"></a>' +
 '    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="ابزارها" aria-expanded="false"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>' +
 '    <button class="dc-topbar-btn dcOpenSearch" aria-label="جستجو"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>' +
+/* Music player trigger (headphones icon). ONLY toggles #dcMusicPanel open/
+   closed via delegation — it never affects playback (play/pause is a separate
+   control inside the panel). */
+'    <button class="dc-topbar-btn" id="btn-music-toggle" aria-label="موسیقی" aria-expanded="false"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M3 14a9 9 0 0 1 18 0"/><path d="M5 14h3v7H5a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2z"/><path d="M19 14h-3v7h3a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2z"/></svg></button>' +
 '  </div>' +
 '  <div class="dc-topbar-brand">' +
 '    <div class="dc-topbar-brand-name">DentCast</div>' +
@@ -202,6 +206,42 @@
   var DC_DRAWER_RADAR_BTN =
 '<button class="dc-drawer-tool-seg" type="button" id="btn-radar-topbar" aria-label="رادار"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="m12 12 7-7"/><path d="M12 12h.01"/></svg></span><span class="dc-drawer-tool-txt">رادار</span></button>';
 
+  /* ── MUSIC PLAYER — panel markup ──────────────────
+     A dropdown panel that mirrors #dcToolbarDrawer's open/close pattern.
+     Shows the current track's title/artist/description, a play/pause control
+     at the bottom (SEPARATE from the trigger), and a link to the channel.
+     The play/pause button starts disabled and is enabled once tracks load. */
+  var DC_MUSIC_PANEL_HTML =
+'<div id="dcMusicPanel" class="dc-music-panel" aria-hidden="true">' +
+'  <div class="dc-music-inner">' +
+'    <div class="dc-music-meta">' +
+'      <div class="dc-music-title" id="dcMusicTitle">در حال بارگذاری…</div>' +
+'      <div class="dc-music-artist" id="dcMusicArtist"></div>' +
+'      <div class="dc-music-desc" id="dcMusicDesc"></div>' +
+'    </div>' +
+'    <div class="dc-music-controls">' +
+'      <button class="dc-music-playpause" id="dc-music-playpause" type="button" aria-label="پخش / مکث" disabled><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="10"/><path d="m10 8 6 4-6 4z"/></svg></button>' +
+'      <a class="dc-music-channel" id="dcMusicChannel" href="#" target="_blank" rel="noopener" hidden><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M10 13a5 5 0 0 0 7.1 0l2-2a5 5 0 0 0-7.1-7.1l-1.1 1.1"/><path d="M14 11a5 5 0 0 0-7.1 0l-2 2A5 5 0 0 0 12 20.1l1.1-1.1"/></svg><span>کانال موسیقی</span></a>' +
+'    </div>' +
+'  </div>' +
+'</div>';
+
+  /* Panel CSS, injected once (so it travels with the header regardless of
+     whether a page loads dc-nav.css). Reuses the theme's CSS variables and
+     mirrors the tool-drawer dropdown look. */
+  var DC_MUSIC_CSS =
+'.dc-music-panel{overflow:hidden;max-height:0;opacity:0;background:var(--surface2,#f4f6fb);border-bottom:1px solid var(--border,rgba(2,35,96,.10));transition:max-height .28s cubic-bezier(.4,0,.2,1),opacity .22s ease;}' +
+'.dc-music-inner{padding:12px 14px;display:flex;flex-direction:column;gap:8px;}' +
+'.dc-music-title{font-size:.92rem;font-weight:800;color:var(--txt1,#16213a);}' +
+'.dc-music-artist{font-size:.74rem;font-weight:700;color:var(--ac,#a334d4);}' +
+'.dc-music-desc{font-size:.74rem;line-height:1.7;color:var(--txt2,#5a6b8c);}' +
+'.dc-music-controls{display:flex;align-items:center;gap:12px;margin-top:4px;}' +
+'.dc-music-playpause{display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;border:0;border-radius:999px;background:var(--ac,#a334d4);color:#fff;cursor:pointer;font-size:22px;flex-shrink:0;}' +
+'.dc-music-playpause[disabled]{opacity:.45;cursor:default;}' +
+'.dc-music-playpause:active{transform:scale(.92);}' +
+'.dc-music-channel{display:inline-flex;align-items:center;gap:6px;font-size:.78rem;font-weight:700;color:var(--ac,#a334d4);text-decoration:none;}' +
+'.dc-music-channel .dc-svg-icon{width:1em;height:1em;}';
+
   (function injectSharedHeader() {
     /* Opt-out: localized/non-standard pages keep their own header. This
        is an opt-OUT, so a forgotten flag fails loud (a visible wrong
@@ -241,6 +281,20 @@
     if (!document.getElementById('btn-radar-topbar')) {
       var drawerInner = document.querySelector('#dcToolbarDrawer .dc-toolbar-drawer-inner');
       if (drawerInner) drawerInner.insertAdjacentHTML('beforeend', DC_DRAWER_RADAR_BTN);
+    }
+
+    /* 4) Music player: inject the panel (a sibling dropdown after the drawer)
+          and its CSS once. Markup only — playback is wired separately and is
+          gated to the top-level window (see initMusicPlayer). Idempotent. */
+    if (!document.getElementById('dc-music-style')) {
+      var st = document.createElement('style');
+      st.id = 'dc-music-style';
+      st.textContent = DC_MUSIC_CSS;
+      (document.head || document.documentElement).appendChild(st);
+    }
+    if (!document.getElementById('dcMusicPanel')) {
+      var anchor = document.getElementById('dcToolbarDrawer') || newHeader;
+      anchor.insertAdjacentHTML('afterend', DC_MUSIC_PANEL_HTML);
     }
   })();
 
@@ -375,6 +429,202 @@
     if (inp) setTimeout(function () { inp.focus(); }, 0);
   }
 
+  /* ── MUSIC PLAYER ──────────────────────────────────
+     A header dropdown that plays atmospheric tracks from dentcast-music.json
+     (Arvan-hosted mp3s). The panel mirrors the tool drawer's open/close.
+
+     SEPARATION OF CONCERNS (same principle as radar/drawer): the trigger
+     (#btn-music-toggle) ONLY opens/closes the panel and NEVER touches sound;
+     play/pause (#dc-music-playpause) is a separate control. Both are bound via
+     document delegation, so they survive header replace-in-place.
+
+     CROSS-PAGE: this is an MPA — a full reload destroys the <audio>, so audio
+     can't continuously survive navigation. We persist {id, currentTime} to
+     localStorage and, on the next load, RESTORE the track+position but leave it
+     PAUSED (resume-on-reload, not gapless). We never auto-resume.
+
+     IFRAME SAFETY: playback is gated to the top-level window so the desktop
+     shell's content iframe never spawns a second audio source. */
+
+  /* Panel base styles (defensive, same as the drawer's normalize step). */
+  (function normalizeMusicPanel() {
+    var p = document.getElementById('dcMusicPanel');
+    if (!p) return;
+    p.style.overflow  = 'hidden';
+    p.style.maxHeight = '0';
+    p.style.opacity   = '0';
+  })();
+
+  var DC_ICON_PLAY  = '<svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="10"/><path d="m10 8 6 4-6 4z"/></svg>';
+  var DC_ICON_PAUSE = '<svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="10"/><path d="M10 8v8"/><path d="M14 8v8"/></svg>';
+
+  /* Make the play/pause icon reflect the TRUE audio state (never changes it). */
+  function syncMusicPlayPauseIcon() {
+    var btn = document.getElementById('dc-music-playpause');
+    if (!btn) return;
+    var playing = dcAudio && !dcAudio.paused && !dcAudio.ended;
+    btn.innerHTML = playing ? DC_ICON_PAUSE : DC_ICON_PLAY;
+  }
+
+  /* Trigger handler — ONLY opens/closes the panel. Mirrors toggleToolbarDrawer.
+     On open we sync the play/pause icon to reality; we never start/stop sound. */
+  function toggleMusicPanel() {
+    var btn   = document.getElementById('btn-music-toggle');
+    var panel = document.getElementById('dcMusicPanel');
+    if (!btn || !panel) return;
+    if (!panel.classList.contains('open')) {
+      syncMusicPlayPauseIcon();
+      panel.classList.add('open');
+      panel.style.maxHeight = panel.scrollHeight + 'px';
+      panel.style.opacity   = '1';
+      btn.setAttribute('aria-expanded', 'true');
+      panel.setAttribute('aria-hidden', 'false');
+    } else {
+      panel.classList.remove('open');
+      panel.style.maxHeight = '0';
+      panel.style.opacity   = '0';
+      btn.setAttribute('aria-expanded', 'false');
+      panel.setAttribute('aria-hidden', 'true');
+    }
+  }
+
+  /* play() rejects when the browser blocks autoplay, and returns undefined in
+     some engines — guard both so we never throw. */
+  function dcSafePlay() {
+    if (!dcAudio) return;
+    try { var p = dcAudio.play(); if (p && p.catch) p.catch(function () {}); } catch (e) {}
+  }
+
+  /* ── playback state (top-level window only) ── */
+  var dcAudio = null;        // single shared HTMLAudioElement (new Audio())
+  var dcTracks = [];         // parsed from dentcast-music.json
+  var dcTrackIndex = -1;     // current index into dcTracks
+  var DC_MUSIC_KEY = 'dc-music-state';
+  var dcLastSave = 0;
+
+  function dcMusicSave() {
+    /* Only persist once a track is actually loaded (never a non-played preview). */
+    if (!dcAudio || !dcAudio.src || dcTrackIndex < 0 || !dcTracks[dcTrackIndex]) return;
+    try {
+      localStorage.setItem(DC_MUSIC_KEY, JSON.stringify({
+        id: dcTracks[dcTrackIndex].id,
+        t:  dcAudio.currentTime || 0
+      }));
+    } catch (e) {}
+  }
+
+  function dcSetTrackDisplay(track) {
+    var t = document.getElementById('dcMusicTitle');
+    var a = document.getElementById('dcMusicArtist');
+    var d = document.getElementById('dcMusicDesc');
+    if (t) t.textContent = track ? (track.title  || '') : 'موسیقی در دسترس نیست';
+    if (a) a.textContent = track ? (track.artist || '') : '';
+    if (d) d.textContent = track ? (track.description || '') : '';
+  }
+
+  function dcRandomIndex() {
+    if (dcTracks.length <= 1) return 0;
+    var i; do { i = Math.floor(Math.random() * dcTracks.length); } while (i === dcTrackIndex);
+    return i;
+  }
+
+  /* Load a track into the shared audio element. opts.seek restores a position
+     (paused); opts.play starts playback. */
+  function dcLoadTrack(index, opts) {
+    opts = opts || {};
+    if (!dcAudio || !dcTracks.length) return;
+    dcTrackIndex = ((index % dcTracks.length) + dcTracks.length) % dcTracks.length;
+    var track = dcTracks[dcTrackIndex];
+    dcAudio.src = track.src || '';
+    dcSetTrackDisplay(track);
+    if (typeof opts.seek === 'number' && opts.seek > 0) {
+      /* Need metadata before currentTime can be set; load it without playing. */
+      dcAudio.preload = 'metadata';
+      dcAudio.addEventListener('loadedmetadata', function once() {
+        dcAudio.removeEventListener('loadedmetadata', once);
+        try { dcAudio.currentTime = opts.seek; } catch (e) {}
+      });
+      try { dcAudio.load(); } catch (e) {}
+    }
+    if (opts.play) dcSafePlay();
+    syncMusicPlayPauseIcon();
+  }
+
+  /* Play/pause handler — the ONLY thing that starts/stops sound. Fully
+     independent of the panel toggle. */
+  function toggleMusicPlayPause() {
+    if (!dcAudio || !dcTracks.length) return;
+    if (dcAudio.paused) {
+      if (!dcAudio.src) dcLoadTrack(dcTrackIndex >= 0 ? dcTrackIndex : dcRandomIndex(), { play: true });
+      else dcSafePlay();
+    } else {
+      dcAudio.pause();
+    }
+    syncMusicPlayPauseIcon();
+  }
+
+  function initMusicPlayer() {
+    /* The player lives only in the top-level header. In the desktop iframe
+       shell (or any iframe / content-only view) we must NOT create a second
+       audio source. */
+    if (window.self !== window.top) return;
+    if (document.body && document.body.classList.contains('dc-content-only')) return;
+    if (!document.getElementById('dcMusicPanel')) return;  // page has no header
+
+    dcAudio = new Audio();
+    dcAudio.preload = 'none';
+
+    /* Continuous play: on end, auto-advance to the next RANDOM track. */
+    dcAudio.addEventListener('ended', function () { dcLoadTrack(dcRandomIndex(), { play: true }); });
+    /* Broken src → try another track, but don't loop forever. */
+    var dcErrors = 0;
+    dcAudio.addEventListener('error', function () {
+      if (!dcTracks.length || !dcAudio.src) return;
+      if (++dcErrors <= dcTracks.length) dcLoadTrack(dcRandomIndex(), { play: !dcAudio.paused });
+      else dcSetTrackDisplay(null);
+    });
+    /* Persist position (throttled) and keep the icon honest. */
+    dcAudio.addEventListener('timeupdate', function () {
+      var now = Date.now();
+      if (now - dcLastSave > 5000) { dcLastSave = now; dcMusicSave(); }
+    });
+    dcAudio.addEventListener('play',  syncMusicPlayPauseIcon);
+    dcAudio.addEventListener('pause', syncMusicPlayPauseIcon);
+    /* Final save on navigation away (resume-on-reload). */
+    window.addEventListener('pagehide', dcMusicSave);
+
+    /* Graceful failure: a missing/broken JSON leaves the panel usable with a
+       clean "unavailable" state and no thrown errors. */
+    fetch('/dentcast-music.json')
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (data) {
+        if (!data || !Array.isArray(data.tracks) || !data.tracks.length) { dcSetTrackDisplay(null); return; }
+        dcTracks = data.tracks;
+
+        var ch = document.getElementById('dcMusicChannel');
+        if (ch && data.channel_url) { ch.href = data.channel_url; ch.hidden = false; }
+
+        var pp = document.getElementById('dc-music-playpause');
+        if (pp) pp.disabled = false;  // enable now that tracks exist
+
+        /* Resume-on-reload: restore saved track + position, but PAUSED. We
+           never call play() here — the user resumes with one tap if they want. */
+        var saved = null;
+        try { saved = JSON.parse(localStorage.getItem(DC_MUSIC_KEY) || 'null'); } catch (e) {}
+        if (saved && saved.id) {
+          for (var i = 0; i < dcTracks.length; i++) {
+            if (dcTracks[i].id === saved.id) { dcLoadTrack(i, { seek: saved.t || 0 }); break; }
+          }
+        }
+        /* No saved state → preview a random track's info (not loaded/played);
+           pressing play will start exactly that track. */
+        if (dcTrackIndex < 0) { dcTrackIndex = dcRandomIndex(); dcSetTrackDisplay(dcTracks[dcTrackIndex]); }
+        syncMusicPlayPauseIcon();
+      })
+      .catch(function () { dcSetTrackDisplay(null); });
+  }
+  initMusicPlayer();
+
   /* ── HEADER EVENT DELEGATION ───────────────────────
      Header button handlers are bound ONCE on document, not on the buttons.
      Because document always exists, it doesn't matter WHEN a button enters
@@ -394,6 +644,10 @@
     if (t.closest('#btn-toolbar-toggle')) { toggleToolbarDrawer(); return; }
     /* Search trigger — a CLASS; the search button has no id. */
     if (t.closest('.dcOpenSearch'))       { openGlobalSearch();    return; }
+    /* Music: trigger ONLY toggles the panel; play/pause is a SEPARATE control
+       and never affected by the trigger. */
+    if (t.closest('#btn-music-toggle'))   { toggleMusicPanel();    return; }
+    if (t.closest('#dc-music-playpause')) { toggleMusicPlayPause(); return; }
     /* Drawer tool buttons. */
     if (t.closest('#tool-pwa'))     { handlePwaInstall(); return; }
     if (t.closest('#tool-consult')) { window.location.href = 'mailto:info@dentcast.ir'; return; }
