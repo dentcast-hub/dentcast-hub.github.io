@@ -1,0 +1,26 @@
+{
+  "channel_url": "https://t.me/PLACEHOLDER_CHANNEL",
+  "tracks": [
+    {
+      "id": "track-001",
+      "title": "نمونه آهنگ ۱",
+      "artist": "هنرمند نمونه",
+      "description": "توضیح کوتاه دربارهٔ این قطعهٔ موسیقی فضایی برای تمرکز.",
+      "src": "https://dentcast.s3.ir-thr-at1.arvanstorage.ir/music/PLACEHOLDER-1.mp3"
+    },
+    {
+      "id": "track-002",
+      "title": "نمونه آهنگ ۲",
+      "artist": "هنرمند نمونه",
+      "description": "یک قطعهٔ آرام دیگر برای پخش در پس‌زمینه.",
+      "src": "https://dentcast.s3.ir-thr-at1.arvanstorage.ir/music/PLACEHOLDER-2.mp3"
+    },
+    {
+      "id": "track-003",
+      "title": "نمونه آهنگ ۳",
+      "artist": "هنرمند نمونه",
+      "description": "قطعهٔ سوم نمونه؛ مقادیر واقعی بعداً جایگزین می‌شوند.",
+      "src": "https://dentcast.s3.ir-thr-at1.arvanstorage.ir/music/PLACEHOLDER-3.mp3"
+    }
+  ]
+}
