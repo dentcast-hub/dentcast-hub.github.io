@@ -43,7 +43,7 @@
       },
       "mainEntity": {
         "@type": "ItemList",
-        "numberOfItems": 3,
+        "numberOfItems": 4,
         "itemListElement": [
           {
             "@type": "ListItem",
@@ -65,6 +65,13 @@
             "name": "پروتز ثابت",
             "url": "https://dentcast.org/pillar/fixed-pros/",
             "description": "از تراش تا سمان — زنجیره‌ی بازسازی"
+          },
+          {
+            "@type": "ListItem",
+            "position": 4,
+            "name": "ایمپلنتولوژی",
+            "url": "https://dentcast.org/pillar/implantology/",
+            "description": "از استخوان تا روکش — یک قوس پیوسته"
           }
         ]
       }
@@ -189,6 +196,24 @@ body:has(.dc-topbar) .pillar-intro { background: transparent; border: 0; box-sha
 [data-theme="dark"] .pillar-card-row[data-pillar="fixed-pros"] .pillar-card-name { color: #d8a570; }
 [data-theme="dark"] .pillar-card-row[data-pillar="fixed-pros"] .subtopic-chip { background: rgba(200,148,86,.18); color: #c89456; }
 [data-theme="dark"] .pillar-card-row[data-pillar="fixed-pros"] .pillar-card-arrow { background: rgba(200,148,86,.15); border-color: rgba(200,148,86,.35); color: #c89456; }
+
+/* Per-pillar accent — implantology uses metallic gray in place of teal.
+   Same mechanism, same places as the default teal above; selectors
+   are scoped to [data-pillar="implantology"] so other cards stay teal.
+     light primary gray: #6b7280
+     dark primary gray:  #9ca3af */
+.pillar-card-row[data-pillar="implantology"] { border-color: rgba(107,114,128,.25); }
+.pillar-card-row[data-pillar="implantology"]:hover { border-color: rgba(107,114,128,.35); }
+.pillar-card-row[data-pillar="implantology"] .pillar-card-icon { color: #6b7280; }
+.pillar-card-row[data-pillar="implantology"] .pillar-card-name { color: #6b7280; }
+.pillar-card-row[data-pillar="implantology"] .subtopic-chip { background: rgba(107,114,128,.10); color: #6b7280; }
+.pillar-card-row[data-pillar="implantology"] .pillar-card-arrow { background: rgba(107,114,128,.10); border-color: rgba(107,114,128,.25); color: #6b7280; }
+[data-theme="dark"] .pillar-card-row[data-pillar="implantology"] { border-color: rgba(156,163,175,.30); }
+[data-theme="dark"] .pillar-card-row[data-pillar="implantology"]:hover { border-color: rgba(156,163,175,.45); }
+[data-theme="dark"] .pillar-card-row[data-pillar="implantology"] .pillar-card-icon { color: #9ca3af; }
+[data-theme="dark"] .pillar-card-row[data-pillar="implantology"] .pillar-card-name { color: #9ca3af; }
+[data-theme="dark"] .pillar-card-row[data-pillar="implantology"] .subtopic-chip { background: rgba(156,163,175,.18); color: #9ca3af; }
+[data-theme="dark"] .pillar-card-row[data-pillar="implantology"] .pillar-card-arrow { background: rgba(156,163,175,.15); border-color: rgba(156,163,175,.35); color: #9ca3af; }
 </style>
 
   <!-- Theme init verbatim from metanotes/index.html -->
@@ -275,9 +300,9 @@ body:has(.dc-topbar) .pillar-intro { background: transparent; border: 0; box-sha
       </section>
 
       <div class="pillar-index-stats">
-        <span class="pillar-index-stat-chip"><span class="stat-value">۳</span><span class="stat-label">موضوع</span></span>
-        <span class="pillar-index-stat-chip"><span class="stat-value">۲۰۳</span><span class="stat-label">مطلب</span></span>
-        <span class="pillar-index-stat-chip"><span class="stat-value">۱۶</span><span class="stat-label">زیرموضوع</span></span>
+        <span class="pillar-index-stat-chip"><span class="stat-value">۴</span><span class="stat-label">موضوع</span></span>
+        <span class="pillar-index-stat-chip"><span class="stat-value">۳۰۸</span><span class="stat-label">مطلب</span></span>
+        <span class="pillar-index-stat-chip"><span class="stat-value">۲۱</span><span class="stat-label">زیرموضوع</span></span>
       </div>
     </div>
 
@@ -359,7 +384,7 @@ body:has(.dc-topbar) .pillar-intro { background: transparent; border: 0; box-sha
             <h2 class="pillar-card-name">پروتز ثابت</h2>
           </div>
           <p class="pillar-card-subtitle">از تراش تا سمان — زنجیره‌ی بازسازی</p>
-          <p class="pillar-card-meta">۸۵ مطلب · ۶ زیرموضوع</p>
+          <p class="pillar-card-meta">۸۳ مطلب · ۶ زیرموضوع</p>
           <ul class="pillar-card-subtopics">
           <li>
             <span class="subtopic-label">پست و کور</span>
@@ -375,15 +400,50 @@ body:has(.dc-topbar) .pillar-intro { background: transparent; border: 0; box-sha
           </li>
           <li>
             <span class="subtopic-label">روکش و اینله/آنله</span>
-            <span class="subtopic-chip">۱۶</span>
+            <span class="subtopic-chip">۱۵</span>
           </li>
           <li>
             <span class="subtopic-label">سمان‌کردن</span>
-            <span class="subtopic-chip">۲۳</span>
+            <span class="subtopic-chip">۲۲</span>
           </li>
           <li>
             <span class="subtopic-label">شکست و عوارض</span>
             <span class="subtopic-chip">۸</span>
+          </li>
+          </ul>
+        </div>
+        <div class="pillar-card-arrow" aria-hidden="true">
+          <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6"/></svg>
+        </div>
+      </a>
+      <a class="pillar-card-row" data-pillar="implantology" href="/pillar/implantology/">
+        <div class="pillar-card-body">
+          <div class="pillar-card-header">
+            <span class="pillar-card-icon" aria-hidden="true"><svg class="dc-svg-icon" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-target"/></svg></span>
+            <h2 class="pillar-card-name">ایمپلنتولوژی</h2>
+          </div>
+          <p class="pillar-card-subtitle">از استخوان تا روکش — یک قوس پیوسته</p>
+          <p class="pillar-card-meta">۱۰۷ مطلب · ۵ زیرموضوع</p>
+          <ul class="pillar-card-subtopics">
+          <li>
+            <span class="subtopic-label">جراحی، جایگذاری و طرح درمان</span>
+            <span class="subtopic-chip">۲۵</span>
+          </li>
+          <li>
+            <span class="subtopic-label">بیولوژی، حفظ استخوان و عوارض پری‌ایمپلنت</span>
+            <span class="subtopic-chip">۱۸</span>
+          </li>
+          <li>
+            <span class="subtopic-label">اجزا، اباتمنت، اتصالات و پیچ‌ها</span>
+            <span class="subtopic-chip">۲۸</span>
+          </li>
+          <li>
+            <span class="subtopic-label">رستوریشن: ریتنشن، سمان، متریال و اِمرجِنس</span>
+            <span class="subtopic-chip">۲۳</span>
+          </li>
+          <li>
+            <span class="subtopic-label">مبانی و آموزش بیمار</span>
+            <span class="subtopic-chip">۱۳</span>
           </li>
           </ul>
         </div>

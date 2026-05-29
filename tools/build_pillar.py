@@ -105,6 +105,30 @@ PILLARS = {
             {"slug": "failures",      "title_fa": "شکست و عوارض",         "icon": "icon-warning", "intro_fa": "وقتی زنجیره می‌شکند. الگوهای شکست — از جداشدگی روکش و فرکچر تا <strong>پوسیدگی ثانویه</strong> — معمولاً به یک حلقه‌ی ضعیف در ابتدای راه برمی‌گردند. درس گرفتن از شکست‌ها، طراحی بهتر زنجیره‌ی بعدی است."},
         ],
     },
+    "implantology": {
+        "title_fa": "ایمپلنتولوژی",
+        "icon":             "icon-implant",
+        "subtitle_fa_short": "از استخوان تا روکش — یک قوس پیوسته",
+        "page_title":       "فهرست موضوعی — ایمپلنتولوژی / دنت‌کست",
+        "meta_description": "نقشه‌ی موضوعی ایمپلنتولوژی در دندان‌پزشکی — از جراحی و طرح درمان و حفظ استخوان پری‌ایمپلنت، تا اجزای پروتزی، رستوریشن نهایی و مبانی آموزش بیمار. یک قوس پیوسته از استخوان تا روکش، با لینک به اپیزودها، گلاسری، نوت‌کست‌ها و یادداشت‌های بالینی دنت‌کست.",
+        "h1_fa":        "ایمپلنتولوژی",
+        "subtitle_fa":  "نقشه‌ی موضوعی دنت‌کست",
+        "intro_paragraphs": [
+            'ایمپلنتولوژی یک درمان منفرد نیست؛ یک <strong>قوس پیوسته</strong> است که از استخوان آغاز می‌شود و به روکش ختم می‌گردد. بیولوژی، جراحی و پروتز سه فصل جدا نیستند — سه بخش از یک مسیر واحدند که در آن هر تصمیم اولیه، سقفِ کیفیت مراحل بعد را تعیین می‌کند.',
+            'این مسیر از یک پرسش بنیادین آغاز می‌شود: <strong>کجا</strong> و <strong>چگونه</strong> فیکسچر را در استخوان بنشانیم؟ زمان بارگذاری، ایمپلنت کوتاه در برابر سینوس‌لیفت، جایگذاری فوری در ناحیه‌ی زیبایی، و رویکردهای پیشرفته‌ای مثل <strong>All-on-4</strong> و زایگوما — همه پاسخ‌هایی به همین پرسش‌اند، نه انتخاب‌های مستقل.',
+            'اما هیچ ایمپلنتی جدا از <strong>بافت زنده‌ی اطرافش</strong> معنا ندارد. تحلیل استخوان مارژینال، اوسئواینتگریشن، <strong>پری‌ایمپلنتایتیس</strong>، و ریسک‌فاکتورهایی مثل سیگار و سابقه‌ی پریودنتیت تعیین می‌کنند که این قوس سال‌ها دوام می‌آورد یا زود می‌شکند. نگاه مدرن، از بیومکانیک محض به سمت <strong>بیولوژی</strong> چرخیده است.',
+            'وقتی فیکسچر تثبیت شد، نوبت به <strong>اجزای پروتزی</strong> می‌رسد: نوع کانکشن، انتخاب اباتمنت، <strong>Ti-Base</strong>، مولتی‌یونیت، اسکن‌بادی و پیچ‌ها. این‌جا رفتار مکانیکی اتصال حرف اول را می‌زند — شل‌شدن یا شکست پیچ، عدم‌تطابق برندها، و خطای انتقال دیجیتال، همه در همین حلقه رخ می‌دهند.',
+            'حلقه‌ی پایانی، <strong>رستوریشن</strong> است: پیچ‌شونده یا سمان‌شونده، انتخاب متریال (زیرکونیا، PFM، مونولیتیک یا ونیرشده)، طراحی <strong>پروفایل اِمرجِنس</strong>، و مدیریت سمان. سمان باقی‌مانده یک عارضه‌ی صرفاً پروتزی نیست — تهدیدی بیولوژیک برای همان استخوانی است که در ابتدای قوس حفظش کردیم؛ این‌جاست که زنجیره به نقطه‌ی شروع بازمی‌گردد.',
+            'این صفحه یک نقشه‌ی موضوعی برای ورود به این جهان است. مطالب در <strong>پنج لایه</strong> دسته‌بندی شده‌اند، به‌ترتیبِ همان زنجیره‌ی درمان — از جراحی و طرح درمان تا مبانیِ آموزش بیمار. اگر تازه وارد ایمپلنتولوژی می‌شوید از بالا شروع کنید؛ اگر دنبال یک تصمیم بالینی مشخص هستید، مستقیم به دسته‌ی مرتبط بروید. هر مورد به منبع کاملش در دنت‌کست لینک شده — اپیزود پادکست، نوت‌کست، گلاسری، یا یادداشت بالینی.',
+        ],
+        "subtopics": [
+            {"slug": "surgical-planning",    "title_fa": "جراحی، جایگذاری و طرح درمان", "icon": "icon-compass",    "intro_fa": "نخستین حلقه‌ی قوس. تصمیم درباره‌ی <strong>زمان و محل جایگذاری</strong>، پروتکل بارگذاری، و انتخاب میان رویکردها — از ایمپلنت کوتاه و سینوس‌لیفت تا فول‌آرچ — بستری را می‌سازد که تمام مراحل بعد روی آن بنا می‌شود."},
+            {"slug": "peri-implant-health",  "title_fa": "بیولوژی، حفظ استخوان و عوارض پری‌ایمپلنت", "icon": "icon-microbe", "intro_fa": "بستر زیستیِ همه‌چیز. <strong>اوسئواینتگریشن</strong>، حفظ استخوان مارژینال و پیشگیری از پری‌ایمپلنتایتیس تعیین می‌کنند که قوس درمان پایدار می‌ماند یا فرومی‌پاشد. ریسک را این‌جا می‌سنجیم، نه پس از شکست."},
+            {"slug": "prosthetic-components", "title_fa": "اجزا، اباتمنت، اتصالات و پیچ‌ها", "icon": "icon-gear",      "intro_fa": "حلقه‌ی مکانیکی میانی. <strong>اباتمنت، کانکشن و پیچ</strong> — به‌علاوه‌ی Ti-Base و اسکن‌بادی — رفتار اتصال را رقم می‌زنند. بیشتر عوارض مکانیکی، از شل‌شدن پیچ تا عدم‌تطابق دیجیتال، در همین نقطه ریشه دارند."},
+            {"slug": "restoration-design",    "title_fa": "رستوریشن: ریتنشن، سمان، متریال و اِمرجِنس", "icon": "icon-crown", "intro_fa": "حلقه‌ی پایانی و بازگشت به آغاز. انتخاب میان <strong>پیچ‌شونده و سمان‌شونده</strong>، متریال روکش، طراحی پروفایل اِمرجِنس و مدیریت سمان — جایی که موفقیت پروتزی و سلامت بیولوژیک به هم گره می‌خورند."},
+            {"slug": "fundamentals",          "title_fa": "مبانی و آموزش بیمار", "icon": "icon-book",                "intro_fa": "زبان مشترک با بیمار. توضیح ساده‌ی این‌که <strong>ایمپلنت چیست</strong>، مراحل درمان کدام‌اند و چرا فالوآپ اهمیت دارد — نقطه‌ی ورود برای کسی که می‌خواهد کل این قوس را از بیرون بفهمد."},
+        ],
+    },
 }
 
 TYPE_META = {
@@ -471,6 +495,15 @@ def render_page(slug, cfg, intro_html, cards_html, flat_ordered):
         '      background: rgba(61, 214, 196, 0.10);\n'
         '      border-right-color: rgba(61, 214, 196, 0.45);\n'
         '    }\n'
+        '    /* implantology — metallic gray: #6b7280 light / #9ca3af dark */\n'
+        '    [data-pillar="implantology"] .pillar-subtopic-intro {\n'
+        '      background: rgba(107, 114, 128, 0.07);\n'
+        '      border-right-color: rgba(107, 114, 128, 0.40);\n'
+        '    }\n'
+        '    [data-theme="dark"] [data-pillar="implantology"] .pillar-subtopic-intro {\n'
+        '      background: rgba(156, 163, 175, 0.10);\n'
+        '      border-right-color: rgba(156, 163, 175, 0.45);\n'
+        '    }\n'
         '  </style>\n'
         '\n'
         "  <!-- Theme init verbatim from metanotes/index.html -->\n"
@@ -763,6 +796,24 @@ INDEX_INLINE_STYLE = (
     "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"fixed-pros\"] .pillar-card-name { color: #d8a570; }\n"
     "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"fixed-pros\"] .subtopic-chip { background: rgba(200,148,86,.18); color: #c89456; }\n"
     "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"fixed-pros\"] .pillar-card-arrow { background: rgba(200,148,86,.15); border-color: rgba(200,148,86,.35); color: #c89456; }\n"
+    "\n"
+    "/* Per-pillar accent — implantology uses metallic gray in place of teal.\n"
+    "   Same mechanism, same places as the default teal above; selectors\n"
+    "   are scoped to [data-pillar=\"implantology\"] so other cards stay teal.\n"
+    "     light primary gray: #6b7280\n"
+    "     dark primary gray:  #9ca3af */\n"
+    ".pillar-card-row[data-pillar=\"implantology\"] { border-color: rgba(107,114,128,.25); }\n"
+    ".pillar-card-row[data-pillar=\"implantology\"]:hover { border-color: rgba(107,114,128,.35); }\n"
+    ".pillar-card-row[data-pillar=\"implantology\"] .pillar-card-icon { color: #6b7280; }\n"
+    ".pillar-card-row[data-pillar=\"implantology\"] .pillar-card-name { color: #6b7280; }\n"
+    ".pillar-card-row[data-pillar=\"implantology\"] .subtopic-chip { background: rgba(107,114,128,.10); color: #6b7280; }\n"
+    ".pillar-card-row[data-pillar=\"implantology\"] .pillar-card-arrow { background: rgba(107,114,128,.10); border-color: rgba(107,114,128,.25); color: #6b7280; }\n"
+    "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"implantology\"] { border-color: rgba(156,163,175,.30); }\n"
+    "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"implantology\"]:hover { border-color: rgba(156,163,175,.45); }\n"
+    "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"implantology\"] .pillar-card-icon { color: #9ca3af; }\n"
+    "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"implantology\"] .pillar-card-name { color: #9ca3af; }\n"
+    "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"implantology\"] .subtopic-chip { background: rgba(156,163,175,.18); color: #9ca3af; }\n"
+    "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"implantology\"] .pillar-card-arrow { background: rgba(156,163,175,.15); border-color: rgba(156,163,175,.35); color: #9ca3af; }\n"
     "</style>"
 )
 
