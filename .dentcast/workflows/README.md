@@ -11,6 +11,7 @@
 7. **Structured-pillar list is live, never hardcoded.** Only some pillars are *structured* — meaning `tools/build_pillar.py` generates a topical-index page for them. The structured set grows over time and MUST be read live from `PILLARS` in `tools/build_pillar.py` on every run. Subtopics are meaningful only for structured pillars; non-structured pillars get no subtopic. Do NOT bake pillar slugs, subtopic slugs, or Persian titles into this workflow. A new subtopic is created only on explicit user confirmation; a new pillar is never created in step 5.5.
 8. **`main` is authoritative for taxonomy and builders.** The authoritative source for pillars/subtopics — and for the build scripts in general — is always the `main` branch. Before reading `PILLARS` or running any builder, ensure the working state reflects `main` (run from `main`, or merge `main` into the working branch first). Never trust a feature branch's `tools/build_pillar.py` as the taxonomy source of truth.
 9. **Hard cap of 5 links per "کاوش بیشتر" section.** Any single "کاوش بیشتر" section may contain **at most 5 links total** — an absolute ceiling counting *every* link of *every* kind in that section together: the site-wide capsules (دانشنامه, فهرست موضوعی), glossary back-links, semantic brain-entry links — all share **one budget of 5**. There are **no** separate per-type quotas. Before any step adds a link, it must **count the links already present**; if the section already has 5 or more, that step adds nothing and skips; if fewer, it may add only up to `(5 − current count)`, choosing its highest-priority candidates first. Insertion order across steps matters because of the shared budget: the site-wide capsules (step 2.5) are placed first and consume their slots, and later steps (step 4.7 on glossary pages, step 4.9 on the new page) fill only whatever remains. **Only add within the remaining budget — never remove, reorder, or restyle existing links to make room.** If there's no room, skip. Every step that touches a "کاوش بیشتر" section (2.5, 4.7, 4.9) defers to this single rule.
+10. **LiteCast is an isolated track.** LiteCast is non-specialist (general-audience) content governed by its **own** source of truth (`litecast/lite-glossary.json`, not `dentcast-brain.json`) and its **own** internal link structure. It is deliberately kept **separate** from the specialist ecosystem and must **not** be cross-linked with it in either direction. When the locked category is LiteCast, the Phase C **step 0 branch** overrides the corresponding general steps (it skips the site-wide capsules and all specialist cross-linking, and writes the entry to `litecast/lite-glossary.json` only). See Phase C step 0.
 
 ## Phase A — Discover
 
@@ -81,6 +82,36 @@ If for some category Pulse announcements aren't customary (you can tell by check
 
 Run, in order:
 
+### 0. LiteCast branch — isolated track (overrides the general steps)
+
+**Check the locked category first (from Phase B Question 1).** If it is **LiteCast**, this branch's rules **override** the corresponding general steps below. LiteCast is **non-specialist (general-audience)** content, deliberately kept **separate** from the rest of the site's specialist ecosystem: it has its own source of truth, its own internal link structure, and must **not** be cross-linked with specialist content. If the locked category is anything other than LiteCast, ignore this section and proceed normally from step 1.
+
+**0.1 — Source of truth is `litecast/lite-glossary.json`, not `dentcast-brain.json`.**
+- The file is a JSON **object** whose entries live under the top-level **`LightGlossary`** key — an array of LiteCast entries (despite the filename, this is LiteCast *content*, not a glossary of terms). The current entry shape is `type` (`"litecast"`), `id` (`litecast-N`), `title`, `caption`, `hashtags`, `keywords`, `page_url` (a path like `litecast/lite-CAST-N.html`). There is **no** `pillar` field — confirm the live shape from the file rather than trusting this list.
+- Infer **all** LiteCast structure from `litecast/lite-glossary.json`: required fields, schema shape, directory/URL pattern, and media requirements. Read it the way Phase A reads the brain — find the **most recent** entry in `LightGlossary` and use it as both the **schema** and **structural** template.
+- The new LiteCast entry is **appended to the `LightGlossary` array** in `litecast/lite-glossary.json`, matching its format **exactly** (identical keys/nesting/ordering to the previous entry — no extra fields, no missing fields).
+- Do **NOT** add a LiteCast entry to `dentcast-brain.json`. This replaces the normal step 5 brain-entry write (and its step 5.5 pillar classification — see 0.4).
+
+**0.2 — Isolation: no cross-linking with specialist content.** This is the core of LiteCast's separateness. For a LiteCast publish, **skip these steps entirely**:
+- **Step 2.5** (site-wide capsule block) — do **NOT** inject the دانشنامه / فهرست موضوعی capsules on LiteCast pages; those point into the specialist ecosystem. LiteCast is a **SKIP** case in the step 2.5 conditional.
+- **Step 4.7** (glossary back-link to the new content) — do **NOT** add LiteCast links into any glossary "کاوش بیشتر" section.
+- **Step 4.8** (in-body links from the article to glossary terms / episodes) — LiteCast bodies do **NOT** get inline links to specialist content.
+- **Step 4.9** (semantic "کاوش بیشتر" links from the new page to brain entries) — do **NOT** link a LiteCast page out to specialist brain entries.
+
+The rule is symmetric: the rest of the site must not link **to** LiteCast, and LiteCast must not link **out** to specialist content.
+
+**0.3 — LiteCast's own internal structure.** LiteCast items link **only among themselves**. When building the new page, **clone the previous LiteCast page's structure exactly**, including whatever internal LiteCast-to-LiteCast linking it already uses, and swap values. Do **NOT** invent a new internal-linking scheme — derive it from how existing LiteCast pages already link to each other. If existing LiteCast pages have **no** internal-link mechanism, do not fabricate one; leave it as the template has it and note that to the user.
+
+**0.4 — What still runs (keyed to `litecast/lite-glossary.json` and the LiteCast directory, not the brain).** Everything that is **not** cross-linking still applies in LiteCast-appropriate form:
+- **Step 1 & Step 4** (template lock + integrity hash) — against the previous LiteCast page.
+- **Step 2** (build the new page) — clone the previous LiteCast page; per 0.3.
+- **Step 3** (date / meta audit) — runs normally.
+- **Step 5 / 5.5** — replaced by 0.1: the entry goes to `litecast/lite-glossary.json` only. LiteCast lives **outside** the specialist pillar taxonomy, so do **not** assign a specialist pillar/subtopic and do **not** pull from the `PILLARS` taxonomy; fill a pillar-like field only if `litecast/lite-glossary.json`'s own schema has one, per its own convention.
+- **Step 6** (Pulse) — follow the existing Pulse convention for this type (including the «این نوع معمولاً تو پالس اعلان نمی‌شه — مطمئنی می‌خوای؟» check from Phase B Question 5 if LiteCast isn't customarily announced).
+- **Step 7** (cache-bust) and **Step 8** (rebuild) — run, keyed to LiteCast's own files.
+
+Rule of thumb: **anything about LiteCast's own files runs; anything that bridges LiteCast to the specialist ecosystem is skipped.**
+
 ### 1. Template lock & hash
 
 Identify the previous same-category page on disk (if the type has on-disk pages). Compute SHA-256, store it. This is the structural template and must remain untouched at the end.
@@ -104,9 +135,10 @@ After the new page is cloned and field values are swapped (step 2), inject the s
 
 | Locked category source | What goes in the section |
 |---|---|
-| Typed brain entry (any entry in `dentcast-brain.json` with a `type` field — NoteCast, Insight, Clinical, Chairside, LiteCast, DentAI, MetaNote, PhotoCast, ShareHub, DentCast+, DentCast, …) | **Both** capsules: دانشنامه + فهرست موضوعی |
+| Typed brain entry (any entry in `dentcast-brain.json` with a `type` field — NoteCast, Insight, Clinical, Chairside, DentAI, MetaNote, PhotoCast, ShareHub, DentCast+, DentCast, …) | **Both** capsules: دانشنامه + فهرست موضوعی |
 | Glossary term page (sourced from `glossary/glossary.json`, not from the brain) | **Only** the فهرست موضوعی capsule |
 | Core podcast episode (no `type` field — `/episodes/episode-XX.html`) | **Skip** entirely. Do NOT add this section to core episode pages. |
+| **LiteCast** (isolated track — see Phase C step 0) | **Skip** entirely. The دانشنامه / فهرست موضوعی capsules point into the specialist ecosystem; LiteCast must not link into it. Do NOT inject this section on LiteCast pages. |
 
 The conditional is binary skip-or-include, decided by where the locked category came from. The capsule link targets are **fixed sitewide** (`/glossary/` and `/pillar/`) — never per-pillar, never per-subtopic, no dependency on `pillar.primary` or `pillar.subtopic`.
 
@@ -132,7 +164,7 @@ For glossary term pages, omit the first `<a>` (the دانشنامه capsule) —
 
 **Verify after injection:**
 - The section appears once on the new page (no duplicate).
-- The correct number of capsules is present for the locked category (2 for typed-brain, 1 for glossary, 0 for core episode — but core episodes hit the skip branch, so this case never reaches verification).
+- The correct number of capsules is present for the locked category (2 for typed-brain, 1 for glossary, 0 for core episode and 0 for LiteCast — but core episodes and LiteCast hit the skip branch, so those cases never reach verification).
 - The page uses `dc-related-*` classes only — never `ep-*` — to avoid relying on episode-only inline styles.
 - The injection is the only diff vs the cloned template, beyond the swaps already specified in step 2.
 
