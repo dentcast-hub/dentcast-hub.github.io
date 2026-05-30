@@ -1,6 +1,6 @@
 /* ============================================================
    DentCast Global Search Engine — Final Stable Version v5.0
-   Author: ChatGPT for Dr. Fouad Shahabian
+   Author: ChatGPT for Dr. Foad Shahabian
    ============================================================ */
 
 document.addEventListener("DOMContentLoaded", () => {
