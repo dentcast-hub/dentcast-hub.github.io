@@ -9674,5 +9674,46 @@
       ],
       "subtopic": "crowns-onlays"
     }
+  },
+  {
+    "type": "sharehub",
+    "id": "7",
+    "title": "دیابت و پوسیدگی؛ رابطه‌ای که آن‌قدرها مستقیم نیست",
+    "caption": "مطلبی منتخب در Share Hub دنت‌کست؛ مرور یک متاآنالیز درباره‌ی ارتباط دیابت نوع ۲ و پوسیدگی دندان (شاخص DMFT) و نقش واسطه‌ای بزاق شامل کاهش جریان، افت pH و ضعف ظرفیت بافری؛ با تأکید بر مشاهده‌ای بودن داده‌ها و غیرمستقیم بودن این رابطه. این محتوا تولید دنت‌کست نیست و به‌صورت curated منتشر شده است.",
+    "author": "Zhou G, et al",
+    "source": "https://pubmed.ncbi.nlm.nih.gov/39216817/",
+    "hashtags": [
+      "#دیابت",
+      "#پوسیدگی",
+      "#دیابت_نوع_۲",
+      "#بزاق",
+      "#DMFT",
+      "#ظرفیت_بافری",
+      "#پوسیدگی_دندان",
+      "#سلامت_دهان",
+      "#Share_Hub",
+      "#Curated_Content",
+      "#Type2_Diabetes",
+      "#Dental_Caries",
+      "#Saliva"
+    ],
+    "keywords": [
+      "type 2 diabetes dental caries",
+      "DMFT diabetes",
+      "salivary flow rate",
+      "salivary buffering capacity",
+      "salivary pH",
+      "diabetes oral health",
+      "cariogenic bacteria",
+      "observational meta-analysis",
+      "دیابت و پوسیدگی",
+      "بزاق و پوسیدگی"
+    ],
+    "url": "/sharehub/share-7.html",
+    "pillar": {
+      "primary": "operative",
+      "secondary": [],
+      "subtopic": null
+    }
   }
 ]
