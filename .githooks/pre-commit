@@ -14,7 +14,7 @@ set -euo pipefail
 
 is_text() {
   case "${1,,}" in
-    *.html|*.htm|*.css|*.js|*.mjs|*.cjs|*.json|*.md|*.txt|*.svg|*.xml|*.webmanifest|*.yml|*.yaml) return 0 ;;
+    *.html|*.htm|*.css|*.js|*.mjs|*.cjs|*.json|*.md|*.txt|*.svg|*.xml|*.webmanifest|*.yml|*.yaml|*.py) return 0 ;;
     *) return 1 ;;
   esac
 }
