@@ -193,6 +193,52 @@ For each glossary term judged semantically related, treat it **independently** �
 - No page that was at the 5-link cap was touched.
 - Report the full candidate list, which terms were linked, which were skipped (and why: cap reached / no section / judged unrelated), and the link text used on each edited page.
 
+### 4.8. Suggest in-article internal links (all content types)
+
+Runs when new content is published. This is the **inverse** of step 4.7: where 4.7 links existing pages *to* the new content, this step enriches the new article's **own body** with internal links pointing **out** to existing glossary terms and episodes. It operates on the new content's page, so it belongs with the page-mutation steps.
+
+#### Step 1 — Build the candidate target list
+
+Read **both** `glossary/glossary.json` **and** `dentcast-brain.json`. Build one candidate target list:
+- Every glossary term, with its page URL.
+- Every episode, with its page URL, from `dentcast-brain.json`.
+
+#### Step 2 — Semantic analysis of the article body
+
+Perform a genuinely **semantic** analysis of the new article's body — **not** surface keyword/string matching. For each candidate target the question is conceptual: does this exact place in the article actually refer to the concept that the glossary term or episode is about? A term qualifies **only** when the word/phrase, in its real context, carries the meaning of the target concept — not merely because the same letters appear.
+
+**Hard rules for matching:**
+- **No junk/generic words.** Do not propose links on common, generic, or filler words that merely coincide with a term string (ordinary verbs, common adjectives, everyday nouns not used as the technical concept). If a reader wouldn't gain anything from the link, it's junk — discard it.
+- **Sense-disambiguation required.** If a word has both an everyday meaning and a technical/glossary meaning, link it **only** where it is clearly used in the technical sense. Skip everyday-sense occurrences entirely.
+- **Conceptual relevance over lexical coincidence.** A match is valid only when the linked concept is genuinely the thing being discussed at that point, and the link would genuinely help the reader go deeper.
+- **When in doubt, DON'T propose it.** Precision beats coverage. A short list of strong, meaningful links is the goal — never a flood of weak matches.
+
+#### Step 3 — First-occurrence only
+
+For each term that survives the semantic filter, the link targets **only the FIRST occurrence** of that word/phrase in the article body (the first place it appears in the qualifying technical sense). Do not link later occurrences of the same term. **One link per term, on its first qualifying appearance, in reading order.**
+
+#### Step 4 — Present for confirmation (do NOT edit yet)
+
+Do **not** edit anything in this sub-step. **Present** the proposed links to the user as a numbered review list. For each proposed link show:
+- The matched word/phrase, with enough surrounding context (a few words each side) to see exactly where it sits.
+- The target type (glossary term vs. episode).
+- The target URL.
+- A one-line reason why this is a genuine semantic match (so the user can sanity-check the judgment).
+
+Then ask the user to confirm which links to apply. The user may approve all, approve a subset, or reject. **Do NOT insert any link without explicit user confirmation.**
+
+#### Step 5 — Insert approved links
+
+After confirmation, insert **only** the approved links, each on the **first qualifying occurrence** of its term in the body, using the **same anchor markup/classes the article body already uses for inline links** (match the existing in-body link style exactly — do not introduce a new link style).
+
+#### Step 6 — Constraints
+
+- **First occurrence only, one link per term** — never link the same term twice.
+- **Semantic, not lexical** — never link a word purely because its characters match a term; the concept must actually be present at that spot.
+- **No self-links** — if the new content IS the glossary page for "X", don't link "X" in its own body to itself.
+- **Don't break structure** — never create a link inside an existing link, inside a heading, or anywhere it would break the HTML.
+- **Hash the new page before and after this step.** The only allowed diffs are the approved anchor insertions. Report before/after hashes.
+
 ### 5. Brain entry
 
 `dentcast-brain.json` is a **single flat array of all entries — there are no per-type sections.** Read it. Find the most recent entry of the LOCKED category and use it as the **schema template**.
