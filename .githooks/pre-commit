@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+# Reject staged TEXT files containing NUL bytes.
+#
+# NUL bytes in text files are corruption — the write/sync layer in some editing
+# environments appends NUL padding after a file's real content (and has, on
+# occasion, zeroed a span mid-file). Such files read as "binary", so they vanish
+# from grep and text tooling and can be committed silently. This guard inspects
+# the STAGED content (the index) — exactly the bytes that would enter the commit —
+# and aborts if any text file carries a NUL byte.
+#
+# Activate once per clone:  git config core.hooksPath .githooks
+# Override (only if certain): git commit --no-verify
+set -euo pipefail
+
+is_text() {
+  case "${1,,}" in
+    *.html|*.htm|*.css|*.js|*.mjs|*.cjs|*.json|*.md|*.txt|*.svg|*.xml|*.webmanifest|*.yml|*.yaml) return 0 ;;
+    *) return 1 ;;
+  esac
+}
+
+bad=()
+while IFS= read -r -d '' f; do
+  is_text "$f" || continue
+  # Inspect the staged blob, not the working-tree copy.
+  if git show ":$f" 2>/dev/null | LC_ALL=C grep -qaP '\x00'; then
+    n=$(git show ":$f" | LC_ALL=C tr -cd '\000' | wc -c | tr -d ' ')
+    bad+=("$f ($n NUL byte(s))")
+  fi
+done < <(git diff --cached --name-only --diff-filter=ACMR -z)
+
+if ((${#bad[@]})); then
+  echo "" >&2
+  echo "  COMMIT REJECTED - NUL bytes found in text file(s):" >&2
+  printf '      %s\n' "${bad[@]}" >&2
+  echo "" >&2
+  echo "  This is the trailing-padding corruption from the write/sync layer." >&2
+  echo "  Clean with:  python3 tools/strip_text_nuls.py <file>" >&2
+  echo "  Override (only if certain):  git commit --no-verify" >&2
+  echo "" >&2
+  exit 1
+fi
+exit 0
