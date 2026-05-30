@@ -159,6 +159,40 @@ After the new NoteCast page is built and verified, locate the parent episode pag
 
 Hash the parent episode page before editing and after. Report both. The only diff allowed is the related-content insertion.
 
+### 4.7. Semantic glossary back-linking (all content types)
+
+Runs whenever new content is published, regardless of category. The goal is to surface the new content from the glossary terms it genuinely relates to — by adding a single back-link on each truly-related term's page.
+
+#### Step 1 — Semantic review of glossary terms
+
+Read `glossary/glossary.json`. Perform a genuinely **semantic** review of its terms — **not** keyword/string matching. Compare the *conceptual subject* of the new content against each glossary term's meaning and scope, and identify the terms whose topic is genuinely conceptually related to the new content.
+
+Be **conservative**: link only where the relationship is real and would genuinely help a reader, not tangential. When you are uncertain whether a term is related enough, **list the candidate terms and ask the user to confirm before editing** — do not guess.
+
+#### Step 2 — Per-term back-link (independent, per page)
+
+For each glossary term judged semantically related, treat it **independently** — one related term may get the link (under the cap) while another is skipped (at the cap):
+
+- Open that glossary term's page on disk.
+- Find its **"کاوش بیشتر"** section.
+- Count the existing related-content links already in that section.
+- **If the count is fewer than 5:** add a link to the **new** content at the **bottom** of that section's link list, matching the exact form, classes, and styling of the other links already there. Use link text that fits naturally and descriptively for the new content, written in the same style/register as the sibling links — meaningful and specific, never a generic label.
+- **If the count is already 5 or more:** skip that glossary page entirely — do not add the link, do not remove or reorder anything.
+
+#### Step 3 — Constraints
+
+- **Add only** — never remove, reorder, or restyle existing links in any glossary "کاوش بیشتر" section.
+- The added link's markup must match the sibling links **exactly** (same classes, same structure); only the URL and the descriptive text differ.
+- The link text must be meaningful and specific to the new content, in the same style/register as the existing links in that section — not generic.
+- If a glossary page has **no** "کاوش بیشتر" section, skip it — do not invent one — unless this document's conventions elsewhere already define how that section is created, in which case follow that.
+- **Hash each glossary page before and after editing.** The only allowed diff is the single appended link. Report before/after hashes for every edited page.
+
+#### Verify after write
+
+- Each edited page differs from its pre-edit state by exactly one appended link, nothing else (confirmed by the before/after hashes and a diff).
+- No page that was at the 5-link cap was touched.
+- Report the full candidate list, which terms were linked, which were skipped (and why: cap reached / no section / judged unrelated), and the link text used on each edited page.
+
 ### 5. Brain entry
 
 `dentcast-brain.json` is a **single flat array of all entries — there are no per-type sections.** Read it. Find the most recent entry of the LOCKED category and use it as the **schema template**.
@@ -239,8 +273,8 @@ Re-read the brain entry and confirm:
 Use the sentence + hyperlink word from intake Question 5.
 
 - Locate the Pulse section in `index.html` (or its data source if data-driven).
-- Remove the **bottom-most** (lowest) line of the Pulse section entirely — no empty containers left behind. (This is the oldest announcement, currently the Radar one, but the rule is positional: always the lowest line.)
-- Insert the new sentence **one position above the new bottom** — i.e., just above whatever line is now the lowest after the removal. The new line is NOT at the very top of Pulse; it sits one above the bottom.
+- Insert the new sentence at the **absolute top** of the Pulse section — it becomes the first (highest) line, above every existing line.
+- Remove the **bottom-most** (lowest) line of the Pulse section entirely — no empty containers left behind. (This is the oldest announcement; the rule is positional: always the lowest line.)
 - The chosen word is hyperlinked to the new content's page URL.
 - Match exact HTML/classes of other Pulse items.
 
