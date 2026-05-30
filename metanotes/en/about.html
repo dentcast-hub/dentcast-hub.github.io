@@ -116,9 +116,34 @@
 body { font-family: 'Vazirmatn', system-ui, -apple-system, sans-serif; }
 
 main.about-page {
+  position: relative;
   max-width: 680px;
   margin: 0 auto;
   padding: 32px 18px 100px;
+}
+
+.lang-btn{
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  background: rgba(255,255,255,0.92);
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 12px;
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #0b5fff;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  cursor: pointer;
+  transition: transform .18s ease, background .18s ease;
+}
+
+.lang-btn:hover{
+  background:#fff;
+  transform: scale(1.03);
 }
 
 /* ── Profile hero ────────────────────────────────── */
@@ -365,6 +390,12 @@ main.about-page {
 
 <!-- ── MAIN CONTENT ── -->
 <main class="about-page">
+  <!-- 🌐 Persian Version (SEO-friendly link) -->
+  <a class="lang-btn"
+     href="../../about.html"
+     rel="noopener">
+    <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20"/><path d="M12 2a15 15 0 0 0 0 20"/></svg> فارسی
+  </a>
 
   <p class="about-page-label">About</p>
 
