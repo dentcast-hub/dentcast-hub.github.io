@@ -1,0 +1,32 @@
+name: NUL-byte guard
+
+# Backstop for the local .githooks/pre-commit guard: a local hook can be skipped
+# with --no-verify and does not exist in fresh/automated clones, so this CI check
+# is the un-bypassable guarantee that NUL-corrupted text files never reach the repo.
+on: [push, pull_request]
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Reject NUL bytes in tracked text files
+        run: |
+          rc=0
+          while IFS= read -r -d '' f; do
+            case "${f,,}" in
+              *.html|*.htm|*.css|*.js|*.mjs|*.cjs|*.json|*.md|*.txt|*.svg|*.xml|*.webmanifest|*.yml|*.yaml|*.py) ;;
+              *) continue ;;
+            esac
+            if LC_ALL=C grep -qaP '\x00' "$f"; then
+              n=$(LC_ALL=C tr -cd '\000' < "$f" | wc -c)
+              echo "::error file=$f::contains $n NUL byte(s) - text-file corruption"
+              rc=1
+            fi
+          done < <(git ls-files -z)
+          if [ "$rc" -ne 0 ]; then
+            echo "NUL-byte corruption detected in text file(s) above. Clean with tools/strip_text_nuls.py."
+          else
+            echo "OK - no NUL bytes in tracked text files."
+          fi
+          exit $rc
