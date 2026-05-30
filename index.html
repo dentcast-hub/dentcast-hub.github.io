@@ -2757,7 +2757,7 @@ a.dc-list-card--pillar {
           <span class="k">ساعت محتوای صوتی</span>
         </div>
         <div class="hero-stat" role="listitem">
-          <span class="v"><!-- COUNTER:CONTENT:START -->۴۶۵<!-- COUNTER:CONTENT:END --></span>
+          <span class="v"><!-- COUNTER:CONTENT:START -->۴۶۶<!-- COUNTER:CONTENT:END --></span>
           <span class="k">محتوای آنلاین</span>
         </div>
       </div>
@@ -2820,8 +2820,8 @@ a.dc-list-card--pillar {
         <ul class="dc-pulse-list">
           <li>دنت‌کست ۳۴ <a href="/notecast/episode-34.html"><strong>خلاصه</strong></a> شد و در سایت قرار گرفت · ۶ خرداد</li>
           <li>یک <a href="/insight/insight-43.html"><strong>تجربه‌ی کلینیکی</strong></a> اضافه شد · ۶ خرداد</li>
+          <li>یک <a href="/insight/insight-44.html"><strong>تجربه‌ی کلینیکی</strong></a> منتشر شد · ۹ خرداد</li>
           <li>یک <a href="/insight/insight-42.html"><strong>تجربه‌ی کلینیکی</strong></a> اضافه شد · ۴ خرداد</li>
-          <li><a href="/pillar/index.html"><strong>فهرست موضوعی</strong></a> به سایت اضافه شد و به مرور تکمیل می‌گردد · ۳ خرداد</li>
         </ul>
         <div class="dc-pulse-ad">
           <a href="https://deventapp.ir" target="_blank" rel="sponsored noopener">
@@ -3580,7 +3580,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 <script>
 /* ── LAST 30 UPDATES ── */
 (function(){
-  const FEED_URL='/dentcast-brain.json?v=20260527';
+  const FEED_URL='/dentcast-brain.json?v=20260530';
   const el=document.getElementById('dcLast3Updates');
   if(!el) return;
   function extractArray(json){if(Array.isArray(json))return json;const cands=[json?.items,json?.data,json?.entries,json?.feed].filter(Boolean);for(const c of cands)if(Array.isArray(c))return c;for(const k in(json||{})){const v=json[k];if(Array.isArray(v))return v;if(v&&typeof v==='object'&&Array.isArray(v.items))return v.items;}return[];}
@@ -3746,7 +3746,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 
   function getBrain(){
     if(brainCache) return Promise.resolve(brainCache);
-    return fetch('/dentcast-brain.json?v=20260527', {cache:'no-store'})
+    return fetch('/dentcast-brain.json?v=20260530', {cache:'no-store'})
       .then(r => r.ok ? r.json() : [])
       .then(d => { brainCache = Array.isArray(d) ? d : []; return brainCache; })
       .catch(() => { brainCache = []; return []; });

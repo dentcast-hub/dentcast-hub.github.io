@@ -9636,5 +9636,43 @@
       "secondary": [],
       "subtopic": null
     }
+  },
+  {
+    "type": "clinical",
+    "id": "clinical-44",
+    "title": "وقتی روکش روی دندان ثبات ندارد: یک ترفند ساده برای تثبیت موقت",
+    "caption": "گاهی روکش روی دندان یا اباتمنت ثبات و موقعیت درست ندارد و همین، چک ظاهر و فیت، چک و تنظیم اکلوژن و سایر ارزیابی‌ها را غیرقابل‌اعتماد می‌کند—چون آنچه می‌بینی، روکش در جای اشتباه است. این اینسایت یک راه‌حل ساده را شرح می‌دهد: قرار دادن یک تکه دستمال کاغذی کوچک و خیس‌شده زیر سطح داخلی روکش تا یک واسطه‌ی ویسکوز موقت ایجاد شود که روکش را بدون قفل‌کردن در موقعیت درستش نگه می‌دارد و سپس به‌سادگی برداشته می‌شود.",
+    "hashtags": [
+      "#تثبیت_موقت_روکش",
+      "#ترای_این_روکش",
+      "#نشستن_روکش",
+      "#چک_اکلوژن",
+      "#واسطه_ویسکوز",
+      "#فیت_روکش",
+      "#اباتمنت",
+      "#سمان_موقت",
+      "#پروتز_ثابت",
+      "#روکش"
+    ],
+    "keywords": [
+      "crown try-in stability",
+      "temporary crown seating",
+      "viscous medium crown try-in",
+      "wet tissue paper under crown",
+      "occlusion check crown",
+      "crown fit evaluation",
+      "crown not seating abutment",
+      "provisional stabilization try-in",
+      "fixed prosthodontics",
+      "prosthodontics"
+    ],
+    "page_url": "/insight/insight-44.html",
+    "pillar": {
+      "primary": "fixed-pros",
+      "secondary": [
+        "fixed-pros"
+      ],
+      "subtopic": "crowns-onlays"
+    }
   }
 ]
