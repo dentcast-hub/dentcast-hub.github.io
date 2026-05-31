@@ -595,6 +595,72 @@ modeBtn.addEventListener("click", () => {
   updateModeButton();
 })();
 
+/* RESUME LAST POSITION — یک رکورد، روی آخرین اپیزود پخش‌شده بازنویسی می‌شود.
+   هم‌روش با ذخیرهٔ dc-playback-mode؛ فقط در بارگذاری تازه بازیابی می‌شود و
+   هرگز خودش play نمی‌کند (سیاست مرورگرها + UX خوب). */
+const RESUME_KEY = "dc-resume-state";
+let lastResumeSave = 0;   /* برای throttle کردن نوشتن روی localStorage */
+let restoring = false;    /* جلوگیری از بازنویسی رکورد ذخیره‌شده در حین خودِ بازیابی */
+
+function saveResumeState(){
+  if (currentEpisodeNum == null) return;
+  try {
+    localStorage.setItem(RESUME_KEY, JSON.stringify({
+      episode:  currentEpisodeNum,
+      position: audio.currentTime || 0,
+      anchor:   anchorEpisode
+    }));
+  } catch (e) { /* localStorage پر/غیرفعال — بی‌صدا رد شو */ }
+  lastResumeSave = Date.now();
+}
+
+/* بازیابی فقط در mount تازه؛ اگر رکورد معتبر بود true برمی‌گرداند. */
+function restoreResumeState(){
+  let saved = null;
+  try { saved = JSON.parse(localStorage.getItem(RESUME_KEY)); } catch (e) { saved = null; }
+  if (!saved || saved.episode == null) return false;
+
+  const i = episodes.findIndex(e => Number(e.episode) === Number(saved.episode));
+  if (i === -1) return false;   /* اپیزود ذخیره‌شده دیگر وجود ندارد → fallback بی‌صدا */
+
+  restoring = true;
+  loadEpisode(i);               /* فقط src را ست می‌کند؛ نه seek، نه play */
+  restoring = false;
+
+  /* لنگر را هم بازیابی کن تا زنجیرهٔ auto-advance سازگار بماند */
+  if (saved.anchor != null &&
+      episodesRaw.some(e => Number(e.episode) === Number(saved.anchor))) {
+    anchorEpisode = saved.anchor;
+  } else {
+    anchorEpisode = episodes[i].episode;
+  }
+
+  const savedPos = Number(saved.position) || 0;
+
+  /* currentTime فقط بعد از دانستن مدت قابل تنظیم است؛ الگوی لیسنر یک‌بارمصرف */
+  audio.addEventListener("loadedmetadata", function handler(){
+    audio.removeEventListener("loadedmetadata", handler);
+    const dur = audio.duration || 0;
+
+    /* نزدیک پایان (۳۰ ثانیهٔ آخر یا ≥۹۸٪ مدت) → تمام‌شده تلقی کن و از صفر بارگذاری کن */
+    const nearEnd = dur > 0 && (savedPos >= dur - 30 || savedPos >= dur * 0.98);
+    const target  = nearEnd ? 0 : Math.min(savedPos, dur);
+
+    audio.currentTime = target;
+
+    /* رکورد را با موقعیت واقعی (۰ در حالت near-end) فوراً درمان کن تا
+       reset در بارگذاری‌های بعدی دوباره تریگر نشود — بدون نیاز به اولین timeupdate. */
+    saveResumeState();
+
+    /* نوار و زمان را همگام کن چون paused است و timeupdate فعلاً صدا نمی‌خورد */
+    seek.value = dur ? (target / dur) * 100 : 0;
+    document.getElementById("dc-time-current").textContent =
+      new Date(target * 1000).toISOString().substr(14, 5);
+  });
+
+  return true;
+}
+
 /* آیکون «در حال پخش» (دو میله) — مشترک بین پخش دستی و خودکار */
 function setPlayingIcon(){
   playBtn.innerHTML = '<svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
@@ -623,6 +689,10 @@ downloadBtn.setAttribute("download", "");
   descEl.innerHTML = ep.description || "";
   descEl.style.display = "none";
   playBtn.textContent = "▶";
+
+  /* تغییر اپیزود = نوشتن فوری رکورد (در حین بازیابی سرکوب می‌شود تا
+     رکورد ذخیره‌شده پیش از seekِ مبتنی بر metadata بازنویسی نشود) */
+  if (!restoring) saveResumeState();
 }
 
 /* LIST ROW */
@@ -747,7 +817,13 @@ audio.addEventListener("timeupdate", ()=>{
   seek.value = (audio.currentTime / audio.duration) * 100;
   document.getElementById("dc-time-current").textContent =
     new Date(audio.currentTime * 1000).toISOString().substr(14,5);
+
+  /* persist موقعیت، throttle‌شده (هر ۵ ثانیه) تا localStorage کوبیده نشود */
+  if (Date.now() - lastResumeSave >= 5000) saveResumeState();
 });
+
+/* روی pause فوراً ذخیره کن (ارزان و کم‌تکرار) */
+audio.addEventListener("pause", saveResumeState);
 
 seek.addEventListener("input", ()=>{
   if (!audio.duration) return;
@@ -892,8 +968,12 @@ fetch(JSON_URL)
 .then(data=>{
   episodesRaw = data;
   applySorting();
-  loadEpisode(0);
-  anchorEpisode = episodes[0] ? episodes[0].episode : null;   /* لنگر اولیه = اپیزود پیش‌فرض */
+  /* فقط در mount تازه: اگر رکورد resume معتبر بود همان را بارگذاری کن (paused)،
+     وگرنه به اپیزود پیش‌فرض برگرد. */
+  if (!restoreResumeState()) {
+    loadEpisode(0);
+    anchorEpisode = episodes[0] ? episodes[0].episode : null;   /* لنگر اولیه = اپیزود پیش‌فرض */
+  }
 });
 
 fetch(BRAIN_URL)
