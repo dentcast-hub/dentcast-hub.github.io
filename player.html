@@ -379,6 +379,29 @@ body {
   text-decoration: underline;
 }
 
+/* دکمه حالت پخش خودکار (autoplay) — سه‌حالته */
+#dc-mode {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  line-height: 1;
+}
+
+#dc-mode .dc-mode-label {
+  font-size: 9px;
+  font-weight: 600;
+  opacity: 0.4;
+  transition: opacity 0.2s;
+}
+
+#dc-mode.is-active .dc-mode-label {
+  opacity: 0.85;
+}
+
+#dc-mode.is-off .dc-mode-ico {
+  opacity: 0.4;
+}
+
 
   </style>
     <link rel="stylesheet" href="/dc-theme.css">
@@ -456,6 +479,7 @@ body {
 
       <div class="dc-controls-row">
       <button id="dc-speed" class="dc-speed-btn">1x</button>
+      <button id="dc-mode" class="dc-speed-btn is-off" aria-label="autoplay: off"><span class="dc-mode-ico"></span><span class="dc-mode-label">autoplay</span></button>
       <button id="dc-back" class="dc-jump-btn"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg> 15s</button>
       <button id="dc-play" class="dc-play-btn"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="10"/><path d="m10 8 6 4-6 4z"/></svg></button>
       <button id="dc-forward" class="dc-jump-btn">15s <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg></button>
@@ -501,6 +525,8 @@ const descEl  = document.getElementById("dc-current-desc");
 const playBtn = document.getElementById("dc-play");
 const seek = document.getElementById("dc-seek");
 const speedBtn = document.getElementById("dc-speed");
+const modeBtn = document.getElementById("dc-mode");
+const modeIco = modeBtn.querySelector(".dc-mode-ico");
 const sortBtn = document.getElementById("dc-sort-btn");
 const backBtn = document.getElementById("dc-back");
 const fwdBtn  = document.getElementById("dc-forward");
@@ -514,9 +540,25 @@ let episodes = [];
 let brainData = [];
 let sortDescending = true;
 let currentIndex = 0;
+let currentEpisodeNum = null;   /* شمارهٔ اپیزود در حال پخش (مستقل از ترتیب لیست) */
+let anchorEpisode = null;       /* اپیزود لنگر: فقط با انتخاب دستی کاربر تغییر می‌کند */
 
 let speeds = [1, 1.25, 1.5, 1.75, 2];
 let speedIndex = 0;
+
+/* AUTOPLAY MODE — سه‌حالته: off → forward → reverse → off */
+const PLAYBACK_MODES = ["off", "forward", "reverse"];
+let modeIndex = 0;
+
+/* کتابخانهٔ آیکون‌های حالت پخش (هم‌سبک با بقیهٔ آیکون‌های فایل) */
+const MODE_ICONS = {
+  /* icon-ban (مطابق کتابخانه): خاموش */
+  off: '<svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:14px;height:14px;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="10"/><path d="m4.9 4.9 14.2 14.2"/></svg>',
+  /* chevron-right (مطابق icon-chevron-right کتابخانه): رو به جلو، شماره‌های بزرگ‌تر */
+  forward: '<svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:14px;height:14px;vertical-align:-.15em;display:inline-block"><path d="m9 6 6 6-6 6"/></svg>',
+  /* chevron-left (مطابق icon-chevron-left کتابخانه): معکوس، شماره‌های کوچک‌تر */
+  reverse: '<svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:14px;height:14px;vertical-align:-.15em;display:inline-block"><path d="m15 6-6 6 6 6"/></svg>'
+};
 
 /* تبدیل شماره اپیزود به slug فایل (106.1 → 106-1) */
 function epSlug(n) { return String(n).replace('.', '-'); }
@@ -528,11 +570,51 @@ speedBtn.addEventListener("click", () => {
   speedBtn.textContent = speeds[speedIndex] + "x";
 });
 
+/* AUTOPLAY MODE */
+function updateModeButton(){
+  const mode = PLAYBACK_MODES[modeIndex];
+  modeIco.innerHTML = MODE_ICONS[mode];
+  modeBtn.classList.toggle("is-off", mode === "off");
+  modeBtn.classList.toggle("is-active", mode !== "off");
+  modeBtn.setAttribute("aria-label", "autoplay: " + mode);
+  modeBtn.title = "autoplay: " + mode;
+}
+
+modeBtn.addEventListener("click", () => {
+  modeIndex = (modeIndex + 1) % PLAYBACK_MODES.length;
+  localStorage.setItem("dc-playback-mode", PLAYBACK_MODES[modeIndex]);
+  updateModeButton();
+});
+
+/* بازگردانی حالت ذخیره‌شده (هم‌روش با ذخیرهٔ تم) */
+(function(){
+  const saved = localStorage.getItem("dc-playback-mode");
+  if (saved && PLAYBACK_MODES.indexOf(saved) !== -1) {
+    modeIndex = PLAYBACK_MODES.indexOf(saved);
+  }
+  updateModeButton();
+})();
+
+/* آیکون «در حال پخش» (دو میله) — مشترک بین پخش دستی و خودکار */
+function setPlayingIcon(){
+  playBtn.innerHTML = '<svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
+}
+
+/* پخش اپیزود بارگذاری‌شده با الگوی یک‌بارمصرف canplay (بدون انباشت لیسنر) */
+function playLoadedEpisode(){
+  audio.addEventListener("canplay", function handler(){
+    audio.removeEventListener("canplay", handler);
+    audio.play();
+    setPlayingIcon();
+  });
+}
+
 /* LOAD EPISODE */
 function loadEpisode(i){
   const ep = episodes[i];
   if (!ep) return;
   currentIndex = i;
+  currentEpisodeNum = Number(ep.episode);
   audio.src = ep.audio_url;
   downloadBtn.href = ep.audio_url;
 downloadBtn.setAttribute("download", "");
@@ -566,12 +648,9 @@ function createRow(ep, i){
   desc.innerHTML = brainMatch?.caption || ep.description || "";
 
   header.addEventListener("click", () => {
+    anchorEpisode = ep.episode;   /* انتخاب دستی → تعیین لنگر */
     loadEpisode(i);
-    audio.addEventListener("canplay", function handler() {
-      audio.removeEventListener("canplay", handler);
-      audio.play();
-      playBtn.innerHTML = '<svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
-    });
+    playLoadedEpisode();
   });
 
   info.addEventListener("click", (e) => {
@@ -625,6 +704,11 @@ function applySorting(){
   episodes = [...episodesRaw].sort((a,b)=>{
     return sortDescending ? (b.episode - a.episode) : (a.episode - b.episode);
   });
+  /* ترتیب لیست عوض شد؛ currentIndex را بر اساس شمارهٔ اپیزود تازه می‌کنیم */
+  if (currentEpisodeNum != null) {
+    const idx = episodes.findIndex(e => Number(e.episode) === currentEpisodeNum);
+    if (idx !== -1) currentIndex = idx;
+  }
   renderList();
 }
 
@@ -668,6 +752,48 @@ audio.addEventListener("timeupdate", ()=>{
 seek.addEventListener("input", ()=>{
   if (!audio.duration) return;
   audio.currentTime = (seek.value / 100) * audio.duration;
+});
+
+/* AUTO-ADVANCE ----------------------------------------------------------- */
+
+/* دنبالهٔ متعارفِ شماره‌های اپیزود، مستقل از ترتیب نمایش لیست.
+   اگر لنگر عدد صحیح باشد فقط اپیزودهای اصلی (صحیح) در زنجیره می‌آیند؛
+   اگر لنگر اعشاری باشد همهٔ شماره‌ها (صحیح و اعشاری) در دنباله هستند. */
+function applicableEpisodeNumbers(){
+  const anchorIsInt = anchorEpisode != null && Number.isInteger(Number(anchorEpisode));
+  let nums = episodesRaw.map(e => Number(e.episode)).filter(n => !Number.isNaN(n));
+  if (anchorIsInt) nums = nums.filter(n => Number.isInteger(n));
+  nums = [...new Set(nums)].sort((a, b) => a - b);   /* همان تبدیل عددی sort */
+  return nums;
+}
+
+/* شمارهٔ اپیزود بعدی در جهت داده‌شده، با چرخش (wrap) به‌جای توقف */
+function resolveNextEpisode(direction){
+  if (anchorEpisode == null || currentEpisodeNum == null) return null;
+  const nums = applicableEpisodeNumbers();
+  if (!nums.length) return null;
+
+  if (direction === "forward") {
+    const next = nums.find(n => n > currentEpisodeNum);
+    return next !== undefined ? next : nums[0];                 /* wrap → کوچک‌ترین */
+  } else { /* reverse */
+    const lower = nums.filter(n => n < currentEpisodeNum);
+    return lower.length ? lower[lower.length - 1] : nums[nums.length - 1]; /* wrap → بزرگ‌ترین */
+  }
+}
+
+audio.addEventListener("ended", () => {
+  const mode = PLAYBACK_MODES[modeIndex];
+  if (mode === "off") return;
+
+  const nextNum = resolveNextEpisode(mode);
+  if (nextNum == null) return;
+
+  const i = episodes.findIndex(e => Number(e.episode) === nextNum);
+  if (i === -1) return;
+
+  loadEpisode(i);          /* لنگر را تغییر نمی‌دهد — فقط انتخاب دستی این کار را می‌کند */
+  playLoadedEpisode();
 });
 
 /* SEARCH */
@@ -746,12 +872,9 @@ function handleSearch() {
     box.appendChild(desc);
 
     box.addEventListener("click", () => {
+      anchorEpisode = episodes[epIndex].episode;   /* انتخاب دستی → تعیین لنگر */
       loadEpisode(epIndex);
-      audio.addEventListener("canplay", function handler() {
-        audio.removeEventListener("canplay", handler);
-        audio.play();
-        playBtn.innerHTML = '<svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
-      });
+      playLoadedEpisode();
     });
 
     searchResults.appendChild(box);
@@ -770,6 +893,7 @@ fetch(JSON_URL)
   episodesRaw = data;
   applySorting();
   loadEpisode(0);
+  anchorEpisode = episodes[0] ? episodes[0].episode : null;   /* لنگر اولیه = اپیزود پیش‌فرض */
 });
 
 fetch(BRAIN_URL)
