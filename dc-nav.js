@@ -238,7 +238,10 @@
 '<div id="dcMusicPanel" class="dc-music-panel" aria-hidden="true">' +
 '  <div class="dc-music-inner">' +
 '    <div class="dc-music-head">' +
-'      <button class="dc-music-playpause" id="dc-music-playpause" type="button" aria-label="پخش" aria-pressed="false" disabled><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button>' +
+'      <div class="dc-music-controls">' +
+'        <button class="dc-music-skip" id="dc-music-forward" type="button" aria-label="آهنگ بعدی (تصادفی)" disabled><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 6v12l8.5-6zM16 6h2v12h-2z"/></svg></button>' +
+'        <button class="dc-music-playpause" id="dc-music-playpause" type="button" aria-label="پخش" aria-pressed="false" disabled><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button>' +
+'      </div>' +
 '      <div class="dc-music-text">' +
 '        <div class="dc-music-title" id="dcMusicTitle">در حال بارگذاری…</div>' +
 '        <div class="dc-music-artist" id="dcMusicArtist"></div>' +
@@ -266,18 +269,22 @@
 '.dc-music-artist:empty{display:none;}' +
 '.dc-music-desc{font-size:.7rem;line-height:1.5;color:var(--txt3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}' +
 '.dc-music-desc:empty{display:none;}' +
-/* Play/pause: small refined accent icon, transparent, 44px touch target. */
-'.dc-music-playpause{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border:0;border-radius:999px;background:transparent;color:var(--ac);cursor:pointer;flex-shrink:0;transition:transform .12s ease,background .15s ease;-webkit-tap-highlight-color:transparent;}' +
-'.dc-music-playpause .dc-svg-icon{width:20px;height:20px;fill:currentColor;stroke:none;animation:dcMusicPop .18s ease;}' +
-'.dc-music-playpause[disabled]{opacity:.35;cursor:default;}' +
-'.dc-music-playpause:not([disabled]):hover{background:rgba(var(--ac-rgb),.10);}' +
-'.dc-music-playpause:not([disabled]):active{transform:scale(.86);}' +
+/* Controls column: forward (top) stacked over play/pause (bottom), the two
+   splitting the original 44px play target evenly between them. */
+'.dc-music-controls{display:flex;flex-direction:column;width:44px;height:44px;flex-shrink:0;}' +
+/* Forward + play/pause: small refined accent icons, transparent, each half the
+   column's height. */
+'.dc-music-skip,.dc-music-playpause{display:inline-flex;align-items:center;justify-content:center;width:100%;height:50%;border:0;border-radius:999px;background:transparent;color:var(--ac);cursor:pointer;padding:0;transition:transform .12s ease,background .15s ease;-webkit-tap-highlight-color:transparent;}' +
+'.dc-music-skip .dc-svg-icon,.dc-music-playpause .dc-svg-icon{width:16px;height:16px;fill:currentColor;stroke:none;animation:dcMusicPop .18s ease;}' +
+'.dc-music-skip[disabled],.dc-music-playpause[disabled]{opacity:.35;cursor:default;}' +
+'.dc-music-skip:not([disabled]):hover,.dc-music-playpause:not([disabled]):hover{background:rgba(var(--ac-rgb),.10);}' +
+'.dc-music-skip:not([disabled]):active,.dc-music-playpause:not([disabled]):active{transform:scale(.86);}' +
 /* Channel: tiny, subtle secondary action with an external-link cue. */
 '.dc-music-channel{display:inline-flex;align-items:center;gap:4px;flex-shrink:0;font-size:.7rem;font-weight:600;color:#c49820;text-decoration:none;transition:color .15s ease;}' +
 '.dc-music-channel:hover{color:#c49820;}' +
 '.dc-music-channel .dc-music-ext{width:.78em;height:.78em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;opacity:.7;}' +
 /* Unavailable state: dim the (disabled) controls, leave the message clean. */
-'.dc-music-panel.is-unavailable .dc-music-playpause{opacity:.3;}' +
+'.dc-music-panel.is-unavailable .dc-music-playpause,.dc-music-panel.is-unavailable .dc-music-skip{opacity:.3;}' +
 /* Header trigger: a music note is the permanent base icon; the equalizer is an
    overlay that appears only while playing, beside the (centered) note. */
 '.dc-music-trigger{position:relative;}' +
@@ -300,7 +307,7 @@
 '@keyframes dcEq{0%,100%{transform:scaleY(.35);}50%{transform:scaleY(1);}}' +
 '@keyframes dcGlow{0%,100%{box-shadow:0 0 0 0 rgba(var(--ac-rgb),0);}50%{box-shadow:0 0 9px 1px rgba(var(--ac-rgb),.45);}}' +
 '@keyframes dcMusicPop{from{opacity:.4;transform:scale(.82);}to{opacity:1;transform:scale(1);}}' +
-'@media (prefers-reduced-motion: reduce){.dc-music-trigger.is-playing .dc-music-eq i{animation:none;}.dc-music-trigger.is-playing{animation:none;}.dc-music-playpause .dc-svg-icon{animation:none;}.dc-music-panel{transition:none;}}';
+'@media (prefers-reduced-motion: reduce){.dc-music-trigger.is-playing .dc-music-eq i{animation:none;}.dc-music-trigger.is-playing{animation:none;}.dc-music-skip .dc-svg-icon,.dc-music-playpause .dc-svg-icon{animation:none;}.dc-music-panel{transition:none;}}';
 
   /* ── PODCAST PLAYER — global drawer markup ────────
      A hidden slide-down drawer (UNDER the fixed header) that hosts the
@@ -714,6 +721,15 @@
     syncMusicPlayPauseIcon();
   }
 
+  /* Forward — skip to a RANDOM next track and play it. A deliberate user
+     gesture, so starting playback is allowed (no autoplay policy concern).
+     dcRandomIndex() never repeats the current track when more than one exists,
+     so this stays useful as the library grows. */
+  function dcMusicForward() {
+    if (!dcAudio || !dcTracks.length) return;
+    dcLoadTrack(dcRandomIndex(), { play: true });
+  }
+
   function initMusicPlayer() {
     /* The player lives only in the top-level header. In the desktop iframe
        shell (or any iframe / content-only view) we must NOT create a second
@@ -762,6 +778,8 @@
 
         var pp = document.getElementById('dc-music-playpause');
         if (pp) pp.disabled = false;  // enable now that tracks exist
+        var fw = document.getElementById('dc-music-forward');
+        if (fw) fw.disabled = false;  // forward becomes usable too
 
         /* Resume-on-reload: restore saved track + position, but PAUSED. We
            never call play() here — the user resumes with one tap if they want. */
@@ -936,6 +954,7 @@
     /* Music: trigger ONLY toggles the panel; play/pause is a SEPARATE control
        and never affected by the trigger. */
     if (t.closest('#btn-music-toggle'))   { toggleMusicPanel();    return; }
+    if (t.closest('#dc-music-forward'))   { dcMusicForward();      return; }
     if (t.closest('#dc-music-playpause')) { toggleMusicPlayPause(); return; }
     /* Podcast drawer: the headphone icon is the toggle (open ↔ close). */
     if (t.closest('#btn-podcast-toggle'))    { dcPodToggle();  return; }
