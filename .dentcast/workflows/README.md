@@ -95,7 +95,7 @@ Run, in order:
 **0.2 — Isolation: no cross-linking with specialist content.** This is the core of LiteCast's separateness. For a LiteCast publish, **skip these steps entirely**:
 - **Step 2.5** (site-wide capsule block) — do **NOT** inject the دانشنامه / فهرست موضوعی capsules on LiteCast pages; those point into the specialist ecosystem. LiteCast is a **SKIP** case in the step 2.5 conditional.
 - **Step 4.7** (glossary back-link to the new content) — do **NOT** add LiteCast links into any glossary "کاوش بیشتر" section.
-- **Step 4.8** (in-body links from the article to glossary terms / episodes) — LiteCast bodies do **NOT** get inline links to specialist content.
+- **Step 4.8** (in-body links from the article to glossary terms / episodes) — LiteCast bodies do **NOT** get inline links to specialist content. (The LiteCast-internal in-body equivalent — inline links to *other LiteCast* items only — is **step 0.5** below.)
 - **Step 4.9** (semantic "کاوش بیشتر" links from the new page to brain entries) — do **NOT** link a LiteCast page out to specialist brain entries.
 
 The rule is symmetric: the rest of the site must not link **to** LiteCast, and LiteCast must not link **out** to specialist content.
@@ -111,6 +111,32 @@ The rule is symmetric: the rest of the site must not link **to** LiteCast, and L
 - **Step 7** (cache-bust) and **Step 8** (rebuild) — run, keyed to LiteCast's own files.
 
 Rule of thumb: **anything about LiteCast's own files runs; anything that bridges LiteCast to the specialist ecosystem is skipped.**
+
+**0.5 — In-body semantic linking within LiteCast (LiteCast-only; the LiteCast counterpart of step 4.8).** This is the *only* in-body linking LiteCast gets: inline links from the new item's body text out to **other LiteCast** items, drawn **exclusively** from `litecast/lite-glossary.json`. It is exclusive to LiteCast — it runs only when the locked category is LiteCast, never applies to any other type, and no other type's linking steps (4.7/4.8/4.9) apply to LiteCast. Run it after the new LiteCast page is built (0.3) and before the rebuild (step 8).
+
+#### Step 1 — Semantic analysis of the new body against existing LiteCast entries
+
+Read `litecast/lite-glossary.json` end-to-end. Perform a genuinely **semantic** analysis of the new LiteCast item's body text against the **existing LiteCast entries** — **not** keyword/string matching. For each existing entry the question is conceptual: where the new body text discusses something an existing LiteCast entry is about, that spot is a linking candidate.
+
+**Hard rules for matching:**
+- **Real conceptual relevance only** — link only where the word/phrase in context actually refers to the existing entry's concept.
+- **No junk/generic words** — never link common filler words that merely coincide with a term.
+- **When in doubt, DON'T propose it.**
+- **Candidates come ONLY from `litecast/lite-glossary.json`** — never a specialist glossary term or episode.
+- **Never link the item to itself.**
+- **First occurrence only** — link only the **first** place each matched concept appears in the body; never link the same target twice.
+
+#### Step 2 — Present for confirmation (do NOT edit yet)
+
+Present the proposed links to the user as a numbered list before editing. For each: the matched word/phrase with a few words of surrounding context, the target LiteCast entry, its URL, and a one-line reason for the semantic match. Then ask for confirmation. **Do NOT insert without explicit user confirmation.** The user may approve all, a subset, or none.
+
+#### Step 3 — Insert approved links
+
+After confirmation, insert **only** the approved links into the new item's body, each on the **first occurrence** of its matched phrase, using the **same inline link markup/classes the LiteCast body already uses** (derive the style from how existing LiteCast bodies link — do not introduce a new link style).
+
+#### Step 4 — Hash & verify
+
+**Hash the new LiteCast page before and after this step.** The only allowed diff is the approved inline link insertions. Report before/after hashes. Do not break HTML structure (no link inside an existing link or heading).
 
 ### 1. Template lock & hash
 
