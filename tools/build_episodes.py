@@ -1028,7 +1028,7 @@ INLINE_BEHAVIOR_JS = (
     '  function mountInternal(){\n'
     '    if (iFrame) return;\n'
     "    iFrame = document.createElement('iframe');\n"
-    "    iFrame.src = '/player.html?v=3';\n"
+    "    iFrame.src = '/player.html?v=4';\n"
     "    iFrame.title = 'پلیر داخلی دنت‌کست';\n"
     "    iFrame.loading = 'lazy';\n"
     "    iFrame.allow = 'autoplay';\n"
