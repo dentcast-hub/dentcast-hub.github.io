@@ -2365,6 +2365,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://dentcast.org/litecast/lite-CAST26.html</loc>
+    <lastmod>2026-05-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://dentcast.org/litecast/lite-CAST3.html</loc>
     <lastmod>2025-11-17</lastmod>
     <changefreq>monthly</changefreq>
