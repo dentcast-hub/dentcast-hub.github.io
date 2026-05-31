@@ -6026,6 +6026,9 @@ body.search-open #page-content{
     iHold.appendChild(iFrame);
   }
   function openInternal(scroll){
+    // Mutual exclusion: if the global podcast overlay is open, close it so only
+    // one /player.html audio source is alive (it hands off via shared resume).
+    if (window.dcClosePodcastOverlay) { try { window.dcClosePodcastOverlay(); } catch(e){} }
     iBtn.style.display = 'none';
     iWrap.hidden = false;
     iBtn.setAttribute('aria-expanded', 'true');
