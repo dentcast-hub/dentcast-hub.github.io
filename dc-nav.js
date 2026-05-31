@@ -364,8 +364,8 @@
    via max-height:0 + visibility (NOT display:none) so the iframe keeps playing
    in the background while the drawer is closed. */
 '.dc-player-overlay{position:fixed;top:57px;left:0;right:0;z-index:199;background:var(--bg,#f0f2f5);overflow:hidden;max-height:0;opacity:0;visibility:hidden;transition:max-height .32s cubic-bezier(.4,0,.2,1),opacity .22s ease,visibility .32s;border-bottom:1px solid var(--border,rgba(2,35,96,.10));box-shadow:0 12px 28px rgba(2,35,96,.16);}' +
-'.dc-player-overlay.open{max-height:calc(100vh - 57px);opacity:1;visibility:visible;}' +
-'.dc-player-overlay-body{height:calc(100vh - 57px);overflow-y:auto;-webkit-overflow-scrolling:touch;}' +
+'.dc-player-overlay.open{max-height:var(--dc-player-h,calc(100vh - 57px));opacity:1;visibility:visible;}' +
+'.dc-player-overlay-body{height:var(--dc-player-h,calc(100vh - 57px));overflow-y:auto;-webkit-overflow-scrolling:touch;}' +
 '.dc-player-overlay-body iframe{width:100%;height:100%;border:0;display:block;background:var(--surface2,#f4f6fb);}' +
 '@media (prefers-reduced-motion: reduce){.dc-podcast-trigger.is-playing .dc-music-eq i{animation:none;}.dc-podcast-trigger.is-playing{animation:none;}.dc-player-overlay{transition:none;}}';
 
@@ -881,6 +881,45 @@
     a.addEventListener('ended', dcPodSyncFromAudio);
   }
 
+  /* Size the overlay to the player CARD, not the viewport. Read-only: we measure
+     the same-origin iframe's existing .dc-wrapper card (the same contentDocument
+     access dcPodAudio already relies on) and publish it as --dc-player-h, which
+     the overlay/body CSS consume. We measure the CARD specifically (not
+     document.body, which carries player.html's min-height:100vh + padding) so we
+     never inherit its full-viewport floor — hence no need to touch player.html.
+     A safety cap keeps it within the available space below the header; if the
+     card is taller, the body's own overflow-y:auto scrolls. Falls back silently
+     to the CSS default (calc(100vh - 57px)) if measurement isn't available. */
+  function dcPodSizeToContent() {
+    var ov = document.getElementById('dcPlayerOverlay');
+    if (!ov || !dcPodFrame) return;
+    try {
+      var doc = dcPodFrame.contentDocument;
+      var card = doc && doc.querySelector('.dc-wrapper');
+      if (!card) return;
+      /* +32 mirrors player.html's body padding (16px top/bottom) so the card
+         keeps its intended breathing room inside the panel. */
+      var want = Math.ceil(card.getBoundingClientRect().height) + 32;
+      var cap  = window.innerHeight - 57;
+      var h    = Math.max(0, Math.min(want, cap));
+      if (h > 0) ov.style.setProperty('--dc-player-h', h + 'px');
+    } catch (e) { /* cross-origin/not-ready → keep the CSS fallback height */ }
+  }
+
+  /* Keep the panel matched to the card as its content reflows (description
+     toggles, search results, episode list). Reuses the same-origin access; the
+     observer lives on the iframe's <body> and just re-measures the card. */
+  function dcPodObserveSize() {
+    if (!dcPodFrame || typeof ResizeObserver === 'undefined') return;
+    try {
+      var body = dcPodFrame.contentDocument && dcPodFrame.contentDocument.body;
+      if (!body) return;
+      if (dcPodFrame._dcSizeRO) dcPodFrame._dcSizeRO.disconnect();
+      dcPodFrame._dcSizeRO = new ResizeObserver(dcPodSizeToContent);
+      dcPodFrame._dcSizeRO.observe(body);
+    } catch (e) { /* not available → static one-shot sizing still applied */ }
+  }
+
   /* Lazy-mount on first open only; afterwards dcPodFrame persists. */
   function dcPodMount() {
     if (dcPodFrame) return;
@@ -891,7 +930,11 @@
     dcPodFrame.title = 'پخش‌کنندهٔ پادکست دنت‌کست';
     dcPodFrame.loading = 'lazy';
     dcPodFrame.allow = 'autoplay';
-    dcPodFrame.addEventListener('load', dcPodAttachAudioHook);
+    dcPodFrame.addEventListener('load', function () {
+      dcPodAttachAudioHook();
+      dcPodSizeToContent();   // initial fit once the card has rendered
+      dcPodObserveSize();     // keep fitting as the card reflows
+    });
     holder.appendChild(dcPodFrame);
   }
 
@@ -910,13 +953,16 @@
     ov.setAttribute('aria-hidden', 'false');
     var b = document.getElementById('btn-podcast-toggle');
     if (b) b.setAttribute('aria-expanded', 'true');
-    document.documentElement.classList.add('dc-noscroll');
-    if (document.body) document.body.classList.add('dc-noscroll');
+    /* Re-measure on each open: the iframe persists between opens, so its card may
+       have reflowed (or never been measured if the first open raced the load). */
+    dcPodSizeToContent();
+    /* No full-screen scroll lock: the panel now sizes to the player card and
+       sits under the header like the music panel / tool drawer, so the rest of
+       the page must stay visible and scrollable beneath it (this was the
+       "covers the whole page" complaint). */
   }
   /* Close ONLY hides the drawer — the iframe stays mounted and keeps playing. */
   function dcPodDrawerClose() {
-    document.documentElement.classList.remove('dc-noscroll');
-    if (document.body) document.body.classList.remove('dc-noscroll');
     var ov = document.getElementById('dcPlayerOverlay');
     if (!ov) return;
     ov.classList.remove('open');
