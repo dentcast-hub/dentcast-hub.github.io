@@ -269,12 +269,12 @@
 '.dc-music-artist:empty{display:none;}' +
 '.dc-music-desc{font-size:.7rem;line-height:1.5;color:var(--txt3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}' +
 '.dc-music-desc:empty{display:none;}' +
-/* Controls column: forward (top) stacked over play/pause (bottom), the two
-   splitting the original 44px play target evenly between them. */
-'.dc-music-controls{display:flex;flex-direction:column;width:44px;height:44px;flex-shrink:0;}' +
-/* Forward + play/pause: small refined accent icons, transparent, each half the
-   column's height. */
-'.dc-music-skip,.dc-music-playpause{display:inline-flex;align-items:center;justify-content:center;width:100%;height:50%;border:0;border-radius:999px;background:transparent;color:var(--ac);cursor:pointer;padding:0;transition:transform .12s ease,background .15s ease;-webkit-tap-highlight-color:transparent;}' +
+/* Controls column: forward (top) stacked over play/pause (bottom), with a gap
+   between them so each is a comfortable, distinct tap target. */
+'.dc-music-controls{display:flex;flex-direction:column;align-items:center;gap:10px;width:44px;flex-shrink:0;}' +
+/* Forward + play/pause: small refined accent icons, transparent, each a square
+   touch target separated by the column gap. */
+'.dc-music-skip,.dc-music-playpause{display:inline-flex;align-items:center;justify-content:center;width:100%;height:24px;border:0;border-radius:999px;background:transparent;color:var(--ac);cursor:pointer;padding:0;transition:transform .12s ease,background .15s ease;-webkit-tap-highlight-color:transparent;}' +
 '.dc-music-skip .dc-svg-icon,.dc-music-playpause .dc-svg-icon{width:16px;height:16px;fill:currentColor;stroke:none;animation:dcMusicPop .18s ease;}' +
 '.dc-music-skip[disabled],.dc-music-playpause[disabled]{opacity:.35;cursor:default;}' +
 '.dc-music-skip:not([disabled]):hover,.dc-music-playpause:not([disabled]):hover{background:rgba(var(--ac-rgb),.10);}' +
