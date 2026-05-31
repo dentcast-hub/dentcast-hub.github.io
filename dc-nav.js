@@ -256,8 +256,14 @@
      whether a page loads dc-nav.css). Reuses the theme's CSS variables and
      mirrors the tool-drawer dropdown look. */
   var DC_MUSIC_CSS =
-/* Panel — mirrors the tool drawer's max-height/opacity dropdown; themed. */
-'.dc-music-panel{overflow:hidden;max-height:0;opacity:0;background:var(--surface2);border-bottom:1px solid var(--border);transition:max-height .28s cubic-bezier(.4,0,.2,1),opacity .22s ease;}' +
+/* Panel — mirrors the tool drawer's max-height/opacity dropdown; themed. It now
+   also mirrors the tool drawer's POSITIONING: fixed + anchored 57px below the
+   viewport top (right under the fixed header), same z-index tier (199, below the
+   header's 200). Previously it had no position, so it sat in normal document
+   flow at the top of <body> and scrolled away — opening it while scrolled down
+   looked like nothing happened. Anchored like this it floats into view wherever
+   you are, exactly like the hamburger drawer. */
+'.dc-music-panel{position:fixed;top:57px;left:0;right:0;width:100%;z-index:199;box-sizing:border-box;overflow:hidden;max-height:0;opacity:0;background:var(--surface2);border-bottom:1px solid var(--border);transition:max-height .28s cubic-bezier(.4,0,.2,1),opacity .22s ease;}' +
 '.dc-music-inner{padding:12px 14px;}' +
 /* Compact head row: play/pause (primary) + text block + channel (secondary),
    all pulled up together — no separate bottom band. */
@@ -333,6 +339,18 @@
 '.dc-podcast-trigger{position:relative;color:var(--ac);background:rgba(var(--ac-rgb),.10);border-color:rgba(var(--ac-rgb),.22);}' +
 '.dc-podcast-trigger .dc-svg-icon{stroke:currentColor;}' +
 '.dc-podcast-trigger:active{background:rgba(var(--ac-rgb),.18);}' +
+/* Open-state ring — ONE rule for every header opener. While an overlay/menu is
+   open its trigger carries aria-expanded="true"; we surface that with a thin
+   1px ring in the existing پالس/news brick color (rgba(245,162,8) — the exact
+   color the pulse card's border uses), shown only while open and gone when
+   closed. Static, no pulse/animation. It naturally covers exactly the three
+   top-bar openers (hamburger #btn-toolbar-toggle, music, podcast — the only
+   .dc-topbar-btn that toggle aria-expanded); momentary full-screen triggers
+   (search/radar) live inside the drawer and are intentionally excluded. This
+   changes border-color only, never box-shadow, so on the podcast/music buttons
+   it can't collide with the .is-playing accent glow — open-not-playing reads as
+   the brick ring, playing-not-open as the accent glow, both as ring + glow. */
+'.dc-topbar-btn[aria-expanded="true"]{border-color:rgba(245,162,8,.9);}' +
 /* Playing state — mirrors .dc-music-trigger exactly: the equalizer overlay
    fades in + animates and the button breathes the same accent glow. */
 '.dc-podcast-trigger.is-playing .dc-music-eq{opacity:1;}' +
