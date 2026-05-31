@@ -950,6 +950,39 @@
     if (ov && ov.classList.contains('open')) dcPodDrawerClose();
   });
 
+  /* ── HEADER OPENER EXCLUSIVITY ─────────────────────
+     Only ONE header menu (tool drawer / music panel / podcast overlay) may be
+     open at a time, and while one is open, tapping a DIFFERENT opener must just
+     dismiss the open one — it must NOT open the tapped menu nor light up its
+     aria-expanded ring. (The three menus share the same fixed anchor under the
+     header and overlap, so without this an opened-but-hidden sibling would still
+     flip aria-expanded="true" and colour its border — the reported bug.)
+     Tapping the SAME opener that's open toggles it closed; tapping any opener
+     while nothing is open opens it normally. */
+  function dcOpenMenu() {
+    var td = document.getElementById('dcToolbarDrawer');
+    if (td && td.classList.contains('open')) return 'toolbar';
+    var mp = document.getElementById('dcMusicPanel');
+    if (mp && mp.classList.contains('open')) return 'music';
+    var ov = document.getElementById('dcPlayerOverlay');
+    if (ov && ov.classList.contains('open')) return 'podcast';
+    return null;
+  }
+  function dcCloseMenu(which) {
+    if (which === 'toolbar') toggleToolbarDrawer();
+    else if (which === 'music') toggleMusicPanel();
+    else if (which === 'podcast') dcPodDrawerClose();
+  }
+  function dcHeaderOpenerClick(which) {
+    var open = dcOpenMenu();
+    /* A different menu is open → just close it; do NOT open/colour the tapped one. */
+    if (open && open !== which) { dcCloseMenu(open); return; }
+    /* Same one open (toggle closed) or nothing open (open it). */
+    if (which === 'toolbar') toggleToolbarDrawer();
+    else if (which === 'music') toggleMusicPanel();
+    else dcPodToggle();
+  }
+
   /* ── HEADER EVENT DELEGATION ───────────────────────
      Header button handlers are bound ONCE on document, not on the buttons.
      Because document always exists, it doesn't matter WHEN a button enters
@@ -966,16 +999,16 @@
     /* Mobile tool drawer. NOTE: #btn-toolbar-toggle is the mobile tool
        drawer — NOT #dcd-hdr-hamburger (desktop sidebar collapse in
        index.html). Never conflate the two. */
-    if (t.closest('#btn-toolbar-toggle')) { toggleToolbarDrawer(); return; }
+    if (t.closest('#btn-toolbar-toggle')) { dcHeaderOpenerClick('toolbar'); return; }
     /* Search trigger — a CLASS; the search button has no id. */
     if (t.closest('.dcOpenSearch'))       { openGlobalSearch();    return; }
     /* Music: trigger ONLY toggles the panel; play/pause is a SEPARATE control
        and never affected by the trigger. */
-    if (t.closest('#btn-music-toggle'))   { toggleMusicPanel();    return; }
+    if (t.closest('#btn-music-toggle'))   { dcHeaderOpenerClick('music');   return; }
     if (t.closest('#dc-music-forward'))   { dcMusicForward();      return; }
     if (t.closest('#dc-music-playpause')) { toggleMusicPlayPause(); return; }
     /* Podcast drawer: the headphone icon is the toggle (open ↔ close). */
-    if (t.closest('#btn-podcast-toggle'))    { dcPodToggle();  return; }
+    if (t.closest('#btn-podcast-toggle'))    { dcHeaderOpenerClick('podcast'); return; }
     /* Drawer tool buttons. */
     if (t.closest('#tool-pwa'))     { handlePwaInstall(); return; }
     if (t.closest('#tool-consult')) { window.location.href = 'mailto:info@dentcast.ir'; return; }
