@@ -334,15 +334,11 @@
   var DC_PLAYER_CSS =
 /* Scroll lock applied to <html> and <body> while the overlay is open. */
 '.dc-noscroll{overflow:hidden!important;}' +
-/* Headphone launcher — neutral idle, identical to the other header buttons. It
-   used to be accent-tinted to stand out, but a permanently-colored button next
-   to the others was misread as an "open" signal (opening the music menu made
-   this colored neighbor look like the thing that opened). The "open" cue is now
-   the shared aria-expanded ring below; idle styling is just the plain button.
-   position:relative is kept — the .dc-music-eq equalizer is absolutely
-   positioned against it. */
-'.dc-podcast-trigger{position:relative;}' +
+/* Headphone launcher — accent-tinted idle so it stands out from the neutral
+   header buttons, using only existing brand accent vars. */
+'.dc-podcast-trigger{position:relative;color:var(--ac);background:rgba(var(--ac-rgb),.10);border-color:rgba(var(--ac-rgb),.22);}' +
 '.dc-podcast-trigger .dc-svg-icon{stroke:currentColor;}' +
+'.dc-podcast-trigger:active{background:rgba(var(--ac-rgb),.18);}' +
 /* Open-state ring — ONE rule for every header opener. While an overlay/menu is
    open its trigger carries aria-expanded="true"; we surface that with a thin
    1px ring in the existing پالس/news brick color (rgba(245,162,8) — the exact
@@ -350,11 +346,10 @@
    closed. Static, no pulse/animation. It naturally covers exactly the three
    top-bar openers (hamburger #btn-toolbar-toggle, music, podcast — the only
    .dc-topbar-btn that toggle aria-expanded); momentary full-screen triggers
-   (search/radar) live inside the drawer and are intentionally excluded.
-   Distinct from the *playing* state on purpose: this changes border-color only,
-   never box-shadow, so it can't collide with the .is-playing accent glow — a
-   button can be open-not-playing (brick ring), playing-not-open (accent glow),
-   or both (ring + glow), and all three read distinctly. */
+   (search/radar) live inside the drawer and are intentionally excluded. This
+   changes border-color only, never box-shadow, so on the podcast/music buttons
+   it can't collide with the .is-playing accent glow — open-not-playing reads as
+   the brick ring, playing-not-open as the accent glow, both as ring + glow. */
 '.dc-topbar-btn[aria-expanded="true"]{border-color:rgba(245,162,8,.9);}' +
 /* Playing state — mirrors .dc-music-trigger exactly: the equalizer overlay
    fades in + animates and the button breathes the same accent glow. */
