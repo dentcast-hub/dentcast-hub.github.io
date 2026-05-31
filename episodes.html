@@ -6016,6 +6016,16 @@ body.search-open #page-content{
   var iHold  = document.getElementById('internalFrameHolder');
   var iFrame = null;
 
+  // Exclusivity: pause this inline player's audio (called by the global podcast
+  // when it starts, so only one /player.html source is audible at a time).
+  function dcInlinePause(){
+    try {
+      var a = iFrame && iFrame.contentDocument && iFrame.contentDocument.getElementById('dc-audio');
+      if (a && !a.paused) a.pause();
+    } catch(e){}
+  }
+  window.dcEpisodesInlinePause = dcInlinePause;
+
   function mountInternal(){
     if (iFrame) return;
     iFrame = document.createElement('iframe');
@@ -6023,12 +6033,19 @@ body.search-open #page-content{
     iFrame.title = 'پلیر داخلی دنت‌کست';
     iFrame.loading = 'lazy';
     iFrame.allow = 'autoplay';
+    // Exclusivity (symmetric): when THIS player starts playing, stop the global
+    // podcast drawer so the two /player.html iframes never play at once.
+    iFrame.addEventListener('load', function(){
+      try {
+        var a = iFrame.contentDocument && iFrame.contentDocument.getElementById('dc-audio');
+        if (a) a.addEventListener('play', function(){
+          if (window.dcPodcastStop) { try { window.dcPodcastStop(); } catch(e){} }
+        });
+      } catch(e){}
+    });
     iHold.appendChild(iFrame);
   }
   function openInternal(scroll){
-    // Mutual exclusion: if the global podcast overlay is open, close it so only
-    // one /player.html audio source is alive (it hands off via shared resume).
-    if (window.dcClosePodcastOverlay) { try { window.dcClosePodcastOverlay(); } catch(e){} }
     iBtn.style.display = 'none';
     iWrap.hidden = false;
     iBtn.setAttribute('aria-expanded', 'true');

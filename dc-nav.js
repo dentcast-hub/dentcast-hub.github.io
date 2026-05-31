@@ -161,13 +161,15 @@
 '  <div class="dc-topbar-actions">' +
 '    <a href="/" aria-label="صفحه اصلی دنت‌کست" style="display:flex;align-items:center;margin-left:8px;flex-shrink:0;"><img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;"></a>' +
 '    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="ابزارها" aria-expanded="false"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>' +
-/* Podcast player launcher. Opens the global full-screen overlay that hosts the
-   /player.html iframe (see DC_PLAYER_OVERLAY_HTML + the podcast-overlay block
-   below). The search trigger that used to sit here moved INTO the tool drawer
+/* Podcast player launcher — the icon itself is the toggle (tap to open, tap to
+   close) for the global slide-down player drawer that hosts the /player.html
+   iframe (see DC_PLAYER_OVERLAY_HTML + the podcast-drawer block below). The
+   search trigger that used to sit here moved INTO the tool drawer
    (DC_DRAWER_SEARCH_BTN) to make room. Idle styling is accent-tinted to draw a
    little attention; the .is-playing state mirrors the music trigger exactly
-   (same .dc-music-eq equalizer + dcGlow), driven by the iframe's audio. */
-'    <button class="dc-topbar-btn dc-podcast-trigger" id="btn-podcast-toggle" aria-label="پادکست دنت‌کست" aria-haspopup="dialog" aria-expanded="false">' + dcSvgIcon('headphones') + '<span class="dc-music-eq" aria-hidden="true"><i></i><i></i><i></i></span></button>' +
+   (same .dc-music-eq equalizer + dcGlow), driven by the iframe's audio and kept
+   accurate even while the drawer is closed. */
+'    <button class="dc-topbar-btn dc-podcast-trigger" id="btn-podcast-toggle" aria-label="پادکست دنت‌کست" aria-haspopup="true" aria-expanded="false">' + dcSvgIcon('headphones') + '<span class="dc-music-eq" aria-hidden="true"><i></i><i></i><i></i></span></button>' +
 /* Music player trigger. Base icon is a simple music note (always shown). When
    playing, the equalizer animation + a soft glow activate within the icon area
    (the note stays); idle shows just the note. Driven by the .is-playing class.
@@ -300,17 +302,15 @@
 '@keyframes dcMusicPop{from{opacity:.4;transform:scale(.82);}to{opacity:1;transform:scale(1);}}' +
 '@media (prefers-reduced-motion: reduce){.dc-music-trigger.is-playing .dc-music-eq i{animation:none;}.dc-music-trigger.is-playing{animation:none;}.dc-music-playpause .dc-svg-icon{animation:none;}.dc-music-panel{transition:none;}}';
 
-  /* ── PODCAST PLAYER — global overlay markup ───────
-     A hidden full-screen layer that hosts the /player.html iframe. The iframe
-     is NOT in this markup — it lazy-mounts on first open (see dcPodMount) so
-     the omnipresent header never loads audio just by existing. Injected to the
-     end of <body> once, idempotently (same approach as the radar overlay). */
+  /* ── PODCAST PLAYER — global drawer markup ────────
+     A hidden slide-down drawer (UNDER the fixed header) that hosts the
+     /player.html iframe. The iframe is NOT in this markup — it lazy-mounts on
+     first open (see dcPodMount) so the omnipresent header never loads audio
+     just by existing, then it persists and keeps playing in the background
+     while the drawer is hidden. Injected to the end of <body> once,
+     idempotently (same approach as the radar overlay). */
   var DC_PLAYER_OVERLAY_HTML =
-'<div id="dcPlayerOverlay" class="dc-player-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-label="پخش‌کنندهٔ پادکست دنت‌کست">' +
-'  <div class="dc-player-overlay-header">' +
-'    <button id="dcClosePlayerOverlay" class="dc-player-close-btn" type="button" aria-label="بستن پخش‌کننده">' + dcSvgIcon('x') + '</button>' +
-'    <div class="dc-player-overlay-title">پادکست دنت‌کست</div>' +
-'  </div>' +
+'<div id="dcPlayerOverlay" class="dc-player-overlay" aria-hidden="true" aria-label="پخش‌کنندهٔ پادکست دنت‌کست">' +
 '  <div id="dcPlayerOverlayHolder" class="dc-player-overlay-body"></div>' +
 '</div>';
 
@@ -333,17 +333,14 @@
 '.dc-podcast-trigger.is-playing .dc-music-eq i:nth-child(2){animation-delay:.25s;}' +
 '.dc-podcast-trigger.is-playing .dc-music-eq i:nth-child(3){animation-delay:.5s;}' +
 '.dc-podcast-trigger.is-playing{animation:dcGlow 2.6s ease-in-out infinite;}' +
-/* Full-screen overlay. z-index 99999 clears the fixed header (200), drawer
-   (199) and the bottom-fixed theme toggle / jump button (250). Hidden via
-   visibility+opacity so it is non-interactive and never traps scroll. */
-'.dc-player-overlay{position:fixed;inset:0;width:100%;height:100%;z-index:99999;background:var(--bg,#f0f2f5);display:flex;flex-direction:column;opacity:0;visibility:hidden;transition:opacity .22s ease,visibility .22s ease;}' +
-'.dc-player-overlay.open{opacity:1;visibility:visible;}' +
-'.dc-player-overlay-header{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--border,rgba(2,35,96,.10));background:var(--surface,#fff);flex-shrink:0;}' +
-'.dc-player-close-btn{width:36px;height:36px;border-radius:var(--r-f,999px);border:1px solid var(--border2,rgba(2,35,96,.06));background:var(--surface2,#f4f6fb);color:var(--txt2,#4a5f85);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;-webkit-tap-highlight-color:transparent;transition:transform .12s ease,background .15s ease;}' +
-'.dc-player-close-btn:active{transform:scale(.88);background:var(--surface3,#eaecf5);}' +
-'.dc-player-close-btn .dc-svg-icon{width:20px;height:20px;}' +
-'.dc-player-overlay-title{font-weight:700;font-size:.95rem;color:var(--txt);}' +
-'.dc-player-overlay-body{flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;}' +
+/* Slide-down drawer UNDER the fixed header — same anchor (top:57px) and tier
+   (z-index:199, BELOW the header's 200) as the tool drawer / music panel, so the
+   header stays visible on top. Reveal via max-height like those panels. Hidden
+   via max-height:0 + visibility (NOT display:none) so the iframe keeps playing
+   in the background while the drawer is closed. */
+'.dc-player-overlay{position:fixed;top:57px;left:0;right:0;z-index:199;background:var(--bg,#f0f2f5);overflow:hidden;max-height:0;opacity:0;visibility:hidden;transition:max-height .32s cubic-bezier(.4,0,.2,1),opacity .22s ease,visibility .32s;border-bottom:1px solid var(--border,rgba(2,35,96,.10));box-shadow:0 12px 28px rgba(2,35,96,.16);}' +
+'.dc-player-overlay.open{max-height:calc(100vh - 57px);opacity:1;visibility:visible;}' +
+'.dc-player-overlay-body{height:calc(100vh - 57px);overflow-y:auto;-webkit-overflow-scrolling:touch;}' +
 '.dc-player-overlay-body iframe{width:100%;height:100%;border:0;display:block;background:var(--surface2,#f4f6fb);}' +
 '@media (prefers-reduced-motion: reduce){.dc-podcast-trigger.is-playing .dc-music-eq i{animation:none;}.dc-podcast-trigger.is-playing{animation:none;}.dc-player-overlay{transition:none;}}';
 
@@ -744,9 +741,9 @@
     });
     dcAudio.addEventListener('play',  function () {
       syncMusicPlayPauseIcon();
-      /* Mutual exclusion: only one audio source alive. When the music starts,
-         tear down the podcast overlay if it's mounted. Safe no-op otherwise. */
-      dcClosePodcastForMusic();
+      /* Exclusivity: only one audio source plays. When the music starts, the
+         podcast yields — stop it (unmount + close). Safe no-op if not mounted. */
+      dcStopPodcast();
     });
     dcAudio.addEventListener('pause', syncMusicPlayPauseIcon);
     /* Final save on navigation away (resume-on-reload). */
@@ -784,31 +781,40 @@
   }
   initMusicPlayer();
 
-  /* ── PODCAST PLAYER OVERLAY ────────────────────────
-     A global, full-screen layer that hosts the /player.html iframe. player.html
-     is reused completely untouched — all its auto-advance + resume logic stays
-     inside the iframe. We only control WHERE/WHEN it mounts:
-       • lazy-mount on first open (no audio loads just because the header is
-         everywhere); full unmount on close — resume restores from
-         localStorage('dc-resume-state'), PAUSED, on the next mount;
-       • body-scroll lock while open;
-       • mutual exclusion so only ONE /player.html-or-music audio source is ever
-         alive: opening the overlay tears down the episodes-page inline player
-         and pauses the header music; the iframe's own <audio> (#dc-audio,
-         same-origin, read-only) drives the headphone's is-playing visual and
-         re-pauses the music if podcast playback (re)starts.
+  /* ── PODCAST PLAYER DRAWER ─────────────────────────
+     A global slide-down drawer (under the fixed header) that hosts the
+     /player.html iframe. The podcast is designed to behave EXACTLY like the
+     header music button: it keeps playing on the same page even when the drawer
+     is hidden, it stops on navigation (the MPA reload destroys the iframe), and
+     it resumes from the last position on the next page via player.html's own
+     localStorage('dc-resume-state') — the same resume-on-reload feel the music
+     button gets from localStorage('dc-music-state'). player.html is reused
+     completely untouched; we only control WHERE/WHEN it mounts and toggle the
+     drawer's visibility:
+       • lazy-mount on FIRST open only; afterwards the iframe persists and keeps
+         playing in the background while the drawer is hidden;
+       • the headphone icon is the toggle (open ↔ close); close only HIDES;
+       • body-scroll lock only while the drawer is open;
+       • exclusivity: only one audio source plays at a time and the podcast
+         yields to whatever starts next. When the podcast plays it pauses the
+         music and the episodes inline player; when the music or the episodes
+         inline player starts, the podcast is stopped (its iframe goes away and
+         the drawer closes) — resume position is kept for the next open.
      All functions are declarations (hoisted), so the delegated click handler
      and the music 'play' hook above can reference them regardless of order. */
   var dcPodFrame = null;
 
   /* Reflect the iframe's true audio state on the headphone trigger, reusing the
-     exact .is-playing treatment the music trigger uses (equalizer + glow). */
+     exact .is-playing treatment the music trigger uses (equalizer + glow). This
+     stays accurate even when the drawer is closed, because the iframe and its
+     audio listeners persist — so the user can see audio is live and where to
+     tap. */
   function dcSetPodcastPlaying(on) {
     var b = document.getElementById('btn-podcast-toggle');
     if (b) b.classList.toggle('is-playing', !!on);
   }
 
-  /* Read the (same-origin) iframe audio's live state without mutating it. */
+  /* The (same-origin) iframe audio element. */
   function dcPodAudio() {
     try {
       var doc = dcPodFrame && dcPodFrame.contentDocument;
@@ -819,14 +825,18 @@
     var a = dcPodAudio();
     dcSetPodcastPlaying(!!(a && !a.paused && !a.ended));
   }
+  /* Podcast just became the active audio → silence the others (mirrors the
+     music button's play-event-driven exclusivity). */
   function dcPodOnPlay() {
     dcSetPodcastPlaying(true);
-    /* Mutual exclusion: podcast is now the active audio → pause the music. */
     if (dcAudio && !dcAudio.paused) dcAudio.pause();
+    if (typeof window.dcEpisodesInlinePause === 'function') {
+      try { window.dcEpisodesInlinePause(); } catch (e) {}
+    }
   }
 
-  /* Attach read-only listeners to the iframe's <audio> once it has loaded. This
-     observes player.html; it never changes player.html's logic. */
+  /* Attach listeners to the iframe's <audio> once it has loaded — observing
+     player.html, never changing its logic. */
   function dcPodAttachAudioHook() {
     var a = dcPodAudio();
     if (!a) return;
@@ -835,6 +845,7 @@
     a.addEventListener('ended', dcPodSyncFromAudio);
   }
 
+  /* Lazy-mount on first open only; afterwards dcPodFrame persists. */
   function dcPodMount() {
     if (dcPodFrame) return;
     var holder = document.getElementById('dcPlayerOverlayHolder');
@@ -847,28 +858,17 @@
     dcPodFrame.addEventListener('load', dcPodAttachAudioHook);
     holder.appendChild(dcPodFrame);
   }
-  function dcPodUnmount() {
-    if (dcPodFrame) { dcPodFrame.remove(); dcPodFrame = null; }
-    dcSetPodcastPlaying(false);
-  }
 
-  /* Close the episodes-page inline internal player, if present and open, by
-     triggering its own close button (reuses that page's teardown). No-op on
-     every other page. Keeps a single /player.html audio source alive. */
-  function dcCloseEpisodesInlinePlayer() {
-    var iClose = document.getElementById('internalClose');
-    var iWrap  = document.getElementById('internalPlayerWrap');
-    if (iClose && iWrap && !iWrap.hidden) iClose.click();
-  }
-
-  function openPodcastOverlay() {
+  function dcPodDrawerOpen() {
     /* Top-level only — never spawn a nested player inside an iframe. */
     if (window.self !== window.top) return;
     var ov = document.getElementById('dcPlayerOverlay');
     if (!ov) return;
-    /* Mutual exclusion on open: stop the other two audio sources. */
-    dcCloseEpisodesInlinePlayer();
-    if (dcAudio && !dcAudio.paused) dcAudio.pause();
+    /* Don't stack header dropdowns: collapse the tool drawer / music panel. */
+    var td = document.getElementById('dcToolbarDrawer');
+    if (td && td.classList.contains('open')) toggleToolbarDrawer();
+    var mp = document.getElementById('dcMusicPanel');
+    if (mp && mp.classList.contains('open')) toggleMusicPanel();
     dcPodMount();
     ov.classList.add('open');
     ov.setAttribute('aria-hidden', 'false');
@@ -877,33 +877,41 @@
     document.documentElement.classList.add('dc-noscroll');
     if (document.body) document.body.classList.add('dc-noscroll');
   }
-  function closePodcastOverlay() {
-    var ov = document.getElementById('dcPlayerOverlay');
+  /* Close ONLY hides the drawer — the iframe stays mounted and keeps playing. */
+  function dcPodDrawerClose() {
     document.documentElement.classList.remove('dc-noscroll');
     if (document.body) document.body.classList.remove('dc-noscroll');
-    dcPodUnmount();
+    var ov = document.getElementById('dcPlayerOverlay');
     if (!ov) return;
     ov.classList.remove('open');
     ov.setAttribute('aria-hidden', 'true');
     var b = document.getElementById('btn-podcast-toggle');
     if (b) b.setAttribute('aria-expanded', 'false');
   }
-  /* Called from the music 'play' hook above: only act when the podcast is
-     actually mounted, so starting music elsewhere is otherwise untouched. */
-  function dcClosePodcastForMusic() {
-    if (dcPodFrame) closePodcastOverlay();
+  /* The headphone icon is the toggle. */
+  function dcPodToggle() {
+    var ov = document.getElementById('dcPlayerOverlay');
+    if (ov && ov.classList.contains('open')) dcPodDrawerClose();
+    else dcPodDrawerOpen();
+  }
+  /* Exclusivity stop: another source started, so the podcast yields entirely —
+     unmount the iframe (it "goes away") and close the drawer. Resume position is
+     preserved in localStorage('dc-resume-state'); reopening re-mounts paused. */
+  function dcStopPodcast() {
+    if (dcPodFrame) { dcPodFrame.remove(); dcPodFrame = null; }
+    dcSetPodcastPlaying(false);
+    dcPodDrawerClose();
   }
 
-  /* Let other pages (the episodes inline player) hand off cleanly: when they
-     open their own player, they close this overlay so only one stays alive. */
-  window.dcClosePodcastOverlay = closePodcastOverlay;
+  /* Exposed so the episodes-page inline player can silence the podcast when it
+     starts playing (the symmetric half lives in episodes.html). */
+  window.dcPodcastStop = dcStopPodcast;
 
-  /* Escape closes the overlay (mirrors common modal behavior; the radar overlay
-     has its own close control). */
+  /* Escape just hides the drawer; it does NOT stop playback. */
   document.addEventListener('keydown', function (e) {
     if (e.key !== 'Escape' && e.keyCode !== 27) return;
     var ov = document.getElementById('dcPlayerOverlay');
-    if (ov && ov.classList.contains('open')) closePodcastOverlay();
+    if (ov && ov.classList.contains('open')) dcPodDrawerClose();
   });
 
   /* ── HEADER EVENT DELEGATION ───────────────────────
@@ -929,9 +937,8 @@
        and never affected by the trigger. */
     if (t.closest('#btn-music-toggle'))   { toggleMusicPanel();    return; }
     if (t.closest('#dc-music-playpause')) { toggleMusicPlayPause(); return; }
-    /* Podcast overlay: launcher opens it, the overlay's own button closes it. */
-    if (t.closest('#btn-podcast-toggle'))    { openPodcastOverlay();  return; }
-    if (t.closest('#dcClosePlayerOverlay'))  { closePodcastOverlay(); return; }
+    /* Podcast drawer: the headphone icon is the toggle (open ↔ close). */
+    if (t.closest('#btn-podcast-toggle'))    { dcPodToggle();  return; }
     /* Drawer tool buttons. */
     if (t.closest('#tool-pwa'))     { handlePwaInstall(); return; }
     if (t.closest('#tool-consult')) { window.location.href = 'mailto:info@dentcast.ir'; return; }
