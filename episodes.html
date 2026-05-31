@@ -364,6 +364,21 @@ body.search-open #page-content{
 .player-frame-holder.internal iframe{ min-height:560px; height:560px; }
 .player-frame-holder.acast iframe{ height:380px; }
 
+/* ---- پلیر داخلی: حذف لایه‌ی کارت تو‌در‌تو + پهن‌تر شدن هنگام باز بودن ---- */
+/* B: رپر داخلی را بصری ناپدید کن (بدون حذف عنصر؛ رفتار باز/بسته و close حفظ می‌شود).
+   overflow:hidden و border-radius از .player-wrap باقی می‌ماند تا گوشه‌های نوار
+   «بستن» و iframe همچنان گرد و کلیپ‌شده بمانند. فقط برای آیدی، نه کلاس مشترک. */
+#internalPlayerWrap{ background:transparent; border:0; box-shadow:none; }
+
+/* C: وقتی پلیر داخلی باز است، سلول تمام عرض گرید را بگیرد و padding کمتری داشته باشد */
+.player-cell:has(#internalPlayerWrap:not([hidden])){
+  grid-column:1 / -1;
+  padding:24px 20px;
+}
+@media (min-width:720px){
+  .player-cell:has(#internalPlayerWrap:not([hidden])){ padding:28px 24px; }
+}
+
 /* ARCHIVE */
 .dc-archive .archive-head{
   display:flex; align-items:baseline; justify-content:space-between;
