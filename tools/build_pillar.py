@@ -209,6 +209,45 @@ PILLARS = {
             {"slug": "snap-on-smile",        "title_fa": "اسنپ‌آن اسمایل",          "icon": "icon-smile",   "intro_fa": "اپلاینسِ متحرکِ <strong>بدون تراش</strong> که روی دندان‌ها snap می‌شود. نقشی موقت و کم‌تهاجمی دارد — از راه‌حلِ زیباییِ سریع تا اسپلینتِ پریودنتال — با اندیکاسیون‌ها و محدودیت‌های مشخصِ خودش."},
         ],
     },
+    "operative": {
+        "title_fa": "دندانپزشکی ترمیمی",
+        "icon":             "icon-tooth-restoration",
+        "subtitle_fa_short": "از پوسیدگی و ترک تا ترمیمِ مستقیم",
+        "page_title":       "فهرست موضوعی — دندانپزشکی ترمیمی / دنت‌کست",
+        "meta_description": "نقشه‌ی موضوعی دندانپزشکی ترمیمی — از مدیریت و برداشتِ پوسیدگی با حداقل تهاجم، تا تشخیص و مدیریتِ ترک و آسیبِ ساختاری دندان، و ترمیمِ مستقیم و مواد. رویکردِ محافظه‌کارانه و بیومیمتیک به حفظِ ساختارِ دندان، با لینک به اپیزودها، گلاسری، نوت‌کست‌ها و یادداشت‌های بالینی دنت‌کست.",
+        "h1_fa":        "دندانپزشکی ترمیمی",
+        "subtitle_fa":  "نقشه‌ی موضوعی دنت‌کست",
+        "intro_paragraphs": [
+            'دندانپزشکی ترمیمی، هنرِ <strong>حفظِ ساختارِ دندان</strong> است؛ جایی که هر تصمیم میان مداخله و پرهیز، یک معامله بر سرِ بافتِ از‌دست‌رفتنی است. این‌جا دیگر بحث بر سرِ بازساختِ کاملِ تاج نیست؛ بر سرِ این است که <strong>چقدر برداریم</strong>، <strong>کجا متوقف شویم</strong>، و چه چیزی جای بافتِ رفته بنشیند.',
+            'پشت هر ترمیم، یک زنجیره از پرسش‌ها نشسته است: این پوسیدگی را تا کجا باید برداشت — تا عاجِ سخت یا تا مرزِ کنترل‌شده‌ی نزدیکِ پالپ؟ این ترکِ مینایی یک خطِ بی‌خطر است یا آغازِ یک فرکچرِ ساختاری؟ و این حفره را با چه طراحی و چه ماده‌ای ترمیم کنیم تا <strong>مقاومت به شکست</strong> بازگردد؟',
+            'این صفحه نقشه‌ای موضوعی از همین انضباط است. مطالب در <strong>سه لایه</strong> چیده شده‌اند — مدیریت و برداشتِ پوسیدگی، ترک و آسیبِ ساختاری، و ترمیمِ مستقیم و مواد. هر مورد به منبع کاملش در دنت‌کست لینک شده — اپیزود پادکست، نوت‌کست، گلاسری، یا یادداشت بالینی.',
+        ],
+        "subtopics": [
+            {"slug": "caries-management",   "title_fa": "مدیریت و برداشتِ پوسیدگی", "icon": "icon-microbe", "intro_fa": "قلبِ ترمیمی: <strong>چقدر</strong> پوسیدگی را برداریم و <strong>کجا</strong> متوقف شویم. از فلسفه‌ی حداقل تهاجم (MID) و برداشتِ انتخابی، تا نقاطِ پایانیِ کنترل‌شده مثلِ PSZ و CRE برای حفظِ پالپ در ضایعاتِ عمیق."},
+            {"slug": "cracked-tooth",       "title_fa": "ترک و آسیبِ ساختاریِ دندان", "icon": "icon-warning", "intro_fa": "تشخیصِ آنچه چشمِ غیرمسلح نمی‌بیند. تمایزِ <strong>ترک‌های بی‌خطر از فرکچرهای ساختاری</strong>، و تعیینِ نقاطِ پایانیِ حذفِ ترک (CrRE) — مرزِ میانِ حفظِ دندان و شکستِ پیش‌رونده."},
+            {"slug": "direct-restorations", "title_fa": "ترمیمِ مستقیم و مواد",       "icon": "icon-tooth",   "intro_fa": "وقتی بافت رفته، چه چیزی جایش بنشیند؟ طراحیِ حفره برای <strong>مقاومت به شکست</strong>، و انتخابِ موادِ ترمیمِ مستقیم — جایی که شیمیِ ماده و طراحیِ مکانیکی با هم طولِ عمرِ ترمیم را رقم می‌زنند."},
+        ],
+    },
+    "digital": {
+        "title_fa": "دندانپزشکی دیجیتال",
+        "icon":             "icon-scan",
+        "subtitle_fa_short": "از اسکن و CAD/CAM تا هوشِ مصنوعی",
+        "page_title":       "فهرست موضوعی — دندانپزشکی دیجیتال / دنت‌کست",
+        "meta_description": "نقشه‌ی موضوعی دندانپزشکی دیجیتال — از اسکنِ داخل‌دهانی و قالب‌گیریِ دیجیتال، تا CAD/CAM و موادِ نوین، گردش‌کارِ دیجیتال و بیمارِ مجازی، و هوشِ مصنوعی در تشخیص و درمان. مجموعه‌ای از اپیزودها، گلاسری، نوت‌کست‌ها و یادداشت‌های بالینی دنت‌کست در یک ساختار واحد.",
+        "h1_fa":        "دندانپزشکی دیجیتال",
+        "subtitle_fa":  "نقشه‌ی موضوعی دنت‌کست",
+        "intro_paragraphs": [
+            'دندانپزشکی دیجیتال یک ابزار نیست؛ یک <strong>گردش‌کار</strong> است که از ثبتِ واقعیتِ دهان آغاز می‌شود و تا طراحی، ساخت و تصمیم‌گیریِ هوشمند ادامه می‌یابد. این‌جا دقتِ هر مرحله، سقفِ کیفیتِ مرحله‌ی بعد را تعیین می‌کند — درست مثلِ هر زنجیره‌ی بالینیِ دیگر.',
+            'مسیر با یک پرسشِ ساده آغاز می‌شود: <strong>چگونه</strong> دهان را به داده تبدیل کنیم؟ اسکنِ داخل‌دهانی، فرمتِ فایل، و کنترلِ شرایطِ بافتی تعیین می‌کنند که این داده چقدر <strong>دقیق</strong> است. سپس داده به ماده می‌رسد — <strong>CAD/CAM</strong> و موادی مثلِ PEEK — و در نهایت به تلفیق و تصمیم: بیمارِ مجازی، و <strong>هوشِ مصنوعی</strong> که الگوها را جایی می‌بیند که چشمِ ما نمی‌بیند.',
+            'این صفحه نقشه‌ای موضوعی از همین جهان است. مطالب در <strong>چهار لایه</strong> چیده شده‌اند — اسکنِ داخل‌دهانی، CAD/CAM و مواد، گردش‌کارِ دیجیتال و بیمارِ مجازی، و هوشِ مصنوعی. هر مورد به منبع کاملش در دنت‌کست لینک شده — اپیزود پادکست، نوت‌کست، گلاسری، یا یادداشت بالینی.',
+        ],
+        "subtopics": [
+            {"slug": "intraoral-scanning", "title_fa": "اسکنِ داخل‌دهانی و قالب‌گیریِ دیجیتال", "icon": "icon-camera",     "intro_fa": "نخستین حلقه: تبدیلِ دهان به داده. <strong>دقتِ اسکن</strong> — از فرمتِ فایل و سرعتِ اسکن تا کنترلِ خونریزی و بافتِ نرم — سقفِ دقتِ همه‌ی مراحلِ بعد را تعیین می‌کند."},
+            {"slug": "cad-cam",            "title_fa": "CAD/CAM و موادِ دیجیتال",          "icon": "icon-gear",       "intro_fa": "از داده به ماده. طراحی و ساختِ دیجیتالِ ترمیم، و موادی مثلِ <strong>PEEK</strong> — با خواصِ مکانیکی و اندیکاسیون‌های خاصِ خود — که گردش‌کارِ دیجیتال آن‌ها را ممکن کرده است."},
+            {"slug": "digital-workflow",   "title_fa": "گردش‌کارِ دیجیتال و بیمارِ مجازی", "icon": "icon-monitor",    "intro_fa": "تلفیقِ همه‌چیز. <strong>بیمارِ مجازی</strong> — همپوشانیِ اسکنِ صورت، اسکنِ داخل‌دهانی و CBCT — و گردش‌کارِ جامعِ مطبِ مدرن، جایی که داده‌های پراکنده یک تصویرِ واحد برای تصمیم می‌سازند."},
+            {"slug": "ai",                 "title_fa": "هوشِ مصنوعی",                       "icon": "icon-brain",      "intro_fa": "لایه‌ی تصمیم. مفاهیمِ پایه‌ی <strong>AI، یادگیریِ ماشین و یادگیریِ عمیق</strong>، مسیرِ یادگیریِ آن‌ها، و کاربردهای عملی در تشخیص و درمان — فناوریِ عرضی‌ای که کم‌کم همه‌ی شاخه‌ها را لمس می‌کند."},
+        ],
+    },
 }
 
 TYPE_META = {
@@ -646,6 +685,24 @@ def render_page(slug, cfg, intro_html, cards_html, flat_ordered):
         '      background: rgba(192, 138, 99, 0.10);\n'
         '      border-right-color: rgba(192, 138, 99, 0.45);\n'
         '    }\n'
+        '    /* operative — sage green: #5e8c6a light / #86b894 dark */\n'
+        '    [data-pillar="operative"] .pillar-subtopic-intro {\n'
+        '      background: rgba(94, 140, 106, 0.07);\n'
+        '      border-right-color: rgba(94, 140, 106, 0.40);\n'
+        '    }\n'
+        '    [data-theme="dark"] [data-pillar="operative"] .pillar-subtopic-intro {\n'
+        '      background: rgba(134, 184, 148, 0.10);\n'
+        '      border-right-color: rgba(134, 184, 148, 0.45);\n'
+        '    }\n'
+        '    /* digital — steel periwinkle: #6b5b95 light / #9d8ec7 dark */\n'
+        '    [data-pillar="digital"] .pillar-subtopic-intro {\n'
+        '      background: rgba(107, 91, 149, 0.07);\n'
+        '      border-right-color: rgba(107, 91, 149, 0.40);\n'
+        '    }\n'
+        '    [data-theme="dark"] [data-pillar="digital"] .pillar-subtopic-intro {\n'
+        '      background: rgba(157, 142, 199, 0.10);\n'
+        '      border-right-color: rgba(157, 142, 199, 0.45);\n'
+        '    }\n'
         '    /* Pillar header icon — centered above H1, colored with each\n'
         '       pillar accent via [data-pillar] scope. Stroke icons inherit\n'
         '       the color through currentColor. Same accent values + light/\n'
@@ -667,6 +724,10 @@ def render_page(slug, cfg, intro_html, cards_html, flat_ordered):
         '    [data-theme="dark"] [data-pillar="treatment-planning"] .pillar-header-icon { color: #7d8cc0; }\n'
         '    [data-pillar="removable-pros"] .pillar-header-icon { color: #9c6644; }\n'
         '    [data-theme="dark"] [data-pillar="removable-pros"] .pillar-header-icon { color: #c08a63; }\n'
+        '    [data-pillar="operative"] .pillar-header-icon { color: #5e8c6a; }\n'
+        '    [data-theme="dark"] [data-pillar="operative"] .pillar-header-icon { color: #86b894; }\n'
+        '    [data-pillar="digital"] .pillar-header-icon { color: #6b5b95; }\n'
+        '    [data-theme="dark"] [data-pillar="digital"] .pillar-header-icon { color: #9d8ec7; }\n'
         '  </style>\n'
         '\n'
         "  <!-- Theme init verbatim from metanotes/index.html -->\n"
@@ -1050,6 +1111,42 @@ INDEX_INLINE_STYLE = (
     "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"removable-pros\"] .pillar-card-name { color: #c08a63; }\n"
     "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"removable-pros\"] .subtopic-chip { background: rgba(192,138,99,.18); color: #c08a63; }\n"
     "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"removable-pros\"] .pillar-card-arrow { background: rgba(192,138,99,.15); border-color: rgba(192,138,99,.35); color: #c08a63; }\n"
+    "\n"
+    "/* Per-pillar accent — operative uses sage green in place of teal.\n"
+    "   Same mechanism, same places as the default teal above; selectors\n"
+    "   are scoped to [data-pillar=\"operative\"] so other cards stay teal.\n"
+    "     light primary sage: #5e8c6a\n"
+    "     dark primary sage:  #86b894 */\n"
+    ".pillar-card-row[data-pillar=\"operative\"] { border-color: rgba(94,140,106,.25); }\n"
+    ".pillar-card-row[data-pillar=\"operative\"]:hover { border-color: rgba(94,140,106,.35); }\n"
+    ".pillar-card-row[data-pillar=\"operative\"] .pillar-card-icon { color: #5e8c6a; }\n"
+    ".pillar-card-row[data-pillar=\"operative\"] .pillar-card-name { color: #5e8c6a; }\n"
+    ".pillar-card-row[data-pillar=\"operative\"] .subtopic-chip { background: rgba(94,140,106,.10); color: #5e8c6a; }\n"
+    ".pillar-card-row[data-pillar=\"operative\"] .pillar-card-arrow { background: rgba(94,140,106,.10); border-color: rgba(94,140,106,.25); color: #5e8c6a; }\n"
+    "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"operative\"] { border-color: rgba(134,184,148,.30); }\n"
+    "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"operative\"]:hover { border-color: rgba(134,184,148,.45); }\n"
+    "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"operative\"] .pillar-card-icon { color: #86b894; }\n"
+    "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"operative\"] .pillar-card-name { color: #86b894; }\n"
+    "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"operative\"] .subtopic-chip { background: rgba(134,184,148,.18); color: #86b894; }\n"
+    "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"operative\"] .pillar-card-arrow { background: rgba(134,184,148,.15); border-color: rgba(134,184,148,.35); color: #86b894; }\n"
+    "\n"
+    "/* Per-pillar accent — digital uses steel periwinkle in place of teal.\n"
+    "   Same mechanism, same places as the default teal above; selectors\n"
+    "   are scoped to [data-pillar=\"digital\"] so other cards stay teal.\n"
+    "     light primary periwinkle: #6b5b95\n"
+    "     dark primary periwinkle:  #9d8ec7 */\n"
+    ".pillar-card-row[data-pillar=\"digital\"] { border-color: rgba(107,91,149,.25); }\n"
+    ".pillar-card-row[data-pillar=\"digital\"]:hover { border-color: rgba(107,91,149,.35); }\n"
+    ".pillar-card-row[data-pillar=\"digital\"] .pillar-card-icon { color: #6b5b95; }\n"
+    ".pillar-card-row[data-pillar=\"digital\"] .pillar-card-name { color: #6b5b95; }\n"
+    ".pillar-card-row[data-pillar=\"digital\"] .subtopic-chip { background: rgba(107,91,149,.10); color: #6b5b95; }\n"
+    ".pillar-card-row[data-pillar=\"digital\"] .pillar-card-arrow { background: rgba(107,91,149,.10); border-color: rgba(107,91,149,.25); color: #6b5b95; }\n"
+    "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"digital\"] { border-color: rgba(157,142,199,.30); }\n"
+    "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"digital\"]:hover { border-color: rgba(157,142,199,.45); }\n"
+    "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"digital\"] .pillar-card-icon { color: #9d8ec7; }\n"
+    "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"digital\"] .pillar-card-name { color: #9d8ec7; }\n"
+    "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"digital\"] .subtopic-chip { background: rgba(157,142,199,.18); color: #9d8ec7; }\n"
+    "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"digital\"] .pillar-card-arrow { background: rgba(157,142,199,.15); border-color: rgba(157,142,199,.35); color: #9d8ec7; }\n"
     "</style>"
 )
 

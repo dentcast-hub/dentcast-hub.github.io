@@ -1993,7 +1993,7 @@
     "pillar": {
       "primary": "digital",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "cad-cam"
     }
   },
   {
@@ -2014,7 +2014,7 @@
     "pillar": {
       "primary": "digital",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "cad-cam"
     }
   },
   {
@@ -2035,7 +2035,7 @@
     "pillar": {
       "primary": "digital",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "cad-cam"
     }
   },
   {
@@ -2268,7 +2268,7 @@
     "pillar": {
       "primary": "digital",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "intraoral-scanning"
     }
   },
   {
@@ -2362,7 +2362,7 @@
     "pillar": {
       "primary": "digital",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "ai"
     }
   },
   {
@@ -2410,7 +2410,7 @@
     "pillar": {
       "primary": "digital",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "ai"
     }
   },
   {
@@ -2910,7 +2910,7 @@
     "pillar": {
       "primary": "digital",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "intraoral-scanning"
     }
   },
   {
@@ -2956,7 +2956,7 @@
     ],
     "page_url": "/episodes/episode-122-4.html",
     "pillar": {
-      "primary": "digital",
+      "primary": null,
       "secondary": [],
       "subtopic": null
     }
@@ -4339,7 +4339,7 @@
     "pillar": {
       "primary": "digital",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "ai"
     }
   },
   {
@@ -4363,7 +4363,7 @@
     "pillar": {
       "primary": "digital",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "digital-workflow"
     }
   },
   {
@@ -4411,7 +4411,7 @@
     "pillar": {
       "primary": "digital",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "digital-workflow"
     }
   },
   {
@@ -9291,7 +9291,7 @@
     "pillar": {
       "primary": "digital",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "intraoral-scanning"
     }
   },
   {

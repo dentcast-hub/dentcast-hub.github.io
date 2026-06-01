@@ -180,7 +180,7 @@
       "pillar": {
         "primary": "operative",
         "secondary": [],
-        "subtopic": null
+        "subtopic": "direct-restorations"
       }
     },
     {
@@ -654,7 +654,7 @@
       "pillar": {
         "primary": "operative",
         "secondary": [],
-        "subtopic": null
+        "subtopic": "direct-restorations"
       }
     },
     {
@@ -847,7 +847,7 @@
       "pillar": {
         "primary": "operative",
         "secondary": [],
-        "subtopic": null
+        "subtopic": "direct-restorations"
       }
     },
     {
@@ -863,7 +863,7 @@
       "pillar": {
         "primary": "operative",
         "secondary": [],
-        "subtopic": null
+        "subtopic": "direct-restorations"
       }
     },
     {
@@ -1146,7 +1146,7 @@
       "pillar": {
         "primary": "digital",
         "secondary": [],
-        "subtopic": null
+        "subtopic": "cad-cam"
       }
     },
     {

@@ -458,6 +458,24 @@
       background: rgba(192, 138, 99, 0.10);
       border-right-color: rgba(192, 138, 99, 0.45);
     }
+    /* operative — sage green: #5e8c6a light / #86b894 dark */
+    [data-pillar="operative"] .pillar-subtopic-intro {
+      background: rgba(94, 140, 106, 0.07);
+      border-right-color: rgba(94, 140, 106, 0.40);
+    }
+    [data-theme="dark"] [data-pillar="operative"] .pillar-subtopic-intro {
+      background: rgba(134, 184, 148, 0.10);
+      border-right-color: rgba(134, 184, 148, 0.45);
+    }
+    /* digital — steel periwinkle: #6b5b95 light / #9d8ec7 dark */
+    [data-pillar="digital"] .pillar-subtopic-intro {
+      background: rgba(107, 91, 149, 0.07);
+      border-right-color: rgba(107, 91, 149, 0.40);
+    }
+    [data-theme="dark"] [data-pillar="digital"] .pillar-subtopic-intro {
+      background: rgba(157, 142, 199, 0.10);
+      border-right-color: rgba(157, 142, 199, 0.45);
+    }
     /* Pillar header icon — centered above H1, colored with each
        pillar accent via [data-pillar] scope. Stroke icons inherit
        the color through currentColor. Same accent values + light/
@@ -479,6 +497,10 @@
     [data-theme="dark"] [data-pillar="treatment-planning"] .pillar-header-icon { color: #7d8cc0; }
     [data-pillar="removable-pros"] .pillar-header-icon { color: #9c6644; }
     [data-theme="dark"] [data-pillar="removable-pros"] .pillar-header-icon { color: #c08a63; }
+    [data-pillar="operative"] .pillar-header-icon { color: #5e8c6a; }
+    [data-theme="dark"] [data-pillar="operative"] .pillar-header-icon { color: #86b894; }
+    [data-pillar="digital"] .pillar-header-icon { color: #6b5b95; }
+    [data-theme="dark"] [data-pillar="digital"] .pillar-header-icon { color: #9d8ec7; }
   </style>
 
   <!-- Theme init verbatim from metanotes/index.html -->

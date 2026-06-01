@@ -43,7 +43,7 @@
       },
       "mainEntity": {
         "@type": "ItemList",
-        "numberOfItems": 27,
+        "numberOfItems": 28,
         "itemListElement": [
           {
             "@type": "ListItem",
@@ -126,84 +126,90 @@
           {
             "@type": "ListItem",
             "position": 14,
+            "name": "Dahl Concept – بخش اول",
+            "url": "https://dentcast.org/episodes/episode-34.html"
+          },
+          {
+            "@type": "ListItem",
+            "position": 15,
             "name": "Dahl Concept – بخش دوم",
             "url": "https://dentcast.org/episodes/episode-35.html"
           },
           {
             "@type": "ListItem",
-            "position": 15,
+            "position": 16,
             "name": "مدیریت سایش دندانی با کانسپت دال — بخش اول",
             "url": "https://dentcast.org/notecast/episode-34.html"
           },
           {
             "@type": "ListItem",
-            "position": 16,
+            "position": 17,
             "name": "TMD",
             "url": "https://dentcast.org/glossary/tmd.html"
           },
           {
             "@type": "ListItem",
-            "position": 17,
+            "position": 18,
             "name": "داستان TMD: از داوسون تا اوکیسون — قسمت اول",
             "url": "https://dentcast.org/episodes/episode-142.html"
           },
           {
             "@type": "ListItem",
-            "position": 18,
+            "position": 19,
             "name": "داستان TMD: از داوسون تا اوکیسون — قسمت دوم",
             "url": "https://dentcast.org/episodes/episode-143.html"
           },
           {
             "@type": "ListItem",
-            "position": 19,
+            "position": 20,
             "name": "داستان TMD: از داوسون تا اوکیسون — قسمت سوم",
             "url": "https://dentcast.org/episodes/episode-144.html"
           },
           {
             "@type": "ListItem",
-            "position": 20,
+            "position": 21,
             "name": "داستان TMD: از داوسون تا اوکیسون — قسمت چهارم",
             "url": "https://dentcast.org/episodes/episode-145.html"
           },
           {
             "@type": "ListItem",
-            "position": 21,
+            "position": 22,
             "name": "TMD – اختلالات عضلات ماضغه",
             "url": "https://dentcast.org/episodes/episode-85.html"
           },
           {
             "@type": "ListItem",
-            "position": 22,
+            "position": 23,
             "name": "TMD – اختلالات داخل کپسولی",
             "url": "https://dentcast.org/episodes/episode-86.html"
           },
           {
             "@type": "ListItem",
-            "position": 23,
+            "position": 24,
             "name": "آخرین مرحله قبل از خداحافظی با بیمار — چک فرمیتوس بعد از تحویل روکش",
             "url": "https://dentcast.org/dentcast-plus/video-2.html"
           },
           {
             "@type": "ListItem",
-            "position": 24,
+            "position": 25,
             "name": "دنتوپدیا — فرمیتوس (Fremitus) چیست؟",
             "url": "https://dentcast.org/episodes/episode-123-2.html"
           },
           {
             "@type": "ListItem",
-            "position": 25,
+            "position": 26,
             "name": "ضخامت کاغذ آرتیکولاسیون مهم‌تر از چیزیه که فکر می‌کنی",
             "url": "https://dentcast.org/insight/insight-1.html"
           },
           {
             "@type": "ListItem",
-            "position": 26,
+            "position": 27,
             "name": "اگر کار می‌کند، دست نزن — تداخل اکلوژنی پایدار بدون علامت",
             "url": "https://dentcast.org/insight/insight-8.html"
           },
           {
             "@type": "ListItem",
-            "position": 27,
+            "position": 28,
             "name": "قانون BULL در تنظیم اکلوزال",
             "url": "https://dentcast.org/photocast/episode-2.html"
           }
@@ -296,6 +302,24 @@
       background: rgba(192, 138, 99, 0.10);
       border-right-color: rgba(192, 138, 99, 0.45);
     }
+    /* operative — sage green: #5e8c6a light / #86b894 dark */
+    [data-pillar="operative"] .pillar-subtopic-intro {
+      background: rgba(94, 140, 106, 0.07);
+      border-right-color: rgba(94, 140, 106, 0.40);
+    }
+    [data-theme="dark"] [data-pillar="operative"] .pillar-subtopic-intro {
+      background: rgba(134, 184, 148, 0.10);
+      border-right-color: rgba(134, 184, 148, 0.45);
+    }
+    /* digital — steel periwinkle: #6b5b95 light / #9d8ec7 dark */
+    [data-pillar="digital"] .pillar-subtopic-intro {
+      background: rgba(107, 91, 149, 0.07);
+      border-right-color: rgba(107, 91, 149, 0.40);
+    }
+    [data-theme="dark"] [data-pillar="digital"] .pillar-subtopic-intro {
+      background: rgba(157, 142, 199, 0.10);
+      border-right-color: rgba(157, 142, 199, 0.45);
+    }
     /* Pillar header icon — centered above H1, colored with each
        pillar accent via [data-pillar] scope. Stroke icons inherit
        the color through currentColor. Same accent values + light/
@@ -317,6 +341,10 @@
     [data-theme="dark"] [data-pillar="treatment-planning"] .pillar-header-icon { color: #7d8cc0; }
     [data-pillar="removable-pros"] .pillar-header-icon { color: #9c6644; }
     [data-theme="dark"] [data-pillar="removable-pros"] .pillar-header-icon { color: #c08a63; }
+    [data-pillar="operative"] .pillar-header-icon { color: #5e8c6a; }
+    [data-theme="dark"] [data-pillar="operative"] .pillar-header-icon { color: #86b894; }
+    [data-pillar="digital"] .pillar-header-icon { color: #6b5b95; }
+    [data-theme="dark"] [data-pillar="digital"] .pillar-header-icon { color: #9d8ec7; }
   </style>
 
   <!-- Theme init verbatim from metanotes/index.html -->
@@ -511,7 +539,7 @@
     <summary class="pillar-card-summary">
       <span class="pillar-card-icon" aria-hidden="true"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M10.3 3.9 2.4 18a2 2 0 0 0 1.7 3h15.8a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/> <path d="M12 9v5"/> <path d="M12 18h.01"/></svg></span>
       <h2 class="pillar-card-title">سایش دندانی و کانسپت دال</h2>
-      <span class="pillar-card-count" aria-label="۴ مورد">(۴)</span>
+      <span class="pillar-card-count" aria-label="۵ مورد">(۵)</span>
       <span class="pillar-card-chevron" aria-hidden="true">▾</span>
     </summary>
     <div class="pillar-card-body">
@@ -527,6 +555,13 @@
         <a href="/episodes/episode-126.html" class="pillar-item-link">
           <span class="pillar-item-icon" aria-hidden="true"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 14a9 9 0 0 1 18 0"/> <path d="M5 14h3v7H5a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2z"/> <path d="M19 14h-3v7h3a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2z"/></svg></span>
           <span class="pillar-item-title">ضایعات سرویکال (NCCL) — تشخیص و مدیریت (قسمت دوم)</span>
+          <span class="sr-only"> پادکست</span>
+        </a>
+      </li>
+      <li class="pillar-item" data-type="podcast">
+        <a href="/episodes/episode-34.html" class="pillar-item-link">
+          <span class="pillar-item-icon" aria-hidden="true"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 14a9 9 0 0 1 18 0"/> <path d="M5 14h3v7H5a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2z"/> <path d="M19 14h-3v7h3a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2z"/></svg></span>
+          <span class="pillar-item-title">Dahl Concept – بخش اول</span>
           <span class="sr-only"> پادکست</span>
         </a>
       </li>
