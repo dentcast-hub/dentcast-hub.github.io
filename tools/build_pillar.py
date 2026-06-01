@@ -169,6 +169,46 @@ PILLARS = {
             {"slug": "veneers-laminates",   "title_fa": "ونیر و لمینیت",       "icon": "icon-diamond", "intro_fa": ""},
         ],
     },
+    "treatment-planning": {
+        "title_fa": "طرح درمان",
+        "icon":             "icon-compass",
+        "subtitle_fa_short": "از تشخیص جامع تا تصمیمِ حفظ یا جایگزینی",
+        "page_title":       "فهرست موضوعی — طرح درمان / دنت‌کست",
+        "meta_description": "نقشه‌ی موضوعی طرح درمان در دندان‌پزشکی — از تشخیص جامع و طراحیِ کلِ درمان، تا تصمیمِ حفظ یا کشیدن دندان و جایگزینیِ دندانِ ازدست‌رفته. انضباطِ تصمیم‌گیری که پیش از هر تکنیک می‌نشیند، با لینک به اپیزودها، گلاسری، نوت‌کست‌ها و یادداشت‌های بالینی دنت‌کست.",
+        "h1_fa":        "طرح درمان",
+        "subtitle_fa":  "نقشه‌ی موضوعی دنت‌کست",
+        "intro_paragraphs": [
+            'طرح درمان، یک پیلارِ <strong>مقصد</strong> است؛ جایی که همه‌ی رشته‌های دیگر — از ایمپلنت و پروتز تا پریو و اندو — مطلب به آن می‌سپارند تا یک پرسشِ واحد پاسخ بگیرد: <strong>برای این بیمار، برای این دندان، چه باید کرد؟</strong> این‌جا دیگر بحث بر سرِ «چگونه»‌ی یک تکنیک نیست؛ بر سرِ <strong>«چه»</strong> و <strong>«چرا»</strong>ست.',
+            'مرزِ این پیلار دقیق است. <strong>تصمیمِ</strong> میان حفظ و کشیدن، میان بریج و ایمپلنت، میان مداخله و عدم‌مداخله — این‌جا جا دارد. اما <strong>اجرای</strong> همان تصمیم — تکنیکِ جراحیِ ایمپلنت، تراشِ روکش، ساختِ دنچر — به پیلارِ تخصصیِ خودش برمی‌گردد. طرح درمان، نقطه‌ی تصمیم است، نه میزِ کار.',
+            'پشت هر تصمیمِ خوب، یک <strong>تشخیصِ جامع</strong> نشسته است: نگاهی سیستمی که فراتر از یک دندانِ منفرد، کلِ صورت و لبخند و فانکشن و <strong>پروگنوزِ بلندمدت</strong> را می‌بیند. بدون این نقشه‌ی کلان، هر ترمیمِ موضعی ریسکِ آن را دارد که در خدمتِ یک طرحِ اشتباه بنشیند.',
+            'این صفحه نقشه‌ای موضوعی از همین انضباط است. مطالب در <strong>سه لایه</strong> چیده شده‌اند — از تشخیصِ جامع، تا تصمیمِ حفظ یا کشیدن، تا جایگزینیِ دندانِ ازدست‌رفته. هر مورد به منبع کاملش در دنت‌کست لینک شده — اپیزود پادکست، نوت‌کست، گلاسری، یا یادداشت بالینی.',
+        ],
+        "subtopics": [
+            {"slug": "comprehensive-diagnosis",    "title_fa": "تشخیص جامع و طرح‌ریزی", "icon": "icon-node-graph", "intro_fa": "پیش از هر تصمیم، یک نقشه‌ی کلان لازم است. تشخیصِ جامع — به‌سبکِ <strong>Global Diagnosis</strong> — کلِ صورت، لبخند، فانکشن و پروگنوز را در یک قابِ واحد می‌بیند، تا درمان‌های موضعی در خدمتِ یک طرحِ منسجم بنشینند، نه برعکس."},
+            {"slug": "extraction-vs-preservation", "title_fa": "حفظ یا کشیدن دندان",     "icon": "icon-scale",      "intro_fa": "بنیادی‌ترین تصمیمِ طرح درمان: آیا این دندان ارزشِ نگه‌داشتن دارد؟ سنجشِ <strong>restorability</strong>، پروگنوزِ بیومکانیکی و بیولوژیک، و مقایسه‌ی صادقانه‌ی حفظ در برابرِ کشیدن و جایگزینی — جایی که عجله یا تعصب، گران تمام می‌شود."},
+            {"slug": "replacing-missing-teeth",    "title_fa": "جایگزینیِ دندانِ ازدست‌رفته", "icon": "icon-puzzle", "intro_fa": "وقتی دندان رفته یا قرار است برود، پرسشِ بعدی <strong>مودالیتیِ جایگزینی</strong> است: بریج، ایمپلنت، یا گاهی هیچ‌کدام. این تصمیم — جدا از تکنیکِ اجرای آن — بر اساسِ فضا، فانکشن و نیازِ واقعیِ بیمار سنجیده می‌شود."},
+        ],
+    },
+    "removable-pros": {
+        "title_fa": "پروتز متحرک",
+        "icon":             "icon-denture",
+        "subtitle_fa_short": "از اوردنچر و دنچر کامل تا اسنپ‌آن اسمایل",
+        "page_title":       "فهرست موضوعی — پروتز متحرک / دنت‌کست",
+        "meta_description": "نقشه‌ی موضوعی پروتز متحرک در دندان‌پزشکی — از اوردنچرِ متکی بر ایمپلنت و انتخابِ اتچمنت، تا دنچرِ کامل و اپلاینسِ اسنپ‌آن اسمایل. مجموعه‌ای از اپیزودها، گلاسری، نوت‌کست‌ها و یادداشت‌های بالینی دنت‌کست در یک ساختار واحد.",
+        "h1_fa":        "پروتز متحرک",
+        "subtitle_fa":  "نقشه‌ی موضوعی دنت‌کست",
+        "intro_paragraphs": [
+            'پروتز متحرک، هنرِ بازگرداندنِ فانکشن و زیبایی در جایی است که دندان‌ها رفته‌اند — اما برخلافِ پروتزِ ثابت، اتکای اصلیِ آن بر <strong>بافتِ زنده</strong> است: مخاط، ریج، و گاهی چند ایمپلنت. این وابستگی به بافت، هر تصمیم را به یک <strong>معامله</strong> میان گیر، پایداری و راحتی تبدیل می‌کند.',
+            'طیفِ این درمان‌ها گسترده است. در یک سَر، <strong>اوردنچرِ متکی بر ایمپلنت</strong> که با انتخابِ درستِ اتچمنت، گیر و پایداری را به دنچر بازمی‌گرداند. در سرِ دیگر، <strong>دنچرِ کاملِ</strong> کلاسیک که موفقیتش به بسترِ پروتزی و رکوردگیریِ دقیق گره خورده. و در میانه، اپلاینس‌هایی مثلِ <strong>اسنپ‌آن اسمایل</strong> که نقشی موقت و کم‌تهاجمی ایفا می‌کنند.',
+            'پشت هر پروتزِ موفق، یک زنجیره از سنجش‌ها نشسته است: <strong>اکلوژن</strong> و ساپورتِ قوسِ مقابل، فرمِ ریج، انتخابِ اتچمنت یا سیستمِ ساخت، و رابطِ پروتز با بافت. ضعف در هر حلقه — از نبودِ ساپورتِ خلفی تا ریجِ نامناسب — می‌تواند کلِ درمان را ناپایدار کند.',
+            'این صفحه نقشه‌ای موضوعی از این جهان است. مطالب در <strong>سه لایه</strong> چیده شده‌اند — اوردنچرِ متکی بر ایمپلنت، دنچرِ کامل، و اسنپ‌آن اسمایل. هر مورد به منبع کاملش در دنت‌کست لینک شده — اپیزود پادکست، نوت‌کست، گلاسری، یا یادداشت بالینی.',
+        ],
+        "subtopics": [
+            {"slug": "implant-overdentures", "title_fa": "اوردنچرِ متکی بر ایمپلنت", "icon": "icon-implant", "intro_fa": "دنچری که چند ایمپلنت آن را مهار می‌کنند. قلبِ تصمیم این‌جا <strong>اتچمنت</strong> است — بار در برابر لوکیتور، تعداد ایمپلنت، و پروتکلِ بارگذاری — و این‌که چگونه گیر و پایداری با راحتی و بهداشتِ بیمار متعادل شود."},
+            {"slug": "complete-dentures",    "title_fa": "دنچر کامل",               "icon": "icon-denture", "intro_fa": "پروتزِ کاملِ متکی بر بافت، برای قوسِ بی‌دندان. موفقیتش به <strong>بسترِ پروتزی</strong>، رکوردگیریِ دقیق و سیستمِ ساخت (مثلِ BPS) و تعادلِ استتیک با فرمِ ریج وابسته است — جایی که میلی‌مترها در نمای نهایی دیده می‌شوند."},
+            {"slug": "snap-on-smile",        "title_fa": "اسنپ‌آن اسمایل",          "icon": "icon-smile",   "intro_fa": "اپلاینسِ متحرکِ <strong>بدون تراش</strong> که روی دندان‌ها snap می‌شود. نقشی موقت و کم‌تهاجمی دارد — از راه‌حلِ زیباییِ سریع تا اسپلینتِ پریودنتال — با اندیکاسیون‌ها و محدودیت‌های مشخصِ خودش."},
+        ],
+    },
 }
 
 TYPE_META = {
@@ -588,6 +628,24 @@ def render_page(slug, cfg, intro_html, cards_html, flat_ordered):
         '      background: rgba(199, 125, 146, 0.10);\n'
         '      border-right-color: rgba(199, 125, 146, 0.45);\n'
         '    }\n'
+        '    /* treatment-planning — slate indigo: #4a5a8a light / #7d8cc0 dark */\n'
+        '    [data-pillar="treatment-planning"] .pillar-subtopic-intro {\n'
+        '      background: rgba(74, 90, 138, 0.07);\n'
+        '      border-right-color: rgba(74, 90, 138, 0.40);\n'
+        '    }\n'
+        '    [data-theme="dark"] [data-pillar="treatment-planning"] .pillar-subtopic-intro {\n'
+        '      background: rgba(125, 140, 192, 0.10);\n'
+        '      border-right-color: rgba(125, 140, 192, 0.45);\n'
+        '    }\n'
+        '    /* removable-pros — terracotta: #9c6644 light / #c08a63 dark */\n'
+        '    [data-pillar="removable-pros"] .pillar-subtopic-intro {\n'
+        '      background: rgba(156, 102, 68, 0.07);\n'
+        '      border-right-color: rgba(156, 102, 68, 0.40);\n'
+        '    }\n'
+        '    [data-theme="dark"] [data-pillar="removable-pros"] .pillar-subtopic-intro {\n'
+        '      background: rgba(192, 138, 99, 0.10);\n'
+        '      border-right-color: rgba(192, 138, 99, 0.45);\n'
+        '    }\n'
         '    /* Pillar header icon — centered above H1, colored with each\n'
         '       pillar accent via [data-pillar] scope. Stroke icons inherit\n'
         '       the color through currentColor. Same accent values + light/\n'
@@ -605,6 +663,10 @@ def render_page(slug, cfg, intro_html, cards_html, flat_ordered):
         '    [data-theme="dark"] [data-pillar="occlusion"] .pillar-header-icon { color: #a98fe0; }\n'
         '    [data-pillar="esthetic"] .pillar-header-icon { color: #a8536b; }\n'
         '    [data-theme="dark"] [data-pillar="esthetic"] .pillar-header-icon { color: #c77d92; }\n'
+        '    [data-pillar="treatment-planning"] .pillar-header-icon { color: #4a5a8a; }\n'
+        '    [data-theme="dark"] [data-pillar="treatment-planning"] .pillar-header-icon { color: #7d8cc0; }\n'
+        '    [data-pillar="removable-pros"] .pillar-header-icon { color: #9c6644; }\n'
+        '    [data-theme="dark"] [data-pillar="removable-pros"] .pillar-header-icon { color: #c08a63; }\n'
         '  </style>\n'
         '\n'
         "  <!-- Theme init verbatim from metanotes/index.html -->\n"
@@ -952,6 +1014,42 @@ INDEX_INLINE_STYLE = (
     "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"esthetic\"] .pillar-card-name { color: #c77d92; }\n"
     "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"esthetic\"] .subtopic-chip { background: rgba(199,125,146,.18); color: #c77d92; }\n"
     "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"esthetic\"] .pillar-card-arrow { background: rgba(199,125,146,.15); border-color: rgba(199,125,146,.35); color: #c77d92; }\n"
+    "\n"
+    "/* Per-pillar accent — treatment-planning uses slate indigo in place of teal.\n"
+    "   Same mechanism, same places as the default teal above; selectors\n"
+    "   are scoped to [data-pillar=\"treatment-planning\"] so other cards stay teal.\n"
+    "     light primary indigo: #4a5a8a\n"
+    "     dark primary indigo:  #7d8cc0 */\n"
+    ".pillar-card-row[data-pillar=\"treatment-planning\"] { border-color: rgba(74,90,138,.25); }\n"
+    ".pillar-card-row[data-pillar=\"treatment-planning\"]:hover { border-color: rgba(74,90,138,.35); }\n"
+    ".pillar-card-row[data-pillar=\"treatment-planning\"] .pillar-card-icon { color: #4a5a8a; }\n"
+    ".pillar-card-row[data-pillar=\"treatment-planning\"] .pillar-card-name { color: #4a5a8a; }\n"
+    ".pillar-card-row[data-pillar=\"treatment-planning\"] .subtopic-chip { background: rgba(74,90,138,.10); color: #4a5a8a; }\n"
+    ".pillar-card-row[data-pillar=\"treatment-planning\"] .pillar-card-arrow { background: rgba(74,90,138,.10); border-color: rgba(74,90,138,.25); color: #4a5a8a; }\n"
+    "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"treatment-planning\"] { border-color: rgba(125,140,192,.30); }\n"
+    "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"treatment-planning\"]:hover { border-color: rgba(125,140,192,.45); }\n"
+    "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"treatment-planning\"] .pillar-card-icon { color: #7d8cc0; }\n"
+    "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"treatment-planning\"] .pillar-card-name { color: #7d8cc0; }\n"
+    "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"treatment-planning\"] .subtopic-chip { background: rgba(125,140,192,.18); color: #7d8cc0; }\n"
+    "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"treatment-planning\"] .pillar-card-arrow { background: rgba(125,140,192,.15); border-color: rgba(125,140,192,.35); color: #7d8cc0; }\n"
+    "\n"
+    "/* Per-pillar accent — removable-pros uses terracotta in place of teal.\n"
+    "   Same mechanism, same places as the default teal above; selectors\n"
+    "   are scoped to [data-pillar=\"removable-pros\"] so other cards stay teal.\n"
+    "     light primary terracotta: #9c6644\n"
+    "     dark primary terracotta:  #c08a63 */\n"
+    ".pillar-card-row[data-pillar=\"removable-pros\"] { border-color: rgba(156,102,68,.25); }\n"
+    ".pillar-card-row[data-pillar=\"removable-pros\"]:hover { border-color: rgba(156,102,68,.35); }\n"
+    ".pillar-card-row[data-pillar=\"removable-pros\"] .pillar-card-icon { color: #9c6644; }\n"
+    ".pillar-card-row[data-pillar=\"removable-pros\"] .pillar-card-name { color: #9c6644; }\n"
+    ".pillar-card-row[data-pillar=\"removable-pros\"] .subtopic-chip { background: rgba(156,102,68,.10); color: #9c6644; }\n"
+    ".pillar-card-row[data-pillar=\"removable-pros\"] .pillar-card-arrow { background: rgba(156,102,68,.10); border-color: rgba(156,102,68,.25); color: #9c6644; }\n"
+    "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"removable-pros\"] { border-color: rgba(192,138,99,.30); }\n"
+    "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"removable-pros\"]:hover { border-color: rgba(192,138,99,.45); }\n"
+    "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"removable-pros\"] .pillar-card-icon { color: #c08a63; }\n"
+    "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"removable-pros\"] .pillar-card-name { color: #c08a63; }\n"
+    "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"removable-pros\"] .subtopic-chip { background: rgba(192,138,99,.18); color: #c08a63; }\n"
+    "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"removable-pros\"] .pillar-card-arrow { background: rgba(192,138,99,.15); border-color: rgba(192,138,99,.35); color: #c08a63; }\n"
     "</style>"
 )
 

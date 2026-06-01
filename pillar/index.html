@@ -43,7 +43,7 @@
       },
       "mainEntity": {
         "@type": "ItemList",
-        "numberOfItems": 6,
+        "numberOfItems": 8,
         "itemListElement": [
           {
             "@type": "ListItem",
@@ -86,6 +86,20 @@
             "name": "زیبایی",
             "url": "https://dentcast.org/pillar/esthetic/",
             "description": "از آنالیز لبخند تا رنگ و ونیر"
+          },
+          {
+            "@type": "ListItem",
+            "position": 7,
+            "name": "طرح درمان",
+            "url": "https://dentcast.org/pillar/treatment-planning/",
+            "description": "از تشخیص جامع تا تصمیمِ حفظ یا جایگزینی"
+          },
+          {
+            "@type": "ListItem",
+            "position": 8,
+            "name": "پروتز متحرک",
+            "url": "https://dentcast.org/pillar/removable-pros/",
+            "description": "از اوردنچر و دنچر کامل تا اسنپ‌آن اسمایل"
           }
         ]
       }
@@ -264,6 +278,42 @@ body:has(.dc-topbar) .pillar-intro { background: transparent; border: 0; box-sha
 [data-theme="dark"] .pillar-card-row[data-pillar="esthetic"] .pillar-card-name { color: #c77d92; }
 [data-theme="dark"] .pillar-card-row[data-pillar="esthetic"] .subtopic-chip { background: rgba(199,125,146,.18); color: #c77d92; }
 [data-theme="dark"] .pillar-card-row[data-pillar="esthetic"] .pillar-card-arrow { background: rgba(199,125,146,.15); border-color: rgba(199,125,146,.35); color: #c77d92; }
+
+/* Per-pillar accent — treatment-planning uses slate indigo in place of teal.
+   Same mechanism, same places as the default teal above; selectors
+   are scoped to [data-pillar="treatment-planning"] so other cards stay teal.
+     light primary indigo: #4a5a8a
+     dark primary indigo:  #7d8cc0 */
+.pillar-card-row[data-pillar="treatment-planning"] { border-color: rgba(74,90,138,.25); }
+.pillar-card-row[data-pillar="treatment-planning"]:hover { border-color: rgba(74,90,138,.35); }
+.pillar-card-row[data-pillar="treatment-planning"] .pillar-card-icon { color: #4a5a8a; }
+.pillar-card-row[data-pillar="treatment-planning"] .pillar-card-name { color: #4a5a8a; }
+.pillar-card-row[data-pillar="treatment-planning"] .subtopic-chip { background: rgba(74,90,138,.10); color: #4a5a8a; }
+.pillar-card-row[data-pillar="treatment-planning"] .pillar-card-arrow { background: rgba(74,90,138,.10); border-color: rgba(74,90,138,.25); color: #4a5a8a; }
+[data-theme="dark"] .pillar-card-row[data-pillar="treatment-planning"] { border-color: rgba(125,140,192,.30); }
+[data-theme="dark"] .pillar-card-row[data-pillar="treatment-planning"]:hover { border-color: rgba(125,140,192,.45); }
+[data-theme="dark"] .pillar-card-row[data-pillar="treatment-planning"] .pillar-card-icon { color: #7d8cc0; }
+[data-theme="dark"] .pillar-card-row[data-pillar="treatment-planning"] .pillar-card-name { color: #7d8cc0; }
+[data-theme="dark"] .pillar-card-row[data-pillar="treatment-planning"] .subtopic-chip { background: rgba(125,140,192,.18); color: #7d8cc0; }
+[data-theme="dark"] .pillar-card-row[data-pillar="treatment-planning"] .pillar-card-arrow { background: rgba(125,140,192,.15); border-color: rgba(125,140,192,.35); color: #7d8cc0; }
+
+/* Per-pillar accent — removable-pros uses terracotta in place of teal.
+   Same mechanism, same places as the default teal above; selectors
+   are scoped to [data-pillar="removable-pros"] so other cards stay teal.
+     light primary terracotta: #9c6644
+     dark primary terracotta:  #c08a63 */
+.pillar-card-row[data-pillar="removable-pros"] { border-color: rgba(156,102,68,.25); }
+.pillar-card-row[data-pillar="removable-pros"]:hover { border-color: rgba(156,102,68,.35); }
+.pillar-card-row[data-pillar="removable-pros"] .pillar-card-icon { color: #9c6644; }
+.pillar-card-row[data-pillar="removable-pros"] .pillar-card-name { color: #9c6644; }
+.pillar-card-row[data-pillar="removable-pros"] .subtopic-chip { background: rgba(156,102,68,.10); color: #9c6644; }
+.pillar-card-row[data-pillar="removable-pros"] .pillar-card-arrow { background: rgba(156,102,68,.10); border-color: rgba(156,102,68,.25); color: #9c6644; }
+[data-theme="dark"] .pillar-card-row[data-pillar="removable-pros"] { border-color: rgba(192,138,99,.30); }
+[data-theme="dark"] .pillar-card-row[data-pillar="removable-pros"]:hover { border-color: rgba(192,138,99,.45); }
+[data-theme="dark"] .pillar-card-row[data-pillar="removable-pros"] .pillar-card-icon { color: #c08a63; }
+[data-theme="dark"] .pillar-card-row[data-pillar="removable-pros"] .pillar-card-name { color: #c08a63; }
+[data-theme="dark"] .pillar-card-row[data-pillar="removable-pros"] .subtopic-chip { background: rgba(192,138,99,.18); color: #c08a63; }
+[data-theme="dark"] .pillar-card-row[data-pillar="removable-pros"] .pillar-card-arrow { background: rgba(192,138,99,.15); border-color: rgba(192,138,99,.35); color: #c08a63; }
 </style>
 
   <!-- Theme init verbatim from metanotes/index.html -->
@@ -350,9 +400,9 @@ body:has(.dc-topbar) .pillar-intro { background: transparent; border: 0; box-sha
       </section>
 
       <div class="pillar-index-stats">
-        <span class="pillar-index-stat-chip"><span class="stat-value">۶</span><span class="stat-label">موضوع</span></span>
-        <span class="pillar-index-stat-chip"><span class="stat-value">۳۵۵</span><span class="stat-label">مطلب</span></span>
-        <span class="pillar-index-stat-chip"><span class="stat-value">۲۹</span><span class="stat-label">زیرموضوع</span></span>
+        <span class="pillar-index-stat-chip"><span class="stat-value">۸</span><span class="stat-label">موضوع</span></span>
+        <span class="pillar-index-stat-chip"><span class="stat-value">۳۸۲</span><span class="stat-label">مطلب</span></span>
+        <span class="pillar-index-stat-chip"><span class="stat-value">۳۵</span><span class="stat-label">زیرموضوع</span></span>
       </div>
     </div>
 
@@ -473,11 +523,11 @@ body:has(.dc-topbar) .pillar-intro { background: transparent; border: 0; box-sha
             <h2 class="pillar-card-name">ایمپلنتولوژی</h2>
           </div>
           <p class="pillar-card-subtitle">از استخوان تا روکش — یک قوس پیوسته</p>
-          <p class="pillar-card-meta">۱۱۰ مطلب · ۵ زیرموضوع</p>
+          <p class="pillar-card-meta">۱۰۷ مطلب · ۵ زیرموضوع</p>
           <ul class="pillar-card-subtopics">
           <li>
             <span class="subtopic-label">جراحی، جایگذاری و طرح درمان</span>
-            <span class="subtopic-chip">۲۵</span>
+            <span class="subtopic-chip">۲۲</span>
           </li>
           <li>
             <span class="subtopic-label">بیولوژی، حفظ استخوان و عوارض پری‌ایمپلنت</span>
@@ -556,6 +606,60 @@ body:has(.dc-topbar) .pillar-intro { background: transparent; border: 0; box-sha
           <li>
             <span class="subtopic-label">ونیر و لمینیت</span>
             <span class="subtopic-chip">۶</span>
+          </li>
+          </ul>
+        </div>
+        <div class="pillar-card-arrow" aria-hidden="true">
+          <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6"/></svg>
+        </div>
+      </a>
+      <a class="pillar-card-row" data-pillar="treatment-planning" href="/pillar/treatment-planning/">
+        <div class="pillar-card-body">
+          <div class="pillar-card-header">
+            <span class="pillar-card-icon" aria-hidden="true"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/> <path d="m16.24 7.76-2.12 6.36-6.36 2.12 2.12-6.36 6.36-2.12z"/></svg></span>
+            <h2 class="pillar-card-name">طرح درمان</h2>
+          </div>
+          <p class="pillar-card-subtitle">از تشخیص جامع تا تصمیمِ حفظ یا جایگزینی</p>
+          <p class="pillar-card-meta">۱۴ مطلب · ۳ زیرموضوع</p>
+          <ul class="pillar-card-subtopics">
+          <li>
+            <span class="subtopic-label">تشخیص جامع و طرح‌ریزی</span>
+            <span class="subtopic-chip">۵</span>
+          </li>
+          <li>
+            <span class="subtopic-label">حفظ یا کشیدن دندان</span>
+            <span class="subtopic-chip">۷</span>
+          </li>
+          <li>
+            <span class="subtopic-label">جایگزینیِ دندانِ ازدست‌رفته</span>
+            <span class="subtopic-chip">۲</span>
+          </li>
+          </ul>
+        </div>
+        <div class="pillar-card-arrow" aria-hidden="true">
+          <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6"/></svg>
+        </div>
+      </a>
+      <a class="pillar-card-row" data-pillar="removable-pros" href="/pillar/removable-pros/">
+        <div class="pillar-card-body">
+          <div class="pillar-card-header">
+            <span class="pillar-card-icon" aria-hidden="true"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6c0 8 3.2 13 8 13s8-5 8-13"/> <path d="M8 7c0 5.6 1.8 9 4 9s4-3.4 4-9"/> <path d="M5.2 9.3 8 8.3"/> <path d="M7.6 15.7 9.9 14.4"/> <path d="M12 18.4v-2.6"/> <path d="M16.4 15.7 14.1 14.4"/> <path d="M18.8 9.3 16 8.3"/></svg></span>
+            <h2 class="pillar-card-name">پروتز متحرک</h2>
+          </div>
+          <p class="pillar-card-subtitle">از اوردنچر و دنچر کامل تا اسنپ‌آن اسمایل</p>
+          <p class="pillar-card-meta">۱۶ مطلب · ۳ زیرموضوع</p>
+          <ul class="pillar-card-subtopics">
+          <li>
+            <span class="subtopic-label">اوردنچرِ متکی بر ایمپلنت</span>
+            <span class="subtopic-chip">۷</span>
+          </li>
+          <li>
+            <span class="subtopic-label">دنچر کامل</span>
+            <span class="subtopic-chip">۳</span>
+          </li>
+          <li>
+            <span class="subtopic-label">اسنپ‌آن اسمایل</span>
+            <span class="subtopic-chip">۴</span>
           </li>
           </ul>
         </div>
