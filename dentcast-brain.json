@@ -456,7 +456,7 @@
     ],
     "page_url": "/episodes/episode-22.html",
     "pillar": {
-      "primary": "oral-medicine",
+      "primary": null,
       "secondary": [],
       "subtopic": null
     }
@@ -2456,7 +2456,7 @@
     ],
     "page_url": "/episodes/episode-110-1.html",
     "pillar": {
-      "primary": "radiology",
+      "primary": null,
       "secondary": [],
       "subtopic": null
     }
@@ -2504,7 +2504,7 @@
     ],
     "page_url": "/episodes/episode-111-1.html",
     "pillar": {
-      "primary": "pediatric",
+      "primary": null,
       "secondary": [],
       "subtopic": null
     }
@@ -5484,9 +5484,9 @@
     ],
     "page_url": "/photocast/episode-3.html",
     "pillar": {
-      "primary": "pediatric",
+      "primary": "treatment-planning",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "extraction-vs-preservation"
     }
   },
   {
@@ -6262,7 +6262,7 @@
     ],
     "url": "/notecast/episode-22.html",
     "pillar": {
-      "primary": "oral-medicine",
+      "primary": null,
       "secondary": [],
       "subtopic": null
     }
@@ -6624,9 +6624,9 @@
     ],
     "page_url": "/insight/insight-19.html",
     "pillar": {
-      "primary": "ortho",
+      "primary": "treatment-planning",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "replacing-missing-teeth"
     }
   },
   {
@@ -7779,9 +7779,9 @@
     ],
     "page_url": "/chairside/chairside-2.html",
     "pillar": {
-      "primary": "ortho",
+      "primary": "treatment-planning",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "replacing-missing-teeth"
     }
   },
   {
