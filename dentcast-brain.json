@@ -822,9 +822,9 @@
     ],
     "page_url": "/episodes/episode-40.html",
     "pillar": {
-      "primary": "endo",
+      "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "crowns-onlays"
     }
   },
   {
@@ -842,9 +842,9 @@
     ],
     "page_url": "/episodes/episode-41.html",
     "pillar": {
-      "primary": "endo",
+      "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "crowns-onlays"
     }
   },
   {
@@ -5041,9 +5041,9 @@
     ],
     "page_url": "/insight/insight-11.html",
     "pillar": {
-      "primary": "endo",
+      "primary": "treatment-planning",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "comprehensive-diagnosis"
     }
   },
   {
@@ -6427,9 +6427,9 @@
     ],
     "page_url": "/metanotes/meta-1.html",
     "pillar": {
-      "primary": "perio",
+      "primary": "treatment-planning",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "extraction-vs-preservation"
     }
   },
   {
@@ -7876,9 +7876,9 @@
     ],
     "page_url": "/chairside/chairside-4.html",
     "pillar": {
-      "primary": "endo",
+      "primary": "treatment-planning",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "extraction-vs-preservation"
     }
   },
   {
@@ -8320,9 +8320,9 @@
     ],
     "page_url": "/metanotes/meta-11.html",
     "pillar": {
-      "primary": "endo",
+      "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "post-and-core"
     }
   },
   {
@@ -8682,9 +8682,9 @@
     ],
     "page_url": "/chairside/chairside-7.html",
     "pillar": {
-      "primary": "perio",
+      "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "failures"
     }
   },
   {
@@ -9226,9 +9226,9 @@
     ],
     "page_url": "/chairside/chairside-14.html",
     "pillar": {
-      "primary": "perio",
+      "primary": "treatment-planning",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "extraction-vs-preservation"
     }
   },
   {
