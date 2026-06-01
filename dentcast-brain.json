@@ -295,7 +295,7 @@
     "pillar": {
       "primary": "occlusion",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "vertical-dimension"
     }
   },
   {
@@ -722,7 +722,7 @@
     "pillar": {
       "primary": "occlusion",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "tooth-wear-dahl"
     }
   },
   {
@@ -1757,7 +1757,7 @@
     "pillar": {
       "primary": "occlusion",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "tmd-orofacial-pain"
     }
   },
   {
@@ -1780,7 +1780,7 @@
     "pillar": {
       "primary": "occlusion",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "tmd-orofacial-pain"
     }
   },
   {
@@ -3078,7 +3078,7 @@
     "pillar": {
       "primary": "occlusion",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "occlusal-analysis-adjustment"
     }
   },
   {
@@ -3341,7 +3341,7 @@
     "pillar": {
       "primary": "occlusion",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "tooth-wear-dahl"
     }
   },
   {
@@ -3553,7 +3553,7 @@
     "pillar": {
       "primary": "occlusion",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "occlusal-scheme-guidance"
     }
   },
   {
@@ -3577,7 +3577,7 @@
     "pillar": {
       "primary": "occlusion",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "occlusal-scheme-guidance"
     }
   },
   {
@@ -3813,7 +3813,7 @@
     "pillar": {
       "primary": "occlusion",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "tmd-orofacial-pain"
     }
   },
   {
@@ -3836,7 +3836,7 @@
     "pillar": {
       "primary": "occlusion",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "tmd-orofacial-pain"
     }
   },
   {
@@ -3884,7 +3884,7 @@
     "pillar": {
       "primary": "occlusion",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "tmd-orofacial-pain"
     }
   },
   {
@@ -3956,7 +3956,7 @@
     "pillar": {
       "primary": "occlusion",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "tmd-orofacial-pain"
     }
   },
   {
@@ -4705,7 +4705,7 @@
     "pillar": {
       "primary": "occlusion",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "occlusal-analysis-adjustment"
     }
   },
   {
@@ -4873,7 +4873,7 @@
     "pillar": {
       "primary": "occlusion",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "vertical-dimension"
     }
   },
   {
@@ -4941,7 +4941,7 @@
     "pillar": {
       "primary": "occlusion",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "occlusal-analysis-adjustment"
     }
   },
   {
@@ -5076,7 +5076,7 @@
     "pillar": {
       "primary": "occlusion",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "vertical-dimension"
     }
   },
   {
@@ -5453,7 +5453,7 @@
     "pillar": {
       "primary": "occlusion",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "occlusal-analysis-adjustment"
     }
   },
   {
@@ -5543,7 +5543,7 @@
     "pillar": {
       "primary": "occlusion",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "occlusal-analysis-adjustment"
     }
   },
   {
@@ -5994,7 +5994,7 @@
     "pillar": {
       "primary": "occlusion",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "vertical-dimension"
     }
   },
   {
@@ -7751,7 +7751,7 @@
     "pillar": {
       "primary": "occlusion",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "vertical-dimension"
     }
   },
   {
@@ -8006,7 +8006,7 @@
     "pillar": {
       "primary": "occlusion",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "occlusal-scheme-guidance"
     }
   },
   {
@@ -8204,7 +8204,7 @@
     "pillar": {
       "primary": "occlusion",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "vertical-dimension"
     }
   },
   {
@@ -8265,7 +8265,7 @@
     "pillar": {
       "primary": "occlusion",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "occlusal-scheme-guidance"
     }
   },
   {
@@ -9065,7 +9065,7 @@
     ],
     "url": "/notecast/episode-33.html",
     "pillar": {
-      "primary": "occlusion",
+      "primary": "removable-pros",
       "secondary": [],
       "subtopic": null
     }
@@ -9428,7 +9428,7 @@
     "pillar": {
       "primary": "occlusion",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "occlusal-scheme-guidance"
     }
   },
   {
@@ -9501,7 +9501,7 @@
     "url": "/sharehub/share-6.html",
     "pillar": {
       "primary": "esthetic",
-      "secondary": [],
+      "secondary": ["occlusion"],
       "subtopic": null
     }
   },
@@ -9634,7 +9634,7 @@
     "pillar": {
       "primary": "occlusion",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "tooth-wear-dahl"
     }
   },
   {
