@@ -2625,7 +2625,7 @@
     "pillar": {
       "primary": "treatment-planning",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "comprehensive-diagnosis"
     }
   },
   {
@@ -2649,7 +2649,7 @@
     "pillar": {
       "primary": "treatment-planning",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "comprehensive-diagnosis"
     }
   },
   {
@@ -2673,7 +2673,7 @@
     "pillar": {
       "primary": "treatment-planning",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "comprehensive-diagnosis"
     }
   },
   {
@@ -2720,7 +2720,7 @@
     "pillar": {
       "primary": "treatment-planning",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "comprehensive-diagnosis"
     }
   },
   {
@@ -2742,9 +2742,9 @@
     ],
     "page_url": "/episodes/episode-119-1.html",
     "pillar": {
-      "primary": "implantology",
+      "primary": "treatment-planning",
       "secondary": [],
-      "subtopic": "surgical-planning"
+      "subtopic": "replacing-missing-teeth"
     }
   },
   {
@@ -2768,7 +2768,7 @@
     "pillar": {
       "primary": "treatment-planning",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "comprehensive-diagnosis"
     }
   },
   {
@@ -3198,7 +3198,7 @@
     "pillar": {
       "primary": "treatment-planning",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "extraction-vs-preservation"
     }
   },
   {
@@ -4433,9 +4433,9 @@
     ],
     "page_url": "/episodes/episode-150-2.html",
     "pillar": {
-      "primary": "implantology",
+      "primary": "treatment-planning",
       "secondary": [],
-      "subtopic": "surgical-planning"
+      "subtopic": "extraction-vs-preservation"
     }
   },
   {
@@ -4458,7 +4458,7 @@
     "pillar": {
       "primary": "treatment-planning",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "extraction-vs-preservation"
     }
   },
   {
@@ -5109,7 +5109,7 @@
     "pillar": {
       "primary": "treatment-planning",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "extraction-vs-preservation"
     }
   },
   {
@@ -6601,9 +6601,9 @@
     ],
     "page_url": "/metanotes/meta-6.html",
     "pillar": {
-      "primary": "implantology",
+      "primary": "treatment-planning",
       "secondary": [],
-      "subtopic": "surgical-planning"
+      "subtopic": "extraction-vs-preservation"
     }
   },
   {
@@ -6857,7 +6857,7 @@
     "pillar": {
       "primary": "treatment-planning",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "extraction-vs-preservation"
     }
   },
   {
@@ -6961,7 +6961,7 @@
     ],
     "page_url": "/litecast/lite-CAST11.html",
     "pillar": {
-      "primary": "treatment-planning",
+      "primary": null,
       "secondary": [],
       "subtopic": null
     }
@@ -7466,7 +7466,7 @@
     "pillar": {
       "primary": "treatment-planning",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "extraction-vs-preservation"
     }
   },
   {
@@ -7848,7 +7848,7 @@
     "pillar": {
       "primary": "treatment-planning",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "replacing-missing-teeth"
     }
   },
   {
