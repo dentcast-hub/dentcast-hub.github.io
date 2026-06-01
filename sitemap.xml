@@ -1507,6 +1507,12 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://dentcast.org/glossary/abutment.html</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://dentcast.org/glossary/activator.html</loc>
     <lastmod>2026-01-05</lastmod>
     <changefreq>monthly</changefreq>
@@ -1521,6 +1527,12 @@
   <url>
     <loc>https://dentcast.org/glossary/biological-width.html</loc>
     <lastmod>2026-05-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dentcast.org/glossary/biomimetic-dentistry.html</loc>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -1753,6 +1765,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://dentcast.org/glossary/osseointegration.html</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://dentcast.org/glossary/oxygen-inhibition-layer.html</loc>
     <lastmod>2026-01-08</lastmod>
     <changefreq>monthly</changefreq>
@@ -1791,6 +1809,12 @@
   <url>
     <loc>https://dentcast.org/glossary/polycrystalline-ceramics.html</loc>
     <lastmod>2026-02-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dentcast.org/glossary/post-and-core.html</loc>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -1905,6 +1929,12 @@
   <url>
     <loc>https://dentcast.org/glossary/ti-base.html</loc>
     <lastmod>2026-05-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dentcast.org/glossary/tmd.html</loc>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
