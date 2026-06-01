@@ -7,10 +7,10 @@
 3. **New entries go to the absolute END of the flat `dentcast-brain.json` array.** The latest-content widget reads the last 30 entries across all types, so physical tail position is what matters. The brain is a single flat array (no per-type sections) — the new entry becomes the last element of the whole file, regardless of type.
 4. **Auto-discover first, ask second.** Only ask the user for things you cannot infer.
 5. **Don't invent fields.** A new brain entry must have the same keys as previous same-category entries — no more, no less.
-6. **Pillar is set at entry creation; never re-decided later.** Every entry's `pillar` object is populated when the brain entry is built (step 5). The classification phase (step 5.5) reads that pillar — it does NOT re-classify, re-guess, or overwrite it under any circumstance.
-7. **Structured-pillar list is live, never hardcoded.** Only some pillars are *structured* — meaning `tools/build_pillar.py` generates a topical-index page for them. The structured set grows over time and MUST be read live from `PILLARS` in `tools/build_pillar.py` on every run. Subtopics are meaningful only for structured pillars; non-structured pillars get no subtopic. Do NOT bake pillar slugs, subtopic slugs, or Persian titles into this workflow. A new subtopic is created only on explicit user confirmation; a new pillar is never created in step 5.5.
+6. **Pillar & subtopic are determined semantically, confirmed by the user, then never silently re-decided.** Both are decided **once, up front** in the semantic determination step (**step 2.4**), *before* any step consumes them — the «کاوش بیشتر»/«محتوای مرتبط» pillar capsule (step 2.5) and the brain write (step 5). `pillar.primary` is chosen by a genuinely **semantic** match between the new content and the **live pillar set** (the pillars listed on `/pillar/` = `list(PILLARS.keys())`); when that pillar is **structured**, `pillar.subtopic` is chosen by a semantic match against that pillar's **own** subtopics. Matching is conceptual — **never** keyword/string matching. Each pick is **proposed to the user and only written after explicit confirmation** (the user may override or choose none). Once confirmed and written, the brain write (step 5) and the verify step (step 5.5) **record and verify** the decision — they do NOT re-classify, re-guess, or overwrite it under any circumstance.
+7. **Structured-pillar list is live, never hardcoded.** Only some pillars are *structured* — meaning `tools/build_pillar.py` generates a topical-index page for them. The structured set grows over time and MUST be read live from `PILLARS` in `tools/build_pillar.py` on every run. Subtopics are meaningful only for structured pillars; non-structured pillars get no subtopic. Do NOT bake pillar slugs, subtopic slugs, or Persian titles into this workflow. A new subtopic is created only on explicit user confirmation; a new pillar is never created in the determination step (step 2.4).
 8. **`main` is authoritative for taxonomy and builders.** The authoritative source for pillars/subtopics — and for the build scripts in general — is always the `main` branch. Before reading `PILLARS` or running any builder, ensure the working state reflects `main` (run from `main`, or merge `main` into the working branch first). Never trust a feature branch's `tools/build_pillar.py` as the taxonomy source of truth.
-9. **Hard cap of 5 links per "کاوش بیشتر" section.** Any single "کاوش بیشتر" section may contain **at most 5 links total** — an absolute ceiling counting *every* link of *every* kind in that section together: the site-wide capsules (دانشنامه, فهرست موضوعی), glossary back-links, semantic brain-entry links — all share **one budget of 5**. There are **no** separate per-type quotas. Before any step adds a link, it must **count the links already present**; if the section already has 5 or more, that step adds nothing and skips; if fewer, it may add only up to `(5 − current count)`, choosing its highest-priority candidates first. Insertion order across steps matters because of the shared budget: the site-wide capsules (step 2.5) are placed first and consume their slots, and later steps (step 4.7 on glossary pages, step 4.9 on the new page) fill only whatever remains. **Only add within the remaining budget — never remove, reorder, or restyle existing links to make room.** If there's no room, skip. Every step that touches a "کاوش بیشتر" section (2.5, 4.7, 4.9) defers to this single rule.
+9. **Hard cap of 5 links per "کاوش بیشتر" section.** Any single "کاوش بیشتر" section may contain **at most 5 links total** — an absolute ceiling counting *every* link of *every* kind in that section together: the nav capsules (دانشنامه + فهرست موضوعی — the دانشنامه capsule is sitewide `/glossary/`, the فهرست موضوعی capsule now points to the entry's **own** pillar `/pillar/<pillar.primary>/`), glossary back-links, semantic brain-entry links — all share **one budget of 5**. There are **no** separate per-type quotas. Before any step adds a link, it must **count the links already present**; if the section already has 5 or more, that step adds nothing and skips; if fewer, it may add only up to `(5 − current count)`, choosing its highest-priority candidates first. Insertion order across steps matters because of the shared budget: the nav capsules (step 2.5) are placed first and consume their slots, and later steps (step 4.7 on glossary pages, step 4.9 on the new page) fill only whatever remains. **Only add within the remaining budget — never remove, reorder, or restyle existing links to make room.** If there's no room, skip. Every step that touches a "کاوش بیشتر" section (2.5, 4.7, 4.9) defers to this single rule.
 10. **LiteCast is an isolated track.** LiteCast is non-specialist (general-audience) content governed by its **own** source of truth (`litecast/lite-glossary.json`, not `dentcast-brain.json`) and its **own** internal link structure. It is deliberately kept **separate** from the *specialist* ecosystem and must **not** be cross-linked with it in either direction — but it **does** link **among its own items**: a LiteCast page's **«کاوش بیشتر»** section is populated **only** with links to other LiteCast entries (never the site-wide دانشنامه / فهرست موضوعی capsules, never glossary terms, never brain entries). When the locked category is LiteCast, the Phase C **step 0 branch** overrides the corresponding general steps (it skips the site-wide *specialist* capsules and all specialist cross-linking, fills «کاوش بیشتر» with LiteCast-internal links per **step 0.6**, and writes the entry to `litecast/lite-glossary.json` only). See Phase C step 0.
 
 ## Phase A — Discover
@@ -25,7 +25,7 @@ Before asking the user anything other than "what type is this":
    - Which media fields the type uses: text body, image, audio, video link, external link, transcript, etc.
    - Whether previous entries link to a page file on disk (e.g., `/notecast/episode-33.html`) — if yes, that page is the structural HTML template.
 4. For NoteCast type specifically, the workflow must also touch the matching parent episode page in `/episodes/` to add a related-content link back to the new NoteCast.
-5. Read the **live structured-pillar set** at runtime — never from memory and never from a list written into this workflow. Authoritative source: the `PILLARS` dict in `tools/build_pillar.py`. Its keys are the slugs of the pillars that get a built topical-index page, and `PILLARS[slug]['subtopics']` is the live subtopic list for each. Re-derive on every run so newly structured pillars are picked up automatically. A practical one-liner: `python -c "import sys; sys.path.insert(0,'tools'); from build_pillar import PILLARS; import json; print(json.dumps({k:[s['slug'] for s in v['subtopics']] for k,v in PILLARS.items()}, ensure_ascii=False))"`. The entry's pillar itself (`pillar.primary`) is set during brain-entry creation, not in the classification phase.
+5. Read the **live structured-pillar set** at runtime — never from memory and never from a list written into this workflow. Authoritative source: the `PILLARS` dict in `tools/build_pillar.py`. Its keys are the slugs of the pillars that get a built topical-index page, and `PILLARS[slug]['subtopics']` is the live subtopic list for each. Re-derive on every run so newly structured pillars are picked up automatically. A practical one-liner: `python -c "import sys; sys.path.insert(0,'tools'); from build_pillar import PILLARS; import json; print(json.dumps({k:[s['slug'] for s in v['subtopics']] for k,v in PILLARS.items()}, ensure_ascii=False))"`. The entry's pillar (`pillar.primary`) and — when that pillar is structured — its `subtopic` are decided up front in the semantic determination step (**step 2.4**), *before* the page capsules (step 2.5) and the brain write (step 5) consume them.
 
 ## Phase B — Intake
 
@@ -90,7 +90,7 @@ Run, in order:
 - The file is a JSON **object** whose entries live under the top-level **`LightGlossary`** key — an array of LiteCast entries (despite the filename, this is LiteCast *content*, not a glossary of terms). The current entry shape is `type` (`"litecast"`), `id` (`litecast-N`), `title`, `caption`, `hashtags`, `keywords`, `page_url` (a path like `litecast/lite-CAST-N.html`). There is **no** `pillar` field — confirm the live shape from the file rather than trusting this list.
 - Infer **all** LiteCast structure from `litecast/lite-glossary.json`: required fields, schema shape, directory/URL pattern, and media requirements. Read it the way Phase A reads the brain — find the **most recent** entry in `LightGlossary` and use it as both the **schema** and **structural** template.
 - The new LiteCast entry is **appended to the `LightGlossary` array** in `litecast/lite-glossary.json`, matching its format **exactly** (identical keys/nesting/ordering to the previous entry — no extra fields, no missing fields).
-- Do **NOT** add a LiteCast entry to `dentcast-brain.json`. This replaces the normal step 5 brain-entry write (and its step 5.5 pillar classification — see 0.4).
+- Do **NOT** add a LiteCast entry to `dentcast-brain.json`. This replaces the normal step 5 brain-entry write (and the step 2.4 pillar/subtopic determination — see 0.4).
 
 **0.2 — Isolation: no cross-linking with specialist content.** This is the core of LiteCast's separateness. For a LiteCast publish, **skip these steps entirely**:
 - **Step 2.5** (site-wide capsule block) — do **NOT** inject the دانشنامه / فهرست موضوعی capsules on LiteCast pages; those point into the specialist ecosystem. LiteCast is a **SKIP** case for the *specialist* capsules in the step 2.5 conditional. **The «کاوش بیشتر» section itself is NOT skipped or left empty, though** — it is filled with **LiteCast-internal** capsule links instead, per **step 0.6**.
@@ -106,7 +106,7 @@ The rule is symmetric: the rest of the site must not link **to** LiteCast, and L
 - **Step 1 & Step 4** (template lock + integrity hash) — against the previous LiteCast page.
 - **Step 2** (build the new page) — clone the previous LiteCast page; per 0.3.
 - **Step 3** (date / meta audit) — runs normally.
-- **Step 5 / 5.5** — replaced by 0.1: the entry goes to `litecast/lite-glossary.json` only. LiteCast lives **outside** the specialist pillar taxonomy, so do **not** assign a specialist pillar/subtopic and do **not** pull from the `PILLARS` taxonomy; fill a pillar-like field only if `litecast/lite-glossary.json`'s own schema has one, per its own convention.
+- **Step 2.4 (determination) and Step 5 / 5.5** — replaced by 0.1: the entry goes to `litecast/lite-glossary.json` only, and step 2.4 is **skipped**. LiteCast lives **outside** the specialist pillar taxonomy, so do **not** assign a specialist pillar/subtopic and do **not** pull from the `PILLARS` taxonomy; fill a pillar-like field only if `litecast/lite-glossary.json`'s own schema has one, per its own convention.
 - **Step 6** (Pulse) — follow the existing Pulse convention for this type (including the «این نوع معمولاً تو پالس اعلان نمی‌شه — مطمئنی می‌خوای؟» check from Phase B Question 5 if LiteCast isn't customarily announced).
 - **Step 0.6** (LiteCast «کاوش بیشتر» internal links) — the LiteCast counterpart of step 4.9: populate the new page's «کاوش بیشتر» section with capsule links to other LiteCast items only. Replaces the skipped step 2.5 specialist capsules.
 - **Step 7** (cache-bust) and **Step 8** (rebuild) — run, keyed to LiteCast's own files.
@@ -176,20 +176,64 @@ Clone the previous same-category page exactly — identical HTML tree, CSS class
 
 If the category has no on-disk page (data-only), skip this and go to step 4.
 
+### 2.4. Semantic pillar & subtopic determination (propose + confirm)
+
+Decide the entry's `pillar.primary` and — when that pillar is structured — its `pillar.subtopic` **here, once**, before any step consumes them (the pillar capsule in step 2.5, and the brain write in step 5). Per **Hard Rule 6**, this is the **only** place the decision is made; later steps (5, 5.5) record and verify it but never re-decide it. Matching is genuinely **semantic** (conceptual relevance of the new content), **never** keyword/string matching.
+
+**LiteCast exception:** LiteCast lives outside the specialist pillar taxonomy — **skip this step entirely** for LiteCast (see Phase C step 0). It assigns no specialist pillar/subtopic.
+
+#### Step 1 — Read the live taxonomy (from a state that reflects `main`)
+
+Per **Hard Rules 7 & 8**, read the live structured-pillar set at runtime from `tools/build_pillar.py`'s `PILLARS` dict (never a baked copy), from a working state that reflects `main`. The pillar slugs shown on the `/pillar/` page are exactly `list(PILLARS.keys())`, each with its Persian title (`PILLARS[slug]['title_fa']`) and its live subtopic list (`PILLARS[slug]['subtopics']`, each `{"slug": ..., "title_fa": ..., ...}`). One-liner:
+
+```bash
+python -c "import sys; sys.path.insert(0,'tools'); from build_pillar import PILLARS; import json; print(json.dumps({k:[s['slug'] for s in v['subtopics']] for k,v in PILLARS.items()}, ensure_ascii=False))"
+```
+
+#### Step 2 — Semantically pick the pillar (propose, then confirm)
+
+Compare the **conceptual subject** of the new content against each pillar in the live set and choose the single best-matching `pillar.primary`. Present it as a recommendation, with the full pillar list available so the user can override:
+
+> با توجه به محتوا، پیلار پیشنهادی: «[PILLARS[pick]['title_fa']]» (`[pick]`).
+> پیلارهای موجود: [title_fa فهرست همه‌ی پیلارها]. کدوم درسته؟ (یا «هیچ‌کدوم» اگه این مطلب پیلار مشخصی نمی‌خواد.)
+
+- **User confirms / picks another** → use that slug **exactly** as it appears in `PILLARS` (same spelling/format, no normalization).
+- **User says none** → `pillar.primary` stays `null`; **skip Step 3** (no subtopic). The فهرست موضوعی capsule in step 2.5 then falls back to the sitewide `/pillar/`.
+
+**Do NOT write anything to the brain without explicit confirmation.**
+
+#### Step 3 — Semantically pick the subtopic (structured pillars only, propose then confirm)
+
+- **Confirmed pillar is NOT structured** (`pillar.primary not in PILLARS`) → there is no subtopic. `pillar.subtopic` stays `null` (the key is still present). Tell the user:
+  > پیلار «[X]» فعلاً جزو پیلارهای ساختاریافته نیست — ساب‌تاپیک خالی می‌مونه، بعداً دستی اضافه‌ش کن.
+- **Confirmed pillar IS structured** → semantically compare the content against `PILLARS[primary]['subtopics']`, choose the best match, and present it as a recommendation with the full list to override (live `title_fa`, never hardcoded):
+  > پیلار: «[PILLARS[primary]['title_fa']]». ساب‌تاپیک پیشنهادی: «[best['title_fa']]».
+  > ساب‌تاپیک‌های موجود این پیلار:
+  > 1. [subtopics[0]['title_fa']]
+  > 2. [subtopics[1]['title_fa']]
+  > … N. پیشنهاد یه ساب‌تاپیک جدید
+  > کدوم؟
+  - **User picks an existing subtopic** → use its slug **exactly** as stored in `PILLARS[primary]['subtopics'][i]['slug']` (no re-casing, no normalization).
+  - **User picks "new"** → propose slug + `title_fa` in the same style as that pillar's existing subtopics (kebab-case English slug, short Persian noun phrase — match the siblings). Flag it **NEW** and get explicit confirmation. Once confirmed, add it to `PILLARS[primary]['subtopics']` in `tools/build_pillar.py`, copying the exact shape of an existing sibling subtopic — do not improvise the schema. **A new pillar is never created here.**
+
+#### Step 4 — Hold the confirmed values
+
+Hold the confirmed `pillar.primary` and `pillar.subtopic` for the rest of the run. Step 2.5 uses `pillar.primary` for the capsule `href`; step 5 writes both into the brain entry; step 5.5 only verifies them. Do not re-decide them anywhere downstream.
+
 ### 2.5. Inject the "کاوش بیشتر" capsule section (site-wide nav)
 
-After the new page is cloned and field values are swapped (step 2), inject the site-wide "کاوش بیشتر" block on the **new** page. This is separate from step 4.5, which mutates a different page (the parent episode) and uses the per-episode `ep-*` classes; this step always uses the site-wide `dc-related-*` classes defined in `dc-theme.css`.
+After the new page is cloned and field values are swapped (step 2), add the "کاوش بیشتر" / pillar-link block on the **new** page, using the pillar confirmed in step 2.4. This is separate from step 4.5, which mutates a different page (the parent episode). For typed-brain and glossary pages this step uses the site-wide `dc-related-*` capsule classes defined in `dc-theme.css`; for the **Episode branch** it instead uses the page's existing `ep-related-link` markup inside «محتوای مرتبط» (see the Episode branch below).
 
 **Conditional — based on the locked category from Phase B Question 1:**
 
 | Locked category source | What goes in the section |
 |---|---|
-| Typed brain entry (any entry in `dentcast-brain.json` with a `type` field — NoteCast, Insight, Clinical, Chairside, DentAI, MetaNote, PhotoCast, ShareHub, DentCast+, DentCast, …) | **Both** capsules: دانشنامه + فهرست موضوعی |
-| Glossary term page (sourced from `glossary/glossary.json`, not from the brain) | **Only** the فهرست موضوعی capsule |
-| Core podcast episode (no `type` field — `/episodes/episode-XX.html`) | **Skip** entirely. Do NOT add this section to core episode pages. |
+| Typed brain entry (any entry in `dentcast-brain.json` with a `type` field — NoteCast, Insight, Clinical, Chairside, DentAI, MetaNote, PhotoCast, ShareHub, DentCast+, DentCast, …) | **Both** capsules: دانشنامه + فهرست موضوعی (the فهرست موضوعی capsule points to the entry's own pillar — see below) |
+| Glossary term page (sourced from `glossary/glossary.json`, not from the brain) | **Only** the فهرست موضوعی capsule (pointing to the term's own pillar) |
+| Core podcast episode (no `type` field — `/episodes/episode-XX.html`) | **No `dc-related-section`.** Instead add the pillar link into the episode's existing «محتوای مرتبط» (`ep-section`) block using `ep-related-link` — see the **Episode branch** below. |
 | **LiteCast** (isolated track — see Phase C step 0) | **Skip the specialist capsules** (دانشنامه / فهرست موضوعی point into the specialist ecosystem; LiteCast must not link into it). The «کاوش بیشتر» section itself is **kept** and filled with **LiteCast-internal** capsule links instead — see step 0.6. |
 
-The conditional is binary skip-or-include, decided by where the locked category came from. The capsule link targets are **fixed sitewide** (`/glossary/` and `/pillar/`) — never per-pillar, never per-subtopic, no dependency on `pillar.primary` or `pillar.subtopic`.
+The conditional is decided by where the locked category came from. **Capsule link targets:** the دانشنامه capsule is **fixed sitewide** (`/glossary/`). The فهرست موضوعی capsule, by contrast, points to the entry's **own** pillar — `href="/pillar/<pillar.primary>/"` — using the **canonical pillar-page format**: lowercase slug, **trailing slash, no `index.html`**, matching that pillar page's own `<link rel="canonical">` (e.g. `https://dentcast.org/pillar/fixed-pros/` → internal link `/pillar/fixed-pros/`). `pillar.primary` is the value **confirmed in step 2.4**. The link targets the pillar **root**, not a subtopic anchor. **Fallback:** if `pillar.primary` is `null` (no pillar confirmed) or not a real pillar slug, the فهرست موضوعی capsule falls back to the sitewide `/pillar/` landing page. (This per-pillar target is the established site convention.)
 
 **Markup to inject** (use the global classes — NOT `ep-*`, which are inlined per-episode and not styled on other page types):
 
@@ -198,12 +242,19 @@ The conditional is binary skip-or-include, decided by where the locked category 
   <h2 class="dc-related-label">کاوش بیشتر</h2>
   <div class="dc-related-capsules">
     <a href="/glossary/" class="dc-related-capsule">دانشنامه</a>
-    <a href="/pillar/" class="dc-related-capsule">فهرست موضوعی</a>
+    <a href="/pillar/<pillar.primary>/" class="dc-related-capsule">فهرست موضوعی</a>
   </div>
 </div>
 ```
 
-For glossary term pages, omit the first `<a>` (the دانشنامه capsule) — they ARE the glossary.
+For glossary term pages, omit the first `<a>` (the دانشنامه capsule) — they ARE the glossary. The فهرست موضوعی capsule still points to the term's own pillar (`/pillar/<pillar.primary>/`), same canonical format and fallback as above.
+
+**Episode branch (core podcast episodes — the «محتوای مرتبط» case).** Core episodes do **not** get a `dc-related-section`. Instead, add the pillar link into the episode page's existing **«محتوای مرتبط»** block — the `ep-section` whose label is `<h2 class="ep-section-label">محتوای مرتبط</h2>`. Use the **same `ep-related-link` markup/classes already used in that block** (the same style as the NoteCast link, e.g. `<a href="…" class="ep-related-link">…</a>`) — **not** `dc-related-capsule` — so it stays visually consistent with the rest of that section. Only the `href` and label differ:
+
+- `href="/pillar/<pillar.primary>/"` — same canonical pillar-page format (trailing slash, no `index.html`) and same `null`/unknown fallback rule as above; here, if `pillar.primary` is `null`, **skip** the episode pillar link entirely (there is no specific pillar to point to).
+- Label: a short pillar label in the register of the sibling links, e.g. «فهرست موضوعی: [PILLARS[primary]['title_fa']]».
+
+Add it **once**; if the «محتوای مرتبط» block already links to that pillar, leave it and just confirm. If the episode has no «محتوای مرتبط» block at all, follow the same fallback the NoteCast flow uses (clone the block from the previous episode — see step 4.5) before adding the pillar link. Hash the episode page before/after; the only diff is the added pillar link.
 
 **Placement on the new page:** at the bottom of the main content area — after the body content and before any next/prev navigation or footer. If the cloned template already has a "کاوش بیشتر" section (rare for non-episode types — most don't), insert the capsules **into that existing section** alongside whatever's already there, rather than creating a duplicate. Never remove anything pre-existing in that section.
 
@@ -213,8 +264,9 @@ For glossary term pages, omit the first `<a>` (the دانشنامه capsule) —
 
 **Verify after injection:**
 - The section appears once on the new page (no duplicate).
-- The correct number of capsules is present for the locked category (2 for typed-brain, 1 for glossary, 0 specialist capsules for core episode and for LiteCast — but core episodes and LiteCast hit the skip branch for the *specialist* capsules, so those cases never reach this verification; LiteCast's «کاوش بیشتر» is instead filled with LiteCast-internal links and verified in step 0.6).
-- The page uses `dc-related-*` classes only — never `ep-*` — to avoid relying on episode-only inline styles.
+- The correct number of capsules is present for the locked category (2 for typed-brain, 1 for glossary, 0 specialist capsules for core episode and for LiteCast — but core episodes use the **Episode branch** (a single `ep-related-link` pillar link in «محتوای مرتبط») and LiteCast hits the skip branch for the *specialist* capsules, so neither reaches this `dc-related-section` verification; LiteCast's «کاوش بیشتر» is instead filled with LiteCast-internal links and verified in step 0.6).
+- The فهرست موضوعی capsule's `href` is `/pillar/<pillar.primary>/` in the canonical format (trailing slash, no `index.html`), with `pillar.primary` exactly the slug confirmed in step 2.4 — or the `/pillar/` fallback when no pillar was confirmed.
+- For the `dc-related-section` (typed-brain / glossary) the page uses `dc-related-*` classes only — never `ep-*`. For the **Episode branch** the opposite holds: the pillar link uses the existing `ep-related-link` markup of the «محتوای مرتبط» block, not `dc-related-capsule`.
 - The injection is the only diff vs the cloned template, beyond the swaps already specified in step 2.
 
 ### 2.6. Update the content type's landing/index page
@@ -380,7 +432,7 @@ Present the proposed additions to the user as a numbered list before editing. Fo
 
 **Schema templating stays category-locked, even though physical placement does not.** Match the locked category by its `type` field — or, for the core podcast episodes, by the **absence of a `type` field** (the 202 episode entries have no `type` key at all). Don't confuse "where to put it" (end of the whole array) with "what shape to give it" (the most recent same-category entry).
 
-Build the new entry with **identical keys, nesting, and ordering** as the previous same-category entry. Fill all fields based on new content + today's date + new URL — including the entire `pillar` object: `pillar.primary` (the assigned pillar slug), `pillar.secondary` (matches previous entries' shape — usually `[]`), and `pillar.subtopic` initialized to `null`. The `subtopic` key is **always present** under `pillar` (that is the brain's convention — never omit it). If the entry's pillar turns out to be structured, step 5.5 may overwrite `pillar.subtopic` with a real slug; if not, it stays `null`.
+Build the new entry with **identical keys, nesting, and ordering** as the previous same-category entry. Fill all fields based on new content + today's date + new URL — including the entire `pillar` object, using the values **confirmed in step 2.4**: `pillar.primary` (the confirmed pillar slug, or `null` if the user chose no pillar), `pillar.secondary` (matches previous entries' shape — usually `[]`), and `pillar.subtopic` (the confirmed subtopic slug for a structured pillar, otherwise `null`). The `subtopic` key is **always present** under `pillar` (that is the brain's convention — never omit it). Do **not** re-decide the pillar or subtopic here — just record exactly what step 2.4 confirmed; step 5.5 then verifies it.
 
 **Critical constraints:**
 - Do NOT add any field that doesn't exist on the previous same-category entry.
@@ -396,58 +448,20 @@ Re-read the file and confirm:
 - For episode entries: confirm **no `type` field was added**.
 - It's well-formed and contains no stale data from previous entries.
 
-### 5.5. Pillar & subtopic classification (dynamic)
+### 5.5. Verify the recorded pillar & subtopic
 
-The brain entry's `pillar` object is already written (step 5). The pillar is **not** re-decided here. The only thing this phase may change is `pillar.subtopic`, and only when the pillar is structured.
-
-#### Step 1 — Read the existing pillar (do not change it)
-
-Read `pillar.primary` from the new brain entry as it was just written in step 5. Treat it as authoritative. **Do NOT re-classify, re-guess, or overwrite it under any circumstance**, including if it looks wrong — that is a separate concern handled outside this workflow.
-
-#### Step 2 — Determine if that pillar is structured
-
-At runtime, read the live structured-pillar set from `tools/build_pillar.py`'s `PILLARS` dict (and any data file it reads). The structured set is exactly `list(PILLARS.keys())`. Read it live every time — never bake a copy into this workflow — so newly structured pillars are picked up automatically. **Per Hard Rule 8, read `PILLARS` only from a working state that reflects `main`** (run from `main`, or merge `main` into the working branch first). A feature branch's `tools/build_pillar.py` may be stale and must not be trusted as the taxonomy source. One-liner:
+The pillar and subtopic were **decided and confirmed in step 2.4** and **written into the brain entry in step 5**. This step only **verifies** them — it does **not** re-classify, re-guess, or overwrite anything (Hard Rule 6). Read the live `PILLARS` taxonomy (from a state that reflects `main`, per Hard Rule 8) to check the invariants:
 
 ```bash
 python -c "import sys; sys.path.insert(0,'tools'); from build_pillar import PILLARS; import json; print(json.dumps({k:[s['slug'] for s in v['subtopics']] for k,v in PILLARS.items()}, ensure_ascii=False))"
 ```
 
-Compare the entry's `pillar.primary` against this live structured list:
-
-- **Pillar IS structured** (`pillar.primary in PILLARS`) → go to Step 3.
-- **Pillar is NOT structured** → skip subtopic entirely. The brain convention is: the `subtopic` key remains present under `pillar` with value `null` (which is already how step 5 initialized it). Do NOT remove the key, do NOT invent a value, do NOT add a new key. Tell the user:
-  > پیلار «[X]» فعلاً جزو پیلارهای ساختاریافته نیست — ساب‌تاپیک خالی موند، بعداً دستی اضافه‌ش کن.
-  Then proceed to the rebuild step. Classification is done.
-
-#### Step 3 — Present subtopic options (structured pillars only)
-
-Look up the chosen pillar's current subtopics from the live taxonomy: `PILLARS[pillar.primary]['subtopics']`. Each is `{"slug": ..., "title_fa": ..., ...}`. Present them as a numbered choice list, using the live `title_fa` values (never hardcoded):
-
-> پیلار: «[PILLARS[primary]['title_fa']]»
-> ساب‌تاپیک‌های موجود این پیلار:
-> 1. [subtopics[0]['title_fa']]
-> 2. [subtopics[1]['title_fa']]
-> 3. [subtopics[2]['title_fa']]
-> …
-> N. پیشنهاد یه ساب‌تاپیک جدید
->
-> کدوم؟
-
-#### Step 4 — Resolve the choice
-
-- **User picks an existing subtopic** → use its slug **exactly** as stored in `PILLARS[primary]['subtopics'][i]['slug']`. Same spelling, spacing, format — no normalization, no re-casing.
-- **User picks "new"** → propose a new subtopic name (slug + `title_fa`) written in the same style and convention as that pillar's existing subtopics (look at the slugs already there — kebab-case English, short noun phrases — and match). Clearly flag it as **NEW**. Ask the user to confirm the wording or edit it. **Do not finalize a new subtopic without explicit confirmation.** Once confirmed, add it to `PILLARS[primary]['subtopics']` in `tools/build_pillar.py` (copy the shape of an existing sibling subtopic exactly — do not improvise the schema) before writing the brain entry.
-
-#### Step 5 — Write
-
-Write the confirmed subtopic slug into the brain entry's `pillar.subtopic` field, overwriting the `null` placeholder set in step 5. Use the **exact existing field name** — `pillar.subtopic` — and the **exact slug** chosen, with no extra keys added to the `pillar` object and no sibling keys (no `pillar_reasoning`, no `subtopic_reasoning`, no notes). The rest of the entry stays untouched.
-
-#### Verify after write
-
 Re-read the brain entry and confirm:
-- `pillar.primary` is **identical** to its value before this phase (untouched).
-- `pillar.subtopic` is either a valid subtopic slug for `pillar.primary` in the live `PILLARS` taxonomy (when the pillar is structured), or `null` (when the pillar is not structured) — and the `subtopic` key is present in both cases.
-- The entry's key set is **unchanged** from end-of-step-5 — no new top-level keys, no new keys under `pillar`.
+- `pillar.primary` is **identical** to the slug the user confirmed in step 2.4 (or `null` if they chose no pillar) — exact spelling/format, no normalization.
+- `pillar.subtopic` is either a valid subtopic slug for `pillar.primary` in the live `PILLARS` taxonomy (when the pillar is structured) or `null` (when the pillar is not structured, or no pillar was assigned) — and the `subtopic` key is **present** in every case.
+- The `pillar` object has **no extra keys** beyond the previous same-category entry's shape (no `pillar_reasoning`, no `subtopic_reasoning`, no notes), and the entry's overall key set is unchanged from end-of-step-5.
+- If a **new** subtopic was confirmed in step 2.4, confirm it was added to `PILLARS[primary]['subtopics']` in `tools/build_pillar.py` (sibling shape copied exactly) and that the brain entry uses that exact new slug.
+- The فهرست موضوعی capsule injected in step 2.5 (or the episode pillar link) points to `/pillar/<pillar.primary>/` consistent with this confirmed `pillar.primary` (or to the `/pillar/` fallback when it is `null`).
 
 ### 6. Pulse update
 
@@ -483,12 +497,13 @@ After the pillar builder finishes, verify:
 - Template page path + SHA-256 before/after (must match)
 - Media sources gathered (and which were auto-fetched vs asked)
 - Audit table after fixes (all OK)
-- "کاوش بیشتر" capsule injection (step 2.5): which branch fired (typed-brain → 2 capsules / glossary → 1 capsule / core episode → skipped); the exact `<div class="dc-related-section">…</div>` block inserted (or "skipped"); confirmation that `dc-related-*` classes were used (not `ep-*`) and that no other diff was introduced beyond step 2's swaps
+- Pillar & subtopic determination (step 2.4): the live pillar set read from `PILLARS`; the proposed-then-confirmed `pillar.primary` (or `null`); whether the pillar is structured; the proposed-then-confirmed `pillar.subtopic` (slug if structured, else `null`); whether a new subtopic was created (and user-confirmed)
+- "کاوش بیشتر" capsule injection (step 2.5): which branch fired (typed-brain → 2 capsules / glossary → 1 capsule / core episode → `ep-related-link` pillar link in «محتوای مرتبط»); the exact block inserted (or the episode `ep-related-link`); the فهرست موضوعی capsule's `href` = `/pillar/<pillar.primary>/` (canonical format) or the `/pillar/` fallback; confirmation that `dc-related-*` classes were used for the section (and `ep-related-link` for the episode branch) and that no other diff was introduced beyond step 2's swaps
 - Landing/index page (step 2.6): the type's landing page path (e.g. `/sharehub/index.html`); whether it's generated (regenerated by which builder) or hand-maintained (the exact link added and its position); confirmation it now links to the new entry exactly once
 - New brain entry (printed as it now exists at the end of the flat array) — confirmation that it's the last element, that its key set matches the previous same-category entry exactly, and (for episodes) that no `type` field was added
 - Pulse: which line was removed (the bottom one), and where the new line was inserted (one above the new bottom), with before/after diff
 - For NoteCast: parent episode page path; whether the related-content block existed already or was created; before/after hash of the parent episode page; diff of the inserted markup
-- Pillar/subtopic classification: the entry's `pillar.primary` (set in step 5, untouched in step 5.5); live structured-pillar set read from `PILLARS` at runtime; whether the pillar is structured or not; resulting `pillar.subtopic` (slug if structured, `null` if not); whether a new subtopic was added to `PILLARS` on this run (and confirmed by the user); confirmation that no new keys were added to the `pillar` object or as siblings, and that the `subtopic` key is present in both cases
+- Pillar/subtopic verification (step 5.5): confirmation that the recorded `pillar.primary` and `pillar.subtopic` are **identical** to what was confirmed in step 2.4 (untouched by steps 5/5.5); resulting `pillar.subtopic` (slug if structured, `null` if not); confirmation that no new keys were added to the `pillar` object or as siblings, that the `subtopic` key is present in every case, and that the step-2.5 capsule / episode pillar link is consistent with `pillar.primary`
 - Builder runs: each command + full stdout/stderr (`python tools/update-homepage-counters.py` and `python tools/build_pillar.py all`); confirmation that the new content appears in the regenerated pillar page when a structured pillar was assigned
 - Confirmation the new entry appears in the latest-content widget data
 - List of all modified file paths
