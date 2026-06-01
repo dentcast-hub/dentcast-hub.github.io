@@ -2827,6 +2827,18 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://dentcast.org/pillar/removable-pros/</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://dentcast.org/pillar/treatment-planning/</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://dentcast.org/sharehub/</loc>
     <lastmod>2025-12-24</lastmod>
     <changefreq>weekly</changefreq>
