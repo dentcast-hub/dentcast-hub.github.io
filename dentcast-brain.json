@@ -580,7 +580,7 @@
     "pillar": {
       "primary": "esthetic",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "smile-design"
     }
   },
   {
@@ -657,7 +657,7 @@
     ],
     "page_url": "/episodes/episode-32.html",
     "pillar": {
-      "primary": "esthetic",
+      "primary": "removable-pros",
       "secondary": [],
       "subtopic": null
     }
@@ -677,7 +677,7 @@
     ],
     "page_url": "/episodes/episode-33.html",
     "pillar": {
-      "primary": "esthetic",
+      "primary": "removable-pros",
       "secondary": [],
       "subtopic": null
     }
@@ -805,7 +805,7 @@
     "pillar": {
       "primary": "esthetic",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "veneers-laminates"
     }
   },
   {
@@ -948,7 +948,7 @@
     "pillar": {
       "primary": "esthetic",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "smile-design"
     }
   },
   {
@@ -1252,7 +1252,7 @@
     "pillar": {
       "primary": "esthetic",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "shade-and-whitening"
     }
   },
   {
@@ -1396,7 +1396,7 @@
     "pillar": {
       "primary": "esthetic",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "shade-and-whitening"
     }
   },
   {
@@ -1438,7 +1438,7 @@
     "pillar": {
       "primary": "esthetic",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "shade-and-whitening"
     }
   },
   {
@@ -2623,7 +2623,7 @@
     ],
     "page_url": "/episodes/episode-116.html",
     "pillar": {
-      "primary": "esthetic",
+      "primary": "treatment-planning",
       "secondary": [],
       "subtopic": null
     }
@@ -2671,7 +2671,7 @@
     ],
     "page_url": "/episodes/episode-118.html",
     "pillar": {
-      "primary": "esthetic",
+      "primary": "treatment-planning",
       "secondary": [],
       "subtopic": null
     }
@@ -2718,7 +2718,7 @@
     ],
     "page_url": "/episodes/episode-119.html",
     "pillar": {
-      "primary": "esthetic",
+      "primary": "treatment-planning",
       "secondary": [],
       "subtopic": null
     }
@@ -2766,7 +2766,7 @@
     ],
     "page_url": "/episodes/episode-120.html",
     "pillar": {
-      "primary": "esthetic",
+      "primary": "treatment-planning",
       "secondary": [],
       "subtopic": null
     }
@@ -2791,7 +2791,7 @@
     "pillar": {
       "primary": "esthetic",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "smile-design"
     }
   },
   {
@@ -3291,9 +3291,9 @@
     ],
     "page_url": "/episodes/episode-125-2.html",
     "pillar": {
-      "primary": "esthetic",
+      "primary": "implantology",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "restoration-design"
     }
   },
   {
@@ -4456,7 +4456,7 @@
     ],
     "page_url": "/episodes/episode-151.html",
     "pillar": {
-      "primary": "esthetic",
+      "primary": "treatment-planning",
       "secondary": [],
       "subtopic": null
     }
@@ -4522,7 +4522,7 @@
     "pillar": {
       "primary": "esthetic",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "shade-and-whitening"
     }
   },
   {
@@ -6855,7 +6855,7 @@
     ],
     "page_url": "/episodes/episode-152.html",
     "pillar": {
-      "primary": "esthetic",
+      "primary": "treatment-planning",
       "secondary": [],
       "subtopic": null
     }
@@ -7443,7 +7443,7 @@
     "pillar": {
       "primary": "esthetic",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "smile-design"
     }
   },
   {
@@ -7464,7 +7464,7 @@
     ],
     "page_url": "/episodes/episode-153.html",
     "pillar": {
-      "primary": "esthetic",
+      "primary": "treatment-planning",
       "secondary": [],
       "subtopic": null
     }
@@ -7721,7 +7721,7 @@
     "pillar": {
       "primary": "esthetic",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "veneers-laminates"
     }
   },
   {
@@ -8295,7 +8295,7 @@
     "pillar": {
       "primary": "esthetic",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "shade-and-whitening"
     }
   },
   {
@@ -8468,7 +8468,7 @@
     ],
     "url": "/notecast/episode-32.html",
     "pillar": {
-      "primary": "esthetic",
+      "primary": "removable-pros",
       "secondary": [],
       "subtopic": null
     }
@@ -9132,7 +9132,7 @@
     "pillar": {
       "primary": "esthetic",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "veneers-laminates"
     }
   },
   {
@@ -9502,7 +9502,7 @@
     "pillar": {
       "primary": "esthetic",
       "secondary": ["occlusion"],
-      "subtopic": null
+      "subtopic": "veneers-laminates"
     }
   },
   {
