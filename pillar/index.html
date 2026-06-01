@@ -43,7 +43,7 @@
       },
       "mainEntity": {
         "@type": "ItemList",
-        "numberOfItems": 4,
+        "numberOfItems": 5,
         "itemListElement": [
           {
             "@type": "ListItem",
@@ -72,6 +72,13 @@
             "name": "ایمپلنتولوژی",
             "url": "https://dentcast.org/pillar/implantology/",
             "description": "از استخوان تا روکش — یک قوس پیوسته"
+          },
+          {
+            "@type": "ListItem",
+            "position": 5,
+            "name": "اکلوژن",
+            "url": "https://dentcast.org/pillar/occlusion/",
+            "description": "از تماس دو قوس تا درد و بازسازی"
           }
         ]
       }
@@ -214,6 +221,24 @@ body:has(.dc-topbar) .pillar-intro { background: transparent; border: 0; box-sha
 [data-theme="dark"] .pillar-card-row[data-pillar="implantology"] .pillar-card-name { color: #9ca3af; }
 [data-theme="dark"] .pillar-card-row[data-pillar="implantology"] .subtopic-chip { background: rgba(156,163,175,.18); color: #9ca3af; }
 [data-theme="dark"] .pillar-card-row[data-pillar="implantology"] .pillar-card-arrow { background: rgba(156,163,175,.15); border-color: rgba(156,163,175,.35); color: #9ca3af; }
+
+/* Per-pillar accent — occlusion uses violet in place of teal.
+   Same mechanism, same places as the default teal above; selectors
+   are scoped to [data-pillar="occlusion"] so other cards stay teal.
+     light primary violet: #7c5cbf
+     dark primary violet:  #a98fe0 */
+.pillar-card-row[data-pillar="occlusion"] { border-color: rgba(124,92,191,.25); }
+.pillar-card-row[data-pillar="occlusion"]:hover { border-color: rgba(124,92,191,.35); }
+.pillar-card-row[data-pillar="occlusion"] .pillar-card-icon { color: #7c5cbf; }
+.pillar-card-row[data-pillar="occlusion"] .pillar-card-name { color: #7c5cbf; }
+.pillar-card-row[data-pillar="occlusion"] .subtopic-chip { background: rgba(124,92,191,.10); color: #7c5cbf; }
+.pillar-card-row[data-pillar="occlusion"] .pillar-card-arrow { background: rgba(124,92,191,.10); border-color: rgba(124,92,191,.25); color: #7c5cbf; }
+[data-theme="dark"] .pillar-card-row[data-pillar="occlusion"] { border-color: rgba(169,143,224,.30); }
+[data-theme="dark"] .pillar-card-row[data-pillar="occlusion"]:hover { border-color: rgba(169,143,224,.45); }
+[data-theme="dark"] .pillar-card-row[data-pillar="occlusion"] .pillar-card-icon { color: #a98fe0; }
+[data-theme="dark"] .pillar-card-row[data-pillar="occlusion"] .pillar-card-name { color: #a98fe0; }
+[data-theme="dark"] .pillar-card-row[data-pillar="occlusion"] .subtopic-chip { background: rgba(169,143,224,.18); color: #a98fe0; }
+[data-theme="dark"] .pillar-card-row[data-pillar="occlusion"] .pillar-card-arrow { background: rgba(169,143,224,.15); border-color: rgba(169,143,224,.35); color: #a98fe0; }
 </style>
 
   <!-- Theme init verbatim from metanotes/index.html -->
@@ -300,9 +325,9 @@ body:has(.dc-topbar) .pillar-intro { background: transparent; border: 0; box-sha
       </section>
 
       <div class="pillar-index-stats">
-        <span class="pillar-index-stat-chip"><span class="stat-value">۴</span><span class="stat-label">موضوع</span></span>
-        <span class="pillar-index-stat-chip"><span class="stat-value">۳۰۹</span><span class="stat-label">مطلب</span></span>
-        <span class="pillar-index-stat-chip"><span class="stat-value">۲۱</span><span class="stat-label">زیرموضوع</span></span>
+        <span class="pillar-index-stat-chip"><span class="stat-value">۵</span><span class="stat-label">موضوع</span></span>
+        <span class="pillar-index-stat-chip"><span class="stat-value">۳۳۵</span><span class="stat-label">مطلب</span></span>
+        <span class="pillar-index-stat-chip"><span class="stat-value">۲۶</span><span class="stat-label">زیرموضوع</span></span>
       </div>
     </div>
 
@@ -444,6 +469,41 @@ body:has(.dc-topbar) .pillar-intro { background: transparent; border: 0; box-sha
           <li>
             <span class="subtopic-label">مبانی و آموزش بیمار</span>
             <span class="subtopic-chip">۱۳</span>
+          </li>
+          </ul>
+        </div>
+        <div class="pillar-card-arrow" aria-hidden="true">
+          <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6"/></svg>
+        </div>
+      </a>
+      <a class="pillar-card-row" data-pillar="occlusion" href="/pillar/occlusion/">
+        <div class="pillar-card-body">
+          <div class="pillar-card-header">
+            <span class="pillar-card-icon" aria-hidden="true"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6 q2 11 4 0 q2 11 4 0 q2 11 4 0 q2 11 4 0"/> <path d="M4 18 q2 -11 4 0 q2 -11 4 0 q2 -11 4 0 q2 -11 4 0"/></svg></span>
+            <h2 class="pillar-card-name">اکلوژن</h2>
+          </div>
+          <p class="pillar-card-subtitle">از تماس دو قوس تا درد و بازسازی</p>
+          <p class="pillar-card-meta">۲۶ مطلب · ۵ زیرموضوع</p>
+          <ul class="pillar-card-subtopics">
+          <li>
+            <span class="subtopic-label">بُعد عمودی (VDO)</span>
+            <span class="subtopic-chip">۶</span>
+          </li>
+          <li>
+            <span class="subtopic-label">الگوی هدایت و اسکیم اکلوزال</span>
+            <span class="subtopic-chip">۵</span>
+          </li>
+          <li>
+            <span class="subtopic-label">سایش دندانی و کانسپت دال</span>
+            <span class="subtopic-chip">۳</span>
+          </li>
+          <li>
+            <span class="subtopic-label">اختلالات گیجگاهی‌فکی و درد</span>
+            <span class="subtopic-chip">۶</span>
+          </li>
+          <li>
+            <span class="subtopic-label">تحلیل و تنظیم اکلوزال</span>
+            <span class="subtopic-chip">۵</span>
           </li>
           </ul>
         </div>

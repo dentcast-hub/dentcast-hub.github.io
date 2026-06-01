@@ -127,6 +127,28 @@ PILLARS = {
             {"slug": "fundamentals",          "title_fa": "مبانی و آموزش بیمار", "icon": "icon-book",                "intro_fa": "زبان مشترک با بیمار. توضیح ساده‌ی این‌که <strong>ایمپلنت چیست</strong>، مراحل درمان کدام‌اند و چرا فالوآپ اهمیت دارد — نقطه‌ی ورود برای کسی که می‌خواهد کل این قوس را از بیرون بفهمد."},
         ],
     },
+    "occlusion": {
+        "title_fa": "اکلوژن",
+        "icon":             "icon-occlusion",
+        "subtitle_fa_short": "از تماس دو قوس تا درد و بازسازی",
+        "page_title":       "فهرست موضوعی — اکلوژن / دنت‌کست",
+        "meta_description": "نقشه‌ی موضوعی اکلوژن در دندان‌پزشکی — از بُعد عمودی و الگوهای هدایت لترال، تا سایش و کانسپت دال، اختلالات گیجگاهی‌فکی، و تحلیل و تنظیم تماس‌های اکلوزال. مجموعه‌ای از اپیزودها، گلاسری، نوت‌کست‌ها و یادداشت‌های بالینی دنت‌کست در یک ساختار واحد.",
+        "h1_fa":        "اکلوژن",
+        "subtitle_fa":  "نقشه‌ی موضوعی دنت‌کست",
+        "intro_paragraphs": [
+            'اکلوژن، نقطه‌ای است که دندان‌پزشکی از سطحِ یک دندان منفرد فراتر می‌رود و به <strong>رابطه‌ی دو قوس</strong> می‌رسد. این‌جا دیگر با یک ترمیم تنها سر و کار نداریم؛ با این‌که این ترمیم در میان صدها تماس دینامیک، با حرکات فک، با عضله و مفصل، چگونه <strong>رفتار</strong> می‌کند.',
+            'پشت هر تصمیم اکلوزال، چند پرسش بنیادین نشسته است: <strong>بُعد عمودی</strong> درست کجاست و کِی باید تغییرش داد؟ در حرکات لترال، هدایت با <strong>کانین</strong> باشد یا <strong>گروپ فانکشن</strong>؟ سایش پیش‌رونده را کجا باید متوقف کرد و کجا با کانسپت دال جبران؟ و وقتی درد و صدای مفصل وارد می‌شود، مرز میان یک <strong>اختلال گیجگاهی‌فکی</strong> و یک تماس زودرسِ ساده کجاست؟',
+            'و در نهایت، همه‌چیز به یک مهارت پای صندلی برمی‌گردد: <strong>سنجش و تنظیم تماس</strong>. کاغذ آرتیکولاسیون، فرمیتوس، قانون BULL — ابزارهایی که تعیین می‌کنند آیا کارِ خوبِ ما در دهان <strong>پایدار</strong> می‌ماند یا به عارضه تبدیل می‌شود.',
+            'این صفحه یک نقشه‌ی موضوعی برای ورود به این جهان است. مطالب در پنج لایه دسته‌بندی شده‌اند، از بُعد عمودی و الگوهای هدایت تا سایش، اختلالات مفصلی، و تحلیل و تنظیم. اگر دنبال یک مفهوم خاص یا یک تصمیم بالینی مشخص هستید، مستقیم به دسته‌ی مرتبط بروید. هر مورد به منبع کاملش در دنت‌کست لینک شده — اپیزود پادکست، نوت‌کست، گلاسری، یا یادداشت بالینی.',
+        ],
+        "subtopics": [
+            {"slug": "vertical-dimension",          "title_fa": "بُعد عمودی (VDO)",       "icon": "icon-ruler",   "intro_fa": ""},
+            {"slug": "occlusal-scheme-guidance",     "title_fa": "الگوی هدایت و اسکیم اکلوزال", "icon": "icon-compass", "intro_fa": ""},
+            {"slug": "tooth-wear-dahl",              "title_fa": "سایش دندانی و کانسپت دال", "icon": "icon-warning", "intro_fa": ""},
+            {"slug": "tmd-orofacial-pain",           "title_fa": "اختلالات گیجگاهی‌فکی و درد", "icon": "icon-alert-circle", "intro_fa": ""},
+            {"slug": "occlusal-analysis-adjustment", "title_fa": "تحلیل و تنظیم اکلوزال",  "icon": "icon-target",  "intro_fa": ""},
+        ],
+    },
 }
 
 TYPE_META = {
@@ -528,6 +550,15 @@ def render_page(slug, cfg, intro_html, cards_html, flat_ordered):
         '      background: rgba(156, 163, 175, 0.10);\n'
         '      border-right-color: rgba(156, 163, 175, 0.45);\n'
         '    }\n'
+        '    /* occlusion — violet: #7c5cbf light / #a98fe0 dark */\n'
+        '    [data-pillar="occlusion"] .pillar-subtopic-intro {\n'
+        '      background: rgba(124, 92, 191, 0.07);\n'
+        '      border-right-color: rgba(124, 92, 191, 0.40);\n'
+        '    }\n'
+        '    [data-theme="dark"] [data-pillar="occlusion"] .pillar-subtopic-intro {\n'
+        '      background: rgba(169, 143, 224, 0.10);\n'
+        '      border-right-color: rgba(169, 143, 224, 0.45);\n'
+        '    }\n'
         '    /* Pillar header icon — centered above H1, colored with each\n'
         '       pillar accent via [data-pillar] scope. Stroke icons inherit\n'
         '       the color through currentColor. Same accent values + light/\n'
@@ -541,6 +572,8 @@ def render_page(slug, cfg, intro_html, cards_html, flat_ordered):
         '    [data-theme="dark"] [data-pillar="fixed-pros"] .pillar-header-icon { color: #c89456; }\n'
         '    [data-pillar="implantology"] .pillar-header-icon { color: #6b7280; }\n'
         '    [data-theme="dark"] [data-pillar="implantology"] .pillar-header-icon { color: #9ca3af; }\n'
+        '    [data-pillar="occlusion"] .pillar-header-icon { color: #7c5cbf; }\n'
+        '    [data-theme="dark"] [data-pillar="occlusion"] .pillar-header-icon { color: #a98fe0; }\n'
         '  </style>\n'
         '\n'
         "  <!-- Theme init verbatim from metanotes/index.html -->\n"
@@ -852,6 +885,24 @@ INDEX_INLINE_STYLE = (
     "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"implantology\"] .pillar-card-name { color: #9ca3af; }\n"
     "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"implantology\"] .subtopic-chip { background: rgba(156,163,175,.18); color: #9ca3af; }\n"
     "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"implantology\"] .pillar-card-arrow { background: rgba(156,163,175,.15); border-color: rgba(156,163,175,.35); color: #9ca3af; }\n"
+    "\n"
+    "/* Per-pillar accent — occlusion uses violet in place of teal.\n"
+    "   Same mechanism, same places as the default teal above; selectors\n"
+    "   are scoped to [data-pillar=\"occlusion\"] so other cards stay teal.\n"
+    "     light primary violet: #7c5cbf\n"
+    "     dark primary violet:  #a98fe0 */\n"
+    ".pillar-card-row[data-pillar=\"occlusion\"] { border-color: rgba(124,92,191,.25); }\n"
+    ".pillar-card-row[data-pillar=\"occlusion\"]:hover { border-color: rgba(124,92,191,.35); }\n"
+    ".pillar-card-row[data-pillar=\"occlusion\"] .pillar-card-icon { color: #7c5cbf; }\n"
+    ".pillar-card-row[data-pillar=\"occlusion\"] .pillar-card-name { color: #7c5cbf; }\n"
+    ".pillar-card-row[data-pillar=\"occlusion\"] .subtopic-chip { background: rgba(124,92,191,.10); color: #7c5cbf; }\n"
+    ".pillar-card-row[data-pillar=\"occlusion\"] .pillar-card-arrow { background: rgba(124,92,191,.10); border-color: rgba(124,92,191,.25); color: #7c5cbf; }\n"
+    "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"occlusion\"] { border-color: rgba(169,143,224,.30); }\n"
+    "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"occlusion\"]:hover { border-color: rgba(169,143,224,.45); }\n"
+    "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"occlusion\"] .pillar-card-icon { color: #a98fe0; }\n"
+    "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"occlusion\"] .pillar-card-name { color: #a98fe0; }\n"
+    "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"occlusion\"] .subtopic-chip { background: rgba(169,143,224,.18); color: #a98fe0; }\n"
+    "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"occlusion\"] .pillar-card-arrow { background: rgba(169,143,224,.15); border-color: rgba(169,143,224,.35); color: #a98fe0; }\n"
     "</style>"
 )
 

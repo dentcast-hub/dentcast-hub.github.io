@@ -740,6 +740,15 @@
       background: rgba(156, 163, 175, 0.10);
       border-right-color: rgba(156, 163, 175, 0.45);
     }
+    /* occlusion — violet: #7c5cbf light / #a98fe0 dark */
+    [data-pillar="occlusion"] .pillar-subtopic-intro {
+      background: rgba(124, 92, 191, 0.07);
+      border-right-color: rgba(124, 92, 191, 0.40);
+    }
+    [data-theme="dark"] [data-pillar="occlusion"] .pillar-subtopic-intro {
+      background: rgba(169, 143, 224, 0.10);
+      border-right-color: rgba(169, 143, 224, 0.45);
+    }
     /* Pillar header icon — centered above H1, colored with each
        pillar accent via [data-pillar] scope. Stroke icons inherit
        the color through currentColor. Same accent values + light/
@@ -753,6 +762,8 @@
     [data-theme="dark"] [data-pillar="fixed-pros"] .pillar-header-icon { color: #c89456; }
     [data-pillar="implantology"] .pillar-header-icon { color: #6b7280; }
     [data-theme="dark"] [data-pillar="implantology"] .pillar-header-icon { color: #9ca3af; }
+    [data-pillar="occlusion"] .pillar-header-icon { color: #7c5cbf; }
+    [data-theme="dark"] [data-pillar="occlusion"] .pillar-header-icon { color: #a98fe0; }
   </style>
 
   <!-- Theme init verbatim from metanotes/index.html -->
