@@ -2803,6 +2803,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://dentcast.org/pillar/digital/</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://dentcast.org/pillar/esthetic/</loc>
     <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
@@ -2822,6 +2828,12 @@
   </url>
   <url>
     <loc>https://dentcast.org/pillar/occlusion/</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://dentcast.org/pillar/operative/</loc>
     <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
