@@ -15,7 +15,7 @@
     "audio_url": "",
     "page_url": "/episodes/episode-1.html",
     "pillar": {
-      "primary": "operative",
+      "primary": null,
       "secondary": [],
       "subtopic": null
     }
@@ -699,9 +699,9 @@
     ],
     "page_url": "/episodes/episode-34.html",
     "pillar": {
-      "primary": "operative",
+      "primary": "occlusion",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "tooth-wear-dahl"
     }
   },
   {
@@ -1334,7 +1334,7 @@
     "pillar": {
       "primary": "operative",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "caries-management"
     }
   },
   {
@@ -1968,9 +1968,9 @@
     ],
     "page_url": "/episodes/episode-95.html",
     "pillar": {
-      "primary": "operative",
+      "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "preparation"
     }
   },
   {
@@ -2058,7 +2058,7 @@
     "pillar": {
       "primary": "operative",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "caries-management"
     }
   },
   {
@@ -2241,7 +2241,7 @@
     ],
     "page_url": "/episodes/episode-106-1.html",
     "pillar": {
-      "primary": "operative",
+      "primary": null,
       "secondary": [],
       "subtopic": null
     }
@@ -2312,7 +2312,7 @@
     ],
     "page_url": "/episodes/episode-107-1.html",
     "pillar": {
-      "primary": "operative",
+      "primary": null,
       "secondary": [],
       "subtopic": null
     }
@@ -2384,7 +2384,7 @@
     ],
     "page_url": "/episodes/episode-109-1.html",
     "pillar": {
-      "primary": "operative",
+      "primary": null,
       "secondary": [],
       "subtopic": null
     }
@@ -2552,9 +2552,9 @@
     ],
     "page_url": "/episodes/episode-113.html",
     "pillar": {
-      "primary": "operative",
+      "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "preparation"
     }
   },
   {
@@ -2575,9 +2575,9 @@
     ],
     "page_url": "/episodes/episode-114.html",
     "pillar": {
-      "primary": "operative",
+      "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "preparation"
     }
   },
   {
@@ -2956,7 +2956,7 @@
     ],
     "page_url": "/episodes/episode-122-4.html",
     "pillar": {
-      "primary": "operative",
+      "primary": "digital",
       "secondary": [],
       "subtopic": null
     }
@@ -3459,7 +3459,7 @@
     "pillar": {
       "primary": "operative",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "direct-restorations"
     }
   },
   {
@@ -3624,7 +3624,7 @@
     "pillar": {
       "primary": "operative",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "caries-management"
     }
   },
   {
@@ -3647,7 +3647,7 @@
     "pillar": {
       "primary": "operative",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "caries-management"
     }
   },
   {
@@ -4076,7 +4076,7 @@
     "pillar": {
       "primary": "operative",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "direct-restorations"
     }
   },
   {
@@ -4487,7 +4487,7 @@
     "pillar": {
       "primary": "operative",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "cracked-tooth"
     }
   },
   {
@@ -4561,7 +4561,7 @@
     "pillar": {
       "primary": "operative",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "caries-management"
     }
   },
   {
@@ -5511,9 +5511,9 @@
     ],
     "page_url": "/dentcast-plus/video-1.html",
     "pillar": {
-      "primary": "operative",
+      "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "preparation"
     }
   },
   {
@@ -6572,9 +6572,9 @@
     ],
     "page_url": "/insight/insight-18.html",
     "pillar": {
-      "primary": "operative",
+      "primary": "fixed-pros",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "preparation"
     }
   },
   {
@@ -8037,7 +8037,7 @@
     "pillar": {
       "primary": "operative",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "caries-management"
     }
   },
   {
@@ -8109,7 +8109,7 @@
     "pillar": {
       "primary": "operative",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "caries-management"
     }
   },
   {
@@ -8350,7 +8350,7 @@
     "pillar": {
       "primary": "operative",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "caries-management"
     }
   },
   {
@@ -8382,7 +8382,7 @@
     "pillar": {
       "primary": "operative",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "cracked-tooth"
     }
   },
   {
@@ -8409,7 +8409,7 @@
     "pillar": {
       "primary": "operative",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "cracked-tooth"
     }
   },
   {
@@ -8527,7 +8527,7 @@
     "pillar": {
       "primary": "operative",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "cracked-tooth"
     }
   },
   {
@@ -9711,7 +9711,7 @@
     ],
     "url": "/sharehub/share-7.html",
     "pillar": {
-      "primary": "operative",
+      "primary": null,
       "secondary": [],
       "subtopic": null
     }
