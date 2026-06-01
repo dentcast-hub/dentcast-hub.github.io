@@ -1271,7 +1271,7 @@
       "pillar": {
         "primary": "occlusion",
         "secondary": [],
-        "subtopic": null
+        "subtopic": "vertical-dimension"
       }
     },
     {
