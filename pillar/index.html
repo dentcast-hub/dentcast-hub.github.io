@@ -43,7 +43,7 @@
       },
       "mainEntity": {
         "@type": "ItemList",
-        "numberOfItems": 5,
+        "numberOfItems": 6,
         "itemListElement": [
           {
             "@type": "ListItem",
@@ -79,6 +79,13 @@
             "name": "اکلوژن",
             "url": "https://dentcast.org/pillar/occlusion/",
             "description": "از تماس دو قوس تا درد و بازسازی"
+          },
+          {
+            "@type": "ListItem",
+            "position": 6,
+            "name": "زیبایی",
+            "url": "https://dentcast.org/pillar/esthetic/",
+            "description": "از آنالیز لبخند تا رنگ و ونیر"
           }
         ]
       }
@@ -88,7 +95,7 @@
   </script>
 
   <link rel="stylesheet" href="/dc-theme.css">
-  <link rel="stylesheet" href="/dc-nav.css?v=12">
+  <link rel="stylesheet" href="/dc-nav.css">
   <link rel="stylesheet" href="/global-search.css?v=1">
 
   <style>
@@ -239,6 +246,24 @@ body:has(.dc-topbar) .pillar-intro { background: transparent; border: 0; box-sha
 [data-theme="dark"] .pillar-card-row[data-pillar="occlusion"] .pillar-card-name { color: #a98fe0; }
 [data-theme="dark"] .pillar-card-row[data-pillar="occlusion"] .subtopic-chip { background: rgba(169,143,224,.18); color: #a98fe0; }
 [data-theme="dark"] .pillar-card-row[data-pillar="occlusion"] .pillar-card-arrow { background: rgba(169,143,224,.15); border-color: rgba(169,143,224,.35); color: #a98fe0; }
+
+/* Per-pillar accent — esthetic uses dusty rose in place of teal.
+   Same mechanism, same places as the default teal above; selectors
+   are scoped to [data-pillar="esthetic"] so other cards stay teal.
+     light primary rose: #a8536b
+     dark primary rose:  #c77d92 */
+.pillar-card-row[data-pillar="esthetic"] { border-color: rgba(168,83,107,.25); }
+.pillar-card-row[data-pillar="esthetic"]:hover { border-color: rgba(168,83,107,.35); }
+.pillar-card-row[data-pillar="esthetic"] .pillar-card-icon { color: #a8536b; }
+.pillar-card-row[data-pillar="esthetic"] .pillar-card-name { color: #a8536b; }
+.pillar-card-row[data-pillar="esthetic"] .subtopic-chip { background: rgba(168,83,107,.10); color: #a8536b; }
+.pillar-card-row[data-pillar="esthetic"] .pillar-card-arrow { background: rgba(168,83,107,.10); border-color: rgba(168,83,107,.25); color: #a8536b; }
+[data-theme="dark"] .pillar-card-row[data-pillar="esthetic"] { border-color: rgba(199,125,146,.30); }
+[data-theme="dark"] .pillar-card-row[data-pillar="esthetic"]:hover { border-color: rgba(199,125,146,.45); }
+[data-theme="dark"] .pillar-card-row[data-pillar="esthetic"] .pillar-card-icon { color: #c77d92; }
+[data-theme="dark"] .pillar-card-row[data-pillar="esthetic"] .pillar-card-name { color: #c77d92; }
+[data-theme="dark"] .pillar-card-row[data-pillar="esthetic"] .subtopic-chip { background: rgba(199,125,146,.18); color: #c77d92; }
+[data-theme="dark"] .pillar-card-row[data-pillar="esthetic"] .pillar-card-arrow { background: rgba(199,125,146,.15); border-color: rgba(199,125,146,.35); color: #c77d92; }
 </style>
 
   <!-- Theme init verbatim from metanotes/index.html -->
@@ -325,9 +350,9 @@ body:has(.dc-topbar) .pillar-intro { background: transparent; border: 0; box-sha
       </section>
 
       <div class="pillar-index-stats">
-        <span class="pillar-index-stat-chip"><span class="stat-value">۵</span><span class="stat-label">موضوع</span></span>
-        <span class="pillar-index-stat-chip"><span class="stat-value">۳۴۱</span><span class="stat-label">مطلب</span></span>
-        <span class="pillar-index-stat-chip"><span class="stat-value">۲۶</span><span class="stat-label">زیرموضوع</span></span>
+        <span class="pillar-index-stat-chip"><span class="stat-value">۶</span><span class="stat-label">موضوع</span></span>
+        <span class="pillar-index-stat-chip"><span class="stat-value">۳۵۵</span><span class="stat-label">مطلب</span></span>
+        <span class="pillar-index-stat-chip"><span class="stat-value">۲۹</span><span class="stat-label">زیرموضوع</span></span>
       </div>
     </div>
 
@@ -448,7 +473,7 @@ body:has(.dc-topbar) .pillar-intro { background: transparent; border: 0; box-sha
             <h2 class="pillar-card-name">ایمپلنتولوژی</h2>
           </div>
           <p class="pillar-card-subtitle">از استخوان تا روکش — یک قوس پیوسته</p>
-          <p class="pillar-card-meta">۱۰۹ مطلب · ۵ زیرموضوع</p>
+          <p class="pillar-card-meta">۱۱۰ مطلب · ۵ زیرموضوع</p>
           <ul class="pillar-card-subtopics">
           <li>
             <span class="subtopic-label">جراحی، جایگذاری و طرح درمان</span>
@@ -464,7 +489,7 @@ body:has(.dc-topbar) .pillar-intro { background: transparent; border: 0; box-sha
           </li>
           <li>
             <span class="subtopic-label">رستوریشن: ریتنشن، سمان، متریال و اِمرجِنس</span>
-            <span class="subtopic-chip">۲۳</span>
+            <span class="subtopic-chip">۲۴</span>
           </li>
           <li>
             <span class="subtopic-label">مبانی و آموزش بیمار</span>
@@ -511,6 +536,33 @@ body:has(.dc-topbar) .pillar-intro { background: transparent; border: 0; box-sha
           <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6"/></svg>
         </div>
       </a>
+      <a class="pillar-card-row" data-pillar="esthetic" href="/pillar/esthetic/">
+        <div class="pillar-card-body">
+          <div class="pillar-card-header">
+            <span class="pillar-card-icon" aria-hidden="true"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/> <path d="M8.5 14.5s1.4 2 3.5 2 3.5-2 3.5-2"/> <path d="M9 9.5h.01"/> <path d="M15 9.5h.01"/></svg></span>
+            <h2 class="pillar-card-name">زیبایی</h2>
+          </div>
+          <p class="pillar-card-subtitle">از آنالیز لبخند تا رنگ و ونیر</p>
+          <p class="pillar-card-meta">۱۳ مطلب · ۳ زیرموضوع</p>
+          <ul class="pillar-card-subtopics">
+          <li>
+            <span class="subtopic-label">طراحی و آنالیز لبخند</span>
+            <span class="subtopic-chip">۴</span>
+          </li>
+          <li>
+            <span class="subtopic-label">رنگ، شید و سفیدکردن</span>
+            <span class="subtopic-chip">۵</span>
+          </li>
+          <li>
+            <span class="subtopic-label">ونیر و لمینیت</span>
+            <span class="subtopic-chip">۴</span>
+          </li>
+          </ul>
+        </div>
+        <div class="pillar-card-arrow" aria-hidden="true">
+          <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6"/></svg>
+        </div>
+      </a>
     </div>
 
   </main>
@@ -524,7 +576,7 @@ body:has(.dc-topbar) .pillar-intro { background: transparent; border: 0; box-sha
 <script src="/global-search.js?v=5"></script>
 <script src="/global-search-ui.js?v=1"></script>
 <script src="/shake-search.js?v=1"></script>
-<script src="/dc-nav.js?v=12" defer></script>
+<script src="/dc-nav.js" defer></script>
 
 </body>
 </html>

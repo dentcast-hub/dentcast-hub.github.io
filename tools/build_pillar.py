@@ -149,6 +149,26 @@ PILLARS = {
             {"slug": "occlusal-analysis-adjustment", "title_fa": "تحلیل و تنظیم اکلوزال",  "icon": "icon-target",  "intro_fa": ""},
         ],
     },
+    "esthetic": {
+        "title_fa": "زیبایی",
+        "icon":             "icon-smile",
+        "subtitle_fa_short": "از آنالیز لبخند تا رنگ و ونیر",
+        "page_title":       "فهرست موضوعی — زیبایی / دنت‌کست",
+        "meta_description": "نقشه‌ی موضوعی زیبایی در دندان‌پزشکی — از آنالیز و طراحی لبخند، تا علم رنگ و سفیدکردن، و ونیر و لمینیت. مجموعه‌ای از اپیزودها، گلاسری، نوت‌کست‌ها و یادداشت‌های بالینی دنت‌کست در یک ساختار واحد.",
+        "h1_fa":        "زیبایی",
+        "subtitle_fa":  "نقشه‌ی موضوعی دنت‌کست",
+        "intro_paragraphs": [
+            'زیبایی در دندان‌پزشکی، فراتر از «سفید و ردیف» است. یک <strong>هماهنگی</strong> است میان دندان، لثه، لب و صورت — جایی که تناسب، رنگ و فرم باید با هم یک کلِ باورپذیر بسازند. این‌جا تصمیم بالینی نه با یک دندانِ تنها، که با کلِ <strong>لبخند</strong> در قاب صورت سنجیده می‌شود.',
+            'پشت هر درمان زیبایی، چند پرسش بنیادین نشسته است: <strong>تناسبات</strong> لبخند و موقعیت لبه‌ی اینسایزال کجا درست می‌نشیند؟ <strong>رنگ</strong> نهایی را چه چیزی تعیین می‌کند — زیرلایه، ماده، نور، یا بلیچینگ؟ و کجا یک <strong>ونیر</strong> یا لمینیت کم‌تهاجمی پاسخ است و کجا باید از آن پرهیز کرد؟',
+            'این سه محور — طراحی و آنالیز لبخند، علم رنگ و سفیدکردن، و ونیر و لمینیت — به‌هم وابسته‌اند. آنالیز درست، نقشه‌ی درمان را می‌سازد؛ رنگ، باورپذیری نتیجه را؛ و انتخاب ماده و تکنیک، <strong>پایداری</strong> آن را در گذر زمان. خطا در آنالیز، با بهترین ونیر هم جبران نمی‌شود.',
+            'این صفحه یک نقشه‌ی موضوعی برای ورود به این جهان است. مطالب در <strong>سه لایه</strong> دسته‌بندی شده‌اند، از آنالیز و طراحی لبخند تا رنگ و ونیر. اگر دنبال یک مفهوم خاص یا یک تصمیم بالینی مشخص هستید، مستقیم به دسته‌ی مرتبط بروید. هر مورد به منبع کاملش در دنت‌کست لینک شده — اپیزود پادکست، نوت‌کست، گلاسری، یا یادداشت بالینی.',
+        ],
+        "subtopics": [
+            {"slug": "smile-design",        "title_fa": "طراحی و آنالیز لبخند", "icon": "icon-ruler",   "intro_fa": ""},
+            {"slug": "shade-and-whitening", "title_fa": "رنگ، شید و سفیدکردن", "icon": "icon-sparkle", "intro_fa": ""},
+            {"slug": "veneers-laminates",   "title_fa": "ونیر و لمینیت",       "icon": "icon-diamond", "intro_fa": ""},
+        ],
+    },
 }
 
 TYPE_META = {
@@ -559,6 +579,15 @@ def render_page(slug, cfg, intro_html, cards_html, flat_ordered):
         '      background: rgba(169, 143, 224, 0.10);\n'
         '      border-right-color: rgba(169, 143, 224, 0.45);\n'
         '    }\n'
+        '    /* esthetic — dusty rose: #a8536b light / #c77d92 dark */\n'
+        '    [data-pillar="esthetic"] .pillar-subtopic-intro {\n'
+        '      background: rgba(168, 83, 107, 0.07);\n'
+        '      border-right-color: rgba(168, 83, 107, 0.40);\n'
+        '    }\n'
+        '    [data-theme="dark"] [data-pillar="esthetic"] .pillar-subtopic-intro {\n'
+        '      background: rgba(199, 125, 146, 0.10);\n'
+        '      border-right-color: rgba(199, 125, 146, 0.45);\n'
+        '    }\n'
         '    /* Pillar header icon — centered above H1, colored with each\n'
         '       pillar accent via [data-pillar] scope. Stroke icons inherit\n'
         '       the color through currentColor. Same accent values + light/\n'
@@ -574,6 +603,8 @@ def render_page(slug, cfg, intro_html, cards_html, flat_ordered):
         '    [data-theme="dark"] [data-pillar="implantology"] .pillar-header-icon { color: #9ca3af; }\n'
         '    [data-pillar="occlusion"] .pillar-header-icon { color: #7c5cbf; }\n'
         '    [data-theme="dark"] [data-pillar="occlusion"] .pillar-header-icon { color: #a98fe0; }\n'
+        '    [data-pillar="esthetic"] .pillar-header-icon { color: #a8536b; }\n'
+        '    [data-theme="dark"] [data-pillar="esthetic"] .pillar-header-icon { color: #c77d92; }\n'
         '  </style>\n'
         '\n'
         "  <!-- Theme init verbatim from metanotes/index.html -->\n"
@@ -903,6 +934,24 @@ INDEX_INLINE_STYLE = (
     "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"occlusion\"] .pillar-card-name { color: #a98fe0; }\n"
     "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"occlusion\"] .subtopic-chip { background: rgba(169,143,224,.18); color: #a98fe0; }\n"
     "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"occlusion\"] .pillar-card-arrow { background: rgba(169,143,224,.15); border-color: rgba(169,143,224,.35); color: #a98fe0; }\n"
+    "\n"
+    "/* Per-pillar accent — esthetic uses dusty rose in place of teal.\n"
+    "   Same mechanism, same places as the default teal above; selectors\n"
+    "   are scoped to [data-pillar=\"esthetic\"] so other cards stay teal.\n"
+    "     light primary rose: #a8536b\n"
+    "     dark primary rose:  #c77d92 */\n"
+    ".pillar-card-row[data-pillar=\"esthetic\"] { border-color: rgba(168,83,107,.25); }\n"
+    ".pillar-card-row[data-pillar=\"esthetic\"]:hover { border-color: rgba(168,83,107,.35); }\n"
+    ".pillar-card-row[data-pillar=\"esthetic\"] .pillar-card-icon { color: #a8536b; }\n"
+    ".pillar-card-row[data-pillar=\"esthetic\"] .pillar-card-name { color: #a8536b; }\n"
+    ".pillar-card-row[data-pillar=\"esthetic\"] .subtopic-chip { background: rgba(168,83,107,.10); color: #a8536b; }\n"
+    ".pillar-card-row[data-pillar=\"esthetic\"] .pillar-card-arrow { background: rgba(168,83,107,.10); border-color: rgba(168,83,107,.25); color: #a8536b; }\n"
+    "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"esthetic\"] { border-color: rgba(199,125,146,.30); }\n"
+    "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"esthetic\"]:hover { border-color: rgba(199,125,146,.45); }\n"
+    "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"esthetic\"] .pillar-card-icon { color: #c77d92; }\n"
+    "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"esthetic\"] .pillar-card-name { color: #c77d92; }\n"
+    "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"esthetic\"] .subtopic-chip { background: rgba(199,125,146,.18); color: #c77d92; }\n"
+    "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"esthetic\"] .pillar-card-arrow { background: rgba(199,125,146,.15); border-color: rgba(199,125,146,.35); color: #c77d92; }\n"
     "</style>"
 )
 
