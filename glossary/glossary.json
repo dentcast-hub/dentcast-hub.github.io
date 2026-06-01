@@ -1327,6 +1327,91 @@
         "secondary": [],
         "subtopic": "peri-implant-health"
       }
+    },
+    {
+      "slug": "biomimetic-dentistry",
+      "title": "Biomimetic Dentistry",
+      "fa_title": "دندانپزشکی بیومیمتیک",
+      "synonyms": [
+        "دندانپزشکی زیست‌تقلیدی",
+        "بیومیمتیک",
+        "دندانپزشکی ترمیمی بیومیمتیک",
+        "biomimetic restorative dentistry"
+      ],
+      "url": "/glossary/biomimetic-dentistry.html",
+      "pillar": {
+        "primary": "bonding",
+        "secondary": [],
+        "subtopic": "advanced"
+      }
+    },
+    {
+      "slug": "abutment",
+      "title": "Abutment",
+      "fa_title": "اباتمنت",
+      "synonyms": [
+        "اباتمنت ایمپلنت",
+        "اباتمنت پروتزی",
+        "جزء واسط ایمپلنت",
+        "implant abutment"
+      ],
+      "url": "/glossary/abutment.html",
+      "pillar": {
+        "primary": "implantology",
+        "secondary": [],
+        "subtopic": "prosthetic-components"
+      }
+    },
+    {
+      "slug": "osseointegration",
+      "title": "Osseointegration",
+      "fa_title": "اسئواینتگریشن",
+      "synonyms": [
+        "اسئواینتگراسیون",
+        "جوش‌خوردگی استخوانی ایمپلنت",
+        "ادغام استخوانی ایمپلنت",
+        "osseointegration"
+      ],
+      "url": "/glossary/osseointegration.html",
+      "pillar": {
+        "primary": "implantology",
+        "secondary": [],
+        "subtopic": "peri-implant-health"
+      }
+    },
+    {
+      "slug": "post-and-core",
+      "title": "Post and Core",
+      "fa_title": "پست و کور",
+      "synonyms": [
+        "پست اند کور",
+        "پست و هسته",
+        "بیلدآپ پست و کور",
+        "post and core"
+      ],
+      "url": "/glossary/post-and-core.html",
+      "pillar": {
+        "primary": "fixed-pros",
+        "secondary": [],
+        "subtopic": "post-and-core"
+      }
+    },
+    {
+      "slug": "tmd",
+      "title": "TMD",
+      "fa_title": "اختلالات گیجگاهی‌فکی",
+      "synonyms": [
+        "اختلالات مفصل گیجگاهی فکی",
+        "ناهنجاری‌های گیجگاهی‌فکی",
+        "اختلال TMJ",
+        "temporomandibular disorders"
+      ],
+      "url": "/glossary/tmd.html",
+      "pillar": {
+        "primary": "occlusion",
+        "secondary": [],
+        "subtopic": "tmd-orofacial-pain"
+      }
     }
   ]
 }
