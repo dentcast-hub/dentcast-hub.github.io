@@ -10,20 +10,22 @@
 
   function openSearch() {
     globalBox.classList.add("open");
-    //document.body.classList.add("search-open");
+    document.body.classList.add("search-open");
     if (searchCard) {
       searchCard.classList.add("active-toggle");
     }
 
     const input = globalBox.querySelector(".dc-search-input");
+    /* Synchronous focus — matches dc-nav.js/index.html so tap and shake behave
+       identically and iOS Safari opens the keyboard inside the gesture. */
     if (input) {
-      setTimeout(() => input.focus(), 200);
+      input.focus();
     }
   }
 
   function closeSearch() {
     globalBox.classList.remove("open");
-//document.body.classList.remove("search-open");
+    document.body.classList.remove("search-open");
     if (searchCard) {
       searchCard.classList.remove("active-toggle");
     }

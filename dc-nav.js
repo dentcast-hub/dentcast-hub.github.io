@@ -553,6 +553,21 @@
     document.body.appendChild(floatSearch);
   }
 
+  /* ── SEARCH DIM (Issue 3) ───────────────────────────
+     A single translucent backdrop element, injected once (mirrors the
+     float-search pattern), shared by all bottom-sheet pages (breeds B & C).
+     It carries NO inline styles: all appearance + the show/hide toggle live in
+     global-search.css under `#dc-search-dim` / `body.search-open #dc-search-dim`,
+     so there is no inline-vs-stylesheet specificity fight. The homepage does not
+     load global-search.css and never sets body.search-open, so this stays an
+     invisible, zero-impact empty div there. Tapping it closes search (handled by
+     the CLOSE RESULTS delegated listener above). */
+  if (!document.getElementById('dc-search-dim')) {
+    var searchDim = document.createElement('div');
+    searchDim.id = 'dc-search-dim';
+    document.body.appendChild(searchDim);
+  }
+
   /* Desktop drawer toggle (#dcdThemeBtn) — same handler */
   var themeDrawerBtn = document.getElementById('dcdThemeBtn');
   if (themeDrawerBtn) {
@@ -637,8 +652,19 @@
     var drawer = document.getElementById('dcToolbarDrawer');
     if (drawer && drawer.classList.contains('open')) toggleToolbarDrawer();
     box.classList.add('open');
+    /* Dim the page behind the bottom sheet (breeds B & C). The homepage runs
+       its own full-screen overlay (body.dc-search-mode) and must NOT get the
+       translucent dim — skip there. The dim visual + scroll-lock live in
+       global-search.css under body.search-open (homepage doesn't load it). */
+    if (!document.body.classList.contains('dc-search-mode')) {
+      document.body.classList.add('search-open');
+    }
     var inp = document.getElementById('dcSearch');
-    if (inp) setTimeout(function () { inp.focus(); }, 0);
+    /* iOS Safari only honors programmatic focus when it runs SYNCHRONOUSLY
+       inside the user-gesture handler. The panel animates via transform/opacity
+       (never display:none), so the input is focusable the instant .open is set —
+       focus right away, no setTimeout/transitionend. */
+    if (inp) inp.focus();
   }
 
   /* ── MUSIC PLAYER ──────────────────────────────────
@@ -1115,13 +1141,16 @@
     }
   });
 
-  /* ── CLOSE RESULTS ── */
+  /* ── CLOSE RESULTS ──
+     Closes on the × button OR on a tap on the translucent dim (#dc-search-dim),
+     mirroring the bottom-sheet close behavior for breeds B & C. */
   document.addEventListener('click', function (e) {
-    if (e.target.closest('.dc-close-results')) {
+    if (e.target.closest('.dc-close-results') || (e.target.id === 'dc-search-dim')) {
       var g = document.getElementById('dcGlobalBox');
       var r = document.getElementById('dcResults');
       if (g) g.classList.remove('open');
       if (r) r.style.display = 'none';
+      document.body.classList.remove('search-open');
     }
   }, true);
 
