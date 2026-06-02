@@ -9501,7 +9501,9 @@
     "url": "/sharehub/share-6.html",
     "pillar": {
       "primary": "esthetic",
-      "secondary": ["occlusion"],
+      "secondary": [
+        "occlusion"
+      ],
       "subtopic": "veneers-laminates"
     }
   },
@@ -9603,7 +9605,9 @@
     "page_url": "/insight/insight-43.html",
     "pillar": {
       "primary": "fixed-pros",
-      "secondary": ["fixed-pros"],
+      "secondary": [
+        "fixed-pros"
+      ],
       "subtopic": "crowns-onlays"
     }
   },
@@ -9714,6 +9718,47 @@
       "primary": null,
       "secondary": [],
       "subtopic": null
+    }
+  },
+  {
+    "type": "sharehub",
+    "id": "8",
+    "title": "اصول علمی آماده‌سازی دندان برای لمینت‌های سرامیکی",
+    "caption": "مطلبی منتخب در Share Hub دنت‌کست؛ مرور اصول علمی آماده‌سازی دندان برای لمینت‌های سرامیکی شامل اهداف تراش، پرهیز از اورکانتورینگ و اصل حفظ حداکثری مینا، به‌همراه چارچوب چهارمرحله‌ای (سطح فیشیال با تکنیک گورل، مارجین سرویکال با لایت چمفر، سطوح پروگزیمال و طرح لبه اینسایزال) و مقایسه‌ی طرح‌های بات‌جوینت، ویندو، فدر اج و پالاتال چمفر با تأکید بر ارجحیت بات‌جوینت برای بقای بلندمدت. همراه با فایل صوتی پادکست. این محتوا به‌صورت curated منتشر شده است.",
+    "author": "دکتر ساسان رسایی‌پور",
+    "source": "https://t.me/DrRasaeipourAcademy",
+    "hashtags": [
+      "#لمینت_سرامیکی",
+      "#آماده_سازی_لمینت",
+      "#تراش_لمینت",
+      "#بات_جوینت",
+      "#لبه_اینسایزال",
+      "#تکنیک_گورل",
+      "#حفظ_مینا",
+      "#دندانپزشکی_زیبایی",
+      "#Share_Hub",
+      "#Curated_Content",
+      "#Ceramic_Veneer",
+      "#Laminate_Veneer",
+      "#Butt_Joint"
+    ],
+    "keywords": [
+      "ceramic veneer preparation",
+      "laminate veneer butt joint",
+      "incisal edge design veneer",
+      "feather edge veneer",
+      "palatal chamfer",
+      "light chamfer cervical margin",
+      "enamel preservation bonding",
+      "آماده‌سازی لمینت سرامیکی",
+      "تراش لمینت",
+      "طرح لبه اینسایزال"
+    ],
+    "url": "/sharehub/share-8.html",
+    "pillar": {
+      "primary": "esthetic",
+      "secondary": [],
+      "subtopic": "veneers-laminates"
     }
   }
 ]
