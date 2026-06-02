@@ -828,13 +828,12 @@ def render_page(slug, cfg, intro_html, cards_html, flat_ordered):
         '</div>\n'
         '\n'
         '<!-- تم تاگل -->\n'
-        '<button id="dc-theme-toggle" aria-label="تغییر تم"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M20.5 14.2A8.2 8.2 0 0 1 9.8 3.5 8.8 8.8 0 1 0 20.5 14.2z"/></svg></button>\n'
         '\n'
         '<!-- Theme toggle behavior moved to /dc-nav.js (single source) -->\n'
         '<script src="/global-search.js?v=5"></script>\n'
         '<script src="/global-search-ui.js?v=1"></script>\n'
         '<script src="/shake-search.js?v=1"></script>\n'
-        '<script src="/dc-nav.js" defer></script>\n'
+        '<script src="/dc-nav.js?v=13" defer></script>\n'
         '\n'
         '</body>\n'
         '</html>\n'
@@ -1388,13 +1387,12 @@ def _render_index_page(pillars_info, cards_html):
         '</div>\n'
         '\n'
         '<!-- تم تاگل -->\n'
-        '<button id="dc-theme-toggle" aria-label="تغییر تم"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M20.5 14.2A8.2 8.2 0 0 1 9.8 3.5 8.8 8.8 0 1 0 20.5 14.2z"/></svg></button>\n'
         '\n'
         '<!-- Theme toggle behavior moved to /dc-nav.js (single source) -->\n'
         '<script src="/global-search.js?v=5"></script>\n'
         '<script src="/global-search-ui.js?v=1"></script>\n'
         '<script src="/shake-search.js?v=1"></script>\n'
-        '<script src="/dc-nav.js" defer></script>\n'
+        '<script src="/dc-nav.js?v=13" defer></script>\n'
         '\n'
         '</body>\n'
         '</html>\n'
@@ -1933,7 +1931,6 @@ _GLOSSARY_AFTER_LISTWRAP = """    </div>
     <div><a href="/about.html">دربارهٔ دکتر فؤاد شهابیان</a></div>
   </footer>
 
-  <button id="dc-theme-toggle" aria-label="تغییر تم"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M20.5 14.2A8.2 8.2 0 0 1 9.8 3.5 8.8 8.8 0 1 0 20.5 14.2z"/></svg></button>
 
   <!-- Theme toggle behavior moved to /dc-nav.js (single source) -->
 """
@@ -2089,7 +2086,7 @@ _GLOSSARY_TAIL = """<div class="dc-global-filter-box" id="dcGlobalBox">
   <div class="dc-results-box" id="dcResults"></div>
 </div>
 <script src="/global-search.js?v=5" defer></script>
-<script src="/dc-nav.js" defer></script>
+<script src="/dc-nav.js?v=13" defer></script>
 </body>
 </html>
 """
