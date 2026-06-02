@@ -3352,7 +3352,7 @@ scrollBody.addEventListener('touchend',e=>{
 </script>
 
 <!-- Theme toggle behavior moved to /dc-nav.js (single source) -->
-<script src="/dc-nav.js?v=13" defer></script>
+<script src="/dc-nav.js?v=14" defer></script>
 
 <!-- Toolbar drawer toggle is handled by /dc-nav.js (single source) -->
 
@@ -3378,7 +3378,9 @@ scrollBody.addEventListener('touchend',e=>{
     document.body.classList.add('dc-search-mode');
     overlay.setAttribute('aria-hidden','false');
     globalBox.classList.add('open');
-    setTimeout(()=>searchInput.focus(),0);
+    /* Synchronous focus AFTER the relocation, inside the tap gesture, so iOS
+       Safari opens the keyboard. Matches dc-nav.js / global-search-ui.js. */
+    searchInput.focus();
     if(term){
       searchInput.value=term;
       /* use setTimeout(0) so Chrome finalises DOM move before event fires */
@@ -3468,7 +3470,7 @@ document.getElementById('tool-consult')?.addEventListener('click',()=>{window.lo
 document.getElementById('tool-about')?.addEventListener('click',()=>{window.location.href='about.html';});
 </script>
 
-<script src="/global-search.js?v=3"></script>
+<script src="/global-search.js?v=4"></script>
 <script>if('serviceWorker'in navigator){navigator.serviceWorker.register('/service-worker.js').catch(()=>{});}</script>
 
 <script>
@@ -4059,7 +4061,8 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
     document.body.classList.add('dc-search-mode');
     overlay.setAttribute('aria-hidden','false');
     globalBox.classList.add('open');
-    setTimeout(() => searchInp?.focus(), 0);
+    /* Synchronous focus AFTER the relocation, inside the gesture (iOS keyboard). */
+    searchInp?.focus();
     if(term && searchInp){ searchInp.value=term; searchInp.dispatchEvent(new Event('input')); }
     const hash=term?'#search:'+encodeURIComponent(term):'#search';
     history.pushState({dcSearch:true,q:term},'',hash);

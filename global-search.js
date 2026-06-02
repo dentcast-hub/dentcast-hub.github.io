@@ -206,3 +206,93 @@ const TYPE_MAP = {
   loadDB();
 
 });
+
+/* ============================================================
+   BOTTOM-SHEET KEYBOARD HANDLING — visualViewport (Issue 2)
+   ------------------------------------------------------------
+   The bottom sheet (#dcGlobalBox) is position:fixed; bottom:0 and, on iOS,
+   sits BEHIND the on-screen keyboard once the input is focused. This module
+   lifts the sheet above the keyboard and re-caps #dcResults to the space that
+   remains visible, reacting live to visualViewport resize/scroll.
+
+   It hooks the sheet by OBSERVING the `.open` class, so every open path —
+   dc-nav.js (tap, breeds B & C), global-search-ui.js (shake, breed C) — is
+   covered by one implementation, with no per-controller wiring.
+
+   GUARDS:
+   - Homepage runs a full-screen overlay (body.dc-search-mode) with flex,
+     full-height results; its layout is unaffected, so we skip repositioning
+     whenever dc-search-mode is set.
+   - When window.visualViewport is undefined (older Android), we do nothing and
+     leave the existing static behavior — no crash.
+============================================================ */
+(function () {
+  function init() {
+    var box = document.getElementById("dcGlobalBox");
+    if (!box) return;
+    var vv = window.visualViewport; /* may be undefined — graceful fallback */
+    var input = document.getElementById("dcSearch");
+
+    /* Bottom-sheet layout only; the homepage overlay manages itself. */
+    function isSheet() {
+      return !document.body.classList.contains("dc-search-mode");
+    }
+
+    function reposition() {
+      if (!vv || !box.classList.contains("open") || !isSheet()) return;
+      /* Keyboard height ≈ layout viewport − visible viewport (− any offset). */
+      var kb = Math.max(0, window.innerHeight - vv.height - vv.offsetTop);
+      box.style.transform = "translateY(-" + kb + "px)"; /* GPU-smooth lift */
+      box.style.maxHeight = vv.height + "px";
+      var r = document.getElementById("dcResults");
+      if (r) {
+        /* Cap results to the gap between their top and the keyboard's top,
+           keeping them scrollable within the visible viewport. */
+        var rect = r.getBoundingClientRect();
+        var avail = (vv.offsetTop + vv.height) - rect.top - 12;
+        r.style.maxHeight = Math.max(80, avail) + "px";
+      }
+    }
+
+    function attach() {
+      if (!vv || !isSheet()) return;
+      /* Identical listener refs → repeated attach() calls are no-ops. */
+      vv.addEventListener("resize", reposition);
+      vv.addEventListener("scroll", reposition);
+      /* Re-cap #dcResults as the user types (results appear/grow after the
+         keyboard has already settled, so no viewport event would fire). */
+      if (input) input.addEventListener("input", reposition);
+      reposition();
+    }
+
+    function detach() {
+      if (vv) {
+        vv.removeEventListener("resize", reposition);
+        vv.removeEventListener("scroll", reposition);
+      }
+      if (input) input.removeEventListener("input", reposition);
+      box.style.transform = "";
+      box.style.maxHeight = "";
+      var r = document.getElementById("dcResults");
+      if (r) r.style.maxHeight = "";
+    }
+
+    var obs = new MutationObserver(function (muts) {
+      for (var i = 0; i < muts.length; i++) {
+        if (muts[i].attributeName === "class") {
+          if (box.classList.contains("open")) attach();
+          else detach();
+        }
+      }
+    });
+    obs.observe(box, { attributes: true, attributeFilter: ["class"] });
+
+    if (box.classList.contains("open")) attach();
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();

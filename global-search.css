@@ -141,13 +141,30 @@
   color: #075985;
   font-weight: 600;
 }
-/* ====== Blur پس‌زمینه بدون دستکاری HTML ====== */
-body.search-open > *:not(#dcGlobalBox) {
-  filter: blur(10px);
-  transition: filter 0.2s ease;
+/* ====== Dim پس‌زمینه بدون دستکاری HTML ======
+   Translucent backdrop for the bottom-sheet breeds (B & C). The element
+   (#dc-search-dim) is injected once by dc-nav.js; it carries no inline styles,
+   so these rules fully own its appearance and the fade. It sits BELOW the sheet
+   (z-index 9999) and ABOVE page content (z-index 9998). Tapping it closes
+   search (delegated handler in dc-nav.js). */
+#dc-search-dim {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  background: rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
 }
 
-/* جلوگیری از blur روی خود سرچ */
+body.search-open #dc-search-dim {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+/* جلوگیری از دیم روی خود سرچ */
 #dcGlobalBox {
   position: fixed;
   left: 0;
