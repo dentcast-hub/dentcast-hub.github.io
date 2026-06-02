@@ -568,6 +568,143 @@
     document.body.appendChild(searchDim);
   }
 
+  /* ── SHAKE → PLAYER DRAWER ──────────────────────────
+     Shake-to-play. The shake gesture (formerly shake-search.js, which opened
+     the search sheet on breed C only) now slides up a bottom drawer hosting
+     player.html in an iframe — and it lives here in dc-nav.js, so it reaches
+     ALL 488 pages with one shared file.
+
+     TOP-LEVEL ONLY: guarded to the top window so the iframe'd player.html
+     itself (and index.html's desktop content iframe) never inject a nested
+     drawer or double-handle devicemotion.
+
+     The drawer + dim + chrome styling are injected once (mirroring the
+     float-search / search-dim pattern), so no per-page markup is needed. The
+     iframe is created LAZILY on first open (not 488 hidden iframes at load) and
+     is NEVER reset on close — we only hide the drawer via transform, so audio
+     keeps playing / its position survives a re-open. */
+  if (window.top === window.self) {
+    var DC_PLAYER_CSS =
+'#dc-player-dim{position:fixed;inset:0;z-index:100000;background:rgba(0,0,0,.5);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .3s ease,visibility .3s ease;}' +
+'body.dc-player-open #dc-player-dim{opacity:1;visibility:visible;pointer-events:auto;}' +
+'body.dc-player-open{overflow:hidden;}' +
+'#dc-player-drawer{position:fixed;left:0;right:0;bottom:0;z-index:100001;height:86vh;height:86dvh;max-height:86vh;max-height:86dvh;background:#fff;border-radius:18px 18px 0 0;box-shadow:0 -8px 30px rgba(0,0,0,.35);transform:translateY(100%);transition:transform .38s cubic-bezier(.25,.46,.45,.94);display:flex;flex-direction:column;overflow:hidden;}' +
+'body.dc-player-open #dc-player-drawer{transform:translateY(0);}' +
+'#dc-player-drawer .dc-player-grip{position:absolute;top:6px;left:50%;transform:translateX(-50%);width:42px;height:4px;border-radius:2px;background:#cdd3e6;pointer-events:none;}' +
+'#dc-player-drawer .dc-player-bar{flex:0 0 auto;display:flex;align-items:center;justify-content:flex-end;padding:14px 12px 8px;}' +
+'#dc-player-close{width:34px;height:34px;border:none;border-radius:50%;background:#f0f0f5;color:#333;cursor:pointer;display:flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent;transition:transform .15s ease,background .15s ease;}' +
+'#dc-player-close:active{transform:scale(.88);background:#e2e2ee;}' +
+'#dc-player-close .dc-svg-icon{width:20px;height:20px;}' +
+'#dc-player-iframe{flex:1 1 auto;width:100%;border:0;background:#f4f7ff;}' +
+'[data-theme="dark"] #dc-player-drawer{background:#1a2940;}' +
+'[data-theme="dark"] #dc-player-close{background:#2a3a55;color:#cfe2ff;}' +
+'[data-theme="dark"] #dc-player-iframe{background:#1a2940;}';
+
+    if (!document.getElementById('dc-player-style')) {
+      var pst = document.createElement('style');
+      pst.id = 'dc-player-style';
+      pst.textContent = DC_PLAYER_CSS;
+      (document.head || document.documentElement).appendChild(pst);
+    }
+
+    var dcPlayerIframe = null;
+
+    function dcEnsurePlayerEls() {
+      if (!document.getElementById('dc-player-dim')) {
+        var pdim = document.createElement('div');
+        pdim.id = 'dc-player-dim';
+        document.body.appendChild(pdim);
+      }
+      var drawer = document.getElementById('dc-player-drawer');
+      if (!drawer) {
+        drawer = document.createElement('div');
+        drawer.id = 'dc-player-drawer';
+        drawer.setAttribute('role', 'dialog');
+        drawer.setAttribute('aria-label', 'پخش‌کننده دنت‌کست');
+        drawer.innerHTML =
+          '<span class="dc-player-grip"></span>' +
+          '<div class="dc-player-bar">' +
+            '<button type="button" id="dc-player-close" aria-label="بستن">' +
+              dcSvgIcon('x') +
+            '</button>' +
+          '</div>';
+        document.body.appendChild(drawer);
+      }
+      return drawer;
+    }
+
+    function dcOpenPlayer() {
+      var drawer = dcEnsurePlayerEls();
+      /* Mutually exclusive with search: never stack the player over an open
+         search sheet/dim. */
+      var sb = document.getElementById('dcGlobalBox');
+      if (sb) sb.classList.remove('open');
+      document.body.classList.remove('search-open');
+      /* Lazy iframe — created on first open, kept forever after. Absolute
+         /player.html so its own relative fetches resolve from any page depth. */
+      if (!dcPlayerIframe) {
+        dcPlayerIframe = document.createElement('iframe');
+        dcPlayerIframe.id = 'dc-player-iframe';
+        dcPlayerIframe.title = 'DentCast Player';
+        dcPlayerIframe.setAttribute('allow', 'autoplay; encrypted-media');
+        dcPlayerIframe.src = '/player.html';
+        drawer.appendChild(dcPlayerIframe);
+      }
+      document.body.classList.add('dc-player-open');
+    }
+
+    /* Close = hide only. We NEVER clear/reset the iframe src, so playback (and
+       the player's restored position) survives a re-open. */
+    function dcClosePlayer() {
+      document.body.classList.remove('dc-player-open');
+    }
+
+    function dcTogglePlayer() {
+      if (document.body.classList.contains('dc-player-open')) dcClosePlayer();
+      else dcOpenPlayer();
+    }
+
+    /* Close affordances: the × button or a tap on the dim. */
+    document.addEventListener('click', function (e) {
+      if (!e.target) return;
+      if ((e.target.closest && e.target.closest('#dc-player-close')) ||
+          e.target.id === 'dc-player-dim') {
+        dcClosePlayer();
+      }
+    });
+
+    /* Public API (parity with window.dcSearch). */
+    window.dcPlayer = { open: dcOpenPlayer, close: dcClosePlayer, toggle: dcTogglePlayer };
+
+    /* Shake detection — same threshold/debounce as the old shake-search.js, but
+       the action is now dcPlayer.toggle() instead of dcSearch.open(). A short
+       cooldown stops a single continuous shake from flapping open/closed.
+       NOTE: on iOS 13+ devicemotion needs DeviceMotionEvent.requestPermission()
+       from a user gesture; the original shake-search.js never requested it, so
+       this preserves that behavior — on those devices the gesture stays silent
+       until permission is granted (no permission UI added, by design). */
+    if ('DeviceMotionEvent' in window) {
+      var _shLast = 0, _shHits = 0, _shTime = 0, _shCooldown = 0;
+      window.addEventListener('devicemotion', function (e) {
+        var a = e.accelerationIncludingGravity;
+        if (!a) return;
+        var mag = Math.sqrt(a.x * a.x + a.y * a.y + a.z * a.z);
+        var delta = Math.abs(mag - _shLast);
+        var now = Date.now();
+        if (delta > 16) {
+          _shHits = (now - _shTime < 500) ? _shHits + 1 : 1;
+          _shTime = now;
+          if (_shHits >= 2 && now - _shCooldown > 800) {
+            _shCooldown = now;
+            _shHits = 0;
+            window.dcPlayer.toggle();
+          }
+        }
+        _shLast = mag;
+      }, { passive: true });
+    }
+  }
+
   /* Desktop drawer toggle (#dcdThemeBtn) — same handler */
   var themeDrawerBtn = document.getElementById('dcdThemeBtn');
   if (themeDrawerBtn) {
