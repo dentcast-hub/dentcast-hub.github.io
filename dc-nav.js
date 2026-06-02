@@ -678,13 +678,13 @@
 
     /* Shake detection — same threshold/debounce as the old shake-search.js, but
        the action is now dcPlayer.toggle() instead of dcSearch.open(). A short
-       cooldown stops a single continuous shake from flapping open/closed.
-       NOTE: on iOS 13+ devicemotion needs DeviceMotionEvent.requestPermission()
-       from a user gesture; the original shake-search.js never requested it, so
-       this preserves that behavior — on those devices the gesture stays silent
-       until permission is granted (no permission UI added, by design). */
-    if ('DeviceMotionEvent' in window) {
-      var _shLast = 0, _shHits = 0, _shTime = 0, _shCooldown = 0;
+       cooldown stops a single continuous shake from flapping open/closed. The
+       listener body is wrapped so it can be attached either immediately
+       (Android/desktop) or only after iOS grants motion permission (below). */
+    var _shLast = 0, _shHits = 0, _shTime = 0, _shCooldown = 0, _shAttached = false;
+    function attachShakeListener() {
+      if (_shAttached) return; /* never bind twice */
+      _shAttached = true;
       window.addEventListener('devicemotion', function (e) {
         var a = e.accelerationIncludingGravity;
         if (!a) return;
@@ -702,6 +702,33 @@
         }
         _shLast = mag;
       }, { passive: true });
+    }
+
+    /* iOS 13+ gates devicemotion behind DeviceMotionEvent.requestPermission(),
+       which MUST be called from inside a user gesture or motion never fires. We
+       add NO UI of our own — instead we piggy-back on the user's FIRST tap
+       anywhere on the page (once + capture, so it fires no matter what was
+       tapped and without disturbing that tap's normal action) to silently
+       request it. The only thing the user sees is iOS's own native popup. On
+       'granted' we attach the shake listener; on 'denied' — or a throw in odd
+       embedded webviews — we stay silent and never re-prompt this page load.
+       Android/desktop have no requestPermission, so they fall through and bind
+       the listener normally at load (where present; harmless if it never fires). */
+    if (typeof DeviceMotionEvent !== 'undefined' &&
+        typeof DeviceMotionEvent.requestPermission === 'function') {
+      var _shReqDone = false;
+      var dcRequestMotionOnce = function () {
+        if (_shReqDone) return; /* request at most once per page load */
+        _shReqDone = true;
+        try {
+          DeviceMotionEvent.requestPermission().then(function (state) {
+            if (state === 'granted') attachShakeListener();
+          }).catch(function () { /* denied / unsupported — stay silent */ });
+        } catch (err) { /* embedded webview threw — skip silently */ }
+      };
+      document.addEventListener('pointerdown', dcRequestMotionOnce, { once: true, capture: true });
+    } else if ('DeviceMotionEvent' in window) {
+      attachShakeListener();
     }
   }
 
