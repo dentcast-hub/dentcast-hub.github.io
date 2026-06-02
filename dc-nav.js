@@ -161,11 +161,19 @@
 '  <div class="dc-topbar-actions">' +
 '    <a href="/" aria-label="صفحه اصلی دنت‌کست" style="display:flex;align-items:center;margin-left:8px;flex-shrink:0;"><img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;"></a>' +
 '    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="ابزارها" aria-expanded="false"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>' +
+/* Search trigger — now a PERSISTENT one-click top-bar icon (it used to live
+   inside the tool drawer). Keeps the .dcOpenSearch class so the existing
+   delegated handler (openGlobalSearch) is unchanged; an id is added only for
+   targeting/QA. Inline SVG (not emoji) so it never flashes through
+   hydrateUiIcons. A .dc-topbar-sep divider follows it to visually separate the
+   search/utility cluster from the media (podcast/music) cluster. */
+'    <button class="dc-topbar-btn dcOpenSearch" id="btn-search-topbar" aria-label="جستجو"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>' +
+'    <span class="dc-topbar-sep" aria-hidden="true"></span>' +
 /* Podcast player launcher — the icon itself is the toggle (tap to open, tap to
    close) for the global slide-down player drawer that hosts the /player.html
-   iframe (see DC_PLAYER_OVERLAY_HTML + the podcast-drawer block below). The
-   search trigger that used to sit here moved INTO the tool drawer
-   (DC_DRAWER_SEARCH_BTN) to make room. Idle styling is accent-tinted to draw a
+   iframe (see DC_PLAYER_OVERLAY_HTML + the podcast-drawer block below). It sits
+   after the search button + .dc-topbar-sep divider, in the media cluster
+   (podcast + music). Idle styling is accent-tinted to draw a
    little attention; the .is-playing state mirrors the music trigger exactly
    (same .dc-music-eq equalizer + dcGlow), driven by the iframe's audio and kept
    accurate even while the drawer is closed. */
@@ -217,15 +225,16 @@
   var DC_DRAWER_RADAR_BTN =
 '<button class="dc-drawer-tool-seg" type="button" id="btn-radar-topbar" aria-label="رادار"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="m12 12 7-7"/><path d="M12 12h.01"/></svg></span><span class="dc-drawer-tool-txt">رادار</span></button>';
 
-  /* Search trigger as a drawer tool button: the search button used to live in
-     the top bar; it now sits in the drawer to make room for the podcast
-     headphone icon. It keeps the SAME .dcOpenSearch class, so the existing
-     delegated handler (openGlobalSearch) opens the page's own #dcGlobalBox
-     untouched — only its location changed. Injected idempotently into the
+  /* Theme toggle as a drawer tool button: dark-mode moved OFF the floating
+     bottom-left button and INTO the hamburger drawer (search moved the other
+     way — to the top bar). Same .dc-drawer-tool-seg shape as the other drawer
+     items so it's native and RTL-correct. Injected idempotently into the
      existing drawer (same pattern as the radar button) so it appears on every
-     page regardless of which page owns the drawer markup. */
-  var DC_DRAWER_SEARCH_BTN =
-'<button class="dc-drawer-tool-seg dcOpenSearch" type="button" id="btn-search-drawer" aria-label="جستجو"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></span><span class="dc-drawer-tool-txt">جستجو</span></button>';
+     page regardless of which page owns the drawer markup. Its click is routed
+     through the central delegated handler → applyTheme; its moon/sun icon is
+     kept in sync inside applyTheme (alongside #dcdThemeBtn). */
+  var DC_DRAWER_THEME_BTN =
+'<button class="dc-drawer-tool-seg" type="button" id="btn-theme-drawer" aria-label="تغییر تم"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M20.5 14.2A8.2 8.2 0 0 1 9.8 3.5 8.8 8.8 0 1 0 20.5 14.2z"/></svg></span><span class="dc-drawer-tool-txt">تم</span></button>';
 
   /* ── MUSIC PLAYER — panel markup ──────────────────
      A dropdown panel that mirrors #dcToolbarDrawer's open/close pattern.
@@ -421,12 +430,17 @@
       if (drawerInner) drawerInner.insertAdjacentHTML('beforeend', DC_DRAWER_RADAR_BTN);
     }
 
-    /* 3b) Place the search trigger INSIDE the drawer (it moved off the top bar
-           to free a slot for the headphone). Same idempotent pattern as radar;
-           keeps the .dcOpenSearch class so its delegated handler is unchanged. */
-    if (!document.getElementById('btn-search-drawer')) {
-      var drawerInnerS = document.querySelector('#dcToolbarDrawer .dc-toolbar-drawer-inner');
-      if (drawerInnerS) drawerInnerS.insertAdjacentHTML('beforeend', DC_DRAWER_SEARCH_BTN);
+    /* 3b) Place the THEME toggle INSIDE the drawer (it moved off the floating
+           bottom-left button). Same idempotent pattern as radar; its click is
+           wired via the central delegated handler → applyTheme. (Search moved
+           the opposite way — it's now a persistent top-bar icon.) Honored the
+           data-no-theme-toggle="1" opt-out (player.html): such pages get NO
+           theme control anywhere — neither the (now-removed) floating button
+           nor this drawer item. */
+    if (document.body.dataset.noThemeToggle !== '1' &&
+        !document.getElementById('btn-theme-drawer')) {
+      var drawerInnerT = document.querySelector('#dcToolbarDrawer .dc-toolbar-drawer-inner');
+      if (drawerInnerT) drawerInnerT.insertAdjacentHTML('beforeend', DC_DRAWER_THEME_BTN);
     }
 
     /* 4) Music player: inject the panel (a sibling dropdown after the drawer)
@@ -472,6 +486,12 @@
     var drawerBtn = document.getElementById('dcdThemeBtn');
     if (drawerBtn) drawerBtn.innerHTML =
       '<span>' + dcSvgIcon(dark ? 'sun' : 'moon') + '</span><span>تم</span>';
+    /* Mobile hamburger-drawer theme item — keep its moon/sun ico in sync. */
+    var mobileDrawerBtn = document.getElementById('btn-theme-drawer');
+    if (mobileDrawerBtn) {
+      var mIco = mobileDrawerBtn.querySelector('.dc-drawer-tool-ico');
+      if (mIco) mIco.innerHTML = dcSvgIcon(dark ? 'sun' : 'moon');
+    }
   }
   window.dcApplyTheme = applyTheme;
 
@@ -484,25 +504,23 @@
     applyTheme(stored === 'dark' || (stored === null && osDark));
   })();
 
+  /* The dark-mode control now lives INSIDE the hamburger drawer
+     (#btn-theme-drawer, injected above and routed via the central delegated
+     click handler). We no longer create the floating bottom-left button.
+
+     Any legacy inline #dc-theme-toggle (hard-coded in ~22 landing pages and
+     duplicated in index.html) is hidden globally via CSS
+     (dc-theme.css: #dc-theme-toggle{display:none!important}). Because the
+     homepage loads its CSS inline and pulls in NEITHER dc-theme.css NOR
+     dc-nav.css, we ALSO hide it here in JS so the float can't survive on any
+     page that runs this script. We do NOT bind a click handler to it — the
+     drawer item is the single control now.
+
+     The data-no-theme-toggle="1" opt-out (player.html) yields NO theme control
+     anywhere: no floating button is created and the drawer theme item is
+     skipped at injection time. */
   var existingToggle = document.getElementById('dc-theme-toggle');
-  var noToggle = document.body.dataset.noThemeToggle === '1';
-
-  if (!existingToggle && !noToggle) {
-    /* Legacy fallback: page has no inline button, create one */
-    var toggleBtn = document.createElement('button');
-    toggleBtn.id = 'dc-theme-toggle';
-    toggleBtn.setAttribute('aria-label', 'تغییر تم');
-    document.body.appendChild(toggleBtn);
-    existingToggle = toggleBtn;
-  }
-
-  if (existingToggle) {
-    setDcIcon(existingToggle,
-      document.documentElement.getAttribute('data-theme') === 'dark' ? 'sun' : 'moon');
-    existingToggle.addEventListener('click', function () {
-      applyTheme(document.documentElement.getAttribute('data-theme') !== 'dark');
-    });
-  }
+  if (existingToggle) existingToggle.style.display = 'none';
 
   /* Desktop drawer toggle (#dcdThemeBtn) — same handler */
   var themeDrawerBtn = document.getElementById('dcdThemeBtn');
@@ -1059,6 +1077,12 @@
     if (t.closest('#tool-pwa'))     { handlePwaInstall(); return; }
     if (t.closest('#tool-consult')) { window.location.href = 'mailto:info@dentcast.ir'; return; }
     if (t.closest('#tool-about'))   { window.location.href = '/about.html'; return; }
+    /* Dark-mode toggle — moved into the drawer; reuse the shared applyTheme,
+       no separate listener. */
+    if (t.closest('#btn-theme-drawer')) {
+      applyTheme(document.documentElement.getAttribute('data-theme') !== 'dark');
+      return;
+    }
   });
 
   /* ── CLOSE RESULTS ── */
