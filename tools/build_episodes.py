@@ -317,7 +317,6 @@ GLOBAL_SEARCH_HTML = (
 
 THEME_TOGGLE_HTML = (
     '<!-- تم تاگل -->\n'
-    '<button id="dc-theme-toggle" aria-label="تغییر تم"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M20.5 14.2A8.2 8.2 0 0 1 9.8 3.5 8.8 8.8 0 1 0 20.5 14.2z"/></svg></button>\n'
 )
 
 EXTERNAL_SCRIPTS_HTML = (
@@ -325,7 +324,7 @@ EXTERNAL_SCRIPTS_HTML = (
     '<script src="/global-search.js?v=5" defer></script>\n'
     '<script src="/global-search-ui.js?v=1" defer></script>\n'
     '<script src="/shake-search.js?v=1" defer></script>\n'
-    '<script src="/dc-nav.js" defer></script>\n'
+    '<script src="/dc-nav.js?v=13" defer></script>\n'
 )
 
 def render_seo_block(ep_count, hours, years):
