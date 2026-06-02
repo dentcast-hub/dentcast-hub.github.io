@@ -227,6 +227,33 @@
   var DC_DRAWER_SEARCH_BTN =
 '<button class="dc-drawer-tool-seg dcOpenSearch" type="button" id="btn-search-drawer" aria-label="جستجو"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></span><span class="dc-drawer-tool-txt">جستجو</span></button>';
 
+  /* Theme toggle as a drawer tool button (Change 2): dark/light moved OFF the
+     floating control (which is now a persistent Search trigger, see below) and
+     INTO the hamburger drawer. Same .dc-drawer-tool-seg shape as the other
+     tools. The icon is dual-state — applyTheme swaps the .dc-drawer-tool-ico
+     between sun (dark) and moon (light); the initial glyph below is the
+     light-mode moon and is corrected by the applyTheme call on load. Routed
+     through the EXISTING delegated click handler → applyTheme (no 2nd listener).
+     Injected idempotently, mirroring the radar/search pattern. */
+  var DC_DRAWER_THEME_BTN =
+'<button class="dc-drawer-tool-seg" type="button" id="btn-theme-drawer" aria-label="تغییر تم"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M20.5 14.2A8.2 8.2 0 0 1 9.8 3.5 8.8 8.8 0 1 0 20.5 14.2z"/></svg></span><span class="dc-drawer-tool-txt">تم</span></button>';
+
+  /* Floating SEARCH control styling (Change 3). The fixed bottom-left control
+     that used to be the theme toggle is now a persistent SEARCH trigger
+     (#dc-float-search). Single source of styling, injected so it reaches every
+     page — including index.html, which loads NEITHER dc-theme.css NOR
+     dc-nav.css. Border + icon use var(--pr) verbatim — the SAME navy/سورمه‌ای
+     the episodes hero card (#card-episodes / .dc-hero-card) fills with — so it
+     stays theme-aware (navy #022360 in light, accent #5b9cf6 in dark). Border +
+     icon color only; background stays --card-bg (subtle). Hidden on the desktop
+     app-shell (body.dc-desktop-ui) and in content-only view, exactly as the old
+     floating control was. */
+  var DC_FLOAT_SEARCH_CSS =
+'#dc-float-search{position:fixed;bottom:76px;left:14px;z-index:250;width:40px;height:40px;border-radius:var(--r-md);background:var(--card-bg);color:var(--pr);border:1.5px solid var(--pr);box-shadow:var(--card-sh);display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;-webkit-tap-highlight-color:transparent;transition:all var(--tr);}' +
+'#dc-float-search:active{transform:scale(.86);background:var(--surface2);}' +
+'#dc-float-search .dc-svg-icon{width:20px;height:20px;color:var(--pr);}' +
+'body.dc-desktop-ui #dc-float-search,body.dc-content-only #dc-float-search{display:none!important;}';
+
   /* ── MUSIC PLAYER — panel markup ──────────────────
      A dropdown panel that mirrors #dcToolbarDrawer's open/close pattern.
      Compact: the play/pause control and the channel link sit UP on the title
@@ -429,6 +456,24 @@
       if (drawerInnerS) drawerInnerS.insertAdjacentHTML('beforeend', DC_DRAWER_SEARCH_BTN);
     }
 
+    /* 3c) Place the THEME toggle INSIDE the drawer (Change 2). Idempotent, same
+           pattern as radar/search. Routed via the delegated handler → applyTheme.
+           Honors data-no-theme-toggle="1" (player.html) → no theme item there. */
+    if (document.body.dataset.noThemeToggle !== '1' &&
+        !document.getElementById('btn-theme-drawer')) {
+      var drawerInnerT = document.querySelector('#dcToolbarDrawer .dc-toolbar-drawer-inner');
+      if (drawerInnerT) drawerInnerT.insertAdjacentHTML('beforeend', DC_DRAWER_THEME_BTN);
+    }
+
+    /* 3d) Inject the floating-search styling once (Change 3). Reaches every
+           page, including index.html which loads no shared CSS. */
+    if (!document.getElementById('dc-float-search-style')) {
+      var fst = document.createElement('style');
+      fst.id = 'dc-float-search-style';
+      fst.textContent = DC_FLOAT_SEARCH_CSS;
+      (document.head || document.documentElement).appendChild(fst);
+    }
+
     /* 4) Music player: inject the panel (a sibling dropdown after the drawer)
           and its CSS once. Markup only — playback is wired separately and is
           gated to the top-level window (see initMusicPlayer). Idempotent. */
@@ -457,21 +502,27 @@
     }
   })();
 
-  /* ── THEME TOGGLE ─────────────────────────────────
-     Single source of truth for theme behavior.
-     Pages should include <button id="dc-theme-toggle">
-     in markup (no popping in). If absent, we create it.
-     The click handler is ALWAYS bound here; pages must
-     NOT bind their own.
+  /* ── THEME (centralized) ──────────────────────────
+     Single source of truth for theme behavior. The control lives in the
+     hamburger drawer (#btn-theme-drawer, injected above) and — on the desktop
+     app-shell — in the sidebar footer (#dcdThemeBtn). Both are routed through
+     the delegated click handler → applyTheme; pages must NOT bind their own.
+     There is no longer a floating theme button: that slot is now Search.
   ─────────────────────────────────────────────────── */
   function applyTheme(dark) {
     document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
     localStorage.setItem('dc-theme', dark ? 'dark' : 'light');
-    var btn = document.getElementById('dc-theme-toggle');
-    if (btn) setDcIcon(btn, dark ? 'sun' : 'moon');
+    /* Desktop sidebar footer button (#dcdThemeBtn) — sun in dark, moon in light. */
     var drawerBtn = document.getElementById('dcdThemeBtn');
     if (drawerBtn) drawerBtn.innerHTML =
       '<span>' + dcSvgIcon(dark ? 'sun' : 'moon') + '</span><span>تم</span>';
+    /* Mobile hamburger-drawer theme item (#btn-theme-drawer) — same dual-state
+       convention: sun glyph while dark, moon glyph while light. */
+    var mDraw = document.getElementById('btn-theme-drawer');
+    if (mDraw) {
+      var mIco = mDraw.querySelector('.dc-drawer-tool-ico');
+      if (mIco) mIco.innerHTML = dcSvgIcon(dark ? 'sun' : 'moon');
+    }
   }
   window.dcApplyTheme = applyTheme;
 
@@ -484,24 +535,22 @@
     applyTheme(stored === 'dark' || (stored === null && osDark));
   })();
 
-  var existingToggle = document.getElementById('dc-theme-toggle');
-  var noToggle = document.body.dataset.noThemeToggle === '1';
-
-  if (!existingToggle && !noToggle) {
-    /* Legacy fallback: page has no inline button, create one */
-    var toggleBtn = document.createElement('button');
-    toggleBtn.id = 'dc-theme-toggle';
-    toggleBtn.setAttribute('aria-label', 'تغییر تم');
-    document.body.appendChild(toggleBtn);
-    existingToggle = toggleBtn;
-  }
-
-  if (existingToggle) {
-    setDcIcon(existingToggle,
-      document.documentElement.getAttribute('data-theme') === 'dark' ? 'sun' : 'moon');
-    existingToggle.addEventListener('click', function () {
-      applyTheme(document.documentElement.getAttribute('data-theme') !== 'dark');
-    });
+  /* ── FLOATING SEARCH (Change 3) ───────────────────
+     The fixed bottom-left control that used to be the theme toggle is now a
+     persistent one-click SEARCH trigger. We create it once if absent; the
+     .dcOpenSearch class wires it to the existing delegated openGlobalSearch
+     handler — no theme behavior remains on it. It shows the magnifier glyph
+     (same SVG as the header/in-drawer search) and is styled by the injected
+     #dc-float-search-style. Present on every page (incl. player.html); the
+     style hides it on the desktop app-shell and in content-only view. */
+  if (!document.getElementById('dc-float-search')) {
+    var floatSearch = document.createElement('button');
+    floatSearch.id = 'dc-float-search';
+    floatSearch.className = 'dcOpenSearch';
+    floatSearch.type = 'button';
+    floatSearch.setAttribute('aria-label', 'جستجو');
+    floatSearch.innerHTML = dcSvgIcon('search');
+    document.body.appendChild(floatSearch);
   }
 
   /* Desktop drawer toggle (#dcdThemeBtn) — same handler */
@@ -1059,6 +1108,11 @@
     if (t.closest('#tool-pwa'))     { handlePwaInstall(); return; }
     if (t.closest('#tool-consult')) { window.location.href = 'mailto:info@dentcast.ir'; return; }
     if (t.closest('#tool-about'))   { window.location.href = '/about.html'; return; }
+    /* Theme toggle moved into the drawer — reuse applyTheme, no 2nd listener. */
+    if (t.closest('#btn-theme-drawer')) {
+      applyTheme(document.documentElement.getAttribute('data-theme') !== 'dark');
+      return;
+    }
   });
 
   /* ── CLOSE RESULTS ── */
