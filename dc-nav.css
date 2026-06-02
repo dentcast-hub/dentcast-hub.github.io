@@ -68,17 +68,6 @@ body:has(.dc-topbar) {
   background: var(--surface3, #eaecf5);
 }
 
-/* Divider between the utility cluster (hamburger + search) and the media
-   cluster (podcast + music) so the search magnifier isn't confused with the
-   headphone icon. */
-.dc-topbar-sep {
-  width: 1px;
-  align-self: stretch;
-  margin: 6px 1px;
-  background: var(--border2, rgba(2,35,96,.10));
-  flex-shrink: 0;
-}
-
 .dc-svg-icon {
   width: 1em;
   height: 1em;
