@@ -584,47 +584,53 @@
      is NEVER reset on close — we only hide the drawer via transform, so audio
      keeps playing / its position survives a re-open. */
   if (window.top === window.self) {
-    var DC_PLAYER_CSS =
-'#dc-player-dim{position:fixed;inset:0;z-index:100000;background:rgba(0,0,0,.5);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .3s ease,visibility .3s ease;}' +
-'body.dc-player-open #dc-player-dim{opacity:1;visibility:visible;pointer-events:auto;}' +
-'body.dc-player-open{overflow:hidden;}' +
-'#dc-player-drawer{position:fixed;left:0;right:0;bottom:0;z-index:100001;height:86vh;height:86dvh;max-height:86vh;max-height:86dvh;background:#fff;border-radius:18px 18px 0 0;box-shadow:0 -8px 30px rgba(0,0,0,.35);transform:translateY(100%);transition:transform .38s cubic-bezier(.25,.46,.45,.94);display:flex;flex-direction:column;overflow:hidden;}' +
-'body.dc-player-open #dc-player-drawer{transform:translateY(0);}' +
-'#dc-player-drawer .dc-player-grip{position:absolute;top:6px;left:50%;transform:translateX(-50%);width:42px;height:4px;border-radius:2px;background:#cdd3e6;pointer-events:none;}' +
-'#dc-player-drawer .dc-player-bar{flex:0 0 auto;display:flex;align-items:center;justify-content:flex-end;padding:14px 12px 8px;}' +
-'#dc-player-close{width:34px;height:34px;border:none;border-radius:50%;background:#f0f0f5;color:#333;cursor:pointer;display:flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent;transition:transform .15s ease,background .15s ease;}' +
-'#dc-player-close:active{transform:scale(.88);background:#e2e2ee;}' +
-'#dc-player-close .dc-svg-icon{width:20px;height:20px;}' +
-'#dc-player-iframe{flex:1 1 auto;width:100%;border:0;background:#f4f7ff;}' +
-'[data-theme="dark"] #dc-player-drawer{background:#1a2940;}' +
-'[data-theme="dark"] #dc-player-close{background:#2a3a55;color:#cfe2ff;}' +
-'[data-theme="dark"] #dc-player-iframe{background:#1a2940;}';
+    /* NAMESPACE: this shake drawer uses the `dc-shake-*` namespace. dc-nav.js
+       ALREADY ships a separate "podcast overlay" feature that owns DC_PLAYER_CSS,
+       the <style id="dc-player-style">, and #dcPlayerOverlay. Reusing those names
+       made our injection guard (getElementById('dc-player-style')) find the
+       podcast style already present and SKIP injecting ours — so the drawer
+       rendered unstyled. Distinct names keep the two features fully separate. */
+    var DC_SHAKE_CSS =
+'#dc-shake-dim{position:fixed;inset:0;z-index:100000;background:rgba(0,0,0,.5);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .3s ease,visibility .3s ease;}' +
+'body.dc-shake-open #dc-shake-dim{opacity:1;visibility:visible;pointer-events:auto;}' +
+'body.dc-shake-open{overflow:hidden;}' +
+'#dc-shake-drawer{position:fixed;left:0;right:0;bottom:0;z-index:100001;height:86vh;height:86dvh;max-height:86vh;max-height:86dvh;background:#fff;border-radius:18px 18px 0 0;box-shadow:0 -8px 30px rgba(0,0,0,.35);transform:translateY(100%);transition:transform .38s cubic-bezier(.25,.46,.45,.94);display:flex;flex-direction:column;overflow:hidden;}' +
+'body.dc-shake-open #dc-shake-drawer{transform:translateY(0);}' +
+'#dc-shake-drawer .dc-shake-grip{position:absolute;top:6px;left:50%;transform:translateX(-50%);width:42px;height:4px;border-radius:2px;background:#cdd3e6;pointer-events:none;}' +
+'#dc-shake-drawer .dc-shake-bar{flex:0 0 auto;display:flex;align-items:center;justify-content:flex-end;padding:14px 12px 8px;}' +
+'#dc-shake-close{width:34px;height:34px;border:none;border-radius:50%;background:#f0f0f5;color:#333;cursor:pointer;display:flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent;transition:transform .15s ease,background .15s ease;}' +
+'#dc-shake-close:active{transform:scale(.88);background:#e2e2ee;}' +
+'#dc-shake-close .dc-svg-icon{width:20px;height:20px;}' +
+'#dc-shake-iframe{flex:1 1 auto;width:100%;border:0;background:#f4f7ff;}' +
+'[data-theme="dark"] #dc-shake-drawer{background:#1a2940;}' +
+'[data-theme="dark"] #dc-shake-close{background:#2a3a55;color:#cfe2ff;}' +
+'[data-theme="dark"] #dc-shake-iframe{background:#1a2940;}';
 
-    if (!document.getElementById('dc-player-style')) {
+    if (!document.getElementById('dc-shake-style')) {
       var pst = document.createElement('style');
-      pst.id = 'dc-player-style';
-      pst.textContent = DC_PLAYER_CSS;
+      pst.id = 'dc-shake-style';
+      pst.textContent = DC_SHAKE_CSS;
       (document.head || document.documentElement).appendChild(pst);
     }
 
     var dcPlayerIframe = null;
 
     function dcEnsurePlayerEls() {
-      if (!document.getElementById('dc-player-dim')) {
+      if (!document.getElementById('dc-shake-dim')) {
         var pdim = document.createElement('div');
-        pdim.id = 'dc-player-dim';
+        pdim.id = 'dc-shake-dim';
         document.body.appendChild(pdim);
       }
-      var drawer = document.getElementById('dc-player-drawer');
+      var drawer = document.getElementById('dc-shake-drawer');
       if (!drawer) {
         drawer = document.createElement('div');
-        drawer.id = 'dc-player-drawer';
+        drawer.id = 'dc-shake-drawer';
         drawer.setAttribute('role', 'dialog');
         drawer.setAttribute('aria-label', 'پخش‌کننده دنت‌کست');
         drawer.innerHTML =
-          '<span class="dc-player-grip"></span>' +
-          '<div class="dc-player-bar">' +
-            '<button type="button" id="dc-player-close" aria-label="بستن">' +
+          '<span class="dc-shake-grip"></span>' +
+          '<div class="dc-shake-bar">' +
+            '<button type="button" id="dc-shake-close" aria-label="بستن">' +
               dcSvgIcon('x') +
             '</button>' +
           '</div>';
@@ -644,31 +650,31 @@
          /player.html so its own relative fetches resolve from any page depth. */
       if (!dcPlayerIframe) {
         dcPlayerIframe = document.createElement('iframe');
-        dcPlayerIframe.id = 'dc-player-iframe';
+        dcPlayerIframe.id = 'dc-shake-iframe';
         dcPlayerIframe.title = 'DentCast Player';
         dcPlayerIframe.setAttribute('allow', 'autoplay; encrypted-media');
         dcPlayerIframe.src = '/player.html';
         drawer.appendChild(dcPlayerIframe);
       }
-      document.body.classList.add('dc-player-open');
+      document.body.classList.add('dc-shake-open');
     }
 
     /* Close = hide only. We NEVER clear/reset the iframe src, so playback (and
        the player's restored position) survives a re-open. */
     function dcClosePlayer() {
-      document.body.classList.remove('dc-player-open');
+      document.body.classList.remove('dc-shake-open');
     }
 
     function dcTogglePlayer() {
-      if (document.body.classList.contains('dc-player-open')) dcClosePlayer();
+      if (document.body.classList.contains('dc-shake-open')) dcClosePlayer();
       else dcOpenPlayer();
     }
 
     /* Close affordances: the × button or a tap on the dim. */
     document.addEventListener('click', function (e) {
       if (!e.target) return;
-      if ((e.target.closest && e.target.closest('#dc-player-close')) ||
-          e.target.id === 'dc-player-dim') {
+      if ((e.target.closest && e.target.closest('#dc-shake-close')) ||
+          e.target.id === 'dc-shake-dim') {
         dcClosePlayer();
       }
     });
@@ -685,7 +691,7 @@
          • a manual button that opens the player drawer (rules in/out the drawer).
        This isolates which layer is failing without needing DevTools on phone. */
     if (location.hash.indexOf('shaketest') !== -1) {
-      var DC_BUILD = 'dc-nav v17';
+      var DC_BUILD = 'dc-nav v18';
       var dbg = document.createElement('div');
       dbg.id = 'dc-shake-dbg';
       dbg.style.cssText = 'position:fixed;left:8px;bottom:8px;z-index:2147483647;background:rgba(0,0,0,.86);color:#39ff14;font:12px/1.45 monospace;padding:9px 11px;border-radius:8px;max-width:78vw;white-space:pre;direction:ltr;pointer-events:none;';
