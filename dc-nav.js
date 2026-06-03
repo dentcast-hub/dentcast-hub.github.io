@@ -591,13 +591,15 @@
        podcast style already present and SKIP injecting ours — so the drawer
        rendered unstyled. Distinct names keep the two features fully separate. */
     var DC_SHAKE_CSS =
-'#dc-shake-dim{position:fixed;inset:0;z-index:100000;background:rgba(0,0,0,.5);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .3s ease,visibility .3s ease;}' +
+'#dc-shake-dim{position:fixed;inset:0;z-index:100000;background:rgba(0,0,0,.5);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .45s ease,visibility .45s ease;}' +
 'body.dc-shake-open #dc-shake-dim{opacity:1;visibility:visible;pointer-events:auto;}' +
 'body.dc-shake-open{overflow:hidden;}' +
-'#dc-shake-drawer{position:fixed;left:0;right:0;bottom:0;z-index:100001;height:86vh;height:86dvh;max-height:86vh;max-height:86dvh;background:#fff;border-radius:18px 18px 0 0;box-shadow:0 -8px 30px rgba(0,0,0,.35);transform:translateY(100%);transition:transform .38s cubic-bezier(.25,.46,.45,.94);display:flex;flex-direction:column;overflow:hidden;}' +
+/* While the player is open, hide the floating search toggle so it doesn't sit on top of the overlay. */
+'body.dc-shake-open #dc-float-search{display:none!important;}' +
+'#dc-shake-drawer{position:fixed;left:0;right:0;bottom:0;z-index:100001;height:88vh;height:88dvh;max-height:88vh;max-height:88dvh;background:#fff;border-radius:18px 18px 0 0;box-shadow:0 -8px 30px rgba(0,0,0,.35);transform:translateY(100%);transition:transform .55s cubic-bezier(.16,1,.3,1);display:flex;flex-direction:column;overflow:hidden;}' +
 'body.dc-shake-open #dc-shake-drawer{transform:translateY(0);}' +
 '#dc-shake-drawer .dc-shake-grip{position:absolute;top:6px;left:50%;transform:translateX(-50%);width:42px;height:4px;border-radius:2px;background:#cdd3e6;pointer-events:none;}' +
-'#dc-shake-drawer .dc-shake-bar{flex:0 0 auto;display:flex;align-items:center;justify-content:flex-end;padding:14px 12px 8px;}' +
+'#dc-shake-drawer .dc-shake-bar{flex:0 0 auto;display:flex;align-items:center;justify-content:flex-end;padding:7px 8px 2px;}' +
 '#dc-shake-close{width:34px;height:34px;border:none;border-radius:50%;background:#f0f0f5;color:#333;cursor:pointer;display:flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent;transition:transform .15s ease,background .15s ease;}' +
 '#dc-shake-close:active{transform:scale(.88);background:#e2e2ee;}' +
 '#dc-shake-close .dc-svg-icon{width:20px;height:20px;}' +
