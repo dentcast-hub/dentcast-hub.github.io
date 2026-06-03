@@ -684,67 +684,6 @@
     /* Public API (parity with window.dcSearch). */
     window.dcPlayer = { open: dcOpenPlayer, close: dcClosePlayer, toggle: dcTogglePlayer };
 
-    /* ── SHAKE DIAGNOSTIC (opt-in via #shaketest) ───────
-       Hidden for normal users. Open ANY page with #shaketest in the URL (e.g.
-       https://dentcast.org/#shaketest) to see, live:
-         • whether this is the fresh build (version stamp) — rules out stale SW,
-         • whether DeviceMotion events are arriving at all (sensor/permission),
-         • the live magnitude + max delta vs the trigger threshold (sensitivity),
-         • a manual button that opens the player drawer (rules in/out the drawer).
-       This isolates which layer is failing without needing DevTools on phone. */
-    if (location.hash.indexOf('shaketest') !== -1) {
-      var DC_BUILD = 'dc-nav v18';
-      var dbg = document.createElement('div');
-      dbg.id = 'dc-shake-dbg';
-      dbg.style.cssText = 'position:fixed;left:8px;bottom:8px;z-index:2147483647;background:rgba(0,0,0,.86);color:#39ff14;font:12px/1.45 monospace;padding:9px 11px;border-radius:8px;max-width:78vw;white-space:pre;direction:ltr;pointer-events:none;';
-      document.body.appendChild(dbg);
-      var dbgBtn = document.createElement('button');
-      dbgBtn.type = 'button';
-      dbgBtn.textContent = 'باز کردن پلیر (دستی)';
-      dbgBtn.style.cssText = 'position:fixed;right:8px;bottom:8px;z-index:2147483647;background:#0b5fff;color:#fff;border:0;padding:11px 13px;border-radius:8px;font:13px sans-serif;';
-      dbgBtn.addEventListener('click', function () { window.dcPlayer.toggle(); });
-      document.body.appendChild(dbgBtn);
-
-      var _dcDmCount = 0, _dcMaxDelta = 0, _dcPrev = 0, _dcPrimed = false, _dcPerm = 'n/a';
-      var _dcHasDM = ('DeviceMotionEvent' in window);
-      var _dcNeedsPerm = (typeof DeviceMotionEvent !== 'undefined' &&
-                          typeof DeviceMotionEvent.requestPermission === 'function');
-      function _dcPaint() {
-        dbg.textContent =
-          DC_BUILD + '\n' +
-          'DeviceMotionEvent: ' + _dcHasDM + '\n' +
-          'iOS needs permission: ' + _dcNeedsPerm + '\n' +
-          'permission: ' + _dcPerm + '\n' +
-          'motion events: ' + _dcDmCount + '\n' +
-          'max delta: ' + _dcMaxDelta.toFixed(1) + '\n' +
-          'trigger threshold: 12  (need 2x in 600ms)';
-      }
-      _dcPaint();
-      /* On iOS the diagnostic also needs permission; request on first tap. */
-      if (_dcNeedsPerm) {
-        document.addEventListener('pointerdown', function _dcReq() {
-          try {
-            DeviceMotionEvent.requestPermission()
-              .then(function (s) { _dcPerm = s; _dcPaint(); })
-              .catch(function () { _dcPerm = 'error'; _dcPaint(); });
-          } catch (err) { _dcPerm = 'throw'; _dcPaint(); }
-        }, { once: true });
-      }
-      window.addEventListener('devicemotion', function (e) {
-        _dcDmCount++;
-        var a = (e.acceleration && e.acceleration.x != null) ? e.acceleration : e.accelerationIncludingGravity;
-        if (a) {
-          var mag = Math.sqrt((a.x || 0) * (a.x || 0) + (a.y || 0) * (a.y || 0) + (a.z || 0) * (a.z || 0));
-          if (_dcPrimed) {
-            var d = Math.abs(mag - _dcPrev);
-            if (d > _dcMaxDelta) _dcMaxDelta = d;
-          }
-          _dcPrev = mag; _dcPrimed = true;
-        }
-        if (_dcDmCount % 4 === 0) _dcPaint();
-      }, { passive: true });
-    }
-
     /* Shake detection — same threshold/debounce as the old shake-search.js, but
        the action is now dcPlayer.toggle() instead of dcSearch.open(). A short
        cooldown stops a single continuous shake from flapping open/closed. The
