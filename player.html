@@ -402,6 +402,11 @@ body {
   opacity: 0.4;
 }
 
+/* dc-nav.js injects a global floating search toggle (#dc-float-search) on every
+   page, including this one — and since the player is hosted in an iframe by the
+   shake drawer, that toggle ends up sitting on top of the player. It isn't
+   wanted here, so hide it within the player itself. */
+#dc-float-search { display: none !important; }
 
   </style>
     <link rel="stylesheet" href="/dc-theme.css">
