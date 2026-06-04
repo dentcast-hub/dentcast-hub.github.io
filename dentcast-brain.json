@@ -9760,5 +9760,37 @@
       "secondary": [],
       "subtopic": "veneers-laminates"
     }
+  },
+  {
+    "type": "chairside",
+    "id": "chairside-18",
+    "title": "وقتی یک یافته‌ی مبهم، دو احتمال رقیب می‌سازد",
+    "caption": "روایت یک کیس بالینی درباره‌ی یک دندان کراون‌دار که در سمت پالاتالِ آن یک ریشه‌ی تیره و پوسیده، بیرون از محدوده‌ی روکش، دیده می‌شد. در نبودِ رادیوگرافی دو روایت رقیب مطرح است: مارجینِ کراونِ اشتباه با پوسیدگیِ فورکا و جابه‌جاییِ ریشه، یا یک دندان اضافه‌ی مجزا که سال‌ها دست‌نخورده پوسیده است. این یادداشت نشان می‌دهد چرا «حرکت ریشه» یک ادعای مکانیکی است نه مشاهده، و چگونه یک معیار رادیوگرافیک واحد — شمارش و استقلال ریشه‌ها — هر دو فرضیه را هم‌زمان تست می‌کند؛ و درسی درباره‌ی نگه‌داشتن دو احتمال تا فراهم‌شدن داده.",
+    "hashtags": [
+      "#یافته_مبهم",
+      "#مارجین_کراون",
+      "#دندان_اضافه",
+      "#تشخیص_افتراقی",
+      "#پوسیدگی_فورکا",
+      "#قضاوت_بالینی",
+      "#کیس_بالینی",
+      "#رادیوگرافی_تشخیصی"
+    ],
+    "keywords": [
+      "ambiguous intraoral finding diagnosis",
+      "misjudged crown margin vs supernumerary tooth",
+      "submarginal caries maxillary molar furcation",
+      "radiographic differentiation root count independence",
+      "competing diagnostic hypotheses dentistry",
+      "carious palatal root crowned tooth",
+      "clinical judgment versus guess without radiograph",
+      "PA CBCT differential diagnosis tooth"
+    ],
+    "page_url": "/chairside/chairside-18.html",
+    "pillar": {
+      "primary": "treatment-planning",
+      "secondary": [],
+      "subtopic": "comprehensive-diagnosis"
+    }
   }
 ]
