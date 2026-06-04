@@ -203,6 +203,7 @@ Added for migrating in-body emoji like <svg class="dc-svg-icon" viewBox="0 0 24 
 | `icon-sprout`   | Organic leaf + stem       | Growth / natural / regeneration                 |
 | `icon-wrench`   | Wrench                    | Tools / repair / clinical technique             |
 | `icon-bullet`   | Small filled circle       | Inline list bullet / separator                  |
+| `icon-graduation-cap` | Mortarboard + tassel | Education / course / learning series (e.g. Promptologist) |
 
 ### Scientific & dental (added in emoji-migration pass)
 
