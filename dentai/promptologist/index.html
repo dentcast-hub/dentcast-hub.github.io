@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>🧠 پرامپتولوژیست – آموزش هوش مصنوعی برای دندانپزشکان | دنت‌کست</title>
+  <meta name="description" content="پرامپتولوژیست؛ دوره‌ی آموزش هوش مصنوعی برای دندانپزشکان به زبان ساده و کاربردی، که به‌تدریج و قسمت‌به‌قسمت منتشر می‌شود. از تفاوت هوش مصنوعی تشخیصی و مولد تا کار با ابزارهایی مثل ChatGPT.">
+  <link rel="canonical" href="https://dentcast.org/dentai/promptologist/">
+  <link rel="icon" href="/logo-v2.png" type="image/png" sizes="512x512">
+  <link rel="apple-touch-icon" href="/logo-v2.png">
+  <link rel="stylesheet" href="/global-search.css?v=2">
+  <meta name="theme-color" content="#F3F5F7">
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "CollectionPage",
+      "url": "https://dentcast.org/dentai/promptologist/index.html",
+      "name": "🧠 پرامپتولوژیست – آموزش هوش مصنوعی برای دندانپزشکان",
+      "description": "دوره‌ی آموزشی هوش مصنوعی برای دندانپزشکان؛ به زبان ساده و کاربردی، که به‌تدریج و قسمت‌به‌قسمت منتشر می‌شود.",
+      "inLanguage": "fa",
+      "isPartOf": {
+        "@id": "https://dentcast.org/#website"
+      },
+      "author": {
+        "@id": "https://dentcast.org/#person-foad"
+      }
+    }
+  ]
+}
+</script>
+
+  <!-- Theme init — no flash -->
+  <script>
+    (function(){
+      const s=localStorage.getItem('dc-theme');
+      const d=window.matchMedia('(prefers-color-scheme:dark)').matches;
+      if(s==='dark'||(s===null&&d)) document.documentElement.setAttribute('data-theme','dark');
+    })();
+  </script>
+
+  <style>
+/* =====================================================
+   CSS VARIABLES — مطابق index.html
+===================================================== */
+:root{
+  --pr:#022360; --pr-rgb:2,35,96;
+  --ac:#0b5fff; --ac-rgb:11,95,255;
+
+  --bg:#f0f2f5;
+  --surface:#ffffff;
+  --surface2:#f4f6fb;
+  --surface3:#eaecf5;
+  --border:rgba(2,35,96,.10);
+  --border2:rgba(2,35,96,.06);
+
+  --txt:#0a1a33;
+  --txt2:#4a5f85;
+  --txt3:#8a9cbe;
+
+  --card-bg:#ffffff;
+  --card-border:rgba(2,35,96,.09);
+  --card-sh:0 1px 3px rgba(2,35,96,.07),0 4px 14px rgba(2,35,96,.04);
+  --card-sh2:0 4px 18px rgba(2,35,96,.13),0 1px 4px rgba(2,35,96,.07);
+
+  --monitor-sh:inset -6px -6px 14px rgba(2,6,23,.06),inset 6px 6px 14px rgba(255,255,255,.80);
+
+  --tr:.17s cubic-bezier(.4,0,.2,1);
+  --tr2:.26s cubic-bezier(.4,0,.2,1);
+  --r-sm:10px; --r-md:14px; --r-lg:18px; --r-xl:22px; --r-f:999px;
+}
+
+[data-theme="dark"]{
+  --pr:#5b9cf6; --pr-rgb:91,156,246;
+  --ac:#5b9cf6; --ac-rgb:91,156,246;
+
+  --bg:#0e1621;
+  --surface:#17212b; --surface2:#1e2c3a; --surface3:#232e3c;
+  --border:rgba(255,255,255,.08); --border2:rgba(255,255,255,.04);
+
+  --txt:#e8f0ff; --txt2:#8aaac8; --txt3:#4a6a88;
+
+  --card-bg:#1e2c3a; --card-border:rgba(255,255,255,.07);
+  --card-sh:0 1px 3px rgba(0,0,0,.22),0 4px 14px rgba(0,0,0,.14);
+  --card-sh2:0 4px 18px rgba(0,0,0,.28);
+
+  --monitor-sh:inset -6px -6px 12px rgba(0,0,0,.22),inset 6px 6px 12px rgba(255,255,255,.03);
+}
+
+/* =====================================================
+   RESET
+===================================================== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{height:100%;width:100%;}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+  font-size:16px; line-height:1.5;
+  background:var(--bg); color:var(--txt);
+  min-height:100vh;
+  display:flex; flex-direction:column;
+  -webkit-font-smoothing:antialiased;
+  transition:background var(--tr2),color var(--tr2);
+}
+a{text-decoration:none;color:inherit;cursor:pointer;}
+button,input{font:inherit;color:inherit;background:none;border:none;outline:none;cursor:pointer;}
+[hidden]{display:none!important;}
+
+/* =====================================================
+   LAYOUT
+===================================================== */
+.wrap{
+  max-width:680px;
+  margin:0 auto;
+  padding:20px 14px 100px;
+  flex:1;
+}
+
+/* =====================================================
+   هدر صفحه
+===================================================== */
+header{
+  text-align:center;
+  padding:28px 0 20px;
+}
+h1{
+  font-size:1.5rem;
+  font-weight:900;
+  color:var(--pr);
+  letter-spacing:-.3px;
+  transition:color var(--tr2);
+}
+
+/* =====================================================
+   intro — مثل monitor card
+===================================================== */
+.intro{
+  background:var(--card-bg);
+  border:1px solid var(--card-border);
+  border-right:3px solid rgba(var(--pr-rgb),.20);
+  border-radius:var(--r-lg);
+  box-shadow:var(--monitor-sh);
+  padding:14px 16px;
+  margin-bottom:20px;
+  font-size:.88rem;
+  line-height:1.85;
+  color:var(--txt2);
+  transition:all var(--tr2);
+}
+.intro strong{ color:var(--txt); }
+.intro p + p{ margin-top:8px; }
+
+/* =====================================================
+   سرتیتر بخش فهرست
+===================================================== */
+h2{
+  font-size:.88rem;
+  font-weight:800;
+  color:var(--txt);
+  padding-bottom:10px;
+  margin-bottom:14px;
+  border-bottom:1px solid var(--border);
+  transition:color var(--tr2),border-color var(--tr2);
+}
+
+/* =====================================================
+   ai-item — مثل dc-list-card با desc
+===================================================== */
+.ai-list{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+.ai-item{
+  display:block;
+  background:var(--card-bg);
+  border:1px solid var(--card-border);
+  border-right:3px solid rgba(var(--pr-rgb),.28);
+  border-radius:var(--r-lg);
+  box-shadow:var(--card-sh);
+  padding:12px 14px;
+  text-decoration:none;
+  transition:all var(--tr);
+  -webkit-tap-highlight-color:transparent;
+  position:relative;
+  overflow:hidden;
+}
+.ai-item:hover{
+  transform:translateY(-1px);
+  box-shadow:var(--card-sh2);
+  border-right-color:rgba(var(--pr-rgb),.55);
+}
+.ai-item:active{
+  transform:scale(.985);
+  background:var(--surface2);
+}
+
+.ai-title{
+  font-weight:700;
+  font-size:.875rem;
+  color:var(--txt);
+  margin-bottom:5px;
+  line-height:1.45;
+  transition:color var(--tr);
+}
+.ai-item:hover .ai-title{ color:var(--ac); }
+[data-theme="dark"] .ai-item:hover .ai-title{ color:#8ab4f8; }
+
+.ai-desc{
+  font-size:.80rem;
+  color:var(--txt3);
+  line-height:1.6;
+  transition:color var(--tr2);
+}
+
+/* =====================================================
+   قسمت در دست تهیه — soon
+===================================================== */
+.ai-item.soon{
+  opacity:.6;
+  cursor:default;
+  border-right-color:var(--border);
+  box-shadow:none;
+}
+.ai-item.soon:hover{ transform:none; box-shadow:none; border-right-color:var(--border); }
+.ai-item.soon:hover .ai-title{ color:var(--txt); }
+.soon-badge{
+  display:inline-block;
+  font-size:.7rem;
+  font-weight:700;
+  color:var(--txt3);
+  background:var(--surface2);
+  border:1px solid var(--border);
+  border-radius:var(--r-f);
+  padding:2px 10px;
+  margin-right:6px;
+  vertical-align:middle;
+}
+
+/* =====================================================
+   فوتر و دکمه‌ها
+===================================================== */
+footer{
+  text-align:center;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:10px;
+  margin-top:32px;
+  padding-bottom:20px;
+}
+
+.btn-home{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  background:var(--pr);
+  color:#fff;
+  border-radius:var(--r-md);
+  padding:12px 32px;
+  font-weight:800;
+  font-size:.92rem;
+  box-shadow:0 4px 14px rgba(var(--pr-rgb),.28);
+  transition:all var(--tr);
+  text-decoration:none;
+}
+.btn-home:hover{ transform:translateY(-1px); box-shadow:0 6px 20px rgba(var(--pr-rgb),.34); }
+.btn-home:active{ transform:scale(.97); }
+[data-theme="dark"] .btn-home{ background:#2b5278; box-shadow:0 4px 14px rgba(0,0,0,.28); }
+
+.btn-about{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  background:var(--surface2);
+  color:var(--txt2);
+  border:1px solid var(--border);
+  border-radius:var(--r-f);
+  padding:7px 18px;
+  font-weight:600;
+  font-size:.80rem;
+  text-decoration:none;
+  transition:all var(--tr);
+}
+.btn-about:hover{ background:var(--surface3); }
+.btn-about:active{ transform:scale(.97); }
+
+.footer-copy{
+  font-size:.76rem;
+  color:var(--txt3);
+  margin-top:4px;
+}
+.footer-copy strong{ color:var(--ac); }
+[data-theme="dark"] .footer-copy strong{ color:#8ab4f8; }
+
+/* =====================================================
+   دکمه Jump — راست
+===================================================== */
+.dc-jump{
+  position:fixed;
+  right:18px;
+  left:auto;
+  bottom:calc(18px + env(safe-area-inset-bottom, 0px));
+  width:42px; height:42px;
+  border-radius:var(--r-f);
+  background:#022360;
+  border:1px solid #022360;
+  box-shadow:0 4px 16px rgba(var(--pr-rgb),.18);
+  display:grid;
+  place-items:center;
+  opacity:.85;
+  transition:opacity .2s ease, transform .2s ease, background var(--tr2);
+  cursor:pointer;
+  z-index:9999;
+}
+.dc-jump:hover{ opacity:1; transform:translateY(-1px); }
+.dc-jump:active{ transform:scale(.92); }
+.dc-jump svg{
+  width:20px; height:20px;
+  fill:#fff;
+  transition:fill var(--tr2), transform .2s ease;
+}
+.dc-jump.is-up svg{ transform:rotate(180deg); }
+
+@media(max-width:640px){
+  .dc-jump{ bottom:calc(22px + env(safe-area-inset-bottom, 0px)); }
+}
+
+/* =====================================================
+   تم تاگل — چپ
+===================================================== */
+#dc-theme-toggle{
+  position:fixed; bottom:20px; left:14px; z-index:250;
+  width:42px; height:42px; border-radius:var(--r-f);
+  background:#17212b; color:#e8f0ff;
+  border:1px solid rgba(255,255,255,.12);
+  box-shadow:0 4px 16px rgba(0,0,0,.28);
+  display:flex; align-items:center; justify-content:center;
+  font-size:19px; cursor:pointer;
+  transition:all var(--tr);
+}
+#dc-theme-toggle:active{ transform:scale(.86); }
+
+@media(max-width:768px){
+  h1{ font-size:1.3rem; }
+  .wrap{ padding:16px 12px 100px; }
+}
+  </style>
+
+  <script>window.addEventListener('load',function(){!function(t,e,n){t.yektanetAnalyticsObject=n,t[n]=t[n]||function(){t[n].q.push(arguments)},t[n].q=t[n].q||[];var a=new Date,r=a.getFullYear().toString()+"0"+a.getMonth()+"0"+a.getDate()+"0"+a.getHours(),c=e.getElementsByTagName("script")[0],s=e.createElement("script");s.id="ua-script-nzlddHSQ";s.dataset.analyticsobject=n;s.async=1;s.type="text/javascript";s.src="https://cdn.yektanet.com/rg_woebegone/scripts_v3/nzlddHSQ/rg.complete.js?v="+r,c.parentNode.insertBefore(s,c)}(window,document,"yektanet");});</script>
+    <link rel="stylesheet" href="/dc-theme.css">
+<link rel="stylesheet" href="/dc-nav.css?v=12">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "دنت‌کست", "item": "https://dentcast.org/" },
+    { "@type": "ListItem", "position": 2, "name": "DentAI", "item": "https://dentcast.org/dentai/" },
+    { "@type": "ListItem", "position": 3, "name": "پرامپتولوژیست", "item": "https://dentcast.org/dentai/promptologist/" }
+  ]
+}
+  </script>
+</head>
+
+<body>
+<!-- DC NAV: TOP BAR -->
+<header class="dc-topbar">
+  <div class="dc-topbar-actions">
+    <a href="/" aria-label="صفحه اصلی دنت‌کست" style="display:flex;align-items:center;margin-left:8px;flex-shrink:0;"><img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;"></a>
+    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="ابزارها" aria-expanded="false">☰</button>
+    <button class="dc-topbar-btn dcOpenSearch" aria-label="جستجو">🔍</button>
+  </div>
+  <div class="dc-topbar-brand">
+    <div class="dc-topbar-brand-name">DentCast</div>
+    <a href="/about.html" class="dc-topbar-brand-sub">دکتر فواد شهابیان</a>
+  </div>
+</header>
+<div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">
+  <div class="dc-toolbar-drawer-inner">
+    <span class="dc-toolbar-drawer-label">ابزارها</span>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa"><span class="dc-drawer-tool-ico">📱</span><span class="dc-drawer-tool-txt">نصب</span></button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-consult"><span class="dc-drawer-tool-ico">📧</span><span class="dc-drawer-tool-txt">مشاوره</span></button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-about"><span class="dc-drawer-tool-ico">✨</span><span class="dc-drawer-tool-txt">درباره</span></button>
+  </div>
+</div>
+<div id="dcRadarOverlay" class="radar-overlay" aria-hidden="true">
+  <div class="radar-overlay-header">
+    <button id="dcCloseRadarOverlay" class="radar-close-btn">&times;</button>
+    <div class="radar-header-title">رادار دنت‌کست (جایگزین گوگل)</div>
+  </div>
+  <div class="radar-overlay-body">
+    <div class="radar-search-box">
+      <input type="text" id="dcRadarInput" placeholder="نام سایت، زمینه فعالیت یا کلمه کلیدی..." autocomplete="off">
+    </div>
+    <div id="dcRadarResults" class="radar-results">
+      <div class="radar-initial-msg">برای جستجو در بین سایت‌های دندانپزشکی، تایپ کنید...</div>
+    </div>
+  </div>
+</div>
+
+<div id="dc-top"></div>
+
+<div class="wrap">
+
+  <header>
+    <h1>🧠 پرامپتولوژیست</h1>
+  </header>
+
+  <!-- 🔍 Global Search -->
+  <div class="dc-global-filter-box" id="dcGlobalBox">
+    <button class="dc-close-results">✖</button>
+    <h3 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h3>
+    <input id="dcSearch" class="dc-search-input" placeholder="جستجو در همهٔ بخش‌های دنت‌کست…">
+    <div class="dc-filter-list">
+      <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
+      <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
+      <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
+      <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
+      <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
+      <button class="dc-filter-btn active" data-type="meta">metanote</button>
+      <button class="dc-filter-btn active" data-type="chairside">chairside</button>
+      <button class="dc-filter-btn active" data-type="sharehub">Share Hub</button>
+    </div>
+    <div class="dc-results-box" id="dcResults"></div>
+  </div>
+
+  <div class="intro">
+    <p><strong>پرامپتولوژیست</strong> دوره‌ی آموزش هوش مصنوعی برای دندانپزشکان است؛ به زبانی ساده و کاربردی که به‌تدریج و قسمت‌به‌قسمت منتشر می‌شود.</p>
+    <p>هدف این است که دندانپزشک بفهمد این ابزارها واقعاً چطور کار می‌کنند، کجا می‌شود به آن‌ها اعتماد کرد و کجا نه، و چطور باید با آن‌ها حرف زد تا جوابِ درست و قابل‌اتکا گرفت.</p>
+  </div>
+
+  <h2>🎓 فصل ۱ — مبانی</h2>
+
+  <div class="ai-list">
+
+    <a href="prompt1-1.html" class="ai-item">
+      <div class="ai-title">⚡ قسمت ۱ – چرا ChatGPT همان هوش مصنوعیِ رادیوگرافی نیست</div>
+      <div class="ai-desc">تفاوتِ بنیادیِ هوش مصنوعیِ تشخیصی (مثل تشخیص پوسیدگی روی رادیوگرافی) با هوش مصنوعیِ مولد مثل ChatGPT؛ چرا این دو از یک جنس نیستند و چرا خلطِ این دو می‌تواند گران تمام شود.</div>
+    </a>
+
+    <div class="ai-item soon">
+      <div class="ai-title">⚡ قسمت ۲ <span class="soon-badge">به‌زودی</span></div>
+      <div class="ai-desc">ادامه‌ی همین بحث؛ اینکه هرکدام از این دو چطور ساخته شده‌اند، با چه منطقی تصمیم می‌گیرند و چرا خطایشان از یک جنس نیست.</div>
+    </div>
+
+  </div>
+
+  <div id="dc-list-end"></div>
+
+  <button id="dcJumpBtn" class="dc-jump" type="button" aria-label="Jump">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 16.5c-.3 0-.6-.1-.8-.3l-6-6a1.1 1.1 0 0 1 1.6-1.6L12 13.8l5.2-5.2a1.1 1.1 0 0 1 1.6 1.6l-6 6c-.2.2-.5.3-.8.3z"/>
+    </svg>
+  </button>
+
+  <footer class="dc-site-footer">
+    <a href="/dentai/" class="btn-home">📂 برگشت به DentAI</a>
+    <a href="/about.html" class="btn-about">💬 درباره‌ی دکتر فواد شهابیان و دنت‌کست</a>
+    <div class="footer-copy">© 2025 DentCast — طراحی و توسعه توسط <strong>فواد شهابیان</strong></div>
+  </footer>
+
+</div>
+
+<!-- تم تاگل -->
+
+<!-- Theme toggle behavior moved to /dc-nav.js (single source) -->
+<!-- JS (unchanged) -->
+<script src="/global-search.js?v=6"></script>
+<script src="/global-search-ui.js?v=2"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const btn = document.getElementById("dcJumpBtn");
+  const topEl = document.getElementById("dc-top");
+  const endEl = document.getElementById("dc-list-end");
+  if (!btn) return;
+  const BOTTOM_RATIO = 0.85;
+  const TOP_RESET = 20;
+  let isUp = false;
+  function pageHeight() { return document.documentElement.scrollHeight; }
+  function viewportHeight() { return window.innerHeight; }
+  function scrollY() { return window.pageYOffset || document.documentElement.scrollTop; }
+  function nearBottom() { return (scrollY() + viewportHeight()) >= pageHeight() * BOTTOM_RATIO; }
+  function updateState() {
+    if (pageHeight() <= viewportHeight() + 10) { btn.style.opacity = "0.4"; return; }
+    else { btn.style.opacity = ".85"; }
+    isUp = nearBottom();
+    btn.classList.toggle("is-up", isUp);
+
+  }
+  btn.addEventListener("click", function () {
+    if (isUp) {
+      if (topEl) topEl.scrollIntoView({ behavior: "smooth" });
+      else window.scrollTo({ top: 0, behavior: "smooth" });
+    } else {
+      if (endEl) endEl.scrollIntoView({ behavior: "smooth" });
+      else window.scrollTo({ top: pageHeight(), behavior: "smooth" });
+    }
+  });
+  window.addEventListener("scroll", updateState);
+  window.addEventListener("resize", updateState);
+  updateState();
+});
+</script>
+<script src="/dc-nav.js?v=20" defer></script>
+</body>
+</html>
