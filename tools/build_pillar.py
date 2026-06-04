@@ -350,12 +350,11 @@ GLOBAL_SEARCH_HTML = (
     '  </div>\n'
 )
 
-GLOBAL_SEARCH_CSS_LINK = '  <link rel="stylesheet" href="/global-search.css?v=1">\n'
+GLOBAL_SEARCH_CSS_LINK = '  <link rel="stylesheet" href="/global-search.css?v=2">\n'
 
 GLOBAL_SEARCH_SCRIPTS = (
-    '<script src="/global-search.js?v=5"></script>\n'
-    '<script src="/global-search-ui.js?v=1"></script>\n'
-    '<script src="/shake-search.js?v=1"></script>\n'
+    '<script src="/global-search.js?v=6"></script>\n'
+    '<script src="/global-search-ui.js?v=2"></script>\n'
 )
 
 URL_TO_TYPE = [
@@ -605,7 +604,7 @@ def render_page(slug, cfg, intro_html, cards_html, flat_ordered):
         '\n'
         '  <link rel="stylesheet" href="/dc-theme.css">\n'
         '  <link rel="stylesheet" href="/dc-nav.css">\n'
-        '  <link rel="stylesheet" href="/global-search.css?v=1">\n'
+        '  <link rel="stylesheet" href="/global-search.css?v=2">\n'
         '\n'
         '  <link rel="stylesheet" href="/pillar/bonding/bonding.css">\n'
         '\n'
@@ -830,10 +829,9 @@ def render_page(slug, cfg, intro_html, cards_html, flat_ordered):
         '<!-- تم تاگل -->\n'
         '\n'
         '<!-- Theme toggle behavior moved to /dc-nav.js (single source) -->\n'
-        '<script src="/global-search.js?v=5"></script>\n'
-        '<script src="/global-search-ui.js?v=1"></script>\n'
-        '<script src="/shake-search.js?v=1"></script>\n'
-        '<script src="/dc-nav.js?v=13" defer></script>\n'
+        '<script src="/global-search.js?v=6"></script>\n'
+        '<script src="/global-search-ui.js?v=2"></script>\n'
+        '<script src="/dc-nav.js?v=20" defer></script>\n'
         '\n'
         '</body>\n'
         '</html>\n'
@@ -1285,7 +1283,7 @@ def _render_index_page(pillars_info, cards_html):
         '\n'
         '  <link rel="stylesheet" href="/dc-theme.css">\n'
         '  <link rel="stylesheet" href="/dc-nav.css">\n'
-        '  <link rel="stylesheet" href="/global-search.css?v=1">\n'
+        '  <link rel="stylesheet" href="/global-search.css?v=2">\n'
         '\n'
         '  ' + INDEX_INLINE_STYLE + '\n'
         '\n'
@@ -1389,10 +1387,9 @@ def _render_index_page(pillars_info, cards_html):
         '<!-- تم تاگل -->\n'
         '\n'
         '<!-- Theme toggle behavior moved to /dc-nav.js (single source) -->\n'
-        '<script src="/global-search.js?v=5"></script>\n'
-        '<script src="/global-search-ui.js?v=1"></script>\n'
-        '<script src="/shake-search.js?v=1"></script>\n'
-        '<script src="/dc-nav.js?v=13" defer></script>\n'
+        '<script src="/global-search.js?v=6"></script>\n'
+        '<script src="/global-search-ui.js?v=2"></script>\n'
+        '<script src="/dc-nav.js?v=20" defer></script>\n'
         '\n'
         '</body>\n'
         '</html>\n'
@@ -1837,7 +1834,7 @@ section[id^="sec-"]{ scroll-margin-top:160px; }
   </style>
     <link rel="stylesheet" href="/dc-theme.css">
 <link rel="stylesheet" href="/dc-nav.css">
-  <link rel="stylesheet" href="/global-search.css?v=1">
+  <link rel="stylesheet" href="/global-search.css?v=2">
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -2085,8 +2082,8 @@ _GLOSSARY_TAIL = """<div class="dc-global-filter-box" id="dcGlobalBox">
   </div>
   <div class="dc-results-box" id="dcResults"></div>
 </div>
-<script src="/global-search.js?v=5" defer></script>
-<script src="/dc-nav.js?v=13" defer></script>
+<script src="/global-search.js?v=6" defer></script>
+<script src="/dc-nav.js?v=20" defer></script>
 </body>
 </html>
 """
