@@ -156,61 +156,73 @@ h1{
 .pl-capsule{
   display:flex;
   align-items:center;
-  gap:13px;
-  background:linear-gradient(135deg,var(--pr),var(--ac));
-  border-radius:var(--r-xl);
-  padding:15px 17px;
+  gap:14px;
+  background:var(--card-bg);
+  border:1px solid var(--card-border);
+  border-radius:var(--r-lg);
+  box-shadow:var(--card-sh);
+  padding:14px 16px;
   margin-bottom:22px;
-  box-shadow:0 8px 26px rgba(var(--ac-rgb),.30);
   position:relative;
   overflow:hidden;
   text-decoration:none;
-  transition:transform var(--tr),box-shadow var(--tr);
+  transition:transform var(--tr),box-shadow var(--tr),border-color var(--tr);
   -webkit-tap-highlight-color:transparent;
 }
+/* خط کناری گرادیانی — لبه‌ی پیش‌روِ RTL */
 .pl-capsule::before{
   content:"";
-  position:absolute; inset:0;
-  background:linear-gradient(135deg,rgba(255,255,255,.12),transparent 60%);
+  position:absolute; top:0; bottom:0; right:0; width:4px;
+  background:linear-gradient(180deg,var(--ac),var(--pr));
+}
+/* درخشش بسیار ملایم گوشه — حسِ «ویژه» */
+.pl-capsule::after{
+  content:"";
+  position:absolute; top:-45%; right:-8%;
+  width:170px; height:170px;
+  background:radial-gradient(circle,rgba(var(--ac-rgb),.10),transparent 70%);
   pointer-events:none;
 }
 .pl-capsule:hover{
   transform:translateY(-1px);
-  box-shadow:0 12px 32px rgba(var(--ac-rgb),.40);
+  box-shadow:var(--card-sh2);
+  border-color:rgba(var(--ac-rgb),.30);
 }
-.pl-capsule:active{ transform:scale(.985); }
+.pl-capsule:active{ transform:scale(.99); }
 .pl-capsule-ico{
-  width:44px; height:44px; flex-shrink:0;
-  background:rgba(255,255,255,.16);
-  border:1px solid rgba(255,255,255,.24);
-  border-radius:var(--r-md);
+  width:46px; height:46px; flex-shrink:0;
+  background:rgba(var(--ac-rgb),.10);
+  border:1px solid rgba(var(--ac-rgb),.18);
+  border-radius:14px;
   display:flex; align-items:center; justify-content:center;
-  color:#fff; font-size:23px;
+  color:var(--ac); font-size:24px;
   position:relative; z-index:1;
 }
 .pl-capsule-main{ flex:1; min-width:0; position:relative; z-index:1; }
 .pl-capsule-eyebrow{
   display:inline-block;
-  font-size:.62rem; font-weight:800; letter-spacing:.03em;
-  color:#fff;
-  background:rgba(255,255,255,.18);
-  border:1px solid rgba(255,255,255,.24);
+  font-size:.63rem; font-weight:800; letter-spacing:.02em;
+  color:var(--ac);
+  background:rgba(var(--ac-rgb),.10);
+  border:1px solid rgba(var(--ac-rgb),.16);
   padding:2px 9px; border-radius:var(--r-f);
-  margin-bottom:6px;
+  margin-bottom:7px;
 }
 .pl-capsule-title{
-  font-size:.97rem; font-weight:900;
-  color:#fff; line-height:1.35; letter-spacing:-.2px;
+  font-size:.95rem; font-weight:800;
+  color:var(--txt); line-height:1.4; letter-spacing:-.2px;
 }
 .pl-capsule-sub{
-  font-size:.72rem; color:rgba(255,255,255,.80);
+  font-size:.74rem; color:var(--txt3);
   line-height:1.6; margin-top:3px;
 }
 .pl-capsule-arrow{
-  flex-shrink:0; color:#fff; opacity:.92;
+  flex-shrink:0; color:var(--ac); opacity:.85;
   font-size:20px; position:relative; z-index:1;
+  transition:transform var(--tr);
 }
-[data-theme="dark"] .pl-capsule{ box-shadow:0 8px 24px rgba(0,0,0,.36); }
+.pl-capsule:hover .pl-capsule-arrow{ transform:translateX(-3px); }
+[data-theme="dark"] .pl-capsule-ico{ background:rgba(var(--ac-rgb),.15); }
 
 /* =====================================================
    سرتیتر بخش فهرست
