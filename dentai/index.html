@@ -151,6 +151,68 @@ h1{
 .intro strong{ color:var(--txt); }
 
 /* =====================================================
+   کپسول پرامپتولوژیست — ورودی به سری LLM
+===================================================== */
+.pl-capsule{
+  display:flex;
+  align-items:center;
+  gap:13px;
+  background:linear-gradient(135deg,var(--pr),var(--ac));
+  border-radius:var(--r-xl);
+  padding:15px 17px;
+  margin-bottom:22px;
+  box-shadow:0 8px 26px rgba(var(--ac-rgb),.30);
+  position:relative;
+  overflow:hidden;
+  text-decoration:none;
+  transition:transform var(--tr),box-shadow var(--tr);
+  -webkit-tap-highlight-color:transparent;
+}
+.pl-capsule::before{
+  content:"";
+  position:absolute; inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.12),transparent 60%);
+  pointer-events:none;
+}
+.pl-capsule:hover{
+  transform:translateY(-1px);
+  box-shadow:0 12px 32px rgba(var(--ac-rgb),.40);
+}
+.pl-capsule:active{ transform:scale(.985); }
+.pl-capsule-ico{
+  width:44px; height:44px; flex-shrink:0;
+  background:rgba(255,255,255,.16);
+  border:1px solid rgba(255,255,255,.24);
+  border-radius:var(--r-md);
+  display:flex; align-items:center; justify-content:center;
+  color:#fff; font-size:23px;
+  position:relative; z-index:1;
+}
+.pl-capsule-main{ flex:1; min-width:0; position:relative; z-index:1; }
+.pl-capsule-eyebrow{
+  display:inline-block;
+  font-size:.62rem; font-weight:800; letter-spacing:.03em;
+  color:#fff;
+  background:rgba(255,255,255,.18);
+  border:1px solid rgba(255,255,255,.24);
+  padding:2px 9px; border-radius:var(--r-f);
+  margin-bottom:6px;
+}
+.pl-capsule-title{
+  font-size:.97rem; font-weight:900;
+  color:#fff; line-height:1.35; letter-spacing:-.2px;
+}
+.pl-capsule-sub{
+  font-size:.72rem; color:rgba(255,255,255,.80);
+  line-height:1.6; margin-top:3px;
+}
+.pl-capsule-arrow{
+  flex-shrink:0; color:#fff; opacity:.92;
+  font-size:20px; position:relative; z-index:1;
+}
+[data-theme="dark"] .pl-capsule{ box-shadow:0 8px 24px rgba(0,0,0,.36); }
+
+/* =====================================================
    سرتیتر بخش فهرست
 ===================================================== */
 h2{
@@ -406,6 +468,16 @@ footer{
   <div class="intro">
     <p><strong>DentAI</strong> ترکیبی از دندان‌پزشکی و هوش مصنوعی برای خواندن، خلاصه‌سازی و استخراج نکات کلینیکی از مقالات علمی است.</p>
   </div>
+
+  <a href="/dentai/promptologist/" class="pl-capsule">
+    <span class="pl-capsule-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.125em;display:inline-block"><path d="M12 3l1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></svg></span>
+    <span class="pl-capsule-main">
+      <span class="pl-capsule-eyebrow">سری جدید · پرامپتولوژیست</span>
+      <span class="pl-capsule-title">آموزش هوش مصنوعی زبانی برای دندانپزشکان</span>
+      <span class="pl-capsule-sub">از مبانی LLM تا کار با ابزارهایی مثل ChatGPT — قسمت‌به‌قسمت منتشر می‌شود</span>
+    </span>
+    <svg class="pl-capsule-arrow dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.125em;display:inline-block"><path d="m15 18-6-6 6-6"/></svg>
+  </a>
 
   <h2>📚 فهرست پرونده‌های DentAI</h2>
 
