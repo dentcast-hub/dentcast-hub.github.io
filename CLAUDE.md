@@ -16,3 +16,28 @@ This repo powers DentCast. When the user brings new content to publish:
 - `index.html` — homepage with Pulse section + latest-content widget.
 - Each content type has its own directory at the repo root (e.g., `/notecast/`, `/insight/`, `/litecast/`, etc.). Confirm exact paths from the URLs stored in brain entries.
 - `.dentcast/workflows/` — publishing workflows.
+
+## Site-wide invariants
+
+- **Google Analytics 4 (deferred) on every page.** Every HTML page MUST carry the deferred GA4 snippet (measurement ID `G-GMM0WC8X3M`) inside `<head>`. It is lazy-loaded — `gtag.js` is appended only after the `load` event so it never blocks first paint. Do NOT use Google's default async snippet; use the deferred pattern below. Because new pages are cloned from the most recent same-category page, the tag propagates automatically — but always confirm it survived the clone.
+  - The canonical injector is `.github/scripts/inject_ga.py` (idempotent; skips pages that already have it, and pages without a `<head>`). To backfill/verify the whole site: `python3 .github/scripts/inject_ga.py` (or `--check` to fail if any page is missing it).
+  - The build templates emit it too: `GA_DEFERRED_SNIPPET` in `tools/build_episodes.py` and `tools/build_pillar.py` (and the glossary head literal). Keep all of these in sync if the snippet ever changes.
+  - The `.org` and `.ir` codebases are mirrors; the same tag intentionally deploys to both. Do NOT add per-domain logic.
+  - The exact deferred snippet (place inside `<head>`):
+    ```html
+    <!-- Google Analytics (deferred: loads only after the page is fully rendered) -->
+    <script>
+      window.addEventListener('load', function () {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){ dataLayer.push(arguments); }
+        window.gtag = gtag;
+        gtag('js', new Date());
+        gtag('config', 'G-GMM0WC8X3M');
+        var ga = document.createElement('script');
+        ga.async = true;
+        ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-GMM0WC8X3M';
+        document.head.appendChild(ga);
+      });
+    </script>
+    ```
+  - If a Content-Security-Policy is ever added, it must allow `script-src https://www.googletagmanager.com` and `connect-src https://*.google-analytics.com https://*.analytics.google.com`. (No CSP currently exists in this repo.)
