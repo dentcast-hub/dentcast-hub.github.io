@@ -25,15 +25,33 @@ CONTENT_SOURCES = [
     ROOT / "litecast" / "lite-glossary.json",
 ]
 
+# Shared assets cached by the service worker (Cache-First). Including them means
+# the version also bumps on an asset-only change, so cached CSS/JS refreshes too.
+# NOTE: service-worker.js is deliberately excluded — the stamper rewrites its
+# CACHE_NAME, so hashing it would make the version unstable (non-idempotent).
+ASSET_SOURCES = [
+    ROOT / "dc-theme.css",
+    ROOT / "dc-nav.css",
+    ROOT / "dc-nav.js",
+    ROOT / "global-search.css",
+    ROOT / "global-search.js",
+    ROOT / "global-search-ui.js",
+    ROOT / "episodes-drawer.js",
+]
+
+# All inputs to the version hash, in a fixed order for determinism.
+VERSION_INPUTS = CONTENT_SOURCES + ASSET_SOURCES
+
 SERVICE_WORKER = ROOT / "service-worker.js"
 CACHE_PREFIX = "dentcast-assets-"
 
 
 def content_version():
-    """Short hex digest over the concatenated content sources."""
+    """Short hex digest over the concatenated content + asset sources."""
     h = hashlib.sha256()
-    for p in CONTENT_SOURCES:
-        h.update(p.read_bytes())
+    for p in VERSION_INPUTS:
+        if p.exists():
+            h.update(p.read_bytes())
     return h.hexdigest()[:10]
 
 
