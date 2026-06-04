@@ -342,6 +342,7 @@ GLOBAL_SEARCH_HTML = (
     '      <!-- <button class="dc-filter-btn active" data-type="photocast">فوتوکست</button>-->\n'
     '      <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>\n'
     '      <button class="dc-filter-btn active" data-type="dentai">مقالات</button>\n'
+    '      <button class="dc-filter-btn active" data-type="promptologist">پرامپتولوژیست</button>\n'
     '      <button class="dc-filter-btn active" data-type="meta">metanote</button>\n'
     '      <button class="dc-filter-btn active" data-type="chairside">chairside</button>\n'
     '      <button class="dc-filter-btn active" data-type="sharehub">Share Hub</button>\n'
@@ -801,6 +802,7 @@ def render_page(slug, cfg, intro_html, cards_html, flat_ordered):
         '      <!-- <button class="dc-filter-btn active" data-type="photocast">فوتوکست</button>-->\n'
         '      <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>\n'
         '      <button class="dc-filter-btn active" data-type="dentai">مقالات</button>\n'
+        '      <button class="dc-filter-btn active" data-type="promptologist">پرامپتولوژیست</button>\n'
         '      <button class="dc-filter-btn active" data-type="meta">metanote</button>\n'
         '      <button class="dc-filter-btn active" data-type="chairside">chairside</button>\n'
         '      <button class="dc-filter-btn active" data-type="sharehub">Share Hub</button>\n'
@@ -1351,6 +1353,7 @@ def _render_index_page(pillars_info, cards_html):
         '      <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>\n'
         '      <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>\n'
         '      <button class="dc-filter-btn active" data-type="dentai">مقالات</button>\n'
+        '      <button class="dc-filter-btn active" data-type="promptologist">پرامپتولوژیست</button>\n'
         '      <button class="dc-filter-btn active" data-type="meta">metanote</button>\n'
         '      <button class="dc-filter-btn active" data-type="chairside">chairside</button>\n'
         '      <button class="dc-filter-btn active" data-type="sharehub">Share Hub</button>\n'
@@ -2076,6 +2079,7 @@ _GLOSSARY_TAIL = """<div class="dc-global-filter-box" id="dcGlobalBox">
     <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
     <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
     <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
+    <button class="dc-filter-btn active" data-type="promptologist">پرامپتولوژیست</button>
     <button class="dc-filter-btn active" data-type="meta">metanote</button>
     <button class="dc-filter-btn active" data-type="chairside">chairside</button>
     <button class="dc-filter-btn active" data-type="sharehub">Share Hub</button>
