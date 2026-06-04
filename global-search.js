@@ -20,6 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
   "clinical",
   "dentcast_plus",
   "dentai",
+  "promptologist",
   "meta",
   "chairside",
   "sharehub"
@@ -32,6 +33,7 @@ const TYPE_MAP = {
   clinical:       "clinical",
   dentcast_plus:  "dentcast_plus",
   dentai:         "dentai",
+  promptologist:  "promptologist",
   meta:           "meta",
   chairside:      "chairside",
   sharehub:       "sharehub"
@@ -105,12 +107,14 @@ const TYPE_MAP = {
  const _iPuzz = _ic('<path d="M8 3h4v4h3a2 2 0 1 1 0 4h-3v3h3a2 2 0 1 1 0 4h-3v3H8v-3H5a2 2 0 1 1 0-4h3v-3H5a2 2 0 1 1 0-4h3z"/>');
  const _iToot = _ic('<path d="M8.5 3.5c1.2 0 2 .6 3.5.6s2.3-.6 3.5-.6c2 0 3.5 1.6 3.5 4 0 2.8-1.5 4.4-2.2 7.4-.7 3-1.4 5.6-3 5.6-1.2 0-1.1-3.5-1.8-3.5s-.6 3.5-1.8 3.5c-1.6 0-2.3-2.6-3-5.6C6.5 11.9 5 10.3 5 7.5c0-2.4 1.5-4 3.5-4z"/>');
  const _iLink = _ic('<path d="M10 13a5 5 0 0 0 7.1 0l2-2a5 5 0 0 0-7.1-7.1l-1.1 1.1"/><path d="M14 11a5 5 0 0 0-7.1 0l-2 2A5 5 0 0 0 12 20.1l1.1-1.1"/>');
+ const _iSpark = _ic('<path d="M12 3l1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/>');
  const labelMap = {
   dentcast:      _iMic  + " دنت‌کست — اپیزود " + item.episode,
   notecast:      _iNote + " نوت‌کست — " + title,
   clinical:      _iBulb + " نکته کلینیکی — " + title,
   dentcast_plus: _iPlay + " دنت‌کست+ — " + title,
   dentai:        _iBook + " مقاله — " + title,
+  promptologist: _iSpark + " پرامپتولوژیست — " + title,
   meta:          _iPuzz + " متانوت — " + title,
   chairside:     _iToot + " چرساید — " + title,
   sharehub:      _iLink + " Share Hub — " + title
