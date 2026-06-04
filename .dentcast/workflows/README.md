@@ -473,18 +473,33 @@ Use the sentence + hyperlink word from intake Question 5.
 - The chosen word is hyperlinked to the new content's page URL.
 - Match exact HTML/classes of other Pulse items.
 
-### 7. Cache-bust the latest-content widget
+### 7. Bump the site content version (cache-bust)
 
-The latest-content widget automatically displays the last 30 entries of `dentcast-brain.json`; no logic changes needed. Only do this: find where `dentcast-brain.json` is fetched with a version query string (`?v=<N>`) and increment it (e.g. `?v=5` → `?v=6`) so the cache serves the fresh file. If there's no version param, leave it. Nothing else in this step.
+Every publish must change a **site-wide content version** so browsers (and the PWA service worker) are forced to pick up the new content instead of serving stale caches. The version is **derived from a hash of the content sources of truth** (`dentcast-brain.json` + `glossary/glossary.json` + `litecast/lite-glossary.json`), so it changes automatically whenever any content is published — never hand-pick or manually increment a number.
+
+This is done by a builder, not by hand:
+
+```bash
+python tools/stamp-version.py
+```
+
+It computes `ver = sha256(content sources)[:10]` and stamps it into **two** places, keeping them consistent:
+- **`service-worker.js`** → `CACHE_NAME = 'dentcast-assets-<ver>'`. On the next visit the SW activates, **purges every old cache**, and re-fetches assets — so the whole site (HTML is already network-first, the brain is already `no-store`, and now cached CSS/JS/images too) comes back consistent with the new content.
+- Every **`dentcast-brain.json?v=<ver>`** fetch URL in the HTML (currently `index.html` ×2 and `player.html`) → so any intermediary/CDN cache that ignores `no-store` is still defeated.
+
+This step is part of the rebuild (step 8) and must run from a state that reflects `main` (same as the other builders). Report the old → new version.
+
+**Builder consistency:** if any builder template ever emits a `dentcast-brain.json?v=` URL or a `CACHE_NAME`, it must NOT hard-code a stale value — let `tools/stamp-version.py` own the version and run it **last** in the build so it overwrites whatever the other builders emitted. (Today the generated pillar/glossary pages don't fetch the brain with a version and don't define `CACHE_NAME`, so only `service-worker.js`, `index.html`, and `player.html` carry the version.)
 
 ### 8. Rebuild
 
 **Per Hard Rule 8, run these builders only from a working state that reflects `main`** (run from `main`, or merge `main` into the working branch first) — a feature branch's builder scripts may be stale.
 
-Run both builders from the project root, in this order. Capture stdout/stderr for both; on error, stop and report verbatim.
+Run the builders from the project root, in this order. Capture stdout/stderr for each; on error, stop and report verbatim.
 
 1. **Homepage / main-index builder.** Run `python tools/update-homepage-counters.py`.
 2. **Pillar builder — always run `all`.** Run `python tools/build_pillar.py all` (rebuilds every `/pillar/<slug>/index.html`, the pillar landing page, AND `/glossary/index.html`). Run unconditionally, regardless of whether the new content's pillar is structured or not — the call is cheap, idempotent, and catches cross-pillar effects. The `glossary` target is part of `all`; if you ever touch `glossary/glossary.json` directly (adding/editing a term, fixing a URL, etc.) you MUST re-run at minimum `python tools/build_pillar.py glossary` — the page is no longer client-rendered, so a JSON edit alone will not surface on the live page until the build runs. Never hand-edit `/glossary/index.html`; it is generated. Other build targets: `python tools/build_pillar.py <pillar-slug>` (single pillar), `python tools/build_pillar.py index` (pillar landing only), `python tools/build_pillar.py glossary` (glossary only).
+3. **Version stamper — always run LAST.** Run `python tools/stamp-version.py` (step 7). It must run **after** the other builders so the content hash reflects the final state and so it overwrites any version strings they emitted. Report the old → new content version.
 
 After the pillar builder finishes, verify:
 - **When the entry's pillar is structured:** the new content appears under the correct pillar + subtopic in the regenerated `/pillar/<pillar.primary>/index.html`. Report the section it landed in.
