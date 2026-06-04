@@ -176,6 +176,8 @@ Clone the previous same-category page exactly — identical HTML tree, CSS class
 
 If the category has no on-disk page (data-only), skip this and go to step 4.
 
+**Google Analytics tag (every page).** The deferred GA4 snippet (measurement ID `G-GMM0WC8X3M`) must be present in the new page's `<head>`. Because you cloned the previous same-category page — which already carries it — it should come across automatically; **verify it survived the clone and appears exactly once**. If it's missing (e.g. an older template), run `python3 .github/scripts/inject_ga.py` to backfill it (idempotent — it skips pages that already have it). It is the lazy-loaded pattern (loads `gtag.js` only on the `load` event) — never swap in Google's default async snippet. The `.org`/`.ir` mirrors share this tag; no per-domain logic. If you ever introduce a Content-Security-Policy, it must allow `script-src https://www.googletagmanager.com` and `connect-src https://*.google-analytics.com https://*.analytics.google.com`.
+
 ### 2.4. Semantic pillar & subtopic determination (propose + confirm)
 
 Decide the entry's `pillar.primary` and — when that pillar is structured — its `pillar.subtopic` **here, once**, before any step consumes them (the pillar capsule in step 2.5, and the brain write in step 5). Per **Hard Rule 6**, this is the **only** place the decision is made; later steps (5, 5.5) record and verify it but never re-decide it. Matching is genuinely **semantic** (conceptual relevance of the new content), **never** keyword/string matching.

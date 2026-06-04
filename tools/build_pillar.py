@@ -32,6 +32,30 @@ from collections import defaultdict
 from pathlib import Path
 
 # -------------------------------------------------------------------
+# Google Analytics 4 — deferred (lazy-loaded) so it never blocks first
+# paint. gtag.js is appended only after the page's `load` event. This
+# block must appear in the <head> of every generated page. The .org and
+# .ir codebases are mirrors; the same tag intentionally deploys to both
+# (no per-domain logic). Keep in sync with .github/scripts/inject_ga.py.
+# -------------------------------------------------------------------
+GA_DEFERRED_SNIPPET = (
+    '  <!-- Google Analytics (deferred: loads only after the page is fully rendered) -->\n'
+    '  <script>\n'
+    "    window.addEventListener('load', function () {\n"
+    '      window.dataLayer = window.dataLayer || [];\n'
+    '      function gtag(){ dataLayer.push(arguments); }\n'
+    '      window.gtag = gtag;\n'
+    "      gtag('js', new Date());\n"
+    "      gtag('config', 'G-GMM0WC8X3M');\n"
+    "      var ga = document.createElement('script');\n"
+    '      ga.async = true;\n'
+    "      ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-GMM0WC8X3M';\n"
+    '      document.head.appendChild(ga);\n'
+    '    });\n'
+    '  </script>\n'
+)
+
+# -------------------------------------------------------------------
 # Pillar-specific copy & metadata.
 # Add a new entry to PILLARS to build a new pillar page; the rest of
 # the script is data-driven.
@@ -575,6 +599,7 @@ def render_page(slug, cfg, intro_html, cards_html, flat_ordered):
         '<!DOCTYPE html>\n'
         '<html lang="fa" dir="rtl">\n'
         '<head>\n'
+        + GA_DEFERRED_SNIPPET +
         '  <meta charset="UTF-8">\n'
         '  <meta name="viewport" content="width=device-width, initial-scale=1">\n'
         '  <title>' + esc(cfg["page_title"]) + '</title>\n'
@@ -1255,6 +1280,7 @@ def _render_index_page(pillars_info, cards_html):
         '<!DOCTYPE html>\n'
         '<html lang="fa" dir="rtl">\n'
         '<head>\n'
+        + GA_DEFERRED_SNIPPET +
         '  <meta charset="UTF-8">\n'
         '  <meta name="viewport" content="width=device-width, initial-scale=1">\n'
         '  <title>' + esc(page_title) + '</title>\n'
@@ -1503,6 +1529,20 @@ def _build_glossary_jsonld(terms_sorted):
 _GLOSSARY_HEAD_TOP = """<!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
+  <!-- Google Analytics (deferred: loads only after the page is fully rendered) -->
+  <script>
+    window.addEventListener('load', function () {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-GMM0WC8X3M');
+      var ga = document.createElement('script');
+      ga.async = true;
+      ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-GMM0WC8X3M';
+      document.head.appendChild(ga);
+    });
+  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>دانشنامه | DentCast</title>
