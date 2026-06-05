@@ -291,7 +291,7 @@
    looked like nothing happened. Anchored like this it floats into view wherever
    you are, exactly like the hamburger drawer. */
 '.dc-music-panel{position:fixed;top:57px;left:0;right:0;width:100%;z-index:199;box-sizing:border-box;overflow:hidden;max-height:0;opacity:0;background:var(--surface2);border-bottom:1px solid var(--border);transition:max-height .28s cubic-bezier(.4,0,.2,1),opacity .22s ease;}' +
-'.dc-music-inner{padding:12px 14px;}' +
+'.dc-music-inner{padding:18px 14px 20px;}' +
 /* Compact head row: play/pause (primary) + text block + channel (secondary),
    all pulled up together — no separate bottom band. */
 '.dc-music-head{display:flex;align-items:center;gap:10px;}' +
@@ -300,15 +300,15 @@
 '.dc-music-title{font-size:.9rem;font-weight:700;line-height:1.35;color:var(--txt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}' +
 '.dc-music-artist{font-size:.7rem;font-weight:600;color:var(--ac);}' +
 '.dc-music-artist:empty{display:none;}' +
-'.dc-music-desc{font-size:.7rem;line-height:1.5;color:var(--txt3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}' +
+'.dc-music-desc{font-size:.7rem;line-height:1.5;color:var(--txt3);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}' +
 '.dc-music-desc:empty{display:none;}' +
 /* Controls column: forward (top) stacked over play/pause (bottom), with a gap
    between them so each is a comfortable, distinct tap target. */
-'.dc-music-controls{display:flex;flex-direction:column;align-items:center;gap:10px;width:44px;flex-shrink:0;}' +
+'.dc-music-controls{display:flex;flex-direction:column;align-items:center;gap:10px;width:52px;flex-shrink:0;}' +
 /* Forward + play/pause: small refined accent icons, transparent, each a square
    touch target separated by the column gap. */
-'.dc-music-skip,.dc-music-playpause{display:inline-flex;align-items:center;justify-content:center;width:100%;height:24px;border:0;border-radius:999px;background:transparent;color:var(--ac);cursor:pointer;padding:0;transition:transform .12s ease,background .15s ease;-webkit-tap-highlight-color:transparent;}' +
-'.dc-music-skip .dc-svg-icon,.dc-music-playpause .dc-svg-icon{width:16px;height:16px;fill:currentColor;stroke:none;animation:dcMusicPop .18s ease;}' +
+'.dc-music-skip,.dc-music-playpause{display:inline-flex;align-items:center;justify-content:center;width:100%;height:30px;border:0;border-radius:999px;background:transparent;color:var(--ac);cursor:pointer;padding:0;transition:transform .12s ease,background .15s ease;-webkit-tap-highlight-color:transparent;}' +
+'.dc-music-skip .dc-svg-icon,.dc-music-playpause .dc-svg-icon{width:22px;height:22px;fill:currentColor;stroke:none;animation:dcMusicPop .18s ease;}' +
 '.dc-music-skip[disabled],.dc-music-playpause[disabled]{opacity:.35;cursor:default;}' +
 '.dc-music-skip:not([disabled]):hover,.dc-music-playpause:not([disabled]):hover{background:rgba(var(--ac-rgb),.10);}' +
 '.dc-music-skip:not([disabled]):active,.dc-music-playpause:not([disabled]):active{transform:scale(.86);}' +
