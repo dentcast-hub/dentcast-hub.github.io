@@ -1419,6 +1419,12 @@ body.dc-desktop-ui #dc-desktop-root{
 }
 .dcd-subitem-ico{ font-size:12.5px; flex-shrink:0; }
 .dcd-subitem-lbl{ flex:1; }
+/* Faded sub-caption under a tree item's label (e.g. Promptologist) */
+.dcd-subitem-cap{
+  display:block; font-size:9px; font-weight:500;
+  color:var(--sb-txt2); opacity:.6; margin-top:1px; line-height:1.3;
+}
+.dcd-subitem.active .dcd-subitem-cap{ opacity:.72; }
 
 /* Direct links (non-expandable nav items) */
 .dcd-navlink{
@@ -3138,6 +3144,7 @@ a.dc-list-card--pillar {
           <button class="dcd-subitem" data-type="notecast" data-label="NoteCast" data-src="notecast"><span class="dcd-subitem-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M8 13h8"/><path d="M8 17h5"/></svg></span><span class="dcd-subitem-lbl">NoteCast</span></button>
           <button class="dcd-subitem" data-type="dentcast_plus" data-label="DentCast+" data-src="brain"><span class="dcd-subitem-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="10"/><path d="m10 8 6 4-6 4z"/></svg></span><span class="dcd-subitem-lbl">DentCast+</span></button>
           <button class="dcd-subitem" data-type="dentai" data-label="DentAI" data-src="brain"><span class="dcd-subitem-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="5" y="8" width="14" height="10" rx="3"/><path d="M12 8V4"/><circle cx="9" cy="13" r="1"/><circle cx="15" cy="13" r="1"/><path d="M9 18v2"/><path d="M15 18v2"/></svg></span><span class="dcd-subitem-lbl">DentAI</span></button>
+          <button class="dcd-subitem" data-type="promptologist" data-label="پرامپتولوژیست" data-src="brain"><span class="dcd-subitem-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="m7 9 3 3-3 3"/><path d="M13 15h4"/></svg></span><span class="dcd-subitem-lbl">پرامپتولوژیست<small class="dcd-subitem-cap">هوش مصنوعی برای دندانپزشکان</small></span></button>
           <button class="dcd-subitem" data-type="sharehub" data-label="Share Hub" data-src="sharehub"><span class="dcd-subitem-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M10 13a5 5 0 0 0 7.1 0l2-2a5 5 0 0 0-7.1-7.1l-1.1 1.1"/><path d="M14 11a5 5 0 0 0-7.1 0l-2 2A5 5 0 0 0 12 20.1l1.1-1.1"/></svg></span><span class="dcd-subitem-lbl">Share Hub</span></button>
           <button class="dcd-subitem" data-mode="viewer" data-viewer-url="/episodes.html" data-label="اپیزودها"><span class="dcd-subitem-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M3 14a9 9 0 0 1 18 0"/><path d="M5 14h3v7H5a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2z"/><path d="M19 14h-3v7h3a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2z"/></svg></span><span class="dcd-subitem-lbl">اپیزودها</span></button>
         </div>
