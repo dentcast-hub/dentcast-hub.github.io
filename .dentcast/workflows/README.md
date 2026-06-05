@@ -290,6 +290,8 @@ Every content type has its own landing page that lists its entries (e.g. `/share
 
 **Glossary note:** glossary term pages and `/glossary/index.html` are **generated** from `glossary/glossary.json` by `tools/build_pillar.py glossary` (part of `all`). Never hand-edit `/glossary/index.html`; edit the JSON (if applicable) and let step 8's build regenerate it.
 
+**Episodes note:** the episodes landing page is `/episodes.html` (not `/episodes/index.html`, which is only a redirect). It is **generated** — a fully static build produced by `tools/build_episodes.py` from `dentcast.json` (+ brain). It is **NOT** client-rendered, so appending to `dentcast.json` in step 5 is **not enough**: the new episode appears under `/episodes/` only after `tools/build_episodes.py` runs in **step 8** (builder #3). Never hand-edit `/episodes.html`. Do not assume it picks up new episodes at runtime.
+
 **Verify after edit:** the landing page now links to the new entry exactly once, the only diff is that single added link (for hand-maintained pages), and the link target/label are correct.
 
 ### 3. Date / meta double-check
@@ -516,11 +518,14 @@ Run the builders from the project root, in this order. Capture stdout/stderr for
 
 1. **Homepage / main-index builder.** Run `python tools/update-homepage-counters.py`.
 2. **Pillar builder — always run `all`.** Run `python tools/build_pillar.py all` (rebuilds every `/pillar/<slug>/index.html`, the pillar landing page, AND `/glossary/index.html`). Run unconditionally, regardless of whether the new content's pillar is structured or not — the call is cheap, idempotent, and catches cross-pillar effects. The `glossary` target is part of `all`; if you ever touch `glossary/glossary.json` directly (adding/editing a term, fixing a URL, etc.) you MUST re-run at minimum `python tools/build_pillar.py glossary` — the page is no longer client-rendered, so a JSON edit alone will not surface on the live page until the build runs. Never hand-edit `/glossary/index.html`; it is generated. Other build targets: `python tools/build_pillar.py <pillar-slug>` (single pillar), `python tools/build_pillar.py index` (pillar landing only), `python tools/build_pillar.py glossary` (glossary only).
-3. **Version stamper — always run LAST.** Run `python tools/stamp-version.py` (step 7). It must run **after** the other builders so the content hash reflects the final state and so it overwrites any version strings they emitted. Report the old → new content version.
+3. **Episodes landing-page builder — MANDATORY whenever the publish touched `dentcast.json` (i.e. any episode publish).** When the locked category is a core podcast **episode** or any **dentcast-typed** entry — i.e. whenever a new entry was appended to `dentcast.json` and/or a new `/episodes/episode-*.html` page was created — run `python tools/build_episodes.py`. This regenerates the **fully static** `episodes.html` landing page (the episode list, featured card, stats and Jalali dates are baked in at build time — `episodes.html` is **not** client-rendered from JSON, so a `dentcast.json` edit alone will NOT surface the new episode under `/episodes/` until this build runs). It reads only `dentcast.json` (+ `dentcast-brain.json` for captions/tags) and writes only `episodes.html`; it never touches individual episode pages, so any hand-added cross-links (steps 4.8/4.9) are safe. Skip it **only** for non-episode types that don't write to `dentcast.json`. (`episodes/index.html` is just a redirect to `/episodes.html` — never hand-edit it.)
+4. **Version stamper — always run LAST.** Run `python tools/stamp-version.py` (step 7). It must run **after** the other builders so the content hash reflects the final state and so it overwrites any version strings they emitted. Report the old → new content version.
 
 After the pillar builder finishes, verify:
 - **When the entry's pillar is structured:** the new content appears under the correct pillar + subtopic in the regenerated `/pillar/<pillar.primary>/index.html`. Report the section it landed in.
 - **When the entry's pillar is not structured:** confirm explicitly that the entry was **not** forced into any pillar page (it has no structured pillar to belong to, and `pillar.subtopic` is `null`). Note this in the report rather than skipping the check.
+
+**For episode publishes, also verify the episodes builder took:** confirm the new episode now appears as a real `<a href="/episodes/episode-N.html">` in the regenerated `episodes.html` (e.g. `grep -c "episode-N.html" episodes.html` ≥ 1). If it's missing, `build_episodes.py` did not run — the publish is incomplete.
 
 ## Final output summary
 
@@ -541,6 +546,6 @@ After the pillar builder finishes, verify:
   - **4.9 (related links on the new page):** for episodes, confirm this targeted the **«محتوای مرتبط»** block (not skipped due to the naming difference); the related brain entries considered (sibling series parts first), how many slots were free under the 5-cap, which links were proposed/added, and the remaining-budget math. An empty result is acceptable **only** as a documented "at cap" / "0 qualifying entries".
   - Explicitly confirm that **none** of 4.7/4.8/4.9 was skipped on the grounds that the cloned/previous/sibling page lacked such links (a Hard-Rule-11 violation).
 - Pillar/subtopic verification (step 5.5): confirmation that the recorded `pillar.primary` and `pillar.subtopic` are **identical** to what was confirmed in step 2.4 (untouched by steps 5/5.5); resulting `pillar.subtopic` (slug if structured, `null` if not); confirmation that no new keys were added to the `pillar` object or as siblings, that the `subtopic` key is present in every case, and that the step-2.5 capsule / episode pillar link is consistent with `pillar.primary`
-- Builder runs: each command + full stdout/stderr (`python tools/update-homepage-counters.py` and `python tools/build_pillar.py all`); confirmation that the new content appears in the regenerated pillar page when a structured pillar was assigned
+- Builder runs: each command + full stdout/stderr (`python tools/update-homepage-counters.py`, `python tools/build_pillar.py all`, `python tools/build_episodes.py` for episode publishes, and `python tools/stamp-version.py` LAST); confirmation that the new content appears in the regenerated pillar page when a structured pillar was assigned, **and (for episodes) that the new episode appears in the regenerated `episodes.html`**
 - Confirmation the new entry appears in the latest-content widget data
 - List of all modified file paths
