@@ -1412,6 +1412,96 @@
         "secondary": [],
         "subtopic": "tmd-orofacial-pain"
       }
+    },
+    {
+      "slug": "centric-relation",
+      "title": "Centric Relation",
+      "fa_title": "رابطه‌ی مرکزی",
+      "synonyms": [
+        "رابطه مرکزی",
+        "سنتریک ریلیشن",
+        "رابطه‌ی سنتریک",
+        "centric relation",
+        "CR"
+      ],
+      "url": "/glossary/centric-relation.html",
+      "pillar": {
+        "primary": "occlusion",
+        "secondary": [],
+        "subtopic": "occlusal-analysis-adjustment"
+      }
+    },
+    {
+      "slug": "overdenture",
+      "title": "Overdenture",
+      "fa_title": "اوردنچر",
+      "synonyms": [
+        "اوردنچر",
+        "روکش‌دنچر",
+        "پروتز متکی بر ریشه",
+        "اوردنچر متکی بر ایمپلنت",
+        "overdenture"
+      ],
+      "url": "/glossary/overdenture.html",
+      "pillar": {
+        "primary": "removable-pros",
+        "secondary": [],
+        "subtopic": "implant-overdentures"
+      }
+    },
+    {
+      "slug": "intraoral-scanner",
+      "title": "Intraoral Scanner",
+      "fa_title": "اسکنر داخل‌دهانی",
+      "synonyms": [
+        "اسکنر داخل دهانی",
+        "اسکنر دهانی",
+        "قالب‌گیری دیجیتال",
+        "IOS",
+        "intraoral scanner"
+      ],
+      "url": "/glossary/intraoral-scanner.html",
+      "pillar": {
+        "primary": "digital",
+        "secondary": [],
+        "subtopic": "intraoral-scanning"
+      }
+    },
+    {
+      "slug": "smile-design",
+      "title": "Smile Design",
+      "fa_title": "طراحی لبخند",
+      "synonyms": [
+        "طراحی لبخند",
+        "دیزاین لبخند",
+        "طراحی دیجیتال لبخند",
+        "DSD",
+        "smile design",
+        "digital smile design"
+      ],
+      "url": "/glossary/smile-design.html",
+      "pillar": {
+        "primary": "esthetic",
+        "secondary": [],
+        "subtopic": "smile-design"
+      }
+    },
+    {
+      "slug": "inlay",
+      "title": "Inlay",
+      "fa_title": "اینله",
+      "synonyms": [
+        "اینله",
+        "ترمیم غیرمستقیم داخل‌تاجی",
+        "اینله سرامیکی",
+        "inlay"
+      ],
+      "url": "/glossary/inlay.html",
+      "pillar": {
+        "primary": "fixed-pros",
+        "secondary": [],
+        "subtopic": "crowns-onlays"
+      }
     }
   ]
 }
