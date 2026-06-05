@@ -3909,9 +3909,16 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
         });
       });
 
-      /* Collect page-specific <style> blocks from <head> */
+      /* Collect page-specific <style> blocks from <head>.
+         Strip document-level rules (:root / html / body) so a fetched
+         page's dark-first tokens (e.g. --bg:#0b1220) and its body
+         background can't override the viewer's own theme and turn the
+         light-mode viewer dark. Page-scoped rules (body.x, body .y,
+         .glass-box…) are kept untouched. */
       const headStyleText = Array.from(doc.querySelectorAll('head style'))
-        .map(st => st.textContent).join('\n');
+        .map(st => st.textContent).join('\n')
+        .replace(/([^{}]+)\{[^{}]*\}/g, (blk, sel) =>
+          sel.split(',').every(p => /^\s*(?::root|html|body)\s*$/.test(p)) ? '' : blk);
 
       /* Collect inline <script> blocks that sit OUTSIDE .article-content-wrap
          in the fetched body (e.g. the episode audio-player script).
@@ -4026,18 +4033,45 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
       if(!document.body.classList.contains('dc-desktop-ui')) return;
       const a = e.target.closest('a[href]');
       if(!a) return;
-      let path;
-      try{ path = new URL(a.href, location.origin).pathname; }catch(x){ return; }
+      /* Only intercept same-origin links; leave external/mailto/tel/hash alone */
+      let u;
+      try{ u = new URL(a.href, location.origin); }catch(x){ return; }
+      if(u.origin !== location.origin) return;
+      const path = u.pathname;
       /* Individual episode page → load in col-C */
       if(EP_PAGE_RE.test(path)){
         e.preventDefault();
         openContent(path, a.textContent.trim() || path);
         return;
       }
-      /* Back-to-episodes link → reopen the episodes viewer */
+      /* Episodes listing → reopen the episodes viewer */
       if(path === '/episodes/' || path === '/episodes/index.html' || path === '/episodes.html'){
         e.preventDefault();
         openPageViewer('/episodes.html');
+        return;
+      }
+      /* Glossary / Pillar → full-page viewer (iframe) */
+      if(/^\/glossary\//.test(path)){
+        e.preventDefault();
+        openPageViewer(path.endsWith('.html') ? path : '/glossary/');
+        return;
+      }
+      if(/^\/pillar\//.test(path)){
+        e.preventDefault();
+        openPageViewer(path);
+        return;
+      }
+      /* Related-content links to individual article pages → load in col-C
+         instead of letting the browser navigate out of the desktop app */
+      if(/^\/(notecast|insight|chairside|litecast|metanotes|dentai|dentcast-plus|photocast|sharehub)\/[^/]+\.html$/.test(path)){
+        e.preventDefault();
+        openContent(path, a.textContent.trim() || path);
+        return;
+      }
+      /* Any remaining internal section directory (not the home page) → viewer */
+      if(path !== '/' && /\/$/.test(path)){
+        e.preventDefault();
+        openPageViewer(path);
       }
     });
   }
