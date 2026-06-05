@@ -4138,9 +4138,11 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
         openPageViewer(path);
         return;
       }
-      /* Related-content links to individual article pages → load in col-C
-         instead of letting the browser navigate out of the desktop app */
-      if(/^\/(notecast|insight|chairside|litecast|metanotes|dentai|dentcast-plus|photocast|sharehub)\/[^/]+\.html$/.test(path)){
+      /* Related-content / language links to individual article pages → load
+         in col-C instead of letting the browser navigate out of the app.
+         `.+\.html` (not `[^/]+`) so sub-folder pages like the English
+         versions at /metanotes/en/meta-1.html are also caught. */
+      if(/^\/(notecast|insight|chairside|litecast|metanotes|dentai|dentcast-plus|photocast|sharehub)\/.+\.html$/.test(path)){
         e.preventDefault();
         openContent(path, a.textContent.trim() || path);
         return;
