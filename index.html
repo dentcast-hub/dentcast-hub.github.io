@@ -3680,11 +3680,19 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 (function(){
   'use strict';
 
-  /* ── Detection — tablet + desktop ── */
+  /* ── Detection — tablet + desktop ──
+     Desktop UI when EITHER:
+       • a pointer device (mouse/trackpad) at ≥768px  → laptops/desktops, and
+         iPads with a keyboard/trackpad (any orientation), OR
+       • the viewport is ≥1024px wide                 → landscape tablets
+         (iPad landscape = 1024px). This is purely size-based, so touch iPads
+         get the desktop UI in landscape while staying mobile in portrait
+         (768/834px), and phones stay mobile even in landscape (≤~932px). */
   function isDesk(){
-    return window.matchMedia('(min-width:768px)').matches &&
-           (window.matchMedia('(pointer:fine)').matches ||
-            window.matchMedia('(hover:hover)').matches);
+    return (window.matchMedia('(min-width:768px)').matches &&
+            (window.matchMedia('(pointer:fine)').matches ||
+             window.matchMedia('(hover:hover)').matches))
+        || window.matchMedia('(min-width:1024px)').matches;
   }
 
   const root = document.getElementById('dc-desktop-root');
