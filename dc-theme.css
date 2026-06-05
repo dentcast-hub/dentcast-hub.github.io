@@ -264,11 +264,19 @@ body:has(.dc-topbar) .dc-trustline {
   text-align: center;
 }
 
-/* Glossary term pages: stack the trustline vertically — author/specialty on
-   its own line, then the dates beneath it (rather than wrapping side by side). */
+/* Glossary term header layout:
+   - the Persian caption (subtitle) hugs the H1,
+   - a blank-line gap separates the caption from the byline,
+   - the author/specialty sits on its own line, and the two dates share the
+     line beneath it. */
+body:has(.dc-topbar) .term-header .subtitle {
+  margin-top: 3px;
+}
 body:has(.dc-topbar) .term-header .dc-trustline {
-  flex-direction: column;
-  gap: 2px;
+  margin-top: 22px;
+}
+body:has(.dc-topbar) .term-header .dc-trustline > span:first-child {
+  flex-basis: 100%;
 }
 
 body:has(.dc-topbar) .dc-trustline a,
