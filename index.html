@@ -3824,6 +3824,11 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
       return;
     }
 
+    /* Newest first: brain types and the notecast/litecast/dentcast/photocast
+       sources are ordered oldest→newest, so reverse them. sharehub's index is
+       already newest→oldest, and glossary is an alphabetical reference — leave both. */
+    if(src !== 'sharehub' && src !== 'glossary') items.reverse();
+
     colBCount.textContent = items.length + ' مطلب';
 
     /* DentAI only — pin a mobile-styled Promptologist card at the very top */
