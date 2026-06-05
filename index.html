@@ -3824,11 +3824,31 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
     }
 
     colBCount.textContent = items.length + ' مطلب';
-    colB.innerHTML = items.map(it =>
+
+    /* DentAI only — pin a mobile-styled Promptologist card at the very top */
+    const pinnedHTML = (type === 'dentai')
+      ? `<a class="dc-list-card dc-list-card--insight dcd-pin-promptologist" href="/dentai/promptologist/" data-viewer-url="/dentai/promptologist/" style="margin-bottom:14px;">
+           <div class="dc-list-card-main">
+             <div class="dc-list-card-title">پرامپتولوژیست <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="5" y="8" width="14" height="10" rx="3"/><path d="M12 8V4"/><circle cx="9" cy="13" r="1"/><circle cx="15" cy="13" r="1"/><path d="M9 18v2"/><path d="M15 18v2"/></svg></div>
+             <div class="dc-list-card-sub">هوش مصنوعی برای دندان‌پزشکان</div>
+           </div>
+         </a>`
+      : '';
+
+    colB.innerHTML = pinnedHTML + items.map(it =>
       `<div class="dcd-item" data-url="${h(it.url)}" data-title="${h(it.title)}">
          <div class="dcd-item-title">${h(it.title)}</div>
        </div>`
     ).join('');
+
+    /* Pinned Promptologist card → open its landing page in the viewer */
+    const pin = colB.querySelector('.dcd-pin-promptologist');
+    if(pin){
+      pin.addEventListener('click', e => {
+        e.preventDefault();
+        openPageViewer(pin.getAttribute('data-viewer-url'));
+      });
+    }
 
     colB.querySelectorAll('.dcd-item').forEach(el => {
       el.addEventListener('click', () => {
