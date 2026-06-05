@@ -1338,8 +1338,9 @@ body.dc-desktop-ui #dc-desktop-root{
 @media(min-width:1600px){ .dcd-app{ grid-template-columns:250px 300px 1fr; } }
 @media(max-width:1280px){ .dcd-app{ grid-template-columns:200px 250px 1fr; } }
 @media(max-width:1024px){ .dcd-app{ grid-template-columns:180px 220px 1fr; } }
-/* Tablet: hide col-b, show only col-a and col-c */
-@media(max-width:820px){ .dcd-app{ grid-template-columns:170px 1fr; } .dcd-col-b{ display:none; } }
+/* Tablet (down to 768px desktop threshold): keep all three columns,
+   just narrower — never hide the list column. */
+@media(max-width:820px){ .dcd-app{ grid-template-columns:160px 200px 1fr; } }
 
 /* ══════════════════════════════════════════════
    COL-A — CATEGORY TREE (right side in RTL)
@@ -1565,7 +1566,7 @@ body.dc-desktop-ui #dc-desktop-root{
 }
 .dcd-welcome-feed{
   position:relative; z-index:1;
-  max-width:680px; margin:0 auto;
+  max-width:780px; margin:0 auto;
   display:flex; flex-direction:column; gap:14px;
   padding:28px 22px;
   width:100%;
@@ -1698,6 +1699,44 @@ body.dc-desktop-ui #dc-desktop-root{
 }
 .dcd-pulse-list a{ color:var(--link); text-decoration:none; }
 .dcd-pulse-list strong{ color:rgba(235,243,255,.95); }
+
+/* Welcome pulse — reuse the mobile .dc-pulse look; drop its bottom margin
+   so the welcome-feed gap controls spacing. */
+.dcd-welcome-pulse{ margin-bottom:0; }
+
+/* Latest content — glass cards over the cover image (fixed light-on-dark
+   for strong contrast in both themes, since they sit over the dark overlay) */
+.dcd-latest-head{
+  display:flex; align-items:center; gap:7px;
+  font-size:.9rem; font-weight:800; color:#fff;
+  margin:2px 2px 12px; text-shadow:0 1px 6px rgba(0,0,0,.55);
+}
+.dcd-latest-dot{ width:7px; height:7px; border-radius:50%; background:#5b9cf6; flex-shrink:0; }
+.dcd-latest-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:12px; }
+@media(min-width:1280px){ .dcd-latest-grid{ grid-template-columns:repeat(3,1fr); } }
+.dcd-latest-card{
+  display:flex; flex-direction:column; gap:8px;
+  background:rgba(12,18,28,.60);
+  backdrop-filter:blur(10px) saturate(1.1); -webkit-backdrop-filter:blur(10px) saturate(1.1);
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:var(--r-lg);
+  padding:13px 14px; min-height:94px;
+  cursor:pointer; text-decoration:none;
+  box-shadow:0 6px 20px rgba(0,0,0,.28);
+  transition:transform .15s ease, border-color .15s ease, background .15s ease;
+}
+.dcd-latest-card:hover{ transform:translateY(-2px); border-color:rgba(255,255,255,.30); background:rgba(12,18,28,.72); }
+.dcd-latest-badge{
+  align-self:flex-start; font-size:.66rem; font-weight:700;
+  color:#cfe0ff; background:rgba(91,156,246,.20);
+  border:1px solid rgba(91,156,246,.34);
+  padding:2px 9px; border-radius:999px;
+}
+.dcd-latest-title{
+  font-size:.86rem; font-weight:700; line-height:1.55;
+  color:rgba(245,249,255,.96);
+  display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;
+}
 
 .dcd-hero{
   display:flex; align-items:center; gap:14px;
@@ -3181,16 +3220,21 @@ a.dc-list-card--pillar {
     <!-- Scrollable body -->
     <div class="dcd-col-c-scroll" id="dcd-col-c-scroll">
 
-      <!-- Welcome: فقط Pulse و hero image — نه کل موبایل -->
+      <!-- Welcome: mobile-styled Pulse on top + latest-content cards over the cover -->
       <div class="dcd-welcome" id="dcd-welcome">
         <div class="dcd-welcome-feed">
 
-          <div class="dcd-pulse" id="dcdPulse">
-            <div class="dcd-pulse-head">
-              <div class="dcd-pulse-title"><span class="dcd-pulse-dot"></span>پالس · آخرین اخبار دنت‌کست</div>
-              <button class="dcd-pulse-close" onclick="document.getElementById('dcdPulse').style.display='none'"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+          <div class="dc-pulse dcd-welcome-pulse" id="dcdPulse">
+            <div class="dc-pulse-head">
+              <div class="dc-pulse-title"><span class="dc-pulse-dot"></span>پالس · آخرین اخبار دنت‌کست</div>
+              <button class="dc-pulse-close" onclick="document.getElementById('dcdPulse').style.display='none'" aria-label="بستن"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
             </div>
-            <ul class="dcd-pulse-list"></ul>
+            <ul class="dc-pulse-list"></ul>
+          </div>
+
+          <div class="dcd-latest">
+            <div class="dcd-latest-head"><span class="dcd-latest-dot"></span>آخرین مطالب دنت‌کست</div>
+            <div class="dcd-latest-grid" id="dcdLatest"></div>
           </div>
 
         </div>
@@ -3679,11 +3723,19 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 (function(){
   'use strict';
 
-  /* ── Detection — tablet + desktop ── */
+  /* ── Detection — tablet + desktop ──
+     Desktop UI when EITHER:
+       • a pointer device (mouse/trackpad) at ≥768px  → laptops/desktops, and
+         iPads with a keyboard/trackpad (any orientation), OR
+       • the viewport is ≥1024px wide                 → landscape tablets
+         (iPad landscape = 1024px). This is purely size-based, so touch iPads
+         get the desktop UI in landscape while staying mobile in portrait
+         (768/834px), and phones stay mobile even in landscape (≤~932px). */
   function isDesk(){
-    return window.matchMedia('(min-width:768px)').matches &&
-           (window.matchMedia('(pointer:fine)').matches ||
-            window.matchMedia('(hover:hover)').matches);
+    return (window.matchMedia('(min-width:768px)').matches &&
+            (window.matchMedia('(pointer:fine)').matches ||
+             window.matchMedia('(hover:hover)').matches))
+        || window.matchMedia('(min-width:1024px)').matches;
   }
 
   const root = document.getElementById('dc-desktop-root');
@@ -3823,12 +3875,37 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
       return;
     }
 
+    /* Newest first: brain types and the notecast/litecast/dentcast/photocast
+       sources are ordered oldest→newest, so reverse them. sharehub's index is
+       already newest→oldest, and glossary is an alphabetical reference — leave both. */
+    if(src !== 'sharehub' && src !== 'glossary') items.reverse();
+
     colBCount.textContent = items.length + ' مطلب';
-    colB.innerHTML = items.map(it =>
+
+    /* DentAI only — pin a mobile-styled Promptologist card at the very top */
+    const pinnedHTML = (type === 'dentai')
+      ? `<a class="dc-list-card dc-list-card--insight dcd-pin-promptologist" href="/dentai/promptologist/" data-viewer-url="/dentai/promptologist/" style="margin-bottom:14px;">
+           <div class="dc-list-card-main">
+             <div class="dc-list-card-title">پرامپتولوژیست <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="5" y="8" width="14" height="10" rx="3"/><path d="M12 8V4"/><circle cx="9" cy="13" r="1"/><circle cx="15" cy="13" r="1"/><path d="M9 18v2"/><path d="M15 18v2"/></svg></div>
+             <div class="dc-list-card-sub">هوش مصنوعی برای دندان‌پزشکان</div>
+           </div>
+         </a>`
+      : '';
+
+    colB.innerHTML = pinnedHTML + items.map(it =>
       `<div class="dcd-item" data-url="${h(it.url)}" data-title="${h(it.title)}">
          <div class="dcd-item-title">${h(it.title)}</div>
        </div>`
     ).join('');
+
+    /* Pinned Promptologist card → open its landing page in the viewer */
+    const pin = colB.querySelector('.dcd-pin-promptologist');
+    if(pin){
+      pin.addEventListener('click', e => {
+        e.preventDefault();
+        openPageViewer(pin.getAttribute('data-viewer-url'));
+      });
+    }
 
     colB.querySelectorAll('.dcd-item').forEach(el => {
       el.addEventListener('click', () => {
@@ -3909,9 +3986,16 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
         });
       });
 
-      /* Collect page-specific <style> blocks from <head> */
+      /* Collect page-specific <style> blocks from <head>.
+         Strip document-level rules (:root / html / body) so a fetched
+         page's dark-first tokens (e.g. --bg:#0b1220) and its body
+         background can't override the viewer's own theme and turn the
+         light-mode viewer dark. Page-scoped rules (body.x, body .y,
+         .glass-box…) are kept untouched. */
       const headStyleText = Array.from(doc.querySelectorAll('head style'))
-        .map(st => st.textContent).join('\n');
+        .map(st => st.textContent).join('\n')
+        .replace(/([^{}]+)\{[^{}]*\}/g, (blk, sel) =>
+          sel.split(',').every(p => /^\s*(?::root|html|body)\s*$/.test(p)) ? '' : blk);
 
       /* Collect inline <script> blocks that sit OUTSIDE .article-content-wrap
          in the fetched body (e.g. the episode audio-player script).
@@ -4026,18 +4110,45 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
       if(!document.body.classList.contains('dc-desktop-ui')) return;
       const a = e.target.closest('a[href]');
       if(!a) return;
-      let path;
-      try{ path = new URL(a.href, location.origin).pathname; }catch(x){ return; }
+      /* Only intercept same-origin links; leave external/mailto/tel/hash alone */
+      let u;
+      try{ u = new URL(a.href, location.origin); }catch(x){ return; }
+      if(u.origin !== location.origin) return;
+      const path = u.pathname;
       /* Individual episode page → load in col-C */
       if(EP_PAGE_RE.test(path)){
         e.preventDefault();
         openContent(path, a.textContent.trim() || path);
         return;
       }
-      /* Back-to-episodes link → reopen the episodes viewer */
+      /* Episodes listing → reopen the episodes viewer */
       if(path === '/episodes/' || path === '/episodes/index.html' || path === '/episodes.html'){
         e.preventDefault();
         openPageViewer('/episodes.html');
+        return;
+      }
+      /* Glossary / Pillar → full-page viewer (iframe) */
+      if(/^\/glossary\//.test(path)){
+        e.preventDefault();
+        openPageViewer(path.endsWith('.html') ? path : '/glossary/');
+        return;
+      }
+      if(/^\/pillar\//.test(path)){
+        e.preventDefault();
+        openPageViewer(path);
+        return;
+      }
+      /* Related-content links to individual article pages → load in col-C
+         instead of letting the browser navigate out of the desktop app */
+      if(/^\/(notecast|insight|chairside|litecast|metanotes|dentai|dentcast-plus|photocast|sharehub)\/[^/]+\.html$/.test(path)){
+        e.preventDefault();
+        openContent(path, a.textContent.trim() || path);
+        return;
+      }
+      /* Any remaining internal section directory (not the home page) → viewer */
+      if(path !== '/' && /\/$/.test(path)){
+        e.preventDefault();
+        openPageViewer(path);
       }
     });
   }
@@ -4127,35 +4238,96 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
      adapting links to load in col-C instead of
      navigating the page.
   ══════════════════════════════════════════════ */
+  /* Rewire internal links inside a cloned pulse node so they open in the
+     col-C viewer instead of navigating away. External links are left alone
+     (e.g. the sponsor ad), so they behave exactly like on mobile. */
+  function rewirePulseNode(node){
+    node.querySelectorAll('a[href]').forEach(a => {
+      const raw = a.getAttribute('href') || '';
+      if(/^https?:\/\/|^\/\//.test(raw)) return;        /* external → leave */
+      let path;
+      try{ path = new URL(raw, location.origin).pathname; }catch(x){ return; }
+      a.setAttribute('href','#');
+      a.addEventListener('click', function(e){
+        e.preventDefault();
+        if(EP_PAGE_RE.test(path)){
+          openContent(path, a.textContent.trim());
+        } else if(path === '/glossary/' || path.startsWith('/glossary/')){
+          openPageViewer(path.endsWith('.html') ? path : '/glossary/');
+        } else if(path === '/episodes.html' || path === '/episodes/' || path === '/episodes/index.html'){
+          openPageViewer('/episodes.html');
+        } else {
+          openContent(path, a.textContent.trim());
+        }
+      });
+    });
+    return node;
+  }
+
+  /* Desktop pulse fully follows the mobile pulse — list AND ad — so the
+     pulse only ever needs to be edited in one place (#dcPulseCard). */
   function syncDesktopPulse(){
-    const src  = document.querySelector('#dcPulseCard .dc-pulse-list');
-    const dest = document.querySelector('#dcdPulse .dcd-pulse-list');
-    if(!src || !dest) return;
-    dest.innerHTML = '';
-    src.querySelectorAll('li').forEach(li => {
-      const newLi = li.cloneNode(true);
-      newLi.querySelectorAll('a[href]').forEach(a => {
-        const raw = a.getAttribute('href') || '';
-        /* Leave external links alone */
-        if(/^https?:\/\/|^\/\//.test(raw)) return;
-        let path;
-        try{ path = new URL(raw, location.origin).pathname; }catch(x){ return; }
-        a.setAttribute('href','#');
-        a.addEventListener('click', function(e){
+    const srcCard  = document.getElementById('dcPulseCard');
+    const destCard = document.getElementById('dcdPulse');
+    if(!srcCard || !destCard) return;
+
+    /* News items */
+    const srcList  = srcCard.querySelector('.dc-pulse-list');
+    const destList = destCard.querySelector('.dc-pulse-list');
+    if(srcList && destList){
+      destList.innerHTML = '';
+      srcList.querySelectorAll('li').forEach(li =>
+        destList.appendChild(rewirePulseNode(li.cloneNode(true))));
+    }
+
+    /* Sponsor ad — mirror it too (remove any previous clone first) */
+    const oldAd = destCard.querySelector('.dc-pulse-ad');
+    if(oldAd) oldAd.remove();
+    const srcAd = srcCard.querySelector('.dc-pulse-ad');
+    if(srcAd) destCard.appendChild(rewirePulseNode(srcAd.cloneNode(true)));
+  }
+
+  /* ══════════════════════════════════════════════
+     WELCOME — "آخرین مطالب دنت‌کست" cards
+     The last 6 brain entries that have a page_url
+     (newest first), rendered as glass cards over the
+     cover image. Clicking routes into the viewer.
+  ══════════════════════════════════════════════ */
+  const LATEST_LABEL = {
+    dentcast:'اپیزود', notecast:'NoteCast', clinical:'Clinical Insight',
+    insight:'Clinical Insight', dentcast_plus:'ویدیو', dentai:'DentAI',
+    promptologist:'پرامپتولوژیست', meta:'Meta Note', chairside:'Chairside',
+    sharehub:'Share Hub', litecast:'LiteCast'
+  };
+  function renderDesktopLatest(){
+    const host = document.getElementById('dcdLatest');
+    if(!host || host.dataset.loaded) return;
+    getBrain().then(brain => {
+      const linked = (Array.isArray(brain) ? brain : [])
+        .filter(x => x && x.page_url && x.title);
+      const latest = linked.slice(-6).reverse();   /* newest first */
+      if(!latest.length) return;
+      host.dataset.loaded = '1';
+      host.innerHTML = latest.map(x => {
+        const title = (x.title || '').replace(/^\d+[-–.\s]+/, '').trim();
+        const label = LATEST_LABEL[x.type] || x.type || '';
+        return `<a class="dcd-latest-card" href="${h(x.page_url)}" data-url="${h(x.page_url)}">
+                  <span class="dcd-latest-badge">${h(label)}</span>
+                  <span class="dcd-latest-title">${h(title)}</span>
+                </a>`;
+      }).join('');
+      host.querySelectorAll('.dcd-latest-card').forEach(a => {
+        a.addEventListener('click', e => {
           e.preventDefault();
-          if(EP_PAGE_RE.test(path)){
-            openContent(path, a.textContent.trim());
-          } else if(path === '/glossary/' || path.startsWith('/glossary/')){
-            openPageViewer('/glossary/');
-          } else if(path === '/episodes.html' || path === '/episodes/' || path === '/episodes/index.html'){
-            openPageViewer('/episodes.html');
-          } else {
-            openContent(path, a.textContent.trim());
-          }
+          const url = a.getAttribute('data-url');
+          let path; try{ path = new URL(url, location.origin).pathname; }catch(x){ path = url; }
+          if(/^\/glossary\//.test(path)) openPageViewer(path.endsWith('.html') ? path : '/glossary/');
+          else if(/^\/pillar\//.test(path)) openPageViewer(path);
+          else if(path === '/episodes.html' || path === '/episodes/' || path === '/episodes/index.html') openPageViewer('/episodes.html');
+          else openContent(path, a.querySelector('.dcd-latest-title')?.textContent.trim() || '');
         });
       });
-      dest.appendChild(newLi);
-    });
+    }).catch(()=>{});
   }
 
   /* ══════════════════════════════════════════════
@@ -4166,8 +4338,13 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
     enabled = true;
     document.body.classList.add('dc-desktop-ui');
     root.setAttribute('aria-hidden', 'false');
-    syncThemeIcon();
+    /* NOTE: syncThemeIcon() used to be called here but was never defined
+       anywhere, so under "use strict" it threw a ReferenceError that aborted
+       enable() before the pulse/cards could populate. Guard it so an optional
+       (possibly later-defined) helper can never break the welcome again. */
+    if(typeof syncThemeIcon === 'function') syncThemeIcon();
     syncDesktopPulse();
+    renderDesktopLatest();
     /* make radar overlay visible above desktop when opened */
     const radarOverlay = document.getElementById('dcRadarOverlay');
     if(radarOverlay) radarOverlay.style.removeProperty('display');
