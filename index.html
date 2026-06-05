@@ -4338,7 +4338,11 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
     enabled = true;
     document.body.classList.add('dc-desktop-ui');
     root.setAttribute('aria-hidden', 'false');
-    syncThemeIcon();
+    /* NOTE: syncThemeIcon() used to be called here but was never defined
+       anywhere, so under "use strict" it threw a ReferenceError that aborted
+       enable() before the pulse/cards could populate. Guard it so an optional
+       (possibly later-defined) helper can never break the welcome again. */
+    if(typeof syncThemeIcon === 'function') syncThemeIcon();
     syncDesktopPulse();
     renderDesktopLatest();
     /* make radar overlay visible above desktop when opened */
