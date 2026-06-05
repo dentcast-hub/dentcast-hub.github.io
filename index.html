@@ -4238,35 +4238,53 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
      adapting links to load in col-C instead of
      navigating the page.
   ══════════════════════════════════════════════ */
-  function syncDesktopPulse(){
-    const src  = document.querySelector('#dcPulseCard .dc-pulse-list');
-    const dest = document.querySelector('#dcdPulse .dc-pulse-list');
-    if(!src || !dest) return;
-    dest.innerHTML = '';
-    src.querySelectorAll('li').forEach(li => {
-      const newLi = li.cloneNode(true);
-      newLi.querySelectorAll('a[href]').forEach(a => {
-        const raw = a.getAttribute('href') || '';
-        /* Leave external links alone */
-        if(/^https?:\/\/|^\/\//.test(raw)) return;
-        let path;
-        try{ path = new URL(raw, location.origin).pathname; }catch(x){ return; }
-        a.setAttribute('href','#');
-        a.addEventListener('click', function(e){
-          e.preventDefault();
-          if(EP_PAGE_RE.test(path)){
-            openContent(path, a.textContent.trim());
-          } else if(path === '/glossary/' || path.startsWith('/glossary/')){
-            openPageViewer('/glossary/');
-          } else if(path === '/episodes.html' || path === '/episodes/' || path === '/episodes/index.html'){
-            openPageViewer('/episodes.html');
-          } else {
-            openContent(path, a.textContent.trim());
-          }
-        });
+  /* Rewire internal links inside a cloned pulse node so they open in the
+     col-C viewer instead of navigating away. External links are left alone
+     (e.g. the sponsor ad), so they behave exactly like on mobile. */
+  function rewirePulseNode(node){
+    node.querySelectorAll('a[href]').forEach(a => {
+      const raw = a.getAttribute('href') || '';
+      if(/^https?:\/\/|^\/\//.test(raw)) return;        /* external → leave */
+      let path;
+      try{ path = new URL(raw, location.origin).pathname; }catch(x){ return; }
+      a.setAttribute('href','#');
+      a.addEventListener('click', function(e){
+        e.preventDefault();
+        if(EP_PAGE_RE.test(path)){
+          openContent(path, a.textContent.trim());
+        } else if(path === '/glossary/' || path.startsWith('/glossary/')){
+          openPageViewer(path.endsWith('.html') ? path : '/glossary/');
+        } else if(path === '/episodes.html' || path === '/episodes/' || path === '/episodes/index.html'){
+          openPageViewer('/episodes.html');
+        } else {
+          openContent(path, a.textContent.trim());
+        }
       });
-      dest.appendChild(newLi);
     });
+    return node;
+  }
+
+  /* Desktop pulse fully follows the mobile pulse — list AND ad — so the
+     pulse only ever needs to be edited in one place (#dcPulseCard). */
+  function syncDesktopPulse(){
+    const srcCard  = document.getElementById('dcPulseCard');
+    const destCard = document.getElementById('dcdPulse');
+    if(!srcCard || !destCard) return;
+
+    /* News items */
+    const srcList  = srcCard.querySelector('.dc-pulse-list');
+    const destList = destCard.querySelector('.dc-pulse-list');
+    if(srcList && destList){
+      destList.innerHTML = '';
+      srcList.querySelectorAll('li').forEach(li =>
+        destList.appendChild(rewirePulseNode(li.cloneNode(true))));
+    }
+
+    /* Sponsor ad — mirror it too (remove any previous clone first) */
+    const oldAd = destCard.querySelector('.dc-pulse-ad');
+    if(oldAd) oldAd.remove();
+    const srcAd = srcCard.querySelector('.dc-pulse-ad');
+    if(srcAd) destCard.appendChild(rewirePulseNode(srcAd.cloneNode(true)));
   }
 
   /* ══════════════════════════════════════════════
