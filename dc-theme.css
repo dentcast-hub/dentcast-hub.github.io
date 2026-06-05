@@ -264,6 +264,13 @@ body:has(.dc-topbar) .dc-trustline {
   text-align: center;
 }
 
+/* Glossary term pages: stack the trustline vertically — author/specialty on
+   its own line, then the dates beneath it (rather than wrapping side by side). */
+body:has(.dc-topbar) .term-header .dc-trustline {
+  flex-direction: column;
+  gap: 2px;
+}
+
 body:has(.dc-topbar) .dc-trustline a,
 body:has(.dc-topbar) .dc-author-link {
   color: var(--txt2);
