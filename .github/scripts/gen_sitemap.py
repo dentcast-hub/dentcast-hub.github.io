@@ -13,6 +13,7 @@ DentCast Sitemap Generator
 import subprocess, os, re, sys
 
 DOMAIN = "https://dentcast.org"
+DOMAIN_IR = "https://dentcast.ir"
 BASE   = "."
 
 EXCLUDE_NAMES = {"404.html", "player.html"}
@@ -139,6 +140,7 @@ for root, dirs, files in os.walk(BASE):
 html_files.sort()
 
 entries = []
+entries_ir = []
 seen = set()
 
 warn_no_canonical = []
@@ -158,7 +160,11 @@ for rel in html_files:
         warn_no_canonical.append(rel)
         continue
 
-    if not (canon == DOMAIN + "/" or canon.startswith(DOMAIN + "/")):
+    if canon == DOMAIN + "/" or canon.startswith(DOMAIN + "/"):
+        bucket = entries
+    elif canon == DOMAIN_IR + "/" or canon.startswith(DOMAIN_IR + "/"):
+        bucket = entries_ir
+    else:
         warn_off_domain.append((rel, canon))
         continue
 
@@ -166,44 +172,51 @@ for rel in html_files:
     if canon in seen:
         continue
     seen.add(canon)
-    entries.append((rel, canon))
+    bucket.append((rel, canon))
 
 
-def _sort_key(item):
-    path, url = item
-    is_home = (url == DOMAIN + "/")
-    return (0 if is_home else 1, url)
+def write_sitemap(filename, bucket, home_url):
+    def _sort_key(item):
+        path, url = item
+        is_home = (url == home_url)
+        return (0 if is_home else 1, url)
 
+    bucket = sorted(bucket, key=_sort_key)
 
-entries.sort(key=_sort_key)
-
-lines = [
-    '<?xml version="1.0" encoding="UTF-8"?>',
-    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
-]
-for path, url in entries:
-    d = get_date("/index.html" if path == "/index.html" else path)
-    lines += [
-        "  <url>",
-        f"    <loc>{url}</loc>",
-        f"    <lastmod>{d}</lastmod>",
-        f"    <changefreq>{get_freq(path)}</changefreq>",
-        f"    <priority>{get_priority(path)}</priority>",
-        "  </url>",
+    lines = [
+        '<?xml version="1.0" encoding="UTF-8"?>',
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
     ]
-lines.append("</urlset>")
+    for path, url in bucket:
+        d = get_date("/index.html" if path == "/index.html" else path)
+        lines += [
+            "  <url>",
+            f"    <loc>{url}</loc>",
+            f"    <lastmod>{d}</lastmod>",
+            f"    <changefreq>{get_freq(path)}</changefreq>",
+            f"    <priority>{get_priority(path)}</priority>",
+            "  </url>",
+        ]
+    lines.append("</urlset>")
 
-with open("sitemap.xml", "w", encoding="utf-8") as f:
-    f.write("\n".join(lines) + "\n")
+    with open(filename, "w", encoding="utf-8") as f:
+        f.write("\n".join(lines) + "\n")
+    return len(bucket)
 
-print(f"OK  sitemap.xml — {len(entries)} URLs written.")
+
+n_org = write_sitemap("sitemap.xml", entries, DOMAIN + "/")
+n_ir = write_sitemap("sitemap-ir.xml", entries_ir, DOMAIN_IR + "/")
+
+print(f"OK  sitemap.xml — {n_org} URLs written.")
+print(f"OK  sitemap-ir.xml — {n_ir} URLs written.")
 print()
 print("=== Summary ===")
 print(f"  HTML files considered (after EXCLUDE_*): {len(html_files)}")
 print(f"  Skipped: noindex                        : {len(skipped_noindex)}")
 print(f"  Skipped: no canonical                   : {len(warn_no_canonical)}")
 print(f"  Skipped: off-domain canonical           : {len(warn_off_domain)}")
-print(f"  URLs emitted                            : {len(entries)}")
+print(f"  URLs emitted (sitemap.xml / .org)       : {len(entries)}")
+print(f"  URLs emitted (sitemap-ir.xml / .ir)     : {len(entries_ir)}")
 
 if skipped_noindex:
     print("\nSkipped (noindex):")
