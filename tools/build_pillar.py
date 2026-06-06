@@ -486,16 +486,28 @@ def sort_items(items):
     return sorted(items, key=k)
 
 
+def abs_url(url):
+    """Absolutize a root-relative page URL to its canonical domain.
+
+    LiteCast has a single-domain identity on dentcast.ir (its pages are
+    canonical on .ir with no hreflang); every other content type is canonical
+    on dentcast.org. Keying on the /litecast/ path prefix keeps JSON-LD url
+    values consistent with each page's own canonical, so a rebuild no longer
+    regresses the litecast URLs back to .org (which previously required a
+    manual re-patch after every build)."""
+    if not url.startswith("/"):
+        return url
+    domain = "https://dentcast.ir" if url.startswith("/litecast/") else "https://dentcast.org"
+    return domain + url
+
+
 def build_jsonld(cfg, canonical, flat_ordered):
     item_list_elements = []
     for i, it in enumerate(flat_ordered, start=1):
         e = it["entry"]
         title = e.get("title") or e.get("fa_title") or "(بدون عنوان)"
         url = e.get("page_url") or e.get("url") or ""
-        if url.startswith("/"):
-            url_abs = "https://dentcast.org" + url
-        else:
-            url_abs = url
+        url_abs = abs_url(url)
         item_list_elements.append({
             "@type": "ListItem",
             "position": i,
@@ -1497,7 +1509,7 @@ def _build_glossary_jsonld(terms_sorted):
     defined_terms = []
     for e in terms_sorted:
         url = e.get("url") or ""
-        url_abs = ("https://dentcast.org" + url) if url.startswith("/") else url
+        url_abs = abs_url(url)
         defined_terms.append({
             "@type": "DefinedTerm",
             "@id": url_abs + "#term",
