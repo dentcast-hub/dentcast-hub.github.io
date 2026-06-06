@@ -9,6 +9,21 @@ This repo powers DentCast. When the user brings new content to publish:
 5. Auto-discover whatever you can. Ask the user only for things you genuinely cannot determine.
 6. Brain entry schema is sacred. Never add new fields to a brain entry that don't exist on previous same-category entries. Match the existing shape exactly.
 
+## English-version protocol (trigger)
+
+There is a **second** workflow alongside the publishing router. When the user
+asks to produce the **English (en) version of an existing page** — trigger
+phrase **«… رو انگلیسی کن»** (e.g. «پرامپتولوژیست ۱ رو انگلیسی کن»,
+«نسخه‌ی انگلیسیِ متانوت ۳») — do **not** use the «متن جدید دارم» publishing
+router. Instead read `.dentcast/workflows/en-version.md` and follow it
+strictly. That workflow mirrors one existing page into
+`/{type}/en/{same-filename}.html`: English chrome cloned from
+`metanotes/en/meta-1.html`, body/schema inherited and translated from the
+source's own type, a real per-document fa↔en toggle on both sides, and
+disk-discovered hreflang pairing. en pages are standalone translations — they
+get **no** `dentcast-brain.json` entry, **no** Pulse line, and **no**
+specialist cross-linking.
+
 ## Repo conventions
 
 - `dentcast-brain.json` — central data file, has separate sections/arrays per content type.

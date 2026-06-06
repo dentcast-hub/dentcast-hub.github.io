@@ -19,10 +19,16 @@ Rules (see SEO audit / task brief):
     3-line block (fa-IR, fa, x-default)
   - About pages (about.html, metanotes/en/about.html): 4-line block
     with en pointing to metanotes/en/about.html
-  - MetaNotes Persian meta-1..meta-6 (paired): 4-line block with en
-    pointing to metanotes/en/meta-N.html
-  - MetaNotes English meta-1..meta-6 (paired): same 4-line block as
-    the Persian counterpart (mirror)
+  - Paired fa/en pages of ANY type (disk-discovered, not hardcoded):
+    a typed fa page `{type}/{file}.html` is paired iff its English
+    counterpart `{type}/en/{file}.html` actually EXISTS on disk; the en
+    page `{type}/en/{file}.html` is paired to its fa counterpart
+    `{type}/{file}.html`. Both sides emit the same 4-line mirror block
+    (fa-IR→ir fa-path, fa→org fa-path, en→org en-path, x-default→org
+    fa-path). This generalizes the old metanotes-only set: metanotes
+    1..5 stay paired (their en files exist), and a phantom pair — an
+    hreflang en alternate whose target file does NOT exist (e.g.
+    meta-6) — self-resolves to the default 3-line block on the next run.
   - Default (everything else): 3-line block (fa-IR, fa, x-default)
     using the canonical path verbatim
 """
@@ -42,10 +48,13 @@ SKIP_FILES = {
     "episodes/index.html",
 }
 
-# Persian metanotes meta-1..meta-6 are paired with English counterparts
-# per the task brief. (Note: metanotes/en/meta-6.html may not exist on
-# disk yet; the spec is the source of truth.)
-METANOTES_PAIRED_NS = {"1", "2", "3", "4", "5", "6"}
+# Pairing is discovered from disk, NOT from a hardcoded set: a typed fa
+# page `{type}/{file}.html` is paired with an English counterpart iff the
+# file `{type}/en/{file}.html` actually exists on disk (and an en page is
+# paired back to `{type}/{file}.html`). This generalizes the old
+# metanotes-only `METANOTES_PAIRED_NS` to every content type and lets
+# phantom pairs (an hreflang en alternate whose target file does not
+# exist — e.g. meta-6) self-resolve to the default 3-line block.
 
 
 def make_block(indent: str, items: list) -> list:
@@ -54,6 +63,57 @@ def make_block(indent: str, items: list) -> list:
         f'{indent}<link rel="alternate" hreflang="{h}" href="{u}">'
         for h, u in items
     ]
+
+
+def en_counterpart_path(rel_path: str):
+    """
+    For a typed fa page `{type}/{file}.html` return its en counterpart
+    rel-path `{type}/en/{file}.html`. Returns None for: root-level pages
+    (no `{type}` directory), section hubs (`index.html`), and pages that
+    already live inside an `en/` folder.
+    """
+    m = re.match(r"^(?P<type>.+)/(?P<file>[^/]+\.html)$", rel_path)
+    if not m:
+        return None
+    type_dir = m.group("type")
+    file_name = m.group("file")
+    if type_dir == "en" or type_dir.endswith("/en") or "/en/" in (type_dir + "/"):
+        return None  # already inside an en/ folder
+    if file_name == "index.html":
+        return None  # section hub, never a paired content page
+    return f"{type_dir}/en/{file_name}"
+
+
+def fa_counterpart_path(rel_path: str):
+    """
+    For an en page `{type}/en/{file}.html` return its fa counterpart
+    rel-path `{type}/{file}.html`. Returns None when `rel_path` is not an
+    en page of the `{type}/en/{file}` shape.
+    """
+    m = re.match(r"^(?P<type>.+)/en/(?P<file>[^/]+\.html)$", rel_path)
+    if not m:
+        return None
+    return f"{m.group('type')}/{m.group('file')}"
+
+
+def disk_exists(rel_path: str) -> bool:
+    """True iff `rel_path` (repo-relative) exists as a file on disk."""
+    return os.path.isfile(os.path.join(REPO_ROOT, rel_path))
+
+
+def paired_block(fa_rel_path: str, indent: str) -> list:
+    """
+    The shared 4-line fa/en hreflang block for a paired page. Both the fa
+    side and the en side emit the SAME block (a mirror), so it is always
+    keyed to the FA counterpart's rel-path `{type}/{file}.html`.
+    """
+    en_rel = en_counterpart_path(fa_rel_path)  # {type}/en/{file}.html
+    return make_block(indent, [
+        ("fa-IR", f"https://dentcast.ir/{fa_rel_path}"),
+        ("fa", f"https://dentcast.org/{fa_rel_path}"),
+        ("en", f"https://dentcast.org/{en_rel}"),
+        ("x-default", f"https://dentcast.org/{fa_rel_path}"),
+    ])
 
 
 def desired_block(rel_path: str, canonical_path: str, indent: str) -> list:
@@ -81,27 +141,22 @@ def desired_block(rel_path: str, canonical_path: str, indent: str) -> list:
             ("x-default", "https://dentcast.org/about.html"),
         ])
 
-    # MetaNotes Persian paired meta-1..meta-6
-    m = re.match(r"^metanotes/meta-(\d+)\.html$", p)
-    if m and m.group(1) in METANOTES_PAIRED_NS:
-        N = m.group(1)
-        return make_block(indent, [
-            ("fa-IR", f"https://dentcast.ir/metanotes/meta-{N}.html"),
-            ("fa", f"https://dentcast.org/metanotes/meta-{N}.html"),
-            ("en", f"https://dentcast.org/metanotes/en/meta-{N}.html"),
-            ("x-default", f"https://dentcast.org/metanotes/meta-{N}.html"),
-        ])
+    # English page of ANY type: {type}/en/{file}.html — emit the mirror
+    # block keyed to its fa counterpart {type}/{file}.html. (The about
+    # special-case above already handled metanotes/en/about.html, so this
+    # only catches en CONTENT pages.)
+    fa_rel = fa_counterpart_path(p)
+    if fa_rel is not None:
+        return paired_block(fa_rel, indent)
 
-    # MetaNotes English meta-1..meta-6 (mirror block)
-    m = re.match(r"^metanotes/en/meta-(\d+)\.html$", p)
-    if m and m.group(1) in METANOTES_PAIRED_NS:
-        N = m.group(1)
-        return make_block(indent, [
-            ("fa-IR", f"https://dentcast.ir/metanotes/meta-{N}.html"),
-            ("fa", f"https://dentcast.org/metanotes/meta-{N}.html"),
-            ("en", f"https://dentcast.org/metanotes/en/meta-{N}.html"),
-            ("x-default", f"https://dentcast.org/metanotes/meta-{N}.html"),
-        ])
+    # Persian typed page of ANY type: {type}/{file}.html — paired ONLY
+    # when its en counterpart actually EXISTS on disk (disk-discovery, not
+    # a hardcoded set). When the en file is absent, fall through to the
+    # default 3-line block below — which is exactly how a phantom en pair
+    # (e.g. meta-6, whose en/meta-6.html does not exist) self-resolves.
+    en_rel = en_counterpart_path(p)
+    if en_rel is not None and disk_exists(en_rel):
+        return paired_block(p, indent)
 
     # Section hubs (path ends in /index.html, canonical uses trailing-slash)
     if p.endswith("/index.html"):
