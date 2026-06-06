@@ -180,6 +180,14 @@ def process_file(file_path: str, rel_path: str):
     if canonical_path is None and rel_path == "index.html":
         canonical_path = "/"
 
+    # Domain-keyed guard (runs before any rule/injection decision below):
+    # a page whose canonical lives on dentcast.ir carries a full single-domain
+    # (.ir) identity and must NOT receive an hreflang block. Skip it outright so
+    # the injector can never (re-)add hreflang to an .ir-canonical page. Keyed on
+    # the canonical DOMAIN only — never on a path/section name.
+    if canonical_url and re.match(r"https?://(?:www\.)?dentcast\.ir(?:[/?#]|$)", canonical_url):
+        return ("skipped", "canonical on dentcast.ir (no hreflang)")
+
     # Compute desired block (lines, no trailing newline).
     expected_block = desired_block(rel_path, canonical_path, canonical_indent)
 
