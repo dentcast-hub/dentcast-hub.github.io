@@ -170,6 +170,31 @@ Each toggle must land on **this** document's true counterpart. Verify the two
 targets are exact inverses of each other and that neither references meta-1
 unless meta-1 *is* the document being processed.
 
+### 4.5. Series prev/next navigation (series types only)
+For ordered-series types whose pages carry a bottom `ep-nav` prev/next bar
+(e.g. Promptologist `prompt<season>-<part>.html`), the en page **keeps** that
+bar — it is part of the type's own structure (Hard rule 4), so it must not be
+dropped even under the Phase B Q2 "clean translation" default (that default
+governs the specialist «کاوش بیشتر» capsules, not the series nav). The bar
+operates **entirely within the en tier**, mirroring the fa series mechanism
+(README 4.6):
+
+- **Targets are en counterparts.** The previous/next slots point to the en
+  pages of the adjacent parts (`{type}/en/{prev-or-next-file}.html`), never to
+  the fa pages and never cross-language.
+- **Absent sibling → disabled placeholder.** If an adjacent part has no en
+  page yet, that slot stays the empty/disabled placeholder
+  `<span class="ep-nav-btn ep-nav-empty">…</span>` (keep the directional label
+  on the "next" placeholder, e.g. `Next Part →`; leave the "previous"
+  placeholder empty for a first part). Do **not** emit a link to a
+  non-existent en file (no 404) and do **not** fall back to the fa part.
+- **Wiring is reciprocal, on the sibling's publish.** When a later part is
+  translated via this workflow, that run converts this page's "next"
+  placeholder into a real link to the new en part, and wires the new part's
+  "previous" slot back here — exactly the README 4.6 prev/next dance, applied
+  to the en tier. Carry the `.ep-nav*` CSS over from the source type so the
+  bar renders.
+
 ### 5. Translation
 Render the source body into English: scientific, fluent, technically
 correct; clinical/technical terms preserved precisely; **structure-faithful**
@@ -275,8 +300,11 @@ touched brain-derived output, which it normally does not.)
   general logic pairs both pages and writes the 4-line block to each — no
   code change, no hardcoded set needed. Two files touched: the new en page +
   `prompt1-1.html`.
-- **Not done:** no brain entry, no Pulse, no series prev/next rewrite, no
-  glossary back-links.
+- **Series nav (step 4.5):** the bottom `ep-nav` prev/next bar is kept (it is
+  type structure). Part 1 has no previous; "next" stays a disabled placeholder
+  until `en/prompt1-2.html` exists, at which point translating part 2 wires
+  both slots within the en tier.
+- **Not done:** no brain entry, no Pulse, no glossary back-links.
 
 ### (b) meta-6 — the phantom pair (proper death)
 - meta-6 is **not** invoked here (the constraints forbid editing it). This

@@ -130,6 +130,10 @@ body{font-family:'Vazirmatn',system-ui,-apple-system,sans-serif;}
 .ep-chip-link:hover{background:var(--ac);color:#fff;border-color:var(--ac);}
 .ep-tags{display:flex;flex-wrap:wrap;gap:8px;}
 .ep-hashtag{font-size:.8rem;color:var(--ac);font-weight:600;}
+.ep-nav{display:flex;justify-content:space-between;gap:12px;margin-top:28px;}
+.ep-nav-btn{flex:1;text-align:center;padding:12px 16px;border:1px solid var(--card-border);border-radius:12px;text-decoration:none;font-size:.85rem;font-weight:600;color:var(--txt2);background:var(--card-bg);transition:all .15s;}
+.ep-nav-btn:hover{border-color:var(--ac);color:var(--ac);}
+.ep-nav-empty{cursor:default;opacity:.3;pointer-events:none;}
 @media(max-width:480px){.ep-title{font-size:1.25rem;}.ep-box-head,.ep-section{padding-right:18px;padding-left:18px;}}
 .lang-btn{
   display: flex;
@@ -269,6 +273,13 @@ body{font-family:'Vazirmatn',system-ui,-apple-system,sans-serif;}
       <h2 class="ep-section-label">Tags</h2>
       <div class="ep-tags"><span class="ep-hashtag">#AI</span><span class="ep-hashtag">#ChatGPT</span><span class="ep-hashtag">#LLM</span><span class="ep-hashtag">#AIinDentistry</span><span class="ep-hashtag">#DentalAI</span><span class="ep-hashtag">#DiagnosticAI</span><span class="ep-hashtag">#GenerativeAI</span><span class="ep-hashtag">#DetectionAI</span><span class="ep-hashtag">#GenerativeModels</span><span class="ep-hashtag">#CariesDetection</span><span class="ep-hashtag">#Hallucination</span><span class="ep-hashtag">#AIHallucination</span><span class="ep-hashtag">#AILiteracy</span><span class="ep-hashtag">#AIAwareness</span><span class="ep-hashtag">#Promptologist</span></div>
     </div>
+  </div>
+  <!-- Series prev/next (en tier). Part 1: no previous. Next is a disabled
+       placeholder until en/prompt1-2.html exists; publishing the English
+       part 2 wires both slots (this page's next + part 2's previous). -->
+  <div class="ep-nav">
+    <span class="ep-nav-btn ep-nav-empty"></span>
+    <span class="ep-nav-btn ep-nav-empty">Next Part &#8594;</span>
   </div>
 </main>
 
