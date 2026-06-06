@@ -4543,5 +4543,34 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 })();
 </script>
 
+<script>
+/* ── #patient deep-link → patient panel (additive) ──
+   Wires dentcast.ir/#patient and dentcast.org/#patient to land directly on the
+   patient panel. Mirrors the existing #radar hashchange pattern (in dc-nav.js).
+
+   Ordering: this runs on the window 'load' event, which fires only AFTER every
+   inline script in the document has executed — including the cinematic scroll
+   engine above, whose MutationObserver on #panel-patient is attached
+   synchronously (.observe(panelEl,{attributes:true})). So by the time this code
+   calls showPanel('panel-patient',…) and flips the panel to .active, that
+   observer is already listening and fires the cinematic canvas init.
+
+   The hash token (#patient) is mapped EXPLICITLY to the panel id (panel-patient);
+   they intentionally differ and nothing is renamed. 'fade' is the neutral dir
+   value used by showPanel (same value the bottom-nav click handler uses when the
+   target equals the current panel). This block adds behavior only — showPanel,
+   panelOrder, the swipe/click handlers, and the MutationObserver are untouched. */
+(function(){
+  'use strict';
+  function gotoPatientFromHash(){
+    if(window.location.hash === '#patient' && typeof showPanel === 'function'){
+      showPanel('panel-patient','fade');
+    }
+  }
+  window.addEventListener('load', gotoPatientFromHash);
+  window.addEventListener('hashchange', gotoPatientFromHash);
+})();
+</script>
+
 </body>
 </html>
