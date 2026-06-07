@@ -1269,7 +1269,7 @@ body.dc-desktop-ui .dc-search-overlay{ display:none!important; }
 
 /* ── HAMBURGER: collapse col-A sidebar ── */
 .dcd-app.col-a-hidden{
-  grid-template-columns:0px 270px 1fr !important;
+  grid-template-columns:0px 420px 1fr !important;
 }
 .dcd-app.col-a-hidden .dcd-col-a{
   overflow:hidden; pointer-events:none;
@@ -1330,17 +1330,20 @@ body.dc-desktop-ui #dc-desktop-root{
 /* ── 3-COLUMN APP GRID ── */
 .dcd-app{
   display:grid;
-  /* RTL: col-A (220px) = rightmost, col-C (1fr) = leftmost */
-  grid-template-columns:220px 270px 1fr;
+  /* RTL: col-A (220px) = rightmost, col-C (1fr) = leftmost.
+     col-B (middle, content list) widened ~1.5–1.6× so long item titles
+     read on fewer lines and col-C lands near an ideal reading measure;
+     graduated per breakpoint so laptops keep a comfortable col-C. */
+  grid-template-columns:220px 420px 1fr;
   height:100vh; width:100%; overflow:hidden;
   background:var(--bg); transition:background var(--tr2);
 }
-@media(min-width:1600px){ .dcd-app{ grid-template-columns:250px 300px 1fr; } }
-@media(max-width:1280px){ .dcd-app{ grid-template-columns:200px 250px 1fr; } }
-@media(max-width:1024px){ .dcd-app{ grid-template-columns:180px 220px 1fr; } }
+@media(min-width:1600px){ .dcd-app{ grid-template-columns:250px 480px 1fr; } }
+@media(max-width:1280px){ .dcd-app{ grid-template-columns:200px 360px 1fr; } }
+@media(max-width:1024px){ .dcd-app{ grid-template-columns:180px 300px 1fr; } }
 /* Tablet (down to 768px desktop threshold): keep all three columns,
    just narrower — never hide the list column. */
-@media(max-width:820px){ .dcd-app{ grid-template-columns:160px 200px 1fr; } }
+@media(max-width:820px){ .dcd-app{ grid-template-columns:160px 250px 1fr; } }
 
 /* ══════════════════════════════════════════════
    COL-A — CATEGORY TREE (right side in RTL)
