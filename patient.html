@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <link rel="canonical" href="https://dentcast.org/">
+  <!-- No-JS fallback: root-relative so it behaves identically on .ir and .org -->
+  <meta http-equiv="refresh" content="0;url=/?patient">
+  <title>در حال انتقال…</title>
+  <!-- Redirect immediately, before render, so Meta's in-app webview never lingers
+       here. location.replace leaves no history entry. Root-relative target so the
+       existing ?patient handler on the homepage activates the patient panel on
+       both dentcast.ir and dentcast.org. No external resources. -->
+  <script>location.replace('/?patient');</script>
+</head>
+<body>
+  <p style="font-family:sans-serif;text-align:center;margin-top:2rem">در حال انتقال…</p>
+  <noscript><p style="font-family:sans-serif;text-align:center"><a href="/?patient">ادامه</a></p></noscript>
+</body>
+</html>
