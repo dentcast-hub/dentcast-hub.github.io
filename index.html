@@ -4544,9 +4544,12 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 </script>
 
 <script>
-/* ── #patient deep-link → patient panel (additive) ──
-   Wires dentcast.ir/#patient and dentcast.org/#patient to land directly on the
-   patient panel. Mirrors the existing #radar hashchange pattern (in dc-nav.js).
+/* ── patient deep-link → patient panel (additive) ──
+   Lands visitors directly on the patient panel for ads/social. Two entry points:
+     • ?patient  (primary) — a QUERY param survives Instagram/social link wrappers
+       and redirects that strip the URL #fragment. ?patient and ?patient=x both match.
+     • #patient  (legacy / back-compat) — the original hash deep-link.
+   Mirrors the existing #radar hashchange pattern (in dc-nav.js).
 
    Ordering: this runs on the window 'load' event, which fires only AFTER every
    inline script in the document has executed — including the cinematic scroll
@@ -4555,20 +4558,34 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
    calls showPanel('panel-patient',…) and flips the panel to .active, that
    observer is already listening and fires the cinematic canvas init.
 
-   The hash token (#patient) is mapped EXPLICITLY to the panel id (panel-patient);
-   they intentionally differ and nothing is renamed. 'fade' is the neutral dir
-   value used by showPanel (same value the bottom-nav click handler uses when the
-   target equals the current panel). This block adds behavior only — showPanel,
-   panelOrder, the swipe/click handlers, and the MutationObserver are untouched. */
+   The #patient / ?patient tokens are mapped EXPLICITLY to the panel id
+   (panel-patient); they intentionally differ and nothing is renamed. 'fade' is
+   the neutral dir value used by showPanel (same value the bottom-nav click
+   handler uses when the target equals the current panel).
+
+   The query is read ONCE on load (correct for fresh ad clicks — no query-watcher).
+   The hashchange listener checks the hash ONLY, so the #patient link still works
+   when already on the page, without yanking a ?patient visitor back when an
+   unrelated hash (e.g. #search) changes while ?patient remains in the URL.
+
+   This block adds behavior only — showPanel, panelOrder, the swipe/click handlers,
+   and the MutationObserver are untouched. */
 (function(){
   'use strict';
-  function gotoPatientFromHash(){
-    if(window.location.hash === '#patient' && typeof showPanel === 'function'){
-      showPanel('panel-patient','fade');
-    }
+  function hashIsPatient(){ return window.location.hash === '#patient'; }
+  function queryIsPatient(){
+    try { return new URLSearchParams(window.location.search).has('patient'); }
+    catch(e){ return false; }
   }
-  window.addEventListener('load', gotoPatientFromHash);
-  window.addEventListener('hashchange', gotoPatientFromHash);
+  function activatePatient(){
+    if(typeof showPanel === 'function') showPanel('panel-patient','fade');
+  }
+  window.addEventListener('load', function(){
+    if(queryIsPatient() || hashIsPatient()) activatePatient();
+  });
+  window.addEventListener('hashchange', function(){
+    if(hashIsPatient()) activatePatient();
+  });
 })();
 </script>
 
