@@ -1429,24 +1429,6 @@ body.dc-desktop-ui #dc-desktop-root{
   }
 }
 
-/* ── PATIENTS direct item: standalone (no accordion) neon ──────────────────
-   Carries the same coral --bn-glow as its mobile tab. At rest: static coral
-   glow (no pulse). While its cinematic viewer is active (col-C has is-patient):
-   the icon pulses — mirroring mobile, where only the active tab pulses. */
-.dcd-patient-item .dcd-group-hdr-ico{
-  filter:drop-shadow(0 0 5px rgba(var(--bn-glow),.55));
-}
-.dcd-app:has(.dcd-col-c.is-patient) .dcd-patient-item .dcd-group-hdr-ico{
-  animation:bnNeonPulse 5s ease-in-out infinite;
-}
-@media (prefers-reduced-motion: reduce){
-  .dcd-app:has(.dcd-col-c.is-patient) .dcd-patient-item .dcd-group-hdr-ico{
-    animation:none;
-    opacity:1;
-    filter:drop-shadow(0 0 5px rgba(var(--bn-glow),.55));
-  }
-}
-
 /* Sub-items (collapsed by default) */
 .dcd-group-items{
   overflow:hidden; max-height:0;
@@ -1662,15 +1644,6 @@ body.dc-desktop-ui #dc-desktop-root{
 .dcd-col-c.is-viewer .dcd-col-c-scroll{ display:none; }
 .dcd-col-c.is-viewer .dcd-page-viewer{
   display:block; flex:1; min-height:0;
-}
-
-/* Patients cinematic: phone-preview — narrow centered iframe with a dark
-   backdrop filling the empty side gutters. is-patient is set alongside
-   is-viewer, so the iframe is already displayed; we only constrain its width. */
-.dcd-col-c.is-patient{ background:#0b1118; }
-.dcd-col-c.is-patient .dcd-page-viewer{
-  width:430px; max-width:100%; margin:0 auto;
-  background:#0b1118;
 }
 
 /* Fetched content styling — extracted from article pages */
@@ -3228,12 +3201,17 @@ a.dc-list-card--pillar {
         </div>
       </div>
 
-      <!-- Patients — direct-click item (no accordion): opens the mobile cinematic
-           patients experience in the col-C iframe + the LiteCast list in col-B -->
-      <button class="dcd-group-hdr dcd-patient-item" data-grp="patients" id="dcd-patient-item">
-        <span class="dcd-group-hdr-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span>
-        <span class="dcd-group-hdr-lbl">بیماران</span>
-      </button>
+      <!-- Patients group -->
+      <div class="dcd-group" id="dcd-grp-patients">
+        <button class="dcd-group-hdr" data-grp="patients">
+          <span class="dcd-group-hdr-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span>
+          <span class="dcd-group-hdr-lbl">بیماران</span>
+          <span class="dcd-group-hdr-arr"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="10"/><path d="m10 8 6 4-6 4z"/></svg></span>
+        </button>
+        <div class="dcd-group-items">
+          <button class="dcd-subitem" data-type="litecast" data-label="LiteCast" data-src="litecast"><span class="dcd-subitem-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M12 3l1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></svg></span><span class="dcd-subitem-lbl">LiteCast</span></button>
+        </div>
+      </div>
 
 
     </div><!-- /dcd-tree -->
@@ -3827,7 +3805,6 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
   root.querySelectorAll('.dcd-group-hdr').forEach(hdr => {
     hdr.addEventListener('click', () => {
       const grp = hdr.closest('.dcd-group');
-      if(!grp) return;            /* patients direct-item has no group wrapper */
       const wasOpen = grp.classList.contains('open');
       /* Close all groups */
       root.querySelectorAll('.dcd-group').forEach(g => g.classList.remove('open'));
@@ -3837,27 +3814,10 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
   });
 
   /* ══════════════════════════════════════════════
-     COL-A: PATIENTS direct item → cinematic in col-C + LiteCast in col-B
-  ══════════════════════════════════════════════ */
-  const patientItem = document.getElementById('dcd-patient-item');
-  if(patientItem){
-    patientItem.addEventListener('click', () => {
-      /* No sidebar sub-item is "selected" while in patients mode */
-      root.querySelectorAll('.dcd-subitem').forEach(b => b.classList.remove('active'));
-      /* LiteCast list into the middle column */
-      loadList('litecast', 'LiteCast', 'litecast');
-      /* Mobile cinematic patients experience (chrome stripped) into the viewer */
-      openPageViewer('/?patient&bare');
-      if(colCEl) colCEl.classList.add('is-patient');
-    });
-  }
-
-  /* ══════════════════════════════════════════════
      COL-A: SUB-ITEM → POPULATE COL-B
   ══════════════════════════════════════════════ */
   root.querySelectorAll('.dcd-subitem').forEach(btn => {
     btn.addEventListener('click', () => {
-      if(colCEl) colCEl.classList.remove('is-patient');  /* leaving patients mode */
       root.querySelectorAll('.dcd-subitem').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
 
@@ -4025,8 +3985,8 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
   async function openContent(url, title){
     if(!url) return;
 
-    /* Exit viewer / patients mode if active */
-    if(colCEl){ colCEl.classList.remove('is-viewer'); colCEl.classList.remove('is-patient'); }
+    /* Exit viewer mode if active */
+    if(colCEl) colCEl.classList.remove('is-viewer');
     if(pageViewer) pageViewer.src = 'about:blank';
 
     /* Show loading */
@@ -4651,26 +4611,11 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
     try { return new URLSearchParams(window.location.search).has('patient'); }
     catch(e){ return false; }
   }
-  function queryIsBare(){
-    try { return new URLSearchParams(window.location.search).has('bare'); }
-    catch(e){ return false; }
-  }
   function activatePatient(){
     if(typeof showPanel === 'function') showPanel('panel-patient','fade');
   }
-  /* Bare mode (?bare): strip ALL chrome — top header + bottom three-tab nav —
-     so only the cinematic patients experience shows. Used when the desktop
-     sidebar embeds /?patient&bare inside the col-C iframe. Strictly gated on
-     the param, so the normal mobile site is untouched. The topbar is sticky and
-     the nav is fixed; hiding them doesn't change the svh-based pt-track/pt-sticky
-     sizing, so the scroll engine still maps the 277 frames across the full range. */
-  function applyBare(){
-    document.querySelectorAll('.dc-topbar, .dc-bottom-nav')
-      .forEach(function(el){ el.style.display = 'none'; });
-  }
   window.addEventListener('load', function(){
     if(queryIsPatient() || hashIsPatient()) activatePatient();
-    if(queryIsBare()) applyBare();
   });
   window.addEventListener('hashchange', function(){
     if(hashIsPatient()) activatePatient();
