@@ -1345,6 +1345,22 @@ body.dc-desktop-ui #dc-desktop-root{
    just narrower — never hide the list column. */
 @media(max-width:820px){ .dcd-app{ grid-template-columns:160px 250px 1fr; } }
 
+/* ── PATIENTS / cinematic mode ──
+   Only while the cinematic film is playing (col-C has .is-patient), size
+   col-C (the viewer) to the film's own 9:16 aspect so the portrait video
+   shows in FULL — no crop — and let col-B (the LiteCast list) absorb the
+   slack. The fit tracks viewport HEIGHT (film fits by height), so col-C
+   width = 9/16 × (100vh − topbar≈54px) = calc(56.25vh − 30px). Scoped to
+   is-patient, so normal article-reading width (above) is untouched. */
+.dcd-app:has(.dcd-col-c.is-patient){ grid-template-columns:220px 1fr calc(56.25vh - 30px); }
+@media(min-width:1600px){ .dcd-app:has(.dcd-col-c.is-patient){ grid-template-columns:250px 1fr calc(56.25vh - 30px); } }
+@media(max-width:1280px){ .dcd-app:has(.dcd-col-c.is-patient){ grid-template-columns:200px 1fr calc(56.25vh - 30px); } }
+@media(max-width:1024px){ .dcd-app:has(.dcd-col-c.is-patient){ grid-template-columns:180px 1fr calc(56.25vh - 30px); } }
+@media(max-width:820px){  .dcd-app:has(.dcd-col-c.is-patient){ grid-template-columns:160px 1fr calc(56.25vh - 30px); } }
+/* Sidebar collapsed (hamburger) while the film plays: drop col-A, keep the
+   film fitted. !important to beat the generic col-a-hidden rule above. */
+.dcd-app.col-a-hidden:has(.dcd-col-c.is-patient){ grid-template-columns:0px 1fr calc(56.25vh - 30px) !important; }
+
 /* ══════════════════════════════════════════════
    COL-A — CATEGORY TREE (right side in RTL)
    Dark sidebar with expandable groups
