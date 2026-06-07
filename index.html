@@ -1398,6 +1398,58 @@ body.dc-desktop-ui #dc-desktop-root{
 .dcd-group.open .dcd-group-hdr-arr{ transform:rotate(90deg); }
 .dcd-group.open .dcd-group-hdr{ background:rgba(255,255,255,.04); }
 
+/* ── COL-A GROUP HEADERS: mobile bottom-nav "living neon" parity ──────────
+   Each category group carries the SAME --bn-glow RGB triad as its matching
+   mobile tab (gold/teal/coral), driving BOTH the header-icon color and its
+   neon glow. The sidebar bg is the same navy (#17212b) as the mobile footer,
+   so these values are pre-validated. Set on the header element so the reused
+   bnNeonPulse keyframe reads var(--bn-glow). */
+.dcd-group-hdr[data-grp="studio"]   { --bn-glow:196,152,32; }  /* gold  #c49820 */
+.dcd-group-hdr[data-grp="metabase"] { --bn-glow:79,209,197; }  /* teal  #4fd1c5 */
+.dcd-group-hdr[data-grp="patients"] { --bn-glow:245,106,121; } /* coral #f56a79 */
+[data-theme="dark"] .dcd-group-hdr[data-grp="studio"]   { --bn-glow:227,185,74; }  /* gold  #e3b94a */
+[data-theme="dark"] .dcd-group-hdr[data-grp="metabase"] { --bn-glow:95,224,211; }  /* teal  #5fe0d3 */
+[data-theme="dark"] .dcd-group-hdr[data-grp="patients"] { --bn-glow:255,122,138; } /* coral #ff7a8a */
+
+/* Icon tinted to its brand color — all three group headers, open or closed */
+.dcd-group-hdr-ico{ color:rgb(var(--bn-glow)); }
+
+/* Open group: label tinted like the mobile ACTIVE tab label (var(--bn-active)) */
+.dcd-group.open .dcd-group-hdr-lbl{ color:var(--bn-active); }
+
+/* Open group: soft pulsing outer glow on its icon — only the open group pulses,
+   mirroring mobile where only the active tab glows. Reuses the mobile keyframe;
+   only opacity + filter animate, never layout-triggering props. */
+.dcd-group.open .dcd-group-hdr-ico{
+  animation:bnNeonPulse 5s ease-in-out infinite;
+}
+/* Reduced motion: steady static glow, no pulse (mirrors the mobile nav) */
+@media (prefers-reduced-motion: reduce){
+  .dcd-group.open .dcd-group-hdr-ico{
+    animation:none;
+    opacity:1;
+    filter:drop-shadow(0 0 5px rgba(var(--bn-glow),.55));
+  }
+}
+
+/* ── PATIENTS direct item: standalone (no accordion) neon ──────────────────
+   Carries the same coral --bn-glow as its mobile tab. At rest: static coral
+   glow (no pulse). While its cinematic viewer is active (col-C has is-patient):
+   the icon pulses — mirroring mobile, where only the active tab pulses. */
+.dcd-patient-item .dcd-group-hdr-ico{
+  filter:drop-shadow(0 0 5px rgba(var(--bn-glow),.55));
+}
+.dcd-app:has(.dcd-col-c.is-patient) .dcd-patient-item .dcd-group-hdr-ico{
+  animation:bnNeonPulse 5s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce){
+  .dcd-app:has(.dcd-col-c.is-patient) .dcd-patient-item .dcd-group-hdr-ico{
+    animation:none;
+    opacity:1;
+    filter:drop-shadow(0 0 5px rgba(var(--bn-glow),.55));
+  }
+}
+
 /* Sub-items (collapsed by default) */
 .dcd-group-items{
   overflow:hidden; max-height:0;
@@ -3158,7 +3210,7 @@ a.dc-list-card--pillar {
       <!-- Meta Base group -->
       <div class="dcd-group" id="dcd-grp-metabase">
         <button class="dcd-group-hdr" data-grp="metabase">
-          <span class="dcd-group-hdr-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M9 4a3 3 0 0 0-3 3v1a3 3 0 0 0-2 5.2A3.5 3.5 0 0 0 8 19h1"/><path d="M15 4a3 3 0 0 1 3 3v1a3 3 0 0 1 2 5.2A3.5 3.5 0 0 1 16 19h-1"/><path d="M12 4v17"/><path d="M8 9h2"/><path d="M14 9h2"/><path d="M8 14h2"/><path d="M14 14h2"/></svg></span>
+          <span class="dcd-group-hdr-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="4.5" r="2.2"/><circle cx="4.5" cy="18.5" r="2.2"/><circle cx="19.5" cy="18.5" r="2.2"/><line x1="10.2" y1="6.2" x2="5.9" y2="16.5"/><line x1="13.8" y1="6.2" x2="18.1" y2="16.5"/><line x1="6.6" y1="18.5" x2="17.4" y2="18.5"/></svg></span>
           <span class="dcd-group-hdr-lbl">Meta Base</span>
           <span class="dcd-group-hdr-arr"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="10"/><path d="m10 8 6 4-6 4z"/></svg></span>
         </button>
@@ -3170,17 +3222,13 @@ a.dc-list-card--pillar {
         </div>
       </div>
 
-      <!-- Patients group -->
-      <div class="dcd-group" id="dcd-grp-patients">
-        <button class="dcd-group-hdr" data-grp="patients">
-          <span class="dcd-group-hdr-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span>
-          <span class="dcd-group-hdr-lbl">بیماران</span>
-          <span class="dcd-group-hdr-arr"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="10"/><path d="m10 8 6 4-6 4z"/></svg></span>
-        </button>
-        <div class="dcd-group-items">
-          <button class="dcd-subitem" data-type="litecast" data-label="LiteCast" data-src="litecast"><span class="dcd-subitem-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M12 3l1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></svg></span><span class="dcd-subitem-lbl">LiteCast</span></button>
-        </div>
-      </div>
+      <!-- Patients — direct-click item (no accordion): opens the full-viewer
+           cinematic experience (/patients/cinematic.html) in col-C and the
+           LiteCast list in col-B -->
+      <button class="dcd-group-hdr dcd-patient-item" data-grp="patients" id="dcd-patient-item">
+        <span class="dcd-group-hdr-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span>
+        <span class="dcd-group-hdr-lbl">بیماران</span>
+      </button>
 
 
     </div><!-- /dcd-tree -->
@@ -3774,6 +3822,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
   root.querySelectorAll('.dcd-group-hdr').forEach(hdr => {
     hdr.addEventListener('click', () => {
       const grp = hdr.closest('.dcd-group');
+      if(!grp) return;            /* patients direct-item has no group wrapper */
       const wasOpen = grp.classList.contains('open');
       /* Close all groups */
       root.querySelectorAll('.dcd-group').forEach(g => g.classList.remove('open'));
@@ -3783,10 +3832,27 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
   });
 
   /* ══════════════════════════════════════════════
+     COL-A: PATIENTS direct item → full-viewer cinematic in col-C + LiteCast in col-B
+  ══════════════════════════════════════════════ */
+  const patientItem = document.getElementById('dcd-patient-item');
+  if(patientItem){
+    patientItem.addEventListener('click', () => {
+      /* No sidebar sub-item is "selected" while in patients mode */
+      root.querySelectorAll('.dcd-subitem').forEach(b => b.classList.remove('active'));
+      /* LiteCast list into the middle column */
+      loadList('litecast', 'LiteCast', 'litecast');
+      /* Standalone full-viewer cinematic experience into the viewer (no capsule) */
+      openPageViewer('/patients/cinematic.html');
+      if(colCEl) colCEl.classList.add('is-patient');
+    });
+  }
+
+  /* ══════════════════════════════════════════════
      COL-A: SUB-ITEM → POPULATE COL-B
   ══════════════════════════════════════════════ */
   root.querySelectorAll('.dcd-subitem').forEach(btn => {
     btn.addEventListener('click', () => {
+      if(colCEl) colCEl.classList.remove('is-patient');  /* leaving patients mode */
       root.querySelectorAll('.dcd-subitem').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
 
@@ -3954,8 +4020,8 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
   async function openContent(url, title){
     if(!url) return;
 
-    /* Exit viewer mode if active */
-    if(colCEl) colCEl.classList.remove('is-viewer');
+    /* Exit viewer / patients mode if active */
+    if(colCEl){ colCEl.classList.remove('is-viewer'); colCEl.classList.remove('is-patient'); }
     if(pageViewer) pageViewer.src = 'about:blank';
 
     /* Show loading */
@@ -4547,9 +4613,12 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 </script>
 
 <script>
-/* ── #patient deep-link → patient panel (additive) ──
-   Wires dentcast.ir/#patient and dentcast.org/#patient to land directly on the
-   patient panel. Mirrors the existing #radar hashchange pattern (in dc-nav.js).
+/* ── patient deep-link → patient panel (additive) ──
+   Lands visitors directly on the patient panel for ads/social. Two entry points:
+     • ?patient  (primary) — a QUERY param survives Instagram/social link wrappers
+       and redirects that strip the URL #fragment. ?patient and ?patient=x both match.
+     • #patient  (legacy / back-compat) — the original hash deep-link.
+   Mirrors the existing #radar hashchange pattern (in dc-nav.js).
 
    Ordering: this runs on the window 'load' event, which fires only AFTER every
    inline script in the document has executed — including the cinematic scroll
@@ -4558,20 +4627,34 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
    calls showPanel('panel-patient',…) and flips the panel to .active, that
    observer is already listening and fires the cinematic canvas init.
 
-   The hash token (#patient) is mapped EXPLICITLY to the panel id (panel-patient);
-   they intentionally differ and nothing is renamed. 'fade' is the neutral dir
-   value used by showPanel (same value the bottom-nav click handler uses when the
-   target equals the current panel). This block adds behavior only — showPanel,
-   panelOrder, the swipe/click handlers, and the MutationObserver are untouched. */
+   The #patient / ?patient tokens are mapped EXPLICITLY to the panel id
+   (panel-patient); they intentionally differ and nothing is renamed. 'fade' is
+   the neutral dir value used by showPanel (same value the bottom-nav click
+   handler uses when the target equals the current panel).
+
+   The query is read ONCE on load (correct for fresh ad clicks — no query-watcher).
+   The hashchange listener checks the hash ONLY, so the #patient link still works
+   when already on the page, without yanking a ?patient visitor back when an
+   unrelated hash (e.g. #search) changes while ?patient remains in the URL.
+
+   This block adds behavior only — showPanel, panelOrder, the swipe/click handlers,
+   and the MutationObserver are untouched. */
 (function(){
   'use strict';
-  function gotoPatientFromHash(){
-    if(window.location.hash === '#patient' && typeof showPanel === 'function'){
-      showPanel('panel-patient','fade');
-    }
+  function hashIsPatient(){ return window.location.hash === '#patient'; }
+  function queryIsPatient(){
+    try { return new URLSearchParams(window.location.search).has('patient'); }
+    catch(e){ return false; }
   }
-  window.addEventListener('load', gotoPatientFromHash);
-  window.addEventListener('hashchange', gotoPatientFromHash);
+  function activatePatient(){
+    if(typeof showPanel === 'function') showPanel('panel-patient','fade');
+  }
+  window.addEventListener('load', function(){
+    if(queryIsPatient() || hashIsPatient()) activatePatient();
+  });
+  window.addEventListener('hashchange', function(){
+    if(hashIsPatient()) activatePatient();
+  });
 })();
 </script>
 
