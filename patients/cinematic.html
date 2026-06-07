@@ -329,7 +329,15 @@
     if(!img || !img.naturalWidth) return;
     const cw=canvas.width, ch=canvas.height;
     const scale=Math.max(cw/img.naturalWidth, ch/img.naturalHeight);
-    ctx.drawImage(img,(cw-img.naturalWidth*scale)/2,(ch-img.naturalHeight*scale)/2,img.naturalWidth*scale,img.naturalHeight*scale);
+    /* Vertical focus of the cover crop: 0 = anchor to the top of the frame,
+       0.5 = centered. Biased above center so the top of the shot stays
+       visible on wide desktop viewers (where the portrait frame overflows
+       a lot vertically) — without the dead space full top-anchoring caused.
+       Lower it toward 0 to reveal more top, raise toward 0.5 for center. */
+    const VFOCUS=0.30;
+    const dx=(cw-img.naturalWidth*scale)/2;
+    const dy=(ch-img.naturalHeight*scale)*VFOCUS;
+    ctx.drawImage(img,dx,dy,img.naturalWidth*scale,img.naturalHeight*scale);
   }
 
   /* size the canvas backing store to the viewer (capped DPR for sharpness) */
