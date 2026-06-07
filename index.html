@@ -1346,22 +1346,22 @@ body.dc-desktop-ui #dc-desktop-root{
 @media(max-width:820px){ .dcd-app{ grid-template-columns:160px 250px 1fr; } }
 
 /* ── PATIENTS / cinematic mode ──
-   Only while the cinematic film is playing (col-C has .is-patient), give the
-   viewer two-thirds of the width so the scrollytelling film is large and
-   dominant; col-B (the LiteCast list) takes the remaining third via 1fr.
-   (The portrait film still cover-fits with the top protected by VFOCUS in
-   patients/cinematic.html.) Scoped to is-patient, so normal article-reading
-   width (above) is untouched — and clicking a list article calls
-   openContent(), which removes .is-patient and snaps the grid back to the
-   standard layout automatically. */
-.dcd-app:has(.dcd-col-c.is-patient){ grid-template-columns:220px 1fr calc(200vw / 3); }
-@media(min-width:1600px){ .dcd-app:has(.dcd-col-c.is-patient){ grid-template-columns:250px 1fr calc(200vw / 3); } }
-@media(max-width:1280px){ .dcd-app:has(.dcd-col-c.is-patient){ grid-template-columns:200px 1fr calc(200vw / 3); } }
-@media(max-width:1024px){ .dcd-app:has(.dcd-col-c.is-patient){ grid-template-columns:180px 1fr calc(200vw / 3); } }
-@media(max-width:820px){  .dcd-app:has(.dcd-col-c.is-patient){ grid-template-columns:160px 1fr calc(200vw / 3); } }
+   While in patients mode (col-C has .is-patient), the MIDDLE column (col-B)
+   IS the cinematic film, and the wide col-C (1fr) holds the LiteCast links +
+   the article reader. The portrait 9:16 film fills col-B exactly when col-B's
+   width = 9/16 × its height; col-B has no topbar, so it's the full 100vh →
+   col-B = 56.25vh (no crop, no black bars). col-A keeps its per-breakpoint
+   width; col-C takes the rest. Scoped to is-patient, so the normal layout
+   (above) is untouched, and clicking another sidebar item drops .is-patient
+   and snaps back automatically. */
+.dcd-app:has(.dcd-col-c.is-patient){ grid-template-columns:220px 56.25vh 1fr; }
+@media(min-width:1600px){ .dcd-app:has(.dcd-col-c.is-patient){ grid-template-columns:250px 56.25vh 1fr; } }
+@media(max-width:1280px){ .dcd-app:has(.dcd-col-c.is-patient){ grid-template-columns:200px 56.25vh 1fr; } }
+@media(max-width:1024px){ .dcd-app:has(.dcd-col-c.is-patient){ grid-template-columns:180px 56.25vh 1fr; } }
+@media(max-width:820px){  .dcd-app:has(.dcd-col-c.is-patient){ grid-template-columns:160px 56.25vh 1fr; } }
 /* Sidebar collapsed (hamburger) while the film plays: drop col-A, keep the
-   two-thirds viewer. !important to beat the generic col-a-hidden rule above. */
-.dcd-app.col-a-hidden:has(.dcd-col-c.is-patient){ grid-template-columns:0px 1fr calc(200vw / 3) !important; }
+   film column. !important to beat the generic col-a-hidden rule above. */
+.dcd-app.col-a-hidden:has(.dcd-col-c.is-patient){ grid-template-columns:0px 56.25vh 1fr !important; }
 
 /* ══════════════════════════════════════════════
    COL-A — CATEGORY TREE (right side in RTL)
@@ -1588,6 +1588,19 @@ body.dc-desktop-ui #dc-desktop-root{
   text-align:center; gap:10px;
 }
 .dcd-col-b-empty-ico{ font-size:32px; opacity:.4; }
+
+/* ── Patients mode: middle column becomes the cinematic film ── */
+.dcd-b-film{ display:none; width:100%; flex:1; min-height:0; border:none; background:#000; }
+.dcd-app:has(.dcd-col-c.is-patient) .dcd-col-b-hdr,
+.dcd-app:has(.dcd-col-c.is-patient) .dcd-col-b-list{ display:none; }
+.dcd-app:has(.dcd-col-c.is-patient) .dcd-b-film{ display:block; }
+/* Back-to-links button shown above an opened article while the film plays */
+.dcd-patient-back{
+  font:inherit; font-size:.85rem; font-weight:700; color:var(--ac);
+  background:transparent; border:none; cursor:pointer;
+  padding:0 0 14px; display:inline-block;
+}
+.dcd-patient-back:hover{ text-decoration:underline; text-underline-offset:3px; }
 
 /* Domain notice — mobile topbar */
 .dc-domain-notice{
@@ -3274,6 +3287,10 @@ a.dc-list-card--pillar {
       </div>
     </div>
 
+    <!-- Patients mode: the cinematic scrollytelling film, pinned in the middle column -->
+    <iframe class="dcd-b-film" id="dcd-b-film" title="DentCast Patients Film"
+            sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-top-navigation-by-user-activation"></iframe>
+
   </div>
 
   <!-- ══ COL-C: ARTICLE VIEWER (leftmost, widest) ══ -->
@@ -3829,6 +3846,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
   const colCScroll  = document.getElementById('dcd-col-c-scroll');
   const contentArea = document.getElementById('dcd-content-area');
   const pageViewer  = document.getElementById('dcd-page-viewer');
+  const bFilm       = document.getElementById('dcd-b-film');
 
   /* ── Public helpers (used in HTML onclick) ── */
   window.dcdOpen       = function(url, title){ openContent(url, title); };
@@ -3857,11 +3875,45 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
     patientItem.addEventListener('click', () => {
       /* No sidebar sub-item is "selected" while in patients mode */
       root.querySelectorAll('.dcd-subitem').forEach(b => b.classList.remove('active'));
-      /* LiteCast list into the middle column */
-      loadList('litecast', 'LiteCast', 'litecast');
-      /* Standalone full-viewer cinematic experience into the viewer (no capsule) */
-      openPageViewer('/patients/cinematic.html');
-      if(colCEl) colCEl.classList.add('is-patient');
+      /* Enter patients mode: film pinned in the middle column (col-B),
+         links + reader in the wide col-C. NOT is-viewer — col-C uses its
+         scroll/content area, not the page-viewer iframe. */
+      if(colCEl){ colCEl.classList.remove('is-viewer'); colCEl.classList.add('is-patient'); }
+      if(pageViewer) pageViewer.src = 'about:blank';
+      /* Cinematic film into the middle column — load once, keep it playing */
+      if(bFilm && !((bFilm.getAttribute('src') || '').includes('cinematic')))
+        bFilm.src = '/patients/cinematic.html?view=content';
+      /* LiteCast links into the wide viewer */
+      showPatientFeed();
+    });
+  }
+
+  /* Patients: render the LiteCast links as a list in the wide viewer (col-C).
+     Clicking a link opens that article in place (openContent keepPatient=true),
+     so the film keeps playing in the middle column. Re-clicking «بیماران» (or
+     the back button on an article) returns here. */
+  async function showPatientFeed(){
+    if(!contentArea || !colCScroll) return;
+    colCScroll.classList.add('has-content');
+    contentArea.innerHTML = '<div class="dcd-col-b-empty"><div class="dcd-col-b-empty-ico">⏳</div><div>در حال بارگذاری…</div></div>';
+    let items = [];
+    try{
+      const d = await fetch('/litecast/lite-glossary.json', {cache:'no-store'}).then(r => r.json());
+      const arr = d.LightGlossary || d;
+      items = (Array.isArray(arr) ? arr : []).map(x => ({
+        title: (x.title || x.name || '').trim(),
+        url:   ('/' + (x.page_url || '').replace(/^\//,'')).replace('//','/')
+      })).filter(x => x.title && x.url).reverse();
+    }catch(e){ items = []; }
+    if(!items.length){
+      contentArea.innerHTML = '<div class="dcd-col-b-empty"><div class="dcd-col-b-empty-ico">🚫</div><div>محتوایی یافت نشد</div></div>';
+      return;
+    }
+    contentArea.innerHTML = '<div class="dcd-patient-feed">' + items.map(it =>
+      `<div class="dcd-item" data-url="${h(it.url)}" data-title="${h(it.title)}"><div class="dcd-item-title">${h(it.title)}</div></div>`
+    ).join('') + '</div>';
+    contentArea.querySelectorAll('.dcd-item').forEach(el => {
+      el.addEventListener('click', () => openContent(el.dataset.url, el.dataset.title, true));
     });
   }
 
@@ -3871,6 +3923,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
   root.querySelectorAll('.dcd-subitem').forEach(btn => {
     btn.addEventListener('click', () => {
       if(colCEl) colCEl.classList.remove('is-patient');  /* leaving patients mode */
+      if(bFilm) bFilm.src = 'about:blank';               /* stop the patients film */
       root.querySelectorAll('.dcd-subitem').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
 
@@ -4035,11 +4088,13 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
      article-content-wrap (or fallback selectors).
      No iframe — clean content only.
   ══════════════════════════════════════════════ */
-  async function openContent(url, title){
+  async function openContent(url, title, keepPatient){
     if(!url) return;
 
-    /* Exit viewer / patients mode if active */
-    if(colCEl){ colCEl.classList.remove('is-viewer'); colCEl.classList.remove('is-patient'); }
+    /* Exit viewer mode. Leave patients mode only when NOT keepPatient, so a
+       LiteCast link clicked from the patients feed opens here while the film
+       keeps playing in the middle column. */
+    if(colCEl){ colCEl.classList.remove('is-viewer'); if(!keepPatient) colCEl.classList.remove('is-patient'); }
     if(pageViewer) pageViewer.src = 'about:blank';
 
     /* Show loading */
@@ -4106,6 +4161,15 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
       contentArea.innerHTML = (headStyleText ? `<style>${headStyleText}</style>` : '')
                               + extract.innerHTML
                               + extraScripts;
+
+      /* Patients mode: keep the film playing and offer a way back to the links */
+      if(keepPatient){
+        const back = document.createElement('button');
+        back.className = 'dcd-patient-back';
+        back.textContent = '→ بازگشت به فهرست';
+        back.addEventListener('click', showPatientFeed);
+        contentArea.prepend(back);
+      }
 
       /* Rebuild audio elements so they work in the new DOM.
          Copy all original attributes (id, src, preload…) so
