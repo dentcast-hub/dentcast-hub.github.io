@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <!-- Google Analytics (deferred: loads only after the page is fully rendered) -->
+  <script>
+    window.addEventListener('load', function () {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-GMM0WC8X3M');
+      var ga = document.createElement('script');
+      ga.async = true;
+      ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-GMM0WC8X3M';
+      document.head.appendChild(ga);
+    });
+  </script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="/logo-v2.png" type="image/png">
+  <title>بیماران · دکتر فواد شهابیان</title>
+
+  <!-- Vazirmatn (same faces as the main site) -->
+  <style>
+  @font-face{ font-family:'Vazirmatn'; src:url('/fonts/Vazirmatn-Regular.woff2')  format('woff2'); font-weight:400; font-display:swap; }
+  @font-face{ font-family:'Vazirmatn'; src:url('/fonts/Vazirmatn-SemiBold.woff2') format('woff2'); font-weight:600; font-display:swap; }
+  @font-face{ font-family:'Vazirmatn'; src:url('/fonts/Vazirmatn-ExtraBold.woff2')format('woff2'); font-weight:800; font-display:swap; }
+
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; height:100%; background:#000; }
+  body{ font-family:'Vazirmatn',system-ui,sans-serif; }
+
+  /* Full-viewer scroll container (mirrors the mobile #mobile-body scroller) */
+  #sc-body{
+    height:100svh; overflow-y:auto; overflow-x:hidden;
+    -webkit-overflow-scrolling:touch; background:#000;
+  }
+
+  /* =====================================================
+     CINEMATIC PATIENTS — desktop full-viewer (no capsule)
+     Same frames / scenes / speed as the mobile experience.
+     The 0→1 scroll distance is (track − sticky) = 3200px, identical
+     to mobile, so the playback speed is unchanged.
+  ===================================================== */
+  .pt-wrap{ position:relative; margin:0; }
+  .pt-track{ position:relative; height:calc(100svh + 3200px); }
+  .pt-sticky{
+    position:sticky; top:0;
+    height:100svh; width:100%;
+    overflow:hidden; background:#000;
+    z-index:10;
+  }
+  /* canvas — sized to the viewer in JS, cover-fit (fills, never distorts) */
+  #pt-canvas{ position:absolute; inset:0; width:100%; height:100%; display:block; }
+
+  /* gradient overlays */
+  .pt-grad-top{
+    position:absolute; top:0; left:0; right:0; height:52%;
+    background:linear-gradient(to bottom,rgba(0,0,0,.72) 0%,rgba(0,0,0,.28) 55%,transparent 100%);
+    pointer-events:none; z-index:2;
+  }
+  .pt-grad-bottom{
+    position:absolute; bottom:0; left:0; right:0; height:68%;
+    background:linear-gradient(to top,rgba(0,0,0,.92) 0%,rgba(0,0,0,.50) 42%,transparent 100%);
+    pointer-events:none; z-index:2; opacity:0;
+  }
+  .pt-vignette{
+    position:absolute; inset:0;
+    background:radial-gradient(ellipse at center,transparent 52%,rgba(0,0,0,.28) 100%);
+    pointer-events:none; z-index:2;
+  }
+  /* progress bar */
+  .pt-progress{
+    position:absolute; top:12px; right:10px;
+    width:2.5px; height:calc(100% - 24px);
+    background:rgba(255,255,255,.14); border-radius:999px;
+    overflow:hidden; z-index:20;
+  }
+  .pt-progress-fill{ width:100%; height:0%; background:rgba(255,255,255,.72); border-radius:999px; will-change:height; }
+
+  /* scenes — shared base. On the wide viewer the interactive content sits in a
+     centered column over the full-bleed cinematic background. */
+  .pt-scene{
+    position:absolute; inset:0;
+    display:flex; flex-direction:column; align-items:center;
+    opacity:0; pointer-events:none; z-index:5;
+    will-change:opacity,transform;
+  }
+  .pt-scene > *{ width:100%; max-width:480px; }
+
+  /* scene: hero */
+  .pt-scene-hero{ justify-content:flex-start; padding:34px 24px 0; }
+  .pt-hero-tagline{
+    color:#fff; font-size:1.55rem; font-weight:900; letter-spacing:-.01em;
+    text-shadow:0 2px 20px rgba(0,0,0,.65),0 1px 4px rgba(0,0,0,.45);
+    line-height:1.25; text-align:center; margin-bottom:14px;
+  }
+  .pt-scroll-hint{ display:flex; flex-direction:column; align-items:center; gap:6px; will-change:opacity; }
+  .pt-hint-text{
+    font-size:.86rem; font-weight:800; color:rgba(255,255,255,.88);
+    letter-spacing:.04em; text-shadow:0 1px 10px rgba(0,0,0,.5);
+  }
+  .pt-hint-ico{
+    font-size:1.55rem; color:rgba(255,255,255,.90);
+    animation:pt-bounce .95s ease-in-out infinite; display:block; line-height:1;
+    text-shadow:0 2px 12px rgba(0,0,0,.45);
+  }
+  @keyframes pt-bounce{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(5px); } }
+
+  /* doctor identity — parallax layer, slides up with scroll */
+  .pt-hero-bottom{
+    position:absolute; bottom:32px; left:0; right:0;
+    display:flex; flex-direction:column; align-items:center;
+    padding:0 24px; z-index:6; will-change:transform; pointer-events:none;
+  }
+  .pt-hero-name{
+    color:#fff; font-size:1.28rem; font-weight:900; letter-spacing:-.01em;
+    text-shadow:0 2px 16px rgba(0,0,0,.60),0 1px 4px rgba(0,0,0,.40);
+    line-height:1.2; text-align:center;
+  }
+  .pt-hero-divider{ width:24px; height:1.5px; background:rgba(255,255,255,.35); border-radius:999px; margin:8px auto; }
+  .pt-hero-spec{
+    color:rgba(255,255,255,.62); font-size:.80rem; font-weight:600; letter-spacing:.03em;
+    text-shadow:0 1px 8px rgba(0,0,0,.40); text-align:center;
+  }
+
+  /* scene: knowledge (litecast cards) */
+  .pt-scene-knowledge{ justify-content:flex-start; padding:24px 18px 0; gap:0; }
+  .pt-scene-label{
+    font-size:.62rem; font-weight:800; color:rgba(255,255,255,.42);
+    letter-spacing:.15em; text-transform:uppercase; margin-bottom:11px;
+    align-self:flex-start; padding:0 2px;
+  }
+  .pt-lc-cards{ display:flex; flex-direction:column; gap:8px; width:100%; }
+  .pt-lc-card{
+    background:rgba(255,255,255,.09);
+    backdrop-filter:blur(20px) saturate(1.5); -webkit-backdrop-filter:blur(20px) saturate(1.5);
+    border:1px solid rgba(255,255,255,.16); border-radius:14px;
+    padding:13px 15px; display:flex; flex-direction:column; gap:5px;
+    text-decoration:none; opacity:0; transform:translateY(16px);
+    will-change:opacity,transform;
+    box-shadow:0 4px 28px rgba(0,0,0,.22),0 1px 6px rgba(0,0,0,.18);
+    -webkit-tap-highlight-color:transparent;
+  }
+  .pt-lc-card:hover{ background:rgba(255,255,255,.15); }
+  .pt-lc-card-cat{ font-size:.62rem; font-weight:700; color:rgba(255,255,255,.48); letter-spacing:.09em; text-transform:uppercase; }
+  .pt-lc-card-title{ font-size:.94rem; font-weight:800; color:#fff; line-height:1.40; text-shadow:0 1px 6px rgba(0,0,0,.28); }
+
+  /* scene: articles */
+  .pt-scene-articles{ justify-content:flex-start; padding:24px 18px 0; }
+  .pt-articles-list{ list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:7px; width:100%; }
+  .pt-article-item{ opacity:0; transform:translateX(14px); will-change:opacity,transform; }
+  .pt-article-item a{
+    display:flex; align-items:center; gap:11px; padding:12px 14px;
+    background:rgba(255,255,255,.08);
+    backdrop-filter:blur(18px) saturate(1.4); -webkit-backdrop-filter:blur(18px) saturate(1.4);
+    border:1px solid rgba(255,255,255,.13); border-radius:12px;
+    text-decoration:none; -webkit-tap-highlight-color:transparent;
+  }
+  .pt-article-item a:hover{ background:rgba(255,255,255,.15); }
+  .pt-article-dot{ width:5px; height:5px; border-radius:50%; background:rgba(255,255,255,.48); flex-shrink:0; }
+  .pt-article-title{ font-size:.88rem; font-weight:700; color:#fff; line-height:1.42; text-shadow:0 1px 4px rgba(0,0,0,.28); }
+
+  /* scene: CTA — decision mode */
+  .pt-scene-cta{ justify-content:flex-end; padding:0 18px 30px; }
+  .pt-cta-tagline{ font-size:.82rem; font-weight:600; color:rgba(255,255,255,.62); text-align:center; margin-bottom:5px; letter-spacing:.02em; }
+  .pt-cta-name{ font-size:1.18rem; font-weight:900; color:#fff; text-align:center; margin-bottom:18px; text-shadow:0 2px 14px rgba(0,0,0,.55); letter-spacing:-.01em; }
+  .pt-cta-actions{ display:grid; grid-template-columns:1fr 1fr; gap:8px; width:100%; }
+  .pt-cta-btn{
+    display:flex; align-items:center; justify-content:center; gap:7px;
+    padding:13px 10px; border-radius:12px; text-decoration:none;
+    font-size:.86rem; font-weight:800; min-height:48px;
+    -webkit-tap-highlight-color:transparent; will-change:transform;
+  }
+  .pt-cta-btn:active{ transform:scale(.96); }
+  .pt-cta-btn-primary{ background:rgba(255,255,255,.94); color:#022360; border:none; grid-column:1/-1; box-shadow:0 4px 20px rgba(0,0,0,.38); }
+  .pt-cta-btn-secondary{ background:rgba(255,255,255,.11); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); border:1px solid rgba(255,255,255,.26); color:#fff; }
+  .pt-btn-ico{ font-size:1.05rem; line-height:1; display:inline-flex; }
+  .pt-btn-ico svg{ width:1em; height:1em; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+
+  @media (prefers-reduced-motion: reduce){
+    .pt-hint-ico{ animation:none; }
+  }
+  </style>
+</head>
+<body>
+
+<div id="sc-body">
+  <div class="pt-wrap">
+    <div class="pt-track" id="pt-track">
+      <div class="pt-sticky" id="pt-sticky">
+
+        <!-- CINEMATIC FRAME CANVAS -->
+        <canvas id="pt-canvas" aria-label="کلینیک دکتر فواد شهابیان"></canvas>
+
+        <!-- GRADIENT OVERLAYS -->
+        <div class="pt-grad-top"></div>
+        <div class="pt-grad-bottom" id="pt-grad-bottom"></div>
+        <div class="pt-vignette"></div>
+
+        <!-- PROGRESS BAR -->
+        <div class="pt-progress"><div class="pt-progress-fill" id="pt-progress-fill"></div></div>
+
+        <!-- DOCTOR IDENTITY — parallax, slides up with scroll -->
+        <div class="pt-hero-bottom" id="pt-hero-bottom">
+          <div class="pt-hero-name">دکتر فواد شهابیان</div>
+          <div class="pt-hero-divider"></div>
+          <div class="pt-hero-spec">متخصص پروتز · زیبایی · ایمپلنت</div>
+        </div>
+
+        <!-- SCENE 1: HERO -->
+        <div class="pt-scene pt-scene-hero" id="pt-scene-hero">
+          <div class="pt-hero-tagline">درمان از اینجا شروع میشه</div>
+          <div class="pt-scroll-hint" id="pt-scroll-hint">
+            <span class="pt-hint-text">اسکرول کنید</span>
+            <span class="pt-hint-ico">↓</span>
+          </div>
+        </div>
+
+        <!-- SCENE 2: LITECAST KNOWLEDGE CARDS (no "go to LiteCast page" CTA — LiteCast lives in the middle column) -->
+        <div class="pt-scene pt-scene-knowledge" id="pt-scene-knowledge">
+          <div class="pt-scene-label">آموزش · LiteCast</div>
+          <div class="pt-lc-cards" id="pt-lc-cards"><!-- JS populated --></div>
+        </div>
+
+        <!-- SCENE 3: CONTEXTUAL ARTICLES -->
+        <div class="pt-scene pt-scene-articles" id="pt-scene-articles">
+          <div class="pt-scene-label">پیشنهاد مطالعه</div>
+          <ul class="pt-articles-list" id="pt-articles-list"><!-- JS populated --></ul>
+        </div>
+
+        <!-- SCENE 4: CTA — DECISION MODE -->
+        <div class="pt-scene pt-scene-cta" id="pt-scene-cta">
+          <div class="pt-cta-tagline">برای هماهنگی وقت معاینه</div>
+          <div class="pt-cta-name">دکتر فواد شهابیان</div>
+          <div class="pt-cta-actions">
+            <a class="pt-cta-btn pt-cta-btn-primary" href="tel:+986133380090">
+              <span class="pt-btn-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.4 19.4 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.4 2.1L8.1 10a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.9.6 2.9.7a2 2 0 0 1 1.6 1.9z"/></svg></span>
+              <span>تماس با مطب</span>
+            </a>
+            <a class="pt-cta-btn pt-cta-btn-secondary" href="https://nshn.ir/32sbkzKEOBbXR4" target="_blank" rel="noopener">
+              <span class="pt-btn-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
+              <span>مسیریابی</span>
+            </a>
+            <a class="pt-cta-btn pt-cta-btn-secondary" href="https://www.instagram.com/dr.foad_shahabian/" target="_blank" rel="noopener">
+              <span class="pt-btn-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 4 16 7h3a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h3l1.5-3z"/><circle cx="12" cy="13" r="4"/></svg></span>
+              <span>اینستاگرام</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ── CINEMATIC PATIENTS — data loader (same feed/shape as the mobile site) ── */
+(function(){
+  'use strict';
+  const FEED_URL='/litecast/lite-glossary.json';
+  function shuffle(arr,n){const a=arr.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a.slice(0,Math.min(n,a.length));}
+  fetch(FEED_URL,{cache:'no-store'})
+    .then(r=>r.ok?r.json():Promise.reject())
+    .then(json=>{
+      const items=Array.isArray(json.LightGlossary)?json.LightGlossary:[];
+      if(!items.length) return;
+      const picked=shuffle(items,6);
+      const lcBox=document.getElementById('pt-lc-cards');
+      if(lcBox){
+        lcBox.innerHTML='';
+        picked.slice(0,3).forEach(it=>{
+          const a=document.createElement('a');
+          a.className='pt-lc-card';
+          a.href='/'+(it.page_url||'litecast/');
+          a.innerHTML='<span class="pt-lc-card-cat">LiteCast · بیماران</span><span class="pt-lc-card-title">'+it.title+'</span>';
+          lcBox.appendChild(a);
+        });
+      }
+      const artBox=document.getElementById('pt-articles-list');
+      if(artBox){
+        artBox.innerHTML='';
+        picked.slice(3,6).forEach(it=>{
+          const li=document.createElement('li');
+          li.className='pt-article-item';
+          const a=document.createElement('a');
+          a.href='/'+(it.page_url||'litecast/');
+          a.innerHTML='<span class="pt-article-dot"></span><span class="pt-article-title">'+it.title+'</span>';
+          li.appendChild(a);
+          artBox.appendChild(li);
+        });
+      }
+    })
+    .catch(()=>{});
+})();
+</script>
+
+<script>
+/* ── CINEMATIC PATIENTS — desktop full-viewer scroll engine ──
+   Same frames (277), same easing, same scene timing as the mobile engine.
+   Differences vs mobile: scrolls the page's own #sc-body, the sticky fills the
+   whole viewer (no capsule), the canvas backing store tracks the viewer size so
+   the portrait frames cover-fit without distortion, and there is no panel-active
+   gate (this page is always the patients experience). */
+(function(){
+  'use strict';
+  const FRAME_COUNT = 277;
+
+  const track     = document.getElementById('pt-track');
+  const sticky    = document.getElementById('pt-sticky');
+  const canvas    = document.getElementById('pt-canvas');
+  const fillEl    = document.getElementById('pt-progress-fill');
+  const gradBot   = document.getElementById('pt-grad-bottom');
+  const heroScene = document.getElementById('pt-scene-hero');
+  const lcScene   = document.getElementById('pt-scene-knowledge');
+  const artScene  = document.getElementById('pt-scene-articles');
+  const ctaScene  = document.getElementById('pt-scene-cta');
+  const hintEl    = document.getElementById('pt-scroll-hint');
+  const heroBot   = document.getElementById('pt-hero-bottom');
+  const body      = document.getElementById('sc-body');
+
+  if(!track || !canvas || !body || !sticky) return;
+
+  const ctx = canvas.getContext('2d');
+
+  /* cover-fit draw — fills the canvas backing store, cropping the overflow */
+  function drawFrame(img){
+    if(!img || !img.naturalWidth) return;
+    const cw=canvas.width, ch=canvas.height;
+    const scale=Math.max(cw/img.naturalWidth, ch/img.naturalHeight);
+    ctx.drawImage(img,(cw-img.naturalWidth*scale)/2,(ch-img.naturalHeight*scale)/2,img.naturalWidth*scale,img.naturalHeight*scale);
+  }
+
+  /* size the canvas backing store to the viewer (capped DPR for sharpness) */
+  function resize(){
+    const r=sticky.getBoundingClientRect();
+    const dpr=Math.min(window.devicePixelRatio||1, 2);
+    canvas.width  = Math.max(1, Math.round(r.width  * dpr));
+    canvas.height = Math.max(1, Math.round(r.height * dpr));
+    const f=frames[lastIdx>=0?lastIdx:0];
+    if(f&&f.complete&&f.naturalWidth){ ctx.clearRect(0,0,canvas.width,canvas.height); drawFrame(f); }
+  }
+
+  /* preload all frames */
+  const frames=[];
+  for(let i=1;i<=FRAME_COUNT;i++){
+    const img=new Image();
+    img.src='/patients/frames/f'+String(i).padStart(3,'0')+'.webp';
+    img.onload=function(){ if(i===1){ resize(); } };
+    frames.push(img);
+  }
+
+  /* helpers (identical to the mobile engine) */
+  function rng(p,a,b){ return Math.max(0,Math.min(1,(p-a)/(b-a))); }
+  function ease(t){ return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2; }
+  function setO(el,v){ if(el) el.style.opacity=v; }
+  function setPE(el,on){ if(el) el.style.pointerEvents=on?'auto':'none'; }
+
+  if(heroScene){ heroScene.style.opacity='1'; heroScene.style.pointerEvents='auto'; }
+
+  let lastIdx=-1, ticking=false;
+
+  function update(){
+    ticking=false;
+
+    const total=track.offsetHeight-body.clientHeight;
+    if(total<=0) return;
+    const bRect=body.getBoundingClientRect();
+    const tRect=track.getBoundingClientRect();
+    const p=Math.max(0,Math.min(1,(bRect.top-tRect.top)/total));
+
+    /* === FRAMES === */
+    const idx=Math.round(p*(FRAME_COUNT-1));
+    if(idx!==lastIdx){
+      lastIdx=idx;
+      const f=frames[idx];
+      if(f&&f.complete&&f.naturalWidth){ ctx.clearRect(0,0,canvas.width,canvas.height); drawFrame(f); }
+    }
+
+    /* === PROGRESS BAR === */
+    if(fillEl) fillEl.style.height=(p*100)+'%';
+
+    /* === DOCTOR IDENTITY — parallax up === */
+    if(heroBot){
+      const shift = ease(rng(p,0,0.44)) * (body.clientHeight + 80);
+      heroBot.style.transform = 'translateY(-'+shift+'px)';
+    }
+
+    /* === SCENE 1: HERO (0.08 → 0.22) === */
+    const heroO=ease(1-rng(p,0.08,0.22));
+    setO(heroScene,heroO);
+    setPE(heroScene,heroO>0.04);
+    if(hintEl) hintEl.style.opacity=Math.max(0,1-p/0.07);
+
+    /* === SCENE 2: LITECAST (0.18 → 0.58) === */
+    const lcO=Math.min(ease(rng(p,0.18,0.27)),ease(1-rng(p,0.50,0.58)));
+    setO(lcScene,lcO);
+    setPE(lcScene,lcO>0.05);
+    const lcCards=document.querySelectorAll('.pt-lc-card');
+    [[0,0.21,0.29],[1,0.27,0.35],[2,0.33,0.41]].forEach(function(d){
+      var c=lcCards[d[0]]; if(!c) return;
+      var t=ease(rng(p,d[1],d[2]))*Math.min(1,lcO*4);
+      c.style.opacity=t;
+      c.style.transform='translateY('+(1-t)*15+'px)';
+    });
+
+    /* === SCENE 3: ARTICLES (0.52 → 0.82) === */
+    const artO=Math.min(ease(rng(p,0.52,0.60)),ease(1-rng(p,0.74,0.82)));
+    setO(artScene,artO);
+    setPE(artScene,artO>0.05);
+    const artItems=document.querySelectorAll('.pt-article-item');
+    [[0,0.54,0.62],[1,0.59,0.67],[2,0.64,0.72]].forEach(function(d){
+      var c=artItems[d[0]]; if(!c) return;
+      var t=ease(rng(p,d[1],d[2]))*Math.min(1,artO*4);
+      c.style.opacity=t;
+      c.style.transform='translateX('+(1-t)*12+'px)';
+    });
+
+    /* === SCENE 4: CTA (0.83 → 0.94) === */
+    const ctaO=ease(rng(p,0.83,0.94));
+    setO(ctaScene,ctaO);
+    setPE(ctaScene,ctaO>0.05);
+
+    /* === BOTTOM GRADIENT === */
+    if(gradBot) gradBot.style.opacity=ease(rng(p,0.62,0.80));
+  }
+
+  body.addEventListener('scroll',function(){
+    if(!ticking){ ticking=true; requestAnimationFrame(update); }
+  },{passive:true});
+
+  window.addEventListener('resize', function(){ resize(); update(); });
+
+  /* initial paint */
+  requestAnimationFrame(function(){ requestAnimationFrame(function(){ resize(); update(); }); });
+})();
+</script>
+
+</body>
+</html>
