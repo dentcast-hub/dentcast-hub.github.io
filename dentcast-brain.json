@@ -9951,5 +9951,41 @@
       "secondary": [],
       "subtopic": null
     }
+  },
+  {
+    "type": "clinical",
+    "id": "clinical-45",
+    "title": "وقتی علتِ درد روشن نیست: منطقِ درمان از طریقِ تفریق",
+    "caption": "گاهی تصمیمِ درمانیِ درست از یک تشخیصِ قطعی شروع نمی‌شود، بلکه از حذفِ متغیری که نگه‌داشتنش هیچ سودی ندارد. این اینسایت رویکرد به یک دندان‌دردِ مولر با علتِ نامشخص را شرح می‌دهد: پاسخِ ماندگار به سرد و گرم بدونِ دردِ پرکاشن به منشأ پالپی اشاره می‌کند، اما چون علتِ روشنی در کار نیست، دردِ ارجاعی هم روی میز می‌ماند. دندانِ عقلِ پایین که آنتاگونیستِ فانکشنال ندارد یک متغیرِ بی‌ارزش است؛ حذفش فضای احتمالات را کوچک می‌کند و در نهایت تشخیصِ افتراقیِ پالپ به متخصصِ ریشه سپرده می‌شود—درمان از طریقِ تفریق، به‌جای قمار روی علت.",
+    "hashtags": [
+      "#درمان_از_طریق_تفریق",
+      "#دندان‌درد_مولر",
+      "#علت_نامشخص",
+      "#دندان_عقل_بدون_آنتاگونیست",
+      "#تشخیص_افتراقی_پالپ",
+      "#درد_ارجاعی",
+      "#ارجاع_به_اندو",
+      "#پالپیت",
+      "#پری‌کرونیت",
+      "#تصمیم_بالینی"
+    ],
+    "keywords": [
+      "unexplained molar pain",
+      "treatment by subtraction",
+      "wisdom tooth without antagonist",
+      "pulpal differential diagnosis",
+      "referred pain molar",
+      "diagnostic uncertainty dentistry",
+      "endodontic referral",
+      "pulpitis vs referred pain",
+      "functional antagonist extraction",
+      "clinical decision making"
+    ],
+    "page_url": "/insight/insight-45.html",
+    "pillar": {
+      "primary": "treatment-planning",
+      "secondary": [],
+      "subtopic": "comprehensive-diagnosis"
+    }
   }
 ]
