@@ -1502,6 +1502,110 @@
         "secondary": [],
         "subtopic": "crowns-onlays"
       }
+    },
+    {
+      "slug": "onlay",
+      "title": "Onlay",
+      "fa_title": "آنله",
+      "synonyms": [
+        "آنله",
+        "ترمیم غیرمستقیم با پوشش کاسپ",
+        "آنله سرامیکی",
+        "onlay"
+      ],
+      "url": "/glossary/onlay.html",
+      "pillar": {
+        "primary": "fixed-pros",
+        "secondary": [],
+        "subtopic": "crowns-onlays"
+      }
+    },
+    {
+      "slug": "overlay",
+      "title": "Overlay",
+      "fa_title": "اورلی",
+      "synonyms": [
+        "اورلی",
+        "اورله",
+        "ترمیم تمام‌کاسپی",
+        "table top",
+        "overlay"
+      ],
+      "url": "/glossary/overlay.html",
+      "pillar": {
+        "primary": "fixed-pros",
+        "secondary": [],
+        "subtopic": "crowns-onlays"
+      }
+    },
+    {
+      "slug": "endocrown",
+      "title": "Endocrown",
+      "fa_title": "اندوکراون",
+      "synonyms": [
+        "اندوکراون",
+        "اندو کراون",
+        "ترمیم یکپارچه‌ی دندان اندوشده",
+        "endocrown"
+      ],
+      "url": "/glossary/endocrown.html",
+      "pillar": {
+        "primary": "fixed-pros",
+        "secondary": [],
+        "subtopic": "crowns-onlays"
+      }
+    },
+    {
+      "slug": "implant-loading",
+      "title": "Implant Loading",
+      "fa_title": "پروتکل بارگذاری ایمپلنت",
+      "synonyms": [
+        "پروتکل بارگذاری ایمپلنت",
+        "بارگذاری فوری ایمپلنت",
+        "بارگذاری زودهنگام",
+        "immediate loading",
+        "implant loading"
+      ],
+      "url": "/glossary/implant-loading.html",
+      "pillar": {
+        "primary": "implantology",
+        "secondary": [],
+        "subtopic": "surgical-planning"
+      }
+    },
+    {
+      "slug": "screw-retained",
+      "title": "Screw-Retained",
+      "fa_title": "پیچ‌شونده",
+      "synonyms": [
+        "پیچ‌شونده",
+        "رستوریشن پیچ‌شونده",
+        "اسکرو ریتیند",
+        "screw retained"
+      ],
+      "url": "/glossary/screw-retained.html",
+      "pillar": {
+        "primary": "implantology",
+        "secondary": [],
+        "subtopic": "restoration-design"
+      }
+    },
+    {
+      "slug": "cement-retained",
+      "title": "Cement-Retained",
+      "fa_title": "سمان‌شونده",
+      "synonyms": [
+        "سمان‌شونده",
+        "رستوریشن سمان‌شونده",
+        "سمنت ریتیند",
+        "cement retained"
+      ],
+      "url": "/glossary/cement-retained.html",
+      "pillar": {
+        "primary": "implantology",
+        "secondary": [],
+        "subtopic": "restoration-design"
+      }
     }
   ]
 }

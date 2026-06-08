@@ -1,7 +1,7 @@
 // service-worker.js
 // DentCast PWA — Safe Content Strategy
 
-const CACHE_NAME = 'dentcast-assets-899e1be22f';
+const CACHE_NAME = 'dentcast-assets-7adcc86f1f';
 
 /* نصب */
 self.addEventListener('install', (event) => {
