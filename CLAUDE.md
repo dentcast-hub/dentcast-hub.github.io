@@ -24,6 +24,18 @@ disk-discovered hreflang pairing. en pages are standalone translations — they
 get **no** `dentcast-brain.json` entry, **no** Pulse line, and **no**
 specialist cross-linking.
 
+**Note — the publishing router already invokes this workflow automatically.**
+Every normal `.org` publish ends with **Phase D** of
+`.dentcast/workflows/README.md`, which runs this same en-version workflow on
+the page it just published — so a freshly published page **always** ships with
+its English mirror + a working fa↔en language toggle (Hard Rule 12), never a
+toggle-less page. The **«… رو انگلیسی کن»** trigger therefore remains for
+mirroring an **older/pre-existing** page that predates that rule (or any page
+whose en version is missing) — it is the on-demand entry point to the *same*
+machinery the router now calls on its own. **LiteCast is the sole exception:**
+it is `.ir`-only with no hreflang, so it gets no en mirror or toggle in either
+path.
+
 ## Repo conventions
 
 - `dentcast-brain.json` — central data file, has separate sections/arrays per content type.
