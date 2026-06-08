@@ -24,6 +24,7 @@
   <link rel="canonical" href="https://dentcast.org/insight/insight-1.html">
   <link rel="alternate" hreflang="fa-IR" href="https://dentcast.ir/insight/insight-1.html">
   <link rel="alternate" hreflang="fa" href="https://dentcast.org/insight/insight-1.html">
+  <link rel="alternate" hreflang="en" href="https://dentcast.org/insight/en/insight-1.html">
   <link rel="alternate" hreflang="x-default" href="https://dentcast.org/insight/insight-1.html">
 
 
@@ -103,6 +104,34 @@
 
     strong {
       color: var(--blue);
+    }
+
+    /* دکمه‌ی نسخه انگلیسی (هم‌راستا با en chrome) */
+    .lang-btn{
+      display: flex;
+      width: fit-content;
+      max-width: 100%;
+      align-items: center;
+      gap: 6px;
+      margin: 0 auto 18px 0;
+      background: rgba(255,255,255,0.92);
+      border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 12px;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #0b5fff;
+      text-decoration: none;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      cursor: pointer;
+      transition: transform .18s ease, background .18s ease;
+    }
+
+    .lang-btn:hover{
+      background:#fff;
+      transform: scale(1.03);
     }
 
     .author-note{
@@ -320,6 +349,13 @@
 
 
   <div class="glass-box">
+    <!-- 🌐 English Version (SEO-friendly link) -->
+    <a class="lang-btn"
+       href="en/insight-1.html"
+       rel="noopener">
+      <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20"/><path d="M12 2a15 15 0 0 0 0 20"/></svg> English
+    </a>
+
     <p>همه‌ی علامت‌های ناشی از کاغذ اکلوزال واقعی نیستن. گاهی اون نقطه‌ی درشت و تیره، فقط یه مثبت کاذب (<strong>false positive</strong>) ـه.</p>
 
     <h3><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="2" y="9" width="20" height="6" rx="1"/><path d="M6 9v3"/><path d="M10 9v4"/><path d="M14 9v3"/><path d="M18 9v4"/></svg> ماجرا چیه؟</h3>
