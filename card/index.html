@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <!-- Google Analytics (deferred: loads only after the page is fully rendered) -->
+  <script>
+    window.addEventListener('load', function () {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-GMM0WC8X3M');
+      var ga = document.createElement('script');
+      ga.async = true;
+      ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-GMM0WC8X3M';
+      document.head.appendChild(ga);
+    });
+  </script>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#022360">
+
+  <!-- Patient-facing contact card behind the clinic QR code.
+       .ir-canonical island (same pattern as LiteCast) + noindex:
+       a navigation/contact page with no independent search value,
+       deliberately kept off the canonical Person graph. -->
+  <meta name="robots" content="noindex">
+  <link rel="canonical" href="https://dentcast.ir/card/">
+
+  <link rel="icon" href="/logo-v2.png" type="image/png">
+  <title>دکتر فؤاد شهابیان · کارت تماس</title>
+  <meta name="description" content="کارت تماس دکتر فؤاد شهابیان، متخصص پروتزهای دندانی — مسیریابی مطب، تماس و هماهنگی نوبت.">
+
+  <!-- Vazirmatn (same faces as the main site) -->
+  <style>
+  @font-face{ font-family:'Vazirmatn'; src:url('/fonts/Vazirmatn-Regular.woff2')  format('woff2'); font-weight:400; font-display:swap; }
+  @font-face{ font-family:'Vazirmatn'; src:url('/fonts/Vazirmatn-Medium.woff2')   format('woff2'); font-weight:500; font-display:swap; }
+  @font-face{ font-family:'Vazirmatn'; src:url('/fonts/Vazirmatn-SemiBold.woff2') format('woff2'); font-weight:600; font-display:swap; }
+  @font-face{ font-family:'Vazirmatn'; src:url('/fonts/Vazirmatn-Bold.woff2')     format('woff2'); font-weight:700; font-display:swap; }
+  @font-face{ font-family:'Vazirmatn'; src:url('/fonts/Vazirmatn-ExtraBold.woff2')format('woff2'); font-weight:800; font-display:swap; }
+
+  :root{
+    /* Brand tokens — same values as the DentCast design system (dc-theme.css). */
+    --navy:#022360;
+    --link:#0a3fb8;
+    --ink:#0a1a33;
+    --muted:#4a5f85;
+    --soft:#8a9cbe;
+    --bg:#eef1f6;
+    --surface:#ffffff;
+    --line:rgba(2,35,96,.10);
+    --line-soft:rgba(2,35,96,.06);
+    --navy-sh:0 10px 26px rgba(2,35,96,.26);
+    --card-sh:0 1px 3px rgba(2,35,96,.06), 0 12px 36px rgba(2,35,96,.10);
+    --r-btn:16px;
+    --r-card:22px;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    margin:0;
+    font-family:'Vazirmatn', system-ui, sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    padding:
+      max(18px, env(safe-area-inset-top))
+      16px
+      max(28px, env(safe-area-inset-bottom));
+    display:flex;
+    justify-content:center;
+  }
+
+  .card{
+    width:100%;
+    max-width:440px;
+    background:var(--surface);
+    border:1px solid var(--line-soft);
+    border-radius:var(--r-card);
+    box-shadow:var(--card-sh);
+    padding:26px 20px 22px;
+  }
+
+  /* ===== 1 · IDENTITY HEADER ===== */
+  .identity{
+    text-align:center;
+    padding-bottom:22px;
+    margin-bottom:22px;
+    border-bottom:1px solid var(--line-soft);
+  }
+  .identity .avatar{
+    width:104px;
+    height:104px;
+    border-radius:50%;
+    object-fit:cover;
+    object-position:center top;
+    margin:0 auto 14px;
+    display:block;
+    border:3px solid #fff;
+    box-shadow:0 0 0 1px var(--line), 0 8px 22px rgba(2,35,96,.18);
+    background:var(--bg);
+  }
+  /* Clean fallback slot if the photo is ever removed. */
+  .identity .avatar-slot{
+    width:104px; height:104px; border-radius:50%;
+    margin:0 auto 14px; display:flex; align-items:center; justify-content:center;
+    background:var(--bg); color:var(--soft); font-weight:700; font-size:1.9rem;
+    border:1px dashed var(--line);
+  }
+  .identity h1{
+    margin:0;
+    font-size:1.5rem;
+    font-weight:800;
+    color:var(--navy);
+    letter-spacing:-.01em;
+  }
+  .identity .specialty{
+    margin:5px 0 0;
+    font-size:.98rem;
+    font-weight:500;
+    color:var(--muted);
+  }
+
+  /* ===== 2 · PRIMARY ACTIONS ===== */
+  .actions{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+  }
+  .btn{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    width:100%;
+    min-height:62px;
+    padding:12px 18px;
+    background:var(--navy);
+    color:#fff;
+    text-decoration:none;
+    border-radius:var(--r-btn);
+    box-shadow:var(--navy-sh);
+    transition:transform .15s ease, box-shadow .15s ease, filter .15s ease;
+  }
+  .btn:active{ transform:scale(.985); filter:brightness(1.06); }
+  .btn:focus-visible{ outline:3px solid var(--link); outline-offset:2px; }
+  .btn .ico{
+    flex:0 0 auto;
+    width:26px; height:26px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .btn .ico svg{ width:26px; height:26px; stroke:#fff; fill:none; stroke-width:1.9; stroke-linecap:round; stroke-linejoin:round; }
+  .btn .txt{ display:flex; flex-direction:column; line-height:1.35; text-align:start; }
+  .btn .label{ font-size:1.12rem; font-weight:700; }
+  .btn .sub{ font-size:.82rem; font-weight:500; opacity:.78; }
+  .btn .sub.num{ direction:ltr; unicode-bidi:plaintext; }
+
+  /* Quiet alternate phone line — subordinate to the dominant Call button. */
+  .alt-phone{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:7px;
+    margin:9px 2px 2px;
+    font-size:.86rem;
+    color:var(--muted);
+  }
+  .alt-phone a{
+    color:var(--link);
+    text-decoration:none;
+    font-weight:600;
+    direction:ltr;
+    unicode-bidi:plaintext;
+  }
+  .alt-phone a:active{ text-decoration:underline; }
+
+  /* ===== 3 · ABOUT BLOCK ===== */
+  .about{
+    margin-top:24px;
+    padding-top:20px;
+    border-top:1px solid var(--line-soft);
+  }
+  .about h2{
+    margin:0 0 12px;
+    font-size:.82rem;
+    font-weight:700;
+    letter-spacing:.02em;
+    color:var(--soft);
+    text-transform:none;
+  }
+  .about ul{ list-style:none; margin:0; padding:0; }
+  .about li{
+    display:flex;
+    gap:10px;
+    padding:8px 0;
+    font-size:.92rem;
+    color:var(--ink);
+    border-bottom:1px solid var(--line-soft);
+  }
+  .about li:last-child{ border-bottom:0; }
+  .about li .bullet{
+    flex:0 0 auto;
+    width:7px; height:7px; margin-top:.6em;
+    border-radius:50%;
+    background:var(--navy);
+    opacity:.55;
+  }
+  .about li b{ color:var(--navy); font-weight:700; }
+  .about .more{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    margin-top:14px;
+    font-size:.9rem;
+    font-weight:600;
+    color:var(--link);
+    text-decoration:none;
+  }
+  .about .more svg{ width:16px; height:16px; stroke:currentColor; fill:none; stroke-width:1.9; stroke-linecap:round; stroke-linejoin:round; }
+  .about .more:active{ text-decoration:underline; }
+
+  /* ===== 4 · SECONDARY TIER ===== */
+  .secondary{
+    margin-top:22px;
+    padding-top:18px;
+    border-top:1px solid var(--line-soft);
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+  }
+  .chip{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    flex:1 1 auto;
+    justify-content:center;
+    min-height:46px;
+    padding:8px 14px;
+    background:var(--bg);
+    color:var(--link);
+    text-decoration:none;
+    font-size:.9rem;
+    font-weight:600;
+    border:1px solid var(--line-soft);
+    border-radius:12px;
+    transition:background .15s ease;
+  }
+  .chip:active{ background:#e6eaf2; }
+  .chip:focus-visible{ outline:3px solid var(--link); outline-offset:2px; }
+  .chip svg{ width:19px; height:19px; stroke:currentColor; fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+  .chip .ig-dot{ fill:currentColor; stroke:none; }
+
+  footer{
+    margin-top:22px;
+    text-align:center;
+    color:var(--soft);
+    font-size:.74rem;
+  }
+  footer a{ color:var(--soft); text-decoration:none; font-weight:700; letter-spacing:.04em; }
+
+  /* ===== Dark mode (restrained, brand-consistent) ===== */
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#0e1621;
+      --surface:#17212b;
+      --ink:#e8f0ff;
+      --muted:#8aaac8;
+      --soft:#4a6a88;
+      --line:rgba(255,255,255,.10);
+      --line-soft:rgba(255,255,255,.07);
+      --link:#5b9cf6;
+      --navy:#1f4ea8;            /* lift navy for contrast on dark surface */
+      --navy-sh:0 10px 26px rgba(0,0,0,.45);
+      --card-sh:0 1px 3px rgba(0,0,0,.3), 0 12px 36px rgba(0,0,0,.4);
+    }
+    .identity .avatar{ border-color:#17212b; }
+    .chip:active{ background:#202d3b; }
+    .about li b, .identity h1{ color:var(--ink); }
+  }
+
+  @media (max-width:360px){
+    .btn .label{ font-size:1.05rem; }
+    .identity h1{ font-size:1.35rem; }
+  }
+  </style>
+</head>
+
+<body>
+  <main class="card">
+
+    <!-- 1 · IDENTITY -->
+    <header class="identity">
+      <img class="avatar" src="/author.jpg" alt="دکتر فؤاد شهابیان" width="104" height="104">
+      <h1>دکتر فؤاد شهابیان</h1>
+      <p class="specialty">متخصص پروتزهای دندانی</p>
+    </header>
+
+    <!-- 2 · PRIMARY ACTIONS -->
+    <nav class="actions" aria-label="اقدامات اصلی">
+
+      <!-- مسیریابی → Neshan destination (clinic), from the site's stored hasMap link -->
+      <a class="btn" href="https://nshn.ir/32sbkzKEOBbXR4" target="_blank" rel="noopener" aria-label="مسیریابی به مطب در نشان">
+        <span class="ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </span>
+        <span class="txt">
+          <span class="label">مسیریابی</span>
+          <span class="sub">مسیر مطب در نشان</span>
+        </span>
+      </a>
+
+      <!-- تماس → dominant Call button dials line 1 in one tap -->
+      <a class="btn" href="tel:+986133380090" aria-label="تماس با مطب، خط اول">
+        <span class="ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </span>
+        <span class="txt">
+          <span class="label">تماس</span>
+          <span class="sub num">۰۶۱-۳۳۳۸۰۰۹۰</span>
+        </span>
+      </a>
+
+      <!-- هماهنگی و نوبت → secretary (front desk) on Rubika -->
+      <a class="btn" href="https://rubika.ir/Salviagholizadeh" target="_blank" rel="noopener" aria-label="هماهنگی و نوبت، پیام به منشی مطب در روبیکا">
+        <span class="ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+        </span>
+        <span class="txt">
+          <span class="label">هماهنگی و نوبت</span>
+          <span class="sub">پیام به منشی مطب در روبیکا</span>
+        </span>
+      </a>
+
+      <!-- Quiet alternate line — second clinic number -->
+      <p class="alt-phone">
+        <span>خط دوم:</span>
+        <a href="tel:+986133380091">۰۶۱-۳۳۳۸۰۰۹۱</a>
+      </p>
+    </nav>
+
+    <!-- 3 · ABOUT -->
+    <section class="about" aria-label="درباره">
+      <h2>درباره</h2>
+      <ul>
+        <li><span class="bullet" aria-hidden="true"></span><span>شمارهٔ نظام پزشکی: <b>۱۱۴۷۰۷</b></span></li>
+        <li><span class="bullet" aria-hidden="true"></span><span>فارغ‌التحصیل دکترای عمومی دندانپزشکی از دانشگاه علوم پزشکی شهید بهشتی</span></li>
+        <li><span class="bullet" aria-hidden="true"></span><span>فارغ‌التحصیل دکترای تخصصی پروتز از دانشگاه علوم پزشکی مشهد</span></li>
+        <li><span class="bullet" aria-hidden="true"></span><span>۵ سال عضو هیئت علمی دانشگاه علوم پزشکی جندی‌شاپور</span></li>
+        <li><span class="bullet" aria-hidden="true"></span><span>بیش از ۱۳ سال سابقه به عنوان متخصص پروتز</span></li>
+      </ul>
+      <a class="more" href="/about.html">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+        دربارهٔ بیشتر
+      </a>
+    </section>
+
+    <!-- 4 · SECONDARY TIER (room for a future «وقت‌دهی» action) -->
+    <nav class="secondary" aria-label="پیوندهای بیشتر">
+      <a class="chip" href="https://www.instagram.com/dr.foad_shahabian/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5"/><circle cx="12" cy="12" r="4"/><circle class="ig-dot" cx="17.6" cy="6.4" r="1.1"/></svg>
+        اینستاگرام
+      </a>
+      <a class="chip" href="/#patient">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="9.5" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        بخش بیماران
+      </a>
+    </nav>
+
+    <footer>
+      <a href="/">DENTCAST</a>
+    </footer>
+
+  </main>
+</body>
+</html>
