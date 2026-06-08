@@ -1597,6 +1597,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://dentcast.org/glossary/cement-retained.html</loc>
+    <lastmod>2026-06-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://dentcast.org/glossary/centric-relation.html</loc>
     <lastmod>2026-06-05</lastmod>
     <changefreq>monthly</changefreq>
@@ -1677,6 +1683,12 @@
   <url>
     <loc>https://dentcast.org/glossary/emergence-profile.html</loc>
     <lastmod>2026-02-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dentcast.org/glossary/endocrown.html</loc>
+    <lastmod>2026-06-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -1765,6 +1777,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://dentcast.org/glossary/implant-loading.html</loc>
+    <lastmod>2026-06-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://dentcast.org/glossary/inlay.html</loc>
     <lastmod>2026-06-05</lastmod>
     <changefreq>monthly</changefreq>
@@ -1819,6 +1837,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://dentcast.org/glossary/onlay.html</loc>
+    <lastmod>2026-06-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://dentcast.org/glossary/osseointegration.html</loc>
     <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
@@ -1827,6 +1851,12 @@
   <url>
     <loc>https://dentcast.org/glossary/overdenture.html</loc>
     <lastmod>2026-06-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dentcast.org/glossary/overlay.html</loc>
+    <lastmod>2026-06-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -1911,6 +1941,12 @@
   <url>
     <loc>https://dentcast.org/glossary/scan-body.html</loc>
     <lastmod>2026-05-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dentcast.org/glossary/screw-retained.html</loc>
+    <lastmod>2026-06-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
