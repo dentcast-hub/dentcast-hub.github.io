@@ -20,6 +20,8 @@
     - **The only valid no-op is a documented empty result.** A step may add nothing **only** when you actually performed the analysis and there were **zero genuinely-qualifying candidates** (or the section is at the 5-link cap). You must then **say so explicitly** in the report ("4.8: analyzed body, 0 qualifying glossary/episode candidates" / "4.9: section at cap, skipped"). Silence is not an allowed state.
     - **Type mapping for core episodes (no on-disk `dc-related-section`).** Episodes use the **«محتوای مرتبط»** block (`ep-related-link`), not a `dc-related-section` «کاوش بیشتر». For episodes, **step 4.9 targets the «محتوای مرتبط» block** (fill its free slots, under the Hard-Rule-9 cap, with semantically related brain entries — e.g. sibling parts of a multi-part series first), and **step 4.8 targets the «درباره این اپیزود» caption body**. The naming difference is **not** an excuse to skip; the «محتوای مرتبط» block IS the episode's related-links section for 4.9 purposes.
 
+12. **Every published page ships bilingual: the English mirror + fa↔en toggle is MANDATORY (Phase D), never an afterthought.** A `.org` publish is **incomplete** until the new page has a real English counterpart at `/{type}/en/{same-filename}.html` and a working **per-document fa↔en language toggle on both sides**. The toggle button (`.lang-btn`) is **never** added alone: a toggle whose English target does not exist on disk is a forbidden phantom pair (the `inject_hreflang.py` machinery drops it), so the en page MUST be created in the same publish. This is produced by running the **English-version workflow** (`.dentcast/workflows/en-version.md`) on the just-published page as the final phase — see **Phase D**. "The cloned template had no toggle, so I matched it" is an **explicitly forbidden** justification (same spirit as Hard Rule 11): if earlier same-type pages lack the toggle/en mirror, that is a gap, never a pattern to copy forward. **The single exception is LiteCast**, which is `.ir`-only, carries **no** hreflang, and gets **no** en mirror or toggle (Hard Rule 10) — for LiteCast, Phase D is a documented skip.
+
 ## Phase A — Discover
 
 Before asking the user anything other than "what type is this":
@@ -567,6 +569,25 @@ After the pillar builder finishes, verify:
 
 **For episode publishes, also verify the episodes builder took:** confirm the new episode now appears as a real `<a href="/episodes/episode-N.html">` in the regenerated `episodes.html` (e.g. `grep -c "episode-N.html" episodes.html` ≥ 1). If it's missing, `build_episodes.py` did not run — the publish is incomplete.
 
+## Phase D — English mirror & language toggle (MANDATORY; Hard Rule 12)
+
+**This phase is not optional and is not the «… رو انگلیسی کن» trigger — it runs automatically at the end of every `.org` publish.** A publish that produced a new fa page but no English counterpart + working toggle is **incomplete**. The recurring failure this prevents: shipping an insight/notecast/etc. page with **no language toggle** because the cloned template never had one. The toggle is meaningless without its target, so the en page and the toggle are produced together, here, by reusing the existing English-version machinery.
+
+**LiteCast exception (the only skip):** if the locked category is **LiteCast**, skip Phase D entirely and **say so in the report** ("Phase D: skipped — LiteCast is `.ir`-only, no hreflang/en mirror per Hard Rule 10"). Every other category runs it.
+
+**Steps:**
+
+1. **Hand off to the English-version workflow.** Treat the page you just published (`{type}/{file}.html`) as the source and run **`.dentcast/workflows/en-version.md`** against it. That workflow already owns every detail correctly — do not re-improvise them here:
+   - en page at `/{type}/en/{file}.html`; **English chrome cloned from `metanotes/en/meta-1.html`** (`<html lang="en" dir="ltr" data-dc-no-header>`, English topbar/toolbar labels, the `.lang-btn` CSS + markup), GA4 present exactly once.
+   - **Body, box/section CSS classes, and JSON-LD `@type`/shape inherited from THIS page's own type** (e.g. the insight `.glass-box` structure), rendered LTR and **translated** structure-faithfully (same headings, same number of `<li>` items, nothing added or dropped).
+   - **Scripts/analytics follow this type's conventions, not meta-1's extras.**
+   - en page carries **no** specialist «کاوش بیشتر» capsules / glossary back-links / brain links (en pages stay out of the brain ecosystem — en-version Hard Rule 8): no brain entry, no Pulse line, no 4.7/4.8/4.9 for the en page.
+2. **Wire the toggle on BOTH sides (en-version step 4).** On the new en page: `.lang-btn` → `../{file}.html` (label «فارسی»). On the source fa page: add `.lang-btn` → `en/{file}.html` (label «English»), placed/styled per the fa-side precedent (`metanotes/meta-1.html`), and **add the `.lang-btn` CSS to the fa page's inline `<style>`** (the insight/clinical templates do **not** define `.lang-btn` — adding the button without its CSS is the "missing toggle = CSS issue" failure; add both). The two targets must be exact inverses and neither may point at meta-1.
+3. **Pair via disk-discovery (en-version step 7).** Run `python3 .github/scripts/inject_hreflang.py`. Because the en file now exists, both pages gain the 4-line hreflang mirror and the fa page gains its `en` alternate automatically — never hand-maintain a parallel copy. Also run `python3 .github/scripts/gen_sitemap.py` (the new `.org` en page enters the sitemap) and re-run `python tools/stamp-version.py` **last**.
+4. **Verify (en-version step 9).** Confirm: en page has `<html lang="en" dir="ltr" data-dc-no-header>`, self-canonical `.org`, the 4-line hreflang mirror, `inLanguage`/`lang`/`og:locale` all `en`, the same JSON-LD `@type` as this type, GA4 exactly once; both toggles are exact inverses; the chrome standard `metanotes/en/meta-1.html` is **untouched** (hash unchanged). Report the two file paths created/modified (new en page + the toggle/hreflang edit on the source fa page).
+
+**Why Phase D and not a step inside Phase C:** it consumes the *finished* fa page (after all of Phase C's swaps, enrichment, and rebuild), and it deliberately reuses a **separate, already-correct workflow** rather than duplicating its logic. Keep it last so the English mirror reflects the final published state.
+
 ## Final output summary
 
 - Category locked
@@ -588,5 +609,6 @@ After the pillar builder finishes, verify:
   - Explicitly confirm that **none** of 4.7/4.8/4.9 was skipped on the grounds that the cloned/previous/sibling page lacked such links (a Hard-Rule-11 violation).
 - Pillar/subtopic verification (step 5.5): confirmation that the recorded `pillar.primary` and `pillar.subtopic` are **identical** to what was confirmed in step 2.4 (untouched by steps 5/5.5); resulting `pillar.subtopic` (slug if structured, `null` if not); confirmation that no new keys were added to the `pillar` object or as siblings, that the `subtopic` key is present in every case, and that the step-2.5 capsule / episode pillar link is consistent with `pillar.primary`
 - Builder runs: each command + full stdout/stderr (`python tools/update-homepage-counters.py`, `python tools/build_pillar.py all`, `python tools/build_episodes.py` for episode publishes, and `python tools/stamp-version.py` LAST); confirmation that the new content appears in the regenerated pillar page when a structured pillar was assigned, **and (for episodes) that the new episode now appears in the regenerated `episodes.html`** with no feature regression.
+- **Phase D (English mirror & toggle — Hard Rule 12; REQUIRED unless LiteCast):** the en page path created (`/{type}/en/{file}.html`); confirmation the body was translated structure-faithfully from THIS type (not rendered as a metanote) with GA4 once and `lang`/`inLanguage`/`og:locale` all `en`; both toggle targets (exact inverses, no meta-1 hardcode) and that the fa page got both the `.lang-btn` markup **and** its CSS; `inject_hreflang.py` pairing confirmation (fa page gained its `en` alternate); chrome standard `metanotes/en/meta-1.html` hash unchanged. For LiteCast, the documented skip line instead.
 - Confirmation the new entry appears in the latest-content widget data
 - List of all modified file paths
