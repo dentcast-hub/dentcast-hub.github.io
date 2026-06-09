@@ -211,50 +211,189 @@ Two senses of "orphan" apply here:
 
 ---
 
-## 4. Benchmark Gap List — ⏸ DEFERRED
+## 4. Benchmark Gap List
 
-**Status: not run this pass (user-directed "Skip Phase 3 for now").**
+**Benchmark source:** `litecastpatientquerybenchmark.fa.json` (id `litecast-patient-implant-queries`,
+lang `fa`, generated 2026-06-09, scope "dental implants and implant crowns, patient-facing") —
+supplied by the user. **53 real-world Persian patient queries** across 13 categories, each tagged
+with a `commonness` of high / medium / low.
 
-Phase 3 requires reading a benchmark question set from a file path that arrived as the literal
-unsubstituted placeholder **`[BENCHMARK_FILE_PATH]`**. No benchmark/query file exists anywhere
-in the repository (searched: `*benchmark*`, `*queries*`, `*query*`, `*gap*` — no matches). The
-benchmark-vs-coverage mapping (covered well / partial / not covered, ranked by query frequency)
-is therefore **pending** until a real benchmark file is supplied.
+**Coverage verdicts** (judged against the actual rendered body text of the 28 pages, not just titles):
+- **Covered** — a page directly and substantially answers the query (H1/body section).
+- **Partial** — answered only as a brief FAQ line, indirectly, or via an adjacent-topic page.
+- **Uncovered** — nothing in LiteCast addresses it.
 
-**To complete Phase 3 later:** provide the benchmark file path (or paste the Persian query set),
-and this section will be filled with the per-query coverage mapping and a frequency-ranked gap
-list. The taxonomy in §2 already pre-stages the likely gaps (cost, post-surgery pain/recovery,
-longevity, candidacy, bone graft) so the mapping will be fast once the query set exists.
+### 4a. Coverage summary
+
+| Verdict | Count | Share |
+|---|:---:|:---:|
+| ✅ Covered | 11 | 21% |
+| 🟡 Partial | 13 | 25% |
+| ❌ Uncovered | 29 | 55% |
+| **Total** | **53** | 100% |
+
+**Coverage by category** (covered / partial / uncovered):
+
+| Category | ✅ | 🟡 | ❌ | Read |
+|---|:--:|:--:|:--:|---|
+| procedure_steps_timeline | 5 | 0 | 0 | **Fully covered** — strongest area |
+| immediate_implant | 2 | 0 | 0 | **Fully covered** |
+| crown_prosthetic | 2 | 3 | 1 | Good |
+| alternatives | 1 | 1 | 1 | Moderate |
+| candidacy_contraindications | 1 | 0 | 6 | **Weak** — one FAQ, six gaps |
+| materials_brand | 0 | 1 | 2 | Weak |
+| aftercare_maintenance | 0 | 3 | 0 | All thin/partial |
+| eating_function | 0 | 1 | 1 | Thin |
+| longevity_success | 0 | 2 | 3 | **Weak** |
+| pain_recovery | 0 | 1 | 4 | **Weak** |
+| risks_complications | 0 | 1 | 3 | **Weak** |
+| cost | 0 | 0 | 5 | **Absent — total blank** |
+| bone_graft_sinus | 0 | 0 | 3 | **Absent — total blank** |
+
+### 4b. Full per-query mapping
+
+| # | Query (verbatim) | Common. | Verdict | Supporting page(s) / note |
+|---|---|:---:|:---:|---|
+| | **pain_recovery** | | | |
+| 1 | ایمپلنت دندان درد دارد؟ | high | ❌ | page 21 is *root-canal* pain, not implant |
+| 2 | بعد از ایمپلنت دندان چقدر درد دارد و چند روز طول می‌کشد؟ | high | ❌ | no post-op implant page |
+| 3 | تورم و کبودی بعد از جراحی ایمپلنت طبیعی است؟ | medium | ❌ | — |
+| 4 | بعد از ایمپلنت چه چیزهایی نباید بخورم؟ | medium | ❌ | — |
+| 5 | ایمپلنت بدون درد امکان دارد؟ | medium | 🟡 | 9/14/15 mention patient comfort, not pain itself |
+| | **cost** | | | |
+| 6 | قیمت ایمپلنت دندان چقدر است؟ | high | ❌ | — |
+| 7 | هزینه ایمپلنت دندان با روکش | high | ❌ | — |
+| 8 | چرا ایمپلنت دندان اینقدر گران است؟ | medium | ❌ | — |
+| 9 | تفاوت قیمت برندهای ایمپلنت در چیست؟ | medium | ❌ | — |
+| 10 | ایمپلنت ارزان خوب است یا خطرناک؟ | low | ❌ | — |
+| | **longevity_success** | | | |
+| 11 | عمر ایمپلنت دندان چقدر است؟ | high | 🟡 | 12 says only «با مراقبت، عمر طولانی دارد» — no duration |
+| 12 | ایمپلنت مادام‌العمر است یا تعویض می‌شود؟ | high | ❌ | — |
+| 13 | میزان موفقیت ایمپلنت دندان چند درصد است؟ | medium | ❌ | success mentioned qualitatively, no figure |
+| 14 | چه عواملی باعث کم شدن عمر ایمپلنت می‌شود؟ | medium | 🟡 | 19 (follow-up), 10, 12 imply factors |
+| 15 | روکش ایمپلنت بعد از چند سال باید عوض شود؟ | medium | ❌ | 16 describes crown but not its lifespan |
+| | **candidacy_contraindications** | | | |
+| 16 | آیا ایمپلنت برای همه مناسب است؟ | high | ✅ | 12 body «نکته», also 14/15 FAQ — answered (briefly) |
+| 17 | سن مناسب برای ایمپلنت دندان چند سال است؟ | high | ❌ | — |
+| 18 | بیمار دیابتی می‌تواند ایمپلنت بزند؟ | high | ❌ | 26 is diabetes↔caries, not implant candidacy |
+| 19 | سیگار روی ایمپلنت دندان تاثیر دارد؟ | medium | ❌ | — |
+| 20 | اگر استخوان فک کم باشد می‌شود ایمپلنت زد؟ | high | ❌ | ties to bone graft (also absent) |
+| 21 | آیا با پوکی استخوان می‌توان ایمپلنت کاشت؟ | medium | ❌ | — |
+| 22 | بیماری لثه مانع ایمپلنت می‌شود؟ | medium | ❌ | 12 lists gum disease as a cause of loss, not as a contraindication |
+| | **bone_graft_sinus** | | | |
+| 23 | پیوند استخوان برای ایمپلنت چیست و چرا لازم است؟ | high | ❌ | — |
+| 24 | سینوس لیفت برای ایمپلنت یعنی چه؟ | medium | ❌ | — |
+| 25 | پیوند استخوان درد دارد و چقدر طول می‌کشد؟ | medium | ❌ | — |
+| | **procedure_steps_timeline** | | | |
+| 26 | مراحل ایمپلنت دندان به ترتیب چیست؟ | high | ✅ | 13 (5 stages); also 8 |
+| 27 | ایمپلنت دندان چند جلسه و چند ماه طول می‌کشد؟ | high | ✅ | 8 (timeline) |
+| 28 | بعد از کاشت ایمپلنت چقدر باید صبر کنم تا روکش بگذارند؟ | high | ✅ | 8 («حدود ۳ ماه»); 13 loading stage |
+| 29 | جوش خوردن ایمپلنت با استخوان (اسئواینتگریشن) چقدر طول می‌کشد؟ | medium | ✅ | 8 («۳ ماه … اُسئواینتگریشن») |
+| 30 | اباتمنت ایمپلنت چیست؟ | medium | ✅ | 18 (دedicated page) |
+| | **materials_brand** | | | |
+| 31 | ایمپلنت از چه جنسی است؟ تیتانیوم بهتر است یا زیرکونیا؟ | medium | 🟡 | 12 covers titanium; no zirconia comparison |
+| 32 | بهترین برند ایمپلنت دندان کدام است؟ | high | ❌ | 11 («بهترین» is contextual) is only adjacent framing |
+| 33 | آیا به فلز تیتانیوم ایمپلنت حساسیت پیدا می‌شود؟ | medium | ❌ | — |
+| | **crown_prosthetic** | | | |
+| 34 | چرا روکش ایمپلنت را اول موقت می‌چسبانند؟ | medium | 🟡 | 8 mentions temp/provisional crown, not the rationale |
+| 35 | روکش موقت ایمپلنت تا کی روی دندان می‌ماند؟ | medium | 🟡 | 8 implies ~3 months to final |
+| 36 | روکش ایمپلنت لق شده، خطرناک است؟ | high | ✅ | 10 (dedicated) |
+| 37 | روکش ایمپلنت افتاد، چه کار کنم؟ | high | ✅ | 10 («سمان رها شده» + مراجعهٔ زود) |
+| 38 | تفاوت روکش پیچی و روکش چسبی ایمپلنت چیست؟ | low | 🟡 | 10 explains cement-over-screw & loosening types, not a design comparison |
+| 39 | روکش ایمپلنت بو می‌دهد یا غذا زیرش می‌رود، چرا؟ | medium | ❌ | — |
+| | **aftercare_maintenance** | | | |
+| 40 | بعد از ایمپلنت چطور باید از دندان مراقبت کنم؟ | high | 🟡 | 19 is *clinical* follow-up, not a home-care routine |
+| 41 | نخ دندان و مسواک برای ایمپلنت چطور باید استفاده شود؟ | medium | 🟡 | 1/27 are general hygiene, not implant-specific technique |
+| 42 | ایمپلنت هم جرم‌گیری لازم دارد؟ | medium | 🟡 | 19 monitors plaque/cleanliness, no scaling answer |
+| | **alternatives** | | | |
+| 43 | ایمپلنت بهتر است یا بریج؟ | high | 🟡 | 5 = implant-bridge vs removable partial, not implant vs conventional bridge |
+| 44 | ایمپلنت بهتر است یا دندان مصنوعی متحرک؟ | medium | ✅ | 5 (direct); reinforced by 2, 4 |
+| 45 | آل آن فور (All-on-4) چیست و برای چه کسانی است؟ | medium | ❌ | — |
+| | **immediate_implant** | | | |
+| 46 | ایمپلنت فوری یعنی چه و آیا قابل اعتماد است؟ | medium | ✅ | 15 (meaning + suitability caveats) |
+| 47 | می‌شود همان روز کشیدن دندان ایمپلنت کاشت؟ | medium | ✅ | 15 (immediate after extraction) |
+| | **eating_function** | | | |
+| 48 | با ایمپلنت می‌توانم مثل دندان طبیعی غذا بخورم؟ | medium | 🟡 | 4 (قدرت جویدن), 16, 5 («مثل دندان طبیعی ثابت») |
+| 49 | ایمپلنت روی حرف زدن و تلفظ تاثیر دارد؟ | low | ❌ | 16 mentions «راحتی هنگام صحبت» only in passing |
+| | **risks_complications** | | | |
+| 50 | عوارض ایمپلنت دندان چیست؟ | high | 🟡 | 10 covers one *mechanical* complication; no overview |
+| 51 | علائم رد شدن یا عفونت ایمپلنت چیست؟ | high | ❌ | 19 monitors but never lists rejection/infection signs |
+| 52 | پری‌ایمپلنتایتیس چیست و چرا ایمپلنت لق می‌شود؟ | medium | ❌ | 10 is crown looseness, not fixture/peri-implantitis |
+| 53 | ایمپلنت ممکن است به عصب آسیب بزند؟ | low | ❌ | — |
+
+### 4c. Gap list (uncovered + partial), ranked by commonness
+
+**HIGH commonness — fix first (15 gaps):**
+- ❌ «ایمپلنت دندان درد دارد؟» (pain)
+- ❌ «بعد از ایمپلنت دندان چقدر درد دارد و چند روز طول می‌کشد؟» (pain)
+- ❌ «قیمت ایمپلنت دندان چقدر است؟» (cost)
+- ❌ «هزینه ایمپلنت دندان با روکش» (cost)
+- ❌ «ایمپلنت دندان مادام‌العمر است یا تعویض می‌شود؟» (longevity)
+- ❌ «سن مناسب برای ایمپلنت دندان چند سال است؟» (candidacy)
+- ❌ «بیمار دیابتی می‌تواند ایمپلنت بزند؟» (candidacy)
+- ❌ «اگر استخوان فک کم باشد می‌شود ایمپلنت زد؟» (candidacy/bone)
+- ❌ «پیوند استخوان برای ایمپلنت چیست و چرا لازم است؟» (bone graft)
+- ❌ «بهترین برند ایمپلنت دندان کدام است؟» (materials/brand)
+- ❌ «علائم رد شدن یا عفونت ایمپلنت چیست؟» (risks)
+- 🟡 «عمر ایمپلنت دندان چقدر است؟» (longevity — only a one-line «عمر طولانی»)
+- 🟡 «بعد از ایمپلنت چطور باید از دندان مراقبت کنم؟» (aftercare — clinical only, no home care)
+- 🟡 «ایمپلنت بهتر است یا بریج؟» (alternatives — implant-vs-conventional-bridge missing)
+- 🟡 «عوارض ایمپلنت دندان چیست؟» (risks — no complications overview)
+
+**MEDIUM commonness (23 gaps):**
+- ❌ تورم و کبودی بعد از جراحی · ❌ بعد از ایمپلنت چه نخورم · ❌ چرا ایمپلنت گران است ·
+  ❌ تفاوت قیمت برندها · ❌ موفقیت چند درصد است · ❌ روکش بعد از چند سال تعویض ·
+  ❌ سیگار روی ایمپلنت · ❌ پوکی استخوان و ایمپلنت · ❌ بیماری لثه مانع ایمپلنت ·
+  ❌ سینوس لیفت یعنی چه · ❌ پیوند استخوان درد دارد/چقدر · ❌ حساسیت به تیتانیوم ·
+  ❌ روکش بو می‌دهد/غذا زیرش می‌رود · ❌ آل‌آن‌فور (All-on-4) · ❌ پری‌ایمپلنتایتیس چیست
+- 🟡 ایمپلنت بدون درد · 🟡 عوامل کم‌شدن عمر · 🟡 تیتانیوم یا زیرکونیا · 🟡 چرا روکش اول موقت ·
+  🟡 روکش موقت تا کی می‌ماند · 🟡 نخ/مسواک برای ایمپلنت · 🟡 ایمپلنت جرم‌گیری لازم دارد ·
+  🟡 با ایمپلنت مثل دندان طبیعی غذا بخورم
+
+**LOW commonness (4 gaps):**
+- ❌ ایمپلنت ارزان خوب/خطرناک · ❌ تاثیر بر حرف زدن/تلفظ · ❌ آسیب به عصب
+- 🟡 تفاوت روکش پیچی و چسبی
 
 ---
 
 ## Prioritized list of missing / underserved topics
 
-> Derived from the **internal taxonomy gaps in §2–§3** (thin/absent axes + duplicate-signal
-> demand), **not** from an external benchmark — that ranking is deferred with Phase 3. No
-> content drafted; topics only.
+> Now **benchmark-confirmed** (Phase 3 complete). Ordering reflects query commonness × coverage
+> gap. No content drafted; topics only.
 
-**Tier 1 — clear absences with obvious high patient demand (implant focus):**
-1. **هزینه / قیمت ایمپلنت** — implant cost & what drives it. **Zero coverage**; consistently a
-   top patient query and currently unanswered anywhere in LiteCast.
-2. **عمر ایمپلنت چقدر است؟ / موفقیت بلندمدت** — implant lifespan & success rate (longevity axis,
-   absent; only implied by 19's follow-up page).
-3. **درد و تورم و دوره نقاهت بعد از جراحی ایمپلنت** — pain, swelling & recovery *after implant
-   surgery* (the pain/recovery axis exists only for root canal, page 21, not for implants).
-4. **آیا من کاندید ایمپلنت هستم؟ (دیابت، سیگار، پوکی استخوان، سن)** — a dedicated candidacy /
-   contraindications page; demand is proven by the «آیا برای همه مناسب است؟» FAQ recurring on 4/12/14/15.
+**Tier 1 — high-demand categories that are entirely or near-entirely blank:**
+1. **هزینه / قیمت ایمپلنت** (cost) — **0/5 covered**, two of them high-commonness. The single
+   biggest blind spot: a top patient query with zero coverage anywhere in LiteCast.
+2. **درد و نقاهت بعد از جراحی ایمپلنت** (pain_recovery) — **0/5 covered**; the two highest-frequency
+   pain queries are both uncovered (page 21 answers root-canal pain, not implant).
+3. **کاندیداتوری و موارد منع ایمپلنت** (candidacy) — **1/7 covered**; high-commonness gaps include
+   age, diabetes, and insufficient bone. Demand is double-proven by the recurring «آیا برای همه
+   مناسب است؟» FAQ across 4/12/14/15.
+4. **عمر و موفقیت بلندمدت ایمپلنت** (longevity_success) — **0/5 fully covered**; "is it lifelong?"
+   and "how many years?" are high/medium and unanswered.
 
-**Tier 2 — underserved (thin or partial):**
-5. **پیوند استخوان / سینوس لیفت** — bone graft & sinus lift (absent; common pre-implant step).
-6. **ایمپلنت یا بریج ثابت؟** — implant vs fixed bridge specifically (5 covers removable-vs-fixed only).
-7. **مراقبت و بهداشت روزانهٔ ایمپلنت** — daily home care/cleaning around an implant & what to eat
-   (aftercare axis is thin — 19 is clinical follow-up, not home care).
-8. **Consolidate the digital-implant duplicate (9 vs 14)** and the steps/timeline overlap
-   (13 vs 8) — dedupe rather than add.
+**Tier 2 — high-value secondary gaps:**
+5. **پیوند استخوان / سینوس لیفت** (bone_graft_sinus) — **0/3 covered**; directly blocks the common
+   "اگر استخوان کم باشد" candidacy query.
+6. **عوارض و عفونت ایمپلنت / پری‌ایمپلنتایتیس** (risks) — **0/4 covered well**; "rejection/infection
+   signs" is high-commonness and only indirectly touched by the follow-up page.
+7. **مراقبت و بهداشت روزانهٔ ایمپلنت** (aftercare) — all 3 queries only partial; page 19 is clinical
+   follow-up, with no home-care / flossing / scaling guidance.
+8. **بهترین برند ایمپلنت / تیتانیوم vs زیرکونیا** (materials_brand) — brand question is high-commonness
+   and uncovered.
+9. **ایمپلنت در برابر بریج ثابت** (alternatives) — high-commonness, only partial (page 5 compares
+   against removable partials, not conventional bridges); also add **All-on-4**.
 
-**Tier 3 — single-page topics that could anchor small clusters if expanded:**
-9. Radiography/diagnosis (only page 20), aesthetics/veneers (only page 7), and provider-choice
-   (only page 11) are each a lone page — fine as-is, but candidates if those intents prove popular.
+**Tier 3 — cleanup (no new content; fixes existing):**
+10. **Consolidate duplicates** flagged in §3a — the digital-implant pair (9 vs 14) and the
+    steps/timeline overlap (13 vs 8) — and **wire in the 5 zero-inbound orphans** (6, 7, 11, 27,
+    28) via sibling «کاوش بیشتر» capsules.
+
+**Coverage headline:** of 53 benchmark queries, **55% are uncovered and 25% only partial** — i.e.
+**80% of common patient implant questions are not yet well answered** by LiteCast. The covered
+fifth is concentrated almost entirely in **procedure/steps/timeline, immediate implant, and crown
+mechanics** — LiteCast today explains *how an implant is done* far better than *what it costs, how
+much it hurts, how long it lasts, and whether the patient qualifies*.
 
 ---
 
