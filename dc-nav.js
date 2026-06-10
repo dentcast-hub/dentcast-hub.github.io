@@ -500,6 +500,48 @@
     if (!inFrame && !document.getElementById('dcPlayerOverlay')) {
       document.body.insertAdjacentHTML('beforeend', DC_PLAYER_OVERLAY_HTML);
     }
+
+    /* 6) a11y skip link: first focusable element on the page, lets keyboard
+          users jump past the injected chrome straight to the content. The
+          target is resolved at click time (mobile <main>, article body, or
+          the desktop shell's content column — whichever is visible), so one
+          link works across every shell. Styles injected here so it reaches
+          index.html too, which loads no shared CSS. Idempotent; pointless
+          inside iframes (no chrome to skip), so gated like the overlay. */
+    if (!inFrame && !document.getElementById('dcSkipLink')) {
+      if (!document.getElementById('dc-skip-link-style')) {
+        var sst = document.createElement('style');
+        sst.id = 'dc-skip-link-style';
+        sst.textContent =
+          '.dc-skip-link{position:fixed;top:-99px;right:14px;z-index:1000;' +
+          'padding:10px 20px;border-radius:999px;background:var(--ac,#0b5fff);' +
+          'color:#fff;font-weight:700;font-size:.9rem;text-decoration:none;' +
+          'box-shadow:0 4px 14px rgba(0,0,0,.25);transition:top .15s ease;}' +
+          '.dc-skip-link:focus{top:10px;}';
+        (document.head || document.documentElement).appendChild(sst);
+      }
+      var skip = document.createElement('a');
+      skip.id = 'dcSkipLink';
+      skip.className = 'dc-skip-link';
+      skip.href = '#';
+      skip.textContent = 'پرش به محتوا';
+      skip.addEventListener('click', function (e) {
+        e.preventDefault();
+        var sels = ['main', 'article', '.wrap', '.dcd-col-b'];
+        for (var i = 0; i < sels.length; i++) {
+          var els = document.querySelectorAll(sels[i]);
+          for (var j = 0; j < els.length; j++) {
+            if (els[j].offsetParent !== null) {
+              els[j].setAttribute('tabindex', '-1');
+              els[j].focus();
+              els[j].scrollIntoView({ block: 'start' });
+              return;
+            }
+          }
+        }
+      });
+      document.body.insertBefore(skip, document.body.firstChild);
+    }
   })();
 
   /* ── THEME (centralized) ──────────────────────────

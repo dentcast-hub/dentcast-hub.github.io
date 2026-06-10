@@ -54,7 +54,7 @@ body.dc-content-only main.article-page {
 
   --txt:     #0a1a33;
   --txt2:    #4a5f85;
-  --txt3:    #8a9cbe;
+  --txt3:    #62779a;   /* was #8a9cbe (2.8:1 on white) → now 4.5:1, WCAG AA */
   --txt-inv: #ffffff;
 
   --card-bg:     #ffffff;
@@ -106,7 +106,7 @@ body.dc-content-only main.article-page {
 
   --txt:  #e8f0ff;
   --txt2: #8aaac8;
-  --txt3: #4a6a88;
+  --txt3: #6f8fb0;   /* was #4a6a88 (2.9:1 on surface) → now 4.8:1, WCAG AA */
 
   --card-bg:     #1e2c3a;
   --card-border: rgba(255,255,255,.07);
@@ -784,3 +784,32 @@ body:has(.dc-topbar) .back:hover {
 .dc-related-capsule{display:inline-flex;align-items:center;gap:6px;font-size:.87rem;font-weight:600;color:var(--ac);text-decoration:none;padding:8px 16px;border:1px solid var(--ac);border-radius:10px;transition:background .15s,color .15s;}
 .dc-related-capsule:hover{background:var(--ac);color:#fff;}
 @media(max-width:480px){.dc-related-section{padding-right:18px;padding-left:18px;}}
+
+/* =====================================================
+   ACCESSIBILITY — KEYBOARD FOCUS + REDUCED MOTION
+   Added 2026-06-10 (phase 2 a11y).
+   - :focus-visible fires only on keyboard/AT focus, so
+     touch and mouse users never see the ring.
+   - [tabindex="-1"] targets receive programmatic focus
+     (skip link); they need no ring of their own.
+   - The reduced-motion block is a global kill-switch for
+     every animation/transition on pages that load this
+     file (520+), honoring vestibular-disorder settings.
+===================================================== */
+:focus-visible {
+  outline: 3px solid var(--ac);
+  outline-offset: 2px;
+}
+
+[tabindex="-1"]:focus {
+  outline: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
