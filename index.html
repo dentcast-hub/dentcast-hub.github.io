@@ -2950,7 +2950,7 @@ a.dc-list-card--pillar {
           <span class="k">ساعت محتوای صوتی</span>
         </div>
         <div class="hero-stat" role="listitem">
-          <span class="v"><!-- COUNTER:CONTENT:START -->۴۹۵<!-- COUNTER:CONTENT:END --></span>
+          <span class="v"><!-- COUNTER:CONTENT:START -->۴۹۶<!-- COUNTER:CONTENT:END --></span>
           <span class="k">محتوای آنلاین</span>
         </div>
       </div>
@@ -3011,11 +3011,11 @@ a.dc-list-card--pillar {
           <button class="dc-pulse-close" onclick="document.getElementById('dcPulseCard').style.display='none'" aria-label="بستن"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
         </div>
         <ul class="dc-pulse-list">
+          <li><a href="/dentai/promptologist/prompt1-3.html">قسمت سوم</a> <strong>هوش مصنوعی برای دندانپزشکان</strong> در سایت قرار گرفت · ۲۰ خرداد</li>
           <li><a href="/notecast/episode-35.html">نوت‌کست ۳۵</a> با عنوانِ <strong>مدیریت سایش دندانی با کانسپت دال (بخش دوم)</strong> منتشر شد · ۱۸ خرداد</li>
           <li><a href="/insight/insight-45.html">اینسایت ۴۵</a> با عنوانِ <strong>درمان از طریقِ تفریق</strong> منتشر شد · ۱۸ خرداد</li>
           <li><a href="/dentai/promptologist/prompt1-2.html">قسمت دوم</a> <strong>هوش مصنوعی برای دندانپزشکان</strong> در سایت قرار گرفت · ۱۵ خرداد</li>
           <li><a href="/episodes/episode-158.html"><strong>دنت‌کست ۱۵۸</strong></a> منتشر شد · ۱۵ خرداد</li>
-          <li><a href="/dentai/promptologist/prompt1-1.html">قسمت اول</a> <strong>هوش مصنوعی برای دندانپزشکان</strong> در سایت قرار گرفت · ۱۴ خرداد</li>
         </ul>
         <div class="dc-pulse-ad">
           <a href="https://deventapp.ir" target="_blank" rel="sponsored noopener">
@@ -3782,7 +3782,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 <script>
 /* ── LAST 30 UPDATES ── */
 (function(){
-  const FEED_URL='/dentcast-brain.json?v=15bbfddf08';
+  const FEED_URL='/dentcast-brain.json?v=1fc73ceb2f';
   const el=document.getElementById('dcLast3Updates');
   if(!el) return;
   function extractArray(json){if(Array.isArray(json))return json;const cands=[json?.items,json?.data,json?.entries,json?.feed].filter(Boolean);for(const c of cands)if(Array.isArray(c))return c;for(const k in(json||{})){const v=json[k];if(Array.isArray(v))return v;if(v&&typeof v==='object'&&Array.isArray(v.items))return v.items;}return[];}
@@ -4032,7 +4032,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 
   function getBrain(){
     if(brainCache) return Promise.resolve(brainCache);
-    return fetch('/dentcast-brain.json?v=15bbfddf08', {cache:'no-store'})
+    return fetch('/dentcast-brain.json?v=1fc73ceb2f', {cache:'no-store'})
       .then(r => r.ok ? r.json() : [])
       .then(d => { brainCache = Array.isArray(d) ? d : []; return brainCache; })
       .catch(() => { brainCache = []; return []; });
