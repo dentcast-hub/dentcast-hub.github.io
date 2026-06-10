@@ -16,6 +16,7 @@
     });
   </script>
   <meta charset="utf-8">
+  <link rel="preload" as="font" href="/fonts/Vazirmatn[wght].woff2" type="font/woff2" crossorigin>
   <link rel="icon" href="/logo-v2.png" type="image/png" sizes="192x192">
   <link rel="icon" href="/logo-v2.png" type="image/png" sizes="512x512">
   <link rel="apple-touch-icon" href="/logo-v2.png">
@@ -55,18 +56,8 @@
 ===================================================== */
 @font-face{
   font-family:'Vazirmatn';
-  src:url('/fonts/Vazirmatn-Regular.woff2') format('woff2');
-  font-weight:400; font-display:swap;
-}
-@font-face{
-  font-family:'Vazirmatn';
-  src:url('/fonts/Vazirmatn-SemiBold.woff2') format('woff2');
-  font-weight:600; font-display:swap;
-}
-@font-face{
-  font-family:'Vazirmatn';
-  src:url('/fonts/Vazirmatn-ExtraBold.woff2') format('woff2');
-  font-weight:800; font-display:swap;
+  src:url('/fonts/Vazirmatn[wght].woff2') format('woff2');
+  font-weight:100 900; font-display:swap;
 }
 
 :root{
@@ -83,7 +74,7 @@
 
   --txt:#0a1a33;
   --txt2:#4a5f85;
-  --txt3:#8a9cbe;
+  --txt3:#62779a;   /* was #8a9cbe (2.8:1 on white) → now 4.5:1, WCAG AA */
   --txt-inv:#ffffff;
 
   /* sidebar / desktop */
@@ -137,7 +128,7 @@
   --surface:#17212b; --surface2:#1e2c3a; --surface3:#232e3c;
   --border:rgba(255,255,255,.08); --border2:rgba(255,255,255,.04);
 
-  --txt:#e8f0ff; --txt2:#8aaac8; --txt3:#4a6a88;
+  --txt:#e8f0ff; --txt2:#8aaac8; --txt3:#6f8fb0;   /* txt3 was #4a6a88 (2.9:1) → now 4.8:1, WCAG AA */
 
   /* frosted-glass footer in the navy family; against the dark body (--bg
      #0e1621) the translucent --bn-bg-glass layer sits a touch lighter/bluer
@@ -2679,6 +2670,31 @@ a.dc-list-card--pillar {
   background: rgba(74,154,171,.15);
   border-color: rgba(74,154,171,.40);
 }
+
+/* =====================================================
+   ACCESSIBILITY — KEYBOARD FOCUS + REDUCED MOTION
+   Mirrors the dc-theme.css block (index loads no shared
+   CSS). :focus-visible fires only on keyboard/AT focus;
+   [tabindex="-1"] targets are programmatic focus stops
+   (skip link) and need no ring of their own.
+===================================================== */
+:focus-visible {
+  outline: 3px solid var(--ac);
+  outline-offset: 2px;
+}
+
+[tabindex="-1"]:focus {
+  outline: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
   </style>
 
 
@@ -3782,7 +3798,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 <script>
 /* ── LAST 30 UPDATES ── */
 (function(){
-  const FEED_URL='/dentcast-brain.json?v=c9330d9500';
+  const FEED_URL='/dentcast-brain.json?v=50844ad026';
   const el=document.getElementById('dcLast3Updates');
   if(!el) return;
   function extractArray(json){if(Array.isArray(json))return json;const cands=[json?.items,json?.data,json?.entries,json?.feed].filter(Boolean);for(const c of cands)if(Array.isArray(c))return c;for(const k in(json||{})){const v=json[k];if(Array.isArray(v))return v;if(v&&typeof v==='object'&&Array.isArray(v.items))return v.items;}return[];}
@@ -4032,7 +4048,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 
   function getBrain(){
     if(brainCache) return Promise.resolve(brainCache);
-    return fetch('/dentcast-brain.json?v=c9330d9500', {cache:'no-store'})
+    return fetch('/dentcast-brain.json?v=50844ad026', {cache:'no-store'})
       .then(r => r.ok ? r.json() : [])
       .then(d => { brainCache = Array.isArray(d) ? d : []; return brainCache; })
       .catch(() => { brainCache = []; return []; });
