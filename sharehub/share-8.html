@@ -85,6 +85,33 @@
     .ep-range::-webkit-slider-thumb{-webkit-appearance:none;width:13px;height:13px;border-radius:50%;background:var(--ac);cursor:pointer;box-shadow:0 0 0 2px var(--surface);}
     .ep-time-row{display:flex;justify-content:space-between;font-size:10px;color:var(--txt3);direction:ltr;}
 
+    /* English-version toggle button */
+    .lang-btn{
+      display: flex;
+      width: fit-content;
+      max-width: 100%;
+      align-items: center;
+      gap: 6px;
+      margin: 0 auto 18px 0;
+      background: rgba(255,255,255,0.92);
+      border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 12px;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #0b5fff;
+      text-decoration: none;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      cursor: pointer;
+      transition: transform .18s ease, background .18s ease;
+    }
+    .lang-btn:hover{
+      background:#fff;
+      transform: scale(1.03);
+    }
+
     @media (max-width:768px){
       .glass-box { padding: 20px 22px;}
       p { font-size: .98rem; line-height: 1.9;}
@@ -227,6 +254,11 @@
 <h1><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M19 21 12 16l-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg> Share Hub — اصول علمی آماده‌سازی دندان برای لمینت‌های سرامیکی</h1>
 
 <div class="glass-box">
+
+   <!-- 🌐 English Version (SEO-friendly link) -->
+  <a class="lang-btn" href="en/share-8.html" rel="noopener">
+    <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20"/><path d="M12 2a15 15 0 0 0 0 20"/></svg> English
+  </a>
 
   <p>
   لمینت‌های سرامیکی درمانی فراتر از زیبایی‌اند؛ مستقیماً بر عملکرد و اعتمادبه‌نفس اجتماعی بیمار اثر می‌گذارند. اما آنچه موفقیت بلندمدت را تعیین می‌کند و از عوارضی مثل <strong>چیپینگ</strong> (لب‌پریدگی) و <strong>دیباندینگ</strong> (جداشدن) جلوگیری می‌کند، <strong>آماده‌سازی اصولی</strong> است.
