@@ -786,6 +786,20 @@ body:has(.dc-topbar) .back:hover {
 @media(max-width:480px){.dc-related-section{padding-right:18px;padding-left:18px;}}
 
 /* =====================================================
+   RESPONSIVE IMAGE GUARD
+   Content images now carry intrinsic width/height attrs
+   (CLS fix, injected by .github/scripts/inject_img_attrs.py).
+   This zero-specificity rule keeps those attrs from ever
+   fixing the height of a responsive image: any page rule —
+   even a bare `img { }` — still wins over :where() at 0,0,1,
+   so explicitly sized images (logos, avatars) are unaffected.
+===================================================== */
+:where(main, article, figure, .wrap, .text-box, .content-box, .glass-box) img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* =====================================================
    ACCESSIBILITY — KEYBOARD FOCUS + REDUCED MOTION
    Added 2026-06-10 (phase 2 a11y).
    - :focus-visible fires only on keyboard/AT focus, so
