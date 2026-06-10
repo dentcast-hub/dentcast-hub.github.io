@@ -93,6 +93,34 @@
       background: rgba(11,95,255,0.15);
       transform: scale(1.03);
     }
+
+    /* دکمه‌ی نسخه انگلیسی (بالا-چپ) */
+    .lang-btn{
+      display: flex;
+      width: fit-content;
+      max-width: 100%;
+      align-items: center;
+      gap: 6px;
+      margin: 0 auto 18px 0;
+      background: rgba(255,255,255,0.92);
+      border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 12px;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #0b5fff;
+      text-decoration: none;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      cursor: pointer;
+      transition: transform .18s ease, background .18s ease;
+    }
+
+    .lang-btn:hover{
+      background:#fff;
+      transform: scale(1.03);
+    }
   </style>
   <script type="application/ld+json">
 {
@@ -112,6 +140,7 @@
   },
   "datePublished": "2025-11-10",
   "dateModified": "2025-11-10",
+  "inLanguage": "fa",
   "description": "بیمار با درد شدید در ناحیه چپ فک پایین پس از تحویل روکش. بررسی بالینی و رادیوگرافیک دندان ۶ با روکش تازه نشان می‌دهد منشأ درد نه فورکیشن، بلکه باز بودن کانتکت دیستال است. تحلیل مراحل بازسازی درد و گزینه‌های اصلاح درمان شامل خارج کردن روکش‌ها یا اصلاح کانتکت با کامپوزیت، همراه با ملاحظات احتیاطی."
 }
 </script>
@@ -193,6 +222,12 @@
   </figure>
 
   <div class="text-box">
+     <!-- 🌐 English Version (SEO-friendly link) -->
+    <a class="lang-btn"
+       href="en/episode-1.html"
+       rel="noopener">
+      <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20"/><path d="M12 2a15 15 0 0 0 0 20"/></svg> English
+    </a>
 
     <h2><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg> تحلیل بالینی و تشخیص منشأ درد</h2>
     <p>سعی کردم درد را بازسازی کنم.</p>
