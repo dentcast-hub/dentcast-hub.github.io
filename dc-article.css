@@ -171,3 +171,81 @@ li{ margin-bottom:10px; }
   .glass-box,
   .content-box{ padding:20px 18px; }
 }
+
+/* =====================================================
+   ARTICLE UX WIDGETS — injected by dc-nav.js (phase 5)
+   Reading-time/share chip row + auto table of contents.
+===================================================== */
+.dc-article-meta{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:8px;
+  margin:0 0 14px;
+}
+
+.dc-meta-chip{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  font-family:inherit;
+  font-size:.78rem;
+  font-weight:700;
+  color:var(--txt2, #4a5f85);
+  background:var(--surface2, #f4f6fb);
+  border:1px solid var(--border2, rgba(2,35,96,.06));
+  border-radius:999px;
+  padding:6px 14px;
+}
+
+button.dc-meta-chip{
+  cursor:pointer;
+  transition:background .15s, color .15s;
+}
+
+button.dc-meta-chip:hover{
+  background:var(--chip-bg, rgba(11,95,255,.08));
+  color:var(--ac, #0b5fff);
+}
+
+.dc-toc{
+  margin:0 0 20px;
+  background:var(--card-bg, #ffffff);
+  border:1px solid var(--card-border, rgba(2,35,96,.09));
+  border-radius:var(--r-lg, 18px);
+  box-shadow:var(--card-sh, 0 1px 3px rgba(2,35,96,.07));
+  padding:4px 20px;
+}
+
+.dc-toc summary{
+  cursor:pointer;
+  font-size:.9rem;
+  font-weight:700;
+  color:var(--txt2, #4a5f85);
+  padding:12px 0;
+}
+
+.dc-toc ol{
+  margin:0 0 14px;
+  padding-right:20px;
+}
+
+.dc-toc li{
+  margin:7px 0;
+  font-size:.88rem;
+}
+
+.dc-toc a{
+  color:var(--txt2, #4a5f85);
+  text-decoration:none;
+}
+
+.dc-toc a:hover{
+  color:var(--ac, #0b5fff);
+  text-decoration:underline;
+  text-underline-offset:3px;
+}
+
+/* ToC jump targets clear the fixed topbar */
+[id^="dc-sec-"]{ scroll-margin-top:72px; }

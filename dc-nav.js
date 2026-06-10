@@ -542,6 +542,99 @@
       });
       document.body.insertBefore(skip, document.body.firstChild);
     }
+
+    /* 7) Article UX widgets — only on pages built on the shared article
+          layer (/dc-article.css): a reading-time + share chip row above
+          the content, an auto table-of-contents for long articles, and a
+          topbar EN switch that appears exactly when a translated
+          counterpart exists (the hreflang en alternate is disk-discovered
+          by inject_hreflang.py, so this lights up as translations land).
+          All idempotent; styles live in dc-article.css. */
+    if (document.querySelector('link[href^="/dc-article.css"]')) {
+
+      /* 7a) Topbar language switch — real en counterpart only. */
+      var enAlt = document.querySelector('link[rel="alternate"][hreflang="en"]');
+      if (enAlt && !document.getElementById('dcTopbarLang')) {
+        var langA = document.createElement('a');
+        langA.id = 'dcTopbarLang';
+        langA.className = 'dc-topbar-btn';
+        langA.href = enAlt.getAttribute('href');
+        langA.setAttribute('aria-label', 'English version');
+        langA.style.cssText = 'text-decoration:none;font-size:11px;font-weight:800;width:auto;min-width:34px;padding:0 12px;';
+        langA.textContent = 'EN';
+        var langActs = newHeader.querySelector('.dc-topbar-actions');
+        if (langActs) langActs.appendChild(langA);
+      }
+
+      var dcBoxes = document.querySelectorAll('.text-box, .glass-box, .content-box');
+      var firstBox = dcBoxes.length ? dcBoxes[0] : null;
+
+      /* 7b) Reading time + share row, right above the first content box. */
+      if (firstBox && !document.getElementById('dcArticleMeta')) {
+        var dcWords = 0;
+        for (var bi = 0; bi < dcBoxes.length; bi++) {
+          dcWords += (dcBoxes[bi].textContent || '').trim().split(/\s+/).length;
+        }
+        var dcMins = Math.max(1, Math.round(dcWords / 180));
+
+        var metaRow = document.createElement('div');
+        metaRow.id = 'dcArticleMeta';
+        metaRow.className = 'dc-article-meta';
+
+        var timeChip = document.createElement('span');
+        timeChip.className = 'dc-meta-chip';
+        timeChip.textContent = 'زمان مطالعه: حدود ' + dcMins + ' دقیقه';
+        metaRow.appendChild(timeChip);
+
+        var shareBtn = document.createElement('button');
+        shareBtn.type = 'button';
+        shareBtn.className = 'dc-meta-chip';
+        shareBtn.textContent = 'اشتراک‌گذاری';
+        shareBtn.addEventListener('click', function () {
+          if (navigator.share) {
+            navigator.share({ title: document.title, url: location.href }).catch(function () {});
+          } else if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(location.href).then(function () {
+              var prev = shareBtn.textContent;
+              shareBtn.textContent = 'لینک کپی شد ✓';
+              setTimeout(function () { shareBtn.textContent = prev; }, 1600);
+            });
+          }
+        });
+        metaRow.appendChild(shareBtn);
+
+        firstBox.parentNode.insertBefore(metaRow, firstBox);
+      }
+
+      /* 7c) Auto table of contents — long articles only (4+ sections). */
+      if (firstBox && !document.getElementById('dcToc')) {
+        var tocHeads = [];
+        for (var ti = 0; ti < dcBoxes.length; ti++) {
+          var hs = dcBoxes[ti].querySelectorAll('h2:not(.dc-related-label), h3, h4');
+          for (var hi = 0; hi < hs.length; hi++) tocHeads.push(hs[hi]);
+        }
+        if (tocHeads.length >= 4) {
+          var toc = document.createElement('details');
+          toc.id = 'dcToc';
+          toc.className = 'dc-toc';
+          var sum = document.createElement('summary');
+          sum.textContent = 'فهرست مطالب';
+          toc.appendChild(sum);
+          var ol = document.createElement('ol');
+          for (var li = 0; li < tocHeads.length; li++) {
+            if (!tocHeads[li].id) tocHeads[li].id = 'dc-sec-' + (li + 1);
+            var item = document.createElement('li');
+            var a = document.createElement('a');
+            a.href = '#' + tocHeads[li].id;
+            a.textContent = (tocHeads[li].textContent || '').trim();
+            item.appendChild(a);
+            ol.appendChild(item);
+          }
+          toc.appendChild(ol);
+          firstBox.parentNode.insertBefore(toc, firstBox);
+        }
+      }
+    }
   })();
 
   /* ── THEME (centralized) ──────────────────────────
