@@ -25,6 +25,8 @@
   <link rel="alternate" hreflang="x-default" href="https://dentcast.org/notecast/episode-3.html">
 
 
+    <!-- Shared article layer (body/headings/lists/boxes/byline) — page-specific rules below -->
+  <link rel="stylesheet" href="/dc-article.css">
   <style>
     :root{
       --blue:#0b5fff;
@@ -37,34 +39,6 @@
     }
 
     html,body{margin:0; padding:0;}
-    body{
-      font-family:'Vazirmatn', sans-serif;
-      background: radial-gradient(1200px 600px at 20% -10%, #1b2640 0%, transparent 60%),
-                  linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
-      color: var(--text);
-      max-width: 920px;
-      margin: 0 auto;
-      padding: 40px 22px 90px;
-      line-height: 1.9;
-      -webkit-font-smoothing:antialiased;
-      text-rendering:optimizeLegibility;
-    }
-
-    h1{
-      text-align:center;
-      color:var(--blue);
-      font-weight:800;
-      font-size:2rem;
-      margin-bottom:8px;
-    }
-
-    h2{
-      text-align:center;
-      color:#e7eaf1;
-      font-weight:600;
-      font-size:1.3rem;
-      margin-bottom:30px;
-    }
 
     /* استایل H3 برای معرفی بخش اصلی مقاله */
     h3{
@@ -83,40 +57,6 @@
       font-weight:600;
       margin-bottom:8px;
     }
-
-    ul{
-      list-style-type:"✦ ";
-      padding-right:20px;
-      margin:10px 0 20px;
-    }
-
-    li{margin-bottom:10px;}
-
-    .author-note{
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  align-items:center;
-  gap:6px 10px;
-  margin:2.5rem auto 1rem;
-  padding-top:1.25rem;
-  border-top:1px solid rgba(120,140,170,0.18);
-  color:var(--txt3);
-  font-size:.78rem;
-}
-.author-note .author-link{
-  color:var(--txt2);
-  font-weight:600;
-  text-decoration:none;
-}
-.author-note .author-link:hover{
-  color:var(--ac);
-  text-decoration:underline;
-  text-underline-offset:3px;
-}
-.author-note .author-role{
-  color:var(--txt3);
-}
 
     iframe{
       width:100%;
@@ -152,13 +92,6 @@
 
     .back:hover{background:rgba(11,95,255,0.15);transform:scale(1.03);}
 
-    footer{
-      margin-top:70px;
-      text-align:center;
-      color:var(--muted);
-      font-size:.9rem;
-    }
-
     .text-box {
       background: rgba(255, 255, 255, 0.99);
       color: #111;
@@ -173,15 +106,11 @@
     .text-box h4 { color: #0b5fff; margin-top:30px; }
 
     @media (max-width: 768px) {
-      body {padding: 25px 16px 60px; line-height: 1.8;}
-      h1 {font-size: 1.6rem;}
-      h2 {font-size: 1.1rem; margin-bottom: 24px;}
       h3 {font-size: 1.05rem; margin-top: 20px;}
       h4 {font-size: 1rem; margin-top: 24px;} /* اندازه H4 در موبایل */
       ul {padding-right:14px; font-size:.95rem;}
       .audio-box {margin-top:40px; padding:16px;}
       .back {font-size:.9rem; padding:8px 16px; margin-top:40px;}
-      footer {font-size:.8rem; margin-top:50px;}
     }
   </style>
 

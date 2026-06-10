@@ -534,7 +534,7 @@ Use the sentence + hyperlink word from intake Question 5.
 
 ### 7. Bump the site content version (cache-bust)
 
-Every publish must change a **site-wide version** so browsers (and the PWA service worker) are forced to pick up the new content instead of serving stale caches. The version is **derived from a hash of the content sources of truth** (`dentcast-brain.json` + `glossary/glossary.json` + `litecast/lite-glossary.json`) **plus the shared cached assets** (`dc-theme.css`, `dc-nav.css`, `dc-nav.js`, `global-search.css`, `global-search.js`, `global-search-ui.js`, `episodes-drawer.js`), so it changes automatically whenever any content **or** any of those assets changes — never hand-pick or manually increment a number. (`service-worker.js` itself is deliberately excluded from the hash because the stamper rewrites its `CACHE_NAME`; hashing it would make the version unstable.)
+Every publish must change a **site-wide version** so browsers (and the PWA service worker) are forced to pick up the new content instead of serving stale caches. The version is **derived from a hash of the content sources of truth** (`dentcast-brain.json` + `glossary/glossary.json` + `litecast/lite-glossary.json`) **plus the shared cached assets** (`dc-theme.css`, `dc-article.css`, `dc-nav.css`, `dc-nav.js`, `global-search.css`, `global-search.js`, `global-search-ui.js`, `episodes-drawer.js`), so it changes automatically whenever any content **or** any of those assets changes — never hand-pick or manually increment a number. (`service-worker.js` itself is deliberately excluded from the hash because the stamper rewrites its `CACHE_NAME`; hashing it would make the version unstable.)
 
 This is done by a builder, not by hand:
 

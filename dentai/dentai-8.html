@@ -29,6 +29,8 @@
 
 
 
+    <!-- Shared article layer (body/headings/lists/boxes/byline) — page-specific rules below -->
+  <link rel="stylesheet" href="/dc-article.css">
   <style>
     :root{
       --blue:#0b5fff;
@@ -39,33 +41,6 @@
       --muted:#9aa1b3;
       --radius:18px;
       --shadow:0 18px 50px rgba(0,0,0,.35);
-    }
-
-    html, body{
-      height:100%;
-      margin:0;
-      padding:0;
-    }
-
-    body{
-      font-family:'Vazirmatn', sans-serif;
-      background: radial-gradient(1200px 600px at 20% -10%, #1b2640 0%, transparent 60%),
-                  linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
-      color:var(--text);
-      max-width:920px;
-      margin:0 auto;
-      padding:40px 20px 80px;
-      -webkit-font-smoothing:antialiased;
-      text-rendering:optimizeLegibility;
-      line-height:1.95;
-    }
-
-    h1{
-      text-align:center;
-      color:var(--blue);
-      font-weight:800;
-      font-size:2rem;
-      margin-bottom:16px;
     }
 
     .caption{
@@ -101,14 +76,6 @@
       line-height: 2;
     }
 
-    h2{
-      color:var(--heading);
-      font-weight:800;
-      font-size:1.35rem;
-      margin-top:36px;
-      margin-bottom:12px;
-    }
-
     ul{
       list-style:none;
       padding:0;
@@ -125,16 +92,7 @@
       font-weight:bold;
     }
 
-    footer{
-      margin-top:60px;
-      text-align:center;
-      color:var(--muted);
-      font-size:.9rem;
-    }
-
     @media (max-width:768px){
-      body{padding:25px 14px 60px;}
-      h1{font-size:1.7rem;}
       .caption p{font-size:1rem;}
       .text-box{padding:20px 18px; font-size:.98rem;}
     }
@@ -158,32 +116,6 @@
 
 .listen-btn:hover{
   background: #fff;
-}
-
-  .author-note{
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  align-items:center;
-  gap:6px 10px;
-  margin:2.5rem auto 1rem;
-  padding-top:1.25rem;
-  border-top:1px solid rgba(120,140,170,0.18);
-  color:var(--txt3);
-  font-size:.78rem;
-}
-.author-note .author-link{
-  color:var(--txt2);
-  font-weight:600;
-  text-decoration:none;
-}
-.author-note .author-link:hover{
-  color:var(--ac);
-  text-decoration:underline;
-  text-underline-offset:3px;
-}
-.author-note .author-role{
-  color:var(--txt3);
 }
   </style>
 

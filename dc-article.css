@@ -1,0 +1,173 @@
+/* =====================================================
+   dc-article.css — DentCast Shared Article Layer
+   The common body of every cloned content page
+   (notecast / insight / metanotes / chairside / dentai /
+   photocast / sharehub …). Loaded BEFORE the page's own
+   inline <style>, so page-specific rules still win, and
+   dc-theme.css continues to load last as the patch layer.
+   LiteCast is exempt (deliberately distinct .ir design).
+
+   Design language: the minimal-white episodes/glossary
+   look — narrow 760px column, quiet near-black titles,
+   accent side-bar section labels (the same signature as
+   .ep-section-label / .dc-related-label), token-driven
+   cards. Heading COLORS are deliberately left to the
+   dc-theme patch layer so light/dark stay correct.
+
+   Legacy per-page token names (--blue, --radius,
+   --shadow…) are aliased below so inline rules that
+   survive on older clones keep resolving.
+===================================================== */
+
+/* ── Brand font — single source.
+   The cloned templates ask for 'Vazirmatn' but never
+   declared it; this is the one canonical face (same
+   variable file the episodes/index pages use). */
+@font-face{
+  font-family:'Vazirmatn';
+  src:url('/fonts/Vazirmatn[wght].woff2') format('woff2');
+  font-weight:100 900; font-display:swap;
+}
+
+/* ── Legacy token aliases (resolve against dc-theme tokens) ── */
+:root{
+  --blue: var(--ac, #0b5fff);
+  --lightblue: rgba(11,95,255,.15);
+  --radius: var(--r-lg, 18px);
+  --shadow: var(--card-sh2, 0 4px 18px rgba(2,35,96,.13));
+}
+
+/* ── Page canvas — episodes column ── */
+body{
+  margin:0 auto;
+  max-width:760px;
+  padding:40px 20px 80px;
+  font-family:'Vazirmatn', system-ui, -apple-system, sans-serif;
+  background:var(--bg, #f0f2f5);
+  color:var(--txt, #0a1a33);
+  line-height:1.9;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizelegibility;
+}
+
+/* ── Article header — quiet, near-black (glossary pattern) ── */
+h1{
+  text-align:center;
+  color:var(--txt, #0a1a33);
+  font-weight:800;
+  font-size:1.7rem;
+  line-height:1.5;
+  margin:0 0 10px;
+}
+
+/* Subtitle line right under the H1 (notecast/meta/chairside).
+   In-box section H2s are restyled by the box-scoped rule below. */
+h2{
+  text-align:center;
+  color:var(--txt2, #4a5f85);
+  font-weight:600;
+  font-size:1.02rem;
+  margin:0 0 30px;
+}
+
+/* ── Section labels — the DentCast signature bar.
+   Same visual as .ep-section-label / .dc-related-label.
+   Color intentionally not set here: the dc-theme patch
+   layer paints heading text; the accent bar carries the
+   signature in both themes. ── */
+.text-box h2:not(.dc-related-label),
+.glass-box h2:not(.dc-related-label),
+.content-box h2:not(.dc-related-label),
+.text-box h3, .glass-box h3, .content-box h3,
+.text-box h4, .glass-box h4, .content-box h4{
+  text-align:right;
+  font-size:1.05rem;
+  font-weight:700;
+  border-right:4px solid var(--ac, #0b5fff);
+  padding-right:12px;
+  margin:28px 0 14px;
+}
+
+/* ── Lists — the ✦ house style ── */
+ul{
+  list-style-type:"✦ ";
+  padding-right:20px;
+  margin:10px 0 20px;
+}
+
+li{ margin-bottom:10px; }
+
+/* ── Content boxes — one card, three legacy class names ── */
+.text-box,
+.glass-box,
+.content-box{
+  background:var(--card-bg, #ffffff);
+  color:var(--txt, #0a1a33);
+  border:1px solid var(--card-border, rgba(2,35,96,.09));
+  border-radius:var(--r-lg, 18px);
+  box-shadow:var(--card-sh, 0 1px 3px rgba(2,35,96,.07));
+  padding:26px 32px;
+  margin:20px 0;
+  line-height:1.9;
+}
+
+.text-box img,
+.glass-box img,
+.content-box img{
+  display:block;
+  max-width:100%;
+  height:auto;
+  border-radius:var(--r-lg, 18px);
+  margin:0 auto 30px;
+  box-shadow:var(--card-sh, 0 1px 3px rgba(2,35,96,.07));
+  border:1px solid var(--card-border, rgba(2,35,96,.09));
+}
+
+/* ── Section divider (insight/sharehub) ── */
+.text-divider{
+  margin:30px 0;
+  border:0;
+  height:1px;
+  background-image:linear-gradient(to right,
+    rgba(0,0,0,0),
+    rgba(var(--ac-rgb, 11,95,255),.4),
+    rgba(0,0,0,0));
+}
+
+/* ── Author / E-E-A-T byline (verbatim from the templates;
+      already written against dc-theme tokens) ── */
+.author-note{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  align-items:center;
+  gap:6px 10px;
+  margin:2.5rem auto 1rem;
+  padding-top:1.25rem;
+  border-top:1px solid rgba(120,140,170,0.18);
+  color:var(--txt3);
+  font-size:.78rem;
+}
+.author-note .author-link{
+  color:var(--txt2);
+  font-weight:600;
+  text-decoration:none;
+}
+.author-note .author-link:hover{
+  color:var(--ac);
+  text-decoration:underline;
+  text-underline-offset:3px;
+}
+.author-note .author-role{
+  color:var(--txt3);
+}
+
+/* ── Mobile ── */
+@media (max-width:768px){
+  body{ padding:24px 16px 60px; }
+  h1{ font-size:1.35rem; }
+  h2{ font-size:.95rem; }
+  .text-box,
+  .glass-box,
+  .content-box{ padding:20px 18px; }
+}
