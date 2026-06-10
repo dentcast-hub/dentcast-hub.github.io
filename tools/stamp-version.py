@@ -31,6 +31,7 @@ CONTENT_SOURCES = [
 # CACHE_NAME, so hashing it would make the version unstable (non-idempotent).
 ASSET_SOURCES = [
     ROOT / "dc-theme.css",
+    ROOT / "dc-article.css",
     ROOT / "dc-nav.css",
     ROOT / "dc-nav.js",
     ROOT / "global-search.css",
