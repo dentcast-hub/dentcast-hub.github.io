@@ -28,6 +28,8 @@
 
 
 
+    <!-- Shared article layer (body/headings/lists/boxes/byline) — page-specific rules below -->
+  <link rel="stylesheet" href="/dc-article.css">
   <style>
     :root {
       --blue:#0b5fff;
@@ -40,68 +42,10 @@
       --shadow:0 18px 50px rgba(0,0,0,.2);
     }
 
-    html,body { margin:0; padding:0; height:100%; }
-
-    body {
-      font-family:'Vazirmatn', sans-serif;
-      background: linear-gradient(180deg, var(--bg1) 0%, var(--bg2) 100%);
-      color: var(--text);
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 60px 26px 100px;
-      line-height: 2;
-      -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeLegibility;
-      min-height: 100vh;
-    }
-
-    h1 {
-      text-align: center;
-      color: var(--blue);
-      font-weight: 800;
-      font-size: 1.9rem;
-      margin-bottom: 36px;
-    }
-
-    .glass-box {
-      background: rgba(255,255,255,0.99);
-      border: 1px solid rgba(11,95,255,0.25);
-      border-radius: var(--radius);
-      padding: 28px 36px;
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(12px);
-    }
-
-    .glass-box img {
-        display: block;
-        max-width: 100%;
-        height: auto;
-        border-radius: var(--radius);
-        margin: 0 auto 30px;
-        box-shadow: 0 8px 30px rgba(0,0,0,0.1);
-        border: 2px solid rgba(11,95,255,0.1);
-    }
-
     p {
       margin: 14px 0;
       font-size: 1.05rem;
       text-align: justify;
-    }
-
-    h3 {
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: var(--blue);
-      margin: 20px 0 10px 0;
-      border-bottom: 2px solid var(--lightblue);
-      padding-bottom: 4px;
-    }
-
-    .text-divider {
-        margin: 30px 0;
-        height: 1px;
-        border:0;
-        background-image: linear-gradient(to right, rgba(0,0,0,0), rgba(11,95,255,0.4), rgba(0,0,0,0));
     }
 
     ul { list-style:none; padding-right:0; margin:14px 0; }
@@ -109,39 +53,8 @@
     strong { color:var(--blue); }
 
     @media (max-width:768px){
-      body {padding:35px 16px 80px;}
-      .glass-box {padding:20px 22px;}
-      h1 {font-size:1.6rem; margin-bottom:24px;}
       p {font-size:.98rem;}
-      h3 {font-size:.98rem;}
-      .glass-box img {margin-bottom:20px;}
     }
-
-.author-note{
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  align-items:center;
-  gap:6px 10px;
-  margin:2.5rem auto 1rem;
-  padding-top:1.25rem;
-  border-top:1px solid rgba(120,140,170,0.18);
-  color:var(--txt3);
-  font-size:.78rem;
-}
-.author-note .author-link{
-  color:var(--txt2);
-  font-weight:600;
-  text-decoration:none;
-}
-.author-note .author-link:hover{
-  color:var(--ac);
-  text-decoration:underline;
-  text-underline-offset:3px;
-}
-.author-note .author-role{
-  color:var(--txt3);
-}
 </style>
 
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">

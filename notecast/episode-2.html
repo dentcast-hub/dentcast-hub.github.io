@@ -25,6 +25,8 @@
   <link rel="alternate" hreflang="x-default" href="https://dentcast.org/notecast/episode-2.html">
 
 
+    <!-- Shared article layer (body/headings/lists/boxes/byline) — page-specific rules below -->
+  <link rel="stylesheet" href="/dc-article.css">
   <style>
     :root{
       --blue:#0b5fff;
@@ -37,34 +39,6 @@
     }
 
     html,body{margin:0; padding:0;}
-    body{
-      font-family:'Vazirmatn', sans-serif;
-      background: radial-gradient(1200px 600px at 20% -10%, #1b2640 0%, transparent 60%),
-                  linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
-      color: var(--text);
-      max-width: 920px;
-      margin: 0 auto;
-      padding: 40px 22px 90px;
-      line-height: 1.9;
-      -webkit-font-smoothing:antialiased;
-      text-rendering:optimizeLegibility;
-    }
-
-    h1{
-      text-align:center;
-      color:var(--blue);
-      font-weight:800;
-      font-size:2rem;
-      margin-bottom:8px;
-    }
-
-    h2{
-      text-align:center;
-      color:#e7eaf1;
-      font-weight:600;
-      font-size:1.3rem;
-      margin-bottom:30px;
-    }
 
     /* ** SEO Change: H4 style to match the original H3 style ** */
     /* Neutral H3 style */
@@ -81,16 +55,6 @@
       margin-top:30px;
       font-size:1.1rem;
       font-weight:700;
-    }
-
-    ul{
-      list-style-type:"✦ ";
-      padding-right:20px;
-      margin:10px 0 20px;
-    }
-
-    li{
-      margin-bottom:10px;
     }
 
 
@@ -121,13 +85,6 @@
     .back:hover{
       background:rgba(11,95,255,0.15);
       transform:scale(1.03);
-    }
-
-    footer{
-      margin-top:70px;
-      text-align:center;
-      color:var(--muted);
-      font-size:.9rem;
     }
 
     /* 📱 بهینه‌سازی موبایل */
@@ -174,32 +131,6 @@
   box-shadow: 0 8px 30px rgba(0,0,0,0.15);
   backdrop-filter: blur(8px);
   }
-
-.author-note{
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  align-items:center;
-  gap:6px 10px;
-  margin:2.5rem auto 1rem;
-  padding-top:1.25rem;
-  border-top:1px solid rgba(120,140,170,0.18);
-  color:var(--txt3);
-  font-size:.78rem;
-}
-.author-note .author-link{
-  color:var(--txt2);
-  font-weight:600;
-  text-decoration:none;
-}
-.author-note .author-link:hover{
-  color:var(--ac);
-  text-decoration:underline;
-  text-underline-offset:3px;
-}
-.author-note .author-role{
-  color:var(--txt3);
-}
 </style>
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
 <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">

@@ -27,6 +27,8 @@
 
 
 
+    <!-- Shared article layer (body/headings/lists/boxes/byline) — page-specific rules below -->
+  <link rel="stylesheet" href="/dc-article.css">
   <style>
     :root {
       --blue: #0b5fff;
@@ -36,45 +38,6 @@
       --muted: #9aa1b3;
       --radius: 18px;
       --shadow: 0 18px 50px rgba(0,0,0,.35);
-    }
-
-    body {
-      margin: 0;
-      font-family: 'Vazirmatn', sans-serif;
-      background: linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
-      color: var(--text);
-      max-width: 920px;
-      margin: 0 auto;
-      padding: 40px 22px 90px;
-      line-height: 1.9;
-    }
-
-    h1 {
-      text-align: center;
-      color: var(--blue);
-      font-weight: 800;
-      font-size: 2rem;
-      margin-bottom: 8px;
-    }
-
-    h2 {
-      text-align: center;
-      color: var(--text);
-      font-weight: 600;
-      font-size: 1.2rem;
-      margin-bottom: 30px;
-    }
-
-    .glass-box {
-      background: rgba(255, 255, 255, 0.99);
-      backdrop-filter: blur(12px);
-      border-radius: var(--radius);
-      padding: 20px 25px;
-      margin: 25px 0;
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.25);
-      color: #111;
-      line-height: 1.9;
     }
 
     /* ** SEO Change: H4 used for main content sections to respect H1/H2 hierarchy ** */
@@ -93,14 +56,6 @@
       margin-top: 30px;
       font-size: 1.2rem;
     }
-
-    ul {
-      list-style-type: "✦ ";
-      padding-right: 20px;
-      margin: 10px 0 20px;
-    }
-
-    li { margin-bottom: 10px; }
 
     .audio-box {
       margin-top: 60px;
@@ -130,47 +85,11 @@
       transform: scale(1.03);
     }
 
-    footer {
-      margin-top: 70px;
-      text-align: center;
-      color: var(--muted);
-      font-size: .9rem;
-    }
-
     @media (max-width: 768px) {
-      body { padding: 25px 16px 60px; line-height: 1.8; }
-      h1 { font-size: 1.6rem; }
-      h2 { font-size: 1rem; margin-bottom: 24px; }
       h3 { font-size: 1.05rem; margin-top: 20px; } /* Adjusted H3 */
       .glass-box h4 { font-size: 1rem; margin-top: 20px; } /* New H4 mobile style to match old H3 */
       ul { padding-right: 14px; font-size: .95rem; }
     }
-
-.author-note{
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  align-items:center;
-  gap:6px 10px;
-  margin:2.5rem auto 1rem;
-  padding-top:1.25rem;
-  border-top:1px solid rgba(120,140,170,0.18);
-  color:var(--txt3);
-  font-size:.78rem;
-}
-.author-note .author-link{
-  color:var(--txt2);
-  font-weight:600;
-  text-decoration:none;
-}
-.author-note .author-link:hover{
-  color:var(--ac);
-  text-decoration:underline;
-  text-underline-offset:3px;
-}
-.author-note .author-role{
-  color:var(--txt3);
-}
 </style>
 
 <script type="application/ld+json">
