@@ -261,8 +261,8 @@ const TYPE_MAP = {
     function attach() {
       if (!vv || !isSheet()) return;
       /* Identical listener refs → repeated attach() calls are no-ops. */
-      vv.addEventListener("resize", reposition);
-      vv.addEventListener("scroll", reposition);
+      vv.addEventListener("resize", reposition, { passive: true });
+      vv.addEventListener("scroll", reposition, { passive: true });
       /* Re-cap #dcResults as the user types (results appear/grow after the
          keyboard has already settled, so no viewport event would fire). */
       if (input) input.addEventListener("input", reposition);
