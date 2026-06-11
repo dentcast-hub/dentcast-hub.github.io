@@ -138,6 +138,17 @@ Create `{type}/en/{file}.html` by composing two strictly-separated regions:
 - Body, box/section structure, and **CSS classes copied from the source
   type** (`.text-box`, `.ep-box`, `ep-caption`, etc. — whatever that type
   uses), rendered LTR (`direction: ltr` where the source set RTL).
+- **Styling source (dc-article era):** fa article pages now take their body
+  styles from the shared **RTL** layer `/dc-article.css` and keep only
+  page-specific rules inline. The en page must **NOT** link
+  `/dc-article.css` (it is RTL-tuned). Instead give the en page its own
+  inline `<style>` carrying an **LTR-adapted equivalent** of that look:
+  760px column, centered near-black h1, section headings with the accent
+  bar on the **left** (`border-left:4px solid #0b5fff`), white token
+  cards, plus the source type's own specific rules. If a reference en page
+  of the same type exists, copy its decisions; otherwise use
+  `insight/en/insight-46.html` as the canonical precedent for box-article
+  types.
 - JSON-LD with the **same `@type` and shape as the source** (e.g. an episode
   stays an episode schema, a Promptologist part keeps its schema) — only
   language/locale and translated text fields change (step 6).
