@@ -42,6 +42,13 @@
       "artist": "Aerosmith",
       "description": "قصه‌ی کسی که می‌بینه زمان داره فرسوده‌اش می‌کنه، ولی رؤیا دیدن رو به‌عنوان تنها عصیان در برابر فناپذیری انتخاب می‌کنه؛ جایی که خودِ دیدن مهمه، نه رسیدن.",
       "src": "https://ghofli.s3.ir-thr-at1.arvanstorage.ir/6.mp3?versionId="
+    },
+    {
+      "id": "track-007",
+      "title": "Famous Blue Raincoat",
+      "artist": "Leonard Cohen",
+      "description": "بعضی آدم‌ها با زخمی که به ما می‌زنند، مسیر زندگی‌مان را عوض می‌کنند. سال‌ها بعد ممکن است بفهمیم که اگر آن درد، آن خیانت یا آن برخورد اتفاق نمی‌افتاد، آدم دیگری می‌شدیم.",
+      "src": "https://ghofli.s3.ir-thr-at1.arvanstorage.ir/7.mp3?versionId="
     }
   ]
 }
