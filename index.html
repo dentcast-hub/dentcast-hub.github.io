@@ -2807,6 +2807,12 @@ a.dc-list-card--pillar {
 [data-theme="dark"] #panel-studio .t-chair{ color:#ffb45f; background:rgba(163,90,0,.20); }
 [data-theme="dark"] #panel-studio .t-meta{ color:#c79bf2; background:rgba(123,63,191,.22); }
 [data-theme="dark"] #panel-studio .t-photo{ color:#ff8fc0; background:rgba(179,38,110,.22); }
+#panel-studio .t-ai{ color:#5b21b6; background:rgba(91,33,182,.10); }
+#panel-studio .t-share{ color:#0e7490; background:rgba(14,116,144,.10); }
+#panel-studio .t-plus{ color:#b91c1c; background:rgba(185,28,28,.10); }
+[data-theme="dark"] #panel-studio .t-ai{ color:#c4b5fd; background:rgba(139,92,246,.20); }
+[data-theme="dark"] #panel-studio .t-share{ color:#67e8f9; background:rgba(14,116,144,.25); }
+[data-theme="dark"] #panel-studio .t-plus{ color:#fca5a5; background:rgba(185,28,28,.25); }
 #panel-studio .dc-rail-title{
   font-size:.8rem; font-weight:700; line-height:1.7; color:var(--txt); margin:0;
   display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;
@@ -2865,7 +2871,7 @@ a.dc-list-card--pillar {
 .dc-bottom-nav .dc-bn-item .dc-bn-ico{ color:var(--txt3); }
 .dc-bottom-nav .dc-bn-item.active .dc-bn-ico{ color:var(--pr); transform:translateY(-1px); }
 .dc-bottom-nav .dc-bn-item.active .dc-bn-lbl{ color:var(--pr); font-weight:900; }
-.dc-bottom-nav .dc-bn-item.active{ background:rgba(var(--ac-rgb),.07); border-radius:14px; }
+.dc-bottom-nav .dc-bn-item.active{ background:none; border-radius:14px; }
 .dc-bottom-nav .dc-bn-item.active::after{ background:var(--ac); box-shadow:none; }
   </style>
 
@@ -3114,8 +3120,6 @@ a.dc-list-card--pillar {
           <li><a href="/insight/insight-46.html">اینسایت ۴۶</a> با عنوانِ <strong>فرمِ کاسپِ باکال در ناحیه‌ی لبخند</strong> منتشر شد · ۲۰ خرداد</li>
           <li><a href="/dentai/promptologist/prompt1-3.html">قسمت سوم</a> <strong>هوش مصنوعی برای دندانپزشکان</strong> در سایت قرار گرفت · ۲۰ خرداد</li>
           <li><a href="/notecast/episode-35.html">نوت‌کست ۳۵</a> با عنوانِ <strong>مدیریت سایش دندانی با کانسپت دال (بخش دوم)</strong> منتشر شد · ۱۸ خرداد</li>
-          <li><a href="/insight/insight-45.html">اینسایت ۴۵</a> با عنوانِ <strong>درمان از طریقِ تفریق</strong> منتشر شد · ۱۸ خرداد</li>
-          <li><a href="/dentai/promptologist/prompt1-2.html">قسمت دوم</a> <strong>هوش مصنوعی برای دندانپزشکان</strong> در سایت قرار گرفت · ۱۵ خرداد</li>
         </ul>
         <div class="dc-pulse-ad">
           <a href="https://deventapp.ir" target="_blank" rel="sponsored noopener">
@@ -3127,30 +3131,55 @@ a.dc-list-card--pillar {
 
       <div class="dc-home-sec"><h2 class="dc-home-sec-label">تازه‌های دنت‌کست</h2><a class="dc-home-more" href="/episodes.html">همه ←</a></div>
       <div class="dc-rail">
-        <a class="dc-rail-card" href="/notecast/episode-35.html">
-          <span class="dc-type-chip t-note">نوت‌کست</span>
-          <p class="dc-rail-title">مدیریت سایش دندانی با کانسپت دال — بخش دوم</p>
-          <span class="dc-rail-meta">NoteCast ۳۵</span>
-        </a>
         <a class="dc-rail-card" href="/insight/insight-46.html">
           <span class="dc-type-chip t-insight">اینسایت</span>
           <p class="dc-rail-title">وقتی کاسپ باکال در لبخند کوتاه می‌افتد: فضا را از آنتاگونیست بگیر</p>
           <span class="dc-rail-meta">Insight ۴۶</span>
         </a>
-        <a class="dc-rail-card" href="/chairside/chairside-18.html">
-          <span class="dc-type-chip t-chair">چیرساید</span>
-          <p class="dc-rail-title">وقتی یک یافته‌ی مبهم، دو احتمال رقیب می‌سازد</p>
-          <span class="dc-rail-meta">Chairside ۱۸</span>
+        <a class="dc-rail-card" href="/dentai/promptologist/prompt1-3.html">
+          <span class="dc-type-chip t-ai">پرامپتولوژیست</span>
+          <p class="dc-rail-title">وقتی اشتباه می‌کنند، یک جور اشتباه نمی‌کنند</p>
+          <span class="dc-rail-meta">هوش مصنوعی · بخش ۳</span>
+        </a>
+        <a class="dc-rail-card" href="/notecast/episode-35.html">
+          <span class="dc-type-chip t-note">نوت‌کست</span>
+          <p class="dc-rail-title">مدیریت سایش دندانی با کانسپت دال — بخش دوم</p>
+          <span class="dc-rail-meta">NoteCast ۳۵</span>
         </a>
         <a class="dc-rail-card" href="/metanotes/meta-12.html">
           <span class="dc-type-chip t-meta">متانوت</span>
           <p class="dc-rail-title">یک نکته‌ی مهم در مدیریت کانتکت بین دندان‌های ۶ و ۷</p>
           <span class="dc-rail-meta">MetaNote ۱۲</span>
         </a>
-        <a class="dc-rail-card" href="/photocast/episode-3.html">
-          <span class="dc-type-chip t-photo">فوتوکست</span>
-          <p class="dc-rail-title">دندان ۶ پایین در زیر ۱۸ سال — چه روکشی و چه زمانی؟</p>
-          <span class="dc-rail-meta">PhotoCast ۳</span>
+        <a class="dc-rail-card" href="/chairside/chairside-18.html">
+          <span class="dc-type-chip t-chair">چیرساید</span>
+          <p class="dc-rail-title">وقتی یک یافته‌ی مبهم، دو احتمال رقیب می‌سازد</p>
+          <span class="dc-rail-meta">Chairside ۱۸</span>
+        </a>
+        <a class="dc-rail-card" href="/insight/insight-45.html">
+          <span class="dc-type-chip t-insight">اینسایت</span>
+          <p class="dc-rail-title">وقتی علتِ درد روشن نیست: منطقِ درمان از طریقِ تفریق</p>
+          <span class="dc-rail-meta">Insight ۴۵</span>
+        </a>
+        <a class="dc-rail-card" href="/dentai/dentai-16.html">
+          <span class="dc-type-chip t-ai">DentAI</span>
+          <p class="dc-rail-title">سلسله‌مراتب قابلیت باند (HOB)</p>
+          <span class="dc-rail-meta">DentAI ۱۶</span>
+        </a>
+        <a class="dc-rail-card" href="/sharehub/share-8.html">
+          <span class="dc-type-chip t-share">شیرهاب</span>
+          <p class="dc-rail-title">اصول علمی آماده‌سازی دندان برای لمینت‌های سرامیکی</p>
+          <span class="dc-rail-meta">ShareHub ۸</span>
+        </a>
+        <a class="dc-rail-card" href="/dentai/promptologist/prompt1-2.html">
+          <span class="dc-type-chip t-ai">پرامپتولوژیست</span>
+          <p class="dc-rail-title">دو نژادِ متفاوت، دو منطقِ متفاوت</p>
+          <span class="dc-rail-meta">هوش مصنوعی · بخش ۲</span>
+        </a>
+        <a class="dc-rail-card" href="/dentcast-plus/video-6.html">
+          <span class="dc-type-chip t-plus">ویدیو</span>
+          <p class="dc-rail-title">تداخل کارگر در گروپ فانکشن</p>
+          <span class="dc-rail-meta">+DentCast ۶</span>
         </a>
       </div>
 
@@ -3823,10 +3852,12 @@ bnItems.forEach((item,i)=>{
 });
 
 /* SWIPE */
-let sx=0,sy=0,st=0,isH=false;
+let sx=0,sy=0,st=0,isH=false,ig=false;
 const scrollBody = document.getElementById('mobile-body');
 scrollBody.addEventListener('touchstart',e=>{
   const t=e.touches[0]; sx=t.clientX; sy=t.clientY; st=Date.now(); isH=false;
+  /* gestures that start inside a horizontal rail belong to the rail, never to panel switching */
+  ig = !!(e.target.closest && e.target.closest('.dc-rail'));
 },{passive:true});
 scrollBody.addEventListener('touchmove',e=>{
   const dx=e.touches[0].clientX-sx;
@@ -3834,11 +3865,11 @@ scrollBody.addEventListener('touchmove',e=>{
   if(Math.abs(dx)>Math.abs(dy)*1.1&&Math.abs(dx)>6){ isH=true; }
 },{passive:true});
 scrollBody.addEventListener('touchend',e=>{
-  if(!isH) return;
+  if(!isH||ig) return;
   const dx=e.changedTouches[0].clientX-sx;
   const dt=Date.now()-st;
   const sp=Math.abs(dx)/dt;
-  if(Math.abs(dx)<28&&sp<0.22) return;
+  if(Math.abs(dx)<64&&sp<0.35) return;
   if(dx>0 && curIdx<panelOrder.length-1) showPanel(panelOrder[curIdx+1],'right');
   else if(dx<0 && curIdx>0)              showPanel(panelOrder[curIdx-1],'left');
 },{passive:true});
