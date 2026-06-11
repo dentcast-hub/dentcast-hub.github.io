@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <!-- Google Analytics (deferred: loads only after the page is fully rendered) -->
+  <script>
+    window.addEventListener('load', function () {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-GMM0WC8X3M');
+      var ga = document.createElement('script');
+      ga.async = true;
+      ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-GMM0WC8X3M';
+      document.head.appendChild(ga);
+    });
+  </script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>پیش‌نمایش طراحی جدید خانه — دنت‌کست (آزمایشی)</title>
+  <link rel="icon" href="/favicon-192.png" type="image/png" sizes="192x192">
+  <link rel="preload" as="font" href="/fonts/Vazirmatn[wght].woff2" type="font/woff2" crossorigin>
+
+  <!-- Theme init — no flash -->
+  <script>
+    (function(){
+      var s=localStorage.getItem('dc-theme');
+      var d=window.matchMedia('(prefers-color-scheme:dark)').matches;
+      if(s==='dark'||(s===null&&d)) document.documentElement.setAttribute('data-theme','dark');
+    })();
+  </script>
+
+  <style>
+  @font-face{
+    font-family:'Vazirmatn';
+    src:url('/fonts/Vazirmatn[wght].woff2') format('woff2');
+    font-weight:100 900; font-display:swap;
+  }
+
+  :root{
+    --pr:#022360; --pr-rgb:2,35,96;
+    --ac:#0b5fff; --ac-rgb:11,95,255;
+    --bg:#f0f2f5;
+    --surface:#ffffff;
+    --surface2:#f4f6fb;
+    --border:rgba(2,35,96,.10);
+    --border2:rgba(2,35,96,.06);
+    --txt:#0a1a33; --txt2:#4a5f85; --txt3:#62779a;
+    --card-bg:#ffffff;
+    --card-border:rgba(2,35,96,.09);
+    --card-sh:0 1px 3px rgba(2,35,96,.07), 0 4px 14px rgba(2,35,96,.04);
+    --chip-bg:rgba(11,95,255,.08);
+    --chip-bd:rgba(11,95,255,.20);
+    --r:18px;
+  }
+  [data-theme="dark"]{
+    --pr:#5b9cf6; --pr-rgb:91,156,246;
+    --ac:#5b9cf6; --ac-rgb:91,156,246;
+    --bg:#0e1621;
+    --surface:#17212b;
+    --surface2:#1e2c3a;
+    --border:rgba(255,255,255,.08);
+    --border2:rgba(255,255,255,.04);
+    --txt:#e8f0ff; --txt2:#8aaac8; --txt3:#6f8fb0;
+    --card-bg:#1e2c3a;
+    --card-border:rgba(255,255,255,.07);
+    --card-sh:0 1px 3px rgba(0,0,0,.22), 0 4px 14px rgba(0,0,0,.14);
+    --chip-bg:rgba(91,156,246,.12);
+    --chip-bd:rgba(91,156,246,.24);
+  }
+
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
+  body{
+    font-family:'Vazirmatn', system-ui, -apple-system, sans-serif;
+    background:var(--bg);
+    color:var(--txt);
+    line-height:1.8;
+    padding-bottom:88px; /* room for bottom nav */
+    -webkit-font-smoothing:antialiased;
+    transition:background .25s, color .25s;
+  }
+  .wrap{ max-width:560px; margin:0 auto; padding:0 16px; }
+
+  /* ── preview ribbon ── */
+  .ribbon{
+    background:var(--pr); color:#fff;
+    text-align:center; font-size:.72rem; font-weight:700;
+    padding:7px 14px; letter-spacing:.02em;
+  }
+  [data-theme="dark"] .ribbon{ background:#0b2a6b; }
+
+  /* ── topbar ── */
+  .topbar{
+    position:sticky; top:0; z-index:50;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:10px 16px;
+    background:var(--surface);
+    border-bottom:1px solid var(--border2);
+    transition:background .25s;
+  }
+  .brand{ display:flex; align-items:center; gap:10px; }
+  .brand img{ display:block; }
+  .brand-name{ font-size:1.02rem; font-weight:900; color:var(--pr); line-height:1.2; }
+  .brand-sub{ font-size:.66rem; color:var(--txt3); }
+  .top-actions{ display:flex; gap:8px; align-items:center; }
+  .ghost-btn{
+    display:inline-flex; align-items:center; justify-content:center;
+    min-width:36px; height:36px; padding:0 12px;
+    border-radius:999px; border:1px solid var(--border);
+    background:var(--surface2); color:var(--txt2);
+    font-family:inherit; font-size:12px; font-weight:800;
+    text-decoration:none; cursor:pointer;
+  }
+
+  /* ── hero: continue listening ── */
+  .hero{
+    margin-top:16px;
+    background:var(--card-bg);
+    border:1px solid var(--card-border);
+    border-radius:22px;
+    box-shadow:var(--card-sh);
+    padding:18px;
+    transition:background .25s;
+  }
+  .hero-top{ display:flex; gap:14px; align-items:center; }
+  .hero-cover{
+    width:84px; height:84px; border-radius:16px; flex-shrink:0;
+    object-fit:cover; border:1px solid var(--border2);
+  }
+  .hero-info{ min-width:0; flex:1; }
+  .hero-badge{
+    display:inline-flex; align-items:center; gap:5px;
+    font-size:.66rem; font-weight:800; color:var(--ac);
+    background:var(--chip-bg); border:1px solid var(--chip-bd);
+    border-radius:999px; padding:2px 10px; margin-bottom:6px;
+  }
+  .hero-title{
+    margin:0; font-size:.98rem; font-weight:800; line-height:1.6;
+    color:var(--txt);
+    display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
+  }
+  .hero-player{ display:flex; align-items:center; gap:12px; margin-top:14px; }
+  .play-btn{
+    width:52px; height:52px; border-radius:50%; flex-shrink:0;
+    background:var(--pr); border:none; color:#fff; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 6px 18px rgba(var(--pr-rgb),.32);
+    transition:transform .12s;
+  }
+  .play-btn:active{ transform:scale(.92); }
+  .play-btn svg{ width:20px; height:20px; fill:#fff; margin-right:-2px; }
+  .progress-area{ flex:1; min-width:0; }
+  .progress-track{
+    height:5px; border-radius:3px; background:var(--surface2);
+    border:1px solid var(--border2); overflow:hidden;
+  }
+  .progress-fill{ height:100%; width:64%; border-radius:3px; background:var(--ac); }
+  .progress-meta{
+    display:flex; justify-content:space-between;
+    font-size:.68rem; color:var(--txt3); margin-top:6px; font-weight:600;
+  }
+
+  /* ── pulse line ── */
+  .pulse{
+    display:flex; align-items:center; gap:10px;
+    margin-top:12px; padding:10px 16px;
+    background:var(--surface);
+    border:1px solid var(--border2);
+    border-radius:14px;
+    font-size:.78rem; color:var(--txt2); font-weight:600;
+  }
+  .pulse-dot{
+    width:7px; height:7px; border-radius:50%; flex-shrink:0;
+    background:var(--ac);
+    animation:pulse 1.6s ease-in-out infinite;
+  }
+  .pulse span{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  @keyframes pulse{ 50%{ opacity:.35; } }
+
+  /* ── section label (the signature) ── */
+  .sec{
+    display:flex; align-items:center; justify-content:space-between;
+    margin:26px 0 12px;
+  }
+  .sec-label{
+    font-size:.95rem; font-weight:800; color:var(--txt);
+    border-right:4px solid var(--ac); padding-right:10px; line-height:1.4;
+  }
+  .sec-more{ font-size:.72rem; font-weight:700; color:var(--ac); text-decoration:none; }
+
+  /* ── horizontal rail ── */
+  .rail{
+    display:flex; gap:10px; overflow-x:auto; padding:2px 16px 10px;
+    margin:0 -16px;
+    scroll-snap-type:x mandatory; scrollbar-width:none;
+  }
+  .rail::-webkit-scrollbar{ display:none; }
+  .rail-card{
+    scroll-snap-align:start; flex:0 0 168px;
+    background:var(--card-bg); border:1px solid var(--card-border);
+    border-radius:var(--r); box-shadow:var(--card-sh);
+    padding:14px; text-decoration:none; color:inherit;
+    display:flex; flex-direction:column; gap:8px;
+    transition:transform .15s, background .25s;
+  }
+  .rail-card:active{ transform:scale(.97); }
+  .type-chip{
+    align-self:flex-start;
+    font-size:.62rem; font-weight:800; border-radius:999px; padding:2px 9px;
+  }
+  .t-note{ color:#0b5fff; background:rgba(11,95,255,.10); }
+  .t-insight{ color:#0d8a72; background:rgba(13,138,114,.10); }
+  .t-chair{ color:#a35a00; background:rgba(163,90,0,.10); }
+  .t-meta{ color:#7b3fbf; background:rgba(123,63,191,.10); }
+  .t-photo{ color:#b3266e; background:rgba(179,38,110,.10); }
+  [data-theme="dark"] .t-note{ color:#8ab4f8; background:rgba(91,156,246,.14); }
+  [data-theme="dark"] .t-insight{ color:#5fd0b8; background:rgba(13,138,114,.18); }
+  [data-theme="dark"] .t-chair{ color:#ffb45f; background:rgba(163,90,0,.20); }
+  [data-theme="dark"] .t-meta{ color:#c79bf2; background:rgba(123,63,191,.22); }
+  [data-theme="dark"] .t-photo{ color:#ff8fc0; background:rgba(179,38,110,.22); }
+  .rail-title{
+    font-size:.8rem; font-weight:700; line-height:1.7; color:var(--txt); margin:0;
+    display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;
+    min-height:4.9em;
+  }
+  .rail-meta{ font-size:.66rem; color:var(--txt3); font-weight:600; margin-top:auto; }
+
+  /* ── pillar rail ── */
+  .pillar-card{
+    scroll-snap-align:start; flex:0 0 124px;
+    background:var(--card-bg); border:1px solid var(--card-border);
+    border-radius:var(--r); box-shadow:var(--card-sh);
+    padding:14px 12px; text-decoration:none; color:inherit;
+    display:flex; flex-direction:column; align-items:center; gap:8px; text-align:center;
+    transition:transform .15s, background .25s;
+  }
+  .pillar-card:active{ transform:scale(.96); }
+  .pillar-ico{
+    width:40px; height:40px; border-radius:12px;
+    background:var(--chip-bg); border:1px solid var(--chip-bd);
+    display:flex; align-items:center; justify-content:center;
+    color:var(--ac);
+  }
+  .pillar-ico svg{ width:20px; height:20px; stroke:currentColor; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+  .pillar-name{ font-size:.76rem; font-weight:800; color:var(--txt); }
+  .pillar-count{ font-size:.62rem; color:var(--txt3); font-weight:600; }
+
+  /* ── two-up: word of the day / random insight ── */
+  .duo{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .duo-card{
+    background:var(--card-bg); border:1px solid var(--card-border);
+    border-radius:var(--r); box-shadow:var(--card-sh);
+    padding:16px 14px; text-decoration:none; color:inherit;
+    display:flex; flex-direction:column; gap:6px;
+    transition:transform .15s, background .25s;
+  }
+  .duo-card:active{ transform:scale(.97); }
+  .duo-kicker{ font-size:.64rem; font-weight:800; color:var(--ac); }
+  .duo-title{ font-size:.84rem; font-weight:800; color:var(--txt); line-height:1.6; margin:0; }
+  .duo-sub{ font-size:.68rem; color:var(--txt3); font-weight:600; }
+
+  /* ── stats strip ── */
+  .stats{
+    display:flex; justify-content:center; gap:8px;
+    margin:26px 0 8px; flex-wrap:wrap;
+  }
+  .stat{
+    display:flex; align-items:baseline; gap:5px;
+    background:var(--surface); border:1px solid var(--border2);
+    border-radius:999px; padding:6px 16px;
+  }
+  .stat b{ font-size:.95rem; font-weight:900; color:var(--pr); }
+  .stat span{ font-size:.68rem; color:var(--txt3); font-weight:700; }
+
+  footer{
+    text-align:center; color:var(--txt3); font-size:.7rem;
+    padding:18px 16px 6px; line-height:1.9;
+  }
+
+  /* ── bottom nav — quiet, white, 3 tabs ── */
+  .bottom-nav{
+    position:fixed; bottom:0; left:0; right:0; z-index:60;
+    display:flex; justify-content:space-around; align-items:stretch;
+    background:var(--surface);
+    border-top:1px solid var(--border2);
+    padding:6px 8px calc(8px + env(safe-area-inset-bottom));
+    backdrop-filter:saturate(1.4) blur(14px);
+    transition:background .25s;
+  }
+  .bn{
+    flex:1; max-width:120px;
+    display:flex; flex-direction:column; align-items:center; gap:3px;
+    padding:6px 0 2px; text-decoration:none; cursor:pointer;
+    color:var(--txt3); border:none; background:none; font-family:inherit;
+  }
+  .bn svg{ width:22px; height:22px; stroke:currentColor; fill:none; stroke-width:1.9; stroke-linecap:round; stroke-linejoin:round; transition:transform .15s; }
+  .bn-lbl{ font-size:.64rem; font-weight:800; }
+  .bn.active{ color:var(--pr); }
+  .bn.active svg{ transform:translateY(-1px); }
+  .bn-dot{ width:4px; height:4px; border-radius:50%; background:transparent; }
+  .bn.active .bn-dot{ background:var(--ac); }
+  .bn:active svg{ transform:scale(.88); }
+
+  /* ── theme toggle (demo) ── */
+  .theme-fab{
+    position:fixed; bottom:92px; left:14px; z-index:55;
+    width:40px; height:40px; border-radius:14px;
+    background:var(--card-bg); color:var(--txt2);
+    border:1px solid var(--card-border); box-shadow:var(--card-sh);
+    display:flex; align-items:center; justify-content:center;
+    font-size:17px; cursor:pointer;
+  }
+
+  :focus-visible{ outline:3px solid var(--ac); outline-offset:2px; }
+
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{
+      animation-duration:.01ms !important;
+      animation-iteration-count:1 !important;
+      transition-duration:.01ms !important;
+    }
+  }
+
+  /* slightly wider phones / tablet: rails breathe more */
+  @media (min-width:480px){
+    .rail-card{ flex-basis:188px; }
+  }
+  </style>
+</head>
+<body>
+
+  <div class="ribbon">پیش‌نمایش طراحی جدید صفحه‌ی اصلی — نسخه‌ی آزمایشی · سایت اصلی تغییری نکرده</div>
+
+  <!-- topbar -->
+  <header class="topbar">
+    <div class="brand">
+      <img src="/logo-v2.png" alt="DentCast" width="36" height="36" style="object-fit:contain">
+      <div>
+        <div class="brand-name">DentCast</div>
+        <div class="brand-sub">دکتر فواد شهابیان · پروتزهای دندانی</div>
+      </div>
+    </div>
+    <div class="top-actions">
+      <button class="ghost-btn" aria-label="جستجو">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      </button>
+      <a class="ghost-btn" href="#">EN</a>
+    </div>
+  </header>
+
+  <main class="wrap">
+
+    <!-- HERO: continue listening -->
+    <section class="hero" aria-label="ادامه‌ی پخش">
+      <div class="hero-top">
+        <img class="hero-cover" src="/dentcast-cover.webp" alt="" width="84" height="84">
+        <div class="hero-info">
+          <span class="hero-badge">🎙 قسمت ۱۵۸ · تازه‌ترین</span>
+          <h1 class="hero-title">Bio-Restorative Concept in Implant Dentistry — بخش سوم</h1>
+        </div>
+      </div>
+      <div class="hero-player">
+        <button class="play-btn" aria-label="پخش">
+          <svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z"/></svg>
+        </button>
+        <div class="progress-area">
+          <div class="progress-track"><div class="progress-fill"></div></div>
+          <div class="progress-meta"><span>ادامه از ۱۷:۲۰</span><span>۱۲ دقیقه مانده</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- pulse one-liner -->
+    <div class="pulse">
+      <i class="pulse-dot"></i>
+      <span>پالس: نسخه‌ی انگلیسی فوتوکست و شیرهاب منتشر شد — ۱۱ صفحه‌ی جدید</span>
+    </div>
+
+    <!-- rail: latest -->
+    <div class="sec">
+      <h2 class="sec-label">تازه‌های دنت‌کست</h2>
+      <a class="sec-more" href="#">همه ←</a>
+    </div>
+    <div class="rail">
+      <a class="rail-card" href="#">
+        <span class="type-chip t-note">نوت‌کست</span>
+        <p class="rail-title">مدیریت سایش دندانی با کانسپت دال — بخش دوم</p>
+        <span class="rail-meta">حدود ۶ دقیقه مطالعه</span>
+      </a>
+      <a class="rail-card" href="#">
+        <span class="type-chip t-insight">اینسایت</span>
+        <p class="rail-title">وقتی کاسپ باکال در لبخند کوتاه می‌افتد: فضا را از آنتاگونیست بگیر</p>
+        <span class="rail-meta">حدود ۴ دقیقه مطالعه</span>
+      </a>
+      <a class="rail-card" href="#">
+        <span class="type-chip t-chair">چیرساید</span>
+        <p class="rail-title">وقتی یک یافته‌ی مبهم، دو احتمال رقیب می‌سازد</p>
+        <span class="rail-meta">حدود ۳ دقیقه مطالعه</span>
+      </a>
+      <a class="rail-card" href="#">
+        <span class="type-chip t-meta">متانوت</span>
+        <p class="rail-title">یک نکته‌ی مهم در مدیریت کانتکت بین دندان‌های ۶ و ۷</p>
+        <span class="rail-meta">حدود ۲ دقیقه مطالعه</span>
+      </a>
+      <a class="rail-card" href="#">
+        <span class="type-chip t-photo">فوتوکست</span>
+        <p class="rail-title">دندان ۶ پایین در زیر ۱۸ سال — چه روکشی و چه زمانی؟</p>
+        <span class="rail-meta">حدود ۵ دقیقه مطالعه</span>
+      </a>
+    </div>
+
+    <!-- rail: pillars -->
+    <div class="sec">
+      <h2 class="sec-label">سری‌های موضوعی</h2>
+      <a class="sec-more" href="#">همه ←</a>
+    </div>
+    <div class="rail">
+      <a class="pillar-card" href="#">
+        <span class="pillar-ico"><svg viewBox="0 0 24 24"><path d="M12 2 2 7l10 5 10-5z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg></span>
+        <span class="pillar-name">باندینگ</span>
+        <span class="pillar-count">۱۲ مطلب</span>
+      </a>
+      <a class="pillar-card" href="#">
+        <span class="pillar-ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18"/></svg></span>
+        <span class="pillar-name">اکلوژن</span>
+        <span class="pillar-count">۹ مطلب</span>
+      </a>
+      <a class="pillar-card" href="#">
+        <span class="pillar-ico"><svg viewBox="0 0 24 24"><path d="M12 22V8"/><path d="M5 12V5a7 7 0 0 1 14 0v7"/></svg></span>
+        <span class="pillar-name">ایمپلنتولوژی</span>
+        <span class="pillar-count">۱۴ مطلب</span>
+      </a>
+      <a class="pillar-card" href="#">
+        <span class="pillar-ico"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M8 12h8M12 8v8"/></svg></span>
+        <span class="pillar-name">سرامیک</span>
+        <span class="pillar-count">۱۱ مطلب</span>
+      </a>
+      <a class="pillar-card" href="#">
+        <span class="pillar-ico"><svg viewBox="0 0 24 24"><path d="m12 3 1.9 5.8H20l-5 3.7 1.9 5.8-4.9-3.6-4.9 3.6L9 12.5 4 8.8h6.1z"/></svg></span>
+        <span class="pillar-name">زیبایی</span>
+        <span class="pillar-count">۷ مطلب</span>
+      </a>
+      <a class="pillar-card" href="#">
+        <span class="pillar-ico"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span>
+        <span class="pillar-name">طرح درمان</span>
+        <span class="pillar-count">۸ مطلب</span>
+      </a>
+    </div>
+
+    <!-- duo: word of the day + random insight -->
+    <div class="sec">
+      <h2 class="sec-label">یک نگاه سریع</h2>
+    </div>
+    <div class="duo">
+      <a class="duo-card" href="#">
+        <span class="duo-kicker">📖 واژه‌ی امروز دانشنامه</span>
+        <p class="duo-title">Abutment — اباتمنت</p>
+        <span class="duo-sub">۹۵ واژه‌ی تخصصی دیگر</span>
+      </a>
+      <a class="duo-card" href="#">
+        <span class="duo-kicker">🎲 یک اینسایت تصادفی</span>
+        <p class="duo-title">سلسله‌مراتب قابلیت باند (HOB)</p>
+        <span class="duo-sub">از سری DentAI</span>
+      </a>
+    </div>
+
+    <!-- stats -->
+    <div class="stats">
+      <span class="stat"><b>۱۵۸</b><span>قسمت پادکست</span></span>
+      <span class="stat"><b>+۱۳۷</b><span>مقاله و نوت</span></span>
+      <span class="stat"><b>۹۵</b><span>واژه‌ی دانشنامه</span></span>
+    </div>
+
+    <footer>
+      دنت‌کست — مرجع علمی پروتز و ایمپلنت · دکتر فواد شهابیان<br>
+      این صفحه فقط یک پیش‌نمایش طراحی است.
+    </footer>
+  </main>
+
+  <!-- theme toggle (demo) -->
+  <button class="theme-fab" id="themeFab" aria-label="تغییر حالت روشن/تاریک">🌓</button>
+
+  <!-- bottom nav -->
+  <nav class="bottom-nav" aria-label="ناوبری اصلی">
+    <button class="bn active">
+      <svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg>
+      <span class="bn-lbl">خانه</span>
+      <i class="bn-dot"></i>
+    </button>
+    <button class="bn">
+      <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+      <span class="bn-lbl">آرشیو</span>
+      <i class="bn-dot"></i>
+    </button>
+    <button class="bn">
+      <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      <span class="bn-lbl">بیماران</span>
+      <i class="bn-dot"></i>
+    </button>
+  </nav>
+
+  <script>
+    document.getElementById('themeFab').addEventListener('click', function(){
+      var dark = document.documentElement.getAttribute('data-theme') === 'dark';
+      document.documentElement.setAttribute('data-theme', dark ? 'light' : 'dark');
+      localStorage.setItem('dc-theme', dark ? 'light' : 'dark');
+    });
+    /* tab press demo only */
+    document.querySelectorAll('.bn').forEach(function(b){
+      b.addEventListener('click', function(){
+        document.querySelectorAll('.bn').forEach(function(x){ x.classList.remove('active'); });
+        b.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>
