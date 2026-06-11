@@ -724,7 +724,7 @@
      Top window only; sub-minute weeks stay silent. */
   (function () {
     if (window.self !== window.top) return;
-    var KEY = 'dc-tos-v1';
+    var KEY = 'dc-tos-v2';
     var fa = function (n) { return String(n).replace(/[0-9]/g, function (d) { return '۰۱۲۳۴۵۶۷۸۹'[+d]; }); };
     function dayId(d) { return d.toISOString().slice(0, 10); }
     function weekId(d) {
@@ -803,6 +803,14 @@
         setTimeout(function () { showCard(msg, 15000); }, 2500);
       }
       s.week = w; s.weekSec = 0;
+    }
+    /* one-time activation card: instant visible proof the module is live
+       on this device (also resets expectations after the v1→v2 key reset) */
+    if (!s.hello) {
+      s.hello = 1;
+      setTimeout(function () {
+        showCard('✨ همراهی‌سنجِ دنت‌کست فعال شد — از امروز وقتِ مطالعه‌ات شمرده می‌شه', 8000);
+      }, 1500);
     }
     save(s);
 
