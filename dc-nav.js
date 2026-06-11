@@ -812,10 +812,10 @@
     }
     /* one-time activation card: instant visible proof the module is live
        on this device (also resets expectations after the v1→v2 key reset) */
-    if (!s.hello) {
-      s.hello = 1;
+    if (!s.hello2) {
+      s.hello2 = 1;
       setTimeout(function () {
-        showCard('✨ همراهی‌سنجِ دنت‌کست فعال شد — از امروز وقتِ مطالعه‌ات شمرده می‌شه', 8000);
+        showCard('✨ همراهی‌سنج فعال شد. از امروز حواسم هست چقدر دنت‌کست می‌خونی', 8000);
       }, 1500);
     }
     save(s);
