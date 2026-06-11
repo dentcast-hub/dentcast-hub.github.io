@@ -1,71 +1,32 @@
 // service-worker.js
-// DentCast PWA — Safe Content Strategy
+// DentCast PWA — NO-CACHE strategy
+//
+// Everything is served straight from the network. The worker keeps:
+//   1. a fetch listener only so the PWA stays installable (it does not
+//      intercept or cache anything — the browser's normal HTTP caching
+//      semantics apply untouched);
+//   2. an activate step that deletes EVERY cache this site ever created,
+//      so returning visitors shed the old cache-first storage;
+//   3. the CACHE_NAME constant, kept solely because tools/stamp-version.py
+//      re-stamps it on each publish — the byte change makes browsers fetch
+//      and activate the new worker promptly.
 
 const CACHE_NAME = 'dentcast-assets-f03b2c239e';
 
 /* نصب */
 self.addEventListener('install', (event) => {
-  console.log('DentCast SW installed');
   self.skipWaiting();
 });
 
-/* فعال‌سازی */
+/* فعال‌سازی — حذف همه‌ی کش‌های قدیمی */
 self.addEventListener('activate', (event) => {
-  console.log('DentCast SW activated');
   event.waitUntil(
-    caches.keys().then(keys =>
-      Promise.all(
-        keys.map(key => {
-          if (key !== CACHE_NAME) {
-            return caches.delete(key);
-          }
-        })
-      )
+    caches.keys().then((keys) =>
+      Promise.all(keys.map((key) => caches.delete(key)))
     )
   );
   self.clients.claim();
 });
 
-/* fetch logic */
-self.addEventListener('fetch', (event) => {
-  if (event.request.method !== 'GET') return;
-
-  const accept = event.request.headers.get('accept') || '';
-
-  /* 🔴 HTML → Network First (مهم‌ترین بخش) */
-  if (accept.includes('text/html')) {
-    event.respondWith(
-      fetch(event.request)
-        .then((response) => response)
-        .catch(() => caches.match(event.request))
-    );
-    return;
-  }
-
-  // ❌ این فایل‌ها هرگز نباید کش شوند
-if (event.request.url.includes('dentcast-brain.json') ||
-    event.request.url.includes('dentcast-music.json')) {
-  event.respondWith(fetch(event.request, { cache: "no-store" }));
-  return;
-}
-
-/* 🟢 Assets → Cache First */
-event.respondWith(
-  caches.open(CACHE_NAME).then((cache) => {
-    return cache.match(event.request).then((cachedResponse) => {
-      if (cachedResponse) return cachedResponse;
-
-      return fetch(event.request).then((networkResponse) => {
-        if (
-          event.request.url.startsWith('http') &&
-          networkResponse.status === 200
-        ) {
-          cache.put(event.request, networkResponse.clone());
-        }
-        return networkResponse;
-      });
-    });
-  })
-);
-
-});
+/* fetch — عمداً بدون مداخله: شبکه‌ی خالص، بدون هیچ کشی */
+self.addEventListener('fetch', () => {});

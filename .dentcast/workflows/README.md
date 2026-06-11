@@ -543,7 +543,7 @@ python tools/stamp-version.py
 ```
 
 It computes `ver = sha256(content sources)[:10]` and stamps it into **two** places, keeping them consistent:
-- **`service-worker.js`** → `CACHE_NAME = 'dentcast-assets-<ver>'`. On the next visit the SW activates, **purges every old cache**, and re-fetches assets — so the whole site (HTML is already network-first, the brain is already `no-store`, and now cached CSS/JS/images too) comes back consistent with the new content.
+- **`service-worker.js`** → `CACHE_NAME = 'dentcast-assets-<ver>'`. The worker is now **no-cache** (network-only; it deletes every cache on activate and never stores anything). The stamp's only job here is changing the worker's bytes so browsers fetch and activate the new worker promptly. Freshness of CSS/JS rides on the `?v=` asset URLs and normal HTTP caching.
 - Every **`dentcast-brain.json?v=<ver>`** fetch URL in the HTML (currently `index.html` ×2 and `player.html`) → so any intermediary/CDN cache that ignores `no-store` is still defeated.
 
 This step is part of the rebuild (step 8) and must run from a state that reflects `main` (same as the other builders). Report the old → new version.
