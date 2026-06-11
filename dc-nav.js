@@ -742,19 +742,25 @@
         var st = document.createElement('style');
         st.id = 'dc-tos-style';
         st.textContent =
+          /* clinical-green card: clearly distinct from the white page, still
+             calm and medical — same green family as the Insight chip. */
           '#dcTosCard{position:fixed;bottom:96px;left:14px;right:14px;margin:0 auto;max-width:420px;' +
           'z-index:400;display:flex;align-items:center;gap:10px;' +
-          'background:var(--card-bg,#fff);color:var(--txt,#0a1a33);' +
-          'border:1px solid var(--card-border,rgba(2,35,96,.09));border-right:4px solid var(--ac,#0b5fff);' +
-          'border-radius:16px;box-shadow:0 8px 28px rgba(2,35,96,.16);padding:12px 16px;' +
+          'background:#e6f7f1;color:#0a5847;' +
+          'border:1px solid rgba(13,138,114,.35);border-right:4px solid #0d8a72;' +
+          'border-radius:16px;box-shadow:0 10px 30px rgba(13,138,114,.30);padding:12px 16px;' +
           'font-size:.82rem;font-weight:700;line-height:1.9;' +
           'opacity:0;transform:translateY(12px);pointer-events:none;' +
           'transition:opacity .3s ease,transform .3s ease;}' +
           '#dcTosCard.on{opacity:1;transform:translateY(0);pointer-events:auto;}' +
           '#dcTosCard .dc-tos-msg{flex:1;min-width:0;}' +
           '#dcTosCard .dc-tos-close{flex-shrink:0;width:28px;height:28px;border:none;cursor:pointer;' +
-          'background:var(--surface2,#f4f6fb);color:var(--txt3,#62779a);border-radius:999px;' +
-          'display:flex;align-items:center;justify-content:center;font-size:14px;line-height:1;padding:0;}';
+          'background:rgba(13,138,114,.12);color:#0a5847;border-radius:999px;' +
+          'display:flex;align-items:center;justify-content:center;font-size:14px;line-height:1;padding:0;}' +
+          '[data-theme="dark"] #dcTosCard{background:#11352b;color:#7fe3c8;' +
+          'border-color:rgba(95,208,184,.35);border-right-color:#5fd0b8;' +
+          'box-shadow:0 10px 30px rgba(0,0,0,.45);}' +
+          '[data-theme="dark"] #dcTosCard .dc-tos-close{background:rgba(95,208,184,.15);color:#7fe3c8;}';
         (document.head || document.documentElement).appendChild(st);
       }
       if (!box) {
