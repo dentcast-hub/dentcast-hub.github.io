@@ -706,6 +706,97 @@
     };
     if (fsBody) fsBody.addEventListener('scroll', fsUpd, { passive: true });
     window.addEventListener('scroll', fsUpd, { passive: true });
+
+  /* ── TIME-ON-SITE ENCOURAGEMENT ──────────────────────
+     Duolingo-style, privacy-friendly: active (visible-tab) minutes are
+     accumulated in localStorage across all pages. Daily ladder toasts at
+     5/15/30/60 min (each once per day, day resets at midnight); a weekly
+     recap fires on the FIRST visit of a new week (weeks start Saturday)
+     against a 5-min/day benchmark: <35 min = gentle nudge, 35–70 = keep
+     it up, >70 = pride. A sub-minute week stays silent. Top window only. */
+  (function () {
+    if (window.self !== window.top) return;
+    var KEY = 'dc-tos-v1';
+    var fa = function (n) { return String(n).replace(/[0-9]/g, function (d) { return '۰۱۲۳۴۵۶۷۸۹'[+d]; }); };
+    function dayId(d) { return d.toISOString().slice(0, 10); }
+    function weekId(d) { /* Saturday-based week start date */
+      var x = new Date(d); x.setDate(x.getDate() - ((x.getDay() + 1) % 7));
+      return dayId(x);
+    }
+    function load() {
+      try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { return {}; }
+    }
+    function save(s) { try { localStorage.setItem(KEY, JSON.stringify(s)); } catch (e) {} }
+
+    var toastBox = null;
+    function toast(msg, ms) {
+      if (!document.getElementById('dc-tos-style')) {
+        var st = document.createElement('style');
+        st.id = 'dc-tos-style';
+        st.textContent =
+          '#dcTosToast{position:fixed;bottom:96px;left:50%;transform:translateX(-50%) translateY(12px);' +
+          'z-index:400;max-width:88vw;background:var(--card-bg,#fff);color:var(--txt,#0a1a33);' +
+          'border:1px solid var(--card-border,rgba(2,35,96,.09));border-right:4px solid var(--ac,#0b5fff);' +
+          'border-radius:16px;box-shadow:0 8px 28px rgba(2,35,96,.16);padding:12px 18px;' +
+          'font-size:.82rem;font-weight:700;line-height:1.9;opacity:0;pointer-events:none;' +
+          'transition:opacity .3s ease,transform .3s ease;}' +
+          '#dcTosToast.on{opacity:1;transform:translateX(-50%) translateY(0);}';
+        (document.head || document.documentElement).appendChild(st);
+      }
+      if (!toastBox) {
+        toastBox = document.createElement('div');
+        toastBox.id = 'dcTosToast';
+        toastBox.setAttribute('role', 'status');
+        toastBox.setAttribute('aria-live', 'polite');
+        document.body.appendChild(toastBox);
+      }
+      toastBox.textContent = msg;
+      requestAnimationFrame(function () { toastBox.classList.add('on'); });
+      clearTimeout(toastBox._t);
+      toastBox._t = setTimeout(function () { toastBox.classList.remove('on'); }, ms || 4500);
+    }
+
+    var DAILY = [
+      [300,  '☕ ۵ دقیقه مطالعه‌ی تخصصی — شروع خوبیه!'],
+      [900,  '🎧 ۱۵ دقیقه یادگیری — به‌اندازه‌ی نصف یک اپیزود عمیق شدی'],
+      [1800, '🏆 نیم ساعت یادگیری امروز — این دیگه عادتِ حرفه‌ای‌هاست'],
+      [3600, '⭐ یک ساعت کامل با دنت‌کست — کم‌نظیری! فردا هم منتظرتیم']
+    ];
+
+    var now = new Date(), s = load();
+    var d = dayId(now), w = weekId(now);
+    if (s.day !== d) { s.day = d; s.daySec = 0; s.shown = {}; }
+    if (s.week !== w) {
+      /* week rolled over → stash last week for the recap, then reset */
+      if (s.week && (s.weekSec || 0) >= 60 && s.recapFor !== s.week) {
+        var mins = Math.round(s.weekSec / 60);
+        var msg;
+        if (mins < 35)      msg = '🌱 هفته‌ی قبل ' + fa(mins) + ' دقیقه وقت گذاشتی؛ کاش این هفته بیشتر بهم سر بزنی';
+        else if (mins <= 70) msg = '👏 هفته‌ی قبل ' + fa(mins) + ' دقیقه مطالعه داشتی — کارت درسته، ادامه بده';
+        else                msg = '⭐ هفته‌ی قبل خیلی خوب بودی! ' + fa(mins) + ' دقیقه مطالعه‌ی دنت‌کست — باعث افتخارمونی';
+        s.recapFor = s.week;
+        setTimeout(function () { toast(msg, 7000); }, 2500);
+      }
+      s.week = w; s.weekSec = 0;
+    }
+    save(s);
+
+    var TICK = 15;
+    setInterval(function () {
+      if (document.visibilityState !== 'visible') return;
+      s.daySec = (s.daySec || 0) + TICK;
+      s.weekSec = (s.weekSec || 0) + TICK;
+      for (var i = 0; i < DAILY.length; i++) {
+        var th = DAILY[i][0];
+        if (s.daySec >= th && !(s.shown && s.shown[th])) {
+          s.shown = s.shown || {}; s.shown[th] = 1;
+          toast(DAILY[i][1]);
+          break;
+        }
+      }
+      save(s);
+    }, TICK * 1000);
+  })();
   }
 
   /* ── SEARCH DIM (Issue 3) ───────────────────────────
