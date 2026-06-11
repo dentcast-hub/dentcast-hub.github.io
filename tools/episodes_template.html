@@ -648,7 +648,86 @@ body.search-open #page-content{
 .dc-jump svg{ width:20px; height:20px; fill:#fff; transition:fill var(--tr2), transform .2s ease; }
 .dc-jump.is-up svg{ transform:rotate(180deg); }
 @media(max-width:640px){ .dc-jump{ bottom:calc(22px + env(safe-area-inset-bottom, 0px)); } }
-  </style>
+  
+
+/* =====================================================
+   EPISODES REDESIGN — 2026-06-11
+   Same minimal-white language as the homepage: compact
+   stat chips, home-style featured card, signature
+   section labels, quiet ad row, calm logo-less archive
+   rows with 2-line clamped captions (full text stays in
+   the DOM for SEO — the clamp is purely visual).
+===================================================== */
+
+/* hero — tighter, chips instead of giant numbers */
+.dc-hero h1{ font-size:1.45rem; margin:6px 0 10px; }
+.hero-lede{ font-size:.86rem; }
+.hero-stat-chips{ display:flex; flex-wrap:wrap; gap:8px; margin-top:16px; }
+.stat-chip{
+  display:inline-flex; align-items:baseline; gap:5px;
+  background:var(--surface); border:1px solid var(--border2);
+  border-radius:999px; padding:6px 16px;
+  font-size:.72rem; font-weight:700; color:var(--txt3);
+}
+.stat-chip b{ font-size:.95rem; font-weight:900; color:var(--pr); }
+
+/* signature section labels (same as home) */
+.section-title{
+  border-right:4px solid var(--ac);
+  padding-right:10px;
+  font-size:.95rem; font-weight:800; color:var(--txt);
+}
+.featured-label{
+  border-right:4px solid var(--ac); padding-right:10px;
+  font-size:.95rem; font-weight:800; color:var(--txt);
+}
+
+/* featured — home-hero look */
+.featured-card{
+  display:flex; align-items:center; gap:14px;
+  background:var(--card-bg); border:1px solid var(--card-border);
+  border-radius:22px; box-shadow:var(--card-sh); padding:18px;
+}
+.featured-cover{
+  width:72px; height:72px; border-radius:14px; flex-shrink:0;
+  object-fit:cover; object-position:left center;
+  border:1px solid var(--border2);
+}
+.featured-body{ flex:1; min-width:0; }
+
+/* ad — quiet announcement row (pulse pattern) */
+.ad-card{
+  background:var(--card-bg); border:1px solid var(--card-border);
+  border-right:4px solid var(--ac); border-radius:18px;
+  box-shadow:var(--card-sh);
+}
+.ad-card .ad-link{ display:flex; align-items:center; gap:10px; padding:14px 16px; text-decoration:none; background:none; }
+.ad-card .dc-card-title{ font-size:.78rem; color:var(--txt2); font-weight:600; line-height:1.9; }
+.ad-card .ad-strong{
+  flex-shrink:0; font-size:.7rem; font-weight:800; color:var(--ac);
+  background:var(--chip-bg); border:1px solid var(--chip-bd);
+  border-radius:999px; padding:4px 14px;
+}
+
+/* archive rows — logo-less, calm, number as a chip */
+.episode-item{ gap:12px; }
+.episode-item .ep-num{
+  display:inline-flex; align-items:center; justify-content:center;
+  min-width:44px; padding:3px 10px; border-radius:999px;
+  background:var(--chip-bg); border:1px solid var(--chip-bd);
+  color:var(--ac); font-weight:800; font-size:.8rem;
+  flex-shrink:0;
+}
+.episode-item .ep-caption{
+  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;
+  overflow:hidden;
+}
+
+/* sort + more — chip family */
+.archive-sort, .ep-more{
+  border-radius:999px;
+}
+</style>
 
   <script type="application/ld+json">
 {
@@ -811,36 +890,11 @@ body.search-open #page-content{
         دنت‌کست جایی‌ست برای مرور آرام و مستندِ پروتکل‌های کلینیکی، خواندن مقاله‌های مرجع و گفت‌وگو درباره‌ی مفاهیمی که در کارِ روزانه‌ی پروتز، ایمپلنت، اکلوژن و دندانپزشکی ادهزیو به آن‌ها برمی‌خوریم. بدون شعار، بدون قطعیتِ زودهنگام.
       </p>
 
-      <div class="hero-stats" role="list" aria-label="آمار پادکست">
-        <div class="hero-stat" role="listitem">
-          <span class="v">@@EP_COUNT@@</span>
-          <span class="k">اپیزود</span>
-        </div>
-        <div class="hero-stat" role="listitem">
-          <span class="v">@@HOURS@@</span>
-          <span class="k">ساعت محتوا</span>
-        </div>
-        <div class="hero-stat" role="listitem">
-          <span class="v">@@YEARS@@</span>
-          <span class="k">سال فعالیت</span>
-        </div>
+      <div class="hero-stat-chips" role="list" aria-label="آمار پادکست">
+        <span class="stat-chip" role="listitem"><b>@@EP_COUNT@@</b> اپیزود</span>
+        <span class="stat-chip" role="listitem"><b>@@HOURS@@</b> ساعت محتوا</span>
+        <span class="stat-chip" role="listitem"><b>@@YEARS@@</b> سال فعالیت</span>
       </div>
-    </section>
-
-    <!-- ============================================================
-         SECTION 2 — AD CARD (moved up; same content + mailto)
-    ============================================================ -->
-    <section class="section">
-      <article class="ad-card" id="card-ad-contact">
-        <a href="mailto:info@dentcast.ir?subject=درخواست معرفی برند در دنت‌کست" class="ad-link">
-          <div class="dc-card-main">
-            <div class="dc-card-title">
-              اینجا محل معرفی برند شما به جامعه دندانپزشکیست.
-            </div>
-          </div>
-          <strong class="ad-strong">تماس بگیرید</strong>
-        </a>
-      </article>
     </section>
 
     <!-- ============================================================
@@ -850,6 +904,8 @@ body.search-open #page-content{
     <section class="section dc-featured" aria-labelledby="featuredLabel">
       <div class="featured-label" id="featuredLabel">اپیزود پیشنهادی</div>
       <a class="featured-card" id="featured-episode" href="#" data-state="loading" aria-busy="true" aria-label="اپیزود پیشنهادی">
+        <img class="featured-cover" src="/dentcast-cover.webp" alt="" width="72" height="72" loading="lazy" decoding="async">
+        <div class="featured-body">
         <div class="featured-num"><span class="hash">اپیزود</span> <span class="featured-num-val">—</span></div>
         <div class="featured-title">در حال بارگذاری اپیزود پیشنهادی...</div>
         <p class="featured-excerpt"></p>
@@ -861,6 +917,7 @@ body.search-open #page-content{
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
           </span>
         </div>
+        </div>
       </a>
     </section>
 
@@ -869,7 +926,7 @@ body.search-open #page-content{
     ============================================================ -->
     <section class="section dc-listen" aria-labelledby="listenTitle">
       <div class="section-head">
-        <h2 class="section-title" id="listenTitle"><span class="listen-badge">شنیدن همه‌ی اپیزودها</span></h2>
+        <h2 class="section-title" id="listenTitle">شنیدن اپیزودها</h2>
         <span class="section-note">— مطابق وضعیت اینترنت‌تان انتخاب کنید</span>
       </div>
 
@@ -915,12 +972,28 @@ body.search-open #page-content{
     </section>
 
     <!-- ============================================================
+         SECTION 2 — AD CARD (moved up; same content + mailto)
+    ============================================================ -->
+    <section class="section">
+      <article class="ad-card" id="card-ad-contact">
+        <a href="mailto:info@dentcast.ir?subject=درخواست معرفی برند در دنت‌کست" class="ad-link">
+          <div class="dc-card-main">
+            <div class="dc-card-title">
+              اینجا محل معرفی برند شما به جامعه دندانپزشکیست.
+            </div>
+          </div>
+          <strong class="ad-strong">تماس بگیرید</strong>
+        </a>
+      </article>
+    </section>
+
+    <!-- ============================================================
          SECTION 5 — ARCHIVE (همهٔ اپیزودها، static)
     ============================================================ -->
     <section class="section dc-archive" aria-labelledby="archiveTitle">
       <div class="archive-head">
         <div class="lhs">
-          <h2 class="section-title" id="archiveTitle">آرشیو اپیزودها</h2>
+          <h2 class="section-title" id="archiveTitle">آرشیو کامل اپیزودها</h2>
           <span class="count">@@EP_COUNT@@ اپیزود</span>
         </div>
         <button id="archiveSortBtn" class="archive-sort" type="button" aria-pressed="false" aria-label="تغییر ترتیب نمایش اپیزودها">

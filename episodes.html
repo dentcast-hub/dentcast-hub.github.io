@@ -648,7 +648,86 @@ body.search-open #page-content{
 .dc-jump svg{ width:20px; height:20px; fill:#fff; transition:fill var(--tr2), transform .2s ease; }
 .dc-jump.is-up svg{ transform:rotate(180deg); }
 @media(max-width:640px){ .dc-jump{ bottom:calc(22px + env(safe-area-inset-bottom, 0px)); } }
-  </style>
+  
+
+/* =====================================================
+   EPISODES REDESIGN — 2026-06-11
+   Same minimal-white language as the homepage: compact
+   stat chips, home-style featured card, signature
+   section labels, quiet ad row, calm logo-less archive
+   rows with 2-line clamped captions (full text stays in
+   the DOM for SEO — the clamp is purely visual).
+===================================================== */
+
+/* hero — tighter, chips instead of giant numbers */
+.dc-hero h1{ font-size:1.45rem; margin:6px 0 10px; }
+.hero-lede{ font-size:.86rem; }
+.hero-stat-chips{ display:flex; flex-wrap:wrap; gap:8px; margin-top:16px; }
+.stat-chip{
+  display:inline-flex; align-items:baseline; gap:5px;
+  background:var(--surface); border:1px solid var(--border2);
+  border-radius:999px; padding:6px 16px;
+  font-size:.72rem; font-weight:700; color:var(--txt3);
+}
+.stat-chip b{ font-size:.95rem; font-weight:900; color:var(--pr); }
+
+/* signature section labels (same as home) */
+.section-title{
+  border-right:4px solid var(--ac);
+  padding-right:10px;
+  font-size:.95rem; font-weight:800; color:var(--txt);
+}
+.featured-label{
+  border-right:4px solid var(--ac); padding-right:10px;
+  font-size:.95rem; font-weight:800; color:var(--txt);
+}
+
+/* featured — home-hero look */
+.featured-card{
+  display:flex; align-items:center; gap:14px;
+  background:var(--card-bg); border:1px solid var(--card-border);
+  border-radius:22px; box-shadow:var(--card-sh); padding:18px;
+}
+.featured-cover{
+  width:72px; height:72px; border-radius:14px; flex-shrink:0;
+  object-fit:cover; object-position:left center;
+  border:1px solid var(--border2);
+}
+.featured-body{ flex:1; min-width:0; }
+
+/* ad — quiet announcement row (pulse pattern) */
+.ad-card{
+  background:var(--card-bg); border:1px solid var(--card-border);
+  border-right:4px solid var(--ac); border-radius:18px;
+  box-shadow:var(--card-sh);
+}
+.ad-card .ad-link{ display:flex; align-items:center; gap:10px; padding:14px 16px; text-decoration:none; background:none; }
+.ad-card .dc-card-title{ font-size:.78rem; color:var(--txt2); font-weight:600; line-height:1.9; }
+.ad-card .ad-strong{
+  flex-shrink:0; font-size:.7rem; font-weight:800; color:var(--ac);
+  background:var(--chip-bg); border:1px solid var(--chip-bd);
+  border-radius:999px; padding:4px 14px;
+}
+
+/* archive rows — logo-less, calm, number as a chip */
+.episode-item{ gap:12px; }
+.episode-item .ep-num{
+  display:inline-flex; align-items:center; justify-content:center;
+  min-width:44px; padding:3px 10px; border-radius:999px;
+  background:var(--chip-bg); border:1px solid var(--chip-bd);
+  color:var(--ac); font-weight:800; font-size:.8rem;
+  flex-shrink:0;
+}
+.episode-item .ep-caption{
+  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;
+  overflow:hidden;
+}
+
+/* sort + more — chip family */
+.archive-sort, .ep-more{
+  border-radius:999px;
+}
+</style>
 
   <script type="application/ld+json">
 {
@@ -811,36 +890,11 @@ body.search-open #page-content{
         دنت‌کست جایی‌ست برای مرور آرام و مستندِ پروتکل‌های کلینیکی، خواندن مقاله‌های مرجع و گفت‌وگو درباره‌ی مفاهیمی که در کارِ روزانه‌ی پروتز، ایمپلنت، اکلوژن و دندانپزشکی ادهزیو به آن‌ها برمی‌خوریم. بدون شعار، بدون قطعیتِ زودهنگام.
       </p>
 
-      <div class="hero-stats" role="list" aria-label="آمار پادکست">
-        <div class="hero-stat" role="listitem">
-          <span class="v">۲۰۶</span>
-          <span class="k">اپیزود</span>
-        </div>
-        <div class="hero-stat" role="listitem">
-          <span class="v">۷۰</span>
-          <span class="k">ساعت محتوا</span>
-        </div>
-        <div class="hero-stat" role="listitem">
-          <span class="v">۷</span>
-          <span class="k">سال فعالیت</span>
-        </div>
+      <div class="hero-stat-chips" role="list" aria-label="آمار پادکست">
+        <span class="stat-chip" role="listitem"><b>۲۰۶</b> اپیزود</span>
+        <span class="stat-chip" role="listitem"><b>۷۰</b> ساعت محتوا</span>
+        <span class="stat-chip" role="listitem"><b>۷</b> سال فعالیت</span>
       </div>
-    </section>
-
-    <!-- ============================================================
-         SECTION 2 — AD CARD (moved up; same content + mailto)
-    ============================================================ -->
-    <section class="section">
-      <article class="ad-card" id="card-ad-contact">
-        <a href="mailto:info@dentcast.ir?subject=درخواست معرفی برند در دنت‌کست" class="ad-link">
-          <div class="dc-card-main">
-            <div class="dc-card-title">
-              اینجا محل معرفی برند شما به جامعه دندانپزشکیست.
-            </div>
-          </div>
-          <strong class="ad-strong">تماس بگیرید</strong>
-        </a>
-      </article>
     </section>
 
     <!-- ============================================================
@@ -850,6 +904,8 @@ body.search-open #page-content{
     <section class="section dc-featured" aria-labelledby="featuredLabel">
       <div class="featured-label" id="featuredLabel">اپیزود پیشنهادی</div>
       <a class="featured-card" id="featured-episode" href="#" data-state="loading" aria-busy="true" aria-label="اپیزود پیشنهادی">
+        <img class="featured-cover" src="/dentcast-cover.webp" alt="" width="72" height="72" loading="lazy" decoding="async">
+        <div class="featured-body">
         <div class="featured-num"><span class="hash">اپیزود</span> <span class="featured-num-val">—</span></div>
         <div class="featured-title">در حال بارگذاری اپیزود پیشنهادی...</div>
         <p class="featured-excerpt"></p>
@@ -861,6 +917,7 @@ body.search-open #page-content{
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
           </span>
         </div>
+        </div>
       </a>
     </section>
 
@@ -869,7 +926,7 @@ body.search-open #page-content{
     ============================================================ -->
     <section class="section dc-listen" aria-labelledby="listenTitle">
       <div class="section-head">
-        <h2 class="section-title" id="listenTitle"><span class="listen-badge">شنیدن همه‌ی اپیزودها</span></h2>
+        <h2 class="section-title" id="listenTitle">شنیدن اپیزودها</h2>
         <span class="section-note">— مطابق وضعیت اینترنت‌تان انتخاب کنید</span>
       </div>
 
@@ -915,12 +972,28 @@ body.search-open #page-content{
     </section>
 
     <!-- ============================================================
+         SECTION 2 — AD CARD (moved up; same content + mailto)
+    ============================================================ -->
+    <section class="section">
+      <article class="ad-card" id="card-ad-contact">
+        <a href="mailto:info@dentcast.ir?subject=درخواست معرفی برند در دنت‌کست" class="ad-link">
+          <div class="dc-card-main">
+            <div class="dc-card-title">
+              اینجا محل معرفی برند شما به جامعه دندانپزشکیست.
+            </div>
+          </div>
+          <strong class="ad-strong">تماس بگیرید</strong>
+        </a>
+      </article>
+    </section>
+
+    <!-- ============================================================
          SECTION 5 — ARCHIVE (همهٔ اپیزودها، static)
     ============================================================ -->
     <section class="section dc-archive" aria-labelledby="archiveTitle">
       <div class="archive-head">
         <div class="lhs">
-          <h2 class="section-title" id="archiveTitle">آرشیو اپیزودها</h2>
+          <h2 class="section-title" id="archiveTitle">آرشیو کامل اپیزودها</h2>
           <span class="count">۲۰۶ اپیزود</span>
         </div>
         <button id="archiveSortBtn" class="archive-sort" type="button" aria-pressed="false" aria-label="تغییر ترتیب نمایش اپیزودها">
@@ -934,7 +1007,6 @@ body.search-open #page-content{
       <ol class="episode-list" id="episodeList">
         <li>
           <a class="episode-item" href="/episodes/episode-158.html" aria-label="اپیزود ۱۵۸: Bio-Restorative Concept in Implant Dentistry :part3">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۵۸</span>
               <div class="ep-body">
@@ -959,7 +1031,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-157.html" aria-label="اپیزود ۱۵۷: Bio-Restorative Concept in Implant Dentistry :part2">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۵۷</span>
               <div class="ep-body">
@@ -984,7 +1055,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-156.html" aria-label="اپیزود ۱۵۶: Bio-Restorative Concept in Implant Dentistry :part1">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۵۶</span>
               <div class="ep-body">
@@ -1009,7 +1079,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-155.html" aria-label="اپیزود ۱۵۵: Vertical Dimension of Occlusion: Myths &amp; Evidence (Part 2)">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۵۵</span>
               <div class="ep-body">
@@ -1034,7 +1103,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-154.html" aria-label="اپیزود ۱۵۴: Vertical Dimension of Occlusion: Myths &amp; Evidence (Part 1)">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۵۴</span>
               <div class="ep-body">
@@ -1059,7 +1127,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-153.html" aria-label="اپیزود ۱۵۳: The Decision to Extract or Preserve :part3">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۵۳</span>
               <div class="ep-body">
@@ -1084,7 +1151,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-152.html" aria-label="اپیزود ۱۵۲: The Decision to Extract or Preserve :part2">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۵۲</span>
               <div class="ep-body">
@@ -1109,7 +1175,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-151.html" aria-label="اپیزود ۱۵۱: The Decision to Extract or Preserve :part1">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۵۱</span>
               <div class="ep-body">
@@ -1134,7 +1199,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-150-2.html" aria-label="اپیزود ۱۵۰.۲: (Dentopedia)- Saving Compromised Teeth or Implanting? An Open Debate">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۵۰.۲</span>
               <div class="ep-body">
@@ -1159,7 +1223,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-150-1.html" aria-label="اپیزود ۱۵۰.۱: (dentopedia)- The Virtual Patient: Redefining Reality in Digital Dentistry">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۵۰.۱</span>
               <div class="ep-body">
@@ -1184,7 +1247,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-150.html" aria-label="اپیزود ۱۵۰: Immediate Implants in the Esthetic Zone — Inside the ITI 2023 Consensus">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۵۰</span>
               <div class="ep-body">
@@ -1209,7 +1271,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-149-2.html" aria-label="اپیزود ۱۴۹.۲: (Dentopedia)- A Deep Dive into Digital Dentistry">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۴۹.۲</span>
               <div class="ep-body">
@@ -1234,7 +1295,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-149-1.html" aria-label="اپیزود ۱۴۹.۱: (Slidecast)- AI Basics for Dentists">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۴۹.۱</span>
               <div class="ep-body">
@@ -1259,7 +1319,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-149.html" aria-label="اپیزود ۱۴۹: Resin cement selection for different types of fixed partial coverage restorations: A narrative systematic review :part2">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۴۹</span>
               <div class="ep-body">
@@ -1284,7 +1343,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-148-2.html" aria-label="اپیزود ۱۴۸.۲: (Dentopedia)- Shahabian Concept in Implant Crown Or Smart Vent Crown">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۴۸.۲</span>
               <div class="ep-body">
@@ -1309,7 +1367,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-148-1.html" aria-label="اپیزود ۱۴۸.۱: (Dentopedia)- Beyond Biomechanics: The Biological Turn in Implant Dentistry">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۴۸.۱</span>
               <div class="ep-body">
@@ -1334,7 +1391,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-148.html" aria-label="اپیزود ۱۴۸: Resin cement selection for different types of fixed partial coverage restorations: A narrative systematic review :part1">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۴۸</span>
               <div class="ep-body">
@@ -1359,7 +1415,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-147-9.html" aria-label="اپیزود ۱۴۷.۹: (Dentopedia)-  Subperiosteal Implants in Modern Prosthodontics">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۴۷.۹</span>
               <div class="ep-body">
@@ -1384,7 +1439,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-147-8.html" aria-label="اپیزود ۱۴۷.۸: (Dentopedia)- Zygomatic Implants Demystified: ZAGA Classification and Prosthetic Insights">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۴۷.۸</span>
               <div class="ep-body">
@@ -1409,7 +1463,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-147-7.html" aria-label="اپیزود ۱۴۷.۷: (Dentopedia)- Posts in Endodontically Treated Anterior Teeth: Evidence and Decision Algorithm (2015–2025)">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۴۷.۷</span>
               <div class="ep-body">
@@ -1434,7 +1487,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-147-6.html" aria-label="اپیزود ۱۴۷.۶: (Dentopedia)- All about Overdentures">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۴۷.۶</span>
               <div class="ep-body">
@@ -1459,7 +1511,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-147-5.html" aria-label="اپیزود ۱۴۷.۵: (Dentopedia)- Implant - Tooth Splinting">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۴۷.۵</span>
               <div class="ep-body">
@@ -1484,7 +1535,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-147-4.html" aria-label="اپیزود ۱۴۷.۴: (SlideCast)- The Chameleon Effect in Dental Composites: Mechanisms, Advantages, Limitations, and Clinical Implications">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۴۷.۴</span>
               <div class="ep-body">
@@ -1509,7 +1559,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-147-3.html" aria-label="اپیزود ۱۴۷.۳: (Dentopedia)- Critical Appraisal of Stela Automix: A Review of Independent Studies on its Clinical Performance and Material Properties">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۴۷.۳</span>
               <div class="ep-body">
@@ -1534,7 +1583,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-147-2.html" aria-label="اپیزود ۱۴۷.۲: (In-Sight)- History of Treated Periodontitis and Smoking as Risks for Implant Therapy">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۴۷.۲</span>
               <div class="ep-body">
@@ -1559,7 +1607,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-147-1.html" aria-label="اپیزود ۱۴۷.۱: (Dentopedia)- BPS system in complete denture">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۴۷.۱</span>
               <div class="ep-body">
@@ -1584,7 +1631,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-147.html" aria-label="اپیزود ۱۴۷: Best Material for Supra gingival part of implant restorations">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۴۷</span>
               <div class="ep-body">
@@ -1609,7 +1655,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-146.html" aria-label="اپیزود ۱۴۶: Zirconia without Zirconia implant restorations">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۴۶</span>
               <div class="ep-body">
@@ -1634,7 +1679,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-145.html" aria-label="اپیزود ۱۴۵: The Story of TMD :From Dawson to Okeson Part4">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۴۵</span>
               <div class="ep-body">
@@ -1659,7 +1703,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-144-2.html" aria-label="اپیزود ۱۴۴.۲: (Dentopedia)- Why Photogrammetry Changes the Game in Full-Arch Scanning">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۴۴.۲</span>
               <div class="ep-body">
@@ -1684,7 +1727,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-144-1.html" aria-label="اپیزود ۱۴۴.۱: (Dentopedia)- All On Four Concept">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۴۴.۱</span>
               <div class="ep-body">
@@ -1709,7 +1751,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-144.html" aria-label="اپیزود ۱۴۴: The Story of TMD :From Dawson to Okeson Part3">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۴۴</span>
               <div class="ep-body">
@@ -1734,7 +1775,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-143-1.html" aria-label="اپیزود ۱۴۳.۱: (Dentopedia)- Building your dental practice brand">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۴۳.۱</span>
               <div class="ep-body">
@@ -1759,7 +1799,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-143.html" aria-label="اپیزود ۱۴۳: The Story of TMD :From Dawson to Okeson Part2">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۴۳</span>
               <div class="ep-body">
@@ -1784,7 +1823,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-142.html" aria-label="اپیزود ۱۴۲: The Story of TMD :From Dawson to Okeson  Part1">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۴۲</span>
               <div class="ep-body">
@@ -1809,7 +1847,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-141.html" aria-label="اپیزود ۱۴۱: Prosthetic Materials in Implant Crown :part3">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۴۱</span>
               <div class="ep-body">
@@ -1834,7 +1871,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-140.html" aria-label="اپیزود ۱۴۰: Prosthetic Materials in Implant Crown :part2">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۴۰</span>
               <div class="ep-body">
@@ -1859,7 +1895,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-139.html" aria-label="اپیزود ۱۳۹: Prosthetic Materials in Implant Crown :part1">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۳۹</span>
               <div class="ep-body">
@@ -1884,7 +1919,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-138.html" aria-label="اپیزود ۱۳۸: Posterior Indirect Adhesive Restoration: Clinical Protocol :part2">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۳۸</span>
               <div class="ep-body">
@@ -1908,7 +1942,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-137.html" aria-label="اپیزود ۱۳۷: Posterior Indirect Adhesive Restoration: Clinical Protocol :part1">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۳۷</span>
               <div class="ep-body">
@@ -1933,7 +1966,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-136.html" aria-label="اپیزود ۱۳۶: Surface treatment of ceramic restorations before bonding">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۳۶</span>
               <div class="ep-body">
@@ -1958,7 +1990,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-135.html" aria-label="اپیزود ۱۳۵: Clinical guidelines for treating caries evidence based part2">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۳۵</span>
               <div class="ep-body">
@@ -1983,7 +2014,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-134.html" aria-label="اپیزود ۱۳۴: Clinical guidelines for treating caries evidence based part1">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۳۴</span>
               <div class="ep-body">
@@ -2008,7 +2038,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-133.html" aria-label="اپیزود ۱۳۳: Enhancing scanning accuracy of digital implant scans">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۳۳</span>
               <div class="ep-body">
@@ -2033,7 +2062,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-132.html" aria-label="اپیزود ۱۳۲: Impact of lateral occlusion scheme :part2">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۳۲</span>
               <div class="ep-body">
@@ -2058,7 +2086,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-131.html" aria-label="اپیزود ۱۳۱: Impact of lateral occlusion scheme  : part1">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۳۱</span>
               <div class="ep-body">
@@ -2083,7 +2110,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-130-1.html" aria-label="اپیزود ۱۳۰.۱: (In-Sight)- Analysis of risk factors related to early implant failure: A retrospective study">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۳۰.۱</span>
               <div class="ep-body">
@@ -2108,7 +2134,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-130.html" aria-label="اپیزود ۱۳۰: Influence of the abutment emergence profile on implant bone stability">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۳۰</span>
               <div class="ep-body">
@@ -2133,7 +2158,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-129.html" aria-label="اپیزود ۱۲۹: A comprehensive guide for fiber posts :part2">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۲۹</span>
               <div class="ep-body">
@@ -2158,7 +2182,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-128-2.html" aria-label="اپیزود ۱۲۸.۲: (In-Sight)- Effect of preparation design on fracture strength of compromised molar  restored with direct composite resin restoration">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۲۸.۲</span>
               <div class="ep-body">
@@ -2183,7 +2206,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-128-1.html" aria-label="اپیزود ۱۲۸.۱: (In-Sight)- trueness and precision of single tooth scans">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۲۸.۱</span>
               <div class="ep-body">
@@ -2208,7 +2230,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-128.html" aria-label="اپیزود ۱۲۸: A comprehensive guide for fiber posts :part1">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۲۸</span>
               <div class="ep-body">
@@ -2233,7 +2254,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-127.html" aria-label="اپیزود ۱۲۷: Noncarious cervical lesioans(NCCL’s): part3">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۲۷</span>
               <div class="ep-body">
@@ -2257,7 +2277,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-126-1.html" aria-label="اپیزود ۱۲۶.۱: (In-Sight)- Survival time analysis of remaining teeth following replacement of unilateral free-end missing teeth: A comparison between fixed implant-supported prostheses and removable partial dentures">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۲۶.۱</span>
               <div class="ep-body">
@@ -2282,7 +2301,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-126.html" aria-label="اپیزود ۱۲۶: Noncarious cervical lesions(NCCL’s): part2">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۲۶</span>
               <div class="ep-body">
@@ -2307,7 +2325,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-125-3.html" aria-label="اپیزود ۱۲۵.۳: (In-Sight)- Comparative Evaluation of the Effect of Different Post and Core Materials on Stress Distribution in Radicular Dentin by Three-Dimensional Finite Element Analysis">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۲۵.۳</span>
               <div class="ep-body">
@@ -2332,7 +2349,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-125-2.html" aria-label="اپیزود ۱۲۵.۲: (In-Sight)- Impact of immediate interim restoration on peri-implant tissues around immediately placed single dental implants in the esthetic region: A systematic review and meta-analysis">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۲۵.۲</span>
               <div class="ep-body">
@@ -2357,7 +2373,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-125-1.html" aria-label="اپیزود ۱۲۵.۱: (In-Sight)- Monolithic zirconia as a valid alternative to metal-ceramic for implant-supported single crowns in the posterior region: A systematic review and meta-analysis of randomized controlled trials">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۲۵.۱</span>
               <div class="ep-body">
@@ -2382,7 +2397,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-125.html" aria-label="اپیزود ۱۲۵: Noncarious cervical lesions(NCCL’s): part1">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۲۵</span>
               <div class="ep-body">
@@ -2407,7 +2421,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-124-1.html" aria-label="اپیزود ۱۲۴.۱: (In-Sight)- Laser-assisted debonding of ceramic veneers: A systematic review and meta-analysis">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۲۴.۱</span>
               <div class="ep-body">
@@ -2432,7 +2445,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-124.html" aria-label="اپیزود ۱۲۴: Clinical guidelines for posterior restorations part4">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۲۴</span>
               <div class="ep-body">
@@ -2457,7 +2469,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-123-6.html" aria-label="اپیزود ۱۲۳.۶: (In-Sight)- Risk factors associated with screw loosening in CAD-CAM custom abutments">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۲۳.۶</span>
               <div class="ep-body">
@@ -2482,7 +2493,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-123-5.html" aria-label="اپیزود ۱۲۳.۵: (In-Sight)-Sleeping Vs loaded implant">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۲۳.۵</span>
               <div class="ep-body">
@@ -2507,7 +2517,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-123-4.html" aria-label="اپیزود ۱۲۳.۴: (In-Sight)-Evaluating the clinical behavior of veneered zirconia in comparison with monolithic zirconia complete arch implant-supported prostheses">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۲۳.۴</span>
               <div class="ep-body">
@@ -2532,7 +2541,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-123-3.html" aria-label="اپیزود ۱۲۳.۳: (In-Sight)-Performance of direct and indirect onlay restorations for structurally compromised teeth">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۲۳.۳</span>
               <div class="ep-body">
@@ -2557,7 +2565,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-123-2.html" aria-label="اپیزود ۱۲۳.۲: (Dentopedia)-What is Fremitus?">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۲۳.۲</span>
               <div class="ep-body">
@@ -2582,7 +2589,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-123-1.html" aria-label="اپیزود ۱۲۳.۱: (In-Sight)- Marginal discrepancy of lithium disilicate crowns made with digital and conventional technologies">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۲۳.۱</span>
               <div class="ep-body">
@@ -2607,7 +2613,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-123.html" aria-label="اپیزود ۱۲۳: Clinical guidelines for posterior restorations part3">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۲۳</span>
               <div class="ep-body">
@@ -2632,7 +2637,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-122-6.html" aria-label="اپیزود ۱۲۲.۶: (In-Sight)- Cytotoxicity of Dental Cements on Soft Tissue Associated with Dental Implants">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۲۲.۶</span>
               <div class="ep-body">
@@ -2657,7 +2661,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-122-5.html" aria-label="اپیزود ۱۲۲.۵: (In-Sight)- A comparative study of the cutting efficiency of diamond rotary instruments with different grit sizes with a low-speed electric handpiece against zirconia specimens">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۲۲.۵</span>
               <div class="ep-body">
@@ -2682,7 +2685,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-122-4.html" aria-label="اپیزود ۱۲۲.۴: (Dentopedia)-Pain perception following computer-controlled versus conventional dental anesthesia">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۲۲.۴</span>
               <div class="ep-body">
@@ -2707,7 +2709,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-122-3.html" aria-label="اپیزود ۱۲۲.۳: (In-Sight)- Factors influencing success rate of ceramic veneers on endodontically treated anterior teeth: A systematic review">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۲۲.۳</span>
               <div class="ep-body">
@@ -2732,7 +2733,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-122-2.html" aria-label="اپیزود ۱۲۲.۲: (In-Sight)- Influence of intraoral scanning duration on data accuracy">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۲۲.۲</span>
               <div class="ep-body">
@@ -2757,7 +2757,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-122-1.html" aria-label="اپیزود ۱۲۲.۱: (In-Sight)- Incidence of peri-implant disease associated with cement- and screw-retained implant-supported prostheses: A systematic review">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۲۲.۱</span>
               <div class="ep-body">
@@ -2782,7 +2781,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-122.html" aria-label="اپیزود ۱۲۲: Clinical guidelines for posterior restorations part2">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۲۲</span>
               <div class="ep-body">
@@ -2807,7 +2805,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-121-1.html" aria-label="اپیزود ۱۲۱.۱: (Dentopedia)-Management of teeth interproximal contact">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۲۱.۱</span>
               <div class="ep-body">
@@ -2832,7 +2829,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-121.html" aria-label="اپیزود ۱۲۱: Clinical guidelines for posterior restorations part 1">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۲۱</span>
               <div class="ep-body">
@@ -2857,7 +2853,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-120-1.html" aria-label="اپیزود ۱۲۰.۱: (Dentopedia)-Incisal edge consideration in esthetic treatment">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۲۰.۱</span>
               <div class="ep-body">
@@ -2882,7 +2877,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-120.html" aria-label="اپیزود ۱۲۰: Global diagnosis part5">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۲۰</span>
               <div class="ep-body">
@@ -2907,7 +2901,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-119-1.html" aria-label="اپیزود ۱۱۹.۱: (Dentopedia)-Bridge or Implant">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۱۹.۱</span>
               <div class="ep-body">
@@ -2932,7 +2925,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-119.html" aria-label="اپیزود ۱۱۹: Global diagnosis part4">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۱۹</span>
               <div class="ep-body">
@@ -2957,7 +2949,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-118-1.html" aria-label="اپیزود ۱۱۸.۱: (Dentopedia)-Flangeless Denture">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۱۸.۱</span>
               <div class="ep-body">
@@ -2982,7 +2973,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-118.html" aria-label="اپیزود ۱۱۸: Global Diagnosis  part 3">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۱۸</span>
               <div class="ep-body">
@@ -3007,7 +2997,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-117.html" aria-label="اپیزود ۱۱۷: Global Diagnosis part2">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۱۷</span>
               <div class="ep-body">
@@ -3032,7 +3021,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-116.html" aria-label="اپیزود ۱۱۶: Global Diagnosis part 1">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۱۶</span>
               <div class="ep-body">
@@ -3057,7 +3045,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-115.html" aria-label="اپیزود ۱۱۵: Zero Bone Loss Concept part4">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۱۵</span>
               <div class="ep-body">
@@ -3082,7 +3069,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-114.html" aria-label="اپیزود ۱۱۴: Guidelines for complete crown tooth preparation part2">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۱۴</span>
               <div class="ep-body">
@@ -3107,7 +3093,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-113.html" aria-label="اپیزود ۱۱۳: Guidelines for complete crown tooth preparation part1">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۱۳</span>
               <div class="ep-body">
@@ -3132,7 +3117,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-112.html" aria-label="اپیزود ۱۱۲: Zero Bone Loss Concept part3">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۱۲</span>
               <div class="ep-body">
@@ -3157,7 +3141,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-111-1.html" aria-label="اپیزود ۱۱۱.۱: (Dentopedia)-Fissure sealant">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۱۱.۱</span>
               <div class="ep-body">
@@ -3182,7 +3165,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-111.html" aria-label="اپیزود ۱۱۱: Zero Bone Loss Concept part2">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۱۱</span>
               <div class="ep-body">
@@ -3207,7 +3189,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-110-1.html" aria-label="اپیزود ۱۱۰.۱: (Dentopedia)-All about dental portable x-ray">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۱۰.۱</span>
               <div class="ep-body">
@@ -3232,7 +3213,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-110.html" aria-label="اپیزود ۱۱۰: Zero Bone Loss Concept part1">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۱۰</span>
               <div class="ep-body">
@@ -3257,7 +3237,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-109-2.html" aria-label="اپیزود ۱۰۹.۲: (Dentopedia)-Interview :AI,Deep Learning">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۰۹.۲</span>
               <div class="ep-body">
@@ -3282,7 +3261,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-109-1.html" aria-label="اپیزود ۱۰۹.۱: (Dentopedia)-Loupes">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۰۹.۱</span>
               <div class="ep-body">
@@ -3307,7 +3285,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-109.html" aria-label="اپیزود ۱۰۹: AI,Machine learning and Deep learning in dentistry">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۰۹</span>
               <div class="ep-body">
@@ -3332,7 +3309,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-108.html" aria-label="اپیزود ۱۰۸: Multi unit abutments">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۰۸</span>
               <div class="ep-body">
@@ -3357,7 +3333,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-107-1.html" aria-label="اپیزود ۱۰۷.۱: (Dentopedia)-What does Color Coding of dental Hand pieces mean">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۰۷.۱</span>
               <div class="ep-body">
@@ -3382,7 +3357,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-107.html" aria-label="اپیزود ۱۰۷: Gradient Multilayered Zirconia">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۰۷</span>
               <div class="ep-body">
@@ -3406,7 +3380,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-106-2.html" aria-label="اپیزود ۱۰۶.۲: (Dentopedia)-Dental scaners file formats : STL. OBJ. PLY.">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۰۶.۲</span>
               <div class="ep-body">
@@ -3431,7 +3404,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-106-1.html" aria-label="اپیزود ۱۰۶.۱: (Dentopedia)-Suck-back action turbine">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۰۶.۱</span>
               <div class="ep-body">
@@ -3456,7 +3428,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-106.html" aria-label="اپیزود ۱۰۶: Titanium Base Abutments part3">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۰۶</span>
               <div class="ep-body">
@@ -3481,7 +3452,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-105.html" aria-label="اپیزود ۱۰۵: Titanium Base Abutment part2">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۰۵</span>
               <div class="ep-body">
@@ -3506,7 +3476,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-104.html" aria-label="اپیزود ۱۰۴: Titanium Base Abutments part1">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۰۴</span>
               <div class="ep-body">
@@ -3531,7 +3500,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-103.html" aria-label="اپیزود ۱۰۳: implant-abutment selection part 2">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۰۳</span>
               <div class="ep-body">
@@ -3556,7 +3524,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-102.html" aria-label="اپیزود ۱۰۲: Implant-abutment selection part1">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۰۲</span>
               <div class="ep-body">
@@ -3581,7 +3548,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-101.html" aria-label="اپیزود ۱۰۱: effectiveness of pretreatment on bond strength to root dentin">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۰۱</span>
               <div class="ep-body">
@@ -3606,7 +3572,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-99.html" aria-label="اپیزود ۹۹: Resin infiltration treatment for white lesions">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۹۹</span>
               <div class="ep-body">
@@ -3631,7 +3596,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-98.html" aria-label="اپیزود ۹۸: The use of PEEK in digital  prosthodontics :part3">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۹۸</span>
               <div class="ep-body">
@@ -3655,7 +3619,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-97.html" aria-label="اپیزود ۹۷: The use of PEEK in digital prosthodontics :part2">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۹۷</span>
               <div class="ep-body">
@@ -3679,7 +3642,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-96.html" aria-label="اپیزود ۹۶: The use of PEEK in digital prosthodontics :part1">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۹۶</span>
               <div class="ep-body">
@@ -3704,7 +3666,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-95.html" aria-label="اپیزود ۹۵: BOPT:For Sustainable Periodontal Health and Optimal Esthetics">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۹۵</span>
               <div class="ep-body">
@@ -3729,7 +3690,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-94.html" aria-label="اپیزود ۹۴: bk :Biomemetic Restorative Dentistry  :part5">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۹۴</span>
               <div class="ep-body">
@@ -3753,7 +3713,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-93.html" aria-label="اپیزود ۹۳: bk :Biomimetic Restorative  Dentistry :part4">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۹۳</span>
               <div class="ep-body">
@@ -3777,7 +3736,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-92.html" aria-label="اپیزود ۹۲: bk: Biomimetic Restorative Dentistry part3">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۹۲</span>
               <div class="ep-body">
@@ -3800,7 +3758,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-91.html" aria-label="اپیزود ۹۱: bk: Biomimetic Restorative Dentistry :part2">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۹۱</span>
               <div class="ep-body">
@@ -3824,7 +3781,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-90.html" aria-label="اپیزود ۹۰: bk: Biomimetic Restorative Dentistry : part1">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۹۰</span>
               <div class="ep-body">
@@ -3848,7 +3804,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-89.html" aria-label="اپیزود ۸۹: Revolution of Current Dental Zirconia  part3">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۸۹</span>
               <div class="ep-body">
@@ -3872,7 +3827,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-88.html" aria-label="اپیزود ۸۸: revolution of current dental zirconia part2">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۸۸</span>
               <div class="ep-body">
@@ -3896,7 +3850,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-87.html" aria-label="اپیزود ۸۷: revolution of current dental zirconia part1">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۸۷</span>
               <div class="ep-body">
@@ -3919,7 +3872,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-86.html" aria-label="اپیزود ۸۶: Differential Diagnosis of Temporomandibular Disorders part2">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۸۶</span>
               <div class="ep-body">
@@ -3944,7 +3896,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-85.html" aria-label="اپیزود ۸۵: Differential Diagnosis of Temporomandibular Disorders part1">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۸۵</span>
               <div class="ep-body">
@@ -3969,7 +3920,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-84.html" aria-label="اپیزود ۸۴: Abutment Screw">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۸۴</span>
               <div class="ep-body">
@@ -3993,7 +3943,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-83.html" aria-label="اپیزود ۸۳: Platform switch implants- an overview part 2">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۸۳</span>
               <div class="ep-body">
@@ -4018,7 +3967,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-82.html" aria-label="اپیزود ۸۲: Platform Switch implants -an overview part1">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۸۲</span>
               <div class="ep-body">
@@ -4042,7 +3990,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-81.html" aria-label="اپیزود ۸۱: know your implant connection part 2">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۸۱</span>
               <div class="ep-body">
@@ -4067,7 +4014,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-80.html" aria-label="اپیزود ۸۰: Know your implant connections">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۸۰</span>
               <div class="ep-body">
@@ -4092,7 +4038,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-79.html" aria-label="اپیزود ۷۹: Fiber Posts">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۷۹</span>
               <div class="ep-body">
@@ -4116,7 +4061,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-78.html" aria-label="اپیزود ۷۸: Adhesive restoration in the posterior area with subgingival cervical margins part 2">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۷۸</span>
               <div class="ep-body">
@@ -4140,7 +4084,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-77.html" aria-label="اپیزود ۷۷: Adhesive restoration in the posterior area with subgingival cervical margins part1">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۷۷</span>
               <div class="ep-body">
@@ -4164,7 +4107,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-76.html" aria-label="اپیزود ۷۶: Deep margin elevation versus crown lengthening part 2">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۷۶</span>
               <div class="ep-body">
@@ -4189,7 +4131,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-75.html" aria-label="اپیزود ۷۵: Deep margin elevation versus crown lengthening part 1">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۷۵</span>
               <div class="ep-body">
@@ -4214,7 +4155,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-74.html" aria-label="اپیزود ۷۴: Decoupling with time part 3">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۷۴</span>
               <div class="ep-body">
@@ -4238,7 +4178,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-73.html" aria-label="اپیزود ۷۳: Decoupling with time part 2">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۷۳</span>
               <div class="ep-body">
@@ -4262,7 +4201,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-72.html" aria-label="اپیزود ۷۲: Decoupling with time part1">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۷۲</span>
               <div class="ep-body">
@@ -4286,7 +4224,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-71.html" aria-label="اپیزود ۷۱: Adhesion to metal">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۷۱</span>
               <div class="ep-body">
@@ -4310,7 +4247,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-70.html" aria-label="اپیزود ۷۰: Office bleaching and Home bleaching">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۷۰</span>
               <div class="ep-body">
@@ -4335,7 +4271,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-69.html" aria-label="اپیزود ۶۹: All about E-max ingots">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۶۹</span>
               <div class="ep-body">
@@ -4359,7 +4294,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-68.html" aria-label="اپیزود ۶۸: Shade matching in esthetic dentistry">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۶۸</span>
               <div class="ep-body">
@@ -4384,7 +4318,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-67.html" aria-label="اپیزود ۶۷: A systematic approach to deep caries removal end points part 3">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۶۷</span>
               <div class="ep-body">
@@ -4408,7 +4341,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-66.html" aria-label="اپیزود ۶۶: A systematic approach to deep caries removal end points part 2">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۶۶</span>
               <div class="ep-body">
@@ -4432,7 +4364,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-65.html" aria-label="اپیزود ۶۵: A systematic approach to deep caries removal end points part 1">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۶۵</span>
               <div class="ep-body">
@@ -4456,7 +4387,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-64.html" aria-label="اپیزود ۶۴: Facial development,continuous tooth eruption and mesial drift in implant placment part 3">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۶۴</span>
               <div class="ep-body">
@@ -4481,7 +4411,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-63.html" aria-label="اپیزود ۶۳: Facial development,continuous tooth eruption and implant placement part 2">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۶۳</span>
               <div class="ep-body">
@@ -4506,7 +4435,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-62.html" aria-label="اپیزود ۶۲: Facial development,continuous tooth eruption and implant placement part 1">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۶۲</span>
               <div class="ep-body">
@@ -4530,7 +4458,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-61.html" aria-label="اپیزود ۶۱: Internal bleaching">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۶۱</span>
               <div class="ep-body">
@@ -4555,7 +4482,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-60.html" aria-label="اپیزود ۶۰: Occlusion in implant restorations">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۶۰</span>
               <div class="ep-body">
@@ -4579,7 +4505,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-59.html" aria-label="اپیزود ۵۹: Risk indicators for implant marginal bone resorption">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۵۹</span>
               <div class="ep-body">
@@ -4604,7 +4529,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-58.html" aria-label="اپیزود ۵۸: Nonretentive bonded ceramic partial crowns part 4">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۵۸</span>
               <div class="ep-body">
@@ -4628,7 +4552,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-57.html" aria-label="اپیزود ۵۷: Nonretentive bonded ceramic partial crowns part 3">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۵۷</span>
               <div class="ep-body">
@@ -4653,7 +4576,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-56.html" aria-label="اپیزود ۵۶: Non retentive ceramic partial crowns part2">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۵۶</span>
               <div class="ep-body">
@@ -4677,7 +4599,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-55.html" aria-label="اپیزود ۵۵: Nonretentive bonded ceramic partial crowns part1">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۵۵</span>
               <div class="ep-body">
@@ -4702,7 +4623,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-54.html" aria-label="اپیزود ۵۴: the protocols of biomimetic restorative dentistry part 2">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۵۴</span>
               <div class="ep-body">
@@ -4725,7 +4645,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-53.html" aria-label="اپیزود ۵۳: The protocols of Biomimetic restorative dentistry">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۵۳</span>
               <div class="ep-body">
@@ -4748,7 +4667,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-52.html" aria-label="اپیزود ۵۲: A learning pathway to overdentures part 3">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۵۲</span>
               <div class="ep-body">
@@ -4773,7 +4691,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-51.html" aria-label="اپیزود ۵۱: A learning pathway to overdenture attachment selection part2">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۵۱</span>
               <div class="ep-body">
@@ -4797,7 +4714,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-50.html" aria-label="اپیزود ۵۰: A learning pathway to overdenture attachment selection part 1">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۵۰</span>
               <div class="ep-body">
@@ -4821,7 +4737,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-49.html" aria-label="اپیزود ۴۹: Rethinking ferrule part3">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۴۹</span>
               <div class="ep-body">
@@ -4845,7 +4760,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-48.html" aria-label="اپیزود ۴۸: Rethinking ferrule part 2">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۴۸</span>
               <div class="ep-body">
@@ -4869,7 +4783,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-47.html" aria-label="اپیزود ۴۷: Rethinking ferrule">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۴۷</span>
               <div class="ep-body">
@@ -4893,7 +4806,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-46.html" aria-label="اپیزود ۴۶: The facial flow concept">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۴۶</span>
               <div class="ep-body">
@@ -4918,7 +4830,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-45.html" aria-label="اپیزود ۴۵: Immediate versus early loading of single dental implants">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۴۵</span>
               <div class="ep-body">
@@ -4943,7 +4854,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-44.html" aria-label="اپیزود ۴۴: Effect of curing and silanizing on composite repair bond strength">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۴۴</span>
               <div class="ep-body">
@@ -4967,7 +4877,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-43.html" aria-label="اپیزود ۴۳: Evaluation of different surface treatments on fiber post cemented with a self-adhesive system">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۴۳</span>
               <div class="ep-body">
@@ -4992,7 +4901,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-42.html" aria-label="اپیزود ۴۲: Effect of different ﬁberpost surface treatments on microtensile bond strength to composite resin">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۴۲</span>
               <div class="ep-body">
@@ -5016,7 +4924,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-41.html" aria-label="اپیزود ۴۱: Endocrown a systematic review">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۴۱</span>
               <div class="ep-body">
@@ -5039,7 +4946,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-40.html" aria-label="اپیزود ۴۰: The Endocrown: A Different type of All-Ceramic Reconstruction for molars">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۴۰</span>
               <div class="ep-body">
@@ -5062,7 +4968,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-39.html" aria-label="اپیزود ۳۹: Clinical evaluation of interdental papilla reconstruction with injectable hyaluronic acid gel">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۳۹</span>
               <div class="ep-body">
@@ -5087,7 +4992,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-38.html" aria-label="اپیزود ۳۸: Tooth preparation for ceramic veneers">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۳۸</span>
               <div class="ep-body">
@@ -5112,7 +5016,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-37.html" aria-label="اپیزود ۳۷: Veneer Preparations: When to Break Interproximal Contact">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۳۷</span>
               <div class="ep-body">
@@ -5137,7 +5040,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-36.html" aria-label="اپیزود ۳۶: Bonding to root dentin">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۳۶</span>
               <div class="ep-body">
@@ -5161,7 +5063,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-35.html" aria-label="اپیزود ۳۵: The Dahl Concept :past,present and future(part 2)">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۳۵</span>
               <div class="ep-body">
@@ -5186,7 +5087,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-34.html" aria-label="اپیزود ۳۴: The Dahl Concept:past,present and future">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۳۴</span>
               <div class="ep-body">
@@ -5211,7 +5111,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-33.html" aria-label="اپیزود ۳۳: All about Snap-On Smile">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۳۳</span>
               <div class="ep-body">
@@ -5235,7 +5134,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-32.html" aria-label="اپیزود ۳۲: Snap on smile review">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۳۲</span>
               <div class="ep-body">
@@ -5259,7 +5157,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-31.html" aria-label="اپیزود ۳۱: Reliability of retrievable cemented implant-supported prostheses">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۳۱</span>
               <div class="ep-body">
@@ -5283,7 +5180,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-30.html" aria-label="اپیزود ۳۰: Contemporary dental ceramics classification part2">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۳۰</span>
               <div class="ep-body">
@@ -5306,7 +5202,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-29.html" aria-label="اپیزود ۲۹: Contemporary dental ceramic materials">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۲۹</span>
               <div class="ep-body">
@@ -5329,7 +5224,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-28.html" aria-label="اپیزود ۲۸: Smile analysis">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۲۸</span>
               <div class="ep-body">
@@ -5353,7 +5247,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-27.html" aria-label="اپیزود ۲۷: Effect of the attachment system on the biomechanical and clinical performance">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۲۷</span>
               <div class="ep-body">
@@ -5377,7 +5270,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-26.html" aria-label="اپیزود ۲۶: Effect of timing of restoration on implant Marginal Bone Less">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۲۶</span>
               <div class="ep-body">
@@ -5402,7 +5294,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-25.html" aria-label="اپیزود ۲۵: Short implant vs sinus lift +normal implant">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۲۵</span>
               <div class="ep-body">
@@ -5426,7 +5317,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-24.html" aria-label="اپیزود ۲۴: Influence of crown/implant ratio on Margina Bone Loss/A systematic Review">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۲۴</span>
               <div class="ep-body">
@@ -5450,7 +5340,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-23.html" aria-label="اپیزود ۲۳: Occlusal overload and bone/implant loss">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۲۳</span>
               <div class="ep-body">
@@ -5475,7 +5364,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-22.html" aria-label="اپیزود ۲۲: Three serious drug interaction that every dentist should know about">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۲۲</span>
               <div class="ep-body">
@@ -5499,7 +5387,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-21.html" aria-label="اپیزود ۲۱: Two step impression part 2">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۲۱</span>
               <div class="ep-body">
@@ -5523,7 +5410,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-20.html" aria-label="اپیزود ۲۰: Tips and tricks of impression making">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۲۰</span>
               <div class="ep-body">
@@ -5546,7 +5432,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-19.html" aria-label="اپیزود ۱۹: Effect of ceramic material and resin cement systems on the color stability of laminate veneers">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۹</span>
               <div class="ep-body">
@@ -5569,7 +5454,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-18.html" aria-label="اپیزود ۱۸: New high translucent cubic zircona part 2">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۸</span>
               <div class="ep-body">
@@ -5593,7 +5477,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-17.html" aria-label="اپیزود ۱۷: New high translucent cubic-phase-containing zirconia">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۷</span>
               <div class="ep-body">
@@ -5617,7 +5500,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-16.html" aria-label="اپیزود ۱۶: Does adhesive resin contribute to bond durability?">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۶</span>
               <div class="ep-body">
@@ -5642,7 +5524,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-15.html" aria-label="اپیزود ۱۵: Longevity of ceramic onlays:a systematic review">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۵</span>
               <div class="ep-body">
@@ -5665,7 +5546,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-14.html" aria-label="اپیزود ۱۴: VD increasing">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۴</span>
               <div class="ep-body">
@@ -5688,7 +5568,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-13.html" aria-label="اپیزود ۱۳: Esthetic width and umbrella effect">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۳</span>
               <div class="ep-body">
@@ -5711,7 +5590,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-12.html" aria-label="اپیزود ۱۲: Ceramic-based restorations cleaning protocol">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۲</span>
               <div class="ep-body">
@@ -5736,7 +5614,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-11.html" aria-label="اپیزود ۱۱: Ceramic surface treatment 3(zirconia)">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۱</span>
               <div class="ep-body">
@@ -5760,7 +5637,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-10.html" aria-label="اپیزود ۱۰: Ceramic surface treatment 2">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱۰</span>
               <div class="ep-body">
@@ -5785,7 +5661,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-9.html" aria-label="اپیزود ۹: Ceramics surface treatment1">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۹</span>
               <div class="ep-body">
@@ -5810,7 +5685,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-8.html" aria-label="اپیزود ۸: Ceramics">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۸</span>
               <div class="ep-body">
@@ -5834,7 +5708,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-7.html" aria-label="اپیزود ۷: Deep margin elevation">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۷</span>
               <div class="ep-body">
@@ -5858,7 +5731,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-6.html" aria-label="اپیزود ۶: Immediate dentin sealing">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۶</span>
               <div class="ep-body">
@@ -5882,7 +5754,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-5.html" aria-label="اپیزود ۵: Universal bondings">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۵</span>
               <div class="ep-body">
@@ -5907,7 +5778,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-4.html" aria-label="اپیزود ۴: Bonding generations">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۴</span>
               <div class="ep-body">
@@ -5932,7 +5802,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-3.html" aria-label="اپیزود ۳: Cementation part 2">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۳</span>
               <div class="ep-body">
@@ -5955,7 +5824,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-2.html" aria-label="اپیزود ۲: Cementation part 1">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۲</span>
               <div class="ep-body">
@@ -5979,7 +5847,6 @@ body.search-open #page-content{
         </li>
         <li>
           <a class="episode-item" href="/episodes/episode-1.html" aria-label="اپیزود ۱: Simplified prosthodontics">
-            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">
             <div class="ep-content">
               <span class="ep-num">۱</span>
               <div class="ep-body">

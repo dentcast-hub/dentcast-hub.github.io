@@ -298,7 +298,6 @@ def render_episode_li(ep, brain_entry):
     return (
         '        <li>\n'
         '          <a class="episode-item" href="' + esc(href) + '" aria-label="' + esc(aria) + '">\n'
-        '            <img class="ep-logo" src="/logo-v2.png" alt="" width="44" height="44" loading="lazy" decoding="async">\n'
         '            <div class="ep-content">\n'
         '              <span class="ep-num">' + num + '</span>\n'
         '              <div class="ep-body">\n'
