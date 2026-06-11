@@ -3122,7 +3122,7 @@ a.dc-list-card--pillar {
         <div class="dc-home-hero-top">
           <img class="dc-home-hero-cover" src="/dentcast-cover.webp" alt="" width="84" height="84">
           <div class="dc-home-hero-info">
-            <span class="dc-home-hero-badge">🎙 قسمت ۱۵۸ · تازه‌ترین</span>
+            <span class="dc-home-hero-badge"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M3 14a9 9 0 0 1 18 0"/><path d="M5 14h3v7H5a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2z"/><path d="M19 14h-3v7h3a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2z"/></svg> قسمت ۱۵۸ · تازه‌ترین</span>
             <h2 class="dc-home-hero-title">Bio-Restorative Concept in Implant Dentistry — بخش سوم</h2>
           </div>
         </div>
@@ -3404,7 +3404,7 @@ a.dc-list-card--pillar {
       </div>
       </div>
 
-      <div class="dc-home-sec"><h2 class="dc-home-sec-label">تولید اختصاصی دنت‌کست</h2></div>
+      <div class="dc-home-sec"><h2 class="dc-home-sec-label"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="4.5" r="2.2"/><circle cx="4.5" cy="18.5" r="2.2"/><circle cx="19.5" cy="18.5" r="2.2"/><line x1="10.2" y1="6.2" x2="5.9" y2="16.5"/><line x1="13.8" y1="6.2" x2="18.1" y2="16.5"/><line x1="6.6" y1="18.5" x2="17.4" y2="18.5"/></svg> تولید اختصاصی دنت‌کست</h2></div>
 
       <div class="dc-list-card dc-list-card--insight" onclick="window.location.href='/insight/'">
         <div class="dc-list-card-main">
@@ -3434,7 +3434,7 @@ a.dc-list-card--pillar {
         </div>
       </div>
 
-      <div class="dc-home-sec"><h2 class="dc-home-sec-label">مرور منابع علمی</h2></div>
+      <div class="dc-home-sec"><h2 class="dc-home-sec-label"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M12 14a4 4 0 0 0 4-4V6a4 4 0 1 0-8 0v4a4 4 0 0 0 4 4z"/><path d="M19 10a7 7 0 0 1-14 0"/><path d="M12 17v4"/><path d="M8 21h8"/></svg> مرور منابع علمی</h2></div>
 
       <div class="dc-list-card" onclick="window.location.href='/notecast/'">
         <div class="dc-list-card-main">
@@ -4194,8 +4194,8 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
   };
   function detectCategory(url){
     if(/\/episodes\//.test(url)) return 'episodes';
-    if(/\/(?:notecast|litecast|photocast|dentai|dentcast-plus|sharehub)\//.test(url)) return 'studio';
-    if(/\/(?:insight|chairside|metanotes)\//.test(url)) return 'metabase';
+    if(/\/(?:notecast|litecast|photocast|dentai|sharehub)\//.test(url)) return 'studio';
+    if(/\/(?:insight|chairside|metanotes|dentcast-plus)\//.test(url)) return 'metabase';
     return null;
   }
   function render(items){
