@@ -2862,7 +2862,22 @@ a.dc-list-card--pillar {
 
 /* =====================================================
    BOTTOM NAV — clean active state (no neon, no glow)
+   + standard frosted-glass surface (replaces the navy
+   glass family) so labels keep full contrast in both
+   themes.
 ===================================================== */
+.dc-bottom-nav{
+  background:rgba(255,255,255,.85);
+  backdrop-filter:saturate(1.4) blur(14px);
+  -webkit-backdrop-filter:saturate(1.4) blur(14px);
+  border-top:1px solid var(--border2);
+  box-shadow:0 -2px 14px rgba(2,35,96,.06);
+}
+[data-theme="dark"] .dc-bottom-nav{
+  background:rgba(23,33,43,.85);
+  border-top-color:var(--border);
+  box-shadow:0 -2px 14px rgba(0,0,0,.35);
+}
 .dc-bottom-nav .dc-bn-item .dc-bn-ico,
 .dc-bottom-nav .dc-bn-item.active .dc-bn-ico{
   animation:none !important; filter:none !important; text-shadow:none !important;
@@ -3129,57 +3144,47 @@ a.dc-list-card--pillar {
         </div>
       </div>
 
-      <div class="dc-home-sec"><h2 class="dc-home-sec-label">تازه‌های دنت‌کست</h2><a class="dc-home-more" href="/episodes.html">همه ←</a></div>
-      <div class="dc-rail">
-        <a class="dc-rail-card" href="/insight/insight-46.html">
+      <div class="dc-home-sec"><h2 class="dc-home-sec-label">تازه‌های دنت‌کست</h2></div>
+      <div class="dc-rail" id="dcLatestRail">
+        <a class="dc-rail-card" data-cat="clinical" href="/insight/insight-46.html">
           <span class="dc-type-chip t-insight">اینسایت</span>
           <p class="dc-rail-title">وقتی کاسپ باکال در لبخند کوتاه می‌افتد: فضا را از آنتاگونیست بگیر</p>
-          <span class="dc-rail-meta">Insight ۴۶</span>
+          <span class="dc-rail-meta">Clinical Insight</span>
         </a>
-        <a class="dc-rail-card" href="/dentai/promptologist/prompt1-3.html">
-          <span class="dc-type-chip t-ai">پرامپتولوژیست</span>
-          <p class="dc-rail-title">وقتی اشتباه می‌کنند، یک جور اشتباه نمی‌کنند</p>
-          <span class="dc-rail-meta">هوش مصنوعی · بخش ۳</span>
-        </a>
-        <a class="dc-rail-card" href="/notecast/episode-35.html">
+        <a class="dc-rail-card" data-cat="notecast" href="/notecast/episode-35.html">
           <span class="dc-type-chip t-note">نوت‌کست</span>
           <p class="dc-rail-title">مدیریت سایش دندانی با کانسپت دال — بخش دوم</p>
-          <span class="dc-rail-meta">NoteCast ۳۵</span>
+          <span class="dc-rail-meta">NoteCast</span>
         </a>
-        <a class="dc-rail-card" href="/metanotes/meta-12.html">
+        <a class="dc-rail-card" data-cat="meta" href="/metanotes/meta-12.html">
           <span class="dc-type-chip t-meta">متانوت</span>
           <p class="dc-rail-title">یک نکته‌ی مهم در مدیریت کانتکت بین دندان‌های ۶ و ۷</p>
-          <span class="dc-rail-meta">MetaNote ۱۲</span>
+          <span class="dc-rail-meta">MetaNote</span>
         </a>
-        <a class="dc-rail-card" href="/chairside/chairside-18.html">
+        <a class="dc-rail-card" data-cat="chairside" href="/chairside/chairside-18.html">
           <span class="dc-type-chip t-chair">چیرساید</span>
           <p class="dc-rail-title">وقتی یک یافته‌ی مبهم، دو احتمال رقیب می‌سازد</p>
-          <span class="dc-rail-meta">Chairside ۱۸</span>
+          <span class="dc-rail-meta">Chairside</span>
         </a>
-        <a class="dc-rail-card" href="/insight/insight-45.html">
-          <span class="dc-type-chip t-insight">اینسایت</span>
-          <p class="dc-rail-title">وقتی علتِ درد روشن نیست: منطقِ درمان از طریقِ تفریق</p>
-          <span class="dc-rail-meta">Insight ۴۵</span>
-        </a>
-        <a class="dc-rail-card" href="/dentai/dentai-16.html">
+        <a class="dc-rail-card" data-cat="dentai" href="/dentai/dentai-16.html">
           <span class="dc-type-chip t-ai">DentAI</span>
           <p class="dc-rail-title">سلسله‌مراتب قابلیت باند (HOB)</p>
-          <span class="dc-rail-meta">DentAI ۱۶</span>
+          <span class="dc-rail-meta">DentAI</span>
         </a>
-        <a class="dc-rail-card" href="/sharehub/share-8.html">
-          <span class="dc-type-chip t-share">شیرهاب</span>
-          <p class="dc-rail-title">اصول علمی آماده‌سازی دندان برای لمینت‌های سرامیکی</p>
-          <span class="dc-rail-meta">ShareHub ۸</span>
-        </a>
-        <a class="dc-rail-card" href="/dentai/promptologist/prompt1-2.html">
+        <a class="dc-rail-card" data-cat="promptologist" href="/dentai/promptologist/prompt1-3.html">
           <span class="dc-type-chip t-ai">پرامپتولوژیست</span>
-          <p class="dc-rail-title">دو نژادِ متفاوت، دو منطقِ متفاوت</p>
-          <span class="dc-rail-meta">هوش مصنوعی · بخش ۲</span>
+          <p class="dc-rail-title">وقتی اشتباه می‌کنند، یک جور اشتباه نمی‌کنند</p>
+          <span class="dc-rail-meta">Promptologist</span>
         </a>
-        <a class="dc-rail-card" href="/dentcast-plus/video-6.html">
+        <a class="dc-rail-card" data-cat="sharehub" href="/sharehub/share-8.html">
+          <span class="dc-type-chip t-share">ShareHub</span>
+          <p class="dc-rail-title">اصول علمی آماده‌سازی دندان برای لمینت‌های سرامیکی</p>
+          <span class="dc-rail-meta">ShareHub</span>
+        </a>
+        <a class="dc-rail-card" data-cat="dentcast_plus" href="/dentcast-plus/video-6.html">
           <span class="dc-type-chip t-plus">ویدیو</span>
           <p class="dc-rail-title">تداخل کارگر در گروپ فانکشن</p>
-          <span class="dc-rail-meta">+DentCast ۶</span>
+          <span class="dc-rail-meta">DentCast+</span>
         </a>
       </div>
 
@@ -3213,13 +3218,13 @@ a.dc-list-card--pillar {
 
       <div class="dc-home-sec"><h2 class="dc-home-sec-label">یک نگاه سریع</h2></div>
       <div class="dc-duo">
-        <a class="dc-duo-card" href="/glossary/abutment.html">
-          <span class="dc-duo-kicker">📖 از دانشنامه</span>
+        <a class="dc-duo-card" id="dcQuickGloss" href="/glossary/abutment.html">
+          <span class="dc-duo-kicker">📖 واژه‌ای از دانشنامه</span>
           <p class="dc-duo-title">Abutment — اباتمنت</p>
           <span class="dc-duo-sub">واژه‌نامه‌ی تخصصی دنت‌کست</span>
         </a>
-        <a class="dc-duo-card" href="/dentai/dentai-16.html">
-          <span class="dc-duo-kicker">🤖 از سری DentAI</span>
+        <a class="dc-duo-card" id="dcQuickBrain" href="/dentai/dentai-16.html">
+          <span class="dc-duo-kicker">🎲 یک مطلب تصادفی</span>
           <p class="dc-duo-title">سلسله‌مراتب قابلیت باند (HOB)</p>
           <span class="dc-duo-sub">مرور با هوش مصنوعی</span>
         </a>
@@ -3873,6 +3878,55 @@ scrollBody.addEventListener('touchend',e=>{
   if(dx>0 && curIdx<panelOrder.length-1) showPanel(panelOrder[curIdx+1],'right');
   else if(dx<0 && curIdx>0)              showPanel(panelOrder[curIdx-1],'left');
 },{passive:true});
+
+/* ── HOME RAIL + QUICK-LOOK — filled from the brain at runtime ──
+   Each rail card shows ITS category's newest entry (entries are appended
+   at the end of their category in dentcast-brain.json, so the last valid
+   one per type wins). Static markup above stays as instant fallback. */
+(function(){
+  var rail=document.getElementById('dcLatestRail');
+  var qg=document.getElementById('dcQuickGloss');
+  var qb=document.getElementById('dcQuickBrain');
+  if(!rail&&!qg&&!qb) return;
+  function setCard(a,title,url){
+    if(!a||!title||!url) return;
+    var p=a.querySelector('.dc-rail-title')||a.querySelector('.dc-duo-title');
+    if(p) p.textContent=title;
+    a.href=url;
+  }
+  fetch('/dentcast-brain.json?v=e3bedc007f',{cache:'no-store'}).then(function(r){return r.json();}).then(function(arr){
+    if(!Array.isArray(arr)) return;
+    var latest={}, pool=[];
+    arr.forEach(function(e){
+      if(!e) return;
+      var ty=e.type||'', ti=(e.title||'').trim(), u=(e.page_url||'').trim();
+      if(!ty||ty==='photocast'||ty==='litecast') return;
+      /* the LAST entry of a category is its newest — track it even when it
+         lacks page_url, so we never "upgrade" a card to an OLDER entry;
+         a url-less newest entry simply keeps the static fallback card. */
+      latest[ty]={t:ti,u:u};
+      if(ti&&u) pool.push({t:ti,u:u});
+    });
+    if(rail){
+      rail.querySelectorAll('.dc-rail-card[data-cat]').forEach(function(a){
+        var it=latest[a.getAttribute('data-cat')];
+        if(it&&it.t&&it.u) setCard(a,it.t,it.u);
+      });
+    }
+    if(qb&&pool.length){
+      var r=pool[Math.floor(Math.random()*pool.length)];
+      setCard(qb,r.t,r.u);
+    }
+  }).catch(function(){});
+  if(qg){
+    fetch('/glossary/glossary.json').then(function(r){return r.json();}).then(function(g){
+      var L=(g&&g.glossary)||[];
+      if(!L.length) return;
+      var it=L[Math.floor(Math.random()*L.length)];
+      if(it&&it.url) setCard(qg,(it.title||'')+' — '+(it.fa_title||''),it.url);
+    }).catch(function(){});
+  }
+})();
 </script>
 
 <!-- Theme toggle behavior moved to /dc-nav.js (single source) -->
