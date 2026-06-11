@@ -2865,7 +2865,7 @@ a.dc-list-card--pillar {
 /* ── ARCHIVE panel polish (same language) ── */
 #panel-sharehub .dc-radar-hero{ margin-bottom:0; }
 #panel-sharehub .dc-monitor-secondary{ margin-top:26px; }
-#panel-sharehub .dc-grid{ grid-template-columns:repeat(2,1fr); }
+#panel-sharehub .dc-grid{ grid-template-columns:repeat(3,1fr); }
 
 /* =====================================================
    BOTTOM NAV — clean active state (no neon, no glow)
@@ -3434,16 +3434,12 @@ a.dc-list-card--pillar {
 
       <div class="dc-home-sec"><h2 class="dc-home-sec-label">مرور منابع علمی</h2></div>
 
-      <div class="dc-list-card" onclick="window.location.href='/notecast/'">
-        <div class="dc-list-card-main">
-          <div class="dc-list-card-title">NoteCast <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M8 13h8"/><path d="M8 17h5"/></svg></div>
-          <div class="dc-list-card-sub">خلاصه‌نویسی اپیزودها از مقالات علمی</div>
-        </div>
-      </div>
-
       <!-- Feature cards — 2x2 grid, hierarchy by position (top row = flagship) -->
       <div class="dc-grid">
-        
+        <div class="dc-grid-card" onclick="window.location.href='/notecast/'">
+          <div class="dc-grid-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M8 13h8"/><path d="M8 17h5"/></svg></div>
+          <div class="dc-grid-title">NoteCast</div>
+          <div class="dc-grid-sub">خلاصه‌نویسی اپیزودها</div>
         </div>
         <div class="dc-grid-card" onclick="window.location.href='/dentai/'">
           <div class="dc-grid-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="5" y="8" width="14" height="10" rx="3"/><path d="M12 8V4"/><circle cx="9" cy="13" r="1"/><circle cx="15" cy="13" r="1"/><path d="M9 18v2"/><path d="M15 18v2"/></svg></div>
