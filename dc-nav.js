@@ -707,53 +707,74 @@
     if (fsBody) fsBody.addEventListener('scroll', fsUpd, { passive: true });
     window.addEventListener('scroll', fsUpd, { passive: true });
 
+  }
+
   /* ── TIME-ON-SITE ENCOURAGEMENT ──────────────────────
-     Duolingo-style, privacy-friendly: active (visible-tab) minutes are
-     accumulated in localStorage across all pages. Daily ladder toasts at
-     5/15/30/60 min (each once per day, day resets at midnight); a weekly
-     recap fires on the FIRST visit of a new week (weeks start Saturday)
-     against a 5-min/day benchmark: <35 min = gentle nudge, 35–70 = keep
-     it up, >70 = pride. A sub-minute week stays silent. Top window only. */
+     Privacy-friendly: active (visible-tab) minutes accumulate in
+     localStorage across all pages. Daily ladder at 5/15/30/60 min (each
+     once per day, midnight reset); a weekly recap fires on the FIRST
+     visit of a new week (weeks start Saturday) against a 5-min/day
+     benchmark. The message renders as a dismissible card in the site's
+     own design language (token card + accent side-bar + close button).
+     Top window only; sub-minute weeks stay silent. */
   (function () {
     if (window.self !== window.top) return;
     var KEY = 'dc-tos-v1';
     var fa = function (n) { return String(n).replace(/[0-9]/g, function (d) { return '۰۱۲۳۴۵۶۷۸۹'[+d]; }); };
     function dayId(d) { return d.toISOString().slice(0, 10); }
-    function weekId(d) { /* Saturday-based week start date */
+    function weekId(d) {
       var x = new Date(d); x.setDate(x.getDate() - ((x.getDay() + 1) % 7));
       return dayId(x);
     }
     function load() {
       try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { return {}; }
     }
-    function save(s) { try { localStorage.setItem(KEY, JSON.stringify(s)); } catch (e) {} }
+    function save(st) { try { localStorage.setItem(KEY, JSON.stringify(st)); } catch (e) {} }
 
-    var toastBox = null;
-    function toast(msg, ms) {
+    var box = null;
+    function showCard(msg, ms) {
       if (!document.getElementById('dc-tos-style')) {
         var st = document.createElement('style');
         st.id = 'dc-tos-style';
         st.textContent =
-          '#dcTosToast{position:fixed;bottom:96px;left:50%;transform:translateX(-50%) translateY(12px);' +
-          'z-index:400;max-width:88vw;background:var(--card-bg,#fff);color:var(--txt,#0a1a33);' +
+          '#dcTosCard{position:fixed;bottom:96px;left:14px;right:14px;margin:0 auto;max-width:420px;' +
+          'z-index:400;display:flex;align-items:center;gap:10px;' +
+          'background:var(--card-bg,#fff);color:var(--txt,#0a1a33);' +
           'border:1px solid var(--card-border,rgba(2,35,96,.09));border-right:4px solid var(--ac,#0b5fff);' +
-          'border-radius:16px;box-shadow:0 8px 28px rgba(2,35,96,.16);padding:12px 18px;' +
-          'font-size:.82rem;font-weight:700;line-height:1.9;opacity:0;pointer-events:none;' +
+          'border-radius:16px;box-shadow:0 8px 28px rgba(2,35,96,.16);padding:12px 16px;' +
+          'font-size:.82rem;font-weight:700;line-height:1.9;' +
+          'opacity:0;transform:translateY(12px);pointer-events:none;' +
           'transition:opacity .3s ease,transform .3s ease;}' +
-          '#dcTosToast.on{opacity:1;transform:translateX(-50%) translateY(0);}';
+          '#dcTosCard.on{opacity:1;transform:translateY(0);pointer-events:auto;}' +
+          '#dcTosCard .dc-tos-msg{flex:1;min-width:0;}' +
+          '#dcTosCard .dc-tos-close{flex-shrink:0;width:28px;height:28px;border:none;cursor:pointer;' +
+          'background:var(--surface2,#f4f6fb);color:var(--txt3,#62779a);border-radius:999px;' +
+          'display:flex;align-items:center;justify-content:center;font-size:14px;line-height:1;padding:0;}';
         (document.head || document.documentElement).appendChild(st);
       }
-      if (!toastBox) {
-        toastBox = document.createElement('div');
-        toastBox.id = 'dcTosToast';
-        toastBox.setAttribute('role', 'status');
-        toastBox.setAttribute('aria-live', 'polite');
-        document.body.appendChild(toastBox);
+      if (!box) {
+        box = document.createElement('div');
+        box.id = 'dcTosCard';
+        box.setAttribute('role', 'status');
+        box.setAttribute('aria-live', 'polite');
+        var m = document.createElement('span');
+        m.className = 'dc-tos-msg';
+        var x = document.createElement('button');
+        x.className = 'dc-tos-close';
+        x.type = 'button';
+        x.setAttribute('aria-label', 'بستن');
+        x.textContent = '✕';
+        x.addEventListener('click', function () {
+          box.classList.remove('on');
+          clearTimeout(box._t);
+        });
+        box.appendChild(m); box.appendChild(x);
+        document.body.appendChild(box);
       }
-      toastBox.textContent = msg;
-      requestAnimationFrame(function () { toastBox.classList.add('on'); });
-      clearTimeout(toastBox._t);
-      toastBox._t = setTimeout(function () { toastBox.classList.remove('on'); }, ms || 4500);
+      box.querySelector('.dc-tos-msg').textContent = msg;
+      requestAnimationFrame(function () { box.classList.add('on'); });
+      clearTimeout(box._t);
+      box._t = setTimeout(function () { box.classList.remove('on'); }, ms || 10000);
     }
 
     var DAILY = [
@@ -767,15 +788,14 @@
     var d = dayId(now), w = weekId(now);
     if (s.day !== d) { s.day = d; s.daySec = 0; s.shown = {}; }
     if (s.week !== w) {
-      /* week rolled over → stash last week for the recap, then reset */
       if (s.week && (s.weekSec || 0) >= 60 && s.recapFor !== s.week) {
         var mins = Math.round(s.weekSec / 60);
         var msg;
-        if (mins < 35)      msg = '🌱 هفته‌ی قبل ' + fa(mins) + ' دقیقه وقت گذاشتی؛ کاش این هفته بیشتر بهم سر بزنی';
+        if (mins < 35)       msg = '🌱 هفته‌ی قبل ' + fa(mins) + ' دقیقه وقت گذاشتی؛ کاش این هفته بیشتر بهم سر بزنی';
         else if (mins <= 70) msg = '👏 هفته‌ی قبل ' + fa(mins) + ' دقیقه مطالعه داشتی — کارت درسته، ادامه بده';
-        else                msg = '⭐ هفته‌ی قبل خیلی خوب بودی! ' + fa(mins) + ' دقیقه مطالعه‌ی دنت‌کست — باعث افتخارمونی';
+        else                 msg = '⭐ هفته‌ی قبل خیلی خوب بودی! ' + fa(mins) + ' دقیقه مطالعه‌ی دنت‌کست — باعث افتخارمونی';
         s.recapFor = s.week;
-        setTimeout(function () { toast(msg, 7000); }, 2500);
+        setTimeout(function () { showCard(msg, 15000); }, 2500);
       }
       s.week = w; s.weekSec = 0;
     }
@@ -790,14 +810,13 @@
         var th = DAILY[i][0];
         if (s.daySec >= th && !(s.shown && s.shown[th])) {
           s.shown = s.shown || {}; s.shown[th] = 1;
-          toast(DAILY[i][1]);
+          showCard(DAILY[i][1]);
           break;
         }
       }
       save(s);
     }, TICK * 1000);
   })();
-  }
 
   /* ── SEARCH DIM (Issue 3) ───────────────────────────
      A single translucent backdrop element, injected once (mirrors the
