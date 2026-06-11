@@ -249,9 +249,12 @@
      app-shell (body.dc-desktop-ui) and in content-only view, exactly as the old
      floating control was. */
   var DC_FLOAT_SEARCH_CSS =
-'#dc-float-search{position:fixed;bottom:76px;left:14px;z-index:250;width:40px;height:40px;border-radius:var(--r-md);background:var(--card-bg);color:var(--pr);border:1.5px solid var(--pr);box-shadow:var(--card-sh);display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;-webkit-tap-highlight-color:transparent;transition:all var(--tr);}' +
+'#dc-float-search{position:fixed;bottom:76px;left:14px;z-index:250;min-width:40px;height:40px;border-radius:var(--r-md);background:var(--card-bg);color:var(--pr);border:1.5px solid var(--pr);box-shadow:var(--card-sh);display:flex;align-items:center;justify-content:center;gap:7px;cursor:pointer;padding:0 12px;-webkit-tap-highlight-color:transparent;transition:all var(--tr);}' +
 '#dc-float-search:active{transform:scale(.86);background:var(--surface2);}' +
-'#dc-float-search .dc-svg-icon{width:20px;height:20px;color:var(--pr);}' +
+'#dc-float-search .dc-svg-icon{width:20px;height:20px;color:var(--pr);flex-shrink:0;}' +
+'#dc-float-search .dc-fs-lbl{font-size:12.5px;font-weight:800;color:var(--pr);white-space:nowrap;max-width:64px;overflow:hidden;transition:max-width .22s ease,opacity .18s ease;}' +
+'#dc-float-search.dc-fs-min{padding:0;gap:0;width:40px;}' +
+'#dc-float-search.dc-fs-min .dc-fs-lbl{max-width:0;opacity:0;}' +
 'body.dc-desktop-ui #dc-float-search,body.dc-content-only #dc-float-search{display:none!important;}';
 
   /* ── MUSIC PLAYER — panel markup ──────────────────
@@ -684,8 +687,16 @@
     floatSearch.className = 'dcOpenSearch';
     floatSearch.type = 'button';
     floatSearch.setAttribute('aria-label', 'جستجو');
-    floatSearch.innerHTML = dcSvgIcon('search');
+    floatSearch.innerHTML = dcSvgIcon('search') + '<span class="dc-fs-lbl">جستجو</span>';
     document.body.appendChild(floatSearch);
+    /* Extended at the top of the page (icon + «جستجو» label) so new users
+       instantly read it as the site-wide search; collapses to icon-only
+       once they scroll, expands again back at the top. Works for both the
+       window scroller and the homepage's #mobile-body scroller. */
+    var fsMin = function (y) { floatSearch.classList.toggle('dc-fs-min', y > 70); };
+    var fsBody = document.getElementById('mobile-body');
+    if (fsBody) fsBody.addEventListener('scroll', function () { fsMin(fsBody.scrollTop); }, { passive: true });
+    window.addEventListener('scroll', function () { fsMin(window.scrollY || document.documentElement.scrollTop); }, { passive: true });
   }
 
   /* ── SEARCH DIM (Issue 3) ───────────────────────────
