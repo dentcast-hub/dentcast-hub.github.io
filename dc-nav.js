@@ -681,7 +681,12 @@
      (same SVG as the header/in-drawer search) and is styled by the injected
      #dc-float-search-style. Present on every page (incl. player.html); the
      style hides it on the desktop app-shell and in content-only view. */
-  if (!document.getElementById('dc-float-search')) {
+  /* No-header (standalone English) pages get no floating search: the
+     header IIFE that injects its CSS bails out there, and the global
+     search UI is Persian anyway — an unstyled raw button was leaking
+     into the page flow. */
+  if (!document.documentElement.hasAttribute('data-dc-no-header') &&
+      !document.getElementById('dc-float-search')) {
     var floatSearch = document.createElement('button');
     floatSearch.id = 'dc-float-search';
     floatSearch.className = 'dcOpenSearch';
