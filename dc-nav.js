@@ -693,10 +693,19 @@
        instantly read it as the site-wide search; collapses to icon-only
        once they scroll, expands again back at the top. Works for both the
        window scroller and the homepage's #mobile-body scroller. */
-    var fsMin = function (y) { floatSearch.classList.toggle('dc-fs-min', y > 70); };
     var fsBody = document.getElementById('mobile-body');
-    if (fsBody) fsBody.addEventListener('scroll', function () { fsMin(fsBody.scrollTop); }, { passive: true });
-    window.addEventListener('scroll', function () { fsMin(window.scrollY || document.documentElement.scrollTop); }, { passive: true });
+    /* One source of truth: the DEEPEST of the two possible scrollers, so a
+       0-report from the idle one can never re-extend the button mid-page.
+       Hysteresis (collapse >90, re-extend <40) kills threshold jitter. */
+    var fsUpd = function () {
+      var y = Math.max(window.scrollY || document.documentElement.scrollTop || 0,
+                       fsBody ? fsBody.scrollTop : 0);
+      var min = floatSearch.classList.contains('dc-fs-min');
+      if (!min && y > 90) floatSearch.classList.add('dc-fs-min');
+      else if (min && y < 40) floatSearch.classList.remove('dc-fs-min');
+    };
+    if (fsBody) fsBody.addEventListener('scroll', fsUpd, { passive: true });
+    window.addEventListener('scroll', fsUpd, { passive: true });
   }
 
   /* ── SEARCH DIM (Issue 3) ───────────────────────────
