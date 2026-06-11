@@ -23,6 +23,7 @@ CONTENT_SOURCES = [
     ROOT / "dentcast-brain.json",
     ROOT / "glossary" / "glossary.json",
     ROOT / "litecast" / "lite-glossary.json",
+    ROOT / "dentcast-music.json",
 ]
 
 # Shared assets cached by the service worker (Cache-First). Including them means
