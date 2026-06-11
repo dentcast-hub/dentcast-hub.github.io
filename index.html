@@ -2740,6 +2740,12 @@ a.dc-list-card--pillar {
   border:1px solid var(--border2);
   border-radius:16px;
   padding:7px 12px 7px 7px; /* a contained player bar — the play belongs to the card */
+  position:relative; overflow:hidden;
+}
+#panel-studio .dc-home-hero-play{ border:none; cursor:pointer; padding:0; }
+#panel-studio .dc-home-hero-prog{
+  position:absolute; bottom:0; right:0; height:3px; width:0;
+  background:var(--ac); transition:width .3s linear;
 }
 #panel-studio .dc-home-hero-play{ order:1; }
 #panel-studio .dc-home-hero-play{
@@ -3127,8 +3133,9 @@ a.dc-list-card--pillar {
           </div>
         </div>
         <div class="dc-home-hero-row">
-          <span class="dc-home-hero-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z"/></svg></span>
+          <button class="dc-home-hero-play" id="dcHeroPlay" type="button" aria-label="پخش تازه‌ترین قسمت" data-src="https://episodes.s3.ir-thr-at1.arvanstorage.ir/dentcast158%20.mp3?versionId="><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg></button>
           <span class="dc-home-hero-cta">شنیدن این قسمت و آرشیو کامل اپیزودها</span>
+          <span class="dc-home-hero-prog" id="dcHeroProg" aria-hidden="true"></span>
         </div>
       </div>
 
@@ -3944,6 +3951,18 @@ scrollBody.addEventListener('touchend',e=>{
         if(it&&it.t&&it.u) setCard(a,it.t,it.u);
       });
     }
+    /* hero: newest episode (last brain entry with audio) feeds title/badge/audio */
+    var ep=null;
+    arr.forEach(function(e){ if(e&&e.audio_url&&(e.page_url||e.url)) ep=e; });
+    var hpBtn=document.getElementById('dcHeroPlay');
+    if(ep&&hpBtn){
+      hpBtn.dataset.src=ep.audio_url;
+      var ht=document.querySelector('#panel-studio .dc-home-hero-title');
+      if(ht&&ep.title) ht.textContent=ep.title;
+      var hb=document.querySelector('#panel-studio .dc-home-hero-badge');
+      if(hb&&ep.episode&&hb.lastChild&&hb.lastChild.nodeType===3)
+        hb.lastChild.textContent=' قسمت '+ep.episode+' · تازه‌ترین';
+    }
     if(qb&&pool.length){
       var NAMES={clinical:'Clinical Insight',notecast:'NoteCast',meta:'MetaNote',
                  chairside:'Chairside',dentai:'DentAI',promptologist:'Promptologist',
@@ -3954,6 +3973,27 @@ scrollBody.addEventListener('touchend',e=>{
       if(sub) sub.textContent='از بخش '+(NAMES[r.ty]||r.ty);
     }
   }).catch(function(){});
+  /* inline hero player: tap = play/pause right here (audio from the brain),
+     progress on the bar; the rest of the card still opens the episodes page */
+  var hp=document.getElementById('dcHeroPlay'), hprog=document.getElementById('dcHeroProg');
+  if(hp){
+    var heroAudio=null, P_PLAY='M8 5.5v13l11-6.5z', P_PAUSE='M7 5h4v14H7zM13 5h4v14h-4z';
+    hp.addEventListener('click',function(ev){
+      ev.stopPropagation(); ev.preventDefault();
+      if(!heroAudio){
+        heroAudio=new Audio(hp.dataset.src);
+        heroAudio.preload='auto';
+        heroAudio.addEventListener('timeupdate',function(){
+          if(heroAudio.duration&&hprog) hprog.style.width=(heroAudio.currentTime/heroAudio.duration*100)+'%';
+        });
+        heroAudio.addEventListener('ended',function(){
+          hp.querySelector('path').setAttribute('d',P_PLAY);
+        });
+      }
+      if(heroAudio.paused){ heroAudio.play(); hp.querySelector('path').setAttribute('d',P_PAUSE); }
+      else{ heroAudio.pause(); hp.querySelector('path').setAttribute('d',P_PLAY); }
+    });
+  }
   if(qg){
     fetch('/glossary/glossary.json').then(function(r){return r.json();}).then(function(g){
       var L=(g&&g.glossary)||[];
