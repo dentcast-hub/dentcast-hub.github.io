@@ -3126,7 +3126,7 @@ a.dc-list-card--pillar {
       <!-- HERO: latest episode (showcase) -->
       <div class="dc-home-hero" id="card-episodes" onclick="window.location.href='episodes.html?v=1'" role="link" tabindex="0" aria-label="شنیدن تازه‌ترین قسمت">
         <div class="dc-home-hero-top">
-          <img class="dc-home-hero-cover" src="/dentcast-cover.webp" alt="" width="84" height="84">
+          <img class="dc-home-hero-cover" src="/dentcast-cover.webp" alt="" width="84" height="84" loading="lazy" decoding="async">
           <div class="dc-home-hero-info">
             <span class="dc-home-hero-badge"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M3 14a9 9 0 0 1 18 0"/><path d="M5 14h3v7H5a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2z"/><path d="M19 14h-3v7h3a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2z"/></svg> قسمت ۱۵۸ · تازه‌ترین</span>
             <h2 class="dc-home-hero-title">Bio‑Restorative Concept in Implant Dentistry :part3</h2>
@@ -3148,9 +3148,9 @@ a.dc-list-card--pillar {
           </div>
         </div>
         <ul class="dc-pulse-list">
+          <li><a href="/dentai/promptologist/prompt1-append1.html">پیوست ۱ پرامپتولوژیست</a> با عنوانِ <strong>نحوه‌ی گرفتنِ اشتراکِ هوش مصنوعی در ایران</strong> منتشر شد · ۲۱ خرداد</li>
           <li><a href="/insight/insight-47.html">اینسایت ۴۷</a> با عنوانِ <strong>مواجهه با ایمپلنتِ با زاویه‌ی نامناسب</strong> منتشر شد · ۲۱ خرداد</li>
           <li><a href="/insight/insight-46.html">اینسایت ۴۶</a> با عنوانِ <strong>فرمِ کاسپِ باکال در ناحیه‌ی لبخند</strong> منتشر شد · ۲۰ خرداد</li>
-          <li><a href="/dentai/promptologist/prompt1-3.html">قسمت سوم</a> <strong>هوش مصنوعی برای دندانپزشکان</strong> در سایت قرار گرفت · ۲۰ خرداد</li>
         </ul>
         <div class="dc-pulse-ad">
           <a href="https://deventapp.ir" target="_blank" rel="sponsored noopener">
@@ -3187,9 +3187,9 @@ a.dc-list-card--pillar {
           <p class="dc-rail-title">سلسله‌مراتب قابلیت باند (Hierarchy of Bondability - HOB)</p>
           <span class="dc-rail-meta">تازه‌ترین مطلب</span>
         </a>
-        <a class="dc-rail-card" data-cat="promptologist" href="/dentai/promptologist/prompt1-3.html">
+        <a class="dc-rail-card" data-cat="promptologist" href="/dentai/promptologist/prompt1-append1.html">
           <span class="dc-type-chip t-ai">Promptologist</span>
-          <p class="dc-rail-title">پرامپتولوژیست — وقتی اشتباه می‌کنند، یک جور اشتباه نمی‌کنند</p>
+          <p class="dc-rail-title">پرامپتولوژیست — پیوست ۱: نحوه‌ی گرفتنِ اشتراکِ هوش مصنوعی در ایران</p>
           <span class="dc-rail-meta">تازه‌ترین مطلب</span>
         </a>
         <a class="dc-rail-card" data-cat="sharehub" href="/sharehub/share-8.html">
@@ -3314,7 +3314,7 @@ a.dc-list-card--pillar {
           <span class="k">ساعت محتوای صوتی</span>
         </div>
         <div class="hero-stat" role="listitem">
-          <span class="v"><!-- COUNTER:CONTENT:START -->۴۹۸<!-- COUNTER:CONTENT:END --></span>
+          <span class="v"><!-- COUNTER:CONTENT:START -->۴۹۹<!-- COUNTER:CONTENT:END --></span>
           <span class="k">مطلب و مدخل آموزشی</span>
         </div>
       </div>
@@ -3932,7 +3932,7 @@ scrollBody.addEventListener('touchend',e=>{
     if(p) p.textContent=title;
     a.href=url;
   }
-  fetch('/dentcast-brain.json?v=23d1edba74',{cache:'no-store'}).then(function(r){return r.json();}).then(function(arr){
+  fetch('/dentcast-brain.json?v=813f13ead8',{cache:'no-store'}).then(function(r){return r.json();}).then(function(arr){
     if(!Array.isArray(arr)) return;
     var latest={}, pool=[];
     arr.forEach(function(e){
@@ -4221,7 +4221,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 <script>
 /* ── LAST 30 UPDATES ── */
 (function(){
-  const FEED_URL='/dentcast-brain.json?v=23d1edba74';
+  const FEED_URL='/dentcast-brain.json?v=813f13ead8';
   const el=document.getElementById('dcLast3Updates');
   if(!el) return;
   function extractArray(json){if(Array.isArray(json))return json;const cands=[json?.items,json?.data,json?.entries,json?.feed].filter(Boolean);for(const c of cands)if(Array.isArray(c))return c;for(const k in(json||{})){const v=json[k];if(Array.isArray(v))return v;if(v&&typeof v==='object'&&Array.isArray(v.items))return v.items;}return[];}
@@ -4471,7 +4471,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 
   function getBrain(){
     if(brainCache) return Promise.resolve(brainCache);
-    return fetch('/dentcast-brain.json?v=23d1edba74', {cache:'no-store'})
+    return fetch('/dentcast-brain.json?v=813f13ead8', {cache:'no-store'})
       .then(r => r.ok ? r.json() : [])
       .then(d => { brainCache = Array.isArray(d) ? d : []; return brainCache; })
       .catch(() => { brainCache = []; return []; });
