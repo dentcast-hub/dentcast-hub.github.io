@@ -2695,6 +2695,178 @@ a.dc-list-card--pillar {
     scroll-behavior: auto !important;
   }
 }
+
+/* =====================================================
+   HOME SHOWCASE + ARCHIVE — per the approved mockup
+   (mockup-home.html). Scoped strictly to #panel-studio,
+   #panel-sharehub and .dc-bottom-nav so nothing leaks
+   into the header, the patients panel or desktop shell.
+===================================================== */
+
+/* identity — shimmer becomes a static accent */
+#panel-studio .dc-shimmer-word{
+  animation:none; background:none;
+  -webkit-text-fill-color:var(--ac); color:var(--ac);
+}
+
+/* ── HERO ── */
+#panel-studio .dc-home-hero{
+  background:var(--card-bg); border:1px solid var(--card-border);
+  border-radius:22px; box-shadow:var(--card-sh);
+  padding:18px; margin-bottom:12px; cursor:pointer;
+}
+#panel-studio .dc-home-hero-top{ display:flex; gap:14px; align-items:center; }
+#panel-studio .dc-home-hero-cover{
+  width:84px; height:84px; border-radius:16px; object-fit:cover;
+  border:1px solid var(--border2); flex-shrink:0;
+}
+#panel-studio .dc-home-hero-info{ flex:1; min-width:0; }
+#panel-studio .dc-home-hero-badge{
+  display:inline-flex; align-items:center; gap:5px;
+  font-size:.66rem; font-weight:800; color:var(--ac);
+  background:var(--chip-bg); border:1px solid var(--chip-bd);
+  border-radius:999px; padding:2px 10px; margin-bottom:6px;
+}
+#panel-studio .dc-home-hero-title{
+  margin:0; font-size:.98rem; font-weight:800; line-height:1.6; color:var(--txt);
+  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
+}
+#panel-studio .dc-home-hero-row{ display:flex; align-items:center; gap:12px; margin-top:14px; }
+#panel-studio .dc-home-hero-play{
+  width:48px; height:48px; border-radius:50%; flex-shrink:0;
+  background:var(--pr); display:flex; align-items:center; justify-content:center;
+  box-shadow:0 6px 18px rgba(var(--pr-rgb),.32);
+}
+#panel-studio .dc-home-hero-play svg{ width:20px; height:20px; fill:#fff; margin-right:-2px; }
+#panel-studio .dc-home-hero:active .dc-home-hero-play{ transform:scale(.92); }
+#panel-studio .dc-home-hero-cta{ font-size:.78rem; font-weight:700; color:var(--txt2); }
+
+/* ── PULSE → Premium Announcement ── */
+#panel-studio .dc-pulse{
+  background:var(--card-bg); border:1px solid var(--card-border);
+  border-right:4px solid var(--ac); border-radius:18px;
+  box-shadow:var(--card-sh); padding:16px 18px; margin-bottom:0;
+}
+#panel-studio .dc-pulse-title{
+  color:var(--txt); font-weight:800; font-size:.86rem;
+  display:flex; align-items:center; gap:8px;
+}
+#panel-studio .dc-pulse-dot{ width:8px; height:8px; border-radius:50%; background:var(--ac); box-shadow:none; }
+#panel-studio .dc-pulse-close{ color:var(--txt3); background:none; }
+#panel-studio .dc-pulse-list{ margin:10px 0 0; }
+#panel-studio .dc-pulse-list li{ color:var(--txt2); font-size:.78rem; line-height:2; border-color:var(--border2); }
+#panel-studio .dc-pulse-list li a{ color:var(--ac); font-weight:700; }
+#panel-studio .dc-pulse-list li strong{ color:var(--txt); font-weight:700; }
+#panel-studio .dc-pulse-ad{ margin-top:12px; padding:10px 0 0; border-top:1px dashed var(--border); background:none; border-radius:0; }
+#panel-studio .dc-pulse-ad a{ display:flex; align-items:center; gap:10px; text-decoration:none; padding:0; background:none; }
+#panel-studio .dc-pulse-ad-txt{ flex:1; font-size:.74rem; color:var(--txt2); line-height:1.9; }
+#panel-studio .dc-pulse-ad-txt strong{ color:var(--txt); }
+#panel-studio .dc-pulse-ad-btn{
+  font-size:.7rem; font-weight:800; color:var(--ac);
+  background:var(--chip-bg); border:1px solid var(--chip-bd);
+  border-radius:999px; padding:4px 14px; flex-shrink:0;
+}
+
+/* ── section label + «همه» (shared by home & archive) ── */
+#panel-studio .dc-home-sec,
+#panel-sharehub .dc-home-sec{
+  display:flex; align-items:center; justify-content:space-between;
+  margin:26px 0 12px;
+}
+#panel-studio .dc-home-sec-label,
+#panel-sharehub .dc-home-sec-label{
+  font-size:.95rem; font-weight:800; color:var(--txt);
+  border-right:4px solid var(--ac); padding-right:10px;
+  margin:0; line-height:1.4; text-align:right;
+}
+#panel-studio .dc-home-more{ font-size:.72rem; font-weight:700; color:var(--ac); text-decoration:none; }
+
+/* ── horizontal rails ── */
+#panel-studio .dc-rail{
+  display:flex; gap:10px; overflow-x:auto;
+  padding:2px 16px 10px; margin:0 -16px;
+  scroll-snap-type:x mandatory; scrollbar-width:none;
+}
+#panel-studio .dc-rail::-webkit-scrollbar{ display:none; }
+#panel-studio .dc-rail-card{
+  scroll-snap-align:start; flex:0 0 168px;
+  background:var(--card-bg); border:1px solid var(--card-border);
+  border-radius:18px; box-shadow:var(--card-sh);
+  padding:14px; text-decoration:none; color:inherit;
+  display:flex; flex-direction:column; gap:8px;
+}
+#panel-studio .dc-rail-card:active{ transform:scale(.97); }
+#panel-studio .dc-type-chip{ align-self:flex-start; font-size:.62rem; font-weight:800; border-radius:999px; padding:2px 9px; }
+#panel-studio .t-note{ color:#0b5fff; background:rgba(11,95,255,.10); }
+#panel-studio .t-insight{ color:#0d8a72; background:rgba(13,138,114,.10); }
+#panel-studio .t-chair{ color:#a35a00; background:rgba(163,90,0,.10); }
+#panel-studio .t-meta{ color:#7b3fbf; background:rgba(123,63,191,.10); }
+#panel-studio .t-photo{ color:#b3266e; background:rgba(179,38,110,.10); }
+[data-theme="dark"] #panel-studio .t-note{ color:#8ab4f8; background:rgba(91,156,246,.14); }
+[data-theme="dark"] #panel-studio .t-insight{ color:#5fd0b8; background:rgba(13,138,114,.18); }
+[data-theme="dark"] #panel-studio .t-chair{ color:#ffb45f; background:rgba(163,90,0,.20); }
+[data-theme="dark"] #panel-studio .t-meta{ color:#c79bf2; background:rgba(123,63,191,.22); }
+[data-theme="dark"] #panel-studio .t-photo{ color:#ff8fc0; background:rgba(179,38,110,.22); }
+#panel-studio .dc-rail-title{
+  font-size:.8rem; font-weight:700; line-height:1.7; color:var(--txt); margin:0;
+  display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;
+  min-height:4.9em;
+}
+#panel-studio .dc-rail-meta{ font-size:.66rem; color:var(--txt3); font-weight:600; margin-top:auto; }
+
+/* pillar cards */
+#panel-studio .dc-pillar-card{
+  scroll-snap-align:start; flex:0 0 118px;
+  background:var(--card-bg); border:1px solid var(--card-border);
+  border-radius:18px; box-shadow:var(--card-sh);
+  padding:14px 12px; text-decoration:none; color:inherit;
+  display:flex; flex-direction:column; align-items:center; gap:8px; text-align:center;
+}
+#panel-studio .dc-pillar-card:active{ transform:scale(.96); }
+#panel-studio .dc-pillar-ico{
+  width:40px; height:40px; border-radius:12px;
+  background:var(--chip-bg); border:1px solid var(--chip-bd);
+  display:flex; align-items:center; justify-content:center; color:var(--ac);
+}
+#panel-studio .dc-pillar-ico svg{ width:20px; height:20px; stroke:currentColor; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+#panel-studio .dc-pillar-name{ font-size:.76rem; font-weight:800; color:var(--txt); }
+
+/* duo cards */
+#panel-studio .dc-duo{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+#panel-studio .dc-duo-card{
+  background:var(--card-bg); border:1px solid var(--card-border);
+  border-radius:18px; box-shadow:var(--card-sh);
+  padding:16px 14px; text-decoration:none; color:inherit;
+  display:flex; flex-direction:column; gap:6px;
+}
+#panel-studio .dc-duo-card:active{ transform:scale(.97); }
+#panel-studio .dc-duo-kicker{ font-size:.64rem; font-weight:800; color:var(--ac); }
+#panel-studio .dc-duo-title{ font-size:.84rem; font-weight:800; color:var(--txt); line-height:1.6; margin:0; }
+#panel-studio .dc-duo-sub{ font-size:.68rem; color:var(--txt3); font-weight:600; }
+
+/* stats — compact, brand-blue accents, bottom of home */
+#panel-studio .hero-stats{ margin-top:26px; margin-bottom:8px; padding:22px 0; }
+#panel-studio .hero-stat::before{ background:var(--ac); }
+#panel-studio .hero-stat .v{ font-size:clamp(2rem,8vw,3.4rem); font-weight:300; }
+#panel-studio .hero-stat .k{ margin-top:10px; font-size:.72rem; }
+
+/* ── ARCHIVE panel polish (same language) ── */
+#panel-sharehub .dc-radar-hero{ margin-bottom:0; }
+#panel-sharehub .dc-monitor-secondary{ margin-top:26px; }
+
+/* =====================================================
+   BOTTOM NAV — clean active state (no neon, no glow)
+===================================================== */
+.dc-bottom-nav .dc-bn-item .dc-bn-ico,
+.dc-bottom-nav .dc-bn-item.active .dc-bn-ico{
+  animation:none !important; filter:none !important; text-shadow:none !important;
+}
+.dc-bottom-nav .dc-bn-item .dc-bn-lbl{ color:var(--txt3); text-shadow:none !important; }
+.dc-bottom-nav .dc-bn-item .dc-bn-ico{ color:var(--txt3); }
+.dc-bottom-nav .dc-bn-item.active .dc-bn-ico{ color:var(--pr); transform:translateY(-1px); }
+.dc-bottom-nav .dc-bn-item.active .dc-bn-lbl{ color:var(--pr); font-weight:900; }
+.dc-bottom-nav .dc-bn-item.active{ background:rgba(var(--ac-rgb),.07); border-radius:14px; }
+.dc-bottom-nav .dc-bn-item.active::after{ background:var(--ac); box-shadow:none; }
   </style>
 
 
@@ -2914,6 +3086,116 @@ a.dc-list-card--pillar {
         <h1 class="dc-identity-main">دنت‌کست — <span class="dc-shimmer-word">جامع‌ترین</span> منبع فارسی پروتز و ایمپلنت مبتنی بر شواهد</h1>
       </div>
 
+      <!-- HERO: latest episode (showcase) -->
+      <div class="dc-home-hero" id="card-episodes" onclick="window.location.href='episodes.html?v=1'" role="link" tabindex="0" aria-label="شنیدن تازه‌ترین قسمت">
+        <div class="dc-home-hero-top">
+          <img class="dc-home-hero-cover" src="/dentcast-cover.webp" alt="" width="84" height="84">
+          <div class="dc-home-hero-info">
+            <span class="dc-home-hero-badge">🎙 قسمت ۱۵۸ · تازه‌ترین</span>
+            <h2 class="dc-home-hero-title">Bio-Restorative Concept in Implant Dentistry — بخش سوم</h2>
+          </div>
+        </div>
+        <div class="dc-home-hero-row">
+          <span class="dc-home-hero-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z"/></svg></span>
+          <span class="dc-home-hero-cta">شنیدن این قسمت و آرشیو کامل اپیزودها</span>
+        </div>
+      </div>
+
+      <!-- Pulse -->
+      <div class="dc-pulse" id="dcPulseCard">
+        <div class="dc-pulse-head">
+          <div class="dc-pulse-title">
+            <span class="dc-pulse-dot"></span>
+            پالس · آخرین اخبار دنتکست
+          </div>
+          <button class="dc-pulse-close" onclick="document.getElementById('dcPulseCard').style.display='none'" aria-label="بستن"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+        </div>
+        <ul class="dc-pulse-list">
+          <li><a href="/insight/insight-46.html">اینسایت ۴۶</a> با عنوانِ <strong>فرمِ کاسپِ باکال در ناحیه‌ی لبخند</strong> منتشر شد · ۲۰ خرداد</li>
+          <li><a href="/dentai/promptologist/prompt1-3.html">قسمت سوم</a> <strong>هوش مصنوعی برای دندانپزشکان</strong> در سایت قرار گرفت · ۲۰ خرداد</li>
+          <li><a href="/notecast/episode-35.html">نوت‌کست ۳۵</a> با عنوانِ <strong>مدیریت سایش دندانی با کانسپت دال (بخش دوم)</strong> منتشر شد · ۱۸ خرداد</li>
+          <li><a href="/insight/insight-45.html">اینسایت ۴۵</a> با عنوانِ <strong>درمان از طریقِ تفریق</strong> منتشر شد · ۱۸ خرداد</li>
+          <li><a href="/dentai/promptologist/prompt1-2.html">قسمت دوم</a> <strong>هوش مصنوعی برای دندانپزشکان</strong> در سایت قرار گرفت · ۱۵ خرداد</li>
+        </ul>
+        <div class="dc-pulse-ad">
+          <a href="https://deventapp.ir" target="_blank" rel="sponsored noopener">
+            <div class="dc-pulse-ad-txt"><strong>دیونت</strong> : پلتفرم آگهی تجهیزات کار کرده و خدمات دندانپزشکی</div>
+            <span class="dc-pulse-ad-btn">بازدید</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="dc-home-sec"><h2 class="dc-home-sec-label">تازه‌های دنت‌کست</h2><a class="dc-home-more" href="/episodes.html">همه ←</a></div>
+      <div class="dc-rail">
+        <a class="dc-rail-card" href="/notecast/episode-35.html">
+          <span class="dc-type-chip t-note">نوت‌کست</span>
+          <p class="dc-rail-title">مدیریت سایش دندانی با کانسپت دال — بخش دوم</p>
+          <span class="dc-rail-meta">NoteCast ۳۵</span>
+        </a>
+        <a class="dc-rail-card" href="/insight/insight-46.html">
+          <span class="dc-type-chip t-insight">اینسایت</span>
+          <p class="dc-rail-title">وقتی کاسپ باکال در لبخند کوتاه می‌افتد: فضا را از آنتاگونیست بگیر</p>
+          <span class="dc-rail-meta">Insight ۴۶</span>
+        </a>
+        <a class="dc-rail-card" href="/chairside/chairside-18.html">
+          <span class="dc-type-chip t-chair">چیرساید</span>
+          <p class="dc-rail-title">وقتی یک یافته‌ی مبهم، دو احتمال رقیب می‌سازد</p>
+          <span class="dc-rail-meta">Chairside ۱۸</span>
+        </a>
+        <a class="dc-rail-card" href="/metanotes/meta-12.html">
+          <span class="dc-type-chip t-meta">متانوت</span>
+          <p class="dc-rail-title">یک نکته‌ی مهم در مدیریت کانتکت بین دندان‌های ۶ و ۷</p>
+          <span class="dc-rail-meta">MetaNote ۱۲</span>
+        </a>
+        <a class="dc-rail-card" href="/photocast/episode-3.html">
+          <span class="dc-type-chip t-photo">فوتوکست</span>
+          <p class="dc-rail-title">دندان ۶ پایین در زیر ۱۸ سال — چه روکشی و چه زمانی؟</p>
+          <span class="dc-rail-meta">PhotoCast ۳</span>
+        </a>
+      </div>
+
+      <div class="dc-home-sec"><h2 class="dc-home-sec-label">سری‌های موضوعی</h2><a class="dc-home-more" href="/pillar/">همه ←</a></div>
+      <div class="dc-rail">
+        <a class="dc-pillar-card" href="/pillar/bonding/">
+          <span class="dc-pillar-ico"><svg viewBox="0 0 24 24"><path d="M12 2 2 7l10 5 10-5z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg></span>
+          <span class="dc-pillar-name">باندینگ</span>
+        </a>
+        <a class="dc-pillar-card" href="/pillar/occlusion/">
+          <span class="dc-pillar-ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18"/></svg></span>
+          <span class="dc-pillar-name">اکلوژن</span>
+        </a>
+        <a class="dc-pillar-card" href="/pillar/implantology/">
+          <span class="dc-pillar-ico"><svg viewBox="0 0 24 24"><path d="M12 22V8"/><path d="M5 12V5a7 7 0 0 1 14 0v7"/></svg></span>
+          <span class="dc-pillar-name">ایمپلنتولوژی</span>
+        </a>
+        <a class="dc-pillar-card" href="/pillar/ceramics/">
+          <span class="dc-pillar-ico"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M8 12h8M12 8v8"/></svg></span>
+          <span class="dc-pillar-name">سرامیک</span>
+        </a>
+        <a class="dc-pillar-card" href="/pillar/esthetic/">
+          <span class="dc-pillar-ico"><svg viewBox="0 0 24 24"><path d="m12 3 1.9 5.8H20l-5 3.7 1.9 5.8-4.9-3.6-4.9 3.6L9 12.5 4 8.8h6.1z"/></svg></span>
+          <span class="dc-pillar-name">زیبایی</span>
+        </a>
+        <a class="dc-pillar-card" href="/pillar/fixed-pros/">
+          <span class="dc-pillar-ico"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span>
+          <span class="dc-pillar-name">پروتز ثابت</span>
+        </a>
+      </div>
+
+      <div class="dc-home-sec"><h2 class="dc-home-sec-label">یک نگاه سریع</h2></div>
+      <div class="dc-duo">
+        <a class="dc-duo-card" href="/glossary/abutment.html">
+          <span class="dc-duo-kicker">📖 از دانشنامه</span>
+          <p class="dc-duo-title">Abutment — اباتمنت</p>
+          <span class="dc-duo-sub">واژه‌نامه‌ی تخصصی دنت‌کست</span>
+        </a>
+        <a class="dc-duo-card" href="/dentai/dentai-16.html">
+          <span class="dc-duo-kicker">🤖 از سری DentAI</span>
+          <p class="dc-duo-title">سلسله‌مراتب قابلیت باند (HOB)</p>
+          <span class="dc-duo-sub">مرور با هوش مصنوعی</span>
+        </a>
+      </div>
+
       <!-- ===== Homepage stats counters — numbers maintained by tools/update-homepage-counters.py =====
            CSS/JS copied bit-for-bit from episodes.html (CSS 138–175, JS 5990–6020). -->
       <style>
@@ -3007,6 +3289,13 @@ a.dc-list-card--pillar {
 })();
       </script>
 
+    </section>
+
+    <!-- ── PANEL: Meta Base ── -->
+    <section class="dc-panel" id="panel-sharehub">
+
+      <div class="dc-home-sec"><h2 class="dc-home-sec-label">جستجو و کاوش</h2></div>
+
       <!-- Radar hero — main tool of the site -->
       <div class="dc-radar-hero radar-shine-card" id="btnOpenRadarMob" role="button" aria-label="رادار دنت‌کست">
         <div class="dc-radar-hero-ico" aria-hidden="true"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="m12 12 7-7"/><path d="M12 12h.01"/></svg></div>
@@ -3017,71 +3306,16 @@ a.dc-list-card--pillar {
         <span class="dc-radar-hero-btn">جستجو</span>
       </div>
 
-      <!-- Pulse -->
-      <div class="dc-pulse" id="dcPulseCard">
-        <div class="dc-pulse-head">
-          <div class="dc-pulse-title">
-            <span class="dc-pulse-dot"></span>
-            پالس · آخرین اخبار دنتکست
-          </div>
-          <button class="dc-pulse-close" onclick="document.getElementById('dcPulseCard').style.display='none'" aria-label="بستن"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
-        </div>
-        <ul class="dc-pulse-list">
-          <li><a href="/insight/insight-46.html">اینسایت ۴۶</a> با عنوانِ <strong>فرمِ کاسپِ باکال در ناحیه‌ی لبخند</strong> منتشر شد · ۲۰ خرداد</li>
-          <li><a href="/dentai/promptologist/prompt1-3.html">قسمت سوم</a> <strong>هوش مصنوعی برای دندانپزشکان</strong> در سایت قرار گرفت · ۲۰ خرداد</li>
-          <li><a href="/notecast/episode-35.html">نوت‌کست ۳۵</a> با عنوانِ <strong>مدیریت سایش دندانی با کانسپت دال (بخش دوم)</strong> منتشر شد · ۱۸ خرداد</li>
-          <li><a href="/insight/insight-45.html">اینسایت ۴۵</a> با عنوانِ <strong>درمان از طریقِ تفریق</strong> منتشر شد · ۱۸ خرداد</li>
-          <li><a href="/dentai/promptologist/prompt1-2.html">قسمت دوم</a> <strong>هوش مصنوعی برای دندانپزشکان</strong> در سایت قرار گرفت · ۱۵ خرداد</li>
-        </ul>
-        <div class="dc-pulse-ad">
-          <a href="https://deventapp.ir" target="_blank" rel="sponsored noopener">
-            <div class="dc-pulse-ad-txt"><strong>دیونت</strong> : پلتفرم آگهی تجهیزات کار کرده و خدمات دندانپزشکی</div>
-            <span class="dc-pulse-ad-btn">بازدید</span>
-          </a>
+      <div class="dc-home-sec"><h2 class="dc-home-sec-label">پادکست</h2></div>
+
+      <div class="dc-list-card" onclick="window.location.href='episodes.html?v=1'">
+        <div class="dc-list-card-main">
+          <div class="dc-list-card-title">اپیزودهای پادکست <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M3 14a9 9 0 0 1 18 0"/><path d="M5 14h3v7H5a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2z"/><path d="M19 14h-3v7h3a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2z"/></svg></div>
+          <div class="dc-list-card-sub">همه‌ی اپیزودهای اصلی و فرعی دنت‌کست</div>
         </div>
       </div>
 
-      <!-- Episodes hero -->
-      <div class="dc-hero-card" id="card-episodes" onclick="window.location.href='episodes.html?v=1'">
-        <div class="ep-eyebrow-row">
-          <div class="ep-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M3 14a9 9 0 0 1 18 0"/><path d="M5 14h3v7H5a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2z"/><path d="M19 14h-3v7h3a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2z"/></svg></div>
-          <span class="ep-category">پادکست · اپیزودها</span>
-        </div>
-        <div class="ep-title">فهرست و شنیدن اپیزودهای دنت‌کست</div>
-        <div class="ep-footer">
-          <span class="ep-sub">همه‌ی اپیزودهای اصلی و فرعی</span>
-          <span class="ep-chip">DentCast <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="m9 6 6 6-6 6"/></svg></span>
-        </div>
-      </div>
-
-      <!-- Feature cards — 2x2 grid, hierarchy by position (top row = flagship) -->
-      <div class="dc-grid">
-        <div class="dc-grid-card" onclick="window.location.href='/notecast/'">
-          <div class="dc-grid-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M8 13h8"/><path d="M8 17h5"/></svg></div>
-          <div class="dc-grid-title">NoteCast</div>
-          <div class="dc-grid-sub">خلاصه‌نویسی اپیزودها</div>
-        </div>
-        <div class="dc-grid-card" onclick="window.location.href='/dentai/'">
-          <div class="dc-grid-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="5" y="8" width="14" height="10" rx="3"/><path d="M12 8V4"/><circle cx="9" cy="13" r="1"/><circle cx="15" cy="13" r="1"/><path d="M9 18v2"/><path d="M15 18v2"/></svg></div>
-          <div class="dc-grid-title">DentAI</div>
-          <div class="dc-grid-sub">مرور با هوش مصنوعی</div>
-        </div>
-        <div class="dc-grid-card" onclick="window.location.href='/sharehub/'">
-          <div class="dc-grid-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M10 13a5 5 0 0 0 7.1 0l2-2a5 5 0 0 0-7.1-7.1l-1.1 1.1"/><path d="M14 11a5 5 0 0 0-7.1 0l-2 2A5 5 0 0 0 12 20.1l1.1-1.1"/></svg></div>
-          <div class="dc-grid-title">Share Hub</div>
-          <div class="dc-grid-sub">مطالب با ذکر منبع</div>
-        </div>
-        <div class="dc-grid-card" onclick="window.location.href='/dentcast-plus/'">
-          <div class="dc-grid-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="10"/><path d="m10 8 6 4-6 4z"/></svg></div>
-          <div class="dc-grid-title">DentCast+</div>
-          <div class="dc-grid-sub">آموزش با ویدیو</div>
-        </div>
-      </div>
-
-    </section>
-
-    <!-- ── PANEL: Meta Base ── -->
-    <section class="dc-panel" id="panel-sharehub">
+      <div class="dc-home-sec"><h2 class="dc-home-sec-label">مرجع‌های دنت‌کست</h2></div>
 
       <div class="dc-card-pair">
       <a class="dc-list-card featured dc-list-card--pillar" id="card-pillar" href="/pillar/">
@@ -3111,6 +3345,8 @@ a.dc-list-card--pillar {
       </div>
       </div>
 
+      <div class="dc-home-sec"><h2 class="dc-home-sec-label">مطالب تخصصی</h2></div>
+
       <div class="dc-list-card dc-list-card--insight" onclick="window.location.href='/insight/'">
         <div class="dc-list-card-main">
           <div class="dc-list-card-title">Clinical Insight <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M9 4a3 3 0 0 0-3 3v1a3 3 0 0 0-2 5.2A3.5 3.5 0 0 0 8 19h1"/><path d="M15 4a3 3 0 0 1 3 3v1a3 3 0 0 1 2 5.2A3.5 3.5 0 0 1 16 19h-1"/><path d="M12 4v17"/><path d="M8 9h2"/><path d="M14 9h2"/><path d="M8 14h2"/><path d="M14 14h2"/></svg></div>
@@ -3129,6 +3365,32 @@ a.dc-list-card--pillar {
         <div class="dc-list-card-main">
           <div class="dc-list-card-title">Meta Note <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M8 3h4v4h3a2 2 0 1 1 0 4h-3v3h3a2 2 0 1 1 0 4h-3v3H8v-3H5a2 2 0 1 1 0-4h3v-3H5a2 2 0 1 1 0-4h3z"/></svg></div>
           <div class="dc-list-card-sub">ایده‌ها و مدل‌های تحلیلی</div>
+        </div>
+      </div>
+
+      <div class="dc-home-sec"><h2 class="dc-home-sec-label">بخش‌های دیگر</h2></div>
+
+      <!-- Feature cards — 2x2 grid, hierarchy by position (top row = flagship) -->
+      <div class="dc-grid">
+        <div class="dc-grid-card" onclick="window.location.href='/notecast/'">
+          <div class="dc-grid-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M8 13h8"/><path d="M8 17h5"/></svg></div>
+          <div class="dc-grid-title">NoteCast</div>
+          <div class="dc-grid-sub">خلاصه‌نویسی اپیزودها</div>
+        </div>
+        <div class="dc-grid-card" onclick="window.location.href='/dentai/'">
+          <div class="dc-grid-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="5" y="8" width="14" height="10" rx="3"/><path d="M12 8V4"/><circle cx="9" cy="13" r="1"/><circle cx="15" cy="13" r="1"/><path d="M9 18v2"/><path d="M15 18v2"/></svg></div>
+          <div class="dc-grid-title">DentAI</div>
+          <div class="dc-grid-sub">مرور با هوش مصنوعی</div>
+        </div>
+        <div class="dc-grid-card" onclick="window.location.href='/sharehub/'">
+          <div class="dc-grid-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M10 13a5 5 0 0 0 7.1 0l2-2a5 5 0 0 0-7.1-7.1l-1.1 1.1"/><path d="M14 11a5 5 0 0 0-7.1 0l-2 2A5 5 0 0 0 12 20.1l1.1-1.1"/></svg></div>
+          <div class="dc-grid-title">Share Hub</div>
+          <div class="dc-grid-sub">مطالب با ذکر منبع</div>
+        </div>
+        <div class="dc-grid-card" onclick="window.location.href='/dentcast-plus/'">
+          <div class="dc-grid-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="10"/><path d="m10 8 6 4-6 4z"/></svg></div>
+          <div class="dc-grid-title">DentCast+</div>
+          <div class="dc-grid-sub">آموزش با ویدیو</div>
         </div>
       </div>
 
@@ -3254,8 +3516,8 @@ a.dc-list-card--pillar {
   <!-- BOTTOM NAV — سه‌تایی -->
   <nav class="dc-bottom-nav" id="dcBottomNav" aria-label="ناوبری اصلی">
     <div class="dc-bn-item active" data-panel="panel-studio">
-      <span class="dc-bn-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M12 14a4 4 0 0 0 4-4V6a4 4 0 1 0-8 0v4a4 4 0 0 0 4 4z"/><path d="M19 10a7 7 0 0 1-14 0"/><path d="M12 17v4"/><path d="M8 21h8"/></svg></span>
-      <span class="dc-bn-lbl">استودیو</span>
+      <span class="dc-bn-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="m3 10 9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg></span>
+      <span class="dc-bn-lbl">خانه</span>
     </div>
     <div class="dc-bn-item" data-panel="panel-sharehub">
       <span class="dc-bn-ico">
@@ -3268,7 +3530,7 @@ a.dc-list-card--pillar {
           <line x1="6.6" y1="18.5" x2="17.4" y2="18.5"/>
         </svg>
       </span>
-      <span class="dc-bn-lbl">Meta Base</span>
+      <span class="dc-bn-lbl">آرشیو</span>
     </div>
     <div class="dc-bn-item" data-panel="panel-patient">
       <span class="dc-bn-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span>
