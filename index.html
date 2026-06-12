@@ -2392,6 +2392,28 @@ body.dc-desktop-ui #dc-desktop-root{
   position:absolute; top:1px; bottom:1px;
   width:1.5px; border-radius:1px;
   background:rgba(var(--pr-rgb),.14);
+  transition:background .5s ease;
+}
+/* a crossed 5-minute milestone leaves its tick lit — a quiet trace */
+.dc-dose-tick.on{ background:rgba(var(--ac-rgb),.85); }
+.dc-done .dc-dose-tick.on,
+.dc-dose-bar.dc-done .dc-dose-tick.on{ background:rgba(255,255,255,.65); }
+/* one-shot milestone glow on the bar (no text — peripheral only) */
+.dc-dose-bar.dc-cele{ animation:dcDoseGlow 1s ease-out; }
+@keyframes dcDoseGlow{
+  0%{ box-shadow:0 0 0 0 rgba(var(--ac-rgb),.4); }
+  100%{ box-shadow:0 0 0 9px rgba(var(--ac-rgb),0); }
+}
+/* one-shot milestone pop on the header ring */
+.dc-dose-ring.dc-pop{ animation:dcDosePop .9s cubic-bezier(.34,1.56,.64,1); }
+@keyframes dcDosePop{
+  0%{ transform:scale(1); box-shadow:0 0 0 0 rgba(var(--ac-rgb),.45); }
+  35%{ transform:scale(1.16); }
+  100%{ transform:scale(1); box-shadow:0 0 0 12px rgba(var(--ac-rgb),0); }
+}
+@media (prefers-reduced-motion:reduce){
+  .dc-dose-bar.dc-cele{ animation:none; }
+  .dc-dose-ring.dc-pop{ animation:none; }
 }
 .dc-dose-live{
   width:7px; height:7px; border-radius:50%;
@@ -2456,9 +2478,13 @@ body.dc-desktop-ui #dc-desktop-root{
 .dc-dose-card.dc-done .dc-dose-lbl{ color:#c49820; }
 [data-theme="dark"] .dc-dose-card.dc-done .dc-dose-lbl{ color:#e3b94a; }
 .dc-dose-time{ font-size:.74rem; font-weight:900; color:var(--pr); }
+.dc-dose-state{
+  font-size:.64rem; font-weight:700; color:var(--txt2);
+  margin-top:8px; line-height:1.7;
+}
 .dc-dose-msg{
   font-size:.65rem; color:var(--txt3); line-height:1.8;
-  margin-top:8px;
+  margin-top:3px;
 }
 
 /* =====================================================
@@ -3297,6 +3323,7 @@ a.dc-list-card--pillar {
           <span class="dc-dose-tick" style="right:71.43%"></span>
           <span class="dc-dose-tick" style="right:85.71%"></span>
         </div>
+        <div class="dc-dose-state" id="dcDoseStateHome">—</div>
         <div class="dc-dose-msg">سعی کن هفته‌ای حداقل ۳۵ دقیقه با دنت‌کست باشی</div>
       </div>
 
@@ -5643,7 +5670,18 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
       rowLive = document.getElementById('dcDoseLiveHome'),
       rowLbl = document.getElementById('dcDoseLblHome'),
       rowTime = document.getElementById('dcDoseTimeHome'),
-      rowFill = document.getElementById('dcDoseFillHome');
+      rowFill = document.getElementById('dcDoseFillHome'),
+      rowState = document.getElementById('dcDoseStateHome'),
+      rowBar = document.getElementById('dcDoseBarHome'),
+      rowTicks = rowBar ? rowBar.querySelectorAll('.dc-dose-tick') : [],
+      popTicks = popBar ? popBar.querySelectorAll('.dc-dose-tick') : [];
+
+  /* crossed 5-min milestones leave their tick lit */
+  function lightTicks(list, sec) {
+    for (var i = 0; i < list.length; i++) {
+      list[i].classList.toggle('on', sec >= (i + 1) * 300);
+    }
+  }
 
   function paint() {
     var o = load();
@@ -5660,16 +5698,41 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
       rowTime.textContent = fmt(sec) + ' از ۳۵:۰۰';
       rowFill.style.width = (frac * 100) + '%';
       rowLive.classList.toggle('on', active);
+      lightTicks(rowTicks, sec);
+      if (rowState) {
+        /* hide on done — the label already announces completion */
+        rowState.style.display = done ? 'none' : '';
+        rowState.textContent = active ? 'در حال شمارش حضور شما'
+          : 'متوقف — با فعالیت ادامه می‌یابد';
+      }
     }
     if (pop.classList.contains('open')) {
       popTime.textContent = fmt(sec) + ' از ۳۵:۰۰';
       popFill.style.width = (frac * 100) + '%';
       popBar.classList.toggle('dc-done', done);
       popLive.classList.toggle('on', active);
+      lightTicks(popTicks, sec);
       popState.textContent = done ? 'یادگیری این هفته کامل شد ✓'
         : active ? 'در حال شمارش حضور شما'
         : 'متوقف — با فعالیت ادامه می‌یابد';
     }
+  }
+
+  /* one-shot milestone effect — no text, peripheral only */
+  function celebrate() {
+    rings.forEach(function (ring) {
+      ring.classList.remove('dc-pop');
+      void ring.offsetWidth;
+      ring.classList.add('dc-pop');
+      setTimeout(function () { ring.classList.remove('dc-pop'); }, 1000);
+    });
+    [rowBar, pop.classList.contains('open') ? popBar : null].forEach(function (bar) {
+      if (!bar) return;
+      bar.classList.remove('dc-cele');
+      void bar.offsetWidth;
+      bar.classList.add('dc-cele');
+      setTimeout(function () { bar.classList.remove('dc-cele'); }, 1100);
+    });
   }
 
   /* heartbeat */
@@ -5677,9 +5740,11 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
     if (isActive()) {
       var o = load(), now = Date.now();
       if (o.s < WEEK_SEC && now - (o.t || 0) >= TICK - 700) {
+        var prevMil = Math.floor(o.s / 300);
         o.s += TICK / 1000;
         o.t = now;
         save(o);
+        if (Math.floor(Math.min(o.s, WEEK_SEC) / 300) > prevMil) celebrate();
       }
     }
     paint();

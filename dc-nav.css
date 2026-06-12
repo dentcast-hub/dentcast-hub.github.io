@@ -469,3 +469,24 @@ body.dc-radar-mode { overflow: hidden; }
   border-top:1px dashed var(--border2,rgba(2,35,96,.06));
 }
 @media print{ .dc-dose-ring,.dc-dose-pop{ display:none; } }
+
+/* dcDose — milestone effects (no text, peripheral only) */
+.dc-dose-tick{ transition:background .5s ease; }
+.dc-dose-tick.on{ background:rgba(var(--ac-rgb,11,95,255),.85); }
+.dc-done .dc-dose-tick.on,
+.dc-dose-bar.dc-done .dc-dose-tick.on{ background:rgba(255,255,255,.65); }
+.dc-dose-bar.dc-cele{ animation:dcDoseGlow 1s ease-out; }
+@keyframes dcDoseGlow{
+  0%{ box-shadow:0 0 0 0 rgba(var(--ac-rgb,11,95,255),.4); }
+  100%{ box-shadow:0 0 0 9px rgba(var(--ac-rgb,11,95,255),0); }
+}
+.dc-dose-ring.dc-pop{ animation:dcDosePop .9s cubic-bezier(.34,1.56,.64,1); }
+@keyframes dcDosePop{
+  0%{ transform:scale(1); box-shadow:0 0 0 0 rgba(var(--ac-rgb,11,95,255),.45); }
+  35%{ transform:scale(1.16); }
+  100%{ transform:scale(1); box-shadow:0 0 0 12px rgba(var(--ac-rgb,11,95,255),0); }
+}
+@media (prefers-reduced-motion:reduce){
+  .dc-dose-bar.dc-cele{ animation:none; }
+  .dc-dose-ring.dc-pop{ animation:none; }
+}
