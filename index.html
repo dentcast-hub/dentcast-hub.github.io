@@ -2435,26 +2435,31 @@ body.dc-desktop-ui #dc-desktop-root{
   border-top:1px dashed var(--border2);
 }
 
-/* weekly dose row — lives inside the latest-episode hero, styled like the
-   hero's own player row so it reads as part of the same instrument */
-#panel-studio .dc-dose-row{
-  margin-top:10px;
-  padding:9px 12px 11px;
-  background:var(--surface2);
-  border:1px solid var(--border2);
-  border-radius:16px;
+/* weekly learning card — standalone identity, sits ABOVE the episode hero:
+   it belongs to the visitor's whole week, not to the episodes */
+#panel-studio .dc-dose-card{
+  background:var(--card-bg);
+  border:1px solid var(--card-border);
+  border-radius:18px;
+  box-shadow:var(--card-sh);
+  padding:13px 15px 11px;
+  margin-bottom:12px;
 }
 .dc-dose-head{
   display:flex; align-items:center; justify-content:space-between;
-  gap:10px; margin-bottom:7px;
+  gap:10px; margin-bottom:8px;
 }
 .dc-dose-lbl{
-  font-size:.70rem; font-weight:800; color:var(--txt2);
-  display:inline-flex; align-items:center; gap:6px;
+  font-size:.74rem; font-weight:900; color:var(--pr);
+  display:inline-flex; align-items:center; gap:7px;
 }
-.dc-dose-row.dc-done .dc-dose-lbl{ color:#c49820; }
-[data-theme="dark"] .dc-dose-row.dc-done .dc-dose-lbl{ color:#e3b94a; }
+.dc-dose-card.dc-done .dc-dose-lbl{ color:#c49820; }
+[data-theme="dark"] .dc-dose-card.dc-done .dc-dose-lbl{ color:#e3b94a; }
 .dc-dose-time{ font-size:.74rem; font-weight:900; color:var(--pr); }
+.dc-dose-msg{
+  font-size:.65rem; color:var(--txt3); line-height:1.8;
+  margin-top:8px;
+}
 
 /* =====================================================
    EPISODES CARD — redesigned layout
@@ -3275,6 +3280,26 @@ a.dc-list-card--pillar {
         <h1 class="dc-identity-main">دنت‌کست — <span class="dc-shimmer-word">جامع‌ترین</span> منبع فارسی پروتز و ایمپلنت مبتنی بر شواهد</h1>
       </div>
 
+      <!-- WEEKLY LEARNING — standalone card with its own identity, above the
+           episode hero on purpose: it belongs to the visitor's whole week,
+           not to the episodes -->
+      <div class="dc-dose-card" id="dcDoseRow" aria-label="یادگیری هفتگی شما">
+        <div class="dc-dose-head">
+          <span class="dc-dose-lbl"><span class="dc-dose-live" id="dcDoseLiveHome"></span><span id="dcDoseLblHome">یادگیری هفتگی شما</span></span>
+          <span class="dc-dose-time" id="dcDoseTimeHome">۰:۰۰ از ۳۵:۰۰</span>
+        </div>
+        <div class="dc-dose-bar" id="dcDoseBarHome">
+          <div class="dc-dose-fill" id="dcDoseFillHome"></div>
+          <span class="dc-dose-tick" style="right:14.29%"></span>
+          <span class="dc-dose-tick" style="right:28.57%"></span>
+          <span class="dc-dose-tick" style="right:42.86%"></span>
+          <span class="dc-dose-tick" style="right:57.14%"></span>
+          <span class="dc-dose-tick" style="right:71.43%"></span>
+          <span class="dc-dose-tick" style="right:85.71%"></span>
+        </div>
+        <div class="dc-dose-msg">سعی کن هفته‌ای حداقل ۳۵ دقیقه با دنت‌کست باشی</div>
+      </div>
+
       <!-- HERO: latest episode (showcase) -->
       <div class="dc-home-hero" id="card-episodes" onclick="window.location.href='episodes.html?v=1'" role="link" tabindex="0" aria-label="شنیدن تازه‌ترین قسمت">
         <div class="dc-home-hero-top">
@@ -3288,22 +3313,6 @@ a.dc-list-card--pillar {
           <button class="dc-home-hero-play" id="dcHeroPlay" type="button" aria-label="پخش تازه‌ترین قسمت" data-src="https://episodes.s3.ir-thr-at1.arvanstorage.ir/dentcast158%20.mp3?versionId="><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg></button>
           <span class="dc-home-hero-cta">شنیدن این قسمت و آرشیو کامل اپیزودها</span>
           <span class="dc-home-hero-prog" id="dcHeroProg" aria-hidden="true"></span>
-        </div>
-        <!-- weekly dose — the visitor's 35-minute presence player -->
-        <div class="dc-dose-row" id="dcDoseRow" aria-label="یادگیری هفتگی شما">
-          <div class="dc-dose-head">
-            <span class="dc-dose-lbl"><span class="dc-dose-live" id="dcDoseLiveHome"></span><span id="dcDoseLblHome">یادگیری هفتگی شما</span></span>
-            <span class="dc-dose-time" id="dcDoseTimeHome">۰:۰۰ از ۳۵:۰۰</span>
-          </div>
-          <div class="dc-dose-bar" id="dcDoseBarHome">
-            <div class="dc-dose-fill" id="dcDoseFillHome"></div>
-            <span class="dc-dose-tick" style="right:14.29%"></span>
-            <span class="dc-dose-tick" style="right:28.57%"></span>
-            <span class="dc-dose-tick" style="right:42.86%"></span>
-            <span class="dc-dose-tick" style="right:57.14%"></span>
-            <span class="dc-dose-tick" style="right:71.43%"></span>
-            <span class="dc-dose-tick" style="right:85.71%"></span>
-          </div>
         </div>
       </div>
 
@@ -5601,7 +5610,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
     '<div class="dc-dose-pop-time">—</div>' +
     '<div class="dc-dose-bar"><div class="dc-dose-fill"></div>' + ticksHtml + '</div>' +
     '<div class="dc-dose-pop-status"><span class="dc-dose-live"></span><span class="dc-dose-pop-state">—</span></div>' +
-    '<div class="dc-dose-pop-note">زمان حضور فعال شما در دنت‌کست — خواندن یا شنیدن. ذخیره روی همین دستگاه · هفته از شنبه</div>';
+    '<div class="dc-dose-pop-note">سعی کن هفته‌ای حداقل ۳۵ دقیقه با دنت‌کست باشی. شمارش: حضور فعال شما — خواندن یا شنیدن؛ ذخیره روی همین دستگاه · هفته از شنبه</div>';
   document.body.appendChild(pop);
   var popTime = pop.querySelector('.dc-dose-pop-time'),
       popFill = pop.querySelector('.dc-dose-fill'),

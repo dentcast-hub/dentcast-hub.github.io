@@ -1825,7 +1825,7 @@
       '<div class="dc-dose-pop-time">—</div>' +
       '<div class="dc-dose-bar"><div class="dc-dose-fill"></div>' + ticksHtml + '</div>' +
       '<div class="dc-dose-pop-status"><span class="dc-dose-live"></span><span class="dc-dose-pop-state">—</span></div>' +
-      '<div class="dc-dose-pop-note">زمان حضور فعال شما در دنت‌کست — خواندن یا شنیدن. ذخیره روی همین دستگاه · هفته از شنبه</div>';
+      '<div class="dc-dose-pop-note">سعی کن هفته‌ای حداقل ۳۵ دقیقه با دنت‌کست باشی. شمارش: حضور فعال شما — خواندن یا شنیدن؛ ذخیره روی همین دستگاه · هفته از شنبه</div>';
     document.body.appendChild(pop);
     var popTime = pop.querySelector('.dc-dose-pop-time'),
         popFill = pop.querySelector('.dc-dose-fill'),
