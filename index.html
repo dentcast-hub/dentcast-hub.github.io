@@ -5685,36 +5685,36 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 
   function paint() {
     var o = load();
+    /* 35:00 is the GOAL, not a ceiling: the bar/ring saturate at 35 but the
+       clock keeps counting and the player stays alive past the goal */
     var sec = Math.min(o.s, WEEK_SEC), frac = sec / WEEK_SEC, done = o.s >= WEEK_SEC;
-    var active = isActive() && !done;
+    var active = isActive();
     rings.forEach(function (ring) {
       ring.querySelector('.dc-dr-fg').style.strokeDashoffset = C * (1 - frac);
-      ring.querySelector('.dc-dr-min').textContent = faNum(Math.floor(sec / 60));
+      ring.querySelector('.dc-dr-min').textContent = faNum(Math.floor(o.s / 60));
       ring.classList.toggle('dc-done', done);
     });
     if (rowEl) {
       rowEl.classList.toggle('dc-done', done);
       rowLbl.textContent = done ? 'یادگیری این هفته کامل شد ✓' : 'یادگیری هفتگی شما';
-      rowTime.textContent = fmt(sec) + ' از ۳۵:۰۰';
+      rowTime.textContent = done ? fmt(o.s) + ' ✓' : fmt(o.s) + ' از ۳۵:۰۰';
       rowFill.style.width = (frac * 100) + '%';
       rowLive.classList.toggle('on', active);
       lightTicks(rowTicks, sec);
       if (rowState) {
-        /* hide on done — the label already announces completion */
-        rowState.style.display = done ? 'none' : '';
         rowState.textContent = active ? 'در حال شمارش حضور شما'
           : 'متوقف — با فعالیت ادامه می‌یابد';
       }
     }
     if (pop.classList.contains('open')) {
-      popTime.textContent = fmt(sec) + ' از ۳۵:۰۰';
+      popTime.textContent = done ? fmt(o.s) + ' ✓' : fmt(o.s) + ' از ۳۵:۰۰';
       popFill.style.width = (frac * 100) + '%';
       popBar.classList.toggle('dc-done', done);
       popLive.classList.toggle('on', active);
       lightTicks(popTicks, sec);
-      popState.textContent = done ? 'یادگیری این هفته کامل شد ✓'
-        : active ? 'در حال شمارش حضور شما'
-        : 'متوقف — با فعالیت ادامه می‌یابد';
+      popState.textContent = !active ? 'متوقف — با فعالیت ادامه می‌یابد'
+        : done ? 'یادگیری این هفته کامل شد ✓'
+        : 'در حال شمارش حضور شما';
     }
   }
 
@@ -5735,16 +5735,16 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
     });
   }
 
-  /* heartbeat */
+  /* heartbeat — keeps counting past 35 */
   setInterval(function () {
     if (isActive()) {
       var o = load(), now = Date.now();
-      if (o.s < WEEK_SEC && now - (o.t || 0) >= TICK - 700) {
+      if (now - (o.t || 0) >= TICK - 700) {
         var prevMil = Math.floor(o.s / 300);
         o.s += TICK / 1000;
         o.t = now;
         save(o);
-        if (Math.floor(Math.min(o.s, WEEK_SEC) / 300) > prevMil) celebrate();
+        if (Math.floor(o.s / 300) > prevMil) celebrate();
       }
     }
     paint();
