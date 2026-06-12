@@ -30,3 +30,19 @@ jobs:
             --delete \
             --exclude ".git/*" \
             --exclude ".github/*"
+
+      # vCard must be served as text/vcard so phones open it as a contact
+      # (mimetype guessing may fall back to octet-stream → forced download).
+      - name: Fix Content-Type for vCard files
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.ARVAN_ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.ARVAN_SECRET_KEY }}
+          AWS_EC2_METADATA_DISABLED: "true"
+          ARVAN_BUCKET: ${{ secrets.ARVAN_BUCKET }}
+          ARVAN_ENDPOINT: ${{ secrets.ARVAN_ENDPOINT }}
+        run: |
+          aws s3 cp "card/dr-foad-shahabian.vcf" \
+            "s3://$ARVAN_BUCKET/card/dr-foad-shahabian.vcf" \
+            --endpoint-url "$ARVAN_ENDPOINT" \
+            --content-type "text/vcard; charset=utf-8" \
+            --metadata-directive REPLACE
