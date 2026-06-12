@@ -1950,24 +1950,27 @@ body.dc-desktop-ui #dc-desktop-root{
 @media(min-width:768px){
   .pt-wrap{ display:none!important; }
 }
+/* Patients mode — the scroll body goes full-bleed so the cinematic stage runs
+   edge-to-edge between the topbar and the bottom nav. --pt-stage is measured
+   by the scroll engine from the real scroller + bottom-nav geometry (no
+   viewport magic numbers), so the stage is always exactly full-frame and the
+   film ends exactly where the scroll ends. */
+#mobile-body.pt-mode{ padding:0; }
 .pt-wrap{
   position:relative;
-  margin:0 0 8px;
+  margin:0;
 }
 .pt-track{
   position:relative;
-  height:calc(100svh - 165px + 3200px);
+  height:calc(var(--pt-stage, 70svh) + 3200px);
 }
 .pt-sticky{
   position:sticky;
   top:0;
-  height:calc(100svh - 165px);
+  height:var(--pt-stage, 70svh);
   width:100%;
   overflow:hidden;
   background:#000;
-  border-radius:var(--r-lg);
-  box-shadow:var(--card-sh2);
-  border:1px solid var(--card-border);
   z-index:10;
 }
 /* canvas */
@@ -2002,25 +2005,55 @@ body.dc-desktop-ui #dc-desktop-root{
   pointer-events:none;
   z-index:2;
 }
-/* progress bar */
+/* progress rail — chapter-marked, GPU-composited fill + glowing head */
 .pt-progress{
   position:absolute;
-  top:12px; right:10px;
-  width:2.5px;
-  height:calc(100% - 24px);
-  background:rgba(255,255,255,.14);
+  top:16px; right:12px;
+  width:3px;
+  height:calc(100% - 32px);
+  z-index:20;
+  pointer-events:none;
+}
+.pt-progress-rail{
+  position:absolute; inset:0;
+  background:rgba(255,255,255,.13);
   border-radius:999px;
   overflow:hidden;
-  z-index:20;
 }
 .pt-progress-fill{
-  width:100%;
-  height:0%;
-  background:rgba(255,255,255,.72);
+  width:100%; height:100%;
+  background:linear-gradient(to bottom,rgba(170,200,255,.95),rgba(255,255,255,.95));
   border-radius:999px;
-  will-change:height;
+  transform:scaleY(0);
+  transform-origin:top center;
+  will-change:transform;
 }
-/* scenes — shared base */
+.pt-progress-head{
+  position:absolute;
+  top:0; left:50%;
+  width:7px; height:7px;
+  margin:-3.5px 0 0 -3.5px;
+  border-radius:50%;
+  background:#fff;
+  box-shadow:0 0 10px 2px rgba(178,205,255,.65);
+  will-change:transform;
+}
+.pt-chapter{
+  position:absolute;
+  left:50%;
+  width:5px; height:5px;
+  margin:-2.5px 0 0 -2.5px;
+  border-radius:50%;
+  background:rgba(255,255,255,.28);
+  transition:background .3s ease,box-shadow .3s ease,transform .3s ease;
+}
+.pt-chapter.on{
+  background:#fff;
+  box-shadow:0 0 8px rgba(178,205,255,.8);
+  transform:scale(1.25);
+}
+/* scenes — shared base. All scenes share one 20px gutter grid and one
+   centered content column so every box lines up on the same axis. */
 .pt-scene{
   position:absolute;
   inset:0;
@@ -2032,10 +2065,11 @@ body.dc-desktop-ui #dc-desktop-root{
   z-index:5;
   will-change:opacity,transform;
 }
+.pt-scene > *{ width:100%; max-width:480px; }
 /* scene: hero */
 .pt-scene-hero{
   justify-content:flex-start;
-  padding:28px 24px 0;
+  padding:32px 20px 0;
 }
 .pt-hero-tagline{
   font-family:'Vazirmatn',system-ui,sans-serif;
@@ -2116,18 +2150,17 @@ body.dc-desktop-ui #dc-desktop-root{
 /* scene: knowledge (litecast) */
 .pt-scene-knowledge{
   justify-content:flex-start;
-  padding:20px 15px 0;
+  padding:28px 20px 0;
   gap:0;
 }
 .pt-scene-label{
   font-family:'Vazirmatn',system-ui,sans-serif;
-  font-size:.60rem;
+  font-size:.62rem;
   font-weight:800;
-  color:rgba(255,255,255,.42);
-  letter-spacing:.15em;
+  color:rgba(255,255,255,.45);
+  letter-spacing:.18em;
   text-transform:uppercase;
-  margin-bottom:11px;
-  align-self:flex-start;
+  margin-bottom:12px;
   padding:0 2px;
 }
 .pt-lc-cards{
@@ -2141,17 +2174,18 @@ body.dc-desktop-ui #dc-desktop-root{
   backdrop-filter:blur(20px) saturate(1.5);
   -webkit-backdrop-filter:blur(20px) saturate(1.5);
   border:1px solid rgba(255,255,255,.16);
-  border-radius:14px;
-  padding:13px 15px;
+  border-radius:16px;
+  padding:14px 16px;
   display:flex;
   flex-direction:column;
   gap:5px;
   text-decoration:none;
   opacity:0;
-  transform:translateY(16px);
+  transform:translateY(18px) scale(.97);
   will-change:opacity,transform;
   box-shadow:0 4px 28px rgba(0,0,0,.22),0 1px 6px rgba(0,0,0,.18);
   -webkit-tap-highlight-color:transparent;
+  transition:background .25s ease;
 }
 .pt-lc-card:active{
   background:rgba(255,255,255,.17);
@@ -2173,6 +2207,7 @@ body.dc-desktop-ui #dc-desktop-root{
 }
 .pt-lc-cta-link{
   display:inline-block;
+  width:auto; /* opt out of the shared full-width column rule — stays a pill */
   margin-top:13px;
   font-family:'Vazirmatn',system-ui,sans-serif;
   font-size:.74rem;
@@ -2195,7 +2230,7 @@ body.dc-desktop-ui #dc-desktop-root{
 /* scene: articles */
 .pt-scene-articles{
   justify-content:flex-start;
-  padding:20px 15px 0;
+  padding:28px 20px 0;
 }
 .pt-articles-list{
   list-style:none;
@@ -2207,21 +2242,22 @@ body.dc-desktop-ui #dc-desktop-root{
 }
 .pt-article-item{
   opacity:0;
-  transform:translateX(14px);
+  transform:translateX(14px) scale(.97);
   will-change:opacity,transform;
 }
 .pt-article-item a{
   display:flex;
   align-items:center;
   gap:11px;
-  padding:12px 14px;
-  background:rgba(255,255,255,.08);
-  backdrop-filter:blur(18px) saturate(1.4);
-  -webkit-backdrop-filter:blur(18px) saturate(1.4);
-  border:1px solid rgba(255,255,255,.13);
-  border-radius:12px;
+  padding:13px 15px;
+  background:rgba(255,255,255,.09);
+  backdrop-filter:blur(20px) saturate(1.5);
+  -webkit-backdrop-filter:blur(20px) saturate(1.5);
+  border:1px solid rgba(255,255,255,.16);
+  border-radius:14px;
   text-decoration:none;
   -webkit-tap-highlight-color:transparent;
+  transition:background .25s ease;
 }
 .pt-article-item a:active{
   background:rgba(255,255,255,.16);
@@ -2243,7 +2279,7 @@ body.dc-desktop-ui #dc-desktop-root{
 /* scene: CTA — decision mode */
 .pt-scene-cta{
   justify-content:flex-end;
-  padding:0 18px 26px;
+  padding:0 20px 26px;
 }
 .pt-cta-tagline{
   font-family:'Vazirmatn',system-ui,sans-serif;
@@ -2276,7 +2312,7 @@ body.dc-desktop-ui #dc-desktop-root{
   justify-content:center;
   gap:7px;
   padding:13px 10px;
-  border-radius:12px;
+  border-radius:14px;
   text-decoration:none;
   font-family:'Vazirmatn',system-ui,sans-serif;
   font-size:.84rem;
@@ -3493,9 +3529,16 @@ a.dc-list-card--pillar {
             <div class="pt-grad-bottom" id="pt-grad-bottom"></div>
             <div class="pt-vignette"></div>
 
-            <!-- PROGRESS BAR -->
-            <div class="pt-progress">
-              <div class="pt-progress-fill" id="pt-progress-fill"></div>
+            <!-- PROGRESS RAIL — chapter dots mark the 4 scenes -->
+            <div class="pt-progress" id="pt-progress" aria-hidden="true">
+              <div class="pt-progress-rail">
+                <div class="pt-progress-fill" id="pt-progress-fill"></div>
+              </div>
+              <span class="pt-chapter" style="top:0%"></span>
+              <span class="pt-chapter" style="top:27%"></span>
+              <span class="pt-chapter" style="top:60%"></span>
+              <span class="pt-chapter" style="top:94%"></span>
+              <div class="pt-progress-head" id="pt-progress-head"></div>
             </div>
 
             <!-- DOCTOR IDENTITY — parallax, slides up with scroll -->
@@ -3882,7 +3925,11 @@ function showPanel(targetId, dir){
 
   curIdx = newIdx;
   const body = document.getElementById('mobile-body');
-  if(body) body.scrollTop = 0;
+  if(body){
+    body.scrollTop = 0;
+    /* patients panel is a full-bleed cinematic stage — drop the body gutters */
+    body.classList.toggle('pt-mode', targetId === 'panel-patient');
+  }
 }
 
 bnItems.forEach((item,i)=>{
@@ -5071,12 +5118,18 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
   const lcCtaLink = document.getElementById('pt-lc-cta-link');
   const heroBot   = document.getElementById('pt-hero-bottom');
   const body      = document.getElementById('mobile-body');
+  const sticky    = track ? track.querySelector('.pt-sticky') : null;
+  const progEl    = document.getElementById('pt-progress');
+  const headEl    = document.getElementById('pt-progress-head');
+  const chapEls   = document.querySelectorAll('#panel-patient .pt-chapter');
+  /* progress-rail chapter anchors = the scroll fraction where each scene is fully on */
+  const CHAPTERS  = [0, 0.27, 0.60, 0.94];
 
   if(!track || !canvas || !body) return;
 
   const ctx = canvas.getContext('2d');
   canvas.width  = 540;
-  canvas.height = 960;
+  canvas.height = 960; /* fallback until the panel is first shown and measured */
 
   /* cover-fit draw */
   function drawFrame(img){
@@ -5085,6 +5138,29 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
     const scale=Math.max(cw/img.naturalWidth, ch/img.naturalHeight);
     ctx.drawImage(img,(cw-img.naturalWidth*scale)/2,(ch-img.naturalHeight*scale)/2,img.naturalWidth*scale,img.naturalHeight*scale);
   }
+
+  /* stage = exact visible strip of the scroller between topbar and bottom nav.
+     Measured from the live layout — works on every device, no magic numbers. */
+  let railH=0;
+  function measure(){
+    const bn=document.querySelector('.dc-bottom-nav');
+    const stage=Math.max(240, body.clientHeight-(bn?bn.offsetHeight:0));
+    document.documentElement.style.setProperty('--pt-stage', stage+'px');
+    railH=progEl?progEl.clientHeight:0;
+  }
+
+  /* size the canvas backing store to the stage (capped DPR) for a sharp film */
+  function sizeCanvas(){
+    if(!sticky) return;
+    const r=sticky.getBoundingClientRect();
+    if(r.width<10||r.height<10) return; /* panel hidden — keep fallback store */
+    const dpr=Math.min(window.devicePixelRatio||1, 2);
+    canvas.width =Math.max(1,Math.round(r.width *dpr));
+    canvas.height=Math.max(1,Math.round(r.height*dpr));
+    const f=frames[lastIdx>=0?lastIdx:0];
+    if(f&&f.complete&&f.naturalWidth){ ctx.clearRect(0,0,canvas.width,canvas.height); drawFrame(f); }
+  }
+  measure();
 
   /* preload all frames */
   const frames=[];
@@ -5128,8 +5204,12 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
       }
     }
 
-    /* === PROGRESS BAR === */
-    if(fillEl) fillEl.style.height=(p*100)+'%';
+    /* === PROGRESS RAIL — composited fill + glowing head + chapter dots === */
+    if(fillEl) fillEl.style.transform='scaleY('+p+')';
+    if(headEl) headEl.style.transform='translate3d(0,'+(p*railH)+'px,0)';
+    for(var ci=0;ci<chapEls.length;ci++){
+      chapEls[ci].classList.toggle('on', p>=CHAPTERS[ci]-0.001);
+    }
 
     /* === DOCTOR IDENTITY — parallax up, like painted on the frame === */
     if(heroBot){
@@ -5152,7 +5232,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
       var c=lcCards[d[0]]; if(!c) return;
       var t=ease(rng(p,d[1],d[2]))*Math.min(1,lcO*4);
       c.style.opacity=t;
-      c.style.transform='translateY('+(1-t)*15+'px)';
+      c.style.transform='translateY('+(1-t)*18+'px) scale('+(0.97+0.03*t)+')';
     });
     if(lcCtaLink){
       var lt=ease(rng(p,0.41,0.49))*Math.min(1,lcO*4);
@@ -5169,13 +5249,14 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
       var c=artItems[d[0]]; if(!c) return;
       var t=ease(rng(p,d[1],d[2]))*Math.min(1,artO*4);
       c.style.opacity=t;
-      c.style.transform='translateX('+(1-t)*12+'px)';
+      c.style.transform='translateX('+(1-t)*14+'px) scale('+(0.97+0.03*t)+')';
     });
 
     /* === SCENE 4: CTA (0.83 → 0.94 full) — shifted to make room for extended Scene 3 === */
     const ctaO=ease(rng(p,0.83,0.94));
     setO(ctaScene,ctaO);
     setPE(ctaScene,ctaO>0.05);
+    if(ctaScene) ctaScene.style.transform='translateY('+(1-ctaO)*16+'px)';
 
     /* === BOTTOM GRADIENT === */
     if(gradBot) gradBot.style.opacity=ease(rng(p,0.62,0.80));
@@ -5186,6 +5267,12 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
     if(!ticking){ ticking=true; requestAnimationFrame(update); }
   },{passive:true});
 
+  /* keep the stage glued to the real viewport (URL-bar collapse, rotation…) */
+  window.addEventListener('resize',function(){ measure(); sizeCanvas(); update(); });
+  if(window.visualViewport){
+    window.visualViewport.addEventListener('resize',function(){ measure(); sizeCanvas(); update(); });
+  }
+
   /* panel activation — double rAF ensures layout is computed after display:none→block */
   const panelEl=document.getElementById('panel-patient');
   if(panelEl){
@@ -5194,6 +5281,8 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
         if(panelEl.classList.contains('active')){
           requestAnimationFrame(function(){
             requestAnimationFrame(function(){
+              measure();
+              sizeCanvas();
               update();
               /* fallback: if canvas still blank, draw first loaded frame */
               if(lastIdx===-1){

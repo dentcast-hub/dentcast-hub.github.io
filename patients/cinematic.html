@@ -30,9 +30,11 @@
   html,body{ margin:0; padding:0; height:100%; background:#000; }
   body{ font-family:'Vazirmatn',system-ui,sans-serif; }
 
-  /* Full-viewer scroll container (mirrors the mobile #mobile-body scroller) */
+  /* Full-viewer scroll container (mirrors the mobile #mobile-body scroller).
+     dvh (with svh fallback) tracks the live viewport so no gap opens when a
+     mobile browser's URL bar collapses. */
   #sc-body{
-    height:100svh; overflow-y:auto; overflow-x:hidden;
+    height:100svh; height:100dvh; overflow-y:auto; overflow-x:hidden;
     -webkit-overflow-scrolling:touch; background:#000;
   }
 
@@ -43,10 +45,10 @@
      to mobile, so the playback speed is unchanged.
   ===================================================== */
   .pt-wrap{ position:relative; margin:0; }
-  .pt-track{ position:relative; height:calc(100svh + 3200px); }
+  .pt-track{ position:relative; height:calc(100svh + 3200px); height:calc(100dvh + 3200px); }
   .pt-sticky{
     position:sticky; top:0;
-    height:100svh; width:100%;
+    height:100svh; height:100dvh; width:100%;
     overflow:hidden; background:#000;
     z-index:10;
   }
@@ -69,14 +71,42 @@
     background:radial-gradient(ellipse at center,transparent 52%,rgba(0,0,0,.28) 100%);
     pointer-events:none; z-index:2;
   }
-  /* progress bar */
+  /* progress rail — chapter-marked, GPU-composited fill + glowing head */
   .pt-progress{
-    position:absolute; top:12px; right:10px;
-    width:2.5px; height:calc(100% - 24px);
-    background:rgba(255,255,255,.14); border-radius:999px;
-    overflow:hidden; z-index:20;
+    position:absolute;
+    top:calc(16px + env(safe-area-inset-top,0px)); right:12px;
+    width:3px; height:calc(100% - 32px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px));
+    z-index:20; pointer-events:none;
   }
-  .pt-progress-fill{ width:100%; height:0%; background:rgba(255,255,255,.72); border-radius:999px; will-change:height; }
+  .pt-progress-rail{
+    position:absolute; inset:0;
+    background:rgba(255,255,255,.13); border-radius:999px; overflow:hidden;
+  }
+  .pt-progress-fill{
+    width:100%; height:100%;
+    background:linear-gradient(to bottom,rgba(170,200,255,.95),rgba(255,255,255,.95));
+    border-radius:999px;
+    transform:scaleY(0); transform-origin:top center;
+    will-change:transform;
+  }
+  .pt-progress-head{
+    position:absolute; top:0; left:50%;
+    width:7px; height:7px; margin:-3.5px 0 0 -3.5px;
+    border-radius:50%; background:#fff;
+    box-shadow:0 0 10px 2px rgba(178,205,255,.65);
+    will-change:transform;
+  }
+  .pt-chapter{
+    position:absolute; left:50%;
+    width:5px; height:5px; margin:-2.5px 0 0 -2.5px;
+    border-radius:50%; background:rgba(255,255,255,.28);
+    transition:background .3s ease,box-shadow .3s ease,transform .3s ease;
+  }
+  .pt-chapter.on{
+    background:#fff;
+    box-shadow:0 0 8px rgba(178,205,255,.8);
+    transform:scale(1.25);
+  }
 
   /* scenes — shared base. On the wide viewer the interactive content sits in a
      centered column over the full-bleed cinematic background. */
@@ -89,7 +119,7 @@
   .pt-scene > *{ width:100%; max-width:480px; }
 
   /* scene: hero */
-  .pt-scene-hero{ justify-content:flex-start; padding:34px 24px 0; }
+  .pt-scene-hero{ justify-content:flex-start; padding:34px 20px 0; }
   .pt-hero-tagline{
     color:#fff; font-size:1.55rem; font-weight:900; letter-spacing:-.01em;
     text-shadow:0 2px 20px rgba(0,0,0,.65),0 1px 4px rgba(0,0,0,.45);
@@ -125,50 +155,52 @@
   }
 
   /* scene: knowledge (litecast cards) */
-  .pt-scene-knowledge{ justify-content:flex-start; padding:24px 18px 0; gap:0; }
+  .pt-scene-knowledge{ justify-content:flex-start; padding:28px 20px 0; gap:0; }
   .pt-scene-label{
-    font-size:.62rem; font-weight:800; color:rgba(255,255,255,.42);
-    letter-spacing:.15em; text-transform:uppercase; margin-bottom:11px;
-    align-self:flex-start; padding:0 2px;
+    font-size:.62rem; font-weight:800; color:rgba(255,255,255,.45);
+    letter-spacing:.18em; text-transform:uppercase; margin-bottom:12px;
+    padding:0 2px;
   }
   .pt-lc-cards{ display:flex; flex-direction:column; gap:8px; width:100%; }
   .pt-lc-card{
     background:rgba(255,255,255,.09);
     backdrop-filter:blur(20px) saturate(1.5); -webkit-backdrop-filter:blur(20px) saturate(1.5);
-    border:1px solid rgba(255,255,255,.16); border-radius:14px;
-    padding:13px 15px; display:flex; flex-direction:column; gap:5px;
-    text-decoration:none; opacity:0; transform:translateY(16px);
+    border:1px solid rgba(255,255,255,.16); border-radius:16px;
+    padding:14px 16px; display:flex; flex-direction:column; gap:5px;
+    text-decoration:none; opacity:0; transform:translateY(18px) scale(.97);
     will-change:opacity,transform;
     box-shadow:0 4px 28px rgba(0,0,0,.22),0 1px 6px rgba(0,0,0,.18);
     -webkit-tap-highlight-color:transparent;
+    transition:background .25s ease;
   }
   .pt-lc-card:hover{ background:rgba(255,255,255,.15); }
   .pt-lc-card-cat{ font-size:.62rem; font-weight:700; color:rgba(255,255,255,.48); letter-spacing:.09em; text-transform:uppercase; }
   .pt-lc-card-title{ font-size:.94rem; font-weight:800; color:#fff; line-height:1.40; text-shadow:0 1px 6px rgba(0,0,0,.28); }
 
   /* scene: articles */
-  .pt-scene-articles{ justify-content:flex-start; padding:24px 18px 0; }
+  .pt-scene-articles{ justify-content:flex-start; padding:28px 20px 0; }
   .pt-articles-list{ list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:7px; width:100%; }
-  .pt-article-item{ opacity:0; transform:translateX(14px); will-change:opacity,transform; }
+  .pt-article-item{ opacity:0; transform:translateX(14px) scale(.97); will-change:opacity,transform; }
   .pt-article-item a{
-    display:flex; align-items:center; gap:11px; padding:12px 14px;
-    background:rgba(255,255,255,.08);
-    backdrop-filter:blur(18px) saturate(1.4); -webkit-backdrop-filter:blur(18px) saturate(1.4);
-    border:1px solid rgba(255,255,255,.13); border-radius:12px;
+    display:flex; align-items:center; gap:11px; padding:13px 15px;
+    background:rgba(255,255,255,.09);
+    backdrop-filter:blur(20px) saturate(1.5); -webkit-backdrop-filter:blur(20px) saturate(1.5);
+    border:1px solid rgba(255,255,255,.16); border-radius:14px;
     text-decoration:none; -webkit-tap-highlight-color:transparent;
+    transition:background .25s ease;
   }
   .pt-article-item a:hover{ background:rgba(255,255,255,.15); }
   .pt-article-dot{ width:5px; height:5px; border-radius:50%; background:rgba(255,255,255,.48); flex-shrink:0; }
   .pt-article-title{ font-size:.88rem; font-weight:700; color:#fff; line-height:1.42; text-shadow:0 1px 4px rgba(0,0,0,.28); }
 
   /* scene: CTA — decision mode */
-  .pt-scene-cta{ justify-content:flex-end; padding:0 18px 30px; }
+  .pt-scene-cta{ justify-content:flex-end; padding:0 20px calc(28px + env(safe-area-inset-bottom,0px)); }
   .pt-cta-tagline{ font-size:.82rem; font-weight:600; color:rgba(255,255,255,.62); text-align:center; margin-bottom:5px; letter-spacing:.02em; }
   .pt-cta-name{ font-size:1.18rem; font-weight:900; color:#fff; text-align:center; margin-bottom:18px; text-shadow:0 2px 14px rgba(0,0,0,.55); letter-spacing:-.01em; }
   .pt-cta-actions{ display:grid; grid-template-columns:1fr 1fr; gap:8px; width:100%; }
   .pt-cta-btn{
     display:flex; align-items:center; justify-content:center; gap:7px;
-    padding:13px 10px; border-radius:12px; text-decoration:none;
+    padding:13px 10px; border-radius:14px; text-decoration:none;
     font-size:.86rem; font-weight:800; min-height:48px;
     -webkit-tap-highlight-color:transparent; will-change:transform;
   }
@@ -201,8 +233,17 @@
         <div class="pt-grad-bottom" id="pt-grad-bottom"></div>
         <div class="pt-vignette"></div>
 
-        <!-- PROGRESS BAR -->
-        <div class="pt-progress"><div class="pt-progress-fill" id="pt-progress-fill"></div></div>
+        <!-- PROGRESS RAIL — chapter dots mark the 4 scenes -->
+        <div class="pt-progress" id="pt-progress" aria-hidden="true">
+          <div class="pt-progress-rail">
+            <div class="pt-progress-fill" id="pt-progress-fill"></div>
+          </div>
+          <span class="pt-chapter" style="top:0%"></span>
+          <span class="pt-chapter" style="top:27%"></span>
+          <span class="pt-chapter" style="top:60%"></span>
+          <span class="pt-chapter" style="top:94%"></span>
+          <div class="pt-progress-head" id="pt-progress-head"></div>
+        </div>
 
         <!-- DOCTOR IDENTITY — parallax, slides up with scroll -->
         <div class="pt-hero-bottom" id="pt-hero-bottom">
@@ -321,6 +362,12 @@
   const hintEl    = document.getElementById('pt-scroll-hint');
   const heroBot   = document.getElementById('pt-hero-bottom');
   const body      = document.getElementById('sc-body');
+  const progEl    = document.getElementById('pt-progress');
+  const headEl    = document.getElementById('pt-progress-head');
+  const chapEls   = document.querySelectorAll('.pt-chapter');
+  /* progress-rail chapter anchors = the scroll fraction where each scene is fully on */
+  const CHAPTERS  = [0, 0.27, 0.60, 0.94];
+  let railH = 0;
 
   if(!track || !canvas || !body || !sticky) return;
 
@@ -348,6 +395,7 @@
     const dpr=Math.min(window.devicePixelRatio||1, 2);
     canvas.width  = Math.max(1, Math.round(r.width  * dpr));
     canvas.height = Math.max(1, Math.round(r.height * dpr));
+    railH = progEl ? progEl.clientHeight : 0;
     const f=frames[lastIdx>=0?lastIdx:0];
     if(f&&f.complete&&f.naturalWidth){ ctx.clearRect(0,0,canvas.width,canvas.height); drawFrame(f); }
   }
@@ -388,8 +436,12 @@
       if(f&&f.complete&&f.naturalWidth){ ctx.clearRect(0,0,canvas.width,canvas.height); drawFrame(f); }
     }
 
-    /* === PROGRESS BAR === */
-    if(fillEl) fillEl.style.height=(p*100)+'%';
+    /* === PROGRESS RAIL — composited fill + glowing head + chapter dots === */
+    if(fillEl) fillEl.style.transform='scaleY('+p+')';
+    if(headEl) headEl.style.transform='translate3d(0,'+(p*railH)+'px,0)';
+    for(var ci=0;ci<chapEls.length;ci++){
+      chapEls[ci].classList.toggle('on', p>=CHAPTERS[ci]-0.001);
+    }
 
     /* === DOCTOR IDENTITY — parallax up === */
     if(heroBot){
@@ -412,7 +464,7 @@
       var c=lcCards[d[0]]; if(!c) return;
       var t=ease(rng(p,d[1],d[2]))*Math.min(1,lcO*4);
       c.style.opacity=t;
-      c.style.transform='translateY('+(1-t)*15+'px)';
+      c.style.transform='translateY('+(1-t)*18+'px) scale('+(0.97+0.03*t)+')';
     });
 
     /* === SCENE 3: ARTICLES (0.52 → 0.82) === */
@@ -424,13 +476,14 @@
       var c=artItems[d[0]]; if(!c) return;
       var t=ease(rng(p,d[1],d[2]))*Math.min(1,artO*4);
       c.style.opacity=t;
-      c.style.transform='translateX('+(1-t)*12+'px)';
+      c.style.transform='translateX('+(1-t)*14+'px) scale('+(0.97+0.03*t)+')';
     });
 
     /* === SCENE 4: CTA (0.83 → 0.94) === */
     const ctaO=ease(rng(p,0.83,0.94));
     setO(ctaScene,ctaO);
     setPE(ctaScene,ctaO>0.05);
+    if(ctaScene) ctaScene.style.transform='translateY('+(1-ctaO)*16+'px)';
 
     /* === BOTTOM GRADIENT === */
     if(gradBot) gradBot.style.opacity=ease(rng(p,0.62,0.80));
