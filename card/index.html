@@ -27,6 +27,15 @@
   <meta name="robots" content="noindex">
   <link rel="canonical" href="https://dentcast.ir/card/">
 
+  <!-- Messenger previews when patients forward the card link (noindex pages still get unfurled) -->
+  <meta property="og:type" content="profile">
+  <meta property="og:title" content="دکتر فؤاد شهابیان · متخصص پروتزهای دندانی">
+  <meta property="og:description" content="کارت تماس مطب — مسیریابی، تماس، هماهنگی نوبت و ذخیرهٔ شماره‌ها.">
+  <meta property="og:image" content="https://dentcast.ir/author.jpg">
+  <meta property="og:url" content="https://dentcast.ir/card/">
+  <meta property="og:locale" content="fa_IR">
+  <meta name="twitter:card" content="summary">
+
   <link rel="icon" href="/logo-v2.png" type="image/png">
   <link rel="preload" as="font" href="/fonts/Vazirmatn[wght].woff2" type="font/woff2" crossorigin>
   <title>دکتر فؤاد شهابیان · کارت تماس</title>
@@ -47,6 +56,7 @@
     --surface:#ffffff;
     --line:rgba(2,35,96,.10);
     --line-soft:rgba(2,35,96,.06);
+    --open:#168a47;
     --navy-sh:0 10px 26px rgba(2,35,96,.26);
     --card-sh:0 1px 3px rgba(2,35,96,.06), 0 12px 36px rgba(2,35,96,.10);
     --r-btn:16px;
@@ -88,24 +98,23 @@
     margin-bottom:22px;
     border-bottom:1px solid var(--line-soft);
   }
+  .avatar-ring{
+    display:inline-flex;
+    padding:3px;
+    border-radius:50%;
+    margin:0 auto 14px;
+    background:conic-gradient(from 210deg, var(--navy), #4f7fd9, #9db9e8, var(--navy));
+    box-shadow:0 8px 22px rgba(2,35,96,.18);
+  }
   .identity .avatar{
     width:104px;
     height:104px;
     border-radius:50%;
     object-fit:cover;
     object-position:center top;
-    margin:0 auto 14px;
     display:block;
-    border:3px solid #fff;
-    box-shadow:0 0 0 1px var(--line), 0 8px 22px rgba(2,35,96,.18);
+    border:3px solid var(--surface);
     background:var(--bg);
-  }
-  /* Clean fallback slot if the photo is ever removed. */
-  .identity .avatar-slot{
-    width:104px; height:104px; border-radius:50%;
-    margin:0 auto 14px; display:flex; align-items:center; justify-content:center;
-    background:var(--bg); color:var(--soft); font-weight:700; font-size:1.9rem;
-    border:1px dashed var(--line);
   }
   .identity h1{
     margin:0;
@@ -119,6 +128,38 @@
     font-size:.98rem;
     font-weight:500;
     color:var(--muted);
+  }
+
+  /* Live open/closed pill — filled by JS from the clinic's working hours. */
+  .status{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    margin:11px 0 0;
+    padding:4px 13px;
+    font-size:.8rem;
+    font-weight:600;
+    color:var(--muted);
+    background:var(--bg);
+    border:1px solid var(--line-soft);
+    border-radius:999px;
+  }
+  .status .dot{
+    flex:0 0 auto;
+    width:8px; height:8px;
+    border-radius:50%;
+    background:var(--soft);
+  }
+  .status.is-open{ color:var(--open); }
+  .status.is-open .dot{
+    background:var(--open);
+    box-shadow:0 0 0 0 rgba(22,138,71,.45);
+    animation:pulse 2.2s ease-out infinite;
+  }
+  @keyframes pulse{
+    0%{ box-shadow:0 0 0 0 rgba(22,138,71,.45); }
+    70%{ box-shadow:0 0 0 7px rgba(22,138,71,0); }
+    100%{ box-shadow:0 0 0 0 rgba(22,138,71,0); }
   }
 
   /* ===== 2 · PRIMARY ACTIONS ===== */
@@ -173,7 +214,84 @@
   }
   .alt-phone a:active{ text-decoration:underline; }
 
-  /* ===== 4 · ABOUT BLOCK ===== */
+  /* Ghost tier — save-contact + share, visually lighter than the navy CTAs. */
+  .tools{
+    display:flex;
+    gap:10px;
+    margin-top:12px;
+  }
+  .tools .btn{
+    flex:1 1 0;
+    min-height:54px;
+    justify-content:center;
+    gap:9px;
+    padding:10px 12px;
+    background:var(--surface);
+    color:var(--link);
+    border:1.5px solid var(--line);
+    box-shadow:none;
+  }
+  .tools .btn .ico{ width:21px; height:21px; }
+  .tools .btn .ico svg{ width:21px; height:21px; stroke:currentColor; stroke-width:1.8; }
+  .tools .btn .label{ font-size:.92rem; }
+  .tools .btn:active{ background:var(--bg); filter:none; }
+
+  /* ===== 3 · ADDRESS ===== */
+  .address{ margin-top:18px; }
+  .addr-panel{
+    display:flex;
+    align-items:flex-start;
+    gap:11px;
+    padding:13px 15px;
+    background:var(--bg);
+    border:1px solid var(--line-soft);
+    border-radius:14px;
+  }
+  .addr-panel > svg{
+    flex:0 0 auto;
+    width:19px; height:19px;
+    margin-top:.2em;
+    stroke:var(--navy);
+    fill:none; stroke-width:1.9; stroke-linecap:round; stroke-linejoin:round;
+    opacity:.85;
+  }
+  .addr-txt{ flex:1 1 auto; min-width:0; }
+  .addr-txt .addr-label{
+    display:block;
+    font-size:.74rem;
+    font-weight:700;
+    color:var(--soft);
+    letter-spacing:.02em;
+  }
+  .addr-txt .addr-value{
+    display:block;
+    font-size:.88rem;
+    font-weight:500;
+    color:var(--ink);
+    line-height:1.65;
+  }
+  .copy-btn{
+    flex:0 0 auto;
+    align-self:center;
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    min-height:38px;
+    padding:6px 13px;
+    font:inherit;
+    font-size:.82rem;
+    font-weight:700;
+    color:var(--link);
+    background:var(--surface);
+    border:1.5px solid var(--line);
+    border-radius:10px;
+    cursor:pointer;
+  }
+  .copy-btn svg{ width:15px; height:15px; stroke:currentColor; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+  .copy-btn:active{ background:var(--bg); }
+  .copy-btn:focus-visible{ outline:3px solid var(--link); outline-offset:2px; }
+
+  /* ===== 5 · ABOUT BLOCK ===== */
   .about{
     margin-top:24px;
     padding-top:22px;
@@ -251,7 +369,7 @@
   .about .more svg{ width:16px; height:16px; stroke:currentColor; fill:none; stroke-width:1.9; stroke-linecap:round; stroke-linejoin:round; }
   .about .more:active{ text-decoration:underline; }
 
-  /* ===== 3 · SECONDARY TIER ===== */
+  /* ===== 4 · SECONDARY TIER ===== */
   .secondary{
     margin-top:18px;
     display:flex;
@@ -288,6 +406,44 @@
   }
   footer a{ color:var(--soft); text-decoration:none; font-weight:700; letter-spacing:.04em; }
 
+  /* Toast for copy/share feedback. */
+  .toast{
+    position:fixed;
+    bottom:max(24px, env(safe-area-inset-bottom));
+    left:50%;
+    transform:translate(-50%, 8px);
+    padding:9px 20px;
+    background:var(--navy);
+    color:#fff;
+    font-size:.86rem;
+    font-weight:600;
+    border-radius:999px;
+    box-shadow:var(--navy-sh);
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .25s ease, transform .25s ease;
+    z-index:9;
+  }
+  .toast.show{ opacity:1; transform:translate(-50%, 0); }
+
+  /* ===== Entrance (staggered, subtle, honours reduced motion) ===== */
+  @media (prefers-reduced-motion: no-preference){
+    .card > *{
+      animation:rise .5s cubic-bezier(.2,.7,.3,1) backwards;
+    }
+    .card > *:nth-child(1){ animation-delay:.02s; }
+    .card > *:nth-child(2){ animation-delay:.08s; }
+    .card > *:nth-child(3){ animation-delay:.14s; }
+    .card > *:nth-child(4){ animation-delay:.20s; }
+    .card > *:nth-child(5){ animation-delay:.26s; }
+    .card > *:nth-child(6){ animation-delay:.32s; }
+    .card > *:nth-child(7){ animation-delay:.38s; }
+    @keyframes rise{
+      from{ opacity:0; transform:translateY(10px); }
+      to{ opacity:1; transform:translateY(0); }
+    }
+  }
+
   /* ===== Dark mode (restrained, brand-consistent) ===== */
   @media (prefers-color-scheme: dark){
     :root{
@@ -300,17 +456,28 @@
       --line-soft:rgba(255,255,255,.07);
       --link:#5b9cf6;
       --navy:#1f4ea8;            /* lift navy for contrast on dark surface */
+      --open:#34c878;
       --navy-sh:0 10px 26px rgba(0,0,0,.45);
       --card-sh:0 1px 3px rgba(0,0,0,.3), 0 12px 36px rgba(0,0,0,.4);
     }
-    .identity .avatar{ border-color:#17212b; }
+    .avatar-ring{ background:conic-gradient(from 210deg, #2c5cc0, #5b9cf6, #1f4ea8, #2c5cc0); }
     .chip:active{ background:#202d3b; }
     .identity h1{ color:var(--ink); }
+    .status.is-open .dot{
+      box-shadow:0 0 0 0 rgba(52,200,120,.4);
+      animation-name:pulse-dark;
+    }
+    @keyframes pulse-dark{
+      0%{ box-shadow:0 0 0 0 rgba(52,200,120,.4); }
+      70%{ box-shadow:0 0 0 7px rgba(52,200,120,0); }
+      100%{ box-shadow:0 0 0 0 rgba(52,200,120,0); }
+    }
   }
 
   @media (max-width:360px){
     .btn .label{ font-size:1.05rem; }
     .identity h1{ font-size:1.35rem; }
+    .tools .btn .label{ font-size:.85rem; }
   }
   </style>
 </head>
@@ -320,16 +487,23 @@
 
     <!-- 1 · IDENTITY -->
     <header class="identity">
-      <img class="avatar" src="/author.jpg" alt="دکتر فؤاد شهابیان" width="104" height="104">
+      <span class="avatar-ring">
+        <!-- 208px card-only derivative of /author.jpg (~7 KB) so first paint is instant on mobile data. -->
+        <img class="avatar" src="/card/avatar.jpg" alt="دکتر فؤاد شهابیان" width="104" height="104" fetchpriority="high">
+      </span>
       <h1>دکتر فؤاد شهابیان</h1>
       <p class="specialty">متخصص پروتزهای دندانی</p>
+      <p class="status" id="clinic-status" hidden>
+        <span class="dot" aria-hidden="true"></span>
+        <span id="clinic-status-text"></span>
+      </p>
     </header>
 
     <!-- 2 · PRIMARY ACTIONS -->
     <nav class="actions" aria-label="اقدامات اصلی">
 
       <!-- مسیریابی → Neshan destination (clinic), from the site's stored hasMap link -->
-      <a class="btn" href="https://nshn.ir/32sbkzKEOBbXR4" target="_blank" rel="noopener" aria-label="مسیریابی به مطب در نشان">
+      <a class="btn" href="https://nshn.ir/32sbkzKEOBbXR4" target="_blank" rel="noopener" data-track="route" aria-label="مسیریابی به مطب در نشان">
         <span class="ico" aria-hidden="true">
           <svg viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
         </span>
@@ -340,7 +514,7 @@
       </a>
 
       <!-- تماس → dominant Call button dials line 1 in one tap -->
-      <a class="btn" href="tel:+986133380090" aria-label="تماس با مطب، خط اول">
+      <a class="btn" href="tel:+986133380090" data-track="call" aria-label="تماس با مطب، خط اول">
         <span class="ico" aria-hidden="true">
           <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
         </span>
@@ -351,7 +525,7 @@
       </a>
 
       <!-- هماهنگی و نوبت → secretary (front desk) on Rubika -->
-      <a class="btn" href="https://rubika.ir/Salviagholizadeh" target="_blank" rel="noopener" aria-label="هماهنگی و نوبت، پیام به منشی مطب در روبیکا">
+      <a class="btn" href="https://rubika.ir/Salviagholizadeh" target="_blank" rel="noopener" data-track="rubika" aria-label="هماهنگی و نوبت، پیام به منشی مطب در روبیکا">
         <span class="ico" aria-hidden="true">
           <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
         </span>
@@ -364,23 +538,54 @@
       <!-- Quiet alternate line — second clinic number -->
       <p class="alt-phone">
         <span>خط دوم:</span>
-        <a href="tel:+986133380091">۰۶۱-۳۳۳۸۰۰۹۱</a>
+        <a href="tel:+986133380091" data-track="call2">۰۶۱-۳۳۳۸۰۰۹۱</a>
       </p>
+
+      <!-- Ghost tier: one-tap vCard + native share -->
+      <div class="tools">
+        <a class="btn" href="/card/dr-foad-shahabian.vcf" data-track="vcard" aria-label="ذخیرهٔ شماره‌های مطب در مخاطبین گوشی">
+          <span class="ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6"/><path d="M22 11h-6"/></svg>
+          </span>
+          <span class="txt"><span class="label">ذخیره در مخاطبین</span></span>
+        </a>
+        <button class="btn" type="button" id="share-card" aria-label="اشتراک‌گذاری کارت">
+          <span class="ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4"/><path d="M15.4 6.5l-6.8 4"/></svg>
+          </span>
+          <span class="txt"><span class="label">اشتراک‌گذاری</span></span>
+        </button>
+      </div>
     </nav>
 
-    <!-- 3 · SECONDARY TIER (room for a future «وقت‌دهی» action) -->
+    <!-- 3 · ADDRESS (written address for ride-hailing apps + one-tap copy) -->
+    <section class="address" aria-label="آدرس مطب">
+      <div class="addr-panel">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <span class="addr-txt">
+          <span class="addr-label">آدرس مطب</span>
+          <span class="addr-value" id="addr-text">اهواز، کیانپارس، خیابان ۶ غربی، مجتمع ایران نگین، طبقه ۴، واحد ۱</span>
+        </span>
+        <button class="copy-btn" type="button" id="copy-addr" data-track="copy_address" aria-label="کپی آدرس مطب">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          کپی
+        </button>
+      </div>
+    </section>
+
+    <!-- 4 · SECONDARY TIER (room for a future «وقت‌دهی» action) -->
     <nav class="secondary" aria-label="پیوندهای بیشتر">
-      <a class="chip" href="https://www.instagram.com/dr.foad_shahabian/" target="_blank" rel="noopener">
+      <a class="chip" href="https://www.instagram.com/dr.foad_shahabian/" target="_blank" rel="noopener" data-track="instagram">
         <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5"/><circle cx="12" cy="12" r="4"/><circle class="ig-dot" cx="17.6" cy="6.4" r="1.1"/></svg>
         اینستاگرام
       </a>
-      <a class="chip" href="/#patient">
+      <a class="chip" href="/#patient" data-track="patients">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="9.5" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
         بخش بیماران
       </a>
     </nav>
 
-    <!-- 4 · ABOUT -->
+    <!-- 5 · ABOUT -->
     <section class="about" aria-label="درباره">
       <h2>درباره</h2>
       <div class="panel">
@@ -418,5 +623,104 @@
     </footer>
 
   </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+  (function () {
+    'use strict';
+
+    /* --- GA click events (no-op until the deferred gtag is ready) --- */
+    function track(id) {
+      if (window.gtag) { window.gtag('event', 'card_click', { link_id: id }); }
+    }
+    var tracked = document.querySelectorAll('[data-track]');
+    for (var i = 0; i < tracked.length; i++) {
+      (function (el) {
+        el.addEventListener('click', function () { track(el.getAttribute('data-track')); });
+      })(tracked[i]);
+    }
+
+    /* --- Toast --- */
+    var toastEl = document.getElementById('toast');
+    var toastTimer = null;
+    function toast(msg) {
+      toastEl.textContent = msg;
+      toastEl.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(function () { toastEl.classList.remove('show'); }, 2200);
+    }
+
+    /* --- Copy helper (clipboard API + legacy fallback for in-app browsers) --- */
+    function copyText(text, msg) {
+      function done() { toast(msg); }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, function () { legacy(); });
+      } else { legacy(); }
+      function legacy() {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.setAttribute('readonly', '');
+        ta.style.cssText = 'position:fixed;opacity:0';
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand('copy'); done(); } catch (e) {}
+        document.body.removeChild(ta);
+      }
+    }
+
+    document.getElementById('copy-addr').addEventListener('click', function () {
+      copyText(document.getElementById('addr-text').textContent, 'آدرس کپی شد ✓');
+    });
+
+    /* --- Share (native sheet, falls back to copying the link) --- */
+    document.getElementById('share-card').addEventListener('click', function () {
+      track('share');
+      var data = {
+        title: 'دکتر فؤاد شهابیان · متخصص پروتزهای دندانی',
+        text: 'کارت تماس مطب دکتر فؤاد شهابیان — مسیریابی، تماس و هماهنگی نوبت',
+        url: 'https://dentcast.ir/card/'
+      };
+      if (navigator.share) {
+        navigator.share(data).catch(function () {});
+      } else {
+        copyText(data.url, 'لینک کارت کپی شد ✓');
+      }
+    });
+
+    /* --- Live open/closed pill ---
+       Clinic hours: Sat–Wed, 12:30–19:00 (Asia/Tehran), matching the
+       openingHoursSpecification in /about.html. Update both together. */
+    try {
+      var OPEN = 12 * 60 + 30, CLOSE = 19 * 60;
+      var WEEK = ['Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
+      var FA_DAY = { Sat: 'شنبه', Sun: 'یکشنبه', Mon: 'دوشنبه', Tue: 'سه‌شنبه', Wed: 'چهارشنبه' };
+      var parts = new Intl.DateTimeFormat('en-US', {
+        timeZone: 'Asia/Tehran', weekday: 'short',
+        hour: '2-digit', minute: '2-digit', hour12: false
+      }).formatToParts(new Date());
+      var p = {};
+      for (var j = 0; j < parts.length; j++) { p[parts[j].type] = parts[j].value; }
+      var idx = WEEK.indexOf(p.weekday);
+      var mins = (parseInt(p.hour, 10) % 24) * 60 + parseInt(p.minute, 10);
+      var isWorkday = idx >= 0 && idx <= 4;
+
+      var pill = document.getElementById('clinic-status');
+      var txt = document.getElementById('clinic-status-text');
+      if (isWorkday && mins >= OPEN && mins < CLOSE) {
+        pill.classList.add('is-open');
+        txt.textContent = 'مطب الان باز است · تا ساعت ۱۹:۰۰';
+      } else if (isWorkday && mins < OPEN) {
+        txt.textContent = 'مطب بسته است · امروز ساعت ۱۲:۳۰ باز می‌شود';
+      } else {
+        var n = 1;
+        while (WEEK[(idx + n) % 7] === 'Thu' || WEEK[(idx + n) % 7] === 'Fri') { n++; }
+        var when = (n === 1) ? 'فردا' : FA_DAY[WEEK[(idx + n) % 7]];
+        txt.textContent = 'مطب بسته است · ' + when + ' ساعت ۱۲:۳۰ باز می‌شود';
+      }
+      pill.hidden = false;
+    } catch (e) { /* keep the pill hidden if Intl/timeZone is unavailable */ }
+  })();
+  </script>
 </body>
 </html>
