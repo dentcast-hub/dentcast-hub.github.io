@@ -1806,7 +1806,7 @@
       var b = document.createElement('button');
       b.type = 'button';
       b.className = 'dc-dose-ring';
-      b.setAttribute('aria-label', 'دوز هفتگی دنت‌کست');
+      b.setAttribute('aria-label', 'یادگیری هفتگی شما در دنت‌کست');
       b.innerHTML =
         '<svg viewBox="0 0 34 34" aria-hidden="true">' +
         '<circle class="dc-dr-bg" cx="17" cy="17" r="' + R + '"/>' +
@@ -1821,11 +1821,11 @@
     var pop = document.createElement('div');
     pop.className = 'dc-dose-pop';
     pop.innerHTML =
-      '<div class="dc-dose-pop-title">دوز هفتگی دنت‌کست</div>' +
+      '<div class="dc-dose-pop-title">یادگیری هفتگی شما با دنت‌کست</div>' +
       '<div class="dc-dose-pop-time">—</div>' +
       '<div class="dc-dose-bar"><div class="dc-dose-fill"></div>' + ticksHtml + '</div>' +
       '<div class="dc-dose-pop-status"><span class="dc-dose-live"></span><span class="dc-dose-pop-state">—</span></div>' +
-      '<div class="dc-dose-pop-note">حضور فعال شما در دنت‌کست؛ ذخیره روی همین دستگاه · هفته از شنبه</div>';
+      '<div class="dc-dose-pop-note">زمان حضور فعال شما در دنت‌کست — خواندن یا شنیدن. ذخیره روی همین دستگاه · هفته از شنبه</div>';
     document.body.appendChild(pop);
     var popTime = pop.querySelector('.dc-dose-pop-time'),
         popFill = pop.querySelector('.dc-dose-fill'),
@@ -1868,7 +1868,7 @@
         popFill.style.width = (frac * 100) + '%';
         popBar.classList.toggle('dc-done', done);
         popLive.classList.toggle('on', active);
-        popState.textContent = done ? 'دوز این هفته کامل شد ✓'
+        popState.textContent = done ? 'یادگیری این هفته کامل شد ✓'
           : active ? 'در حال شمارش حضور شما'
           : 'متوقف — با فعالیت ادامه می‌یابد';
       }
