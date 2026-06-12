@@ -506,3 +506,25 @@ body.dc-radar-mode { overflow: hidden; }
   50%{ transform:scale(1.25); }
 }
 @media (prefers-reduced-motion:reduce){ .dc-dose-live.dc-heart.on{ animation:none; } }
+
+/* dcDose — once-per-week greeting banner (first visit after the Saturday reset) */
+.dc-dose-greet{
+  position:fixed; z-index:400;
+  top:68px; left:50%;
+  transform:translateX(-50%) translateY(-8px);
+  max-width:min(92vw,340px);
+  background:var(--surface,#fff);
+  border:1px solid var(--border,rgba(2,35,96,.10));
+  border-radius:16px;
+  box-shadow:0 12px 40px rgba(2,8,30,.18);
+  padding:10px 14px;
+  font-size:.74rem; font-weight:700; color:var(--txt,#16203a); line-height:1.9;
+  text-align:center;
+  opacity:0;
+  transition:opacity .35s ease, transform .35s ease;
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+}
+.dc-dose-greet b{ color:var(--ac,#0b5fff); font-weight:900; }
+.dc-dose-greet.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+@media print{ .dc-dose-greet{ display:none; } }

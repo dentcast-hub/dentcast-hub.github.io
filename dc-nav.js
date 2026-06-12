@@ -1758,15 +1758,22 @@
   'use strict';
   var KEY = 'dcDose', WEEK_SEC = 35 * 60, TICK = 5000;
 
-  function weekId() {
-    var d = new Date(), off = (d.getDay() + 1) % 7; /* days since Saturday */
+  function weekIdOf(d) {
+    var off = (d.getDay() + 1) % 7; /* days since Saturday */
     var sat = new Date(d.getFullYear(), d.getMonth(), d.getDate() - off);
     return sat.getFullYear() + '-' + (sat.getMonth() + 1) + '-' + sat.getDate();
   }
+  function weekId() { return weekIdOf(new Date()); }
   function load() {
     var o = null;
     try { o = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) {}
-    if (!o || o.w !== weekId()) o = { w: weekId(), s: 0, t: 0 };
+    if (!o || o.w !== weekId()) {
+      /* new week: archive last week's seconds (only if it truly was LAST week)
+         for the once-per-week greeting, then start fresh. pa = greeted flag. */
+      var lw = weekIdOf(new Date(Date.now() - 7 * 864e5));
+      o = { w: weekId(), s: 0, t: 0, p: (o && o.w === lw && o.s) ? o.s : 0, pa: 0 };
+      save(o);
+    }
     return o;
   }
   function save(o) { try { localStorage.setItem(KEY, JSON.stringify(o)); } catch (e) {} }
@@ -1853,6 +1860,26 @@
       if (pop.classList.contains('open') && !pop.contains(e.target)) closePop();
     });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closePop(); });
+
+    /* once-per-week greeting — the first visit after the Saturday reset */
+    (function greet() {
+      var o = load();
+      if (o.pa) return;
+      o.pa = 1; save(o);
+      if (!o.p || o.p < 60) return;
+      var g = document.createElement('div');
+      g.className = 'dc-dose-greet';
+      g.setAttribute('role', 'status');
+      g.innerHTML = 'هفته‌ی قبل <b>' + faNum(Math.round(o.p / 60)) + ' دقیقه</b> با دنت‌کست بودی — ببینیم این هفته چی‌کار می‌کنی!';
+      document.body.appendChild(g);
+      requestAnimationFrame(function () { requestAnimationFrame(function () { g.classList.add('show'); }); });
+      function bye() {
+        g.classList.remove('show');
+        setTimeout(function () { if (g.parentNode) g.parentNode.removeChild(g); }, 400);
+      }
+      g.addEventListener('click', bye);
+      setTimeout(bye, 8000);
+    })();
 
     /* at 70 minutes — double the goal — the presence dot becomes a tiny heart */
     var HEART_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.6-4.7-10.1-9.3C.5 8.4 2.6 4.9 6 4.9c2 0 3.4 1.1 4.2 2.4L12 9l1.8-1.7c.8-1.3 2.2-2.4 4.2-2.4 3.4 0 5.5 3.5 4.1 6.8C19.6 16.3 12 21 12 21z"/></svg>';
