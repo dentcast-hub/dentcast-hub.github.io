@@ -2345,6 +2345,118 @@ body.dc-desktop-ui #dc-desktop-root{
 .pt-btn-ico{ font-size:1.05rem; line-height:1; }
 
 /* =====================================================
+   dcDose — weekly 35-minute presence player (homepage)
+   Same storage key & rules as the dc-nav.js module on the
+   internal pages: real presence only, Saturday week.
+===================================================== */
+.dc-dose-ring{
+  position:relative;
+  width:34px; height:34px;
+  border-radius:var(--r-f);
+  background:var(--surface2);
+  border:1px solid var(--border2);
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer; padding:0; flex-shrink:0;
+  font-family:inherit;
+  transition:transform .15s ease;
+  -webkit-tap-highlight-color:transparent;
+}
+.dc-dose-ring:active{ transform:scale(.88); }
+.dc-dose-ring svg{ position:absolute; inset:0; width:34px; height:34px; transform:rotate(-90deg); }
+.dc-dose-ring .dc-dr-bg{ fill:none; stroke:rgba(var(--pr-rgb),.12); stroke-width:2.5; }
+.dc-dose-ring .dc-dr-fg{
+  fill:none; stroke:var(--ac); stroke-width:2.5; stroke-linecap:round;
+  transition:stroke-dashoffset .6s ease, stroke .3s ease;
+}
+.dc-dose-ring .dc-dr-min{ font-size:.56rem; font-weight:900; color:var(--pr); line-height:1; }
+.dc-dose-ring.dc-done .dc-dr-fg{ stroke:#c49820; }
+.dc-dose-ring.dc-done .dc-dr-min{ color:#c49820; }
+[data-theme="dark"] .dc-dose-ring.dc-done .dc-dr-fg{ stroke:#e3b94a; }
+[data-theme="dark"] .dc-dose-ring.dc-done .dc-dr-min{ color:#e3b94a; }
+
+.dc-dose-bar{
+  position:relative;
+  height:6px; border-radius:var(--r-f);
+  background:rgba(var(--pr-rgb),.08);
+  overflow:hidden;
+}
+.dc-dose-fill{
+  position:absolute; top:0; bottom:0; right:0;
+  width:0%; border-radius:var(--r-f);
+  background:linear-gradient(to left,var(--ac),rgba(var(--ac-rgb),.6));
+  transition:width .6s ease, background .3s ease;
+}
+.dc-done .dc-dose-fill,
+.dc-dose-bar.dc-done .dc-dose-fill{ background:linear-gradient(to left,#c49820,#e3b94a); }
+.dc-dose-tick{
+  position:absolute; top:1px; bottom:1px;
+  width:1.5px; border-radius:1px;
+  background:rgba(var(--pr-rgb),.14);
+}
+.dc-dose-live{
+  width:7px; height:7px; border-radius:50%;
+  background:var(--txt3);
+  flex-shrink:0;
+  transition:background .3s ease;
+}
+.dc-dose-live.on{
+  background:#2e7d32;
+  animation:dcDosePulse 1.6s ease-out infinite;
+}
+@keyframes dcDosePulse{
+  0%{ box-shadow:0 0 0 0 rgba(46,125,50,.35); }
+  100%{ box-shadow:0 0 0 7px rgba(46,125,50,0); }
+}
+@media (prefers-reduced-motion:reduce){ .dc-dose-live.on{ animation:none; } }
+
+.dc-dose-pop{
+  position:fixed; z-index:400;
+  width:232px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:16px;
+  box-shadow:0 12px 40px rgba(2,8,30,.18);
+  padding:13px 14px 11px;
+  opacity:0; transform:translateY(-6px);
+  pointer-events:none;
+  transition:opacity .22s ease, transform .22s ease;
+}
+.dc-dose-pop.open{ opacity:1; transform:none; pointer-events:auto; }
+.dc-dose-pop-title{ font-size:.72rem; font-weight:900; color:var(--pr); margin-bottom:7px; }
+.dc-dose-pop-time{ font-size:1.02rem; font-weight:900; color:var(--txt); margin-bottom:8px; }
+.dc-dose-pop .dc-dose-bar{ margin-bottom:9px; }
+.dc-dose-pop-status{
+  font-size:.66rem; font-weight:700; color:var(--txt2);
+  display:flex; align-items:center; gap:6px;
+}
+.dc-dose-pop-note{
+  font-size:.59rem; color:var(--txt3); line-height:1.8;
+  margin-top:7px; padding-top:7px;
+  border-top:1px dashed var(--border2);
+}
+
+/* weekly dose row — lives inside the latest-episode hero, styled like the
+   hero's own player row so it reads as part of the same instrument */
+#panel-studio .dc-dose-row{
+  margin-top:10px;
+  padding:9px 12px 11px;
+  background:var(--surface2);
+  border:1px solid var(--border2);
+  border-radius:16px;
+}
+.dc-dose-head{
+  display:flex; align-items:center; justify-content:space-between;
+  gap:10px; margin-bottom:7px;
+}
+.dc-dose-lbl{
+  font-size:.70rem; font-weight:800; color:var(--txt2);
+  display:inline-flex; align-items:center; gap:6px;
+}
+.dc-dose-row.dc-done .dc-dose-lbl{ color:#c49820; }
+[data-theme="dark"] .dc-dose-row.dc-done .dc-dose-lbl{ color:#e3b94a; }
+.dc-dose-time{ font-size:.74rem; font-weight:900; color:var(--pr); }
+
+/* =====================================================
    EPISODES CARD — redesigned layout
 ===================================================== */
 #card-episodes{
@@ -3176,6 +3288,22 @@ a.dc-list-card--pillar {
           <button class="dc-home-hero-play" id="dcHeroPlay" type="button" aria-label="پخش تازه‌ترین قسمت" data-src="https://episodes.s3.ir-thr-at1.arvanstorage.ir/dentcast158%20.mp3?versionId="><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg></button>
           <span class="dc-home-hero-cta">شنیدن این قسمت و آرشیو کامل اپیزودها</span>
           <span class="dc-home-hero-prog" id="dcHeroProg" aria-hidden="true"></span>
+        </div>
+        <!-- weekly dose — the visitor's 35-minute presence player -->
+        <div class="dc-dose-row" id="dcDoseRow" aria-label="دوز هفتگی شما">
+          <div class="dc-dose-head">
+            <span class="dc-dose-lbl"><span class="dc-dose-live" id="dcDoseLiveHome"></span><span id="dcDoseLblHome">دوز هفتگی شما</span></span>
+            <span class="dc-dose-time" id="dcDoseTimeHome">۰:۰۰ از ۳۵:۰۰</span>
+          </div>
+          <div class="dc-dose-bar" id="dcDoseBarHome">
+            <div class="dc-dose-fill" id="dcDoseFillHome"></div>
+            <span class="dc-dose-tick" style="right:14.29%"></span>
+            <span class="dc-dose-tick" style="right:28.57%"></span>
+            <span class="dc-dose-tick" style="right:42.86%"></span>
+            <span class="dc-dose-tick" style="right:57.14%"></span>
+            <span class="dc-dose-tick" style="right:71.43%"></span>
+            <span class="dc-dose-tick" style="right:85.71%"></span>
+          </div>
         </div>
       </div>
 
@@ -5397,6 +5525,159 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
     }).observe(panelEl,{attributes:true});
   }
 
+})();
+</script>
+
+<script>
+/* ── dcDose — weekly 35-minute presence player (homepage copy) ──
+   Identical core & storage key to the dc-nav.js module on internal pages,
+   so minutes accumulate across the whole site. Counts only real presence
+   (tab visible + interaction in the last 60s); a write lock keeps multiple
+   tabs at single-tab rate; week starts Saturday. UI here: topbar ring(s),
+   the popover, and the weekly-dose row inside the latest-episode hero. */
+(function () {
+  'use strict';
+  var KEY = 'dcDose', WEEK_SEC = 35 * 60, TICK = 5000;
+
+  function weekId() {
+    var d = new Date(), off = (d.getDay() + 1) % 7; /* days since Saturday */
+    var sat = new Date(d.getFullYear(), d.getMonth(), d.getDate() - off);
+    return sat.getFullYear() + '-' + (sat.getMonth() + 1) + '-' + sat.getDate();
+  }
+  function load() {
+    var o = null;
+    try { o = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) {}
+    if (!o || o.w !== weekId()) o = { w: weekId(), s: 0, t: 0 };
+    return o;
+  }
+  function save(o) { try { localStorage.setItem(KEY, JSON.stringify(o)); } catch (e) {} }
+  function faNum(x) {
+    return String(x).replace(/\d/g, function (d) { return '۰۱۲۳۴۵۶۷۸۹'[d]; });
+  }
+  function fmt(sec) {
+    sec = Math.floor(sec);
+    var m = Math.floor(sec / 60), s = sec % 60;
+    return faNum(m) + ':' + faNum((s < 10 ? '0' : '') + s);
+  }
+
+  var lastAct = Date.now();
+  function poke() { lastAct = Date.now(); }
+  ['scroll', 'touchstart', 'pointerdown', 'keydown', 'mousemove', 'click'].forEach(function (ev) {
+    window.addEventListener(ev, poke, { passive: true });
+  });
+  var mb = document.getElementById('mobile-body');
+  if (mb) mb.addEventListener('scroll', poke, { passive: true });
+  function isActive() {
+    return document.visibilityState === 'visible' && (Date.now() - lastAct) < 60000;
+  }
+
+  /* rings in both topbars (mobile shell + desktop col-C header) */
+  var R = 14, C = 2 * Math.PI * R;
+  var ticksHtml = '';
+  for (var m5 = 5; m5 <= 30; m5 += 5) {
+    ticksHtml += '<span class="dc-dose-tick" style="right:' + (m5 / 35 * 100).toFixed(2) + '%"></span>';
+  }
+  var rings = [];
+  Array.prototype.forEach.call(document.querySelectorAll('.dc-topbar-actions'), function (bar) {
+    if (bar.querySelector('.dc-dose-ring')) return;
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'dc-dose-ring';
+    b.setAttribute('aria-label', 'دوز هفتگی دنت‌کست');
+    b.innerHTML =
+      '<svg viewBox="0 0 34 34" aria-hidden="true">' +
+      '<circle class="dc-dr-bg" cx="17" cy="17" r="' + R + '"/>' +
+      '<circle class="dc-dr-fg" cx="17" cy="17" r="' + R + '" stroke-dasharray="' + C + ' ' + C + '" stroke-dashoffset="' + C + '"/>' +
+      '</svg><span class="dc-dr-min">۰</span>';
+    bar.appendChild(b);
+    rings.push(b);
+  });
+
+  /* popover */
+  var pop = document.createElement('div');
+  pop.className = 'dc-dose-pop';
+  pop.innerHTML =
+    '<div class="dc-dose-pop-title">دوز هفتگی دنت‌کست</div>' +
+    '<div class="dc-dose-pop-time">—</div>' +
+    '<div class="dc-dose-bar"><div class="dc-dose-fill"></div>' + ticksHtml + '</div>' +
+    '<div class="dc-dose-pop-status"><span class="dc-dose-live"></span><span class="dc-dose-pop-state">—</span></div>' +
+    '<div class="dc-dose-pop-note">حضور فعال شما در دنت‌کست؛ ذخیره روی همین دستگاه · هفته از شنبه</div>';
+  document.body.appendChild(pop);
+  var popTime = pop.querySelector('.dc-dose-pop-time'),
+      popFill = pop.querySelector('.dc-dose-fill'),
+      popLive = pop.querySelector('.dc-dose-live'),
+      popState = pop.querySelector('.dc-dose-pop-state'),
+      popBar = pop.querySelector('.dc-dose-bar');
+
+  function openPop(ring) {
+    var r = ring.getBoundingClientRect();
+    var w = 232, vw = window.innerWidth;
+    pop.style.top = Math.round(r.bottom + 8) + 'px';
+    pop.style.left = Math.round(Math.max(8, Math.min(vw - w - 8, r.left + r.width / 2 - w / 2))) + 'px';
+    pop.classList.add('open');
+    paint();
+  }
+  function closePop() { pop.classList.remove('open'); }
+  rings.forEach(function (ring) {
+    ring.addEventListener('click', function (e) {
+      e.stopPropagation();
+      pop.classList.contains('open') ? closePop() : openPop(ring);
+    });
+  });
+  document.addEventListener('click', function (e) {
+    if (pop.classList.contains('open') && !pop.contains(e.target)) closePop();
+  });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closePop(); });
+
+  /* hero weekly-dose row */
+  var rowEl = document.getElementById('dcDoseRow'),
+      rowLive = document.getElementById('dcDoseLiveHome'),
+      rowLbl = document.getElementById('dcDoseLblHome'),
+      rowTime = document.getElementById('dcDoseTimeHome'),
+      rowFill = document.getElementById('dcDoseFillHome');
+
+  function paint() {
+    var o = load();
+    var sec = Math.min(o.s, WEEK_SEC), frac = sec / WEEK_SEC, done = o.s >= WEEK_SEC;
+    var active = isActive() && !done;
+    rings.forEach(function (ring) {
+      ring.querySelector('.dc-dr-fg').style.strokeDashoffset = C * (1 - frac);
+      ring.querySelector('.dc-dr-min').textContent = faNum(Math.floor(sec / 60));
+      ring.classList.toggle('dc-done', done);
+    });
+    if (rowEl) {
+      rowEl.classList.toggle('dc-done', done);
+      rowLbl.textContent = done ? 'دوز این هفته کامل شد ✓' : 'دوز هفتگی شما';
+      rowTime.textContent = fmt(sec) + ' از ۳۵:۰۰';
+      rowFill.style.width = (frac * 100) + '%';
+      rowLive.classList.toggle('on', active);
+    }
+    if (pop.classList.contains('open')) {
+      popTime.textContent = fmt(sec) + ' از ۳۵:۰۰';
+      popFill.style.width = (frac * 100) + '%';
+      popBar.classList.toggle('dc-done', done);
+      popLive.classList.toggle('on', active);
+      popState.textContent = done ? 'دوز این هفته کامل شد ✓'
+        : active ? 'در حال شمارش حضور شما'
+        : 'متوقف — با فعالیت ادامه می‌یابد';
+    }
+  }
+
+  /* heartbeat */
+  setInterval(function () {
+    if (isActive()) {
+      var o = load(), now = Date.now();
+      if (o.s < WEEK_SEC && now - (o.t || 0) >= TICK - 700) {
+        o.s += TICK / 1000;
+        o.t = now;
+        save(o);
+      }
+    }
+    paint();
+  }, TICK);
+  window.addEventListener('storage', function (e) { if (e.key === KEY) paint(); });
+  document.addEventListener('visibilitychange', paint);
+  paint();
 })();
 </script>
 

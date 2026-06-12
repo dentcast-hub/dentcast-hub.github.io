@@ -373,3 +373,99 @@ body.dc-radar-mode { overflow: hidden; }
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+/* =====================================================
+   dcDose — weekly 35-minute presence player
+   A header ring + popover on every internal page. Counts
+   only real presence (tab visible + recent interaction),
+   stored per device in localStorage, week starts Saturday.
+   Injected by dc-nav.js; homepage carries its own copy.
+===================================================== */
+.dc-dose-ring{
+  position:relative;
+  width:34px; height:34px;
+  border-radius:var(--r-f,17px);
+  background:var(--surface2,#f4f7fd);
+  border:1px solid var(--border2,rgba(2,35,96,.06));
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer; padding:0; flex-shrink:0;
+  font-family:inherit;
+  transition:transform .15s ease;
+  -webkit-tap-highlight-color:transparent;
+}
+.dc-dose-ring:active{ transform:scale(.88); }
+.dc-dose-ring svg{ position:absolute; inset:0; width:34px; height:34px; transform:rotate(-90deg); }
+.dc-dose-ring .dc-dr-bg{ fill:none; stroke:rgba(var(--pr-rgb,2,35,96),.12); stroke-width:2.5; }
+.dc-dose-ring .dc-dr-fg{
+  fill:none; stroke:var(--ac,#0b5fff); stroke-width:2.5; stroke-linecap:round;
+  transition:stroke-dashoffset .6s ease, stroke .3s ease;
+}
+.dc-dose-ring .dc-dr-min{ font-size:.56rem; font-weight:900; color:var(--pr,#022360); line-height:1; }
+.dc-dose-ring.dc-done .dc-dr-fg{ stroke:#c49820; }
+.dc-dose-ring.dc-done .dc-dr-min{ color:#c49820; }
+[data-theme="dark"] .dc-dose-ring.dc-done .dc-dr-fg{ stroke:#e3b94a; }
+[data-theme="dark"] .dc-dose-ring.dc-done .dc-dr-min{ color:#e3b94a; }
+
+/* shared dose bar (popover + homepage hero row) */
+.dc-dose-bar{
+  position:relative;
+  height:6px; border-radius:999px;
+  background:rgba(var(--pr-rgb,2,35,96),.08);
+  overflow:hidden;
+}
+.dc-dose-fill{
+  position:absolute; top:0; bottom:0; right:0;
+  width:0%; border-radius:999px;
+  background:linear-gradient(to left,var(--ac,#0b5fff),rgba(var(--ac-rgb,11,95,255),.6));
+  transition:width .6s ease, background .3s ease;
+}
+.dc-done .dc-dose-fill,
+.dc-dose-bar.dc-done .dc-dose-fill{ background:linear-gradient(to left,#c49820,#e3b94a); }
+.dc-dose-tick{
+  position:absolute; top:1px; bottom:1px;
+  width:1.5px; border-radius:1px;
+  background:rgba(var(--pr-rgb,2,35,96),.14);
+}
+.dc-dose-live{
+  width:7px; height:7px; border-radius:50%;
+  background:var(--txt3,#8a9bbf);
+  flex-shrink:0;
+  transition:background .3s ease;
+}
+.dc-dose-live.on{
+  background:#2e7d32;
+  animation:dcDosePulse 1.6s ease-out infinite;
+}
+@keyframes dcDosePulse{
+  0%{ box-shadow:0 0 0 0 rgba(46,125,50,.35); }
+  100%{ box-shadow:0 0 0 7px rgba(46,125,50,0); }
+}
+@media (prefers-reduced-motion:reduce){ .dc-dose-live.on{ animation:none; } }
+
+/* popover */
+.dc-dose-pop{
+  position:fixed; z-index:400;
+  width:232px;
+  background:var(--surface,#fff);
+  border:1px solid var(--border,rgba(2,35,96,.10));
+  border-radius:16px;
+  box-shadow:0 12px 40px rgba(2,8,30,.18);
+  padding:13px 14px 11px;
+  opacity:0; transform:translateY(-6px);
+  pointer-events:none;
+  transition:opacity .22s ease, transform .22s ease;
+}
+.dc-dose-pop.open{ opacity:1; transform:none; pointer-events:auto; }
+.dc-dose-pop-title{ font-size:.72rem; font-weight:900; color:var(--pr,#022360); margin-bottom:7px; }
+.dc-dose-pop-time{ font-size:1.02rem; font-weight:900; color:var(--txt,#16203a); margin-bottom:8px; }
+.dc-dose-pop .dc-dose-bar{ margin-bottom:9px; }
+.dc-dose-pop-status{
+  font-size:.66rem; font-weight:700; color:var(--txt2,#4a5f85);
+  display:flex; align-items:center; gap:6px;
+}
+.dc-dose-pop-note{
+  font-size:.59rem; color:var(--txt3,#8a9bbf); line-height:1.8;
+  margin-top:7px; padding-top:7px;
+  border-top:1px dashed var(--border2,rgba(2,35,96,.06));
+}
+@media print{ .dc-dose-ring,.dc-dose-pop{ display:none; } }

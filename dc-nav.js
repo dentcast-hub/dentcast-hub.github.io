@@ -1742,3 +1742,152 @@
   });
 
 })();
+
+/* =====================================================
+   dcDose — weekly 35-minute presence player
+   Counts the visitor's REAL presence: tab visible AND an
+   interaction within the last 60s. 5s heartbeat; a write
+   lock (o.t) keeps multiple open tabs/frames at the
+   single-tab rate. Stored per device in localStorage,
+   week starts Saturday. UI: a progress ring in the topbar
+   + a tap popover. The homepage runs its own copy of this
+   core against the SAME storage key, so minutes add up
+   across the whole site.
+===================================================== */
+(function () {
+  'use strict';
+  var KEY = 'dcDose', WEEK_SEC = 35 * 60, TICK = 5000;
+
+  function weekId() {
+    var d = new Date(), off = (d.getDay() + 1) % 7; /* days since Saturday */
+    var sat = new Date(d.getFullYear(), d.getMonth(), d.getDate() - off);
+    return sat.getFullYear() + '-' + (sat.getMonth() + 1) + '-' + sat.getDate();
+  }
+  function load() {
+    var o = null;
+    try { o = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) {}
+    if (!o || o.w !== weekId()) o = { w: weekId(), s: 0, t: 0 };
+    return o;
+  }
+  function save(o) { try { localStorage.setItem(KEY, JSON.stringify(o)); } catch (e) {} }
+  function faNum(x) {
+    return String(x).replace(/\d/g, function (d) { return '۰۱۲۳۴۵۶۷۸۹'[d]; });
+  }
+  function fmt(sec) {
+    sec = Math.floor(sec);
+    var m = Math.floor(sec / 60), s = sec % 60;
+    return faNum(m) + ':' + faNum((s < 10 ? '0' : '') + s);
+  }
+
+  var lastAct = Date.now();
+  function poke() { lastAct = Date.now(); }
+  ['scroll', 'touchstart', 'pointerdown', 'keydown', 'mousemove', 'click'].forEach(function (ev) {
+    window.addEventListener(ev, poke, { passive: true });
+  });
+  function isActive() {
+    return document.visibilityState === 'visible' && (Date.now() - lastAct) < 60000;
+  }
+
+  function ready(fn) {
+    if (document.readyState !== 'loading') fn();
+    else document.addEventListener('DOMContentLoaded', fn);
+  }
+
+  ready(function () {
+    /* ── ring in every topbar actions cluster ── */
+    var R = 14, C = 2 * Math.PI * R;
+    var ticksHtml = '';
+    for (var m5 = 5; m5 <= 30; m5 += 5) {
+      ticksHtml += '<span class="dc-dose-tick" style="right:' + (m5 / 35 * 100).toFixed(2) + '%"></span>';
+    }
+    var rings = [];
+    Array.prototype.forEach.call(document.querySelectorAll('.dc-topbar-actions'), function (bar) {
+      if (bar.querySelector('.dc-dose-ring')) return;
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'dc-dose-ring';
+      b.setAttribute('aria-label', 'دوز هفتگی دنت‌کست');
+      b.innerHTML =
+        '<svg viewBox="0 0 34 34" aria-hidden="true">' +
+        '<circle class="dc-dr-bg" cx="17" cy="17" r="' + R + '"/>' +
+        '<circle class="dc-dr-fg" cx="17" cy="17" r="' + R + '" stroke-dasharray="' + C + ' ' + C + '" stroke-dashoffset="' + C + '"/>' +
+        '</svg><span class="dc-dr-min">۰</span>';
+      bar.appendChild(b);
+      rings.push(b);
+    });
+    if (!rings.length) return;
+
+    /* ── popover (one per page) ── */
+    var pop = document.createElement('div');
+    pop.className = 'dc-dose-pop';
+    pop.innerHTML =
+      '<div class="dc-dose-pop-title">دوز هفتگی دنت‌کست</div>' +
+      '<div class="dc-dose-pop-time">—</div>' +
+      '<div class="dc-dose-bar"><div class="dc-dose-fill"></div>' + ticksHtml + '</div>' +
+      '<div class="dc-dose-pop-status"><span class="dc-dose-live"></span><span class="dc-dose-pop-state">—</span></div>' +
+      '<div class="dc-dose-pop-note">حضور فعال شما در دنت‌کست؛ ذخیره روی همین دستگاه · هفته از شنبه</div>';
+    document.body.appendChild(pop);
+    var popTime = pop.querySelector('.dc-dose-pop-time'),
+        popFill = pop.querySelector('.dc-dose-fill'),
+        popLive = pop.querySelector('.dc-dose-live'),
+        popState = pop.querySelector('.dc-dose-pop-state'),
+        popBar = pop.querySelector('.dc-dose-bar');
+
+    function openPop(ring) {
+      var r = ring.getBoundingClientRect();
+      var w = 232, vw = window.innerWidth;
+      pop.style.top = Math.round(r.bottom + 8) + 'px';
+      pop.style.left = Math.round(Math.max(8, Math.min(vw - w - 8, r.left + r.width / 2 - w / 2))) + 'px';
+      pop.classList.add('open');
+      paint();
+    }
+    function closePop() { pop.classList.remove('open'); }
+    rings.forEach(function (ring) {
+      ring.addEventListener('click', function (e) {
+        e.stopPropagation();
+        pop.classList.contains('open') ? closePop() : openPop(ring);
+      });
+    });
+    document.addEventListener('click', function (e) {
+      if (pop.classList.contains('open') && !pop.contains(e.target)) closePop();
+    });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closePop(); });
+
+    /* ── paint everything from storage ── */
+    function paint() {
+      var o = load();
+      var sec = Math.min(o.s, WEEK_SEC), frac = sec / WEEK_SEC, done = o.s >= WEEK_SEC;
+      var active = isActive() && !done;
+      rings.forEach(function (ring) {
+        ring.querySelector('.dc-dr-fg').style.strokeDashoffset = C * (1 - frac);
+        ring.querySelector('.dc-dr-min').textContent = faNum(Math.floor(sec / 60));
+        ring.classList.toggle('dc-done', done);
+      });
+      if (pop.classList.contains('open')) {
+        popTime.textContent = fmt(sec) + ' از ۳۵:۰۰';
+        popFill.style.width = (frac * 100) + '%';
+        popBar.classList.toggle('dc-done', done);
+        popLive.classList.toggle('on', active);
+        popState.textContent = done ? 'دوز این هفته کامل شد ✓'
+          : active ? 'در حال شمارش حضور شما'
+          : 'متوقف — با فعالیت ادامه می‌یابد';
+      }
+    }
+
+    /* ── heartbeat: count presence, multi-tab safe ── */
+    setInterval(function () {
+      if (isActive()) {
+        var o = load(), now = Date.now();
+        if (o.s < WEEK_SEC && now - (o.t || 0) >= TICK - 700) {
+          o.s += TICK / 1000;
+          o.t = now;
+          save(o);
+        }
+      }
+      paint();
+    }, TICK);
+    window.addEventListener('storage', function (e) { if (e.key === KEY) paint(); });
+    document.addEventListener('visibilitychange', paint);
+    paint();
+  });
+})();
