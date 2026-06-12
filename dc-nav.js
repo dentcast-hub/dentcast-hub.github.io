@@ -1742,3 +1742,169 @@
   });
 
 })();
+
+/* =====================================================
+   dc-readcirc — reading-progress circuit (35-min week)
+   The weekly DentCast dose is 35 minutes. The rail maps
+   those 35 minutes head-to-toe with a tick every 5; this
+   article lights up only its own share as you scroll (a
+   7-minute read fills 7/35 of the trace), and its solder
+   pad marks where today's reading ends inside the week.
+   Same PCB language as the patients cinematic circuit.
+   Injected only on long-form article pages (skips lists,
+   short pages, and iframes).
+===================================================== */
+(function () {
+  'use strict';
+  if (window !== window.top) return;
+
+  function ready(fn) {
+    if (document.readyState !== 'loading') fn();
+    else document.addEventListener('DOMContentLoaded', fn);
+  }
+
+  ready(function () {
+    if (document.getElementById('dc-readcirc')) return;
+    var scope = document.querySelector('main.article-content-wrap, article, main');
+    if (!scope) return;
+    var doc = document.documentElement;
+    if ((doc.scrollHeight - window.innerHeight) < window.innerHeight * 0.7) return;
+
+    /* reading time from real prose only */
+    var blocks = scope.querySelectorAll('p,blockquote,h2,h3,li');
+    var words = 0;
+    for (var i = 0; i < blocks.length; i++) {
+      var el = blocks[i];
+      if (el.tagName === 'LI' && el.querySelector('p')) continue;
+      if (el.closest('nav,header,footer')) continue;
+      words += (el.textContent || '').split(/\s+/).filter(Boolean).length;
+    }
+    if (words < 200) return;
+    var WEEK = 35;
+    var MIN = Math.max(1, Math.min(WEEK, Math.round(words / 170)));
+
+    function fa(n) {
+      return String(n).replace(/\d/g, function (d) { return '۰۱۲۳۴۵۶۷۸۹'[d]; });
+    }
+
+    var NS = 'http://www.w3.org/2000/svg';
+    function mk(tag, cls, parent) {
+      var e = document.createElementNS(NS, tag);
+      if (cls) e.setAttribute('class', cls);
+      if (parent) parent.appendChild(e);
+      return e;
+    }
+
+    var wrap = document.createElement('div');
+    wrap.id = 'dc-readcirc';
+    wrap.setAttribute('aria-hidden', 'true');
+    var svg = mk('svg', null, null);
+    wrap.appendChild(svg);
+    var base = mk('path', 'dc-rc-base', svg);
+    var ticksG = mk('g', null, svg);
+    var lit = mk('path', 'dc-rc-lit', svg);
+    var pad = mk('g', 'dc-rc-pad', svg);
+    var padRing = mk('circle', 'dc-rc-pad-ring', pad); padRing.setAttribute('r', '4.5');
+    var padCore = mk('circle', 'dc-rc-pad-core', pad); padCore.setAttribute('r', '1.8');
+    var sig = mk('circle', 'dc-rc-sig', svg);
+    sig.setAttribute('r', '2.2');
+    sig.setAttribute('transform', 'translate(-30 -300)');
+    var chip = document.createElement('div');
+    chip.className = 'dc-readcirc-chip';
+    chip.innerHTML = '<b>۰</b> از ' + fa(WEEK) + ' دقیقهٔ هفتگی';
+    wrap.appendChild(chip);
+    document.body.appendChild(wrap);
+    var chipNum = chip.querySelector('b');
+
+    var AX = 7, J = 3;
+    var verts = [], tot = 0, H = 0, yTop = 8, yBot = 0;
+
+    function yOf(min) { return yTop + (min / WEEK) * (yBot - yTop); }
+
+    /* point + arc length at a given y (path is monotonic in y) */
+    function at(y) {
+      if (!verts.length) return { x: AX, y: 0, len: 0 };
+      if (y <= verts[0].y) return verts[0];
+      for (var i = 1; i < verts.length; i++) {
+        var a = verts[i - 1], b = verts[i];
+        if (y <= b.y) {
+          var t = (b.y === a.y) ? 1 : (y - a.y) / (b.y - a.y);
+          var seg = Math.sqrt((b.x - a.x) * (b.x - a.x) + (b.y - a.y) * (b.y - a.y));
+          return { x: a.x + (b.x - a.x) * t, y: y, len: a.len + seg * t };
+        }
+      }
+      return verts[verts.length - 1];
+    }
+
+    function build() {
+      H = Math.round(wrap.clientHeight);
+      if (H < 160) { tot = 0; return; }
+      yBot = H - 8;
+      var yT = yOf(MIN);
+      svg.setAttribute('viewBox', '0 0 14 ' + H);
+      svg.setAttribute('height', H);
+      verts = [{ x: AX, y: yTop, len: 0 }];
+      var d = 'M' + AX + ' ' + yTop;
+      function add(x, y) {
+        var a = verts[verts.length - 1];
+        verts.push({ x: x, y: y, len: a.len + Math.sqrt((x - a.x) * (x - a.x) + (y - a.y) * (y - a.y)) });
+        d += ' L' + x + ' ' + y;
+      }
+      /* two gentle elbows give the rail its board feel — skipped when the
+         article's own pad would sit inside the bend */
+      var elbows = [{ c: yOf(11), dir: 1 }, { c: yOf(23), dir: -1 }];
+      elbows.forEach(function (e) {
+        if (Math.abs(e.c - yT) < 22) return;
+        if (e.c - 9 - J <= verts[verts.length - 1].y) return;
+        var x = AX + e.dir * J;
+        add(AX, e.c - 6 - J); add(x, e.c - 6); add(x, e.c + 6); add(AX, e.c + 6 + J);
+      });
+      add(AX, yBot);
+      tot = verts[verts.length - 1].len;
+      base.setAttribute('d', d);
+      lit.setAttribute('d', d);
+      lit.style.strokeDasharray = tot + ' ' + tot;
+      lit.style.strokeDashoffset = tot;
+      /* 5-minute ticks + week start/end caps */
+      ticksG.innerHTML = '';
+      for (var m = 0; m <= WEEK; m += 5) {
+        var y = yOf(m);
+        if (Math.abs(y - yT) < 9) continue;
+        var p = at(y);
+        var c = mk('circle', m === 0 || m === WEEK ? 'dc-rc-cap' : 'dc-rc-tick', ticksG);
+        c.setAttribute('cx', p.x); c.setAttribute('cy', y);
+        c.setAttribute('r', m === 0 || m === WEEK ? 2 : 1.4);
+      }
+      var pT = at(yT);
+      pad.setAttribute('transform', 'translate(' + pT.x + ' ' + yT + ')');
+      upd();
+    }
+
+    var lastShown = -1, ticking = false;
+    function upd() {
+      ticking = false;
+      if (!tot) return;
+      var max = doc.scrollHeight - window.innerHeight;
+      if (max <= 0) return;
+      var sc = window.pageYOffset || doc.scrollTop || 0;
+      var s = Math.max(0, Math.min(1, sc / max));
+      var m = s * MIN;
+      var pt = at(yOf(m));
+      lit.style.strokeDashoffset = (tot - pt.len);
+      sig.setAttribute('transform', 'translate(' + pt.x + ' ' + pt.y + ')');
+      wrap.classList.toggle('live', sc > 120);
+      wrap.classList.toggle('done', s >= 0.985);
+      var shown = Math.min(MIN, Math.round(m));
+      if (shown !== lastShown) { lastShown = shown; chipNum.textContent = fa(shown); }
+    }
+
+    window.addEventListener('scroll', function () {
+      if (!ticking) { ticking = true; requestAnimationFrame(upd); }
+    }, { passive: true });
+    var rsT = null;
+    window.addEventListener('resize', function () {
+      clearTimeout(rsT); rsT = setTimeout(build, 120);
+    });
+    build();
+  });
+})();
