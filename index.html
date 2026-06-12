@@ -3290,9 +3290,9 @@ a.dc-list-card--pillar {
           <span class="dc-home-hero-prog" id="dcHeroProg" aria-hidden="true"></span>
         </div>
         <!-- weekly dose — the visitor's 35-minute presence player -->
-        <div class="dc-dose-row" id="dcDoseRow" aria-label="دوز هفتگی شما">
+        <div class="dc-dose-row" id="dcDoseRow" aria-label="یادگیری هفتگی شما">
           <div class="dc-dose-head">
-            <span class="dc-dose-lbl"><span class="dc-dose-live" id="dcDoseLiveHome"></span><span id="dcDoseLblHome">دوز هفتگی شما</span></span>
+            <span class="dc-dose-lbl"><span class="dc-dose-live" id="dcDoseLiveHome"></span><span id="dcDoseLblHome">یادگیری هفتگی شما</span></span>
             <span class="dc-dose-time" id="dcDoseTimeHome">۰:۰۰ از ۳۵:۰۰</span>
           </div>
           <div class="dc-dose-bar" id="dcDoseBarHome">
@@ -5583,7 +5583,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
     var b = document.createElement('button');
     b.type = 'button';
     b.className = 'dc-dose-ring';
-    b.setAttribute('aria-label', 'دوز هفتگی دنت‌کست');
+    b.setAttribute('aria-label', 'یادگیری هفتگی شما در دنت‌کست');
     b.innerHTML =
       '<svg viewBox="0 0 34 34" aria-hidden="true">' +
       '<circle class="dc-dr-bg" cx="17" cy="17" r="' + R + '"/>' +
@@ -5597,11 +5597,11 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
   var pop = document.createElement('div');
   pop.className = 'dc-dose-pop';
   pop.innerHTML =
-    '<div class="dc-dose-pop-title">دوز هفتگی دنت‌کست</div>' +
+    '<div class="dc-dose-pop-title">یادگیری هفتگی شما با دنت‌کست</div>' +
     '<div class="dc-dose-pop-time">—</div>' +
     '<div class="dc-dose-bar"><div class="dc-dose-fill"></div>' + ticksHtml + '</div>' +
     '<div class="dc-dose-pop-status"><span class="dc-dose-live"></span><span class="dc-dose-pop-state">—</span></div>' +
-    '<div class="dc-dose-pop-note">حضور فعال شما در دنت‌کست؛ ذخیره روی همین دستگاه · هفته از شنبه</div>';
+    '<div class="dc-dose-pop-note">زمان حضور فعال شما در دنت‌کست — خواندن یا شنیدن. ذخیره روی همین دستگاه · هفته از شنبه</div>';
   document.body.appendChild(pop);
   var popTime = pop.querySelector('.dc-dose-pop-time'),
       popFill = pop.querySelector('.dc-dose-fill'),
@@ -5647,7 +5647,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
     });
     if (rowEl) {
       rowEl.classList.toggle('dc-done', done);
-      rowLbl.textContent = done ? 'دوز این هفته کامل شد ✓' : 'دوز هفتگی شما';
+      rowLbl.textContent = done ? 'یادگیری این هفته کامل شد ✓' : 'یادگیری هفتگی شما';
       rowTime.textContent = fmt(sec) + ' از ۳۵:۰۰';
       rowFill.style.width = (frac * 100) + '%';
       rowLive.classList.toggle('on', active);
@@ -5657,7 +5657,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
       popFill.style.width = (frac * 100) + '%';
       popBar.classList.toggle('dc-done', done);
       popLive.classList.toggle('on', active);
-      popState.textContent = done ? 'دوز این هفته کامل شد ✓'
+      popState.textContent = done ? 'یادگیری این هفته کامل شد ✓'
         : active ? 'در حال شمارش حضور شما'
         : 'متوقف — با فعالیت ادامه می‌یابد';
     }
