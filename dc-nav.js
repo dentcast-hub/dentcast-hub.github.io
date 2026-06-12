@@ -1854,6 +1854,16 @@
     });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closePop(); });
 
+    /* at 70 minutes — double the goal — the presence dot becomes a tiny heart */
+    var HEART_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.6-4.7-10.1-9.3C.5 8.4 2.6 4.9 6 4.9c2 0 3.4 1.1 4.2 2.4L12 9l1.8-1.7c.8-1.3 2.2-2.4 4.2-2.4 3.4 0 5.5 3.5 4.1 6.8C19.6 16.3 12 21 12 21z"/></svg>';
+    function setLive(el, active, loved) {
+      if (!el) return;
+      if (loved && !el.dataset.h) { el.dataset.h = '1'; el.innerHTML = HEART_SVG; }
+      else if (!loved && el.dataset.h) { el.dataset.h = ''; el.innerHTML = ''; }
+      el.classList.toggle('dc-heart', loved);
+      el.classList.toggle('on', active);
+    }
+
     /* ── paint everything from storage ── */
     function paint() {
       var o = load();
@@ -1861,6 +1871,7 @@
          clock keeps counting and the player stays alive past the goal */
       var sec = Math.min(o.s, WEEK_SEC), frac = sec / WEEK_SEC, done = o.s >= WEEK_SEC;
       var active = isActive();
+      var loved = o.s >= WEEK_SEC * 2;
       rings.forEach(function (ring) {
         ring.querySelector('.dc-dr-fg').style.strokeDashoffset = C * (1 - frac);
         ring.querySelector('.dc-dr-min').textContent = faNum(Math.floor(o.s / 60));
@@ -1870,7 +1881,7 @@
         popTime.textContent = done ? fmt(o.s) + ' ✓' : fmt(o.s) + ' از ۳۵:۰۰';
         popFill.style.width = (frac * 100) + '%';
         popBar.classList.toggle('dc-done', done);
-        popLive.classList.toggle('on', active);
+        setLive(popLive, active, loved);
         /* crossed 5-min milestones leave their tick lit */
         for (var ti = 0; ti < popTicks.length; ti++) {
           popTicks[ti].classList.toggle('on', sec >= (ti + 1) * 300);

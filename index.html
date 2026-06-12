@@ -2430,6 +2430,21 @@ body.dc-desktop-ui #dc-desktop-root{
   100%{ box-shadow:0 0 0 7px rgba(46,125,50,0); }
 }
 @media (prefers-reduced-motion:reduce){ .dc-dose-live.on{ animation:none; } }
+/* at 70 minutes — double the goal — the dot becomes a tiny beating heart */
+.dc-dose-live.dc-heart{
+  background:none; border-radius:0;
+  width:11px; height:11px;
+  color:#f56a79;
+  display:inline-flex; align-items:center; justify-content:center;
+}
+[data-theme="dark"] .dc-dose-live.dc-heart{ color:#ff7a8a; }
+.dc-dose-live.dc-heart svg{ width:11px; height:11px; fill:currentColor; display:block; }
+.dc-dose-live.dc-heart.on{ background:none; animation:dcHeartBeat 1.4s ease-in-out infinite; }
+@keyframes dcHeartBeat{
+  0%,100%{ transform:scale(1); }
+  50%{ transform:scale(1.25); }
+}
+@media (prefers-reduced-motion:reduce){ .dc-dose-live.dc-heart.on{ animation:none; } }
 
 .dc-dose-pop{
   position:fixed; z-index:400;
@@ -5683,12 +5698,23 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
     }
   }
 
+  /* at 70 minutes — double the goal — the presence dot becomes a tiny heart */
+  var HEART_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.6-4.7-10.1-9.3C.5 8.4 2.6 4.9 6 4.9c2 0 3.4 1.1 4.2 2.4L12 9l1.8-1.7c.8-1.3 2.2-2.4 4.2-2.4 3.4 0 5.5 3.5 4.1 6.8C19.6 16.3 12 21 12 21z"/></svg>';
+  function setLive(el, active, loved) {
+    if (!el) return;
+    if (loved && !el.dataset.h) { el.dataset.h = '1'; el.innerHTML = HEART_SVG; }
+    else if (!loved && el.dataset.h) { el.dataset.h = ''; el.innerHTML = ''; }
+    el.classList.toggle('dc-heart', loved);
+    el.classList.toggle('on', active);
+  }
+
   function paint() {
     var o = load();
     /* 35:00 is the GOAL, not a ceiling: the bar/ring saturate at 35 but the
        clock keeps counting and the player stays alive past the goal */
     var sec = Math.min(o.s, WEEK_SEC), frac = sec / WEEK_SEC, done = o.s >= WEEK_SEC;
     var active = isActive();
+    var loved = o.s >= WEEK_SEC * 2;
     rings.forEach(function (ring) {
       ring.querySelector('.dc-dr-fg').style.strokeDashoffset = C * (1 - frac);
       ring.querySelector('.dc-dr-min').textContent = faNum(Math.floor(o.s / 60));
@@ -5699,7 +5725,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
       rowLbl.textContent = done ? 'یادگیری این هفته کامل شد ✓' : 'یادگیری هفتگی شما';
       rowTime.textContent = done ? fmt(o.s) + ' ✓' : fmt(o.s) + ' از ۳۵:۰۰';
       rowFill.style.width = (frac * 100) + '%';
-      rowLive.classList.toggle('on', active);
+      setLive(rowLive, active, loved);
       lightTicks(rowTicks, sec);
       if (rowState) {
         rowState.textContent = active ? 'در حال شمارش حضور شما'
@@ -5710,7 +5736,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
       popTime.textContent = done ? fmt(o.s) + ' ✓' : fmt(o.s) + ' از ۳۵:۰۰';
       popFill.style.width = (frac * 100) + '%';
       popBar.classList.toggle('dc-done', done);
-      popLive.classList.toggle('on', active);
+      setLive(popLive, active, loved);
       lightTicks(popTicks, sec);
       popState.textContent = !active ? 'متوقف — با فعالیت ادامه می‌یابد'
         : done ? 'یادگیری این هفته کامل شد ✓'

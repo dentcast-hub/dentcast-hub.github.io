@@ -490,3 +490,19 @@ body.dc-radar-mode { overflow: hidden; }
   .dc-dose-bar.dc-cele{ animation:none; }
   .dc-dose-ring.dc-pop{ animation:none; }
 }
+
+/* dcDose — at 70 minutes (double the goal) the dot becomes a tiny beating heart */
+.dc-dose-live.dc-heart{
+  background:none; border-radius:0;
+  width:11px; height:11px;
+  color:#f56a79;
+  display:inline-flex; align-items:center; justify-content:center;
+}
+[data-theme="dark"] .dc-dose-live.dc-heart{ color:#ff7a8a; }
+.dc-dose-live.dc-heart svg{ width:11px; height:11px; fill:currentColor; display:block; }
+.dc-dose-live.dc-heart.on{ background:none; animation:dcHeartBeat 1.4s ease-in-out infinite; }
+@keyframes dcHeartBeat{
+  0%,100%{ transform:scale(1); }
+  50%{ transform:scale(1.25); }
+}
+@media (prefers-reduced-motion:reduce){ .dc-dose-live.dc-heart.on{ animation:none; } }
