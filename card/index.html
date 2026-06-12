@@ -699,18 +699,49 @@
       }
     }
 
-    /* --- vCard guidance ---
+    /* --- vCard guidance + MIME guard ---
        Browsers cannot write to the phone's contacts directly, so the .vcf
-       download is the only mechanism. iOS Safari opens it as a contact sheet
-       by itself; on Android the patient must tap the download notification —
-       show a plain-language hint for the next step right after the tap. */
-    var saveBtn = document.querySelector('a[data-track="vcard"]');
-    saveBtn.addEventListener('click', function () {
+       download is the only mechanism. On hosts that serve the file with the
+       right type (text/vcard — e.g. GitHub Pages) the native navigation is
+       best: iOS Safari opens the contact sheet in one tap. The .ir mirror's
+       host may serve it as application/octet-stream, which breaks that AND
+       leaves Android unable to open the downloaded file — so we probe the
+       served Content-Type once, and when it's wrong we rebuild the file
+       client-side as a text/vcard Blob so the OS always knows it's a contact. */
+    var VCF_URL = '/card/dr-foad-shahabian.vcf';
+    var vcfServedWrong = false;
+    if (window.fetch) {
+      fetch(VCF_URL, { method: 'HEAD' }).then(function (r) {
+        var ct = (r.headers.get('content-type') || '').toLowerCase();
+        vcfServedWrong = ct.indexOf('vcard') === -1;
+      }).catch(function () {});
+    }
+
+    function showSaveHint() {
       var isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent);
       document.getElementById('save-hint-text').textContent = isIOS
-        ? 'در صفحه‌ای که باز می‌شود، گزینهٔ «ایجاد مخاطب جدید» (Create New Contact) را بزنید. اگر چیزی باز نشد، فایل دانلودشده را لمس کنید.'
-        : 'فایل مخاطب آماده شد ✓ روی اعلان دانلود (نوار بالا یا پایین صفحه) بزنید تا «دکتر فؤاد شهابیان» در مخاطبین گوشی ذخیره شود.';
-      document.getElementById('save-hint').hidden = false;
+        ? 'اگر کارت مخاطب باز شد، «ایجاد مخاطب جدید» را بزنید. اگر دانلود شد، روی آیکن دانلود (فلش آبی بالای صفحه) و سپس روی فایل بزنید.'
+        : 'فایل مخاطب آماده شد ✓ روی اعلان دانلود (بالای صفحه یا نوار پایین مرورگر) بزنید تا «دکتر فؤاد شهابیان» در مخاطبین گوشی ذخیره شود.';
+      var hint = document.getElementById('save-hint');
+      hint.hidden = false;
+      if (navigator.vibrate) { navigator.vibrate(60); }
+    }
+
+    var saveBtn = document.querySelector('a[data-track="vcard"]');
+    saveBtn.addEventListener('click', function (ev) {
+      showSaveHint();
+      if (!vcfServedWrong || !window.fetch) { return; } // server type is fine → native flow
+      ev.preventDefault();
+      fetch(VCF_URL).then(function (r) { return r.text(); }).then(function (text) {
+        var url = URL.createObjectURL(new Blob([text], { type: 'text/vcard;charset=utf-8' }));
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'dr-foad-shahabian.vcf';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(function () { URL.revokeObjectURL(url); }, 60000);
+      }).catch(function () { window.location.href = VCF_URL; });
     });
 
     document.getElementById('copy-addr').addEventListener('click', function () {
