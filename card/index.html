@@ -236,6 +236,30 @@
   .tools .btn .label{ font-size:.92rem; }
   .tools .btn:active{ background:var(--bg); filter:none; }
 
+  /* Post-tap guidance for the vCard download — patients may not know what a
+     downloaded .vcf is, so spell out the next step per platform. */
+  .save-hint{
+    display:flex;
+    align-items:flex-start;
+    gap:9px;
+    margin:10px 2px 0;
+    padding:11px 14px;
+    font-size:.83rem;
+    font-weight:500;
+    line-height:1.7;
+    color:var(--ink);
+    background:var(--bg);
+    border:1px solid var(--line-soft);
+    border-radius:12px;
+  }
+  .save-hint svg{
+    flex:0 0 auto;
+    width:17px; height:17px;
+    margin-top:.22em;
+    stroke:var(--link);
+    fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round;
+  }
+
   /* ===== 3 · ADDRESS ===== */
   .address{ margin-top:18px; }
   .addr-panel{
@@ -556,6 +580,12 @@
           <span class="txt"><span class="label">اشتراک‌گذاری</span></span>
         </button>
       </div>
+
+      <!-- Filled by JS right after the vCard tap, with platform-specific wording. -->
+      <p class="save-hint" id="save-hint" role="status" aria-live="polite" hidden>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+        <span id="save-hint-text"></span>
+      </p>
     </nav>
 
     <!-- 3 · ADDRESS (written address for ride-hailing apps + one-tap copy) -->
@@ -668,6 +698,20 @@
         document.body.removeChild(ta);
       }
     }
+
+    /* --- vCard guidance ---
+       Browsers cannot write to the phone's contacts directly, so the .vcf
+       download is the only mechanism. iOS Safari opens it as a contact sheet
+       by itself; on Android the patient must tap the download notification —
+       show a plain-language hint for the next step right after the tap. */
+    var saveBtn = document.querySelector('a[data-track="vcard"]');
+    saveBtn.addEventListener('click', function () {
+      var isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent);
+      document.getElementById('save-hint-text').textContent = isIOS
+        ? 'در صفحه‌ای که باز می‌شود، گزینهٔ «ایجاد مخاطب جدید» (Create New Contact) را بزنید. اگر چیزی باز نشد، فایل دانلودشده را لمس کنید.'
+        : 'فایل مخاطب آماده شد ✓ روی اعلان دانلود (نوار بالا یا پایین صفحه) بزنید تا «دکتر فؤاد شهابیان» در مخاطبین گوشی ذخیره شود.';
+      document.getElementById('save-hint').hidden = false;
+    });
 
     document.getElementById('copy-addr').addEventListener('click', function () {
       copyText(document.getElementById('addr-text').textContent, 'آدرس کپی شد ✓');
