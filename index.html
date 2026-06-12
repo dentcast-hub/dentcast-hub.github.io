@@ -2005,52 +2005,56 @@ body.dc-desktop-ui #dc-desktop-root{
   pointer-events:none;
   z-index:2;
 }
-/* progress rail — chapter-marked, GPU-composited fill + glowing head */
-.pt-progress{
+/* progress circuit — a PCB-style trace beside the film. The path is built in
+   JS to the rail's real pixel height (crisp 45° elbows, no viewBox stretch);
+   the lit run is animated with stroke-dashoffset and a glowing signal dot
+   rides the trace via getPointAtLength. Four solder-pad nodes (tooth /
+   headphones / book / phone) light up as the story reaches each scene. */
+.pt-circuit{
   position:absolute;
-  top:16px; right:12px;
-  width:3px;
+  top:16px; right:2px;
+  width:22px;
   height:calc(100% - 32px);
   z-index:20;
   pointer-events:none;
 }
-.pt-progress-rail{
-  position:absolute; inset:0;
-  background:rgba(255,255,255,.13);
-  border-radius:999px;
-  overflow:hidden;
+.pt-circuit svg{ display:block; width:22px; overflow:visible; }
+.pt-trace-stubs{ fill:none; stroke:rgba(255,255,255,.10); stroke-width:1.4; }
+.pt-via{ fill:rgba(255,255,255,.14); }
+.pt-trace-base{ fill:none; stroke:rgba(255,255,255,.14); stroke-width:1.6; stroke-linejoin:round; }
+.pt-trace-lit{
+  fill:none;
+  stroke:rgba(214,230,255,.95);
+  stroke-width:1.6;
+  stroke-linejoin:round;
+  filter:drop-shadow(0 0 3px rgba(170,200,255,.8));
+  will-change:stroke-dashoffset;
 }
-.pt-progress-fill{
-  width:100%; height:100%;
-  background:linear-gradient(to bottom,rgba(170,200,255,.95),rgba(255,255,255,.95));
-  border-radius:999px;
-  transform:scaleY(0);
-  transform-origin:top center;
-  will-change:transform;
+.pt-signal{ fill:#fff; filter:drop-shadow(0 0 6px rgba(190,215,255,.95)); opacity:0; transition:opacity .25s ease; }
+.pt-node-bg{ fill:rgba(8,12,22,.62); }
+.pt-node-ring{ fill:none; stroke:rgba(255,255,255,.30); stroke-width:1.3; transition:stroke .3s ease; }
+.pt-node-ico{
+  stroke:rgba(255,255,255,.42); fill:none;
+  stroke-width:1.3; stroke-linecap:round; stroke-linejoin:round;
+  transition:stroke .3s ease;
 }
-.pt-progress-head{
-  position:absolute;
-  top:0; left:50%;
-  width:7px; height:7px;
-  margin:-3.5px 0 0 -3.5px;
-  border-radius:50%;
-  background:#fff;
-  box-shadow:0 0 10px 2px rgba(178,205,255,.65);
-  will-change:transform;
+.pt-node-scale{
+  transition:transform .35s cubic-bezier(.34,1.56,.64,1);
+  transform-box:fill-box; transform-origin:center;
 }
-.pt-chapter{
-  position:absolute;
-  left:50%;
-  width:5px; height:5px;
-  margin:-2.5px 0 0 -2.5px;
-  border-radius:50%;
-  background:rgba(255,255,255,.28);
-  transition:background .3s ease,box-shadow .3s ease,transform .3s ease;
+.pt-node.on .pt-node-ring{ stroke:rgba(255,255,255,.9); }
+.pt-node.on .pt-node-ico{ stroke:#fff; }
+.pt-node.on{ filter:drop-shadow(0 0 5px rgba(170,200,255,.65)); }
+.pt-node.cur .pt-node-scale{ transform:scale(1.3); }
+.pt-node-halo{ fill:none; stroke:rgba(190,215,255,0); transform-box:fill-box; transform-origin:center; }
+.pt-node.cur .pt-node-halo{ animation:ptHalo .7s ease-out both; }
+@keyframes ptHalo{
+  0%{ transform:scale(.6); stroke:rgba(190,215,255,.7); }
+  100%{ transform:scale(1.9); stroke:rgba(190,215,255,0); }
 }
-.pt-chapter.on{
-  background:#fff;
-  box-shadow:0 0 8px rgba(178,205,255,.8);
-  transform:scale(1.25);
+@media (prefers-reduced-motion:reduce){
+  .pt-node-scale,.pt-node-ring,.pt-node-ico{ transition:none; }
+  .pt-node.cur .pt-node-halo{ animation:none; }
 }
 /* scenes — shared base. All scenes share one 20px gutter grid and one
    centered content column so every box lines up on the same axis. */
@@ -3529,16 +3533,43 @@ a.dc-list-card--pillar {
             <div class="pt-grad-bottom" id="pt-grad-bottom"></div>
             <div class="pt-vignette"></div>
 
-            <!-- PROGRESS RAIL — chapter dots mark the 4 scenes -->
-            <div class="pt-progress" id="pt-progress" aria-hidden="true">
-              <div class="pt-progress-rail">
-                <div class="pt-progress-fill" id="pt-progress-fill"></div>
-              </div>
-              <span class="pt-chapter" style="top:0%"></span>
-              <span class="pt-chapter" style="top:27%"></span>
-              <span class="pt-chapter" style="top:60%"></span>
-              <span class="pt-chapter" style="top:94%"></span>
-              <div class="pt-progress-head" id="pt-progress-head"></div>
+            <!-- PROGRESS CIRCUIT — PCB trace with 4 story nodes (path built in JS) -->
+            <div class="pt-circuit" id="pt-circuit" aria-hidden="true">
+              <svg id="pt-circuit-svg" xmlns="http://www.w3.org/2000/svg">
+                <path class="pt-trace-stubs" id="pt-trace-stubs" d=""/>
+                <g id="pt-vias"></g>
+                <path class="pt-trace-base" id="pt-trace-base" d=""/>
+                <path class="pt-trace-lit" id="pt-trace-lit" d=""/>
+                <g class="pt-node" id="pt-node-0"><!-- tooth: the journey starts at the clinic -->
+                  <circle class="pt-node-halo" r="9"/>
+                  <g class="pt-node-scale">
+                    <circle class="pt-node-bg" r="9"/><circle class="pt-node-ring" r="9"/>
+                    <g class="pt-node-ico" transform="scale(.5) translate(-12 -12)"><path vector-effect="non-scaling-stroke" d="M12 4.2c-1.7 0-2.5.9-4.3.9C5.2 5.1 4 7 4 9.4c0 3.9 1.9 5.3 2.7 9.6.3 1.7 2.1 1.7 2.4 0 .3-1.6.9-3.2 2.9-3.2s2.6 1.6 2.9 3.2c.3 1.7 2.1 1.7 2.4 0 .8-4.3 2.7-5.7 2.7-9.6 0-2.4-1.2-4.3-3.7-4.3-1.8 0-2.6-.9-4.3-.9z"/></g>
+                  </g>
+                </g>
+                <g class="pt-node" id="pt-node-1"><!-- headphones: LiteCast learning -->
+                  <circle class="pt-node-halo" r="9"/>
+                  <g class="pt-node-scale">
+                    <circle class="pt-node-bg" r="9"/><circle class="pt-node-ring" r="9"/>
+                    <g class="pt-node-ico" transform="scale(.5) translate(-12 -12)"><path vector-effect="non-scaling-stroke" d="M4 19v-6a8 8 0 0 1 16 0v6M4 15h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H4v-5zM20 15h-2a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h2v-5z"/></g>
+                  </g>
+                </g>
+                <g class="pt-node" id="pt-node-2"><!-- open book: suggested reading -->
+                  <circle class="pt-node-halo" r="9"/>
+                  <g class="pt-node-scale">
+                    <circle class="pt-node-bg" r="9"/><circle class="pt-node-ring" r="9"/>
+                    <g class="pt-node-ico" transform="scale(.5) translate(-12 -12)"><path vector-effect="non-scaling-stroke" d="M12 6.7A3.7 3.7 0 0 0 8.3 3H3v14.5h6a3 3 0 0 1 3 3 3 3 0 0 1 3-3h6V3h-5.3A3.7 3.7 0 0 0 12 6.7zM12 6.7v13.8"/></g>
+                  </g>
+                </g>
+                <g class="pt-node" id="pt-node-3"><!-- phone: book a visit -->
+                  <circle class="pt-node-halo" r="9"/>
+                  <g class="pt-node-scale">
+                    <circle class="pt-node-bg" r="9"/><circle class="pt-node-ring" r="9"/>
+                    <g class="pt-node-ico" transform="scale(.5) translate(-12 -12)"><path vector-effect="non-scaling-stroke" d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.4 19.4 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.4 2.1L8.1 10a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.9.6 2.9.7a2 2 0 0 1 1.6 1.9z"/></g>
+                  </g>
+                </g>
+                <circle class="pt-signal" id="pt-signal" r="2.6" transform="translate(-30 -300)"/>
+              </svg>
             </div>
 
             <!-- DOCTOR IDENTITY — parallax, slides up with scroll -->
@@ -5108,7 +5139,6 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 
   const track     = document.getElementById('pt-track');
   const canvas    = document.getElementById('pt-canvas');
-  const fillEl    = document.getElementById('pt-progress-fill');
   const gradBot   = document.getElementById('pt-grad-bottom');
   const heroScene = document.getElementById('pt-scene-hero');
   const lcScene   = document.getElementById('pt-scene-knowledge');
@@ -5119,10 +5149,15 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
   const heroBot   = document.getElementById('pt-hero-bottom');
   const body      = document.getElementById('mobile-body');
   const sticky    = track ? track.querySelector('.pt-sticky') : null;
-  const progEl    = document.getElementById('pt-progress');
-  const headEl    = document.getElementById('pt-progress-head');
-  const chapEls   = document.querySelectorAll('#panel-patient .pt-chapter');
-  /* progress-rail chapter anchors = the scroll fraction where each scene is fully on */
+  const circEl    = document.getElementById('pt-circuit');
+  const circSvg   = document.getElementById('pt-circuit-svg');
+  const stubsPath = document.getElementById('pt-trace-stubs');
+  const viasEl    = document.getElementById('pt-vias');
+  const basePath  = document.getElementById('pt-trace-base');
+  const litPath   = document.getElementById('pt-trace-lit');
+  const signalEl  = document.getElementById('pt-signal');
+  const nodeEls   = [0,1,2,3].map(function(i){ return document.getElementById('pt-node-'+i); });
+  /* circuit chapter anchors = the scroll fraction where each scene is fully on */
   const CHAPTERS  = [0, 0.27, 0.60, 0.94];
 
   if(!track || !canvas || !body) return;
@@ -5146,7 +5181,53 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
     const bn=document.querySelector('.dc-bottom-nav');
     const stage=Math.max(240, body.clientHeight-(bn?bn.offsetHeight:0));
     document.documentElement.style.setProperty('--pt-stage', stage+'px');
-    railH=progEl?progEl.clientHeight:0;
+    railH=circEl?circEl.clientHeight:0;
+    buildCircuit();
+  }
+
+  /* build the PCB trace to the rail's real pixel height: a vertical spine that
+     elbows 45° left/right between the 4 solder-pad nodes, plus a few dead-end
+     stubs with via dots for the board feel. nodeLen[] maps each node to its
+     true arc length so the lit run and the signal dot hit pads dead-on. */
+  let totLen=0, nodeLen=[0,0,0,0];
+  function buildCircuit(){
+    if(!circSvg||!basePath||!litPath) return;
+    const H=Math.round(railH);
+    if(H<140) return; /* panel hidden or rail too short — keep last build */
+    const AX=11, J=5, INS=12, G=12;
+    circSvg.setAttribute('viewBox','0 0 22 '+H);
+    circSvg.setAttribute('height',H);
+    const ys=CHAPTERS.map(function(c){ return INS+c*(H-2*INS); });
+    let d='M'+AX+' '+ys[0], sd='', len=0;
+    nodeLen=[0];
+    if(viasEl) viasEl.innerHTML='';
+    for(let i=0;i<3;i++){
+      const dir=(i%2===0)?1:-1, x=AX+dir*J, y1=ys[i], y2=ys[i+1];
+      d+=' L'+AX+' '+(y1+G)
+       + ' L'+x +' '+(y1+G+J)
+       + ' L'+x +' '+(y2-G-J)
+       + ' L'+AX+' '+(y2-G)
+       + ' L'+AX+' '+y2;
+      len+=(y2-y1)+2*J*(Math.SQRT2-1);
+      nodeLen.push(len);
+      /* dead-end stub + via, branching off the run toward the other side */
+      const ym=Math.round((y1+y2)/2), bx=x-dir*8;
+      sd+='M'+x+' '+ym+' L'+bx+' '+ym+' ';
+      if(viasEl){
+        const v=document.createElementNS('http://www.w3.org/2000/svg','circle');
+        v.setAttribute('class','pt-via');
+        v.setAttribute('cx',bx); v.setAttribute('cy',ym); v.setAttribute('r','1.6');
+        viasEl.appendChild(v);
+      }
+    }
+    basePath.setAttribute('d',d);
+    litPath.setAttribute('d',d);
+    if(stubsPath) stubsPath.setAttribute('d',sd);
+    totLen=litPath.getTotalLength();
+    const k=len>0?totLen/len:1;
+    for(let i=0;i<nodeLen.length;i++) nodeLen[i]*=k;
+    litPath.style.strokeDasharray=totLen+' '+totLen;
+    nodeEls.forEach(function(n,i){ if(n) n.setAttribute('transform','translate('+AX+' '+ys[i]+')'); });
   }
 
   /* size the canvas backing store to the stage (capped DPR) for a sharp film */
@@ -5204,11 +5285,25 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
       }
     }
 
-    /* === PROGRESS RAIL — composited fill + glowing head + chapter dots === */
-    if(fillEl) fillEl.style.transform='scaleY('+p+')';
-    if(headEl) headEl.style.transform='translate3d(0,'+(p*railH)+'px,0)';
-    for(var ci=0;ci<chapEls.length;ci++){
-      chapEls[ci].classList.toggle('on', p>=CHAPTERS[ci]-0.001);
+    /* === PROGRESS CIRCUIT — lit trace + riding signal + node states === */
+    if(totLen>0){
+      let li=0;
+      for(let i=CHAPTERS.length-1;i>=0;i--){ if(p>=CHAPTERS[i]-0.001){ li=i; break; } }
+      const segT=(li>=CHAPTERS.length-1)?1:rng(p,CHAPTERS[li],CHAPTERS[li+1]);
+      const len=nodeLen[li]+(nodeLen[Math.min(li+1,CHAPTERS.length-1)]-nodeLen[li])*segT;
+      litPath.style.strokeDashoffset=(totLen-len);
+      if(signalEl){
+        const pt=litPath.getPointAtLength(len);
+        signalEl.setAttribute('transform','translate('+pt.x+' '+pt.y+')');
+        /* dot rides only mid-journey: appears on first scroll, fades out as
+           the signal is "delivered" to the final node */
+        signalEl.style.opacity=(p>0.01&&p<0.93)?'1':'0';
+      }
+      nodeEls.forEach(function(n,i){
+        if(!n) return;
+        n.classList.toggle('on', i<=li);
+        n.classList.toggle('cur', i===li);
+      });
     }
 
     /* === DOCTOR IDENTITY — parallax up, like painted on the frame === */
