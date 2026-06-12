@@ -2472,6 +2472,27 @@ body.dc-desktop-ui #dc-desktop-root{
   border-top:1px dashed var(--border2);
 }
 
+/* once-per-week greeting banner — first visit after the Saturday reset */
+.dc-dose-greet{
+  position:fixed; z-index:400;
+  top:68px; left:50%;
+  transform:translateX(-50%) translateY(-8px);
+  max-width:min(92vw,340px);
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:16px;
+  box-shadow:0 12px 40px rgba(2,8,30,.18);
+  padding:10px 14px;
+  font-size:.74rem; font-weight:700; color:var(--txt); line-height:1.9;
+  text-align:center;
+  opacity:0;
+  transition:opacity .35s ease, transform .35s ease;
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+}
+.dc-dose-greet b{ color:var(--ac); font-weight:900; }
+.dc-dose-greet.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+
 /* weekly learning card — standalone identity, sits ABOVE the episode hero:
    it belongs to the visitor's whole week, not to the episodes */
 #panel-studio .dc-dose-card{
@@ -5590,15 +5611,22 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
   'use strict';
   var KEY = 'dcDose', WEEK_SEC = 35 * 60, TICK = 5000;
 
-  function weekId() {
-    var d = new Date(), off = (d.getDay() + 1) % 7; /* days since Saturday */
+  function weekIdOf(d) {
+    var off = (d.getDay() + 1) % 7; /* days since Saturday */
     var sat = new Date(d.getFullYear(), d.getMonth(), d.getDate() - off);
     return sat.getFullYear() + '-' + (sat.getMonth() + 1) + '-' + sat.getDate();
   }
+  function weekId() { return weekIdOf(new Date()); }
   function load() {
     var o = null;
     try { o = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) {}
-    if (!o || o.w !== weekId()) o = { w: weekId(), s: 0, t: 0 };
+    if (!o || o.w !== weekId()) {
+      /* new week: archive last week's seconds (only if it truly was LAST week)
+         for the once-per-week greeting, then start fresh. pa = greeted flag. */
+      var lw = weekIdOf(new Date(Date.now() - 7 * 864e5));
+      o = { w: weekId(), s: 0, t: 0, p: (o && o.w === lw && o.s) ? o.s : 0, pa: 0 };
+      save(o);
+    }
     return o;
   }
   function save(o) { try { localStorage.setItem(KEY, JSON.stringify(o)); } catch (e) {} }
@@ -5679,6 +5707,26 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
     if (pop.classList.contains('open') && !pop.contains(e.target)) closePop();
   });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closePop(); });
+
+  /* once-per-week greeting — the first visit after the Saturday reset */
+  (function greet() {
+    var o = load();
+    if (o.pa) return;
+    o.pa = 1; save(o);
+    if (!o.p || o.p < 60) return;
+    var g = document.createElement('div');
+    g.className = 'dc-dose-greet';
+    g.setAttribute('role', 'status');
+    g.innerHTML = 'هفته‌ی قبل <b>' + faNum(Math.round(o.p / 60)) + ' دقیقه</b> با دنت‌کست بودی — ببینیم این هفته چی‌کار می‌کنی!';
+    document.body.appendChild(g);
+    requestAnimationFrame(function () { requestAnimationFrame(function () { g.classList.add('show'); }); });
+    function bye() {
+      g.classList.remove('show');
+      setTimeout(function () { if (g.parentNode) g.parentNode.removeChild(g); }, 400);
+    }
+    g.addEventListener('click', bye);
+    setTimeout(bye, 8000);
+  })();
 
   /* hero weekly-dose row */
   var rowEl = document.getElementById('dcDoseRow'),
