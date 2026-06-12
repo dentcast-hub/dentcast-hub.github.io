@@ -1831,7 +1831,8 @@
         popFill = pop.querySelector('.dc-dose-fill'),
         popLive = pop.querySelector('.dc-dose-live'),
         popState = pop.querySelector('.dc-dose-pop-state'),
-        popBar = pop.querySelector('.dc-dose-bar');
+        popBar = pop.querySelector('.dc-dose-bar'),
+        popTicks = pop.querySelectorAll('.dc-dose-tick');
 
     function openPop(ring) {
       var r = ring.getBoundingClientRect();
@@ -1868,9 +1869,29 @@
         popFill.style.width = (frac * 100) + '%';
         popBar.classList.toggle('dc-done', done);
         popLive.classList.toggle('on', active);
+        /* crossed 5-min milestones leave their tick lit */
+        for (var ti = 0; ti < popTicks.length; ti++) {
+          popTicks[ti].classList.toggle('on', sec >= (ti + 1) * 300);
+        }
         popState.textContent = done ? 'یادگیری این هفته کامل شد ✓'
           : active ? 'در حال شمارش حضور شما'
           : 'متوقف — با فعالیت ادامه می‌یابد';
+      }
+    }
+
+    /* ── one-shot milestone effect — no text, peripheral only ── */
+    function celebrate() {
+      rings.forEach(function (ring) {
+        ring.classList.remove('dc-pop');
+        void ring.offsetWidth;
+        ring.classList.add('dc-pop');
+        setTimeout(function () { ring.classList.remove('dc-pop'); }, 1000);
+      });
+      if (pop.classList.contains('open')) {
+        popBar.classList.remove('dc-cele');
+        void popBar.offsetWidth;
+        popBar.classList.add('dc-cele');
+        setTimeout(function () { popBar.classList.remove('dc-cele'); }, 1100);
       }
     }
 
@@ -1879,9 +1900,11 @@
       if (isActive()) {
         var o = load(), now = Date.now();
         if (o.s < WEEK_SEC && now - (o.t || 0) >= TICK - 700) {
+          var prevMil = Math.floor(o.s / 300);
           o.s += TICK / 1000;
           o.t = now;
           save(o);
+          if (Math.floor(Math.min(o.s, WEEK_SEC) / 300) > prevMil) celebrate();
         }
       }
       paint();
