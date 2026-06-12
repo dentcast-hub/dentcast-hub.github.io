@@ -1030,6 +1030,58 @@
     }
   }
 
+  /* ── HAPTIC TICK ─────────────────────────────────────
+     A tiny ~10ms vibration "tick" the moment a finger presses any interactive
+     control (buttons, links, play boxes, toggles, tabs…), so taps feel like
+     pressing a real button — and it lives here in dc-nav.js, so it reaches
+     ALL pages with one shared file (same delivery as shake-to-play).
+
+     - navigator.vibrate is Android-only; iOS Safari has no Vibration API, so
+       there this whole module is inert (zero cost, zero errors, no fallback
+       hacks). Mouse/pen and desktop users are never buzzed: we only react to
+       pointerType 'touch'.
+     - Fires on pointerdown — the press moment, not the click release — which
+       is what makes it FEEL like a physical button. Delegated capture-phase
+       listener: it covers controls injected later (drawer, search sheet,
+       shake player chrome) and survives handlers that stopPropagation in the
+       bubble phase. Passive: it can never block scrolling or add tap latency.
+     - NOT guarded to the top window (unlike shake): the player iframe loads
+       dc-nav.js too and its own play/pause controls should tick as well.
+     - Respects prefers-reduced-motion, and a short throttle stops a
+       two-finger tap from double-buzzing.
+     - Public API (parity with dcSearch/dcPlayer): window.dcHaptics.tick()
+       for any JS-built control that wants to fire a tick manually. */
+  if ('vibrate' in navigator) {
+    /* Everything tappable that behaves like a control. Plain text/scroll
+       touches never tick — that would be noise, not feedback. */
+    var DC_HAPTIC_SELECTOR =
+      'a[href],button,summary,select,label,' +
+      '[role="button"],[role="tab"],[role="menuitem"],[role="switch"],[role="option"],[role="link"],' +
+      'input[type="button"],input[type="submit"],input[type="reset"],' +
+      'input[type="checkbox"],input[type="radio"],input[type="range"],' +
+      'audio[controls],video[controls],[onclick]';
+    var DC_HAPTIC_MS = 10;       /* one crisp tick — long buzzes feel cheap */
+    var DC_HAPTIC_GAP = 80;      /* min ms between ticks (multi-touch guard) */
+    var _hapticReduce = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+    var _hapticLast = 0;
+
+    function dcHapticTick() {
+      if (_hapticReduce && _hapticReduce.matches) return;
+      var now = Date.now();
+      if (now - _hapticLast < DC_HAPTIC_GAP) return;
+      _hapticLast = now;
+      try { navigator.vibrate(DC_HAPTIC_MS); } catch (err) { /* never break the tap */ }
+    }
+
+    document.addEventListener('pointerdown', function (e) {
+      if (e.pointerType !== 'touch') return;
+      var t = e.target;
+      if (t && t.closest && t.closest(DC_HAPTIC_SELECTOR)) dcHapticTick();
+    }, { passive: true, capture: true });
+
+    window.dcHaptics = { tick: dcHapticTick };
+  }
+
   /* Desktop drawer toggle (#dcdThemeBtn) — same handler */
   var themeDrawerBtn = document.getElementById('dcdThemeBtn');
   if (themeDrawerBtn) {
