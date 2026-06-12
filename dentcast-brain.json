@@ -10172,5 +10172,46 @@
       "secondary": [],
       "subtopic": null
     }
+  },
+  {
+    "type": "sharehub",
+    "id": "9",
+    "title": "دخانیات و شکست زودرس ایمپلنت دندانی؛ از سازوکار زیستی تا مدیریت بیمار سیگاری",
+    "caption": "مطلبی منتخب در Share Hub دنت‌کست؛ گفتاری از دکتر نرگس شجاعی (متخصص پریودانتیکس) درباره‌ی تأثیر دخانیات بر ایمپلنت دندانی و جراحی‌های دهان؛ از اثر دود بر ترشوندگی سطح ایمپلنت و اختلال نخستین مرحله‌ی استئواینتگریشن تا سازوکارهای هیپوکسی و نیکوتین و پیشرفت پری‌ایمپلنتیتیس، خطر بیشتر شکست در فک بالا، زمان مؤثر قطع سیگار پیش و پس از جراحی، انتخاب سطح ایمپلنت و پایش تحلیل استخوان مارژینال، و جایگاه قلیان و ویپ و حشیش. همراه با فایل صوتی پادکست. این محتوا تولید دنت‌کست نیست و به‌صورت curated منتشر شده است.",
+    "author": "دکتر نرگس شجاعی",
+    "source": "https://t.me/periopod",
+    "hashtags": [
+      "#دخانیات",
+      "#سیگار",
+      "#ایمپلنت_دندانی",
+      "#شکست_ایمپلنت",
+      "#پری_ایمپلنتیتیس",
+      "#استئواینتگریشن",
+      "#جراحی_ایمپلنت",
+      "#بیمار_سیگاری",
+      "#Share_Hub",
+      "#Curated_Content",
+      "#Dental_Implant",
+      "#Peri_Implantitis",
+      "#Smoking"
+    ],
+    "keywords": [
+      "smoking dental implant failure",
+      "peri-implantitis smoking",
+      "osseointegration nicotine",
+      "implant surgery smoker",
+      "marginal bone loss implant",
+      "smoking cessation implant surgery",
+      "vaping hookah dental implant",
+      "دخانیات و ایمپلنت",
+      "سیگار و شکست ایمپلنت",
+      "قطع سیگار پیش از جراحی"
+    ],
+    "url": "/sharehub/share-9.html",
+    "pillar": {
+      "primary": "implantology",
+      "secondary": [],
+      "subtopic": "peri-implant-health"
+    }
   }
 ]
