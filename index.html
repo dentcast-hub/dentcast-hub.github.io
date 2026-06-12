@@ -2391,9 +2391,10 @@ body.dc-desktop-ui #dc-desktop-root{
 .dc-dose-tick{
   position:absolute; top:1px; bottom:1px;
   width:1.5px; border-radius:1px;
-  background:rgba(var(--pr-rgb),.14);
+  background:rgba(245,106,121,.55); /* site coral — upcoming 5-min targets */
   transition:background .5s ease;
 }
+[data-theme="dark"] .dc-dose-tick{ background:rgba(255,122,138,.6); }
 /* a crossed 5-minute milestone leaves its tick lit — a quiet trace */
 .dc-dose-tick.on{ background:rgba(var(--ac-rgb),.85); }
 .dc-done .dc-dose-tick.on,

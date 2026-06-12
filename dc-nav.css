@@ -424,8 +424,9 @@ body.dc-radar-mode { overflow: hidden; }
 .dc-dose-tick{
   position:absolute; top:1px; bottom:1px;
   width:1.5px; border-radius:1px;
-  background:rgba(var(--pr-rgb,2,35,96),.14);
+  background:rgba(245,106,121,.55); /* site coral — upcoming 5-min targets */
 }
+[data-theme="dark"] .dc-dose-tick{ background:rgba(255,122,138,.6); }
 .dc-dose-live{
   width:7px; height:7px; border-radius:50%;
   background:var(--txt3,#8a9bbf);
