@@ -1052,15 +1052,19 @@
      - Public API (parity with dcSearch/dcPlayer): window.dcHaptics.tick()
        for any JS-built control that wants to fire a tick manually. */
   if ('vibrate' in navigator) {
-    /* Everything tappable that behaves like a control. Plain text/scroll
-       touches never tick — that would be noise, not feedback. */
+    /* Only REAL buttons tick — primary controls, not every link. Generic
+       in-text links and big content cards (.capsule) are deliberately
+       excluded: those are the elements a finger lands on while scrolling, and
+       buzzing on a scroll-start feels like noise, not feedback. The site's
+       action controls are either <button> or button-styled <a> whose class
+       ends in -btn / contains cta (verified across the codebase). */
     var DC_HAPTIC_SELECTOR =
-      'a[href],button,summary,select,label,' +
-      '[role="button"],[role="tab"],[role="menuitem"],[role="switch"],[role="option"],[role="link"],' +
+      'button,[role="button"],[role="tab"],[role="switch"],' +
       'input[type="button"],input[type="submit"],input[type="reset"],' +
-      'input[type="checkbox"],input[type="radio"],input[type="range"],' +
-      'audio[controls],video[controls],[onclick]';
-    var DC_HAPTIC_MS = 10;       /* one crisp tick — long buzzes feel cheap */
+      'input[type="checkbox"],input[type="radio"],' +
+      'audio[controls],video[controls],' +
+      'a[class*="btn"],a[class*="cta"]';
+    var DC_HAPTIC_MS = 6;        /* a lighter tick — shorter pulse, softer feel */
     var DC_HAPTIC_GAP = 80;      /* min ms between ticks (multi-touch guard) */
     var _hapticReduce = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
     var _hapticLast = 0;
