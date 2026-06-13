@@ -10213,5 +10213,37 @@
       "secondary": [],
       "subtopic": "peri-implant-health"
     }
+  },
+  {
+    "type": "chairside",
+    "id": "chairside-19",
+    "title": "وقتی دندانِ مقابل، فضای بازسازی را اشغال می‌کند",
+    "caption": "روایت یک کیسِ بالینی از ترومای قدامیِ ماگزیلا: سانترالِ چپِ بالا شکسته و دندانِ قدامیِ پایینِ مقابل با از دست رفتنِ آنتاگونیست سوپرااراپت شده و بخشی از فضای لازم برای بازسازی را اشغال کرده است. این یادداشت نشان می‌دهد چرا با وجودِ کم بودنِ مقدارِ سوپرااراپشن، مسیر از اینتروژنِ ارتودنسی (که متخصصِ ارتو به‌دلیلِ نبودِ عمقِ قوسِ اسپی ردش کرد) به یک اصلاحِ رستوریتیوِ مینیمالِ تقسیم‌شده بین دو قوس تغییر کرد؛ و توالیِ رسیدن به پلنِ نهایی — از کشیدنِ دندان‌های غیرقابلِ نگه‌داری تا حفظِ یک کانتکتِ پایدار برای جلوگیری از ریلپسِ اراپشن — را شرح می‌دهد.",
+    "hashtags": [
+      "#تروما_قدامی",
+      "#سوپرااراپشن",
+      "#فضای_رستوریتیو",
+      "#اینتروژن_ارتودنسی",
+      "#اصلاح_مینیمال",
+      "#طرح_درمان",
+      "#کیس_بالینی",
+      "#لبه_اینسایزال"
+    ],
+    "keywords": [
+      "maxillary anterior trauma treatment planning",
+      "supereruption opposing tooth restorative space",
+      "dentoalveolar extrusion lower incisor active",
+      "orthodontic intrusion versus restorative correction",
+      "absolute intrusion mini-screw anterior",
+      "minimal two-arch restorative correction",
+      "incisal edge position rest display phonetics",
+      "non-restorable tooth extraction post-trauma"
+    ],
+    "page_url": "/chairside/chairside-19.html",
+    "pillar": {
+      "primary": "treatment-planning",
+      "secondary": [],
+      "subtopic": "comprehensive-diagnosis"
+    }
   }
 ]
