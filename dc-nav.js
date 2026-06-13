@@ -1031,33 +1031,34 @@
   }
 
   /* ── HAPTIC TICK ─────────────────────────────────────
-     A tiny ~10ms vibration "tick" the moment a finger presses any interactive
-     control (buttons, links, play boxes, toggles, tabs…), so taps feel like
-     pressing a real button — and it lives here in dc-nav.js, so it reaches
-     ALL pages with one shared file (same delivery as shake-to-play).
+     A tiny ~6ms vibration "tick" when a tap actually ACTIVATES an interactive
+     control (buttons, play boxes, toggles, tabs…), so a press feels like a
+     real button — and it lives here in dc-nav.js, so it reaches ALL pages with
+     one shared file (same delivery as shake-to-play).
 
      - navigator.vibrate is Android-only; iOS Safari has no Vibration API, so
        there this whole module is inert (zero cost, zero errors, no fallback
-       hacks). Mouse/pen and desktop users are never buzzed: we only react to
-       pointerType 'touch'.
-     - Fires on pointerdown — the press moment, not the click release — which
-       is what makes it FEEL like a physical button. Delegated capture-phase
-       listener: it covers controls injected later (drawer, search sheet,
-       shake player chrome) and survives handlers that stopPropagation in the
-       bubble phase. Passive: it can never block scrolling or add tap latency.
+       hacks). Mouse/pen and desktop users are never buzzed: we only tick when
+       the last pointer that touched the screen was a finger.
+     - Fires on CLICK, not pointerdown. The browser only emits a click when a
+       press genuinely activates the control; a touch that turns into a scroll
+       (or a finger that merely grazes a button mid-scroll) never produces a
+       click, so it never ticks. This is exactly "buzz only if the tap opens
+       the button." Delegated capture-phase listener so it covers controls
+       injected later (drawer, search sheet, shake player chrome) and survives
+       handlers that stopPropagation in the bubble phase.
      - NOT guarded to the top window (unlike shake): the player iframe loads
        dc-nav.js too and its own play/pause controls should tick as well.
      - Respects prefers-reduced-motion, and a short throttle stops a
-       two-finger tap from double-buzzing.
+       double-fire from bouncing the same activation.
      - Public API (parity with dcSearch/dcPlayer): window.dcHaptics.tick()
        for any JS-built control that wants to fire a tick manually. */
   if ('vibrate' in navigator) {
     /* Only REAL buttons tick — primary controls, not every link. Generic
        in-text links and big content cards (.capsule) are deliberately
-       excluded: those are the elements a finger lands on while scrolling, and
-       buzzing on a scroll-start feels like noise, not feedback. The site's
-       action controls are either <button> or button-styled <a> whose class
-       ends in -btn / contains cta (verified across the codebase). */
+       excluded. The site's action controls are either <button> or button-styled
+       <a> whose class ends in -btn / contains cta (verified across the
+       codebase). */
     var DC_HAPTIC_SELECTOR =
       'button,[role="button"],[role="tab"],[role="switch"],' +
       'input[type="button"],input[type="submit"],input[type="reset"],' +
@@ -1065,9 +1066,14 @@
       'audio[controls],video[controls],' +
       'a[class*="btn"],a[class*="cta"]';
     var DC_HAPTIC_MS = 6;        /* a lighter tick — shorter pulse, softer feel */
-    var DC_HAPTIC_GAP = 80;      /* min ms between ticks (multi-touch guard) */
+    var DC_HAPTIC_GAP = 80;      /* min ms between ticks (de-bounce double-fire) */
     var _hapticReduce = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
     var _hapticLast = 0;
+    /* The click event carries no pointerType, so we remember whether the most
+       recent pointer down was a finger and only tick for touch activations.
+       Keyboard-driven clicks (Enter/Space) leave this as-is and are harmless —
+       a no-op on devices without a vibration motor anyway. */
+    var _hapticTouch = false;
 
     function dcHapticTick() {
       if (_hapticReduce && _hapticReduce.matches) return;
@@ -1078,10 +1084,14 @@
     }
 
     document.addEventListener('pointerdown', function (e) {
-      if (e.pointerType !== 'touch') return;
+      _hapticTouch = (e.pointerType === 'touch');
+    }, { passive: true, capture: true });
+
+    document.addEventListener('click', function (e) {
+      if (!_hapticTouch) return;
       var t = e.target;
       if (t && t.closest && t.closest(DC_HAPTIC_SELECTOR)) dcHapticTick();
-    }, { passive: true, capture: true });
+    }, { capture: true });
 
     window.dcHaptics = { tick: dcHapticTick };
   }
