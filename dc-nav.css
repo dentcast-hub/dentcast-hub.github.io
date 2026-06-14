@@ -529,3 +529,7 @@ body.dc-radar-mode { overflow: hidden; }
 .dc-dose-greet b{ color:var(--ac,#0b5fff); font-weight:900; }
 .dc-dose-greet.show{ opacity:1; transform:translateX(-50%) translateY(0); }
 @media print{ .dc-dose-greet{ display:none; } }
+
+/* dcDose — milestone flash message (per-5-minute), in site coral */
+.dc-dose-pop-state.dc-flash{ color:#f56a79; font-weight:800; }
+[data-theme="dark"] .dc-dose-pop-state.dc-flash{ color:#ff7a8a; }
