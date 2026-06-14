@@ -533,3 +533,32 @@ body.dc-radar-mode { overflow: hidden; }
 /* dcDose — milestone flash message (per-5-minute), in site coral */
 .dc-dose-pop-state.dc-flash{ color:#f56a79; font-weight:800; }
 [data-theme="dark"] .dc-dose-pop-state.dc-flash{ color:#ff7a8a; }
+
+/* dcDose — celebration toast (35-min goal & 70-min double, on every page) */
+.dc-dose-toast{
+  position:fixed; z-index:500;
+  left:50%; bottom:calc(80px + env(safe-area-inset-bottom,0px));
+  transform:translateX(-50%) translateY(16px);
+  max-width:min(92vw,360px);
+  display:flex; align-items:center; gap:10px;
+  background:var(--surface,#fff); border:1px solid var(--border,rgba(2,35,96,.10));
+  border-radius:14px; box-shadow:0 14px 44px rgba(2,8,30,.22);
+  padding:11px 15px;
+  font-size:.78rem; font-weight:700; color:var(--txt,#0a1a33); line-height:1.85;
+  opacity:0; transition:opacity .4s ease, transform .4s cubic-bezier(.22,.9,.3,1);
+  cursor:pointer; -webkit-tap-highlight-color:transparent;
+}
+.dc-dose-toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+.dc-dose-toast b{ font-weight:900; }
+.dc-dose-toast-ic{ font-size:1.25rem; line-height:1; flex-shrink:0; }
+.dc-dose-toast.dc-goal{ border-color:rgba(196,152,32,.5); }
+.dc-dose-toast.dc-goal b{ color:#c49820; }
+.dc-dose-toast.dc-double{ border-color:rgba(245,106,121,.5); }
+.dc-dose-toast.dc-double b{ color:#f56a79; }
+[data-theme="dark"] .dc-dose-toast.dc-goal b{ color:#e3b94a; }
+[data-theme="dark"] .dc-dose-toast.dc-double b{ color:#ff7a8a; }
+@media print{ .dc-dose-toast{ display:none; } }
+@media (prefers-reduced-motion:reduce){
+  .dc-dose-toast{ transition:opacity .3s ease; transform:translateX(-50%); }
+  .dc-dose-toast.show{ transform:translateX(-50%); }
+}

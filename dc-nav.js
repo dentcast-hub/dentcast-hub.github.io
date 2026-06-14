@@ -1999,6 +1999,7 @@
         flashMsg = milMsg(curMil);
         flashUntil = Date.now() + 6000;
         celebrate();
+        if (curMil === 7 || curMil === 14) bigToast(curMil); /* 35-min goal, 70-min double */
         setTimeout(paint, 6100);
       }
       var flashing = flashMsg && Date.now() < flashUntil;
@@ -2023,6 +2024,23 @@
           : done ? 'یادگیری این هفته کامل شد ✓'
           : 'در حال شمارش حضور شما';
       }
+    }
+
+    /* ── celebration toast + gentle haptic — only at 35-min goal & 70-min double ── */
+    function bigToast(mil) {
+      var goal = mil === 7;
+      var t = document.createElement('div');
+      t.className = 'dc-dose-toast ' + (goal ? 'dc-goal' : 'dc-double');
+      t.setAttribute('role', 'status');
+      t.innerHTML = goal
+        ? '<span class="dc-dose-toast-ic">🎯</span><span>به هدف <b>۳۵ دقیقه</b>‌ی این هفته رسیدی! کارت عالی بود</span>'
+        : '<span class="dc-dose-toast-ic">❤️</span><span><b>۷۰ دقیقه</b> — دو برابرِ هدفِ هفته! فوق‌العاده‌ای</span>';
+      document.body.appendChild(t);
+      requestAnimationFrame(function () { requestAnimationFrame(function () { t.classList.add('show'); }); });
+      try { if (navigator.vibrate) navigator.vibrate(goal ? [14, 45, 14] : [14, 45, 14, 45, 26]); } catch (e) {}
+      function bye() { t.classList.remove('show'); setTimeout(function () { if (t.parentNode) t.parentNode.removeChild(t); }, 420); }
+      t.addEventListener('click', bye);
+      setTimeout(bye, 6500);
     }
 
     /* ── one-shot milestone effect — peripheral pop + bar glow ── */

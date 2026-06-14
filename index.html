@@ -2494,6 +2494,36 @@ body.dc-desktop-ui #dc-desktop-root{
 .dc-dose-greet b{ color:var(--ac); font-weight:900; }
 .dc-dose-greet.show{ opacity:1; transform:translateX(-50%) translateY(0); }
 
+/* celebration toast — fires ONLY at the 35-min goal and the 70-min double,
+   on every page (these are rare, earned moments — not the silent 5-min ones) */
+.dc-dose-toast{
+  position:fixed; z-index:500;
+  left:50%; bottom:calc(80px + env(safe-area-inset-bottom,0px));
+  transform:translateX(-50%) translateY(16px);
+  max-width:min(92vw,360px);
+  display:flex; align-items:center; gap:10px;
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:14px; box-shadow:0 14px 44px rgba(2,8,30,.22);
+  padding:11px 15px;
+  font-size:.78rem; font-weight:700; color:var(--txt); line-height:1.85;
+  opacity:0; transition:opacity .4s ease, transform .4s cubic-bezier(.22,.9,.3,1);
+  cursor:pointer; -webkit-tap-highlight-color:transparent;
+}
+.dc-dose-toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+.dc-dose-toast b{ font-weight:900; }
+.dc-dose-toast-ic{ font-size:1.25rem; line-height:1; flex-shrink:0; }
+.dc-dose-toast.dc-goal{ border-color:rgba(196,152,32,.5); }
+.dc-dose-toast.dc-goal b{ color:#c49820; }
+.dc-dose-toast.dc-double{ border-color:rgba(245,106,121,.5); }
+.dc-dose-toast.dc-double b{ color:#f56a79; }
+[data-theme="dark"] .dc-dose-toast.dc-goal b{ color:#e3b94a; }
+[data-theme="dark"] .dc-dose-toast.dc-double b{ color:#ff7a8a; }
+@media print{ .dc-dose-toast{ display:none; } }
+@media (prefers-reduced-motion:reduce){
+  .dc-dose-toast{ transition:opacity .3s ease; transform:translateX(-50%); }
+  .dc-dose-toast.show{ transform:translateX(-50%); }
+}
+
 /* weekly learning card — standalone identity, sits ABOVE the episode hero:
    it belongs to the visitor's whole week, not to the episodes */
 #panel-studio .dc-dose-card{
@@ -5808,6 +5838,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
       flashMsg = milMsg(curMil);
       flashUntil = Date.now() + 6000;
       celebrate();
+      if (curMil === 7 || curMil === 14) bigToast(curMil); /* 35-min goal, 70-min double */
       setTimeout(paint, 6100); /* clear the flash promptly between heartbeats */
     }
     var flashing = flashMsg && Date.now() < flashUntil;
@@ -5843,6 +5874,23 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
         : done ? 'یادگیری این هفته کامل شد ✓'
         : 'در حال شمارش حضور شما';
     }
+  }
+
+  /* celebration toast + gentle haptic — only at the 35-min goal & 70-min double */
+  function bigToast(mil) {
+    var goal = mil === 7;
+    var t = document.createElement('div');
+    t.className = 'dc-dose-toast ' + (goal ? 'dc-goal' : 'dc-double');
+    t.setAttribute('role', 'status');
+    t.innerHTML = goal
+      ? '<span class="dc-dose-toast-ic">🎯</span><span>به هدف <b>۳۵ دقیقه</b>‌ی این هفته رسیدی! کارت عالی بود</span>'
+      : '<span class="dc-dose-toast-ic">❤️</span><span><b>۷۰ دقیقه</b> — دو برابرِ هدفِ هفته! فوق‌العاده‌ای</span>';
+    document.body.appendChild(t);
+    requestAnimationFrame(function () { requestAnimationFrame(function () { t.classList.add('show'); }); });
+    try { if (navigator.vibrate) navigator.vibrate(goal ? [14, 45, 14] : [14, 45, 14, 45, 26]); } catch (e) {}
+    function bye() { t.classList.remove('show'); setTimeout(function () { if (t.parentNode) t.parentNode.removeChild(t); }, 420); }
+    t.addEventListener('click', bye);
+    setTimeout(bye, 6500);
   }
 
   /* one-shot milestone effect — peripheral pop + bar glow */
