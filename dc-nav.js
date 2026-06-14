@@ -1822,6 +1822,9 @@
 ===================================================== */
 (function () {
   'use strict';
+  /* one dcDose instance per page (the homepage inline copy claims this first) */
+  if (window.__dcDoseInit) return;
+  window.__dcDoseInit = 1;
   var KEY = 'dcDose', WEEK_SEC = 35 * 60, TICK = 5000;
 
   function weekIdOf(d) {
@@ -1835,10 +1838,13 @@
     try { o = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) {}
     if (!o || o.w !== weekId()) {
       /* new week: archive last week's seconds (only if it truly was LAST week)
-         for the once-per-week greeting, then start fresh. pa = greeted flag. */
+         for the once-per-week greeting, then start fresh. pa = greeted flag,
+         m = highest 5-min milestone already celebrated this week. */
       var lw = weekIdOf(new Date(Date.now() - 7 * 864e5));
-      o = { w: weekId(), s: 0, t: 0, p: (o && o.w === lw && o.s) ? o.s : 0, pa: 0 };
+      o = { w: weekId(), s: 0, t: 0, p: (o && o.w === lw && o.s) ? o.s : 0, pa: 0, m: 0 };
       save(o);
+    } else if (o.m === undefined) {
+      o.m = Math.floor(o.s / 300); save(o);
     }
     return o;
   }
@@ -1957,6 +1963,25 @@
       el.classList.toggle('on', active);
     }
 
+    /* exact per-milestone message — mil = 1 → 5min, 7 → 35min (the goal) */
+    var MIL_MSG = {
+      1: '۵ دقیقه شد — خوب شروع کردی 👌',
+      2: '۱۰ دقیقه — روی غلتک افتادی',
+      3: '۱۵ دقیقه — یک‌سومِ راه',
+      4: '۲۰ دقیقه — از نیمه گذشتی',
+      5: '۲۵ دقیقه — کم مونده',
+      6: '۳۰ دقیقه — فقط ۵ دقیقه تا هدف',
+      7: 'به هدف ۳۵ دقیقه رسیدی ✓'
+    };
+    function milMsg(mil) {
+      if (mil <= 0) return '';
+      if (MIL_MSG[mil]) return MIL_MSG[mil];
+      var mins = mil * 5;
+      return mins >= 70 ? faNum(mins) + ' دقیقه — دو برابر هدف ❤'
+        : faNum(mins) + ' دقیقه — فراتر از هدف 🔥';
+    }
+    var flashMsg = '', flashUntil = 0;
+
     /* ── paint everything from storage ── */
     function paint() {
       var o = load();
@@ -1965,6 +1990,19 @@
       var sec = Math.min(o.s, WEEK_SEC), frac = sec / WEEK_SEC, done = o.s >= WEEK_SEC;
       var active = isActive();
       var loved = o.s >= WEEK_SEC * 2;
+
+      /* milestone detection lives HERE, reading the exact o.s being displayed,
+         so the effect/message can never fire ahead of the on-screen timer */
+      var curMil = Math.floor(o.s / 300);
+      if (curMil > (o.m || 0)) {
+        o.m = curMil; save(o);
+        flashMsg = milMsg(curMil);
+        flashUntil = Date.now() + 6000;
+        celebrate();
+        setTimeout(paint, 6100);
+      }
+      var flashing = flashMsg && Date.now() < flashUntil;
+
       rings.forEach(function (ring) {
         ring.querySelector('.dc-dr-fg').style.strokeDashoffset = C * (1 - frac);
         ring.querySelector('.dc-dr-min').textContent = faNum(Math.floor(o.s / 60));
@@ -1979,13 +2017,15 @@
         for (var ti = 0; ti < popTicks.length; ti++) {
           popTicks[ti].classList.toggle('on', sec >= (ti + 1) * 300);
         }
-        popState.textContent = !active ? 'متوقف — با فعالیت ادامه می‌یابد'
+        popState.classList.toggle('dc-flash', !!flashing);
+        popState.textContent = flashing ? flashMsg
+          : !active ? 'متوقف — با فعالیت ادامه می‌یابد'
           : done ? 'یادگیری این هفته کامل شد ✓'
           : 'در حال شمارش حضور شما';
       }
     }
 
-    /* ── one-shot milestone effect — no text, peripheral only ── */
+    /* ── one-shot milestone effect — peripheral pop + bar glow ── */
     function celebrate() {
       rings.forEach(function (ring) {
         ring.classList.remove('dc-pop');
@@ -2001,16 +2041,14 @@
       }
     }
 
-    /* ── heartbeat: count presence, multi-tab safe — keeps counting past 35 ── */
+    /* ── heartbeat: only advances the clock; milestones handled in paint() ── */
     setInterval(function () {
       if (isActive()) {
         var o = load(), now = Date.now();
         if (now - (o.t || 0) >= TICK - 700) {
-          var prevMil = Math.floor(o.s / 300);
           o.s += TICK / 1000;
           o.t = now;
           save(o);
-          if (Math.floor(o.s / 300) > prevMil) celebrate();
         }
       }
       paint();
