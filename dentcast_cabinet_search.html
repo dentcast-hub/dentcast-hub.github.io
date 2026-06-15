@@ -74,6 +74,8 @@ main#list{padding:6px 0 20px}
 }
 .back-link::before{ content:"← "; }
 .back-link:hover{ color:var(--ac); }
+/* We're already on the cabinet — hide the shared topbar's cabinet entry here. */
+#btn-cabinet{ display:none; }
   <link rel="alternate" hreflang="fa-IR" href="https://dentcast.ir/dentcast_cabinet_search.html">
   <link rel="alternate" hreflang="fa" href="https://dentcast.org/dentcast_cabinet_search.html">
   <link rel="alternate" hreflang="x-default" href="https://dentcast.org/dentcast_cabinet_search.html">
@@ -117,7 +119,7 @@ main#list{padding:6px 0 20px}
 <div class="wrap" dir="ltr">
   <div class="nav-back" dir="rtl"><a href="/index.html" class="back-link">بازگشت به صفحه‌ی اصلی</a></div>
   <div class="cab-head">
-    <h1><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block;color:var(--ac)"><path d="M15 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7z"/><path d="M15 3v4h4"/><path d="M9 9h2"/><path d="M9 13h6"/><path d="M9 17h6"/></svg> DentCast Cabinet <span id="total"></span></h1>
+    <h1>DentCast Cabinet <span id="total"></span></h1>
     <div class="row"><input id="q" placeholder="search title or tag..." disabled>
     <select id="topic" disabled><option value="">all topics</option></select>
     <select id="type" disabled><option value="">all types</option></select>
