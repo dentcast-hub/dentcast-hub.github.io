@@ -76,6 +76,35 @@ main#list{padding:6px 0 20px}
 .back-link:hover{ color:var(--ac); }
 /* We're already on the cabinet — hide the shared topbar's cabinet entry here. */
 #btn-cabinet{ display:none; }
+/* Floating jump button (quick scroll) — copied from the landing pages */
+.dc-jump{
+  position:fixed;
+  right:18px;
+  left:auto;
+  bottom:calc(18px + env(safe-area-inset-bottom, 0px));
+  width:42px;
+  height:42px;
+  border-radius:var(--r-f);
+  background:#022360;
+  border:1px solid #022360;
+  box-shadow:0 4px 16px rgba(var(--pr-rgb),.18);
+  display:grid;
+  place-items:center;
+  opacity:.85;
+  transition:opacity .2s ease, transform .2s ease, background var(--tr2);
+  cursor:pointer;
+  z-index:9999;
+}
+.dc-jump:hover{ opacity:1; transform:translateY(-1px); }
+.dc-jump:active{ transform:scale(.92); }
+.dc-jump svg{
+  width:20px; height:20px;
+  fill:#fff;
+  transition:fill var(--tr2), transform .2s ease;
+}
+.dc-jump.is-up svg{
+  transform:rotate(180deg);
+}
   <link rel="alternate" hreflang="fa-IR" href="https://dentcast.ir/dentcast_cabinet_search.html">
   <link rel="alternate" hreflang="fa" href="https://dentcast.org/dentcast_cabinet_search.html">
   <link rel="alternate" hreflang="x-default" href="https://dentcast.org/dentcast_cabinet_search.html">
@@ -129,6 +158,14 @@ main#list{padding:6px 0 20px}
   <div class="count" id="count"></div>
   <main id="list"><div class="state" id="state">Loading catalog...</div></main>
 </div>
+<div id="dc-list-end"></div>
+
+<!-- Floating jump button (quick scroll) -->
+<button id="dcJumpBtn" class="dc-jump" type="button" aria-label="Jump">
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M12 16.5c-.3 0-.6-.1-.8-.3l-6-6a1.1 1.1 0 0 1 1.6-1.6L12 13.8l5.2-5.2a1.1 1.1 0 0 1 1.6 1.6l-6 6c-.2.2-.5.3-.8.3z"/>
+  </svg>
+</button>
 
 <!-- DC NAV: FOOTER (shared chrome) -->
 <footer class="dc-site-footer">
@@ -201,4 +238,79 @@ function render(reset){if(reset){shown=0;document.getElementById('list').innerHT
  if(shown<res.length){const b=document.createElement('button');b.id='more';b.className='more';b.textContent='show more ('+(res.length-shown)+' left)';b.onclick=()=>render(false);list.appendChild(b);}}
 function chips(){const c=document.getElementById('active');c.innerHTML='';active.forEach(a=>{const s=document.createElement('span');s.className='chip x';s.textContent='#'+a+' \u2715';s.onclick=()=>{active.delete(a);chips();render(true)};c.appendChild(s);});}
 document.addEventListener('click',e=>{if(e.target.classList.contains('tag')){active.add(e.target.dataset.t);chips();render(true);}});
-</script></body></html>
+</script>
+<!-- Floating jump button (quick scroll) — behavior copied from the landing pages -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+  const btn = document.getElementById("dcJumpBtn");
+  const topEl = document.getElementById("dc-top");
+  const endEl = document.getElementById("dc-list-end");
+
+  if (!btn) return;
+
+  const BOTTOM_RATIO = 0.85;
+  const TOP_RESET = 20;
+
+  let isUp = false;
+
+  function pageHeight() {
+    return document.documentElement.scrollHeight;
+  }
+
+  function viewportHeight() {
+    return window.innerHeight;
+  }
+
+  function scrollY() {
+    return window.pageYOffset || document.documentElement.scrollTop;
+  }
+
+  function nearBottom() {
+    return (scrollY() + viewportHeight()) >= pageHeight() * BOTTOM_RATIO;
+  }
+
+  function updateState() {
+
+    if (pageHeight() <= viewportHeight() + 10) {
+      btn.style.opacity = "0.4";
+      return;
+    } else {
+      btn.style.opacity = ".85";
+    }
+
+    isUp = nearBottom();
+    btn.classList.toggle("is-up", isUp);
+
+
+  }
+
+  btn.addEventListener("click", function () {
+    if (isUp) {
+      if (topEl) {
+        topEl.scrollIntoView({ behavior: "smooth" });
+      } else {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    } else {
+      if (endEl) {
+        endEl.scrollIntoView({ behavior: "smooth" });
+      } else {
+        window.scrollTo({ top: pageHeight(), behavior: "smooth" });
+      }
+    }
+  });
+
+  window.addEventListener("scroll", updateState);
+  window.addEventListener("resize", updateState);
+
+  // The catalog list renders asynchronously after fetch — re-check the button
+  // state when it changes so it isn't stuck dimmed on first paint.
+  const listEl = document.getElementById("list");
+  if (listEl) new MutationObserver(updateState).observe(listEl, { childList: true });
+
+  updateState();
+
+});
+</script>
+</body></html>
