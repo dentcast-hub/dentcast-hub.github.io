@@ -1,0 +1,75 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>DentCast Cabinet</title>
+<style>
+:root{--bg:#0d0f12;--pan:#15181d;--bd:#262b33;--fg:#e6e8eb;--mut:#8a93a0;--ac:#5aa6ff;--ac2:#1f2937}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:14px/1.5 ui-sans-serif,system-ui,Segoe UI,Roboto,sans-serif}
+header{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--bd);padding:14px 18px;z-index:5}
+h1{margin:0 0 10px;font-size:15px;font-weight:600}h1 span{color:var(--mut);font-weight:400}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+input,select{background:var(--pan);border:1px solid var(--bd);color:var(--fg);border-radius:8px;padding:8px 10px;font-size:13px}
+input#q{flex:1;min-width:220px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.chip.x{background:var(--ac);color:#06121f;border:1px solid var(--ac);border-radius:999px;padding:3px 10px;font-size:12px;cursor:pointer}
+.count{color:var(--mut);font-size:12px;margin:10px 18px 0}main{padding:6px 18px 60px}
+.card{background:var(--pan);border:1px solid var(--bd);border-radius:10px;padding:12px 14px;margin:10px 0}
+.title{font-size:14px;font-weight:500;margin:0 0 5px}.jr{font-size:11px;color:var(--mut);margin:0 0 6px}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}.badge{font-size:11px;color:var(--mut);border:1px solid var(--bd);border-radius:6px;padding:1px 7px}
+.tags{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px}.tag{font-size:11px;color:var(--ac);cursor:pointer}.tag:hover{text-decoration:underline}
+.act a{display:inline-block;font-size:12px;text-decoration:none;border:1px solid var(--bd);border-radius:7px;padding:5px 11px;margin-right:7px;color:var(--fg)}
+.act a.dl{background:var(--ac);color:#06121f;border-color:var(--ac)}.act a.nolink{opacity:.4;pointer-events:none}
+.more{display:block;margin:18px auto;background:var(--pan);border:1px solid var(--bd);color:var(--fg);border-radius:8px;padding:8px 16px;cursor:pointer}
+.state{padding:40px 18px;color:var(--mut)}.state a{color:var(--ac)}
+</style></head><body>
+<header><h1>DentCast Cabinet <span id="total"></span></h1>
+<div class="row"><input id="q" placeholder="search title or tag..." disabled>
+<select id="topic" disabled><option value="">all topics</option></select>
+<select id="type" disabled><option value="">all types</option></select>
+<select id="sort"><option value="t">sort: title</option><option value="ty">sort: type</option><option value="tp">sort: topic</option></select></div>
+<div class="chips" id="active"></div></header>
+<div class="count" id="count"></div>
+<main id="list"><div class="state" id="state">Loading catalog...</div></main>
+<script>
+// JSON lives next to this file in the repo. Relative path works on any domain.
+const SRC="dentcast_cabinet_full_catalog.json";
+let DATA=[],active=new Set(),shown=0;const PAGE=80;
+const q=document.getElementById('q'),topic=document.getElementById('topic'),type=document.getElementById('type'),sort=document.getElementById('sort');
+const nm=s=>(s||'').toLowerCase();
+
+fetch(SRC).then(r=>{if(!r.ok)throw new Error(r.status);return r.json();}).then(j=>{
+  const papers=Array.isArray(j)?j:(j.papers||[]);
+  DATA=papers.map(p=>({
+    t:p.display_title||p.real_title||p.title||"",
+    tp:p.topic||"",ty:p.type||"",tg:p.tags||[],
+    d:p.drive_download||"",v:p.drive_view||"",j:p.journal||""
+  }));
+  document.getElementById('total').textContent='\u00b7 '+DATA.length+' papers';
+  fill(topic,[...new Set(DATA.map(p=>p.tp).filter(x=>x&&x!=='(root)'))].sort());
+  fill(type,[...new Set(DATA.map(p=>p.ty).filter(Boolean))].sort());
+  [q,topic,type].forEach(el=>el.disabled=false);
+  [q,topic,type,sort].forEach(el=>el.addEventListener('input',()=>render(true)));
+  document.getElementById('state').remove();render(true);
+}).catch(e=>{
+  document.getElementById('state').innerHTML='Could not load <b>'+SRC+'</b> ('+e.message+').<br>Make sure the JSON sits in the same folder as this page in the repo.';
+});
+
+function fill(sel,arr){for(const v of arr){const o=document.createElement('option');o.textContent=v;sel.appendChild(o);}}
+function match(p){const t=nm(q.value).trim();
+ if(t&&!(nm(p.t).includes(t)||p.tg.some(x=>nm(x).includes(t))))return false;
+ if(topic.value&&p.tp!==topic.value)return false;if(type.value&&p.ty!==type.value)return false;
+ for(const a of active)if(!p.tg.includes(a))return false;return true;}
+function render(reset){if(reset){shown=0;document.getElementById('list').innerHTML='';}
+ const res=DATA.filter(match);res.sort((a,b)=>(a[sort.value]||'').localeCompare(b[sort.value]||''));
+ document.getElementById('count').textContent=res.length+' result'+(res.length==1?'':'s');
+ const list=document.getElementById('list');
+ for(const p of res.slice(shown,shown+PAGE)){const d=document.createElement('div');d.className='card';
+  const tags=p.tg.map(t=>'<span class="tag" data-t="'+t+'">#'+t+'</span>').join(' ');
+  const dl=p.d?'<a class="dl" href="'+p.d+'" target="_blank">Download</a>':'<a class="dl nolink">No link</a>';
+  const vw=p.v?'<a href="'+p.v+'" target="_blank">View</a>':'';
+  const jr=p.j?'<p class="jr">'+p.j+'</p>':'';
+  d.innerHTML='<p class="title">'+p.t+'</p>'+jr+'<div class="meta"><span class="badge">'+p.ty+'</span><span class="badge">'+p.tp+'</span></div><div class="tags">'+tags+'</div><div class="act">'+dl+vw+'</div>';
+  list.appendChild(d);}
+ shown+=Math.min(PAGE,Math.max(0,res.length-shown));let mb=document.getElementById('more');if(mb)mb.remove();
+ if(shown<res.length){const b=document.createElement('button');b.id='more';b.className='more';b.textContent='show more ('+(res.length-shown)+' left)';b.onclick=()=>render(false);list.appendChild(b);}}
+function chips(){const c=document.getElementById('active');c.innerHTML='';active.forEach(a=>{const s=document.createElement('span');s.className='chip x';s.textContent='#'+a+' \u2715';s.onclick=()=>{active.delete(a);chips();render(true)};c.appendChild(s);});}
+document.addEventListener('click',e=>{if(e.target.classList.contains('tag')){active.add(e.target.dataset.t);chips();render(true);}});
+</script></body></html>
