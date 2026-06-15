@@ -36,9 +36,32 @@ machinery the router now calls on its own. **LiteCast is the sole exception:**
 it is `.ir`-only with no hreflang, so it gets no en mirror or toggle in either
 path.
 
+## DentAI + attached paper (trigger)
+
+DentAI content is often derived from a source research paper. When the user
+brings DentAI content **and hands you the article/paper file alongside it**,
+the publish gains **three additive actions** on top of the normal DentAI flow —
+specified in **Phase C step 4.10** of `.dentcast/workflows/README.md` (armed by
+**Phase B Question 4.7**):
+
+1. **File the paper into Google Drive** — upload it into the correct *topical
+   subfolder* (chosen semantically) of the cabinet folder
+   `https://drive.google.com/drive/folders/1iDwq4Uj-y7_FO99-QW1Th0hVRN5yfk9f`.
+2. **Enrich `dentcast_cabinet_full_catalog.json`** (repo root) — append the
+   paper to its `papers` array with the Drive link, semantic hashtags (plus the
+   article's own name), and the enriched-entry schema.
+3. **First-author → DOI credit** — find the paper's DOI on the web, then credit
+   the **first author** under the article with a link to the DOI, ShareHub-style.
+
+Hard guard for this trigger: **«اگر جایی شک داشتی سوال کن عمل نکن»** — anywhere
+you're unsure (subfolder, topic/tags, DOI, first author), **ask first, never
+guess.** A DentAI publish with **no** attached paper skips all three actions and
+publishes normally.
+
 ## Repo conventions
 
 - `dentcast-brain.json` — central data file, has separate sections/arrays per content type.
+- `dentcast_cabinet_full_catalog.json` — root catalog of the paper cabinet (`papers` array; mirrors the Google Drive folder's topical subfolders). Updated by the DentAI-with-paper branch (workflow step 4.10); the search UI is `dentcast_cabinet_search.html`.
 - `tools/` — Python scripts including the main index builder.
 - `index.html` — homepage with Pulse section + latest-content widget.
 - Each content type has its own directory at the repo root (e.g., `/notecast/`, `/insight/`, `/litecast/`, etc.). Confirm exact paths from the URLs stored in brain entries.
