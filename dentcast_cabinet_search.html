@@ -65,6 +65,17 @@ main#list{padding:6px 0 20px}
 .more:hover{background:var(--surface2)}
 .state{padding:40px 0;color:var(--txt3);text-align:center}
 #list .state a{color:var(--ac)}
+.nav-back{ margin-bottom:8px; }
+.back-link{
+  display:inline-flex; align-items:center; gap:4px;
+  font-size:.78rem; font-weight:600;
+  color:var(--txt3);
+  transition:color var(--tr);
+}
+.back-link::before{ content:"← "; }
+.back-link:hover{ color:var(--ac); }
+/* We're already on the cabinet — hide the shared topbar's cabinet entry here. */
+#btn-cabinet{ display:none; }
   <link rel="alternate" hreflang="fa-IR" href="https://dentcast.ir/dentcast_cabinet_search.html">
   <link rel="alternate" hreflang="fa" href="https://dentcast.org/dentcast_cabinet_search.html">
   <link rel="alternate" hreflang="x-default" href="https://dentcast.org/dentcast_cabinet_search.html">
@@ -106,6 +117,7 @@ main#list{padding:6px 0 20px}
 </div>
 
 <div class="wrap" dir="ltr">
+  <div class="nav-back" dir="rtl"><a href="/index.html" class="back-link">بازگشت به صفحه‌ی اصلی</a></div>
   <div class="cab-head">
     <h1>DentCast Cabinet <span id="total"></span></h1>
     <div class="row"><input id="q" placeholder="search title or tag..." disabled>
@@ -144,7 +156,7 @@ main#list{padding:6px 0 20px}
   <div class="dc-results-box" id="dcResults"></div>
 </div>
 <script src="/global-search.js?v=6" defer></script>
-<script src="/dc-nav.js?v=26" defer></script>
+<script src="/dc-nav.js?v=27" defer></script>
 <script>
 // JSON lives next to this file in the repo. Relative path works on any domain.
 const SRC="dentcast_cabinet_full_catalog.json";

@@ -211,6 +211,7 @@ Added for migrating in-body emoji like <svg class="dc-svg-icon" viewBox="0 0 24 
 |-------------------|-----------------------------------|------------------------------------------|
 | `icon-microbe`    | Spiky circle (8 radial spikes)    | Microorganism / pathogen / infection     |
 | `icon-microscope` | Microscope body + arm + lens      | Research / lab / evidence / science      |
+| `icon-article`    | Page outline + text lines         | Research article / paper / document      |
 
 ### Editorial — direction
 
