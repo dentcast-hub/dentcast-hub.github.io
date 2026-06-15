@@ -10281,5 +10281,46 @@
       "secondary": [],
       "subtopic": "prosthetic-components"
     }
+  },
+  {
+    "type": "dentai",
+    "id": "dentai-17",
+    "title": "سیل فوری عاج (Immediate Dentin Sealing - IDS) و رزین کوتینگ (Resin Coating - RC)",
+    "caption": "مروری بر سیل فوری عاج (IDS) و رزین کوتینگ (RC)؛ تعریف و مراحل IDS، سیستم‌های باندینگ عاج استاندارد طلایی (Optibond FL، Clearfil SE Protect و Clearfil SE Bond)، تأثیر استرس پلیمریزاسیون و C-Factor بر لایه هیبرید در حال تشکیل و نقش RC در تشکیل Biobase؛ ادامهٔ درس شش‌گانهٔ بیومیمتیک دیوید آلمان.",
+    "hashtags": [
+      "#IDS",
+      "#resin coating",
+      "#immediate dentin sealing",
+      "#biobase",
+      "#biomimetic",
+      "#adhesive dentistry",
+      "#سیل_فوری_عاج",
+      "#رزین_کوتینگ",
+      "#بیومیمتیک",
+      "#باندینگ"
+    ],
+    "keywords": [
+      "immediate dentin sealing",
+      "IDS",
+      "resin coating",
+      "RC",
+      "Optibond FL",
+      "Clearfil SE Protect",
+      "Clearfil SE Bond",
+      "gold standard bonding systems",
+      "polymerization stress",
+      "C-Factor",
+      "hybrid layer",
+      "biobase",
+      "oxygen inhibition layer",
+      "biomimetic dentistry",
+      "adhesive dentistry"
+    ],
+    "page_url": "/dentai/dentai-17.html",
+    "pillar": {
+      "primary": "bonding",
+      "secondary": [],
+      "subtopic": "strategies"
+    }
   }
 ]
