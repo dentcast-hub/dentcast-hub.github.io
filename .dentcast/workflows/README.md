@@ -22,6 +22,35 @@
 
 12. **Every published page ships bilingual: the English mirror + fa↔en toggle is MANDATORY (Phase D), never an afterthought.** A `.org` publish is **incomplete** until the new page has a real English counterpart at `/{type}/en/{same-filename}.html` and a working **per-document fa↔en language toggle on both sides**. The toggle button (`.lang-btn`) is **never** added alone: a toggle whose English target does not exist on disk is a forbidden phantom pair (the `inject_hreflang.py` machinery drops it), so the en page MUST be created in the same publish. This is produced by running the **English-version workflow** (`.dentcast/workflows/en-version.md`) on the just-published page as the final phase — see **Phase D**. "The cloned template had no toggle, so I matched it" is an **explicitly forbidden** justification (same spirit as Hard Rule 11): if earlier same-type pages lack the toggle/en mirror, that is a gap, never a pattern to copy forward. **The single exception is LiteCast**, which is `.ir`-only, carries **no** hreflang, and gets **no** en mirror or toggle (Hard Rule 10) — for LiteCast, Phase D is a documented skip.
 
+## Phase 0 — Routing: is there an attached paper file? is there text to publish?
+
+Before anything else, classify what the user handed you along two independent axes:
+
+- **Is there text/content to publish?** (a متن for a page)
+- **Is there an attached research paper/article file?** (a PDF or similar)
+
+The **attached-paper actions are triggered by the paper file itself — independent
+of content type.** They are **not** tied to DentAI; whenever a paper file is
+present, the paper branch (**Phase C step 4.10**) fires, whatever the locked
+category is (or even when there is no category at all). Route as follows:
+
+| Text to publish? | Paper file attached? | What runs |
+|---|---|---|
+| **Yes** | **No** | Normal publish only (Phases A–D). No paper branch. |
+| **Yes** | **Yes** | Normal publish for that type (any type — **not just DentAI**) **plus** step 4.10's **all three parts** (Drive filing + catalog enrichment + first-author→DOI credit on the published page). |
+| **No** | **Yes** | **Paper-only fast path** — do **NOT** run the publishing phases (no page clone, no brain entry, no pillar, no Pulse, no en mirror, no rebuild). Run **only step 4.10 Part 1 (Drive) and Part 2 (catalog)**. **Skip Part 3** — there is no published page to put a credit under. Then commit. |
+| **No** | **No** | Nothing to do — ask the user what they want. |
+
+**Paper-only fast path (text-less) detail.** When the user gives you just a paper
+file with no متن: jump straight to **step 4.10**, run **Parts 1 & 2 only**, and
+stop. The cabinet catalog (`dentcast_cabinet_full_catalog.json`) is read
+client-side by `dentcast_cabinet_search.html` via `fetch`, and it is **not** part
+of the site version hash (step 7), so a paper-only addition needs **no** builder
+run and **no** version bump — Drive upload + catalog edit + commit is the whole job.
+
+When there **is** text, proceed through Phases A–D as usual; the paper branch (if a
+file is attached) runs as step 4.10 inside Phase C.
+
 ## Phase A — Discover
 
 Before asking the user anything other than "what type is this":
@@ -77,27 +106,29 @@ Look at the latest entry in the locked category and identify which media fields 
 
 If a field exists in previous entries but you genuinely don't know whether the user wants it this time, ask: «این بار [field] داری یا نه؟»
 
-### Question 4.7 — DentAI only: is there an accompanying article (paper) file?
+### Question 4.7 — Any type: is there an accompanying article (paper) file?
 
-**Runs only when the locked category is DentAI.** Skip for every other type.
+**Runs for EVERY type, not just DentAI** (Phase 0 routing). The attached-paper
+actions key off the **paper file**, not the content category — so check this on
+every publish regardless of the locked category.
 
-DentAI content is frequently derived from a source research paper. When the user
-supplies the content **together with the article/paper file** (a PDF or similar
-attachment — the trigger is the user handing you the paper alongside the متن),
-the publish gains **three extra, additive actions** beyond the normal DentAI
-flow — Drive filing, cabinet-catalog enrichment, and a first-author→DOI credit
-on the page. These are specified in **Phase C step 4.10**.
+When the user supplies the content **together with a research paper/article file**
+(a PDF or similar attachment), the publish gains **three extra, additive actions**
+beyond the normal flow — Drive filing, cabinet-catalog enrichment, and a
+first-author→DOI credit on the published page. These are specified in **Phase C
+step 4.10**.
 
-- If the user attached a paper file → set the **DentAI article-file branch
-  (step 4.10) ACTIVE** and keep the file (and its real filename) for that step.
-- If no paper file accompanies this DentAI publish → the branch is a documented
-  **skip**; the DentAI page publishes normally with no Drive/catalog/DOI actions.
-- If it's DentAI but you're unsure whether a file was provided, **ask** — don't
-  assume either way.
+- If the user attached a paper file → set the **attached-paper branch (step 4.10)
+  ACTIVE** and keep the file (and its real filename) for that step.
+- If no paper file accompanies this publish → the branch is a documented **skip**;
+  the page publishes normally with no Drive/catalog/DOI actions.
+- If you're unsure whether a file was provided, **ask** — don't assume either way.
 
-This branch is **additive**: it never replaces or overrides any general step.
-The normal DentAI publish (clone, pillar, brain entry, enrichment, Pulse, en
-mirror) runs in full; step 4.10 only adds the three paper-specific actions.
+This branch is **additive**: it never replaces or overrides any general step. The
+normal publish for the locked type (clone, pillar, brain entry, enrichment, Pulse,
+en mirror) runs in full; step 4.10 only adds the three paper-specific actions.
+(For a paper file with **no** متن at all, see the **paper-only fast path** in
+Phase 0 — Parts 1 & 2 only, no publish.)
 
 ### Question 5 — Pulse sentence
 
@@ -507,26 +538,35 @@ Present the proposed additions to the user as a numbered list before editing. Fo
 - Labels must be **short, semantic, Persian, and specific** to the target — never generic.
 - **Hash the new page before and after this step.** The only allowed diffs are the approved capsule additions. Report before/after hashes.
 
-### 4.10. DentAI article-file branch (DentAI **with** an attached paper only)
+### 4.10. Attached-paper branch (ANY type — triggered by the paper file, not the category)
 
-**Runs only when the locked category is DentAI AND the user supplied an
-accompanying article/paper file** (the branch armed in Phase B Question 4.7).
-For DentAI publishes with **no** paper file, and for **every other category**,
-skip this entire section and **say so in the report** ("4.10: skipped — no
-attached paper"). This branch is **additive** — it adds three actions on top of
-the normal DentAI publish and overrides nothing.
+**Runs whenever the user supplied an accompanying research paper/article file —
+for EVERY type, not just DentAI** (the branch armed in Phase B Question 4.7; the
+trigger keys off the **file**, not the locked category). For publishes with **no**
+paper file, skip this entire section and **say so in the report** ("4.10: skipped
+— no attached paper"). This branch is **additive** — it adds the paper actions on
+top of whatever normal publish is running and overrides nothing.
+
+**Which parts run depends on whether a page is being published (Phase 0 routing):**
+- **Paper file + text/content (any type):** run **all three parts** — Parts 1 & 2
+  (Drive + catalog) and Part 3 (first-author→DOI credit on the published page).
+- **Paper file only, no text (paper-only fast path):** run **Parts 1 & 2 only**.
+  **Skip Part 3** — there is no published page to put a credit under — and skip the
+  rest of the normal publish flow entirely (see Phase 0). Report "Part 3: skipped —
+  no published page (paper-only)".
 
 **Overarching rule for this whole branch — ASK, don't guess (the user's
 explicit instruction «اگر جایی شک داشتی سوال کن عمل نکن»).** Anywhere in the
-three parts below where you are not confident — the right Drive subfolder, the
-correct topic/tags, the paper's real title, its DOI, or its first author —
-**stop and ask the user before acting.** Never invent a subfolder, a DOI, an
-author, or a tag. A wrong guess here mis-files a paper and publishes a false
-citation; a question costs nothing.
+parts below where you are not confident — the right Drive subfolder, the correct
+topic/tags, the paper's real title, its DOI, or its first author — **stop and ask
+the user before acting.** Never invent a subfolder, a DOI, an author, or a tag. A
+wrong guess here mis-files a paper and publishes a false citation; a question
+costs nothing.
 
-The three parts mirror the three things a paper-backed DentAI publish must do.
-Parts 1 and 2 are data operations (Drive + catalog); Part 3 mutates the new
-DentAI page. Run them in order; all three run before the rebuild (step 8).
+Parts 1 and 2 are data operations (Drive + catalog) and **always** run when a
+paper file is present. Part 3 mutates the published page and runs **only when
+there is a page** (text-bearing publish). Run them in order; when a page exists,
+all three run before the rebuild (step 8).
 
 #### Part 1 — File the paper into Google Drive (correct topical subfolder)
 
@@ -583,9 +623,11 @@ socket`, `GBR`, `periimplantitis`, `biomimetic`, with nested paths like
      URLs/id captured in Part 1.** (Putting the paper's Drive link into the JSON
      is the whole point of this part.)
    - `status` → match the template (e.g. `"linked"`); `semantic_tagged` → `true`.
-   - `linked_episodes` → the DentAI page being published (follow the template's
-     value shape); `key_finding` / `clinical_bottom_line` may stay `""` as on
-     most entries unless the content gives them clearly.
+   - `linked_episodes` → the page being published, if any (follow the template's
+     value shape); on the **paper-only fast path** there is no page, so leave it
+     as the template's empty shape (e.g. `[]`). `key_finding` /
+     `clinical_bottom_line` may stay `""` as on most entries unless the content
+     gives them clearly.
 4. **Hashtags (`tags`) — the user's rule: semantic + the article's own name.**
    Generate genuinely **semantic** tags describing the paper's concepts, in the
    **same lowercase-kebab style as existing `tags`** (e.g. `marginal-bone-loss`,
@@ -606,10 +648,12 @@ socket`, `GBR`, `periimplantitis`, `biomimetic`, with nested paths like
 
 #### Part 3 — Find the DOI on the web and add a first-author → DOI credit on the page (ShareHub style)
 
-This is the on-page action and mirrors how **ShareHub** credits its source: a
-`.author` block reading «نویسنده:» followed by a single hyperlinked name. Here
-the linked name is the **paper's first author** and the link target is the
-**DOI**.
+**Runs only when a page is being published** (text-bearing publish, any type). On
+the **paper-only fast path** there is no page — skip this part entirely and report
+the skip. This is the on-page action and mirrors how **ShareHub** credits its
+source: a `.author` block reading «نویسنده:» followed by a single hyperlinked
+name. Here the linked name is the **paper's first author** and the link target is
+the **DOI**.
 
 1. **Find the DOI + first author on the web.** Search the net for the paper's
    **DOI** and its **first author** — use `WebSearch` and/or the article-lookup
@@ -618,9 +662,9 @@ the linked name is the **paper's first author** and the link target is the
    to the correct paper (matching title/journal/year). **If you cannot confidently
    determine the DOI or the first author, ASK the user — never fabricate either.**
    The DOI/journal/year found here also feed Part 2's catalog fields.
-2. **Add the credit under the article body.** On the new DentAI page, **below the
-   article body**, add a source-credit block crediting the paper's first author,
-   where the **first author's name is an anchor to the DOI**:
+2. **Add the credit under the article body.** On the published page (whatever its
+   type), **below the article body**, add a source-credit block crediting the
+   paper's first author, where the **first author's name is an anchor to the DOI**:
    ```html
    <div class="author">
      نویسنده:
@@ -628,17 +672,19 @@ the linked name is the **paper's first author** and the link target is the
    </div>
    ```
    - Use the **same markup/style precedent the page's own type already uses** for
-     a source credit. DentAI already has a source-citation precedent (e.g.
+     a source credit. DentAI, for instance, has a source-citation precedent (e.g.
      `dentai/dentai-3.html`: a citation card with the paper title, authors,
-     journal, and DOI, plus a JSON-LD `isBasedOn` → `doi.org` reference). If that
-     citation card is present, **enhance it** by making the **first author** a
-     real `<a href="https://doi.org/<doi>">` link (ShareHub style) rather than
-     adding a visually duplicate block; if no such block exists, add the
-     ShareHub-style `.author` credit above.
+     journal, and DOI, plus a JSON-LD `isBasedOn` → `doi.org` reference). If such a
+     citation card is present on the page, **enhance it** by making the **first
+     author** a real `<a href="https://doi.org/<doi>">` link (ShareHub style)
+     rather than adding a visually duplicate block; if no such block exists, add
+     the ShareHub-style `.author` credit above, and ensure its `.author` CSS exists
+     in the page (it does on ShareHub-derived pages; add it if the type's template
+     lacks it).
    - **This is the SOURCE paper's author** — do **not** confuse it with, or
-     overwrite, the existing DentCast `.author-note` (دکتر فواد شهابیان), which
-     credits the narrator/site author. The two coexist.
-3. **Keep JSON-LD consistent.** If the DentAI template carries an `isBasedOn`
+     overwrite, any existing site author credit (e.g. DentCast's `.author-note`,
+     دکتر فواد شهابیان, the narrator/site author). The two coexist.
+3. **Keep JSON-LD consistent.** If the page's template carries an `isBasedOn`
    (CreativeWork) reference, set its `url` to `https://doi.org/<doi>` and its
    `name` to the paper title — matching the `dentai-3` precedent.
 4. **Hash the new page before and after Part 3.** The only allowed diffs are the
@@ -647,8 +693,9 @@ the linked name is the **paper's first author** and the link target is the
 
 **Verify after the branch:** report the Drive subfolder the paper landed in (and
 its `drive_view` URL); the new catalog entry's `id`, `topic`/`topic_path`,
-`tags`, and Drive link; and the DOI + first author used for the on-page credit
-(with the rendered anchor). Explicitly flag anything you had to ask the user
+`tags`, and Drive link; and — when a page was published — the DOI + first author
+used for the on-page credit (with the rendered anchor), or the "Part 3 skipped —
+paper-only" note otherwise. Explicitly flag anything you had to ask the user
 about, and confirm nothing was guessed.
 
 ### 5. Brain entry
@@ -769,7 +816,7 @@ After the pillar builder finishes, verify:
 - Pulse: which line was removed (the bottom one), and where the new line was inserted (one above the new bottom), with before/after diff
 - For NoteCast: parent episode page path; whether the related-content block existed already or was created; before/after hash of the parent episode page; diff of the inserted markup
 - For Promptologist (step 4.6): the new part's `ep-nav` previous slot wired to `<prev-id>.html` (next slot left as the empty placeholder); the previous part's page path with before/after hash, confirming its empty «next» placeholder was converted into a link to `<new-id>.html` (only that slot changed)
-- For DentAI with an attached paper (step 4.10) — or the documented "skipped — no attached paper" line otherwise: **Part 1** — the Drive subfolder the paper was filed into (chosen semantically) and its `drive_view` URL; **Part 2** — the new `dentcast_cabinet_full_catalog.json` entry's `id`, `topic`/`topic_path`, `tags` (semantic + article-name), and the Drive link, with confirmation the key set matches the enriched-entry template and the paper surfaces in `dentcast_cabinet_search.html`; **Part 3** — the DOI and first author found on the web, the rendered first-author→DOI credit anchor (ShareHub `.author` style) and any `isBasedOn` update, with before/after page hash. Explicitly list anything you asked the user about and confirm nothing (subfolder/DOI/author/tags) was guessed
+- For any publish with an attached paper file (step 4.10 — triggered by the file, any type) — or the documented "skipped — no attached paper" line otherwise: **Part 1** — the Drive subfolder the paper was filed into (chosen semantically) and its `drive_view` URL; **Part 2** — the new `dentcast_cabinet_full_catalog.json` entry's `id`, `topic`/`topic_path`, `tags` (semantic + article-name), and the Drive link, with confirmation the key set matches the enriched-entry template and the paper surfaces in `dentcast_cabinet_search.html`; **Part 3** (only when a page was published) — the DOI and first author found on the web, the rendered first-author→DOI credit anchor (ShareHub `.author` style) and any `isBasedOn` update, with before/after page hash — or the "Part 3 skipped — paper-only (no page)" note on the paper-only fast path. Explicitly list anything you asked the user about and confirm nothing (subfolder/DOI/author/tags) was guessed
 - **Cross-linking completion gate (Hard Rule 11) — REQUIRED; the publish is incomplete if any of these is missing.** For **each** of steps 4.7, 4.8, 4.9, report its explicit outcome — never leave one unstated:
   - **4.7 (glossary → new content):** the candidate terms considered, which were linked (with the link text used), and which were skipped and why (at 5-cap / no section / judged unrelated). An empty result is acceptable **only** as a documented "analyzed, 0 qualifying terms".
   - **4.8 (in-body inline links on the new page):** confirmation that a **fresh** semantic analysis of *this* body was run (NOT inherited from the clone); the candidates presented to the user; which were approved/inserted (first-occurrence) and which rejected. For episodes, confirm the «درباره این اپیزود» caption was the analyzed body. An empty result is acceptable **only** as a documented "analyzed body, 0 qualifying glossary/episode candidates".

@@ -36,13 +36,14 @@ machinery the router now calls on its own. **LiteCast is the sole exception:**
 it is `.ir`-only with no hreflang, so it gets no en mirror or toggle in either
 path.
 
-## DentAI + attached paper (trigger)
+## Attached paper file (trigger — ANY type, file-driven)
 
-DentAI content is often derived from a source research paper. When the user
-brings DentAI content **and hands you the article/paper file alongside it**,
-the publish gains **three additive actions** on top of the normal DentAI flow —
-specified in **Phase C step 4.10** of `.dentcast/workflows/README.md` (armed by
-**Phase B Question 4.7**):
+The paper actions are triggered by the **paper file itself**, *not* by the
+content type. Whenever the user hands you a research paper/article file — with
+content of **any** type (not just DentAI), or with **no** متن at all — the paper
+branch fires. Specified in **Phase C step 4.10** of
+`.dentcast/workflows/README.md` (routed in **Phase 0**, armed by **Phase B
+Question 4.7**):
 
 1. **File the paper into Google Drive** — upload it into the correct *topical
    subfolder* (chosen semantically) of the cabinet folder
@@ -53,10 +54,17 @@ specified in **Phase C step 4.10** of `.dentcast/workflows/README.md` (armed by
 3. **First-author → DOI credit** — find the paper's DOI on the web, then credit
    the **first author** under the article with a link to the DOI, ShareHub-style.
 
+**Routing by what was attached:**
+- **Paper file + text (any type):** the page publishes normally for its type
+  **and** all three actions run.
+- **Paper file only, no text:** run **only actions 1 & 2** (Drive upload +
+  catalog update) — **skip action 3** (no page to credit) and skip the rest of
+  the publish flow. Drive upload + catalog edit + commit is the whole job.
+- **Text, no paper file:** no paper actions; publish normally.
+
 Hard guard for this trigger: **«اگر جایی شک داشتی سوال کن عمل نکن»** — anywhere
 you're unsure (subfolder, topic/tags, DOI, first author), **ask first, never
-guess.** A DentAI publish with **no** attached paper skips all three actions and
-publishes normally.
+guess.**
 
 ## Repo conventions
 
