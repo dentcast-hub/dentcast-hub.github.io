@@ -1,0 +1,49 @@
+...processed 25/1460  filled=15
+...processed 75/1460  filled=47
+...processed 100/1460  filled=57
+...processed 125/1460  filled=68
+...processed 150/1460  filled=73
+...processed 175/1460  filled=86
+...processed 200/1460  filled=97
+...processed 225/1460  filled=106
+...processed 250/1460  filled=120
+...processed 275/1460  filled=133
+...processed 325/1460  filled=155
+...processed 350/1460  filled=163
+...processed 475/1460  filled=228
+...processed 525/1460  filled=252
+...processed 600/1460  filled=280
+...processed 625/1460  filled=290
+...processed 650/1460  filled=303
+...processed 675/1460  filled=310
+...processed 725/1460  filled=334
+...processed 750/1460  filled=344
+...processed 775/1460  filled=350
+...processed 800/1460  filled=361
+...processed 825/1460  filled=368
+...processed 875/1460  filled=386
+...processed 900/1460  filled=395
+...processed 1025/1460  filled=453
+...processed 1050/1460  filled=469
+...processed 1125/1460  filled=511
+...processed 1150/1460  filled=520
+...processed 1200/1460  filled=539
+...processed 1225/1460  filled=549
+...processed 1250/1460  filled=563
+...processed 1350/1460  filled=625
+...processed 1425/1460  filled=673
+...processed 1450/1460  filled=687
+DOI fill summary
+================
+Total missing at start : 1460
+Filled via embedded    : 0
+Filled via Crossref    : 668
+Filled via OpenAlex    : 22
+Skipped low-confidence : 726
+Skipped ambiguous      : 41
+Not found              : 3
+Lookup errors          : 0
+Total filled           : 690
+Final entries          : 2194
+Remaining missing      : 770
+DONE

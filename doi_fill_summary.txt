@@ -1,0 +1,13 @@
+DOI fill summary
+================
+Total missing at start : 1460
+Filled via embedded    : 0
+Filled via Crossref    : 668
+Filled via OpenAlex    : 22
+Skipped low-confidence : 726
+Skipped ambiguous      : 41
+Not found              : 3
+Lookup errors          : 0
+Total filled           : 690
+Final entries          : 2194
+Remaining missing      : 770
