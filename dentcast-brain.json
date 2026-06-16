@@ -10322,5 +10322,128 @@
       "secondary": [],
       "subtopic": "strategies"
     }
+  },
+  {
+    "type": "dentai",
+    "id": "dentai-18",
+    "title": "لایه مهار شده با اکسیژن (Oxygen-Inhibited Layer - OIL)",
+    "caption": "مروری بر لایه مهار شده با اکسیژن (OIL)؛ تعریف، علت تشکیل (واکنش اکسیژن با رادیکال‌های آزاد)، ضخامت، راه‌حل‌های رفع آن (افزودن رزین کوتینگ و استفاده از لایه گلیسیرین) و اهمیت OIL هنگام ایجاد بایوبیس با سیستم‌های باندینگ Clearfil SE Protect و Optibond FL؛ ادامهٔ درس شش‌گانهٔ بیومیمتیک دیوید آلمان.",
+    "hashtags": [
+      "#OIL",
+      "#oxygen inhibited layer",
+      "#oxygen inhibition layer",
+      "#resin coating",
+      "#biobase",
+      "#biomimetic",
+      "#adhesive dentistry",
+      "#لایه_مهار_اکسیژن",
+      "#بایوبیس",
+      "#بیومیمتیک"
+    ],
+    "keywords": [
+      "oxygen inhibited layer",
+      "OIL",
+      "oxygen inhibition layer",
+      "air inhibition layer",
+      "free radicals",
+      "polymerization",
+      "resin coating",
+      "glycerin",
+      "biobase",
+      "Clearfil SE Protect",
+      "Optibond FL",
+      "biomimetic dentistry",
+      "لایه مهار شده با اکسیژن",
+      "بایوبیس",
+      "رزین کوتینگ"
+    ],
+    "page_url": "/dentai/dentai-18.html",
+    "pillar": {
+      "primary": "bonding",
+      "secondary": [],
+      "subtopic": "strategies"
+    }
+  },
+  {
+    "type": "dentai",
+    "id": "dentai-19",
+    "title": "جداسازی با زمان (Decoupling With Time - DWT)",
+    "caption": "مروری بر مفهوم جداسازی با زمان (DWT)؛ بلوغ باند عاج و لایه هیبرید پس از IDS، رسیدن باند عاج به ۹۰٪ استحکام پس از ۵ دقیقه، نقش رزین کوتینگ و کارهای قابل انجام در طول زمان بلوغ باند (fiber inserts، DME و ساخت دیواره‌های پروگزیمال)؛ ادامهٔ درس شش‌گانهٔ بیومیمتیک دیوید آلمان.",
+    "hashtags": [
+      "#DWT",
+      "#decoupling with time",
+      "#IDS",
+      "#hybrid layer",
+      "#resin coating",
+      "#biomimetic",
+      "#adhesive dentistry",
+      "#جداسازی_با_زمان",
+      "#لایه_هیبرید",
+      "#بیومیمتیک"
+    ],
+    "keywords": [
+      "decoupling with time",
+      "DWT",
+      "immediate dentin sealing",
+      "IDS",
+      "hybrid layer",
+      "dentin bond maturation",
+      "resin coating",
+      "C-Factor",
+      "fiber inserts",
+      "deep margin elevation",
+      "hierarchy of bondability",
+      "biomimetic dentistry",
+      "جداسازی با زمان",
+      "لایه هیبرید",
+      "بلوغ باند عاج"
+    ],
+    "page_url": "/dentai/dentai-19.html",
+    "pillar": {
+      "primary": "bonding",
+      "secondary": [],
+      "subtopic": "strategies"
+    }
+  },
+  {
+    "type": "dentai",
+    "id": "dentai-20",
+    "title": "قانون آلمان-دلیپری (Alleman-Deliperi Rule) و قالب‌گیری بایوبیس",
+    "caption": "مروری بر قانون آلمان-دلیپری در مورد بایوبیس و لایه‌های آن (IDS، رزین کوتینگ به ضخامت ۰.۵ میلی‌متر و کامپوزیت تقویت‌شده با الیاف)؛ مقایسه روش ایده‌آل قالب‌گیری Indirect با روش DDS (Delayed Dentin Sealing) و الزامات قالب‌گیری بلافاصله پس از ساخت بایوبیس؛ ادامهٔ درس شش‌گانهٔ بیومیمتیک دیوید آلمان.",
+    "hashtags": [
+      "#Alleman Deliperi rule",
+      "#biobase",
+      "#IDS",
+      "#resin coating",
+      "#DDS",
+      "#impression",
+      "#biomimetic",
+      "#قانون_آلمان_دلیپری",
+      "#بایوبیس",
+      "#بیومیمتیک"
+    ],
+    "keywords": [
+      "Alleman-Deliperi rule",
+      "biobase",
+      "immediate dentin sealing",
+      "IDS",
+      "resin coating",
+      "fiber-reinforced composite",
+      "indirect restoration",
+      "impression",
+      "delayed dentin sealing",
+      "DDS",
+      "hybrid layer",
+      "oxygen inhibition",
+      "biomimetic dentistry",
+      "قانون آلمان دلیپری",
+      "بایوبیس"
+    ],
+    "page_url": "/dentai/dentai-20.html",
+    "pillar": {
+      "primary": "bonding",
+      "secondary": [],
+      "subtopic": "strategies"
+    }
   }
 ]
