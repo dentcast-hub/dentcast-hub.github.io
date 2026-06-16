@@ -1,0 +1,76 @@
+{
+  "threshold": 3,
+  "max_new_per_paper": 8,
+  "max_total_per_paper": 12,
+  "vocabulary_size": 523,
+  "matchable_vocab_size": 278,
+  "excluded_from_matching": "topic:-prefixed and purely-numeric (year artifact) tags",
+  "papers_eligible": 10,
+  "papers_modified": 3,
+  "total_tags_added": 3,
+  "modifications": [
+    {
+      "id": "P0697",
+      "real_title": "Saving Costs through the Decontamination of the Packaging of Unused Medical Supplies Using Hydrogen Peroxide Vapor",
+      "tags_before": [
+        "topic:covid-19",
+        "topic:hydrogen-peroxide",
+        "covid-19"
+      ],
+      "tags_added": [
+        {
+          "tag": "decontamination",
+          "source": "abstract-match"
+        }
+      ],
+      "tags_after": [
+        "topic:covid-19",
+        "topic:hydrogen-peroxide",
+        "covid-19",
+        "decontamination"
+      ]
+    },
+    {
+      "id": "P1559",
+      "real_title": "High-Power LED Units Currently Available for Dental Resin-Based Materials—A Review",
+      "tags_before": [
+        "in-vitro",
+        "topic:lightcure-instrument",
+        "in-vivo"
+      ],
+      "tags_added": [
+        {
+          "tag": "review",
+          "source": "abstract-match"
+        }
+      ],
+      "tags_after": [
+        "in-vitro",
+        "topic:lightcure-instrument",
+        "in-vivo",
+        "review"
+      ]
+    },
+    {
+      "id": "P1685",
+      "real_title": "Computer‐assisted implantology: historical background and potential outcomes—a review",
+      "tags_before": [
+        "topic:navigation",
+        "dental-implant",
+        "implantology"
+      ],
+      "tags_added": [
+        {
+          "tag": "review",
+          "source": "abstract-match"
+        }
+      ],
+      "tags_after": [
+        "topic:navigation",
+        "dental-implant",
+        "implantology",
+        "review"
+      ]
+    }
+  ]
+}

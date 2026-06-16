@@ -19131,7 +19131,8 @@
    "tags": [
     "topic:covid-19",
     "topic:hydrogen-peroxide",
-    "covid-19"
+    "covid-19",
+    "decontamination"
    ],
    "name_bucket": "author_year",
    "semantic_tagged": true,
@@ -42556,7 +42557,8 @@
    "tags": [
     "in-vitro",
     "topic:lightcure-instrument",
-    "in-vivo"
+    "in-vivo",
+    "review"
    ],
    "name_bucket": "heavy",
    "semantic_tagged": true,
@@ -45515,7 +45517,8 @@
    "tags": [
     "topic:navigation",
     "dental-implant",
-    "implantology"
+    "implantology",
+    "review"
    ],
    "name_bucket": "heavy",
    "semantic_tagged": true,
