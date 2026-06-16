@@ -2,3 +2,6 @@
 !.claude/skills/
 __pycache__/
 *.pyc
+
+# Cabinet enrichment resume cache (regenerable; never commit)
+enrich_cache.json
