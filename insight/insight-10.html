@@ -61,7 +61,35 @@
     @media (max-width:768px){
       p {font-size: .98rem; line-height: 1.9;}
     }
-  </style>
+  
+    /* English-version toggle button (aligned with the en chrome) */
+    .lang-btn{
+      display: flex;
+      width: fit-content;
+      max-width: 100%;
+      align-items: center;
+      gap: 6px;
+      margin: 0 auto 18px 0;
+      background: rgba(255,255,255,0.92);
+      border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 12px;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #0b5fff;
+      text-decoration: none;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      cursor: pointer;
+      transition: transform .18s ease, background .18s ease;
+    }
+
+    .lang-btn:hover{
+      background:#fff;
+      transform: scale(1.03);
+    }
+</style>
 
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
   <link rel="icon" type="image/png" sizes="192x192" href="/favicon.png">
@@ -219,6 +247,14 @@
 
 
   <div class="glass-box">
+
+    <!-- 🌐 English Version (SEO-friendly link) -->
+    <a class="lang-btn"
+       href="en/insight-10.html"
+       rel="noopener">
+      <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20"/><path d="M12 2a15 15 0 0 0 0 20"/></svg> English
+    </a>
+
 
     <img src="insight10.webp" alt="ایمپلنت سانترال در بیمار دیپ بایت با محدودیت فضا" loading="lazy" width="1000" height="1144">
 
