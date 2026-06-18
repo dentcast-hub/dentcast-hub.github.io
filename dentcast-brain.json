@@ -10528,5 +10528,32 @@
       "secondary": [],
       "subtopic": "preparation"
     }
+  },
+  {
+    "type": "meta",
+    "id": "meta-13",
+    "title": "سندرم بیمار آشنا",
+    "caption": "عارضه‌ی «بیمار آشنا» از خودِ آشنایی نیست؛ از کوتاه‌آمدن از اصول درمانی برای راضی‌کردن اوست.",
+    "hashtags": [
+      "#متانوت",
+      "#بیمار آشنا",
+      "#تصمیم‌گیری بالینی",
+      "#انتخاب کیس",
+      "#اصول درمانی",
+      "#لمینیت سرامیکی"
+    ],
+    "keywords": [
+      "familiar patient syndrome",
+      "clinical decision-making",
+      "case selection",
+      "treatment principles",
+      "ceramic veneer indication"
+    ],
+    "page_url": "/metanotes/meta-13.html",
+    "pillar": {
+      "primary": "treatment-planning",
+      "secondary": [],
+      "subtopic": "comprehensive-diagnosis"
+    }
   }
 ]

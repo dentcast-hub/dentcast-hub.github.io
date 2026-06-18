@@ -3425,9 +3425,9 @@ a.dc-list-card--pillar {
           </div>
         </div>
         <ul class="dc-pulse-list">
+          <li><a href="/metanotes/meta-13.html">متانوت سیزده</a> با عنوانِ <strong>سندرم بیمار آشنا</strong> منتشر شد · ۲۸ خرداد</li>
           <li><a href="/insight/insight-49.html">اینسایت ۴۹</a> با عنوانِ <strong>روکش روی دندونِ آمالگام‌دار و پوسیدگیِ جامانده در پروگزیمال</strong> منتشر شد · ۲۷ خرداد</li>
           <li><a href="/dentai/dentai-21.html">مقاله‌ای</a> با موضوع اثر مایعات روی دقت اسکن در dentAI منتشر شد · ۲۶ خرداد</li>
-          <li>مقاله‌های هفدهم، هجدهم، نوزدهم و بیستم که ادامه‌ی دروس دیوید آلمان هستند، در قسمت <a href="/dentai/">dentAI</a> گذاشته شدند · ۲۶ خرداد</li>
         </ul>
         <div class="dc-pulse-ad">
           <a href="https://deventapp.ir" target="_blank" rel="sponsored noopener">
@@ -3449,9 +3449,9 @@ a.dc-list-card--pillar {
           <p class="dc-rail-title">مدیریت سایش دندانی با کانسپت دال — بخش دوم</p>
           <span class="dc-rail-meta">تازه‌ترین مطلب</span>
         </a>
-        <a class="dc-rail-card" data-cat="meta" href="/metanotes/meta-12.html">
+        <a class="dc-rail-card" data-cat="meta" href="/metanotes/meta-13.html">
           <span class="dc-type-chip t-meta">MetaNote</span>
-          <p class="dc-rail-title">یه نکته ی مهم در مدیریت کانتکت بین دندانهای ۶ و ۷</p>
+          <p class="dc-rail-title">سندرم بیمار آشنا</p>
           <span class="dc-rail-meta">تازه‌ترین مطلب</span>
         </a>
         <a class="dc-rail-card" data-cat="chairside" href="/chairside/chairside-19.html">
@@ -3591,7 +3591,7 @@ a.dc-list-card--pillar {
           <span class="k">ساعت محتوای صوتی</span>
         </div>
         <div class="hero-stat" role="listitem">
-          <span class="v"><!-- COUNTER:CONTENT:START -->۵۱۰<!-- COUNTER:CONTENT:END --></span>
+          <span class="v"><!-- COUNTER:CONTENT:START -->۵۱۱<!-- COUNTER:CONTENT:END --></span>
           <span class="k">مطلب و مدخل آموزشی</span>
         </div>
       </div>
@@ -4248,7 +4248,7 @@ scrollBody.addEventListener('touchend',e=>{
     if(p) p.textContent=title;
     a.href=url;
   }
-  fetch('/dentcast-brain.json?v=8f05fc9258',{cache:'no-store'}).then(function(r){return r.json();}).then(function(arr){
+  fetch('/dentcast-brain.json?v=7a0c62282f',{cache:'no-store'}).then(function(r){return r.json();}).then(function(arr){
     if(!Array.isArray(arr)) return;
     var latest={}, pool=[];
     arr.forEach(function(e){
@@ -4537,7 +4537,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 <script>
 /* ── LAST 30 UPDATES ── */
 (function(){
-  const FEED_URL='/dentcast-brain.json?v=8f05fc9258';
+  const FEED_URL='/dentcast-brain.json?v=7a0c62282f';
   const el=document.getElementById('dcLast3Updates');
   if(!el) return;
   function extractArray(json){if(Array.isArray(json))return json;const cands=[json?.items,json?.data,json?.entries,json?.feed].filter(Boolean);for(const c of cands)if(Array.isArray(c))return c;for(const k in(json||{})){const v=json[k];if(Array.isArray(v))return v;if(v&&typeof v==='object'&&Array.isArray(v.items))return v.items;}return[];}
@@ -4787,7 +4787,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 
   function getBrain(){
     if(brainCache) return Promise.resolve(brainCache);
-    return fetch('/dentcast-brain.json?v=8f05fc9258', {cache:'no-store'})
+    return fetch('/dentcast-brain.json?v=7a0c62282f', {cache:'no-store'})
       .then(r => r.ok ? r.json() : [])
       .then(d => { brainCache = Array.isArray(d) ? d : []; return brainCache; })
       .catch(() => { brainCache = []; return []; });
