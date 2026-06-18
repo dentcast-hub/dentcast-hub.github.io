@@ -189,6 +189,30 @@ body{
   min-height:100dvh;
 }
 
+/* ── TABLET FIX (touch tablet, e.g. iPad in portrait) ────────────────────
+   Problem: on a tablet the taller panels made the DOCUMENT scroll instead of
+   #mobile-body, because #mobile-shell only had min-height (no bounded height),
+   so #mobile-body never became a real scroll container. Two pieces of code
+   assume #mobile-body IS the scroller, so they broke only on tablet:
+     • showPanel() resets to top with #mobile-body.scrollTop=0 → a no-op when
+       the document is the scroller, so the آرشیو panel kept the previous
+       offset ("over-scrolls and never returns to top").
+     • the بیماران cinematic engine binds 'scroll' to #mobile-body and reads
+       its clientHeight → the event never fired / total≤0, so the scrollytelling
+       never advanced.
+   Bounding the shell to the viewport turns #mobile-body back into the internal
+   scroller (the same model the desktop app-shell already uses), which makes the
+   existing JS work as designed. Scoped to the tablet band (min-width/min-height
+   600px exclude phones in both orientations; max-width 1023px stays below the
+   desktop UI) so phones and laptops are left exactly as they are. */
+@media (min-width:600px) and (min-height:600px) and (max-width:1023px){
+  #mobile-shell{ height:100dvh; overflow:hidden; }
+  #mobile-body{ overscroll-behavior:contain; }
+  /* footer would otherwise be stranded below the fixed shell; desktop already
+     hides it for the same reason (body.dc-desktop-ui footer). */
+  footer{ display:none; }
+}
+
 /* ── TOP BAR ── */
 .dc-topbar{
   position:sticky; top:0; z-index:200;
