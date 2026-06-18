@@ -207,7 +207,11 @@ body{
    desktop UI) so phones and laptops are left exactly as they are. */
 @media (min-width:600px) and (min-height:600px) and (max-width:1023px){
   #mobile-shell{ height:100dvh; overflow:hidden; }
-  #mobile-body{ overscroll-behavior:contain; }
+  /* min-height:0 is the key bit: a flex item defaults to min-height:auto, which
+     refuses to shrink below its content, so #mobile-body would otherwise grow to
+     the patients' ~3200px track and get clipped by the shell instead of becoming
+     a scroller. min-height:0 lets it shrink to the shell and scroll internally. */
+  #mobile-body{ min-height:0; overscroll-behavior:contain; }
   /* footer would otherwise be stranded below the fixed shell; desktop already
      hides it for the same reason (body.dc-desktop-ui footer). */
   footer{ display:none; }
