@@ -1967,7 +1967,12 @@ body.dc-desktop-ui #dc-desktop-root{
 /* =====================================================
    CINEMATIC PATIENTS — unified scrollytelling
 ===================================================== */
-@media(min-width:768px){
+/* Hide the mobile cinematic only on real desktop/hover devices (which use the
+   iframe cinematic). The (hover:hover) guard mirrors the flash-prevention rule
+   above and the isDesk() JS — without it, touch tablets at ≥768px (iPad 11"
+   portrait = 834px, Android tablets) stay on the MOBILE layout but had their
+   whole cinematic hidden, so pt-track collapsed to 0 and scrollytelling died. */
+@media(min-width:768px) and (hover:hover){
   .pt-wrap{ display:none!important; }
 }
 /* Patients mode — the scroll body goes full-bleed so the cinematic stage runs
@@ -5992,63 +5997,6 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
   window.addEventListener('hashchange', function(){
     if(hashIsPatient()) activatePatient();
   });
-})();
-</script>
-
-<!-- ── TEMP DIAGNOSTIC (only runs with ?ptdebug=1) — patients scrollytelling ──
-     Safe: gated behind a query flag, reads-only, adds a fixed overlay. Remove
-     once the tablet cause is found. -->
-<script>
-(function(){
-  if(!/[?&]ptdebug=1/.test(location.search)) return;
-  var box=document.createElement('div');
-  box.style.cssText='position:fixed;top:0;left:0;right:0;z-index:2147483647;'
-    +'background:rgba(0,0,0,.86);color:#0f0;font:11px/1.45 monospace;'
-    +'padding:8px 10px;white-space:pre-wrap;direction:ltr;text-align:left;'
-    +'max-height:60vh;overflow:auto;pointer-events:none;';
-  document.documentElement.appendChild(box);
-  var mbScroll=0, winScroll=0, docScroll=0;
-  function mm(q){ return window.matchMedia(q).matches; }
-  function $(s){ return document.querySelector(s); }
-  function num(n){ return (n==null||isNaN(n))?'-':Math.round(n); }
-  var mb=$('#mobile-body');
-  if(mb) mb.addEventListener('scroll',function(){mbScroll++;},{passive:true});
-  window.addEventListener('scroll',function(){winScroll++;},{passive:true},true);
-  document.addEventListener('scroll',function(){docScroll++;},{passive:true,capture:true});
-  function canvasState(){
-    var c=$('#pt-canvas'); if(!c) return 'no-canvas';
-    var s=c.width+'x'+c.height;
-    try{
-      var ctx=c.getContext('2d');
-      var d=ctx.getImageData(Math.floor(c.width/2),Math.floor(c.height/2),1,1).data;
-      var blank=(d[0]+d[1]+d[2]===0)?' BLANK/BLACK':' drawn('+d[0]+','+d[1]+','+d[2]+')';
-      return s+blank;
-    }catch(e){ return s+' getImageData-ERR:'+e.message; }
-  }
-  function tick(){
-    var panel=$('#panel-patient');
-    var track=$('#pt-track');
-    var stageVar=getComputedStyle(document.documentElement).getPropertyValue('--pt-stage').trim();
-    var total=(track&&mb)?(track.offsetHeight-mb.clientHeight):null;
-    var de=document.scrollingElement||document.documentElement;
-    var out=[
-      'PTDEBUG  '+new Date().toLocaleTimeString(),
-      'viewport '+window.innerWidth+'x'+window.innerHeight+' dpr='+(window.devicePixelRatio||1),
-      'MQ min1024='+mm('(min-width:1024px)')+' fine='+mm('(pointer:fine)')+' hover='+mm('(hover:hover)')+' '+(mm('(orientation:portrait)')?'PORTRAIT':'LANDSCAPE'),
-      'myMQ(landscape override)='+mm('(min-width:600px) and (min-height:600px) and (max-width:1023px) and (orientation:landscape)'),
-      'layout='+(document.body.classList.contains('dc-desktop-ui')?'DESKTOP(iframe)':'MOBILE(canvas)'),
-      'patient.active='+(panel?panel.classList.contains('active'):'no-panel')+'  body.pt-mode='+(mb?mb.classList.contains('pt-mode'):'-'),
-      'mobile-body scrollTop='+num(mb&&mb.scrollTop)+' scrollH='+num(mb&&mb.scrollHeight)+' clientH='+num(mb&&mb.clientHeight),
-      'document   scrollTop='+num(de.scrollTop)+' scrollH='+num(de.scrollHeight)+' clientH='+num(de.clientHeight),
-      'pt-track offsetH='+num(track&&track.offsetHeight)+'  --pt-stage='+(stageVar||'(unset)'),
-      'engine total(track-clientH)='+num(total)+(total!=null&&total<=0?'  <= ZERO! update() bails':''),
-      'canvas '+canvasState(),
-      'scrollEvents  mobile-body='+mbScroll+'  window='+winScroll+'  document='+docScroll,
-      '(scroll the بیماران panel; watch scrollTop & scrollEvents & canvas change)'
-    ];
-    box.textContent=out.join('\n');
-  }
-  setInterval(tick,300); tick();
 })();
 </script>
 
