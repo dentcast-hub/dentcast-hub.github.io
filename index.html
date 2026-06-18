@@ -189,23 +189,15 @@ body{
   min-height:100dvh;
 }
 
-/* ── TABLET FIX (touch tablet, e.g. iPad in portrait) ────────────────────
-   Problem: on a tablet the taller panels made the DOCUMENT scroll instead of
-   #mobile-body, because #mobile-shell only had min-height (no bounded height),
-   so #mobile-body never became a real scroll container. Two pieces of code
-   assume #mobile-body IS the scroller, so they broke only on tablet:
-     • showPanel() resets to top with #mobile-body.scrollTop=0 → a no-op when
-       the document is the scroller, so the آرشیو panel kept the previous
-       offset ("over-scrolls and never returns to top").
-     • the بیماران cinematic engine binds 'scroll' to #mobile-body and reads
-       its clientHeight → the event never fired / total≤0, so the scrollytelling
-       never advanced.
-   Bounding the shell to the viewport turns #mobile-body back into the internal
-   scroller (the same model the desktop app-shell already uses), which makes the
-   existing JS work as designed. Scoped to the tablet band (min-width/min-height
-   600px exclude phones in both orientations; max-width 1023px stays below the
-   desktop UI) so phones and laptops are left exactly as they are. */
-@media (min-width:600px) and (min-height:600px) and (max-width:1023px){
+/* ── TABLET shell bounding — NON-PORTRAIT only ───────────────────────────
+   Bounds #mobile-shell to the viewport so #mobile-body becomes the internal
+   scroller. This is intentionally NOT applied in portrait: a portrait tablet
+   must fall back to the exact same base CSS as a phone (the phone layout works,
+   including the patients scrollytelling), so the override is gated to landscape.
+   Phones never matched anyway (width < 600); landscape tablets/laptops use the
+   desktop UI where #mobile-shell is display:none, so this block is harmless
+   there but kept in place rather than deleted. */
+@media (min-width:600px) and (min-height:600px) and (max-width:1023px) and (orientation:landscape){
   #mobile-shell{ height:100dvh; overflow:hidden; }
   /* min-height:0 is the key bit: a flex item defaults to min-height:auto, which
      refuses to shrink below its content, so #mobile-body would otherwise grow to
