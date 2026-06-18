@@ -113,7 +113,7 @@
 html{height:100%;width:100%;}
 body{
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
-  font-size:16px; line-height:1.5;
+  font-size:1rem; line-height:1.5;
   background:var(--bg); color:var(--txt);
   min-height:100vh;
   display:flex; flex-direction:column;
@@ -128,9 +128,9 @@ button,input{font:inherit;color:inherit;background:none;border:none;outline:none
    LAYOUT
 ===================================================== */
 .wrap{
-  max-width:680px;
+  max-width:42.5rem;
   margin:0 auto;
-  padding:20px 14px 100px;
+  padding:1.25rem 0.875rem 6.25rem;
   flex:1;
 }
 
@@ -139,7 +139,7 @@ button,input{font:inherit;color:inherit;background:none;border:none;outline:none
 ===================================================== */
 header{
   text-align:center;
-  padding:28px 0 20px;
+  padding:1.75rem 0 1.25rem;
 }
 h1{
   font-size:1.5rem;
@@ -158,8 +158,8 @@ h1{
   border-right:3px solid rgba(var(--pr-rgb),.20);
   border-radius:var(--r-lg);
   box-shadow:var(--monitor-sh);
-  padding:14px 16px;
-  margin-bottom:20px;
+  padding:0.875rem 1rem;
+  margin-bottom:1.25rem;
   font-size:.88rem;
   line-height:1.85;
   color:var(--txt2);
@@ -173,13 +173,13 @@ h1{
 .pl-capsule{
   display:flex;
   align-items:center;
-  gap:14px;
+  gap:0.875rem;
   background:var(--card-bg);
   border:1px solid var(--card-border);
   border-radius:var(--r-lg);
   box-shadow:var(--card-sh);
-  padding:14px 16px;
-  margin-bottom:22px;
+  padding:0.875rem 1rem;
+  margin-bottom:1.375rem;
   position:relative;
   overflow:hidden;
   text-decoration:none;
@@ -189,14 +189,14 @@ h1{
 /* خط کناری گرادیانی — لبه‌ی پیش‌روِ RTL */
 .pl-capsule::before{
   content:"";
-  position:absolute; top:0; bottom:0; right:0; width:4px;
+  position:absolute; top:0; bottom:0; right:0; width:0.25rem;
   background:linear-gradient(180deg,var(--ac),var(--pr));
 }
 /* درخشش بسیار ملایم گوشه — حسِ «ویژه» */
 .pl-capsule::after{
   content:"";
   position:absolute; top:-45%; right:-8%;
-  width:170px; height:170px;
+  width:10.625rem; height:10.625rem;
   background:radial-gradient(circle,rgba(var(--ac-rgb),.10),transparent 70%);
   pointer-events:none;
 }
@@ -207,12 +207,12 @@ h1{
 }
 .pl-capsule:active{ transform:scale(.99); }
 .pl-capsule-ico{
-  width:46px; height:46px; flex-shrink:0;
+  width:2.875rem; height:2.875rem; flex-shrink:0;
   background:rgba(var(--ac-rgb),.10);
   border:1px solid rgba(var(--ac-rgb),.18);
-  border-radius:14px;
+  border-radius:0.875rem;
   display:flex; align-items:center; justify-content:center;
-  color:var(--ac); font-size:24px;
+  color:var(--ac); font-size:1.5rem;
   position:relative; z-index:1;
 }
 .pl-capsule-main{ flex:1; min-width:0; position:relative; z-index:1; }
@@ -222,8 +222,8 @@ h1{
   color:var(--ac);
   background:rgba(var(--ac-rgb),.10);
   border:1px solid rgba(var(--ac-rgb),.16);
-  padding:2px 9px; border-radius:var(--r-f);
-  margin-bottom:7px;
+  padding:0.125rem 0.5625rem; border-radius:var(--r-f);
+  margin-bottom:0.4375rem;
 }
 .pl-capsule-title{
   display:block;
@@ -233,11 +233,11 @@ h1{
 .pl-capsule-sub{
   display:block;
   font-size:.74rem; color:var(--txt3);
-  line-height:1.6; margin-top:3px;
+  line-height:1.6; margin-top:0.1875rem;
 }
 .pl-capsule-arrow{
   flex-shrink:0; color:var(--ac); opacity:.85;
-  font-size:20px; position:relative; z-index:1;
+  font-size:1.25rem; position:relative; z-index:1;
   transition:transform var(--tr);
 }
 .pl-capsule:hover .pl-capsule-arrow{ transform:translateX(-3px); }
@@ -250,8 +250,8 @@ h2{
   font-size:.88rem;
   font-weight:800;
   color:var(--txt);
-  padding-bottom:10px;
-  margin-bottom:14px;
+  padding-bottom:0.625rem;
+  margin-bottom:0.875rem;
   border-bottom:1px solid var(--border);
   transition:color var(--tr2),border-color var(--tr2);
 }
@@ -262,7 +262,7 @@ h2{
 .ai-list{
   display:flex;
   flex-direction:column;
-  gap:8px;
+  gap:0.5rem;
 }
 
 .ai-item{
@@ -272,7 +272,7 @@ h2{
   border-right:3px solid rgba(var(--pr-rgb),.28);
   border-radius:var(--r-lg);
   box-shadow:var(--card-sh);
-  padding:12px 14px;
+  padding:0.75rem 0.875rem;
   text-decoration:none;
   transition:all var(--tr);
   -webkit-tap-highlight-color:transparent;
@@ -293,7 +293,7 @@ h2{
   font-weight:700;
   font-size:.875rem;
   color:var(--txt);
-  margin-bottom:5px;
+  margin-bottom:0.3125rem;
   line-height:1.45;
   transition:color var(--tr);
 }
@@ -315,19 +315,19 @@ footer{
   display:flex;
   flex-direction:column;
   align-items:center;
-  gap:10px;
-  margin-top:32px;
-  padding-bottom:20px;
+  gap:0.625rem;
+  margin-top:2rem;
+  padding-bottom:1.25rem;
 }
 
 .btn-home{
   display:inline-flex;
   align-items:center;
-  gap:6px;
+  gap:0.375rem;
   background:var(--pr);
   color:#fff;
   border-radius:var(--r-md);
-  padding:12px 32px;
+  padding:0.75rem 2rem;
   font-weight:800;
   font-size:.92rem;
   box-shadow:0 4px 14px rgba(var(--pr-rgb),.28);
@@ -341,12 +341,12 @@ footer{
 .btn-about{
   display:inline-flex;
   align-items:center;
-  gap:5px;
+  gap:0.3125rem;
   background:var(--surface2);
   color:var(--txt2);
   border:1px solid var(--border);
   border-radius:var(--r-f);
-  padding:7px 18px;
+  padding:0.4375rem 1.125rem;
   font-weight:600;
   font-size:.80rem;
   text-decoration:none;
@@ -358,7 +358,7 @@ footer{
 .footer-copy{
   font-size:.76rem;
   color:var(--txt3);
-  margin-top:4px;
+  margin-top:0.25rem;
 }
 .footer-copy strong{ color:var(--ac); }
 [data-theme="dark"] .footer-copy strong{ color:#8ab4f8; }
@@ -368,10 +368,10 @@ footer{
 ===================================================== */
 .dc-jump{
   position:fixed;
-  right:18px;
+  right:1.125rem;
   left:auto;
-  bottom:calc(18px + env(safe-area-inset-bottom, 0px));
-  width:42px; height:42px;
+  bottom:calc(1.125rem + env(safe-area-inset-bottom, 0rem));
+  width:2.625rem; height:2.625rem;
   border-radius:var(--r-f);
   background:#022360;
   border:1px solid #022360;
@@ -386,34 +386,34 @@ footer{
 .dc-jump:hover{ opacity:1; transform:translateY(-1px); }
 .dc-jump:active{ transform:scale(.92); }
 .dc-jump svg{
-  width:20px; height:20px;
+  width:1.25rem; height:1.25rem;
   fill:#fff;
   transition:fill var(--tr2), transform .2s ease;
 }
 .dc-jump.is-up svg{ transform:rotate(180deg); }
 
 @media(max-width:640px){
-  .dc-jump{ bottom:calc(22px + env(safe-area-inset-bottom, 0px)); }
+  .dc-jump{ bottom:calc(1.375rem + env(safe-area-inset-bottom, 0rem)); }
 }
 
 /* =====================================================
    تم تاگل — چپ
 ===================================================== */
 #dc-theme-toggle{
-  position:fixed; bottom:20px; left:14px; z-index:250;
-  width:42px; height:42px; border-radius:var(--r-f);
+  position:fixed; bottom:1.25rem; left:0.875rem; z-index:250;
+  width:2.625rem; height:2.625rem; border-radius:var(--r-f);
   background:#17212b; color:#e8f0ff;
   border:1px solid rgba(255,255,255,.12);
   box-shadow:0 4px 16px rgba(0,0,0,.28);
   display:flex; align-items:center; justify-content:center;
-  font-size:19px; cursor:pointer;
+  font-size:1.1875rem; cursor:pointer;
   transition:all var(--tr);
 }
 #dc-theme-toggle:active{ transform:scale(.86); }
 
 @media(max-width:768px){
   h1{ font-size:1.3rem; }
-  .wrap{ padding:16px 12px 100px; }
+  .wrap{ padding:1rem 0.75rem 6.25rem; }
 }
   </style>
 
@@ -436,7 +436,7 @@ footer{
 <!-- DC NAV: TOP BAR -->
 <header class="dc-topbar">
   <div class="dc-topbar-actions">
-    <a href="/" aria-label="صفحه اصلی دنت‌کست" style="display:flex;align-items:center;margin-left:8px;flex-shrink:0;"><img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;"></a>
+    <a href="/" aria-label="صفحه اصلی دنت‌کست" style="display:flex;align-items:center;margin-left:0.5rem;flex-shrink:0;"><img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;"></a>
     <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="ابزارها" aria-expanded="false">☰</button>
     <button class="dc-topbar-btn dcOpenSearch" aria-label="جستجو">🔍</button>
   </div>

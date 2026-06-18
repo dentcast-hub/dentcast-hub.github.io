@@ -6,8 +6,8 @@
 /* کانتینر اصلی سرچ (Bottom Sheet) */
 #dcGlobalBox.dc-global-filter-box {
   background: #ffffff;
-  border-radius: 22px 22px 0 0; /* گوشه‌های پایین را صاف می‌کنیم */
-  padding: 22px 22px 75px 22px ;
+  border-radius: 1.375rem 1.375rem 0 0; /* گوشه‌های پایین را صاف می‌کنیم */
+  padding: 1.375rem 1.375rem 4.6875rem 1.375rem ;
   border: 1px solid #e2e6f3;
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
   
@@ -40,45 +40,45 @@
 /* عنوان سرچ */
 #dcGlobalBox .dc-global-filter-title {
   font-weight: 700;
-  font-size: 20px;
+  font-size: 1.25rem;
   color: #022360;
   text-align: center;
-  margin-bottom: 14px;
+  margin-bottom: 0.875rem;
 }
 
 /* اینپوت سرچ */
 #dcGlobalBox .dc-search-input {
   width: 100%;
-  padding: 11px 14px;
-  border-radius: 14px;
+  padding: 0.6875rem 0.875rem;
+  border-radius: 0.875rem;
   border: 1px solid #d5d9ea;
   background: #f7f8fc;
-  font-size: 14px;
+  font-size: 0.875rem;
   outline: none;
-  margin-bottom: 16px;
+  margin-bottom: 1rem;
 }
 
 #dcGlobalBox .dc-search-input::placeholder {
   color: #9aa1b3;
-  font-size: 13px;
+  font-size: 0.8125rem;
 }
 
 /* فیلترها */
 #dcGlobalBox .dc-filter-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 0.5rem;
   justify-content: center;
-  margin-top: 10px;
+  margin-top: 0.625rem;
 }
 
 #dcGlobalBox .dc-filter-btn {
-  padding: 7px 16px;
-  border-radius: 999px;
+  padding: 0.4375rem 1rem;
+  border-radius: 62.4375rem;
   border: 1px solid #d3daf1;
   background: #eef3ff;
   color: #0b1d40;
-  font-size: 13px;
+  font-size: 0.8125rem;
   cursor: pointer;
 }
 
@@ -91,9 +91,9 @@
 
 /* نتایج */
 #dcResults.dc-results-box {
-  margin-top: 18px;
-  padding: 14px 16px;
-  border-radius: 16px;
+  margin-top: 1.125rem;
+  padding: 0.875rem 1rem;
+  border-radius: 1rem;
   background: #f7f9ff;
   border: 1px solid #e2e6f3;
   display: none;
@@ -104,9 +104,9 @@
 
 #dcResults .dc-result-item {
   display: block;
-  padding: 8px 0;
+  padding: 0.5rem 0;
   border-bottom: 1px solid #e3e6f2;
-  font-size: 14px;
+  font-size: 0.875rem;
   color: #0b1d40;
   text-decoration: none;
 }
@@ -123,8 +123,8 @@
 /* دکمه بستن (موقعیت دهی برای Fixed Box) */
 #dcGlobalBox .dc-close-results {
   position: absolute; 
-  top: 15px; /* فاصله از بالا */
-  right: 15px; /* فاصله از راست */
+  top: 0.9375rem; /* فاصله از بالا */
+  right: 0.9375rem; /* فاصله از راست */
   z-index: 10000;
   /* ... بقیه استایل‌های این کلاس را دست نزنید ... */
 }
@@ -133,9 +133,9 @@
 /* دکمه More */
 #dcGlobalBox .dc-more-btn {
   background: #e0f2fe;
-  padding: 10px 15px;
-  margin-top: 8px;
-  border-radius: 10px;
+  padding: 0.625rem 0.9375rem;
+  margin-top: 0.5rem;
+  border-radius: 0.625rem;
   text-align: center;
   cursor: pointer;
   color: #075985;

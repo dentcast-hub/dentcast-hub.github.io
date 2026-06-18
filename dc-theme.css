@@ -31,11 +31,11 @@ body.dc-content-only {
 }
 body.dc-content-only .wrap {
   margin-top: 0;
-  padding-top: 24px;
+  padding-top: 1.5rem;
 }
 body.dc-content-only main.page,
 body.dc-content-only main.article-page {
-  padding-top: 24px;
+  padding-top: 1.5rem;
 }
 
 /* =====================================================
@@ -256,8 +256,8 @@ body:has(.dc-topbar) .dc-trustline {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  gap: 6px 10px;
-  margin: -6px auto 22px;
+  gap: 0.375rem 0.625rem;
+  margin: -0.375rem auto 1.375rem;
   color: var(--txt3);
   font-size: .78rem;
   line-height: 1.8;
@@ -270,10 +270,10 @@ body:has(.dc-topbar) .dc-trustline {
    - the author/specialty sits on its own line, and the two dates share the
      line beneath it. */
 body:has(.dc-topbar) .term-header .subtitle {
-  margin-top: 3px;
+  margin-top: 0.1875rem;
 }
 body:has(.dc-topbar) .term-header .dc-trustline {
-  margin-top: 22px;
+  margin-top: 1.375rem;
 }
 body:has(.dc-topbar) .term-header .dc-trustline > span:first-child {
   flex-basis: 100%;
@@ -300,8 +300,8 @@ body:has(.dc-topbar) .author {
 }
 
 body:has(.dc-topbar) .dc-disclaimer {
-  margin: 28px 0 0;
-  padding-top: 14px;
+  margin: 1.75rem 0 0;
+  padding-top: 0.875rem;
   border-top: 1px solid var(--border2);
   color: var(--txt3);
   font-size: .82rem;
@@ -310,8 +310,8 @@ body:has(.dc-topbar) .dc-disclaimer {
 }
 
 body:has(.dc-topbar) .dc-references {
-  margin-top: 30px;
-  padding-top: 18px;
+  margin-top: 1.875rem;
+  padding-top: 1.125rem;
   border-top: 1px solid var(--border2);
   color: var(--txt2);
   font-size: .86rem;
@@ -330,8 +330,8 @@ body:has(.dc-topbar) .dc-references h4 {
 
 body:has(.dc-topbar) .dc-references ol,
 body:has(.dc-topbar) .dc-references ul {
-  margin: 10px 0 0;
-  padding-right: 20px;
+  margin: 0.625rem 0 0;
+  padding-right: 1.25rem;
 }
 
 /* =====================================================
@@ -347,8 +347,8 @@ body:has(.dc-topbar) .dc-site-footer {
   text-align: center !important;
   font-size: .82rem !important;
   line-height: 1.9 !important;
-  padding: 22px 18px 90px !important;   /* 90px bottom = room above toggle btn */
-  margin-top: 40px !important;
+  padding: 1.375rem 1.125rem 5.625rem !important;   /* 90px bottom = room above toggle btn */
+  margin-top: 2.5rem !important;
   transition: color var(--tr2), border-color var(--tr2);
   /* Reset any gradient/dark background some pages set */
   background-image: none !important;
@@ -377,8 +377,8 @@ body:has(.dc-topbar) footer a[href="../"],
 body:has(.dc-topbar) footer a[href="../../"] {
   display: inline-flex !important;
   align-items: center !important;
-  gap: 6px !important;
-  padding: 10px 22px !important;
+  gap: 0.375rem !important;
+  padding: 0.625rem 1.375rem !important;
   border-radius: var(--r-f) !important;
   background: var(--pr) !important;
   color: #ffffff !important;
@@ -388,7 +388,7 @@ body:has(.dc-topbar) footer a[href="../../"] {
   text-decoration: none !important;
   box-shadow: 0 4px 14px rgba(var(--pr-rgb),.28) !important;
   transition: all var(--tr) !important;
-  margin: 6px 4px !important;
+  margin: 0.375rem 0.25rem !important;
 }
 
 body:has(.dc-topbar) footer .btn-home:hover,
@@ -405,8 +405,8 @@ body:has(.dc-topbar) .btn-about,
 body:has(.dc-topbar) footer a[href="/about.html"] {
   display: inline-flex !important;
   align-items: center !important;
-  gap: 6px !important;
-  padding: 10px 22px !important;
+  gap: 0.375rem !important;
+  padding: 0.625rem 1.375rem !important;
   border-radius: var(--r-f) !important;
   background: var(--surface2) !important;
   color: var(--txt2) !important;
@@ -416,7 +416,7 @@ body:has(.dc-topbar) footer a[href="/about.html"] {
   text-decoration: none !important;
   box-shadow: var(--card-sh) !important;
   transition: all var(--tr) !important;
-  margin: 6px 4px !important;
+  margin: 0.375rem 0.25rem !important;
 }
 
 body:has(.dc-topbar) footer .btn-about:hover,
@@ -431,8 +431,8 @@ body:has(.dc-topbar) .term-footer .btn,
 body:has(.dc-topbar) a.btn {
   display: inline-flex !important;
   align-items: center !important;
-  gap: 6px !important;
-  padding: 10px 22px !important;
+  gap: 0.375rem !important;
+  padding: 0.625rem 1.375rem !important;
   border-radius: var(--r-f) !important;
   background: var(--surface2) !important;
   color: var(--txt) !important;          /* --txt نه --txt2 برای کنتراست بیشتر */
@@ -442,7 +442,7 @@ body:has(.dc-topbar) a.btn {
   text-decoration: none !important;
   box-shadow: var(--card-sh) !important;
   transition: all var(--tr) !important;
-  margin: 6px 4px !important;
+  margin: 0.375rem 0.25rem !important;
 }
 
 body:has(.dc-topbar) footer .btn:hover,
@@ -460,8 +460,8 @@ body:has(.dc-topbar) .term-footer .btn:hover {
 body:has(.dc-topbar) footer a {
   display: inline-flex !important;
   align-items: center !important;
-  gap: 6px !important;
-  padding: 10px 22px !important;
+  gap: 0.375rem !important;
+  padding: 0.625rem 1.375rem !important;
   border-radius: var(--r-f) !important;
   background: var(--surface2) !important;
   color: var(--txt2) !important;
@@ -471,7 +471,7 @@ body:has(.dc-topbar) footer a {
   text-decoration: none !important;
   box-shadow: var(--card-sh) !important;
   transition: all var(--tr) !important;
-  margin: 6px 4px !important;
+  margin: 0.375rem 0.25rem !important;
   /* Reset all inline-style colours */
   background-color: var(--surface2) !important;
   background-image: none !important;
@@ -490,7 +490,7 @@ body:has(.dc-topbar) .term-footer .about-link,
 body:has(.dc-topbar) footer .about-link {
   font-size: .80rem !important;
   color: var(--txt3) !important;
-  margin-top: 10px !important;
+  margin-top: 0.625rem !important;
 }
 
 body:has(.dc-topbar) footer strong {
@@ -579,13 +579,13 @@ body:has(.dc-topbar) .wrap > ol li {
    Ported 1:1 from index.html so every page matches.
 ===================================================== */
 #dc-theme-toggle{
-  position:fixed; bottom:76px; left:14px; z-index:250;
-  width:40px; height:40px; border-radius:var(--r-md);
+  position:fixed; bottom:4.75rem; left:0.875rem; z-index:250;
+  width:2.5rem; height:2.5rem; border-radius:var(--r-md);
   background:var(--card-bg); color:var(--txt2);
   border:1px solid var(--card-border);
   box-shadow:var(--card-sh);
   display:flex; align-items:center; justify-content:center;
-  font-size:17px; cursor:pointer;
+  font-size:1.0625rem; cursor:pointer;
   transition:all var(--tr);
 }
 #dc-theme-toggle:active{ transform:scale(.86); background:var(--surface2); }
@@ -596,11 +596,11 @@ body:has(.dc-topbar) .wrap > ol li {
 body:has(.dc-topbar) .dc-jump,
 body:has(.dc-topbar) #dcJumpBtn {
   position: fixed;
-  bottom: 126px;   /* above theme toggle (76px + 42px + 8px) */
-  left: 14px;
+  bottom: 7.875rem;   /* above theme toggle (76px + 42px + 8px) */
+  left: 0.875rem;
   z-index: 249;
-  width: 42px;
-  height: 42px;
+  width: 2.625rem;
+  height: 2.625rem;
   border-radius: var(--r-f);
   background: var(--surface2);
   color: var(--txt3);
@@ -619,8 +619,8 @@ body:has(.dc-topbar) #dcJumpBtn:active {
 }
 
 body:has(.dc-topbar) #dcJumpBtn svg {
-  width: 20px;
-  height: 20px;
+  width: 1.25rem;
+  height: 1.25rem;
   fill: var(--txt3);
 }
 
@@ -630,18 +630,18 @@ body:has(.dc-topbar) #dcJumpBtn svg {
    articles ≤ 720px, listings ≤ 860px
 ===================================================== */
 body:has(.dc-topbar) .wrap {
-  max-width: 860px;
+  max-width: 53.75rem;
   margin-left: auto;
   margin-right: auto;
-  padding-left: 18px;
-  padding-right: 18px;
+  padding-left: 1.125rem;
+  padding-right: 1.125rem;
   background: transparent;
 }
 
 /* Narrower for single-article pages */
 body:has(.dc-topbar) main.page,
 body:has(.dc-topbar) main.article-page {
-  max-width: 720px;
+  max-width: 45rem;
   margin-left: auto;
   margin-right: auto;
 }
@@ -777,13 +777,13 @@ body:has(.dc-topbar) .back:hover {
    /episodes/*.html), so typed-brain pages and glossary pages can render the
    same blue-accent section + outline capsule without each page redefining the
    rules. Visual values mirror ep-* verbatim. */
-.dc-related-section{padding:22px 28px 0;}
-.dc-related-section:last-child{padding-bottom:28px;}
-.dc-related-label{font-size:1rem;font-weight:700;color:var(--ac);border-right:4px solid var(--ac);padding-right:12px;margin-bottom:14px;}
-.dc-related-capsules{display:flex;flex-wrap:wrap;gap:8px;}
-.dc-related-capsule{display:inline-flex;align-items:center;gap:6px;font-size:.87rem;font-weight:600;color:var(--ac);text-decoration:none;padding:8px 16px;border:1px solid var(--ac);border-radius:10px;transition:background .15s,color .15s;}
+.dc-related-section{padding:1.375rem 1.75rem 0;}
+.dc-related-section:last-child{padding-bottom:1.75rem;}
+.dc-related-label{font-size:1rem;font-weight:700;color:var(--ac);border-right:4px solid var(--ac);padding-right:0.75rem;margin-bottom:0.875rem;}
+.dc-related-capsules{display:flex;flex-wrap:wrap;gap:0.5rem;}
+.dc-related-capsule{display:inline-flex;align-items:center;gap:0.375rem;font-size:.87rem;font-weight:600;color:var(--ac);text-decoration:none;padding:0.5rem 1rem;border:1px solid var(--ac);border-radius:0.625rem;transition:background .15s,color .15s;}
 .dc-related-capsule:hover{background:var(--ac);color:#fff;}
-@media(max-width:480px){.dc-related-section{padding-right:18px;padding-left:18px;}}
+@media(max-width:480px){.dc-related-section{padding-right:1.125rem;padding-left:1.125rem;}}
 
 /* =====================================================
    RESPONSIVE IMAGE GUARD
