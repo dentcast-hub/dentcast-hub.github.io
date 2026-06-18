@@ -4368,7 +4368,11 @@ scrollBody.addEventListener('touchend',e=>{
   let _searchPushed = false;
 
   function openS(push=true, term=''){
-    if(!isMob()) return;
+    /* The desktop shell owns search via its own overlay (deskOpenSearch). On wide
+       laptops isMob() (≤1023px) and the desktop UI can both be active at once, so
+       bail here whenever the desktop UI is on — otherwise a stale "#search" hash
+       would auto-open this mobile sheet (rendered full-screen by the desktop CSS). */
+    if(!isMob() || document.body.classList.contains('dc-desktop-ui')) return;
     overlayBody.appendChild(globalBox);
     document.body.classList.add('dc-search-mode');
     overlay.setAttribute('aria-hidden','false');
@@ -4690,7 +4694,13 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
   const bFilm       = document.getElementById('dcd-b-film');
 
   /* ── Public helpers (used in HTML onclick) ── */
-  window.dcdOpen       = function(url, title){ openContent(url, title); };
+  window.dcdOpen       = function(url, title){
+    /* A search result must first dismiss the full-screen search overlay; without
+       this the content loads into col-C *behind* the overlay (z-index 99998) and
+       the result appears unclickable. deskCloseSearch is hoisted within this IIFE. */
+    if(document.body.classList.contains('dc-search-mode')) deskCloseSearch();
+    openContent(url, title);
+  };
   window.dcdOpenViewer = function(url){ openPageViewer(url); };
 
   /* ══════════════════════════════════════════════
