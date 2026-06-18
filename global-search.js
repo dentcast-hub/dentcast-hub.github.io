@@ -128,9 +128,12 @@ const TYPE_MAP = {
   }
   if (!url.startsWith("http")) url = location.origin + url;
 
-  /* On desktop (≥1024px), open content in col-C via dcdOpen; on mobile navigate directly */
+  /* On the desktop shell, open content in col-C via dcdOpen (which also dismisses
+     the search overlay); on mobile navigate directly. Keyed off the actual UI
+     mode (body.dc-desktop-ui) instead of a raw px threshold so every desktop
+     width routes through dcdOpen, not just ≥1024px. */
   const escapedTitle = title.replace(/'/g, "\\'");
-  const clickHandler = `(window.innerWidth>=1024&&window.dcdOpen ? window.dcdOpen('${url}','${escapedTitle}') : (window.location.href='${url}'))`;
+  const clickHandler = `(document.body.classList.contains('dc-desktop-ui')&&window.dcdOpen ? window.dcdOpen('${url}','${escapedTitle}') : (window.location.href='${url}'))`;
 
   return `
     <div class="dc-result-item"
