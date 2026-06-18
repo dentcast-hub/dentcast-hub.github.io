@@ -15,7 +15,7 @@
    ------------------------------------------------------------------ */
 @media (min-width: 1024px) {
   .wrap {
-    max-width: 600px;
+    max-width: 37.5rem;
   }
 }
 
@@ -24,11 +24,11 @@
    ------------------------------------------------------------------ */
 .wrap > header {
   text-align: center;
-  padding: 28px 0 14px;
+  padding: 1.75rem 0 0.875rem;
 }
 
 .pillar-subtitle {
-  margin: 8px 0 0;
+  margin: 0.5rem 0 0;
   font-size: 0.92rem;
   font-weight: 600;
   color: var(--txt2);
@@ -40,7 +40,7 @@
    continuity with Meta Base and other content pages.
    ------------------------------------------------------------------ */
 .pillar-intro {
-  margin: 20px 0 28px;
+  margin: 1.25rem 0 1.75rem;
 }
 
 .pillar-intro p {
@@ -48,7 +48,7 @@
 }
 
 .pillar-intro p + p {
-  margin-top: 10px;
+  margin-top: 0.625rem;
 }
 
 /* Override the global .intro card styling for pillar pages.
@@ -69,8 +69,8 @@ body:has(.dc-topbar) .pillar-intro {
 .pillar-cards {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  margin-bottom: 24px;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
 }
 
 .pillar-card {
@@ -93,12 +93,12 @@ body:has(.dc-topbar) .pillar-intro {
   list-style: none;
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 14px 16px;
+  gap: 0.625rem;
+  padding: 0.875rem 1rem;
   cursor: pointer;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
-  min-height: 44px;
+  min-height: 2.75rem;
 }
 
 .pillar-card-summary::-webkit-details-marker { display: none; }
@@ -139,7 +139,7 @@ body:has(.dc-topbar) .pillar-intro {
   display: inline-block;
   font-size: 0.9rem;
   color: var(--txt2);
-  margin-right: 2px;
+  margin-right: 0.125rem;
   transition: transform var(--tr2);
 }
 
@@ -156,7 +156,7 @@ body:has(.dc-topbar) .pillar-intro {
 .pillar-card-body {
   position: relative;
   border-top: 1px solid var(--border2);
-  max-height: 264px;
+  max-height: 16.5rem;
   overflow-y: auto;
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
@@ -165,10 +165,10 @@ body:has(.dc-topbar) .pillar-intro {
 .pillar-list {
   list-style: none;
   margin: 0;
-  padding: 8px 10px 14px;
+  padding: 0.5rem 0.625rem 0.875rem;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 0.375rem;
 }
 
 .pillar-item {
@@ -177,7 +177,7 @@ body:has(.dc-topbar) .pillar-intro {
   border-radius: var(--r-md);
   padding: 0;
   margin: 0;
-  min-height: 44px;
+  min-height: 2.75rem;
   transition: background var(--tr);
   overflow: visible;
   box-shadow: none;
@@ -194,9 +194,9 @@ body:has(.dc-topbar) .pillar-intro {
 .pillar-item-link {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 10px 12px;
-  min-height: 44px;
+  gap: 0.625rem;
+  padding: 0.625rem 0.75rem;
+  min-height: 2.75rem;
   color: var(--txt);
   font-size: 0.88rem;
   font-weight: 600;
@@ -235,8 +235,8 @@ body:has(.dc-topbar) .pillar-intro {
   bottom: 0;
   left: 0;
   right: 0;
-  height: 36px;
-  margin-top: -36px;
+  height: 2.25rem;
+  margin-top: -2.25rem;
   pointer-events: none;
   background: linear-gradient(
     to top,
@@ -259,10 +259,10 @@ body:has(.dc-topbar) .pillar-intro {
    ------------------------------------------------------------------ */
 .sr-only {
   position: absolute;
-  width: 1px;
-  height: 1px;
+  width: 0.0625rem;
+  height: 0.0625rem;
   padding: 0;
-  margin: -1px;
+  margin: -0.0625rem;
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
@@ -274,12 +274,12 @@ body:has(.dc-topbar) .pillar-intro {
    ------------------------------------------------------------------ */
 @media (max-width: 480px) {
   .pillar-card-summary {
-    padding: 12px 14px;
+    padding: 0.75rem 0.875rem;
   }
   .pillar-card-title {
     font-size: 0.95rem;
   }
   .pillar-item-link {
-    padding: 10px 10px;
+    padding: 0.625rem 0.625rem;
   }
 }

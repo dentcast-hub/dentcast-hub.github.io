@@ -654,12 +654,12 @@ def render_page(slug, cfg, intro_html, cards_html, flat_ordered):
         '       default teal; per-pillar overrides below stay scoped via\n'
         '       [data-pillar="..."] on <body>. */\n'
         '    .pillar-subtopic-intro {\n'
-        '      margin: 0 0 16px 0;\n'
-        '      padding: 12px 16px;\n'
+        '      margin: 0 0 1rem 0;\n'
+        '      padding: 0.75rem 1rem;\n'
         '      background: rgba(45, 106, 122, 0.06);\n'
         '      border-right: 3px solid rgba(45, 106, 122, 0.35);\n'
-        '      border-radius: 6px;\n'
-        '      font-size: 14px;\n'
+        '      border-radius: 0.375rem;\n'
+        '      font-size: 0.875rem;\n'
         '      line-height: 1.7;\n'
         '      color: var(--text, #333);\n'
         '    }\n'
@@ -744,8 +744,8 @@ def render_page(slug, cfg, intro_html, cards_html, flat_ordered):
         '       pillar accent via [data-pillar] scope. Stroke icons inherit\n'
         '       the color through currentColor. Same accent values + light/\n'
         '       dark pairs as the pillar-index card icons. */\n'
-        '    .pillar-header-icon { display: block; line-height: 1; margin: 0 0 8px; color: #2d6a7a; }\n'
-        '    .pillar-header-icon .dc-svg-icon { width: 38px; height: 38px; }\n'
+        '    .pillar-header-icon { display: block; line-height: 1; margin: 0 0 0.5rem; color: #2d6a7a; }\n'
+        '    .pillar-header-icon .dc-svg-icon { width: 2.375rem; height: 2.375rem; }\n'
         '    [data-theme="dark"] .pillar-header-icon { color: #4a9aab; }\n'
         '    [data-pillar="ceramics"] .pillar-header-icon { color: #1ca5a5; }\n'
         '    [data-theme="dark"] [data-pillar="ceramics"] .pillar-header-icon { color: #3dd6c4; }\n'
@@ -783,7 +783,7 @@ def render_page(slug, cfg, intro_html, cards_html, flat_ordered):
         '\n'
         '<header class="dc-topbar">\n'
         '  <div class="dc-topbar-actions">\n'
-        '    <a href="/" aria-label="صفحه اصلی دنت‌کست" style="display:flex;align-items:center;margin-left:8px;flex-shrink:0;"><img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;"></a>\n'
+        '    <a href="/" aria-label="صفحه اصلی دنت‌کست" style="display:flex;align-items:center;margin-left:0.5rem;flex-shrink:0;"><img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;"></a>\n'
         '    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="ابزارها" aria-expanded="false"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>\n'
         '    <button class="dc-topbar-btn dcOpenSearch" aria-label="جستجو"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>\n'
         '  </div>\n'
@@ -953,71 +953,71 @@ INDEX_INLINE_STYLE = (
     "   Opacities mirror Glossary's. */\n"
     "\n"
     "/* Page container */\n"
-    ".pillar-index .page { max-width: 680px; margin: 0 auto; padding: 0 14px 60px; }\n"
+    ".pillar-index .page { max-width: 42.5rem; margin: 0 auto; padding: 0 0.875rem 3.75rem; }\n"
     "\n"
     "/* Hero / title */\n"
-    ".pillar-index .top { padding: 12px 0 10px; }\n"
-    ".pillar-index .nav-back { margin-bottom: 8px; }\n"
-    ".pillar-index .back-link { display: inline-flex; align-items: center; gap: 4px; font-size: .78rem; font-weight: 600; color: var(--txt3); transition: color var(--tr); }\n"
+    ".pillar-index .top { padding: 0.75rem 0 0.625rem; }\n"
+    ".pillar-index .nav-back { margin-bottom: 0.5rem; }\n"
+    ".pillar-index .back-link { display: inline-flex; align-items: center; gap: 0.25rem; font-size: .78rem; font-weight: 600; color: var(--txt3); transition: color var(--tr); }\n"
     ".pillar-index .back-link::before { content: \"\\2190 \\00A0\"; }\n"
     ".pillar-index .back-link:hover { color: #2d6a7a; }\n"
     "[data-theme=\"dark\"] .pillar-index .back-link:hover { color: #4a9aab; }\n"
     "\n"
-    ".pillar-index .hero { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }\n"
-    ".pillar-index .title { font-size: 1.1rem; font-weight: 900; color: #2d6a7a; display: flex; gap: 8px; align-items: center; transition: color var(--tr2); margin: 0; }\n"
-    ".pillar-index .title .dot { width: 9px; height: 9px; border-radius: var(--r-f); background: #2d6a7a; box-shadow: 0 0 0 4px rgba(45,106,122,.15); flex-shrink: 0; }\n"
+    ".pillar-index .hero { display: flex; flex-direction: column; gap: 0.375rem; margin-bottom: 0.875rem; }\n"
+    ".pillar-index .title { font-size: 1.1rem; font-weight: 900; color: #2d6a7a; display: flex; gap: 0.5rem; align-items: center; transition: color var(--tr2); margin: 0; }\n"
+    ".pillar-index .title .dot { width: 0.5625rem; height: 0.5625rem; border-radius: var(--r-f); background: #2d6a7a; box-shadow: 0 0 0 4px rgba(45,106,122,.15); flex-shrink: 0; }\n"
     ".pillar-index .subtitle { color: var(--txt3); font-size: .80rem; line-height: 1.6; transition: color var(--tr2); }\n"
     "[data-theme=\"dark\"] .pillar-index .title { color: #4a9aab; }\n"
     "[data-theme=\"dark\"] .pillar-index .title .dot { background: #4a9aab; box-shadow: 0 0 0 4px rgba(74,154,171,.15); }\n"
     "\n"
     "/* Intro paragraph — free-flowing text */\n"
-    "body:has(.dc-topbar) .pillar-intro { background: transparent; border: 0; box-shadow: none; padding: 0; backdrop-filter: none; -webkit-backdrop-filter: none; margin: 6px 0 14px; }\n"
+    "body:has(.dc-topbar) .pillar-intro { background: transparent; border: 0; box-shadow: none; padding: 0; backdrop-filter: none; -webkit-backdrop-filter: none; margin: 0.375rem 0 0.875rem; }\n"
     ".pillar-intro p { color: var(--txt2); font-size: .82rem; line-height: 1.85; margin: 0; }\n"
     ".pillar-intro p strong { color: var(--txt); }\n"
     "\n"
     "/* Stats — three separate chips */\n"
-    ".pillar-index-stats { display: flex; flex-direction: row; gap: 10px; justify-content: center; flex-wrap: wrap; margin: 16px 0; }\n"
-    ".pillar-index-stat-chip { display: inline-flex; align-items: baseline; gap: 6px; padding: 8px 16px; border-radius: 22px; background: rgba(45,106,122,.10); border: 1px solid rgba(45,106,122,.25); }\n"
-    ".pillar-index-stat-chip .stat-value { font-size: 16px; font-weight: 700; color: #2d6a7a; font-feature-settings: \"tnum\"; font-variant-numeric: tabular-nums; }\n"
-    ".pillar-index-stat-chip .stat-label { font-size: 13px; color: var(--txt3); }\n"
+    ".pillar-index-stats { display: flex; flex-direction: row; gap: 0.625rem; justify-content: center; flex-wrap: wrap; margin: 1rem 0; }\n"
+    ".pillar-index-stat-chip { display: inline-flex; align-items: baseline; gap: 0.375rem; padding: 0.5rem 1rem; border-radius: 1.375rem; background: rgba(45,106,122,.10); border: 1px solid rgba(45,106,122,.25); }\n"
+    ".pillar-index-stat-chip .stat-value { font-size: 1rem; font-weight: 700; color: #2d6a7a; font-feature-settings: \"tnum\"; font-variant-numeric: tabular-nums; }\n"
+    ".pillar-index-stat-chip .stat-label { font-size: 0.8125rem; color: var(--txt3); }\n"
     "[data-theme=\"dark\"] .pillar-index-stat-chip { background: rgba(74,154,171,.15); border-color: rgba(74,154,171,.35); }\n"
     "[data-theme=\"dark\"] .pillar-index-stat-chip .stat-value { color: #4a9aab; }\n"
     "\n"
     "/* List wrap (outer card frame, same as Glossary's .listWrap) */\n"
-    ".pillar-index .listWrap { margin-top: 4px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: var(--r-xl); overflow: hidden; box-shadow: var(--card-sh); transition: all var(--tr2); }\n"
+    ".pillar-index .listWrap { margin-top: 0.25rem; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: var(--r-xl); overflow: hidden; box-shadow: var(--card-sh); transition: all var(--tr2); }\n"
     "\n"
     "/* Pillar card row */\n"
-    ".pillar-card-row { display: flex; align-items: stretch; gap: 12px; padding: 14px 14px; margin: 6px 6px; border-radius: var(--r-md); background: var(--surface2); border: 1px solid rgba(45,106,122,.25); transition: all var(--tr); -webkit-tap-highlight-color: transparent; color: inherit; text-decoration: none; }\n"
+    ".pillar-card-row { display: flex; align-items: stretch; gap: 0.75rem; padding: 0.875rem 0.875rem; margin: 0.375rem 0.375rem; border-radius: var(--r-md); background: var(--surface2); border: 1px solid rgba(45,106,122,.25); transition: all var(--tr); -webkit-tap-highlight-color: transparent; color: inherit; text-decoration: none; }\n"
     ".pillar-card-row:hover { background: var(--surface3); border-color: rgba(45,106,122,.35); transform: translateX(-2px); }\n"
     ".pillar-card-row:active { transform: scale(.99); }\n"
     "[data-theme=\"dark\"] .pillar-card-row { border-color: rgba(74,154,171,.30); }\n"
     "[data-theme=\"dark\"] .pillar-card-row:hover { border-color: rgba(74,154,171,.45); }\n"
     "\n"
-    ".pillar-card-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px; }\n"
-    ".pillar-card-header { display: flex; align-items: center; gap: 8px; }\n"
+    ".pillar-card-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 0.5rem; }\n"
+    ".pillar-card-header { display: flex; align-items: center; gap: 0.5rem; }\n"
     ".pillar-card-icon { font-size: 1.1rem; line-height: 1; color: #2d6a7a; flex-shrink: 0; display: inline-flex; align-items: center; }\n"
     ".pillar-card-icon .dc-svg-icon { width: 1.2em; height: 1.2em; }\n"
     "[data-theme=\"dark\"] .pillar-card-icon { color: #4a9aab; }\n"
-    ".pillar-card-name { margin: 0 0 4px 0; font-size: 20px; font-weight: 700; color: #2d6a7a; letter-spacing: -.2px; }\n"
+    ".pillar-card-name { margin: 0 0 0.25rem 0; font-size: 1.25rem; font-weight: 700; color: #2d6a7a; letter-spacing: -.2px; }\n"
     "[data-theme=\"dark\"] .pillar-card-name { color: #6ab5c4; }\n"
     ".pillar-card-subtitle { margin: 0; font-size: .78rem; color: var(--txt2); line-height: 1.5; }\n"
     ".pillar-card-meta { margin: 0; font-size: .7rem; color: var(--txt3); font-feature-settings: \"tnum\"; }\n"
     "\n"
     "/* Subtopic list — label on right (RTL), small teal chip on left */\n"
-    ".pillar-card-subtopics { list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-direction: column; gap: 0; font-size: .78rem; color: var(--txt2); }\n"
-    ".pillar-card-subtopics li { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 6px 0; border-bottom: 1px solid var(--border2); }\n"
+    ".pillar-card-subtopics { list-style: none; margin: 0.25rem 0 0; padding: 0; display: flex; flex-direction: column; gap: 0; font-size: .78rem; color: var(--txt2); }\n"
+    ".pillar-card-subtopics li { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; padding: 0.375rem 0; border-bottom: 1px solid var(--border2); }\n"
     ".pillar-card-subtopics li:last-child { border-bottom: 0; }\n"
     ".subtopic-label { font-size: .82rem; color: var(--txt); }\n"
-    ".subtopic-chip { display: inline-flex; align-items: center; justify-content: center; min-width: 28px; height: 22px; padding: 0 8px; border-radius: 11px; background: rgba(45,106,122,.10); color: #2d6a7a; font-size: 12px; font-weight: 600; font-feature-settings: \"tnum\"; font-variant-numeric: tabular-nums; }\n"
+    ".subtopic-chip { display: inline-flex; align-items: center; justify-content: center; min-width: 1.75rem; height: 1.375rem; padding: 0 0.5rem; border-radius: 0.6875rem; background: rgba(45,106,122,.10); color: #2d6a7a; font-size: 0.75rem; font-weight: 600; font-feature-settings: \"tnum\"; font-variant-numeric: tabular-nums; }\n"
     "[data-theme=\"dark\"] .subtopic-chip { background: rgba(74,154,171,.18); color: #4a9aab; }\n"
     "\n"
     "/* Arrow (chevron) on the LEFT in RTL */\n"
-    ".pillar-card-arrow { width: 30px; height: 30px; border-radius: var(--r-sm); display: grid; place-items: center; background: rgba(45,106,122,.10); border: 1px solid rgba(45,106,122,.25); color: #2d6a7a; flex-shrink: 0; align-self: center; transition: all var(--tr2); }\n"
+    ".pillar-card-arrow { width: 1.875rem; height: 1.875rem; border-radius: var(--r-sm); display: grid; place-items: center; background: rgba(45,106,122,.10); border: 1px solid rgba(45,106,122,.25); color: #2d6a7a; flex-shrink: 0; align-self: center; transition: all var(--tr2); }\n"
     ".pillar-card-arrow .dc-svg-icon { width: 1em; height: 1em; }\n"
     "[data-theme=\"dark\"] .pillar-card-arrow { background: rgba(74,154,171,.15); border-color: rgba(74,154,171,.35); color: #4a9aab; }\n"
     "\n"
     "@media (max-width: 480px) {\n"
-    "  .pillar-card-row { padding: 12px 12px; }\n"
+    "  .pillar-card-row { padding: 0.75rem 0.75rem; }\n"
     "  .pillar-card-name { font-size: .92rem; }\n"
     "}\n"
     "\n"
@@ -1343,7 +1343,7 @@ def _render_index_page(pillars_info, cards_html):
         '\n'
         '<header class="dc-topbar">\n'
         '  <div class="dc-topbar-actions">\n'
-        '    <a href="/" aria-label="صفحه اصلی دنت‌کست" style="display:flex;align-items:center;margin-left:8px;flex-shrink:0;"><img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;"></a>\n'
+        '    <a href="/" aria-label="صفحه اصلی دنت‌کست" style="display:flex;align-items:center;margin-left:0.5rem;flex-shrink:0;"><img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;"></a>\n'
         '    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="ابزارها" aria-expanded="false"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>\n'
         '    <button class="dc-topbar-btn dcOpenSearch" aria-label="جستجو"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>\n'
         '  </div>\n'
@@ -1630,7 +1630,7 @@ _GLOSSARY_HEAD_AFTER_JSONLD = """</script>
 html{height:100%;width:100%;}
 body{
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
-  font-size:16px; line-height:1.5;
+  font-size:1rem; line-height:1.5;
   background:var(--bg); color:var(--txt);
   min-height:100vh;
   -webkit-font-smoothing:antialiased;
@@ -1640,24 +1640,24 @@ body{
 a{color:inherit;text-decoration:none;}
 
 .page{
-  max-width:680px;
+  max-width:42.5rem;
   margin:0 auto;
-  padding:0 14px 60px;
+  padding:0 0.875rem 3.75rem;
 }
 
 /* ── STICKY TOP ── */
 .top{
   position:sticky; top:0; z-index:20;
-  padding:12px 0 10px;
+  padding:0.75rem 0 0.625rem;
   background:var(--surface);
   border-bottom:1px solid var(--border);
   box-shadow:0 2px 10px rgba(var(--pr-rgb),.06);
   transition:background var(--tr2),border-color var(--tr2);
 }
 
-.nav-back{ margin-bottom:8px; }
+.nav-back{ margin-bottom:0.5rem; }
 .back-link{
-  display:inline-flex; align-items:center; gap:4px;
+  display:inline-flex; align-items:center; gap:0.25rem;
   font-size:.78rem; font-weight:600;
   color:var(--txt3);
   transition:color var(--tr);
@@ -1665,16 +1665,16 @@ a{color:inherit;text-decoration:none;}
 .back-link::before{ content:"← "; }
 .back-link:hover{ color:var(--ac); }
 
-.hero{ display:flex; flex-direction:column; gap:6px; margin-bottom:10px; }
+.hero{ display:flex; flex-direction:column; gap:0.375rem; margin-bottom:0.625rem; }
 
 .title{
   font-size:1.1rem; font-weight:900;
   color:var(--pr);
-  display:flex; gap:8px; align-items:center;
+  display:flex; gap:0.5rem; align-items:center;
   transition:color var(--tr2);
 }
 .title .dot{
-  width:9px; height:9px; border-radius:var(--r-f);
+  width:0.5625rem; height:0.5625rem; border-radius:var(--r-f);
   background:var(--ac);
   box-shadow:0 0 0 4px rgba(var(--ac-rgb),.15);
   flex-shrink:0;
@@ -1689,8 +1689,8 @@ a{color:inherit;text-decoration:none;}
   background:var(--surface2);
   border:1px solid var(--border);
   border-radius:var(--r-lg);
-  padding:8px 10px;
-  display:flex; gap:10px; align-items:center;
+  padding:0.5rem 0.625rem;
+  display:flex; gap:0.625rem; align-items:center;
   transition:all var(--tr2);
 }
 .searchWrap:focus-within{
@@ -1698,30 +1698,30 @@ a{color:inherit;text-decoration:none;}
   box-shadow:0 0 0 3px rgba(var(--ac-rgb),.08);
 }
 .searchIcon{
-  width:34px; height:34px;
+  width:2.125rem; height:2.125rem;
   border-radius:var(--r-md);
   background:rgba(var(--ac-rgb),.08);
   border:1px solid rgba(var(--ac-rgb),.18);
   display:grid; place-items:center;
   flex-shrink:0; color:var(--ac);
-  font-weight:900; font-size:16px;
+  font-weight:900; font-size:1rem;
   transition:all var(--tr2);
 }
 #search{
   width:100%; border:0; outline:0;
   background:transparent; color:var(--txt);
-  font-size:14px; font-family:inherit;
-  padding:6px 4px;
+  font-size:0.875rem; font-family:inherit;
+  padding:0.375rem 0.25rem;
 }
 #search::placeholder{ color:var(--txt3); }
 
 .metaRow{
   display:flex; justify-content:space-between;
-  align-items:center; gap:10px;
-  margin-top:8px; font-size:.76rem;
+  align-items:center; gap:0.625rem;
+  margin-top:0.5rem; font-size:.76rem;
 }
 .chip{
-  padding:5px 10px; border-radius:var(--r-f);
+  padding:0.3125rem 0.625rem; border-radius:var(--r-f);
   border:1px solid var(--border);
   background:var(--surface2);
   font-size:.72rem; color:var(--txt3);
@@ -1731,17 +1731,17 @@ a{color:inherit;text-decoration:none;}
 
 /* alpha nav */
 .alphaNav{
-  margin-top:8px;
-  display:flex; gap:6px;
+  margin-top:0.5rem;
+  display:flex; gap:0.375rem;
   overflow-x:auto; overflow-y:hidden;
   -webkit-overflow-scrolling:touch;
   scrollbar-width:none;
-  padding:4px 2px 2px;
+  padding:0.25rem 0.125rem 0.125rem;
 }
 .alphaNav::-webkit-scrollbar{ display:none; }
 
 .alphaBtn{
-  flex:0 0 auto; min-width:32px; height:32px;
+  flex:0 0 auto; min-width:2rem; height:2rem;
   border-radius:var(--r-sm);
   border:1px solid var(--border);
   background:var(--surface2);
@@ -1761,7 +1761,7 @@ a{color:inherit;text-decoration:none;}
 
 /* ── LIST WRAP ── */
 .listWrap{
-  margin-top:12px;
+  margin-top:0.75rem;
   background:var(--card-bg);
   border:1px solid var(--card-border);
   border-radius:var(--r-xl);
@@ -1772,8 +1772,8 @@ a{color:inherit;text-decoration:none;}
 
 .sectionHeader{
   display:flex; justify-content:space-between;
-  align-items:center; gap:10px;
-  padding:10px 14px;
+  align-items:center; gap:0.625rem;
+  padding:0.625rem 0.875rem;
   background:var(--surface2);
   border-bottom:1px solid var(--border2);
   transition:background var(--tr2);
@@ -1781,23 +1781,23 @@ a{color:inherit;text-decoration:none;}
 .sectionHeader h2{
   margin:0; font-size:.82rem; font-weight:800;
   color:var(--txt2); letter-spacing:.04em;
-  display:flex; align-items:center; gap:8px;
+  display:flex; align-items:center; gap:0.5rem;
   transition:color var(--tr2);
 }
 .sectionHeader .badge{
   font-size:.68rem; color:var(--txt3);
   border:1px solid var(--border);
   background:var(--surface);
-  padding:3px 8px; border-radius:var(--r-f);
+  padding:0.1875rem 0.5rem; border-radius:var(--r-f);
   transition:all var(--tr2);
 }
 
-.items{ padding:8px 6px 10px; }
+.items{ padding:0.5rem 0.375rem 0.625rem; }
 
 .term{
   display:flex; justify-content:space-between;
-  align-items:center; gap:10px;
-  padding:10px 12px; margin:4px 4px;
+  align-items:center; gap:0.625rem;
+  padding:0.625rem 0.75rem; margin:0.25rem 0.25rem;
   border-radius:var(--r-md);
   background:var(--surface2);
   border:1px solid var(--border2);
@@ -1813,7 +1813,7 @@ a{color:inherit;text-decoration:none;}
 
 .term .left{
   display:flex; flex-direction:column;
-  gap:2px; min-width:0;
+  gap:0.125rem; min-width:0;
 }
 .en{
   font-weight:700; font-size:.88rem; color:var(--txt);
@@ -1826,17 +1826,17 @@ a{color:inherit;text-decoration:none;}
   transition:color var(--tr2);
 }
 .arrow{
-  width:30px; height:30px; border-radius:var(--r-sm);
+  width:1.875rem; height:1.875rem; border-radius:var(--r-sm);
   display:grid; place-items:center;
   background:rgba(var(--ac-rgb),.08);
   border:1px solid rgba(var(--ac-rgb),.18);
   color:var(--ac); flex-shrink:0;
-  font-weight:900; font-size:16px;
+  font-weight:900; font-size:1rem;
   transition:all var(--tr2);
 }
 
 .empty{
-  padding:24px 16px; color:var(--txt3);
+  padding:1.5rem 1rem; color:var(--txt3);
   font-size:.86rem; line-height:1.9; text-align:center;
 }
 
@@ -1847,10 +1847,10 @@ section[id^="sec-"]{ scroll-margin-top:160px; }
 
 /* فوتر */
 .footer{
-  margin-top:16px; padding:14px 6px 0;
+  margin-top:1rem; padding:0.875rem 0.375rem 0;
   color:var(--txt3); font-size:.76rem;
   display:flex; justify-content:space-between;
-  align-items:center; gap:12px; flex-wrap:wrap;
+  align-items:center; gap:0.75rem; flex-wrap:wrap;
   transition:color var(--tr2);
 }
 .footer a{
@@ -1862,13 +1862,13 @@ section[id^="sec-"]{ scroll-margin-top:160px; }
 
 @media(max-width:640px){
   .footer{
-    margin-top:24px; padding:18px 12px 28px;
+    margin-top:1.5rem; padding:1.125rem 0.75rem 1.75rem;
     flex-direction:column; justify-content:center;
-    align-items:center; gap:10px;
+    align-items:center; gap:0.625rem;
     text-align:center; border-top:1px solid var(--border);
   }
   .footer a{
-    display:inline-block; padding:6px 14px;
+    display:inline-block; padding:0.375rem 0.875rem;
     border-radius:var(--r-f);
     background:var(--surface2); border:1px solid var(--border);
   }
@@ -1876,13 +1876,13 @@ section[id^="sec-"]{ scroll-margin-top:160px; }
 
 /* تم تاگل */
 #dc-theme-toggle{
-  position:fixed; bottom:20px; left:14px; z-index:250;
-  width:42px; height:42px; border-radius:var(--r-f);
+  position:fixed; bottom:1.25rem; left:0.875rem; z-index:250;
+  width:2.625rem; height:2.625rem; border-radius:var(--r-f);
   background:#17212b; color:#e8f0ff;
   border:1px solid rgba(255,255,255,.12);
   box-shadow:0 4px 16px rgba(0,0,0,.28);
   display:flex; align-items:center; justify-content:center;
-  font-size:19px; cursor:pointer;
+  font-size:1.1875rem; cursor:pointer;
   transition:all var(--tr);
 }
 #dc-theme-toggle:active{ transform:scale(.86); }
@@ -1906,7 +1906,7 @@ section[id^="sec-"]{ scroll-margin-top:160px; }
 <!-- DC NAV: TOP BAR -->
 <header class="dc-topbar">
   <div class="dc-topbar-actions">
-    <a href="/" aria-label="صفحه اصلی دنت‌کست" style="display:flex;align-items:center;margin-left:8px;flex-shrink:0;"><img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;"></a>
+    <a href="/" aria-label="صفحه اصلی دنت‌کست" style="display:flex;align-items:center;margin-left:0.5rem;flex-shrink:0;"><img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;"></a>
     <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="ابزارها" aria-expanded="false"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
     <button class="dc-topbar-btn dcOpenSearch" aria-label="جستجو"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
   </div>
