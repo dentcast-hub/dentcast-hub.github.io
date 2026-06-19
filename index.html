@@ -3426,7 +3426,7 @@ a.dc-list-card--pillar {
       </div>
 
       <!-- HERO: latest episode (showcase) -->
-      <div class="dc-home-hero" id="card-episodes" onclick="window.location.href='episodes.html?v=1'" role="link" tabindex="0" aria-label="شنیدن تازه‌ترین قسمت">
+      <div class="dc-home-hero" id="card-episodes" data-href="/episodes/episode-159.html" onclick="window.location.href=this.dataset.href||'episodes.html'" role="link" tabindex="0" aria-label="رفتن به صفحه‌ی تازه‌ترین قسمت">
         <div class="dc-home-hero-top">
           <img class="dc-home-hero-cover" src="/dentcast-cover.webp" alt="" width="84" height="84" loading="lazy" decoding="async">
           <div class="dc-home-hero-info">
@@ -4298,6 +4298,9 @@ scrollBody.addEventListener('touchend',e=>{
     var hpBtn=document.getElementById('dcHeroPlay');
     if(ep&&hpBtn){
       hpBtn.dataset.src=ep.audio_url;
+      var heroCard=document.getElementById('card-episodes');
+      var epUrl=ep.page_url||ep.url;
+      if(heroCard&&epUrl) heroCard.dataset.href=epUrl;
       var ht=document.querySelector('#panel-studio .dc-home-hero-title');
       if(ht&&ep.title) ht.textContent=ep.title;
       var hb=document.querySelector('#panel-studio .dc-home-hero-badge');

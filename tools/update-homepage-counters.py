@@ -116,12 +116,18 @@ def latest_brain_state():
 
 
 def refresh_hero(html, episode):
-    """Hero fallback: badge number, title, audio src. Returns (html, note)."""
+    """Hero fallback: badge number, title, audio src, episode page link.
+    Returns (html, note)."""
     if not episode:
         return html, "hero: no episode with audio_url (skipped)"
     title = esc_html((episode.get("title") or "").strip())
     num = to_fa(episode.get("episode") or "")
     src = esc_html((episode.get("audio_url") or "").strip())
+    page = esc_html((episode.get("page_url") or episode.get("url") or "").strip())
+    if page:
+        html = re.sub(
+            r'(id="card-episodes"[^>]*\sdata-href=")[^"]*(")',
+            lambda m: m.group(1) + page + m.group(2), html, count=1)
     html = re.sub(
         r'(<h2 class="dc-home-hero-title">).*?(</h2>)',
         lambda m: m.group(1) + title + m.group(2), html, count=1, flags=re.S)
