@@ -10597,5 +10597,52 @@
       "secondary": [],
       "subtopic": null
     }
+  },
+  {
+    "type": "dentcast",
+    "id": "dentcast-159",
+    "episode": "159",
+    "title": "از دست رفتن کانتکت بین ایمپلنت و دندان مجاور (Interproximal Contact Loss)",
+    "caption": "موضوع این قسمت، از دست رفتن کانتکت بین رستوریشن ایمپلنت و دندان مجاور (Interproximal Contact Loss یا ICL) است. به این می‌پردازیم که چرا این کانتکت‌ها با گذشت زمان باز می‌شوند، این پدیده چقدر شایع است و از نظر بالینی چطور باید آن را مدیریت کرد.",
+    "hashtags": [
+      "#InterproximalContactLoss",
+      "#OpenContact",
+      "#ProximalContact",
+      "#ImplantProsthetics",
+      "#MesialDrift",
+      "#ContinuedEruption",
+      "#FoodImpaction",
+      "#ImplantComplications",
+      "#ImplantRestoration",
+      "#AdjacentTooth",
+      "#کانتکت_باز",
+      "#از_دست_رفتن_کانتکت",
+      "#کانتکت_پروگزیمال",
+      "#پروتز_ایمپلنت",
+      "#دریفت_مزیالی",
+      "#گیر_غذایی",
+      "#عوارض_ایمپلنت",
+      "#ایمپلنت"
+    ],
+    "keywords": [
+      "interproximal contact loss",
+      "open proximal contact",
+      "ICL",
+      "mesial drift",
+      "continued eruption",
+      "food impaction",
+      "implant-adjacent tooth",
+      "proximal contact",
+      "پروتز ایمپلنت",
+      "کانتکت باز",
+      "گیر غذایی"
+    ],
+    "audio_url": "https://episodes.s3.ir-thr-at1.arvanstorage.ir/dentcast159%20.mp3?versionId=",
+    "page_url": "/episodes/episode-159.html",
+    "pillar": {
+      "primary": "implantology",
+      "secondary": [],
+      "subtopic": "restoration-design"
+    }
   }
 ]
