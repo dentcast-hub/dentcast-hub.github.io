@@ -10644,5 +10644,52 @@
       "secondary": [],
       "subtopic": "restoration-design"
     }
+  },
+  {
+    "type": "dentai",
+    "id": "dentai-22",
+    "title": "آمالگام در برابر کامپوزیت: جدیدترین متاآنالیز ۲۰۲۵ و پرسش تعویض آمالگام‌های سالم",
+    "caption": "مرور متاآنالیز ۲۰۲۵ (International Dental Journal) در مقایسه‌ی ریسک شکست آمالگام و کامپوزیت در دندان‌های خلفی؛ RR=۰.۹۶ (۹۵٪ CI: ۰.۶۸ تا ۱.۳۴) یعنی تفاوت معنادار دیده نشد، مقایسه با مرور کاکرین ۲۰۲۱ که برتری آمالگام را نشان می‌داد، نقش fracture در تعریف failure و شایع‌ترین علتِ شکستِ آمالگام، و نقد بالینی روند برداشتن آمالگام‌های سالم و بی‌علامت به بهانه‌ی کرکِ زیر آن.",
+    "hashtags": [
+      "#dental amalgam",
+      "#composite resin",
+      "#risk ratio",
+      "#meta-analysis",
+      "#systematic review",
+      "#restoration failure",
+      "#secondary caries",
+      "#cracked tooth syndrome",
+      "#posterior teeth",
+      "#Cochrane review",
+      "#آمالگام",
+      "#کامپوزیت",
+      "#پوسیدگی_ثانویه",
+      "#شکست_ترمیم"
+    ],
+    "keywords": [
+      "dental amalgam",
+      "composite resin",
+      "risk ratio",
+      "meta-analysis",
+      "systematic review",
+      "restoration failure",
+      "secondary caries",
+      "cracked tooth syndrome",
+      "posterior teeth",
+      "Cochrane review",
+      "amalgam failure",
+      "composite failure",
+      "direct restoration",
+      "آمالگام",
+      "کامپوزیت",
+      "پوسیدگی ثانویه",
+      "شکست ترمیم"
+    ],
+    "page_url": "/dentai/dentai-22.html",
+    "pillar": {
+      "primary": "operative",
+      "secondary": [],
+      "subtopic": "direct-restorations"
+    }
   }
 ]
