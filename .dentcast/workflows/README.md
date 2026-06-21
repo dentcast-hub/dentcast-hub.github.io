@@ -91,6 +91,42 @@ Ask:
 
 Wait for it.
 
+### Question 3.5 — Writing-style check (de-AI pass)
+
+**Runs for EVERY type, on EVERY publish, on whatever متن was just received in Question 3 — before any other step.** This gate happens before Phase C (and before Question 4 onward) consumes the text, because if changes are approved, the **edited** text — not the raw submission — is what every downstream step (page build, glossary linking, Pulse, etc.) works from.
+
+**Goal:** read the submitted متن the way an editor would, and flag the spots that read as AI-generated rather than human-written — phrasing/rhythm/word-choice only, **never** facts, claims, numbers, or meaning.
+
+#### Step 1 — Scan for AI tells
+
+Look for patterns like (non-exhaustive — judge by ear, not by a checklist):
+- **Formulaic throat-clearing openers/closers** — generic preambles or wrap-up sentences that restate what was just said («در نتیجه می‌توان گفت که...», «به طور کلی...»).
+- **Overused AI clichés** — stock phrases such as «بدون شک», «نکته قابل توجه این است که», «در دنیای امروز», «نقش بسزایی دارد», «از اهمیت ویژه‌ای برخوردار است».
+- **False-balance hedge stacking** — reflexive «نه‌تنها... بلکه...», «از یک سو... از سوی دیگر...» used as filler rather than because a real contrast exists.
+- **Mechanical parallelism / listy prose** — three-item lists or rule-of-three constructions inserted by reflex, or prose chopped into bullet-like sentence fragments where a human would just write a sentence.
+- **Uniform sentence rhythm** — every sentence near-identical in length/structure, lacking the natural variation a human writer has.
+- **Generic filler with no concrete content** — sentences that sound authoritative but say nothing specific to this topic.
+- **Over-punctuated emphasis** — excessive em-dashes, bolding, or exclamation used as a substitute for a real point.
+
+#### Step 2 — Identify and announce, don't edit yet
+
+For each genuine instance found, prepare: the exact original phrase/sentence, a proposed rewrite that keeps the **same meaning, facts, and register** but reads naturally, and a one-line reason it tripped the check. Present the full list to the user as a numbered review **before touching the text** — this is a proposal, not an edit.
+
+If the متن has **no** genuine AI tells, say so explicitly («متن طبیعی به نظر می‌رسه، تغییری لازم نیست») and proceed straight to Question 4 with the text unchanged.
+
+#### Step 3 — Confirm, then branch
+
+Ask the user to confirm. The user may approve all, a subset, or none.
+
+- **Approved (all or a subset):** apply only the approved rewrites to the متن. The resulting edited text becomes the text of record for the rest of this publish (Phase C step 2 and everything downstream uses it).
+- **Not approved / rejected:** make no changes — continue with the original متن exactly as submitted. Proceed to Question 4.
+
+#### Constraints
+
+- **Style and phrasing only.** Never alter clinical claims, data, numbers, names, citations, or meaning. If a flagged sentence can't be rewritten without touching its substance, drop it from the list rather than risk changing meaning.
+- **No new content.** Rewrites tighten or naturalize existing sentences — they don't add claims, examples, or sections that weren't in the original.
+- **One pass.** This runs once, here, on the as-submitted متن — it is not repeated later in the same publish.
+
 ### Question 4 — Required media (dynamic, based on category)
 
 Look at the latest entry in the locked category and identify which media fields are populated. For each one, ask the user — but phrase the question based on what's actually needed:
@@ -805,6 +841,7 @@ After the pillar builder finishes, verify:
 ## Final output summary
 
 - Category locked
+- Writing-style check (Question 3.5): flagged AI-tell spots presented (or the explicit "no changes needed" result); which rewrites were approved/applied vs rejected; confirmation the text used from this point on is the post-decision text (edited if approved, original otherwise)
 - Auto-discovered next number (and whether user overrode it)
 - Template page path + SHA-256 before/after (must match)
 - Media sources gathered (and which were auto-fetched vs asked)
