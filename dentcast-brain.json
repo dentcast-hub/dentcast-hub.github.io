@@ -10727,5 +10727,52 @@
       "secondary": [],
       "subtopic": "direct-restorations"
     }
+  },
+  {
+    "type": "dentai",
+    "id": "dentai-23",
+    "title": "براکسیسم: بیماری یا رفتار؟ کنسنسوس بین‌المللی ۲۰۱۸ در سنجش Bruxism",
+    "caption": "کنسنسوس بین‌المللیِ ۲۰۱۸ (Journal of Oral Rehabilitation) که تعریفِ ۲۰۱۳ از براکسیسم را بازبینی می‌کند: چهار اصطلاح پایه (clenching و grinding که نیاز به تماسِ دندانی دارند، در برابر bracing و thrusting که ندارند)، دو تعریفِ جداگانه برای sleep و awake bruxism، استدلال علیه بیماری‌انگاریِ براکسیسم در افراد سالم (ریسک‌فاکتور یا حتی فاکتورِ محافظ)، نقدِ حدِ آستانه‌ی ثابت، و سیستم نمره‌دهیِ سه‌سطحیِ پیشنهادی (Possible/Probable/Definite).",
+    "hashtags": [
+      "#bruxism",
+      "#sleep bruxism",
+      "#awake bruxism",
+      "#clenching",
+      "#grinding",
+      "#bracing",
+      "#thrusting",
+      "#electromyography",
+      "#risk factor",
+      "#international consensus",
+      "#براکسیسم",
+      "#دندان_قروچه",
+      "#کلینچینگ",
+      "#ریسک_فاکتور"
+    ],
+    "keywords": [
+      "bruxism",
+      "sleep bruxism",
+      "awake bruxism",
+      "clenching",
+      "grinding",
+      "bracing",
+      "thrusting",
+      "electromyography",
+      "polysomnography",
+      "risk factor",
+      "protective factor",
+      "cut-off point",
+      "grading system",
+      "international consensus",
+      "براکسیسم",
+      "دندان قروچه",
+      "کلینچینگ"
+    ],
+    "page_url": "/dentai/dentai-23.html",
+    "pillar": {
+      "primary": "occlusion",
+      "secondary": [],
+      "subtopic": "tmd-orofacial-pain"
+    }
   }
 ]
