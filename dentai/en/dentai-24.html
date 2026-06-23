@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<!-- data-dc-no-header: opt out of the shared (Persian/RTL) header injected by dc-nav.js; this page keeps its own English/LTR header. -->
+<html lang="en" dir="ltr" data-dc-no-header>
+<head>
+  <!-- Google Analytics (deferred: loads only after the page is fully rendered) -->
+  <script>
+    window.addEventListener('load', function () {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-GMM0WC8X3M');
+      var ga = document.createElement('script');
+      ga.async = true;
+      ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-GMM0WC8X3M';
+      document.head.appendChild(ga);
+    });
+  </script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DentAI – The BEWE Index: Scoring and Managing Tooth Wear in Practice | DentCast</title>
+<meta name="description" content="The Basic Erosive Wear Examination (BEWE): a simple tool to screen tooth wear that condenses severity into a single number, which in turn sets the patient's risk level and recall interval.">
+
+<link rel="canonical" href="https://dentcast.org/dentai/en/dentai-24.html">
+<link rel="alternate" hreflang="fa-IR" href="https://dentcast.ir/dentai/dentai-24.html">
+<link rel="alternate" hreflang="fa" href="https://dentcast.org/dentai/dentai-24.html">
+<link rel="alternate" hreflang="en" href="https://dentcast.org/dentai/en/dentai-24.html">
+<link rel="alternate" hreflang="x-default" href="https://dentcast.org/dentai/dentai-24.html">
+
+<meta name="robots" content="index, follow, max-image-preview:large">
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="DentCast">
+<meta property="og:title" content="DentAI – The BEWE Index: Scoring and Managing Tooth Wear in Practice">
+<meta property="og:description" content="The Basic Erosive Wear Examination condenses tooth-wear severity into a single number that sets the patient's risk level and recall interval.">
+<meta property="og:url" content="https://dentcast.org/dentai/en/dentai-24.html">
+<meta property="og:image" content="https://dentcast.org/dentcast-cover.webp">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="DentAI – The BEWE Index: Scoring and Managing Tooth Wear in Practice">
+<meta name="twitter:description" content="The Basic Erosive Wear Examination condenses tooth-wear severity into a single number that sets the patient's risk level and recall interval.">
+<meta name="twitter:image" content="https://dentcast.org/dentcast-cover.webp">
+
+  <!-- Shared design system -->
+  <link rel="stylesheet" href="/dc-theme.css">
+  <link rel="stylesheet" href="/dc-nav.css?v=12">
+  <link rel="stylesheet" href="/global-search.css?v=2">
+
+  <link rel="icon" href="/logo-v2.png" type="image/png" sizes="192x192">
+  <link rel="apple-touch-icon" href="/logo-v2.png">
+
+  <!-- Theme init — no flash -->
+  <script>(function(){var s=localStorage.getItem('dc-theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme','dark');})()</script>
+
+  <style>
+    :root {
+      --blue:#0b5fff;
+      --gold:rgba(255,199,44,0.95);
+      --lightblue:rgba(11,95,255,0.15);
+      --bg1:#eaf1ff;
+      --bg2:#f5f8ff;
+      --text:#111;
+      --muted:#444;
+      --radius:18px;
+      --shadow:0 18px 50px rgba(0,0,0,.2);
+    }
+
+    html,body { margin:0; padding:0; height:100%; }
+
+    body {
+      font-family:'vazirmatn', sans-serif;
+      background: linear-gradient(180deg, var(--bg1) 0%, var(--bg2) 100%);
+      color: var(--text);
+      max-width: 56.25rem;
+      margin: 0 auto;
+      padding: 3.75rem 1.625rem 6.25rem;
+      line-height: 2;
+      direction: ltr;
+      text-align: left;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizelegibility;
+      min-height: 100vh;
+    }
+
+    h1 {
+      text-align: center;
+      color: var(--blue);
+      font-weight: 800;
+      font-size: 1.9rem;
+      margin-bottom: 2.25rem;
+    }
+
+    .caption{
+      background:rgba(255, 185, 40, 0.15);
+      border:1px solid rgba(255, 220, 100, 0.55);
+      border-radius:var(--radius);
+      padding:1.25rem 1.5rem;
+      margin-bottom:2.1875rem;
+      box-shadow:0 0 30px rgba(255,200,0,0.1);
+    }
+    .caption p{
+      color:#9a6b00;
+      font-weight:600;
+      font-size:1.1rem;
+      margin:0;
+      text-align:left;
+      line-height:1.9;
+    }
+
+    .text-box {
+      background: #ffffff;
+      border: 1px solid rgba(11,95,255,0.18);
+      border-radius: 1.375rem;
+      padding: 1.75rem 2.25rem;
+      margin: 1.5rem 0;
+      box-shadow: var(--shadow);
+      color: #111;
+      font-size: 1.05rem;
+      line-height: 2;
+    }
+
+    .text-box h2 {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--blue);
+      margin: 1.625rem 0 0.75rem 0;
+      border-left: 4px solid var(--blue);
+      padding-left: 0.75rem;
+    }
+    .text-box h2:first-child { margin-top: 0.25rem; }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 0.875rem 0;
+    }
+    ul li {
+      margin-bottom: 0.625rem;
+      padding-left: 1rem;
+      position: relative;
+    }
+    ul li::before {
+      content: "•";
+      color: var(--blue);
+      font-weight: bold;
+      position: absolute;
+      left: 0;
+    }
+
+    /* BEWE scoring / sextant / risk tables */
+    .text-box table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.25rem 0 1.5rem;
+      font-size: .98rem;
+      line-height: 1.7;
+    }
+    .text-box table th,
+    .text-box table td {
+      border: 1px solid rgba(11,95,255,0.18);
+      padding: 0.6rem 0.8rem;
+      text-align: left;
+      vertical-align: top;
+    }
+    .text-box table thead th {
+      background: rgba(11,95,255,0.08);
+      color: #0a1638;
+      font-weight: 700;
+    }
+    .text-box table tbody tr:nth-child(even) {
+      background: rgba(11,95,255,0.03);
+    }
+
+    .author-note{
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:center;
+      align-items:center;
+      gap:0.375rem 0.625rem;
+      margin:2.5rem auto 1rem;
+      padding-top:1.25rem;
+      border-top:1px solid rgba(120,140,170,0.18);
+      color:var(--txt3);
+      font-size:.78rem;
+    }
+    .author-note .author-link{
+      color:var(--txt2);
+      font-weight:600;
+      text-decoration:none;
+    }
+    .author-note .author-link:hover{
+      color:var(--ac);
+      text-decoration:underline;
+      text-underline-offset:3px;
+    }
+    .author-note .author-role{
+      color:var(--txt3);
+    }
+
+    /* English-version toggle button (top corner) */
+    .lang-btn{
+      display: flex;
+      width: fit-content;
+      max-width: 100%;
+      align-items: center;
+      gap: 0.375rem;
+      margin: 0 0 1.125rem auto;
+      background: rgba(255,255,255,0.92);
+      border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 0.75rem;
+      padding: 0.375rem 0.75rem;
+      font-size: 0.8125rem;
+      font-weight: 700;
+      color: #0b5fff;
+      text-decoration: none;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      cursor: pointer;
+      transition: transform .18s ease, background .18s ease;
+    }
+    .lang-btn:hover{
+      background:#fff;
+      transform: scale(1.03);
+    }
+
+    @media (max-width:768px){
+      .caption p{font-size:1rem;}
+      .text-box{padding:1.25rem 1.125rem; font-size:.98rem;}
+      .text-box table{font-size:.9rem;}
+      .text-box table th,.text-box table td{padding:0.45rem 0.5rem;}
+    }
+  </style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://dentcast.org/dentai/en/dentai-24.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DentCast",
+          "item": "https://dentcast.org/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "DentAI",
+          "item": "https://dentcast.org/dentai/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "The BEWE Index: Scoring and Managing Tooth Wear in Practice",
+          "item": "https://dentcast.org/dentai/en/dentai-24.html"
+        }
+      ]
+    },
+    {
+      "@type": "Article",
+      "@id": "https://dentcast.org/dentai/en/dentai-24.html#article",
+      "headline": "The BEWE Index: Scoring and Managing Tooth Wear in Practice",
+      "description": "A complete guide to the Basic Erosive Wear Examination (BEWE): a four-level score across six sextants, a cumulative total up to 18, converting the number into a risk level and recall interval, common diagnostic mistakes, and use in children.",
+      "datePublished": "2026-06-23T10:00:00+03:30",
+      "dateModified": "2026-06-23T10:00:00+03:30",
+      "author": {
+        "@id": "https://dentcast.org/#person-foad"
+      },
+      "publisher": {
+        "@id": "https://dentcast.org/#org-dentcast"
+      },
+      "mainEntityOfPage": {
+        "@id": "https://dentcast.org/dentai/en/dentai-24.html"
+      },
+      "isBasedOn": [
+        {
+          "@type": "CreativeWork",
+          "url": "https://doi.org/10.1038/s41415-020-1246-y",
+          "name": "Recommendations and guidelines for dentists using the basic erosive wear examination index (BEWE)"
+        },
+        {
+          "@type": "CreativeWork",
+          "url": "https://doi.org/10.1007/s00784-007-0181-5",
+          "name": "Basic Erosive Wear Examination (BEWE): a new scoring system for scientific and clinical needs"
+        }
+      ],
+      "inLanguage": "en",
+      "articleSection": "Occlusion & Tooth Wear / Erosive Wear Assessment (BEWE)",
+      "keywords": [
+        "BEWE",
+        "basic erosive wear examination",
+        "erosive tooth wear",
+        "erosion",
+        "abrasion",
+        "attrition",
+        "tooth wear",
+        "sextant",
+        "BPE",
+        "cupping",
+        "risk assessment",
+        "intrinsic acid",
+        "extrinsic acid"
+      ],
+      "about": [
+        {
+          "@type": "Thing",
+          "name": "Tooth Wear"
+        },
+        {
+          "@type": "MedicalCondition",
+          "name": "Dental Erosion"
+        }
+      ],
+      "mentions": [
+        {
+          "@type": "Thing",
+          "name": "Abrasion"
+        },
+        {
+          "@type": "Thing",
+          "name": "Attrition"
+        },
+        {
+          "@type": "Thing",
+          "name": "Basic Periodontal Examination"
+        },
+        {
+          "@type": "Thing",
+          "name": "Cupping"
+        },
+        {
+          "@type": "Thing",
+          "name": "Non-Carious Cervical Lesion"
+        }
+      ],
+      "speakable": {
+        "@type": "SpeakableSpecification",
+        "cssSelector": [
+          "h2",
+          ".text-box"
+        ]
+      }
+    },
+    {
+      "@type": "Dentist",
+      "@id": "https://dentcast.org/#dentist-ahvaz",
+      "name": "Dr. Foad Shahabian",
+      "url": "https://dentcast.org/about.html",
+      "jobTitle": "Prosthodontist and Implant Specialist",
+      "medicalCode": "114707",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Ahvaz",
+        "addressRegion": "Khuzestan",
+        "addressCountry": "IR"
+      },
+      "sameAs": [
+        "https://www.instagram.com/dr.foad_shahabian/",
+        "https://t.me/dentcast",
+        "https://podcasts.apple.com/us/podcast/dentcast/id1502032364"
+      ]
+    }
+  ]
+}
+</script>
+  <meta name="theme-color" content="#0b5fff">
+</head>
+
+<body>
+<!-- ── TOP BAR ── -->
+<header class="dc-topbar">
+  <div class="dc-topbar-actions">
+    <a href="/" aria-label="DentCast Homepage" style="display:flex;align-items:center;margin-left:0.5rem;flex-shrink:0;">
+      <img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;">
+    </a>
+    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="Tools" aria-expanded="false"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
+    <button class="dc-topbar-btn" id="btn-radar-topbar" aria-label="Radar"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="m12 12 7-7"/><path d="M12 12h.01"/></svg></button>
+    <button class="dc-topbar-btn dcOpenSearch" aria-label="Search"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+  </div>
+  <div class="dc-topbar-brand">
+    <div class="dc-topbar-brand-name">DentCast</div>
+    <span class="dc-topbar-brand-sub">Dr. Foad Shahabian</span>
+  </div>
+</header>
+
+<!-- ── TOOLBAR DRAWER ── -->
+<div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">
+  <div class="dc-toolbar-drawer-inner">
+    <span class="dc-toolbar-drawer-label">Tools</span>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M10 18h4"/><path d="M12 7v6"/><path d="m9.5 10.5 2.5 2.5 2.5-2.5"/></svg></span><span class="dc-drawer-tool-txt">Install</span>
+    </button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-consult">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span class="dc-drawer-tool-txt">Contact</span>
+    </button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-about">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M12 3l1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></svg></span><span class="dc-drawer-tool-txt">About</span>
+    </button>
+  </div>
+</div>
+
+<!-- ── RADAR OVERLAY ── -->
+<div id="dcRadarOverlay" class="radar-overlay" aria-hidden="true">
+  <div class="radar-overlay-header">
+    <button id="dcCloseRadarOverlay" class="radar-close-btn">&times;</button>
+    <div class="radar-header-title">رادار دنت‌کست (جایگزین گوگل)</div>
+  </div>
+  <div class="radar-overlay-body">
+    <div class="radar-search-box">
+      <input type="text" id="dcRadarInput" placeholder="نام سایت، زمینه فعالیت یا کلمه کلیدی..." autocomplete="off">
+    </div>
+    <div id="dcRadarResults" class="radar-results">
+      <div class="radar-initial-msg">برای جستجو در بین سایت‌های دندانپزشکی، تایپ کنید...</div>
+    </div>
+  </div>
+</div>
+
+
+<main class="article-content-wrap">
+<h1><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M8.5 3.5c1.2 0 2 .6 3.5.6s2.3-.6 3.5-.6c2 0 3.5 1.6 3.5 4 0 2.8-1.5 4.4-2.2 7.4-.7 3-1.4 5.6-3 5.6-1.2 0-1.1-3.5-1.8-3.5s-.6 3.5-1.8 3.5c-1.6 0-2.3-2.6-3-5.6C6.5 11.9 5 10.3 5 7.5c0-2.4 1.5-4 3.5-4z"/></svg> DentAI – The BEWE Index: Scoring and Managing Tooth Wear in Practice</h1>
+
+<a class="lang-btn" href="../dentai-24.html" rel="noopener">
+  <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20"/><path d="M12 2a15 15 0 0 0 0 20"/></svg> فارسی
+</a>
+
+<div class="caption">
+  <p>
+The Basic Erosive Wear Examination (BEWE) is a simple tool for screening tooth wear that condenses its severity into a single number, and that same number determines the patient's risk level and recall interval. Introduced in 2008, it has become a standard tool for the general dental practitioner. This article shows what the BEWE is, how it is scored, and what management decision the final number gives you.
+  </p>
+</div>
+
+<div class="text-box">
+
+<h2>What Is the BEWE Index?</h2>
+
+<p>
+Before the BEWE, there were many indices for recording tooth wear that were complex and whose results were not comparable with one another. At chairside, the dentist usually relied on subjective terms such as mild, moderate, and severe, whose interpretation varied between clinicians. The BEWE was created to solve exactly this problem: a simple, repeatable, and transferable scoring system that is useful in practice for screening while also serving as a shared scientific unit.
+</p>
+
+<p>
+The core idea is that within each sextant (each of the six segments into which the dental arches are divided) only the most severely affected surface is scored, and the sum of the six scores reflects the overall severity.
+</p>
+
+<h2>What Is the BPE and How Does It Relate to the BEWE?</h2>
+
+<p>
+The BPE (Basic Periodontal Examination) is a simple periodontal screening examination in which gingival status and pocket depth are assessed across six sextants with a dedicated probe, and only the worst score of each sextant is recorded. The BEWE was designed with exactly this same logic and on the same structure.
+</p>
+
+<p>
+The practical importance of this similarity is that, because the BEWE and the BPE share a similar method, scoring system, and recording grid, you can perform both at the same time, in a single visit. This costs you time but ensures that the early signs of tooth wear are not missed. The recommendation is that the BEWE be performed for every new patient.
+</p>
+
+<h2>Erosion, Abrasion, and Attrition: What Does the BEWE Measure?</h2>
+
+<p>
+The index has the word erosion in its name because, when it was introduced, the prevailing view was that erosion was the most important agent of tooth wear and that severe wear rarely occurs without an underlying acidic cause. These acids fall into two categories: intrinsic acid that comes from the body itself (such as gastric reflux or frequent vomiting) and extrinsic acid that comes from outside (such as acidic drinks, citrus fruits, and certain medications).
+</p>
+
+<p>
+But the key point for working with the index is this: the BEWE records the change in the tooth surface regardless of its cause. That is, it is not specific to erosion and applies to all causes of tooth wear, including abrasion (mechanical wear such as from incorrect brushing) and attrition (tooth-on-tooth wear).
+</p>
+
+<h2>The BEWE Scoring System</h2>
+
+<p>
+Each surface is scored on a four-level scale:
+</p>
+
+<table>
+  <thead>
+    <tr><th>Score</th><th>What you see</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>0</td><td>No tooth wear</td></tr>
+    <tr><td>1</td><td>Initial loss of surface texture: reduced brightness, an opaque surface, or a frosted-glass appearance</td></tr>
+    <tr><td>2</td><td>Distinct defect, hard-tissue loss of less than 50% of the surface area</td></tr>
+    <tr><td>3</td><td>Hard-tissue loss of more than 50% of the surface area</td></tr>
+  </tbody>
+</table>
+
+<p>
+In scores 2 and 3 dentin is often involved, but seeing dentin is not a definite prerequisite for these scores. This is a deliberate feature of the index: the absolute distinction between "loss of enamel" and "exposure of dentin" was removed in order to avoid diagnostic uncertainty, especially in the cervical region.
+</p>
+
+<h2>Step-by-Step Examination Method</h2>
+
+<p>
+1. Preferably clean the teeth before the examination and work under good light.
+</p>
+
+<p>
+2. In each sextant, examine the buccal, occlusal or incisal, and lingual or palatal surfaces.
+</p>
+
+<p>
+3. Score only the worst surface of each sextant. The sextant layout is the same as the BPE layout:
+</p>
+
+<table>
+  <thead>
+    <tr><th>Sextant</th><th>Teeth</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>1</td><td>17 to 14</td></tr>
+    <tr><td>2</td><td>13 to 23</td></tr>
+    <tr><td>3</td><td>24 to 27</td></tr>
+    <tr><td>4</td><td>37 to 34</td></tr>
+    <tr><td>5</td><td>33 to 43</td></tr>
+    <tr><td>6</td><td>44 to 47</td></tr>
+  </tbody>
+</table>
+
+<p>
+4. Add up the six highest scores. The total reaches a maximum of 18, and that number is the basis for management.
+</p>
+
+<p>
+A few practical rules that come up during the examination:
+</p>
+
+<ul>
+  <li>When in doubt between two scores, record the lower number.</li>
+  <li>A restoration covering more than 50% of the surface is not scored; use another surface of the same sextant.</li>
+  <li>If only one tooth remains in a sextant, add its score to the adjacent sextant.</li>
+  <li>The third molar is usually not counted, unless it has replaced the second molar.</li>
+  <li>In a rotated tooth, the surface facing the cheek counts as buccal, and rotation has no effect on the score.</li>
+</ul>
+
+<h2>Surface-by-Surface Scoring</h2>
+
+<p>
+The general criterion is the same 0-to-3 scale, but a few region-specific points help you score more precisely.
+</p>
+
+<p>
+<strong>Occlusal surfaces of molars and premolars:</strong> the first signs are rounding of the cusps and the formation of a cup-shaped concavity on the cusp tip, called cupping. If the diameter of the cupping is less than or equal to 0.5 mm the score is 1, and if it is greater than 0.5 mm but overall less than 50% of the surface the score is 2. You can use the WHO probe to gauge the diameter.
+</p>
+
+<p>
+<strong>Buccal, lingual, and palatal surfaces of anterior teeth:</strong> here, take the clinical crown height as the reference, i.e. the distance from the gingival margin to the incisal edge. If the loss of crown height from the buccal aspect is less than 50% the score is 2, and if it is greater the score is 3.
+</p>
+
+<p>
+<strong>Incisal edges:</strong> assessing wear on the incisal edge is harder, but the same criteria apply, even if the result is a higher score for that sextant.
+</p>
+
+<p>
+A note about adults: in patients over 20, a tooth completely free of wear is rare. A score of 1 is considered almost normal, and the clinically important distinction is between scores 2 and 3.
+</p>
+
+<h2>Risk and Management Table</h2>
+
+<p>
+Once you convert the cumulative score into a risk level, the index tells you what to do and at what interval to recall the patient.
+</p>
+
+<table>
+  <thead>
+    <tr><th>Cumulative score</th><th>Risk</th><th>Management</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>≤ 2</td><td>None</td><td>Routine observation. Recall every 3 years</td></tr>
+    <tr><td>3 to 8</td><td>Low</td><td>Assess and advise on oral hygiene and diet, routine observation. Recall every 2 years</td></tr>
+    <tr><td>9 to 13</td><td>Medium</td><td>Assess hygiene and diet, identify and remove the main cause, fluoride measures to increase surface resistance; preferably do not restore and monitor with study casts or photographs. Recall every 6 to 12 months</td></tr>
+    <tr><td>≥ 14</td><td>High</td><td>As for the medium level, and in cases of severe progression special care that may include restoration. Recall every 6 to 12 months</td></tr>
+  </tbody>
+</table>
+
+<p>
+For patients exposed to intrinsic or extrinsic acid, set the recall interval at 6 months.
+</p>
+
+<p>
+Worth knowing: the authors of the original paper explicitly stated that these cut-off values were determined on the basis of the experience and studies of one of the authors, are a proposal, and should be revised over time.
+</p>
+
+<h2>Common Diagnostic Mistakes</h2>
+
+<p>
+<strong>Do not mistake gingival recession for wear.</strong> The usual concavity beside the gingival margin is not wear; it is the tooth's normal anatomy. When in doubt, assess tactilely with a round-tipped (WHO) probe and compare with the adjacent tooth.
+</p>
+
+<p>
+<strong>Do not mistake cervical caries for erosion.</strong> Root caries is brown-orange with a soft, friable surface; non-carious wear is the same color as the tooth tissue and its surface is hard. Plaque accumulation also usually accompanies caries. If you see a carious lesion together with wear, record the BEWE score of that surface regardless of the caries; but if you are unsure whether it is caries or erosion, treat it as caries and record BEWE 0.
+</p>
+
+<h2>The BEWE in Children</h2>
+
+<p>
+The same protocol applies to children and primary teeth, with the same grading, dividing the sextants into anterior and posterior. Because primary teeth are more susceptible to wear, the score will usually be higher. Risk assessment must take this into account, and in high-risk cases the recall interval is reduced to 6 to 12 months.
+</p>
+
+<h2>Limitations of the BEWE</h2>
+
+<ul>
+  <li>The BEWE was not designed to measure the progression of wear over time. It is a cross-sectional assessment and an adjunct to clinical judgment, not a before-and-after comparison tool.</li>
+  <li>The BEWE does not guide the choice of prosthetic or restorative technique, because at that level of decision-making the variation between clinicians is large.</li>
+  <li>The BEWE is a screening index; a more detailed version is needed for closer examination.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+
+<p><strong>Is the BEWE only for erosion?</strong><br>
+No. The index records the change in the surface regardless of cause and applies to abrasion and attrition as well.
+</p>
+
+<p><strong>What is the maximum possible score?</strong><br>
+18, the sum of the highest score of the six sextants.
+</p>
+
+<p><strong>How often should the BEWE be repeated?</strong><br>
+Depending on risk, from every 3 years at None risk to every 6 months in patients exposed to acid.
+</p>
+
+<p><strong>What if a restoration covers most of the surface?</strong><br>
+If a restoration covers more than 50% of the surface, that surface is not scored and another surface of the same sextant must be used.
+</p>
+
+<p><strong>Does the BEWE measure the progression of wear?</strong><br>
+No. It is a single assessment and is not accurate enough for comparison over time.
+</p>
+
+
+<div style="
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.625rem;
+  margin-top: 1.75rem;
+">
+  <div style="
+    background: rgba(255, 220, 80, 0.07);
+    border: 1px solid rgba(255, 220, 80, 0.18);
+    border-radius: 0.5625rem;
+    padding: 0.5rem 0.875rem;
+    text-align: center;
+    font-size: .8rem;
+    color: #0a1638;
+    line-height: 1.55;
+    box-shadow: 0 3px 14px rgba(0,0,0,0.25);
+    backdrop-filter: blur(5px);
+  ">
+    <p style="margin: 0; font-weight: 600; color: #0a1638;">
+      "Recommendations and guidelines for dentists using the basic erosive wear examination index (BEWE)"
+    </p>
+    <p style="margin: 0.125rem 0 0 0;">
+      <a href="https://doi.org/10.1038/s41415-020-1246-y" target="_blank" rel="noopener noreferrer">Aránguiz V</a>, Lara JS, Marró ML, O’Toole S, Ramírez V, Bartlett D — <em>British Dental Journal. 2020;228(3):153-157</em>
+    </p>
+    <p style="margin: 0;">DOI: 10.1038/s41415-020-1246-y</p>
+  </div>
+  <div style="
+    background: rgba(255, 220, 80, 0.07);
+    border: 1px solid rgba(255, 220, 80, 0.18);
+    border-radius: 0.5625rem;
+    padding: 0.5rem 0.875rem;
+    text-align: center;
+    font-size: .8rem;
+    color: #0a1638;
+    line-height: 1.55;
+    box-shadow: 0 3px 14px rgba(0,0,0,0.25);
+    backdrop-filter: blur(5px);
+  ">
+    <p style="margin: 0; font-weight: 600; color: #0a1638;">
+      "Basic Erosive Wear Examination (BEWE): a new scoring system for scientific and clinical needs"
+    </p>
+    <p style="margin: 0.125rem 0 0 0;">
+      <a href="https://doi.org/10.1007/s00784-007-0181-5" target="_blank" rel="noopener noreferrer">Bartlett D</a>, Ganss C, Lussi A — <em>Clinical Oral Investigations. 2008;12(Suppl 1):S65-S68</em>
+    </p>
+    <p style="margin: 0;">DOI: 10.1007/s00784-007-0181-5</p>
+  </div>
+</div>
+
+</div>
+
+<div class="author-note">
+  <a href="/about.html" class="author-link">Dr. Foad Shahabian</a>
+  <span class="author-role">Prosthodontist &amp; Implant Specialist</span>
+</div>
+
+<footer class="dc-site-footer" style="text-align:center; margin-top:2.8125rem; color:#9aa1b3; font-size:.9rem; line-height:1.8;">
+
+  <div style="margin-bottom:1.375rem;">
+    <a href="/"
+       style="
+         display:inline-block;
+         background:rgba(11,95,255,0.18);
+         color:var(--link);
+         border:1.8px solid rgba(var(--link-rgb),0.45);
+         border-radius:0.75rem;
+         padding:0.75rem 2.625rem;
+         font-weight:700;
+         text-decoration:none;
+         font-size:1rem;
+         box-shadow:0 0 14px rgba(11,95,255,0.15);
+         transition:all .25s ease;">
+      <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg> Back to DentCast
+    </a>
+  </div>
+
+  <div style="margin-top:0.375rem;">
+    © 2025 DentCast
+  </div>
+
+</footer>
+
+</main>
+<div class="dc-global-filter-box" id="dcGlobalBox">
+  <button class="dc-close-results"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+  <h3 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h3>
+  <input id="dcSearch" class="dc-search-input" placeholder="جستجو در همهٔ بخش‌های دنت‌کست…">
+  <div class="dc-filter-list">
+    <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
+    <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
+    <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
+    <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
+    <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
+    <button class="dc-filter-btn active" data-type="promptologist">پرامپتولوژیست</button>
+    <button class="dc-filter-btn active" data-type="meta">metanote</button>
+    <button class="dc-filter-btn active" data-type="chairside">chairside</button>
+    <button class="dc-filter-btn active" data-type="sharehub">Share Hub</button>
+  </div>
+  <div class="dc-results-box" id="dcResults"></div>
+</div>
+<script src="/global-search.js?v=6" defer></script>
+<script src="/dc-nav.js?v=27" defer></script>
+</body>
+</html>

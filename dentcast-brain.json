@@ -10774,5 +10774,51 @@
       "secondary": [],
       "subtopic": "tmd-orofacial-pain"
     }
+  },
+  {
+    "type": "dentai",
+    "id": "dentai-24",
+    "title": "شاخص BEWE: امتیازدهی و مدیریت ساییدگی دندان در مطب",
+    "caption": "شاخص BEWE (Basic Erosive Wear Examination) یک ابزار ساده‌ی غربالگری ساییدگی دندان است که در سال ۲۰۰۸ معرفی شد: در هر سکستانت فقط بدترین سطح با مقیاس چهارسطحی (۰ تا ۳) امتیاز می‌گیرد، مجموع شش امتیاز تا ۱۸ می‌رسد و همان عدد به سطح ریسک و فاصله‌ی پیگیری ترجمه می‌شود. BEWE روی همان ساختار BPE سوار است، تغییر سطح را بدون توجه به علت (erosion، abrasion، attrition) ثبت می‌کند، و اشتباهات رایج تشخیصی (رسس لثه، پوسیدگی سرویکال) و کاربرد در کودکان را هم پوشش می‌دهد.",
+    "hashtags": [
+      "#BEWE",
+      "#erosive tooth wear",
+      "#tooth wear",
+      "#erosion",
+      "#abrasion",
+      "#attrition",
+      "#BPE",
+      "#sextant",
+      "#cupping",
+      "#risk assessment",
+      "#ساییدگی_دندان",
+      "#فرسایش_دندان",
+      "#غربالگری_ساییدگی",
+      "#اروژن"
+    ],
+    "keywords": [
+      "BEWE",
+      "basic erosive wear examination",
+      "erosive tooth wear",
+      "tooth wear",
+      "erosion",
+      "abrasion",
+      "attrition",
+      "BPE",
+      "sextant",
+      "cupping",
+      "risk assessment",
+      "intrinsic acid",
+      "extrinsic acid",
+      "ساییدگی دندان",
+      "فرسایش دندان",
+      "غربالگری ساییدگی"
+    ],
+    "page_url": "/dentai/dentai-24.html",
+    "pillar": {
+      "primary": "occlusion",
+      "secondary": [],
+      "subtopic": "tooth-wear-dahl"
+    }
   }
 ]
