@@ -1606,6 +1606,105 @@
         "secondary": [],
         "subtopic": "restoration-design"
       }
+    },
+    {
+      "slug": "bruxism",
+      "title": "Bruxism",
+      "fa_title": "دندان قروچه",
+      "synonyms": [
+        "براکسیسم",
+        "دندان‌قروچه",
+        "bruxism",
+        "کلنچینگ",
+        "گرایندینگ"
+      ],
+      "url": "/glossary/bruxism.html",
+      "pillar": {
+        "primary": "occlusion",
+        "secondary": [],
+        "subtopic": "tmd-orofacial-pain"
+      }
+    },
+    {
+      "slug": "tooth-wear",
+      "title": "Tooth Wear",
+      "fa_title": "سایش دندان",
+      "synonyms": [
+        "سایش دندان",
+        "Tooth Wear",
+        "اتریشن",
+        "ابریژن",
+        "اروژن",
+        "ابفرکشن"
+      ],
+      "url": "/glossary/tooth-wear.html",
+      "pillar": {
+        "primary": "occlusion",
+        "secondary": [],
+        "subtopic": "tooth-wear-dahl"
+      }
+    },
+    {
+      "slug": "bewe",
+      "title": "BEWE",
+      "fa_title": "شاخص پایه سایش فرسایشی",
+      "synonyms": [
+        "شاخص BEWE",
+        "Basic Erosive Wear Examination",
+        "شاخص پایه سایش فرسایشی"
+      ],
+      "url": "/glossary/bewe.html",
+      "pillar": {
+        "primary": "occlusion",
+        "secondary": [],
+        "subtopic": "tooth-wear-dahl"
+      }
+    },
+    {
+      "slug": "canine-guidance",
+      "title": "Canine Guidance",
+      "fa_title": "گاید کانین",
+      "synonyms": [
+        "گاید کانین",
+        "Canine-Protected Occlusion",
+        "راهنمای کانینی"
+      ],
+      "url": "/glossary/canine-guidance.html",
+      "pillar": {
+        "primary": "occlusion",
+        "secondary": [],
+        "subtopic": "occlusal-scheme-guidance"
+      }
+    },
+    {
+      "slug": "group-function",
+      "title": "Group Function",
+      "fa_title": "گروپ فانکشن",
+      "synonyms": [
+        "گروپ فانکشن",
+        "Group Function Occlusion"
+      ],
+      "url": "/glossary/group-function.html",
+      "pillar": {
+        "primary": "occlusion",
+        "secondary": [],
+        "subtopic": "occlusal-scheme-guidance"
+      }
+    },
+    {
+      "slug": "toc",
+      "title": "TOC",
+      "fa_title": "همگرایی کلی اکلوزالی",
+      "synonyms": [
+        "همگرایی کلی اکلوزالی",
+        "Total Occlusal Convergence"
+      ],
+      "url": "/glossary/toc.html",
+      "pillar": {
+        "primary": "fixed-pros",
+        "secondary": [],
+        "subtopic": "preparation"
+      }
     }
   ]
 }
