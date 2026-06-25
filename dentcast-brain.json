@@ -10863,5 +10863,59 @@
       "secondary": [],
       "subtopic": null
     }
+  },
+  {
+    "type": "dentai",
+    "id": "dentai-25",
+    "title": "بقای ترمیم‌های Partial Coverage: انتخابِ ماده چقدر مهم است؟",
+    "caption": "متاآنالیزِ Morimoto و همکاران (۲۰۱۶) روی حدود ۱۴ مطالعه، بقای onlay/overlay سرامیکی را حدود ۹۵٪ در پنج سال و ۹۱٪ در ده سال گزارش می‌کند؛ نوع سرامیک (feldspathic porcelain در برابر glass-ceramic) بقا را تغییر نمی‌دهد، اما vitality دندان قوی‌ترین عامل است (کاهش حدود ۸۰٪ ریسکِ شکست در دندان‌های vital در برابر endodontically treated). مرورِ تازه‌ترِ Prott و همکاران (۲۰۲۵) فقط RCT ها را وارد کرده تا موادِ امروزی را head-to-head مقایسه کند — resin matrix ceramic (RMC) در برابر lithium disilicate (LDS) و leucite-reinforced glass ceramic — و باز هم تفاوتِ معناداری بین مواد پیدا نکرد؛ آنچه واقعاً بقا را تعیین می‌کند پروتکلِ bonding، بافتِ باقی‌مانده‌ی دندان، و vitality است، نه هویتِ ماده.",
+    "hashtags": [
+      "#onlay",
+      "#overlay",
+      "#partial_coverage",
+      "#ceramic",
+      "#feldspathic_porcelain",
+      "#glass_ceramic",
+      "#lithium_disilicate",
+      "#resin_matrix_ceramic",
+      "#RMC",
+      "#bonding_protocol",
+      "#pulp_vitality",
+      "#آنله",
+      "#اورلی",
+      "#سرامیک_دندانی",
+      "#بقای_ترمیم",
+      "#پروتکل_باند"
+    ],
+    "keywords": [
+      "partial coverage restoration",
+      "onlay",
+      "overlay",
+      "partial crown",
+      "feldspathic porcelain",
+      "glass-ceramic",
+      "lithium disilicate",
+      "resin matrix ceramic",
+      "RMC",
+      "LDS",
+      "survival rate",
+      "pulp vitality",
+      "endodontically treated tooth",
+      "bond strength",
+      "bonding protocol",
+      "sandblasting",
+      "بقای ترمیم",
+      "ترمیم پارشیال",
+      "آنله",
+      "اورلی",
+      "سرامیک دندانی",
+      "لیتیوم دی‌سیلیکات"
+    ],
+    "page_url": "/dentai/dentai-25.html",
+    "pillar": {
+      "primary": "fixed-pros",
+      "secondary": [],
+      "subtopic": "crowns-onlays"
+    }
   }
 ]
