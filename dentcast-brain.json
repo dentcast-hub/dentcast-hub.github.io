@@ -10919,6 +10919,7 @@
     }
   },
   {
+    "type": "dentcast",
     "episode": "159.1",
     "title": "دنتوپدیا — بقای ترمیم‌های Partial Coverage: انتخابِ ماده چقدر مهم است؟",
     "caption": "آنله، اورلی یا پارشیال کراون به‌جای کرون کامل؛ این ترمیم‌ها چقدر دوام می‌آورند و انتخابِ سرامیک چقدر در نتیجه فرق می‌کند؟",
@@ -10935,6 +10936,7 @@
       "lithium disilicate",
       "بقای ترمیم"
     ],
+    "audio_url": "https://episodes.s3.ir-thr-at1.arvanstorage.ir/dentcast159.1.m4a?versionId=",
     "page_url": "/episodes/episode-159-1.html",
     "pillar": {
       "primary": "fixed-pros",
