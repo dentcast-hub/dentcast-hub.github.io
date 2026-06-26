@@ -3133,6 +3133,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://dentcast.org/metanotes/en/meta-14.html</loc>
+    <lastmod>2025-01-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://dentcast.org/metanotes/en/meta-2.html</loc>
     <lastmod>2026-02-27</lastmod>
     <changefreq>monthly</changefreq>
@@ -3207,6 +3213,12 @@
   <url>
     <loc>https://dentcast.org/metanotes/meta-13.html</loc>
     <lastmod>2026-06-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://dentcast.org/metanotes/meta-14.html</loc>
+    <lastmod>2025-01-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
