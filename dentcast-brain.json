@@ -11010,5 +11010,55 @@
       "secondary": [],
       "subtopic": null
     }
+  },
+  {
+    "type": "dentai",
+    "id": "dentai-26",
+    "title": "سایش دندان مقابل در برابر روکش‌های سرامیکی: زیرکونیا واقعاً مقصر است؟",
+    "caption": "دو متاآنالیز — Solá-Ruíz و همکاران (۲۰۲۰، JCM) روی سایشِ تک‌ماده‌ایِ زیرکونیای مونولیتیک، و Rosa و همکاران (۲۰۲۶، Dentistry Journal) با مقایسه‌ی سه‌جانبه‌ی زیرکونیا، لیتیوم دی‌سیلیکات و متال-سرامیک با ونیرِ فلدسپاتیک — نشان می‌دهند باورِ «زیرکونیا چون سخت‌تر است پس ساینده‌تر است» به این سادگی درست نیست: زیرکونیای پالیش‌شده خودش هم به‌اندازه‌ی قابل‌توجهی ساییده می‌شود، فلدسپاتیک با finish خوب در عمل کم‌ساینده‌ترین گزینه از آب درمی‌آید، و کیفیتِ پالیشِ مکانیکی در برابر glaze نقشی به‌مراتب مهم‌تر از خودِ جنسِ ماده در سایشِ دندانِ مقابل دارد.",
+    "hashtags": [
+      "#زیرکونیا",
+      "#سایش_دندانی",
+      "#لیتیوم_دی_سیلیکات",
+      "#متال_سرامیک",
+      "#فلدسپاتیک",
+      "#monolithic_zirconia",
+      "#tooth_wear",
+      "#lithium_disilicate",
+      "#feldspathic_porcelain",
+      "#antagonist_wear",
+      "#polish_vs_glaze",
+      "#متاآنالیز",
+      "#اکلوژن",
+      "#bruxism",
+      "#براکسیسم",
+      "#DentAI"
+    ],
+    "keywords": [
+      "antagonist tooth wear",
+      "monolithic zirconia",
+      "lithium disilicate",
+      "metal-ceramic",
+      "feldspathic porcelain",
+      "polish versus glaze",
+      "enamel wear",
+      "systematic review",
+      "meta-analysis",
+      "bruxism",
+      "سایش دندان مقابل",
+      "زیرکونیای مونولیتیک",
+      "لیتیوم دی‌سیلیکات",
+      "متال-سرامیک",
+      "پرسلن فلدسپاتیک",
+      "پالیش در برابر گلیز",
+      "سایش مینا",
+      "براکسیسم"
+    ],
+    "page_url": "/dentai/dentai-26.html",
+    "pillar": {
+      "primary": "occlusion",
+      "secondary": [],
+      "subtopic": "tooth-wear-dahl"
+    }
   }
 ]

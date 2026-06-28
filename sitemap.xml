@@ -361,6 +361,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://dentcast.org/dentai/dentai-26.html</loc>
+    <lastmod>2026-06-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://dentcast.org/dentai/dentai-3.html</loc>
     <lastmod>2025-11-08</lastmod>
     <changefreq>monthly</changefreq>
@@ -453,6 +459,12 @@
   <url>
     <loc>https://dentcast.org/dentai/en/dentai-25.html</loc>
     <lastmod>2026-06-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://dentcast.org/dentai/en/dentai-26.html</loc>
+    <lastmod>2026-06-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
