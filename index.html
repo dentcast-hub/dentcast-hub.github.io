@@ -3450,9 +3450,9 @@ a.dc-list-card--pillar {
           </div>
         </div>
         <ul class="dc-pulse-list">
+          <li>فصلِ سومِ <a href="/dentai/promptologist/prompt3-1.html">پرامپتولوژیست</a> درباره‌ی قاب‌بندیِ پرامپت و راستی‌آزماییِ هم‌زمان با مدل منتشر شد · ۸ تیر</li>
           <li><a href="/dentai/dentai-26.html">مقاله‌ای</a> با موضوع سایش دندان مقابل در برابر روکش‌های سرامیکی: زیرکونیا واقعاً مقصر است؟ در dentAI منتشر شد · ۷ تیر</li>
           <li>فصلِ دومِ <a href="/dentai/promptologist/prompt2-1.html">پرامپتولوژیست</a> درباره‌ی کانفابیولیشن و اطمینانِ کاذبِ مدل منتشر شد · ۶ تیر</li>
-          <li><a href="/metanotes/meta-14.html">یادداشتی</a> با موضوع توهم و واقعیتِ بقا در دندانپزشکی ادهزیو در MetaNote منتشر شد · ۵ تیر</li>
         </ul>
         <div class="dc-pulse-ad">
           <a href="https://deventapp.ir" target="_blank" rel="sponsored noopener">
@@ -3489,9 +3489,9 @@ a.dc-list-card--pillar {
           <p class="dc-rail-title">سایش دندان مقابل در برابر روکش‌های سرامیکی: زیرکونیا واقعاً مقصر است؟</p>
           <span class="dc-rail-meta">تازه‌ترین مطلب</span>
         </a>
-        <a class="dc-rail-card" data-cat="promptologist" href="/dentai/promptologist/prompt2-1.html">
+        <a class="dc-rail-card" data-cat="promptologist" href="/dentai/promptologist/prompt3-1.html">
           <span class="dc-type-chip t-ai">Promptologist</span>
-          <p class="dc-rail-title">پرامپتولوژیست — مدل چطور فکر می‌کند و چرا گاهی مطمئن دروغ می‌گوید</p>
+          <p class="dc-rail-title">پرامپتولوژیست — اولین گفت‌وگو با مدل</p>
           <span class="dc-rail-meta">تازه‌ترین مطلب</span>
         </a>
         <a class="dc-rail-card" data-cat="sharehub" href="/sharehub/share-9.html">
@@ -3616,7 +3616,7 @@ a.dc-list-card--pillar {
           <span class="k">ساعت محتوای صوتی</span>
         </div>
         <div class="hero-stat" role="listitem">
-          <span class="v"><!-- COUNTER:CONTENT:START -->۵۳۰<!-- COUNTER:CONTENT:END --></span>
+          <span class="v"><!-- COUNTER:CONTENT:START -->۵۳۱<!-- COUNTER:CONTENT:END --></span>
           <span class="k">مطلب و مدخل آموزشی</span>
         </div>
       </div>
@@ -4273,7 +4273,7 @@ scrollBody.addEventListener('touchend',e=>{
     if(p) p.textContent=title;
     a.href=url;
   }
-  fetch('/dentcast-brain.json?v=3cdf3c5024',{cache:'no-store'}).then(function(r){return r.json();}).then(function(arr){
+  fetch('/dentcast-brain.json?v=3ff19340ea',{cache:'no-store'}).then(function(r){return r.json();}).then(function(arr){
     if(!Array.isArray(arr)) return;
     var latest={}, pool=[];
     arr.forEach(function(e){
@@ -4569,7 +4569,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 <script>
 /* ── LAST 30 UPDATES ── */
 (function(){
-  const FEED_URL='/dentcast-brain.json?v=3cdf3c5024';
+  const FEED_URL='/dentcast-brain.json?v=3ff19340ea';
   const el=document.getElementById('dcLast3Updates');
   if(!el) return;
   function extractArray(json){if(Array.isArray(json))return json;const cands=[json?.items,json?.data,json?.entries,json?.feed].filter(Boolean);for(const c of cands)if(Array.isArray(c))return c;for(const k in(json||{})){const v=json[k];if(Array.isArray(v))return v;if(v&&typeof v==='object'&&Array.isArray(v.items))return v.items;}return[];}
@@ -4825,7 +4825,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 
   function getBrain(){
     if(brainCache) return Promise.resolve(brainCache);
-    return fetch('/dentcast-brain.json?v=3cdf3c5024', {cache:'no-store'})
+    return fetch('/dentcast-brain.json?v=3ff19340ea', {cache:'no-store'})
       .then(r => r.ok ? r.json() : [])
       .then(d => { brainCache = Array.isArray(d) ? d : []; return brainCache; })
       .catch(() => { brainCache = []; return []; });
