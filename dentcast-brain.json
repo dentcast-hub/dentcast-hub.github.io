@@ -11098,5 +11098,35 @@
       "secondary": [],
       "subtopic": null
     }
+  },
+  {
+    "type": "notecast",
+    "id": "36",
+    "title": "چالش‌های باند به عاج ریشه در درمان اندو",
+    "caption": "خلاصه‌ای از دنت‌کست درباره چالش‌های باند به عاج ریشه؛ تفاوت ساختاری عاج ریشه و تاج، چالش C-فاکتور و لایه‌های اسمیر در کانال، تاثیر شوینده‌ها و داروهای اندو روی استحکام باند، و انتخاب سیستم باندینگ مناسب (نسل ۴ و سلف‌اچ دو-استپ) برای کانال ریشه.",
+    "hashtags": [
+      "#RootDentinBonding",
+      "#باند_به_عاج_ریشه",
+      "#پست_و_کور",
+      "#اسمیر_لایر",
+      "#اندودنتیکس"
+    ],
+    "keywords": [
+      "root dentin bonding",
+      "C-factor",
+      "smear layer",
+      "chlorhexidine",
+      "NaOCl",
+      "EDTA",
+      "self-etch",
+      "dual-cure resin cement",
+      "bonding generations"
+    ],
+    "url": "/notecast/episode-36.html",
+    "pillar": {
+      "primary": "fixed-pros",
+      "secondary": [],
+      "subtopic": "post-and-core"
+    }
   }
 ]
