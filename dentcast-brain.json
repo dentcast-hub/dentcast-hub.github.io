@@ -11128,5 +11128,37 @@
       "secondary": [],
       "subtopic": "post-and-core"
     }
+  },
+  {
+    "type": "chairside",
+    "id": "chairside-20",
+    "title": "وقتی مجهول‌بودنِ یک پایه، دیگر قابل‌قبول نیست",
+    "caption": "روایتِ یک کیسِ بالینی: بیمارِ مصرف‌کننده‌ی بیس‌فسفونات با سابقه‌ی رادیوتراپیِ سینه، با منعِ ایمپلنتِ فکِ پایین مراجعه کرد و درمان به سمتِ پارسیلِ definitive رفت. این یادداشت نشان می‌دهد چرا روکشِ پایه‌ای که حتی رادیوگرافیک ایده‌آل به‌نظر می‌رسد هم باید باز شود — نه به‌خاطرِ مکانیکِ پارسیل، بلکه چون در بیمارِ درمعرضِ MRONJ، فیل‌شدنِ پایه یعنی کشیدنِ دندان، و کشیدن دقیقاً محرکِ اصلیِ استئونکروزِ فک است.",
+    "hashtags": [
+      "#بیس_فسفونات",
+      "#استئونکروز_فک",
+      "#پارسیل_دفینیتیو",
+      "#ارزیابی_پایه",
+      "#پست_و_کور",
+      "#طرح_درمان",
+      "#کیس_بالینی",
+      "#MRONJ"
+    ],
+    "keywords": [
+      "bisphosphonate implant contraindication",
+      "MRONJ extraction risk trigger",
+      "definitive removable partial denture planning",
+      "RPD abutment crown evaluation",
+      "periapical radiograph abutment assessment",
+      "post core ferrule margin evaluation",
+      "treatment planning unknown abutment risk",
+      "osteonecrosis of the jaw prevention dentistry"
+    ],
+    "page_url": "/chairside/chairside-20.html",
+    "pillar": {
+      "primary": "treatment-planning",
+      "secondary": [],
+      "subtopic": "replacing-missing-teeth"
+    }
   }
 ]
