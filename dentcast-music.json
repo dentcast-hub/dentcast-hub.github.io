@@ -49,6 +49,13 @@
       "artist": "Leonard Cohen",
       "description": "بعضی آدم‌ها با زخمی که به ما می‌زنند، مسیر زندگی‌مان را عوض می‌کنند. سال‌ها بعد ممکن است بفهمیم که اگر آن درد، آن خیانت یا آن برخورد اتفاق نمی‌افتاد، آدم دیگری می‌شدیم.",
       "src": "https://ghofli.s3.ir-thr-at1.arvanstorage.ir/7.mp3?versionId="
+    },
+    {
+      "id": "track-008",
+      "title": "How to Disappear Completely",
+      "artist": "Radiohead",
+      "description": "گاهی تنها راه دوام آوردن این است که برای چند دقیقه آرزو کنی از همه‌چیز محو شوی؛ نه از روی نفرت، بلکه از شدت خستگی.",
+      "src": "https://ghofli.s3.ir-thr-at1.arvanstorage.ir/8.mp3?versionId="
     }
   ]
 }
