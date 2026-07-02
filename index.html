@@ -3450,9 +3450,9 @@ a.dc-list-card--pillar {
           </div>
         </div>
         <ul class="dc-pulse-list">
+          <li>یک <a href="/insight/insight-51.html">اینسایت بالینی</a> با نکاتی در مورد درمانِ دیجیتالیِ بیمارِ کاملاً بی‌دندان و تأییدِ VD با پترن رزین منتشر شد · ۱۱ تیر</li>
           <li><a href="/dentai/promptologist/prompt4-1.html">فصلِ چهار، قسمتِ اولِ</a> پرامپتولوژیست، که شروعِ آموزشِ پرامپت‌دادن است، منتشر شد · ۱۰ تیر</li>
           <li>یک <a href="/chairside/chairside-20.html">روایت ویزیت</a> در مورد نحوه‌ی طرح‌ریزی درمان بیمار نیمه‌بی‌دندان منتشر شد · ۹ تیر</li>
-          <li>دنتکست ۳۶ با موضوع <a href="/notecast/episode-36.html">مشکلات باند به دنتین ریشه</a> خلاصه شد · ۸ تیر</li>
         </ul>
         <div class="dc-pulse-ad">
           <a href="https://deventapp.ir" target="_blank" rel="sponsored noopener">
@@ -3464,9 +3464,9 @@ a.dc-list-card--pillar {
 
       <div class="dc-home-sec"><h2 class="dc-home-sec-label">تازه‌های دنت‌کست</h2></div>
       <div class="dc-rail" id="dcLatestRail">
-        <a class="dc-rail-card" data-cat="clinical" href="/insight/insight-50.html">
+        <a class="dc-rail-card" data-cat="clinical" href="/insight/insight-51.html">
           <span class="dc-type-chip t-insight">Insight</span>
-          <p class="dc-rail-title">اصلاح فرم لثه بدون استفاده از روکش موقت</p>
+          <p class="dc-rail-title">نکاتی در مورد درمان دیجیتالی بیمار کاملاً بی‌دندان</p>
           <span class="dc-rail-meta">تازه‌ترین مطلب</span>
         </a>
         <a class="dc-rail-card" data-cat="notecast" href="/notecast/episode-36.html">
@@ -3616,7 +3616,7 @@ a.dc-list-card--pillar {
           <span class="k">ساعت محتوای صوتی</span>
         </div>
         <div class="hero-stat" role="listitem">
-          <span class="v"><!-- COUNTER:CONTENT:START -->۵۳۴<!-- COUNTER:CONTENT:END --></span>
+          <span class="v"><!-- COUNTER:CONTENT:START -->۵۳۵<!-- COUNTER:CONTENT:END --></span>
           <span class="k">مطلب و مدخل آموزشی</span>
         </div>
       </div>
@@ -4273,7 +4273,7 @@ scrollBody.addEventListener('touchend',e=>{
     if(p) p.textContent=title;
     a.href=url;
   }
-  fetch('/dentcast-brain.json?v=fba1a210df',{cache:'no-store'}).then(function(r){return r.json();}).then(function(arr){
+  fetch('/dentcast-brain.json?v=968f39fb82',{cache:'no-store'}).then(function(r){return r.json();}).then(function(arr){
     if(!Array.isArray(arr)) return;
     var latest={}, pool=[];
     arr.forEach(function(e){
@@ -4569,7 +4569,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 <script>
 /* ── LAST 30 UPDATES ── */
 (function(){
-  const FEED_URL='/dentcast-brain.json?v=fba1a210df';
+  const FEED_URL='/dentcast-brain.json?v=968f39fb82';
   const el=document.getElementById('dcLast3Updates');
   if(!el) return;
   function extractArray(json){if(Array.isArray(json))return json;const cands=[json?.items,json?.data,json?.entries,json?.feed].filter(Boolean);for(const c of cands)if(Array.isArray(c))return c;for(const k in(json||{})){const v=json[k];if(Array.isArray(v))return v;if(v&&typeof v==='object'&&Array.isArray(v.items))return v.items;}return[];}
@@ -4825,7 +4825,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 
   function getBrain(){
     if(brainCache) return Promise.resolve(brainCache);
-    return fetch('/dentcast-brain.json?v=fba1a210df', {cache:'no-store'})
+    return fetch('/dentcast-brain.json?v=968f39fb82', {cache:'no-store'})
       .then(r => r.ok ? r.json() : [])
       .then(d => { brainCache = Array.isArray(d) ? d : []; return brainCache; })
       .catch(() => { brainCache = []; return []; });
