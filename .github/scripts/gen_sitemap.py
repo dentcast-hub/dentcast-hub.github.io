@@ -10,7 +10,7 @@ DentCast Sitemap Generator
 - در پایان: گزارش هشدارها (no-canonical, off-domain, duplicates)
 """
 
-import subprocess, os, re, sys
+import subprocess, os, re, sys, datetime
 
 DOMAIN = "https://dentcast.org"
 DOMAIN_IR = "https://dentcast.ir"
@@ -23,6 +23,16 @@ EXCLUDE_PATTERNS = [
     r"google[0-9a-f]+\.html$",
     r".*\(.*\).*\.html$",
 ]
+
+# lastmod is derived from each file's git history below. A shallow clone (e.g. the
+# publish environment) truncates that history and yields wrong dates, which then
+# differ from the full-history sitemap CI regenerates — causing a corrective second
+# commit/push that races the GitHub Pages deployment ("Deployment failed, try again
+# later"). Ensure full history first. No-op in CI (checks out with fetch-depth: 0)
+# and degrades gracefully to the shallow behavior if the fetch can't run.
+if subprocess.run(["git", "rev-parse", "--is-shallow-repository"],
+                  capture_output=True, text=True).stdout.strip() == "true":
+    subprocess.run(["git", "fetch", "--unshallow", "--quiet"], check=False)
 
 result = subprocess.run(
     ["git", "log", "--format=%cd", "--date=format:%Y-%m-%d",
@@ -39,8 +49,31 @@ for line in result.stdout.splitlines():
         dates["/" + line] = current_date
 
 
+TODAY = datetime.date.today().strftime("%Y-%m-%d")
+
+# Files with uncommitted changes (staged, modified, or untracked .html) have no
+# final commit date yet. The sitemap is generated *before* the publish commit, so
+# without this those files fall back to a stale date; after the commit lands, CI
+# regenerates and computes today's date instead. That mismatch made the sitemap
+# workflow push a second, racing commit to main on every publish (two overlapping
+# GitHub Pages deployments -> "Deployment failed, try again later"). Treating dirty
+# .html as today makes the locally generated sitemap match the one CI regenerates
+# post-commit, so no second push is needed.
+_status = subprocess.run(["git", "status", "--porcelain"], capture_output=True, text=True)
+_dirty = set()
+for _line in _status.stdout.splitlines():
+    _p = _line[3:]
+    if " -> " in _p:            # rename: take the destination path
+        _p = _p.split(" -> ", 1)[1]
+    _p = _p.strip().strip('"')
+    if _p.endswith(".html"):
+        _dirty.add("/" + _p)
+
+
 def get_date(path):
-    return dates.get(path, "2025-01-01")
+    if path in _dirty:
+        return TODAY
+    return dates.get(path, TODAY)
 
 
 def get_priority(path):
