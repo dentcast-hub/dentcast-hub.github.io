@@ -11305,5 +11305,63 @@
       "secondary": [],
       "subtopic": "crowns-onlays"
     }
+  },
+  {
+    "type": "dentai",
+    "id": "dentai-27",
+    "title": "اندوکراون یا پست و روکش؟ یک مقاله که تکلیف را روشن می‌کند",
+    "caption": "یک مرورِ سیستماتیک و متارگرسیونِ ۲۵ مطالعه‌ی آزمایشگاهی (Fraga و همکاران، Brazilian Dental Journal ۲۰۲۶) که load-to-fracture دندان‌های اندوشده‌ی ترمیم‌شده با اندوکراون را در برابر پست‌وروکش مقایسه می‌کند: نوعِ رستوریشن (اندوکراون یا پست‌وروکش) روی مقاومت به شکست اثرِ آماری ندارد، و قدامی/خلفی بودنِ دندان و حضورِ ferrule (تا ۲ میلی‌متر) هم بی‌اثر بودند؛ اما نوعِ سمان (کامپوزیت رزین در برابرِ سمانِ رزینیِ معمول) و جهتِ نیرو (بارِ مایل مقاومت را به‌شدت پایین می‌آورد) عواملِ تعیین‌کننده بودند. پیامِ بالینی: تصمیم را بر پایه‌ی حفظِ دنتینِ سالم بگیر، و روی سمان‌کردنِ درست و تنظیمِ اکلوژن تمرکز کن.",
+    "hashtags": [
+      "#اندوکراون",
+      "#پست_و_روکش",
+      "#پست_و_کور",
+      "#دندان_اندوشده",
+      "#مقاومت_به_شکست",
+      "#سمان_رزینی",
+      "#فرول",
+      "#نیروی_مایل",
+      "#تنظیم_اکلوژن",
+      "#endocrown",
+      "#post_and_crown",
+      "#post_and_core",
+      "#endodontically_treated_teeth",
+      "#load_to_fracture",
+      "#fracture_resistance",
+      "#luting_agent",
+      "#ferrule",
+      "#systematic_review",
+      "#meta_regression",
+      "#DentAI"
+    ],
+    "keywords": [
+      "endocrown",
+      "post-and-crown",
+      "post-and-core",
+      "endodontically treated teeth",
+      "load-to-fracture",
+      "fracture resistance",
+      "luting agent",
+      "resin cement",
+      "resin composite cement",
+      "ferrule",
+      "oblique loading",
+      "occlusal adjustment",
+      "systematic review",
+      "meta-regression",
+      "اندوکراون",
+      "پست و روکش",
+      "دندان اندوشده",
+      "مقاومت به شکست",
+      "سمان رزینی",
+      "فرول",
+      "نیروی مایل",
+      "تنظیم اکلوژن"
+    ],
+    "page_url": "/dentai/dentai-27.html",
+    "pillar": {
+      "primary": "fixed-pros",
+      "secondary": [],
+      "subtopic": "failures"
+    }
   }
 ]
