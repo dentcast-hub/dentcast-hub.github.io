@@ -11363,5 +11363,37 @@
       "secondary": [],
       "subtopic": "failures"
     }
+  },
+  {
+    "type": "chairside",
+    "id": "chairside-21",
+    "title": "چالش حفظ یا کشیدن دندان پره‌مولر دوم (کیس ریپورت پروتز)",
+    "caption": "روایتِ یک کیسِ بالینی: دندانِ ۵ پس از حذفِ کاملِ پوسیدگی و ترمیم‌های قدیمی، فقط با دیواره‌ی باکالِ باقی‌مانده مواجه بود. اگرچه طولِ ریشه و پروگنوزِ احتمالی پس از افزایشِ طولِ تاج (CL) قابل‌قبول می‌ماند، تیلتِ شدیدِ مزیالیِ دندانِ مجاور، پایین‌آوردنِ لولِ لثه را به گیرِ غذاییِ شدید و تصاعدی تبدیل می‌کرد. این یادداشت نشان می‌دهد چرا در چنین شرایطی، کشیدنِ کانزرواتیوِ دندان برای حفظِ استخوانِ ایمپلنت و سلامتِ دندانِ مجاور، تصمیمِ منطقی‌تر بود.",
+    "hashtags": [
+      "#طرح_درمان",
+      "#کشیدن_دندان",
+      "#دندان_مجاور",
+      "#افزایش_طول_تاج",
+      "#پروگنوز_دندان",
+      "#تصمیم_درمانی",
+      "#حفظ_استخوان_ایمپلنت",
+      "#کیس_بالینی"
+    ],
+    "keywords": [
+      "tooth extraction vs preservation decision",
+      "adjacent tooth food impaction risk",
+      "crown lengthening surgery periodontal risk",
+      "mesial tilt adjacent tooth complication",
+      "biomechanical prognosis evaluation fair",
+      "implant space preservation strategic extraction",
+      "crown-to-root ratio assessment",
+      "conservative extraction treatment planning"
+    ],
+    "page_url": "/chairside/chairside-21.html",
+    "pillar": {
+      "primary": "treatment-planning",
+      "secondary": [],
+      "subtopic": "extraction-vs-preservation"
+    }
   }
 ]
