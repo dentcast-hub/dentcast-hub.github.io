@@ -63,6 +63,13 @@
       "artist": "Radiohead",
       "description": "داستانِ آدمی که از دور به زیبایی‌های زندگی زل زده، اما غرق در ناامنی‌های خودشه؛ کسی که فکر می‌کنه هیچ‌وقت لیاقتِ سهم داشتن از اون زیبایی‌ها رو نداره.",
       "src": "https://ghofli.s3.ir-thr-at1.arvanstorage.ir/9.mp3?versionId="
+    },
+    {
+      "id": "track-010",
+      "title": "Decima",
+      "artist": "Katatonia",
+      "description": "مواجههٔ آگاهانه با زوال و پوچی؛ جایی که انسان به جای دست‌وپا زدن در برابر تقدیر، با وقار و آرامش به یک «تسلیمِ رضایت‌مندانه» می‌رسد و هنرمندانه رها می‌کند.",
+      "src": "https://ghofli.s3.ir-thr-at1.arvanstorage.ir/10.mp3?versionId="
     }
   ]
 }
