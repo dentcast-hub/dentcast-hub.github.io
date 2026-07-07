@@ -11,7 +11,7 @@
 //      re-stamps it on each publish — the byte change makes browsers fetch
 //      and activate the new worker promptly.
 
-const CACHE_NAME = 'dentcast-assets-f7b0a76537';
+const CACHE_NAME = 'dentcast-assets-cd81e417e3';
 
 /* نصب */
 self.addEventListener('install', (event) => {
