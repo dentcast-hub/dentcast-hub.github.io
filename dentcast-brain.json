@@ -11455,5 +11455,33 @@
       "secondary": [],
       "subtopic": "comprehensive-diagnosis"
     }
+  },
+  {
+    "type": "meta",
+    "id": "meta-16",
+    "title": "چرا ثبت رابطه‌ی دیجیتال را از خلف شروع کنیم",
+    "caption": "ثبت رابطه‌ی دیجیتال با اسکنر داخل‌دهانی وقتی از دندان‌های خلفیِ پرفیچر شروع شود، به نرم‌افزار انکِر دقیق‌تری برای قفل‌کردن دو فک می‌دهد؛ یک مشاهده‌ی بالینی درباره‌ی ترتیب اسکن و چرا نزدیک‌ماندن به همان ناحیه، خطای زاویه‌ای را کوچک نگه می‌دارد.",
+    "hashtags": [
+      "#متانوت",
+      "#ثبت_رابطه",
+      "#رجیستریشن_دیجیتال",
+      "#اسکنر_داخل_دهانی",
+      "#دندانپزشکی_دیجیتال",
+      "#دقت_اسکن"
+    ],
+    "keywords": [
+      "digital registration",
+      "scan order",
+      "intraoral scanner",
+      "bite registration",
+      "digital dentistry",
+      "scan accuracy"
+    ],
+    "page_url": "/metanotes/meta-16.html",
+    "pillar": {
+      "primary": "digital",
+      "secondary": [],
+      "subtopic": "intraoral-scanning"
+    }
   }
 ]
