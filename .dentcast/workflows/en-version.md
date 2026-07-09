@@ -94,14 +94,19 @@ Before asking anything beyond "which page":
 ## Phase B — Intake
 
 ### Question 1 — Confirm the source
+Per README Hard Rule 14: if the trigger phrase resolves to exactly one file on disk with no ambiguity, state the resolved path directly and proceed — no need to wait for a yes:
+> منبع: `{type}/{file}.html` → خروجی: `{type}/en/{file}.html`
+
+Only ask when the trigger is genuinely ambiguous (it could match more than one file, or the resolved path doesn't obviously exist):
 > این صفحه درسته؟ `{type}/{file}.html` → خروجی: `{type}/en/{file}.html`
 
-Wait for confirmation. Lock the source for the rest of the run.
+Lock the source for the rest of the run.
 
 ### Question 2 — Cross-ecosystem sections (only if the source has them)
-If the source body contains a «کاوش بیشتر» / related-links / glossary
-back-link region (specialist ecosystem links that have **no** en
-equivalent), ask once:
+The default (omit on the en page, matching en/meta-1) is well-established — per Hard Rule 14, apply it directly and note it in the report rather than asking every time:
+> این صفحه بخش «کاوش بیشتر»/لینک‌های مرتبط داره؛ طبق قرارداد en/meta-1 تو نسخه‌ی انگلیسی حذف می‌شه.
+
+Only ask when there's a real reason to deviate from the default (the user has previously asked to keep such links on an en page, or the section's content isn't clearly specialist-only):
 > این صفحه بخش «کاوش بیشتر»/لینک‌های مرتبط داره. تو نسخه‌ی انگلیسی حذفش کنم
 > (پیش‌فرض، مثل en/meta-1) یا همون لینک‌های فعلی فارسی/سراسری رو نگه دارم؟
 
