@@ -11423,5 +11423,37 @@
       "secondary": [],
       "subtopic": "post-and-core"
     }
+  },
+  {
+    "type": "chairside",
+    "id": "chairside-22",
+    "title": "چالشِ روکش یا ترمیم در دندانِ قدامی با تخریبِ وسیعِ داخلی",
+    "caption": "روایتِ یک کیسِ بالینی: بیمار با یک ترمیمِ کامپوزیتِ وسیع و نامناسب در دندانِ یک، برای زیبایی درخواستِ روکش داشت. عکسِ پری‌اپیکال تخریبِ وسیعِ داخلی و دیواره‌ی مزیالِ بسیار نازکی را نشان داد. این یادداشت نشان می‌دهد چرا روکش در این شرایط، به‌جای نجاتِ دندان، عاملِ تضعیف و کاهشِ عمرِ آن می‌شود و چرا ارجاعِ بیمار برای ترمیمِ ادهزیوِ اصولی، تصمیمِ درست‌تر بود.",
+    "hashtags": [
+      "#طرح_درمان",
+      "#روکش",
+      "#ترمیم_ادهزیو",
+      "#تخریب_داخلی",
+      "#دیواره_نازک",
+      "#دندان_قدامی",
+      "#ارجاع_تخصصی",
+      "#کیس_بالینی"
+    ],
+    "keywords": [
+      "crown vs restoration treatment decision",
+      "anterior tooth extensive internal caries",
+      "thin remaining tooth wall preparation risk",
+      "crown preparation tooth structure loss",
+      "adhesive restoration referral specialist",
+      "periapical radiograph internal destruction",
+      "esthetic crown request patient expectation",
+      "conservative restorative treatment planning"
+    ],
+    "page_url": "/chairside/chairside-22.html",
+    "pillar": {
+      "primary": "treatment-planning",
+      "secondary": [],
+      "subtopic": "comprehensive-diagnosis"
+    }
   }
 ]
