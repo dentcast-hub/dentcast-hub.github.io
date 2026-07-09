@@ -7,7 +7,7 @@
 3. **New entries go to the absolute END of the flat `dentcast-brain.json` array.** The latest-content widget reads the last 30 entries across all types, so physical tail position is what matters. The brain is a single flat array (no per-type sections) — the new entry becomes the last element of the whole file, regardless of type.
 4. **Auto-discover first, ask second.** Only ask the user for things you cannot infer.
 5. **Don't invent fields.** A new brain entry must have the same keys as previous same-category entries — no more, no less.
-6. **Pillar & subtopic are determined semantically, confirmed by the user, then never silently re-decided.** Both are decided **once, up front** in the semantic determination step (**step 2.4**), *before* any step consumes them — the «کاوش بیشتر»/«محتوای مرتبط» pillar capsule (step 2.5) and the brain write (step 5). `pillar.primary` is chosen by a genuinely **semantic** match between the new content and the **live pillar set** (the pillars listed on `/pillar/` = `list(PILLARS.keys())`); when that pillar is **structured**, `pillar.subtopic` is chosen by a semantic match against that pillar's **own** subtopics. Matching is conceptual — **never** keyword/string matching. Each pick is **proposed to the user and only written after explicit confirmation** (the user may override or choose none). Once confirmed and written, the brain write (step 5) and the verify step (step 5.5) **record and verify** the decision — they do NOT re-classify, re-guess, or overwrite it under any circumstance.
+6. **Pillar & subtopic are determined semantically, confirmed by the user, then never silently re-decided.** Both are decided **once, up front** in the semantic determination step (**step 2.4**), *before* any step consumes them — the «کاوش بیشتر»/«محتوای مرتبط» pillar capsule (step 2.5) and the brain write (step 5). `pillar.primary` is chosen by a genuinely **semantic** match between the new content and the **live pillar set** (the pillars listed on `/pillar/` = `list(PILLARS.keys())`); when that pillar is **structured**, `pillar.subtopic` is chosen by a semantic match against that pillar's **own** subtopics. Matching is conceptual — **never** keyword/string matching. Each pick is decided in step 2.4 per **Hard Rule 14**: a clear, unambiguous best match is stated and applied directly, while a genuinely ambiguous case is proposed to the user as named options and only written after their pick (the user may always override or choose none, either way). Once decided and written, the brain write (step 5) and the verify step (step 5.5) **record and verify** the decision — they do NOT re-classify, re-guess, or overwrite it under any circumstance.
 7. **Structured-pillar list is live, never hardcoded.** Only some pillars are *structured* — meaning `tools/build_pillar.py` generates a topical-index page for them. The structured set grows over time and MUST be read live from `PILLARS` in `tools/build_pillar.py` on every run. Subtopics are meaningful only for structured pillars; non-structured pillars get no subtopic. Do NOT bake pillar slugs, subtopic slugs, or Persian titles into this workflow. A new subtopic is created only on explicit user confirmation; a new pillar is never created in the determination step (step 2.4).
 8. **`main` is authoritative for taxonomy and builders.** The authoritative source for pillars/subtopics — and for the build scripts in general — is always the `main` branch. Before reading `PILLARS` or running any builder, ensure the working state reflects `main` (run from `main`, or merge `main` into the working branch first). Never trust a feature branch's `tools/build_pillar.py` as the taxonomy source of truth.
 9. **Hard cap of 5 links per "کاوش بیشتر" section.** Any single "کاوش بیشتر" section may contain **at most 5 links total** — an absolute ceiling counting *every* link of *every* kind in that section together: the nav capsules (دانشنامه + فهرست موضوعی — the دانشنامه capsule is sitewide `/glossary/`, the فهرست موضوعی capsule now points to the entry's **own** pillar `/pillar/<pillar.primary>/`), glossary back-links, semantic brain-entry links — all share **one budget of 5**. There are **no** separate per-type quotas. Before any step adds a link, it must **count the links already present**; if the section already has 5 or more, that step adds nothing and skips; if fewer, it may add only up to `(5 − current count)`, choosing its highest-priority candidates first. Insertion order across steps matters because of the shared budget: the nav capsules (step 2.5) are placed first and consume their slots, and later steps (step 4.7 on glossary pages, step 4.9 on the new page) fill only whatever remains. **Only add within the remaining budget — never remove, reorder, or restyle existing links to make room.** If there's no room, skip. Every step that touches a "کاوش بیشتر" section (2.5, 4.7, 4.9) defers to this single rule.
@@ -16,7 +16,7 @@
 11. **Enrichment steps (4.7, 4.8, 4.9) are MANDATORY and template-independent — they run on every publish, for every type, and "skip" is not a default.** These three semantic-linking steps are *not* optional, *not* conditional on the template, and *not* satisfied by the clone. Specifically:
     - **They run on EVERY publish, for EVERY type — core episodes included.** A publish is **incomplete** until each of 4.7, 4.8, and 4.9 has been **explicitly resolved** and reported. "I didn't get to it" is a protocol violation.
     - **The step-2 clone and any "same-category precedent" govern STRUCTURE ONLY — never enrichment.** What the previous same-category page (or a sibling in the same series) happened to contain has **zero** bearing on whether 4.7/4.8/4.9 run. *"The previous/cloned page had no inline links / only the pillar capsule, so I'll match it"* is an **explicitly forbidden** justification. If earlier pages lack these links, that is a **gap to fix on this publish**, never a pattern to copy forward. Any inline or related link that merely survived the clone does **not** count as having executed 4.8/4.9 — those steps require a fresh semantic analysis on this content.
-    - **"Present-then-confirm" ≠ "skip".** 4.8 and 4.9 (and 4.7 when uncertain) require you to *run the semantic analysis*, *surface the candidates to the user*, and *ask*. Needing confirmation is **never** a reason to silently do nothing. The user rejecting candidates is a valid outcome; never presenting them is not.
+    - **"Auto-apply or ask" ≠ "skip".** 4.8, 4.9, and 4.7 always require you to *run the semantic analysis*. Per **Hard Rule 14**, a high-confidence candidate (the matched concept is unmistakably the one being discussed) gets inserted directly and reported; a borderline or ambiguous candidate gets surfaced to the user as an explicit link/skip option. Either way, doing nothing without having run the analysis, or discarding a genuine candidate without reporting it, is never allowed.
     - **The only valid no-op is a documented empty result.** A step may add nothing **only** when you actually performed the analysis and there were **zero genuinely-qualifying candidates** (or the section is at the 5-link cap). You must then **say so explicitly** in the report ("4.8: analyzed body, 0 qualifying glossary/episode candidates" / "4.9: section at cap, skipped"). Silence is not an allowed state.
     - **Type mapping for core episodes (no on-disk `dc-related-section`).** Episodes use the **«محتوای مرتبط»** block (`ep-related-link`), not a `dc-related-section` «کاوش بیشتر». For episodes, **step 4.9 targets the «محتوای مرتبط» block** (fill its free slots, under the Hard-Rule-9 cap, with semantically related brain entries — e.g. sibling parts of a multi-part series first), and **step 4.8 targets the «درباره این اپیزود» caption body**. The naming difference is **not** an excuse to skip; the «محتوای مرتبط» block IS the episode's related-links section for 4.9 purposes.
 
@@ -26,8 +26,14 @@
     - **Numeric/factual metadata — duration, file size, dates, counts, IDs — is never estimated.** If the audio host is unreachable (network policy block, missing tool, timeout, anything else) and the duration can't be probed, **ask the user for the exact duration.** Do not write a "reasonable-sounding" placeholder into the brain, `dentcast.json`, the page's visible time, or its JSON-LD `duration` — not even temporarily, not even flagged as an estimate in a later report. A wrong number silently shipped to a live page is exactly the failure this rule exists to prevent.
     - **Titles, hashtags, keywords, and short labels the user did not explicitly supply are proposals, not facts.** Present them and get confirmation before writing them anywhere (brain entry, page `<h1>`, meta tags, en-mirror title). Composing a title from a caption, or reusing another page's title/terminology as a stand-in, is a draft to show the user — not a decision to ship silently.
     - **Schema-shape choices that affect site behavior must be asked about, not resolved by picking whichever precedent seems closer.** When more than one precedent could plausibly govern a new entry's field set (e.g. an older sub-episode's shape vs. the parent series' current shape), ask which one applies — a wrong pick here can silently break downstream automation that keys off specific fields (e.g. the homepage hero/latest-content script keys off `type` and `audio_url`; an entry missing them never surfaces there, with no error raised anywhere).
-    - **Steps 4.7/4.8/4.9's "present for confirmation" instruction means literally show the candidate list and wait — every time**, including under a standing instruction to proceed autonomously without further questions. That kind of instruction governs pacing/cadence, not this rule: it never authorizes guessing or silently skipping a step's mandated confirmation. If proceeding would require either, stop and say plainly that you're blocked on user input.
-    - **Disclosing an assumption after the fact, in a final report, is not a substitute for asking first.** By the time a report discloses a guess, the page is already live with unconfirmed data. Ask **before** writing, not after.
+    - **Steps 4.7/4.8/4.9 still MUST run their semantic analysis every time** — a standing instruction to proceed autonomously never authorizes skipping the analysis itself or fabricating a match. What changed under Hard Rule 14 is only whether a *high-confidence result* of that analysis needs a stop-and-ask round-trip before being applied — see Hard Rule 14 for exactly when that round-trip is required vs. waived.
+    - **Disclosing an assumption after the fact, in a final report, is not a substitute for asking first.** By the time a report discloses a guess, the page is already live with unconfirmed data. Ask **before** writing, not after. (This is about genuinely unknown/unknowable facts — Hard Rule 14 governs the separate case of a confident judgment call, which is reported, not asked.)
+
+14. **Confidence-gated confirmation — auto-apply what you're genuinely sure of; ask with concrete options for what you're not.** This rule narrows *when* a proposal needs a stop-and-ask round-trip; it never narrows Hard Rule 13's ban on fabricating unknowable facts. Two different situations recur throughout this workflow, and they are handled differently:
+    - **Unknowable/unverifiable facts stay under Hard Rule 13, always ask, no exceptions.** Durations, file sizes, dates, counts, IDs, DOIs, first authors, and any title/hashtag/keyword/label the user did not explicitly supply are never auto-applied regardless of how "obvious" they seem — confidence is not the test there, derivability is. Nothing in this rule changes that.
+    - **Judgment calls get auto-applied when confidence is genuinely high.** This covers: the auto-discovered next sequence number when there is no gap in the series; the pillar/subtopic pick when exactly one pillar/subtopic is a clear conceptual fit and no other pillar is plausibly competitive; a Pulse sentence that follows the same-type precedent's established phrasing pattern; a glossary-term or brain-entry link where the matched word/phrase unmistakably refers to that exact concept in context; and the writing-style pass finding no genuine AI-tell. In each of these, proceed directly — do not stop for a rubber-stamp — and state the decision plainly in the running commentary and the final summary so the user can see and override it after the fact if they disagree.
+    - **Genuine uncertainty still stops and asks — but as a short menu, not an open question.** Multiple plausible pillars/subtopics, a borderline or tangential enrichment candidate, a gap or irregularity in the number sequence, two precedents that could each govern a schema shape, or any other spot where a wrong pick would need to be walked back — stop and ask. Phrase it as a small set of concrete, named options (the candidate pillars, "link it / skip it", the competing precedents) rather than a free-form question, so confirming is a single pick. Fall back to open-ended phrasing only when the options genuinely can't be enumerated (e.g. "what should the Pulse sentence say" when no usable convention exists yet).
+    - **Reporting is not optional either way.** Whether a call was auto-applied or asked-and-confirmed, the final summary must say which happened and why, exactly as today — auto-applied items are not silent just because they skipped the question.
 
 ## Phase 0 — Routing: is there an attached paper file? is there text to publish?
 
@@ -84,9 +90,9 @@ Wait. Lock the chosen category for the rest of the run.
 
 ### Question 2 — Number / identifier
 
-Try to determine the next number automatically (max existing number in this category + 1). Ask:
+Try to determine the next number automatically (max existing number in this category + 1). Per **Hard Rule 14**: if the series has no gaps and the next number is unambiguous, state it directly (e.g. «شماره‌اش meta-16 است») and move on — no need to wait for a yes. Only ask when the numbering is irregular or ambiguous (a gap in the sequence, a sub-numbered entry, two plausible next values), and phrase it as the specific candidates to pick from:
 
-> شماره‌اش [N] درسته؟
+> شماره‌اش [N] درسته یا [alternative]؟
 
 If user disagrees, accept their number.
 
@@ -175,13 +181,13 @@ Phase 0 — Parts 1 & 2 only, no publish.)
 
 ### Question 5 — Pulse sentence
 
-Ask:
+Per **Hard Rule 14**: if this category has an established Pulse phrasing convention (previous entries of this type follow a consistent pattern), draft the sentence yourself in that pattern — including which word gets hyperlinked — and state it directly rather than asking an open question; the hyperlink target is the new content's page URL in its own category's directory. Report the drafted line plainly so the user can correct it if they want something different.
+
+Only ask when there is genuine ambiguity — no established convention to follow, or the category's Pulse phrasing varies enough that a pick isn't obvious:
 
 > جمله‌ی پالس چی باشه و کدوم کلمه‌ش لینک بشه؟
 
-Get the full sentence + the exact word to hyperlink. The hyperlink target is the new content's page URL in its own category's directory.
-
-If for some category Pulse announcements aren't customary (you can tell by checking if previous Pulse entries reference that category), still ask, but also note: «این نوع معمولاً تو پالس اعلان نمی‌شه — مطمئنی می‌خوای؟»
+If for some category Pulse announcements aren't customary (you can tell by checking if previous Pulse entries reference that category), draft a line anyway but flag it: «این نوع معمولاً تو پالس اعلان نمی‌شه — همین‌طوری درج کنم یا رد شم؟» (a yes/no option, not an open question).
 
 ## Phase C — Execute
 
@@ -232,13 +238,13 @@ Read `litecast/lite-glossary.json` end-to-end. Perform a genuinely **semantic** 
 - **Never link the item to itself.**
 - **First occurrence only** — link only the **first** place each matched concept appears in the body; never link the same target twice.
 
-#### Step 2 — Present for confirmation (do NOT edit yet)
+#### Step 2 — Auto-apply high-confidence matches; ask only for the rest
 
-Present the proposed links to the user as a numbered list before editing. For each: the matched word/phrase with a few words of surrounding context, the target LiteCast entry, its URL, and a one-line reason for the semantic match. Then ask for confirmation. **Do NOT insert without explicit user confirmation.** The user may approve all, a subset, or none.
+Per **Hard Rule 14**: for a match where the word/phrase unmistakably refers to the existing entry's concept, proceed to Step 3 directly — state it plainly (matched phrase + context, target, one-line reason) rather than waiting for a yes. For a real-but-borderline match, present it in a numbered list — matched word/phrase with context, target LiteCast entry, its URL, one-line reason — and ask for confirmation before inserting. The user may approve all, a subset, or none of the presented ones.
 
-#### Step 3 — Insert approved links
+#### Step 3 — Insert links
 
-After confirmation, insert **only** the approved links into the new item's body, each on the **first occurrence** of its matched phrase, using the **same inline link markup/classes the LiteCast body already uses** (derive the style from how existing LiteCast bodies link — do not introduce a new link style).
+Insert the auto-applied matches and any user-approved matches into the new item's body, each on the **first occurrence** of its matched phrase, using the **same inline link markup/classes the LiteCast body already uses** (derive the style from how existing LiteCast bodies link — do not introduce a new link style).
 
 #### Step 4 — Hash & verify
 
@@ -258,9 +264,9 @@ The «کاوش بیشتر» section holds **at most 5** links total (consistent 
 
 Use the **same** `dc-related-section` / `dc-related-capsules` / `dc-related-capsule` markup the LiteCast template already uses for «کاوش بیشتر»; only the `href` (the target LiteCast page URL) and the capsule label (a short Persian title of the target LiteCast item) differ. **Replace** the cloned template's specialist capsules (دانشنامه / فهرست موضوعی) with these LiteCast-internal capsules — the section ends up containing LiteCast links only.
 
-#### Step 4 — Present for confirmation (do NOT edit yet)
+#### Step 4 — Auto-apply high-confidence matches; ask only for the rest
 
-Present the proposed links to the user as a numbered list before editing. For each: the target LiteCast item, its URL, the proposed short label, and a one-line reason for the semantic match. Then ask for confirmation. **Do NOT insert without explicit user confirmation.** The user may approve all, a subset, or none.
+Per **Hard Rule 14**: strong, unmistakable relatedness gets inserted directly (state it plainly — target, URL, label, one-line reason). Real-but-borderline candidates get presented as a numbered list — target LiteCast item, its URL, proposed short label, one-line reason — with the user asked to confirm before inserting. The user may approve all, a subset, or none of the presented ones.
 
 #### Step 5 — Hash & verify
 
@@ -301,31 +307,32 @@ Per **Hard Rules 7 & 8**, read the live structured-pillar set at runtime from `t
 python -c "import sys; sys.path.insert(0,'tools'); from build_pillar import PILLARS; import json; print(json.dumps({k:[s['slug'] for s in v['subtopics']] for k,v in PILLARS.items()}, ensure_ascii=False))"
 ```
 
-#### Step 2 — Semantically pick the pillar (propose, then confirm)
+#### Step 2 — Semantically pick the pillar (auto-apply if clear, else propose options)
 
-Compare the **conceptual subject** of the new content against each pillar in the live set and choose the single best-matching `pillar.primary`. Present it as a recommendation, with the full pillar list available so the user can override:
+Compare the **conceptual subject** of the new content against each pillar in the live set. Per **Hard Rule 14**:
 
-> با توجه به محتوا، پیلار پیشنهادی: «[PILLARS[pick]['title_fa']]» (`[pick]`).
-> پیلارهای موجود: [title_fa فهرست همه‌ی پیلارها]. کدوم درسته؟ (یا «هیچ‌کدوم» اگه این مطلب پیلار مشخصی نمی‌خواد.)
+- **One pillar is clearly, unambiguously the best conceptual fit and no other pillar is plausibly competitive** → set `pillar.primary` to that slug directly and state the decision plainly (e.g. «با توجه به محتوا، پیلار: «[title_fa]» (`[slug]`)»). No need to wait for a yes — just report it.
+- **Genuinely ambiguous** (two or more pillars are each a real plausible fit, or the content doesn't clearly belong to any one pillar) → stop and ask, presenting the competing candidates plus the option of none:
+  > با توجه به محتوا، این پیلارها هر دو محتمل به نظر می‌رسن: «[A]» یا «[B]». پیلارهای موجود: [title_fa فهرست همه‌ی پیلارها]. کدوم درسته؟ (یا «هیچ‌کدوم»)
 
-- **User confirms / picks another** → use that slug **exactly** as it appears in `PILLARS` (same spelling/format, no normalization).
-- **User says none** → `pillar.primary` stays `null`; **skip Step 3** (no subtopic). The فهرست موضوعی capsule in step 2.5 then falls back to the sitewide `/pillar/`.
+- **User confirms / picks another (when asked)** → use that slug **exactly** as it appears in `PILLARS` (same spelling/format, no normalization).
+- **No pillar applies** (auto-detected or user says none) → `pillar.primary` stays `null`; **skip Step 3** (no subtopic). The فهرست موضوعی capsule in step 2.5 then falls back to the sitewide `/pillar/`.
 
-**Do NOT write anything to the brain without explicit confirmation.**
+Either way, report the pillar decision in the running commentary before it's written to the brain (step 5) — auto-applied is not silent.
 
-#### Step 3 — Semantically pick the subtopic (structured pillars only, propose then confirm)
+#### Step 3 — Semantically pick the subtopic (structured pillars only; auto-apply if clear, else propose options)
 
-- **Confirmed pillar is NOT structured** (`pillar.primary not in PILLARS`) → there is no subtopic. `pillar.subtopic` stays `null` (the key is still present). Tell the user:
+- **Confirmed pillar is NOT structured** (`pillar.primary not in PILLARS`) → there is no subtopic. `pillar.subtopic` stays `null` (the key is still present). State it:
   > پیلار «[X]» فعلاً جزو پیلارهای ساختاریافته نیست — ساب‌تاپیک خالی می‌مونه، بعداً دستی اضافه‌ش کن.
-- **Confirmed pillar IS structured** → semantically compare the content against `PILLARS[primary]['subtopics']`, choose the best match, and present it as a recommendation with the full list to override (live `title_fa`, never hardcoded):
-  > پیلار: «[PILLARS[primary]['title_fa']]». ساب‌تاپیک پیشنهادی: «[best['title_fa']]».
-  > ساب‌تاپیک‌های موجود این پیلار:
-  > 1. [subtopics[0]['title_fa']]
-  > 2. [subtopics[1]['title_fa']]
-  > … N. پیشنهاد یه ساب‌تاپیک جدید
-  > کدوم؟
-  - **User picks an existing subtopic** → use its slug **exactly** as stored in `PILLARS[primary]['subtopics'][i]['slug']` (no re-casing, no normalization).
-  - **User picks "new"** → propose slug + `title_fa` in the same style as that pillar's existing subtopics (kebab-case English slug, short Persian noun phrase — match the siblings). Flag it **NEW** and get explicit confirmation. Once confirmed, add it to `PILLARS[primary]['subtopics']` in `tools/build_pillar.py`, copying the exact shape of an existing sibling subtopic — do not improvise the schema. **A new pillar is never created here.**
+- **Confirmed pillar IS structured** → semantically compare the content against `PILLARS[primary]['subtopics']`. Per **Hard Rule 14**:
+  - **One subtopic is clearly the best fit** → set it directly and state the decision plainly (e.g. «ساب‌تاپیک: «[best['title_fa']]»»).
+  - **Two or more subtopics are each plausible, or none of the existing ones fit well** → stop and ask, listing the live options plus a "propose new" option:
+    > پیلار: «[PILLARS[primary]['title_fa']]». چند ساب‌تاپیک این پیلار به این محتوا نزدیکن؛ کدوم درسته؟
+    > 1. [subtopics[0]['title_fa']]
+    > 2. [subtopics[1]['title_fa']]
+    > … N. پیشنهاد یه ساب‌تاپیک جدید
+  - **User picks an existing subtopic (when asked)** → use its slug **exactly** as stored in `PILLARS[primary]['subtopics'][i]['slug']` (no re-casing, no normalization).
+  - **A genuinely new subtopic is needed** (no existing one fits, even at high confidence) → this always goes through the ask-with-options path, never auto-applied — propose slug + `title_fa` in the same style as that pillar's existing subtopics (kebab-case English slug, short Persian noun phrase — match the siblings), flag it **NEW**, and get explicit confirmation before adding it to `PILLARS[primary]['subtopics']` in `tools/build_pillar.py` (copying the exact shape of an existing sibling subtopic). **A new pillar is never created here.**
 
 #### Step 4 — Hold the confirmed values
 
@@ -464,11 +471,11 @@ Runs whenever new content is published, regardless of category. The goal is to s
 
 Read `glossary/glossary.json`. Perform a genuinely **semantic** review of its terms — **not** keyword/string matching. Compare the *conceptual subject* of the new content against each glossary term's meaning and scope, and identify the terms whose topic is genuinely conceptually related to the new content.
 
-Be **conservative**: link only where the relationship is real and would genuinely help a reader, not tangential. When you are uncertain whether a term is related enough, **list the candidate terms and ask the user to confirm before editing** — do not guess.
+Be **conservative**: link only where the relationship is real and would genuinely help a reader, not tangential. Per **Hard Rule 14**: when a term's relatedness is genuinely unmistakable (the new content is clearly, substantively about that exact concept), proceed to Step 2 directly for that term — no need to ask. When you are uncertain whether a term is related enough (real but borderline/tangential relevance), **list that candidate and ask the user to confirm** (a simple link-it/skip-it choice) before editing — do not guess, and do not silently drop a genuine-but-uncertain candidate without asking.
 
 #### Step 2 — Per-term back-link (independent, per page)
 
-For each glossary term judged semantically related, treat it **independently** — one related term may get the link (under the cap) while another is skipped (at the cap):
+For each glossary term judged semantically related (auto-applied or user-confirmed), treat it **independently** — one related term may get the link (under the cap) while another is skipped (at the cap):
 
 - Open that glossary term's page on disk.
 - Find its **"کاوش بیشتر"** section.
@@ -514,19 +521,16 @@ Perform a genuinely **semantic** analysis of the new article's body — **not** 
 
 For each term that survives the semantic filter, the link targets **only the FIRST occurrence** of that word/phrase in the article body (the first place it appears in the qualifying technical sense). Do not link later occurrences of the same term. **One link per term, on its first qualifying appearance, in reading order.**
 
-#### Step 4 — Present for confirmation (do NOT edit yet)
+#### Step 4 — Auto-apply high-confidence matches; ask only for the rest
 
-Do **not** edit anything in this sub-step. **Present** the proposed links to the user as a numbered review list. For each proposed link show:
-- The matched word/phrase, with enough surrounding context (a few words each side) to see exactly where it sits.
-- The target type (glossary term vs. episode).
-- The target URL.
-- A one-line reason why this is a genuine semantic match (so the user can sanity-check the judgment).
+Per **Hard Rule 14**, split the surviving candidates by confidence:
 
-Then ask the user to confirm which links to apply. The user may approve all, approve a subset, or reject. **Do NOT insert any link without explicit user confirmation.**
+- **Unmistakable matches** (the word is clearly being used in its technical sense to discuss exactly that concept, per Step 2's sense-disambiguation rule) → proceed straight to Step 5 for these; no confirmation round-trip needed. State them plainly in the running commentary (matched phrase, target, one-line reason) so the user can see and override afterward.
+- **Borderline or judgment-call matches** (plausible but not unmistakable — a looser conceptual connection, a term that could be read either technically or generically here) → **do not** insert yet. Present these as a numbered review list — matched phrase with context, target type, target URL, one-line reason — and ask the user which (if any) to apply. The user may approve all, a subset, or reject.
 
-#### Step 5 — Insert approved links
+#### Step 5 — Insert links
 
-After confirmation, insert **only** the approved links, each on the **first qualifying occurrence** of its term in the body, using the **same anchor markup/classes the article body already uses for inline links** (match the existing in-body link style exactly — do not introduce a new link style).
+Insert the auto-applied matches and any user-approved matches, each on the **first qualifying occurrence** of its term in the body, using the **same anchor markup/classes the article body already uses for inline links** (match the existing in-body link style exactly — do not introduce a new link style).
 
 #### Step 6 — Constraints
 
@@ -569,9 +573,12 @@ Locate the new page's "کاوش بیشتر" section (injected in step 2.5) and a
 - The label is a **short, semantically meaningful Persian title** derived from the target entry — a concise descriptive phrase, not the raw long title and not a generic word.
 - The `href` is the target entry's page URL.
 
-#### Step 4 — Present for confirmation (do NOT edit yet)
+#### Step 4 — Auto-apply high-confidence matches; ask only for the rest
 
-Present the proposed additions to the user as a numbered list before editing. For each: the target entry, its URL, the proposed short label, and a one-line reason for the semantic match. Then ask for confirmation. **Do NOT insert without explicit user confirmation.** The user may approve all, a subset, or none; respect the global cap on whatever subset they approve.
+Per **Hard Rule 14**, split the ranked candidates within the available slots by confidence:
+
+- **Strong, unmistakable relatedness** (a reader would obviously want to go there next) → insert directly, filling the available slots strongest-first; no confirmation round-trip needed. State the additions plainly (target, URL, label, one-line reason) so the user can see and override afterward.
+- **Real but borderline relatedness** (worth surfacing, but not obviously a must-include) → present these as a numbered list — target, URL, proposed label, one-line reason — and ask which (if any) to add. The user may approve all, a subset, or none; respect the global cap on whatever subset they approve.
 
 #### Step 5 — Constraints
 
@@ -862,9 +869,9 @@ After the pillar builder finishes, verify:
 - For Promptologist (step 4.6): the new part's `ep-nav` previous slot wired to `<prev-id>.html` (next slot left as the empty placeholder); the previous part's page path with before/after hash, confirming its empty «next» placeholder was converted into a link to `<new-id>.html` (only that slot changed)
 - For any publish with an attached paper file (step 4.10 — triggered by the file, any type) — or the documented "skipped — no attached paper" line otherwise: **Part 1** — the Drive subfolder the paper was filed into (chosen semantically) and its `drive_view` URL; **Part 2** — the new `dentcast_cabinet_full_catalog.json` entry's `id`, `topic`/`topic_path`, `tags` (semantic + article-name), and the Drive link, with confirmation the key set matches the enriched-entry template and the paper surfaces in `dentcast_cabinet_search.html`; **Part 3** (only when a page was published) — the DOI and first author found on the web, the rendered first-author→DOI credit anchor (ShareHub `.author` style) and any `isBasedOn` update, with before/after page hash — or the "Part 3 skipped — paper-only (no page)" note on the paper-only fast path. Explicitly list anything you asked the user about and confirm nothing (subfolder/DOI/author/tags) was guessed
 - **Cross-linking completion gate (Hard Rule 11) — REQUIRED; the publish is incomplete if any of these is missing.** For **each** of steps 4.7, 4.8, 4.9, report its explicit outcome — never leave one unstated:
-  - **4.7 (glossary → new content):** the candidate terms considered, which were linked (with the link text used), and which were skipped and why (at 5-cap / no section / judged unrelated). An empty result is acceptable **only** as a documented "analyzed, 0 qualifying terms".
-  - **4.8 (in-body inline links on the new page):** confirmation that a **fresh** semantic analysis of *this* body was run (NOT inherited from the clone); the candidates presented to the user; which were approved/inserted (first-occurrence) and which rejected. For episodes, confirm the «درباره این اپیزود» caption was the analyzed body. An empty result is acceptable **only** as a documented "analyzed body, 0 qualifying glossary/episode candidates".
-  - **4.9 (related links on the new page):** for episodes, confirm this targeted the **«محتوای مرتبط»** block (not skipped due to the naming difference); the related brain entries considered (sibling series parts first), how many slots were free under the 5-cap, which links were proposed/added, and the remaining-budget math. An empty result is acceptable **only** as a documented "at cap" / "0 qualifying entries".
+  - **4.7 (glossary → new content):** the candidate terms considered, which were linked (auto-applied vs. asked-and-confirmed, per Hard Rule 14, with the link text used), and which were skipped and why (at 5-cap / no section / judged unrelated / asked-and-declined). An empty result is acceptable **only** as a documented "analyzed, 0 qualifying terms".
+  - **4.8 (in-body inline links on the new page):** confirmation that a **fresh** semantic analysis of *this* body was run (NOT inherited from the clone); which candidates were auto-applied at high confidence vs. presented to the user (Hard Rule 14); which of the presented ones were approved/inserted (first-occurrence) and which rejected. For episodes, confirm the «درباره این اپیزود» caption was the analyzed body. An empty result is acceptable **only** as a documented "analyzed body, 0 qualifying glossary/episode candidates".
+  - **4.9 (related links on the new page):** for episodes, confirm this targeted the **«محتوای مرتبط»** block (not skipped due to the naming difference); the related brain entries considered (sibling series parts first), how many slots were free under the 5-cap, which links were auto-applied vs. presented to the user (Hard Rule 14) and which of those were approved/added, and the remaining-budget math. An empty result is acceptable **only** as a documented "at cap" / "0 qualifying entries".
   - Explicitly confirm that **none** of 4.7/4.8/4.9 was skipped on the grounds that the cloned/previous/sibling page lacked such links (a Hard-Rule-11 violation).
 - Pillar/subtopic verification (step 5.5): confirmation that the recorded `pillar.primary` and `pillar.subtopic` are **identical** to what was confirmed in step 2.4 (untouched by steps 5/5.5); resulting `pillar.subtopic` (slug if structured, `null` if not); confirmation that no new keys were added to the `pillar` object or as siblings, that the `subtopic` key is present in every case, and that the step-2.5 capsule / episode pillar link is consistent with `pillar.primary`
 - Builder runs: each command + full stdout/stderr (`python tools/update-homepage-counters.py`, `python tools/build_pillar.py all`, `python tools/build_episodes.py` for episode publishes, and `python tools/stamp-version.py` LAST); confirmation that the new content appears in the regenerated pillar page when a structured pillar was assigned, **and (for episodes) that the new episode now appears in the regenerated `episodes.html`** with no feature regression.
