@@ -11508,5 +11508,33 @@
       "secondary": [],
       "subtopic": "replacing-missing-teeth"
     }
+  },
+  {
+    "type": "meta",
+    "id": "meta-17",
+    "title": "آیا مفهوم قوس کوتاه‌شده در بازسازی کامل با ایمپلنت هم معتبر است؟",
+    "caption": "مفهوم Shortened Dental Arch برای اکثر بیماران با شواهد فانکشن، رضایت و ثبات اکلوزال توجیه می‌شود. این توجیه‌ها در بازسازی کامل با ایمپلنت هم برقرارند، اما نبود PDL یک ملاحظه‌ی مکانیکی اضافه وارد می‌کند: گسترش قوس تا مولر می‌تواند نیروی اکلوزال را روی واحدهای پروتزی بیشتری توزیع کند و به عمر رستوریشن‌ها کمک کند.",
+    "hashtags": [
+      "#متانوت",
+      "#قوس_کوتاه_شده",
+      "#SDA",
+      "#بازسازی_کامل_با_ایمپلنت",
+      "#توزیع_نیرو",
+      "#PDL"
+    ],
+    "keywords": [
+      "shortened dental arch",
+      "full-arch implant rehabilitation",
+      "PDL",
+      "occlusal load distribution",
+      "implant biomechanics",
+      "SDA"
+    ],
+    "page_url": "/metanotes/meta-17.html",
+    "pillar": {
+      "primary": "implantology",
+      "secondary": [],
+      "subtopic": "restoration-design"
+    }
   }
 ]
