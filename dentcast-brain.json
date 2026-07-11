@@ -11566,5 +11566,41 @@
       "secondary": [],
       "subtopic": "prosthetic-components"
     }
+  },
+  {
+    "type": "clinical",
+    "id": "clinical-54",
+    "title": "مدیریت افتادن مکرر روکش: رویکرد حذف گام‌به‌گام علل",
+    "caption": "بیماری با روکش دندان‌های ۶ و ۷ پایین سمت چپ مراجعه کرد که با وجود سمان دائم افتاده بود. به‌جای نگرانی یا تصمیم عجولانه برای تعویض پروتز یا سمان مجدد بی‌هدف، علل افتادن مکرر روکش را می‌توان به دو دسته کلی تقسیم کرد: ایرادهای حین کار (تکنیک سمان و اکلوژن) و ایرادهای ساختاری (تراش دندان یا ساختار روکش). قدم اول حذف اشتباهات حین کار است: دقت بالا در سمان مجدد با کنترل رطوبت و ایزولاسیون، کنترل نیروهای زودهنگام تا ست‌شدن کامل سمان، و بررسی و تنظیم دقیق اکلوژن برای حذف هرگونه تداخل یا نیروی زودهنگام روی روکش. اگر با رعایت کامل این اصول، افتادن روکش باز هم تکرار شد، یعنی مشکل ساختاری است: باید سمان مجدد را متوقف کرد، روکش جدید ساخت و تراش دندان را مجدداً ارزیابی و اصلاح کرد (موازی بودن دیواره‌ها، ارتفاع تراش و مسیر نشستن روکش) تا ضعف‌های بیومکانیکی قبلی کاملاً برطرف شوند. روکشی که مکرراً می‌افتد نشان‌دهنده یک اشکال مکانیکی در سیستم دندان و پروتز است؛ کلید موفقیت، حذف گام‌به‌گام علل از ساده‌ترین (تکنیک سمان و اکلوژن) تا پیچیده‌ترین (نقص تراش و کار لابراتوار) است.",
+    "hashtags": [
+      "#روکش_افتاده",
+      "#سمان_مجدد",
+      "#تنظیم_اکلوژن",
+      "#ایزولاسیون",
+      "#تراش_دندان",
+      "#پروتز_ثابت",
+      "#Crown_Retention",
+      "#Recementation",
+      "#Occlusal_Adjustment",
+      "#Tooth_Preparation"
+    ],
+    "keywords": [
+      "recurrent crown dislodgement",
+      "crown recementation technique",
+      "occlusal adjustment after cementation",
+      "premature occlusal contact",
+      "tooth preparation resistance form",
+      "total occlusal convergence",
+      "crown retention failure diagnosis",
+      "cementation isolation protocol",
+      "biomechanical crown failure",
+      "crown remake indication"
+    ],
+    "page_url": "/insight/insight-54.html",
+    "pillar": {
+      "primary": "fixed-pros",
+      "secondary": [],
+      "subtopic": "failures"
+    }
   }
 ]
