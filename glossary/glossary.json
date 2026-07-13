@@ -1705,6 +1705,25 @@
         "secondary": [],
         "subtopic": "preparation"
       }
+    },
+    {
+      "slug": "dahl-concept",
+      "title": "Dahl Concept",
+      "fa_title": "کانسپت دال",
+      "synonyms": [
+        "کانسپت دال",
+        "Dahl Concept",
+        "تکنیک دال",
+        "Dahl Technique",
+        "افکت دال",
+        "Dahl Effect"
+      ],
+      "url": "/glossary/dahl-concept.html",
+      "pillar": {
+        "primary": "occlusion",
+        "secondary": [],
+        "subtopic": "tooth-wear-dahl"
+      }
     }
   ]
 }
