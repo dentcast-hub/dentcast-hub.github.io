@@ -1705,6 +1705,106 @@
         "secondary": [],
         "subtopic": "preparation"
       }
+    },
+    {
+      "slug": "dahl-concept",
+      "title": "Dahl Concept",
+      "fa_title": "کانسپت دال",
+      "synonyms": [
+        "کانسپت دال",
+        "Dahl Concept",
+        "تکنیک دال",
+        "Dahl Technique",
+        "افکت دال",
+        "Dahl Effect"
+      ],
+      "url": "/glossary/dahl-concept.html",
+      "pillar": {
+        "primary": "occlusion",
+        "secondary": [],
+        "subtopic": "tooth-wear-dahl"
+      }
+    },
+    {
+      "slug": "occlusal-splint",
+      "title": "Occlusal Splint",
+      "fa_title": "اسپلینت اکلوزال",
+      "synonyms": [
+        "اسپلینت اکلوزال",
+        "Occlusal Splint",
+        "نایت‌گارد",
+        "Night Guard",
+        "اسپلینت استابیلیزیشن",
+        "Stabilization Splint",
+        "اسپلینت میشیگان",
+        "Michigan Splint"
+      ],
+      "url": "/glossary/occlusal-splint.html",
+      "pillar": {
+        "primary": "occlusion",
+        "secondary": [],
+        "subtopic": "tmd-orofacial-pain"
+      }
+    },
+    {
+      "slug": "bleaching",
+      "title": "Bleaching",
+      "fa_title": "بلیچینگ",
+      "synonyms": [
+        "بلیچینگ",
+        "Bleaching",
+        "سفید کردن دندان",
+        "Tooth Whitening",
+        "هوم بلیچ",
+        "Home Bleaching",
+        "آفیس بلیچ",
+        "In-Office Bleaching",
+        "بلیچینگ داخلی",
+        "Internal Bleaching"
+      ],
+      "url": "/glossary/bleaching.html",
+      "pillar": {
+        "primary": "esthetic",
+        "secondary": [],
+        "subtopic": "shade-and-whitening"
+      }
+    },
+    {
+      "slug": "nccl",
+      "title": "NCCL",
+      "fa_title": "ضایعات سرویکال غیرپوسیدگی‌ای",
+      "synonyms": [
+        "ضایعات سرویکال غیرپوسیدگی‌ای",
+        "Non-Carious Cervical Lesions",
+        "NCCL",
+        "ضایعه گوه‌ای سرویکال",
+        "Cervical Wedge-Shaped Lesion"
+      ],
+      "url": "/glossary/nccl.html",
+      "pillar": {
+        "primary": "occlusion",
+        "secondary": [],
+        "subtopic": "tooth-wear-dahl"
+      }
+    },
+    {
+      "slug": "abfraction",
+      "title": "Abfraction",
+      "fa_title": "ابفرکشن",
+      "synonyms": [
+        "ابفرکشن",
+        "Abfraction",
+        "فرضیه ابفرکشن",
+        "Abfraction Theory",
+        "تئوری ابفرکشن",
+        "Abfraction Hypothesis"
+      ],
+      "url": "/glossary/abfraction.html",
+      "pillar": {
+        "primary": "occlusion",
+        "secondary": [],
+        "subtopic": "tooth-wear-dahl"
+      }
     }
   ]
 }
