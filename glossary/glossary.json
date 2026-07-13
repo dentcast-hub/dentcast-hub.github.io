@@ -1745,6 +1745,29 @@
         "secondary": [],
         "subtopic": "tmd-orofacial-pain"
       }
+    },
+    {
+      "slug": "bleaching",
+      "title": "Bleaching",
+      "fa_title": "بلیچینگ",
+      "synonyms": [
+        "بلیچینگ",
+        "Bleaching",
+        "سفید کردن دندان",
+        "Tooth Whitening",
+        "هوم بلیچ",
+        "Home Bleaching",
+        "آفیس بلیچ",
+        "In-Office Bleaching",
+        "بلیچینگ داخلی",
+        "Internal Bleaching"
+      ],
+      "url": "/glossary/bleaching.html",
+      "pillar": {
+        "primary": "esthetic",
+        "secondary": [],
+        "subtopic": "shade-and-whitening"
+      }
     }
   ]
 }
