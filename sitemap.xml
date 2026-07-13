@@ -2161,6 +2161,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://dentcast.org/glossary/en/occlusal-splint.html</loc>
+    <lastmod>2026-07-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://dentcast.org/glossary/en/toc.html</loc>
     <lastmod>2026-06-24</lastmod>
     <changefreq>monthly</changefreq>
@@ -2325,6 +2331,12 @@
   <url>
     <loc>https://dentcast.org/glossary/milling.html</loc>
     <lastmod>2026-02-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dentcast.org/glossary/occlusal-splint.html</loc>
+    <lastmod>2026-07-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -3752,67 +3764,67 @@
   </url>
   <url>
     <loc>https://dentcast.org/pillar/</loc>
-    <lastmod>2026-05-24</lastmod>
+    <lastmod>2026-07-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://dentcast.org/pillar/bonding/</loc>
-    <lastmod>2026-05-24</lastmod>
+    <lastmod>2026-07-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://dentcast.org/pillar/ceramics/</loc>
-    <lastmod>2026-05-25</lastmod>
+    <lastmod>2026-07-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://dentcast.org/pillar/digital/</loc>
-    <lastmod>2026-06-01</lastmod>
+    <lastmod>2026-07-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://dentcast.org/pillar/esthetic/</loc>
-    <lastmod>2026-06-01</lastmod>
+    <lastmod>2026-07-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://dentcast.org/pillar/fixed-pros/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-07-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://dentcast.org/pillar/implantology/</loc>
-    <lastmod>2026-05-29</lastmod>
+    <lastmod>2026-07-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://dentcast.org/pillar/occlusion/</loc>
-    <lastmod>2026-06-01</lastmod>
+    <lastmod>2026-07-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://dentcast.org/pillar/operative/</loc>
-    <lastmod>2026-06-01</lastmod>
+    <lastmod>2026-07-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://dentcast.org/pillar/removable-pros/</loc>
-    <lastmod>2026-06-01</lastmod>
+    <lastmod>2026-07-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://dentcast.org/pillar/treatment-planning/</loc>
-    <lastmod>2026-06-01</lastmod>
+    <lastmod>2026-07-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>

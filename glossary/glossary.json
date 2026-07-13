@@ -1724,6 +1724,27 @@
         "secondary": [],
         "subtopic": "tooth-wear-dahl"
       }
+    },
+    {
+      "slug": "occlusal-splint",
+      "title": "Occlusal Splint",
+      "fa_title": "اسپلینت اکلوزال",
+      "synonyms": [
+        "اسپلینت اکلوزال",
+        "Occlusal Splint",
+        "نایت‌گارد",
+        "Night Guard",
+        "اسپلینت استابیلیزیشن",
+        "Stabilization Splint",
+        "اسپلینت میشیگان",
+        "Michigan Splint"
+      ],
+      "url": "/glossary/occlusal-splint.html",
+      "pillar": {
+        "primary": "occlusion",
+        "secondary": [],
+        "subtopic": "tmd-orofacial-pain"
+      }
     }
   ]
 }
