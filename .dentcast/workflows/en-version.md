@@ -218,6 +218,26 @@ correct; clinical/technical terms preserved precisely; **structure-faithful**
 translate proper nouns/brand names that are conventionally left as-is. The
 translation is the only source of the en body text.
 
+**Drop fa-side English glosses — never carry the parenthetical over
+literally.** fa source text routinely glosses a Persian term with its English
+equivalent in parentheses right after it — «محافظه‌کارانه بودن (Conservative)»,
+«اسکن‌بادی (Scanbody)» — because that parenthetical helps a Persian reader map
+the term to its English original. That purpose evaporates once the sentence
+itself is already in English: translating the phrase verbatim produces a
+same-word duplicate like *"conservative (Conservative)"* or *"scanbody
+(Scanbody)"*, which reads as a mistake, not a gloss. When the parenthetical's
+content is just the English form of the word already used (or about to be
+used) in the English sentence, **drop the parenthetical entirely** — the
+English word standing alone already carries the meaning. Only keep a
+parenthetical on the en page when it adds real information beyond the term
+itself (a translated explanatory aside, a different word, a defined
+abbreviation on first use, etc.) — never when it is the same word repeated
+back at itself. **Before finishing step 9's verification, grep the new en
+page for this exact pattern** (a word or short phrase immediately followed by
+itself in parentheses, case-insensitively) and confirm zero matches; this
+class of bug is exactly what step 9's fresh eyes should catch, not something
+to notice only when a source page's precedent happens to be clean.
+
 ### 6. SEO head — consistent language signals
 On the new en page:
 - `<link rel="canonical" href="https://dentcast.org/{type}/en/{file}.html">`
@@ -281,6 +301,10 @@ touched brain-derived output, which it normally does not.)
   source type, toggle → `../{file}.html`, body structure-faithful to source.
 - Confirm both toggles are exact inverses and neither points at meta-1
   (unless meta-1 is the document).
+- **No same-word gloss duplicates (step 5):** confirm the en body has no
+  `word (Word)` / `word (word)` leftover from a source-side English gloss —
+  e.g. `python3 -c "import re; t=open('{type}/en/{file}.html',encoding='utf-8').read(); print([m.group(0) for m in re.finditer(r'\b([A-Za-z][A-Za-z-]{2,30})\s*\(\s*\1\s*\)', t, re.I)])"`
+  must print `[]`.
 
 ## Final output summary
 - Source page + computed en target path
@@ -291,6 +315,8 @@ touched brain-derived output, which it normally does not.)
 - Injector run output (pairing now present for this file; skips intact)
 - Explicit confirmation: no brain entry, no Pulse, no specialist
   cross-linking was added for the en page (Hard rule 8)
+- Explicit confirmation: no `word (Word)` same-word gloss duplicates left
+  over from the fa source's parenthetical English glosses (step 5 / step 9)
 - List of modified/created file paths (exactly two: new en page + source fa
   page)
 
