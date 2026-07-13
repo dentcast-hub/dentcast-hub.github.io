@@ -1786,6 +1786,25 @@
         "secondary": [],
         "subtopic": "tooth-wear-dahl"
       }
+    },
+    {
+      "slug": "abfraction",
+      "title": "Abfraction",
+      "fa_title": "ابفرکشن",
+      "synonyms": [
+        "ابفرکشن",
+        "Abfraction",
+        "فرضیه ابفرکشن",
+        "Abfraction Theory",
+        "تئوری ابفرکشن",
+        "Abfraction Hypothesis"
+      ],
+      "url": "/glossary/abfraction.html",
+      "pillar": {
+        "primary": "occlusion",
+        "secondary": [],
+        "subtopic": "tooth-wear-dahl"
+      }
     }
   ]
 }
