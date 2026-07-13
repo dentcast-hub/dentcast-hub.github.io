@@ -1768,6 +1768,24 @@
         "secondary": [],
         "subtopic": "shade-and-whitening"
       }
+    },
+    {
+      "slug": "nccl",
+      "title": "NCCL",
+      "fa_title": "ضایعات سرویکال غیرپوسیدگی‌ای",
+      "synonyms": [
+        "ضایعات سرویکال غیرپوسیدگی‌ای",
+        "Non-Carious Cervical Lesions",
+        "NCCL",
+        "ضایعه گوه‌ای سرویکال",
+        "Cervical Wedge-Shaped Lesion"
+      ],
+      "url": "/glossary/nccl.html",
+      "pillar": {
+        "primary": "occlusion",
+        "secondary": [],
+        "subtopic": "tooth-wear-dahl"
+      }
     }
   ]
 }
