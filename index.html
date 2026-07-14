@@ -3450,9 +3450,9 @@ a.dc-list-card--pillar {
           </div>
         </div>
         <ul class="dc-pulse-list">
+          <li>یک <a href="/chairside/chairside-25.html">روایت ویزیت</a> با موضوع «گاهی نپذیرفتنِ بیمار، حرفه‌ای‌تر است؛ ردِ طرح‌درمانِ پروتزِ ایمپلنتِ خلفی به‌دلیلِ ریسکِ بالینی و عدمِ هماهنگیِ درمانِ مشترک» در سایت قرار گرفت · ۲۳ تیر</li>
           <li>یک <a href="/chairside/chairside-24.html">روایت ویزیت</a> با موضوع «طرح‌درمانِ استیج‌بندی‌شده برای یک کیسِ ایمپلنتِ پیچیده؛ وقتی نبودِ دیدِ پروتزی در جراحیِ اولیه، پروتزِ نهایی را پیچیده می‌کند» در سایت قرار گرفت · ۲۳ تیر</li>
           <li>یک <a href="/insight/insight-54.html">اینسایت بالینی</a> درباره‌ی مدیریت افتادن مکرر روکش با رویکرد حذف گام‌به‌گام علل منتشر شد · ۲۰ تیر</li>
-          <li>یک <a href="/chairside/chairside-23.html">روایت ویزیت</a> با موضوع «شکست اباتمنت ایمپلنت بعد از ۹ سال؛ وقتی بیومکانیک فک قربانی غیبت دندان‌ها می‌شود» در سایت قرار گرفت · ۲۰ تیر</li>
         </ul>
         <div class="dc-pulse-ad">
           <a href="https://deventapp.ir" target="_blank" rel="sponsored noopener">
@@ -3479,9 +3479,9 @@ a.dc-list-card--pillar {
           <p class="dc-rail-title">آیا مفهوم قوس کوتاه‌شده در بازسازی کامل با ایمپلنت هم معتبر است؟</p>
           <span class="dc-rail-meta">تازه‌ترین مطلب</span>
         </a>
-        <a class="dc-rail-card" data-cat="chairside" href="/chairside/chairside-24.html">
+        <a class="dc-rail-card" data-cat="chairside" href="/chairside/chairside-25.html">
           <span class="dc-type-chip t-chair">Chairside</span>
-          <p class="dc-rail-title">طرح‌درمانِ استیج‌بندی‌شده برای یک کیسِ ایمپلنتِ پیچیده؛ وقتی نبودِ دیدِ پروتزی در جراحیِ اولیه، پروتزِ نهایی را پیچیده می‌کند</p>
+          <p class="dc-rail-title">گاهی نپذیرفتنِ بیمار، حرفه‌ای‌تر است؛ ردِ طرح‌درمانِ پروتزِ ایمپلنتِ خلفی به‌دلیلِ ریسکِ بالینی و عدمِ هماهنگیِ درمانِ مشترک</p>
           <span class="dc-rail-meta">تازه‌ترین مطلب</span>
         </a>
         <a class="dc-rail-card" data-cat="dentai" href="/dentai/dentai-27.html">
@@ -3616,7 +3616,7 @@ a.dc-list-card--pillar {
           <span class="k">ساعت محتوای صوتی</span>
         </div>
         <div class="hero-stat" role="listitem">
-          <span class="v"><!-- COUNTER:CONTENT:START -->۵۵۴<!-- COUNTER:CONTENT:END --></span>
+          <span class="v"><!-- COUNTER:CONTENT:START -->۵۵۵<!-- COUNTER:CONTENT:END --></span>
           <span class="k">مطلب و مدخل آموزشی</span>
         </div>
       </div>
@@ -4273,7 +4273,7 @@ scrollBody.addEventListener('touchend',e=>{
     if(p) p.textContent=title;
     a.href=url;
   }
-  fetch('/dentcast-brain.json?v=21ea46a3f9',{cache:'no-store'}).then(function(r){return r.json();}).then(function(arr){
+  fetch('/dentcast-brain.json?v=ef1474042c',{cache:'no-store'}).then(function(r){return r.json();}).then(function(arr){
     if(!Array.isArray(arr)) return;
     var latest={}, pool=[];
     arr.forEach(function(e){
@@ -4569,7 +4569,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 <script>
 /* ── LAST 30 UPDATES ── */
 (function(){
-  const FEED_URL='/dentcast-brain.json?v=21ea46a3f9';
+  const FEED_URL='/dentcast-brain.json?v=ef1474042c';
   const el=document.getElementById('dcLast3Updates');
   if(!el) return;
   function extractArray(json){if(Array.isArray(json))return json;const cands=[json?.items,json?.data,json?.entries,json?.feed].filter(Boolean);for(const c of cands)if(Array.isArray(c))return c;for(const k in(json||{})){const v=json[k];if(Array.isArray(v))return v;if(v&&typeof v==='object'&&Array.isArray(v.items))return v.items;}return[];}
@@ -4825,7 +4825,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 
   function getBrain(){
     if(brainCache) return Promise.resolve(brainCache);
-    return fetch('/dentcast-brain.json?v=21ea46a3f9', {cache:'no-store'})
+    return fetch('/dentcast-brain.json?v=ef1474042c', {cache:'no-store'})
       .then(r => r.ok ? r.json() : [])
       .then(d => { brainCache = Array.isArray(d) ? d : []; return brainCache; })
       .catch(() => { brainCache = []; return []; });

@@ -11663,5 +11663,35 @@
       "secondary": [],
       "subtopic": "comprehensive-diagnosis"
     }
+  },
+  {
+    "type": "chairside",
+    "id": "chairside-25",
+    "title": "گاهی نپذیرفتنِ بیمار، حرفه‌ای‌تر است؛ ردِ طرح‌درمانِ پروتزِ ایمپلنتِ خلفی به‌دلیلِ ریسکِ بالینی و عدمِ هماهنگیِ درمانِ مشترک",
+    "caption": "در این کیس Chairside بررسی می‌کنیم چرا طرح‌درمانِ پروتزِ ایمپلنت‌های خلفیِ یک بیمار رد شد؛ از شیبِ باکالِ ایمپلنت‌ها و کمبودِ لثه‌ی کراتینیزه تا ناهماهنگی با همکارِ بخشِ قدامی و نگرشِ بیمار به بهینه‌سازیِ مسیرِ درمان به‌نفعِ خودش.",
+    "hashtags": [
+      "#گزارش_کیس",
+      "#رد_طرح_درمان",
+      "#انتخاب_بیمار",
+      "#پروتز_ایمپلنت_خلفی",
+      "#بهداشت_دهان",
+      "#دکتر_شهابیان"
+    ],
+    "keywords": [
+      "implant prosthesis treatment refusal",
+      "patient selection criteria dental implants",
+      "buccal inclination posterior implants",
+      "deficient keratinized tissue peri-implant risk",
+      "shared treatment plan referral coordination",
+      "occlusal interference risk multi-provider case",
+      "patient compliance treatment prognosis",
+      "informed refusal complex prosthetic case"
+    ],
+    "page_url": "/chairside/chairside-25.html",
+    "pillar": {
+      "primary": "treatment-planning",
+      "secondary": [],
+      "subtopic": "comprehensive-diagnosis"
+    }
   }
 ]
