@@ -84,14 +84,17 @@ export async function highlightRoutes(app: FastifyInstance): Promise<void> {
         properties: {
           content_id: { type: 'string' },
           exact: { type: 'string', minLength: 1 },
-          prefix: { type: 'string' },
-          suffix: { type: 'string' },
-          color: { type: 'string' },
+          // Optional anchor/annotation fields: the workbench sends a consistent
+          // shape with explicit nulls when a tool leaves them unset, so accept
+          // null as well as the value type.
+          prefix: { type: ['string', 'null'] },
+          suffix: { type: ['string', 'null'] },
+          color: { type: ['string', 'null'] },
           underline: { type: 'boolean' },
           cloze_markers: { type: 'array' },
-          note: { type: 'string' },
-          label: { type: 'string' },
-          content_hash: { type: 'string' },
+          note: { type: ['string', 'null'] },
+          label: { type: ['string', 'null'] },
+          content_hash: { type: ['string', 'null'] },
         },
       },
     },

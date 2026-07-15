@@ -3,13 +3,20 @@
    it uses the page's own body font). Colors reference the site's CSS variables
    with safe fallbacks. Everything is prefixed .dcp- to avoid collisions. RTL. */
 
+/* Bind to the site's real theme tokens (defined in dc-theme.css for both light
+   and [data-theme="dark"]), so the workbench inherits the site's colors, radii,
+   shadows and typography and follows dark mode automatically (spec 2.1). */
 :root {
-  --dcp-accent: var(--blue, #2f6fb0);
-  --dcp-ink: var(--text, #1c1c1c);
-  --dcp-surface: var(--card-bg, var(--bg, #ffffff));
-  --dcp-line: rgba(0, 0, 0, .12);
-  --dcp-radius: var(--radius, 12px);
-  --dcp-shadow: var(--shadow, 0 8px 30px rgba(0, 0, 0, .15));
+  --dcp-accent: var(--ac, #0b5fff);
+  --dcp-ink: var(--txt, #0a1a33);
+  --dcp-muted: var(--txt2, #4a5f85);
+  --dcp-surface: var(--card-bg, #ffffff);
+  --dcp-surface-2: var(--surface2, #f4f6fb);
+  --dcp-line: var(--border, rgba(2, 35, 96, .12));
+  --dcp-radius: var(--r-md, 14px);
+  --dcp-radius-pill: var(--r-f, 999px);
+  --dcp-shadow: var(--card-sh2, 0 8px 30px rgba(0, 0, 0, .15));
+  --dcp-chip-bg: var(--chip-bg, rgba(11, 95, 255, .08));
 }
 
 /* ---- workbench entry button ---------------------------------------------- */

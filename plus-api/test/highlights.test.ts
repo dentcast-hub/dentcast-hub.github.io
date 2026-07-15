@@ -110,6 +110,23 @@ describe('highlights CRUD + anchoring round-trip', () => {
     expect(cs.rows[0].n).toBe(0); // cascaded
   });
 
+  it('accepts a highlight with null optional fields (workbench with no label)', async () => {
+    // The workbench sends explicit nulls for unset fields; the API must accept
+    // them (regression: previously rejected with 400 so highlighting never worked).
+    const res = await app.inject({
+      method: 'POST', url: '/highlights', headers: { cookie },
+      payload: {
+        content_id: 'resin-cements-overview',
+        exact: 'یک هایلایت بدون برچسب',
+        prefix: 'قبل ', suffix: ' بعد',
+        color: 'green', underline: false, cloze_markers: [],
+        note: null, label: null, content_hash: 'h',
+      },
+    });
+    expect(res.statusCode).toBe(201);
+    expect(res.json().highlight.label).toBeNull();
+  });
+
   it('rejects an invalid label', async () => {
     const res = await app.inject({
       method: 'POST', url: '/highlights', headers: { cookie },
