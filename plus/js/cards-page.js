@@ -5,6 +5,7 @@ import { openLoginModal } from './login-modal.js';
 import { renderTree } from './tree.js';
 import { renderArchive } from './archive.js';
 import { el } from './util.js';
+import { registerSW } from './pwa.js';
 
 function showLogin(root) {
   root.innerHTML = '';
@@ -20,6 +21,7 @@ function showLogin(root) {
 }
 
 async function main() {
+  registerSW();
   const root = document.getElementById('dcp-root');
   if (!root) return;
   const user = await currentUser();

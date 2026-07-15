@@ -68,6 +68,36 @@ body.dcp-page a { color: var(--dcp-accent); text-decoration: none; }
 .dcp-blank { font: inherit; background: var(--dcp-accent-soft); border: 1px dashed var(--dcp-accent); color: var(--dcp-accent); border-radius: 6px; padding: 0 8px; cursor: pointer; letter-spacing: .1em; }
 .dcp-blank.is-open { background: transparent; border-style: solid; color: var(--dcp-ink); cursor: default; letter-spacing: normal; }
 
+/* ---- dashboard ----------------------------------------------------------- */
+.dcp-dash-hello { font-size: 1.4rem; font-weight: 800; margin: 4px 2px 16px; }
+.dcp-dash-sec { background: var(--dcp-panel); border: 1px solid var(--dcp-line); border-radius: 16px; padding: 14px 16px; margin-bottom: 12px; }
+.dcp-dash-h2 { font-size: 1rem; font-weight: 800; margin: 0 0 10px; color: var(--dcp-muted); }
+.dcp-muted { color: var(--dcp-muted); }
+.dcp-placeholder, .dcp-dormant { opacity: .85; }
+
+.dcp-streak-detail { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+.dcp-streak-big { display: inline-flex; align-items: baseline; gap: 8px; }
+.dcp-streak-num { font-size: 2rem; font-weight: 900; }
+.dcp-streak-unit { color: var(--dcp-muted); }
+.dcp-streak-record { color: var(--dcp-muted); }
+.dc-plus-flame { filter: grayscale(1); opacity: .5; }
+.dc-plus-flame.is-active { filter: none; opacity: 1; }
+
+.dcp-continue { color: var(--dcp-accent) !important; font-weight: 600; }
+.dcp-continue-lead { color: var(--dcp-muted); font-weight: 400; }
+
+.dcp-recent-list { display: flex; flex-direction: column; gap: 8px; }
+.dcp-recent { display: flex; align-items: center; gap: 8px; color: var(--dcp-ink) !important; text-decoration: none; padding: 6px 0; border-bottom: 1px solid var(--dcp-line); }
+.dcp-recent:last-child { border-bottom: none; }
+.dcp-recent-text { flex: 1 1 auto; }
+
+.dcp-tile-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+.dcp-tile { position: relative; background: var(--dcp-panel-2); border: 1px solid var(--dcp-line); border-radius: 12px; padding: 14px 12px; display: flex; flex-direction: column; gap: 4px; }
+.dcp-tile.is-locked { opacity: .8; }
+.dcp-tile-lock { font-size: 1.1rem; }
+.dcp-tile-name { font-weight: 700; }
+.dcp-tile-soon { font-size: .8rem; color: var(--dcp-muted); }
+
 /* dark-surface overrides for the shared button classes on /plus pages */
 body.dcp-page .dcp-btn { border-color: var(--dcp-line); color: var(--dcp-ink); }
 body.dcp-page .dcp-btn-primary { background: var(--dcp-accent); color: #06101f; border-color: transparent; }

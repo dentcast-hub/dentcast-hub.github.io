@@ -3404,26 +3404,12 @@ a.dc-list-card--pillar {
         <h1 class="dc-identity-main">دنت‌کست — <span class="dc-shimmer-word">جامع‌ترین</span> منبع فارسی پروتز و ایمپلنت مبتنی بر شواهد</h1>
       </div>
 
-      <!-- WEEKLY LEARNING — standalone card with its own identity, above the
-           episode hero on purpose: it belongs to the visitor's whole week,
-           not to the episodes -->
-      <div class="dc-dose-card" id="dcDoseRow" aria-label="یادگیری هفتگی شما">
-        <div class="dc-dose-head">
-          <span class="dc-dose-lbl"><span class="dc-dose-live" id="dcDoseLiveHome"></span><span id="dcDoseLblHome">یادگیری هفتگی شما</span></span>
-          <span class="dc-dose-time" id="dcDoseTimeHome">۰:۰۰ از ۳۵:۰۰</span>
-        </div>
-        <div class="dc-dose-bar" id="dcDoseBarHome">
-          <div class="dc-dose-fill" id="dcDoseFillHome"></div>
-          <span class="dc-dose-tick" style="right:14.29%"></span>
-          <span class="dc-dose-tick" style="right:28.57%"></span>
-          <span class="dc-dose-tick" style="right:42.86%"></span>
-          <span class="dc-dose-tick" style="right:57.14%"></span>
-          <span class="dc-dose-tick" style="right:71.43%"></span>
-          <span class="dc-dose-tick" style="right:85.71%"></span>
-        </div>
-        <div class="dc-dose-state" id="dcDoseStateHome">—</div>
-        <div class="dc-dose-msg">سعی کن هفته‌ای حداقل ۳۵ دقیقه با دنت‌کست باشی</div>
-      </div>
+      <!-- DentCast Plus personal card. One of exactly two anonymous invitation
+           points (spec 2.3). For guests: a quiet one-line invitation. For a
+           logged-in free user: streak + a line back into their own material +
+           one quiet premium line. No minutes target, no due-card counter.
+           Rendered by /plus/plus.js; stays empty (display:none) until it is. -->
+      <div id="dcPlusHomeCard" class="dc-plus-home-card" aria-label="یادگیری شما" hidden></div>
 
       <!-- HERO: latest episode (showcase) -->
       <div class="dc-home-hero" id="card-episodes" data-href="/episodes/episode-160.html" onclick="window.location.href=this.dataset.href||'episodes.html'" role="link" tabindex="0" aria-label="رفتن به صفحه‌ی تازه‌ترین قسمت">
@@ -5689,6 +5675,11 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
      claims this flag, so the dc-nav.js copy bails and we never double-count */
   if (window.__dcDoseInit) return;
   window.__dcDoseInit = 1;
+  /* Minutes-based weekly-presence widget retired (DentCast Plus, spec principle 3:
+     no minutes target anywhere). The server-sourced Plus card (#dcPlusHomeCard,
+     rendered by /plus/plus.js) replaces it. This early return also stops the
+     localStorage presence counter. */
+  return;
   var KEY = 'dcDose', WEEK_SEC = 35 * 60, TICK = 5000;
 
   function weekIdOf(d) {

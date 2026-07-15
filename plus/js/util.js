@@ -31,6 +31,28 @@ export function debounce(fn, ms) {
   };
 }
 
+// Asia/Tehran calendar day ('YYYY-MM-DD') for the same day boundary the server
+// uses, so the client can tell whether a streak is still "active" today.
+export function tehranDay(date = new Date()) {
+  return new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Asia/Tehran', year: 'numeric', month: '2-digit', day: '2-digit',
+  }).format(date);
+}
+
+export function previousDay(day) {
+  const [y, m, d] = day.split('-').map(Number);
+  return new Date(Date.UTC(y, m - 1, d) - 86400000).toISOString().slice(0, 10);
+}
+
+// A streak is "active" (bright flame) only if the last active day is today or
+// yesterday. Otherwise it is stale; we never show a bright flame for a lapsed
+// streak, and never a gray flame to guests (that manufactures false loss).
+export function streakIsActive(lastActiveDay) {
+  if (!lastActiveDay) return false;
+  const today = tehranDay();
+  return lastActiveDay === today || lastActiveDay === previousDay(today);
+}
+
 export function escapeHtml(s) {
   return String(s).replace(/[&<>"']/g, (c) => (
     { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]

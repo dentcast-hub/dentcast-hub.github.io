@@ -8,6 +8,7 @@ import { openLoginModal } from './js/login-modal.js';
 import { Workbench } from './js/workbench.js';
 import { el } from './js/util.js';
 import { getModel, landingTopicKey } from './js/content-index.js';
+import { initHomeCard } from './js/home-card.js';
 
 function injectWorkbenchButton(main, proseRoot) {
   const btn = el('button', { class: 'dcp-wb-button', type: 'button', 'aria-pressed': 'false' }, 'میز کار');
@@ -109,6 +110,7 @@ function boot() {
   try {
     initArticle();
     initLanding();
+    initHomeCard();
   } catch (e) {
     // Progressive enhancement: never break the page.
     if (window.console) console.warn('[plus] init failed', e);

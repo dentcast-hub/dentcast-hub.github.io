@@ -62,6 +62,19 @@ export async function highlightRoutes(app: FastifyInstance): Promise<void> {
     return reply.send({ highlights: res.rows });
   });
 
+  // GET /highlights/recent?limit= -> the user's latest highlights (own dashboard;
+  // bodies allowed here). Registered before :id routes; distinct method anyway.
+  app.get('/highlights/recent', async (request, reply) => {
+    const q = request.query as { limit?: string };
+    const limit = Math.min(Math.max(parseInt(q.limit || '8', 10) || 8, 1), 50);
+    const res = await pool.query<HighlightRow>(
+      `select ${SELECT_COLS} from highlights
+        where user_id = $1 order by created_at desc limit $2`,
+      [request.user!.id, limit],
+    );
+    return reply.send({ highlights: res.rows });
+  });
+
   // POST /highlights  -> create highlight + its card_state row + log the event
   app.post('/highlights', {
     schema: {

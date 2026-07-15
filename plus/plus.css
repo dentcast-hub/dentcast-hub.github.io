@@ -39,6 +39,25 @@
   color: #fff; background: var(--dcp-accent); border: 1px solid transparent;
 }
 
+/* ---- homepage personal card ---------------------------------------------- */
+.dc-plus-home-card { margin: 0 0 14px; }
+.dc-plus-home-inner {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px;
+  padding: 12px 16px; border: 1px solid var(--dcp-line); border-radius: var(--dcp-radius);
+  background: var(--dcp-surface);
+}
+.dc-plus-anon { justify-content: space-between; }
+.dc-plus-anon-line { margin: 0; line-height: 1.9; flex: 1 1 240px; }
+.dc-plus-streak { display: inline-flex; align-items: center; gap: 6px; text-decoration: none; color: inherit; font-weight: 700; }
+.dc-plus-flame { filter: grayscale(1); opacity: .5; }
+.dc-plus-flame.is-active { filter: none; opacity: 1; }
+.dc-plus-streak-n { font-size: 1.2rem; }
+.dc-plus-streak-lbl { font-weight: 400; opacity: .8; font-size: .9rem; }
+.dc-plus-material { color: var(--dcp-accent); text-decoration: none; font-weight: 600; }
+.dc-plus-material-lead { opacity: .75; font-weight: 400; }
+.dc-plus-due { color: var(--dcp-accent); font-weight: 700; text-decoration: none; }
+.dc-plus-premium-line { margin-inline-start: auto; color: inherit; opacity: .6; font-size: .88rem; text-decoration: none; }
+
 /* ---- highlight marks (in the prose) -------------------------------------- */
 mark.dcp-hl { background: transparent; color: inherit; border-radius: 3px; padding: 0 1px; cursor: pointer; }
 mark.dcp-hl[data-color="yellow"] { background: #ffe08a; }

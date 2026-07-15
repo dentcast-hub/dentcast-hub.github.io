@@ -88,6 +88,18 @@ describe('GET /export/highlights', () => {
   });
 });
 
+describe('GET /highlights/recent', () => {
+  it('returns the latest highlights newest-first, capped by limit', async () => {
+    await addHighlight(cidsInSub[0], 'قدیمی');
+    await addHighlight(cidsInSub[0], 'جدیدتر');
+    const res = await app.inject({ method: 'GET', url: '/highlights/recent?limit=1', headers: { cookie } });
+    expect(res.statusCode).toBe(200);
+    const list = res.json().highlights;
+    expect(list).toHaveLength(1);
+    expect(list[0].exact).toBe('جدیدتر');
+  });
+});
+
 describe('GET /progress', () => {
   it('reports totals and last content', async () => {
     await addHighlight(cidsInSub[0], 'یک');

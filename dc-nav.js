@@ -1827,6 +1827,11 @@
   /* one dcDose instance per page (the homepage inline copy claims this first) */
   if (window.__dcDoseInit) return;
   window.__dcDoseInit = 1;
+  /* Minutes-based weekly-presence widget retired site-wide (DentCast Plus, spec
+     principle 3: no minutes target anywhere). This early return stops the topbar
+     ring and the localStorage 'dcDose' presence counter on every page. The dead
+     code below is removed in the header rework. */
+  return;
   var KEY = 'dcDose', WEEK_SEC = 35 * 60, TICK = 5000;
 
   function weekIdOf(d) {

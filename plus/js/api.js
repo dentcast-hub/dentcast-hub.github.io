@@ -60,6 +60,7 @@ export const api = {
   // highlights
   listHighlights: (content_id) => request('/highlights', { query: { content_id } }),
   listTopic: (topic) => request('/highlights', { query: { topic } }),
+  recentHighlights: (limit = 8) => request('/highlights/recent', { query: { limit } }),
   createHighlight: (h) => request('/highlights', { method: 'POST', body: h }),
   updateHighlight: (id, patch) => request('/highlights/' + id, { method: 'PATCH', body: patch }),
   deleteHighlight: (id) => request('/highlights/' + id, { method: 'DELETE' }),
