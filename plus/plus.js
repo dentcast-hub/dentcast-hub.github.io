@@ -85,26 +85,37 @@ async function initArticle() {
   }
 }
 
-// Topic/category landing pages carry an entry point into the user's card
-// archive for that topic (spec 2.8). Shown to LOGGED-IN users only: for guests
-// the site must stay exactly as today except the two invitation points (2.3), so
-// a "your cards" link must never appear for anonymous visitors.
+// Folder landing pages carry a flashcard section at the top for that folder's
+// cards (prototype feedback). Shown to LOGGED-IN users only: guests see the site
+// exactly as today except the two invitation points (spec 2.3).
 async function initLanding() {
   if (document.querySelector('main.article-content-wrap')) return; // handled as an article
+  if (document.querySelector('.dcp-flash-section')) return;
   const user = await currentUser();
   if (!user) return;
   const model = await getModel();
   const topicKey = landingTopicKey(model, location.pathname);
   if (!topicKey) return;
-  if (document.querySelector('.dcp-cards-entry')) return;
 
-  const link = el('a', {
-    class: 'dcp-cards-entry-btn', href: '/plus/cards.html?topic=' + encodeURIComponent(topicKey),
-  }, 'کارت‌های شما');
-  const bar = el('div', { class: 'dcp-cards-entry' }, [link]);
-  const h1 = document.querySelector('main h1, h1');
-  if (h1 && h1.parentNode) h1.parentNode.insertBefore(bar, h1.nextSibling);
-  else (document.querySelector('main') || document.body).prepend(bar);
+  const { renderArchive } = await import('./js/archive.js');
+  const body = el('div', { class: 'dcp-flash-body' });
+  const chevron = el('span', { class: 'dcp-flash-chevron', 'aria-hidden': 'true' }, '▾');
+  const head = el('div', { class: 'dcp-flash-head', role: 'button', tabindex: '0' }, [
+    el('span', {}, 'فلش‌کارت‌های شما در این پوشه'),
+    chevron,
+  ]);
+  const section = el('section', { class: 'dcp-flash-section is-open', 'aria-label': 'فلش‌کارت‌های شما' }, [head, body]);
+
+  const toggle = () => section.classList.toggle('is-open');
+  head.addEventListener('click', toggle);
+  head.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } });
+
+  const main = document.querySelector('main') || document.body;
+  const h1 = main.querySelector('h1');
+  if (h1 && h1.parentNode === main) main.insertBefore(section, h1.nextSibling);
+  else main.prepend(section);
+
+  renderArchive(body, topicKey, { inline: true });
 }
 
 function boot() {

@@ -50,6 +50,17 @@ describe('OTP flow', () => {
     expect('due_card_count' in me).toBe(false);
   });
 
+  it('reports is_new on first login and not on subsequent logins (onboarding)', async () => {
+    const phone = '09121110099';
+    const r1 = await app.inject({ method: 'POST', url: '/auth/otp/request', payload: { phone } });
+    const v1 = await app.inject({ method: 'POST', url: '/auth/otp/verify', payload: { phone, code: r1.json().dev_code } });
+    expect(v1.json().is_new).toBe(true);
+
+    const r2 = await app.inject({ method: 'POST', url: '/auth/otp/request', payload: { phone } });
+    const v2 = await app.inject({ method: 'POST', url: '/auth/otp/verify', payload: { phone, code: r2.json().dev_code } });
+    expect(v2.json().is_new).toBe(false);
+  });
+
   it('does not create a second profile when the same phone logs in again', async () => {
     const phone = '09121110002';
     for (let i = 0; i < 2; i += 1) {

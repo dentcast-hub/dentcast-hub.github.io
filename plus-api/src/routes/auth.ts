@@ -111,17 +111,19 @@ export async function authRoutes(app: FastifyInstance): Promise<void> {
       tier: string;
       current_streak: number;
       longest_streak: number;
+      is_new: boolean;
     }>(
       `insert into profiles (phone, display_name)
        values ($1, $2)
        on conflict (phone) do update set phone = excluded.phone
-       returning id, display_name, tier, current_streak, longest_streak`,
+       returning id, display_name, tier, current_streak, longest_streak, (xmax = 0) as is_new`,
       [phone, generatePseudonym()],
     );
 
     setSessionCookie(reply, user!.id);
     return reply.send({
       user: publicUser(user!),
+      is_new: user!.is_new === true, // first login -> client shows onboarding
       return_to: sanitizeReturnTo(return_to),
     });
   });

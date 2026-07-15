@@ -95,11 +95,41 @@ export function openLoginModal({ returnTo = location.pathname } = {}) {
         try {
           const res = await api.verifyOtp(phone, code, returnTo);
           currentUser({ refresh: true }); // invalidate cached /me
-          close(resolve, { user: res.user, return_to: res.return_to });
+          if (res.is_new) showOnboardingStep(stepCode, res);
+          else close(resolve, { user: res.user, return_to: res.return_to });
         } catch (e) {
           codeMsg.textContent = e instanceof ApiError ? e.message : 'ورود ناموفق بود.';
           verifyBtn.disabled = false;
         }
+      }
+
+      // First login only: a short, fully skippable step asking just a nickname.
+      // No real name is ever required (spec feedback).
+      function showOnboardingStep(prevStep, res) {
+        const nameInput = el('input', { type: 'text', class: 'dcp-input', maxlength: '40' });
+        nameInput.value = (res.user && res.user.display_name) || '';
+        const finish = (user) => close(resolve, { user, return_to: res.return_to });
+        const saveBtn = el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button' }, 'ذخیره و ادامه');
+        const skipBtn = el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button' }, 'رد کردن');
+        saveBtn.onclick = async () => {
+          const name = nameInput.value.trim();
+          saveBtn.disabled = true;
+          if (name && name !== res.user.display_name) {
+            try { const u = await api.updateMe({ display_name: name }); finish({ ...res.user, display_name: u.display_name }); return; }
+            catch (_) { /* fall through and keep the generated name */ }
+          }
+          finish(res.user);
+        };
+        skipBtn.onclick = () => finish(res.user);
+
+        const step = el('div', { class: 'dcp-modal-step' }, [
+          el('label', { class: 'dcp-label' }, 'یک اسم مستعار برای خودتان انتخاب کنید'),
+          nameInput,
+          el('p', { class: 'dcp-modal-sub', style: 'margin:0' }, 'نام واقعی لازم نیست. بعداً هم از پروفایل قابل تغییر است.'),
+          el('div', { class: 'dcp-editor-actions' }, [saveBtn, skipBtn]),
+        ]);
+        card.replaceChild(step, prevStep);
+        setTimeout(() => { nameInput.focus(); nameInput.select(); }, 30);
       }
       verifyBtn.onclick = submitCode;
       codeInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') submitCode(); });

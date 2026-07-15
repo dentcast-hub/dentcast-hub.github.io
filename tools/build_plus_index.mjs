@@ -24,7 +24,7 @@ const toContentId = (url) => url.replace(/^\/+/, '').replace(/\.html$/i, '');
 // order they should appear. Each links to its landing page; the article total is
 // counted from disk so per-folder progress is accurate.
 const FOLDER_META = [
-  ['episodes', 'پادکست', '/episodes/'],
+  ['episodes', 'پادکست', '/episodes.html'],
   ['notecast', 'نوت‌کست', '/notecast/'],
   ['insight', 'کلینیکال اینسایت', '/insight/'],
   ['dentai', 'دنت‌ای‌آی', '/dentai/'],

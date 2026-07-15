@@ -84,25 +84,6 @@ body.dcp-page a { color: var(--ac, #0b5fff); text-decoration: none; }
 .dcp-tile-name { font-weight: 700; }
 .dcp-tile-soon { font-size: .8rem; color: var(--txt2, #4a5f85); }
 
-/* ---- card archive -------------------------------------------------------- */
-.dcp-archive-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px; margin-bottom: 6px; }
-.dcp-back { color: var(--txt2, #4a5f85) !important; font-size: .9rem; }
-.dcp-archive-title { font-size: 1.4rem; font-weight: 800; margin: 0; flex: 1 1 auto; }
-.dcp-archive-count { color: var(--txt2, #4a5f85); font-size: .9rem; }
-.dcp-archive-note { color: var(--txt2, #4a5f85); font-size: .92rem; margin: 4px 2px 18px; }
-.dcp-card-list { display: flex; flex-direction: column; gap: 12px; }
-.dcp-card { background: var(--card-bg, #fff); border: 1px solid var(--card-border, rgba(2,35,96,.09)); border-radius: var(--r-lg, 18px); padding: 14px 16px; box-shadow: var(--card-sh, 0 1px 3px rgba(2,35,96,.07)); }
-.dcp-card.is-reviewed { opacity: .7; border-color: var(--ac, #0b5fff); }
-.dcp-card-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; color: var(--txt2, #4a5f85); font-size: .82rem; }
-.dcp-card-dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
-.dcp-card-label { background: var(--chip-bg, rgba(11,95,255,.08)); border: 1px solid var(--chip-bd, rgba(11,95,255,.2)); color: var(--chip-txt, #022360); border-radius: 999px; padding: 1px 10px; }
-.dcp-card-src { margin-inline-start: auto; }
-.dcp-card-text { font-size: 1.05rem; line-height: 2.1; }
-.dcp-card-note { margin-top: 10px; padding: 8px 10px; background: var(--surface2, #f4f6fb); border-radius: 10px; white-space: pre-wrap; }
-.dcp-card-actions { display: flex; gap: 8px; margin-top: 12px; }
-.dcp-blank { font: inherit; background: var(--chip-bg, rgba(11,95,255,.12)); border: 1px dashed var(--ac, #0b5fff); color: var(--ac, #0b5fff); border-radius: 6px; padding: 0 10px; cursor: pointer; letter-spacing: .1em; }
-.dcp-blank.is-open { background: transparent; border-style: solid; color: inherit; cursor: default; letter-spacing: normal; }
-
 /* ---- profile ------------------------------------------------------------- */
 .dcp-field-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
 .dcp-field-row .dcp-input { flex: 1 1 180px; background: var(--surface, #fff); color: var(--txt); border: 1px solid var(--border, rgba(2,35,96,.12)); border-radius: 10px; padding: 10px 12px; font: inherit; }

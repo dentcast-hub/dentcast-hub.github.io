@@ -18,17 +18,16 @@ export function contentInfo(model, contentId) {
   return (model.byContent && model.byContent[contentId]) || null;
 }
 
-// Detect the topic key for a topic/category landing page, or null if the current
-// path is not one. The real topic/category landing pages are the pillar category
-// pages (/pillar/<cluster>/); their archive is scoped to exactly that category's
-// content (spec 2.8). Content-type index pages (/insight/, /notecast/) are NOT
-// topics and get no archive entry point, so a landing page never shows a set that
-// spans multiple categories.
+// Detect the folder-landing topic key for the current path, or null. The card
+// archive / flashcards live on each real folder landing page (/notecast/,
+// /dentai/, ...), scoped to exactly that folder's content (prototype feedback).
+// Article pages are handled as articles (workbench), not here.
 export function landingTopicKey(model, pathname) {
   const segs = pathname.replace(/^\/+|\/+$/g, '').split('/').filter(Boolean);
-  if (segs[0] === 'pillar' && segs[1] && segs[1] !== 'index.html') {
-    const exists = (model.clusters || []).some((c) => c.key === segs[1]);
-    return exists ? 'cluster:' + segs[1] : null;
-  }
-  return null;
+  const isLanding = segs.length === 1 || (segs.length === 2 && segs[1] === 'index.html');
+  if (!isLanding) return null;
+  // Matches /folder/, /folder/index.html, and a root /folder.html landing.
+  const folder = segs[0].replace(/\.html$/i, '');
+  const known = (model.folders || []).some((f) => f.key === folder);
+  return known ? 'folder:' + folder : null;
 }

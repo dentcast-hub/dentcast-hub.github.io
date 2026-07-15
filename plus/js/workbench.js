@@ -56,8 +56,8 @@ export class Workbench {
         onclick: () => this._setTool({ kind: 'highlight', color: p.key }),
       }));
 
-    const underlineBtn = el('button', { class: 'dcp-tool', type: 'button', title: 'زیرخط', dataset: { tool: 'underline' }, onclick: () => this._setTool({ kind: 'underline' }) }, 'زیرخط');
-    const clozeBtn = el('button', { class: 'dcp-tool', type: 'button', title: 'جای‌خالی', dataset: { tool: 'cloze' }, onclick: () => this._setTool({ kind: 'cloze' }) }, 'جای‌خالی');
+    const underlineBtn = el('button', { class: 'dcp-tool', type: 'button', title: 'زیرخط کشیدن', dataset: { tool: 'underline' }, onclick: () => this._setTool({ kind: 'underline' }) }, 'U̲ زیرخط');
+    const clozeBtn = el('button', { class: 'dcp-tool', type: 'button', title: 'جای خالی برای مرور (کلوز)', dataset: { tool: 'cloze' }, onclick: () => this._setTool({ kind: 'cloze' }) }, '▢ جای خالی');
 
     const labelChips = LABELS.map((l) =>
       el('button', {
@@ -65,14 +65,19 @@ export class Workbench {
         onclick: () => this._toggleLabel(l.key),
       }, l.fa));
 
-    const notesToggle = el('button', { class: 'dcp-tool', type: 'button', title: 'یادداشت‌ها', onclick: () => this._toggleNotes() }, 'یادداشت‌ها');
-    const tocToggle = el('button', { class: 'dcp-tool dcp-only-mobile', type: 'button', title: 'فهرست', onclick: () => this._toggleToc() }, 'فهرست');
-    const exitBtn = el('button', { class: 'dcp-tool dcp-exit', type: 'button', onclick: () => this.exit() }, 'خروج از میز کار');
+    const notesToggle = el('button', { class: 'dcp-tool', type: 'button', title: 'یادداشت‌های شما', onclick: () => this._toggleNotes() }, '📝 یادداشت‌ها');
+    const tocToggle = el('button', { class: 'dcp-tool dcp-only-mobile', type: 'button', title: 'سرفصل‌های مقاله', onclick: () => this._toggleToc() }, '☰ سرفصل‌ها');
+    const exitBtn = el('button', { class: 'dcp-tool dcp-exit', type: 'button', onclick: () => this.exit() }, '✕ خروج');
+
+    const group = (label, items) => el('span', { class: 'dcp-tool-group' }, [
+      el('span', { class: 'dcp-tool-glabel' }, label),
+      ...items,
+    ]);
 
     const bar = el('div', { class: 'dcp-toolbar', role: 'toolbar', 'aria-label': 'ابزار میز کار' }, [
-      el('span', { class: 'dcp-tool-group' }, swatches),
-      el('span', { class: 'dcp-tool-group' }, [underlineBtn, clozeBtn]),
-      el('span', { class: 'dcp-tool-group' }, labelChips),
+      group('رنگ هایلایت', swatches),
+      group('ابزار', [underlineBtn, clozeBtn]),
+      group('برچسب', labelChips),
       el('span', { class: 'dcp-tool-group' }, [notesToggle, tocToggle]),
       exitBtn,
     ]);
@@ -137,8 +142,12 @@ export class Workbench {
       this._renderOne(highlight);
       this._recountToc();
       this._renderNotes();
+      // Make note-writing immediate and in-reach: open the note field on the new
+      // highlight (spec feedback: a real, accessible place to write).
+      const item = this.items.get(highlight.id);
+      if (item && item.marks[0]) this._openEditor(highlight, item.marks[0], { focusNote: true });
     } catch (e) {
-      this._toast('ثبت هایلایت ناموفق بود.');
+      this._toast('ثبت هایلایت ناموفق بود. اتصال به سرور را بررسی کنید.');
     }
   }
 
@@ -176,9 +185,9 @@ export class Workbench {
   }
 
   // --- editor popover (note / label / color / delete) ----------------------
-  _openEditor(h, anchorEl) {
+  _openEditor(h, anchorEl, { focusNote = false } = {}) {
     this._closeEditor();
-    const noteInput = el('textarea', { class: 'dcp-note-input', placeholder: 'یادداشت شما...' });
+    const noteInput = el('textarea', { class: 'dcp-note-input', rows: '3', placeholder: 'یادداشت خود را اینجا بنویسید...' });
     noteInput.value = h.note || '';
 
     const colorRow = PALETTE.map((p) => el('button', {
@@ -198,16 +207,22 @@ export class Workbench {
     const del = el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button', onclick: () => this._delete(h) }, 'حذف');
 
     const pop = el('div', { class: 'dcp-editor', role: 'dialog', 'aria-label': 'ویرایش هایلایت' }, [
-      el('div', { class: 'dcp-editor-row' }, colorRow),
-      el('div', { class: 'dcp-editor-row' }, labelRow),
+      el('label', { class: 'dcp-editor-label' }, 'یادداشت'),
       noteInput,
+      el('label', { class: 'dcp-editor-label' }, 'رنگ'),
+      el('div', { class: 'dcp-editor-row' }, colorRow),
+      el('label', { class: 'dcp-editor-label' }, 'برچسب'),
+      el('div', { class: 'dcp-editor-row' }, labelRow),
       el('div', { class: 'dcp-editor-actions' }, [save, del]),
     ]);
     document.body.appendChild(pop);
     this.ui.editor = pop;
     const r = anchorEl.getBoundingClientRect();
-    pop.style.top = (window.scrollY + r.bottom + 6) + 'px';
-    pop.style.right = Math.max(8, document.documentElement.clientWidth - (r.right)) + 'px';
+    // Prefer placing the editor just below the highlight, clamped to the viewport.
+    const top = Math.min(window.scrollY + r.bottom + 8, window.scrollY + window.innerHeight - 280);
+    pop.style.top = Math.max(window.scrollY + 8, top) + 'px';
+    pop.style.right = Math.max(8, document.documentElement.clientWidth - r.right) + 'px';
+    if (focusNote) setTimeout(() => noteInput.focus(), 30);
     setTimeout(() => {
       const off = (e) => { if (!pop.contains(e.target) && e.target !== anchorEl) { this._closeEditor(); document.removeEventListener('mousedown', off); } };
       document.addEventListener('mousedown', off);
@@ -262,7 +277,7 @@ export class Workbench {
       list.appendChild(el('div', { class: 'dcp-toc-item' }, [link]));
     });
     const panel = el('aside', { class: 'dcp-toc-panel' }, [
-      el('div', { class: 'dcp-panel-head' }, 'فهرست'),
+      el('div', { class: 'dcp-panel-head' }, 'سرفصل‌های مقاله'),
       list,
     ]);
     document.body.appendChild(panel);
