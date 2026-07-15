@@ -2,7 +2,7 @@ import type { FastifyInstance } from 'fastify';
 import { requireAuth } from '../middleware/auth.js';
 import { pool, withTransaction } from '../db.js';
 import { recordActivity } from '../services/activity.js';
-import { resolveTopic } from '../content-index.js';
+import { resolveTopic, folderLabel } from '../content-index.js';
 
 const LABELS = new Set(['important', 'unclear', 'clinical_pearl']);
 
@@ -33,9 +33,22 @@ export async function highlightRoutes(app: FastifyInstance): Promise<void> {
   app.get('/highlights', async (request, reply) => {
     const { content_id, topic } = request.query as { content_id?: string; topic?: string };
 
-    // Topic archive (spec 2.8): the user's highlights across the content within
-    // ONE taxonomy branch. Not cross-topic aggregation (that is premium).
+    // Topic archive (spec 2.8): the user's highlights within ONE branch. Not
+    // cross-topic aggregation (that is premium).
     if (topic && !content_id) {
+      // folder:<key> - every highlight in the folder, matched by content_id
+      // prefix (covers pages that are not in the taxonomy index too).
+      if (topic.startsWith('folder:')) {
+        const key = topic.slice('folder:'.length);
+        if (!/^[a-z0-9-]+$/i.test(key)) return reply.code(404).send({ error: 'unknown_topic' });
+        const res = await pool.query<HighlightRow>(
+          `select ${SELECT_COLS} from highlights
+            where user_id = $1 and content_id like $2
+            order by content_id asc, created_at asc`,
+          [request.user!.id, key + '/%'],
+        );
+        return reply.send({ topic, topic_fa: folderLabel(key), highlights: res.rows });
+      }
       const resolved = resolveTopic(topic);
       if (!resolved) return reply.code(404).send({ error: 'unknown_topic' });
       const res = await pool.query<HighlightRow>(

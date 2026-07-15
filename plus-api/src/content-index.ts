@@ -12,8 +12,9 @@ import { config } from './config.js';
 
 interface Subtopic { key: string; fa: string; contentCount: number; contentIds: string[]; }
 interface Cluster { key: string; fa: string; contentCount: number; contentIds: string[]; subtopics: Subtopic[]; }
-interface ContentInfo { cluster: string; subtopic: string | null; type: string; title: string; url: string; secondary: string[]; }
-interface IndexFile { version: number; clusters: Cluster[]; byContent: Record<string, ContentInfo>; }
+interface Folder { key: string; fa: string; url: string; total: number; }
+interface ContentInfo { cluster: string | null; subtopic: string | null; type: string; title: string; url: string; secondary: string[]; }
+interface IndexFile { version: number; folders: Folder[]; clusters: Cluster[]; byContent: Record<string, ContentInfo>; }
 
 let cached: IndexFile | null = null;
 
@@ -31,9 +32,18 @@ export function getIndex(): IndexFile {
     // Missing index must not crash the API; the tree just comes back empty.
     // eslint-disable-next-line no-console
     console.warn(`[content-index] could not load ${path}; tree/topic will be empty`);
-    cached = { version: 0, clusters: [], byContent: {} };
+    cached = { version: 0, folders: [], clusters: [], byContent: {} };
   }
   return cached;
+}
+
+export function getFolders(): Folder[] {
+  return getIndex().folders || [];
+}
+
+/** The folder ("پادکست"، "نوت‌کست"، ...) a content_id belongs to. */
+export function folderOf(contentId: string): string {
+  return contentId.split('/')[0];
 }
 
 /** Resolve a topic key to its content_ids and a Persian label. */
@@ -44,7 +54,9 @@ export function resolveTopic(topic: string): { fa: string; contentIds: string[] 
   const colon = topic.indexOf(':');
   if (colon !== -1) { kind = topic.slice(0, colon); scope = topic.slice(colon + 1); }
 
-  if (kind === 'type' || (!kind && false)) {
+  // folder:<key> is resolved by the caller via a content_id prefix query (it must
+  // include every highlight in the folder, even on pages not in the index).
+  if (kind === 'type') {
     const contentIds = Object.keys(idx.byContent).filter((id) => idx.byContent[id].type === scope);
     if (!contentIds.length) return null;
     return { fa: scope, contentIds };
@@ -65,7 +77,28 @@ export function resolveTopic(topic: string): { fa: string; contentIds: string[] 
   return null;
 }
 
-/** Turn a content_id -> count map into the dashboard tree (counts + links). */
+/** Persian label for a folder key, or the key itself if unknown. */
+export function folderLabel(key: string): string {
+  return getFolders().find((f) => f.key === key)?.fa || key;
+}
+
+/**
+ * The dashboard navigation tree: the real site folders, each with the user's
+ * highlight count and its landing-page link (spec change: folder-based tree).
+ * Counts are grouped by content_id prefix.
+ */
+export function buildFolderTree(counts: Map<string, number>) {
+  const byFolder = new Map<string, number>();
+  for (const [cid, n] of counts) {
+    const f = folderOf(cid);
+    byFolder.set(f, (byFolder.get(f) || 0) + n);
+  }
+  return getFolders().map((f) => ({
+    key: f.key, fa: f.fa, url: f.url, total: f.total, count: byFolder.get(f.key) || 0,
+  }));
+}
+
+/** Turn a content_id -> count map into the pillar tree (Phase 3 map reuses it). */
 export function buildTree(counts: Map<string, number>) {
   const idx = getIndex();
   const sum = (ids: string[]) => ids.reduce((acc, id) => acc + (counts.get(id) || 0), 0);

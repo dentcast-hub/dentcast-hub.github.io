@@ -37,22 +37,23 @@ async function addHighlight(content_id: string, exact: string) {
 }
 
 describe('GET /tree', () => {
-  it('aggregates highlight counts per taxonomy branch with links, no bodies', async () => {
+  it('returns real site folders with per-folder highlight counts + landing links', async () => {
+    // content_id folder = first path segment.
+    const folderKey = cidsInSub[0].split('/')[0];
     await addHighlight(cidsInSub[0], 'اول');
     await addHighlight(cidsInSub[0], 'دوم');
-    await addHighlight(cidsInSub[1] || cidsInSub[0], 'سوم');
 
     const res = await app.inject({ method: 'GET', url: '/tree', headers: { cookie } });
     expect(res.statusCode).toBe(200);
     const body = res.json();
-    expect(body.total_highlights).toBe(3);
+    expect(body.total_highlights).toBe(2);
+    expect(Array.isArray(body.folders)).toBe(true);
 
-    const branch = body.clusters.find((c: any) => c.key === cluster.key);
-    expect(branch).toBeTruthy();
-    expect(branch.count).toBe(3);
-    expect(branch.topicKey).toBe('cluster:' + cluster.key);
-    const subBranch = branch.subtopics.find((s: any) => s.key === sub.key);
-    expect(subBranch.count).toBe(3);
+    const folder = body.folders.find((f: any) => f.key === folderKey);
+    expect(folder, `folder ${folderKey} present`).toBeTruthy();
+    expect(folder.count).toBe(2);
+    expect(folder.url).toMatch(/^\//); // landing-page link
+    expect(folder.total).toBeGreaterThan(0);
     // no highlight bodies leak into the tree
     expect(JSON.stringify(body)).not.toContain('اول');
   });
@@ -73,6 +74,17 @@ describe('GET /highlights?topic=', () => {
     // card form carries exact/cloze/note/label + anchor fields
     expect(body.highlights[0]).toHaveProperty('exact');
     expect(body.highlights[0]).toHaveProperty('cloze_markers');
+  });
+
+  it('scopes a folder archive by content_id prefix (folder:key)', async () => {
+    const folderKey = cidsInSub[0].split('/')[0];
+    await addHighlight(cidsInSub[0], 'در این فولدر');
+    await addHighlight('someotherfolder/x-1', 'فولدر دیگر');
+    const res = await app.inject({ method: 'GET', url: '/highlights?topic=folder:' + folderKey, headers: { cookie } });
+    expect(res.statusCode).toBe(200);
+    const texts = res.json().highlights.map((h: any) => h.exact);
+    expect(texts).toContain('در این فولدر');
+    expect(texts).not.toContain('فولدر دیگر');
   });
 
   it('404s on an unknown topic', async () => {
@@ -154,5 +166,11 @@ describe('GET /progress', () => {
     const body = res.json();
     expect(body.total_highlights).toBe(1);
     expect(body.last_content_id).toBe(cidsInSub[0]);
+    // folder progress + score (spec change)
+    expect(Array.isArray(body.folder_progress)).toBe(true);
+    const fp = body.folder_progress.find((f: any) => f.key === cidsInSub[0].split('/')[0]);
+    expect(fp.engaged).toBeGreaterThanOrEqual(1);
+    expect(fp.total).toBeGreaterThan(0);
+    expect(body.score).toBeGreaterThan(0); // activity-derived, ready for leaderboard
   });
 });

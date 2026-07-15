@@ -12,13 +12,37 @@
 // ".html" (matches the client's detectContentId()).
 //
 // Run from the repo root:  node tools/build_plus_index.mjs
-import { readFileSync, writeFileSync, existsSync } from 'node:fs';
+import { readFileSync, writeFileSync, existsSync, readdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const read = (p) => readFileSync(resolve(root, p), 'utf8');
 const toContentId = (url) => url.replace(/^\/+/, '').replace(/\.html$/i, '');
+
+// The real site content folders (the top level of the dashboard tree), in the
+// order they should appear. Each links to its landing page; the article total is
+// counted from disk so per-folder progress is accurate.
+const FOLDER_META = [
+  ['episodes', 'پادکست', '/episodes/'],
+  ['notecast', 'نوت‌کست', '/notecast/'],
+  ['insight', 'کلینیکال اینسایت', '/insight/'],
+  ['dentai', 'دنت‌ای‌آی', '/dentai/'],
+  ['chairside', 'چیرساید', '/chairside/'],
+  ['metanotes', 'متانوت', '/metanotes/'],
+  ['litecast', 'لایت‌کست', '/litecast/'],
+  ['glossary', 'دانشنامه', '/glossary/'],
+  ['photocast', 'فوتوکست', '/photocast/'],
+  ['sharehub', 'شیرهاب', '/sharehub/'],
+];
+
+function countArticles(folderKey) {
+  const dir = resolve(root, folderKey);
+  if (!existsSync(dir)) return 0;
+  try {
+    return readdirSync(dir).filter((f) => /\.html$/i.test(f) && f.toLowerCase() !== 'index.html').length;
+  } catch (_) { return 0; }
+}
 
 // --- 1. Categories (clusters) from the pillar hub, in site order ------------
 const hub = read('pillar/index.html');
@@ -62,10 +86,10 @@ const prettify = (s) => s.replace(/-/g, ' ');
 
 for (const e of brain) {
   const url = e.page_url;
-  const primary = e.pillar && e.pillar.primary;
-  if (!url || !primary) continue;
+  if (!url) continue;
   const contentId = toContentId(url);
   if (byContent[contentId]) continue; // first wins
+  const primary = (e.pillar && e.pillar.primary) || null;
   const subtopic = (e.pillar && e.pillar.subtopic) || null;
   const type = contentId.split('/')[0];
   byContent[contentId] = {
@@ -76,8 +100,8 @@ for (const e of brain) {
     url,
     secondary: (e.pillar && e.pillar.secondary) || [],
   };
-  // Only content whose category is a real site pillar joins the tree.
-  if (!clusterContent.has(primary)) continue;
+  // Pillar categories feed the Phase 3 map; only pillar-tagged content joins them.
+  if (!primary || !clusterContent.has(primary)) continue;
   clusterContent.get(primary).add(contentId);
   if (subtopic) {
     const k = `${primary}::${subtopic}`;
@@ -108,17 +132,22 @@ const clusters = clusterOrder.map((c) => {
   };
 });
 
+// Real site folders (dashboard tree top level): landing link + article total.
+const folders = FOLDER_META.map(([key, fa, url]) => ({ key, fa, url, total: countArticles(key) }))
+  .filter((f) => f.total > 0);
+
 const out = {
-  version: 2,
-  generatedFrom: 'pillar/*.html (structure+labels) + dentcast-brain.json (content)',
+  version: 3,
+  generatedFrom: 'pillar/*.html + folder file counts + dentcast-brain.json',
   clusterCount: clusters.length,
+  folderCount: folders.length,
   contentCount: Object.keys(byContent).length,
+  folders,
   clusters,
   byContent,
 };
 
 writeFileSync(resolve(root, 'plus', 'content-index.json'), JSON.stringify(out, null, 0) + '\n');
-console.log(`Wrote plus/content-index.json: ${clusters.length} categories (site order), ${out.contentCount} content pages.`);
-for (const c of clusters) {
-  console.log(`  ${c.fa} (${c.key}) — ${c.contentCount} · subs: ${c.subtopics.map((s) => s.fa).join('، ')}`);
-}
+console.log(`Wrote plus/content-index.json: ${folders.length} folders, ${clusters.length} pillar categories, ${out.contentCount} content pages.`);
+console.log('Folders (dashboard tree top level):');
+for (const f of folders) console.log(`  ${f.fa} (${f.key}) -> ${f.url} · ${f.total} مقاله`);

@@ -1,7 +1,7 @@
 import type { FastifyInstance } from 'fastify';
 import { requireAuth } from '../middleware/auth.js';
 import { pool } from '../db.js';
-import { buildTree } from '../content-index.js';
+import { buildFolderTree, getFolders, folderOf } from '../content-index.js';
 import { config } from '../config.js';
 import { QUALIFYING_ACTIONS } from '../services/streak.js';
 import { dayInTz, previousDay } from '../services/time.js';
@@ -89,8 +89,8 @@ export async function dashboardRoutes(app: FastifyInstance): Promise<void> {
     });
   });
 
-  // GET /tree - the user's highlight counts per taxonomy branch, links only.
-  // No highlight bodies, no cross-article aggregation (that is premium).
+  // GET /tree - the real site folders, each with the user's highlight count and
+  // its landing-page link. Navigation only; no bodies, no cross-article aggregation.
   app.get('/tree', async (request, reply) => {
     const rows = await pool.query<{ content_id: string; n: number }>(
       `select content_id, count(*)::int as n
@@ -99,21 +99,14 @@ export async function dashboardRoutes(app: FastifyInstance): Promise<void> {
       [request.user!.id],
     );
     const counts = new Map(rows.rows.map((r) => [r.content_id, r.n]));
-    const tree = buildTree(counts);
+    const folders = buildFolderTree(counts);
     const total = rows.rows.reduce((a, r) => a + r.n, 0);
-    return reply.send({ total_highlights: total, ...tree });
+    return reply.send({ total_highlights: total, folders });
   });
 
-  // GET /progress - per-content completion states + personal stats.
+  // GET /progress - per-folder progress + personal stats + score.
   app.get('/progress', async (request, reply) => {
     const userId = request.user!.id;
-    const completed = await pool.query<{ content_id: string; last: string }>(
-      `select content_id, max(created_at) as last
-         from user_activity
-        where user_id = $1 and action = 'article_completed' and content_id is not null
-        group by content_id`,
-      [userId],
-    );
     const stats = await pool.query<{ total_highlights: number; articles_with_highlights: number }>(
       `select count(*)::int as total_highlights,
               count(distinct content_id)::int as articles_with_highlights
@@ -127,13 +120,48 @@ export async function dashboardRoutes(app: FastifyInstance): Promise<void> {
         order by created_at desc limit 1`,
       [userId],
     );
+    // "Engaged" content per folder: distinct pages the user has highlighted or
+    // finished. Progress bar = engaged / folder total (spec 2.6).
+    const engagedRows = await pool.query<{ content_id: string }>(
+      `select distinct content_id from (
+         select content_id from highlights where user_id = $1
+         union
+         select content_id from user_activity
+          where user_id = $1 and action = 'article_completed' and content_id is not null
+       ) t`,
+      [userId],
+    );
+    const engagedByFolder = new Map<string, number>();
+    for (const r of engagedRows.rows) {
+      const f = folderOf(r.content_id);
+      engagedByFolder.set(f, (engagedByFolder.get(f) || 0) + 1);
+    }
+    const folder_progress = getFolders().map((f) => ({
+      key: f.key, fa: f.fa, url: f.url, total: f.total,
+      engaged: Math.min(engagedByFolder.get(f.key) || 0, f.total),
+    }));
+
+    // Score: a concrete, activity-log-derived metric, ready for a future
+    // leaderboard. Base = qualifying active days (monotonic) plus a small
+    // per-highlight bonus. Streak is the headline; this is the comparable total.
+    const score = await pool.query<{ active_days: number }>(
+      `select count(distinct (created_at at time zone $2)::date)::int as active_days
+         from user_activity
+        where user_id = $1 and action in ('article_completed','highlight_created','card_reviewed_manual','review_finished')`,
+      [userId, config.streakTimezone],
+    );
+    const activeDays = score.rows[0]?.active_days ?? 0;
+    const totalHl = stats.rows[0]?.total_highlights ?? 0;
+
     return reply.send({
       current_streak: request.user!.current_streak,
       longest_streak: request.user!.longest_streak,
-      total_highlights: stats.rows[0]?.total_highlights ?? 0,
+      total_highlights: totalHl,
       articles_with_highlights: stats.rows[0]?.articles_with_highlights ?? 0,
-      completed: completed.rows.map((r) => ({ content_id: r.content_id, at: r.last })),
       last_content_id: lastArticle.rows[0]?.content_id ?? null,
+      folder_progress,
+      score: activeDays * 10 + totalHl,
+      score_active_days: activeDays,
     });
   });
 
