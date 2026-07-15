@@ -66,6 +66,47 @@ npm run dev                   # API on http://localhost:8787
 | `npm run rebuild-streaks` | recompute all streak caches from `user_activity` |
 | `npm test` | run the test suite |
 
+The taxonomy index the tree/archive/map share is generated from the repo root
+(not npm): `node tools/build_plus_index.mjs` writes `plus/content-index.json`.
+
+## API surface (Phase 1)
+
+Auth: `POST /auth/otp/request`, `POST /auth/otp/verify`, `POST /auth/logout`,
+`POST /auth/telegram/link`, `GET /me`, `PATCH /me`. Data: `POST /activity`,
+`POST /anon/event`, `GET/POST/PATCH/DELETE /highlights`,
+`GET /highlights/recent`, `GET /highlights?topic=`, `GET /tree`, `GET /progress`,
+`GET /profile/stats`, `GET /export/highlights`. Admin (HTTP Basic):
+`GET /admin` (rendered KPI page) and `GET /admin/kpis` (JSON). `requirePremium`
+is wired but no premium endpoint ships in Phase 1.
+
+## Founder admin
+
+`GET /admin` is the founder-only KPI page, behind HTTP Basic auth
+(`ADMIN_USER` / `ADMIN_PASSWORD`). It computes KPIs 1-6 from spec section 7
+(anonymous demand + approx conversion, 48h activation, D1 return, D7 survival by
+tier, weekly depth median, archive-usage sessions) from `user_activity` +
+`anon_events`. Navigate to it in a browser; it prompts for the credentials.
+
+## Deploy target (end of phase)
+
+ArvanCloud Cloud Container for the API + ArvanCloud Managed Database (Postgres),
+DB not publicly reachable. Set every provider-specific value via env:
+
+- `DATABASE_URL` (managed Postgres, private network only)
+- `SESSION_SECRET` (long random), `SESSION_COOKIE_SECURE=true` (HTTPS)
+- `CORS_ORIGINS=https://dentcast.org,https://dentcast.ir`
+- `SMS_PROVIDER` (swap the console sender for an Iranian provider),
+  `NOTIFY_PROVIDER=telegram` + `TELEGRAM_BOT_TOKEN` / `TELEGRAM_WEBHOOK_SECRET`
+- `ADMIN_USER` / `ADMIN_PASSWORD`
+- `CONTENT_INDEX_PATH` pointing at the deployed `content-index.json`
+
+Build + run: `npm ci && npm run build && npm run migrate && node dist/index.js`.
+Schedule a daily `pg_dump` to a second, independent S3-compatible store
+(ArvanCloud Object Storage) for backups. The static site deploys unchanged from
+the repo (Cloudflare Pages → .org, ArvanCloud → .ir); the client reaches the API
+at the `api.*` host via the health-checked base list in `plus/js/config.js`
+(set the final hostnames there at deploy).
+
 ## Environment
 
 See `.env.example` for the full list. Everything provider-specific (DB URL,

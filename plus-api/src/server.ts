@@ -7,6 +7,7 @@ import { anonRoutes } from './routes/anon.js';
 import { activityRoutes } from './routes/activity.js';
 import { highlightRoutes } from './routes/highlights.js';
 import { dashboardRoutes } from './routes/dashboard.js';
+import { adminRoutes } from './routes/admin.js';
 
 /**
  * Build the Fastify app. Exported separately from the listen() call so tests can
@@ -31,6 +32,7 @@ export async function buildServer(): Promise<FastifyInstance> {
   await app.register(activityRoutes);
   await app.register(highlightRoutes);
   await app.register(dashboardRoutes);
+  await app.register(adminRoutes);
 
   return app;
 }

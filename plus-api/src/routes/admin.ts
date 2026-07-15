@@ -1,0 +1,71 @@
+import type { FastifyInstance } from 'fastify';
+import { requireAdmin } from '../middleware/basic-auth.js';
+import { computeKpis, type Kpis } from '../services/kpis.js';
+
+function fmtPct(v: number | null): string {
+  return v == null ? '—' : v.toFixed(1) + '٪';
+}
+function fmtNum(v: number | null): string {
+  return v == null ? '—' : String(v);
+}
+
+function renderHtml(k: Kpis): string {
+  const d7Rows = k.d7_survival_by_tier.length
+    ? k.d7_survival_by_tier
+        .map((r) => `<tr><td>${r.tier}</td><td>${r.cohort}</td><td>${r.kept}</td><td>${fmtPct(r.pct)}</td></tr>`)
+        .join('')
+    : '<tr><td colspan="4">هنوز داده‌ای نیست</td></tr>';
+
+  const card = (n: string, title: string, value: string, sub: string) =>
+    `<div class="card"><div class="k">${n}</div><h3>${title}</h3><div class="v">${value}</div><div class="s">${sub}</div></div>`;
+
+  return `<!doctype html><html lang="fa" dir="rtl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex">
+<title>KPI ادمین | دنت‌کست پلاس</title>
+<style>
+  body{margin:0;background:#0f1420;color:#e8eef7;font-family:system-ui,'Segoe UI',Tahoma,sans-serif;line-height:1.8}
+  .wrap{max-width:880px;margin:0 auto;padding:22px 16px 60px}
+  h1{font-size:1.3rem}
+  .muted{color:#93a1b8;font-size:.85rem}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;margin-top:16px}
+  .card{background:#171e2d;border:1px solid #2a3448;border-radius:14px;padding:14px 16px}
+  .card .k{color:#4f9cf0;font-weight:800;font-size:.8rem}
+  .card h3{margin:.2rem 0;font-size:.95rem;color:#c8d4e6}
+  .card .v{font-size:1.8rem;font-weight:900}
+  .card .s{color:#93a1b8;font-size:.82rem}
+  table{width:100%;border-collapse:collapse;margin-top:8px;background:#171e2d;border:1px solid #2a3448;border-radius:14px;overflow:hidden}
+  th,td{padding:8px 12px;text-align:center;border-bottom:1px solid #2a3448}
+  th{color:#93a1b8;font-weight:700}
+</style></head><body><div class="wrap">
+  <h1>پیشخوان بنیان‌گذار</h1>
+  <div class="muted">تولید: ${k.generated_at} · منطقه زمانی: ${k.tz}</div>
+  <div class="grid">
+    ${card('KPI 1', 'تقاضای ناشناس', String(k.anonymous_demand.workbench_clicks),
+      `کلیک میز کار مهمان · تبدیل تقریبی: ${fmtPct(k.anonymous_demand.conversion_pct_approx)} · ثبت‌نام: ${k.anonymous_demand.total_signups}`)}
+    ${card('KPI 2', 'فعال‌سازی (۴۸ ساعت)', fmtPct(k.activation_48h_pct.pct),
+      `اولین هایلایت در ۴۸ ساعت · گروه: ${k.activation_48h_pct.cohort}`)}
+    ${card('KPI 3', 'بازگشت روز اول', fmtPct(k.d1_return_pct.pct), `گروه: ${k.d1_return_pct.cohort}`)}
+    ${card('KPI 5', 'عمق (میانه هفتگی)', fmtNum(k.depth_median_highlights_per_user_week),
+      'میانه هایلایت هر کاربر فعال در هفته')}
+    ${card('KPI 6', 'استفاده از آرشیو', fmtNum(k.archive_usage.sessions_per_free_user_week),
+      `جلسه مرور دستی هر کاربر رایگان در هفته · کل جلسات ۷ روز: ${k.archive_usage.sessions_last_7d}`)}
+  </div>
+  <h3 style="margin-top:22px">KPI 4 — ماندگاری روز هفتم بر اساس پلن</h3>
+  <table><thead><tr><th>پلن</th><th>گروه</th><th>مانده</th><th>درصد</th></tr></thead><tbody>${d7Rows}</tbody></table>
+  <p class="muted" style="margin-top:14px">KPI ها از user_activity و anon_events محاسبه می‌شوند. تبدیل KPI 1 تقریبی است چون رویدادهای ناشناس هویت‌محور نیستند.</p>
+</div></body></html>`;
+}
+
+export async function adminRoutes(app: FastifyInstance): Promise<void> {
+  app.addHook('preHandler', requireAdmin);
+
+  app.get('/admin/kpis', async (_request, reply) => {
+    const kpis = await computeKpis();
+    return reply.send(kpis);
+  });
+
+  app.get('/admin', async (_request, reply) => {
+    const kpis = await computeKpis();
+    return reply.type('text/html; charset=utf-8').send(renderHtml(kpis));
+  });
+}
