@@ -21,7 +21,19 @@ export async function buildServer(): Promise<FastifyInstance> {
 
   await app.register(cookie, { secret: config.session.secret });
   await app.register(cors, {
-    origin: config.corsOrigins,
+    // Reflect the request origin when it is allowed. In production only the
+    // configured origins (the .org/.ir sites) pass. In dev we also accept any
+    // localhost / 127.0.0.1 origin on ANY port, so the static site can be served
+    // from whatever local port without touching config. Reflecting the exact
+    // origin (not "*") is required because credentials are enabled.
+    origin(origin, cb) {
+      if (!origin) return cb(null, true); // curl / same-origin / non-browser
+      if (config.corsOrigins.includes(origin)) return cb(null, true);
+      if (!config.isProd && /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)) {
+        return cb(null, true);
+      }
+      return cb(null, false); // disallowed: no ACAO header, browser blocks
+    },
     credentials: true, // session cookie travels on cross-origin fetches from the site
   });
 
