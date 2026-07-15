@@ -2,9 +2,92 @@ import type { FastifyInstance } from 'fastify';
 import { requireAuth } from '../middleware/auth.js';
 import { pool } from '../db.js';
 import { buildTree } from '../content-index.js';
+import { config } from '../config.js';
+import { QUALIFYING_ACTIONS } from '../services/streak.js';
+import { dayInTz, previousDay } from '../services/time.js';
 
 export async function dashboardRoutes(app: FastifyInstance): Promise<void> {
   app.addHook('preHandler', requireAuth);
+
+  // PATCH /me - edit the pseudonym and/or merge settings (e.g. reminders).
+  app.patch('/me', {
+    schema: {
+      body: {
+        type: 'object',
+        properties: {
+          display_name: { type: 'string', minLength: 1, maxLength: 40 },
+          settings: { type: 'object', additionalProperties: true },
+        },
+      },
+    },
+  }, async (request, reply) => {
+    const b = request.body as { display_name?: string; settings?: Record<string, unknown> };
+    const sets: string[] = [];
+    const vals: unknown[] = [request.user!.id];
+    if (b.display_name !== undefined) { sets.push(`display_name = $${vals.length + 1}`); vals.push(b.display_name.trim()); }
+    if (b.settings !== undefined) { sets.push(`settings = settings || $${vals.length + 1}::jsonb`); vals.push(JSON.stringify(b.settings)); }
+    if (!sets.length) return reply.code(400).send({ error: 'nothing_to_update' });
+    const res = await pool.query(
+      `update profiles set ${sets.join(', ')} where id = $1
+        returning display_name, settings`,
+      vals,
+    );
+    return reply.send(res.rows[0]);
+  });
+
+  // GET /profile/stats - week streak strip, month-vs-month, records (spec 2.7).
+  app.get('/profile/stats', async (request, reply) => {
+    const userId = request.user!.id;
+    const tz = config.streakTimezone;
+    const actions = Array.from(QUALIFYING_ACTIONS);
+
+    // Active Tehran days in the last 8 days (for a 7-day strip).
+    const active = await pool.query<{ d: string }>(
+      `select distinct (created_at at time zone $2)::date as d
+         from user_activity
+        where user_id = $1 and action = any($3) and created_at >= now() - interval '8 days'`,
+      [userId, tz, actions],
+    );
+    const activeSet = new Set(active.rows.map((r) => r.d));
+    const today = dayInTz(new Date(), tz);
+    const week: Array<{ day: string; active: boolean }> = [];
+    let cursor = today;
+    for (let i = 0; i < 7; i += 1) { week.unshift({ day: cursor, active: activeSet.has(cursor) }); cursor = previousDay(cursor); }
+
+    // Highlights per Tehran month + active days per Tehran month.
+    const hlByMonth = await pool.query<{ ym: string; n: number }>(
+      `select to_char((created_at at time zone $2), 'YYYY-MM') as ym, count(*)::int as n
+         from highlights where user_id = $1 group by ym`,
+      [userId, tz],
+    );
+    const daysByMonth = await pool.query<{ ym: string; n: number }>(
+      `select ym, count(*)::int as n from (
+         select distinct to_char((created_at at time zone $2), 'YYYY-MM') as ym,
+                (created_at at time zone $2)::date as d
+           from user_activity where user_id = $1 and action = any($3)
+       ) t group by ym`,
+      [userId, tz, actions],
+    );
+    const thisMonth = today.slice(0, 7);
+    const lastMonth = previousDay(today.slice(0, 7) + '-01').slice(0, 7);
+    const pick = (rows: Array<{ ym: string; n: number }>, ym: string) => rows.find((r) => r.ym === ym)?.n ?? 0;
+
+    return reply.send({
+      records: {
+        current_streak: request.user!.current_streak,
+        longest_streak: request.user!.longest_streak,
+      },
+      week,
+      month_vs_month: {
+        this_month: thisMonth,
+        last_month: lastMonth,
+        highlights_this: pick(hlByMonth.rows, thisMonth),
+        highlights_last: pick(hlByMonth.rows, lastMonth),
+        active_days_this: pick(daysByMonth.rows, thisMonth),
+        active_days_last: pick(daysByMonth.rows, lastMonth),
+      },
+    });
+  });
 
   // GET /tree - the user's highlight counts per taxonomy branch, links only.
   // No highlight bodies, no cross-article aggregation (that is premium).

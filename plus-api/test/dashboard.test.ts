@@ -76,6 +76,32 @@ describe('GET /highlights?topic=', () => {
   });
 });
 
+describe('PATCH /me', () => {
+  it('updates the pseudonym and merges settings', async () => {
+    const patch = await app.inject({ method: 'PATCH', url: '/me', headers: { cookie },
+      payload: { display_name: 'نام تازه', settings: { reminders: { enabled: true } } } });
+    expect(patch.statusCode).toBe(200);
+    expect(patch.json().display_name).toBe('نام تازه');
+    expect(patch.json().settings.reminders.enabled).toBe(true);
+
+    const me = await (await app.inject({ method: 'GET', url: '/me', headers: { cookie } })).json();
+    expect(me.display_name).toBe('نام تازه');
+  });
+});
+
+describe('GET /profile/stats', () => {
+  it('returns a 7-day week strip, month comparison, and records', async () => {
+    await addHighlight(cidsInSub[0], 'برای آمار');
+    const res = await app.inject({ method: 'GET', url: '/profile/stats', headers: { cookie } });
+    expect(res.statusCode).toBe(200);
+    const body = res.json();
+    expect(body.week).toHaveLength(7);
+    expect(body.week[6].active).toBe(true); // today had a qualifying action (highlight)
+    expect(body.month_vs_month.highlights_this).toBe(1);
+    expect(body.records).toHaveProperty('longest_streak');
+  });
+});
+
 describe('GET /export/highlights', () => {
   it('dumps the user data with an attachment header', async () => {
     await addHighlight(cidsInSub[0], 'برای اکسپورت');

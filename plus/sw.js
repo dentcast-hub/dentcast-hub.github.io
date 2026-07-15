@@ -8,6 +8,8 @@ const SHELL = [
   '/plus/',
   '/plus/index.html',
   '/plus/cards.html',
+  '/plus/profile.html',
+  '/plus/js/profile-page.js',
   '/plus/plus.css?v=1',
   '/plus/plus-pages.css?v=1',
   '/plus/plus.js?v=1',

@@ -46,6 +46,8 @@ async function request(path, { method = 'GET', body, query } = {}) {
 export const api = {
   // auth
   me: () => request('/me'),
+  updateMe: (patch) => request('/me', { method: 'PATCH', body: patch }),
+  profileStats: () => request('/profile/stats'),
   requestOtp: (phone) => request('/auth/otp/request', { method: 'POST', body: { phone } }),
   verifyOtp: (phone, code, return_to) =>
     request('/auth/otp/verify', { method: 'POST', body: { phone, code, return_to } }),

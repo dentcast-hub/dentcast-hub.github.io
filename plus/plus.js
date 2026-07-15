@@ -9,6 +9,7 @@ import { Workbench } from './js/workbench.js';
 import { el } from './js/util.js';
 import { getModel, landingTopicKey } from './js/content-index.js';
 import { initHomeCard } from './js/home-card.js';
+import { initHeader } from './js/header.js';
 
 function injectWorkbenchButton(main, proseRoot) {
   const btn = el('button', { class: 'dcp-wb-button', type: 'button', 'aria-pressed': 'false' }, 'میز کار');
@@ -108,6 +109,7 @@ async function initLanding() {
 
 function boot() {
   try {
+    initHeader();
     initArticle();
     initLanding();
     initHomeCard();

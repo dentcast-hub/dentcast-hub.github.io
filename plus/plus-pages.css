@@ -98,6 +98,24 @@ body.dcp-page a { color: var(--dcp-accent); text-decoration: none; }
 .dcp-tile-name { font-weight: 700; }
 .dcp-tile-soon { font-size: .8rem; color: var(--dcp-muted); }
 
+/* ---- profile ------------------------------------------------------------- */
+.dcp-field-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.dcp-field-row .dcp-input { flex: 1 1 180px; background: var(--dcp-panel-2); color: var(--dcp-ink); border-color: var(--dcp-line); }
+.dcp-inline-msg { color: var(--dcp-muted); font-size: .85rem; }
+.dcp-plan { display: inline-block; font-weight: 800; background: var(--dcp-accent-soft); color: var(--dcp-accent); padding: 2px 12px; border-radius: 999px; }
+.dcp-week-strip { display: flex; gap: 6px; }
+.dcp-week-cell { flex: 1; text-align: center; padding: 8px 0; border: 1px solid var(--dcp-line); border-radius: 10px; background: var(--dcp-panel-2); }
+.dcp-week-cell.is-active { border-color: var(--dcp-accent); }
+.dcp-week-dot { display: block; height: 1.2em; }
+.dcp-week-lbl { font-size: .8rem; color: var(--dcp-muted); }
+.dcp-records { display: flex; flex-direction: column; gap: 4px; }
+.dcp-cmp { display: flex; flex-direction: column; gap: 6px; }
+.dcp-cmp-row { display: flex; justify-content: space-between; gap: 10px; }
+.dcp-cmp-arrow.up { color: #58c493; }
+.dcp-cmp-arrow.down { color: #d98a8a; }
+.dcp-phone { font-weight: 700; }
+.dcp-switch { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; }
+
 /* dark-surface overrides for the shared button classes on /plus pages */
 body.dcp-page .dcp-btn { border-color: var(--dcp-line); color: var(--dcp-ink); }
 body.dcp-page .dcp-btn-primary { background: var(--dcp-accent); color: #06101f; border-color: transparent; }
