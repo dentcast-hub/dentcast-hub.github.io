@@ -1,0 +1,26 @@
+# Local-first Postgres for DentCast Plus (Phase 1).
+# The API container is added at deploy time (ArvanCloud Cloud Container);
+# in dev the API runs on the host with `npm run dev` and talks to this DB.
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: dentcast_plus_db
+    environment:
+      POSTGRES_USER: dentcast
+      POSTGRES_PASSWORD: dentcast
+      POSTGRES_DB: dentcast_plus
+      # Store timestamps in UTC; the app derives the Asia/Tehran day itself.
+      TZ: UTC
+      PGTZ: UTC
+    ports:
+      - "5432:5432"
+    volumes:
+      - dentcast_plus_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U dentcast -d dentcast_plus"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  dentcast_plus_pgdata:

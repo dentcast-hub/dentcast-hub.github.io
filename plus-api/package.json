@@ -1,0 +1,39 @@
+{
+  "name": "dentcast-plus-api",
+  "version": "0.1.0",
+  "private": true,
+  "description": "DentCast Plus API (Phase 1): OTP auth, highlights, streak engine, activity log.",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "start": "node dist/index.js",
+    "build": "tsc -p tsconfig.json",
+    "migrate": "node-pg-migrate up",
+    "migrate:up": "node-pg-migrate up",
+    "migrate:down": "node-pg-migrate down",
+    "seed": "tsx src/scripts/seed.ts",
+    "rebuild-streaks": "tsx src/scripts/rebuild-streaks.ts",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@fastify/cookie": "^11.0.2",
+    "dotenv": "^16.4.7",
+    "fastify": "^5.2.1",
+    "node-pg-migrate": "^7.9.1",
+    "pg": "^8.13.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.6",
+    "@types/pg": "^8.11.10",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3",
+    "vitest": "^3.0.2"
+  },
+  "allowScripts": {
+    "esbuild@0.28.1": true
+  }
+}
