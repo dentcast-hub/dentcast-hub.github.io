@@ -1,0 +1,83 @@
+// DentCast Plus API client. Health-checked base with failover, cookie sessions.
+import { API_BASES } from './config.js';
+
+let resolvedBase = null;
+
+async function pickBase() {
+  if (resolvedBase) return resolvedBase;
+  for (const base of API_BASES) {
+    try {
+      const res = await fetch(base + '/health', { method: 'GET', credentials: 'include' });
+      if (res.ok) { resolvedBase = base; return base; }
+    } catch (_) { /* try next */ }
+  }
+  // Fall back to the first configured base so callers still get a real error.
+  resolvedBase = API_BASES[0];
+  return resolvedBase;
+}
+
+export class ApiError extends Error {
+  constructor(status, body) {
+    super((body && body.message) || (body && body.error) || 'API error');
+    this.status = status;
+    this.body = body || {};
+  }
+}
+
+async function request(path, { method = 'GET', body, query } = {}) {
+  const base = await pickBase();
+  let url = base + path;
+  if (query) {
+    const qs = new URLSearchParams(query).toString();
+    if (qs) url += (url.includes('?') ? '&' : '?') + qs;
+  }
+  const opts = { method, credentials: 'include', headers: {} };
+  if (body !== undefined) {
+    opts.headers['content-type'] = 'application/json';
+    opts.body = JSON.stringify(body);
+  }
+  const res = await fetch(url, opts);
+  if (res.status === 204) return null;
+  const data = await res.json().catch(() => null);
+  if (!res.ok) throw new ApiError(res.status, data);
+  return data;
+}
+
+export const api = {
+  // auth
+  me: () => request('/me'),
+  requestOtp: (phone) => request('/auth/otp/request', { method: 'POST', body: { phone } }),
+  verifyOtp: (phone, code, return_to) =>
+    request('/auth/otp/verify', { method: 'POST', body: { phone, code, return_to } }),
+  logout: () => request('/auth/logout', { method: 'POST' }),
+
+  // activity + anon
+  activity: (action, content_id, meta) =>
+    request('/activity', { method: 'POST', body: { action, content_id, meta } }),
+  anonEvent: (event, content_id) =>
+    request('/anon/event', { method: 'POST', body: { event, content_id } }),
+
+  // highlights
+  listHighlights: (content_id) => request('/highlights', { query: { content_id } }),
+  listTopic: (topic) => request('/highlights', { query: { topic } }),
+  createHighlight: (h) => request('/highlights', { method: 'POST', body: h }),
+  updateHighlight: (id, patch) => request('/highlights/' + id, { method: 'PATCH', body: patch }),
+  deleteHighlight: (id) => request('/highlights/' + id, { method: 'DELETE' }),
+
+  // dashboard (later milestones)
+  tree: () => request('/tree'),
+  progress: () => request('/progress'),
+  exportHighlights: () => request('/export/highlights'),
+};
+
+// A cached /me lookup so multiple widgets on one page share one request.
+let mePromise;
+export function currentUser({ refresh = false } = {}) {
+  if (refresh) mePromise = undefined;
+  if (!mePromise) {
+    // Any failure (401, or the API being unreachable) means "treat as anonymous"
+    // so the static site stays pristine as pure progressive enhancement.
+    mePromise = api.me().catch(() => null);
+  }
+  return mePromise;
+}

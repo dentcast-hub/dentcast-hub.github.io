@@ -2078,3 +2078,21 @@
     paint();
   });
 })();
+
+/* ── DentCast Plus loader (progressive enhancement) ──────────────────────────
+   Injects the Plus stylesheet + module on every page. All Plus logic lives under
+   /plus/; this loader is the only hook in the shared nav. Anonymous visitors see
+   no change until they use one of the two invitation points (spec 2.3). */
+(function () {
+  if (window.__dcPlusLoaded) return;
+  window.__dcPlusLoaded = true;
+  var V = '1';
+  var css = document.createElement('link');
+  css.rel = 'stylesheet';
+  css.href = '/plus/plus.css?v=' + V;
+  document.head.appendChild(css);
+  var js = document.createElement('script');
+  js.type = 'module';
+  js.src = '/plus/plus.js?v=' + V;
+  document.body.appendChild(js);
+})();
