@@ -90,6 +90,20 @@ describe('client anchoring round-trip', () => {
     expect(combined).toBe('اول پررنگ و');
   });
 
+  it('captures the whole sentence as context when only a fragment is highlighted', () => {
+    // Prototype feedback: highlighting half a sentence / one word must still
+    // record the full sentence (so the flashcard is meaningful).
+    const root = setProse('<p>جمله اول. سمان رزینی به عاج پیوند می‌خورد و دوام دارد. جمله سوم.</p>');
+    const range = rangeForOccurrence(root, 'پیوند'); // a single word in the middle
+    const quote = serializeRange(range, root);
+    expect(quote.exact).toBe('پیوند');
+    // prefix reaches back to the sentence start; suffix forward to the period
+    const sentence = (quote.prefix + quote.exact + quote.suffix).trim();
+    expect(sentence).toBe('سمان رزینی به عاج پیوند می‌خورد و دوام دارد.');
+    // and it re-anchors to exactly the highlighted word (colored mark unchanged)
+    expect(anchorQuote(quote, root)!.toString()).toBe('پیوند');
+  });
+
   it('returns null when the text no longer exists (fallback path)', () => {
     const root = setProse('<p>متن کاملا متفاوت.</p>');
     const re = anchorQuote({ exact: 'چیزی که نیست', prefix: '', suffix: '' }, root);

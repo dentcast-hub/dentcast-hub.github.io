@@ -4,7 +4,7 @@ import { pool } from '../db.js';
 import { buildFolderTree, getFolders, folderOf } from '../content-index.js';
 import { config } from '../config.js';
 import { QUALIFYING_ACTIONS } from '../services/streak.js';
-import { dayInTz, previousDay } from '../services/time.js';
+import { dayInTz, previousDay, nextDay, weekStartSaturday } from '../services/time.js';
 
 export async function dashboardRoutes(app: FastifyInstance): Promise<void> {
   app.addHook('preHandler', requireAuth);
@@ -41,18 +41,19 @@ export async function dashboardRoutes(app: FastifyInstance): Promise<void> {
     const tz = config.streakTimezone;
     const actions = Array.from(QUALIFYING_ACTIONS);
 
-    // Active Tehran days in the last 8 days (for a 7-day strip).
+    // The current week, starting Saturday (Iranian week). Marks which days had a
+    // qualifying action. Looks back far enough to cover the whole week.
     const active = await pool.query<{ d: string }>(
       `select distinct (created_at at time zone $2)::date as d
          from user_activity
-        where user_id = $1 and action = any($3) and created_at >= now() - interval '8 days'`,
+        where user_id = $1 and action = any($3) and created_at >= now() - interval '9 days'`,
       [userId, tz, actions],
     );
     const activeSet = new Set(active.rows.map((r) => r.d));
     const today = dayInTz(new Date(), tz);
     const week: Array<{ day: string; active: boolean }> = [];
-    let cursor = today;
-    for (let i = 0; i < 7; i += 1) { week.unshift({ day: cursor, active: activeSet.has(cursor) }); cursor = previousDay(cursor); }
+    let cursor = weekStartSaturday(today); // Saturday
+    for (let i = 0; i < 7; i += 1) { week.push({ day: cursor, active: activeSet.has(cursor) }); cursor = nextDay(cursor); }
 
     // Highlights per Tehran month + active days per Tehran month.
     const hlByMonth = await pool.query<{ ym: string; n: number }>(

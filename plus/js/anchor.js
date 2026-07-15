@@ -2,7 +2,13 @@
 // load and a robust multi-node wrap. On failure callers show the highlight in a
 // sidebar fallback list instead of silently dropping it (spec 2.2).
 
-const CONTEXT = 32; // chars of prefix/suffix captured for disambiguation
+// Prefix/suffix are captured out to the surrounding SENTENCE boundaries (capped),
+// not a fixed window. This means even a half-sentence or single-word highlight
+// records enough context that its flashcard shows the whole meaningful sentence,
+// while the colored mark stays on exactly what the user selected. Longer context
+// also strengthens re-anchoring disambiguation.
+const CONTEXT_MAX = 400; // hard cap so a delimiter-less block cannot store a novel
+const SENTENCE_DELIM = /[.!?؟۔\n]/;
 
 // Full concatenated text of a root, in document order. Range.toString() and
 // TreeWalker(SHOW_TEXT) walk text nodes in the same order, so offsets computed
@@ -34,15 +40,29 @@ function locate(root, target) {
   return last ? { node: last, offset: last.data.length } : null;
 }
 
-// Turn a live selection Range into a storable quote selector.
+// Turn a live selection Range into a storable quote selector whose prefix/suffix
+// reach the surrounding sentence boundaries (capped at CONTEXT_MAX).
 export function serializeRange(range, root) {
   const text = fullText(root);
   const start = offsetOf(root, range.startContainer, range.startOffset);
   const end = offsetOf(root, range.endContainer, range.endOffset);
+
+  // prefix: walk back to the start of the sentence (just after the previous
+  // delimiter), but no further than the cap.
+  let ps = Math.max(0, start - CONTEXT_MAX);
+  for (let i = start - 1; i >= ps; i -= 1) {
+    if (SENTENCE_DELIM.test(text[i])) { ps = i + 1; break; }
+  }
+  // suffix: walk forward to the end of the sentence (including its delimiter).
+  let se = Math.min(text.length, end + CONTEXT_MAX);
+  for (let i = end; i < se; i += 1) {
+    if (SENTENCE_DELIM.test(text[i])) { se = i + 1; break; }
+  }
+
   return {
     exact: text.slice(start, end),
-    prefix: text.slice(Math.max(0, start - CONTEXT), start),
-    suffix: text.slice(end, end + CONTEXT),
+    prefix: text.slice(ps, start),
+    suffix: text.slice(end, se),
   };
 }
 

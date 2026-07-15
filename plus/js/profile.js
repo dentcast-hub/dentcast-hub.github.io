@@ -37,8 +37,12 @@ function weekStrip(week) {
   const today = tehranDay();
   const strip = el('div', { class: 'dcp-week-strip' });
   for (const d of week) {
+    const future = d.day > today; // this week can extend past today (Sat start)
     strip.appendChild(el('div', {
-      class: 'dcp-week-cell' + (d.active ? ' is-active' : '') + (d.day === today ? ' is-today' : ''),
+      class: 'dcp-week-cell'
+        + (d.active ? ' is-active' : '')
+        + (d.day === today ? ' is-today' : '')
+        + (future ? ' is-future' : ''),
       title: d.day,
     }, [
       el('span', { class: 'dcp-week-day' }, weekdayLetter(d.day)),

@@ -122,13 +122,18 @@ describe('PATCH /me', () => {
 });
 
 describe('GET /profile/stats', () => {
-  it('returns a 7-day week strip, month comparison, and records', async () => {
+  it('returns the current week starting Saturday, month comparison, and records', async () => {
     await addHighlight(cidsInSub[0], 'برای آمار');
     const res = await app.inject({ method: 'GET', url: '/profile/stats', headers: { cookie } });
     expect(res.statusCode).toBe(200);
     const body = res.json();
     expect(body.week).toHaveLength(7);
-    expect(body.week[6].active).toBe(true); // today had a qualifying action (highlight)
+    // week[0] is a Saturday (getUTCDay 6)
+    const [y, m, d] = body.week[0].day.split('-').map(Number);
+    expect(new Date(Date.UTC(y, m - 1, d)).getUTCDay()).toBe(6);
+    // today is somewhere in the week and is active (we just created a highlight)
+    const todayCell = body.week.find((c: any) => c.active);
+    expect(todayCell).toBeTruthy();
     expect(body.month_vs_month.highlights_this).toBe(1);
     expect(body.records).toHaveProperty('longest_streak');
   });
