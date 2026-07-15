@@ -29,6 +29,11 @@ export function openOverlay(type, title, renderFn) {
     body,
   ]);
   document.body.appendChild(node);
+  // Sit below the site header so its person icon stays visible and clickable to
+  // toggle the overlay closed (the header is not covered).
+  const topbar = document.querySelector('.dc-topbar');
+  const top = topbar ? Math.max(0, Math.round(topbar.getBoundingClientRect().bottom)) : 0;
+  node.style.top = top + 'px';
   document.body.style.overflow = 'hidden';
   document.addEventListener('keydown', onKey);
   current = { type, node };

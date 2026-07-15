@@ -2091,11 +2091,18 @@
 (function () {
   if (window.__dcPlusLoaded) return;
   window.__dcPlusLoaded = true;
-  var V = '2';
-  var css = document.createElement('link');
-  css.rel = 'stylesheet';
-  css.href = '/plus/plus.css?v=' + V;
-  document.head.appendChild(css);
+  var V = '3';
+  // Both stylesheets load on every page: plus.css (workbench/header/home card)
+  // and plus-pages.css (dashboard/profile/overlay), because the header opens the
+  // dashboard and profile as overlays on content pages, and their markup needs
+  // those styles. The classes are .dcp-* prefixed and the body.dcp-page rules
+  // only apply to the standalone /plus pages, so nothing bleeds onto content.
+  ['/plus/plus.css?v=' + V, '/plus/plus-pages.css?v=' + V].forEach(function (href) {
+    var css = document.createElement('link');
+    css.rel = 'stylesheet';
+    css.href = href;
+    document.head.appendChild(css);
+  });
   var js = document.createElement('script');
   js.type = 'module';
   js.src = '/plus/plus.js?v=' + V;
