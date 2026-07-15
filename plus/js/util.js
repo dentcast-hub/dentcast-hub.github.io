@@ -44,13 +44,12 @@ export function previousDay(day) {
   return new Date(Date.UTC(y, m - 1, d) - 86400000).toISOString().slice(0, 10);
 }
 
-// A streak is "active" (bright flame) only if the last active day is today or
-// yesterday. Otherwise it is stale; we never show a bright flame for a lapsed
-// streak, and never a gray flame to guests (that manufactures false loss).
-export function streakIsActive(lastActiveDay) {
+// The flame shows TODAY's status: on if the user did a qualifying action today
+// (Tehran), off otherwise (prototype feedback: two states, today-based). Never a
+// gray flame for guests (that manufactures false loss) - guests see no flame.
+export function streakIsActiveToday(lastActiveDay) {
   if (!lastActiveDay) return false;
-  const today = tehranDay();
-  return lastActiveDay === today || lastActiveDay === previousDay(today);
+  return lastActiveDay === tehranDay();
 }
 
 export function escapeHtml(s) {

@@ -1,18 +1,23 @@
-// Header rework (spec 2.5) as progressive enhancement over the dc-nav.js header.
-// Keeps logo, podcast, streak flame (logged-in only), person/avatar, hamburger.
-// Moves music + articles into the hamburger drawer. Login is a modal, never a
-// page. dc-nav injects the header synchronously before DOMContentLoaded, so the
-// elements are present by the time this module runs.
-import { el, faNum, streakIsActive } from './util.js';
+// Header rework (spec 2.5 + prototype feedback) as progressive enhancement over
+// the dc-nav.js header. Keeps logo, podcast, hamburger. Adds:
+//  - streak flame: two states (on today / off), logged-in only, links /plus.
+//  - person icon (SVG): gray for guests -> login modal; blue for logged-in ->
+//    a toggle that opens a small menu (پیشخوان / پروفایل), each of which opens as
+//    an OVERLAY. Clicking the person again closes whatever is open.
+import { el, faNum, streakIsActiveToday } from './util.js';
 import { currentUser, api } from './api.js';
 import { openLoginModal } from './login-modal.js';
+import { openOverlay, closeOverlay, overlayOpen } from './overlay.js';
+import { renderDashboard } from './dashboard.js';
+import { renderProfile } from './profile.js';
+
+const PERSON_SVG = '<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>';
 
 function moveToDrawer(btn, labelText) {
   const drawer = document.querySelector('.dc-toolbar-drawer-inner');
   if (!btn || !drawer || btn.dataset.dcpMoved) return;
   btn.dataset.dcpMoved = '1';
   btn.classList.add('dc-drawer-tool-seg');
-  // Wrap the existing icon so it matches the drawer tool markup, then add a label.
   const ico = el('span', { class: 'dc-drawer-tool-ico' });
   while (btn.firstChild) ico.appendChild(btn.firstChild);
   btn.appendChild(ico);
@@ -20,51 +25,66 @@ function moveToDrawer(btn, labelText) {
   drawer.appendChild(btn);
 }
 
-function buildFlame(streak, active) {
+function buildFlame(user) {
+  const active = streakIsActiveToday(user.last_active_day);
   return el('a', {
     class: 'dc-topbar-btn dcp-flame-btn' + (active ? ' is-active' : ''),
-    href: '/plus/', 'aria-label': 'استریک شما',
+    href: '/plus/', 'aria-label': active ? 'استریک شما: امروز فعال' : 'استریک شما: امروز غیرفعال',
+    title: active ? 'امروز فعال بوده‌اید' : 'امروز هنوز فعالیتی ثبت نشده',
   }, [
     el('span', { class: 'dcp-flame-ico', 'aria-hidden': 'true' }, '🔥'),
-    el('span', { class: 'dcp-flame-n' }, faNum(streak || 0)),
+    el('span', { class: 'dcp-flame-n' }, faNum(user.current_streak || 0)),
   ]);
 }
 
-function buildPerson(user) {
-  if (!user) {
-    const btn = el('button', { class: 'dc-topbar-btn dcp-person-btn', type: 'button', 'aria-label': 'ورود' },
-      el('svg', { viewBox: '0 0 24 24', class: 'dc-svg-icon', 'aria-hidden': 'true', style: 'width:1em;height:1em' }));
-    // simple person glyph
-    btn.querySelector('svg').innerHTML = '<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>';
-    btn.addEventListener('click', async () => {
-      const res = await openLoginModal({ returnTo: location.pathname + location.search });
-      if (res && res.user) location.reload();
-    });
-    return btn;
-  }
+function personSvg(colorClass) {
+  const btn = el('button', { class: 'dc-topbar-btn dcp-person-btn ' + colorClass, type: 'button' });
+  const svg = el('svg', { viewBox: '0 0 24 24', 'aria-hidden': 'true', style: 'width:1.15em;height:1.15em' });
+  svg.innerHTML = PERSON_SVG;
+  btn.appendChild(svg);
+  return btn;
+}
 
-  const initial = (user.display_name || '؟').trim().charAt(0);
-  const avatar = el('button', { class: 'dc-topbar-btn dcp-avatar-btn', type: 'button', 'aria-haspopup': 'true', 'aria-expanded': 'false', 'aria-label': 'حساب شما' },
-    el('span', { class: 'dcp-avatar' }, initial));
+function buildGuestPerson() {
+  const btn = personSvg('is-guest');
+  btn.setAttribute('aria-label', 'ورود');
+  btn.addEventListener('click', async () => {
+    const res = await openLoginModal({ returnTo: location.pathname + location.search });
+    if (res && res.user) location.reload();
+  });
+  return btn;
+}
 
-  const menu = el('div', { class: 'dcp-avatar-menu', role: 'menu', hidden: 'hidden' }, [
-    el('a', { class: 'dcp-avatar-item', href: '/plus/', role: 'menuitem' }, 'پیشخوان'),
-    el('a', { class: 'dcp-avatar-item', href: '/plus/profile.html', role: 'menuitem' }, 'پروفایل'),
-    el('button', { class: 'dcp-avatar-item', type: 'button', role: 'menuitem', onclick: async () => {
-      await api.logout().catch(() => {});
-      location.reload();
-    } }, 'خروج'),
-  ]);
+function buildUserPerson(user) {
+  const btn = personSvg('is-user');
+  btn.setAttribute('aria-label', 'حساب شما');
+  btn.setAttribute('aria-haspopup', 'true');
 
-  const toggle = (open) => {
-    const show = open === undefined ? menu.hidden : open;
-    menu.hidden = !show;
-    avatar.setAttribute('aria-expanded', String(show));
+  let menu = null;
+  const closeMenu = () => { if (menu) { menu.remove(); menu = null; document.removeEventListener('click', onDoc); } };
+  const onDoc = (e) => { if (menu && !menu.contains(e.target) && e.target !== btn && !btn.contains(e.target)) closeMenu(); };
+
+  const openMenu = () => {
+    menu = el('div', { class: 'dcp-person-menu', role: 'menu' }, [
+      el('button', { class: 'dcp-person-item', type: 'button', role: 'menuitem',
+        onclick: () => { closeMenu(); openOverlay('dashboard', 'پیشخوان', (root) => renderDashboard(root, { me: user })); } }, 'پیشخوان'),
+      el('button', { class: 'dcp-person-item', type: 'button', role: 'menuitem',
+        onclick: () => { closeMenu(); openOverlay('profile', 'پروفایل', (root) => renderProfile(root, { me: user })); } }, 'پروفایل'),
+    ]);
+    const wrap = btn.closest('.dcp-person-wrap') || btn.parentNode;
+    wrap.appendChild(menu);
+    setTimeout(() => document.addEventListener('click', onDoc), 0);
   };
-  avatar.addEventListener('click', (e) => { e.stopPropagation(); toggle(); });
-  document.addEventListener('click', (e) => { if (!menu.contains(e.target) && e.target !== avatar) toggle(false); });
 
-  const wrap = el('div', { class: 'dcp-avatar-wrap' }, [avatar, menu]);
+  // Toggle cycle: closed -> menu -> (select) -> overlay -> person closes it.
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (menu) { closeMenu(); return; }
+    if (overlayOpen()) { closeOverlay(); return; }
+    openMenu();
+  });
+
+  const wrap = el('div', { class: 'dcp-person-wrap' }, [btn]);
   return wrap;
 }
 
@@ -73,17 +93,11 @@ export async function initHeader() {
   if (!actions || actions.dataset.dcpHeader) return;
   actions.dataset.dcpHeader = '1';
 
-  // Move music + articles (cabinet) into the hamburger drawer.
+  // Move music + articles into the hamburger drawer.
   moveToDrawer(document.getElementById('btn-music-toggle'), 'موسیقی');
   moveToDrawer(document.getElementById('btn-cabinet'), 'مقاله‌ها');
 
   const user = await currentUser();
-
-  // Streak flame: logged-in only, on every page, links to /plus.
-  if (user) {
-    const active = streakIsActive(user.last_active_day);
-    actions.appendChild(buildFlame(user.current_streak, active));
-  }
-  // Person icon: guest -> login modal; logged-in -> avatar menu.
-  actions.appendChild(buildPerson(user));
+  if (user) actions.appendChild(buildFlame(user));
+  actions.appendChild(user ? buildUserPerson(user) : buildGuestPerson());
 }

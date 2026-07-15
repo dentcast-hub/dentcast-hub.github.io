@@ -1,7 +1,7 @@
 // Homepage personal card, in the existing "یادگیری هفتگی" slot (spec 2.4).
 // Two states: anonymous invitation, and logged-in free daily status. NO due-card
 // counter for free users, not even a zero or a locked stub. No minutes target.
-import { el, faNum, streakIsActive } from './util.js';
+import { el, faNum, streakIsActiveToday } from './util.js';
 import { currentUser, api } from './api.js';
 import { openLoginModal } from './login-modal.js';
 import { getModel, contentInfo } from './content-index.js';
@@ -30,7 +30,7 @@ async function renderLoggedIn(card, user) {
     getModel(),
   ]);
 
-  const active = streakIsActive(me.last_active_day);
+  const active = streakIsActiveToday(me.last_active_day);
   const streakLine = el('a', { class: 'dc-plus-streak', href: '/plus/' }, [
     flame(active),
     el('span', { class: 'dc-plus-streak-n' }, faNum(me.current_streak || 0)),
@@ -54,13 +54,11 @@ async function renderLoggedIn(card, user) {
   const rows = [streakLine, materialLine];
 
   // Premium-only due-card line. Never rendered for free users (not even zero).
+  // (No premium teaser line on the home card, per prototype feedback.)
   if (me.tier === 'premium' && typeof me.due_card_count === 'number') {
     rows.push(el('a', { class: 'dc-plus-due', href: '/plus/' },
       faNum(me.due_card_count) + ' کارت برای مرور'));
   }
-
-  // One quiet premium line (teaser), for everyone; visibly secondary.
-  rows.push(el('a', { class: 'dc-plus-premium-line', href: '/plus/' }, 'مسیر یادگیری زمان‌بندی‌شده، به‌زودی'));
 
   card.replaceChildren(el('div', { class: 'dc-plus-home-inner' }, rows));
 }
