@@ -4,7 +4,7 @@
 //  - person icon (SVG): gray for guests -> login modal; blue for logged-in ->
 //    a toggle that opens a small menu (پیشخوان / پروفایل), each of which opens as
 //    an OVERLAY. Clicking the person again closes whatever is open.
-import { el, faNum, streakIsActiveToday } from './util.js';
+import { el, streakIsActiveToday } from './util.js';
 import { currentUser, api } from './api.js';
 import { openLoginModal } from './login-modal.js';
 import { openOverlay, closeOverlay, overlayOpen } from './overlay.js';
@@ -26,14 +26,16 @@ function moveToDrawer(btn, labelText) {
 }
 
 function buildFlame(user) {
+  // Two states only, no number/chain: lit = a qualifying action was completed
+  // today (Asia/Tehran), unlit = not yet today. The streak count lives on the
+  // homepage card and the dashboard, never in the header.
   const active = streakIsActiveToday(user.last_active_day);
   return el('a', {
     class: 'dc-topbar-btn dcp-flame-btn' + (active ? ' is-active' : ''),
-    href: '/plus/', 'aria-label': active ? 'استریک شما: امروز فعال' : 'استریک شما: امروز غیرفعال',
+    href: '/plus/', 'aria-label': active ? 'امروز فعال بوده‌اید' : 'امروز هنوز فعالیتی ثبت نشده',
     title: active ? 'امروز فعال بوده‌اید' : 'امروز هنوز فعالیتی ثبت نشده',
   }, [
     el('span', { class: 'dcp-flame-ico', 'aria-hidden': 'true' }, '🔥'),
-    el('span', { class: 'dcp-flame-n' }, faNum(user.current_streak || 0)),
   ]);
 }
 
@@ -70,6 +72,8 @@ function buildUserPerson(user) {
         onclick: () => { closeMenu(); openOverlay('dashboard', 'پیشخوان', (root) => renderDashboard(root, { me: user })); } }, 'پیشخوان'),
       el('button', { class: 'dcp-person-item', type: 'button', role: 'menuitem',
         onclick: () => { closeMenu(); openOverlay('profile', 'پروفایل', (root) => renderProfile(root, { me: user })); } }, 'پروفایل'),
+      el('button', { class: 'dcp-person-item', type: 'button', role: 'menuitem',
+        onclick: async () => { closeMenu(); await api.logout().catch(() => {}); location.reload(); } }, 'خروج'),
     ]);
     const wrap = btn.closest('.dcp-person-wrap') || btn.parentNode;
     wrap.appendChild(menu);
