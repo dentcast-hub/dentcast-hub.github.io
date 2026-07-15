@@ -1,5 +1,7 @@
 import pg from 'pg';
-import migrate from 'node-pg-migrate';
+// node-pg-migrate exposes a named `runner` and no default export under ESM;
+// importing a default gives undefined (and vitest then throws "not a function").
+import { runner as migrate } from 'node-pg-migrate';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 
