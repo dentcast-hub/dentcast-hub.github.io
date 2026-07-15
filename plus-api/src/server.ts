@@ -4,6 +4,8 @@ import cors from '@fastify/cors';
 import { config } from './config.js';
 import { authRoutes } from './routes/auth.js';
 import { anonRoutes } from './routes/anon.js';
+import { activityRoutes } from './routes/activity.js';
+import { highlightRoutes } from './routes/highlights.js';
 
 /**
  * Build the Fastify app. Exported separately from the listen() call so tests can
@@ -25,6 +27,8 @@ export async function buildServer(): Promise<FastifyInstance> {
 
   await app.register(authRoutes);
   await app.register(anonRoutes);
+  await app.register(activityRoutes);
+  await app.register(highlightRoutes);
 
   return app;
 }
