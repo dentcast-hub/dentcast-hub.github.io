@@ -6,6 +6,11 @@ import { config } from './config.js';
 // project, and returning strings would leak into every caller.
 pg.types.setTypeParser(20, (v) => (v === null ? null : Number(v)));
 
+// Return `date` (OID 1082) as the raw 'YYYY-MM-DD' string, not a JS Date. The
+// streak engine compares Asia/Tehran calendar days as strings; a Date object
+// would drag UTC/local offsets into that comparison.
+pg.types.setTypeParser(1082, (v) => v);
+
 export const pool = new pg.Pool({ connectionString: config.databaseUrl });
 
 export type Queryable = pg.Pool | pg.PoolClient;

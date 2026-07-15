@@ -1,30 +1,48 @@
 import type pg from 'pg';
-import { pool } from '../db.js';
+import { pool, withTransaction } from '../db.js';
+import { QUALIFYING_ACTIONS, applyStreak } from './streak.js';
+import { dayInTz } from './time.js';
 
 /**
  * Append an event to the append-only `user_activity` log. This log is the single
  * source of truth; every streak cache is reconstructable from it.
  *
- * The streak engine (a later milestone) extends this function to also update the
- * profile caches transactionally and append a `streak_kept` event when a new day
- * is counted. For now it only appends, so no cache is ever wrong: rebuilding from
- * the log yields the same result.
+ * When the action is a qualifying one, the streak caches are advanced in the
+ * SAME transaction and a `streak_kept` event is appended if a new Tehran day is
+ * counted. The day is taken from the inserted row's own created_at so a rebuild
+ * (which reads created_at) always agrees with the live path.
  *
- * IMPORTANT: `card_reviewed_manual` flows through here and MUST NOT touch
- * `card_state`. This function never writes to `card_state`; keep it that way.
+ * IMPORTANT: `card_reviewed_manual` flows through here and counts for the streak,
+ * but MUST NOT touch `card_state`. Nothing here writes to `card_state`; keep it
+ * that way.
  */
+async function insertAndScore(
+  client: pg.PoolClient,
+  userId: string,
+  action: string,
+  contentId: string | null,
+  meta: Record<string, unknown>,
+): Promise<{ id: number }> {
+  const res = await client.query<{ id: number; created_at: Date }>(
+    `insert into user_activity (user_id, action, content_id, meta)
+     values ($1, $2, $3, $4::jsonb)
+     returning id, created_at`,
+    [userId, action, contentId, JSON.stringify(meta ?? {})],
+  );
+  const row = res.rows[0];
+  if (QUALIFYING_ACTIONS.has(action)) {
+    await applyStreak(client, userId, dayInTz(row.created_at));
+  }
+  return { id: row.id };
+}
+
 export async function recordActivity(
   userId: string,
   action: string,
   contentId: string | null = null,
   meta: Record<string, unknown> = {},
-  client: pg.Pool | pg.PoolClient = pool,
+  client?: pg.PoolClient,
 ): Promise<{ id: number }> {
-  const res = await client.query<{ id: number }>(
-    `insert into user_activity (user_id, action, content_id, meta)
-     values ($1, $2, $3, $4::jsonb)
-     returning id`,
-    [userId, action, contentId, JSON.stringify(meta ?? {})],
-  );
-  return res.rows[0];
+  if (client) return insertAndScore(client, userId, action, contentId, meta);
+  return withTransaction((c) => insertAndScore(c, userId, action, contentId, meta));
 }

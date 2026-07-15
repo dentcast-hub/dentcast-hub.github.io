@@ -10,6 +10,7 @@
 import { pool, withTransaction, query } from '../db.js';
 import { generatePseudonym } from '../services/pseudonym.js';
 import { getIndex } from '../content-index.js';
+import { rebuildAllStreaks } from './rebuild-streaks.js';
 
 const SEED_PHONES = ['09120000001', '09120000002'];
 
@@ -145,9 +146,11 @@ async function main(): Promise<void> {
   const premiumId = await upsertUser(SEED_PHONES[1], 'premium', 2);
   for (const h of PREMIUM_HIGHLIGHTS) await insertHighlight(premiumId, h);
 
+  await rebuildAllStreaks(); // compute streak caches from the seeded activity
+
   console.log(`  free user   : ${SEED_PHONES[0]}  (${freeId})`);
   console.log(`  premium user: ${SEED_PHONES[1]}  (${premiumId})`);
-  console.log('Done. Streak caches are left at 0; run `npm run rebuild-streaks` to compute them.');
+  console.log('Done. Streak caches rebuilt from activity.');
   await pool.end();
 }
 
