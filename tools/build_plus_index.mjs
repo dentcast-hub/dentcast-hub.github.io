@@ -1,56 +1,64 @@
-// Build plus/content-index.json from dentcast-brain.json.
+// Build plus/content-index.json — the single taxonomy model shared by the
+// dashboard navigation tree (Phase 1) and the hex completion map (Phase 3).
 //
-// This compact index is the single taxonomy model shared by:
-//   - the dashboard navigation tree (Phase 1)
-//   - the hex completion map (Phase 3, a different data layer over the same model)
-//   - the server (/tree, /highlights?topic, /progress)
+// The taxonomy STRUCTURE and LABELS are taken from the site's own pillar pages
+// (pillar/index.html for the categories, pillar/<key>/index.html for each
+// category's subcategories), so the tree mirrors the real site exactly: same
+// hierarchy, same Persian labels, same order. Highlight COUNTS are layered on at
+// runtime by the API; only the user's highlights live in the DB.
 //
-// content_id = page_url without the leading slash and ".html" (matches the
-// client's detectContentId()). Run from the repo root:  node tools/build_plus_index.mjs
-import { readFileSync, writeFileSync } from 'node:fs';
+// Content is mapped into this structure from dentcast-brain.json (pillar.primary
+// / pillar.subtopic). content_id = page_url without the leading slash and
+// ".html" (matches the client's detectContentId()).
+//
+// Run from the repo root:  node tools/build_plus_index.mjs
+import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const brain = JSON.parse(readFileSync(resolve(root, 'dentcast-brain.json'), 'utf8'));
-
-const CLUSTER_FA = {
-  implantology: 'ایمپلنتولوژی',
-  'fixed-pros': 'پروتز ثابت',
-  bonding: 'باندینگ',
-  ceramics: 'سرامیک',
-  occlusion: 'اکلوژن',
-  'treatment-planning': 'طرح درمان',
-  esthetic: 'زیبایی',
-  operative: 'ترمیمی',
-  'removable-pros': 'پروتز متحرک',
-  digital: 'دیجیتال',
-  'oral-medicine': 'طب دهان',
-};
-
-const SUBTOPIC_FA = {
-  cementation: 'سمان‌گذاری', preparation: 'تراش', impression: 'قالب‌گیری',
-  'post-and-core': 'پست و کور', 'crowns-onlays': 'روکش و آنله', failures: 'شکست‌ها',
-  strategies: 'راهبردها', clinical: 'بالینی', advanced: 'پیشرفته',
-  types: 'انواع', 'surface-prep': 'آماده‌سازی سطح', indications: 'اندیکاسیون‌ها', basics: 'مبانی',
-  'vertical-dimension': 'بعد عمودی', 'tooth-wear-dahl': 'سایش دندان و روش دال',
-  'tmd-orofacial-pain': 'اختلالات مفصل و درد صورت', 'occlusal-analysis-adjustment': 'آنالیز و تنظیم اکلوزال',
-  'occlusal-scheme-guidance': 'طرح و گاید اکلوزال',
-  'peri-implant-health': 'سلامت اطراف ایمپلنت', 'surgical-planning': 'طرح جراحی',
-  'restoration-design': 'طراحی رستوریشن', 'prosthetic-components': 'اجزای پروتزی', fundamentals: 'مبانی',
-  'implant-overdentures': 'اوردنچر متکی بر ایمپلنت', 'snap-on-smile': 'اسنپ‌ان‌اسمایل', 'complete-dentures': 'دنچر کامل',
-  'smile-design': 'طراحی لبخند', 'veneers-laminates': 'ونیر و لمینت', 'shade-and-whitening': 'رنگ و سفید کردن',
-  'caries-management': 'مدیریت پوسیدگی', 'direct-restorations': 'ترمیم مستقیم', 'cracked-tooth': 'دندان ترک‌خورده',
-  'cad-cam': 'کد/کم', 'intraoral-scanning': 'اسکن داخل‌دهانی', ai: 'هوش مصنوعی', 'digital-workflow': 'گردش‌کار دیجیتال',
-  'comprehensive-diagnosis': 'تشخیص جامع', 'replacing-missing-teeth': 'جایگزینی دندان ازدست‌رفته',
-  'extraction-vs-preservation': 'کشیدن یا حفظ دندان',
-};
-
-const prettify = (s) => s.replace(/-/g, ' ');
+const read = (p) => readFileSync(resolve(root, p), 'utf8');
 const toContentId = (url) => url.replace(/^\/+/, '').replace(/\.html$/i, '');
 
+// --- 1. Categories (clusters) from the pillar hub, in site order ------------
+const hub = read('pillar/index.html');
+const clusterOrder = [];
+const clusterFa = {};
+// Split into per-card chunks so each chunk holds exactly one data-pillar and one
+// pillar-card-name, regardless of how much markup sits between them.
+for (const card of hub.split('pillar-card-row').slice(1)) {
+  const key = card.match(/data-pillar="([a-z0-9-]+)"/);
+  const label = card.match(/pillar-card-name">\s*([^<]+?)\s*</);
+  if (!key || !label || clusterFa[key[1]]) continue;
+  clusterFa[key[1]] = label[1];
+  clusterOrder.push(key[1]);
+}
+
+// --- 2. Subcategories (subtopics) from each pillar page, in site order ------
+const subOrder = {}; // clusterKey -> [subKey...]
+const subFa = {}; // clusterKey -> { subKey: label }
+for (const c of clusterOrder) {
+  subOrder[c] = [];
+  subFa[c] = {};
+  const file = `pillar/${c}/index.html`;
+  if (!existsSync(resolve(root, file))) continue;
+  const html = read(file);
+  // Each chunk starts at a data-subtopic key and contains its pillar-card-title.
+  for (const chunk of html.split('data-subtopic="').slice(1)) {
+    const key = chunk.match(/^([a-z0-9-]+)"/);
+    const label = chunk.match(/pillar-card-title">\s*([^<]+?)\s*</);
+    if (!key || !label || subFa[c][key[1]]) continue;
+    subFa[c][key[1]] = label[1];
+    subOrder[c].push(key[1]);
+  }
+}
+
+// --- 3. Map brain content into the structure --------------------------------
+const brain = JSON.parse(read('dentcast-brain.json'));
 const byContent = {};
-const clusters = new Map(); // key -> { key, fa, contentIds:Set, subs: Map }
+const clusterContent = new Map(clusterOrder.map((c) => [c, new Set()]));
+const subContent = new Map(); // `${cluster}::${sub}` -> Set
+const prettify = (s) => s.replace(/-/g, ' ');
 
 for (const e of brain) {
   const url = e.page_url;
@@ -68,39 +76,49 @@ for (const e of brain) {
     url,
     secondary: (e.pillar && e.pillar.secondary) || [],
   };
-
-  if (!clusters.has(primary)) {
-    clusters.set(primary, { key: primary, fa: CLUSTER_FA[primary] || prettify(primary), contentIds: new Set(), subs: new Map() });
-  }
-  const c = clusters.get(primary);
-  c.contentIds.add(contentId);
+  // Only content whose category is a real site pillar joins the tree.
+  if (!clusterContent.has(primary)) continue;
+  clusterContent.get(primary).add(contentId);
   if (subtopic) {
-    if (!c.subs.has(subtopic)) c.subs.set(subtopic, { key: subtopic, fa: SUBTOPIC_FA[subtopic] || prettify(subtopic), contentIds: new Set() });
-    c.subs.get(subtopic).contentIds.add(contentId);
+    const k = `${primary}::${subtopic}`;
+    if (!subContent.has(k)) subContent.set(k, new Set());
+    subContent.get(k).add(contentId);
   }
 }
 
-const clustersOut = [...clusters.values()]
-  .map((c) => ({
-    key: c.key,
-    fa: c.fa,
-    contentCount: c.contentIds.size,
-    contentIds: [...c.contentIds],
-    subtopics: [...c.subs.values()]
-      .map((s) => ({ key: s.key, fa: s.fa, contentCount: s.contentIds.size, contentIds: [...s.contentIds] }))
-      .sort((a, b) => b.contentCount - a.contentCount),
-  }))
-  .sort((a, b) => b.contentCount - a.contentCount);
+// --- 4. Emit, preserving the site's order -----------------------------------
+const clusters = clusterOrder.map((c) => {
+  const ids = clusterContent.get(c) || new Set();
+  // Subtopics: the pillar page's order, plus any brain subtopics not listed
+  // there (so no content is silently orphaned), appended after.
+  const known = subOrder[c] || [];
+  const extras = [...new Set(
+    [...ids].map((id) => byContent[id].subtopic).filter((s) => s && !subFa[c][s]),
+  )];
+  const subKeys = [...known, ...extras];
+  return {
+    key: c,
+    fa: clusterFa[c] || prettify(c),
+    contentCount: ids.size,
+    contentIds: [...ids],
+    subtopics: subKeys.map((s) => {
+      const sids = subContent.get(`${c}::${s}`) || new Set();
+      return { key: s, fa: subFa[c][s] || prettify(s), contentCount: sids.size, contentIds: [...sids] };
+    }),
+  };
+});
 
 const out = {
-  version: 1,
-  generatedFrom: 'dentcast-brain.json',
-  clusterCount: clustersOut.length,
+  version: 2,
+  generatedFrom: 'pillar/*.html (structure+labels) + dentcast-brain.json (content)',
+  clusterCount: clusters.length,
   contentCount: Object.keys(byContent).length,
-  clusters: clustersOut,
+  clusters,
   byContent,
 };
 
-const outPath = resolve(root, 'plus', 'content-index.json');
-writeFileSync(outPath, JSON.stringify(out, null, 0) + '\n');
-console.log(`Wrote ${outPath}: ${out.clusterCount} clusters, ${out.contentCount} content pages.`);
+writeFileSync(resolve(root, 'plus', 'content-index.json'), JSON.stringify(out, null, 0) + '\n');
+console.log(`Wrote plus/content-index.json: ${clusters.length} categories (site order), ${out.contentCount} content pages.`);
+for (const c of clusters) {
+  console.log(`  ${c.fa} (${c.key}) — ${c.contentCount} · subs: ${c.subtopics.map((s) => s.fa).join('، ')}`);
+}

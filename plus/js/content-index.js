@@ -19,21 +19,16 @@ export function contentInfo(model, contentId) {
 }
 
 // Detect the topic key for a topic/category landing page, or null if the current
-// path is not one. Used for the landing-page card-archive entry point.
+// path is not one. The real topic/category landing pages are the pillar category
+// pages (/pillar/<cluster>/); their archive is scoped to exactly that category's
+// content (spec 2.8). Content-type index pages (/insight/, /notecast/) are NOT
+// topics and get no archive entry point, so a landing page never shows a set that
+// spans multiple categories.
 export function landingTopicKey(model, pathname) {
   const segs = pathname.replace(/^\/+|\/+$/g, '').split('/').filter(Boolean);
-  // /pillar/<cluster>/(index.html)
   if (segs[0] === 'pillar' && segs[1] && segs[1] !== 'index.html') {
     const exists = (model.clusters || []).some((c) => c.key === segs[1]);
     return exists ? 'cluster:' + segs[1] : null;
-  }
-  // /<type>/index.html  or  /<type>/  (a content-type category landing page)
-  const isIndex = segs.length === 2 && segs[1] === 'index.html';
-  const isBareDir = segs.length === 1;
-  if (isIndex || isBareDir) {
-    const type = segs[0];
-    const hasContent = Object.values(model.byContent || {}).some((v) => v.type === type);
-    return hasContent ? 'type:' + type : null;
   }
   return null;
 }

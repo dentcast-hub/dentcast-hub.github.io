@@ -8,10 +8,15 @@ let app: FastifyInstance;
 let cookie: string;
 
 // Pick real content_ids from the taxonomy so tree/topic have something to group.
+// Use a category + subcategory that actually contain content (the site-order
+// index can start with an empty subcategory).
 const idx = getIndex();
-const cluster = idx.clusters[0];
-const sub = cluster.subtopics[0];
+const cluster = idx.clusters.find((c) => c.subtopics.some((s) => s.contentCount >= 2))!;
+const sub = cluster.subtopics.find((s) => s.contentCount >= 2)!;
 const cidsInSub = sub.contentIds.slice(0, 2);
+// A different category, for cross-category scoping checks.
+const otherCluster = idx.clusters.find((c) => c.key !== cluster.key && c.contentCount >= 1)!;
+const otherCid = otherCluster.contentIds[0];
 
 beforeEach(async () => {
   await resetDb();
@@ -73,6 +78,21 @@ describe('GET /highlights?topic=', () => {
   it('404s on an unknown topic', async () => {
     const res = await app.inject({ method: 'GET', url: '/highlights?topic=cluster:nope', headers: { cookie } });
     expect(res.statusCode).toBe(404);
+  });
+
+  it('scopes a category archive to ONLY that category (issue 4)', async () => {
+    await addHighlight(cidsInSub[0], 'داخل دسته');       // in `cluster`
+    await addHighlight(otherCid, 'دسته دیگر');            // in `otherCluster`
+
+    const inCat = await app.inject({ method: 'GET', url: '/highlights?topic=cluster:' + cluster.key, headers: { cookie } });
+    const texts = inCat.json().highlights.map((h: any) => h.exact);
+    expect(texts).toContain('داخل دسته');
+    expect(texts).not.toContain('دسته دیگر'); // the other category never leaks in
+
+    const other = await app.inject({ method: 'GET', url: '/highlights?topic=cluster:' + otherCluster.key, headers: { cookie } });
+    const otherTexts = other.json().highlights.map((h: any) => h.exact);
+    expect(otherTexts).toContain('دسته دیگر');
+    expect(otherTexts).not.toContain('داخل دسته');
   });
 });
 
