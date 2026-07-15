@@ -11,7 +11,13 @@ import { openOverlay, closeOverlay, overlayOpen } from './overlay.js';
 import { renderDashboard } from './dashboard.js';
 import { renderProfile } from './profile.js';
 
-const PERSON_SVG = '<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>';
+// Inlined so it can never 404. Built via innerHTML on an HTML button (not
+// createElement('svg')) so the parser creates properly namespaced SVG nodes;
+// createElement('svg') would produce an unrenderable HTML element (empty icon).
+const PERSON_SVG =
+  '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" ' +
+  'style="width:1.3em;height:1.3em;display:block">' +
+  '<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>';
 
 function moveToDrawer(btn, labelText) {
   const drawer = document.querySelector('.dc-toolbar-drawer-inner');
@@ -41,9 +47,9 @@ function buildFlame(user) {
 
 function personSvg(colorClass) {
   const btn = el('button', { class: 'dc-topbar-btn dcp-person-btn ' + colorClass, type: 'button' });
-  const svg = el('svg', { viewBox: '0 0 24 24', 'aria-hidden': 'true', style: 'width:1.15em;height:1.15em' });
-  svg.innerHTML = PERSON_SVG;
-  btn.appendChild(svg);
+  // Setting innerHTML with an <svg> string on an HTML element yields real,
+  // namespaced SVG nodes that render (and give the button a clickable size).
+  btn.innerHTML = PERSON_SVG;
   return btn;
 }
 
@@ -97,11 +103,25 @@ export async function initHeader() {
   if (!actions || actions.dataset.dcpHeader) return;
   actions.dataset.dcpHeader = '1';
 
-  // Move music + articles into the hamburger drawer.
-  moveToDrawer(document.getElementById('btn-music-toggle'), 'موسیقی');
-  moveToDrawer(document.getElementById('btn-cabinet'), 'مقاله‌ها');
+  // Move music + articles into the hamburger drawer (independent of the API).
+  try {
+    moveToDrawer(document.getElementById('btn-music-toggle'), 'موسیقی');
+    moveToDrawer(document.getElementById('btn-cabinet'), 'مقاله‌ها');
+  } catch (_) { /* non-fatal */ }
 
-  const user = await currentUser();
-  if (user) actions.appendChild(buildFlame(user));
-  actions.appendChild(user ? buildUserPerson(user) : buildGuestPerson());
+  // A failed /me (e.g. API down) must never break icon rendering or the toggle:
+  // currentUser already swallows errors, but guard anyway and default to guest.
+  let user = null;
+  try { user = await currentUser(); } catch (_) { user = null; }
+
+  try {
+    if (user) actions.appendChild(buildFlame(user));
+    actions.appendChild(user ? buildUserPerson(user) : buildGuestPerson());
+  } catch (e) {
+    if (window.console) console.warn('[plus header] wiring failed', e);
+    // Last resort: at least a working guest login icon.
+    if (!actions.querySelector('.dcp-person-btn')) {
+      try { actions.appendChild(buildGuestPerson()); } catch (_) { /* give up quietly */ }
+    }
+  }
 }
