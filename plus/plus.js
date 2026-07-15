@@ -7,6 +7,7 @@ import { currentUser, api } from './js/api.js';
 import { openLoginModal } from './js/login-modal.js';
 import { Workbench } from './js/workbench.js';
 import { el } from './js/util.js';
+import { getModel, landingTopicKey } from './js/content-index.js';
 
 function injectWorkbenchButton(main, proseRoot) {
   const btn = el('button', { class: 'dcp-wb-button', type: 'button', 'aria-pressed': 'false' }, 'میز کار');
@@ -82,9 +83,32 @@ async function initArticle() {
   }
 }
 
+// Topic/category landing pages carry an entry point into the user's card
+// archive for that topic (spec 2.8). Shown to LOGGED-IN users only: for guests
+// the site must stay exactly as today except the two invitation points (2.3), so
+// a "your cards" link must never appear for anonymous visitors.
+async function initLanding() {
+  if (document.querySelector('main.article-content-wrap')) return; // handled as an article
+  const user = await currentUser();
+  if (!user) return;
+  const model = await getModel();
+  const topicKey = landingTopicKey(model, location.pathname);
+  if (!topicKey) return;
+  if (document.querySelector('.dcp-cards-entry')) return;
+
+  const link = el('a', {
+    class: 'dcp-cards-entry-btn', href: '/plus/cards.html?topic=' + encodeURIComponent(topicKey),
+  }, 'کارت‌های شما');
+  const bar = el('div', { class: 'dcp-cards-entry' }, [link]);
+  const h1 = document.querySelector('main h1, h1');
+  if (h1 && h1.parentNode) h1.parentNode.insertBefore(bar, h1.nextSibling);
+  else (document.querySelector('main') || document.body).prepend(bar);
+}
+
 function boot() {
   try {
     initArticle();
+    initLanding();
   } catch (e) {
     // Progressive enhancement: never break the page.
     if (window.console) console.warn('[plus] init failed', e);

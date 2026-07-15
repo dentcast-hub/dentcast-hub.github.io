@@ -1,0 +1,73 @@
+/* Dark, card-based identity for the /plus pages (dashboard, cards, profile).
+   The workbench stays inside article pages and keeps the site's light look; only
+   the standalone /plus surfaces use this darker identity (spec 2.1). It reuses
+   the site's font (dc-theme.css is loaded first) and overrides colors. RTL. */
+
+:root {
+  --dcp-bg: #0f1420;
+  --dcp-panel: #171e2d;
+  --dcp-panel-2: #1f2839;
+  --dcp-ink: #e8eef7;
+  --dcp-muted: #93a1b8;
+  --dcp-line: #2a3448;
+  --dcp-accent: #4f9cf0;
+  --dcp-accent-soft: rgba(79, 156, 240, .16);
+}
+
+body.dcp-page {
+  margin: 0; background: var(--dcp-bg); color: var(--dcp-ink);
+  min-height: 100vh; line-height: 1.8;
+}
+body.dcp-page a { color: var(--dcp-accent); text-decoration: none; }
+
+.dcp-page-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 18px; border-bottom: 1px solid var(--dcp-line);
+  position: sticky; top: 0; background: rgba(15, 20, 32, .9); backdrop-filter: blur(8px); z-index: 10;
+}
+.dcp-page-brand { font-weight: 800; font-size: 1.1rem; color: var(--dcp-ink) !important; }
+.dcp-page-back { color: var(--dcp-muted) !important; font-size: .9rem; }
+.dcp-page-main { max-width: 860px; margin: 0 auto; padding: 18px 16px 60px; }
+
+.dcp-loading, .dcp-empty, .dcp-gate { padding: 30px 6px; color: var(--dcp-muted); text-align: center; }
+.dcp-gate { display: flex; flex-direction: column; gap: 14px; align-items: center; }
+
+/* ---- navigation tree ----------------------------------------------------- */
+.dcp-tree-head { display: flex; align-items: baseline; justify-content: space-between; margin: 6px 2px 14px; }
+.dcp-tree-head > span:first-child { font-size: 1.25rem; font-weight: 800; }
+.dcp-tree-total { color: var(--dcp-muted); font-size: .9rem; }
+.dcp-tree { display: flex; flex-direction: column; gap: 8px; }
+.dcp-tree-cluster { background: var(--dcp-panel); border: 1px solid var(--dcp-line); border-radius: 14px; padding: 4px 12px; }
+.dcp-tree-cluster.has-hl { border-color: var(--dcp-accent); }
+.dcp-tree-summary { display: flex; align-items: center; justify-content: space-between; gap: 10px; cursor: pointer; padding: 8px 2px; list-style: none; }
+.dcp-tree-summary::-webkit-details-marker { display: none; }
+.dcp-tree-link { color: var(--dcp-ink) !important; font-weight: 600; }
+.dcp-tree-sub { display: flex; align-items: center; justify-content: space-between; padding: 6px 14px; border-top: 1px solid var(--dcp-line); }
+.dcp-tree-sub .dcp-tree-link { font-weight: 400; color: var(--dcp-muted) !important; }
+.dcp-tree-count { min-width: 26px; text-align: center; font-weight: 800; color: var(--dcp-accent); background: var(--dcp-accent-soft); border-radius: 999px; padding: 1px 8px; font-size: .85rem; }
+.dcp-tree-count.is-zero { background: transparent; }
+
+/* ---- card archive -------------------------------------------------------- */
+.dcp-archive-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px; margin-bottom: 6px; }
+.dcp-back { color: var(--dcp-muted) !important; font-size: .9rem; }
+.dcp-archive-title { font-size: 1.4rem; font-weight: 800; margin: 0; flex: 1 1 auto; }
+.dcp-archive-count { color: var(--dcp-muted); font-size: .9rem; }
+.dcp-archive-note { color: var(--dcp-muted); font-size: .92rem; margin: 4px 2px 18px; }
+
+.dcp-card-list { display: flex; flex-direction: column; gap: 12px; }
+.dcp-card { background: var(--dcp-panel); border: 1px solid var(--dcp-line); border-radius: 16px; padding: 14px 16px; }
+.dcp-card.is-reviewed { opacity: .7; border-color: var(--dcp-accent); }
+.dcp-card-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; color: var(--dcp-muted); font-size: .82rem; }
+.dcp-card-dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+.dcp-card-label { background: var(--dcp-panel-2); border: 1px solid var(--dcp-line); border-radius: 999px; padding: 1px 10px; }
+.dcp-card-src { margin-inline-start: auto; }
+.dcp-card-text { font-size: 1.05rem; line-height: 2; }
+.dcp-card-note { margin-top: 10px; padding: 8px 10px; background: var(--dcp-panel-2); border-radius: 10px; color: var(--dcp-ink); white-space: pre-wrap; }
+.dcp-card-actions { display: flex; gap: 8px; margin-top: 12px; }
+
+.dcp-blank { font: inherit; background: var(--dcp-accent-soft); border: 1px dashed var(--dcp-accent); color: var(--dcp-accent); border-radius: 6px; padding: 0 8px; cursor: pointer; letter-spacing: .1em; }
+.dcp-blank.is-open { background: transparent; border-style: solid; color: var(--dcp-ink); cursor: default; letter-spacing: normal; }
+
+/* dark-surface overrides for the shared button classes on /plus pages */
+body.dcp-page .dcp-btn { border-color: var(--dcp-line); color: var(--dcp-ink); }
+body.dcp-page .dcp-btn-primary { background: var(--dcp-accent); color: #06101f; border-color: transparent; }

@@ -1,0 +1,15 @@
+{
+  "name": "دنت‌کست پلاس",
+  "short_name": "پلاس",
+  "start_url": "/plus/",
+  "scope": "/plus/",
+  "display": "standalone",
+  "background_color": "#0f1420",
+  "theme_color": "#0f1420",
+  "lang": "fa",
+  "dir": "rtl",
+  "icons": [
+    { "src": "/favicon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/favicon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

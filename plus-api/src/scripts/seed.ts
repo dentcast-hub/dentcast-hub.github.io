@@ -9,8 +9,17 @@
  */
 import { pool, withTransaction, query } from '../db.js';
 import { generatePseudonym } from '../services/pseudonym.js';
+import { getIndex } from '../content-index.js';
 
 const SEED_PHONES = ['09120000001', '09120000002'];
+
+// Real content_ids from the taxonomy index so the tree + topic archive have data.
+const idx = getIndex();
+const cluster0 = idx.clusters[0]; // implantology
+const cluster1 = idx.clusters[1]; // fixed-pros
+const FREE_CONTENT = (cluster0?.contentIds || ['implantology/x']).slice(0, 2);
+const FREE_CONTENT_B = (cluster1?.contentIds || ['fixed-pros/x']).slice(0, 1);
+const PREMIUM_CONTENT = (idx.clusters[2]?.contentIds || ['bonding/x']).slice(0, 1);
 
 type SeedHighlight = {
   content_id: string;
@@ -26,7 +35,7 @@ type SeedHighlight = {
 
 const FREE_HIGHLIGHTS: SeedHighlight[] = [
   {
-    content_id: 'resin-cements-overview',
+    content_id: FREE_CONTENT[0],
     exact: 'سمان‌های رزینی به سه دسته‌ی کاملا اچینگ، خوداچ و خودچسب تقسیم می‌شوند',
     prefix: 'به طور کلی ',
     suffix: ' که هر کدام کاربرد خود را دارند.',
@@ -36,7 +45,7 @@ const FREE_HIGHLIGHTS: SeedHighlight[] = [
     cloze_markers: [[0, 12]],
   },
   {
-    content_id: 'resin-cements-overview',
+    content_id: FREE_CONTENT[0],
     exact: 'پیوند به عاج همیشه ضعیف‌تر از پیوند به مینا است',
     prefix: 'باید توجه داشت که ',
     suffix: '.',
@@ -44,7 +53,7 @@ const FREE_HIGHLIGHTS: SeedHighlight[] = [
     label: 'clinical_pearl',
   },
   {
-    content_id: 'zirconia-bonding',
+    content_id: FREE_CONTENT[1] || FREE_CONTENT[0],
     exact: 'سندبلاست سطح زیرکونیا پیش از باندینگ ضروری است',
     prefix: '',
     suffix: ' تا گیر میکرومکانیکی ایجاد شود.',
@@ -53,7 +62,7 @@ const FREE_HIGHLIGHTS: SeedHighlight[] = [
     label: 'important',
   },
   {
-    content_id: 'zirconia-bonding',
+    content_id: FREE_CONTENT_B[0],
     exact: 'پرایمرهای حاوی MDP بهترین دوام باند را فراهم می‌کنند',
     color: 'yellow',
     note: 'MDP = 10-MDP monomer',
@@ -62,7 +71,7 @@ const FREE_HIGHLIGHTS: SeedHighlight[] = [
 
 const PREMIUM_HIGHLIGHTS: SeedHighlight[] = [
   {
-    content_id: 'endo-irrigation',
+    content_id: PREMIUM_CONTENT[0],
     exact: 'هیپوکلریت سدیم استاندارد طلایی شست‌وشوی کانال است',
     color: 'yellow',
     label: 'important',
@@ -129,8 +138,8 @@ async function main(): Promise<void> {
   for (const h of FREE_HIGHLIGHTS) await insertHighlight(freeId, h);
   await query(
     `insert into user_activity (user_id, action, content_id)
-     values ($1, 'article_completed', 'resin-cements-overview')`,
-    [freeId],
+     values ($1, 'article_completed', $2)`,
+    [freeId, FREE_CONTENT[0]],
   );
 
   const premiumId = await upsertUser(SEED_PHONES[1], 'premium', 2);

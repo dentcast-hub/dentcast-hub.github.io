@@ -70,6 +70,10 @@ export const config = {
   },
 
   streakTimezone: str('STREAK_TIMEZONE', 'Asia/Tehran'),
+
+  // Path to the generated taxonomy index (tools/build_plus_index.mjs output).
+  // Defaults to the repo's plus/ dir in dev; set explicitly in the container.
+  contentIndexPath: process.env.CONTENT_INDEX_PATH || '',
 };
 
 export type Config = typeof config;

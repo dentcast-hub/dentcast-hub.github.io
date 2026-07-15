@@ -1,7 +1,8 @@
 import type { FastifyInstance } from 'fastify';
 import { requireAuth } from '../middleware/auth.js';
-import { pool, one, withTransaction } from '../db.js';
+import { pool, withTransaction } from '../db.js';
 import { recordActivity } from '../services/activity.js';
+import { resolveTopic } from '../content-index.js';
 
 const LABELS = new Set(['important', 'unclear', 'clinical_pearl']);
 
@@ -32,11 +33,21 @@ export async function highlightRoutes(app: FastifyInstance): Promise<void> {
   app.get('/highlights', async (request, reply) => {
     const { content_id, topic } = request.query as { content_id?: string; topic?: string };
 
+    // Topic archive (spec 2.8): the user's highlights across the content within
+    // ONE taxonomy branch. Not cross-topic aggregation (that is premium).
     if (topic && !content_id) {
-      // The topic archive needs the content-index (topic -> content_ids) mapping,
-      // built in the archive+tree milestone. Wired there.
-      return reply.code(501).send({ error: 'topic_archive_not_ready' });
+      const resolved = resolveTopic(topic);
+      if (!resolved) return reply.code(404).send({ error: 'unknown_topic' });
+      const res = await pool.query<HighlightRow>(
+        `select ${SELECT_COLS}
+           from highlights
+          where user_id = $1 and content_id = any($2)
+          order by content_id asc, created_at asc`,
+        [request.user!.id, resolved.contentIds],
+      );
+      return reply.send({ topic, topic_fa: resolved.fa, highlights: res.rows });
     }
+
     if (!content_id) {
       return reply.code(400).send({ error: 'content_id_required' });
     }
