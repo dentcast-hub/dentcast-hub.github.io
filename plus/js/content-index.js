@@ -4,11 +4,14 @@
 // model with a different data source. Do not fork this into two features.
 let modelPromise;
 
-export function getModel() {
+// refresh:true re-fetches the content index (used when the dashboard opens, in
+// case new content has been published since the page loaded).
+export function getModel({ refresh = false } = {}) {
+  if (refresh) modelPromise = undefined;
   if (!modelPromise) {
-    modelPromise = fetch('/plus/content-index.json', { credentials: 'omit' })
-      .then((r) => (r.ok ? r.json() : { clusters: [], byContent: {} }))
-      .catch(() => ({ clusters: [], byContent: {} }));
+    modelPromise = fetch('/plus/content-index.json' + (refresh ? '?t=' + (window.performance ? Math.floor(performance.now()) : '') : ''), { credentials: 'omit', cache: 'no-cache' })
+      .then((r) => (r.ok ? r.json() : { folders: [], clusters: [], byContent: {} }))
+      .catch(() => ({ folders: [], clusters: [], byContent: {} }));
   }
   return modelPromise;
 }

@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs';
+import { readFileSync, statSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 import { config } from './config.js';
@@ -17,19 +17,27 @@ interface ContentInfo { cluster: string | null; subtopic: string | null; type: s
 interface IndexFile { version: number; folders: Folder[]; clusters: Cluster[]; byContent: Record<string, ContentInfo>; }
 
 let cached: IndexFile | null = null;
+let cachedMtimeMs = 0;
 
 function defaultPath(): string {
   const here = dirname(fileURLToPath(import.meta.url)); // plus-api/src (or dist)
   return resolve(here, '..', '..', 'plus', 'content-index.json');
 }
 
+/**
+ * Load the index, reloading automatically when the file changes on disk (so
+ * newly published content is reflected without an API restart; the dashboard
+ * checks for new content each time it opens).
+ */
 export function getIndex(): IndexFile {
-  if (cached) return cached;
   const path = config.contentIndexPath || defaultPath();
   try {
+    const mtime = statSync(path).mtimeMs;
+    if (cached && mtime === cachedMtimeMs) return cached;
     cached = JSON.parse(readFileSync(path, 'utf8')) as IndexFile;
+    cachedMtimeMs = mtime;
   } catch (err) {
-    // Missing index must not crash the API; the tree just comes back empty.
+    if (cached) return cached; // keep the last good copy on a transient read error
     // eslint-disable-next-line no-console
     console.warn(`[content-index] could not load ${path}; tree/topic will be empty`);
     cached = { version: 0, folders: [], clusters: [], byContent: {} };

@@ -3,7 +3,6 @@
 // not a separate dark theme (prototype-feedback override).
 import { el, faNum, streakIsActiveToday } from './util.js';
 import { api } from './api.js';
-import { renderTree } from './tree.js';
 import { getModel, contentInfo } from './content-index.js';
 import { LABELS, PALETTE } from './config.js';
 
@@ -53,14 +52,16 @@ function continueBlock(progress, model) {
 }
 
 function progressBars(progress) {
-  const rows = (progress.folder_progress || []).filter((f) => f.engaged > 0);
-  if (!rows.length) return el('div', { class: 'dcp-muted' }, 'با خواندن و هایلایت کردن، پیشرفت هر پوشه اینجا پر می‌شود.');
+  // Every folder gets a 0..100 bar showing how much of it you have read
+  // (engaged / total). Totals reflect currently published content.
+  const rows = (progress.folder_progress || []).filter((f) => f.total > 0);
+  if (!rows.length) return el('div', { class: 'dcp-muted' }, 'به‌زودی.');
   const list = el('div', { class: 'dcp-progress-list' });
   for (const f of rows) {
-    const pct = f.total ? Math.round((f.engaged / f.total) * 100) : 0;
+    const pct = f.total ? Math.min(100, Math.round((f.engaged / f.total) * 100)) : 0;
     list.appendChild(el('div', { class: 'dcp-progress-row' }, [
-      el('span', { class: 'dcp-progress-name' }, f.fa),
-      el('span', { class: 'dcp-progress-val' }, faNum(f.engaged) + ' از ' + faNum(f.total) + ' (٪' + faNum(pct) + ')'),
+      el('span', { class: 'dcp-progress-name', dir: 'ltr' }, f.key),
+      el('span', { class: 'dcp-progress-val' }, '٪' + faNum(pct) + ' · ' + faNum(f.engaged) + ' از ' + faNum(f.total)),
       el('div', { class: 'dcp-progress-track' }, el('div', { class: 'dcp-progress-fill', style: 'width:' + pct + '%' })),
     ]));
   }
@@ -116,14 +117,16 @@ function premiumTiles() {
 
 export async function renderDashboard(root, { me: preMe } = {}) {
   root.replaceChildren(el('div', { class: 'dcp-loading' }, 'در حال بارگذاری...'));
+  // Always fetch fresh when the dashboard opens: /me and /progress are never
+  // cached, and the content model is refreshed so newly published content is
+  // reflected in the per-folder progress totals.
   const [me, progress, model] = await Promise.all([
     preMe ? Promise.resolve(preMe) : api.me().catch(() => null),
     api.progress().catch(() => ({})),
-    getModel(),
+    getModel({ refresh: true }),
   ]);
   if (!me) { root.replaceChildren(el('div', { class: 'dcp-gate' }, 'برای دیدن پیشخوان وارد شوید.')); return; }
 
-  const treeWrap = el('div', {});
   const recentWrap = el('div', {}, el('div', { class: 'dcp-loading' }, '...'));
   const children = [
     el('div', { class: 'dcp-dash-hello' }, 'سلام، ' + (me.display_name || '')),
@@ -137,8 +140,7 @@ export async function renderDashboard(root, { me: preMe } = {}) {
   children.push(
     section('استریک', 'هر روز که بخوانید، هایلایت کنید یا مرور کنید، یک روز به زنجیره‌تان اضافه می‌شود. رکورد شما بیشترین زنجیره‌ای است که تا حالا ساخته‌اید و هیچ‌وقت پاک نمی‌شود.', streakDetail(me)),
     section('ادامه مطالعه', null, continueBlock(progress, model)),
-    section('پوشه‌های سایت', 'هر پوشه به صفحه‌ی خودش می‌رود؛ عدد کنارش تعداد هایلایت‌های شما در آن پوشه است.', treeWrap),
-    section('پیشرفت هر پوشه', 'نسبت مطالبی که در هر پوشه خوانده یا هایلایت کرده‌اید به کل آن پوشه.', progressBars(progress)),
+    section('پیشرفت هر پوشه', 'برای هر پوشه، چند درصد از کل مطالب آن را خوانده‌اید (۰ تا ۱۰۰). هر بار پیشخوان باز شود به‌روز می‌شود.', progressBars(progress)),
     section('امتیاز شما', 'امتیاز از روی فعالیت شما ساخته می‌شود و پایه‌ی رقابت‌های بعدی است.',
       el('div', { class: 'dcp-score' }, [el('span', { class: 'dcp-score-n' }, faNum(progress.score || 0)), el('span', { class: 'dcp-muted' }, 'امتیاز')])),
     section('هایلایت‌های اخیر', null, recentWrap),
@@ -146,6 +148,5 @@ export async function renderDashboard(root, { me: preMe } = {}) {
   );
 
   root.replaceChildren(...children.filter(Boolean));
-  renderTree(treeWrap);
   recentWrap.replaceChildren(await recentBlock(model));
 }

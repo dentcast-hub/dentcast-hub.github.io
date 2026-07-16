@@ -7,7 +7,6 @@ import { currentUser, api } from './js/api.js';
 import { openLoginModal } from './js/login-modal.js';
 import { Workbench } from './js/workbench.js';
 import { el } from './js/util.js';
-import { getModel, landingTopicKey } from './js/content-index.js';
 import { initHomeCard } from './js/home-card.js';
 import { initHeader } from './js/header.js';
 
@@ -85,44 +84,14 @@ async function initArticle() {
   }
 }
 
-// Folder landing pages carry a flashcard section at the top for that folder's
-// cards (prototype feedback). Shown to LOGGED-IN users only: guests see the site
-// exactly as today except the two invitation points (spec 2.3).
-async function initLanding() {
-  if (document.querySelector('main.article-content-wrap')) return; // handled as an article
-  if (document.querySelector('.dcp-flash-section')) return;
-  const user = await currentUser();
-  if (!user) return;
-  const model = await getModel();
-  const topicKey = landingTopicKey(model, location.pathname);
-  if (!topicKey) return;
-
-  const { renderArchive } = await import('./js/archive.js');
-  const body = el('div', { class: 'dcp-flash-body' });
-  const chevron = el('span', { class: 'dcp-flash-chevron', 'aria-hidden': 'true' }, '▾');
-  const head = el('div', { class: 'dcp-flash-head', role: 'button', tabindex: '0' }, [
-    el('span', {}, 'فلش‌کارت‌های شما در این پوشه'),
-    chevron,
-  ]);
-  const section = el('section', { class: 'dcp-flash-section is-open', 'aria-label': 'فلش‌کارت‌های شما' }, [head, body]);
-
-  const toggle = () => section.classList.toggle('is-open');
-  head.addEventListener('click', toggle);
-  head.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } });
-
-  const main = document.querySelector('main') || document.body;
-  const h1 = main.querySelector('h1');
-  if (h1 && h1.parentNode === main) main.insertBefore(section, h1.nextSibling);
-  else main.prepend(section);
-
-  renderArchive(body, topicKey, { inline: true });
-}
+// The per-folder flashcard section on landing pages was removed for the free
+// version. Highlighting (میز کار) stays; the review/flashcard system moves to the
+// premium scheduled-review layer later. No landing-page flashcard injection.
 
 function boot() {
   try {
     initHeader();
     initArticle();
-    initLanding();
     initHomeCard();
   } catch (e) {
     // Progressive enhancement: never break the page.
