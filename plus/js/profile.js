@@ -35,20 +35,22 @@ function pseudonymBlock(me) {
 
 function weekStrip(week) {
   const today = tehranDay();
-  // dir=rtl on the element itself so شنبه is first-from-the-right even if a
-  // cached/ltr ancestor context would otherwise flip it.
-  const strip = el('div', { class: 'dcp-week-strip', dir: 'rtl' });
+  // Saturday is week[0]. Render right-to-left and force the order at the element
+  // level (dir + inline direction) so شنبه is always the first cell on the right,
+  // regardless of any cached/ltr context.
+  const strip = el('div', { class: 'dcp-week-strip', dir: 'rtl', style: 'direction:rtl' });
   for (const d of week) {
     const future = d.day > today; // this week can extend past today (Sat start)
     strip.appendChild(el('div', {
       class: 'dcp-week-cell'
-        + (d.active ? ' is-active' : '')
         + (d.day === today ? ' is-today' : '')
         + (future ? ' is-future' : ''),
       title: d.day,
     }, [
       el('span', { class: 'dcp-week-day' }, weekdayLetter(d.day)),
       el('span', { class: 'dcp-week-date' }, dayOfMonth(d.day)),
+      // Completed day = the streak flame (not a colour change).
+      el('span', { class: 'dcp-week-flame', 'aria-hidden': 'true' }, d.active ? '🔥' : ''),
     ]));
   }
   return strip;

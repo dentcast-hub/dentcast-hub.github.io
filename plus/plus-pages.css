@@ -103,12 +103,13 @@ body.dcp-page a { color: var(--ac, #0b5fff); text-decoration: none; }
 /* Force RTL so the week always reads شنبه (first) on the right, جمعه on the left,
    independent of any ambient direction. */
 .dcp-week-strip { display: flex; gap: 8px; direction: rtl; }
-.dcp-week-cell { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 10px 0; border: 1px solid var(--border, rgba(2,35,96,.1)); border-radius: var(--r-md, 14px); background: var(--surface, #fff); }
-.dcp-week-cell.is-active { background: var(--ac, #0b5fff); border-color: transparent; color: #fff; }
+.dcp-week-cell { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 10px 0; border: 1px solid var(--border, rgba(2,35,96,.1)); border-radius: var(--r-md, 14px); background: var(--surface, #fff); }
 .dcp-week-cell.is-today { outline: 2px solid var(--ac, #0b5fff); outline-offset: 1px; }
 .dcp-week-cell.is-future { opacity: .45; }
 .dcp-week-day { font-size: .95rem; font-weight: 800; }
 .dcp-week-date { font-size: .72rem; opacity: .8; }
+/* Completed day is marked by the streak flame, not a colour change. */
+.dcp-week-flame { height: 1.15em; line-height: 1.15em; font-size: 1rem; }
 
 .dcp-btn { font: inherit; font-weight: 600; padding: 10px 16px; border-radius: 10px; cursor: pointer; border: 1px solid var(--border, rgba(2,35,96,.12)); background: transparent; color: var(--txt); }
 .dcp-btn-primary { background: var(--ac, #0b5fff); color: #fff; border-color: transparent; }
