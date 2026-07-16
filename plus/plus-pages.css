@@ -77,6 +77,16 @@ body.dcp-page a { color: var(--ac, #0b5fff); text-decoration: none; }
 .dcp-score { display: flex; align-items: baseline; gap: 8px; }
 .dcp-score-n { font-size: 1.8rem; font-weight: 900; color: var(--ac, #0b5fff); }
 
+/* ---- recent highlights (each removable) ---------------------------------- */
+.dcp-recent-list { display: flex; flex-direction: column; }
+.dcp-recent-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; padding: 8px 0; border-bottom: 1px solid var(--border, rgba(2,35,96,.08)); }
+.dcp-recent-row:last-child { border-bottom: none; }
+.dcp-recent-link { flex: 1 1 auto; display: flex; align-items: center; gap: 8px; min-width: 0; color: var(--txt) !important; }
+.dcp-recent-text { flex: 1 1 auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dcp-recent-del { flex: none; width: 26px; height: 26px; line-height: 22px; text-align: center; font-size: 1.2rem; border-radius: 50%; border: 1px solid var(--border, rgba(2,35,96,.12)); background: var(--surface, #fff); color: var(--txt2, #4a5f85); cursor: pointer; }
+.dcp-recent-del:hover { color: #c0392b; border-color: #c0392b; }
+.dcp-recent-confirm { flex: 1 1 100%; display: flex; align-items: center; gap: 8px; color: var(--txt2, #4a5f85); }
+
 /* ---- premium tiles ------------------------------------------------------- */
 .dcp-tile-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
 .dcp-tile { position: relative; background: var(--surface2, #f4f6fb); border: 1px solid var(--border, rgba(2,35,96,.08)); border-radius: var(--r-md, 14px); padding: 14px 12px; display: flex; flex-direction: column; gap: 4px; }

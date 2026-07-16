@@ -70,13 +70,34 @@ function progressBars(progress) {
 async function recentBlock(model) {
   const data = await api.recentHighlights(6).catch(() => ({ highlights: [] }));
   if (!data.highlights.length) return el('div', { class: 'dcp-muted' }, 'هنوز هایلایتی ندارید.');
-  const list = el('div', { class: 'dcp-card-list' });
+  const list = el('div', { class: 'dcp-recent-list' });
   for (const h of data.highlights) {
     const info = contentInfo(model, h.content_id);
-    list.appendChild(el('a', { class: 'dcp-folder', href: (info ? info.url : '#') + '#:~:text=' + encodeURIComponent(h.exact.slice(0, 100)) }, [
-      el('span', { class: 'dcp-progress-name' }, h.exact.slice(0, 70)),
-      h.label ? el('span', { class: 'dcp-card-label' }, labelFa(h.label)) : el('span', {}),
-    ]));
+    const link = el('a', { class: 'dcp-recent-link', href: (info ? info.url : '#') + '#:~:text=' + encodeURIComponent(h.exact.slice(0, 100)) }, [
+      el('span', { class: 'dcp-recent-text' }, h.exact.slice(0, 70)),
+      h.label ? el('span', { class: 'dcp-card-label' }, labelFa(h.label)) : null,
+    ]);
+    const del = el('button', { class: 'dcp-recent-del', type: 'button', 'aria-label': 'حذف هایلایت', title: 'حذف' }, '×');
+    const row = el('div', { class: 'dcp-recent-row' }, [link, del]);
+
+    del.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (row.querySelector('.dcp-recent-confirm')) return;
+      const yes = el('button', { class: 'dcp-btn dcp-btn-danger', type: 'button' }, 'حذف');
+      const no = el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button' }, 'انصراف');
+      const confirm = el('span', { class: 'dcp-recent-confirm' }, ['حذف شود؟', yes, no]);
+      no.onclick = () => confirm.remove();
+      yes.onclick = async () => {
+        yes.disabled = true;
+        try {
+          await api.deleteHighlight(h.id);
+          row.remove();
+          if (!list.children.length) list.appendChild(el('div', { class: 'dcp-muted' }, 'هایلایتی نمانده.'));
+        } catch (_) { yes.disabled = false; }
+      };
+      row.appendChild(confirm);
+    });
+    list.appendChild(row);
   }
   return list;
 }
