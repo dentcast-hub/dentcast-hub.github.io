@@ -17,8 +17,8 @@ export async function renderTree(container) {
     list.appendChild(el('a', { class: 'dcp-folder' + (f.count ? ' has-hl' : ''), href: f.url }, [
       // Default (folder) name, e.g. notecast / dentai / metanotes.
       el('span', { class: 'dcp-folder-name', dir: 'ltr' }, f.key),
-      el('span', { class: 'dcp-folder-count' + (f.count ? '' : ' is-zero') },
-        f.count ? faNum(f.count) + ' فلش‌کارت' : 'بدون فلش‌کارت'),
+      // Just the number: how many highlights the user has in that folder.
+      el('span', { class: 'dcp-folder-count' + (f.count ? '' : ' is-zero'), title: 'تعداد هایلایت‌ها' }, faNum(f.count || 0)),
     ]));
   }
   if (!(tree.folders || []).length) {
