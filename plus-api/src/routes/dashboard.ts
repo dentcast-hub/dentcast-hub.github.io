@@ -121,15 +121,22 @@ export async function dashboardRoutes(app: FastifyInstance): Promise<void> {
         order by created_at desc limit 1`,
       [userId],
     );
-    // Reading progress per folder: distinct pages the user has READ, where a page
-    // counts as read when it has an `article_completed` event (spec 2.9 — this is
-    // the "where the user has read" layer, distinct from where they highlighted).
-    // Progress bar = read / folder total. Both sides derive from the same content
-    // index the dashboard tree uses; totals reflect currently published content,
-    // so newly shipped articles lower a folder's percent until they are read.
+    // Reading progress per folder: distinct pages the user has READ. A page counts
+    // as read when the user has engaged with it - either finished it
+    // (`article_completed`) OR highlighted inside it (a highlight is direct
+    // evidence the page was read). The client does not emit `article_completed`
+    // yet, so highlights are the real read signal today; keep both so the bar
+    // reflects actual reading. Progress bar = read / folder total, and both sides
+    // derive from the same content index the dashboard tree uses; totals reflect
+    // currently published content, so new articles lower a folder's percent until
+    // they are read.
     const readRows = await pool.query<{ content_id: string }>(
-      `select distinct content_id from user_activity
-        where user_id = $1 and action = 'article_completed' and content_id is not null`,
+      `select distinct content_id from (
+         select content_id from highlights where user_id = $1
+         union
+         select content_id from user_activity
+          where user_id = $1 and action = 'article_completed' and content_id is not null
+       ) t`,
       [userId],
     );
     const readByFolder = new Map<string, number>();

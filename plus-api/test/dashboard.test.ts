@@ -175,13 +175,14 @@ describe('GET /progress', () => {
     expect(Array.isArray(body.folder_progress)).toBe(true);
     const fp = body.folder_progress.find((f: any) => f.key === cidsInSub[0].split('/')[0]);
     expect(fp.total).toBeGreaterThan(0);
-    // A highlight alone is NOT a read: reading progress counts only completed
-    // articles (article_completed), so a highlighted-but-unread page reads 0.
-    expect(fp.read).toBe(0);
+    // A highlight is direct evidence the page was read, so it counts toward the
+    // folder's reading progress (article_completed is not emitted by the client yet).
+    expect(fp.read).toBe(1);
+    expect(fp.read).toBeLessThanOrEqual(fp.total); // numerator never exceeds the folder total
     expect(body.score).toBeGreaterThan(0); // activity-derived, ready for leaderboard
   });
 
-  it('counts a folder as read only after an article_completed event', async () => {
+  it('also counts a page as read on an article_completed event', async () => {
     const folderKey = cidsInSub[0].split('/')[0];
     await app.inject({
       method: 'POST', url: '/activity', headers: { cookie },
@@ -190,6 +191,6 @@ describe('GET /progress', () => {
     const res = await app.inject({ method: 'GET', url: '/progress', headers: { cookie } });
     const fp = res.json().folder_progress.find((f: any) => f.key === folderKey);
     expect(fp.read).toBe(1);
-    expect(fp.read).toBeLessThanOrEqual(fp.total); // numerator never exceeds the folder total
+    expect(fp.read).toBeLessThanOrEqual(fp.total);
   });
 });

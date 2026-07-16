@@ -9,6 +9,11 @@ import { LABELS, PALETTE } from './config.js';
 const labelFa = (k) => (LABELS.find((l) => l.key === k) || {}).fa || '';
 const colorCss = (k) => (PALETTE.find((p) => p.key === k) || {}).css || 'transparent';
 
+// Folders intentionally left out of the per-folder reading-progress widget
+// (not article-style reading content). The folder list itself is still derived
+// dynamically from the content index; this only hides these specific keys.
+const PROGRESS_EXCLUDE = new Set(['photocast']);
+
 // Premium tiles. Leaderboard is intentionally NOT here (removed). "نماهای موضوعی"
 // renamed to something concrete.
 const PREMIUM_TILES = [
@@ -59,7 +64,7 @@ function progressBars(progress, model) {
   // has READ = article_completed) comes from /progress. Recomputed every mount,
   // never cached; as new articles ship the totals grow and a folder's percent
   // drops until they are read.
-  const folders = (model.folders || []).filter((f) => f.total > 0);
+  const folders = (model.folders || []).filter((f) => f.total > 0 && !PROGRESS_EXCLUDE.has(f.key));
   if (!folders.length) return el('div', { class: 'dcp-muted' }, 'هنوز پوشه‌ای برای نمایش نیست.');
   const readByKey = new Map((progress.folder_progress || []).map((f) => [f.key, f.read || 0]));
   const list = el('div', { class: 'dcp-progress-list' });
