@@ -4,6 +4,10 @@ import { pool } from '../db.js';
 import { buildFolderTree, getFolders, folderOf } from '../content-index.js';
 import { config } from '../config.js';
 import { QUALIFYING_ACTIONS } from '../services/streak.js';
+import {
+  computeScore, freezesUsedCount, freezesAvailable, pointsToNextFreeze,
+  SHIELD_CAP, SHIELD_POINTS,
+} from '../services/score.js';
 import { dayInTz, previousDay, nextDay, weekStartSaturday } from '../services/time.js';
 
 export async function dashboardRoutes(app: FastifyInstance): Promise<void> {
@@ -152,14 +156,13 @@ export async function dashboardRoutes(app: FastifyInstance): Promise<void> {
     // Score: a concrete, activity-log-derived metric, ready for a future
     // leaderboard. Base = qualifying active days (monotonic) plus a small
     // per-highlight bonus. Streak is the headline; this is the comparable total.
-    const score = await pool.query<{ active_days: number }>(
-      `select count(distinct (created_at at time zone $2)::date)::int as active_days
-         from user_activity
-        where user_id = $1 and action in ('article_completed','highlight_created','card_reviewed_manual','review_finished')`,
-      [userId, config.streakTimezone],
-    );
-    const activeDays = score.rows[0]?.active_days ?? 0;
+    const { score, active_days: activeDays } = await computeScore(pool, userId);
     const totalHl = stats.rows[0]?.total_highlights ?? 0;
+
+    // Streak shields (سپر استریک): one per SHIELD_POINTS of score, capped, spent
+    // automatically to save the streak on a missed day (see the streak engine).
+    const freezesUsed = await freezesUsedCount(pool, userId);
+    const freezesAvail = freezesAvailable(score, freezesUsed);
 
     return reply.send({
       current_streak: request.user!.current_streak,
@@ -168,8 +171,14 @@ export async function dashboardRoutes(app: FastifyInstance): Promise<void> {
       articles_with_highlights: stats.rows[0]?.articles_with_highlights ?? 0,
       last_content_id: lastArticle.rows[0]?.content_id ?? null,
       folder_progress,
-      score: activeDays * 10 + totalHl,
+      score,
       score_active_days: activeDays,
+      freezes: {
+        available: freezesAvail,
+        cap: SHIELD_CAP,
+        points: SHIELD_POINTS,
+        next_in: pointsToNextFreeze(score, freezesAvail),
+      },
     });
   });
 

@@ -95,6 +95,37 @@ function progressBars(progress, model) {
   return list;
 }
 
+function scoreBlock(progress) {
+  // Score number + streak shields (سپر استریک). One shield per `points` of score,
+  // up to `cap` held; a shield is spent automatically to save the streak on a
+  // missed day. Filled icons = available, dimmed = empty slots.
+  const f = progress.freezes || {};
+  const cap = f.cap || 2;
+  const available = Math.max(0, Math.min(cap, f.available || 0));
+  const points = f.points || 150;
+
+  const wrap = el('div', { class: 'dcp-score-wrap' }, [
+    el('div', { class: 'dcp-score' }, [
+      el('span', { class: 'dcp-score-n' }, faNum(progress.score || 0)),
+      el('span', { class: 'dcp-muted' }, 'امتیاز'),
+    ]),
+  ]);
+
+  const icons = el('span', { class: 'dcp-freeze-icons', 'aria-hidden': 'true' });
+  for (let i = 0; i < cap; i += 1) {
+    icons.appendChild(el('span', { class: 'dcp-freeze-ico' + (i < available ? '' : ' is-empty') }, '🛡️'));
+  }
+  wrap.appendChild(el('div', { class: 'dcp-freeze' }, [
+    icons,
+    el('span', { class: 'dcp-freeze-label' }, 'سپر استریک: ' + faNum(available) + ' از ' + faNum(cap)),
+  ]));
+
+  let hint = 'اگر یک روز فعالیت نکنید، یک سپر خرج می‌شود و استریکتان حفظ می‌شود. هر ' + faNum(points) + ' امتیاز یک سپر، تا سقف ' + faNum(cap) + '.';
+  if (available < cap && f.next_in) hint += ' ' + faNum(f.next_in) + ' امتیاز تا سپر بعدی.';
+  wrap.appendChild(el('p', { class: 'dcp-freeze-hint' }, hint));
+  return wrap;
+}
+
 async function recentBlock(model) {
   const data = await api.recentHighlights(6).catch(() => ({ highlights: [] }));
   if (!data.highlights.length) return el('div', { class: 'dcp-muted' }, 'هنوز هایلایتی ندارید.');
@@ -168,8 +199,7 @@ export async function renderDashboard(root, { me: preMe } = {}) {
     section('استریک', 'هر روز که بخوانید، هایلایت کنید یا مرور کنید، یک روز به زنجیره‌تان اضافه می‌شود. رکورد شما بیشترین زنجیره‌ای است که تا حالا ساخته‌اید و هیچ‌وقت پاک نمی‌شود.', streakDetail(me)),
     section('ادامه مطالعه', null, continueBlock(progress, model)),
     section('پیشرفت هر پوشه', 'برای هر پوشه، چند درصد از کل مطالب آن را خوانده‌اید (۰ تا ۱۰۰). هر بار پیشخوان باز شود به‌روز می‌شود.', progressBars(progress, model)),
-    section('امتیاز شما', 'امتیاز از روی فعالیت شما ساخته می‌شود و پایه‌ی رقابت‌های بعدی است.',
-      el('div', { class: 'dcp-score' }, [el('span', { class: 'dcp-score-n' }, faNum(progress.score || 0)), el('span', { class: 'dcp-muted' }, 'امتیاز')])),
+    section('امتیاز شما', 'امتیاز از روی فعالیت شما ساخته می‌شود و پایه‌ی رقابت‌های بعدی است.', scoreBlock(progress)),
     section('هایلایت‌های اخیر', null, recentWrap),
     section('پریمیوم', 'به‌زودی در دسترس.', premiumTiles()),
   );

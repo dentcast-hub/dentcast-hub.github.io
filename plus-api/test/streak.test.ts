@@ -54,6 +54,35 @@ describe('computeStreakUpdate (pure)', () => {
   });
 });
 
+describe('computeStreakUpdate with streak shields', () => {
+  const prev = { current_streak: 5, longest_streak: 5, last_active_day: '2026-03-20' };
+
+  it('bridges a one-day gap with a shield instead of resetting', () => {
+    // missed 2026-03-21, active again 2026-03-22 -> needs 1 shield
+    const { next, shieldsUsed } = computeStreakUpdate(prev, '2026-03-22', 1);
+    expect(shieldsUsed).toBe(1);
+    expect(next).toEqual({ current_streak: 6, longest_streak: 6, last_active_day: '2026-03-22' });
+  });
+
+  it('bridges a two-day gap when two shields are available', () => {
+    const { next, shieldsUsed } = computeStreakUpdate(prev, '2026-03-23', 2);
+    expect(shieldsUsed).toBe(2);
+    expect(next.current_streak).toBe(6);
+  });
+
+  it('resets when the gap needs more shields than are available', () => {
+    const { next, shieldsUsed } = computeStreakUpdate(prev, '2026-03-23', 1); // needs 2, has 1
+    expect(shieldsUsed).toBe(0);
+    expect(next.current_streak).toBe(1);
+  });
+
+  it('does not spend a shield on a consecutive day', () => {
+    const { next, shieldsUsed } = computeStreakUpdate(prev, '2026-03-21', 2);
+    expect(shieldsUsed).toBe(0);
+    expect(next.current_streak).toBe(6);
+  });
+});
+
 describe('streakFromDays (rebuild math)', () => {
   it('computes current run, longest run, and last day, ignoring order/dupes', () => {
     const s = streakFromDays(['2026-03-01', '2026-03-02', '2026-03-02', '2026-03-05', '2026-03-06', '2026-03-07']);
@@ -64,6 +93,20 @@ describe('streakFromDays (rebuild math)', () => {
   it('current run is shorter than longest when the tail is isolated', () => {
     const s = streakFromDays(['2026-03-01', '2026-03-02', '2026-03-03', '2026-03-10']);
     expect(s.longest_streak).toBe(3);
+    expect(s.current_streak).toBe(1);
+  });
+
+  it('bridges a gap across a frozen day so the run survives', () => {
+    // active 01,02,04 with 03 frozen -> one continuous run of 3 active days
+    const s = streakFromDays(['2026-03-01', '2026-03-02', '2026-03-04'], ['2026-03-03']);
+    expect(s.current_streak).toBe(3);
+    expect(s.longest_streak).toBe(3);
+    expect(s.last_active_day).toBe('2026-03-04');
+  });
+
+  it('still resets when the gap has an unfrozen day', () => {
+    // gap 02->05 needs 03 and 04 frozen; only 03 is -> run breaks
+    const s = streakFromDays(['2026-03-01', '2026-03-02', '2026-03-05'], ['2026-03-03']);
     expect(s.current_streak).toBe(1);
   });
 });
@@ -86,6 +129,44 @@ describe('live streak via /activity', () => {
     // exactly one streak_kept event for today
     const kept = await pool.query(`select count(*)::int as n from user_activity where action='streak_kept'`);
     expect(kept.rows[0].n).toBe(1);
+  });
+});
+
+describe('streak shields save the streak live (spec: سپر استریک)', () => {
+  it('spends a shield on a missed day instead of resetting, and reports it', async () => {
+    const cookie = await loginAs(app, '09121500009');
+    const me0 = await (await app.inject({ method: 'GET', url: '/me', headers: { cookie } })).json();
+    const userId = me0.id;
+
+    // Reach 150 score => 1 shield earned: 15 distinct active days (active_days*10).
+    const rows: string[] = [];
+    for (let i = 1; i <= 15; i += 1) {
+      const day = '2025-01-' + String(i).padStart(2, '0');
+      rows.push(`($1,'highlight_created','${day}T08:00:00Z')`);
+    }
+    await pool.query(`insert into user_activity (user_id, action, created_at) values ${rows.join(',')}`, [userId]);
+
+    // A streak of 5 ending two days ago: today's action must bridge one missed day.
+    const today = dayInTz(new Date());
+    const twoAgo = previousDay(previousDay(today));
+    await pool.query(
+      `update profiles set current_streak=5, longest_streak=5, last_active_day=$2 where id=$1`,
+      [userId, twoAgo],
+    );
+
+    await app.inject({ method: 'POST', url: '/activity', headers: { cookie },
+      payload: { action: 'card_reviewed_manual', content_id: 'x/y' } });
+
+    const me = await (await app.inject({ method: 'GET', url: '/me', headers: { cookie } })).json();
+    expect(me.current_streak).toBe(6); // preserved, not reset to 1
+
+    const froze = await pool.query<{ n: number }>(
+      `select count(*)::int as n from user_activity where user_id=$1 and action='streak_freeze_used'`, [userId]);
+    expect(froze.rows[0].n).toBe(1); // exactly one shield spent
+
+    const prog = await (await app.inject({ method: 'GET', url: '/progress', headers: { cookie } })).json();
+    expect(prog.freezes.cap).toBe(2);
+    expect(prog.freezes.available).toBe(0); // the one earned shield was just spent
   });
 });
 

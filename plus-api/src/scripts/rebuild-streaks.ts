@@ -23,7 +23,14 @@ export async function rebuildAllStreaks(): Promise<number> {
         order by d`,
       [id, config.streakTimezone, actions],
     );
-    const state = streakFromDays(days.rows.map((r) => r.d));
+    // Days a shield bridged, so a rebuilt streak survives the same gaps the live
+    // engine protected (the log records each frozen day under meta.frozen_day).
+    const frozen = await pool.query<{ d: string }>(
+      `select (meta->>'frozen_day') as d from user_activity
+        where user_id = $1 and action = 'streak_freeze_used' and meta ? 'frozen_day'`,
+      [id],
+    );
+    const state = streakFromDays(days.rows.map((r) => r.d), frozen.rows.map((r) => r.d).filter(Boolean));
     await withTransaction((client) =>
       client.query(
         `update profiles

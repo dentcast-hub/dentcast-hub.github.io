@@ -76,8 +76,16 @@ body.dcp-page a { color: var(--ac, #0b5fff); text-decoration: none; }
 .dcp-progress-fill { height: 100%; background: var(--txt3, #62779a); border-radius: 999px; transition: width .4s; }
 
 /* ---- score --------------------------------------------------------------- */
+.dcp-score-wrap { display: flex; flex-direction: column; gap: 8px; }
 .dcp-score { display: flex; align-items: baseline; gap: 8px; }
 .dcp-score-n { font-size: 1.8rem; font-weight: 900; color: var(--ac, #0b5fff); }
+/* streak shields (سپر استریک) */
+.dcp-freeze { display: flex; align-items: center; gap: 8px; }
+.dcp-freeze-icons { display: inline-flex; gap: 2px; }
+.dcp-freeze-ico { font-size: 1.15rem; line-height: 1; }
+.dcp-freeze-ico.is-empty { filter: grayscale(1); opacity: .3; }
+.dcp-freeze-label { font-weight: 600; }
+.dcp-freeze-hint { margin: 0; color: var(--txt2, #4a5f85); font-size: .8rem; line-height: 1.7; }
 
 /* ---- recent highlights (each removable) ---------------------------------- */
 .dcp-recent-list { display: flex; flex-direction: column; }
