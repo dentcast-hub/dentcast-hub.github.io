@@ -12,7 +12,20 @@ const colorCss = (k) => (PALETTE.find((p) => p.key === k) || {}).css || 'transpa
 // Folders intentionally left out of the per-folder reading-progress widget
 // (not article-style reading content). The folder list itself is still derived
 // dynamically from the content index; this only hides these specific keys.
-const PROGRESS_EXCLUDE = new Set(['photocast']);
+const PROGRESS_EXCLUDE = new Set(['photocast', 'litecast']);
+
+// English brand names for the progress widget titles (the index only carries the
+// Persian label). Falls back to the folder key so a new folder still renders.
+const FOLDER_EN = {
+  episodes: 'Podcast',
+  notecast: 'NoteCast',
+  insight: 'Clinical Insight',
+  dentai: 'DentAI',
+  chairside: 'Chairside',
+  metanotes: 'MetaNote',
+  glossary: 'Glossary',
+  sharehub: 'ShareHub',
+};
 
 // Premium tiles. Leaderboard is intentionally NOT here (removed). "نماهای موضوعی"
 // renamed to something concrete.
@@ -73,7 +86,7 @@ function progressBars(progress, model) {
     // f.total > 0 here (divide-by-zero guarded above); clamp to 0..100.
     const pct = Math.max(0, Math.min(100, Math.round((read / f.total) * 100)));
     list.appendChild(el('div', { class: 'dcp-progress-row' }, [
-      el('span', { class: 'dcp-progress-name' }, f.fa || f.key),
+      el('span', { class: 'dcp-progress-name', dir: 'ltr' }, FOLDER_EN[f.key] || f.key),
       el('div', { class: 'dcp-progress-track' },
         el('div', { class: 'dcp-progress-fill', style: 'width:' + pct + '%' })),
       el('span', { class: 'dcp-progress-val' }, '٪' + faNum(pct)),
