@@ -1,0 +1,49 @@
+name: Notify new articles
+
+# Fires the DentCast Plus `article_published` event on a REAL editorial publish.
+# A page qualifies only when it (1) is an article content type, (2) carries the
+# explicit `<meta name="dc-notify" content="true">` publish marker, and (3) has a
+# canonical content_id not notified before. The push diff only selects candidates;
+# tools/notify_new_articles.py enforces the three gates and the API dedups on retry.
+#
+# One-time before enabling: run the backfill so existing pages never fire as new:
+#   curl -u "$USER:$PASS" -X POST "$PLUS_API_BASE/admin/articles/backfill"
+#
+# Required repository secrets: PLUS_API_BASE, PLUS_ADMIN_USER, PLUS_ADMIN_PASSWORD.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '**/*.html'
+
+# New pushes supersede in-flight runs; never double-fire for rapid pushes.
+concurrency:
+  group: notify-new-articles
+  cancel-in-progress: false
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # need the before..after range to diff changed pages
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Fire article_published for real publishes
+        env:
+          PLUS_API_BASE: ${{ secrets.PLUS_API_BASE }}
+          ADMIN_USER: ${{ secrets.PLUS_ADMIN_USER }}
+          ADMIN_PASSWORD: ${{ secrets.PLUS_ADMIN_PASSWORD }}
+        run: |
+          if [ -z "$PLUS_API_BASE" ] || [ -z "$ADMIN_USER" ] || [ -z "$ADMIN_PASSWORD" ]; then
+            echo "Plus API secrets not configured; skipping new-article notification."
+            exit 0
+          fi
+          python tools/notify_new_articles.py \
+            --base-sha "${{ github.event.before }}" \
+            --head-sha "${{ github.sha }}"

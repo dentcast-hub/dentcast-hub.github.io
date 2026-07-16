@@ -71,6 +71,11 @@ export const api = {
   tree: () => request('/tree'),
   progress: () => request('/progress'),
   exportHighlights: () => request('/export/highlights'),
+
+  // web push (reminder delivery channel for free users)
+  pushPublicKey: () => request('/push/public-key'),
+  savePushSubscription: (subscription) => request('/push/subscribe', { method: 'POST', body: { subscription } }),
+  deletePushSubscription: (endpoint) => request('/push/unsubscribe', { method: 'POST', body: { endpoint } }),
 };
 
 // A cached /me lookup so multiple widgets on one page share one request.

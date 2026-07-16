@@ -852,6 +852,59 @@ After the pillar builder finishes, verify:
 
 **Why Phase D and not a step inside Phase C:** it consumes the *finished* fa page (after all of Phase C's swaps, enrichment, and rebuild), and it deliberately reuses a **separate, already-correct workflow** rather than duplicating its logic. Keep it last so the English mirror reflects the final published state.
 
+## Phase E — Mark the page for the new-article push
+
+**Runs at the very end of every `.org` page publish, once, after Phase D.** The
+actual notification is **automated** by the `notify-new-articles` GitHub Action on
+push to `main` — this phase's only job is to add the explicit **publish marker** so
+that push counts as a real editorial publish. The Action then fires the API's
+`article_published` event: **premium is notified immediately; free is batched into
+the 21:00 Asia/Tehran digest** (published_at + 24h, effective delay «۱ تا ۲ روز»).
+The free/premium split and delivery model live in the API — see
+`plus-api/src/services/article-notify.ts` (Layer 1) and the web-push provider
+(Layer 2). A push counts as a new article ONLY when all three hold, enforced by
+`tools/notify_new_articles.py` (not by the file diff):
+
+1. **Article content type** — the type is the page's top folder (first segment of
+   its canonical `content_id`). Everything counts EXCEPT `glossary` and `litecast`.
+2. **The publish marker** — `<meta name="dc-notify" content="true">` in `<head>`.
+3. **Canonical `content_id` not notified before** — taken from `<link rel="canonical">`
+   (the SEO-frozen slug), never the file path, so a move/rename that keeps the slug is
+   not a new article. The API dedups on `content_id` (idempotency = retry-safety only).
+
+**Do in this phase:** ensure the just-published page's `<head>` contains exactly
+`<meta name="dc-notify" content="true">` (add it if the clone didn't carry it; it is
+idempotent — never add a second copy). That is all. The commit + push to `main` does
+the rest.
+
+**Skip cases (do NOT add the marker; report the skip line):**
+- **Paper-only fast path** (no page was published) — nothing to announce.
+- **LiteCast** — `.ir`-only, outside the Plus push ecosystem (a `/litecast/…` push
+  would break for `.org` subscribers). Report "Phase E: skipped — LiteCast".
+- **Glossary** — reference type, not an article. Report the skip.
+- Every other category adds the marker.
+
+**One-time go-live step (before the Action is enabled the first time):** record all
+existing pages as already-notified so editing an old article never fires premium:
+
+```bash
+curl -u "$ADMIN_USER:$ADMIN_PASSWORD" -X POST "$PLUS_API_BASE/admin/articles/backfill"
+```
+
+**Manual fallback (ops / when running outside CI)** — announce a single page directly
+(idempotent; safe to re-run). Pass the **full `https://dentcast.org/…` URL**:
+
+```bash
+ADMIN_USER=… ADMIN_PASSWORD=… PLUS_API_BASE=https://api.dentcast.org \
+  python tools/notify_new_article.py --url https://dentcast.org/{type}/{file}.html \
+    --title "<the page's Persian title>"
+```
+
+**Verify / report:** confirm the marker is present on the new page (or the documented
+skip line for paper-only / LiteCast / glossary). Delivery reaches only users who
+enabled «نوتیف مطلب جدید» and have a push subscription; everyone else is skipped
+silently — expected, not an error.
+
 ## Final output summary
 
 - Category locked
@@ -876,5 +929,10 @@ After the pillar builder finishes, verify:
 - Pillar/subtopic verification (step 5.5): confirmation that the recorded `pillar.primary` and `pillar.subtopic` are **identical** to what was confirmed in step 2.4 (untouched by steps 5/5.5); resulting `pillar.subtopic` (slug if structured, `null` if not); confirmation that no new keys were added to the `pillar` object or as siblings, that the `subtopic` key is present in every case, and that the step-2.5 capsule / episode pillar link is consistent with `pillar.primary`
 - Builder runs: each command + full stdout/stderr (`python tools/update-homepage-counters.py`, `python tools/build_pillar.py all`, `python tools/build_episodes.py` for episode publishes, and `python tools/stamp-version.py` LAST); confirmation that the new content appears in the regenerated pillar page when a structured pillar was assigned, **and (for episodes) that the new episode now appears in the regenerated `episodes.html`** with no feature regression.
 - **Phase D (English mirror & toggle — Hard Rule 12; REQUIRED unless LiteCast):** the en page path created (`/{type}/en/{file}.html`); confirmation the body was translated structure-faithfully from THIS type (not rendered as a metanote) with GA4 once and `lang`/`inLanguage`/`og:locale` all `en`; both toggle targets (exact inverses, no meta-1 hardcode) and that the fa page got both the `.lang-btn` markup **and** its CSS; `inject_hreflang.py` pairing confirmation (fa page gained its `en` alternate); chrome standard `metanotes/en/meta-1.html` hash unchanged. For LiteCast, the documented skip line instead.
+- **Phase E (new-article push marker — REQUIRED unless paper-only/LiteCast/glossary):**
+  confirmation that `<meta name="dc-notify" content="true">` is present exactly once
+  in the published page's `<head>` (so the `notify-new-articles` Action fires the
+  `article_published` event on push); or the documented skip line ("paper-only" /
+  "LiteCast" / "glossary").
 - Confirmation the new entry appears in the latest-content widget data
 - List of all modified file paths

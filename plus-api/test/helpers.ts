@@ -10,7 +10,8 @@ export async function resetDb(): Promise<void> {
     truncate table
       profiles, user_activity, highlights, card_state,
       collections, collection_items, user_pathways,
-      subscriptions, payments, certificates, anon_events
+      subscriptions, payments, certificates, anon_events,
+      push_subscriptions, articles
     restart identity cascade
   `);
   resetRateLimits();

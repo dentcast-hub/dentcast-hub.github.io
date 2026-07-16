@@ -6,7 +6,7 @@
 //    an OVERLAY. Clicking the person again closes whatever is open.
 import { el, streakIsActiveToday, STREAK_ACTIVITY_EVENT } from './util.js';
 import { currentUser, api } from './api.js';
-import { openLoginModal } from './login-modal.js';
+import { openLoginModal, openNameGate, nameIsChosen } from './login-modal.js';
 import { openOverlay, closeOverlay, overlayOpen } from './overlay.js';
 import { renderDashboard } from './dashboard.js';
 import { renderProfile } from './profile.js';
@@ -113,6 +113,15 @@ export async function initHeader() {
   // currentUser already swallows errors, but guard anyway and default to guest.
   let user = null;
   try { user = await currentUser(); } catch (_) { user = null; }
+
+  // Plus requires a chosen pseudonym (leaderboard identity). If a logged-in user
+  // somehow has none yet, gate the whole experience behind a mandatory,
+  // non-dismissable name prompt. (Fires only when the backend leaves the name
+  // unchosen; it never misfires while the backend auto-generates one.)
+  if (user && !nameIsChosen(user)) {
+    try { user = await openNameGate({ user }); currentUser({ refresh: true }); }
+    catch (_) { /* non-fatal: fall through to normal rendering */ }
+  }
 
   try {
     if (user) {

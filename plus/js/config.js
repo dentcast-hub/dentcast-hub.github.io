@@ -18,6 +18,12 @@ function defaultBases() {
 
 export const API_BASES = OVERRIDE.apiBases || defaultBases();
 
+// --- Web Push (VAPID) -------------------------------------------------------
+// Public application-server key for browser push. Safe to embed (it is public).
+// Override via window.DENTCAST_PLUS.vapidPublicKey; if left empty, the client
+// fetches it from the API (/push/public-key) at subscribe time.
+export const VAPID_PUBLIC_KEY = OVERRIDE.vapidPublicKey || '';
+
 // --- content_id from the canonical URL --------------------------------------
 // content_id = page path without leading slash and without ".html".
 // e.g. /chairside/chairside-25.html -> "chairside/chairside-25". Unique across

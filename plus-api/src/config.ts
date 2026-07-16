@@ -60,6 +60,23 @@ export const config = {
     telegramWebhookSecret: str('TELEGRAM_WEBHOOK_SECRET', ''),
   },
 
+  // Web Push (VAPID). The public key is safe to expose; the client fetches it
+  // from /push/public-key. With no keys set (dev), the web-push provider logs
+  // instead of sending, so the flow still works end to end without secrets.
+  push: {
+    vapidPublicKey: str('VAPID_PUBLIC_KEY', ''),
+    vapidPrivateKey: str('VAPID_PRIVATE_KEY', ''),
+    vapidSubject: str('VAPID_SUBJECT', 'mailto:foad.shahabian@gmail.com'),
+  },
+
+  // New-article notifications. Premium fires immediately on publish; free is
+  // batched into one digest by a cron at freeDigestHour local (Asia/Tehran),
+  // for articles whose notify_free_after (published_at + freeDelayHours) passed.
+  articleNotify: {
+    freeDelayHours: int('ARTICLE_FREE_DELAY_HOURS', 24),
+    freeDigestHour: int('ARTICLE_FREE_DIGEST_HOUR', 21),
+  },
+
   anon: {
     maxPerIpPerHour: int('ANON_EVENT_MAX_PER_IP_PER_HOUR', 60),
   },

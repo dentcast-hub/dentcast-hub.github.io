@@ -1,6 +1,6 @@
 import { config } from '../../config.js';
 import { one } from '../../db.js';
-import type { NotificationSender, NotificationKind } from './types.js';
+import { type NotificationSender, type NotificationKind, type NotificationMessage, messageText } from './types.js';
 
 /**
  * Telegram notification sender. Stubbed for Phase 1: if no bot token is set (dev),
@@ -11,7 +11,7 @@ import type { NotificationSender, NotificationKind } from './types.js';
 export class TelegramNotificationSender implements NotificationSender {
   readonly name = 'telegram';
 
-  async send(userId: string, message: string, kind: NotificationKind): Promise<void> {
+  async send(userId: string, message: string | NotificationMessage, kind: NotificationKind): Promise<void> {
     const row = await one<{ telegram_id: number | null }>(
       'select telegram_id from profiles where id = $1',
       [userId],
@@ -19,9 +19,10 @@ export class TelegramNotificationSender implements NotificationSender {
     const telegramId = row?.telegram_id ?? null;
     if (!telegramId) return; // user has not linked Telegram; in-site indicator still shows
 
+    const text = messageText(message);
     if (!config.notify.telegramBotToken) {
       // eslint-disable-next-line no-console
-      console.log(`[notify:telegram:stub:${kind}] chat=${telegramId} :: ${message}`);
+      console.log(`[notify:telegram:stub:${kind}] chat=${telegramId} :: ${text}`);
       return;
     }
 
@@ -29,7 +30,7 @@ export class TelegramNotificationSender implements NotificationSender {
     await fetch(url, {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ chat_id: telegramId, text: message }),
+      body: JSON.stringify({ chat_id: telegramId, text }),
     });
   }
 }

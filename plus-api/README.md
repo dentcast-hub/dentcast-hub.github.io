@@ -75,9 +75,47 @@ Auth: `POST /auth/otp/request`, `POST /auth/otp/verify`, `POST /auth/logout`,
 `POST /auth/telegram/link`, `GET /me`, `PATCH /me`. Data: `POST /activity`,
 `POST /anon/event`, `GET/POST/PATCH/DELETE /highlights`,
 `GET /highlights/recent`, `GET /highlights?topic=`, `GET /tree`, `GET /progress`,
-`GET /profile/stats`, `GET /export/highlights`. Admin (HTTP Basic):
-`GET /admin` (rendered KPI page) and `GET /admin/kpis` (JSON). `requirePremium`
-is wired but no premium endpoint ships in Phase 1.
+`GET /profile/stats`, `GET /export/highlights`. Web push:
+`GET /push/public-key`, `POST /push/subscribe`, `POST /push/unsubscribe`. Admin
+(HTTP Basic): `GET /admin` (rendered KPI page), `GET /admin/kpis` (JSON),
+`POST /admin/articles/published` (the `article_published` event),
+`POST /admin/articles/run-free-digest` (manual digest run), and
+`POST /admin/articles/backfill` (one-time go-live: record all existing pages as
+already-notified). `requirePremium` is wired but no premium endpoint ships in Phase 1.
+
+## New-article notifications
+
+Built in two layers so the rule is written once and channels are swappable
+destinations underneath it.
+
+- **Layer 1 — scheduling & selection** (`src/services/article-notify.ts`,
+  channel-agnostic). Premium fires immediately on `article_published`
+  (`kind=article_premium`). Free gets `notify_free_after = published_at + 24h`;
+  a cron at **21:00 Asia/Tehran** (`src/scheduler.ts`) batches every due, unsent
+  article into a **single digest** (`kind=article_free_digest`), sends once, and
+  marks them sent so they are never re-sent. The free/premium split lives on
+  `kind`, not on the channel or the article. The article is public and indexed at
+  publish time; the delay is only on the active push (principle 1). Effective free
+  delay is **24-48h** — describe it to users as `۱ تا ۲ روز`, never "۲۴ ساعت".
+- **Layer 2 — delivery** goes through the provider-agnostic
+  `send(userId, message, kind)`. **Web push** (`NOTIFY_PROVIDER=webpush`) is the
+  live channel; **Bale/Telegram** sit behind the same interface but are locked
+  until the messenger connection ships (then delivery can become multi-channel
+  with no change to Layer 1). A user with **no push subscription is skipped
+  quietly** — expected (web push is unavailable pre-auth and, on iOS, only after
+  the PWA is installed to the home screen), never an error.
+
+**Automated trigger.** The `notify-new-articles` GitHub Action (repo
+`.github/workflows/notify-new-articles.yml`) fires this on push to `main`. A page
+counts as a real publish only when it is an article type (any folder except
+`glossary`/`litecast`), carries the `<meta name="dc-notify" content="true">` marker,
+and its canonical `content_id` is new. The Action runs `tools/notify_new_articles.py`
+(the file diff only picks candidates; those three gates decide). Repo secrets:
+`PLUS_API_BASE`, `PLUS_ADMIN_USER`, `PLUS_ADMIN_PASSWORD`.
+
+**One-time before enabling the Action:** `POST /admin/articles/backfill` so every
+already-published page is recorded as notified and an old-article edit never fires
+premium. For a single manual announce, `tools/notify_new_article.py` still works.
 
 ## Founder admin
 
@@ -96,7 +134,10 @@ DB not publicly reachable. Set every provider-specific value via env:
 - `SESSION_SECRET` (long random), `SESSION_COOKIE_SECURE=true` (HTTPS)
 - `CORS_ORIGINS=https://dentcast.org,https://dentcast.ir`
 - `SMS_PROVIDER` (swap the console sender for an Iranian provider),
-  `NOTIFY_PROVIDER=telegram` + `TELEGRAM_BOT_TOKEN` / `TELEGRAM_WEBHOOK_SECRET`
+  `NOTIFY_PROVIDER=webpush` (live channel) + `VAPID_PUBLIC_KEY` /
+  `VAPID_PRIVATE_KEY` / `VAPID_SUBJECT` (generate once with
+  `npx web-push generate-vapid-keys`). Telegram/Bale stay locked until the
+  messenger connection ships.
 - `ADMIN_USER` / `ADMIN_PASSWORD`
 - `CONTENT_INDEX_PATH` pointing at the deployed `content-index.json`
 

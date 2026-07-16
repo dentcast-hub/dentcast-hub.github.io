@@ -3,7 +3,7 @@
 // installed app opens instantly. It deliberately does NOT cache article content
 // or API responses, so there is no false "works offline" claim: user data always
 // comes fresh from the API, and the shell shows a normal error when offline.
-const CACHE = 'dcp-shell-v6';
+const CACHE = 'dcp-shell-v7';
 const SHELL = [
   '/plus/',
   '/plus/index.html',
@@ -26,6 +26,7 @@ const SHELL = [
   '/plus/js/profile.js',
   '/plus/js/overlay.js',
   '/plus/js/pwa.js',
+  '/plus/js/push.js',
   '/plus/content-index.json',
   '/plus/manifest.webmanifest',
 ];
@@ -41,6 +42,40 @@ self.addEventListener('activate', (event) => {
     caches.keys()
       .then((keys) => Promise.all(keys.filter((k) => k !== CACHE).map((k) => caches.delete(k))))
       .then(() => self.clients.claim()),
+  );
+});
+
+// --- Web Push --------------------------------------------------------------
+// The backend sends a JSON payload { title, body, url, tag }. We show a
+// notification; clicking it focuses an existing Plus tab or opens the target.
+self.addEventListener('push', (event) => {
+  let data = {};
+  try { data = event.data ? event.data.json() : {}; }
+  catch (_) { data = { body: event.data && event.data.text() }; }
+
+  const title = data.title || 'دنت‌کست پلاس';
+  const options = {
+    body: data.body || '',
+    icon: data.icon || '/favicon-192.png',
+    badge: data.badge || '/favicon-192.png',
+    dir: 'rtl',
+    lang: 'fa',
+    tag: data.tag,
+    data: { url: data.url || '/plus/' },
+  };
+  event.waitUntil(self.registration.showNotification(title, options));
+});
+
+self.addEventListener('notificationclick', (event) => {
+  event.notification.close();
+  const target = (event.notification.data && event.notification.data.url) || '/plus/';
+  event.waitUntil(
+    self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clients) => {
+      for (const c of clients) {
+        if (c.url.includes(target) && 'focus' in c) return c.focus();
+      }
+      return self.clients.openWindow ? self.clients.openWindow(target) : undefined;
+    }),
   );
 });
 

@@ -3,6 +3,7 @@
 // here is mandatory: the pseudonym is editable, no real name is ever required.
 import { el, faNum, tehranDay } from './util.js';
 import { api } from './api.js';
+import { ensurePushSubscription, removePushSubscription } from './push.js';
 
 const WEEKDAY_FA = ['ی', 'د', 'س', 'چ', 'پ', 'ج', 'ش']; // Sun..Sat
 function weekdayLetter(dayStr) {
@@ -21,7 +22,7 @@ function pseudonymBlock(me) {
   const save = el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button' }, 'ذخیره');
   save.addEventListener('click', async () => {
     const name = input.value.trim();
-    if (!name) { msg.textContent = 'نام نمی‌تواند خالی باشد.'; return; }
+    if (name.length < 2) { msg.textContent = 'اسم مستعار باید حداقل ۲ حرف باشد.'; return; }
     save.disabled = true;
     try { await api.updateMe({ display_name: name }); msg.textContent = 'ذخیره شد.'; }
     catch (_) { msg.textContent = 'خطا در ذخیره.'; }
@@ -29,7 +30,7 @@ function pseudonymBlock(me) {
   });
   return el('div', {}, [
     el('div', { class: 'dcp-field-row' }, [input, save, msg]),
-    el('p', { class: 'dcp-sec-hint' }, 'نام واقعی لازم نیست. همین اسم مستعار در پروفایل و رقابت‌های آینده استفاده می‌شود.'),
+    el('p', { class: 'dcp-sec-hint' }, 'نام واقعی لازم نیست. همین اسم مستعار در پروفایل و لیدربورد نمایش داده می‌شود.'),
   ]);
 }
 
@@ -73,29 +74,97 @@ function monthCompare(m) {
   ]);
 }
 
-function remindersBlock(me) {
-  const enabled = !!(me.settings && me.settings.reminders && me.settings.reminders.enabled);
-  const cb = el('input', { type: 'checkbox' });
-  cb.checked = enabled;
-  cb.addEventListener('change', () => api.updateMe({ settings: { reminders: { enabled: cb.checked } } }).catch(() => {}));
-  return el('label', { class: 'dcp-switch' }, [cb, el('span', {}, 'یادآوری‌های مطالعه')]);
+function planBlock() {
+  const msg = el('span', { class: 'dcp-inline-msg' });
+  const plus = el('span', { class: 'dcp-plan is-active' }, 'پلاس');
+  const premium = el('button', { class: 'dcp-plan is-soon', type: 'button' }, 'پریمیوم');
+  premium.addEventListener('click', () => { msg.textContent = 'به زودی'; });
+  return el('div', { class: 'dcp-plan-row' }, [plus, premium, msg]);
 }
 
-function exportBlock() {
-  const btn = el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button' }, 'دریافت هایلایت‌های من');
-  btn.addEventListener('click', async () => {
-    btn.disabled = true;
-    try {
-      const data = await api.exportHighlights();
-      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = el('a', { href: url, download: 'dentcast-highlights.json' });
-      document.body.appendChild(a); a.click(); a.remove();
-      URL.revokeObjectURL(url);
-    } catch (_) { /* ignore */ }
-    btn.disabled = false;
-  });
-  return el('div', {}, [btn, el('p', { class: 'dcp-sec-hint' }, 'داده شما همیشه و در هر پلنی قابل دریافت است.')]);
+function remindersBlock(me) {
+  const r = (me.settings && me.settings.reminders) || {};
+  const msg = el('span', { class: 'dcp-inline-msg' });
+  const state = { new_content: !!r.new_content, streak: !!r.streak };
+  // Deep-merge patch: send only the toggled key so sibling settings survive.
+  const patch = (part) => api.updateMe({ settings: { reminders: part } }).catch(() => {});
+
+  const denialText = (res) => res === 'denied'
+    ? 'اجازه‌ی اعلان در مرورگر داده نشد.'
+    : res === 'unsupported'
+      ? 'مرورگر شما از اعلان پشتیبانی نمی‌کند.'
+      : 'فعال‌سازی اعلان ناموفق بود.';
+
+  const mk = (key, label) => {
+    const cb = el('input', { type: 'checkbox' });
+    cb.checked = state[key];
+    cb.addEventListener('change', async () => {
+      // Turning a reminder ON requires a working browser push subscription;
+      // only flip the setting once the subscription is confirmed.
+      if (cb.checked) {
+        cb.disabled = true;
+        msg.textContent = 'در حال فعال‌سازی اعلان‌ها...';
+        const res = await ensurePushSubscription();
+        cb.disabled = false;
+        if (res !== 'ok') { cb.checked = false; msg.textContent = denialText(res); return; }
+        msg.textContent = '';
+      }
+      state[key] = cb.checked;
+      await patch({ [key]: cb.checked });
+      // Everything off -> drop the browser subscription so none lingers.
+      if (!state.new_content && !state.streak) removePushSubscription();
+    });
+    return el('label', { class: 'dcp-switch' }, [cb, el('span', {}, label)]);
+  };
+
+  return el('div', { class: 'dcp-toggle-list' }, [
+    mk('new_content', 'نوتیف مطلب جدید'),
+    mk('streak', 'یادآوری استریک'),
+    msg,
+  ]);
+}
+
+// Messenger connection (spec 2.7). COMING SOON ("به زودی"): both provider
+// options render as selectable chips but are DISABLED. No connection flow runs,
+// no provider is linked, nothing is stored. Presentational + locked only.
+//
+// NOT premium: when the real integration ships it is FREE for everyone, because
+// the connected messenger is the login/OTP fallback and therefore must stay
+// universal. The lock reads "coming soon," never "premium."
+//
+// Deferred build (Part B — recorded, do NOT implement here):
+//   - Providers Bale (بله) and Telegram both sit behind the provider-agnostic
+//     notification interface send(userId, message, kind) (spec 3). Bale is
+//     domestic and the most cutoff-resilient path; Telegram is the second option
+//     and OTP fallback. The connected messenger serves both OTP fallback and
+//     notification delivery.
+//   - New-article notification model:
+//       * Premium: fires immediately on article_published (no schedule/queue).
+//       * Free: each article gets notify_free_after = published_at + 24h; a cron
+//         at 21:00 Asia/Tehran batches all due, unsent articles into ONE digest
+//         ("یک مطلب جدید" / "N مطلب جدید"), sends once, marks them sent. Effective
+//         free delay is 24-48h; if ever surfaced to users describe it honestly as
+//         "۱ تا ۲ روز", never "۲۴ ساعت".
+//       * The free/premium split lives in `kind` (article_premium vs
+//         article_free_digest), not in the article or the channel. The article
+//         itself is public and indexed at publish time; the delay is only on the
+//         active push, never on access (principle 1).
+//   - Streak notification is already handled by the existing system; no change.
+function messengerBlock() {
+  const opt = (label) => el('button', {
+    class: 'dcp-provider-opt', type: 'button', disabled: 'disabled', 'aria-disabled': 'true',
+  }, label);
+  return el('div', { class: 'dcp-messenger' }, [
+    el('div', { class: 'dcp-provider-row' }, [
+      opt('بله'),
+      opt('تلگرام'),
+      el('span', { class: 'dcp-soon-badge' }, [
+        el('span', { class: 'dcp-lock-ico', 'aria-hidden': 'true' }, '🔒'),
+        el('span', {}, 'به زودی'),
+      ]),
+    ]),
+    el('p', { class: 'dcp-sec-hint' }, 'نوتیف‌ها، پیام‌رسانی و کد ورود از طریق اپ متصل ارسال می‌شود.'),
+  ]);
 }
 
 export async function renderProfile(root, { me: preMe } = {}) {
@@ -112,10 +181,7 @@ export async function renderProfile(root, { me: preMe } = {}) {
   root.replaceChildren(
     el('div', { class: 'dcp-dash-hello' }, 'پروفایل'),
     section('نام مستعار', pseudonymBlock(me)),
-    section('پلن', el('div', {}, [
-      el('div', { class: 'dcp-plan' }, me.tier === 'premium' ? 'پریمیوم' : 'رایگان'),
-      el('p', { class: 'dcp-sec-hint' }, 'نسخه بتای باز. کاربران اولیه هنگام فعال شدن پریمیوم مزایای عضو مؤسس می‌گیرند.'),
-    ])),
+    section('پلن', planBlock()),
     section('هفته شما', stats.week && stats.week.length ? weekStrip(stats.week) : el('div', { class: 'dcp-muted' }, '—')),
     section('رکوردها', el('div', { class: 'dcp-records' }, [
       el('div', {}, [el('b', {}, faNum(stats.records?.current_streak || 0)), el('span', {}, 'استریک فعلی')]),
@@ -123,12 +189,8 @@ export async function renderProfile(root, { me: preMe } = {}) {
     ])),
     section('مقایسه ماه به ماه', stats.month_vs_month ? monthCompare(stats.month_vs_month) : el('div', { class: 'dcp-muted' }, '—')),
     section('شماره موبایل', el('div', { dir: 'ltr', class: 'dcp-phone' }, me.phone || '—')),
-    section('تلگرام', el('div', {}, [
-      el('div', {}, me.telegram_linked ? 'متصل است.' : 'هنوز متصل نشده است.'),
-      el('p', { class: 'dcp-sec-hint' }, 'اتصال تلگرام برای یادآوری‌ها از طریق ربات انجام می‌شود.'),
-    ])),
+    section('اتصال به اپ‌های پیام‌رسان', messengerBlock()),
     section('یادآوری‌ها', remindersBlock(me)),
-    section('داده‌های من', exportBlock()),
     el('div', { class: 'dcp-dash-sec' }, [logoutBtn]),
   );
 }

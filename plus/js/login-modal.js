@@ -4,8 +4,12 @@ import { el, faNum } from './util.js';
 import { api, ApiError, currentUser } from './api.js';
 
 let overlay = null;
+// While the mandatory nickname step is showing, every dismissal path (×,
+// Escape, backdrop click) is locked: Plus requires a chosen name (leaderboard).
+let locked = false;
 
 function close(resolve, value) {
+  if (locked) return;
   if (overlay) { overlay.remove(); overlay = null; }
   document.removeEventListener('keydown', onKey);
   resolve(value);
@@ -13,9 +17,83 @@ function close(resolve, value) {
 
 let onKey = () => {};
 
+// A chosen pseudonym is what the leaderboard shows. The backend either leaves
+// display_name empty/null until the user picks one, or (later) sends
+// name_chosen:false. Either way this is the single source of truth.
+export function nameIsChosen(user) {
+  if (!user) return false;
+  if (user.name_chosen === false) return false;
+  return !!(user.display_name && user.display_name.trim());
+}
+
+// The nickname step, shared by first-login onboarding and the standalone gate.
+// Returns { node, focus }. onSaved(updatedUser) fires only after a valid name
+// is persisted. There is no skip — a name is required.
+function buildNameStep({ user, onSaved }) {
+  // Never pre-fill an auto-generated name; make the user type a real pseudonym.
+  const nameInput = el('input', {
+    type: 'text', class: 'dcp-input', maxlength: '40',
+    value: nameIsChosen(user) ? user.display_name : '',
+  });
+  const msg = el('div', { class: 'dcp-modal-msg', role: 'status' });
+  const saveBtn = el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button' }, 'ذخیره و ادامه');
+
+  async function save() {
+    const name = nameInput.value.trim();
+    if (name.length < 2) { msg.textContent = 'یک اسم مستعار (حداقل ۲ حرف) وارد کنید.'; nameInput.focus(); return; }
+    saveBtn.disabled = true;
+    msg.textContent = 'در حال ذخیره...';
+    try {
+      const u = await api.updateMe({ display_name: name });
+      onSaved({ ...user, display_name: (u && u.display_name) || name, name_chosen: true });
+    } catch (e) {
+      msg.textContent = e instanceof ApiError ? e.message : 'ذخیره نشد؛ دوباره تلاش کنید.';
+      saveBtn.disabled = false;
+    }
+  }
+  saveBtn.onclick = save;
+  nameInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') save(); });
+
+  const node = el('div', { class: 'dcp-modal-step' }, [
+    el('label', { class: 'dcp-label' }, 'یک اسم مستعار برای خودتان انتخاب کنید'),
+    nameInput,
+    el('p', { class: 'dcp-modal-sub', style: 'margin:0' }, 'نام واقعی لازم نیست. همین اسم در پروفایل و لیدربورد نمایش داده می‌شود و بعداً از پروفایل قابل تغییر است.'),
+    msg,
+    el('div', { class: 'dcp-editor-actions' }, [saveBtn]),
+  ]);
+  return { node, focus: () => setTimeout(() => { nameInput.focus(); nameInput.select(); }, 30) };
+}
+
+// Standalone, non-dismissable gate: for an already-logged-in user who has no
+// chosen name yet (e.g. backend left display_name empty). Resolves with the
+// updated user once a name is saved. There is no cancel.
+export function openNameGate({ user } = {}) {
+  return new Promise((resolve) => {
+    if (overlay) overlay.remove();
+    locked = true;
+
+    const card = el('div', { class: 'dcp-modal-card', role: 'dialog', 'aria-modal': 'true', 'aria-label': 'انتخاب اسم مستعار' }, [
+      el('h2', { class: 'dcp-modal-title' }, 'اسم مستعار خود را انتخاب کنید'),
+      el('p', { class: 'dcp-modal-sub' }, 'برای استفاده از دنت‌کست پلاس یک اسم مستعار لازم است.'),
+    ]);
+    const step = buildNameStep({
+      user: user || {},
+      onSaved: (u) => { locked = false; if (overlay) { overlay.remove(); overlay = null; } document.removeEventListener('keydown', onKey); resolve(u); },
+    });
+    card.appendChild(step.node);
+
+    overlay = el('div', { class: 'dcp-modal-overlay' }, [card]); // no backdrop-close handler
+    document.body.appendChild(overlay);
+    onKey = () => {}; // Escape does nothing while locked
+    document.addEventListener('keydown', onKey);
+    step.focus();
+  });
+}
+
 export function openLoginModal({ returnTo = location.pathname } = {}) {
   return new Promise((resolve) => {
     if (overlay) overlay.remove();
+    locked = false;
 
     const phoneInput = el('input', {
       type: 'tel', inputmode: 'numeric', class: 'dcp-input',
@@ -103,33 +181,19 @@ export function openLoginModal({ returnTo = location.pathname } = {}) {
         }
       }
 
-      // First login only: a short, fully skippable step asking just a nickname.
-      // No real name is ever required (spec feedback).
+      // First login: a MANDATORY nickname step. Plus is built around a chosen
+      // pseudonym (it's the leaderboard identity), so there is no skip and the
+      // modal cannot be dismissed until a valid name is saved. No real name is
+      // ever required — any pseudonym works.
       function showOnboardingStep(prevStep, res) {
-        const nameInput = el('input', { type: 'text', class: 'dcp-input', maxlength: '40' });
-        nameInput.value = (res.user && res.user.display_name) || '';
-        const finish = (user) => close(resolve, { user, return_to: res.return_to });
-        const saveBtn = el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button' }, 'ذخیره و ادامه');
-        const skipBtn = el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button' }, 'رد کردن');
-        saveBtn.onclick = async () => {
-          const name = nameInput.value.trim();
-          saveBtn.disabled = true;
-          if (name && name !== res.user.display_name) {
-            try { const u = await api.updateMe({ display_name: name }); finish({ ...res.user, display_name: u.display_name }); return; }
-            catch (_) { /* fall through and keep the generated name */ }
-          }
-          finish(res.user);
-        };
-        skipBtn.onclick = () => finish(res.user);
-
-        const step = el('div', { class: 'dcp-modal-step' }, [
-          el('label', { class: 'dcp-label' }, 'یک اسم مستعار برای خودتان انتخاب کنید'),
-          nameInput,
-          el('p', { class: 'dcp-modal-sub', style: 'margin:0' }, 'نام واقعی لازم نیست. بعداً هم از پروفایل قابل تغییر است.'),
-          el('div', { class: 'dcp-editor-actions' }, [saveBtn, skipBtn]),
-        ]);
-        card.replaceChild(step, prevStep);
-        setTimeout(() => { nameInput.focus(); nameInput.select(); }, 30);
+        locked = true; // lock ×/Escape/backdrop until a name is saved
+        const step = buildNameStep({
+          user: res.user,
+          onSaved: (user) => { locked = false; close(resolve, { user, return_to: res.return_to }); },
+        });
+        card.replaceChild(step.node, prevStep);
+        card.querySelector('.dcp-modal-close')?.classList.add('is-hidden');
+        step.focus();
       }
       verifyBtn.onclick = submitCode;
       codeInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') submitCode(); });

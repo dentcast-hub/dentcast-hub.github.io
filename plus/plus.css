@@ -191,6 +191,7 @@ body.dcp-study { padding-bottom: 90px; }
 .dcp-modal-overlay { position: fixed; inset: 0; z-index: 10000; background: rgba(0, 0, 0, .5); display: flex; align-items: center; justify-content: center; padding: 16px; }
 .dcp-modal-card { position: relative; width: 100%; max-width: 380px; background: var(--dcp-surface); color: var(--dcp-ink); border-radius: 16px; box-shadow: var(--dcp-shadow); padding: 22px; }
 .dcp-modal-close { position: absolute; top: 10px; inset-inline-end: 12px; background: none; border: none; font-size: 1.6rem; line-height: 1; cursor: pointer; color: var(--dcp-ink); }
+.dcp-modal-close.is-hidden { display: none; }
 .dcp-modal-title { margin: 0 0 6px; font-size: 1.25rem; }
 .dcp-modal-sub { margin: 0 0 16px; opacity: .8; line-height: 1.8; font-size: .92rem; }
 .dcp-modal-step { display: flex; flex-direction: column; gap: 10px; }

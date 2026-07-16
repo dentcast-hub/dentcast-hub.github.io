@@ -1,6 +1,7 @@
 import type { FastifyInstance } from 'fastify';
 import { requireAdmin } from '../middleware/basic-auth.js';
 import { computeKpis, type Kpis } from '../services/kpis.js';
+import { onArticlePublished, runFreeDigest, backfillExistingContent } from '../services/article-notify.js';
 
 function fmtPct(v: number | null): string {
   return v == null ? '—' : v.toFixed(1) + '٪';
@@ -67,5 +68,48 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
   app.get('/admin', async (_request, reply) => {
     const kpis = await computeKpis();
     return reply.type('text/html; charset=utf-8').send(renderHtml(kpis));
+  });
+
+  // POST /admin/articles/published - the `article_published` event. The publish
+  // pipeline calls this once per new page. Premium users are notified immediately;
+  // the free digest is scheduled (notify_free_after = published_at + delay).
+  app.post('/admin/articles/published', {
+    schema: {
+      body: {
+        type: 'object',
+        required: ['content_id', 'title', 'url'],
+        properties: {
+          content_id: { type: 'string', minLength: 1 },
+          title: { type: 'string', minLength: 1 },
+          url: { type: 'string', minLength: 1 },
+          published_at: { type: 'string' }, // ISO; defaults to now server-side
+        },
+      },
+    },
+  }, async (request, reply) => {
+    const b = request.body as { content_id: string; title: string; url: string; published_at?: string };
+    const publishedAt = b.published_at ? new Date(b.published_at) : undefined;
+    if (publishedAt && Number.isNaN(publishedAt.getTime())) {
+      return reply.code(400).send({ error: 'invalid_published_at' });
+    }
+    const result = await onArticlePublished({
+      contentId: b.content_id, title: b.title, url: b.url, publishedAt,
+    });
+    return reply.send({ ok: true, ...result });
+  });
+
+  // POST /admin/articles/run-free-digest - manually trigger the free digest run
+  // (the cron does this at 21:00 Asia/Tehran). Useful for ops and verification.
+  app.post('/admin/articles/run-free-digest', async (_request, reply) => {
+    const result = await runFreeDigest(new Date());
+    return reply.send({ ok: true, ...result });
+  });
+
+  // POST /admin/articles/backfill - one-time go-live step: mark every existing
+  // published page as already-notified so old-article edits never fire premium.
+  // Idempotent; run once before enabling the auto-publish Action.
+  app.post('/admin/articles/backfill', async (_request, reply) => {
+    const result = await backfillExistingContent(new Date());
+    return reply.send({ ok: true, ...result });
   });
 }
