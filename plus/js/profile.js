@@ -35,7 +35,9 @@ function pseudonymBlock(me) {
 
 function weekStrip(week) {
   const today = tehranDay();
-  const strip = el('div', { class: 'dcp-week-strip' });
+  // dir=rtl on the element itself so شنبه is first-from-the-right even if a
+  // cached/ltr ancestor context would otherwise flip it.
+  const strip = el('div', { class: 'dcp-week-strip', dir: 'rtl' });
   for (const d of week) {
     const future = d.day > today; // this week can extend past today (Sat start)
     strip.appendChild(el('div', {

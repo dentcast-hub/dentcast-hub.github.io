@@ -100,7 +100,9 @@ body.dcp-page a { color: var(--ac, #0b5fff); text-decoration: none; }
 .dcp-switch { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; }
 
 /* week strip: clear day cells with weekday letters + a filled dot on active days */
-.dcp-week-strip { display: flex; gap: 8px; }
+/* Force RTL so the week always reads شنبه (first) on the right, جمعه on the left,
+   independent of any ambient direction. */
+.dcp-week-strip { display: flex; gap: 8px; direction: rtl; }
 .dcp-week-cell { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 10px 0; border: 1px solid var(--border, rgba(2,35,96,.1)); border-radius: var(--r-md, 14px); background: var(--surface, #fff); }
 .dcp-week-cell.is-active { background: var(--ac, #0b5fff); border-color: transparent; color: #fff; }
 .dcp-week-cell.is-today { outline: 2px solid var(--ac, #0b5fff); outline-offset: 1px; }
