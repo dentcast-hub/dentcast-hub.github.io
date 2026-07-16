@@ -2091,7 +2091,7 @@
 (function () {
   if (window.__dcPlusLoaded) return;
   window.__dcPlusLoaded = true;
-  var V = '6';
+  var V = '7';
   // Both stylesheets load on every page: plus.css (workbench/header/home card)
   // and plus-pages.css (dashboard/profile/overlay), because the header opens the
   // dashboard and profile as overlays on content pages, and their markup needs

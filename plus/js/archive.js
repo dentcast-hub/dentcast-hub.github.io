@@ -3,7 +3,7 @@
 // the card text expands to the whole sentence around the highlight, and the
 // highlighted piece becomes the cloze blank (revealable). Manual review logs
 // card_reviewed_manual and never touches card_state.
-import { el, faNum } from './util.js';
+import { el, faNum, signalStreakActivity } from './util.js';
 import { api } from './api.js';
 import { getModel, contentInfo } from './content-index.js';
 import { LABELS, PALETTE } from './config.js';
@@ -102,6 +102,7 @@ export async function renderArchive(container, topicKey, { inline = false } = {}
       reviewBtn.disabled = true;
       try {
         await api.activity('card_reviewed_manual', h.content_id, { highlight_id: h.id });
+        signalStreakActivity(); // manual review counts for today's streak
         reviewBtn.textContent = 'مرور شد ✓';
         card.classList.add('is-reviewed');
       } catch (_) { reviewBtn.disabled = false; }

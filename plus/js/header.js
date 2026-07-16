@@ -4,7 +4,7 @@
 //  - person icon (SVG): gray for guests -> login modal; blue for logged-in ->
 //    a toggle that opens a small menu (پیشخوان / پروفایل), each of which opens as
 //    an OVERLAY. Clicking the person again closes whatever is open.
-import { el, streakIsActiveToday } from './util.js';
+import { el, streakIsActiveToday, STREAK_ACTIVITY_EVENT } from './util.js';
 import { currentUser, api } from './api.js';
 import { openLoginModal } from './login-modal.js';
 import { openOverlay, closeOverlay, overlayOpen } from './overlay.js';
@@ -115,7 +115,17 @@ export async function initHeader() {
   try { user = await currentUser(); } catch (_) { user = null; }
 
   try {
-    if (user) actions.appendChild(buildFlame(user));
+    if (user) {
+      const flame = buildFlame(user);
+      actions.appendChild(flame);
+      // A qualifying action just happened today -> light the flame live, so the
+      // user does not have to reload to see today's streak reflected.
+      document.addEventListener(STREAK_ACTIVITY_EVENT, () => {
+        flame.classList.add('is-active');
+        flame.setAttribute('aria-label', 'امروز فعال بوده‌اید');
+        flame.setAttribute('title', 'امروز فعال بوده‌اید');
+      });
+    }
     actions.appendChild(user ? buildUserPerson(user) : buildGuestPerson());
   } catch (e) {
     if (window.console) console.warn('[plus header] wiring failed', e);

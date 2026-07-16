@@ -1,7 +1,7 @@
 // Study mode controller. A mode of the article page, not a separate page. It
 // inherits the site's typography (styles live in plus.css and reference the
 // site's own CSS variables). Never auto-enters; the caller decides when.
-import { el, faNum, debounce } from './util.js';
+import { el, faNum, debounce, signalStreakActivity } from './util.js';
 import { api } from './api.js';
 import { PALETTE, LABELS, SS_MODE } from './config.js';
 import { serializeRange, anchorQuote, wrapRange, unwrapMarks, fullText, hashText } from './anchor.js';
@@ -139,6 +139,7 @@ export class Workbench {
     };
     try {
       const { highlight } = await api.createHighlight(payload);
+      signalStreakActivity(); // highlight_created counts for today's streak
       this._renderOne(highlight);
       this._recountToc();
       this._renderNotes();

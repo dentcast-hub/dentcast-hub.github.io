@@ -52,6 +52,13 @@ export function streakIsActiveToday(lastActiveDay) {
   return lastActiveDay === tehranDay();
 }
 
+// Fired after a qualifying action (highlight created, card reviewed) so the
+// header flame can light up live, without waiting for a page reload.
+export const STREAK_ACTIVITY_EVENT = 'dcp:streak-activity';
+export function signalStreakActivity() {
+  try { document.dispatchEvent(new CustomEvent(STREAK_ACTIVITY_EVENT)); } catch (_) { /* ignore */ }
+}
+
 export function escapeHtml(s) {
   return String(s).replace(/[&<>"']/g, (c) => (
     { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
