@@ -66,12 +66,14 @@ body.dcp-page a { color: var(--ac, #0b5fff); text-decoration: none; }
 .dcp-folder-count.is-zero { color: var(--txt3, #62779a); background: transparent; font-weight: 400; }
 
 /* ---- per-folder progress bars -------------------------------------------- */
-.dcp-progress-list { display: flex; flex-direction: column; gap: 12px; }
-.dcp-progress-row { display: grid; grid-template-columns: 1fr auto; gap: 4px 10px; align-items: center; }
-.dcp-progress-name { font-weight: 600; }
-.dcp-progress-val { color: var(--txt2, #4a5f85); font-size: .85rem; }
-.dcp-progress-track { grid-column: 1 / -1; height: 8px; background: var(--surface3, #eaecf5); border-radius: 999px; overflow: hidden; }
-.dcp-progress-fill { height: 100%; background: var(--ac, #0b5fff); border-radius: 999px; transition: width .4s; }
+.dcp-progress-list { display: flex; flex-direction: column; gap: 10px; }
+/* One line per folder: name (right), the bar stretching in the middle, percent (left). */
+.dcp-progress-row { display: grid; grid-template-columns: auto 1fr auto; gap: 10px; align-items: center; }
+.dcp-progress-name { font-weight: 600; white-space: nowrap; }
+.dcp-progress-val { color: var(--txt2, #4a5f85); font-size: .85rem; font-variant-numeric: tabular-nums; min-width: 3.2em; text-align: left; }
+.dcp-progress-track { height: 6px; background: var(--surface3, #eaecf5); border-radius: 999px; overflow: hidden; }
+/* Understated gray fill (not the accent) - this is a quiet completion signal. */
+.dcp-progress-fill { height: 100%; background: var(--txt3, #62779a); border-radius: 999px; transition: width .4s; }
 
 /* ---- score --------------------------------------------------------------- */
 .dcp-score { display: flex; align-items: baseline; gap: 8px; }

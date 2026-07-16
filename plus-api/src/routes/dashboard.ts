@@ -121,25 +121,25 @@ export async function dashboardRoutes(app: FastifyInstance): Promise<void> {
         order by created_at desc limit 1`,
       [userId],
     );
-    // "Engaged" content per folder: distinct pages the user has highlighted or
-    // finished. Progress bar = engaged / folder total (spec 2.6).
-    const engagedRows = await pool.query<{ content_id: string }>(
-      `select distinct content_id from (
-         select content_id from highlights where user_id = $1
-         union
-         select content_id from user_activity
-          where user_id = $1 and action = 'article_completed' and content_id is not null
-       ) t`,
+    // Reading progress per folder: distinct pages the user has READ, where a page
+    // counts as read when it has an `article_completed` event (spec 2.9 — this is
+    // the "where the user has read" layer, distinct from where they highlighted).
+    // Progress bar = read / folder total. Both sides derive from the same content
+    // index the dashboard tree uses; totals reflect currently published content,
+    // so newly shipped articles lower a folder's percent until they are read.
+    const readRows = await pool.query<{ content_id: string }>(
+      `select distinct content_id from user_activity
+        where user_id = $1 and action = 'article_completed' and content_id is not null`,
       [userId],
     );
-    const engagedByFolder = new Map<string, number>();
-    for (const r of engagedRows.rows) {
+    const readByFolder = new Map<string, number>();
+    for (const r of readRows.rows) {
       const f = folderOf(r.content_id);
-      engagedByFolder.set(f, (engagedByFolder.get(f) || 0) + 1);
+      readByFolder.set(f, (readByFolder.get(f) || 0) + 1);
     }
     const folder_progress = getFolders().map((f) => ({
       key: f.key, fa: f.fa, url: f.url, total: f.total,
-      engaged: Math.min(engagedByFolder.get(f.key) || 0, f.total),
+      read: Math.min(readByFolder.get(f.key) || 0, f.total),
     }));
 
     // Score: a concrete, activity-log-derived metric, ready for a future

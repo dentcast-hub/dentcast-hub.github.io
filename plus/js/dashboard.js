@@ -51,18 +51,27 @@ function continueBlock(progress, model) {
   ]);
 }
 
-function progressBars(progress) {
-  // Every folder gets a 0..100 bar showing how much of it you have read
-  // (engaged / total). Totals reflect currently published content.
-  const rows = (progress.folder_progress || []).filter((f) => f.total > 0);
-  if (!rows.length) return el('div', { class: 'dcp-muted' }, 'به‌زودی.');
+function progressBars(progress, model) {
+  // Reading-progress layer (spec 2.9), built over the SAME shared content-index
+  // model the navigation tree uses. The FOLDER LIST and each folder's total come
+  // from the static content index (model.folders) so every folder always renders,
+  // even before the user has read anything. Only the numerator (how many the user
+  // has READ = article_completed) comes from /progress. Recomputed every mount,
+  // never cached; as new articles ship the totals grow and a folder's percent
+  // drops until they are read.
+  const folders = (model.folders || []).filter((f) => f.total > 0);
+  if (!folders.length) return el('div', { class: 'dcp-muted' }, 'هنوز پوشه‌ای برای نمایش نیست.');
+  const readByKey = new Map((progress.folder_progress || []).map((f) => [f.key, f.read || 0]));
   const list = el('div', { class: 'dcp-progress-list' });
-  for (const f of rows) {
-    const pct = f.total ? Math.min(100, Math.round((f.engaged / f.total) * 100)) : 0;
+  for (const f of folders) {
+    const read = Math.min(readByKey.get(f.key) || 0, f.total);
+    // f.total > 0 here (divide-by-zero guarded above); clamp to 0..100.
+    const pct = Math.max(0, Math.min(100, Math.round((read / f.total) * 100)));
     list.appendChild(el('div', { class: 'dcp-progress-row' }, [
-      el('span', { class: 'dcp-progress-name', dir: 'ltr' }, f.key),
-      el('span', { class: 'dcp-progress-val' }, '٪' + faNum(pct) + ' · ' + faNum(f.engaged) + ' از ' + faNum(f.total)),
-      el('div', { class: 'dcp-progress-track' }, el('div', { class: 'dcp-progress-fill', style: 'width:' + pct + '%' })),
+      el('span', { class: 'dcp-progress-name' }, f.fa || f.key),
+      el('div', { class: 'dcp-progress-track' },
+        el('div', { class: 'dcp-progress-fill', style: 'width:' + pct + '%' })),
+      el('span', { class: 'dcp-progress-val' }, '٪' + faNum(pct)),
     ]));
   }
   return list;
@@ -140,7 +149,7 @@ export async function renderDashboard(root, { me: preMe } = {}) {
   children.push(
     section('استریک', 'هر روز که بخوانید، هایلایت کنید یا مرور کنید، یک روز به زنجیره‌تان اضافه می‌شود. رکورد شما بیشترین زنجیره‌ای است که تا حالا ساخته‌اید و هیچ‌وقت پاک نمی‌شود.', streakDetail(me)),
     section('ادامه مطالعه', null, continueBlock(progress, model)),
-    section('پیشرفت هر پوشه', 'برای هر پوشه، چند درصد از کل مطالب آن را خوانده‌اید (۰ تا ۱۰۰). هر بار پیشخوان باز شود به‌روز می‌شود.', progressBars(progress)),
+    section('پیشرفت هر پوشه', 'برای هر پوشه، چند درصد از کل مطالب آن را خوانده‌اید (۰ تا ۱۰۰). هر بار پیشخوان باز شود به‌روز می‌شود.', progressBars(progress, model)),
     section('امتیاز شما', 'امتیاز از روی فعالیت شما ساخته می‌شود و پایه‌ی رقابت‌های بعدی است.',
       el('div', { class: 'dcp-score' }, [el('span', { class: 'dcp-score-n' }, faNum(progress.score || 0)), el('span', { class: 'dcp-muted' }, 'امتیاز')])),
     section('هایلایت‌های اخیر', null, recentWrap),
