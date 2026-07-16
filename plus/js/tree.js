@@ -15,9 +15,10 @@ export async function renderTree(container) {
   const list = el('div', { class: 'dcp-folders' });
   for (const f of tree.folders || []) {
     list.appendChild(el('a', { class: 'dcp-folder' + (f.count ? ' has-hl' : ''), href: f.url }, [
-      el('span', { class: 'dcp-folder-name' }, f.fa),
+      // Default (folder) name, e.g. notecast / dentai / metanotes.
+      el('span', { class: 'dcp-folder-name', dir: 'ltr' }, f.key),
       el('span', { class: 'dcp-folder-count' + (f.count ? '' : ' is-zero') },
-        f.count ? faNum(f.count) + ' هایلایت' : 'بدون هایلایت'),
+        f.count ? faNum(f.count) + ' فلش‌کارت' : 'بدون فلش‌کارت'),
     ]));
   }
   if (!(tree.folders || []).length) {

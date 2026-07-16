@@ -66,10 +66,13 @@ export async function renderArchive(container, topicKey, { inline = false } = {}
     // important first, then by content/creation order the API returned
     .sort((a, b) => (b.label === 'important' ? 1 : 0) - (a.label === 'important' ? 1 : 0));
 
+  let count = cards.length;
+  const countEl = el('span', { class: 'dcp-archive-count' }, faNum(count) + ' کارت');
+  const setCount = (n) => { count = Math.max(0, n); countEl.textContent = faNum(count) + ' کارت'; };
   const head = el('div', { class: 'dcp-archive-head' }, [
     inline ? null : el('a', { class: 'dcp-back', href: '/plus/cards.html' }, '‹ همه پوشه‌ها'),
     el('h2', { class: 'dcp-archive-title' }, 'فلش‌کارت‌های ' + (data.topic_fa || '')),
-    el('span', { class: 'dcp-archive-count' }, faNum(cards.length) + ' کارت'),
+    countEl,
   ]);
 
   if (!cards.length) {
@@ -89,7 +92,12 @@ export async function renderArchive(container, topicKey, { inline = false } = {}
     const href = sourceHref(info, h.exact);
     if (href) actions.appendChild(el('a', { class: 'dcp-btn dcp-btn-ghost', href, target: '_top' }, 'منبع'));
     const reviewBtn = el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button' }, 'مرور شد');
-    const card = el('div', { class: 'dcp-card' }, [meta, renderCardText(h), h.note ? el('div', { class: 'dcp-card-note' }, h.note) : null, actions]);
+
+    // Delete (×): removes the flashcard (i.e. the underlying highlight) after a
+    // small inline confirm, so an accidental tap does not destroy data.
+    const delBtn = el('button', { class: 'dcp-card-del', type: 'button', 'aria-label': 'حذف فلش‌کارت', title: 'حذف' }, '×');
+    const card = el('div', { class: 'dcp-card' }, [delBtn, meta, renderCardText(h), h.note ? el('div', { class: 'dcp-card-note' }, h.note) : null, actions]);
+
     reviewBtn.addEventListener('click', async () => {
       reviewBtn.disabled = true;
       try {
@@ -99,6 +107,27 @@ export async function renderArchive(container, topicKey, { inline = false } = {}
       } catch (_) { reviewBtn.disabled = false; }
     });
     actions.appendChild(reviewBtn);
+
+    delBtn.addEventListener('click', () => {
+      if (card.querySelector('.dcp-card-confirm')) return;
+      const yes = el('button', { class: 'dcp-btn dcp-btn-danger', type: 'button' }, 'حذف');
+      const no = el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button' }, 'انصراف');
+      const confirmRow = el('div', { class: 'dcp-card-confirm' }, [
+        el('span', {}, 'این فلش‌کارت حذف شود؟'), yes, no,
+      ]);
+      no.onclick = () => confirmRow.remove();
+      yes.onclick = async () => {
+        yes.disabled = true;
+        try {
+          await api.deleteHighlight(h.id);
+          card.remove();
+          setCount(count - 1);
+          if (count === 0) list.appendChild(el('div', { class: 'dcp-empty' }, 'همه کارت‌های این پوشه حذف شد.'));
+        } catch (_) { yes.disabled = false; }
+      };
+      card.appendChild(confirmRow);
+    });
+
     list.appendChild(card);
   }
 

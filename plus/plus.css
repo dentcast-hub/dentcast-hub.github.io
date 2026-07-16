@@ -163,9 +163,13 @@ body.dcp-study { padding-bottom: 90px; }
 .dcp-archive-count { color: var(--dcp-muted); font-size: .9rem; }
 .dcp-archive-note { color: var(--dcp-muted); font-size: .92rem; margin: 4px 2px 18px; }
 .dcp-card-list { display: flex; flex-direction: column; gap: 12px; }
-.dcp-card { background: var(--dcp-surface); border: 1px solid var(--dcp-line); border-radius: var(--dcp-radius); padding: 14px 16px; box-shadow: var(--dcp-shadow); }
+.dcp-card { position: relative; background: var(--dcp-surface); border: 1px solid var(--dcp-line); border-radius: var(--dcp-radius); padding: 14px 16px; box-shadow: var(--dcp-shadow); }
+.dcp-card-del { position: absolute; top: 8px; inset-inline-start: 8px; width: 26px; height: 26px; line-height: 22px; text-align: center; font-size: 1.2rem; border-radius: 50%; border: 1px solid var(--dcp-line); background: var(--dcp-surface); color: var(--dcp-muted); cursor: pointer; }
+.dcp-card-del:hover { color: #c0392b; border-color: #c0392b; }
+.dcp-card-confirm { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--dcp-line); }
+.dcp-btn-danger { background: #c0392b; color: #fff; border-color: transparent; }
 .dcp-card.is-reviewed { opacity: .7; border-color: var(--dcp-accent); }
-.dcp-card-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; color: var(--dcp-muted); font-size: .82rem; }
+.dcp-card-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; padding-inline-start: 32px; color: var(--dcp-muted); font-size: .82rem; }
 .dcp-card-dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
 .dcp-card-label { background: var(--dcp-chip-bg); border: 1px solid var(--dcp-line); color: var(--dcp-accent); border-radius: 999px; padding: 1px 10px; }
 .dcp-card-src { margin-inline-start: auto; }
