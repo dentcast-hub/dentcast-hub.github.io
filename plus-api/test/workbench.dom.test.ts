@@ -30,7 +30,33 @@ describe('workbench builds its study-mode UI', () => {
     expect(toolbar, 'toolbar should exist').not.toBeNull();
     const swatches = document.querySelectorAll('.dcp-toolbar .dcp-swatch');
     expect(swatches.length, 'color swatches').toBe(4);
-    expect(document.querySelector('.dcp-toc-panel'), 'TOC panel').not.toBeNull();
+    // سرفصل (TOC) was removed from the workbench: no panel, no toolbar button.
+    expect(document.querySelector('.dcp-toc-panel'), 'no TOC panel').toBeNull();
+    const toolbarText = (document.querySelector('.dcp-toolbar') as HTMLElement).textContent || '';
+    expect(toolbarText.includes('سرفصل'), 'no سرفصل button').toBe(false);
     expect(document.querySelector('.dcp-notes-panel'), 'notes panel').not.toBeNull();
+  });
+
+  it('the یادداشت button toggles a single ARTICLE note, independent of highlights', async () => {
+    const root = setArticle();
+    const wb: any = new Workbench({ contentId: 'x/y', proseRoot: root });
+    await wb.enter();
+
+    // nothing is open just from entering
+    expect(document.querySelector('.dcp-editor'), 'no editor on enter').toBeNull();
+
+    // the button opens the article note with NO highlight in focus (not tied to one)
+    expect(wb._currentHl, 'no current highlight').toBeFalsy();
+    wb._noteButton();
+    const pop = document.querySelector('.dcp-editor') as HTMLElement;
+    expect(pop, 'article note opened by the button').not.toBeNull();
+    expect(pop.getAttribute('aria-label'), 'it is the article note').toBe('یادداشت مقاله');
+    expect(document.body.style.getPropertyValue('--dcp-editor-dock'), 'docked via CSS var').not.toBe('');
+    const ta = pop.querySelector('.dcp-note-input') as HTMLTextAreaElement;
+    expect(ta.value, 'note opens empty').toBe('');
+
+    // pressing the button again CLOSES it (toggle)
+    wb._noteButton();
+    expect(document.querySelector('.dcp-editor'), 'article note closed by the button').toBeNull();
   });
 });

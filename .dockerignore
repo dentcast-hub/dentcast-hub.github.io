@@ -1,0 +1,25 @@
+# Build context for the Plus API image is the repo root (see plus-api/Dockerfile),
+# so keep the huge, irrelevant parts of the static site out of the Docker context.
+# Only plus-api/ sources and plus/content-index.json are actually COPYed.
+.git
+**/node_modules
+plus-api/dist
+plus-api/.env
+plus-api/scripts-dev
+
+# Static-site content the API never needs (keeps the context small & builds fast).
+*.html
+assets
+images
+img
+reports
+notecast
+insight
+litecast
+metanotes
+chairside
+glossary
+card
+tools
+.dentcast
+.github

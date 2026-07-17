@@ -67,6 +67,10 @@ export const api = {
   updateHighlight: (id, patch) => request('/highlights/' + id, { method: 'PATCH', body: patch }),
   deleteHighlight: (id) => request('/highlights/' + id, { method: 'DELETE' }),
 
+  // per-article note (independent of highlights)
+  getArticleNote: (content_id) => request('/article-note', { query: { content_id } }),
+  saveArticleNote: (content_id, note) => request('/article-note', { method: 'PUT', body: { content_id, note } }),
+
   // dashboard (later milestones)
   tree: () => request('/tree'),
   progress: () => request('/progress'),

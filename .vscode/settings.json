@@ -1,0 +1,6 @@
+{
+  "// Live Server: send no-store so the browser never heuristically caches the site.": "Without this, Live Server sends only Last-Modified (no Cache-Control), so browsers serve stale dc-nav.js / plus.css / workbench.js without revalidating — edits don't show up until a hard reload or cache clear. no-store forces every reload to be fresh. Restart Live Server after adding this.",
+  "liveServer.settings.headers": {
+    "Cache-Control": "no-store"
+  }
+}

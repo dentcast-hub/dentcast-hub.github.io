@@ -30,10 +30,10 @@ const FOLDER_EN = {
 // Premium tiles. Leaderboard is intentionally NOT here (removed). "نماهای موضوعی"
 // renamed to something concrete.
 const PREMIUM_TILES = [
-  'مرور زمان‌بندی‌شده',
+  'مرور فلش‌کارت زمان‌بندی‌شده',
   'مسیرهای یادگیری',
   'جمع‌بندی موضوعی هایلایت‌ها',
-  'گزارش ماهانه',
+  'کوییز و کسب امتیاز',
   'دستیار هوشمند',
 ];
 
@@ -86,7 +86,9 @@ function progressBars(progress, model) {
     // f.total > 0 here (divide-by-zero guarded above); clamp to 0..100.
     const pct = Math.max(0, Math.min(100, Math.round((read / f.total) * 100)));
     list.appendChild(el('div', { class: 'dcp-progress-row' }, [
-      el('span', { class: 'dcp-progress-name', dir: 'ltr' }, FOLDER_EN[f.key] || f.key),
+      f.url
+        ? el('a', { class: 'dcp-progress-name', dir: 'ltr', href: f.url }, FOLDER_EN[f.key] || f.key)
+        : el('span', { class: 'dcp-progress-name', dir: 'ltr' }, FOLDER_EN[f.key] || f.key),
       el('div', { class: 'dcp-progress-track' },
         el('div', { class: 'dcp-progress-fill', style: 'width:' + pct + '%' })),
       el('span', { class: 'dcp-progress-val' }, '٪' + faNum(pct)),

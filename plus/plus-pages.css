@@ -70,6 +70,8 @@ body.dcp-page a { color: var(--ac, #0b5fff); text-decoration: none; }
 /* One line per folder: name (right), the bar stretching in the middle, percent (left). */
 .dcp-progress-row { display: grid; grid-template-columns: auto 1fr auto; gap: 10px; align-items: center; }
 .dcp-progress-name { font-weight: 600; white-space: nowrap; }
+a.dcp-progress-name { color: inherit; text-decoration: none; }
+a.dcp-progress-name:hover { color: var(--ac, #0b5fff); text-decoration: underline; }
 .dcp-progress-val { color: var(--txt2, #4a5f85); font-size: .85rem; font-variant-numeric: tabular-nums; min-width: 3.2em; text-align: left; }
 .dcp-progress-track { height: 6px; background: var(--surface3, #eaecf5); border-radius: 999px; overflow: hidden; }
 /* Understated gray fill (not the accent) - this is a quiet completion signal. */

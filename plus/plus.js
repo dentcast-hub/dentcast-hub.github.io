@@ -5,10 +5,18 @@
 import { detectContentId, findProseRoot, INVITE_LINE, SS_MODE, SS_RETURN_STUDY } from './js/config.js';
 import { currentUser, api } from './js/api.js';
 import { openLoginModal } from './js/login-modal.js';
-import { Workbench } from './js/workbench.js';
 import { el } from './js/util.js';
 import { initHomeCard } from './js/home-card.js';
 import { initHeader } from './js/header.js';
+
+// Carry plus.js's own cache-busting version (?v=N, set by dc-nav.js) onto the
+// workbench module import. Article pages are OUTSIDE the /plus/ service-worker
+// scope, so their module requests hit the plain browser HTTP cache — an
+// unversioned import would keep serving a stale workbench.js even after V is
+// bumped. Versioning the URL forces the fresh module. Bump V in dc-nav.js when
+// workbench.js (or a module it pulls in) changes.
+const PLUS_V = new URL(import.meta.url).search; // e.g. '?v=12'
+const loadWorkbench = () => import('./js/workbench.js' + PLUS_V).then((m) => m.Workbench);
 
 function injectWorkbenchButton(main, proseRoot) {
   const btn = el('button', { class: 'dcp-wb-button', type: 'button', 'aria-pressed': 'false' }, 'میز کار');
@@ -38,6 +46,7 @@ async function initArticle() {
   if (!main || !proseRoot) return; // not an article page
 
   const contentId = detectContentId();
+  const Workbench = await loadWorkbench();
   const wb = new Workbench({ contentId, proseRoot });
   const btn = injectWorkbenchButton(main, proseRoot);
 
@@ -88,7 +97,16 @@ async function initArticle() {
 // version. Highlighting (میز کار) stays; the review/flashcard system moves to the
 // premium scheduled-review layer later. No landing-page flashcard injection.
 
+// Plus is a MOBILE-ONLY layer: on desktop nothing from Plus is injected — no میز کار
+// button, no header additions, no home card. The site's own mobile breakpoint is
+// 1099px (see plus.css), so desktop is (min-width: 1100px).
+const DESKTOP_MQ = '(min-width: 1100px)';
+function isDesktop() {
+  return typeof window.matchMedia === 'function' && window.matchMedia(DESKTOP_MQ).matches;
+}
+
 function boot() {
+  if (isDesktop()) return; // desktop: Plus disabled entirely (no workbench, header, or card)
   try {
     initHeader();
     initArticle();
@@ -103,4 +121,10 @@ if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', boot);
 } else {
   boot();
+}
+
+// Crossing the desktop/mobile boundary flips whether Plus should exist, so reload to
+// apply the correct set (injecting on entering mobile / clearing on entering desktop).
+if (typeof window.matchMedia === 'function') {
+  window.matchMedia(DESKTOP_MQ).addEventListener('change', () => location.reload());
 }

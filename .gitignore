@@ -5,3 +5,6 @@ __pycache__/
 
 # Cabinet enrichment resume cache (regenerable; never commit)
 enrich_cache.json
+
+# Dev-only screenshot output (probe/shot scripts); the scripts stay, PNGs don't.
+scripts-dev/*.png

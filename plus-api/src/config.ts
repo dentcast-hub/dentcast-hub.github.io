@@ -52,6 +52,14 @@ export const config = {
     length: int('OTP_LENGTH', 5),
     maxPerPhonePerHour: int('OTP_MAX_PER_PHONE_PER_HOUR', 5),
     maxPerIpPerHour: int('OTP_MAX_PER_IP_PER_HOUR', 15),
+    // SMS.ir template-based OTP (used only when SMS_PROVIDER=smsir). The template
+    // is created in the SMS.ir panel; its numeric id and single parameter name
+    // live here. Empty in dev (console provider ignores them).
+    smsir: {
+      apiKey: str('SMSIR_API_KEY', ''),
+      templateId: int('SMSIR_TEMPLATE_ID', 0),
+      paramName: str('SMSIR_PARAM_NAME', 'CODE'),
+    },
   },
 
   notify: {

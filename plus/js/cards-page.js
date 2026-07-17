@@ -9,7 +9,7 @@ function main() {
   const root = document.getElementById('dcp-root');
   if (!root) return;
   root.replaceChildren(el('div', { class: 'dcp-gate' }, [
-    el('p', {}, 'مرور فلش‌کارت‌ها به‌زودی در «مرور زمان‌بندی‌شده»ی پریمیوم در دسترس خواهد بود.'),
+    el('p', {}, 'مرور فلش‌کارت‌ها به‌زودی در «مرور فلش‌کارت زمان‌بندی‌شده»ی پریمیوم در دسترس خواهد بود.'),
     el('p', { class: 'dcp-muted' }, 'هایلایت‌های شما حفظ می‌شوند و در همان مقاله و در «هایلایت‌های اخیر» پیشخوان دیده می‌شوند.'),
     el('a', { class: 'dcp-btn dcp-btn-primary', href: '/plus/' }, 'رفتن به پیشخوان'),
   ]));

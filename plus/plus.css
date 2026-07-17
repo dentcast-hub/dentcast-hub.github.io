@@ -91,7 +91,7 @@ mark.dcp-hl[data-color="green"] { background: #b7e4b0; }
 mark.dcp-hl[data-color="blue"] { background: #a9d3f5; }
 mark.dcp-hl[data-color="pink"] { background: #f6b8cf; }
 mark.dcp-hl.dcp-underline { background: transparent; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 3px; }
-mark.dcp-hl.dcp-cloze { background: transparent; border-bottom: 2px dashed var(--dcp-accent); }
+mark.dcp-hl.dcp-cloze { background: transparent; border-bottom: 2px dotted var(--dcp-accent); }
 
 /* ---- floating toolbar (bottom, ergonomic, avoids the fixed header) -------- */
 .dcp-toolbar {
@@ -148,12 +148,35 @@ body.dcp-study { padding-bottom: 90px; }
 .dcp-failed-quote { line-height: 1.8; }
 
 /* ---- editor popover ------------------------------------------------------ */
+/* Docked just ABOVE the workbench toolbar (never under it) and viewport-fixed, so
+   the note editor is always visible. `--dcp-editor-dock` is the live offset JS keeps
+   in sync: the measured toolbar height normally, or the on-screen keyboard height
+   while the note field is focused on mobile — so the editor sits above the keyboard
+   like a search bar, keyboard below. `!important` makes the stylesheet the single
+   source of truth for placement, immune to the article page's own layout and to any
+   stale cached JS. The dock var has a 96px fallback so it works even before JS sets it. */
 .dcp-editor {
-  position: absolute; z-index: 9100; width: 280px; padding: 12px;
+  position: fixed !important;
+  top: auto !important;
+  bottom: var(--dcp-editor-dock, 96px) !important; /* sits directly on the toolbar's top edge */
+  /* left+right+margin:auto centring can never overflow either edge (unlike a
+     translateX(-50%), which clipped by a few px against the scrollbar). */
+  left: 8px !important;
+  right: 8px !important;
+  margin-inline: auto !important;
+  transform: none !important;
+  width: auto !important;
+  max-width: 420px !important;
+  /* Height is relative to the window: never more than the space between the top of
+     the screen and the dock (toolbar, or keyboard when typing), so it can't overflow
+     the viewport; content scrolls inside instead. Capped at 60vh so it isn't huge. */
+  max-height: min(60vh, calc(100dvh - var(--dcp-editor-dock, 96px) - 16px)) !important;
+  overflow: auto !important;
+  z-index: 9500; padding: 12px;
   background: var(--dcp-surface); border: 1px solid var(--dcp-line); border-radius: var(--dcp-radius); box-shadow: var(--dcp-shadow);
 }
 .dcp-editor-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
-.dcp-note-input { width: 100%; min-height: 70px; font: inherit; padding: 8px; border: 1px solid var(--dcp-line); border-radius: 8px; resize: vertical; }
+.dcp-note-input { box-sizing: border-box; width: 100%; min-height: 70px; font: inherit; padding: 8px; border: 1px solid var(--dcp-line); border-radius: 8px; resize: vertical; }
 .dcp-editor-actions { display: flex; gap: 8px; margin-top: 8px; }
 
 /* ---- card archive / flashcards (works on /plus AND folder landing pages) -- */
