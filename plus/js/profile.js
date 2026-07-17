@@ -2,7 +2,7 @@
 // the header overlay. Site design language; a clear, readable week strip. Nothing
 // here is mandatory: the pseudonym is editable, no real name is ever required.
 import { el, faNum, tehranDay } from './util.js';
-import { api } from './api.js';
+import { api, ApiError, currentUser } from './api.js';
 import { ensurePushSubscription, removePushSubscription } from './push.js';
 
 const WEEKDAY_FA = ['ی', 'د', 'س', 'چ', 'پ', 'ج', 'ش']; // Sun..Sat
@@ -24,8 +24,23 @@ function pseudonymBlock(me) {
     const name = input.value.trim();
     if (name.length < 2) { msg.textContent = 'اسم مستعار باید حداقل ۲ حرف باشد.'; return; }
     save.disabled = true;
-    try { await api.updateMe({ display_name: name }); msg.textContent = 'ذخیره شد.'; }
-    catch (_) { msg.textContent = 'خطا در ذخیره.'; }
+    msg.textContent = 'در حال ذخیره...';
+    try {
+      const u = await api.updateMe({ display_name: name });
+      const saved = (u && u.display_name) || name;
+      // Keep the shared snapshot (header menu / dashboard reuse this object) and
+      // the /me cache in sync, so the new name shows everywhere without a reload.
+      me.display_name = saved;
+      input.value = saved;
+      currentUser({ refresh: true });
+      msg.textContent = 'ذخیره شد.';
+    } catch (e) {
+      // Surface the real reason instead of a generic error so a session/auth
+      // problem is actionable (the server sends "ورود لازم است." on a 401).
+      if (e instanceof ApiError && e.status === 401) msg.textContent = 'نشست شما منقضی شده؛ لطفاً دوباره وارد شوید.';
+      else if (e instanceof ApiError) msg.textContent = e.message || 'خطا در ذخیره.';
+      else msg.textContent = 'اتصال با سرور برقرار نشد؛ اینترنت/دامنه را بررسی کنید.';
+    }
     save.disabled = false;
   });
   return el('div', {}, [
