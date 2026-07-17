@@ -2,6 +2,7 @@
 // Resolves with { user, return_to } on success, or null if the user cancels.
 import { el, faNum } from './util.js';
 import { api, ApiError, currentUser } from './api.js';
+import { isOrgHost, irMirrorUrl } from './config.js';
 
 let overlay = null;
 // While the mandatory nickname step is showing, every dismissal path (×,
@@ -90,7 +91,54 @@ export function openNameGate({ user } = {}) {
   });
 }
 
+// --- .org notice (TEMPORARY) ------------------------------------------------
+// Shown on the .org hosts in place of the OTP modal (see isOrgHost in
+// config.js). It (1) logs the anonymous demand signal reusing the single
+// whitelisted anon event -- the entry source and the .org marker ride in
+// content_id as `org:<source>[:<contentId>]`, queryable via content_id LIKE
+// 'org:%' -- and (2) deep-links the same page on dentcast.ir. Fully dismissable
+// (×, Escape, backdrop, بعداً). Resolves null, so callers that check res.user
+// simply do nothing. Delete together with the isOrgHost gates once
+// api.dentcast.org is live.
+export function openOrgNotice({ source = 'login', contentId } = {}) {
+  const tag = 'org:' + source + (contentId ? ':' + contentId : '');
+  api.anonEvent('workbench_button_anon_click', tag).catch(() => {});
+
+  return new Promise((resolve) => {
+    if (overlay) overlay.remove();
+    locked = false;
+
+    // A <button> (not an <a>) so it inherits the exact primary-button styling;
+    // it navigates on click. Path + query + hash are preserved by irMirrorUrl.
+    const goBtn = el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button' }, 'ادامه در dentcast.ir');
+    const laterBtn = el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button' }, 'بعداً');
+
+    const card = el('div', { class: 'dcp-modal-card', role: 'dialog', 'aria-modal': 'true', 'aria-label': 'دنت‌کست پلاس' }, [
+      el('button', { class: 'dcp-modal-close', type: 'button', 'aria-label': 'بستن', onclick: () => close(resolve, null) }, '×'),
+      el('h2', { class: 'dcp-modal-title' }, 'دنت‌کست پلاس'),
+      el('p', { class: 'dcp-modal-sub' },
+        'امکانات دنت‌کست پلاس (میز کار، هایلایت و یادداشت) فعلاً از نسخه‌ی dentcast.ir در دسترس است. همین صفحه را همان‌جا باز کنید و ادامه دهید.'),
+      el('div', { class: 'dcp-editor-actions' }, [goBtn, laterBtn]),
+    ]);
+
+    goBtn.onclick = () => { window.location.href = irMirrorUrl(); };
+    laterBtn.onclick = () => close(resolve, null);
+
+    overlay = el('div', { class: 'dcp-modal-overlay', onclick: (e) => { if (e.target === overlay) close(resolve, null); } }, [card]);
+    document.body.appendChild(overlay);
+    setTimeout(() => goBtn.focus(), 30);
+
+    onKey = (e) => { if (e.key === 'Escape') close(resolve, null); };
+    document.addEventListener('keydown', onKey);
+  });
+}
+
 export function openLoginModal({ returnTo = location.pathname } = {}) {
+  // .org backstop: the OTP modal must never open on the .org hosts (no phone
+  // entry, no SMS spend). Any caller that reaches here on .org -- including the
+  // /plus dashboard/profile pages -- gets the notice instead. The three primary
+  // entry points short-circuit earlier with their own source label.
+  if (isOrgHost()) return openOrgNotice({ source: 'login' });
   return new Promise((resolve) => {
     if (overlay) overlay.remove();
     locked = false;

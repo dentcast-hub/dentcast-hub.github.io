@@ -3,9 +3,9 @@
 // counter for free users, not even a zero or a locked stub. No minutes target.
 import { el, faNum, streakIsActiveToday } from './util.js';
 import { currentUser, api } from './api.js';
-import { openLoginModal } from './login-modal.js';
+import { openLoginModal, openOrgNotice } from './login-modal.js';
 import { getModel, contentInfo } from './content-index.js';
-import { INVITE_LINE } from './config.js';
+import { INVITE_LINE, isOrgHost, detectContentId } from './config.js';
 
 function flame(active) {
   return el('span', { class: 'dc-plus-flame' + (active ? ' is-active' : ''), 'aria-hidden': 'true' }, '🔥');
@@ -14,6 +14,9 @@ function flame(active) {
 function renderAnon(card) {
   const btn = el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button' }, 'ورود');
   btn.addEventListener('click', async () => {
+    // .org gate (temporary): show the dentcast.ir notice instead of OTP; the
+    // anon demand signal is logged inside openOrgNotice (marked org:home).
+    if (isOrgHost()) { openOrgNotice({ source: 'home', contentId: detectContentId() }); return; }
     const res = await openLoginModal({ returnTo: '/plus/' });
     if (res && res.user) location.reload();
   });

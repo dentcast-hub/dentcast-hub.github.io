@@ -1,2 +1,12 @@
 /dentcast_cabinet_full_catalog.json
   X-Robots-Tag: noindex
+
+# Plus bootstrap + modules must revalidate so behavior changes (e.g. the .org
+# entry-point gate) propagate on the next load instead of sitting in the 4h
+# browser cache. no-cache still allows cheap 304s via ETag. Cloudflare (.org)
+# honors _headers; .ir (Arvan) is unaffected.
+/dc-nav.js
+  Cache-Control: no-cache
+
+/plus/*
+  Cache-Control: no-cache

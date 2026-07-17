@@ -2,9 +2,9 @@
 // enhancement. It decides the page type and wires only what belongs there. For
 // anonymous visitors the page must look exactly as before except the two
 // invitation points (spec 2.3): the workbench button and the homepage card.
-import { detectContentId, findProseRoot, INVITE_LINE, SS_MODE, SS_RETURN_STUDY } from './js/config.js';
+import { detectContentId, findProseRoot, INVITE_LINE, SS_MODE, SS_RETURN_STUDY, isOrgHost } from './js/config.js';
 import { currentUser, api } from './js/api.js';
-import { openLoginModal } from './js/login-modal.js';
+import { openLoginModal, openOrgNotice } from './js/login-modal.js';
 import { el } from './js/util.js';
 import { initHomeCard } from './js/home-card.js';
 import { initHeader } from './js/header.js';
@@ -58,6 +58,10 @@ async function initArticle() {
   }
 
   async function onClick() {
+    // .org gate (temporary): Plus login cannot work cross-site on the .org
+    // hosts, so instead of the OTP flow show the dentcast.ir notice. The anon
+    // demand signal is still logged (inside openOrgNotice, marked org:workbench).
+    if (isOrgHost()) { openOrgNotice({ source: 'workbench', contentId }); return; }
     const user = await currentUser({ refresh: true });
     if (!user) {
       // Anonymous invitation point: log the demand signal, show one sentence,

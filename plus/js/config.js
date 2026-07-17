@@ -18,6 +18,27 @@ function defaultBases() {
 
 export const API_BASES = OVERRIDE.apiBases || defaultBases();
 
+// --- .org gate (TEMPORARY) --------------------------------------------------
+// api.dentcast.org is not wired yet, so on the .org hosts the Plus API is only
+// reachable cross-site and the SameSite=Lax session cookie is dropped -> OTP
+// login can never complete. Until api.dentcast.org resolves, the three .org
+// Plus entry points (workbench button, header person, home card) show a notice
+// and deep-link the SAME page on dentcast.ir instead of opening the OTP modal.
+// The failover list above is intentionally left untouched. To retire this once
+// .org has its own API: delete ORG_HOSTS / isOrgHost / irMirrorUrl and their
+// call sites (grep isOrgHost, openOrgNotice).
+export const ORG_HOSTS = ['dentcast.org', 'www.dentcast.org'];
+
+export function isOrgHost() {
+  return typeof location !== 'undefined' && ORG_HOSTS.indexOf(location.hostname) !== -1;
+}
+
+// The same path on the .ir host, so the reader is not thrown out of their
+// article (only the hostname changes; path + query + hash are preserved).
+export function irMirrorUrl() {
+  return 'https://dentcast.ir' + location.pathname + location.search + location.hash;
+}
+
 // --- Web Push (VAPID) -------------------------------------------------------
 // Public application-server key for browser push. Safe to embed (it is public).
 // Override via window.DENTCAST_PLUS.vapidPublicKey; if left empty, the client

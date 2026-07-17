@@ -6,7 +6,8 @@
 //    an OVERLAY. Clicking the person again closes whatever is open.
 import { el, streakIsActiveToday, STREAK_ACTIVITY_EVENT } from './util.js';
 import { currentUser, api } from './api.js';
-import { openLoginModal, openNameGate, nameIsChosen } from './login-modal.js';
+import { isOrgHost, detectContentId } from './config.js';
+import { openLoginModal, openOrgNotice, openNameGate, nameIsChosen } from './login-modal.js';
 import { openOverlay, closeOverlay, overlayOpen } from './overlay.js';
 import { renderDashboard } from './dashboard.js';
 import { renderProfile } from './profile.js';
@@ -57,6 +58,9 @@ function buildGuestPerson() {
   const btn = personSvg('is-guest');
   btn.setAttribute('aria-label', 'ورود');
   btn.addEventListener('click', async () => {
+    // .org gate (temporary): show the dentcast.ir notice instead of OTP; the
+    // anon demand signal is logged inside openOrgNotice (marked org:header).
+    if (isOrgHost()) { openOrgNotice({ source: 'header', contentId: detectContentId() }); return; }
     const res = await openLoginModal({ returnTo: location.pathname + location.search });
     if (res && res.user) location.reload();
   });
