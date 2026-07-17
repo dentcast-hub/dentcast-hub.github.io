@@ -25,7 +25,17 @@ export function setSessionCookie(reply: FastifyReply, userId: string): void {
 }
 
 export function clearSessionCookie(reply: FastifyReply): void {
-  reply.clearCookie(config.session.cookieName, { path: '/' });
+  // The deletion cookie MUST carry the same attributes it was set with (path,
+  // secure, sameSite, httpOnly). A browser only evicts a cookie when the clearing
+  // Set-Cookie matches; dropping `Secure`/`SameSite` here left the httpOnly+Secure
+  // session cookie in place, so logout appeared to do nothing (user stayed signed
+  // in). Mirror setSessionCookie exactly (minus maxAge, which clearCookie sets to 0).
+  reply.clearCookie(config.session.cookieName, {
+    path: '/',
+    httpOnly: true,
+    secure: config.session.secure,
+    sameSite: 'lax',
+  });
 }
 
 /** Return the authenticated user id from the signed cookie, or null. */
