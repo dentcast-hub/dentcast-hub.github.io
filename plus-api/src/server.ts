@@ -39,6 +39,18 @@ export async function buildServer(): Promise<FastifyInstance> {
     credentials: true, // session cookie travels on cross-origin fetches from the site
   });
 
+  // SECURITY: never let a shared cache store an API response. Every response here
+  // is per-user, keyed only by the session cookie — which the ArvanCloud /
+  // Cloudflare CDN (and any intermediary proxy) does NOT include in its cache
+  // key. Without this, a cached GET /me is replayed to a DIFFERENT user and leaks
+  // that user's phone/identity (observed in production). `no-store` also stops any
+  // Set-Cookie response from being cached and handed to multiple users. This is a
+  // whole-API invariant; do not weaken it to `private`/`max-age` on any route.
+  app.addHook('onSend', async (_request, reply, payload) => {
+    reply.header('cache-control', 'no-store');
+    return payload;
+  });
+
   app.get('/health', async () => ({ ok: true }));
 
   await app.register(authRoutes);
