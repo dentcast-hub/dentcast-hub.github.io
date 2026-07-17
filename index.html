@@ -5675,11 +5675,12 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
      claims this flag, so the dc-nav.js copy bails and we never double-count */
   if (window.__dcDoseInit) return;
   window.__dcDoseInit = 1;
-  /* Minutes-based weekly-presence widget retired (DentCast Plus, spec principle 3:
-     no minutes target anywhere). The server-sourced Plus card (#dcPlusHomeCard,
-     rendered by /plus/plus.js) replaces it. This early return also stops the
-     localStorage presence counter. */
-  return;
+  /* Minutes-based weekly-presence widget: retired on the .ir hosts, where the
+     server-sourced Plus card (#dcPlusHomeCard) replaces it. On the .org hosts
+     Plus is disabled entirely, so the ORIGINAL local presence widget (topbar
+     ring, popover, hero dose row + localStorage counter) is restored here.
+     Remove this host check once Plus runs on .org too. */
+  if (location.hostname !== 'dentcast.org' && location.hostname !== 'www.dentcast.org') return;
   var KEY = 'dcDose', WEEK_SEC = 35 * 60, TICK = 5000;
 
   function weekIdOf(d) {

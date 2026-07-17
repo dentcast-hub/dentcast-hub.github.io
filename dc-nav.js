@@ -1827,11 +1827,12 @@
   /* one dcDose instance per page (the homepage inline copy claims this first) */
   if (window.__dcDoseInit) return;
   window.__dcDoseInit = 1;
-  /* Minutes-based weekly-presence widget retired site-wide (DentCast Plus, spec
-     principle 3: no minutes target anywhere). This early return stops the topbar
-     ring and the localStorage 'dcDose' presence counter on every page. The dead
-     code below is removed in the header rework. */
-  return;
+  /* Minutes-based weekly-presence widget: retired on the .ir hosts, where the
+     DentCast Plus server card/streak replaces it (spec principle 3: no minutes
+     target). On the .org hosts Plus is disabled entirely (see the Plus loader
+     guard), so the ORIGINAL local presence ring + localStorage counter are
+     restored. Remove this host check and re-retire once Plus runs on .org too. */
+  if (location.hostname !== 'dentcast.org' && location.hostname !== 'www.dentcast.org') return;
   var KEY = 'dcDose', WEEK_SEC = 35 * 60, TICK = 5000;
 
   function weekIdOf(d) {
@@ -2090,6 +2091,13 @@
    no change until they use one of the two invitation points (spec 2.3). */
 (function () {
   if (window.__dcPlusLoaded) return;
+  /* DentCast Plus is dentcast.ir-only for now: the session cookie is same-site
+     only on .ir, so login (and therefore all of Plus) cannot work on the .org
+     hosts. Load NOTHING from Plus there -- no CSS, no JS, no dcp-booting -- so
+     .org renders exactly as the original static site (its local dcDose ring is
+     restored separately). Remove this guard once api.dentcast.org serves the
+     API and Plus can run on .org too. */
+  if (location.hostname === 'dentcast.org' || location.hostname === 'www.dentcast.org') return;
   window.__dcPlusLoaded = true;
   var V = '24';
 
