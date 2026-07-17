@@ -2091,7 +2091,27 @@
 (function () {
   if (window.__dcPlusLoaded) return;
   window.__dcPlusLoaded = true;
-  var V = '22';
+  var V = '23';
+
+  /* Anti-FOUC for the Plus header. Plus (mobile only) relocates the music +
+     articles buttons from the topbar into the tool drawer and adds the person
+     icon. Without this, the base header paints WITH those buttons, then plus.js
+     moves them a moment later -> a visible header "jump". Hide them on the
+     canonical header until the enhanced header is wired (initHeader clears the
+     class). Injected inline here (not in plus.css) so the rule is active on the
+     header's first paint rather than after an async stylesheet loads. Mobile
+     only -- Plus is disabled on desktop, where the buttons must stay. The
+     timeout is a safety net: if plus.js never runs (load failure), the buttons
+     still reveal so the base header is never left broken. Remove this block if
+     the Plus header stops relocating topbar buttons. */
+  document.documentElement.classList.add('dcp-booting');
+  setTimeout(function () { document.documentElement.classList.remove('dcp-booting'); }, 3000);
+  if (!document.getElementById('dcp-antifouc-style')) {
+    var afs = document.createElement('style');
+    afs.id = 'dcp-antifouc-style';
+    afs.textContent = '@media (max-width:1099px){html.dcp-booting .dc-topbar-actions #btn-music-toggle,html.dcp-booting .dc-topbar-actions #btn-cabinet{display:none!important;}}';
+    (document.head || document.documentElement).appendChild(afs);
+  }
   // Both stylesheets load on every page: plus.css (workbench/header/home card)
   // and plus-pages.css (dashboard/profile/overlay), because the header opens the
   // dashboard and profile as overlays on content pages, and their markup needs

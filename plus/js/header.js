@@ -113,38 +113,47 @@ export async function initHeader() {
     moveToDrawer(document.getElementById('btn-cabinet'), 'مقاله‌ها');
   } catch (_) { /* non-fatal */ }
 
-  // A failed /me (e.g. API down) must never break icon rendering or the toggle:
-  // currentUser already swallows errors, but guard anyway and default to guest.
+  // Render the guest header SYNCHRONOUSLY so it is final from the first paint:
+  // no waiting on /me, which is slow and cross-site on the .org hosts (where it
+  // always resolves to guest anyway). This removes the post-network icon pop-in
+  // that read as a header "jump". The structure is complete now, so drop the
+  // anti-FOUC hide (set in dc-nav.js) -> the header settles in one step.
+  let guestPerson = null;
+  try { guestPerson = buildGuestPerson(); actions.appendChild(guestPerson); }
+  catch (e) { if (window.console) console.warn('[plus header] guest render failed', e); }
+  document.documentElement.classList.remove('dcp-booting');
+
+  // A failed /me (API down, or cross-site on .org) leaves the guest header as
+  // the final state. currentUser already swallows errors; guard anyway.
   let user = null;
   try { user = await currentUser(); } catch (_) { user = null; }
+  if (!user) return; // guest header is correct; nothing to upgrade
 
   // Plus requires a chosen pseudonym (leaderboard identity). If a logged-in user
-  // somehow has none yet, gate the whole experience behind a mandatory,
-  // non-dismissable name prompt. (Fires only when the backend leaves the name
-  // unchosen; it never misfires while the backend auto-generates one.)
-  if (user && !nameIsChosen(user)) {
+  // somehow has none yet, gate behind a mandatory, non-dismissable name prompt.
+  if (!nameIsChosen(user)) {
     try { user = await openNameGate({ user }); currentUser({ refresh: true }); }
-    catch (_) { /* non-fatal: fall through to normal rendering */ }
+    catch (_) { /* non-fatal: fall through to the logged-in upgrade */ }
   }
 
+  // Upgrade the guest header to the logged-in one IN PLACE (flame + blue person
+  // replacing the gray one), so a logged-in visitor sees only the icon swap and
+  // the flame filling its spot, never a second relayout.
   try {
-    if (user) {
-      const flame = buildFlame(user);
-      actions.appendChild(flame);
-      // A qualifying action just happened today -> light the flame live, so the
-      // user does not have to reload to see today's streak reflected.
-      document.addEventListener(STREAK_ACTIVITY_EVENT, () => {
-        flame.classList.add('is-active');
-        flame.setAttribute('aria-label', 'امروز فعال بوده‌اید');
-        flame.setAttribute('title', 'امروز فعال بوده‌اید');
-      });
-    }
-    actions.appendChild(user ? buildUserPerson(user) : buildGuestPerson());
+    const flame = buildFlame(user);
+    if (guestPerson && guestPerson.parentNode === actions) actions.insertBefore(flame, guestPerson);
+    else actions.appendChild(flame);
+    // A qualifying action just happened today -> light the flame live, so the
+    // user does not have to reload to see today's streak reflected.
+    document.addEventListener(STREAK_ACTIVITY_EVENT, () => {
+      flame.classList.add('is-active');
+      flame.setAttribute('aria-label', 'امروز فعال بوده‌اید');
+      flame.setAttribute('title', 'امروز فعال بوده‌اید');
+    });
+    const userPerson = buildUserPerson(user);
+    if (guestPerson && guestPerson.parentNode === actions) actions.replaceChild(userPerson, guestPerson);
+    else actions.appendChild(userPerson);
   } catch (e) {
-    if (window.console) console.warn('[plus header] wiring failed', e);
-    // Last resort: at least a working guest login icon.
-    if (!actions.querySelector('.dcp-person-btn')) {
-      try { actions.appendChild(buildGuestPerson()); } catch (_) { /* give up quietly */ }
-    }
+    if (window.console) console.warn('[plus header] upgrade failed', e);
   }
 }
