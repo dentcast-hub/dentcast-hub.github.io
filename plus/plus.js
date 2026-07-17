@@ -8,6 +8,7 @@ import { openLoginModal, openOrgNotice } from './js/login-modal.js';
 import { el } from './js/util.js';
 import { initHomeCard } from './js/home-card.js';
 import { initHeader } from './js/header.js';
+import { initReadingTracker } from './js/reading.js';
 
 // Carry plus.js's own cache-busting version (?v=N, set by dc-nav.js) onto the
 // workbench module import. Article pages are OUTSIDE the /plus/ service-worker
@@ -50,6 +51,16 @@ async function initArticle() {
   const wb = new Workbench({ contentId, proseRoot });
   const btn = injectWorkbenchButton(main, proseRoot);
 
+  // Reading-completion signal: started only for a signed-in reader (the /activity
+  // endpoint requires auth) and only once per page. Guarded so a mid-page login
+  // does not start a second tracker.
+  let readingStarted = false;
+  function startReading() {
+    if (readingStarted) return;
+    readingStarted = true;
+    initReadingTracker({ contentId, proseRoot });
+  }
+
   function updateBtn() {
     const on = wb.isActive();
     btn.textContent = on ? 'خروج از میز کار' : 'میز کار';
@@ -72,6 +83,7 @@ async function initArticle() {
         const res = await openLoginModal({ returnTo: location.pathname });
         if (res && res.user) {
           sessionStorage.removeItem(SS_RETURN_STUDY);
+          startReading(); // now authenticated: begin counting this read
           await wb.enter();
           updateBtn();
         }
@@ -86,6 +98,7 @@ async function initArticle() {
   // Post-login return-to-study (the funnel) or a remembered choice this session.
   // Never auto-enters on a fresh visit: sessionStorage is empty then.
   const user = await currentUser();
+  if (user) startReading(); // count this read for an already-signed-in visitor
   const returnStudy = sessionStorage.getItem(SS_RETURN_STUDY);
   if (user && returnStudy === location.pathname) {
     sessionStorage.removeItem(SS_RETURN_STUDY);

@@ -85,10 +85,27 @@ export const LABELS = [
   { key: 'clinical_pearl', fa: 'نکته بالینی' },
 ];
 
+// --- reading completion -----------------------------------------------------
+// The client emits `article_completed` (a qualifying streak + scoring action)
+// only when BOTH hold: the reader reached the end of the prose AND spent enough
+// *visible* time on the page. This is what makes plain reading — not just
+// highlighting — earn a score, an active day and the streak.
+//
+// The dwell threshold scales with ARTICLE LENGTH: estimated full reading time =
+// words / READ_WPM, and the reader must stay for READ_FRACTION of it, clamped
+// between READ_MIN_MS and READ_MAX_MS. So a short note needs the floor while a
+// long article needs proportionally more. Visible time only — a backgrounded tab
+// or a locked phone does not count.
+export const READ_WPM = 200;         // Persian words/minute (technical prose reads slower than casual)
+export const READ_FRACTION = 0.5;    // must dwell at least half the estimated read time
+export const READ_MIN_MS = 30000;    // floor: even a tiny stub needs 30s
+export const READ_MAX_MS = 240000;   // cap: a very long article never demands > 4 min
+
 // --- storage keys -----------------------------------------------------------
 // Mode choice is remembered per session only (never auto-enter across sessions).
 export const SS_MODE = 'dcp:mode:'; // + contentId -> 'study'
 export const SS_RETURN_STUDY = 'dcp:return-study'; // path to auto-enter after login
+export const SS_READ_DONE = 'dcp:read:'; // + contentId -> '1' once article_completed fired this session
 
 // One-sentence invitation shown to anonymous users at the workbench button.
 export const INVITE_LINE =
