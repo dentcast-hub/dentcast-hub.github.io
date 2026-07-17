@@ -1,7 +1,9 @@
 node_modules/
 dist/
+# Ignore every real env file (secrets); keep only the committed template.
 .env
-.env.local
+.env.*
+!.env.example
 *.log
 coverage/
 
