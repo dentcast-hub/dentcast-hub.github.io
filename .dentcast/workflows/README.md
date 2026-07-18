@@ -748,6 +748,77 @@ used for the on-page credit (with the rendered anchor), or the "Part 3 skipped �
 paper-only" note otherwise. Explicitly flag anything you had to ask the user
 about, and confirm nothing was guessed.
 
+### 4.11. Flashcards (Leitner) — semantic card authoring
+
+**Runs for EVERY type, on EVERY publish that produces a page — LiteCast is the
+sole exception** (LiteCast stays outside the specialist ecosystem, same as the
+glossary/pillar linking it skips in step 0). Writes into
+**`plus/flashcards-index.json`**, the static, git-tracked catalog the premium
+app reads to seed a reader's Leitner deck the moment they finish an article
+(the existing `article_completed` event). This file is a sibling of
+`plus/content-index.json` — same `byContent` shape, same content_id
+convention (`page_url` without the leading slash or `.html`), same "static
+content, per-user state lives in the DB" split the rest of DentCast Plus
+already follows. **This step never touches `dentcast-brain.json`** — Hard
+Rule 6 (brain schema is sacred; never add a field absent from the previous
+same-category entry) makes the brain the wrong home for a feature being
+rolled out prospectively while older entries wait for a later, separate
+backfill pass.
+
+**Card content must be semantic, never a mechanical FAQ dump.** A card's job
+is to test recall of **one concept**. Never copy a FAQ question/answer
+verbatim onto a card's front/back. Where this page already carries an
+FAQPage entry, use it as raw material but rewrite it: tighten the front into
+a pure recall prompt, and rewrite the back into the complete, precise answer
+to *that one concept* — no more, no less. Where an FAQ answer bundles more
+than one concept, split it into multiple atomic cards instead of one crowded
+card. Where no FAQ exists yet, author cards directly from the published body
+using the same atomicity rule.
+
+**Ask, don't guess — same standard as step 4.10's paper branch.** Anywhere
+you're not confident a candidate concept is genuinely atomic, clinically
+accurate, or worth a card at all, stop and present it to the user rather than
+forcing a card into existence. A thin or fabricated card is worse than no
+card.
+
+Schema (one object per content_id):
+
+```json
+{
+  "version": 1,
+  "byContent": {
+    "insight/insight-12": {
+      "cards": [
+        {
+          "id": "insight/insight-12#c1",
+          "concept": "short internal label — not shown to the user",
+          "front": "single-concept recall prompt",
+          "back": "complete, precise answer to that one concept",
+          "source": "faq",
+          "source_faq_index": 2
+        }
+      ]
+    }
+  }
+}
+```
+
+- `id` = `<content_id>#c<n>`, 1-indexed per page, stable once published — a
+  later wording fix must not renumber existing ids (the backend's
+  `card_state` rows key off this id).
+- `source` is `"faq"` or `"authored"`. `source_faq_index` is present **only**
+  when `source` is `"faq"`; it points at the FAQPage `mainEntity` index the
+  card was derived from, for traceability if that FAQ entry changes later.
+- No other keys. Match this shape exactly on every future entry, the same
+  way brain entries match their category's previous entry — this is now the
+  schema template for every subsequent publish.
+
+**Verify:** confirm the new content_id key was appended to
+`plus/flashcards-index.json` (object key order doesn't matter here, unlike
+the brain's flat array); that every card has a unique `id`; that no card's
+front/back is a verbatim copy of an FAQ Q/A pair; and report the count of
+cards written and how many came from `faq` vs `authored`.
+
 ### 5. Brain entry
 
 `dentcast-brain.json` is a **single flat array of all entries — there are no per-type sections.** Read it. Find the most recent entry of the LOCKED category and use it as the **schema template**.
@@ -921,6 +992,7 @@ silently — expected, not an error.
 - For NoteCast: parent episode page path; whether the related-content block existed already or was created; before/after hash of the parent episode page; diff of the inserted markup
 - For Promptologist (step 4.6): the new part's `ep-nav` previous slot wired to `<prev-id>.html` (next slot left as the empty placeholder); the previous part's page path with before/after hash, confirming its empty «next» placeholder was converted into a link to `<new-id>.html` (only that slot changed)
 - For any publish with an attached paper file (step 4.10 — triggered by the file, any type) — or the documented "skipped — no attached paper" line otherwise: **Part 1** — the Drive subfolder the paper was filed into (chosen semantically) and its `drive_view` URL; **Part 2** — the new `dentcast_cabinet_full_catalog.json` entry's `id`, `topic`/`topic_path`, `tags` (semantic + article-name), and the Drive link, with confirmation the key set matches the enriched-entry template and the paper surfaces in `dentcast_cabinet_search.html`; **Part 3** (only when a page was published) — the DOI and first author found on the web, the rendered first-author→DOI credit anchor (ShareHub `.author` style) and any `isBasedOn` update, with before/after page hash — or the "Part 3 skipped — paper-only (no page)" note on the paper-only fast path. Explicitly list anything you asked the user about and confirm nothing (subfolder/DOI/author/tags) was guessed
+- **Flashcards (step 4.11)** — or the documented "skipped — LiteCast" line: the content_id key written to `plus/flashcards-index.json`; the number of cards and their ids; how many came from `source: "faq"` vs `"authored"`; confirmation no card front/back is a verbatim FAQ copy; anything you asked the user about
 - **Cross-linking completion gate (Hard Rule 11) — REQUIRED; the publish is incomplete if any of these is missing.** For **each** of steps 4.7, 4.8, 4.9, report its explicit outcome — never leave one unstated:
   - **4.7 (glossary → new content):** the candidate terms considered, which were linked (auto-applied vs. asked-and-confirmed, per Hard Rule 14, with the link text used), and which were skipped and why (at 5-cap / no section / judged unrelated / asked-and-declined). An empty result is acceptable **only** as a documented "analyzed, 0 qualifying terms".
   - **4.8 (in-body inline links on the new page):** confirmation that a **fresh** semantic analysis of *this* body was run (NOT inherited from the clone); which candidates were auto-applied at high confidence vs. presented to the user (Hard Rule 14); which of the presented ones were approved/inserted (first-occurrence) and which rejected. For episodes, confirm the «درباره این اپیزود» caption was the analyzed body. An empty result is acceptable **only** as a documented "analyzed body, 0 qualifying glossary/episode candidates".
