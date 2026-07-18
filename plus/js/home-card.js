@@ -27,10 +27,13 @@ function renderAnon(card) {
 }
 
 async function renderLoggedIn(card, user) {
-  const [me, progress, model] = await Promise.all([
+  const [me, progress, model, recent] = await Promise.all([
     api.me().catch(() => user),
     api.progress().catch(() => ({})),
     getModel(),
+    // The most recent highlight is a reliable "last article read" fallback when
+    // the activity-derived last_content_id is missing (limit 1, cheap).
+    api.recentHighlights(1).catch(() => ({ highlights: [] })),
   ]);
 
   const active = streakIsActiveToday(me.last_active_day);
@@ -40,8 +43,14 @@ async function renderLoggedIn(card, user) {
     el('span', { class: 'dc-plus-streak-lbl' }, 'روز پیاپی'),
   ]);
 
-  // A line back into the user's own material.
-  const last = progress.last_content_id ? contentInfo(model, progress.last_content_id) : null;
+  // A line back into the user's own material: the LAST article they read, as a
+  // link. Prefer the server's activity-derived last_content_id; fall back to the
+  // most recent highlight's article (covers highlights created before activity
+  // logging existed). Only when neither resolves do we show a highlight prompt.
+  const recentId = (recent && recent.highlights && recent.highlights[0])
+    ? recent.highlights[0].content_id : null;
+  const lastId = progress.last_content_id || recentId;
+  const last = lastId ? contentInfo(model, lastId) : null;
   let materialLine;
   if (last) {
     materialLine = el('a', { class: 'dc-plus-material', href: last.url }, [
