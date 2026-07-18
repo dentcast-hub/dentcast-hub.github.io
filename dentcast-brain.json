@@ -11693,5 +11693,41 @@
       "secondary": [],
       "subtopic": "comprehensive-diagnosis"
     }
+  },
+  {
+    "type": "clinical",
+    "id": "clinical-55",
+    "title": "اسپیلینت کردن پروتزی؛ مدیریت بایومکانیک دندان‌های با ریشه‌ی کوتاه",
+    "caption": "بیمار با دو روکش بسیار بلند در ناحیه‌ی دندان‌های قدامی مراجعه کرد که از نظر نسبت‌های زیبایی، ظاهر ناخوشایند و غیرطبیعی داشتند و قبلاً جراحی افزایش طول تاج شده بودند. چالش اصلی، کوتاهی شدید ریشه‌ی هر دو دندان بود که آن‌ها را در مرز کشیده شدن قرار می‌داد. پس از برداشتن روکش‌های قبلی مشخص شد تراش پالاتال بسیار نامناسب و غیراصولی بوده است؛ اصلاح تراش (Re-prep) با کانتور اصولی پالاتال انجام شد. از آنجا که ریشه‌ها بسیار کوتاه بودند و هر دندان به تنهایی توانایی کافی برای تحمل نیروهای فانکشنال در درازمدت را نداشت، استراتژی بایومکانیک، اتصال (اسپلینت) روکش‌ها به یکدیگر بود تا نیرو بین دو دندان تقسیم و طول عمر پروتز افزایش یابد؛ این تصمیم به این دلیل ممکن شد که هر دو دندان از نظر میزان تحلیل ریشه و قدرت در یک سطح بودند. یک پروتز موقتِ متصل‌به‌هم (Splinted Temporary) به مدت ۲ الی ۳ هفته تحت مانیتورینگ قرار گرفت تا فرم، فونتیک، کانتور پالاتال و رضایت بیمار بررسی شود، پیش از ساخت روکش‌های دائم متصل‌به‌هم. پیام کلیدی: اسپلینت‌کردن روکش‌ها برای بهبود بایومکانیک، شرطش این است که دندان‌های پایه از نظر قدرت، توانایی و وضعیت ریشه، متناسب و در یک سطح باشند.",
+    "hashtags": [
+      "#اسپلینت_پروتزی",
+      "#ریشه_کوتاه",
+      "#بایومکانیک_دندان",
+      "#تراش_مجدد",
+      "#پروتز_موقت",
+      "#جراحی_افزایش_طول_تاج",
+      "#Prosthetic_Splinting",
+      "#Short_Root",
+      "#Biomechanics",
+      "#Crown_Lengthening"
+    ],
+    "keywords": [
+      "splinted crown prosthesis",
+      "short tooth root management",
+      "biomechanics of splinted crowns",
+      "crown re-preparation technique",
+      "palatal contour correction",
+      "splinted provisional restoration",
+      "crown lengthening surgery outcome",
+      "abutment tooth prognosis",
+      "fixed partial denture splinting indication",
+      "tooth root resorption risk crown"
+    ],
+    "page_url": "/insight/insight-55.html",
+    "pillar": {
+      "primary": "fixed-pros",
+      "secondary": [],
+      "subtopic": "crowns-onlays"
+    }
   }
 ]
