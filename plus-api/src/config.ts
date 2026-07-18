@@ -85,6 +85,13 @@ export const config = {
     freeDigestHour: int('ARTICLE_FREE_DIGEST_HOUR', 21),
   },
 
+  // Streak reminder: fired once a day at this Tehran hour to users who opted in
+  // and have not kept their streak yet today (see services/streak-reminder.ts).
+  // Evening default leaves time to act before Tehran midnight.
+  streakReminder: {
+    hour: int('STREAK_REMINDER_HOUR', 20),
+  },
+
   anon: {
     maxPerIpPerHour: int('ANON_EVENT_MAX_PER_IP_PER_HOUR', 60),
   },

@@ -1,5 +1,6 @@
 import { config } from './config.js';
 import { runFreeDigest } from './services/article-notify.js';
+import { runStreakReminders } from './services/streak-reminder.js';
 
 /**
  * Daily free-digest scheduler. Fires runFreeDigest() at freeDigestHour:00 in the
@@ -54,6 +55,37 @@ export function startArticleScheduler(): () => void {
         .finally(schedule); // reschedule for the next day regardless of outcome
     }, delay);
     // Do not keep the process alive solely for this timer.
+    if (typeof timer.unref === 'function') timer.unref();
+  };
+
+  schedule();
+  return () => clearTimeout(timer);
+}
+
+/**
+ * Start the daily streak-reminder scheduler. Fires runStreakReminders() at
+ * streakReminder.hour:00 (Asia/Tehran) and reschedules after each run. Same
+ * timezone-wall-clock + unref pattern as the article digest above.
+ */
+export function startStreakReminderScheduler(): () => void {
+  let timer: NodeJS.Timeout;
+
+  const schedule = () => {
+    const delay = msUntilNextRun(new Date(), config.streakReminder.hour, config.streakTimezone);
+    timer = setTimeout(() => {
+      void runStreakReminders(new Date())
+        .then((r) => {
+          if (r.reminded > 0) {
+            // eslint-disable-next-line no-console
+            console.log(`[streak-reminder] reminded ${r.reminded} user(s)`);
+          }
+        })
+        .catch((err) => {
+          // eslint-disable-next-line no-console
+          console.error('[streak-reminder] run failed', err);
+        })
+        .finally(schedule);
+    }, delay);
     if (typeof timer.unref === 'function') timer.unref();
   };
 
