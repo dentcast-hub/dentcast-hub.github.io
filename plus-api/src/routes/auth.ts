@@ -129,8 +129,8 @@ export async function authRoutes(app: FastifyInstance): Promise<void> {
   });
 
   // --- POST /auth/logout -----------------------------------------------------
-  app.post('/auth/logout', async (_request, reply) => {
-    clearSessionCookie(reply);
+  app.post('/auth/logout', async (request, reply) => {
+    clearSessionCookie(reply, request);
     return reply.send({ ok: true });
   });
 
