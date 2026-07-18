@@ -7,7 +7,7 @@ async function pickBase() {
   if (resolvedBase) return resolvedBase;
   for (const base of API_BASES) {
     try {
-      const res = await fetch(base + '/health', { method: 'GET', credentials: 'include' });
+      const res = await fetch(base + '/health', { method: 'GET', credentials: 'include', cache: 'no-store' });
       if (res.ok) { resolvedBase = base; return base; }
     } catch (_) { /* try next */ }
   }
@@ -31,7 +31,12 @@ async function request(path, { method = 'GET', body, query } = {}) {
     const qs = new URLSearchParams(query).toString();
     if (qs) url += (url.includes('?') ? '&' : '?') + qs;
   }
-  const opts = { method, credentials: 'include', headers: {} };
+  // `cache: 'no-store'` so the browser never serves a STALE API response. During
+  // the pre-no-store window some GETs (/me, /profile/stats) were cached with no
+  // cache headers; a stale /me then read as "still logged in" after logout, and a
+  // stale /profile/stats showed empty week/records. Always hitting the network
+  // fixes both and keeps auth state truthful.
+  const opts = { method, credentials: 'include', cache: 'no-store', headers: {} };
   if (body !== undefined) {
     opts.headers['content-type'] = 'application/json';
     opts.body = JSON.stringify(body);
