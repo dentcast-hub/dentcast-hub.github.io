@@ -188,6 +188,10 @@ export async function authRoutes(app: FastifyInstance): Promise<void> {
       current_streak: user.current_streak,
       longest_streak: user.longest_streak,
       last_active_day: user.last_active_day,
+      // Surface settings (e.g. reminders) so the profile can reflect saved
+      // toggle state. Without this the reminder checkboxes always render empty
+      // after a reload even though PATCH /me persisted them.
+      settings: user.settings ?? {},
       active_pathway: null, // Phase 3
     };
     // due_card_count is premium-only and intentionally absent for free users.

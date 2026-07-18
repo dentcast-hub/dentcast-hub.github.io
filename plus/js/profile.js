@@ -125,7 +125,10 @@ function remindersBlock(me) {
         msg.textContent = '';
       }
       state[key] = cb.checked;
-      await patch({ [key]: cb.checked });
+      // Send the WHOLE reminders state, not just the toggled key: the server
+      // shallow-merges `settings || {reminders:{...}}`, so a single-key patch
+      // would replace the reminders object and wipe the sibling toggle.
+      await patch({ ...state });
       // Everything off -> drop the browser subscription so none lingers.
       if (!state.new_content && !state.streak) removePushSubscription();
     });
