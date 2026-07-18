@@ -3,7 +3,7 @@
 // here is mandatory: the pseudonym is editable, no real name is ever required.
 import { el, faNum, tehranDay } from './util.js';
 import { api, ApiError, currentUser } from './api.js';
-import { ensurePushSubscription, removePushSubscription } from './push.js';
+import { ensurePushSubscription, removePushSubscription, pushSupported } from './push.js';
 
 const WEEKDAY_FA = ['ی', 'د', 'س', 'چ', 'پ', 'ج', 'ش']; // Sun..Sat
 function weekdayLetter(dayStr) {
@@ -101,45 +101,61 @@ function remindersBlock(me) {
   const r = (me.settings && me.settings.reminders) || {};
   const msg = el('span', { class: 'dcp-inline-msg' });
   const state = { new_content: !!r.new_content, streak: !!r.streak };
-  // Deep-merge patch: send only the toggled key so sibling settings survive.
-  const patch = (part) => api.updateMe({ settings: { reminders: part } }).catch(() => {});
+  // Send the WHOLE reminders state (not just the toggled key): the server
+  // shallow-merges `settings || {reminders:{...}}`, so a single-key patch would
+  // replace the reminders object and wipe the sibling toggle.
+  const patch = () => api.updateMe({ settings: { reminders: { ...state } } }).catch(() => {});
 
-  const denialText = (res) => res === 'denied'
-    ? 'اجازه‌ی اعلان در مرورگر داده نشد.'
+  // The stored preference is INDEPENDENT of the browser push permission: turning
+  // a reminder on always saves, even when the browser has notifications blocked.
+  // We still try to (re)create the push subscription so delivery works; if that
+  // fails we KEEP the toggle on and just explain how to unblock. That is what
+  // lets both toggles be flipped on/off freely without ever getting stuck when a
+  // browser (e.g. Opera) has blocked notifications for the site.
+  const guidanceText = (res) => res === 'denied'
+    ? 'اعلان‌ها در مرورگر بلاک شده. ترجیح ذخیره شد؛ برای دریافت نوتیف، از تنظیمات سایتِ مرورگر آن را Allow کن.'
     : res === 'unsupported'
-      ? 'مرورگر شما از اعلان پشتیبانی نمی‌کند.'
-      : 'فعال‌سازی اعلان ناموفق بود.';
+      ? 'مرورگر شما از اعلان پشتیبانی نمی‌کند. ترجیح ذخیره شد ولی نوتیف ارسال نمی‌شود.'
+      : 'ترجیح ذخیره شد؛ فعال‌سازی اعلان فعلاً ناموفق بود و بعداً دوباره تلاش می‌شود.';
 
   const mk = (key, label) => {
     const cb = el('input', { type: 'checkbox' });
     cb.checked = state[key];
     cb.addEventListener('change', async () => {
-      // Turning a reminder ON requires a working browser push subscription;
-      // only flip the setting once the subscription is confirmed.
-      if (cb.checked) {
-        cb.disabled = true;
+      const on = cb.checked;
+      state[key] = on; // the toggle reflects the user's intent no matter what
+      if (on) {
+        // Call ensurePushSubscription FIRST so the click gesture is still active
+        // for the permission prompt (any earlier await would consume it). The
+        // toggle stays on regardless of the outcome; we only annotate delivery.
         msg.textContent = 'در حال فعال‌سازی اعلان‌ها...';
         const res = await ensurePushSubscription();
-        cb.disabled = false;
-        if (res !== 'ok') { cb.checked = false; msg.textContent = denialText(res); return; }
+        msg.textContent = res === 'ok' ? '' : guidanceText(res);
+      } else {
         msg.textContent = '';
       }
-      state[key] = cb.checked;
-      // Send the WHOLE reminders state, not just the toggled key: the server
-      // shallow-merges `settings || {reminders:{...}}`, so a single-key patch
-      // would replace the reminders object and wipe the sibling toggle.
-      await patch({ ...state });
+      await patch();
       // Everything off -> drop the browser subscription so none lingers.
-      if (!state.new_content && !state.streak) removePushSubscription();
+      if (!state.new_content && !state.streak) await removePushSubscription();
     });
     return el('label', { class: 'dcp-switch' }, [cb, el('span', {}, label)]);
   };
 
-  return el('div', { class: 'dcp-toggle-list' }, [
+  const block = el('div', { class: 'dcp-toggle-list' }, [
     mk('new_content', 'نوتیف مطلب جدید'),
     mk('streak', 'یادآوری استریک'),
     msg,
   ]);
+
+  // Self-heal: if a reminder is on and the browser already grants notifications,
+  // make sure a live subscription exists (the user may have unblocked in browser
+  // settings, or turned a toggle on earlier while blocked and has since allowed).
+  // Only when permission is already 'granted' so we never prompt without a gesture.
+  if ((state.new_content || state.streak) && pushSupported() && Notification.permission === 'granted') {
+    ensurePushSubscription().catch(() => {});
+  }
+
+  return block;
 }
 
 // Messenger connection (spec 2.7). COMING SOON ("به زودی"): both provider
