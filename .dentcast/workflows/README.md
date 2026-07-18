@@ -748,6 +748,94 @@ used for the on-page credit (with the rendered anchor), or the "Part 3 skipped �
 paper-only" note otherwise. Explicitly flag anything you had to ask the user
 about, and confirm nothing was guessed.
 
+### 4.11. Flashcards (Leitner) — semantic `DefinedTermSet` on the page itself
+
+**Runs for EVERY type, on EVERY publish that produces a page — LiteCast is the
+sole exception** (LiteCast stays outside the specialist ecosystem, same as the
+glossary/pillar linking it skips in step 0). A flashcard is **a concept, not a
+question** — so it lives in schema.org's real vocabulary for exactly that:
+`DefinedTermSet` → `hasDefinedTerm[]` of `DefinedTerm { name, description }`.
+This block is added to the **new page's own JSON-LD**, the same way the FAQPage
+block already lives on the page — **not** a separate hand-maintained file.
+`plus/flashcards-index.json` (the premium app's Leitner-seed catalog) is
+**generated**, never edited directly: run
+`node tools/build_flashcards_index.mjs` (added to step 8's rebuild list) to
+scan every page's `DefinedTermSet` and regenerate it. **This step never
+touches `dentcast-brain.json`** — Hard Rule 6 (brain schema is sacred; never
+add a field absent from the previous same-category entry) makes the brain the
+wrong home for a feature being rolled out prospectively while older entries
+wait for a later, separate backfill pass.
+
+**Card content must be semantic, never a mechanical FAQ dump.** Each
+`DefinedTerm` tests recall of **one concept**: `name` is a tight recall
+prompt, `description` is the complete, precise answer to that one concept —
+never a verbatim copy of a FAQ question/answer pair.
+
+**FAQ → flashcard compression, but judged, not mechanical.** Where this page
+already carries a FAQPage entry, walk its `mainEntity` and classify each
+Q/A pair:
+- **Genuinely "define/explain X" shaped** (the question names one concept,
+  the answer explains it) → compress it into one `DefinedTerm`: rewrite the
+  question into a `name` recall prompt, rewrite the answer into a complete
+  `description` for that one concept. If the answer bundles more than one
+  concept, split it into multiple atomic terms instead of one crowded one.
+- **Comparison/decision/procedural shaped** (e.g. "ایمپلنت کوتاه یا سینوس
+  لیفت؟", "کدوم بهتره؟") — these have no single concept to define. **Skip
+  them** rather than forcing a card; note the skip in the report.
+- **Ambiguous cases** — ask the user rather than guessing which bucket a Q/A
+  pair falls into.
+
+Where no FAQ exists yet, author `DefinedTerm`s directly from the published
+body using the same atomicity rule.
+
+**Ask, don't guess — same standard as step 4.10's paper branch.** Anywhere
+you're not confident a candidate concept is genuinely atomic, clinically
+accurate, or worth a card at all, stop and present it to the user rather than
+forcing a term into existence. A thin or fabricated card is worse than no
+card.
+
+Markup (placed alongside the page's existing JSON-LD block(s), same pattern
+as the FAQPage `@id` convention already in use, e.g.
+`https://dentcast.org/insight/insight-12.html#faq`):
+
+```html
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "DefinedTermSet",
+  "@id": "https://dentcast.org/insight/insight-12.html#flashcards",
+  "hasDefinedTerm": [
+    {
+      "@type": "DefinedTerm",
+      "@id": "https://dentcast.org/insight/insight-12.html#flashcards-c1",
+      "name": "single-concept recall prompt",
+      "description": "complete, precise answer to that one concept",
+      "source": "faq",
+      "sourceFaqIndex": 2
+    }
+  ]
+}
+</script>
+```
+
+- `@id` on each `DefinedTerm` ends in `#flashcards-c<n>`, 1-indexed per page,
+  stable once published — a later wording fix must not renumber existing ids
+  (the backend's `card_state` rows key off the fragment).
+- `source` and `sourceFaqIndex` are non-standard but harmless extra
+  properties (ignored by anything reading strict schema.org): `source` is
+  `"faq"` or `"authored"`; `sourceFaqIndex` is present **only** when `source`
+  is `"faq"`, pointing at the FAQPage `mainEntity` index the term was derived
+  from, for traceability if that FAQ entry changes later.
+- No other properties beyond real `DefinedTerm`/`DefinedTermSet` fields plus
+  these two. Match this shape exactly on every future publish — this is now
+  the schema template.
+
+**Verify:** confirm the `DefinedTermSet` block is present and valid JSON-LD;
+that every `DefinedTerm` has a unique `@id`; that no `name`/`description` is a
+verbatim copy of a FAQ Q/A pair; and report the count of terms written, how
+many came from `faq` vs `authored`, and which FAQ entries (if any) were
+judged comparison/decision-shaped and skipped.
+
 ### 5. Brain entry
 
 `dentcast-brain.json` is a **single flat array of all entries — there are no per-type sections.** Read it. Find the most recent entry of the LOCKED category and use it as the **schema template**.
@@ -824,8 +912,9 @@ Run the builders from the project root, in this order. Capture stdout/stderr for
 3. **Episodes landing-page builder — MANDATORY whenever the publish touched `dentcast.json` (any episode publish).** Run `python tools/build_episodes.py`. `episodes.html` is **fully static** (episode list, stats and Jalali dates baked in — **not** client-rendered, so appending to `dentcast.json` alone does NOT surface the new episode under `/episodes/`; the builder must run). The builder injects the dynamic bits — the episode `<li>` list (newest-first → top of `<ol id="episodeList">`) and the `@@EP_COUNT@@`/`@@HOURS@@`/`@@YEARS@@` stats — into the verbatim page shell stored in **`tools/episodes_template.html`**. It reads only `dentcast.json` + `dentcast-brain.json` + the template, and writes only `episodes.html`; it never touches individual `/episodes/episode-*.html` pages, so hand-added cross-links (steps 4.8/4.9) are safe. Skip this step only for non-episode types that don't write to `dentcast.json`. (`episodes/index.html` is just a redirect — never hand-edit it.)
 
    **Never hand-edit `episodes.html`** (the builder overwrites it; hand-edits silently desync from the builder — the failure that motivated this template split). To change page **chrome** (CSS/JS/layout/nav/the sort-toggle/pagination/`dc-jump`/the search filter row/asset-version bumps), edit **`tools/episodes_template.html`**, then run the builder. The template carries those features verbatim, so a normal run preserves them; the only build-to-build deltas are the new episode, the stats, and any brain-driven hashtag/caption changes.
-4. **Image attributes backfill.** Run `python3 .github/scripts/inject_img_attrs.py` (idempotent, cheap). New pages cloned in this publish may carry images without intrinsic `width`/`height` (CLS) or `alt`; this backfills them site-wide. `--check` mode exists for CI.
-5. **Version stamper — always run LAST.** Run `python tools/stamp-version.py` (step 7). It must run **after** the other builders so the content hash reflects the final state and so it overwrites any version strings they emitted. Report the old → new content version.
+4. **Flashcards index builder — run whenever step 4.11 added a `DefinedTermSet` to the new page.** Run `node tools/build_flashcards_index.mjs`. It scans every page site-wide for `DefinedTermSet` JSON-LD (skipping LiteCast and `/en/` mirrors) and regenerates `plus/flashcards-index.json` from scratch — **never hand-edit that file**, this builder is its only writer. Skip only on the documented "4.11: skipped — LiteCast" publishes.
+5. **Image attributes backfill.** Run `python3 .github/scripts/inject_img_attrs.py` (idempotent, cheap). New pages cloned in this publish may carry images without intrinsic `width`/`height` (CLS) or `alt`; this backfills them site-wide. `--check` mode exists for CI.
+6. **Version stamper — always run LAST.** Run `python tools/stamp-version.py` (step 7). It must run **after** the other builders so the content hash reflects the final state and so it overwrites any version strings they emitted. Report the old → new content version.
 
 After the pillar builder finishes, verify:
 - **When the entry's pillar is structured:** the new content appears under the correct pillar + subtopic in the regenerated `/pillar/<pillar.primary>/index.html`. Report the section it landed in.
@@ -921,13 +1010,14 @@ silently — expected, not an error.
 - For NoteCast: parent episode page path; whether the related-content block existed already or was created; before/after hash of the parent episode page; diff of the inserted markup
 - For Promptologist (step 4.6): the new part's `ep-nav` previous slot wired to `<prev-id>.html` (next slot left as the empty placeholder); the previous part's page path with before/after hash, confirming its empty «next» placeholder was converted into a link to `<new-id>.html` (only that slot changed)
 - For any publish with an attached paper file (step 4.10 — triggered by the file, any type) — or the documented "skipped — no attached paper" line otherwise: **Part 1** — the Drive subfolder the paper was filed into (chosen semantically) and its `drive_view` URL; **Part 2** — the new `dentcast_cabinet_full_catalog.json` entry's `id`, `topic`/`topic_path`, `tags` (semantic + article-name), and the Drive link, with confirmation the key set matches the enriched-entry template and the paper surfaces in `dentcast_cabinet_search.html`; **Part 3** (only when a page was published) — the DOI and first author found on the web, the rendered first-author→DOI credit anchor (ShareHub `.author` style) and any `isBasedOn` update, with before/after page hash — or the "Part 3 skipped — paper-only (no page)" note on the paper-only fast path. Explicitly list anything you asked the user about and confirm nothing (subfolder/DOI/author/tags) was guessed
+- **Flashcards (step 4.11)** — or the documented "skipped — LiteCast" line: the `DefinedTermSet` block added to the page (term count and their `@id`s); how many came from `source: "faq"` vs `"authored"`; which FAQ entries (if any) were judged comparison/decision-shaped and skipped; confirmation no `name`/`description` is a verbatim FAQ copy; anything you asked the user about; confirmation `node tools/build_flashcards_index.mjs` was re-run in step 8 so `plus/flashcards-index.json` reflects the new page
 - **Cross-linking completion gate (Hard Rule 11) — REQUIRED; the publish is incomplete if any of these is missing.** For **each** of steps 4.7, 4.8, 4.9, report its explicit outcome — never leave one unstated:
   - **4.7 (glossary → new content):** the candidate terms considered, which were linked (auto-applied vs. asked-and-confirmed, per Hard Rule 14, with the link text used), and which were skipped and why (at 5-cap / no section / judged unrelated / asked-and-declined). An empty result is acceptable **only** as a documented "analyzed, 0 qualifying terms".
   - **4.8 (in-body inline links on the new page):** confirmation that a **fresh** semantic analysis of *this* body was run (NOT inherited from the clone); which candidates were auto-applied at high confidence vs. presented to the user (Hard Rule 14); which of the presented ones were approved/inserted (first-occurrence) and which rejected. For episodes, confirm the «درباره این اپیزود» caption was the analyzed body. An empty result is acceptable **only** as a documented "analyzed body, 0 qualifying glossary/episode candidates".
   - **4.9 (related links on the new page):** for episodes, confirm this targeted the **«محتوای مرتبط»** block (not skipped due to the naming difference); the related brain entries considered (sibling series parts first), how many slots were free under the 5-cap, which links were auto-applied vs. presented to the user (Hard Rule 14) and which of those were approved/added, and the remaining-budget math. An empty result is acceptable **only** as a documented "at cap" / "0 qualifying entries".
   - Explicitly confirm that **none** of 4.7/4.8/4.9 was skipped on the grounds that the cloned/previous/sibling page lacked such links (a Hard-Rule-11 violation).
 - Pillar/subtopic verification (step 5.5): confirmation that the recorded `pillar.primary` and `pillar.subtopic` are **identical** to what was confirmed in step 2.4 (untouched by steps 5/5.5); resulting `pillar.subtopic` (slug if structured, `null` if not); confirmation that no new keys were added to the `pillar` object or as siblings, that the `subtopic` key is present in every case, and that the step-2.5 capsule / episode pillar link is consistent with `pillar.primary`
-- Builder runs: each command + full stdout/stderr (`python tools/update-homepage-counters.py`, `python tools/build_pillar.py all`, `python tools/build_episodes.py` for episode publishes, and `python tools/stamp-version.py` LAST); confirmation that the new content appears in the regenerated pillar page when a structured pillar was assigned, **and (for episodes) that the new episode now appears in the regenerated `episodes.html`** with no feature regression.
+- Builder runs: each command + full stdout/stderr (`python tools/update-homepage-counters.py`, `python tools/build_pillar.py all`, `python tools/build_episodes.py` for episode publishes, `node tools/build_flashcards_index.mjs` unless step 4.11 was skipped, and `python tools/stamp-version.py` LAST); confirmation that the new content appears in the regenerated pillar page when a structured pillar was assigned, **and (for episodes) that the new episode now appears in the regenerated `episodes.html`** with no feature regression.
 - **Phase D (English mirror & toggle — Hard Rule 12; REQUIRED unless LiteCast):** the en page path created (`/{type}/en/{file}.html`); confirmation the body was translated structure-faithfully from THIS type (not rendered as a metanote) with GA4 once and `lang`/`inLanguage`/`og:locale` all `en`; both toggle targets (exact inverses, no meta-1 hardcode) and that the fa page got both the `.lang-btn` markup **and** its CSS; `inject_hreflang.py` pairing confirmation (fa page gained its `en` alternate); chrome standard `metanotes/en/meta-1.html` hash unchanged. For LiteCast, the documented skip line instead.
 - **Phase E (new-article push marker — REQUIRED unless paper-only/LiteCast/glossary):**
   confirmation that `<meta name="dc-notify" content="true">` is present exactly once
