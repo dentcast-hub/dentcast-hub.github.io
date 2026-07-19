@@ -10,6 +10,7 @@ import { articleNoteRoutes } from './routes/article-note.js';
 import { dashboardRoutes } from './routes/dashboard.js';
 import { adminRoutes } from './routes/admin.js';
 import { pushRoutes } from './routes/push.js';
+import { telegramRoutes } from './routes/telegram.js';
 
 /**
  * Build the Fastify app. Exported separately from the listen() call so tests can
@@ -61,6 +62,7 @@ export async function buildServer(): Promise<FastifyInstance> {
   await app.register(dashboardRoutes);
   await app.register(adminRoutes);
   await app.register(pushRoutes);
+  await app.register(telegramRoutes);
 
   return app;
 }

@@ -1,8 +1,9 @@
 import type { FastifyInstance, FastifyRequest } from 'fastify';
 import { config } from '../config.js';
-import { one, query } from '../db.js';
+import { one } from '../db.js';
 import { normalizePhone } from '../services/phone.js';
 import { issueCode, verifyCode } from '../services/otp.js';
+import { linkTelegram } from '../services/telegram-link.js';
 import { consume, HOUR_MS } from '../services/rate-limit.js';
 import { setSessionCookie, clearSessionCookie } from '../services/session.js';
 import { sanitizeReturnTo } from '../services/return-to.js';
@@ -161,12 +162,12 @@ export async function authRoutes(app: FastifyInstance): Promise<void> {
     const phone = normalizePhone(rawPhone);
     if (!phone) return reply.code(400).send({ error: 'invalid_phone' });
 
-    const res = await query(
-      `update profiles set telegram_id = $1 where phone = $2`,
-      [telegram_id, phone],
-    );
-    if (res.rowCount === 0) {
+    const result = await linkTelegram(phone, telegram_id);
+    if (result === 'no_profile') {
       return reply.code(404).send({ error: 'no_profile', message: 'شماره‌ای با این مشخصات یافت نشد.' });
+    }
+    if (result === 'already_linked_elsewhere') {
+      return reply.code(409).send({ error: 'already_linked', message: 'این حساب تلگرام قبلاً به شماره‌ی دیگری متصل است.' });
     }
     return reply.send({ ok: true });
   });

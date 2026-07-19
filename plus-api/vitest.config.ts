@@ -11,6 +11,9 @@ export default defineConfig({
     env: {
       NODE_ENV: 'test',
       DATABASE_URL: 'postgres://dentcast:dentcast@localhost:5432/dentcast_plus_test',
+      // Exercises the real secret check in routes/telegram.ts. TELEGRAM_BOT_TOKEN
+      // stays unset so callTelegramApi() no-ops instead of calling out to Telegram.
+      TELEGRAM_WEBHOOK_SECRET: 'test-webhook-secret',
     },
   },
 });

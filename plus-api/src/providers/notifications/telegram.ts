@@ -1,12 +1,13 @@
 import { config } from '../../config.js';
 import { one } from '../../db.js';
+import { callTelegramApi } from '../telegram-api.js';
 import { type NotificationSender, type NotificationKind, type NotificationMessage, messageText } from './types.js';
 
 /**
- * Telegram notification sender. Stubbed for Phase 1: if no bot token is set (dev),
- * it logs and no-ops. With a token it looks up the user's linked telegram_id and
- * calls the Bot API. The reminder scheduling that drives this is Phase 2; the
- * channel lives behind the NotificationSender interface so it can be swapped.
+ * Telegram notification sender. The user links telegram_id via the bot webhook
+ * (routes/telegram.ts, /start -> contact share). If no bot token is set (dev),
+ * it logs and no-ops. The channel lives behind the NotificationSender interface
+ * so it can be swapped or, later, fanned out alongside web push.
  */
 export class TelegramNotificationSender implements NotificationSender {
   readonly name = 'telegram';
@@ -26,11 +27,6 @@ export class TelegramNotificationSender implements NotificationSender {
       return;
     }
 
-    const url = `https://api.telegram.org/bot${config.notify.telegramBotToken}/sendMessage`;
-    await fetch(url, {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ chat_id: telegramId, text }),
-    });
+    await callTelegramApi('sendMessage', { chat_id: telegramId, text });
   }
 }

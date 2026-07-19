@@ -64,6 +64,7 @@ npm run dev                   # API on http://localhost:8787
 | `npm run migrate:down` | roll back the last migration |
 | `npm run seed` | load demo data (idempotent) |
 | `npm run rebuild-streaks` | recompute all streak caches from `user_activity` |
+| `npm run telegram:set-webhook -- <url>` | point the Telegram bot at this API (one-time / after token rotation) |
 | `npm test` | run the test suite |
 
 The taxonomy index the tree/archive/map share is generated from the repo root
@@ -76,7 +77,9 @@ Auth: `POST /auth/otp/request`, `POST /auth/otp/verify`, `POST /auth/logout`,
 `POST /anon/event`, `GET/POST/PATCH/DELETE /highlights`,
 `GET /highlights/recent`, `GET /highlights?topic=`, `GET /tree`, `GET /progress`,
 `GET /profile/stats`, `GET /export/highlights`. Web push:
-`GET /push/public-key`, `POST /push/subscribe`, `POST /push/unsubscribe`. Admin
+`GET /push/public-key`, `POST /push/subscribe`, `POST /push/unsubscribe`.
+Telegram: `POST /telegram/webhook` (the bot itself — `/start` → contact share →
+`telegram_id` stored; see "Telegram bot" below). Admin
 (HTTP Basic): `GET /admin` (rendered KPI page), `GET /admin/kpis` (JSON),
 `POST /admin/articles/published` (the `article_published` event),
 `POST /admin/articles/run-free-digest` (manual digest run), and
@@ -116,6 +119,28 @@ and its canonical `content_id` is new. The Action runs `tools/notify_new_article
 **One-time before enabling the Action:** `POST /admin/articles/backfill` so every
 already-published page is recorded as notified and an old-article edit never fires
 premium. For a single manual announce, `tools/notify_new_article.py` still works.
+
+## Telegram bot
+
+`POST /telegram/webhook` (`src/routes/telegram.ts`) is the bot: `/start` replies
+with a contact-share button; sharing the user's own contact normalizes the phone
+and calls `linkTelegram()` (`src/services/telegram-link.ts`) to store `telegram_id`
+on the matching profile. This is the linking half — `providers/notifications/telegram.ts`
+reads `telegram_id` to actually deliver messages once `NOTIFY_PROVIDER=telegram`.
+Both the webhook and `providers/notifications/telegram.ts` call the Bot API through
+the shared `callTelegramApi()` helper (`src/providers/telegram-api.ts`), which no-ops
+with no `TELEGRAM_BOT_TOKEN` set (dev).
+
+Security: the webhook checks the `X-Telegram-Bot-Api-Secret-Token` header against
+`TELEGRAM_WEBHOOK_SECRET` (Telegram echoes back whatever secret was set via
+`setWebhook`), and only links a contact whose `user_id` matches the sender — a
+forwarded contact card belonging to someone else is rejected, so a phone can only
+ever be linked by the Telegram account that actually shared its own number.
+`telegram_id` is unique per profile; re-sharing an id already linked elsewhere is
+rejected (`409`), not silently moved.
+
+See `DEPLOY.md` section 5b for creating the bot via @BotFather and running
+`npm run telegram:set-webhook`.
 
 ## Founder admin
 

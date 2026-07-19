@@ -100,6 +100,8 @@ variables** on the container:
 | `VAPID_PUBLIC_KEY` | (from step 1) |
 | `VAPID_PRIVATE_KEY` | (from step 1) |
 | `VAPID_SUBJECT` | `mailto:foad.shahabian@gmail.com` |
+| `TELEGRAM_BOT_TOKEN` | (from step 5b) |
+| `TELEGRAM_WEBHOOK_SECRET` | a long random string, e.g. `node -e "console.log(require('crypto').randomBytes(24).toString('hex'))"` |
 | `ADMIN_USER` | `founder` |
 | `ADMIN_PASSWORD` | (a strong secret) |
 | `STREAK_TIMEZONE` | `Asia/Tehran` |
@@ -128,6 +130,43 @@ return ['https://api.dentcast.org', 'https://api.dentcast.ir'];
 
 ---
 
+## 5b. Telegram bot (linking + OTP fallback channel)
+
+The bot lets a user link their Telegram account to their DentCast Plus profile
+(`/start` → share own phone via the contact button → `telegram_id` stored on
+`profiles`), which is both the notification channel and a resilience fallback
+if SMS.ir ever goes down. Requires the `api.*` domain from step 5 to already
+be live (Telegram needs a real HTTPS URL to call).
+
+1. In Telegram, talk to **@BotFather** → `/newbot` → follow the prompts → copy
+   the token it gives you → `TELEGRAM_BOT_TOKEN`.
+2. Generate a random webhook secret (see the table in step 4) →
+   `TELEGRAM_WEBHOOK_SECRET`. Set both on the container and redeploy/restart it
+   so `routes/telegram.ts` picks them up.
+3. Point the bot at the running API (run locally, with the same two env vars
+   set, or set them inline for one call):
+   ```bash
+   cd plus-api
+   TELEGRAM_BOT_TOKEN=... TELEGRAM_WEBHOOK_SECRET=... \
+     npm run telegram:set-webhook -- https://api.dentcast.ir/telegram/webhook
+   ```
+   This calls Telegram's `setWebhook` with that URL and `secret_token`; a
+   `{"ok":true, ...}` response confirms it. Telegram will now echo the secret
+   back on the `X-Telegram-Bot-Api-Secret-Token` header of every webhook call,
+   which is how `routes/telegram.ts` verifies a request actually came from
+   Telegram (403 otherwise).
+4. Test it: open the bot in Telegram, send `/start`, tap the contact-share
+   button. It should reply confirming the link. `select telegram_id from
+   profiles where phone = '09...'` should show the Telegram user id.
+
+> `NOTIFY_PROVIDER` still picks a single active delivery channel (`webpush` is
+> the production default from step 4). Linking works regardless of which
+> channel is active; switching `NOTIFY_PROVIDER=telegram` (or building a
+> multi-channel fan-out) is a separate decision, not required for linking to
+> work.
+
+---
+
 ## 6. Daily backup
 
 Schedule a daily `pg_dump` of the managed Postgres to a **second, independent**
@@ -145,6 +184,8 @@ the primary DB so a loss of one doesn't take the backup with it.
 - [ ] Enter the code → logged in, session cookie set (Secure, httpOnly)
 - [ ] Create a highlight + an article note → survives reload
 - [ ] `/admin` KPIs load behind Basic auth
+- [ ] Send `/start` to the bot, share contact → reply confirms, `telegram_id`
+      is set on that phone's profile row (step 5b)
 
 **Then ship the frontend:**
 
