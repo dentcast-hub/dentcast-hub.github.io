@@ -10,7 +10,17 @@ function weekdayLetter(dayStr) {
   const [y, m, d] = dayStr.split('-').map(Number);
   return WEEKDAY_FA[new Date(Date.UTC(y, m - 1, d)).getUTCDay()];
 }
-function dayOfMonth(dayStr) { return faNum(Number(dayStr.split('-')[2])); }
+// The week strip shows the Persian (Shamsi) day-of-month, not the Gregorian
+// one, since that's the calendar Iranian users read dates in. `dayStr` is
+// already the correct Tehran calendar day ('YYYY-MM-DD', Gregorian-encoded);
+// noon UTC + timeZone:'UTC' keeps that exact day fixed while re-rendering it
+// in the Persian calendar (no DST/offset drift).
+function dayOfMonth(dayStr) {
+  const [y, m, d] = dayStr.split('-').map(Number);
+  const date = new Date(Date.UTC(y, m - 1, d, 12));
+  const day = new Intl.DateTimeFormat('en-US-u-ca-persian', { day: 'numeric', timeZone: 'UTC' }).format(date);
+  return faNum(day);
+}
 
 function section(title, body) {
   return el('section', { class: 'dcp-dash-sec' }, [el('h2', { class: 'dcp-dash-h2' }, title), body]);
