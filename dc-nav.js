@@ -1141,9 +1141,11 @@
     if (!drawerBtn || !drawer) return;
     var isOpen = drawer.classList.contains('open');
     if (!isOpen) {
-      /* OPEN */
+      /* OPEN — size to the actual content: on phones the tools now wrap into
+         two rows (see the drawer grid in dc-nav.css), so a fixed 80px would
+         clip the second row. scrollHeight is measurable even at max-height:0. */
       drawer.classList.add('open');
-      drawer.style.maxHeight = '80px';
+      drawer.style.maxHeight = Math.max(80, drawer.scrollHeight) + 'px';
       drawer.style.opacity   = '1';
       drawerBtn.setAttribute('aria-expanded', 'true');
       drawer.setAttribute('aria-hidden', 'false');

@@ -340,6 +340,27 @@ body{
 .dc-drawer-tool-seg:active{ background:rgba(var(--pr-rgb),.06); }
 .dc-drawer-tool-ico{ font-size:1.25rem; line-height:1; }
 .dc-drawer-tool-txt{ font-size:0.6875rem; font-weight:800; color:var(--txt2); white-space:nowrap; }
+/* Phones: the drawer ends up holding 8 tools at runtime (dc-nav.js injects
+   رادار/جستجو/تم and plus/js/header.js moves موسیقی/مقاله‌ها in), so one
+   scrolling row clips the tail. Grid of 4 → label on top + two full rows.
+   Mirrors the same block in dc-nav.css. */
+@media (max-width:640px){
+  .dc-toolbar-drawer.open{ max-height:12rem; }
+  .dc-toolbar-drawer-inner{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:0.125rem 0;
+    overflow-x:hidden;
+    padding:0.375rem 0.625rem 0.5rem;
+  }
+  .dc-toolbar-drawer-label{
+    grid-column:1/-1;
+    border-left:none;
+    padding-left:0;
+    margin-left:0;
+  }
+  .dc-drawer-tool-seg{ padding:0.5rem 0.25rem; }
+}
 
 /* ── SCROLL BODY ── */
 #mobile-body{
@@ -4259,7 +4280,7 @@ scrollBody.addEventListener('touchend',e=>{
     if(p) p.textContent=title;
     a.href=url;
   }
-  fetch('/dentcast-brain.json?v=d52e87c535',{cache:'no-store'}).then(function(r){return r.json();}).then(function(arr){
+  fetch('/dentcast-brain.json?v=ff9ee5d827',{cache:'no-store'}).then(function(r){return r.json();}).then(function(arr){
     if(!Array.isArray(arr)) return;
     var latest={}, pool=[];
     arr.forEach(function(e){
@@ -4336,7 +4357,7 @@ scrollBody.addEventListener('touchend',e=>{
 </script>
 
 <!-- Theme toggle behavior moved to /dc-nav.js (single source) -->
-<script src="/dc-nav.js?v=27" defer></script>
+<script src="/dc-nav.js?v=28" defer></script>
 
 <!-- Toolbar drawer toggle is handled by /dc-nav.js (single source) -->
 
@@ -4555,7 +4576,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 <script>
 /* ── LAST 30 UPDATES ── */
 (function(){
-  const FEED_URL='/dentcast-brain.json?v=d52e87c535';
+  const FEED_URL='/dentcast-brain.json?v=ff9ee5d827';
   const el=document.getElementById('dcLast3Updates');
   if(!el) return;
   function extractArray(json){if(Array.isArray(json))return json;const cands=[json?.items,json?.data,json?.entries,json?.feed].filter(Boolean);for(const c of cands)if(Array.isArray(c))return c;for(const k in(json||{})){const v=json[k];if(Array.isArray(v))return v;if(v&&typeof v==='object'&&Array.isArray(v.items))return v.items;}return[];}
@@ -4811,7 +4832,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 
   function getBrain(){
     if(brainCache) return Promise.resolve(brainCache);
-    return fetch('/dentcast-brain.json?v=d52e87c535', {cache:'no-store'})
+    return fetch('/dentcast-brain.json?v=ff9ee5d827', {cache:'no-store'})
       .then(r => r.ok ? r.json() : [])
       .then(d => { brainCache = Array.isArray(d) ? d : []; return brainCache; })
       .catch(() => { brainCache = []; return []; });

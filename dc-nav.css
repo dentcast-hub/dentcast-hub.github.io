@@ -194,6 +194,11 @@ main > h2 .dc-svg-icon {
 }
 
 .dc-drawer-tool-seg {
+  text-decoration: none; /* link-based tools (e.g. مقاله‌ها) render like the buttons */
+  /* Tools moved in from the top bar keep .dc-topbar-btn, whose fixed
+     2.125rem square squeezed them (the "shrunken last two"). Un-fix it. */
+  width: auto;
+  height: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -222,6 +227,29 @@ main > h2 .dc-svg-icon {
   font-weight: 800;
   color: var(--txt2, #4a5f85);
   white-space: nowrap;
+}
+
+/* On phones the drawer has collected 8 tools (نصب، مشاوره، درباره، رادار،
+   جستجو، تم، موسیقی، مقاله‌ها — the last ones injected by dc-nav.js and
+   plus/js/header.js), so a single scrolling row clips the tail. Lay them out
+   as a 4-column grid instead: the «ابزارها» label spans the top and the tools
+   fall into two full-width rows — nothing scrolls, nothing shrinks. */
+@media (max-width: 640px) {
+  .dc-toolbar-drawer.open { max-height: 12rem; }
+  .dc-toolbar-drawer-inner {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.125rem 0;
+    overflow-x: hidden;
+    padding: 0.375rem 0.625rem 0.5rem;
+  }
+  .dc-toolbar-drawer-label {
+    grid-column: 1 / -1;
+    border-left: none;
+    padding-left: 0;
+    margin-left: 0;
+  }
+  .dc-drawer-tool-seg { padding: 0.5rem 0.25rem; }
 }
 
 /* =====================================================
