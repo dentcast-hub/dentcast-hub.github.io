@@ -836,6 +836,55 @@ verbatim copy of a FAQ Q/A pair; and report the count of terms written, how
 many came from `faq` vs `authored`, and which FAQ entries (if any) were
 judged comparison/decision-shaped and skipped.
 
+### 4.12. Quiz-ready FAQ + scored binary bank
+
+**Runs for EVERY type, on EVERY publish that produces a page — LiteCast is the
+sole exception** (same scope as flashcards: LiteCast is patient-facing and
+stays out of the specialist quiz/flashcard ecosystem). The FAQPage block that
+rides on the page (from the clone + this content's own Q/A) feeds two premium
+surfaces — the Leitner flashcards (step 4.11) **and** a scored yes/no quiz
+(`plus/quiz-index.json`, awarding premium XP). Both consume the page's FAQ, so
+FAQ questions must be authored to a **standalone-quiz standard**, not written
+as page-bound reading aids. Two hard requirements on every FAQ Question:
+
+**(a) Self-contained — no article deixis.** Each question must be
+understandable and answerable by a dentist who read the article a month ago and
+remembers only the concept, not which article it was. **Forbidden in a
+question `name`:** «این کیس», «این بیمار», «این مطالعه», «این متن», «این
+ویدیو», «این تکنیک/روش/وضعیت/تصمیم/خطا», or any other reference that only
+resolves by seeing this specific page. Case-based content (chairside, insight
+case-studies, dentcast-plus videos) must embed the case's key conditions **into
+the question itself** — turn «چرا MTA برای این کیس انتخاب شد؟» into «در تحلیلِ
+خارجیِ سرویکالِ (ECR) پیشرفته، چرا MTA ماده‌ی مناسبی برای ترمیم است؟». A
+question that is pure narrative recall of one unnamed patient («تصمیمِ نهایی
+برای این بیمار چه بود؟») with no concept to generalize does not belong in the
+FAQ at all — don't author it. The answer stays 100% grounded in the body;
+never add a clinical claim the article doesn't make.
+
+**(b) Binary answers open with an explicit verdict.** `tools/build_quiz_index.mjs`
+selects the yes/no subset mechanically: a question qualifies only when it is
+phrased as a yes/no question (opens with «آیا»/«مگر», or ends «… درست است؟» /
+«… امکان دارد؟» etc.) **and** its answer's **first clause** states «بله» or
+«خیر»/«نه». So whenever a FAQ question is yes/no-shaped, **write the answer to
+open with the verdict** — «خیر؛ …», «بله، …», or a short concession then the
+verdict («برخلافِ باورِ قدیمی، خیر؛ …»). That one word becomes the graded
+answer key. If the honest answer is genuinely "it depends" (no clean yes/no),
+that's fine — write it hedged and it is correctly **excluded** from the scored
+bank (it still serves as a flashcard / SEO FAQ). Never contort a real "it
+depends" into a false yes/no just to get it scored: accuracy over coverage,
+the bank must never grade against a guessed key.
+
+The builder is generated-only, run in step 8 (never hand-edit
+`plus/quiz-index.json`); its `content_id` is the page path without `.html`, and
+each question keeps its `source_faq_index` so a later FAQ edit is traceable to
+its quiz entry — the same identifier convention as flashcards, so the premium
+app maps "reader finished article X" → X's quiz questions and flashcards alike.
+
+**Verify:** after step 8's quiz build, report how many binary questions this
+page contributed (and, if zero, confirm its FAQ is intentionally all
+open/comparison-shaped). Confirm no question `name` on the page contains a
+deictic reference per (a).
+
 ### 5. Brain entry
 
 `dentcast-brain.json` is a **single flat array of all entries — there are no per-type sections.** Read it. Find the most recent entry of the LOCKED category and use it as the **schema template**.
@@ -913,6 +962,7 @@ Run the builders from the project root, in this order. Capture stdout/stderr for
 
    **Never hand-edit `episodes.html`** (the builder overwrites it; hand-edits silently desync from the builder — the failure that motivated this template split). To change page **chrome** (CSS/JS/layout/nav/the sort-toggle/pagination/`dc-jump`/the search filter row/asset-version bumps), edit **`tools/episodes_template.html`**, then run the builder. The template carries those features verbatim, so a normal run preserves them; the only build-to-build deltas are the new episode, the stats, and any brain-driven hashtag/caption changes.
 4. **Flashcards index builder — run whenever step 4.11 added a `DefinedTermSet` to the new page.** Run `node tools/build_flashcards_index.mjs`. It scans every page site-wide for `DefinedTermSet` JSON-LD (skipping LiteCast and `/en/` mirrors) and regenerates `plus/flashcards-index.json` from scratch — **never hand-edit that file**, this builder is its only writer. Skip only on the documented "4.11: skipped — LiteCast" publishes.
+4b. **Quiz index builder — run on every non-LiteCast publish that produced a page (step 4.12).** Run `node tools/build_quiz_index.mjs`. It scans every page's `FAQPage` JSON-LD site-wide (skipping LiteCast, `/en/` mirrors, and homepage), keeps only the binary (yes/no) questions whose answer opens with an explicit «بله»/«خیر» verdict, and regenerates `plus/quiz-index.json` from scratch — **never hand-edit that file**, this builder is its only writer. It prints `<pages>, <questions> binary questions (of <N> FAQ items scanned)`; the "scanned − kept" gap is the open/hedged questions correctly left out of the scored bank. Skip only on the documented "4.12: skipped — LiteCast" publishes.
 5. **Image attributes backfill.** Run `python3 .github/scripts/inject_img_attrs.py` (idempotent, cheap). New pages cloned in this publish may carry images without intrinsic `width`/`height` (CLS) or `alt`; this backfills them site-wide. `--check` mode exists for CI.
 6. **Version stamper — always run LAST.** Run `python tools/stamp-version.py` (step 7). It must run **after** the other builders so the content hash reflects the final state and so it overwrites any version strings they emitted. Report the old → new content version.
 
@@ -1011,6 +1061,7 @@ silently — expected, not an error.
 - For Promptologist (step 4.6): the new part's `ep-nav` previous slot wired to `<prev-id>.html` (next slot left as the empty placeholder); the previous part's page path with before/after hash, confirming its empty «next» placeholder was converted into a link to `<new-id>.html` (only that slot changed)
 - For any publish with an attached paper file (step 4.10 — triggered by the file, any type) — or the documented "skipped — no attached paper" line otherwise: **Part 1** — the Drive subfolder the paper was filed into (chosen semantically) and its `drive_view` URL; **Part 2** — the new `dentcast_cabinet_full_catalog.json` entry's `id`, `topic`/`topic_path`, `tags` (semantic + article-name), and the Drive link, with confirmation the key set matches the enriched-entry template and the paper surfaces in `dentcast_cabinet_search.html`; **Part 3** (only when a page was published) — the DOI and first author found on the web, the rendered first-author→DOI credit anchor (ShareHub `.author` style) and any `isBasedOn` update, with before/after page hash — or the "Part 3 skipped — paper-only (no page)" note on the paper-only fast path. Explicitly list anything you asked the user about and confirm nothing (subfolder/DOI/author/tags) was guessed
 - **Flashcards (step 4.11)** — or the documented "skipped — LiteCast" line: the `DefinedTermSet` block added to the page (term count and their `@id`s); how many came from `source: "faq"` vs `"authored"`; which FAQ entries (if any) were judged comparison/decision-shaped and skipped; confirmation no `name`/`description` is a verbatim FAQ copy; anything you asked the user about; confirmation `node tools/build_flashcards_index.mjs` was re-run in step 8 so `plus/flashcards-index.json` reflects the new page
+- **Quiz (step 4.12)** — or the documented "skipped — LiteCast" line: confirmation every FAQ question `name` is standalone (no article deixis per 4.12(a)); how many of the page's FAQ questions are binary/scored vs open (and that any binary answer opens with an explicit «بله»/«خیر» verdict); confirmation `node tools/build_quiz_index.mjs` was re-run in step 8 and the new page's binary count appears in `plus/quiz-index.json`
 - **Cross-linking completion gate (Hard Rule 11) — REQUIRED; the publish is incomplete if any of these is missing.** For **each** of steps 4.7, 4.8, 4.9, report its explicit outcome — never leave one unstated:
   - **4.7 (glossary → new content):** the candidate terms considered, which were linked (auto-applied vs. asked-and-confirmed, per Hard Rule 14, with the link text used), and which were skipped and why (at 5-cap / no section / judged unrelated / asked-and-declined). An empty result is acceptable **only** as a documented "analyzed, 0 qualifying terms".
   - **4.8 (in-body inline links on the new page):** confirmation that a **fresh** semantic analysis of *this* body was run (NOT inherited from the clone); which candidates were auto-applied at high confidence vs. presented to the user (Hard Rule 14); which of the presented ones were approved/inserted (first-occurrence) and which rejected. For episodes, confirm the «درباره این اپیزود» caption was the analyzed body. An empty result is acceptable **only** as a documented "analyzed body, 0 qualifying glossary/episode candidates".
