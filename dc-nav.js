@@ -2112,12 +2112,14 @@
     afs.textContent = '@media (max-width:1099px){html.dcp-booting .dc-topbar-actions #btn-music-toggle,html.dcp-booting .dc-topbar-actions #btn-cabinet{display:none!important;}}';
     (document.head || document.documentElement).appendChild(afs);
   }
-  // Both stylesheets load on every page: plus.css (workbench/header/home card)
-  // and plus-pages.css (dashboard/profile/overlay), because the header opens the
-  // dashboard and profile as overlays on content pages, and their markup needs
-  // those styles. The classes are .dcp-* prefixed and the body.dcp-page rules
-  // only apply to the standalone /plus pages, so nothing bleeds onto content.
-  ['/plus/plus.css?v=' + V, '/plus/plus-pages.css?v=' + V].forEach(function (href) {
+  // Three stylesheets load on every page: plus.css (workbench/header/home card),
+  // plus-pages.css (dashboard/profile/overlay), and plus-desktop.css (the
+  // desktop/tablet polish for those same surfaces — additive, min-width only),
+  // because the header opens the dashboard and profile as overlays on content
+  // pages, and their markup needs those styles. The classes are .dcp-* prefixed
+  // and the body.dcp-page rules only apply to the standalone /plus pages, so
+  // nothing bleeds onto content.
+  ['/plus/plus.css?v=' + V, '/plus/plus-pages.css?v=' + V, '/plus/plus-desktop.css?v=' + V].forEach(function (href) {
     var css = document.createElement('link');
     css.rel = 'stylesheet';
     css.href = href;
