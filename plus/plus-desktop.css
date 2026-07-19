@@ -1,0 +1,69 @@
+/* /plus desktop + tablet polish (additive, min-width only — the mobile app is
+   untouched below 768px). Keeps the EXACT same single-column shape and section
+   order; it only brings the phone-first app up to a polished, centered
+   app-column layout on larger screens. No new components, no logic. All values
+   reference the site's dc-theme.css tokens so light/dark both follow. RTL. */
+
+:root {
+  /* Comfortable reading/app column on large screens. Narrower than the old
+     900px so the phone-first rows (streak, score) read as intentional instead
+     of stretched, and hint lines stay a comfortable length. */
+  --dcp-col: 760px;
+}
+
+/* ============================ tablet & up (>=768px) ====================== */
+@media (min-width: 768px) {
+  /* Align the sticky header's brand/back to the SAME column as the body, so the
+     bar content lines up with the cards instead of hugging the window edges.
+     The bar background stays full-bleed; only its padding is widened. */
+  .dcp-page-header {
+    padding-inline: max(20px, calc((100% - var(--dcp-col)) / 2));
+    padding-block: 16px;
+  }
+  .dcp-page-brand { font-size: 1.15rem; }
+
+  .dcp-page-main {
+    max-width: var(--dcp-col);
+    padding: 28px 20px 88px;
+  }
+
+  /* A touch more air and a clearer greeting on desktop. */
+  .dcp-dash-hello { font-size: 1.7rem; margin: 6px 2px 20px; }
+  .dcp-dash-sec { padding: 20px 22px; margin-bottom: 16px; border-radius: var(--r-xl, 22px); }
+  .dcp-dash-h2 { font-size: 1.05rem; }
+
+  /* Interactive rows get a real hover affordance on pointer devices. */
+  .dcp-continue:hover { text-decoration: underline; }
+  .dcp-recent-link:hover .dcp-recent-text { color: var(--ac, #0b5fff); }
+  .dcp-tile { transition: border-color .15s, box-shadow .15s, transform .15s; }
+  .dcp-tile:hover { border-color: var(--chip-bd, rgba(11,95,255,.20)); box-shadow: var(--card-sh, 0 1px 3px rgba(2,35,96,.07)); }
+
+  /* The header overlay (dashboard/profile opened from the person menu on the
+     main site) shares these classes — keep its body on the same column. */
+  .dcp-overlay-body { max-width: var(--dcp-col); padding: 24px 20px 80px; }
+  .dcp-overlay-bar { padding-inline: max(20px, calc((100% - var(--dcp-col)) / 2)); }
+}
+
+/* ============================ desktop (>=1024px) ======================== */
+@media (min-width: 1024px) {
+  /* Slightly larger base rhythm on true desktop, still one column. */
+  .dcp-page-main { padding-top: 34px; }
+  .dcp-dash-hello { font-size: 1.85rem; }
+  .dcp-dash-sec { padding: 22px 24px; }
+
+  /* The streak & score rows were built to fill a phone width; on desktop cap
+     their inner spread so the record chip / shields sit near their group
+     instead of drifting to the far edge. Keeps the same elements & order. */
+  .dcp-streak-detail { gap: 22px; }
+  .dcp-streak-record { margin-inline-start: auto; }
+
+  /* Premium tiles: even, comfortable grid rather than tight phone cells. */
+  .dcp-tile-grid { grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .dcp-tile { padding: 16px 14px; }
+}
+
+/* Large desktops: don't let the app drift to a corner — keep it centred with
+   calm, even margins (the column itself stays fixed and readable). */
+@media (min-width: 1440px) {
+  .dcp-dash-hello { margin-top: 10px; }
+}
