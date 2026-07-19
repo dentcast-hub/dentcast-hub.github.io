@@ -114,20 +114,29 @@ async function initArticle() {
 // version. Highlighting (میز کار) stays; the review/flashcard system moves to the
 // premium scheduled-review layer later. No landing-page flashcard injection.
 
-// Plus is a MOBILE-ONLY layer: on desktop nothing from Plus is injected — no میز کار
-// button, no header additions, no home card. The site's own mobile breakpoint is
-// 1099px (see plus.css), so desktop is (min-width: 1100px).
+// The workbench (میز کار) and its login now run on ALL viewports — the old
+// desktop-off gate is removed. The static reading layout is untouched: on an
+// article page Plus only ADDS the میز کار button above the prose and the header
+// person/streak icons (the login entry), exactly as on mobile. In study mode the
+// desktop/mobile difference is purely CSS — the TOC/notes panels are
+// viewport-fixed side rails in the empty article margins on desktop (see
+// plus.css min-width 1100) and toggled bottom sheets on mobile — both respond to
+// resize live, so no reload is needed when the viewport crosses the breakpoint.
+//
+// The homepage home card is the one Plus surface deliberately kept MOBILE-ONLY:
+// it replaces a slot on the static homepage, and desktop's static appearance is
+// intentionally left unchanged. To also show it on desktop, drop the isDesktop()
+// guard on initHomeCard below.
 const DESKTOP_MQ = '(min-width: 1100px)';
 function isDesktop() {
   return typeof window.matchMedia === 'function' && window.matchMedia(DESKTOP_MQ).matches;
 }
 
 function boot() {
-  if (isDesktop()) return; // desktop: Plus disabled entirely (no workbench, header, or card)
   try {
     initHeader();
     initArticle();
-    initHomeCard();
+    if (!isDesktop()) initHomeCard(); // homepage card stays mobile-only (static desktop homepage untouched)
   } catch (e) {
     // Progressive enhancement: never break the page.
     if (window.console) console.warn('[plus] init failed', e);
@@ -138,10 +147,4 @@ if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', boot);
 } else {
   boot();
-}
-
-// Crossing the desktop/mobile boundary flips whether Plus should exist, so reload to
-// apply the correct set (injecting on entering mobile / clearing on entering desktop).
-if (typeof window.matchMedia === 'function') {
-  window.matchMedia(DESKTOP_MQ).addEventListener('change', () => location.reload());
 }
