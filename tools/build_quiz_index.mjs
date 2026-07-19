@@ -88,12 +88,25 @@ function extractFaqPages(html) {
 }
 
 // A question counts as yes/no-form when it opens with an interrogative
-// yes/no particle or ends in a common Persian yes/no tail.
+// yes/no particle («آیا»/«مگر») or ends in a Persian yes/no tail — BUT never
+// when it carries a wh-interrogative (چه/چرا/چگونه/کدام/…), which looks
+// superficially binary (it still ends in a verb + ؟) yet asks for an
+// explanation, not true/false. The wh-guard is what makes the generic verb
+// tails «می‌کند؟»/«می‌شود؟» safe to include: a wh-question ending in a verb is
+// already rejected, so the tails only admit genuine yes/no phrasings like
+// «… هم صدق می‌کند؟». (A «یا» inside a question is NOT treated as either/or —
+// in this corpus it almost always joins synonyms/examples inside a real
+// yes/no question, e.g. «آیا کانین نیرو را جذب یا توزیع می‌کند؟».)
 // NB: JS `\b` does not recognize Persian letters as word chars, so a boundary
-// after «آیا»/«مگر» must be spelled out as "space or start/end", not `\b`.
-const YES_NO_QUESTION = (q) =>
-  /^\s*[«"']?(آیا|مگر)(\s|$)/.test(q) ||
-  /(درست است\؟|درسته\؟|صحت دارد\؟|واقعیت دارد\؟|امکان دارد\؟|لازم است\؟|حتمی است\؟|کافی است\؟|یکسان است\؟|مهم است\؟|خطرناک است\؟|ضروری است\؟|بهتر است\؟|می‌شود\؟|می‌کند\؟|وجود دارد\؟)\s*[»"']?\s*$/.test(q);
+// after «آیا»/«مگر» must be spelled out as "space or start/end".
+const WH_WORD = /(^|\s)(چرا|چگونه|چطور|کدام|چند|چقدر|کِی|کی |کجا|چه )/;
+const YES_NO_QUESTION = (q) => {
+  if (WH_WORD.test(q)) return false;
+  return (
+    /^\s*[«"']?(آیا|مگر)(\s|$)/.test(q) ||
+    /(درست است\؟|درسته\؟|صحت دارد\؟|واقعیت دارد\؟|امکان دارد\؟|لازم است\؟|حتمی است\؟|کافی است\؟|یکسان است\؟|مهم است\؟|خطرناک است\؟|ضروری است\؟|بهتر است\؟|وجود دارد\؟|صدق می‌کند\؟|می‌شود\؟|می‌کند\؟)\s*[»"']?\s*$/.test(q)
+  );
+};
 
 // Derive the boolean key from the answer's opening clause. Returns true
 // (بله), false (خیر/نه), or null (ambiguous → excluded). The verdict may sit
@@ -105,6 +118,10 @@ const YES_NO_QUESTION = (q) =>
 function deriveKey(answer) {
   const opening = answer.replace(/^[\s«"']+/, '');
   const clause = opening.split(/[؛.:]/)[0].slice(0, 80);
+  // A verdict guarded by a comparison («در مقایسه با مینای طبیعی بله، …») is
+  // conditional, not absolute — the answer flips on what you compare against,
+  // so it is not a clean yes/no. Exclude.
+  if (/مقایسه/.test(clause)) return null;
   const yes = /(^|[\s،؛«])بله([\s،؛.!»]|$)/.test(clause);
   const no = /(^|[\s،؛«])(خیر|نه)([\s،؛.!»]|$)/.test(clause);
   if (yes && !no) return true;
