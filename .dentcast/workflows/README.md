@@ -880,10 +880,33 @@ each question keeps its `source_faq_index` so a later FAQ edit is traceable to
 its quiz entry — the same identifier convention as flashcards, so the premium
 app maps "reader finished article X" → X's quiz questions and flashcards alike.
 
+**When to run — and fix, not just flag.** This is an authoring gate, not a
+report-only check: it runs on the FAQ **before** the page is finalized (right
+after the step-2 clone swaps the FAQ values in, alongside the step-4.11
+flashcard pass which reads the same FAQ). Walk every `mainEntity` question and
+**bring it into compliance in place** — a cloned/adapted question that still
+carries deixis (per (a)) gets **rewritten standalone or removed here**, and a
+yes/no-shaped question whose answer buries or omits the verdict gets its answer
+**reopened with «بله»/«خیر» (per (b))** — so the published page is already
+correct and never needs a later correction pass. Editing is confined to the
+FAQPage JSON-LD block; the answer stays grounded in the body.
+
+**Ask, don't guess — same standard as steps 4.10/4.11.** Where a call is
+genuinely borderline, stop and ask the user rather than deciding silently:
+whether a case-bound question can be rewritten into a self-contained vignette
+**or** should be dropped entirely; whether an answer is truly a clean yes/no
+**or** an honest "it depends" (so it should stay hedged and fall out of the
+scored bank); or whether embedding the case conditions would smuggle in a claim
+the body doesn't actually make. A wrong auto-decision here ships a
+misleading quiz key or an unanswerable question — exactly the outcomes worth a
+one-line question to prevent. Phrase it as a concrete rewrite-vs-drop choice,
+not an open question.
+
 **Verify:** after step 8's quiz build, report how many binary questions this
 page contributed (and, if zero, confirm its FAQ is intentionally all
-open/comparison-shaped). Confirm no question `name` on the page contains a
-deictic reference per (a).
+open/comparison-shaped); confirm no question `name` on the page contains a
+deictic reference per (a); and list any question you rewrote/dropped for
+compliance and anything you asked the user about.
 
 ### 5. Brain entry
 
