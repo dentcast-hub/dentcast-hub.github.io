@@ -123,23 +123,17 @@ async function initArticle() {
 // plus.css min-width 1100) and toggled bottom sheets on mobile — both respond to
 // resize live, so no reload is needed when the viewport crosses the breakpoint.
 //
-// The homepage personal card lives inside the #mobile-shell column, which the
-// desktop UI (body.dc-desktop-ui) hides via display:none. The desktop homepage
-// is a separate .dcd-app layout with no card slot, so init the card only when
-// the shell is actually visible — otherwise we'd fire /me + /progress fetches
-// for a card that can never paint on desktop. (Desktop's Plus surface is the
-// header person menu, wired by initHeader into the visible topbar.)
-function homeCardSlotVisible() {
-  const shell = document.getElementById('mobile-shell');
-  // No shell (non-homepage) -> initHomeCard() bails on its own missing slot.
-  return !shell || shell.getClientRects().length > 0;
-}
+// The homepage home card renders on every viewport. It was previously kept
+// mobile-only, which left desktop showing the plain static homepage without the
+// personal Plus card. The card slot (#dcPlusHomeCard) lives in the shared
+// #mobile-body column that desktop shows too, so initializing it everywhere just
+// fills that slot on desktop as well.
 
 function boot() {
   try {
     initHeader();
     initArticle();
-    if (homeCardSlotVisible()) initHomeCard();
+    initHomeCard(); // homepage personal card on all viewports (desktop + mobile)
   } catch (e) {
     // Progressive enhancement: never break the page.
     if (window.console) console.warn('[plus] init failed', e);
