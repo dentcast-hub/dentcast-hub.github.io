@@ -1,4 +1,4 @@
-name: Generate, Push and Ping Sitemap
+name: Generate site indexes (sitemap + plus content index)
 
 on:
   push:
@@ -20,12 +20,18 @@ jobs:
       - name: 2. Generate Sitemap
         run: python3 .github/scripts/gen_sitemap.py
 
-      - name: 3. Commit and Push Sitemap
+      - name: 2b. Rebuild Plus content index
+        # Keeps plus/content-index.json in sync with newly published content, so
+        # the dashboard tree and the homepage "last read" card can always resolve
+        # the freshest articles (a stale index silently drops new pages).
+        run: node tools/build_plus_index.mjs
+
+      - name: 3. Commit and Push generated files
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name  "github-actions[bot]"
-          git add sitemap.xml sitemap-ir.xml
-          git commit -m "chore: auto-generate sitemap [skip ci]" || echo "No changes to commit"
+          git add sitemap.xml sitemap-ir.xml plus/content-index.json
+          git commit -m "chore: auto-generate sitemap + plus index [skip ci]" || echo "No changes to commit"
           git push origin main
 
       - name: 4. Ping Google Search Console
