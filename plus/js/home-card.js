@@ -43,27 +43,22 @@ async function renderLoggedIn(card, user) {
     el('span', { class: 'dc-plus-streak-lbl' }, 'روز پیاپی'),
   ]);
 
-  // A line back into the user's own material: the LAST article they read, as a
-  // link. Prefer the server's activity-derived last_content_id; fall back to the
-  // most recent highlight's article (covers highlights created before activity
-  // logging existed). Only when neither resolves do we show a highlight prompt.
+  // A line back into the user's own material: ONLY the LAST article they read,
+  // as a link. Prefer the server's activity-derived last_content_id; fall back to
+  // the most recent highlight's article. If neither resolves, show nothing here —
+  // never a "your highlights" line.
   const recentId = (recent && recent.highlights && recent.highlights[0])
     ? recent.highlights[0].content_id : null;
   const lastId = progress.last_content_id || recentId;
   const last = lastId ? contentInfo(model, lastId) : null;
-  let materialLine;
+
+  const rows = [streakLine];
   if (last) {
-    materialLine = el('a', { class: 'dc-plus-material', href: last.url }, [
+    rows.push(el('a', { class: 'dc-plus-material', href: last.url }, [
       el('span', { class: 'dc-plus-material-lead' }, 'ادامه خواندن: '),
       el('span', {}, last.title),
-    ]);
-  } else {
-    const n = progress.total_highlights || 0;
-    materialLine = el('a', { class: 'dc-plus-material', href: '/plus/cards.html' },
-      n ? faNum(n) + ' هایلایت شما' : 'اولین هایلایت خود را بسازید');
+    ]));
   }
-
-  const rows = [streakLine, materialLine];
 
   // Premium-only due-card line. Never rendered for free users (not even zero).
   // (No premium teaser line on the home card, per prototype feedback.)
