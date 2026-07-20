@@ -103,7 +103,14 @@ function buildUserPerson(user) {
 }
 
 export async function initHeader() {
-  const actions = document.querySelector('.dc-topbar .dc-topbar-actions');
+  // The homepage ships TWO topbars: the mobile one (inside #mobile-shell, which
+  // is display:none on the desktop UI) and the desktop one (inside the
+  // .dcd-col-c header). A plain querySelector always returns the first (mobile)
+  // bar, so on desktop the login/person icon landed in a hidden bar and there
+  // was no way to log in. Pick the VISIBLE bar instead (getClientRects is empty
+  // for a display:none subtree but non-empty for a visible fixed header).
+  const bars = Array.from(document.querySelectorAll('.dc-topbar .dc-topbar-actions'));
+  const actions = bars.find((b) => b.getClientRects().length > 0) || bars[0];
   if (!actions || actions.dataset.dcpHeader) return;
   actions.dataset.dcpHeader = '1';
 
