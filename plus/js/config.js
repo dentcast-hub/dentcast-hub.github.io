@@ -77,6 +77,7 @@ export const PALETTE = [
   { key: 'green', fa: 'سبز', css: '#b7e4b0' },
   { key: 'blue', fa: 'آبی', css: '#a9d3f5' },
   { key: 'pink', fa: 'صورتی', css: '#f6b8cf' },
+  { key: 'red', fa: 'قرمز', css: '#ff5c5c' },
 ];
 
 export const LABELS = [

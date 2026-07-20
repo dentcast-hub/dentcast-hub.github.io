@@ -69,11 +69,13 @@ export class Workbench {
       el('button', {
         class: 'dcp-swatch', type: 'button', title: p.fa, 'aria-label': 'رنگ ' + p.fa,
         dataset: { color: p.key }, style: '--sw:' + p.css,
-        onclick: () => this._setTool({ kind: 'highlight', color: p.key }),
+        onclick: () => this._setColor(p.key),
       }));
 
-    const underlineBtn = el('button', { class: 'dcp-tool', type: 'button', title: 'خط ممتد', dataset: { tool: 'underline' }, onclick: () => this._setTool({ kind: 'underline' }) }, '─ خط ممتد');
-    const clozeBtn = el('button', { class: 'dcp-tool', type: 'button', title: 'نقطه‌چین (برای مرور)', dataset: { tool: 'cloze' }, onclick: () => this._setTool({ kind: 'cloze' }) }, '⋯ نقطه‌چین');
+    // Tools apply the CURRENT colour: highlight (fill), underline, cloze.
+    const highlightBtn = el('button', { class: 'dcp-tool', type: 'button', title: 'هایلایت', dataset: { tool: 'highlight' }, onclick: () => this._setKind('highlight') }, '🖍 هایلایت');
+    const underlineBtn = el('button', { class: 'dcp-tool', type: 'button', title: 'خط ممتد', dataset: { tool: 'underline' }, onclick: () => this._setKind('underline') }, '─ خط ممتد');
+    const clozeBtn = el('button', { class: 'dcp-tool', type: 'button', title: 'نقطه‌چین (برای مرور)', dataset: { tool: 'cloze' }, onclick: () => this._setKind('cloze') }, '⋯ نقطه‌چین');
 
     const labelChips = LABELS.map((l) =>
       el('button', {
@@ -92,7 +94,7 @@ export class Workbench {
     const bar = el('div', { class: 'dcp-toolbar', role: 'toolbar', 'aria-label': 'ابزار میز کار' }, [
       hint,
       group('رنگ هایلایت', swatches),
-      group('ابزار', [underlineBtn, clozeBtn]),
+      group('ابزار', [highlightBtn, underlineBtn, clozeBtn]),
       group('برچسب', labelChips),
       el('span', { class: 'dcp-tool-group' }, [notesToggle]),
       exitBtn,
@@ -107,15 +109,15 @@ export class Workbench {
     window.addEventListener('resize', this._onResize);
   }
 
-  _setTool(tool) {
-    // Underline / cloze are sticky modes. Pressing the ALREADY-active one turns
-    // it OFF — back to highlight mode with the last-used colour — so they never
-    // get stuck (before, only clicking a colour could leave underline/cloze).
-    if (tool.kind !== 'highlight' && this.tool.kind === tool.kind) {
-      tool = { kind: 'highlight', color: this._lastColor || 'yellow' };
-    }
-    if (tool.kind === 'highlight') this._lastColor = tool.color;
-    this.tool = tool;
+  // Colour is persistent and applies to whatever tool is active. Picking a colour
+  // also switches to highlight mode (pressing a colour highlights).
+  _setColor(color) { this.tool = { kind: 'highlight', color }; this._refreshToolbar(); }
+
+  // Tool = mark type, keeping the current colour. Underline / cloze toggle OFF
+  // back to highlight when the active one is pressed again, so they never stick.
+  _setKind(kind) {
+    if (kind !== 'highlight' && this.tool.kind === kind) kind = 'highlight';
+    this.tool = { kind, color: this.tool.color };
     this._refreshToolbar();
   }
   _toggleLabel(key) { this.label = this.label === key ? null : key; this._refreshToolbar(); }
@@ -123,8 +125,10 @@ export class Workbench {
   _refreshToolbar() {
     const bar = this.ui.toolbar;
     if (!bar) return;
-    // No active ring on colour swatches: a pre-selected circle read as "already
-    // chosen" and made people think they need not pick a colour.
+    // Show the active colour (yellow by default) and the active tool.
+    bar.querySelectorAll('.dcp-swatch').forEach((s) => {
+      s.classList.toggle('is-active', this.tool.color === s.dataset.color);
+    });
     bar.querySelectorAll('.dcp-tool[data-tool]').forEach((b) => {
       b.classList.toggle('is-active', this.tool.kind === b.dataset.tool);
     });
@@ -162,7 +166,7 @@ export class Workbench {
       prefix: quote.prefix,
       suffix: quote.suffix,
       underline: this.tool.kind === 'underline',
-      color: this.tool.kind === 'highlight' ? this.tool.color : null,
+      color: this.tool.color, // the mark carries the colour for every tool
       cloze_markers: this.tool.kind === 'cloze' ? [[0, quote.exact.length]] : [],
       label: this.label,
       content_hash: hashText(fullText(this.root)),

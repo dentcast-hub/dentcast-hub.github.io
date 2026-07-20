@@ -90,8 +90,17 @@ mark.dcp-hl[data-color="yellow"] { background: #ffe08a; }
 mark.dcp-hl[data-color="green"] { background: #b7e4b0; }
 mark.dcp-hl[data-color="blue"] { background: #a9d3f5; }
 mark.dcp-hl[data-color="pink"] { background: #f6b8cf; }
-mark.dcp-hl.dcp-underline { background: transparent; text-decoration: underline; text-decoration-color: #e5484d; text-decoration-thickness: 2px; text-underline-offset: 3px; }
-mark.dcp-hl.dcp-cloze { background: transparent; border-bottom: 2px dotted #e5484d; }
+mark.dcp-hl[data-color="red"] { background: #ff5c5c; }
+/* Underline & cloze are transparent-fill marks that carry the chosen colour on
+   the line / dotted border. Base is red (also covers older colourless marks);
+   the per-colour rules below override it with the selected colour. */
+mark.dcp-hl.dcp-underline { background: transparent; text-decoration: underline; text-decoration-color: #ff5c5c; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+mark.dcp-hl.dcp-cloze { background: transparent; border-bottom: 2px dotted #ff5c5c; }
+mark.dcp-hl.dcp-underline[data-color="yellow"] { text-decoration-color: #ffe08a; } mark.dcp-hl.dcp-cloze[data-color="yellow"] { border-bottom-color: #ffe08a; }
+mark.dcp-hl.dcp-underline[data-color="green"]  { text-decoration-color: #b7e4b0; } mark.dcp-hl.dcp-cloze[data-color="green"]  { border-bottom-color: #b7e4b0; }
+mark.dcp-hl.dcp-underline[data-color="blue"]   { text-decoration-color: #a9d3f5; } mark.dcp-hl.dcp-cloze[data-color="blue"]   { border-bottom-color: #a9d3f5; }
+mark.dcp-hl.dcp-underline[data-color="pink"]   { text-decoration-color: #f6b8cf; } mark.dcp-hl.dcp-cloze[data-color="pink"]   { border-bottom-color: #f6b8cf; }
+mark.dcp-hl.dcp-underline[data-color="red"]    { text-decoration-color: #ff5c5c; } mark.dcp-hl.dcp-cloze[data-color="red"]    { border-bottom-color: #ff5c5c; }
 
 /* ---- floating toolbar (bottom, ergonomic, avoids the fixed header) -------- */
 .dcp-toolbar {
