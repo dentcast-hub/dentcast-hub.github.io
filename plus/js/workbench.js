@@ -68,7 +68,7 @@ export class Workbench {
   // --- toolbar --------------------------------------------------------------
   _buildToolbar() {
     // Static instruction line (top of the toolbar); the text never changes.
-    const hint = el('div', { class: 'dcp-wb-hint' }, 'بعد از انتخاب متن ابزار را مشخص کنید');
+    const hint = el('div', { class: 'dcp-wb-hint' }, 'بعد از انتخاب متن، ابزار را مشخص کنید');
 
     // Fire the action on pointerdown (not click) with preventDefault, so ONE tap
     // applies even while text is selected: mobile otherwise spends the first tap
