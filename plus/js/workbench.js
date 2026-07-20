@@ -68,19 +68,27 @@ export class Workbench {
   // --- toolbar --------------------------------------------------------------
   _buildToolbar() {
     // Static instruction line (top of the toolbar); the text never changes.
-    const hint = el('div', { class: 'dcp-wb-hint' }, 'بعد از انتخاب متن، رنگ هایلایت را مشخص کنید');
+    const hint = el('div', { class: 'dcp-wb-hint' }, 'بعد از انتخاب متن ابزار را مشخص کنید');
 
-    const swatches = PALETTE.map((p) =>
+    // Fire the action on pointerdown (not click) with preventDefault, so ONE tap
+    // applies even while text is selected: mobile otherwise spends the first tap
+    // dismissing the selection (hence the old "tap twice"). Capturing here grabs
+    // the still-live selection right before the browser can drop it.
+    const armApply = (btn, run) => {
+      btn.addEventListener('pointerdown', (e) => { e.preventDefault(); this._captureSelection(); run(); });
+      return btn;
+    };
+
+    const swatches = PALETTE.map((p) => armApply(
       el('button', {
         class: 'dcp-swatch', type: 'button', title: p.fa, 'aria-label': 'رنگ ' + p.fa,
         dataset: { color: p.key }, style: '--sw:' + p.css,
-        onclick: () => this._setColor(p.key),
-      }));
+      }), () => this._setColor(p.key)));
 
     // Tools apply the CURRENT colour: highlight (fill), underline, cloze.
-    const highlightBtn = el('button', { class: 'dcp-tool', type: 'button', title: 'هایلایت', onclick: () => this._apply('highlight') }, '🖍 هایلایت');
-    const underlineBtn = el('button', { class: 'dcp-tool', type: 'button', title: 'خط ممتد', onclick: () => this._apply('underline') }, '─ خط ممتد');
-    const clozeBtn = el('button', { class: 'dcp-tool', type: 'button', title: 'نقطه‌چین (برای مرور)', onclick: () => this._apply('cloze') }, '⋯ نقطه‌چین');
+    const highlightBtn = armApply(el('button', { class: 'dcp-tool', type: 'button', title: 'هایلایت' }, '🖍 هایلایت'), () => this._apply('highlight'));
+    const underlineBtn = armApply(el('button', { class: 'dcp-tool', type: 'button', title: 'خط ممتد' }, '─ خط ممتد'), () => this._apply('underline'));
+    const clozeBtn = armApply(el('button', { class: 'dcp-tool', type: 'button', title: 'نقطه‌چین (برای مرور)' }, '⋯ نقطه‌چین'), () => this._apply('cloze'));
 
     const labelChips = LABELS.map((l) =>
       el('button', {
