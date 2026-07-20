@@ -11,7 +11,12 @@ export class Workbench {
     this.contentId = contentId;
     this.root = proseRoot;
     this.active = false;
-    this.tool = { kind: 'highlight', color: 'yellow' };
+    // Colour is the only persistent choice (one is always active, yellow by
+    // default). Tools are momentary actions, not modes: you select text, then
+    // press a tool, and it applies THAT mark type in the active colour to the
+    // held selection. Nothing about the tools is remembered/highlighted.
+    this.color = 'yellow';
+    this._pendingQuote = null;
     // «مهم» is pre-selected by default; the user can toggle it off per highlight.
     this.label = 'important';
     this.items = new Map(); // id -> { data, marks }
@@ -73,9 +78,9 @@ export class Workbench {
       }));
 
     // Tools apply the CURRENT colour: highlight (fill), underline, cloze.
-    const highlightBtn = el('button', { class: 'dcp-tool', type: 'button', title: 'هایلایت', dataset: { tool: 'highlight' }, onclick: () => this._setKind('highlight') }, '🖍 هایلایت');
-    const underlineBtn = el('button', { class: 'dcp-tool', type: 'button', title: 'خط ممتد', dataset: { tool: 'underline' }, onclick: () => this._setKind('underline') }, '─ خط ممتد');
-    const clozeBtn = el('button', { class: 'dcp-tool', type: 'button', title: 'نقطه‌چین (برای مرور)', dataset: { tool: 'cloze' }, onclick: () => this._setKind('cloze') }, '⋯ نقطه‌چین');
+    const highlightBtn = el('button', { class: 'dcp-tool', type: 'button', title: 'هایلایت', onclick: () => this._apply('highlight') }, '🖍 هایلایت');
+    const underlineBtn = el('button', { class: 'dcp-tool', type: 'button', title: 'خط ممتد', onclick: () => this._apply('underline') }, '─ خط ممتد');
+    const clozeBtn = el('button', { class: 'dcp-tool', type: 'button', title: 'نقطه‌چین (برای مرور)', onclick: () => this._apply('cloze') }, '⋯ نقطه‌چین');
 
     const labelChips = LABELS.map((l) =>
       el('button', {
@@ -109,28 +114,33 @@ export class Workbench {
     window.addEventListener('resize', this._onResize);
   }
 
-  // Colour is persistent and applies to whatever tool is active. Picking a colour
-  // also switches to highlight mode (pressing a colour highlights).
-  _setColor(color) { this.tool = { kind: 'highlight', color }; this._refreshToolbar(); }
-
-  // Tool = mark type, keeping the current colour. Underline / cloze toggle OFF
-  // back to highlight when the active one is pressed again, so they never stick.
-  _setKind(kind) {
-    if (kind !== 'highlight' && this.tool.kind === kind) kind = 'highlight';
-    this.tool = { kind, color: this.tool.color };
+  // Set the active colour (persistent). Pressing a colour also applies a
+  // highlight in it to the held selection — "select, then press a colour".
+  _setColor(color) {
+    this.color = color;
     this._refreshToolbar();
+    this._apply('highlight');
   }
+
+  // Apply a tool (highlight / underline / cloze) to the held selection in the
+  // active colour, then clear it. One-shot: tools are actions, not modes.
+  _apply(kind) {
+    if (!this._pendingQuote) return;
+    const quote = this._pendingQuote;
+    this._pendingQuote = null;
+    const sel = window.getSelection(); if (sel) sel.removeAllRanges();
+    this._createHighlight(quote, kind);
+  }
+
   _toggleLabel(key) { this.label = this.label === key ? null : key; this._refreshToolbar(); }
 
   _refreshToolbar() {
     const bar = this.ui.toolbar;
     if (!bar) return;
-    // Show the active colour (yellow by default) and the active tool.
+    // Only the active COLOUR is shown (yellow by default). Tools get no ring —
+    // they are momentary actions, not a remembered mode.
     bar.querySelectorAll('.dcp-swatch').forEach((s) => {
-      s.classList.toggle('is-active', this.tool.color === s.dataset.color);
-    });
-    bar.querySelectorAll('.dcp-tool[data-tool]').forEach((b) => {
-      b.classList.toggle('is-active', this.tool.kind === b.dataset.tool);
+      s.classList.toggle('is-active', this.color === s.dataset.color);
     });
     bar.querySelectorAll('.dcp-chip').forEach((c) => {
       c.classList.toggle('is-active', this.label === c.dataset.label);
@@ -155,19 +165,19 @@ export class Workbench {
     if (!this.root.contains(range.commonAncestorContainer)) return;
     const quote = serializeRange(range, this.root);
     if (!quote.exact.trim() || quote.exact.length < 2) return;
-    sel.removeAllRanges();
-    this._createHighlight(quote);
+    // Hold the selection; a mark is created only when a colour/tool is pressed.
+    this._pendingQuote = quote;
   }
 
-  async _createHighlight(quote) {
+  async _createHighlight(quote, kind) {
     const payload = {
       content_id: this.contentId,
       exact: quote.exact,
       prefix: quote.prefix,
       suffix: quote.suffix,
-      underline: this.tool.kind === 'underline',
-      color: this.tool.color, // the mark carries the colour for every tool
-      cloze_markers: this.tool.kind === 'cloze' ? [[0, quote.exact.length]] : [],
+      underline: kind === 'underline',
+      color: this.color, // the mark carries the active colour for every tool
+      cloze_markers: kind === 'cloze' ? [[0, quote.exact.length]] : [],
       label: this.label,
       content_hash: hashText(fullText(this.root)),
     };
