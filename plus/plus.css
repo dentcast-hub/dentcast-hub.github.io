@@ -101,6 +101,8 @@ mark.dcp-hl.dcp-cloze { background: transparent; border-bottom: 2px dotted var(-
   background: var(--dcp-surface); border-top: 1px solid var(--dcp-line);
   box-shadow: 0 -6px 24px rgba(0, 0, 0, .12);
 }
+/* Static instruction line: full width so it sits on its own row above the tools. */
+.dcp-wb-hint { flex: 0 0 100%; text-align: center; font-size: .82rem; font-weight: 800; color: var(--dcp-muted); margin-bottom: 2px; }
 .dcp-tool-group { display: inline-flex; gap: 6px; align-items: center; padding-inline-end: 8px; border-inline-end: 1px solid var(--dcp-line); }
 .dcp-tool-group:last-of-type { border-inline-end: none; }
 .dcp-tool-glabel { font-size: .72rem; color: var(--dcp-muted); font-weight: 700; margin-inline-end: 2px; }

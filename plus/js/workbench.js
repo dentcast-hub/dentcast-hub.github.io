@@ -62,6 +62,9 @@ export class Workbench {
 
   // --- toolbar --------------------------------------------------------------
   _buildToolbar() {
+    // Static instruction line (top of the toolbar); the text never changes.
+    const hint = el('div', { class: 'dcp-wb-hint' }, 'بعد از انتخاب متن، رنگ هایلایت را مشخص کنید');
+
     const swatches = PALETTE.map((p) =>
       el('button', {
         class: 'dcp-swatch', type: 'button', title: p.fa, 'aria-label': 'رنگ ' + p.fa,
@@ -87,6 +90,7 @@ export class Workbench {
     ]);
 
     const bar = el('div', { class: 'dcp-toolbar', role: 'toolbar', 'aria-label': 'ابزار میز کار' }, [
+      hint,
       group('رنگ هایلایت', swatches),
       group('ابزار', [underlineBtn, clozeBtn]),
       group('برچسب', labelChips),
@@ -109,9 +113,8 @@ export class Workbench {
   _refreshToolbar() {
     const bar = this.ui.toolbar;
     if (!bar) return;
-    bar.querySelectorAll('.dcp-swatch').forEach((s) => {
-      s.classList.toggle('is-active', this.tool.kind === 'highlight' && this.tool.color === s.dataset.color);
-    });
+    // No active ring on colour swatches: a pre-selected circle read as "already
+    // chosen" and made people think they need not pick a colour.
     bar.querySelectorAll('.dcp-tool[data-tool]').forEach((b) => {
       b.classList.toggle('is-active', this.tool.kind === b.dataset.tool);
     });
