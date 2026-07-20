@@ -3457,9 +3457,9 @@ a.dc-list-card--pillar {
           </div>
         </div>
         <ul class="dc-pulse-list">
+          <li>یک <a href="/insight/insight-56.html">اینسایت بالینی</a> درباره‌ی استفاده از آینه به‌عنوان بیوفیدبک دیداری برای اصلاح حرکات لترالی هنگام تنظیم اکلوژن منتشر شد · ۲۹ تیر</li>
           <li>یک <a href="/metanotes/meta-18.html">متانوت</a> درباره‌ی اینکه چرا دندان‌های اسپلینت‌شده باید قدرت مشابهی داشته باشند منتشر شد · ۲۸ تیر</li>
           <li>یک <a href="/insight/insight-55.html">اینسایت بالینی</a> درباره‌ی اسپلینت‌کردن پروتزی برای مدیریت بایومکانیک دندان‌های با ریشه‌ی کوتاه منتشر شد · ۲۷ تیر</li>
-          <li>یک <a href="/chairside/chairside-25.html">روایت ویزیت</a> با موضوع «گاهی نپذیرفتن بیمار بهتر است» در سایت قرار گرفت · ۲۳ تیر</li>
         </ul>
         <div class="dc-pulse-ad">
           <a href="https://deventapp.ir" target="_blank" rel="sponsored noopener">
@@ -3471,9 +3471,9 @@ a.dc-list-card--pillar {
 
       <div class="dc-home-sec"><h2 class="dc-home-sec-label">تازه‌های دنت‌کست</h2></div>
       <div class="dc-rail" id="dcLatestRail">
-        <a class="dc-rail-card" data-cat="clinical" href="/insight/insight-55.html">
+        <a class="dc-rail-card" data-cat="clinical" href="/insight/insight-56.html">
           <span class="dc-type-chip t-insight">Insight</span>
-          <p class="dc-rail-title">اسپیلینت کردن پروتزی؛ مدیریت بایومکانیک دندان‌های با ریشه‌ی کوتاه</p>
+          <p class="dc-rail-title">استفاده از آینه به عنوان بیوفیدبک دیداری در ثبت حرکات لترالی</p>
           <span class="dc-rail-meta">تازه‌ترین مطلب</span>
         </a>
         <a class="dc-rail-card" data-cat="notecast" href="/notecast/episode-37.html">
@@ -3623,7 +3623,7 @@ a.dc-list-card--pillar {
           <span class="k">ساعت محتوای صوتی</span>
         </div>
         <div class="hero-stat" role="listitem">
-          <span class="v"><!-- COUNTER:CONTENT:START -->۵۵۷<!-- COUNTER:CONTENT:END --></span>
+          <span class="v"><!-- COUNTER:CONTENT:START -->۵۵۸<!-- COUNTER:CONTENT:END --></span>
           <span class="k">مطلب و مدخل آموزشی</span>
         </div>
       </div>
@@ -4280,7 +4280,7 @@ scrollBody.addEventListener('touchend',e=>{
     if(p) p.textContent=title;
     a.href=url;
   }
-  fetch('/dentcast-brain.json?v=adaa7d4d4e',{cache:'no-store'}).then(function(r){return r.json();}).then(function(arr){
+  fetch('/dentcast-brain.json?v=e46151b4b2',{cache:'no-store'}).then(function(r){return r.json();}).then(function(arr){
     if(!Array.isArray(arr)) return;
     var latest={}, pool=[];
     arr.forEach(function(e){
@@ -4576,7 +4576,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 <script>
 /* ── LAST 30 UPDATES ── */
 (function(){
-  const FEED_URL='/dentcast-brain.json?v=adaa7d4d4e';
+  const FEED_URL='/dentcast-brain.json?v=e46151b4b2';
   const el=document.getElementById('dcLast3Updates');
   if(!el) return;
   function extractArray(json){if(Array.isArray(json))return json;const cands=[json?.items,json?.data,json?.entries,json?.feed].filter(Boolean);for(const c of cands)if(Array.isArray(c))return c;for(const k in(json||{})){const v=json[k];if(Array.isArray(v))return v;if(v&&typeof v==='object'&&Array.isArray(v.items))return v.items;}return[];}
@@ -4832,7 +4832,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 
   function getBrain(){
     if(brainCache) return Promise.resolve(brainCache);
-    return fetch('/dentcast-brain.json?v=adaa7d4d4e', {cache:'no-store'})
+    return fetch('/dentcast-brain.json?v=e46151b4b2', {cache:'no-store'})
       .then(r => r.ok ? r.json() : [])
       .then(d => { brainCache = Array.isArray(d) ? d : []; return brainCache; })
       .catch(() => { brainCache = []; return []; });
