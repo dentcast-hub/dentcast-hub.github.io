@@ -29,18 +29,12 @@ export class Workbench {
     sessionStorage.setItem(SS_MODE + this.contentId, 'study');
     this._buildToolbar();
     this._buildNotes();
-    // Bind selection BEFORE the network loads below. Otherwise the very first
-    // text selection after entering study mode is dropped (handlers not bound
-    // yet), and the highlight only lands once a later mouseup fires — which made
-    // it feel like you had to click the yellow swatch after selecting. The
-    // default tool (yellow highlight) + label («مهم») are set in the constructor,
-    // so the first selection highlights immediately.
-    this._bindSelection();
     await this._loadAndRender();
     // The article note (one per article, independent of highlights) is loaded up
     // front so the یادداشت button opens instantly with the saved text.
     try { const r = await api.getArticleNote(this.contentId); this.articleNote = (r && r.note) || null; }
     catch (e) { this.articleNote = null; }
+    this._bindSelection();
   }
 
   exit() {
