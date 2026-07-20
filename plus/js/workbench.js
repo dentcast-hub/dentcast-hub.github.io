@@ -107,7 +107,17 @@ export class Workbench {
     window.addEventListener('resize', this._onResize);
   }
 
-  _setTool(tool) { this.tool = tool; this._refreshToolbar(); }
+  _setTool(tool) {
+    // Underline / cloze are sticky modes. Pressing the ALREADY-active one turns
+    // it OFF — back to highlight mode with the last-used colour — so they never
+    // get stuck (before, only clicking a colour could leave underline/cloze).
+    if (tool.kind !== 'highlight' && this.tool.kind === tool.kind) {
+      tool = { kind: 'highlight', color: this._lastColor || 'yellow' };
+    }
+    if (tool.kind === 'highlight') this._lastColor = tool.color;
+    this.tool = tool;
+    this._refreshToolbar();
+  }
   _toggleLabel(key) { this.label = this.label === key ? null : key; this._refreshToolbar(); }
 
   _refreshToolbar() {
