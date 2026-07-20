@@ -427,11 +427,40 @@ export class Workbench {
   _noteButton() {
     if (this.ui.editor) { this._closeEditor(); return; }
     const item = this._currentHl != null ? this.items.get(this._currentHl) : null;
-    if (item && item.data && item.marks && item.marks.length) {
-      this._openEditor(item.data, item.marks[0], { focusNote: true });
+    if (item && item.data) {
+      this._openHighlightNote(item.data);
       return;
     }
     this._openArticleNote();
+  }
+
+  // A plain note field for the selected highlight — JUST the note (no colour /
+  // label / delete UI). Saving attaches it to the highlight, so it shows in the
+  // notes panel as a sticky-note card.
+  _openHighlightNote(h) {
+    this._closeEditor();
+    const ta = el('textarea', { class: 'dcp-note-input', rows: '4', placeholder: 'یادداشت خود را اینجا بنویسید…' });
+    ta.value = h.note || '';
+    const save = el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button', onclick: async () => {
+      await this._patch(h, { note: ta.value.trim() || null });
+      this._closeEditor();
+    } }, 'ذخیره');
+    const close = el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button', onclick: () => this._closeEditor() }, 'بستن');
+    const pop = el('div', { class: 'dcp-editor', role: 'dialog', 'aria-label': 'یادداشت' }, [
+      el('label', { class: 'dcp-editor-label' }, 'یادداشت'),
+      ta,
+      el('div', { class: 'dcp-editor-actions' }, [save, close]),
+    ]);
+    document.body.appendChild(pop);
+    this.ui.editor = pop;
+    this._placeEditor();
+    setTimeout(() => ta.focus(), 30);
+    ta.addEventListener('focus', () => this._syncDock());
+    ta.addEventListener('blur', () => setTimeout(() => this._syncDock(), 50));
+    setTimeout(() => {
+      const off = (e) => { if (!pop.contains(e.target)) { this._closeEditor(); document.removeEventListener('mousedown', off); } };
+      document.addEventListener('mousedown', off);
+    }, 0);
   }
 
   // The per-article note editor: a single empty/typeable field, docked above the
