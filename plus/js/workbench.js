@@ -6,23 +6,13 @@ import { api } from './api.js';
 import { PALETTE, LABELS, SS_MODE } from './config.js';
 import { serializeRange, anchorQuote, wrapRange, unwrapMarks, fullText, hashText } from './anchor.js';
 
-// Toolbar hint (top line of the workbench bar). The interaction is two explicit
-// steps — select text, THEN click a colour — so nothing is pre-armed and the
-// line spells out both steps. It flips to READY once text is selected.
-const HINT_IDLE = 'بعد از انتخاب متن، رنگ هایلایت را مشخص کنید';
-const HINT_READY = 'حالا رنگ هایلایت را انتخاب کنید';
-
 export class Workbench {
   constructor({ contentId, proseRoot }) {
     this.contentId = contentId;
     this.root = proseRoot;
     this.active = false;
-    // Interaction model: select text first, then click a colour (or underline /
-    // cloze) to APPLY it — like selecting text and then choosing an action. No
-    // colour is pre-selected; the just-selected range is held here until a tool
-    // is clicked.
-    this._pendingQuote = null;
-    // «مهم» is the default label written onto a new highlight; toggle off per item.
+    this.tool = { kind: 'highlight', color: 'yellow' };
+    // «مهم» is pre-selected by default; the user can toggle it off per highlight.
     this.label = 'important';
     this.items = new Map(); // id -> { data, marks }
     this.failed = []; // highlights whose anchor could not be found
@@ -39,10 +29,12 @@ export class Workbench {
     sessionStorage.setItem(SS_MODE + this.contentId, 'study');
     this._buildToolbar();
     this._buildNotes();
-    // Bind selection BEFORE the network loads below, so the very first text
-    // selection is captured as the pending range (handlers must be attached when
-    // its mouseup fires); otherwise the first colour click would have nothing to
-    // apply and the reader would have to click twice.
+    // Bind selection BEFORE the network loads below. Otherwise the very first
+    // text selection after entering study mode is dropped (handlers not bound
+    // yet), and the highlight only lands once a later mouseup fires — which made
+    // it feel like you had to click the yellow swatch after selecting. The
+    // default tool (yellow highlight) + label («مهم») are set in the constructor,
+    // so the first selection highlights immediately.
     this._bindSelection();
     await this._loadAndRender();
     // The article note (one per article, independent of highlights) is loaded up
@@ -70,21 +62,15 @@ export class Workbench {
 
   // --- toolbar --------------------------------------------------------------
   _buildToolbar() {
-    // Top line: the two-step instruction, full width above the tools.
-    const hint = el('div', { class: 'dcp-wb-hint' }, HINT_IDLE);
-    this.ui.hint = hint;
-
-    // Swatches / underline / cloze are APPLY buttons now (they act on the pending
-    // selection), not tool selectors — so none is ever shown pre-selected.
     const swatches = PALETTE.map((p) =>
       el('button', {
-        class: 'dcp-swatch', type: 'button', title: p.fa, 'aria-label': 'هایلایت ' + p.fa,
+        class: 'dcp-swatch', type: 'button', title: p.fa, 'aria-label': 'رنگ ' + p.fa,
         dataset: { color: p.key }, style: '--sw:' + p.css,
-        onclick: () => this._applyTool({ kind: 'highlight', color: p.key }),
+        onclick: () => this._setTool({ kind: 'highlight', color: p.key }),
       }));
 
-    const underlineBtn = el('button', { class: 'dcp-tool', type: 'button', title: 'خط ممتد', onclick: () => this._applyTool({ kind: 'underline' }) }, '─ خط ممتد');
-    const clozeBtn = el('button', { class: 'dcp-tool', type: 'button', title: 'نقطه‌چین (برای مرور)', onclick: () => this._applyTool({ kind: 'cloze' }) }, '⋯ نقطه‌چین');
+    const underlineBtn = el('button', { class: 'dcp-tool', type: 'button', title: 'خط ممتد', dataset: { tool: 'underline' }, onclick: () => this._setTool({ kind: 'underline' }) }, '─ خط ممتد');
+    const clozeBtn = el('button', { class: 'dcp-tool', type: 'button', title: 'نقطه‌چین (برای مرور)', dataset: { tool: 'cloze' }, onclick: () => this._setTool({ kind: 'cloze' }) }, '⋯ نقطه‌چین');
 
     const labelChips = LABELS.map((l) =>
       el('button', {
@@ -101,7 +87,6 @@ export class Workbench {
     ]);
 
     const bar = el('div', { class: 'dcp-toolbar', role: 'toolbar', 'aria-label': 'ابزار میز کار' }, [
-      hint,
       group('رنگ هایلایت', swatches),
       group('ابزار', [underlineBtn, clozeBtn]),
       group('برچسب', labelChips),
@@ -118,39 +103,18 @@ export class Workbench {
     window.addEventListener('resize', this._onResize);
   }
 
+  _setTool(tool) { this.tool = tool; this._refreshToolbar(); }
   _toggleLabel(key) { this.label = this.label === key ? null : key; this._refreshToolbar(); }
-
-  // Apply the clicked tool to the pending (just-selected) text. With no selection
-  // yet, nudge the reader to select first — this is the whole "select, then pick a
-  // colour" model: the click is what creates the highlight, nothing is pre-armed.
-  _applyTool(tool) {
-    if (!this._pendingQuote) { this._nudgeSelectFirst(); return; }
-    const quote = this._pendingQuote;
-    this._pendingQuote = null;
-    const sel = window.getSelection(); if (sel) sel.removeAllRanges();
-    this._reflectPending();
-    this._createHighlight(quote, tool);
-  }
-
-  _nudgeSelectFirst() {
-    if (!this.ui.hint) return;
-    this.ui.hint.textContent = HINT_IDLE;
-    this.ui.hint.classList.add('is-warn');
-    setTimeout(() => this.ui.hint && this.ui.hint.classList.remove('is-warn'), 1200);
-  }
-
-  // Reflect whether a selection is waiting for a colour, in the hint line.
-  _reflectPending() {
-    if (!this.ui.hint) return;
-    const ready = !!this._pendingQuote;
-    this.ui.hint.textContent = ready ? HINT_READY : HINT_IDLE;
-    this.ui.hint.classList.toggle('is-ready', ready);
-    this.ui.hint.classList.remove('is-warn');
-  }
 
   _refreshToolbar() {
     const bar = this.ui.toolbar;
     if (!bar) return;
+    bar.querySelectorAll('.dcp-swatch').forEach((s) => {
+      s.classList.toggle('is-active', this.tool.kind === 'highlight' && this.tool.color === s.dataset.color);
+    });
+    bar.querySelectorAll('.dcp-tool[data-tool]').forEach((b) => {
+      b.classList.toggle('is-active', this.tool.kind === b.dataset.tool);
+    });
     bar.querySelectorAll('.dcp-chip').forEach((c) => {
       c.classList.toggle('is-active', this.label === c.dataset.label);
     });
@@ -174,22 +138,19 @@ export class Workbench {
     if (!this.root.contains(range.commonAncestorContainer)) return;
     const quote = serializeRange(range, this.root);
     if (!quote.exact.trim() || quote.exact.length < 2) return;
-    // Hold the selection; the highlight is created only when a colour/tool is
-    // clicked. The native selection stays visible so the reader sees what they
-    // picked (and the browser's own copy menu still works).
-    this._pendingQuote = quote;
-    this._reflectPending();
+    sel.removeAllRanges();
+    this._createHighlight(quote);
   }
 
-  async _createHighlight(quote, tool) {
+  async _createHighlight(quote) {
     const payload = {
       content_id: this.contentId,
       exact: quote.exact,
       prefix: quote.prefix,
       suffix: quote.suffix,
-      underline: tool.kind === 'underline',
-      color: tool.kind === 'highlight' ? tool.color : null,
-      cloze_markers: tool.kind === 'cloze' ? [[0, quote.exact.length]] : [],
+      underline: this.tool.kind === 'underline',
+      color: this.tool.kind === 'highlight' ? this.tool.color : null,
+      cloze_markers: this.tool.kind === 'cloze' ? [[0, quote.exact.length]] : [],
       label: this.label,
       content_hash: hashText(fullText(this.root)),
     };
