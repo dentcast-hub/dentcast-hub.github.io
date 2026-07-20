@@ -90,8 +90,8 @@ mark.dcp-hl[data-color="yellow"] { background: #ffe08a; }
 mark.dcp-hl[data-color="green"] { background: #b7e4b0; }
 mark.dcp-hl[data-color="blue"] { background: #a9d3f5; }
 mark.dcp-hl[data-color="pink"] { background: #f6b8cf; }
-mark.dcp-hl.dcp-underline { background: transparent; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 3px; }
-mark.dcp-hl.dcp-cloze { background: transparent; border-bottom: 2px dotted var(--dcp-accent); }
+mark.dcp-hl.dcp-underline { background: transparent; text-decoration: underline; text-decoration-color: #e5484d; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+mark.dcp-hl.dcp-cloze { background: transparent; border-bottom: 2px dotted #e5484d; }
 
 /* ---- floating toolbar (bottom, ergonomic, avoids the fixed header) -------- */
 .dcp-toolbar {

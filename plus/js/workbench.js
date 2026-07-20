@@ -421,10 +421,16 @@ export class Workbench {
   }
 
   // --- note button ----------------------------------------------------------
-  // Toggles the ARTICLE note — one note for the whole article, independent of any
-  // highlight. The only way this note opens or closes.
+  // Writes a note ON the currently-selected highlight (the last one created or
+  // clicked) so it shows up in the notes panel. If no highlight is selected, it
+  // falls back to the whole-article note.
   _noteButton() {
     if (this.ui.editor) { this._closeEditor(); return; }
+    const item = this._currentHl != null ? this.items.get(this._currentHl) : null;
+    if (item && item.data && item.marks && item.marks.length) {
+      this._openEditor(item.data, item.marks[0], { focusNote: true });
+      return;
+    }
     this._openArticleNote();
   }
 
