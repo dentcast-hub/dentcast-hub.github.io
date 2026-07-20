@@ -2,7 +2,7 @@
 // enhancement. It decides the page type and wires only what belongs there. For
 // anonymous visitors the page must look exactly as before except the two
 // invitation points (spec 2.3): the workbench button and the homepage card.
-import { detectContentId, findProseRoot, INVITE_LINE, SS_MODE, SS_RETURN_STUDY, isOrgHost } from './js/config.js';
+import { detectContentId, findProseRoot, PROSE_SELECTORS, INVITE_LINE, SS_MODE, SS_RETURN_STUDY, isOrgHost } from './js/config.js';
 import { currentUser, api } from './js/api.js';
 import { openLoginModal, openOrgNotice } from './js/login-modal.js';
 import { el } from './js/util.js';
@@ -41,49 +41,42 @@ function showInvitation(anchorBtn, onProceed) {
   dismiss.onclick = () => box.remove();
 }
 
-async function initArticle() {
-  const main = document.querySelector('main.article-content-wrap');
-  const proseRoot = findProseRoot();
-  if (!main || !proseRoot) return; // not an article page
-
-  const contentId = detectContentId();
+// Wire the میز کار button + study mode onto a prose root. Shared by standalone
+// article pages (initArticle) and the desktop 3-column viewer (mountArticleWorkbench).
+async function setupWorkbench({ proseRoot, contentId }) {
   const Workbench = await loadWorkbench();
   const wb = new Workbench({ contentId, proseRoot });
-  const btn = injectWorkbenchButton(main, proseRoot);
+  const btn = injectWorkbenchButton(proseRoot, proseRoot);
 
   // Reading-completion signal: started only for a signed-in reader (the /activity
-  // endpoint requires auth) and only once per page. Guarded so a mid-page login
-  // does not start a second tracker.
+  // endpoint requires auth) and only once. Guarded so a mid-page login does not
+  // start a second tracker.
   let readingStarted = false;
-  function startReading() {
+  const startReading = () => {
     if (readingStarted) return;
     readingStarted = true;
     initReadingTracker({ contentId, proseRoot });
-  }
-
-  function updateBtn() {
+  };
+  const updateBtn = () => {
     const on = wb.isActive();
     btn.textContent = on ? 'خروج از میز کار' : 'میز کار';
     btn.setAttribute('aria-pressed', String(on));
     btn.classList.toggle('is-active', on);
-  }
+  };
 
-  async function onClick() {
-    // .org gate (temporary): Plus login cannot work cross-site on the .org
-    // hosts, so instead of the OTP flow show the dentcast.ir notice. The anon
-    // demand signal is still logged (inside openOrgNotice, marked org:workbench).
+  btn.addEventListener('click', async () => {
+    // .org gate (temporary): Plus login cannot work cross-site on the .org hosts,
+    // so instead of the OTP flow show the dentcast.ir notice.
     if (isOrgHost()) { openOrgNotice({ source: 'workbench', contentId }); return; }
     const user = await currentUser({ refresh: true });
     if (!user) {
-      // Anonymous invitation point: log the demand signal, show one sentence,
-      // then OTP login carrying return_to. Never dump on the homepage after.
       api.anonEvent('workbench_button_anon_click', contentId).catch(() => {});
       showInvitation(btn, async () => {
         sessionStorage.setItem(SS_RETURN_STUDY, location.pathname);
-        const res = await openLoginModal({ returnTo: location.pathname });
+        const res = await openLoginModal({ returnTo: location.pathname + location.search });
         if (res && res.user) {
           sessionStorage.removeItem(SS_RETURN_STUDY);
-          startReading(); // now authenticated: begin counting this read
+          startReading();
           await wb.enter();
           updateBtn();
         }
@@ -92,13 +85,24 @@ async function initArticle() {
     }
     if (wb.isActive()) wb.exit(); else await wb.enter();
     updateBtn();
-  }
-  btn.addEventListener('click', onClick);
+  });
+
+  const user = await currentUser();
+  if (user) startReading(); // count this read for an already-signed-in visitor
+  return { wb, updateBtn };
+}
+
+async function initArticle() {
+  const main = document.querySelector('main.article-content-wrap');
+  const proseRoot = findProseRoot();
+  if (!main || !proseRoot) return; // not a standalone article page
+
+  const contentId = detectContentId();
+  const { wb, updateBtn } = await setupWorkbench({ proseRoot, contentId });
 
   // Post-login return-to-study (the funnel) or a remembered choice this session.
   // Never auto-enters on a fresh visit: sessionStorage is empty then.
   const user = await currentUser();
-  if (user) startReading(); // count this read for an already-signed-in visitor
   const returnStudy = sessionStorage.getItem(SS_RETURN_STUDY);
   if (user && returnStudy === location.pathname) {
     sessionStorage.removeItem(SS_RETURN_STUDY);
@@ -109,6 +113,24 @@ async function initArticle() {
     updateBtn();
   }
 }
+
+// Desktop 3-column viewer: the homepage loads an article IN PLACE inside
+// #dcd-content-area (openContent), stripping dc-nav/plus, so the workbench must
+// be mounted explicitly. openContent calls this after injecting the article.
+// content_id comes from the article URL (the address bar still shows the
+// homepage). Re-mounting first tears down the previous in-place workbench.
+let desktopWb = null;
+async function mountArticleWorkbench(root, url) {
+  if (desktopWb) { try { desktopWb.exit(); } catch (_) { /* ignore */ } desktopWb = null; }
+  if (!root || !url) return;
+  let proseRoot = null;
+  for (const sel of PROSE_SELECTORS) { const found = root.querySelector(sel); if (found) { proseRoot = found; break; } }
+  if (!proseRoot) return; // not an article (e.g. a viewer / patients panel)
+  const contentId = url.replace(/^\/+/, '').replace(/\.html$/i, '') || detectContentId();
+  const { wb } = await setupWorkbench({ proseRoot, contentId });
+  desktopWb = wb;
+}
+if (typeof window !== 'undefined') window.dcpMountArticleWorkbench = mountArticleWorkbench;
 
 // The per-folder flashcard section on landing pages was removed for the free
 // version. Highlighting (میز کار) stays; the review/flashcard system moves to the

@@ -5082,6 +5082,11 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
       /* Scroll col-c to top */
       colCScroll.scrollTo(0, 0);
 
+      /* Mount the Plus workbench (میز کار) onto the just-injected article. plus.js
+         exposes this; dc-nav/plus was stripped from the fetched HTML, so the
+         button must be wired explicitly here, with the article's own URL. */
+      if (window.dcpMountArticleWorkbench) window.dcpMountArticleWorkbench(contentArea, url);
+
     } catch(e){
       contentArea.innerHTML =
         '<div class="dcd-loading" style="flex-direction:column;gap:0.5rem;">' +
