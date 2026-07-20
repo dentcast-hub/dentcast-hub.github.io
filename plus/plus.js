@@ -123,20 +123,17 @@ async function initArticle() {
 // plus.css min-width 1100) and toggled bottom sheets on mobile — both respond to
 // resize live, so no reload is needed when the viewport crosses the breakpoint.
 //
-// The homepage home card is the one Plus surface deliberately kept MOBILE-ONLY:
-// it replaces a slot on the static homepage, and desktop's static appearance is
-// intentionally left unchanged. To also show it on desktop, drop the isDesktop()
-// guard on initHomeCard below.
-const DESKTOP_MQ = '(min-width: 1100px)';
-function isDesktop() {
-  return typeof window.matchMedia === 'function' && window.matchMedia(DESKTOP_MQ).matches;
-}
+// The homepage home card renders on every viewport. It was previously kept
+// mobile-only, which left desktop showing the plain static homepage without the
+// personal Plus card. The card slot (#dcPlusHomeCard) lives in the shared
+// #mobile-body column that desktop shows too, so initializing it everywhere just
+// fills that slot on desktop as well.
 
 function boot() {
   try {
     initHeader();
     initArticle();
-    if (!isDesktop()) initHomeCard(); // homepage card stays mobile-only (static desktop homepage untouched)
+    initHomeCard(); // homepage personal card on all viewports (desktop + mobile)
   } catch (e) {
     // Progressive enhancement: never break the page.
     if (window.console) console.warn('[plus] init failed', e);
