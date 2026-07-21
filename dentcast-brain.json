@@ -11793,5 +11793,45 @@
       "secondary": [],
       "subtopic": "occlusal-analysis-adjustment"
     }
+  },
+  {
+    "type": "sharehub",
+    "id": "10",
+    "title": "Resistance Form در روکش‌ها؛ تعریف و ارزیابی بالینی",
+    "caption": "مطلبی در Share Hub دنت‌کست؛ مروری بر resistance form در تراش روکش: تعریف رسمی طبق Glossary of Prosthodontic Terms، تفاوت آن با retention، اینکه نبود آن یکی از دلایل اصلی لق‌شدن و از دست رفتن سمان روکش است (بیش از ۹۵٪ روکش‌های شکست‌خورده resistance form نداشتند)، رابطهٔ taper (زاویهٔ total occlusal convergence) و ارتفاع و پهنای قاعدهٔ تراش با آن و مفهوم limiting taper، توصیهٔ عددی TOC حدود ۲ تا ۶ درجه و نقش groove و box، و یک تست بالینیِ ساده (rocking سرِ صندلی و تست روی die) برای تشخیص نبود resistance form — با تأکید بر اینکه resistance form در مرحلهٔ تراش تعیین می‌شود نه در لابراتوار. همراه با منابع علمی و لینک به مراجع اصلی.",
+    "author": "دنت‌کست",
+    "source": "https://dentcast.org",
+    "hashtags": [
+      "#resistance_form",
+      "#retention_form",
+      "#تراش_روکش",
+      "#افتادن_روکش",
+      "#limiting_taper",
+      "#total_occlusal_convergence",
+      "#پروتز_ثابت",
+      "#Share_Hub",
+      "#Resistance_Form",
+      "#Crown_Preparation",
+      "#Tooth_Preparation",
+      "#Limiting_Taper"
+    ],
+    "keywords": [
+      "resistance form crown preparation",
+      "retention vs resistance form",
+      "limiting taper concept",
+      "total occlusal convergence taper",
+      "crown decementation resistance form",
+      "die test resistance form",
+      "resistance form در تراش روکش",
+      "تفاوت resistance و retention",
+      "افتادن مکرر روکش",
+      "تست بالینی resistance form"
+    ],
+    "url": "/sharehub/share-10.html",
+    "pillar": {
+      "primary": "fixed-pros",
+      "secondary": [],
+      "subtopic": "preparation"
+    }
   }
 ]
