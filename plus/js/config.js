@@ -23,19 +23,18 @@ function defaultBases() {
 
 export const API_BASES = OVERRIDE.apiBases || defaultBases();
 
-// --- .org gate (TEMPORARY) --------------------------------------------------
-// api.dentcast.org is not wired yet, so on the .org hosts the Plus API is only
-// reachable cross-site and the SameSite=Lax session cookie is dropped -> OTP
-// login can never complete. Until api.dentcast.org resolves, the three .org
-// Plus entry points (workbench button, header person, home card) show a notice
-// and deep-link the SAME page on dentcast.ir instead of opening the OTP modal.
-// The failover list above is intentionally left untouched. To retire this once
-// .org has its own API: delete ORG_HOSTS / isOrgHost / irMirrorUrl and their
-// call sites (grep isOrgHost, openOrgNotice).
+// --- .org gate (RETIRED) ----------------------------------------------------
+// api.dentcast.org is now wired: a Cloudflare Worker on api.dentcast.org proxies
+// to the same container, so .org has a same-site API and the SameSite=Lax session
+// cookie works (the API sets a host-only cookie). .org therefore runs the NATIVE
+// OTP flow exactly like .ir. isOrgHost() returns false so every .org gate below
+// becomes a no-op in one place; the now-dead openOrgNotice / irMirrorUrl paths and
+// their call sites can be deleted later. Flip this back to the ORG_HOSTS check
+// only if api.dentcast.org is ever down.
 export const ORG_HOSTS = ['dentcast.org', 'www.dentcast.org'];
 
 export function isOrgHost() {
-  return typeof location !== 'undefined' && ORG_HOSTS.indexOf(location.hostname) !== -1;
+  return false;
 }
 
 // The same path on the .ir host, so the reader is not thrown out of their
