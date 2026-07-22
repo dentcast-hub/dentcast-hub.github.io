@@ -11,7 +11,7 @@ export async function resetDb(): Promise<void> {
       profiles, user_activity, highlights, card_state,
       collections, collection_items, user_pathways,
       subscriptions, payments, certificates, anon_events,
-      push_subscriptions, articles
+      push_subscriptions, articles, auth_identities
     restart identity cascade
   `);
   resetRateLimits();

@@ -49,6 +49,35 @@ export function irMirrorUrl() {
 // fetches it from the API (/push/public-key) at subscribe time.
 export const VAPID_PUBLIC_KEY = OVERRIDE.vapidPublicKey || '';
 
+// --- Telegram Login (dentcast.org sign-in) ----------------------------------
+// The bot USERNAME is public — it is what renders the official Login Widget.
+// The bot's /setdomain is dentcast.org, so the widget only renders (and only
+// makes sense) on the .org hosts; .ir will use "Login with Bale" later. The
+// widget redirects the browser to the API's /auth/telegram/callback, which
+// verifies the signed payload server-side with the SECRET token.
+export const TELEGRAM_BOT_USERNAME = OVERRIDE.telegramBotUsername || 'Dentcast_bot';
+
+// Show "Login with Telegram" only where the bot domain matches (the .org hosts).
+// Set window.DENTCAST_PLUS.forceTelegramLogin = true to preview it elsewhere
+// (the widget itself will still report "Bot domain invalid" off dentcast.org).
+export function telegramLoginEnabled() {
+  if (!TELEGRAM_BOT_USERNAME) return false;
+  if (OVERRIDE.forceTelegramLogin) return true;
+  return location.hostname.indexOf('dentcast.org') !== -1;
+}
+
+// The absolute auth-url the widget redirects to. It is a top-level navigation
+// (not a fetch), so we target the primary same-site API base directly rather
+// than the health-checked failover list. `origin` + `return_to` tell the
+// callback where to send the browser back after it sets the session cookie.
+export function telegramCallbackUrl(returnTo) {
+  const qs = new URLSearchParams({
+    origin: location.origin,
+    return_to: returnTo || '/plus/',
+  });
+  return API_BASES[0] + '/auth/telegram/callback?' + qs.toString();
+}
+
 // --- content_id from the canonical URL --------------------------------------
 // content_id = page path without leading slash and without ".html".
 // e.g. /chairside/chairside-25.html -> "chairside/chairside-25". Unique across

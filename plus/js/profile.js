@@ -4,6 +4,7 @@
 import { el, faNum, tehranDay } from './util.js';
 import { api, ApiError, currentUser } from './api.js';
 import { ensurePushSubscription, removePushSubscription, pushSupported } from './push.js';
+import { telegramLoginEnabled, telegramCallbackUrl, TELEGRAM_BOT_USERNAME } from './config.js';
 
 const WEEKDAY_FA = ['ی', 'د', 'س', 'چ', 'پ', 'ج', 'ش']; // Sun..Sat
 function weekdayLetter(dayStr) {
@@ -211,6 +212,45 @@ function messengerBlock() {
   ]);
 }
 
+// Telegram login-linking (dentcast.org). Distinct from the messenger block
+// above (that is the future NOTIFICATION integration). This lets an account
+// gain Telegram as a SECOND way to sign in:
+//   - already linked -> a "connected" confirmation.
+//   - not linked, on a host where the widget works (.org) -> the official Login
+//     Widget. Because the session cookie rides the widget's redirect to the API
+//     callback, Telegram is linked to the CURRENT account (so afterwards phone
+//     AND Telegram both identify the same user). Returns null where it does not
+//     apply, so the section is omitted entirely.
+function telegramLoginBlock(me) {
+  if (me.telegram_linked) {
+    return el('div', {}, [
+      el('div', { class: 'dcp-tg-linked' }, [
+        el('span', { class: 'dcp-tg-linked-ico', 'aria-hidden': 'true' }, '✓'),
+        el('span', {}, 'حساب تلگرام متصل است'),
+      ]),
+      el('p', { class: 'dcp-sec-hint' }, 'می‌توانید دفعهٔ بعد با تلگرام هم وارد شوید.'),
+    ]);
+  }
+  if (!telegramLoginEnabled()) return null;
+
+  const holder = el('div', { class: 'dcp-tg-holder' });
+  const s = document.createElement('script');
+  s.async = true;
+  s.src = 'https://telegram.org/js/telegram-widget.js?22';
+  s.setAttribute('data-telegram-login', TELEGRAM_BOT_USERNAME);
+  s.setAttribute('data-size', 'large');
+  s.setAttribute('data-userpic', 'false');
+  s.setAttribute('data-radius', '10');
+  s.setAttribute('data-request-access', 'write');
+  s.setAttribute('data-auth-url', telegramCallbackUrl('/plus/profile.html'));
+  holder.appendChild(s);
+
+  return el('div', {}, [
+    holder,
+    el('p', { class: 'dcp-sec-hint' }, 'با اتصال تلگرام، دفعهٔ بعد می‌توانید فقط با تلگرام و بدون کد پیامکی وارد شوید. حساب فعلی و اطلاعاتتان حفظ می‌شود.'),
+  ]);
+}
+
 export async function renderProfile(root, { me: preMe } = {}) {
   root.replaceChildren(el('div', { class: 'dcp-loading' }, 'در حال بارگذاری...'));
   const [me, stats] = await Promise.all([
@@ -222,7 +262,9 @@ export async function renderProfile(root, { me: preMe } = {}) {
   const logoutBtn = el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button' }, 'خروج از حساب');
   logoutBtn.addEventListener('click', async () => { await api.logout().catch(() => {}); location.href = '/'; });
 
-  root.replaceChildren(
+  const tgBlock = telegramLoginBlock(me);
+
+  root.replaceChildren(...[
     el('div', { class: 'dcp-dash-hello' }, 'پروفایل'),
     section('نام مستعار', pseudonymBlock(me)),
     section('پلن', planBlock()),
@@ -233,8 +275,11 @@ export async function renderProfile(root, { me: preMe } = {}) {
     ])),
     section('مقایسه ماه به ماه', stats.month_vs_month ? monthCompare(stats.month_vs_month) : el('div', { class: 'dcp-muted' }, '—')),
     section('شماره موبایل', el('div', { dir: 'ltr', class: 'dcp-phone' }, me.phone || '—')),
+    // "Login with Telegram" linking — omitted where it does not apply (.ir, or
+    // already covered by the messenger section for notifications).
+    tgBlock ? section('ورود با تلگرام', tgBlock) : null,
     section('اتصال به اپ‌های پیام‌رسان', messengerBlock()),
     section('یادآوری‌ها', remindersBlock(me)),
     el('div', { class: 'dcp-dash-sec' }, [logoutBtn]),
-  );
+  ].filter(Boolean));
 }

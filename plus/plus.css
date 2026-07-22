@@ -239,6 +239,18 @@ body.dcp-study { padding-bottom: 90px; }
 .dcp-modal-msg { min-height: 1.2em; font-size: .88rem; color: var(--dcp-accent); }
 .dcp-modal-devhint { font-size: .82rem; opacity: .7; }
 
+/* Telegram Login block (shown above the phone step on .org). */
+.dcp-tg-step { margin-bottom: 14px; }
+.dcp-tg-caption { font-size: .9rem; font-weight: 600; margin-bottom: 4px; }
+.dcp-tg-holder { min-height: 40px; display: flex; }
+.dcp-tg-holder iframe { margin: 0 !important; }
+/* "or with your phone number" divider between Telegram and OTP. */
+.dcp-modal-or { display: flex; align-items: center; text-align: center; gap: 10px; opacity: .6; font-size: .82rem; margin-top: 6px; }
+.dcp-modal-or::before, .dcp-modal-or::after { content: ""; flex: 1; height: 1px; background: var(--dcp-line); }
+/* Profile: "Telegram connected" confirmation. */
+.dcp-tg-linked { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; color: #1f9d55; }
+.dcp-tg-linked-ico { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%; background: #1f9d55; color: #fff; font-size: .8rem; }
+
 .dcp-btn { font: inherit; font-weight: 600; padding: 10px 16px; border-radius: 10px; cursor: pointer; border: 1px solid var(--dcp-line); background: transparent; color: var(--dcp-ink); }
 .dcp-btn-primary { background: var(--dcp-accent); color: #fff; border-color: transparent; }
 .dcp-btn-ghost { background: transparent; }

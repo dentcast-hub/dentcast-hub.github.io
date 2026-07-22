@@ -2,7 +2,10 @@
 // Resolves with { user, return_to } on success, or null if the user cancels.
 import { el, faNum } from './util.js';
 import { api, ApiError, currentUser } from './api.js';
-import { isOrgHost, irMirrorUrl } from './config.js';
+import {
+  isOrgHost, irMirrorUrl,
+  telegramLoginEnabled, telegramCallbackUrl, TELEGRAM_BOT_USERNAME,
+} from './config.js';
 
 let overlay = null;
 // While the mandatory nickname step is showing, every dismissal path (×,
@@ -133,6 +136,39 @@ export function openOrgNotice({ source = 'login', contentId } = {}) {
   });
 }
 
+// The official Telegram Login Widget, shown ABOVE the phone/OTP step on the
+// hosts where it applies (dentcast.org). It is a REDIRECT widget: clicking it
+// navigates the whole tab to Telegram and then to the API callback
+// (data-auth-url), which sets the session cookie and sends the browser back to
+// `returnTo`. So there is no JS callback and nothing to await here — the modal
+// simply unloads with the navigation. Returns null when Telegram login is not
+// enabled for this host.
+function buildTelegramBlock(returnTo) {
+  if (!telegramLoginEnabled()) return null;
+
+  // The widget script renders its iframe button in place of itself, so it must
+  // be appended live to the DOM (not built as a string). data-request-access
+  // ="write" asks the user to let the bot message them — needed for the future
+  // notification channel (new posts, streak reminders).
+  const holder = el('div', { class: 'dcp-tg-holder' });
+  const s = document.createElement('script');
+  s.async = true;
+  s.src = 'https://telegram.org/js/telegram-widget.js?22';
+  s.setAttribute('data-telegram-login', TELEGRAM_BOT_USERNAME);
+  s.setAttribute('data-size', 'large');
+  s.setAttribute('data-userpic', 'true');
+  s.setAttribute('data-radius', '10');
+  s.setAttribute('data-request-access', 'write');
+  s.setAttribute('data-auth-url', telegramCallbackUrl(returnTo));
+  holder.appendChild(s);
+
+  return el('div', { class: 'dcp-modal-step dcp-tg-step' }, [
+    el('div', { class: 'dcp-tg-caption' }, 'ورود سریع با تلگرام'),
+    holder,
+    el('div', { class: 'dcp-modal-or' }, [el('span', {}, 'یا با شماره موبایل')]),
+  ]);
+}
+
 export function openLoginModal({ returnTo = location.pathname } = {}) {
   // .org backstop: the OTP modal must never open on the .org hosts (no phone
   // entry, no SMS spend). Any caller that reaches here on .org -- including the
@@ -163,6 +199,16 @@ export function openLoginModal({ returnTo = location.pathname } = {}) {
       el('p', { class: 'dcp-modal-sub' }, 'با شماره موبایل وارد شوید. کد یکبار مصرف برایتان ارسال می‌شود.'),
       stepPhone,
     ]);
+
+    // On the .org hosts, offer "Login with Telegram" above the phone step (the
+    // user chose Telegram + OTP). Elsewhere (.ir) the block is null and only the
+    // OTP flow shows.
+    const tgBlock = buildTelegramBlock(returnTo);
+    if (tgBlock) {
+      const sub = card.querySelector('.dcp-modal-sub');
+      if (sub) sub.textContent = 'با تلگرام وارد شوید، یا از شماره موبایل استفاده کنید.';
+      card.insertBefore(tgBlock, stepPhone);
+    }
 
     overlay = el('div', { class: 'dcp-modal-overlay', onclick: (e) => { if (e.target === overlay) close(resolve, null); } }, [card]);
     document.body.appendChild(overlay);

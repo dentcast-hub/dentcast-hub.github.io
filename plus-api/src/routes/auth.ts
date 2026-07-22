@@ -1,16 +1,24 @@
 import type { FastifyInstance, FastifyRequest } from 'fastify';
 import { config } from '../config.js';
-import { one, query, pool } from '../db.js';
+import { one, query, pool, withTransaction } from '../db.js';
 import { normalizePhone } from '../services/phone.js';
 import { issueCode, verifyCode } from '../services/otp.js';
 import { consume, HOUR_MS } from '../services/rate-limit.js';
-import { setSessionCookie, clearSessionCookie } from '../services/session.js';
+import { setSessionCookie, clearSessionCookie, readSession } from '../services/session.js';
 import { sanitizeReturnTo } from '../services/return-to.js';
 import { generatePseudonym } from '../services/pseudonym.js';
+import { verifyTelegramAuth } from '../services/telegram-auth.js';
+import { mergeProfiles } from '../services/merge-profiles.js';
 import { sms } from '../providers/registry.js';
 import { loadUser } from '../middleware/auth.js';
 import { displayStreak } from '../services/streak.js';
 import { dayInTz } from '../services/time.js';
+
+// The exact fields the Telegram Login Widget sends. Only these participate in
+// the signature check; our own auth-url params (return_to, origin) are ignored.
+const TELEGRAM_FIELDS = [
+  'id', 'first_name', 'last_name', 'username', 'photo_url', 'auth_date', 'hash',
+] as const;
 
 function clientIp(request: FastifyRequest): string {
   return request.ip || 'unknown';
@@ -171,6 +179,148 @@ export async function authRoutes(app: FastifyInstance): Promise<void> {
       return reply.code(404).send({ error: 'no_profile', message: 'شماره‌ای با این مشخصات یافت نشد.' });
     }
     return reply.send({ ok: true });
+  });
+
+  // --- GET /auth/telegram/callback -------------------------------------------
+  // The Telegram Login Widget (embedded on dentcast.org) redirects the browser
+  // here with the signed payload as query params, PLUS our own return_to/origin.
+  // We verify the signature, upsert the account, set the SAME session cookie the
+  // OTP flow uses, and 302 the browser back to the site. On any failure we send
+  // the browser to the static Persian error page instead of leaking a reason as
+  // JSON on the API host.
+  app.get('/auth/telegram/callback', async (request, reply) => {
+    const q = request.query as Record<string, string>;
+
+    // Decide where to send the browser afterward. `origin` must be one of the
+    // configured site origins (never an attacker-supplied host); `return_to` a
+    // same-site path. In dev, fall back to the first configured origin.
+    const origin = config.corsOrigins.includes(q.origin)
+      ? q.origin
+      : (config.corsOrigins[0] ?? '');
+    const returnTo = sanitizeReturnTo(q.return_to);
+    const fail = (reason: string) =>
+      reply.redirect(`${origin}/plus/auth-error.html?reason=${encodeURIComponent(reason)}`);
+
+    if (!config.auth.telegram.botToken) return fail('not_configured');
+
+    // Feed ONLY Telegram's own fields into the signature check.
+    const tg: Record<string, string> = {};
+    for (const k of TELEGRAM_FIELDS) {
+      if (typeof q[k] === 'string' && q[k] !== '') tg[k] = q[k];
+    }
+
+    const verdict = verifyTelegramAuth(
+      tg, config.auth.telegram.botToken, config.auth.telegram.maxAgeSeconds,
+    );
+    if (!verdict.ok) return fail(verdict.reason ?? 'bad_signature');
+
+    const providerUserId = tg.id;                 // text form -> auth_identities
+    const telegramIdNum = Number(tg.id);          // bigint    -> profiles.telegram_id
+    const username = tg.username || null;
+    const name = [tg.first_name, tg.last_name].filter(Boolean).join(' ') || null;
+    const photo = tg.photo_url || null;
+
+    // The user may ALREADY be logged in (e.g. a phone/OTP account) and clicking
+    // the Telegram button to connect Telegram. The widget's redirect is a
+    // top-level navigation to this API host, so the existing session cookie
+    // rides along and we can read it.
+    const sessionUserId = readSession(request);
+
+    // Resolve which profile this Telegram identity belongs to, in one
+    // transaction.
+    //   canonical = the account this Telegram ALREADY belongs to (its identity
+    //               row, or a profile that carries this telegram_id), if any.
+    //   session   = the account the browser is currently logged in as, if real.
+    //
+    //   (A) canonical exists -> use it. If the browser is logged in as a
+    //       DIFFERENT account (a phone/OTP account created before Telegram was
+    //       connected), MERGE that account into the canonical one, so the person
+    //       ends up with ONE account reachable by phone AND Telegram — never a
+    //       duplicate. Create the identity row if only telegram_id existed.
+    //   (B) no canonical, but logged in -> LINK Telegram to the current account
+    //       (the "logged-in phone user connects Telegram" flow).
+    //   (C) neither -> create a phone-less account with an EMPTY display_name so
+    //       the mandatory-nickname gate (header.js -> openNameGate) fires.
+    const userId = await withTransaction(async (client) => {
+      const identity = await one<{ user_id: string }>(
+        `select user_id from auth_identities
+           where provider = 'telegram' and provider_user_id = $1`,
+        [providerUserId], client,
+      );
+      const linkedProfile = identity
+        ? null
+        : await one<{ id: string }>(
+            'select id from profiles where telegram_id = $1', [telegramIdNum], client,
+          );
+      const canonical = identity?.user_id ?? linkedProfile?.id ?? null;
+
+      let sessionAccount: string | null = null;
+      if (sessionUserId) {
+        const s = await one<{ id: string }>(
+          'select id from profiles where id = $1', [sessionUserId], client,
+        );
+        sessionAccount = s?.id ?? null;
+      }
+
+      let uid: string;
+      if (canonical) {
+        // (A) Fold a different logged-in account into the Telegram account.
+        if (sessionAccount && sessionAccount !== canonical) {
+          await mergeProfiles(client, sessionAccount, canonical);
+        }
+        uid = canonical;
+        if (!identity) {
+          await query(
+            `insert into auth_identities
+               (user_id, provider, provider_user_id, username, display_name, photo_url)
+             values ($1, 'telegram', $2, $3, $4, $5)`,
+            [uid, providerUserId, username, name, photo], client,
+          );
+        }
+      } else if (sessionAccount) {
+        // (B) Link Telegram to the account the user is signed in as.
+        uid = sessionAccount;
+        await query(
+          `insert into auth_identities
+             (user_id, provider, provider_user_id, username, display_name, photo_url)
+           values ($1, 'telegram', $2, $3, $4, $5)`,
+          [uid, providerUserId, username, name, photo], client,
+        );
+      } else {
+        // (C) Brand-new account.
+        const created = await one<{ id: string }>(
+          `insert into profiles (phone, telegram_id, display_name)
+           values (null, $1, '') returning id`,
+          [telegramIdNum], client,
+        );
+        uid = created!.id;
+        await query(
+          `insert into auth_identities
+             (user_id, provider, provider_user_id, username, display_name, photo_url)
+           values ($1, 'telegram', $2, $3, $4, $5)`,
+          [uid, providerUserId, username, name, photo], client,
+        );
+      }
+
+      const resolvedUid = uid;
+
+      // Keep the chat_id fresh on the profile (the notification sender reads it)
+      // and refresh the identity's cached username/name/photo on every login.
+      await query(
+        'update profiles set telegram_id = $2 where id = $1 and telegram_id is distinct from $2',
+        [resolvedUid, telegramIdNum], client,
+      );
+      await query(
+        `update auth_identities
+            set username = $2, display_name = $3, photo_url = $4, updated_at = now()
+          where provider = 'telegram' and provider_user_id = $1`,
+        [providerUserId, username, name, photo], client,
+      );
+      return resolvedUid;
+    });
+
+    setSessionCookie(reply, userId);
+    return reply.redirect(`${origin}${returnTo}`);
   });
 
   // --- GET /me ---------------------------------------------------------------
