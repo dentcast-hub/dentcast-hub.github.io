@@ -12,6 +12,8 @@ Usage:
   python3 tools/pathway_scout.py TERM [TERM ...]        ranked candidate table
   python3 tools/pathway_scout.py --steps TERM [...]     steps JSON skeleton to
                                                         paste into plus/pathways.json
+  python3 tools/pathway_scout.py --coverage             audit which content is in
+                                                        0 / 1 / many pathways
 
 Matching is over title + caption + keywords + hashtags, Persian-normalized
 (ي/ی, ك/ک, ZWNJ stripped) and case-insensitive. Purely read-only: it never
@@ -44,7 +46,35 @@ def score(e, terms):
     # require the theme to actually appear; breadth of distinct terms breaks ties
     return (total + len(hits) * 2) if hits else 0
 
+PW = os.path.join(os.path.dirname(__file__), '..', 'plus', 'pathways.json')
+
+def coverage():
+    """Audit which brain content sits in 0 / 1 / many pathways."""
+    from collections import Counter
+    d = json.load(open(BRAIN))
+    pw = json.load(open(PW))
+    seat = Counter()
+    for p in pw:
+        for s in p['steps']:
+            seat[s['content_id']] += 1
+    title = {content_id(e): e.get('title', '') for e in d}
+    allc = [content_id(e) for e in d if content_id(e)]
+    uncovered = [c for c in allc if c not in seat]
+    multi = [c for c in allc if seat[c] > 1]
+    print(f'pathways: {len(pw)} | content: {len(allc)} | '
+          f'in >=1: {len(allc) - len(uncovered)} | in multiple: {len(set(multi))} | '
+          f'uncovered: {len(uncovered)}')
+    print('\n-- uncovered (excluding litecast, which is patient-facing) --')
+    for c in uncovered:
+        if not c.startswith('litecast/'):
+            print(f'  {c:26s} {title.get(c, "")[:56]}')
+    print('\n-- most-shared content (in the most pathways) --')
+    for c, n in seat.most_common(12):
+        print(f'  {n}x  {c:26s} {title.get(c, "")[:50]}')
+
 def main(argv):
+    if '--coverage' in argv:
+        coverage(); return
     as_steps = '--steps' in argv
     terms = [norm(a) for a in argv if not a.startswith('--')]
     if not terms:
