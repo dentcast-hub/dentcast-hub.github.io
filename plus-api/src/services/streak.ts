@@ -12,6 +12,7 @@ import { computeScore, freezesUsedCount, freezesAvailable } from './score.js';
 
 export const QUALIFYING_ACTIONS = new Set([
   'article_completed',
+  'episode_listened', // podcast twin of article_completed (listening = engagement)
   'highlight_created',
   'card_reviewed_manual', // free path
   'review_finished', // premium scheduled session (Phase 2)

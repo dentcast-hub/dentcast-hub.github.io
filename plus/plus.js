@@ -9,6 +9,7 @@ import { el } from './js/util.js';
 import { initHomeCard } from './js/home-card.js';
 import { initHeader } from './js/header.js';
 import { initReadingTracker } from './js/reading.js';
+import { initListeningTracker } from './js/listening.js';
 
 // Carry plus.js's own cache-busting version (?v=N, set by dc-nav.js) onto the
 // workbench module import. Article pages are OUTSIDE the /plus/ service-worker
@@ -151,10 +152,31 @@ if (typeof window !== 'undefined') window.dcpMountArticleWorkbench = mountArticl
 // #mobile-body column that desktop shows too, so initializing it everywhere just
 // fills that slot on desktop as well.
 
+// Listening signal (audio twin of the reading tracker). Two entry points:
+//  1. Episode pages carry their own <audio id="ep-audio"> and their URL IS the
+//     episode, so we attach here using the page's own content_id.
+//  2. The shared player (player.html) plays many episodes over its lifetime from
+//     one <audio> element, so it calls window.dcpTrackListening(contentId, audio)
+//     on each episode switch; we tear down the previous tracker and start a fresh
+//     one for the new content_id.
+function initListening() {
+  const audioEl = document.getElementById('ep-audio');
+  if (!audioEl) return; // not an episode page (the shared player wires itself)
+  initListeningTracker({ contentId: detectContentId(), audioEl });
+}
+
+let sharedListen = null;
+function trackListening(contentId, audioEl) {
+  if (sharedListen && sharedListen.stop) { try { sharedListen.stop(); } catch (_) { /* ignore */ } }
+  sharedListen = initListeningTracker({ contentId, audioEl });
+}
+if (typeof window !== 'undefined') window.dcpTrackListening = trackListening;
+
 function boot() {
   try {
     initHeader();
     initArticle();
+    initListening(); // episode-page audio → episode_listened
     initHomeCard(); // homepage personal card on all viewports (desktop + mobile)
   } catch (e) {
     // Progressive enhancement: never break the page.

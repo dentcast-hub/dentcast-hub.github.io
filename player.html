@@ -535,7 +535,7 @@ body {
 <!--  SCRIPTS -->
 <script>
 const JSON_URL = "dentcast.json?v=3";
-const BRAIN_URL = "/dentcast-brain.json?v=bb1094ec96";
+const BRAIN_URL = "/dentcast-brain.json?v=435acf92fb";
 
 const audio = document.getElementById("dc-audio");
 const listEl = document.getElementById("dc-list");
@@ -708,6 +708,14 @@ downloadBtn.setAttribute("download", "");
   descEl.innerHTML = ep.description || "";
   descEl.style.display = "none";
   playBtn.textContent = "▶";
+
+  /* سیگنال شنیدن (Plus): این پلیرِ مشترک اپیزودها را عوض می‌کند، پس در هر
+     تعویض، ردیابِ قبلی برچیده و یک ردیابِ تازه برای content_id جدید شروع می‌شود.
+     plus.js (که dc-nav روی همه‌ی صفحات لود می‌کند) این قلاب را تعریف می‌کند؛
+     نبودنش هرگز پلیر را نمی‌شکند (progressive enhancement). */
+  if (window.dcpTrackListening && ep.episode != null) {
+    try { window.dcpTrackListening("episodes/episode-" + epSlug(ep.episode), audio); } catch (_) {}
+  }
 
   /* تغییر اپیزود = نوشتن فوری رکورد (در حین بازیابی سرکوب می‌شود تا
      رکورد ذخیره‌شده پیش از seekِ مبتنی بر metadata بازنویسی نشود) */

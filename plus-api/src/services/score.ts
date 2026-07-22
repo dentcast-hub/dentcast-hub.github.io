@@ -18,7 +18,7 @@ export const SHIELD_CAP = 2;
 // Actions that count toward an "active day" for the score. Kept local (not the
 // streak module's QUALIFYING_ACTIONS) to avoid a circular import; the two sets
 // are intentionally the same today.
-const SCORING_ACTIONS = ['article_completed', 'highlight_created', 'card_reviewed_manual', 'review_finished'];
+const SCORING_ACTIONS = ['article_completed', 'episode_listened', 'highlight_created', 'card_reviewed_manual', 'review_finished'];
 
 type Db = pg.Pool | pg.PoolClient;
 

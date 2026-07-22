@@ -102,11 +102,21 @@ export const READ_FRACTION = 0.5;    // must dwell at least half the estimated r
 export const READ_MIN_MS = 30000;    // floor: even a tiny stub needs 30s
 export const READ_MAX_MS = 240000;   // cap: a very long article never demands > 4 min
 
+// The LISTEN threshold is the audio analogue of READ: the listener must hear
+// LISTEN_FRACTION of the episode's real duration, clamped between LISTEN_MIN_S
+// and LISTEN_MAX_S. Only ACTUAL played seconds count (seeking to the end does
+// not) — measured from real playback progress, so it is the audio twin of the
+// visible-dwell rule for reading.
+export const LISTEN_FRACTION = 0.6;  // must hear at least 60% of the episode
+export const LISTEN_MIN_S = 60;      // floor: even a short clip needs 60s of real play
+export const LISTEN_MAX_S = 1200;    // cap: a very long episode never demands > 20 min
+
 // --- storage keys -----------------------------------------------------------
 // Mode choice is remembered per session only (never auto-enter across sessions).
 export const SS_MODE = 'dcp:mode:'; // + contentId -> 'study'
 export const SS_RETURN_STUDY = 'dcp:return-study'; // path to auto-enter after login
 export const SS_READ_DONE = 'dcp:read:'; // + contentId -> '1' once article_completed fired this session
+export const SS_LISTEN_DONE = 'dcp:listen:'; // + contentId -> '1' once episode_listened fired this session
 
 // One-sentence invitation shown to anonymous users at the workbench button.
 export const INVITE_LINE =
