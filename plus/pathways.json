@@ -784,235 +784,6 @@
     "reserved": {}
   },
   {
-    "id": "implant-prosthetic",
-    "title_fa": "ایمپلنت پروتزی: اجزا، اسکن دیجیتال و طراحی رستوریشن",
-    "description_fa": "نیمه‌ی پروتزیِ ایمپلنتولوژی — از کانکشن‌ها و اباتمنت‌ها و اسکن دیجیتال دقیق تا عیب‌یابی پیچ، مدیریت سمان و طراحی رستوریشن با کانسپت Zero Bone Loss؛ از پایه تا پیشرفته.",
-    "premium": true,
-    "steps": [
-      {
-        "content_id": "episodes/episode-80",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-81",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-82",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-83",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-84",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-102",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-103",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-104",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-105",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-106",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-108",
-        "milestone": true
-      },
-      {
-        "content_id": "episodes/episode-133",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-144-2",
-        "milestone": false
-      },
-      {
-        "content_id": "sharehub/share-2",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-26",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-33",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-30",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-31",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-48",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-35",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-52",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-3",
-        "milestone": true
-      },
-      {
-        "content_id": "episodes/episode-123-6",
-        "milestone": false
-      },
-      {
-        "content_id": "sharehub/share-1",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-22",
-        "milestone": false
-      },
-      {
-        "content_id": "metanotes/meta-8",
-        "milestone": false
-      },
-      {
-        "content_id": "chairside/chairside-12",
-        "milestone": false
-      },
-      {
-        "content_id": "chairside/chairside-23",
-        "milestone": true
-      },
-      {
-        "content_id": "episodes/episode-31",
-        "milestone": false
-      },
-      {
-        "content_id": "notecast/episode-31",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-122-1",
-        "milestone": false
-      },
-      {
-        "content_id": "sharehub/share-4",
-        "milestone": false
-      },
-      {
-        "content_id": "dentcast-plus/video-4",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-9",
-        "milestone": true
-      },
-      {
-        "content_id": "episodes/episode-110",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-111",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-112",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-115",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-130",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-139",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-140",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-141",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-146",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-147",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-123-4",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-125-1",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-125-2",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-148-2",
-        "milestone": false
-      },
-      {
-        "content_id": "metanotes/meta-10",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-159",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-10",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-47",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-50",
-        "milestone": false
-      },
-      {
-        "content_id": "dentcast-plus/video-5",
-        "milestone": false
-      },
-      {
-        "content_id": "metanotes/meta-17",
-        "milestone": true
-      }
-    ],
-    "reserved": {}
-  },
-  {
     "id": "digital",
     "title_fa": "دندانپزشکی دیجیتال: اسکن، CAD/CAM و ورک‌فلو",
     "description_fa": "مسیر دیجیتال (به‌جز هوش مصنوعی) — از اسکن داخل‌دهانی و ثبت دقیق تا متریال CAD/CAM و ورک‌فلوی کامل دیجیتال؛ از پایه تا پیشرفته.",
@@ -1397,307 +1168,6 @@
       },
       {
         "content_id": "dentai/dentai-15",
-        "milestone": true
-      }
-    ],
-    "reserved": {}
-  },
-  {
-    "id": "fixed-pros",
-    "title_fa": "پروتز ثابت: تراش، قالب، سمان و روکش",
-    "description_fa": "نیمه‌ی روکش و رستوریشنِ پروتز ثابت — از اصول تراش و آماده‌سازی و قالب‌گیری تا سمان‌کردن (با مبانی چسبندگی)، روکش/انله/اندوکراون و مدیریت شکست؛ از پایه تا پیشرفته.",
-    "premium": true,
-    "steps": [
-      {
-        "content_id": "episodes/episode-113",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-114",
-        "milestone": false
-      },
-      {
-        "content_id": "sharehub/share-10",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-18",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-95",
-        "milestone": false
-      },
-      {
-        "content_id": "dentcast-plus/video-1",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-55",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-56",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-57",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-58",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-15",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-66",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-67",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-49",
-        "milestone": true
-      },
-      {
-        "content_id": "episodes/episode-20",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-21",
-        "milestone": false
-      },
-      {
-        "content_id": "notecast/episode-20",
-        "milestone": false
-      },
-      {
-        "content_id": "notecast/episode-21",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-34",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-128-1",
-        "milestone": true
-      },
-      {
-        "content_id": "episodes/episode-4",
-        "milestone": false
-      },
-      {
-        "content_id": "notecast/episode-4",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-5",
-        "milestone": false
-      },
-      {
-        "content_id": "notecast/episode-5",
-        "milestone": false
-      },
-      {
-        "content_id": "dentai/dentai-5",
-        "milestone": false
-      },
-      {
-        "content_id": "dentai/dentai-16",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-6",
-        "milestone": false
-      },
-      {
-        "content_id": "notecast/episode-6",
-        "milestone": false
-      },
-      {
-        "content_id": "dentai/dentai-17",
-        "milestone": true
-      },
-      {
-        "content_id": "episodes/episode-10",
-        "milestone": false
-      },
-      {
-        "content_id": "notecast/episode-10",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-2",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-3",
-        "milestone": false
-      },
-      {
-        "content_id": "notecast/episode-2",
-        "milestone": false
-      },
-      {
-        "content_id": "notecast/episode-3",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-148",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-149",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-137",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-138",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-29",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-36",
-        "milestone": true
-      },
-      {
-        "content_id": "episodes/episode-121",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-121-1",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-122",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-123",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-123-1",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-40",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-41",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-159-1",
-        "milestone": false
-      },
-      {
-        "content_id": "dentai/dentai-25",
-        "milestone": false
-      },
-      {
-        "content_id": "dentai/dentai-7",
-        "milestone": false
-      },
-      {
-        "content_id": "metanotes/meta-12",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-2",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-17",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-21",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-25",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-42",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-43",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-44",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-53",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-55",
-        "milestone": true
-      },
-      {
-        "content_id": "insight/insight-7",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-14",
-        "milestone": false
-      },
-      {
-        "content_id": "photocast/episode-1",
-        "milestone": false
-      },
-      {
-        "content_id": "dentcast-plus/video-3",
-        "milestone": false
-      },
-      {
-        "content_id": "chairside/chairside-7",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-32",
-        "milestone": false
-      },
-      {
-        "content_id": "chairside/chairside-9",
-        "milestone": false
-      },
-      {
-        "content_id": "chairside/chairside-13",
-        "milestone": false
-      },
-      {
-        "content_id": "chairside/chairside-16",
-        "milestone": false
-      },
-      {
-        "content_id": "dentai/dentai-27",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-54",
-        "milestone": false
-      },
-      {
-        "content_id": "metanotes/meta-18",
         "milestone": true
       }
     ],
@@ -2169,6 +1639,584 @@
       },
       {
         "content_id": "insight/insight-27",
+        "milestone": true
+      }
+    ],
+    "reserved": {}
+  },
+  {
+    "id": "implant-prosthetic",
+    "title_fa": "ایمپلنت پروتزی: اجزا، اسکن دیجیتال و طراحی رستوریشن",
+    "description_fa": "نیمه‌ی پروتزیِ ایمپلنتولوژی — از کانکشن‌ها و اباتمنت‌ها و اسکن دیجیتال دقیق تا اکلوژنِ ایمپلنت، عیب‌یابی پیچ، مدیریت سمان و طراحی رستوریشن با کانسپت Zero Bone Loss؛ از پایه تا پیشرفته.",
+    "premium": true,
+    "steps": [
+      {
+        "content_id": "episodes/episode-80",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-81",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-82",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-83",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-84",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-102",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-103",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-104",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-105",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-106",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-108",
+        "milestone": true
+      },
+      {
+        "content_id": "episodes/episode-133",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-144-2",
+        "milestone": false
+      },
+      {
+        "content_id": "sharehub/share-2",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-26",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-33",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-30",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-31",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-48",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-35",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-52",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-3",
+        "milestone": true
+      },
+      {
+        "content_id": "episodes/episode-123-6",
+        "milestone": false
+      },
+      {
+        "content_id": "sharehub/share-1",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-22",
+        "milestone": false
+      },
+      {
+        "content_id": "metanotes/meta-8",
+        "milestone": false
+      },
+      {
+        "content_id": "chairside/chairside-12",
+        "milestone": false
+      },
+      {
+        "content_id": "chairside/chairside-23",
+        "milestone": true
+      },
+      {
+        "content_id": "episodes/episode-60",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-23",
+        "milestone": false
+      },
+      {
+        "content_id": "notecast/episode-23",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-24",
+        "milestone": false
+      },
+      {
+        "content_id": "notecast/episode-24",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-131",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-132",
+        "milestone": true
+      },
+      {
+        "content_id": "episodes/episode-31",
+        "milestone": false
+      },
+      {
+        "content_id": "notecast/episode-31",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-122-1",
+        "milestone": false
+      },
+      {
+        "content_id": "sharehub/share-4",
+        "milestone": false
+      },
+      {
+        "content_id": "dentcast-plus/video-4",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-9",
+        "milestone": true
+      },
+      {
+        "content_id": "episodes/episode-110",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-111",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-112",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-115",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-130",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-139",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-140",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-141",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-146",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-147",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-123-4",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-125-1",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-125-2",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-148-2",
+        "milestone": false
+      },
+      {
+        "content_id": "metanotes/meta-10",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-159",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-10",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-47",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-50",
+        "milestone": false
+      },
+      {
+        "content_id": "dentcast-plus/video-5",
+        "milestone": false
+      },
+      {
+        "content_id": "metanotes/meta-17",
+        "milestone": true
+      }
+    ],
+    "reserved": {}
+  },
+  {
+    "id": "fixed-pros",
+    "title_fa": "پروتز ثابت: تراش، قالب، سمان و روکش",
+    "description_fa": "نیمه‌ی روکش و رستوریشنِ پروتز ثابت — از اصول تراش و آماده‌سازی و قالب‌گیری تا مبانی چسبندگی و سمان، اکلوژنِ بازسازی، روکش/انله/اندوکراون و مدیریت شکست؛ از پایه تا پیشرفته.",
+    "premium": true,
+    "steps": [
+      {
+        "content_id": "episodes/episode-113",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-114",
+        "milestone": false
+      },
+      {
+        "content_id": "sharehub/share-10",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-18",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-95",
+        "milestone": false
+      },
+      {
+        "content_id": "dentcast-plus/video-1",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-55",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-56",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-57",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-58",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-15",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-66",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-67",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-49",
+        "milestone": true
+      },
+      {
+        "content_id": "episodes/episode-20",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-21",
+        "milestone": false
+      },
+      {
+        "content_id": "notecast/episode-20",
+        "milestone": false
+      },
+      {
+        "content_id": "notecast/episode-21",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-34",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-128-1",
+        "milestone": true
+      },
+      {
+        "content_id": "episodes/episode-4",
+        "milestone": false
+      },
+      {
+        "content_id": "notecast/episode-4",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-5",
+        "milestone": false
+      },
+      {
+        "content_id": "notecast/episode-5",
+        "milestone": false
+      },
+      {
+        "content_id": "dentai/dentai-5",
+        "milestone": false
+      },
+      {
+        "content_id": "dentai/dentai-16",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-6",
+        "milestone": false
+      },
+      {
+        "content_id": "notecast/episode-6",
+        "milestone": false
+      },
+      {
+        "content_id": "dentai/dentai-17",
+        "milestone": true
+      },
+      {
+        "content_id": "episodes/episode-10",
+        "milestone": false
+      },
+      {
+        "content_id": "notecast/episode-10",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-2",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-3",
+        "milestone": false
+      },
+      {
+        "content_id": "notecast/episode-2",
+        "milestone": false
+      },
+      {
+        "content_id": "notecast/episode-3",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-148",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-149",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-137",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-138",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-29",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-36",
+        "milestone": true
+      },
+      {
+        "content_id": "episodes/episode-131",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-132",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-1",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-123-2",
+        "milestone": false
+      },
+      {
+        "content_id": "photocast/episode-2",
+        "milestone": true
+      },
+      {
+        "content_id": "episodes/episode-121",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-121-1",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-122",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-123",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-123-1",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-40",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-41",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-159-1",
+        "milestone": false
+      },
+      {
+        "content_id": "dentai/dentai-25",
+        "milestone": false
+      },
+      {
+        "content_id": "dentai/dentai-7",
+        "milestone": false
+      },
+      {
+        "content_id": "metanotes/meta-12",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-2",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-17",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-21",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-25",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-42",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-43",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-44",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-53",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-55",
+        "milestone": true
+      },
+      {
+        "content_id": "insight/insight-7",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-14",
+        "milestone": false
+      },
+      {
+        "content_id": "photocast/episode-1",
+        "milestone": false
+      },
+      {
+        "content_id": "dentcast-plus/video-3",
+        "milestone": false
+      },
+      {
+        "content_id": "chairside/chairside-7",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-32",
+        "milestone": false
+      },
+      {
+        "content_id": "chairside/chairside-9",
+        "milestone": false
+      },
+      {
+        "content_id": "chairside/chairside-13",
+        "milestone": false
+      },
+      {
+        "content_id": "chairside/chairside-16",
+        "milestone": false
+      },
+      {
+        "content_id": "dentai/dentai-27",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-54",
+        "milestone": false
+      },
+      {
+        "content_id": "metanotes/meta-18",
         "milestone": true
       }
     ],

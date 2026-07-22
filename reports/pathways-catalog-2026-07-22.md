@@ -18,8 +18,8 @@ This is the founder-facing content layer, ready to curate before activation.
 
 | id | title_fa | steps | shape |
 |---|---|---|---|
-| `fixed-pros` | پروتز ثابت: تراش، قالب، سمان و روکش | 73 | pillar (split) |
-| `implant-prosthetic` | ایمپلنت پروتزی: اجزا، اسکن دیجیتال و طراحی رستوریشن | 55 | pillar (split) |
+| `fixed-pros` | پروتز ثابت: تراش، قالب، سمان و روکش | 78 | pillar (split) |
+| `implant-prosthetic` | ایمپلنت پروتزی: اجزا، اسکن دیجیتال و طراحی رستوریشن | 62 | pillar (split) |
 | `ceramics` | سرامیک دندانی: از انتخاب ماده تا سمان | 48 | cross-pillar |
 | `implant-surgical` | ایمپلنت: جراحی، طرح‌ریزی و سلامت پری‌ایمپلنت | 39 | pillar (split) |
 | `esthetic` | زیبایی و طراحی لبخند | 39 | cross-pillar |
@@ -33,6 +33,30 @@ This is the founder-facing content layer, ready to curate before activation.
 | `ai-dentistry` | هوش مصنوعی در دندانپزشکی | 12 | cross-pillar (+promptologist) |
 | `failure-troubleshooting` | چرا شکست خورد؟ عیب‌یابی و مدیریت شکست | 12 | cross-pillar (problem-led) |
 | `digital` | دندانپزشکی دیجیتال: اسکن، CAD/CAM و ورک‌فلو | 11 | pillar |
+
+### Standing rule: build each pathway around what the LEARNER needs
+
+A pathway is defined by the question **"what must a person know to learn topic
+X — and in what order?"** — not by which pillar a file was filed under. So a
+pathway freely **borrows prerequisite/relevant content from other pillars** and
+places it in learning order. Bonding was one example; occlusion is another: a
+learner of implant prosthetics must also know **implant occlusion**, so those
+occlusion items live in the implant pathway too (as well as in `occlusion`).
+
+Applied so far:
+- **`implant-prosthetic`** ← borrowed block «اکلوژن در ایمپلنت» (occlusal
+  overload, crown/implant ratio, occlusion-in-implant, canine-rise vs
+  group-function) as a design prerequisite before restoration design.
+- **`fixed-pros`** ← borrowed block «اکلوژن در بازسازی: طرح و تنظیم» (occlusal
+  scheme + articulation-paper/fremitus adjustment) before the crowns block.
+- Bonding foundation (below) into every bonded-restoration pathway.
+
+Multi-membership is now **95** items — the intended consequence of this rule.
+
+Further borrow candidates for founder review (not yet injected, to avoid noise
+before you weigh in): anterior-guidance occlusion → `esthetic`; VDO restoration
+(insight-6/12/43) → `treatment-planning`; occlusal scheme for bonded onlays →
+`biomimetic`; denture occlusal scheme → `removable-pros`.
 
 ### Shared bonding foundation (a deliberate multi-membership block)
 
@@ -49,7 +73,7 @@ pathway multi-membership.
 ## Coverage (run `python3 tools/pathway_scout.py --coverage` to refresh)
 
 - **389 / 419** content items sit in ≥1 pathway.
-- **85** items sit in **multiple** pathways — the multi-membership the founder
+- **95** items sit in **multiple** pathways — the multi-membership the founder
   asked for (e.g. ceramic surface-prep + resin cementation appear in
   `biomimetic`, `ceramics` and `esthetic`; ferrule/post items in `biomimetic`,
   `fixed-pros-core`, `failure-troubleshooting`).
