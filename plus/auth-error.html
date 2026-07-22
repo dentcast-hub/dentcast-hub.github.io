@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <!-- Google Analytics (deferred: loads only after the page is fully rendered) -->
+  <script>
+    window.addEventListener('load', function () {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-GMM0WC8X3M');
+      var ga = document.createElement('script');
+      ga.async = true;
+      ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-GMM0WC8X3M';
+      document.head.appendChild(ga);
+    });
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>ورود ناموفق | دنت‌کست پلاس</title>
+  <link rel="manifest" href="/plus/manifest.webmanifest">
+  <meta name="theme-color" content="#f0f2f5">
+  <link rel="stylesheet" href="/dc-theme.css">
+  <link rel="stylesheet" href="/plus/plus.css?v=1">
+  <link rel="stylesheet" href="/plus/plus-pages.css?v=1">
+  <link rel="stylesheet" href="/plus/plus-desktop.css?v=1">
+  <style>
+    .dcp-autherr-wrap { max-width: 460px; margin: 8vh auto 0; padding: 0 20px; text-align: center; }
+    .dcp-autherr-icon { font-size: 2.6rem; line-height: 1; margin-bottom: 12px; }
+    .dcp-autherr-title { font-size: 1.35rem; margin: 0 0 10px; }
+    .dcp-autherr-msg { opacity: .85; line-height: 1.9; margin: 0 0 22px; }
+    .dcp-autherr-actions { display: flex; flex-direction: column; gap: 10px; }
+    .dcp-autherr-actions .dcp-btn { text-decoration: none; text-align: center; }
+    .dcp-autherr-code { margin-top: 18px; font-size: .78rem; opacity: .5; }
+  </style>
+</head>
+<body class="dcp-page">
+  <header class="dcp-page-header">
+    <a class="dcp-page-brand" href="/plus/">دنت‌کست پلاس</a>
+    <a class="dcp-page-back" href="/">بازگشت به سایت</a>
+  </header>
+  <main class="dcp-page-main">
+    <div class="dcp-autherr-wrap">
+      <div class="dcp-autherr-icon" aria-hidden="true">⚠️</div>
+      <h1 class="dcp-autherr-title">ورود ناموفق بود</h1>
+      <p class="dcp-autherr-msg" id="dcp-autherr-msg">
+        در روند ورود با تلگرام مشکلی پیش آمد. لطفاً دوباره تلاش کنید.
+      </p>
+      <div class="dcp-autherr-actions">
+        <a class="dcp-btn dcp-btn-primary" href="/plus/">تلاش دوباره برای ورود</a>
+        <a class="dcp-btn dcp-btn-ghost" href="/">بازگشت به سایت</a>
+      </div>
+      <p class="dcp-autherr-code" id="dcp-autherr-code"></p>
+    </div>
+  </main>
+  <script>
+    // Map the callback's ?reason= to a friendly Persian message. Unknown reasons
+    // fall back to the generic text already in the markup.
+    (function () {
+      var MESSAGES = {
+        bad_signature: 'اعتبارسنجی اطلاعات ورودِ تلگرام ناموفق بود. لطفاً دوباره از دکمه‌ی «ورود با تلگرام» استفاده کنید.',
+        expired: 'مهلت این درخواستِ ورود گذشته است. لطفاً دوباره وارد شوید.',
+        missing_hash: 'اطلاعات ورود ناقص دریافت شد. لطفاً دوباره تلاش کنید.',
+        missing_fields: 'اطلاعات ورود ناقص دریافت شد. لطفاً دوباره تلاش کنید.',
+        not_configured: 'ورود با تلگرام هنوز روی سرور فعال نشده است. لطفاً کمی بعد دوباره امتحان کنید یا با شماره‌ی موبایل وارد شوید.'
+      };
+      try {
+        var reason = new URLSearchParams(location.search).get('reason') || '';
+        if (MESSAGES[reason]) {
+          document.getElementById('dcp-autherr-msg').textContent = MESSAGES[reason];
+        }
+        if (reason) {
+          document.getElementById('dcp-autherr-code').textContent = 'کد خطا: ' + reason;
+        }
+      } catch (e) { /* leave the default message */ }
+    })();
+  </script>
+</body>
+</html>

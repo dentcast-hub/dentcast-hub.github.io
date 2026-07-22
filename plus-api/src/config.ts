@@ -68,6 +68,21 @@ export const config = {
     telegramWebhookSecret: str('TELEGRAM_WEBHOOK_SECRET', ''),
   },
 
+  // External-login providers. Layered so a second provider (Bale, on the .ir
+  // deployment) slots in beside Telegram without reshaping auth. Telegram Login
+  // (dentcast.org sign-in) uses the SAME bot as notifications, so it reuses
+  // TELEGRAM_BOT_TOKEN; the callback verifies the widget payload with
+  // SHA256(botToken) as the HMAC key. The bot USERNAME is public and lives in the
+  // frontend (plus/js/config.js), never here.
+  auth: {
+    telegram: {
+      botToken: str('TELEGRAM_BOT_TOKEN', ''),
+      // Reject a Telegram auth payload older than this (seconds); 24h per the
+      // login-widget guidance ("to prevent the use of outdated data").
+      maxAgeSeconds: int('TELEGRAM_AUTH_MAX_AGE_SECONDS', 86400),
+    },
+  },
+
   // Web Push (VAPID). The public key is safe to expose; the client fetches it
   // from /push/public-key. With no keys set (dev), the web-push provider logs
   // instead of sending, so the flow still works end to end without secrets.
