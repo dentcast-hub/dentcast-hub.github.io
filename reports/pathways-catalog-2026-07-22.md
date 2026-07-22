@@ -20,16 +20,16 @@ This is the founder-facing content layer, ready to curate before activation.
 |---|---|---|---|
 | `fixed-pros` | پروتز ثابت: تراش، قالب، سمان و روکش | 78 | pillar (split) |
 | `implant-prosthetic` | ایمپلنت پروتزی: اجزا، اسکن دیجیتال و طراحی رستوریشن | 62 | pillar (split) |
-| `ceramics` | سرامیک دندانی: از انتخاب ماده تا سمان | 48 | cross-pillar |
+| `ceramics` | سرامیک دندانی: از انتخاب ماده تا سمان | 49 | cross-pillar |
 | `implant-surgical` | ایمپلنت: جراحی، طرح‌ریزی و سلامت پری‌ایمپلنت | 39 | pillar (split) |
-| `esthetic` | زیبایی و طراحی لبخند | 39 | cross-pillar |
-| `treatment-planning` | طرح درمان و تصمیم‌گیری بالینی | 34 | cross-pillar |
+| `esthetic` | زیبایی و طراحی لبخند | 42 | cross-pillar |
+| `treatment-planning` | طرح درمان و تصمیم‌گیری بالینی | 41 | cross-pillar |
 | `occlusion` | اکلوژن: از تحلیل تا بازسازی و اختلالات | 32 | pillar |
-| `biomimetic` | دندانپزشکی بیومیمتیک و ترمیم ادهزیو | 82 | cross-pillar |
+| `biomimetic` | دندانپزشکی بیومیمتیک و ترمیم ادهزیو | 84 | cross-pillar |
 | `post-and-core` | پست و کور و بازسازی دندان اندوشده | 24 | pillar (split) |
 | `operative-cariology` | کاریولوژی و ترمیم مستقیم | 20 | pillar |
 | `evidence-literacy` | سواد نقد شواهد و تصمیم‌گیری علمی | 15 | cross-pillar (metanotes) |
-| `removable-pros` | پروتز متحرک و اوردنچر | 14 | pillar |
+| `removable-pros` | پروتز متحرک و اوردنچر | 16 | pillar |
 | `ai-dentistry` | هوش مصنوعی در دندانپزشکی | 12 | cross-pillar (+promptologist) |
 | `failure-troubleshooting` | چرا شکست خورد؟ عیب‌یابی و مدیریت شکست | 12 | cross-pillar (problem-led) |
 | `digital` | دندانپزشکی دیجیتال: اسکن، CAD/CAM و ورک‌فلو | 11 | pillar |
@@ -43,20 +43,24 @@ places it in learning order. Bonding was one example; occlusion is another: a
 learner of implant prosthetics must also know **implant occlusion**, so those
 occlusion items live in the implant pathway too (as well as in `occlusion`).
 
-Applied so far:
-- **`implant-prosthetic`** ← borrowed block «اکلوژن در ایمپلنت» (occlusal
-  overload, crown/implant ratio, occlusion-in-implant, canine-rise vs
-  group-function) as a design prerequisite before restoration design.
-- **`fixed-pros`** ← borrowed block «اکلوژن در بازسازی: طرح و تنظیم» (occlusal
-  scheme + articulation-paper/fremitus adjustment) before the crowns block.
+Applied (occlusion borrowed into every pathway whose learner needs it):
+- **`implant-prosthetic`** ← «اکلوژن در ایمپلنت» (overload, crown/implant ratio,
+  occlusion-in-implant, canine-rise vs group-function) before restoration design.
+- **`fixed-pros`** ← «اکلوژن در بازسازی: طرح و تنظیم» (scheme + articulation
+  paper / fremitus) before crowns.
+- **`esthetic`** ← «اکلوژن و گاید قدامی» (canine-rise scheme + lateral-movement
+  biofeedback) before veneers — anterior guidance governs veneer function.
+- **`treatment-planning`** ← «بعد عمودی در طرح درمانِ بازسازی» (VDO myths/evidence
+  + restoring VD without a posterior stop) after the diagnosis framework.
+- **`removable-pros`** ← «بعد عمودی و ثبت رابطه» as the edentulous foundation.
+- **`biomimetic`** ← «اکلوژن در ترمیم‌های ادهزیو» before indirect restorations.
+- **`ceramics`** ← antagonist-wear (zirconia vs opposing tooth) into material
+  selection.
 - Bonding foundation (below) into every bonded-restoration pathway.
 
-Multi-membership is now **95** items — the intended consequence of this rule.
-
-Further borrow candidates for founder review (not yet injected, to avoid noise
-before you weigh in): anterior-guidance occlusion → `esthetic`; VDO restoration
-(insight-6/12/43) → `treatment-planning`; occlusal scheme for bonded onlays →
-`biomimetic`; denture occlusal scheme → `removable-pros`.
+Multi-membership is now **104** items — the intended consequence of this rule.
+The same lens applies to any future topic: define the pathway by what the
+learner needs, then borrow those items (in order) from wherever they live.
 
 ### Shared bonding foundation (a deliberate multi-membership block)
 
@@ -73,7 +77,7 @@ pathway multi-membership.
 ## Coverage (run `python3 tools/pathway_scout.py --coverage` to refresh)
 
 - **389 / 419** content items sit in ≥1 pathway.
-- **95** items sit in **multiple** pathways — the multi-membership the founder
+- **104** items sit in **multiple** pathways — the multi-membership the founder
   asked for (e.g. ceramic surface-prep + resin cementation appear in
   `biomimetic`, `ceramics` and `esthetic`; ferrule/post items in `biomimetic`,
   `fixed-pros-core`, `failure-troubleshooting`).
