@@ -1118,5 +1118,142 @@
       }
     ],
     "reserved": {}
+  },
+  {
+    "id": "occlusion",
+    "title_fa": "اکلوژن: از تحلیل تا بازسازی و اختلالات",
+    "description_fa": "مسیر جامع اکلوژن — از ابزارهای تحلیل و تنظیم اکلوزال و طرح اکلوزال بازسازی‌ها تا بعد عمودی، مدیریت سایش با کانسپت دال و اختلالات مفصل و پارافانکشن؛ از پایه تا پیشرفته.",
+    "premium": true,
+    "steps": [
+      {
+        "content_id": "insight/insight-1",
+        "milestone": false
+      },
+      {
+        "content_id": "photocast/episode-2",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-123-2",
+        "milestone": false
+      },
+      {
+        "content_id": "dentcast-plus/video-2",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-8",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-56",
+        "milestone": true
+      },
+      {
+        "content_id": "episodes/episode-131",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-132",
+        "milestone": false
+      },
+      {
+        "content_id": "sharehub/share-5",
+        "milestone": false
+      },
+      {
+        "content_id": "dentcast-plus/video-6",
+        "milestone": false
+      },
+      {
+        "content_id": "chairside/chairside-15",
+        "milestone": true
+      },
+      {
+        "content_id": "episodes/episode-14",
+        "milestone": false
+      },
+      {
+        "content_id": "notecast/episode-14",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-154",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-155",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-6",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-12",
+        "milestone": true
+      },
+      {
+        "content_id": "dentai/dentai-24",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-34",
+        "milestone": false
+      },
+      {
+        "content_id": "notecast/episode-34",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-35",
+        "milestone": false
+      },
+      {
+        "content_id": "notecast/episode-35",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-125",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-126",
+        "milestone": false
+      },
+      {
+        "content_id": "dentai/dentai-26",
+        "milestone": true
+      },
+      {
+        "content_id": "episodes/episode-85",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-86",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-142",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-143",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-144",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-145",
+        "milestone": false
+      },
+      {
+        "content_id": "dentai/dentai-23",
+        "milestone": true
+      }
+    ],
+    "reserved": {}
   }
 ]
