@@ -1,390 +1,5 @@
 [
   {
-    "id": "implantology-core",
-    "title_fa": "مسیر جامع ایمپلنتولوژی",
-    "description_fa": "از مبانی ایمپلنت تا طرح‌ریزی جراحی، اجزای پروتزی، طراحی رستوریشن و سلامت پری‌ایمپلنت — به ترتیب یادگیری.",
-    "premium": true,
-    "steps": [
-      {
-        "content_id": "episodes/episode-25",
-        "milestone": false
-      },
-      {
-        "content_id": "notecast/episode-25",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-26",
-        "milestone": false
-      },
-      {
-        "content_id": "notecast/episode-26",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-45",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-62",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-63",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-64",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-123-5",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-126-1",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-144-1",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-147-5",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-147-8",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-147-9",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-150",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-156",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-157",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-158",
-        "milestone": false
-      },
-      {
-        "content_id": "sharehub/share-3",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-24",
-        "milestone": false
-      },
-      {
-        "content_id": "chairside/chairside-10",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-38",
-        "milestone": false
-      },
-      {
-        "content_id": "chairside/chairside-17",
-        "milestone": true
-      },
-      {
-        "content_id": "episodes/episode-80",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-81",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-82",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-83",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-84",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-102",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-103",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-104",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-105",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-106",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-108",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-123-6",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-133",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-144-2",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-3",
-        "milestone": false
-      },
-      {
-        "content_id": "sharehub/share-1",
-        "milestone": false
-      },
-      {
-        "content_id": "sharehub/share-2",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-22",
-        "milestone": false
-      },
-      {
-        "content_id": "metanotes/meta-8",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-26",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-30",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-31",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-33",
-        "milestone": false
-      },
-      {
-        "content_id": "chairside/chairside-12",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-35",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-48",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-52",
-        "milestone": false
-      },
-      {
-        "content_id": "chairside/chairside-23",
-        "milestone": true
-      },
-      {
-        "content_id": "episodes/episode-31",
-        "milestone": false
-      },
-      {
-        "content_id": "notecast/episode-31",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-110",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-111",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-112",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-115",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-122-1",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-123-4",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-125-1",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-125-2",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-130",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-139",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-140",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-141",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-146",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-147",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-148-2",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-159",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-9",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-10",
-        "milestone": false
-      },
-      {
-        "content_id": "dentcast-plus/video-4",
-        "milestone": false
-      },
-      {
-        "content_id": "sharehub/share-4",
-        "milestone": false
-      },
-      {
-        "content_id": "dentcast-plus/video-5",
-        "milestone": false
-      },
-      {
-        "content_id": "metanotes/meta-10",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-47",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-50",
-        "milestone": false
-      },
-      {
-        "content_id": "metanotes/meta-17",
-        "milestone": true
-      },
-      {
-        "content_id": "episodes/episode-23",
-        "milestone": false
-      },
-      {
-        "content_id": "notecast/episode-23",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-24",
-        "milestone": false
-      },
-      {
-        "content_id": "notecast/episode-24",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-59",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-60",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-122-6",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-130-1",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-147-2",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-148-1",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-16",
-        "milestone": false
-      },
-      {
-        "content_id": "metanotes/meta-2",
-        "milestone": false
-      },
-      {
-        "content_id": "metanotes/meta-3",
-        "milestone": false
-      },
-      {
-        "content_id": "metanotes/meta-4",
-        "milestone": false
-      },
-      {
-        "content_id": "metanotes/meta-5",
-        "milestone": false
-      },
-      {
-        "content_id": "sharehub/share-9",
-        "milestone": true
-      }
-    ],
-    "reserved": {}
-  },
-  {
     "id": "fixed-pros-core",
     "title_fa": "مسیر جامع پروتز ثابت",
     "description_fa": "از تراش و قالب‌گیری تا سمان‌کردن، روکش و انله، پست و کور و مدیریت شکست‌ها — به ترتیب یادگیری.",
@@ -1505,6 +1120,400 @@
       },
       {
         "content_id": "episodes/episode-122-3",
+        "milestone": true
+      }
+    ],
+    "reserved": {}
+  },
+  {
+    "id": "implant-surgical",
+    "title_fa": "ایمپلنت: جراحی، طرح‌ریزی و سلامت پری‌ایمپلنت",
+    "description_fa": "نیمه‌ی جراحی و بیولوژیکِ ایمپلنتولوژی — از بارگذاری و طرح‌ریزی و سناریوهای پیشرفته تا بیولوژی، اکلوژن و شکست‌های پری‌ایمپلنت؛ از پایه تا پیشرفته.",
+    "premium": true,
+    "steps": [
+      {
+        "content_id": "episodes/episode-25",
+        "milestone": false
+      },
+      {
+        "content_id": "notecast/episode-25",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-26",
+        "milestone": false
+      },
+      {
+        "content_id": "notecast/episode-26",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-45",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-150",
+        "milestone": false
+      },
+      {
+        "content_id": "sharehub/share-3",
+        "milestone": true
+      },
+      {
+        "content_id": "episodes/episode-23",
+        "milestone": false
+      },
+      {
+        "content_id": "notecast/episode-23",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-24",
+        "milestone": false
+      },
+      {
+        "content_id": "notecast/episode-24",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-59",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-60",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-148-1",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-122-6",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-147-2",
+        "milestone": false
+      },
+      {
+        "content_id": "sharehub/share-9",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-130-1",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-16",
+        "milestone": false
+      },
+      {
+        "content_id": "metanotes/meta-2",
+        "milestone": false
+      },
+      {
+        "content_id": "metanotes/meta-3",
+        "milestone": false
+      },
+      {
+        "content_id": "metanotes/meta-4",
+        "milestone": false
+      },
+      {
+        "content_id": "metanotes/meta-5",
+        "milestone": true
+      },
+      {
+        "content_id": "episodes/episode-62",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-63",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-64",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-123-5",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-126-1",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-144-1",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-147-5",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-147-8",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-147-9",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-156",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-157",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-158",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-24",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-38",
+        "milestone": false
+      },
+      {
+        "content_id": "chairside/chairside-10",
+        "milestone": false
+      },
+      {
+        "content_id": "chairside/chairside-17",
+        "milestone": true
+      }
+    ],
+    "reserved": {}
+  },
+  {
+    "id": "implant-prosthetic",
+    "title_fa": "ایمپلنت پروتزی: اجزا، اسکن دیجیتال و طراحی رستوریشن",
+    "description_fa": "نیمه‌ی پروتزیِ ایمپلنتولوژی — از کانکشن‌ها و اباتمنت‌ها و اسکن دیجیتال دقیق تا عیب‌یابی پیچ، مدیریت سمان و طراحی رستوریشن با کانسپت Zero Bone Loss؛ از پایه تا پیشرفته.",
+    "premium": true,
+    "steps": [
+      {
+        "content_id": "episodes/episode-80",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-81",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-82",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-83",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-84",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-102",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-103",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-104",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-105",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-106",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-108",
+        "milestone": true
+      },
+      {
+        "content_id": "episodes/episode-133",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-144-2",
+        "milestone": false
+      },
+      {
+        "content_id": "sharehub/share-2",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-26",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-33",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-30",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-31",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-48",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-35",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-52",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-3",
+        "milestone": true
+      },
+      {
+        "content_id": "episodes/episode-123-6",
+        "milestone": false
+      },
+      {
+        "content_id": "sharehub/share-1",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-22",
+        "milestone": false
+      },
+      {
+        "content_id": "metanotes/meta-8",
+        "milestone": false
+      },
+      {
+        "content_id": "chairside/chairside-12",
+        "milestone": false
+      },
+      {
+        "content_id": "chairside/chairside-23",
+        "milestone": true
+      },
+      {
+        "content_id": "episodes/episode-31",
+        "milestone": false
+      },
+      {
+        "content_id": "notecast/episode-31",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-122-1",
+        "milestone": false
+      },
+      {
+        "content_id": "sharehub/share-4",
+        "milestone": false
+      },
+      {
+        "content_id": "dentcast-plus/video-4",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-9",
+        "milestone": true
+      },
+      {
+        "content_id": "episodes/episode-110",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-111",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-112",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-115",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-130",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-139",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-140",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-141",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-146",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-147",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-123-4",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-125-1",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-125-2",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-148-2",
+        "milestone": false
+      },
+      {
+        "content_id": "metanotes/meta-10",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-159",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-10",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-47",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-50",
+        "milestone": false
+      },
+      {
+        "content_id": "dentcast-plus/video-5",
+        "milestone": false
+      },
+      {
+        "content_id": "metanotes/meta-17",
         "milestone": true
       }
     ],
