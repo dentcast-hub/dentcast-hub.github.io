@@ -14,18 +14,19 @@ This is the founder-facing content layer, ready to curate before activation.
   last step of each block is a `milestone`.
 - **Litecast is excluded** from all professional pathways (patient-facing, `.ir`).
 
-## The 14 pathways
+## The 15 pathways
 
 | id | title_fa | steps | shape |
 |---|---|---|---|
-| `implant-surgical` | ایمپلنت: جراحی، طرح‌ریزی و سلامت پری‌ایمپلنت | 39 | pillar (split) |
+| `fixed-pros` | پروتز ثابت: تراش، قالب، سمان و روکش | 73 | pillar (split) |
 | `implant-prosthetic` | ایمپلنت پروتزی: اجزا، اسکن دیجیتال و طراحی رستوریشن | 55 | pillar (split) |
-| `fixed-pros-core` | پروتز ثابت (جامع) | 86 | pillar (early draft) |
-| `biomimetic` | دندانپزشکی بیومیمتیک و ترمیم ادهزیو | 82 | cross-pillar |
-| `ceramics` | سرامیک دندانی: از انتخاب ماده تا سمان | 35 | cross-pillar |
+| `ceramics` | سرامیک دندانی: از انتخاب ماده تا سمان | 48 | cross-pillar |
+| `implant-surgical` | ایمپلنت: جراحی، طرح‌ریزی و سلامت پری‌ایمپلنت | 39 | pillar (split) |
+| `esthetic` | زیبایی و طراحی لبخند | 39 | cross-pillar |
 | `treatment-planning` | طرح درمان و تصمیم‌گیری بالینی | 34 | cross-pillar |
 | `occlusion` | اکلوژن: از تحلیل تا بازسازی و اختلالات | 32 | pillar |
-| `esthetic` | زیبایی و طراحی لبخند | 25 | cross-pillar |
+| `biomimetic` | دندانپزشکی بیومیمتیک و ترمیم ادهزیو | 82 | cross-pillar |
+| `post-and-core` | پست و کور و بازسازی دندان اندوشده | 24 | pillar (split) |
 | `operative-cariology` | کاریولوژی و ترمیم مستقیم | 20 | pillar |
 | `evidence-literacy` | سواد نقد شواهد و تصمیم‌گیری علمی | 15 | cross-pillar (metanotes) |
 | `removable-pros` | پروتز متحرک و اوردنچر | 14 | pillar |
@@ -33,10 +34,22 @@ This is the founder-facing content layer, ready to curate before activation.
 | `failure-troubleshooting` | چرا شکست خورد؟ عیب‌یابی و مدیریت شکست | 12 | cross-pillar (problem-led) |
 | `digital` | دندانپزشکی دیجیتال: اسکن، CAD/CAM و ورک‌فلو | 11 | pillar |
 
+### Shared bonding foundation (a deliberate multi-membership block)
+
+Adhesion fundamentals — adhesive generations, universal adhesives, hierarchy
+of bondability, and **Immediate Dentin Sealing (bond to dentin)** — are
+prerequisite knowledge for anyone placing a **bonded** restoration, not a
+biomimetics-only topic. The same foundation block (label
+«مبانی چسبندگی و باند به دنتین») is therefore injected into every pathway that
+bonds a restoration to tooth: `biomimetic`, `esthetic`, `ceramics`,
+`fixed-pros` (and bond-to-root-dentin into `post-and-core`). Same files, same
+base, surfaced wherever the clinician needs it — the clearest example of
+pathway multi-membership.
+
 ## Coverage (run `python3 tools/pathway_scout.py --coverage` to refresh)
 
 - **389 / 419** content items sit in ≥1 pathway.
-- **76** items sit in **multiple** pathways — the multi-membership the founder
+- **85** items sit in **multiple** pathways — the multi-membership the founder
   asked for (e.g. ceramic surface-prep + resin cementation appear in
   `biomimetic`, `ceramics` and `esthetic`; ferrule/post items in `biomimetic`,
   `fixed-pros-core`, `failure-troubleshooting`).
@@ -54,6 +67,10 @@ This is the founder-facing content layer, ready to curate before activation.
 - **Implant split**: the 94-step `implantology-core` draft was retired and
   replaced by `implant-surgical` (biology/surgery) + `implant-prosthetic`
   (components/restoration). 94 steps was too long for one route.
+- **Fixed-pros split**: likewise the 86-step `fixed-pros-core` draft was
+  retired and rebuilt into `fixed-pros` (prep → impression → cementation →
+  crowns/onlays → crown failures) + `post-and-core` (fiber post → ferrule →
+  root-dentin bonding → decisions/troubleshooting).
 - **AI**: the standalone `promptologist` draft was absorbed into `ai-dentistry`
   (concept episodes → promptologist series).
 - **Biomimetic vs esthetic vs ceramics**: anterior veneers live in `esthetic`;
