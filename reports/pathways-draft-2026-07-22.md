@@ -57,6 +57,30 @@ invented — `digital/ai` already existed with 3 entries):
   `litecast/lite-CAST1` (2-2-2) — the taxonomy has no equipment/prevention
   pillar; either add one deliberately or leave these outside pathways.
 
+## Doctrine: pathway ≠ pillar (founder decision, 2026-07-22)
+
+A pillar is where a content item *lives* (exactly one home in the taxonomy).
+A pathway is a curated *journey through* content and may cross pillars freely
+— e.g. a "biomimetic" pathway must include bonding items even though bonding
+is its own pillar, plus ceramics/surface-prep, adhesive cementation, IDS/DME,
+etc. One item can belong to many pathways.
+
+The `pathways.json` schema already supports this: steps are explicit
+`content_id` lists with no pillar coupling. The two pillar-shaped drafts
+(`implantology-core`, `fixed-pros-core`) used the pillar only as a drafting
+shortcut, not as a structural rule.
+
+Authoring aid for cross-pillar pathways: `tools/pathway_scout.py` — offline,
+read-only. Give it theme terms and it ranks candidates across the whole brain
+(Persian-normalized match over title/caption/keywords/hashtags); `--steps`
+emits a steps-JSON skeleton to paste into `plus/pathways.json`. Demo: a
+biomimetic-style query surfaced 105 candidates spanning bonding, fixed-pros
+(post-and-core, cementation), ceramics/surface-prep and dentai.
+
+**Activation status:** nothing is live. `plus/pathways.json` is inert data —
+no page or script loads it yet; the scout is founder-run only. All of this is
+groundwork awaiting the base version's completion.
+
 ## Next steps (Phase 3 delta)
 
 1. Founder curates the three draft pathways (reorder / trim steps).
