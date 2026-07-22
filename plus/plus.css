@@ -84,6 +84,10 @@
 .dc-plus-due { color: var(--dcp-accent); font-weight: 700; text-decoration: none; }
 .dc-plus-premium-line { margin-inline-start: auto; color: inherit; opacity: .6; font-size: .88rem; text-decoration: none; }
 
+/* ---- "seen" ticks on landing-page links (Plus, logged-in only) ----------- */
+.dcp-seen-tick { display: inline-block; margin-inline-end: 6px; font-weight: 800; color: var(--dcp-muted, #9aa4b2); opacity: .5; }
+.dcp-seen-tick.is-seen { color: #22a06b; opacity: 1; }
+
 /* ---- highlight marks (in the prose) -------------------------------------- */
 mark.dcp-hl { background: transparent; color: inherit; border-radius: 3px; padding: 0 1px; cursor: pointer; }
 mark.dcp-hl[data-color="yellow"] { background: #ffe08a; }

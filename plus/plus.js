@@ -10,6 +10,7 @@ import { initHomeCard } from './js/home-card.js';
 import { initHeader } from './js/header.js';
 import { initReadingTracker } from './js/reading.js';
 import { initListeningTracker } from './js/listening.js';
+import { getModel } from './js/content-index.js';
 
 // Carry plus.js's own cache-busting version (?v=N, set by dc-nav.js) onto the
 // workbench module import. Article pages are OUTSIDE the /plus/ service-worker
@@ -99,6 +100,7 @@ async function initArticle() {
   if (!main || !proseRoot) return; // not a standalone article page
 
   const contentId = detectContentId();
+  markViewed(contentId); // record the open for the landing-page "seen" ticks
   const { wb, updateBtn } = await setupWorkbench({ proseRoot, contentId });
 
   // Post-login return-to-study (the funnel) or a remembered choice this session.
@@ -128,10 +130,55 @@ async function mountArticleWorkbench(root, url) {
   for (const sel of PROSE_SELECTORS) { const found = root.querySelector(sel); if (found) { proseRoot = found; break; } }
   if (!proseRoot) return; // not an article (e.g. a viewer / patients panel)
   const contentId = url.replace(/^\/+/, '').replace(/\.html$/i, '') || detectContentId();
+  markViewed(contentId); // record the open for the landing-page "seen" ticks
   const { wb } = await setupWorkbench({ proseRoot, contentId });
   desktopWb = wb;
 }
 if (typeof window !== 'undefined') window.dcpMountArticleWorkbench = mountArticleWorkbench;
+
+// --- "seen" ticks (a Plus benefit; account-scoped → follows the user across
+// devices). A logged-in reader opening an article records `article_viewed`; a
+// landing page then greens the ticks next to content they've already seen.
+// Anonymous visitors get nothing — kept purely a Plus feature.
+async function markViewed(contentId) {
+  if (!contentId || contentId === 'index') return;
+  const key = 'dcp:viewed:' + contentId; // fire at most once per session per article
+  if (sessionStorage.getItem(key)) return;
+  const user = await currentUser();
+  if (!user) return; // Plus-only
+  sessionStorage.setItem(key, '1');
+  api.activity('article_viewed', contentId).catch(() => {});
+}
+
+async function initSeenTicks() {
+  const user = await currentUser();
+  if (!user) return; // Plus-only: no ticks for anonymous visitors
+  const model = await getModel();
+  if (!model || !model.byContent) return;
+  const here = detectContentId();
+  const links = [];
+  document.querySelectorAll('a[href]').forEach((a) => {
+    let cid;
+    try {
+      const u = new URL(a.getAttribute('href'), location.href);
+      if (u.origin !== location.origin) return;
+      cid = u.pathname.replace(/^\/+/, '').replace(/\.html$/i, '');
+    } catch (_) { return; }
+    if (cid && cid !== here && model.byContent[cid]) links.push({ a, cid });
+  });
+  if (links.length < 2) return; // not a list/landing page → skip
+  let seen;
+  try { const r = await api.seen(); seen = new Set(r.seen || []); }
+  catch (_) { return; }
+  for (const { a, cid } of links) {
+    if (a.querySelector('.dcp-seen-tick')) continue; // already decorated
+    const on = seen.has(cid);
+    a.insertBefore(el('span', {
+      class: 'dcp-seen-tick' + (on ? ' is-seen' : ''), 'aria-hidden': 'true',
+      title: on ? 'دیده‌اید' : 'هنوز ندیده‌اید',
+    }, '✓'), a.firstChild);
+  }
+}
 
 // The per-folder flashcard section on landing pages was removed for the free
 // version. Highlighting (میز کار) stays; the review/flashcard system moves to the
@@ -178,6 +225,7 @@ function boot() {
     initArticle();
     initListening(); // episode-page audio → episode_listened
     initHomeCard(); // homepage personal card on all viewports (desktop + mobile)
+    initSeenTicks(); // landing pages: green ticks next to already-seen content
   } catch (e) {
     // Progressive enhancement: never break the page.
     if (window.console) console.warn('[plus] init failed', e);

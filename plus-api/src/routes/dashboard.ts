@@ -189,6 +189,21 @@ export async function dashboardRoutes(app: FastifyInstance): Promise<void> {
     });
   });
 
+  // GET /seen - content_ids the user has seen, for the landing-page "seen" ticks
+  // (a Plus benefit; cross-device because it's account-scoped). "Seen" = ANY
+  // engagement with a page: opening it (article_viewed), reading it through
+  // (article_completed), listening (episode_listened), or highlighting.
+  app.get('/seen', async (request, reply) => {
+    const res = await pool.query<{ content_id: string }>(
+      `select distinct content_id from user_activity
+        where user_id = $1 and content_id is not null
+          and action in ('article_viewed','article_completed','episode_listened',
+                          'highlight_created','card_reviewed_manual','review_finished')`,
+      [request.user!.id],
+    );
+    return reply.send({ seen: res.rows.map((r) => r.content_id) });
+  });
+
   // GET /export/highlights - full dump of the user's own data. Any plan, any
   // time. The concrete embodiment of principle 2 (ownership is the user's).
   app.get('/export/highlights', async (request, reply) => {

@@ -79,6 +79,8 @@ export const api = {
   // dashboard (later milestones)
   tree: () => request('/tree'),
   progress: () => request('/progress'),
+  // content_ids the user has seen (landing-page "seen" ticks; Plus, cross-device)
+  seen: () => request('/seen'),
   exportHighlights: () => request('/export/highlights'),
 
   // web push (reminder delivery channel for free users)
