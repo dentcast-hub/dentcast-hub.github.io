@@ -3,10 +3,16 @@
 
 Given a content_id that ALREADY exists in dentcast-brain.json, propose which
 pathway(s) it belongs to and WHERE inside each (after which existing step),
-so the same item can join multiple pathways in the right position. Placement
-is a semantic judgment the publishing agent makes; this tool only surfaces
-ranked candidates + a suggested anchor + a confidence flag, per Hard Rule 14
-(auto-apply the unmistakable, ask with concrete options for the borderline).
+so the same item can join multiple pathways in the right position.
+
+Pathways are INDEPENDENT of pillars. A pillar is the item's one home in the
+taxonomy; a pathway is a learning journey and an item may belong to many. So
+placement here is decided purely on CONCEPTUAL relevance to each pathway's own
+content — what a learner of that pathway needs — and deliberately ignores the
+item's pillar/subtopic. Placement is a semantic judgment the publishing agent
+makes; this tool only surfaces ranked candidates + a suggested anchor + a
+confidence flag, per Hard Rule 14 (auto-apply the unmistakable, ask with
+concrete options for the borderline).
 
 Usage:
   python3 tools/pathway_place.py CONTENT_ID          proposal (which pathways / where)
@@ -75,9 +81,12 @@ def propose(cid):
         print('LiteCast content is excluded from professional pathways — skip placement.')
         return
     entry = by_id[cid]
-    prim, sub = pillar_of(entry)
     et = tokens(entry)
-    print(f'PLACE  {cid}  [{prim}/{sub}]  {entry.get("title","")[:60]}')
+    # NOTE: pillar is intentionally NOT used for placement — pathways are
+    # independent of pillars. Shown only as FYI, never as a scoring signal.
+    prim, sub = pillar_of(entry)
+    print(f'PLACE  {cid}  {entry.get("title","")[:64]}')
+    print(f'(pillar {prim}/{sub} — FYI only, not used for placement)')
     print(f'tokens: {", ".join(sorted(et))}\n')
 
     ranked = []
@@ -86,43 +95,38 @@ def propose(cid):
         step_entries = [by_id[s] for s in steps if s in by_id]
         if cid in steps:
             continue  # already a member
-        # pathway-level pillar profile
-        pil_share = sum(1 for se in step_entries if pillar_of(se)[0] == prim)
-        sub_steps = [se for se in step_entries if pillar_of(se) == (prim, sub) and sub]
-        # lexical fit: best-matching existing step + total overlap
-        best_anchor, best_sim = None, 0
-        total = 0
+        # Purely CONCEPTUAL fit against this pathway's own content: how strongly
+        # do the item's concepts overlap the concepts of the pathway's steps,
+        # and which single step is the closest neighbour (the anchor).
+        best_anchor, best_sim, total, related = None, 0, 0, 0
         for se in step_entries:
             sim = similarity(et, se)
             total += sim
+            if sim >= 2:
+                related += 1
             if sim > best_sim:
                 best_sim, best_anchor = sim, content_id(se)
-        # prefer an anchor inside the same subtopic block
-        sub_anchor = None
-        if sub_steps:
-            sub_anchor = max(sub_steps, key=lambda se: similarity(et, se))
-            sub_anchor = content_id(sub_anchor)
-        score = total + pil_share * 2 + (10 if sub_steps else 0) + best_sim * 2
-        if score <= 0:
+        if total <= 0:
             continue
-        anchor = sub_anchor or best_anchor
-        # confidence: STRONG only when the pathway already holds items of this
-        # exact pillar+subtopic (an unmistakable home). Lexical-only overlap is
-        # always ASK — surface it, let the agent judge and the user confirm.
-        strong = bool(sub_steps)
-        ranked.append((score, p['id'], anchor, strong, len(sub_steps), best_sim))
+        score = total + best_sim * 2 + related
+        # STRONG only when a real conceptual CLUSTER exists in this pathway
+        # (several related steps AND a close neighbour) — concept-based, never
+        # pillar-based. Everything thinner is ASK.
+        strong = related >= 3 and best_sim >= 3
+        ranked.append((score, p['id'], best_anchor, strong, related, best_sim))
 
     ranked.sort(key=lambda x: -x[0])
     if not ranked:
         print('No candidate pathway — genuinely orphan, or a new theme. ASK the user.')
         return
     print('candidate pathways (score | conf | pathway | suggested anchor):')
-    for score, pid, anchor, strong, nsub, bsim in ranked[:8]:
+    for score, pid, anchor, strong, related, bsim in ranked[:8]:
         conf = 'STRONG ' if strong else 'ASK    '
-        why = f'{nsub} same-subtopic steps' if nsub else f'best lexical match {bsim}'
-        print(f'  {score:3d} | {conf} | {pid:24s} | after {anchor or "(end)"}   ({why})')
-    print('\nSTRONG = unmistakable home (auto-place, report it). '
-          'ASK = borderline (present options, confirm before inserting).')
+        print(f'  {score:3d} | {conf} | {pid:24s} | after {anchor or "(end)"}'
+              f'   ({related} related steps, closest {bsim})')
+    print('\nSTRONG = a real conceptual cluster in that pathway (auto-place, '
+          'report it). ASK = thinner/borderline (present options, confirm first).\n'
+          'Placement is conceptual only — the item\'s pillar is irrelevant here.')
 
 def insert(cid, pid, after=None, at_end=False, milestone=False):
     d, by_id, pw = load()

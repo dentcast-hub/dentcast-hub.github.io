@@ -954,12 +954,22 @@ spirit as Phase D). It runs **after** step 5 (the `content_id` now exists in
 the brain) and step 5.5 (pillar/subtopic confirmed), because placement consumes
 both.
 
-**Principle (the whole point of pathways).** A pathway is **not** a pillar view.
-A pillar is where the item *lives* (one home, decided in step 2.4). A **pathway
-is a curated learning journey** defined by *"what must a person know to learn
-topic X, and in what order?"* — so the **same item can and often should belong
-to several pathways**, placed at the right position in each. The catalog and the
-governing doctrine live in `plus/pathways.json` and
+**Principle — pathways are INDEPENDENT of pillars; do not conflate them.**
+- A **pillar** is where the item *lives*: exactly **one** home per item, decided
+  in step 2.4. That decision is done and is **not** revisited here.
+- A **pathway** is a curated **learning journey** defined by *"what must a
+  person know to learn topic X, and in what order?"* The **same item can and
+  often should belong to several pathways**, placed at the right position in
+  each.
+- **An item's pillar neither determines nor limits its pathways.** Placement is
+  decided purely on **conceptual relevance to each pathway's own content / the
+  learner's need** — never by matching the item's pillar or subtopic to a
+  pathway. A `bonding` item can belong to esthetics, ceramics, fixed-pros and
+  biomimetic pathways at once; an `occlusion` item can belong to the implant and
+  prosthetics pathways. Pillar is irrelevant to this step (the tool prints it as
+  FYI only).
+
+The catalog and governing doctrine live in `plus/pathways.json` and
 `reports/pathways-catalog-2026-07-22.md`; **read the catalog before placing.**
 `plus/pathways.json` is the single source of truth (spec §5 schema: each pathway
 is `{id, title_fa, description_fa, premium, steps:[{content_id, milestone}],
@@ -978,23 +988,28 @@ new content's actual subject against what a learner of each pathway needs.
    It prints, per pathway, a score, a **confidence flag**, and a **suggested
    anchor** (`after <existing content_id>`) so the item lands *inside the right
    conceptual block*, in prerequisite→advanced order — not just appended. It
-   marks a pathway **STRONG** only when that pathway already holds items of the
-   **same pillar+subtopic** (an unmistakable home); everything else is **ASK**.
-2. Decide membership **semantically**, per **Hard Rule 14**:
+   scores each pathway purely on **conceptual overlap with that pathway's own
+   content** (it ignores pillar). It marks a pathway **STRONG** only when a real
+   conceptual **cluster** exists there (several related steps + a close
+   neighbour); everything thinner is **ASK**.
+2. Decide membership **semantically**, per **Hard Rule 14** — judged on the
+   content's actual subject vs. what each pathway's learner needs, **never** on
+   the item's pillar:
    - **STRONG / unmistakable homes** (the item clearly belongs — e.g. a new
-     `implantology/restoration-design` piece into `implant-prosthetic`, a new
-     bonding/adhesion piece into every bonded-restoration pathway): **place them
-     directly** and report each placement (pathway + anchor + milestone flag).
+     adhesion/bonding piece into every bonded-restoration pathway, a new
+     screw-loosening piece into the implant-prosthetic and failure pathways):
+     **place them directly** and report each placement (pathway + anchor +
+     milestone flag).
    - **Borderline / cross-cutting judgment calls** (a plausible but not obvious
      fit, a brand-new theme with no clear home, or genuine uncertainty about the
      exact position): **ASK the user first**, presenting concrete named options
      (which pathway(s), after which step) — never guess, never silently drop a
      real candidate. This is the explicit **«اگر شک داشتی سوال کن، عمل نکن»**
      guard for pathways.
-   - Remember the **borrow rule**: an item may belong to a pathway from another
-     pillar because that pathway's *learner* needs it (bonding basics into
-     esthetics/ceramics; implant occlusion into the implant pathway). Consider
-     those cross-pillar homes too, not just the item's own pillar.
+   - A single item routinely belongs to **several** pathways — place it in each
+     one whose learner needs it, at the right position in each. The reach is
+     conceptual, not pillar-bound (bonding basics reach esthetics/ceramics;
+     occlusion reaches the implant and prosthetics pathways).
 3. Apply each confirmed placement mechanically (this is the only writer of
    `plus/pathways.json`; it refuses duplicates and refuses LiteCast):
    ```bash
