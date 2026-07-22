@@ -1400,5 +1400,114 @@
       }
     ],
     "reserved": {}
+  },
+  {
+    "id": "esthetic",
+    "title_fa": "زیبایی و طراحی لبخند",
+    "description_fa": "مسیر زیبایی — از اصول طراحی لبخند و آنالیز صورت تا رنگ و سفیدکردن، ونیر و لمینیت سرامیکی (اندیکاسیون، تراش، اصلاح‌های زیبایی) و انتخاب سرامیکِ زیبایی با افکت‌های نوری؛ از پایه تا پیشرفته.",
+    "premium": true,
+    "steps": [
+      {
+        "content_id": "episodes/episode-28",
+        "milestone": false
+      },
+      {
+        "content_id": "notecast/episode-28",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-46",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-120-1",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-46",
+        "milestone": true
+      },
+      {
+        "content_id": "episodes/episode-68",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-61",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-70",
+        "milestone": false
+      },
+      {
+        "content_id": "dentai/dentai-2",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-5",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-28",
+        "milestone": true
+      },
+      {
+        "content_id": "episodes/episode-37",
+        "milestone": false
+      },
+      {
+        "content_id": "notecast/episode-37",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-38",
+        "milestone": false
+      },
+      {
+        "content_id": "sharehub/share-8",
+        "milestone": false
+      },
+      {
+        "content_id": "dentai/dentai-10",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-39",
+        "milestone": false
+      },
+      {
+        "content_id": "sharehub/share-6",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-37",
+        "milestone": false
+      },
+      {
+        "content_id": "chairside/chairside-1",
+        "milestone": true
+      },
+      {
+        "content_id": "episodes/episode-13",
+        "milestone": false
+      },
+      {
+        "content_id": "notecast/episode-13",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-69",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-107",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-122-3",
+        "milestone": true
+      }
+    ],
+    "reserved": {}
   }
 ]
