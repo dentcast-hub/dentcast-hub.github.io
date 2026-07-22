@@ -1923,5 +1923,94 @@
       }
     ],
     "reserved": {}
+  },
+  {
+    "id": "operative-cariology",
+    "title_fa": "کاریولوژی و ترمیم مستقیم",
+    "description_fa": "مسیر پوسیدگی و ترمیم مستقیم — از تشخیص و مدیریت پوسیدگی و پیشگیری تا برداشت مبتنی بر PSZ/CRE، ترمیم مستقیم کامپوزیت و مواد، و تشخیص ترک دندان؛ از پایه تا پیشرفته.",
+    "premium": true,
+    "steps": [
+      {
+        "content_id": "dentai/dentai-3",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-23",
+        "milestone": false
+      },
+      {
+        "content_id": "sharehub/share-7",
+        "milestone": false
+      },
+      {
+        "content_id": "dentai/dentai-4",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-134",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-135",
+        "milestone": true
+      },
+      {
+        "content_id": "episodes/episode-111-1",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-99",
+        "milestone": true
+      },
+      {
+        "content_id": "episodes/episode-65",
+        "milestone": false
+      },
+      {
+        "content_id": "dentai/dentai-11",
+        "milestone": false
+      },
+      {
+        "content_id": "dentai/dentai-12",
+        "milestone": true
+      },
+      {
+        "content_id": "dentai/dentai-6",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-128-2",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-147-4",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-147-3",
+        "milestone": false
+      },
+      {
+        "content_id": "dentai/dentai-22",
+        "milestone": true
+      },
+      {
+        "content_id": "dentai/dentai-13",
+        "milestone": false
+      },
+      {
+        "content_id": "dentai/dentai-1",
+        "milestone": false
+      },
+      {
+        "content_id": "dentai/dentai-14",
+        "milestone": false
+      },
+      {
+        "content_id": "dentai/dentai-15",
+        "milestone": true
+      }
+    ],
+    "reserved": {}
   }
 ]
