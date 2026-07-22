@@ -456,7 +456,7 @@
     ],
     "page_url": "/episodes/episode-22.html",
     "pillar": {
-      "primary": null,
+      "primary": "oral-medicine",
       "secondary": [],
       "subtopic": null
     }
@@ -2504,9 +2504,9 @@
     ],
     "page_url": "/episodes/episode-111-1.html",
     "pillar": {
-      "primary": null,
+      "primary": "operative",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "caries-management"
     }
   },
   {
@@ -5247,9 +5247,9 @@
     ],
     "page_url": "/litecast/lite-CAST2.html",
     "pillar": {
-      "primary": null,
+      "primary": "removable-pros",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "implant-overdentures"
     }
   },
   {
@@ -5296,9 +5296,9 @@
     ],
     "page_url": "/litecast/lite-CAST4.html",
     "pillar": {
-      "primary": null,
+      "primary": "removable-pros",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "implant-overdentures"
     }
   },
   {
@@ -6262,7 +6262,7 @@
     ],
     "url": "/notecast/episode-22.html",
     "pillar": {
-      "primary": null,
+      "primary": "oral-medicine",
       "secondary": [],
       "subtopic": null
     }
@@ -9831,9 +9831,9 @@
     ],
     "page_url": "/dentai/promptologist/prompt1-1.html",
     "pillar": {
-      "primary": null,
+      "primary": "digital",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "ai"
     }
   },
   {
@@ -9947,9 +9947,9 @@
     ],
     "page_url": "/dentai/promptologist/prompt1-2.html",
     "pillar": {
-      "primary": null,
+      "primary": "digital",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "ai"
     }
   },
   {
@@ -10056,9 +10056,9 @@
     ],
     "page_url": "/dentai/promptologist/prompt1-3.html",
     "pillar": {
-      "primary": null,
+      "primary": "digital",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "ai"
     }
   },
   {
@@ -10168,9 +10168,9 @@
     ],
     "page_url": "/dentai/promptologist/prompt1-append1.html",
     "pillar": {
-      "primary": null,
+      "primary": "digital",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "ai"
     }
   },
   {
@@ -10629,9 +10629,9 @@
     ],
     "page_url": "/dentai/promptologist/prompt1-4.html",
     "pillar": {
-      "primary": null,
+      "primary": "digital",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "ai"
     }
   },
   {
@@ -10859,9 +10859,9 @@
     ],
     "page_url": "/dentai/promptologist/prompt1-5.html",
     "pillar": {
-      "primary": null,
+      "primary": "digital",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "ai"
     }
   },
   {
@@ -11006,9 +11006,9 @@
     ],
     "page_url": "/dentai/promptologist/prompt2-1.html",
     "pillar": {
-      "primary": null,
+      "primary": "digital",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "ai"
     }
   },
   {
@@ -11094,9 +11094,9 @@
     ],
     "page_url": "/dentai/promptologist/prompt3-1.html",
     "pillar": {
-      "primary": null,
+      "primary": "digital",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "ai"
     }
   },
   {
@@ -11193,9 +11193,9 @@
     ],
     "page_url": "/dentai/promptologist/prompt4-1.html",
     "pillar": {
-      "primary": null,
+      "primary": "digital",
       "secondary": [],
-      "subtopic": null
+      "subtopic": "ai"
     }
   },
   {
