@@ -781,5 +781,342 @@
       }
     ],
     "reserved": {}
+  },
+  {
+    "id": "biomimetic",
+    "title_fa": "دندانپزشکی بیومیمتیک و ترمیم ادهزیو",
+    "description_fa": "مسیری کامل از فلسفه و مبانی چسبندگی تا تکنیک‌های حفظ نسج، برداشت پوسیدگی، ترمیم مستقیم و غیرمستقیم ادهزیو، سمان‌کردن سرامیک و بازسازی دندان‌های اندوشده — از پیش‌نیاز تا پیشرفته.",
+    "premium": true,
+    "steps": [
+      {
+        "content_id": "episodes/episode-53",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-54",
+        "milestone": false
+      },
+      {
+        "content_id": "metanotes/meta-14",
+        "milestone": true
+      },
+      {
+        "content_id": "episodes/episode-4",
+        "milestone": false
+      },
+      {
+        "content_id": "notecast/episode-4",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-5",
+        "milestone": false
+      },
+      {
+        "content_id": "notecast/episode-5",
+        "milestone": false
+      },
+      {
+        "content_id": "dentai/dentai-5",
+        "milestone": false
+      },
+      {
+        "content_id": "dentai/dentai-16",
+        "milestone": false
+      },
+      {
+        "content_id": "dentai/dentai-18",
+        "milestone": true
+      },
+      {
+        "content_id": "episodes/episode-90",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-91",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-92",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-93",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-94",
+        "milestone": true
+      },
+      {
+        "content_id": "episodes/episode-6",
+        "milestone": false
+      },
+      {
+        "content_id": "notecast/episode-6",
+        "milestone": false
+      },
+      {
+        "content_id": "dentai/dentai-17",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-7",
+        "milestone": false
+      },
+      {
+        "content_id": "notecast/episode-7",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-75",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-76",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-72",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-73",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-74",
+        "milestone": false
+      },
+      {
+        "content_id": "dentai/dentai-19",
+        "milestone": false
+      },
+      {
+        "content_id": "dentai/dentai-20",
+        "milestone": false
+      },
+      {
+        "content_id": "dentai/dentai-8",
+        "milestone": false
+      },
+      {
+        "content_id": "dentai/dentai-9",
+        "milestone": true
+      },
+      {
+        "content_id": "episodes/episode-134",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-135",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-65",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-66",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-67",
+        "milestone": false
+      },
+      {
+        "content_id": "dentai/dentai-11",
+        "milestone": true
+      },
+      {
+        "content_id": "dentai/dentai-13",
+        "milestone": false
+      },
+      {
+        "content_id": "dentai/dentai-1",
+        "milestone": false
+      },
+      {
+        "content_id": "dentai/dentai-14",
+        "milestone": false
+      },
+      {
+        "content_id": "dentai/dentai-15",
+        "milestone": true
+      },
+      {
+        "content_id": "dentai/dentai-6",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-128-2",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-147-4",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-127",
+        "milestone": true
+      },
+      {
+        "content_id": "episodes/episode-44",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-71",
+        "milestone": true
+      },
+      {
+        "content_id": "episodes/episode-123-3",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-137",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-138",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-77",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-78",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-121",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-122",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-123",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-124",
+        "milestone": false
+      },
+      {
+        "content_id": "dentai/dentai-25",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-159-1",
+        "milestone": true
+      },
+      {
+        "content_id": "notecast/episode-8",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-9",
+        "milestone": false
+      },
+      {
+        "content_id": "notecast/episode-9",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-136",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-10",
+        "milestone": false
+      },
+      {
+        "content_id": "notecast/episode-10",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-11",
+        "milestone": false
+      },
+      {
+        "content_id": "notecast/episode-11",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-12",
+        "milestone": false
+      },
+      {
+        "content_id": "notecast/episode-12",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-16",
+        "milestone": false
+      },
+      {
+        "content_id": "notecast/episode-16",
+        "milestone": false
+      },
+      {
+        "content_id": "notecast/episode-2",
+        "milestone": false
+      },
+      {
+        "content_id": "notecast/episode-3",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-148",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-149",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-36",
+        "milestone": true
+      },
+      {
+        "content_id": "episodes/episode-47",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-48",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-49",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-4",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-36",
+        "milestone": false
+      },
+      {
+        "content_id": "notecast/episode-36",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-101",
+        "milestone": false
+      },
+      {
+        "content_id": "metanotes/meta-7",
+        "milestone": false
+      },
+      {
+        "content_id": "dentai/dentai-27",
+        "milestone": true
+      }
+    ],
+    "reserved": {}
   }
 ]

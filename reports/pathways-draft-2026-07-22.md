@@ -81,6 +81,35 @@ biomimetic-style query surfaced 105 candidates spanning bonding, fixed-pros
 no page or script loads it yet; the scout is founder-run only. All of this is
 groundwork awaiting the base version's completion.
 
+### First cross-pillar pathway built: `biomimetic` (82 steps)
+
+Built with `pathway_scout.py` + founder decisions (see below). Semantic order
+prerequisite→advanced, in 11 conceptual blocks; each block's last step is a
+milestone. Spans bonding, ceramics, operative, fixed-pros and dentai — the
+proof that pathways cross pillars. Blocks:
+
+1. چرا بیومیمتیک؟ (فلسفه) — 3
+2. مبانی چسبندگی و ادهزیوها (پیش‌نیاز) — 7
+3. تئوری بیومیمتیک، کتاب فصل ۱ — 5
+4. تکنیک‌های سیل و حفظ نسج (IDS/DME/DWT) — 14
+5. برداشت پوسیدگی: MID و PSZ — 6
+6. تشخیص ترک و ساختار — 4
+7. ترمیم مستقیم کامپوزیت — 4
+8. تعمیر به‌جای تعویض — 2
+9. ترمیم غیرمستقیم ادهزیو و آنله — 11
+10. سرامیک: آماده‌سازی سطح و سمان — 17
+11. دندان اندوشده و حفظ نسج (پیشرفته) — 9
+
+Founder decisions applied (2026-07-22):
+- Anterior veneers/laminates **excluded** — biomimetic core is posterior /
+  tissue-preservation; veneers reserved for a future "adhesive esthetics" path.
+- Endo block **complete** (ferrule series 47-49, root-dentin bonding 36/101,
+  fiber-post metanote, endocrown-vs-post dentai-27, insight-4).
+- Book series (ep 90-94) placed **after** bonding fundamentals (theory before
+  technique).
+- Borderline items **included**: repair (ep 44, 71), direct-composite block
+  (dentai-6, ep 128-2, 147-4), NCCL (ep 127).
+
 ## Next steps (Phase 3 delta)
 
 1. Founder curates the three draft pathways (reorder / trim steps).
