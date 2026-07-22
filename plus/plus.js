@@ -10,7 +10,6 @@ import { initHomeCard } from './js/home-card.js';
 import { initHeader } from './js/header.js';
 import { initReadingTracker } from './js/reading.js';
 import { initListeningTracker } from './js/listening.js';
-import { getModel } from './js/content-index.js';
 
 // Carry plus.js's own cache-busting version (?v=N, set by dc-nav.js) onto the
 // workbench module import. Article pages are OUTSIDE the /plus/ service-worker
@@ -100,7 +99,6 @@ async function initArticle() {
   if (!main || !proseRoot) return; // not a standalone article page
 
   const contentId = detectContentId();
-  markViewed(contentId); // record the open for the landing-page "seen" ticks
   const { wb, updateBtn } = await setupWorkbench({ proseRoot, contentId });
 
   // Post-login return-to-study (the funnel) or a remembered choice this session.
@@ -140,8 +138,21 @@ if (typeof window !== 'undefined') window.dcpMountArticleWorkbench = mountArticl
 // devices). A logged-in reader opening an article records `article_viewed`; a
 // landing page then greens the ticks next to content they've already seen.
 // Anonymous visitors get nothing — kept purely a Plus feature.
+//
+// Content folders that get ticks: everything EXCEPT litecast & glossary (product
+// choice). Path-based (not the taxonomy index), so it also covers content the
+// brain doesn't pillar-map (sharehub, most notecast, ...) and nested content like
+// dentai/promptologist/… (matched by its top folder 'dentai').
+const SEEN_FOLDERS = new Set([
+  'episodes', 'notecast', 'insight', 'dentai', 'chairside', 'metanotes', 'photocast', 'sharehub', 'dentcast-plus',
+]);
+function isSeenContent(contentId) {
+  const parts = (contentId || '').split('/');
+  return parts.length >= 2 && SEEN_FOLDERS.has(parts[0]); // a real article, in a ticked folder
+}
+
 async function markViewed(contentId) {
-  if (!contentId || contentId === 'index') return;
+  if (!isSeenContent(contentId)) return;
   const key = 'dcp:viewed:' + contentId; // fire at most once per session per article
   if (sessionStorage.getItem(key)) return;
   const user = await currentUser();
@@ -153,8 +164,6 @@ async function markViewed(contentId) {
 async function initSeenTicks() {
   const user = await currentUser();
   if (!user) return; // Plus-only: no ticks for anonymous visitors
-  const model = await getModel();
-  if (!model || !model.byContent) return;
   const here = detectContentId();
   const links = [];
   document.querySelectorAll('a[href]').forEach((a) => {
@@ -164,7 +173,7 @@ async function initSeenTicks() {
       if (u.origin !== location.origin) return;
       cid = u.pathname.replace(/^\/+/, '').replace(/\.html$/i, '');
     } catch (_) { return; }
-    if (cid && cid !== here && model.byContent[cid]) links.push({ a, cid });
+    if (cid !== here && isSeenContent(cid)) links.push({ a, cid });
   });
   if (links.length < 2) return; // not a list/landing page → skip
   let seen;
@@ -225,6 +234,7 @@ function boot() {
     initArticle();
     initListening(); // episode-page audio → episode_listened
     initHomeCard(); // homepage personal card on all viewports (desktop + mobile)
+    markViewed(detectContentId()); // mark THIS content page seen on open (any folder, incl. episodes)
     initSeenTicks(); // landing pages: green ticks next to already-seen content
   } catch (e) {
     // Progressive enhancement: never break the page.
