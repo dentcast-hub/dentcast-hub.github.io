@@ -12,8 +12,13 @@ function defaultBases() {
   if (h === 'localhost' || h === '127.0.0.1' || h === '') {
     return ['http://localhost:8787'];
   }
-  // Placeholders until the api subdomains are finalized at deploy.
-  return ['https://api.dentcast.org', 'https://api.dentcast.ir'];
+  // Each site talks to its OWN api host FIRST, so the session cookie stays
+  // same-site (SameSite=Lax). Order is critical: if .ir picked api.dentcast.org
+  // first (once that host exists behind a Cloudflare Worker), it would be
+  // cross-site and the cookie would be dropped — breaking .ir login. The other
+  // host is only a fallback for read-only resilience (same container behind both).
+  if (h.indexOf('dentcast.org') !== -1) return ['https://api.dentcast.org', 'https://api.dentcast.ir'];
+  return ['https://api.dentcast.ir', 'https://api.dentcast.org'];
 }
 
 export const API_BASES = OVERRIDE.apiBases || defaultBases();
