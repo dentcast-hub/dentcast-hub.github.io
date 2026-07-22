@@ -54,8 +54,11 @@ async function renderLoggedIn(card, user) {
 
   const rows = [streakLine];
   if (last) {
+    // Episodes are audio (the only content that fires episode_listened), so the
+    // lead reads "ادامه گوش دادن"; everything else is "ادامه خواندن".
+    const lead = last.type === 'episodes' ? 'ادامه گوش دادن: ' : 'ادامه خواندن: ';
     rows.push(el('a', { class: 'dc-plus-material', href: last.url }, [
-      el('span', { class: 'dc-plus-material-lead' }, 'ادامه خواندن: '),
+      el('span', { class: 'dc-plus-material-lead' }, lead),
       el('span', {}, last.title),
     ]));
   }
