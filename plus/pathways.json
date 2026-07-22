@@ -353,51 +353,6 @@
     "reserved": {}
   },
   {
-    "id": "promptologist",
-    "title_fa": "پرامپتولوژیست — سواد هوش مصنوعی",
-    "description_fa": "دوره‌ی دنباله‌دار آشنایی با مدل‌های زبانی و پرامپت‌نویسی برای دندانپزشکان، به ترتیب انتشار.",
-    "premium": true,
-    "steps": [
-      {
-        "content_id": "dentai/promptologist/prompt1-1",
-        "milestone": false
-      },
-      {
-        "content_id": "dentai/promptologist/prompt1-2",
-        "milestone": false
-      },
-      {
-        "content_id": "dentai/promptologist/prompt1-3",
-        "milestone": false
-      },
-      {
-        "content_id": "dentai/promptologist/prompt1-append1",
-        "milestone": false
-      },
-      {
-        "content_id": "dentai/promptologist/prompt1-4",
-        "milestone": false
-      },
-      {
-        "content_id": "dentai/promptologist/prompt1-5",
-        "milestone": true
-      },
-      {
-        "content_id": "dentai/promptologist/prompt2-1",
-        "milestone": false
-      },
-      {
-        "content_id": "dentai/promptologist/prompt3-1",
-        "milestone": false
-      },
-      {
-        "content_id": "dentai/promptologist/prompt4-1",
-        "milestone": true
-      }
-    ],
-    "reserved": {}
-  },
-  {
     "id": "biomimetic",
     "title_fa": "دندانپزشکی بیومیمتیک و ترمیم ادهزیو",
     "description_fa": "مسیری کامل از فلسفه و مبانی چسبندگی تا تکنیک‌های حفظ نسج، برداشت پوسیدگی، ترمیم مستقیم و غیرمستقیم ادهزیو، سمان‌کردن سرامیک و بازسازی دندان‌های اندوشده — از پیش‌نیاز تا پیشرفته.",
@@ -1514,6 +1469,456 @@
       },
       {
         "content_id": "metanotes/meta-17",
+        "milestone": true
+      }
+    ],
+    "reserved": {}
+  },
+  {
+    "id": "digital",
+    "title_fa": "دندانپزشکی دیجیتال: اسکن، CAD/CAM و ورک‌فلو",
+    "description_fa": "مسیر دیجیتال (به‌جز هوش مصنوعی) — از اسکن داخل‌دهانی و ثبت دقیق تا متریال CAD/CAM و ورک‌فلوی کامل دیجیتال؛ از پایه تا پیشرفته.",
+    "premium": true,
+    "steps": [
+      {
+        "content_id": "episodes/episode-106-2",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-122-2",
+        "milestone": false
+      },
+      {
+        "content_id": "dentai/dentai-21",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-40",
+        "milestone": false
+      },
+      {
+        "content_id": "metanotes/meta-16",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-51",
+        "milestone": true
+      },
+      {
+        "content_id": "episodes/episode-96",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-97",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-98",
+        "milestone": true
+      },
+      {
+        "content_id": "episodes/episode-149-2",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-150-1",
+        "milestone": true
+      }
+    ],
+    "reserved": {}
+  },
+  {
+    "id": "removable-pros",
+    "title_fa": "پروتز متحرک و اوردنچر",
+    "description_fa": "مسیر پروتز متحرک — از دنچر کامل تا اوردنچرهای متکی بر ایمپلنت (انتخاب اتچمنت و پروتکل لود) و اپلاینس‌های اسنپ‌آن اسمایل.",
+    "premium": true,
+    "steps": [
+      {
+        "content_id": "episodes/episode-118-1",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-147-1",
+        "milestone": false
+      },
+      {
+        "content_id": "chairside/chairside-8",
+        "milestone": true
+      },
+      {
+        "content_id": "episodes/episode-27",
+        "milestone": false
+      },
+      {
+        "content_id": "notecast/episode-27",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-50",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-51",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-52",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-147-6",
+        "milestone": false
+      },
+      {
+        "content_id": "chairside/chairside-11",
+        "milestone": true
+      },
+      {
+        "content_id": "episodes/episode-32",
+        "milestone": false
+      },
+      {
+        "content_id": "notecast/episode-32",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-33",
+        "milestone": false
+      },
+      {
+        "content_id": "notecast/episode-33",
+        "milestone": true
+      }
+    ],
+    "reserved": {}
+  },
+  {
+    "id": "ai-dentistry",
+    "title_fa": "هوش مصنوعی در دندانپزشکی",
+    "description_fa": "مسیر سواد هوش مصنوعی برای دندانپزشکان — از مبانی مدل‌های زبانی تا دوره‌ی دنباله‌دار پرامپتولوژیست (پرامپت‌نویسی، توهم مدل، شکل خروجی).",
+    "premium": true,
+    "steps": [
+      {
+        "content_id": "episodes/episode-109",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-149-1",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-109-2",
+        "milestone": true
+      },
+      {
+        "content_id": "dentai/promptologist/prompt1-1",
+        "milestone": false
+      },
+      {
+        "content_id": "dentai/promptologist/prompt1-2",
+        "milestone": false
+      },
+      {
+        "content_id": "dentai/promptologist/prompt1-3",
+        "milestone": false
+      },
+      {
+        "content_id": "dentai/promptologist/prompt1-append1",
+        "milestone": false
+      },
+      {
+        "content_id": "dentai/promptologist/prompt1-4",
+        "milestone": false
+      },
+      {
+        "content_id": "dentai/promptologist/prompt1-5",
+        "milestone": false
+      },
+      {
+        "content_id": "dentai/promptologist/prompt2-1",
+        "milestone": false
+      },
+      {
+        "content_id": "dentai/promptologist/prompt3-1",
+        "milestone": false
+      },
+      {
+        "content_id": "dentai/promptologist/prompt4-1",
+        "milestone": true
+      }
+    ],
+    "reserved": {}
+  },
+  {
+    "id": "ceramics",
+    "title_fa": "سرامیک دندانی: از انتخاب ماده تا سمان",
+    "description_fa": "مسیر مواد سرامیکی — از دسته‌بندی و انواع و علمِ زیرکونیا تا اندیکاسیون‌ها، آماده‌سازی سطح و سمان‌کردن ادهزیو و شکست‌ها؛ از پایه تا پیشرفته. عرضی با باندینگ و زیبایی.",
+    "premium": true,
+    "steps": [
+      {
+        "content_id": "episodes/episode-8",
+        "milestone": false
+      },
+      {
+        "content_id": "notecast/episode-8",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-29",
+        "milestone": false
+      },
+      {
+        "content_id": "notecast/episode-29",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-30",
+        "milestone": false
+      },
+      {
+        "content_id": "notecast/episode-30",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-69",
+        "milestone": true
+      },
+      {
+        "content_id": "episodes/episode-17",
+        "milestone": false
+      },
+      {
+        "content_id": "notecast/episode-17",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-18",
+        "milestone": false
+      },
+      {
+        "content_id": "notecast/episode-18",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-87",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-88",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-89",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-107",
+        "milestone": true
+      },
+      {
+        "content_id": "episodes/episode-13",
+        "milestone": false
+      },
+      {
+        "content_id": "notecast/episode-13",
+        "milestone": false
+      },
+      {
+        "content_id": "notecast/episode-15",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-122-3",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-122-5",
+        "milestone": false
+      },
+      {
+        "content_id": "dentai/dentai-10",
+        "milestone": true
+      },
+      {
+        "content_id": "episodes/episode-9",
+        "milestone": false
+      },
+      {
+        "content_id": "notecast/episode-9",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-136",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-10",
+        "milestone": false
+      },
+      {
+        "content_id": "notecast/episode-10",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-11",
+        "milestone": false
+      },
+      {
+        "content_id": "notecast/episode-11",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-12",
+        "milestone": false
+      },
+      {
+        "content_id": "notecast/episode-12",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-16",
+        "milestone": false
+      },
+      {
+        "content_id": "notecast/episode-16",
+        "milestone": true
+      },
+      {
+        "content_id": "episodes/episode-19",
+        "milestone": false
+      },
+      {
+        "content_id": "notecast/episode-19",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-27",
+        "milestone": true
+      }
+    ],
+    "reserved": {}
+  },
+  {
+    "id": "failure-troubleshooting",
+    "title_fa": "چرا شکست خورد؟ عیب‌یابی و مدیریت شکست",
+    "description_fa": "مسیر مسئله‌محور — شناخت، تحلیل و مدیریت شکست‌های ترمیمی و پروتزی: از افتادن و لق‌شدن روکش و درد بعد از درمان تا پروگنوز نامشخص و تصمیم بازسازی‌پذیری. عرضی از چند پیلار.",
+    "premium": true,
+    "steps": [
+      {
+        "content_id": "photocast/episode-1",
+        "milestone": false
+      },
+      {
+        "content_id": "chairside/chairside-7",
+        "milestone": false
+      },
+      {
+        "content_id": "dentcast-plus/video-3",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-32",
+        "milestone": true
+      },
+      {
+        "content_id": "insight/insight-54",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-14",
+        "milestone": false
+      },
+      {
+        "content_id": "metanotes/meta-18",
+        "milestone": true
+      },
+      {
+        "content_id": "insight/insight-7",
+        "milestone": false
+      },
+      {
+        "content_id": "chairside/chairside-9",
+        "milestone": false
+      },
+      {
+        "content_id": "chairside/chairside-13",
+        "milestone": false
+      },
+      {
+        "content_id": "chairside/chairside-16",
+        "milestone": false
+      },
+      {
+        "content_id": "dentai/dentai-27",
+        "milestone": true
+      }
+    ],
+    "reserved": {}
+  },
+  {
+    "id": "evidence-literacy",
+    "title_fa": "سواد نقد شواهد و تصمیم‌گیری علمی",
+    "description_fa": "مسیر خواندن نقادانه‌ی مقاله و شواهد — متانوت‌ها به‌عنوان مرورِ نقادانه‌ی مطالعات: از متد تصمیم و مفهوم Success/Survival تا نقدِ ادعاهای بقا و طراحی مطالعه.",
+    "premium": true,
+    "steps": [
+      {
+        "content_id": "metanotes/meta-6",
+        "milestone": false
+      },
+      {
+        "content_id": "metanotes/meta-13",
+        "milestone": false
+      },
+      {
+        "content_id": "metanotes/meta-14",
+        "milestone": true
+      },
+      {
+        "content_id": "metanotes/meta-1",
+        "milestone": false
+      },
+      {
+        "content_id": "metanotes/meta-2",
+        "milestone": false
+      },
+      {
+        "content_id": "metanotes/meta-3",
+        "milestone": false
+      },
+      {
+        "content_id": "metanotes/meta-4",
+        "milestone": false
+      },
+      {
+        "content_id": "metanotes/meta-5",
+        "milestone": true
+      },
+      {
+        "content_id": "metanotes/meta-7",
+        "milestone": false
+      },
+      {
+        "content_id": "metanotes/meta-9",
+        "milestone": false
+      },
+      {
+        "content_id": "metanotes/meta-11",
+        "milestone": false
+      },
+      {
+        "content_id": "metanotes/meta-12",
+        "milestone": false
+      },
+      {
+        "content_id": "metanotes/meta-15",
+        "milestone": false
+      },
+      {
+        "content_id": "metanotes/meta-17",
+        "milestone": false
+      },
+      {
+        "content_id": "metanotes/meta-18",
         "milestone": true
       }
     ],
