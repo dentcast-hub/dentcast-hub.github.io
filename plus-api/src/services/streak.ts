@@ -63,6 +63,45 @@ export function computeStreakUpdate(
 }
 
 /**
+ * Whether the cached run is still alive as of `today`: the user was active
+ * today or yesterday, or the missed days since `lastActiveDay` can still be
+ * bridged by the shields currently held (the same rule computeStreakUpdate
+ * applies on the next action). The cache itself is rewritten lazily — only on
+ * the next qualifying action — so display and the reminder must use this to
+ * avoid showing/protecting a number that is already dead.
+ */
+export function streakIsAlive(
+  lastActiveDay: string | null,
+  today: string,
+  shieldsAvailable = 0,
+): boolean {
+  if (!lastActiveDay) return false;
+  const gap = dayDiff(today, lastActiveDay);
+  if (gap <= 1) return true; // active today or yesterday
+  return gap - 1 <= shieldsAvailable; // shields can still bridge the missed days
+}
+
+/**
+ * The streak number to SHOW right now: the cached run while it is alive, 0 once
+ * it can no longer be saved. Shields are looked up only when the gap actually
+ * needs them, so the common case (active today/yesterday) costs no queries.
+ */
+export async function displayStreak(
+  db: pg.Pool | pg.PoolClient,
+  userId: string,
+  prev: Pick<StreakState, 'current_streak' | 'last_active_day'>,
+  today: string,
+): Promise<number> {
+  const last = prev.last_active_day;
+  if (!last) return 0;
+  if (dayDiff(today, last) <= 1) return prev.current_streak;
+  const { score } = await computeScore(db, userId);
+  const used = await freezesUsedCount(db, userId);
+  const shields = freezesAvailable(score, used);
+  return streakIsAlive(last, today, shields) ? prev.current_streak : 0;
+}
+
+/**
  * Apply a qualifying action's streak effect on the given client (must be inside
  * the same transaction as the activity insert). Appends a `streak_kept` event
  * when a new day is counted. Locks the profile row to serialize same-user writes.

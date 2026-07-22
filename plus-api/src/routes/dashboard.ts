@@ -3,7 +3,7 @@ import { requireAuth } from '../middleware/auth.js';
 import { pool } from '../db.js';
 import { buildFolderTree, getFolders, folderOf } from '../content-index.js';
 import { config } from '../config.js';
-import { QUALIFYING_ACTIONS } from '../services/streak.js';
+import { QUALIFYING_ACTIONS, streakIsAlive, displayStreak } from '../services/streak.js';
 import {
   computeScore, freezesUsedCount, freezesAvailable, pointsToNextFreeze,
   SHIELD_CAP, SHIELD_POINTS,
@@ -79,7 +79,8 @@ export async function dashboardRoutes(app: FastifyInstance): Promise<void> {
 
     return reply.send({
       records: {
-        current_streak: request.user!.current_streak,
+        // 0 once the run can no longer be saved (the cache resets lazily).
+        current_streak: await displayStreak(pool, userId, request.user!, today),
         longest_streak: request.user!.longest_streak,
       },
       week,
@@ -164,8 +165,14 @@ export async function dashboardRoutes(app: FastifyInstance): Promise<void> {
     const freezesUsed = await freezesUsedCount(pool, userId);
     const freezesAvail = freezesAvailable(score, freezesUsed);
 
+    // Streak shown as 0 once the run can no longer be saved (cache is lazy);
+    // reuses the shields already computed above instead of re-querying.
+    const today = dayInTz(new Date(), config.streakTimezone);
+    const shownStreak = streakIsAlive(request.user!.last_active_day, today, freezesAvail)
+      ? request.user!.current_streak : 0;
+
     return reply.send({
-      current_streak: request.user!.current_streak,
+      current_streak: shownStreak,
       longest_streak: request.user!.longest_streak,
       total_highlights: totalHl,
       articles_with_highlights: stats.rows[0]?.articles_with_highlights ?? 0,
