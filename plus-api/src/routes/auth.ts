@@ -8,6 +8,7 @@ import { setSessionCookie, clearSessionCookie, readSession } from '../services/s
 import { sanitizeReturnTo } from '../services/return-to.js';
 import { generatePseudonym } from '../services/pseudonym.js';
 import { verifyTelegramAuth } from '../services/telegram-auth.js';
+import { mergeProfiles } from '../services/merge-profiles.js';
 import { sms } from '../providers/registry.js';
 import { loadUser } from '../middleware/auth.js';
 import { displayStreak } from '../services/streak.js';
@@ -220,54 +221,79 @@ export async function authRoutes(app: FastifyInstance): Promise<void> {
     const photo = tg.photo_url || null;
 
     // The user may ALREADY be logged in (e.g. a phone/OTP account) and clicking
-    // the Telegram button to LINK Telegram to that same account. The widget's
-    // redirect is a top-level navigation to this API host, so the existing
-    // session cookie rides along and we can read it.
+    // the Telegram button to connect Telegram. The widget's redirect is a
+    // top-level navigation to this API host, so the existing session cookie
+    // rides along and we can read it.
     const sessionUserId = readSession(request);
 
     // Resolve which profile this Telegram identity belongs to, in one
-    // transaction. Precedence:
-    //   1) known auth_identity(telegram, id)  -> returning Telegram login; that
-    //      account is authoritative (even if a different session is present).
-    //   2) a profile already carries this telegram_id (linked earlier, e.g. for
-    //      notifications) -> adopt it; the id becomes a full login identity.
-    //   3) a user is currently logged in (phone/OTP) -> LINK Telegram to THAT
-    //      account, so phone AND Telegram now identify one user. (This is the
-    //      "logged-in phone user ticks Telegram" flow.)
-    //   4) brand-new -> create a phone-less profile with an EMPTY display_name so
-    //      the mandatory-nickname gate (header.js -> openNameGate) fires and the
-    //      user picks a leaderboard name.
+    // transaction.
+    //   canonical = the account this Telegram ALREADY belongs to (its identity
+    //               row, or a profile that carries this telegram_id), if any.
+    //   session   = the account the browser is currently logged in as, if real.
+    //
+    //   (A) canonical exists -> use it. If the browser is logged in as a
+    //       DIFFERENT account (a phone/OTP account created before Telegram was
+    //       connected), MERGE that account into the canonical one, so the person
+    //       ends up with ONE account reachable by phone AND Telegram — never a
+    //       duplicate. Create the identity row if only telegram_id existed.
+    //   (B) no canonical, but logged in -> LINK Telegram to the current account
+    //       (the "logged-in phone user connects Telegram" flow).
+    //   (C) neither -> create a phone-less account with an EMPTY display_name so
+    //       the mandatory-nickname gate (header.js -> openNameGate) fires.
     const userId = await withTransaction(async (client) => {
-      const existing = await one<{ user_id: string }>(
+      const identity = await one<{ user_id: string }>(
         `select user_id from auth_identities
            where provider = 'telegram' and provider_user_id = $1`,
         [providerUserId], client,
       );
+      const linkedProfile = identity
+        ? null
+        : await one<{ id: string }>(
+            'select id from profiles where telegram_id = $1', [telegramIdNum], client,
+          );
+      const canonical = identity?.user_id ?? linkedProfile?.id ?? null;
 
-      let uid: string | undefined;
-      if (existing) {
-        uid = existing.user_id;                                       // (1)
-      } else {
-        const linked = await one<{ id: string }>(
-          'select id from profiles where telegram_id = $1', [telegramIdNum], client,
+      let sessionAccount: string | null = null;
+      if (sessionUserId) {
+        const s = await one<{ id: string }>(
+          'select id from profiles where id = $1', [sessionUserId], client,
         );
-        if (linked) {
-          uid = linked.id;                                            // (2)
-        } else if (sessionUserId) {
-          // (3) Trust the session only if it still points at a real profile.
-          const me = await one<{ id: string }>(
-            'select id from profiles where id = $1', [sessionUserId], client,
-          );
-          if (me) uid = me.id;
+        sessionAccount = s?.id ?? null;
+      }
+
+      let uid: string;
+      if (canonical) {
+        // (A) Fold a different logged-in account into the Telegram account.
+        if (sessionAccount && sessionAccount !== canonical) {
+          await mergeProfiles(client, sessionAccount, canonical);
         }
-        if (!uid) {
-          const created = await one<{ id: string }>(                  // (4)
-            `insert into profiles (phone, telegram_id, display_name)
-             values (null, $1, '') returning id`,
-            [telegramIdNum], client,
+        uid = canonical;
+        if (!identity) {
+          await query(
+            `insert into auth_identities
+               (user_id, provider, provider_user_id, username, display_name, photo_url)
+             values ($1, 'telegram', $2, $3, $4, $5)`,
+            [uid, providerUserId, username, name, photo], client,
           );
-          uid = created!.id;
         }
+      } else if (sessionAccount) {
+        // (B) Link Telegram to the account the user is signed in as.
+        uid = sessionAccount;
+        await query(
+          `insert into auth_identities
+             (user_id, provider, provider_user_id, username, display_name, photo_url)
+           values ($1, 'telegram', $2, $3, $4, $5)`,
+          [uid, providerUserId, username, name, photo], client,
+        );
+      } else {
+        // (C) Brand-new account.
+        const created = await one<{ id: string }>(
+          `insert into profiles (phone, telegram_id, display_name)
+           values (null, $1, '') returning id`,
+          [telegramIdNum], client,
+        );
+        uid = created!.id;
         await query(
           `insert into auth_identities
              (user_id, provider, provider_user_id, username, display_name, photo_url)
@@ -276,7 +302,7 @@ export async function authRoutes(app: FastifyInstance): Promise<void> {
         );
       }
 
-      const resolvedUid = uid!; // set by exactly one branch above
+      const resolvedUid = uid;
 
       // Keep the chat_id fresh on the profile (the notification sender reads it)
       // and refresh the identity's cached username/name/photo on every login.

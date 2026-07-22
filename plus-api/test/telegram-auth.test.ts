@@ -178,6 +178,53 @@ describe('GET /auth/telegram/callback', () => {
     expect(count2.rows[0].n).toBe(1);
   });
 
+  it('merges a phone account into the pre-existing Telegram account (no duplicate)', async () => {
+    // 1) The person first signs in with Telegram -> account A (phone-less).
+    await app.inject({ method: 'GET', url: callbackUrl(payload({ id: '66666' })) });
+    const a = await pool.query("select user_id from auth_identities where provider_user_id = '66666'");
+    const accountA = a.rows[0].user_id;
+
+    // 2) Later they sign in with phone/OTP -> a SEPARATE account B, and do some
+    //    work on it (a highlight + an article note).
+    const cookieB = await loginAs(app, '09121110066');
+    const b = await pool.query("select id from profiles where phone = '09121110066'");
+    const accountB = b.rows[0].id;
+    expect(accountB).not.toBe(accountA);
+    await pool.query(
+      "insert into highlights (user_id, content_id, exact) values ($1, 'chairside/x', 'text')",
+      [accountB],
+    );
+    await pool.query(
+      "insert into article_notes (user_id, content_id, note) values ($1, 'chairside/x', 'note')",
+      [accountB],
+    );
+
+    // 3) While logged in as B they connect Telegram -> id 66666 already owned by
+    //    A, so B is merged INTO A and removed.
+    const res = await app.inject({
+      method: 'GET',
+      url: callbackUrl(payload({ id: '66666', auth_date: String(Math.floor(Date.now() / 1000)) })),
+      headers: { cookie: cookieB },
+    });
+    expect(res.statusCode).toBe(302);
+
+    // Exactly one account remains (A); B is gone.
+    const remaining = await pool.query('select id, phone from profiles');
+    expect(remaining.rowCount).toBe(1);
+    expect(remaining.rows[0].id).toBe(accountA);
+    expect(remaining.rows[0].phone).toBe('09121110066'); // phone moved onto A
+
+    // B's data was repointed to A, not lost.
+    const hl = await pool.query('select user_id from highlights');
+    expect(hl.rows[0].user_id).toBe(accountA);
+    const note = await pool.query('select user_id from article_notes');
+    expect(note.rows[0].user_id).toBe(accountA);
+
+    // Still exactly one Telegram identity.
+    const idn = await pool.query("select count(*)::int n from auth_identities where provider = 'telegram'");
+    expect(idn.rows[0].n).toBe(1);
+  });
+
   it('redirects to the error page on a bad signature', async () => {
     const p = payload();
     p.hash = 'deadbeef';
