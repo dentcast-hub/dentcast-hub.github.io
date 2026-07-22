@@ -945,6 +945,79 @@ Re-read the brain entry and confirm:
 - If a **new** subtopic was confirmed in step 2.4, confirm it was added to `PILLARS[primary]['subtopics']` in `tools/build_pillar.py` (sibling shape copied exactly) and that the brain entry uses that exact new slug.
 - The فهرست موضوعی capsule injected in step 2.5 (or the episode pillar link) points to `/pillar/<pillar.primary>/` consistent with this confirmed `pillar.primary` (or to the `/pillar/` fallback when it is `null`).
 
+### 5.6. Learning-pathway placement (all specialist types)
+
+**MANDATORY on every publish that wrote a specialist brain entry** (i.e. every
+type **except LiteCast** — LiteCast is patient-facing and excluded from
+professional pathways, so for LiteCast this step is a documented skip, same
+spirit as Phase D). It runs **after** step 5 (the `content_id` now exists in
+the brain) and step 5.5 (pillar/subtopic confirmed), because placement consumes
+both.
+
+**Principle (the whole point of pathways).** A pathway is **not** a pillar view.
+A pillar is where the item *lives* (one home, decided in step 2.4). A **pathway
+is a curated learning journey** defined by *"what must a person know to learn
+topic X, and in what order?"* — so the **same item can and often should belong
+to several pathways**, placed at the right position in each. The catalog and the
+governing doctrine live in `plus/pathways.json` and
+`reports/pathways-catalog-2026-07-22.md`; **read the catalog before placing.**
+`plus/pathways.json` is the single source of truth (spec §5 schema: each pathway
+is `{id, title_fa, description_fa, premium, steps:[{content_id, milestone}],
+reserved}`; `content_id` = page path without leading `/` and `.html`).
+
+**This is a genuinely semantic decision — never keyword/string matching** (same
+standard as the pillar decision in 2.4 and the link steps 4.7–4.9). Judge the
+new content's actual subject against what a learner of each pathway needs.
+
+**Procedure.**
+
+1. Generate ranked candidates (an aid, not the decision):
+   ```bash
+   python3 tools/pathway_place.py <content_id>
+   ```
+   It prints, per pathway, a score, a **confidence flag**, and a **suggested
+   anchor** (`after <existing content_id>`) so the item lands *inside the right
+   conceptual block*, in prerequisite→advanced order — not just appended. It
+   marks a pathway **STRONG** only when that pathway already holds items of the
+   **same pillar+subtopic** (an unmistakable home); everything else is **ASK**.
+2. Decide membership **semantically**, per **Hard Rule 14**:
+   - **STRONG / unmistakable homes** (the item clearly belongs — e.g. a new
+     `implantology/restoration-design` piece into `implant-prosthetic`, a new
+     bonding/adhesion piece into every bonded-restoration pathway): **place them
+     directly** and report each placement (pathway + anchor + milestone flag).
+   - **Borderline / cross-cutting judgment calls** (a plausible but not obvious
+     fit, a brand-new theme with no clear home, or genuine uncertainty about the
+     exact position): **ASK the user first**, presenting concrete named options
+     (which pathway(s), after which step) — never guess, never silently drop a
+     real candidate. This is the explicit **«اگر شک داشتی سوال کن، عمل نکن»**
+     guard for pathways.
+   - Remember the **borrow rule**: an item may belong to a pathway from another
+     pillar because that pathway's *learner* needs it (bonding basics into
+     esthetics/ceramics; implant occlusion into the implant pathway). Consider
+     those cross-pillar homes too, not just the item's own pillar.
+3. Apply each confirmed placement mechanically (this is the only writer of
+   `plus/pathways.json`; it refuses duplicates and refuses LiteCast):
+   ```bash
+   python3 tools/pathway_place.py --insert <content_id> --pathway <id> --after <anchor_id> [--milestone]
+   # or --at-end instead of --after <anchor_id>
+   ```
+   Set `--milestone` only if the item becomes the new end of its conceptual
+   block (rare; usually a new item is mid-block, milestone=false).
+4. Verify coverage and report:
+   ```bash
+   python3 tools/pathway_place.py --coverage
+   ```
+   Confirm the new `content_id` is now in **≥1** pathway (or, if you and the
+   user deliberately left it out — a meta/equipment/orphan piece — state that
+   explicitly, never silently). Report every pathway it joined and where.
+
+**Scope / non-effects.** This step edits **only** `plus/pathways.json`. Pathways
+are still **inert** (no page or builder reads them yet), so there is **no**
+rebuild, no version bump, and no user-visible change from this step — it purely
+keeps the pathway data correct as content grows, ready for activation. It does
+**not** touch the brain, the page, capsules, or links (those are steps 4.7–4.9
+and 5). Do not add pathway data to the brain entry (Hard Rule 6).
+
 ### 6. Pulse update
 
 Use the sentence + hyperlink word from intake Question 5.
