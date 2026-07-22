@@ -1255,5 +1255,150 @@
       }
     ],
     "reserved": {}
+  },
+  {
+    "id": "treatment-planning",
+    "title_fa": "طرح درمان و تصمیم‌گیری بالینی",
+    "description_fa": "مسیر تصمیم‌گیری در دندانپزشکی — از چارچوب تشخیص جامع و افتراقیِ درد تا تصمیم کشیدن یا نگه‌داشتن، جایگزینی دندانِ از دست‌رفته و کیس‌های پیچیده‌ی مدیریت بیمار؛ ستونِ فقراتش کیس‌های واقعیِ چیرساید است.",
+    "premium": true,
+    "steps": [
+      {
+        "content_id": "episodes/episode-116",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-117",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-118",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-119",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-120",
+        "milestone": false
+      },
+      {
+        "content_id": "metanotes/meta-6",
+        "milestone": false
+      },
+      {
+        "content_id": "metanotes/meta-13",
+        "milestone": true
+      },
+      {
+        "content_id": "insight/insight-11",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-45",
+        "milestone": false
+      },
+      {
+        "content_id": "chairside/chairside-18",
+        "milestone": false
+      },
+      {
+        "content_id": "chairside/chairside-7",
+        "milestone": false
+      },
+      {
+        "content_id": "chairside/chairside-13",
+        "milestone": true
+      },
+      {
+        "content_id": "episodes/episode-150-2",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-151",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-152",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-153",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-13",
+        "milestone": false
+      },
+      {
+        "content_id": "metanotes/meta-1",
+        "milestone": false
+      },
+      {
+        "content_id": "photocast/episode-3",
+        "milestone": false
+      },
+      {
+        "content_id": "chairside/chairside-4",
+        "milestone": false
+      },
+      {
+        "content_id": "chairside/chairside-14",
+        "milestone": false
+      },
+      {
+        "content_id": "chairside/chairside-21",
+        "milestone": false
+      },
+      {
+        "content_id": "chairside/chairside-16",
+        "milestone": false
+      },
+      {
+        "content_id": "chairside/chairside-9",
+        "milestone": true
+      },
+      {
+        "content_id": "episodes/episode-119-1",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-160",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-19",
+        "milestone": false
+      },
+      {
+        "content_id": "chairside/chairside-2",
+        "milestone": false
+      },
+      {
+        "content_id": "chairside/chairside-3",
+        "milestone": false
+      },
+      {
+        "content_id": "chairside/chairside-20",
+        "milestone": false
+      },
+      {
+        "content_id": "chairside/chairside-19",
+        "milestone": true
+      },
+      {
+        "content_id": "chairside/chairside-22",
+        "milestone": false
+      },
+      {
+        "content_id": "chairside/chairside-24",
+        "milestone": false
+      },
+      {
+        "content_id": "chairside/chairside-25",
+        "milestone": true
+      }
+    ],
+    "reserved": {}
   }
 ]
