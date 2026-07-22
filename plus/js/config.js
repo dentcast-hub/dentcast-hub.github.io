@@ -65,7 +65,11 @@ export function detectContentId() {
 }
 
 // The prose container a user highlights inside. First match wins.
-export const PROSE_SELECTORS = ['.text-box', '.glass-box', '.content-box'];
+// .ep-box is the episode/promptologist shell. It's included so the workbench can
+// mount on text promptologist pages; audio episode pages (which also use .ep-box)
+// are excluded separately by the #ep-audio gate in plus.js (podcasts get the
+// "seen" tick, not the workbench).
+export const PROSE_SELECTORS = ['.text-box', '.glass-box', '.content-box', '.ep-box'];
 
 export function findProseRoot() {
   for (const sel of PROSE_SELECTORS) {

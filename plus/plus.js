@@ -97,6 +97,10 @@ async function initArticle() {
   const main = document.querySelector('main.article-content-wrap');
   const proseRoot = findProseRoot();
   if (!main || !proseRoot) return; // not a standalone article page
+  // Audio content (episodes) shares the .ep-box shell but gets NO workbench —
+  // highlighting a podcast makes no sense; it only gets the "seen" tick (fired
+  // from boot). The audio player element is the reliable tell.
+  if (document.getElementById('ep-audio')) return;
 
   const contentId = detectContentId();
   const { wb, updateBtn } = await setupWorkbench({ proseRoot, contentId });
@@ -129,6 +133,7 @@ async function mountArticleWorkbench(root, url) {
   if (!proseRoot) return; // not an article (e.g. a viewer / patients panel)
   const contentId = url.replace(/^\/+/, '').replace(/\.html$/i, '') || detectContentId();
   markViewed(contentId); // record the open for the landing-page "seen" ticks
+  if (contentId.startsWith('episodes/')) return; // audio: seen tick only, no workbench
   const { wb } = await setupWorkbench({ proseRoot, contentId });
   desktopWb = wb;
 }
