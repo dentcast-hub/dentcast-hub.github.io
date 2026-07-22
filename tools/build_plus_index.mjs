@@ -114,6 +114,35 @@ for (const e of brain) {
   }
 }
 
+// --- 3b. Glossary (دانشنامه) — its own file, not the brain -------------------
+// Fold glossary terms into the SAME maps so they show in the dashboard tree and
+// resolve for the homepage "continue" line. Each term carries slug/url/fa_title
+// and its own pillar, so it slots into clusters just like brain content.
+const glossaryTerms = JSON.parse(read('glossary/glossary.json')).glossary || [];
+for (const e of glossaryTerms) {
+  const url = e.url;
+  if (!url) continue;
+  const contentId = toContentId(url);
+  if (byContent[contentId]) continue; // first wins
+  const primary = (e.pillar && e.pillar.primary) || null;
+  const subtopic = (e.pillar && e.pillar.subtopic) || null;
+  byContent[contentId] = {
+    cluster: primary,
+    subtopic,
+    type: 'glossary',
+    title: e.fa_title || e.title || contentId,
+    url,
+    secondary: (e.pillar && e.pillar.secondary) || [],
+  };
+  if (!primary || !clusterContent.has(primary)) continue;
+  clusterContent.get(primary).add(contentId);
+  if (subtopic) {
+    const k = `${primary}::${subtopic}`;
+    if (!subContent.has(k)) subContent.set(k, new Set());
+    subContent.get(k).add(contentId);
+  }
+}
+
 // --- 4. Emit, preserving the site's order -----------------------------------
 const clusters = clusterOrder.map((c) => {
   const ids = clusterContent.get(c) || new Set();
