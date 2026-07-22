@@ -1,6 +1,6 @@
 import type { FastifyInstance, FastifyRequest } from 'fastify';
 import { config } from '../config.js';
-import { one, query } from '../db.js';
+import { one, query, pool } from '../db.js';
 import { normalizePhone } from '../services/phone.js';
 import { issueCode, verifyCode } from '../services/otp.js';
 import { consume, HOUR_MS } from '../services/rate-limit.js';
@@ -9,6 +9,8 @@ import { sanitizeReturnTo } from '../services/return-to.js';
 import { generatePseudonym } from '../services/pseudonym.js';
 import { sms } from '../providers/registry.js';
 import { loadUser } from '../middleware/auth.js';
+import { displayStreak } from '../services/streak.js';
+import { dayInTz } from '../services/time.js';
 
 function clientIp(request: FastifyRequest): string {
   return request.ip || 'unknown';
@@ -179,13 +181,18 @@ export async function authRoutes(app: FastifyInstance): Promise<void> {
     const user = await loadUser(request);
     if (!user) return reply.code(401).send({ error: 'unauthorized' });
 
+    // Show the streak only while it is still alive. The cache resets lazily (on
+    // the next qualifying action), so after an unbridgeable gap the cached
+    // number is stale — the client must see 0, not last week's run.
+    const shownStreak = await displayStreak(pool, user.id, user, dayInTz(new Date()));
+
     const me: Record<string, unknown> = {
       id: user.id,
       display_name: user.display_name,
       tier: user.tier,
       phone: user.phone,
       telegram_linked: user.telegram_id !== null,
-      current_streak: user.current_streak,
+      current_streak: shownStreak,
       longest_streak: user.longest_streak,
       last_active_day: user.last_active_day,
       // Surface settings (e.g. reminders) so the profile can reflect saved

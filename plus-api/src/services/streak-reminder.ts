@@ -1,13 +1,16 @@
 import { config } from '../config.js';
-import { query } from '../db.js';
+import { pool, query } from '../db.js';
 import { dayInTz } from './time.js';
+import { displayStreak } from './streak.js';
 import { notifications } from '../providers/registry.js';
 import type { NotificationMessage } from '../providers/notifications/types.js';
 
 /**
  * Daily streak reminder (settings.reminders.streak). Nudges users who:
  *   (a) opted into the reminder,
- *   (b) have an active streak worth protecting (current_streak >= 1),
+ *   (b) have a streak that is STILL SAVABLE — last active yesterday, or the gap
+ *       is bridgeable by their held shields (the cache resets lazily, so
+ *       current_streak >= 1 alone would nag users whose run is already dead),
  *   (c) have NOT logged a qualifying action today (last_active_day != today, Tehran), and
  *   (d) have a live push subscription (Layer 2 skips anyone without one anyway).
  * It runs in the evening so there is still time to act before the Tehran-midnight
@@ -23,8 +26,8 @@ const toFa = (n: number): string => String(n).replace(/\d/g, (d) => FA_DIGITS[Nu
 
 export async function runStreakReminders(now: Date = new Date()): Promise<{ reminded: number }> {
   const today = dayInTz(now, config.streakTimezone);
-  const eligible = await query<{ id: string; current_streak: number }>(
-    `select p.id, p.current_streak
+  const eligible = await query<{ id: string; current_streak: number; last_active_day: string | null }>(
+    `select p.id, p.current_streak, p.last_active_day
        from profiles p
       where coalesce((p.settings->'reminders'->>'streak')::boolean, false) = true
         and p.current_streak >= 1
@@ -40,6 +43,10 @@ export async function runStreakReminders(now: Date = new Date()): Promise<{ remi
 
   let reminded = 0;
   for (const u of eligible.rows) {
+    // Skip runs that are already dead: nothing left to protect, and the cached
+    // number would make the nudge a lie ("don't lose your 10-day streak").
+    const alive = await displayStreak(pool, u.id, u, today);
+    if (alive < 1) continue;
     const message: NotificationMessage = {
       title: 'دنت‌کست پلاس',
       body: `استریک ${toFa(u.current_streak)} روزه‌ات را از دست نده — امروز هنوز فعالیتی ثبت نکرده‌ای.`,
