@@ -85,7 +85,11 @@ const subContent = new Map(); // `${cluster}::${sub}` -> Set
 const prettify = (s) => s.replace(/-/g, ' ');
 
 for (const e of brain) {
-  const url = e.page_url;
+  // The brain schema is inconsistent: most types carry the page URL in `page_url`,
+  // but some (all of sharehub, most of notecast) use `url`. Read either so every
+  // brain entry lands in byContent — otherwise those types were silently missing
+  // from the dashboard tree and the homepage "continue" resolution.
+  const url = e.page_url || e.url;
   if (!url) continue;
   const contentId = toContentId(url);
   if (byContent[contentId]) continue; // first wins
