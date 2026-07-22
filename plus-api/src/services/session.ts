@@ -6,19 +6,25 @@ import { config } from '../config.js';
  * server-side session table (schema is fixed to section 4). Signing is done by
  * @fastify/cookie with SESSION_SECRET. Logout clears the cookie.
  *
- * The site and API share a registrable domain in production (dentcast.org /
- * api.dentcast.org), so SameSite=Lax is correct; set SESSION_COOKIE_SECURE=true
- * behind HTTPS.
+ * The site reaches the API across a subdomain (dentcast.ir -> api.dentcast.ir,
+ * and dentcast.org -> api.dentcast.org via a Cloudflare Worker). Strict mobile
+ * browsers (iOS Safari / mobile Chrome) drop a SameSite=Lax cookie in that
+ * cross-origin fetch/proxy context, so login worked on desktop but not mobile.
+ * Use SameSite=None (which REQUIRES Secure) in production so the cookie survives;
+ * fall back to Lax only in dev where Secure is off (None+insecure is rejected).
  */
 
 const MAX_AGE_SECONDS = () => config.session.ttlDays * 24 * 60 * 60;
+
+// SameSite=None needs Secure; dev (localhost, Secure off) keeps Lax.
+const sameSite = (): 'none' | 'lax' => (config.session.secure ? 'none' : 'lax');
 
 export function setSessionCookie(reply: FastifyReply, userId: string): void {
   reply.setCookie(config.session.cookieName, userId, {
     path: '/',
     httpOnly: true,
     secure: config.session.secure,
-    sameSite: 'lax',
+    sameSite: sameSite(),
     signed: true,
     maxAge: MAX_AGE_SECONDS(),
   });
@@ -42,7 +48,7 @@ export function clearSessionCookie(reply: FastifyReply, request?: FastifyRequest
   // Set-Cookie matches; dropping `Secure`/`SameSite` here left the httpOnly+Secure
   // session cookie in place, so logout appeared to do nothing (user stayed signed
   // in). Mirror setSessionCookie exactly (minus maxAge, which clearCookie sets to 0).
-  const base = { path: '/', httpOnly: true, secure: config.session.secure, sameSite: 'lax' as const };
+  const base = { path: '/', httpOnly: true, secure: config.session.secure, sameSite: sameSite() };
   reply.clearCookie(config.session.cookieName, base);
   // Also clear a DOMAIN-scoped variant (.dentcast.ir). The server sets a host-only
   // cookie today, but early builds/proxies could leave a Domain=... cookie behind,
