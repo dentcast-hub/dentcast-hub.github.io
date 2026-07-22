@@ -1628,6 +1628,19 @@
   }
   function dcHeaderOpenerClick(which) {
     var open = dcOpenMenu();
+    /* Openers that Plus RELOCATES into the tool drawer (currently #btn-music-toggle)
+       can only be tapped while that drawer is open. Without this, dcOpenMenu() sees
+       'toolbar' open and the rule below would just close the drawer and swallow the
+       tap (the reported "music does nothing" bug). Instead: close the drawer it
+       lives in AND open the tapped panel. */
+    if (which === 'music' && open === 'toolbar') {
+      var mt = document.getElementById('btn-music-toggle');
+      if (mt && mt.closest('#dcToolbarDrawer')) {
+        toggleToolbarDrawer();
+        toggleMusicPanel();
+        return;
+      }
+    }
     /* A different menu is open → just close it; do NOT open/colour the tapped one. */
     if (open && open !== which) { dcCloseMenu(open); return; }
     /* Same one open (toggle closed) or nothing open (open it). */
@@ -1671,6 +1684,20 @@
       applyTheme(document.documentElement.getAttribute('data-theme') !== 'dark');
       return;
     }
+  });
+
+  /* Close the music panel on a tap OUTSIDE it. Needed because Plus moves the music
+     trigger INTO the tool drawer and opening music closes that drawer — so the
+     trigger is then hidden and could no longer toggle the panel shut. The opening
+     tap lands on #btn-music-toggle, so it's excluded and never self-closes. */
+  document.addEventListener('click', function (e) {
+    var mp = document.getElementById('dcMusicPanel');
+    if (!mp || !mp.classList.contains('open')) return;
+    var t = e.target;
+    if (!t || !t.closest) return;
+    if (mp.contains(t)) return;                     // inside the panel
+    if (t.closest('#btn-music-toggle')) return;     // the trigger itself toggles it
+    toggleMusicPanel();                             // outside → close
   });
 
   /* ── CLOSE RESULTS ──
@@ -2093,7 +2120,7 @@
 (function () {
   if (window.__dcPlusLoaded) return;
   window.__dcPlusLoaded = true;
-  var V = '31';
+  var V = '32';
 
   /* Anti-FOUC for the Plus header. Plus (mobile only) relocates the music +
      articles buttons from the topbar into the tool drawer and adds the person
