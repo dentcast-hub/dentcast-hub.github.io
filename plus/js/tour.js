@@ -1,6 +1,6 @@
 // DentCast site tour (guided walkthrough) — mobile homepage, phase 1.
 // A spotlight overlay walks the user through the homepage: everything dims
-// except the current element (a "hole" cut with a huge box-shadow), with an
+// except the current element (four dim strips leave it a bright "hole"), with an
 // explanation card placed above/below it (whichever side has room, so the card
 // and the highlighted element overlap as little as possible). Stops that live
 // on the archive panel switch panels via the real bottom-nav items.
@@ -142,7 +142,7 @@ const STOPS = [
 ];
 
 // ---------------------------------------------------------------- engine ----
-let state = null; // { seq, idx, els, layer, hole, card, onKey, onResize }
+let state = null; // { seq, idx, els, lastRect, layer, dims, ring, card, watch, onKey, onResize }
 
 function unionRect(els) {
   let t = Infinity, l = Infinity, r = -Infinity, b = -Infinity;
@@ -189,25 +189,42 @@ function waitScrollSettle(container, timeout = 1500) {
   });
 }
 
-function positionHole(hole, rect) {
-  if (!rect) { // finale: zero-size hole in the center -> full dim
-    hole.classList.add('is-empty');
-    hole.style.top = (window.innerHeight / 2) + 'px';
-    hole.style.left = (window.innerWidth / 2) + 'px';
-    hole.style.width = '0px';
-    hole.style.height = '0px';
+// Dim everything EXCEPT the hole with FOUR opaque strips (top/bottom/left/
+// right) plus a transparent ring for the highlight border. The previous
+// single-element trick (box-shadow with a 200vmax spread) silently failed to
+// paint on some real phones (mobile GPUs drop huge shadow rasters), leaving
+// the page undimmed — plain positioned divs cannot fail that way.
+function positionMask(st, rect) {
+  const vw = window.innerWidth, vh = window.innerHeight;
+  const [dTop, dBottom, dLeft, dRight] = st.dims;
+  const box = (d, top, left, width, height) => {
+    d.style.top = top + 'px';
+    d.style.left = left + 'px';
+    d.style.width = Math.max(0, width) + 'px';
+    d.style.height = Math.max(0, height) + 'px';
+  };
+  if (!rect) { // finale: full dim, no ring
+    st.ring.style.display = 'none';
+    box(dTop, 0, 0, vw, vh);
+    box(dBottom, vh, 0, vw, 0);
+    box(dLeft, 0, 0, 0, 0);
+    box(dRight, 0, vw, 0, 0);
     return;
   }
-  hole.classList.remove('is-empty');
   const pad = 6;
   const top = Math.max(4, rect.top - pad);
   const left = Math.max(4, rect.left - pad);
-  const right = Math.min(window.innerWidth - 4, rect.right + pad);
-  const bottom = Math.min(window.innerHeight - 4, rect.bottom + pad);
-  hole.style.top = top + 'px';
-  hole.style.left = left + 'px';
-  hole.style.width = Math.max(0, right - left) + 'px';
-  hole.style.height = Math.max(0, bottom - top) + 'px';
+  const right = Math.min(vw - 4, rect.right + pad);
+  const bottom = Math.min(vh - 4, rect.bottom + pad);
+  st.ring.style.display = '';
+  st.ring.style.top = top + 'px';
+  st.ring.style.left = left + 'px';
+  st.ring.style.width = Math.max(0, right - left) + 'px';
+  st.ring.style.height = Math.max(0, bottom - top) + 'px';
+  box(dTop, 0, 0, vw, top);
+  box(dBottom, bottom, 0, vw, vh - bottom);
+  box(dLeft, top, 0, left, bottom - top);
+  box(dRight, top, right, vw - right, bottom - top);
 }
 
 // Below the hole when there is room (or more room than above), else above;
@@ -245,7 +262,7 @@ function positionStop() {
     st.els = stop.targets ? stop.targets().filter(visible) : [];
   }
   const rect = st.els.length ? unionRect(st.els) : null;
-  positionHole(st.hole, rect);
+  positionMask(st, rect);
   placeCard(st.card, rect);
   st.lastRect = rect;
 }
@@ -344,17 +361,18 @@ export function startTour({ manual = false } = {}) {
   document.querySelectorAll('.dcp-welcome-overlay').forEach((n) => n.remove());
   document.querySelectorAll('.dcp-person-attention').forEach((n) => n.classList.remove('dcp-person-attention'));
 
-  const hole = el('div', { class: 'dcp-tour-hole' });
+  const dims = [0, 1, 2, 3].map(() => el('div', { class: 'dcp-tour-dim' }));
+  const ring = el('div', { class: 'dcp-tour-ring' });
   const card = el('div', { class: 'dcp-tour-card', role: 'dialog', 'aria-modal': 'true', 'aria-label': 'راهنمای دنت‌کست' });
-  const layer = el('div', { class: 'dcp-tour-layer' }, [hole, card]);
+  const layer = el('div', { class: 'dcp-tour-layer' }, [...dims, ring, card]);
   const onKey = (e) => { if (e.key === 'Escape') endTour(false); };
   let resizeT = null;
   const onResize = () => {
     clearTimeout(resizeT);
     resizeT = setTimeout(positionStop, 150);
   };
-  state = { seq: 0, idx: 0, els: [], lastRect: null, layer, hole, card, onKey, onResize };
-  state.watch = setInterval(driftCheck, 400);
+  state = { seq: 0, idx: 0, els: [], lastRect: null, layer, dims, ring, card, onKey, onResize };
+  state.watch = setInterval(driftCheck, 250);
   document.body.appendChild(layer);
   document.documentElement.classList.add('dcp-touring');
   document.addEventListener('keydown', onKey);

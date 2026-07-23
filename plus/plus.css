@@ -320,16 +320,19 @@ html.dcp-touring #mobile-body { overflow: hidden; }
    10060): it swallows all interaction so the tour can't be broken mid-step. */
 .dcp-tour-layer { position: fixed; inset: 0; z-index: 20000; overscroll-behavior: contain; touch-action: none; }
 
-/* The spotlight: a transparent window whose giant shadow dims the whole page.
-   Zero-size + .is-empty (final stop) = full dim, no ring. */
-.dcp-tour-hole {
+/* The spotlight mask: FOUR opaque strips around the hole (a giant box-shadow
+   spread silently fails to paint on some phone GPUs — plain divs cannot) plus
+   a transparent ring for the highlight border. */
+.dcp-tour-dim {
+  position: fixed; background: rgba(3, 8, 18, .72);
+  transition: top .3s ease, left .3s ease, width .3s ease, height .3s ease;
+}
+.dcp-tour-ring {
   position: fixed; pointer-events: none; border-radius: 14px;
-  box-shadow: 0 0 0 200vmax rgba(3, 8, 18, .72);
   outline: 2px solid color-mix(in srgb, var(--dcp-accent, #0b5fff) 70%, #fff);
   outline-offset: 2px;
   transition: top .3s ease, left .3s ease, width .3s ease, height .3s ease;
 }
-.dcp-tour-hole.is-empty { outline: none; }
 
 .dcp-tour-card {
   position: fixed; width: min(92vw, 340px); box-sizing: border-box;
@@ -349,5 +352,5 @@ html.dcp-touring #mobile-body { overflow: hidden; }
 .dcp-tour-offer-hint { margin: 0 0 14px; font-size: .85rem; opacity: .8; line-height: 1.9; }
 
 @media (prefers-reduced-motion: reduce) {
-  .dcp-tour-hole, .dcp-tour-card { transition: none; }
+  .dcp-tour-dim, .dcp-tour-ring, .dcp-tour-card { transition: none; }
 }
