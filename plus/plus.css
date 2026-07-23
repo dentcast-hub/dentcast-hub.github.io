@@ -50,6 +50,10 @@
 .dcp-flame-btn { display: inline-flex; align-items: center; gap: 3px; text-decoration: none; color: inherit; }
 .dcp-flame-ico { filter: grayscale(1); opacity: .5; }
 .dcp-flame-btn.is-active .dcp-flame-ico { filter: none; opacity: 1; }
+/* The flame is a passive indicator, not a control: no pointer cursor and no
+   press feedback (override the interactive .dc-topbar-btn affordances). */
+.dc-topbar-btn.dcp-flame-btn { cursor: default; }
+.dc-topbar-btn.dcp-flame-btn:active { transform: none; background: var(--surface2, #f4f6fb); }
 .dcp-flame-n { font-weight: 800; font-size: .9rem; }
 
 .dcp-person-wrap { position: relative; display: inline-flex; }

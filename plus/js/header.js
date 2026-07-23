@@ -8,7 +8,7 @@ import { el, streakIsActiveToday, STREAK_ACTIVITY_EVENT } from './util.js';
 import { currentUser, api } from './api.js';
 import { isOrgHost, detectContentId } from './config.js';
 import { openLoginModal, openOrgNotice, openNameGate, nameIsChosen } from './login-modal.js';
-import { openOverlay, closeOverlay, overlayOpen, overlayType } from './overlay.js';
+import { openOverlay, closeOverlay, overlayOpen } from './overlay.js';
 import { renderDashboard } from './dashboard.js';
 import { renderProfile } from './profile.js';
 
@@ -33,28 +33,18 @@ function moveToDrawer(btn, labelText) {
 }
 
 function buildFlame(user) {
-  // Two states only, no number/chain: lit = a qualifying action was completed
-  // today (Asia/Tehran), unlit = not yet today. The streak count lives on the
-  // homepage card and the dashboard, never in the header.
+  // A PASSIVE indicator only (both desktop and mobile): two states — lit (a
+  // qualifying action was completed today, Asia/Tehran) or unlit. NOT a link or
+  // button; clicking added no information, only an extra action. The streak
+  // count lives on the homepage card and the dashboard, never in the header.
   const active = streakIsActiveToday(user.last_active_day);
-  const flame = el('a', {
+  const label = active ? 'امروز فعال بوده‌اید' : 'امروز هنوز فعالیتی ثبت نشده';
+  return el('span', {
     class: 'dc-topbar-btn dcp-flame-btn' + (active ? ' is-active' : ''),
-    href: '/plus/', 'aria-label': active ? 'امروز فعال بوده‌اید' : 'امروز هنوز فعالیتی ثبت نشده',
-    title: active ? 'امروز فعال بوده‌اید' : 'امروز هنوز فعالیتی ثبت نشده',
+    role: 'img', 'aria-label': label, title: label,
   }, [
     el('span', { class: 'dcp-flame-ico', 'aria-hidden': 'true' }, '🔥'),
   ]);
-  // On the desktop 3-column UI, open the dashboard (پیشخوان) as an OVERLAY over
-  // the article column instead of navigating away — same behaviour as the
-  // پیشخوان / پروفایل menu items, so the reader stays in place. A second click
-  // toggles it closed. Mobile (and no-JS) keep the plain /plus/ navigation.
-  flame.addEventListener('click', (e) => {
-    if (!document.body.classList.contains('dc-desktop-ui')) return; // mobile: navigate
-    e.preventDefault();
-    if (overlayType() === 'dashboard') { closeOverlay(); return; }
-    openOverlay('dashboard', 'پیشخوان', (root) => renderDashboard(root, { me: user }));
-  });
-  return flame;
 }
 
 function personSvg(colorClass) {
