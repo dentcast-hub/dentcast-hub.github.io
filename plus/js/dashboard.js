@@ -180,8 +180,13 @@ export async function renderDashboard(root, { me: preMe } = {}) {
   // Always fetch fresh when the dashboard opens: /me and /progress are never
   // cached, and the content model is refreshed so newly published content is
   // reflected in the per-folder progress totals.
+  //
+  // IMPORTANT: fetch /me FRESH every open — the header passes a `preMe` captured
+  // at page boot, and using it made the streak number + "active today" look stale
+  // after a just-completed read/highlight until a manual page refresh. Fall back
+  // to that preMe only if the fresh fetch fails (offline / 401).
   const [me, progress, model] = await Promise.all([
-    preMe ? Promise.resolve(preMe) : api.me().catch(() => null),
+    api.me().catch(() => preMe || null),
     api.progress().catch(() => ({})),
     getModel({ refresh: true }),
   ]);
