@@ -11,6 +11,7 @@ import { openLoginModal, openOrgNotice, openNameGate, nameIsChosen } from './log
 import { openOverlay, closeOverlay, overlayOpen } from './overlay.js';
 import { renderDashboard } from './dashboard.js';
 import { renderProfile } from './profile.js';
+import { maybeShowWelcome } from './welcome.js';
 
 // Inlined so it can never 404. Built via innerHTML on an HTML button (not
 // createElement('svg')) so the parser creates properly namespaced SVG nodes;
@@ -135,7 +136,12 @@ export async function initHeader() {
   // the final state. currentUser already swallows errors; guard anyway.
   let user = null;
   try { user = await currentUser(); } catch (_) { user = null; }
-  if (!user) return; // guest header is correct; nothing to upgrade
+  if (!user) {
+    // Confirmed guest: invite them in with the first-visit welcome box (capped
+    // per device), pulsing the person icon toward the login entry point.
+    try { maybeShowWelcome({ personBtn: guestPerson }); } catch (_) { /* non-fatal */ }
+    return; // guest header is correct; nothing to upgrade
+  }
 
   // Plus requires a chosen pseudonym (leaderboard identity). If a logged-in user
   // somehow has none yet, gate behind a mandatory, non-dismissable name prompt.
