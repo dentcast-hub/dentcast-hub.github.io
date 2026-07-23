@@ -1,6 +1,7 @@
 import { config } from './config.js';
 import { runFreeDigest } from './services/article-notify.js';
 import { runStreakReminders } from './services/streak-reminder.js';
+import { runReactivationNudges } from './services/reactivation.js';
 
 /**
  * Daily free-digest scheduler. Fires runFreeDigest() at freeDigestHour:00 in the
@@ -83,6 +84,37 @@ export function startStreakReminderScheduler(): () => void {
         .catch((err) => {
           // eslint-disable-next-line no-console
           console.error('[streak-reminder] run failed', err);
+        })
+        .finally(schedule);
+    }, delay);
+    if (typeof timer.unref === 'function') timer.unref();
+  };
+
+  schedule();
+  return () => clearTimeout(timer);
+}
+
+/**
+ * Start the daily reactivation-nudge scheduler (users with no live streak).
+ * Fires runReactivationNudges() at reactivation.hour:00 (Asia/Tehran) and
+ * reschedules. Same timezone-wall-clock + unref pattern as the others.
+ */
+export function startReactivationScheduler(): () => void {
+  let timer: NodeJS.Timeout;
+
+  const schedule = () => {
+    const delay = msUntilNextRun(new Date(), config.reactivation.hour, config.streakTimezone);
+    timer = setTimeout(() => {
+      void runReactivationNudges(new Date())
+        .then((r) => {
+          if (r.nudged > 0) {
+            // eslint-disable-next-line no-console
+            console.log(`[reactivation] nudged ${r.nudged} user(s)`);
+          }
+        })
+        .catch((err) => {
+          // eslint-disable-next-line no-console
+          console.error('[reactivation] run failed', err);
         })
         .finally(schedule);
     }, delay);

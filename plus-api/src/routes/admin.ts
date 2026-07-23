@@ -2,6 +2,8 @@ import type { FastifyInstance } from 'fastify';
 import { requireAdmin } from '../middleware/basic-auth.js';
 import { computeKpis, type Kpis } from '../services/kpis.js';
 import { onArticlePublished, runFreeDigest, backfillExistingContent } from '../services/article-notify.js';
+import { runReactivationNudges } from '../services/reactivation.js';
+import { runStreakReminders } from '../services/streak-reminder.js';
 import { one } from '../db.js';
 import { normalizePhone } from '../services/phone.js';
 import { notifications } from '../providers/registry.js';
@@ -114,6 +116,20 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
   // Idempotent; run once before enabling the auto-publish Action.
   app.post('/admin/articles/backfill', async (_request, reply) => {
     const result = await backfillExistingContent(new Date());
+    return reply.send({ ok: true, ...result });
+  });
+
+  // POST /admin/reactivation/run - manually fire the no-streak reactivation nudge
+  // run (the cron does this daily at REACTIVATION_HOUR). Ops/verification only.
+  app.post('/admin/reactivation/run', async (_request, reply) => {
+    const result = await runReactivationNudges(new Date());
+    return reply.send({ ok: true, ...result });
+  });
+
+  // POST /admin/streak-reminder/run - manually fire the savable-streak reminder
+  // run (the cron does this daily at STREAK_REMINDER_HOUR). Ops/verification only.
+  app.post('/admin/streak-reminder/run', async (_request, reply) => {
+    const result = await runStreakReminders(new Date());
     return reply.send({ ok: true, ...result });
   });
 

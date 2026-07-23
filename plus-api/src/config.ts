@@ -113,6 +113,16 @@ export const config = {
     hour: int('STREAK_REMINDER_HOUR', 20),
   },
 
+  // Reactivation nudge for users with NO live streak: a gentle once-a-day
+  // "start your streak" push (both channels). Opt-OUT (respects a disabled streak
+  // reminder), and CAPPED at maxNudges since the user's last real activity, so a
+  // dormant/dead account is never harassed. The moment a user engages they leave
+  // this cohort and fall back to the normal streak/new-article notifications.
+  reactivation: {
+    hour: int('REACTIVATION_HOUR', 20),
+    maxNudges: int('REACTIVATION_MAX_NUDGES', 6),
+  },
+
   anon: {
     maxPerIpPerHour: int('ANON_EVENT_MAX_PER_IP_PER_HOUR', 60),
   },
