@@ -13,6 +13,7 @@ import { renderDashboard } from './dashboard.js';
 import { renderProfile } from './profile.js';
 import { maybeShowWelcome } from './welcome.js';
 import { startTour, maybeOfferTour, tourMenuAvailable, initTourAutostart } from './tour.js';
+import { maybeShowNotifPrompt } from './notif-prompt.js';
 
 // Inlined so it can never 404. Built via innerHTML on an HTML button (not
 // createElement('svg')) so the parser creates properly namespaced SVG nodes;
@@ -182,5 +183,12 @@ export async function initHeader() {
 
   // First login ever (account-scoped settings.tour_seen): offer the guided
   // tour. Guests get the welcome box above instead — never both.
-  try { maybeOfferTour(user); } catch (_) { /* non-fatal */ }
+  try {
+    maybeOfferTour(user); // first login (mobile homepage): the guided-tour offer
+    // Nudge the user to enable notifications (tour-styled, account-capped at 2,
+    // once per session). It DEFERS while the tour offer/run is on screen — so on
+    // the first mobile login it fires right after the tour closes (see tour.js),
+    // and on desktop or on later logins it fires here.
+    maybeShowNotifPrompt(user);
+  } catch (_) { /* non-fatal */ }
 }

@@ -13,7 +13,8 @@
 //  2. MANUAL — «راهنمای سایت» in the header person menu (logged-in), any time.
 //     On a non-home page it navigates to /?tour=1 and starts there.
 import { el, faNum } from './util.js';
-import { api } from './api.js';
+import { api, currentUser } from './api.js';
+import { maybeShowNotifPrompt } from './notif-prompt.js';
 
 const SS_PENDING = 'dcp:tour:pending'; // set before navigating home to start there
 
@@ -329,7 +330,7 @@ async function showStop(idx) {
   track('tour_step', { step: idx + 1, key: stop.key });
 }
 
-function endTour(completed) {
+function endTour(completed, opts = {}) {
   const st = state; if (!st) return;
   state = null;
   clearInterval(st.watch);
@@ -344,10 +345,18 @@ function endTour(completed) {
     const bn = document.querySelector('.dc-bn-item[data-panel="panel-studio"]');
     if (bn) bn.click();
   }
+  // The tour just closed for REAL (not a restart): nudge the user to turn on
+  // notifications, tour-styled + account-capped. Small delay so the panel
+  // transition settles first.
+  if (!opts.silent) {
+    setTimeout(() => {
+      currentUser().then((u) => { if (u) maybeShowNotifPrompt(u); }).catch(() => { /* ignore */ });
+    }, 500);
+  }
 }
 
 export function startTour({ manual = false } = {}) {
-  if (state) endTour(false); // restart cleanly instead of silently ignoring
+  if (state) endTour(false, { silent: true }); // restart cleanly (no notif nudge)
   if (!isHomePage()) {
     // The anchors only exist on the homepage: jump there and auto-start.
     try { sessionStorage.setItem(SS_PENDING, '1'); } catch (_) { /* ignore */ }
