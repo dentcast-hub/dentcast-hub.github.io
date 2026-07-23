@@ -53,9 +53,16 @@ async function setupWorkbench({ proseRoot, contentId }) {
   // Reading-completion signal: started only for a signed-in reader (the /activity
   // endpoint requires auth) and only once. Guarded so a mid-page login does not
   // start a second tracker.
+  //
+  // LiteCast is the ONE readable type excluded from the streak (product rule).
+  // Today it happens to carry no prose container so it never reaches here, but we
+  // guard EXPLICITLY too, so even if a LiteCast page later gains a .text-box it
+  // still never fires article_completed. Every other readable type lights the
+  // streak; audio episodes light it via episode_listened instead.
+  const streakExcluded = /^litecast\//.test(contentId);
   let readingStarted = false;
   const startReading = () => {
-    if (readingStarted) return;
+    if (readingStarted || streakExcluded) return;
     readingStarted = true;
     initReadingTracker({ contentId, proseRoot });
   };
