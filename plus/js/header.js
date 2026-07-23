@@ -12,6 +12,7 @@ import { openOverlay, closeOverlay, overlayOpen } from './overlay.js';
 import { renderDashboard } from './dashboard.js';
 import { renderProfile } from './profile.js';
 import { maybeShowWelcome } from './welcome.js';
+import { startTour, maybeOfferTour, tourMenuAvailable } from './tour.js';
 
 // Inlined so it can never 404. Built via innerHTML on an HTML button (not
 // createElement('svg')) so the parser creates properly namespaced SVG nodes;
@@ -84,6 +85,10 @@ function buildUserPerson(user) {
         onclick: () => { closeMenu(); openOverlay('dashboard', 'پیشخوان', (root) => renderDashboard(root, { me: user })); } }, 'پیشخوان'),
       el('button', { class: 'dcp-person-item', type: 'button', role: 'menuitem',
         onclick: () => { closeMenu(); openOverlay('profile', 'پروفایل', (root) => renderProfile(root, { me: user })); } }, 'پروفایل'),
+      // Re-run the guided tour on demand (mobile shell only for now). On a
+      // non-home page startTour hands off to the homepage via /?tour=1.
+      tourMenuAvailable() ? el('button', { class: 'dcp-person-item', type: 'button', role: 'menuitem',
+        onclick: () => { closeMenu(); if (overlayOpen()) closeOverlay(); startTour({ manual: true }); } }, 'راهنمای سایت') : null,
       el('button', { class: 'dcp-person-item', type: 'button', role: 'menuitem',
         onclick: async () => { closeMenu(); await api.logout().catch(() => {}); location.reload(); } }, 'خروج'),
     ]);
@@ -170,4 +175,8 @@ export async function initHeader() {
   } catch (e) {
     if (window.console) console.warn('[plus header] upgrade failed', e);
   }
+
+  // First login ever (account-scoped settings.tour_seen): offer the guided
+  // tour. Guests get the welcome box above instead — never both.
+  try { maybeOfferTour(user); } catch (_) { /* non-fatal */ }
 }

@@ -311,3 +311,43 @@ body.dcp-study { padding-bottom: 90px; }
 @media (min-width: 1100px) {
   .dcp-only-mobile { display: none; }
 }
+
+/* ---- site tour (guided walkthrough; mobile homepage) --------------------- */
+/* Freeze the scroll body while the tour drives it programmatically. */
+html.dcp-touring #mobile-body { overflow: hidden; }
+
+/* Full-screen layer above everything (header 200, bottom nav 300, person menu
+   10060): it swallows all interaction so the tour can't be broken mid-step. */
+.dcp-tour-layer { position: fixed; inset: 0; z-index: 20000; overscroll-behavior: contain; touch-action: none; }
+
+/* The spotlight: a transparent window whose giant shadow dims the whole page.
+   Zero-size + .is-empty (final stop) = full dim, no ring. */
+.dcp-tour-hole {
+  position: fixed; pointer-events: none; border-radius: 14px;
+  box-shadow: 0 0 0 200vmax rgba(3, 8, 18, .72);
+  outline: 2px solid color-mix(in srgb, var(--dcp-accent, #0b5fff) 70%, #fff);
+  outline-offset: 2px;
+  transition: top .3s ease, left .3s ease, width .3s ease, height .3s ease;
+}
+.dcp-tour-hole.is-empty { outline: none; }
+
+.dcp-tour-card {
+  position: fixed; width: min(92vw, 340px); box-sizing: border-box;
+  background: var(--dcp-surface, #fff); color: var(--dcp-ink, #1a2233);
+  border: 1px solid var(--dcp-line, rgba(0, 0, 0, .1)); border-radius: 16px;
+  padding: 14px 16px 12px; box-shadow: 0 18px 50px rgba(0, 0, 0, .4);
+  transition: top .3s ease, left .3s ease;
+}
+.dcp-tour-kicker { margin: 0 0 4px; font-size: .72rem; font-weight: 700; letter-spacing: .4px; color: var(--dcp-accent, #0b5fff); }
+.dcp-tour-title { margin: 0 0 6px; font-size: 1.05rem; font-weight: 800; }
+.dcp-tour-text { margin: 0 0 12px; font-size: .92rem; line-height: 1.9; }
+.dcp-tour-foot { display: flex; align-items: center; gap: 8px; }
+.dcp-tour-next { min-width: 96px; }
+.dcp-tour-progress { margin-inline-start: auto; font-size: .8rem; opacity: .65; font-variant-numeric: tabular-nums; }
+
+/* First-login invite (reuses the welcome overlay look). */
+.dcp-tour-offer-hint { margin: 0 0 14px; font-size: .85rem; opacity: .8; line-height: 1.9; }
+
+@media (prefers-reduced-motion: reduce) {
+  .dcp-tour-hole, .dcp-tour-card { transition: none; }
+}
