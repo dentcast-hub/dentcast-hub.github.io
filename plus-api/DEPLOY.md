@@ -128,10 +128,18 @@ return ['https://api.dentcast.org', 'https://api.dentcast.ir'];
 
 ---
 
-## 5b. Telegram login (dentcast.org AND dentcast.ir)
+## 5b. Telegram login (dentcast.org; .ir is OTP-only)
 
-"Login with Telegram" runs on BOTH sites (alongside phone OTP). A Telegram bot's
-`/setdomain` is bound to exactly ONE domain, so each site uses its OWN bot:
+"Login with Telegram" is shown on **dentcast.org** only (alongside phone OTP). On
+**dentcast.ir** it is deliberately **hidden** in the frontend
+(`telegramLoginEnabled()` → .org only): Telegram is filtered in Iran and its widget
+loads from `telegram.org`, so the button would be broken for non-VPN users. `.ir`
+uses **phone/OTP** now and is slated for **"Login with Bale"** (domestic, unfiltered)
+later. The `.ir` bot + `TELEGRAM_BOT_TOKEN_IR` + multi-token callback stay wired, so
+re-enabling `.ir` Telegram is just widening that frontend check — no backend change.
+
+A Telegram bot's `/setdomain` is bound to exactly ONE domain, so each site uses its
+OWN bot (the `.ir` one is provisioned but currently unused by the frontend):
 
 | Site | Bot | `/setdomain` | Token env var |
 |---|---|---|---|

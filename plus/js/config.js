@@ -67,14 +67,16 @@ export function telegramBotUsername() {
     : TELEGRAM_BOT_USERNAME_ORG; // .org hosts and the dev default
 }
 
-// Telegram login is offered on BOTH sites (each via its own bot). Requires the
-// matching /setdomain in BotFather (dentcast.org / dentcast.ir). Set
-// window.DENTCAST_PLUS.forceTelegramLogin = true to preview it elsewhere (the
-// widget itself will still report "Bot domain invalid" off its bot's domain).
+// Telegram login is shown ONLY on .org. On .ir it is deliberately hidden:
+// Telegram is filtered in Iran and the widget loads from telegram.org /
+// oauth.telegram.org, so the button would be broken for non-VPN users — exactly
+// the .ir audience. .ir uses phone/OTP now and gets "Login with Bale" (domestic,
+// unfiltered) later. The .ir bot (@Dentcast_irbot) and the multi-token backend
+// stay wired, so re-enabling .ir Telegram is just widening the check below.
+// Set window.DENTCAST_PLUS.forceTelegramLogin = true to preview it anywhere.
 export function telegramLoginEnabled() {
   if (OVERRIDE.forceTelegramLogin) return true;
-  const h = location.hostname;
-  return h.indexOf('dentcast.org') !== -1 || h.indexOf('dentcast.ir') !== -1;
+  return location.hostname.indexOf('dentcast.org') !== -1;
 }
 
 // The absolute auth-url the widget redirects to. It is a top-level navigation
