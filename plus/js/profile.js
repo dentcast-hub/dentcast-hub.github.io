@@ -169,47 +169,39 @@ function remindersBlock(me) {
   return block;
 }
 
-// Messenger connection (spec 2.7). COMING SOON ("به زودی"): both provider
-// options render as selectable chips but are DISABLED. No connection flow runs,
-// no provider is linked, nothing is stored. Presentational + locked only.
-//
-// NOT premium: when the real integration ships it is FREE for everyone, because
-// the connected messenger is the login/OTP fallback and therefore must stay
-// universal. The lock reads "coming soon," never "premium."
-//
-// Deferred build (Part B — recorded, do NOT implement here):
-//   - Providers Bale (بله) and Telegram both sit behind the provider-agnostic
-//     notification interface send(userId, message, kind) (spec 3). Bale is
-//     domestic and the most cutoff-resilient path; Telegram is the second option
-//     and OTP fallback. The connected messenger serves both OTP fallback and
-//     notification delivery.
-//   - New-article notification model:
-//       * Premium: fires immediately on article_published (no schedule/queue).
-//       * Free: each article gets notify_free_after = published_at + 24h; a cron
-//         at 21:00 Asia/Tehran batches all due, unsent articles into ONE digest
-//         ("یک مطلب جدید" / "N مطلب جدید"), sends once, marks them sent. Effective
-//         free delay is 24-48h; if ever surfaced to users describe it honestly as
-//         "۱ تا ۲ روز", never "۲۴ ساعت".
-//       * The free/premium split lives in `kind` (article_premium vs
-//         article_free_digest), not in the article or the channel. The article
-//         itself is public and indexed at publish time; the delay is only on the
-//         active push, never on access (principle 1).
-//   - Streak notification is already handled by the existing system; no change.
-function messengerBlock() {
-  const opt = (label) => el('button', {
-    class: 'dcp-provider-opt', type: 'button', disabled: 'disabled', 'aria-disabled': 'true',
-  }, label);
-  return el('div', { class: 'dcp-messenger' }, [
-    el('div', { class: 'dcp-provider-row' }, [
-      opt('بله'),
-      opt('تلگرام'),
+// Messenger connection (spec 2.7). Telegram is now LIVE — connecting it enables
+// both login and notification delivery (streak reminders + new-article), sent by
+// the API's provider-agnostic sender to whatever channels a user has connected
+// (Telegram and/or web push). Bale (بله) stays "به زودی": it is a domestic,
+// cutoff-resilient path but needs OAuth onboarding (client credentials) before it
+// can ship. When it lands it is FREE for everyone (the connected messenger is the
+// universal notification/OTP-fallback channel), never premium.
+function messengerBlock(me) {
+  const rows = [];
+
+  // Telegram — connect / connected. telegramLoginBlock returns null where the
+  // widget can't run (currently .ir), so there only Bale shows.
+  const tg = telegramLoginBlock(me);
+  if (tg) {
+    rows.push(el('div', { class: 'dcp-messenger-provider' }, [
+      el('div', { class: 'dcp-messenger-name' }, 'تلگرام'),
+      tg,
+    ]));
+  }
+
+  // Bale — still coming soon.
+  rows.push(el('div', { class: 'dcp-messenger-provider is-soon' }, [
+    el('div', { class: 'dcp-messenger-name' }, [
+      el('span', {}, 'بله'),
       el('span', { class: 'dcp-soon-badge' }, [
         el('span', { class: 'dcp-lock-ico', 'aria-hidden': 'true' }, '🔒'),
         el('span', {}, 'به زودی'),
       ]),
     ]),
-    el('p', { class: 'dcp-sec-hint' }, 'نوتیف‌ها، پیام‌رسانی و کد ورود از طریق اپ متصل ارسال می‌شود.'),
-  ]);
+    el('p', { class: 'dcp-sec-hint', style: 'margin:4px 0 0' }, 'ورود و نوتیف با بله به‌زودی اضافه می‌شود.'),
+  ]));
+
+  return el('div', { class: 'dcp-messenger' }, rows);
 }
 
 // Telegram login-linking (dentcast.org). Distinct from the messenger block
@@ -228,7 +220,7 @@ function telegramLoginBlock(me) {
         el('span', { class: 'dcp-tg-linked-ico', 'aria-hidden': 'true' }, '✓'),
         el('span', {}, 'حساب تلگرام متصل است'),
       ]),
-      el('p', { class: 'dcp-sec-hint' }, 'می‌توانید دفعهٔ بعد با تلگرام هم وارد شوید.'),
+      el('p', { class: 'dcp-sec-hint' }, 'ورود سریع و دریافتِ نوتیف استریک و مطلب جدید از تلگرام فعال است.'),
     ]);
   }
   if (!telegramLoginEnabled()) return null;
@@ -247,7 +239,7 @@ function telegramLoginBlock(me) {
 
   return el('div', {}, [
     holder,
-    el('p', { class: 'dcp-sec-hint' }, 'با اتصال تلگرام، دفعهٔ بعد می‌توانید فقط با تلگرام و بدون کد پیامکی وارد شوید. حساب فعلی و اطلاعاتتان حفظ می‌شود.'),
+    el('p', { class: 'dcp-sec-hint' }, 'با اتصال تلگرام: ورود بدون کد پیامکی + دریافتِ نوتیف استریک و مطلب جدید از تلگرام. حساب فعلی و اطلاعاتتان حفظ می‌شود.'),
   ]);
 }
 
@@ -262,9 +254,7 @@ export async function renderProfile(root, { me: preMe } = {}) {
   const logoutBtn = el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button' }, 'خروج از حساب');
   logoutBtn.addEventListener('click', async () => { await api.logout().catch(() => {}); location.href = '/'; });
 
-  const tgBlock = telegramLoginBlock(me);
-
-  root.replaceChildren(...[
+  root.replaceChildren(
     el('div', { class: 'dcp-dash-hello' }, 'پروفایل'),
     section('نام مستعار', pseudonymBlock(me)),
     section('پلن', planBlock()),
@@ -275,11 +265,9 @@ export async function renderProfile(root, { me: preMe } = {}) {
     ])),
     section('مقایسه ماه به ماه', stats.month_vs_month ? monthCompare(stats.month_vs_month) : el('div', { class: 'dcp-muted' }, '—')),
     section('شماره موبایل', el('div', { dir: 'ltr', class: 'dcp-phone' }, me.phone || '—')),
-    // "Login with Telegram" linking — omitted where it does not apply (.ir, or
-    // already covered by the messenger section for notifications).
-    tgBlock ? section('ورود با تلگرام', tgBlock) : null,
-    section('اتصال به اپ‌های پیام‌رسان', messengerBlock()),
+    // Telegram connect (login + notifications) + Bale (coming soon).
+    section('اتصال به پیام‌رسان‌ها', messengerBlock(me)),
     section('یادآوری‌ها', remindersBlock(me)),
     el('div', { class: 'dcp-dash-sec' }, [logoutBtn]),
-  ].filter(Boolean));
+  );
 }

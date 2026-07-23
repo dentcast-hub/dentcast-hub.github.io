@@ -96,7 +96,7 @@ variables** on the container:
 | `SMSIR_API_KEY` | (from step 2) |
 | `SMSIR_TEMPLATE_ID` | (from step 2) |
 | `SMSIR_PARAM_NAME` | `CODE` (or your template's param) |
-| `NOTIFY_PROVIDER` | `webpush` |
+| `NOTIFY_PROVIDER` | `webpush,telegram` (comma list; fans out to both) |
 | `VAPID_PUBLIC_KEY` | (from step 1) |
 | `VAPID_PRIVATE_KEY` | (from step 1) |
 | `VAPID_SUBJECT` | `mailto:foad.shahabian@gmail.com` |

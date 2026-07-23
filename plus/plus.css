@@ -250,6 +250,11 @@ body.dcp-study { padding-bottom: 90px; }
 /* Profile: "Telegram connected" confirmation. */
 .dcp-tg-linked { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; color: #1f9d55; }
 .dcp-tg-linked-ico { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%; background: #1f9d55; color: #fff; font-size: .8rem; }
+/* Profile: messenger-connection rows (Telegram live + Bale coming soon). */
+.dcp-messenger { display: flex; flex-direction: column; gap: 14px; }
+.dcp-messenger-provider { display: flex; flex-direction: column; gap: 8px; padding: 12px; border: 1px solid var(--dcp-line); border-radius: 12px; }
+.dcp-messenger-provider.is-soon { opacity: .7; }
+.dcp-messenger-name { display: flex; align-items: center; gap: 8px; font-weight: 700; }
 
 .dcp-btn { font: inherit; font-weight: 600; padding: 10px 16px; border-radius: 10px; cursor: pointer; border: 1px solid var(--dcp-line); background: transparent; color: var(--dcp-ink); }
 .dcp-btn-primary { background: var(--dcp-accent); color: #fff; border-color: transparent; }
