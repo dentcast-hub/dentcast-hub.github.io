@@ -43,6 +43,8 @@ export function maybeShowWelcome({ personBtn } = {}) {
   if (!isHomePage()) return;              // homepage only
   if (getCount() >= MAX_SHOWS) return;
   if (shownThisSession()) return;
+  // Never stack on top of a running guided tour (manual /?tour=1 as a guest).
+  if (document.documentElement.classList.contains('dcp-touring')) return;
 
   markSession();
   bumpCount();
