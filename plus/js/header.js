@@ -12,7 +12,7 @@ import { openOverlay, closeOverlay, overlayOpen } from './overlay.js';
 import { renderDashboard } from './dashboard.js';
 import { renderProfile } from './profile.js';
 import { maybeShowWelcome } from './welcome.js';
-import { startTour, maybeOfferTour, tourMenuAvailable } from './tour.js';
+import { startTour, maybeOfferTour, tourMenuAvailable, initTourAutostart } from './tour.js';
 
 // Inlined so it can never 404. Built via innerHTML on an HTML button (not
 // createElement('svg')) so the parser creates properly namespaced SVG nodes;
@@ -120,6 +120,10 @@ export async function initHeader() {
   const actions = bars.find((b) => b.getClientRects().length > 0) || bars[0];
   if (!actions || actions.dataset.dcpHeader) return;
   actions.dataset.dcpHeader = '1';
+
+  // Tour handoff (/?tour=1) — also armed here, not just in plus.js boot, so it
+  // survives a stale cached plus.js entry (see initTourAutostart; idempotent).
+  try { initTourAutostart(); } catch (_) { /* non-fatal */ }
 
   // Move music + articles into the hamburger drawer (independent of the API).
   try {
