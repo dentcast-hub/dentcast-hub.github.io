@@ -156,19 +156,37 @@ function unionRect(els) {
 
 // Scroll #mobile-body so the (in-flow) targets sit in the free band between
 // the sticky header and the fixed bottom nav. Fixed/sticky targets (header,
-// bottom nav) never need this. Returns true if it scrolled.
+// bottom nav) never need this. Returns the scrolled container (or null).
 function scrollTargets(els) {
   const mb = byId('mobile-body');
-  if (!mb) return false;
+  if (!mb) return null;
   const inBody = els.filter((e) => mb.contains(e));
-  if (!inBody.length) return false;
+  if (!inBody.length) return null;
   const u = unionRect(inBody);
   const bandTop = 82, bandBottom = window.innerHeight - 88;
-  if (u.top >= bandTop && u.bottom <= bandBottom) return false;
+  if (u.top >= bandTop && u.bottom <= bandBottom) return null;
   const slack = Math.max(0, (bandBottom - bandTop - u.height) / 3);
   const top = Math.max(0, mb.scrollTop + (u.top - bandTop - slack));
   mb.scrollTo({ top, behavior: 'smooth' });
-  return true;
+  return mb;
+}
+
+// Real phones take an unpredictable time to finish a smooth scroll (a fixed
+// delay measured mid-scroll and left the spotlight offset from its target).
+// Resolve once scrollTop has been still for ~8 frames, capped at 1.5s.
+function waitScrollSettle(container, timeout = 1500) {
+  return new Promise((resolve) => {
+    let last = container.scrollTop, still = 0;
+    const t0 = (window.performance || Date).now();
+    (function tick() {
+      requestAnimationFrame(() => {
+        const now = container.scrollTop;
+        if (now === last) still += 1; else { still = 0; last = now; }
+        if (still >= 8 || (window.performance || Date).now() - t0 > timeout) resolve();
+        else tick();
+      });
+    })();
+  });
 }
 
 function positionHole(hole, rect) {
@@ -216,11 +234,37 @@ function placeCard(card, rect) {
   card.style.visibility = '';
 }
 
+// Recompute the union rect and (re)place hole + card. Content is untouched, so
+// this is safe to call repeatedly (resize, drift watcher).
+function positionStop() {
+  const st = state; if (!st) return;
+  // Async widgets (e.g. the Plus home card) can re-render and replace a
+  // spotlighted node after we grabbed it — refetch from the stop definition.
+  if (st.els.some((e) => !e.isConnected)) {
+    const stop = STOPS[st.idx];
+    st.els = stop.targets ? stop.targets().filter(visible) : [];
+  }
+  const rect = st.els.length ? unionRect(st.els) : null;
+  positionHole(st.hole, rect);
+  placeCard(st.card, rect);
+  st.lastRect = rect;
+}
+
+// Late layout shifts (async-injected cards, web fonts, viewport chrome) move
+// the page under a displayed stop. Watch for drift and follow the target.
+function driftCheck() {
+  const st = state; if (!st || !st.els.length) return;
+  if (st.els.some((e) => !e.isConnected)) { positionStop(); return; }
+  const r = unionRect(st.els), o = st.lastRect;
+  if (!o || Math.abs(r.top - o.top) > 2 || Math.abs(r.left - o.left) > 2
+    || Math.abs(r.height - o.height) > 2 || Math.abs(r.width - o.width) > 2) {
+    positionStop();
+  }
+}
+
 function renderStop(stop, idx) {
   const st = state; if (!st) return;
   const last = idx === STOPS.length - 1;
-  const rect = st.els.length ? unionRect(st.els) : null;
-  positionHole(st.hole, rect);
 
   st.card.textContent = '';
   st.card.appendChild(el('p', { class: 'dcp-tour-kicker' }, 'راهنمای دنت‌کست'));
@@ -236,7 +280,7 @@ function renderStop(stop, idx) {
   }
   foot.push(el('span', { class: 'dcp-tour-progress' }, faNum(idx + 1) + ' از ' + faNum(STOPS.length)));
   st.card.appendChild(el('div', { class: 'dcp-tour-foot' }, foot));
-  placeCard(st.card, rect);
+  positionStop();
 }
 
 async function showStop(idx) {
@@ -258,8 +302,9 @@ async function showStop(idx) {
 
   const els = stop.targets ? stop.targets().filter(visible) : [];
   if (stop.targets && !els.length) { showStop(idx + 1); return; } // anchor missing -> skip
-  if (els.length && scrollTargets(els)) {
-    await wait(420); // let the smooth scroll settle before measuring
+  const scrolled = els.length ? scrollTargets(els) : null;
+  if (scrolled) {
+    await waitScrollSettle(scrolled);
     if (!state || state.seq !== seq) return;
   }
   st.els = els;
@@ -270,6 +315,7 @@ async function showStop(idx) {
 function endTour(completed) {
   const st = state; if (!st) return;
   state = null;
+  clearInterval(st.watch);
   document.removeEventListener('keydown', st.onKey);
   window.removeEventListener('resize', st.onResize);
   document.documentElement.classList.remove('dcp-touring');
@@ -284,7 +330,7 @@ function endTour(completed) {
 }
 
 export function startTour({ manual = false } = {}) {
-  if (state) return;
+  if (state) endTour(false); // restart cleanly instead of silently ignoring
   if (!isHomePage()) {
     // The anchors only exist on the homepage: jump there and auto-start.
     try { sessionStorage.setItem(SS_PENDING, '1'); } catch (_) { /* ignore */ }
@@ -305,9 +351,10 @@ export function startTour({ manual = false } = {}) {
   let resizeT = null;
   const onResize = () => {
     clearTimeout(resizeT);
-    resizeT = setTimeout(() => { if (state) renderStop(STOPS[state.idx], state.idx); }, 150);
+    resizeT = setTimeout(positionStop, 150);
   };
-  state = { seq: 0, idx: 0, els: [], layer, hole, card, onKey, onResize };
+  state = { seq: 0, idx: 0, els: [], lastRect: null, layer, hole, card, onKey, onResize };
+  state.watch = setInterval(driftCheck, 400);
   document.body.appendChild(layer);
   document.documentElement.classList.add('dcp-touring');
   document.addEventListener('keydown', onKey);
@@ -361,8 +408,14 @@ export function maybeOfferTour(user) {
 // ------------------------------------------------------------- autostart ----
 // Handles the /?tour=1 handoff (manual start requested from a non-home page)
 // on homepage load. Small delay so the Plus header/home card have a chance to
-// render before the tour measures them.
+// render before the tour measures them. Idempotent (guarded by a module flag)
+// because it is invoked from BOTH plus.js boot and initHeader — the header
+// path guarantees the handoff works even when a cached plus.js entry predates
+// this feature (its module graph still pulls the fresh header.js + tour.js).
+let autostartDone = false;
 export function initTourAutostart() {
+  if (autostartDone) return;
+  autostartDone = true;
   let pending = false;
   try {
     pending = sessionStorage.getItem(SS_PENDING) === '1';
