@@ -4,7 +4,7 @@ import { el, faNum } from './util.js';
 import { api, ApiError, currentUser } from './api.js';
 import {
   isOrgHost, irMirrorUrl,
-  telegramLoginEnabled, telegramCallbackUrl, TELEGRAM_BOT_USERNAME,
+  telegramLoginEnabled, telegramCallbackUrl, telegramBotUsername,
 } from './config.js';
 
 let overlay = null;
@@ -154,7 +154,7 @@ function buildTelegramBlock(returnTo) {
   const s = document.createElement('script');
   s.async = true;
   s.src = 'https://telegram.org/js/telegram-widget.js?22';
-  s.setAttribute('data-telegram-login', TELEGRAM_BOT_USERNAME);
+  s.setAttribute('data-telegram-login', telegramBotUsername());
   s.setAttribute('data-size', 'large');
   s.setAttribute('data-userpic', 'true');
   s.setAttribute('data-radius', '10');

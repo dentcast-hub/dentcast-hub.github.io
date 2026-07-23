@@ -7,7 +7,7 @@ import { consume, HOUR_MS } from '../services/rate-limit.js';
 import { setSessionCookie, clearSessionCookie, readSession } from '../services/session.js';
 import { sanitizeReturnTo } from '../services/return-to.js';
 import { generatePseudonym } from '../services/pseudonym.js';
-import { verifyTelegramAuth } from '../services/telegram-auth.js';
+import { verifyTelegramAuthAny } from '../services/telegram-auth.js';
 import { mergeProfiles } from '../services/merge-profiles.js';
 import { sms } from '../providers/registry.js';
 import { loadUser } from '../middleware/auth.js';
@@ -201,7 +201,11 @@ export async function authRoutes(app: FastifyInstance): Promise<void> {
     const fail = (reason: string) =>
       reply.redirect(`${origin}/plus/auth-error.html?reason=${encodeURIComponent(reason)}`);
 
-    if (!config.auth.telegram.botToken) return fail('not_configured');
+    // Accept a payload signed by either bot (.org or .ir); both map to the same
+    // Telegram account since the user id is global.
+    const botTokens = [config.auth.telegram.botToken, config.auth.telegram.botTokenIr]
+      .filter(Boolean);
+    if (botTokens.length === 0) return fail('not_configured');
 
     // Feed ONLY Telegram's own fields into the signature check.
     const tg: Record<string, string> = {};
@@ -209,8 +213,8 @@ export async function authRoutes(app: FastifyInstance): Promise<void> {
       if (typeof q[k] === 'string' && q[k] !== '') tg[k] = q[k];
     }
 
-    const verdict = verifyTelegramAuth(
-      tg, config.auth.telegram.botToken, config.auth.telegram.maxAgeSeconds,
+    const verdict = verifyTelegramAuthAny(
+      tg, botTokens, config.auth.telegram.maxAgeSeconds,
     );
     if (!verdict.ok) return fail(verdict.reason ?? 'bad_signature');
 

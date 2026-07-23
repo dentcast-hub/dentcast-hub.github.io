@@ -128,29 +128,42 @@ return ['https://api.dentcast.org', 'https://api.dentcast.ir'];
 
 ---
 
-## 5b. Telegram login (dentcast.org)
+## 5b. Telegram login (dentcast.org AND dentcast.ir)
 
-"Login with Telegram" is live on the `.org` hosts (alongside phone OTP). It needs:
+"Login with Telegram" runs on BOTH sites (alongside phone OTP). A Telegram bot's
+`/setdomain` is bound to exactly ONE domain, so each site uses its OWN bot:
 
-1. **BotFather** — the login bot is `@Dentcast_bot`. Run `/setdomain` and set it to
-   **`dentcast.org`** (bare domain, no scheme/path). The widget only renders on a
-   page whose domain matches this value, so it must be `dentcast.org` — the domain
-   the widget is embedded on. (The redirect target — the API callback — may live on
-   the `api.` subdomain; only the *embedding* page's domain is checked.)
-2. **Container env** — set `TELEGRAM_BOT_TOKEN` to the bot's API token (the same
-   token the Telegram notification sender uses). Without it the callback returns the
-   users to `/plus/auth-error.html?reason=not_configured`. Optional:
+| Site | Bot | `/setdomain` | Token env var |
+|---|---|---|---|
+| dentcast.org | `@Dentcast_bot` | `dentcast.org` | `TELEGRAM_BOT_TOKEN` |
+| dentcast.ir  | `@Dentcast_irbot` | `dentcast.ir` | `TELEGRAM_BOT_TOKEN_IR` |
+
+The Telegram **user id is global** (identical across bots), so a person who signs
+in on both sites is ONE account. The single API container serves both `api.` hosts
+and the callback accepts a payload signed by **either** bot.
+
+1. **BotFather** — for each bot run `/setdomain` and set the bare domain (no
+   scheme/path): `@Dentcast_bot` → `dentcast.org`, `@Dentcast_irbot` → `dentcast.ir`.
+   The widget only renders on a page whose domain matches its bot's setdomain. (The
+   redirect target — the API callback — may live on the `api.` subdomain; only the
+   *embedding* page's domain is checked.)
+2. **Container env** — set BOTH `TELEGRAM_BOT_TOKEN` and `TELEGRAM_BOT_TOKEN_IR`
+   (one container, both api hosts). With neither set the callback sends users to
+   `/plus/auth-error.html?reason=not_configured`. Optional:
    `TELEGRAM_AUTH_MAX_AGE_SECONDS` (default `86400` = reject payloads older than 24h).
-3. **Frontend** — the bot **username** is public and set in `plus/js/config.js`
-   (`TELEGRAM_BOT_USERNAME = 'Dentcast_bot'`). `telegramLoginEnabled()` shows the
-   widget only on `dentcast.org`; `.ir` keeps OTP-only until "Login with Bale" ships.
-4. **HTTPS** — the widget requires the page to be served over HTTPS (Cloudflare Pages
-   already is) and the callback (`https://api.dentcast.org/auth/telegram/callback`)
-   to be valid TLS (covered by step 5).
+3. **Frontend** — the bot usernames are public and set in `plus/js/config.js`
+   (`Dentcast_bot` / `Dentcast_irbot`); `telegramBotUsername()` picks by host and
+   `telegramLoginEnabled()` shows the widget on both `.org` and `.ir`.
+4. **HTTPS** — the widget requires the embedding page over HTTPS and a valid-TLS
+   callback (`https://api.dentcast.{org,ir}/auth/telegram/callback`), covered by step 5.
 
-Verify: on `https://dentcast.org`, open the login modal → the Telegram button renders
-→ authorize → you land back on the page logged in (session cookie set), and a first-
-time user is immediately prompted for a nickname (the leaderboard name).
+Note (future): the notification sender currently uses only `TELEGRAM_BOT_TOKEN`, so a
+bot can message only users who authorized IT. Per-bot notification delivery for
+`.ir`-only users is a later task.
+
+Verify on each site: open the login modal → the Telegram button renders → authorize
+→ you land back logged in (session cookie set); a first-time user is prompted for a
+nickname (the leaderboard name).
 
 ## 6. Daily backup
 

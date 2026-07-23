@@ -49,21 +49,32 @@ export function irMirrorUrl() {
 // fetches it from the API (/push/public-key) at subscribe time.
 export const VAPID_PUBLIC_KEY = OVERRIDE.vapidPublicKey || '';
 
-// --- Telegram Login (dentcast.org sign-in) ----------------------------------
-// The bot USERNAME is public — it is what renders the official Login Widget.
-// The bot's /setdomain is dentcast.org, so the widget only renders (and only
-// makes sense) on the .org hosts; .ir will use "Login with Bale" later. The
-// widget redirects the browser to the API's /auth/telegram/callback, which
-// verifies the signed payload server-side with the SECRET token.
-export const TELEGRAM_BOT_USERNAME = OVERRIDE.telegramBotUsername || 'Dentcast_bot';
+// --- Telegram Login ---------------------------------------------------------
+// Each site uses its OWN bot, because a bot's /setdomain binds it to exactly ONE
+// domain: @Dentcast_bot -> dentcast.org, @Dentcast_irbot -> dentcast.ir. The
+// widget only renders on its bot's domain, so we pick the username by host. The
+// bot username is public. The Telegram USER id is global (same across bots), so
+// the same person is ONE account across both sites. The widget redirects to the
+// API's /auth/telegram/callback, which verifies the payload against either bot's
+// SECRET token server-side.
+const TELEGRAM_BOT_USERNAME_ORG = OVERRIDE.telegramBotUsername || 'Dentcast_bot';
+const TELEGRAM_BOT_USERNAME_IR = OVERRIDE.telegramBotUsernameIr || 'Dentcast_irbot';
 
-// Show "Login with Telegram" only where the bot domain matches (the .org hosts).
-// Set window.DENTCAST_PLUS.forceTelegramLogin = true to preview it elsewhere
-// (the widget itself will still report "Bot domain invalid" off dentcast.org).
+// The bot username for the current host (.ir -> the .ir bot; else the .org bot).
+export function telegramBotUsername() {
+  return location.hostname.indexOf('dentcast.ir') !== -1
+    ? TELEGRAM_BOT_USERNAME_IR
+    : TELEGRAM_BOT_USERNAME_ORG; // .org hosts and the dev default
+}
+
+// Telegram login is offered on BOTH sites (each via its own bot). Requires the
+// matching /setdomain in BotFather (dentcast.org / dentcast.ir). Set
+// window.DENTCAST_PLUS.forceTelegramLogin = true to preview it elsewhere (the
+// widget itself will still report "Bot domain invalid" off its bot's domain).
 export function telegramLoginEnabled() {
-  if (!TELEGRAM_BOT_USERNAME) return false;
   if (OVERRIDE.forceTelegramLogin) return true;
-  return location.hostname.indexOf('dentcast.org') !== -1;
+  const h = location.hostname;
+  return h.indexOf('dentcast.org') !== -1 || h.indexOf('dentcast.ir') !== -1;
 }
 
 // The absolute auth-url the widget redirects to. It is a top-level navigation

@@ -76,7 +76,13 @@ export const config = {
   // frontend (plus/js/config.js), never here.
   auth: {
     telegram: {
+      // Two bots, one per site (a bot's /setdomain is bound to ONE domain):
+      //   botToken   = @Dentcast_bot   (/setdomain dentcast.org) — also notifications
+      //   botTokenIr = @Dentcast_irbot (/setdomain dentcast.ir)
+      // The login callback accepts a payload signed by EITHER (the Telegram user
+      // id is global, so both resolve to the same account).
       botToken: str('TELEGRAM_BOT_TOKEN', ''),
+      botTokenIr: str('TELEGRAM_BOT_TOKEN_IR', ''),
       // Reject a Telegram auth payload older than this (seconds); 24h per the
       // login-widget guidance ("to prevent the use of outdated data").
       maxAgeSeconds: int('TELEGRAM_AUTH_MAX_AGE_SECONDS', 86400),

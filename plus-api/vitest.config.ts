@@ -11,10 +11,11 @@ export default defineConfig({
     env: {
       NODE_ENV: 'test',
       DATABASE_URL: 'postgres://dentcast:dentcast@localhost:5432/dentcast_plus_test',
-      // A throwaway token so the Telegram-login route/verifier have a key under
-      // test. dotenv does not override an already-set env var, so this wins over
-      // the real token in .env. Tests sign their payloads with this same value.
+      // Throwaway bot tokens so the Telegram-login route/verifier have keys under
+      // test. dotenv does not override an already-set env var, so these win over
+      // the real tokens in .env. Tests sign their payloads with these values.
       TELEGRAM_BOT_TOKEN: '123456:TEST-telegram-bot-token',
+      TELEGRAM_BOT_TOKEN_IR: '999999:TEST-telegram-ir-bot-token',
     },
   },
 });

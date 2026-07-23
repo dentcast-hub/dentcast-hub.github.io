@@ -3,10 +3,11 @@ import crypto from 'node:crypto';
 import type { FastifyInstance } from 'fastify';
 import { makeApp, resetDb, sessionCookieFrom, loginAs } from './helpers.js';
 import { pool } from '../src/db.js';
-import { verifyTelegramAuth } from '../src/services/telegram-auth.js';
+import { verifyTelegramAuth, verifyTelegramAuthAny } from '../src/services/telegram-auth.js';
 
-// Must match TELEGRAM_BOT_TOKEN in vitest.config.ts.
+// Must match the tokens in vitest.config.ts.
 const BOT_TOKEN = '123456:TEST-telegram-bot-token';
+const BOT_TOKEN_IR = '999999:TEST-telegram-ir-bot-token';
 // One of the CORS origins loaded from .env, so the callback accepts it.
 const ORIGIN = 'http://localhost:5500';
 
@@ -20,7 +21,7 @@ function sign(fields: Record<string, string>, token = BOT_TOKEN): string {
   return crypto.createHmac('sha256', secret).update(dcs).digest('hex');
 }
 
-function payload(overrides: Record<string, string> = {}): Record<string, string> {
+function payload(overrides: Record<string, string> = {}, token = BOT_TOKEN): Record<string, string> {
   const base: Record<string, string> = {
     id: '77777',
     first_name: 'Sara',
@@ -28,7 +29,7 @@ function payload(overrides: Record<string, string> = {}): Record<string, string>
     auth_date: String(Math.floor(Date.now() / 1000)),
     ...overrides,
   };
-  return { ...base, hash: sign(base) };
+  return { ...base, hash: sign(base, token) };
 }
 
 function callbackUrl(fields: Record<string, string>, extra: Record<string, string> = {}): string {
@@ -67,6 +68,26 @@ describe('verifyTelegramAuth', () => {
   it('is order-independent (signs the same set regardless of key order)', () => {
     const p = payload({ last_name: 'K', photo_url: 'https://t.me/x.jpg' });
     expect(verifyTelegramAuth(p, BOT_TOKEN, 86400).ok).toBe(true);
+  });
+});
+
+describe('verifyTelegramAuthAny (two bots: .org + .ir)', () => {
+  it('accepts a payload signed by EITHER bot', () => {
+    const fromOrg = payload({ id: '111' }, BOT_TOKEN);
+    const fromIr = payload({ id: '222' }, BOT_TOKEN_IR);
+    expect(verifyTelegramAuthAny(fromOrg, [BOT_TOKEN, BOT_TOKEN_IR], 86400).ok).toBe(true);
+    expect(verifyTelegramAuthAny(fromIr, [BOT_TOKEN, BOT_TOKEN_IR], 86400).ok).toBe(true);
+  });
+
+  it('rejects a payload signed by neither bot', () => {
+    const forged = payload({ id: '333' }, 'someone:else-token');
+    expect(verifyTelegramAuthAny(forged, [BOT_TOKEN, BOT_TOKEN_IR], 86400))
+      .toMatchObject({ ok: false, reason: 'bad_signature' });
+  });
+
+  it('skips empty tokens in the list', () => {
+    const fromIr = payload({ id: '444' }, BOT_TOKEN_IR);
+    expect(verifyTelegramAuthAny(fromIr, ['', BOT_TOKEN_IR], 86400).ok).toBe(true);
   });
 });
 
@@ -223,6 +244,20 @@ describe('GET /auth/telegram/callback', () => {
     // Still exactly one Telegram identity.
     const idn = await pool.query("select count(*)::int n from auth_identities where provider = 'telegram'");
     expect(idn.rows[0].n).toBe(1);
+  });
+
+  it('accepts a login signed by the .ir bot (second bot)', async () => {
+    const res = await app.inject({
+      method: 'GET',
+      url: callbackUrl(payload({ id: '73737' }, BOT_TOKEN_IR)),
+    });
+    expect(res.statusCode).toBe(302);
+    expect(sessionCookieFrom(res)).toBeTruthy();
+    const idn = await pool.query(
+      "select provider_user_id from auth_identities where provider = 'telegram'",
+    );
+    expect(idn.rowCount).toBe(1);
+    expect(idn.rows[0].provider_user_id).toBe('73737');
   });
 
   it('redirects to the error page on a bad signature', async () => {
