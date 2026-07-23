@@ -27,10 +27,24 @@ export class TelegramNotificationSender implements NotificationSender {
     }
 
     const url = `https://api.telegram.org/bot${config.notify.telegramBotToken}/sendMessage`;
-    await fetch(url, {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ chat_id: telegramId, text }),
-    });
+    try {
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ chat_id: telegramId, text }),
+      });
+      if (!res.ok) {
+        // fetch does NOT reject on a 4xx/5xx, so without this a failed send (e.g.
+        // 403 "bot was blocked by the user", 400 "chat not found", bad token)
+        // would vanish silently. Log it — best-effort, never throw the batch.
+        const detail = await res.text().catch(() => '');
+        // eslint-disable-next-line no-console
+        console.warn(`[notify:telegram:${kind}] sendMessage ${res.status} chat=${telegramId} :: ${detail.slice(0, 300)}`);
+      }
+    } catch (err) {
+      // Network/DNS failure reaching api.telegram.org.
+      // eslint-disable-next-line no-console
+      console.warn(`[notify:telegram:${kind}] network error chat=${telegramId}: ${(err as Error).message}`);
+    }
   }
 }

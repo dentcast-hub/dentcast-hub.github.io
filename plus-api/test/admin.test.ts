@@ -39,6 +39,42 @@ describe('admin auth', () => {
   });
 });
 
+describe('POST /admin/notify/test', () => {
+  it('requires admin auth', async () => {
+    const res = await app.inject({ method: 'POST', url: '/admin/notify/test', payload: { telegram_id: 1 } });
+    expect(res.statusCode).toBe(401);
+  });
+
+  it('sends a test notification to a Telegram-linked user located by telegram_id', async () => {
+    await pool.query(
+      "insert into profiles (phone, telegram_id, display_name) values (null, 424242, 'tg')",
+    );
+    const res = await app.inject({
+      method: 'POST', url: '/admin/notify/test',
+      headers: { authorization: basic }, payload: { telegram_id: 424242 },
+    });
+    expect(res.statusCode).toBe(200);
+    const body = res.json();
+    expect(body.ok).toBe(true);
+    expect(body.telegram_linked).toBe(true);
+    expect(typeof body.channel).toBe('string'); // active sender name (stub in tests)
+  });
+
+  it('404s an unknown target and 400s a missing target', async () => {
+    const notFound = await app.inject({
+      method: 'POST', url: '/admin/notify/test',
+      headers: { authorization: basic }, payload: { phone: '09129999999' },
+    });
+    expect(notFound.statusCode).toBe(404);
+
+    const noTarget = await app.inject({
+      method: 'POST', url: '/admin/notify/test',
+      headers: { authorization: basic }, payload: {},
+    });
+    expect(noTarget.statusCode).toBe(400);
+  });
+});
+
 describe('admin KPIs', () => {
   it('computes the six KPIs from activity + anon events', async () => {
     // an anonymous demand signal

@@ -2,6 +2,10 @@ import type { FastifyInstance } from 'fastify';
 import { requireAdmin } from '../middleware/basic-auth.js';
 import { computeKpis, type Kpis } from '../services/kpis.js';
 import { onArticlePublished, runFreeDigest, backfillExistingContent } from '../services/article-notify.js';
+import { one } from '../db.js';
+import { normalizePhone } from '../services/phone.js';
+import { notifications } from '../providers/registry.js';
+import type { NotificationMessage } from '../providers/notifications/types.js';
 
 function fmtPct(v: number | null): string {
   return v == null ? '—' : v.toFixed(1) + '٪';
@@ -111,5 +115,54 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
   app.post('/admin/articles/backfill', async (_request, reply) => {
     const result = await backfillExistingContent(new Date());
     return reply.send({ ok: true, ...result });
+  });
+
+  // POST /admin/notify/test - send a REAL test notification to one user via the
+  // configured channels (fan-out: web push AND Telegram). Locate the user by
+  // phone, telegram_id, or user_id. Use this to verify end-to-end delivery (e.g.
+  // that a Telegram-linked account actually receives the message). Check the
+  // response's channel flags and, on Telegram failure, the server logs
+  // ([notify:telegram:...]).
+  app.post('/admin/notify/test', {
+    schema: {
+      body: {
+        type: 'object',
+        properties: {
+          phone: { type: 'string' },
+          telegram_id: { type: 'integer' },
+          user_id: { type: 'string' },
+        },
+      },
+    },
+  }, async (request, reply) => {
+    const b = request.body as { phone?: string; telegram_id?: number; user_id?: string };
+
+    let row: { id: string; telegram_id: number | null } | null = null;
+    if (b.user_id) {
+      row = await one('select id, telegram_id from profiles where id = $1', [b.user_id]);
+    } else if (b.telegram_id) {
+      row = await one('select id, telegram_id from profiles where telegram_id = $1', [b.telegram_id]);
+    } else if (b.phone) {
+      const phone = normalizePhone(b.phone);
+      if (phone) row = await one('select id, telegram_id from profiles where phone = $1', [phone]);
+    } else {
+      return reply.code(400).send({ error: 'no_target', message: 'phone | telegram_id | user_id لازم است.' });
+    }
+    if (!row) return reply.code(404).send({ error: 'no_profile' });
+
+    const message: NotificationMessage = {
+      title: 'دنت‌کست پلاس',
+      body: 'پیام تست — اتصال نوتیف شما درست کار می‌کند ✅',
+      url: '/plus/',
+      tag: 'notify_test',
+    };
+    await notifications.send(row.id, message, 'system');
+
+    return reply.send({
+      ok: true,
+      user_id: row.id,
+      channel: notifications.name,          // e.g. multi(webpush+telegram)
+      telegram_linked: row.telegram_id != null,
+    });
   });
 }
