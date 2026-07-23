@@ -305,16 +305,19 @@ export async function authRoutes(app: FastifyInstance): Promise<void> {
     //               row, or a profile that carries this telegram_id), if any.
     //   session   = the account the browser is currently logged in as, if real.
     //
-    //   (A) canonical exists -> use it. If the browser is logged in as a
-    //       DIFFERENT account (a phone/OTP account created before Telegram was
-    //       connected), MERGE that account into the canonical one, so the person
-    //       ends up with ONE account reachable by phone AND Telegram — never a
-    //       duplicate. Create the identity row if only telegram_id existed.
+    //   (A) canonical exists:
+    //         - not logged in, or logged in AS canonical -> use it (a normal
+    //           returning Telegram login, or a re-connect of the same account).
+    //         - logged in as a DIFFERENT account -> REJECT ('telegram_taken'). This
+    //           Telegram already belongs to another account; we must NOT merge the
+    //           two — that silently destroys the logged-in account and its phone
+    //           (the bug that ate a phone number). To move Telegram to another
+    //           account, disconnect it from the old one first (/auth/telegram/unlink).
     //   (B) no canonical, but logged in -> LINK Telegram to the current account
-    //       (the "logged-in phone user connects Telegram" flow).
+    //       (the "logged-in phone user connects a free Telegram" flow).
     //   (C) neither -> create a phone-less account with an EMPTY display_name so
     //       the mandatory-nickname gate (header.js -> openNameGate) fires.
-    const userId = await withTransaction(async (client) => {
+    const outcome = await withTransaction<{ userId?: string; rejected?: string }>(async (client) => {
       const identity = await one<{ user_id: string }>(
         `select user_id from auth_identities
            where provider = 'telegram' and provider_user_id = $1`,
@@ -337,9 +340,11 @@ export async function authRoutes(app: FastifyInstance): Promise<void> {
 
       let uid: string;
       if (canonical) {
-        // (A) Fold a different logged-in account into the Telegram account.
+        // (A) The Telegram already belongs to `canonical`.
         if (sessionAccount && sessionAccount !== canonical) {
-          await mergeProfiles(client, sessionAccount, canonical);
+          // Logged in as a DIFFERENT account: refuse. Merging would delete the
+          // logged-in account (and its phone). No auto-merge — ever.
+          return { rejected: 'telegram_taken' };
         }
         uid = canonical;
         if (!identity) {
@@ -389,11 +394,35 @@ export async function authRoutes(app: FastifyInstance): Promise<void> {
           where provider = 'telegram' and provider_user_id = $1`,
         [providerUserId, username, name, photo], client,
       );
-      return resolvedUid;
+      return { userId: resolvedUid };
     });
 
-    setSessionCookie(reply, userId);
+    if (outcome.rejected) return fail(outcome.rejected);
+    setSessionCookie(reply, outcome.userId!);
     return reply.redirect(`${origin}${returnTo}`);
+  });
+
+  // --- POST /auth/telegram/unlink --------------------------------------------
+  // Disconnect Telegram from the current account. Requires the account to keep a
+  // way in: only allowed if it also has a phone, so a Telegram-only user can't
+  // lock themselves out. After this the Telegram id is free to connect elsewhere.
+  app.post('/auth/telegram/unlink', async (request, reply) => {
+    const user = await loadUser(request);
+    if (!user) return reply.code(401).send({ error: 'unauthorized', message: 'ورود لازم است.' });
+    if (!user.phone) {
+      return reply.code(409).send({
+        error: 'no_fallback',
+        message: 'برای قطع تلگرام، حساب باید راه ورود دیگری داشته باشد؛ اول شماره موبایل خود را تأیید کنید.',
+      });
+    }
+    await withTransaction(async (client) => {
+      await query(
+        "delete from auth_identities where user_id = $1 and provider = 'telegram'",
+        [user.id], client,
+      );
+      await query('update profiles set telegram_id = null where id = $1', [user.id], client);
+    });
+    return reply.send({ ok: true });
   });
 
   // --- GET /me ---------------------------------------------------------------

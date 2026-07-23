@@ -215,13 +215,37 @@ function messengerBlock(me) {
 //     apply, so the section is omitted entirely.
 function telegramLoginBlock(me) {
   if (me.telegram_linked) {
-    return el('div', {}, [
+    const msg = el('span', { class: 'dcp-inline-msg' });
+    const children = [
       el('div', { class: 'dcp-tg-linked' }, [
         el('span', { class: 'dcp-tg-linked-ico', 'aria-hidden': 'true' }, '✓'),
         el('span', {}, 'حساب تلگرام متصل است'),
       ]),
       el('p', { class: 'dcp-sec-hint' }, 'ورود سریع و دریافتِ نوتیف استریک و مطلب جدید از تلگرام فعال است.'),
-    ]);
+    ];
+    // Allow disconnecting ONLY when the account keeps another way in (a phone),
+    // so a Telegram-only user can't lock themselves out.
+    if (me.phone) {
+      const unlinkBtn = el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button' }, 'قطع اتصال تلگرام');
+      unlinkBtn.addEventListener('click', async () => {
+        unlinkBtn.disabled = true;
+        msg.textContent = 'در حال قطع...';
+        try {
+          await api.unlinkTelegram();
+          currentUser({ refresh: true });
+          msg.textContent = 'تلگرام قطع شد.';
+          setTimeout(() => location.reload(), 700);
+        } catch (e) {
+          msg.textContent = e instanceof ApiError ? e.message : 'قطع اتصال ناموفق بود.';
+          unlinkBtn.disabled = false;
+        }
+      });
+      children.push(el('div', { class: 'dcp-field-row', style: 'margin-top:8px' }, [unlinkBtn, msg]));
+    } else {
+      children.push(el('p', { class: 'dcp-sec-hint', style: 'margin-top:6px' },
+        'برای قطع تلگرام، اول در بخش «شماره موبایل» شماره‌ات را تأیید کن تا راه ورود دیگری داشته باشی.'));
+    }
+    return el('div', {}, children);
   }
   if (!telegramLoginEnabled()) return null;
 

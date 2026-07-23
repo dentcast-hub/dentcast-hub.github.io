@@ -125,3 +125,39 @@ describe('POST /auth/phone/link', () => {
     expect(res.statusCode).toBe(401);
   });
 });
+
+describe('POST /auth/telegram/unlink', () => {
+  it('disconnects Telegram from an account that also has a phone', async () => {
+    // Telegram account + attach a phone -> it now has both.
+    const tgCookie = await telegramLogin(app, '90901');
+    const code = await otpCode(app, '09121118888');
+    const linked = await app.inject({
+      method: 'POST', url: '/auth/phone/link',
+      headers: { cookie: tgCookie }, payload: { phone: '09121118888', code },
+    });
+    const cookie = sessionCookieFrom(linked) || tgCookie;
+
+    const res = await app.inject({ method: 'POST', url: '/auth/telegram/unlink', headers: { cookie } });
+    expect(res.statusCode).toBe(200);
+
+    const p = await pool.query("select telegram_id from profiles where phone = '09121118888'");
+    expect(p.rows[0].telegram_id).toBeNull();
+    const idn = await pool.query("select count(*)::int n from auth_identities where provider_user_id = '90901'");
+    expect(idn.rows[0].n).toBe(0);
+  });
+
+  it('refuses to disconnect a Telegram-only account (409, no lock-out)', async () => {
+    const tgCookie = await telegramLogin(app, '90902');
+    const res = await app.inject({ method: 'POST', url: '/auth/telegram/unlink', headers: { cookie: tgCookie } });
+    expect(res.statusCode).toBe(409);
+    expect(res.json().error).toBe('no_fallback');
+    // still linked
+    const idn = await pool.query("select count(*)::int n from auth_identities where provider_user_id = '90902'");
+    expect(idn.rows[0].n).toBe(1);
+  });
+
+  it('requires a session (401)', async () => {
+    const res = await app.inject({ method: 'POST', url: '/auth/telegram/unlink' });
+    expect(res.statusCode).toBe(401);
+  });
+});

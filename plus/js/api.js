@@ -60,6 +60,8 @@ export const api = {
   // recover/merge an older phone account. Call requestOtp(phone) first.
   linkPhone: (phone, code) =>
     request('/auth/phone/link', { method: 'POST', body: { phone, code } }),
+  // Disconnect Telegram from the current account (needs a phone fallback).
+  unlinkTelegram: () => request('/auth/telegram/unlink', { method: 'POST' }),
   logout: () => request('/auth/logout', { method: 'POST' }),
 
   // activity + anon
