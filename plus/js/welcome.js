@@ -12,6 +12,14 @@ const LS_COUNT = 'dcp:welcome:count';   // total appearances on this device
 const SS_SHOWN = 'dcp:welcome:shown';   // once per browser session
 const MAX_SHOWS = 5;
 
+// Only on the site homepage — never on article/reading pages (it's intrusive
+// mid-read). A guest who lands on an article first sees nothing until they reach
+// the homepage; landing on a non-home page doesn't consume a session or a count.
+function isHomePage() {
+  const p = location.pathname.replace(/\/+$/, '') || '/';
+  return p === '/' || p === '/index' || p === '/index.html';
+}
+
 function getCount() {
   try { return parseInt(localStorage.getItem(LS_COUNT) || '0', 10) || 0; }
   catch (_) { return MAX_SHOWS; } // storage blocked -> behave as "already done"
@@ -32,6 +40,7 @@ function markSession() {
  * reached, already shown this session, or storage is unavailable.
  */
 export function maybeShowWelcome({ personBtn } = {}) {
+  if (!isHomePage()) return;              // homepage only
   if (getCount() >= MAX_SHOWS) return;
   if (shownThisSession()) return;
 
