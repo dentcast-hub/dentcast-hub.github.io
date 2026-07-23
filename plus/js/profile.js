@@ -243,6 +243,80 @@ function telegramLoginBlock(me) {
   ]);
 }
 
+// Phone section. For an account that already has a phone, just show it. For a
+// phone-LESS account (typically Telegram-only, since Telegram never gives us the
+// phone), offer an OTP step to prove a phone and RECOVER/MERGE an older phone
+// account — reuniting a Telegram login with a pre-existing streak/history.
+function phoneBlock(me) {
+  if (me.phone) return el('div', { dir: 'ltr', class: 'dcp-phone' }, me.phone);
+
+  const phoneInput = el('input', {
+    type: 'tel', inputmode: 'numeric', class: 'dcp-input',
+    placeholder: '09xxxxxxxxx', dir: 'ltr', autocomplete: 'tel',
+  });
+  const msg = el('span', { class: 'dcp-inline-msg' });
+  const sendBtn = el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button' }, 'دریافت کد');
+  const codeArea = el('div', {});
+
+  const container = el('div', {}, [
+    el('p', { class: 'dcp-sec-hint', style: 'margin:0 0 10px' },
+      'اگر قبلاً با شماره موبایل حساب و استریک داشتی، شماره‌ات را تأیید کن تا حساب‌ها یکی شوند و پیشرفتت برگردد.'),
+    el('div', { class: 'dcp-field-row' }, [phoneInput, sendBtn]),
+    codeArea,
+    msg,
+  ]);
+
+  let phone = '';
+  sendBtn.addEventListener('click', async () => {
+    phone = phoneInput.value.trim();
+    if (!phone) { msg.textContent = 'شماره را وارد کن.'; return; }
+    sendBtn.disabled = true;
+    msg.textContent = 'در حال ارسال کد...';
+    try {
+      const res = await api.requestOtp(phone);
+      msg.textContent = '';
+      buildCodeStep(res && res.dev_code);
+    } catch (e) {
+      msg.textContent = e instanceof ApiError ? e.message : 'ارسال کد ناموفق بود.';
+      sendBtn.disabled = false;
+    }
+  });
+
+  function buildCodeStep(devCode) {
+    codeArea.replaceChildren();
+    const codeInput = el('input', {
+      type: 'text', inputmode: 'numeric', class: 'dcp-input',
+      placeholder: 'کد پیامک‌شده', dir: 'ltr', maxlength: '6', autocomplete: 'one-time-code',
+    });
+    const verifyBtn = el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button' }, 'تأیید و ادغام');
+    codeArea.append(
+      el('div', { class: 'dcp-field-row', style: 'margin-top:8px' }, [codeInput, verifyBtn]),
+      devCode ? el('div', { class: 'dcp-modal-devhint' }, 'کد تست: ' + faNum(devCode)) : el('span', {}),
+    );
+    setTimeout(() => codeInput.focus(), 30);
+
+    verifyBtn.addEventListener('click', async () => {
+      const code = codeInput.value.trim();
+      if (!code) { msg.textContent = 'کد را وارد کن.'; return; }
+      verifyBtn.disabled = true;
+      msg.textContent = 'در حال بررسی...';
+      try {
+        const res = await api.linkPhone(phone, code);
+        currentUser({ refresh: true });
+        msg.textContent = res && res.merged
+          ? 'حساب قبلی‌ات پیدا و یکی شد؛ پیشرفتت برگشت.'
+          : 'شماره ثبت شد.';
+        setTimeout(() => location.reload(), 900);
+      } catch (e) {
+        msg.textContent = e instanceof ApiError ? e.message : 'تأیید ناموفق بود.';
+        verifyBtn.disabled = false;
+      }
+    });
+  }
+
+  return container;
+}
+
 export async function renderProfile(root, { me: preMe } = {}) {
   root.replaceChildren(el('div', { class: 'dcp-loading' }, 'در حال بارگذاری...'));
   const [me, stats] = await Promise.all([
@@ -264,7 +338,7 @@ export async function renderProfile(root, { me: preMe } = {}) {
       el('div', {}, [el('b', {}, faNum(stats.records?.longest_streak || 0)), el('span', {}, 'بلندترین استریک')]),
     ])),
     section('مقایسه ماه به ماه', stats.month_vs_month ? monthCompare(stats.month_vs_month) : el('div', { class: 'dcp-muted' }, '—')),
-    section('شماره موبایل', el('div', { dir: 'ltr', class: 'dcp-phone' }, me.phone || '—')),
+    section('شماره موبایل', phoneBlock(me)),
     // Telegram connect (login + notifications) + Bale (coming soon).
     section('اتصال به پیام‌رسان‌ها', messengerBlock(me)),
     section('یادآوری‌ها', remindersBlock(me)),

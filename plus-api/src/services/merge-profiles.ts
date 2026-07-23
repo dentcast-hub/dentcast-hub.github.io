@@ -59,24 +59,50 @@ export async function mergeProfiles(
     await client.query(`update ${table} set user_id = $2 where user_id = $1`, [fromId, toId]);
   }
 
-  // --- Consolidate profile-level fields, then delete the source. Free the
-  //     source phone BEFORE the target claims it, or the unique(phone) move
-  //     would clash while both rows still hold it.
-  const src = await client.query<{ phone: string | null; tier: string; longest_streak: number }>(
-    'select phone, tier, longest_streak from profiles where id = $1',
+  // --- Consolidate profile-level fields, then delete the source. Works in
+  //     EITHER direction (keep the phone account or the Telegram account), so we
+  //     carry BOTH unique handles (phone, telegram_id) and the LIVE streak.
+  const src = await client.query<{
+    phone: string | null;
+    telegram_id: number | null;
+    tier: string;
+    current_streak: number;
+    longest_streak: number;
+    last_active_day: string | null;
+    settings: Record<string, unknown>;
+  }>(
+    `select phone, telegram_id, tier, current_streak, longest_streak, last_active_day, settings
+       from profiles where id = $1`,
     [fromId],
   );
   const from = src.rows[0];
   if (!from) return; // source vanished (already merged); nothing to do
 
-  await client.query('update profiles set phone = null where id = $1', [fromId]);
+  // Free the UNIQUE columns on the source BEFORE the target claims them, or the
+  // unique(phone)/unique(telegram_id) move would clash while both rows hold them.
+  await client.query('update profiles set phone = null, telegram_id = null where id = $1', [fromId]);
   await client.query(
-    `update profiles set
-        phone          = coalesce(phone, $2),
-        tier           = case when $3 = 'premium' then 'premium' else tier end,
-        longest_streak = greatest(longest_streak, $4)
-      where id = $1`,
-    [toId, from.phone, from.tier, from.longest_streak],
+    `update profiles t set
+        phone          = coalesce(t.phone, $2),
+        telegram_id    = coalesce(t.telegram_id, $3),
+        tier           = case when $4 = 'premium' then 'premium' else t.tier end,
+        longest_streak = greatest(t.longest_streak, $6),
+        -- Keep the LIVE streak: adopt the source's current run only if it was more
+        -- recently active than the target's (else the kept account's run stands).
+        current_streak = case
+          when $7::date is not null and (t.last_active_day is null or $7::date > t.last_active_day)
+          then $5 else t.current_streak end,
+        last_active_day = case
+          when $7::date is not null and (t.last_active_day is null or $7::date > t.last_active_day)
+          then $7::date else t.last_active_day end,
+        -- Keep the target's settings; inherit any keys it lacks from the source.
+        settings = $8::jsonb || t.settings
+      where t.id = $1`,
+    [
+      toId, from.phone, from.telegram_id, from.tier,
+      from.current_streak, from.longest_streak, from.last_active_day,
+      JSON.stringify(from.settings ?? {}),
+    ],
   );
   await client.query('delete from profiles where id = $1', [fromId]);
 }

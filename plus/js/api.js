@@ -56,6 +56,10 @@ export const api = {
   requestOtp: (phone) => request('/auth/otp/request', { method: 'POST', body: { phone } }),
   verifyOtp: (phone, code, return_to) =>
     request('/auth/otp/verify', { method: 'POST', body: { phone, code, return_to } }),
+  // Prove a phone via OTP while logged in (e.g. a Telegram-only account), to
+  // recover/merge an older phone account. Call requestOtp(phone) first.
+  linkPhone: (phone, code) =>
+    request('/auth/phone/link', { method: 'POST', body: { phone, code } }),
   logout: () => request('/auth/logout', { method: 'POST' }),
 
   // activity + anon

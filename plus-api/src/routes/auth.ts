@@ -144,6 +144,75 @@ export async function authRoutes(app: FastifyInstance): Promise<void> {
     return reply.send({ ok: true });
   });
 
+  // --- POST /auth/phone/link -------------------------------------------------
+  // For a logged-in account with NO phone (typically a Telegram-only account):
+  // prove ownership of a phone via OTP to RECOVER/MERGE an older phone account.
+  // Telegram never gives us the phone, so this is the only way to reunite a
+  // Telegram login with a pre-existing phone/streak account. Reuses the same OTP
+  // issue/verify as login (call /auth/otp/request first to send the code).
+  //   - phone already has an account -> merge THIS account into it (keep the
+  //     phone account + its streak; it gains the Telegram identity), switch session.
+  //   - phone is new -> just attach it to the current account.
+  app.post('/auth/phone/link', {
+    schema: {
+      body: {
+        type: 'object',
+        required: ['phone', 'code'],
+        properties: { phone: { type: 'string' }, code: { type: 'string' } },
+      },
+    },
+  }, async (request, reply) => {
+    const current = await loadUser(request);
+    if (!current) {
+      return reply.code(401).send({ error: 'unauthorized', message: 'ورود لازم است.' });
+    }
+    if (current.phone) {
+      return reply.code(409).send({ error: 'already_has_phone', message: 'این حساب از قبل شماره‌ی موبایل دارد.' });
+    }
+
+    const { phone: rawPhone, code } = request.body as { phone: string; code: string };
+    const phone = normalizePhone(rawPhone);
+    if (!phone) {
+      return reply.code(400).send({ error: 'invalid_phone', message: 'شماره موبایل معتبر نیست.' });
+    }
+
+    const result = verifyCode(phone, code);
+    if (result !== 'ok') {
+      const map: Record<string, string> = {
+        no_code: 'کدی برای این شماره صادر نشده است.',
+        expired: 'کد منقضی شده است. دوباره درخواست کنید.',
+        mismatch: 'کد وارد شده درست نیست.',
+        too_many_attempts: 'تلاش زیاد. دوباره درخواست کنید.',
+      };
+      return reply.code(400).send({ error: result, message: map[result] ?? 'کد نامعتبر است.' });
+    }
+
+    const outcome = await withTransaction(async (client) => {
+      const existing = await one<{ id: string }>(
+        'select id from profiles where phone = $1', [phone], client,
+      );
+      if (existing && existing.id !== current.id) {
+        // The phone already identifies an (older) account: fold THIS account into
+        // it, keeping the phone account and its streak. mergeProfiles carries the
+        // Telegram id + live streak across.
+        await mergeProfiles(client, current.id, existing.id);
+        return { userId: existing.id, merged: true };
+      }
+      // No other account for this phone -> attach it to the current account.
+      await query('update profiles set phone = $2 where id = $1', [current.id, phone], client);
+      return { userId: current.id, merged: false };
+    });
+
+    setSessionCookie(reply, outcome.userId);
+    const u = await one<{
+      id: string; display_name: string; tier: string; current_streak: number; longest_streak: number;
+    }>(
+      'select id, display_name, tier, current_streak, longest_streak from profiles where id = $1',
+      [outcome.userId],
+    );
+    return reply.send({ merged: outcome.merged, user: u ? publicUser(u) : null });
+  });
+
   // --- POST /auth/telegram/link ---------------------------------------------
   // Called by the Telegram bot webhook after a contact share: match the shared
   // phone to a profile and store telegram_id. Guarded by the webhook secret.
