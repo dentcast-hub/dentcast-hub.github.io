@@ -284,7 +284,7 @@ function phoneBlock(me) {
 
   const container = el('div', {}, [
     el('p', { class: 'dcp-sec-hint', style: 'margin:0 0 10px' },
-      'اگر قبلاً با شماره موبایل حساب و استریک داشتی، شماره‌ات را تأیید کن تا حساب‌ها یکی شوند و پیشرفتت برگردد.'),
+      'اتصال شماره موبایل اختیاری است و لازم نیست. فقط اگر قبلاً با شماره موبایل (ایران) حساب و استریک داشتی، برای یکی‌شدنِ حساب‌ها و بازگشتِ پیشرفت، شماره‌ات را تأیید کن.'),
     el('div', { class: 'dcp-field-row' }, [phoneInput, sendBtn]),
     codeArea,
     msg,
@@ -362,7 +362,7 @@ export async function renderProfile(root, { me: preMe } = {}) {
       el('div', {}, [el('b', {}, faNum(stats.records?.longest_streak || 0)), el('span', {}, 'بلندترین استریک')]),
     ])),
     section('مقایسه ماه به ماه', stats.month_vs_month ? monthCompare(stats.month_vs_month) : el('div', { class: 'dcp-muted' }, '—')),
-    section('شماره موبایل', phoneBlock(me)),
+    section(me.phone ? 'شماره موبایل' : 'شماره موبایل (اختیاری)', phoneBlock(me)),
     // Telegram connect (login + notifications) + Bale (coming soon).
     section('اتصال به پیام‌رسان‌ها', messengerBlock(me)),
     section('یادآوری‌ها', remindersBlock(me)),
