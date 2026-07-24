@@ -94,31 +94,61 @@ export async function getOrCreateOpenLeague(
 
 /**
  * XP hook, called from recordActivity for every SCORING action in the SAME
- * transaction. weekly_xp mirrors the site score's weekly slice: +xp_per_active_day
- * on the first scoring action of a Tehran day, +xp_per_highlight per highlight.
- * The user JOINS a weekly group on their first XP of the week (never before).
+ * transaction. Per-action weekly_xp (rewards depth, resists highlight-farming);
+ * ALL weights live in league_config. Separate from the all-time score (score.ts),
+ * which is unchanged. The user JOINS a weekly group on their first XP of the week.
  * first_reached_current_xp_at is set to the event time on every change (tie-break:
  * whoever reached a given total earlier ranks higher).
+ *
+ *   xp_active_bonus  — first scoring action of the Tehran day
+ *   xp_read          — article_completed, ONCE per (content, week)
+ *   xp_listen        — episode_listened, ONCE per (content, week)
+ *   xp_highlight     — per highlight_created, capped xp_highlight_cap per (content, week)
+ *   xp_review        — card_reviewed_manual / review_finished
  */
 export async function awardLeagueXp(
-  client: pg.PoolClient, userId: string, action: string, createdAt: Date,
+  client: pg.PoolClient, userId: string, action: string, contentId: string | null, createdAt: Date,
 ): Promise<void> {
   if (!SCORING_ACTIONS.includes(action)) return;
   const cfg = await getLeagueConfig(client);
-  const day = dayInTz(createdAt, cfg.timezone);
+  const tz = cfg.timezone;
+  const day = dayInTz(createdAt, tz);
   const { week_start, week_end } = leagueWeek(day);
 
-  // First scoring action of this Tehran day? The current row is already inserted
-  // in this tx, so a count of 1 means this event opened a new active day.
+  let xpDelta = 0;
+
+  // Daily active bonus — first scoring action of this Tehran day (the current row
+  // is already inserted in this tx, so a count of 1 means it's the first).
   const dayCount = await client.query<{ n: number }>(
     `select count(*)::int as n from user_activity
       where user_id = $1 and action = any($2)
         and (created_at at time zone $3)::date = $4::date`,
-    [userId, SCORING_ACTIONS, cfg.timezone, day],
+    [userId, SCORING_ACTIONS, tz, day],
   );
-  const isNewActiveDay = (dayCount.rows[0]?.n ?? 0) <= 1;
-  const xpDelta = (isNewActiveDay ? cfg.xp_per_active_day : 0)
-    + (action === 'highlight_created' ? cfg.xp_per_highlight : 0);
+  if ((dayCount.rows[0]?.n ?? 0) <= 1) xpDelta += cfg.xp_active_bonus;
+
+  // How many times this exact (action, content) already happened this week
+  // (including the just-inserted row).
+  const weekCount = async (act: string): Promise<number> => {
+    const r = await client.query<{ n: number }>(
+      `select count(*)::int as n from user_activity
+        where user_id = $1 and action = $2 and content_id is not distinct from $3
+          and (created_at at time zone $4)::date between $5::date and $6::date`,
+      [userId, act, contentId, tz, week_start, week_end],
+    );
+    return r.rows[0]?.n ?? 0;
+  };
+
+  if (action === 'article_completed') {
+    if (contentId && (await weekCount(action)) <= 1) xpDelta += cfg.xp_read;
+  } else if (action === 'episode_listened') {
+    if (contentId && (await weekCount(action)) <= 1) xpDelta += cfg.xp_listen;
+  } else if (action === 'highlight_created') {
+    if (contentId && (await weekCount(action)) <= cfg.xp_highlight_cap) xpDelta += cfg.xp_highlight;
+  } else if (action === 'card_reviewed_manual' || action === 'review_finished') {
+    xpDelta += cfg.xp_review;
+  }
+
   if (xpDelta <= 0) return;
 
   // Already in a group this week? Just add XP (keep them in their original group).

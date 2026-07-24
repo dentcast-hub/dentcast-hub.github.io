@@ -34,9 +34,9 @@ async function insertAndScore(
   if (QUALIFYING_ACTIONS.has(action)) {
     await applyStreak(client, userId, dayInTz(row.created_at));
   }
-  // League weekly_xp (mirrors the score's weekly slice). No-op for non-scoring
-  // actions. Same transaction so weekly_xp and the activity row commit together.
-  await awardLeagueXp(client, userId, action, row.created_at);
+  // League weekly_xp (per-action model). No-op for non-scoring actions. Same
+  // transaction so weekly_xp and the activity row commit together.
+  await awardLeagueXp(client, userId, action, contentId, row.created_at);
   return { id: row.id };
 }
 

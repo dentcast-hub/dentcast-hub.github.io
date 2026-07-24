@@ -285,6 +285,8 @@
 .dcp-lg-howto summary::-webkit-details-marker { display: none; }
 .dcp-lg-howto summary::before { content: '؟ '; opacity: .55; }
 .dcp-lg-howto p { margin: 8px 0 0; color: var(--dcp-muted); line-height: 1.9; }
+.dcp-lg-howto-list { margin: 8px 0 0; padding-inline-start: 18px; color: var(--dcp-muted); line-height: 2; }
+.dcp-lg-howto-list li { list-style: disc; }
 
 /* the league overlay must sit ABOVE the dashboard/profile header panel (10050).
    Two classes (specificity 0,2,0) so it beats .dcp-modal-overlay regardless of

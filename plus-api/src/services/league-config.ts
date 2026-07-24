@@ -18,6 +18,14 @@ export interface LeagueConfig {
   max_active_tier_order: number;
   week_start_dow: string;
   timezone: string;
+  // Per-action XP weights (0007). weekly_xp only; all-time score is separate.
+  xp_active_bonus: number;   // first scoring action of the day
+  xp_read: number;           // article read to completion (once per article/week)
+  xp_listen: number;         // podcast past the threshold (once per episode/week)
+  xp_highlight: number;      // per highlight...
+  xp_highlight_cap: number;  // ...capped per article/week
+  xp_review: number;         // manual card review
+  // Legacy 0006 keys — kept for back-compat, no longer read by awardLeagueXp.
   xp_per_active_day: number;
   xp_per_highlight: number;
   group_size_last_changed_week: string | null;
@@ -28,6 +36,7 @@ type Db = pg.Pool | pg.PoolClient;
 const NUMERIC_KEYS: Array<keyof LeagueConfig> = [
   'group_size_current', 'promotion_pct', 'demotion_pct', 'min_valid_group_size',
   'promotion_min_weekly_xp', 'cooldown_weeks', 'max_active_tier_order',
+  'xp_active_bonus', 'xp_read', 'xp_listen', 'xp_highlight', 'xp_highlight_cap', 'xp_review',
   'xp_per_active_day', 'xp_per_highlight',
 ];
 

@@ -269,4 +269,28 @@ describe('GET /league — placement on first XP', () => {
     const res = await app.inject({ method: 'GET', url: '/league', headers: { cookie } });
     expect(res.json().joined).toBe(false);
   });
+
+  const act = (cookie, action, content_id) => app.inject({
+    method: 'POST', url: '/activity', headers: { cookie }, payload: { action, content_id },
+  });
+  const myXp = async (cookie) => (await app.inject({ method: 'GET', url: '/league', headers: { cookie } })).json().my_weekly_xp;
+
+  it('per-action XP: read once = +active(5) +read(5); re-reading the same article adds nothing', async () => {
+    const cookie = await loginAs(app, '09120000003');
+    await act(cookie, 'article_completed', 'insight/insight-1');
+    await act(cookie, 'article_completed', 'insight/insight-1'); // same article, same day
+    expect(await myXp(cookie)).toBe(10);
+  });
+
+  it('per-action XP: highlights are capped at 3 per article', async () => {
+    const cookie = await loginAs(app, '09120000004');
+    for (let i = 0; i < 4; i += 1) await act(cookie, 'highlight_created', 'insight/insight-2');
+    expect(await myXp(cookie)).toBe(8); // 5 active + 1+1+1 (4th capped)
+  });
+
+  it('per-action XP: a podcast listen = +active(5) +listen(5)', async () => {
+    const cookie = await loginAs(app, '09120000005');
+    await act(cookie, 'episode_listened', 'episodes/episode-1');
+    expect(await myXp(cookie)).toBe(10);
+  });
 });

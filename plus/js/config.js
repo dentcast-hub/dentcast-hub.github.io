@@ -183,7 +183,7 @@ export const READ_MAX_MS = 240000;   // cap: a very long article never demands >
 // and LISTEN_MAX_S. Only ACTUAL played seconds count (seeking to the end does
 // not) — measured from real playback progress, so it is the audio twin of the
 // visible-dwell rule for reading.
-export const LISTEN_FRACTION = 0.6;  // must hear at least 60% of the episode
+export const LISTEN_FRACTION = 0.5;  // must hear at least half the episode
 export const LISTEN_MIN_S = 60;      // floor: even a short clip needs 60s of real play
 export const LISTEN_MAX_S = 1200;    // cap: a very long episode never demands > 20 min
 
