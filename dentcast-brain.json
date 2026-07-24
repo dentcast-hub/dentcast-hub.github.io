@@ -11870,5 +11870,58 @@
       "secondary": [],
       "subtopic": "ai"
     }
+  },
+  {
+    "type": "dentai",
+    "id": "dentai-28",
+    "title": "وقتی هوش مصنوعی تنها بهتر از پزشکِ مجهز به هوش مصنوعی عمل می‌کند",
+    "caption": "یک کارآزماییِ تصادفی‌شده (Goh و همکاران، JAMA Network Open ۲۰۲۴) اثرِ دسترسی به GPT-4 را بر استدلالِ تشخیصیِ ۵۰ پزشک از سه دانشگاهِ آمریکا (از جمله Stanford) سنجید: گروهِ دارای مدل حدود ۷۶٪ گرفت و گروهِ منابعِ معمول ۷۴٪ (اختلافِ بی‌معنا)، اما خودِ GPT-4 به‌تنهایی روی همان کیس‌ها ۹۲٪ گرفت و حدودِ ۱۶ واحدِ درصد به‌طورِ معنادار از هر دو گروهِ پزشک جلو زد. الگو در همه‌ی زیرگروه‌ها (اتندینگ/رزیدنت، باتجربه/بی‌تجربه با ChatGPT) یکسان بود. پیامِ اصلی: شکاف، شکافِ تواناییِ مدل نیست بلکه شکافِ نحوه‌ی استفاده (prompt engineering) است؛ صرفِ دسترسی به هوش مصنوعی تشخیص را بهتر نمی‌کند، مهارتِ کار با آن یک مهارتِ بالینیِ تازه است، و عملکردِ بالا روی کیسِ تمیز به‌معنای آمادگی برای بالینِ واقعیِ پر از ابهام نیست.",
+    "hashtags": [
+      "#هوش_مصنوعی",
+      "#مدل_زبانی_بزرگ",
+      "#GPT4",
+      "#ChatGPT",
+      "#استدلال_تشخیصی",
+      "#کارآزمایی_تصادفی",
+      "#تشخیص",
+      "#مهارت_بالینی",
+      "#دندانپزشکی_دیجیتال",
+      "#artificial_intelligence",
+      "#large_language_model",
+      "#LLM",
+      "#GPT_4",
+      "#diagnostic_reasoning",
+      "#clinical_reasoning",
+      "#randomized_clinical_trial",
+      "#physician_AI_collaboration",
+      "#prompt_engineering",
+      "#DentAI"
+    ],
+    "keywords": [
+      "artificial intelligence",
+      "large language model",
+      "LLM",
+      "GPT-4",
+      "ChatGPT",
+      "diagnostic reasoning",
+      "clinical reasoning",
+      "randomized clinical trial",
+      "physician-AI collaboration",
+      "prompt engineering",
+      "diagnostic accuracy",
+      "هوش مصنوعی",
+      "مدل زبانی بزرگ",
+      "استدلال تشخیصی",
+      "کارآزمایی تصادفی",
+      "تشخیص",
+      "مهارت بالینی",
+      "دندانپزشکی دیجیتال"
+    ],
+    "page_url": "/dentai/dentai-28.html",
+    "pillar": {
+      "primary": "digital",
+      "secondary": [],
+      "subtopic": "ai"
+    }
   }
 ]
