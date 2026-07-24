@@ -2,6 +2,7 @@ import { config } from './config.js';
 import { runFreeDigest } from './services/article-notify.js';
 import { runStreakReminders } from './services/streak-reminder.js';
 import { runReactivationNudges } from './services/reactivation.js';
+import { finalizeDueWeeks } from './services/league-finalize.js';
 
 /**
  * Daily free-digest scheduler. Fires runFreeDigest() at freeDigestHour:00 in the
@@ -84,6 +85,38 @@ export function startStreakReminderScheduler(): () => void {
         .catch((err) => {
           // eslint-disable-next-line no-console
           console.error('[streak-reminder] run failed', err);
+        })
+        .finally(schedule);
+    }, delay);
+    if (typeof timer.unref === 'function') timer.unref();
+  };
+
+  schedule();
+  return () => clearTimeout(timer);
+}
+
+/**
+ * Start the daily league-finalization check. Runs at 00:00 Asia/Tehran and
+ * finalizes any week whose groups have closed (week_end < today). Daily (not
+ * weekly) so a missed run self-heals the next day; finalizeDueWeeks is idempotent.
+ * Same timezone-wall-clock + unref pattern as the others.
+ */
+export function startLeagueScheduler(): () => void {
+  let timer: NodeJS.Timeout;
+
+  const schedule = () => {
+    const delay = msUntilNextRun(new Date(), 0, config.streakTimezone); // 00:00 Tehran
+    timer = setTimeout(() => {
+      void finalizeDueWeeks(new Date())
+        .then((r) => {
+          if (r.weeks > 0) {
+            // eslint-disable-next-line no-console
+            console.log(`[league] finalized ${r.weeks} week(s): +${r.promotions} promoted, -${r.demotions} demoted`);
+          }
+        })
+        .catch((err) => {
+          // eslint-disable-next-line no-console
+          console.error('[league] finalization run failed', err);
         })
         .finally(schedule);
     }, delay);

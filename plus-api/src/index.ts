@@ -3,6 +3,7 @@ import { config } from './config.js';
 import { closePool } from './db.js';
 import {
   startArticleScheduler, startStreakReminderScheduler, startReactivationScheduler,
+  startLeagueScheduler,
 } from './scheduler.js';
 import { startBalePolling } from './services/bale-updates.js';
 
@@ -15,6 +16,7 @@ async function main(): Promise<void> {
   const stopScheduler = startArticleScheduler();
   const stopStreakReminder = startStreakReminderScheduler();
   const stopReactivation = startReactivationScheduler();
+  const stopLeague = startLeagueScheduler();
   // Bale connect worker: long-polls getUpdates and links chat_ids (no-op without
   // a BALE_BOT_TOKEN). Primary path since Bale's webhook delivery is unreliable.
   const stopBalePolling = startBalePolling();
@@ -24,6 +26,7 @@ async function main(): Promise<void> {
     stopScheduler();
     stopStreakReminder();
     stopReactivation();
+    stopLeague();
     stopBalePolling();
     await app.close();
     await closePool();

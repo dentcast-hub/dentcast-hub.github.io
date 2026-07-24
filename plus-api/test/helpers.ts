@@ -12,9 +12,24 @@ export async function resetDb(): Promise<void> {
       profiles, user_activity, highlights, card_state,
       collections, collection_items, user_pathways,
       subscriptions, payments, certificates, anon_events,
-      push_subscriptions, articles, auth_identities
+      push_subscriptions, articles, auth_identities,
+      leagues, league_members, league_weekly_stats, league_audit_log
     restart identity cascade
   `);
+  // League seed data (tiers + config) is created ONCE by the migration and must
+  // survive truncation — reset only the auto-tuned state back to seed defaults so
+  // each test starts from a known baseline.
+  await pool.query(`
+    update league_config set value = case key
+      when 'group_size_current' then '8'
+      when 'max_active_tier_order' then '3'
+      when 'group_size_last_changed_week' then ''
+      else value end,
+      locked = false, locked_at = null;
+    `);
+  await pool.query(
+    "update league_tiers set is_active = (tier_order <= 3), activated_at = case when tier_order <= 3 then now() else null end",
+  );
   resetRateLimits();
   clearOtpStore();
   clearBaleLinkStore();
