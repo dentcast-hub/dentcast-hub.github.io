@@ -108,12 +108,69 @@
 }
 .dc-plus-anon { justify-content: space-between; }
 .dc-plus-anon-line { margin: 0; line-height: 1.9; flex: 1 1 240px; }
-.dc-plus-anon-cta { flex: 0 0 auto; }
-/* grayed, non-interactive preview of the logged-in features (anon teaser) */
-.dc-plus-teaser {
-  flex: 1 0 100%;
-  display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px;
-  filter: grayscale(1); opacity: .5; pointer-events: none; user-select: none;
+/* ---- signed-out promo card (login teaser, "variant B") ------------------- */
+.dc-plus-promo {
+  position: relative; overflow: hidden;
+  color: var(--dcp-ink); background: var(--dcp-surface);
+  border: 1px solid var(--dcp-line); border-radius: var(--dcp-radius);
+  box-shadow: var(--dcp-shadow); padding: 20px 22px;
+  background-image:
+    radial-gradient(140% 120% at 92% 0%, rgba(255, 94, 58, .13), transparent 55%),
+    radial-gradient(120% 130% at 0% 100%, rgba(var(--ac-rgb, 11, 95, 255), .10), transparent 55%);
+}
+.dc-plus-promo-top { display: flex; align-items: center; gap: 14px; }
+.dc-plus-promo-h { margin: 0; font-size: 1.15rem; font-weight: 800; letter-spacing: -.01em; text-wrap: balance; }
+.dc-plus-promo-sub { margin: 3px 0 0; color: var(--dcp-muted); font-size: .9rem; line-height: 1.7; }
+.dc-plus-promo-rule { height: 1px; background: var(--dcp-line); margin: 16px 0; }
+.dc-plus-promo-bottom { display: flex; align-items: center; justify-content: space-between; gap: 12px 16px; flex-wrap: wrap; }
+
+/* warm flame medallion (the one bold, on-brand-for-streaks focal point) */
+.dc-plus-medal {
+  position: relative; flex: 0 0 auto; width: 52px; height: 52px; border-radius: 50%;
+  display: grid; place-items: center;
+  background:
+    radial-gradient(120% 120% at 30% 20%, rgba(255, 191, 71, .35), transparent 60%),
+    conic-gradient(from 210deg, #ff5e3a, #ffbf47, #ff5e3a);
+  box-shadow: 0 6px 18px rgba(255, 94, 58, .35), inset 0 0 0 1px rgba(255, 255, 255, .35);
+}
+.dc-plus-medal-fl { font-size: 1.35rem; line-height: 1; filter: drop-shadow(0 2px 4px rgba(255, 94, 58, .5)); }
+
+/* feature chips */
+.dc-plus-feats { display: flex; flex-wrap: wrap; gap: 8px; flex: 1 1 auto; }
+.dc-plus-feat {
+  display: inline-flex; align-items: center; gap: 7px; padding: 6px 12px;
+  border-radius: var(--dcp-radius-pill); font-size: .82rem; font-weight: 600;
+  color: var(--dcp-ink); background: var(--dcp-chip-bg); border: 1px solid var(--dcp-line);
+}
+.dc-plus-feat-ico { display: inline-flex; color: var(--dcp-muted); }
+.dc-plus-feat-ico svg { width: 15px; height: 15px; display: block; }
+.dc-plus-feat-ico.t-fl { color: #ff6a3d; }
+.dc-plus-feat-ico.t-st { color: #f5a300; }
+.dc-plus-feat-ico.t-bell { color: var(--dcp-accent); }
+
+/* CTA (own gradient so it never depends on --primary specificity) */
+.dcp-btn.dc-plus-cta {
+  display: inline-flex; align-items: center; gap: 6px; white-space: nowrap;
+  font: inherit; font-weight: 800; cursor: pointer; color: #fff; border: none;
+  padding: 11px 20px; border-radius: 12px;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--dcp-accent) 82%, #fff), var(--dcp-accent));
+  box-shadow: 0 8px 20px rgba(var(--ac-rgb, 11, 95, 255), .30);
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+.dcp-btn.dc-plus-cta:hover { transform: translateY(-1px); box-shadow: 0 12px 26px rgba(var(--ac-rgb, 11, 95, 255), .42); }
+.dcp-btn.dc-plus-cta:active { transform: translateY(0); }
+.dc-plus-cta-arrow { opacity: .9; font-weight: 700; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .dc-plus-medal { animation: dc-plus-pulse 3.2s ease-in-out infinite; }
+  @keyframes dc-plus-pulse {
+    0%, 100% { box-shadow: 0 6px 18px rgba(255, 94, 58, .35), inset 0 0 0 1px rgba(255, 255, 255, .35); }
+    50% { box-shadow: 0 8px 26px rgba(255, 94, 58, .6), inset 0 0 0 1px rgba(255, 255, 255, .4); }
+  }
+}
+@media (max-width: 420px) {
+  .dc-plus-promo-bottom { align-items: stretch; }
+  .dcp-btn.dc-plus-cta { width: 100%; justify-content: center; }
 }
 .dc-plus-streak { display: inline-flex; align-items: center; gap: 6px; text-decoration: none; color: inherit; font-weight: 700; }
 .dc-plus-flame { filter: grayscale(1); opacity: .5; }

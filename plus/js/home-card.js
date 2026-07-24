@@ -12,8 +12,17 @@ function flame(active) {
   return el('span', { class: 'dc-plus-flame' + (active ? ' is-active' : ''), 'aria-hidden': 'true' }, '🔥');
 }
 
+// Crafted inline icons for the signed-out promo feature chips (cleaner than
+// emoji). Static markup, injected via innerHTML on a plain span.
+const IC_FLAME = '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M13 2s1 3-1.5 5.5S8 12 8 14a4 4 0 0 0 8 .3c.2-2.3-1.3-3.8-1-5.8 1.6.8 2.4 2 2.6 3.9A6.5 6.5 0 1 1 8.7 6.3 12 12 0 0 0 13 2z"/></svg>';
+const IC_STAR = '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2l2.9 6.3 6.9.7-5.1 4.7 1.4 6.8L12 17.8 5.9 21.2l1.4-6.8L2.2 9.7l6.9-.7z"/></svg>';
+const IC_BELL = '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 22a2.3 2.3 0 0 0 2.3-2.3H9.7A2.3 2.3 0 0 0 12 22zm7-6.3-1.7-2v-3.2a5.4 5.4 0 0 0-4.2-5.3V4.5a1.1 1.1 0 1 0-2.2 0v.7A5.4 5.4 0 0 0 6.7 10.5v3.2L5 15.7a.9.9 0 0 0 .7 1.5h12.6a.9.9 0 0 0 .7-1.5z"/></svg>';
+
 function renderAnon(card) {
-  const btn = el('button', { class: 'dcp-btn dcp-btn-primary dc-plus-anon-cta', type: 'button' }, 'شروع رایگان');
+  const btn = el('button', { class: 'dcp-btn dc-plus-cta', type: 'button' }, [
+    el('span', {}, 'شروع رایگان'),
+    el('span', { class: 'dc-plus-cta-arrow', 'aria-hidden': 'true' }, '←'),
+  ]);
   btn.addEventListener('click', async () => {
     // .org gate (temporary): show the dentcast.ir notice instead of OTP; the
     // anon demand signal is logged inside openOrgNotice (marked org:home).
@@ -22,30 +31,33 @@ function renderAnon(card) {
     if (res && res.user) location.reload();
   });
 
-  // A grayed, disabled PREVIEW of what login unlocks — mirrors the logged-in
-  // card's layout (streak, score, connection chips) so the value is visible
-  // before sign-in. Decorative (aria-hidden); the real action is the button.
-  const chip = (label) => el('span', { class: 'dc-plus-chip' }, [
-    el('span', { class: 'dc-plus-chip-ico', 'aria-hidden': 'true' }, '○'),
-    el('span', {}, label),
-  ]);
-  const teaser = el('div', { class: 'dc-plus-teaser', 'aria-hidden': 'true' }, [
-    el('span', { class: 'dc-plus-streak' }, [
-      flame(false),
-      el('span', { class: 'dc-plus-streak-lbl' }, 'استریکِ روزانه'),
-    ]),
-    el('span', { class: 'dc-plus-score' }, [
-      el('span', { class: 'dc-plus-score-ico', 'aria-hidden': 'true' }, '⭐'),
-      el('span', { class: 'dc-plus-score-lbl' }, 'امتیاز'),
-    ]),
-    el('div', { class: 'dc-plus-chips' }, [chip('نوتیف'), chip('بله'), chip('تلگرام')]),
+  const feat = (svg, label, tone) => {
+    const ico = el('span', { class: 'dc-plus-feat-ico ' + tone, 'aria-hidden': 'true' });
+    ico.innerHTML = svg; // static, trusted markup
+    return el('span', { class: 'dc-plus-feat' }, [ico, el('span', {}, label)]);
+  };
+
+  const medal = el('span', { class: 'dc-plus-medal', 'aria-hidden': 'true' }, [
+    el('span', { class: 'dc-plus-medal-fl' }, '🔥'),
   ]);
 
-  card.replaceChildren(el('div', { class: 'dc-plus-home-inner dc-plus-anon' }, [
-    teaser,
-    el('p', { class: 'dc-plus-anon-line' },
-      'با ورودِ رایگان، استریک و امتیازت شروع می‌شود و نوتیفِ مطلبِ جدید می‌گیری؛ پیشرفتت ثبت و روی همه‌ی دستگاه‌هایت همراهت می‌ماند.'),
-    btn,
+  card.replaceChildren(el('div', { class: 'dc-plus-promo' }, [
+    el('div', { class: 'dc-plus-promo-top' }, [
+      medal,
+      el('div', {}, [
+        el('h3', { class: 'dc-plus-promo-h' }, 'شعله‌ی یادگیری‌ات را روشن کن'),
+        el('p', { class: 'dc-plus-promo-sub' }, 'رایگان وارد شو؛ پیشرفتت ثبت و همه‌جا همراهت می‌ماند.'),
+      ]),
+    ]),
+    el('div', { class: 'dc-plus-promo-rule' }),
+    el('div', { class: 'dc-plus-promo-bottom' }, [
+      el('div', { class: 'dc-plus-feats' }, [
+        feat(IC_FLAME, 'استریک روزانه', 't-fl'),
+        feat(IC_STAR, 'امتیاز', 't-st'),
+        feat(IC_BELL, 'نوتیف مطلب جدید', 't-bell'),
+      ]),
+      btn,
+    ]),
   ]));
 }
 
