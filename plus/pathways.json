@@ -407,6 +407,10 @@
       {
         "content_id": "dentai/promptologist/prompt4-1",
         "milestone": true
+      },
+      {
+        "content_id": "dentai/promptologist/prompt4-2",
+        "milestone": true
       }
     ],
     "reserved": {}
