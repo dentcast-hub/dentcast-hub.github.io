@@ -125,29 +125,41 @@ async function renderLoggedIn(card, user) {
   const lastId = progress.last_content_id || recentId;
   const last = lastId ? contentInfo(model, lastId) : null;
 
-  const rows = [streakLine];
-  if (scoreBadge) rows.push(scoreBadge);
-  if (rankBadge) rows.push(rankBadge);
-  if (leagueChipEl) rows.push(leagueChipEl);
+  // Row 1 — the glanceable STAT RAIL: streak · score · rank کل · league, tidy with
+  // hairline dividers between whatever is present. A small «؟» reveals a one-line
+  // scoring caption on demand (kept out of the way so the rail stays glanceable).
+  const stats = [streakLine, scoreBadge, rankBadge, leagueChipEl].filter(Boolean);
+  const rail = el('div', { class: 'dc-plus-statrail' });
+  stats.forEach((s, i) => {
+    if (i) rail.appendChild(el('span', { class: 'dc-plus-div', 'aria-hidden': 'true' }));
+    rail.appendChild(s);
+  });
+  const scoreCap = el('p', { class: 'dc-plus-scorecap', hidden: true },
+    'با خواندن، گوش‌دادن، هایلایت و مرور امتیاز می‌گیری؛ امتیاز، رتبه و جایگاهِ لیگت را می‌سازد.');
+  const info = el('button', {
+    class: 'dc-plus-info', type: 'button', title: 'امتیاز چطور جمع می‌شود؟', 'aria-label': 'امتیاز چطور جمع می‌شود؟',
+  }, '؟');
+  info.addEventListener('click', () => { scoreCap.hidden = !scoreCap.hidden; });
+  rail.appendChild(info);
+
+  const rows = [rail, scoreCap];
+
+  // Row 2 — the one primary action: continue where you left off.
   if (last) {
-    // Episodes are audio (the only content that fires episode_listened), so the
-    // lead reads "ادامه گوش دادن"; everything else is "ادامه خواندن".
     const lead = last.type === 'episodes' ? 'ادامه گوش دادن: ' : 'ادامه خواندن: ';
     rows.push(el('a', { class: 'dc-plus-material', href: last.url }, [
       el('span', { class: 'dc-plus-material-lead' }, lead),
       el('span', {}, last.title),
     ]));
   }
-
   // Premium-only due-card line. Never rendered for free users (not even zero).
-  // (No premium teaser line on the home card, per prototype feedback.)
   if (me.tier === 'premium' && typeof me.due_card_count === 'number') {
     rows.push(el('a', { class: 'dc-plus-due', href: '/plus/' },
       faNum(me.due_card_count) + ' کارت برای مرور'));
   }
 
-  // Connection chips on their own line: invite (○) when off, tick (✓) when on.
-  rows.push(connectionsRow(me));
+  // Row 3 — connection chips, demoted to a lighter row under a divider.
+  rows.push(el('div', { class: 'dc-plus-connrow' }, [connectionsRow(me)]));
 
   card.replaceChildren(el('div', { class: 'dc-plus-home-inner' }, rows));
 
