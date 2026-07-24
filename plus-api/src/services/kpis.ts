@@ -1,6 +1,7 @@
 import { pool } from '../db.js';
 import { config } from '../config.js';
 import { QUALIFYING_ACTIONS } from './streak.js';
+import { SCORING_ACTIONS } from './score.js';
 
 /**
  * Founder KPIs 1-6 (spec section 7), computed from user_activity + anon_events.
@@ -18,6 +19,17 @@ export interface Kpis {
   d7_survival_by_tier: Array<{ tier: string; cohort: number; kept: number; pct: number | null }>;
   depth_median_highlights_per_user_week: number | null;
   archive_usage: { sessions_last_7d: number; free_users: number; sessions_per_free_user_week: number | null };
+  // Engagement / connections (v20). Absolute user counts — the founder's own view
+  // (the total signup count is already shown here, so exposing these is fine).
+  engagement: {
+    scored_users: number;       // users with score >= 1 (actually engaged)
+    bale_connected: number;
+    telegram_connected: number;
+    notif_on: number;           // at least one reminder toggle on
+    push_subscribed: number;    // has >= 1 browser/PWA push subscription
+    active_today: number;       // a qualifying action today (Tehran)
+    streak_alive: number;       // cached current_streak >= 1
+  };
 }
 
 const num = (v: unknown): number => (v == null ? 0 : Number(v));
@@ -108,6 +120,37 @@ export async function computeKpis(): Promise<Kpis> {
   const nSessions = num(sessions.rows[0]?.sessions);
   const nFree = num(freeUsers.rows[0]?.n);
 
+  // Engagement / connections (v20). Profile-level counts in one pass...
+  const eng = await pool.query<{
+    bale: number; telegram: number; notif: number; active_today: number; streak_alive: number;
+  }>(
+    `select
+       count(*) filter (where bale_id is not null)::int as bale,
+       count(*) filter (where telegram_id is not null)::int as telegram,
+       count(*) filter (where coalesce((settings->'reminders'->>'new_content')::boolean, false)
+                           or coalesce((settings->'reminders'->>'streak')::boolean, false))::int as notif,
+       count(*) filter (where last_active_day = (now() at time zone $1)::date)::int as active_today,
+       count(*) filter (where current_streak >= 1)::int as streak_alive
+     from profiles`,
+    [tz],
+  );
+  // ...browser push (distinct users)...
+  const pushSub = await pool.query<{ n: number }>(
+    `select count(distinct user_id)::int as n from push_subscriptions`,
+  );
+  // ...and users with a real score (>= 1), derived exactly like computeScore.
+  const scored = await pool.query<{ n: number }>(
+    `with scores as (
+       select p.id, coalesce(ad.n, 0) * 10 + coalesce(hl.n, 0) as score
+         from profiles p
+         left join (select user_id, count(distinct (created_at at time zone $1)::date) as n
+                      from user_activity where action = any($2) group by user_id) ad on ad.user_id = p.id
+         left join (select user_id, count(*) as n from highlights group by user_id) hl on hl.user_id = p.id
+     )
+     select count(*) filter (where score >= 1)::int as n from scores`,
+    [tz, Array.from(SCORING_ACTIONS)],
+  );
+
   return {
     generated_at: new Date().toISOString(),
     tz,
@@ -126,6 +169,15 @@ export async function computeKpis(): Promise<Kpis> {
       sessions_last_7d: nSessions,
       free_users: nFree,
       sessions_per_free_user_week: nFree > 0 ? Math.round((nSessions / nFree) * 100) / 100 : null,
+    },
+    engagement: {
+      scored_users: num(scored.rows[0]?.n),
+      bale_connected: num(eng.rows[0]?.bale),
+      telegram_connected: num(eng.rows[0]?.telegram),
+      notif_on: num(eng.rows[0]?.notif),
+      push_subscribed: num(pushSub.rows[0]?.n),
+      active_today: num(eng.rows[0]?.active_today),
+      streak_alive: num(eng.rows[0]?.streak_alive),
     },
   };
 }
