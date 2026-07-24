@@ -267,6 +267,15 @@
 .dcp-lg-row.is-me .dcp-lg-nm { font-weight: 800; }
 .dcp-lg-foot { padding: 12px 18px; font-size: .78rem; color: var(--dcp-muted); border-top: 1px solid var(--dcp-line); text-align: center; }
 .dcp-lg-empty { padding: 22px 20px; text-align: center; } .dcp-lg-empty p { margin: 0 0 8px; }
+/* "how to earn XP" (collapsible, subtle) */
+.dcp-lg-howto { border-top: 1px solid var(--dcp-line); padding: 10px 18px; font-size: .82rem; }
+.dcp-lg-howto summary { cursor: pointer; font-weight: 700; color: var(--dcp-ink); list-style: none; }
+.dcp-lg-howto summary::-webkit-details-marker { display: none; }
+.dcp-lg-howto summary::before { content: '؟ '; opacity: .55; }
+.dcp-lg-howto p { margin: 8px 0 0; color: var(--dcp-muted); line-height: 1.9; }
+
+/* the league overlay must sit ABOVE the dashboard/profile header panel (10050) */
+.dcp-lg-overlay { z-index: 10090; }
 
 /* finalized-outcome announcement */
 .dcp-lg-announce { align-items: center; text-align: center; padding: 26px 22px; gap: 6px; }

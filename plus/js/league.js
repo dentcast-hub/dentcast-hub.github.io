@@ -94,11 +94,17 @@ function buildCard(data, onClose) {
     el('b', {}, fmtRemaining(data.time_remaining_seconds).replace(' مانده', '')),
   ]));
 
+  const howto = () => el('details', { class: 'dcp-lg-howto' }, [
+    el('summary', {}, 'چطور امتیازِ لیگ می‌گیرم؟'),
+    el('p', {}, 'هر روز که مطلبی بخوانی، پادکست گوش بدهی، هایلایت کنی یا کارت مرور کنی، XP می‌گیری؛ هر روزِ فعالِ تازه بیشترین امتیاز را دارد. فقط فعالیتِ همین هفته در لیگ حساب می‌شود و شنبه از نو صفر می‌شود.'),
+  ]);
+
   if (!data.joined) {
     card.append(el('div', { class: 'dcp-lg-empty' }, [
       el('p', {}, 'این هفته هنوز واردِ لیگ نشده‌ای.'),
       el('p', { class: 'dcp-sec-hint' }, 'همین که یک مطلب بخوانی یا هایلایت کنی، به گروهِ این هفته اضافه می‌شوی و رقابت شروع می‌شود.'),
     ]));
+    card.append(howto());
     return card;
   }
 
@@ -109,11 +115,11 @@ function buildCard(data, onClose) {
 
   const body = el('div', { class: 'dcp-lg-body' });
   if (up > 0) {
-    body.append(el('div', { class: 'dcp-lg-zone is-up' }, [el('span', {}, 'صعود به تیرِ بالاتر'), el('span', { class: 'dcp-lg-zone-ln' }), el('span', {}, '↑')]));
+    body.append(el('div', { class: 'dcp-lg-zone is-up' }, [el('span', {}, 'صعود به لیگِ بالاتر'), el('span', { class: 'dcp-lg-zone-ln' }), el('span', {}, '↑')]));
   }
   members.forEach((m, i) => {
     if (down > 0 && i === members.length - down) {
-      body.append(el('div', { class: 'dcp-lg-zone is-down' }, [el('span', {}, '↓'), el('span', { class: 'dcp-lg-zone-ln' }), el('span', {}, 'سقوط به تیرِ پایین‌تر')]));
+      body.append(el('div', { class: 'dcp-lg-zone is-down' }, [el('span', {}, '↓'), el('span', { class: 'dcp-lg-zone-ln' }), el('span', {}, 'سقوط به لیگِ پایین‌تر')]));
     }
     body.append(memberRow(m, { up, down, size }));
   });
@@ -123,6 +129,7 @@ function buildCard(data, onClose) {
     ? 'این هفته گروه هنوز کوچک است؛ صعود/سقوط وقتی فعال می‌شود که گروه پر شود. فعلاً فقط فعالیتت را جمع کن.'
     : 'برای صعود، هم باید در ناحیهٔ سبز باشی و هم حداقل ' + faNum(data.promotion_min_weekly_xp || 0) + ' امتیازِ هفتگی بگیری.';
   card.append(el('div', { class: 'dcp-lg-foot' }, foot));
+  card.append(howto());
   return card;
 }
 

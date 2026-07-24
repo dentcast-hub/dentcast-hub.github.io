@@ -206,7 +206,7 @@ export async function renderDashboard(root, { me: preMe } = {}) {
 
   children.push(
     section('استریک', 'هر روز که بخوانید، هایلایت کنید یا مرور کنید، یک روز به زنجیره‌تان اضافه می‌شود. رکورد شما بیشترین زنجیره‌ای است که تا حالا ساخته‌اید و هیچ‌وقت پاک نمی‌شود.', streakDetail(me)),
-    league ? section('لیگ من', 'رتبه‌ات در گروهِ رقابتیِ این هفته؛ برای صعود به تیرِ بالاتر تلاش کن.', leagueEntryButton(league)) : null,
+    league ? section('لیگ من', 'رتبه‌ات در گروهِ رقابتیِ این هفته؛ برای صعود به لیگِ بالاتر تلاش کن.', leagueEntryButton(league)) : null,
     section('ادامه مطالعه', null, continueBlock(progress, model)),
     section('پیشرفت هر پوشه', 'برای هر پوشه، چند درصد از کل مطالب آن را خوانده‌اید (۰ تا ۱۰۰). هر بار پیشخوان باز شود به‌روز می‌شود.', progressBars(progress, model)),
     section('امتیاز شما', 'امتیاز از روی فعالیت شما ساخته می‌شود و پایه‌ی رقابت‌های بعدی است.', scoreBlock(progress)),
