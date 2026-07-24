@@ -36,6 +36,20 @@ machinery the router now calls on its own. **LiteCast is the sole exception:**
 it is `.ir`-only with no hreflang, so it gets no en mirror or toggle in either
 path.
 
+## Ad-publishing protocol (trigger)
+
+There is a **third** workflow alongside the publishing router and the
+en-version router. When the user says they have an **advertisement** to
+publish or manage — trigger phrases like **«تبلیغ دارم»**, «آگهی دارم»,
+«اسپانسر گرفتیم», «تبلیغ X رو خاموش کن», «سهم اسپانسر رو کم/زیاد کن» — do
+**not** use the «متن جدید دارم» publishing router. Instead read
+`.dentcast/workflows/ads.md` and follow it strictly. An ad is not content:
+it gets **no** page, **no** brain entry, **no** Pulse line, **no** en mirror
+— the whole ad system lives in `ads/ads-config.json` (see `ads/README.md`).
+That workflow interviews for the gaps (sponsor vs internal, link, copy,
+image, slots, rotation share) and files sponsors so they automatically ship
+with `rel="sponsored"` (Google compliance). Never hardcode an ad into a page.
+
 ## Attached paper file (trigger — ANY type, file-driven)
 
 The paper actions are triggered by the **paper file itself**, *not* by the

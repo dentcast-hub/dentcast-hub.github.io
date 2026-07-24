@@ -45,18 +45,24 @@ function track(name, params) {
 
 // ── creative selection ───────────────────────────────────────────────────────
 
-function enabledSponsors(cfg) {
+// Optional per-creative slot targeting: a creative with "slots": ["home", ...]
+// only ever renders in those slots; no "slots" field = allowed everywhere.
+function allowedIn(creative, slotName) {
+  return !Array.isArray(creative.slots) || creative.slots.includes(slotName);
+}
+
+function enabledSponsors(cfg, slotName) {
   const list = (cfg.creatives && cfg.creatives.sponsors) || [];
-  return list.filter((s) => s && s.enabled && s.url);
+  return list.filter((s) => s && s.enabled && s.url && allowedIn(s, slotName));
 }
 
-function premiumCreative(cfg) {
+function premiumCreative(cfg, slotName) {
   const p = cfg.creatives && cfg.creatives.premium;
-  return p && p.enabled !== false && p.url ? p : null;
+  return p && p.enabled !== false && p.url && allowedIn(p, slotName) ? p : null;
 }
 
-function nextSponsor(cfg) {
-  const sponsors = enabledSponsors(cfg);
+function nextSponsor(cfg, slotName) {
+  const sponsors = enabledSponsors(cfg, slotName);
   if (!sponsors.length) return null;
   const pool = [];
   sponsors.forEach((s) => {
@@ -70,16 +76,18 @@ function nextSponsor(cfg) {
 
 // One creative per page view: every slot on the page shows the same campaign,
 // and the rotation counter advances once (in main(), after a successful render).
-function pickCreative(cfg) {
+// A step whose creative is missing or not allowed in this slot falls back to
+// the other kind; nothing eligible → nothing renders.
+function pickCreative(cfg, slotName) {
   const seq = (cfg.rotation && Array.isArray(cfg.rotation.sequence) && cfg.rotation.sequence.length)
     ? cfg.rotation.sequence
     : ['premium'];
   const step = seq[lsGet(K_TICK) % seq.length];
-  if (step === 'premium') return premiumCreative(cfg) || nextSponsor(cfg);
-  if (step === 'sponsor') return nextSponsor(cfg) || premiumCreative(cfg);
+  if (step === 'premium') return premiumCreative(cfg, slotName) || nextSponsor(cfg, slotName);
+  if (step === 'sponsor') return nextSponsor(cfg, slotName) || premiumCreative(cfg, slotName);
   // a specific sponsor id
-  const named = enabledSponsors(cfg).find((s) => s.id === step);
-  return named || nextSponsor(cfg) || premiumCreative(cfg);
+  const named = enabledSponsors(cfg, slotName).find((s) => s.id === step);
+  return named || nextSponsor(cfg, slotName) || premiumCreative(cfg, slotName);
 }
 
 // ── card DOM ─────────────────────────────────────────────────────────────────
@@ -312,7 +320,7 @@ async function main() {
     tierPromise.then((t) => { if (t === 'premium') removeAllAds(); });
   }
 
-  const creative = pickCreative(cfg);
+  const creative = pickCreative(cfg, type);
   if (!creative) return;
 
   const renderers = { article: renderArticle, home: renderHome, player: renderPlayer, episodes: renderEpisodes };
