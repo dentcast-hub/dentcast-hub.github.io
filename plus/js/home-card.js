@@ -7,6 +7,7 @@ import { openLoginModal, openOrgNotice } from './login-modal.js';
 import { getModel, contentInfo } from './content-index.js';
 import { isOrgHost, detectContentId, baleEnabled, telegramLoginEnabled } from './config.js';
 import { ensurePushSubscription, removePushSubscription } from './push.js';
+import { leagueChip, maybeAnnounceOutcome } from './league.js';
 
 function flame(active) {
   return el('span', { class: 'dc-plus-flame' + (active ? ' is-active' : ''), 'aria-hidden': 'true' }, '🔥');
@@ -64,13 +65,14 @@ function renderAnon(card) {
 }
 
 async function renderLoggedIn(card, user) {
-  const [me, progress, model, recent] = await Promise.all([
+  const [me, progress, model, recent, league] = await Promise.all([
     api.me().catch(() => user),
     api.progress().catch(() => ({})),
     getModel(),
     // The most recent highlight is a reliable "last article read" fallback when
     // the activity-derived last_content_id is missing (limit 1, cheap).
     api.recentHighlights(1).catch(() => ({ highlights: [] })),
+    api.league().catch(() => null),
   ]);
 
   // Keep handles to the flame + numbers so live updates (below) can patch them in
@@ -105,10 +107,14 @@ async function renderLoggedIn(card, user) {
     rankNumEl = el('span', { class: 'dc-plus-rank-n' }, faNum(progress.rank));
     const rankIco = el('span', { class: 'dc-plus-rank-ico', 'aria-hidden': 'true' });
     rankIco.innerHTML = IC_RANK; // static, trusted markup
-    rankBadge = el('span', { class: 'dc-plus-rank', title: 'رتبه‌ی شما میان کاربران' }, [
-      rankIco, rankNumEl, el('span', { class: 'dc-plus-rank-lbl' }, 'رتبه'),
+    rankBadge = el('span', { class: 'dc-plus-rank', title: 'رتبه‌ی کلِ شما میان کاربران' }, [
+      rankIco, rankNumEl, el('span', { class: 'dc-plus-rank-lbl' }, 'رتبه کل'),
     ]);
   }
+
+  // League chip (opens the weekly-league overlay). Present whenever /league
+  // answered — even "not joined this week" shows the tier with a gentle nudge.
+  let leagueChipEl = league ? leagueChip(league) : null;
 
   // A line back into the user's own material: ONLY the LAST article they read,
   // as a link. Prefer the server's activity-derived last_content_id; fall back to
@@ -122,6 +128,7 @@ async function renderLoggedIn(card, user) {
   const rows = [streakLine];
   if (scoreBadge) rows.push(scoreBadge);
   if (rankBadge) rows.push(rankBadge);
+  if (leagueChipEl) rows.push(leagueChipEl);
   if (last) {
     // Episodes are audio (the only content that fires episode_listened), so the
     // lead reads "ادامه گوش دادن"; everything else is "ادامه خواندن".
@@ -144,18 +151,23 @@ async function renderLoggedIn(card, user) {
 
   card.replaceChildren(el('div', { class: 'dc-plus-home-inner' }, rows));
 
-  // Live update, no reload: patch the streak flame + streak/score numbers in
-  // place when the user earns a qualifying action (STREAK_ACTIVITY_EVENT, the same
-  // signal the header flame uses) or returns to this page (bfcache restore / tab
-  // refocus). Cheap — two COUNTs — and guarded so overlapping triggers coalesce.
+  // Announce a finalized league outcome (promoted / stayed / demoted) once — the
+  // only "reward" of this phase, so never silent. Clears itself server-side.
+  maybeAnnounceOutcome(league);
+
+  // Live update, no reload: patch the streak flame + streak/score/rank numbers and
+  // the league chip in place when the user earns a qualifying action
+  // (STREAK_ACTIVITY_EVENT, the same signal the header flame uses) or returns to
+  // this page (bfcache restore / tab refocus). Guarded so overlaps coalesce.
   let refreshing = false;
   async function refreshStatus() {
     if (refreshing) return;
     refreshing = true;
     try {
-      const [m2, p2] = await Promise.all([
+      const [m2, p2, lg2] = await Promise.all([
         currentUser({ refresh: true }),
         api.progress().catch(() => null),
+        api.league().catch(() => null),
       ]);
       if (m2) {
         flameEl.classList.toggle('is-active', streakIsActiveToday(m2.last_active_day));
@@ -166,6 +178,11 @@ async function renderLoggedIn(card, user) {
       }
       if (rankNumEl && p2 && typeof p2.rank === 'number') {
         rankNumEl.textContent = faNum(p2.rank);
+      }
+      if (lg2 && leagueChipEl) {
+        const fresh = leagueChip(lg2);
+        leagueChipEl.replaceWith(fresh);
+        leagueChipEl = fresh;
       }
     } finally {
       refreshing = false;

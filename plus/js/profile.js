@@ -6,6 +6,7 @@ import { api, ApiError, currentUser } from './api.js';
 import { ensurePushSubscription, removePushSubscription, pushSupported } from './push.js';
 import { telegramLoginEnabled, telegramCallbackUrl, telegramBotUsername } from './config.js';
 import { baleEnabled, baleDeepLink } from './config.js';
+import { leagueEntryButton } from './league.js';
 
 const WEEKDAY_FA = ['ی', 'د', 'س', 'چ', 'پ', 'ج', 'ش']; // Sun..Sat
 function weekdayLetter(dayStr) {
@@ -438,9 +439,10 @@ function phoneBlock(me) {
 
 export async function renderProfile(root, { me: preMe } = {}) {
   root.replaceChildren(el('div', { class: 'dcp-loading' }, 'در حال بارگذاری...'));
-  const [me, stats] = await Promise.all([
+  const [me, stats, league] = await Promise.all([
     preMe ? Promise.resolve(preMe) : api.me().catch(() => null),
     api.profileStats().catch(() => ({ week: [], month_vs_month: null, records: {} })),
+    api.league().catch(() => null),
   ]);
   if (!me) { root.replaceChildren(el('div', { class: 'dcp-gate' }, 'برای دیدن پروفایل وارد شوید.')); return; }
 
@@ -456,6 +458,7 @@ export async function renderProfile(root, { me: preMe } = {}) {
       el('div', {}, [el('b', {}, faNum(stats.records?.current_streak || 0)), el('span', {}, 'استریک فعلی')]),
       el('div', {}, [el('b', {}, faNum(stats.records?.longest_streak || 0)), el('span', {}, 'بلندترین استریک')]),
     ])),
+    ...(league ? [section('لیگ من', leagueEntryButton(league))] : []),
     section('مقایسه ماه به ماه', stats.month_vs_month ? monthCompare(stats.month_vs_month) : el('div', { class: 'dcp-muted' }, '—')),
     section(me.phone ? 'شماره موبایل' : 'شماره موبایل (اختیاری)', phoneBlock(me)),
     // Telegram (login + notifications) + Bale (notifications only). `connect` is the

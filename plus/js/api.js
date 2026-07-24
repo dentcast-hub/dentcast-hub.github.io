@@ -93,6 +93,10 @@ export const api = {
   seen: () => request('/seen'),
   exportHighlights: () => request('/export/highlights'),
 
+  // weekly league (group view + acknowledge finalized outcome)
+  league: () => request('/league'),
+  leagueOutcomeSeen: () => request('/league/outcome/seen', { method: 'POST' }),
+
   // web push (reminder delivery channel for free users)
   pushPublicKey: () => request('/push/public-key'),
   savePushSubscription: (subscription) => request('/push/subscribe', { method: 'POST', body: { subscription } }),

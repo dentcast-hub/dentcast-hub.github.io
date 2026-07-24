@@ -4,6 +4,7 @@
 import { el, faNum, streakIsActiveToday } from './util.js';
 import { api } from './api.js';
 import { getModel, contentInfo } from './content-index.js';
+import { leagueEntryButton } from './league.js';
 import { LABELS, PALETTE } from './config.js';
 
 const labelFa = (k) => (LABELS.find((l) => l.key === k) || {}).fa || '';
@@ -185,10 +186,11 @@ export async function renderDashboard(root, { me: preMe } = {}) {
   // at page boot, and using it made the streak number + "active today" look stale
   // after a just-completed read/highlight until a manual page refresh. Fall back
   // to that preMe only if the fresh fetch fails (offline / 401).
-  const [me, progress, model] = await Promise.all([
+  const [me, progress, model, league] = await Promise.all([
     api.me().catch(() => preMe || null),
     api.progress().catch(() => ({})),
     getModel({ refresh: true }),
+    api.league().catch(() => null),
   ]);
   if (!me) { root.replaceChildren(el('div', { class: 'dcp-gate' }, 'برای دیدن پیشخوان وارد شوید.')); return; }
 
@@ -204,6 +206,7 @@ export async function renderDashboard(root, { me: preMe } = {}) {
 
   children.push(
     section('استریک', 'هر روز که بخوانید، هایلایت کنید یا مرور کنید، یک روز به زنجیره‌تان اضافه می‌شود. رکورد شما بیشترین زنجیره‌ای است که تا حالا ساخته‌اید و هیچ‌وقت پاک نمی‌شود.', streakDetail(me)),
+    league ? section('لیگ من', 'رتبه‌ات در گروهِ رقابتیِ این هفته؛ برای صعود به تیرِ بالاتر تلاش کن.', leagueEntryButton(league)) : null,
     section('ادامه مطالعه', null, continueBlock(progress, model)),
     section('پیشرفت هر پوشه', 'برای هر پوشه، چند درصد از کل مطالب آن را خوانده‌اید (۰ تا ۱۰۰). هر بار پیشخوان باز شود به‌روز می‌شود.', progressBars(progress, model)),
     section('امتیاز شما', 'امتیاز از روی فعالیت شما ساخته می‌شود و پایه‌ی رقابت‌های بعدی است.', scoreBlock(progress)),
