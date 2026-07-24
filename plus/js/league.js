@@ -84,12 +84,14 @@ function buildCard(data, onClose) {
     tierBadge(t.tier_order, { size: 'md' }),
     el('div', { class: 'dcp-lg-head-txt' }, [
       el('h3', {}, 'لیگ ' + t.name_fa),
-      el('p', { class: 'dcp-lg-head-sub' }, data.joined ? 'گروهِ این هفته' : 'وارد نشده‌اید'),
+      el('p', { class: 'dcp-lg-head-sub' }, data.joined ? 'گروهِ این هفته' : 'این هفته وارد نشده‌اید'),
     ]),
-    el('div', { class: 'dcp-lg-count' }, [
-      el('b', {}, fmtRemaining(data.time_remaining_seconds).replace(' مانده', '')),
-      el('span', {}, 'تا پایان'),
-    ]),
+  ]));
+  // League timer as its own bar (clear, and never colliding with the × corner).
+  card.append(el('div', { class: 'dcp-lg-timebar' }, [
+    el('span', { class: 'dcp-lg-timebar-ico', 'aria-hidden': 'true' }, '⏳'),
+    el('span', { class: 'dcp-lg-timebar-lbl' }, 'تا پایانِ هفتهٔ لیگ:'),
+    el('b', {}, fmtRemaining(data.time_remaining_seconds).replace(' مانده', '')),
   ]));
 
   if (!data.joined) {

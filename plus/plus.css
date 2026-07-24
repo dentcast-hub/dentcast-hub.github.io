@@ -241,11 +241,17 @@
   border-radius: 20px; box-shadow: var(--dcp-shadow); overflow: hidden; width: min(440px, 94vw); max-height: 90vh;
   display: flex; flex-direction: column; position: relative; }
 .dcp-lg-head { display: flex; align-items: center; gap: 14px; padding: 20px 18px 16px;
+  padding-inline-end: 46px; /* reserve the top corner for the × so nothing sits under it */
   background: radial-gradient(120% 130% at 90% 0, rgba(245, 163, 0, .13), transparent 55%); }
+.dcp-lg-card .dcp-modal-close { top: 12px; inset-inline-end: 14px; z-index: 2; }
 .dcp-lg-head-txt h3 { margin: 0; font-size: 1.15rem; font-weight: 800; }
 .dcp-lg-head-sub { margin: 2px 0 0; font-size: .82rem; color: var(--dcp-muted); }
-.dcp-lg-count { margin-inline-start: auto; text-align: center; background: var(--dcp-chip-bg); border: 1px solid var(--dcp-line); border-radius: 12px; padding: 6px 10px; }
-.dcp-lg-count b { display: block; font-size: .95rem; font-weight: 800; } .dcp-lg-count span { font-size: .66rem; opacity: .7; }
+/* league timer bar */
+.dcp-lg-timebar { display: flex; align-items: center; gap: 7px; padding: 9px 18px;
+  font-size: .84rem; border-top: 1px solid var(--dcp-line); border-bottom: 1px solid var(--dcp-line);
+  background: color-mix(in srgb, var(--dcp-accent) 6%, transparent); }
+.dcp-lg-timebar-lbl { color: var(--dcp-muted); }
+.dcp-lg-timebar b { font-weight: 800; margin-inline-start: auto; font-variant-numeric: tabular-nums; }
 .dcp-lg-body { overflow-y: auto; }
 .dcp-lg-zone { display: flex; align-items: center; gap: 8px; padding: 7px 18px; font-size: .72rem; font-weight: 700; }
 .dcp-lg-zone.is-up { color: #12a06b; } .dcp-lg-zone.is-down { color: #e0533d; }
