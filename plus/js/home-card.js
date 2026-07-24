@@ -94,6 +94,16 @@ async function renderLoggedIn(card, user) {
       ])
     : null;
 
+  // Rank among all users — shown ONLY once the user has scored (the server sends
+  // rank:null for a fresh 0-point account, so a newcomer never sees a discouraging
+  // last place). The total sits in a tooltip so the strip stays compact.
+  const rankNumEl = (typeof progress.rank === 'number')
+    ? el('span', { class: 'dc-plus-rank-n' }, faNum(progress.rank)) : null;
+  const rankBadge = rankNumEl
+    ? el('span', { class: 'dc-plus-rank', title: 'رتبه‌ی شما میان کاربران' },
+        [el('span', { class: 'dc-plus-rank-lbl' }, 'رتبه'), rankNumEl])
+    : null;
+
   // A line back into the user's own material: ONLY the LAST article they read,
   // as a link. Prefer the server's activity-derived last_content_id; fall back to
   // the most recent highlight's article. If neither resolves, show nothing here —
@@ -105,6 +115,7 @@ async function renderLoggedIn(card, user) {
 
   const rows = [streakLine];
   if (scoreBadge) rows.push(scoreBadge);
+  if (rankBadge) rows.push(rankBadge);
   if (last) {
     // Episodes are audio (the only content that fires episode_listened), so the
     // lead reads "ادامه گوش دادن"; everything else is "ادامه خواندن".
@@ -146,6 +157,9 @@ async function renderLoggedIn(card, user) {
       }
       if (scoreNumEl && p2 && typeof p2.score === 'number') {
         scoreNumEl.textContent = faNum(p2.score);
+      }
+      if (rankNumEl && p2 && typeof p2.rank === 'number') {
+        rankNumEl.textContent = faNum(p2.rank);
       }
     } finally {
       refreshing = false;

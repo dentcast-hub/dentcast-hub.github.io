@@ -6,7 +6,7 @@ import { config } from '../config.js';
 import { QUALIFYING_ACTIONS, streakIsAlive, displayStreak } from '../services/streak.js';
 import {
   computeScore, freezesUsedCount, freezesAvailable, pointsToNextFreeze,
-  SHIELD_CAP, SHIELD_POINTS,
+  SHIELD_CAP, SHIELD_POINTS, SCORING_ACTIONS,
 } from '../services/score.js';
 import { dayInTz, previousDay, nextDay, weekStartSaturday } from '../services/time.js';
 
@@ -171,6 +171,35 @@ export async function dashboardRoutes(app: FastifyInstance): Promise<void> {
     const shownStreak = streakIsAlive(request.user!.last_active_day, today, freezesAvail)
       ? request.user!.current_streak : 0;
 
+    // Rank among all users by score (standard competition ranking: users tied on
+    // score share a rank). Only meaningful once the user has scored — for a fresh
+    // account (score 0) we return null so the client shows no rank. We deliberately
+    // do NOT expose the total user count (the founder does not want the userbase
+    // size revealed), so we return only the 1-based position. One aggregate query;
+    // every user's score is derived the same way computeScore does, so the number
+    // the user sees for themselves and their rank never disagree.
+    let rank: number | null = null;
+    if (score >= 1) {
+      const rk = await pool.query<{ ahead: number }>(
+        `with scores as (
+           select p.id,
+                  coalesce(ad.n, 0) * 10 + coalesce(hl.n, 0) as score
+             from profiles p
+             left join (
+               select user_id, count(distinct (created_at at time zone $2)::date) as n
+                 from user_activity where action = any($3) group by user_id
+             ) ad on ad.user_id = p.id
+             left join (
+               select user_id, count(*) as n from highlights group by user_id
+             ) hl on hl.user_id = p.id
+         )
+         select count(*) filter (where score > $1)::int as ahead
+           from scores`,
+        [score, config.streakTimezone, SCORING_ACTIONS],
+      );
+      rank = (rk.rows[0]?.ahead ?? 0) + 1;
+    }
+
     return reply.send({
       current_streak: shownStreak,
       longest_streak: request.user!.longest_streak,
@@ -180,6 +209,7 @@ export async function dashboardRoutes(app: FastifyInstance): Promise<void> {
       folder_progress,
       score,
       score_active_days: activeDays,
+      rank,
       freezes: {
         available: freezesAvail,
         cap: SHIELD_CAP,
