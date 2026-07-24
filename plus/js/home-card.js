@@ -158,7 +158,7 @@ function connectionsRow(me) {
 
   // بله — connect/manage on the profile (deep-link + poll is too heavy for here).
   if (baleEnabled()) {
-    chips.push(el('a', { class: 'dc-plus-chip' + (me.bale_linked ? ' is-on' : ''), href: '/plus/profile.html' }, [
+    chips.push(el('a', { class: 'dc-plus-chip' + (me.bale_linked ? ' is-on' : ''), href: '/plus/profile.html#connect' }, [
       el('span', { class: 'dc-plus-chip-ico', 'aria-hidden': 'true' }, me.bale_linked ? '✓' : '○'),
       el('span', {}, 'بله'),
     ]));
@@ -167,7 +167,7 @@ function connectionsRow(me) {
   // تلگرام — show only where it can be connected (.org) or is already linked; the
   // widget doesn't work on .ir, so an un-linked .ir user doesn't see a dead chip.
   if (me.telegram_linked || telegramLoginEnabled()) {
-    chips.push(el('a', { class: 'dc-plus-chip' + (me.telegram_linked ? ' is-on' : ''), href: '/plus/profile.html' }, [
+    chips.push(el('a', { class: 'dc-plus-chip' + (me.telegram_linked ? ' is-on' : ''), href: '/plus/profile.html#connect' }, [
       el('span', { class: 'dc-plus-chip-ico', 'aria-hidden': 'true' }, me.telegram_linked ? '✓' : '○'),
       el('span', {}, 'تلگرام'),
     ]));

@@ -136,6 +136,14 @@
 .dc-plus-chip.is-on { border-color: color-mix(in srgb, #22a06b 45%, var(--dcp-line)); background: color-mix(in srgb, #22a06b 10%, transparent); }
 .dc-plus-chip.is-on .dc-plus-chip-ico { color: #22a06b; opacity: 1; }
 
+/* deep-link highlight: arriving at a section via #hash (e.g. #connect from the
+   homepage chips) briefly tints it so the eye lands in the right place. */
+.dcp-flash { animation: dcp-flash 1.8s ease-out; border-radius: var(--dcp-radius); }
+@keyframes dcp-flash {
+  0%, 12% { background: color-mix(in srgb, var(--dcp-accent) 16%, transparent); }
+  100% { background: transparent; }
+}
+
 /* ---- "seen" ticks on landing-page links (Plus, logged-in only) ----------- */
 .dcp-seen-tick { display: inline-block; margin-inline-end: 6px; font-weight: 800; color: var(--dcp-muted, #9aa4b2); opacity: .5; }
 .dcp-seen-tick.is-seen { color: #22a06b; opacity: 1; }

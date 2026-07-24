@@ -24,8 +24,10 @@ function dayOfMonth(dayStr) {
   return faNum(day);
 }
 
-function section(title, body) {
-  return el('section', { class: 'dcp-dash-sec' }, [el('h2', { class: 'dcp-dash-h2' }, title), body]);
+function section(title, body, id) {
+  const attrs = { class: 'dcp-dash-sec' };
+  if (id) attrs.id = id; // anchor target for deep links (e.g. #connect from the homepage chips)
+  return el('section', attrs, [el('h2', { class: 'dcp-dash-h2' }, title), body]);
 }
 
 function pseudonymBlock(me) {
@@ -456,8 +458,9 @@ export async function renderProfile(root, { me: preMe } = {}) {
     ])),
     section('مقایسه ماه به ماه', stats.month_vs_month ? monthCompare(stats.month_vs_month) : el('div', { class: 'dcp-muted' }, '—')),
     section(me.phone ? 'شماره موبایل' : 'شماره موبایل (اختیاری)', phoneBlock(me)),
-    // Telegram (login + notifications) + Bale (notifications only).
-    section('اتصال به پیام‌رسان‌ها', messengerBlock(me)),
+    // Telegram (login + notifications) + Bale (notifications only). `connect` is the
+    // deep-link anchor the homepage Bale/Telegram chips scroll to.
+    section('اتصال به پیام‌رسان‌ها', messengerBlock(me), 'connect'),
     section('یادآوری‌ها', remindersBlock(me)),
     el('div', { class: 'dcp-dash-sec' }, [logoutBtn]),
   );

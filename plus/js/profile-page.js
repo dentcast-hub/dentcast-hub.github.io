@@ -21,6 +21,19 @@ async function main() {
     return;
   }
   await renderProfile(root, { me: user });
+
+  // Deep-link support: /plus/profile.html#connect (from the homepage Bale/Telegram
+  // chips) scrolls to and briefly highlights that section. renderProfile mounts
+  // asynchronously, so we look the target up only after it has resolved.
+  const id = (location.hash || '').replace(/^#/, '');
+  const target = id && document.getElementById(id);
+  if (target) {
+    requestAnimationFrame(() => {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      target.classList.add('dcp-flash');
+      setTimeout(() => target.classList.remove('dcp-flash'), 1800);
+    });
+  }
 }
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', main);
