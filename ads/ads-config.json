@@ -1,0 +1,38 @@
+{
+  "enabled": true,
+  "premium_hides_ads": true,
+  "slots": {
+    "article": { "enabled": true, "position": "middle", "min_paragraphs": 8, "fallback": "end" },
+    "home": { "enabled": true },
+    "player": { "enabled": false },
+    "episodes": { "enabled": true, "every_n": 10, "max": 3 }
+  },
+  "rotation": {
+    "sequence": ["premium"]
+  },
+  "creatives": {
+    "premium": {
+      "enabled": true,
+      "id": "premium",
+      "badge": "دنت‌کست پلاس",
+      "title": "با میز کار بخوان، هایلایت کن، پیشرفتت را ببین",
+      "text": "ورود به دنت‌کست پلاس رایگان است — هایلایت‌هایت ذخیره می‌شود، استریک و امتیازت شمرده می‌شود.",
+      "cta": "شروع رایگان",
+      "url": "/plus/",
+      "image": null
+    },
+    "sponsors": [
+      {
+        "id": "example-sponsor",
+        "enabled": false,
+        "badge": "حمایت‌شده",
+        "title": "",
+        "text": "",
+        "cta": "بازدید",
+        "url": "",
+        "image": null,
+        "weight": 1
+      }
+    ]
+  }
+}

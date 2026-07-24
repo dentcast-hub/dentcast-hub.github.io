@@ -1,0 +1,90 @@
+/* DentCast Ads — injected by /ads/ads.js only when an ad actually renders.
+   Native look: same surfaces/typography vars as the site (dc-theme.css). */
+
+.dc-ad {
+  margin: 1.25rem 0;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Study mode (میز کار) stays clean — a live preview of premium's no-ads feel. */
+body.dcp-study .dc-ad,
+body.dcp-study .dc-ad-li { display: none !important; }
+
+.dc-ad-link {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  padding: 0.875rem 1.125rem;
+  background: var(--surface, #fff);
+  border: 1px solid var(--surface3, #eaecf5);
+  border-radius: 14px;
+  text-decoration: none;
+  color: var(--txt, #0a1a33);
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+.dc-ad-link:active { transform: scale(0.99); background: var(--surface2, #f4f6fb); }
+
+.dc-ad-img {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  object-fit: cover;
+  flex: 0 0 auto;
+}
+
+.dc-ad-body { flex: 1 1 auto; min-width: 0; }
+
+.dc-ad-badge {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  line-height: 1;
+  padding: 0.25rem 0.5rem;
+  border-radius: 999px;
+  margin-bottom: 0.375rem;
+}
+.dc-ad--premium .dc-ad-badge { color: #1d5bd8; background: rgba(29, 91, 216, 0.08); }
+.dc-ad--sponsor .dc-ad-badge { color: #a07a10; background: rgba(245, 162, 8, 0.1); }
+[data-theme="dark"] .dc-ad--premium .dc-ad-badge { color: #7fa8f0; background: rgba(127, 168, 240, 0.1); }
+[data-theme="dark"] .dc-ad--sponsor .dc-ad-badge { color: #c49820; background: rgba(245, 162, 8, 0.08); }
+
+.dc-ad-title {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 700;
+  line-height: 1.7;
+  color: var(--txt, #0a1a33);
+}
+
+.dc-ad-text {
+  margin: 0.25rem 0 0;
+  font-size: 0.78rem;
+  line-height: 1.9;
+  color: var(--txt2, #4a5f85);
+}
+
+.dc-ad-cta {
+  flex: 0 0 auto;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.5rem 0.875rem;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.dc-ad--premium .dc-ad-cta { color: #fff; background: #1d5bd8; }
+.dc-ad--sponsor .dc-ad-cta { color: var(--txt, #0a1a33); background: var(--surface2, #f4f6fb); border: 1px solid var(--surface3, #eaecf5); }
+[data-theme="dark"] .dc-ad--premium .dc-ad-cta { background: #2f6ae0; }
+
+/* Inside article prose the card must not inherit article paragraph margins. */
+.dc-ad--article { margin: 1.5rem 0; }
+.dc-ad--article .dc-ad-text, .dc-ad--article .dc-ad-title { margin-top: 0.25rem; }
+
+/* Episodes archive row wrapper (an <li> inside ol#episodeList). */
+.dc-ad-li { list-style: none; }
+.dc-ad-li .dc-ad { margin: 0.625rem 0; }
+
+@media (max-width: 480px) {
+  .dc-ad-link { flex-wrap: wrap; }
+  .dc-ad-cta { margin-inline-start: auto; }
+}

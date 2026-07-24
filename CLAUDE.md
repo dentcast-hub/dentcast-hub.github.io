@@ -36,6 +36,20 @@ machinery the router now calls on its own. **LiteCast is the sole exception:**
 it is `.ir`-only with no hreflang, so it gets no en mirror or toggle in either
 path.
 
+## Ad-publishing protocol (trigger)
+
+There is a **third** workflow alongside the publishing router and the
+en-version router. When the user says they have an **advertisement** to
+publish or manage — trigger phrases like **«تبلیغ دارم»**, «آگهی دارم»,
+«اسپانسر گرفتیم», «تبلیغ X رو خاموش کن», «سهم اسپانسر رو کم/زیاد کن» — do
+**not** use the «متن جدید دارم» publishing router. Instead read
+`.dentcast/workflows/ads.md` and follow it strictly. An ad is not content:
+it gets **no** page, **no** brain entry, **no** Pulse line, **no** en mirror
+— the whole ad system lives in `ads/ads-config.json` (see `ads/README.md`).
+That workflow interviews for the gaps (sponsor vs internal, link, copy,
+image, slots, rotation share) and files sponsors so they automatically ship
+with `rel="sponsored"` (Google compliance). Never hardcode an ad into a page.
+
 ## Attached paper file (trigger — ANY type, file-driven)
 
 The paper actions are triggered by the **paper file itself**, *not* by the
@@ -74,6 +88,7 @@ guess.**
 - `index.html` — homepage with Pulse section + latest-content widget.
 - Each content type has its own directory at the repo root (e.g., `/notecast/`, `/insight/`, `/litecast/`, etc.). Confirm exact paths from the URLs stored in brain entries.
 - `.dentcast/workflows/` — publishing workflows.
+- `ads/` — central config-driven ad system. `ads/ads-config.json` is the single source of truth (master + per-slot on/off, premium/sponsor creatives, rotation sequence); `ads/ads.js` is injected on every page by a loader hook at the end of `dc-nav.js`. Anonymous + free Plus users see ads; premium users see none; anything switched off leaves zero trace. Docs: `ads/README.md`. No page carries ad markup — never hardcode ads into pages.
 - `plus/pathways.json` — DentCast Plus learning pathways (spec §5 schema; premium Phase 3). A pathway is a curated learning journey, **not** a pillar view: unlike a pillar (one home per item), the **same item can belong to many pathways**, placed at the right prerequisite→advanced position in each. Every specialist publish assigns the new content to its pathway(s) via **workflow step 5.6** (semantic, ask-if-unsure). Tools: `tools/pathway_place.py` (placement proposal + `--insert` + `--coverage`) and `tools/pathway_scout.py` (candidate search + `--steps` + `--coverage`). Catalog/doctrine: `reports/pathways-catalog-2026-07-22.md`. Currently **inert** — no page or builder reads it yet, so no rebuild/version-bump on change.
 
 ## Site-wide invariants

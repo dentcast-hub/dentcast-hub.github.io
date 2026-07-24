@@ -2159,3 +2159,18 @@
   js.src = '/plus/plus.js?v=' + V;
   document.body.appendChild(js);
 })();
+
+/* ── DentCast Ads loader ─────────────────────────────────────────────────────
+   Loads the central ad system on every page. All behavior (master/per-slot
+   on-off, creatives, rotation) lives in /ads/ads-config.json; when it is off,
+   ads.js renders nothing at all. Premium users never see ads. Bump ADS_V when
+   /ads/ads.js or /ads/ads.css changes (the config itself is fetched no-store). */
+(function () {
+  if (window.__dcAdsLoaded) return;
+  window.__dcAdsLoaded = true;
+  var ADS_V = '2';
+  var js = document.createElement('script');
+  js.type = 'module';
+  js.src = '/ads/ads.js?v=' + ADS_V;
+  document.body.appendChild(js);
+})();
