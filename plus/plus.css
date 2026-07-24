@@ -286,8 +286,10 @@
 .dcp-lg-howto summary::before { content: '؟ '; opacity: .55; }
 .dcp-lg-howto p { margin: 8px 0 0; color: var(--dcp-muted); line-height: 1.9; }
 
-/* the league overlay must sit ABOVE the dashboard/profile header panel (10050) */
-.dcp-lg-overlay { z-index: 10090; }
+/* the league overlay must sit ABOVE the dashboard/profile header panel (10050).
+   Two classes (specificity 0,2,0) so it beats .dcp-modal-overlay regardless of
+   source order. */
+.dcp-modal-overlay.dcp-lg-overlay { z-index: 10090; }
 
 /* finalized-outcome announcement */
 .dcp-lg-announce { align-items: center; text-align: center; padding: 26px 22px; gap: 6px; }
