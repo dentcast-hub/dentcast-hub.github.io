@@ -4,6 +4,7 @@ import { closePool } from './db.js';
 import {
   startArticleScheduler, startStreakReminderScheduler, startReactivationScheduler,
 } from './scheduler.js';
+import { startBalePolling } from './services/bale-updates.js';
 
 async function main(): Promise<void> {
   const app = await buildServer();
@@ -14,12 +15,16 @@ async function main(): Promise<void> {
   const stopScheduler = startArticleScheduler();
   const stopStreakReminder = startStreakReminderScheduler();
   const stopReactivation = startReactivationScheduler();
+  // Bale connect worker: long-polls getUpdates and links chat_ids (no-op without
+  // a BALE_BOT_TOKEN). Primary path since Bale's webhook delivery is unreliable.
+  const stopBalePolling = startBalePolling();
 
   const shutdown = async (signal: string) => {
     app.log.info(`${signal} received, shutting down`);
     stopScheduler();
     stopStreakReminder();
     stopReactivation();
+    stopBalePolling();
     await app.close();
     await closePool();
     process.exit(0);

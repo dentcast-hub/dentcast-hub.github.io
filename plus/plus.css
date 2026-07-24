@@ -118,6 +118,24 @@
 .dc-plus-due { color: var(--dcp-accent); font-weight: 700; text-decoration: none; }
 .dc-plus-premium-line { margin-inline-start: auto; color: inherit; opacity: .6; font-size: .88rem; text-decoration: none; }
 
+/* score badge (inline beside the streak) */
+.dc-plus-score { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; }
+.dc-plus-score-n { font-size: 1.2rem; }
+.dc-plus-score-lbl { font-weight: 400; opacity: .8; font-size: .9rem; }
+
+/* connection chips — their own line under the streak/score */
+.dc-plus-chips { flex: 1 0 100%; display: flex; flex-wrap: wrap; gap: 8px; margin-top: 2px; }
+.dc-plus-chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 11px; border: 1px solid var(--dcp-line); border-radius: 999px;
+  font: inherit; font-size: .85rem; line-height: 1.6; color: inherit;
+  background: transparent; text-decoration: none; cursor: pointer;
+}
+.dc-plus-chip:disabled { opacity: .6; cursor: default; }
+.dc-plus-chip-ico { font-weight: 800; opacity: .45; }
+.dc-plus-chip.is-on { border-color: color-mix(in srgb, #22a06b 45%, var(--dcp-line)); background: color-mix(in srgb, #22a06b 10%, transparent); }
+.dc-plus-chip.is-on .dc-plus-chip-ico { color: #22a06b; opacity: 1; }
+
 /* ---- "seen" ticks on landing-page links (Plus, logged-in only) ----------- */
 .dcp-seen-tick { display: inline-block; margin-inline-end: 6px; font-weight: 800; color: var(--dcp-muted, #9aa4b2); opacity: .5; }
 .dcp-seen-tick.is-seen { color: #22a06b; opacity: 1; }
