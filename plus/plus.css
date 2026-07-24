@@ -187,14 +187,13 @@
 .dc-plus-score-n { font-size: 1.2rem; }
 .dc-plus-score-lbl { font-weight: 400; opacity: .8; font-size: .9rem; }
 
-/* rank pill (only shown once the user has scored; never reveals the user count) */
-.dc-plus-rank {
-  display: inline-flex; align-items: center; gap: 5px;
-  padding: 3px 10px; border-radius: var(--dcp-radius-pill);
-  background: var(--dcp-chip-bg); border: 1px solid var(--dcp-line);
-}
-.dc-plus-rank-lbl { font-weight: 500; opacity: .8; font-size: .82rem; }
-.dc-plus-rank-n { font-weight: 800; font-size: 1.02rem; }
+/* rank — styled like the score badge (icon + number + label), not a pill. Only
+   shown once the user has scored; never reveals the total user count. */
+.dc-plus-rank { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; }
+.dc-plus-rank-ico { display: inline-flex; color: var(--dcp-accent); }
+.dc-plus-rank-ico svg { width: 19px; height: 19px; display: block; }
+.dc-plus-rank-n { font-size: 1.2rem; }
+.dc-plus-rank-lbl { font-weight: 400; opacity: .8; font-size: .9rem; }
 
 /* connection chips — their own line under the streak/score */
 .dc-plus-chips { flex: 1 0 100%; display: flex; flex-wrap: wrap; gap: 8px; margin-top: 2px; }

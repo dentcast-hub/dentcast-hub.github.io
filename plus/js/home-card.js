@@ -17,6 +17,8 @@ function flame(active) {
 const IC_FLAME = '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M13 2s1 3-1.5 5.5S8 12 8 14a4 4 0 0 0 8 .3c.2-2.3-1.3-3.8-1-5.8 1.6.8 2.4 2 2.6 3.9A6.5 6.5 0 1 1 8.7 6.3 12 12 0 0 0 13 2z"/></svg>';
 const IC_STAR = '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2l2.9 6.3 6.9.7-5.1 4.7 1.4 6.8L12 17.8 5.9 21.2l1.4-6.8L2.2 9.7l6.9-.7z"/></svg>';
 const IC_BELL = '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 22a2.3 2.3 0 0 0 2.3-2.3H9.7A2.3 2.3 0 0 0 12 22zm7-6.3-1.7-2v-3.2a5.4 5.4 0 0 0-4.2-5.3V4.5a1.1 1.1 0 1 0-2.2 0v.7A5.4 5.4 0 0 0 6.7 10.5v3.2L5 15.7a.9.9 0 0 0 .7 1.5h12.6a.9.9 0 0 0 .7-1.5z"/></svg>';
+// Medal — the rank badge icon (paired with the score's ⭐).
+const IC_RANK = '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 2.2 1 2 2.2.3-1.6 1.5.4 2.2-2-1-2 1 .4-2.2-1.6-1.5 2.2-.3 1-2zM8.5 12.9 7 22l5-2.6L17 22l-1.5-9.1a7 7 0 0 1-7 0z"/></svg>';
 
 function renderAnon(card) {
   const btn = el('button', { class: 'dcp-btn dc-plus-cta', type: 'button' }, [
@@ -97,12 +99,16 @@ async function renderLoggedIn(card, user) {
   // Rank among all users — shown ONLY once the user has scored (the server sends
   // rank:null for a fresh 0-point account, so a newcomer never sees a discouraging
   // last place). The total sits in a tooltip so the strip stays compact.
-  const rankNumEl = (typeof progress.rank === 'number')
-    ? el('span', { class: 'dc-plus-rank-n' }, faNum(progress.rank)) : null;
-  const rankBadge = rankNumEl
-    ? el('span', { class: 'dc-plus-rank', title: 'رتبه‌ی شما میان کاربران' },
-        [el('span', { class: 'dc-plus-rank-lbl' }, 'رتبه'), rankNumEl])
-    : null;
+  let rankNumEl = null;
+  let rankBadge = null;
+  if (typeof progress.rank === 'number') {
+    rankNumEl = el('span', { class: 'dc-plus-rank-n' }, faNum(progress.rank));
+    const rankIco = el('span', { class: 'dc-plus-rank-ico', 'aria-hidden': 'true' });
+    rankIco.innerHTML = IC_RANK; // static, trusted markup
+    rankBadge = el('span', { class: 'dc-plus-rank', title: 'رتبه‌ی شما میان کاربران' }, [
+      rankIco, rankNumEl, el('span', { class: 'dc-plus-rank-lbl' }, 'رتبه'),
+    ]);
+  }
 
   // A line back into the user's own material: ONLY the LAST article they read,
   // as a link. Prefer the server's activity-derived last_content_id; fall back to
