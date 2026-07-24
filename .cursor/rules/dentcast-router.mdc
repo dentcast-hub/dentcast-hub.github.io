@@ -22,7 +22,7 @@ alwaysApply: true
 |---|---|---|
 | متن/محتوای **جدید** برای انتشار در سایت دارد (هر نوع: NoteCast، Insight، LiteCast، DentAI، Promptologist، متانوت، اپیزود و ...) | `.dentcast/workflows/README.md` | `https://github.com/dentcast-hub/dentcast-hub.github.io/blob/main/.dentcast/workflows/README.md` |
 | خواستِ **نسخهٔ انگلیسیِ یک صفحهٔ موجود** را دارد (تریگر: «... رو انگلیسی کن») | `.dentcast/workflows/en-version.md` | `https://github.com/dentcast-hub/dentcast-hub.github.io/blob/main/.dentcast/workflows/en-version.md` |
-| یک **فایل مقاله/پیپر** پیوست کرده (با یا بدون متن) | داخل همان `.dentcast/workflows/README.md` — Phase 0 و step 4.10 | همان لینک بالا |
+| یک **فایل مقاله/پیپر** پیوست کرده (هر نوع محتوا، با یا بدون متن) | داخل همان `.dentcast/workflows/README.md` — روتینگ در Phase 0، مسلح‌شدن در Question 4.7 فاز B، و سه اکشن پیپر در **Phase C step 4.10** (آپلود در Google Drive → غنی‌سازی `dentcast_cabinet_full_catalog.json` → کردیت نویسندهٔ اول با DOI). اگر فقط فایل پیوست است بدون متن، فقط اکشن ۱ و ۲ اجرا می‌شود. | همان لینک بالا |
 | می‌خواهد محتوای علمی برای یک ترم **دانشنامه (Glossary)** نوشته شود | `.claude/skills/glossary-writer/SKILL.md` | `https://github.com/dentcast-hub/dentcast-hub.github.io/blob/main/.claude/skills/glossary-writer/SKILL.md` |
 
 ## قواعد پایه (از `CLAUDE.md` ریپو — همیشه معتبرند، مستقل از این‌که کدام ردیف بالا فعال شود)
@@ -41,6 +41,13 @@ alwaysApply: true
 - هر پابلیش عادی روی `.org` باید در پایان، معادل انگلیسی + تاگل fa↔en هم
   بگیرد (یعنی فایل `en-version.md` هم روی همان صفحه اجرا شود) — به‌جز LiteCast
   که فقط `.ir` است و این مرحله را ندارد.
+- هر پابلیش **تخصصی** (همهٔ نوع‌ها جز LiteCast) در **step ۵.۶** ورکفلو، محتوای
+  جدید را به مسیر(های) یادگیریِ مربوطه در `plus/pathways.json` هم اضافه می‌کند —
+  یک تصمیم **کاملاً معنایی** (نه تطبیق کلیدواژه/رشته، و **مستقل از pillar**؛ یک
+  آیتم می‌تواند در چند pathway باشد)، و طبق قاعده اگر شک داشتی **بپرس، حدس نزن**.
+  این فایل فعلاً **inert** است (هنوز هیچ صفحه/بیلدری آن را نمی‌خواند، پس تغییرش
+  rebuild یا بامپ‌ورژن ندارد). ابزارها: `tools/pathway_place.py` و
+  `tools/pathway_scout.py`؛ داکترین/کاتالوگ: `reports/pathways-catalog-2026-07-22.md`.
 
 هر بار قبل از اقدام، فایل مرجعِ ردیف مربوطه را کامل بخوان — این فایل صرفاً
 مسیر را نشان می‌دهد، جایگزین خواندن آن نمی‌شود.
