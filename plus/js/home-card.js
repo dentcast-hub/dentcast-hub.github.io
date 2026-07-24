@@ -5,7 +5,7 @@ import { el, faNum, streakIsActiveToday, STREAK_ACTIVITY_EVENT } from './util.js
 import { currentUser, api } from './api.js';
 import { openLoginModal, openOrgNotice } from './login-modal.js';
 import { getModel, contentInfo } from './content-index.js';
-import { INVITE_LINE, isOrgHost, detectContentId, baleEnabled, telegramLoginEnabled } from './config.js';
+import { isOrgHost, detectContentId, baleEnabled, telegramLoginEnabled } from './config.js';
 import { ensurePushSubscription, removePushSubscription } from './push.js';
 
 function flame(active) {
@@ -13,7 +13,7 @@ function flame(active) {
 }
 
 function renderAnon(card) {
-  const btn = el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button' }, 'ورود');
+  const btn = el('button', { class: 'dcp-btn dcp-btn-primary dc-plus-anon-cta', type: 'button' }, 'شروع رایگان');
   btn.addEventListener('click', async () => {
     // .org gate (temporary): show the dentcast.ir notice instead of OTP; the
     // anon demand signal is logged inside openOrgNotice (marked org:home).
@@ -21,8 +21,30 @@ function renderAnon(card) {
     const res = await openLoginModal({ returnTo: '/plus/' });
     if (res && res.user) location.reload();
   });
+
+  // A grayed, disabled PREVIEW of what login unlocks — mirrors the logged-in
+  // card's layout (streak, score, connection chips) so the value is visible
+  // before sign-in. Decorative (aria-hidden); the real action is the button.
+  const chip = (label) => el('span', { class: 'dc-plus-chip' }, [
+    el('span', { class: 'dc-plus-chip-ico', 'aria-hidden': 'true' }, '○'),
+    el('span', {}, label),
+  ]);
+  const teaser = el('div', { class: 'dc-plus-teaser', 'aria-hidden': 'true' }, [
+    el('span', { class: 'dc-plus-streak' }, [
+      flame(false),
+      el('span', { class: 'dc-plus-streak-lbl' }, 'استریکِ روزانه'),
+    ]),
+    el('span', { class: 'dc-plus-score' }, [
+      el('span', { class: 'dc-plus-score-ico', 'aria-hidden': 'true' }, '⭐'),
+      el('span', { class: 'dc-plus-score-lbl' }, 'امتیاز'),
+    ]),
+    el('div', { class: 'dc-plus-chips' }, [chip('نوتیف'), chip('بله'), chip('تلگرام')]),
+  ]);
+
   card.replaceChildren(el('div', { class: 'dc-plus-home-inner dc-plus-anon' }, [
-    el('p', { class: 'dc-plus-anon-line' }, INVITE_LINE),
+    teaser,
+    el('p', { class: 'dc-plus-anon-line' },
+      'با ورودِ رایگان، استریک و امتیازت شروع می‌شود و نوتیفِ مطلبِ جدید می‌گیری؛ پیشرفتت ثبت و روی همه‌ی دستگاه‌هایت همراهت می‌ماند.'),
     btn,
   ]));
 }

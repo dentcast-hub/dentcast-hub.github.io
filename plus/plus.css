@@ -108,6 +108,13 @@
 }
 .dc-plus-anon { justify-content: space-between; }
 .dc-plus-anon-line { margin: 0; line-height: 1.9; flex: 1 1 240px; }
+.dc-plus-anon-cta { flex: 0 0 auto; }
+/* grayed, non-interactive preview of the logged-in features (anon teaser) */
+.dc-plus-teaser {
+  flex: 1 0 100%;
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px;
+  filter: grayscale(1); opacity: .5; pointer-events: none; user-select: none;
+}
 .dc-plus-streak { display: inline-flex; align-items: center; gap: 6px; text-decoration: none; color: inherit; font-weight: 700; }
 .dc-plus-flame { filter: grayscale(1); opacity: .5; }
 .dc-plus-flame.is-active { filter: none; opacity: 1; }
