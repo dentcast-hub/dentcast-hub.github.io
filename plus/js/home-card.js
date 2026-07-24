@@ -1,7 +1,7 @@
 // Homepage personal card, in the existing "یادگیری هفتگی" slot (spec 2.4).
 // Two states: anonymous invitation, and logged-in free daily status. NO due-card
 // counter for free users, not even a zero or a locked stub. No minutes target.
-import { el, faNum, streakIsActiveToday } from './util.js';
+import { el, faNum, streakIsActiveToday, STREAK_ACTIVITY_EVENT } from './util.js';
 import { currentUser, api } from './api.js';
 import { openLoginModal, openOrgNotice } from './login-modal.js';
 import { getModel, contentInfo } from './content-index.js';
@@ -37,20 +37,25 @@ async function renderLoggedIn(card, user) {
     api.recentHighlights(1).catch(() => ({ highlights: [] })),
   ]);
 
-  const active = streakIsActiveToday(me.last_active_day);
+  // Keep handles to the flame + numbers so live updates (below) can patch them in
+  // place, without re-rendering the whole card.
+  const flameEl = flame(streakIsActiveToday(me.last_active_day));
+  const streakNumEl = el('span', { class: 'dc-plus-streak-n' }, faNum(me.current_streak || 0));
   const streakLine = el('a', { class: 'dc-plus-streak', href: '/plus/' }, [
-    flame(active),
-    el('span', { class: 'dc-plus-streak-n' }, faNum(me.current_streak || 0)),
+    flameEl,
+    streakNumEl,
     el('span', { class: 'dc-plus-streak-lbl' }, 'روز پیاپی'),
   ]);
 
   // Score (⭐) sits inline beside the streak. It's the same number the future
   // leagues rank on, so surfacing it now is the stepping stone toward that. No
   // "rank" label yet — just the personal total.
-  const scoreBadge = (typeof progress.score === 'number')
+  const scoreNumEl = (typeof progress.score === 'number')
+    ? el('span', { class: 'dc-plus-score-n' }, faNum(progress.score)) : null;
+  const scoreBadge = scoreNumEl
     ? el('span', { class: 'dc-plus-score', title: 'امتیاز شما' }, [
         el('span', { class: 'dc-plus-score-ico', 'aria-hidden': 'true' }, '⭐'),
-        el('span', { class: 'dc-plus-score-n' }, faNum(progress.score)),
+        scoreNumEl,
         el('span', { class: 'dc-plus-score-lbl' }, 'امتیاز'),
       ])
     : null;
@@ -87,6 +92,36 @@ async function renderLoggedIn(card, user) {
   rows.push(connectionsRow(me));
 
   card.replaceChildren(el('div', { class: 'dc-plus-home-inner' }, rows));
+
+  // Live update, no reload: patch the streak flame + streak/score numbers in
+  // place when the user earns a qualifying action (STREAK_ACTIVITY_EVENT, the same
+  // signal the header flame uses) or returns to this page (bfcache restore / tab
+  // refocus). Cheap — two COUNTs — and guarded so overlapping triggers coalesce.
+  let refreshing = false;
+  async function refreshStatus() {
+    if (refreshing) return;
+    refreshing = true;
+    try {
+      const [m2, p2] = await Promise.all([
+        currentUser({ refresh: true }),
+        api.progress().catch(() => null),
+      ]);
+      if (m2) {
+        flameEl.classList.toggle('is-active', streakIsActiveToday(m2.last_active_day));
+        streakNumEl.textContent = faNum(m2.current_streak || 0);
+      }
+      if (scoreNumEl && p2 && typeof p2.score === 'number') {
+        scoreNumEl.textContent = faNum(p2.score);
+      }
+    } finally {
+      refreshing = false;
+    }
+  }
+  document.addEventListener(STREAK_ACTIVITY_EVENT, refreshStatus);
+  window.addEventListener('pageshow', (e) => { if (e.persisted) refreshStatus(); });
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') refreshStatus();
+  });
 }
 
 // The connection strip: notifications (a light inline on/off toggle) plus Bale /
