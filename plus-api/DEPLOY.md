@@ -96,7 +96,9 @@ variables** on the container:
 | `SMSIR_API_KEY` | (from step 2) |
 | `SMSIR_TEMPLATE_ID` | (from step 2) |
 | `SMSIR_PARAM_NAME` | `CODE` (or your template's param) |
-| `NOTIFY_PROVIDER` | `webpush,telegram` (comma list; fans out to both) |
+| `NOTIFY_PROVIDER` | `webpush,telegram,bale` (comma list; fans out to all) |
+| `BALE_BOT_TOKEN` | (Bale bot token — see step 5c) |
+| `BALE_WEBHOOK_SECRET` | (random secret embedded in the webhook URL — step 5c) |
 | `VAPID_PUBLIC_KEY` | (from step 1) |
 | `VAPID_PRIVATE_KEY` | (from step 1) |
 | `VAPID_SUBJECT` | `mailto:foad.shahabian@gmail.com` |
@@ -172,6 +174,40 @@ bot can message only users who authorized IT. Per-bot notification delivery for
 Verify on each site: open the login modal → the Telegram button renders → authorize
 → you land back logged in (session cookie set); a first-time user is prompted for a
 nickname (the leaderboard name).
+
+## 5c. Bale (بله) notifications (both sites)
+
+Bale is a **notification channel only** — there is **no login widget** and no
+"Login with Bale". A user connects it from their profile to receive the streak
+reminder and new-article pushes; connecting deep-links to the Bale bot with a
+one-time `?start=` token, and the bot's **webhook** links their `chat_id` (stored
+in `profiles.bale_id`, the twin of `profiles.telegram_id`). It is shown on **both**
+`.org` and `.ir` (Bale is domestic and unfiltered).
+
+One bot serves both sites (the notification `chat_id` is global to the bot):
+
+| Messenger | Bot | Deep link | Token env var |
+|---|---|---|---|
+| Bale | `@dentcast_bot` | `ble.ir/dentcast_bot` | `BALE_BOT_TOKEN` |
+
+1. **Container env** — set `BALE_BOT_TOKEN` (from the Bale bot panel) and
+   `BALE_WEBHOOK_SECRET` (any long random string), and include `bale` in
+   `NOTIFY_PROVIDER` (`webpush,telegram,bale`). `BALE_API_BASE` defaults to
+   `https://tapi.bale.ai`.
+2. **Register the webhook once** — point Bale's bot at the API path that carries
+   the secret:
+   ```bash
+   curl "https://tapi.bale.ai/bot${BALE_BOT_TOKEN}/setWebhook?url=https://api.dentcast.ir/webhooks/bale/${BALE_WEBHOOK_SECRET}"
+   ```
+   The secret is in the URL path (not a header), so verification does not depend
+   on Bale mirroring Telegram's `secret_token` header. Use whichever `api.*` host
+   is reachable to Bale's servers.
+3. **Frontend** — the bot username is public and set in `plus/js/config.js`
+   (`baleBotUsername()` → `dentcast_bot`); `baleEnabled()` shows the connect UI on
+   both sites.
+
+Verify: on the profile page → «اتصال به بله» → the Bale bot opens → press Start →
+you get a "connected" reply in Bale and the profile flips to «حساب بله متصل است».
 
 ## 6. Daily backup
 

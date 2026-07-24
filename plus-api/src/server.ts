@@ -3,6 +3,7 @@ import cookie from '@fastify/cookie';
 import cors from '@fastify/cors';
 import { config } from './config.js';
 import { authRoutes } from './routes/auth.js';
+import { baleRoutes } from './routes/bale.js';
 import { anonRoutes } from './routes/anon.js';
 import { activityRoutes } from './routes/activity.js';
 import { highlightRoutes } from './routes/highlights.js';
@@ -54,6 +55,7 @@ export async function buildServer(): Promise<FastifyInstance> {
   app.get('/health', async () => ({ ok: true }));
 
   await app.register(authRoutes);
+  await app.register(baleRoutes);
   await app.register(anonRoutes);
   await app.register(activityRoutes);
   await app.register(highlightRoutes);

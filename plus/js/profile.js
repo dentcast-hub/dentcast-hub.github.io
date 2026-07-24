@@ -5,6 +5,7 @@ import { el, faNum, tehranDay } from './util.js';
 import { api, ApiError, currentUser } from './api.js';
 import { ensurePushSubscription, removePushSubscription, pushSupported } from './push.js';
 import { telegramLoginEnabled, telegramCallbackUrl, telegramBotUsername } from './config.js';
+import { baleEnabled, baleDeepLink } from './config.js';
 
 const WEEKDAY_FA = ['ی', 'د', 'س', 'چ', 'پ', 'ج', 'ش']; // Sun..Sat
 function weekdayLetter(dayStr) {
@@ -169,18 +170,20 @@ function remindersBlock(me) {
   return block;
 }
 
-// Messenger connection (spec 2.7). Telegram is now LIVE — connecting it enables
-// both login and notification delivery (streak reminders + new-article), sent by
-// the API's provider-agnostic sender to whatever channels a user has connected
-// (Telegram and/or web push). Bale (بله) stays "به زودی": it is a domestic,
-// cutoff-resilient path but needs OAuth onboarding (client credentials) before it
-// can ship. When it lands it is FREE for everyone (the connected messenger is the
-// universal notification/OTP-fallback channel), never premium.
+// Messenger connection (spec 2.7). Both channels feed the API's provider-agnostic
+// notification sender (streak reminders + new-article), delivered to whatever a
+// user has connected (Telegram, Bale, and/or web push). Both are FREE for everyone
+// (a connected messenger is the universal notification channel), never premium.
+//   - Telegram (تلگرام): connecting also enables passwordless login (widget). The
+//     widget is .org-only, so telegramLoginBlock returns null on .ir.
+//   - Bale (بله): NOTIFICATIONS ONLY, no login widget. Connecting deep-links to the
+//     Bale bot with a one-time token; the bot webhook links the chat_id. Shown on
+//     both sites (domestic, unfiltered).
 function messengerBlock(me) {
   const rows = [];
 
   // Telegram — connect / connected. telegramLoginBlock returns null where the
-  // widget can't run (currently .ir), so there only Bale shows.
+  // widget can't run (currently .ir).
   const tg = telegramLoginBlock(me);
   if (tg) {
     rows.push(el('div', { class: 'dcp-messenger-provider' }, [
@@ -189,19 +192,109 @@ function messengerBlock(me) {
     ]));
   }
 
-  // Bale — still coming soon.
-  rows.push(el('div', { class: 'dcp-messenger-provider is-soon' }, [
-    el('div', { class: 'dcp-messenger-name' }, [
-      el('span', {}, 'بله'),
-      el('span', { class: 'dcp-soon-badge' }, [
-        el('span', { class: 'dcp-lock-ico', 'aria-hidden': 'true' }, '🔒'),
-        el('span', {}, 'به زودی'),
-      ]),
-    ]),
-    el('p', { class: 'dcp-sec-hint', style: 'margin:4px 0 0' }, 'ورود و نوتیف با بله به‌زودی اضافه می‌شود.'),
-  ]));
+  // Bale — notification channel (connect / connected).
+  const bale = baleBlock(me);
+  if (bale) {
+    rows.push(el('div', { class: 'dcp-messenger-provider' }, [
+      el('div', { class: 'dcp-messenger-name' }, 'بله'),
+      bale,
+    ]));
+  }
 
   return el('div', { class: 'dcp-messenger' }, rows);
+}
+
+// Bale connect/connected (notifications only — NO login). Distinct from Telegram:
+// Bale has no login widget, so we cannot get the chat_id from a signed payload.
+// Instead the connect button asks the API for a one-time token, opens the Bale bot
+// deep link (ble.ir/<bot>?start=<token>), and polls /me until the bot webhook has
+// linked the chat_id. Returns null only if Bale is force-disabled for the page.
+function baleBlock(me) {
+  if (!baleEnabled()) return null;
+
+  const msg = el('span', { class: 'dcp-inline-msg' });
+
+  if (me.bale_linked) {
+    const children = [
+      el('div', { class: 'dcp-tg-linked' }, [
+        el('span', { class: 'dcp-tg-linked-ico', 'aria-hidden': 'true' }, '✓'),
+        el('span', {}, 'حساب بله متصل است'),
+      ]),
+      el('p', { class: 'dcp-sec-hint' }, 'یادآوری استریک و اطلاع مطلب جدید از بله برایتان ارسال می‌شود.'),
+    ];
+    const unlinkBtn = el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button' }, 'قطع اتصال بله');
+    unlinkBtn.addEventListener('click', async () => {
+      unlinkBtn.disabled = true;
+      msg.textContent = 'در حال قطع...';
+      try {
+        await api.unlinkBale();
+        currentUser({ refresh: true });
+        msg.textContent = 'بله قطع شد.';
+        setTimeout(() => location.reload(), 700);
+      } catch (e) {
+        msg.textContent = e instanceof ApiError ? e.message : 'قطع اتصال ناموفق بود.';
+        unlinkBtn.disabled = false;
+      }
+    });
+    children.push(el('div', { class: 'dcp-field-row', style: 'margin-top:8px' }, [unlinkBtn, msg]));
+    return el('div', {}, children);
+  }
+
+  const connectBtn = el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button' }, 'اتصال به بله');
+  let polling = false;
+  connectBtn.addEventListener('click', async () => {
+    if (polling) return;
+    connectBtn.disabled = true;
+    msg.textContent = 'در حال ساخت لینک اتصال...';
+    let token;
+    try {
+      const res = await api.connectBale();
+      token = res && res.token;
+    } catch (e) {
+      msg.textContent = e instanceof ApiError ? e.message : 'ساخت لینک ناموفق بود.';
+      connectBtn.disabled = false;
+      return;
+    }
+    if (!token) { msg.textContent = 'ساخت لینک ناموفق بود.'; connectBtn.disabled = false; return; }
+
+    // Open the bot in Bale. A pop-up blocker may stop window.open, so also show a
+    // tappable fallback link that carries the same deep link.
+    const link = baleDeepLink(token);
+    window.open(link, '_blank', 'noopener');
+    msg.replaceChildren(
+      el('span', {}, 'در بله دکمه‌ی Start (شروع) را بزنید. '),
+      el('a', { href: link, target: '_blank', rel: 'noopener' }, 'باز کردن بله'),
+    );
+
+    // Poll /me until the webhook links the chat_id (or the token TTL elapses).
+    polling = true;
+    let tries = 0;
+    const MAX_TRIES = 40; // 40 x 3s = 2 min
+    const timer = setInterval(async () => {
+      tries += 1;
+      const fresh = await currentUser({ refresh: true });
+      if (fresh && fresh.bale_linked) {
+        clearInterval(timer);
+        polling = false;
+        msg.textContent = 'بله متصل شد.';
+        setTimeout(() => location.reload(), 700);
+      } else if (tries >= MAX_TRIES) {
+        clearInterval(timer);
+        polling = false;
+        connectBtn.disabled = false;
+        msg.replaceChildren(
+          el('span', {}, 'هنوز وصل نشد. اگر Start را زده‌اید کمی صبر کنید یا دوباره تلاش کنید. '),
+          el('a', { href: link, target: '_blank', rel: 'noopener' }, 'باز کردن بله'),
+        );
+      }
+    }, 3000);
+  });
+
+  return el('div', {}, [
+    el('div', { class: 'dcp-field-row' }, [connectBtn]),
+    el('p', { class: 'dcp-sec-hint' }, 'با اتصال بله، یادآوری استریک و اطلاع مطلب جدید را در پیام‌رسان بله می‌گیرید. بله جایگزین ورود نیست؛ فقط کانال دریافت نوتیف است.'),
+    msg,
+  ]);
 }
 
 // Telegram login-linking (dentcast.org). Distinct from the messenger block
@@ -363,7 +456,7 @@ export async function renderProfile(root, { me: preMe } = {}) {
     ])),
     section('مقایسه ماه به ماه', stats.month_vs_month ? monthCompare(stats.month_vs_month) : el('div', { class: 'dcp-muted' }, '—')),
     section(me.phone ? 'شماره موبایل' : 'شماره موبایل (اختیاری)', phoneBlock(me)),
-    // Telegram connect (login + notifications) + Bale (coming soon).
+    // Telegram (login + notifications) + Bale (notifications only).
     section('اتصال به پیام‌رسان‌ها', messengerBlock(me)),
     section('یادآوری‌ها', remindersBlock(me)),
     el('div', { class: 'dcp-dash-sec' }, [logoutBtn]),

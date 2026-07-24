@@ -91,6 +91,32 @@ export function telegramCallbackUrl(returnTo) {
   return API_BASES[0] + '/auth/telegram/callback?' + qs.toString();
 }
 
+// --- Bale (بله) notifications -----------------------------------------------
+// Bale is a NOTIFICATION channel only — there is NO login widget and no "Login
+// with Bale". A user connects it from their profile: the connect button asks the
+// API for a one-time token, opens the Bale bot deep link `ble.ir/<bot>?start=<token>`,
+// and once the user presses Start the bot webhook links their chat_id. The bot
+// username is public. Unlike Telegram login (which is .org-only because Telegram
+// is filtered in Iran), Bale is the DOMESTIC, unfiltered channel and is shown on
+// BOTH sites. Override the username via window.DENTCAST_PLUS.baleBotUsername.
+const BALE_BOT_USERNAME = OVERRIDE.baleBotUsername || 'dentcast_bot';
+
+export function baleBotUsername() {
+  return BALE_BOT_USERNAME;
+}
+
+// Bale is available everywhere. Kept as a function for symmetry with
+// telegramLoginEnabled(), so a page can force it off via the override if needed.
+export function baleEnabled() {
+  return OVERRIDE.baleEnabled !== false;
+}
+
+// The deep link the connect button opens. Pressing Start in Bale sends
+// `/start <token>` to the bot, whose webhook links this account to the chat_id.
+export function baleDeepLink(token) {
+  return 'https://ble.ir/' + baleBotUsername() + '?start=' + encodeURIComponent(token);
+}
+
 // --- content_id from the canonical URL --------------------------------------
 // content_id = page path without leading slash and without ".html".
 // e.g. /chairside/chairside-25.html -> "chairside/chairside-25". Unique across

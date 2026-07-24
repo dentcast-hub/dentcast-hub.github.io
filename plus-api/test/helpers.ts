@@ -3,6 +3,7 @@ import { buildServer } from '../src/server.js';
 import { pool } from '../src/db.js';
 import { resetRateLimits } from '../src/services/rate-limit.js';
 import { clearOtpStore } from '../src/services/otp.js';
+import { clearBaleLinkStore } from '../src/services/bale-link.js';
 
 /** Truncate all data tables and reset in-process stores. Call in beforeEach. */
 export async function resetDb(): Promise<void> {
@@ -16,6 +17,7 @@ export async function resetDb(): Promise<void> {
   `);
   resetRateLimits();
   clearOtpStore();
+  clearBaleLinkStore();
 }
 
 export async function makeApp(): Promise<FastifyInstance> {

@@ -13,7 +13,7 @@ import type { NotificationMessage } from '../providers/notifications/types.js';
  * is then lost for good.
  *
  * Sent to a user when ALL hold:
- *   (a) they have a delivery channel (a push subscription OR a linked Telegram),
+ *   (a) they have a delivery channel (a push subscription OR a linked Telegram / Bale),
  *   (b) they have NOT explicitly disabled reminders (opt-OUT: streak toggle
  *       !== false — unset counts as "ok to nudge"),
  *   (c) no qualifying action TODAY (Asia/Tehran),
@@ -60,6 +60,7 @@ export async function runReactivationNudges(now: Date = new Date()): Promise<{ n
         and (                                                                          -- (a) has a channel
           exists (select 1 from push_subscriptions s where s.user_id = p.id)
           or p.telegram_id is not null
+          or p.bale_id is not null
         )
         and not exists (                                                               -- (f) not nudged today
           select 1 from user_activity a

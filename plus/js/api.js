@@ -62,6 +62,10 @@ export const api = {
     request('/auth/phone/link', { method: 'POST', body: { phone, code } }),
   // Disconnect Telegram from the current account (needs a phone fallback).
   unlinkTelegram: () => request('/auth/telegram/unlink', { method: 'POST' }),
+  // Bale (بله) notification channel (no login flow): mint a one-time connect
+  // token (the client builds the deep link from it) / disconnect.
+  connectBale: () => request('/auth/bale/connect', { method: 'POST' }),
+  unlinkBale: () => request('/auth/bale/unlink', { method: 'POST' }),
   logout: () => request('/auth/logout', { method: 'POST' }),
 
   // activity + anon

@@ -13,8 +13,8 @@ import type { NotificationMessage } from '../providers/notifications/types.js';
  *       current_streak >= 1 alone would nag users whose run is already dead),
  *   (c) have NOT logged a qualifying action today (last_active_day != today, Tehran), and
  *   (d) have SOME delivery channel — a live push subscription OR a linked Telegram
- *       (chat_id). Without this pre-filter we'd nudge users we can't reach; the
- *       sender (Layer 2) still skips any channel a user lacks.
+ *       / Bale (chat_id). Without this pre-filter we'd nudge users we can't reach;
+ *       the sender (Layer 2) still skips any channel a user lacks.
  * It runs in the evening so there is still time to act before the Tehran-midnight
  * day boundary flips the streak.
  *
@@ -37,6 +37,7 @@ export async function runStreakReminders(now: Date = new Date()): Promise<{ remi
         and (
           exists (select 1 from push_subscriptions s where s.user_id = p.id)
           or p.telegram_id is not null
+          or p.bale_id is not null
         )
         and not exists (
           select 1 from user_activity a

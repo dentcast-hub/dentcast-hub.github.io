@@ -444,6 +444,7 @@ export async function authRoutes(app: FastifyInstance): Promise<void> {
       tier: user.tier,
       phone: user.phone,
       telegram_linked: user.telegram_id !== null,
+      bale_linked: user.bale_id !== null,
       current_streak: shownStreak,
       longest_streak: user.longest_streak,
       last_active_day: user.last_active_day,

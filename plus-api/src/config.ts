@@ -66,6 +66,14 @@ export const config = {
     provider: str('NOTIFY_PROVIDER', 'stub'),
     telegramBotToken: str('TELEGRAM_BOT_TOKEN', ''),
     telegramWebhookSecret: str('TELEGRAM_WEBHOOK_SECRET', ''),
+    // Bale (بله) — domestic messenger, notification channel only (no login). One
+    // bot, one token (@dentcast_bot on ble.ir). The Bot API is Telegram-compatible
+    // but lives on a different host (baleApiBase). The webhook secret is embedded
+    // in the webhook URL path (/webhooks/bale/:secret) rather than a header, so it
+    // does not depend on Bale mirroring Telegram's secret_token header.
+    baleBotToken: str('BALE_BOT_TOKEN', ''),
+    baleWebhookSecret: str('BALE_WEBHOOK_SECRET', ''),
+    baleApiBase: str('BALE_API_BASE', 'https://tapi.bale.ai'),
   },
 
   // External-login providers. Layered so a second provider (Bale, on the .ir

@@ -72,7 +72,10 @@ The taxonomy index the tree/archive/map share is generated from the repo root
 ## API surface (Phase 1)
 
 Auth: `POST /auth/otp/request`, `POST /auth/otp/verify`, `POST /auth/logout`,
-`POST /auth/telegram/link`, `GET /me`, `PATCH /me`. Data: `POST /activity`,
+`POST /auth/telegram/link`, `GET /auth/telegram/callback`,
+`POST /auth/telegram/unlink`, `POST /auth/phone/link`, `POST /auth/bale/connect`,
+`POST /auth/bale/unlink`, `POST /webhooks/bale/:secret` (Bale bot webhook),
+`GET /me`, `PATCH /me`. Data: `POST /activity`,
 `POST /anon/event`, `GET/POST/PATCH/DELETE /highlights`,
 `GET /highlights/recent`, `GET /highlights?topic=`, `GET /tree`, `GET /progress`,
 `GET /profile/stats`, `GET /export/highlights`. Web push:
@@ -98,12 +101,13 @@ destinations underneath it.
   publish time; the delay is only on the active push (principle 1). Effective free
   delay is **24-48h** — describe it to users as `۱ تا ۲ روز`, never "۲۴ ساعت".
 - **Layer 2 — delivery** goes through the provider-agnostic
-  `send(userId, message, kind)`. **Web push** (`NOTIFY_PROVIDER=webpush`) is the
-  live channel; **Bale/Telegram** sit behind the same interface but are locked
-  until the messenger connection ships (then delivery can become multi-channel
-  with no change to Layer 1). A user with **no push subscription is skipped
-  quietly** — expected (web push is unavailable pre-auth and, on iOS, only after
-  the PWA is installed to the home screen), never an error.
+  `send(userId, message, kind)`. `NOTIFY_PROVIDER` is a comma list that fans out
+  to every configured channel: **web push** (`webpush`), **Telegram** (`telegram`,
+  chat_id from the login widget), and **Bale** (`bale`, chat_id captured by the
+  profile connect + bot webhook — notifications only, no login). A user is
+  **skipped quietly** on any channel they have not connected (no push
+  subscription, no `telegram_id`, no `bale_id`) — an expected state, never an
+  error. Adding a channel is one env-var change; Layer 1 never changes.
 
 **Automated trigger.** The `notify-new-articles` GitHub Action (repo
 `.github/workflows/notify-new-articles.yml`) fires this on push to `main`. A page

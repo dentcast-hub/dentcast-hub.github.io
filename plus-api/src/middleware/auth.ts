@@ -11,6 +11,7 @@ export interface AuthUser {
   longest_streak: number;
   last_active_day: string | null;
   telegram_id: number | null;
+  bale_id: number | null;
   settings: Record<string, unknown>;
 }
 
@@ -26,7 +27,7 @@ export async function loadUser(request: FastifyRequest): Promise<AuthUser | null
   if (!userId) return null;
   const user = await one<AuthUser>(
     `select id, phone, display_name, tier, current_streak, longest_streak,
-            last_active_day, telegram_id, settings
+            last_active_day, telegram_id, bale_id, settings
        from profiles where id = $1`,
     [userId],
   );
