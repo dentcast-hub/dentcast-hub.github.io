@@ -19,7 +19,7 @@
 "slots": {
   "article":  { "enabled": true },   // باکس داخل مقاله‌ها
   "home":     { "enabled": true },   // کارت بعد از پالس در صفحهٔ اصلی
-  "player":   { "enabled": true },   // بنر بالای فهرست پخش در player.html
+  "player":   { "enabled": true },   // بنر بالای «جستجو در دنت‌کست» در player.html
   "episodes": { "enabled": true }    // کارت زیر «اپیزود پیشنهادی» در episodes.html
 }
 ```

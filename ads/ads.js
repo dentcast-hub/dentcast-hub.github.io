@@ -223,10 +223,11 @@ function renderHome(cfg, creative) {
 }
 
 function renderPlayer(cfg, creative) {
-  const list = document.getElementById('dc-list');
-  if (!list) return false;
+  // Above the «جستجو در دنت‌کست» box; falls back to above the episode list.
+  const anchor = document.querySelector('.dc-search-box') || document.getElementById('dc-list');
+  if (!anchor) return false;
   const card = buildCard(creative, 'player');
-  list.parentNode.insertBefore(card, list);
+  anchor.parentNode.insertBefore(card, anchor);
   return true;
 }
 
