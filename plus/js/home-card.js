@@ -26,8 +26,9 @@ function shieldCapText(fz) {
   const available = Math.max(0, Math.min(cap, fz.available || 0));
   const points = fz.points || 150;
   let t = 'سپر استریک نگهبانِ زنجیره‌ی توست: اگر یک روز فعالیت نکنی، به‌جای صفر شدنِ استریک '
-        + 'یک سپر خودکار خرج می‌شود و زنجیره‌ات حفظ می‌ماند. شارژش با امتیاز است: هر '
-        + faNum(points) + ' امتیاز یک سپر، تا سقف ' + faNum(cap) + ' سپر.';
+        + 'یک سپر خودکار خرج می‌شود و زنجیره‌ات حفظ می‌ماند. سپر را با «امتیاز» می‌خری (نه با XP): هر '
+        + faNum(points) + ' امتیاز یک سپر، تا سقف ' + faNum(cap) + ' سپر. امتیاز فقط بالا می‌رود، '
+        + 'پس سپرِ خرج‌شده با رسیدن به آستانه‌ی بعدی دوباره پر می‌شود.';
   if (available < cap && fz.next_in) t += ' ' + faNum(fz.next_in) + ' امتیاز تا سپر بعدی.';
   return t;
 }
@@ -106,9 +107,11 @@ async function renderLoggedIn(card, user) {
     el('span', { class: 'dc-plus-streak-lbl' }, 'روز پیاپی'),
   ]);
 
-  // Score (⭐) sits inline beside the streak. It's the same number the future
-  // leagues rank on, so surfacing it now is the stepping stone toward that. No
-  // "rank" label yet — just the personal total.
+  // Score (⭐) sits inline beside the streak: the all-time total from score.ts
+  // (active_days*10 + highlights), which is what BUYS streak shields. It is NOT
+  // the league currency — the league ranks on weekly_xp, a separate per-action
+  // quantity that resets every week (see services/league.ts). Never conflate the
+  // two in copy: the «؟» caption spells the difference out.
   const scoreNumEl = (typeof progress.score === 'number')
     ? el('span', { class: 'dc-plus-score-n' }, faNum(progress.score)) : null;
   const scoreBadge = scoreNumEl
@@ -167,7 +170,9 @@ async function renderLoggedIn(card, user) {
   const shieldCapEl = fz ? el('span', { class: 'dc-plus-capline' }, shieldCapText(fz)) : null;
   const scoreCap = el('p', { class: 'dc-plus-scorecap', hidden: true }, [
     el('span', { class: 'dc-plus-capline' },
-      'با خواندن، گوش‌دادن، هایلایت و مرور امتیاز می‌گیری؛ امتیاز، سپرِ استریک و جایگاهِ لیگت را می‌سازد.'),
+      'با خواندن، گوش‌دادن، هایلایت و مرور دو چیز جدا جمع می‌شود: «امتیاز» و «XP». '
+      + 'امتیاز همیشگی است و انباشته می‌شود و با آن سپر استریک می‌خری؛ '
+      + 'XP هر هفته از صفر شروع می‌شود و فقط جایگاهِ تو در لیگِ همان هفته را می‌سازد.'),
     shieldCapEl,
   ].filter(Boolean));
   const capTitle = fz ? 'امتیاز و سپر چطور کار می‌کنند؟' : 'امتیاز چطور جمع می‌شود؟';

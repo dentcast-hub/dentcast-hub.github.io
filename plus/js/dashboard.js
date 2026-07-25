@@ -123,7 +123,7 @@ function scoreBlock(progress) {
     el('span', { class: 'dcp-freeze-label' }, 'سپر استریک: ' + faNum(available) + ' از ' + faNum(cap)),
   ]));
 
-  let hint = 'اگر یک روز فعالیت نکنید، یک سپر خرج می‌شود و استریکتان حفظ می‌شود. هر ' + faNum(points) + ' امتیاز یک سپر، تا سقف ' + faNum(cap) + '.';
+  let hint = 'اگر یک روز فعالیت نکنید، یک سپر خرج می‌شود و استریکتان حفظ می‌شود. سپر با امتیاز خریده می‌شود (نه با XP لیگ): هر ' + faNum(points) + ' امتیاز یک سپر، تا سقف ' + faNum(cap) + '.';
   if (available < cap && f.next_in) hint += ' ' + faNum(f.next_in) + ' امتیاز تا سپر بعدی.';
   wrap.appendChild(el('p', { class: 'dcp-freeze-hint' }, hint));
   return wrap;
@@ -209,7 +209,9 @@ export async function renderDashboard(root, { me: preMe } = {}) {
     league ? section('لیگ من', 'رتبه‌ات در گروهِ رقابتیِ این هفته؛ برای صعود به لیگِ بالاتر تلاش کن.', leagueEntryButton(league)) : null,
     section('ادامه مطالعه', null, continueBlock(progress, model)),
     section('پیشرفت هر پوشه', 'برای هر پوشه، چند درصد از کل مطالب آن را خوانده‌اید (۰ تا ۱۰۰). هر بار پیشخوان باز شود به‌روز می‌شود.', progressBars(progress, model)),
-    section('امتیاز شما', 'امتیاز از روی فعالیت شما ساخته می‌شود و پایه‌ی رقابت‌های بعدی است.', scoreBlock(progress)),
+    // NOTE: امتیاز (all-time, buys shields) and XP هفتگی (ranks the league) are two
+    // separate quantities in the API — never describe one as feeding the other.
+    section('امتیاز شما', 'امتیاز از روی فعالیت شما ساخته می‌شود، همیشگی است و با آن سپر استریک می‌خرید. لیگ هفتگی جداست و روی XP آن هفته حساب می‌شود.', scoreBlock(progress)),
     section('هایلایت‌های اخیر', null, recentWrap),
     section('پریمیوم', 'به‌زودی در دسترس.', premiumTiles()),
   );
