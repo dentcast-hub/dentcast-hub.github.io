@@ -7,7 +7,8 @@
     "player": { "enabled": true },
     "episodes": { "enabled": true, "position": "after_featured" },
     "dashboard": { "enabled": true },
-    "profile": { "enabled": true }
+    "profile": { "enabled": true },
+    "search": { "enabled": true }
   },
   "rotation": {
     "sequence": ["premium"]

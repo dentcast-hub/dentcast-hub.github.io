@@ -174,6 +174,8 @@ body.dcp-study .dc-spot { display: none !important; }
 .dc-spot--article { margin: 1.5rem 0; }
 .dc-spot--article .dc-spot-text, .dc-spot--article .dc-spot-title { margin-top: 0.25rem; }
 .dc-spot--dashboard, .dc-spot--profile { margin: 1.125rem 0; }
+.dc-spot--search { margin: 0.75rem 0; }
+.dc-spot--search .dc-spot-link { padding: 0.75rem 1rem; }
 .dc-spot--episodes { margin: 0.875rem 0 2.75rem; }
 @media (min-width: 720px) { .dc-spot--episodes { margin: 1rem 0 4rem; } }
 @media (max-width: 480px) {
@@ -379,6 +381,37 @@ function watchOverlaySlot(cfg, slotName, anchorTitle, audienceNow) {
   seat();
 }
 
+// ── search-overlay slot (جستجوی سراسری) ──────────────────────────────────────
+
+// Every page carries the global-search bottom sheet (#dcGlobalBox) in its
+// static markup: title, input, .dc-filter-list (the scope buttons), then the
+// #dcResults box. The card sits between the two — below the filter buttons,
+// above the results. The sheet is closed on load, so the card is inserted
+// (and its impression counted) only on the FIRST actual open: dc-nav.js adds
+// class "open" to the box; the homepage's own overlay sets body.dc-search-mode.
+function setupSearchSlot(cfg, audienceNow) {
+  const box = document.getElementById('dcGlobalBox');
+  const results = document.getElementById('dcResults');
+  if (!box || !results || !results.parentNode) return;
+  const isOpen = () => box.classList.contains('open') || document.body.classList.contains('dc-search-mode');
+  const seat = () => {
+    if (adsKilled) return;
+    const creative = pickCreative(cfg, 'search', audienceNow());
+    if (!creative) return;
+    results.parentNode.insertBefore(buildCard(creative, 'search'), results);
+    impression(creative, 'search');
+    tickOnce();
+  };
+  if (isOpen()) { seat(); return; }
+  const observer = new MutationObserver(() => {
+    if (!isOpen()) return;
+    observer.disconnect();
+    seat();
+  });
+  observer.observe(box, { attributes: true, attributeFilter: ['class'] });
+  observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+}
+
 // ── premium check ────────────────────────────────────────────────────────────
 
 function currentUserSafe() {
@@ -413,7 +446,8 @@ async function main() {
   const overlaySlots = [];
   if (slotOn('dashboard')) overlaySlots.push(['dashboard', 'استریک']);
   if (slotOn('profile')) overlaySlots.push(['profile', 'پلن']);
-  if (!pageSlot && !overlaySlots.length) return;
+  const searchOn = slotOn('search');
+  if (!pageSlot && !overlaySlots.length && !searchOn) return;
 
   // Resolve the viewer once — for premium hiding AND audience targeting — but
   // don't hold rendering hostage to a slow API: after TIER_TIMEOUT_MS assume
@@ -445,6 +479,7 @@ async function main() {
   }
 
   overlaySlots.forEach(([name, title]) => watchOverlaySlot(cfg, name, title, audienceNow));
+  if (searchOn) setupSearchSlot(cfg, audienceNow);
 }
 
 if (document.readyState === 'loading') {
