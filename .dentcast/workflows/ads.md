@@ -133,6 +133,11 @@ combined question message, with concrete options where possible:
    engine has no scheduler; expiry is a manual `enabled: false` later —
    tell the user that plainly, and that they can just say «تبلیغ X رو
    خاموش کن» when the time comes).
+8. **قیمت** — pricing questions are answered ONLY from `spot/PRICING.md`
+   (per-slot ratios of the bundle price X, combination-discount ladder,
+   rotation-share proration, contract-length discounts). Never invent
+   numbers; if the rial value of X is unknown, quote the ratios and ask
+   the user for X.
 
 ## Phase C — Apply
 
