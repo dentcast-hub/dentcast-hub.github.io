@@ -11,19 +11,22 @@
 body.dcp-study .dc-ad,
 body.dcp-study .dc-ad-li { display: none !important; }
 
+/* Orange theme — same palette as the Deonet ad inside the homepage Pulse card
+   (.dc-pulse-ad in index.html): amber #F5A208 tints + #c49820 text, identical
+   in light and dark. */
 .dc-ad-link {
   display: flex;
   align-items: center;
   gap: 0.875rem;
   padding: 0.875rem 1.125rem;
-  background: var(--surface, #fff);
-  border: 1px solid var(--surface3, #eaecf5);
+  background: rgba(245, 162, 8, 0.10);
+  border: 1px solid rgba(245, 162, 8, 0.32);
   border-radius: 14px;
   text-decoration: none;
-  color: var(--txt, #0a1a33);
+  color: #c49820;
   transition: transform 0.15s ease, background 0.15s ease;
 }
-.dc-ad-link:active { transform: scale(0.99); background: var(--surface2, #f4f6fb); }
+.dc-ad-link:active { transform: scale(0.99); background: rgba(245, 162, 8, 0.16); }
 
 .dc-ad-img {
   width: 44px;
@@ -44,24 +47,21 @@ body.dcp-study .dc-ad-li { display: none !important; }
   border-radius: 999px;
   margin-bottom: 0.375rem;
 }
-.dc-ad--premium .dc-ad-badge { color: #1d5bd8; background: rgba(29, 91, 216, 0.08); }
-.dc-ad--sponsor .dc-ad-badge { color: #a07a10; background: rgba(245, 162, 8, 0.1); }
-[data-theme="dark"] .dc-ad--premium .dc-ad-badge { color: #7fa8f0; background: rgba(127, 168, 240, 0.1); }
-[data-theme="dark"] .dc-ad--sponsor .dc-ad-badge { color: #c49820; background: rgba(245, 162, 8, 0.08); }
+.dc-ad-badge { color: #c49820; background: rgba(245, 162, 8, 0.12); }
 
 .dc-ad-title {
   display: block;
   font-size: 0.88rem;
   font-weight: 700;
   line-height: 1.7;
-  color: var(--txt, #0a1a33);
+  color: #c49820;
 }
 
 .dc-ad-text {
   margin: 0.25rem 0 0;
   font-size: 0.78rem;
   line-height: 1.9;
-  color: var(--txt2, #4a5f85);
+  color: #c49820;
 }
 
 .dc-ad-cta {
@@ -71,18 +71,21 @@ body.dcp-study .dc-ad-li { display: none !important; }
   padding: 0.5rem 0.875rem;
   border-radius: 999px;
   white-space: nowrap;
+  color: #c49820;
+  background: rgba(245, 162, 8, 0.12);
+  border: 1px solid rgba(245, 162, 8, 0.22);
 }
-.dc-ad--premium .dc-ad-cta { color: #fff; background: #1d5bd8; }
-.dc-ad--sponsor .dc-ad-cta { color: var(--txt, #0a1a33); background: var(--surface2, #f4f6fb); border: 1px solid var(--surface3, #eaecf5); }
-[data-theme="dark"] .dc-ad--premium .dc-ad-cta { background: #2f6ae0; }
 
 /* Inside article prose the card must not inherit article paragraph margins. */
 .dc-ad--article { margin: 1.5rem 0; }
 .dc-ad--article .dc-ad-text, .dc-ad--article .dc-ad-title { margin-top: 0.25rem; }
 
-/* Episodes archive row wrapper (an <li> inside ol#episodeList). */
-.dc-ad-li { list-style: none; }
-.dc-ad-li .dc-ad { margin: 0.625rem 0; }
+/* Episodes page: one card right below the «اپیزود پیشنهادی» section. Sitting
+   between two .section blocks breaks their `.section + .section` top-margin
+   chain, so this card restores the section rhythm itself: tight to the
+   featured card above, full section gap below. */
+.dc-ad--episodes { margin: 0.875rem 0 2.75rem; }
+@media (min-width: 720px) { .dc-ad--episodes { margin: 1rem 0 4rem; } }
 
 @media (max-width: 480px) {
   .dc-ad-link { flex-wrap: wrap; }

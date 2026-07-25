@@ -4,8 +4,8 @@
   "slots": {
     "article": { "enabled": true, "position": "middle", "min_paragraphs": 8, "fallback": "end" },
     "home": { "enabled": true },
-    "player": { "enabled": false },
-    "episodes": { "enabled": true, "every_n": 10, "max": 3 }
+    "player": { "enabled": true },
+    "episodes": { "enabled": true, "position": "after_featured" }
   },
   "rotation": {
     "sequence": ["premium"]
