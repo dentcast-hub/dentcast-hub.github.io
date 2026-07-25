@@ -176,6 +176,7 @@ body.dcp-study .dc-spot { display: none !important; }
 .dc-spot--dashboard, .dc-spot--profile { margin: 1.125rem 0; }
 .dc-spot--search { margin: 0.75rem 0; }
 .dc-spot--search .dc-spot-link { padding: 0.75rem 1rem; }
+.dc-spot--archive { margin: 0.75rem 0; }
 .dc-spot--episodes { margin: 0.875rem 0 2.75rem; }
 @media (min-width: 720px) { .dc-spot--episodes { margin: 1rem 0 4rem; } }
 @media (max-width: 480px) {
@@ -412,6 +413,31 @@ function setupSearchSlot(cfg, audienceNow) {
   observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
 }
 
+// ── archive-tab slot (تب آرشیو صفحهٔ اصلی) ───────────────────────────────────
+
+// The homepage archive tab lists one .dc-list-card per archive; the card seats
+// right below the «اپیزودهای پادکست» one. The tab is hidden until the user
+// switches to it, so the card is inserted up front (it shows/hides with the
+// panel) but its impression is counted only when it actually becomes visible.
+function setupArchiveSlot(cfg, audienceNow) {
+  const title = Array.from(document.querySelectorAll('.dc-list-card .dc-list-card-title'))
+    .find((el) => el.textContent.trim().indexOf('اپیزودهای پادکست') === 0);
+  const anchor = title && title.closest('.dc-list-card');
+  if (!anchor) return;
+  const creative = pickCreative(cfg, 'archive', audienceNow());
+  if (!creative) return;
+  const card = buildCard(creative, 'archive');
+  anchor.parentNode.insertBefore(card, anchor.nextSibling);
+  const io = new IntersectionObserver((entries) => {
+    if (!entries.some((e) => e.isIntersecting)) return;
+    io.disconnect();
+    if (adsKilled) return;
+    impression(creative, 'archive');
+    tickOnce();
+  });
+  io.observe(card);
+}
+
 // ── premium check ────────────────────────────────────────────────────────────
 
 function currentUserSafe() {
@@ -447,7 +473,8 @@ async function main() {
   if (slotOn('dashboard')) overlaySlots.push(['dashboard', 'استریک']);
   if (slotOn('profile')) overlaySlots.push(['profile', 'پلن']);
   const searchOn = slotOn('search');
-  if (!pageSlot && !overlaySlots.length && !searchOn) return;
+  const archiveOn = slotOn('archive');
+  if (!pageSlot && !overlaySlots.length && !searchOn && !archiveOn) return;
 
   // Resolve the viewer once — for premium hiding AND audience targeting — but
   // don't hold rendering hostage to a slow API: after TIER_TIMEOUT_MS assume
@@ -480,6 +507,7 @@ async function main() {
 
   overlaySlots.forEach(([name, title]) => watchOverlaySlot(cfg, name, title, audienceNow));
   if (searchOn) setupSearchSlot(cfg, audienceNow);
+  if (archiveOn) setupArchiveSlot(cfg, audienceNow);
 }
 
 if (document.readyState === 'loading') {
