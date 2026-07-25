@@ -142,7 +142,9 @@ function buildCard(creative, slotName) {
   a.href = creative.url;
   const external = /^https?:\/\//.test(creative.url);
   if (external) a.target = '_blank';
-  a.rel = isSponsor(creative) ? 'sponsored noopener' : (external ? 'noopener' : '');
+  // rel="sponsored" is Google link-scheme compliance — it only applies to
+  // crawlable http(s) links. mailto:/internal urls (house placeholders) get none.
+  a.rel = external ? (isSponsor(creative) ? 'sponsored noopener' : 'noopener') : '';
 
   if (creative.image) {
     const img = document.createElement('img');
