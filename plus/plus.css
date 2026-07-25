@@ -114,6 +114,9 @@
   cursor: pointer; margin-inline-start: auto; flex: 0 0 auto; }
 .dc-plus-info:hover { color: var(--dcp-ink); border-color: var(--dcp-muted); }
 .dc-plus-scorecap { margin: 0; font-size: .82rem; color: var(--dcp-muted); line-height: 1.8; }
+/* one caption line per topic (score, then سپر) — a paragraph each, not a wall */
+.dc-plus-capline { display: block; }
+.dc-plus-capline + .dc-plus-capline { margin-top: 5px; }
 /* row 3: connection chips demoted under a divider */
 .dc-plus-connrow { border-top: 1px solid var(--dcp-line); padding-top: 10px; }
 .dc-plus-connrow .dc-plus-chips { margin-top: 0; }

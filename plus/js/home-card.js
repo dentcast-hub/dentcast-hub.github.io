@@ -18,6 +18,20 @@ function flame(active) {
 const IC_FLAME = '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M13 2s1 3-1.5 5.5S8 12 8 14a4 4 0 0 0 8 .3c.2-2.3-1.3-3.8-1-5.8 1.6.8 2.4 2 2.6 3.9A6.5 6.5 0 1 1 8.7 6.3 12 12 0 0 0 13 2z"/></svg>';
 const IC_STAR = '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2l2.9 6.3 6.9.7-5.1 4.7 1.4 6.8L12 17.8 5.9 21.2l1.4-6.8L2.2 9.7l6.9-.7z"/></svg>';
 const IC_BELL = '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 22a2.3 2.3 0 0 0 2.3-2.3H9.7A2.3 2.3 0 0 0 12 22zm7-6.3-1.7-2v-3.2a5.4 5.4 0 0 0-4.2-5.3V4.5a1.1 1.1 0 1 0-2.2 0v.7A5.4 5.4 0 0 0 6.7 10.5v3.2L5 15.7a.9.9 0 0 0 .7 1.5h12.6a.9.9 0 0 0 .7-1.5z"/></svg>';
+// What a streak shield is and how it charges — the «؟» caption's shield line,
+// worded like the پیشخوان's hint and built from the server's own numbers
+// (`points` per shield, `cap` held, `next_in` to the next one).
+function shieldCapText(fz) {
+  const cap = fz.cap || 2;
+  const available = Math.max(0, Math.min(cap, fz.available || 0));
+  const points = fz.points || 150;
+  let t = 'سپر استریک نگهبانِ زنجیره‌ی توست: اگر یک روز فعالیت نکنی، به‌جای صفر شدنِ استریک '
+        + 'یک سپر خودکار خرج می‌شود و زنجیره‌ات حفظ می‌ماند. شارژش با امتیاز است: هر '
+        + faNum(points) + ' امتیاز یک سپر، تا سقف ' + faNum(cap) + ' سپر.';
+  if (available < cap && fz.next_in) t += ' ' + faNum(fz.next_in) + ' امتیاز تا سپر بعدی.';
+  return t;
+}
+
 // Streak-shield row, identical to the پیشخوان's: one icon per slot, dimmed when
 // the slot is empty. Rebuilt in place so the strip tracks the dashboard live.
 function paintShields(host, available, cap) {
@@ -146,10 +160,19 @@ async function renderLoggedIn(card, user) {
     if (i) rail.appendChild(el('span', { class: 'dc-plus-div', 'aria-hidden': 'true' }));
     rail.appendChild(s);
   });
-  const scoreCap = el('p', { class: 'dc-plus-scorecap', hidden: true },
-    'با خواندن، گوش‌دادن، هایلایت و مرور امتیاز می‌گیری؛ امتیاز، سپرِ استریک و جایگاهِ لیگت را می‌سازد.');
+  // The «؟» caption: how the score is earned, plus — now that the rail carries
+  // سپر — what a streak shield is and how it charges. The shield line is built
+  // from the same `freezes` payload (never hardcoded numbers) and says the same
+  // thing the پیشخوان says, so the two explanations can't drift apart.
+  const shieldCapEl = fz ? el('span', { class: 'dc-plus-capline' }, shieldCapText(fz)) : null;
+  const scoreCap = el('p', { class: 'dc-plus-scorecap', hidden: true }, [
+    el('span', { class: 'dc-plus-capline' },
+      'با خواندن، گوش‌دادن، هایلایت و مرور امتیاز می‌گیری؛ امتیاز، سپرِ استریک و جایگاهِ لیگت را می‌سازد.'),
+    shieldCapEl,
+  ].filter(Boolean));
+  const capTitle = fz ? 'امتیاز و سپر چطور کار می‌کنند؟' : 'امتیاز چطور جمع می‌شود؟';
   const info = el('button', {
-    class: 'dc-plus-info', type: 'button', title: 'امتیاز چطور جمع می‌شود؟', 'aria-label': 'امتیاز چطور جمع می‌شود؟',
+    class: 'dc-plus-info', type: 'button', title: capTitle, 'aria-label': capTitle,
   }, '؟');
   info.addEventListener('click', () => { scoreCap.hidden = !scoreCap.hidden; });
   rail.appendChild(info);
@@ -206,6 +229,8 @@ async function renderLoggedIn(card, user) {
         paintShields(shieldIconsEl, av2, cap2);
         shieldNumEl.textContent = faNum(av2);
         shieldBadge.title = 'سپر استریک: ' + faNum(av2) + ' از ' + faNum(cap2);
+        // Keep the «؟» explanation honest too — «… امتیاز تا سپر بعدی» moves.
+        if (shieldCapEl) shieldCapEl.textContent = shieldCapText(p2.freezes);
       }
       if (lg2 && leagueChipEl) {
         const fresh = leagueChip(lg2);
