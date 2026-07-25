@@ -98,18 +98,19 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
           content_id: { type: 'string', minLength: 1 },
           title: { type: 'string', minLength: 1 },
           url: { type: 'string', minLength: 1 },
+          pulse: { type: 'string' }, // the Pulse sentence (brain caption); optional
           published_at: { type: 'string' }, // ISO; defaults to now server-side
         },
       },
     },
   }, async (request, reply) => {
-    const b = request.body as { content_id: string; title: string; url: string; published_at?: string };
+    const b = request.body as { content_id: string; title: string; url: string; pulse?: string; published_at?: string };
     const publishedAt = b.published_at ? new Date(b.published_at) : undefined;
     if (publishedAt && Number.isNaN(publishedAt.getTime())) {
       return reply.code(400).send({ error: 'invalid_published_at' });
     }
     const result = await onArticlePublished({
-      contentId: b.content_id, title: b.title, url: b.url, publishedAt,
+      contentId: b.content_id, title: b.title, url: b.url, pulse: b.pulse, publishedAt,
     });
     return reply.send({ ok: true, ...result });
   });

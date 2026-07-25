@@ -1,6 +1,6 @@
 import { config } from '../config.js';
 import { one, query, withTransaction, type Queryable, pool } from '../db.js';
-import { getIndex } from '../content-index.js';
+import { getIndex, getFolders, folderOf } from '../content-index.js';
 import { notifications } from '../providers/registry.js';
 import type { NotificationKind, NotificationMessage } from '../providers/notifications/types.js';
 
@@ -23,6 +23,8 @@ export interface PublishInput {
   contentId: string;
   title: string;
   url: string;
+  /** The article's Pulse sentence (brain `caption`); the message body. Optional. */
+  pulse?: string;
   /** Defaults to now(); injectable so tests can place a publish relative to 21:00. */
   publishedAt?: Date;
 }
@@ -31,10 +33,35 @@ interface ArticleRow {
   content_id: string;
   title: string;
   url: string;
+  pulse: string | null;
   published_at: string;
   notify_free_after: string;
   premium_notified_at: string | null;
   free_notified_at: string | null;
+}
+
+const SECTION_FALLBACK = 'دنت‌کست';
+
+/** Persian section (folder) name for the fallback line, from the content index. */
+function sectionFa(contentId: string): string {
+  try {
+    const key = folderOf(contentId);
+    return getFolders().find((f) => f.key === key)?.fa || SECTION_FALLBACK;
+  } catch {
+    return SECTION_FALLBACK;
+  }
+}
+
+/** The user-visible line for one article: its Pulse, else "a new article in {section}". */
+function articleLine(a: { pulse?: string | null; content_id: string }): string {
+  const p = (a.pulse || '').trim();
+  return p || `مطلب جدیدی در ${sectionFa(a.content_id)} منتشر شد`;
+}
+
+/** Absolute URL for the (prepared) premium link. */
+function absUrl(url: string): string {
+  if (/^https?:\/\//i.test(url)) return url;
+  return config.articleNotify.siteBaseUrl.replace(/\/$/, '') + (url.startsWith('/') ? url : '/' + url);
 }
 
 /**
@@ -82,18 +109,23 @@ export async function onArticlePublished(input: PublishInput): Promise<{
   );
 
   const inserted = await one<ArticleRow>(
-    `insert into articles (content_id, title, url, published_at, notify_free_after)
-     values ($1, $2, $3, $4, $5)
+    `insert into articles (content_id, title, url, pulse, published_at, notify_free_after)
+     values ($1, $2, $3, $4, $5, $6)
      on conflict (content_id) do nothing
      returning *`,
-    [input.contentId, input.title, input.url, publishedAt.toISOString(), notifyFreeAfter.toISOString()],
+    [input.contentId, input.title, input.url, input.pulse ?? null,
+      publishedAt.toISOString(), notifyFreeAfter.toISOString()],
   );
   if (!inserted) return { recorded: false, premiumRecipients: 0 };
 
   const recipients = await audience('premium');
+  // Text-only: the Pulse sentence (or the section fallback). Link plumbing is
+  // prepared but off (config.articleNotify.linkInText) — a later premium feature.
+  let body = articleLine({ pulse: input.pulse, content_id: input.contentId });
+  if (config.articleNotify.linkInText) body += '\n' + absUrl(input.url);
   const message: NotificationMessage = {
     title: 'مطلب جدید در دنت‌کست',
-    body: input.title,
+    body,
     url: input.url,
     tag: 'article:' + input.contentId,
   };
@@ -142,10 +174,14 @@ export async function runFreeDigest(now: Date = new Date()): Promise<{
 
   const count = claimed.length;
   const only = count === 1 ? claimed[0] : null;
+  // Text-only Pulse sentences. One article -> its Pulse; several -> a bulleted
+  // list of Pulses, one per line. No links (per product decision).
+  const lines = claimed.map((a) => articleLine(a));
+  const body = count === 1 ? lines[0] : lines.map((l) => '• ' + l).join('\n');
   const message: NotificationMessage = {
-    title: 'دنت‌کست پلاس',
-    body: count === 1 ? 'یک مطلب جدید' : `${toFa(count)} مطلب جدید`,
-    url: only ? only.url : '/plus/', // one article deep-links to it; many -> recent list
+    title: count === 1 ? 'مطلب جدید در دنت‌کست' : `${toFa(count)} مطلب جدید در دنت‌کست`,
+    body,
+    url: only ? only.url : '/plus/', // web-push tap target only; no link in the text
     tag: 'article_free_digest',
   };
   const recipients = await audience('free');

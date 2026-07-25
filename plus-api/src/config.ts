@@ -112,6 +112,11 @@ export const config = {
   articleNotify: {
     freeDelayHours: int('ARTICLE_FREE_DELAY_HOURS', 24),
     freeDigestHour: int('ARTICLE_FREE_DIGEST_HOUR', 21),
+    // New-article messages are text-only (the Pulse sentence); no link for now.
+    // Link plumbing is PREPARED for a later premium feature: flip linkInText on
+    // and premium messenger messages append the absolute article link.
+    linkInText: bool('ARTICLE_NOTIFY_LINK_IN_TEXT', false),
+    siteBaseUrl: str('ARTICLE_NOTIFY_SITE_BASE_URL', 'https://dentcast.ir'),
   },
 
   // Streak reminder: fired once a day at this Tehran hour to users who opted in

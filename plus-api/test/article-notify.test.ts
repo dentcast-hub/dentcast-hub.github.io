@@ -1,8 +1,9 @@
-import { describe, it, expect, beforeEach, afterAll } from 'vitest';
+import { describe, it, expect, beforeEach, afterAll, vi } from 'vitest';
 import type { FastifyInstance } from 'fastify';
 import { makeApp, resetDb, loginAs } from './helpers.js';
 import { pool, one } from '../src/db.js';
 import { config } from '../src/config.js';
+import { notifications } from '../src/providers/registry.js';
 import { onArticlePublished, runFreeDigest, backfillExistingContent } from '../src/services/article-notify.js';
 import { msUntilNextRun } from '../src/scheduler.js';
 import { WebPushNotificationSender } from '../src/providers/notifications/webpush.js';
@@ -55,6 +56,44 @@ async function freeSentIds(): Promise<string[]> {
 // A fixed publish instant, expressed in UTC. Tehran is UTC+3:30 (no DST):
 //   17:30Z == 21:00 Asia/Tehran, so the 21:00 cron on a given day is <day>T17:30:00Z.
 const T = new Date('2026-03-10T12:00:00Z'); // 15:30 Tehran, mid-afternoon
+
+describe('new-article Pulse text', () => {
+  it('premium message body is the Pulse sentence', async () => {
+    const spy = vi.spyOn(notifications, 'send').mockResolvedValue();
+    await makeUser('09120000090', 'premium', { newContent: true });
+    await onArticlePublished({
+      contentId: 'insight/p1', title: 'ت', url: '/insight/p1.html',
+      pulse: 'یک جملهٔ پالسِ تستی', publishedAt: T,
+    });
+    const msg = spy.mock.calls.at(-1)?.[1] as { body: string };
+    expect(msg.body).toBe('یک جملهٔ پالسِ تستی');
+    spy.mockRestore();
+  });
+
+  it('free digest lists each new article\'s Pulse, one per line', async () => {
+    await makeUser('09120000091', 'free', { newContent: true });
+    const pub = new Date('2026-03-08T12:00:00Z'); // >24h before the digest run
+    await onArticlePublished({ contentId: 'insight/d1', title: 'a', url: '/insight/d1.html', pulse: 'پالسِ یک', publishedAt: pub });
+    await onArticlePublished({ contentId: 'insight/d2', title: 'b', url: '/insight/d2.html', pulse: 'پالسِ دو', publishedAt: pub });
+
+    const spy = vi.spyOn(notifications, 'send').mockResolvedValue();
+    const res = await runFreeDigest(new Date('2026-03-10T17:30:00Z')); // 21:00 Tehran
+    expect(res.articles).toBe(2);
+    const msg = spy.mock.calls.at(-1)?.[1] as { body: string };
+    expect(msg.body).toContain('• پالسِ یک');
+    expect(msg.body).toContain('• پالسِ دو');
+    spy.mockRestore();
+  });
+
+  it('falls back to the section line when an article has no Pulse', async () => {
+    const spy = vi.spyOn(notifications, 'send').mockResolvedValue();
+    await makeUser('09120000092', 'premium', { newContent: true });
+    await onArticlePublished({ contentId: 'insight/nofr', title: 'ت', url: '/insight/nofr.html', publishedAt: T });
+    const msg = spy.mock.calls.at(-1)?.[1] as { body: string };
+    expect(msg.body).toContain('مطلب جدیدی در');
+    spy.mockRestore();
+  });
+});
 
 describe('new-article notifications — Layer 1 (scheduling & selection)', () => {
   it('premium fires immediately on publish; free is only scheduled, not sent', async () => {

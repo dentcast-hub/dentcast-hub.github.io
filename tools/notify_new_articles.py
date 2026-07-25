@@ -91,20 +91,25 @@ def has_marker(html):
 
 
 def load_brain_titles():
-    """Map normalized page path -> editorial title from dentcast-brain.json, so the
-    push uses the real title (not the '<title> | دنت‌کست' chrome)."""
+    """Map normalized page path -> (editorial title, Pulse caption) from
+    dentcast-brain.json, so the push uses the real title (not the '<title> | دنت‌کست'
+    chrome) and carries the article's Pulse sentence. Returns (titles, captions)."""
     import json
-    titles = {}
+    titles, captions = {}, {}
     try:
         brain = json.load(open("dentcast-brain.json", encoding="utf-8"))
     except Exception:
-        return titles
+        return titles, captions
     arr = brain if isinstance(brain, list) else next(
         (v for v in brain.values() if isinstance(v, list)), [])
     for e in arr:
-        if isinstance(e, dict) and e.get("page_url") and e.get("title"):
-            titles[to_path(e["page_url"])] = e["title"]
-    return titles
+        if isinstance(e, dict) and e.get("page_url"):
+            path = to_path(e["page_url"])
+            if e.get("title"):
+                titles[path] = e["title"]
+            if e.get("caption"):
+                captions[path] = e["caption"]
+    return titles, captions
 
 
 def title_for(path, html, brain_titles):
@@ -117,27 +122,27 @@ def title_for(path, html, brain_titles):
     return content_id_from_path(path)
 
 
-def qualify(files, brain_titles):
-    """Yield (content_id, url, title, reason_or_None) for each candidate file.
-    reason is a skip reason string when the file does NOT qualify."""
+def qualify(files, brain_titles, brain_captions):
+    """Yield (content_id, url, title, pulse, reason_or_None) for each candidate
+    file. reason is a skip reason string when the file does NOT qualify."""
     for f in files:
         if not os.path.isfile(f):
-            yield (f, None, None, "file no longer exists")
+            yield (f, None, None, None, "file no longer exists")
             continue
         html = open(f, encoding="utf-8", errors="replace").read()
         path = canonical_path(html)
         if not path:
-            yield (f, None, None, "no canonical link")
+            yield (f, None, None, None, "no canonical link")
             continue
         content_id = content_id_from_path(path)
         folder = content_id.split("/", 1)[0]
         if folder in EXCLUDE_FOLDERS:
-            yield (content_id, path, None, f"excluded type '{folder}'")
+            yield (content_id, path, None, None, f"excluded type '{folder}'")
             continue
         if not has_marker(html):
-            yield (content_id, path, None, "no dc-notify marker")
+            yield (content_id, path, None, None, "no dc-notify marker")
             continue
-        yield (content_id, path, title_for(path, html, brain_titles), None)
+        yield (content_id, path, title_for(path, html, brain_titles), brain_captions.get(path), None)
 
 
 def main():
@@ -154,26 +159,26 @@ def main():
         print("no changed .html files; nothing to do")
         return 0
 
-    brain_titles = load_brain_titles()
+    brain_titles, brain_captions = load_brain_titles()
     fired, skipped, errors = [], [], 0
 
     user = os.environ.get("ADMIN_USER")
     password = os.environ.get("ADMIN_PASSWORD")
     need_creds = not args.dry_run
 
-    for content_id, url, title, reason in qualify(files, brain_titles):
+    for content_id, url, title, pulse, reason in qualify(files, brain_titles, brain_captions):
         if reason:
             skipped.append((content_id, reason))
             continue
         if args.dry_run:
-            print(f"WOULD fire: content_id={content_id} url={url} title={title!r}")
+            print(f"WOULD fire: content_id={content_id} url={url} title={title!r} pulse={pulse!r}")
             fired.append(content_id)
             continue
         if not user or not password:
             print("error: set ADMIN_USER and ADMIN_PASSWORD in the environment", file=sys.stderr)
             return 2
         try:
-            data = post_article(args.api_base, user, password, content_id, title, url)
+            data = post_article(args.api_base, user, password, content_id, title, url, pulse=pulse)
             tag = "recorded" if data.get("recorded") else "already-recorded (no re-notify)"
             print(f"fired: content_id={content_id} -> {tag}, premium_recipients={data.get('premiumRecipients', 0)}")
             fired.append(content_id)

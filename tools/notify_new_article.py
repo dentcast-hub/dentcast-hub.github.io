@@ -51,13 +51,15 @@ def content_id_from_path(path: str) -> str:
     return cid or "index"
 
 
-def post_article(api_base, user, password, content_id, title, url, published_at=None, timeout=20):
+def post_article(api_base, user, password, content_id, title, url, published_at=None, pulse=None, timeout=20):
     """POST the article_published event. Returns the parsed JSON response dict.
     Raises RuntimeError on any HTTP/network failure. Shared by the single-page CLI
     and the git-range detector (tools/notify_new_articles.py)."""
     payload = {"content_id": content_id, "title": title, "url": url}
     if published_at:
         payload["published_at"] = published_at
+    if pulse:
+        payload["pulse"] = pulse
     endpoint = api_base.rstrip("/") + "/admin/articles/published"
     token = base64.b64encode(f"{user}:{password}".encode("utf-8")).decode("ascii")
     req = urllib.request.Request(
