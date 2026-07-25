@@ -231,53 +231,20 @@ function renderPlayer(cfg, creative) {
 }
 
 function renderEpisodes(cfg, creative) {
+  // One card right below the «اپیزود پیشنهادی» (featured) section. Fallback for
+  // safety: if the featured section is ever missing, sit just above the archive.
+  const card = buildCard(creative, 'episodes');
+  const featured = document.getElementById('featured-episode');
+  const anchor = featured && (featured.closest('section') || featured);
+  if (anchor) {
+    anchor.parentNode.insertBefore(card, anchor.nextSibling);
+    return true;
+  }
   const list = document.getElementById('episodeList');
   if (!list) return false;
-  const slot = cfg.slots.episodes;
-  const everyN = Math.max(4, slot.every_n || 12);
-  const max = Math.max(1, slot.max || 3);
-
-  // The archive re-appends every episode <li> on sort/"show more" (archRender),
-  // which shoves foreign nodes to the end — so after every render we re-seat the
-  // ad rows after each Nth VISIBLE episode. Our own moves are invisible to the
-  // observer because we disconnect while re-seating.
-  const ads = [];
-  const place = () => {
-    const visible = Array.from(list.children).filter(
-      (li) => !li.classList.contains('dc-ad-li') && !li.classList.contains('ep-hidden')
-    );
-    let k = 0;
-    for (let i = everyN - 1; i < visible.length && k < max; i += everyN, k++) {
-      if (!ads[k]) {
-        const li = document.createElement('li');
-        li.className = 'dc-ad-li';
-        li.appendChild(buildCard(creative, 'episodes'));
-        ads[k] = li;
-      }
-      const anchor = visible[i];
-      if (anchor.nextSibling !== ads[k]) list.insertBefore(ads[k], anchor.nextSibling);
-    }
-    // Park unused ad rows out of the DOM (list shrank below their position).
-    for (let j = k; j < ads.length; j++) {
-      if (ads[j] && ads[j].parentNode) ads[j].parentNode.removeChild(ads[j]);
-    }
-  };
-
-  let scheduled = false;
-  const observer = new MutationObserver(() => {
-    if (scheduled) return;
-    scheduled = true;
-    requestAnimationFrame(() => {
-      scheduled = false;
-      observer.disconnect();
-      place();
-      observe();
-    });
-  });
-  const observe = () => observer.observe(list, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
-  place();
-  observe();
-  return ads.length > 0;
+  const archive = list.closest('section') || list;
+  archive.parentNode.insertBefore(card, archive);
+  return true;
 }
 
 // ── premium check ────────────────────────────────────────────────────────────

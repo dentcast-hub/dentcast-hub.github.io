@@ -19,10 +19,11 @@ THIS workflow — never the publishing router, even if the user also pastes
 
 1. **`ads/ads-config.json` is the only home of ads.** Never hardcode ad
    markup into any HTML page, template, or builder. The loader hook in
-   `dc-nav.js` + `ads/ads.js` render everything from the config. (Two
-   legacy hardcoded ads predate this system — the دیونت box inside the
-   homepage Pulse card and the «معرفی برند» card in `episodes.html`; leave
-   them alone unless the user explicitly asks to migrate them.)
+   `dc-nav.js` + `ads/ads.js` render everything from the config. (One
+   legacy hardcoded ad predates this system — the دیونت box inside the
+   homepage Pulse card; leave it alone unless the user explicitly asks to
+   migrate it. The old «معرفی برند» card in `episodes.html` has been
+   removed at the user's request — do not bring it back.)
 2. **Sponsor vs. internal decides Google compliance — get it right, it is
    not cosmetic.** `ads/ads.js` emits `rel="sponsored noopener"` +
    `target="_blank"` for every entry in `creatives.sponsors`, and does NOT
