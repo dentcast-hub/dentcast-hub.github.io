@@ -99,13 +99,13 @@ function progressBars(progress, model) {
 }
 
 function scoreBlock(progress) {
-  // Score number + streak shields (سپر استریک). One shield per `points` of score,
-  // up to `cap` held; a shield is spent automatically to save the streak on a
-  // missed day. Filled icons = available, dimmed = empty slots.
+  // Score number + streak shields (سپر استریک). Shields cost more each time
+  // (first_cost, then +step) and there is no holding cap; one is spent
+  // automatically to save the streak on a missed day. One icon per shield held.
   const f = progress.freezes || {};
-  const cap = f.cap || 2;
-  const available = Math.max(0, Math.min(cap, f.available || 0));
-  const points = f.points || 150;
+  const available = Math.max(0, f.available || 0);
+  const first = f.first_cost || 200;
+  const step = f.step || 50;
 
   const wrap = el('div', { class: 'dcp-score-wrap' }, [
     el('div', { class: 'dcp-score' }, [
@@ -115,16 +115,19 @@ function scoreBlock(progress) {
   ]);
 
   const icons = el('span', { class: 'dcp-freeze-icons', 'aria-hidden': 'true' });
-  for (let i = 0; i < cap; i += 1) {
+  for (let i = 0; i < Math.max(1, available); i += 1) {
     icons.appendChild(el('span', { class: 'dcp-freeze-ico' + (i < available ? '' : ' is-empty') }, '🛡️'));
   }
   wrap.appendChild(el('div', { class: 'dcp-freeze' }, [
     icons,
-    el('span', { class: 'dcp-freeze-label' }, 'سپر استریک: ' + faNum(available) + ' از ' + faNum(cap)),
+    el('span', { class: 'dcp-freeze-label' }, 'سپر استریک: ' + faNum(available)),
   ]));
 
-  let hint = 'اگر یک روز فعالیت نکنید، یک سپر خرج می‌شود و استریکتان حفظ می‌شود. سپر با امتیاز باز می‌شود (نه با XP لیگ) و امتیازتان هم کم نمی‌شود: به ازای هر ' + faNum(points) + ' امتیاز یک سپر، تا سقف ' + faNum(cap) + '.';
-  if (available < cap && f.next_in) hint += ' ' + faNum(f.next_in) + ' امتیاز تا سپر بعدی.';
+  let hint = 'اگر یک روز فعالیت نکنید، یک سپر خرج می‌شود و استریکتان حفظ می‌شود. سپر با امتیاز باز می‌شود (نه با XP لیگ) و امتیازتان هم کم نمی‌شود. هر سپر از سپر قبلی گران‌تر است: اولی ' + faNum(first) + ' امتیاز و هر سپر بعدی ' + faNum(step) + ' امتیاز بیشتر؛ پس نگه‌داشتن سپر به‌صرفه‌تر از دوباره گرفتن آن است.';
+  if (f.next_in) {
+    hint += ' ' + faNum(f.next_in) + ' امتیاز تا سپر بعدی';
+    hint += f.next_cost ? ' (که ' + faNum(f.next_cost) + ' امتیاز می‌ارزد).' : '.';
+  }
   wrap.appendChild(el('p', { class: 'dcp-freeze-hint' }, hint));
   return wrap;
 }

@@ -18,27 +18,36 @@ function flame(active) {
 const IC_FLAME = '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M13 2s1 3-1.5 5.5S8 12 8 14a4 4 0 0 0 8 .3c.2-2.3-1.3-3.8-1-5.8 1.6.8 2.4 2 2.6 3.9A6.5 6.5 0 1 1 8.7 6.3 12 12 0 0 0 13 2z"/></svg>';
 const IC_STAR = '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2l2.9 6.3 6.9.7-5.1 4.7 1.4 6.8L12 17.8 5.9 21.2l1.4-6.8L2.2 9.7l6.9-.7z"/></svg>';
 const IC_BELL = '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 22a2.3 2.3 0 0 0 2.3-2.3H9.7A2.3 2.3 0 0 0 12 22zm7-6.3-1.7-2v-3.2a5.4 5.4 0 0 0-4.2-5.3V4.5a1.1 1.1 0 1 0-2.2 0v.7A5.4 5.4 0 0 0 6.7 10.5v3.2L5 15.7a.9.9 0 0 0 .7 1.5h12.6a.9.9 0 0 0 .7-1.5z"/></svg>';
-// What a streak shield is and how it charges — the «؟» caption's shield line,
-// worded like the پیشخوان's hint and built from the server's own numbers
-// (`points` per shield, `cap` held, `next_in` to the next one).
+// The «؟» caption's shield line. Plain language, short sentences, and every
+// number from the server (`first_cost`, `step`, `next_in`) so the copy can never
+// disagree with the ladder the API actually applies.
 function shieldCapText(fz) {
-  const cap = fz.cap || 2;
-  const available = Math.max(0, Math.min(cap, fz.available || 0));
-  const points = fz.points || 150;
-  let t = 'سپر استریک نگهبانِ زنجیره‌ی توست: اگر یک روز فعالیت نکنی، به‌جای صفر شدنِ استریک '
-        + 'یک سپر خودکار خرج می‌شود و زنجیره‌ات حفظ می‌ماند. سپر با «امتیاز» باز می‌شود نه با XP، '
-        + 'و امتیازت هم برای آن کم نمی‌شود: به ازای هر ' + faNum(points) + ' امتیاز یک سپر، تا سقف '
-        + faNum(cap) + ' سپر؛ سپرِ خرج‌شده وقتی امتیازت به آستانه‌ی ' + faNum(points)
-        + 'تاییِ بعدی برسد دوباره پر می‌شود.';
-  if (available < cap && fz.next_in) t += ' ' + faNum(fz.next_in) + ' امتیاز تا سپر بعدی.';
+  const first = fz.first_cost || 200;
+  const step = fz.step || 50;
+  let t = '🛡️ سپر استریک نگهبانِ زنجیره‌ی توست. اگر یک روز فعالیت نکنی، خودش خرج می‌شود '
+        + 'و زنجیره‌ات نمی‌شکند. سپر با امتیاز باز می‌شود و امتیازت هم کم نمی‌شود؛ '
+        + 'ولی هر سپر از قبلی گران‌تر است: اولی ' + faNum(first) + ' امتیاز، بعدی‌ها هر بار '
+        + faNum(step) + ' امتیاز بیشتر. پس نگه‌داشتنِ سپر خیلی بهتر از دوباره گرفتنش است.';
+  if (fz.next_in) t += ' ' + faNum(fz.next_in) + ' امتیاز تا سپر بعدی.';
   return t;
 }
 
-// Streak-shield row, identical to the پیشخوان's: one icon per slot, dimmed when
-// the slot is empty. Rebuilt in place so the strip tracks the dashboard live.
-function paintShields(host, available, cap) {
+// Hover text for the badge: what you hold, and what the next one costs.
+function shieldTitle(available, fz) {
+  let t = 'سپر استریک: ' + faNum(available);
+  if (fz.next_in) {
+    t += ' — ' + faNum(fz.next_in) + ' امتیاز تا سپر بعدی';
+    if (fz.next_cost) t += ' (سپر بعدی ' + faNum(fz.next_cost) + ' امتیاز)';
+  }
+  return t;
+}
+
+// Streak-shield row, identical to the پیشخوان's: one icon per shield in hand.
+// There is no cap, so there are no empty slots to draw — when the user holds
+// none, a single dimmed shield stands in as the "not yet" state.
+function paintShields(host, available) {
   const icons = [];
-  for (let i = 0; i < cap; i += 1) {
+  for (let i = 0; i < Math.max(1, available); i += 1) {
     icons.push(el('span', { class: 'dc-plus-shield-ico' + (i < available ? '' : ' is-empty') }, '🛡️'));
   }
   host.replaceChildren(...icons);
@@ -133,14 +142,12 @@ async function renderLoggedIn(card, user) {
   let shieldBadge = null;
   const fz = progress.freezes;
   if (fz) {
-    const cap = fz.cap || 2;
-    const available = Math.max(0, Math.min(cap, fz.available || 0));
+    const available = Math.max(0, fz.available || 0);
     shieldIconsEl = el('span', { class: 'dc-plus-shield-icos', 'aria-hidden': 'true' });
-    paintShields(shieldIconsEl, available, cap);
+    paintShields(shieldIconsEl, available);
     shieldNumEl = el('span', { class: 'dc-plus-shield-n' }, faNum(available));
     shieldBadge = el('span', {
-      class: 'dc-plus-shield',
-      title: 'سپر استریک: ' + faNum(available) + ' از ' + faNum(cap),
+      class: 'dc-plus-shield', title: shieldTitle(available, fz),
     }, [shieldIconsEl, shieldNumEl, el('span', { class: 'dc-plus-shield-lbl' }, 'سپر')]);
   }
 
@@ -173,9 +180,10 @@ async function renderLoggedIn(card, user) {
   const shieldCapEl = fz ? el('span', { class: 'dc-plus-capline' }, shieldCapText(fz)) : null;
   const scoreCap = el('p', { class: 'dc-plus-scorecap', hidden: true }, [
     el('span', { class: 'dc-plus-capline' },
-      'با خواندن، گوش‌دادن، هایلایت و مرور دو چیز جدا جمع می‌شود: «امتیاز» و «XP». '
-      + 'امتیاز همیشگی است، هیچ‌وقت کم نمی‌شود و با بالا رفتنش سپر استریک باز می‌کند؛ '
-      + 'XP هر هفته از صفر شروع می‌شود و فقط جایگاهِ تو در لیگِ همان هفته را می‌سازد.'),
+      '⭐ هر بار که می‌خوانی، گوش می‌دهی، هایلایت می‌کنی یا مرور می‌کنی، امتیاز می‌گیری. '
+      + 'امتیاز برای همیشه برایت می‌ماند و با آن سپر می‌گیری.'),
+    el('span', { class: 'dc-plus-capline' },
+      '🏆 XP چیز دیگری است: هر هفته از صفر شروع می‌شود و فقط جایگاهت در لیگِ آن هفته را می‌سازد.'),
     shieldCapEl,
   ].filter(Boolean));
   const capTitle = fz ? 'امتیاز و سپر چطور کار می‌کنند؟' : 'امتیاز چطور جمع می‌شود؟';
@@ -232,11 +240,10 @@ async function renderLoggedIn(card, user) {
         scoreNumEl.textContent = faNum(p2.score);
       }
       if (shieldBadge && p2 && p2.freezes) {
-        const cap2 = p2.freezes.cap || 2;
-        const av2 = Math.max(0, Math.min(cap2, p2.freezes.available || 0));
-        paintShields(shieldIconsEl, av2, cap2);
+        const av2 = Math.max(0, p2.freezes.available || 0);
+        paintShields(shieldIconsEl, av2);
         shieldNumEl.textContent = faNum(av2);
-        shieldBadge.title = 'سپر استریک: ' + faNum(av2) + ' از ' + faNum(cap2);
+        shieldBadge.title = shieldTitle(av2, p2.freezes);
         // Keep the «؟» explanation honest too — «… امتیاز تا سپر بعدی» moves.
         if (shieldCapEl) shieldCapEl.textContent = shieldCapText(p2.freezes);
       }

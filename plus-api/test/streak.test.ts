@@ -157,9 +157,10 @@ describe('streak shields save the streak live (spec: سپر استریک)', () =
     const me0 = await (await app.inject({ method: 'GET', url: '/me', headers: { cookie } })).json();
     const userId = me0.id;
 
-    // Reach 150 score => 1 shield earned: 15 distinct active days (active_days*10).
+    // Reach 200 score => the first shield (it costs SHIELD_BASE): 20 distinct
+    // active days (active_days*10).
     const rows: string[] = [];
-    for (let i = 1; i <= 15; i += 1) {
+    for (let i = 1; i <= 20; i += 1) {
       const day = '2025-01-' + String(i).padStart(2, '0');
       rows.push(`($1,'highlight_created','${day}T08:00:00Z')`);
     }
@@ -184,8 +185,10 @@ describe('streak shields save the streak live (spec: سپر استریک)', () =
     expect(froze.rows[0].n).toBe(1); // exactly one shield spent
 
     const prog = await (await app.inject({ method: 'GET', url: '/progress', headers: { cookie } })).json();
-    expect(prog.freezes.cap).toBe(2);
     expect(prog.freezes.available).toBe(0); // the one earned shield was just spent
+    // The replacement is the NEXT rung of the ladder (250), not another 200.
+    expect(prog.freezes.next_cost).toBe(250);
+    expect(prog.freezes.next_in).toBe(450 - prog.score); // second shield sits at 200+250
   });
 });
 
@@ -225,9 +228,9 @@ describe('display shows 0 once the run is dead (lazy cache never reaches the cli
     const cookie = await loginAs(app, '09121500004');
     const me0 = await (await app.inject({ method: 'GET', url: '/me', headers: { cookie } })).json();
 
-    // 15 distinct active days -> score 150 -> 1 shield held.
+    // 20 distinct active days -> score 200 -> the first shield (SHIELD_BASE).
     const rows: string[] = [];
-    for (let i = 1; i <= 15; i += 1) {
+    for (let i = 1; i <= 20; i += 1) {
       const day = '2025-01-' + String(i).padStart(2, '0');
       rows.push(`($1,'highlight_created','${day}T08:00:00Z')`);
     }

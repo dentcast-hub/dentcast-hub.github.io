@@ -7,13 +7,24 @@ import { config } from '../config.js';
  * number the user sees and the number the engine spends never drift apart.
  *
  * Score = active_days * 10 + total_highlights (activity-log derived, monotonic).
- * A shield is earned for every SHIELD_POINTS of score, capped at SHIELD_CAP held
- * at once. Because score only grows, spent shields refill as new thresholds are
- * crossed (up to the cap).
+ *
+ * Shields get PROGRESSIVELY MORE EXPENSIVE: the first costs SHIELD_BASE, and
+ * every next one costs SHIELD_STEP more than the one before (200, 250, 300 …).
+ * There is deliberately no holding cap — the rising price is the limiter, and it
+ * buys two properties a flat price + cap could not have at the same time:
+ *
+ *   1. Score never stops mattering. Under a flat price with a cap, every point
+ *      earned while at the cap did nothing at all; here each point always moves
+ *      the user toward the next (dearer) shield.
+ *   2. Keeping a shield beats re-earning one. Spending drops the balance, and
+ *      the replacement is the NEXT price up the ladder, never the one just paid.
+ *
+ * Score is never deducted — a threshold is a milestone, not a purchase — so the
+ * balance stays a plain subtraction: granted so far minus spent so far.
  */
 
-export const SHIELD_POINTS = 150;
-export const SHIELD_CAP = 2;
+export const SHIELD_BASE = 200; // score needed for the first shield
+export const SHIELD_STEP = 50;  // each further shield costs this much more
 
 // Actions that count toward an "active day" for the score. Kept local (not the
 // streak module's QUALIFYING_ACTIONS) to avoid a circular import; the two sets
@@ -50,15 +61,29 @@ export async function freezesUsedCount(db: Db, userId: string): Promise<number> 
   return r.rows[0]?.n ?? 0;
 }
 
-/** Shields currently available to hold/spend: earned minus spent, capped. */
-export function freezesAvailable(score: number, used: number): number {
-  const earned = Math.floor(score / SHIELD_POINTS);
-  return Math.max(0, Math.min(SHIELD_CAP, earned - used));
+/** What the n-th shield (1-based) costs on its own: 200, 250, 300 … */
+export function shieldCost(n: number): number {
+  return n < 1 ? 0 : SHIELD_BASE + SHIELD_STEP * (n - 1);
 }
 
-/** Points still needed to reach the next shield threshold (null once at the cap). */
-export function pointsToNextFreeze(score: number, available: number): number | null {
-  if (available >= SHIELD_CAP) return null;
-  const rem = score % SHIELD_POINTS;
-  return rem === 0 ? SHIELD_POINTS : SHIELD_POINTS - rem;
+/** Total score needed to have been granted n shields (the sum of their costs). */
+export function shieldThreshold(n: number): number {
+  return n < 1 ? 0 : n * SHIELD_BASE + (SHIELD_STEP * n * (n - 1)) / 2;
+}
+
+/** How many shields a score has unlocked over all time. */
+export function shieldsGranted(score: number): number {
+  let n = 0;
+  while (shieldThreshold(n + 1) <= score) n += 1; // ~sqrt(score) steps, tiny
+  return n;
+}
+
+/** Shields currently available to hold/spend: granted minus spent. */
+export function freezesAvailable(score: number, used: number): number {
+  return Math.max(0, shieldsGranted(score) - used);
+}
+
+/** Points still needed to unlock the next shield (there is always a next one). */
+export function pointsToNextFreeze(score: number): number {
+  return shieldThreshold(shieldsGranted(score) + 1) - score;
 }

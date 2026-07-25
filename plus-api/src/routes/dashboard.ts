@@ -6,7 +6,7 @@ import { config } from '../config.js';
 import { QUALIFYING_ACTIONS, streakIsAlive, displayStreak } from '../services/streak.js';
 import {
   computeScore, freezesUsedCount, freezesAvailable, pointsToNextFreeze,
-  SHIELD_CAP, SHIELD_POINTS, SCORING_ACTIONS,
+  SHIELD_BASE, SHIELD_STEP, shieldCost, shieldsGranted, SCORING_ACTIONS,
 } from '../services/score.js';
 import { dayInTz, previousDay, nextDay, weekStartSaturday } from '../services/time.js';
 
@@ -160,8 +160,9 @@ export async function dashboardRoutes(app: FastifyInstance): Promise<void> {
     const { score, active_days: activeDays } = await computeScore(pool, userId);
     const totalHl = stats.rows[0]?.total_highlights ?? 0;
 
-    // Streak shields (سپر استریک): one per SHIELD_POINTS of score, capped, spent
-    // automatically to save the streak on a missed day (see the streak engine).
+    // Streak shields (سپر استریک): unlocked at rising score thresholds (200, then
+    // +50 each), no holding cap, spent automatically to save the streak on a
+    // missed day (see the streak engine).
     const freezesUsed = await freezesUsedCount(pool, userId);
     const freezesAvail = freezesAvailable(score, freezesUsed);
 
@@ -212,9 +213,13 @@ export async function dashboardRoutes(app: FastifyInstance): Promise<void> {
       rank,
       freezes: {
         available: freezesAvail,
-        cap: SHIELD_CAP,
-        points: SHIELD_POINTS,
-        next_in: pointsToNextFreeze(score, freezesAvail),
+        // The ladder, so the UI can explain it without hardcoding numbers: what
+        // the first shield costs, how much each next one adds, what the one being
+        // worked toward costs, and how far off it is.
+        first_cost: SHIELD_BASE,
+        step: SHIELD_STEP,
+        next_cost: shieldCost(shieldsGranted(score) + 1),
+        next_in: pointsToNextFreeze(score),
       },
     });
   });
