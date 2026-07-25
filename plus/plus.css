@@ -335,6 +335,11 @@ mark.dcp-hl[data-color="green"] { background: #b7e4b0; }
 mark.dcp-hl[data-color="blue"] { background: #a9d3f5; }
 mark.dcp-hl[data-color="pink"] { background: #f6b8cf; }
 mark.dcp-hl[data-color="red"] { background: #ff8080; }
+/* Dark theme: the pastel fills above stay the same, but the inherited text
+   colour is white there — unreadable on a light fill. Force dark ink on FILLED
+   marks only; underline/cloze have transparent fills and must keep the theme's
+   light text. */
+[data-theme="dark"] mark.dcp-hl[data-color]:not(.dcp-underline):not(.dcp-cloze) { color: #0a1a33; }
 /* Underline & cloze are transparent-fill marks that carry the chosen colour on
    the line / dotted border. Base is red (also covers older colourless marks);
    the per-colour rules below override it with the selected colour. */
