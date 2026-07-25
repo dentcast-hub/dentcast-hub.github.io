@@ -328,7 +328,9 @@
 }
 
 /* ---- "seen" ticks on landing-page links (Plus, logged-in only) ----------- */
-.dcp-seen-tick { display: inline-block; margin-inline-end: 6px; font-weight: 800; color: var(--dcp-muted, #9aa4b2); opacity: .5; }
+/* The unseen tick is deliberately very faint — the green "seen" state must read
+   as an obvious change at a glance, so the grey sits far below it in contrast. */
+.dcp-seen-tick { display: inline-block; margin-inline-end: 6px; font-weight: 800; color: var(--dcp-muted, #9aa4b2); opacity: .28; }
 .dcp-seen-tick.is-seen { color: #22a06b; opacity: 1; }
 
 /* ---- highlight marks (in the prose) -------------------------------------- */
