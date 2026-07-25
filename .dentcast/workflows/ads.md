@@ -26,12 +26,17 @@ THIS workflow — never the publishing router, even if the user also pastes
    removed at the user's request — do not bring it back.)
 2. **Sponsor vs. internal decides Google compliance — get it right, it is
    not cosmetic.** `spot/spot.js` emits `rel="sponsored noopener"` +
-   `target="_blank"` for every entry in `creatives.sponsors`, and does NOT
-   for the internal `creatives.premium` house ad. Therefore: **any paid
-   placement, barter, or external business goes under `sponsors` — never
-   under `premium`.** Putting a paid link where it renders without
-   `rel="sponsored"` is a Google policy violation (link scheme). When in
-   doubt whether something counts as sponsored, it does — or ask.
+   `target="_blank"` for every `creatives.sponsors` entry with an external
+   `http(s)` url, and does NOT for the internal `creatives.premium` house
+   ad (non-web urls like `mailto:` never get a `rel` — there is nothing
+   for Google to crawl). Therefore: **any paid placement, barter, or
+   external business goes under `sponsors` — never under `premium`.**
+   Putting a paid link where it renders without `rel="sponsored"` is a
+   Google policy violation (link scheme). When in doubt whether something
+   counts as sponsored, it does — or ask. (The `brand-invite` entry in
+   `sponsors` is an exception by design: an internal placeholder shown to
+   signed-in users via `audience: ["plus"]` — unpaid, `mailto:` link. A
+   real sponsor replacing it later must follow the normal rules.)
 3. **Schema is sacred.** A new sponsor entry copies the exact field shape
    of the existing entries in `creatives.sponsors` (`id`, `enabled`,
    `badge`, `title`, `text`, `cta`, `url`, `image`, `weight`, optional
