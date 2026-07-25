@@ -117,8 +117,8 @@ combined question message, with concrete options where possible:
    material, draft the three fields and show them for confirmation.
 4. **عکس** — attached file, an image they'll send, or none (`image: null`).
 5. **کجا نمایش داده بشه** — which slots: مقاله / صفحهٔ اصلی / آرشیو
-   اپیزودها / پلیر / پیشخوان / پروفایل / جستجوی سراسری، یا همه‌جا (= omit
-   the `slots` field). Offer the currently-enabled slots as the default.
+   اپیزودها / پلیر / پیشخوان / پروفایل / جستجوی سراسری / تب آرشیو، یا
+   همه‌جا (= omit the `slots` field). Offer the currently-enabled slots as the default.
    If they name a disabled slot, ask whether to enable it (that switch
    affects ALL ads in that slot — say so).
 5b. **کی ببینه** — audience targeting is OPTIONAL and defaults to everyone;

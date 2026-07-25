@@ -8,7 +8,8 @@
     "episodes": { "enabled": true, "position": "after_featured" },
     "dashboard": { "enabled": true },
     "profile": { "enabled": true },
-    "search": { "enabled": true }
+    "search": { "enabled": true },
+    "archive": { "enabled": true }
   },
   "rotation": {
     "sequence": ["premium"]
