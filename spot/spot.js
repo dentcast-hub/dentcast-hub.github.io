@@ -295,24 +295,36 @@ function renderArticle(cfg, creative) {
   const slot = cfg.slots.article;
   const prose = findProseRoot();
   if (!prose) return false;
-  const minP = slot.min_paragraphs == null ? 8 : slot.min_paragraphs;
-  const paragraphs = prose.querySelectorAll('p').length;
   const card = buildCard(creative, 'article');
-
   const placeEnd = () => { prose.appendChild(card); return true; };
 
   if (slot.position === 'end') return placeEnd();
   if (slot.position === 'top') { prose.insertBefore(card, prose.firstChild); return true; }
-  // middle (default): short articles fall back per config.
-  if (paragraphs < minP) return slot.fallback === 'none' ? false : placeEnd();
-  // Before the middle heading — a section boundary, never mid-sentence.
-  const heads = Array.from(prose.querySelectorAll('h2, h3'));
-  if (heads.length >= 2) {
-    const target = heads[Math.floor(heads.length / 2)];
-    target.parentNode.insertBefore(card, target);
-    return true;
+
+  // "middle" (default): aim for the UPPER THIRD so the card is seen, not buried at
+  // the end. Target a paragraph ~target_ratio down the body, then SNAP to the
+  // nearest section heading (h2/h3) at/after it within the first ~60% — a clean
+  // boundary, never mid-sentence. If no heading is near, sit right before the
+  // target paragraph (still a between-paragraphs boundary). Only very short
+  // articles fall back per config. (Was: geometric-middle heading, so most short
+  // articles fell to the end.)
+  const minP = slot.min_paragraphs == null ? 3 : slot.min_paragraphs;
+  const ratio = slot.target_ratio == null ? 0.33 : slot.target_ratio;
+  const paras = Array.from(prose.querySelectorAll('p'));
+  if (paras.length < minP) return slot.fallback === 'none' ? false : placeEnd();
+
+  // Never the very first paragraph (keep an intro above the card).
+  const targetP = paras[Math.min(paras.length - 1, Math.max(1, Math.round(paras.length * ratio)))];
+  const limitP = paras[Math.min(paras.length - 1, Math.round(paras.length * 0.6))];
+  const FOLLOWING = 4; // Node.DOCUMENT_POSITION_FOLLOWING
+  let anchor = targetP;
+  for (const h of prose.querySelectorAll('h2, h3')) {
+    const afterTarget = (targetP.compareDocumentPosition(h) & FOLLOWING) !== 0;
+    const afterLimit = (limitP.compareDocumentPosition(h) & FOLLOWING) !== 0;
+    if (afterTarget && !afterLimit) { anchor = h; break; } // earliest heading in the upper window
   }
-  return slot.fallback === 'none' ? false : placeEnd();
+  anchor.parentNode.insertBefore(card, anchor);
+  return true;
 }
 
 function renderHome(cfg, creative) {

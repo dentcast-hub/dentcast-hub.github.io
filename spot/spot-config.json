@@ -2,7 +2,7 @@
   "enabled": true,
   "premium_hides_ads": true,
   "slots": {
-    "article": { "enabled": true, "position": "middle", "min_paragraphs": 8, "fallback": "end" },
+    "article": { "enabled": true, "position": "middle", "min_paragraphs": 3, "target_ratio": 0.33, "fallback": "end" },
     "home": { "enabled": true },
     "player": { "enabled": true },
     "episodes": { "enabled": true, "position": "after_featured" },
