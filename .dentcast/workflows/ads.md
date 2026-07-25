@@ -19,11 +19,12 @@ THIS workflow — never the publishing router, even if the user also pastes
 
 1. **`spot/spot-config.json` is the only home of ads.** Never hardcode ad
    markup into any HTML page, template, or builder. The loader hook in
-   `dc-nav.js` + `spot/spot.js` render everything from the config. (One
-   legacy hardcoded ad predates this system — the دیونت box inside the
-   homepage Pulse card; leave it alone unless the user explicitly asks to
-   migrate it. The old «معرفی برند» card in `episodes.html` has been
-   removed at the user's request — do not bring it back.)
+   `dc-nav.js` + `spot/spot.js` render everything from the config. Both
+   legacy hardcoded ads are GONE at the user's request — the «معرفی برند»
+   card in `episodes.html` and the دیونت box inside the homepage Pulse
+   card — do not bring either back. **The Pulse card is news-only: it
+   never carries an ad of any kind.** The homepage's ad placement is the
+   separate `home` slot card that renders after the Pulse card.
 2. **Sponsor vs. internal decides Google compliance — get it right, it is
    not cosmetic.** `spot/spot.js` emits `rel="sponsored noopener"` +
    `target="_blank"` for every `creatives.sponsors` entry with an external
