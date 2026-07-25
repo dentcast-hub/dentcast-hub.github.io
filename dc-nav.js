@@ -2165,12 +2165,13 @@
    adblock filter lists don't match it) on every page. All behavior
    (master/per-slot on-off, creatives, rotation, audience) lives in
    /spot/spot-config.json; when it is off, spot.js renders nothing at all.
-   Premium users never see ads. Bump SPOT_V when /spot/spot.js or
-   /spot/spot.css changes (the config itself is fetched no-store). */
+   Premium users never see ads. The card CSS ships inline inside spot.js
+   (no separate stylesheet — the Arvan mirror mangled one). Bump SPOT_V when
+   /spot/spot.js changes (the config itself is fetched no-store). */
 (function () {
   if (window.__dcSpotLoaded) return;
   window.__dcSpotLoaded = true;
-  var SPOT_V = '2';
+  var SPOT_V = '3';
   var js = document.createElement('script');
   js.type = 'module';
   js.src = '/spot/spot.js?v=' + SPOT_V;
