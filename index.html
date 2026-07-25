@@ -322,6 +322,12 @@ body{
   flex-shrink:0;
 }
 .dc-drawer-tool-seg{
+  /* Tools moved in from the top bar (موسیقی/مقاله‌ها) keep .dc-topbar-btn,
+     whose fixed 2.125rem square kept them from filling — and centering in —
+     their grid cell, so the second row sat off-column. Un-fix it, same as
+     the .dc-drawer-tool-seg block in dc-nav.css. */
+  width:auto;
+  height:auto;
   display:flex;
   flex-direction:column;
   align-items:center;
