@@ -18,8 +18,15 @@ function flame(active) {
 const IC_FLAME = '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M13 2s1 3-1.5 5.5S8 12 8 14a4 4 0 0 0 8 .3c.2-2.3-1.3-3.8-1-5.8 1.6.8 2.4 2 2.6 3.9A6.5 6.5 0 1 1 8.7 6.3 12 12 0 0 0 13 2z"/></svg>';
 const IC_STAR = '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2l2.9 6.3 6.9.7-5.1 4.7 1.4 6.8L12 17.8 5.9 21.2l1.4-6.8L2.2 9.7l6.9-.7z"/></svg>';
 const IC_BELL = '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 22a2.3 2.3 0 0 0 2.3-2.3H9.7A2.3 2.3 0 0 0 12 22zm7-6.3-1.7-2v-3.2a5.4 5.4 0 0 0-4.2-5.3V4.5a1.1 1.1 0 1 0-2.2 0v.7A5.4 5.4 0 0 0 6.7 10.5v3.2L5 15.7a.9.9 0 0 0 .7 1.5h12.6a.9.9 0 0 0 .7-1.5z"/></svg>';
-// Medal — the rank badge icon (paired with the score's ⭐).
-const IC_RANK = '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 2.2 1 2 2.2.3-1.6 1.5.4 2.2-2-1-2 1 .4-2.2-1.6-1.5 2.2-.3 1-2zM8.5 12.9 7 22l5-2.6L17 22l-1.5-9.1a7 7 0 0 1-7 0z"/></svg>';
+// Streak-shield row, identical to the پیشخوان's: one icon per slot, dimmed when
+// the slot is empty. Rebuilt in place so the strip tracks the dashboard live.
+function paintShields(host, available, cap) {
+  const icons = [];
+  for (let i = 0; i < cap; i += 1) {
+    icons.push(el('span', { class: 'dc-plus-shield-ico' + (i < available ? '' : ' is-empty') }, '🛡️'));
+  }
+  host.replaceChildren(...icons);
+}
 
 function renderAnon(card) {
   const btn = el('button', { class: 'dcp-btn dc-plus-cta', type: 'button' }, [
@@ -98,18 +105,23 @@ async function renderLoggedIn(card, user) {
       ])
     : null;
 
-  // Rank among all users — shown ONLY once the user has scored (the server sends
-  // rank:null for a fresh 0-point account, so a newcomer never sees a discouraging
-  // last place). The total sits in a tooltip so the strip stays compact.
-  let rankNumEl = null;
-  let rankBadge = null;
-  if (typeof progress.rank === 'number') {
-    rankNumEl = el('span', { class: 'dc-plus-rank-n' }, faNum(progress.rank));
-    const rankIco = el('span', { class: 'dc-plus-rank-ico', 'aria-hidden': 'true' });
-    rankIco.innerHTML = IC_RANK; // static, trusted markup
-    rankBadge = el('span', { class: 'dc-plus-rank', title: 'رتبه‌ی کلِ شما میان کاربران' }, [
-      rankIco, rankNumEl, el('span', { class: 'dc-plus-rank-lbl' }, 'رتبه کل'),
-    ]);
+  // Streak shields (سپر) — the very same value the پیشخوان shows, read from the
+  // same `progress.freezes` payload, so the two never disagree: filled 🛡️ for a
+  // shield in hand, dimmed slot for an empty one. Replaces the old «رتبه کل».
+  let shieldIconsEl = null;
+  let shieldNumEl = null;
+  let shieldBadge = null;
+  const fz = progress.freezes;
+  if (fz) {
+    const cap = fz.cap || 2;
+    const available = Math.max(0, Math.min(cap, fz.available || 0));
+    shieldIconsEl = el('span', { class: 'dc-plus-shield-icos', 'aria-hidden': 'true' });
+    paintShields(shieldIconsEl, available, cap);
+    shieldNumEl = el('span', { class: 'dc-plus-shield-n' }, faNum(available));
+    shieldBadge = el('span', {
+      class: 'dc-plus-shield' + (available ? '' : ' is-none'),
+      title: 'سپر استریک: ' + faNum(available) + ' از ' + faNum(cap),
+    }, [shieldIconsEl, shieldNumEl, el('span', { class: 'dc-plus-shield-lbl' }, 'سپر')]);
   }
 
   // League chip (opens the weekly-league overlay). Present whenever /league
@@ -125,17 +137,17 @@ async function renderLoggedIn(card, user) {
   const lastId = progress.last_content_id || recentId;
   const last = lastId ? contentInfo(model, lastId) : null;
 
-  // Row 1 — the glanceable STAT RAIL: streak · score · rank کل · league, tidy with
+  // Row 1 — the glanceable STAT RAIL: streak · score · سپر · league, tidy with
   // hairline dividers between whatever is present. A small «؟» reveals a one-line
   // scoring caption on demand (kept out of the way so the rail stays glanceable).
-  const stats = [streakLine, scoreBadge, rankBadge, leagueChipEl].filter(Boolean);
+  const stats = [streakLine, scoreBadge, shieldBadge, leagueChipEl].filter(Boolean);
   const rail = el('div', { class: 'dc-plus-statrail' });
   stats.forEach((s, i) => {
     if (i) rail.appendChild(el('span', { class: 'dc-plus-div', 'aria-hidden': 'true' }));
     rail.appendChild(s);
   });
   const scoreCap = el('p', { class: 'dc-plus-scorecap', hidden: true },
-    'با خواندن، گوش‌دادن، هایلایت و مرور امتیاز می‌گیری؛ امتیاز، رتبه و جایگاهِ لیگت را می‌سازد.');
+    'با خواندن، گوش‌دادن، هایلایت و مرور امتیاز می‌گیری؛ امتیاز، سپرِ استریک و جایگاهِ لیگت را می‌سازد.');
   const info = el('button', {
     class: 'dc-plus-info', type: 'button', title: 'امتیاز چطور جمع می‌شود؟', 'aria-label': 'امتیاز چطور جمع می‌شود؟',
   }, '؟');
@@ -188,8 +200,13 @@ async function renderLoggedIn(card, user) {
       if (scoreNumEl && p2 && typeof p2.score === 'number') {
         scoreNumEl.textContent = faNum(p2.score);
       }
-      if (rankNumEl && p2 && typeof p2.rank === 'number') {
-        rankNumEl.textContent = faNum(p2.rank);
+      if (shieldBadge && p2 && p2.freezes) {
+        const cap2 = p2.freezes.cap || 2;
+        const av2 = Math.max(0, Math.min(cap2, p2.freezes.available || 0));
+        paintShields(shieldIconsEl, av2, cap2);
+        shieldNumEl.textContent = faNum(av2);
+        shieldBadge.classList.toggle('is-none', !av2);
+        shieldBadge.title = 'سپر استریک: ' + faNum(av2) + ' از ' + faNum(cap2);
       }
       if (lg2 && leagueChipEl) {
         const fresh = leagueChip(lg2);
