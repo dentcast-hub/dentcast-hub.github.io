@@ -176,7 +176,7 @@ body.dcp-study .dc-spot { display: none !important; }
 .dc-spot--dashboard, .dc-spot--profile { margin: 1.125rem 0; }
 .dc-spot--search { margin: 0.75rem 0; }
 .dc-spot--search .dc-spot-link { padding: 0.75rem 1rem; }
-.dc-spot--archive { margin: 0.75rem 0; }
+.dc-spot--archive { margin: 1.25rem 0 0.75rem; }
 .dc-spot--episodes { margin: 0.875rem 0 2.75rem; }
 @media (min-width: 720px) { .dc-spot--episodes { margin: 1rem 0 4rem; } }
 @media (max-width: 480px) {
