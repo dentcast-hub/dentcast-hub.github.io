@@ -1,7 +1,13 @@
-// DentCast Ads — central, config-driven ad system. Loaded on every page by the
+// DentCast Spot — central, config-driven ad system. Loaded on every page by the
 // loader hook in dc-nav.js (the ONLY hook; no page carries ad markup of its own).
 //
-// Single source of truth: /ads/ads-config.json. Turning the master switch or a
+// NAMING IS DELIBERATELY NEUTRAL ("spot", never "ad"): EasyList carries a
+// generic element-hiding rule `##.dc-ad` (and blocks many ad-ish paths), so
+// Opera's built-in blocker & co. hid the entire old dc-ad system. Never put
+// "ad"/"ads" in this system's file names, URL paths, class names, ids, or
+// data attributes — verify new names against EasyList before shipping.
+//
+// Single source of truth: /spot/spot-config.json. Turning the master switch or a
 // slot off there leaves ZERO trace on the site — no DOM, no stylesheet, nothing.
 //
 // Visibility rule: ads render for anonymous visitors AND signed-in free (Plus)
@@ -26,10 +32,12 @@
 
 import { findProseRoot } from '/plus/js/config.js';
 
-const CONFIG_URL = '/ads/ads-config.json';
-const CSS_URL = '/ads/ads.css';
-const ADS_V = new URL(import.meta.url).search; // carry ?v= from the loader onto ads.css
+const CONFIG_URL = '/spot/spot-config.json';
+const CSS_URL = '/spot/spot.css';
+const SPOT_V = new URL(import.meta.url).search; // carry ?v= from the loader onto spot.css
 const TIER_TIMEOUT_MS = 3000;
+// localStorage keys keep their historical names — invisible to blockers, and
+// renaming them would reset every visitor's rotation position.
 const K_TICK = 'dcAds.tick'; // rotation step, advances once per ad-showing page view
 const K_RR = 'dcAds.rr'; // sponsor round-robin cursor
 
@@ -115,7 +123,7 @@ function injectCss() {
   cssInjected = true;
   const link = document.createElement('link');
   link.rel = 'stylesheet';
-  link.href = CSS_URL + ADS_V;
+  link.href = CSS_URL + SPOT_V;
   document.head.appendChild(link);
 }
 
@@ -126,11 +134,11 @@ function isSponsor(creative) {
 function buildCard(creative, slotName) {
   injectCss();
   const aside = document.createElement('aside');
-  aside.className = 'dc-ad dc-ad--' + slotName + (isSponsor(creative) ? ' dc-ad--sponsor' : ' dc-ad--premium');
-  aside.setAttribute('data-dc-ad', creative.id || '');
+  aside.className = 'dc-spot dc-spot--' + slotName + (isSponsor(creative) ? ' dc-spot--sponsor' : ' dc-spot--premium');
+  aside.setAttribute('data-dc-spot', creative.id || '');
 
   const a = document.createElement('a');
-  a.className = 'dc-ad-link';
+  a.className = 'dc-spot-link';
   a.href = creative.url;
   const external = /^https?:\/\//.test(creative.url);
   if (external) a.target = '_blank';
@@ -138,7 +146,7 @@ function buildCard(creative, slotName) {
 
   if (creative.image) {
     const img = document.createElement('img');
-    img.className = 'dc-ad-img';
+    img.className = 'dc-spot-img';
     img.src = creative.image;
     img.alt = '';
     img.loading = 'lazy';
@@ -146,20 +154,20 @@ function buildCard(creative, slotName) {
   }
 
   const body = document.createElement('div');
-  body.className = 'dc-ad-body';
+  body.className = 'dc-spot-body';
   const badge = document.createElement('span');
-  badge.className = 'dc-ad-badge';
+  badge.className = 'dc-spot-badge';
   badge.textContent = creative.badge || (isSponsor(creative) ? 'حمایت‌شده' : 'دنت‌کست پلاس');
   body.appendChild(badge);
   if (creative.title) {
     const t = document.createElement('strong');
-    t.className = 'dc-ad-title';
+    t.className = 'dc-spot-title';
     t.textContent = creative.title;
     body.appendChild(t);
   }
   if (creative.text) {
     const p = document.createElement('p');
-    p.className = 'dc-ad-text';
+    p.className = 'dc-spot-text';
     p.textContent = creative.text;
     body.appendChild(p);
   }
@@ -167,7 +175,7 @@ function buildCard(creative, slotName) {
 
   if (creative.cta) {
     const cta = document.createElement('span');
-    cta.className = 'dc-ad-cta';
+    cta.className = 'dc-spot-cta';
     cta.textContent = creative.cta;
     a.appendChild(cta);
   }
@@ -316,7 +324,7 @@ function currentUserSafe() {
 let adsKilled = false;
 function removeAllAds() {
   adsKilled = true; // stops overlay watchers from re-seating their cards
-  document.querySelectorAll('.dc-ad, .dc-ad-li').forEach((el) => el.remove());
+  document.querySelectorAll('.dc-spot').forEach((el) => el.remove());
 }
 
 // ── boot ─────────────────────────────────────────────────────────────────────
@@ -324,7 +332,7 @@ function removeAllAds() {
 async function main() {
   let cfg;
   try {
-    const res = await fetch(CONFIG_URL + ADS_V, { cache: 'no-store' });
+    const res = await fetch(CONFIG_URL + SPOT_V, { cache: 'no-store' });
     if (!res.ok) return;
     cfg = await res.json();
   } catch (_) { return; }

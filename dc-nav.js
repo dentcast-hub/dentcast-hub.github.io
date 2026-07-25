@@ -2160,17 +2160,19 @@
   document.body.appendChild(js);
 })();
 
-/* ── DentCast Ads loader ─────────────────────────────────────────────────────
-   Loads the central ad system on every page. All behavior (master/per-slot
-   on-off, creatives, rotation) lives in /ads/ads-config.json; when it is off,
-   ads.js renders nothing at all. Premium users never see ads. Bump ADS_V when
-   /ads/ads.js or /ads/ads.css changes (the config itself is fetched no-store). */
+/* ── DentCast Spot loader ────────────────────────────────────────────────────
+   Loads the central ad system ("spot" — the name is deliberately neutral so
+   adblock filter lists don't match it) on every page. All behavior
+   (master/per-slot on-off, creatives, rotation, audience) lives in
+   /spot/spot-config.json; when it is off, spot.js renders nothing at all.
+   Premium users never see ads. Bump SPOT_V when /spot/spot.js or
+   /spot/spot.css changes (the config itself is fetched no-store). */
 (function () {
-  if (window.__dcAdsLoaded) return;
-  window.__dcAdsLoaded = true;
-  var ADS_V = '5';
+  if (window.__dcSpotLoaded) return;
+  window.__dcSpotLoaded = true;
+  var SPOT_V = '1';
   var js = document.createElement('script');
   js.type = 'module';
-  js.src = '/ads/ads.js?v=' + ADS_V;
+  js.src = '/spot/spot.js?v=' + SPOT_V;
   document.body.appendChild(js);
 })();
