@@ -24,10 +24,9 @@ const IC_BELL = '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 22a2.
 function shieldCapText(fz) {
   const first = fz.first_cost || 200;
   const step = fz.step || 50;
-  let t = '🛡️ سپر استریک نگهبانِ زنجیره‌ی توست. اگر یک روز فعالیت نکنی، خودش خرج می‌شود '
-        + 'و زنجیره‌ات نمی‌شکند. سپر با امتیاز باز می‌شود و امتیازت هم کم نمی‌شود؛ '
-        + 'ولی هر سپر از قبلی گران‌تر است: اولی ' + faNum(first) + ' امتیاز، بعدی‌ها هر بار '
-        + faNum(step) + ' امتیاز بیشتر. پس نگه‌داشتنِ سپر خیلی بهتر از دوباره گرفتنش است.';
+  let t = '🛡️ سپر یعنی یک روز مرخصی. اگر یک روز نیایی، سپر خودش خرج می‌شود و زنجیره‌ات '
+        + 'نمی‌شکند. سپر اول ' + faNum(first) + ' امتیاز است و هر سپر بعدی '
+        + faNum(step) + ' امتیاز گران‌تر؛ امتیازت هم کم نمی‌شود. پس سپرت را نگه دار.';
   if (fz.next_in) t += ' ' + faNum(fz.next_in) + ' امتیاز تا سپر بعدی.';
   return t;
 }
@@ -180,8 +179,8 @@ async function renderLoggedIn(card, user) {
   const shieldCapEl = fz ? el('span', { class: 'dc-plus-capline' }, shieldCapText(fz)) : null;
   const scoreCap = el('p', { class: 'dc-plus-scorecap', hidden: true }, [
     el('span', { class: 'dc-plus-capline' },
-      '⭐ هر بار که می‌خوانی، گوش می‌دهی، هایلایت می‌کنی یا مرور می‌کنی، امتیاز می‌گیری. '
-      + 'امتیاز برای همیشه برایت می‌ماند و با آن سپر می‌گیری.'),
+      '⭐ با خواندن، گوش‌دادن، هایلایت و مرور امتیاز می‌گیری. امتیاز همیشه برایت می‌ماند '
+      + 'و با آن سپر می‌گیری.'),
     el('span', { class: 'dc-plus-capline' },
       '🏆 XP چیز دیگری است: هر هفته از صفر شروع می‌شود و فقط جایگاهت در لیگِ آن هفته را می‌سازد.'),
     shieldCapEl,

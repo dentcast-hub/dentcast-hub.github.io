@@ -123,11 +123,8 @@ function scoreBlock(progress) {
     el('span', { class: 'dcp-freeze-label' }, 'سپر استریک: ' + faNum(available)),
   ]));
 
-  let hint = 'اگر یک روز فعالیت نکنید، یک سپر خرج می‌شود و استریکتان حفظ می‌شود. سپر با امتیاز باز می‌شود (نه با XP لیگ) و امتیازتان هم کم نمی‌شود. هر سپر از سپر قبلی گران‌تر است: اولی ' + faNum(first) + ' امتیاز و هر سپر بعدی ' + faNum(step) + ' امتیاز بیشتر؛ پس نگه‌داشتن سپر به‌صرفه‌تر از دوباره گرفتن آن است.';
-  if (f.next_in) {
-    hint += ' ' + faNum(f.next_in) + ' امتیاز تا سپر بعدی';
-    hint += f.next_cost ? ' (که ' + faNum(f.next_cost) + ' امتیاز می‌ارزد).' : '.';
-  }
+  let hint = 'سپر یعنی یک روز مرخصی. اگر یک روز فعالیت نکنید، سپر خودش خرج می‌شود و استریکتان نمی‌شکند. سپر اول ' + faNum(first) + ' امتیاز است و هر سپر بعدی ' + faNum(step) + ' امتیاز گران‌تر؛ امتیازتان هم کم نمی‌شود. پس سپرتان را نگه دارید.';
+  if (f.next_in) hint += ' ' + faNum(f.next_in) + ' امتیاز تا سپر بعدی.';
   wrap.appendChild(el('p', { class: 'dcp-freeze-hint' }, hint));
   return wrap;
 }
@@ -215,7 +212,7 @@ export async function renderDashboard(root, { me: preMe } = {}) {
     // NOTE: امتیاز (all-time, unlocks shields at thresholds, never spent) and XP
     // هفتگی (ranks the league, resets weekly) are two separate quantities in the
     // API — never describe one as feeding the other, and never as a balance.
-    section('امتیاز شما', 'امتیاز از روی فعالیت شما ساخته می‌شود، همیشگی است و هیچ‌وقت کم نمی‌شود؛ با بالا رفتنش سپر استریک باز می‌شود. لیگ هفتگی جداست و روی XP همان هفته حساب می‌شود.', scoreBlock(progress)),
+    section('امتیاز شما', 'امتیاز با فعالیت شما بالا می‌رود، همیشه می‌ماند و کم نمی‌شود؛ با آن سپر می‌گیرید. لیگ هفتگی جداست و روی XP همان هفته حساب می‌شود.', scoreBlock(progress)),
     section('هایلایت‌های اخیر', null, recentWrap),
     section('پریمیوم', 'به‌زودی در دسترس.', premiumTiles()),
   );
