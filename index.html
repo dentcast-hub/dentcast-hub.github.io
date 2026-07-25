@@ -491,29 +491,6 @@ body{
 .dc-pulse-list a{ color:var(--link); }
 .dc-pulse-list strong{ font-weight:800; color:inherit; }
 
-/* Ad inside pulse */
-.dc-pulse-ad{
-  margin-top:0.625rem;
-  background:rgba(245,162,8,.10);
-  border:1px solid rgba(245,162,8,.32);
-  border-radius:var(--r-md);
-  overflow:hidden;
-}
-.dc-pulse-ad a{
-  display:flex; align-items:center;
-  justify-content:space-between;
-  gap:0.625rem; padding:0.5rem 0.625rem;
-  text-decoration:none;
-}
-.dc-pulse-ad-txt{ font-size:.82rem; color:#c49820; font-weight:400; }
-.dc-pulse-ad-txt strong{ font-weight:700; }
-.dc-pulse-ad-btn{
-  background:rgba(245,162,8,.12);
-  color:#c49820; padding:0.1875rem 0.625rem;
-  border-radius:var(--r-f); font-size:.68rem;
-  border:1px solid rgba(245,162,8,.22);
-  white-space:nowrap; flex-shrink:0;
-}
 
 /* =====================================================
    BRAND SUBTITLE — typographic, no box
@@ -3075,16 +3052,6 @@ a.dc-list-card--pillar {
 #panel-studio .dc-pulse-list li{ color:var(--txt2); font-size:.78rem; line-height:2; border-color:var(--border2); }
 #panel-studio .dc-pulse-list li a{ color:var(--ac); font-weight:700; }
 #panel-studio .dc-pulse-list li strong{ color:var(--txt); font-weight:700; }
-#panel-studio .dc-pulse-ad{ margin-top:0.75rem; padding:0.625rem 0 0; border-top:1px dashed var(--border); background:none; border-radius:0; }
-#panel-studio .dc-pulse-ad a{ display:flex; align-items:center; gap:0.625rem; text-decoration:none; padding:0; background:none; }
-#panel-studio .dc-pulse-ad-txt{ flex:1; font-size:.74rem; color:var(--txt2); line-height:1.9; }
-#panel-studio .dc-pulse-ad-txt strong{ color:var(--txt); }
-#panel-studio .dc-pulse-ad-btn{
-  font-size:.7rem; font-weight:800; color:var(--ac);
-  background:var(--chip-bg); border:1px solid var(--chip-bd);
-  border-radius:62.4375rem; padding:0.25rem 0.875rem; flex-shrink:0;
-}
-
 /* ── section label + «همه» (shared by home & archive) ── */
 #panel-studio .dc-home-sec,
 #panel-sharehub .dc-home-sec{
@@ -3461,12 +3428,6 @@ a.dc-list-card--pillar {
           <li>یک <a href="/dentai/promptologist/prompt4-2.html">قسمت تازه‌ی پرامپتولوژیست</a> درباره‌ی اینکه چرا به‌جای فهرستِ «نکن‌ها» باید به مدل بگویید چه بکند منتشر شد · ۲ مرداد</li>
           <li>یک <a href="/sharehub/share-10.html">مطلب Share Hub</a> درباره‌ی resistance form در روکش‌ها؛ تعریف، تفاوت با retention و تست بالینی تشخیص نبود آن منتشر شد · ۳۰ تیر</li>
         </ul>
-        <div class="dc-pulse-ad">
-          <a href="https://deventapp.ir" target="_blank" rel="sponsored noopener">
-            <div class="dc-pulse-ad-txt"><strong>دیونت</strong> : پلتفرم آگهی تجهیزات کار کرده و خدمات دندانپزشکی</div>
-            <span class="dc-pulse-ad-btn">بازدید</span>
-          </a>
-        </div>
       </div>
 
       <div class="dc-home-sec"><h2 class="dc-home-sec-label">تازه‌های دنت‌کست</h2></div>
@@ -5330,11 +5291,6 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
         destList.appendChild(rewirePulseNode(li.cloneNode(true))));
     }
 
-    /* Sponsor ad — mirror it too (remove any previous clone first) */
-    const oldAd = destCard.querySelector('.dc-pulse-ad');
-    if(oldAd) oldAd.remove();
-    const srcAd = srcCard.querySelector('.dc-pulse-ad');
-    if(srcAd) destCard.appendChild(rewirePulseNode(srcAd.cloneNode(true)));
   }
 
   /* ══════════════════════════════════════════════

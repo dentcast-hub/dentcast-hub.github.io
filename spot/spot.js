@@ -123,9 +123,10 @@ function tickOnce() {
 // One file, one request, nothing for a CDN or MIME guesser to break.
 //
 // Native look: same surfaces/typography vars as the site (dc-theme.css).
-// Orange theme — same amber family (#F5A208) as the Deonet ad inside the
-// homepage Pulse card: soft gradient tint, bold saturated border, dark body
-// text, solid-amber CTA pill. Study mode (body.dcp-study) hides all cards.
+// Orange theme — the amber family (#F5A208) inherited from the site's old
+// Deonet pulse ad (since removed; Pulse is news-only now): soft gradient tint,
+// bold saturated border, dark body text, solid-amber CTA pill. Study mode
+// (body.dcp-study) hides all cards.
 const SPOT_CSS = `
 .dc-spot { margin: 1.25rem 0; user-select: none; -webkit-user-select: none; }
 body.dcp-study .dc-spot { display: none !important; }
