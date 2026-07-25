@@ -119,7 +119,7 @@ async function renderLoggedIn(card, user) {
     paintShields(shieldIconsEl, available, cap);
     shieldNumEl = el('span', { class: 'dc-plus-shield-n' }, faNum(available));
     shieldBadge = el('span', {
-      class: 'dc-plus-shield' + (available ? '' : ' is-none'),
+      class: 'dc-plus-shield',
       title: 'سپر استریک: ' + faNum(available) + ' از ' + faNum(cap),
     }, [shieldIconsEl, shieldNumEl, el('span', { class: 'dc-plus-shield-lbl' }, 'سپر')]);
   }
@@ -205,7 +205,6 @@ async function renderLoggedIn(card, user) {
         const av2 = Math.max(0, Math.min(cap2, p2.freezes.available || 0));
         paintShields(shieldIconsEl, av2, cap2);
         shieldNumEl.textContent = faNum(av2);
-        shieldBadge.classList.toggle('is-none', !av2);
         shieldBadge.title = 'سپر استریک: ' + faNum(av2) + ' از ' + faNum(cap2);
       }
       if (lg2 && leagueChipEl) {
