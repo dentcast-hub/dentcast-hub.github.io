@@ -1,7 +1,13 @@
-// DentCast Ads — central, config-driven ad system. Loaded on every page by the
+// DentCast Spot — central, config-driven ad system. Loaded on every page by the
 // loader hook in dc-nav.js (the ONLY hook; no page carries ad markup of its own).
 //
-// Single source of truth: /ads/ads-config.json. Turning the master switch or a
+// NAMING IS DELIBERATELY NEUTRAL ("spot", never "ad"): EasyList carries a
+// generic element-hiding rule `##.dc-ad` (and blocks many ad-ish paths), so
+// Opera's built-in blocker & co. hid the entire old dc-ad system. Never put
+// "ad"/"ads" in this system's file names, URL paths, class names, ids, or
+// data attributes — verify new names against EasyList before shipping.
+//
+// Single source of truth: /spot/spot-config.json. Turning the master switch or a
 // slot off there leaves ZERO trace on the site — no DOM, no stylesheet, nothing.
 //
 // Visibility rule: ads render for anonymous visitors AND signed-in free (Plus)
@@ -15,6 +21,10 @@
 // over enabled sponsors), or a specific sponsor id. Missing creative at a step
 // falls back to the other kind; nothing available → nothing renders.
 //
+// Targeting: a creative may carry "slots": [...] (where it renders) and/or
+// "audience": ["anon"|"plus"] (who sees it). No field = everyone, everywhere —
+// so by default signed-out and signed-in visitors see the same campaign.
+//
 // The article card is inserted at a SECTION BOUNDARY (before the middle h2/h3)
 // so it can never sit inside a sentence a workbench highlight spans, and it is
 // user-select:none + hidden entirely in study mode (body.dcp-study) so the
@@ -22,10 +32,12 @@
 
 import { findProseRoot } from '/plus/js/config.js';
 
-const CONFIG_URL = '/ads/ads-config.json';
-const CSS_URL = '/ads/ads.css';
-const ADS_V = new URL(import.meta.url).search; // carry ?v= from the loader onto ads.css
+const CONFIG_URL = '/spot/spot-config.json';
+const CSS_URL = '/spot/spot.css';
+const SPOT_V = new URL(import.meta.url).search; // carry ?v= from the loader onto spot.css
 const TIER_TIMEOUT_MS = 3000;
+// localStorage keys keep their historical names — invisible to blockers, and
+// renaming them would reset every visitor's rotation position.
 const K_TICK = 'dcAds.tick'; // rotation step, advances once per ad-showing page view
 const K_RR = 'dcAds.rr'; // sponsor round-robin cursor
 
@@ -45,24 +57,29 @@ function track(name, params) {
 
 // ── creative selection ───────────────────────────────────────────────────────
 
-// Optional per-creative slot targeting: a creative with "slots": ["home", ...]
-// only ever renders in those slots; no "slots" field = allowed everywhere.
-function allowedIn(creative, slotName) {
-  return !Array.isArray(creative.slots) || creative.slots.includes(slotName);
+// Optional per-creative targeting. "slots": ["home", ...] limits WHERE a
+// creative renders; "audience": ["anon"] / ["plus"] limits WHO sees it —
+// "anon" = signed-out visitor, "plus" = signed-in non-premium user (premium
+// users never see ads at all). A missing field = everywhere / everyone, so by
+// default every visitor class sees the same campaign.
+function allowedIn(creative, slotName, audience) {
+  const slotOk = !Array.isArray(creative.slots) || creative.slots.includes(slotName);
+  const audOk = !Array.isArray(creative.audience) || creative.audience.includes(audience);
+  return slotOk && audOk;
 }
 
-function enabledSponsors(cfg, slotName) {
+function enabledSponsors(cfg, slotName, audience) {
   const list = (cfg.creatives && cfg.creatives.sponsors) || [];
-  return list.filter((s) => s && s.enabled && s.url && allowedIn(s, slotName));
+  return list.filter((s) => s && s.enabled && s.url && allowedIn(s, slotName, audience));
 }
 
-function premiumCreative(cfg, slotName) {
+function premiumCreative(cfg, slotName, audience) {
   const p = cfg.creatives && cfg.creatives.premium;
-  return p && p.enabled !== false && p.url && allowedIn(p, slotName) ? p : null;
+  return p && p.enabled !== false && p.url && allowedIn(p, slotName, audience) ? p : null;
 }
 
-function nextSponsor(cfg, slotName) {
-  const sponsors = enabledSponsors(cfg, slotName);
+function nextSponsor(cfg, slotName, audience) {
+  const sponsors = enabledSponsors(cfg, slotName, audience);
   if (!sponsors.length) return null;
   const pool = [];
   sponsors.forEach((s) => {
@@ -75,19 +92,27 @@ function nextSponsor(cfg, slotName) {
 }
 
 // One creative per page view: every slot on the page shows the same campaign,
-// and the rotation counter advances once (in main(), after a successful render).
-// A step whose creative is missing or not allowed in this slot falls back to
-// the other kind; nothing eligible → nothing renders.
-function pickCreative(cfg, slotName) {
+// and the rotation counter advances once (tickOnce, after the first successful
+// render). A step whose creative is missing or not allowed in this slot / for
+// this audience falls back to the other kind; nothing eligible → nothing
+// renders.
+function pickCreative(cfg, slotName, audience) {
   const seq = (cfg.rotation && Array.isArray(cfg.rotation.sequence) && cfg.rotation.sequence.length)
     ? cfg.rotation.sequence
     : ['premium'];
   const step = seq[lsGet(K_TICK) % seq.length];
-  if (step === 'premium') return premiumCreative(cfg, slotName) || nextSponsor(cfg, slotName);
-  if (step === 'sponsor') return nextSponsor(cfg, slotName) || premiumCreative(cfg, slotName);
+  if (step === 'premium') return premiumCreative(cfg, slotName, audience) || nextSponsor(cfg, slotName, audience);
+  if (step === 'sponsor') return nextSponsor(cfg, slotName, audience) || premiumCreative(cfg, slotName, audience);
   // a specific sponsor id
-  const named = enabledSponsors(cfg, slotName).find((s) => s.id === step);
-  return named || nextSponsor(cfg, slotName) || premiumCreative(cfg, slotName);
+  const named = enabledSponsors(cfg, slotName, audience).find((s) => s.id === step);
+  return named || nextSponsor(cfg, slotName, audience) || premiumCreative(cfg, slotName, audience);
+}
+
+let ticked = false;
+function tickOnce() {
+  if (ticked) return;
+  ticked = true;
+  lsSet(K_TICK, lsGet(K_TICK) + 1);
 }
 
 // ── card DOM ─────────────────────────────────────────────────────────────────
@@ -98,7 +123,7 @@ function injectCss() {
   cssInjected = true;
   const link = document.createElement('link');
   link.rel = 'stylesheet';
-  link.href = CSS_URL + ADS_V;
+  link.href = CSS_URL + SPOT_V;
   document.head.appendChild(link);
 }
 
@@ -109,11 +134,11 @@ function isSponsor(creative) {
 function buildCard(creative, slotName) {
   injectCss();
   const aside = document.createElement('aside');
-  aside.className = 'dc-ad dc-ad--' + slotName + (isSponsor(creative) ? ' dc-ad--sponsor' : ' dc-ad--premium');
-  aside.setAttribute('data-dc-ad', creative.id || '');
+  aside.className = 'dc-spot dc-spot--' + slotName + (isSponsor(creative) ? ' dc-spot--sponsor' : ' dc-spot--premium');
+  aside.setAttribute('data-dc-spot', creative.id || '');
 
   const a = document.createElement('a');
-  a.className = 'dc-ad-link';
+  a.className = 'dc-spot-link';
   a.href = creative.url;
   const external = /^https?:\/\//.test(creative.url);
   if (external) a.target = '_blank';
@@ -121,7 +146,7 @@ function buildCard(creative, slotName) {
 
   if (creative.image) {
     const img = document.createElement('img');
-    img.className = 'dc-ad-img';
+    img.className = 'dc-spot-img';
     img.src = creative.image;
     img.alt = '';
     img.loading = 'lazy';
@@ -129,20 +154,20 @@ function buildCard(creative, slotName) {
   }
 
   const body = document.createElement('div');
-  body.className = 'dc-ad-body';
+  body.className = 'dc-spot-body';
   const badge = document.createElement('span');
-  badge.className = 'dc-ad-badge';
+  badge.className = 'dc-spot-badge';
   badge.textContent = creative.badge || (isSponsor(creative) ? 'حمایت‌شده' : 'دنت‌کست پلاس');
   body.appendChild(badge);
   if (creative.title) {
     const t = document.createElement('strong');
-    t.className = 'dc-ad-title';
+    t.className = 'dc-spot-title';
     t.textContent = creative.title;
     body.appendChild(t);
   }
   if (creative.text) {
     const p = document.createElement('p');
-    p.className = 'dc-ad-text';
+    p.className = 'dc-spot-text';
     p.textContent = creative.text;
     body.appendChild(p);
   }
@@ -150,7 +175,7 @@ function buildCard(creative, slotName) {
 
   if (creative.cta) {
     const cta = document.createElement('span');
-    cta.className = 'dc-ad-cta';
+    cta.className = 'dc-spot-cta';
     cta.textContent = creative.cta;
     a.appendChild(cta);
   }
@@ -248,18 +273,58 @@ function renderEpisodes(cfg, creative) {
   return true;
 }
 
-// ── premium check ────────────────────────────────────────────────────────────
+// ── overlay slots (پیشخوان / پروفایل) ────────────────────────────────────────
 
-function currentTier() {
-  // Shares plus.js's cached /me (same module URL → same instance). Never rejects.
-  return import('/plus/js/api.js')
-    .then((m) => m.currentUser())
-    .then((user) => (user && user.tier) || 'free')
-    .catch(() => 'free');
+// The dashboard and profile are client-rendered views (the standalone /plus/
+// pages AND the header overlay on any page) that re-render on every open — so
+// these slots are DOM-driven, not URL-driven: watch for the anchor section
+// («استریک» on the dashboard, «پلن» on the profile — both .dcp-dash-sec blocks
+// titled by a .dcp-dash-h2) and keep one card seated right below it. Both
+// views only render for signed-in users, so in practice the audience here is
+// always "plus".
+function watchOverlaySlot(cfg, slotName, anchorTitle, audienceNow) {
+  let creative = null;
+  let card = null;
+  const seat = () => {
+    if (adsKilled) return;
+    const heads = document.querySelectorAll('.dcp-dash-sec > .dcp-dash-h2');
+    for (const h of heads) {
+      if (h.textContent.trim() !== anchorTitle) continue;
+      const sec = h.parentElement;
+      if (card && sec.nextElementSibling === card) return;
+      if (!creative) creative = pickCreative(cfg, slotName, audienceNow());
+      if (!creative) return;
+      if (!card) card = buildCard(creative, slotName);
+      sec.parentNode.insertBefore(card, sec.nextSibling);
+      impression(creative, slotName);
+      tickOnce();
+      return;
+    }
+  };
+  let scheduled = false;
+  const observer = new MutationObserver(() => {
+    if (scheduled) return;
+    scheduled = true;
+    requestAnimationFrame(() => { scheduled = false; seat(); });
+  });
+  observer.observe(document.body, { childList: true, subtree: true });
+  seat();
 }
 
+// ── premium check ────────────────────────────────────────────────────────────
+
+function currentUserSafe() {
+  // Shares plus.js's cached /me (same module URL → same instance). Never
+  // rejects; any failure = anonymous.
+  return import('/plus/js/api.js')
+    .then((m) => m.currentUser())
+    .catch(() => null);
+}
+
+let adsKilled = false;
 function removeAllAds() {
-  document.querySelectorAll('.dc-ad, .dc-ad-li').forEach((el) => el.remove());
+  adsKilled = true; // stops overlay watchers from re-seating their cards
+  document.querySelectorAll('.dc-spot').forEach((el) => el.remove());
 }
 
 // ── boot ─────────────────────────────────────────────────────────────────────
@@ -267,36 +332,51 @@ function removeAllAds() {
 async function main() {
   let cfg;
   try {
-    const res = await fetch(CONFIG_URL + ADS_V, { cache: 'no-store' });
+    const res = await fetch(CONFIG_URL + SPOT_V, { cache: 'no-store' });
     if (!res.ok) return;
     cfg = await res.json();
   } catch (_) { return; }
   if (!cfg || !cfg.enabled) return; // master off → zero trace
 
+  const slots = cfg.slots || {};
+  const slotOn = (name) => slots[name] && slots[name].enabled;
   const type = pageType();
-  if (!type || !cfg.slots || !cfg.slots[type] || !cfg.slots[type].enabled) return;
+  const pageSlot = type && slotOn(type) ? type : null;
+  const overlaySlots = [];
+  if (slotOn('dashboard')) overlaySlots.push(['dashboard', 'استریک']);
+  if (slotOn('profile')) overlaySlots.push(['profile', 'پلن']);
+  if (!pageSlot && !overlaySlots.length) return;
 
-  // Don't hold rendering hostage to a slow API: after TIER_TIMEOUT_MS assume
-  // free; if the real answer later says premium, take the ads down.
+  // Resolve the viewer once — for premium hiding AND audience targeting — but
+  // don't hold rendering hostage to a slow API: after TIER_TIMEOUT_MS assume
+  // anonymous; if the real answer later says premium, take the ads down.
+  const userPromise = currentUserSafe();
+  let user = await Promise.race([
+    userPromise,
+    new Promise((resolve) => setTimeout(() => resolve(null), TIER_TIMEOUT_MS)),
+  ]);
   if (cfg.premium_hides_ads !== false) {
-    const tierPromise = currentTier();
-    const tier = await Promise.race([
-      tierPromise,
-      new Promise((resolve) => setTimeout(() => resolve('free'), TIER_TIMEOUT_MS)),
-    ]);
-    if (tier === 'premium') return;
-    tierPromise.then((t) => { if (t === 'premium') removeAllAds(); });
+    if (user && user.tier === 'premium') return;
+    userPromise.then((u) => { if (u && u.tier === 'premium') removeAllAds(); });
+  }
+  // Late answers still sharpen targeting for overlay slots, which pick their
+  // creative only when their section actually appears in the DOM.
+  userPromise.then((u) => { if (u) user = u; });
+  const audienceNow = () => (user ? 'plus' : 'anon');
+
+  if (pageSlot) {
+    const creative = pickCreative(cfg, pageSlot, audienceNow());
+    if (creative) {
+      const renderers = { article: renderArticle, home: renderHome, player: renderPlayer, episodes: renderEpisodes };
+      const placed = renderers[pageSlot](cfg, creative);
+      if (placed) {
+        impression(creative, pageSlot);
+        tickOnce(); // advance the rotation once per ad-showing page view
+      }
+    }
   }
 
-  const creative = pickCreative(cfg, type);
-  if (!creative) return;
-
-  const renderers = { article: renderArticle, home: renderHome, player: renderPlayer, episodes: renderEpisodes };
-  const placed = renderers[type](cfg, creative);
-  if (placed) {
-    impression(creative, type);
-    lsSet(K_TICK, lsGet(K_TICK) + 1); // advance the rotation once per ad-showing page view
-  }
+  overlaySlots.forEach(([name, title]) => watchOverlaySlot(cfg, name, title, audienceNow));
 }
 
 if (document.readyState === 'loading') {

@@ -5,7 +5,9 @@
     "article": { "enabled": true, "position": "middle", "min_paragraphs": 8, "fallback": "end" },
     "home": { "enabled": true },
     "player": { "enabled": true },
-    "episodes": { "enabled": true, "position": "after_featured" }
+    "episodes": { "enabled": true, "position": "after_featured" },
+    "dashboard": { "enabled": true },
+    "profile": { "enabled": true }
   },
   "rotation": {
     "sequence": ["premium"]
