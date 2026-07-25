@@ -33,8 +33,7 @@
 import { findProseRoot } from '/plus/js/config.js';
 
 const CONFIG_URL = '/spot/spot-config.json';
-const CSS_URL = '/spot/spot.css';
-const SPOT_V = new URL(import.meta.url).search; // carry ?v= from the loader onto spot.css
+const SPOT_V = new URL(import.meta.url).search; // carry ?v= from the loader onto the config fetch
 const TIER_TIMEOUT_MS = 3000;
 // localStorage keys keep their historical names — invisible to blockers, and
 // renaming them would reset every visitor's rotation position.
@@ -115,16 +114,83 @@ function tickOnce() {
   lsSet(K_TICK, lsGet(K_TICK) + 1);
 }
 
+// ── card styles ──────────────────────────────────────────────────────────────
+
+// The CSS ships INLINE inside this module (a <style> tag, not a <link>): the
+// dentcast.ir mirror sits behind Arvan object storage + CDN, which served the
+// standalone spot.css in a way the browser refused to apply as a stylesheet
+// (content-minified, wrong/nosniffed content-type) — cards rendered unstyled.
+// One file, one request, nothing for a CDN or MIME guesser to break.
+//
+// Native look: same surfaces/typography vars as the site (dc-theme.css).
+// Orange theme — same amber family (#F5A208) as the Deonet ad inside the
+// homepage Pulse card: soft gradient tint, bold saturated border, dark body
+// text, solid-amber CTA pill. Study mode (body.dcp-study) hides all cards.
+const SPOT_CSS = `
+.dc-spot { margin: 1.25rem 0; user-select: none; -webkit-user-select: none; }
+body.dcp-study .dc-spot { display: none !important; }
+.dc-spot-link {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  padding: 1rem 1.125rem;
+  background: linear-gradient(135deg, rgba(245, 162, 8, 0.12), rgba(245, 162, 8, 0.04));
+  border: 2px solid rgba(245, 162, 8, 0.65);
+  border-radius: 16px;
+  text-decoration: none;
+  color: var(--txt, #0a1a33);
+  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.dc-spot-link:hover { border-color: #f5a208; box-shadow: 0 4px 14px rgba(245, 162, 8, 0.18); }
+.dc-spot-link:active { transform: scale(0.99); }
+.dc-spot-img { width: 44px; height: 44px; border-radius: 10px; object-fit: cover; flex: 0 0 auto; }
+.dc-spot-body { flex: 1 1 auto; min-width: 0; }
+.dc-spot-badge {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  line-height: 1;
+  padding: 0.25rem 0.5rem;
+  border-radius: 999px;
+  margin-bottom: 0.375rem;
+  color: #b07d00;
+  background: rgba(245, 162, 8, 0.16);
+  letter-spacing: 0.02em;
+}
+[data-theme="dark"] .dc-spot-badge { color: #f5b63e; background: rgba(245, 162, 8, 0.14); }
+.dc-spot-title { display: block; font-size: 0.88rem; font-weight: 800; line-height: 1.7; color: var(--txt, #0a1a33); }
+.dc-spot-text { margin: 0.25rem 0 0; font-size: 0.78rem; line-height: 1.9; color: var(--txt, #0a1a33); opacity: 0.85; }
+.dc-spot-cta {
+  flex: 0 0 auto;
+  font-size: 0.78rem;
+  font-weight: 800;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  white-space: nowrap;
+  color: #fff;
+  background: #f5a208;
+  box-shadow: 0 2px 8px rgba(245, 162, 8, 0.35);
+}
+.dc-spot--article { margin: 1.5rem 0; }
+.dc-spot--article .dc-spot-text, .dc-spot--article .dc-spot-title { margin-top: 0.25rem; }
+.dc-spot--dashboard, .dc-spot--profile { margin: 1.125rem 0; }
+.dc-spot--episodes { margin: 0.875rem 0 2.75rem; }
+@media (min-width: 720px) { .dc-spot--episodes { margin: 1rem 0 4rem; } }
+@media (max-width: 480px) {
+  .dc-spot-link { flex-wrap: wrap; }
+  .dc-spot-cta { margin-inline-start: auto; }
+}
+`;
+
 // ── card DOM ─────────────────────────────────────────────────────────────────
 
 let cssInjected = false;
 function injectCss() {
   if (cssInjected) return;
   cssInjected = true;
-  const link = document.createElement('link');
-  link.rel = 'stylesheet';
-  link.href = CSS_URL + SPOT_V;
-  document.head.appendChild(link);
+  const style = document.createElement('style');
+  style.textContent = SPOT_CSS;
+  document.head.appendChild(style);
 }
 
 function isSponsor(creative) {

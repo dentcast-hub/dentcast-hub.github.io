@@ -62,8 +62,12 @@ THIS workflow — never the publishing router, even if the user also pastes
    resulting pattern back in the report.
 7. **Config edits are live instantly; engine edits need a version bump.**
    `spot-config.json` is fetched `no-store` — publish is commit+push, done.
-   Only if `spot/spot.js` or `spot/spot.css` themselves change, bump `SPOT_V`
-   in the ads loader at the end of `dc-nav.js`.
+   Only if `spot/spot.js` itself changes, bump `SPOT_V` in the ads loader
+   at the end of `dc-nav.js`. The card CSS lives INSIDE `spot.js` (the
+   `SPOT_CSS` constant, injected as a `<style>` tag) — never split it back
+   into a standalone .css file: the Arvan CDN on the `.ir` mirror mangled
+   the separate stylesheet (minified it and served it so the browser
+   refused to apply it) and every card rendered unstyled.
 8. **Images are self-hosted.** An attached image goes to
    `spot/img/<id>.webp` (convert to webp when tooling allows; otherwise
    keep the original extension), referenced root-relative in `image`.
