@@ -88,6 +88,10 @@ body.dcp-study .dc-ad-li { display: none !important; }
 .dc-ad--article { margin: 1.5rem 0; }
 .dc-ad--article .dc-ad-text, .dc-ad--article .dc-ad-title { margin-top: 0.25rem; }
 
+/* پیشخوان (below «استریک») and پروفایل (below «پلن») cards sit between
+   .dcp-dash-sec blocks inside the plus views. */
+.dc-ad--dashboard, .dc-ad--profile { margin: 1.125rem 0; }
+
 /* Episodes page: one card right below the «اپیزود پیشنهادی» section. Sitting
    between two .section blocks breaks their `.section + .section` top-margin
    chain, so this card restores the section rhythm itself: tight to the

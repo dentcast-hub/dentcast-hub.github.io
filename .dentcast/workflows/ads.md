@@ -35,9 +35,9 @@ THIS workflow — never the publishing router, even if the user also pastes
 3. **Schema is sacred.** A new sponsor entry copies the exact field shape
    of the existing entries in `creatives.sponsors` (`id`, `enabled`,
    `badge`, `title`, `text`, `cta`, `url`, `image`, `weight`, optional
-   `slots`). Free-text human notes may go in an extra `note` field (the
-   engine ignores unknown fields) — nothing else new. Append new sponsors
-   at the END of the array.
+   `slots`, optional `audience`). Free-text human notes may go in an extra
+   `note` field (the engine ignores unknown fields) — nothing else new.
+   Append new sponsors at the END of the array.
 4. **Ask, don't guess (Hard Rule 13 of the publishing router applies
    verbatim).** URLs, ad copy the user didn't supply, image choice, slot
    placement, rotation share, and contract dates are never invented. Copy
@@ -95,10 +95,15 @@ combined question message, with concrete options where possible:
    material, draft the three fields and show them for confirmation.
 4. **عکس** — attached file, an image they'll send, or none (`image: null`).
 5. **کجا نمایش داده بشه** — which slots: مقاله / صفحهٔ اصلی / آرشیو
-   اپیزودها / پلیر، یا همه‌جا (= omit the `slots` field). Offer the
-   currently-enabled slots as the default. If they name a disabled slot,
-   ask whether to enable it (that switch affects ALL ads in that slot —
-   say so).
+   اپیزودها / پلیر / پیشخوان / پروفایل، یا همه‌جا (= omit the `slots`
+   field). Offer the currently-enabled slots as the default. If they name
+   a disabled slot, ask whether to enable it (that switch affects ALL ads
+   in that slot — say so).
+5b. **کی ببینه** — audience targeting is OPTIONAL and defaults to everyone;
+   do NOT ask about it unless the user brings it up. When they do
+   («لاگین‌نشده‌ها اینو ببینن»), set the creative's `audience` field:
+   `["anon"]` (signed-out) / `["plus"]` (signed-in non-premium). Premium
+   users never see ads regardless.
 6. **سهم چرخش** — فعلاً طبق همین چرخش موجود، یا سهم مشخص؟ (rule 6; only
    relevant when a sponsor is being added or a share is requested).
 7. **مدت/قرارداد** — start/end date if any → recorded in `note` (the

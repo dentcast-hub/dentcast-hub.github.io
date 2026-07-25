@@ -2168,7 +2168,7 @@
 (function () {
   if (window.__dcAdsLoaded) return;
   window.__dcAdsLoaded = true;
-  var ADS_V = '4';
+  var ADS_V = '5';
   var js = document.createElement('script');
   js.type = 'module';
   js.src = '/ads/ads.js?v=' + ADS_V;
