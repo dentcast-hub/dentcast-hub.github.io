@@ -5,7 +5,7 @@ import { buildFolderTree, getFolders, folderOf } from '../content-index.js';
 import { config } from '../config.js';
 import { QUALIFYING_ACTIONS, streakIsAlive, displayStreak } from '../services/streak.js';
 import {
-  computeScore, freezesAvailable, pointsToNextFreeze,
+  computeScore, freezesUsedCount, freezesAvailable, pointsToNextFreeze,
   SHIELD_CAP, SHIELD_POINTS, SCORING_ACTIONS,
 } from '../services/score.js';
 import { dayInTz, previousDay, nextDay, weekStartSaturday } from '../services/time.js';
@@ -160,10 +160,10 @@ export async function dashboardRoutes(app: FastifyInstance): Promise<void> {
     const { score, active_days: activeDays } = await computeScore(pool, userId);
     const totalHl = stats.rows[0]?.total_highlights ?? 0;
 
-    // Streak shields (سپر استریک): one granted per SHIELD_POINTS threshold the
-    // score crosses, at most SHIELD_CAP held (a grant on a full pair is burned),
-    // spent automatically to save the streak on a missed day (see score.ts).
-    const freezesAvail = await freezesAvailable(pool, userId, score);
+    // Streak shields (سپر استریک): one per SHIELD_POINTS of score, capped, spent
+    // automatically to save the streak on a missed day (see the streak engine).
+    const freezesUsed = await freezesUsedCount(pool, userId);
+    const freezesAvail = freezesAvailable(score, freezesUsed);
 
     // Streak shown as 0 once the run can no longer be saved (cache is lazy);
     // reuses the shields already computed above instead of re-querying.

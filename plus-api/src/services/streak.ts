@@ -1,6 +1,6 @@
 import type pg from 'pg';
 import { previousDay, dayDiff } from './time.js';
-import { computeScore, freezesAvailable } from './score.js';
+import { computeScore, freezesUsedCount, freezesAvailable } from './score.js';
 
 /**
  * Streak engine (spec section 4). A day counts if the user performed at least
@@ -97,7 +97,8 @@ export async function displayStreak(
   if (!last) return 0;
   if (dayDiff(today, last) <= 1) return prev.current_streak;
   const { score } = await computeScore(db, userId);
-  const shields = await freezesAvailable(db, userId, score);
+  const used = await freezesUsedCount(db, userId);
+  const shields = freezesAvailable(score, used);
   return streakIsAlive(last, today, shields) ? prev.current_streak : 0;
 }
 
@@ -115,11 +116,11 @@ export async function applyStreak(client: pg.PoolClient, userId: string, day: st
   if (res.rowCount === 0) return;
   const prev = res.rows[0];
 
-  // Shields available right now (to bridge a missed-day gap), read BEFORE this
-  // event's own streak_freeze_used rows are appended below. Same math the
+  // Shields available right now (to bridge a missed-day gap). Same math the
   // dashboard shows, so display and engine never disagree.
   const { score } = await computeScore(client, userId);
-  const shields = await freezesAvailable(client, userId, score);
+  const used = await freezesUsedCount(client, userId);
+  const shields = freezesAvailable(score, used);
 
   const { next, counted, shieldsUsed } = computeStreakUpdate(prev, day, shields);
   if (!counted) return;

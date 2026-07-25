@@ -123,7 +123,7 @@ function scoreBlock(progress) {
     el('span', { class: 'dcp-freeze-label' }, 'سپر استریک: ' + faNum(available) + ' از ' + faNum(cap)),
   ]));
 
-  let hint = 'اگر یک روز فعالیت نکنید، یک سپر خرج می‌شود و استریکتان حفظ می‌شود. سپر با امتیاز باز می‌شود (نه با XP لیگ) و امتیازتان هم کم نمی‌شود: به ازای هر ' + faNum(points) + ' امتیاز یک سپر، تا سقف ' + faNum(cap) + ' سپر. اگر هر دو خانه پر باشد، سپرِ آستانه‌ی بعدی از بین می‌رود و ذخیره نمی‌شود.';
+  let hint = 'اگر یک روز فعالیت نکنید، یک سپر خرج می‌شود و استریکتان حفظ می‌شود. سپر با امتیاز باز می‌شود (نه با XP لیگ) و امتیازتان هم کم نمی‌شود: به ازای هر ' + faNum(points) + ' امتیاز یک سپر، تا سقف ' + faNum(cap) + '.';
   if (available < cap && f.next_in) hint += ' ' + faNum(f.next_in) + ' امتیاز تا سپر بعدی.';
   wrap.appendChild(el('p', { class: 'dcp-freeze-hint' }, hint));
   return wrap;
