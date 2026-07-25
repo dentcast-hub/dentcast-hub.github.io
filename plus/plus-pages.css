@@ -86,7 +86,9 @@ a.dcp-progress-name:hover { color: var(--ac, #0b5fff); text-decoration: underlin
 .dcp-freeze-icons { display: inline-flex; gap: 2px; }
 .dcp-freeze-ico { font-size: 1.15rem; line-height: 1; }
 .dcp-freeze-ico.is-empty { filter: grayscale(1); opacity: .3; }
-.dcp-freeze-label { font-weight: 600; }
+/* Same ink and weight as the rest of the card's text — the shield state lives in
+   the icons, never in a lighter label. */
+.dcp-freeze-label { color: var(--txt, #0a1a33); font-weight: 600; opacity: 1; }
 .dcp-freeze-hint { margin: 0; color: var(--txt2, #4a5f85); font-size: .8rem; line-height: 1.7; }
 
 /* ---- recent highlights (each removable) ---------------------------------- */

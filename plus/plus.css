@@ -114,6 +114,9 @@
   cursor: pointer; margin-inline-start: auto; flex: 0 0 auto; }
 .dc-plus-info:hover { color: var(--dcp-ink); border-color: var(--dcp-muted); }
 .dc-plus-scorecap { margin: 0; font-size: .82rem; color: var(--dcp-muted); line-height: 1.8; }
+/* one caption line per topic (score, then سپر) — a paragraph each, not a wall */
+.dc-plus-capline { display: block; }
+.dc-plus-capline + .dc-plus-capline { margin-top: 5px; }
 /* row 3: connection chips demoted under a divider */
 .dc-plus-connrow { border-top: 1px solid var(--dcp-line); padding-top: 10px; }
 .dc-plus-connrow .dc-plus-chips { margin-top: 0; }
@@ -199,16 +202,15 @@
 .dc-plus-score-n { font-size: 1.2rem; }
 .dc-plus-score-lbl { font-weight: 400; opacity: .8; font-size: .9rem; }
 
-/* streak shields (سپر) — styled like the score badge (icons + number + label),
-   mirroring the پیشخوان's shield row: filled icon = a shield in hand, dimmed
-   slot = empty. With zero shields the whole badge fades back. */
-.dc-plus-shield { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; }
+/* streak shields (سپر) — identical typography to the streak/score badges beside
+   it (same color, weight and label opacity); only the ICONS carry the
+   filled/empty state, never the text, so the rail reads as one row. */
+.dc-plus-shield { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; color: inherit; }
 .dc-plus-shield-icos { display: inline-flex; gap: 2px; }
 .dc-plus-shield-ico { font-size: 1.05rem; line-height: 1; }
 .dc-plus-shield-ico.is-empty { filter: grayscale(1); opacity: .3; }
 .dc-plus-shield-n { font-size: 1.2rem; }
 .dc-plus-shield-lbl { font-weight: 400; opacity: .8; font-size: .9rem; }
-.dc-plus-shield.is-none { opacity: .65; }
 
 /* ===== weekly league =================================================== */
 /* tier shield badge — material gradient per tier, low (acrylic) to high (titanium) */
