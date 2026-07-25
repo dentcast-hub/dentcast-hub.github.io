@@ -114,6 +114,17 @@ function tickOnce() {
   lsSet(K_TICK, lsGet(K_TICK) + 1);
 }
 
+// Per-SLOT audience gate, independent of per-creative "audience": a slot with
+// "audience": ["anon"] renders only for signed-out visitors, ["plus"] only for
+// signed-in non-premium users; no field = both (default). This decides whether
+// the PLACEMENT exists for this viewer at all — per-creative audience then
+// decides which campaign fills it. Checked lazily (at seat/open time) so late
+// /me answers still count for the DOM-driven slots.
+function slotAllows(cfg, name, audience) {
+  const s = cfg.slots && cfg.slots[name];
+  return !!(s && s.enabled && (!Array.isArray(s.audience) || s.audience.includes(audience)));
+}
+
 // ── card styles ──────────────────────────────────────────────────────────────
 
 // The CSS ships INLINE inside this module (a <style> tag, not a <link>): the
@@ -358,7 +369,7 @@ function watchOverlaySlot(cfg, slotName, anchorTitle, audienceNow) {
   let creative = null;
   let card = null;
   const seat = () => {
-    if (adsKilled) return;
+    if (adsKilled || !slotAllows(cfg, slotName, audienceNow())) return;
     const heads = document.querySelectorAll('.dcp-dash-sec > .dcp-dash-h2');
     for (const h of heads) {
       if (h.textContent.trim() !== anchorTitle) continue;
@@ -397,7 +408,7 @@ function setupSearchSlot(cfg, audienceNow) {
   if (!box || !results || !results.parentNode) return;
   const isOpen = () => box.classList.contains('open') || document.body.classList.contains('dc-search-mode');
   const seat = () => {
-    if (adsKilled) return;
+    if (adsKilled || !slotAllows(cfg, 'search', audienceNow())) return;
     const creative = pickCreative(cfg, 'search', audienceNow());
     if (!creative) return;
     results.parentNode.insertBefore(buildCard(creative, 'search'), results);
@@ -421,6 +432,7 @@ function setupSearchSlot(cfg, audienceNow) {
 // switches to it, so the card is inserted up front (it shows/hides with the
 // panel) but its impression is counted only when it actually becomes visible.
 function setupArchiveSlot(cfg, audienceNow) {
+  if (!slotAllows(cfg, 'archive', audienceNow())) return;
   const title = Array.from(document.querySelectorAll('.dc-list-card .dc-list-card-title'))
     .find((el) => el.textContent.trim().indexOf('اپیزودهای پادکست') === 0);
   const anchor = title && title.closest('.dc-list-card');
@@ -494,7 +506,7 @@ async function main() {
   userPromise.then((u) => { if (u) user = u; });
   const audienceNow = () => (user ? 'plus' : 'anon');
 
-  if (pageSlot) {
+  if (pageSlot && slotAllows(cfg, pageSlot, audienceNow())) {
     const creative = pickCreative(cfg, pageSlot, audienceNow());
     if (creative) {
       const renderers = { article: renderArticle, home: renderHome, player: renderPlayer, episodes: renderEpisodes };

@@ -123,16 +123,26 @@ combined question message, with concrete options where possible:
    If they name a disabled slot, ask whether to enable it (that switch
    affects ALL ads in that slot — say so).
 5b. **کی ببینه** — audience targeting is OPTIONAL and defaults to everyone;
-   do NOT ask about it unless the user brings it up. When they do
-   («لاگین‌نشده‌ها اینو ببینن»), set the creative's `audience` field:
-   `["anon"]` (signed-out) / `["plus"]` (signed-in non-premium). Premium
-   users never see ads regardless.
+   do NOT ask about it unless the user brings it up. Two independent
+   layers, both `["anon"]` (signed-out) / `["plus"]` (signed-in
+   non-premium), missing = both:
+   - **per-creative** `audience` — which campaign fills a placement
+     («لاگین‌نشده‌ها اینو ببینن» → set it on the creative);
+   - **per-slot** `audience` — whether the placement exists for that
+     viewer at all («جایگاه اپیزودها فقط برای لاگین‌نشده‌ها» → set it on
+     the slot in `slots`).
+   Premium users never see ads regardless of either layer.
 6. **سهم چرخش** — فعلاً طبق همین چرخش موجود، یا سهم مشخص؟ (rule 6; only
    relevant when a sponsor is being added or a share is requested).
 7. **مدت/قرارداد** — start/end date if any → recorded in `note` (the
    engine has no scheduler; expiry is a manual `enabled: false` later —
    tell the user that plainly, and that they can just say «تبلیغ X رو
    خاموش کن» when the time comes).
+8. **قیمت** — pricing questions are answered ONLY from `spot/PRICING.md`
+   (per-slot ratios of the bundle price X, combination-discount ladder,
+   rotation-share proration, contract-length discounts). Never invent
+   numbers; if the rial value of X is unknown, quote the ratios and ask
+   the user for X.
 
 ## Phase C — Apply
 
