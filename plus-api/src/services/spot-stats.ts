@@ -89,7 +89,7 @@ export function isCalendarDay(v: unknown): v is string {
 // The bucket a day belongs to. `week` is the IRANIAN week (Saturday start), to
 // match the league/streak week used everywhere else — not date_trunc('week'),
 // which is Monday-based.
-const PERIOD_SQL: Record<GroupBy, string> = {
+export const PERIOD_SQL: Record<GroupBy, string> = {
   day: 'day',
   week: "(day - (((extract(dow from day)::int) + 1) % 7) * interval '1 day')::date",
   month: "date_trunc('month', day)::date",

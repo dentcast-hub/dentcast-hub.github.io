@@ -9,6 +9,7 @@ import { normalizePhone } from '../services/phone.js';
 import {
   getSpotStats, defaultRange, isCalendarDay, type GroupBy,
 } from '../services/spot-stats.js';
+import { withPageViews } from '../services/view-stats.js';
 import { notifications } from '../providers/registry.js';
 import type { NotificationMessage } from '../providers/notifications/types.js';
 
@@ -113,7 +114,11 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
     if (!['day', 'week', 'month'].includes(groupBy)) {
       return reply.code(400).send({ error: 'invalid_group_by' });
     }
-    return reply.send(await getSpotStats({ from, to, groupBy }));
+    // Impressions are returned together with the page views that could have
+    // produced them: a delivery number is unreadable on its own, and the guest
+    // ratio in particular is the only way to tell a quiet day apart from a hole
+    // in the pipeline.
+    return reply.send(await withPageViews(await getSpotStats({ from, to, groupBy })));
   });
 
   // POST /admin/articles/published - the `article_published` event. The publish
