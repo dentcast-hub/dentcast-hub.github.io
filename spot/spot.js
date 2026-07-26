@@ -32,6 +32,12 @@
 // "audience": ["anon"|"plus"] (who sees it). No field = everyone, everywhere —
 // so by default signed-out and signed-in visitors see the same campaign.
 //
+// Measurement: every render sends ad_impression and every click ad_click to
+// GA4, each carrying ad_slot (which placement), ad_creative (which campaign)
+// and viewer ("anon" | "plus"). Signed-out visitors are measured exactly like
+// signed-in ones — GA4 identifies by its own first-party cookie, no login
+// involved. Reporting recipe: .dentcast/workflows/spot-report.md.
+//
 // The article card is inserted at a SECTION BOUNDARY (before the middle h2/h3)
 // so it can never sit inside a sentence a workbench highlight spans, and it is
 // user-select:none + hidden entirely in study mode (body.dcp-study) so the
@@ -63,6 +69,15 @@ function track(name, params) {
   if (window.gtag) send();
   else window.addEventListener('load', () => setTimeout(send, 0), { once: true });
 }
+
+// Viewer class carried on every ad event as the "viewer" parameter: "anon"
+// (signed-out) or "plus" (signed-in, non-premium). Premium never reaches a
+// track() call — those users see no ads at all — so the dimension only ever
+// carries these two values and "premium = 0 impressions" is by construction,
+// not something to read out of the data. Resolved at EVENT time rather than
+// card-build time, so a /me answer that lands late still labels the click
+// correctly (the same lazy rule the targeting layer already uses).
+let viewerNow = () => 'anon';
 
 // ── creative selection ───────────────────────────────────────────────────────
 
@@ -314,18 +329,25 @@ function buildCard(creative, slotName) {
   }
 
   a.addEventListener('click', () => {
-    track('ad_click', { ad_slot: slotName, ad_creative: creative.id || 'unknown' });
+    track('ad_click', { ad_slot: slotName, ad_creative: creative.id || 'unknown', viewer: viewerNow() });
   });
   aside.appendChild(a);
   return aside;
 }
 
+// One impression per PLACEMENT per PAGE VIEW — the standard ad-server rule, and
+// the one the reporting depends on: the number a report calls "بار دیده شده" is
+// the GA4 event COUNT, never the user count. A visitor who opens 20 pages
+// generates 20 impressions; a page carrying three enabled slots generates three
+// (one per card on screen). The Set below only stops the SAME card on the SAME
+// page from being counted twice when an overlay watcher re-seats it — it never
+// collapses repeat views across pages.
 const seenImpressions = new Set();
 function impression(creative, slotName) {
   const key = slotName + ':' + (creative.id || '');
   if (seenImpressions.has(key)) return;
   seenImpressions.add(key);
-  track('ad_impression', { ad_slot: slotName, ad_creative: creative.id || 'unknown' });
+  track('ad_impression', { ad_slot: slotName, ad_creative: creative.id || 'unknown', viewer: viewerNow() });
 }
 
 // ── page detection ───────────────────────────────────────────────────────────
@@ -572,6 +594,7 @@ async function main() {
   // creative only when their section actually appears in the DOM.
   userPromise.then((u) => { if (u) user = u; });
   const audienceNow = () => (user ? 'plus' : 'anon');
+  viewerNow = audienceNow; // same answer drives targeting AND the measurement label
 
   if (pageSlot && slotAllows(cfg, pageSlot, audienceNow())) {
     const creative = pickCreative(cfg, pageSlot, audienceNow());

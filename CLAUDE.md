@@ -54,6 +54,19 @@ what fills the rest** — the rotation advances once per **session**, so a
 four-entry `rotation.sequence` = four visits, and an ad assigned to no beat
 renders never (ads.md hard rule 6 + Phase B question 6).
 
+## Ad-reporting protocol (trigger)
+
+When the user asks for **ad numbers** — «گزارش تبلیغ بده», «آمار تبلیغات»,
+«تبلیغ‌ها ماه گذشته چقدر دیده شدن؟», «کلیک اسپانسر X چقدر بوده؟» — read
+`.dentcast/workflows/spot-report.md` and follow it. This is read-only: no
+config edit, no publish. Every ad render/click already reports to GA4
+(`ad_impression`/`ad_click` with `ad_slot`, `ad_creative`, `viewer`), so the
+report is a lookup, not a build. Two rules that decide whether the answer is
+right: the headline number is always the **Event count** (تعداد بارِ نمایش —
+one person seeing an ad 20 times is 20, never "users"), and **premium is zero
+by design, not by measurement**. Numbers are never guessed — if the data isn't
+in hand, hand over the recipe instead.
+
 ## Attached paper file (trigger — ANY type, file-driven)
 
 The paper actions are triggered by the **paper file itself**, *not* by the
