@@ -6,119 +6,128 @@ over a day / week / month.
 
 **Trigger (registered in `CLAUDE.md`):** the user asks for ad numbers —
 «گزارش تبلیغ بده», «آمار تبلیغات», «تبلیغ‌ها چقدر دیده شدن؟», «ماه گذشته چند
-تا ایمپرشن داشتیم؟», «کلیک اسپانسر X چقدر بوده؟». No config is edited in this
+تا نمایش داشتیم؟», «کلیک اسپانسر X چقدر بوده؟». No config is edited in this
 workflow — it is read-only reporting.
 
 ---
 
-## What the data is
+## Two recorders, one of them authoritative
 
-`spot/spot.js` sends two GA4 events (property `G-GMM0WC8X3M`), each with three
-parameters:
+Every render and click is reported twice by `spot/spot.js`:
 
-| رویداد | معنی |
-|---|---|
-| `ad_impression` | یک کارت تبلیغ روی صفحه رندر شد |
-| `ad_click` | کاربر روی کارت کلیک کرد |
+| | مقصد | رویدادها | نقش |
+|---|---|---|---|
+| **۱** | **API خودمان** (`api.dentcast.ir` / `.org`) | `spot_impression` / `spot_click` | **منبع اصلی** |
+| ۲ | GA4 (`G-GMM0WC8X3M`) | `ad_impression` / `ad_click` | کنترل متقابل |
 
-| پارامتر | مقادیر |
-|---|---|
-| `ad_slot` | `article`, `home`, `player`, `episodes`, `dashboard`, `profile`, `search`, `archive` |
-| `ad_creative` | `premium`, `brand-invite`, و id هر اسپانسر |
-| `viewer` | `anon` (لاگین‌نکرده) — `plus` (لاگین‌کردهٔ رایگان) |
+**Our own API is the source of truth, and that is not a preference — it is a
+data-quality fact.** Adblock filter lists block `googletagmanager.com` but not
+a same-site subdomain, so GA structurally undercounts while the first-party
+counters do not. Quote GA numbers only as a cross-check, and never mix the two
+in one total.
+
+Client → server mapping (`spot/spot.js`, function `report()`):
+
+- مهمان → `POST /anon/event` با `{ event, content_id }`
+- لاگین‌کرده → `POST /activity` با `{ action, content_id }`
+- `content_id` = `"<slot>:<creative>"` (مثل `home:sponsor-x`)
+- `viewer` را **سرور** از روی کوکی سشن پر می‌کند، نه کلاینت — پس برچسب
+  مهمان/پلاس قابل جعل یا اشتباه‌شدن از سمت مرورگر نیست.
+
+Server side stores aggregate counters keyed `(day, slot, creative, viewer,
+kind)` — a few hundred rows a month, no per-user attribution for ad views by
+design. Days are **Asia/Tehran** calendar days (same boundary as the streak
+engine); week buckets start **Saturday**.
 
 ---
 
 ## Hard rules for every report
 
-1. **واحد = تعداد بارِ نمایش، نه تعداد آدم.** Always read the GA4 metric
-   **Event count**. NEVER report "Total users" as the headline number: the
-   user has stated explicitly that one person seeing an ad 20 times while
-   browsing counts as 20. Users may be quoted as a secondary line («این ۲۰
-   هزار نمایش از حدود ۳٬۱۰۰ مرورگر آمده») but never as the main figure.
+1. **واحد = تعداد بارِ نمایش، نه تعداد آدم.** The counters literally count
+   events, and there is deliberately no per-user attribution — so "چند نفر"
+   is not answerable from this data and must not be implied. The user has
+   stated explicitly that one person seeing an ad 20 times while browsing
+   counts as 20.
 2. **پریمیوم همیشه صفر است — و این داده نیست، تعریف است.** Premium users see
    no ads, so they emit no events. Say «پریمیوم: تبلیغ نمی‌بیند (طبق طراحی)»,
    never «پریمیوم: ۰ نمایش» as if it were measured.
-3. **همیشه بگو عدد کفِ واقعیت است.** Adblockers block `googletagmanager.com`
-   (not the cards themselves — Spot's naming is blocker-neutral), so every
-   number is an undercount. Impressions and clicks are lost together for the
-   same visitor, so **CTR stays roughly honest while absolute counts do not**.
-   Put this line in every sponsor-facing report.
+3. **عدد سرور تقریباً کامل است؛ عدد GA کفِ واقعیت.** Only three things still
+   cost the first-party counters an event: a visitor who blocks *all*
+   third-party-ish XHR, a request lost in flight, and the rate limit below.
+   Never carry GA's heavy-undercount disclaimer over to server numbers — that
+   would understate real inventory in a sponsor report.
 4. **ایمپرشن یعنی «رندر شد»، نه «دیده شد».** Only the `archive` slot verifies
    viewport visibility (IntersectionObserver). Everything else — including the
    in-article card — counts at insertion, even if the visitor never scrolls to
    it. State this whenever CTR is quoted.
-5. **تاریخ شروع دادهٔ تفکیکی: ۱۴۰۵/۰۵/۰۴ (2026-07-26).** The `viewer`
-   parameter shipped that day, and GA4 custom dimensions are **not
-   retroactive**. Any request covering earlier dates gets totals only, with a
-   plain sentence saying the anon/plus split does not exist for that period.
-   Never back-fill, estimate, or interpolate the missing split.
-6. **هیچ عددی حدس زده نمی‌شود.** If the data is not in hand (see next
-   section), say so and hand over the recipe — an invented or "typical"
-   number in a sponsor report is worse than no report.
+5. **تاریخ شروع: ۱۴۰۵/۰۵/۰۴ (2026-07-26)** — the day the client emitter
+   shipped. There is **no** ad data of any kind before it. For GA's `viewer`
+   split the same date applies (custom dimensions are not retroactive). Any
+   request covering earlier dates gets a plain sentence saying so. Never
+   back-fill, estimate, or interpolate.
+6. **سقف نرخ: ۶۰۰ رویداد در ساعت** per IP (guests) or per user (signed-in),
+   `SPOT_EVENT_MAX_PER_IP_PER_HOUR`. Iranian mobile readers share NAT
+   addresses, so a very busy hour on one carrier IP can shed events. If a
+   report shows a suspiciously flat ceiling on a peak day, say so rather than
+   presenting it as demand.
+7. **هیچ عددی حدس زده نمی‌شود.** If the data is not in hand, say so and hand
+   over the command — an invented or "typical" number in a sponsor report is
+   worse than no report.
 
 ---
 
-## Where the numbers come from (in order)
+## Where the numbers come from
 
-1. **A Google Analytics connector/API, if one is ever available in the
-   session.** Check first; there is none by default.
-2. **An export the user provides.** Ask them to run the exploration below and
-   export CSV → then read it (a file drop, or Google Drive, which IS
-   available). This is the practical path today.
-3. **Neither → hand over the recipe** in the next section so they can read it
-   themselves in two minutes, and offer path 2 for next time.
+**Primary — the admin endpoint** (founder-only, HTTP Basic):
 
-**Say which path was used at the top of the report.** A report built from an
-export the user supplied is evidence; a recipe is not a report.
+```
+GET /admin/spot/stats?from=YYYY-MM-DD&to=YYYY-MM-DD&group_by=day|week|month
+```
 
----
+Inclusive Tehran days; default window = last 30 days. Returns `totals`,
+`by_period`, `by_slot`, `by_creative`, `by_viewer` (each with `impressions`,
+`clicks`, `ctr_pct`) plus raw `period × slot × creative × viewer` rows — i.e.
+every split this workflow needs, already aggregated.
 
-## One-time GA4 setup (do this before any real reporting)
+**The credentials are the founder's and are NOT in this repo — never ask for
+them, never store them anywhere in the repo.** So in practice:
 
-Event parameters do not appear in GA4 reports until they are registered as
-custom dimensions, and registration is not retroactive — so this must happen
-BEFORE a sponsor contract starts, not at the end of it.
+1. Ask the user to run the request and paste/drop the JSON (Google Drive works
+   too). Hand them the exact line, filled in with real dates:
+   ```
+   curl -u '<user>:<pass>' 'https://api.dentcast.ir/admin/spot/stats?from=2026-07-01&to=2026-07-31&group_by=week'
+   ```
+2. Then render it in the report shape below. The JSON already carries every
+   split, so this is formatting, not computation — recompute nothing except
+   percentages you show.
+3. If they'd rather not run it, fall back to GA (recipe below) and label the
+   report «از GA — کفِ واقعیت» in its first line.
 
-`Admin → Data display → Custom definitions → Create custom dimension`, three
-times, scope **Event**:
-
-| Dimension name | Event parameter |
-|---|---|
-| Ad slot | `ad_slot` |
-| Ad creative | `ad_creative` |
-| Viewer | `viewer` |
-
-Also recommended once: `Admin → Data retention → 14 months` (the 2-month
-default silently truncates Explorations, which is where these reports live).
-
-Verification without waiting: `Reports → Realtime` or `DebugView` shows the
-parameters live even before registration.
+**Say which source was used at the top of every report.** A report built from
+the admin endpoint is evidence; a recipe is not a report.
 
 ---
 
-## The exploration (month / week / day)
+## GA cross-check (secondary)
 
-`Explore → Free form`:
+GA only shows the ad parameters once they are registered as custom dimensions
+(`Admin → Data display → Custom definitions`, scope **Event**): `ad_slot`,
+`ad_creative`, `viewer`. Not retroactive. Then `Explore → Free form` with
+those dimensions + `Date`/`Week`/`Month`, metric **Event count**, filtered to
+`Event name` = `ad_impression` or `ad_click`.
 
-- **Dimensions:** `Ad creative`, `Ad slot`, `Viewer`, plus a date dimension —
-  `Date` (روزانه), `Week`, or `Month` (or `Nth month` for «ماه گذشته»).
-- **Metric:** `Event count`.
-- **Filter:** `Event name` exactly matches `ad_impression` (نمایش‌ها) or
-  `ad_click` (کلیک‌ها).
-- **Date range:** Last 7 days / Last 28 days / Last month, per the ask.
-
-Rows come out as `creative × slot × viewer × period`, which is exactly the
-breakdown the user asked for; sum or pivot as needed.
+Useful for one thing above all: comparing GA's total against the server's
+total estimates **what share of the audience runs an adblocker** — a genuinely
+interesting number for the business, and worth surfacing when both are in hand.
 
 ---
 
 ## Report shape (Persian, this order)
 
 ```
-بازهٔ ‹…› — منبع: ‹اکسپورت کاربر / …›
+بازهٔ ‹…› — منبع: ‹API خودمان / GA›
 
-کل نمایش: ‹N›   کل کلیک: ‹M›   CTR: ‹M/N›
+کل نمایش: ‹N›   کل کلیک: ‹M›   CTR: ‹…٪›
 
 به تفکیک بیننده:
   مهمان (لاگین‌نکرده): ‹…› نمایش، ‹…› کلیک
@@ -127,19 +136,23 @@ breakdown the user asked for; sum or pivot as needed.
 
 به تفکیک تبلیغ:  ‹creative›: ‹…›  …
 به تفکیک جایگاه: صفحهٔ اصلی ‹…› / مقاله ‹…› / جستجو ‹…› / …
+روند: ‹by_period، روز/هفته/ماه بسته به درخواست›
 
-هشدارها: کفِ واقعیت (ادبلاک) — ایمپرشن = رندر نه لزوماً دیده‌شدن
+هشدارها: ‹فقط آن‌هایی که واقعاً به این بازه مربوط‌اند›
 ```
 
-Translate slot ids to Persian names for the user («صفحهٔ اصلی» = `home`,
-«مقاله» = `article`, «جستجوی سراسری» = `search`, «تب آرشیو» = `archive`,
-«پلیر» = `player`, «آرشیو اپیزودها» = `episodes`, «پیشخوان» = `dashboard`,
-«پروفایل» = `profile`).
+Translate slot ids to Persian for the user («صفحهٔ اصلی» = `home`, «مقاله» =
+`article`, «جستجوی سراسری» = `search`, «تب آرشیو» = `archive`, «پلیر» =
+`player`, «آرشیو اپیزودها» = `episodes`, «پیشخوان» = `dashboard`, «پروفایل» =
+`profile`).
 
 Two comparisons worth adding unprompted when the data allows:
+
 - **سهم هر تبلیغ در برابر سهم زمان‌هایش** — with `advance: "session"`, a
   campaign holding 2 of 4 زمان‌ها should land near half the impressions. A big
   gap means an `audience`/`slots` gate is quietly falling back (`ads.md`
   rule 9's silent surprise).
-- **دو دامنه یک property‌اند** — `.org` and `.ir` share the tag, so split by
-  the `Hostname` dimension when the user asks «کدام دامنه؟».
+- **مهمان در برابر پلاس** — the split is a real audience fact (not a sampling
+  artifact), so it is safe to reason about: it says which visitor class the
+  inventory actually reaches, and therefore which `audience` targeting is
+  worth selling.

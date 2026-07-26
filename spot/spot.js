@@ -32,11 +32,13 @@
 // "audience": ["anon"|"plus"] (who sees it). No field = everyone, everywhere —
 // so by default signed-out and signed-in visitors see the same campaign.
 //
-// Measurement: every render sends ad_impression and every click ad_click to
-// GA4, each carrying ad_slot (which placement), ad_creative (which campaign)
-// and viewer ("anon" | "plus"). Signed-out visitors are measured exactly like
-// signed-in ones — GA4 identifies by its own first-party cookie, no login
-// involved. Reporting recipe: .dentcast/workflows/spot-report.md.
+// Measurement: every render and click is reported TWICE — to GA4
+// (ad_impression / ad_click with ad_slot, ad_creative, viewer) and to our own
+// API (spot_impression / spot_click on /anon/event for guests, /activity for
+// signed-in users). Our API is the source of truth because adblockers drop GA
+// but not a same-site subdomain; GA stays as the cross-check. Signed-out
+// visitors are measured exactly like signed-in ones — no login is involved in
+// counting. Reporting recipe: .dentcast/workflows/spot-report.md.
 //
 // The article card is inserted at a SECTION BOUNDARY (before the middle h2/h3)
 // so it can never sit inside a sentence a workbench highlight spans, and it is
@@ -78,6 +80,43 @@ function track(name, params) {
 // card-build time, so a /me answer that lands late still labels the click
 // correctly (the same lazy rule the targeting layer already uses).
 let viewerNow = () => 'anon';
+
+// ── first-party telemetry (our own API, alongside GA) ────────────────────────
+
+// GA4 loses every adblocked visitor (googletagmanager.com is on EasyList; the
+// Spot cards themselves are not). So the same two events also go to our own
+// API, which is a same-site subdomain no filter list touches — those counters
+// are the real numbers, GA is the cross-check.
+//
+// The server stores AGGREGATE COUNTERS keyed (day, slot, creative, viewer,
+// kind), never one row per view, and it fills `viewer` itself from the session
+// cookie — a client cannot mislabel its own traffic, so nothing here is
+// security-relevant. Endpoint is chosen by login state only: /activity is
+// behind requireAuth and 401s for a guest.
+//
+// Fire-and-forget, always: never block a render, never surface an error,
+// never retry. A dropped impression is acceptable; a broken card is not.
+// keepalive lets a click still report while the browser navigates away (the
+// house ad's link is internal, so that tab really does unload).
+const SPOT_EVENT = { impression: 'spot_impression', click: 'spot_click' };
+function report(kind, slotName, creativeId) {
+  const signedIn = viewerNow() === 'plus';
+  const path = signedIn ? '/activity' : '/anon/event';
+  const name = SPOT_EVENT[kind];
+  const body = { content_id: slotName + ':' + (creativeId || 'unknown') };
+  body[signedIn ? 'action' : 'event'] = name;
+  import('/plus/js/api.js')
+    .then((m) => m.apiBase())
+    .then((base) => fetch(base + path, {
+      method: 'POST',
+      credentials: 'include', // the session cookie is what labels this as "plus"
+      keepalive: true,
+      cache: 'no-store',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(body),
+    }))
+    .catch(() => { /* telemetry never breaks the page */ });
+}
 
 // ── creative selection ───────────────────────────────────────────────────────
 
@@ -330,6 +369,7 @@ function buildCard(creative, slotName) {
 
   a.addEventListener('click', () => {
     track('ad_click', { ad_slot: slotName, ad_creative: creative.id || 'unknown', viewer: viewerNow() });
+    report('click', slotName, creative.id);
   });
   aside.appendChild(a);
   return aside;
@@ -348,6 +388,7 @@ function impression(creative, slotName) {
   if (seenImpressions.has(key)) return;
   seenImpressions.add(key);
   track('ad_impression', { ad_slot: slotName, ad_creative: creative.id || 'unknown', viewer: viewerNow() });
+  report('impression', slotName, creative.id);
 }
 
 // ── page detection ───────────────────────────────────────────────────────────
