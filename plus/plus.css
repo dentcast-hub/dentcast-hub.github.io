@@ -80,6 +80,13 @@
 .dcp-welcome-close { min-width: 130px; background: rgba(255,255,255,.14); color: #fff; border-color: rgba(255,255,255,.35); }
 .dcp-welcome-close:hover { background: rgba(255,255,255,.24); }
 
+/* Notification nudge (notif-prompt.js) — reuses the welcome card, plus a status
+   line under the lead (activation progress / browser-blocked guidance) and an
+   optional secondary hint (the iOS install path). */
+.dcp-notif-hint { margin: 0 0 10px; font-size: .85rem; line-height: 1.9; opacity: .8; }
+.dcp-notif-prompt .dcp-notif-msg { display: block; margin: 0 0 10px; line-height: 1.8; }
+.dcp-notif-prompt .dcp-notif-msg:empty { display: none; }
+
 /* Header person icon pulse while the welcome box is up. */
 @keyframes dcp-person-pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.28); } }
 .dcp-person-attention { animation: dcp-person-pulse 1.05s ease-in-out infinite; }
