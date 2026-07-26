@@ -2198,5 +2198,273 @@
     "featured": false,
     "credit": false,
     "iran_server": true
+  },
+  {
+    "id": "edu-107",
+    "name": "دانشکده دندانپزشکی دانشگاه آزاد اسلامی تهران",
+    "url": "https://dentaliau.ac.ir",
+    "desc": "دانشکده دندانپزشکی دانشگاه علوم پزشکی آزاد اسلامی تهران؛ پرجمعیت‌ترین مرکز آموزش دندانپزشکی عمومی تهران با ۱۱ گروه آموزشی و دوره‌های تخصصی، به‌همراه سامانه کنگره و آموزش مجازی دانشکده.",
+    "keywords": [
+      "دانشگاه آزاد",
+      "آزاد اسلامی",
+      "dentaliau",
+      "iautmu",
+      "دانشکده دندانپزشکی",
+      "پاسداران",
+      "تخصصی",
+      "رزیدنتی",
+      "دندانپزشکی",
+      "آموزش"
+    ],
+    "priority": 10,
+    "featured": false,
+    "credit": false,
+    "iran_server": true
+  },
+  {
+    "id": "edu-108",
+    "name": "سامانه آموزش جامعه دندانپزشکی ایران",
+    "url": "https://learn.ida-dent.org",
+    "desc": "بازوی آموزش الکترونیک جامعه دندانپزشکی ایران (IDA)؛ دوره‌های آنلاین و آرشیو سخنرانی‌های کنگره‌های اکسیدا.",
+    "keywords": [
+      "ida",
+      "جامعه دندانپزشکی",
+      "بازآموزی",
+      "اکسیدا",
+      "excida",
+      "کنگره",
+      "دوره آنلاین",
+      "آموزش",
+      "learn",
+      "وبینار"
+    ],
+    "priority": 10,
+    "featured": false,
+    "credit": false,
+    "iran_server": true
+  },
+  {
+    "id": "asc-109",
+    "name": "جامعه دندانسازان ایران (IDTA)",
+    "url": "https://www.idta.ir",
+    "desc": "تشکل صنفی دندانسازان و تکنسین‌های لابراتوار دندانی ایران؛ اخبار و اطلاع‌رسانی صنفی این حوزه.",
+    "keywords": [
+      "دندانساز",
+      "دندانسازی",
+      "تکنسین",
+      "لابراتوار",
+      "idta",
+      "صنفی",
+      "پروتز",
+      "جامعه دندانسازان",
+      "انجمن"
+    ],
+    "priority": 10,
+    "featured": false,
+    "credit": false,
+    "iran_server": true
+  },
+  {
+    "id": "edu-110",
+    "name": "دانشکده دندانپزشکی یزد",
+    "url": "https://dentistry.ssu.ac.ir",
+    "desc": "دانشکده دندانپزشکی دانشگاه علوم پزشکی شهید صدوقی یزد؛ گروه‌های آموزشی، کلینیک‌ها و اطلاعات دانشجویی.",
+    "keywords": [
+      "یزد",
+      "شهید صدوقی",
+      "ssu",
+      "دانشکده دندانپزشکی",
+      "دانشگاه علوم پزشکی",
+      "آموزش",
+      "دندانپزشکی"
+    ],
+    "priority": 10,
+    "featured": false,
+    "credit": false,
+    "iran_server": true
+  },
+  {
+    "id": "edu-111",
+    "name": "دانشکده دندانپزشکی کرمان",
+    "url": "https://sd.kmu.ac.ir/fa",
+    "desc": "دانشکده دندانپزشکی دانشگاه علوم پزشکی کرمان؛ گروه‌های آموزشی، مراکز تحقیقاتی و اطلاعات دانشجویی.",
+    "keywords": [
+      "کرمان",
+      "kmu",
+      "دانشکده دندانپزشکی",
+      "دانشگاه علوم پزشکی",
+      "آموزش",
+      "دندانپزشکی"
+    ],
+    "priority": 10,
+    "featured": false,
+    "credit": false,
+    "iran_server": true
+  },
+  {
+    "id": "edu-112",
+    "name": "دانشکده دندانپزشکی همدان",
+    "url": "https://dentistry.umsha.ac.ir",
+    "desc": "دانشکده دندانپزشکی دانشگاه علوم پزشکی همدان؛ گروه‌های آموزشی، کلینیک‌ها و اطلاعات دانشجویی.",
+    "keywords": [
+      "همدان",
+      "umsha",
+      "دانشکده دندانپزشکی",
+      "دانشگاه علوم پزشکی",
+      "آموزش",
+      "دندانپزشکی"
+    ],
+    "priority": 10,
+    "featured": false,
+    "credit": false,
+    "iran_server": true
+  },
+  {
+    "id": "edu-113",
+    "name": "دانشکده دندانپزشکی بابل",
+    "url": "https://dentistry.mubabol.ac.ir",
+    "desc": "دانشکده دندانپزشکی دانشگاه علوم پزشکی بابل؛ گروه‌های آموزشی، کلینیک‌ها و اطلاعات دانشجویی.",
+    "keywords": [
+      "بابل",
+      "mubabol",
+      "مازندران",
+      "دانشکده دندانپزشکی",
+      "دانشگاه علوم پزشکی",
+      "آموزش",
+      "دندانپزشکی"
+    ],
+    "priority": 10,
+    "featured": false,
+    "credit": false,
+    "iran_server": true
+  },
+  {
+    "id": "mag-114",
+    "name": "Frontiers in Dentistry (FID)",
+    "url": "https://jdt.tums.ac.ir",
+    "desc": "نشریه انگلیسی‌زبان و دسترسی‌آزاد مرکز تحقیقات دندانپزشکی دانشگاه علوم پزشکی تهران؛ نخستین ژورنال دندانپزشکی ایران به زبان انگلیسی.",
+    "keywords": [
+      "frontiers in dentistry",
+      "fid",
+      "jdt",
+      "تهران",
+      "tums",
+      "ژورنال",
+      "مجله",
+      "مقاله",
+      "دسترسی آزاد",
+      "open access"
+    ],
+    "priority": 5,
+    "featured": false,
+    "credit": false,
+    "iran_server": true
+  },
+  {
+    "id": "mag-115",
+    "name": "Journal of Dentistry, Shiraz (JODS)",
+    "url": "https://dentjods.sums.ac.ir",
+    "desc": "فصلنامه دسترسی‌آزاد و داوری‌همتای دانشکده دندانپزشکی دانشگاه علوم پزشکی شیراز؛ نمایه‌شده در Scopus.",
+    "keywords": [
+      "journal of dentistry",
+      "jods",
+      "شیراز",
+      "sums",
+      "ژورنال",
+      "مجله",
+      "مقاله",
+      "scopus",
+      "دسترسی آزاد"
+    ],
+    "priority": 5,
+    "featured": false,
+    "credit": false,
+    "iran_server": true
+  },
+  {
+    "id": "mag-116",
+    "name": "Iranian Endodontic Journal (IEJ)",
+    "url": "https://journals.sbmu.ac.ir/iej",
+    "desc": "نشریه رسمی انجمن اندودانتیست‌های ایران و مرکز تحقیقات اندودانتیکس (ICER)؛ فصلنامه انگلیسی‌زبان نمایه‌شده در Scopus.",
+    "keywords": [
+      "iranian endodontic journal",
+      "iej",
+      "اندو",
+      "اندودانتیکس",
+      "درمان ریشه",
+      "انجمن اندو",
+      "ژورنال",
+      "مجله",
+      "scopus",
+      "شهید بهشتی"
+    ],
+    "priority": 5,
+    "featured": false,
+    "credit": false,
+    "iran_server": true
+  },
+  {
+    "id": "mag-117",
+    "name": "Dental Research Journal (DRJ)",
+    "url": "https://drj.mui.ac.ir",
+    "desc": "نشریه علمی دوماهانه مرکز تحقیقات دندانپزشکی ترابی‌نژاد دانشگاه علوم پزشکی اصفهان؛ نمایه‌شده در PubMed و Scopus.",
+    "keywords": [
+      "dental research journal",
+      "drj",
+      "اصفهان",
+      "mui",
+      "ترابی نژاد",
+      "ژورنال",
+      "مجله",
+      "مقاله",
+      "pubmed",
+      "scopus"
+    ],
+    "priority": 5,
+    "featured": false,
+    "credit": false,
+    "iran_server": true
+  },
+  {
+    "id": "mag-118",
+    "name": "Journal of Oral Health and Oral Epidemiology (JOHOE)",
+    "url": "https://johoe.kmu.ac.ir",
+    "desc": "نشریه انگلیسی‌زبان دانشگاه علوم پزشکی کرمان در حوزه سلامت دهان و اپیدمیولوژی دهان و دندان.",
+    "keywords": [
+      "johoe",
+      "کرمان",
+      "kmu",
+      "سلامت دهان",
+      "اپیدمیولوژی",
+      "ژورنال",
+      "مجله",
+      "مقاله",
+      "دندانپزشکی اجتماعی"
+    ],
+    "priority": 5,
+    "featured": false,
+    "credit": false,
+    "iran_server": true
+  },
+  {
+    "id": "mag-119",
+    "name": "Journal of Research in Dental and Maxillofacial Sciences (JRDMS)",
+    "url": "https://jrdms.dentaliau.ac.ir",
+    "desc": "نشریه پژوهشی دانشکده دندانپزشکی دانشگاه آزاد اسلامی تهران در حوزه علوم دندانپزشکی و فک و صورت.",
+    "keywords": [
+      "jrdms",
+      "دانشگاه آزاد",
+      "dentaliau",
+      "فک و صورت",
+      "maxillofacial",
+      "ژورنال",
+      "مجله",
+      "مقاله",
+      "پژوهش"
+    ],
+    "priority": 5,
+    "featured": false,
+    "credit": false,
+    "iran_server": true
   }
 ]
