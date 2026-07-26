@@ -56,21 +56,34 @@ engine); week buckets start **Saturday**.
    third-party-ish XHR, a request lost in flight, and the rate limit below.
    Never carry GA's heavy-undercount disclaimer over to server numbers — that
    would understate real inventory in a sponsor report.
-4. **ایمپرشن یعنی «رندر شد»، نه «دیده شد».** Only the `archive` slot verifies
-   viewport visibility (IntersectionObserver). Everything else — including the
-   in-article card — counts at insertion, even if the visitor never scrolls to
-   it. State this whenever CTR is quoted.
-5. **تاریخ شروع: ۱۴۰۵/۰۵/۰۴ (2026-07-26)** — the day the client emitter
+4. **ایمپرشن یعنی «دیده شد»، نه «رندر شد».** A card counts only after it has
+   been at least **۵۰٪ روی صفحه، یک ثانیهٔ پیوسته، در تبِ فعال** (the IAB
+   display rule; thresholds live in `spot-config.json` → `seen`). So a card the
+   visitor never scrolled to, a background/prerendered tab, and a fast scroll
+   past the card all count **nothing** — the number you report is delivered
+   inventory, and it is defensible to a sponsor's own measurement. It is
+   therefore **lower** than the number of pages that carried an ad; never
+   present the two as the same thing.
+5. **دو دستهٔ بیننده، و پریمیوم هرگز.** Only `anon` (signed-out) and `plus`
+   (signed-in, free) can generate ad events at all. `premium` never renders an
+   ad, so it never appears — see rule 2. Today the site has **no premium users
+   yet** (every account is `free`), so `by_viewer` splitting into `anon` + `plus`
+   is the complete picture, not a partial one.
+6. **تاریخ شروع: ۱۴۰۵/۰۵/۰۴ (2026-07-26)** — the day the client emitter
    shipped. There is **no** ad data of any kind before it. For GA's `viewer`
    split the same date applies (custom dimensions are not retroactive). Any
    request covering earlier dates gets a plain sentence saying so. Never
    back-fill, estimate, or interpolate.
-6. **سقف نرخ: ۶۰۰ رویداد در ساعت** per IP (guests) or per user (signed-in),
+   **یک ناپیوستگی در همان روز اول:** the first few hours of 2026-07-26 counted
+   ads at render (the viewability rule shipped later the same day), so a handful
+   of impressions on that single day are "rendered", not "seen". Mention it only
+   if a report is specifically about that day.
+7. **سقف نرخ: ۶۰۰ رویداد در ساعت** per IP (guests) or per user (signed-in),
    `SPOT_EVENT_MAX_PER_IP_PER_HOUR`. Iranian mobile readers share NAT
    addresses, so a very busy hour on one carrier IP can shed events. If a
    report shows a suspiciously flat ceiling on a peak day, say so rather than
    presenting it as demand.
-7. **هیچ عددی حدس زده نمی‌شود.** If the data is not in hand, say so and hand
+8. **هیچ عددی حدس زده نمی‌شود.** If the data is not in hand, say so and hand
    over the command — an invented or "typical" number in a sponsor report is
    worse than no report.
 

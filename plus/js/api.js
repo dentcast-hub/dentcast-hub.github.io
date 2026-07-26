@@ -114,12 +114,25 @@ export const api = {
 
 // A cached /me lookup so multiple widgets on one page share one request.
 let mePromise;
+
+// WHY the last /me resolved the way it did: 'user' (a real profile came back),
+// 'anon' (the API answered 401 — genuinely signed out), 'error' (we never got an
+// answer: offline, DNS, CORS, 5xx), or 'unknown' (not asked yet).
+// currentUser() deliberately flattens all of these to profile-or-null, which is
+// right for progressive enhancement but wrong for Spot: "we could not ask" must
+// NOT be read as "not premium", or a premium visitor gets an ad they paid to
+// never see. Only the ad system needs this distinction.
+let lastMeStatus = 'unknown';
+export function meStatus() { return lastMeStatus; }
+
 export function currentUser({ refresh = false } = {}) {
   if (refresh) mePromise = undefined;
   if (!mePromise) {
     // Any failure (401, or the API being unreachable) means "treat as anonymous"
     // so the static site stays pristine as pure progressive enhancement.
-    mePromise = api.me().catch(() => null);
+    mePromise = api.me()
+      .then((u) => { lastMeStatus = u ? 'user' : 'anon'; return u; })
+      .catch((e) => { lastMeStatus = (e && e.status === 401) ? 'anon' : 'error'; return null; });
   }
   return mePromise;
 }

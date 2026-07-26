@@ -1,8 +1,22 @@
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vitest/config';
+
+const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
 // Tests run against a dedicated database so they never touch dev/seed data.
 // global-setup.ts creates it and applies migrations once per run.
 export default defineConfig({
+  // The site's browser modules import each other by absolute site path
+  // ('/plus/js/api.js'), which the static server resolves from the repo root.
+  // Map that root here so a jsdom test can drive the REAL shipped file
+  // (spot/spot.js) instead of a copy that can drift from it.
+  resolve: {
+    alias: [
+      { find: /^\/plus\//, replacement: path.join(repoRoot, 'plus/') },
+      { find: /^\/spot\//, replacement: path.join(repoRoot, 'spot/') },
+    ],
+  },
   test: {
     environment: 'node',
     globalSetup: './test/global-setup.ts',

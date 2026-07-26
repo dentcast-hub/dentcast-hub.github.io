@@ -10,11 +10,22 @@
 // Single source of truth: /spot/spot-config.json. Turning the master switch or a
 // slot off there leaves ZERO trace on the site — no DOM, no stylesheet, nothing.
 //
-// Visibility rule: ads render for anonymous visitors AND signed-in free (Plus)
-// users. Only tier === 'premium' hides every ad ("بدون تبلیغات" is a premium
-// perk). The tier check shares plus.js's cached /me request, but never blocks
-// rendering more than TIER_TIMEOUT_MS — if the API is slow/unreachable the
-// visitor is treated as free and a late "premium" answer removes the ads.
+// Visibility rule — three visitor classes, decided BEFORE anything renders:
+//   anon    (signed out)        → sees ads
+//   plus    (signed in, free)   → sees ads, targeted separately from anon
+//   premium (tier === 'premium')→ never, anywhere ("بدون تبلیغات" is the perk)
+//
+// The class comes from plus.js's shared /me, plus a localStorage memory of what
+// this device was LAST CONFIRMED to be (K_CLASS), written only on a real answer.
+// That memory is what makes the premium promise hold on a slow API: a device
+// known to be premium waits for the answer instead of rendering "as anon" and
+// pulling the card afterwards — a premium user must never see the flash. A
+// device known to be plus renders immediately with plus targeting instead of
+// being served the anon-only "join Plus" card. A device that has never signed in
+// has no memory, renders as anon at once, and a late premium answer still
+// removes every card (removeAllAds) as a last resort.
+
+
 //
 // Rotation: rotation.sequence cycles one step per rotation unit (localStorage
 // counter). Entries: "premium", "sponsor" (weighted round-robin over enabled
@@ -32,7 +43,12 @@
 // "audience": ["anon"|"plus"] (who sees it). No field = everyone, everywhere —
 // so by default signed-out and signed-in visitors see the same campaign.
 //
-// Measurement: every render and click is reported TWICE — to GA4
+// Measurement counts a SEEN ad, not a rendered one: a card must be at least 50%
+// on screen for one continuous second in a foreground tab before it counts
+// (the IAB display rule; tunable via `seen` in the config). Only the two classes
+// that get ads can generate events at all — premium never renders one — so the
+// report is exactly "how often anon and plus visitors actually saw each
+// campaign". Every seen impression and click is reported TWICE — to GA4
 // (ad_impression / ad_click with ad_slot, ad_creative, viewer) and to our own
 // API (spot_impression / spot_click on /anon/event for guests, /activity for
 // signed-in users). Our API is the source of truth because adblockers drop GA
@@ -56,6 +72,7 @@ const K_TICK = 'dcAds.tick'; // rotation step, advances once per rotation unit
 const K_RR = 'dcAds.rr'; // sponsor round-robin cursor, advances with the step
 const K_SEEN = 'dcAds.seen'; // ms stamp of the last page view (session heartbeat)
 const K_HELD = 'dcAds.held'; // 1 = the current session already took its step
+const K_CLASS = 'dcAds.vc'; // last CONFIRMED viewer class on this device: anon|plus|premium
 const DEFAULT_SESSION_MINUTES = 30; // idle gap that starts a new session
 
 function lsGet(key) {
@@ -63,6 +80,12 @@ function lsGet(key) {
 }
 function lsSet(key, n) {
   try { localStorage.setItem(key, String(n)); } catch (_) { /* private mode */ }
+}
+function lsGetStr(key) {
+  try { return localStorage.getItem(key) || ''; } catch (_) { return ''; }
+}
+function lsSetStr(key, v) {
+  try { localStorage.setItem(key, v); } catch (_) { /* private mode */ }
 }
 
 function track(name, params) {
@@ -100,21 +123,27 @@ let viewerNow = () => 'anon';
 // house ad's link is internal, so that tab really does unload).
 const SPOT_EVENT = { impression: 'spot_impression', click: 'spot_click' };
 function report(kind, slotName, creativeId) {
-  const signedIn = viewerNow() === 'plus';
-  const path = signedIn ? '/activity' : '/anon/event';
   const name = SPOT_EVENT[kind];
-  const body = { content_id: slotName + ':' + (creativeId || 'unknown') };
-  body[signedIn ? 'action' : 'event'] = name;
+  const contentId = slotName + ':' + (creativeId || 'unknown');
+  const post = (base, path, key) => fetch(base + path, {
+    method: 'POST',
+    credentials: 'include', // the session cookie is what labels this as "plus"
+    keepalive: true,
+    cache: 'no-store',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ [key]: name, content_id: contentId }),
+  });
   import('/plus/js/api.js')
     .then((m) => m.apiBase())
-    .then((base) => fetch(base + path, {
-      method: 'POST',
-      credentials: 'include', // the session cookie is what labels this as "plus"
-      keepalive: true,
-      cache: 'no-store',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify(body),
-    }))
+    .then((base) => {
+      if (viewerNow() !== 'plus') return post(base, '/anon/event', 'event');
+      // We think this visitor is signed in — but the belief can come from the
+      // device hint while the session has actually expired, and /activity is
+      // behind requireAuth. Fall back once so the event is counted as a guest
+      // rather than silently lost; the server labels the viewer either way.
+      return post(base, '/activity', 'action')
+        .then((res) => (res && res.status === 401 ? post(base, '/anon/event', 'event') : res));
+    })
     .catch(() => { /* telemetry never breaks the page */ });
 }
 
@@ -372,16 +401,20 @@ function buildCard(creative, slotName) {
     report('click', slotName, creative.id);
   });
   aside.appendChild(a);
+  // Every card counts itself, once it has actually been seen. Doing it here (the
+  // one place a card is ever built) means no placement can be added later that
+  // forgets to measure, or that measures at insertion by accident.
+  armSeen(aside, creative, slotName);
   return aside;
 }
 
 // One impression per PLACEMENT per PAGE VIEW — the standard ad-server rule, and
 // the one the reporting depends on: the number a report calls "بار دیده شده" is
-// the GA4 event COUNT, never the user count. A visitor who opens 20 pages
-// generates 20 impressions; a page carrying three enabled slots generates three
-// (one per card on screen). The Set below only stops the SAME card on the SAME
-// page from being counted twice when an overlay watcher re-seats it — it never
-// collapses repeat views across pages.
+// the event COUNT, never the user count. A visitor who opens 20 pages generates
+// 20 impressions; a page carrying three enabled slots generates three (one per
+// card the visitor actually sees). The Set below only stops the SAME card on the
+// SAME page from being counted twice when an overlay watcher re-seats it — it
+// never collapses repeat views across pages.
 const seenImpressions = new Set();
 function impression(creative, slotName) {
   const key = slotName + ':' + (creative.id || '');
@@ -389,6 +422,72 @@ function impression(creative, slotName) {
   seenImpressions.add(key);
   track('ad_impression', { ad_slot: slotName, ad_creative: creative.id || 'unknown', viewer: viewerNow() });
   report('impression', slotName, creative.id);
+  // The rotation step belongs to a SEEN ad, not a rendered one: a visit where
+  // the visitor never scrolled to the card must not burn the campaign's turn.
+  advanceRotation();
+}
+
+// ── viewability: an impression means SEEN, not rendered ──────────────────────
+
+// A card that is inserted but never scrolled to was never delivered, and a
+// sponsor report that counts it is selling air. So nothing is counted until the
+// card is actually on screen: at least `seenRatio` of it visible, continuously,
+// for `seenMs`, in a foreground tab (the IAB display rule — 50% for one second —
+// which is what a sponsor's own agency will measure against).
+//
+// Consequences worth knowing when reading a report:
+//   - an article card below the fold counts only if the visitor scrolls to it,
+//   - a background/prerendered tab counts nothing until it is looked at,
+//   - the two homepage layouts (mobile + desktop) both get a card inserted, but
+//     only the displayed one can ever become visible, so it counts once,
+//   - a premium answer that lands during the dwell removes the card before the
+//     timer fires, so a premium visitor cannot leave an impression behind.
+let seenRatio = 0.5;
+let seenMs = 1000;
+// The /me answer, once main() has asked for it. An impression is held until it
+// settles (see done()); CLASS_WAIT_MS caps that hold so a hung request can never
+// swallow a visit's telemetry outright.
+let classPending = null;
+const CLASS_WAIT_MS = 10000;
+
+function armSeen(el, creative, slotName) {
+  // No IntersectionObserver (very old browser): fall back to counting at
+  // insertion rather than losing the visitor's traffic entirely.
+  if (typeof IntersectionObserver === 'undefined') { impression(creative, slotName); return; }
+  let timer = null;
+  let inView = false;
+  const stop = () => { if (timer) { clearTimeout(timer); timer = null; } };
+  const fire = () => {
+    if (adsKilled) return; // a premium answer pulled the card
+    io.disconnect();
+    document.removeEventListener('visibilitychange', onVisibility);
+    impression(creative, slotName);
+  };
+  const done = () => {
+    timer = null;
+    // Never count while the visitor class is still UNCONFIRMED. On a first-ever
+    // visit with a slow API the card can be rendered, seen and its dwell
+    // finished before /me answers — and if that answer says premium, an
+    // impression would already be on the books, filed by the server (which
+    // labels from the session cookie) under `plus`. Holding until the class
+    // settles closes the last hole in "premium generates no ad data".
+    if (!classPending) { fire(); return; }
+    Promise.race([
+      classPending,
+      new Promise((resolve) => setTimeout(resolve, CLASS_WAIT_MS)),
+    ]).then(fire);
+  };
+  const start = () => {
+    if (timer || !inView || document.visibilityState === 'hidden') return;
+    timer = setTimeout(done, seenMs);
+  };
+  const onVisibility = () => { if (document.visibilityState === 'hidden') stop(); else start(); };
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => { inView = e.isIntersecting && e.intersectionRatio >= seenRatio; });
+    if (inView) start(); else stop();
+  }, { threshold: [seenRatio] });
+  io.observe(el);
+  document.addEventListener('visibilitychange', onVisibility);
 }
 
 // ── page detection ───────────────────────────────────────────────────────────
@@ -502,10 +601,8 @@ function watchOverlaySlot(cfg, slotName, anchorTitle, audienceNow) {
       if (card && sec.nextElementSibling === card) return;
       if (!creative) creative = pickCreative(cfg, slotName, audienceNow());
       if (!creative) return;
-      if (!card) card = buildCard(creative, slotName);
+      if (!card) card = buildCard(creative, slotName); // arms its own seen-counter
       sec.parentNode.insertBefore(card, sec.nextSibling);
-      impression(creative, slotName);
-      advanceRotation();
       return;
     }
   };
@@ -537,8 +634,6 @@ function setupSearchSlot(cfg, audienceNow) {
     const creative = pickCreative(cfg, 'search', audienceNow());
     if (!creative) return;
     results.parentNode.insertBefore(buildCard(creative, 'search'), results);
-    impression(creative, 'search');
-    advanceRotation();
   };
   if (isOpen()) { seat(); return; }
   const observer = new MutationObserver(() => {
@@ -555,7 +650,9 @@ function setupSearchSlot(cfg, audienceNow) {
 // The homepage archive tab lists one .dc-list-card per archive; the card seats
 // right below the «اپیزودهای پادکست» one. The tab is hidden until the user
 // switches to it, so the card is inserted up front (it shows/hides with the
-// panel) but its impression is counted only when it actually becomes visible.
+// panel) and — like every other placement now — counts only once it is really on
+// screen. This slot used to be the ONLY one that checked visibility; that check
+// now lives in buildCard/armSeen for all of them.
 function setupArchiveSlot(cfg, audienceNow) {
   if (!slotAllows(cfg, 'archive', audienceNow())) return;
   const title = Array.from(document.querySelectorAll('.dc-list-card .dc-list-card-title'))
@@ -564,26 +661,39 @@ function setupArchiveSlot(cfg, audienceNow) {
   if (!anchor) return;
   const creative = pickCreative(cfg, 'archive', audienceNow());
   if (!creative) return;
-  const card = buildCard(creative, 'archive');
-  anchor.parentNode.insertBefore(card, anchor.nextSibling);
-  const io = new IntersectionObserver((entries) => {
-    if (!entries.some((e) => e.isIntersecting)) return;
-    io.disconnect();
-    if (adsKilled) return;
-    impression(creative, 'archive');
-    advanceRotation();
-  });
-  io.observe(card);
+  anchor.parentNode.insertBefore(buildCard(creative, 'archive'), anchor.nextSibling);
 }
 
 // ── premium check ────────────────────────────────────────────────────────────
 
-function currentUserSafe() {
-  // Shares plus.js's cached /me (same module URL → same instance). Never
-  // rejects; any failure = anonymous.
+// The three visitor classes, and the ONLY thing that decides them. `premium`
+// never sees an ad (that is the paid promise); `plus` (signed-in, free) and
+// `anon` (signed-out) both do — they only differ in which campaign is targeted
+// at them.
+function classOf(user) {
+  return user ? (user.tier === 'premium' ? 'premium' : 'plus') : 'anon';
+}
+
+// Ask /me and report WHY it answered what it answered. Shares plus.js's cached
+// request (same module URL → same instance), never rejects. `status: 'error'`
+// means the question could not be asked at all — treated very differently from
+// a confirmed 'anon' below.
+function viewerProbe() {
   return import('/plus/js/api.js')
-    .then((m) => m.currentUser())
-    .catch(() => null);
+    .then((m) => m.currentUser().then((user) => ({ user, status: m.meStatus() })))
+    .catch(() => ({ user: null, status: 'error' }));
+}
+
+// What this device WAS, last time we got a straight answer. Written only on a
+// confirmed answer, so a failed /me never overwrites a known premium with
+// "anon". This is what closes the flash: the first paint of page 2 already
+// knows what page 1 confirmed, instead of re-guessing "anon" every time.
+function rememberClass(probe) {
+  if (probe.status === 'user' || probe.status === 'anon') lsSetStr(K_CLASS, classOf(probe.user));
+}
+function hintedClass() {
+  const h = lsGetStr(K_CLASS);
+  return h === 'premium' || h === 'plus' ? h : 'anon';
 }
 
 let adsKilled = false;
@@ -608,6 +718,12 @@ async function main() {
   // visitor browsing pages without slots doesn't get counted as a new session.
   openRotationWindow(cfg);
 
+  // Viewability thresholds are config, not code (a sponsor contract may specify
+  // its own). Defaults are the IAB display rule: 50% of the card, for 1s.
+  const seenCfg = cfg.seen || {};
+  if (Number(seenCfg.ratio) > 0 && Number(seenCfg.ratio) <= 1) seenRatio = Number(seenCfg.ratio);
+  if (Number(seenCfg.ms) >= 0) seenMs = Number(seenCfg.ms);
+
   const slots = cfg.slots || {};
   const slotOn = (name) => slots[name] && slots[name].enabled;
   const type = pageType();
@@ -619,33 +735,59 @@ async function main() {
   const archiveOn = slotOn('archive');
   if (!pageSlot && !overlaySlots.length && !searchOn && !archiveOn) return;
 
-  // Resolve the viewer once — for premium hiding AND audience targeting — but
-  // don't hold rendering hostage to a slow API: after TIER_TIMEOUT_MS assume
-  // anonymous; if the real answer later says premium, take the ads down.
-  const userPromise = currentUserSafe();
-  let user = await Promise.race([
-    userPromise,
-    new Promise((resolve) => setTimeout(() => resolve(null), TIER_TIMEOUT_MS)),
-  ]);
-  if (cfg.premium_hides_ads !== false) {
-    if (user && user.tier === 'premium') return;
-    userPromise.then((u) => { if (u && u.tier === 'premium') removeAllAds(); });
+  // Resolve the viewer class ONCE, before anything renders. It decides two
+  // things: whether an ad may exist at all (premium: never), and which campaign
+  // is targeted (anon vs plus).
+  //
+  // The old rule — "assume anon after TIER_TIMEOUT_MS, undo later if premium" —
+  // guessed wrong in both directions on a slow /me: a premium visitor saw an ad
+  // flash before it was pulled, and a signed-in free visitor was served the
+  // anon-targeted "join Plus" card (and that mismatch is visible in the
+  // reporting: the server labels the impression `plus` from the session cookie
+  // while the client had picked an `anon` creative). The device hint fixes the
+  // common case; waiting fixes the premium case.
+  const probe = viewerProbe();
+  classPending = probe; // impressions wait on this before they may be counted
+  probe.then(rememberClass);
+  const hint = hintedClass();
+  const premiumHides = cfg.premium_hides_ads !== false;
+
+  // A device last confirmed as PREMIUM waits for the real answer — no timeout,
+  // no fallback render. The wait is bounded anyway: the probe never rejects, it
+  // resolves with status 'error' when the API is unreachable. Everyone else
+  // keeps first paint independent of the API.
+  const early = (premiumHides && hint === 'premium')
+    ? await probe
+    : await Promise.race([
+      probe,
+      new Promise((resolve) => setTimeout(() => resolve(null), TIER_TIMEOUT_MS)),
+    ]);
+
+  // No answer (timed out) or no way to ask (status 'error') → trust what this
+  // device was last confirmed to be. A never-signed-in device has no hint and
+  // stays 'anon', exactly as before.
+  let viewerClass = (early && early.status !== 'error') ? classOf(early.user) : hint;
+
+  if (premiumHides && viewerClass === 'premium') return; // zero trace, no impression
+
+  // Safety net for the one case the hint cannot cover: a device signing in as
+  // premium for the FIRST time here. The answer lands late, the ads come down.
+  if (premiumHides) {
+    probe.then((p) => { if (p.status === 'user' && classOf(p.user) === 'premium') removeAllAds(); });
   }
   // Late answers still sharpen targeting for overlay slots, which pick their
   // creative only when their section actually appears in the DOM.
-  userPromise.then((u) => { if (u) user = u; });
-  const audienceNow = () => (user ? 'plus' : 'anon');
+  probe.then((p) => { if (p.status !== 'error') viewerClass = classOf(p.user); });
+  const audienceNow = () => (viewerClass === 'anon' ? 'anon' : 'plus');
   viewerNow = audienceNow; // same answer drives targeting AND the measurement label
 
   if (pageSlot && slotAllows(cfg, pageSlot, audienceNow())) {
     const creative = pickCreative(cfg, pageSlot, audienceNow());
     if (creative) {
       const renderers = { article: renderArticle, home: renderHome, player: renderPlayer, episodes: renderEpisodes };
-      const placed = renderers[pageSlot](cfg, creative);
-      if (placed) {
-        impression(creative, pageSlot);
-        advanceRotation(); // one step per rotation unit (page view, or session)
-      }
+      // Placement only. The card counts itself (and moves the rotation) when the
+      // visitor actually sees it — see armSeen.
+      renderers[pageSlot](cfg, creative);
     }
   }
 
