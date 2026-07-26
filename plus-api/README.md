@@ -83,9 +83,11 @@ Auth: `POST /auth/otp/request`, `POST /auth/otp/verify`, `POST /auth/logout`,
 (HTTP Basic): `GET /admin` (rendered KPI page), `GET /admin/kpis` (JSON),
 `GET /admin/spot/stats` (ad telemetry report),
 `POST /admin/articles/published` (the `article_published` event),
-`POST /admin/articles/run-free-digest` (manual digest run), and
+`POST /admin/articles/run-free-digest` (manual digest run),
 `POST /admin/articles/backfill` (one-time go-live: record all existing pages as
-already-notified). `requirePremium` is wired but no premium endpoint ships in Phase 1.
+already-notified), and `GET /admin/notify/health` (can the channels actually
+deliver right now — config + reachability, sends nothing).
+`requirePremium` is wired but no premium endpoint ships in Phase 1.
 
 ## New-article notifications
 
@@ -109,6 +111,14 @@ destinations underneath it.
   **skipped quietly** on any channel they have not connected (no push
   subscription, no `telegram_id`, no `bale_id`) — an expected state, never an
   error. Adding a channel is one env-var change; Layer 1 never changes.
+- **The transport under Layer 2** (`src/providers/outbound.ts`). Telegram and web
+  push are **international** (`api.telegram.org`, FCM, APNs); Bale is **domestic**.
+  A container in Iran can therefore lose exactly the first two and keep the third —
+  the 2026-07-26 outage. So every send is bounded by a timeout (a filtered host
+  used to hang the whole batch), the international channels honour
+  `OUTBOUND_PROXY_URL` (Bale always goes direct), and **every** failure is logged:
+  a channel that cannot deliver must never be silent again. `GET /admin/notify/health`
+  reports config + reachability per channel without sending anything.
 
 **Automated trigger.** The `notify-new-articles` GitHub Action (repo
 `.github/workflows/notify-new-articles.yml`) fires this on push to `main`. A page
@@ -165,6 +175,33 @@ Returns `totals`, `by_period`, `by_slot`, `by_creative`, `by_viewer` (each with
 curl -u "$ADMIN_USER:$ADMIN_PASSWORD" \
   "$API/admin/spot/stats?from=2026-07-01&to=2026-07-31&group_by=week"
 ```
+
+### The denominator: `view_stats`
+
+An impression count cannot be judged on its own — "21 guest impressions" is a
+quiet day or a broken pipeline depending entirely on how many guest page views
+produced them, and that number was the one thing the site never recorded
+(`user_activity` covers signed-in users only; GA is undercounted by adblockers).
+
+`GET /me` is called **exactly once per page view by every visitor**, guests
+included — `plus/js/api.js` memoizes the promise per page load, and the ad system
+must know whether the visitor is premium before it renders anything. So the /me
+handler bumps a counter in `view_stats (day, viewer, count)`, same counter shape
+as `spot_stats` (migration 0010). Consequences worth knowing:
+
+- costs **no extra request** and needed **no client change**;
+- **adblock-proof** — it rides the first-party API subdomain, not a tag host;
+- **crawler-free** — bots run no JavaScript, so they never call /me;
+- `premium` is counted **separately** from `plus`, because premium page views
+  must stay out of the ad denominator (those visitors are shown no ad by design);
+- the write is **fire-and-forget**: a counter must never delay a session check or
+  turn a valid session into a 401.
+
+The same `GET /admin/spot/stats` response therefore also carries `page_views`
+(`totals`, `by_period`, and `since` = the first day with any data) and
+`impressions_per_view` per viewer class. That ratio is **null, never 0**, for a
+window with no page-view data, so a missing denominator can never be misread as
+"nobody saw anything". There is no page-view data before **2026-07-26**.
 
 ## Founder admin
 

@@ -13,6 +13,7 @@ import { sms } from '../providers/registry.js';
 import { loadUser } from '../middleware/auth.js';
 import { displayStreak } from '../services/streak.js';
 import { dayInTz } from '../services/time.js';
+import { recordPageView } from '../services/view-stats.js';
 
 // The exact fields the Telegram Login Widget sends. Only these participate in
 // the signature check; our own auth-url params (return_to, origin) are ignored.
@@ -431,6 +432,19 @@ export async function authRoutes(app: FastifyInstance): Promise<void> {
   // ABSENT for free users (never zero, never a locked stub).
   app.get('/me', async (request, reply) => {
     const user = await loadUser(request);
+
+    // Page-view counter (see migration 0010). /me is called exactly once per page
+    // view by every visitor — guests included, since the ad system must know
+    // whether this visitor is premium before it renders anything — which makes
+    // this the one place that can count guest traffic first-party. It is the
+    // denominator the Spot report was missing: impressions alone cannot be judged
+    // without the number of page views that could have produced them.
+    //
+    // Fire-and-forget on purpose: a counter must never delay a session check, and
+    // a failed counter must never turn a valid session into a 401.
+    recordPageView(user ? (user.tier === 'premium' ? 'premium' : 'plus') : 'anon')
+      .catch(() => { /* telemetry never breaks auth */ });
+
     if (!user) return reply.code(401).send({ error: 'unauthorized' });
 
     // Show the streak only while it is still alive. The cache resets lazily (on

@@ -83,7 +83,13 @@ engine); week buckets start **Saturday**.
    addresses, so a very busy hour on one carrier IP can shed events. If a
    report shows a suspiciously flat ceiling on a peak day, say so rather than
    presenting it as demand.
-8. **هیچ عددی حدس زده نمی‌شود.** If the data is not in hand, say so and hand
+8. **نمایش را هرگز بدون مخرجش گزارش نکن.** «۲۱ نمایش مهمان» به‌تنهایی نه خوب
+   است نه بد؛ کنارِ «از چند بازدید صفحه» معنا پیدا می‌کند. هر دو عدد در همان
+   پاسخ هستند (`page_views` و `impressions_per_view`) — پس بهانه‌ای برای
+   گزارشِ بی‌مخرج نیست. نسبتِ مهمان در برابر نسبتِ پلاس هم مقایسه‌ای است که
+   خودش را باید در گزارش نشان دهد: اگر نسبتِ یک کلاس چند برابر دیگری باشد،
+   قبل از هر تفسیری باید علتش پیدا شود.
+9. **هیچ عددی حدس زده نمی‌شود.** If the data is not in hand, say so and hand
    over the command — an invented or "typical" number in a sponsor report is
    worse than no report.
 
@@ -101,6 +107,17 @@ Inclusive Tehran days; default window = last 30 days. Returns `totals`,
 `by_period`, `by_slot`, `by_creative`, `by_viewer` (each with `impressions`,
 `clicks`, `ctr_pct`) plus raw `period × slot × creative × viewer` rows — i.e.
 every split this workflow needs, already aggregated.
+
+**The same response carries the denominator** — `page_views` (`totals` per
+viewer class, `by_period`, and `since` = the first day that has any data) and
+`impressions_per_view` per viewer class. Use it: a bare impression count cannot
+be judged, and the guest ratio is the only thing that separates a quiet day from
+a hole in the pipeline. It is counted server-side from `GET /me`, which every
+page view calls exactly once — so it is adblock-proof and crawler-free (bots run
+no JS), and premium views are held out of it because those visitors are shown no
+ad. `impressions_per_view` is **null, never 0**, when the window has no
+page-view data; report it as «داده‌ای نیست», not as a zero. Nothing exists
+before **2026-07-26**.
 
 **The credentials are the founder's and are NOT in this repo — never ask for
 them, never store them anywhere in the repo.** So in practice:
@@ -143,9 +160,9 @@ interesting number for the business, and worth surfacing when both are in hand.
 کل نمایش: ‹N›   کل کلیک: ‹M›   CTR: ‹…٪›
 
 به تفکیک بیننده:
-  مهمان (لاگین‌نکرده): ‹…› نمایش، ‹…› کلیک
-  پلاس رایگان:        ‹…› نمایش، ‹…› کلیک
-  پریمیوم:            تبلیغ نمی‌بیند (طبق طراحی)
+  مهمان (لاگین‌نکرده): ‹…› نمایش از ‹…› بازدید صفحه — ‹…› نمایش به ازای هر بازدید
+  پلاس رایگان:        ‹…› نمایش از ‹…› بازدید صفحه — ‹…› نمایش به ازای هر بازدید
+  پریمیوم:            تبلیغ نمی‌بیند (طبق طراحی) · ‹…› بازدید صفحه
 
 به تفکیک تبلیغ:  ‹creative›: ‹…›  …
 به تفکیک جایگاه: صفحهٔ اصلی ‹…› / مقاله ‹…› / جستجو ‹…› / …

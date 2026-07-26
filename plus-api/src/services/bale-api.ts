@@ -1,4 +1,5 @@
 import { config } from '../config.js';
+import { outboundFetch, describeError } from '../providers/outbound.js';
 
 /**
  * Low-level Bale Bot API caller. Bale's Bot API mirrors Telegram's shape
@@ -18,11 +19,14 @@ export async function baleSendMessage(chatId: number, text: string): Promise<voi
   }
   const url = `${config.notify.baleApiBase}/bot${config.notify.baleBotToken}/sendMessage`;
   try {
-    const res = await fetch(url, {
+    // Bale is DOMESTIC: always direct, never through the international egress
+    // proxy (that hop could only add a failure). It still gets the timeout, so a
+    // stalled Bale request cannot hold up a notification batch either.
+    const res = await outboundFetch(url, {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({ chat_id: chatId, text }),
-    });
+    }, { proxy: false });
     if (!res.ok) {
       // fetch does NOT reject on 4xx/5xx; without this a failed send (bot blocked,
       // chat not found, bad token) would vanish silently. Log, never throw.
@@ -32,6 +36,6 @@ export async function baleSendMessage(chatId: number, text: string): Promise<voi
     }
   } catch (err) {
     // eslint-disable-next-line no-console
-    console.warn(`[bale] network error chat=${chatId}: ${(err as Error).message}`);
+    console.warn(`[bale] network error chat=${chatId}: ${describeError(err)}`);
   }
 }
