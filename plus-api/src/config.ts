@@ -76,6 +76,22 @@ export const config = {
     baleApiBase: str('BALE_API_BASE', 'https://tapi.bale.ai'),
   },
 
+  // Outbound HTTP to the notification destinations (see providers/outbound.ts).
+  // A container hosted in Iran may have no route to api.telegram.org / FCM / APNs
+  // while domestic hosts (Bale) stay reachable — exactly the 2026-07-26 outage.
+  // OUTBOUND_PROXY_URL routes the INTERNATIONAL channels through a proxy
+  // (http://host:port, credentials allowed); empty = direct, the normal case.
+  // HTTPS_PROXY is honoured as a fallback so a platform-level setting also works.
+  outbound: {
+    proxyUrl: str('OUTBOUND_PROXY_URL', '') || str('HTTPS_PROXY', '') || str('https_proxy', ''),
+    // A plain fetch has no timeout: against a filtered host it can hang until the
+    // socket dies, stalling every later user in a notification batch.
+    timeoutMs: int('OUTBOUND_TIMEOUT_MS', 10_000),
+    // The /admin/notify/health reachability check fails fast — it is a diagnosis,
+    // not a delivery.
+    probeTimeoutMs: int('OUTBOUND_PROBE_TIMEOUT_MS', 5_000),
+  },
+
   // External-login providers. Layered so a second provider (Bale, on the .ir
   // deployment) slots in beside Telegram without reshaping auth. Telegram Login
   // (dentcast.org sign-in) uses the SAME bot as notifications, so it reuses

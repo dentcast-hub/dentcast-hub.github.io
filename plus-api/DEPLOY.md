@@ -102,6 +102,8 @@ variables** on the container:
 | `VAPID_PUBLIC_KEY` | (from step 1) |
 | `VAPID_PRIVATE_KEY` | (from step 1) |
 | `VAPID_SUBJECT` | `mailto:foad.shahabian@gmail.com` |
+| `OUTBOUND_PROXY_URL` | leave empty unless the pod has no international egress — see below |
+| `OUTBOUND_TIMEOUT_MS` | `10000` (optional; hard timeout per notification send) |
 | `ADMIN_USER` | `founder` |
 | `ADMIN_PASSWORD` | (a strong secret) |
 | `STREAK_TIMEZONE` | `Asia/Tehran` |
@@ -208,6 +210,34 @@ One bot serves both sites (the notification `chat_id` is global to the bot):
 
 Verify: on the profile page → «اتصال به بله» → the Bale bot opens → press Start →
 you get a "connected" reply in Bale and the profile flips to «حساب بله متصل است».
+
+### 5d. When only Bale delivers (international egress)
+
+Two of the three channels live outside Iran — Telegram (`api.telegram.org`) and
+web push (`fcm.googleapis.com`, `web.push.apple.com`) — while Bale is domestic.
+A pod without international egress therefore loses **exactly those two** and keeps
+Bale, which is what happened after the 2026-07-26 redeploy.
+
+Diagnose it in one call (read-only; sends nothing):
+
+```bash
+curl -s -u "$ADMIN_USER:$ADMIN_PASSWORD" https://api.dentcast.ir/admin/notify/health | jq
+```
+
+Read the answer as follows:
+
+- `channels.<name>.configured: false` → the secret is missing from the container
+  env (token / VAPID pair). The channel is skipping silently; re-enter the value.
+- `channels.<name>.reachable: false` with Bale reachable → the pod has no route to
+  that host. Fix the egress in the ArvanCloud panel, or set `OUTBOUND_PROXY_URL`
+  to a proxy that can reach it (the international channels use it; Bale never does).
+- `proxy.configured: true` but the `via: "proxy"` probes fail → the proxy itself is
+  the broken part.
+
+`GET /admin/notify/health?probe=0` reports configuration only, without touching
+the network. Delivery failures are also logged now — grep the container log for
+`[notify:telegram:` and `[notify:webpush:` (a line with `failed=N` is a real
+delivery failure; `pruned=N` alone is just expired subscriptions being cleaned up).
 
 ## 6. Daily backup
 

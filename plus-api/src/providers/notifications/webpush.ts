@@ -1,6 +1,7 @@
 import webpush from 'web-push';
 import { config } from '../../config.js';
 import { query } from '../../db.js';
+import { webPushOptions, describeError } from '../outbound.js';
 import { type NotificationSender, type NotificationKind, type NotificationMessage, messageText } from './types.js';
 
 /**
@@ -36,6 +37,16 @@ function payloadFor(message: string | NotificationMessage): string {
 
 interface SubRow { id: string; endpoint: string; p256dh: string; auth: string; }
 
+/** Log the push SERVICE (fcm.googleapis.com / web.push.apple.com), never the
+ *  full endpoint — the endpoint path is a device secret. */
+function endpointHost(endpoint: string): string {
+  try {
+    return new URL(endpoint).host;
+  } catch {
+    return 'unknown-host';
+  }
+}
+
 export class WebPushNotificationSender implements NotificationSender {
   readonly name = 'webpush';
 
@@ -54,21 +65,47 @@ export class WebPushNotificationSender implements NotificationSender {
     }
 
     const payload = payloadFor(message);
+    let sent = 0;
+    let pruned = 0;
+    const failures: string[] = [];
+
     for (const s of subs.rows) {
       try {
         await webpush.sendNotification(
           { endpoint: s.endpoint, keys: { p256dh: s.p256dh, auth: s.auth } },
           payload,
+          // Proxy + timeout: FCM and APNs are international, so from an Iranian
+          // pod they are exactly as blockable as Telegram.
+          webPushOptions(),
         );
+        sent += 1;
       } catch (err) {
         // 404/410 => the subscription is gone (unsubscribed / expired): prune it.
-        // Anything else is a transient delivery hiccup for THIS endpoint, not a
-        // bug in the caller; swallow it so one dead device never fails the batch.
-        const status = (err as { statusCode?: number })?.statusCode;
-        if (status === 404 || status === 410) {
+        // That is bookkeeping, NOT a failure — it needs no alarm.
+        const e = err as { statusCode?: number; body?: string; message?: string };
+        if (e?.statusCode === 404 || e?.statusCode === 410) {
           await query('delete from push_subscriptions where id = $1', [s.id]);
+          pruned += 1;
+          continue;
         }
+        // Everything else IS a failure and must be visible. This branch used to
+        // swallow the error entirely, which is why a whole night of undelivered
+        // web push left not one line in the logs (2026-07-26). One dead device
+        // still never fails the batch — we count it and keep going.
+        const detail = (e?.body || e?.message) ? `${e.statusCode ?? ''} ${(e.body || e.message || '').slice(0, 120)}`.trim() : describeError(err);
+        failures.push(`${endpointHost(s.endpoint)}: ${detail}`);
       }
+    }
+
+    if (failures.length > 0) {
+      // eslint-disable-next-line no-console
+      console.warn(
+        `[notify:webpush:${kind}] user=${userId} sent=${sent} failed=${failures.length} pruned=${pruned}`
+        + ` :: ${failures.join(' | ')}`,
+      );
+    } else if (pruned > 0) {
+      // eslint-disable-next-line no-console
+      console.log(`[notify:webpush:${kind}] user=${userId} sent=${sent} pruned=${pruned} (expired subscriptions)`);
     }
   }
 }

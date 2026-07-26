@@ -11,6 +11,8 @@ import {
 } from '../services/spot-stats.js';
 import { withPageViews } from '../services/view-stats.js';
 import { notifications } from '../providers/registry.js';
+import { probe, proxyConfigured, proxyHost, type ProbeResult } from '../providers/outbound.js';
+import { config } from '../config.js';
 import type { NotificationMessage } from '../providers/notifications/types.js';
 
 function fmtPct(v: number | null): string {
@@ -177,6 +179,108 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
   app.post('/admin/streak-reminder/run', async (_request, reply) => {
     const result = await runStreakReminders(new Date());
     return reply.send({ ok: true, ...result });
+  });
+
+  // GET /admin/notify/health - is the notification pipeline actually able to
+  // deliver, RIGHT NOW? Read-only: it sends no message to anyone. It answers the
+  // two questions that cost a night on 2026-07-26 — is each channel configured
+  // (token / VAPID pair present), and can this container REACH each channel's
+  // host — because a silent channel looks identical from the outside whether the
+  // secret is missing or the network is blocked.
+  // ?probe=0 skips the network checks and reports configuration only.
+  app.get('/admin/notify/health', async (request, reply) => {
+    const q = request.query as { probe?: string };
+    const withProbes = q.probe !== '0';
+
+    const names = config.notify.provider.split(',').map((s) => s.trim()).filter(Boolean);
+    const on = (n: string): boolean => names.includes(n);
+
+    const channels = {
+      webpush: {
+        enabled: on('webpush'),
+        configured: Boolean(config.push.vapidPublicKey && config.push.vapidPrivateKey),
+        vapid_public: Boolean(config.push.vapidPublicKey),
+        vapid_private: Boolean(config.push.vapidPrivateKey),
+      },
+      telegram: {
+        enabled: on('telegram'),
+        configured: Boolean(config.notify.telegramBotToken),
+        bot_token: Boolean(config.notify.telegramBotToken),
+      },
+      bale: {
+        enabled: on('bale'),
+        configured: Boolean(config.notify.baleBotToken),
+        bot_token: Boolean(config.notify.baleBotToken),
+        api_base: config.notify.baleApiBase,
+      },
+    };
+
+    // One host per channel that MUST be reachable for it to deliver. Web push has
+    // two, because a user's subscription lives on whichever service their browser
+    // uses (Chrome -> FCM, Safari/iOS -> APNs) and either can be blocked alone.
+    // `international` decides whether the proxy is even relevant: Bale is domestic.
+    const targets: { channel: string; url: string; international: boolean }[] = [];
+    if (channels.webpush.enabled) {
+      targets.push({ channel: 'webpush', url: 'https://fcm.googleapis.com', international: true });
+      targets.push({ channel: 'webpush', url: 'https://web.push.apple.com', international: true });
+    }
+    if (channels.telegram.enabled) {
+      targets.push({ channel: 'telegram', url: 'https://api.telegram.org', international: true });
+    }
+    if (channels.bale.enabled) {
+      targets.push({ channel: 'bale', url: config.notify.baleApiBase, international: false });
+    }
+
+    const probes: (ProbeResult & { channel: string })[] = [];
+    if (withProbes) {
+      const runs = targets.flatMap((t) => {
+        // Domestic hosts are checked direct only. International hosts are checked
+        // direct AND (when a proxy is set) through it, so the answer distinguishes
+        // "the pod has no route" from "the proxy is broken".
+        const viaProxy = t.international && proxyConfigured();
+        const list = [probe(t.url, { proxy: false }).then((r) => ({ ...r, channel: t.channel }))];
+        if (viaProxy) list.push(probe(t.url, { proxy: true }).then((r) => ({ ...r, channel: t.channel })));
+        return list;
+      });
+      probes.push(...(await Promise.all(runs)));
+    }
+
+    const reachable = (channel: string): boolean | null => {
+      const own = probes.filter((p) => p.channel === channel);
+      if (own.length === 0) return null; // not probed
+      // Web push needs only the service its subscribers actually use, so ANY
+      // reachable host counts as a live channel.
+      return own.some((p) => p.ok);
+    };
+
+    const problems: string[] = [];
+    for (const [name, c] of Object.entries(channels)) {
+      if (!c.enabled) continue;
+      if (!c.configured) problems.push(`${name}: کلید/توکن در محیط اجرا تنظیم نشده — پیام بی‌صدا رد می‌شود.`);
+      const r = reachable(name);
+      if (r === false) {
+        problems.push(
+          `${name}: هیچ‌کدام از مقصدهایش از این کانتینر در دسترس نیست`
+          + (proxyConfigured() ? ' (حتی از طریق پراکسی).' : ' — اگر بقیهٔ کانال‌ها سالم‌اند، خروجی بین‌الملل قطع است: OUTBOUND_PROXY_URL را تنظیم کن.'),
+        );
+      }
+    }
+    if (names.length === 0) problems.push('NOTIFY_PROVIDER خالی است — هیچ کانالی فعال نیست.');
+
+    return reply.send({
+      ok: problems.length === 0,
+      channel: notifications.name, // the fan-out actually in use, e.g. multi(webpush+telegram+bale)
+      provider: config.notify.provider,
+      channels: {
+        webpush: { ...channels.webpush, reachable: reachable('webpush') },
+        telegram: { ...channels.telegram, reachable: reachable('telegram') },
+        bale: { ...channels.bale, reachable: reachable('bale') },
+      },
+      proxy: { configured: proxyConfigured(), host: proxyHost() },
+      timeouts_ms: { send: config.outbound.timeoutMs, probe: config.outbound.probeTimeoutMs },
+      probes,
+      problems,
+    });
   });
 
   // POST /admin/notify/test - send a REAL test notification to one user via the

@@ -1,5 +1,6 @@
 import { config } from '../../config.js';
 import { one } from '../../db.js';
+import { outboundFetch, describeError } from '../outbound.js';
 import { type NotificationSender, type NotificationKind, type NotificationMessage, messageText } from './types.js';
 
 /**
@@ -26,9 +27,13 @@ export class TelegramNotificationSender implements NotificationSender {
       return;
     }
 
+    // api.telegram.org is INTERNATIONAL: from an Iranian pod it may be reachable
+    // only through OUTBOUND_PROXY_URL, or not at all. outboundFetch adds that
+    // proxy (when set) and a hard timeout, so an unreachable host fails in
+    // seconds instead of hanging the rest of the batch behind it.
     const url = `https://api.telegram.org/bot${config.notify.telegramBotToken}/sendMessage`;
     try {
-      const res = await fetch(url, {
+      const res = await outboundFetch(url, {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({ chat_id: telegramId, text }),
@@ -42,9 +47,11 @@ export class TelegramNotificationSender implements NotificationSender {
         console.warn(`[notify:telegram:${kind}] sendMessage ${res.status} chat=${telegramId} :: ${detail.slice(0, 300)}`);
       }
     } catch (err) {
-      // Network/DNS failure reaching api.telegram.org.
+      // Network/DNS failure or timeout reaching api.telegram.org. A `fetch failed`
+      // here with Bale still delivering means the pod lost international egress:
+      // check GET /admin/notify/health, then set OUTBOUND_PROXY_URL.
       // eslint-disable-next-line no-console
-      console.warn(`[notify:telegram:${kind}] network error chat=${telegramId}: ${(err as Error).message}`);
+      console.warn(`[notify:telegram:${kind}] network error chat=${telegramId}: ${describeError(err)}`);
     }
   }
 }

@@ -83,9 +83,11 @@ Auth: `POST /auth/otp/request`, `POST /auth/otp/verify`, `POST /auth/logout`,
 (HTTP Basic): `GET /admin` (rendered KPI page), `GET /admin/kpis` (JSON),
 `GET /admin/spot/stats` (ad telemetry report),
 `POST /admin/articles/published` (the `article_published` event),
-`POST /admin/articles/run-free-digest` (manual digest run), and
+`POST /admin/articles/run-free-digest` (manual digest run),
 `POST /admin/articles/backfill` (one-time go-live: record all existing pages as
-already-notified). `requirePremium` is wired but no premium endpoint ships in Phase 1.
+already-notified), and `GET /admin/notify/health` (can the channels actually
+deliver right now — config + reachability, sends nothing).
+`requirePremium` is wired but no premium endpoint ships in Phase 1.
 
 ## New-article notifications
 
@@ -109,6 +111,14 @@ destinations underneath it.
   **skipped quietly** on any channel they have not connected (no push
   subscription, no `telegram_id`, no `bale_id`) — an expected state, never an
   error. Adding a channel is one env-var change; Layer 1 never changes.
+- **The transport under Layer 2** (`src/providers/outbound.ts`). Telegram and web
+  push are **international** (`api.telegram.org`, FCM, APNs); Bale is **domestic**.
+  A container in Iran can therefore lose exactly the first two and keep the third —
+  the 2026-07-26 outage. So every send is bounded by a timeout (a filtered host
+  used to hang the whole batch), the international channels honour
+  `OUTBOUND_PROXY_URL` (Bale always goes direct), and **every** failure is logged:
+  a channel that cannot deliver must never be silent again. `GET /admin/notify/health`
+  reports config + reachability per channel without sending anything.
 
 **Automated trigger.** The `notify-new-articles` GitHub Action (repo
 `.github/workflows/notify-new-articles.yml`) fires this on push to `main`. A page
