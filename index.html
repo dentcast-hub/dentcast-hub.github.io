@@ -4510,7 +4510,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
   }
 
   window.loadRadarData=function(){
-    fetch('/radar.json?v=12',{cache:'no-store'}).then(r=>r.json()).then(data=>{
+    fetch('/radar.json?v=13',{cache:'no-store'}).then(r=>r.json()).then(data=>{
       radarData=data; window.isRadarLoaded=true; handleSearch();
     }).catch(()=>{resultsContainer.innerHTML='<div class="radar-no-results">ارتباط با رادار برقرار نشد.</div>';});
   };

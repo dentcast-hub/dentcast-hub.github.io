@@ -1762,7 +1762,7 @@
   }
 
   function loadRadarData() {
-    fetch('/radar.json?v=12', { cache: 'no-store' })
+    fetch('/radar.json?v=13', { cache: 'no-store' })
       .then(function (r) { return r.json(); })
       .then(function (data) {
         radarData = data;
