@@ -60,7 +60,12 @@ THIS workflow — never the publishing router, even if the user also pastes
    user what that means in practice. When they do want a share («هر ۴ بار
    اسپانسر یه بار پریمیوم»), write the literal cyclic array (e.g.
    `["sponsor","sponsor","sponsor","sponsor","premium"]`) and echo the
-   resulting pattern back in the report.
+   resulting pattern back in the report. **The unit of that array is
+   `rotation.advance`** — `"session"` (current setting) means one step per
+   visit, so a four-entry array = «سه سشن یک تبلیغ، سشن چهارم تبلیغ بعدی»;
+   `"view"` means one step per ad-showing page view. Always echo the
+   pattern in the unit that is actually configured — «هر ۴ بار» is
+   ambiguous until you say بار = بازدید or بار = سشن.
 7. **Config edits are live instantly; engine edits need a version bump.**
    `spot-config.json` is fetched `no-store` — publish is commit+push, done.
    Only if `spot/spot.js` itself changes, bump `SPOT_V` in the ads loader

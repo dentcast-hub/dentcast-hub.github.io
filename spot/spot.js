@@ -16,10 +16,17 @@
 // rendering more than TIER_TIMEOUT_MS — if the API is slow/unreachable the
 // visitor is treated as free and a late "premium" answer removes the ads.
 //
-// Rotation: rotation.sequence cycles one step per page-view that shows an ad
-// (localStorage counter). Entries: "premium", "sponsor" (weighted round-robin
-// over enabled sponsors), or a specific sponsor id. Missing creative at a step
-// falls back to the other kind; nothing available → nothing renders.
+// Rotation: rotation.sequence cycles one step per rotation unit (localStorage
+// counter). Entries: "premium", "sponsor" (weighted round-robin over enabled
+// sponsors), or a specific sponsor id. Missing creative at a step falls back to
+// the other kind; nothing available → nothing renders.
+//
+// Rotation cadence (rotation.advance): "view" (default) takes one step per
+// ad-showing page view. "session" takes one step per VISIT — every page opened
+// within rotation.session_minutes of the previous one shows the SAME campaign,
+// and the next session moves one step down the sequence. That is what makes a
+// four-beat sequence like ["premium","premium","premium","sponsor"] mean "three
+// whole sessions of one ad, a different one on the fourth visit".
 //
 // Targeting: a creative may carry "slots": [...] (where it renders) and/or
 // "audience": ["anon"|"plus"] (who sees it). No field = everyone, everywhere —
@@ -37,8 +44,11 @@ const SPOT_V = new URL(import.meta.url).search; // carry ?v= from the loader ont
 const TIER_TIMEOUT_MS = 3000;
 // localStorage keys keep their historical names — invisible to blockers, and
 // renaming them would reset every visitor's rotation position.
-const K_TICK = 'dcAds.tick'; // rotation step, advances once per ad-showing page view
-const K_RR = 'dcAds.rr'; // sponsor round-robin cursor
+const K_TICK = 'dcAds.tick'; // rotation step, advances once per rotation unit
+const K_RR = 'dcAds.rr'; // sponsor round-robin cursor, advances with the step
+const K_SEEN = 'dcAds.seen'; // ms stamp of the last page view (session heartbeat)
+const K_HELD = 'dcAds.held'; // 1 = the current session already took its step
+const DEFAULT_SESSION_MINUTES = 30; // idle gap that starts a new session
 
 function lsGet(key) {
   try { return parseInt(localStorage.getItem(key) || '0', 10) || 0; } catch (_) { return 0; }
@@ -85,16 +95,18 @@ function nextSponsor(cfg, slotName, audience) {
     const w = Math.max(1, Math.floor(s.weight) || 1);
     for (let i = 0; i < w; i++) pool.push(s);
   });
-  const cursor = lsGet(K_RR);
-  lsSet(K_RR, cursor + 1);
-  return pool[cursor % pool.length];
+  // The cursor moves with the rotation step (advanceRotation), not per call —
+  // so every slot on the page, and every page of a held session, resolves the
+  // same sponsor.
+  return pool[lsGet(K_RR) % pool.length];
 }
 
 // One creative per page view: every slot on the page shows the same campaign,
-// and the rotation counter advances once (tickOnce, after the first successful
-// render). A step whose creative is missing or not allowed in this slot / for
-// this audience falls back to the other kind; nothing eligible → nothing
-// renders.
+// and the rotation counter advances once (advanceRotation, after the first
+// successful render) — and, in session cadence, not at all until the visitor
+// comes back for a new session. A step whose creative is missing or not allowed
+// in this slot / for this audience falls back to the other kind; nothing
+// eligible → nothing renders.
 function pickCreative(cfg, slotName, audience) {
   const seq = (cfg.rotation && Array.isArray(cfg.rotation.sequence) && cfg.rotation.sequence.length)
     ? cfg.rotation.sequence
@@ -107,11 +119,49 @@ function pickCreative(cfg, slotName, audience) {
   return named || nextSponsor(cfg, slotName, audience) || premiumCreative(cfg, slotName, audience);
 }
 
+// ── rotation cadence (per view vs. per session) ──────────────────────────────
+
+// "view" (default, historical): the counters move AFTER an ad renders, so the
+// next page view lands on the next step.
+//
+// "session": the counters move only at a SESSION BOUNDARY — never mid-visit.
+// That is the whole point: the step has to stay frozen while the visitor is
+// browsing, otherwise page 2 of the same visit would already show the next
+// campaign. A visit ends after rotation.session_minutes without a page view
+// (default 30, the usual analytics window); the heartbeat lives in
+// localStorage, so it survives tab closes and is shared across tabs.
+//
+// K_HELD marks "the session that just ended actually showed an ad" — the new
+// session steps only then. A visit where no slot ever rendered therefore burns
+// no step: the campaign the visitor never saw is still waiting next time.
+let sessionMode = false;
+function openRotationWindow(cfg) {
+  const rot = cfg.rotation || {};
+  sessionMode = rot.advance === 'session';
+  if (!sessionMode) return;
+  const m = Number(rot.session_minutes);
+  const minutes = m > 0 ? m : DEFAULT_SESSION_MINUTES;
+  const now = Date.now();
+  const last = lsGet(K_SEEN);
+  if (last && now - last <= minutes * 60000) { lsSet(K_SEEN, now); return; } // same visit → frozen
+  // New session: take the step the previous session earned, then re-arm.
+  if (lsGet(K_HELD) === 1) {
+    lsSet(K_TICK, lsGet(K_TICK) + 1);
+    lsSet(K_RR, lsGet(K_RR) + 1);
+    lsSet(K_HELD, 0);
+  }
+  lsSet(K_SEEN, now);
+}
+
 let ticked = false;
-function tickOnce() {
+function advanceRotation() {
   if (ticked) return;
   ticked = true;
+  // Session cadence: don't move the counters now — just record that this visit
+  // used its step; openRotationWindow spends it when the next session starts.
+  if (sessionMode) { lsSet(K_HELD, 1); return; }
   lsSet(K_TICK, lsGet(K_TICK) + 1);
+  lsSet(K_RR, lsGet(K_RR) + 1);
 }
 
 // Per-SLOT audience gate, independent of per-creative "audience": a slot with
@@ -392,7 +442,7 @@ function watchOverlaySlot(cfg, slotName, anchorTitle, audienceNow) {
       if (!card) card = buildCard(creative, slotName);
       sec.parentNode.insertBefore(card, sec.nextSibling);
       impression(creative, slotName);
-      tickOnce();
+      advanceRotation();
       return;
     }
   };
@@ -425,7 +475,7 @@ function setupSearchSlot(cfg, audienceNow) {
     if (!creative) return;
     results.parentNode.insertBefore(buildCard(creative, 'search'), results);
     impression(creative, 'search');
-    tickOnce();
+    advanceRotation();
   };
   if (isOpen()) { seat(); return; }
   const observer = new MutationObserver(() => {
@@ -458,7 +508,7 @@ function setupArchiveSlot(cfg, audienceNow) {
     io.disconnect();
     if (adsKilled) return;
     impression(creative, 'archive');
-    tickOnce();
+    advanceRotation();
   });
   io.observe(card);
 }
@@ -489,6 +539,11 @@ async function main() {
     cfg = await res.json();
   } catch (_) { return; }
   if (!cfg || !cfg.enabled) return; // master off → zero trace
+
+  // Decide up front whether this page view may move the rotation, and keep the
+  // session heartbeat alive on every page (not just ad-showing ones), so a
+  // visitor browsing pages without slots doesn't get counted as a new session.
+  openRotationWindow(cfg);
 
   const slots = cfg.slots || {};
   const slotOn = (name) => slots[name] && slots[name].enabled;
@@ -525,7 +580,7 @@ async function main() {
       const placed = renderers[pageSlot](cfg, creative);
       if (placed) {
         impression(creative, pageSlot);
-        tickOnce(); // advance the rotation once per ad-showing page view
+        advanceRotation(); // one step per rotation unit (page view, or session)
       }
     }
   }

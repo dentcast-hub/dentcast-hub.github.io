@@ -2171,7 +2171,7 @@
 (function () {
   if (window.__dcSpotLoaded) return;
   window.__dcSpotLoaded = true;
-  var SPOT_V = '9';
+  var SPOT_V = '10';
   var js = document.createElement('script');
   js.type = 'module';
   js.src = '/spot/spot.js?v=' + SPOT_V;
