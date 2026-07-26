@@ -14,7 +14,7 @@
   "rotation": {
     "advance": "session",
     "session_minutes": 30,
-    "sequence": ["premium", "premium", "premium", "sponsor"]
+    "sequence": ["premium", "premium", "premium", "premium"]
   },
   "creatives": {
     "premium": {
