@@ -2177,3 +2177,55 @@
   js.src = '/spot/spot.js?v=' + SPOT_V;
   document.body.appendChild(js);
 })();
+
+/* ── PWA install prerequisites ───────────────────────────────────────────────
+   The «نصب» tool in the drawer is powered by `beforeinstallprompt`, and Chrome
+   only fires that event on a page that (a) links a web app manifest and (b) is
+   controlled by a service worker carrying a `fetch` handler. Both artifacts
+   already existed — /manifest.json and /service-worker.js — but nothing
+   referenced them anywhere except index.html's own inline snippet, so on every
+   other page the install button could only ever reach its "not available"
+   alert. Injecting both from here is what makes the *site* installable rather
+   than just the homepage, and it is the reason the drawer button now has
+   something to prompt with.
+
+   Scope notes:
+     · /plus/* ships its own manifest + worker at scope /plus/ and never loads
+       this file — the path guard is defensive only. Registering the root worker
+       there would also be harmless (the narrower /plus/ scope wins), but the
+       root manifest would fight the Plus one for the install identity.
+     · Inside the desktop shell's content iframe there is nothing to install and
+       a nested manifest is ignored, so skip — same gate the overlay uses.
+     · Both URLs are origin-relative, so the one file serves .org and .ir with
+       no per-domain logic (site-wide invariant).
+     · Idempotent: an existing manifest link always wins, and re-registering the
+       same worker URL resolves to the existing registration. */
+(function () {
+  if (window.__dcPwaLoaded) return;
+  window.__dcPwaLoaded = true;
+
+  /* Cross-origin framing throws on window.top — treat that as "framed". */
+  try { if (window.top !== window.self) return; } catch (_) { return; }
+  if (location.pathname.indexOf('/plus/') === 0) return;
+
+  if (!document.querySelector('link[rel="manifest"]')) {
+    var mf = document.createElement('link');
+    mf.rel = 'manifest';
+    mf.href = '/manifest.json';
+    (document.head || document.documentElement).appendChild(mf);
+  }
+
+  /* The worker deliberately intercepts nothing (see service-worker.js): it is
+     registered to satisfy the install criteria, not to cache. Held back to the
+     load event so it never competes with first paint — but this file is pulled
+     in both deferred (707 pages) and plain (19), and a plain tag late in the
+     body can execute after `load` has already fired, where the listener would
+     never run. Check readyState first so both loading styles register. */
+  if ('serviceWorker' in navigator) {
+    var registerSW = function () {
+      navigator.serviceWorker.register('/service-worker.js').catch(function () {});
+    };
+    if (document.readyState === 'complete') registerSW();
+    else window.addEventListener('load', registerSW);
+  }
+})();

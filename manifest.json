@@ -2,6 +2,7 @@
   "name": "DentCast",
   "short_name": "DentCast",
   "description": "پادکست علمی دندانپزشکی به زبان فارسی — بررسی مقالات و مفاهیم کلینیکی",
+  "id": "/",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
@@ -21,6 +22,26 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "اپیزودها",
+      "short_name": "اپیزودها",
+      "url": "/episodes.html",
+      "icons": [{ "src": "/favicon-192.png", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
+      "name": "دانشنامه",
+      "short_name": "دانشنامه",
+      "url": "/glossary/",
+      "icons": [{ "src": "/favicon-192.png", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
+      "name": "دنت‌کست پلاس",
+      "short_name": "پلاس",
+      "url": "/plus/",
+      "icons": [{ "src": "/favicon-192.png", "sizes": "192x192", "type": "image/png" }]
     }
   ]
 }
