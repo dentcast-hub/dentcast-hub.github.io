@@ -116,6 +116,9 @@ a.dcp-progress-name:hover { color: var(--ac, #0b5fff); text-decoration: underlin
 .dcp-plan-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
 .dcp-plan.is-soon { cursor: pointer; background: var(--chip-bg-muted, rgba(2,35,96,.06)); color: var(--txt2, #4a5f85); opacity: .65; }
 .dcp-toggle-list { display: flex; flex-direction: column; gap: 12px; }
+/* Sub-label spelling out what a switch covers — sits tight under its own switch,
+   not a list item in its own right. */
+.dcp-toggle-note { margin-top: -7px; font-size: .85rem; line-height: 1.8; }
 .dcp-lock-ico { font-size: 1rem; line-height: 1; opacity: .7; }
 /* messenger connection (coming soon: options visible but disabled) */
 .dcp-messenger { display: flex; flex-direction: column; gap: 10px; }

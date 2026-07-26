@@ -124,8 +124,8 @@ function remindersBlock(me) {
   // The stored preference is INDEPENDENT of the browser push permission: turning
   // a reminder on always saves, even when the browser has notifications blocked.
   // We still try to (re)create the push subscription so delivery works; if that
-  // fails we KEEP the toggle on and just explain how to unblock. That is what
-  // lets both toggles be flipped on/off freely without ever getting stuck when a
+  // fails we KEEP the switch on and just explain how to unblock. That is what
+  // lets the switch be flipped on/off freely without ever getting stuck when a
   // browser (e.g. Opera) has blocked notifications for the site.
   const guidanceText = (res) => res === 'denied'
     ? 'اعلان‌ها در مرورگر بلاک شده. ترجیح ذخیره شد؛ برای دریافت نوتیف، از تنظیمات سایتِ مرورگر آن را Allow کن.'
@@ -133,32 +133,34 @@ function remindersBlock(me) {
       ? 'مرورگر شما از اعلان پشتیبانی نمی‌کند. ترجیح ذخیره شد ولی نوتیف ارسال نمی‌شود.'
       : 'ترجیح ذخیره شد؛ فعال‌سازی اعلان فعلاً ناموفق بود و بعداً دوباره تلاش می‌شود.';
 
-  const mk = (key, label) => {
-    const cb = el('input', { type: 'checkbox' });
-    cb.checked = state[key];
-    cb.addEventListener('change', async () => {
-      const on = cb.checked;
-      state[key] = on; // the toggle reflects the user's intent no matter what
-      if (on) {
-        // Call ensurePushSubscription FIRST so the click gesture is still active
-        // for the permission prompt (any earlier await would consume it). The
-        // toggle stays on regardless of the outcome; we only annotate delivery.
-        msg.textContent = 'در حال فعال‌سازی اعلان‌ها...';
-        const res = await ensurePushSubscription();
-        msg.textContent = res === 'ok' ? '' : guidanceText(res);
-      } else {
-        msg.textContent = '';
-      }
-      await patch();
-      // Everything off -> drop the browser subscription so none lingers.
-      if (!state.new_content && !state.streak) await removePushSubscription();
-    });
-    return el('label', { class: 'dcp-switch' }, [cb, el('span', {}, label)]);
-  };
+  // ONE switch for both. The two preferences stay separate columns in the data
+  // (article-notify.ts and streak-reminder.ts read them independently), but the
+  // UI never splits them: the card that asks for the browser permission promises
+  // both, and a half-on account is a worse product than either end of it.
+  const cb = el('input', { type: 'checkbox' });
+  cb.checked = state.new_content || state.streak;
+  cb.addEventListener('change', async () => {
+    const on = cb.checked;
+    state.new_content = on; // the switch reflects the user's intent no matter what
+    state.streak = on;
+    if (on) {
+      // Call ensurePushSubscription FIRST so the click gesture is still active
+      // for the permission prompt (any earlier await would consume it). The
+      // switch stays on regardless of the outcome; we only annotate delivery.
+      msg.textContent = 'در حال فعال‌سازی اعلان‌ها...';
+      const res = await ensurePushSubscription();
+      msg.textContent = res === 'ok' ? '' : guidanceText(res);
+    } else {
+      msg.textContent = '';
+    }
+    await patch();
+    // Off -> drop the browser subscription so none lingers.
+    if (!on) await removePushSubscription();
+  });
 
   const block = el('div', { class: 'dcp-toggle-list' }, [
-    mk('new_content', 'نوتیف مطلب جدید'),
-    mk('streak', 'یادآوری استریک'),
+    el('label', { class: 'dcp-switch' }, [cb, el('span', {}, 'نوتیف‌ها')]),
+    el('div', { class: 'dcp-muted dcp-toggle-note' }, 'خبرِ مطلبِ جدید + یادآوریِ مرورِ روزانه'),
     msg,
   ]);
 

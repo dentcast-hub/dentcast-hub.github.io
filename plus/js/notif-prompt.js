@@ -151,7 +151,7 @@ export function maybeShowNotifPrompt(user) {
 
   if (mode === 'push') {
     title = 'نوتیف رو روشن کن';
-    lead = 'بهت پیشنهاد می‌کنم نوتیفیکیشن رو روشن کنی تا بهت بگم کی مطلب جدید پست شده. قول می‌دم اون‌قدر پیام ندم که اذیت بشی.';
+    lead = 'بهت پیشنهاد می‌کنم نوتیفیکیشن رو روشن کنی تا بهت بگم کی مطلب جدید پست شده و یادآوریِ مرورِ روزانه‌ات هم برسه. قول می‌دم کم پیام بدم و بی‌خودی غر نزنم.';
     go.textContent = 'روشن‌کردن نوتیف';
     let closeOnNextClick = false; // after a failed attempt the CTA becomes «باشه»
     go.addEventListener('click', async () => {
@@ -164,14 +164,11 @@ export function maybeShowNotifPrompt(user) {
       // and a saved preference still delivers over Telegram/Bale.
       let res = 'error';
       try { res = await ensurePushSubscription(); } catch (_) { /* keep the pref */ }
-      // ONLY new_content — the card promises "I'll tell you when something new is
-      // posted, and I won't spam you". The daily streak reminder would break that
-      // promise on day one, and the punishment for breaking it is a Block, which
-      // kills every channel including the streak one. Losing one toggle here beats
-      // losing the whole subscription; the streak reminder stays one tap away in
-      // the profile. Send the WHOLE reminders object anyway: PATCH /me
-      // shallow-merges settings, so a partial patch would replace it wholesale.
-      await api.updateMe({ settings: { reminders: { new_content: true, streak: false } } }).catch(() => {});
+      // Both, always — notifications are ONE switch here and in the profile, and
+      // the lead names both halves so nothing is switched on behind the user's
+      // back. Send the WHOLE reminders object: PATCH /me shallow-merges settings,
+      // so a partial patch would replace it wholesale.
+      await api.updateMe({ settings: { reminders: { new_content: true, streak: true } } }).catch(() => {});
       currentUser({ refresh: true });
       if (res === 'ok') {
         // The toggles are genuinely ticked now — confirm it, then get out of the way.
@@ -179,7 +176,7 @@ export function maybeShowNotifPrompt(user) {
           el('div', { class: 'dcp-welcome-ico', 'aria-hidden': 'true' }, '✅'),
           el('h2', { class: 'dcp-welcome-title' }, 'حله، روشن شد'),
           el('p', { class: 'dcp-welcome-lead' },
-            'از این به بعد هر وقت مطلب جدیدی منتشر شد بهت خبر می‌دم. هر وقت خواستی از «پروفایل ← یادآوری‌ها» خاموشش کن — یادآوریِ استریک هم همان‌جاست.'),
+            'از این به بعد خبرِ مطلبِ جدید و یادآوریِ مرورِ روزانه‌ات رو می‌فرستم. هر وقت خواستی، از «پروفایل ← یادآوری‌ها» با یه کلیک خاموشش کن.'),
         );
         later.remove();
         setTimeout(cleanup, 2200);
@@ -194,12 +191,12 @@ export function maybeShowNotifPrompt(user) {
   } else if (mode === 'install') {
     title = 'نوتیف روی آیفون';
     lead = 'سافاری فقط وقتی نوتیف می‌فرسته که دنت‌کست روی صفحه‌ی اصلی نصب شده باشه: دکمه‌ی «اشتراک‌گذاری» ← «Add to Home Screen»، بعد از همون‌جا وارد شو و نوتیف رو روشن کن.';
-    hint = 'تا اون موقع، تلگرام یا بله همین حالا خبرِ مطلبِ جدید رو برات می‌فرسته.';
+    hint = 'تا اون موقع، تلگرام یا بله همین حالا خبرها و یادآوری‌ها رو برات می‌فرسته.';
     go.textContent = 'اتصال تلگرام / بله';
     go.addEventListener('click', () => openProfileAt('connect'));
   } else {
-    title = 'از مطلب جدید باخبر شو';
-    lead = 'این مرورگر نوتیف نمی‌فرسته، ولی تلگرام و بله می‌فرستن: وصلشون کن تا بهت بگم کی مطلب جدید پست شده. قول می‌دم اون‌قدر پیام ندم که اذیت بشی.';
+    title = 'نوتیف رو روشن کن';
+    lead = 'این مرورگر نوتیف نمی‌فرسته، ولی تلگرام و بله می‌فرستن: وصلشون کن تا بهت بگم کی مطلب جدید پست شده و یادآوریِ مرورِ روزانه‌ات هم برسه. قول می‌دم کم پیام بدم و بی‌خودی غر نزنم.';
     go.textContent = 'اتصال تلگرام / بله';
     go.addEventListener('click', () => openProfileAt('connect'));
   }
