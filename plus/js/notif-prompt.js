@@ -82,12 +82,12 @@ function pickMode() {
 
 function guidanceText(res) {
   if (res === 'denied') {
-    return 'اعلان‌ها در مرورگر بلاک شده. ترجیح شما ذخیره شد؛ برای دریافت نوتیف، از تنظیماتِ سایتِ مرورگر آن را Allow کنید.';
+    return 'نوتیف در مرورگرت بلاک شده. ترجیحت ذخیره شد؛ برای اینکه خبرها برسه، از تنظیماتِ سایت در مرورگر روی Allow بذارش.';
   }
   if (res === 'unsupported') {
-    return 'مرورگر شما از اعلان پشتیبانی نمی‌کند. ترجیح شما ذخیره شد؛ برای دریافت نوتیف، تلگرام یا بله را وصل کنید.';
+    return 'مرورگرت نوتیف نمی‌فرسته. ترجیحت ذخیره شد؛ برای اینکه خبردار بشی، تلگرام یا بله رو وصل کن.';
   }
-  return 'ترجیح شما ذخیره شد؛ فعال‌سازی اعلان فعلاً ناموفق بود و بعداً دوباره تلاش می‌شود.';
+  return 'ترجیحت ذخیره شد؛ روشن‌کردنِ نوتیف فعلاً نشد و بعداً دوباره تلاش می‌کنیم.';
 }
 
 /**
@@ -150,9 +150,9 @@ export function maybeShowNotifPrompt(user) {
   const go = el('button', { class: 'dcp-btn dcp-btn-primary dcp-welcome-cta', type: 'button' });
 
   if (mode === 'push') {
-    title = 'نوتیف‌ها را روشن کن';
-    lead = 'با یک کلیک، هم یادآوریِ روزانه‌ی یادگیری را می‌گیری و هم از انتشارِ مطالبِ جدید باخبر می‌شوی — همین یک قدم، تداومت را نگه می‌دارد.';
-    go.textContent = 'روشن‌کردن نوتیف‌ها';
+    title = 'نوتیف رو روشن کن';
+    lead = 'بهت پیشنهاد می‌کنم نوتیفیکیشن رو روشن کنی تا بهت بگم کی مطلب جدید پست شده. قول می‌دم اون‌قدر پیام ندم که اذیت بشی.';
+    go.textContent = 'روشن‌کردن نوتیف';
     let closeOnNextClick = false; // after a failed attempt the CTA becomes «باشه»
     go.addEventListener('click', async () => {
       if (closeOnNextClick) { cleanup(); return; }
@@ -164,17 +164,22 @@ export function maybeShowNotifPrompt(user) {
       // and a saved preference still delivers over Telegram/Bale.
       let res = 'error';
       try { res = await ensurePushSubscription(); } catch (_) { /* keep the pref */ }
-      // Send the WHOLE reminders object: PATCH /me shallow-merges settings, so a
-      // partial patch would replace `reminders` wholesale.
-      await api.updateMe({ settings: { reminders: { new_content: true, streak: true } } }).catch(() => {});
+      // ONLY new_content — the card promises "I'll tell you when something new is
+      // posted, and I won't spam you". The daily streak reminder would break that
+      // promise on day one, and the punishment for breaking it is a Block, which
+      // kills every channel including the streak one. Losing one toggle here beats
+      // losing the whole subscription; the streak reminder stays one tap away in
+      // the profile. Send the WHOLE reminders object anyway: PATCH /me
+      // shallow-merges settings, so a partial patch would replace it wholesale.
+      await api.updateMe({ settings: { reminders: { new_content: true, streak: false } } }).catch(() => {});
       currentUser({ refresh: true });
       if (res === 'ok') {
         // The toggles are genuinely ticked now — confirm it, then get out of the way.
         box.replaceChildren(
           el('div', { class: 'dcp-welcome-ico', 'aria-hidden': 'true' }, '✅'),
-          el('h2', { class: 'dcp-welcome-title' }, 'نوتیف‌ها روشن شد'),
+          el('h2', { class: 'dcp-welcome-title' }, 'حله، روشن شد'),
           el('p', { class: 'dcp-welcome-lead' },
-            'هر دو یادآوری در پروفایلت تیک خورد: مطلبِ جدید و استریکِ روزانه. هر وقت خواستی از «پروفایل ← یادآوری‌ها» خاموششان کن.'),
+            'از این به بعد هر وقت مطلب جدیدی منتشر شد بهت خبر می‌دم. هر وقت خواستی از «پروفایل ← یادآوری‌ها» خاموشش کن — یادآوریِ استریک هم همان‌جاست.'),
         );
         later.remove();
         setTimeout(cleanup, 2200);
@@ -188,13 +193,13 @@ export function maybeShowNotifPrompt(user) {
     });
   } else if (mode === 'install') {
     title = 'نوتیف روی آیفون';
-    lead = 'سافاری فقط وقتی نوتیف می‌فرستد که دنت‌کست روی صفحه‌ی اصلی نصب شده باشد: دکمه‌ی «اشتراک‌گذاری» ← «Add to Home Screen»، بعد از همان‌جا وارد شو و نوتیف را روشن کن.';
-    hint = 'تا آن موقع، تلگرام یا بله همین حالا همان یادآوری‌ها را برایت می‌فرستد.';
+    lead = 'سافاری فقط وقتی نوتیف می‌فرسته که دنت‌کست روی صفحه‌ی اصلی نصب شده باشه: دکمه‌ی «اشتراک‌گذاری» ← «Add to Home Screen»، بعد از همون‌جا وارد شو و نوتیف رو روشن کن.';
+    hint = 'تا اون موقع، تلگرام یا بله همین حالا خبرِ مطلبِ جدید رو برات می‌فرسته.';
     go.textContent = 'اتصال تلگرام / بله';
     go.addEventListener('click', () => openProfileAt('connect'));
   } else {
-    title = 'یادآوری‌ها را روشن کن';
-    lead = 'این مرورگر نوتیف نمی‌فرستد، اما تلگرام و بله می‌فرستند: وصلشان کن تا هم یادآوریِ روزانه‌ی یادگیری را بگیری و هم از مطالبِ جدید باخبر شوی.';
+    title = 'از مطلب جدید باخبر شو';
+    lead = 'این مرورگر نوتیف نمی‌فرسته، ولی تلگرام و بله می‌فرستن: وصلشون کن تا بهت بگم کی مطلب جدید پست شده. قول می‌دم اون‌قدر پیام ندم که اذیت بشی.';
     go.textContent = 'اتصال تلگرام / بله';
     go.addEventListener('click', () => openProfileAt('connect'));
   }
