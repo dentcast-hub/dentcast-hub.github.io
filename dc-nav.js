@@ -1723,6 +1723,44 @@
   var radarData = [];
   var isRadarLoaded = false;
 
+  /* Persian normaliser — folds Arabic/Persian letter variants, drops
+     diacritics + zero-width chars (nim-fasele) and unifies digits, so a
+     query and an entry reach the same key regardless of how they were
+     typed. Without it a nim-fasele inside the data made the entry
+     unreachable: «نرم افزار» returned nothing while six «نرم‌افزار مطب»
+     entries sat in radar.json. Mirrors the copy inside index.html's
+     inline radar — the two implementations must stay in step. */
+  function dcNorm(s) {
+    return String(s == null ? '' : s)
+      .replace(/[يى]/g, 'ی')             /* ي ى → ی */
+      .replace(/ك/g, 'ک')                     /* ك → ک */
+      .replace(/[آأإٱ]/g, 'ا') /* آ أ إ ٱ → ا */
+      .replace(/[ةۀ]/g, 'ه')             /* ة ۀ → ه */
+      .replace(/ؤ/g, 'و')                     /* ؤ → و */
+      .replace(/[ً-ْـ]/g, '')            /* اعراب و کشیده */
+      .replace(/[​-‏⁠﻿]/g, '')      /* نیم‌فاصله و صفرعرض */
+      .replace(/[۰-۹]/g, function (c) { return String.fromCharCode(c.charCodeAt(0) - 0x06F0 + 48); })
+      .replace(/[٠-٩]/g, function (c) { return String.fromCharCode(c.charCodeAt(0) - 0x0660 + 48); })
+      .toLowerCase().replace(/\s+/g, ' ').trim();
+  }
+  /* '|' separates the fields so a space-insensitive match can never span
+     two of them. Cached on the item; radarData is replaced wholesale on
+     every load, so the cache can never go stale. */
+  function dcHay(item) {
+    if (item._h === undefined) {
+      item._h  = dcNorm([item.name, item.desc].concat(item.keywords || []).join(' | '));
+      item._hs = item._h.replace(/\s+/g, '');
+    }
+    return item;
+  }
+  /* Two passes: the spaced form first (exact, no false positives), then a
+     whitespace-stripped fallback so «نرم افزار» ↔ «نرم‌افزار» ↔ «نرمافزار»
+     all hit. */
+  function dcMatch(item, q, qs) {
+    dcHay(item);
+    return item._h.indexOf(q) !== -1 || (qs !== '' && item._hs.indexOf(qs) !== -1);
+  }
+
   function loadRadarData() {
     fetch('/radar.json?v=12', { cache: 'no-store' })
       .then(function (r) { return r.json(); })
@@ -1759,7 +1797,7 @@
   }
 
   function handleRadarSearch() {
-    var q = radarInput.value.trim().toLowerCase();
+    var q = dcNorm(radarInput.value);
     if (!q) {
       if (radarResults)
         radarResults.innerHTML =
@@ -1769,12 +1807,8 @@
       return;
     }
     if (!isRadarLoaded) return;
-    var f = radarData.filter(function (item) {
-      var kw = item.keywords || [];
-      return item.name.toLowerCase().includes(q) ||
-             item.desc.toLowerCase().includes(q) ||
-             kw.some(function (k) { return k.toLowerCase().includes(q); });
-    });
+    var qs = q.replace(/\s+/g, '');
+    var f = radarData.filter(function (item) { return dcMatch(item, q, qs); });
     for (var i = f.length - 1; i > 0; i--) {
       var j = Math.floor(Math.random() * (i + 1));
       var tmp = f[i]; f[i] = f[j]; f[j] = tmp;
