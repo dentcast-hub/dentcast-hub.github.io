@@ -3430,9 +3430,9 @@ a.dc-list-card--pillar {
           </div>
         </div>
         <ul class="dc-pulse-list">
+          <li>یک <a href="/sharehub/share-11.html">مطلب Share Hub</a> درباره‌ی اینکه آیا از روی حجم استخوان می‌شود بروکسیسمِ قدیمیِ بیمار را تشخیص داد، و معنی‌اش برای کیس فول آرچ ایمپلنتی منتشر شد · ۴ مرداد</li>
           <li>یک <a href="/insight/insight-57.html">اینسایت بالینی</a> درباره‌ی مدیریت کمبود فضای بین‌فکی در درمان ایمپلنت منتشر شد · ۳ مرداد</li>
           <li>یک <a href="/dentai/dentai-28.html">مقاله‌ی تازه‌ی DentAI</a> درباره‌ی یک کارآزماییِ تصادفی که نشان داد GPT-4 به‌تنهایی از پزشکِ مجهز به GPT-4 بهتر تشخیص می‌دهد منتشر شد · ۲ مرداد</li>
-          <li>یک <a href="/dentai/promptologist/prompt4-2.html">قسمت تازه‌ی پرامپتولوژیست</a> درباره‌ی اینکه چرا به‌جای فهرستِ «نکن‌ها» باید به مدل بگویید چه بکند منتشر شد · ۲ مرداد</li>
         </ul>
       </div>
 
@@ -3468,9 +3468,9 @@ a.dc-list-card--pillar {
           <p class="dc-rail-title">پرامپتولوژیست — بگو چه بکند نه اینکه چه نکند</p>
           <span class="dc-rail-meta">تازه‌ترین مطلب</span>
         </a>
-        <a class="dc-rail-card" data-cat="sharehub" href="/sharehub/share-10.html">
+        <a class="dc-rail-card" data-cat="sharehub" href="/sharehub/share-11.html">
           <span class="dc-type-chip t-share">ShareHub</span>
-          <p class="dc-rail-title">Resistance Form در روکش‌ها؛ تعریف و ارزیابی بالینی</p>
+          <p class="dc-rail-title">استخوان حجیم، نشانه بروکسیسم قدیمی؟ بحثی برای دندانپزشک عمومی درباره ایمپلنت فول آرچ</p>
           <span class="dc-rail-meta">تازه‌ترین مطلب</span>
         </a>
         <a class="dc-rail-card" data-cat="dentcast_plus" href="/dentcast-plus/video-6.html">
@@ -3590,7 +3590,7 @@ a.dc-list-card--pillar {
           <span class="k">ساعت محتوای صوتی</span>
         </div>
         <div class="hero-stat" role="listitem">
-          <span class="v"><!-- COUNTER:CONTENT:START -->۵۶۲<!-- COUNTER:CONTENT:END --></span>
+          <span class="v"><!-- COUNTER:CONTENT:START -->۵۶۳<!-- COUNTER:CONTENT:END --></span>
           <span class="k">مطلب و مدخل آموزشی</span>
         </div>
       </div>
@@ -4247,7 +4247,7 @@ scrollBody.addEventListener('touchend',e=>{
     if(p) p.textContent=title;
     a.href=url;
   }
-  fetch('/dentcast-brain.json?v=7b46a48e06',{cache:'no-store'}).then(function(r){return r.json();}).then(function(arr){
+  fetch('/dentcast-brain.json?v=572f92ab0b',{cache:'no-store'}).then(function(r){return r.json();}).then(function(arr){
     if(!Array.isArray(arr)) return;
     var latest={}, pool=[];
     arr.forEach(function(e){
@@ -4543,7 +4543,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 <script>
 /* ── LAST 30 UPDATES ── */
 (function(){
-  const FEED_URL='/dentcast-brain.json?v=7b46a48e06';
+  const FEED_URL='/dentcast-brain.json?v=572f92ab0b';
   const el=document.getElementById('dcLast3Updates');
   if(!el) return;
   function extractArray(json){if(Array.isArray(json))return json;const cands=[json?.items,json?.data,json?.entries,json?.feed].filter(Boolean);for(const c of cands)if(Array.isArray(c))return c;for(const k in(json||{})){const v=json[k];if(Array.isArray(v))return v;if(v&&typeof v==='object'&&Array.isArray(v.items))return v.items;}return[];}
@@ -4799,7 +4799,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 
   function getBrain(){
     if(brainCache) return Promise.resolve(brainCache);
-    return fetch('/dentcast-brain.json?v=7b46a48e06', {cache:'no-store'})
+    return fetch('/dentcast-brain.json?v=572f92ab0b', {cache:'no-store'})
       .then(r => r.ok ? r.json() : [])
       .then(d => { brainCache = Array.isArray(d) ? d : []; return brainCache; })
       .catch(() => { brainCache = []; return []; });
