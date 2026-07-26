@@ -81,6 +81,7 @@ Auth: `POST /auth/otp/request`, `POST /auth/otp/verify`, `POST /auth/logout`,
 `GET /profile/stats`, `GET /export/highlights`. Web push:
 `GET /push/public-key`, `POST /push/subscribe`, `POST /push/unsubscribe`. Admin
 (HTTP Basic): `GET /admin` (rendered KPI page), `GET /admin/kpis` (JSON),
+`GET /admin/spot/stats` (ad telemetry report),
 `POST /admin/articles/published` (the `article_published` event),
 `POST /admin/articles/run-free-digest` (manual digest run), and
 `POST /admin/articles/backfill` (one-time go-live: record all existing pages as
@@ -120,6 +121,50 @@ and its canonical `content_id` is new. The Action runs `tools/notify_new_article
 **One-time before enabling the Action:** `POST /admin/articles/backfill` so every
 already-published page is recorded as notified and an old-article edit never fires
 premium. For a single manual announce, `tools/notify_new_article.py` still works.
+
+## Spot (ad) telemetry — counters, not rows
+
+Two client events feed the ad system's reporting, on the endpoints that already
+exist — guests `POST /anon/event { event, content_id }`, signed-in users
+`POST /activity { action, content_id }`. `event`/`action` is `spot_impression`
+or `spot_click`; `content_id` is `"<slot>:<creative>"` (e.g. `home:sponsor-x`),
+slot ∈ `article, home, player, episodes, dashboard, profile, search, archive`.
+
+**Neither one writes a log row.** An impression fires on every page view × every
+enabled slot — far more traffic than `article_viewed` — so a row per event would
+make `user_activity`/`anon_events` the biggest tables in the DB and turn each
+report into a full scan. Instead both paths UPSERT a counter in `spot_stats`:
+
+```sql
+insert into spot_stats (day, slot, creative, viewer, kind, count) values (…, 1)
+on conflict (day, slot, creative, viewer, kind) do update set count = spot_stats.count + 1
+```
+
+- `day` is the **Asia/Tehran** calendar day (same boundary as the streak engine).
+- `viewer` (`anon` | `plus`) is filled **server-side** from the presence of a
+  valid session cookie — never from the request body, so a client cannot
+  mislabel its own traffic. Premium users see no ads at all, so `plus` is
+  effectively the free signed-in tier.
+- The signed-in path deliberately **short-circuits `recordActivity`**: an ad
+  impression is not user activity — it never enters the append-only log, never
+  keeps a streak alive and never awards league XP.
+- Unknown slots and malformed creative ids are rejected (`400
+  invalid_content_id`) so the key space cannot be inflated with junk.
+- Own rate-limit budget: `SPOT_EVENT_MAX_PER_IP_PER_HOUR` (default 600), per IP
+  for guests and per user for signed-in.
+
+**Read path** (founder, HTTP Basic):
+`GET /admin/spot/stats?from=YYYY-MM-DD&to=YYYY-MM-DD&group_by=day|week|month`.
+Dates are inclusive Tehran days; the default window is the last 30 days;
+`week` buckets start on **Saturday** (the Iranian week, as everywhere else).
+Returns `totals`, `by_period`, `by_slot`, `by_creative`, `by_viewer` (each with
+`impressions`, `clicks`, `ctr_pct`) plus the raw `rows`
+(period × slot × creative × viewer) for charting.
+
+```bash
+curl -u "$ADMIN_USER:$ADMIN_PASSWORD" \
+  "$API/admin/spot/stats?from=2026-07-01&to=2026-07-31&group_by=week"
+```
 
 ## Founder admin
 

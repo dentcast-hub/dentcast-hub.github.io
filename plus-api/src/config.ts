@@ -140,6 +140,14 @@ export const config = {
     maxPerIpPerHour: int('ANON_EVENT_MAX_PER_IP_PER_HOUR', 60),
   },
 
+  // Spot (ad) telemetry. Its own budget, an order of magnitude above the generic
+  // anonymous-event cap: an impression fires per page view PER enabled slot, and
+  // Iranian mobile networks put many readers behind one NAT address, so a 60/h
+  // cap would silently drop real traffic and skew the report downwards.
+  spot: {
+    maxPerIpPerHour: int('SPOT_EVENT_MAX_PER_IP_PER_HOUR', 600),
+  },
+
   admin: {
     user: str('ADMIN_USER', 'founder'),
     password: str('ADMIN_PASSWORD', 'change-me-admin-password'),

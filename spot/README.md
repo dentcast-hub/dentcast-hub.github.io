@@ -174,6 +174,29 @@ AdBlock Plus و AdGuard) قاعدهٔ عمومی `##.dc-ad` را دارند و �
 هر نمایش و کلیک به GA4 گزارش می‌شود: رویداد `ad_impression` و `ad_click` با
 پارامترهای `ad_slot` و `ad_creative`. گزارش اسپانسر = فیلتر روی همین دو رویداد.
 
+### آمار داخلی (API) — شمارنده، نه لاگ
+
+کنار GA، API خودمان هم همین دو رویداد را می‌پذیرد تا گزارش اسپانسر مستقل از
+گوگل و ادبلاکر باشد. **سمت سرور آماده است؛ ارسال از `spot.js` هنوز وصل نشده**
+(فعلاً فقط GA). قرارداد:
+
+- مهمان: `POST /anon/event` با `{ event, content_id }`
+- کاربر لاگین‌کرده: `POST /activity` با `{ action, content_id }`
+- مقدارها: `spot_impression` / `spot_click` و `content_id = "<slot>:<creative>"`
+  (مثلاً `home:sponsor-x`).
+
+**سرور سطرِ خام ذخیره نمی‌کند.** حجم ایمپرشن (هر بازدید صفحه × هر جایگاه روشن)
+بسیار بیشتر از `article_viewed` است، پس به‌جای لاگ، یک شمارنده در جدول
+`spot_stats` با کلید یکتای `(day, slot, creative, viewer, kind)` بالا می‌رود
+(`UPSERT … count = count + 1`). `day` روزِ تقویمی تهران است و `viewer`
+(`anon`/`plus`) را **خود سرور** از روی وجود کوکی سشن پر می‌کند — کلاینت
+نمی‌تواند دسته‌بندی خودش را جعل کند. ایمپرشن هیچ‌وقت وارد
+`user_activity` نمی‌شود: نه استریک را زنده نگه می‌دارد نه XP لیگ می‌دهد.
+
+خواندن گزارش (فقط بنیان‌گذار، HTTP Basic):
+`GET /admin/spot/stats?from=&to=&group_by=day|week|month` — جمع‌ها به تفکیک
+`slot`، `creative` و `viewer` به‌همراه CTR. جزئیات: `plus-api/README.md`.
+
 ## نکته‌های فنی
 
 - تغییر `spot-config.json` فوری اعمال می‌شود (fetch با `no-store`).

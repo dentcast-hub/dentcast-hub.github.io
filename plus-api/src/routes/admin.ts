@@ -6,6 +6,9 @@ import { runReactivationNudges } from '../services/reactivation.js';
 import { runStreakReminders } from '../services/streak-reminder.js';
 import { one } from '../db.js';
 import { normalizePhone } from '../services/phone.js';
+import {
+  getSpotStats, defaultRange, isCalendarDay, type GroupBy,
+} from '../services/spot-stats.js';
 import { notifications } from '../providers/registry.js';
 import type { NotificationMessage } from '../providers/notifications/types.js';
 
@@ -84,6 +87,33 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
   app.get('/admin', async (_request, reply) => {
     const kpis = await computeKpis();
     return reply.type('text/html; charset=utf-8').send(renderHtml(kpis));
+  });
+
+  // GET /admin/spot/stats?from=&to=&group_by=day|week|month - the read path for
+  // Spot telemetry. Without it the counters would accumulate unseen. Sums the
+  // `spot_stats` counters over the window and returns the cross-cuts the ad
+  // business actually needs: per slot (which placement earns), per creative
+  // (which campaign earns), per viewer (guest vs signed-in), plus the raw
+  // period × slot × creative × viewer rows for a chart.
+  // Dates are Asia/Tehran calendar days ('YYYY-MM-DD'), inclusive on both ends;
+  // default window is the last 30 days. `week` buckets start on SATURDAY (the
+  // Iranian week), matching the league/streak week used elsewhere.
+  app.get('/admin/spot/stats', async (request, reply) => {
+    const q = request.query as { from?: string; to?: string; group_by?: string };
+    const fallback = defaultRange();
+    const from = q.from ?? fallback.from;
+    const to = q.to ?? fallback.to;
+    if (!isCalendarDay(from) || !isCalendarDay(to)) {
+      return reply.code(400).send({ error: 'invalid_date', message: 'from/to باید YYYY-MM-DD باشند.' });
+    }
+    if (from > to) {
+      return reply.code(400).send({ error: 'invalid_range', message: 'from نباید بعد از to باشد.' });
+    }
+    const groupBy = (q.group_by ?? 'day') as GroupBy;
+    if (!['day', 'week', 'month'].includes(groupBy)) {
+      return reply.code(400).send({ error: 'invalid_group_by' });
+    }
+    return reply.send(await getSpotStats({ from, to, groupBy }));
   });
 
   // POST /admin/articles/published - the `article_published` event. The publish
