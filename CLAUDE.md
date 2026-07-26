@@ -49,6 +49,26 @@ it gets **no** page, **no** brain entry, **no** Pulse line, **no** en mirror
 That workflow interviews for the gaps (sponsor vs internal, link, copy,
 image, slots, rotation share) and files sponsors so they automatically ship
 with `rel="sponsored"` (Google compliance). Never hardcode an ad into a page.
+**Always ask which of the four زمان‌ها (rotation beats) the new ad takes and
+what fills the rest** — the rotation advances once per **session**, so a
+four-entry `rotation.sequence` = four visits, and an ad assigned to no beat
+renders never (ads.md hard rule 6 + Phase B question 6).
+
+## Ad-reporting protocol (trigger)
+
+When the user asks for **ad numbers** — «گزارش تبلیغ بده», «آمار تبلیغات»,
+«تبلیغ‌ها ماه گذشته چقدر دیده شدن؟», «کلیک اسپانسر X چقدر بوده؟» — read
+`.dentcast/workflows/spot-report.md` and follow it. This is read-only: no
+config edit, no publish. Every ad render/click already reports to **our own
+API** (`spot_impression`/`spot_click` → aggregate counters, read back via
+`GET /admin/spot/stats`) **and** to GA4 as a cross-check, so the report is a
+lookup, not a build. Our API is the source of truth: adblockers drop GA but
+not a same-site subdomain. Three rules that decide whether the answer is
+right: the headline number is always **تعداد بارِ نمایش** (one person seeing
+an ad 20 times is 20 — there is deliberately no per-user attribution, so
+"چند نفر" is unanswerable), **premium is zero by design, not by
+measurement**, and no data of any kind exists before 2026-07-26. Numbers are
+never guessed — if the data isn't in hand, hand over the command instead.
 
 ## Attached paper file (trigger — ANY type, file-driven)
 

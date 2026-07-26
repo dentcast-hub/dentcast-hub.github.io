@@ -55,12 +55,19 @@ THIS workflow — never the publishing router, even if the user also pastes
    Off = `"enabled": false` (per-ad, per-slot, or master). Never delete a
    sponsor entry unless the user explicitly says delete — a disabled entry
    is the record of a past campaign.
-6. **Rotation is only touched when the user asks for a share.** Default
-   for a new sponsor: leave `rotation.sequence` unchanged and tell the
-   user what that means in practice. When they do want a share («هر ۴ بار
-   اسپانسر یه بار پریمیوم»), write the literal cyclic array (e.g.
-   `["sponsor","sponsor","sponsor","sponsor","premium"]`) and echo the
-   resulting pattern back in the report.
+6. **Rotation is never guessed — it is ASKED, every time an ad is added.**
+   `rotation.sequence` is a row of **زمان‌ها** (beats) and an ad renders only
+   in the beats it occupies, so "leave it as is" is not a safe default: it
+   means the new ad shows to nobody. Phase B question 6 asks how many of
+   the زمان‌ها this ad takes and what fills the rest, then Phase C writes
+   the literal cyclic array the user picked
+   (e.g. `["premium","premium","sponsor-x","sponsor-x"]`). Only the user
+   changes the NUMBER of beats. **The unit of that array is
+   `rotation.advance`** — `"session"` (current setting) means one step per
+   visit, so a four-entry array = «هر زمان یک سشنِ کاربر»; `"view"` means
+   one step per ad-showing page view. Always echo the pattern in the unit
+   that is actually configured — «هر ۴ بار» is ambiguous until you say
+   بار = بازدید or بار = سشن.
 7. **Config edits are live instantly; engine edits need a version bump.**
    `spot-config.json` is fetched `no-store` — publish is commit+push, done.
    Only if `spot/spot.js` itself changes, bump `SPOT_V` in the ads loader
@@ -104,6 +111,19 @@ slots are enabled, the current `rotation.sequence`, existing sponsor ids
 request is management-only (toggle/share change), apply it directly —
 Phase B collapses to confirming the one thing being changed.
 
+**Read the rotation as a numbered map of زمان‌ها before asking anything.**
+`rotation.advance` is `"session"` and `rotation.sequence` currently has four
+entries — four **زمان** (beats), one per visit, all four parked on `premium`
+(rotation structurally present, effectively off). Write the map down for
+yourself, because Phase B question 6 quotes it back to the user:
+
+```
+زمان ۱ = premium   زمان ۲ = premium   زمان ۳ = premium   زمان ۴ = premium
+```
+
+Never assume the array is still four long or still all-`premium` — re-read it
+every time; earlier ads may already own beats.
+
 ## Phase B — Interview (one message, only the gaps)
 
 Auto-discover first; then ask everything still missing in a **single**
@@ -132,8 +152,38 @@ combined question message, with concrete options where possible:
      viewer at all («جایگاه اپیزودها فقط برای لاگین‌نشده‌ها» → set it on
      the slot in `slots`).
    Premium users never see ads regardless of either layer.
-6. **سهم چرخش** — فعلاً طبق همین چرخش موجود، یا سهم مشخص؟ (rule 6; only
-   relevant when a sponsor is being added or a share is requested).
+6. **سهم چرخش — «کدام زمان‌ها؟» (ALWAYS ASK when an ad is added)** — this is
+   not optional and not inferable: a new ad that nobody assigns to a beat
+   renders **never**. Quote the current beat map from Phase A, then ask
+   **both** halves in one question:
+   - **چند تا از ۴ زمان مال این تبلیغ باشد، و کدام‌ها؟** («هر چهار زمان» /
+     «دو زمان» / «یک زمان» / «سه زمان»)
+   - **بقیهٔ زمان‌ها چه پر شود؟** (پریمیوم، یک اسپانسر دیگر با id مشخص، یا
+     `"sponsor"` برای چرخش وزنی بین اسپانسرهای روشن)
+
+   Offer concrete arrays as options so the answer is one word, e.g. for a new
+   `sponsor-x` on a four-beat rotation:
+
+   ```jsonc
+   ["sponsor-x","sponsor-x","sponsor-x","sponsor-x"]  // هر ۴ سشن همین تبلیغ
+   ["premium","premium","sponsor-x","sponsor-x"]      // دو زمان این، دو زمان پریمیوم
+   ["premium","premium","premium","sponsor-x"]        // فقط یک زمان از چهار
+   ["premium","sponsor-x","sponsor-x","sponsor-x"]    // سه زمان این، یکی پریمیوم
+   ```
+
+   Say plainly what the chosen array means in visits: «هر ۴ سشنِ کاربر، ۲ سشن
+   این تبلیغ را می‌بیند و ۲ سشن پریمیوم را» — بار here means سشن, not بازدید
+   صفحه (rule 6). Ask about **beat ORDER** only if the user cares; otherwise
+   place the new ad in the LAST beats of the array (a first-visit ad is the
+   pushiest slot — don't hand it over without being asked). Changing the
+   NUMBER of زمان‌ها (سه‌زمانه، پنج‌زمانه…) is a separate, explicit request:
+   never resize the array to make an ad's share come out even — pick the
+   closest split on the existing length and say so.
+
+   If the user declines to decide («فعلاً کاری نداشته باش»), leave `sequence`
+   untouched and state in the report — loudly — that the ad is filed but
+   **shows to nobody** until a beat is assigned (rule 9's silent-surprise
+   catch).
 7. **مدت/قرارداد** — start/end date if any → recorded in `note` (the
    engine has no scheduler; expiry is a manual `enabled: false` later —
    tell the user that plainly, and that they can just say «تبلیغ X رو
@@ -152,13 +202,28 @@ combined question message, with concrete options where possible:
 2. Image (if any): save to `spot/img/`, set `image`.
 3. Slots: set the per-creative `slots` array (or omit for everywhere);
    flip per-slot `enabled` only with explicit confirmation (Phase B.5).
-4. Rotation: only per rule 6.
+4. Rotation: write the array the user picked in Phase B question 6 —
+   same length as before unless they explicitly asked to change the number
+   of زمان‌ها. `advance` and `session_minutes` are NOT touched by an ad
+   publish (they are the cadence of the whole system, not one campaign).
 
 ## Phase D — Verify, report, ship
 
 1. `python3 -m json.tool spot/spot-config.json` (must pass).
 2. Report in Persian: the final entry as written, where it will appear,
-   the effective rotation pattern (e.g. «از هر ۵ نمایش، ۴ تا این اسپانسر،
-   ۱ پریمیوم»), the rel="sponsored" status, and any note/expiry recorded.
+   the rel="sponsored" status, and any note/expiry recorded — plus the
+   **new beat map**, written out زمان-by-زمان and then translated into
+   visits:
+
+   ```
+   زمان ۱ = premium   زمان ۲ = premium   زمان ۳ = sponsor-x   زمان ۴ = sponsor-x
+   → از هر ۴ سشنِ کاربر: ۲ سشن پریمیوم، ۲ سشن sponsor-x
+   ```
+
+   Always state the unit as **سشن** (not «نمایش»/«بار») while
+   `advance: "session"` is set. If audience/slot targeting means a viewer
+   class never actually reaches this ad's beat (e.g. the ad is
+   `audience: ["plus"]` and the beat falls back for anon), say so — that is
+   the exact silent surprise rule 9 exists to catch.
 3. Commit + push. No builders, no version stamps, no brain — an ad publish
    touches `spot/spot-config.json` (and `spot/img/` if an image) only.

@@ -12,7 +12,9 @@
     "archive": { "enabled": true }
   },
   "rotation": {
-    "sequence": ["premium"]
+    "advance": "session",
+    "session_minutes": 30,
+    "sequence": ["premium", "premium", "premium", "premium"]
   },
   "creatives": {
     "premium": {

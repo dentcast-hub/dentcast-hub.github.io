@@ -16,6 +16,15 @@ async function pickBase() {
   return resolvedBase;
 }
 
+// The resolved (health-checked, failed-over) base, for callers that must build
+// their own request instead of going through request() — currently only the
+// Spot telemetry emitter, which needs keepalive:true so a click still reports
+// while the browser is already navigating away. Everything else should use the
+// `api` object below rather than hand-rolling a fetch.
+export function apiBase() {
+  return pickBase();
+}
+
 export class ApiError extends Error {
   constructor(status, body) {
     super((body && body.message) || (body && body.error) || 'API error');

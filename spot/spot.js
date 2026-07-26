@@ -16,14 +16,29 @@
 // rendering more than TIER_TIMEOUT_MS — if the API is slow/unreachable the
 // visitor is treated as free and a late "premium" answer removes the ads.
 //
-// Rotation: rotation.sequence cycles one step per page-view that shows an ad
-// (localStorage counter). Entries: "premium", "sponsor" (weighted round-robin
-// over enabled sponsors), or a specific sponsor id. Missing creative at a step
-// falls back to the other kind; nothing available → nothing renders.
+// Rotation: rotation.sequence cycles one step per rotation unit (localStorage
+// counter). Entries: "premium", "sponsor" (weighted round-robin over enabled
+// sponsors), or a specific sponsor id. Missing creative at a step falls back to
+// the other kind; nothing available → nothing renders.
+//
+// Rotation cadence (rotation.advance): "view" (default) takes one step per
+// ad-showing page view. "session" takes one step per VISIT — every page opened
+// within rotation.session_minutes of the previous one shows the SAME campaign,
+// and the next session moves one step down the sequence. That is what makes a
+// four-beat sequence like ["premium","premium","premium","sponsor"] mean "three
+// whole sessions of one ad, a different one on the fourth visit".
 //
 // Targeting: a creative may carry "slots": [...] (where it renders) and/or
 // "audience": ["anon"|"plus"] (who sees it). No field = everyone, everywhere —
 // so by default signed-out and signed-in visitors see the same campaign.
+//
+// Measurement: every render and click is reported TWICE — to GA4
+// (ad_impression / ad_click with ad_slot, ad_creative, viewer) and to our own
+// API (spot_impression / spot_click on /anon/event for guests, /activity for
+// signed-in users). Our API is the source of truth because adblockers drop GA
+// but not a same-site subdomain; GA stays as the cross-check. Signed-out
+// visitors are measured exactly like signed-in ones — no login is involved in
+// counting. Reporting recipe: .dentcast/workflows/spot-report.md.
 //
 // The article card is inserted at a SECTION BOUNDARY (before the middle h2/h3)
 // so it can never sit inside a sentence a workbench highlight spans, and it is
@@ -37,8 +52,11 @@ const SPOT_V = new URL(import.meta.url).search; // carry ?v= from the loader ont
 const TIER_TIMEOUT_MS = 3000;
 // localStorage keys keep their historical names — invisible to blockers, and
 // renaming them would reset every visitor's rotation position.
-const K_TICK = 'dcAds.tick'; // rotation step, advances once per ad-showing page view
-const K_RR = 'dcAds.rr'; // sponsor round-robin cursor
+const K_TICK = 'dcAds.tick'; // rotation step, advances once per rotation unit
+const K_RR = 'dcAds.rr'; // sponsor round-robin cursor, advances with the step
+const K_SEEN = 'dcAds.seen'; // ms stamp of the last page view (session heartbeat)
+const K_HELD = 'dcAds.held'; // 1 = the current session already took its step
+const DEFAULT_SESSION_MINUTES = 30; // idle gap that starts a new session
 
 function lsGet(key) {
   try { return parseInt(localStorage.getItem(key) || '0', 10) || 0; } catch (_) { return 0; }
@@ -52,6 +70,52 @@ function track(name, params) {
   // GA is deferred until window load; queue the event for then if needed.
   if (window.gtag) send();
   else window.addEventListener('load', () => setTimeout(send, 0), { once: true });
+}
+
+// Viewer class carried on every ad event as the "viewer" parameter: "anon"
+// (signed-out) or "plus" (signed-in, non-premium). Premium never reaches a
+// track() call — those users see no ads at all — so the dimension only ever
+// carries these two values and "premium = 0 impressions" is by construction,
+// not something to read out of the data. Resolved at EVENT time rather than
+// card-build time, so a /me answer that lands late still labels the click
+// correctly (the same lazy rule the targeting layer already uses).
+let viewerNow = () => 'anon';
+
+// ── first-party telemetry (our own API, alongside GA) ────────────────────────
+
+// GA4 loses every adblocked visitor (googletagmanager.com is on EasyList; the
+// Spot cards themselves are not). So the same two events also go to our own
+// API, which is a same-site subdomain no filter list touches — those counters
+// are the real numbers, GA is the cross-check.
+//
+// The server stores AGGREGATE COUNTERS keyed (day, slot, creative, viewer,
+// kind), never one row per view, and it fills `viewer` itself from the session
+// cookie — a client cannot mislabel its own traffic, so nothing here is
+// security-relevant. Endpoint is chosen by login state only: /activity is
+// behind requireAuth and 401s for a guest.
+//
+// Fire-and-forget, always: never block a render, never surface an error,
+// never retry. A dropped impression is acceptable; a broken card is not.
+// keepalive lets a click still report while the browser navigates away (the
+// house ad's link is internal, so that tab really does unload).
+const SPOT_EVENT = { impression: 'spot_impression', click: 'spot_click' };
+function report(kind, slotName, creativeId) {
+  const signedIn = viewerNow() === 'plus';
+  const path = signedIn ? '/activity' : '/anon/event';
+  const name = SPOT_EVENT[kind];
+  const body = { content_id: slotName + ':' + (creativeId || 'unknown') };
+  body[signedIn ? 'action' : 'event'] = name;
+  import('/plus/js/api.js')
+    .then((m) => m.apiBase())
+    .then((base) => fetch(base + path, {
+      method: 'POST',
+      credentials: 'include', // the session cookie is what labels this as "plus"
+      keepalive: true,
+      cache: 'no-store',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(body),
+    }))
+    .catch(() => { /* telemetry never breaks the page */ });
 }
 
 // ── creative selection ───────────────────────────────────────────────────────
@@ -85,16 +149,18 @@ function nextSponsor(cfg, slotName, audience) {
     const w = Math.max(1, Math.floor(s.weight) || 1);
     for (let i = 0; i < w; i++) pool.push(s);
   });
-  const cursor = lsGet(K_RR);
-  lsSet(K_RR, cursor + 1);
-  return pool[cursor % pool.length];
+  // The cursor moves with the rotation step (advanceRotation), not per call —
+  // so every slot on the page, and every page of a held session, resolves the
+  // same sponsor.
+  return pool[lsGet(K_RR) % pool.length];
 }
 
 // One creative per page view: every slot on the page shows the same campaign,
-// and the rotation counter advances once (tickOnce, after the first successful
-// render). A step whose creative is missing or not allowed in this slot / for
-// this audience falls back to the other kind; nothing eligible → nothing
-// renders.
+// and the rotation counter advances once (advanceRotation, after the first
+// successful render) — and, in session cadence, not at all until the visitor
+// comes back for a new session. A step whose creative is missing or not allowed
+// in this slot / for this audience falls back to the other kind; nothing
+// eligible → nothing renders.
 function pickCreative(cfg, slotName, audience) {
   const seq = (cfg.rotation && Array.isArray(cfg.rotation.sequence) && cfg.rotation.sequence.length)
     ? cfg.rotation.sequence
@@ -107,11 +173,49 @@ function pickCreative(cfg, slotName, audience) {
   return named || nextSponsor(cfg, slotName, audience) || premiumCreative(cfg, slotName, audience);
 }
 
+// ── rotation cadence (per view vs. per session) ──────────────────────────────
+
+// "view" (default, historical): the counters move AFTER an ad renders, so the
+// next page view lands on the next step.
+//
+// "session": the counters move only at a SESSION BOUNDARY — never mid-visit.
+// That is the whole point: the step has to stay frozen while the visitor is
+// browsing, otherwise page 2 of the same visit would already show the next
+// campaign. A visit ends after rotation.session_minutes without a page view
+// (default 30, the usual analytics window); the heartbeat lives in
+// localStorage, so it survives tab closes and is shared across tabs.
+//
+// K_HELD marks "the session that just ended actually showed an ad" — the new
+// session steps only then. A visit where no slot ever rendered therefore burns
+// no step: the campaign the visitor never saw is still waiting next time.
+let sessionMode = false;
+function openRotationWindow(cfg) {
+  const rot = cfg.rotation || {};
+  sessionMode = rot.advance === 'session';
+  if (!sessionMode) return;
+  const m = Number(rot.session_minutes);
+  const minutes = m > 0 ? m : DEFAULT_SESSION_MINUTES;
+  const now = Date.now();
+  const last = lsGet(K_SEEN);
+  if (last && now - last <= minutes * 60000) { lsSet(K_SEEN, now); return; } // same visit → frozen
+  // New session: take the step the previous session earned, then re-arm.
+  if (lsGet(K_HELD) === 1) {
+    lsSet(K_TICK, lsGet(K_TICK) + 1);
+    lsSet(K_RR, lsGet(K_RR) + 1);
+    lsSet(K_HELD, 0);
+  }
+  lsSet(K_SEEN, now);
+}
+
 let ticked = false;
-function tickOnce() {
+function advanceRotation() {
   if (ticked) return;
   ticked = true;
+  // Session cadence: don't move the counters now — just record that this visit
+  // used its step; openRotationWindow spends it when the next session starts.
+  if (sessionMode) { lsSet(K_HELD, 1); return; }
   lsSet(K_TICK, lsGet(K_TICK) + 1);
+  lsSet(K_RR, lsGet(K_RR) + 1);
 }
 
 // Per-SLOT audience gate, independent of per-creative "audience": a slot with
@@ -264,18 +368,27 @@ function buildCard(creative, slotName) {
   }
 
   a.addEventListener('click', () => {
-    track('ad_click', { ad_slot: slotName, ad_creative: creative.id || 'unknown' });
+    track('ad_click', { ad_slot: slotName, ad_creative: creative.id || 'unknown', viewer: viewerNow() });
+    report('click', slotName, creative.id);
   });
   aside.appendChild(a);
   return aside;
 }
 
+// One impression per PLACEMENT per PAGE VIEW — the standard ad-server rule, and
+// the one the reporting depends on: the number a report calls "بار دیده شده" is
+// the GA4 event COUNT, never the user count. A visitor who opens 20 pages
+// generates 20 impressions; a page carrying three enabled slots generates three
+// (one per card on screen). The Set below only stops the SAME card on the SAME
+// page from being counted twice when an overlay watcher re-seats it — it never
+// collapses repeat views across pages.
 const seenImpressions = new Set();
 function impression(creative, slotName) {
   const key = slotName + ':' + (creative.id || '');
   if (seenImpressions.has(key)) return;
   seenImpressions.add(key);
-  track('ad_impression', { ad_slot: slotName, ad_creative: creative.id || 'unknown' });
+  track('ad_impression', { ad_slot: slotName, ad_creative: creative.id || 'unknown', viewer: viewerNow() });
+  report('impression', slotName, creative.id);
 }
 
 // ── page detection ───────────────────────────────────────────────────────────
@@ -392,7 +505,7 @@ function watchOverlaySlot(cfg, slotName, anchorTitle, audienceNow) {
       if (!card) card = buildCard(creative, slotName);
       sec.parentNode.insertBefore(card, sec.nextSibling);
       impression(creative, slotName);
-      tickOnce();
+      advanceRotation();
       return;
     }
   };
@@ -425,7 +538,7 @@ function setupSearchSlot(cfg, audienceNow) {
     if (!creative) return;
     results.parentNode.insertBefore(buildCard(creative, 'search'), results);
     impression(creative, 'search');
-    tickOnce();
+    advanceRotation();
   };
   if (isOpen()) { seat(); return; }
   const observer = new MutationObserver(() => {
@@ -458,7 +571,7 @@ function setupArchiveSlot(cfg, audienceNow) {
     io.disconnect();
     if (adsKilled) return;
     impression(creative, 'archive');
-    tickOnce();
+    advanceRotation();
   });
   io.observe(card);
 }
@@ -490,6 +603,11 @@ async function main() {
   } catch (_) { return; }
   if (!cfg || !cfg.enabled) return; // master off → zero trace
 
+  // Decide up front whether this page view may move the rotation, and keep the
+  // session heartbeat alive on every page (not just ad-showing ones), so a
+  // visitor browsing pages without slots doesn't get counted as a new session.
+  openRotationWindow(cfg);
+
   const slots = cfg.slots || {};
   const slotOn = (name) => slots[name] && slots[name].enabled;
   const type = pageType();
@@ -517,6 +635,7 @@ async function main() {
   // creative only when their section actually appears in the DOM.
   userPromise.then((u) => { if (u) user = u; });
   const audienceNow = () => (user ? 'plus' : 'anon');
+  viewerNow = audienceNow; // same answer drives targeting AND the measurement label
 
   if (pageSlot && slotAllows(cfg, pageSlot, audienceNow())) {
     const creative = pickCreative(cfg, pageSlot, audienceNow());
@@ -525,7 +644,7 @@ async function main() {
       const placed = renderers[pageSlot](cfg, creative);
       if (placed) {
         impression(creative, pageSlot);
-        tickOnce(); // advance the rotation once per ad-showing page view
+        advanceRotation(); // one step per rotation unit (page view, or session)
       }
     }
   }
