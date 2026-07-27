@@ -20,6 +20,13 @@ Every render and click is reported twice by `spot/spot.js`:
 | **۱** | **API خودمان** (`api.dentcast.ir` / `.org`) | `spot_impression` / `spot_click` | **منبع اصلی** |
 | ۲ | GA4 (`G-GMM0WC8X3M`) | `ad_impression` / `ad_click` | کنترل متقابل |
 
+**نبضِ خرابی:** if a report POST to our API fails (non-2xx or network), the client
+emits **`spot_report_failed`** to GA with the HTTP status, once per page view.
+The two channels fail independently — an adblocker takes GA, an outage/CORS/rate
+limit takes ours — so both silent at once is itself the signal. **Before treating
+a low number as low demand, check this event in GA**: a wall of `429` or
+`network` means the pipeline is dropping events, not that nobody saw an ad.
+
 **Our own API is the source of truth, and that is not a preference — it is a
 data-quality fact.** Adblock filter lists block `googletagmanager.com` but not
 a same-site subdomain, so GA structurally undercounts while the first-party
@@ -92,6 +99,19 @@ engine); week buckets start **Saturday**.
 9. **هیچ عددی حدس زده نمی‌شود.** If the data is not in hand, say so and hand
    over the command — an invented or "typical" number in a sponsor report is
    worse than no report.
+10. **مخرجِ درست، بازدید صفحه است — نه «کاربر» از یک سیستم دیگر.** Comparing our
+   impression count against a user count from GA or the ArvanCloud panel mixes
+   three different definitions (an event, a JS-executing visitor, a CDN log
+   entry that may be a bot). Bots never run JS, so they never produce a page
+   view *or* an impression in our data — which makes a CDN "users" figure
+   structurally larger and not a valid denominator. Use `page_views` from the
+   same response. This exact confusion triggered a full investigation on
+   2026-07-27 that found nothing wrong with the pipeline.
+11. **تفکیک دامنه از ۱۴۰۵/۰۵/۰۵ (2026-07-27) به بعد در دسترس است** — `by_host`
+   plus `?host=dentcast.ir|dentcast.org|unknown`. The host is derived
+   server-side from Origin/Referer, never from the request body. Rows written
+   before that day carry `host: "unknown"` — that is "not recorded", never
+   "neither mirror", and it must not be split, estimated or attributed.
 
 ---
 
@@ -104,7 +124,7 @@ GET /admin/spot/stats?from=YYYY-MM-DD&to=YYYY-MM-DD&group_by=day|week|month
 ```
 
 Inclusive Tehran days; default window = last 30 days. Returns `totals`,
-`by_period`, `by_slot`, `by_creative`, `by_viewer` (each with `impressions`,
+`by_period`, `by_slot`, `by_creative`, `by_viewer`, `by_host` (each with `impressions`,
 `clicks`, `ctr_pct`) plus raw `period × slot × creative × viewer` rows — i.e.
 every split this workflow needs, already aggregated.
 

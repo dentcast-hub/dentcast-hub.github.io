@@ -3,7 +3,9 @@ import { config } from '../config.js';
 import { query } from '../db.js';
 import { consume, HOUR_MS } from '../services/rate-limit.js';
 import { readSession } from '../services/session.js';
-import { SPOT_EVENTS, parseSpotContentId, recordSpotEvent } from '../services/spot-stats.js';
+import {
+  SPOT_EVENTS, parseSpotContentId, recordSpotEvent, hostFromHeaders,
+} from '../services/spot-stats.js';
 
 /**
  * Whitelisted anonymous events. Section 2.3 fixes exactly one anonymous
@@ -53,8 +55,10 @@ export async function anonRoutes(app: FastifyInstance): Promise<void> {
       // The client never labels its own audience. A signed-in visitor who posts
       // here (the site picks the endpoint by login state, but a stale page can
       // get it wrong) is still counted as `plus`.
+      // Same rule for the mirror it came from: read off the request headers, so
+      // ".ir vs .org" is a measurement rather than something the client asserts.
       const viewer = readSession(request) ? 'plus' : 'anon';
-      await recordSpotEvent(target, viewer, spotKind);
+      await recordSpotEvent(target, viewer, spotKind, hostFromHeaders(request.headers));
       return reply.code(204).send();
     }
 

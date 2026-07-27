@@ -122,6 +122,28 @@ let viewerNow = () => 'anon';
 // keepalive lets a click still report while the browser navigates away (the
 // house ad's link is internal, so that tab really does unload).
 const SPOT_EVENT = { impression: 'spot_impression', click: 'spot_click' };
+
+/**
+ * Telemetry heartbeat. Everything below is fire-and-forget, which used to mean a
+ * dead reporting channel and an audience that genuinely saw no ads produced the
+ * SAME silence — on 2026-07-27 that ambiguity cost a full investigation before
+ * the numbers could be trusted at all.
+ *
+ * So a failed report says so through the OTHER channel: GA and our API fail
+ * independently (an adblocker takes GA, a CORS/rate-limit/outage takes ours), so
+ * both going quiet at once is itself the signal. Capped at one per page view —
+ * this is a smoke alarm, not a log stream — and it never disturbs the page: a
+ * failure to report a failure is simply dropped.
+ */
+let reportFailureSent = false;
+function reportFailed(status, slotName) {
+  if (reportFailureSent) return;
+  reportFailureSent = true;
+  try {
+    track('spot_report_failed', { status: String(status), ad_slot: slotName, viewer: viewerNow() });
+  } catch (_) { /* never let the alarm break the page */ }
+}
+
 function report(kind, slotName, creativeId) {
   const name = SPOT_EVENT[kind];
   const contentId = slotName + ':' + (creativeId || 'unknown');
@@ -144,7 +166,10 @@ function report(kind, slotName, creativeId) {
       return post(base, '/activity', 'action')
         .then((res) => (res && res.status === 401 ? post(base, '/anon/event', 'event') : res));
     })
-    .catch(() => { /* telemetry never breaks the page */ });
+    // A 4xx/5xx does NOT reject fetch, so the status has to be read: a 400 wall
+    // or a 429 ceiling is exactly the kind of failure that was invisible before.
+    .then((res) => { if (res && !res.ok) reportFailed(res.status, slotName); })
+    .catch(() => { reportFailed('network', slotName); });
 }
 
 // ── creative selection ───────────────────────────────────────────────────────

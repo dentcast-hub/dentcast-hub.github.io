@@ -36,6 +36,36 @@ export const SPOT_SLOTS = new Set([
 // length so the key space cannot be inflated.
 const CREATIVE_RE = /^[a-z0-9][a-z0-9._-]{0,63}$/i;
 
+/**
+ * The two mirrors, plus 'unknown' for a request whose origin we cannot read
+ * (and for every row written before the dimension existed). CLOSED, like the
+ * slot vocabulary: an unrecognised host is recorded as 'unknown' rather than
+ * minting a permanent key, so a stray Origin can never pollute the report.
+ */
+export const SPOT_HOSTS = new Set(['dentcast.ir', 'dentcast.org', 'unknown']);
+
+/**
+ * Which mirror did this event come from? Derived from Origin, falling back to
+ * Referer — NEVER from the request body, for the same reason `viewer` is not:
+ * traffic must not be able to label itself. `www.` is folded into the bare
+ * domain (one site, one number), and anything else becomes 'unknown'.
+ */
+export function hostFromHeaders(headers: {
+  origin?: string | string[];
+  referer?: string | string[];
+}): string {
+  const first = (v: string | string[] | undefined): string =>
+    (Array.isArray(v) ? v[0] : v) || '';
+  for (const raw of [first(headers.origin), first(headers.referer)]) {
+    if (!raw) continue;
+    try {
+      const host = new URL(raw).hostname.replace(/^www\./, '');
+      if (SPOT_HOSTS.has(host)) return host;
+    } catch { /* malformed header → try the next, then 'unknown' */ }
+  }
+  return 'unknown';
+}
+
 export interface SpotTarget { slot: string; creative: string }
 
 /**
@@ -61,14 +91,15 @@ export async function recordSpotEvent(
   target: SpotTarget,
   viewer: SpotViewer,
   kind: SpotKind,
+  host: string = 'unknown',
   at: Date = new Date(),
 ): Promise<void> {
   await query(
-    `insert into spot_stats (day, slot, creative, viewer, kind, count)
-     values ($1::date, $2, $3, $4, $5, 1)
-     on conflict (day, slot, creative, viewer, kind)
+    `insert into spot_stats (day, slot, creative, viewer, kind, host, count)
+     values ($1::date, $2, $3, $4, $5, $6, 1)
+     on conflict (day, slot, creative, viewer, kind, host)
      do update set count = spot_stats.count + 1, updated_at = now()`,
-    [dayInTz(at), target.slot, target.creative, viewer, kind],
+    [dayInTz(at), target.slot, target.creative, viewer, kind, SPOT_HOSTS.has(host) ? host : 'unknown'],
   );
 }
 
@@ -100,6 +131,7 @@ export interface SpotRow {
   slot: string;
   creative: string;
   viewer: SpotViewer;
+  host: string;
   impressions: number;
   clicks: number;
   ctr_pct: number | null;
@@ -115,6 +147,9 @@ export interface SpotStats {
   by_slot: Array<{ slot: string; impressions: number; clicks: number; ctr_pct: number | null }>;
   by_creative: Array<{ creative: string; impressions: number; clicks: number; ctr_pct: number | null }>;
   by_viewer: Array<{ viewer: SpotViewer; impressions: number; clicks: number; ctr_pct: number | null }>;
+  /** Which mirror delivered the inventory. 'unknown' = written before the
+   *  dimension shipped (2026-07-27), never a guess. */
+  by_host: Array<{ host: string; impressions: number; clicks: number; ctr_pct: number | null }>;
   rows: SpotRow[];
 }
 
@@ -139,20 +174,23 @@ export async function getSpotStats(opts: {
   from: string;
   to: string;
   groupBy: GroupBy;
+  /** Optional: report only one mirror ('dentcast.ir' | 'dentcast.org' | 'unknown'). */
+  host?: string;
 }): Promise<SpotStats> {
   const period = PERIOD_SQL[opts.groupBy];
   const res = await query<{
-    period: string; slot: string; creative: string; viewer: SpotViewer;
+    period: string; slot: string; creative: string; viewer: SpotViewer; host: string;
     impressions: number; clicks: number;
   }>(
-    `select ${period} as period, slot, creative, viewer,
+    `select ${period} as period, slot, creative, viewer, host,
             coalesce(sum(count) filter (where kind = 'impression'), 0)::bigint as impressions,
             coalesce(sum(count) filter (where kind = 'click'), 0)::bigint as clicks
        from spot_stats
       where day between $1::date and $2::date
-      group by 1, 2, 3, 4
+        and ($3::text is null or host = $3::text)
+      group by 1, 2, 3, 4, 5
       order by 1 desc, impressions desc, 2, 3`,
-    [opts.from, opts.to],
+    [opts.from, opts.to, opts.host ?? null],
   );
 
   const totals = { impressions: 0, clicks: 0 };
@@ -165,6 +203,7 @@ export async function getSpotStats(opts: {
   const slots = new Map<string, { key: string; impressions: number; clicks: number }>();
   const creatives = new Map<string, { key: string; impressions: number; clicks: number }>();
   const viewers = new Map<string, { key: SpotViewer; impressions: number; clicks: number }>();
+  const hosts = new Map<string, { key: string; impressions: number; clicks: number }>();
 
   const rows: SpotRow[] = res.rows.map((r) => {
     const impressions = Number(r.impressions);
@@ -174,12 +213,13 @@ export async function getSpotStats(opts: {
     for (const e of [
       bucket(periods, r.period), bucket(slots, r.slot),
       bucket(creatives, r.creative), bucket(viewers, r.viewer),
+      bucket(hosts, r.host),
     ]) {
       e.impressions += impressions;
       e.clicks += clicks;
     }
     return {
-      period: r.period, slot: r.slot, creative: r.creative, viewer: r.viewer,
+      period: r.period, slot: r.slot, creative: r.creative, viewer: r.viewer, host: r.host,
       impressions, clicks, ctr_pct: ctr(impressions, clicks),
     };
   });
@@ -201,6 +241,7 @@ export async function getSpotStats(opts: {
     by_slot: list(slots).map(({ key, ...rest }) => ({ slot: key, ...rest })),
     by_creative: list(creatives).map(({ key, ...rest }) => ({ creative: key, ...rest })),
     by_viewer: list(viewers).map(({ key, ...rest }) => ({ viewer: key, ...rest })),
+    by_host: list(hosts).map(({ key, ...rest }) => ({ host: key, ...rest })),
     rows,
   };
 }

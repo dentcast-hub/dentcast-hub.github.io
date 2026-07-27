@@ -3,7 +3,9 @@ import { config } from '../config.js';
 import { requireAuth } from '../middleware/auth.js';
 import { recordActivity } from '../services/activity.js';
 import { consume, HOUR_MS } from '../services/rate-limit.js';
-import { SPOT_EVENTS, parseSpotContentId, recordSpotEvent } from '../services/spot-stats.js';
+import {
+  SPOT_EVENTS, parseSpotContentId, recordSpotEvent, hostFromHeaders,
+} from '../services/spot-stats.js';
 
 // Permissive: the action vocabulary is deliberately open (not an enum). We only
 // guard length and character set so it stays a sane, indexable token.
@@ -55,7 +57,7 @@ export async function activityRoutes(app: FastifyInstance): Promise<void> {
       }
       // Reached through requireAuth, so the session cookie is valid by
       // construction: this traffic is `plus` (premium users see no ads at all).
-      await recordSpotEvent(target, 'plus', spotKind);
+      await recordSpotEvent(target, 'plus', spotKind, hostFromHeaders(request.headers));
       return reply.send({ ok: true, counted: true });
     }
 

@@ -7,7 +7,7 @@ import { runStreakReminders } from '../services/streak-reminder.js';
 import { one } from '../db.js';
 import { normalizePhone } from '../services/phone.js';
 import {
-  getSpotStats, defaultRange, isCalendarDay, type GroupBy,
+  getSpotStats, defaultRange, isCalendarDay, SPOT_HOSTS, type GroupBy,
 } from '../services/spot-stats.js';
 import { withPageViews } from '../services/view-stats.js';
 import { notifications } from '../providers/registry.js';
@@ -102,7 +102,7 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
   // default window is the last 30 days. `week` buckets start on SATURDAY (the
   // Iranian week), matching the league/streak week used elsewhere.
   app.get('/admin/spot/stats', async (request, reply) => {
-    const q = request.query as { from?: string; to?: string; group_by?: string };
+    const q = request.query as { from?: string; to?: string; group_by?: string; host?: string };
     const fallback = defaultRange();
     const from = q.from ?? fallback.from;
     const to = q.to ?? fallback.to;
@@ -120,7 +120,16 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
     // produced them: a delivery number is unreadable on its own, and the guest
     // ratio in particular is the only way to tell a quiet day apart from a hole
     // in the pipeline.
-    return reply.send(await withPageViews(await getSpotStats({ from, to, groupBy })));
+    // ?host=dentcast.ir|dentcast.org|unknown narrows the report to one mirror.
+    // Rejected rather than ignored: a silently-dropped filter would return the
+    // combined number under a heading that says otherwise.
+    if (q.host !== undefined && !SPOT_HOSTS.has(q.host)) {
+      return reply.code(400).send({
+        error: 'invalid_host',
+        message: 'host باید یکی از dentcast.ir | dentcast.org | unknown باشد.',
+      });
+    }
+    return reply.send(await withPageViews(await getSpotStats({ from, to, groupBy, host: q.host })));
   });
 
   // POST /admin/articles/published - the `article_published` event. The publish
