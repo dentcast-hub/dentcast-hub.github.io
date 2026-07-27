@@ -47,3 +47,19 @@ jobs:
           python tools/notify_new_articles.py \
             --base-sha "${{ github.event.before }}" \
             --head-sha "${{ github.sha }}"
+
+      # Announce the same publishes in the Telegram channel, one message per item.
+      # Runs even when the step above was skipped for missing Plus secrets: the two
+      # channels are independent. It works from a GitHub runner precisely because
+      # api.telegram.org is NOT reachable from our own server in Iran.
+      # With no secrets set it prints why and exits 0, so the workflow stays green
+      # until the channel is wired up.
+      - name: Announce new content in Telegram
+        if: always()
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHANNEL_ID: ${{ secrets.TELEGRAM_CHANNEL_ID }}
+        run: |
+          python tools/announce_telegram_channel.py \
+            --base-sha "${{ github.event.before }}" \
+            --head-sha "${{ github.sha }}"
