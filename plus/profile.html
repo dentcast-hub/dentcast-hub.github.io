@@ -38,5 +38,22 @@
     <div id="dcp-root"></div>
   </main>
   <script type="module" src="/plus/js/profile-page.js?v=1"></script>
+  <!-- DentCast Spot loader — this standalone page renders the SAME profile
+       view as the header overlay (which gets Spot via dc-nav.js's own loader),
+       but it does not load dc-nav.js itself (it has its own minimal header, not
+       the full site chrome), so the loader is duplicated here rather than
+       pulling in the whole nav bundle. Keep this block's SPOT_V in sync with
+       the one at the end of /dc-nav.js. -->
+  <script>
+    (function () {
+      if (window.__dcSpotLoaded) return;
+      window.__dcSpotLoaded = true;
+      var SPOT_V = '19';
+      var js = document.createElement('script');
+      js.type = 'module';
+      js.src = '/spot/spot.js?v=' + SPOT_V;
+      document.body.appendChild(js);
+    })();
+  </script>
 </body>
 </html>
