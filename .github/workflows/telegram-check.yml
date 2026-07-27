@@ -1,0 +1,72 @@
+name: Check Telegram wiring
+
+# Read-only. Posts NOTHING to the channel — it only asks Telegram three questions
+# and prints the answers:
+#   1. is TELEGRAM_BOT_TOKEN a live token, and which bot is it?
+#   2. does TELEGRAM_CHANNEL_ID resolve, and to what (title, numeric id, type)?
+#   3. is that bot an ADMIN of that channel? (a non-admin bot cannot post)
+#
+# Why a workflow instead of a local script: api.telegram.org and t.me are both
+# filtered from Iran, so neither our own server nor a laptop here can reach them.
+# A GitHub runner can. This is the same reason the announcer itself lives in CI.
+#
+# Run it from Actions → "Check Telegram wiring" → Run workflow.
+# The token is never printed; only the bot username and the channel's public data.
+
+on:
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ask Telegram who we are and where we are posting
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHANNEL_ID: ${{ secrets.TELEGRAM_CHANNEL_ID }}
+        run: |
+          python3 - <<'PY'
+          import json, os, urllib.parse, urllib.request
+
+          token = os.environ.get("TELEGRAM_BOT_TOKEN")
+          channel = os.environ.get("TELEGRAM_CHANNEL_ID")
+          if not token or not channel:
+              print("MISSING SECRET: set both TELEGRAM_BOT_TOKEN and TELEGRAM_CHANNEL_ID")
+              raise SystemExit(1)
+
+          def call(method, **params):
+              url = f"https://api.telegram.org/bot{token}/{method}"
+              if params:
+                  url += "?" + urllib.parse.urlencode(params)
+              try:
+                  with urllib.request.urlopen(url, timeout=20) as r:
+                      return json.loads(r.read().decode())
+              except Exception as e:
+                  body = getattr(e, "read", lambda: b"")().decode("utf-8", "replace")[:300]
+                  # Never echo the URL: it carries the token.
+                  return {"ok": False, "error": f"{type(e).__name__}: {body or e}"}
+
+          me = call("getMe")
+          if not me.get("ok"):
+              print("TOKEN: INVALID or unreachable ::", me.get("error") or me)
+              raise SystemExit(1)
+          bot = me["result"]
+          print(f"TOKEN  : valid -> @{bot.get('username')} (id {bot.get('id')})")
+
+          chat = call("getChat", chat_id=channel)
+          if not chat.get("ok"):
+              print(f"CHANNEL: {channel} NOT resolvable ::", chat.get("description") or chat.get("error"))
+              print("         (public channel? use @username. private? the bot must be a member first)")
+              raise SystemExit(1)
+          c = chat["result"]
+          print(f"CHANNEL: {channel} -> {c.get('title')!r} | numeric id {c.get('id')} | type {c.get('type')}")
+
+          mem = call("getChatMember", chat_id=channel, user_id=bot["id"])
+          status = mem.get("result", {}).get("status") if mem.get("ok") else None
+          if status in ("administrator", "creator"):
+              print(f"POSTING: OK — the bot is '{status}' in this channel")
+          else:
+              print(f"POSTING: BLOCKED — bot status is {status or mem.get('description') or mem.get('error')!r}")
+              print("         Add the bot to the channel as an ADMIN with 'Post messages'.")
+              raise SystemExit(1)
+          PY
