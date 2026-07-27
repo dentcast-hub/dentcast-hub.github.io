@@ -421,14 +421,23 @@ function buildCard(creative, slotName) {
   return aside;
 }
 
-// One impression per PLACEMENT per PAGE VIEW — the standard ad-server rule, and
-// the one the reporting depends on: the number a report calls "بار دیده شده" is
-// the event COUNT, never the user count. A visitor who opens 20 pages generates
-// 20 impressions; a page carrying three enabled slots generates three (one per
-// card the visitor actually sees). The Set below only stops the SAME card on the
-// SAME page from being counted twice when an overlay watcher re-seats it — it
-// never collapses repeat views across pages.
+// One impression per PLACEMENT per CONTENT VIEW — the standard ad-server rule,
+// and the one the reporting depends on: the number a report calls "بار دیده شده"
+// is the event COUNT, never the user count. A visitor who opens 20 pages
+// generates 20 impressions; a page carrying three enabled slots generates three
+// (one per card the visitor actually sees). The Set below only stops the SAME
+// card in the SAME content view from being counted twice when an overlay watcher
+// re-seats it — it never collapses repeat views.
 const seenImpressions = new Set();
+// The desktop shell reads ten articles inside ONE page load, so "page view"
+// would silently mean "the first article, then nothing for the rest of the
+// visit" — the sponsor delivered ten cards and would be billed for one. The
+// shell clears the slot's key when it seats a card for a genuinely NEW article,
+// which is the same event a phone reports as a page load. Nothing else may call
+// this: the guard against double-counting one seated card stays intact.
+function forgetImpression(slotName, creativeId) {
+  seenImpressions.delete(slotName + ':' + (creativeId || ''));
+}
 function impression(creative, slotName) {
   const key = slotName + ':' + (creative.id || '');
   if (seenImpressions.has(key)) return;
@@ -602,6 +611,11 @@ function setupShellArticleSlot(cfg, audienceNow) {
     if (!prose) return false; // no prose box: the mobile path would show nothing here either
     const creative = pickCreative(cfg, 'article', audienceNow());
     if (!creative) return false;
+    // A new article in the shell is a new content view, so this card is a new
+    // delivery — even though the browser never left the page. Without this the
+    // whole visit would report one article impression no matter how much the
+    // reader read (measured: article #2 reported nothing).
+    forgetImpression('article', creative.id);
     return placeArticleCard(cfg.slots.article, prose, buildCard(creative, 'article'));
   };
 }
