@@ -1452,9 +1452,15 @@
      stays accurate even when the drawer is closed, because the iframe and its
      audio listeners persist — so the user can see audio is live and where to
      tap. */
+  /* Every .dc-podcast-trigger on the page, not one id: the desktop shell's own
+     header (index.html) carries a second trigger for the same single player, and
+     both must show the same truth — an equalizer running in one header and a
+     dead icon in the other would be a lie about the same audio. */
+  function dcPodTriggers() {
+    return document.querySelectorAll('.dc-podcast-trigger');
+  }
   function dcSetPodcastPlaying(on) {
-    var b = document.getElementById('btn-podcast-toggle');
-    if (b) b.classList.toggle('is-playing', !!on);
+    dcPodTriggers().forEach(function (b) { b.classList.toggle('is-playing', !!on); });
   }
 
   /* The (same-origin) iframe audio element. */
@@ -1558,8 +1564,7 @@
     dcPodMount();
     ov.classList.add('open');
     ov.setAttribute('aria-hidden', 'false');
-    var b = document.getElementById('btn-podcast-toggle');
-    if (b) b.setAttribute('aria-expanded', 'true');
+    dcPodTriggers().forEach(function (b) { b.setAttribute('aria-expanded', 'true'); });
     /* Re-measure on each open: the iframe persists between opens, so its card may
        have reflowed (or never been measured if the first open raced the load). */
     dcPodSizeToContent();
@@ -1574,8 +1579,7 @@
     if (!ov) return;
     ov.classList.remove('open');
     ov.setAttribute('aria-hidden', 'true');
-    var b = document.getElementById('btn-podcast-toggle');
-    if (b) b.setAttribute('aria-expanded', 'false');
+    dcPodTriggers().forEach(function (b) { b.setAttribute('aria-expanded', 'false'); });
   }
   /* The headphone icon is the toggle. */
   function dcPodToggle() {
@@ -1595,6 +1599,12 @@
   /* Exposed so the episodes-page inline player can silence the podcast when it
      starts playing (the symmetric half lives in episodes.html). */
   window.dcPodcastStop = dcStopPodcast;
+
+  /* Exposed for the desktop shell's header trigger (index.html), which lives
+     OUTSIDE this file's mobile header and so cannot use the id-based delegation
+     below. It drives the same single player — same mount, same iframe, same
+     resume — so the podcast never becomes two players fighting over one audio. */
+  window.dcPodcastToggle = dcPodToggle;
 
   /* Escape just hides the drawer; it does NOT stop playback. */
   document.addEventListener('keydown', function (e) {

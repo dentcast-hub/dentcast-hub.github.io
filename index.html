@@ -1778,6 +1778,30 @@ body.dc-desktop-ui #dc-desktop-root{
   display:block; flex:1; min-height:0;
 }
 
+/* Podcast player, hosted INSIDE column 3.
+   dc-nav.js owns one player overlay per page and appends it to <body>, anchored
+   under the fixed MOBILE header (position:fixed; top:57px; full width). In
+   desktop mode that header does not exist and full width would be wrong, so the
+   shell adopts the same element into col-c (see hostPlayerInColumn) and this
+   rule re-anchors it under the column's own topbar. The element and its iframe
+   are untouched — only WHERE it sits — which is what keeps the podcast playing
+   while the reader moves between articles, exactly like on mobile.
+   The anchor is the column's OWN topbar height (--dcd-topbar-h, measured in JS),
+   never the mobile header's 57px: the player must open under the header that
+   carries the button the reader just pressed. */
+.dcd-col-c{ position:relative; }
+.dcd-col-c > .dc-player-overlay{
+  position:absolute; top:var(--dcd-topbar-h, 3.5rem); left:0; right:0; bottom:auto;
+  z-index:30;                       /* above the scroll area, below the app's overlays */
+  border-bottom:1px solid var(--border);
+}
+.dcd-col-c > .dc-player-overlay.open{
+  max-height:var(--dc-player-h, calc(100vh - var(--dcd-topbar-h, 3.5rem)));
+}
+.dcd-col-c > .dc-player-overlay .dc-player-overlay-body{
+  height:var(--dc-player-h, calc(100vh - var(--dcd-topbar-h, 3.5rem)));
+}
+
 /* Fetched content styling — extracted from article pages */
 .dcd-content-area .article-content-wrap,
 .dcd-content-area .wrap,
@@ -4031,6 +4055,11 @@ a.dc-list-card--pillar {
         <a class="dc-topbar-btn" id="dcd-hdr-cabinet" href="/dentcast_cabinet_search.html" aria-label="کابینت دنت‌کست"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M15 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7z"/><path d="M15 3v4h4"/><path d="M9 9h2"/><path d="M9 13h6"/><path d="M9 17h6"/></svg></a>
         <button class="dc-topbar-btn" id="dcd-hdr-radar" aria-label="رادار"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="m12 12 7-7"/><path d="M12 12h.01"/></svg></button>
         <button class="dc-topbar-btn" id="dcd-hdr-search" aria-label="جستجو"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+        <!-- Podcast — the desktop twin of the mobile header's headphone trigger.
+             Same classes (dc-podcast-trigger), same icon, same equalizer span, so
+             dc-nav.js's accent tint and .is-playing treatment apply here with no
+             new CSS; the click is wired to window.dcPodcastToggle below. -->
+        <button class="dc-topbar-btn dc-podcast-trigger" id="dcd-hdr-podcast" aria-label="پادکست دنت‌کست" aria-haspopup="true" aria-expanded="false"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M3 14a9 9 0 0 1 18 0"/><path d="M5 14h3v7H5a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2z"/><path d="M19 14h-3v7h3a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2z"/></svg><span class="dc-music-eq" aria-hidden="true"><i></i><i></i><i></i></span></button>
       </div>
       <div class="dc-topbar-brand">
         <div class="dc-topbar-brand-name">DentCast</div>
@@ -4251,7 +4280,7 @@ scrollBody.addEventListener('touchend',e=>{
     if(p) p.textContent=title;
     a.href=url;
   }
-  fetch('/dentcast-brain.json?v=edd1e4c09e',{cache:'no-store'}).then(function(r){return r.json();}).then(function(arr){
+  fetch('/dentcast-brain.json?v=4630056a02',{cache:'no-store'}).then(function(r){return r.json();}).then(function(arr){
     if(!Array.isArray(arr)) return;
     var latest={}, pool=[];
     arr.forEach(function(e){
@@ -4328,7 +4357,7 @@ scrollBody.addEventListener('touchend',e=>{
 </script>
 
 <!-- Theme toggle behavior moved to /dc-nav.js (single source) -->
-<script src="/dc-nav.js?v=36" defer></script>
+<script src="/dc-nav.js?v=37" defer></script>
 
 <!-- Toolbar drawer toggle is handled by /dc-nav.js (single source) -->
 
@@ -4583,7 +4612,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 <script>
 /* ── LAST 30 UPDATES ── */
 (function(){
-  const FEED_URL='/dentcast-brain.json?v=edd1e4c09e';
+  const FEED_URL='/dentcast-brain.json?v=4630056a02';
   const el=document.getElementById('dcLast3Updates');
   if(!el) return;
   function extractArray(json){if(Array.isArray(json))return json;const cands=[json?.items,json?.data,json?.entries,json?.feed].filter(Boolean);for(const c of cands)if(Array.isArray(c))return c;for(const k in(json||{})){const v=json[k];if(Array.isArray(v))return v;if(v&&typeof v==='object'&&Array.isArray(v.items))return v.items;}return[];}
@@ -4839,7 +4868,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 
   function getBrain(){
     if(brainCache) return Promise.resolve(brainCache);
-    return fetch('/dentcast-brain.json?v=edd1e4c09e', {cache:'no-store'})
+    return fetch('/dentcast-brain.json?v=4630056a02', {cache:'no-store'})
       .then(r => r.ok ? r.json() : [])
       .then(d => { brainCache = Array.isArray(d) ? d : []; return brainCache; })
       .catch(() => { brainCache = []; return []; });
@@ -5396,6 +5425,40 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
   /* ══════════════════════════════════════════════
      ENABLE / DISABLE DESKTOP MODE
   ══════════════════════════════════════════════ */
+  /* ══════════════════════════════════════════════
+     COL-C: PODCAST PLAYER
+     dc-nav.js owns exactly one player (mount, audio hooks, resume, exclusivity
+     with the music button). We do NOT build a second one — that would be two
+     iframes fighting over one audio. We only adopt its overlay into column 3 so
+     it opens under THIS header, and let its own toggle do the rest.
+     Adoption happens BEFORE the first open, while the overlay is still an empty
+     div: dc-nav mounts the iframe lazily on open, so nothing ever reloads and
+     the podcast keeps playing while the reader moves between articles — the
+     whole point of the mobile design, preserved here.
+  ══════════════════════════════════════════════ */
+  function hostPlayerInColumn(){
+    const ov = document.getElementById('dcPlayerOverlay');
+    if(!ov || !colCEl) return null;
+    const bar = colCEl.querySelector('.dcd-col-c-topbar');
+    if(bar) colCEl.style.setProperty('--dcd-topbar-h', bar.offsetHeight + 'px');
+    if(ov.parentNode !== colCEl) colCEl.appendChild(ov);
+    return ov;
+  }
+  /* Give the overlay back to <body> when the viewport drops to the mobile
+     layout: down there the mobile header's own trigger owns it, and a player
+     parked inside the (now hidden) desktop column would be unreachable. */
+  function releasePlayerFromColumn(){
+    const ov = document.getElementById('dcPlayerOverlay');
+    if(ov && ov.parentNode !== document.body) document.body.appendChild(ov);
+  }
+  const podBtn = document.getElementById('dcd-hdr-podcast');
+  if(podBtn){
+    podBtn.addEventListener('click', function(){
+      hostPlayerInColumn();
+      if(typeof window.dcPodcastToggle === 'function') window.dcPodcastToggle();
+    });
+  }
+
   function enable(){
     if(enabled) return;
     enabled = true;
@@ -5424,6 +5487,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
     enabled = false;
     document.body.classList.remove('dc-desktop-ui');
     root.setAttribute('aria-hidden', 'true');
+    releasePlayerFromColumn();
   }
 
   function sync(){ isDesk() ? enable() : disable(); }
