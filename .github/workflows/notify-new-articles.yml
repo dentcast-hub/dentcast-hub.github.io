@@ -59,6 +59,10 @@ jobs:
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHANNEL_ID: ${{ secrets.TELEGRAM_CHANNEL_ID }}
+          # Which mirror the channel links to. A repository VARIABLE (not a
+          # secret — it is a public URL) so the domain can be switched from the
+          # GitHub UI without a code change or a deploy; falls back to .org.
+          SITE_BASE_URL: ${{ vars.SITE_BASE_URL || 'https://dentcast.org' }}
         run: |
           python tools/announce_telegram_channel.py \
             --base-sha "${{ github.event.before }}" \
