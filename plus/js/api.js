@@ -1,19 +1,52 @@
 // DentCast Plus API client. Health-checked base with failover, cookie sessions.
 import { API_BASES } from './config.js';
 
+// The health-check round trip only needs to happen ONCE per browser tab, not
+// once per page load — this is a static multi-page site, so every navigation
+// re-imports this module and `resolvedBase` (module-scope) resets to null. On
+// a slow connection that extra /health RTT is exactly what delays the /me
+// answer that gates Spot's card render (see spot.js's TIER_TIMEOUT_MS race),
+// and it repeats on every single page a visitor opens. sessionStorage survives
+// the navigation, so page 2+ of a visit skips straight to /me.
+//
+// Self-healing: a cached base that goes down mid-session must not stick for
+// the rest of the tab — forgetBase() is called on any network-level failure
+// (not an HTTP error status, which is a real API answer) so the very next
+// request re-probes and can fail over to the other mirror.
+const SS_BASE = 'dcp:api-base';
+
+function ssGet(key) {
+  try { return sessionStorage.getItem(key) || ''; } catch (_) { return ''; }
+}
+function ssSet(key, v) {
+  try { sessionStorage.setItem(key, v); } catch (_) { /* private mode */ }
+}
+function ssClear(key) {
+  try { sessionStorage.removeItem(key); } catch (_) { /* private mode */ }
+}
+
 let resolvedBase = null;
 
 async function pickBase() {
   if (resolvedBase) return resolvedBase;
+  const cached = ssGet(SS_BASE);
+  if (cached && API_BASES.indexOf(cached) !== -1) { resolvedBase = cached; return cached; }
   for (const base of API_BASES) {
     try {
       const res = await fetch(base + '/health', { method: 'GET', credentials: 'include', cache: 'no-store' });
-      if (res.ok) { resolvedBase = base; return base; }
+      if (res.ok) { resolvedBase = base; ssSet(SS_BASE, base); return base; }
     } catch (_) { /* try next */ }
   }
   // Fall back to the first configured base so callers still get a real error.
   resolvedBase = API_BASES[0];
   return resolvedBase;
+}
+
+// Exported so callers that build their own fetch (spot.js's telemetry, which
+// bypasses request() for keepalive) can self-heal too on a network failure.
+export function forgetBase() {
+  resolvedBase = null;
+  ssClear(SS_BASE);
 }
 
 // The resolved (health-checked, failed-over) base, for callers that must build
@@ -50,7 +83,13 @@ async function request(path, { method = 'GET', body, query } = {}) {
     opts.headers['content-type'] = 'application/json';
     opts.body = JSON.stringify(body);
   }
-  const res = await fetch(url, opts);
+  let res;
+  try {
+    res = await fetch(url, opts);
+  } catch (e) {
+    forgetBase(); // network-level failure (not an HTTP error) — the cached base may be dead
+    throw e;
+  }
   if (res.status === 204) return null;
   const data = await res.json().catch(() => null);
   if (!res.ok) throw new ApiError(res.status, data);

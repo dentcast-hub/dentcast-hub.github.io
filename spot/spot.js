@@ -1,5 +1,10 @@
-// DentCast Spot — central, config-driven ad system. Loaded on every page by the
-// loader hook in dc-nav.js (the ONLY hook; no page carries ad markup of its own).
+// DentCast Spot — central, config-driven ad system. Loaded by the loader hook
+// at the end of dc-nav.js on every page that pulls in dc-nav.js — which is
+// every page except the two standalone /plus/ full-page views (index.html,
+// profile.html): they have their own minimal header, not the full site nav,
+// so they carry the SAME small loader snippet inline instead of pulling in
+// all of dc-nav.js. No page carries ad MARKUP of its own — only this loader
+// snippet is ever duplicated, config-driven exactly like the primary hook.
 //
 // NAMING IS DELIBERATELY NEUTRAL ("spot", never "ad"): EasyList carries a
 // generic element-hiding rule `##.dc-ad` (and blocks many ad-ish paths), so
@@ -169,7 +174,13 @@ function report(kind, slotName, creativeId) {
     // A 4xx/5xx does NOT reject fetch, so the status has to be read: a 400 wall
     // or a 429 ceiling is exactly the kind of failure that was invisible before.
     .then((res) => { if (res && !res.ok) reportFailed(res.status, slotName); })
-    .catch(() => { reportFailed('network', slotName); });
+    .catch(() => {
+      reportFailed('network', slotName);
+      // A network-level failure (not an HTTP error) may mean the cached base is
+      // dead — self-heal so the NEXT event, and the next page's /me, re-probe
+      // instead of retrying the same unreachable host all session.
+      import('/plus/js/api.js').then((m) => m.forgetBase()).catch(() => {});
+    });
 }
 
 // ── creative selection ───────────────────────────────────────────────────────
@@ -545,13 +556,27 @@ function pageType() {
   if (path === '/player.html') return 'player';
   if (path === '/episodes.html') return 'episodes';
   if (document.querySelector('main.article-content-wrap') && findProseRoot()) return 'article';
+  // LiteCast pages carry the same article-content-wrap shell but never carry
+  // one of PROSE_SELECTORS on purpose — that selector doubles as the Plus
+  // workbench gate (plus.js initArticle), and LiteCast is a deliberately
+  // simpler, general-audience track that must never pick up
+  // highlighting/study mode. Detect it by path instead, so the article slot
+  // still reaches it without touching that shared selector.
+  if (path.indexOf('/litecast/') === 0 && litecastProseRoot()) return 'article';
   return null;
+}
+
+// LiteCast's own prose root: a bare <article> inside the article shell, no
+// PROSE_SELECTORS class. See the pageType() comment above for why this stays
+// separate from findProseRoot() rather than extending PROSE_SELECTORS.
+function litecastProseRoot() {
+  return document.querySelector('main.article-content-wrap article');
 }
 
 // ── slot renderers (each returns true if it placed an ad) ────────────────────
 
 function renderArticle(cfg, creative) {
-  const prose = findProseRoot();
+  const prose = findProseRoot() || litecastProseRoot();
   if (!prose) return false;
   return placeArticleCard(cfg.slots.article, prose, buildCard(creative, 'article'));
 }
