@@ -5094,6 +5094,17 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
          button must be wired explicitly here, with the article's own URL. */
       if (window.dcpMountArticleWorkbench) window.dcpMountArticleWorkbench(contentArea, url);
 
+      /* Place the in-article ad. Same reason as the workbench above: this is a
+         client-side injection, so spot.js — which ran once, when the homepage
+         loaded — cannot see it, and the article slot would silently never render
+         on desktop. The shell decides WHEN (only a real article, the same
+         condition the mobile path checks: the fetched page had
+         .article-content-wrap); spot.js decides WHERE, with the same upper-third
+         rule it uses on a phone. */
+      if (window.dcSpotMountArticle && extract.classList.contains('article-content-wrap')) {
+        window.dcSpotMountArticle(contentArea);
+      }
+
     } catch(e){
       contentArea.innerHTML =
         '<div class="dcd-loading" style="flex-direction:column;gap:0.5rem;">' +

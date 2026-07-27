@@ -61,7 +61,7 @@
 // user-select:none + hidden entirely in study mode (body.dcp-study) so the
 // میز کار experience stays clean.
 
-import { findProseRoot } from '/plus/js/config.js';
+import { findProseRoot, PROSE_SELECTORS } from '/plus/js/config.js';
 
 const CONFIG_URL = '/spot/spot-config.json';
 const SPOT_V = new URL(import.meta.url).search; // carry ?v= from the loader onto the config fetch
@@ -517,10 +517,18 @@ function pageType() {
 // ── slot renderers (each returns true if it placed an ad) ────────────────────
 
 function renderArticle(cfg, creative) {
-  const slot = cfg.slots.article;
   const prose = findProseRoot();
   if (!prose) return false;
-  const card = buildCard(creative, 'article');
+  return placeArticleCard(cfg.slots.article, prose, buildCard(creative, 'article'));
+}
+
+// The placement rule itself, shared by the TWO ways an article reaches a screen:
+// a real article page (renderArticle) and the desktop shell, which injects an
+// article's markup into the homepage with no navigation at all
+// (window.dcSpotMountArticle below). One function so the card lands in the same
+// place on both — a reader on a laptop and the same reader on a phone must not
+// see the ad at different points in the text.
+function placeArticleCard(slot, prose, card) {
   const placeEnd = () => { prose.appendChild(card); return true; };
 
   if (slot.position === 'end') return placeEnd();
@@ -550,6 +558,52 @@ function renderArticle(cfg, creative) {
   }
   anchor.parentNode.insertBefore(card, anchor);
   return true;
+}
+
+// findProseRoot() scoped to one container. The document-wide version is wrong in
+// the shell: the injected article sits inside #dcd-content-area while the
+// homepage around it has boxes of its own, and a document query would find one
+// of those first and drop the card outside the article entirely.
+function proseRootIn(container) {
+  for (const sel of PROSE_SELECTORS) {
+    const el = container.querySelector(sel);
+    if (el) return el;
+  }
+  return null;
+}
+
+/**
+ * Desktop shell (index.html), the article slot's second entry point.
+ *
+ * On a wide screen the homepage IS the app: clicking an item fetches the page,
+ * strips its chrome — dc-nav.js, and therefore this file, included — and injects
+ * the article's markup into #dcd-content-area. The URL never changes and nothing
+ * re-runs, so spot.js (which ran once, on the homepage, and saw `home`) never
+ * learned an article was on screen. That is why the in-article card was missing
+ * on desktop while working on mobile: not config, not targeting — the slot's
+ * trigger simply never fired.
+ *
+ * The shell already solves exactly this for the Plus workbench by calling a mount
+ * hook after it injects; expose the same kind of hook and let it call ours. The
+ * shell decides WHEN (it alone knows the fetched page was an article); we decide
+ * WHERE, with the same placeArticleCard() the mobile path uses.
+ *
+ * Rotation is untouched: pickCreative/nextSponsor only READ the counters, so a
+ * visitor opening ten articles in one shell session keeps seeing that session's
+ * campaign, exactly as ten real page loads would. The card counts its own
+ * impression when actually seen, like every other card.
+ */
+function setupShellArticleSlot(cfg, audienceNow) {
+  window.dcSpotMountArticle = function (container) {
+    if (adsKilled || !container) return false;
+    if (!slotAllows(cfg, 'article', audienceNow())) return false;
+    if (container.querySelector('.dc-spot--article')) return false; // already seated
+    const prose = proseRootIn(container);
+    if (!prose) return false; // no prose box: the mobile path would show nothing here either
+    const creative = pickCreative(cfg, 'article', audienceNow());
+    if (!creative) return false;
+    return placeArticleCard(cfg.slots.article, prose, buildCard(creative, 'article'));
+  };
 }
 
 function renderHome(cfg, creative) {
@@ -746,7 +800,12 @@ async function main() {
   if (slotOn('profile')) overlaySlots.push(['profile', 'پلن']);
   const searchOn = slotOn('search');
   const archiveOn = slotOn('archive');
-  if (!pageSlot && !overlaySlots.length && !searchOn && !archiveOn) return;
+  // The desktop shell injects whole articles into the homepage without a
+  // navigation, so the article slot has to be mountable on demand HERE, on a page
+  // whose own type is `home`. Gated on the shell's container so no other page
+  // pays for a hook it can never use.
+  const shellArticle = slotOn('article') && !!document.getElementById('dcd-content-area');
+  if (!pageSlot && !overlaySlots.length && !searchOn && !archiveOn && !shellArticle) return;
 
   // Resolve the viewer class ONCE, before anything renders. It decides two
   // things: whether an ad may exist at all (premium: never), and which campaign
@@ -807,6 +866,7 @@ async function main() {
   overlaySlots.forEach(([name, title]) => watchOverlaySlot(cfg, name, title, audienceNow));
   if (searchOn) setupSearchSlot(cfg, audienceNow);
   if (archiveOn) setupArchiveSlot(cfg, audienceNow);
+  if (shellArticle) setupShellArticleSlot(cfg, audienceNow);
 }
 
 if (document.readyState === 'loading') {
