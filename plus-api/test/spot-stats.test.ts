@@ -168,10 +168,10 @@ describe('GET /admin/spot/stats', () => {
 
   it('groups by week (Saturday start) and month', async () => {
     await pool.query(
-      `insert into spot_stats (day, slot, creative, viewer, kind, count) values
-         ('2026-07-18', 'home', 'premium', 'anon', 'impression', 5),
-         ('2026-07-19', 'home', 'premium', 'anon', 'impression', 7),
-         ('2026-06-30', 'home', 'premium', 'anon', 'impression', 2)`,
+      `insert into spot_stats (day, slot, creative, viewer, kind, host, count) values
+         ('2026-07-18', 'home', 'premium', 'anon', 'impression', 'dentcast.ir', 5),
+         ('2026-07-19', 'home', 'premium', 'anon', 'impression', 'dentcast.ir', 7),
+         ('2026-06-30', 'home', 'premium', 'anon', 'impression', 'dentcast.org', 2)`,
     );
     const url = (g: string) => `/admin/spot/stats?from=2026-06-01&to=2026-07-31&group_by=${g}`;
 
@@ -195,5 +195,96 @@ describe('GET /admin/spot/stats', () => {
       const res = await app.inject({ method: 'GET', url: '/admin/spot/stats' + q, headers: { authorization: basic } });
       expect(res.statusCode, q).toBe(400);
     }
+  });
+});
+
+// --- host dimension (D2) ----------------------------------------------------
+// The blind spot this closes: on 2026-07-27 a report could not answer "how much
+// of this came from .ir vs .org", and ruling out a broken mirror by hand cost a
+// full investigation.
+
+async function spotFrom(origin: string | undefined, content_id: string, referer?: string) {
+  const headers: Record<string, string> = {};
+  if (origin) headers.origin = origin;
+  if (referer) headers.referer = referer;
+  return app.inject({
+    method: 'POST', url: '/anon/event', headers,
+    payload: { event: 'spot_impression', content_id },
+  });
+}
+async function statsWith(qs: string) {
+  const res = await app.inject({
+    method: 'GET', url: `/admin/spot/stats?from=${today()}&to=${today()}${qs}`,
+    headers: { authorization: basic },
+  });
+  return res;
+}
+
+describe('spot telemetry — host dimension', () => {
+  it('derives the mirror from Origin, and splits the report by it', async () => {
+    await spotFrom('https://dentcast.ir', 'home:premium');
+    await spotFrom('https://dentcast.ir', 'home:premium');
+    await spotFrom('https://dentcast.org', 'home:premium');
+
+    const body = (await statsWith('')).json();
+    const hosts = Object.fromEntries(body.by_host.map((h: { host: string; impressions: number }) => [h.host, h.impressions]));
+    expect(hosts['dentcast.ir']).toBe(2);
+    expect(hosts['dentcast.org']).toBe(1);
+    expect(body.totals.impressions).toBe(3);
+  });
+
+  it('folds www. into the bare domain — one site, one number', async () => {
+    await spotFrom('https://www.dentcast.ir', 'home:premium');
+    await spotFrom('https://dentcast.ir', 'home:premium');
+
+    const body = (await statsWith('')).json();
+    expect(body.by_host).toEqual([
+      expect.objectContaining({ host: 'dentcast.ir', impressions: 2 }),
+    ]);
+  });
+
+  it('falls back to Referer, and records anything else as unknown — never a guess', async () => {
+    await spotFrom(undefined, 'home:premium', 'https://dentcast.org/episodes.html');
+    await spotFrom('https://somewhere-else.example', 'home:premium');
+    await spotFrom(undefined, 'home:premium');
+
+    const body = (await statsWith('')).json();
+    const hosts = Object.fromEntries(body.by_host.map((h: { host: string; impressions: number }) => [h.host, h.impressions]));
+    expect(hosts['dentcast.org']).toBe(1);
+    expect(hosts.unknown).toBe(2);
+  });
+
+  it('does NOT let the client label its own traffic', async () => {
+    // A body claiming .org while the headers say .ir must be recorded as .ir.
+    await app.inject({
+      method: 'POST', url: '/anon/event', headers: { origin: 'https://dentcast.ir' },
+      payload: { event: 'spot_impression', content_id: 'home:premium', host: 'dentcast.org' },
+    });
+    const body = (await statsWith('')).json();
+    expect(body.by_host).toEqual([expect.objectContaining({ host: 'dentcast.ir', impressions: 1 })]);
+  });
+
+  it('filters to one mirror, and rejects an unknown filter instead of ignoring it', async () => {
+    await spotFrom('https://dentcast.ir', 'home:premium');
+    await spotFrom('https://dentcast.org', 'home:premium');
+
+    const ir = (await statsWith('&host=dentcast.ir')).json();
+    expect(ir.totals.impressions).toBe(1);
+    expect(ir.by_host).toEqual([expect.objectContaining({ host: 'dentcast.ir' })]);
+
+    const bad = await statsWith('&host=example.com');
+    expect(bad.statusCode).toBe(400);
+    expect(bad.json().error).toBe('invalid_host');
+  });
+
+  it('keeps the signed-in path labelled too', async () => {
+    const cookie = await loginAs(app, '09121110001');
+    await app.inject({
+      method: 'POST', url: '/activity', headers: { cookie, origin: 'https://dentcast.ir' },
+      payload: { action: 'spot_impression', content_id: 'article:premium' },
+    });
+    const body = (await statsWith('')).json();
+    expect(body.by_host).toEqual([expect.objectContaining({ host: 'dentcast.ir', impressions: 1 })]);
+    expect(body.by_viewer).toEqual([expect.objectContaining({ viewer: 'plus' })]);
   });
 });
