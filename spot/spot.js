@@ -279,7 +279,15 @@ body.dcp-study .dc-spot { display: none !important; }
   align-items: center;
   gap: 0.875rem;
   padding: 1rem 1.125rem;
-  background: linear-gradient(135deg, rgba(245, 162, 8, 0.12), rgba(245, 162, 8, 0.04));
+  /* The amber tint is translucent BY DESIGN, so it must sit on an opaque card
+     surface — never straight on the page. The homepage hero is a dark artwork,
+     and with only the tint the card's own dark body text landed on that image
+     and disappeared (desktop, light theme). Layering the gradient over
+     --card-bg keeps the same look on a normal page and makes the card legible
+     wherever it is dropped. */
+  background:
+    linear-gradient(135deg, rgba(245, 162, 8, 0.12), rgba(245, 162, 8, 0.04)),
+    var(--card-bg, #ffffff);
   border: 2px solid rgba(245, 162, 8, 0.65);
   border-radius: 16px;
   text-decoration: none;
@@ -301,6 +309,11 @@ body.dcp-study .dc-spot { display: none !important; }
   color: #b07d00;
   background: rgba(245, 162, 8, 0.16);
   letter-spacing: 0.02em;
+}
+[data-theme="dark"] .dc-spot-link {
+  background:
+    linear-gradient(135deg, rgba(245, 162, 8, 0.12), rgba(245, 162, 8, 0.04)),
+    var(--card-bg, #1e2c3a);
 }
 [data-theme="dark"] .dc-spot-badge { color: #f5b63e; background: rgba(245, 162, 8, 0.14); }
 .dc-spot-title { display: block; font-size: 0.88rem; font-weight: 800; line-height: 1.7; color: var(--txt, #0a1a33); }
