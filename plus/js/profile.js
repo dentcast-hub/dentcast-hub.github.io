@@ -175,12 +175,17 @@ function remindersBlock(me) {
   return block;
 }
 
-// Messenger connection (spec 2.7). Both channels feed the API's provider-agnostic
+// Messenger connection (spec 2.7). These feed the API's provider-agnostic
 // notification sender (streak reminders + new-article), delivered to whatever a
-// user has connected (Telegram, Bale, and/or web push). Both are FREE for everyone
-// (a connected messenger is the universal notification channel), never premium.
-//   - Telegram (تلگرام): connecting also enables passwordless login (widget). The
-//     widget is .org-only, so telegramLoginBlock returns null on .ir.
+// user has connected (Bale and/or web push). FREE for everyone (a connected
+// messenger is the universal notification channel), never premium.
+//   - Telegram (تلگرام): LOGIN ONLY. The sender still tries it — the code path is
+//     intact and self-heals if the route returns — but the copy must not promise
+//     delivery: api.telegram.org is filtered inside Iran, so the API container
+//     cannot reach it (ArvanCloud confirmed 2026-07-27 that the window when it
+//     worked was a misconfigured filtering box upstream, not a capability). A user
+//     with only Telegram linked would otherwise see a green tick and receive
+//     nothing. The widget is .org-only, so telegramLoginBlock returns null on .ir.
 //   - Bale (بله): NOTIFICATIONS ONLY, no login widget. Connecting deep-links to the
 //     Bale bot with a one-time token; the bot webhook links the chat_id. Shown on
 //     both sites (domestic, unfiltered).
@@ -319,7 +324,7 @@ function telegramLoginBlock(me) {
         el('span', { class: 'dcp-tg-linked-ico', 'aria-hidden': 'true' }, '✓'),
         el('span', {}, 'حساب تلگرام متصل است'),
       ]),
-      el('p', { class: 'dcp-sec-hint' }, 'ورود سریع و دریافتِ نوتیف استریک و مطلب جدید از تلگرام فعال است.'),
+      el('p', { class: 'dcp-sec-hint' }, 'ورود سریع با تلگرام فعال است. نوتیف اما از این مسیر نمی‌رسد؛ برای دریافت یادآوری استریک و خبر مطلب جدید، بله یا نوتیف مرورگر را وصل کنید.'),
     ];
     // Allow disconnecting ONLY when the account keeps another way in (a phone),
     // so a Telegram-only user can't lock themselves out.
@@ -361,7 +366,7 @@ function telegramLoginBlock(me) {
 
   return el('div', {}, [
     holder,
-    el('p', { class: 'dcp-sec-hint' }, 'با اتصال تلگرام: ورود بدون کد پیامکی + دریافتِ نوتیف استریک و مطلب جدید از تلگرام. حساب فعلی و اطلاعاتتان حفظ می‌شود.'),
+    el('p', { class: 'dcp-sec-hint' }, 'با اتصال تلگرام: ورود بدون کد پیامکی. حساب فعلی و اطلاعاتتان حفظ می‌شود. نوتیف از تلگرام ارسال نمی‌شود؛ کانال نوتیف، بله یا مرورگر است.'),
   ]);
 }
 

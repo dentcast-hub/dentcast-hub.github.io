@@ -70,7 +70,11 @@ function isStandalone() {
  *  'install' — iOS Safari outside the installed PWA: web push is impossible
  *              until the site is on the home screen, so we teach that instead
  *              and point at the messengers as the channel that works today.
- *  'connect' — no push support at all: Telegram/Bale is the only route.
+ *  'connect' — no push support at all: Bale is the only route. NOT Telegram —
+ *              it is a login provider only. api.telegram.org is filtered inside
+ *              Iran, so the API container cannot deliver through it (confirmed by
+ *              ArvanCloud 2026-07-27), and offering it here would send the user to
+ *              connect a channel that stays silent.
  * Permission already 'denied' returns null — the browser block is ours to fix
  * nowhere in this card, and re-asking someone who said no is pure noise.
  */
@@ -85,7 +89,7 @@ function guidanceText(res) {
     return 'نوتیف در مرورگرت بلاک شده. ترجیحت ذخیره شد؛ برای اینکه خبرها برسه، از تنظیماتِ سایت در مرورگر روی Allow بذارش.';
   }
   if (res === 'unsupported') {
-    return 'مرورگرت نوتیف نمی‌فرسته. ترجیحت ذخیره شد؛ برای اینکه خبردار بشی، تلگرام یا بله رو وصل کن.';
+    return 'مرورگرت نوتیف نمی‌فرسته. ترجیحت ذخیره شد؛ برای اینکه خبردار بشی، بله رو وصل کن.';
   }
   return 'ترجیحت ذخیره شد؛ روشن‌کردنِ نوتیف فعلاً نشد و بعداً دوباره تلاش می‌کنیم.';
 }
@@ -191,13 +195,13 @@ export function maybeShowNotifPrompt(user) {
   } else if (mode === 'install') {
     title = 'نوتیف روی آیفون';
     lead = 'سافاری فقط وقتی نوتیف می‌فرسته که دنت‌کست روی صفحه‌ی اصلی نصب شده باشه: دکمه‌ی «اشتراک‌گذاری» ← «Add to Home Screen»، بعد از همون‌جا وارد شو و نوتیف رو روشن کن.';
-    hint = 'تا اون موقع، تلگرام یا بله همین حالا خبرها و یادآوری‌ها رو برات می‌فرسته.';
-    go.textContent = 'اتصال تلگرام / بله';
+    hint = 'تا اون موقع، بله همین حالا خبرها و یادآوری‌ها رو برات می‌فرسته.';
+    go.textContent = 'اتصال بله';
     go.addEventListener('click', () => openProfileAt('connect'));
   } else {
     title = 'نوتیف رو روشن کن';
-    lead = 'این مرورگر نوتیف نمی‌فرسته، ولی تلگرام و بله می‌فرستن: وصلشون کن تا بهت بگم کی مطلب جدید پست شده و یادآوریِ مرورِ روزانه‌ات هم برسه. قول می‌دم کم پیام بدم و بی‌خودی غر نزنم.';
-    go.textContent = 'اتصال تلگرام / بله';
+    lead = 'این مرورگر نوتیف نمی‌فرسته، ولی بله می‌فرسته: وصلش کن تا بهت بگم کی مطلب جدید پست شده و یادآوریِ مرورِ روزانه‌ات هم برسه. قول می‌دم کم پیام بدم و بی‌خودی غر نزنم.';
+    go.textContent = 'اتصال بله';
     go.addEventListener('click', () => openProfileAt('connect'));
   }
 
