@@ -581,6 +581,29 @@ function renderArticle(cfg, creative) {
   return placeArticleCard(cfg.slots.article, prose, buildCard(creative, 'article'));
 }
 
+// What counts as one block of body text for placement purposes. It is NOT just
+// <p>: an Insight page carries its substance in a <ul> under a single opening
+// paragraph, so counting paragraphs alone made a page with a real body look
+// nearly empty — min_paragraphs failed and the card fell to the very end, which
+// is the opposite of what "middle" asks for. Headings are deliberately absent
+// here: they are labels, so they anchor the card (below) but never count as body.
+const BODY_BLOCK_SEL = 'p, ul, ol, blockquote, figure, table, pre';
+
+// The legal footer every content page carries is not body text. Counting it
+// inflated every short body by one AND let placeEnd() append the card BELOW it —
+// the worst position on the page, under the small print.
+const NOT_BODY_SEL = '.dc-disclaimer';
+
+// Outermost body blocks, in document order. A <p> inside an <li> or a
+// <blockquote> is part of that block, not a second one.
+function bodyBlocks(prose) {
+  return Array.from(prose.querySelectorAll(BODY_BLOCK_SEL)).filter((el) => {
+    if (el.closest(NOT_BODY_SEL)) return false;
+    const outer = el.parentElement && el.parentElement.closest(BODY_BLOCK_SEL);
+    return !(outer && prose.contains(outer));
+  });
+}
+
 // The placement rule itself, shared by the TWO ways an article reaches a screen:
 // a real article page (renderArticle) and the desktop shell, which injects an
 // article's markup into the homepage with no navigation at all
@@ -588,26 +611,40 @@ function renderArticle(cfg, creative) {
 // place on both — a reader on a laptop and the same reader on a phone must not
 // see the ad at different points in the text.
 function placeArticleCard(slot, prose, card) {
-  const placeEnd = () => { prose.appendChild(card); return true; };
+  // "The end" means the end of the BODY, not the end of the container: the
+  // disclaimer stays last, always.
+  const disclaimer = prose.querySelector(NOT_BODY_SEL);
+  const placeEnd = () => {
+    if (disclaimer && disclaimer.parentNode) disclaimer.parentNode.insertBefore(card, disclaimer);
+    else prose.appendChild(card);
+    return true;
+  };
 
   if (slot.position === 'end') return placeEnd();
   if (slot.position === 'top') { prose.insertBefore(card, prose.firstChild); return true; }
 
   // "middle" (default): aim for the UPPER THIRD so the card is seen, not buried at
-  // the end. Target a paragraph ~target_ratio down the body, then SNAP to the
+  // the end. Target a block ~target_ratio down the body, then SNAP to the
   // nearest section heading (h2/h3) at/after it within the first ~60% — a clean
   // boundary, never mid-sentence. If no heading is near, sit right before the
-  // target paragraph (still a between-paragraphs boundary). Only very short
-  // articles fall back per config. (Was: geometric-middle heading, so most short
-  // articles fell to the end.)
+  // target block (still a between-blocks boundary).
   const minP = slot.min_paragraphs == null ? 3 : slot.min_paragraphs;
   const ratio = slot.target_ratio == null ? 0.33 : slot.target_ratio;
-  const paras = Array.from(prose.querySelectorAll('p'));
-  if (paras.length < minP) return slot.fallback === 'none' ? false : placeEnd();
+  const blocks = bodyBlocks(prose);
 
-  // Never the very first paragraph (keep an intro above the card).
-  const targetP = paras[Math.min(paras.length - 1, Math.max(1, Math.round(paras.length * ratio)))];
-  const limitP = paras[Math.min(paras.length - 1, Math.round(paras.length * 0.6))];
+  // One block or none: no interior boundary exists, so this is the ONLY case
+  // that still falls back per config.
+  if (blocks.length < 2) return slot.fallback === 'none' ? false : placeEnd();
+
+  // Short body (under min_paragraphs): there is no meaningful "one third down",
+  // but there IS a boundary — so sit after the opening block instead of giving
+  // up and dropping to the end. On an Insight page that is between the opening
+  // paragraph and the case list: still the upper half, which is the whole point.
+  if (blocks.length < minP) { blocks[1].parentNode.insertBefore(card, blocks[1]); return true; }
+
+  // Never before the very first block (keep an intro above the card).
+  const targetP = blocks[Math.min(blocks.length - 1, Math.max(1, Math.round(blocks.length * ratio)))];
+  const limitP = blocks[Math.min(blocks.length - 1, Math.round(blocks.length * 0.6))];
   const FOLLOWING = 4; // Node.DOCUMENT_POSITION_FOLLOWING
   let anchor = targetP;
   for (const h of prose.querySelectorAll('h2, h3')) {
