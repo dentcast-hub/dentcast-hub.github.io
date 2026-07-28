@@ -560,6 +560,15 @@ function pageType() {
   // path check plus one anchor covers all ten. They carry no prose selector, so
   // they never reach the article branch below.
   if (path.indexOf('/pillar/') === 0 && document.querySelector('.pillar-intro')) return 'pillar';
+  // Podcast episode pages are an audio shell with no prose body: the description
+  // is a <div>, and the rest is a player, chips and tags. They carry .ep-box,
+  // which IS one of PROSE_SELECTORS (it doubles as the workbench hook on TEXT
+  // promptologist pages), so without this branch they fall into `article` — where
+  // the block counter correctly finds zero body blocks and drops the card past
+  // the tag list, at the very bottom of all 212 of them. Own slot, own anchor.
+  // Gated on the path as well as #ep-audio: a few ShareHub pages embed a player
+  // too, and those are real articles that already place correctly.
+  if (path.indexOf('/episodes/') === 0 && document.getElementById('ep-audio')) return 'episode';
   if (document.querySelector('main.article-content-wrap') && findProseRoot()) return 'article';
   // LiteCast pages carry the same article-content-wrap shell but never carry
   // one of PROSE_SELECTORS on purpose — that selector doubles as the Plus
@@ -741,6 +750,21 @@ function renderPillar(cfg, creative) {
   if (!intro) return false;
   const card = buildCard(creative, 'pillar');
   intro.parentNode.insertBefore(card, intro.nextSibling);
+  return true;
+}
+
+// An episode page has no body to sit inside, so the anchor is the listening
+// moment itself: the card goes directly BELOW the player section — between
+// «پخش اپیزود» and «کلیدواژه‌ها» — where a visitor is parked for the length of an
+// episode rather than scrolling past. The old behaviour appended it to the end
+// of .ep-box, under the tag list, which a listener reaches only by scrolling to
+// the bottom of a page they came to listen to.
+function renderEpisode(cfg, creative) {
+  const player = document.querySelector('.ep-player-wrap') || document.getElementById('ep-audio');
+  if (!player) return false;
+  const anchor = player.closest('.ep-section') || player;
+  const card = buildCard(creative, 'episode');
+  anchor.parentNode.insertBefore(card, anchor.nextSibling);
   return true;
 }
 
@@ -981,7 +1005,7 @@ async function main() {
     if (creative) {
       const renderers = {
         article: renderArticle, home: renderHome, player: renderPlayer,
-        episodes: renderEpisodes, pillar: renderPillar,
+        episodes: renderEpisodes, episode: renderEpisode, pillar: renderPillar,
       };
       // Placement only. The card counts itself (and moves the rotation) when the
       // visitor actually sees it — see armSeen.
