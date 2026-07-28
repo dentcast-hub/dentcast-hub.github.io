@@ -193,12 +193,23 @@ interesting number for the business, and worth surfacing when both are in hand.
 
 Translate slot ids to Persian for the user («صفحهٔ اصلی» = `home`, «مقاله» =
 `article`, «ستون موضوعی» = `pillar`, «جستجوی سراسری» = `search`, «تب آرشیو» =
-`archive`, «پلیر» = `player`, «آرشیو اپیزودها» = `episodes`, «پیشخوان» =
-`dashboard`, «پروفایل» = `profile`).
+`archive`, «پلیر» = `player`, «صفحهٔ اپیزود» = `episode`, «آرشیو اپیزودها» =
+`episodes`, «پیشخوان» = `dashboard`, «پروفایل» = `profile`).
 
-`pillar` shipped on **2026-07-28** and has no data before that day — it is the
-first slot on a signed-out-heavy surface, so its `anon` share is expected to run
-far above every other slot's. That is the point of it, not an anomaly.
+**`episode` و `episodes` را هرگز در یک سطر ادغام نکن** — اولی صفحهٔ تکِ اپیزود
+است و دومی صفحهٔ آرشیو `episodes.html`. اسمشان یک حرف فرق دارد و معنایشان کاملاً
+جداست.
+
+Two slots shipped on **2026-07-28** and have no data before that day:
+
+- `pillar` — the first slot on a signed-out-heavy surface, so its `anon` share is
+  expected to run far above every other slot's. That is the point of it, not an
+  anomaly.
+- `episode` — **and it carries a reporting discontinuity.** Before this date the
+  212 single-episode pages were measured under `article`; from this date they are
+  measured under `episode`. So a sudden drop in `article` across that boundary is
+  a **relabel, not a decline** — say so explicitly in any report whose window
+  spans 2026-07-28, and never compare `article` before/after without the caveat.
 
 Two comparisons worth adding unprompted when the data allows:
 
