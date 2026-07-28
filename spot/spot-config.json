@@ -4,6 +4,7 @@
   "slots": {
     "article": { "enabled": true, "position": "middle", "min_paragraphs": 3, "target_ratio": 0.33, "fallback": "end" },
     "home": { "enabled": true },
+    "pillar": { "enabled": true },
     "player": { "enabled": true },
     "episodes": { "enabled": true, "position": "after_featured" },
     "dashboard": { "enabled": true },

@@ -192,9 +192,13 @@ interesting number for the business, and worth surfacing when both are in hand.
 ```
 
 Translate slot ids to Persian for the user («صفحهٔ اصلی» = `home`, «مقاله» =
-`article`, «جستجوی سراسری» = `search`, «تب آرشیو» = `archive`, «پلیر» =
-`player`, «آرشیو اپیزودها» = `episodes`, «پیشخوان» = `dashboard`, «پروفایل» =
-`profile`).
+`article`, «ستون موضوعی» = `pillar`, «جستجوی سراسری» = `search`, «تب آرشیو» =
+`archive`, «پلیر» = `player`, «آرشیو اپیزودها» = `episodes`, «پیشخوان» =
+`dashboard`, «پروفایل» = `profile`).
+
+`pillar` shipped on **2026-07-28** and has no data before that day — it is the
+first slot on a signed-out-heavy surface, so its `anon` share is expected to run
+far above every other slot's. That is the point of it, not an anomaly.
 
 Two comparisons worth adding unprompted when the data allows:
 

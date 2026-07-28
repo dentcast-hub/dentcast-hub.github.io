@@ -293,6 +293,31 @@ If the category has no on-disk page (data-only), skip this and go to step 4.
 
 **Google Analytics tag (every page).** The deferred GA4 snippet (measurement ID `G-GMM0WC8X3M`) must be present in the new page's `<head>`. Because you cloned the previous same-category page — which already carries it — it should come across automatically; **verify it survived the clone and appears exactly once**. If it's missing (e.g. an older template), run `python3 .github/scripts/inject_ga.py` to backfill it (idempotent — it skips pages that already have it). It is the lazy-loaded pattern (loads `gtag.js` only on the `load` event) — never swap in Google's default async snippet. The `.org`/`.ir` mirrors share this tag; no per-domain logic. If you ever introduce a Content-Security-Policy, it must allow `script-src https://www.googletagmanager.com` and `connect-src https://*.google-analytics.com https://*.analytics.google.com`.
 
+**Opening paragraph before any list (body-structure requirement).** The body must
+open with at least one real `<p>` of prose **before** the first `<ul>`/`<ol>`. This is
+not a style preference — it is load-bearing for ad placement. The in-article Spot card
+is positioned by counting **body blocks** (`p, ul, ol, blockquote, figure, table, pre`
+— headings are labels and never count, `.dc-disclaimer` never counts; see
+`spot/README.md`). A body that is a single `<ul>` has **one** block and therefore **no
+interior boundary**, so the engine has nowhere to put the card and drops it to the end
+of the text — the position least likely to ever be seen. Two blocks (an opening
+paragraph + the list) are enough: the card lands between them, in the upper half.
+
+This bites the **Insight** template hardest — its house style is `h3` label + `h3`
+thesis + one `<ul>` of sections — but the requirement is type-agnostic and applies to
+any page whose body would otherwise be list-only. NoteCast and DentAI pages have
+drifted into the same shape and are equally affected.
+
+Write a genuine 2–4 sentence lead that **adds** something — the clinical situation, the
+decision at stake, what the reader will get — never a restatement of the `h3` thesis
+directly above it. Then mirror the same paragraph into the en version in Phase D (the
+en page is placed by the identical rule and has the identical problem).
+
+To check a page you just built:
+`node -e` against `spot/spot.js`'s `bodyBlocks()`, or simply confirm by eye that a
+paragraph precedes the first list. Pages already published that fail this are a known
+backlog, not a pattern to copy forward (**Hard Rule 11**).
+
 ### 2.4. Semantic pillar & subtopic determination (propose + confirm)
 
 Decide the entry's `pillar.primary` and — when that pillar is structured — its `pillar.subtopic` **here, once**, before any step consumes them (the pillar capsule in step 2.5, and the brain write in step 5). Per **Hard Rule 6**, this is the **only** place the decision is made; later steps (5, 5.5) record and verify it but never re-decide it. Matching is genuinely **semantic** (conceptual relevance of the new content), **never** keyword/string matching.
