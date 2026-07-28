@@ -3458,9 +3458,9 @@ a.dc-list-card--pillar {
           </div>
         </div>
         <ul class="dc-pulse-list">
+          <li>یک <a href="/chairside/chairside-26.html">کیس Chairside</a> درباره‌ی تعارضِ طرحِ درمانِ ساده‌تر با بیومکانیکِ بریج منتشر شد · ۶ مرداد</li>
           <li>یک <a href="/insight/insight-58.html">اینسایت بالینی</a> درباره‌ی ضرورت تعویض روکش‌های قدیمی دندان‌های پایه در پروتز پارسیل منتشر شد · ۶ مرداد</li>
           <li>دنت‌کست ۳۸ با موضوع <a href="/notecast/episode-38.html">تراش لمینیت بر اساس ماکاپ</a> خلاصه شد و در سایت قرار گرفت · ۵ مرداد</li>
-          <li>یک <a href="/metanotes/meta-19.html">متانوت تازه</a> درباره‌ی اینکه آیا کورِ ریختگی واقعاً باید سطح دندان را بپوشاند و چرا این قاعده سه ادعای جدا را قاطی کرده منتشر شد · ۵ مرداد</li>
         </ul>
       </div>
 
@@ -3481,9 +3481,9 @@ a.dc-list-card--pillar {
           <p class="dc-rail-title">کور باید روی دندان را بپوشاند؟ بازخوانی یک قاعده‌ی جاافتاده</p>
           <span class="dc-rail-meta">تازه‌ترین مطلب</span>
         </a>
-        <a class="dc-rail-card" data-cat="chairside" href="/chairside/chairside-25.html">
+        <a class="dc-rail-card" data-cat="chairside" href="/chairside/chairside-26.html">
           <span class="dc-type-chip t-chair">Chairside</span>
-          <p class="dc-rail-title">گاهی نپذیرفتن بیمار بهتر است</p>
+          <p class="dc-rail-title">وقتی طرحِ درمانِ آسان‌تر، بیومکانیکِ سیستم را تهدید می‌کند</p>
           <span class="dc-rail-meta">تازه‌ترین مطلب</span>
         </a>
         <a class="dc-rail-card" data-cat="dentai" href="/dentai/dentai-28.html">
@@ -3618,7 +3618,7 @@ a.dc-list-card--pillar {
           <span class="k">ساعت محتوای صوتی</span>
         </div>
         <div class="hero-stat" role="listitem">
-          <span class="v"><!-- COUNTER:CONTENT:START -->۵۶۶<!-- COUNTER:CONTENT:END --></span>
+          <span class="v"><!-- COUNTER:CONTENT:START -->۵۶۷<!-- COUNTER:CONTENT:END --></span>
           <span class="k">مطلب و مدخل آموزشی</span>
         </div>
       </div>
@@ -4280,7 +4280,7 @@ scrollBody.addEventListener('touchend',e=>{
     if(p) p.textContent=title;
     a.href=url;
   }
-  fetch('/dentcast-brain.json?v=9b6d8efd02',{cache:'no-store'}).then(function(r){return r.json();}).then(function(arr){
+  fetch('/dentcast-brain.json?v=5c02ebeb33',{cache:'no-store'}).then(function(r){return r.json();}).then(function(arr){
     if(!Array.isArray(arr)) return;
     var latest={}, pool=[];
     arr.forEach(function(e){
@@ -4612,7 +4612,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 <script>
 /* ── LAST 30 UPDATES ── */
 (function(){
-  const FEED_URL='/dentcast-brain.json?v=9b6d8efd02';
+  const FEED_URL='/dentcast-brain.json?v=5c02ebeb33';
   const el=document.getElementById('dcLast3Updates');
   if(!el) return;
   function extractArray(json){if(Array.isArray(json))return json;const cands=[json?.items,json?.data,json?.entries,json?.feed].filter(Boolean);for(const c of cands)if(Array.isArray(c))return c;for(const k in(json||{})){const v=json[k];if(Array.isArray(v))return v;if(v&&typeof v==='object'&&Array.isArray(v.items))return v.items;}return[];}
@@ -4868,7 +4868,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 
   function getBrain(){
     if(brainCache) return Promise.resolve(brainCache);
-    return fetch('/dentcast-brain.json?v=9b6d8efd02', {cache:'no-store'})
+    return fetch('/dentcast-brain.json?v=5c02ebeb33', {cache:'no-store'})
       .then(r => r.ok ? r.json() : [])
       .then(d => { brainCache = Array.isArray(d) ? d : []; return brainCache; })
       .catch(() => { brainCache = []; return []; });

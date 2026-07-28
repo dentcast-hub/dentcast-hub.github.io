@@ -12094,5 +12094,35 @@
       "secondary": [],
       "subtopic": "crowns-onlays"
     }
+  },
+  {
+    "type": "chairside",
+    "id": "chairside-26",
+    "title": "وقتی طرحِ درمانِ آسان‌تر، بیومکانیکِ سیستم را تهدید می‌کند",
+    "caption": "در این کیس Chairside بررسی می‌کنیم چرا طرح‌درمانِ بریجِ متکی بر دندان‌های لترال برای جایگزینیِ دو سانترالِ ازدست‌رفته رد شد؛ از عدمِ رعایتِ Ante's Law و طولِ نامناسبِ اسپن تا بی‌توجیه‌بودنِ گسترشِ پایه‌ها به دندان‌های کانینِ سالم.",
+    "hashtags": [
+      "#گزارش_کیس",
+      "#بیومکانیک_بریج",
+      "#رد_طرح_درمان",
+      "#انتخاب_پایه",
+      "#طرح_درمان_پروتزی",
+      "#دکتر_شهابیان"
+    ],
+    "keywords": [
+      "fixed partial denture span length",
+      "ante's law abutment support",
+      "pontic count biomechanics",
+      "canine abutment extension bridge",
+      "borderline bone support abutment teeth",
+      "hopeless central incisor bridge design",
+      "minimally invasive tooth preparation principle",
+      "implant space widening versus long span bridge"
+    ],
+    "page_url": "/chairside/chairside-26.html",
+    "pillar": {
+      "primary": "treatment-planning",
+      "secondary": [],
+      "subtopic": "extraction-vs-preservation"
+    }
   }
 ]
