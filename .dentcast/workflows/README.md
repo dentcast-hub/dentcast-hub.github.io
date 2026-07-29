@@ -313,6 +313,19 @@ decision at stake, what the reader will get — never a restatement of the `h3` 
 directly above it. Then mirror the same paragraph into the en version in Phase D (the
 en page is placed by the identical rule and has the identical problem).
 
+**This lead paragraph is authored text, not derived from the user's own words —
+it MUST be shown to the user for approval before it's written to the page,
+every time, no exceptions.** Draft it, present it plainly (fa, and the en
+mirror once translated), and wait for a yes/edit before proceeding to write
+the file. Do not fold this into a larger batched confirmation and do not
+skip it because the rest of the publish was auto-applied per Hard Rule 14 —
+unlike a title/hashtag proposal (which draws its words from the user's own
+text), this paragraph is fully self-composed prose sitting under the user's
+byline, so it gets its own explicit sign-off. Match the register of the
+user's own writing (their vocabulary for the procedure — e.g. «سمان کردن»
+for cementing a crown — not a generic paraphrase), and keep it tight; when in
+doubt, shorter is safer than padded.
+
 To check a page you just built:
 `node -e` against `spot/spot.js`'s `bodyBlocks()`, or simply confirm by eye that a
 paragraph precedes the first list. Pages already published that fail this are a known
