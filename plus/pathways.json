@@ -1022,6 +1022,10 @@
         "milestone": false
       },
       {
+        "content_id": "insight/insight-59",
+        "milestone": false
+      },
+      {
         "content_id": "metanotes/meta-17",
         "milestone": true
       }
@@ -1164,6 +1168,10 @@
       },
       {
         "content_id": "episodes/episode-2",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-59",
         "milestone": false
       },
       {
