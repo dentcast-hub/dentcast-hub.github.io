@@ -48,6 +48,17 @@
 // "audience": ["anon"|"plus"] (who sees it). No field = everyone, everywhere —
 // so by default signed-out and signed-in visitors see the same campaign.
 //
+// Layout: a creative renders as the full "card" (square logo + badge + title +
+// text + CTA) by default. Set "layout": "image" to render just a horizontal
+// image instead — no badge, no text, no CTA, the whole card IS the clickable
+// image (a separate square "image" still works fine as its source, but a wide
+// image looks right). "image_wide" is the field read for that mode; missing it
+// falls back to the square "image". A creative may want the FULL card in one
+// slot and the image-only banner in another (e.g. a plain logo mid-article,
+// the full pitch on the homepage) — "slot_layout": { "article": "image" }
+// overrides "layout" for just that slot, leaving every other slot on the
+// creative's default. See resolveLayout().
+//
 // Measurement counts a SEEN ad, not a rendered one: a card must be at least 50%
 // on screen for one continuous second in a foreground tab before it counts
 // (the IAB display rule; tunable via `seen` in the config). Only the two classes
@@ -196,6 +207,16 @@ function allowedIn(creative, slotName, audience) {
   return slotOk && audOk;
 }
 
+// "slot_layout" (per-slot) beats "layout" (per-creative default), which beats
+// the overall default "card". "image" with no usable image at all falls back
+// to "card" — an empty clickable box is worse than showing the text.
+function resolveLayout(creative, slotName) {
+  const perSlot = creative.slot_layout && creative.slot_layout[slotName];
+  const requested = perSlot || creative.layout || 'card';
+  if (requested === 'image' && !creative.image_wide && !creative.image) return 'card';
+  return requested;
+}
+
 function enabledSponsors(cfg, slotName, audience) {
   const list = (cfg.creatives && cfg.creatives.sponsors) || [];
   return list.filter((s) => s && s.enabled && s.url && allowedIn(s, slotName, audience));
@@ -333,6 +354,8 @@ body.dcp-study .dc-spot { display: none !important; }
 .dc-spot-link:hover { border-color: #f5a208; box-shadow: 0 4px 14px rgba(245, 162, 8, 0.18); }
 .dc-spot-link:active { transform: scale(0.99); }
 .dc-spot-img { width: 44px; height: 44px; border-radius: 10px; object-fit: cover; flex: 0 0 auto; }
+.dc-spot--imgonly .dc-spot-link { padding: 0; overflow: hidden; }
+.dc-spot-imgonly-img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 1; object-fit: cover; }
 .dc-spot-body { flex: 1 1 auto; min-width: 0; }
 .dc-spot-badge {
   display: inline-block;
@@ -396,8 +419,11 @@ function isSponsor(creative) {
 
 function buildCard(creative, slotName) {
   injectCss();
+  const layout = resolveLayout(creative, slotName);
   const aside = document.createElement('aside');
-  aside.className = 'dc-spot dc-spot--' + slotName + (isSponsor(creative) ? ' dc-spot--sponsor' : ' dc-spot--premium');
+  aside.className = 'dc-spot dc-spot--' + slotName
+    + (isSponsor(creative) ? ' dc-spot--sponsor' : ' dc-spot--premium')
+    + (layout === 'image' ? ' dc-spot--imgonly' : '');
   aside.setAttribute('data-dc-spot', creative.id || '');
 
   const a = document.createElement('a');
@@ -409,40 +435,51 @@ function buildCard(creative, slotName) {
   // crawlable http(s) links. mailto:/internal urls (house placeholders) get none.
   a.rel = external ? (isSponsor(creative) ? 'sponsored noopener' : 'noopener') : '';
 
-  if (creative.image) {
+  if (layout === 'image') {
+    // The whole card IS the image — no badge/title/text/CTA. alt carries
+    // whatever human-readable label the creative has, for screen readers.
     const img = document.createElement('img');
-    img.className = 'dc-spot-img';
-    img.src = creative.image;
-    img.alt = '';
+    img.className = 'dc-spot-imgonly-img';
+    img.src = creative.image_wide || creative.image;
+    img.alt = creative.title || creative.badge || '';
     img.loading = 'lazy';
     a.appendChild(img);
-  }
+  } else {
+    if (creative.image) {
+      const img = document.createElement('img');
+      img.className = 'dc-spot-img';
+      img.src = creative.image;
+      img.alt = '';
+      img.loading = 'lazy';
+      a.appendChild(img);
+    }
 
-  const body = document.createElement('div');
-  body.className = 'dc-spot-body';
-  const badge = document.createElement('span');
-  badge.className = 'dc-spot-badge';
-  badge.textContent = creative.badge || (isSponsor(creative) ? 'حمایت‌شده' : 'دنت‌کست پلاس');
-  body.appendChild(badge);
-  if (creative.title) {
-    const t = document.createElement('strong');
-    t.className = 'dc-spot-title';
-    t.textContent = creative.title;
-    body.appendChild(t);
-  }
-  if (creative.text) {
-    const p = document.createElement('p');
-    p.className = 'dc-spot-text';
-    p.textContent = creative.text;
-    body.appendChild(p);
-  }
-  a.appendChild(body);
+    const body = document.createElement('div');
+    body.className = 'dc-spot-body';
+    const badge = document.createElement('span');
+    badge.className = 'dc-spot-badge';
+    badge.textContent = creative.badge || (isSponsor(creative) ? 'حمایت‌شده' : 'دنت‌کست پلاس');
+    body.appendChild(badge);
+    if (creative.title) {
+      const t = document.createElement('strong');
+      t.className = 'dc-spot-title';
+      t.textContent = creative.title;
+      body.appendChild(t);
+    }
+    if (creative.text) {
+      const p = document.createElement('p');
+      p.className = 'dc-spot-text';
+      p.textContent = creative.text;
+      body.appendChild(p);
+    }
+    a.appendChild(body);
 
-  if (creative.cta) {
-    const cta = document.createElement('span');
-    cta.className = 'dc-spot-cta';
-    cta.textContent = creative.cta;
-    a.appendChild(cta);
+    if (creative.cta) {
+      const cta = document.createElement('span');
+      cta.className = 'dc-spot-cta';
+      cta.textContent = creative.cta;
+      a.appendChild(cta);
+    }
   }
 
   a.addEventListener('click', () => {

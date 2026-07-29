@@ -71,9 +71,13 @@ const CONFIG = {
 let posts: Array<{ url: string; body: any }> = [];
 
 function stubFetch(activityStatus = 204) {
+  stubFetchWithConfig(CONFIG, activityStatus);
+}
+
+function stubFetchWithConfig(cfg: any, activityStatus = 204) {
   globalThis.fetch = vi.fn(async (input: any, init: any) => {
     const url = String(input);
-    if (url.includes('spot-config.json')) return { ok: true, json: async () => CONFIG } as any;
+    if (url.includes('spot-config.json')) return { ok: true, json: async () => cfg } as any;
     posts.push({ url, body: JSON.parse(init.body) });
     if (url.includes('/activity') && activityStatus !== 204) return { ok: false, status: activityStatus } as any;
     return { ok: true, status: 204 } as any;
@@ -262,5 +266,81 @@ describe('an impression means seen, not rendered', () => {
     enterView();
     await tick(5000);
     expect(posts).toHaveLength(1);
+  });
+});
+
+// Layout: a creative can render as the default full card, or — per creative
+// or per individual slot — as a bare, clickable horizontal image with no
+// badge/title/text/CTA. This is what lets the same site show a plain logo
+// mid-article while showing the full pitch card on the homepage.
+describe('layout: card vs image-only', () => {
+  it('renders the full card when layout is unset (existing behavior)', async () => {
+    await boot();
+    const el = document.querySelector('.dc-spot');
+    expect(el?.classList.contains('dc-spot--imgonly')).toBe(false);
+    expect(el?.querySelector('.dc-spot-badge')).toBeTruthy();
+    expect(el?.querySelector('.dc-spot-imgonly-img')).toBeFalsy();
+  });
+
+  it('renders only a clickable image when layout is "image"', async () => {
+    stubFetchWithConfig({
+      ...CONFIG,
+      creatives: {
+        ...CONFIG.creatives,
+        premium: { ...CONFIG.creatives.premium, layout: 'image', image: '/logo.webp', image_wide: '/logo-wide.webp' },
+      },
+    });
+    await boot();
+    const el = document.querySelector('.dc-spot');
+    expect(el?.classList.contains('dc-spot--imgonly')).toBe(true);
+    expect(el?.querySelector('.dc-spot-badge')).toBeFalsy();
+    expect(el?.querySelector('.dc-spot-cta')).toBeFalsy();
+    const img = el?.querySelector('.dc-spot-imgonly-img') as HTMLImageElement | null;
+    expect(img?.getAttribute('src')).toBe('/logo-wide.webp');
+  });
+
+  it('falls back to the square "image" when "image_wide" is not set', async () => {
+    stubFetchWithConfig({
+      ...CONFIG,
+      creatives: {
+        ...CONFIG.creatives,
+        premium: { ...CONFIG.creatives.premium, layout: 'image', image: '/logo.webp' },
+      },
+    });
+    await boot();
+    const img = document.querySelector('.dc-spot-imgonly-img') as HTMLImageElement | null;
+    expect(img?.getAttribute('src')).toBe('/logo.webp');
+  });
+
+  it('falls back to the full card when layout is "image" but no image exists at all', async () => {
+    stubFetchWithConfig({
+      ...CONFIG,
+      creatives: {
+        ...CONFIG.creatives,
+        premium: { ...CONFIG.creatives.premium, layout: 'image', image: null },
+      },
+    });
+    await boot();
+    const el = document.querySelector('.dc-spot');
+    expect(el?.classList.contains('dc-spot--imgonly')).toBe(false);
+    expect(el?.querySelector('.dc-spot-badge')).toBeTruthy();
+  });
+
+  it('lets slot_layout override the creative default for just that slot', async () => {
+    stubFetchWithConfig({
+      ...CONFIG,
+      creatives: {
+        ...CONFIG.creatives,
+        premium: {
+          ...CONFIG.creatives.premium,
+          layout: 'card',
+          slot_layout: { home: 'image' },
+          image_wide: '/logo-wide.webp',
+        },
+      },
+    });
+    await boot();
+    const el = document.querySelector('.dc-spot');
+    expect(el?.classList.contains('dc-spot--imgonly')).toBe(true);
   });
 });

@@ -41,7 +41,8 @@ THIS workflow — never the publishing router, even if the user also pastes
 3. **Schema is sacred.** A new sponsor entry copies the exact field shape
    of the existing entries in `creatives.sponsors` (`id`, `enabled`,
    `badge`, `title`, `text`, `cta`, `url`, `image`, `weight`, optional
-   `slots`, optional `audience`). Free-text human notes may go in an extra
+   `slots`, optional `audience`, optional `layout`, optional `image_wide`,
+   optional `slot_layout`). Free-text human notes may go in an extra
    `note` field (the engine ignores unknown fields) — nothing else new.
    Append new sponsors at the END of the array.
 4. **Ask, don't guess (Hard Rule 13 of the publishing router applies
@@ -80,7 +81,23 @@ THIS workflow — never the publishing router, even if the user also pastes
    `spot/img/<id>.webp` (convert to webp when tooling allows; otherwise
    keep the original extension), referenced root-relative in `image`.
    Never hotlink an external image URL — if the user gives one, download
-   it into `spot/img/`. Keep it small (this is a 44px-square thumb slot).
+   it into `spot/img/`. Keep it small (this is a 44px-square thumb slot —
+   suggest a ~132×132 source for retina). If any of this ad's slots use
+   `layout: "image"` (rule 3b), a SECOND, horizontal image is needed too:
+   `spot/img/<id>-wide.webp`, referenced in `image_wide`, suggested source
+   ~1200×400 (3:1 — the rendered slot is full-width at a fixed 3:1 ratio,
+   cropped to fit via `object-fit: cover`).
+
+3b. **Layout — card (default) or image-only, independently per slot.**
+   Every creative renders as the full card (logo + badge + title + text +
+   CTA) unless told otherwise. `"layout": "image"` makes the WHOLE ad just
+   the horizontal image — no text, no badge, no CTA, click goes straight
+   through. This can be set once for the creative (`layout`) or per slot
+   via `slot_layout: { "<slot>": "image" }`, so the SAME ad can be a bare
+   logo mid-article and the full pitch card on the homepage — ask which
+   slots (if any) should differ, don't assume; default is "card"
+   everywhere if the user doesn't ask for anything else. See
+   `spot/README.md` § فرمت نمایش for the exact schema and image sizing.
 9. **Verify before commit.** `python3 -m json.tool spot/spot-config.json`
    must pass, and the report must state — per slot — what the visitor
    will actually see after this change. If anything about the outcome is
@@ -137,6 +154,15 @@ combined question message, with concrete options where possible:
    `cta` (button label, default «بازدید»). If the user supplied raw
    material, draft the three fields and show them for confirmation.
 4. **عکس** — attached file, an image they'll send, or none (`image: null`).
+4b. **فرمت — کارتِ کامل یا فقط عکس افقی؟** Default is the full card
+   everywhere (`layout` omitted). Only ask if the user hints at wanting a
+   different look per placement (e.g. «توی مقاله فقط عکس باشه»): which
+   slot(s) should be image-only, and — for each of those — do they have
+   (or will they send) a SEPARATE horizontal image (`image_wide`,
+   ~1200×400, 3:1), since the square logo alone will look cropped/wrong
+   stretched across a banner. Write the answer as `slot_layout` overrides
+   on the creative (rule 3b), not a blanket `layout` change, unless they
+   explicitly want it uniform everywhere.
 5. **کجا نمایش داده بشه** — which slots: مقاله / صفحهٔ اصلی / آرشیو
    اپیزودها / پلیر / پیشخوان / پروفایل / جستجوی سراسری / تب آرشیو، یا
    همه‌جا (= omit the `slots` field). Offer the currently-enabled slots as the default.
@@ -199,9 +225,13 @@ combined question message, with concrete options where possible:
 1. Sponsor: append the new entry (rule 3 shape) at the end of
    `creatives.sponsors`, `enabled: true`. Internal ad: edit
    `creatives.premium` fields in place.
-2. Image (if any): save to `spot/img/`, set `image`.
+2. Image (if any): save to `spot/img/`, set `image`. If a horizontal
+   variant was collected for an image-only slot (Phase B.4b): save it to
+   `spot/img/<id>-wide.webp`, set `image_wide`.
 3. Slots: set the per-creative `slots` array (or omit for everywhere);
    flip per-slot `enabled` only with explicit confirmation (Phase B.5).
+   Layout: set `layout` and/or `slot_layout` per Phase B.4b — omit both
+   entirely if the user wants the default full card everywhere.
 4. Rotation: write the array the user picked in Phase B question 6 —
    same length as before unless they explicitly asked to change the number
    of زمان‌ها. `advance` and `session_minutes` are NOT touched by an ad
