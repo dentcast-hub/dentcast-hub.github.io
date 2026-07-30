@@ -38,9 +38,11 @@
   .dcp-tile { transition: border-color .15s, box-shadow .15s, transform .15s; }
   .dcp-tile:hover { border-color: var(--chip-bd, rgba(11,95,255,.20)); box-shadow: var(--card-sh, 0 1px 3px rgba(2,35,96,.07)); }
   .dcp-pw-dash-title:hover { color: var(--ac, #0b5fff) !important; text-decoration: underline; }
+  .dcp-cl-dash-row:hover { background: var(--chip-bg, rgba(11,95,255,.08)); }
 
   /* Learning pathways: catalog cards run two-up, and both the card and each
-     step row get a real hover affordance (see plus.css for the base rules). */
+     step row get a real hover affordance (see plus.css for the base rules).
+     Collections' own catalog reuses the same .dcp-pw-grid/.dcp-pw-card. */
   .dcp-pw-grid { grid-template-columns: repeat(2, 1fr); }
   a.dcp-pw-card:hover { border-color: var(--chip-bd, rgba(11,95,255,.20)); transform: translateY(-2px); }
   .dcp-pw-step:hover .dcp-pw-step-title { color: var(--ac, #0b5fff); }

@@ -148,6 +148,16 @@ export const api = {
   pathway: (id) => request('/pathways/' + encodeURIComponent(id)),
   enrollPathway: (id) => request('/pathways/' + encodeURIComponent(id) + '/enroll', { method: 'POST' }),
 
+  // premium: collections (Phase 3) - user-made freeform folders of highlights/pages
+  listCollections: () => request('/collections'),
+  getCollection: (id) => request('/collections/' + encodeURIComponent(id)),
+  createCollection: (title) => request('/collections', { method: 'POST', body: { title } }),
+  renameCollection: (id, title) => request('/collections/' + encodeURIComponent(id), { method: 'PATCH', body: { title } }),
+  deleteCollection: (id) => request('/collections/' + encodeURIComponent(id), { method: 'DELETE' }),
+  addToCollection: (id, item) => request('/collections/' + encodeURIComponent(id) + '/items', { method: 'POST', body: item }),
+  removeCollectionItem: (id, itemId) =>
+    request('/collections/' + encodeURIComponent(id) + '/items/' + encodeURIComponent(itemId), { method: 'DELETE' }),
+
   // dashboard (later milestones)
   tree: () => request('/tree'),
   progress: () => request('/progress'),

@@ -107,6 +107,13 @@ a.dcp-progress-name:hover { color: var(--ac, #0b5fff); text-decoration: underlin
 .dcp-recent-text { flex: 1 1 auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .dcp-recent-del { flex: none; width: 26px; height: 26px; line-height: 22px; text-align: center; font-size: 1.2rem; border-radius: 50%; border: 1px solid var(--border, rgba(2,35,96,.12)); background: var(--surface, #fff); color: var(--txt2, #4a5f85); cursor: pointer; }
 .dcp-recent-del:hover { color: #c0392b; border-color: #c0392b; }
+.dcp-recent-collect { flex: none; width: 26px; height: 26px; line-height: 24px; text-align: center; font-size: 1rem; border-radius: 50%; border: 1px solid var(--border, rgba(2,35,96,.12)); background: var(--surface, #fff); cursor: pointer; }
+.dcp-recent-collect:hover { border-color: var(--ac, #0b5fff); }
+
+/* ---- collections (dashboard "کالکشن‌ها" block) ----------------------------- */
+.dcp-cl-dash-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 10px; }
+.dcp-cl-dash-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 8px 10px; border-radius: var(--r-md, 14px); background: var(--surface2, #f4f6fb); color: var(--txt) !important; font-weight: 600; }
+.dcp-cl-dash-count { font-size: .8rem; font-weight: 400; color: var(--txt2, #4a5f85); white-space: nowrap; }
 .dcp-recent-confirm { flex: 1 1 100%; display: flex; align-items: center; gap: 8px; color: var(--txt2, #4a5f85); }
 
 /* ---- pathway (dashboard "مسیر یادگیری" block) ----------------------------- */

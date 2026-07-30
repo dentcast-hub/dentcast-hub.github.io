@@ -5,6 +5,7 @@ import { el, faNum, streakIsActiveToday } from './util.js';
 import { api } from './api.js';
 import { getModel, contentInfo, FOLDER_EN } from './content-index.js';
 import { leagueEntryButton } from './league.js';
+import { openCollectionPicker } from './collections.js';
 import { LABELS, PALETTE } from './config.js';
 
 const labelFa = (k) => (LABELS.find((l) => l.key === k) || {}).fa || '';
@@ -128,8 +129,10 @@ async function recentBlock(model) {
       el('span', { class: 'dcp-recent-text' }, h.exact.slice(0, 70)),
       h.label ? el('span', { class: 'dcp-card-label' }, labelFa(h.label)) : null,
     ]);
+    const collectBtn = el('button', { class: 'dcp-recent-collect', type: 'button', 'aria-label': 'افزودن به کالکشن', title: 'افزودن به کالکشن' }, '🗂');
+    collectBtn.addEventListener('click', (e) => { e.preventDefault(); openCollectionPicker({ highlightId: h.id }); });
     const del = el('button', { class: 'dcp-recent-del', type: 'button', 'aria-label': 'حذف هایلایت', title: 'حذف' }, '×');
-    const row = el('div', { class: 'dcp-recent-row' }, [link, del]);
+    const row = el('div', { class: 'dcp-recent-row' }, [link, collectBtn, del]);
 
     del.addEventListener('click', (e) => {
       e.preventDefault();
@@ -208,6 +211,26 @@ function pathwayBlock(me) {
   ]);
 }
 
+// Premium "کالکشن‌ها" block: a compact list of the user's own collections
+// (name + item count, linking to the full view), newest first, capped short —
+// the full list lives on /plus/collections.html.
+async function collectionsBlock() {
+  const data = await api.listCollections().catch(() => null);
+  if (!data || !data.collections.length) {
+    return el('div', { class: 'dcp-muted' }, [
+      'هنوز کالکشنی نساخته‌ای. ',
+      el('a', { href: '/plus/collections.html' }, 'یکی بساز'),
+    ]);
+  }
+  const list = el('div', { class: 'dcp-cl-dash-list' }, data.collections.slice(0, 5).map((c) => el('a', {
+    class: 'dcp-cl-dash-row', href: '/plus/collection.html?id=' + encodeURIComponent(c.id),
+  }, [
+    el('span', {}, c.title),
+    el('span', { class: 'dcp-cl-dash-count' }, faNum(c.item_count) + ' مورد'),
+  ])));
+  return el('div', { class: 'dcp-pw-dash' }, [list, el('a', { class: 'dcp-pw-alllink', href: '/plus/collections.html' }, 'همه‌ی کالکشن‌ها')]);
+}
+
 export async function renderDashboard(root, { me: preMe } = {}) {
   root.replaceChildren(el('div', { class: 'dcp-loading' }, 'در حال بارگذاری...'));
   // Always fetch fresh when the dashboard opens: /me and /progress are never
@@ -227,12 +250,13 @@ export async function renderDashboard(root, { me: preMe } = {}) {
   if (!me) { root.replaceChildren(el('div', { class: 'dcp-gate' }, 'برای دیدن پیشخوان وارد شوید.')); return; }
 
   const recentWrap = el('div', {}, el('div', { class: 'dcp-loading' }, '...'));
+  const collectionsWrap = el('div', {}, el('div', { class: 'dcp-loading' }, '...'));
   const children = [
     el('div', { class: 'dcp-dash-hello' }, 'سلام، ' + (me.display_name || '')),
   ];
 
-  // premium-only blocks first (never for free): today's due review, then the
-  // active learning pathway.
+  // premium-only blocks first (never for free): today's due review, the
+  // active learning pathway, then the user's own collections.
   if (me.tier === 'premium') {
     children.push(section(
       'برای مرور امروز',
@@ -243,6 +267,11 @@ export async function renderDashboard(root, { me: preMe } = {}) {
       'مسیر یادگیری',
       'مجموعه‌ای از مقاله‌ها، اپیزودها و ویدیوها به ترتیبِ منطقیِ یادگیری؛ با خواندن و هایلایت‌کردن، پیشرفتِ مسیر خودش جلو می‌رود.',
       pathwayBlock(me),
+    ));
+    children.push(section(
+      'کالکشن‌ها',
+      'هایلایت‌ها یا کلِ یه مقاله/اپیزود رو تو پوشه‌های دلخواهِ خودت بریز — از میزکار یا از هایلایت‌های اخیرِ همین صفحه.',
+      collectionsWrap,
     ));
   }
 
@@ -261,4 +290,5 @@ export async function renderDashboard(root, { me: preMe } = {}) {
 
   root.replaceChildren(...children.filter(Boolean));
   recentWrap.replaceChildren(await recentBlock(model));
+  if (me.tier === 'premium') collectionsWrap.replaceChildren(await collectionsBlock());
 }
