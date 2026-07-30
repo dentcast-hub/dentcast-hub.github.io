@@ -441,7 +441,7 @@ export class Workbench {
     const list = el('div', { class: 'dcp-failed-list' },
       this.failed.map((h) => el('div', { class: 'dcp-failed-item' }, [
         el('div', { class: 'dcp-failed-quote' }, '«' + h.exact.slice(0, 90) + '»'),
-        h.note ? el('div', { class: 'dcp-note-text' }, h.note) : null,
+        h.note ? el('div', { class: 'dcp-note-text' }, [el('b', {}, 'یادداشت شما: '), h.note]) : null,
       ])));
     const panel = el('aside', { class: 'dcp-failed-panel', 'aria-label': 'هایلایت‌های بدون جایگاه' }, [
       el('div', { class: 'dcp-panel-head' }, 'هایلایت‌هایی که جای‌گذاری نشدند'),
