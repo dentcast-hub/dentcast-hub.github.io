@@ -83,10 +83,20 @@ function pickerCard(target) {
     }));
   }).catch(() => { list.replaceChildren(el('div', { class: 'dcp-empty' }, 'کالکشن‌ها در دسترس نیست.')); });
 
+  // «؟» reveal, same pattern as the homepage promo card's score caption: hidden
+  // by default, toggled inline, never a separate popover.
+  const capTitle = 'کالکشن یعنی چی؟';
+  const cap = el('p', { class: 'dc-plus-scorecap', hidden: true }, [
+    el('span', { class: 'dc-plus-capline' },
+      'کالکشن یعنی یه پوشه‌ی دلخواه که خودت می‌سازی و هرچی خواستی توش می‌ریزی — برای یه امتحان، یه بیمارِ خاص، یا هر موضوعی که خودت بخوای.'),
+  ]);
+  const infoBtn = el('button', { class: 'dc-plus-info', type: 'button', title: capTitle, 'aria-label': capTitle }, '؟');
+  infoBtn.addEventListener('click', () => { cap.hidden = !cap.hidden; });
+
   return el('div', { class: 'dcp-modal-card', role: 'dialog', 'aria-modal': 'true', 'aria-label': 'افزودن به کالکشن' }, [
     el('button', { class: 'dcp-modal-close', type: 'button', 'aria-label': 'بستن', onclick: closeOverlay }, '×'),
-    el('h2', { class: 'dcp-modal-title' }, 'افزودن به کالکشن'),
-    el('p', { class: 'dcp-modal-sub' }, 'کالکشن یعنی یه پوشه‌ی دلخواه که خودت می‌سازی و هرچی خواستی توش می‌ریزی — برای یه امتحان، یه بیمارِ خاص، یا هر موضوعی که خودت بخوای.'),
+    el('div', { class: 'dcp-modal-title-row' }, [el('h2', { class: 'dcp-modal-title' }, 'افزودن به کالکشن'), infoBtn]),
+    cap,
     list,
     el('div', { class: 'dcp-cl-picknew' }, [newTitle, newBtn]),
     msg,
