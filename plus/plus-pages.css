@@ -44,6 +44,11 @@ body.dcp-page a.dcp-btn-danger { color: #fff; }
 }
 .dcp-dash-h2 { font-size: 1rem; font-weight: 800; margin: 0 0 4px; }
 .dcp-sec-hint { color: var(--txt2, #4a5f85); font-size: .9rem; margin: 0 0 12px; }
+/* A hint with a «؟» beside it (the reveal caption itself is dc-plus-scorecap,
+   already styled - see home-card.js's own score/شیلد caption). */
+.dcp-sec-hint-row { display: flex; align-items: flex-start; gap: 8px; margin: 0 0 12px; }
+.dcp-sec-hint-row .dcp-sec-hint { margin: 0; flex: 1 1 auto; }
+.dcp-sec-hint-row .dc-plus-info { flex: none; margin-top: 1px; }
 
 /* ---- streak (with explanation) ------------------------------------------- */
 .dcp-streak-detail { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }

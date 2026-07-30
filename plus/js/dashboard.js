@@ -24,12 +24,23 @@ const PROGRESS_EXCLUDE = new Set(['photocast', 'litecast']);
 // reviewDueBlock/pathwayBlock/collectionsBlock and lockedFeatureCard below).
 const PREMIUM_TILES = ['جمع‌بندی موضوعی هایلایت‌ها', 'کوییز و کسب امتیاز', 'دستیار هوشمند'];
 
-function section(title, hint, body) {
-  return el('section', { class: 'dcp-dash-sec' }, [
-    el('h2', { class: 'dcp-dash-h2' }, title),
-    hint ? el('p', { class: 'dcp-sec-hint' }, hint) : null,
-    body,
-  ]);
+// `more`: an optional longer explanation, tucked behind a «؟» beside the hint —
+// same hidden-by-default reveal the homepage promo card already uses for its
+// score caption (dc-plus-info/dc-plus-scorecap/dc-plus-capline).
+function section(title, hint, body, more) {
+  const children = [el('h2', { class: 'dcp-dash-h2' }, title)];
+  if (hint) {
+    if (more) {
+      const cap = el('p', { class: 'dc-plus-scorecap', hidden: true }, el('span', { class: 'dc-plus-capline' }, more));
+      const infoBtn = el('button', { class: 'dc-plus-info', type: 'button', title: 'توضیح بیشتر', 'aria-label': 'توضیح بیشتر' }, '؟');
+      infoBtn.addEventListener('click', () => { cap.hidden = !cap.hidden; });
+      children.push(el('div', { class: 'dcp-sec-hint-row' }, [el('p', { class: 'dcp-sec-hint' }, hint), infoBtn]), cap);
+    } else {
+      children.push(el('p', { class: 'dcp-sec-hint' }, hint));
+    }
+  }
+  children.push(body);
+  return el('section', { class: 'dcp-dash-sec' }, children);
 }
 
 function streakDetail(me) {
@@ -267,16 +278,19 @@ export async function renderDashboard(root, { me: preMe } = {}) {
     'برای مرور امروز',
     'هایلایت‌هایی که امروز نوبتِ مرورشونه.',
     isPremium ? reviewDueBlock(me) : lockedFeatureCard('/plus/cards.html'),
+    'هایلایت‌هایی که تو مطالبِ مختلف زده‌اید، طبقِ زمان‌بندیِ علمیِ لایتنر، دقیقاً همون وقتی که وقتِ فراموش‌شدنشونه دوباره بهتان نشان داده می‌شود — همین باعث می‌شود واقعاً تو ذهنتان بماند.',
   ));
   children.push(section(
     'مسیر یادگیری',
     'مسیرهای آماده، از پایه تا پیشرفته؛ فقط بخون.',
     isPremium ? pathwayBlock(me) : lockedFeatureCard('/plus/pathways.html'),
+    'دیگر لازم نیست فکر کنید چه چیزی را بعد از چه چیزی بخوانید — خودمان مسیرِ یادگیریِ هر موضوع را قدم‌به‌قدم نشانتان می‌دهیم، تا در آن موضوع کاملاً مسلط شوید و مهارتِ واقعی پیدا کنید.',
   ));
   children.push(section(
     'کالکشن‌ها',
     'هایلایت‌ها و مقاله‌هاتو تو پوشه‌های دلخواهِ خودت بریز.',
     isPremium ? collectionsWrap : lockedFeatureCard('/plus/collections.html'),
+    'هر هایلایت یا مقاله‌ای که دلتان بخواهد را، بر اساسِ موضوعی که خودتان انتخاب می‌کنید، در یک پوشه‌ی دلخواه ذخیره می‌کنید — مثلاً برای یک امتحان، یک بیمارِ خاص، یا هر چیزِ دیگر.',
   ));
 
   children.push(
