@@ -16,17 +16,13 @@ const colorCss = (k) => (PALETTE.find((p) => p.key === k) || {}).css || 'transpa
 // dynamically from the content index; this only hides these specific keys.
 const PROGRESS_EXCLUDE = new Set(['photocast', 'litecast']);
 
-// Premium tiles still locked. Leaderboard is intentionally NOT here (removed).
-// "نماهای موضوعی" renamed to something concrete. "مرور فلش‌کارت زمان‌بندی‌شده"
-// (Phase 2) and "مسیرهای یادگیری" (Phase 3) are both live now — they get their
-// own sections above instead of a locked tile; see reviewDueBlock/pathwayBlock.
-const PREMIUM_TILES = [
-  'مرور فلش‌کارت زمان‌بندی‌شده',
-  'مسیرهای یادگیری',
-  'جمع‌بندی موضوعی هایلایت‌ها',
-  'کوییز و کسب امتیاز',
-  'دستیار هوشمند',
-];
+// Still-locked tiles: nothing built for either plan yet. Leaderboard is
+// intentionally NOT here (removed). The three LIVE premium features (Leitner
+// review, learning pathways, collections) no longer live in this generic grid
+// at all — each gets its own real section for every plan now (a live block
+// for premium, a compelling locked-card teaser for free; see
+// reviewDueBlock/pathwayBlock/collectionsBlock and lockedFeatureCard below).
+const PREMIUM_TILES = ['جمع‌بندی موضوعی هایلایت‌ها', 'کوییز و کسب امتیاز', 'دستیار هوشمند'];
 
 function section(title, hint, body) {
   return el('section', { class: 'dcp-dash-sec' }, [
@@ -159,10 +155,9 @@ async function recentBlock(model) {
 // The first two tiles are live for premium users (Phase 2's flashcard review,
 // Phase 3's learning pathways, see reviewDueBlock/pathwayBlock above) — drop
 // them from their locked grid; free users still see both locked like the rest.
-function premiumTiles(tier) {
-  const tiles = tier === 'premium' ? PREMIUM_TILES.slice(2) : PREMIUM_TILES;
+function premiumTiles() {
   const grid = el('div', { class: 'dcp-tile-grid' });
-  for (const t of tiles) {
+  for (const t of PREMIUM_TILES) {
     grid.appendChild(el('div', { class: 'dcp-tile' }, [
       el('span', { class: 'dcp-tile-lock', 'aria-hidden': 'true' }, '🔒'),
       el('span', { class: 'dcp-tile-name' }, t),
@@ -170,6 +165,18 @@ function premiumTiles(tier) {
     ]));
   }
   return grid;
+}
+
+// A free user's teaser card for a LIVE premium feature: real, simple copy (not
+// just a name) - the whole card is a link to the feature's own page, which
+// already shows the "این ویژگی ویژه‌ی پریمیوم است" upsell to a free visitor
+// (cards.html/pathways.html/collections.html each already gate this way), so
+// clicking is what "tells" the user, with no separate message to keep in sync.
+function lockedFeatureCard(href, blurb) {
+  return el('a', { class: 'dcp-locked-card', href }, [
+    el('p', { class: 'dcp-locked-blurb' }, blurb),
+    el('span', { class: 'dcp-soon-badge' }, '🔒 ویژه‌ی پریمیوم'),
+  ]);
 }
 
 // Premium "برای مرور امروز" block: a real link + count once there's something
@@ -256,25 +263,28 @@ export async function renderDashboard(root, { me: preMe } = {}) {
     el('div', { class: 'dcp-dash-hello' }, 'سلام، ' + (me.display_name || '')),
   ];
 
-  // premium-only blocks first (never for free): today's due review, the
-  // active learning pathway, then the user's own collections.
-  if (me.tier === 'premium') {
-    children.push(section(
-      'برای مرور امروز',
-      'این‌ها هایلایت‌های خودتانند که طبق زمان‌بندی لایتنر، امروز نوبت مرورشان رسیده؛ با زدن دکمه مرورشان می‌کنید.',
-      reviewDueBlock(me),
-    ));
-    children.push(section(
-      'مسیر یادگیری',
-      'مجموعه‌ای از مقاله‌ها، اپیزودها و ویدیوها به ترتیبِ منطقیِ یادگیری؛ با خواندن و هایلایت‌کردن، پیشرفتِ مسیر خودش جلو می‌رود.',
-      pathwayBlock(me),
-    ));
-    children.push(section(
-      'کالکشن‌ها',
-      'هایلایت‌ها یا کلِ یه مقاله/اپیزود رو تو پوشه‌های دلخواهِ خودت بریز — از میزکار یا از هایلایت‌های اخیرِ همین صفحه.',
-      collectionsWrap,
-    ));
-  }
+  // The three live premium features get a real section for EVERY plan now,
+  // in the same spot: the live block for premium, a locked-card teaser for
+  // free (linking to the feature's own page, which does the actual gating).
+  const isPremium = me.tier === 'premium';
+  children.push(section(
+    'برای مرور امروز',
+    'این‌ها هایلایت‌های خودتانند که طبق زمان‌بندی لایتنر، امروز نوبت مرورشان رسیده؛ با زدن دکمه مرورشان می‌کنید.',
+    isPremium ? reviewDueBlock(me) : lockedFeatureCard('/plus/cards.html',
+      'هر روز فقط همون هایلایت‌هایی که وقتِ مرورشونه رو بهت نشون می‌دیم — نه کمتر، نه بیشتر.'),
+  ));
+  children.push(section(
+    'مسیر یادگیری',
+    'مجموعه‌ای از مقاله‌ها، اپیزودها و ویدیوها به ترتیبِ منطقیِ یادگیری؛ با خواندن و هایلایت‌کردن، پیشرفتِ مسیر خودش جلو می‌رود.',
+    isPremium ? pathwayBlock(me) : lockedFeatureCard('/plus/pathways.html',
+      'مسیرهای آماده، از پایه تا پیشرفته؛ فقط بخون، پیشرفتت خودش جلو می‌رود.'),
+  ));
+  children.push(section(
+    'کالکشن‌ها',
+    'هایلایت‌ها یا کلِ یه مقاله/اپیزود رو تو پوشه‌های دلخواهِ خودت بریز — از میزکار یا از هایلایت‌های اخیرِ همین صفحه.',
+    isPremium ? collectionsWrap : lockedFeatureCard('/plus/collections.html',
+      'هایلایت‌ها و مقاله‌هاتو تو پوشه‌های دلخواهِ خودت بریز — برای امتحان، برای یه بیمارِ خاص، هرچی بخوای.'),
+  ));
 
   children.push(
     section('استریک', 'هر روز که بخوانید، هایلایت کنید یا مرور کنید، یک روز به زنجیره‌تان اضافه می‌شود. رکورد شما بیشترین زنجیره‌ای است که تا حالا ساخته‌اید و هیچ‌وقت پاک نمی‌شود.', streakDetail(me)),
@@ -286,10 +296,10 @@ export async function renderDashboard(root, { me: preMe } = {}) {
     // API — never describe one as feeding the other, and never as a balance.
     section('امتیاز شما', 'امتیاز با فعالیت شما بالا می‌رود، همیشه می‌ماند و کم نمی‌شود؛ با آن سپر می‌گیرید. لیگ هفتگی جداست و روی XP همان هفته حساب می‌شود.', scoreBlock(progress)),
     section('هایلایت‌های اخیر', null, recentWrap),
-    section('پریمیوم', 'به‌زودی در دسترس.', premiumTiles(me.tier)),
+    section('پریمیوم', 'به‌زودی در دسترس.', premiumTiles()),
   );
 
   root.replaceChildren(...children.filter(Boolean));
   recentWrap.replaceChildren(await recentBlock(model));
-  if (me.tier === 'premium') collectionsWrap.replaceChildren(await collectionsBlock());
+  if (isPremium) collectionsWrap.replaceChildren(await collectionsBlock());
 }
