@@ -59,7 +59,12 @@ function renderCard(h, model) {
   const card = el('article', { class: 'dcp-rv-card' }, [
     head,
     renderHighlightText(h),
-    h.note ? el('div', { class: 'dcp-rv-note' }, h.note) : null,
+    // h.note is a per-highlight note (highlights.note — set from the workbench's
+    // 📝 یادداشت button on the SELECTED highlight), distinct from the one
+    // whole-article note (article_notes). It only ever shows here when this
+    // exact highlight has one saved; labeled so that's obvious at a glance
+    // instead of reading as an unexplained box (founder feedback, 2026-07-30).
+    h.note ? el('div', { class: 'dcp-rv-note' }, [el('b', {}, 'یادداشت شما: '), h.note]) : null,
     src,
     actions,
     gradedTag,
