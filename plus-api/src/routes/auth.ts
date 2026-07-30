@@ -469,7 +469,14 @@ export async function authRoutes(app: FastifyInstance): Promise<void> {
       active_pathway: null, // Phase 3
     };
     // due_card_count is premium-only and intentionally absent for free users.
-    if (user.tier === 'premium') me.due_card_count = 0; // Phase 2 fills this in
+    if (user.tier === 'premium') {
+      const due = await pool.query<{ n: number }>(
+        `select count(*)::int as n from card_state
+          where user_id = $1 and (next_review_at is null or next_review_at <= now())`,
+        [user.id],
+      );
+      me.due_card_count = due.rows[0]?.n ?? 0;
+    }
     return reply.send(me);
   });
 }

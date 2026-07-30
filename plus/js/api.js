@@ -134,6 +134,10 @@ export const api = {
   getArticleNote: (content_id) => request('/article-note', { query: { content_id } }),
   saveArticleNote: (content_id, note) => request('/article-note', { method: 'PUT', body: { content_id, note } }),
 
+  // premium: Leitner scheduled review
+  reviewDue: (topic, limit) => request('/review/due', { query: { topic, limit } }),
+  reviewAnswer: (highlight_id, result) => request('/review/answer', { method: 'POST', body: { highlight_id, result } }),
+
   // dashboard (later milestones)
   tree: () => request('/tree'),
   progress: () => request('/progress'),
