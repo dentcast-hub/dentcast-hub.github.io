@@ -58,7 +58,20 @@ describe('premium review view', () => {
     const root = document.getElementById('root')!;
     await renderReview(root);
 
-    expect(root.querySelectorAll('.dcp-card')).toHaveLength(1);
+    expect(root.querySelectorAll('.dcp-rv-card')).toHaveLength(1);
+
+    // The highlight shows in FULL, marked like it is in the article — never
+    // hidden behind a cloze blank (prototype feedback, 2026-07-30: hiding a
+    // user's own highlight from them is confusing, not a recall test).
+    expect(root.querySelector('.dcp-blank')).toBeNull();
+    const mark = root.querySelector('mark.dcp-hl');
+    expect(mark).toBeTruthy();
+    expect(mark!.getAttribute('data-color')).toBe('yellow');
+    expect(mark!.textContent).toBe(dueCard.exact);
+    expect(root.querySelector('.dcp-rv-text')!.textContent).toBe(
+      dueCard.prefix + dueCard.exact + dueCard.suffix,
+    );
+
     const gotIt = Array.from(root.querySelectorAll('button')).find((b) => b.textContent === 'بلد بودم');
     expect(gotIt).toBeTruthy();
 
