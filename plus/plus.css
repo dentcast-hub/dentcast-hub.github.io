@@ -495,8 +495,9 @@ body.dcp-study { padding-bottom: 90px; }
 .dcp-rv-badge-dot[data-color="red"]    { background: #ff8080; }
 .dcp-rv-label { font-size: .74rem; font-weight: 700; padding: 3px 11px; border-radius: 999px; background: var(--dcp-chip-bg); color: var(--dcp-accent); }
 .dcp-rv-text { margin: 0; font-size: 1.08rem; line-height: 2.3; color: var(--dcp-ink); }
-.dcp-rv-src { display: inline-block; margin-top: 10px; font-size: .84rem; color: var(--dcp-muted) !important; text-decoration: none; }
-.dcp-rv-src:hover { color: var(--dcp-accent) !important; }
+.dcp-rv-src { margin-top: 10px; font-size: .84rem; color: var(--dcp-muted); }
+.dcp-rv-src a { color: var(--dcp-accent); text-decoration: none; font-weight: 600; }
+.dcp-rv-src a:hover { text-decoration: underline; }
 .dcp-rv-note { margin-top: 12px; padding: 10px 14px; background: var(--dcp-surface-2); border-radius: 12px; font-size: .92rem; color: var(--dcp-muted); white-space: pre-wrap; }
 .dcp-rv-actions { display: flex; gap: 10px; margin-top: 16px; }
 .dcp-rv-btn { flex: 1; font: inherit; font-weight: 700; padding: 13px 10px; border-radius: 14px; cursor: pointer; border: 1px solid transparent; transition: transform .15s ease, opacity .15s ease; }

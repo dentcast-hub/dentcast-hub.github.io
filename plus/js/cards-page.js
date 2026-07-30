@@ -9,7 +9,7 @@ import { registerSW } from './pwa.js';
 
 function comingSoonGate(root) {
   root.replaceChildren(el('div', { class: 'dcp-gate' }, [
-    el('p', {}, 'مرور فلش‌کارت‌های زمان‌بندی‌شده، ویژه‌ی دنت‌کست پلاس است.'),
+    el('p', {}, 'مرور فلش‌کارت‌های زمان‌بندی‌شده، ویژه‌ی دنت‌کست پریمیوم است.'),
     el('p', { class: 'dcp-muted' }, 'هایلایت‌های شما حفظ می‌شوند و در همان مقاله و در «هایلایت‌های اخیر» پیشخوان دیده می‌شوند.'),
     el('a', { class: 'dcp-btn dcp-btn-primary', href: '/plus/' }, 'رفتن به پیشخوان'),
   ]));
