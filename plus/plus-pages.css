@@ -134,11 +134,11 @@ a.dcp-progress-name:hover { color: var(--ac, #0b5fff); text-decoration: underlin
 .dcp-tile-soon { font-size: .8rem; color: var(--txt2, #4a5f85); }
 
 /* A free user's teaser for a LIVE premium feature (Leitner review, pathways,
-   collections) - same section slot the real block occupies for premium, just
-   a simple pitch + a lock chip; the whole card links to the feature's own
-   page, which does the actual "این ویژگی ویژه‌ی پریمیوم است" gating. */
-.dcp-locked-card { display: block; text-decoration: none; }
-.dcp-locked-blurb { margin: 0 0 10px; color: var(--txt, #0a1a33); line-height: 1.8; }
+   collections) - same section slot the real block occupies for premium; the
+   section's own hint already explains it, so this is just a lock chip. The
+   whole card links to the feature's own page, which does the actual
+   "این ویژگی ویژه‌ی پریمیوم است" gating. */
+.dcp-locked-card { display: inline-block; text-decoration: none; }
 
 /* ---- profile ------------------------------------------------------------- */
 .dcp-field-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }

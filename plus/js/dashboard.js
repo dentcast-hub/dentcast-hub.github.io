@@ -167,21 +167,17 @@ function premiumTiles() {
   return grid;
 }
 
-// A free user's teaser card for a LIVE premium feature: real, simple copy (not
-// just a name) - the whole card is a link to the feature's own page, which
-// already shows the "این ویژگی ویژه‌ی پریمیوم است" upsell to a free visitor
-// (cards.html/pathways.html/collections.html each already gate this way), so
-// clicking is what "tells" the user, with no separate message to keep in sync.
-function lockedFeatureCard(href, blurb) {
-  return el('a', { class: 'dcp-locked-card', href }, [
-    el('p', { class: 'dcp-locked-blurb' }, blurb),
-    el('span', { class: 'dcp-soon-badge' }, '🔒 ویژه‌ی پریمیوم'),
-  ]);
+// A free user's teaser for a LIVE premium feature: the section's own hint
+// already says what it does, so the locked card is just the link + a lock
+// chip - never a second paragraph repeating the same thing. The whole card
+// links to the feature's own page, which already shows the "این ویژگی
+// ویژه‌ی پریمیوم است" upsell to a free visitor (cards.html/pathways.html/
+// collections.html each already gate this way), so clicking is what "tells"
+// the user, with no separate message to keep in sync.
+function lockedFeatureCard(href) {
+  return el('a', { class: 'dcp-locked-card', href }, el('span', { class: 'dcp-soon-badge' }, '🔒 ویژه‌ی پریمیوم'));
 }
 
-// Premium "برای مرور امروز" block: a real link + count once there's something
-// due, a calm nudge back toward highlighting when the deck is empty (never a
-// bare zero — matches the review page's own empty state).
 function reviewDueBlock(me) {
   const count = me.due_card_count || 0;
   if (count > 0) {
@@ -269,21 +265,18 @@ export async function renderDashboard(root, { me: preMe } = {}) {
   const isPremium = me.tier === 'premium';
   children.push(section(
     'برای مرور امروز',
-    'این‌ها هایلایت‌های خودتانند که طبق زمان‌بندی لایتنر، امروز نوبت مرورشان رسیده؛ با زدن دکمه مرورشان می‌کنید.',
-    isPremium ? reviewDueBlock(me) : lockedFeatureCard('/plus/cards.html',
-      'هر روز فقط همون هایلایت‌هایی که وقتِ مرورشونه رو بهت نشون می‌دیم — نه کمتر، نه بیشتر.'),
+    'هایلایت‌هایی که امروز نوبتِ مرورشونه.',
+    isPremium ? reviewDueBlock(me) : lockedFeatureCard('/plus/cards.html'),
   ));
   children.push(section(
     'مسیر یادگیری',
-    'مجموعه‌ای از مقاله‌ها، اپیزودها و ویدیوها به ترتیبِ منطقیِ یادگیری؛ با خواندن و هایلایت‌کردن، پیشرفتِ مسیر خودش جلو می‌رود.',
-    isPremium ? pathwayBlock(me) : lockedFeatureCard('/plus/pathways.html',
-      'مسیرهای آماده، از پایه تا پیشرفته؛ فقط بخون، پیشرفتت خودش جلو می‌رود.'),
+    'مسیرهای آماده، از پایه تا پیشرفته؛ فقط بخون.',
+    isPremium ? pathwayBlock(me) : lockedFeatureCard('/plus/pathways.html'),
   ));
   children.push(section(
     'کالکشن‌ها',
-    'هایلایت‌ها یا کلِ یه مقاله/اپیزود رو تو پوشه‌های دلخواهِ خودت بریز — از میزکار یا از هایلایت‌های اخیرِ همین صفحه.',
-    isPremium ? collectionsWrap : lockedFeatureCard('/plus/collections.html',
-      'هایلایت‌ها و مقاله‌هاتو تو پوشه‌های دلخواهِ خودت بریز — برای امتحان، برای یه بیمارِ خاص، هرچی بخوای.'),
+    'هایلایت‌ها و مقاله‌هاتو تو پوشه‌های دلخواهِ خودت بریز.',
+    isPremium ? collectionsWrap : lockedFeatureCard('/plus/collections.html'),
   ));
 
   children.push(
