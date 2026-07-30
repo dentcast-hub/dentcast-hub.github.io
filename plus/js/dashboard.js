@@ -3,7 +3,7 @@
 // not a separate dark theme (prototype-feedback override).
 import { el, faNum, streakIsActiveToday } from './util.js';
 import { api } from './api.js';
-import { getModel, contentInfo } from './content-index.js';
+import { getModel, contentInfo, FOLDER_EN } from './content-index.js';
 import { leagueEntryButton } from './league.js';
 import { LABELS, PALETTE } from './config.js';
 
@@ -15,21 +15,10 @@ const colorCss = (k) => (PALETTE.find((p) => p.key === k) || {}).css || 'transpa
 // dynamically from the content index; this only hides these specific keys.
 const PROGRESS_EXCLUDE = new Set(['photocast', 'litecast']);
 
-// English brand names for the progress widget titles (the index only carries the
-// Persian label). Falls back to the folder key so a new folder still renders.
-const FOLDER_EN = {
-  episodes: 'Podcast',
-  notecast: 'NoteCast',
-  insight: 'Clinical Insight',
-  dentai: 'DentAI',
-  chairside: 'Chairside',
-  metanotes: 'MetaNote',
-  glossary: 'Glossary',
-  sharehub: 'ShareHub',
-};
-
-// Premium tiles. Leaderboard is intentionally NOT here (removed). "نماهای موضوعی"
-// renamed to something concrete.
+// Premium tiles still locked. Leaderboard is intentionally NOT here (removed).
+// "نماهای موضوعی" renamed to something concrete. "مرور فلش‌کارت زمان‌بندی‌شده"
+// (Phase 2) and "مسیرهای یادگیری" (Phase 3) are both live now — they get their
+// own sections above instead of a locked tile; see reviewDueBlock/pathwayBlock.
 const PREMIUM_TILES = [
   'مرور فلش‌کارت زمان‌بندی‌شده',
   'مسیرهای یادگیری',
@@ -164,10 +153,11 @@ async function recentBlock(model) {
   return list;
 }
 
-// "مرور فلش‌کارت زمان‌بندی‌شده" (tile 0) is live for premium users (Phase 2) —
-// drop it from their locked grid; free users still see it locked like the rest.
+// The first two tiles are live for premium users (Phase 2's flashcard review,
+// Phase 3's learning pathways, see reviewDueBlock/pathwayBlock above) — drop
+// them from their locked grid; free users still see both locked like the rest.
 function premiumTiles(tier) {
-  const tiles = tier === 'premium' ? PREMIUM_TILES.slice(1) : PREMIUM_TILES;
+  const tiles = tier === 'premium' ? PREMIUM_TILES.slice(2) : PREMIUM_TILES;
   const grid = el('div', { class: 'dcp-tile-grid' });
   for (const t of tiles) {
     grid.appendChild(el('div', { class: 'dcp-tile' }, [
@@ -194,6 +184,30 @@ function reviewDueBlock(me) {
   ]);
 }
 
+// Premium "مسیر یادگیری" block: /me already carries active_pathway (the most
+// recently started still-in-progress enrollment, or the last completed one),
+// so no extra request is needed here. current_step doubles as a plain count of
+// steps done — "قدم ۳ از ۲۰" reads naturally either way.
+function pathwayBlock(me) {
+  const p = me.active_pathway;
+  const allLink = el('a', { class: 'dcp-pw-alllink', href: '/plus/pathways.html' }, 'همه مسیرها');
+  if (!p) {
+    return el('div', { class: 'dcp-pw-dash' }, [
+      el('div', { class: 'dcp-muted' }, 'هنوز مسیری را شروع نکرده‌اید.'),
+      allLink,
+    ]);
+  }
+  const pct = p.total_steps > 0 ? Math.round((p.current_step / p.total_steps) * 100) : 0;
+  return el('div', { class: 'dcp-pw-dash' }, [
+    el('a', { class: 'dcp-pw-dash-title', href: '/plus/pathway.html?id=' + encodeURIComponent(p.id) }, p.title_fa),
+    el('div', { class: 'dcp-progress-track' }, el('div', { class: 'dcp-progress-fill', style: 'width:' + pct + '%' })),
+    el('div', { class: 'dcp-pw-dash-foot' }, [
+      el('span', {}, p.is_complete ? 'این مسیر را کامل کرده‌اید 🎉' : ('قدم ' + faNum(p.current_step) + ' از ' + faNum(p.total_steps))),
+      allLink,
+    ]),
+  ]);
+}
+
 export async function renderDashboard(root, { me: preMe } = {}) {
   root.replaceChildren(el('div', { class: 'dcp-loading' }, 'در حال بارگذاری...'));
   // Always fetch fresh when the dashboard opens: /me and /progress are never
@@ -217,12 +231,18 @@ export async function renderDashboard(root, { me: preMe } = {}) {
     el('div', { class: 'dcp-dash-hello' }, 'سلام، ' + (me.display_name || '')),
   ];
 
-  // premium-only due block first (never for free)
+  // premium-only blocks first (never for free): today's due review, then the
+  // active learning pathway.
   if (me.tier === 'premium') {
     children.push(section(
       'برای مرور امروز',
       'این‌ها هایلایت‌های خودتانند که طبق زمان‌بندی لایتنر، امروز نوبت مرورشان رسیده؛ با زدن دکمه مرورشان می‌کنید.',
       reviewDueBlock(me),
+    ));
+    children.push(section(
+      'مسیر یادگیری',
+      'مجموعه‌ای از مقاله‌ها، اپیزودها و ویدیوها به ترتیبِ منطقیِ یادگیری؛ با خواندن و هایلایت‌کردن، پیشرفتِ مسیر خودش جلو می‌رود.',
+      pathwayBlock(me),
     ));
   }
 

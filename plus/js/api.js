@@ -143,6 +143,11 @@ export const api = {
   reviewDue: (topic, limit) => request('/review/due', { query: { topic, limit } }),
   reviewAnswer: (highlight_id, result) => request('/review/answer', { method: 'POST', body: { highlight_id, result } }),
 
+  // premium: learning pathways (Phase 3)
+  pathways: () => request('/pathways'),
+  pathway: (id) => request('/pathways/' + encodeURIComponent(id)),
+  enrollPathway: (id) => request('/pathways/' + encodeURIComponent(id) + '/enroll', { method: 'POST' }),
+
   // dashboard (later milestones)
   tree: () => request('/tree'),
   progress: () => request('/progress'),
