@@ -59,6 +59,23 @@ export function signalStreakActivity() {
   try { document.dispatchEvent(new CustomEvent(STREAK_ACTIVITY_EVENT)); } catch (_) { /* ignore */ }
 }
 
+// A user's own note, one line per thought, rendered as a real bulleted list
+// instead of lines just run together with no visual separation (founder
+// feedback, 2026-07-30). A single-line note stays plain text — a list of one
+// bullet is not a list.
+export function renderNoteLines(text) {
+  const lines = String(text ?? '').split(/\r?\n/).map((l) => l.trim()).filter(Boolean);
+  if (lines.length <= 1) return document.createTextNode(text ?? '');
+  const ul = document.createElement('ul');
+  ul.className = 'dcp-note-list';
+  for (const line of lines) {
+    const li = document.createElement('li');
+    li.textContent = line;
+    ul.appendChild(li);
+  }
+  return ul;
+}
+
 export function escapeHtml(s) {
   return String(s).replace(/[&<>"']/g, (c) => (
     { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]

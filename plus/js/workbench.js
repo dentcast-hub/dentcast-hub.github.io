@@ -1,7 +1,7 @@
 // Study mode controller. A mode of the article page, not a separate page. It
 // inherits the site's typography (styles live in plus.css and reference the
 // site's own CSS variables). Never auto-enters; the caller decides when.
-import { el, faNum, debounce, signalStreakActivity } from './util.js';
+import { el, faNum, debounce, signalStreakActivity, renderNoteLines } from './util.js';
 import { api } from './api.js';
 import { PALETTE, LABELS, SS_MODE } from './config.js';
 import { serializeRange, anchorQuote, wrapRange, unwrapMarks, fullText, hashText } from './anchor.js';
@@ -428,7 +428,7 @@ export class Workbench {
       // The note card shows only the user's own note (no highlight text) — the note
       // is the reader's space. Clicking still jumps to the highlight on the page.
       const item = el('div', { class: 'dcp-note-card', onclick: () => marks[0] && marks[0].scrollIntoView({ behavior: 'smooth', block: 'center' }) }, [
-        el('div', { class: 'dcp-note-text' }, data.note),
+        el('div', { class: 'dcp-note-text' }, renderNoteLines(data.note)),
       ]);
       listEl.appendChild(item);
     }
@@ -441,7 +441,7 @@ export class Workbench {
     const list = el('div', { class: 'dcp-failed-list' },
       this.failed.map((h) => el('div', { class: 'dcp-failed-item' }, [
         el('div', { class: 'dcp-failed-quote' }, '«' + h.exact.slice(0, 90) + '»'),
-        h.note ? el('div', { class: 'dcp-note-text' }, [el('b', {}, 'یادداشت شما: '), h.note]) : null,
+        h.note ? el('div', { class: 'dcp-note-text' }, [el('b', {}, 'یادداشت شما: '), renderNoteLines(h.note)]) : null,
       ])));
     const panel = el('aside', { class: 'dcp-failed-panel', 'aria-label': 'هایلایت‌های بدون جایگاه' }, [
       el('div', { class: 'dcp-panel-head' }, 'هایلایت‌هایی که جای‌گذاری نشدند'),

@@ -3,7 +3,7 @@
 // the card text expands to the whole sentence around the highlight, and the
 // highlighted piece becomes the cloze blank (revealable). Manual review logs
 // card_reviewed_manual and never touches card_state.
-import { el, faNum, signalStreakActivity } from './util.js';
+import { el, faNum, signalStreakActivity, renderNoteLines } from './util.js';
 import { api } from './api.js';
 import { getModel, contentInfo } from './content-index.js';
 import { LABELS, PALETTE } from './config.js';
@@ -98,7 +98,7 @@ export async function renderArchive(container, topicKey, { inline = false } = {}
     // Delete (×): removes the flashcard (i.e. the underlying highlight) after a
     // small inline confirm, so an accidental tap does not destroy data.
     const delBtn = el('button', { class: 'dcp-card-del', type: 'button', 'aria-label': 'حذف فلش‌کارت', title: 'حذف' }, '×');
-    const card = el('div', { class: 'dcp-card' }, [delBtn, meta, renderCardText(h), h.note ? el('div', { class: 'dcp-card-note' }, [el('b', {}, 'یادداشت شما: '), h.note]) : null, actions]);
+    const card = el('div', { class: 'dcp-card' }, [delBtn, meta, renderCardText(h), h.note ? el('div', { class: 'dcp-card-note' }, [el('b', {}, 'یادداشت شما: '), renderNoteLines(h.note)]) : null, actions]);
 
     reviewBtn.addEventListener('click', async () => {
       reviewBtn.disabled = true;

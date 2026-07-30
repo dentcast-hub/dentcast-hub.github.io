@@ -204,7 +204,7 @@ async function renderLoggedIn(card, user) {
   }
   // Premium-only due-card line. Never rendered for free users (not even zero).
   if (me.tier === 'premium' && typeof me.due_card_count === 'number') {
-    rows.push(el('a', { class: 'dc-plus-due', href: '/plus/' },
+    rows.push(el('a', { class: 'dc-plus-due', href: '/plus/cards.html' },
       faNum(me.due_card_count) + ' کارت برای مرور'));
   }
 

@@ -412,6 +412,10 @@ body.dcp-study { padding-bottom: 90px; }
 .dcp-note-quote { font-size: .82rem; opacity: .7; margin-bottom: 4px; }
 .dcp-note-text { line-height: 1.7; white-space: pre-wrap; }
 .dcp-notes-empty { opacity: .6; }
+/* A multi-line note (renderNoteLines in util.js) becomes a real bulleted list
+   instead of lines just running one after another with no marker. */
+.dcp-note-list { margin: 0; padding-inline-start: 1.3em; line-height: 1.8; }
+.dcp-note-list li { margin: 2px 0; }
 
 .dcp-failed-panel {
   position: fixed; bottom: 96px; inset-inline-end: 14px; z-index: 8000; width: 280px; max-height: 50vh; overflow: auto;
