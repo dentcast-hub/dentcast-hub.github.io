@@ -446,6 +446,10 @@
         "milestone": false
       },
       {
+        "content_id": "chairside/chairside-27",
+        "milestone": false
+      },
+      {
         "content_id": "insight/insight-32",
         "milestone": true
       },
@@ -1295,6 +1299,10 @@
         "milestone": false
       },
       {
+        "content_id": "chairside/chairside-27",
+        "milestone": false
+      },
+      {
         "content_id": "insight/insight-42",
         "milestone": false
       },
@@ -1626,6 +1634,10 @@
       },
       {
         "content_id": "insight/insight-11",
+        "milestone": false
+      },
+      {
+        "content_id": "chairside/chairside-27",
         "milestone": false
       },
       {
@@ -2117,6 +2129,10 @@
       },
       {
         "content_id": "episodes/episode-75",
+        "milestone": false
+      },
+      {
+        "content_id": "chairside/chairside-27",
         "milestone": false
       },
       {

@@ -12160,5 +12160,35 @@
       "secondary": [],
       "subtopic": "cementation"
     }
+  },
+  {
+    "type": "chairside",
+    "id": "chairside-27",
+    "title": "وقتی توصیهٔ همکارِ قبلی، خودش یک دادهٔ تشخیصی است",
+    "caption": "در این کیس Chairside بررسی می‌کنیم چرا توصیهٔ همکارِ قبلی برای گذاشتنِ روکش روی دندانی با ترمیمِ کامپوزیتِ گسترده، خودش یک دادهٔ تشخیصی محسوب می‌شود؛ از تناقضِ نمای کلینیکی با رادیوگرافی در ارزیابیِ فرول تا تصمیم به تعویقِ مداخله در دندانِ بی‌علامت.",
+    "hashtags": [
+      "#گزارش_کیس",
+      "#ارزیابی_فرول",
+      "#تشخیص_افتراقی",
+      "#طرح_درمان_محافظه‌کارانه",
+      "#روکش_و_کامپوزیت",
+      "#دکتر_شهابیان"
+    ],
+    "keywords": [
+      "ferrule assessment on restored tooth",
+      "clinical exam versus radiograph discrepancy",
+      "previous restoration as diagnostic clue",
+      "adhesive restoration versus crown recommendation contradiction",
+      "subgingival margin after composite removal",
+      "crown lengthening versus extraction decision",
+      "deferred treatment asymptomatic tooth",
+      "minimally invasive treatment sequencing"
+    ],
+    "page_url": "/chairside/chairside-27.html",
+    "pillar": {
+      "primary": "fixed-pros",
+      "secondary": [],
+      "subtopic": "failures"
+    }
   }
 ]
