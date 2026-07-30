@@ -134,3 +134,19 @@ pathway multi-membership.
 4. Audio-completion signal in the player (episodes) before recommending "بشنو".
 5. AI recommendation layer (Phase 5) — candidates-from-rules, pick+justify by
    the model — after the rule-based loop proves itself.
+6. **Pathway-completion certificates** (Maktabkhoone-style; founder request,
+   2026-07-30) — a shareable/printable certificate with a unique verify code
+   (LinkedIn etc.), issued when a pathway is completed. `certificates` table
+   already exists (spec §4: `user_id`, `pathway_id`, `verify_code`,
+   `issued_at`) but nothing writes to it. **Not every pathway qualifies** — the
+   founder wants a per-pathway eligibility flag first (e.g. `"certifiable":
+   true` in `plus/pathways.json`), decided by a founder curation pass, NOT by
+   step count alone. Current step-count spread for that pass to work from
+   (`n` steps / milestones per pathway, thin → substantial):
+   digital 11/3, ai-dentistry 14/3, failure-troubleshooting 14/3,
+   removable-pros 16/4, evidence-literacy 17/3, operative-cariology 20/5,
+   post-and-core 25/4, occlusion 33/5, implant-surgical 40/3, esthetic 43/6,
+   treatment-planning 46/6, ceramics 50/6, implant-prosthetic 65/6,
+   fixed-pros 85/7, biomimetic 87/12. Explicitly deferred — do not build the
+   eligibility flag, the verify-code issuance, or any UI for this until the
+   founder asks.
