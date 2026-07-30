@@ -636,6 +636,12 @@ a.dcp-pw-card {
 .dcp-modal-close { position: absolute; top: 10px; inset-inline-end: 12px; background: none; border: none; font-size: 1.6rem; line-height: 1; cursor: pointer; color: var(--dcp-ink); }
 .dcp-modal-close.is-hidden { display: none; }
 .dcp-modal-title { margin: 0 0 6px; font-size: 1.25rem; }
+/* Title + «؟» reveal button on one row (the "افزودن به کالکشن" picker uses this
+   for its explainer, same reveal-on-demand pattern as the homepage promo
+   card's «؟» -> dc-plus-scorecap/dc-plus-capline). */
+.dcp-modal-title-row { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
+.dcp-modal-title-row .dcp-modal-title { margin: 0; }
+.dcp-modal-card .dc-plus-scorecap:not([hidden]) { margin-bottom: 12px; }
 .dcp-modal-sub { margin: 0 0 16px; opacity: .8; line-height: 1.8; font-size: .92rem; }
 .dcp-modal-step { display: flex; flex-direction: column; gap: 10px; }
 .dcp-label { font-size: .9rem; font-weight: 600; }
