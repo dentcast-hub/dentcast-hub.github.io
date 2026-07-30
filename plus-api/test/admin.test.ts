@@ -75,6 +75,51 @@ describe('POST /admin/notify/test', () => {
   });
 });
 
+describe('POST /admin/users/set-tier', () => {
+  it('requires admin auth', async () => {
+    const res = await app.inject({
+      method: 'POST', url: '/admin/users/set-tier',
+      payload: { phone: '09121800001', tier: 'premium' },
+    });
+    expect(res.statusCode).toBe(401);
+  });
+
+  it('flips an existing profile to premium and back to free', async () => {
+    await loginAs(app, '09121800001'); // creates the profile
+
+    const up = await app.inject({
+      method: 'POST', url: '/admin/users/set-tier',
+      headers: { authorization: basic }, payload: { phone: '09121800001', tier: 'premium' },
+    });
+    expect(up.statusCode).toBe(200);
+    expect(up.json()).toMatchObject({ ok: true, phone: '09121800001', tier: 'premium' });
+
+    const row = await pool.query('select tier from profiles where phone = $1', ['09121800001']);
+    expect(row.rows[0].tier).toBe('premium');
+
+    const down = await app.inject({
+      method: 'POST', url: '/admin/users/set-tier',
+      headers: { authorization: basic }, payload: { phone: '09121800001', tier: 'free' },
+    });
+    expect(down.statusCode).toBe(200);
+    expect(down.json().tier).toBe('free');
+  });
+
+  it('404s an unknown phone and 400s an invalid one', async () => {
+    const notFound = await app.inject({
+      method: 'POST', url: '/admin/users/set-tier',
+      headers: { authorization: basic }, payload: { phone: '09129999999', tier: 'premium' },
+    });
+    expect(notFound.statusCode).toBe(404);
+
+    const invalid = await app.inject({
+      method: 'POST', url: '/admin/users/set-tier',
+      headers: { authorization: basic }, payload: { phone: 'not-a-phone', tier: 'premium' },
+    });
+    expect(invalid.statusCode).toBe(400);
+  });
+});
+
 describe('admin KPIs', () => {
   it('computes the six KPIs from activity + anon events', async () => {
     // an anonymous demand signal
