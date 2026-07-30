@@ -35,7 +35,7 @@
   /* Interactive rows get a real hover affordance on pointer devices. */
   .dcp-continue:hover { text-decoration: underline; }
   .dcp-recent-link:hover .dcp-recent-text { color: var(--ac, #0b5fff); }
-  .dcp-locked-card:hover .dcp-locked-blurb { color: var(--ac, #0b5fff); }
+  .dcp-locked-card:hover .dcp-soon-badge { color: var(--ac, #0b5fff); }
   .dcp-tile { transition: border-color .15s, box-shadow .15s, transform .15s; }
   .dcp-tile:hover { border-color: var(--chip-bd, rgba(11,95,255,.20)); box-shadow: var(--card-sh, 0 1px 3px rgba(2,35,96,.07)); }
   .dcp-pw-dash-title:hover { color: var(--ac, #0b5fff) !important; text-decoration: underline; }
