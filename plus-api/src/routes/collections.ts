@@ -53,19 +53,43 @@ export async function collectionRoutes(app: FastifyInstance): Promise<void> {
   app.addHook('preHandler', requireAuth);
   app.addHook('preHandler', requirePremium);
 
-  // GET /collections - the user's own collections, newest first, with a plain
-  // item count (no item bodies - that's GET /collections/:id).
+  // GET /collections - the user's own collections, newest first. Besides the
+  // count, each carries a small `preview` (its 3 most recent items' color/type
+  // only, no bodies) so the catalog can draw a Pinterest-style board cover
+  // without an extra round trip per collection.
   app.get('/collections', async (request, reply) => {
-    const res = await pool.query<{ id: string; title: string; created_at: string; item_count: number }>(
-      `select c.id, c.title, c.created_at, count(ci.id)::int as item_count
+    const res = await pool.query<{
+      id: string; title: string; created_at: string;
+      items: Array<{ highlight_id: string | null; content_id: string; color: string | null }>;
+    }>(
+      `select c.id, c.title, c.created_at,
+              coalesce(
+                json_agg(
+                  json_build_object('highlight_id', ci.highlight_id, 'content_id', ci.content_id, 'color', h.color)
+                  order by ci.created_at desc
+                ) filter (where ci.id is not null),
+                '[]'
+              ) as items
          from collections c
          left join collection_items ci on ci.collection_id = c.id
+         left join highlights h on h.id = ci.highlight_id
         where c.user_id = $1
         group by c.id
         order by c.created_at desc`,
       [request.user!.id],
     );
-    return reply.send({ collections: res.rows });
+    const collections = res.rows.map((r) => ({
+      id: r.id,
+      title: r.title,
+      created_at: r.created_at,
+      item_count: r.items.length,
+      preview: r.items.slice(0, 3).map((it) => ({
+        kind: it.highlight_id ? 'highlight' : 'page',
+        color: it.color,
+        type: getContentInfo(it.content_id)?.type ?? it.content_id.split('/')[0],
+      })),
+    }));
+    return reply.send({ collections });
   });
 
   // POST /collections { title } - create an (initially empty) collection.

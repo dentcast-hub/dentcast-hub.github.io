@@ -38,14 +38,30 @@
   .dcp-tile { transition: border-color .15s, box-shadow .15s, transform .15s; }
   .dcp-tile:hover { border-color: var(--chip-bd, rgba(11,95,255,.20)); box-shadow: var(--card-sh, 0 1px 3px rgba(2,35,96,.07)); }
   .dcp-pw-dash-title:hover { color: var(--ac, #0b5fff) !important; text-decoration: underline; }
-  .dcp-cl-dash-row:hover { background: var(--chip-bg, rgba(11,95,255,.08)); }
+  .dcp-cl-dash-board:hover .dcp-cl-dash-name { color: var(--ac, #0b5fff); }
 
   /* Learning pathways: catalog cards run two-up, and both the card and each
-     step row get a real hover affordance (see plus.css for the base rules).
-     Collections' own catalog reuses the same .dcp-pw-grid/.dcp-pw-card. */
+     step row get a real hover affordance (see plus.css for the base rules). */
   .dcp-pw-grid { grid-template-columns: repeat(2, 1fr); }
   a.dcp-pw-card:hover { border-color: var(--chip-bd, rgba(11,95,255,.20)); transform: translateY(-2px); }
   .dcp-pw-step:hover .dcp-pw-step-title { color: var(--ac, #0b5fff); }
+
+  /* Collections: board grid runs three-up, pin masonry runs three columns,
+     and the "افزودن به کالکشن" bottom sheet becomes a centered dialog — a
+     bottom sheet reads as a mobile pattern; on a pointer/wide screen it
+     turns into the same modal shape login-modal.js already uses. */
+  .dcp-cl-board-grid { grid-template-columns: repeat(3, 1fr); }
+  .dcp-cl-pin-grid { column-count: 3; }
+  a.dcp-cl-board:hover { transform: translateY(-3px); box-shadow: var(--card-sh2, 0 4px 18px rgba(2,35,96,.13)); }
+  .dcp-cl-pin-link:hover { border-color: var(--chip-bd, rgba(11,95,255,.20)); }
+  .dcp-sheet-overlay { align-items: center; }
+  .dcp-sheet {
+    max-width: 420px; border-radius: 20px; max-height: 85vh;
+    transform: translateY(0) scale(.94); opacity: 0;
+    transition: transform .22s ease, opacity .22s ease;
+  }
+  .dcp-sheet.is-open { transform: translateY(0) scale(1); opacity: 1; }
+  .dcp-sheet-handle { display: none; }
 
   /* The header overlay (dashboard/profile opened from the person menu on the
      main site) shares these classes — keep its body on the same column. */

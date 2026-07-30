@@ -5,7 +5,7 @@ import { el, faNum, streakIsActiveToday } from './util.js';
 import { api } from './api.js';
 import { getModel, contentInfo, FOLDER_EN } from './content-index.js';
 import { leagueEntryButton } from './league.js';
-import { openCollectionPicker } from './collections.js';
+import { openCollectionPicker, boardCover } from './collections.js';
 import { LABELS, PALETTE } from './config.js';
 
 const labelFa = (k) => (LABELS.find((l) => l.key === k) || {}).fa || '';
@@ -211,9 +211,9 @@ function pathwayBlock(me) {
   ]);
 }
 
-// Premium "کالکشن‌ها" block: a compact list of the user's own collections
-// (name + item count, linking to the full view), newest first, capped short —
-// the full list lives on /plus/collections.html.
+// Premium "کالکشن‌ها" block: the same Pinterest board-cover strip as the
+// catalog page, just capped short — a few boards + their real covers, newest
+// first. The full grid lives on /plus/collections.html.
 async function collectionsBlock() {
   const data = await api.listCollections().catch(() => null);
   if (!data || !data.collections.length) {
@@ -222,13 +222,14 @@ async function collectionsBlock() {
       el('a', { href: '/plus/collections.html' }, 'یکی بساز'),
     ]);
   }
-  const list = el('div', { class: 'dcp-cl-dash-list' }, data.collections.slice(0, 5).map((c) => el('a', {
-    class: 'dcp-cl-dash-row', href: '/plus/collection.html?id=' + encodeURIComponent(c.id),
+  const strip = el('div', { class: 'dcp-cl-dash-strip' }, data.collections.slice(0, 4).map((c) => el('a', {
+    class: 'dcp-cl-dash-board', href: '/plus/collection.html?id=' + encodeURIComponent(c.id),
   }, [
-    el('span', {}, c.title),
+    boardCover(c.preview),
+    el('span', { class: 'dcp-cl-dash-name' }, c.title),
     el('span', { class: 'dcp-cl-dash-count' }, faNum(c.item_count) + ' مورد'),
   ])));
-  return el('div', { class: 'dcp-pw-dash' }, [list, el('a', { class: 'dcp-pw-alllink', href: '/plus/collections.html' }, 'همه‌ی کالکشن‌ها')]);
+  return el('div', { class: 'dcp-pw-dash' }, [strip, el('a', { class: 'dcp-pw-alllink', href: '/plus/collections.html' }, 'همه‌ی کالکشن‌ها')]);
 }
 
 export async function renderDashboard(root, { me: preMe } = {}) {
