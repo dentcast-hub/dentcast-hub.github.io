@@ -29,6 +29,12 @@ export type SpotViewer = 'anon' | 'plus';
  */
 export const SPOT_SLOTS = new Set([
   'article', 'home', 'player', 'episodes', 'dashboard', 'profile', 'search', 'archive',
+  // Added 2026-07-28 with the two new slots. Missing them here did NOT look like
+  // a bug in the report — it looked like zero demand: the card rendered, the
+  // visitor saw it, and the POST was rejected 400 as a forged slot. A closed
+  // vocabulary only stays safe if it is widened in the SAME change that widens
+  // spot-config.json; the test below fails if the two ever drift again.
+  'pillar', 'episode',
 ]);
 
 // Creative ids come from spot-config.json (`premium`, sponsor ids). Open-ended by
