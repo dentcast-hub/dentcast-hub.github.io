@@ -82,6 +82,25 @@ describe('premium review view', () => {
     expect(answerCalls).toEqual([{ highlight_id: 'hl-1', result: 'remembered' }]);
   });
 
+  it('labels a per-highlight note so it never reads as an unexplained box', async () => {
+    dueResponse = [{ ...dueCard, note: 'Fggvffggf' }];
+    const root = document.getElementById('root')!;
+    await renderReview(root);
+
+    const noteEl = root.querySelector('.dcp-rv-note');
+    expect(noteEl).toBeTruthy();
+    expect(noteEl!.textContent).toContain('یادداشت شما');
+    expect(noteEl!.textContent).toContain('Fggvffggf');
+  });
+
+  it('omits the note box entirely when the highlight has no note', async () => {
+    dueResponse = [dueCard]; // note: null
+    const root = document.getElementById('root')!;
+    await renderReview(root);
+
+    expect(root.querySelector('.dcp-rv-note')).toBeNull();
+  });
+
   it('grades a card as "forgot" via the دوباره مرورش کن button', async () => {
     dueResponse = [dueCard];
     const root = document.getElementById('root')!;
