@@ -98,7 +98,13 @@ export class Workbench {
       }, l.fa));
 
     const notesToggle = el('button', { class: 'dcp-tool', type: 'button', title: 'یادداشت روی هایلایت انتخاب‌شده', onclick: () => this._noteButton() }, '📝 یادداشت');
-    const collectionBtn = el('button', { class: 'dcp-tool', type: 'button', title: 'افزودنِ هایلایتِ انتخاب‌شده (یا کلِ این صفحه) به یک کالکشن', onclick: () => this._collectionButton() }, '🗂 کالکشن');
+    const collectionBtn = el('button', { class: 'dcp-tool', type: 'button', onclick: () => this._collectionButton() }, '🗂 افزودنِ هایلایت به کالکشن');
+    const collectionCap = el('p', { class: 'dcp-wb-cap' }, 'هایلایتِ انتخاب‌شده (آخرین موردی که ساختی یا رویش کلیک کردی) به یکی از کالکشن‌های خودت اضافه می‌شود.');
+    collectionCap.hidden = true;
+    const collectionInfo = el('button', {
+      class: 'dcp-wb-info', type: 'button', 'aria-label': 'کالکشن یعنی چی؟', title: 'کالکشن یعنی چی؟',
+      onclick: () => { collectionCap.hidden = !collectionCap.hidden; this._syncDock(); },
+    }, '؟');
     const exitBtn = el('button', { class: 'dcp-tool dcp-exit', type: 'button', onclick: () => this.exit() }, '✕ خروج');
 
     const group = (label, items) => el('span', { class: 'dcp-tool-group' }, [
@@ -111,8 +117,10 @@ export class Workbench {
       group('رنگ هایلایت', swatches),
       group('ابزار', [highlightBtn, underlineBtn, clozeBtn]),
       group('برچسب', labelChips),
-      el('span', { class: 'dcp-tool-group' }, [notesToggle, collectionBtn]),
+      el('span', { class: 'dcp-tool-group' }, [notesToggle]),
+      el('span', { class: 'dcp-tool-group' }, [collectionBtn, collectionInfo]),
       exitBtn,
+      collectionCap,
     ]);
     document.body.appendChild(bar);
     this.ui.toolbar = bar;
@@ -469,16 +477,17 @@ export class Workbench {
   }
 
   // --- collection button ------------------------------------------------------
-  // Same dual-target resolution as the note button: sends the currently
-  // SELECTED highlight to a collection if one is active, otherwise falls back
-  // to the whole page ("save this whole article/episode for later").
+  // Single-purpose (unlike the note button): only ever adds the currently
+  // SELECTED highlight. Saving the WHOLE page is a separate, always-visible
+  // button next to میز کار (see injectWorkbenchButton in plus.js) — the two
+  // are deliberately not overloaded onto one control.
   _collectionButton() {
     const item = this._currentHl != null ? this.items.get(this._currentHl) : null;
-    if (item && item.data) {
-      openCollectionPicker({ highlightId: item.data.id });
+    if (!item || !item.data) {
+      this._toast('اول یه هایلایت بزن یا رو یکی از هایلایت‌هات کلیک کن.');
       return;
     }
-    openCollectionPicker({ contentId: this.contentId });
+    openCollectionPicker({ highlightId: item.data.id });
   }
 
   // A plain note field for the selected highlight — JUST the note (no colour /

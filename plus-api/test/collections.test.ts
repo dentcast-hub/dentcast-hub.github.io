@@ -84,6 +84,27 @@ describe('GET /collections', () => {
     expect(list[0].item_count).toBe(1);
   });
 
+  it('carries a preview (kind/color/type) of its most recent items, for the board cover', async () => {
+    await makePremium();
+    const id = await createCollection();
+    await app.inject({
+      method: 'POST', url: `/collections/${id}/items`, headers: { cookie }, payload: { content_id: 'episodes/episode-2' },
+    });
+    const hl = await createHighlight('insight/insight-1');
+    await pool.query(`update highlights set color = 'yellow' where id = $1`, [hl]);
+    await app.inject({ method: 'POST', url: `/collections/${id}/items`, headers: { cookie }, payload: { highlight_id: hl } });
+
+    const res = await app.inject({ method: 'GET', url: '/collections', headers: { cookie } });
+    const preview = res.json().collections[0].preview;
+    expect(preview).toHaveLength(2);
+    const highlightPreview = preview.find((p) => p.kind === 'highlight');
+    const pagePreview = preview.find((p) => p.kind === 'page');
+    expect(highlightPreview.color).toBe('yellow');
+    expect(highlightPreview.type).toBe('insight');
+    expect(pagePreview.color).toBeNull();
+    expect(pagePreview.type).toBe('episodes');
+  });
+
   it('never lists another user\'s collection', async () => {
     await makePremium();
     await createCollection();

@@ -5,6 +5,7 @@
 import { detectContentId, findProseRoot, PROSE_SELECTORS, INVITE_LINE, SS_MODE, SS_RETURN_STUDY, isOrgHost } from './js/config.js';
 import { currentUser, api } from './js/api.js';
 import { openLoginModal, openOrgNotice } from './js/login-modal.js';
+import { openCollectionPicker } from './js/collections.js';
 import { el } from './js/util.js';
 import { initHomeCard } from './js/home-card.js';
 import { initHeader } from './js/header.js';
@@ -21,11 +22,36 @@ import { initListeningTracker } from './js/listening.js';
 const PLUS_V = new URL(import.meta.url).search; // e.g. '?v=12'
 const loadWorkbench = () => import('./js/workbench.js' + PLUS_V).then((m) => m.Workbench);
 
-function injectWorkbenchButton(main, proseRoot) {
+// Beside میزکار (always visible - no need to enter study mode) sits a second,
+// single-purpose button that saves the WHOLE page to a collection. This is
+// deliberately a separate control from the workbench toolbar's own
+// "افزودنِ هایلایت به کالکشن" button (see workbench.js's _collectionButton) -
+// one control per action, never a mode that guesses which one you meant.
+// openCollectionPicker already handles anon (-> login) and free (-> premium
+// upsell) on its own, so no gating logic is needed here.
+function injectCollectionButton(contentId) {
+  const cap = el('p', { class: 'dcp-wb-cap' }, 'با این دکمه، کلِ همین صفحه (نه یک هایلایتِ خاص) به یکی از کالکشن‌های خودت اضافه می‌شود.');
+  cap.hidden = true;
+  const info = el('button', {
+    class: 'dcp-wb-info', type: 'button', 'aria-label': 'کالکشن یعنی چی؟', title: 'کالکشن یعنی چی؟',
+    onclick: () => { cap.hidden = !cap.hidden; },
+  }, '؟');
+  const btn = el('button', {
+    class: 'dcp-wb-collect', type: 'button',
+    onclick: () => openCollectionPicker({ contentId }),
+  }, '🗂 افزودن به کالکشن');
+  return { btn, info, cap };
+}
+
+function injectWorkbenchButton(proseRoot, contentId) {
   const btn = el('button', { class: 'dcp-wb-button', type: 'button', 'aria-pressed': 'false' }, 'میز کار');
+  const { btn: collectBtn, info: collectInfo, cap: collectCap } = injectCollectionButton(contentId);
+  const bar = el('div', { class: 'dcp-wb-bar' }, [
+    el('div', { class: 'dcp-wb-row' }, [btn, collectBtn, collectInfo]),
+    collectCap,
+  ]);
   // Place it at the top of the article, just before the readable prose.
-  const anchor = proseRoot;
-  anchor.parentNode.insertBefore(el('div', { class: 'dcp-wb-bar' }, [btn]), anchor);
+  proseRoot.parentNode.insertBefore(bar, proseRoot);
   return btn;
 }
 
@@ -48,7 +74,7 @@ function showInvitation(anchorBtn, onProceed) {
 async function setupWorkbench({ proseRoot, contentId }) {
   const Workbench = await loadWorkbench();
   const wb = new Workbench({ contentId, proseRoot });
-  const btn = injectWorkbenchButton(proseRoot, proseRoot);
+  const btn = injectWorkbenchButton(proseRoot, contentId);
 
   // Reading-completion signal: started only for a signed-in reader (the /activity
   // endpoint requires auth) and only once. Guarded so a mid-page login does not

@@ -21,6 +21,7 @@
 
 /* ---- workbench entry button ---------------------------------------------- */
 .dcp-wb-bar { margin: 10px 0 4px; }
+.dcp-wb-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 .dcp-wb-button {
   font: inherit; font-weight: 600;
   display: inline-flex; align-items: center; gap: 6px;
@@ -29,6 +30,26 @@
 }
 .dcp-wb-button.is-active { background: transparent; color: var(--dcp-accent); border-color: var(--dcp-accent); }
 .dcp-wb-button:focus-visible { outline: 2px solid var(--dcp-accent); outline-offset: 2px; }
+
+/* Beside میزکار: always-visible "save the whole page" button (separate from
+   the workbench toolbar's own highlight-only collection button below). */
+.dcp-wb-collect {
+  font: inherit; font-weight: 700; font-size: .92rem;
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 7px 14px; border-radius: 999px; cursor: pointer;
+  color: var(--dcp-accent); background: transparent; border: 1.5px solid var(--dcp-accent);
+}
+.dcp-wb-collect:active { transform: scale(.97); }
+/* «؟» reveal, reused by both the beside-میزکار button and the toolbar's own
+   collection button - hidden by default, toggles a plain caption line. */
+.dcp-wb-info {
+  width: 24px; height: 24px; padding: 0; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: .78rem; line-height: 1;
+  color: var(--dcp-muted); background: transparent; border: 1px solid var(--dcp-line); cursor: pointer;
+}
+.dcp-wb-info:hover { color: var(--dcp-ink); border-color: var(--dcp-muted); }
+.dcp-wb-cap { flex: 0 0 100%; font-size: .82rem; color: var(--dcp-muted); line-height: 1.8; margin: 6px 0 0; }
 
 .dcp-invite {
   margin: 8px 0; padding: 12px 14px; border: 1px solid var(--dcp-line);
@@ -586,12 +607,14 @@ a.dcp-pw-card {
 .dcp-pw-step.is-current .dcp-pw-step-marker { background: var(--dcp-accent); border-color: var(--dcp-accent); color: #fff; }
 .dcp-pw-steps .dcp-pw-step:last-child { border-bottom: none; }
 
-/* ---- collections (Phase 3), /plus/collections.html + /plus/collection.html +
-   the "افزودن به کالکشن" picker (workbench button, dashboard recent-highlight
-   rows). Entirely user-made — no founder curation, no taxonomy coupling.
-   The catalog reuses .dcp-pw-top/.dcp-pw-heading/.dcp-pw-grid/.dcp-pw-card
-   from the pathways module above; only what's specific to collections lives
-   here. */
+/* ---- collections (Phase 3), Pinterest-shaped: boards -> pins, localized to
+   the site's own tokens/RTL. /plus/collections.html (board grid) +
+   /plus/collection.html (one board's pin masonry) + the "افزودن به کالکشن"
+   bottom sheet (the two workbench buttons, dashboard recent-highlight rows).
+   Entirely user-made — no founder curation, no taxonomy coupling. The catalog
+   reuses .dcp-pw-top/.dcp-pw-heading and the detail view reuses
+   .dcp-pw-detail-head/.dcp-pw-detail-title from the pathways module above;
+   only what's specific to collections lives here. */
 .dcp-cl-picknew { display: flex; gap: 8px; margin: 14px 0; }
 .dcp-cl-picknew .dcp-input { flex: 1 1 auto; }
 
@@ -599,28 +622,93 @@ a.dcp-pw-card {
 .dcp-cl-title-wrap { flex: 1 1 260px; min-width: 0; }
 .dcp-cl-detail-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 
-.dcp-cl-items { display: flex; flex-direction: column; gap: 10px; margin-top: 14px; }
-.dcp-cl-item { display: flex; align-items: flex-start; gap: 10px; background: var(--dcp-surface); border: 1px solid var(--dcp-line); border-radius: var(--dcp-radius); padding: 12px 14px; box-shadow: var(--dcp-shadow); }
-.dcp-cl-item-link { flex: 1 1 auto; min-width: 0; color: inherit; text-decoration: none; display: flex; flex-direction: column; gap: 4px; }
-.dcp-cl-item-kind { font-size: .72rem; font-weight: 700; color: var(--dcp-muted); letter-spacing: .02em; }
-.dcp-cl-item-text { margin: 0; line-height: 1.9; color: var(--dcp-ink); }
-.dcp-cl-item-text.is-page { font-weight: 700; }
-.dcp-cl-item-link:hover .dcp-cl-item-text { color: var(--dcp-accent); }
-.dcp-cl-item-del { flex: none; width: 26px; height: 26px; line-height: 22px; text-align: center; font-size: 1.2rem; border-radius: 50%; border: 1px solid var(--dcp-line); background: var(--dcp-surface); color: var(--dcp-muted); cursor: pointer; }
-.dcp-cl-item-del:hover { color: #c0392b; border-color: #c0392b; }
+/* board cover: a small collage of up to 3 items (Pinterest's own board-cover
+   shape) — one big + two stacked when there are 3, an even split for 1-2,
+   and a plain folder glyph while empty. Shared by the catalog's board tiles
+   AND the picker sheet's board rows (there at a smaller fixed size). */
+.dcp-cl-cover { display: grid; gap: 2px; overflow: hidden; border-radius: var(--dcp-radius) var(--dcp-radius) 0 0; }
+.dcp-cl-cover-0 { display: flex; align-items: center; justify-content: center; background: var(--dcp-surface-2); }
+.dcp-cl-cover-empty { font-size: 1.6rem; opacity: .5; }
+.dcp-cl-cover-1 { grid-template-columns: 1fr; }
+.dcp-cl-cover-2 { grid-template-columns: 1fr 1fr; }
+.dcp-cl-cover-3 { grid-template-columns: 1.2fr 1fr; grid-template-rows: 1fr 1fr; }
+.dcp-cl-cover-3 .dcp-cl-cover-tile:first-child { grid-row: 1 / 3; }
+.dcp-cl-cover-tile { display: block; min-height: 54px; }
+.dcp-cl-cover-tile-page { display: flex; align-items: center; justify-content: center; font-size: 1.3rem; }
 
-/* the "افزودن به کالکشن" picker modal (opened via collections.js's
-   openCollectionPicker over the shared .dcp-modal-overlay/.dcp-modal-card) */
-.dcp-cl-picklist { display: flex; flex-direction: column; gap: 6px; max-height: 40vh; overflow: auto; margin: 4px 0 12px; }
+/* the board grid itself (catalog page) */
+.dcp-cl-board-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 16px; }
+a.dcp-cl-board {
+  display: block; background: var(--dcp-surface); border: 1px solid var(--dcp-line);
+  border-radius: var(--dcp-radius); overflow: hidden; box-shadow: var(--dcp-shadow);
+  color: inherit; text-decoration: none; transition: transform .15s ease, box-shadow .15s ease;
+}
+.dcp-cl-board .dcp-cl-cover { height: 120px; border-radius: 0; }
+.dcp-cl-board-meta { padding: 10px 12px 12px; }
+.dcp-cl-board-title { font-weight: 800; font-size: .92rem; margin: 0 0 2px; color: var(--dcp-ink); }
+.dcp-cl-board-count { font-size: .78rem; color: var(--dcp-muted); margin: 0; }
+
+/* pin masonry (one board's contents) */
+.dcp-cl-pin-grid { column-count: 2; column-gap: 12px; margin-top: 16px; }
+.dcp-cl-pin { break-inside: avoid; margin-bottom: 12px; position: relative; }
+.dcp-cl-pin-link { display: block; color: inherit; text-decoration: none; background: var(--dcp-surface); border: 1px solid var(--dcp-line); border-radius: var(--dcp-radius); overflow: hidden; box-shadow: var(--dcp-shadow); }
+.dcp-cl-pin-band { padding: 14px 12px; }
+.dcp-cl-pin-band .dcp-hl { display: block; line-height: 1.9; font-size: .92rem; padding: 0; }
+.dcp-cl-pin-page { color: #fff; text-align: center; padding: 26px 12px; font-weight: 700; line-height: 1.7; }
+.dcp-cl-pin-ico { display: block; font-size: 1.5rem; margin-bottom: 8px; }
+.dcp-cl-pin-foot { padding: 7px 12px; font-size: .72rem; color: var(--dcp-muted); border-top: 1px solid var(--dcp-line); }
+.dcp-cl-pin-del {
+  position: absolute; top: 8px; inset-inline-start: 8px; z-index: 1; width: 26px; height: 26px;
+  border-radius: 50%; border: none; background: rgba(255, 255, 255, .88); color: #333;
+  font-size: 1.1rem; cursor: pointer; box-shadow: 0 1px 4px rgba(0, 0, 0, .25);
+}
+.dcp-cl-pin-del:hover { color: #c0392b; }
+
+/* the "افزودن به کالکشن" bottom sheet (Pinterest's own save-to-board shape).
+   Mobile-first: slides up from the bottom; plus-desktop.css turns it into a
+   centered dialog from tablet width up. */
+.dcp-sheet-overlay {
+  position: fixed; inset: 0; z-index: 10100; background: rgba(0, 0, 0, 0); pointer-events: none;
+  transition: background .25s ease; display: flex; align-items: flex-end; justify-content: center;
+}
+.dcp-sheet-overlay.is-open { background: rgba(0, 0, 0, .45); pointer-events: auto; }
+.dcp-sheet {
+  width: 100%; max-width: 480px; background: var(--dcp-surface); border-radius: 20px 20px 0 0;
+  box-shadow: 0 -8px 30px rgba(0, 0, 0, .2); padding: 8px 20px calc(20px + env(safe-area-inset-bottom));
+  max-height: 82vh; overflow: auto; transform: translateY(100%); transition: transform .32s cubic-bezier(.2, .9, .3, 1);
+}
+.dcp-sheet.is-open { transform: translateY(0); }
+.dcp-sheet-handle { width: 40px; height: 4px; border-radius: 4px; background: var(--dcp-line); margin: 8px auto 14px; }
+.dcp-sheet-card { display: flex; flex-direction: column; }
+.dcp-sheet-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 4px; }
+.dcp-sheet-title { font-size: 1.15rem; font-weight: 800; margin: 0; }
+.dcp-sheet-sub { margin: 8px 0 0; color: var(--dcp-muted); font-size: .92rem; line-height: 1.8; }
+.dcp-sheet-cap { font-size: .84rem; color: var(--dcp-muted); line-height: 1.8; margin: 10px 0 0; padding: 10px 12px; background: var(--dcp-surface-2); border-radius: 12px; }
+
+.dcp-cl-picklist { display: flex; flex-direction: column; gap: 8px; max-height: 44vh; overflow: auto; margin: 14px 0; }
 .dcp-cl-pick-empty { margin: 4px 0 10px; color: var(--dcp-muted); font-size: .9rem; }
 .dcp-cl-pick-row {
-  display: flex; align-items: center; justify-content: space-between; gap: 10px;
-  font: inherit; text-align: start; padding: 10px 12px; border-radius: var(--dcp-radius);
+  display: flex; align-items: center; gap: 12px; width: 100%;
+  font: inherit; text-align: start; padding: 8px; border-radius: 14px;
   border: 1px solid var(--dcp-line); background: var(--dcp-surface); color: var(--dcp-ink); cursor: pointer;
 }
 .dcp-cl-pick-row:hover { border-color: var(--dcp-accent); }
-.dcp-cl-pick-row.is-added { border-color: #22a06b; color: #22a06b; }
-.dcp-cl-pick-count { font-size: .78rem; color: var(--dcp-muted); white-space: nowrap; }
+.dcp-cl-pick-row .dcp-cl-cover { width: 46px; height: 46px; flex: none; border-radius: 10px; }
+.dcp-cl-pick-row .dcp-cl-cover-tile { min-height: 0; }
+.dcp-cl-pick-txt { flex: 1 1 auto; display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+.dcp-cl-pick-name { font-weight: 700; }
+.dcp-cl-pick-count { font-size: .78rem; color: var(--dcp-muted); }
+
+/* saved-confirmation toast (Pinterest's own "Saved" pip) */
+.dcp-cl-toast {
+  position: fixed; bottom: calc(24px + env(safe-area-inset-bottom)); left: 50%; z-index: 10200;
+  transform: translate(-50%, 16px); opacity: 0; transition: transform .25s ease, opacity .25s ease;
+  background: var(--dcp-ink); color: var(--dcp-surface); padding: 11px 18px; border-radius: var(--dcp-radius-pill);
+  font-size: .88rem; font-weight: 700; display: flex; align-items: center; gap: 8px;
+  box-shadow: var(--dcp-shadow); white-space: nowrap;
+}
+.dcp-cl-toast.is-shown { transform: translate(-50%, 0); opacity: 1; }
+.dcp-cl-toast-check { width: 18px; height: 18px; border-radius: 50%; background: #22a06b; color: #fff; display: flex; align-items: center; justify-content: center; font-size: .68rem; flex: none; }
 
 /* folder-landing flashcard section (collapsible, at the top of the page) */
 .dcp-flash-section { margin: 14px 0; border: 1px solid var(--dcp-line); border-radius: var(--dcp-radius); background: var(--dcp-surface); overflow: hidden; }
@@ -636,12 +724,6 @@ a.dcp-pw-card {
 .dcp-modal-close { position: absolute; top: 10px; inset-inline-end: 12px; background: none; border: none; font-size: 1.6rem; line-height: 1; cursor: pointer; color: var(--dcp-ink); }
 .dcp-modal-close.is-hidden { display: none; }
 .dcp-modal-title { margin: 0 0 6px; font-size: 1.25rem; }
-/* Title + «؟» reveal button on one row (the "افزودن به کالکشن" picker uses this
-   for its explainer, same reveal-on-demand pattern as the homepage promo
-   card's «؟» -> dc-plus-scorecap/dc-plus-capline). */
-.dcp-modal-title-row { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
-.dcp-modal-title-row .dcp-modal-title { margin: 0; }
-.dcp-modal-card .dc-plus-scorecap:not([hidden]) { margin-bottom: 12px; }
 .dcp-modal-sub { margin: 0 0 16px; opacity: .8; line-height: 1.8; font-size: .92rem; }
 .dcp-modal-step { display: flex; flex-direction: column; gap: 10px; }
 .dcp-label { font-size: .9rem; font-weight: 600; }

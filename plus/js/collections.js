@@ -1,36 +1,86 @@
 // Collections (Phase 3): user-made freeform folders. Unlike a pathway
 // (founder-curated) or a topic archive (auto-grouped by the site's own
 // taxonomy), a collection is entirely the user's own — any mix of their own
-// highlights AND whole pages, regardless of pillar/pathway/topic. This module
-// is shared by /plus/collections.html, /plus/collection.html, the workbench's
-// «🗂 کالکشن» button, and the dashboard's recent-highlights rows.
+// highlights AND whole pages, regardless of pillar/pathway/topic. Presented
+// Pinterest-style (boards -> pins), localized to the site's own tokens/RTL:
+// a board's cover is a collage of its own items' colors/icons, and a board
+// opens into a masonry grid of "pins." This module is shared by
+// /plus/collections.html, /plus/collection.html, the workbench's two
+// single-purpose collection buttons, and the dashboard.
 import { el, faNum } from './util.js';
 import { api, currentUser } from './api.js';
 import { openLoginModal } from './login-modal.js';
 import { FOLDER_EN } from './content-index.js';
+import { PALETTE } from './config.js';
 
-let overlay = null;
-function closeOverlay() {
-  if (overlay) { overlay.remove(); overlay = null; }
-  document.removeEventListener('keydown', onKey);
+const hlColorCss = (key) => (PALETTE.find((p) => p.key === key) || {}).css || '#eaecf5';
+
+// A whole-page item has no highlight color, so its pin/cover tile is colored
+// by content TYPE instead — a fixed, distinguishable palette, one hue per
+// folder. Values are deliberately solid/saturated (white icon/text sits on top).
+const TYPE_COVER_COLOR = {
+  episodes: '#0b5fff', notecast: '#0e9f6e', insight: '#e0a100', dentai: '#7c5cff',
+  chairside: '#16a34a', metanotes: '#db2777', sharehub: '#ea580c', photocast: '#0891b2',
+  'dentcast-plus': '#4f46e5', glossary: '#64748b',
+};
+const TYPE_ICON = {
+  episodes: '🎙️', notecast: '📝', insight: '📄', dentai: '🤖', chairside: '🦷',
+  metanotes: '🔬', sharehub: '🔗', photocast: '📷', 'dentcast-plus': '🎬', glossary: '📖',
+};
+const coverColorOf = (p) => (p.kind === 'highlight' ? hlColorCss(p.color) : (TYPE_COVER_COLOR[p.type] || '#8aaac8'));
+
+function coverTile(p) {
+  if (p.kind === 'highlight') return el('span', { class: 'dcp-cl-cover-tile', style: 'background:' + coverColorOf(p) });
+  return el('span', {
+    class: 'dcp-cl-cover-tile dcp-cl-cover-tile-page', style: 'background:' + coverColorOf(p),
+  }, TYPE_ICON[p.type] || '📄');
 }
-function onKey(e) { if (e.key === 'Escape') closeOverlay(); }
 
-function openOverlay(card) {
-  closeOverlay();
-  overlay = el('div', {
-    class: 'dcp-modal-overlay',
-    onclick: (e) => { if (e.target === overlay) closeOverlay(); },
-  }, [card]);
+/** A board's cover: a small collage of up to 3 of its items (Pinterest's own board-cover shape). */
+export function boardCover(preview) {
+  const cover = el('div', { class: 'dcp-cl-cover dcp-cl-cover-' + Math.min(preview.length, 3) });
+  if (!preview.length) { cover.appendChild(el('span', { class: 'dcp-cl-cover-empty' }, '🗂')); return cover; }
+  preview.slice(0, 3).forEach((p) => cover.appendChild(coverTile(p)));
+  return cover;
+}
+
+// --- bottom sheet (Pinterest's own "save to board" shape, localized) -------
+let sheetOverlay = null;
+function closeSheet() {
+  if (!sheetOverlay) return;
+  const { overlay, sheet } = sheetOverlay;
+  overlay.classList.remove('is-open');
+  sheet.classList.remove('is-open');
+  document.removeEventListener('keydown', onSheetKey);
+  setTimeout(() => overlay.remove(), 300);
+  sheetOverlay = null;
+}
+function onSheetKey(e) { if (e.key === 'Escape') closeSheet(); }
+
+function openSheet(card) {
+  closeSheet();
+  const sheet = el('div', { class: 'dcp-sheet', role: 'dialog', 'aria-modal': 'true' }, [
+    el('div', { class: 'dcp-sheet-handle' }),
+    card,
+  ]);
+  const overlay = el('div', { class: 'dcp-sheet-overlay', onclick: (e) => { if (e.target === overlay) closeSheet(); } }, [sheet]);
   document.body.appendChild(overlay);
-  document.addEventListener('keydown', onKey);
+  document.addEventListener('keydown', onSheetKey);
+  sheetOverlay = { overlay, sheet };
+  requestAnimationFrame(() => { overlay.classList.add('is-open'); sheet.classList.add('is-open'); });
+}
+
+function toast(text) {
+  const t = el('div', { class: 'dcp-cl-toast' }, [el('span', { class: 'dcp-cl-toast-check' }, '✓'), el('span', {}, text)]);
+  document.body.appendChild(t);
+  requestAnimationFrame(() => t.classList.add('is-shown'));
+  setTimeout(() => { t.classList.remove('is-shown'); setTimeout(() => t.remove(), 300); }, 2400);
 }
 
 function gateCard({ title, sub, cta }) {
-  return el('div', { class: 'dcp-modal-card', role: 'dialog', 'aria-modal': 'true', 'aria-label': title }, [
-    el('button', { class: 'dcp-modal-close', type: 'button', 'aria-label': 'بستن', onclick: closeOverlay }, '×'),
-    el('h2', { class: 'dcp-modal-title' }, title),
-    el('p', { class: 'dcp-modal-sub' }, sub),
+  return el('div', { class: 'dcp-sheet-card', role: 'dialog', 'aria-label': title }, [
+    el('h2', { class: 'dcp-sheet-title' }, title),
+    el('p', { class: 'dcp-sheet-sub' }, sub),
     cta,
   ]);
 }
@@ -40,15 +90,13 @@ function pickerCard(target) {
   const list = el('div', { class: 'dcp-cl-picklist' }, el('div', { class: 'dcp-loading' }, 'در حال بارگذاری...'));
 
   const newTitle = el('input', { type: 'text', class: 'dcp-input', placeholder: 'اسمِ کالکشنِ جدید', maxlength: '80' });
-  const newBtn = el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button' }, '+ ساختن و افزودن');
+  const newBtn = el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button' }, '+ ساختن');
 
-  async function addTo(collectionId, rowEl) {
-    msg.textContent = '';
+  async function addTo(collectionId, title) {
     try {
       await api.addToCollection(collectionId, target);
-      rowEl && rowEl.classList.add('is-added');
-      msg.textContent = 'افزوده شد ✓';
-      setTimeout(closeOverlay, 700);
+      closeSheet();
+      toast('به «' + title + '» اضافه شد');
     } catch (_) {
       msg.textContent = 'افزودن ناموفق بود؛ دوباره تلاش کنید.';
     }
@@ -60,7 +108,7 @@ function pickerCard(target) {
     newBtn.disabled = true;
     try {
       const { collection } = await api.createCollection(title);
-      await addTo(collection.id);
+      await addTo(collection.id, collection.title);
     } catch (_) {
       msg.textContent = 'ساختِ کالکشن ناموفق بود؛ دوباره تلاش کنید.';
       newBtn.disabled = false;
@@ -75,27 +123,27 @@ function pickerCard(target) {
     }
     list.replaceChildren(...collections.map((c) => {
       const row = el('button', { class: 'dcp-cl-pick-row', type: 'button' }, [
-        el('span', {}, c.title),
-        el('span', { class: 'dcp-cl-pick-count' }, faNum(c.item_count) + ' مورد'),
+        boardCover(c.preview),
+        el('span', { class: 'dcp-cl-pick-txt' }, [
+          el('span', { class: 'dcp-cl-pick-name' }, c.title),
+          el('span', { class: 'dcp-cl-pick-count' }, faNum(c.item_count) + ' مورد'),
+        ]),
       ]);
-      row.addEventListener('click', () => addTo(c.id, row));
+      row.addEventListener('click', () => addTo(c.id, c.title));
       return row;
     }));
   }).catch(() => { list.replaceChildren(el('div', { class: 'dcp-empty' }, 'کالکشن‌ها در دسترس نیست.')); });
 
-  // «؟» reveal, same pattern as the homepage promo card's score caption: hidden
-  // by default, toggled inline, never a separate popover.
-  const capTitle = 'کالکشن یعنی چی؟';
-  const cap = el('p', { class: 'dc-plus-scorecap', hidden: true }, [
-    el('span', { class: 'dc-plus-capline' },
-      'کالکشن یعنی یه پوشه‌ی دلخواه که خودت می‌سازی و هرچی خواستی توش می‌ریزی — برای یه امتحان، یه بیمارِ خاص، یا هر موضوعی که خودت بخوای.'),
-  ]);
-  const infoBtn = el('button', { class: 'dc-plus-info', type: 'button', title: capTitle, 'aria-label': capTitle }, '؟');
+  // «؟» reveal, same pattern as the homepage promo card's score caption and the
+  // workbench's own two collection buttons: hidden by default, toggled inline.
+  const cap = el('p', { class: 'dcp-sheet-cap' },
+    'کالکشن یعنی یه پوشه‌ی دلخواه که خودت می‌سازی و هرچی خواستی توش می‌ریزی — برای یه امتحان، یه بیمارِ خاص، یا هر موضوعی که خودت بخوای.');
+  cap.hidden = true;
+  const infoBtn = el('button', { class: 'dcp-wb-info', type: 'button', title: 'کالکشن یعنی چی؟', 'aria-label': 'کالکشن یعنی چی؟' }, '؟');
   infoBtn.addEventListener('click', () => { cap.hidden = !cap.hidden; });
 
-  return el('div', { class: 'dcp-modal-card', role: 'dialog', 'aria-modal': 'true', 'aria-label': 'افزودن به کالکشن' }, [
-    el('button', { class: 'dcp-modal-close', type: 'button', 'aria-label': 'بستن', onclick: closeOverlay }, '×'),
-    el('div', { class: 'dcp-modal-title-row' }, [el('h2', { class: 'dcp-modal-title' }, 'افزودن به کالکشن'), infoBtn]),
+  return el('div', { class: 'dcp-sheet-card' }, [
+    el('div', { class: 'dcp-sheet-top' }, [el('h2', { class: 'dcp-sheet-title' }, 'افزودن به کالکشن'), infoBtn]),
     cap,
     list,
     el('div', { class: 'dcp-cl-picknew' }, [newTitle, newBtn]),
@@ -107,8 +155,8 @@ function pickerCard(target) {
  * Open the "add to collection" flow for one item: a highlight (`highlightId`)
  * or a whole page (`contentId`) — pass exactly one. Handles all three states
  * itself (anon -> login, free -> premium upsell, premium -> the real picker),
- * so every call site (workbench button, dashboard row button) behaves
- * identically without repeating the gate logic.
+ * so every call site (the two workbench buttons, the dashboard row button)
+ * behaves identically without repeating the gate logic.
  */
 export async function openCollectionPicker({ highlightId, contentId } = {}) {
   const user = await currentUser();
@@ -118,41 +166,44 @@ export async function openCollectionPicker({ highlightId, contentId } = {}) {
     return openCollectionPicker({ highlightId, contentId });
   }
   if (user.tier !== 'premium') {
-    openOverlay(gateCard({
+    openSheet(gateCard({
       title: 'کالکشن‌ها ویژه‌ی پریمیوم است',
       sub: 'هایلایت‌ها و مطالعه‌ی شما همین حالا هم ثبت می‌شود؛ با پریمیوم، می‌توانید آن‌ها را در پوشه‌های دلخواهِ خودتان دسته‌بندی کنید.',
       cta: el('a', { class: 'dcp-btn dcp-btn-primary', href: '/plus/' }, 'رفتن به پیشخوان'),
     }));
     return;
   }
-  openOverlay(pickerCard({ highlight_id: highlightId, content_id: contentId }));
+  openSheet(pickerCard({ highlight_id: highlightId, content_id: contentId }));
 }
 
-function itemRow(item, onRemove) {
+// --- masonry "pin" (one saved item inside a board) --------------------------
+function pinCard(item, onRemove) {
   const kindLabel = FOLDER_EN[item.type] || item.type;
-  const removeBtn = el('button', { class: 'dcp-cl-item-del', type: 'button', 'aria-label': 'حذف از کالکشن', title: 'حذف' }, '×');
-  // A highlight-item's text shows exactly like it does in the article/review
-  // card (the same mark.dcp-hl[data-color]) - never flattened to plain text.
-  const body = item.exact
-    ? el('p', { class: 'dcp-cl-item-text' },
-        el('mark', { class: 'dcp-hl' + (item.underline ? ' dcp-underline' : ''), 'data-color': item.color || '' }, item.exact))
-    : el('p', { class: 'dcp-cl-item-text is-page' }, item.title);
+  const removeBtn = el('button', { class: 'dcp-cl-pin-del', type: 'button', 'aria-label': 'حذف از کالکشن', title: 'حذف' }, '×');
 
-  const row = el('div', { class: 'dcp-cl-item' }, [
-    el('a', { class: 'dcp-cl-item-link', href: item.url }, [
-      el('span', { class: 'dcp-cl-item-kind', dir: 'ltr' }, kindLabel),
-      body,
-    ]),
+  // A highlight-pin shows the SAME solid pastel the article's own mark.dcp-hl
+  // uses (never flattened to plain text); a page-pin gets its type color + icon.
+  const band = item.exact
+    ? el('div', { class: 'dcp-cl-pin-band' }, [
+        el('mark', { class: 'dcp-hl' + (item.underline ? ' dcp-underline' : ''), 'data-color': item.color || '' }, item.exact),
+      ])
+    : el('div', { class: 'dcp-cl-pin-band dcp-cl-pin-page', style: 'background:' + (TYPE_COVER_COLOR[item.type] || '#8aaac8') }, [
+        el('span', { class: 'dcp-cl-pin-ico' }, TYPE_ICON[item.type] || '📄'),
+        el('span', {}, item.title),
+      ]);
+
+  const pin = el('div', { class: 'dcp-cl-pin' }, [
     removeBtn,
+    el('a', { class: 'dcp-cl-pin-link', href: item.url }, [band, el('div', { class: 'dcp-cl-pin-foot' }, el('span', { dir: 'ltr' }, kindLabel))]),
   ]);
   removeBtn.addEventListener('click', async () => {
     removeBtn.disabled = true;
-    try { await onRemove(item.id); row.remove(); } catch (_) { removeBtn.disabled = false; }
+    try { await onRemove(item.id); pin.remove(); } catch (_) { removeBtn.disabled = false; }
   });
-  return row;
+  return pin;
 }
 
-/** GET /plus/collections.html — every collection the user made, with a quick "+ new". */
+/** GET /plus/collections.html — every collection as a Pinterest-style board grid. */
 export async function renderCollectionsList(container) {
   container.replaceChildren(el('div', { class: 'dcp-loading' }, 'در حال بارگذاری...'));
   const data = await api.listCollections().catch(() => null);
@@ -168,7 +219,7 @@ export async function renderCollectionsList(container) {
   const createBtn = el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button' }, '+ کالکشنِ جدید');
   const createRow = el('div', { class: 'dcp-cl-picknew' }, [titleInput, createBtn]);
 
-  const grid = el('div', { class: 'dcp-pw-grid' });
+  const grid = el('div', { class: 'dcp-cl-board-grid' });
 
   function renderGrid(collections) {
     if (!collections.length) {
@@ -178,9 +229,12 @@ export async function renderCollectionsList(container) {
       ]));
       return;
     }
-    grid.replaceChildren(...collections.map((c) => el('a', { class: 'dcp-pw-card', href: '/plus/collection.html?id=' + encodeURIComponent(c.id) }, [
-      el('div', { class: 'dcp-pw-card-top' }, [el('h3', { class: 'dcp-pw-card-title' }, c.title)]),
-      el('div', { class: 'dcp-pw-card-foot' }, [el('span', {}, faNum(c.item_count) + ' مورد')]),
+    grid.replaceChildren(...collections.map((c) => el('a', { class: 'dcp-cl-board', href: '/plus/collection.html?id=' + encodeURIComponent(c.id) }, [
+      boardCover(c.preview),
+      el('div', { class: 'dcp-cl-board-meta' }, [
+        el('p', { class: 'dcp-cl-board-title' }, c.title),
+        el('p', { class: 'dcp-cl-board-count' }, faNum(c.item_count) + ' مورد'),
+      ]),
     ])));
   }
   renderGrid(data.collections);
@@ -192,8 +246,6 @@ export async function renderCollectionsList(container) {
     try {
       const { collection } = await api.createCollection(title);
       titleInput.value = '';
-      const fresh = await api.listCollections();
-      renderGrid(fresh.collections);
       location.href = '/plus/collection.html?id=' + encodeURIComponent(collection.id);
     } finally { createBtn.disabled = false; }
   });
@@ -202,7 +254,7 @@ export async function renderCollectionsList(container) {
   container.replaceChildren(top, createRow, grid);
 }
 
-/** GET /plus/collection.html?id=... — one collection's items, rename/delete. */
+/** GET /plus/collection.html?id=... — one board's masonry pin grid, rename/delete. */
 export async function renderCollectionDetail(container, id) {
   container.replaceChildren(el('div', { class: 'dcp-loading' }, 'در حال بارگذاری...'));
   const data = await api.getCollection(id).catch(() => null);
@@ -265,13 +317,13 @@ export async function renderCollectionDetail(container, id) {
     el('div', { class: 'dcp-cl-detail-top' }, [titleWrap, actionsRow]),
   ]);
 
-  const list = el('div', { class: 'dcp-cl-items' });
+  const grid = el('div', { class: 'dcp-cl-pin-grid' });
   function renderItems() {
     if (!data.items.length) {
-      list.replaceChildren(el('div', { class: 'dcp-empty' }, 'این کالکشن هنوز خالیه؛ از میزکارِ یه مقاله یا هایلایت‌های اخیرِ داشبورد چیزی بهش اضافه کن.'));
+      grid.replaceChildren(el('div', { class: 'dcp-empty' }, 'این کالکشن هنوز خالیه؛ از میزکارِ یه مقاله یا هایلایت‌های اخیرِ داشبورد چیزی بهش اضافه کن.'));
       return;
     }
-    list.replaceChildren(...data.items.map((item) => itemRow(item, async (itemId) => {
+    grid.replaceChildren(...data.items.map((item) => pinCard(item, async (itemId) => {
       await api.removeCollectionItem(id, itemId);
       data.items = data.items.filter((i) => i.id !== itemId);
       if (!data.items.length) renderItems();
@@ -279,5 +331,5 @@ export async function renderCollectionDetail(container, id) {
   }
   renderItems();
 
-  container.replaceChildren(head, list);
+  container.replaceChildren(head, grid);
 }
