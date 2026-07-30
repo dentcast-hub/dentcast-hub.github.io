@@ -3459,9 +3459,9 @@ a.dc-list-card--pillar {
         </div>
         <ul class="dc-pulse-list">
           <li><strong>از این به بعد هر مطلب جدید در سایت به صورت اتوماتیک به کانال <a href="https://t.me/dentcast" target="_blank" rel="noopener">دنت‌کست در تلگرام</a> ارسال میشه</strong></li>
+          <li>یک <a href="/chairside/chairside-27.html">کیس Chairside</a> درباره‌ی تناقضِ توصیهٔ درمانیِ قبلی با اصولِ ادهزیو در ارزیابیِ نیازِ روکش منتشر شد · ۸ مرداد</li>
           <li>یک <a href="/insight/insight-59.html">اینسایت بالینی</a> درباره‌ی چرایی استفاده از زینک فسفات برای سمان‌کردن روکش منتشر شد · ۷ مرداد</li>
           <li>یک <a href="/chairside/chairside-26.html">کیس Chairside</a> درباره‌ی تعارضِ طرحِ درمانِ ساده‌تر با بیومکانیکِ بریج منتشر شد · ۶ مرداد</li>
-          <li>یک <a href="/insight/insight-58.html">اینسایت بالینی</a> درباره‌ی ضرورت تعویض روکش‌های قدیمی دندان‌های پایه در پروتز پارسیل منتشر شد · ۶ مرداد</li>
         </ul>
       </div>
 
@@ -4281,7 +4281,7 @@ scrollBody.addEventListener('touchend',e=>{
     if(p) p.textContent=title;
     a.href=url;
   }
-  fetch('/dentcast-brain.json?v=6b14072110',{cache:'no-store'}).then(function(r){return r.json();}).then(function(arr){
+  fetch('/dentcast-brain.json?v=955678d153',{cache:'no-store'}).then(function(r){return r.json();}).then(function(arr){
     if(!Array.isArray(arr)) return;
     var latest={}, pool=[];
     arr.forEach(function(e){
@@ -4613,7 +4613,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 <script>
 /* ── LAST 30 UPDATES ── */
 (function(){
-  const FEED_URL='/dentcast-brain.json?v=6b14072110';
+  const FEED_URL='/dentcast-brain.json?v=955678d153';
   const el=document.getElementById('dcLast3Updates');
   if(!el) return;
   function extractArray(json){if(Array.isArray(json))return json;const cands=[json?.items,json?.data,json?.entries,json?.feed].filter(Boolean);for(const c of cands)if(Array.isArray(c))return c;for(const k in(json||{})){const v=json[k];if(Array.isArray(v))return v;if(v&&typeof v==='object'&&Array.isArray(v.items))return v.items;}return[];}
@@ -4869,7 +4869,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 
   function getBrain(){
     if(brainCache) return Promise.resolve(brainCache);
-    return fetch('/dentcast-brain.json?v=6b14072110', {cache:'no-store'})
+    return fetch('/dentcast-brain.json?v=955678d153', {cache:'no-store'})
       .then(r => r.ok ? r.json() : [])
       .then(d => { brainCache = Array.isArray(d) ? d : []; return brainCache; })
       .catch(() => { brainCache = []; return []; });
