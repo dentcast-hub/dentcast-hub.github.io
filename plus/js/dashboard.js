@@ -219,7 +219,11 @@ export async function renderDashboard(root, { me: preMe } = {}) {
 
   // premium-only due block first (never for free)
   if (me.tier === 'premium') {
-    children.push(section('برای مرور امروز', null, reviewDueBlock(me)));
+    children.push(section(
+      'برای مرور امروز',
+      'این‌ها هایلایت‌های خودتانند که طبق زمان‌بندی لایتنر، امروز نوبت مرورشان رسیده؛ با زدن دکمه مرورشان می‌کنید.',
+      reviewDueBlock(me),
+    ));
   }
 
   children.push(

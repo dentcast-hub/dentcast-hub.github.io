@@ -70,7 +70,12 @@ async function request(path, { method = 'GET', body, query } = {}) {
   const base = await pickBase();
   let url = base + path;
   if (query) {
-    const qs = new URLSearchParams(query).toString();
+    // `new URLSearchParams({a: undefined})` stringifies to the literal text
+    // "a=undefined" (a real bug hit by reviewDue's optional `topic`) — drop
+    // null/undefined entries first so an omitted optional param is really omitted.
+    const clean = {};
+    for (const [k, v] of Object.entries(query)) if (v != null) clean[k] = v;
+    const qs = new URLSearchParams(clean).toString();
     if (qs) url += (url.includes('?') ? '&' : '?') + qs;
   }
   // `cache: 'no-store'` so the browser never serves a STALE API response. During
