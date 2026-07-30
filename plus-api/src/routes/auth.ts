@@ -13,6 +13,7 @@ import { sms } from '../providers/registry.js';
 import { loadUser } from '../middleware/auth.js';
 import { displayStreak } from '../services/streak.js';
 import { dayInTz } from '../services/time.js';
+import { getActivePathwaySummary } from '../services/active-pathway.js';
 import { recordPageView } from '../services/view-stats.js';
 
 // The exact fields the Telegram Login Widget sends. Only these participate in
@@ -466,7 +467,7 @@ export async function authRoutes(app: FastifyInstance): Promise<void> {
       // toggle state. Without this the reminder checkboxes always render empty
       // after a reload even though PATCH /me persisted them.
       settings: user.settings ?? {},
-      active_pathway: null, // Phase 3
+      active_pathway: await getActivePathwaySummary(user.id),
     };
     // due_card_count is premium-only and intentionally absent for free users.
     if (user.tier === 'premium') {

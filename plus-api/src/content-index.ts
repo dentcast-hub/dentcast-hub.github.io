@@ -49,6 +49,11 @@ export function getFolders(): Folder[] {
   return getIndex().folders || [];
 }
 
+/** Title/url/type for a content_id (pathway steps resolve display metadata through this), or null if unknown. */
+export function getContentInfo(contentId: string): ContentInfo | null {
+  return getIndex().byContent[contentId] || null;
+}
+
 /** The folder ("پادکست"، "نوت‌کست"، ...) a content_id belongs to. */
 export function folderOf(contentId: string): string {
   return contentId.split('/')[0];

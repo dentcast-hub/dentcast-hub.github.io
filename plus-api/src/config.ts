@@ -174,6 +174,10 @@ export const config = {
   // Path to the generated taxonomy index (tools/build_plus_index.mjs output).
   // Defaults to the repo's plus/ dir in dev; set explicitly in the container.
   contentIndexPath: process.env.CONTENT_INDEX_PATH || '',
+
+  // Path to plus/pathways.json (spec section 5 — versioned in the repo, no DB).
+  // Defaults to the repo's plus/ dir in dev; set explicitly in the container.
+  pathwaysPath: process.env.PATHWAYS_PATH || '',
 };
 
 export type Config = typeof config;
