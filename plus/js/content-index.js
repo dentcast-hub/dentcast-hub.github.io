@@ -21,6 +21,23 @@ export function contentInfo(model, contentId) {
   return (model.byContent && model.byContent[contentId]) || null;
 }
 
+// English brand names per content type/folder key (the index only carries the
+// Persian label). Shared by the dashboard's per-folder progress bars and the
+// learning-pathway step list, so the same type always reads the same way.
+// Falls back to the folder key itself so a new folder still renders something.
+export const FOLDER_EN = {
+  episodes: 'Podcast',
+  notecast: 'NoteCast',
+  insight: 'Clinical Insight',
+  dentai: 'DentAI',
+  chairside: 'Chairside',
+  metanotes: 'MetaNote',
+  glossary: 'Glossary',
+  sharehub: 'ShareHub',
+  photocast: 'PhotoCast',
+  'dentcast-plus': 'DentCast+',
+};
+
 // Detect the folder-landing topic key for the current path, or null. The card
 // archive / flashcards live on each real folder landing page (/notecast/,
 // /dentai/, ...), scoped to exactly that folder's content (prototype feedback).

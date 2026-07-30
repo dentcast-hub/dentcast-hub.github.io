@@ -109,6 +109,12 @@ a.dcp-progress-name:hover { color: var(--ac, #0b5fff); text-decoration: underlin
 .dcp-recent-del:hover { color: #c0392b; border-color: #c0392b; }
 .dcp-recent-confirm { flex: 1 1 100%; display: flex; align-items: center; gap: 8px; color: var(--txt2, #4a5f85); }
 
+/* ---- pathway (dashboard "مسیر یادگیری" block) ----------------------------- */
+.dcp-pw-dash { display: flex; flex-direction: column; gap: 10px; }
+.dcp-pw-dash-title { font-weight: 700; color: var(--txt) !important; }
+.dcp-pw-dash-foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; font-size: .85rem; color: var(--txt2, #4a5f85); }
+.dcp-pw-alllink { color: var(--ac, #0b5fff) !important; font-weight: 600; white-space: nowrap; }
+
 /* ---- premium tiles ------------------------------------------------------- */
 .dcp-tile-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
 .dcp-tile { position: relative; background: var(--surface2, #f4f6fb); border: 1px solid var(--border, rgba(2,35,96,.08)); border-radius: var(--r-md, 14px); padding: 14px 12px; display: flex; flex-direction: column; gap: 4px; }

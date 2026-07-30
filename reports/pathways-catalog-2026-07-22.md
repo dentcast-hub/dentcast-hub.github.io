@@ -125,7 +125,12 @@ pathway multi-membership.
    never advanced by a client call — it's derived from highlights/
    `user_activity` and lazily cached on `user_pathways` on every read, the same
    way the streak caches work.
-3. Frontend pathway page + rule-based "ادامه بده" widget.
+3. ~~Frontend pathway page~~ — **done**: `/plus/pathways.html` (catalog) +
+   `/plus/pathway.html?id=` (step list, resolved to title/url/type, current-step
+   marker, enroll button) + a "مسیر یادگیری" block on the `/plus/` dashboard
+   (active pathway, progress bar, link). The rule-based "ادامه بده" widget
+   itself (a cross-pathway/cross-feature continue-suggestion surface) is still
+   open.
 4. Audio-completion signal in the player (episodes) before recommending "بشنو".
 5. AI recommendation layer (Phase 5) — candidates-from-rules, pick+justify by
    the model — after the rule-based loop proves itself.
