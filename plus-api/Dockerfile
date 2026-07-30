@@ -2,7 +2,8 @@
 #
 # IMPORTANT: build with the REPO ROOT as the context (not plus-api/), because the
 # image must include plus/content-index.json — the API reads it for the dashboard
-# navigation tree and topic rollups. Build command, run from the repo root:
+# navigation tree and topic rollups — and plus/pathways.json, for the learning
+# pathways. Build command, run from the repo root:
 #
 #     docker build -f plus-api/Dockerfile -t dentcast-plus-api .
 #
@@ -22,8 +23,9 @@ RUN npm run build
 # ---- runtime stage ---------------------------------------------------------
 FROM node:20-alpine AS runtime
 ENV NODE_ENV=production
-# The content index is baked in at /app/content-index.json (see COPY below).
+# The content index and pathway definitions are baked in (see COPY below).
 ENV CONTENT_INDEX_PATH=/app/content-index.json
+ENV PATHWAYS_PATH=/app/pathways.json
 WORKDIR /app
 
 # Prod dependencies only.
@@ -35,6 +37,7 @@ RUN npm ci --omit=dev && npm cache clean --force
 COPY --from=build /app/dist ./dist
 COPY plus-api/migrations ./migrations
 COPY plus/content-index.json ./content-index.json
+COPY plus/pathways.json ./pathways.json
 
 # Don't run as root.
 USER node

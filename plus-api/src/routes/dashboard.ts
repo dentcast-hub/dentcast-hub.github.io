@@ -4,6 +4,7 @@ import { pool } from '../db.js';
 import { buildFolderTree, getFolders, folderOf } from '../content-index.js';
 import { config } from '../config.js';
 import { QUALIFYING_ACTIONS, streakIsAlive, displayStreak } from '../services/streak.js';
+import { getConsumedContentIds } from '../services/consumption.js';
 import {
   computeScore, freezesUsedCount, freezesAvailable, pointsToNextFreeze,
   SHIELD_BASE, SHIELD_STEP, shieldCost, shieldsGranted, SCORING_ACTIONS,
@@ -134,19 +135,10 @@ export async function dashboardRoutes(app: FastifyInstance): Promise<void> {
     // Progress bar = consumed / folder total, both sides deriving from the same
     // content index the dashboard tree uses; totals reflect currently published
     // content, so new items lower a folder's percent until consumed.
-    const readRows = await pool.query<{ content_id: string }>(
-      `select distinct content_id from (
-         select content_id from highlights where user_id = $1
-         union
-         select content_id from user_activity
-          where user_id = $1 and action in ('article_completed','episode_listened')
-            and content_id is not null
-       ) t`,
-      [userId],
-    );
+    const consumed = await getConsumedContentIds(userId);
     const readByFolder = new Map<string, number>();
-    for (const r of readRows.rows) {
-      const f = folderOf(r.content_id);
+    for (const contentId of consumed) {
+      const f = folderOf(contentId);
       readByFolder.set(f, (readByFolder.get(f) || 0) + 1);
     }
     const folder_progress = getFolders().map((f) => ({

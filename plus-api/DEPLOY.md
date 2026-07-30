@@ -70,7 +70,8 @@ Migrations run automatically on container start (the image's entrypoint runs
 ## 4. Deploy the API container
 
 The image is defined in `plus-api/Dockerfile`. **Build context = repo root**
-(the image bakes in `plus/content-index.json` for the dashboard tree):
+(the image bakes in `plus/content-index.json` for the dashboard tree and
+`plus/pathways.json` for the learning pathways):
 
 ```bash
 # from the repo root:
@@ -108,10 +109,12 @@ variables** on the container:
 | `ADMIN_PASSWORD` | (a strong secret) |
 | `STREAK_TIMEZONE` | `Asia/Tehran` |
 | `CONTENT_INDEX_PATH` | leave unset — baked into the image at `/app/content-index.json` |
+| `PATHWAYS_PATH` | leave unset — baked into the image at `/app/pathways.json` |
 
-> `CONTENT_INDEX_PATH` is already defaulted by the Dockerfile. It is baked in at
-> build time, so **rebuild/redeploy the API image whenever new content ships**
-> if you want the dashboard tree to include the newest articles.
+> `CONTENT_INDEX_PATH` and `PATHWAYS_PATH` are already defaulted by the
+> Dockerfile. Both are baked in at build time, so **rebuild/redeploy the API
+> image whenever new content ships or a pathway is edited** if you want the
+> dashboard tree / pathway pages to reflect the change.
 
 ---
 

@@ -119,9 +119,12 @@ pathway multi-membership.
 ## Still pending (unchanged from Phase 3 plan)
 
 1. Founder curation pass on ordering/trimming per pathway.
-2. `plus-api`: pathway endpoints behind `requirePremium` (`GET /pathways`,
-   enroll, advance `current_step`; table `user_pathways` exists) + pathway
-   summary in `GET /me`.
+2. ~~`plus-api`: pathway endpoints behind `requirePremium`~~ — **done**:
+   `GET /pathways`, `GET /pathways/:id`, `POST /pathways/:id/enroll` (all
+   behind `requirePremium`) + `active_pathway` in `GET /me`. `current_step` is
+   never advanced by a client call — it's derived from highlights/
+   `user_activity` and lazily cached on `user_pathways` on every read, the same
+   way the streak caches work.
 3. Frontend pathway page + rule-based "ادامه بده" widget.
 4. Audio-completion signal in the player (episodes) before recommending "بشنو".
 5. AI recommendation layer (Phase 5) — candidates-from-rules, pick+justify by
