@@ -1,4 +1,5 @@
 import { describe, it, expect, beforeEach, afterAll } from 'vitest';
+import { readFile } from 'node:fs/promises';
 import type { FastifyInstance } from 'fastify';
 import { makeApp, resetDb, loginAs } from './helpers.js';
 import { pool } from '../src/db.js';
@@ -52,6 +53,25 @@ describe('spot telemetry — guest path', () => {
     await anonSpot('spot_impression', 'article:sponsor-x');
     const rows = await pool.query('select count(*)::int as n from spot_stats');
     expect(rows.rows[0].n).toBe(3);
+  });
+
+  // The regression this guards is invisible from the outside: `pillar` and
+  // `episode` were added to spot-config.json on 2026-07-28 but not to
+  // SPOT_SLOTS, so both slots rendered, were seen, and had every event
+  // rejected 400 — reported for two days as zero demand rather than as a
+  // dropped pipeline. A closed vocabulary has to be widened on both sides.
+  it('accepts every slot spot-config.json enables', async () => {
+    const cfg = JSON.parse(
+      await readFile(new URL('../../spot/spot-config.json', import.meta.url), 'utf8'),
+    ) as { slots: Record<string, { enabled: boolean }> };
+    const configured = Object.keys(cfg.slots);
+    expect(configured.length).toBeGreaterThan(0);
+    for (const slot of configured) {
+      const res = await anonSpot('spot_impression', `${slot}:premium`);
+      expect(res.statusCode, `slot "${slot}" is in spot-config.json but not in SPOT_SLOTS`).toBe(204);
+    }
+    const rows = await pool.query('select count(distinct slot)::int as n from spot_stats');
+    expect(rows.rows[0].n).toBe(configured.length);
   });
 
   it('rejects an unknown slot and a malformed content_id', async () => {
