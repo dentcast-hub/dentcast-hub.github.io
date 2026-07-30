@@ -5,6 +5,7 @@ import { el, faNum, debounce, signalStreakActivity, renderNoteLines } from './ut
 import { api } from './api.js';
 import { PALETTE, LABELS, SS_MODE } from './config.js';
 import { serializeRange, anchorQuote, wrapRange, unwrapMarks, fullText, hashText } from './anchor.js';
+import { openCollectionPicker } from './collections.js';
 
 export class Workbench {
   constructor({ contentId, proseRoot }) {
@@ -97,6 +98,7 @@ export class Workbench {
       }, l.fa));
 
     const notesToggle = el('button', { class: 'dcp-tool', type: 'button', title: 'یادداشت روی هایلایت انتخاب‌شده', onclick: () => this._noteButton() }, '📝 یادداشت');
+    const collectionBtn = el('button', { class: 'dcp-tool', type: 'button', title: 'افزودنِ هایلایتِ انتخاب‌شده (یا کلِ این صفحه) به یک کالکشن', onclick: () => this._collectionButton() }, '🗂 کالکشن');
     const exitBtn = el('button', { class: 'dcp-tool dcp-exit', type: 'button', onclick: () => this.exit() }, '✕ خروج');
 
     const group = (label, items) => el('span', { class: 'dcp-tool-group' }, [
@@ -109,7 +111,7 @@ export class Workbench {
       group('رنگ هایلایت', swatches),
       group('ابزار', [highlightBtn, underlineBtn, clozeBtn]),
       group('برچسب', labelChips),
-      el('span', { class: 'dcp-tool-group' }, [notesToggle]),
+      el('span', { class: 'dcp-tool-group' }, [notesToggle, collectionBtn]),
       exitBtn,
     ]);
     document.body.appendChild(bar);
@@ -464,6 +466,19 @@ export class Workbench {
       return;
     }
     this._openArticleNote();
+  }
+
+  // --- collection button ------------------------------------------------------
+  // Same dual-target resolution as the note button: sends the currently
+  // SELECTED highlight to a collection if one is active, otherwise falls back
+  // to the whole page ("save this whole article/episode for later").
+  _collectionButton() {
+    const item = this._currentHl != null ? this.items.get(this._currentHl) : null;
+    if (item && item.data) {
+      openCollectionPicker({ highlightId: item.data.id });
+      return;
+    }
+    openCollectionPicker({ contentId: this.contentId });
   }
 
   // A plain note field for the selected highlight — JUST the note (no colour /

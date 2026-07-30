@@ -586,6 +586,42 @@ a.dcp-pw-card {
 .dcp-pw-step.is-current .dcp-pw-step-marker { background: var(--dcp-accent); border-color: var(--dcp-accent); color: #fff; }
 .dcp-pw-steps .dcp-pw-step:last-child { border-bottom: none; }
 
+/* ---- collections (Phase 3), /plus/collections.html + /plus/collection.html +
+   the "افزودن به کالکشن" picker (workbench button, dashboard recent-highlight
+   rows). Entirely user-made — no founder curation, no taxonomy coupling.
+   The catalog reuses .dcp-pw-top/.dcp-pw-heading/.dcp-pw-grid/.dcp-pw-card
+   from the pathways module above; only what's specific to collections lives
+   here. */
+.dcp-cl-picknew { display: flex; gap: 8px; margin: 14px 0; }
+.dcp-cl-picknew .dcp-input { flex: 1 1 auto; }
+
+.dcp-cl-detail-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; flex-wrap: wrap; margin-bottom: 10px; }
+.dcp-cl-title-wrap { flex: 1 1 260px; min-width: 0; }
+.dcp-cl-detail-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+
+.dcp-cl-items { display: flex; flex-direction: column; gap: 10px; margin-top: 14px; }
+.dcp-cl-item { display: flex; align-items: flex-start; gap: 10px; background: var(--dcp-surface); border: 1px solid var(--dcp-line); border-radius: var(--dcp-radius); padding: 12px 14px; box-shadow: var(--dcp-shadow); }
+.dcp-cl-item-link { flex: 1 1 auto; min-width: 0; color: inherit; text-decoration: none; display: flex; flex-direction: column; gap: 4px; }
+.dcp-cl-item-kind { font-size: .72rem; font-weight: 700; color: var(--dcp-muted); letter-spacing: .02em; }
+.dcp-cl-item-text { margin: 0; line-height: 1.9; color: var(--dcp-ink); }
+.dcp-cl-item-text.is-page { font-weight: 700; }
+.dcp-cl-item-link:hover .dcp-cl-item-text { color: var(--dcp-accent); }
+.dcp-cl-item-del { flex: none; width: 26px; height: 26px; line-height: 22px; text-align: center; font-size: 1.2rem; border-radius: 50%; border: 1px solid var(--dcp-line); background: var(--dcp-surface); color: var(--dcp-muted); cursor: pointer; }
+.dcp-cl-item-del:hover { color: #c0392b; border-color: #c0392b; }
+
+/* the "افزودن به کالکشن" picker modal (opened via collections.js's
+   openCollectionPicker over the shared .dcp-modal-overlay/.dcp-modal-card) */
+.dcp-cl-picklist { display: flex; flex-direction: column; gap: 6px; max-height: 40vh; overflow: auto; margin: 4px 0 12px; }
+.dcp-cl-pick-empty { margin: 4px 0 10px; color: var(--dcp-muted); font-size: .9rem; }
+.dcp-cl-pick-row {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  font: inherit; text-align: start; padding: 10px 12px; border-radius: var(--dcp-radius);
+  border: 1px solid var(--dcp-line); background: var(--dcp-surface); color: var(--dcp-ink); cursor: pointer;
+}
+.dcp-cl-pick-row:hover { border-color: var(--dcp-accent); }
+.dcp-cl-pick-row.is-added { border-color: #22a06b; color: #22a06b; }
+.dcp-cl-pick-count { font-size: .78rem; color: var(--dcp-muted); white-space: nowrap; }
+
 /* folder-landing flashcard section (collapsible, at the top of the page) */
 .dcp-flash-section { margin: 14px 0; border: 1px solid var(--dcp-line); border-radius: var(--dcp-radius); background: var(--dcp-surface); overflow: hidden; }
 .dcp-flash-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 12px 16px; cursor: pointer; font-weight: 700; }
