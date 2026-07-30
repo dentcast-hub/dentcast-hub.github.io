@@ -164,9 +164,12 @@ async function recentBlock(model) {
   return list;
 }
 
-function premiumTiles() {
+// "مرور فلش‌کارت زمان‌بندی‌شده" (tile 0) is live for premium users (Phase 2) —
+// drop it from their locked grid; free users still see it locked like the rest.
+function premiumTiles(tier) {
+  const tiles = tier === 'premium' ? PREMIUM_TILES.slice(1) : PREMIUM_TILES;
   const grid = el('div', { class: 'dcp-tile-grid' });
-  for (const t of PREMIUM_TILES) {
+  for (const t of tiles) {
     grid.appendChild(el('div', { class: 'dcp-tile' }, [
       el('span', { class: 'dcp-tile-lock', 'aria-hidden': 'true' }, '🔒'),
       el('span', { class: 'dcp-tile-name' }, t),
@@ -174,6 +177,21 @@ function premiumTiles() {
     ]));
   }
   return grid;
+}
+
+// Premium "برای مرور امروز" block: a real link + count once there's something
+// due, a calm nudge back toward highlighting when the deck is empty (never a
+// bare zero — matches the review page's own empty state).
+function reviewDueBlock(me) {
+  const count = me.due_card_count || 0;
+  if (count > 0) {
+    return el('a', { class: 'dcp-btn dcp-btn-primary', href: '/plus/cards.html' },
+      faNum(count) + ' کارت برای مرور');
+  }
+  return el('div', { class: 'dcp-muted' }, [
+    'امروز چیزی برای مرور نداری. ',
+    el('a', { href: '/plus/cards.html' }, 'هایلایت کردن رو شروع کن'),
+  ]);
 }
 
 export async function renderDashboard(root, { me: preMe } = {}) {
@@ -201,7 +219,7 @@ export async function renderDashboard(root, { me: preMe } = {}) {
 
   // premium-only due block first (never for free)
   if (me.tier === 'premium') {
-    children.push(section('برای مرور امروز', null, el('div', { class: 'dcp-muted' }, 'موتور زمان‌بندی در فاز بعد فعال می‌شود.')));
+    children.push(section('برای مرور امروز', null, reviewDueBlock(me)));
   }
 
   children.push(
@@ -214,7 +232,7 @@ export async function renderDashboard(root, { me: preMe } = {}) {
     // API — never describe one as feeding the other, and never as a balance.
     section('امتیاز شما', 'امتیاز با فعالیت شما بالا می‌رود، همیشه می‌ماند و کم نمی‌شود؛ با آن سپر می‌گیرید. لیگ هفتگی جداست و روی XP همان هفته حساب می‌شود.', scoreBlock(progress)),
     section('هایلایت‌های اخیر', null, recentWrap),
-    section('پریمیوم', 'به‌زودی در دسترس.', premiumTiles()),
+    section('پریمیوم', 'به‌زودی در دسترس.', premiumTiles(me.tier)),
   );
 
   root.replaceChildren(...children.filter(Boolean));

@@ -13,8 +13,10 @@ const colorCss = (k) => (PALETTE.find((p) => p.key === k) || {}).css || 'transpa
 const SENT_DELIM = /[.!?؟۔\n]/;
 
 // Expand a highlight to the sentence around it; the highlighted piece is the
-// cloze target. Uses the stored prefix/suffix context (best-effort).
-function flashcard(h) {
+// cloze target. Uses the stored prefix/suffix context (best-effort). Exported
+// so the premium review view (review.js) can reuse the same card rendering
+// instead of duplicating it.
+export function flashcard(h) {
   const prefix = h.prefix || '';
   const exact = h.exact || '';
   const suffix = h.suffix || '';
@@ -32,7 +34,7 @@ function flashcard(h) {
   return { sentence: ctx.slice(sStart, sEnd), clozeStart: start - sStart, clozeEnd: end - sStart };
 }
 
-function renderCardText(h) {
+export function renderCardText(h) {
   const { sentence, clozeStart, clozeEnd } = flashcard(h);
   const wrap = el('div', { class: 'dcp-card-text' });
   wrap.appendChild(document.createTextNode(sentence.slice(0, clozeStart)));
@@ -44,7 +46,7 @@ function renderCardText(h) {
   return wrap;
 }
 
-function sourceHref(info, exact) {
+export function sourceHref(info, exact) {
   if (!info) return null;
   return info.url + '#:~:text=' + encodeURIComponent(exact.slice(0, 120));
 }

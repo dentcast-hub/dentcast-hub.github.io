@@ -10,6 +10,7 @@ import { anonRoutes } from './routes/anon.js';
 import { activityRoutes } from './routes/activity.js';
 import { highlightRoutes } from './routes/highlights.js';
 import { articleNoteRoutes } from './routes/article-note.js';
+import { reviewRoutes } from './routes/review.js';
 import { dashboardRoutes } from './routes/dashboard.js';
 import { adminRoutes } from './routes/admin.js';
 import { pushRoutes } from './routes/push.js';
@@ -64,6 +65,7 @@ export async function buildServer(): Promise<FastifyInstance> {
   await app.register(activityRoutes);
   await app.register(highlightRoutes);
   await app.register(articleNoteRoutes);
+  await app.register(reviewRoutes);
   await app.register(dashboardRoutes);
   await app.register(adminRoutes);
   await app.register(pushRoutes);
