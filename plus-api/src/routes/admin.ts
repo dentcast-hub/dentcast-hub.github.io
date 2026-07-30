@@ -340,4 +340,32 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
       telegram_linked: row.telegram_id != null,
     });
   });
+
+  // POST /admin/users/set-tier { phone, tier } - manual premium/free override
+  // (no payment gateway yet; Phase 4). Founder-only testing/grandfathering tool,
+  // same shape as /admin/league/set-tier but for the premium tier field.
+  app.post('/admin/users/set-tier', {
+    schema: {
+      body: {
+        type: 'object',
+        required: ['phone', 'tier'],
+        properties: {
+          phone: { type: 'string' },
+          tier: { type: 'string', enum: ['free', 'premium'] },
+        },
+      },
+    },
+  }, async (request, reply) => {
+    const { phone: rawPhone, tier } = request.body as { phone: string; tier: 'free' | 'premium' };
+    const phone = normalizePhone(rawPhone);
+    if (!phone) return reply.code(400).send({ error: 'invalid_phone' });
+
+    const row = await one<{ id: string }>(
+      'update profiles set tier = $2 where phone = $1 returning id',
+      [phone, tier],
+    );
+    if (!row) return reply.code(404).send({ error: 'no_profile', message: 'این شماره هنوز ثبت‌نام نکرده.' });
+
+    return reply.send({ ok: true, user_id: row.id, phone, tier });
+  });
 }
