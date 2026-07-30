@@ -476,6 +476,39 @@ body.dcp-study { padding-bottom: 90px; }
 .dcp-blank { font: inherit; background: var(--dcp-chip-bg); border: 1px dashed var(--dcp-accent); color: var(--dcp-accent); border-radius: 6px; padding: 0 10px; cursor: pointer; letter-spacing: .12em; }
 .dcp-blank.is-open { background: transparent; border-style: solid; color: inherit; cursor: default; letter-spacing: normal; }
 
+/* ---- premium review (Leitner), /plus/cards.html ---------------------------
+   Highlights show IN FULL, marked exactly like they are in the article
+   (mark.dcp-hl above) — never cloze-hidden; that treatment is reserved for a
+   later, visually distinct card source (AI-authored key points). */
+.dcp-rv-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 16px; }
+.dcp-rv-title { font-size: 1.3rem; font-weight: 800; margin: 0; }
+.dcp-rv-count { flex: 0 0 auto; font-size: .84rem; font-weight: 700; color: var(--dcp-accent); background: var(--dcp-chip-bg); padding: 5px 13px; border-radius: 999px; }
+.dcp-rv-list { display: flex; flex-direction: column; gap: 14px; }
+.dcp-rv-card { background: var(--dcp-surface); border: 1px solid var(--dcp-line); border-radius: 20px; padding: 18px 20px; box-shadow: var(--dcp-shadow); transition: opacity .25s ease; }
+.dcp-rv-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
+.dcp-rv-badge { display: inline-flex; align-items: center; gap: 7px; font-size: .78rem; font-weight: 700; color: var(--dcp-muted); }
+.dcp-rv-badge-dot { width: 10px; height: 10px; border-radius: 50%; background: #ffe08a; box-shadow: 0 0 0 3px color-mix(in srgb, currentColor 16%, transparent); }
+.dcp-rv-badge-dot[data-color="yellow"] { background: #ffe08a; }
+.dcp-rv-badge-dot[data-color="green"]  { background: #b7e4b0; }
+.dcp-rv-badge-dot[data-color="blue"]   { background: #a9d3f5; }
+.dcp-rv-badge-dot[data-color="pink"]   { background: #f6b8cf; }
+.dcp-rv-badge-dot[data-color="red"]    { background: #ff8080; }
+.dcp-rv-label { font-size: .74rem; font-weight: 700; padding: 3px 11px; border-radius: 999px; background: var(--dcp-chip-bg); color: var(--dcp-accent); }
+.dcp-rv-text { margin: 0; font-size: 1.08rem; line-height: 2.3; color: var(--dcp-ink); }
+.dcp-rv-src { display: inline-block; margin-top: 10px; font-size: .84rem; color: var(--dcp-muted) !important; text-decoration: none; }
+.dcp-rv-src:hover { color: var(--dcp-accent) !important; }
+.dcp-rv-note { margin-top: 12px; padding: 10px 14px; background: var(--dcp-surface-2); border-radius: 12px; font-size: .92rem; color: var(--dcp-muted); white-space: pre-wrap; }
+.dcp-rv-actions { display: flex; gap: 10px; margin-top: 16px; }
+.dcp-rv-btn { flex: 1; font: inherit; font-weight: 700; padding: 13px 10px; border-radius: 14px; cursor: pointer; border: 1px solid transparent; transition: transform .15s ease, opacity .15s ease; }
+.dcp-rv-btn:active { transform: scale(.97); }
+.dcp-rv-btn:disabled { opacity: .55; cursor: default; transform: none; }
+.dcp-rv-btn-again { background: var(--dcp-surface-2); color: var(--dcp-ink); border-color: var(--dcp-line); }
+.dcp-rv-btn-good { background: linear-gradient(180deg, color-mix(in srgb, #22a06b 85%, #fff), #22a06b); color: #fff; box-shadow: 0 6px 18px rgba(34, 160, 107, .3); }
+.dcp-rv-graded-tag { display: none; margin-top: 14px; font-size: .86rem; font-weight: 700; color: #22a06b; }
+.dcp-rv-card.is-graded { opacity: .55; }
+.dcp-rv-card.is-graded .dcp-rv-actions { display: none; }
+.dcp-rv-card.is-graded .dcp-rv-graded-tag { display: block; }
+
 /* folder-landing flashcard section (collapsible, at the top of the page) */
 .dcp-flash-section { margin: 14px 0; border: 1px solid var(--dcp-line); border-radius: var(--dcp-radius); background: var(--dcp-surface); overflow: hidden; }
 .dcp-flash-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 12px 16px; cursor: pointer; font-weight: 700; }
