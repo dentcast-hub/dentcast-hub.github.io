@@ -98,7 +98,7 @@ export async function renderArchive(container, topicKey, { inline = false } = {}
     // Delete (×): removes the flashcard (i.e. the underlying highlight) after a
     // small inline confirm, so an accidental tap does not destroy data.
     const delBtn = el('button', { class: 'dcp-card-del', type: 'button', 'aria-label': 'حذف فلش‌کارت', title: 'حذف' }, '×');
-    const card = el('div', { class: 'dcp-card' }, [delBtn, meta, renderCardText(h), h.note ? el('div', { class: 'dcp-card-note' }, h.note) : null, actions]);
+    const card = el('div', { class: 'dcp-card' }, [delBtn, meta, renderCardText(h), h.note ? el('div', { class: 'dcp-card-note' }, [el('b', {}, 'یادداشت شما: '), h.note]) : null, actions]);
 
     reviewBtn.addEventListener('click', async () => {
       reviewBtn.disabled = true;
