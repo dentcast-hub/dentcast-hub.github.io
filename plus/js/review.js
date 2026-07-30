@@ -46,7 +46,10 @@ function renderCard(h, model) {
     h.label ? el('span', { class: 'dcp-rv-label' }, labelFa(h.label)) : null,
   ]);
   const href = sourceHref(info, h.exact);
-  const src = info ? el('a', { class: 'dcp-rv-src', href, target: '_top' }, info.title) : null;
+  const src = info ? el('div', { class: 'dcp-rv-src' }, [
+    'منبع: ',
+    el('a', { href, target: '_top' }, info.title),
+  ]) : null;
 
   const forgotBtn = el('button', { class: 'dcp-rv-btn dcp-rv-btn-again', type: 'button' }, 'دوباره مرورش کن');
   const gotItBtn = el('button', { class: 'dcp-rv-btn dcp-rv-btn-good', type: 'button' }, 'بلد بودم');
