@@ -11,6 +11,14 @@ body.dcp-page {
   line-height: 1.85;
 }
 body.dcp-page a { color: var(--ac, #0b5fff); text-decoration: none; }
+/* The rule above wins over .dcp-btn-primary/.dcp-btn-danger's own `color: #fff`
+   on any <a> (element+class beats a single class), so a link styled as a
+   filled accent button rendered with accent-blue text on an accent-blue
+   background — invisible (2026-07-30, /plus/'s "کارت برای مرور" button). These
+   need the extra specificity to actually win. */
+body.dcp-page a.dcp-btn { color: var(--txt, #0a1a33); }
+body.dcp-page a.dcp-btn-primary,
+body.dcp-page a.dcp-btn-danger { color: #fff; }
 
 .dcp-page-header {
   display: flex; align-items: center; justify-content: space-between;

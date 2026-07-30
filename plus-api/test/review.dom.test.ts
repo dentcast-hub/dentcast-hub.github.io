@@ -93,6 +93,17 @@ describe('premium review view', () => {
     expect(noteEl!.textContent).toContain('Fggvffggf');
   });
 
+  it('renders a multi-line note as a real bulleted list, not run-together text', async () => {
+    dueResponse = [{ ...dueCard, note: 'خط اول\nخط دوم\nخط سوم' }];
+    const root = document.getElementById('root')!;
+    await renderReview(root);
+
+    const items = root.querySelectorAll('.dcp-rv-note .dcp-note-list li');
+    expect(items).toHaveLength(3);
+    expect(items[0].textContent).toBe('خط اول');
+    expect(items[2].textContent).toBe('خط سوم');
+  });
+
   it('omits the note box entirely when the highlight has no note', async () => {
     dueResponse = [dueCard]; // note: null
     const root = document.getElementById('root')!;

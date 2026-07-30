@@ -5,7 +5,7 @@
 // something you can't even read. Hiding stays reserved for a later, separate
 // card source — AI-authored key points ("نکته هوش مصنوعی") — which will carry
 // its own distinct color/badge so the two are never visually confused.
-import { el, faNum, signalStreakActivity } from './util.js';
+import { el, faNum, signalStreakActivity, renderNoteLines } from './util.js';
 import { api } from './api.js';
 import { getModel, contentInfo } from './content-index.js';
 import { flashcard, sourceHref } from './archive.js';
@@ -64,7 +64,7 @@ function renderCard(h, model) {
     // whole-article note (article_notes). It only ever shows here when this
     // exact highlight has one saved; labeled so that's obvious at a glance
     // instead of reading as an unexplained box (founder feedback, 2026-07-30).
-    h.note ? el('div', { class: 'dcp-rv-note' }, [el('b', {}, 'یادداشت شما: '), h.note]) : null,
+    h.note ? el('div', { class: 'dcp-rv-note' }, [el('b', {}, 'یادداشت شما: '), renderNoteLines(h.note)]) : null,
     src,
     actions,
     gradedTag,
