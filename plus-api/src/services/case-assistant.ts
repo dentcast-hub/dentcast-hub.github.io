@@ -147,6 +147,47 @@ function tagMatchScore(tagFa: string, suggestedWords: Set<string>): number {
 }
 
 /**
+ * How rare is each word across the site's own tags — the ranking half of the
+ * fix for a generic word ("روکش" alone sits inside 40+ distinct single-
+ * article tags) drowning out a specific one ("زینک", "گیر"). A tag matched
+ * only via a word every third tag shares tells you almost nothing; matched
+ * via a word only one or two tags use tells you a lot. Classic smoothed IDF:
+ * log((N+1)/(df+1)) + 1, always positive, never zero even for a word in
+ * every tag.
+ *
+ * Cached against the exact `Tag[]` reference getTags() returns — that
+ * reference only changes when content-index.ts reloads the underlying file
+ * (a real redeploy, not per-request), so this recomputes once per deploy,
+ * not once per assistant round.
+ */
+let idfCacheKey: Tag[] | null = null;
+let idfCache: Map<string, number> | null = null;
+
+function wordIdf(): Map<string, number> {
+  const tags = getTags();
+  if (idfCacheKey === tags && idfCache) return idfCache;
+
+  const df = new Map<string, number>();
+  for (const t of tags) {
+    for (const w of new Set(words(t.fa))) df.set(w, (df.get(w) || 0) + 1);
+  }
+  const n = tags.length;
+  const idf = new Map<string, number>();
+  for (const [w, count] of df) idf.set(w, Math.log((n + 1) / (count + 1)) + 1);
+
+  idfCacheKey = tags;
+  idfCache = idf;
+  return idf;
+}
+
+/** Sum of a tag's own words' rarity — how specific/niche the tag reads,
+ * independent of whether (or how) it matched this round's suggestions. */
+function specificityWeight(tagFa: string): number {
+  const idf = wordIdf();
+  return words(tagFa).reduce((sum, w) => sum + (idf.get(w) ?? 1), 0);
+}
+
+/**
  * Greedily keep only tags that bring at least one NEW content_id not already
  * covered by a higher-ranked tag. Necessary because most site tags are
  * single-article (each article gets its own bespoke AI-proposed hashtags at
@@ -185,15 +226,17 @@ async function nextRootCatalog(description: string, history: NarrowHistoryEntry[
 
   const ranked = suggestedWords.size
     ? getTags()
-      .map((t) => ({ t, score: tagMatchScore(t.fa, suggestedWords), wordCount: words(t.fa).length }))
+      .map((t) => ({ t, score: tagMatchScore(t.fa, suggestedWords), specificity: specificityWeight(t.fa) }))
       .filter((x) => x.score >= TAG_MATCH_THRESHOLD)
       // A full match (score 1.0) is common to several tags at once — e.g. a
       // case about implant-crown cementation fully matches both the broad
       // "ایمپلنت" (85 articles) and the specific "زینک فسفات" (1 article).
-      // Break ties toward the MORE SPECIFIC tag (more words), then the
-      // NICHER one (fewer articles) — the opposite of popularity — so a
-      // precise niche match never gets buried under a broad, popular one.
-      .sort((a, b) => b.score - a.score || b.wordCount - a.wordCount || a.t.contentCount - b.t.contentCount)
+      // Break ties toward the MORE SPECIFIC tag (higher word-rarity, i.e.
+      // built from words few OTHER tags share — "زینک"/"فسفات" beat the
+      // single common word "ایمپلنت"), then the NICHER one (fewer articles)
+      // — the opposite of popularity — so a precise niche match never gets
+      // buried under a broad, popular one.
+      .sort((a, b) => b.score - a.score || b.specificity - a.specificity || a.t.contentCount - b.t.contentCount)
       .map((x) => x.t)
     : [];
 
