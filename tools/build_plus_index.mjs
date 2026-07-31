@@ -84,6 +84,26 @@ const clusterContent = new Map(clusterOrder.map((c) => [c, new Set()]));
 const subContent = new Map(); // `${cluster}::${sub}` -> Set
 const prettify = (s) => s.replace(/-/g, ' ');
 
+// Hashtag inverted index (the site's own #hashtags -> content_ids), keyed
+// case/underscore-insensitively. Powers case-assistant.ts's keyword-search
+// round: an AI-suggested phrase gets matched against these REAL tags instead
+// of only the fixed pillar tree, so content reachable solely through a
+// niche/singleton tag (most tags are used exactly once across the site) isn't
+// stuck behind picking the "right" pillar first. Every brain/glossary entry
+// is eligible; glossary terms currently carry no hashtags, so they simply
+// contribute nothing here.
+const tagsByKey = new Map(); // normalizedKey -> { fa, contentIds: Set }
+function addHashtags(e, contentId) {
+  for (const raw of e.hashtags || []) {
+    if (typeof raw !== 'string' || !raw.trim()) continue;
+    const fa = raw.replace(/^#/, '').replace(/_/g, ' ').trim();
+    if (!fa) continue;
+    const key = fa.toLowerCase();
+    if (!tagsByKey.has(key)) tagsByKey.set(key, { fa, contentIds: new Set() });
+    tagsByKey.get(key).contentIds.add(contentId);
+  }
+}
+
 for (const e of brain) {
   // The brain schema is inconsistent: most types carry the page URL in `page_url`,
   // but some (all of sharehub, most of notecast) use `url`. Read either so every
@@ -104,6 +124,7 @@ for (const e of brain) {
     url,
     secondary: (e.pillar && e.pillar.secondary) || [],
   };
+  addHashtags(e, contentId);
   // Pillar categories feed the Phase 3 map; only pillar-tagged content joins them.
   if (!primary || !clusterContent.has(primary)) continue;
   clusterContent.get(primary).add(contentId);
@@ -134,6 +155,7 @@ for (const e of glossaryTerms) {
     url,
     secondary: (e.pillar && e.pillar.secondary) || [],
   };
+  addHashtags(e, contentId);
   if (!primary || !clusterContent.has(primary)) continue;
   clusterContent.get(primary).add(contentId);
   if (subtopic) {
@@ -169,18 +191,27 @@ const clusters = clusterOrder.map((c) => {
 const folders = FOLDER_META.map(([key, fa, url]) => ({ key, fa, url, total: countArticles(key) }))
   .filter((f) => f.total > 0);
 
+// Most-referenced first, ties broken alphabetically — purely for readability
+// when eyeballing the file; case-assistant.ts scores every tag itself and
+// doesn't rely on this order.
+const tags = [...tagsByKey.entries()]
+  .map(([key, v]) => ({ key, fa: v.fa, contentCount: v.contentIds.size, contentIds: [...v.contentIds] }))
+  .sort((a, b) => b.contentCount - a.contentCount || a.fa.localeCompare(b.fa, 'fa'));
+
 const out = {
   version: 3,
   generatedFrom: 'pillar/*.html + folder file counts + dentcast-brain.json',
   clusterCount: clusters.length,
   folderCount: folders.length,
   contentCount: Object.keys(byContent).length,
+  tagCount: tags.length,
   folders,
   clusters,
+  tags,
   byContent,
 };
 
 writeFileSync(resolve(root, 'plus', 'content-index.json'), JSON.stringify(out, null, 0) + '\n');
-console.log(`Wrote plus/content-index.json: ${folders.length} folders, ${clusters.length} pillar categories, ${out.contentCount} content pages.`);
+console.log(`Wrote plus/content-index.json: ${folders.length} folders, ${clusters.length} pillar categories, ${tags.length} hashtags, ${out.contentCount} content pages.`);
 console.log('Folders (dashboard tree top level):');
 for (const f of folders) console.log(`  ${f.fa} (${f.key}) -> ${f.url} · ${f.total} مقاله`);

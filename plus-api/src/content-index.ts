@@ -14,7 +14,9 @@ interface Subtopic { key: string; fa: string; contentCount: number; contentIds: 
 interface Cluster { key: string; fa: string; contentCount: number; contentIds: string[]; subtopics: Subtopic[]; }
 interface Folder { key: string; fa: string; url: string; total: number; }
 interface ContentInfo { cluster: string | null; subtopic: string | null; type: string; title: string; url: string; secondary: string[]; }
-interface IndexFile { version: number; folders: Folder[]; clusters: Cluster[]; byContent: Record<string, ContentInfo>; }
+/** One real site #hashtag, with every content_id that carries it. */
+interface Tag { key: string; fa: string; contentCount: number; contentIds: string[]; }
+interface IndexFile { version: number; folders: Folder[]; clusters: Cluster[]; tags: Tag[]; byContent: Record<string, ContentInfo>; }
 
 let cached: IndexFile | null = null;
 let cachedMtimeMs = 0;
@@ -40,7 +42,7 @@ export function getIndex(): IndexFile {
     if (cached) return cached; // keep the last good copy on a transient read error
     // eslint-disable-next-line no-console
     console.warn(`[content-index] could not load ${path}; tree/topic will be empty`);
-    cached = { version: 0, folders: [], clusters: [], byContent: {} };
+    cached = { version: 0, folders: [], clusters: [], tags: [], byContent: {} };
   }
   return cached;
 }
@@ -52,6 +54,11 @@ export function getFolders(): Folder[] {
 /** Raw clusters (with contentIds/subtopics) — the taxonomy a recommender walks. */
 export function getClusters(): Cluster[] {
   return getIndex().clusters || [];
+}
+
+/** Every real site #hashtag, each with its own content_ids — the case-assistant's keyword-search catalog. */
+export function getTags(): Tag[] {
+  return getIndex().tags || [];
 }
 
 /** Title/url/type for a content_id (pathway steps resolve display metadata through this), or null if unknown. */

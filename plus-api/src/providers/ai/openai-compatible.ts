@@ -5,12 +5,24 @@ import type { AiProvider, NarrowRoundInput, NarrowRoundResult } from './types.js
 // The model is told the shape it must answer in; JSON mode (where the endpoint
 // supports it) makes that a hard guarantee instead of a request. Either way we
 // never trust the parse blindly — see the validation below.
-const SYSTEM_PROMPT = `تو یک دسته‌بند باریک‌بین برای سایت آموزش دندانپزشکی دنت‌کست هستی، نه یک دستیار بالینی. کاربر (یک دندان‌پزشک) وضعیت یک بیمار را با متن آزاد شرح می‌دهد. کارِ تو فقط این است: بین گزینه‌های داده‌شده (فهرست catalog) کدام‌ها به شرحِ او نزدیک‌ترند را برای یک سؤالِ چندگزینه‌ای انتخاب کنی، تا مرحله‌به‌مرحله موضوع را دقیق‌تر کنی و در نهایت به مقاله‌ی درستِ سایت برسی.
+const NARROW_SYSTEM_PROMPT = `تو یک دسته‌بند باریک‌بین برای سایت آموزش دندانپزشکی دنت‌کست هستی، نه یک دستیار بالینی. کاربر (یک دندان‌پزشک) وضعیت یک بیمار را با متن آزاد شرح می‌دهد. کارِ تو فقط این است: بین گزینه‌های داده‌شده (فهرست catalog) کدام‌ها به شرحِ او نزدیک‌ترند را برای یک سؤالِ چندگزینه‌ای انتخاب کنی، تا مرحله‌به‌مرحله موضوع را دقیق‌تر کنی و در نهایت به مقاله‌ی درستِ سایت برسی.
 قوانین سخت:
 - هرگز تشخیص، توصیه‌ی درمانی یا نظرِ بالینی نده. تو فقط مسیر را به محتوای منتشرشده‌ی خودِ سایت نشان می‌دهی.
 - گزینه‌هایی که برمی‌گردانی باید دقیقاً از میان کلیدهای catalog داده‌شده باشند؛ هرگز کلید یا موضوع تازه نساز.
 - اگر اطلاعات کافی برای رسیدن به یک دسته‌ی روشن داری، done را true برگردان.
 - فقط یک شیء JSON برگردان، دقیقاً به این شکل: {"done": false, "question": "...", "options": ["<یکی از کلیدهای catalog>", ...]} یا {"done": true}.`;
+
+// A separate, narrower prompt: this call never sees a catalog and never picks
+// anything — it only reads free text and proposes candidate topic phrases in
+// the site's own hashtag style. services/case-assistant.ts matches those
+// against the REAL site hashtags in code; the model itself has no way to
+// point at content that doesn't actually carry a matching tag.
+const KEYWORDS_SYSTEM_PROMPT = `تو یک استخراج‌کننده‌ی کلیدواژه برای سایت آموزش دندانپزشکی دنت‌کست هستی، نه یک دستیار بالینی. کاربر (یک دندان‌پزشک) وضعیت یک بیمار یا موضوع مورد نظرش را با متن آزاد شرح می‌دهد.
+کارِ تو فقط این است: از این متن، حداکثر ۸ عبارتِ کوتاهِ فارسیِ تخصصیِ دندان‌پزشکی (هرکدام ۱ تا ۳ کلمه) استخراج یا پیشنهاد کنی که احتمالاً به‌عنوان هشتگِ محتوای سایت به‌کار رفته باشند — دقیقاً در سبکِ هشتگ‌های خودِ سایت (مثل «زینک فسفات»، «سمان ایمپلنت»، «اکلوژن»).
+قوانین سخت:
+- هرگز تشخیص، توصیه‌ی درمانی یا نظرِ بالینی نده.
+- فقط عبارت‌های موضوعی/تخصصی بده، نه جمله؛ هیچ عبارتی را تکرار نکن.
+- فقط یک شیء JSON برگردان، دقیقاً به این شکل: {"keywords": ["...", "..."]}.`;
 
 interface ChatCompletionResponse {
   choices?: Array<{ message?: { content?: string } }>;
@@ -103,14 +115,16 @@ export class OpenAiCompatibleProvider implements AiProvider {
    * without the second, three 10s timeouts plus backoff would keep a user
    * staring at a spinner for half a minute. The budget is checked BEFORE
    * sleeping, so an attempt already in flight is always allowed to finish.
+   * Shared by narrowCase and suggestKeywords — both hit the same gateway with
+   * the same failure modes.
    */
-  async narrowCase(input: NarrowRoundInput): Promise<NarrowRoundResult> {
+  private async withRetry<T>(fn: () => Promise<T>): Promise<T> {
     const attempts = Math.max(1, config.ai.maxAttempts);
     const started = Date.now();
 
     for (let attempt = 1; ; attempt += 1) {
       try {
-        return await this.attempt(input);
+        return await fn();
       } catch (err) {
         const transient = err instanceof TransientAiError;
         const elapsed = Date.now() - started;
@@ -125,17 +139,19 @@ export class OpenAiCompatibleProvider implements AiProvider {
     }
   }
 
-  private async attempt({ description, history, catalog }: NarrowRoundInput): Promise<NarrowRoundResult> {
-    const allowed = new Map(catalog.map((c) => [c.key, c.label]));
-    const userPayload = JSON.stringify({ description, history, catalog });
+  /** One HTTP round trip: POST, unwrap, parse. Throws TransientAiError for
+   * anything worth retrying (see withRetry), a plain Error for a permanent
+   * failure (401/403/404). Never throws for a wrong JSON *shape* — that's the
+   * caller's job to validate, same as the pre-refactor code did. */
+  private async chatJson(systemPrompt: string, userContent: string): Promise<Record<string, unknown>> {
     const useJsonMode = jsonModeEnabled();
 
     const body: Record<string, unknown> = {
       model: config.ai.model,
       temperature: 0,
       messages: [
-        { role: 'system', content: SYSTEM_PROMPT },
-        { role: 'user', content: userPayload },
+        { role: 'system', content: systemPrompt },
+        { role: 'user', content: userContent },
       ],
     };
     if (useJsonMode) body.response_format = { type: 'json_object' };
@@ -172,10 +188,24 @@ export class OpenAiCompatibleProvider implements AiProvider {
     // A 200 with no usable content is the gateway hiccuping, not a bad request.
     if (!raw) throw new TransientAiError('[ai:openai-compatible] empty response');
 
-    const parsed = parseJson(raw) as { done?: boolean; question?: unknown; options?: unknown } | null;
+    const parsed = parseJson(raw);
     // Nothing JSON-shaped survived even the fence/brace fallbacks; a re-roll
     // usually fixes it.
     if (!parsed) throw new TransientAiError('[ai:openai-compatible] non-JSON response');
+
+    return parsed;
+  }
+
+  async narrowCase(input: NarrowRoundInput): Promise<NarrowRoundResult> {
+    return this.withRetry(() => this.narrowAttempt(input));
+  }
+
+  private async narrowAttempt({ description, history, catalog }: NarrowRoundInput): Promise<NarrowRoundResult> {
+    const allowed = new Map(catalog.map((c) => [c.key, c.label]));
+    const userPayload = JSON.stringify({ description, history, catalog });
+
+    const parsed = await this.chatJson(NARROW_SYSTEM_PROMPT, userPayload) as
+      { done?: boolean; question?: unknown; options?: unknown };
 
     if (parsed.done) return { done: true };
 
@@ -197,5 +227,23 @@ export class OpenAiCompatibleProvider implements AiProvider {
       : 'کدام‌یک به شرایط بیمار نزدیک‌تر است؟';
 
     return { done: false, question, options };
+  }
+
+  async suggestKeywords(text: string): Promise<string[]> {
+    return this.withRetry(() => this.keywordsAttempt(text));
+  }
+
+  private async keywordsAttempt(text: string): Promise<string[]> {
+    const parsed = await this.chatJson(KEYWORDS_SYSTEM_PROMPT, JSON.stringify({ text })) as { keywords?: unknown };
+
+    // Same philosophy as narrowCase's option filter: whatever doesn't look
+    // like a short real phrase is just dropped, never thrown on — a
+    // malformed-but-parseable answer degrades to "no suggestions" (the
+    // pillar-tree fallback in case-assistant.ts), not an error screen.
+    const raw = Array.isArray(parsed.keywords) ? parsed.keywords : [];
+    return raw
+      .filter((k): k is string => typeof k === 'string' && k.trim().length > 0)
+      .map((k) => k.trim().slice(0, 40))
+      .slice(0, 8);
   }
 }
