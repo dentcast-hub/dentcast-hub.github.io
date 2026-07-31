@@ -15,6 +15,7 @@ import { pathwayRoutes } from './routes/pathways.js';
 import { collectionRoutes } from './routes/collections.js';
 import { readingCompassRoutes } from './routes/reading-compass.js';
 import { caseAssistantRoutes } from './routes/case-assistant.js';
+import { premiumGrantRoutes } from './routes/premium-grant.js';
 import { dashboardRoutes } from './routes/dashboard.js';
 import { adminRoutes } from './routes/admin.js';
 import { pushRoutes } from './routes/push.js';
@@ -74,6 +75,7 @@ export async function buildServer(): Promise<FastifyInstance> {
   await app.register(collectionRoutes);
   await app.register(readingCompassRoutes);
   await app.register(caseAssistantRoutes);
+  await app.register(premiumGrantRoutes);
   await app.register(dashboardRoutes);
   await app.register(adminRoutes);
   await app.register(pushRoutes);

@@ -4,6 +4,8 @@ import { runStreakReminders } from './services/streak-reminder.js';
 import { runReactivationNudges } from './services/reactivation.js';
 import { finalizeDueWeeks } from './services/league-finalize.js';
 import { notifyLeagueOutcomes } from './services/league-notify.js';
+import { grantWeeklyPrizes, expirePremiumPrizes } from './services/premium-prize.js';
+import { notifyPremiumPrizes } from './services/premium-prize-notify.js';
 import { runReviewReminders } from './services/review-notify.js';
 
 /**
@@ -102,6 +104,13 @@ export function startStreakReminderScheduler(): () => void {
  * finalizes any week whose groups have closed (week_end < today). Daily (not
  * weekly) so a missed run self-heals the next day; finalizeDueWeeks is idempotent.
  * Same timezone-wall-clock + unref pattern as the others.
+ *
+ * Also drives the weekly premium prize: grantWeeklyPrizes() flips a winner's
+ * profiles.tier the INSTANT their week finalizes (never held for the awake
+ * window — only the push about it waits, exactly like promotion/demotion
+ * already works), and expirePremiumPrizes() reverts anyone whose 7 days are up.
+ * Both are cheap idempotent daily re-scans, same self-healing shape as
+ * finalizeDueWeeks itself.
  */
 export function startLeagueScheduler(): () => void {
   let timer: NodeJS.Timeout;
@@ -115,10 +124,17 @@ export function startLeagueScheduler(): () => void {
             // eslint-disable-next-line no-console
             console.log(`[league] finalized ${r.weeks} week(s): +${r.promotions} promoted, -${r.demotions} demoted`);
           }
-          // Announce the outcomes the moment they exist. At the default 00:00 run
-          // this is a no-op (outside the awake window) and the morning sweep below
-          // sends them at 09:00; it matters for any finalize inside the window.
+          const prizes = await grantWeeklyPrizes(new Date());
+          if (prizes.granted > 0) {
+            // eslint-disable-next-line no-console
+            console.log(`[premium-prize] granted ${prizes.granted} week-long prize(s)`);
+          }
+          await expirePremiumPrizes(new Date());
+          // Announce the moment they exist. At the default 00:00 run this is a
+          // no-op (outside the awake window) and the morning sweep below sends
+          // them at 09:00; it matters for any finalize inside the window.
           await notifyLeagueOutcomes(new Date());
+          await notifyPremiumPrizes(new Date());
         })
         .catch((err) => {
           // eslint-disable-next-line no-console
@@ -159,6 +175,11 @@ export function startHeldNotificationsScheduler(): () => void {
         if (league.notified > 0) {
           // eslint-disable-next-line no-console
           console.log(`[league-notify] announced ${league.notified} outcome(s)`);
+        }
+        const prizeNotified = await notifyPremiumPrizes(new Date());
+        if (prizeNotified.notified > 0) {
+          // eslint-disable-next-line no-console
+          console.log(`[premium-prize] announced ${prizeNotified.notified} prize(s)`);
         }
       })()
         .catch((err) => {

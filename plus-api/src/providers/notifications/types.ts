@@ -14,7 +14,9 @@ export type NotificationKind =
   /** League promotion/demotion, fired when a week is finalized (premium). */
   | 'league'
   /** Leitner cards are due (premium — the review schedule itself is premium). */
-  | 'review';
+  | 'review'
+  /** Won a week of premium as the weekly league's top-tier prize. */
+  | 'premium_prize';
 
 /**
  * A message may be a plain string (messenger text) or a structured payload.

@@ -43,6 +43,17 @@ body.dcp-page a.dcp-btn-danger { color: #fff; }
   box-shadow: var(--card-sh, 0 1px 3px rgba(2,35,96,.07));
 }
 .dcp-dash-h2 { font-size: 1rem; font-weight: 800; margin: 0 0 4px; }
+
+/* ---- "won a week of premium" banner (dashboard.js premiumGrantBanner) ---- */
+.dcp-prize-banner {
+  background: var(--card-bg, #fff); border: 1px solid var(--ac, #0b5fff);
+  border-radius: var(--r-lg, 18px); padding: 16px 18px; margin-bottom: 14px;
+  box-shadow: var(--card-sh, 0 1px 3px rgba(2,35,96,.07));
+}
+.dcp-prize-h { font-size: 1.1rem; font-weight: 800; margin: 0 0 4px; }
+.dcp-prize-list { margin: 10px 0 14px; padding-inline-start: 20px; display: flex; flex-direction: column; gap: 6px; }
+.dcp-prize-list li { color: var(--txt2, #4a5f85); font-size: .9rem; line-height: 1.7; }
+.dcp-prize-list li b { color: var(--txt, #0a1a33); }
 .dcp-sec-hint { color: var(--txt2, #4a5f85); font-size: .9rem; margin: 0 0 12px; }
 /* A hint with a «؟» beside it (the reveal caption itself is dc-plus-scorecap,
    already styled - see home-card.js's own score/شیلد caption). */
