@@ -197,3 +197,15 @@ export const SS_LISTEN_DONE = 'dcp:listen:'; // + contentId -> '1' once episode_
 // One-sentence invitation shown to anonymous users at the workbench button.
 export const INVITE_LINE =
   'هایلایت، یادداشت و پیگیری پیشرفت، رایگان. برای شروع وارد شوید.';
+
+// --- premium features (shared) -----------------------------------------------
+// The five LIVE premium features' title + short hint. One place to edit so the
+// dashboard's own sections, the "you won a week of premium" banner, and the
+// league "stayed" teaser (league.js) never drift apart.
+export const PREMIUM_FEATURES = [
+  { title: 'برای مرور امروز', hint: 'هایلایت‌هایی که امروز نوبتِ مرورشونه.' },
+  { title: 'مسیر یادگیری', hint: 'مسیرهای آماده، از پایه تا پیشرفته؛ فقط بخون.' },
+  { title: 'کالکشن‌ها', hint: 'هایلایت‌ها و مقاله‌هاتو تو پوشه‌های دلخواهِ خودت بریز.' },
+  { title: 'قطب‌نمای مطالعه', hint: 'وضعیت خواندن‌هایتان را نسبت به کل محتوای سایت و مسیرهای یادگیری می‌سنجد.' },
+  { title: 'دستیار هوشمند', hint: 'شرایط بیمار را شرح بده؛ با چند گزینه به نزدیک‌ترین مقاله می‌رسیم.' },
+];

@@ -340,6 +340,10 @@
 .dcp-lg-announce p { color: var(--dcp-muted); line-height: 1.8; }
 .dcp-lg-announce-rank { font-size: .85rem; }
 .dcp-lg-announce .dcp-btn { margin-top: 14px; min-width: 140px; }
+/* "stayed" outcome's premium teaser — right-aligned against the rest of the
+   card's centered text, since a bullet list reads better started than centered. */
+.dcp-lg-announce .dcp-lg-stay-teaser { width: 100%; text-align: start; padding-top: 14px; margin-top: 4px; border-top: 1px dashed var(--dcp-line); }
+.dcp-lg-announce .dcp-lg-stay-line { font-weight: 700; color: var(--dcp-ink); }
 
 /* connection chips — their own line under the streak/score */
 .dc-plus-chips { flex: 1 0 100%; display: flex; flex-wrap: wrap; gap: 8px; margin-top: 2px; }

@@ -4,6 +4,7 @@
 // ranks, zone sizes, countdown, neutral-mode, and any pending outcome).
 import { el, faNum } from './util.js';
 import { api } from './api.js';
+import { PREMIUM_FEATURES } from './config.js';
 
 const TOOTH = '<svg class="dcp-tier-tooth" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C8 2 5 4 5 8c0 3 1 5 1.6 8.5C7 19 7.6 22 9 22c1.2 0 1.3-2 1.6-4 .2-1.4.5-2 1.4-2s1.2.6 1.4 2c.3 2 .4 4 1.6 4 1.4 0 2-3 2.4-5.5C19 13 20 11 20 8c0-4-3-6-8-6z"/></svg>';
 
@@ -178,25 +179,41 @@ export async function maybeAnnounceOutcome(data) {
   const nt = p.new_tier || {};
   const kind = p.outcome; // promoted | stayed | demoted
   const face = kind === 'promoted' ? '🎉' : kind === 'demoted' ? '💪' : '🔥';
-  const title = kind === 'promoted' ? 'صعود کردی!' : kind === 'demoted' ? 'این هفته سقوط کردی' : 'در لیگت ماندی';
+  const title = kind === 'promoted' ? 'صعود کردی!' : kind === 'demoted' ? 'این هفته سقوط کردی' : 'دوباره وقتشه!';
   const line = kind === 'promoted'
     ? 'به لیگ ' + nt.name_fa + ' رفتی. رقابتِ این هفته سخت‌تر و شیرین‌تر است.'
     : kind === 'demoted'
       ? 'به لیگ ' + nt.name_fa + ' برگشتی. این هفته دوباره بالا بیا.'
-      : 'در لیگ ' + nt.name_fa + ' ماندی. این هفته برای صعود تلاش کن.';
+      : 'این هفته امتیاز کافی برای صعود از لیگ ' + nt.name_fa + ' نیاوردی. هفته‌ی تازه از صفر شروع شده — این‌بار نفر اولِ گروهت شو.';
 
   const done = () => { closeOverlay(); api.leagueOutcomeSeen().catch(() => {}); };
   const okBtn = el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button' }, 'دیدم');
   okBtn.addEventListener('click', done);
 
-  const card = el('div', { class: 'dcp-lg-card dcp-lg-announce', role: 'dialog', 'aria-modal': 'true' }, [
+  const children = [
     el('div', { class: 'dcp-lg-announce-face', 'aria-hidden': 'true' }, face),
     tierBadge(nt.tier_order || 1, { size: 'lg' }),
     el('h3', {}, title),
     el('p', {}, line),
     el('p', { class: 'dcp-lg-announce-rank' }, 'رتبهٔ هفتهٔ گذشته: ' + faNum(p.final_rank || 0)),
-    okBtn,
-  ]);
+  ];
+
+  // The one outcome with room to pull the user back in: dangle the same
+  // weekly top-of-group prize the win banner (dashboard.js premiumGrantBanner)
+  // announces, plus a taste of what it unlocks. prize_days comes from /league
+  // (league_config, founder-tunable) — never hardcoded, so this can't promise
+  // a length the backend has since changed.
+  if (kind === 'stayed' && data.prize_days > 0) {
+    children.push(el('div', { class: 'dcp-lg-stay-teaser' }, [
+      el('p', { class: 'dcp-lg-stay-line' },
+        'نفر اولِ گروهت شو، ' + faNum(data.prize_days) + ' روز پرمیوم مهمونِ دنت‌کست باش:'),
+      el('ul', { class: 'dcp-prize-list' }, PREMIUM_FEATURES.slice(0, 3).map((f) =>
+        el('li', {}, [el('b', {}, f.title + ': '), f.hint]))),
+    ]));
+  }
+
+  children.push(okBtn);
+  const card = el('div', { class: 'dcp-lg-card dcp-lg-announce', role: 'dialog', 'aria-modal': 'true' }, children);
 
   closeOverlay();
   overlayEl = el('div', { class: 'dcp-modal-overlay dcp-lg-overlay', onclick: (e) => { if (e.target === overlayEl) done(); } }, [card]);
