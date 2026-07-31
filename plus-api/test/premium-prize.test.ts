@@ -4,7 +4,8 @@ import { makeApp, resetDb, loginAs } from './helpers.js';
 import { pool } from '../src/db.js';
 import { finalizeWeek } from '../src/services/league-finalize.js';
 import { grantWeeklyPrizes, expirePremiumPrizes } from '../src/services/premium-prize.js';
-import { notifyPremiumPrizes } from '../src/services/premium-prize-notify.js';
+import { notifyPremiumPrizes, PREMIUM_FEATURE_TITLES } from '../src/services/premium-prize-notify.js';
+import { readFile } from 'node:fs/promises';
 import { notifications } from '../src/providers/registry.js';
 import { getLeagueConfig } from '../src/services/league-config.js';
 import { vi } from 'vitest';
@@ -448,5 +449,42 @@ describe('what the winner is actually told', () => {
     const days = Math.round((new Date(grant.expires_at) - new Date(grant.granted_at)) / 86400000);
     expect(days).toBe(3);
     await app2.close();
+  });
+});
+
+describe('the premium features named in the prize', () => {
+  it('names every feature the banner lists, in the push too', async () => {
+    const sent: string[] = [];
+    const ids = await seedGroup('composite', [90, 80]);
+    await pool.query('update profiles set telegram_id = 700910 where id = $1', [ids[0]]);
+    await finalizeWeek(WEEK);
+    await grantWeeklyPrizes(AWAKE);
+
+    const spy = vi.spyOn(notifications, 'send').mockImplementation(async (_u, m) => {
+      if (typeof m !== 'string') sent.push(m.body);
+    });
+    await notifyPremiumPrizes(AWAKE);
+    spy.mockRestore();
+
+    for (const title of PREMIUM_FEATURE_TITLES) {
+      expect(sent[0], `push must name «${title}»`).toContain(title);
+    }
+  });
+
+  it('stays in step with the banner list it mirrors', async () => {
+    // The server copy (push) and the client copy (banner) are separate
+    // constants in different languages, so nothing but this test stops them
+    // drifting — which is precisely how the prize copy went stale before.
+    const dashboard = await readFile(
+      new URL('../../plus/js/dashboard.js', import.meta.url), 'utf8',
+    );
+    const block = dashboard.slice(
+      dashboard.indexOf('const PREMIUM_FEATURES = ['),
+      dashboard.indexOf('];', dashboard.indexOf('const PREMIUM_FEATURES = [')),
+    );
+    const bannerTitles = [...block.matchAll(/title:\s*'([^']+)'/g)].map((m) => m[1]);
+
+    expect(bannerTitles.length, 'found the banner list').toBeGreaterThan(0);
+    expect(PREMIUM_FEATURE_TITLES).toEqual(bannerTitles);
   });
 });
