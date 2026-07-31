@@ -20,13 +20,19 @@ export async function resetDb(): Promise<void> {
     restart identity cascade
   `);
   // League seed data (tiers + config) is created ONCE by the migration and must
-  // survive truncation — reset only the auto-tuned state back to seed defaults so
-  // each test starts from a known baseline.
+  // survive truncation — so reset the knobs back to their seed values, because
+  // league_config is NOT truncated and a test that retunes one would otherwise
+  // hand its change to every test that runs after it.
   await pool.query(`
     update league_config set value = case key
       when 'group_size_current' then '8'
       when 'max_active_tier_order' then '3'
       when 'group_size_last_changed_week' then ''
+      when 'promotion_min_weekly_xp' then '30'
+      when 'promotion_pct' then '20'
+      when 'demotion_pct' then '20'
+      when 'min_valid_group_size' then '6'
+      when 'cooldown_weeks' then '4'
       else value end,
       locked = false, locked_at = null;
     `);

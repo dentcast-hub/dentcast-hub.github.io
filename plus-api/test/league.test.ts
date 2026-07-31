@@ -3,6 +3,8 @@ import type { FastifyInstance } from 'fastify';
 import { makeApp, resetDb, loginAs } from './helpers.js';
 import { pool } from '../src/db.js';
 import { finalizeWeek } from '../src/services/league-finalize.js';
+import { getLeagueConfig } from '../src/services/league-config.js';
+import { config } from '../src/config.js';
 
 const WEEK = '2026-01-03';       // opaque week key for finalize unit tests
 let seq = 0;
@@ -292,5 +294,75 @@ describe('GET /league — placement on first XP', () => {
     const cookie = await loginAs(app, '09120000005');
     await act(cookie, 'episode_listened', 'episodes/episode-1');
     expect(await myXp(cookie)).toBe(10);
+  });
+});
+
+describe('POST /admin/league/config', () => {
+  const basic = 'Basic ' + Buffer.from(`${config.admin.user}:${config.admin.password}`).toString('base64');
+  let app: FastifyInstance;
+  beforeEach(async () => { app = await makeApp(); });
+
+  function setCfg(body: unknown) {
+    return app.inject({
+      method: 'POST', url: '/admin/league/config',
+      headers: { authorization: basic }, payload: body,
+    });
+  }
+
+  it('requires admin credentials', async () => {
+    const res = await app.inject({ method: 'POST', url: '/admin/league/config', payload: { key: 'x', value: 1 } });
+    expect(res.statusCode).toBe(401);
+  });
+
+  it('changes a behavioural number and records why', async () => {
+    const res = await setCfg({ key: 'promotion_min_weekly_xp', value: 25, reason: 'median came in under 30' });
+
+    expect(res.statusCode).toBe(200);
+    expect(res.json()).toMatchObject({ ok: true, changed: true, old_value: '30', value: '25' });
+    expect((await getLeagueConfig()).promotion_min_weekly_xp).toBe(25);
+
+    const audit = await pool.query(
+      "select new_value, trigger_metric from league_audit_log where changed_key = 'promotion_min_weekly_xp'",
+    );
+    expect(audit.rows[0]).toMatchObject({ new_value: '25', trigger_metric: 'median came in under 30' });
+  });
+
+  it('rejects a value that is not a number for a numeric key', async () => {
+    // Would not fail here but at finalize, a week later, on real users.
+    const res = await setCfg({ key: 'promotion_min_weekly_xp', value: '۲۵ تا' });
+    expect(res.statusCode).toBe(400);
+    expect(res.json().error).toBe('invalid_value');
+    expect((await getLeagueConfig()).promotion_min_weekly_xp).toBe(30);
+  });
+
+  it('rejects a negative value', async () => {
+    expect((await setCfg({ key: 'promotion_pct', value: -5 })).statusCode).toBe(400);
+  });
+
+  it('lists the valid keys when the key is unknown', async () => {
+    const res = await setCfg({ key: 'promotion_min_xp', value: 25 });
+    expect(res.statusCode).toBe(404);
+    expect(res.json().valid_keys).toContain('promotion_min_weekly_xp');
+  });
+
+  it('reports "unchanged" distinctly from a real change', async () => {
+    const res = await setCfg({ key: 'promotion_min_weekly_xp', value: 30 });
+    expect(res.statusCode).toBe(200);
+    expect(res.json()).toMatchObject({ changed: false, note: 'unchanged' });
+  });
+
+  it('refuses a locked key with 409, and obeys force', async () => {
+    await app.inject({
+      method: 'POST', url: '/admin/league/lock',
+      headers: { authorization: basic }, payload: { key: 'promotion_min_weekly_xp', locked: true },
+    });
+
+    const blocked = await setCfg({ key: 'promotion_min_weekly_xp', value: 25 });
+    expect(blocked.statusCode).toBe(409);
+    expect((await getLeagueConfig()).promotion_min_weekly_xp).toBe(30);
+
+    const forced = await setCfg({ key: 'promotion_min_weekly_xp', value: 25, force: true });
+    expect(forced.statusCode).toBe(200);
+    expect((await getLeagueConfig()).promotion_min_weekly_xp).toBe(25);
   });
 });
