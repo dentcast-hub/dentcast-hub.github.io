@@ -25,6 +25,17 @@ const PROGRESS_EXCLUDE = new Set(['photocast', 'litecast']);
 // assistantBlock and lockedFeatureCard below).
 const PREMIUM_TILES = ['جمع‌بندی موضوعی هایلایت‌ها', 'کوییز و کسب امتیاز'];
 
+// The five LIVE premium features' title + short hint, shared by their own
+// section() calls below AND the "you won a week of premium" banner — one
+// place to edit so the two can never drift apart.
+const PREMIUM_FEATURES = [
+  { title: 'برای مرور امروز', hint: 'هایلایت‌هایی که امروز نوبتِ مرورشونه.' },
+  { title: 'مسیر یادگیری', hint: 'مسیرهای آماده، از پایه تا پیشرفته؛ فقط بخون.' },
+  { title: 'کالکشن‌ها', hint: 'هایلایت‌ها و مقاله‌هاتو تو پوشه‌های دلخواهِ خودت بریز.' },
+  { title: 'قطب‌نمای مطالعه', hint: 'وضعیت خواندن‌هایتان را نسبت به کل محتوای سایت و مسیرهای یادگیری می‌سنجد.' },
+  { title: 'دستیار هوشمند', hint: 'شرایط بیمار را شرح بده؛ با چند گزینه به نزدیک‌ترین مقاله می‌رسیم.' },
+];
+
 // `more`: an optional longer explanation, tucked behind a «؟» beside the hint —
 // same hidden-by-default reveal the homepage promo card already uses for its
 // score caption (dc-plus-info/dc-plus-scorecap/dc-plus-capline).
@@ -190,6 +201,29 @@ function lockedFeatureCard(href) {
   return el('a', { class: 'dcp-locked-card', href }, el('span', { class: 'dcp-soon-badge' }, '🔒 ویژه‌ی پریمیوم'));
 }
 
+// "You won a week of premium" banner: the league's weekly top-tier prize
+// (plus-api's premium-prize.ts already flipped tier=premium the instant the
+// week finalized — this is just the one-time announcement). Shown first, above
+// even the hello line, and acknowledged once via POST /premium/grant/seen —
+// same shape as the league outcome banner's outcome_seen.
+function premiumGrantBanner(grant) {
+  const list = el('ul', { class: 'dcp-prize-list' }, PREMIUM_FEATURES.map((f) =>
+    el('li', {}, [el('b', {}, f.title + ': '), f.hint])));
+  const dismiss = el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button' }, 'متوجه شدم');
+  const banner = el('div', { class: 'dcp-prize-banner' }, [
+    el('h2', { class: 'dcp-prize-h' }, '🎉 جایزه‌ی این هفته: یک هفته پرمیوم!'),
+    el('p', { class: 'dcp-sec-hint' }, 'رتبه‌ی برترِ لیگِ این هفته بودی — به مدت یک هفته همه‌ی این‌ها برات بازه:'),
+    list,
+    dismiss,
+  ]);
+  dismiss.addEventListener('click', async () => {
+    dismiss.disabled = true;
+    await api.premiumGrantSeen().catch(() => {});
+    banner.remove();
+  });
+  return banner;
+}
+
 function reviewDueBlock(me) {
   const count = me.due_card_count || 0;
   if (count > 0) {
@@ -295,9 +329,10 @@ export async function renderDashboard(root, { me: preMe } = {}) {
   const recentWrap = el('div', {}, el('div', { class: 'dcp-loading' }, '...'));
   const collectionsWrap = el('div', {}, el('div', { class: 'dcp-loading' }, '...'));
   const compassWrap = el('div', {}, el('div', { class: 'dcp-loading' }, '...'));
-  const children = [
-    el('div', { class: 'dcp-dash-hello' }, 'سلام، ' + (me.display_name || '')),
-  ];
+  const children = [];
+  // Unmissable, above even the hello line — see premiumGrantBanner().
+  if (me.pending_premium_grant) children.push(premiumGrantBanner(me.pending_premium_grant));
+  children.push(el('div', { class: 'dcp-dash-hello' }, 'سلام، ' + (me.display_name || '')));
 
   const isPremium = me.tier === 'premium';
 
@@ -326,32 +361,32 @@ export async function renderDashboard(root, { me: preMe } = {}) {
   // locked-card teaser for free (linking to the feature's own page, which
   // does the actual gating).
   children.push(section(
-    'برای مرور امروز',
-    'هایلایت‌هایی که امروز نوبتِ مرورشونه.',
+    PREMIUM_FEATURES[0].title,
+    PREMIUM_FEATURES[0].hint,
     isPremium ? reviewDueBlock(me) : lockedFeatureCard('/plus/cards.html'),
     'هایلایت‌هایی که تو مطالبِ مختلف زده‌اید، طبقِ زمان‌بندیِ علمیِ لایتنر، دقیقاً همون وقتی که وقتِ فراموش‌شدنشونه دوباره بهتان نشان داده می‌شود — همین باعث می‌شود واقعاً تو ذهنتان بماند.',
   ));
   children.push(section(
-    'مسیر یادگیری',
-    'مسیرهای آماده، از پایه تا پیشرفته؛ فقط بخون.',
+    PREMIUM_FEATURES[1].title,
+    PREMIUM_FEATURES[1].hint,
     isPremium ? pathwayBlock(me) : lockedFeatureCard('/plus/pathways.html'),
     'دیگر لازم نیست فکر کنید چه چیزی را بعد از چه چیزی بخوانید — خودمان مسیرِ یادگیریِ هر موضوع را قدم‌به‌قدم نشانتان می‌دهیم، تا در آن موضوع کاملاً مسلط شوید و مهارتِ واقعی پیدا کنید.',
   ));
   children.push(section(
-    'کالکشن‌ها',
-    'هایلایت‌ها و مقاله‌هاتو تو پوشه‌های دلخواهِ خودت بریز.',
+    PREMIUM_FEATURES[2].title,
+    PREMIUM_FEATURES[2].hint,
     isPremium ? collectionsWrap : lockedFeatureCard('/plus/collections.html'),
     'هر هایلایت یا مقاله‌ای که دلتان بخواهد را، بر اساسِ موضوعی که خودتان انتخاب می‌کنید، در یک پوشه‌ی دلخواه ذخیره می‌کنید — مثلاً برای یک امتحان، یک بیمارِ خاص، یا هر چیزِ دیگر.',
   ));
   children.push(section(
-    'قطب‌نمای مطالعه',
-    'وضعیت خواندن‌هایتان را نسبت به کل محتوای سایت و مسیرهای یادگیری می‌سنجد.',
+    PREMIUM_FEATURES[3].title,
+    PREMIUM_FEATURES[3].hint,
     isPremium ? compassWrap : lockedFeatureCard('/plus/reading-compass.html'),
     'نه حدسِ سلیقه، بلکه آمارِ واقعیِ خواندن‌ها: چند درصد از هر پیلار را پوشش داده‌اید و بیشترین مطالعه‌تان کجا بوده. بر همین اساس دو دسته پیشنهاد می‌دهد: مطالبِ نخوانده‌ی همان حیطه برای ادامه، و حوزه‌هایی که هنوز اصلاً سراغشان نرفته‌اید برای کاوش.',
   ));
   children.push(section(
-    'دستیار هوشمند',
-    'شرایط بیمار را شرح بده؛ با چند گزینه به نزدیک‌ترین مقاله می‌رسیم.',
+    PREMIUM_FEATURES[4].title,
+    PREMIUM_FEATURES[4].hint,
     isPremium ? assistantBlock() : lockedFeatureCard('/plus/assistant.html'),
     'فقط از بین چند گزینه انتخاب می‌کنی — نه گفتگوی آزاد. هوش مصنوعی هیچ تشخیص یا توصیه‌ی درمانی نمی‌دهد؛ فقط توضیحِ تو را به دسته‌بندی‌های خودِ سایت نگاشت می‌کند تا به مقاله‌ی مرتبط برسیم.',
   ));

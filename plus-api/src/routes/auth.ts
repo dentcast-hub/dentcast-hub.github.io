@@ -14,6 +14,7 @@ import { loadUser } from '../middleware/auth.js';
 import { displayStreak } from '../services/streak.js';
 import { dayInTz } from '../services/time.js';
 import { getActivePathwaySummary } from '../services/active-pathway.js';
+import { getPendingPremiumGrant } from '../services/premium-prize.js';
 import { recordPageView } from '../services/view-stats.js';
 
 // The exact fields the Telegram Login Widget sends. Only these participate in
@@ -468,6 +469,11 @@ export async function authRoutes(app: FastifyInstance): Promise<void> {
       // after a reload even though PATCH /me persisted them.
       settings: user.settings ?? {},
       active_pathway: await getActivePathwaySummary(user.id),
+      // The one-time "you won a week of premium" banner (dashboard.js). Present
+      // for every tier (a free user's grant already flipped their tier by the
+      // time they see this, but the field is computed independent of tier so
+      // there is no ordering assumption between the two).
+      pending_premium_grant: await getPendingPremiumGrant(user.id),
     };
     // due_card_count is premium-only and intentionally absent for free users.
     if (user.tier === 'premium') {

@@ -148,6 +148,9 @@ export const api = {
   pathway: (id) => request('/pathways/' + encodeURIComponent(id)),
   enrollPathway: (id) => request('/pathways/' + encodeURIComponent(id) + '/enroll', { method: 'POST' }),
 
+  // premium prize: acknowledge the "you won a week of premium" dashboard banner
+  premiumGrantSeen: () => request('/premium/grant/seen', { method: 'POST' }),
+
   // premium: reading compass — coverage report over the user's own reading,
   // cross-referenced against the taxonomy and pathways (no interest guessing)
   readingCompass: () => request('/reading-compass'),
