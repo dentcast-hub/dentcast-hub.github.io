@@ -207,14 +207,113 @@ a.dcp-progress-row:hover { text-decoration: none; }
 .dcp-locked-card { display: inline-block; text-decoration: none; }
 
 /* ---- «دستیار هوشمند» wizard (case-assistant.js) --------------------------
-   A short multiple-choice round, not a chat transcript — no message bubbles,
-   just one question + a button per option (+ a free-text escape hatch). */
-.dcp-assist-intro, .dcp-assist-round { display: flex; flex-direction: column; gap: 12px; }
-.dcp-assist-ta { width: 100%; resize: vertical; font: inherit; line-height: 1.8; }
-.dcp-assist-q { font-weight: 700; margin: 0; }
-.dcp-assist-opts { display: flex; flex-wrap: wrap; gap: 8px; }
-.dcp-assist-custom { display: flex; gap: 8px; flex-wrap: wrap; }
-.dcp-assist-custom .dcp-input { flex: 1 1 200px; }
+   Still a narrowing multiple-choice wizard, not free-form chat - but now
+   reads like an actual AI product: a spark mark on every assistant turn, a
+   typing indicator while /assistant/next is in flight, and the case text +
+   past answers kept visible as a recap trail above the live turn (previously
+   each step wiped the screen, so the exchange looked amnesiac). */
+.dcp-assist-intro { display: flex; flex-direction: column; gap: 12px; }
+
+.dcp-assist-avatar {
+  flex: none; width: 38px; height: 38px; border-radius: var(--r-md, 14px);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--ac, #0b5fff) 80%, white), var(--pr, #022360));
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 3px 10px color-mix(in srgb, var(--ac, #0b5fff) 35%, transparent);
+}
+.dcp-assist-avatar svg { width: 19px; height: 19px; fill: #fff; }
+.dcp-assist-avatar.is-sm { width: 28px; height: 28px; border-radius: var(--r-sm, 10px); }
+.dcp-assist-avatar.is-sm svg { width: 14px; height: 14px; }
+
+.dcp-assist-thread { display: flex; flex-direction: column; gap: 14px; }
+
+/* the clinician's own free-text case + past answers - quiet, no bubble of its
+   own (this stays a wizard, not a two-party chat), indented to sit under the
+   turn cards' avatar column. */
+.dcp-assist-recap { display: flex; flex-direction: column; gap: 3px; padding-inline-end: 48px; }
+.dcp-assist-recap-label { font-size: .74rem; font-weight: 700; color: var(--txt3, #62779a); }
+.dcp-assist-recap-case { color: var(--txt); font-size: .92rem; background: var(--surface2, #f4f6fb); border-radius: var(--r-md, 14px); padding: 10px 14px; }
+.dcp-assist-recap-text { color: var(--txt2, #4a5f85); font-size: .87rem; line-height: 1.75; }
+.dcp-assist-recap-answer {
+  display: inline-flex; align-self: flex-start; align-items: center; gap: 5px;
+  font-size: .84rem; font-weight: 700; color: var(--ac, #0b5fff);
+  background: var(--chip-bg, rgba(11,95,255,.08)); border: 1px solid var(--chip-bd, rgba(11,95,255,.2));
+  border-radius: var(--r-f, 999px); padding: 4px 12px;
+}
+
+/* the assistant's live turn - the one piece of chrome that actually reads
+   "AI": avatar + a card with its corner nearest the avatar flattened, like a
+   speech-bubble tail. Logical corner (not top-right) so it stays correct if
+   the page is ever mirrored. */
+.dcp-assist-turn { display: flex; gap: 12px; align-items: flex-start; }
+.dcp-assist-card {
+  flex: 1 1 auto; min-width: 0; background: var(--card-bg); border: 1px solid var(--card-border);
+  border-radius: var(--r-lg, 18px); border-start-start-radius: 6px;
+  padding: 14px 16px; box-shadow: var(--card-sh);
+}
+.dcp-assist-q { font-weight: 700; font-size: .98rem; margin: 0; color: var(--txt); }
+
+.dcp-assist-thinking { display: inline-flex; align-items: center; gap: 5px; padding: 4px 0; }
+.dcp-assist-thinking span { width: 6px; height: 6px; border-radius: 50%; background: var(--txt3, #62779a); animation: dcpAssistDot 1.1s ease-in-out infinite; }
+.dcp-assist-thinking span:nth-child(2) { animation-delay: .15s; }
+.dcp-assist-thinking span:nth-child(3) { animation-delay: .3s; }
+@keyframes dcpAssistDot { 0%, 60%, 100% { transform: translateY(0); opacity: .5; } 30% { transform: translateY(-4px); opacity: 1; } }
+
+/* quick-reply chips, directly under the AI card they answer */
+.dcp-assist-opts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; padding-inline-start: 50px; }
+.dcp-assist-opt {
+  font: inherit; font-weight: 600; font-size: .88rem; cursor: pointer;
+  padding: 8px 16px; border-radius: var(--r-f, 999px); border: 1.5px solid var(--chip-bd, rgba(11,95,255,.2));
+  background: var(--chip-bg, rgba(11,95,255,.08)); color: var(--ac, #0b5fff);
+  transition: background var(--tr, .17s), color var(--tr, .17s), transform var(--tr, .17s);
+}
+.dcp-assist-opt:hover { background: var(--ac, #0b5fff); color: #fff; border-color: var(--ac, #0b5fff); }
+.dcp-assist-opt:active { transform: scale(.96); }
+.dcp-assist-more {
+  font: inherit; font-weight: 600; font-size: .85rem; cursor: pointer;
+  padding: 8px 14px; border-radius: var(--r-f, 999px); border: 1.5px dashed var(--border, rgba(2,35,96,.12));
+  background: transparent; color: var(--txt2, #4a5f85);
+}
+.dcp-assist-more:hover { border-color: var(--txt3, #62779a); color: var(--txt); }
+
+.dcp-assist-custom { display: flex; gap: 8px; margin-top: 10px; padding-inline-start: 50px; }
+.dcp-assist-custom input {
+  flex: 1 1 auto; font: inherit; font-size: .88rem; border: 1px solid var(--border, rgba(2,35,96,.12));
+  background: var(--surface, #fff); color: var(--txt); border-radius: var(--r-f, 999px); padding: 9px 16px;
+}
+.dcp-assist-send {
+  flex: none; width: 38px; height: 38px; border-radius: 50%; border: 0;
+  background: var(--ac, #0b5fff); color: #fff; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+}
+.dcp-assist-send svg { width: 16px; height: 16px; fill: currentColor; transform: scaleX(-1); }
+
+/* composer - the case textarea, styled as a real chat input card */
+.dcp-assist-composer {
+  background: var(--card-bg); border: 1px solid var(--card-border); border-radius: var(--r-lg, 18px);
+  box-shadow: var(--card-sh); padding: 6px 6px 6px 14px; display: flex; align-items: flex-end; gap: 10px;
+}
+.dcp-assist-composer textarea {
+  flex: 1 1 auto; resize: vertical; min-height: 84px; font: inherit; font-size: .92rem; line-height: 1.8;
+  border: 0; background: transparent; color: var(--txt); padding: 12px 8px; outline: none;
+}
+.dcp-assist-composer textarea::placeholder { color: var(--txt3, #62779a); }
+.dcp-assist-composer-send {
+  flex: none; width: 40px; height: 40px; margin-bottom: 6px; border-radius: 50%; border: 0;
+  background: var(--ac, #0b5fff); color: #fff; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; transition: transform var(--tr, .17s);
+}
+.dcp-assist-composer-send:hover { transform: scale(1.06); }
+.dcp-assist-composer-send svg { width: 17px; height: 17px; fill: currentColor; transform: scaleX(-1); }
+
+.dcp-assist-disclaimer { display: flex; align-items: center; gap: 6px; color: var(--txt3, #62779a); font-size: .78rem; margin-top: 4px; }
+
+.dcp-assist-result-lead { font-weight: 700; color: var(--txt); margin: 0 0 10px; }
+.dcp-assist-restart {
+  font: inherit; font-weight: 700; font-size: .86rem; cursor: pointer; margin-top: 16px;
+  padding: 8px 16px; border-radius: var(--r-f, 999px); border: 1px solid var(--border, rgba(2,35,96,.12));
+  background: transparent; color: var(--txt2, #4a5f85);
+}
+.dcp-assist-restart:hover { color: var(--ac, #0b5fff); border-color: var(--ac, #0b5fff); }
 
 /* ---- profile ------------------------------------------------------------- */
 .dcp-field-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
