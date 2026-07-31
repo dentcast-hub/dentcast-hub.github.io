@@ -33,7 +33,7 @@ export interface LeagueConfig {
 
 type Db = pg.Pool | pg.PoolClient;
 
-const NUMERIC_KEYS: Array<keyof LeagueConfig> = [
+export const NUMERIC_KEYS: Array<keyof LeagueConfig> = [
   'group_size_current', 'promotion_pct', 'demotion_pct', 'min_valid_group_size',
   'promotion_min_weekly_xp', 'cooldown_weeks', 'max_active_tier_order',
   'xp_active_bonus', 'xp_read', 'xp_listen', 'xp_highlight', 'xp_highlight_cap', 'xp_review',
