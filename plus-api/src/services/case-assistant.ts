@@ -1,5 +1,5 @@
 import { config } from '../config.js';
-import { getClusters, getContentInfo, getTags } from '../content-index.js';
+import { getClusters, getContentInfo, getTags, type Tag } from '../content-index.js';
 import { ai } from '../providers/registry.js';
 import type { NarrowHistoryEntry, NarrowOption } from '../providers/ai/types.js';
 import { getConsumedContentIds } from './consumption.js';
@@ -30,7 +30,22 @@ import { getConsumedContentIds } from './consumption.js';
  */
 
 const ARTICLES_PER_MATCH = 4;
+// The FINAL number of options ever shown to the user (openai-compatible.ts's
+// narrowCase also enforces this independently on whatever the model returns).
 const MAX_TAG_OPTIONS = 4;
+// How many candidate tags nextRootCatalog hands to ai.narrowCase. Wider than
+// MAX_TAG_OPTIONS on purpose: a generic word like "سمان" or "روکش" fully
+// matches dozens of near-duplicate, single-article tags (each article gets
+// its own bespoke AI-proposed hashtags at publish time - see
+// .dentcast/workflows/README.md - so ~75% of site tags are used exactly
+// once). Cutting straight to 4 there, with only a lexical score to rank by,
+// is a coin flip for whether the actually-relevant tag survives (verified:
+// it lost in 2 of 3 realistic trials for "زینک فسفات"/"گیر روکش" against
+// unrelated "___ روکش" tags). A wider pool lets narrowCase's own model use
+// its real understanding of the free-text description to pick the best 4
+// out of a reasonable spread, instead of a blunt lexical score finalizing
+// the list alone.
+const TAG_CANDIDATE_POOL = 10;
 // A real site tag is usually 1-3 words; requiring at least half of them to
 // show up among the AI's suggested phrases keeps a bare one-word coincidence
 // (e.g. a generic "دندان" hit) from outranking a tag that's actually specific
@@ -132,19 +147,43 @@ function tagMatchScore(tagFa: string, suggestedWords: Set<string>): number {
 }
 
 /**
+ * Greedily keep only tags that bring at least one NEW content_id not already
+ * covered by a higher-ranked tag. Necessary because most site tags are
+ * single-article (each article gets its own bespoke AI-proposed hashtags at
+ * publish time), so a generic shared word ("سمان", "روکش") fully or
+ * partially matches dozens of near-duplicate tags pointing at the SAME small
+ * handful of articles — without this, those duplicates alone can fill every
+ * slot in the candidate pool and starve out an article that only has ONE
+ * matching tag but is otherwise unrepresented.
+ */
+function dedupeByContentCoverage(sorted: Tag[], limit: number): Tag[] {
+  const covered = new Set<string>();
+  const picked: Tag[] = [];
+  for (const t of sorted) {
+    if (picked.length >= limit) break;
+    if (!t.contentIds.some((id) => !covered.has(id))) continue;
+    for (const id of t.contentIds) covered.add(id);
+    picked.push(t);
+  }
+  return picked;
+}
+
+/**
  * Round 1 (or any round reached with only free text so far): ask the AI to
  * read the case description + any "غیر از این‌ها" refinements and suggest
  * short topic phrases in the site's own hashtag style, then match those, IN
- * CODE, against every real site tag. Falls back to the original top-level
- * pillar catalog when nothing scores above threshold (a very generic
- * description, or the stub/dev provider, which never suggests anything).
+ * CODE, against every real site tag — a wide, deduplicated pool of them, not
+ * a hard-final 4 (see TAG_CANDIDATE_POOL). Falls back to the original
+ * top-level pillar catalog when nothing scores above threshold (a very
+ * generic description, or the stub/dev provider, which never suggests
+ * anything).
  */
 async function nextRootCatalog(description: string, history: NarrowHistoryEntry[]): Promise<NarrowOption[]> {
   const searchText = [description, ...customAnswers(history)].join('\n');
   const suggestions = await ai.suggestKeywords(searchText);
   const suggestedWords = new Set(suggestions.flatMap((s) => words(s)));
 
-  const options = suggestedWords.size
+  const ranked = suggestedWords.size
     ? getTags()
       .map((t) => ({ t, score: tagMatchScore(t.fa, suggestedWords), wordCount: words(t.fa).length }))
       .filter((x) => x.score >= TAG_MATCH_THRESHOLD)
@@ -155,9 +194,11 @@ async function nextRootCatalog(description: string, history: NarrowHistoryEntry[
       // NICHER one (fewer articles) — the opposite of popularity — so a
       // precise niche match never gets buried under a broad, popular one.
       .sort((a, b) => b.score - a.score || b.wordCount - a.wordCount || a.t.contentCount - b.t.contentCount)
-      .slice(0, MAX_TAG_OPTIONS)
-      .map(({ t }) => ({ key: TAG_PREFIX + t.key, label: t.fa }))
+      .map((x) => x.t)
     : [];
+
+  const options = dedupeByContentCoverage(ranked, TAG_CANDIDATE_POOL)
+    .map((t) => ({ key: TAG_PREFIX + t.key, label: t.fa }));
 
   return options.length ? options : getClusters().map((c) => ({ key: c.key, label: c.fa }));
 }
