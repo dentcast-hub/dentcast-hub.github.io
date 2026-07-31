@@ -13,6 +13,7 @@ import { articleNoteRoutes } from './routes/article-note.js';
 import { reviewRoutes } from './routes/review.js';
 import { pathwayRoutes } from './routes/pathways.js';
 import { collectionRoutes } from './routes/collections.js';
+import { readingCompassRoutes } from './routes/reading-compass.js';
 import { dashboardRoutes } from './routes/dashboard.js';
 import { adminRoutes } from './routes/admin.js';
 import { pushRoutes } from './routes/push.js';
@@ -70,6 +71,7 @@ export async function buildServer(): Promise<FastifyInstance> {
   await app.register(reviewRoutes);
   await app.register(pathwayRoutes);
   await app.register(collectionRoutes);
+  await app.register(readingCompassRoutes);
   await app.register(dashboardRoutes);
   await app.register(adminRoutes);
   await app.register(pushRoutes);

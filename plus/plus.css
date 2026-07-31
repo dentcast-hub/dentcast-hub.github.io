@@ -224,6 +224,11 @@
 .dc-plus-material-lead { opacity: .75; font-weight: 400; }
 .dc-plus-due { color: var(--dcp-accent); font-weight: 700; text-decoration: none; }
 .dc-plus-premium-line { margin-inline-start: auto; color: inherit; opacity: .6; font-size: .88rem; text-decoration: none; }
+/* «قطب‌نمای مطالعه» homepage entry (home-card.js) — same shape as دc-plus-due,
+   plus a locked variant reusing the dashboard's own 🔒 badge + «؟» reveal. */
+.dc-plus-compass-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.dc-plus-compass { display: inline-flex; align-items: center; gap: 6px; text-decoration: none; font-weight: 700; color: var(--dcp-accent); }
+.dc-plus-compass.is-locked { color: inherit; opacity: .8; font-weight: 600; }
 
 /* score badge (inline beside the streak) */
 .dc-plus-score { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; }

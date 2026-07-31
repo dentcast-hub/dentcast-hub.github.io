@@ -246,6 +246,27 @@ async function collectionsBlock() {
   return el('div', { class: 'dcp-pw-dash' }, [strip, el('a', { class: 'dcp-pw-alllink', href: '/plus/collections.html' }, 'همه‌ی کالکشن‌ها')]);
 }
 
+// Premium «قطب‌نمای مطالعه» block: a coverage summary (top pillar + link to
+// the full report), not an interest guess — see reading-compass.js/.ts.
+async function compassBlock() {
+  const data = await api.readingCompass().catch(() => null);
+  const allLink = el('a', { class: 'dcp-pw-alllink', href: '/plus/reading-compass.html' }, 'مشاهده‌ی کامل قطب‌نما');
+  if (!data || !data.total_read) {
+    return el('div', { class: 'dcp-pw-dash' }, [
+      el('div', { class: 'dcp-muted' }, 'هنوز چیزی نخوانده‌اید.'),
+      allLink,
+    ]);
+  }
+  const top = data.top_cluster;
+  return el('div', { class: 'dcp-pw-dash' }, [
+    top ? el('div', {}, [
+      el('span', { class: 'dcp-muted' }, 'بیشترین مطالعه‌تان: '),
+      el('b', {}, top.fa + ' (٪' + faNum(top.coverage_pct) + ' پوشش)'),
+    ]) : null,
+    allLink,
+  ].filter(Boolean));
+}
+
 export async function renderDashboard(root, { me: preMe } = {}) {
   root.replaceChildren(el('div', { class: 'dcp-loading' }, 'در حال بارگذاری...'));
   // Always fetch fresh when the dashboard opens: /me and /progress are never
@@ -266,6 +287,7 @@ export async function renderDashboard(root, { me: preMe } = {}) {
 
   const recentWrap = el('div', {}, el('div', { class: 'dcp-loading' }, '...'));
   const collectionsWrap = el('div', {}, el('div', { class: 'dcp-loading' }, '...'));
+  const compassWrap = el('div', {}, el('div', { class: 'dcp-loading' }, '...'));
   const children = [
     el('div', { class: 'dcp-dash-hello' }, 'سلام، ' + (me.display_name || '')),
   ];
@@ -292,6 +314,12 @@ export async function renderDashboard(root, { me: preMe } = {}) {
     isPremium ? collectionsWrap : lockedFeatureCard('/plus/collections.html'),
     'هر هایلایت یا مقاله‌ای که دلتان بخواهد را، بر اساسِ موضوعی که خودتان انتخاب می‌کنید، در یک پوشه‌ی دلخواه ذخیره می‌کنید — مثلاً برای یک امتحان، یک بیمارِ خاص، یا هر چیزِ دیگر.',
   ));
+  children.push(section(
+    'قطب‌نمای مطالعه',
+    'وضعیت خواندن‌هایتان را نسبت به کل محتوای سایت و مسیرهای یادگیری می‌سنجد.',
+    isPremium ? compassWrap : lockedFeatureCard('/plus/reading-compass.html'),
+    'نه حدسِ سلیقه، بلکه آمارِ واقعیِ خواندن‌ها: چند درصد از هر پیلار را پوشش داده‌اید و بیشترین مطالعه‌تان کجا بوده. بر همین اساس دو دسته پیشنهاد می‌دهد: مطالبِ نخوانده‌ی همان حیطه برای ادامه، و حوزه‌هایی که هنوز اصلاً سراغشان نرفته‌اید برای کاوش.',
+  ));
 
   children.push(
     section('استریک', 'هر روز که بخوانید، هایلایت کنید یا مرور کنید، یک روز به زنجیره‌تان اضافه می‌شود. رکورد شما بیشترین زنجیره‌ای است که تا حالا ساخته‌اید و هیچ‌وقت پاک نمی‌شود.', streakDetail(me)),
@@ -309,4 +337,5 @@ export async function renderDashboard(root, { me: preMe } = {}) {
   root.replaceChildren(...children.filter(Boolean));
   recentWrap.replaceChildren(await recentBlock(model));
   if (isPremium) collectionsWrap.replaceChildren(await collectionsBlock());
+  if (isPremium) compassWrap.replaceChildren(await compassBlock());
 }

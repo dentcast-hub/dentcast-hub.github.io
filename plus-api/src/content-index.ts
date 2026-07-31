@@ -49,6 +49,11 @@ export function getFolders(): Folder[] {
   return getIndex().folders || [];
 }
 
+/** Raw clusters (with contentIds/subtopics) — the taxonomy a recommender walks. */
+export function getClusters(): Cluster[] {
+  return getIndex().clusters || [];
+}
+
 /** Title/url/type for a content_id (pathway steps resolve display metadata through this), or null if unknown. */
 export function getContentInfo(contentId: string): ContentInfo | null {
   return getIndex().byContent[contentId] || null;

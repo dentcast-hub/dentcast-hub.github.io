@@ -148,6 +148,10 @@ export const api = {
   pathway: (id) => request('/pathways/' + encodeURIComponent(id)),
   enrollPathway: (id) => request('/pathways/' + encodeURIComponent(id) + '/enroll', { method: 'POST' }),
 
+  // premium: reading compass — coverage report over the user's own reading,
+  // cross-referenced against the taxonomy and pathways (no interest guessing)
+  readingCompass: () => request('/reading-compass'),
+
   // premium: collections (Phase 3) - user-made freeform folders of highlights/pages
   listCollections: () => request('/collections'),
   getCollection: (id) => request('/collections/' + encodeURIComponent(id)),
