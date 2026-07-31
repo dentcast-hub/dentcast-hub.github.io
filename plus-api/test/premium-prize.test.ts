@@ -5,6 +5,9 @@ import { pool } from '../src/db.js';
 import { finalizeWeek } from '../src/services/league-finalize.js';
 import { grantWeeklyPrizes, expirePremiumPrizes } from '../src/services/premium-prize.js';
 import { notifyPremiumPrizes } from '../src/services/premium-prize-notify.js';
+import { notifications } from '../src/providers/registry.js';
+import { getLeagueConfig } from '../src/services/league-config.js';
+import { vi } from 'vitest';
 
 /**
  * Weekly league prize: the top of EVERY VALID group (not the top of one tier),
@@ -382,5 +385,68 @@ describe('notifyPremiumPrizes', () => {
 
     expect((await notifyPremiumPrizes(ASLEEP)).notified).toBe(0);
     expect((await notifyPremiumPrizes(NEXT_MORNING)).notified).toBe(2);
+  });
+});
+
+describe('what the winner is actually told', () => {
+  /** Capture the message handed to the senders for the first notified user. */
+  async function announce(at = AWAKE): Promise<{ title: string; body: string }> {
+    const sent: Array<{ title: string; body: string }> = [];
+    const spy = vi.spyOn(notifications, 'send').mockImplementation(async (_u, m) => {
+      if (typeof m !== 'string') sent.push({ title: m.title, body: m.body });
+    });
+    await notifyPremiumPrizes(at);
+    spy.mockRestore();
+    return sent[0];
+  }
+
+  async function winAndAnnounce(): Promise<{ title: string; body: string }> {
+    const ids = await seedGroup('composite', [90, 80]);
+    await pool.query('update profiles set telegram_id = 700900 where id = $1', [ids[0]]);
+    await finalizeWeek(WEEK);
+    await grantWeeklyPrizes(AWAKE);
+    return announce();
+  }
+
+  it('states the REAL prize length, not a number frozen into the copy', async () => {
+    const msg = await winAndAnnounce();
+    const cfg = await getLeagueConfig();
+
+    expect(msg.body).toContain('۳ روز');
+    expect(cfg.prize_days, 'the copy must match the config, not a literal').toBe(3);
+    // The exact regression this test exists for: the copy promised a week long
+    // after the prize became three days, so the winner lost premium on day four.
+    expect(msg.body).not.toContain('یک هفته');
+  });
+
+  it('follows a retune of prize_days', async () => {
+    await setPrizeCfg('prize_days', '5');
+    const msg = await winAndAnnounce();
+    expect(msg.body).toContain('۵ روز');
+  });
+
+  it('says GROUP, not league — the user can see their group and never their tier', async () => {
+    const msg = await winAndAnnounce();
+    expect(msg.body).toContain('گروهت');
+    expect(msg.body).not.toContain('لیگِ این هفته');
+  });
+
+  it('gives the banner the cooldown, so a winner knows why next week is quiet', async () => {
+    const app2 = await makeApp();
+    const ids = await seedGroup('composite', [90, 80]);
+    await finalizeWeek(WEEK);
+    await grantWeeklyPrizes(NEAR_WEEK);
+
+    const phone = '09121300009';
+    await pool.query('update profiles set phone = $1 where id = $2', [phone, ids[0]]);
+    const cookie = await loginAs(app2, phone);
+    const me = await app2.inject({ method: 'GET', url: '/me', headers: { cookie } });
+
+    const grant = me.json().pending_premium_grant;
+    expect(grant.cooldown_weeks).toBe(2);
+    // The banner derives the length from these two, so they must be usable.
+    const days = Math.round((new Date(grant.expires_at) - new Date(grant.granted_at)) / 86400000);
+    expect(days).toBe(3);
+    await app2.close();
   });
 });

@@ -30,7 +30,13 @@ import { getLeagueConfig } from './league-config.js';
 /** How far back a finalized week may be and still be worth granting/announcing. */
 const FRESH_DAYS = 7;
 
-export interface PendingPremiumGrant { granted_at: string; expires_at: string; }
+export interface PendingPremiumGrant {
+  granted_at: string;
+  expires_at: string;
+  /** So the banner can say when they may win again, instead of leaving a winner
+   *  who earns nothing next week to conclude the league is broken. */
+  cooldown_weeks: number;
+}
 
 async function grantPrizeForWeek(weekStart: string, now: Date): Promise<number> {
   return withTransaction(async (client) => {
@@ -115,12 +121,17 @@ async function grantPrizeForWeek(weekStart: string, now: Date): Promise<number> 
           if ((ours.rows[0]?.n ?? 0) === 0) continue;
         }
 
+        // granted_at is written from the SAME instant expires_at was derived
+        // from, rather than left to the database clock. The winner banner shows
+        // the prize length as the difference between the two, so the pair has to
+        // be internally consistent — not merely consistent in production because
+        // both clocks happen to agree there.
         const ins = await client.query(
-          `insert into premium_grants (user_id, week_start, expires_at)
-           values ($1, $2, $3)
+          `insert into premium_grants (user_id, week_start, granted_at, expires_at)
+           values ($1, $2, $3, $4)
            on conflict (user_id, week_start) do nothing
            returning id`,
-          [m.user_id, weekStart, expiresAt],
+          [m.user_id, weekStart, now.toISOString(), expiresAt],
         );
         if (!ins.rowCount) continue; // already granted for this week (idempotent re-run)
 
@@ -185,13 +196,16 @@ export async function expirePremiumPrizes(now: Date = new Date()): Promise<{ exp
 
 /** The caller's own unseen, still-active grant (for GET /me), or null. */
 export async function getPendingPremiumGrant(userId: string): Promise<PendingPremiumGrant | null> {
-  return one<PendingPremiumGrant>(
+  const row = await one<{ granted_at: string; expires_at: string }>(
     `select granted_at, expires_at from premium_grants
       where user_id = $1 and seen = false and revoked_at is null
       order by granted_at desc limit 1`,
     [userId],
     pool,
   );
+  if (!row) return null;
+  const cfg = await getLeagueConfig();
+  return { ...row, cooldown_weeks: cfg.prize_cooldown_weeks };
 }
 
 /** Acknowledge the banner so it stops showing. */
