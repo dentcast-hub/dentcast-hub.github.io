@@ -550,26 +550,12 @@
 
     /* 7) Article UX widgets — only on pages built on the shared article
           layer (/dc-article.css): a reading-time + share chip row above
-          the content, an auto table-of-contents for long articles, and a
-          topbar EN switch that appears exactly when a translated
-          counterpart exists (the hreflang en alternate is disk-discovered
-          by inject_hreflang.py, so this lights up as translations land).
+          the content, and an auto table-of-contents for long articles.
+          (The fa↔en language switch lives ONLY next to the article title
+          itself — see .lang-btn in each page's own markup — never in the
+          shared topbar, which has no room to spare.)
           All idempotent; styles live in dc-article.css. */
     if (document.querySelector('link[href^="/dc-article.css"]')) {
-
-      /* 7a) Topbar language switch — real en counterpart only. */
-      var enAlt = document.querySelector('link[rel="alternate"][hreflang="en"]');
-      if (enAlt && !document.getElementById('dcTopbarLang')) {
-        var langA = document.createElement('a');
-        langA.id = 'dcTopbarLang';
-        langA.className = 'dc-topbar-btn';
-        langA.href = enAlt.getAttribute('href');
-        langA.setAttribute('aria-label', 'English version');
-        langA.style.cssText = 'text-decoration:none;font-size:11px;font-weight:800;width:auto;min-width:34px;padding:0 12px;';
-        langA.textContent = 'EN';
-        var langActs = newHeader.querySelector('.dc-topbar-actions');
-        if (langActs) langActs.appendChild(langA);
-      }
 
       var dcBoxes = document.querySelectorAll('.text-box, .glass-box, .content-box');
       var firstBox = dcBoxes.length ? dcBoxes[0] : null;
