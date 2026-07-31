@@ -15,7 +15,7 @@ interface Cluster { key: string; fa: string; contentCount: number; contentIds: s
 interface Folder { key: string; fa: string; url: string; total: number; }
 interface ContentInfo { cluster: string | null; subtopic: string | null; type: string; title: string; url: string; secondary: string[]; }
 /** One real site #hashtag, with every content_id that carries it. */
-interface Tag { key: string; fa: string; contentCount: number; contentIds: string[]; }
+export interface Tag { key: string; fa: string; contentCount: number; contentIds: string[]; }
 interface IndexFile { version: number; folders: Folder[]; clusters: Cluster[]; tags: Tag[]; byContent: Record<string, ContentInfo>; }
 
 let cached: IndexFile | null = null;

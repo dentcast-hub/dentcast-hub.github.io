@@ -220,6 +220,32 @@ describe('keyword-search round (real site hashtags)', () => {
     if (implantIdx !== -1) expect(zincIdx).toBeLessThan(implantIdx);
   });
 
+  it('a generic shared word still surfaces a path to the niche article (regression - specificity weighting)', async () => {
+    // Real report: "افتادن سمان روکش" shares no word at all with «زینک
+    // فسفات», but DOES share "روکش" with 40+ OTHER single-article tags
+    // ("راک روکش", "ترای این روکش", ...) that are equally real but
+    // unrelated. Before weighting a tag's specificity by how RARE its words
+    // are (not just how many it has), those unrelated tags filled the whole
+    // candidate pool before insight-59's own tags ("گیر روکش", "سمان دائم",
+    // ...) got a look in — verified failing in 2 of 3 realistic trials
+    // pre-fix. Checks the CANDIDATE POOL handed to ai.narrowCase (not a
+    // specific final option), since any of several tags pointing at
+    // insight-59 surviving is enough — narrowCase's own model, reading the
+    // real description, picks which one to actually show.
+    await makePremium();
+    const narrowSpy = vi.spyOn(ai, 'narrowCase').mockResolvedValue({ done: true });
+    vi.spyOn(ai, 'suggestKeywords').mockResolvedValue(['افتادن روکش', 'سمان', 'لقی روکش', 'علت افتادن روکش']);
+    await next({ description: 'افتادن سمان روکش' });
+
+    const catalog = narrowSpy.mock.calls[0]?.[0]?.catalog as Array<{ key: string }> | undefined;
+    const tagsByKey = new Map(getTags().map((t) => [t.key, t]));
+    const reachesTarget = (catalog || []).some((o) => {
+      if (!o.key.startsWith('tag:')) return false;
+      return tagsByKey.get(o.key.slice(4))?.contentIds.includes('insight/insight-59');
+    });
+    expect(reachesTarget).toBe(true);
+  });
+
   it('never resolves on the ROOT round even if the AI claims "done" — always asks first', async () => {
     // Defense against a genuine ambiguity ("روکش بیمارم میوفته" - implant
     // crown or natural-tooth crown? the description alone can't say) getting
