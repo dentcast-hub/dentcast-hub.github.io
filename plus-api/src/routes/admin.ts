@@ -13,7 +13,9 @@ import {
 } from '../services/spot-stats.js';
 import { withPageViews } from '../services/view-stats.js';
 import { notifications } from '../providers/registry.js';
-import { probe, proxyConfigured, proxyHost, type ProbeResult } from '../providers/outbound.js';
+import {
+  probe, proxyConfigured, proxyHost, outboundFetch, describeError, type ProbeResult,
+} from '../providers/outbound.js';
 import { config } from '../config.js';
 import type { NotificationMessage } from '../providers/notifications/types.js';
 
@@ -351,6 +353,67 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
       user_id: row.id,
       channel: notifications.name,          // e.g. multi(webpush+telegram)
       telegram_linked: row.telegram_id != null,
+    });
+  });
+
+  // GET /admin/ai/health - is «دستیار هوشمند» actually wired to a model RIGHT NOW?
+  // Read-only and FREE: the probe lists models (GET {base}/models), it never asks
+  // for a completion, so checking costs no tokens.
+  //
+  // This exists for the same reason /admin/notify/health does: from outside, an
+  // assistant answering from the `stub` provider is indistinguishable from one
+  // answering from the real model — both return a sensible question — and the
+  // route that would tell you is behind a premium session. It also separates the
+  // two failures that look identical in the UI: env not set (still on stub) vs
+  // env set but this container cannot reach the gateway.
+  app.get('/admin/ai/health', async (request, reply) => {
+    const q = request.query as { probe?: string };
+    const withProbe = q.probe !== '0';
+    const live = config.ai.provider !== 'stub';
+
+    const configured = {
+      provider: config.ai.provider,
+      api_base: Boolean(config.ai.apiBase),
+      api_key: Boolean(config.ai.apiKey),
+      model: config.ai.model || null,
+      json_mode_requested: config.ai.jsonMode,
+      timeout_ms: config.ai.timeoutMs,
+      max_attempts: config.ai.maxAttempts,
+    };
+
+    // Nothing to probe on stub: it makes no network call by design.
+    if (!live || !withProbe || !config.ai.apiBase) {
+      return reply.send({
+        ok: !live || Boolean(config.ai.apiBase && config.ai.apiKey),
+        live,
+        configured,
+        probe: null,
+      });
+    }
+
+    const started = Date.now();
+    let result: { ok: boolean; status?: number; models?: string[]; error?: string };
+    try {
+      const res = await outboundFetch(
+        `${config.ai.apiBase}/models`,
+        { headers: { authorization: `Bearer ${config.ai.apiKey}` } },
+        { proxy: false, timeoutMs: config.ai.timeoutMs },
+      );
+      const body = (await res.json().catch(() => ({}))) as { data?: Array<{ id?: string }> };
+      result = {
+        ok: res.ok,
+        status: res.status,
+        models: (body.data ?? []).map((m) => String(m.id)).slice(0, 10),
+      };
+    } catch (err) {
+      result = { ok: false, error: describeError(err, config.ai.timeoutMs) };
+    }
+
+    return reply.send({
+      ok: result.ok,
+      live,
+      configured,
+      probe: { ...result, ms: Date.now() - started },
     });
   });
 

@@ -145,3 +145,36 @@ describe('admin KPIs', () => {
     expect(k.archive_usage).toHaveProperty('sessions_last_7d');
   });
 });
+
+describe('GET /admin/ai/health', () => {
+  it('requires admin credentials', async () => {
+    const res = await app.inject({ method: 'GET', url: '/admin/ai/health' });
+    expect(res.statusCode).toBe(401);
+  });
+
+  it('reports the stub provider as live:false and probes nothing (no spend, no network)', async () => {
+    // The suite pins AI_PROVIDER=stub (vitest.config.ts), which is exactly the
+    // state this endpoint exists to make visible: the assistant answers fine,
+    // but from a stub — indistinguishable from the real model out in the UI.
+    const res = await app.inject({
+      method: 'GET', url: '/admin/ai/health', headers: { authorization: basic },
+    });
+
+    expect(res.statusCode).toBe(200);
+    const body = res.json();
+    expect(body.live, 'stub is not a live model').toBe(false);
+    expect(body.ok).toBe(true);
+    expect(body.probe, 'stub makes no network call').toBeNull();
+    expect(body.configured.provider).toBe('stub');
+  });
+
+  it('echoes the tuning knobs so a deploy can be read back', async () => {
+    const res = await app.inject({
+      method: 'GET', url: '/admin/ai/health', headers: { authorization: basic },
+    });
+    const { configured } = res.json();
+    expect(configured.timeout_ms).toBe(config.ai.timeoutMs);
+    expect(configured.max_attempts).toBe(config.ai.maxAttempts);
+    expect(configured.json_mode_requested).toBe(config.ai.jsonMode);
+  });
+});
