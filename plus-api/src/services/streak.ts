@@ -90,13 +90,13 @@ export function streakIsAlive(
 export async function displayStreak(
   db: pg.Pool | pg.PoolClient,
   userId: string,
-  prev: Pick<StreakState, 'current_streak' | 'last_active_day'>,
+  prev: Pick<StreakState, 'current_streak' | 'last_active_day'> & { tier?: string },
   today: string,
 ): Promise<number> {
   const last = prev.last_active_day;
   if (!last) return 0;
   if (dayDiff(today, last) <= 1) return prev.current_streak;
-  const { score } = await computeScore(db, userId);
+  const { score } = await computeScore(db, userId, prev.tier);
   const used = await freezesUsedCount(db, userId);
   const shields = freezesAvailable(score, used);
   return streakIsAlive(last, today, shields) ? prev.current_streak : 0;
@@ -108,8 +108,8 @@ export async function displayStreak(
  * when a new day is counted. Locks the profile row to serialize same-user writes.
  */
 export async function applyStreak(client: pg.PoolClient, userId: string, day: string): Promise<void> {
-  const res = await client.query<StreakState>(
-    `select current_streak, longest_streak, last_active_day
+  const res = await client.query<StreakState & { tier: string }>(
+    `select current_streak, longest_streak, last_active_day, tier
        from profiles where id = $1 for update`,
     [userId],
   );
@@ -118,7 +118,7 @@ export async function applyStreak(client: pg.PoolClient, userId: string, day: st
 
   // Shields available right now (to bridge a missed-day gap). Same math the
   // dashboard shows, so display and engine never disagree.
-  const { score } = await computeScore(client, userId);
+  const { score } = await computeScore(client, userId, prev.tier);
   const used = await freezesUsedCount(client, userId);
   const shields = freezesAvailable(score, used);
 

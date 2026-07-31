@@ -28,8 +28,8 @@ const toFa = (n: number): string => String(n).replace(/\d/g, (d) => FA_DIGITS[Nu
 
 export async function runStreakReminders(now: Date = new Date()): Promise<{ reminded: number }> {
   const today = dayInTz(now, config.streakTimezone);
-  const eligible = await query<{ id: string; current_streak: number; last_active_day: string | null }>(
-    `select p.id, p.current_streak, p.last_active_day
+  const eligible = await query<{ id: string; current_streak: number; last_active_day: string | null; tier: string }>(
+    `select p.id, p.current_streak, p.last_active_day, p.tier
        from profiles p
       where coalesce((p.settings->'reminders'->>'streak')::boolean, false) = true
         and p.current_streak >= 1

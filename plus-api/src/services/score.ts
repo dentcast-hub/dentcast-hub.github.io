@@ -21,10 +21,16 @@ import { config } from '../config.js';
  *
  * Score is never deducted — a threshold is a milestone, not a purchase — so the
  * balance stays a plain subtraction: granted so far minus spent so far.
+ *
+ * Premium earns the SAME score at a better rate (unlike a Duolingo-style streak
+ * freeze, premium still has to earn its shields — it just gets there faster):
+ * PREMIUM_SCORE_MULTIPLIER scales the final score, which in turn scales shield
+ * progress too, since shields are earned off of score.
  */
 
 export const SHIELD_BASE = 200; // score needed for the first shield
 export const SHIELD_STEP = 50;  // each further shield costs this much more
+export const PREMIUM_SCORE_MULTIPLIER = 1.2;
 
 // Actions that count toward an "active day" for the score. Kept local (not the
 // streak module's QUALIFYING_ACTIONS) to avoid a circular import; the two sets
@@ -36,7 +42,7 @@ type Db = pg.Pool | pg.PoolClient;
 export interface ScoreBreakdown { score: number; active_days: number; total_highlights: number; }
 
 /** Compute a user's score and its parts from the activity log + highlights. */
-export async function computeScore(db: Db, userId: string): Promise<ScoreBreakdown> {
+export async function computeScore(db: Db, userId: string, tier?: string): Promise<ScoreBreakdown> {
   const ad = await db.query<{ n: number }>(
     `select count(distinct (created_at at time zone $2)::date)::int as n
        from user_activity where user_id = $1 and action = any($3)`,
@@ -48,7 +54,9 @@ export async function computeScore(db: Db, userId: string): Promise<ScoreBreakdo
   );
   const active_days = ad.rows[0]?.n ?? 0;
   const total_highlights = hl.rows[0]?.n ?? 0;
-  return { score: active_days * 10 + total_highlights, active_days, total_highlights };
+  const base = active_days * 10 + total_highlights;
+  const score = tier === 'premium' ? Math.round(base * PREMIUM_SCORE_MULTIPLIER) : base;
+  return { score, active_days, total_highlights };
 }
 
 /** How many shields the user has already spent (append-only log is the source). */

@@ -193,4 +193,19 @@ describe('GET /progress', () => {
     expect(fp.read).toBe(1);
     expect(fp.read).toBeLessThanOrEqual(fp.total);
   });
+
+  it('gives premium the 1.2x score multiplier, and rank stays consistent with it', async () => {
+    await addHighlight(cidsInSub[0], 'یک');
+    const before = await app.inject({ method: 'GET', url: '/progress', headers: { cookie } });
+    const freeScore = before.json().score;
+
+    await pool.query(`update profiles set tier = 'premium' where phone = '09121400001'`);
+    const after = await app.inject({ method: 'GET', url: '/progress', headers: { cookie } });
+    const body = after.json();
+    expect(body.score).toBe(Math.round(freeScore * 1.2));
+
+    // The rank query re-derives every OTHER user's score with the same rule, so
+    // a lone premium user never sees themselves ranked behind their own number.
+    expect(body.rank).toBe(1);
+  });
 });

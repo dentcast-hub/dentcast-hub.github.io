@@ -8,6 +8,7 @@ import { getConsumedContentIds } from '../services/consumption.js';
 import {
   computeScore, freezesUsedCount, freezesAvailable, pointsToNextFreeze,
   SHIELD_BASE, SHIELD_STEP, shieldCost, shieldsGranted, SCORING_ACTIONS,
+  PREMIUM_SCORE_MULTIPLIER,
 } from '../services/score.js';
 import { dayInTz, previousDay, nextDay, weekStartSaturday } from '../services/time.js';
 
@@ -149,7 +150,7 @@ export async function dashboardRoutes(app: FastifyInstance): Promise<void> {
     // Score: a concrete, activity-log-derived metric, ready for a future
     // leaderboard. Base = qualifying active days (monotonic) plus a small
     // per-highlight bonus. Streak is the headline; this is the comparable total.
-    const { score, active_days: activeDays } = await computeScore(pool, userId);
+    const { score, active_days: activeDays } = await computeScore(pool, userId, request.user!.tier);
     const totalHl = stats.rows[0]?.total_highlights ?? 0;
 
     // Streak shields (سپر استریک): unlocked at rising score thresholds (200, then
@@ -176,7 +177,10 @@ export async function dashboardRoutes(app: FastifyInstance): Promise<void> {
       const rk = await pool.query<{ ahead: number }>(
         `with scores as (
            select p.id,
-                  coalesce(ad.n, 0) * 10 + coalesce(hl.n, 0) as score
+                  case when p.tier = 'premium'
+                       then round((coalesce(ad.n, 0) * 10 + coalesce(hl.n, 0)) * $4::numeric)::int
+                       else coalesce(ad.n, 0) * 10 + coalesce(hl.n, 0)
+                  end as score
              from profiles p
              left join (
                select user_id, count(distinct (created_at at time zone $2)::date) as n
@@ -188,7 +192,7 @@ export async function dashboardRoutes(app: FastifyInstance): Promise<void> {
          )
          select count(*) filter (where score > $1)::int as ahead
            from scores`,
-        [score, config.streakTimezone, SCORING_ACTIONS],
+        [score, config.streakTimezone, SCORING_ACTIONS, PREMIUM_SCORE_MULTIPLIER],
       );
       rank = (rk.rows[0]?.ahead ?? 0) + 1;
     }

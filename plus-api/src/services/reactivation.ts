@@ -52,8 +52,8 @@ export async function runReactivationNudges(now: Date = new Date()): Promise<{ n
   const tz = config.streakTimezone;
   const today = dayInTz(now, tz);
 
-  const candidates = await query<{ id: string; current_streak: number; last_active_day: string | null }>(
-    `select p.id, p.current_streak, p.last_active_day
+  const candidates = await query<{ id: string; current_streak: number; last_active_day: string | null; tier: string }>(
+    `select p.id, p.current_streak, p.last_active_day, p.tier
        from profiles p
       where coalesce((p.settings->'reminders'->>'streak')::boolean, true) = true      -- (b) opt-out
         and (p.last_active_day is null or p.last_active_day <> $1::date)               -- (c) not active today
