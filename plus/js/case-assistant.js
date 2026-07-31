@@ -3,9 +3,55 @@
 // hatch) until the assistant points at real DentCast articles. All state lives
 // in this module (the browser); the server is stateless (plus-api's
 // /assistant/next re-derives everything from the history sent each call).
+// Visual language borrows the shape of a real AI product (a spark mark on
+// every assistant turn, a typing indicator while waiting, a recap trail of
+// the case + past answers) without becoming free-form chat - see
+// dcp-assist-* in plus-pages.css.
 import { el } from './util.js';
 import { api, ApiError } from './api.js';
 import { FOLDER_EN } from './content-index.js';
+
+function sparkAvatar(isSmall) {
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('viewBox', '0 0 24 24');
+  svg.setAttribute('aria-hidden', 'true');
+  svg.innerHTML = '<path d="M12 2l1.8 6.2L20 10l-6.2 1.8L12 18l-1.8-6.2L4 10l6.2-1.8L12 2z"/>';
+  const badge = el('div', { class: 'dcp-assist-avatar' + (isSmall ? ' is-sm' : '') });
+  badge.appendChild(svg);
+  return badge;
+}
+
+function sendButton(className) {
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('viewBox', '0 0 24 24');
+  svg.setAttribute('aria-hidden', 'true');
+  svg.innerHTML = '<path d="M3 20l18-8L3 4l0 6 12 2-12 2z"/>';
+  return el('button', { class: className, type: 'button', 'aria-label': 'ارسال' }, [svg]);
+}
+
+function answerLabel(ans) {
+  return ans.label || ans.custom || '';
+}
+
+// The case text + every resolved question/answer so far, kept visible above
+// the live turn - otherwise each step() wipes the screen and the exchange
+// looks amnesiac instead of like an ongoing conversation.
+function recapTrail(description, history) {
+  const wrap = el('div', { class: 'dcp-assist-thread' });
+  if (description) {
+    wrap.appendChild(el('div', { class: 'dcp-assist-recap' }, [
+      el('span', { class: 'dcp-assist-recap-label' }, 'شرح شما'),
+      el('div', { class: 'dcp-assist-recap-case' }, description),
+    ]));
+  }
+  for (const h of history) {
+    wrap.appendChild(el('div', { class: 'dcp-assist-recap' }, [
+      el('span', { class: 'dcp-assist-recap-text' }, h.question),
+      el('span', { class: 'dcp-assist-recap-answer' }, '✓ ' + answerLabel(h.answer)),
+    ]));
+  }
+  return wrap;
+}
 
 function articleRow(item) {
   return el('a', { class: 'dcp-pw-step', href: item.url }, [
@@ -26,71 +72,91 @@ export function renderCaseAssistant(container) {
     description = '';
     history = [];
     const ta = el('textarea', {
-      class: 'dcp-input dcp-assist-ta', rows: 4,
+      rows: 3,
       placeholder: 'وضعیت بیمار را با متن آزاد شرح بده؛ مثلاً چه شکایتی دارد و چه چیزی در معاینه دیده‌ای...',
     });
     const err = el('p', { class: 'dcp-inline-msg', hidden: true }, 'اول شرح بیمار را بنویس.');
-    const btn = el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button' }, 'بعدی');
-    btn.addEventListener('click', () => {
+    const send = sendButton('dcp-assist-composer-send');
+    send.addEventListener('click', () => {
       const text = ta.value.trim();
       if (!text) { err.hidden = false; return; }
       description = text;
       step();
     });
     container.replaceChildren(el('div', { class: 'dcp-assist-intro' }, [
-      el('p', { class: 'dcp-sec-hint' },
-        'شرح بده، بعد از بین چند گزینه انتخاب کن تا به مقاله‌ی مرتبط برسیم — نه گفتگوی آزاد، و نه تشخیص یا توصیه‌ی درمانی؛ فقط مسیر به محتوای خودِ سایت.'),
-      ta, err, btn,
+      el('p', { class: 'dcp-sec-hint' }, 'شرح بده، بعد از بین چند گزینه انتخاب کن تا به مقاله‌ی مرتبط برسیم.'),
+      el('div', { class: 'dcp-assist-composer' }, [ta, send]),
+      err,
+      el('p', { class: 'dcp-assist-disclaimer' },
+        'ⓘ نه گفتگوی آزاد، و نه تشخیص یا توصیه‌ی درمانی؛ فقط مسیر به محتوای خودِ سایت.'),
     ]));
   }
 
-  function loading() {
-    container.replaceChildren(el('div', { class: 'dcp-loading' }, 'در حال بررسی...'));
+  function thinking() {
+    const trail = recapTrail(description, history);
+    trail.appendChild(el('div', { class: 'dcp-assist-turn' }, [
+      sparkAvatar(true),
+      el('div', { class: 'dcp-assist-card' }, el('div', { class: 'dcp-assist-thinking' }, [el('span'), el('span'), el('span')])),
+    ]));
+    container.replaceChildren(trail);
   }
 
   function optionsScreen(question, options) {
+    const trail = recapTrail(description, history);
+
     const optWrap = el('div', { class: 'dcp-assist-opts' });
     for (const o of options) {
-      const b = el('button', { class: 'dcp-btn dcp-assist-opt', type: 'button' }, o.label);
+      const b = el('button', { class: 'dcp-assist-opt', type: 'button' }, o.label);
       b.addEventListener('click', () => answer({ key: o.key, label: o.label }, question, options));
       optWrap.appendChild(b);
     }
 
-    const customInput = el('input', { class: 'dcp-input', type: 'text', placeholder: 'توضیح بده...' });
-    const customSubmit = el('button', { class: 'dcp-btn', type: 'button' }, 'ثبت');
-    const customWrap = el('div', { class: 'dcp-assist-custom', hidden: true }, [customInput, customSubmit]);
-    customSubmit.addEventListener('click', () => {
+    const customInput = el('input', { type: 'text', placeholder: 'توضیح بده...' });
+    const customSend = sendButton('dcp-assist-send');
+    const customRow = el('div', { class: 'dcp-assist-custom', hidden: true }, [customInput, customSend]);
+    customSend.addEventListener('click', () => {
       const text = customInput.value.trim();
       if (!text) return;
       answer({ custom: text }, question, options);
     });
-    const customToggle = el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button' }, 'غیر از این‌ها');
-    customToggle.addEventListener('click', () => { customWrap.hidden = !customWrap.hidden; });
+    const moreBtn = el('button', { class: 'dcp-assist-more', type: 'button' }, 'غیر از این‌ها');
+    moreBtn.addEventListener('click', () => { customRow.hidden = !customRow.hidden; });
 
-    container.replaceChildren(el('div', { class: 'dcp-assist-round' }, [
-      el('p', { class: 'dcp-assist-q' }, question),
-      optWrap,
-      customToggle,
-      customWrap,
+    trail.appendChild(el('div', { class: 'dcp-assist-turn' }, [
+      sparkAvatar(true),
+      el('div', { class: 'dcp-assist-card' }, el('p', { class: 'dcp-assist-q' }, question)),
     ]));
+    trail.appendChild(optWrap);
+    trail.appendChild(el('div', { class: 'dcp-assist-opts' }, moreBtn));
+    trail.appendChild(customRow);
+    container.replaceChildren(trail);
   }
 
   function doneScreen(body) {
-    const restart = el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button' }, 'شروع دوباره');
+    const trail = recapTrail(description, history);
+    const restart = el('button', { class: 'dcp-assist-restart', type: 'button' }, 'شروع دوباره');
     restart.addEventListener('click', showIntro);
-    const head = body.matched_fa
-      ? el('p', { class: 'dcp-sec-hint' }, 'نزدیک‌ترین حیطه: ' + body.matched_fa)
-      : el('p', { class: 'dcp-sec-hint' }, 'نتیجه‌ی روشنی پیدا نشد؛ دوباره امتحان کن.');
+    const lead = el('p', { class: 'dcp-assist-result-lead' },
+      body.matched_fa ? 'نزدیک‌ترین حیطه: ' + body.matched_fa : 'نتیجه‌ی روشنی پیدا نشد؛ دوباره امتحان کن.');
     const list = body.articles.length
       ? el('div', { class: 'dcp-pw-steps' }, body.articles.map(articleRow))
       : el('div', { class: 'dcp-muted' }, 'مقاله‌ی مرتبطی پیدا نشد.');
-    container.replaceChildren(el('div', {}, [head, list, restart]));
+    trail.appendChild(el('div', { class: 'dcp-assist-turn' }, [
+      sparkAvatar(true),
+      el('div', { class: 'dcp-assist-card' }, [lead, list, restart]),
+    ]));
+    container.replaceChildren(trail);
   }
 
   function errorScreen(message) {
-    const retry = el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button' }, 'دوباره امتحان کن');
+    const trail = recapTrail(description, history);
+    const retry = el('button', { class: 'dcp-assist-restart', type: 'button' }, 'دوباره امتحان کن');
     retry.addEventListener('click', showIntro);
-    container.replaceChildren(el('div', { class: 'dcp-empty' }, [el('p', {}, message), retry]));
+    trail.appendChild(el('div', { class: 'dcp-assist-turn' }, [
+      sparkAvatar(true),
+      el('div', { class: 'dcp-assist-card' }, [el('p', {}, message), retry]),
+    ]));
+    container.replaceChildren(trail);
   }
 
   function answer(ans, question, options) {
@@ -99,7 +165,7 @@ export function renderCaseAssistant(container) {
   }
 
   async function step() {
-    loading();
+    thinking();
     try {
       const body = await api.assistantNext(description, history);
       if (body.done) doneScreen(body);
