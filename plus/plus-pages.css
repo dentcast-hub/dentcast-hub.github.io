@@ -145,6 +145,16 @@ a.dcp-progress-name:hover { color: var(--ac, #0b5fff); text-decoration: underlin
    "این ویژگی ویژه‌ی پریمیوم است" gating. */
 .dcp-locked-card { display: inline-block; text-decoration: none; }
 
+/* ---- «دستیار هوشمند» wizard (case-assistant.js) --------------------------
+   A short multiple-choice round, not a chat transcript — no message bubbles,
+   just one question + a button per option (+ a free-text escape hatch). */
+.dcp-assist-intro, .dcp-assist-round { display: flex; flex-direction: column; gap: 12px; }
+.dcp-assist-ta { width: 100%; resize: vertical; font: inherit; line-height: 1.8; }
+.dcp-assist-q { font-weight: 700; margin: 0; }
+.dcp-assist-opts { display: flex; flex-wrap: wrap; gap: 8px; }
+.dcp-assist-custom { display: flex; gap: 8px; flex-wrap: wrap; }
+.dcp-assist-custom .dcp-input { flex: 1 1 200px; }
+
 /* ---- profile ------------------------------------------------------------- */
 .dcp-field-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
 .dcp-field-row .dcp-input { flex: 1 1 180px; background: var(--surface, #fff); color: var(--txt); border: 1px solid var(--border, rgba(2,35,96,.12)); border-radius: 10px; padding: 10px 12px; font: inherit; }
