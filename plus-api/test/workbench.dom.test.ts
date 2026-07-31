@@ -7,6 +7,10 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 globalThis.fetch = vi.fn(() => Promise.reject(new Error('no network'))) as any;
 
 const { Workbench } = await import('../../plus/js/workbench.js');
+// The toolbar renders one swatch per palette entry, so assert against the
+// palette itself. A hardcoded count silently rots the day a colour is added —
+// which is exactly what happened when `red` landed (6850acd8).
+const { PALETTE } = await import('../../plus/js/config.js');
 
 function setArticle() {
   document.body.innerHTML =
@@ -29,7 +33,8 @@ describe('workbench builds its study-mode UI', () => {
     const toolbar = document.querySelector('.dcp-toolbar');
     expect(toolbar, 'toolbar should exist').not.toBeNull();
     const swatches = document.querySelectorAll('.dcp-toolbar .dcp-swatch');
-    expect(swatches.length, 'color swatches').toBe(4);
+    expect(swatches.length, 'one color swatch per palette entry').toBe(PALETTE.length);
+    expect(PALETTE.length, 'palette is not empty').toBeGreaterThan(0);
     // سرفصل (TOC) was removed from the workbench: no panel, no toolbar button.
     expect(document.querySelector('.dcp-toc-panel'), 'no TOC panel').toBeNull();
     const toolbarText = (document.querySelector('.dcp-toolbar') as HTMLElement).textContent || '';
