@@ -89,17 +89,67 @@ body.dcp-page a.dcp-btn-danger { color: #fff; }
 .dcp-folder-count { font-size: .85rem; font-weight: 700; color: var(--ac, #0b5fff); background: var(--chip-bg, rgba(11,95,255,.08)); border-radius: var(--r-f, 999px); padding: 2px 12px; white-space: nowrap; }
 .dcp-folder-count.is-zero { color: var(--txt3, #62779a); background: transparent; font-weight: 400; }
 
-/* ---- per-folder progress bars -------------------------------------------- */
-.dcp-progress-list { display: flex; flex-direction: column; gap: 10px; }
-/* One line per folder: name (right), the bar stretching in the middle, percent (left). */
-.dcp-progress-row { display: grid; grid-template-columns: auto 1fr auto; gap: 10px; align-items: center; }
-.dcp-progress-name { font-weight: 600; white-space: nowrap; }
+/* ---- per-folder / per-pathway progress bars -------------------------------
+   Two-line layout: name + percent share the first line, the track is forced
+   onto its own full-width line via flex-basis:100%. This is deliberate -
+   a single-row grid (name | track | percent) let a long label (pathway
+   titles run a full sentence) claim the whole row and squeeze the track to
+   nothing or push the percent outside the card. Wrapping keeps every row the
+   same width no matter how long the label is. `order` re-sequences the
+   existing DOM (name, track, percent) without any markup change. */
+.dcp-progress-list { display: flex; flex-direction: column; gap: 14px; }
+.dcp-progress-row { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 12px; row-gap: 6px; }
+.dcp-progress-name {
+  order: 1; flex: 1 1 auto; min-width: 0; font-weight: 700;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
 a.dcp-progress-name { color: inherit; text-decoration: none; }
-a.dcp-progress-name:hover { color: var(--ac, #0b5fff); text-decoration: underline; }
-.dcp-progress-val { color: var(--txt2, #4a5f85); font-size: .85rem; font-variant-numeric: tabular-nums; min-width: 3.2em; text-align: left; }
-.dcp-progress-track { height: 6px; background: var(--surface3, #eaecf5); border-radius: 999px; overflow: hidden; }
-/* Understated gray fill (not the accent) - this is a quiet completion signal. */
-.dcp-progress-fill { height: 100%; background: var(--txt3, #62779a); border-radius: 999px; transition: width .4s; }
+/* Two shapes share this class: a linked name inside a plain, non-clickable
+   row (dashboard's folder list - only the name itself is a link) and a
+   plain-span name inside a row that's a whole-row link (قطب‌نمای مطالعه's
+   pathway rows) - cover both without implying the coverage rows (plain
+   <div>, never a link) are clickable. */
+a.dcp-progress-name:hover, a.dcp-progress-row:hover .dcp-progress-name { color: var(--ac, #0b5fff); }
+/* Marks the single highest-coverage row (قطب‌نمای مطالعه's «پوشش هر پیلار») -
+   a sibling of .dcp-progress-name, own flex item, so it can never get
+   clipped by the name's ellipsis overflow the way an ::after on the name
+   itself would. */
+.dcp-progress-badge {
+  order: 2; flex: none; font-size: .68rem; font-weight: 700; white-space: nowrap;
+  color: var(--ac, #0b5fff); background: var(--chip-bg, rgba(11,95,255,.08));
+  border: 1px solid var(--chip-bd, rgba(11,95,255,.2)); border-radius: 999px; padding: 2px 9px;
+}
+.dcp-progress-val {
+  order: 3; flex: none; font-weight: 800; color: var(--ac, #0b5fff);
+  font-size: .85rem; font-variant-numeric: tabular-nums;
+}
+.dcp-progress-track {
+  order: 4; flex: 0 0 100%; height: 7px;
+  background: var(--surface3, #eaecf5); border-radius: 999px; overflow: hidden;
+}
+/* A soft accent gradient (not the flat brand blue) - the bar is the primary
+   data in this list, so it earns the accent instead of staying a quiet gray
+   line; a min-width keeps the rounded cap visible even at 1-2%. */
+.dcp-progress-fill {
+  height: 100%; min-width: 6px; border-radius: 999px; transition: width .4s;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--ac, #0b5fff) 55%, var(--surface, #fff)), var(--ac, #0b5fff));
+}
+a.dcp-progress-row:hover { text-decoration: none; }
+
+/* ---- section variants (قطب‌نمای مطالعه) -----------------------------------
+   "ادامه در «X»" is the page's one recommendation - a soft accent wash marks
+   it as the actionable card. "حوزه‌های دورمانده" gets a dashed border instead
+   of a solid card - unread/uncharted territory, matching the compass theme. */
+.dcp-dash-sec.is-spotlight { background: color-mix(in srgb, var(--ac, #0b5fff) 6%, transparent); border-color: color-mix(in srgb, var(--ac, #0b5fff) 22%, transparent); }
+.dcp-dash-sec.is-spotlight .dcp-dash-h2 { color: var(--pr, #022360); }
+.dcp-dash-sec.is-unexplored {
+  background: transparent; box-shadow: none;
+  border-style: dashed; border-color: color-mix(in srgb, var(--txt3, #62779a) 45%, transparent);
+}
+
+.dcp-pw-heading-row { display: flex; align-items: center; gap: 10px; }
+.dcp-pw-heading-row .dcp-pw-heading { margin: 0; }
+.dcp-compass-ico { flex: none; width: 28px; height: 28px; color: var(--ac, #0b5fff); }
 
 /* ---- score --------------------------------------------------------------- */
 .dcp-score-wrap { display: flex; flex-direction: column; gap: 8px; }
