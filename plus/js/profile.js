@@ -104,11 +104,24 @@ function monthCompare(m) {
   ]);
 }
 
-function planBlock() {
+// `plus` is the base free tier every logged-in account already has, so it is
+// always shown active. `premium` reflects the REAL account state (me.tier,
+// same field dashboard.js reads) — it can be true today via the league's
+// weekly top-2 prize (plus-api's premium-prize.ts), not just a future paid
+// plan, so a non-premium account is pointed at how to earn it instead of a
+// stale "به زودی".
+function planBlock(me) {
   const msg = el('span', { class: 'dcp-inline-msg' });
   const plus = el('span', { class: 'dcp-plan is-active' }, 'پلاس');
-  const premium = el('button', { class: 'dcp-plan is-soon', type: 'button' }, 'پریمیوم');
-  premium.addEventListener('click', () => { msg.textContent = 'به زودی'; });
+  const isPremium = me.tier === 'premium';
+  const premium = isPremium
+    ? el('span', { class: 'dcp-plan is-active' }, 'پریمیوم')
+    : el('button', { class: 'dcp-plan is-soon', type: 'button' }, 'پریمیوم');
+  if (!isPremium) {
+    premium.addEventListener('click', () => {
+      msg.textContent = 'با رتبه‌ی برتر در لیگِ این هفته، یک هفته پریمیوم رایگان می‌گیری.';
+    });
+  }
   return el('div', { class: 'dcp-plan-row' }, [plus, premium, msg]);
 }
 
@@ -459,7 +472,7 @@ export async function renderProfile(root, { me: preMe } = {}) {
   root.replaceChildren(
     el('div', { class: 'dcp-dash-hello' }, 'پروفایل'),
     section('نام مستعار', pseudonymBlock(me)),
-    section('پلن', planBlock()),
+    section('پلن', planBlock(me)),
     section('هفته شما', stats.week && stats.week.length ? weekStrip(stats.week) : el('div', { class: 'dcp-muted' }, '—')),
     section('رکوردها', el('div', { class: 'dcp-records' }, [
       el('div', {}, [el('b', {}, faNum(stats.records?.current_streak || 0)), el('span', {}, 'استریک فعلی')]),
