@@ -1,17 +1,20 @@
 // «قطب‌نمای مطالعه» (premium): a coverage report, not an interest guess — see
 // plus-api/src/services/reading-compass.ts. Reuses the same row shapes the
 // dashboard/pathways pages already use (dcp-progress-row for bars,
-// dcp-pw-step for suggestion rows) so this page needs no new CSS.
+// dcp-pw-step for suggestion rows); is-spotlight/is-unexplored/
+// dcp-progress-badge/dcp-compass-ico are the only additions, in
+// plus-pages.css.
 import { el, faNum } from './util.js';
 import { api } from './api.js';
 import { FOLDER_EN } from './content-index.js';
 
-function coverageRow(c) {
+function coverageRow(c, isTop) {
   return el('div', { class: 'dcp-progress-row' }, [
     el('span', { class: 'dcp-progress-name' }, c.fa),
+    isTop ? el('span', { class: 'dcp-progress-badge' }, 'بیشترین مطالعه') : null,
     el('div', { class: 'dcp-progress-track' }, el('div', { class: 'dcp-progress-fill', style: 'width:' + c.coverage_pct + '%' })),
     el('span', { class: 'dcp-progress-val' }, '٪' + faNum(c.coverage_pct)),
-  ]);
+  ].filter(Boolean));
 }
 
 function pathwayRow(p) {
@@ -32,12 +35,27 @@ function itemRow(item) {
   ]);
 }
 
-function section(title, hint, body) {
-  return el('div', { class: 'dcp-dash-sec' }, [
+function section(title, hint, body, extraClass) {
+  return el('div', { class: 'dcp-dash-sec' + (extraClass ? ' ' + extraClass : '') }, [
     el('h3', { class: 'dcp-dash-h2' }, title),
     hint ? el('p', { class: 'dcp-sec-hint' }, hint) : null,
     body,
   ].filter(Boolean));
+}
+
+// Compass-rose glyph beside the page title - the one piece of chrome that
+// names the subject (this is a *compass*, not a generic report list).
+function compassIcon() {
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('class', 'dcp-compass-ico');
+  svg.setAttribute('viewBox', '0 0 48 48');
+  svg.setAttribute('fill', 'none');
+  svg.setAttribute('aria-hidden', 'true');
+  svg.innerHTML =
+    '<circle cx="24" cy="24" r="20" stroke="currentColor" stroke-width="2.4"/>' +
+    '<path d="M31 17 L26 26 L17 31 L22 22 Z" fill="currentColor"/>' +
+    '<circle cx="24" cy="24" r="2.2" fill="currentColor"/>';
+  return svg;
 }
 
 /** GET /plus/reading-compass.html — the full coverage report + both suggestion buckets. */
@@ -53,7 +71,7 @@ export async function renderReadingCompass(container) {
   }
 
   const top = el('div', { class: 'dcp-pw-top' }, [
-    el('h2', { class: 'dcp-pw-heading' }, 'قطب‌نمای مطالعه'),
+    el('div', { class: 'dcp-pw-heading-row' }, [compassIcon(), el('h2', { class: 'dcp-pw-heading' }, 'قطب‌نمای مطالعه')]),
     el('p', { class: 'dcp-sec-hint' },
       'وضعیت واقعیِ خواندن‌هایتان را نسبت به کل محتوای سایت و مسیرهای یادگیری نشان می‌دهد — بر اساس آنچه واقعاً خوانده‌اید، نه حدسِ سلیقه.'),
   ]);
@@ -63,7 +81,8 @@ export async function renderReadingCompass(container) {
   children.push(section(
     'پوشش هر پیلار',
     'چند درصد از هر پیلار را تا اینجا خوانده‌اید.',
-    el('div', { class: 'dcp-progress-list' }, data.clusters.map(coverageRow)),
+    el('div', { class: 'dcp-progress-list' },
+      data.clusters.map((c) => coverageRow(c, data.top_cluster && c.key === data.top_cluster.key))),
   ));
 
   if (data.top_cluster) {
@@ -73,6 +92,7 @@ export async function renderReadingCompass(container) {
       data.same_area.length
         ? el('div', { class: 'dcp-pw-steps' }, data.same_area.map(itemRow))
         : el('div', { class: 'dcp-muted' }, 'همه‌ی این پیلار را خوانده‌اید.'),
+      'is-spotlight',
     ));
   }
 
@@ -82,6 +102,7 @@ export async function renderReadingCompass(container) {
     data.unexplored.length
       ? el('div', { class: 'dcp-pw-steps' }, data.unexplored.map(itemRow))
       : el('div', { class: 'dcp-muted' }, 'در همه‌ی حوزه‌ها ردی از مطالعه‌ی شما هست.'),
+    'is-unexplored',
   ));
 
   if (data.pathways.length) {
