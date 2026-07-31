@@ -94,14 +94,20 @@ function buildCard(data, onClose) {
     el('b', {}, fmtRemaining(data.time_remaining_seconds).replace(' مانده', '')),
   ]));
 
+  // Every number here comes from the API (league_config), never hardcoded: a
+  // founder can retune the scoring at any time, and an explainer that says the
+  // rules is the worst place to quietly go stale. Falls back to the shipped
+  // defaults only if an older API answers without the table.
+  const xp = data.xp || {};
+  const n = (v, fallback) => faNum(typeof v === 'number' ? v : fallback);
   const howto = () => el('details', { class: 'dcp-lg-howto' }, [
     el('summary', {}, 'چطور امتیازِ لیگ می‌گیرم؟'),
     el('ul', { class: 'dcp-lg-howto-list' }, [
-      el('li', {}, 'خواندنِ کاملِ یک مقاله (تا آخر): +۵'),
-      el('li', {}, 'گوش‌دادنِ نصفِ یک پادکست: +۵'),
-      el('li', {}, 'هر هایلایت: +۱ (تا ۳ هایلایت در هر مقاله)'),
-      el('li', {}, 'مرورِ کارت: +۲'),
-      el('li', {}, 'اولین فعالیتِ هر روز: +۵'),
+      el('li', {}, 'خواندنِ کاملِ یک مقاله (تا آخر): +' + n(xp.read, 5)),
+      el('li', {}, 'گوش‌دادنِ نصفِ یک پادکست: +' + n(xp.listen, 5)),
+      el('li', {}, 'هر هایلایت: +' + n(xp.highlight, 1) + ' (تا ' + n(xp.highlight_cap, 3) + ' هایلایت در هر مقاله)'),
+      el('li', {}, 'مرورِ کارت: +' + n(xp.review, 2)),
+      el('li', {}, 'اولین فعالیتِ هر روز: +' + n(xp.active_bonus, 5)),
     ]),
     el('p', {}, 'فقط فعالیتِ همین هفته در لیگ حساب می‌شود و شنبه از نو صفر می‌شود.'),
   ]);

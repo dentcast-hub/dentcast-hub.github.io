@@ -273,3 +273,67 @@ describe('keyword-search round (real site hashtags)', () => {
     for (const o of body.options) expect(clusterKeys.has(o.key)).toBe(true);
   });
 });
+
+describe('keyword-suggestion cache', () => {
+  // The root round costs TWO sequential model calls (suggest keywords, then
+  // narrow); this cache removes the first one for a description already seen.
+  // The stub provider returns [] by design, and an empty list is deliberately
+  // NOT cached, so these tests supply a realistic non-empty suggestion and
+  // count REAL calls through the provider registry.
+  beforeEach(async () => { await makePremium(); });
+
+  const SUGGESTED = ['روکش', 'سمان'];
+
+  /** One spy across the whole test, so a cache hit shows up as a missing call. */
+  function spyKeywords(result: string[] = SUGGESTED) {
+    return vi.spyOn(ai, 'suggestKeywords').mockResolvedValue(result);
+  }
+
+  async function ask(description: string): Promise<void> {
+    const res = await next({ description });
+    expect(res.statusCode).toBe(200);
+  }
+
+  it('asks the model once, then serves the repeat from cache', async () => {
+    const spy = spyKeywords();
+    const desc = 'روکش بیمارم مدام می‌افتد و سمان قبلی شسته شده';
+
+    await ask(desc);
+    expect(spy).toHaveBeenCalledTimes(1);
+
+    await ask(desc);
+    expect(spy, 'repeat: no second model call').toHaveBeenCalledTimes(1);
+  });
+
+  it('treats spacing differences as the same description', async () => {
+    const spy = spyKeywords();
+
+    await ask('تحلیل استخوان اطراف ایمپلنت');
+    await ask('  تحلیل   استخوان  اطراف ایمپلنت  ');
+
+    expect(spy).toHaveBeenCalledTimes(1);
+  });
+
+  it('still calls the model for a genuinely different description', async () => {
+    const spy = spyKeywords();
+
+    await ask('پوسیدگی عمیق پروگزیمال مولر دوم');
+    await ask('بی‌دندانی کامل فک بالا');
+
+    expect(spy).toHaveBeenCalledTimes(2);
+  });
+
+  it('does not cache an empty suggestion list (a degraded round must retry next time)', async () => {
+    const desc = 'یک شرح مبهم';
+
+    const empty = spyKeywords([]);
+    await ask(desc);
+    expect(empty).toHaveBeenCalledTimes(1);
+    empty.mockRestore();
+
+    // The empty answer was not pinned: the next round asks the model again.
+    const again = spyKeywords();
+    await ask(desc);
+    expect(again, 'an empty result must not be cached').toHaveBeenCalledTimes(1);
+  });
+});

@@ -183,15 +183,29 @@ function lockedFeatureCard(href) {
 // even the hello line, and acknowledged once via POST /premium/grant/seen —
 // same shape as the league outcome banner's outcome_seen.
 function premiumGrantBanner(grant) {
+  // Length is DERIVED from the grant itself, never written into the copy: this
+  // banner claimed "one week" for a while after the prize became three days,
+  // which promised the winner something the system then took back on day four.
+  const days = Math.max(1, Math.round(
+    (new Date(grant.expires_at) - new Date(grant.granted_at)) / 86400000,
+  ));
   const list = el('ul', { class: 'dcp-prize-list' }, PREMIUM_FEATURES.map((f) =>
     el('li', {}, [el('b', {}, f.title + ': '), f.hint])));
   const dismiss = el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button' }, 'متوجه شدم');
+  // A winner who earns nothing next week, with no explanation, concludes the
+  // league is broken rather than that it is somebody else's turn.
+  const cooldown = grant.cooldown_weeks > 0
+    ? el('p', { class: 'dcp-sec-hint' },
+      faNum(grant.cooldown_weeks) + ' هفته‌ی بعد نوبتِ بقیه‌ی گروه است؛ بعدش دوباره می‌توانی برنده شوی.')
+    : null;
   const banner = el('div', { class: 'dcp-prize-banner' }, [
-    el('h2', { class: 'dcp-prize-h' }, '🎉 جایزه‌ی این هفته: یک هفته پرمیوم!'),
-    el('p', { class: 'dcp-sec-hint' }, 'رتبه‌ی برترِ لیگِ این هفته بودی — به مدت یک هفته همه‌ی این‌ها برات بازه:'),
+    el('h2', { class: 'dcp-prize-h' }, '🎉 نفر اولِ گروهت شدی: ' + faNum(days) + ' روز پرمیوم'),
+    el('p', { class: 'dcp-sec-hint' },
+      'این هفته در گروهت اول شدی — تا ' + faNum(days) + ' روز همه‌ی این‌ها برات بازه:'),
     list,
+    cooldown,
     dismiss,
-  ]);
+  ].filter(Boolean));
   dismiss.addEventListener('click', async () => {
     dismiss.disabled = true;
     await api.premiumGrantSeen().catch(() => {});

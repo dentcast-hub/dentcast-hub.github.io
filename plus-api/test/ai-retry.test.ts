@@ -56,6 +56,18 @@ beforeEach(() => {
   resetJsonMode();
 });
 
+/**
+ * AI_JSON_MODE now defaults to FALSE, because the endpoint we run on rejects
+ * response_format outright. The two tests below are specifically about what
+ * happens on an endpoint where it IS requested, so they turn it on explicitly
+ * and put it back afterwards.
+ */
+function withJsonModeOn(): () => void {
+  const previous = config.ai.jsonMode;
+  (config.ai as { jsonMode: boolean }).jsonMode = true;
+  return () => { (config.ai as { jsonMode: boolean }).jsonMode = previous; };
+}
+
 afterEach(() => {
   globalThis.fetch = realFetch;
   vi.restoreAllMocks();
@@ -136,6 +148,7 @@ describe('openai-compatible retry', () => {
   });
 
   it('drops response_format after the endpoint rejects it, and succeeds without', async () => {
+    const restore = withJsonModeOn();
     // Exactly the ArvanCloud behaviour: response_format => 400, without it => 200.
     const bodies: Array<Record<string, unknown>> = [];
     globalThis.fetch = vi.fn(async (_url: unknown, init: { body?: string } = {}) => {
@@ -156,9 +169,11 @@ describe('openai-compatible retry', () => {
       question: 'کدام؟',
       options: [{ key: 'occlusion', label: 'اکلوژن' }],
     });
+    restore();
   });
 
   it('stays off once latched: a later call never re-sends response_format', async () => {
+    const restore = withJsonModeOn();
     const bodies: Array<Record<string, unknown>> = [];
     globalThis.fetch = vi.fn(async (_url: unknown, init: { body?: string } = {}) => {
       const body = JSON.parse(init.body ?? '{}') as Record<string, unknown>;
@@ -172,6 +187,7 @@ describe('openai-compatible retry', () => {
 
     expect(bodies).toHaveLength(1); // no wasted 400 on the second call
     expect(bodies[0].response_format).toBeUndefined();
+    restore();
   });
 
   it('parses a ```json fenced answer (what a model returns without JSON mode)', async () => {
@@ -237,5 +253,22 @@ describe('openai-compatible suggestKeywords', () => {
 
     await expect(provider.suggestKeywords('x')).resolves.toEqual(['اکلوژن']);
     expect(f.calls()).toBe(2);
+  });
+});
+
+describe('AI_JSON_MODE default', () => {
+  it('is OFF, so the gateway we actually run on never pays a doomed 400', async () => {
+    expect(config.ai.jsonMode).toBe(false);
+
+    const bodies: Array<Record<string, unknown>> = [];
+    globalThis.fetch = vi.fn(async (_url: unknown, init: { body?: string } = {}) => {
+      bodies.push(JSON.parse(init.body ?? '{}') as Record<string, unknown>);
+      return ok({ done: true });
+    }) as unknown as typeof fetch;
+
+    await provider.narrowCase(INPUT);
+
+    expect(bodies).toHaveLength(1);
+    expect(bodies[0].response_format).toBeUndefined();
   });
 });

@@ -25,6 +25,10 @@ export interface LeagueConfig {
   xp_highlight: number;      // per highlight...
   xp_highlight_cap: number;  // ...capped per article/week
   xp_review: number;         // manual card review
+  // Weekly premium prize (0016). Winners are the top of every VALID group.
+  prize_days: number;             // how long a granted premium lasts
+  prize_cooldown_weeks: number;   // a winner sits out this many weeks
+  prize_winners_per_group: number;
   // Legacy 0006 keys — kept for back-compat, no longer read by awardLeagueXp.
   xp_per_active_day: number;
   xp_per_highlight: number;
@@ -33,10 +37,11 @@ export interface LeagueConfig {
 
 type Db = pg.Pool | pg.PoolClient;
 
-const NUMERIC_KEYS: Array<keyof LeagueConfig> = [
+export const NUMERIC_KEYS: Array<keyof LeagueConfig> = [
   'group_size_current', 'promotion_pct', 'demotion_pct', 'min_valid_group_size',
   'promotion_min_weekly_xp', 'cooldown_weeks', 'max_active_tier_order',
   'xp_active_bonus', 'xp_read', 'xp_listen', 'xp_highlight', 'xp_highlight_cap', 'xp_review',
+  'prize_days', 'prize_cooldown_weeks', 'prize_winners_per_group',
   'xp_per_active_day', 'xp_per_highlight',
 ];
 

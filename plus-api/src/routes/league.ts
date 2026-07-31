@@ -70,6 +70,20 @@ export async function leagueRoutes(app: FastifyInstance): Promise<void> {
       time_remaining_seconds: secondsUntilWeekEnd(week_end, now),
       tier: tierPublic(currentTier),
       pending_outcome,
+      // The scoring table the "چطور امتیازِ لیگ می‌گیرم؟" box shows. Sent rather
+      // than hardcoded in the client because these are league_config values a
+      // founder can retune at any time (POST /admin/league/config) — a hardcoded
+      // list would quietly start lying the moment one of them moved, and the
+      // explainer users trust to be the rules is the worst place for that.
+      // Sent on the not-joined branch too: the box is shown there as well.
+      xp: {
+        read: cfg.xp_read,
+        listen: cfg.xp_listen,
+        highlight: cfg.xp_highlight,
+        highlight_cap: cfg.xp_highlight_cap,
+        review: cfg.xp_review,
+        active_bonus: cfg.xp_active_bonus,
+      },
     };
 
     if (!mem) {

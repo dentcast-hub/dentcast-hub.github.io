@@ -158,6 +158,13 @@ export const api = {
   // premium: «دستیار هوشمند» — stateless narrowing wizard, not a chat. The
   // caller resends the whole history every call; nothing is stored server-side.
   assistantNext: (description, history) => request('/assistant/next', { method: 'POST', body: { description, history } }),
+  // Assistant telemetry: the explicit two-button verdict, and which suggested
+  // article was opened. Fire-and-forget at every call site — it must never
+  // delay the reader.
+  assistantFeedback: (roundId, kind, optionKey) => request('/assistant/feedback', {
+    method: 'POST',
+    body: { round_id: roundId, kind, option_key: optionKey },
+  }),
 
   // premium: collections (Phase 3) - user-made freeform folders of highlights/pages
   listCollections: () => request('/collections'),

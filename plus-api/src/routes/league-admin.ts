@@ -5,12 +5,14 @@ import { dayInTz } from '../services/time.js';
 import { leagueWeek, getTiers } from '../services/league.js';
 import {
   getLeagueConfig, getLeagueConfigRows, getLeagueAudit, setLeagueConfigLock,
+  setLeagueConfig, NUMERIC_KEYS,
 } from '../services/league-config.js';
 
 /**
- * League admin (spec 10): read-only observability + the emergency lock + a manual
- * tier override. The self-tuning logic runs automatically; the admin watches and
- * only intervenes for abnormal situations.
+ * League admin (spec 10): observability + the emergency lock + a manual tier
+ * override + retuning any behavioural number (POST /admin/league/config). The
+ * self-tuning logic runs automatically; the admin watches and only intervenes
+ * for abnormal situations.
  */
 export async function leagueAdminRoutes(app: FastifyInstance): Promise<void> {
   app.addHook('preHandler', requireAdmin);
@@ -90,6 +92,69 @@ export async function leagueAdminRoutes(app: FastifyInstance): Promise<void> {
       groups_below_validity: belowValidity,
       audit_log: await getLeagueAudit(50),
     });
+  });
+
+  // POST /admin/league/config { key, value, reason?, force? } — change a league
+  // behavioural number (spec 11: none of them are hardcoded, they all live in
+  // league_config). Goes through setLeagueConfig, so the change is audited and a
+  // locked key is still respected.
+  //
+  // Exists because until now the ONLY way to retune the league — say, lowering
+  // promotion_min_weekly_xp after seeing the median come in under it — was a
+  // direct connection to the production database. That is a bad thing to need
+  // for a routine decision.
+  //
+  // setLeagueConfig answers false for three very different reasons (unknown
+  // key, locked key, value already set). They are separated here, because
+  // "nothing happened" is useless when you cannot tell a frozen key from a
+  // no-op.
+  app.post('/admin/league/config', {
+    schema: {
+      body: {
+        type: 'object', required: ['key', 'value'],
+        properties: {
+          key: { type: 'string' },
+          value: {}, // number or string; normalised below
+          reason: { type: 'string' },
+          force: { type: 'boolean' }, // override the emergency lock
+        },
+      },
+    },
+  }, async (request, reply) => {
+    const b = request.body as { key: string; value: unknown; reason?: string; force?: boolean };
+    const rows = await getLeagueConfigRows();
+    const row = rows.find((r) => r.key === b.key);
+    if (!row) {
+      return reply.code(404).send({ error: 'unknown_key', valid_keys: rows.map((r) => r.key) });
+    }
+
+    const value = String(b.value ?? '').trim();
+    // A behavioural number that silently becomes NaN would not fail here — it
+    // would fail at finalize, a week later, on real users.
+    if ((NUMERIC_KEYS as string[]).includes(b.key)) {
+      const n = Number(value);
+      if (!Number.isFinite(n) || n < 0) {
+        return reply.code(400).send({ error: 'invalid_value', message: 'این کلید باید یک عدد نامنفی باشد.' });
+      }
+    }
+
+    if (row.locked && !b.force) {
+      return reply.code(409).send({
+        error: 'locked',
+        message: 'این کلید قفل است. برای تغییر، force بفرست یا اول قفلش را بردار.',
+        locked_at: row.locked_at,
+      });
+    }
+    if (row.value === value) {
+      return reply.send({ ok: true, changed: false, key: b.key, value, note: 'unchanged' });
+    }
+
+    const changed = await setLeagueConfig(
+      b.key as Parameters<typeof setLeagueConfig>[0],
+      value,
+      { triggerMetric: b.reason ?? 'manual (admin)', force: b.force },
+    );
+    return reply.send({ ok: true, changed, key: b.key, old_value: row.value, value });
   });
 
   // POST /admin/league/lock { key, locked } — emergency freeze of a config key

@@ -3,6 +3,9 @@ import { getClusters, getContentInfo, getTags, type Tag } from '../content-index
 import { ai } from '../providers/registry.js';
 import type { NarrowHistoryEntry, NarrowOption } from '../providers/ai/types.js';
 import { getConsumedContentIds } from './consumption.js';
+import {
+  hashDescription, learnedBonuses, recordRound, recordChoice, type OfferedOption,
+} from './assistant-learning.js';
 
 /**
  * «دستیار هوشمند» (premium): the AI's role is narrowing ONLY — turning a free-text
@@ -64,8 +67,8 @@ export interface CaseArticle {
 }
 
 export type CaseStep =
-  | { done: false; question: string; options: NarrowOption[] }
-  | { done: true; matched_fa: string | null; articles: CaseArticle[] };
+  | { done: false; question: string; options: NarrowOption[]; round_id?: string | null }
+  | { done: true; matched_fa: string | null; articles: CaseArticle[]; round_id?: string | null };
 
 function clusterByKey(key: string) {
   return getClusters().find((c) => c.key === key) ?? null;
@@ -210,24 +213,97 @@ function dedupeByContentCoverage(sorted: Tag[], limit: number): Tag[] {
 }
 
 /**
+ * Keyword-suggestion cache. The root round costs TWO sequential model calls
+ * (suggest keywords, then narrow), and on a slow day that measured 15-53s to
+ * the first question — so the cheapest win is not making the first call at all
+ * when we have already answered this exact text.
+ *
+ * It is safe to cache because the call is deterministic by construction:
+ * temperature 0, no user identity in the input, and the result is only ever a
+ * list of topic phrases that then get matched against the site's tags IN CODE.
+ * Two users describing the same case should get the same candidate tags.
+ *
+ * In-process and bounded, the same trade-off rate-limit.ts documents: a restart
+ * empties it and a second instance keeps its own copy, both of which cost at
+ * most one extra model call. TTL exists so that re-tagged content eventually
+ * changes the answer; MAX_ENTRIES so a flood of unique descriptions cannot grow
+ * it without limit (oldest inserted is evicted first — Map preserves insertion
+ * order, and a hit refreshes an entry's position).
+ */
+const KEYWORD_TTL_MS = 24 * 60 * 60 * 1000;
+const KEYWORD_MAX_ENTRIES = 500;
+
+const keywordCache = new Map<string, { at: number; keywords: string[] }>();
+
+/** Same case, typed with different spacing/casing, is the same lookup. */
+function keywordCacheKey(text: string): string {
+  return text.trim().replace(/\s+/g, ' ').toLowerCase();
+}
+
+async function cachedKeywords(searchText: string): Promise<string[]> {
+  const key = keywordCacheKey(searchText);
+  const hit = keywordCache.get(key);
+  if (hit && Date.now() - hit.at < KEYWORD_TTL_MS) {
+    keywordCache.delete(key);
+    keywordCache.set(key, hit); // refresh recency
+    return hit.keywords;
+  }
+  if (hit) keywordCache.delete(key); // expired
+
+  const keywords = await ai.suggestKeywords(searchText);
+
+  // Never cache an empty result: that is what a failed/degraded round looks
+  // like, and pinning it for a day would keep a user on the fallback catalog.
+  if (keywords.length) {
+    keywordCache.set(key, { at: Date.now(), keywords });
+    while (keywordCache.size > KEYWORD_MAX_ENTRIES) {
+      const oldest = keywordCache.keys().next().value as string | undefined;
+      if (oldest === undefined) break;
+      keywordCache.delete(oldest);
+    }
+  }
+  return keywords;
+}
+
+/** Test/maintenance helper: forget every cached suggestion. */
+export function clearKeywordCache(): void {
+  keywordCache.clear();
+}
+
+/**
  * Round 1 (or any round reached with only free text so far): ask the AI to
  * read the case description + any "غیر از این‌ها" refinements and suggest
  * short topic phrases in the site's own hashtag style, then match those, IN
  * CODE, against every real site tag — a wide, deduplicated pool of them, not
- * a hard-final 4 (see TAG_CANDIDATE_POOL). Falls back to the original
- * top-level pillar catalog when nothing scores above threshold (a very
- * generic description, or the stub/dev provider, which never suggests
+ * a hard-final 4 (see TAG_CANDIDATE_POOL), further nudged by which (word,
+ * tag) pairs have actually worked before (learnedBonuses). Falls back to the
+ * original top-level pillar catalog when nothing scores above threshold (a
+ * very generic description, or the stub/dev provider, which never suggests
  * anything).
  */
 async function nextRootCatalog(description: string, history: NarrowHistoryEntry[]): Promise<NarrowOption[]> {
   const searchText = [description, ...customAnswers(history)].join('\n');
-  const suggestions = await ai.suggestKeywords(searchText);
+  const suggestions = await cachedKeywords(searchText);
   const suggestedWords = new Set(suggestions.flatMap((s) => words(s)));
+
+  // What past rounds on these same words ended well. BOUNDED (LEARN_CAP): it
+  // reorders near-ties, where the static score has no opinion, and can never
+  // lift a tag the words do not actually match past the threshold below.
+  const learned = suggestedWords.size
+    ? await learnedBonuses([...suggestedWords])
+    : new Map<string, number>();
 
   const ranked = suggestedWords.size
     ? getTags()
-      .map((t) => ({ t, score: tagMatchScore(t.fa, suggestedWords), specificity: specificityWeight(t.fa) }))
-      .filter((x) => x.score >= TAG_MATCH_THRESHOLD)
+      .map((t) => {
+        const match = tagMatchScore(t.fa, suggestedWords);
+        return { t, match, score: match + (learned.get(t.key) ?? 0), specificity: specificityWeight(t.fa) };
+      })
+      // Gate on the RAW match, never the learned total: eligibility is a
+      // question about the words, and learning must not smuggle a tag the case
+      // does not actually mention past the threshold. It only reorders what
+      // already qualified.
+      .filter((x) => x.match >= TAG_MATCH_THRESHOLD)
       // A full match (score 1.0) is common to several tags at once — e.g. a
       // case about implant-crown cementation fully matches both the broad
       // "ایمپلنت" (85 articles) and the specific "زینک فسفات" (1 article).
@@ -304,15 +380,45 @@ export async function nextCaseStep(
   // Never trust the client's history length: cap it here regardless of what was
   // sent, so a single description can drive at most maxRounds AI calls.
   const history = historyIn.slice(-config.assistant.maxRounds);
-  if (history.length >= config.assistant.maxRounds) return resolve(userId, history);
+
+  // Learning bookkeeping. The description itself is never stored — only the hash
+  // that makes a repeat recognisable. The history's last entry IS the answer to
+  // the round we showed previously, so the choice records itself here rather
+  // than depending on the client to report it.
+  const descHash = hashDescription(normalizeFa(description));
+  const roundNo = history.length;
+  const searchWords = [...new Set(words([description, ...customAnswers(history)].join('\n')))];
+  if (roundNo > 0) {
+    const last = history[history.length - 1].answer;
+    await recordChoice({
+      userId, descHash, roundNo: roundNo - 1,
+      chosenKey: 'custom' in last ? null : last.key,
+    }).catch(() => { /* learning must never break a round */ });
+  }
+
+  /** Log what we are about to show and hand the id back for click/feedback. */
+  const logged = async (step: CaseStep): Promise<CaseStep> => {
+    const offered: OfferedOption[] = step.done
+      ? []
+      : step.options.map((o, i) => ({ key: o.key, label: o.label, position: i + 1 }));
+    const resolvedTag = step.done && lastConcreteKey(history)?.startsWith(TAG_PREFIX)
+      ? lastConcreteKey(history)!.slice(TAG_PREFIX.length)
+      : null;
+    const roundId = await recordRound({
+      userId, descHash, words: searchWords, roundNo, offered, resolvedTag,
+    }).catch(() => null);
+    return { ...step, round_id: roundId };
+  };
+
+  if (history.length >= config.assistant.maxRounds) return logged(await resolve(userId, history));
 
   const key = lastConcreteKey(history);
   // A tag is always a leaf — picking one resolves straight to its content,
   // there is no further narrowing under a single hashtag.
-  if (key?.startsWith(TAG_PREFIX)) return resolve(userId, history);
+  if (key?.startsWith(TAG_PREFIX)) return logged(await resolve(userId, history));
 
   const catalog = key ? nextClusterCatalog(key) : await nextRootCatalog(description, history);
-  if (!catalog) return resolve(userId, history);
+  if (!catalog) return logged(await resolve(userId, history));
 
   const result = await ai.narrowCase({ description, history, catalog });
   if (result.done) {
@@ -326,8 +432,10 @@ export async function nextCaseStep(
     // "done" this early. Once a real pick HAS been made (key is set), the
     // user has already answered at least one clarifying question, so a
     // model-decided "done" there is a real resolution, not a guess.
-    if (!key) return { done: false, question: DEFAULT_QUESTION, options: catalog.slice(0, MAX_TAG_OPTIONS) };
-    return resolve(userId, history);
+    if (!key) {
+      return logged({ done: false, question: DEFAULT_QUESTION, options: catalog.slice(0, MAX_TAG_OPTIONS) });
+    }
+    return logged(await resolve(userId, history));
   }
-  return { done: false, question: result.question, options: result.options };
+  return logged({ done: false, question: result.question, options: result.options });
 }

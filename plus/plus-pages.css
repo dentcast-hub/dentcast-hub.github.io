@@ -357,3 +357,22 @@ a.dcp-progress-row:hover { text-decoration: none; }
 .dcp-overlay-title { font-weight: 800; font-size: 1.05rem; }
 .dcp-overlay-close { background: none; border: none; font-size: 1.6rem; line-height: 1; cursor: pointer; color: var(--txt); padding: 4px 8px; }
 .dcp-overlay-body { max-width: 900px; width: 100%; margin: 0 auto; padding: 16px; box-sizing: border-box; }
+
+/* Assistant result verdict — the two-button "was this useful?" asked at the
+   moment the answer lands. Deliberately quiet: a thin separator and muted
+   buttons, so it reads as an aside to the result and never competes with the
+   article links above it. */
+.dcp-assist-verdict {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+  margin-top: 14px; padding-top: 12px;
+  border-top: 1px solid var(--border, rgba(2,35,96,.12));
+}
+.dcp-assist-verdict-q { font-size: .85rem; color: var(--txt2, #4a5f85); margin-inline-end: 2px; }
+.dcp-assist-verdict-btn {
+  font: inherit; font-weight: 600; font-size: .82rem; cursor: pointer;
+  padding: 6px 12px; border-radius: var(--r-f, 999px);
+  border: 1.5px solid var(--border, rgba(2,35,96,.12));
+  background: transparent; color: var(--txt2, #4a5f85);
+}
+.dcp-assist-verdict-btn:hover { border-color: var(--txt3, #62779a); color: var(--txt); }
+.dcp-assist-verdict-done { font-size: .85rem; color: var(--txt2, #4a5f85); }

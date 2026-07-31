@@ -4,6 +4,7 @@ import { requirePremium } from '../middleware/require-premium.js';
 import { config } from '../config.js';
 import { consume, HOUR_MS } from '../services/rate-limit.js';
 import { nextCaseStep } from '../services/case-assistant.js';
+import { recordFeedback } from '../services/assistant-learning.js';
 import type { NarrowHistoryEntry } from '../providers/ai/types.js';
 
 // «دستیار هوشمند» (premium): stateless narrowing wizard, not a chat — the client
@@ -31,5 +32,30 @@ export async function caseAssistantRoutes(app: FastifyInstance): Promise<void> {
     const history = Array.isArray(body.history) ? (body.history as NarrowHistoryEntry[]) : [];
     const step = await nextCaseStep(userId, description, history);
     return reply.send(step);
+  });
+
+  // POST /assistant/feedback { round_id, kind: 'up'|'down'|'click', option_key? }
+  // The signals the server cannot observe on its own. `up`/`down` is the
+  // explicit two-button verdict on a result; `click` says which option was
+  // opened, and is weighted DOWN by its position (services/assistant-learning.ts)
+  // so it cannot simply confirm whatever we already ranked first.
+  //
+  // Deliberately forgiving: an unknown round id answers 200 with recorded:false
+  // rather than an error. This is telemetry attached to a UI button — a stale
+  // tab must never show a user an error for a thing that does not affect them.
+  app.post('/assistant/feedback', async (request, reply) => {
+    const b = request.body as { round_id?: unknown; kind?: unknown; option_key?: unknown };
+    const roundId = typeof b.round_id === 'string' ? b.round_id : '';
+    const kind = b.kind === 'up' || b.kind === 'down' || b.kind === 'click' ? b.kind : null;
+    if (!roundId || !kind) return reply.code(400).send({ error: 'round_id_and_kind_required' });
+    if (!/^[0-9a-f-]{36}$/i.test(roundId)) return reply.send({ ok: true, recorded: false });
+
+    const recorded = await recordFeedback({
+      userId: request.user!.id,
+      roundId,
+      kind,
+      optionKey: typeof b.option_key === 'string' ? b.option_key : undefined,
+    });
+    return reply.send({ ok: true, recorded });
   });
 }

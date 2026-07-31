@@ -53,14 +53,22 @@ function recapTrail(description, history) {
   return wrap;
 }
 
-function articleRow(item) {
-  return el('a', { class: 'dcp-pw-step', href: item.url }, [
+function articleRow(item, roundId) {
+  const row = el('a', { class: 'dcp-pw-step', href: item.url }, [
     el('span', { class: 'dcp-pw-step-marker', 'aria-hidden': 'true' }, '📖'),
     el('div', { class: 'dcp-pw-step-body' }, [
       el('div', { class: 'dcp-pw-step-top' }, el('span', { class: 'dcp-pw-step-kind', dir: 'ltr' }, FOLDER_EN[item.type] || item.type)),
       el('div', { class: 'dcp-pw-step-title' }, item.title),
     ]),
   ]);
+  // Report the open, then let the navigation happen. Fire-and-forget: telemetry
+  // must never delay or block the reader getting to the article.
+  if (roundId) {
+    row.addEventListener('click', () => {
+      api.assistantFeedback(roundId, 'click', item.content_id).catch(() => {});
+    });
+  }
+  return row;
 }
 
 /** GET /plus/assistant.html — the whole wizard, one screen at a time. */
@@ -139,13 +147,36 @@ export function renderCaseAssistant(container) {
     const lead = el('p', { class: 'dcp-assist-result-lead' },
       body.matched_fa ? 'نزدیک‌ترین حیطه: ' + body.matched_fa : 'نتیجه‌ی روشنی پیدا نشد؛ دوباره امتحان کن.');
     const list = body.articles.length
-      ? el('div', { class: 'dcp-pw-steps' }, body.articles.map(articleRow))
+      ? el('div', { class: 'dcp-pw-steps' }, body.articles.map((a) => articleRow(a, body.round_id)))
       : el('div', { class: 'dcp-muted' }, 'مقاله‌ی مرتبطی پیدا نشد.');
     trail.appendChild(el('div', { class: 'dcp-assist-turn' }, [
       sparkAvatar(true),
-      el('div', { class: 'dcp-assist-card' }, [lead, list, restart]),
+      el('div', { class: 'dcp-assist-card' }, [lead, list, verdictBox(body.round_id), restart]),
     ]));
     container.replaceChildren(trail);
+  }
+
+  /**
+   * Two buttons, asked at the moment of the result — the only signal that says
+   * outright whether the match was right, rather than being inferred from what
+   * the reader did next. Two options and not more: every extra choice costs
+   * responses. It answers once and then thanks, so a second press cannot
+   * double-count and the user is not nagged.
+   */
+  function verdictBox(roundId) {
+    if (!roundId) return el('div', { hidden: 'hidden' });
+    const box = el('div', { class: 'dcp-assist-verdict' });
+    const ask = el('span', { class: 'dcp-assist-verdict-q' }, 'این نتیجه به کارت آمد؟');
+    const send = (kind) => {
+      api.assistantFeedback(roundId, kind).catch(() => {});
+      box.replaceChildren(el('span', { class: 'dcp-assist-verdict-done' }, 'ممنون — همین بازخورد دفعه‌ی بعد را دقیق‌تر می‌کند.'));
+    };
+    const yes = el('button', { class: 'dcp-assist-verdict-btn', type: 'button' }, 'به کارم آمد');
+    const no = el('button', { class: 'dcp-assist-verdict-btn', type: 'button' }, 'چیزی که می‌خواستم نبود');
+    yes.addEventListener('click', () => send('up'));
+    no.addEventListener('click', () => send('down'));
+    box.append(ask, yes, no);
+    return box;
   }
 
   function errorScreen(message) {

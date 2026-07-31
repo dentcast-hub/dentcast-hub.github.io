@@ -4,6 +4,7 @@ import { pool } from '../src/db.js';
 import { resetRateLimits } from '../src/services/rate-limit.js';
 import { clearOtpStore } from '../src/services/otp.js';
 import { clearBaleLinkStore } from '../src/services/bale-link.js';
+import { clearKeywordCache } from '../src/services/case-assistant.js';
 
 /** Truncate all data tables and reset in-process stores. Call in beforeEach. */
 export async function resetDb(): Promise<void> {
@@ -14,17 +15,35 @@ export async function resetDb(): Promise<void> {
       subscriptions, payments, certificates, anon_events,
       push_subscriptions, articles, auth_identities, spot_stats, view_stats,
       notification_log,
+      assistant_rounds, assistant_tag_scores,
       leagues, league_members, league_weekly_stats, league_audit_log
     restart identity cascade
   `);
   // League seed data (tiers + config) is created ONCE by the migration and must
-  // survive truncation — reset only the auto-tuned state back to seed defaults so
-  // each test starts from a known baseline.
+  // survive truncation — so reset the knobs back to their seed values, because
+  // league_config is NOT truncated and a test that retunes one would otherwise
+  // hand its change to every test that runs after it.
   await pool.query(`
     update league_config set value = case key
       when 'group_size_current' then '8'
       when 'max_active_tier_order' then '3'
       when 'group_size_last_changed_week' then ''
+      when 'promotion_min_weekly_xp' then '30'
+      when 'promotion_pct' then '20'
+      when 'demotion_pct' then '20'
+      when 'min_valid_group_size' then '6'
+      when 'cooldown_weeks' then '4'
+      when 'xp_active_bonus' then '5'
+      when 'xp_read' then '5'
+      when 'xp_listen' then '5'
+      when 'xp_highlight' then '1'
+      when 'xp_highlight_cap' then '3'
+      when 'xp_review' then '2'
+      when 'xp_per_active_day' then '10'
+      when 'xp_per_highlight' then '1'
+      when 'prize_days' then '3'
+      when 'prize_cooldown_weeks' then '2'
+      when 'prize_winners_per_group' then '1'
       else value end,
       locked = false, locked_at = null;
     `);
@@ -32,6 +51,7 @@ export async function resetDb(): Promise<void> {
     "update league_tiers set is_active = (tier_order <= 3), activated_at = case when tier_order <= 3 then now() else null end",
   );
   resetRateLimits();
+  clearKeywordCache();
   clearOtpStore();
   clearBaleLinkStore();
 }

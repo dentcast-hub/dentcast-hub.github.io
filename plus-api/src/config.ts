@@ -35,6 +35,16 @@ export const config = {
 
   databaseUrl: str('DATABASE_URL', 'postgres://dentcast:dentcast@localhost:5432/dentcast_plus'),
 
+  // Build stamp, injected by the Dockerfile (see its ARG/ENV block). Reported by
+  // GET /health so a deploy can be VERIFIED rather than assumed: without it,
+  // a container running last week's image is indistinguishable from a fresh one
+  // whenever a release changes only internals (copy, a query, a default).
+  build: {
+    tag: str('BUILD_TAG', 'dev'),
+    commit: str('GIT_SHA', 'unknown'),
+    builtAt: str('BUILT_AT', 'unknown'),
+  },
+
   port: int('PORT', 8787),
   host: str('HOST', '0.0.0.0'),
   corsOrigins: list('CORS_ORIGINS', ['http://localhost:5500', 'http://127.0.0.1:5500']),
@@ -215,12 +225,16 @@ export const config = {
     maxAttempts: int('AI_MAX_ATTEMPTS', 3),
     retryBudgetMs: int('AI_RETRY_BUDGET_MS', 20_000),
     // Ask for response_format=json_object, which turns "please answer in JSON"
-    // into a hard guarantee — where the endpoint supports it. ArvanCloud's
-    // gateway does NOT and rejects the whole request with a bare 400, so the
-    // provider latches this off for the process on the first such 400 and falls
-    // back to prompt-enforced JSON. Set false to skip even that first failed
-    // call; leave true for an endpoint that honours it.
-    jsonMode: bool('AI_JSON_MODE', true),
+    // into a hard guarantee — where the endpoint supports it.
+    //
+    // Defaults to FALSE because the endpoint we actually run on (ArvanCloud's
+    // gateway) rejects it outright with a bare 400: measured 3/3 failures with
+    // it, 3/3 successes without. The provider still self-heals if it is turned
+    // on against such an endpoint (it latches off after the first 400), but
+    // that costs one wasted round trip on every container boot for a result we
+    // already know. Set true for an endpoint that honours response_format —
+    // the prompt-enforced JSON path stays correct either way.
+    jsonMode: bool('AI_JSON_MODE', false),
     // AI calls get their own, much longer timeout than the notification channels
     // (outbound.timeoutMs, 10s). A reasoning model emits a whole thinking pass
     // before its answer and routinely needs more than 10s; sharing that budget
