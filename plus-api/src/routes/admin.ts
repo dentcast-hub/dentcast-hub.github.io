@@ -1,7 +1,9 @@
 import type { FastifyInstance } from 'fastify';
 import { requireAdmin } from '../middleware/basic-auth.js';
 import { computeKpis, type Kpis } from '../services/kpis.js';
-import { onArticlePublished, runFreeDigest, backfillExistingContent } from '../services/article-notify.js';
+import {
+  onArticlePublished, runFreeDigest, runPremiumBacklog, backfillExistingContent,
+} from '../services/article-notify.js';
 import { runReactivationNudges } from '../services/reactivation.js';
 import { runStreakReminders } from '../services/streak-reminder.js';
 import { one } from '../db.js';
@@ -133,8 +135,10 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
   });
 
   // POST /admin/articles/published - the `article_published` event. The publish
-  // pipeline calls this once per new page. Premium users are notified immediately;
-  // the free digest is scheduled (notify_free_after = published_at + delay).
+  // pipeline calls this once per new page. Premium users are notified immediately
+  // when the publish lands inside the awake window (09:00-22:00 Tehran) and on the
+  // next 09:00 sweep otherwise — `deferred` in the response says which; the free
+  // digest is scheduled either way (notify_free_after = published_at + delay).
   app.post('/admin/articles/published', {
     schema: {
       body: {
@@ -165,6 +169,15 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
   // (the cron does this at 21:00 Asia/Tehran). Useful for ops and verification.
   app.post('/admin/articles/run-free-digest', async (_request, reply) => {
     const result = await runFreeDigest(new Date());
+    return reply.send({ ok: true, ...result });
+  });
+
+  // POST /admin/articles/run-premium-backlog - manually release the premium
+  // pushes held overnight by the awake window (the sweep does this at 09:00
+  // Tehran). Twin of run-free-digest; useful to verify a late-night publish
+  // actually went out rather than waiting until morning to find out.
+  app.post('/admin/articles/run-premium-backlog', async (_request, reply) => {
+    const result = await runPremiumBacklog(new Date());
     return reply.send({ ok: true, ...result });
   });
 

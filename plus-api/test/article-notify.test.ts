@@ -290,7 +290,12 @@ describe('push subscription routes + article_published endpoint', () => {
     const res = await app.inject({
       method: 'POST', url: '/admin/articles/published',
       headers: { authorization: adminHeader },
-      payload: { content_id: 'notecast/n-1', title: 'نوت تازه', url: '/notecast/n-1.html' },
+      // Pinned to mid-afternoon Tehran: outside the awake window the push is held
+      // for the 09:00 sweep, which would make this assertion depend on the clock.
+      payload: {
+        content_id: 'notecast/n-1', title: 'نوت تازه', url: '/notecast/n-1.html',
+        published_at: '2026-03-10T12:00:00Z',
+      },
     });
     expect(res.statusCode).toBe(200);
     const body = res.json();

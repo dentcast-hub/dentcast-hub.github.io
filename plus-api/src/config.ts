@@ -74,6 +74,24 @@ export const config = {
     baleBotToken: str('BALE_BOT_TOKEN', ''),
     baleWebhookSecret: str('BALE_WEBHOOK_SECRET', ''),
     baleApiBase: str('BALE_API_BASE', 'https://tapi.bale.ai'),
+
+    // --- delivery policy (services/notify-policy.ts) -------------------------
+    // maxPerDay: hard cap on notifications delivered to ONE user per Tehran day.
+    //   The price of instant delivery is that a busy day (several publishes + a
+    //   league outcome + cards due) can stack up; over-notifying is how a bot
+    //   gets blocked and push permission revoked, and neither comes back. Excess
+    //   is DROPPED, not queued — a nudge delivered a day late is worse than none.
+    //   `system` (founder broadcast) is exempt and always lands.
+    maxPerDay: int('NOTIFY_MAX_PER_DAY', 5),
+    // awakeStartHour/awakeEndHour: the Tehran hours in which an EVENT-DRIVEN
+    //   notification is allowed to fire the moment its event happens. Inside the
+    //   window (09:00-22:00) instant means instant; outside it the notification
+    //   is HELD — not dropped — and released at awakeStartHour the next morning.
+    //   Both event-driven kinds need this: league weeks finalize at 00:00, and a
+    //   publish can land at any hour. The window is half-open [start, end), so
+    //   22:00 sharp already waits. Set both equal to disable it and fire always.
+    awakeStartHour: int('NOTIFY_AWAKE_START_HOUR', 9),
+    awakeEndHour: int('NOTIFY_AWAKE_END_HOUR', 22),
   },
 
   // Outbound HTTP to the notification destinations (see providers/outbound.ts).
@@ -140,6 +158,15 @@ export const config = {
   // Evening default leaves time to act before Tehran midnight.
   streakReminder: {
     hour: int('STREAK_REMINDER_HOUR', 20),
+  },
+
+  // Review (Leitner) reminder — PREMIUM ONLY, because the review schedule itself
+  // is premium (routes/review.ts requires it). Fired once a day at this Tehran
+  // hour to premium users who have cards due. Morning by default, deliberately
+  // NOT 20:00: that hour already carries the streak reminder and the reactivation
+  // nudge, and a study prompt lands better before the day than at the end of it.
+  reviewReminder: {
+    hour: int('REVIEW_REMINDER_HOUR', 9),
   },
 
   // Reactivation nudge for users with NO live streak: a gentle once-a-day

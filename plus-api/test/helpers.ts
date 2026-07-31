@@ -13,6 +13,7 @@ export async function resetDb(): Promise<void> {
       collections, collection_items, user_pathways,
       subscriptions, payments, certificates, anon_events,
       push_subscriptions, articles, auth_identities, spot_stats, view_stats,
+      notification_log,
       leagues, league_members, league_weekly_stats, league_audit_log
     restart identity cascade
   `);

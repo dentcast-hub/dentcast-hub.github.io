@@ -1,8 +1,10 @@
 import { config } from './config.js';
-import { runFreeDigest } from './services/article-notify.js';
+import { runFreeDigest, runPremiumBacklog } from './services/article-notify.js';
 import { runStreakReminders } from './services/streak-reminder.js';
 import { runReactivationNudges } from './services/reactivation.js';
 import { finalizeDueWeeks } from './services/league-finalize.js';
+import { notifyLeagueOutcomes } from './services/league-notify.js';
+import { runReviewReminders } from './services/review-notify.js';
 
 /**
  * Daily free-digest scheduler. Fires runFreeDigest() at freeDigestHour:00 in the
@@ -108,15 +110,91 @@ export function startLeagueScheduler(): () => void {
     const delay = msUntilNextRun(new Date(), 0, config.streakTimezone); // 00:00 Tehran
     timer = setTimeout(() => {
       void finalizeDueWeeks(new Date())
-        .then((r) => {
+        .then(async (r) => {
           if (r.weeks > 0) {
             // eslint-disable-next-line no-console
             console.log(`[league] finalized ${r.weeks} week(s): +${r.promotions} promoted, -${r.demotions} demoted`);
           }
+          // Announce the outcomes the moment they exist. At the default 00:00 run
+          // this is a no-op (outside the awake window) and the morning sweep below
+          // sends them at 09:00; it matters for any finalize inside the window.
+          await notifyLeagueOutcomes(new Date());
         })
         .catch((err) => {
           // eslint-disable-next-line no-console
           console.error('[league] finalization run failed', err);
+        })
+        .finally(schedule);
+    }, delay);
+    if (typeof timer.unref === 'function') timer.unref();
+  };
+
+  schedule();
+  return () => clearTimeout(timer);
+}
+
+/**
+ * Morning release sweep for everything the awake window held overnight, at
+ * awakeStartHour (09:00 Tehran): premium pushes for articles published after
+ * 22:00, and league outcomes from the 00:00 finalization. Also the self-heal path
+ * if the container was down when the event happened. No-op when nothing is held,
+ * and idempotent — each article and each membership is claimed exactly once.
+ *
+ * The two run in sequence, not in parallel, so a user who has both waiting gets
+ * them in a predictable order rather than racing for the same daily-cap slots.
+ */
+export function startHeldNotificationsScheduler(): () => void {
+  let timer: NodeJS.Timeout;
+
+  const schedule = () => {
+    const delay = msUntilNextRun(new Date(), config.notify.awakeStartHour, config.streakTimezone);
+    timer = setTimeout(() => {
+      void (async () => {
+        const articles = await runPremiumBacklog(new Date());
+        if (articles.articles > 0) {
+          // eslint-disable-next-line no-console
+          console.log(`[article-premium] released ${articles.articles} held article(s) to ${articles.recipients} premium user(s)`);
+        }
+        const league = await notifyLeagueOutcomes(new Date());
+        if (league.notified > 0) {
+          // eslint-disable-next-line no-console
+          console.log(`[league-notify] announced ${league.notified} outcome(s)`);
+        }
+      })()
+        .catch((err) => {
+          // eslint-disable-next-line no-console
+          console.error('[held-notifications] run failed', err);
+        })
+        .finally(schedule);
+    }, delay);
+    if (typeof timer.unref === 'function') timer.unref();
+  };
+
+  schedule();
+  return () => clearTimeout(timer);
+}
+
+/**
+ * Start the daily review-reminder scheduler (premium users with due Leitner
+ * cards). Fires at reviewReminder.hour (09:00 Tehran) — a card's due-ness has no
+ * event to hang on, so it gets the same daily treatment as the other reminders.
+ */
+export function startReviewReminderScheduler(): () => void {
+  let timer: NodeJS.Timeout;
+
+  const schedule = () => {
+    const delay = msUntilNextRun(new Date(), config.reviewReminder.hour, config.streakTimezone);
+    timer = setTimeout(() => {
+      void runReviewReminders(new Date())
+        .then((r) => {
+          if (r.reminded > 0) {
+            // eslint-disable-next-line no-console
+            console.log(`[review-reminder] reminded ${r.reminded} premium user(s)`);
+          }
+        })
+        .catch((err) => {
+          // eslint-disable-next-line no-console
+          console.error('[review-reminder] run failed', err);
         })
         .finally(schedule);
     }, delay);

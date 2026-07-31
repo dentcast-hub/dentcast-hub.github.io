@@ -1,7 +1,7 @@
 import { config } from '../config.js';
 import { one, query, withTransaction, type Queryable, pool } from '../db.js';
 import { getIndex, getFolders, folderOf } from '../content-index.js';
-import { notifications } from '../providers/registry.js';
+import { sendCapped, inAwakeWindow } from './notify-policy.js';
 import type { NotificationKind, NotificationMessage } from '../providers/notifications/types.js';
 
 /**
@@ -83,25 +83,49 @@ async function audience(tier: 'free' | 'premium', client: Queryable = pool): Pro
 }
 
 /** Best-effort fan-out. A failing channel/device never fails selection: Layer 1's
- *  bookkeeping (premium_notified_at / free_notified_at) must not depend on delivery. */
+ *  bookkeeping (premium_notified_at / free_notified_at) must not depend on delivery.
+ *  Goes through sendCapped so a day with several publishes cannot become a push
+ *  storm for one user; a capped recipient is silently skipped, same as one with
+ *  no destination. */
 async function deliver(userIds: string[], message: NotificationMessage, kind: NotificationKind): Promise<void> {
   for (const id of userIds) {
     try {
-      await notifications.send(id, message, kind);
+      await sendCapped(id, message, kind);
     } catch {
       /* delivery is best-effort; providers already skip missing destinations quietly */
     }
   }
 }
 
+/** The premium new-article message for one article. */
+function premiumMessage(a: { content_id: string; url: string; pulse?: string | null }): NotificationMessage {
+  // Text-only: the Pulse sentence (or the section fallback). Link plumbing is
+  // prepared but off (config.articleNotify.linkInText) — a later premium feature.
+  let body = articleLine(a);
+  if (config.articleNotify.linkInText) body += '\n' + absUrl(a.url);
+  return {
+    title: 'مطلب جدید در دنت‌کست',
+    body,
+    url: a.url,
+    tag: 'article:' + a.content_id,
+  };
+}
+
 /**
  * PREMIUM path: fire immediately on `article_published`. No schedule, no queue.
  * Recording the article is idempotent on content_id, so a re-published or
  * duplicate event is a no-op and premium users are never double-notified.
+ *
+ * "Immediately" is bounded by the AWAKE WINDOW (09:00-22:00 Tehran): a publish at
+ * 02:00 must not push at 02:00. Outside the window the article is still RECORDED
+ * (and stays public and indexed — the delay is only ever on the active push, per
+ * principle 1), premium_notified_at is left null, and runPremiumBacklog() below
+ * sends it at 09:00. `deferred` says which of the two happened.
  */
 export async function onArticlePublished(input: PublishInput): Promise<{
   recorded: boolean;
   premiumRecipients: number;
+  deferred: boolean;
 }> {
   const publishedAt = input.publishedAt ?? new Date();
   const notifyFreeAfter = new Date(
@@ -116,23 +140,73 @@ export async function onArticlePublished(input: PublishInput): Promise<{
     [input.contentId, input.title, input.url, input.pulse ?? null,
       publishedAt.toISOString(), notifyFreeAfter.toISOString()],
   );
-  if (!inserted) return { recorded: false, premiumRecipients: 0 };
+  if (!inserted) return { recorded: false, premiumRecipients: 0, deferred: false };
+
+  // Outside waking hours: recorded, not pushed. premium_notified_at stays null,
+  // which is exactly what runPremiumBacklog() selects on in the morning.
+  if (!inAwakeWindow(publishedAt)) return { recorded: true, premiumRecipients: 0, deferred: true };
 
   const recipients = await audience('premium');
-  // Text-only: the Pulse sentence (or the section fallback). Link plumbing is
-  // prepared but off (config.articleNotify.linkInText) — a later premium feature.
-  let body = articleLine({ pulse: input.pulse, content_id: input.contentId });
-  if (config.articleNotify.linkInText) body += '\n' + absUrl(input.url);
-  const message: NotificationMessage = {
-    title: 'مطلب جدید در دنت‌کست',
-    body,
-    url: input.url,
-    tag: 'article:' + input.contentId,
-  };
+  const message = premiumMessage({ content_id: input.contentId, url: input.url, pulse: input.pulse });
   await deliver(recipients, message, 'article_premium');
   await query('update articles set premium_notified_at = now() where content_id = $1', [input.contentId]);
 
-  return { recorded: true, premiumRecipients: recipients.length };
+  return { recorded: true, premiumRecipients: recipients.length, deferred: false };
+}
+
+/**
+ * Release the premium pushes that were held overnight. Run by the morning sweep
+ * at awakeStartHour; also the self-heal path when the container was down at
+ * publish time.
+ *
+ * Each article is claimed (premium_notified_at) inside a locked transaction
+ * BEFORE delivery, the same claim-then-send order the free digest uses, so two
+ * overlapping sweeps cannot both send it. Articles older than FRESH_DAYS are
+ * claimed too but NOT sent — after a multi-day outage the premium lane's value
+ * (you hear about it first) is gone, and a burst of stale pushes is worse than
+ * silence. Whatever gets dropped that way is logged, never silently skipped.
+ */
+const FRESH_DAYS = 2;
+
+export async function runPremiumBacklog(now: Date = new Date()): Promise<{
+  articles: number;
+  recipients: number;
+  stale: number;
+}> {
+  const claimed = await withTransaction(async (client) => {
+    const held = await query<ArticleRow>(
+      `select * from articles
+        where premium_notified_at is null
+        order by published_at asc
+        for update skip locked`,
+      [],
+      client,
+    );
+    if (held.rowCount === 0) return [] as ArticleRow[];
+    await query(
+      'update articles set premium_notified_at = $1 where content_id = any($2)',
+      [now.toISOString(), held.rows.map((r) => r.content_id)],
+      client,
+    );
+    return held.rows;
+  });
+
+  if (claimed.length === 0) return { articles: 0, recipients: 0, stale: 0 };
+
+  const cutoff = now.getTime() - FRESH_DAYS * 86_400_000;
+  const fresh = claimed.filter((a) => new Date(a.published_at).getTime() >= cutoff);
+  const stale = claimed.length - fresh.length;
+  if (stale > 0) {
+    // eslint-disable-next-line no-console
+    console.log(`[article-premium] dropped ${stale} stale held article(s) (older than ${FRESH_DAYS}d)`);
+  }
+  if (fresh.length === 0) return { articles: 0, recipients: 0, stale };
+
+  const recipients = await audience('premium');
+  for (const a of fresh) {
+    await deliver(recipients, premiumMessage(a), 'article_premium');
+  }
+  return { articles: fresh.length, recipients: recipients.length, stale };
 }
 
 /**
@@ -145,12 +219,28 @@ export async function onArticlePublished(input: PublishInput): Promise<{
  * before delivery, so two overlapping runs cannot both send it and a delivery
  * failure never un-marks a claim. Delivery happens after the claim commits, so a
  * large fan-out never holds a DB lock.
+ *
+ * THIS PATH IS UNCHANGED by the premium instant lane: same 24h delay, same one
+ * batched digest, same 21:00 hour. The awake window is the only thing added, and
+ * at the default hour it is a no-op (21:00 is inside 09:00-22:00) — it exists so
+ * that moving ARTICLE_FREE_DIGEST_HOUR to an antisocial hour, or triggering the
+ * digest by hand at 03:00 via /admin/articles/run-free-digest, cannot wake every
+ * free user up. Nothing is CLAIMED when it defers, so the batch simply waits for
+ * the next run; the misconfiguration is logged rather than swallowed.
  */
 export async function runFreeDigest(now: Date = new Date()): Promise<{
   articles: number;
   recipients: number;
   sent: boolean;
+  deferred?: boolean;
 }> {
+  // Before the claim, so a deferred run leaves the batch untouched for next time.
+  if (!inAwakeWindow(now)) {
+    // eslint-disable-next-line no-console
+    console.log('[article-digest] outside the awake window — deferred, nothing claimed');
+    return { articles: 0, recipients: 0, sent: false, deferred: true };
+  }
+
   const claimed = await withTransaction(async (client) => {
     const due = await query<ArticleRow>(
       `select * from articles
