@@ -74,8 +74,24 @@ The image is defined in `plus-api/Dockerfile`. **Build context = repo root**
 `plus/pathways.json` for the learning pathways):
 
 ```bash
-# from the repo root:
-docker build -f plus-api/Dockerfile -t dentcast-plus-api .
+# from the repo root. TAG is the registry tag you are about to push (v46, ...).
+TAG=v46
+docker build -f plus-api/Dockerfile -t dentcast-plus-api:$TAG   --build-arg BUILD_TAG=$TAG   --build-arg GIT_SHA=$(git rev-parse --short HEAD)   --build-arg BUILT_AT=$(date -u +%Y-%m-%dT%H:%M:%SZ)   .
+```
+
+**Always pass the three build args.** They are what `GET /health` reports back:
+
+```json
+{ "ok": true, "version": "v46", "commit": "b17c208", "built_at": "2026-07-31T20:10:00Z" }
+```
+
+Without them the image still runs, but answers `"version": "dev"` — and then a
+container serving last week's image is indistinguishable from a fresh one on any
+release that changed only internals (copy, a query, a default). After every
+deploy, confirm the tag you expect:
+
+```bash
+curl -s https://api.dentcast.ir/health
 ```
 
 Push it to ArvanCloud's container registry (or point Arvan Cloud Container at

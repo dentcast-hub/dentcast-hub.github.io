@@ -178,3 +178,32 @@ describe('GET /admin/ai/health', () => {
     expect(configured.json_mode_requested).toBe(config.ai.jsonMode);
   });
 });
+
+describe('GET /health', () => {
+  it('is public and reports which build is serving', async () => {
+    // The reason this endpoint carries a version at all: when a release changes
+    // only internals — copy, a query, a default — a container running last
+    // week's image answers every other check identically to a fresh one.
+    const res = await app.inject({ method: 'GET', url: '/health' });
+
+    expect(res.statusCode).toBe(200);
+    const body = res.json();
+    expect(body.ok).toBe(true);
+    expect(body).toHaveProperty('version');
+    expect(body).toHaveProperty('commit');
+    expect(body).toHaveProperty('built_at');
+  });
+
+  it('falls back to safe placeholders outside a stamped image', async () => {
+    // npm run dev and a plain `docker build` pass no build args; the endpoint
+    // must still answer rather than crash on a missing env var.
+    const body = (await app.inject({ method: 'GET', url: '/health' })).json();
+    expect(body.version).toBe('dev');
+    expect(body.commit).toBe('unknown');
+  });
+
+  it('leaks nothing else — three known fields and the ok flag', async () => {
+    const body = (await app.inject({ method: 'GET', url: '/health' })).json();
+    expect(Object.keys(body).sort()).toEqual(['built_at', 'commit', 'ok', 'version']);
+  });
+});

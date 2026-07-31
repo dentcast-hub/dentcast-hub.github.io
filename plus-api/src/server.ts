@@ -60,7 +60,15 @@ export async function buildServer(): Promise<FastifyInstance> {
     return payload;
   });
 
-  app.get('/health', async () => ({ ok: true }));
+  // Public, unauthenticated, and cheap: a load balancer probes it, and a human
+  // uses it to confirm WHICH build is actually serving. The repo is public, so
+  // the commit sha reveals nothing; no secret or config value goes in here.
+  app.get('/health', async () => ({
+    ok: true,
+    version: config.build.tag,
+    commit: config.build.commit,
+    built_at: config.build.builtAt,
+  }));
 
   await app.register(authRoutes);
   await app.register(baleRoutes);

@@ -35,6 +35,16 @@ export const config = {
 
   databaseUrl: str('DATABASE_URL', 'postgres://dentcast:dentcast@localhost:5432/dentcast_plus'),
 
+  // Build stamp, injected by the Dockerfile (see its ARG/ENV block). Reported by
+  // GET /health so a deploy can be VERIFIED rather than assumed: without it,
+  // a container running last week's image is indistinguishable from a fresh one
+  // whenever a release changes only internals (copy, a query, a default).
+  build: {
+    tag: str('BUILD_TAG', 'dev'),
+    commit: str('GIT_SHA', 'unknown'),
+    builtAt: str('BUILT_AT', 'unknown'),
+  },
+
   port: int('PORT', 8787),
   host: str('HOST', '0.0.0.0'),
   corsOrigins: list('CORS_ORIGINS', ['http://localhost:5500', 'http://127.0.0.1:5500']),
