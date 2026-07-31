@@ -3,6 +3,9 @@ import { getClusters, getContentInfo, getTags } from '../content-index.js';
 import { ai } from '../providers/registry.js';
 import type { NarrowHistoryEntry, NarrowOption } from '../providers/ai/types.js';
 import { getConsumedContentIds } from './consumption.js';
+import {
+  hashDescription, learnedBonuses, recordRound, recordChoice, type OfferedOption,
+} from './assistant-learning.js';
 
 /**
  * «دستیار هوشمند» (premium): the AI's role is narrowing ONLY — turning a free-text
@@ -49,8 +52,8 @@ export interface CaseArticle {
 }
 
 export type CaseStep =
-  | { done: false; question: string; options: NarrowOption[] }
-  | { done: true; matched_fa: string | null; articles: CaseArticle[] };
+  | { done: false; question: string; options: NarrowOption[]; round_id?: string | null }
+  | { done: true; matched_fa: string | null; articles: CaseArticle[]; round_id?: string | null };
 
 function clusterByKey(key: string) {
   return getClusters().find((c) => c.key === key) ?? null;
@@ -202,10 +205,24 @@ async function nextRootCatalog(description: string, history: NarrowHistoryEntry[
   const suggestions = await cachedKeywords(searchText);
   const suggestedWords = new Set(suggestions.flatMap((s) => words(s)));
 
+  // What past rounds on these same words ended well. BOUNDED (LEARN_CAP): it
+  // reorders near-ties, where the static score has no opinion, and can never
+  // lift a tag the words do not actually match past the threshold below.
+  const learned = suggestedWords.size
+    ? await learnedBonuses([...suggestedWords])
+    : new Map<string, number>();
+
   const options = suggestedWords.size
     ? getTags()
-      .map((t) => ({ t, score: tagMatchScore(t.fa, suggestedWords), wordCount: words(t.fa).length }))
-      .filter((x) => x.score >= TAG_MATCH_THRESHOLD)
+      .map((t) => {
+        const match = tagMatchScore(t.fa, suggestedWords);
+        return { t, match, score: match + (learned.get(t.key) ?? 0), wordCount: words(t.fa).length };
+      })
+      // Gate on the RAW match, never the learned total: eligibility is a
+      // question about the words, and learning must not smuggle a tag the case
+      // does not actually mention past the threshold. It only reorders what
+      // already qualified.
+      .filter((x) => x.match >= TAG_MATCH_THRESHOLD)
       // A full match (score 1.0) is common to several tags at once — e.g. a
       // case about implant-crown cementation fully matches both the broad
       // "ایمپلنت" (85 articles) and the specific "زینک فسفات" (1 article).
@@ -278,15 +295,45 @@ export async function nextCaseStep(
   // Never trust the client's history length: cap it here regardless of what was
   // sent, so a single description can drive at most maxRounds AI calls.
   const history = historyIn.slice(-config.assistant.maxRounds);
-  if (history.length >= config.assistant.maxRounds) return resolve(userId, history);
+
+  // Learning bookkeeping. The description itself is never stored — only the hash
+  // that makes a repeat recognisable. The history's last entry IS the answer to
+  // the round we showed previously, so the choice records itself here rather
+  // than depending on the client to report it.
+  const descHash = hashDescription(normalizeFa(description));
+  const roundNo = history.length;
+  const searchWords = [...new Set(words([description, ...customAnswers(history)].join('\n')))];
+  if (roundNo > 0) {
+    const last = history[history.length - 1].answer;
+    await recordChoice({
+      userId, descHash, roundNo: roundNo - 1,
+      chosenKey: 'custom' in last ? null : last.key,
+    }).catch(() => { /* learning must never break a round */ });
+  }
+
+  /** Log what we are about to show and hand the id back for click/feedback. */
+  const logged = async (step: CaseStep): Promise<CaseStep> => {
+    const offered: OfferedOption[] = step.done
+      ? []
+      : step.options.map((o, i) => ({ key: o.key, label: o.label, position: i + 1 }));
+    const resolvedTag = step.done && lastConcreteKey(history)?.startsWith(TAG_PREFIX)
+      ? lastConcreteKey(history)!.slice(TAG_PREFIX.length)
+      : null;
+    const roundId = await recordRound({
+      userId, descHash, words: searchWords, roundNo, offered, resolvedTag,
+    }).catch(() => null);
+    return { ...step, round_id: roundId };
+  };
+
+  if (history.length >= config.assistant.maxRounds) return logged(await resolve(userId, history));
 
   const key = lastConcreteKey(history);
   // A tag is always a leaf — picking one resolves straight to its content,
   // there is no further narrowing under a single hashtag.
-  if (key?.startsWith(TAG_PREFIX)) return resolve(userId, history);
+  if (key?.startsWith(TAG_PREFIX)) return logged(await resolve(userId, history));
 
   const catalog = key ? nextClusterCatalog(key) : await nextRootCatalog(description, history);
-  if (!catalog) return resolve(userId, history);
+  if (!catalog) return logged(await resolve(userId, history));
 
   const result = await ai.narrowCase({ description, history, catalog });
   if (result.done) {
@@ -300,8 +347,10 @@ export async function nextCaseStep(
     // "done" this early. Once a real pick HAS been made (key is set), the
     // user has already answered at least one clarifying question, so a
     // model-decided "done" there is a real resolution, not a guess.
-    if (!key) return { done: false, question: DEFAULT_QUESTION, options: catalog.slice(0, MAX_TAG_OPTIONS) };
-    return resolve(userId, history);
+    if (!key) {
+      return logged({ done: false, question: DEFAULT_QUESTION, options: catalog.slice(0, MAX_TAG_OPTIONS) });
+    }
+    return logged(await resolve(userId, history));
   }
-  return { done: false, question: result.question, options: result.options };
+  return logged({ done: false, question: result.question, options: result.options });
 }
