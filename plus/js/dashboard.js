@@ -299,10 +299,32 @@ export async function renderDashboard(root, { me: preMe } = {}) {
     el('div', { class: 'dcp-dash-hello' }, 'سلام، ' + (me.display_name || '')),
   ];
 
-  // The three live premium features get a real section for EVERY plan now,
-  // in the same spot: the live block for premium, a locked-card teaser for
-  // free (linking to the feature's own page, which does the actual gating).
   const isPremium = me.tier === 'premium';
+
+  // Own-data sections FIRST, for every plan: a free (or even premium, no
+  // difference in cost) visitor should see proof the site/their account is
+  // alive — streak, what they're reading, real progress — before a wall of
+  // locked premium teasers. With five live premium sections now (review due,
+  // pathway, collections, compass, assistant), stacking all of them above
+  // this reads as "the site is broken" for a free user (founder feedback,
+  // 2026-07-31). One shared order for both plans, deliberately — it costs
+  // nothing for premium (their content further down is still live) and keeps
+  // this simple.
+  children.push(
+    section('استریک', 'هر روز که بخوانید، هایلایت کنید یا مرور کنید، یک روز به زنجیره‌تان اضافه می‌شود. رکورد شما بیشترین زنجیره‌ای است که تا حالا ساخته‌اید و هیچ‌وقت پاک نمی‌شود.', streakDetail(me)),
+    league ? section('لیگ من', 'رتبه‌ات در گروهِ رقابتیِ این هفته؛ برای صعود به لیگِ بالاتر تلاش کن.', leagueEntryButton(league)) : null,
+    section('ادامه مطالعه', null, continueBlock(progress, model)),
+    section('پیشرفت هر پوشه', 'برای هر پوشه، چند درصد از کل مطالب آن را خوانده‌اید (۰ تا ۱۰۰). هر بار پیشخوان باز شود به‌روز می‌شود.', progressBars(progress, model)),
+    // NOTE: امتیاز (all-time, unlocks shields at thresholds, never spent) and XP
+    // هفتگی (ranks the league, resets weekly) are two separate quantities in the
+    // API — never describe one as feeding the other, and never as a balance.
+    section('امتیاز شما', 'امتیاز با فعالیت شما بالا می‌رود، همیشه می‌ماند و کم نمی‌شود؛ با آن سپر می‌گیرید. لیگ هفتگی جداست و روی XP همان هفته حساب می‌شود.', scoreBlock(progress)),
+    section('هایلایت‌های اخیر', null, recentWrap),
+  );
+
+  // The premium feature sections come after: the live block for premium, a
+  // locked-card teaser for free (linking to the feature's own page, which
+  // does the actual gating).
   children.push(section(
     'برای مرور امروز',
     'هایلایت‌هایی که امروز نوبتِ مرورشونه.',
@@ -334,18 +356,7 @@ export async function renderDashboard(root, { me: preMe } = {}) {
     'فقط از بین چند گزینه انتخاب می‌کنی — نه گفتگوی آزاد. هوش مصنوعی هیچ تشخیص یا توصیه‌ی درمانی نمی‌دهد؛ فقط توضیحِ تو را به دسته‌بندی‌های خودِ سایت نگاشت می‌کند تا به مقاله‌ی مرتبط برسیم.',
   ));
 
-  children.push(
-    section('استریک', 'هر روز که بخوانید، هایلایت کنید یا مرور کنید، یک روز به زنجیره‌تان اضافه می‌شود. رکورد شما بیشترین زنجیره‌ای است که تا حالا ساخته‌اید و هیچ‌وقت پاک نمی‌شود.', streakDetail(me)),
-    league ? section('لیگ من', 'رتبه‌ات در گروهِ رقابتیِ این هفته؛ برای صعود به لیگِ بالاتر تلاش کن.', leagueEntryButton(league)) : null,
-    section('ادامه مطالعه', null, continueBlock(progress, model)),
-    section('پیشرفت هر پوشه', 'برای هر پوشه، چند درصد از کل مطالب آن را خوانده‌اید (۰ تا ۱۰۰). هر بار پیشخوان باز شود به‌روز می‌شود.', progressBars(progress, model)),
-    // NOTE: امتیاز (all-time, unlocks shields at thresholds, never spent) and XP
-    // هفتگی (ranks the league, resets weekly) are two separate quantities in the
-    // API — never describe one as feeding the other, and never as a balance.
-    section('امتیاز شما', 'امتیاز با فعالیت شما بالا می‌رود، همیشه می‌ماند و کم نمی‌شود؛ با آن سپر می‌گیرید. لیگ هفتگی جداست و روی XP همان هفته حساب می‌شود.', scoreBlock(progress)),
-    section('هایلایت‌های اخیر', null, recentWrap),
-    section('پریمیوم', 'به‌زودی در دسترس.', premiumTiles()),
-  );
+  children.push(section('پریمیوم', 'به‌زودی در دسترس.', premiumTiles()));
 
   root.replaceChildren(...children.filter(Boolean));
   recentWrap.replaceChildren(await recentBlock(model));
