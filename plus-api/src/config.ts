@@ -207,6 +207,25 @@ export const config = {
     apiBase: str('AI_API_BASE', ''),
     apiKey: str('AI_API_KEY', ''),
     model: str('AI_MODEL', ''),
+    // The ArvanCloud gateway intermittently answers a valid request with a
+    // generic 400 that succeeds unchanged seconds later, so the provider retries
+    // transient failures. maxAttempts caps the CALLS; retryBudgetMs caps the WALL
+    // CLOCK, because a user is watching a spinner while this runs — without it,
+    // three 10s timeouts plus backoff would be half a minute of nothing.
+    maxAttempts: int('AI_MAX_ATTEMPTS', 3),
+    retryBudgetMs: int('AI_RETRY_BUDGET_MS', 20_000),
+    // Ask for response_format=json_object, which turns "please answer in JSON"
+    // into a hard guarantee — where the endpoint supports it. ArvanCloud's
+    // gateway does NOT and rejects the whole request with a bare 400, so the
+    // provider latches this off for the process on the first such 400 and falls
+    // back to prompt-enforced JSON. Set false to skip even that first failed
+    // call; leave true for an endpoint that honours it.
+    jsonMode: bool('AI_JSON_MODE', true),
+    // AI calls get their own, much longer timeout than the notification channels
+    // (outbound.timeoutMs, 10s). A reasoning model emits a whole thinking pass
+    // before its answer and routinely needs more than 10s; sharing that budget
+    // turned every slow-but-fine round into a spurious timeout + paid retry.
+    timeoutMs: int('AI_TIMEOUT_MS', 45_000),
   },
 
   // Bounds on the case-assistant's own cost: rounds per session (never more than
