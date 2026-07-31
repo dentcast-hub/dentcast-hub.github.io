@@ -34,4 +34,14 @@ export type NarrowRoundResult =
 export interface AiProvider {
   readonly name: string;
   narrowCase(input: NarrowRoundInput): Promise<NarrowRoundResult>;
+  /**
+   * Read a free-text case description and suggest short topic phrases in the
+   * site's own hashtag style (e.g. "زینک فسفات", "سمان ایمپلنت") — never
+   * picking real content itself. services/case-assistant.ts matches these,
+   * IN CODE, against the site's real hashtags; a suggestion that matches
+   * nothing real is simply dropped, so a hallucinated phrase can never surface
+   * as an option. Returns an empty array on anything unusable, never throws
+   * for a malformed-but-parseable answer (same philosophy as narrowCase).
+   */
+  suggestKeywords(text: string): Promise<string[]>;
 }

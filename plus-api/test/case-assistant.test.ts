@@ -1,9 +1,10 @@
-import { describe, it, expect, beforeEach, afterAll } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach, afterAll, vi } from 'vitest';
 import type { FastifyInstance } from 'fastify';
 import { makeApp, resetDb, loginAs } from './helpers.js';
 import { pool } from '../src/db.js';
 import { config } from '../src/config.js';
-import { getClusters } from '../src/content-index.js';
+import { getClusters, getTags } from '../src/content-index.js';
+import { ai } from '../src/providers/registry.js';
 
 let app: FastifyInstance;
 let cookie: string;
@@ -19,6 +20,10 @@ beforeEach(async () => {
   if (!app) app = await makeApp();
   phone = '09121200004';
   cookie = await loginAs(app, phone);
+});
+
+afterEach(() => {
+  vi.restoreAllMocks();
 });
 
 afterAll(async () => {
@@ -147,5 +152,98 @@ describe('POST /assistant/next', () => {
     }
     const blocked = await next({ description: 'شکستگی لبه‌ی دندان قدامی' });
     expect(blocked.statusCode).toBe(429);
+  });
+});
+
+// The keyword-search round: an AI-suggested phrase gets matched, IN CODE,
+// against every REAL site hashtag (services/case-assistant.ts's
+// nextRootCatalog), not the fixed pillar tree. «زینک فسفات» is a real,
+// single-content tag (insight/insight-59) — the motivating case: a fixed
+// 2-level pillar tree could only ever reach it via one pillar
+// (fixed-pros/cementation), never from implantology, even though the article
+// covers implant-crown cementation too. The stub AI provider used elsewhere
+// in this file never suggests keywords on purpose (deterministic, zero
+// network), so these tests mock `ai.suggestKeywords` directly to exercise
+// the matching path.
+describe('keyword-search round (real site hashtags)', () => {
+  const TAG = getTags().find((t) => t.key === 'زینک فسفات')!;
+
+  it('«زینک فسفات» is indexed as a real single-content tag (fixture sanity check)', () => {
+    expect(TAG).toBeTruthy();
+    expect(TAG.contentIds).toContain('insight/insight-59');
+  });
+
+  it('an AI-suggested phrase matching a niche tag is offered as a round-1 option', async () => {
+    await makePremium();
+    vi.spyOn(ai, 'suggestKeywords').mockResolvedValue(['زینک فسفات']);
+    const res = await next({ description: 'دیشب مطلبی راجع به سمان کردن با زینک فسفات نوشتم' });
+    expect(res.statusCode).toBe(200);
+    const body = res.json();
+    expect(body.done).toBe(false);
+    expect(body.options).toContainEqual({ key: 'tag:' + TAG.key, label: TAG.fa });
+  });
+
+  it('picking a matched tag resolves straight to its content — a leaf, no further narrowing', async () => {
+    await makePremium();
+    const history = [{ question: 'q', options: [], answer: { key: 'tag:' + TAG.key, label: TAG.fa } }];
+    const res = await next({ description: 'سمان زینک فسفات', history });
+    expect(res.statusCode).toBe(200);
+    const body = res.json();
+    expect(body.done).toBe(true);
+    expect(body.matched_fa).toBe(TAG.fa);
+    expect(body.articles.map((a: { content_id: string }) => a.content_id)).toEqual(TAG.contentIds.slice(0, 4));
+  });
+
+  it('a "غیر از این‌ها" free-text refinement feeds into the NEXT keyword search', async () => {
+    await makePremium();
+    const spy = vi.spyOn(ai, 'suggestKeywords').mockResolvedValue([]);
+    const history = [{ question: 'q', options: [], answer: { custom: 'در واقع منظورم زینک فسفات بود' } }];
+    await next({ description: 'یک سوال کلی درباره‌ی سمان', history });
+    expect(spy).toHaveBeenCalledWith(expect.stringContaining('زینک فسفات'));
+  });
+
+  it('a specific niche tag outranks a broad popular one on a tied score (regression)', async () => {
+    // «ایمپلنت» alone matches ~85 articles; a case about implant-crown
+    // cementation should surface «زینک فسفات» (1 article, the actual match)
+    // ahead of the generic, popular tag it's also a full-score match against
+    // — otherwise a precise niche hit gets buried under a broad one exactly
+    // like the fixed pillar tree used to bury it under the wrong pillar.
+    await makePremium();
+    vi.spyOn(ai, 'suggestKeywords').mockResolvedValue(['زینک فسفات', 'ایمپلنت']);
+    const res = await next({ description: 'سمان کردن روکش ایمپلنت با زینک فسفات' });
+    const body = res.json();
+    expect(body.done).toBe(false);
+    const keys: string[] = body.options.map((o: { key: string }) => o.key);
+    expect(keys).toContain('tag:' + TAG.key);
+    const implantIdx = keys.indexOf('tag:ایمپلنت');
+    const zincIdx = keys.indexOf('tag:' + TAG.key);
+    if (implantIdx !== -1) expect(zincIdx).toBeLessThan(implantIdx);
+  });
+
+  it('never resolves on the ROOT round even if the AI claims "done" — always asks first', async () => {
+    // Defense against a genuine ambiguity ("روکش بیمارم میوفته" - implant
+    // crown or natural-tooth crown? the description alone can't say) getting
+    // silently guessed instead of asked about: an overconfident/misbehaving
+    // model declaring done=true before the user has made a single real pick
+    // must not be trusted — there's nothing to resolve against yet anyway.
+    await makePremium();
+    vi.spyOn(ai, 'suggestKeywords').mockResolvedValue(['روکش']);
+    vi.spyOn(ai, 'narrowCase').mockResolvedValue({ done: true });
+    const res = await next({ description: 'روکش بیمارم میوفته' });
+    expect(res.statusCode).toBe(200);
+    const body = res.json();
+    expect(body.done).toBe(false);
+    expect(body.options.length).toBeGreaterThan(0);
+  });
+
+  it('falls back to the top-level pillar catalog when the AI suggests nothing', async () => {
+    await makePremium();
+    vi.spyOn(ai, 'suggestKeywords').mockResolvedValue([]);
+    const res = await next({ description: 'توضیحی که هیچ کلیدواژه‌ای از آن استخراج نمی‌شود' });
+    expect(res.statusCode).toBe(200);
+    const body = res.json();
+    expect(body.done).toBe(false);
+    const clusterKeys = new Set(getClusters().map((c) => c.key));
+    for (const o of body.options) expect(clusterKeys.has(o.key)).toBe(true);
   });
 });

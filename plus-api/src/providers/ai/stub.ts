@@ -18,4 +18,12 @@ export class StubAiProvider implements AiProvider {
       options: catalog.slice(0, 4),
     };
   }
+
+  /** Never guesses: keeps the keyword-search round deterministic (and free)
+   * in dev/test — it always falls straight through to the pillar-tree
+   * fallback in services/case-assistant.ts, exactly like round 1 did before
+   * the hashtag round existed. */
+  async suggestKeywords(): Promise<string[]> {
+    return [];
+  }
 }

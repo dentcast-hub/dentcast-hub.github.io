@@ -210,3 +210,32 @@ describe('openai-compatible retry', () => {
     });
   });
 });
+
+describe('openai-compatible suggestKeywords', () => {
+  it("returns the model's suggested phrases", async () => {
+    stubFetch([ok({ keywords: ['زینک فسفات', 'سمان ایمپلنت'] })]);
+
+    await expect(provider.suggestKeywords('سمان زینک فسفات روی ایمپلنت'))
+      .resolves.toEqual(['زینک فسفات', 'سمان ایمپلنت']);
+  });
+
+  it('drops non-string entries and caps at 8, without throwing', async () => {
+    stubFetch([ok({ keywords: ['a', 1, null, 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'] })]);
+
+    const out = await provider.suggestKeywords('x');
+    expect(out).toEqual(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']);
+  });
+
+  it('returns [] on a malformed-but-parseable answer, same philosophy as narrowCase', async () => {
+    stubFetch([ok({ keywords: 'not-an-array' })]);
+
+    await expect(provider.suggestKeywords('x')).resolves.toEqual([]);
+  });
+
+  it('shares the same retry behaviour as narrowCase (transient 500)', async () => {
+    const f = stubFetch([status(500), ok({ keywords: ['اکلوژن'] })]);
+
+    await expect(provider.suggestKeywords('x')).resolves.toEqual(['اکلوژن']);
+    expect(f.calls()).toBe(2);
+  });
+});
