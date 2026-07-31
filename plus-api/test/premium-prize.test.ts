@@ -7,10 +7,10 @@ import { grantWeeklyPrizes, expirePremiumPrizes } from '../src/services/premium-
 import { notifyPremiumPrizes } from '../src/services/premium-prize-notify.js';
 
 /**
- * Weekly league prize: top 2 of the current highest active tier that had
- * members, 7 days of premium, dynamic (walks down from the top), idempotent,
- * never misleads an already-premium winner, and auto-reverts unless the user
- * wins again or holds a real subscription.
+ * Weekly league prize: the top of EVERY VALID group (not the top of one tier),
+ * prize_days of premium, a cooldown that passes the prize down rather than
+ * wasting it, idempotent, never misleads an already-premium winner, and
+ * auto-reverts unless the user wins again or holds a real subscription.
  */
 
 const WEEK = '2026-02-07';
@@ -44,65 +44,88 @@ async function grantRow(userId: string, week = WEEK): Promise<{
   return r.rows[0] ?? null;
 }
 
-/** A closed group in `tierSlug` with the given weekly_xp values (descending order recommended). */
-async function seedGroup(tierSlug: string, xps: number[], week = WEEK): Promise<string[]> {
+/** Groups below this award nothing — four people is not a race (seed default: 6). */
+const MIN_VALID = 6;
+
+/**
+ * A closed group in `tierSlug` with the given weekly_xp values, in rank order.
+ * PADDED up to MIN_VALID with low-XP filler members, because the prize only
+ * looks at valid groups now: without the padding every fixture here would be an
+ * undersized group and win nothing. Returns only the ids of the members whose
+ * XP was named, so a test's ids[0] is still rank 1.
+ */
+async function seedGroup(tierSlug: string, xps: number[], week = WEEK, size = MIN_VALID): Promise<string[]> {
   const tid = await tierId(tierSlug);
+  const total = Math.max(xps.length, size);
   const lg = await pool.query<{ id: string }>(
     `insert into leagues (tier_id, week_start, week_end, status, capacity_at_creation)
      values ($1, $2, $2, 'closed', $3) returning id`,
-    [tid, week, Math.max(xps.length, 8)],
+    [tid, week, Math.max(total, 8)],
   );
-  const userIds: string[] = [];
-  for (let i = 0; i < xps.length; i += 1) {
+  const named: string[] = [];
+  for (let i = 0; i < total; i += 1) {
     seq += 1;
     const u = await pool.query<{ id: string }>(
       'insert into profiles (display_name, current_tier_id) values ($1, $2) returning id',
       [`u${seq}`, tid],
     );
-    userIds.push(u.rows[0].id);
+    if (i < xps.length) named.push(u.rows[0].id);
+    // Filler always ranks below every named member.
+    const xp = i < xps.length ? xps[i] : 1;
     await pool.query(
       `insert into league_members (league_id, user_id, week_start, weekly_xp, first_reached_current_xp_at)
        values ($1, $2, $3, $4, $5)`,
-      [lg.rows[0].id, u.rows[0].id, week, xps[i], `2026-02-0${i + 1}T00:00:00Z`],
+      [lg.rows[0].id, u.rows[0].id, week, xp, `2026-02-0${(i % 9) + 1}T00:00:00Z`],
     );
   }
-  return userIds;
+  return named;
+}
+
+/** Retune a prize knob for one test (league_config is restored by resetDb). */
+async function setPrizeCfg(key: string, value: string): Promise<void> {
+  await pool.query('update league_config set value = $2 where key = $1', [key, value]);
 }
 
 beforeEach(async () => { await resetDb(); });
 afterAll(async () => { await pool.end(); });
 
-describe('grantWeeklyPrizes — dynamic tier + top 2', () => {
-  it('grants only the top 2 of the CURRENT highest active tier that had members, not a lower tier', async () => {
-    // amalgam (order 2) has a group; composite (order 3, top active) also does —
-    // the prize must go to composite's top 2 only.
+describe('grantWeeklyPrizes — top of every valid group', () => {
+  it('grants in EVERY tier that had a valid group, not only the highest one', async () => {
+    // The old rule stopped at the highest tier with a group, which left every
+    // lower-tier player permanently ineligible. Both groups must win now.
     const amalgamIds = await seedGroup('amalgam', [90, 80, 70]);
-    const compositeIds = await seedGroup('composite', [60, 50, 40, 30]);
+    const compositeIds = await seedGroup('composite', [60, 50, 40]);
     await finalizeWeek(WEEK);
 
     const res = await grantWeeklyPrizes(NEAR_WEEK);
-    expect(res.granted).toBe(2);
+    expect(res.granted).toBe(2); // one per group
 
     expect(await tierOfUser(compositeIds[0])).toBe('premium');
-    expect(await tierOfUser(compositeIds[1])).toBe('premium');
-    expect(await tierOfUser(compositeIds[2])).toBe('free');
-    expect(await tierOfUser(compositeIds[3])).toBe('free');
-    for (const id of amalgamIds) expect(await tierOfUser(id)).toBe('free');
+    expect(await tierOfUser(amalgamIds[0])).toBe('premium');
+    // ...and only the top of each.
+    expect(await tierOfUser(compositeIds[1])).toBe('free');
+    expect(await tierOfUser(amalgamIds[1])).toBe('free');
   });
 
-  it('falls through to a lower tier when the top active tier had no finalized group that week', async () => {
-    // Only amalgam has members this week; composite (top active) is empty.
-    const amalgamIds = await seedGroup('amalgam', [90, 80, 70]);
+  it('gives every valid group of the SAME tier its own winner', async () => {
+    const a = await seedGroup('acrylic', [90, 80]);
+    const b = await seedGroup('acrylic', [70, 60]);
     await finalizeWeek(WEEK);
 
-    const res = await grantWeeklyPrizes(NEAR_WEEK);
-    expect(res.granted).toBe(2);
-    expect(await tierOfUser(amalgamIds[0])).toBe('premium');
-    expect(await tierOfUser(amalgamIds[1])).toBe('premium');
-    expect(await tierOfUser(amalgamIds[2])).toBe('free');
+    expect((await grantWeeklyPrizes(NEAR_WEEK)).granted).toBe(2);
+    expect(await tierOfUser(a[0])).toBe('premium');
+    expect(await tierOfUser(b[0])).toBe('premium');
   });
 
-  it('sets a 7-day expiry and marks the winners in premium_grants', async () => {
+  it('awards nothing in an undersized group — four people is not a race', async () => {
+    const small = await seedGroup('composite', [90, 80, 70, 60], WEEK, 4);
+    await finalizeWeek(WEEK);
+
+    expect((await grantWeeklyPrizes(NEAR_WEEK)).granted).toBe(0);
+    for (const id of small) expect(await tierOfUser(id)).toBe('free');
+  });
+
+  it('sets the configured prize length and marks the winner in premium_grants', async () => {
     const ids = await seedGroup('composite', [90, 80]);
     await finalizeWeek(WEEK);
     const now = new Date('2026-02-08T00:00:00Z');
@@ -113,7 +136,7 @@ describe('grantWeeklyPrizes — dynamic tier + top 2', () => {
     expect(g!.revoked_at).toBeNull();
     expect(g!.seen).toBe(false);
     const days = (new Date(g!.expires_at).getTime() - now.getTime()) / 86_400_000;
-    expect(Math.round(days)).toBe(7);
+    expect(Math.round(days), 'prize_days').toBe(3);
   });
 
   it('is idempotent: running it twice does not double-grant or duplicate rows', async () => {
@@ -129,24 +152,98 @@ describe('grantWeeklyPrizes — dynamic tier + top 2', () => {
     expect(count.rows[0].n).toBe(1);
   });
 
-  it('skips a winner who is already premium — no grant row, no misleading banner', async () => {
+  it('skips a winner who is already premium and passes the prize down', async () => {
     const ids = await seedGroup('composite', [90, 80, 70]);
     await pool.query("update profiles set tier = 'premium' where id = $1", [ids[0]]);
     await finalizeWeek(WEEK);
 
     const res = await grantWeeklyPrizes(NEAR_WEEK);
-    expect(res.granted).toBe(1); // only rank 2 was actually granted something new
-    expect(await grantRow(ids[0])).toBeNull();
-    expect(await grantRow(ids[1])).not.toBeNull();
+    expect(res.granted).toBe(1);
+    expect(await grantRow(ids[0]), 'never claim credit for premium we did not grant').toBeNull();
+    expect(await grantRow(ids[1]), 'rank 2 gets the prize instead of it being wasted').not.toBeNull();
+  });
+});
+
+describe('the cooldown', () => {
+  /** Seed the same user as rank 1 of a group in `week`. */
+  async function seedWinnerAgain(userId: string, week: string): Promise<void> {
+    const tid = await tierId('composite');
+    const lg = await pool.query<{ id: string }>(
+      `insert into leagues (tier_id, week_start, week_end, status, capacity_at_creation)
+       values ($1, $2, $2, 'closed', 8) returning id`,
+      [tid, week],
+    );
+    await pool.query(
+      `insert into league_members (league_id, user_id, week_start, weekly_xp, first_reached_current_xp_at)
+       values ($1, $2, $3, 100, $4)`,
+      [lg.rows[0].id, userId, week, `${week}T00:00:00Z`],
+    );
+    for (let i = 0; i < MIN_VALID - 1; i += 1) {
+      seq += 1;
+      const u = await pool.query<{ id: string }>(
+        'insert into profiles (display_name, current_tier_id) values ($1, $2) returning id',
+        [`c${seq}`, tid],
+      );
+      await pool.query(
+        `insert into league_members (league_id, user_id, week_start, weekly_xp, first_reached_current_xp_at)
+         values ($1, $2, $3, $4, $5)`,
+        [lg.rows[0].id, u.rows[0].id, week, 50 - i, `${week}T00:00:00Z`],
+      );
+    }
+  }
+
+  it('passes the prize DOWN to the next member instead of wasting the week', async () => {
+    const ids = await seedGroup('composite', [90, 80, 70]);
+    await finalizeWeek(WEEK);
+    await grantWeeklyPrizes(NEAR_WEEK); // ids[0] wins and starts their cooldown
+
+    // Next week, same person tops the group again — but is still cooling down.
+    const WEEK2 = '2026-02-14';
+    await seedWinnerAgain(ids[0], WEEK2);
+    await finalizeWeek(WEEK2, NEAR_WEEK);
+    const nextWeekAt = new Date('2026-02-15T00:00:00Z');
+    const res = await grantWeeklyPrizes(nextWeekAt);
+
+    expect(res.granted, 'the group still produces a winner').toBe(1);
+    expect(await grantRow(ids[0], WEEK2), 'but not the same person').toBeNull();
+  });
+
+  it('lets the same user win again once the cooldown has passed', async () => {
+    const ids = await seedGroup('composite', [90, 80]);
+    await finalizeWeek(WEEK);
+    await grantWeeklyPrizes(NEAR_WEEK);
+
+    const WEEK4 = '2026-02-28'; // three weeks later — outside a 2-week cooldown
+    await seedWinnerAgain(ids[0], WEEK4);
+    await finalizeWeek(WEEK4, NEAR_WEEK);
+    await grantWeeklyPrizes(new Date('2026-03-01T00:00:00Z'));
+
+    expect(await grantRow(ids[0], WEEK4)).not.toBeNull();
+  });
+
+  it('is disabled when prize_cooldown_weeks is 0', async () => {
+    await setPrizeCfg('prize_cooldown_weeks', '0');
+    const ids = await seedGroup('composite', [90, 80]);
+    await finalizeWeek(WEEK);
+    await grantWeeklyPrizes(NEAR_WEEK);
+
+    const WEEK2 = '2026-02-14';
+    await seedWinnerAgain(ids[0], WEEK2);
+    await finalizeWeek(WEEK2, NEAR_WEEK);
+    await grantWeeklyPrizes(new Date('2026-02-15T00:00:00Z'));
+
+    expect(await grantRow(ids[0], WEEK2)).not.toBeNull();
   });
 });
 
 describe('expirePremiumPrizes', () => {
   it('reverts tier to free once expires_at has passed', async () => {
+    // Two groups, so this still exercises reverting a BATCH — one winner each.
     const ids = await seedGroup('composite', [90, 80]);
+    await seedGroup('composite', [70, 60]);
     await finalizeWeek(WEEK);
     const past = new Date('2026-02-08T00:00:00Z');
-    await grantWeeklyPrizes(past); // expires_at = past + 7d
+    await grantWeeklyPrizes(past);
 
     const justAfter = new Date(past.getTime() + 8 * 86_400_000);
     const res = await expirePremiumPrizes(justAfter);
@@ -156,6 +253,9 @@ describe('expirePremiumPrizes', () => {
   });
 
   it('does NOT revert a repeat winner who holds a newer, still-active grant', async () => {
+    // Winning twice in consecutive weeks is only possible with the cooldown
+    // off; with it on, the pass-down rule means somebody else wins instead.
+    await setPrizeCfg('prize_cooldown_weeks', '0');
     const ids = await seedGroup('composite', [90, 80]);
     await finalizeWeek(WEEK);
     const week1At = new Date('2026-02-08T00:00:00Z');
@@ -177,6 +277,19 @@ describe('expirePremiumPrizes', () => {
        values ($1, $2, $3, $4, $5)`,
       [lg2.rows[0].id, ids[0], WEEK2, 100, '2026-02-14T00:00:00Z'],
     );
+    // Pad to a valid group — an undersized one awards nothing at all now.
+    for (let i = 0; i < MIN_VALID - 1; i += 1) {
+      seq += 1;
+      const filler = await pool.query<{ id: string }>(
+        'insert into profiles (display_name, current_tier_id) values ($1, $2) returning id',
+        [`w2f${seq}`, tid],
+      );
+      await pool.query(
+        `insert into league_members (league_id, user_id, week_start, weekly_xp, first_reached_current_xp_at)
+         values ($1, $2, $3, $4, '2026-02-14T00:00:00Z')`,
+        [lg2.rows[0].id, filler.rows[0].id, WEEK2, 10 - i],
+      );
+    }
     // Clearly BEFORE week 1's exact expiry instant (2026-02-15T00:00:00Z), so
     // this is an unambiguous "won again while still covered" case.
     const week2At = new Date('2026-02-13T00:00:00Z');
@@ -184,9 +297,11 @@ describe('expirePremiumPrizes', () => {
     await grantWeeklyPrizes(week2At); // extends ids[0]'s premium with a new grant row
     expect((await grantRow(ids[0], WEEK2))!.expires_at).not.toBeNull();
 
-    // Now check the moment week 1's grant would have expired on its own.
-    const week1Expiry = new Date(week1At.getTime() + 8 * 86_400_000);
-    await expirePremiumPrizes(week1Expiry);
+    // A moment when week 1's grant HAS expired but week 2's has not: week 1 ran
+    // 02-08 -> 02-11 and week 2 runs 02-13 -> 02-16 (prize_days = 3), so 02-14
+    // sits in the gap. Derived from prize_days, not a fixed offset — the old
+    // +8d was arithmetic for the 7-day prize this replaced.
+    await expirePremiumPrizes(new Date('2026-02-14T00:00:00Z'));
     expect(await tierOfUser(ids[0])).toBe('premium'); // still premium — the week-2 grant covers them
     // Week 1's row is correctly left untouched (not yet a terminal outcome) while
     // a newer grant still covers the user — it is only ever revoked once NEITHER
@@ -245,8 +360,9 @@ describe('GET /me pending_premium_grant + POST /premium/grant/seen', () => {
 describe('notifyPremiumPrizes', () => {
   it('announces within the awake window and claims (a second sweep sends nothing new)', async () => {
     const ids = await seedGroup('composite', [90, 80]);
+    const ids2 = await seedGroup('composite', [70, 60]);
     await pool.query('update profiles set telegram_id = $2 where id = $1', [ids[0], 700001]);
-    await pool.query('update profiles set telegram_id = $2 where id = $1', [ids[1], 700002]);
+    await pool.query('update profiles set telegram_id = $2 where id = $1', [ids2[0], 700002]);
     await finalizeWeek(WEEK);
     await grantWeeklyPrizes(AWAKE);
 
@@ -258,8 +374,9 @@ describe('notifyPremiumPrizes', () => {
 
   it('holds the push outside the awake window, releases it the next morning', async () => {
     const ids = await seedGroup('composite', [90, 80]);
+    const ids2 = await seedGroup('composite', [70, 60]);
     await pool.query('update profiles set telegram_id = $2 where id = $1', [ids[0], 700003]);
-    await pool.query('update profiles set telegram_id = $2 where id = $1', [ids[1], 700004]);
+    await pool.query('update profiles set telegram_id = $2 where id = $1', [ids2[0], 700004]);
     await finalizeWeek(WEEK);
     await grantWeeklyPrizes(ASLEEP);
 
