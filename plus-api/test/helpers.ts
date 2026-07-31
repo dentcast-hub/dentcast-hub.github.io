@@ -41,6 +41,9 @@ export async function resetDb(): Promise<void> {
       when 'xp_review' then '2'
       when 'xp_per_active_day' then '10'
       when 'xp_per_highlight' then '1'
+      when 'prize_days' then '3'
+      when 'prize_cooldown_weeks' then '2'
+      when 'prize_winners_per_group' then '1'
       else value end,
       locked = false, locked_at = null;
     `);

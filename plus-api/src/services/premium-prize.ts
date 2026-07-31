@@ -1,24 +1,32 @@
 import { config } from '../config.js';
 import { pool, query, one, withTransaction } from '../db.js';
 import { dayInTz } from './time.js';
-import { getTiers } from './league.js';
+import { getLeagueConfig } from './league-config.js';
 
 /**
  * Weekly league prize: after finalizeWeek() has written final_rank for a week,
- * grant profiles.tier = 'premium' for 7 days to the top 2 members of the
- * CURRENT highest active tier that actually had members that week — dynamic,
- * walked down from the top, so it is meaningful today (everyone is in acrylic,
- * so this literally rewards the top of the whole league) and automatically
- * narrows to an ever-smaller, more exclusive pool as the platform grows and
- * higher tiers fill up, with no config change ever needed.
+ * grant premium for a few days to the TOP OF EVERY VALID GROUP.
+ *
+ * Group-level, not tier-level, and that is the whole point. The rule used to
+ * stop at the highest tier that had a finalized group, which meant the week any
+ * single user reached amalgam, every remaining acrylic player — the large
+ * majority — became permanently ineligible. A reward nobody in the bottom tier
+ * can reach is worst precisely for the cohort that churns. The league UI also
+ * only ever shows a user their own group of 8, so "first in your group" is a
+ * target they can actually see, while "first in your whole tier" is not.
+ *
+ * A winner then sits out prize_cooldown_weeks. That is deliberately a COOLDOWN
+ * and not a lifetime cap: a cap ("you may win twice, ever") punishes success by
+ * permanently stripping the reward from the most engaged users, whereas a
+ * cooldown never says "never again" — and because the prize passes DOWN to the
+ * next eligible member while the winner sits out, it rotates through roughly
+ * three different people per group instead of one, at no extra cost.
  *
  * Idempotent via premium_grants' (user_id, week_start) unique constraint —
  * grantWeeklyPrizes() re-scans a small trailing window every day (like
  * notifyLeagueOutcomes' FRESH_DAYS), so a missed run self-heals the next day.
  */
 
-const GRANT_DAYS = 7;
-const WINNERS_PER_WEEK = 2;
 /** How far back a finalized week may be and still be worth granting/announcing. */
 const FRESH_DAYS = 7;
 
@@ -26,37 +34,85 @@ export interface PendingPremiumGrant { granted_at: string; expires_at: string; }
 
 async function grantPrizeForWeek(weekStart: string, now: Date): Promise<number> {
   return withTransaction(async (client) => {
-    const tiers = await getTiers(client);
-    const activeByOrderDesc = [...tiers].filter((t) => t.is_active).sort((a, b) => b.tier_order - a.tier_order);
+    const cfg = await getLeagueConfig(client);
+    const expiresAt = new Date(now.getTime() + cfg.prize_days * 86_400_000).toISOString();
+    // A winner is ineligible for this many LEAGUE WEEKS. Measured against
+    // week_start, not the grant's wall-clock timestamp: the unit of the league
+    // is the week, so "two weeks off" should mean two league weeks regardless of
+    // when in the day the sweep happened to run, or how long the grant lasted.
 
-    for (const tier of activeByOrderDesc) {
+    // Every finalized group of the week that is big enough to be a real
+    // contest. An undersized group awards nothing, for the same reason
+    // finalizeWeek refuses to promote out of one: four people is not a race.
+    const groups = (await client.query<{ id: string }>(
+      `select l.id
+         from leagues l
+         join league_members lm on lm.league_id = l.id
+        where l.week_start = $1 and l.status = 'finalized'
+        group by l.id
+       having count(lm.id) >= $2
+        order by l.id`,
+      [weekStart, cfg.min_valid_group_size],
+    )).rows;
+
+    let granted = 0;
+    for (const g of groups) {
+      // Ranked members of this group. We walk down rather than taking the top N
+      // outright: a member on cooldown passes the prize DOWN to the next one,
+      // instead of the group silently awarding nothing that week.
       const members = (await client.query<{ user_id: string }>(
         `select lm.user_id
            from league_members lm
-           join leagues l on l.id = lm.league_id
-          where l.tier_id = $1 and l.week_start = $2 and l.status = 'finalized'
-          order by lm.weekly_xp desc, lm.first_reached_current_xp_at asc nulls last, lm.id asc
-          limit $3`,
-        [tier.id, weekStart, WINNERS_PER_WEEK],
+          where lm.league_id = $1
+          order by lm.weekly_xp desc, lm.first_reached_current_xp_at asc nulls last, lm.id asc`,
+        [g.id],
       )).rows;
 
-      if (!members.length) continue; // this tier had no finalized group this week — try the next one down
+      // Winners this group ALREADY has for the week. Without this the sweep is
+      // not idempotent: the per-user unique constraint stops one person being
+      // granted twice, but the pass-down would hand the prize to the next member
+      // on every re-run, walking premium through the whole group in a week.
+      const existing = (await client.query<{ n: number }>(
+        `select count(*)::int as n
+           from premium_grants g
+           join league_members lm on lm.user_id = g.user_id and lm.week_start = g.week_start
+          where lm.league_id = $1 and g.week_start = $2`,
+        [g.id, weekStart],
+      )).rows[0]?.n ?? 0;
 
-      const expiresAt = new Date(now.getTime() + GRANT_DAYS * 86_400_000).toISOString();
-      let granted = 0;
+      let winnersHere = existing;
       for (const m of members) {
+        if (winnersHere >= cfg.prize_winners_per_group) break;
+
+        // Cooldown: won recently enough that it is somebody else's turn.
+        if (cfg.prize_cooldown_weeks > 0) {
+          const recent = await client.query<{ n: number }>(
+            `select count(*)::int as n from premium_grants
+              where user_id = $1
+                and week_start > ($2::date - ($3::int * 7))
+                and week_start < $2::date`,
+            [m.user_id, weekStart, cfg.prize_cooldown_weeks],
+          );
+          if ((recent.rows[0]?.n ?? 0) > 0) continue;
+        }
+
         const profile = await client.query<{ tier: string }>('select tier from profiles where id = $1', [m.user_id]);
         if (profile.rows[0]?.tier === 'premium') {
-          // Already premium: only worth a NEW grant (and a fresh "you won again"
-          // banner) if it EXTENDS an existing grant of ours (a repeat winner).
-          // Otherwise (a real subscriber/founder) skip — never claim credit for
-          // premium status this system did not grant.
-          const activeGrant = await client.query<{ n: number }>(
-            `select count(*)::int as n from premium_grants
-              where user_id = $1 and revoked_at is null and expires_at > $2`,
-            [m.user_id, now.toISOString()],
+          // Already premium. Skip ONLY if that premium is not ours to extend —
+          // a real subscriber or a manual founder override — because claiming
+          // credit for it would show a "you won premium!" banner to someone who
+          // already had it, and burn the group's prize on a no-op.
+          //
+          // Any grant history at all (even an expired one) means this IS our
+          // premium: the daily sweep grants before it expires, so a past
+          // winner can still be sitting on a grant that has run out but not yet
+          // been reverted. Reading that as "a real subscriber" would lock them
+          // out of ever winning again.
+          const ours = await client.query<{ n: number }>(
+            'select count(*)::int as n from premium_grants where user_id = $1',
+            [m.user_id],
           );
-          if ((activeGrant.rows[0]?.n ?? 0) === 0) continue;
+          if ((ours.rows[0]?.n ?? 0) === 0) continue;
         }
 
         const ins = await client.query(
@@ -70,10 +126,10 @@ async function grantPrizeForWeek(weekStart: string, now: Date): Promise<number> 
 
         await client.query("update profiles set tier = 'premium' where id = $1", [m.user_id]);
         granted += 1;
+        winnersHere += 1;
       }
-      return granted; // stop at the first (highest) tier that had a finalized group
     }
-    return 0;
+    return granted;
   });
 }
 
