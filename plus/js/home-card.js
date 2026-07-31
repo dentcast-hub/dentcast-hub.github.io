@@ -52,6 +52,28 @@ function paintShields(host, available) {
   host.replaceChildren(...icons);
 }
 
+// «قطب‌نمای مطالعه» homepage entry point. Premium: a plain link to the report.
+// Free: the same 🔒 lock badge the dashboard's locked-feature cards use, plus
+// a «؟» that reveals one line of explanation — so clicking is never how the
+// user first learns it's premium.
+function compassRow(me) {
+  const isPremium = me.tier === 'premium';
+  const link = el('a', { class: 'dc-plus-compass' + (isPremium ? '' : ' is-locked'), href: '/plus/reading-compass.html' }, [
+    el('span', { 'aria-hidden': 'true' }, '🧭'),
+    el('span', {}, 'قطب‌نمای مطالعه'),
+    isPremium ? null : el('span', { class: 'dcp-soon-badge' }, '🔒 پریمیوم'),
+  ].filter(Boolean));
+  if (isPremium) return el('div', { class: 'dc-plus-compass-row' }, link);
+
+  const cap = el('p', { class: 'dc-plus-scorecap', hidden: true }, el('span', { class: 'dc-plus-capline' },
+    'نشان می‌دهد چند درصد از هر پیلار را خوانده‌اید، بیشترین مطالعه‌تان کجا بوده، و چه حوزه‌ای هنوز از دیدتان دور مانده — با دو دسته پیشنهاد: ادامه‌ی همان حیطه یا کاوش حوزه‌ای تازه. ویژه‌ی پریمیوم است.'));
+  const info = el('button', {
+    class: 'dc-plus-info', type: 'button', title: 'قطب‌نمای مطالعه چیست؟', 'aria-label': 'قطب‌نمای مطالعه چیست؟',
+  }, '؟');
+  info.addEventListener('click', () => { cap.hidden = !cap.hidden; });
+  return el('div', { class: 'dc-plus-compass-row' }, [link, info, cap]);
+}
+
 function renderAnon(card) {
   const btn = el('button', { class: 'dcp-btn dc-plus-cta', type: 'button' }, [
     el('span', {}, 'شروع رایگان'),
@@ -207,6 +229,11 @@ async function renderLoggedIn(card, user) {
     rows.push(el('a', { class: 'dc-plus-due', href: '/plus/cards.html' },
       faNum(me.due_card_count) + ' کارت برای مرور'));
   }
+  // Trace of «قطب‌نمای مطالعه» on the homepage too, for both tiers: premium
+  // links straight through, free sees the same lock badge the dashboard's
+  // locked tiles use plus a «؟» explainer (same reveal pattern as the score
+  // caption above) so a click is never a surprise about what's behind it.
+  rows.push(compassRow(me));
 
   // Row 3 — connection chips, demoted to a lighter row under a divider.
   rows.push(el('div', { class: 'dc-plus-connrow' }, [connectionsRow(me)]));
