@@ -39,6 +39,22 @@ COPY plus-api/migrations ./migrations
 COPY plus/content-index.json ./content-index.json
 COPY plus/pathways.json ./pathways.json
 
+# Build stamp — what GET /health reports back.
+#
+# Deliberately the LAST layer before USER/CMD: these values change on every
+# build, so putting them earlier would invalidate the npm ci and COPY layers
+# above and turn every rebuild into a cold one.
+#
+# Defaults keep a local `docker build` (and `npm run dev`, which never sees
+# these at all) working without passing anything. The real values come from
+# --build-arg; see the deploy notes in DEPLOY.md.
+ARG BUILD_TAG=dev
+ARG GIT_SHA=unknown
+ARG BUILT_AT=unknown
+ENV BUILD_TAG=$BUILD_TAG
+ENV GIT_SHA=$GIT_SHA
+ENV BUILT_AT=$BUILT_AT
+
 # Don't run as root.
 USER node
 
