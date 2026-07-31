@@ -2,7 +2,7 @@ import { config } from '../config.js';
 import { pool, query } from '../db.js';
 import { dayInTz } from './time.js';
 import { displayStreak } from './streak.js';
-import { notifications } from '../providers/registry.js';
+import { sendCapped } from './notify-policy.js';
 import type { NotificationMessage } from '../providers/notifications/types.js';
 
 /**
@@ -65,7 +65,7 @@ export async function runStreakReminders(now: Date = new Date()): Promise<{ remi
         `insert into user_activity (user_id, action, meta) values ($1, 'streak_reminder_sent', $2::jsonb)`,
         [u.id, JSON.stringify({ day: today })],
       );
-      await notifications.send(u.id, message, 'streak');
+      await sendCapped(u.id, message, 'streak', now);
       reminded += 1;
     } catch {
       /* best-effort: a missing destination / dead device never fails the batch */

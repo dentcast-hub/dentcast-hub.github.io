@@ -10,7 +10,11 @@ export type NotificationKind =
   | 'streak'
   | 'system'
   | 'article_premium'
-  | 'article_free_digest';
+  | 'article_free_digest'
+  /** League promotion/demotion, fired when a week is finalized (premium). */
+  | 'league'
+  /** Leitner cards are due (premium — the review schedule itself is premium). */
+  | 'review';
 
 /**
  * A message may be a plain string (messenger text) or a structured payload.

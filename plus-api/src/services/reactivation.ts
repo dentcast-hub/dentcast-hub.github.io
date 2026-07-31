@@ -3,7 +3,7 @@ import { pool, query, one } from '../db.js';
 import { dayInTz } from './time.js';
 import { displayStreak } from './streak.js';
 import { SCORING_ACTIONS } from './score.js';
-import { notifications } from '../providers/registry.js';
+import { sendCapped } from './notify-policy.js';
 import type { NotificationMessage } from '../providers/notifications/types.js';
 
 /**
@@ -98,7 +98,7 @@ export async function runReactivationNudges(now: Date = new Date()): Promise<{ n
         `insert into user_activity (user_id, action, meta) values ($1, 'reactivation_sent', $2::jsonb)`,
         [u.id, JSON.stringify({ day: today, n: nudgesSoFar })],
       );
-      await notifications.send(u.id, message, 'reminder');
+      await sendCapped(u.id, message, 'reminder', now);
       nudged += 1;
     } catch {
       /* best-effort: a missing destination / dead device never fails the batch */
