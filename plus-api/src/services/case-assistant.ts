@@ -132,6 +132,64 @@ function tagMatchScore(tagFa: string, suggestedWords: Set<string>): number {
 }
 
 /**
+ * Keyword-suggestion cache. The root round costs TWO sequential model calls
+ * (suggest keywords, then narrow), and on a slow day that measured 15-53s to
+ * the first question — so the cheapest win is not making the first call at all
+ * when we have already answered this exact text.
+ *
+ * It is safe to cache because the call is deterministic by construction:
+ * temperature 0, no user identity in the input, and the result is only ever a
+ * list of topic phrases that then get matched against the site's tags IN CODE.
+ * Two users describing the same case should get the same candidate tags.
+ *
+ * In-process and bounded, the same trade-off rate-limit.ts documents: a restart
+ * empties it and a second instance keeps its own copy, both of which cost at
+ * most one extra model call. TTL exists so that re-tagged content eventually
+ * changes the answer; MAX_ENTRIES so a flood of unique descriptions cannot grow
+ * it without limit (oldest inserted is evicted first — Map preserves insertion
+ * order, and a hit refreshes an entry's position).
+ */
+const KEYWORD_TTL_MS = 24 * 60 * 60 * 1000;
+const KEYWORD_MAX_ENTRIES = 500;
+
+const keywordCache = new Map<string, { at: number; keywords: string[] }>();
+
+/** Same case, typed with different spacing/casing, is the same lookup. */
+function keywordCacheKey(text: string): string {
+  return text.trim().replace(/\s+/g, ' ').toLowerCase();
+}
+
+async function cachedKeywords(searchText: string): Promise<string[]> {
+  const key = keywordCacheKey(searchText);
+  const hit = keywordCache.get(key);
+  if (hit && Date.now() - hit.at < KEYWORD_TTL_MS) {
+    keywordCache.delete(key);
+    keywordCache.set(key, hit); // refresh recency
+    return hit.keywords;
+  }
+  if (hit) keywordCache.delete(key); // expired
+
+  const keywords = await ai.suggestKeywords(searchText);
+
+  // Never cache an empty result: that is what a failed/degraded round looks
+  // like, and pinning it for a day would keep a user on the fallback catalog.
+  if (keywords.length) {
+    keywordCache.set(key, { at: Date.now(), keywords });
+    while (keywordCache.size > KEYWORD_MAX_ENTRIES) {
+      const oldest = keywordCache.keys().next().value as string | undefined;
+      if (oldest === undefined) break;
+      keywordCache.delete(oldest);
+    }
+  }
+  return keywords;
+}
+
+/** Test/maintenance helper: forget every cached suggestion. */
+export function clearKeywordCache(): void {
+  keywordCache.clear();
+}
+
+/**
  * Round 1 (or any round reached with only free text so far): ask the AI to
  * read the case description + any "غیر از این‌ها" refinements and suggest
  * short topic phrases in the site's own hashtag style, then match those, IN
@@ -141,7 +199,7 @@ function tagMatchScore(tagFa: string, suggestedWords: Set<string>): number {
  */
 async function nextRootCatalog(description: string, history: NarrowHistoryEntry[]): Promise<NarrowOption[]> {
   const searchText = [description, ...customAnswers(history)].join('\n');
-  const suggestions = await ai.suggestKeywords(searchText);
+  const suggestions = await cachedKeywords(searchText);
   const suggestedWords = new Set(suggestions.flatMap((s) => words(s)));
 
   const options = suggestedWords.size

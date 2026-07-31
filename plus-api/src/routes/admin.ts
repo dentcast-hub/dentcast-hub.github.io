@@ -371,6 +371,17 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
     const withProbe = q.probe !== '0';
     const live = config.ai.provider !== 'stub';
 
+    // Diagnostic for "I added them in the panel but the app says they are unset":
+    // the NAMES (never the values) of every env var that looks like it was meant
+    // for this feature. A name with a stray space, a lowercase letter or a dash
+    // reads as "added" in a panel but is invisible to process.env.AI_PROVIDER, and
+    // that is indistinguishable from "never added" until you can see the keys.
+    // Admin-authed and values-free, so it leaks nothing a key holder lacks.
+    const envKeysSeen = Object.keys(process.env)
+      .filter((k) => /ai|assist|model|gateway|deepseek|arvancloudai/i.test(k))
+      .filter((k) => !/^(npm_|PATH$)/i.test(k))
+      .sort();
+
     const configured = {
       provider: config.ai.provider,
       api_base: Boolean(config.ai.apiBase),
@@ -387,6 +398,7 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
         ok: !live || Boolean(config.ai.apiBase && config.ai.apiKey),
         live,
         configured,
+        env_keys_seen: envKeysSeen,
         probe: null,
       });
     }
@@ -413,6 +425,7 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
       ok: result.ok,
       live,
       configured,
+      env_keys_seen: envKeysSeen,
       probe: { ...result, ms: Date.now() - started },
     });
   });
