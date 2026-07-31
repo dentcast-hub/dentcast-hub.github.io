@@ -6,7 +6,7 @@ import { api } from './api.js';
 import { getModel, contentInfo, FOLDER_EN } from './content-index.js';
 import { leagueEntryButton } from './league.js';
 import { openCollectionPicker, boardCover } from './collections.js';
-import { LABELS, PALETTE } from './config.js';
+import { LABELS, PALETTE, PREMIUM_FEATURES } from './config.js';
 
 const labelFa = (k) => (LABELS.find((l) => l.key === k) || {}).fa || '';
 const colorCss = (k) => (PALETTE.find((p) => p.key === k) || {}).css || 'transparent';
@@ -15,17 +15,6 @@ const colorCss = (k) => (PALETTE.find((p) => p.key === k) || {}).css || 'transpa
 // (not article-style reading content). The folder list itself is still derived
 // dynamically from the content index; this only hides these specific keys.
 const PROGRESS_EXCLUDE = new Set(['photocast', 'litecast']);
-
-// The five LIVE premium features' title + short hint, shared by their own
-// section() calls below AND the "you won a week of premium" banner — one
-// place to edit so the two can never drift apart.
-const PREMIUM_FEATURES = [
-  { title: 'برای مرور امروز', hint: 'هایلایت‌هایی که امروز نوبتِ مرورشونه.' },
-  { title: 'مسیر یادگیری', hint: 'مسیرهای آماده، از پایه تا پیشرفته؛ فقط بخون.' },
-  { title: 'کالکشن‌ها', hint: 'هایلایت‌ها و مقاله‌هاتو تو پوشه‌های دلخواهِ خودت بریز.' },
-  { title: 'قطب‌نمای مطالعه', hint: 'وضعیت خواندن‌هایتان را نسبت به کل محتوای سایت و مسیرهای یادگیری می‌سنجد.' },
-  { title: 'دستیار هوشمند', hint: 'شرایط بیمار را شرح بده؛ با چند گزینه به نزدیک‌ترین مقاله می‌رسیم.' },
-];
 
 // `more`: an optional longer explanation, tucked behind a «؟» beside the hint —
 // same hidden-by-default reveal the homepage promo card already uses for its
