@@ -192,13 +192,6 @@ a.dcp-progress-row:hover { text-decoration: none; }
 .dcp-pw-dash-foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; font-size: .85rem; color: var(--txt2, #4a5f85); }
 .dcp-pw-alllink { color: var(--ac, #0b5fff) !important; font-weight: 600; white-space: nowrap; }
 
-/* ---- premium tiles ------------------------------------------------------- */
-.dcp-tile-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
-.dcp-tile { position: relative; background: var(--surface2, #f4f6fb); border: 1px solid var(--border, rgba(2,35,96,.08)); border-radius: var(--r-md, 14px); padding: 14px 12px; display: flex; flex-direction: column; gap: 4px; }
-.dcp-tile-lock { font-size: 1.1rem; }
-.dcp-tile-name { font-weight: 700; }
-.dcp-tile-soon { font-size: .8rem; color: var(--txt2, #4a5f85); }
-
 /* A free user's teaser for a LIVE premium feature (Leitner review, pathways,
    collections) - same section slot the real block occupies for premium; the
    section's own hint already explains it, so this is just a lock chip. The

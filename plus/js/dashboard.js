@@ -16,15 +16,6 @@ const colorCss = (k) => (PALETTE.find((p) => p.key === k) || {}).css || 'transpa
 // dynamically from the content index; this only hides these specific keys.
 const PROGRESS_EXCLUDE = new Set(['photocast', 'litecast']);
 
-// Still-locked tiles: nothing built for either plan yet. Leaderboard is
-// intentionally NOT here (removed). The LIVE premium features (Leitner review,
-// learning pathways, collections, reading compass, the case assistant) no
-// longer live in this generic grid at all — each gets its own real section for
-// every plan now (a live block for premium, a compelling locked-card teaser
-// for free; see reviewDueBlock/pathwayBlock/collectionsBlock/compassBlock/
-// assistantBlock and lockedFeatureCard below).
-const PREMIUM_TILES = ['جمع‌بندی موضوعی هایلایت‌ها', 'کوییز و کسب امتیاز'];
-
 // The five LIVE premium features' title + short hint, shared by their own
 // section() calls below AND the "you won a week of premium" banner — one
 // place to edit so the two can never drift apart.
@@ -173,21 +164,6 @@ async function recentBlock(model) {
     list.appendChild(row);
   }
   return list;
-}
-
-// The first two tiles are live for premium users (Phase 2's flashcard review,
-// Phase 3's learning pathways, see reviewDueBlock/pathwayBlock above) — drop
-// them from their locked grid; free users still see both locked like the rest.
-function premiumTiles() {
-  const grid = el('div', { class: 'dcp-tile-grid' });
-  for (const t of PREMIUM_TILES) {
-    grid.appendChild(el('div', { class: 'dcp-tile' }, [
-      el('span', { class: 'dcp-tile-lock', 'aria-hidden': 'true' }, '🔒'),
-      el('span', { class: 'dcp-tile-name' }, t),
-      el('span', { class: 'dcp-tile-soon' }, 'به زودی'),
-    ]));
-  }
-  return grid;
 }
 
 // A free user's teaser for a LIVE premium feature: the section's own hint
@@ -390,8 +366,6 @@ export async function renderDashboard(root, { me: preMe } = {}) {
     isPremium ? assistantBlock() : lockedFeatureCard('/plus/assistant.html'),
     'فقط از بین چند گزینه انتخاب می‌کنی — نه گفتگوی آزاد. هوش مصنوعی هیچ تشخیص یا توصیه‌ی درمانی نمی‌دهد؛ فقط توضیحِ تو را به دسته‌بندی‌های خودِ سایت نگاشت می‌کند تا به مقاله‌ی مرتبط برسیم.',
   ));
-
-  children.push(section('پریمیوم', 'به‌زودی در دسترس.', premiumTiles()));
 
   root.replaceChildren(...children.filter(Boolean));
   recentWrap.replaceChildren(await recentBlock(model));
