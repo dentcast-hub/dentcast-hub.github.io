@@ -33,6 +33,14 @@ export async function resetDb(): Promise<void> {
       when 'demotion_pct' then '20'
       when 'min_valid_group_size' then '6'
       when 'cooldown_weeks' then '4'
+      when 'xp_active_bonus' then '5'
+      when 'xp_read' then '5'
+      when 'xp_listen' then '5'
+      when 'xp_highlight' then '1'
+      when 'xp_highlight_cap' then '3'
+      when 'xp_review' then '2'
+      when 'xp_per_active_day' then '10'
+      when 'xp_per_highlight' then '1'
       else value end,
       locked = false, locked_at = null;
     `);

@@ -366,3 +366,43 @@ describe('POST /admin/league/config', () => {
     expect((await getLeagueConfig()).promotion_min_weekly_xp).toBe(25);
   });
 });
+
+describe('GET /league — the scoring table the explainer shows', () => {
+  let app: FastifyInstance;
+  beforeEach(async () => { app = await makeApp(); });
+
+  it('sends the live XP weights, so the "how do I score?" box cannot go stale', async () => {
+    const cookie = await loginAs(app, '09121299001');
+    const res = await app.inject({ method: 'GET', url: '/league', headers: { cookie } });
+
+    expect(res.statusCode).toBe(200);
+    const cfg = await getLeagueConfig();
+    expect(res.json().xp).toEqual({
+      read: cfg.xp_read,
+      listen: cfg.xp_listen,
+      highlight: cfg.xp_highlight,
+      highlight_cap: cfg.xp_highlight_cap,
+      review: cfg.xp_review,
+      active_bonus: cfg.xp_active_bonus,
+    });
+  });
+
+  it('follows a retune through the admin endpoint', async () => {
+    const basic = 'Basic ' + Buffer.from(`${config.admin.user}:${config.admin.password}`).toString('base64');
+    await app.inject({
+      method: 'POST', url: '/admin/league/config',
+      headers: { authorization: basic }, payload: { key: 'xp_read', value: 8 },
+    });
+
+    const cookie = await loginAs(app, '09121299002');
+    const res = await app.inject({ method: 'GET', url: '/league', headers: { cookie } });
+    expect(res.json().xp.read).toBe(8);
+  });
+
+  it('is present before the user has joined a group, since the box shows there too', async () => {
+    const cookie = await loginAs(app, '09121299003');
+    const res = await app.inject({ method: 'GET', url: '/league', headers: { cookie } });
+    expect(res.json().joined).toBe(false);
+    expect(res.json().xp.read).toBeTypeOf('number');
+  });
+});
