@@ -4,6 +4,7 @@ import { pool } from '../src/db.js';
 import { resetRateLimits } from '../src/services/rate-limit.js';
 import { clearOtpStore } from '../src/services/otp.js';
 import { clearBaleLinkStore } from '../src/services/bale-link.js';
+import { clearKeywordCache } from '../src/services/case-assistant.js';
 
 /** Truncate all data tables and reset in-process stores. Call in beforeEach. */
 export async function resetDb(): Promise<void> {
@@ -32,6 +33,7 @@ export async function resetDb(): Promise<void> {
     "update league_tiers set is_active = (tier_order <= 3), activated_at = case when tier_order <= 3 then now() else null end",
   );
   resetRateLimits();
+  clearKeywordCache();
   clearOtpStore();
   clearBaleLinkStore();
 }
