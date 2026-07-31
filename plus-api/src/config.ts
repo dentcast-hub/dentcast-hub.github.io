@@ -196,6 +196,27 @@ export const config = {
     password: str('ADMIN_PASSWORD', 'change-me-admin-password'),
   },
 
+  // «دستیار هوشمند» (premium, spec's later AI phase): a narrow classifier, not a
+  // chatbot — it turns a free-text case description into a short multiple-choice
+  // narrowing round, options always drawn from our own taxonomy (never invented),
+  // until it can point at real DentCast articles. AI_PROVIDER=stub (default) costs
+  // nothing and needs no key — see providers/ai/. Only 'openai-compatible' (Arvan's
+  // OpenAI-compatible endpoint) spends real money, and only when explicitly configured.
+  ai: {
+    provider: str('AI_PROVIDER', 'stub'),
+    apiBase: str('AI_API_BASE', ''),
+    apiKey: str('AI_API_KEY', ''),
+    model: str('AI_MODEL', ''),
+  },
+
+  // Bounds on the case-assistant's own cost: rounds per session (never more than
+  // this many AI calls before it is forced to resolve) and requests per user per
+  // hour (abuse/runaway-click guard, same shape as anon.maxPerIpPerHour).
+  assistant: {
+    maxRounds: int('ASSISTANT_MAX_ROUNDS', 4),
+    maxPerUserPerHour: int('ASSISTANT_MAX_PER_USER_PER_HOUR', 20),
+  },
+
   streakTimezone: str('STREAK_TIMEZONE', 'Asia/Tehran'),
 
   // Path to the generated taxonomy index (tools/build_plus_index.mjs output).

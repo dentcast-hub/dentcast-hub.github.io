@@ -17,12 +17,13 @@ const colorCss = (k) => (PALETTE.find((p) => p.key === k) || {}).css || 'transpa
 const PROGRESS_EXCLUDE = new Set(['photocast', 'litecast']);
 
 // Still-locked tiles: nothing built for either plan yet. Leaderboard is
-// intentionally NOT here (removed). The three LIVE premium features (Leitner
-// review, learning pathways, collections) no longer live in this generic grid
-// at all — each gets its own real section for every plan now (a live block
-// for premium, a compelling locked-card teaser for free; see
-// reviewDueBlock/pathwayBlock/collectionsBlock and lockedFeatureCard below).
-const PREMIUM_TILES = ['جمع‌بندی موضوعی هایلایت‌ها', 'کوییز و کسب امتیاز', 'دستیار هوشمند'];
+// intentionally NOT here (removed). The LIVE premium features (Leitner review,
+// learning pathways, collections, reading compass, the case assistant) no
+// longer live in this generic grid at all — each gets its own real section for
+// every plan now (a live block for premium, a compelling locked-card teaser
+// for free; see reviewDueBlock/pathwayBlock/collectionsBlock/compassBlock/
+// assistantBlock and lockedFeatureCard below).
+const PREMIUM_TILES = ['جمع‌بندی موضوعی هایلایت‌ها', 'کوییز و کسب امتیاز'];
 
 // `more`: an optional longer explanation, tucked behind a «؟» beside the hint —
 // same hidden-by-default reveal the homepage promo card already uses for its
@@ -267,6 +268,12 @@ async function compassBlock() {
   ].filter(Boolean));
 }
 
+// Premium «دستیار هوشمند» entry point. The wizard itself is multi-step, so the
+// dashboard only carries a CTA into its own page — see case-assistant.js.
+function assistantBlock() {
+  return el('a', { class: 'dcp-btn dcp-btn-primary', href: '/plus/assistant.html' }, 'شروع دستیار');
+}
+
 export async function renderDashboard(root, { me: preMe } = {}) {
   root.replaceChildren(el('div', { class: 'dcp-loading' }, 'در حال بارگذاری...'));
   // Always fetch fresh when the dashboard opens: /me and /progress are never
@@ -319,6 +326,12 @@ export async function renderDashboard(root, { me: preMe } = {}) {
     'وضعیت خواندن‌هایتان را نسبت به کل محتوای سایت و مسیرهای یادگیری می‌سنجد.',
     isPremium ? compassWrap : lockedFeatureCard('/plus/reading-compass.html'),
     'نه حدسِ سلیقه، بلکه آمارِ واقعیِ خواندن‌ها: چند درصد از هر پیلار را پوشش داده‌اید و بیشترین مطالعه‌تان کجا بوده. بر همین اساس دو دسته پیشنهاد می‌دهد: مطالبِ نخوانده‌ی همان حیطه برای ادامه، و حوزه‌هایی که هنوز اصلاً سراغشان نرفته‌اید برای کاوش.',
+  ));
+  children.push(section(
+    'دستیار هوشمند',
+    'شرایط بیمار را شرح بده؛ با چند گزینه به نزدیک‌ترین مقاله می‌رسیم.',
+    isPremium ? assistantBlock() : lockedFeatureCard('/plus/assistant.html'),
+    'فقط از بین چند گزینه انتخاب می‌کنی — نه گفتگوی آزاد. هوش مصنوعی هیچ تشخیص یا توصیه‌ی درمانی نمی‌دهد؛ فقط توضیحِ تو را به دسته‌بندی‌های خودِ سایت نگاشت می‌کند تا به مقاله‌ی مرتبط برسیم.',
   ));
 
   children.push(

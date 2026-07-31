@@ -152,6 +152,10 @@ export const api = {
   // cross-referenced against the taxonomy and pathways (no interest guessing)
   readingCompass: () => request('/reading-compass'),
 
+  // premium: «دستیار هوشمند» — stateless narrowing wizard, not a chat. The
+  // caller resends the whole history every call; nothing is stored server-side.
+  assistantNext: (description, history) => request('/assistant/next', { method: 'POST', body: { description, history } }),
+
   // premium: collections (Phase 3) - user-made freeform folders of highlights/pages
   listCollections: () => request('/collections'),
   getCollection: (id) => request('/collections/' + encodeURIComponent(id)),
