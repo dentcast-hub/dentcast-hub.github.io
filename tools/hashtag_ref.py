@@ -272,6 +272,31 @@ def cmd_apply(path: str) -> None:
 
     # 2. Global renames (duplicate surface forms collapsing into the canonical).
     renames = batch.get("renames") or {}
+
+    # The reference has to follow the rename, not just the brain. Without this a
+    # renamed form is left behind as a count=0 orphan while its replacement has
+    # no entry at all - the reference would then be describing a vocabulary the
+    # site no longer uses. Re-listing an already-applied rename is a harmless
+    # no-op on the brain and repairs the reference.
+    for old, new in renames.items():
+        old_c = index.get(old)
+        if not old_c:
+            continue
+        old_c.setdefault("variants", [])
+        target = index.get(new)
+        if target is None:                      # pure rename
+            old_c["tag"] = new
+            index[new] = index.pop(old)
+            target = old_c
+        else:                                   # merge into an existing concept
+            for v in old_c["variants"]:
+                if v not in target["variants"]:
+                    target["variants"].append(v)
+            ref["concepts"].remove(old_c)
+            index.pop(old)
+        if old not in target["variants"]:
+            target["variants"].append(old)      # the dead form, recorded
+
     renamed = 0
     for e in brain:
         tags_ = e.get("hashtags")

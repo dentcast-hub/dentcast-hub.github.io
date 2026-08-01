@@ -488,7 +488,9 @@
    "words": 2,
    "definition": "",
    "use_when": "",
-   "variants": [],
+   "variants": [
+    "#پست و کور"
+   ],
    "co_tags": [],
    "count": 21,
    "content_ids": [
@@ -1129,13 +1131,15 @@
    ]
   },
   {
-   "key": "ailiteracy",
-   "tag": "#AILiteracy",
+   "key": "ai_literacy",
+   "tag": "#AI_Literacy",
    "domain": "ai",
-   "words": 1,
+   "words": 2,
    "definition": "",
    "use_when": "",
-   "variants": [],
+   "variants": [
+    "#AILiteracy"
+   ],
    "co_tags": [],
    "count": 9,
    "content_ids": [
@@ -1173,13 +1177,15 @@
    ]
   },
   {
-   "key": "dentalai",
-   "tag": "#DentalAI",
+   "key": "dental_ai",
+   "tag": "#Dental_AI",
    "domain": "ai",
-   "words": 1,
+   "words": 2,
    "definition": "",
    "use_when": "",
-   "variants": [],
+   "variants": [
+    "#DentalAI"
+   ],
    "co_tags": [],
    "count": 9,
    "content_ids": [
@@ -1303,13 +1309,15 @@
    ]
   },
   {
-   "key": "zeroboneloss",
-   "tag": "#ZeroBoneLoss",
+   "key": "zero_bone_loss",
+   "tag": "#Zero_Bone_Loss",
    "domain": "clinical",
-   "words": 1,
+   "words": 3,
    "definition": "",
    "use_when": "",
-   "variants": [],
+   "variants": [
+    "#ZeroBoneLoss"
+   ],
    "co_tags": [],
    "count": 8,
    "content_ids": [
@@ -1684,6 +1692,26 @@
    ]
   },
   {
+   "key": "digital_dentistry",
+   "tag": "#Digital_Dentistry",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [
+    "#DigitalDentistry"
+   ],
+   "co_tags": [],
+   "count": 5,
+   "content_ids": [
+    "episodes/episode-149-2",
+    "sharehub/share-2",
+    "insight/insight-33",
+    "episodes/episode-156",
+    "insight/insight-38"
+   ]
+  },
+  {
    "key": "dme",
    "tag": "#DME",
    "domain": "clinical",
@@ -1735,6 +1763,26 @@
     "dentai/dentai-17",
     "dentai/dentai-19",
     "dentai/dentai-20"
+   ]
+  },
+  {
+   "key": "implant_prosthetics",
+   "tag": "#Implant_Prosthetics",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [
+    "#ImplantProsthetics"
+   ],
+   "co_tags": [],
+   "count": 5,
+   "content_ids": [
+    "sharehub/share-1",
+    "sharehub/share-4",
+    "episodes/episode-157",
+    "episodes/episode-158",
+    "episodes/episode-159"
    ]
   },
   {
@@ -2141,30 +2189,15 @@
    ]
   },
   {
-   "key": "digitaldentistry",
-   "tag": "#DigitalDentistry",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "",
-   "use_when": "",
-   "variants": [],
-   "co_tags": [],
-   "count": 4,
-   "content_ids": [
-    "episodes/episode-149-2",
-    "insight/insight-33",
-    "episodes/episode-156",
-    "insight/insight-38"
-   ]
-  },
-  {
-   "key": "generativeai",
-   "tag": "#GenerativeAI",
+   "key": "generative_ai",
+   "tag": "#Generative_AI",
    "domain": "ai",
-   "words": 1,
+   "words": 2,
    "definition": "",
    "use_when": "",
-   "variants": [],
+   "variants": [
+    "#GenerativeAI"
+   ],
    "co_tags": [],
    "count": 4,
    "content_ids": [
@@ -2175,13 +2208,15 @@
    ]
   },
   {
-   "key": "globaldiagnosis",
-   "tag": "#GlobalDiagnosis",
+   "key": "global_diagnosis",
+   "tag": "#Global_Diagnosis",
    "domain": "clinical",
-   "words": 1,
+   "words": 2,
    "definition": "",
    "use_when": "",
-   "variants": [],
+   "variants": [
+    "#GlobalDiagnosis"
+   ],
    "co_tags": [],
    "count": 4,
    "content_ids": [
@@ -2665,13 +2700,15 @@
    ]
   },
   {
-   "key": "diagnosticai",
-   "tag": "#DiagnosticAI",
+   "key": "diagnostic_ai",
+   "tag": "#Diagnostic_AI",
    "domain": "ai",
-   "words": 1,
+   "words": 2,
    "definition": "",
    "use_when": "",
-   "variants": [],
+   "variants": [
+    "#DiagnosticAI"
+   ],
    "co_tags": [],
    "count": 3,
    "content_ids": [
@@ -2713,13 +2750,15 @@
    ]
   },
   {
-   "key": "implantplanning",
-   "tag": "#ImplantPlanning",
+   "key": "implant_planning",
+   "tag": "#Implant_Planning",
    "domain": "clinical",
-   "words": 1,
+   "words": 2,
    "definition": "",
    "use_when": "",
-   "variants": [],
+   "variants": [
+    "#ImplantPlanning"
+   ],
    "co_tags": [],
    "count": 3,
    "content_ids": [
@@ -2729,13 +2768,31 @@
    ]
   },
   {
-   "key": "implantprosthetics",
-   "tag": "#ImplantProsthetics",
+   "key": "implant_prosthesis",
+   "tag": "#Implant_Prosthesis",
    "domain": "clinical",
-   "words": 1,
+   "words": 2,
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "notecast/episode-24",
+    "insight/insight-35",
+    "insight/insight-57"
+   ]
+  },
+  {
+   "key": "implant_restoration",
+   "tag": "#Implant_Restoration",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [
+    "#ImplantRestoration"
+   ],
    "co_tags": [],
    "count": 3,
    "content_ids": [
@@ -2745,19 +2802,21 @@
    ]
   },
   {
-   "key": "implantrestoration",
-   "tag": "#ImplantRestoration",
+   "key": "laminate_veneer",
+   "tag": "#Laminate_Veneer",
    "domain": "clinical",
-   "words": 1,
+   "words": 2,
    "definition": "",
    "use_when": "",
-   "variants": [],
+   "variants": [
+    "#LaminateVeneer"
+   ],
    "co_tags": [],
    "count": 3,
    "content_ids": [
-    "episodes/episode-157",
-    "episodes/episode-158",
-    "episodes/episode-159"
+    "insight/insight-36",
+    "insight/insight-37",
+    "sharehub/share-8"
    ]
   },
   {
@@ -2793,13 +2852,15 @@
    ]
   },
   {
-   "key": "promptengineering",
-   "tag": "#PromptEngineering",
+   "key": "prompt_engineering",
+   "tag": "#Prompt_Engineering",
    "domain": "ai",
-   "words": 1,
+   "words": 2,
    "definition": "",
    "use_when": "",
-   "variants": [],
+   "variants": [
+    "#PromptEngineering"
+   ],
    "co_tags": [],
    "count": 3,
    "content_ids": [
@@ -2809,13 +2870,15 @@
    ]
   },
   {
-   "key": "snaponsmile",
-   "tag": "#SnapOnSmile",
+   "key": "snap_on_smile",
+   "tag": "#Snap_On_Smile",
    "domain": "clinical",
-   "words": 1,
+   "words": 3,
    "definition": "",
    "use_when": "",
-   "variants": [],
+   "variants": [
+    "#SnapOnSmile"
+   ],
    "co_tags": [],
    "count": 3,
    "content_ids": [
@@ -3510,13 +3573,15 @@
    ]
   },
   {
-   "key": "3dimplantpositioning",
-   "tag": "#3DImplantPositioning",
+   "key": "3d_implant_positioning",
+   "tag": "#3D_Implant_Positioning",
    "domain": "clinical",
-   "words": 1,
+   "words": 3,
    "definition": "",
    "use_when": "",
-   "variants": [],
+   "variants": [
+    "#3DImplantPositioning"
+   ],
    "co_tags": [],
    "count": 2,
    "content_ids": [
@@ -3555,13 +3620,15 @@
    ]
   },
   {
-   "key": "angledscrewchannel",
-   "tag": "#AngledScrewChannel",
+   "key": "angled_screw_channel",
+   "tag": "#Angled_Screw_Channel",
    "domain": "clinical",
-   "words": 1,
+   "words": 3,
    "definition": "",
    "use_when": "",
-   "variants": [],
+   "variants": [
+    "#AngledScrewChannel"
+   ],
    "co_tags": [],
    "count": 2,
    "content_ids": [
@@ -3587,13 +3654,32 @@
    ]
   },
   {
-   "key": "biologicalwidth",
-   "tag": "#BiologicalWidth",
+   "key": "bio_restorative_concept",
+   "tag": "#Bio_Restorative_Concept",
    "domain": "clinical",
-   "words": 1,
+   "words": 3,
    "definition": "",
    "use_when": "",
-   "variants": [],
+   "variants": [
+    "#BioRestorativeConcept"
+   ],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-157",
+    "episodes/episode-158"
+   ]
+  },
+  {
+   "key": "biological_width",
+   "tag": "#Biological_Width",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [
+    "#BiologicalWidth"
+   ],
    "co_tags": [],
    "count": 2,
    "content_ids": [
@@ -3617,28 +3703,15 @@
    ]
   },
   {
-   "key": "biorestorativeconcept",
-   "tag": "#BioRestorativeConcept",
+   "key": "bone_level_implant",
+   "tag": "#Bone_Level_Implant",
    "domain": "clinical",
-   "words": 1,
+   "words": 3,
    "definition": "",
    "use_when": "",
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "episodes/episode-157",
-    "episodes/episode-158"
-   ]
-  },
-  {
-   "key": "bonelevelimplant",
-   "tag": "#BoneLevelImplant",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "",
-   "use_when": "",
-   "variants": [],
+   "variants": [
+    "#BoneLevelImplant"
+   ],
    "co_tags": [],
    "count": 2,
    "content_ids": [
@@ -3707,13 +3780,15 @@
    ]
   },
   {
-   "key": "dahlconcept",
-   "tag": "#DahlConcept",
+   "key": "dahl_concept",
+   "tag": "#Dahl_Concept",
    "domain": "clinical",
-   "words": 1,
+   "words": 2,
    "definition": "",
    "use_when": "",
-   "variants": [],
+   "variants": [
+    "#DahlConcept"
+   ],
    "co_tags": [],
    "count": 2,
    "content_ids": [
@@ -3754,13 +3829,15 @@
    ]
   },
   {
-   "key": "dentalimpression",
-   "tag": "#DentalImpression",
+   "key": "dental_impression",
+   "tag": "#Dental_Impression",
    "domain": "clinical",
-   "words": 1,
+   "words": 2,
    "definition": "",
    "use_when": "",
-   "variants": [],
+   "variants": [
+    "#DentalImpression"
+   ],
    "co_tags": [],
    "count": 2,
    "content_ids": [
@@ -3769,13 +3846,15 @@
    ]
   },
   {
-   "key": "dentaltips",
-   "tag": "#DentalTips",
+   "key": "dental_tips",
+   "tag": "#Dental_Tips",
    "domain": "clinical",
-   "words": 1,
+   "words": 2,
    "definition": "",
    "use_when": "",
-   "variants": [],
+   "variants": [
+    "#DentalTips"
+   ],
    "co_tags": [],
    "count": 2,
    "content_ids": [
@@ -3784,13 +3863,15 @@
    ]
   },
   {
-   "key": "digitalimplantplanning",
-   "tag": "#DigitalImplantPlanning",
+   "key": "digital_implant_planning",
+   "tag": "#Digital_Implant_Planning",
    "domain": "clinical",
-   "words": 1,
+   "words": 3,
    "definition": "",
    "use_when": "",
-   "variants": [],
+   "variants": [
+    "#DigitalImplantPlanning"
+   ],
    "co_tags": [],
    "count": 2,
    "content_ids": [
@@ -3799,13 +3880,15 @@
    ]
   },
   {
-   "key": "emergenceprofile",
-   "tag": "#EmergenceProfile",
+   "key": "emergence_profile",
+   "tag": "#Emergence_Profile",
    "domain": "clinical",
-   "words": 1,
+   "words": 2,
    "definition": "",
    "use_when": "",
-   "variants": [],
+   "variants": [
+    "#EmergenceProfile"
+   ],
    "co_tags": [],
    "count": 2,
    "content_ids": [
@@ -3829,13 +3912,15 @@
    ]
   },
   {
-   "key": "healingabutment",
-   "tag": "#HealingAbutment",
+   "key": "healing_abutment",
+   "tag": "#Healing_Abutment",
    "domain": "clinical",
-   "words": 1,
+   "words": 2,
    "definition": "",
    "use_when": "",
-   "variants": [],
+   "variants": [
+    "#HealingAbutment"
+   ],
    "co_tags": [],
    "count": 2,
    "content_ids": [
@@ -3874,48 +3959,20 @@
    ]
   },
   {
-   "key": "immediateimplant",
-   "tag": "#ImmediateImplant",
+   "key": "immediate_implant",
+   "tag": "#Immediate_Implant",
    "domain": "clinical",
-   "words": 1,
+   "words": 2,
    "definition": "",
    "use_when": "",
-   "variants": [],
+   "variants": [
+    "#ImmediateImplant"
+   ],
    "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-157",
     "episodes/episode-158"
-   ]
-  },
-  {
-   "key": "implant_prosthesis",
-   "tag": "#Implant_Prosthesis",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "",
-   "use_when": "",
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "notecast/episode-24",
-    "insight/insight-57"
-   ]
-  },
-  {
-   "key": "implant_prosthetics",
-   "tag": "#Implant_Prosthetics",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "",
-   "use_when": "",
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "sharehub/share-1",
-    "sharehub/share-4"
    ]
   },
   {
@@ -3934,13 +3991,15 @@
    ]
   },
   {
-   "key": "impressiontechnique",
-   "tag": "#ImpressionTechnique",
+   "key": "impression_technique",
+   "tag": "#Impression_Technique",
    "domain": "clinical",
-   "words": 1,
+   "words": 2,
    "definition": "",
    "use_when": "",
-   "variants": [],
+   "variants": [
+    "#ImpressionTechnique"
+   ],
    "co_tags": [],
    "count": 2,
    "content_ids": [
@@ -3949,33 +4008,20 @@
    ]
   },
   {
-   "key": "jumpinggap",
-   "tag": "#JumpingGap",
+   "key": "jumping_gap",
+   "tag": "#Jumping_Gap",
    "domain": "clinical",
-   "words": 1,
+   "words": 2,
    "definition": "",
    "use_when": "",
-   "variants": [],
+   "variants": [
+    "#JumpingGap"
+   ],
    "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-157",
     "episodes/episode-158"
-   ]
-  },
-  {
-   "key": "laminateveneer",
-   "tag": "#LaminateVeneer",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "",
-   "use_when": "",
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "insight/insight-36",
-    "insight/insight-37"
    ]
   },
   {
@@ -4069,13 +4115,15 @@
    ]
   },
   {
-   "key": "oneabutmentonetime",
-   "tag": "#OneAbutmentOneTime",
+   "key": "one_abutment_one_time",
+   "tag": "#One_Abutment_One_Time",
    "domain": "clinical",
-   "words": 1,
+   "words": 4,
    "definition": "",
    "use_when": "",
-   "variants": [],
+   "variants": [
+    "#OneAbutmentOneTime"
+   ],
    "co_tags": [],
    "count": 2,
    "content_ids": [
@@ -4084,13 +4132,15 @@
    ]
   },
   {
-   "key": "periimplanthealth",
-   "tag": "#PeriImplantHealth",
+   "key": "peri_implant_health",
+   "tag": "#Peri_Implant_Health",
    "domain": "clinical",
-   "words": 1,
+   "words": 3,
    "definition": "",
    "use_when": "",
-   "variants": [],
+   "variants": [
+    "#PeriImplantHealth"
+   ],
    "co_tags": [],
    "count": 2,
    "content_ids": [
@@ -4099,13 +4149,15 @@
    ]
   },
   {
-   "key": "periimplantphenotype",
-   "tag": "#PeriImplantPhenotype",
+   "key": "peri_implant_phenotype",
+   "tag": "#Peri_Implant_Phenotype",
    "domain": "clinical",
-   "words": 1,
+   "words": 3,
    "definition": "",
    "use_when": "",
-   "variants": [],
+   "variants": [
+    "#PeriImplantPhenotype"
+   ],
    "co_tags": [],
    "count": 2,
    "content_ids": [
@@ -4144,13 +4196,15 @@
    ]
   },
   {
-   "key": "platformswitch",
-   "tag": "#PlatformSwitch",
+   "key": "platform_switch",
+   "tag": "#Platform_Switch",
    "domain": "clinical",
-   "words": 1,
+   "words": 2,
    "definition": "",
    "use_when": "",
-   "variants": [],
+   "variants": [
+    "#PlatformSwitch"
+   ],
    "co_tags": [],
    "count": 2,
    "content_ids": [
@@ -4236,13 +4290,15 @@
    ]
   },
   {
-   "key": "smartventcrown",
-   "tag": "#SmartVentCrown",
+   "key": "smart_vent_crown",
+   "tag": "#Smart_Vent_Crown",
    "domain": "clinical",
-   "words": 1,
+   "words": 3,
    "definition": "",
    "use_when": "",
-   "variants": [],
+   "variants": [
+    "#SmartVentCrown"
+   ],
    "co_tags": [],
    "count": 2,
    "content_ids": [
@@ -4251,13 +4307,15 @@
    ]
   },
   {
-   "key": "smiledesign",
-   "tag": "#SmileDesign",
+   "key": "smile_design",
+   "tag": "#Smile_Design",
    "domain": "clinical",
-   "words": 1,
+   "words": 2,
    "definition": "",
    "use_when": "",
-   "variants": [],
+   "variants": [
+    "#SmileDesign"
+   ],
    "co_tags": [],
    "count": 2,
    "content_ids": [
@@ -4266,13 +4324,15 @@
    ]
   },
   {
-   "key": "softtissuemanagement",
-   "tag": "#SoftTissueManagement",
+   "key": "soft_tissue_management",
+   "tag": "#Soft_Tissue_Management",
    "domain": "clinical",
-   "words": 1,
+   "words": 3,
    "definition": "",
    "use_when": "",
-   "variants": [],
+   "variants": [
+    "#SoftTissueManagement"
+   ],
    "co_tags": [],
    "count": 2,
    "content_ids": [
@@ -4281,13 +4341,15 @@
    ]
   },
   {
-   "key": "tissuelevelimplant",
-   "tag": "#TissueLevelImplant",
+   "key": "tissue_level_implant",
+   "tag": "#Tissue_Level_Implant",
    "domain": "clinical",
-   "words": 1,
+   "words": 3,
    "definition": "",
    "use_when": "",
-   "variants": [],
+   "variants": [
+    "#TissueLevelImplant"
+   ],
    "co_tags": [],
    "count": 2,
    "content_ids": [
@@ -6282,42 +6344,6 @@
    "content_ids": [
     "dentcast-plus/video-1"
    ]
-  },
-  {
-   "key": "verticaldimension",
-   "tag": "#VerticalDimension",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "",
-   "use_when": "",
-   "variants": [],
-   "co_tags": [],
-   "count": 0,
-   "content_ids": []
-  },
-  {
-   "key": "فینیشینگ_لاین",
-   "tag": "#فینیشینگ_لاین",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "",
-   "use_when": "",
-   "variants": [],
-   "co_tags": [],
-   "count": 0,
-   "content_ids": []
-  },
-  {
-   "key": "پست_و_کور",
-   "tag": "#پست و کور",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "",
-   "use_when": "",
-   "variants": [],
-   "co_tags": [],
-   "count": 0,
-   "content_ids": []
   }
  ]
 }
