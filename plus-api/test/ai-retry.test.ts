@@ -272,3 +272,45 @@ describe('AI_JSON_MODE default', () => {
     expect(bodies[0].response_format).toBeUndefined();
   });
 });
+
+describe('the timeout / retry-budget pair', () => {
+  // These two only make sense together: the loop checks the budget BEFORE
+  // sleeping, so a budget larger than the timeout buys another whole timeout of
+  // waiting. The pair was 45s/20s, which produced no retry at all and a 45s
+  // ceiling; a naive "raise the budget" fix would have made the ceiling worse.
+  const BACKOFF = [400, 1200];
+
+  function worstCase(timeout: number, budget: number, attempts: number) {
+    let elapsed = 0;
+    let used = 0;
+    for (let a = 1; a <= attempts; a += 1) {
+      elapsed += timeout;
+      used = a;
+      const delay = BACKOFF[Math.min(a - 1, BACKOFF.length - 1)];
+      if (a >= attempts || elapsed + delay >= budget) break;
+      elapsed += delay;
+    }
+    return { attempts: used, worstMs: elapsed };
+  }
+
+  it('keeps the worst case a user can wait under half a minute', () => {
+    const w = worstCase(config.ai.timeoutMs, config.ai.retryBudgetMs, config.ai.maxAttempts);
+    expect(w.worstMs).toBeLessThan(30_000);
+  });
+
+  it('still allows every attempt when failures are FAST', () => {
+    // A 2.6s round (the measured median) failing three times must not be cut
+    // short by the budget — that budget exists for stalls, not for quick errors.
+    const fast = 2_600;
+    let elapsed = 0;
+    let used = 0;
+    for (let a = 1; a <= config.ai.maxAttempts; a += 1) {
+      elapsed += fast;
+      used = a;
+      const delay = BACKOFF[Math.min(a - 1, BACKOFF.length - 1)];
+      if (a >= config.ai.maxAttempts || elapsed + delay >= config.ai.retryBudgetMs) break;
+      elapsed += delay;
+    }
+    expect(used).toBe(config.ai.maxAttempts);
+  });
+});
