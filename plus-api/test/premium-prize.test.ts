@@ -5,7 +5,7 @@ import { pool } from '../src/db.js';
 import { finalizeWeek } from '../src/services/league-finalize.js';
 import { grantWeeklyPrizes, expirePremiumPrizes } from '../src/services/premium-prize.js';
 import { notifyPremiumPrizes, PREMIUM_FEATURE_TITLES } from '../src/services/premium-prize-notify.js';
-import { readFile } from 'node:fs/promises';
+import { readFile, readdir } from 'node:fs/promises';
 import { notifications } from '../src/providers/registry.js';
 import { getLeagueConfig } from '../src/services/league-config.js';
 import { vi } from 'vitest';
@@ -475,16 +475,24 @@ describe('the premium features named in the prize', () => {
     // The server copy (push) and the client copy (banner) are separate
     // constants in different languages, so nothing but this test stops them
     // drifting — which is precisely how the prize copy went stale before.
-    const dashboard = await readFile(
-      new URL('../../plus/js/dashboard.js', import.meta.url), 'utf8',
-    );
-    const block = dashboard.slice(
-      dashboard.indexOf('const PREMIUM_FEATURES = ['),
-      dashboard.indexOf('];', dashboard.indexOf('const PREMIUM_FEATURES = [')),
-    );
+    //
+    // The list is SEARCHED FOR rather than read from a fixed path: it already
+    // moved once (dashboard.js -> config.js) and this test failed on the move
+    // rather than on a real drift. Finding it keeps the guard pointed at the
+    // content it actually cares about.
+    const dir = new URL('../../plus/js/', import.meta.url);
+    let block = '';
+    for (const name of await readdir(dir)) {
+      if (!name.endsWith('.js')) continue;
+      const src = await readFile(new URL(name, dir), 'utf8');
+      const at = src.indexOf('PREMIUM_FEATURES = [');
+      if (at === -1) continue;
+      block = src.slice(at, src.indexOf('];', at));
+      break;
+    }
     const bannerTitles = [...block.matchAll(/title:\s*'([^']+)'/g)].map((m) => m[1]);
 
-    expect(bannerTitles.length, 'found the banner list').toBeGreaterThan(0);
+    expect(bannerTitles.length, 'found the banner list in plus/js/').toBeGreaterThan(0);
     expect(PREMIUM_FEATURE_TITLES).toEqual(bannerTitles);
   });
 });
