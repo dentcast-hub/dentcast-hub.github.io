@@ -12,7 +12,7 @@ import {
   getSpotStats, defaultRange, isCalendarDay, SPOT_HOSTS, type GroupBy,
 } from '../services/spot-stats.js';
 import { withPageViews } from '../services/view-stats.js';
-import { notifications } from '../providers/registry.js';
+import { notifications, ai } from '../providers/registry.js';
 import {
   probe, proxyConfigured, proxyHost, outboundFetch, describeError, type ProbeResult,
 } from '../providers/outbound.js';
@@ -367,7 +367,7 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
   // two failures that look identical in the UI: env not set (still on stub) vs
   // env set but this container cannot reach the gateway.
   app.get('/admin/ai/health', async (request, reply) => {
-    const q = request.query as { probe?: string };
+    const q = request.query as { probe?: string; deep?: string };
     const withProbe = q.probe !== '0';
     const live = config.ai.provider !== 'stub';
 
@@ -392,7 +392,37 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
       max_attempts: config.ai.maxAttempts,
     };
 
-    // Nothing to probe on stub: it makes no network call by design.
+    // ?deep=1 additionally times ONE real narrowing round. The /models probe
+    // proves reachability and auth in a few hundred ms and says nothing about
+    // GENERATION speed — which, on a reasoning model, is the number that decides
+    // whether the assistant is usable. Opt-in because it costs tokens, and
+    // measured HERE rather than from a laptop: this is the path and the network
+    // a user's request actually takes.
+    //
+    // It reports which provider it timed, so a 1ms result from the stub can
+    // never be mistaken for a fast model.
+    const runDeep = async () => {
+      if (q.deep !== '1') return null;
+      const t0 = Date.now();
+      try {
+        const out = await ai.narrowCase({
+          description: 'روکش بیمار مدام می‌افتد و سمان قبلی شسته شده',
+          history: [],
+          catalog: [
+            { key: 'probe-a', label: 'سمان' },
+            { key: 'probe-b', label: 'روکش' },
+          ],
+        });
+        return {
+          ok: true, provider: ai.name, ms: Date.now() - t0,
+          done: out.done, options: out.done ? undefined : out.options.length,
+        };
+      } catch (err) {
+        return { ok: false, provider: ai.name, ms: Date.now() - t0, error: describeError(err, config.ai.timeoutMs) };
+      }
+    };
+
+    // Nothing to network-probe on stub: it makes no network call by design.
     if (!live || !withProbe || !config.ai.apiBase) {
       return reply.send({
         ok: !live || Boolean(config.ai.apiBase && config.ai.apiKey),
@@ -400,6 +430,7 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
         configured,
         env_keys_seen: envKeysSeen,
         probe: null,
+        deep: await runDeep(),
       });
     }
 
@@ -427,6 +458,7 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
       configured,
       env_keys_seen: envKeysSeen,
       probe: { ...result, ms: Date.now() - started },
+      deep: await runDeep(),
     });
   });
 
