@@ -283,7 +283,7 @@ def cmd_seed() -> None:
         if n < SEED_MIN_USES:
             continue  # singletons are the campaign's work, not settled vocabulary
         concepts.append({
-            "key": normalize_fa(tag).replace(" ", "_"),
+            "key": normalize_chars(tag).replace(" ", "_"),
             "tag": tag,
             "domain": "brand" if tag in BRAND_TAGS
                       else guess_domain(rec, type_totals),
@@ -365,7 +365,13 @@ def normalize_concept(c: dict) -> dict:
     c.setdefault("aliases", [])
     c.setdefault("variants", [])
     c.setdefault("co_tags", [])
-    c["key"] = normalize_fa(c["tag"]).replace(" ", "_")
+    # normalize_CHARS, not normalize_fa: the key is an IDENTITY, so it must not
+    # be run through the alias table. It was, and a concept whose own alias
+    # pointed back into its target grew a token per --sync until
+    # #دکتر_شهابیان had a 36-word key. compile_aliases() derives each alias's
+    # target from this key, so an alias-free key also lets the self-reference
+    # guard see the real target and reject that alias outright.
+    c["key"] = normalize_chars(c["tag"]).replace(" ", "_")
     c["words"] = len(words(c["tag"]))
     c.setdefault("count", 0)
     c.setdefault("content_ids", [])
