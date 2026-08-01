@@ -1,0 +1,15 @@
+{
+  "type": "__global__",
+  "note": "Campaign step 12 - collapse tags whose WORD SETS are identical (same words, different order or spacing). The matcher scores against a set of words, so these are already the same tag to the engine while occupying two entries in content-index.json.",
+  "renames": {
+    "#پست_فایبر": "#فایبر_پست",
+    "#snap-on-smile": "#Snap_On_Smile",
+    "#prompt_engineering": "#Prompt_Engineering",
+    "#فول_ماوس_ایمپلنت": "#ایمپلنت_فول_ماوس",
+    "#implant_restoration": "#Implant_Restoration",
+    "#امرجنس_پروفایل": "#پروفایل_امرجنس",
+    "#Journal_of_Periodontology": "#Journal_Of_Periodontology",
+    "#دندان_ایمپلنت": "#ایمپلنت_دندان",
+    "#bonding_protocol": "#Bonding_Protocol"
+  }
+}

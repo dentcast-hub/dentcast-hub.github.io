@@ -16,7 +16,7 @@ interface Folder { key: string; fa: string; url: string; total: number; }
 interface ContentInfo { cluster: string | null; subtopic: string | null; type: string; title: string; url: string; secondary: string[]; }
 /** One real site #hashtag, with every content_id that carries it. */
 export interface Tag { key: string; fa: string; contentCount: number; contentIds: string[]; }
-interface IndexFile { version: number; folders: Folder[]; clusters: Cluster[]; tags: Tag[]; byContent: Record<string, ContentInfo>; }
+interface IndexFile { version: number; folders: Folder[]; clusters: Cluster[]; tags: Tag[]; aliases?: Record<string, string>; byContent: Record<string, ContentInfo>; }
 
 let cached: IndexFile | null = null;
 let cachedMtimeMs = 0;
@@ -42,7 +42,7 @@ export function getIndex(): IndexFile {
     if (cached) return cached; // keep the last good copy on a transient read error
     // eslint-disable-next-line no-console
     console.warn(`[content-index] could not load ${path}; tree/topic will be empty`);
-    cached = { version: 0, folders: [], clusters: [], tags: [], byContent: {} };
+    cached = { version: 0, folders: [], clusters: [], tags: [], aliases: {}, byContent: {} };
   }
   return cached;
 }
@@ -59,6 +59,16 @@ export function getClusters(): Cluster[] {
 /** Every real site #hashtag, each with its own content_ids — the case-assistant's keyword-search catalog. */
 export function getTags(): Tag[] {
   return getIndex().tags || [];
+}
+
+/**
+ * Orthographic variants of one word (بایومیمتیک -> بیومیمتیک), authored in
+ * dentcast-hashtag-reference.json. case-assistant.ts folds these into both the
+ * tag and the query before tokenizing, so a concept stays reachable through
+ * every spelling without carrying every spelling on every article.
+ */
+export function getAliases(): Record<string, string> {
+  return getIndex().aliases || {};
 }
 
 /** Title/url/type for a content_id (pathway steps resolve display metadata through this), or null if unknown. */
