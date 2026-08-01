@@ -10,8 +10,8 @@
    "tag": "#ایمپلنت",
    "domain": "clinical",
    "words": 1,
-   "definition": "",
-   "use_when": "",
+   "definition": "چترِ عامِ ایمپلنت.",
+   "use_when": "همیشه در کنار یک مفهوم مشخص‌تر، هرگز به‌تنهایی.",
    "variants": [],
    "co_tags": [],
    "count": 85,
@@ -175,7 +175,7 @@
    "use_when": "چتر عام اکلوژن. همیشه در کنار یک مفهوم مشخص‌تر بیاید، نه به‌تنهایی.",
    "variants": [],
    "co_tags": [],
-   "count": 37,
+   "count": 36,
    "content_ids": [
     "episodes/episode-14",
     "episodes/episode-23",
@@ -199,7 +199,6 @@
     "dentcast-plus/video-2",
     "notecast/episode-14",
     "notecast/episode-23",
-    "dentcast-plus/video-3",
     "insight/insight-21",
     "episodes/episode-154",
     "sharehub/share-5",
@@ -640,8 +639,8 @@
    "tag": "#اباتمنت",
    "domain": "clinical",
    "words": 1,
-   "definition": "",
-   "use_when": "",
+   "definition": "قطعه‌ی واسط بین ایمپلنت و روکش.",
+   "use_when": "مقاله طراحی، انتخاب یا مشکلی از اباتمنت را تعیین تکلیف کند.",
    "variants": [],
    "co_tags": [],
    "count": 15,
@@ -696,8 +695,8 @@
    "tag": "#روکش_ایمپلنت",
    "domain": "clinical",
    "words": 2,
-   "definition": "",
-   "use_when": "",
+   "definition": "روکشِ متکی بر ایمپلنت، در تمایز با روکش روی دندان طبیعی.",
+   "use_when": "مقاله تصمیمش مختص روکش ایمپلنت باشد.",
    "variants": [],
    "co_tags": [],
    "count": 15,
@@ -778,8 +777,8 @@
    "tag": "#روکش",
    "domain": "clinical",
    "words": 1,
-   "definition": "",
-   "use_when": "",
+   "definition": "چترِ عامِ روکش.",
+   "use_when": "همراه یک تگ مشخص‌تر بیاید، نه به‌تنهایی.",
    "variants": [],
    "co_tags": [],
    "count": 13,
@@ -1324,6 +1323,31 @@
    ]
   },
   {
+   "key": "تنظیم_اکلوژن",
+   "tag": "#تنظیم_اکلوژن",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "حذف انتخابیِ تماس‌های ناخواسته با تراش، بدون از بین بردن هندسه‌ی فانکشنال.",
+   "use_when": "مقاله روش یا قاعده‌ی تراش تنظیمی بدهد.",
+   "variants": [
+    "#تنظیم_اکلوژال",
+    "#تنظیم-اکلوژن",
+    "#چکاپ_اکلوژنی"
+   ],
+   "co_tags": [],
+   "count": 8,
+   "content_ids": [
+    "insight/insight-1",
+    "photocast/episode-2",
+    "dentcast-plus/video-2",
+    "dentcast-plus/video-6",
+    "sharehub/share-6",
+    "dentai/dentai-27",
+    "insight/insight-54",
+    "insight/insight-56"
+   ]
+  },
+  {
    "key": "مدل_زبانی",
    "tag": "#مدل_زبانی",
    "domain": "ai",
@@ -1424,29 +1448,6 @@
     "insight/insight-47",
     "insight/insight-48",
     "insight/insight-49"
-   ]
-  },
-  {
-   "key": "تنظیم_اکلوژن",
-   "tag": "#تنظیم_اکلوژن",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "حذف انتخابیِ تماس‌های ناخواسته با تراش، بدون از بین بردن هندسه‌ی فانکشنال.",
-   "use_when": "مقاله روش یا قاعده‌ی تراش تنظیمی بدهد.",
-   "variants": [
-    "#تنظیم_اکلوژال",
-    "#تنظیم-اکلوژن"
-   ],
-   "co_tags": [],
-   "count": 7,
-   "content_ids": [
-    "insight/insight-1",
-    "photocast/episode-2",
-    "dentcast-plus/video-6",
-    "sharehub/share-6",
-    "dentai/dentai-27",
-    "insight/insight-54",
-    "insight/insight-56"
    ]
   },
   {
@@ -1607,8 +1608,8 @@
    "tag": "#دنتکست_پلاس",
    "domain": "brand",
    "words": 2,
-   "definition": "",
-   "use_when": "",
+   "definition": "نام سری ویدیوهای دنتکست پلاس.",
+   "use_when": "روی هر مدخل dentcast-plus، و هیچ‌جای دیگر.",
    "variants": [],
    "co_tags": [],
    "count": 6,
@@ -1750,6 +1751,29 @@
    ]
   },
   {
+   "key": "افتادن_روکش",
+   "tag": "#افتادن_روکش",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "از دست رفتن گیر و جدا شدن روکش از تکیه‌گاه.",
+   "use_when": "مقاله علتِ افتادن روکش را توضیح بدهد یا پیش‌بینی کند — چه رخ داده باشد، چه مقاله بگوید چرا رخ خواهد داد.",
+   "variants": [
+    "#روکش_افتاده",
+    "#دباندینگ"
+   ],
+   "co_tags": [
+    "#debonding"
+   ],
+   "count": 5,
+   "content_ids": [
+    "notecast/episode-15",
+    "dentcast-plus/video-4",
+    "dentcast-plus/video-5",
+    "insight/insight-54",
+    "sharehub/share-10"
+   ]
+  },
+  {
    "key": "ایمپلنت_دیجیتال",
    "tag": "#ایمپلنت_دیجیتال",
    "domain": "clinical",
@@ -1862,8 +1886,8 @@
    "tag": "#سمان",
    "domain": "clinical",
    "words": 1,
-   "definition": "",
-   "use_when": "",
+   "definition": "لایه‌ی سمان و نقش مکانیکی‌اش.",
+   "use_when": "مفهوم پایه؛ همراه یک تگ مشخص‌تر بیاید.",
    "variants": [],
    "co_tags": [],
    "count": 5,
@@ -1981,6 +2005,24 @@
     "chairside/chairside-20",
     "chairside/chairside-21",
     "chairside/chairside-22"
+   ]
+  },
+  {
+   "key": "گروپ_فانکشن",
+   "tag": "#گروپ_فانکشن",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "الگوی اکلوزالی که در حرکات طرفی، علاوه بر کانین، دندان‌های خلفی هم درگیر می‌شوند.",
+   "use_when": "مقاله گروپ فانکشن را تشخیص بدهد یا تصمیمش را بر آن بنا کند.",
+   "variants": [],
+   "co_tags": [],
+   "count": 5,
+   "content_ids": [
+    "episodes/episode-132",
+    "dentcast-plus/video-6",
+    "chairside/chairside-15",
+    "sharehub/share-6",
+    "insight/insight-47"
    ]
   },
   {
@@ -2478,6 +2520,23 @@
    ]
   },
   {
+   "key": "کانین_رایز",
+   "tag": "#کانین_رایز",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "هدایت کانینی — جدا شدن دندان‌های خلفی در حرکات طرفی به‌واسطه‌ی کانین.",
+   "use_when": "مقاله وجود یا نبودِ کانین رایز را ارزیابی کند؛ نبودش مقدمه‌ی گروپ فانکشن است.",
+   "variants": [],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "episodes/episode-132",
+    "dentcast-plus/video-6",
+    "chairside/chairside-15",
+    "sharehub/share-6"
+   ]
+  },
+  {
    "key": "کشیدن_دندان",
    "tag": "#کشیدن_دندان",
    "domain": "clinical",
@@ -2492,23 +2551,6 @@
     "episodes/episode-152",
     "episodes/episode-153",
     "chairside/chairside-21"
-   ]
-  },
-  {
-   "key": "گروپ_فانکشن",
-   "tag": "#گروپ_فانکشن",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "",
-   "use_when": "",
-   "variants": [],
-   "co_tags": [],
-   "count": 4,
-   "content_ids": [
-    "episodes/episode-132",
-    "chairside/chairside-15",
-    "sharehub/share-6",
-    "insight/insight-47"
    ]
   },
   {
@@ -2948,8 +2990,8 @@
    "tag": "#تحویل_روکش",
    "domain": "clinical",
    "words": 2,
-   "definition": "",
-   "use_when": "",
+   "definition": "جلسه‌ی امتحان و تحویل روکش — از پروو تا سمان و کنترل نهایی.",
+   "use_when": "مقاله مرحله‌ای از همین جلسه را تعیین تکلیف کند.",
    "variants": [],
    "co_tags": [],
    "count": 3,
@@ -3170,6 +3212,24 @@
    ]
   },
   {
+   "key": "شیب_کاسپی",
+   "tag": "#شیب_کاسپی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "شیبِ سطحِ کاسپ — سطحی که در تنظیم حرکات طرفی هدف تراش قرار می‌گیرد.",
+   "use_when": "مقاله شیب کاسپ را ارزیابی یا اصلاح کند.",
+   "variants": [
+    "#کاسپ"
+   ],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "dentcast-plus/video-6",
+    "metanotes/meta-12",
+    "insight/insight-43"
+   ]
+  },
+  {
    "key": "فایبرپست",
    "tag": "#فایبرپست",
    "domain": "clinical",
@@ -3231,6 +3291,25 @@
     "episodes/episode-125-2",
     "episodes/episode-150",
     "insight/insight-9"
+   ]
+  },
+  {
+   "key": "نشست_روکش",
+   "tag": "#نشست_روکش",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "نشستن کاملِ روکش روی تراش تا تماس مؤثر دیواره‌ها.",
+   "use_when": "مقاله دلیل ننشستن یا راه احراز نشست کامل را بگوید.",
+   "variants": [
+    "#نشست روکش",
+    "#نشستن_روکش"
+   ],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "dentcast-plus/video-3",
+    "insight/insight-30",
+    "insight/insight-44"
    ]
   },
   {
@@ -3350,8 +3429,8 @@
    "tag": "#کانتکت",
    "domain": "clinical",
    "words": 1,
-   "definition": "",
-   "use_when": "",
+   "definition": "تماس پروگزیمال بین دندان‌های مجاور.",
+   "use_when": "مفهوم پایه؛ همراه یک تگ مشخص‌تر بیاید.",
    "variants": [],
    "co_tags": [],
    "count": 3,
@@ -3377,22 +3456,6 @@
     "episodes/episode-121-1",
     "photocast/episode-1",
     "episodes/episode-159"
-   ]
-  },
-  {
-   "key": "کانین_رایز",
-   "tag": "#کانین_رایز",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "",
-   "use_when": "",
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "episodes/episode-132",
-    "chairside/chairside-15",
-    "sharehub/share-6"
    ]
   },
   {
@@ -3453,6 +3516,23 @@
    "content_ids": [
     "episodes/episode-157",
     "episodes/episode-158"
+   ]
+  },
+  {
+   "key": "anti_rotation",
+   "tag": "#anti_rotation",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "همان #ضد_چرخش، با اصطلاح انگلیسی.",
+   "use_when": "همیشه همراه #ضد_چرخش — این دو هیچ کلمه‌ی مشترکی ندارند.",
+   "variants": [],
+   "co_tags": [
+    "#ضد_چرخش"
+   ],
+   "count": 2,
+   "content_ids": [
+    "dentcast-plus/video-4",
+    "dentcast-plus/video-5"
    ]
   },
   {
@@ -3588,6 +3668,23 @@
    "content_ids": [
     "notecast/episode-34",
     "notecast/episode-35"
+   ]
+  },
+  {
+   "key": "debonding",
+   "tag": "#debonding",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "همان #افتادن_روکش، با اصطلاح انگلیسی.",
+   "use_when": "همیشه همراه #افتادن_روکش.",
+   "variants": [],
+   "co_tags": [
+    "#افتادن_روکش"
+   ],
+   "count": 2,
+   "content_ids": [
+    "dentcast-plus/video-4",
+    "dentcast-plus/video-5"
    ]
   },
   {
@@ -4038,6 +4135,23 @@
    "content_ids": [
     "dentai/dentai-11",
     "dentai/dentai-15"
+   ]
+  },
+  {
+   "key": "resistance_form",
+   "tag": "#Resistance_Form",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "همان #فرم_رزیستنس، با اصطلاح انگلیسی.",
+   "use_when": "همیشه همراه #فرم_رزیستنس — این دو هیچ کلمه‌ی مشترکی ندارند.",
+   "variants": [],
+   "co_tags": [
+    "#فرم_رزیستنس"
+   ],
+   "count": 2,
+   "content_ids": [
+    "dentcast-plus/video-3",
+    "sharehub/share-10"
    ]
   },
   {
@@ -4746,6 +4860,21 @@
    ]
   },
   {
+   "key": "ثبات_قبل_از_سمان",
+   "tag": "#ثبات_قبل_از_سمان",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "احراز بی‌حرکتیِ روکش روی اباتمنت پیش از سمان — سمان نقشش کمک به گیر است، نه تأمین ثبات.",
+   "use_when": "مقاله ثبات پیش از سمان را آزمون کند یا نبودش را عیب طراحی بداند.",
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "dentcast-plus/video-4",
+    "dentcast-plus/video-5"
+   ]
+  },
+  {
    "key": "حفظ_مینا",
    "tag": "#حفظ_مینا",
    "domain": "clinical",
@@ -5078,6 +5207,23 @@
    ]
   },
   {
+   "key": "ضد_چرخش",
+   "tag": "#ضد_چرخش",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "هندسه‌ای در اباتمنت که چرخش روکش روی آن را مهار می‌کند.",
+   "use_when": "مقاله وجود یا نبودِ گیرِ ضدچرخشی را ارزیابی کند.",
+   "variants": [],
+   "co_tags": [
+    "#anti_rotation"
+   ],
+   "count": 2,
+   "content_ids": [
+    "dentcast-plus/video-4",
+    "dentcast-plus/video-5"
+   ]
+  },
+  {
    "key": "طراحی_ایمپلنت",
    "tag": "#طراحی_ایمپلنت",
    "domain": "clinical",
@@ -5202,8 +5348,8 @@
    "tag": "#فرمیتوس",
    "domain": "clinical",
    "words": 1,
-   "definition": "",
-   "use_when": "",
+   "definition": "لرزشِ محسوسِ دندان زیر انگشت هنگام تپ کردن — نشانه‌ی درگیری اکلوزالی مخرب، نه صرفاً وجود تماس.",
+   "use_when": "مقاله فرمیتوس را تشخیص بدهد یا رفعش کند.",
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -5360,6 +5506,21 @@
    "content_ids": [
     "dentai/dentai-1",
     "dentai/dentai-2"
+   ]
+  },
+  {
+   "key": "نیروی_برشی",
+   "tag": "#نیروی_برشی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "نیروی shear؛ باری که لایه‌ی سمان برای تحملش طراحی نشده.",
+   "use_when": "مقاله بار برشی را عاملِ شکست اتصال بداند.",
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "dentcast-plus/video-4",
+    "dentcast-plus/video-5"
    ]
   },
   {
@@ -5618,6 +5779,24 @@
    ]
   },
   {
+   "key": "کاغذ_آرتیکولاسیون",
+   "tag": "#کاغذ_آرتیکولاسیون",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "کاغذ کاربن ثبت تماس اکلوزالی — نقاط تماس را نشان می‌دهد، ولی نمی‌گوید آن تماس دندان را تکان می‌دهد یا نه.",
+   "use_when": "مقاله درباره‌ی خودِ کاغذ حرف بزند: ضخامت، تفسیر، یا محدودیتش.",
+   "variants": [
+    "#آرتیکولاسیون",
+    "#Articulation"
+   ],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "insight/insight-1",
+    "dentcast-plus/video-2"
+   ]
+  },
+  {
    "key": "کانسپت_دال",
    "tag": "#کانسپت_دال",
    "domain": "clinical",
@@ -5753,6 +5932,22 @@
    ]
   },
   {
+   "key": "اینترفیرنس",
+   "tag": "#اینترفیرنس",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "همان مفهوم تداخل، با واژه‌ی رایجِ کلینیکی.",
+   "use_when": "همیشه همراه #تداخل_سمت_کارگر — هیچ کلمه‌ی مشترکی ندارند.",
+   "variants": [],
+   "co_tags": [
+    "#تداخل_سمت_کارگر"
+   ],
+   "count": 1,
+   "content_ids": [
+    "dentcast-plus/video-6"
+   ]
+  },
+  {
    "key": "بازسازی_درد",
    "tag": "#بازسازی_درد",
    "domain": "clinical",
@@ -5781,6 +5976,24 @@
    ]
   },
   {
+   "key": "تداخل_سمت_کارگر",
+   "tag": "#تداخل_سمت_کارگر",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "تماس مزاحم در سمت کارگر حین حرکت طرفی، که بار را روی یک دندان متمرکز می‌کند.",
+   "use_when": "مقاله تداخلِ مشخصاً سمت کارگر را پیدا یا تنظیم کند. برای تداخل عمومی اکلوزالی از #تداخل_اکلوزالی استفاده شود.",
+   "variants": [
+    "#تداخل"
+   ],
+   "co_tags": [
+    "#اینترفیرنس"
+   ],
+   "count": 1,
+   "content_ids": [
+    "dentcast-plus/video-6"
+   ]
+  },
+  {
    "key": "تماس_زودرس",
    "tag": "#تماس_زودرس",
    "domain": "clinical",
@@ -5792,6 +6005,34 @@
    "count": 1,
    "content_ids": [
     "photocast/episode-2"
+   ]
+  },
+  {
+   "key": "تکرار_کار",
+   "tag": "#تکرار_کار",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "پذیرش ساختِ دوباره‌ی کار به‌جای اصلاحِ ناکافی.",
+   "use_when": "مقاله تکرار را نتیجه‌ی منطقیِ یک عیب طراحی بداند.",
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "dentcast-plus/video-5"
+   ]
+  },
+  {
+   "key": "حساسیت_بعد_از_درمان",
+   "tag": "#حساسیت_بعد_از_درمان",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "Post-op sensitivity — حساسیتی که پس از ترمیم یا پروتز شروع می‌شود.",
+   "use_when": "مقاله علتِ حساسیت پس از درمان را پیدا یا رفع کند.",
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "dentcast-plus/video-2"
    ]
   },
   {
@@ -5827,6 +6068,20 @@
    ]
   },
   {
+   "key": "راک_روکش",
+   "tag": "#راک_روکش",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "تکان/لِنگی روکش روی تراش هنگام امتحان — علامت است، نه علت.",
+   "use_when": "مقاله راک را ببیند و علتش را دنبال کند.",
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "dentcast-plus/video-3"
+   ]
+  },
+  {
    "key": "روکش_استیل",
    "tag": "#روکش_استیل",
    "domain": "clinical",
@@ -5840,6 +6095,36 @@
    "count": 1,
    "content_ids": [
     "photocast/episode-3"
+   ]
+  },
+  {
+   "key": "شکست_پرسلن",
+   "tag": "#شکست_پرسلن",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "چیپ یا شکست لایه‌ی پرسلن رستوریشن.",
+   "use_when": "مقاله علت شکست پرسلن را توضیح بدهد یا از آن پیشگیری کند.",
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "dentcast-plus/video-2"
+   ]
+  },
+  {
+   "key": "فرم_رزیستنس",
+   "tag": "#فرم_رزیستنس",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "مقاومت تراش در برابر جابه‌جایی جانبی/چرخشی — از تماس مؤثر دیواره‌ها می‌آید، نه از سمان.",
+   "use_when": "مقاله رزیستنس فرم را ارزیابی یا اصلاح کند.",
+   "variants": [],
+   "co_tags": [
+    "#Resistance_Form"
+   ],
+   "count": 1,
+   "content_ids": [
+    "dentcast-plus/video-3"
    ]
   },
   {
@@ -5884,6 +6169,20 @@
    "count": 1,
    "content_ids": [
     "photocast/episode-2"
+   ]
+  },
+  {
+   "key": "کانتکت_سنگین",
+   "tag": "#کانتکت_سنگین",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "کانتکت پروگزیمالِ بیش‌ازحد محکم که مانع نشستن کامل روکش می‌شود.",
+   "use_when": "مقاله کانتکت سنگین را عاملِ یک مشکل بداند یا تنظیمش کند.",
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "dentcast-plus/video-3"
    ]
   },
   {
