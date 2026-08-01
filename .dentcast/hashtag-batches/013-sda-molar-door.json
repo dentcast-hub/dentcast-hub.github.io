@@ -1,0 +1,25 @@
+{
+  "type": "dentcast",
+  "note": "Campaign step 13 — episode-160 was unreachable from the question it answers. A dentist asks «بیمار مولر نداره، لازمه جایگزین کنم؟»; every SDA tag is built from words that question does not contain.",
+  "concepts": [
+    {
+      "tag": "#فقدان_مولر",
+      "domain": "clinical",
+      "definition": "نبودِ یک یا چند مولر — وضعیتی که سؤالِ «جایگزین کنم یا نه» را می‌سازد.",
+      "use_when": "مقاله درباره‌ی تصمیمِ جایگزینی یا نکردنِ جایگزینیِ مولر باشد."
+    },
+    {
+      "tag": "#جایگزینی_دندان",
+      "domain": "clinical",
+      "definition": "تصمیم به جایگزین کردن دندانِ از دست رفته — و اینکه گاهی جوابش «نه» است.",
+      "use_when": "مقاله ضرورت یا عدم ضرورتِ جایگزینی را بررسی کند."
+    }
+  ],
+  "articles": {
+    "episodes/episode-160": [
+      "#دنتکست", "#قوس_دندانی_کوتاه_شده", "#SDA", "#فقدان_مولر",
+      "#جایگزینی_دندان", "#طرح_درمان", "#درمان_بیش_از_حد", "#اکلوژن",
+      "#پروتز_متحرک"
+    ]
+  }
+}
