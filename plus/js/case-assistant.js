@@ -7,9 +7,9 @@
 // every assistant turn, a typing indicator while waiting, a recap trail of
 // the case + past answers) without becoming free-form chat - see
 // dcp-assist-* in plus-pages.css.
-import { el } from './util.js';
+import { el, faNum } from './util.js';
 import { api, ApiError } from './api.js';
-import { FOLDER_EN } from './content-index.js';
+import { FOLDER_EN, getModel } from './content-index.js';
 
 function sparkAvatar(isSmall) {
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
@@ -73,10 +73,13 @@ function articleRow(item, roundId) {
 
 /** GET /plus/assistant.html — the whole wizard, one screen at a time. */
 export function renderCaseAssistant(container) {
+  let scanTimer = null;
+  const stopScan = () => { if (scanTimer) { window.clearInterval(scanTimer); scanTimer = null; } };
   let description = '';
   let history = [];
 
   function showIntro() {
+    stopScan();
     description = '';
     history = [];
     const ta = el('textarea', {
@@ -100,16 +103,55 @@ export function renderCaseAssistant(container) {
     ]));
   }
 
+  /**
+   * While it thinks, show what it is actually doing: real site hashtags,
+   * drifting past at reading pace.
+   *
+   * The round takes 20-40s on the current gateway, and three bouncing dots for
+   * that long reads as "stuck". These are the REAL tags from the site's own
+   * index (already loaded in the browser) and the search really is a match
+   * against them — so this is a window onto the work, not a fake progress bar.
+   * Nothing invented: if the index has not loaded, the line just stays quiet.
+   */
   function thinking() {
+    stopScan();
     const trail = recapTrail(description, history);
+    const label = el('div', { class: 'dcp-assist-scan-lbl' }, 'دارم هشتگ‌های سایت را می‌خوانم…');
+    const stream = el('div', { class: 'dcp-assist-scan' });
     trail.appendChild(el('div', { class: 'dcp-assist-turn' }, [
       sparkAvatar(true),
-      el('div', { class: 'dcp-assist-card' }, el('div', { class: 'dcp-assist-thinking' }, [el('span'), el('span'), el('span')])),
+      el('div', { class: 'dcp-assist-card' }, [
+        label,
+        stream,
+        el('div', { class: 'dcp-assist-thinking' }, [el('span'), el('span'), el('span')]),
+      ]),
     ]));
     container.replaceChildren(trail);
+    startScan(stream);
+  }
+
+  /** Drift real tags through `node` until the answer arrives. */
+  function startScan(node) {
+    const still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    getModel().then((model) => {
+      const tags = (model.tags || []).map((t) => t.fa).filter(Boolean);
+      if (!tags.length) return;
+      if (still) {
+        // No motion: state the scope once instead of animating.
+        node.textContent = 'جست‌وجو میان ' + faNum(tags.length) + ' هشتگ سایت';
+        return;
+      }
+      const pick = () => {
+        node.replaceChildren(...Array.from({ length: 3 }, () =>
+          el('span', { class: 'dcp-assist-scan-t' }, '#' + tags[Math.floor(Math.random() * tags.length)])));
+      };
+      pick();
+      scanTimer = window.setInterval(pick, 420);
+    }).catch(() => {});
   }
 
   function optionsScreen(question, options) {
+    stopScan();
     const trail = recapTrail(description, history);
 
     const optWrap = el('div', { class: 'dcp-assist-opts' });
@@ -141,6 +183,7 @@ export function renderCaseAssistant(container) {
   }
 
   function doneScreen(body) {
+    stopScan();
     const trail = recapTrail(description, history);
     const restart = el('button', { class: 'dcp-assist-restart', type: 'button' }, 'شروع دوباره');
     restart.addEventListener('click', showIntro);
@@ -180,6 +223,7 @@ export function renderCaseAssistant(container) {
   }
 
   function errorScreen(message) {
+    stopScan();
     const trail = recapTrail(description, history);
     const retry = el('button', { class: 'dcp-assist-restart', type: 'button' }, 'دوباره امتحان کن');
     retry.addEventListener('click', showIntro);

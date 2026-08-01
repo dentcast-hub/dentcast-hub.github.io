@@ -376,3 +376,24 @@ a.dcp-progress-row:hover { text-decoration: none; }
 }
 .dcp-assist-verdict-btn:hover { border-color: var(--txt3, #62779a); color: var(--txt); }
 .dcp-assist-verdict-done { font-size: .85rem; color: var(--txt2, #4a5f85); }
+
+/* Assistant "thinking" view — real site hashtags drifting past while the model
+   works. The round can take 20-40s on the current gateway, and three dots for
+   that long reads as stuck; these are the site's own tags, so the wait shows
+   the actual work instead of a fake progress bar. Deliberately quiet: dimmed,
+   fixed height so nothing jumps when a line swaps. */
+.dcp-assist-scan-lbl { font-size: .8rem; color: var(--txt2, #4a5f85); margin-bottom: 6px; }
+.dcp-assist-scan {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  min-height: 26px; margin-bottom: 10px;
+}
+.dcp-assist-scan-t {
+  font-size: .78rem; color: var(--txt3, #62779a); opacity: .55;
+  border: 1px dashed var(--border, rgba(2,35,96,.12));
+  border-radius: var(--r-f, 999px); padding: 2px 9px;
+  animation: dcp-scan-in .42s ease both;
+}
+@keyframes dcp-scan-in { from { opacity: 0; transform: translateY(3px); } to { opacity: .55; transform: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .dcp-assist-scan-t { animation: none; }
+}
