@@ -2,6 +2,7 @@
  "version": 1,
  "about": "Canonical hashtag vocabulary for DentCast. The reference owns the vocabulary; dentcast-brain.json owns the assignment. `count` and `content_ids` are derived — run tools/hashtag_ref.py --sync.",
  "enforced_types": [
+  "dentcast_plus",
   "photocast"
  ],
  "concepts": [
@@ -1471,6 +1472,28 @@
    ]
   },
   {
+   "key": "فینیش_لاین",
+   "tag": "#فینیش_لاین",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "خط ختم تراش — مرزی که مارجین رستوریشن روی آن می‌نشیند.",
+   "use_when": "مقاله شکل، موقعیت، یا کیفیت خط ختم را تعیین کند.",
+   "variants": [
+    "#فینیشینگ_لاین"
+   ],
+   "co_tags": [],
+   "count": 7,
+   "content_ids": [
+    "episodes/episode-114",
+    "dentcast-plus/video-1",
+    "notecast/episode-20",
+    "notecast/episode-21",
+    "insight/insight-18",
+    "chairside/chairside-12",
+    "notecast/episode-37"
+   ]
+  },
+  {
    "key": "prosthodontics",
    "tag": "#Prosthodontics",
    "domain": "clinical",
@@ -1551,8 +1574,8 @@
    "tag": "#تراش_دندان",
    "domain": "clinical",
    "words": 2,
-   "definition": "",
-   "use_when": "",
+   "definition": "چترِ عامِ تراش دندان.",
+   "use_when": "همراه یک تگ مشخص‌تر بیاید.",
    "variants": [],
    "co_tags": [],
    "count": 6,
@@ -2248,6 +2271,23 @@
    ]
   },
   {
+   "key": "تراش_روکش",
+   "tag": "#تراش_روکش",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "آماده‌سازی دندان برای روکش کامل.",
+   "use_when": "مقاله مشخصاً درباره‌ی تراشِ روکش باشد، نه لمینیت یا اینله.",
+   "variants": [],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "episodes/episode-114",
+    "dentcast-plus/video-1",
+    "insight/insight-49",
+    "sharehub/share-10"
+   ]
+  },
+  {
    "key": "ترمیم_خلفی",
    "tag": "#ترمیم_خلفی",
    "domain": "clinical",
@@ -2415,23 +2455,6 @@
     "episodes/episode-128",
     "episodes/episode-129",
     "metanotes/meta-7"
-   ]
-  },
-  {
-   "key": "فینیش_لاین",
-   "tag": "#فینیش_لاین",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "",
-   "use_when": "",
-   "variants": [],
-   "co_tags": [],
-   "count": 4,
-   "content_ids": [
-    "notecast/episode-20",
-    "notecast/episode-21",
-    "insight/insight-18",
-    "chairside/chairside-12"
    ]
   },
   {
@@ -2999,22 +3022,6 @@
     "dentcast-plus/video-2",
     "dentcast-plus/video-3",
     "insight/insight-52"
-   ]
-  },
-  {
-   "key": "تراش_روکش",
-   "tag": "#تراش_روکش",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "",
-   "use_when": "",
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "episodes/episode-114",
-    "insight/insight-49",
-    "sharehub/share-10"
    ]
   },
   {
@@ -4470,6 +4477,21 @@
    ]
   },
   {
+   "key": "اصول_تراش",
+   "tag": "#اصول_تراش",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "قواعد حاکم بر تراش: تیپر، ارتفاع، رزیستنس و ریتنشن، خط ختم.",
+   "use_when": "مقاله قاعده‌ای برای تراش بدهد یا آن را ارزیابی کند.",
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-114",
+    "dentcast-plus/video-1"
+   ]
+  },
+  {
    "key": "افزایش_vd",
    "tag": "#افزایش_VD",
    "domain": "clinical",
@@ -5374,21 +5396,6 @@
    ]
   },
   {
-   "key": "فینیشینگ_لاین",
-   "tag": "#فینیشینگ_لاین",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "",
-   "use_when": "",
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "episodes/episode-114",
-    "notecast/episode-37"
-   ]
-  },
-  {
    "key": "قدرت_باند",
    "tag": "#قدرت_باند",
    "domain": "clinical",
@@ -6184,6 +6191,32 @@
    "content_ids": [
     "dentcast-plus/video-3"
    ]
+  },
+  {
+   "key": "کیفیت_تراش",
+   "tag": "#کیفیت_تراش",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "قابل‌پیش‌بینی بودن و تمیزیِ نتیجه‌ی تراش — نه اصولِ کتابی، بلکه آنچه در عمل تراش را بهتر می‌کند.",
+   "use_when": "مقاله به «تراشم خوب درنمی‌آید، چه کار کنم» جواب بدهد. برای مقاله‌ای که فقط تراش را انجام می‌دهد به کار نرود.",
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "dentcast-plus/video-1"
+   ]
+  },
+  {
+   "key": "فینیشینگ_لاین",
+   "tag": "#فینیشینگ_لاین",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "co_tags": [],
+   "count": 0,
+   "content_ids": []
   },
   {
    "key": "پست_و_کور",
