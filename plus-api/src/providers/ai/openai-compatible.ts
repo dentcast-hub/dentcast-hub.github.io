@@ -12,13 +12,18 @@ const NARROW_SYSTEM_PROMPT = `تو یک دسته‌بند باریک‌بین ب
 - اگر اطلاعات کافی برای رسیدن به یک دسته‌ی روشن داری، done را true برگردان.
 - فقط یک شیء JSON برگردان، دقیقاً به این شکل: {"done": false, "question": "...", "options": ["<یکی از کلیدهای catalog>", ...]} یا {"done": true}.`;
 
+// Asks for at most FOUR phrases, not eight. This is a reasoning model: it emits
+// a full thinking pass before its answer, so the response length is a direct
+// latency cost, and four good keywords already saturate the tag match (the
+// shortlist is capped at four options anyway).
+//
 // A separate, narrower prompt: this call never sees a catalog and never picks
 // anything — it only reads free text and proposes candidate topic phrases in
 // the site's own hashtag style. services/case-assistant.ts matches those
 // against the REAL site hashtags in code; the model itself has no way to
 // point at content that doesn't actually carry a matching tag.
 const KEYWORDS_SYSTEM_PROMPT = `تو یک استخراج‌کننده‌ی کلیدواژه برای سایت آموزش دندانپزشکی دنت‌کست هستی، نه یک دستیار بالینی. کاربر (یک دندان‌پزشک) وضعیت یک بیمار یا موضوع مورد نظرش را با متن آزاد شرح می‌دهد.
-کارِ تو فقط این است: از این متن، حداکثر ۸ عبارتِ کوتاهِ فارسیِ تخصصیِ دندان‌پزشکی (هرکدام ۱ تا ۳ کلمه) استخراج یا پیشنهاد کنی که احتمالاً به‌عنوان هشتگِ محتوای سایت به‌کار رفته باشند — دقیقاً در سبکِ هشتگ‌های خودِ سایت (مثل «زینک فسفات»، «سمان ایمپلنت»، «اکلوژن»).
+کارِ تو فقط این است: از این متن، حداکثر ۴ عبارتِ کوتاهِ فارسیِ تخصصیِ دندان‌پزشکی (هرکدام ۱ تا ۳ کلمه) استخراج یا پیشنهاد کنی که احتمالاً به‌عنوان هشتگِ محتوای سایت به‌کار رفته باشند — دقیقاً در سبکِ هشتگ‌های خودِ سایت (مثل «زینک فسفات»، «سمان ایمپلنت»، «اکلوژن»).
 قوانین سخت:
 - هرگز تشخیص، توصیه‌ی درمانی یا نظرِ بالینی نده.
 - فقط عبارت‌های موضوعی/تخصصی بده، نه جمله؛ هیچ عبارتی را تکرار نکن.
