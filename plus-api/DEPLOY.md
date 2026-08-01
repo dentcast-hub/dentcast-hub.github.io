@@ -124,8 +124,18 @@ variables** on the container:
 | `ADMIN_USER` | `founder` |
 | `ADMIN_PASSWORD` | (a strong secret) |
 | `STREAK_TIMEZONE` | `Asia/Tehran` |
+| `FAILSAFE_FOUNDER_USER_ID` | (the founder's own profile id — see the note below) |
 | `CONTENT_INDEX_PATH` | leave unset — baked into the image at `/app/content-index.json` |
 | `PATHWAYS_PATH` | leave unset — baked into the image at `/app/pathways.json` |
+
+> **Dead-man's switch.** It is on by default (`FAILSAFE_ENABLED=true`, 60/90
+> days) and needs no configuration to *fire* — but with neither
+> `FAILSAFE_FOUNDER_USER_ID` nor `FAILSAFE_FOUNDER_PHONE` set it cannot send the
+> grace-period warnings, so the first you would hear of it is the site already
+> having gone premium for everyone. Set one right after the founder's own account
+> exists (`GET /me` while signed in, or look up the profile by phone), then
+> verify with `GET /admin/failsafe` — `can_warn` must be `true`.
+> Full behaviour: README → "The dead-man's switch".
 
 > `CONTENT_INDEX_PATH` and `PATHWAYS_PATH` are already defaulted by the
 > Dockerfile. Both are baked in at build time, so **rebuild/redeploy the API

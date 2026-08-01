@@ -18,6 +18,10 @@ import {
 } from '../providers/outbound.js';
 import { config } from '../config.js';
 import type { NotificationMessage } from '../providers/notifications/types.js';
+import {
+  getFailsafeStatus, getFailsafeLog, touchHeartbeat, runFailsafeCheck, arm, disarm,
+  type FailsafeStatus,
+} from '../services/failsafe.js';
 
 function fmtPct(v: number | null): string {
   return v == null ? '—' : v.toFixed(1) + '٪';
@@ -26,7 +30,52 @@ function fmtNum(v: number | null): string {
   return v == null ? '—' : String(v);
 }
 
-function renderHtml(k: Kpis): string {
+const FA_DIGITS = '۰۱۲۳۴۵۶۷۸۹';
+function faNum(n: number): string {
+  return String(n).replace(/\d/g, (d) => FA_DIGITS[Number(d)]);
+}
+
+const HEARTBEAT_SOURCE_FA: Record<string, string> = {
+  publish: 'انتشار مطلب',
+  admin: 'ورود به پیشخوان',
+  manual: 'تأیید دستی',
+  bootstrap: 'راه‌اندازی اولیه',
+};
+
+/**
+ * The dead-man's-switch panel. It sits at the TOP of the dashboard rather than
+ * with the other operational tools, because the state it reports is the only one
+ * on this page that changes what every reader of the site can see — and because
+ * a founder who returns to an armed switch must not have to scroll to find out.
+ */
+function renderFailsafe(f: FailsafeStatus): string {
+  if (!f.enabled) {
+    return `<div class="fs fs--off"><h3>کلید ایمنی</h3><p>غیرفعال است (FAILSAFE_ENABLED=false). ` +
+      `اگر اتفاقی برای شما بیفتد، بخش پرمیوم برای همیشه قفل می‌ماند.</p></div>`;
+  }
+  const last = `آخرین نشانه‌ی فعالیت: ${f.last_heartbeat_at.slice(0, 10)} ` +
+    `(${HEARTBEAT_SOURCE_FA[f.last_heartbeat_source] || f.last_heartbeat_source})`;
+
+  if (f.armed) {
+    return `<div class="fs fs--armed"><h3>⚠ کلید ایمنی فعال شده است</h3>
+      <p>از ${f.armed_at?.slice(0, 10)} همه‌ی کاربرانِ واردشده دسترسی پرمیوم دارند
+      (دلیل: ${f.armed_reason === 'manual' ? 'فعال‌سازی دستی' : 'سکوت طولانی'}).
+      تبلیغات طبق طراحی همچنان نمایش داده می‌شوند.</p>
+      <p class="muted">برای بازگرداندن: <code>POST /admin/failsafe/disarm</code></p></div>`;
+  }
+  if (f.in_grace_period) {
+    return `<div class="fs fs--grace"><h3>کلید ایمنی — مهلت هشدار</h3>
+      <p>${faNum(f.silent_days)} روز سکوت. تا ${faNum(f.days_until_arm)} روز دیگر
+      دسترسی پرمیوم برای همه باز می‌شود.</p>
+      <p class="muted">${last}${f.can_warn ? '' : ' · هشدار قابل ارسال نیست: پروفایل بنیان‌گذار تنظیم نشده'}</p></div>`;
+  }
+  return `<div class="fs fs--ok"><h3>کلید ایمنی</h3>
+    <p>${faNum(f.silent_days)} روز سکوت · هشدار در ${faNum(f.days_until_warning ?? 0)} روز دیگر ·
+    فعال‌سازی در ${faNum(f.days_until_arm)} روز دیگر.</p>
+    <p class="muted">${last}${f.can_warn ? '' : ' · هشدار قابل ارسال نیست: پروفایل بنیان‌گذار تنظیم نشده'}</p></div>`;
+}
+
+function renderHtml(k: Kpis, f: FailsafeStatus): string {
   const d7Rows = k.d7_survival_by_tier.length
     ? k.d7_survival_by_tier
         .map((r) => `<tr><td>${r.tier}</td><td>${r.cohort}</td><td>${r.kept}</td><td>${fmtPct(r.pct)}</td></tr>`)
@@ -53,9 +102,16 @@ function renderHtml(k: Kpis): string {
   table{width:100%;border-collapse:collapse;margin-top:8px;background:#171e2d;border:1px solid #2a3448;border-radius:14px;overflow:hidden}
   th,td{padding:8px 12px;text-align:center;border-bottom:1px solid #2a3448}
   th{color:#93a1b8;font-weight:700}
+  .fs{margin-top:16px;border-radius:14px;padding:12px 16px;border:1px solid #2a3448;background:#171e2d}
+  .fs h3{margin:.2rem 0;font-size:1rem}
+  .fs p{margin:.3rem 0;font-size:.9rem}
+  .fs--armed{border-color:#c2410c;background:#2a1710}
+  .fs--grace{border-color:#a16207;background:#241d0f}
+  .fs--off{border-color:#4b5563}
 </style></head><body><div class="wrap">
   <h1>پیشخوان بنیان‌گذار</h1>
   <div class="muted">تولید: ${k.generated_at} · منطقه زمانی: ${k.tz}</div>
+  ${renderFailsafe(f)}
   <div class="grid">
     ${card('KPI 1', 'تقاضای ناشناس', String(k.anonymous_demand.workbench_clicks),
       `کلیک میز کار مهمان · تبدیل تقریبی: ${fmtPct(k.anonymous_demand.conversion_pct_approx)} · ثبت‌نام: ${k.anonymous_demand.total_signups}`)}
@@ -93,7 +149,7 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
 
   app.get('/admin', async (_request, reply) => {
     const kpis = await computeKpis();
-    return reply.type('text/html; charset=utf-8').send(renderHtml(kpis));
+    return reply.type('text/html; charset=utf-8').send(renderHtml(kpis, await getFailsafeStatus()));
   });
 
   // GET /admin/spot/stats?from=&to=&group_by=day|week|month - the read path for
@@ -164,6 +220,12 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
     const result = await onArticlePublished({
       contentId: b.content_id, title: b.title, url: b.url, pulse: b.pulse, publishedAt,
     });
+    // A publish is the strongest proof of life there is. Forced past the
+    // debounce so the founder's status panel attributes the heartbeat to the
+    // publish rather than to whichever admin request happened to be first that
+    // hour — knowing WHICH habit is feeding the switch is the point of showing
+    // the source at all.
+    await touchHeartbeat('publish', { force: true }).catch(() => { /* never fails a publish */ });
     return reply.send({ ok: true, ...result });
   });
 
@@ -488,5 +550,72 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
     if (!row) return reply.code(404).send({ error: 'no_profile', message: 'این شماره هنوز ثبت‌نام نکرده.' });
 
     return reply.send({ ok: true, user_id: row.id, phone, tier });
+  });
+
+  // --- dead-man's switch (services/failsafe.ts) ------------------------------
+  // Note that merely REACHING any of these already fed the switch, because
+  // requireAdmin heartbeats on every successful auth. That is intentional: a
+  // founder who is well enough to check the switch is well enough to reset it.
+
+  // GET /admin/failsafe - status + recent events. The one screen that answers
+  // "how long until my site gives itself away, and why?".
+  app.get('/admin/failsafe', async (_request, reply) => {
+    return reply.send({
+      ...(await getFailsafeStatus()),
+      log: await getFailsafeLog(20),
+    });
+  });
+
+  // POST /admin/failsafe/heartbeat - the explicit "I'm here" tap. Redundant on
+  // the happy path (publishing and admin use already count) and that is fine:
+  // it exists for the long quiet stretch where the founder is alive but doing
+  // none of those things, which is precisely the window this switch would
+  // otherwise misread as death.
+  app.post('/admin/failsafe/heartbeat', async (_request, reply) => {
+    await touchHeartbeat('manual', { force: true });
+    return reply.send({ ok: true, ...(await getFailsafeStatus()) });
+  });
+
+  // POST /admin/failsafe/run - run today's sweep now instead of waiting for
+  // FAILSAFE_HOUR. Ops/verification, same role as run-free-digest.
+  app.post('/admin/failsafe/run', async (_request, reply) => {
+    const result = await runFailsafeCheck(new Date());
+    return reply.send({ ok: true, ...result, status: await getFailsafeStatus() });
+  });
+
+  // POST /admin/failsafe/arm { confirm: "ARM" } - fire it deliberately.
+  //
+  // This exists so the switch can be TESTED. A failsafe that has never once been
+  // observed working is a belief, not a mechanism — and the natural way to find
+  // out whether this one works is the one way nobody gets to try. The confirm
+  // token is there because the endpoint is one careless curl away from making the
+  // whole site premium.
+  app.post('/admin/failsafe/arm', {
+    schema: {
+      body: {
+        type: 'object',
+        required: ['confirm'],
+        properties: { confirm: { type: 'string' }, note: { type: 'string' } },
+      },
+    },
+  }, async (request, reply) => {
+    const b = request.body as { confirm: string; note?: string };
+    if (b.confirm !== 'ARM') {
+      return reply.code(400).send({ error: 'confirm_required', message: 'برای فعال‌سازی دستی confirm=ARM لازم است.' });
+    }
+    const armed = await arm('manual', b.note || 'armed manually from /admin');
+    return reply.send({ ok: true, changed: armed, ...(await getFailsafeStatus()) });
+  });
+
+  // POST /admin/failsafe/disarm - stand it down and restart the clock.
+  //
+  // Deliberately NOT automatic on the founder's return. Disarming takes premium
+  // back from every reader who currently has it, and an act that visible should
+  // be a decision someone made, not a side effect of logging in — so a returning
+  // founder sees the armed banner and chooses, rather than silently un-gifting
+  // the site by opening a page.
+  app.post('/admin/failsafe/disarm', async (_request, reply) => {
+    const changed = await disarm('disarmed from /admin');
+    return reply.send({ ok: true, changed, ...(await getFailsafeStatus()) });
   });
 }

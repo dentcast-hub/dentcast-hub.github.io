@@ -8,6 +8,7 @@ import { grantWeeklyPrizes, expirePremiumPrizes } from './services/premium-prize
 import { notifyPremiumPrizes } from './services/premium-prize-notify.js';
 import { runReviewReminders } from './services/review-notify.js';
 import { attributeStrongSignals } from './services/assistant-learning.js';
+import { runFailsafeCheck } from './services/failsafe.js';
 
 /**
  * Daily free-digest scheduler. Fires runFreeDigest() at freeDigestHour:00 in the
@@ -287,5 +288,44 @@ export function startAssistantLearningScheduler(): () => void {
   };
 
   tick();
+  return () => clearTimeout(timer);
+}
+
+/**
+ * The dead-man's switch sweep (services/failsafe.ts). Daily at
+ * config.failsafe.hour Tehran, same wall-clock + unref pattern as the rest.
+ *
+ * Daily is deliberately far more often than the decision needs — the clock it
+ * reads is measured in months — and that is the point: every run re-derives the
+ * whole answer from the stored row, so a container that was down for a fortnight
+ * simply computes the correct state on its next tick rather than missing the
+ * window. A failsafe that could be defeated by a restart would not be one.
+ */
+export function startFailsafeScheduler(): () => void {
+  let timer: NodeJS.Timeout;
+
+  const schedule = () => {
+    const delay = msUntilNextRun(new Date(), config.failsafe.hour, config.streakTimezone);
+    timer = setTimeout(() => {
+      void runFailsafeCheck(new Date())
+        .then((r) => {
+          if (r.armed || r.warned) {
+            // eslint-disable-next-line no-console
+            console.warn(
+              `[failsafe] ${r.armed ? 'ARMED' : 'warned'} after ${r.silentDays} silent day(s)` +
+              (r.warnUndeliverable ? ' (warning had no destination)' : ''),
+            );
+          }
+        })
+        .catch((err) => {
+          // eslint-disable-next-line no-console
+          console.error('[failsafe] sweep failed', err);
+        })
+        .finally(schedule);
+    }, delay);
+    if (typeof timer.unref === 'function') timer.unref();
+  };
+
+  schedule();
   return () => clearTimeout(timer);
 }

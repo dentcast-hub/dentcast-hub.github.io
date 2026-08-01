@@ -211,6 +211,68 @@ window with no page-view data, so a missing denominator can never be misread as
 tier, weekly depth median, archive-usage sessions) from `user_activity` +
 `anon_events`. Navigate to it in a browser; it prompts for the credentials.
 
+## The dead-man's switch («کلید ایمنی»)
+
+Every premium gate on this site reads one column, `profiles.tier`, and only the
+founder can move it. If the founder stops existing, that column freezes: the
+content stays online (the site is static) but the premium half is locked behind a
+door nobody is left to open. The switch opens it.
+
+**How it fires.** Any founder action is a heartbeat — a publish
+(`POST /admin/articles/published`), any authenticated `/admin` request, or the
+explicit `POST /admin/failsafe/heartbeat` — and each one restarts the clock.
+After `FAILSAFE_WARN_DAYS` (60) of total silence a grace period opens: the
+founder is warned through their own notification channels, repeated every
+`FAILSAFE_REMINDER_EVERY_DAYS` (7). After `FAILSAFE_ARM_DAYS` (90) it arms, and
+every signed-in reader is treated as premium.
+
+The trigger is deliberately **not** "no new post for three months". Illness,
+travel, burnout and a heavy research season all produce three silent months from
+a very-much-alive founder; publishing is therefore one heartbeat among several
+rather than the only signal the system can see.
+
+**What arming does — and does not do.**
+
+- It sets one `armed_at` timestamp on one row. It does **not** rewrite
+  `profiles.tier`. The entitlement is computed on top of the column at read time
+  in `middleware/auth.ts`, which is what lets it work with no change to
+  `requirePremium` or to any frontend `tier !== 'premium'` gate — and what makes
+  it cover users who sign up *after* it fired, reversible with one `UPDATE`, and
+  harmless to the league prize's bookkeeping (which reads that same column).
+- `/me` reports `tier` (effective), `base_tier` (as stored) and
+  `failsafe_premium` (why). Anything asking "what is this account really?" must
+  read `base_tier`.
+- **Ads keep running.** Premium normally means no ads, but ad revenue is what
+  pays for the server that serves the features the switch just unlocked; a switch
+  that cancels its own funding turns itself off within a billing cycle. So
+  `spot.js` decides ad visibility from `base_tier`, and a reader unlocked by the
+  switch still sees ads. Someone who actually paid keeps the perk they paid for.
+- Coming back does **not** auto-disarm. Taking premium back from every reader is
+  too visible an act to happen as a side effect of logging in, so a returning
+  founder sees the armed banner on `/admin` and chooses. Disarming also restarts
+  the clock.
+
+**Routes** (all founder-only; reaching any of them is itself a heartbeat):
+
+| Route | Does |
+| --- | --- |
+| `GET /admin/failsafe` | status, countdown, recent events |
+| `POST /admin/failsafe/heartbeat` | explicit "I'm here" |
+| `POST /admin/failsafe/run` | run today's sweep now |
+| `POST /admin/failsafe/arm` | fire it deliberately (`{"confirm":"ARM"}`) — this is how you **test** it |
+| `POST /admin/failsafe/disarm` | stand it down, restart the clock |
+
+**Set `FAILSAFE_FOUNDER_USER_ID` or `FAILSAFE_FOUNDER_PHONE`**, or the warnings
+have nowhere to go. Without them the switch still arms on schedule — it just
+fires without having been able to ask first, which is the correct failure
+direction here — and logs a warning on every interval.
+
+**What it does not protect against.** This covers "the founder is gone but the
+servers are running". It does nothing about the hosting and domain bills: the
+static site survives on GitHub Pages, but `plus-api` stops within a billing
+cycle of the last payment, and an armed switch on a dead API grants nothing.
+That part is not a code problem — it needs a prepaid or handed-over account.
+
 ## Deploy target (end of phase)
 
 ArvanCloud Cloud Container for the API + ArvanCloud Managed Database (Postgres),

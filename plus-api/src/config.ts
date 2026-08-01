@@ -206,6 +206,44 @@ export const config = {
     password: str('ADMIN_PASSWORD', 'change-me-admin-password'),
   },
 
+  // The dead-man's switch (services/failsafe.ts, migration 0018): after a long
+  // enough silence from the founder, every signed-in reader is treated as
+  // premium, so the paid half of the site cannot be orphaned behind a door only
+  // one person could open.
+  //
+  // Two numbers, not one, and the gap between them is the whole safety margin:
+  // warnDays starts a GRACE period (warnings go out, nothing changes for
+  // readers) and armDays ends it (the switch fires). Any heartbeat inside the
+  // grace period cancels it entirely. Defaults are 60/90 — the "three months"
+  // this was asked for, with the last month spent asking rather than acting.
+  //
+  // The warning goes to the founder's OWN profile through the normal
+  // notification channels (Telegram/Bale/web push), so it needs to know which
+  // profile that is: FAILSAFE_FOUNDER_USER_ID (uuid) or FAILSAFE_FOUNDER_PHONE.
+  // With neither set the switch still arms on schedule — it just fires without
+  // having been able to ask first, which is the correct failure direction for a
+  // mechanism whose whole point is to work when nobody is answering.
+  failsafe: {
+    enabled: bool('FAILSAFE_ENABLED', true),
+    warnDays: int('FAILSAFE_WARN_DAYS', 60),
+    armDays: int('FAILSAFE_ARM_DAYS', 90),
+    // Re-warn this often during the grace period. One warning is one chance to
+    // have been looking at the right screen on the right day; a weekly repeat
+    // turns "did you see it?" into "you had four of them".
+    reminderEveryDays: int('FAILSAFE_REMINDER_EVERY_DAYS', 7),
+    // Tehran hour for the daily sweep. Mid-morning: the warning it may send is
+    // the most important message this system ever delivers, and it should not
+    // arrive at 3am.
+    hour: int('FAILSAFE_HOUR', 10),
+    founderUserId: str('FAILSAFE_FOUNDER_USER_ID', ''),
+    founderPhone: str('FAILSAFE_FOUNDER_PHONE', ''),
+    // A heartbeat costs one UPDATE, and requireAdmin fires one on EVERY admin
+    // request. Coalesce them: sub-hour precision is meaningless against a
+    // 90-day clock, and this keeps a busy admin session from writing the row
+    // hundreds of times.
+    heartbeatDebounceMs: int('FAILSAFE_HEARTBEAT_DEBOUNCE_MS', 3_600_000),
+  },
+
   // «دستیار هوشمند» (premium, spec's later AI phase): a narrow classifier, not a
   // chatbot — it turns a free-text case description into a short multiple-choice
   // narrowing round, options always drawn from our own taxonomy (never invented),

@@ -18,7 +18,10 @@
 // Visibility rule — three visitor classes, decided BEFORE anything renders:
 //   anon    (signed out)        → sees ads
 //   plus    (signed in, free)   → sees ads, targeted separately from anon
-//   premium (tier === 'premium')→ never, anywhere ("بدون تبلیغات" is the perk)
+//   premium (base_tier === 'premium') → never, anywhere ("بدون تبلیغات" is the perk)
+//
+// base_tier, not tier: an armed dead-man's switch reports everyone as premium so
+// the features unlock, but keeps the ads running — see classOf() below.
 //
 // The class comes from plus.js's shared /me, plus a localStorage memory of what
 // this device was LAST CONFIRMED to be (K_CLASS), written only on a real answer.
@@ -884,8 +887,20 @@ function setupArchiveSlot(cfg, audienceNow) {
 // never sees an ad (that is the paid promise); `plus` (signed-in, free) and
 // `anon` (signed-out) both do — they only differ in which campaign is targeted
 // at them.
+//
+// Reads base_tier, NOT tier. The two differ in exactly one situation: the
+// dead-man's switch is armed, so /me reports every signed-in reader as premium
+// (plus-api's middleware/auth.ts). Ads deliberately keep running through that —
+// the switch fires precisely when nobody is left to pay the hosting bill, and an
+// unlock that also cancels the site's last revenue would take the premium
+// features it just opened offline with it. So the switch grants FEATURES; the
+// no-ads perk stays with the tier that was actually earned or paid for.
+//
+// The `|| user.tier` fallback covers an API that predates base_tier (and a
+// cached /me from one), where the two were the same thing by definition.
 function classOf(user) {
-  return user ? (user.tier === 'premium' ? 'premium' : 'plus') : 'anon';
+  if (!user) return 'anon';
+  return (user.base_tier || user.tier) === 'premium' ? 'premium' : 'plus';
 }
 
 // Ask /me and report WHY it answered what it answered. Shares plus.js's cached

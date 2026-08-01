@@ -444,7 +444,12 @@ export async function authRoutes(app: FastifyInstance): Promise<void> {
     //
     // Fire-and-forget on purpose: a counter must never delay a session check, and
     // a failed counter must never turn a valid session into a 401.
-    recordPageView(user ? (user.tier === 'premium' ? 'premium' : 'plus') : 'anon')
+    //
+    // Bucketed by base_tier, not the effective one: the `premium` bucket is the
+    // denominator the Spot report checks "premium produced zero impressions"
+    // against, and an armed dead-man's switch would otherwise move the entire
+    // audience into it overnight and destroy that control.
+    recordPageView(user ? (user.base_tier === 'premium' ? 'premium' : 'plus') : 'anon')
       .catch(() => { /* telemetry never breaks auth */ });
 
     if (!user) return reply.code(401).send({ error: 'unauthorized' });
@@ -458,6 +463,13 @@ export async function authRoutes(app: FastifyInstance): Promise<void> {
       id: user.id,
       display_name: user.display_name,
       tier: user.tier,
+      // What the account really is, and whether the dead-man's switch is the
+      // reason it currently reads premium. The ad system needs the distinction
+      // (spot.js classOf) — a reader unlocked by the switch keeps seeing ads,
+      // because that revenue is what keeps the API serving the features the
+      // switch just opened.
+      base_tier: user.base_tier,
+      failsafe_premium: user.failsafe_premium,
       phone: user.phone,
       telegram_linked: user.telegram_id !== null,
       bale_linked: user.bale_id !== null,

@@ -25,8 +25,10 @@ import type { NotificationKind, NotificationMessage } from '../providers/notific
  * of rate-limit.ts, because a container restart must not reset a user's budget.
  */
 
-/** Kinds that ignore the daily cap entirely. */
-const UNCAPPED: ReadonlySet<NotificationKind> = new Set<NotificationKind>(['system']);
+/** Kinds that ignore the daily cap entirely. `failsafe` joins `system` because a
+ *  dead-man's-switch warning that a busy notification day quietly dropped is the
+ *  exact failure the switch exists to prevent. */
+const UNCAPPED: ReadonlySet<NotificationKind> = new Set<NotificationKind>(['system', 'failsafe']);
 
 /** How many capped notifications this user has already been sent on `day`. */
 export async function sentCountOn(

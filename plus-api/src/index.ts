@@ -4,7 +4,7 @@ import { closePool } from './db.js';
 import {
   startArticleScheduler, startStreakReminderScheduler, startReactivationScheduler,
   startLeagueScheduler, startHeldNotificationsScheduler, startReviewReminderScheduler,
-  startAssistantLearningScheduler,
+  startAssistantLearningScheduler, startFailsafeScheduler,
 } from './scheduler.js';
 import { startBalePolling } from './services/bale-updates.js';
 
@@ -23,6 +23,9 @@ async function main(): Promise<void> {
   const stopHeldNotifications = startHeldNotificationsScheduler();
   const stopReviewReminder = startReviewReminderScheduler();
   const stopAssistantLearning = startAssistantLearningScheduler();
+  // The dead-man's switch sweep (10:00). Started here like the rest so tests
+  // never spawn real timers.
+  const stopFailsafe = startFailsafeScheduler();
   // Bale connect worker: long-polls getUpdates and links chat_ids (no-op without
   // a BALE_BOT_TOKEN). Primary path since Bale's webhook delivery is unreliable.
   const stopBalePolling = startBalePolling();
@@ -36,6 +39,7 @@ async function main(): Promise<void> {
     stopHeldNotifications();
     stopReviewReminder();
     stopAssistantLearning();
+    stopFailsafe();
     stopBalePolling();
     await app.close();
     await closePool();

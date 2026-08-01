@@ -144,6 +144,27 @@ describe('premium never sees an ad', () => {
     expect(cards()).toBe(0);
   });
 
+  it('KEEPS showing ads to a reader made premium by the dead-man\'s switch', async () => {
+    // The switch reports every signed-in reader as premium so the features
+    // unlock, but base_tier still says what the account really is — and ads
+    // follow base_tier. It fires exactly when nobody is left to pay the hosting
+    // bill, so an unlock that also cancelled the last revenue would take the
+    // features it just opened offline with it.
+    me.user = { tier: 'premium', base_tier: 'free', failsafe_premium: true };
+    me.status = 'user';
+    await boot();
+    expect(cards()).toBe(1);
+    expect(creativeShown()).toBe('brand-invite'); // targeted as `plus`, not `anon`
+  });
+
+  it('still hides ads from a REAL premium user while the switch is armed', async () => {
+    // Someone who actually paid keeps the perk they paid for.
+    me.user = { tier: 'premium', base_tier: 'premium', failsafe_premium: false };
+    me.status = 'user';
+    await boot();
+    expect(cards()).toBe(0);
+  });
+
   it('counts nothing when a first-time premium answer lands during the dwell', async () => {
     me.user = { tier: 'premium' }; me.status = 'user';
     me.delayMs = 6000; // no device memory yet, so it DOES render first...

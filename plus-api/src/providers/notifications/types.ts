@@ -16,7 +16,9 @@ export type NotificationKind =
   /** Leitner cards are due (premium — the review schedule itself is premium). */
   | 'review'
   /** Won a week of premium as the weekly league's top-tier prize. */
-  | 'premium_prize';
+  | 'premium_prize'
+  /** Dead-man's-switch grace-period warning — founder-only, never capped. */
+  | 'failsafe';
 
 /**
  * A message may be a plain string (messenger text) or a structured payload.

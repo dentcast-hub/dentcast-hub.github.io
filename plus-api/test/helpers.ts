@@ -5,6 +5,7 @@ import { resetRateLimits } from '../src/services/rate-limit.js';
 import { clearOtpStore } from '../src/services/otp.js';
 import { clearBaleLinkStore } from '../src/services/bale-link.js';
 import { clearKeywordCache } from '../src/services/case-assistant.js';
+import { clearFailsafeCache, resetHeartbeatDebounce } from '../src/services/failsafe.js';
 
 /** Truncate all data tables and reset in-process stores. Call in beforeEach. */
 export async function resetDb(): Promise<void> {
@@ -51,6 +52,20 @@ export async function resetDb(): Promise<void> {
   await pool.query(
     "update league_tiers set is_active = (tier_order <= 3), activated_at = case when tier_order <= 3 then now() else null end",
   );
+  // The dead-man's switch is a seeded SINGLETON (like league_config), so it is
+  // reset rather than truncated — and its two in-process caches go with it, or a
+  // test that arms the switch would leak "everyone is premium" into every test
+  // that runs after it.
+  await pool.query(`
+    update failsafe_state
+       set last_heartbeat_at = now(), last_heartbeat_source = 'bootstrap',
+           warned_at = null, warned_for_heartbeat_at = null,
+           armed_at = null, armed_reason = null, updated_at = now()
+     where id = 1
+  `);
+  await pool.query('truncate table failsafe_log');
+  clearFailsafeCache();
+  resetHeartbeatDebounce();
   resetRateLimits();
   clearKeywordCache();
   clearOtpStore();
