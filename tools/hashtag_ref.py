@@ -81,6 +81,34 @@ STOPWORDS = {
 }
 
 
+# Orthography that the same person writes two ways. These are NOT synonyms and
+# NOT variants-to-merge: they are one word, spelled differently, and the
+# tokenizer would otherwise treat them as unrelated. Applied to BOTH the tag and
+# the query, so either spelling reaches the same tag without duplicating it on
+# every article and without distorting IDF. Phrase-level, not word-level,
+# because "بایو میمتیک" written with a space is two tokens that must collapse
+# into the one token "بیومیمتیک". Longest pattern first so a prefix cannot win.
+def _aliases():
+    try:
+        raw = json.loads(REF.read_text(encoding="utf-8")).get("aliases") or {}
+    except Exception:
+        return []
+    return sorted(raw.items(), key=lambda kv: -len(kv[0]))
+
+
+_alias_cache = None
+
+
+def apply_aliases(s: str) -> str:
+    global _alias_cache
+    if _alias_cache is None:
+        _alias_cache = _aliases()
+    for bad, good in _alias_cache:
+        if bad in s:
+            s = s.replace(bad, good)
+    return s
+
+
 def normalize_fa(s: str) -> str:
     s = ZERO_WIDTH.sub(" ", s)
     s = s.replace("ك", "ک").replace("ي", "ی")
@@ -91,7 +119,7 @@ def normalize_fa(s: str) -> str:
         ch if (unicodedata.category(ch)[0] in ("L", "N") or ch.isspace()) else " "
         for ch in s
     )
-    return re.sub(r"\s+", " ", s).strip()
+    return apply_aliases(re.sub(r"\s+", " ", s).strip())
 
 
 def words(s: str) -> list:
@@ -278,6 +306,25 @@ def cmd_apply(path: str) -> None:
     # no entry at all - the reference would then be describing a vocabulary the
     # site no longer uses. Re-listing an already-applied rename is a harmless
     # no-op on the brain and repairs the reference.
+    # A rename is only lossless when someone typing the OLD form still reaches
+    # the canonical - i.e. it still clears the 0.5 threshold, either by sharing
+    # words or through the alias table. Otherwise the merge deletes a door,
+    # which is the mistake batches 015/016 made with #بایومیمتیک and #سیگار.
+    # Registering the pair in `aliases` (or keeping both as co_tags) is the fix;
+    # silently merging is not.
+    closed = []
+    for old, new in renames.items():
+        nw = words(new)
+        ow = set(words(old))
+        if nw and sum(w in ow for w in nw) / len(nw) < 0.5 and not batch.get("allow_lossy"):
+            closed.append(f"{old} -> {new}")
+    if closed:
+        sys.exit("refusing to apply — these renames close a door (the old form "
+                 "would no longer reach the canonical). Add an entry to "
+                 "`aliases` in the reference, keep both as co_tags, or set "
+                 "\"allow_lossy\": true if the old form is genuinely unreachable "
+                 "text nobody types:\n  " + "\n  ".join(closed))
+
     for old, new in renames.items():
         old_c = index.get(old)
         if not old_c:

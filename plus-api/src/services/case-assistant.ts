@@ -1,5 +1,5 @@
 import { config } from '../config.js';
-import { getClusters, getContentInfo, getTags, type Tag } from '../content-index.js';
+import { getAliases, getClusters, getContentInfo, getTags, type Tag } from '../content-index.js';
 import { ai } from '../providers/registry.js';
 import type { NarrowHistoryEntry, NarrowOption } from '../providers/ai/types.js';
 import { getConsumedContentIds } from './consumption.js';
@@ -109,8 +109,38 @@ function customAnswers(history: NarrowHistoryEntry[]): string[] {
 // editor/formatter.
 const ZERO_WIDTH = /[\u200c\u200e\u200f]/g;
 
+/**
+ * Orthographic variants of ONE word, folded together before tokenizing.
+ *
+ * A dentist writes "بیومیمتیک" one day and "بایومیمتیک" — or "بایو میمتیک"
+ * with a space — the next. Those are three unrelated tokens to a matcher that
+ * scores on exact word overlap, so two of the three miss a tag carrying the
+ * third, and the article is simply never reached. Handling it here rather than
+ * by putting every spelling on every article keeps one tag per concept and
+ * leaves IDF undistorted.
+ *
+ * Substitution is on the normalized STRING, not on tokens, because a spaced
+ * spelling ("بایو میمتیک") is two tokens that must collapse into one. Longest
+ * pattern first so a prefix cannot claim a longer match.
+ *
+ * The table is authored in dentcast-hashtag-reference.json and carried into
+ * content-index.json by tools/build_plus_index.mjs, so it reloads with the
+ * index rather than needing a code change per new spelling.
+ */
+let aliasCacheKey: unknown = null;
+let aliasCache: Array<[string, string]> = [];
+
+function aliases(): Array<[string, string]> {
+  const table = getAliases();
+  if (aliasCacheKey !== table) {
+    aliasCache = Object.entries(table).sort((a, b) => b[0].length - a[0].length);
+    aliasCacheKey = table;
+  }
+  return aliasCache;
+}
+
 function normalizeFa(s: string): string {
-  return s
+  const base = s
     .replace(ZERO_WIDTH, ' ')
     .replace(/ك/g, 'ک')
     .replace(/ي/g, 'ی')
@@ -119,6 +149,12 @@ function normalizeFa(s: string): string {
     .replace(/[^\p{L}\p{N}\s]/gu, ' ')
     .replace(/\s+/g, ' ')
     .trim();
+
+  let out = base;
+  for (const [variant, canonical] of aliases()) {
+    if (out.includes(variant)) out = out.split(variant).join(canonical);
+  }
+  return out;
 }
 
 // Common connector/filler words, dropped before matching. Without this a
