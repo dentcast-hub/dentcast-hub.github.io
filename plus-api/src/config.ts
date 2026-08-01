@@ -223,7 +223,7 @@ export const config = {
     // CLOCK, because a user is watching a spinner while this runs — without it,
     // three 10s timeouts plus backoff would be half a minute of nothing.
     maxAttempts: int('AI_MAX_ATTEMPTS', 3),
-    retryBudgetMs: int('AI_RETRY_BUDGET_MS', 20_000),
+    retryBudgetMs: int('AI_RETRY_BUDGET_MS', 15_000),
     // Ask for response_format=json_object, which turns "please answer in JSON"
     // into a hard guarantee — where the endpoint supports it.
     //
@@ -235,11 +235,20 @@ export const config = {
     // already know. Set true for an endpoint that honours response_format —
     // the prompt-enforced JSON path stays correct either way.
     jsonMode: bool('AI_JSON_MODE', false),
-    // AI calls get their own, much longer timeout than the notification channels
-    // (outbound.timeoutMs, 10s). A reasoning model emits a whole thinking pass
-    // before its answer and routinely needs more than 10s; sharing that budget
-    // turned every slow-but-fine round into a spurious timeout + paid retry.
-    timeoutMs: int('AI_TIMEOUT_MS', 45_000),
+    // Sized to the model actually serving. Measured on GPT-5-Nano: 6/6 runs,
+    // median 2.6s, slowest 4.3s — so 10s is ~2x headroom over the worst observed
+    // round, and anything past it is a stall rather than a slow answer.
+    //
+    // These two numbers only make sense together. The retry loop checks the
+    // budget BEFORE sleeping, so the worst case is roughly
+    // attempts x timeout + backoffs, and a budget larger than the timeout buys
+    // another full timeout of waiting:
+    //     45s / 20s  -> 1 attempt,  45.0s worst   (the old pair: no retry at all)
+    //     15s / 40s  -> 3 attempts, 46.6s worst   (worse than what it replaced)
+    //     10s / 15s  -> 2 attempts, 20.4s worst   <- chosen
+    // A FAST failure still gets all three attempts (2.6 + 0.4 + 2.6 + 1.2 = 6.4s,
+    // well inside the budget); only repeated stalls stop at two.
+    timeoutMs: int('AI_TIMEOUT_MS', 10_000),
   },
 
   // Bounds on the case-assistant's own cost: rounds per session (never more than
