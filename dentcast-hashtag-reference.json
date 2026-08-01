@@ -11,6 +11,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 85,
    "content_ids": [
     "episodes/episode-23",
@@ -108,6 +109,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 50,
    "content_ids": [
     "episodes/episode-4",
@@ -167,9 +169,10 @@
    "tag": "#اکلوژن",
    "domain": "clinical",
    "words": 1,
-   "definition": "",
-   "use_when": "",
+   "definition": "رابطه‌ی تماسی دندان‌های دو فک و هرچه بر آن اثر می‌گذارد.",
+   "use_when": "چتر عام اکلوژن. همیشه در کنار یک مفهوم مشخص‌تر بیاید، نه به‌تنهایی.",
    "variants": [],
+   "co_tags": [],
    "count": 38,
    "content_ids": [
     "episodes/episode-14",
@@ -220,6 +223,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 29,
    "content_ids": [
     "episodes/episode-88",
@@ -261,6 +265,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 27,
    "content_ids": [
     "episodes/episode-11",
@@ -300,6 +305,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 26,
    "content_ids": [
     "episodes/episode-106-1",
@@ -338,6 +344,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 26,
    "content_ids": [
     "episodes/episode-83",
@@ -376,6 +383,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 22,
    "content_ids": [
     "episodes/episode-4",
@@ -410,6 +418,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 22,
    "content_ids": [
     "metanotes/meta-1",
@@ -444,6 +453,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 21,
    "content_ids": [
     "episodes/episode-8",
@@ -477,6 +487,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 19,
    "content_ids": [
     "episodes/episode-122-1",
@@ -508,6 +519,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 19,
    "content_ids": [
     "episodes/episode-36",
@@ -539,6 +551,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 17,
    "content_ids": [
     "episodes/episode-13",
@@ -568,6 +581,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 17,
    "content_ids": [
     "metanotes/meta-1",
@@ -597,6 +611,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 15,
    "content_ids": [
     "dentai/dentai-1",
@@ -624,6 +639,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 15,
    "content_ids": [
     "episodes/episode-80",
@@ -651,6 +667,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 15,
    "content_ids": [
     "episodes/episode-98",
@@ -678,6 +695,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 15,
    "content_ids": [
     "episodes/episode-125-1",
@@ -705,6 +723,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 14,
    "content_ids": [
     "episodes/episode-116",
@@ -731,6 +750,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 14,
    "content_ids": [
     "episodes/episode-109",
@@ -757,6 +777,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 13,
    "content_ids": [
     "episodes/episode-2",
@@ -782,6 +803,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 12,
    "content_ids": [
     "episodes/episode-47",
@@ -806,6 +828,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 11,
    "content_ids": [
     "sharehub/share-1",
@@ -829,6 +852,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 11,
    "content_ids": [
     "episodes/episode-4",
@@ -852,6 +876,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 11,
    "content_ids": [
     "episodes/episode-27",
@@ -875,6 +900,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 11,
    "content_ids": [
     "episodes/episode-48",
@@ -898,6 +924,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 11,
    "content_ids": [
     "episodes/episode-9",
@@ -921,6 +948,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 10,
    "content_ids": [
     "dentai/promptologist/prompt1-1",
@@ -943,6 +971,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 10,
    "content_ids": [
     "dentai/promptologist/prompt1-1",
@@ -965,6 +994,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 10,
    "content_ids": [
     "episodes/episode-59",
@@ -987,6 +1017,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 10,
    "content_ids": [
     "episodes/episode-89",
@@ -1009,6 +1040,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 10,
    "content_ids": [
     "episodes/episode-43",
@@ -1031,6 +1063,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 10,
    "content_ids": [
     "dentai/promptologist/prompt1-1",
@@ -1053,6 +1086,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 10,
    "content_ids": [
     "episodes/episode-150-2",
@@ -1075,6 +1109,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 10,
    "content_ids": [
     "episodes/episode-44",
@@ -1097,6 +1132,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 9,
    "content_ids": [
     "dentai/promptologist/prompt1-1",
@@ -1118,6 +1154,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 9,
    "content_ids": [
     "sharehub/share-1",
@@ -1139,6 +1176,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 9,
    "content_ids": [
     "dentai/promptologist/prompt1-1",
@@ -1160,6 +1198,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 9,
    "content_ids": [
     "litecast/lite-CAST11",
@@ -1181,6 +1220,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 9,
    "content_ids": [
     "dentai/promptologist/prompt1-1",
@@ -1202,6 +1242,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 9,
    "content_ids": [
     "dentai/promptologist/prompt1-1",
@@ -1223,6 +1264,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 8,
    "content_ids": [
     "notecast/episode-10",
@@ -1243,6 +1285,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 8,
    "content_ids": [
     "episodes/episode-85",
@@ -1263,6 +1306,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 8,
    "content_ids": [
     "episodes/episode-110",
@@ -1283,6 +1327,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 8,
    "content_ids": [
     "dentai/promptologist/prompt1-2",
@@ -1303,6 +1348,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 8,
    "content_ids": [
     "litecast/lite-CAST16",
@@ -1323,6 +1369,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 8,
    "content_ids": [
     "episodes/episode-65",
@@ -1343,6 +1390,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 7,
    "content_ids": [
     "episodes/episode-122",
@@ -1362,6 +1410,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 7,
    "content_ids": [
     "metanotes/meta-8",
@@ -1374,6 +1423,29 @@
    ]
   },
   {
+   "key": "تنظیم_اکلوژن",
+   "tag": "#تنظیم_اکلوژن",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "حذف انتخابیِ تماس‌های ناخواسته با تراش، بدون از بین بردن هندسه‌ی فانکشنال.",
+   "use_when": "مقاله روش یا قاعده‌ی تراش تنظیمی بدهد.",
+   "variants": [
+    "#تنظیم_اکلوژال",
+    "#تنظیم-اکلوژن"
+   ],
+   "co_tags": [],
+   "count": 7,
+   "content_ids": [
+    "insight/insight-1",
+    "photocast/episode-2",
+    "dentcast-plus/video-6",
+    "sharehub/share-6",
+    "dentai/dentai-27",
+    "insight/insight-54",
+    "insight/insight-56"
+   ]
+  },
+  {
    "key": "درمان_ایمپلنت",
    "tag": "#درمان_ایمپلنت",
    "domain": "clinical",
@@ -1381,6 +1453,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 7,
    "content_ids": [
     "litecast/lite-CAST12",
@@ -1400,6 +1473,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 6,
    "content_ids": [
     "notecast/episode-27",
@@ -1418,6 +1492,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 6,
    "content_ids": [
     "episodes/episode-55",
@@ -1436,6 +1511,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 6,
    "content_ids": [
     "episodes/episode-125-2",
@@ -1454,6 +1530,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 6,
    "content_ids": [
     "episodes/episode-95",
@@ -1465,6 +1542,25 @@
    ]
   },
   {
+   "key": "تشخیص_افتراقی",
+   "tag": "#تشخیص_افتراقی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "رسیدن به علت با رد کردن گزینه‌های رقیب، نه با تأیید مستقیم اولین حدس.",
+   "use_when": "مقاله چند علت محتمل را کنار هم بگذارد و یکی‌یکی ردشان کند.",
+   "variants": [],
+   "co_tags": [],
+   "count": 6,
+   "content_ids": [
+    "insight/insight-11",
+    "photocast/episode-1",
+    "insight/insight-23",
+    "insight/insight-25",
+    "chairside/chairside-18",
+    "chairside/chairside-27"
+   ]
+  },
+  {
    "key": "دقت_اسکن",
    "tag": "#دقت_اسکن",
    "domain": "clinical",
@@ -1472,6 +1568,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 6,
    "content_ids": [
     "episodes/episode-122-2",
@@ -1490,6 +1587,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 6,
    "content_ids": [
     "dentcast-plus/video-1",
@@ -1508,6 +1606,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 6,
    "content_ids": [
     "episodes/episode-28",
@@ -1526,6 +1625,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 6,
    "content_ids": [
     "episodes/episode-121",
@@ -1544,6 +1644,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 5,
    "content_ids": [
     "episodes/episode-75",
@@ -1561,6 +1662,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 5,
    "content_ids": [
     "dentai/promptologist/prompt1-1",
@@ -1578,6 +1680,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 5,
    "content_ids": [
     "notecast/episode-6",
@@ -1595,6 +1698,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 5,
    "content_ids": [
     "episodes/episode-104",
@@ -1612,6 +1716,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 5,
    "content_ids": [
     "episodes/episode-123-3",
@@ -1629,6 +1734,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 5,
    "content_ids": [
     "episodes/episode-122-2",
@@ -1646,6 +1752,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 5,
    "content_ids": [
     "episodes/episode-104",
@@ -1656,40 +1763,6 @@
    ]
   },
   {
-   "key": "تشخیص_افتراقی",
-   "tag": "#تشخیص_افتراقی",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "",
-   "use_when": "",
-   "variants": [],
-   "count": 5,
-   "content_ids": [
-    "insight/insight-11",
-    "insight/insight-23",
-    "insight/insight-25",
-    "chairside/chairside-18",
-    "chairside/chairside-27"
-   ]
-  },
-  {
-   "key": "تنظیم_اکلوژن",
-   "tag": "#تنظیم_اکلوژن",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "",
-   "use_when": "",
-   "variants": [],
-   "count": 5,
-   "content_ids": [
-    "insight/insight-1",
-    "sharehub/share-6",
-    "dentai/dentai-27",
-    "insight/insight-54",
-    "insight/insight-56"
-   ]
-  },
-  {
    "key": "توهم_هوش_مصنوعی",
    "tag": "#توهم_هوش_مصنوعی",
    "domain": "ai",
@@ -1697,6 +1770,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 5,
    "content_ids": [
     "dentai/promptologist/prompt1-1",
@@ -1714,6 +1788,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 5,
    "content_ids": [
     "episodes/episode-130-1",
@@ -1731,6 +1806,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 5,
    "content_ids": [
     "chairside/chairside-23",
@@ -1748,6 +1824,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 5,
    "content_ids": [
     "episodes/episode-34",
@@ -1765,6 +1842,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 5,
    "content_ids": [
     "litecast/lite-CAST1",
@@ -1782,6 +1860,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 5,
    "content_ids": [
     "episodes/episode-2",
@@ -1799,6 +1878,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 5,
    "content_ids": [
     "notecast/episode-8",
@@ -1816,6 +1896,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 5,
    "content_ids": [
     "episodes/episode-20",
@@ -1833,6 +1914,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 5,
    "content_ids": [
     "chairside/chairside-1",
@@ -1850,6 +1932,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 5,
    "content_ids": [
     "chairside/chairside-1",
@@ -1867,6 +1950,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 5,
    "content_ids": [
     "chairside/chairside-18",
@@ -1884,6 +1968,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 5,
    "content_ids": [
     "chairside/chairside-23",
@@ -1901,6 +1986,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 4,
    "content_ids": [
     "dentai/dentai-16",
@@ -1917,6 +2003,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 4,
    "content_ids": [
     "episodes/episode-149-2",
@@ -1933,6 +2020,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 4,
    "content_ids": [
     "dentai/promptologist/prompt1-1",
@@ -1949,6 +2037,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 4,
    "content_ids": [
     "episodes/episode-116",
@@ -1965,6 +2054,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 4,
    "content_ids": [
     "episodes/episode-125",
@@ -1981,6 +2071,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 4,
    "content_ids": [
     "dentai/dentai-17",
@@ -1997,6 +2088,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 4,
    "content_ids": [
     "insight/insight-12",
@@ -2013,6 +2105,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 4,
    "content_ids": [
     "insight/insight-6",
@@ -2029,6 +2122,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 4,
    "content_ids": [
     "episodes/episode-27",
@@ -2045,6 +2139,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 4,
    "content_ids": [
     "insight/insight-6",
@@ -2061,6 +2156,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 4,
    "content_ids": [
     "litecast/lite-CAST14",
@@ -2077,6 +2173,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 4,
    "content_ids": [
     "episodes/episode-40",
@@ -2093,6 +2190,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 4,
    "content_ids": [
     "episodes/episode-121",
@@ -2109,6 +2207,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 4,
    "content_ids": [
     "dentai/dentai-4",
@@ -2125,6 +2224,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 4,
    "content_ids": [
     "episodes/episode-150-2",
@@ -2141,6 +2241,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 4,
    "content_ids": [
     "episodes/episode-1",
@@ -2157,6 +2258,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 4,
    "content_ids": [
     "episodes/episode-147-7",
@@ -2173,6 +2275,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 4,
    "content_ids": [
     "episodes/episode-118-1",
@@ -2189,6 +2292,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 4,
    "content_ids": [
     "episodes/episode-97",
@@ -2205,6 +2309,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 4,
    "content_ids": [
     "episodes/episode-125-2",
@@ -2221,6 +2326,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 4,
    "content_ids": [
     "episodes/episode-130-1",
@@ -2237,6 +2343,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 4,
    "content_ids": [
     "episodes/episode-125-3",
@@ -2253,6 +2360,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 4,
    "content_ids": [
     "notecast/episode-20",
@@ -2269,6 +2377,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 4,
    "content_ids": [
     "notecast/episode-8",
@@ -2285,6 +2394,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 4,
    "content_ids": [
     "episodes/episode-151",
@@ -2301,6 +2411,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 4,
    "content_ids": [
     "dentai/promptologist/prompt1-1",
@@ -2317,6 +2428,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 4,
    "content_ids": [
     "episodes/episode-122-3",
@@ -2333,6 +2445,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 4,
    "content_ids": [
     "episodes/episode-118-1",
@@ -2349,6 +2462,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 4,
    "content_ids": [
     "episodes/episode-151",
@@ -2365,6 +2479,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 4,
    "content_ids": [
     "episodes/episode-132",
@@ -2381,6 +2496,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 3,
    "content_ids": [
     "dentai/dentai-17",
@@ -2396,6 +2512,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 3,
    "content_ids": [
     "episodes/episode-75",
@@ -2411,6 +2528,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 3,
    "content_ids": [
     "dentai/promptologist/prompt1-1",
@@ -2426,6 +2544,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 3,
    "content_ids": [
     "episodes/episode-156",
@@ -2441,6 +2560,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 3,
    "content_ids": [
     "episodes/episode-156",
@@ -2456,6 +2576,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 3,
    "content_ids": [
     "episodes/episode-157",
@@ -2471,6 +2592,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 3,
    "content_ids": [
     "episodes/episode-157",
@@ -2486,6 +2608,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 3,
    "content_ids": [
     "notecast/episode-24",
@@ -2501,6 +2624,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 3,
    "content_ids": [
     "episodes/episode-96",
@@ -2516,6 +2640,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 3,
    "content_ids": [
     "dentai/promptologist/prompt3-1",
@@ -2531,6 +2656,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 3,
    "content_ids": [
     "episodes/episode-32",
@@ -2546,6 +2672,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 3,
    "content_ids": [
     "insight/insight-19",
@@ -2561,6 +2688,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 3,
    "content_ids": [
     "sharehub/share-2",
@@ -2576,6 +2704,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 3,
    "content_ids": [
     "insight/insight-7",
@@ -2591,6 +2720,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 3,
    "content_ids": [
     "notecast/episode-7",
@@ -2606,6 +2736,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 3,
    "content_ids": [
     "episodes/episode-103",
@@ -2621,6 +2752,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 3,
    "content_ids": [
     "episodes/episode-12",
@@ -2636,6 +2768,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 3,
    "content_ids": [
     "episodes/episode-136",
@@ -2651,6 +2784,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 3,
    "content_ids": [
     "insight/insight-27",
@@ -2666,6 +2800,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 3,
    "content_ids": [
     "notecast/episode-14",
@@ -2681,6 +2816,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 3,
    "content_ids": [
     "litecast/lite-CAST1",
@@ -2696,6 +2832,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 3,
    "content_ids": [
     "episodes/episode-148-1",
@@ -2711,6 +2848,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 3,
    "content_ids": [
     "episodes/episode-106-1",
@@ -2726,6 +2864,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 3,
    "content_ids": [
     "dentcast-plus/video-2",
@@ -2741,6 +2880,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 3,
    "content_ids": [
     "episodes/episode-114",
@@ -2756,6 +2896,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 3,
    "content_ids": [
     "notecast/episode-4",
@@ -2771,6 +2912,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 3,
    "content_ids": [
     "notecast/episode-33",
@@ -2786,6 +2928,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 3,
    "content_ids": [
     "episodes/episode-62",
@@ -2801,6 +2944,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 3,
    "content_ids": [
     "episodes/episode-113",
@@ -2816,6 +2960,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 3,
    "content_ids": [
     "insight/insight-28",
@@ -2831,6 +2976,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 3,
    "content_ids": [
     "episodes/episode-118",
@@ -2846,6 +2992,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 3,
    "content_ids": [
     "dentai/dentai-5",
@@ -2861,6 +3008,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 3,
    "content_ids": [
     "notecast/episode-2",
@@ -2876,6 +3024,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 3,
    "content_ids": [
     "episodes/episode-138",
@@ -2891,6 +3040,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 3,
    "content_ids": [
     "insight/insight-6",
@@ -2906,6 +3056,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 3,
    "content_ids": [
     "episodes/episode-42",
@@ -2918,9 +3069,10 @@
    "tag": "#فوتوکست",
    "domain": "brand",
    "words": 1,
-   "definition": "",
-   "use_when": "",
+   "definition": "نامِ سری فوتوکست. ظرف محتوا را نام می‌برد، نه مفهوم بالینی را.",
+   "use_when": "روی هر مدخل فوتوکست، و هیچ‌جای دیگر.",
    "variants": [],
+   "co_tags": [],
    "count": 3,
    "content_ids": [
     "photocast/episode-1",
@@ -2936,6 +3088,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 3,
    "content_ids": [
     "dentai/dentai-10",
@@ -2951,6 +3104,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 3,
    "content_ids": [
     "insight/insight-20",
@@ -2966,6 +3120,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 3,
    "content_ids": [
     "episodes/episode-125-2",
@@ -2981,6 +3136,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 3,
    "content_ids": [
     "dentai/promptologist/prompt1-1",
@@ -2996,6 +3152,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 3,
    "content_ids": [
     "episodes/episode-157",
@@ -3011,6 +3168,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 3,
    "content_ids": [
     "dentai/promptologist/prompt3-1",
@@ -3026,6 +3184,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 3,
    "content_ids": [
     "episodes/episode-118",
@@ -3041,6 +3200,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 3,
    "content_ids": [
     "episodes/episode-157",
@@ -3056,6 +3216,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 3,
    "content_ids": [
     "metanotes/meta-1",
@@ -3071,6 +3232,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 3,
    "content_ids": [
     "litecast/lite-CAST10",
@@ -3086,11 +3248,30 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 3,
    "content_ids": [
     "dentcast-plus/video-3",
     "insight/insight-29",
     "metanotes/meta-12"
+   ]
+  },
+  {
+   "key": "کانتکت_باز",
+   "tag": "#کانتکت_باز",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "همان مفهومِ #تماس_باز، با واژه‌ی رایج‌ترِ محاوره‌ی بالینی.",
+   "use_when": "همیشه همراه #تماس_باز. این دو هیچ کلمه‌ی مشترکی ندارند، پس هرکدام درِ ورودیِ جداگانه‌ای برای همان مفهوم‌اند و حذف یکی، یک در را می‌بندد.",
+   "variants": [],
+   "co_tags": [
+    "#تماس_باز"
+   ],
+   "count": 3,
+   "content_ids": [
+    "episodes/episode-121-1",
+    "photocast/episode-1",
+    "episodes/episode-159"
    ]
   },
   {
@@ -3101,6 +3282,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 3,
    "content_ids": [
     "episodes/episode-132",
@@ -3116,6 +3298,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-157",
@@ -3130,6 +3313,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-109",
@@ -3144,6 +3328,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-108",
@@ -3158,6 +3343,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-157",
@@ -3172,6 +3358,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-75",
@@ -3186,6 +3373,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "notecast/episode-27",
@@ -3200,6 +3388,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-157",
@@ -3214,6 +3403,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-157",
@@ -3228,6 +3418,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-95",
@@ -3242,6 +3433,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "dentai/dentai-23",
@@ -3256,6 +3448,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "insight/insight-30",
@@ -3270,6 +3463,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-96",
@@ -3284,6 +3478,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-34",
@@ -3298,6 +3493,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "notecast/episode-34",
@@ -3312,6 +3508,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-72",
@@ -3326,6 +3523,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "notecast/episode-20",
@@ -3340,6 +3538,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "insight/insight-36",
@@ -3354,6 +3553,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-157",
@@ -3368,6 +3568,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-157",
@@ -3382,6 +3583,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "dentai/dentai-25",
@@ -3396,6 +3598,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-157",
@@ -3410,6 +3613,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "notecast/episode-9",
@@ -3424,6 +3628,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "dentai/dentai-16",
@@ -3438,6 +3643,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "notecast/episode-6",
@@ -3452,6 +3658,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-157",
@@ -3466,6 +3673,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "notecast/episode-24",
@@ -3480,6 +3688,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "sharehub/share-1",
@@ -3494,6 +3703,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "notecast/episode-25",
@@ -3508,6 +3718,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "notecast/episode-21",
@@ -3522,6 +3733,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-157",
@@ -3536,6 +3748,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "insight/insight-36",
@@ -3550,6 +3763,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "dentai/dentai-25",
@@ -3564,6 +3778,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "notecast/episode-17",
@@ -3578,6 +3793,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "notecast/episode-5",
@@ -3592,6 +3808,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "dentai/dentai-2",
@@ -3606,6 +3823,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "dentai/promptologist/prompt1-5",
@@ -3620,6 +3838,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "insight/insight-54",
@@ -3634,6 +3853,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-157",
@@ -3648,6 +3868,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-157",
@@ -3662,6 +3883,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-157",
@@ -3676,6 +3898,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "dentai/dentai-13",
@@ -3690,6 +3913,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-125-1",
@@ -3704,6 +3928,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-82",
@@ -3718,6 +3943,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "dentai/dentai-13",
@@ -3732,6 +3958,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "dentai/dentai-11",
@@ -3746,6 +3973,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-157",
@@ -3760,6 +3988,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-160",
@@ -3774,6 +4003,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-148-2",
@@ -3788,6 +4018,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-118",
@@ -3802,6 +4033,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-157",
@@ -3816,6 +4048,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-157",
@@ -3830,6 +4063,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "insight/insight-54",
@@ -3844,6 +4078,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "notecast/episode-17",
@@ -3858,6 +4093,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-154",
@@ -3872,6 +4108,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "insight/insight-49",
@@ -3886,6 +4123,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-118",
@@ -3900,6 +4138,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-123-6",
@@ -3914,6 +4153,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "litecast/lite-CAST17",
@@ -3928,6 +4168,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "insight/insight-14",
@@ -3942,6 +4183,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-23",
@@ -3956,6 +4198,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-147-4",
@@ -3970,6 +4213,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "insight/insight-16",
@@ -3984,6 +4228,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-147-5",
@@ -3998,6 +4243,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-31",
@@ -4012,6 +4258,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "notecast/episode-31",
@@ -4026,6 +4273,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-133",
@@ -4040,6 +4288,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "litecast/lite-CAST8",
@@ -4054,6 +4303,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "notecast/episode-14",
@@ -4068,6 +4318,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "chairside/chairside-16",
@@ -4082,6 +4333,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "insight/insight-16",
@@ -4096,6 +4348,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "insight/insight-10",
@@ -4110,6 +4363,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "notecast/episode-2",
@@ -4124,6 +4378,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "insight/insight-17",
@@ -4138,6 +4393,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "photocast/episode-3",
@@ -4152,6 +4408,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-142",
@@ -4166,6 +4423,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "notecast/episode-9",
@@ -4180,6 +4438,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-22",
@@ -4194,6 +4453,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-108",
@@ -4208,6 +4468,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "notecast/episode-24",
@@ -4222,6 +4483,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-52",
@@ -4236,6 +4498,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-128",
@@ -4250,6 +4513,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-140",
@@ -4264,6 +4528,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-9",
@@ -4278,6 +4543,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "dentai/dentai-18",
@@ -4292,6 +4558,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "notecast/episode-25",
@@ -4306,6 +4573,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "dentai/dentai-25",
@@ -4320,6 +4588,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-61",
@@ -4334,6 +4603,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-157",
@@ -4348,6 +4618,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "metanotes/meta-4",
@@ -4362,6 +4633,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "insight/insight-4",
@@ -4376,6 +4648,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-123-3",
@@ -4390,6 +4663,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "dentai/dentai-13",
@@ -4404,6 +4678,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "notecast/episode-20",
@@ -4418,6 +4693,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "chairside/chairside-13",
@@ -4432,6 +4708,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "metanotes/meta-6",
@@ -4443,9 +4720,12 @@
    "tag": "#تماس_باز",
    "domain": "clinical",
    "words": 2,
-   "definition": "",
-   "use_when": "",
+   "definition": "نبودِ تماس پروگزیمالِ مؤثر بین دو دندان مجاور؛ معمولاً با گیر کردن غذا و درد موضعی بروز می‌کند.",
+   "use_when": "مقاله کانتکت باز را تشخیص بدهد، علتش را بررسی کند، یا راه اصلاحش را بگوید.",
    "variants": [],
+   "co_tags": [
+    "#کانتکت_باز"
+   ],
    "count": 2,
    "content_ids": [
     "photocast/episode-1",
@@ -4460,6 +4740,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "sharehub/share-8",
@@ -4474,6 +4755,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-142",
@@ -4488,6 +4770,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "insight/insight-11",
@@ -4502,6 +4785,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "insight/insight-20",
@@ -4516,6 +4800,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "litecast/lite-CAST2",
@@ -4530,6 +4815,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "notecast/episode-2",
@@ -4544,6 +4830,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-109",
@@ -4558,6 +4845,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "chairside/chairside-25",
@@ -4572,6 +4860,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "notecast/episode-29",
@@ -4586,6 +4875,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-130-1",
@@ -4600,6 +4890,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "chairside/chairside-16",
@@ -4614,6 +4905,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-141",
@@ -4628,6 +4920,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-125-1",
@@ -4642,6 +4935,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "insight/insight-21",
@@ -4656,6 +4950,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-125",
@@ -4670,6 +4965,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "notecast/episode-10",
@@ -4684,6 +4980,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "notecast/episode-3",
@@ -4698,6 +4995,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "insight/insight-44",
@@ -4712,6 +5010,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "notecast/episode-11",
@@ -4726,6 +5025,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-25",
@@ -4740,6 +5040,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-147-2",
@@ -4754,6 +5055,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-123-6",
@@ -4768,6 +5070,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-157",
@@ -4782,6 +5085,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "notecast/episode-13",
@@ -4796,6 +5100,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-112",
@@ -4810,6 +5115,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "insight/insight-13",
@@ -4824,6 +5130,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "insight/insight-8",
@@ -4838,6 +5145,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "notecast/episode-13",
@@ -4852,6 +5160,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "insight/insight-22",
@@ -4866,6 +5175,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "litecast/lite-CAST10",
@@ -4880,6 +5190,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-123-2",
@@ -4894,6 +5205,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-157",
@@ -4908,6 +5220,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-114",
@@ -4922,6 +5235,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "dentai/dentai-4",
@@ -4936,6 +5250,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "chairside/chairside-18",
@@ -4950,6 +5265,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "sharehub/share-8",
@@ -4964,6 +5280,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "chairside/chairside-12",
@@ -4978,6 +5295,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "dentai/dentai-7",
@@ -4992,6 +5310,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-115",
@@ -5006,6 +5325,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "insight/insight-8",
@@ -5020,6 +5340,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "dentai/dentai-1",
@@ -5034,6 +5355,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "notecast/episode-6",
@@ -5048,6 +5370,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-90",
@@ -5062,6 +5385,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "insight/insight-51",
@@ -5076,6 +5400,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-96",
@@ -5090,6 +5415,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-126-1",
@@ -5104,6 +5430,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-129",
@@ -5118,6 +5445,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "insight/insight-29",
@@ -5132,6 +5460,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "chairside/chairside-13",
@@ -5146,6 +5475,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "chairside/chairside-9",
@@ -5160,6 +5490,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-122-1",
@@ -5174,6 +5505,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "insight/insight-16",
@@ -5188,6 +5520,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "insight/insight-28",
@@ -5202,6 +5535,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-157",
@@ -5216,6 +5550,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "insight/insight-23",
@@ -5230,6 +5565,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "dentai/dentai-3",
@@ -5244,6 +5580,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-111-1",
@@ -5258,6 +5595,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "insight/insight-22",
@@ -5272,24 +5610,11 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "notecast/episode-25",
     "notecast/episode-26"
-   ]
-  },
-  {
-   "key": "کانتکت_باز",
-   "tag": "#کانتکت_باز",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "",
-   "use_when": "",
-   "variants": [],
-   "count": 2,
-   "content_ids": [
-    "episodes/episode-121-1",
-    "episodes/episode-159"
    ]
   },
   {
@@ -5300,6 +5625,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "notecast/episode-34",
@@ -5314,6 +5640,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-81",
@@ -5328,6 +5655,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "episodes/episode-116",
@@ -5342,6 +5670,7 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "notecast/episode-2",
@@ -5356,10 +5685,95 @@
    "definition": "",
    "use_when": "",
    "variants": [],
+   "co_tags": [],
    "count": 2,
    "content_ids": [
     "notecast/episode-4",
     "notecast/episode-5"
+   ]
+  },
+  {
+   "key": "بازسازی_درد",
+   "tag": "#بازسازی_درد",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "روش تشخیصی: تحریک هدفمند (سوند، نخ دندان، فشار) تا همان دردی که بیمار توصیف کرده عیناً تکرار شود.",
+   "use_when": "مقاله از بازسازی درد به‌عنوان ابزار رسیدن به تشخیص استفاده کند.",
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "photocast/episode-1"
+   ]
+  },
+  {
+   "key": "بستن_کانتکت",
+   "tag": "#بستن_کانتکت",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "اصلاح کانتکت باز پروگزیمال — افزودن کامپوزیت، یا اصلاح/تعویض رستوریشن.",
+   "use_when": "مقاله راهکار عملی بستن کانتکت باز بدهد. مفهوم معکوسِ #باز_کردن_کانتکت است؛ جابه‌جا به کار نرود.",
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "photocast/episode-1"
+   ]
+  },
+  {
+   "key": "تماس_زودرس",
+   "tag": "#تماس_زودرس",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "Premature contact — تماسی که زودتر از بقیه می‌نشیند و مسیر بسته شدن فک را منحرف می‌کند.",
+   "use_when": "مقاله تماس زودرس را تشخیص بدهد یا حذفش کند.",
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "photocast/episode-2"
+   ]
+  },
+  {
+   "key": "درد_بعد_از_روکش",
+   "tag": "#درد_بعد_از_روکش",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "دردی که پس از سمان شدن روکش شروع می‌شود؛ شکایتِ بیمار است، نه تشخیص.",
+   "use_when": "مقاله منشأ درد پس از پروتز ثابت را بررسی یا حل کند. برای دردِ حین تراش یا درد اندو به کار نرود.",
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "photocast/episode-1"
+   ]
+  },
+  {
+   "key": "قانون_bull",
+   "tag": "#قانون_BULL",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "Buccal Upper – Lower Lingual: در فک بالا کاسپ باکال و در فک پایین کاسپ لینگوال تراش می‌خورد.",
+   "use_when": "مقاله همین قاعده را آموزش بدهد یا به‌کار ببرد.",
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "photocast/episode-2"
+   ]
+  },
+  {
+   "key": "کاسپ_فانکشنال",
+   "tag": "#کاسپ_فانکشنال",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "کاسپ‌های حامل اکلوژن — پالاتال در فک بالا، باکال در فک پایین — که ارتفاعشان باید حفظ شود.",
+   "use_when": "مقاله درباره‌ی حفظ یا بازسازی ارتفاع و نقش این کاسپ‌ها حرف بزند.",
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "photocast/episode-2"
    ]
   }
  ]

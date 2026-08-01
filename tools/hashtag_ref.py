@@ -34,6 +34,25 @@ USAGE
   hashtag_ref.py --check         validate (enforced types only); exit 1 on error
   hashtag_ref.py --backlog       tags in the brain that the reference lacks
   hashtag_ref.py --words TAG     show how the assistant tokenizes a tag
+  hashtag_ref.py --apply BATCH   run one reviewed campaign batch (see below)
+  hashtag_ref.py --simulate Q    rank the real tags for a query, as the engine does
+
+BATCH FILES
+-----------
+Each step of the review campaign is a JSON file under .dentcast/hashtag-batches/
+so the decision is recorded, reviewable in the diff, and re-runnable:
+
+  {"type": "photocast",
+   "concepts": [ {"tag": "#...", "domain": "clinical",
+                  "definition": "...", "use_when": "...",
+                  "variants": [], "co_tags": []} ],
+   "articles": {"photocast/episode-1": ["#...", "#..."]},
+   "renames":  {"#old_form": "#canonical_form"}}
+
+`renames` rewrites a tag everywhere in the brain (used to collapse duplicate
+surface forms). `articles` replaces an entry's hashtag list outright, and every
+tag it names must exist in the reference once `concepts` is merged in — that
+check is the protocol: no tag reaches the brain without a canonical entry.
 """
 
 import argparse
@@ -210,6 +229,97 @@ def guess_domain(rec: dict, type_totals: Counter) -> str:
     return "clinical"
 
 
+# Field order every concept is written with, so the file stays diffable.
+CONCEPT_FIELDS = ("key", "tag", "domain", "words", "definition", "use_when",
+                  "variants", "co_tags", "count", "content_ids")
+
+
+def normalize_concept(c: dict) -> dict:
+    """Fill in defaults/derived fields and fix key order."""
+    c.setdefault("domain", "clinical")
+    c.setdefault("definition", "")
+    c.setdefault("use_when", "")
+    # variants  = dead surface forms, merged away (share words with the canonical).
+    # co_tags   = forms deliberately carried ALONGSIDE it. A lexical matcher scores
+    #             a tag only on its own words, so "#کانتکت_باز" and "#تماس_باز"
+    #             — no shared word — are two independent doors to one concept, and
+    #             collapsing them would delete one of them. Applied together.
+    c.setdefault("variants", [])
+    c.setdefault("co_tags", [])
+    c["key"] = normalize_fa(c["tag"]).replace(" ", "_")
+    c["words"] = len(words(c["tag"]))
+    c.setdefault("count", 0)
+    c.setdefault("content_ids", [])
+    return {k: c[k] for k in CONCEPT_FIELDS}
+
+
+def cmd_apply(path: str) -> None:
+    batch = json.loads(Path(path).read_text(encoding="utf-8"))
+    ref, brain = load_ref(), load_brain()
+    index = by_tag(ref)
+
+    # 1. New canonical concepts.
+    added = 0
+    for c in batch.get("concepts") or []:
+        if c["tag"] in index:
+            index[c["tag"]].update({k: v for k, v in c.items() if k != "tag"})
+            normalize_concept(index[c["tag"]])
+        else:
+            fresh = normalize_concept(dict(c))
+            ref["concepts"].append(fresh)
+            index[c["tag"]] = fresh
+            added += 1
+
+    # 2. Global renames (duplicate surface forms collapsing into the canonical).
+    renames = batch.get("renames") or {}
+    renamed = 0
+    for e in brain:
+        tags_ = e.get("hashtags")
+        if not tags_:
+            continue
+        new, seen = [], set()
+        for t in tags_:
+            t2 = renames.get(t, t)
+            if t2 != t:
+                renamed += 1
+            if t2 not in seen:  # a rename can collide with a tag already present
+                seen.add(t2)
+                new.append(t2)
+        e["hashtags"] = new
+
+    # 3. Per-article hashtag lists. Every tag must be canonical by now.
+    articles = batch.get("articles") or {}
+    unknown = sorted({t for tags_ in articles.values() for t in tags_
+                      if t not in index})
+    if unknown:
+        sys.exit("refusing to apply — these tags have no reference entry:\n  "
+                 + "\n  ".join(unknown))
+
+    by_cid = {content_id(e): e for e in brain if content_id(e)}
+    touched = 0
+    for cid, tags_ in articles.items():
+        if cid not in by_cid:
+            sys.exit(f"refusing to apply — no brain entry for {cid}")
+        by_cid[cid]["hashtags"] = list(tags_)
+        touched += 1
+
+    # 4. The batch's type is now fully reviewed, so start enforcing it.
+    t = batch.get("type")
+    if batch.get("enforce") and t and t not in ref["enforced_types"]:
+        ref["enforced_types"].append(t)
+        ref["enforced_types"].sort()
+
+    # indent=2 is the brain's existing formatting and round-trips byte-for-byte;
+    # anything else would bury a two-article change in a 12k-line diff.
+    BRAIN.write_text(json.dumps(brain, ensure_ascii=False, indent=2) + "\n",
+                     encoding="utf-8")
+    ref["concepts"] = [normalize_concept(c) for c in ref["concepts"]]
+    write_ref(ref)
+    print(f"Applied {Path(path).name}: +{added} concept(s), "
+          f"{renamed} tag rename(s), {touched} article(s) retagged.")
+    cmd_sync()
+
+
 def cmd_sync() -> None:
     ref = load_ref()
     tags = brain_tag_map(load_brain())
@@ -244,6 +354,59 @@ def cmd_backlog(only_type: str | None) -> None:
     print(f"Backlog for {scope}: {len(missing)} tags not yet in the reference.")
     for tag, n in missing.most_common():
         print(f"  {n:3d}  {tag}   [{', '.join(sorted(where[tag]))}]")
+
+
+def cmd_simulate(query: str) -> None:
+    """
+    Rank the site's real tags for a query exactly the way the engine does, so a
+    retagging decision can be checked instead of trusted.
+
+    Mirrors nextRootCatalog: score = fraction of the TAG's words present in the
+    query, keep >= 0.5, sort by score then word-rarity (IDF over the tag corpus)
+    then fewest articles, then drop any tag bringing no new content. The one
+    thing it cannot reproduce is the model's own keyword extraction, so pass the
+    phrases a dentist would actually type.
+    """
+    brain = load_brain()
+    tags = brain_tag_map(brain)
+    titles = {content_id(e): e.get("title", "") for e in brain}
+
+    df = Counter()
+    for t in tags:
+        for w in set(words(t)):
+            df[w] += 1
+    n = len(tags)
+    import math
+    idf = {w: math.log((n + 1) / (c + 1)) + 1 for w, c in df.items()}
+
+    qwords = set(words(query))
+    scored = []
+    for t, rec in tags.items():
+        tw = words(t)
+        if not tw:
+            continue
+        score = sum(w in qwords for w in tw) / len(tw)
+        if score < 0.5:
+            continue
+        scored.append((score, sum(idf.get(w, 1) for w in tw),
+                       -len(rec["content_ids"]), t, rec))
+    scored.sort(key=lambda x: (-x[0], -x[1], x[2]))
+
+    covered, rank = set(), 0
+    print(f"query: {query}\nwords: {sorted(qwords)}\n")
+    for score, spec, negn, t, rec in scored:
+        if rank >= 10:
+            break
+        if not any(c not in covered for c in rec["content_ids"]):
+            continue
+        covered.update(rec["content_ids"])
+        rank += 1
+        head = rec["content_ids"][0]
+        print(f"{rank:2d}. {t}   score={score:.2f} specificity={spec:.1f} "
+              f"articles={-negn}")
+        print(f"     -> {head}  {titles.get(head, '')[:60]}")
+    if not rank:
+        print("(nothing cleared the 0.5 threshold — falls back to the pillar tree)")
 
 
 def cmd_check() -> None:
@@ -291,6 +454,8 @@ def main() -> None:
     g.add_argument("--check", action="store_true")
     g.add_argument("--backlog", nargs="?", const="", metavar="TYPE")
     g.add_argument("--words", metavar="TAG")
+    g.add_argument("--apply", metavar="BATCH")
+    g.add_argument("--simulate", metavar="QUERY")
     a = p.parse_args()
 
     if a.seed:
@@ -299,6 +464,10 @@ def main() -> None:
         cmd_sync()
     elif a.check:
         cmd_check()
+    elif a.apply:
+        cmd_apply(a.apply)
+    elif a.simulate:
+        cmd_simulate(a.simulate)
     elif a.words is not None:
         print(words(a.words))
     else:
