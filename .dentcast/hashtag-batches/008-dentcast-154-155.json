@@ -1,0 +1,107 @@
+{
+  "type": "dentcast",
+  "note": "Campaign step 8 — episodes 154 & 155 (the VDO two-parter). Podcast pages: tagged from the on-page description and keyword list only; the argument itself is in the audio, so the author's existing #TMD is kept rather than second-guessed.",
+  "concepts": [
+    {
+      "tag": "#بعد_عمودی",
+      "domain": "clinical",
+      "definition": "Vertical Dimension — ارتفاع عمودی صورت در اکلوژن؛ متغیری که تغییرش کل بازسازی را جابه‌جا می‌کند.",
+      "use_when": "مقاله بعد عمودی را بسنجد، تغییر بدهد، یا درباره‌ی تغییرش تصمیم بگیرد.",
+      "co_tags": ["#Vertical_Dimension", "#VDO"]
+    },
+    {
+      "tag": "#Vertical_Dimension",
+      "domain": "clinical",
+      "definition": "همان #بعد_عمودی، با اصطلاح انگلیسی.",
+      "use_when": "همیشه همراه #بعد_عمودی. جایگزین #VerticalDimension که چون CamelCase سرِهم بود به توکنِ «verticaldimension» تبدیل می‌شد و با «vertical dimension» هیچ تطبیقی نداشت.",
+      "variants": ["#VerticalDimension"],
+      "co_tags": ["#بعد_عمودی"]
+    },
+    {
+      "tag": "#VDO",
+      "domain": "clinical",
+      "definition": "سرنامِ Vertical Dimension of Occlusion.",
+      "use_when": "همراه #بعد_عمودی — درِ ورودیِ سرنامی همان مفهوم."
+    },
+    {
+      "tag": "#VD",
+      "domain": "clinical",
+      "definition": "سرنامِ کوتاه‌ترِ Vertical Dimension.",
+      "use_when": "همراه #بعد_عمودی."
+    },
+    {
+      "tag": "#افزایش_VD",
+      "domain": "clinical",
+      "definition": "بالا بردن بعد عمودی — تصمیمی که فضا می‌سازد و همزمان ریسک می‌آورد.",
+      "use_when": "مقاله درباره‌ی خودِ افزایش VD تصمیم بگیرد: اندیکاسیون، مقدار، یا ریسک."
+    },
+    {
+      "tag": "#بازسازی_کامل_دهان",
+      "domain": "clinical",
+      "definition": "Full mouth rehabilitation — بازسازی همه‌ی دندان‌ها در یک طرح واحد.",
+      "use_when": "مقاله تصمیمش را در مقیاس کل دهان بگیرد، نه یک دندان.",
+      "co_tags": ["#Full_Mouth_Rehabilitation"]
+    },
+    {
+      "tag": "#Full_Mouth_Rehabilitation",
+      "domain": "clinical",
+      "definition": "همان #بازسازی_کامل_دهان، با اصطلاح انگلیسی.",
+      "use_when": "همیشه همراه #بازسازی_کامل_دهان. جایگزین #FullMouthRehabilitation که سرِهم بود و با «full mouth rehabilitation» تطبیق نمی‌خورد.",
+      "variants": ["#FullMouthRehabilitation"],
+      "co_tags": ["#بازسازی_کامل_دهان"]
+    },
+    {
+      "tag": "#دوره_آزمایشی",
+      "domain": "clinical",
+      "definition": "مرحله‌ی موقتِ آزمودنِ یک تغییر (مثل VD جدید) پیش از اجرای دائمی.",
+      "use_when": "مقاله ضرورت، طول، یا کفایتِ دوره‌ی آزمایشی را بررسی کند."
+    },
+    {
+      "tag": "#تطابق_بیمار",
+      "domain": "clinical",
+      "definition": "توانِ سازگاری بیمار با تغییر — متغیری که نتیجه را تعیین می‌کند ولی در طرح درمان دیده نمی‌شود.",
+      "use_when": "مقاله تطابق یا عدم تطابق بیمار را عامل تصمیم بداند."
+    },
+    {
+      "tag": "#TMD",
+      "domain": "clinical",
+      "definition": "اختلالات مفصل گیجگاهی‌فکی و عضلات ماضغه.",
+      "use_when": "مقاله TMD را در تصمیم دخالت بدهد."
+    },
+    {
+      "tag": "#دنتکست",
+      "domain": "brand",
+      "definition": "نام خودِ پادکست.",
+      "use_when": "روی مدخل‌هایی که خودِ دنتکست موضوعشان است."
+    }
+  ],
+  "articles": {
+    "episodes/episode-154": [
+      "#دنتکست",
+      "#VDO",
+      "#VD",
+      "#بعد_عمودی",
+      "#Vertical_Dimension",
+      "#افزایش_VD",
+      "#دوره_آزمایشی",
+      "#اکلوژن",
+      "#TMD"
+    ],
+    "episodes/episode-155": [
+      "#دنتکست",
+      "#VDO",
+      "#VD",
+      "#بعد_عمودی",
+      "#Vertical_Dimension",
+      "#افزایش_VD",
+      "#تطابق_بیمار",
+      "#بازسازی_کامل_دهان",
+      "#Full_Mouth_Rehabilitation",
+      "#اکلوژن"
+    ]
+  },
+  "renames": {
+    "#VerticalDimension": "#Vertical_Dimension",
+    "#FullMouthRehabilitation": "#Full_Mouth_Rehabilitation"
+  }
+}

@@ -1286,8 +1286,8 @@
    "tag": "#TMD",
    "domain": "clinical",
    "words": 1,
-   "definition": "",
-   "use_when": "",
+   "definition": "اختلالات مفصل گیجگاهی‌فکی و عضلات ماضغه.",
+   "use_when": "مقاله TMD را در تصمیم دخالت بدهد.",
    "variants": [],
    "co_tags": [],
    "count": 8,
@@ -1756,6 +1756,24 @@
    ]
   },
   {
+   "key": "vd",
+   "tag": "#VD",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "سرنامِ کوتاه‌ترِ Vertical Dimension.",
+   "use_when": "همراه #بعد_عمودی.",
+   "variants": [],
+   "co_tags": [],
+   "count": 5,
+   "content_ids": [
+    "insight/insight-12",
+    "notecast/episode-14",
+    "episodes/episode-154",
+    "episodes/episode-155",
+    "insight/insight-51"
+   ]
+  },
+  {
    "key": "آنله",
    "tag": "#آنله",
    "domain": "clinical",
@@ -1815,6 +1833,27 @@
    ]
   },
   {
+   "key": "بعد_عمودی",
+   "tag": "#بعد_عمودی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "Vertical Dimension — ارتفاع عمودی صورت در اکلوژن؛ متغیری که تغییرش کل بازسازی را جابه‌جا می‌کند.",
+   "use_when": "مقاله بعد عمودی را بسنجد، تغییر بدهد، یا درباره‌ی تغییرش تصمیم بگیرد.",
+   "variants": [],
+   "co_tags": [
+    "#Vertical_Dimension",
+    "#VDO"
+   ],
+   "count": 5,
+   "content_ids": [
+    "notecast/episode-14",
+    "episodes/episode-154",
+    "episodes/episode-155",
+    "insight/insight-51",
+    "insight/insight-60"
+   ]
+  },
+  {
    "key": "توهم_هوش_مصنوعی",
    "tag": "#توهم_هوش_مصنوعی",
    "domain": "ai",
@@ -1848,6 +1887,24 @@
     "litecast/lite-CAST8",
     "litecast/lite-CAST13",
     "sharehub/share-9"
+   ]
+  },
+  {
+   "key": "دنتکست",
+   "tag": "#دنتکست",
+   "domain": "brand",
+   "words": 1,
+   "definition": "نام خودِ پادکست.",
+   "use_when": "روی مدخل‌هایی که خودِ دنتکست موضوعشان است.",
+   "variants": [],
+   "co_tags": [],
+   "count": 5,
+   "content_ids": [
+    "episodes/episode-1",
+    "episodes/episode-100",
+    "episodes/episode-154",
+    "episodes/episode-155",
+    "episodes/episode-156"
    ]
   },
   {
@@ -2169,29 +2226,12 @@
    ]
   },
   {
-   "key": "vd",
-   "tag": "#VD",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "",
-   "use_when": "",
-   "variants": [],
-   "co_tags": [],
-   "count": 4,
-   "content_ids": [
-    "insight/insight-12",
-    "notecast/episode-14",
-    "episodes/episode-155",
-    "insight/insight-51"
-   ]
-  },
-  {
    "key": "vdo",
    "tag": "#VDO",
    "domain": "clinical",
    "words": 1,
-   "definition": "",
-   "use_when": "",
+   "definition": "سرنامِ Vertical Dimension of Occlusion.",
+   "use_when": "همراه #بعد_عمودی — درِ ورودیِ سرنامی همان مفهوم.",
    "variants": [],
    "co_tags": [],
    "count": 4,
@@ -2251,6 +2291,23 @@
     "insight/insight-26",
     "insight/insight-33",
     "insight/insight-51"
+   ]
+  },
+  {
+   "key": "افزایش_vd",
+   "tag": "#افزایش_VD",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "بالا بردن بعد عمودی — تصمیمی که فضا می‌سازد و همزمان ریسک می‌آورد.",
+   "use_when": "مقاله درباره‌ی خودِ افزایش VD تصمیم بگیرد: اندیکاسیون، مقدار، یا ریسک.",
+   "variants": [],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "notecast/episode-14",
+    "episodes/episode-154",
+    "episodes/episode-155",
+    "insight/insight-43"
    ]
   },
   {
@@ -2336,23 +2393,6 @@
     "metanotes/meta-6",
     "chairside/chairside-4",
     "chairside/chairside-16"
-   ]
-  },
-  {
-   "key": "دنتکست",
-   "tag": "#دنتکست",
-   "domain": "brand",
-   "words": 1,
-   "definition": "",
-   "use_when": "",
-   "variants": [],
-   "co_tags": [],
-   "count": 4,
-   "content_ids": [
-    "episodes/episode-1",
-    "episodes/episode-100",
-    "episodes/episode-155",
-    "episodes/episode-156"
    ]
   },
   {
@@ -2785,6 +2825,26 @@
    ]
   },
   {
+   "key": "vertical_dimension",
+   "tag": "#Vertical_Dimension",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "همان #بعد_عمودی، با اصطلاح انگلیسی.",
+   "use_when": "همیشه همراه #بعد_عمودی. جایگزین #VerticalDimension که چون CamelCase سرِهم بود به توکنِ «verticaldimension» تبدیل می‌شد و با «vertical dimension» هیچ تطبیقی نداشت.",
+   "variants": [
+    "#VerticalDimension"
+   ],
+   "co_tags": [
+    "#بعد_عمودی"
+   ],
+   "count": 3,
+   "content_ids": [
+    "notecast/episode-14",
+    "episodes/episode-154",
+    "episodes/episode-155"
+   ]
+  },
+  {
    "key": "ارتودنسی",
    "tag": "#ارتودنسی",
    "domain": "clinical",
@@ -2942,22 +3002,6 @@
     "insight/insight-27",
     "dentai/dentai-23",
     "dentai/dentai-26"
-   ]
-  },
-  {
-   "key": "بعد_عمودی",
-   "tag": "#بعد_عمودی",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "",
-   "use_when": "",
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "notecast/episode-14",
-    "insight/insight-51",
-    "insight/insight-60"
    ]
   },
   {
@@ -4282,21 +4326,6 @@
    ]
   },
   {
-   "key": "verticaldimension",
-   "tag": "#VerticalDimension",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "",
-   "use_when": "",
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "episodes/episode-154",
-    "episodes/episode-155"
-   ]
-  },
-  {
    "key": "آمالگام",
    "tag": "#آمالگام",
    "domain": "clinical",
@@ -4492,21 +4521,6 @@
    ]
   },
   {
-   "key": "افزایش_vd",
-   "tag": "#افزایش_VD",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "",
-   "use_when": "",
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "notecast/episode-14",
-    "insight/insight-43"
-   ]
-  },
-  {
    "key": "امبراژور",
    "tag": "#امبراژور",
    "domain": "clinical",
@@ -4669,6 +4683,23 @@
    "content_ids": [
     "episodes/episode-128",
     "episodes/episode-147-7"
+   ]
+  },
+  {
+   "key": "بازسازی_کامل_دهان",
+   "tag": "#بازسازی_کامل_دهان",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "Full mouth rehabilitation — بازسازی همه‌ی دندان‌ها در یک طرح واحد.",
+   "use_when": "مقاله تصمیمش را در مقیاس کل دهان بگیرد، نه یک دندان.",
+   "variants": [],
+   "co_tags": [
+    "#Full_Mouth_Rehabilitation"
+   ],
+   "count": 2,
+   "content_ids": [
+    "insight/insight-2",
+    "episodes/episode-155"
    ]
   },
   {
@@ -5879,6 +5910,24 @@
    ]
   },
   {
+   "key": "full_mouth_rehabilitation",
+   "tag": "#Full_Mouth_Rehabilitation",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "همان #بازسازی_کامل_دهان، با اصطلاح انگلیسی.",
+   "use_when": "همیشه همراه #بازسازی_کامل_دهان. جایگزین #FullMouthRehabilitation که سرِهم بود و با «full mouth rehabilitation» تطبیق نمی‌خورد.",
+   "variants": [
+    "#FullMouthRehabilitation"
+   ],
+   "co_tags": [
+    "#بازسازی_کامل_دهان"
+   ],
+   "count": 1,
+   "content_ids": [
+    "episodes/episode-155"
+   ]
+  },
+  {
    "key": "ssc",
    "tag": "#SSC",
    "domain": "clinical",
@@ -6001,6 +6050,20 @@
    ]
   },
   {
+   "key": "تطابق_بیمار",
+   "tag": "#تطابق_بیمار",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "توانِ سازگاری بیمار با تغییر — متغیری که نتیجه را تعیین می‌کند ولی در طرح درمان دیده نمی‌شود.",
+   "use_when": "مقاله تطابق یا عدم تطابق بیمار را عامل تصمیم بداند.",
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "episodes/episode-155"
+   ]
+  },
+  {
    "key": "تماس_زودرس",
    "tag": "#تماس_زودرس",
    "domain": "clinical",
@@ -6072,6 +6135,20 @@
    "count": 1,
    "content_ids": [
     "photocast/episode-3"
+   ]
+  },
+  {
+   "key": "دوره_آزمایشی",
+   "tag": "#دوره_آزمایشی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "مرحله‌ی موقتِ آزمودنِ یک تغییر (مثل VD جدید) پیش از اجرای دائمی.",
+   "use_when": "مقاله ضرورت، طول، یا کفایتِ دوره‌ی آزمایشی را بررسی کند.",
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "episodes/episode-154"
    ]
   },
   {
@@ -6205,6 +6282,18 @@
    "content_ids": [
     "dentcast-plus/video-1"
    ]
+  },
+  {
+   "key": "verticaldimension",
+   "tag": "#VerticalDimension",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "co_tags": [],
+   "count": 0,
+   "content_ids": []
   },
   {
    "key": "فینیشینگ_لاین",

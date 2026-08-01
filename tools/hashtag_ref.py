@@ -313,6 +313,9 @@ def cmd_apply(path: str) -> None:
     # anything else would bury a two-article change in a 12k-line diff.
     BRAIN.write_text(json.dumps(brain, ensure_ascii=False, indent=2) + "\n",
                      encoding="utf-8")
+    synced = sync_episode_chips(brain)
+    if synced:
+        print(f"  chips rewritten on {synced} episode page(s).")
     ref["concepts"] = [normalize_concept(c) for c in ref["concepts"]]
     write_ref(ref)
     print(f"Applied {Path(path).name}: +{added} concept(s), "
@@ -354,6 +357,38 @@ def cmd_backlog(only_type: str | None) -> None:
     print(f"Backlog for {scope}: {len(missing)} tags not yet in the reference.")
     for tag, n in missing.most_common():
         print(f"  {n:3d}  {tag}   [{', '.join(sorted(where[tag]))}]")
+
+
+# The chip row baked into every episodes/episode-N.html.
+EP_TAGS_RE = re.compile(r'(<div class="ep-tags">)(.*?)(</div>)', re.S)
+
+
+def sync_episode_chips(brain: list) -> int:
+    """
+    Rewrite the visible #hashtag chips on individual episode pages.
+
+    tools/build_episodes.py regenerates only episodes.html (the listing); the
+    per-episode pages carry their chips as literal markup and no builder owns
+    them. Without this, retagging an episode leaves the brain and the page
+    disagreeing in public - the one desync this campaign could actually ship.
+    """
+    changed = 0
+    for e in brain:
+        cid = content_id(e)
+        if not cid.startswith("episodes/"):
+            continue
+        page = ROOT / (cid + ".html")
+        if not page.exists():
+            continue
+        html = page.read_text(encoding="utf-8")
+        chips = "".join(f'<span class="ep-hashtag">{t}</span>'
+                        for t in e.get("hashtags") or [])
+        new, n = EP_TAGS_RE.subn(lambda m: m.group(1) + chips + m.group(3),
+                                 html, count=1)
+        if n and new != html:
+            page.write_text(new, encoding="utf-8")
+            changed += 1
+    return changed
 
 
 def cmd_simulate(query: str) -> None:
