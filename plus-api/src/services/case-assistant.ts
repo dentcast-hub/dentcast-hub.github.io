@@ -133,7 +133,17 @@ let aliasCache: Array<[string, string]> = [];
 function aliases(): Array<[string, string]> {
   const table = getAliases();
   if (aliasCacheKey !== table) {
-    aliasCache = Object.entries(table).sort((a, b) => b[0].length - a[0].length);
+    aliasCache = Object.entries(table)
+      // A pattern contained in its own replacement grows without bound
+      // ("پروگنوز" -> "پروگنوز دندان"). tools/hashtag_ref.py rejects these when
+      // it compiles the table; this is the same rule enforced at the point of
+      // use, so a hand-edited content-index.json cannot reintroduce one.
+      .filter(([variant, canonical]) => {
+        const v = variant.split(' ');
+        const c = canonical.split(' ');
+        return !c.some((_x, i) => v.every((p, k) => c[i + k] === p));
+      })
+      .sort((a, b) => b[0].length - a[0].length);
     aliasCacheKey = table;
   }
   return aliasCache;
@@ -150,17 +160,27 @@ function normalizeFa(s: string): string {
     .replace(/\s+/g, ' ')
     .trim();
 
-  // Whole words only. A blind replace would maul the words it lands inside:
-  // "سیگار" -> "دخانیات" turns the unrelated "بیمار سیگاری" into
-  // "بیمار دخانیاتی", and "implant" -> "ایمپلنت" would eat "peri implantitis".
-  // Padding and matching " x " means an alias replaces a complete word, or a
-  // complete run of words, and nothing else.
-  let padded = ` ${base} `;
-  for (const [variant, canonical] of aliases()) {
-    const needle = ` ${variant} `;
-    while (padded.includes(needle)) padded = padded.split(needle).join(` ${canonical} `);
+  // One left-to-right pass over the tokens. Repeated string replacement cannot
+  // be used: an alias whose replacement contains its own pattern ("پروگنوز" ->
+  // "پروگنوز دندان") would rewrite its own output forever. Emitting past the
+  // cursor terminates by construction, and matching whole token runs means an
+  // alias replaces a complete word or a complete phrase - never cutting into a
+  // word, which is what would maul "peri implantitis" or "اندوکراون".
+  const toks = base.split(' ');
+  const out: string[] = [];
+  for (let i = 0; i < toks.length;) {
+    let matched = 0;
+    for (const [variant, canonical] of aliases()) { // longest pattern first
+      const parts = variant.split(' ');
+      if (parts.every((p, k) => toks[i + k] === p)) {
+        out.push(...canonical.split(' '));
+        matched = parts.length;
+        break;
+      }
+    }
+    if (matched) { i += matched; } else { out.push(toks[i]); i += 1; }
   }
-  return padded.trim();
+  return out.join(' ');
 }
 
 // Common connector/filler words, dropped before matching. Without this a

@@ -117,31 +117,81 @@ def _aliases():
 
 
 _alias_cache = None
+_alias_index_cache = None
+
+
+def _reset_index():
+    global _alias_index_cache
+    _alias_index_cache = None
+
+
+def _alias_index():
+    """
+    Aliases bucketed by their FIRST token, longest pattern first inside each
+    bucket. Scanning all ~250 patterns at every token position is O(tokens x
+    patterns) and made the two benchmark harnesses take minutes; the bucket
+    turns the inner loop into a handful of candidates.
+    """
+    global _alias_index_cache
+    if _alias_index_cache is None:
+        buckets = {}
+        for bad, good in (_alias_cache or []):
+            parts = bad.split(" ")
+            if parts and parts[0]:
+                buckets.setdefault(parts[0], []).append((parts, good.split(" ")))
+        for v in buckets.values():
+            v.sort(key=lambda pg: -len(pg[0]))
+        _alias_index_cache = buckets
+    return _alias_index_cache
 
 
 def apply_aliases(s: str) -> str:
     """
     Substitute on WHOLE words only.
 
-    A blind string replace is destructive: "سیگار" -> "دخانیات" would turn the
+    Two things this must not do, both learned the hard way.
+
+    It must not cut into a word: "سیگار" -> "دخانیات" applied blindly turns the
     unrelated "بیمار سیگاری" into "بیمار دخانیاتی", and "implant" -> "ایمپلنت"
-    would maul "peri implantitis". Padding with spaces and matching " x " means
-    an alias can only ever replace a complete word (or a complete run of words),
-    never cut into one - so the same table that lets "implant planning" become
-    "ایمپلنت planning" leaves "implantitis" alone.
+    would maul "peri implantitis". Matching whole token runs prevents that.
+
+    And it must not rescan its own output. Repeated replacement hangs forever on
+    an alias whose replacement contains its own pattern - "پروگنوز" ->
+    "پروگنوز دندان" rewrites itself without end. One left-to-right pass that
+    emits past the cursor terminates by construction.
     """
     global _alias_cache
     if _alias_cache is None:
         _alias_cache = _aliases()
-    padded = f" {s} "
-    for bad, good in _alias_cache:
-        needle = f" {bad} "
-        while needle in padded:
-            padded = padded.replace(needle, f" {good} ")
-    return padded.strip()
+        _reset_index()
+    if not _alias_cache:
+        return s
+    index = _alias_index()
+    toks = s.split(" ")
+    out, i = [], 0
+    while i < len(toks):
+        hit = None
+        for parts, good in index.get(toks[i], ()):   # longest pattern first
+            if toks[i:i + len(parts)] == parts:
+                hit = (len(parts), good)
+                break
+        if hit:
+            out.extend(hit[1])
+            i += hit[0]
+        else:
+            out.append(toks[i])
+            i += 1
+    return " ".join(out)
 
 
-def normalize_fa(s: str) -> str:
+def normalize_chars(s: str) -> str:
+    """Character-level normalization only, WITHOUT the alias table.
+
+    compile_aliases must use this: running an alias through the full pipeline
+    folds it into its own canonical form ("implant" -> "ایمپلنت"), the result
+    equals the target, and the entry is dropped as redundant — a table that
+    quietly erases itself.
+    """
     s = ZERO_WIDTH.sub(" ", s)
     s = s.replace("ك", "ک").replace("ي", "ی")
     s = s.replace("#", " ").replace("_", " ")
@@ -151,7 +201,11 @@ def normalize_fa(s: str) -> str:
         ch if (unicodedata.category(ch)[0] in ("L", "N") or ch.isspace()) else " "
         for ch in s
     )
-    return apply_aliases(re.sub(r"\s+", " ", s).strip())
+    return re.sub(r"\s+", " ", s).strip()
+
+
+def normalize_fa(s: str) -> str:
+    return apply_aliases(normalize_chars(s))
 
 
 def words(s: str) -> list:
@@ -343,6 +397,16 @@ def cmd_apply(path: str) -> None:
     # no entry at all - the reference would then be describing a vocabulary the
     # site no longer uses. Re-listing an already-applied rename is a harmless
     # no-op on the brain and repairs the reference.
+    # The batch's own new concepts bring their own aliases, and those have to be
+    # live BEFORE the door-check below runs - otherwise a rename the batch
+    # deliberately covered with an alias is rejected for lacking one.
+    global _alias_cache
+    table, _ = compile_aliases(ref)
+    for k, v in (ref.get("aliases") or {}).items():
+        table.setdefault(k, v)
+    _alias_cache = sorted(table.items(), key=lambda kv: -len(kv[0]))
+    _reset_index()
+
     # A rename is only lossless when someone typing the OLD form still reaches
     # the canonical - i.e. it still clears the 0.5 threshold, either by sharing
     # words or through the alias table. Otherwise the merge deletes a door,
@@ -460,8 +524,16 @@ def compile_aliases(ref: dict) -> list:
     for c in ref["concepts"]:
         target = " ".join(c["key"].split("_"))
         for a in c.get("aliases") or []:
-            a = normalize_fa(a)
+            a = normalize_chars(a)
             if not a or a == target:
+                continue
+            # Self-referential: the replacement contains the pattern, so the
+            # alias grows its own output ("پروگنوز" -> "پروگنوز دندان" yields
+            # "پروگنوز دندان دندان"). Always wrong, always rejected.
+            ap, tp = a.split(" "), target.split(" ")
+            if any(tp[k:k + len(ap)] == ap for k in range(len(tp))):
+                problems.append(
+                    f'{c["tag"]}: alias "{a}" is contained in its own target — dropped')
                 continue
             for other_tag, other in raw.items():
                 if other_tag == c["tag"]:
@@ -486,15 +558,22 @@ def cmd_sync() -> None:
             c["count"] = len(cids)
             changed += 1
         c["words"] = len(words(c["tag"]))
+    # Rebuilt from scratch every time. Merging the previous table back in made
+    # it append-only: an alias dropped by the guard stayed live forever because
+    # the stale entry was preserved. `manual_aliases` is the escape hatch for
+    # word-level entries no single concept owns.
     table, problems = compile_aliases(ref)
-    # Hand-written entries in the top-level table that no concept claims are
-    # kept (the campaign seeded some before the per-concept field existed).
-    for k, v in (ref.get("aliases") or {}).items():
+    for k, v in (ref.get("manual_aliases") or {}).items():
+        kp, vp = k.split(" "), v.split(" ")
+        if any(vp[i:i + len(kp)] == kp for i in range(len(vp))):
+            problems.append(f'manual alias "{k}" is contained in its own target — dropped')
+            continue
         table.setdefault(k, v)
     ref["aliases"] = dict(sorted(table.items(), key=lambda kv: -len(kv[0])))
     write_ref(ref)
     global _alias_cache
     _alias_cache = None
+    _reset_index()
     print(f"Synced {len(ref['concepts'])} concepts from the brain "
           f"({changed} updated); {len(table)} aliases compiled.")
     for p_ in problems:

@@ -2,6 +2,7 @@
  "version": 1,
  "about": "Canonical hashtag vocabulary for DentCast. The reference owns the vocabulary; dentcast-brain.json owns the assignment. `count` and `content_ids` are derived — run tools/hashtag_ref.py --sync.",
  "enforced_types": [
+  "chairside",
   "dentcast",
   "dentcast_plus",
   "meta",
@@ -17,6 +18,10 @@
    "words": 1,
    "definition": "چترِ عامِ ایمپلنت.",
    "use_when": "همیشه در کنار یک مفهوم مشخص‌تر، هرگز به‌تنهایی.",
+   "aliases": [
+    "implant",
+    "ایمپلانت"
+   ],
    "variants": [],
    "co_tags": [],
    "count": 86,
@@ -107,10 +112,6 @@
     "episodes/episode-158",
     "episodes/episode-159",
     "insight/insight-52"
-   ],
-   "aliases": [
-    "implant",
-    "ایمپلانت"
    ]
   },
   {
@@ -120,6 +121,12 @@
    "words": 1,
    "definition": "",
    "use_when": "",
+   "aliases": [
+    "بایو میمتیک",
+    "بایومیمتیک",
+    "بیو میمتیک",
+    "بیومی متیک"
+   ],
    "variants": [],
    "co_tags": [],
    "count": 51,
@@ -175,12 +182,6 @@
     "dentai/dentai-19",
     "dentai/dentai-20",
     "metanotes/meta-14"
-   ],
-   "aliases": [
-    "بایو میمتیک",
-    "بایومیمتیک",
-    "بیو میمتیک",
-    "بیومی متیک"
    ]
   },
   {
@@ -190,6 +191,10 @@
    "words": 1,
    "definition": "رابطه‌ی تماسی دندان‌های دو فک و هرچه بر آن اثر می‌گذارد.",
    "use_when": "چتر عام اکلوژن. همیشه در کنار یک مفهوم مشخص‌تر بیاید، نه به‌تنهایی.",
+   "aliases": [
+    "occlusion",
+    "اکلوزیون"
+   ],
    "variants": [
     "#Occlusion"
    ],
@@ -234,10 +239,6 @@
     "dentai/dentai-26",
     "episodes/episode-160",
     "chairside/chairside-23"
-   ],
-   "aliases": [
-    "occlusion",
-    "اکلوزیون"
    ]
   },
   {
@@ -247,11 +248,16 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [
+    "پروتز فیکس",
+    "fixed prosthesis"
+   ],
    "variants": [
-    "#Prosthodontics"
+    "#Prosthodontics",
+    "#پروتز_دندانی"
    ],
    "co_tags": [],
-   "count": 32,
+   "count": 36,
    "content_ids": [
     "episodes/episode-88",
     "episodes/episode-95",
@@ -271,6 +277,9 @@
     "insight/insight-18",
     "dentai/dentai-7",
     "notecast/episode-27",
+    "litecast/lite-CAST16",
+    "litecast/lite-CAST17",
+    "litecast/lite-CAST18",
     "metanotes/meta-9",
     "insight/insight-24",
     "insight/insight-25",
@@ -282,13 +291,10 @@
     "insight/insight-36",
     "insight/insight-37",
     "insight/insight-38",
+    "insight/insight-41",
     "insight/insight-44",
     "insight/insight-49",
     "insight/insight-54"
-   ],
-   "aliases": [
-    "پروتز فیکس",
-    "fixed prosthesis"
    ]
   },
   {
@@ -298,11 +304,18 @@
    "words": 2,
    "definition": "انتخاب بین مسیرهای درمانی در یک شرایط بالینی مشخص.",
    "use_when": "مقاله خودِ تصمیم را موضوع کند، نه اجرای آن.",
+   "aliases": [
+    "تصمیم گیری درمانی",
+    "تصمیم بالینی",
+    "تصمیم گیری بالینی",
+    "تصمیم پروتزی"
+   ],
    "variants": [
-    "#تصمیم_بالینی"
+    "#تصمیم_بالینی",
+    "#تصمیم_گیری_درمان"
    ],
    "co_tags": [],
-   "count": 30,
+   "count": 35,
    "content_ids": [
     "metanotes/meta-1",
     "metanotes/meta-2",
@@ -314,6 +327,7 @@
     "insight/insight-20",
     "metanotes/meta-8",
     "chairside/chairside-1",
+    "chairside/chairside-2",
     "chairside/chairside-3",
     "chairside/chairside-4",
     "metanotes/meta-9",
@@ -324,7 +338,11 @@
     "insight/insight-27",
     "insight/insight-28",
     "insight/insight-29",
+    "chairside/chairside-5",
+    "chairside/chairside-9",
+    "chairside/chairside-13",
     "chairside/chairside-14",
+    "insight/insight-39",
     "chairside/chairside-16",
     "chairside/chairside-17",
     "insight/insight-45",
@@ -334,12 +352,49 @@
     "insight/insight-49",
     "metanotes/meta-13",
     "chairside/chairside-21"
-   ],
-   "aliases": [
-    "تصمیم گیری درمانی",
-    "تصمیم بالینی",
-    "تصمیم گیری بالینی",
-    "تصمیم پروتزی"
+   ]
+  },
+  {
+   "key": "پروتز_ایمپلنت",
+   "tag": "#پروتز_ایمپلنت",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "بخش پروتزیِ درمان ایمپلنت.",
+   "use_when": "همراه یک تگ مشخص‌تر بیاید.",
+   "aliases": [],
+   "variants": [],
+   "co_tags": [],
+   "count": 29,
+   "content_ids": [
+    "episodes/episode-83",
+    "episodes/episode-102",
+    "episodes/episode-105",
+    "episodes/episode-110",
+    "episodes/episode-111",
+    "episodes/episode-121-1",
+    "episodes/episode-123-5",
+    "episodes/episode-140",
+    "episodes/episode-141",
+    "insight/insight-3",
+    "sharehub/share-4",
+    "insight/insight-22",
+    "metanotes/meta-8",
+    "metanotes/meta-10",
+    "notecast/episode-31",
+    "insight/insight-26",
+    "insight/insight-30",
+    "insight/insight-31",
+    "chairside/chairside-10",
+    "chairside/chairside-11",
+    "chairside/chairside-12",
+    "insight/insight-35",
+    "episodes/episode-156",
+    "episodes/episode-157",
+    "chairside/chairside-17",
+    "episodes/episode-158",
+    "episodes/episode-159",
+    "chairside/chairside-24",
+    "chairside/chairside-25"
    ]
   },
   {
@@ -349,6 +404,12 @@
    "words": 1,
    "definition": "زیرکونیای دندانی به‌عنوان متریال رستوریشن.",
    "use_when": "مقاله انتخاب، آماده‌سازی یا رفتار بالینی زیرکونیا را تعیین کند.",
+   "aliases": [
+    "زیرکونیوم",
+    "زیرکونیم",
+    "zirconia",
+    "زیرکونیای"
+   ],
    "variants": [],
    "co_tags": [],
    "count": 28,
@@ -381,12 +442,6 @@
     "insight/insight-28",
     "insight/insight-29",
     "dentai/dentai-26"
-   ],
-   "aliases": [
-    "زیرکونیوم",
-    "زیرکونیم",
-    "zirconia",
-    "زیرکونیای"
    ]
   },
   {
@@ -396,6 +451,7 @@
    "words": 1,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 27,
@@ -430,43 +486,96 @@
    ]
   },
   {
-   "key": "پروتز_ایمپلنت",
-   "tag": "#پروتز_ایمپلنت",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "بخش پروتزیِ درمان ایمپلنت.",
-   "use_when": "همراه یک تگ مشخص‌تر بیاید.",
+   "key": "چیرساید",
+   "tag": "#چیرساید",
+   "domain": "brand",
+   "words": 1,
+   "definition": "نام سری چیرساید — یادداشت کوتاه از یک ویزیت واقعی، با تصمیمی که سر یونیت گرفته شد.",
+   "use_when": "روی هر مدخل چیرساید، و هیچ‌جای دیگر.",
+   "aliases": [
+    "chairside",
+    "چیر ساید"
+   ],
    "variants": [],
    "co_tags": [],
    "count": 27,
    "content_ids": [
-    "episodes/episode-83",
-    "episodes/episode-102",
-    "episodes/episode-105",
-    "episodes/episode-110",
-    "episodes/episode-111",
-    "episodes/episode-121-1",
-    "episodes/episode-123-5",
-    "episodes/episode-140",
-    "episodes/episode-141",
-    "insight/insight-3",
-    "sharehub/share-4",
-    "insight/insight-22",
-    "metanotes/meta-8",
-    "metanotes/meta-10",
-    "notecast/episode-31",
-    "insight/insight-26",
-    "insight/insight-30",
-    "insight/insight-31",
+    "chairside/chairside-1",
+    "chairside/chairside-2",
+    "chairside/chairside-3",
+    "chairside/chairside-4",
+    "chairside/chairside-5",
+    "chairside/chairside-6",
+    "chairside/chairside-7",
+    "chairside/chairside-8",
+    "chairside/chairside-9",
     "chairside/chairside-10",
     "chairside/chairside-11",
     "chairside/chairside-12",
-    "insight/insight-35",
-    "episodes/episode-156",
-    "episodes/episode-157",
+    "chairside/chairside-13",
+    "chairside/chairside-14",
+    "chairside/chairside-15",
+    "chairside/chairside-16",
     "chairside/chairside-17",
-    "episodes/episode-158",
-    "episodes/episode-159"
+    "chairside/chairside-18",
+    "chairside/chairside-19",
+    "chairside/chairside-20",
+    "chairside/chairside-21",
+    "chairside/chairside-22",
+    "chairside/chairside-23",
+    "chairside/chairside-24",
+    "chairside/chairside-25",
+    "chairside/chairside-26",
+    "chairside/chairside-27"
+   ]
+  },
+  {
+   "key": "کیس_بالینی",
+   "tag": "#کیس_بالینی",
+   "domain": "brand",
+   "words": 2,
+   "definition": "گزارش یک کیس واقعی، از شرح مراجعه تا تصمیم.",
+   "use_when": "روی مدخل‌هایی که ساختارشان گزارش کیس است.",
+   "aliases": [
+    "ویزیت کلینیکی",
+    "گزارش کیس",
+    "کیس ریپورت",
+    "case report"
+   ],
+   "variants": [
+    "#ویزیت_کلینیکی",
+    "#گزارش_کیس"
+   ],
+   "co_tags": [],
+   "count": 27,
+   "content_ids": [
+    "chairside/chairside-1",
+    "chairside/chairside-2",
+    "chairside/chairside-3",
+    "chairside/chairside-4",
+    "chairside/chairside-5",
+    "chairside/chairside-6",
+    "chairside/chairside-7",
+    "chairside/chairside-8",
+    "chairside/chairside-9",
+    "chairside/chairside-10",
+    "chairside/chairside-11",
+    "chairside/chairside-12",
+    "chairside/chairside-13",
+    "chairside/chairside-14",
+    "chairside/chairside-15",
+    "chairside/chairside-16",
+    "chairside/chairside-17",
+    "chairside/chairside-18",
+    "chairside/chairside-19",
+    "chairside/chairside-20",
+    "chairside/chairside-21",
+    "chairside/chairside-22",
+    "chairside/chairside-23",
+    "chairside/chairside-24",
+    "chairside/chairside-25",
+    "chairside/chairside-26",
+    "chairside/chairside-27"
    ]
   },
   {
@@ -476,6 +585,9 @@
    "words": 1,
    "definition": "",
    "use_when": "",
+   "aliases": [
+    "bonding"
+   ],
    "variants": [],
    "co_tags": [],
    "count": 22,
@@ -502,9 +614,6 @@
     "dentai/dentai-9",
     "dentai/dentai-16",
     "dentai/dentai-17"
-   ],
-   "aliases": [
-    "bonding"
    ]
   },
   {
@@ -514,6 +623,11 @@
    "words": 2,
    "definition": "مجموعه‌ی پست و کور برای بازسازی دندان اندوشده.",
    "use_when": "همراه یک تگ مشخص‌تر بیاید.",
+   "aliases": [
+    "post and core",
+    "پست اند کور",
+    "پست کور"
+   ],
    "variants": [
     "#پست و کور"
    ],
@@ -542,11 +656,6 @@
     "dentai/dentai-27",
     "metanotes/meta-15",
     "metanotes/meta-19"
-   ],
-   "aliases": [
-    "post and core",
-    "پست اند کور",
-    "پست کور"
    ]
   },
   {
@@ -556,6 +665,9 @@
    "words": 1,
    "definition": "",
    "use_when": "",
+   "aliases": [
+    "ceramic"
+   ],
    "variants": [],
    "co_tags": [],
    "count": 21,
@@ -581,9 +693,6 @@
     "notecast/episode-15",
     "notecast/episode-16",
     "notecast/episode-30"
-   ],
-   "aliases": [
-    "ceramic"
    ]
   },
   {
@@ -593,6 +702,7 @@
    "words": 1,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 19,
@@ -625,6 +735,7 @@
    "words": 1,
    "definition": "نام سری متانوت — یادداشت‌های تحلیلی درباره‌ی خودِ استدلال، نه صرفاً تکنیک.",
    "use_when": "روی هر مدخل متانوت، و هیچ‌جای دیگر.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 19,
@@ -651,12 +762,89 @@
    ]
   },
   {
+   "key": "طرح_درمان",
+   "tag": "#طرح_درمان",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "انتخاب مسیر درمان در سطح کل کیس.",
+   "use_when": "مقاله بین مسیرهای درمانی تصمیم بگیرد.",
+   "aliases": [
+    "treatment plan",
+    "پلن درمان",
+    "پلن درمانی",
+    "تریتمنت پلن"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 18,
+   "content_ids": [
+    "episodes/episode-116",
+    "episodes/episode-119-1",
+    "episodes/episode-120",
+    "episodes/episode-123-5",
+    "episodes/episode-124",
+    "episodes/episode-150-2",
+    "insight/insight-19",
+    "sharehub/share-5",
+    "chairside/chairside-6",
+    "chairside/chairside-11",
+    "episodes/episode-156",
+    "chairside/chairside-19",
+    "chairside/chairside-20",
+    "chairside/chairside-21",
+    "chairside/chairside-22",
+    "episodes/episode-160",
+    "chairside/chairside-24",
+    "chairside/chairside-26"
+   ]
+  },
+  {
+   "key": "اباتمنت",
+   "tag": "#اباتمنت",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "قطعه‌ی واسط بین ایمپلنت و روکش.",
+   "use_when": "مقاله طراحی، انتخاب یا مشکلی از اباتمنت را تعیین تکلیف کند.",
+   "aliases": [
+    "abutment",
+    "ابوتمنت",
+    "آباتمنت"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 17,
+   "content_ids": [
+    "episodes/episode-80",
+    "episodes/episode-81",
+    "episodes/episode-102",
+    "episodes/episode-103",
+    "episodes/episode-104",
+    "episodes/episode-115",
+    "litecast/lite-CAST10",
+    "litecast/lite-CAST18",
+    "dentcast-plus/video-4",
+    "metanotes/meta-8",
+    "dentcast-plus/video-5",
+    "insight/insight-35",
+    "episodes/episode-157",
+    "insight/insight-44",
+    "insight/insight-52",
+    "chairside/chairside-23",
+    "insight/insight-60"
+   ]
+  },
+  {
    "key": "دندانپزشکی_دیجیتال",
    "tag": "#دندانپزشکی_دیجیتال",
    "domain": "clinical",
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [
+    "digital dentistry",
+    "دندونپزشکی دیجیتال",
+    "دیجیتال دنتیستری"
+   ],
    "variants": [],
    "co_tags": [],
    "count": 17,
@@ -678,11 +866,6 @@
     "metanotes/meta-15",
     "metanotes/meta-16",
     "dentai/dentai-28"
-   ],
-   "aliases": [
-    "digital dentistry",
-    "دندونپزشکی دیجیتال",
-    "دیجیتال دنتیستری"
    ]
   },
   {
@@ -692,6 +875,11 @@
    "words": 1,
    "definition": "",
    "use_when": "",
+   "aliases": [
+    "استتیک",
+    "esthetic",
+    "aesthetic"
+   ],
    "variants": [],
    "co_tags": [],
    "count": 17,
@@ -713,81 +901,36 @@
     "episodes/episode-147",
     "notecast/episode-13",
     "notecast/episode-32"
-   ],
-   "aliases": [
-    "استتیک",
-    "esthetic",
-    "aesthetic"
    ]
   },
   {
-   "key": "طرح_درمان",
-   "tag": "#طرح_درمان",
+   "key": "روکش_ایمپلنت",
+   "tag": "#روکش_ایمپلنت",
    "domain": "clinical",
    "words": 2,
-   "definition": "انتخاب مسیر درمان در سطح کل کیس.",
-   "use_when": "مقاله بین مسیرهای درمانی تصمیم بگیرد.",
-   "variants": [],
-   "co_tags": [],
-   "count": 17,
-   "content_ids": [
-    "episodes/episode-116",
-    "episodes/episode-119-1",
-    "episodes/episode-120",
-    "episodes/episode-123-5",
-    "episodes/episode-124",
-    "episodes/episode-150-2",
-    "insight/insight-19",
-    "sharehub/share-5",
-    "chairside/chairside-6",
-    "chairside/chairside-11",
-    "chairside/chairside-12",
-    "episodes/episode-156",
-    "chairside/chairside-19",
-    "chairside/chairside-20",
-    "chairside/chairside-21",
-    "chairside/chairside-22",
-    "episodes/episode-160"
-   ],
-   "aliases": [
-    "treatment plan",
-    "پلن درمان",
-    "پلن درمانی",
-    "تریتمنت پلن"
-   ]
-  },
-  {
-   "key": "اباتمنت",
-   "tag": "#اباتمنت",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "قطعه‌ی واسط بین ایمپلنت و روکش.",
-   "use_when": "مقاله طراحی، انتخاب یا مشکلی از اباتمنت را تعیین تکلیف کند.",
+   "definition": "روکشِ متکی بر ایمپلنت، در تمایز با روکش روی دندان طبیعی.",
+   "use_when": "مقاله تصمیمش مختص روکش ایمپلنت باشد.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 16,
    "content_ids": [
-    "episodes/episode-80",
-    "episodes/episode-81",
-    "episodes/episode-102",
-    "episodes/episode-103",
-    "episodes/episode-104",
-    "episodes/episode-115",
+    "episodes/episode-125-1",
+    "episodes/episode-147",
+    "episodes/episode-148-2",
     "litecast/lite-CAST10",
+    "litecast/lite-CAST12",
+    "litecast/lite-CAST16",
     "litecast/lite-CAST18",
     "dentcast-plus/video-4",
-    "metanotes/meta-8",
+    "sharehub/share-4",
     "dentcast-plus/video-5",
-    "insight/insight-35",
-    "episodes/episode-157",
-    "insight/insight-44",
-    "insight/insight-52",
-    "insight/insight-60"
-   ],
-   "aliases": [
-    "abutment",
-    "ابوتمنت",
-    "آباتمنت"
+    "metanotes/meta-10",
+    "insight/insight-30",
+    "chairside/chairside-12",
+    "chairside/chairside-17",
+    "insight/insight-46",
+    "insight/insight-53"
    ]
   },
   {
@@ -797,6 +940,7 @@
    "words": 2,
    "definition": "ونیر سرامیکی چسبنده روی سطح فاسیال.",
    "use_when": "مقاله درباره‌ی همین درمان تصمیم بگیرد.",
+   "aliases": [],
    "variants": [
     "#لمینیت"
    ],
@@ -830,6 +974,7 @@
    "words": 1,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 15,
@@ -852,31 +997,67 @@
    ]
   },
   {
-   "key": "روکش_ایمپلنت",
-   "tag": "#روکش_ایمپلنت",
+   "key": "بیومکانیک",
+   "tag": "#بیومکانیک",
    "domain": "clinical",
-   "words": 2,
-   "definition": "روکشِ متکی بر ایمپلنت، در تمایز با روکش روی دندان طبیعی.",
-   "use_when": "مقاله تصمیمش مختص روکش ایمپلنت باشد.",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "aliases": [
+    "بایو مکانیک",
+    "بایومکانیک",
+    "بیو مکانیک"
+   ],
    "variants": [],
    "co_tags": [],
    "count": 15,
    "content_ids": [
-    "episodes/episode-125-1",
-    "episodes/episode-147",
-    "episodes/episode-148-2",
-    "litecast/lite-CAST10",
-    "litecast/lite-CAST12",
-    "litecast/lite-CAST16",
-    "litecast/lite-CAST18",
-    "dentcast-plus/video-4",
-    "sharehub/share-4",
-    "dentcast-plus/video-5",
-    "metanotes/meta-10",
-    "insight/insight-30",
-    "chairside/chairside-17",
-    "insight/insight-46",
-    "insight/insight-53"
+    "episodes/episode-48",
+    "episodes/episode-63",
+    "episodes/episode-125-3",
+    "episodes/episode-128",
+    "episodes/episode-147-5",
+    "episodes/episode-148-1",
+    "insight/insight-13",
+    "notecast/episode-23",
+    "notecast/episode-24",
+    "insight/insight-24",
+    "metanotes/meta-11",
+    "chairside/chairside-11",
+    "chairside/chairside-23",
+    "metanotes/meta-18",
+    "chairside/chairside-26"
+   ]
+  },
+  {
+   "key": "روکش",
+   "tag": "#روکش",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "چترِ عامِ روکش.",
+   "use_when": "همراه یک تگ مشخص‌تر بیاید، نه به‌تنهایی.",
+   "aliases": [
+    "crown",
+    "کراون"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 14,
+   "content_ids": [
+    "episodes/episode-2",
+    "episodes/episode-8",
+    "episodes/episode-9",
+    "episodes/episode-10",
+    "insight/insight-17",
+    "dentcast-plus/video-6",
+    "metanotes/meta-12",
+    "chairside/chairside-6",
+    "chairside/chairside-9",
+    "chairside/chairside-15",
+    "insight/insight-44",
+    "insight/insight-49",
+    "chairside/chairside-22",
+    "chairside/chairside-27"
    ]
   },
   {
@@ -886,6 +1067,7 @@
    "words": 2,
    "definition": "چترِ عامِ هوش مصنوعی.",
    "use_when": "همراه یک تگ مشخص‌تر بیاید، نه به‌تنهایی.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 14,
@@ -907,75 +1089,18 @@
    ]
   },
   {
-   "key": "روکش",
-   "tag": "#روکش",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "چترِ عامِ روکش.",
-   "use_when": "همراه یک تگ مشخص‌تر بیاید، نه به‌تنهایی.",
-   "variants": [],
-   "co_tags": [],
-   "count": 13,
-   "content_ids": [
-    "episodes/episode-2",
-    "episodes/episode-8",
-    "episodes/episode-9",
-    "episodes/episode-10",
-    "insight/insight-17",
-    "dentcast-plus/video-6",
-    "metanotes/meta-12",
-    "chairside/chairside-6",
-    "chairside/chairside-9",
-    "chairside/chairside-15",
-    "insight/insight-44",
-    "insight/insight-49",
-    "chairside/chairside-22"
-   ],
-   "aliases": [
-    "crown",
-    "کراون"
-   ]
-  },
-  {
-   "key": "بیومکانیک",
-   "tag": "#بیومکانیک",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "",
-   "use_when": "",
-   "variants": [],
-   "co_tags": [],
-   "count": 12,
-   "content_ids": [
-    "episodes/episode-48",
-    "episodes/episode-63",
-    "episodes/episode-125-3",
-    "episodes/episode-128",
-    "episodes/episode-147-5",
-    "episodes/episode-148-1",
-    "insight/insight-13",
-    "notecast/episode-23",
-    "notecast/episode-24",
-    "insight/insight-24",
-    "metanotes/meta-11",
-    "metanotes/meta-18"
-   ],
-   "aliases": [
-    "بایو مکانیک",
-    "بایومکانیک",
-    "بیو مکانیک"
-   ]
-  },
-  {
    "key": "فرول",
    "tag": "#فرول",
    "domain": "clinical",
    "words": 1,
    "definition": "حلقه‌ی دیواره‌ی سالمِ دندان که روکش رویش می‌نشیند.",
    "use_when": "مقاله فرول را شرطِ تصمیم بداند.",
+   "aliases": [
+    "ferrule"
+   ],
    "variants": [],
    "co_tags": [],
-   "count": 12,
+   "count": 13,
    "content_ids": [
     "episodes/episode-47",
     "episodes/episode-48",
@@ -988,10 +1113,8 @@
     "chairside/chairside-9",
     "dentai/dentai-27",
     "metanotes/meta-15",
-    "metanotes/meta-19"
-   ],
-   "aliases": [
-    "ferrule"
+    "metanotes/meta-19",
+    "chairside/chairside-27"
    ]
   },
   {
@@ -1001,6 +1124,7 @@
    "words": 2,
    "definition": "نشانه‌ی اینکه محتوا گلچین‌شده از منبع دیگری است، نه تولید اصلی.",
    "use_when": "روی مدخل‌های بازنشر.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 11,
@@ -1025,6 +1149,7 @@
    "words": 2,
    "definition": "نام سریِ Share Hub — بازنشر و مرور محتوای دیگران.",
    "use_when": "روی هر مدخل شیرهاب، و هیچ‌جای دیگر.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 11,
@@ -1049,6 +1174,10 @@
    "words": 1,
    "definition": "",
    "use_when": "",
+   "aliases": [
+    "adhesive",
+    "ادهسیو"
+   ],
    "variants": [],
    "co_tags": [],
    "count": 11,
@@ -1064,10 +1193,6 @@
     "notecast/episode-4",
     "notecast/episode-5",
     "notecast/episode-6"
-   ],
-   "aliases": [
-    "adhesive",
-    "ادهسیو"
    ]
   },
   {
@@ -1077,6 +1202,11 @@
    "words": 1,
    "definition": "",
    "use_when": "",
+   "aliases": [
+    "overdenture",
+    "اوردنچور",
+    "over denture"
+   ],
    "variants": [],
    "co_tags": [],
    "count": 11,
@@ -1092,11 +1222,6 @@
     "notecast/episode-27",
     "chairside/chairside-8",
     "chairside/chairside-11"
-   ],
-   "aliases": [
-    "overdenture",
-    "اوردنچور",
-    "over denture"
    ]
   },
   {
@@ -1106,6 +1231,7 @@
    "words": 1,
    "definition": "سرنامِ Large Language Model.",
    "use_when": "همیشه همراه #مدل_زبانی.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#مدل_زبانی"
@@ -1131,6 +1257,10 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [
+    "bone loss",
+    "تحلیل استخوانی"
+   ],
    "variants": [],
    "co_tags": [],
    "count": 10,
@@ -1145,10 +1275,6 @@
     "notecast/episode-24",
     "metanotes/meta-4",
     "chairside/chairside-14"
-   ],
-   "aliases": [
-    "bone loss",
-    "تحلیل استخوانی"
    ]
   },
   {
@@ -1158,6 +1284,9 @@
    "words": 2,
    "definition": "خانواده‌ی متریال‌های سرامیکی رستوریتیو.",
    "use_when": "مقاله بین انواع سرامیک مقایسه یا انتخاب کند.",
+   "aliases": [
+    "dental ceramic"
+   ],
    "variants": [],
    "co_tags": [],
    "count": 10,
@@ -1172,9 +1301,6 @@
     "notecast/episode-29",
     "dentai/dentai-25",
     "episodes/episode-159-1"
-   ],
-   "aliases": [
-    "dental ceramic"
    ]
   },
   {
@@ -1184,6 +1310,10 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [
+    "resin cement",
+    "سمان رزین"
+   ],
    "variants": [],
    "co_tags": [],
    "count": 10,
@@ -1198,10 +1328,6 @@
     "notecast/episode-19",
     "dentai/dentai-27",
     "insight/insight-59"
-   ],
-   "aliases": [
-    "resin cement",
-    "سمان رزین"
    ]
   },
   {
@@ -1211,6 +1337,7 @@
    "words": 1,
    "definition": "نام سری «پرامپتولوژیست».",
    "use_when": "روی هر مدخل این سری، و هیچ‌جای دیگر.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 10,
@@ -1234,6 +1361,11 @@
    "words": 1,
    "definition": "وضعیت و درمانِ بافت نگهدارنده.",
    "use_when": "همراه یک تگ مشخص‌تر بیاید.",
+   "aliases": [
+    "periodontal",
+    "پریو",
+    "پریودونتال"
+   ],
    "variants": [],
    "co_tags": [],
    "count": 10,
@@ -1248,11 +1380,6 @@
     "chairside/chairside-7",
     "insight/insight-32",
     "chairside/chairside-14"
-   ],
-   "aliases": [
-    "periodontal",
-    "پریو",
-    "پریودونتال"
    ]
   },
   {
@@ -1262,6 +1389,9 @@
    "words": 1,
    "definition": "",
    "use_when": "",
+   "aliases": [
+    "composite"
+   ],
    "variants": [],
    "co_tags": [],
    "count": 10,
@@ -1276,9 +1406,6 @@
     "dentai/dentai-9",
     "insight/insight-23",
     "dentai/dentai-22"
-   ],
-   "aliases": [
-    "composite"
    ]
   },
   {
@@ -1288,6 +1415,7 @@
    "words": 2,
    "definition": "همان #سواد_هوش_مصنوعی، با اصطلاح انگلیسی.",
    "use_when": "همیشه همراه #سواد_هوش_مصنوعی.",
+   "aliases": [],
    "variants": [
     "#AILiteracy"
    ],
@@ -1314,6 +1442,7 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 9,
@@ -1336,6 +1465,7 @@
    "words": 1,
    "definition": "نام خودِ پادکست.",
    "use_when": "روی مدخل‌هایی که خودِ دنتکست موضوعشان است.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 9,
@@ -1358,6 +1488,7 @@
    "words": 3,
    "definition": "فهمِ اینکه مدل چیست، چطور کار می‌کند و کجا نباید به آن اعتماد کرد.",
    "use_when": "مقاله به فهمِ ابزار کمک کند، نه به انجام یک کار با آن.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#AI_Literacy"
@@ -1382,6 +1513,7 @@
    "words": 2,
    "definition": "LLM — مدلی که با حدسِ ادامه‌ی محتملِ متن جواب می‌سازد.",
    "use_when": "مقاله درباره‌ی سازوکار یا رفتار خودِ مدل زبانی باشد.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#LLM"
@@ -1400,38 +1532,13 @@
    ]
   },
   {
-   "key": "پوسیدگی",
-   "tag": "#پوسیدگی",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "ضایعه‌ی پوسیدگی و عواملش.",
-   "use_when": "همراه یک تگ مشخص‌تر بیاید.",
-   "variants": [
-    "#پوسیدگی_دندان"
-   ],
-   "co_tags": [
-    "#Dental_Caries"
-   ],
-   "count": 9,
-   "content_ids": [
-    "episodes/episode-65",
-    "episodes/episode-66",
-    "episodes/episode-67",
-    "episodes/episode-134",
-    "episodes/episode-135",
-    "dentai/dentai-3",
-    "dentai/dentai-12",
-    "chairside/chairside-9",
-    "sharehub/share-7"
-   ]
-  },
-  {
    "key": "biomimetic",
    "tag": "#biomimetic",
    "domain": "clinical",
    "words": 1,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 8,
@@ -1453,6 +1560,7 @@
    "words": 1,
    "definition": "سرویسِ ChatGPT.",
    "use_when": "مقاله مشخصاً به این سرویس بپردازد.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 8,
@@ -1474,6 +1582,7 @@
    "words": 1,
    "definition": "اختلالات مفصل گیجگاهی‌فکی و عضلات ماضغه.",
    "use_when": "مقاله TMD را در تصمیم دخالت بدهد.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 8,
@@ -1489,12 +1598,13 @@
    ]
   },
   {
-   "key": "zero_bone_loss",
+   "key": "zero_تحلیل_استخوان",
    "tag": "#Zero_Bone_Loss",
    "domain": "clinical",
    "words": 3,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [
     "#ZeroBoneLoss"
    ],
@@ -1518,6 +1628,7 @@
    "words": 3,
    "definition": "اسکنر داخل‌دهانی و اصولِ درستِ کار با آن.",
    "use_when": "مقاله دقت، تکنیک یا محدودیتِ اسکن را بررسی کند.",
+   "aliases": [],
    "variants": [
     "#اسکن_داخل_دهانی"
    ],
@@ -1537,12 +1648,40 @@
    ]
   },
   {
+   "key": "افتادن_روکش",
+   "tag": "#افتادن_روکش",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "از دست رفتن گیر و جدا شدن روکش از تکیه‌گاه.",
+   "use_when": "مقاله علتِ افتادن روکش را توضیح بدهد یا پیش‌بینی کند — چه رخ داده باشد، چه مقاله بگوید چرا رخ خواهد داد.",
+   "aliases": [],
+   "variants": [
+    "#روکش_افتاده",
+    "#دباندینگ"
+   ],
+   "co_tags": [
+    "#debonding"
+   ],
+   "count": 8,
+   "content_ids": [
+    "notecast/episode-15",
+    "dentcast-plus/video-4",
+    "dentcast-plus/video-5",
+    "chairside/chairside-5",
+    "chairside/chairside-17",
+    "sharehub/share-8",
+    "insight/insight-54",
+    "sharehub/share-10"
+   ]
+  },
+  {
    "key": "ترمیم_غیرمستقیم",
    "tag": "#ترمیم_غیرمستقیم",
    "domain": "clinical",
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 8,
@@ -1564,6 +1703,7 @@
    "words": 2,
    "definition": "حذف انتخابیِ تماس‌های ناخواسته با تراش، بدون از بین بردن هندسه‌ی فانکشنال.",
    "use_when": "مقاله روش یا قاعده‌ی تراش تنظیمی بدهد.",
+   "aliases": [],
    "variants": [
     "#تنظیم_اکلوژال",
     "#تنظیم-اکلوژن",
@@ -1583,24 +1723,53 @@
    ]
   },
   {
-   "key": "پروتز_دندانی",
-   "tag": "#پروتز_دندانی",
+   "key": "حفظ_دندان",
+   "tag": "#حفظ_دندان",
    "domain": "clinical",
    "words": 2,
-   "definition": "",
-   "use_when": "",
-   "variants": [],
+   "definition": "نگه داشتنِ دندانِ questionable در برابر کشیدن و جایگزینی.",
+   "use_when": "مقاله بین حفظ و کشیدن تصمیم بگیرد.",
+   "aliases": [],
+   "variants": [
+    "#نگهداری_دندان"
+   ],
    "co_tags": [],
    "count": 8,
    "content_ids": [
-    "litecast/lite-CAST16",
-    "litecast/lite-CAST17",
-    "litecast/lite-CAST18",
-    "chairside/chairside-5",
-    "chairside/chairside-11",
-    "insight/insight-34",
-    "chairside/chairside-12",
-    "insight/insight-41"
+    "episodes/episode-150-2",
+    "episodes/episode-151",
+    "metanotes/meta-6",
+    "episodes/episode-152",
+    "episodes/episode-153",
+    "chairside/chairside-4",
+    "chairside/chairside-13",
+    "chairside/chairside-16"
+   ]
+  },
+  {
+   "key": "پوسیدگی",
+   "tag": "#پوسیدگی",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "ضایعه‌ی پوسیدگی و عواملش.",
+   "use_when": "همراه یک تگ مشخص‌تر بیاید.",
+   "aliases": [],
+   "variants": [
+    "#پوسیدگی_دندان"
+   ],
+   "co_tags": [
+    "#Dental_Caries"
+   ],
+   "count": 8,
+   "content_ids": [
+    "episodes/episode-65",
+    "episodes/episode-66",
+    "episodes/episode-67",
+    "episodes/episode-134",
+    "episodes/episode-135",
+    "dentai/dentai-3",
+    "dentai/dentai-12",
+    "sharehub/share-7"
    ]
   },
   {
@@ -1610,6 +1779,7 @@
    "words": 1,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 7,
@@ -1624,12 +1794,34 @@
    ]
   },
   {
+   "key": "تشخیص_افتراقی",
+   "tag": "#تشخیص_افتراقی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "رسیدن به علت با رد کردن گزینه‌های رقیب، نه با تأیید مستقیم اولین حدس.",
+   "use_when": "مقاله چند علت محتمل را کنار هم بگذارد و یکی‌یکی ردشان کند.",
+   "aliases": [],
+   "variants": [],
+   "co_tags": [],
+   "count": 7,
+   "content_ids": [
+    "insight/insight-11",
+    "photocast/episode-1",
+    "insight/insight-23",
+    "insight/insight-25",
+    "chairside/chairside-7",
+    "chairside/chairside-18",
+    "chairside/chairside-27"
+   ]
+  },
+  {
    "key": "درمان_ایمپلنت",
    "tag": "#درمان_ایمپلنت",
    "domain": "clinical",
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 7,
@@ -1650,6 +1842,11 @@
    "words": 2,
    "definition": "خط ختم تراش — مرزی که مارجین رستوریشن روی آن می‌نشیند.",
    "use_when": "مقاله شکل، موقعیت، یا کیفیت خط ختم را تعیین کند.",
+   "aliases": [
+    "فینیشینگ لاین",
+    "فینیش‌لاین",
+    "خط ختم"
+   ],
    "variants": [
     "#فینیشینگ_لاین"
    ],
@@ -1663,11 +1860,6 @@
     "insight/insight-18",
     "chairside/chairside-12",
     "notecast/episode-37"
-   ],
-   "aliases": [
-    "فینیشینگ لاین",
-    "فینیش‌لاین",
-    "خط ختم"
    ]
   },
   {
@@ -1677,6 +1869,7 @@
    "words": 1,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 6,
@@ -1690,36 +1883,13 @@
    ]
   },
   {
-   "key": "افتادن_روکش",
-   "tag": "#افتادن_روکش",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "از دست رفتن گیر و جدا شدن روکش از تکیه‌گاه.",
-   "use_when": "مقاله علتِ افتادن روکش را توضیح بدهد یا پیش‌بینی کند — چه رخ داده باشد، چه مقاله بگوید چرا رخ خواهد داد.",
-   "variants": [
-    "#روکش_افتاده",
-    "#دباندینگ"
-   ],
-   "co_tags": [
-    "#debonding"
-   ],
-   "count": 6,
-   "content_ids": [
-    "notecast/episode-15",
-    "dentcast-plus/video-4",
-    "dentcast-plus/video-5",
-    "sharehub/share-8",
-    "insight/insight-54",
-    "sharehub/share-10"
-   ]
-  },
-  {
    "key": "تراش_دندان",
    "tag": "#تراش_دندان",
    "domain": "clinical",
    "words": 2,
    "definition": "چترِ عامِ تراش دندان.",
    "use_when": "همراه یک تگ مشخص‌تر بیاید.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 6,
@@ -1733,31 +1903,13 @@
    ]
   },
   {
-   "key": "تشخیص_افتراقی",
-   "tag": "#تشخیص_افتراقی",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "رسیدن به علت با رد کردن گزینه‌های رقیب، نه با تأیید مستقیم اولین حدس.",
-   "use_when": "مقاله چند علت محتمل را کنار هم بگذارد و یکی‌یکی ردشان کند.",
-   "variants": [],
-   "co_tags": [],
-   "count": 6,
-   "content_ids": [
-    "insight/insight-11",
-    "photocast/episode-1",
-    "insight/insight-23",
-    "insight/insight-25",
-    "chairside/chairside-18",
-    "chairside/chairside-27"
-   ]
-  },
-  {
    "key": "دقت_اسکن",
    "tag": "#دقت_اسکن",
    "domain": "clinical",
    "words": 2,
    "definition": "دقتِ نهاییِ اسکن و آنچه آن را خراب می‌کند.",
    "use_when": "مقاله دقت را بسنجد یا بهبود دهد.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 6,
@@ -1777,6 +1929,7 @@
    "words": 2,
    "definition": "نام سری ویدیوهای دنتکست پلاس.",
    "use_when": "روی هر مدخل dentcast-plus، و هیچ‌جای دیگر.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 6,
@@ -1796,6 +1949,7 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 6,
@@ -1815,6 +1969,7 @@
    "words": 3,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 6,
@@ -1828,12 +1983,91 @@
    ]
   },
   {
+   "key": "پروتز_متحرک",
+   "tag": "#پروتز_متحرک",
+   "domain": null,
+   "words": 2,
+   "definition": "دنچر و پروتزهای برداشتنی.",
+   "use_when": "همراه یک تگ مشخص‌تر بیاید.",
+   "aliases": [
+    "دنچر",
+    "denture",
+    "پروتز کامل"
+   ],
+   "variants": [
+    "#دنچر"
+   ],
+   "co_tags": [],
+   "count": 6,
+   "content_ids": [
+    "episodes/episode-118-1",
+    "episodes/episode-147-1",
+    "litecast/lite-CAST2",
+    "chairside/chairside-8",
+    "notecast/episode-33",
+    "episodes/episode-160"
+   ]
+  },
+  {
+   "key": "پروگنوز_دندان_دندان",
+   "tag": "#پروگنوز_دندان",
+   "domain": null,
+   "words": 4,
+   "definition": "پیش‌بینیِ سرنوشت یک دندانِ مشخص پیش از سرمایه‌گذاری روی آن.",
+   "use_when": "مقاله پیش از درمان قطعی پروگنوز را بسنجد.",
+   "aliases": [
+    "پروگنوز",
+    "prognosis",
+    "پیش آگهی دندان"
+   ],
+   "variants": [
+    "#پروگنوز",
+    "#ارزیابی_دندان"
+   ],
+   "co_tags": [],
+   "count": 6,
+   "content_ids": [
+    "insight/insight-14",
+    "chairside/chairside-4",
+    "chairside/chairside-9",
+    "chairside/chairside-13",
+    "chairside/chairside-14",
+    "chairside/chairside-21"
+   ]
+  },
+  {
+   "key": "کشیدن_دندان",
+   "tag": "#کشیدن_دندان",
+   "domain": null,
+   "words": 2,
+   "definition": "تصمیم به خارج کردن دندان.",
+   "use_when": "مقاله بین حفظ و کشیدن انتخاب کند.",
+   "aliases": [
+    "اکستراکشن",
+    "extraction",
+    "اکسترکشن",
+    "خارج کردن دندان"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 6,
+   "content_ids": [
+    "episodes/episode-151",
+    "episodes/episode-152",
+    "episodes/episode-153",
+    "chairside/chairside-13",
+    "chairside/chairside-14",
+    "chairside/chairside-21"
+   ]
+  },
+  {
    "key": "گایدلاین",
    "tag": "#گایدلاین",
    "domain": "clinical",
    "words": 1,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 6,
@@ -1853,6 +2087,7 @@
    "words": 1,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 5,
@@ -1871,6 +2106,7 @@
    "words": 1,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 5,
@@ -1889,6 +2125,7 @@
    "words": 1,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 5,
@@ -1907,6 +2144,7 @@
    "words": 1,
    "definition": "سرنامِ کوتاه‌ترِ Vertical Dimension.",
    "use_when": "همراه #بعد_عمودی.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 5,
@@ -1925,6 +2163,7 @@
    "words": 2,
    "definition": "جریانِ کارِ دیجیتالِ ایمپلنت، از اسکن تا طراحی.",
    "use_when": "مقاله در همین جریان کار تصمیم بگیرد.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 5,
@@ -1943,6 +2182,7 @@
    "words": 2,
    "definition": "جایگذاری ایمپلنت در همان جلسه‌ی کشیدن دندان.",
    "use_when": "مقاله درباره‌ی اندیکاسیون یا اجرای ایمپلنت فوری باشد.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#Immediate_Implant"
@@ -1963,6 +2203,7 @@
    "words": 2,
    "definition": "Vertical Dimension — ارتفاع عمودی صورت در اکلوژن؛ متغیری که تغییرش کل بازسازی را جابه‌جا می‌کند.",
    "use_when": "مقاله بعد عمودی را بسنجد، تغییر بدهد، یا درباره‌ی تغییرش تصمیم بگیرد.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#Vertical_Dimension",
@@ -1984,6 +2225,7 @@
    "words": 2,
    "definition": "مرحله‌ی جراحیِ کاشت.",
    "use_when": "همراه یک تگ مشخص‌تر بیاید.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 5,
@@ -1996,12 +2238,34 @@
    ]
   },
   {
-   "key": "دکتر_شهابیان",
-   "tag": "#دکتر_شهابیان",
+   "key": "دندان_قدامی",
+   "tag": "#دندان_قدامی",
    "domain": "clinical",
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
+   "variants": [],
+   "co_tags": [],
+   "count": 5,
+   "content_ids": [
+    "episodes/episode-147-7",
+    "insight/insight-4",
+    "chairside/chairside-4",
+    "chairside/chairside-19",
+    "chairside/chairside-22"
+   ]
+  },
+  {
+   "key": "دکتر_دکتر_shahabian",
+   "tag": "#دکتر_شهابیان",
+   "domain": "brand",
+   "words": 4,
+   "definition": "امضای نویسنده روی کیس‌های شخصی خودش.",
+   "use_when": "روی کیس‌هایی که خودِ نویسنده انجام داده.",
+   "aliases": [
+    "شهابیان"
+   ],
    "variants": [],
    "co_tags": [],
    "count": 5,
@@ -2014,12 +2278,32 @@
    ]
   },
   {
+   "key": "روکش_موقت",
+   "tag": "#روکش_موقت",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "aliases": [],
+   "variants": [],
+   "co_tags": [],
+   "count": 5,
+   "content_ids": [
+    "episodes/episode-125-2",
+    "insight/insight-21",
+    "chairside/chairside-2",
+    "insight/insight-42",
+    "insight/insight-50"
+   ]
+  },
+  {
    "key": "سایش_دندانی",
    "tag": "#سایش_دندانی",
    "domain": "clinical",
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 5,
@@ -2038,6 +2322,7 @@
    "words": 2,
    "definition": "وضعیت کلی سلامت دهان در پیوند با سلامت عمومی.",
    "use_when": "مقاله این پیوند را بررسی کند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 5,
@@ -2056,6 +2341,7 @@
    "words": 1,
    "definition": "لایه‌ی سمان و نقش مکانیکی‌اش.",
    "use_when": "مفهوم پایه؛ همراه یک تگ مشخص‌تر بیاید.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 5,
@@ -2074,6 +2360,7 @@
    "words": 2,
    "definition": "پست فایبری و ادعاهای پیرامون باندِ آن به ریشه.",
    "use_when": "مقاله اندیکاسیون یا اعتبارِ فایبر پست را بررسی کند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 5,
@@ -2092,6 +2379,7 @@
    "words": 1,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 5,
@@ -2110,6 +2398,7 @@
    "words": 1,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 5,
@@ -2122,75 +2411,24 @@
    ]
   },
   {
-   "key": "ویزیت_کلینیکی",
-   "tag": "#ویزیت_کلینیکی",
+   "key": "پلنینگ_ایمپلنت",
+   "tag": "#پلنینگ_ایمپلنت",
    "domain": "clinical",
    "words": 2,
-   "definition": "",
-   "use_when": "",
+   "definition": "مرحله‌ی طراحی درمان ایمپلنت پیش از جراحی.",
+   "use_when": "مقاله تصمیمی از جنس پلنینگ بگیرد.",
+   "aliases": [],
    "variants": [],
-   "co_tags": [],
+   "co_tags": [
+    "#Implant_Planning"
+   ],
    "count": 5,
    "content_ids": [
-    "chairside/chairside-1",
-    "chairside/chairside-2",
-    "chairside/chairside-3",
-    "chairside/chairside-4",
-    "chairside/chairside-5"
-   ]
-  },
-  {
-   "key": "پروتز_متحرک",
-   "tag": "#پروتز_متحرک",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "",
-   "use_when": "",
-   "variants": [],
-   "co_tags": [],
-   "count": 5,
-   "content_ids": [
-    "episodes/episode-118-1",
-    "episodes/episode-147-1",
-    "chairside/chairside-8",
-    "notecast/episode-33",
-    "episodes/episode-160"
-   ]
-  },
-  {
-   "key": "چیرساید",
-   "tag": "#چیرساید",
-   "domain": "brand",
-   "words": 1,
-   "definition": "",
-   "use_when": "",
-   "variants": [],
-   "co_tags": [],
-   "count": 5,
-   "content_ids": [
-    "chairside/chairside-1",
-    "chairside/chairside-2",
-    "chairside/chairside-3",
-    "chairside/chairside-4",
-    "chairside/chairside-5"
-   ]
-  },
-  {
-   "key": "کیس_بالینی",
-   "tag": "#کیس_بالینی",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "",
-   "use_when": "",
-   "variants": [],
-   "co_tags": [],
-   "count": 5,
-   "content_ids": [
-    "chairside/chairside-18",
-    "chairside/chairside-19",
-    "chairside/chairside-20",
-    "chairside/chairside-21",
-    "chairside/chairside-22"
+    "metanotes/meta-5",
+    "episodes/episode-156",
+    "episodes/episode-157",
+    "episodes/episode-158",
+    "chairside/chairside-24"
    ]
   },
   {
@@ -2200,6 +2438,7 @@
    "words": 2,
    "definition": "الگوی اکلوزالی که در حرکات طرفی، علاوه بر کانین، دندان‌های خلفی هم درگیر می‌شوند.",
    "use_when": "مقاله گروپ فانکشن را تشخیص بدهد یا تصمیمش را بر آن بنا کند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 5,
@@ -2212,47 +2451,13 @@
    ]
   },
   {
-   "key": "گزارش_کیس",
-   "tag": "#گزارش_کیس",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "",
-   "use_when": "",
-   "variants": [],
-   "co_tags": [],
-   "count": 5,
-   "content_ids": [
-    "chairside/chairside-23",
-    "chairside/chairside-24",
-    "chairside/chairside-25",
-    "chairside/chairside-26",
-    "chairside/chairside-27"
-   ]
-  },
-  {
-   "key": "adhesive_dentistry",
-   "tag": "#adhesive dentistry",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "",
-   "use_when": "",
-   "variants": [],
-   "co_tags": [],
-   "count": 4,
-   "content_ids": [
-    "dentai/dentai-16",
-    "dentai/dentai-17",
-    "dentai/dentai-18",
-    "dentai/dentai-19"
-   ]
-  },
-  {
    "key": "dental_ai",
    "tag": "#Dental_AI",
    "domain": "ai",
    "words": 2,
    "definition": "همان #هوش_مصنوعی_دندانپزشکی، با اصطلاح انگلیسی.",
    "use_when": "همیشه همراه #هوش_مصنوعی_دندانپزشکی.",
+   "aliases": [],
    "variants": [
     "#DentalAI"
    ],
@@ -2268,31 +2473,13 @@
    ]
   },
   {
-   "key": "digital_dentistry",
-   "tag": "#Digital_Dentistry",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "",
-   "use_when": "",
-   "variants": [
-    "#DigitalDentistry"
-   ],
-   "co_tags": [],
-   "count": 4,
-   "content_ids": [
-    "episodes/episode-149-2",
-    "sharehub/share-2",
-    "insight/insight-33",
-    "insight/insight-38"
-   ]
-  },
-  {
    "key": "global_diagnosis",
    "tag": "#Global_Diagnosis",
    "domain": "clinical",
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [
     "#GlobalDiagnosis"
    ],
@@ -2312,6 +2499,7 @@
    "words": 2,
    "definition": "همان #لمینیت_سرامیکی، با اصطلاح انگلیسی.",
    "use_when": "همیشه همراه #لمینیت_سرامیکی.",
+   "aliases": [],
    "variants": [
     "#LaminateVeneer"
    ],
@@ -2333,6 +2521,7 @@
    "words": 1,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 4,
@@ -2350,6 +2539,7 @@
    "words": 2,
    "definition": "همان #پرامپت_نویسی، با اصطلاح انگلیسی.",
    "use_when": "همیشه همراه #پرامپت_نویسی.",
+   "aliases": [],
    "variants": [
     "#PromptEngineering"
    ],
@@ -2371,6 +2561,7 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 4,
@@ -2388,6 +2579,7 @@
    "words": 3,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [
     "#SnapOnSmile"
    ],
@@ -2407,6 +2599,7 @@
    "words": 1,
    "definition": "سرنامِ Vertical Dimension of Occlusion.",
    "use_when": "همراه #بعد_عمودی — درِ ورودیِ سرنامی همان مفهوم.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 4,
@@ -2418,12 +2611,31 @@
    ]
   },
   {
+   "key": "veneer_سرامیکی",
+   "tag": "#ونیر_سرامیکی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "aliases": [],
+   "variants": [],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "episodes/episode-122-3",
+    "episodes/episode-124-1",
+    "litecast/lite-CAST7",
+    "notecast/episode-19"
+   ]
+  },
+  {
    "key": "اتچمنت",
    "tag": "#اتچمنت",
    "domain": "clinical",
    "words": 1,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 4,
@@ -2435,12 +2647,31 @@
    ]
   },
   {
+   "key": "ادهزیو_dentistry",
+   "tag": "#adhesive dentistry",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "aliases": [],
+   "variants": [],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "dentai/dentai-16",
+    "dentai/dentai-17",
+    "dentai/dentai-18",
+    "dentai/dentai-19"
+   ]
+  },
+  {
    "key": "استاپ_خلفی",
    "tag": "#استاپ_خلفی",
    "domain": "clinical",
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 4,
@@ -2458,6 +2689,7 @@
    "words": 2,
    "definition": "قطعه‌ی اسکن‌بادی روی ایمپلنت.",
    "use_when": "مقاله انتخاب یا رفتار اسکن‌بادی را دخیل بداند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#Scan_Body"
@@ -2477,6 +2709,7 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 4,
@@ -2494,6 +2727,7 @@
    "words": 2,
    "definition": "بالا بردن بعد عمودی — تصمیمی که فضا می‌سازد و همزمان ریسک می‌آورد.",
    "use_when": "مقاله درباره‌ی خودِ افزایش VD تصمیم بگیرد: اندیکاسیون، مقدار، یا ریسک.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 4,
@@ -2511,6 +2745,7 @@
    "words": 1,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 4,
@@ -2528,6 +2763,11 @@
    "words": 1,
    "definition": "سایشِ پارافانکشنالِ دندان‌ها.",
    "use_when": "مقاله بروکسیسم را تشخیص بدهد یا اثرش را مدیریت کند.",
+   "aliases": [
+    "بروکسیسم",
+    "براکسیزم",
+    "بروکسیزم"
+   ],
    "variants": [],
    "co_tags": [
     "#bruxism"
@@ -2538,11 +2778,6 @@
     "dentai/dentai-23",
     "dentai/dentai-26",
     "sharehub/share-11"
-   ],
-   "aliases": [
-    "بروکسیسم",
-    "براکسیزم",
-    "بروکسیزم"
    ]
   },
   {
@@ -2552,6 +2787,7 @@
    "words": 2,
    "definition": "جلسه‌ی امتحان و تحویل روکش — از پروو تا سمان و کنترل نهایی.",
    "use_when": "مقاله مرحله‌ای از همین جلسه را تعیین تکلیف کند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 4,
@@ -2569,6 +2805,7 @@
    "words": 2,
    "definition": "آماده‌سازی دندان برای روکش کامل.",
    "use_when": "مقاله مشخصاً درباره‌ی تراشِ روکش باشد، نه لمینیت یا اینله.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 4,
@@ -2586,6 +2823,7 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 4,
@@ -2603,6 +2841,7 @@
    "words": 2,
    "definition": "روشِ استدلال کردن — چطور به تصمیم می‌رسیم، نه اینکه چه تصمیمی.",
    "use_when": "مقاله جنسِ استدلال را نقد یا بازسازی کند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 4,
@@ -2614,54 +2853,23 @@
    ]
   },
   {
-   "key": "حفظ_دندان",
-   "tag": "#حفظ_دندان",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "نگه داشتنِ دندانِ questionable در برابر کشیدن و جایگزینی.",
-   "use_when": "مقاله بین حفظ و کشیدن تصمیم بگیرد.",
-   "variants": [],
-   "co_tags": [],
-   "count": 4,
-   "content_ids": [
-    "episodes/episode-150-2",
-    "metanotes/meta-6",
-    "chairside/chairside-4",
-    "chairside/chairside-16"
-   ]
-  },
-  {
-   "key": "دندان_قدامی",
-   "tag": "#دندان_قدامی",
+   "key": "دندانپزشکی_دیجیتال",
+   "tag": "#Digital_Dentistry",
    "domain": "clinical",
    "words": 2,
    "definition": "",
    "use_when": "",
-   "variants": [],
+   "aliases": [],
+   "variants": [
+    "#DigitalDentistry"
+   ],
    "co_tags": [],
    "count": 4,
    "content_ids": [
-    "episodes/episode-147-7",
-    "insight/insight-4",
-    "chairside/chairside-4",
-    "chairside/chairside-22"
-   ]
-  },
-  {
-   "key": "دنچر",
-   "tag": "#دنچر",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "",
-   "use_when": "",
-   "variants": [],
-   "co_tags": [],
-   "count": 4,
-   "content_ids": [
-    "episodes/episode-118-1",
-    "episodes/episode-147-1",
-    "litecast/lite-CAST2",
-    "chairside/chairside-8"
+    "episodes/episode-149-2",
+    "sharehub/share-2",
+    "insight/insight-33",
+    "insight/insight-38"
    ]
   },
   {
@@ -2671,6 +2879,7 @@
    "words": 2,
    "definition": "طول عمر بالینیِ ترمیم و آنچه آن را تعیین می‌کند.",
    "use_when": "مقاله بقا یا شکست ترمیم را در طول زمان بررسی کند.",
+   "aliases": [],
    "variants": [
     "#بقای_ترمیم"
    ],
@@ -2690,6 +2899,7 @@
    "words": 1,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 4,
@@ -2701,20 +2911,27 @@
    ]
   },
   {
-   "key": "روکش_موقت",
-   "tag": "#روکش_موقت",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "",
-   "use_when": "",
-   "variants": [],
+   "key": "شروع_نکردن_درمان",
+   "tag": "#شروع_نکردن_درمان",
+   "domain": null,
+   "words": 3,
+   "definition": "تصمیم به شروع نکردن تا وقتی مجهول‌ها روشن نشده‌اند.",
+   "use_when": "مقاله توقف پیش از شروع را انتخابِ درست بداند.",
+   "aliases": [
+    "رد طرح درمان",
+    "نپذیرفتن کیس",
+    "عدم پذیرش بیمار"
+   ],
+   "variants": [
+    "#رد_طرح_درمان"
+   ],
    "co_tags": [],
    "count": 4,
    "content_ids": [
-    "episodes/episode-125-2",
-    "insight/insight-21",
-    "insight/insight-42",
-    "insight/insight-50"
+    "chairside/chairside-17",
+    "chairside/chairside-20",
+    "chairside/chairside-25",
+    "chairside/chairside-26"
    ]
   },
   {
@@ -2724,6 +2941,7 @@
    "words": 2,
    "definition": "از دست رفتنِ ایمپلنت، بیولوژیک یا مکانیکی.",
    "use_when": "مقاله علت یا پیشگیریِ شکست را بگوید.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#Implant_Failure"
@@ -2743,6 +2961,7 @@
    "words": 2,
    "definition": "نشستن کاملِ روکش روی تراش تا تماس مؤثر دیواره‌ها.",
    "use_when": "مقاله دلیل ننشستن یا راه احراز نشست کامل را بگوید.",
+   "aliases": [],
    "variants": [
     "#نشست روکش",
     "#نشستن_روکش"
@@ -2757,29 +2976,13 @@
    ]
   },
   {
-   "key": "نگهداری_دندان",
-   "tag": "#نگهداری_دندان",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "",
-   "use_when": "",
-   "variants": [],
-   "co_tags": [],
-   "count": 4,
-   "content_ids": [
-    "episodes/episode-151",
-    "episodes/episode-152",
-    "episodes/episode-153",
-    "chairside/chairside-13"
-   ]
-  },
-  {
    "key": "هوش_مصنوعی_دندانپزشکی",
    "tag": "#هوش_مصنوعی_دندانپزشکی",
    "domain": "ai",
    "words": 3,
    "definition": "کاربرد هوش مصنوعی در دندانپزشکی.",
    "use_when": "مقاله کاربرد را در بافتِ دندانپزشکی قرار دهد.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#Dental_AI"
@@ -2793,48 +2996,13 @@
    ]
   },
   {
-   "key": "ونیر_سرامیکی",
-   "tag": "#ونیر_سرامیکی",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "",
-   "use_when": "",
-   "variants": [],
-   "co_tags": [],
-   "count": 4,
-   "content_ids": [
-    "episodes/episode-122-3",
-    "episodes/episode-124-1",
-    "litecast/lite-CAST7",
-    "notecast/episode-19"
-   ]
-  },
-  {
-   "key": "پلنینگ_ایمپلنت",
-   "tag": "#پلنینگ_ایمپلنت",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "مرحله‌ی طراحی درمان ایمپلنت پیش از جراحی.",
-   "use_when": "مقاله تصمیمی از جنس پلنینگ بگیرد.",
-   "variants": [],
-   "co_tags": [
-    "#Implant_Planning"
-   ],
-   "count": 4,
-   "content_ids": [
-    "metanotes/meta-5",
-    "episodes/episode-156",
-    "episodes/episode-157",
-    "episodes/episode-158"
-   ]
-  },
-  {
    "key": "پیچ_ایمپلنت",
    "tag": "#پیچ_ایمپلنت",
    "domain": "clinical",
    "words": 2,
    "definition": "پیچ اباتمنت/پروتز و رفتار مکانیکی‌اش.",
    "use_when": "مقاله درباره‌ی خودِ پیچ تصمیم بگیرد.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 4,
@@ -2852,6 +3020,7 @@
    "words": 2,
    "definition": "هدایت کانینی — جدا شدن دندان‌های خلفی در حرکات طرفی به‌واسطه‌ی کانین.",
    "use_when": "مقاله وجود یا نبودِ کانین رایز را ارزیابی کند؛ نبودش مقدمه‌ی گروپ فانکشن است.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 4,
@@ -2863,29 +3032,13 @@
    ]
   },
   {
-   "key": "کشیدن_دندان",
-   "tag": "#کشیدن_دندان",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "",
-   "use_when": "",
-   "variants": [],
-   "co_tags": [],
-   "count": 4,
-   "content_ids": [
-    "episodes/episode-151",
-    "episodes/episode-152",
-    "episodes/episode-153",
-    "chairside/chairside-21"
-   ]
-  },
-  {
    "key": "bio_restorative_concept",
    "tag": "#Bio_Restorative_Concept",
    "domain": "clinical",
    "words": 3,
    "definition": "همان #بیو_رستوریتیو، با نام انگلیسی کانسپت.",
    "use_when": "همیشه همراه #بیو_رستوریتیو.",
+   "aliases": [],
    "variants": [
     "#Bio_Restorative"
    ],
@@ -2906,6 +3059,7 @@
    "words": 1,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 3,
@@ -2922,6 +3076,7 @@
    "words": 1,
    "definition": "همان #براکسیسم، با اصطلاح انگلیسی.",
    "use_when": "همیشه همراه #براکسیسم.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#براکسیسم"
@@ -2940,6 +3095,7 @@
    "words": 1,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 3,
@@ -2956,6 +3112,7 @@
    "words": 2,
    "definition": "همان #هوش_مصنوعی_تشخیصی، با اصطلاح انگلیسی.",
    "use_when": "همیشه همراه #هوش_مصنوعی_تشخیصی.",
+   "aliases": [],
    "variants": [
     "#DiagnosticAI"
    ],
@@ -2976,6 +3133,7 @@
    "words": 1,
    "definition": "همان #توهم_هوش_مصنوعی، با اصطلاح انگلیسی.",
    "use_when": "همیشه همراه #توهم_هوش_مصنوعی.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#توهم_هوش_مصنوعی"
@@ -2994,6 +3152,7 @@
    "words": 3,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 3,
@@ -3004,66 +3163,13 @@
    ]
   },
   {
-   "key": "implant_planning",
-   "tag": "#Implant_Planning",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "همان #پلنینگ_ایمپلنت، با اصطلاح انگلیسی.",
-   "use_when": "همیشه همراه #پلنینگ_ایمپلنت.",
-   "variants": [
-    "#ImplantPlanning"
-   ],
-   "co_tags": [
-    "#پلنینگ_ایمپلنت"
-   ],
-   "count": 3,
-   "content_ids": [
-    "episodes/episode-156",
-    "episodes/episode-157",
-    "episodes/episode-158"
-   ]
-  },
-  {
-   "key": "implant_prosthesis",
-   "tag": "#Implant_Prosthesis",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "",
-   "use_when": "",
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "notecast/episode-24",
-    "insight/insight-35",
-    "insight/insight-57"
-   ]
-  },
-  {
-   "key": "implant_restoration",
-   "tag": "#Implant_Restoration",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "",
-   "use_when": "",
-   "variants": [
-    "#ImplantRestoration"
-   ],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "notecast/episode-31",
-    "episodes/episode-158",
-    "episodes/episode-159"
-   ]
-  },
-  {
    "key": "intraoral_scanner",
    "tag": "#Intraoral_Scanner",
    "domain": "clinical",
    "words": 2,
    "definition": "همان #اسکنر_داخل_دهانی، با اصطلاح انگلیسی.",
    "use_when": "همیشه همراه #اسکنر_داخل_دهانی.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#اسکنر_داخل_دهانی"
@@ -3082,6 +3188,7 @@
    "words": 1,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 3,
@@ -3098,6 +3205,7 @@
    "words": 2,
    "definition": "همان #پری_ایمپلنتیتیس، با اصطلاح انگلیسی.",
    "use_when": "همیشه همراه #پری_ایمپلنتیتیس.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#پری_ایمپلنتیتیس"
@@ -3116,6 +3224,7 @@
    "words": 2,
    "definition": "همان #بعد_عمودی، با اصطلاح انگلیسی.",
    "use_when": "همیشه همراه #بعد_عمودی. جایگزین #VerticalDimension که چون CamelCase سرِهم بود به توکنِ «verticaldimension» تبدیل می‌شد و با «vertical dimension» هیچ تطبیقی نداشت.",
+   "aliases": [],
    "variants": [
     "#VerticalDimension"
    ],
@@ -3136,6 +3245,7 @@
    "words": 1,
    "definition": "درمان ارتودنتیک به‌عنوان بخشی از طرح درمان.",
    "use_when": "مقاله تعاملِ ارتو و پروتز را دخیل بداند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#Orthodontics"
@@ -3154,6 +3264,7 @@
    "words": 2,
    "definition": "پروتزِ سمان‌شده‌ی خارج‌دهانی که با پیچ در دهان بسته می‌شود.",
    "use_when": "مقاله این نوع ریتنشن را انتخاب یا مقایسه کند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#Cement_Retained"
@@ -3168,10 +3279,15 @@
   {
    "key": "افزایش_طول_تاج",
    "tag": "#افزایش_طول_تاج",
-   "domain": "clinical",
+   "domain": null,
    "words": 3,
-   "definition": "",
-   "use_when": "",
+   "definition": "crown lengthening — به‌دست آوردن ساختار با جابه‌جایی لثه و استخوان.",
+   "use_when": "مقاله این جراحی را تجویز، رد، یا هزینه‌اش را بسنجد.",
+   "aliases": [
+    "کراون لنتنینگ",
+    "crown lengthening",
+    "لنتنینگ"
+   ],
    "variants": [],
    "co_tags": [],
    "count": 3,
@@ -3188,6 +3304,7 @@
    "words": 2,
    "definition": "انتخاب جنس رستوریشن بر اساس شرایط کیس.",
    "use_when": "مقاله بین متریال‌ها انتخاب کند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 3,
@@ -3204,6 +3321,7 @@
    "words": 1,
    "definition": "درمان ریشه به‌عنوان پیش‌زمینه‌ی تصمیم ترمیمی.",
    "use_when": "همراه یک تگ مشخص‌تر بیاید.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 3,
@@ -3220,6 +3338,10 @@
    "words": 1,
    "definition": "",
    "use_when": "",
+   "aliases": [
+    "اندودانتیکس",
+    "اندودونتیکس"
+   ],
    "variants": [
     "#اندودانتیکس"
    ],
@@ -3229,10 +3351,6 @@
     "insight/insight-17",
     "insight/insight-39",
     "notecast/episode-36"
-   ],
-   "aliases": [
-    "اندودانتیکس",
-    "اندودونتیکس"
    ]
   },
   {
@@ -3242,6 +3360,7 @@
    "words": 1,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 3,
@@ -3252,12 +3371,70 @@
    ]
   },
   {
+   "key": "ایمپلنت_planning",
+   "tag": "#Implant_Planning",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "همان #پلنینگ_ایمپلنت، با اصطلاح انگلیسی.",
+   "use_when": "همیشه همراه #پلنینگ_ایمپلنت.",
+   "aliases": [],
+   "variants": [
+    "#ImplantPlanning"
+   ],
+   "co_tags": [
+    "#پلنینگ_ایمپلنت"
+   ],
+   "count": 3,
+   "content_ids": [
+    "episodes/episode-156",
+    "episodes/episode-157",
+    "episodes/episode-158"
+   ]
+  },
+  {
+   "key": "ایمپلنت_prosthesis",
+   "tag": "#Implant_Prosthesis",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "aliases": [],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "notecast/episode-24",
+    "insight/insight-35",
+    "insight/insight-57"
+   ]
+  },
+  {
+   "key": "ایمپلنت_restoration",
+   "tag": "#Implant_Restoration",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "aliases": [],
+   "variants": [
+    "#ImplantRestoration"
+   ],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "notecast/episode-31",
+    "episodes/episode-158",
+    "episodes/episode-159"
+   ]
+  },
+  {
    "key": "ایمپلنت_دندانی",
    "tag": "#ایمپلنت_دندانی",
    "domain": "clinical",
    "words": 2,
    "definition": "ایمپلنت دندانی، با تأکید بر خودِ فیکسچر.",
    "use_when": "همراه یک تگ مشخص‌تر بیاید.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#Dental_Implant"
@@ -3276,6 +3453,7 @@
    "words": 3,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 3,
@@ -3292,6 +3470,7 @@
    "words": 1,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 3,
@@ -3308,6 +3487,7 @@
    "words": 3,
    "definition": "Full mouth rehabilitation — بازسازی همه‌ی دندان‌ها در یک طرح واحد.",
    "use_when": "مقاله تصمیمش را در مقیاس کل دهان بگیرد، نه یک دندان.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#Full_Mouth_Rehabilitation"
@@ -3326,6 +3506,7 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 3,
@@ -3338,10 +3519,15 @@
   {
    "key": "بهداشت_دهان",
    "tag": "#بهداشت_دهان",
-   "domain": "clinical",
+   "domain": null,
    "words": 2,
-   "definition": "",
-   "use_when": "",
+   "definition": "وضعیت بهداشتِ بیمار به‌عنوان شرطِ پذیرش درمان.",
+   "use_when": "مقاله بهداشت را معیارِ پذیرش یا رد بداند.",
+   "aliases": [
+    "اورال هایژن",
+    "oral hygiene",
+    "بهداشت دهانی"
+   ],
    "variants": [],
    "co_tags": [],
    "count": 3,
@@ -3358,6 +3544,7 @@
    "words": 2,
    "definition": "رویکردی که جراحی و پروتز ایمپلنت را یک سیستم واحد می‌بیند، نه دو مرحله‌ی پشت‌سرهم.",
    "use_when": "مقاله درباره‌ی همین کانسپت باشد.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#Bio_Restorative_Concept"
@@ -3376,6 +3563,7 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 3,
@@ -3392,6 +3580,7 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 3,
@@ -3408,6 +3597,7 @@
    "words": 2,
    "definition": "خواندنِ انتقادیِ یک مطالعه: طراحی، جمعیت، و آنچه واقعاً نشان می‌دهد.",
    "use_when": "مقاله یک مطالعه‌ی مشخص را بازخوانی کند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 3,
@@ -3424,6 +3614,7 @@
    "words": 2,
    "definition": "تشخیص ضایعه‌ی پوسیدگی.",
    "use_when": "مقاله خودِ تشخیص را موضوع کند، یا آن را نمونه‌ی کارِ AI تشخیصی قرار دهد.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 3,
@@ -3440,6 +3631,7 @@
    "words": 2,
    "definition": "نبودِ تماس پروگزیمالِ مؤثر بین دو دندان مجاور؛ معمولاً با گیر کردن غذا و درد موضعی بروز می‌کند.",
    "use_when": "مقاله کانتکت باز را تشخیص بدهد، علتش را بررسی کند، یا راه اصلاحش را بگوید.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#کانتکت_باز"
@@ -3458,6 +3650,7 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 3,
@@ -3474,6 +3667,7 @@
    "words": 3,
    "definition": "ساختنِ محتوایی که وجود خارجی ندارد، با همان لحنِ محتوای واقعی.",
    "use_when": "مقاله خودِ پدیده را توضیح دهد یا راه مهارش را بگوید — نه صرفاً یادآوری‌اش کند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#Hallucination"
@@ -3492,6 +3686,7 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 3,
@@ -3508,6 +3703,7 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 3,
@@ -3518,12 +3714,34 @@
    ]
   },
   {
+   "key": "رادیوگرافی_تشخیصی_تشخیصی",
+   "tag": "#رادیوگرافی_تشخیصی",
+   "domain": null,
+   "words": 4,
+   "definition": "انتخاب و تفسیرِ درستِ تصویر — پانورامیک در برابر پری‌اپیکال.",
+   "use_when": "مقاله کفایت یا نارساییِ یک تصویر را مسئله بداند.",
+   "aliases": [
+    "پانورامیک",
+    "پری اپیکال",
+    "opg"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "chairside/chairside-13",
+    "chairside/chairside-18",
+    "chairside/chairside-20"
+   ]
+  },
+  {
    "key": "رشد_فک",
    "tag": "#رشد_فک",
    "domain": "clinical",
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 3,
@@ -3540,6 +3758,7 @@
    "words": 2,
    "definition": "پوشش کامل تاج دندان طبیعی.",
    "use_when": "مفهوم پایه‌ی روکش روی دندان طبیعی — نه روی ایمپلنت (#روکش_ایمپلنت).",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 3,
@@ -3556,6 +3775,7 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 3,
@@ -3572,6 +3792,7 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 3,
@@ -3582,12 +3803,50 @@
    ]
   },
   {
+   "key": "زیبایی_قدامی",
+   "tag": "#زیبایی_قدامی",
+   "domain": null,
+   "words": 2,
+   "definition": "نتیجه‌ی زیبایی در ناحیه‌ی قدام.",
+   "use_when": "مقاله تصمیمش را بر معیار زیبایی قدام بنا کند.",
+   "aliases": [
+    "استتیک قدامی",
+    "زیبایی قدام"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "chairside/chairside-1",
+    "chairside/chairside-8",
+    "chairside/chairside-16"
+   ]
+  },
+  {
+   "key": "سایش_دندان",
+   "tag": "#سایش_دندان",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "از دست رفتنِ ساختار در اثر نیروهای مکرر.",
+   "use_when": "مقاله سایش را بسنجد یا مدیریت کند.",
+   "aliases": [],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "episodes/episode-125",
+    "chairside/chairside-23",
+    "sharehub/share-11"
+   ]
+  },
+  {
    "key": "سلف_اچ",
    "tag": "#سلف_اچ",
    "domain": "clinical",
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 3,
@@ -3604,6 +3863,7 @@
    "words": 2,
    "definition": "بقایای سمان زیر لثه — علتِ شایعِ التهاب پری‌ایمپلنت.",
    "use_when": "مقاله از باقی ماندن سمان جلوگیری کند یا خارجش کند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#Residual_Cement"
@@ -3622,6 +3882,7 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 3,
@@ -3634,10 +3895,15 @@
   {
    "key": "سوپرااراپشن",
    "tag": "#سوپرااراپشن",
-   "domain": "clinical",
+   "domain": null,
    "words": 1,
-   "definition": "",
-   "use_when": "",
+   "definition": "رویشِ بیش‌ازحدِ دندان پس از رفتنِ آنتاگونیست.",
+   "use_when": "مقاله اشغالِ فضای رستوریتیو را مسئله بداند.",
+   "aliases": [
+    "اکستروژن",
+    "supraeruption",
+    "رویش بیش از حد"
+   ],
    "variants": [],
    "co_tags": [],
    "count": 3,
@@ -3654,6 +3920,7 @@
    "words": 2,
    "definition": "شیبِ سطحِ کاسپ — سطحی که در تنظیم حرکات طرفی هدف تراش قرار می‌گیرد.",
    "use_when": "مقاله شیب کاسپ را ارزیابی یا اصلاح کند.",
+   "aliases": [],
    "variants": [
     "#کاسپ"
    ],
@@ -3672,6 +3939,7 @@
    "words": 2,
    "definition": "عوارض بیولوژیک و مکانیکیِ درمان ایمپلنت.",
    "use_when": "مقاله یک عارضه را تشخیص بدهد یا مدیریت کند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#Implant_Complications"
@@ -3690,6 +3958,7 @@
    "words": 1,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 3,
@@ -3706,6 +3975,7 @@
    "words": 1,
    "definition": "نامِ سری فوتوکست. ظرف محتوا را نام می‌برد، نه مفهوم بالینی را.",
    "use_when": "روی هر مدخل فوتوکست، و هیچ‌جای دیگر.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 3,
@@ -3716,12 +3986,70 @@
    ]
   },
   {
+   "key": "قوس_دندانی_کوتاه_شده",
+   "tag": "#قوس_دندانی_کوتاه_شده",
+   "domain": "clinical",
+   "words": 4,
+   "definition": "قوسی که تا حد پرمولر ادامه دارد و مولرها جایگزین نشده‌اند — یک وضعیت پایدار، نه یک نقص.",
+   "use_when": "مقاله درباره‌ی کفایت یا مدیریتِ قوس کوتاه تصمیم بگیرد.",
+   "aliases": [],
+   "variants": [],
+   "co_tags": [
+    "#SDA"
+   ],
+   "count": 3,
+   "content_ids": [
+    "chairside/chairside-3",
+    "episodes/episode-160",
+    "metanotes/meta-17"
+   ]
+  },
+  {
+   "key": "مارجین_روکش",
+   "tag": "#مارجین_روکش",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "aliases": [],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "chairside/chairside-12",
+    "chairside/chairside-18",
+    "insight/insight-50"
+   ]
+  },
+  {
+   "key": "مدیریت_بافت_نرم",
+   "tag": "#مدیریت_بافت_نرم",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "حفظ و شکل‌دهی بافت نرم اطراف ایمپلنت.",
+   "use_when": "مقاله بافت نرم را هدفِ تصمیم بداند، نه صرفاً ذکرش کند.",
+   "aliases": [],
+   "variants": [
+    "#بافت_نرم"
+   ],
+   "co_tags": [
+    "#Soft_Tissue_Management"
+   ],
+   "count": 3,
+   "content_ids": [
+    "episodes/episode-140",
+    "insight/insight-40",
+    "episodes/episode-158"
+   ]
+  },
+  {
    "key": "مدیریت_ریسک",
    "tag": "#مدیریت_ریسک",
    "domain": "clinical",
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 3,
@@ -3738,6 +4066,7 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 3,
@@ -3754,6 +4083,7 @@
    "words": 2,
    "definition": "نیروی shear؛ باری که لایه‌ی سمان برای تحملش طراحی نشده.",
    "use_when": "مقاله بار برشی را عاملِ شکست اتصال بداند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 3,
@@ -3770,6 +4100,7 @@
    "words": 3,
    "definition": "مدلی که روی داده‌ی تصویری آموزش دیده و چیزی را در تصویر علامت می‌زند.",
    "use_when": "مقاله این نوع را از مدل زبانی تفکیک کند یا رفتارش را توضیح دهد.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#Diagnostic_AI"
@@ -3788,6 +4119,7 @@
    "words": 2,
    "definition": "نوشتنِ درخواست به شکلی که جوابِ به‌دردبخور بدهد.",
    "use_when": "مقاله تکنیکِ نوشتن پرامپت بدهد.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#Prompt_Engineering"
@@ -3806,6 +4138,7 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 3,
@@ -3822,6 +4155,7 @@
    "words": 2,
    "definition": "شکلِ گذرِ رستوریشن از سطح ایمپلنت تا لبه‌ی لثه؛ تعیین‌کننده‌ی فرم و ثبات بافت نرم.",
    "use_when": "مقاله پروفایل امرجنس را طراحی یا ارزیابی کند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#Emergence_Profile"
@@ -3834,12 +4168,32 @@
    ]
   },
   {
+   "key": "پوزیشن_ایمپلنت",
+   "tag": "#پوزیشن_ایمپلنت",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "موقعیت سه‌بعدی فیکسچر در استخوان — عمق، زاویه و جهت.",
+   "use_when": "مقاله درباره‌ی جایگذاری و پیامدهای پوزیشن تصمیم بگیرد.",
+   "aliases": [],
+   "variants": [],
+   "co_tags": [
+    "#3D_Implant_Positioning"
+   ],
+   "count": 3,
+   "content_ids": [
+    "sharehub/share-3",
+    "chairside/chairside-10",
+    "episodes/episode-157"
+   ]
+  },
+  {
    "key": "پیش_آگهی",
    "tag": "#پیش_آگهی",
    "domain": "clinical",
    "words": 2,
    "definition": "پیش‌بینیِ سرنوشتِ دندان یا درمان، و شرط‌هایی که آن پیش‌بینی رویشان بنا شده.",
    "use_when": "مقاله اعتبار یا شرط‌های یک پیش‌آگهی را بررسی کند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 3,
@@ -3856,6 +4210,7 @@
    "words": 1,
    "definition": "تماس پروگزیمال بین دندان‌های مجاور.",
    "use_when": "مفهوم پایه؛ همراه یک تگ مشخص‌تر بیاید.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 3,
@@ -3872,6 +4227,10 @@
    "words": 2,
    "definition": "همان مفهومِ #تماس_باز، با واژه‌ی رایج‌ترِ محاوره‌ی بالینی.",
    "use_when": "همیشه همراه #تماس_باز. این دو هیچ کلمه‌ی مشترکی ندارند، پس هرکدام درِ ورودیِ جداگانه‌ای برای همان مفهوم‌اند و حذف یکی، یک در را می‌بندد.",
+   "aliases": [
+    "open contact",
+    "proximal contact"
+   ],
    "variants": [],
    "co_tags": [
     "#تماس_باز"
@@ -3881,10 +4240,6 @@
     "episodes/episode-121-1",
     "photocast/episode-1",
     "metanotes/meta-12"
-   ],
-   "aliases": [
-    "open contact",
-    "proximal contact"
    ]
   },
   {
@@ -3894,6 +4249,7 @@
    "words": 1,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -3909,6 +4265,7 @@
    "words": 1,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -3924,6 +4281,7 @@
    "words": 2,
    "definition": "همان #ضد_چرخش، با اصطلاح انگلیسی.",
    "use_when": "همیشه همراه #ضد_چرخش — این دو هیچ کلمه‌ی مشترکی ندارند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#ضد_چرخش"
@@ -3941,6 +4299,7 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [
     "#BiologicalWidth"
    ],
@@ -3958,6 +4317,7 @@
    "words": 1,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -3973,6 +4333,7 @@
    "words": 1,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -3988,6 +4349,7 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -4003,6 +4365,7 @@
    "words": 1,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -4018,6 +4381,7 @@
    "words": 2,
    "definition": "پروتز سمان‌ریتین، در برابر اسکرو‌ریتین.",
    "use_when": "همراه #اسکرو_سمنتد یا #نوع_ریتنشن.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#اسکرو_سمنتد"
@@ -4035,6 +4399,7 @@
    "words": 1,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -4050,6 +4415,7 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [
     "#DahlConcept"
    ],
@@ -4067,6 +4433,11 @@
    "words": 1,
    "definition": "همان #افتادن_روکش، با اصطلاح انگلیسی.",
    "use_when": "همیشه همراه #افتادن_روکش.",
+   "aliases": [
+    "دباندینگ",
+    "دی سمانتاسیون",
+    "دیسمانتاسیون"
+   ],
    "variants": [],
    "co_tags": [
     "#افتادن_روکش"
@@ -4075,11 +4446,6 @@
    "content_ids": [
     "dentcast-plus/video-4",
     "dentcast-plus/video-5"
-   ],
-   "aliases": [
-    "دباندینگ",
-    "دی سمانتاسیون",
-    "دیسمانتاسیون"
    ]
   },
   {
@@ -4089,6 +4455,7 @@
    "words": 1,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -4098,29 +4465,13 @@
    ]
   },
   {
-   "key": "dental_implant",
-   "tag": "#Dental_Implant",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "همان #ایمپلنت_دندانی، با اصطلاح انگلیسی.",
-   "use_when": "همیشه همراه #ایمپلنت_دندانی.",
-   "variants": [],
-   "co_tags": [
-    "#ایمپلنت_دندانی"
-   ],
-   "count": 2,
-   "content_ids": [
-    "insight/insight-35",
-    "sharehub/share-9"
-   ]
-  },
-  {
    "key": "dental_impression",
    "tag": "#Dental_Impression",
    "domain": "clinical",
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [
     "#DentalImpression"
    ],
@@ -4138,6 +4489,7 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [
     "#DentalTips"
    ],
@@ -4149,12 +4501,31 @@
    ]
   },
   {
-   "key": "digital_implant_planning",
+   "key": "dental_ایمپلنت",
+   "tag": "#Dental_Implant",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "همان #ایمپلنت_دندانی، با اصطلاح انگلیسی.",
+   "use_when": "همیشه همراه #ایمپلنت_دندانی.",
+   "aliases": [],
+   "variants": [],
+   "co_tags": [
+    "#ایمپلنت_دندانی"
+   ],
+   "count": 2,
+   "content_ids": [
+    "insight/insight-35",
+    "sharehub/share-9"
+   ]
+  },
+  {
+   "key": "digital_ایمپلنت_planning",
    "tag": "#Digital_Implant_Planning",
    "domain": "clinical",
    "words": 3,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [
     "#DigitalImplantPlanning"
    ],
@@ -4166,12 +4537,33 @@
    ]
   },
   {
+   "key": "emergence_profile",
+   "tag": "#Emergence_Profile",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "همان #پروفایل_امرجنس، با اصطلاح انگلیسی.",
+   "use_when": "همیشه همراه #پروفایل_امرجنس.",
+   "aliases": [],
+   "variants": [
+    "#EmergenceProfile"
+   ],
+   "co_tags": [
+    "#پروفایل_امرجنس"
+   ],
+   "count": 2,
+   "content_ids": [
+    "chairside/chairside-10",
+    "episodes/episode-158"
+   ]
+  },
+  {
    "key": "feldspathic_porcelain",
    "tag": "#feldspathic_porcelain",
    "domain": "clinical",
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -4187,6 +4579,7 @@
    "words": 2,
    "definition": "همان #هوش_مصنوعی_مولد، با اصطلاح انگلیسی.",
    "use_when": "همیشه همراه #هوش_مصنوعی_مولد.",
+   "aliases": [],
    "variants": [
     "#GenerativeAI"
    ],
@@ -4206,6 +4599,7 @@
    "words": 1,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -4221,6 +4615,7 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -4230,61 +4625,13 @@
    ]
   },
   {
-   "key": "implant_complications",
-   "tag": "#Implant_Complications",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "همان #عوارض_ایمپلنت، با اصطلاح انگلیسی.",
-   "use_when": "همیشه همراه #عوارض_ایمپلنت.",
-   "variants": [],
-   "co_tags": [
-    "#عوارض_ایمپلنت"
-   ],
-   "count": 2,
-   "content_ids": [
-    "sharehub/share-1",
-    "episodes/episode-159"
-   ]
-  },
-  {
-   "key": "implant_failure",
-   "tag": "#Implant_Failure",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "همان #شکست_ایمپلنت، با اصطلاح انگلیسی.",
-   "use_when": "همیشه همراه #شکست_ایمپلنت.",
-   "variants": [],
-   "co_tags": [
-    "#شکست_ایمپلنت"
-   ],
-   "count": 2,
-   "content_ids": [
-    "sharehub/share-9",
-    "sharehub/share-11"
-   ]
-  },
-  {
-   "key": "implant_survival",
-   "tag": "#Implant_Survival",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "",
-   "use_when": "",
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "notecast/episode-25",
-    "notecast/episode-26"
-   ]
-  },
-  {
    "key": "impression_technique",
    "tag": "#Impression_Technique",
    "domain": "clinical",
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [
     "#ImpressionTechnique"
    ],
@@ -4302,6 +4649,7 @@
    "words": 3,
    "definition": "همان #از_دست_رفتن_کانتکت، با اصطلاح انگلیسی.",
    "use_when": "همیشه همراه #از_دست_رفتن_کانتکت.",
+   "aliases": [],
    "variants": [
     "#Open_Contact",
     "#Proximal_Contact"
@@ -4322,6 +4670,7 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -4337,6 +4686,7 @@
    "words": 1,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -4352,6 +4702,7 @@
    "words": 1,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -4367,6 +4718,7 @@
    "words": 1,
    "definition": "Molar Incisor Hypomineralization — نقص کیفی مینا در مولر اول دائمی و ثنایاها.",
    "use_when": "مقاله MIH را تشخیص بدهد یا ترمیم/پوشش دندان مبتلا را تعیین کند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -4382,6 +4734,7 @@
    "words": 1,
    "definition": "سرویسِ NotebookLM گوگل.",
    "use_when": "مقاله مشخصاً به این سرویس بپردازد.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -4397,6 +4750,7 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -4412,6 +4766,7 @@
    "words": 1,
    "definition": "لیگامان پریودنتال — تفاوتِ بنیادیِ دندان و ایمپلنت در جذب نیرو.",
    "use_when": "مقاله PDL را عاملِ تفاوت رفتار بداند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -4427,6 +4782,7 @@
    "words": 3,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -4442,6 +4798,7 @@
    "words": 1,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -4457,6 +4814,7 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [
     "#PlatformSwitch"
    ],
@@ -4474,6 +4832,7 @@
    "words": 1,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -4489,6 +4848,7 @@
    "words": 1,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -4504,6 +4864,7 @@
    "words": 2,
    "definition": "همان #سمان_باقیمانده، با اصطلاح انگلیسی.",
    "use_when": "همیشه همراه #سمان_باقیمانده.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#سمان_باقیمانده"
@@ -4521,6 +4882,7 @@
    "words": 2,
    "definition": "همان #فرم_رزیستنس، با اصطلاح انگلیسی.",
    "use_when": "همیشه همراه #فرم_رزیستنس — این دو هیچ کلمه‌ی مشترکی ندارند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#فرم_رزیستنس"
@@ -4538,6 +4900,7 @@
    "words": 2,
    "definition": "همان #اسکن_بادی، با اصطلاح انگلیسی.",
    "use_when": "همیشه همراه #اسکن_بادی.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#اسکن_بادی"
@@ -4555,6 +4918,7 @@
    "words": 1,
    "definition": "سرنامِ Shortened Dental Arch.",
    "use_when": "همیشه همراه #قوس_دندانی_کوتاه_شده.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#قوس_دندانی_کوتاه_شده"
@@ -4566,12 +4930,13 @@
    ]
   },
   {
-   "key": "smart_vent_crown",
+   "key": "smart_vent_روکش",
    "tag": "#Smart_Vent_Crown",
    "domain": "clinical",
    "words": 3,
    "definition": "طرح SVC — روکش سمان‌شونده با ونتِ کنترل‌شده.",
    "use_when": "مقاله همین طرح را شرح دهد.",
+   "aliases": [],
    "variants": [
     "#SmartVentCrown"
    ],
@@ -4591,6 +4956,7 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [
     "#SmileDesign"
    ],
@@ -4608,6 +4974,7 @@
    "words": 2,
    "definition": "آماده‌سازی دندان به‌طور عام، با اصطلاح انگلیسی.",
    "use_when": "همراه #تراش_دندان.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -4623,6 +4990,7 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -4632,12 +5000,29 @@
    ]
   },
   {
+   "key": "veneer",
+   "tag": "#ونیر",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "ونیر به‌عنوان راه‌حلِ زیبایی.",
+   "use_when": "همراه یک تگ مشخص‌تر بیاید.",
+   "aliases": [],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "notecast/episode-6",
+    "metanotes/meta-1"
+   ]
+  },
+  {
    "key": "آمالگام",
    "tag": "#آمالگام",
    "domain": "clinical",
    "words": 1,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -4653,6 +5038,7 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -4668,6 +5054,7 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -4683,6 +5070,7 @@
    "words": 2,
    "definition": "مبهم بودنِ درخواست — نه کم‌دانشیِ مدل — علتِ اصلیِ خروجیِ بی‌مصرف.",
    "use_when": "مقاله ابهام را ریشه‌ی مشکل بداند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -4698,6 +5086,7 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -4707,27 +5096,13 @@
    ]
   },
   {
-   "key": "ارزیابی_دندان",
-   "tag": "#ارزیابی_دندان",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "",
-   "use_when": "",
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "insight/insight-14",
-    "chairside/chairside-9"
-   ]
-  },
-  {
    "key": "از_دست_رفتن_کانتکت",
    "tag": "#از_دست_رفتن_کانتکت",
    "domain": "clinical",
    "words": 3,
    "definition": "باز شدنِ تدریجیِ کانتکت بین رستوریشن ایمپلنت و دندان مجاور در طول زمان (ICL).",
    "use_when": "مقاله علت، شیوع یا مدیریتِ باز شدن کانتکت در طول زمان را بگوید. برای کانتکت بازِ همان روزِ تحویل از #کانتکت_باز استفاده شود.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#Interproximal_Contact_Loss"
@@ -4745,6 +5120,7 @@
    "words": 1,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -4760,6 +5136,7 @@
    "words": 1,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -4775,6 +5152,7 @@
    "words": 1,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -4790,6 +5168,7 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -4805,6 +5184,7 @@
    "words": 1,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -4820,6 +5200,7 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -4835,6 +5216,7 @@
    "words": 2,
    "definition": "قواعد حاکم بر تراش: تیپر، ارتفاع، رزیستنس و ریتنشن، خط ختم.",
    "use_when": "مقاله قاعده‌ای برای تراش بدهد یا آن را ارزیابی کند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -4850,6 +5232,7 @@
    "words": 1,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -4865,6 +5248,7 @@
    "words": 1,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -4880,6 +5264,7 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -4889,12 +5274,33 @@
    ]
   },
   {
+   "key": "انتخاب_پایه",
+   "tag": "#انتخاب_پایه",
+   "domain": null,
+   "words": 2,
+   "definition": "انتخابِ دندان یا ایمپلنتی که بار پروتز رویش می‌افتد.",
+   "use_when": "مقاله کفایتِ پایه را بسنجد.",
+   "aliases": [
+    "ارزیابی پایه",
+    "انتخاب اباتمنت پایه",
+    "abutment selection"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "chairside/chairside-20",
+    "chairside/chairside-26"
+   ]
+  },
+  {
    "key": "اندودنتیکس_ترمیمی",
    "tag": "#اندودنتیکس_ترمیمی",
    "domain": "clinical",
    "words": 2,
    "definition": "مرزِ اندو و ترمیمی: بازسازیِ دندانِ اندوشده.",
    "use_when": "مقاله در همین مرز تصمیم بگیرد.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -4910,6 +5316,7 @@
    "words": 1,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -4925,6 +5332,7 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -4940,6 +5348,7 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -4949,12 +5358,65 @@
    ]
   },
   {
+   "key": "ایمپلنت_complications",
+   "tag": "#Implant_Complications",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "همان #عوارض_ایمپلنت، با اصطلاح انگلیسی.",
+   "use_when": "همیشه همراه #عوارض_ایمپلنت.",
+   "aliases": [],
+   "variants": [],
+   "co_tags": [
+    "#عوارض_ایمپلنت"
+   ],
+   "count": 2,
+   "content_ids": [
+    "sharehub/share-1",
+    "episodes/episode-159"
+   ]
+  },
+  {
+   "key": "ایمپلنت_failure",
+   "tag": "#Implant_Failure",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "همان #شکست_ایمپلنت، با اصطلاح انگلیسی.",
+   "use_when": "همیشه همراه #شکست_ایمپلنت.",
+   "aliases": [],
+   "variants": [],
+   "co_tags": [
+    "#شکست_ایمپلنت"
+   ],
+   "count": 2,
+   "content_ids": [
+    "sharehub/share-9",
+    "sharehub/share-11"
+   ]
+  },
+  {
+   "key": "ایمپلنت_survival",
+   "tag": "#Implant_Survival",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "aliases": [],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "notecast/episode-25",
+    "notecast/episode-26"
+   ]
+  },
+  {
    "key": "ایمپلنت_فول_آرچ",
    "tag": "#ایمپلنت_فول_آرچ",
    "domain": "clinical",
    "words": 3,
    "definition": "بازسازیِ کاملِ یک فک با ایمپلنت.",
    "use_when": "مقاله تصمیمش در مقیاسِ کلِ قوس باشد.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#Full_Arch_Implant"
@@ -4972,6 +5434,7 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -4987,6 +5450,7 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -5002,6 +5466,7 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -5011,27 +5476,13 @@
    ]
   },
   {
-   "key": "بافت_نرم",
-   "tag": "#بافت_نرم",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "",
-   "use_when": "",
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "episodes/episode-140",
-    "chairside/chairside-16"
-   ]
-  },
-  {
    "key": "باند",
    "tag": "#باند",
    "domain": "clinical",
    "words": 1,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -5047,6 +5498,7 @@
    "words": 1,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -5056,12 +5508,33 @@
    ]
   },
   {
+   "key": "برداشت_پوسیدگی",
+   "tag": "#برداشت_پوسیدگی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "حذفِ کاملِ پوسیدگی پیش از قضاوت درباره‌ی ساختارِ باقی‌مانده.",
+   "use_when": "مقاله برداشتِ کامل پوسیدگی را شرطِ تصمیم بداند.",
+   "aliases": [
+    "حذف پوسیدگی",
+    "برداشتن پوسیدگی",
+    "caries removal"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "dentai/dentai-11",
+    "chairside/chairside-9"
+   ]
+  },
+  {
    "key": "بقای_ایمپلنت",
    "tag": "#بقای_ایمپلنت",
    "domain": "clinical",
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -5077,6 +5550,7 @@
    "words": 1,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -5086,12 +5560,29 @@
    ]
   },
   {
+   "key": "بیولوژیک_ویدث",
+   "tag": "#عرض_بیولوژیک",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "aliases": [],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "notecast/episode-13",
+    "insight/insight-50"
+   ]
+  },
+  {
    "key": "تحلیل_مفهومی",
    "tag": "#تحلیل_مفهومی",
    "domain": "clinical",
    "words": 2,
    "definition": "باز کردنِ یک مفهوم یا یک بازیِ کلمات، پیش از استفاده از آن در استدلال.",
    "use_when": "مقاله خودِ مفهوم را بشکافد.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -5101,12 +5592,33 @@
    ]
   },
   {
+   "key": "تداخل_سمت_کارگر",
+   "tag": "#تداخل_سمت_کارگر",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "تماس مزاحم در سمت کارگر حین حرکت طرفی، که بار را روی یک دندان متمرکز می‌کند.",
+   "use_when": "مقاله تداخلِ مشخصاً سمت کارگر را پیدا یا تنظیم کند. برای تداخل عمومی اکلوزالی از #تداخل_اکلوزالی استفاده شود.",
+   "aliases": [],
+   "variants": [
+    "#تداخل"
+   ],
+   "co_tags": [
+    "#اینترفیرنس"
+   ],
+   "count": 2,
+   "content_ids": [
+    "dentcast-plus/video-6",
+    "chairside/chairside-15"
+   ]
+  },
+  {
    "key": "تراش_لمینیت",
    "tag": "#تراش_لمینیت",
    "domain": "clinical",
    "words": 2,
    "definition": "آماده‌سازی دندان برای لمینت — حفظ مینا، فضا، مسیر نشست.",
    "use_when": "مقاله اصولِ تراش لمینت را بدهد.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -5116,12 +5628,32 @@
    ]
   },
   {
+   "key": "ترمیم_ادهزیو",
+   "tag": "#ترمیم_ادهزیو",
+   "domain": null,
+   "words": 2,
+   "definition": "بازسازی چسبنده به‌جای پوششِ کامل.",
+   "use_when": "مقاله بین ترمیم ادهزیو و روکش انتخاب کند.",
+   "aliases": [
+    "ترمیم چسبنده",
+    "adhesive restoration"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "chairside/chairside-22",
+    "chairside/chairside-27"
+   ]
+  },
+  {
    "key": "ترمیم_بیومیمتیک",
    "tag": "#ترمیم_بیومیمتیک",
    "domain": "clinical",
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -5137,6 +5669,7 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -5152,6 +5685,7 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -5167,6 +5701,7 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -5176,27 +5711,13 @@
    ]
   },
   {
-   "key": "تصمیم_گیری_درمان",
-   "tag": "#تصمیم_گیری_درمان",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "",
-   "use_when": "",
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "chairside/chairside-13",
-    "insight/insight-39"
-   ]
-  },
-  {
    "key": "توزیع_نیرو",
    "tag": "#توزیع_نیرو",
    "domain": "clinical",
    "words": 2,
    "definition": "پخشِ بار بین تکیه‌گاه‌ها.",
    "use_when": "مقاله توزیع نیرو را عاملِ طراحی بداند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -5212,6 +5733,7 @@
    "words": 3,
    "definition": "احراز بی‌حرکتیِ روکش روی اباتمنت پیش از سمان — سمان نقشش کمک به گیر است، نه تأمین ثبات.",
    "use_when": "مقاله ثبات پیش از سمان را آزمون کند یا نبودش را عیب طراحی بداند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -5227,6 +5749,7 @@
    "words": 2,
    "definition": "تصمیم به جایگزین کردن دندانِ از دست رفته — و اینکه گاهی جوابش «نه» است.",
    "use_when": "مقاله ضرورت یا عدم ضرورتِ جایگزینی را بررسی کند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -5242,6 +5765,7 @@
    "words": 2,
    "definition": "حفظ حداکثری ساختار دندان؛ معیارِ انتخاب بین گزینه‌های ترمیمی.",
    "use_when": "مقاله میزان برداشتِ ساختار را عاملِ تصمیم بداند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -5251,12 +5775,29 @@
    ]
   },
   {
+   "key": "حداقل_مداخله",
+   "tag": "#حداقل_مداخله",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "کم‌ترین دخالتِ ممکن برای رسیدن به نتیجه.",
+   "use_when": "مقاله کم‌مداخله بودن را معیارِ انتخاب بداند.",
+   "aliases": [],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "metanotes/meta-8",
+    "chairside/chairside-27"
+   ]
+  },
+  {
    "key": "حفظ_مینا",
    "tag": "#حفظ_مینا",
    "domain": "clinical",
    "words": 2,
    "definition": "باقی گذاشتنِ حداکثریِ مینا برای باندِ پایدار.",
    "use_when": "مقاله حفظ مینا را اصلِ حاکم بداند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -5272,6 +5813,7 @@
    "words": 2,
    "definition": "انحرافِ انباشته در اسکن (accumulated distortion).",
    "use_when": "مقاله منشأ خطا را دنبال کند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#Distortion"
@@ -5289,6 +5831,7 @@
    "words": 2,
    "definition": "جنسِ خطای مدل زبانی: ساختنِ چیزی که وجود ندارد، در برابر بدخواندنِ چیزی که هست.",
    "use_when": "مقاله تفاوتِ جنسِ خطاها را توضیح دهد.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -5304,6 +5847,7 @@
    "words": 1,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -5319,6 +5863,11 @@
    "words": 1,
    "definition": "مصرف دخانیات به‌عنوان عاملِ خطر.",
    "use_when": "مقاله اثر دخانیات را بسنجد یا مدیریت کند.",
+   "aliases": [
+    "سیگار",
+    "سیگاری",
+    "تنباکو"
+   ],
    "variants": [
     "#سیگار"
    ],
@@ -5329,11 +5878,6 @@
    "content_ids": [
     "episodes/episode-147-2",
     "sharehub/share-9"
-   ],
-   "aliases": [
-    "سیگار",
-    "سیگاری",
-    "تنباکو"
    ]
   },
   {
@@ -5343,6 +5887,7 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -5358,6 +5903,7 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -5373,6 +5919,7 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -5388,6 +5935,7 @@
    "words": 2,
    "definition": "درمان‌هایی که هدف اصلی‌شان زیبایی است.",
    "use_when": "همراه یک تگ مشخص‌تر بیاید.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -5403,6 +5951,7 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -5418,6 +5967,7 @@
    "words": 2,
    "definition": "همان دامنه‌ی #اطفال، با واژه‌ی «کودکان».",
    "use_when": "همیشه همراه #اطفال. این دو هیچ کلمه‌ی مشترکی ندارند و هرکدام درِ جداگانه‌ای هستند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#اطفال"
@@ -5429,17 +5979,22 @@
    ]
   },
   {
-   "key": "رد_طرح_درمان",
-   "tag": "#رد_طرح_درمان",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "",
-   "use_when": "",
+   "key": "دیاستم",
+   "tag": "#دیاستم",
+   "domain": null,
+   "words": 1,
+   "definition": "فاصله‌ی بین دو دندان مجاور در قدام.",
+   "use_when": "مقاله درباره‌ی بستن یا مدیریت دیاستم تصمیم بگیرد.",
+   "aliases": [
+    "diastema",
+    "دیاستما",
+    "فاصله بین دندانی"
+   ],
    "variants": [],
    "co_tags": [],
    "count": 2,
    "content_ids": [
-    "chairside/chairside-25",
+    "chairside/chairside-1",
     "chairside/chairside-26"
    ]
   },
@@ -5450,6 +6005,7 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -5465,6 +6021,7 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -5476,10 +6033,14 @@
   {
    "key": "ریشه_کوتاه",
    "tag": "#ریشه_کوتاه",
-   "domain": "clinical",
+   "domain": null,
    "words": 2,
-   "definition": "",
-   "use_when": "",
+   "definition": "ریشه‌ای که نسبت تاج به ریشه را نامساعد می‌کند.",
+   "use_when": "مقاله کوتاهیِ ریشه را محدودیت بداند.",
+   "aliases": [
+    "ریشه های کوتاه",
+    "short root"
+   ],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -5495,6 +6056,7 @@
    "words": 3,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -5510,6 +6072,7 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -5521,10 +6084,15 @@
   {
    "key": "ساپورت_خلفی",
    "tag": "#ساپورت_خلفی",
-   "domain": "clinical",
+   "domain": null,
    "words": 2,
-   "definition": "",
-   "use_when": "",
+   "definition": "وجود یا نبودِ تماس خلفی به‌عنوان تکیه‌گاهِ اکلوزال.",
+   "use_when": "مقاله نبودِ ساپورت خلفی را مانع بداند.",
+   "aliases": [
+    "اکلوژن خلفی",
+    "ساپورت اکلوزالی",
+    "تماس خلفی"
+   ],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -5534,27 +6102,13 @@
    ]
   },
   {
-   "key": "سایش_دندان",
-   "tag": "#سایش_دندان",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "از دست رفتنِ ساختار در اثر نیروهای مکرر.",
-   "use_when": "مقاله سایش را بسنجد یا مدیریت کند.",
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "episodes/episode-125",
-    "sharehub/share-11"
-   ]
-  },
-  {
    "key": "سایلان",
    "tag": "#سایلان",
    "domain": "clinical",
    "words": 1,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -5570,6 +6124,7 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -5585,6 +6140,7 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -5600,6 +6156,7 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -5615,6 +6172,7 @@
    "words": 1,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -5630,6 +6188,7 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -5645,6 +6204,7 @@
    "words": 3,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -5660,6 +6220,7 @@
    "words": 2,
    "definition": "چیپ یا شکست لایه‌ی پرسلن رستوریشن.",
    "use_when": "مقاله علت شکست پرسلن را توضیح بدهد یا از آن پیشگیری کند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -5675,6 +6236,7 @@
    "words": 2,
    "definition": "هندسه‌ای در اباتمنت که چرخش روکش روی آن را مهار می‌کند.",
    "use_when": "مقاله وجود یا نبودِ گیرِ ضدچرخشی را ارزیابی کند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#anti_rotation"
@@ -5692,6 +6254,7 @@
    "words": 3,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -5707,6 +6270,7 @@
    "words": 2,
    "definition": "طراحی کلیِ پروتز پیش از اجرا.",
    "use_when": "همراه یک تگ مشخص‌تر بیاید.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#Prosthetic_Design"
@@ -5724,6 +6288,7 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -5735,10 +6300,15 @@
   {
    "key": "عدم_مداخله",
    "tag": "#عدم_مداخله",
-   "domain": "clinical",
+   "domain": null,
    "words": 2,
-   "definition": "",
-   "use_when": "",
+   "definition": "تصمیم به کاری نکردن، به‌عنوان یک انتخاب فعال.",
+   "use_when": "مقاله نکردنِ درمان را گزینه‌ی درست بداند.",
+   "aliases": [
+    "درمان نکردن",
+    "عدم درمان",
+    "مداخله نکردن"
+   ],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -5748,42 +6318,13 @@
    ]
   },
   {
-   "key": "عرض_بیولوژیک",
-   "tag": "#عرض_بیولوژیک",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "",
-   "use_when": "",
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "notecast/episode-13",
-    "insight/insight-50"
-   ]
-  },
-  {
-   "key": "فالوآپ_ایمپلنت",
-   "tag": "#فالوآپ_ایمپلنت",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "",
-   "use_when": "",
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "litecast/lite-CAST10",
-    "litecast/lite-CAST19"
-   ]
-  },
-  {
    "key": "فرم_رزیستنس",
    "tag": "#فرم_رزیستنس",
    "domain": "clinical",
    "words": 2,
    "definition": "مقاومت تراش در برابر جابه‌جایی جانبی/چرخشی — از تماس مؤثر دیواره‌ها می‌آید، نه از سمان.",
    "use_when": "مقاله رزیستنس فرم را ارزیابی یا اصلاح کند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#Resistance_Form"
@@ -5801,6 +6342,7 @@
    "words": 1,
    "definition": "لرزشِ محسوسِ دندان زیر انگشت هنگام تپ کردن — نشانه‌ی درگیری اکلوزالی مخرب، نه صرفاً وجود تماس.",
    "use_when": "مقاله فرمیتوس را تشخیص بدهد یا رفعش کند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -5816,6 +6358,7 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -5831,6 +6374,7 @@
    "words": 2,
    "definition": "تصمیمِ نهاییِ دندان‌پزشک، که به ابزار واگذار نمی‌شود.",
    "use_when": "مقاله مرزِ ابزار و تصمیم‌گیرنده را تعیین کند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -5840,29 +6384,13 @@
    ]
   },
   {
-   "key": "قوس_دندانی_کوتاه_شده",
-   "tag": "#قوس_دندانی_کوتاه_شده",
-   "domain": "clinical",
-   "words": 4,
-   "definition": "قوسی که تا حد پرمولر ادامه دارد و مولرها جایگزین نشده‌اند — یک وضعیت پایدار، نه یک نقص.",
-   "use_when": "مقاله درباره‌ی کفایت یا مدیریتِ قوس کوتاه تصمیم بگیرد.",
-   "variants": [],
-   "co_tags": [
-    "#SDA"
-   ],
-   "count": 2,
-   "content_ids": [
-    "episodes/episode-160",
-    "metanotes/meta-17"
-   ]
-  },
-  {
    "key": "لبه_اینسایزال",
    "tag": "#لبه_اینسایزال",
    "domain": "clinical",
    "words": 2,
    "definition": "مدیریتِ لبه‌ی برنده در تراش لمینت.",
    "use_when": "مقاله طرحِ لبه را تعیین کند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -5872,27 +6400,13 @@
    ]
   },
   {
-   "key": "مارجین_روکش",
-   "tag": "#مارجین_روکش",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "",
-   "use_when": "",
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "chairside/chairside-12",
-    "insight/insight-50"
-   ]
-  },
-  {
    "key": "متاآنالیز",
    "tag": "#متاآنالیز",
    "domain": "clinical",
    "words": 1,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -5908,6 +6422,7 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -5917,29 +6432,13 @@
    ]
   },
   {
-   "key": "مدیریت_بافت_نرم",
-   "tag": "#مدیریت_بافت_نرم",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "حفظ و شکل‌دهی بافت نرم اطراف ایمپلنت.",
-   "use_when": "مقاله بافت نرم را هدفِ تصمیم بداند، نه صرفاً ذکرش کند.",
-   "variants": [],
-   "co_tags": [
-    "#Soft_Tissue_Management"
-   ],
-   "count": 2,
-   "content_ids": [
-    "insight/insight-40",
-    "episodes/episode-158"
-   ]
-  },
-  {
    "key": "مولر_سوم",
    "tag": "#مولر_سوم",
    "domain": "clinical",
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -5955,6 +6454,7 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -5964,12 +6464,33 @@
    ]
   },
   {
+   "key": "نبود_فرول",
+   "tag": "#نبود_فرول",
+   "domain": null,
+   "words": 2,
+   "definition": "نداشتنِ حلقه‌ی دیواره‌ی سالم، و محدودیت‌هایی که می‌سازد.",
+   "use_when": "مقاله نبودِ فرول را عاملِ محدودیت طرح درمان بداند.",
+   "aliases": [
+    "فرول ندارد",
+    "بدون فرول",
+    "عدم فرول"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "chairside/chairside-5",
+    "chairside/chairside-6"
+   ]
+  },
+  {
    "key": "نوع_ریتنشن",
    "tag": "#نوع_ریتنشن",
    "domain": "clinical",
    "words": 2,
    "definition": "انتخاب بین پروتز اسکرو-ریتین و سمان-ریتین.",
    "use_when": "مقاله بین این دو انتخاب کند یا پیامدهایش را بگوید.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -5985,6 +6506,7 @@
    "words": 3,
    "definition": "مدلی که خروجیِ تازه می‌سازد، نه اینکه چیزی را تشخیص دهد.",
    "use_when": "مقاله تولیدی بودنِ مدل را عاملِ رفتارش بداند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#Generative_AI"
@@ -6002,6 +6524,7 @@
    "words": 2,
    "definition": "اباتمنت موقتی که در دوره‌ی ترمیم، فرم بافت نرم را نگه می‌دارد.",
    "use_when": "مقاله انتخاب یا نقش هیلینگ اباتمنت را تعیین کند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#Healing_Abutment"
@@ -6013,27 +6536,13 @@
    ]
   },
   {
-   "key": "ونیر",
-   "tag": "#ونیر",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "ونیر به‌عنوان راه‌حلِ زیبایی.",
-   "use_when": "همراه یک تگ مشخص‌تر بیاید.",
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "notecast/episode-6",
-    "metanotes/meta-1"
-   ]
-  },
-  {
    "key": "پارشیال_کاوریج",
    "tag": "#پارشیال_کاوریج",
    "domain": "clinical",
    "words": 2,
    "definition": "ترمیم با پوشش نسبی — آنله، اورلی یا پارشیال کراون — به‌جای روکش کامل.",
    "use_when": "مقاله بین پوشش نسبی و روکش کامل انتخاب کند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -6049,6 +6558,7 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -6064,6 +6574,7 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -6073,12 +6584,33 @@
    ]
   },
   {
+   "key": "پرمولر",
+   "tag": "#پرمولر",
+   "domain": null,
+   "words": 1,
+   "definition": "دندان پره‌مولر.",
+   "use_when": "مقاله تصمیمش مختصِ این دندان باشد.",
+   "aliases": [
+    "پره مولر",
+    "premolar",
+    "پری مولار"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "chairside/chairside-2",
+    "chairside/chairside-21"
+   ]
+  },
+  {
    "key": "پروتز_دیجیتال",
    "tag": "#پروتز_دیجیتال",
    "domain": "clinical",
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -6088,12 +6620,13 @@
    ]
   },
   {
-   "key": "پروتز_پارسیل",
+   "key": "پروتز_پارشیال",
    "tag": "#پروتز_پارسیل",
    "domain": "clinical",
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -6109,6 +6642,7 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -6124,6 +6658,7 @@
    "words": 1,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -6133,42 +6668,13 @@
    ]
   },
   {
-   "key": "پروگنوز",
-   "tag": "#پروگنوز",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "",
-   "use_when": "",
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "chairside/chairside-13",
-    "chairside/chairside-14"
-   ]
-  },
-  {
-   "key": "پروگنوز_دندان",
-   "tag": "#پروگنوز_دندان",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "",
-   "use_when": "",
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "chairside/chairside-9",
-    "chairside/chairside-21"
-   ]
-  },
-  {
    "key": "پری_ایمپلنتایتس",
    "tag": "#پری_ایمپلنتایتس",
    "domain": "clinical",
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -6184,6 +6690,7 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -6199,6 +6706,7 @@
    "words": 2,
    "definition": "التهاب و تحلیلِ استخوانِ اطراف ایمپلنت.",
    "use_when": "مقاله تشخیص یا مدیریتش را بگوید.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#Peri_Implantitis"
@@ -6210,29 +6718,13 @@
    ]
   },
   {
-   "key": "پوزیشن_ایمپلنت",
-   "tag": "#پوزیشن_ایمپلنت",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "موقعیت سه‌بعدی فیکسچر در استخوان — عمق، زاویه و جهت.",
-   "use_when": "مقاله درباره‌ی جایگذاری و پیامدهای پوزیشن تصمیم بگیرد.",
-   "variants": [],
-   "co_tags": [
-    "#3D_Implant_Positioning"
-   ],
-   "count": 2,
-   "content_ids": [
-    "sharehub/share-3",
-    "episodes/episode-157"
-   ]
-  },
-  {
-   "key": "پوسیدگی_ثانویه",
+   "key": "پوسیدگی_عودکننده",
    "tag": "#پوسیدگی_ثانویه",
    "domain": "clinical",
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -6248,6 +6740,7 @@
    "words": 1,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -6263,6 +6756,7 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -6272,12 +6766,29 @@
    ]
   },
   {
+   "key": "پیگیری_زمانی_ایمپلنت",
+   "tag": "#فالوآپ_ایمپلنت",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "",
+   "use_when": "",
+   "aliases": [],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "litecast/lite-CAST10",
+    "litecast/lite-CAST19"
+   ]
+  },
+  {
    "key": "کارآزمایی_بالینی_تصادفی",
    "tag": "#کارآزمایی_بالینی_تصادفی",
    "domain": "clinical",
    "words": 3,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -6287,12 +6798,13 @@
    ]
   },
   {
-   "key": "کاغذ_آرتیکولاسیون",
+   "key": "کاغذ_ارتیکولاسیون",
    "tag": "#کاغذ_آرتیکولاسیون",
    "domain": "clinical",
    "words": 2,
    "definition": "کاغذ کاربن ثبت تماس اکلوزالی — نقاط تماس را نشان می‌دهد، ولی نمی‌گوید آن تماس دندان را تکان می‌دهد یا نه.",
    "use_when": "مقاله درباره‌ی خودِ کاغذ حرف بزند: ضخامت، تفسیر، یا محدودیتش.",
+   "aliases": [],
    "variants": [
     "#آرتیکولاسیون",
     "#Articulation"
@@ -6311,6 +6823,7 @@
    "words": 2,
    "definition": "خودِ تماس بین دو دندان مجاور، به‌عنوان یک ساختار.",
    "use_when": "مقاله درباره‌ی شکل، محل یا شدتِ کانتکت پروگزیمال باشد.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -6326,17 +6839,17 @@
    "words": 2,
    "definition": "واحدِ طره‌ای که فقط از یک سمت تکیه دارد.",
    "use_when": "مقاله کانتی‌لیور را انتخاب یا رد کند.",
+   "aliases": [
+    "کانتیلور",
+    "کانتی‌لیور",
+    "کانتیلیور"
+   ],
    "variants": [],
    "co_tags": [],
    "count": 2,
    "content_ids": [
     "sharehub/share-3",
     "metanotes/meta-18"
-   ],
-   "aliases": [
-    "کانتیلور",
-    "کانتی‌لیور",
-    "کانتیلیور"
    ]
   },
   {
@@ -6346,6 +6859,7 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -6361,6 +6875,7 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -6376,6 +6891,7 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -6391,6 +6907,7 @@
    "words": 2,
    "definition": "پست و کورِ ریختگیِ یکپارچه.",
    "use_when": "مقاله طراحی یا ساختِ کور ریختگی را تعیین کند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -6406,6 +6923,7 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -6421,6 +6939,7 @@
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -6430,12 +6949,13 @@
    ]
   },
   {
-   "key": "3d_implant_positioning",
+   "key": "3d_ایمپلنت_positioning",
    "tag": "#3D_Implant_Positioning",
    "domain": "clinical",
    "words": 3,
    "definition": "همان #پوزیشن_ایمپلنت، با اصطلاح انگلیسی.",
    "use_when": "همیشه همراه #پوزیشن_ایمپلنت.",
+   "aliases": [],
    "variants": [
     "#3DImplantPositioning"
    ],
@@ -6454,6 +6974,7 @@
    "words": 1,
    "definition": "انجمن دندانپزشکی آمریکا، به‌عنوان مرجعِ موضع‌گیری.",
    "use_when": "مقاله به موضع رسمیِ ADA استناد کند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
@@ -6468,6 +6989,7 @@
    "words": 2,
    "definition": "دندان طبیعیِ مجاور ایمپلنت — طرفِ متحرکِ رابطه‌ای که ایمپلنت در آن ثابت است.",
    "use_when": "مقاله رفتار دندان مجاور را عاملِ یک پیامد بداند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
@@ -6482,6 +7004,7 @@
    "words": 3,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [
     "#AngledScrewChannel"
    ],
@@ -6492,12 +7015,13 @@
    ]
   },
   {
-   "key": "anterior_implant",
+   "key": "anterior_ایمپلنت",
    "tag": "#Anterior_Implant",
    "domain": "clinical",
    "words": 2,
    "definition": "همان #ایمپلنت_قدامی، با اصطلاح انگلیسی.",
    "use_when": "همیشه همراه #ایمپلنت_قدامی.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#ایمپلنت_قدامی"
@@ -6514,6 +7038,7 @@
    "words": 2,
    "definition": "همان #هوش_افزوده، با اصطلاح انگلیسی.",
    "use_when": "همیشه همراه #هوش_افزوده.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#هوش_افزوده"
@@ -6524,12 +7049,13 @@
    ]
   },
   {
-   "key": "bone_level_implant",
+   "key": "bone_level_ایمپلنت",
    "tag": "#Bone_Level_Implant",
    "domain": "clinical",
    "words": 3,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [
     "#BoneLevelImplant"
    ],
@@ -6546,6 +7072,7 @@
    "words": 2,
    "definition": "همان #بات_جوینت، با اصطلاح انگلیسی.",
    "use_when": "همیشه همراه #بات_جوینت.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#بات_جوینت"
@@ -6556,12 +7083,32 @@
    ]
   },
   {
+   "key": "cbct",
+   "tag": "#CBCT",
+   "domain": null,
+   "words": 1,
+   "definition": "توموگرافی مخروطی.",
+   "use_when": "مقاله CBCT را لازمه‌ی تصمیم بداند.",
+   "aliases": [
+    "سی بی سی تی",
+    "کن بیم",
+    "cone beam"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "chairside/chairside-17"
+   ]
+  },
+  {
    "key": "confabulation",
    "tag": "#Confabulation",
    "domain": "ai",
    "words": 1,
    "definition": "همان #کانفابیولیشن، با اصطلاح انگلیسی.",
    "use_when": "همیشه همراه #کانفابیولیشن.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#کانفابیولیشن"
@@ -6578,6 +7125,7 @@
    "words": 2,
    "definition": "همان #رویش_مداوم، با اصطلاح انگلیسی.",
    "use_when": "همیشه همراه #رویش_مداوم.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#رویش_مداوم"
@@ -6588,26 +7136,13 @@
    ]
   },
   {
-   "key": "crown_preparation",
-   "tag": "#Crown_Preparation",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "آماده‌سازی دندان برای روکش، با اصطلاح انگلیسی.",
-   "use_when": "همراه #تراش_روکش.",
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "sharehub/share-10"
-   ]
-  },
-  {
    "key": "dental_caries",
    "tag": "#Dental_Caries",
    "domain": "clinical",
    "words": 2,
    "definition": "همان #پوسیدگی، با اصطلاح انگلیسی.",
    "use_when": "همیشه همراه #پوسیدگی.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#پوسیدگی"
@@ -6624,6 +7159,7 @@
    "words": 1,
    "definition": "همان #خطای_اسکن، با اصطلاح انگلیسی.",
    "use_when": "همیشه همراه #خطای_اسکن.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#خطای_اسکن"
@@ -6640,29 +7176,12 @@
    "words": 1,
    "definition": "شاخص شمارشِ دندان‌های پوسیده، کشیده و پرشده.",
    "use_when": "مقاله از این شاخص برای سنجش استفاده کند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
    "content_ids": [
     "sharehub/share-7"
-   ]
-  },
-  {
-   "key": "emergence_profile",
-   "tag": "#Emergence_Profile",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "همان #پروفایل_امرجنس، با اصطلاح انگلیسی.",
-   "use_when": "همیشه همراه #پروفایل_امرجنس.",
-   "variants": [
-    "#EmergenceProfile"
-   ],
-   "co_tags": [
-    "#پروفایل_امرجنس"
-   ],
-   "count": 1,
-   "content_ids": [
-    "episodes/episode-158"
    ]
   },
   {
@@ -6672,6 +7191,7 @@
    "words": 3,
    "definition": "دادنِ یکی‌دو نمونه‌ی خروجیِ دلخواه به مدل، به‌جای توصیف کردنِ شکلِ آن.",
    "use_when": "مقاله نمونه‌دادن را به‌عنوان تکنیک معرفی کند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#پرامپت_نویسی"
@@ -6688,6 +7208,7 @@
    "words": 2,
    "definition": "همان #گیر_غذایی، با اصطلاح انگلیسی.",
    "use_when": "همیشه همراه #گیر_غذایی.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#گیر_غذایی"
@@ -6698,12 +7219,13 @@
    ]
   },
   {
-   "key": "full_arch_implant",
+   "key": "full_arch_ایمپلنت",
    "tag": "#Full_Arch_Implant",
    "domain": "clinical",
    "words": 3,
    "definition": "همان #ایمپلنت_فول_آرچ، با اصطلاح انگلیسی.",
    "use_when": "همیشه همراه #ایمپلنت_فول_آرچ.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#ایمپلنت_فول_آرچ"
@@ -6720,6 +7242,7 @@
    "words": 3,
    "definition": "همان #بازسازی_کامل_دهان، با اصطلاح انگلیسی.",
    "use_when": "همیشه همراه #بازسازی_کامل_دهان. جایگزین #FullMouthRehabilitation که سرِهم بود و با «full mouth rehabilitation» تطبیق نمی‌خورد.",
+   "aliases": [],
    "variants": [
     "#FullMouthRehabilitation"
    ],
@@ -6732,12 +7255,13 @@
    ]
   },
   {
-   "key": "healing_abutment",
+   "key": "healing_اباتمنت",
    "tag": "#Healing_Abutment",
    "domain": "clinical",
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [
     "#HealingAbutment"
    ],
@@ -6748,12 +7272,13 @@
    ]
   },
   {
-   "key": "immediate_implant",
+   "key": "immediate_ایمپلنت",
    "tag": "#Immediate_Implant",
    "domain": "clinical",
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [
     "#ImmediateImplant"
    ],
@@ -6764,44 +7289,13 @@
    ]
   },
   {
-   "key": "implant_esthetics",
-   "tag": "#Implant_Esthetics",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "همان #زیبایی_ایمپلنت، با اصطلاح انگلیسی.",
-   "use_when": "همیشه همراه #زیبایی_ایمپلنت.",
-   "variants": [],
-   "co_tags": [
-    "#زیبایی_ایمپلنت"
-   ],
-   "count": 1,
-   "content_ids": [
-    "sharehub/share-3"
-   ]
-  },
-  {
-   "key": "implant_prosthetics",
-   "tag": "#Implant_Prosthetics",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "",
-   "use_when": "",
-   "variants": [
-    "#ImplantProsthetics"
-   ],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "sharehub/share-1"
-   ]
-  },
-  {
    "key": "jumping_gap",
    "tag": "#Jumping_Gap",
    "domain": "clinical",
    "words": 2,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [
     "#JumpingGap"
    ],
@@ -6818,6 +7312,7 @@
    "words": 2,
    "definition": "حدِ تیپری که فراتر از آن رزیستنس از بین می‌رود.",
    "use_when": "مقاله همین حد را تعیین یا استفاده کند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
@@ -6832,6 +7327,7 @@
    "words": 2,
    "definition": "همان #دریفت_مزیالی، با اصطلاح انگلیسی.",
    "use_when": "همیشه همراه #دریفت_مزیالی.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#دریفت_مزیالی"
@@ -6848,6 +7344,7 @@
    "words": 2,
    "definition": "همان #مدل_تصمیم، با اصطلاح انگلیسی.",
    "use_when": "همیشه همراه #مدل_تصمیم.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#مدل_تصمیم"
@@ -6858,12 +7355,32 @@
    ]
   },
   {
-   "key": "one_abutment_one_time",
+   "key": "mronj",
+   "tag": "#MRONJ",
+   "domain": null,
+   "words": 1,
+   "definition": "استئونکروز فکِ مرتبط با دارو.",
+   "use_when": "مقاله ریسک یا مدیریتِ MRONJ را بررسی کند.",
+   "aliases": [
+    "استئونکروز فک",
+    "osteonecrosis",
+    "نکروز استخوان فک"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "chairside/chairside-20"
+   ]
+  },
+  {
+   "key": "one_اباتمنت_one_time",
    "tag": "#One_Abutment_One_Time",
    "domain": "clinical",
    "words": 4,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [
     "#OneAbutmentOneTime"
    ],
@@ -6880,6 +7397,7 @@
    "words": 1,
    "definition": "همان #ارتودنسی، با اصطلاح انگلیسی.",
    "use_when": "همیشه همراه #ارتودنسی.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#ارتودنسی"
@@ -6890,12 +7408,13 @@
    ]
   },
   {
-   "key": "peri_implant_phenotype",
+   "key": "peri_ایمپلنت_phenotype",
    "tag": "#Peri_Implant_Phenotype",
    "domain": "clinical",
    "words": 3,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [
     "#PeriImplantPhenotype"
    ],
@@ -6912,6 +7431,7 @@
    "words": 2,
    "definition": "همان #دستور_مثبت، با اصطلاح انگلیسی.",
    "use_when": "همیشه همراه #دستور_مثبت.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#دستور_مثبت"
@@ -6928,6 +7448,7 @@
    "words": 2,
    "definition": "همان #طراحی_پروتز، با اصطلاح انگلیسی.",
    "use_when": "همیشه همراه #طراحی_پروتز.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#طراحی_پروتز"
@@ -6944,6 +7465,7 @@
    "words": 1,
    "definition": "مطالعه‌ی Rasperini درباره‌ی مقایسه‌ی ده‌ساله‌ی دندان پریویی و ایمپلنت.",
    "use_when": "مقاله به همین مطالعه استناد کند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
@@ -6958,6 +7480,7 @@
    "words": 1,
    "definition": "واردکردنِ کدِ گیفت‌کارت برای شارژ موجودی.",
    "use_when": "فقط در راهنمای عملیِ پرداخت.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
@@ -6972,6 +7495,7 @@
    "words": 2,
    "definition": "ویژگی‌هایی از تراش که جلوی خروجِ روکش در امتدادِ مسیر نشست را می‌گیرد — متفاوت با resistance form.",
    "use_when": "مقاله این دو را تفکیک کند یا ریتنشن را ارزیابی کند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
@@ -6986,6 +7510,7 @@
    "words": 1,
    "definition": "همان #بزاق، با اصطلاح انگلیسی.",
    "use_when": "همیشه همراه #بزاق.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#بزاق"
@@ -7002,6 +7527,7 @@
    "words": 1,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
@@ -7016,6 +7542,7 @@
    "words": 2,
    "definition": "همان #طراحی_خودمحافظ، با اصطلاح انگلیسی.",
    "use_when": "همیشه همراه #طراحی_خودمحافظ.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#طراحی_خودمحافظ"
@@ -7032,6 +7559,7 @@
    "words": 2,
    "definition": "نامِ کانسپتِ نویسنده برای همین طرح.",
    "use_when": "همیشه همراه #Smart_Vent_Crown.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#Smart_Vent_Crown"
@@ -7048,6 +7576,7 @@
    "words": 1,
    "definition": "همان #دخانیات، با اصطلاح انگلیسی.",
    "use_when": "همیشه همراه #دخانیات.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#دخانیات"
@@ -7064,6 +7593,7 @@
    "words": 3,
    "definition": "همان #مدیریت_بافت_نرم، با اصطلاح انگلیسی.",
    "use_when": "همیشه همراه #مدیریت_بافت_نرم.",
+   "aliases": [],
    "variants": [
     "#SoftTissueManagement"
    ],
@@ -7082,6 +7612,7 @@
    "words": 1,
    "definition": "Supportive Periodontal Therapy — مراقبت نگهدارنده‌ی منظم.",
    "use_when": "مقاله SPT را شرطِ دوامِ نتیجه بداند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
@@ -7096,6 +7627,7 @@
    "words": 1,
    "definition": "سرنامِ Stainless Steel Crown.",
    "use_when": "همیشه همراه #روکش_استیل — درِ ورودیِ انگلیسیِ همان مفهوم.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#روکش_استیل"
@@ -7112,6 +7644,7 @@
    "words": 1,
    "definition": "«موفقیت» به‌عنوان معیارِ سخت‌گیرانه، در برابر صرفِ باقی ماندن.",
    "use_when": "مقاله تفاوت این دو معیار را موضوع کند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#Survival"
@@ -7128,6 +7661,7 @@
    "words": 1,
    "definition": "«بقا» — اینکه چیزی هنوز در دهان است، بی‌آنکه لزوماً سالم باشد.",
    "use_when": "همیشه همراه #Success.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#Success"
@@ -7138,12 +7672,13 @@
    ]
   },
   {
-   "key": "tissue_level_implant",
+   "key": "tissue_level_ایمپلنت",
    "tag": "#Tissue_Level_Implant",
    "domain": "clinical",
    "words": 3,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [
     "#TissueLevelImplant"
    ],
@@ -7160,6 +7695,7 @@
    "words": 2,
    "definition": "همان #توروس_مندیبولاریس، با اصطلاح انگلیسی.",
    "use_when": "همیشه همراه #توروس_مندیبولاریس.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#Torus_Mandibularis"
@@ -7176,6 +7712,7 @@
    "words": 3,
    "definition": "زاویه‌ی همگراییِ کلِ دیواره‌های تراش.",
    "use_when": "مقاله زاویه‌ی تراش را کمّی کند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
@@ -7190,6 +7727,7 @@
    "words": 2,
    "definition": "دیابت نوع ۲، با اصطلاح انگلیسی.",
    "use_when": "همیشه همراه #دیابت.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#دیابت"
@@ -7200,12 +7738,31 @@
    ]
   },
   {
+   "key": "veneer_کامپوزیت",
+   "tag": "#ونیر_کامپوزیت",
+   "domain": null,
+   "words": 2,
+   "definition": "ونیر ساخته‌شده با کامپوزیت.",
+   "use_when": "مقاله درباره‌ی همین درمان تصمیم بگیرد.",
+   "aliases": [
+    "کامپوزیت ونیر",
+    "composite veneer"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "chairside/chairside-14"
+   ]
+  },
+  {
    "key": "ابزار_ایمپلنت",
    "tag": "#ابزار_ایمپلنت",
    "domain": "clinical",
    "words": 2,
    "definition": "آچار، درایور و ابزارِ اختصاصیِ سیستم ایمپلنت.",
    "use_when": "مقاله ابزار را عاملِ خطا یا راه‌حل بداند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
@@ -7220,11 +7777,49 @@
    "words": 2,
    "definition": "ارتفاعِ دیواره‌ی باقی‌مانده به‌عنوان منبعِ گیر و رزیستنس.",
    "use_when": "مقاله ارتفاع دیواره را عاملِ تصمیم بداند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
    "content_ids": [
     "metanotes/meta-19"
+   ]
+  },
+  {
+   "key": "ارتودنسی_پیش_از_زیبایی",
+   "tag": "#ارتودنسی_پیش_از_زیبایی",
+   "domain": null,
+   "words": 3,
+   "definition": "جابه‌جایی ارتودنتیک پیش از درمان زیبایی، به‌جای پوشاندنِ مشکل با پروتز.",
+   "use_when": "مقاله ارتو را مقدمه‌ی درمان زیبایی بداند.",
+   "aliases": [
+    "ارتو قبل از زیبایی",
+    "ارتودنسی قبل از لمینت"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "chairside/chairside-1"
+   ]
+  },
+  {
+   "key": "ارجاع_تخصصی",
+   "tag": "#ارجاع_تخصصی",
+   "domain": null,
+   "words": 2,
+   "definition": "فرستادنِ کیس به تخصصِ دیگر به‌جای ادامه دادن.",
+   "use_when": "مقاله ارجاع را تصمیمِ درست بداند.",
+   "aliases": [
+    "ریفرال",
+    "referral",
+    "ارجاع بیمار"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "chairside/chairside-22"
    ]
   },
   {
@@ -7234,11 +7829,31 @@
    "words": 1,
    "definition": "جوش‌خوردنِ ایمپلنت به استخوان.",
    "use_when": "مقاله این فرایند یا اختلالش را بررسی کند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
    "content_ids": [
     "sharehub/share-9"
+   ]
+  },
+  {
+   "key": "استئوپلاستی",
+   "tag": "#استئوپلاستی",
+   "domain": null,
+   "words": 1,
+   "definition": "برداشتِ کنترل‌شده‌ی استخوان برای اصلاح فرمِ ریج.",
+   "use_when": "مقاله این جراحی را در طرح بگنجاند.",
+   "aliases": [
+    "osteoplasty",
+    "کاهش ریج",
+    "اصلاح ریج"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "chairside/chairside-8"
    ]
   },
   {
@@ -7248,11 +7863,31 @@
    "words": 2,
    "definition": "تکیه‌گاهِ عمودیِ کور روی سطح دندان.",
    "use_when": "مقاله ضرورت یا بی‌ضرورتیِ آن را بررسی کند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
    "content_ids": [
     "metanotes/meta-19"
+   ]
+  },
+  {
+   "key": "استیج_بندی_درمان",
+   "tag": "#استیج_بندی_درمان",
+   "domain": null,
+   "words": 3,
+   "definition": "شکستنِ درمان به مراحلِ ترتیب‌دار.",
+   "use_when": "مقاله ترتیبِ مراحل را خودِ تصمیم بداند.",
+   "aliases": [
+    "استیجینگ",
+    "staging",
+    "مرحله بندی درمان"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "chairside/chairside-24"
    ]
   },
   {
@@ -7262,6 +7897,7 @@
    "words": 3,
    "definition": "تهیه‌ی اشتراک پولیِ سرویس‌های هوش مصنوعی.",
    "use_when": "مقاله راهنمای عملیِ خرید اشتراک بدهد.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
@@ -7276,6 +7912,7 @@
    "words": 2,
    "definition": "بستن یا ایجادِ فضا با جابه‌جایی دندان.",
    "use_when": "مقاله تصمیمِ اصلاح فضا را بررسی کند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
@@ -7290,6 +7927,7 @@
    "words": 2,
    "definition": "اصولی که فارغ از کیس رعایت می‌شوند.",
    "use_when": "مقاله یک اصل عمومی را طرح یا نقد کند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
@@ -7304,6 +7942,7 @@
    "words": 1,
    "definition": "بیمار کودک و نوجوان؛ ملاحظاتی که از رشد، همکاری و رویش می‌آید.",
    "use_when": "مقاله تصمیمش را به سنِ رشد گره بزند، نه صرفاً بیمار جوان داشته باشد.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#دندانپزشکی_کودکان"
@@ -7320,11 +7959,31 @@
    "words": 2,
    "definition": "لحنِ قاطعِ مدل که هیچ ربطی به درست بودنِ جواب ندارد.",
    "use_when": "مقاله رابطه‌ی لحن و صحت را باز کند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
    "content_ids": [
     "dentai/promptologist/prompt2-1"
+   ]
+  },
+  {
+   "key": "انتخاب_بیمار",
+   "tag": "#انتخاب_بیمار",
+   "domain": null,
+   "words": 2,
+   "definition": "پذیرفتن یا نپذیرفتنِ بیمار پیش از هر تصمیم فنی.",
+   "use_when": "مقاله معیارِ پذیرش بیمار بدهد.",
+   "aliases": [
+    "پذیرش بیمار",
+    "رد بیمار",
+    "case selection"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "chairside/chairside-25"
    ]
   },
   {
@@ -7334,6 +7993,7 @@
    "words": 2,
    "definition": "پذیرفتن یا نپذیرفتنِ کیس، پیش از هر تصمیم فنی.",
    "use_when": "مقاله معیارِ پذیرش کیس بدهد.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
@@ -7348,6 +8008,7 @@
    "words": 2,
    "definition": "معیارهای عبور از ترمیم به روکش: ضخامت دیواره، وسعت تخریب، بار اکلوزالی، ضعف ساختاری پس از اندو.",
    "use_when": "مقاله بگوید کِی باید روکش کرد و کِی ترمیم کافی است. این تگ جای تگ‌های تک‌عاملی (بروکسیسم، اندو، ...) را می‌گیرد وقتی مقاله آن‌ها را فقط به‌عنوان معیار فهرست می‌کند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
@@ -7362,6 +8023,7 @@
    "words": 2,
    "definition": "App Store اپل.",
    "use_when": "فقط در راهنمای عملیِ پرداخت.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
@@ -7376,11 +8038,31 @@
    "words": 2,
    "definition": "اکانت اپل، لازم برای خرید داخل‌برنامه‌ای.",
    "use_when": "فقط در راهنمای عملیِ پرداخت.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
    "content_ids": [
     "dentai/promptologist/prompt1-append1"
+   ]
+  },
+  {
+   "key": "اکسپلنت_ایمپلنت",
+   "tag": "#اکسپلنت_ایمپلنت",
+   "domain": null,
+   "words": 2,
+   "definition": "خارج کردنِ ایمپلنتِ کارگذاشته‌شده.",
+   "use_when": "مقاله اکسپلنت را در طرح بگنجاند.",
+   "aliases": [
+    "explant",
+    "خارج کردن ایمپلنت",
+    "برداشتن ایمپلنت"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "chairside/chairside-24"
    ]
   },
   {
@@ -7390,11 +8072,46 @@
    "words": 1,
    "definition": "محدودیت‌های خاصِ دسترسی و پرداخت در ایران.",
    "use_when": "مقاله راه‌حلِ مختصِ ایران بدهد.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
    "content_ids": [
     "dentai/promptologist/prompt1-append1"
+   ]
+  },
+  {
+   "key": "ایمپلنت_esthetics",
+   "tag": "#Implant_Esthetics",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "همان #زیبایی_ایمپلنت، با اصطلاح انگلیسی.",
+   "use_when": "همیشه همراه #زیبایی_ایمپلنت.",
+   "aliases": [],
+   "variants": [],
+   "co_tags": [
+    "#زیبایی_ایمپلنت"
+   ],
+   "count": 1,
+   "content_ids": [
+    "sharehub/share-3"
+   ]
+  },
+  {
+   "key": "ایمپلنت_prosthetics",
+   "tag": "#Implant_Prosthetics",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "aliases": [],
+   "variants": [
+    "#ImplantProsthetics"
+   ],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "sharehub/share-1"
    ]
   },
   {
@@ -7404,6 +8121,7 @@
    "words": 2,
    "definition": "ایمپلنت در ناحیه‌ی قدام، با بارِ زیباییِ بالا.",
    "use_when": "مقاله تصمیمش مختصِ ناحیه‌ی قدام باشد.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#Anterior_Implant"
@@ -7420,6 +8138,7 @@
    "words": 1,
    "definition": "همان مفهوم تداخل، با واژه‌ی رایجِ کلینیکی.",
    "use_when": "همیشه همراه #تداخل_سمت_کارگر — هیچ کلمه‌ی مشترکی ندارند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#تداخل_سمت_کارگر"
@@ -7430,12 +8149,32 @@
    ]
   },
   {
+   "key": "اینتروژن_ارتودنسی_ارتودنسی",
+   "tag": "#اینتروژن_ارتودنسی",
+   "domain": null,
+   "words": 4,
+   "definition": "فرو بردنِ ارتودنتیکِ دندانِ سوپرااراپت برای بازپس‌گیریِ فضا.",
+   "use_when": "مقاله اینتروژن را راه‌حل بداند.",
+   "aliases": [
+    "اینتروژن",
+    "intrusion",
+    "فرو بردن دندان"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "chairside/chairside-19"
+   ]
+  },
+  {
    "key": "بات_جوینت",
    "tag": "#بات_جوینت",
    "domain": "clinical",
    "words": 2,
    "definition": "طرحِ لبه‌ی اینسایزال به‌صورت اتصال سربه‌سر.",
    "use_when": "مقاله بین طرح‌های لبه انتخاب کند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#Butt_Joint"
@@ -7452,11 +8191,50 @@
    "words": 2,
    "definition": "روش تشخیصی: تحریک هدفمند (سوند، نخ دندان، فشار) تا همان دردی که بیمار توصیف کرده عیناً تکرار شود.",
    "use_when": "مقاله از بازسازی درد به‌عنوان ابزار رسیدن به تشخیص استفاده کند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
    "content_ids": [
     "photocast/episode-1"
+   ]
+  },
+  {
+   "key": "برداشت_ترمیم",
+   "tag": "#برداشت_ترمیم",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "باز کردن و خارج کردنِ ترمیمِ موجود برای دیدنِ زیرِ آن.",
+   "use_when": "مقاله برداشتنِ ترمیم را گامِ تشخیصی یا درمانی بداند.",
+   "aliases": [
+    "برداشتن ترمیم",
+    "خارج کردن ترمیم",
+    "باز کردن ترمیم"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "chairside/chairside-7"
+   ]
+  },
+  {
+   "key": "برند_ایمپلنت",
+   "tag": "#برند_ایمپلنت",
+   "domain": null,
+   "words": 2,
+   "definition": "مشخص نبودنِ سیستم ایمپلنتِ کارگذاشته‌شده.",
+   "use_when": "مقاله ناشناخته بودنِ برند را مانعِ ادامه بداند.",
+   "aliases": [
+    "سیستم ایمپلنت",
+    "مارک ایمپلنت",
+    "شناسایی ایمپلنت"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "chairside/chairside-17"
    ]
   },
   {
@@ -7466,6 +8244,7 @@
    "words": 1,
    "definition": "بزاق، جریان و ظرفیت بافری‌اش.",
    "use_when": "مقاله بزاق را متغیرِ تصمیم بداند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#Saliva"
@@ -7482,11 +8261,31 @@
    "words": 2,
    "definition": "اصلاح کانتکت باز پروگزیمال — افزودن کامپوزیت، یا اصلاح/تعویض رستوریشن.",
    "use_when": "مقاله راهکار عملی بستن کانتکت باز بدهد. مفهوم معکوسِ #باز_کردن_کانتکت است؛ جابه‌جا به کار نرود.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
    "content_ids": [
     "photocast/episode-1"
+   ]
+  },
+  {
+   "key": "بیس_فسفونات",
+   "tag": "#بیس_فسفونات",
+   "domain": null,
+   "words": 2,
+   "definition": "داروی بیس‌فسفونات و منعی که برای جراحی می‌سازد.",
+   "use_when": "مقاله سابقه‌ی مصرف را عاملِ تصمیم بداند.",
+   "aliases": [
+    "bisphosphonate",
+    "بیسفسفونات",
+    "بی فسفونات"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "chairside/chairside-20"
    ]
   },
   {
@@ -7496,6 +8295,7 @@
    "words": 2,
    "definition": "کار کردن برای آشنا و آنچه واقعاً باعث می‌شود نتیجه بد به نظر برسد.",
    "use_when": "مقاله همین پدیده را بازخوانی کند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
@@ -7504,17 +8304,57 @@
    ]
   },
   {
-   "key": "بیمار_سیگاری",
+   "key": "بیمار_دخانیات",
    "tag": "#بیمار_سیگاری",
    "domain": "clinical",
    "words": 2,
    "definition": "پروتکلِ مدیریتِ بیمارِ سیگاری پیش و پس از جراحی.",
    "use_when": "مقاله پروتکل عملی بدهد.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
    "content_ids": [
     "sharehub/share-9"
+   ]
+  },
+  {
+   "key": "بیولوژیک_ویدث",
+   "tag": "#بیولوژیک_ویدث",
+   "domain": null,
+   "words": 2,
+   "definition": "فاصله‌ی زیستیِ بین لبه‌ی ترمیم و استخوان.",
+   "use_when": "مقاله تجاوز به این فاصله را تشخیص بدهد یا از آن پرهیز کند.",
+   "aliases": [
+    "biologic width",
+    "عرض بیولوژیک",
+    "فاصله بیولوژیک",
+    "بیولوژیکال ویدث"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "chairside/chairside-7"
+   ]
+  },
+  {
+   "key": "تحلیل_سرویکال",
+   "tag": "#تحلیل_سرویکال",
+   "domain": null,
+   "words": 2,
+   "definition": "تحلیل خارجی/داخلی در ناحیه‌ی سرویکال ریشه.",
+   "use_when": "مقاله این ضایعه را تشخیص بدهد یا سرنوشت دندان را بر آن بنا کند.",
+   "aliases": [
+    "ریزورپشن سرویکال",
+    "تحلیل گردن دندان",
+    "cervical resorption"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "chairside/chairside-4"
    ]
   },
   {
@@ -7524,6 +8364,7 @@
    "words": 2,
    "definition": "جلسه‌ی تحویل کارِ پروتزی.",
    "use_when": "مقاله مرحله‌ای از همین جلسه را تعیین تکلیف کند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
@@ -7532,21 +8373,21 @@
    ]
   },
   {
-   "key": "تداخل_سمت_کارگر",
-   "tag": "#تداخل_سمت_کارگر",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "تماس مزاحم در سمت کارگر حین حرکت طرفی، که بار را روی یک دندان متمرکز می‌کند.",
-   "use_when": "مقاله تداخلِ مشخصاً سمت کارگر را پیدا یا تنظیم کند. برای تداخل عمومی اکلوزالی از #تداخل_اکلوزالی استفاده شود.",
-   "variants": [
-    "#تداخل"
+   "key": "تخریب_داخلی",
+   "tag": "#تخریب_داخلی",
+   "domain": null,
+   "words": 2,
+   "definition": "از دست رفتنِ ساختار از داخل، با ظاهرِ سالمِ بیرونی.",
+   "use_when": "مقاله این تخریبِ پنهان را یافته‌ی تعیین‌کننده بداند.",
+   "aliases": [
+    "تخریب وسیع داخلی",
+    "پوسیدگی داخلی"
    ],
-   "co_tags": [
-    "#اینترفیرنس"
-   ],
+   "variants": [],
+   "co_tags": [],
    "count": 1,
    "content_ids": [
-    "dentcast-plus/video-6"
+    "chairside/chairside-22"
    ]
   },
   {
@@ -7556,6 +8397,7 @@
    "words": 2,
    "definition": "کیفیت و تراکمِ استخوانِ میزبان.",
    "use_when": "مقاله تراکم را متغیرِ تصمیم بداند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
@@ -7570,6 +8412,7 @@
    "words": 2,
    "definition": "توانِ سازگاری بیمار با تغییر — متغیری که نتیجه را تعیین می‌کند ولی در طرح درمان دیده نمی‌شود.",
    "use_when": "مقاله تطابق یا عدم تطابق بیمار را عامل تصمیم بداند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
@@ -7584,6 +8427,7 @@
    "words": 2,
    "definition": "انطباقِ لبه‌ی رستوریشن با خط ختم.",
    "use_when": "مقاله دقتِ مارجین را بسنجد یا عاملِ نتیجه بداند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
@@ -7598,6 +8442,7 @@
    "words": 2,
    "definition": "Premature contact — تماسی که زودتر از بقیه می‌نشیند و مسیر بسته شدن فک را منحرف می‌کند.",
    "use_when": "مقاله تماس زودرس را تشخیص بدهد یا حذفش کند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
@@ -7612,6 +8457,7 @@
    "words": 2,
    "definition": "برجستگیِ استخوانیِ سطح لینگوالِ مندیبل.",
    "use_when": "مقاله توروس را نشانه یا مانع بداند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#Torus_Mandibularis"
@@ -7628,6 +8474,7 @@
    "words": 2,
    "definition": "میزان و روشِ تورک دادن پیچ.",
    "use_when": "مقاله تورک را عاملِ نتیجه بداند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
@@ -7642,6 +8489,7 @@
    "words": 2,
    "definition": "پذیرش ساختِ دوباره‌ی کار به‌جای اصلاحِ ناکافی.",
    "use_when": "مقاله تکرار را نتیجه‌ی منطقیِ یک عیب طراحی بداند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
@@ -7656,6 +8504,7 @@
    "words": 2,
    "definition": "تکنیک Gurel برای تراش کنترل‌شده روی ماک‌آپ.",
    "use_when": "مقاله همین تکنیک را شرح دهد.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
@@ -7670,11 +8519,31 @@
    "words": 2,
    "definition": "ثبتِ رابطه‌ی فکین.",
    "use_when": "مقاله روش یا خطای ثبت رابطه را بررسی کند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
    "content_ids": [
     "metanotes/meta-16"
+   ]
+  },
+  {
+   "key": "جایگذاری_ایمپلنت",
+   "tag": "#جایگذاری_ایمپلنت",
+   "domain": null,
+   "words": 2,
+   "definition": "عمق، زاویه و موقعیتِ قرار دادن فیکسچر.",
+   "use_when": "مقاله خطای جایگذاری را عاملِ مشکلِ پروتزی بداند.",
+   "aliases": [
+    "قرارگیری ایمپلنت",
+    "پوزیشن فیکسچر",
+    "عمق ایمپلنت"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "chairside/chairside-10"
    ]
   },
   {
@@ -7684,25 +8553,12 @@
    "words": 1,
    "definition": "سرویسِ Gemini گوگل.",
    "use_when": "مقاله مشخصاً به این سرویس بپردازد.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
    "content_ids": [
     "dentai/promptologist/prompt1-append1"
-   ]
-  },
-  {
-   "key": "حداقل_مداخله",
-   "tag": "#حداقل_مداخله",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "کم‌ترین دخالتِ ممکن برای رسیدن به نتیجه.",
-   "use_when": "مقاله کم‌مداخله بودن را معیارِ انتخاب بداند.",
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "metanotes/meta-8"
    ]
   },
   {
@@ -7712,6 +8568,7 @@
    "words": 3,
    "definition": "Post-op sensitivity — حساسیتی که پس از ترمیم یا پروتز شروع می‌شود.",
    "use_when": "مقاله علتِ حساسیت پس از درمان را پیدا یا رفع کند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
@@ -7726,11 +8583,30 @@
    "words": 2,
    "definition": "مراحل عملیِ خرید و فعال‌سازی اشتراک.",
    "use_when": "مقاله گام‌به‌گام خرید را بگوید.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
    "content_ids": [
     "dentai/promptologist/prompt1-append1"
+   ]
+  },
+  {
+   "key": "خطای_قالبگیری",
+   "tag": "#خطای_قالبگیری",
+   "domain": null,
+   "words": 2,
+   "definition": "خطایی که در مرحله‌ی ثبت وارد کار می‌شود و بعداً دیده می‌شود.",
+   "use_when": "مقاله منشأ خطا را به قالب‌گیری برگرداند.",
+   "aliases": [
+    "خطای قالب",
+    "ایمپرشن اشتباه"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "chairside/chairside-12"
    ]
   },
   {
@@ -7740,11 +8616,30 @@
    "words": 3,
    "definition": "دردی که پس از سمان شدن روکش شروع می‌شود؛ شکایتِ بیمار است، نه تشخیص.",
    "use_when": "مقاله منشأ درد پس از پروتز ثابت را بررسی یا حل کند. برای دردِ حین تراش یا درد اندو به کار نرود.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
    "content_ids": [
     "photocast/episode-1"
+   ]
+  },
+  {
+   "key": "درد_مبهم",
+   "tag": "#درد_مبهم",
+   "domain": null,
+   "words": 2,
+   "definition": "دردی که بیمار نمی‌تواند دقیق موضعش را نشان دهد.",
+   "use_when": "مقاله منشأ دردِ مبهم را دنبال کند.",
+   "aliases": [
+    "درد نامشخص",
+    "درد گنگ"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "chairside/chairside-7"
    ]
   },
   {
@@ -7754,11 +8649,50 @@
    "words": 3,
    "definition": "Over-treatment — درمانی که انجامش از انجام‌ندادنش بدتر یا بی‌فایده است.",
    "use_when": "مقاله نکردنِ درمان را گزینه‌ی درست بداند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
    "content_ids": [
     "episodes/episode-160"
+   ]
+  },
+  {
+   "key": "درمان_درمان_بین_رشته_ای",
+   "tag": "#درمان_بین_رشته_ای",
+   "domain": null,
+   "words": 6,
+   "definition": "درمانی که تصمیمش بین دو تخصص تقسیم شده.",
+   "use_when": "مقاله هماهنگی بین تخصص‌ها را مسئله بداند.",
+   "aliases": [
+    "بین رشته ای",
+    "مولتی دیسیپلینری",
+    "interdisciplinary"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "chairside/chairside-2"
+   ]
+  },
+  {
+   "key": "درمان_مجدد_ریشه",
+   "tag": "#درمان_مجدد_ریشه",
+   "domain": null,
+   "words": 3,
+   "definition": "retreatment — تکرار درمان ریشه‌ی قبلی.",
+   "use_when": "مقاله ضرورت یا ارزشِ ری‌تریتمنت را بسنجد.",
+   "aliases": [
+    "ری تریتمنت",
+    "retreatment",
+    "درمان ریشه مجدد"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "chairside/chairside-9"
    ]
   },
   {
@@ -7768,6 +8702,7 @@
    "words": 2,
    "definition": "حرکت تدریجی دندان طبیعی به سمت مزیال — یکی از علل باز شدن کانتکت کنار ایمپلنت.",
    "use_when": "مقاله دریفت را عاملِ یک پیامد بداند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#Mesial_Drift"
@@ -7784,6 +8719,7 @@
    "words": 2,
    "definition": "گفتنِ «چه بکن» به‌جای «چه نکن»؛ هر «نکن» یک جای خالی می‌سازد که مدل با حدس پر می‌کند.",
    "use_when": "مقاله همین قاعده را آموزش دهد.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#Positive_Instructions"
@@ -7800,11 +8736,31 @@
    "words": 2,
    "definition": "دقتِ قابل احرازِ کار پروتزی در برابر صرفه‌جوییِ زمانی.",
    "use_when": "مقاله دقت را در برابر سرعت بگذارد.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
    "content_ids": [
     "metanotes/meta-9"
+   ]
+  },
+  {
+   "key": "دندان_اضافه",
+   "tag": "#دندان_اضافه",
+   "domain": null,
+   "words": 2,
+   "definition": "supernumerary — دندانِ اضافه به‌عنوان یکی از دو احتمال رقیب.",
+   "use_when": "مقاله این احتمال را در تشخیص افتراقی بگذارد.",
+   "aliases": [
+    "سوپرانومرری",
+    "supernumerary",
+    "دندان مازاد"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "chairside/chairside-18"
    ]
   },
   {
@@ -7814,6 +8770,7 @@
    "words": 2,
    "definition": "همان #مولر_اول_دائمی، با نام محاوره‌ای.",
    "use_when": "همیشه همراه #مولر_اول_دائمی. جایگزین #دندان۶ که چون بین «دندان» و «۶» جداکننده نداشت به یک توکنِ «دندان۶» تبدیل می‌شد و با هیچ پرسشی تطبیق نمی‌خورد.",
+   "aliases": [],
    "variants": [
     "#دندان۶"
    ],
@@ -7832,6 +8789,7 @@
    "words": 2,
    "definition": "مرحله‌ی موقتِ آزمودنِ یک تغییر (مثل VD جدید) پیش از اجرای دائمی.",
    "use_when": "مقاله ضرورت، طول، یا کفایتِ دوره‌ی آزمایشی را بررسی کند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
@@ -7846,6 +8804,7 @@
    "words": 1,
    "definition": "دیابت به‌عنوان عاملِ سیستمیکِ مؤثر بر دهان.",
    "use_when": "مقاله اثر دیابت را بسنجد.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#Type2_Diabetes"
@@ -7856,12 +8815,32 @@
    ]
   },
   {
+   "key": "دیواره_نازک",
+   "tag": "#دیواره_نازک",
+   "domain": null,
+   "words": 2,
+   "definition": "دیواره‌ی باقی‌مانده‌ای که نازک‌تر از حدِ تحمل است.",
+   "use_when": "مقاله ضخامت دیواره را عاملِ تصمیم بداند.",
+   "aliases": [
+    "دیواره باریک",
+    "ضخامت دیواره",
+    "نازکی دیواره"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "chairside/chairside-22"
+   ]
+  },
+  {
    "key": "رابردم",
    "tag": "#رابردم",
    "domain": "clinical",
    "words": 1,
    "definition": "ایزولاسیون با رابردم.",
    "use_when": "مقاله رابردم را ابزارِ حلِ مسئله بداند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
@@ -7876,6 +8855,7 @@
    "words": 2,
    "definition": "رابطه‌ی کانین بالا و پایین به‌عنوان مرجعِ اکلوزال.",
    "use_when": "مقاله این رابطه را حفظ یا تغییر دهد.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
@@ -7890,6 +8870,7 @@
    "words": 2,
    "definition": "نگاهِ بدبینانه به جوابِ مدل به‌عنوان بخشی از روند کار.",
    "use_when": "مقاله راستی‌آزمایی را در جریان کار جا بدهد.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
@@ -7904,6 +8885,7 @@
    "words": 2,
    "definition": "تکان/لِنگی روکش روی تراش هنگام امتحان — علامت است، نه علت.",
    "use_when": "مقاله راک را ببیند و علتش را دنبال کند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
@@ -7918,6 +8900,7 @@
    "words": 2,
    "definition": "ثبت رابطه با اسکنر، و ترتیبی که دقتش را تعیین می‌کند.",
    "use_when": "مقاله درباره‌ی همین روش دیجیتال باشد.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
@@ -7932,6 +8915,7 @@
    "words": 2,
    "definition": "همکاری، کنترل پلاک و پیگیریِ بیمار به‌عنوان متغیرِ نتیجه.",
    "use_when": "مقاله رفتار بیمار را شرطِ پیش‌آگهی بداند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
@@ -7946,11 +8930,27 @@
    "words": 2,
    "definition": "منبعی که مدل کامل و مرتب می‌سازد ولی وجود ندارد.",
    "use_when": "مقاله درباره‌ی همین شکلِ خاصِ توهم باشد.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
    "content_ids": [
     "dentai/promptologist/prompt1-4"
+   ]
+  },
+  {
+   "key": "روکش_preparation",
+   "tag": "#Crown_Preparation",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "آماده‌سازی دندان برای روکش، با اصطلاح انگلیسی.",
+   "use_when": "همراه #تراش_روکش.",
+   "aliases": [],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "sharehub/share-10"
    ]
   },
   {
@@ -7960,6 +8960,7 @@
    "words": 2,
    "definition": "Stainless Steel Crown — روکش پیش‌ساخته‌ی فلزی، انتخاب سریع و محافظه‌کارانه در سنین ۸ تا ۱۲.",
    "use_when": "مقاله SSC را تجویز، رد، یا با گزینه‌ی دیگری مقایسه کند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#SSC"
@@ -7976,6 +8977,7 @@
    "words": 2,
    "definition": "رویش آهسته و مادام‌العمر دندان طبیعی، در برابر ایمپلنتِ ثابتِ آنکیلوزه.",
    "use_when": "مقاله این تفاوت را عاملِ تغییر رابطه‌ی ایمپلنت و دندان مجاور بداند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#Continued_Eruption"
@@ -7986,12 +8988,13 @@
    ]
   },
   {
-   "key": "ریچموند_کراون",
+   "key": "ریچموند_روکش",
    "tag": "#ریچموند_کراون",
    "domain": "clinical",
    "words": 2,
    "definition": "ایده‌ی کلاسیکِ روکشِ یکپارچه با پست، در قالب دیجیتال.",
    "use_when": "مقاله همین ایده را احیا یا نقد کند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
@@ -8006,6 +9009,7 @@
    "words": 2,
    "definition": "دادنِ نقش، مخاطب و شرایط به مدل تا از جوابِ کلی به جوابِ مفید برسد.",
    "use_when": "مقاله بگوید چه چیزی باید به مدل داد.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
@@ -8020,6 +9024,7 @@
    "words": 2,
    "definition": "نتیجه‌ی زیباییِ درمان ایمپلنت.",
    "use_when": "مقاله زیبایی را معیارِ تصمیم بداند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#Implant_Esthetics"
@@ -8036,6 +9041,7 @@
    "words": 3,
    "definition": "تفاوتِ سفتی و توانِ تحملِ نیرو بین تکیه‌گاه‌های اسپلینت‌شده.",
    "use_when": "مقاله ناهمگونیِ تکیه‌گاه‌ها را مسئله بداند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
@@ -8050,6 +9056,7 @@
    "words": 1,
    "definition": "مرحله‌ی سمان کردنِ رستوریشن.",
    "use_when": "مقاله پروتکل سمان را بدهد.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
@@ -8064,11 +9071,30 @@
    "words": 2,
    "definition": "ساختِ رپلیکای اباتمنت با سیلیکون برای حذفِ سمان اضافه پیش از سمان نهایی.",
    "use_when": "مقاله همین تکنیک را شرح دهد.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
    "content_ids": [
     "sharehub/share-4"
+   ]
+  },
+  {
+   "key": "شکست_پست",
+   "tag": "#شکست_پست",
+   "domain": null,
+   "words": 2,
+   "definition": "خم شدن یا شکستن پست داخل کانال.",
+   "use_when": "مقاله علتِ شکست پست را دنبال کند.",
+   "aliases": [
+    "خم شدن پست",
+    "شکستن پست"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "chairside/chairside-5"
    ]
   },
   {
@@ -8078,6 +9104,7 @@
    "words": 2,
    "definition": "چک کردنِ خروجی مدل در برابر منبع واقعی، پیش از استفاده.",
    "use_when": "مقاله روشی برای راستی‌آزمایی بدهد.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
@@ -8092,6 +9119,7 @@
    "words": 2,
    "definition": "طراحی خودِ سیستم ایمپلنت و کامپوننت‌هایش.",
    "use_when": "مقاله ویژگی طراحی فیکسچر یا کامپوننت را دخیل بداند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
@@ -8106,6 +9134,7 @@
    "words": 2,
    "definition": "طراحی درمان ایمپلنت به‌شکلی که خودش از خودش محافظت کند، چون حمایت بیولوژیک ندارد.",
    "use_when": "مقاله همین منطق طراحی را شرح دهد.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#Self_defensive"
@@ -8122,6 +9151,7 @@
    "words": 2,
    "definition": "توانِ بزاق در خنثی کردن اسید.",
    "use_when": "مقاله این ظرفیت را عاملِ ریسک بداند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
@@ -8136,6 +9166,7 @@
    "words": 2,
    "definition": "شکستِ قطعات: پیچ، پرسلن، فریم.",
    "use_when": "مقاله عارضه‌ی مکانیکی را پیش‌بینی یا مدیریت کند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
@@ -8150,11 +9181,31 @@
    "words": 2,
    "definition": "فاصله‌ی دو ایمپلنت مجاور و اثرش بر استخوان و پاپیلا.",
    "use_when": "مقاله فاصله را عاملِ تصمیم بداند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
    "content_ids": [
     "sharehub/share-3"
+   ]
+  },
+  {
+   "key": "فرش_ساکت",
+   "tag": "#فرش_ساکت",
+   "domain": null,
+   "words": 2,
+   "definition": "جایگذاری ایمپلنت در ساکتِ تازه‌ی دندان کشیده‌شده.",
+   "use_when": "مقاله پیامدهای همین جایگذاری را بررسی کند.",
+   "aliases": [
+    "fresh socket",
+    "ساکت تازه",
+    "ایمپلنت در ساکت"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "chairside/chairside-10"
    ]
   },
   {
@@ -8164,11 +9215,67 @@
    "words": 2,
    "definition": "تعیینِ شکلِ جواب (جدول، فهرست، طول، لحن) توسط خودِ کاربر.",
    "use_when": "مقاله درباره‌ی شکلِ خروجی باشد، نه محتوایش.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
    "content_ids": [
     "dentai/promptologist/prompt4-1"
+   ]
+  },
+  {
+   "key": "فضای_ارتودنسی",
+   "tag": "#فضای_ارتودنسی",
+   "domain": null,
+   "words": 2,
+   "definition": "فضایی که ارتودنسی باز یا بسته کرده و باید پروتزی مدیریت شود.",
+   "use_when": "مقاله کفایت یا زیادیِ فضا را بسنجد.",
+   "aliases": [
+    "فضای ارتو",
+    "ارزیابی فضا"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "chairside/chairside-2"
+   ]
+  },
+  {
+   "key": "فضای_رستوریتیو",
+   "tag": "#فضای_رستوریتیو",
+   "domain": null,
+   "words": 2,
+   "definition": "فضای عمودیِ لازم برای بازسازی.",
+   "use_when": "مقاله کمبود یا اشغالِ این فضا را مسئله بداند.",
+   "aliases": [
+    "فضای بازسازی",
+    "restorative space",
+    "فضای پروتزی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "chairside/chairside-19"
+   ]
+  },
+  {
+   "key": "فقدان_دندان",
+   "tag": "#فقدان_دندان",
+   "domain": null,
+   "words": 2,
+   "definition": "نبودِ یک دندان و سؤالِ جایگزینی.",
+   "use_when": "مقاله درباره‌ی جایگزین کردن یا نکردن تصمیم بگیرد.",
+   "aliases": [
+    "از دست رفتن دندان",
+    "بی دندانی موضعی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "chairside/chairside-3"
    ]
   },
   {
@@ -8178,6 +9285,7 @@
    "words": 2,
    "definition": "نبودِ یک یا چند مولر — وضعیتی که سؤالِ «جایگزین کنم یا نه» را می‌سازد.",
    "use_when": "مقاله درباره‌ی تصمیمِ جایگزینی یا نکردنِ جایگزینیِ مولر باشد.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
@@ -8192,6 +9300,7 @@
    "words": 3,
    "definition": "ضخامت و کیفیت بافت نرم اطراف ایمپلنت به‌عنوان یک متغیر پیش‌بینی‌کننده.",
    "use_when": "مقاله فنوتیپ را بسنجد یا تغییرش بدهد.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#Peri_Implant_Phenotype"
@@ -8208,6 +9317,7 @@
    "words": 2,
    "definition": "Buccal Upper – Lower Lingual: در فک بالا کاسپ باکال و در فک پایین کاسپ لینگوال تراش می‌خورد.",
    "use_when": "مقاله همین قاعده را آموزش بدهد یا به‌کار ببرد.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
@@ -8222,6 +9332,7 @@
    "words": 1,
    "definition": "حرکتِ طرفیِ مندیبل.",
    "use_when": "مقاله تماس‌های این حرکت را تنظیم کند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
@@ -8236,6 +9347,7 @@
    "words": 2,
    "definition": "چارچوبِ صریح برای رسیدن به تصمیم، به‌جای قضاوت موردی.",
    "use_when": "مقاله یک چارچوب تصمیم ارائه دهد.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#Meta_Decision"
@@ -8246,12 +9358,32 @@
    ]
   },
   {
+   "key": "معماری_استخوان",
+   "tag": "#معماری_استخوان",
+   "domain": null,
+   "words": 2,
+   "definition": "فرمِ استخوانِ اطراف و هزینه‌ی از دست دادنش.",
+   "use_when": "مقاله حفظ یا تخریبِ فرم استخوان را در تصمیم دخیل کند.",
+   "aliases": [
+    "فرم استخوان",
+    "آناتومی استخوان",
+    "بون آرکیتکچر"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "chairside/chairside-16"
+   ]
+  },
+  {
    "key": "مولر_اول_دائمی",
    "tag": "#مولر_اول_دائمی",
    "domain": "clinical",
    "words": 3,
    "definition": "اولین مولر دائمی؛ زودترین دندان دائمی که رویش پیدا می‌کند و مرجع اکلوژن و رشد فک است.",
    "use_when": "مقاله درباره‌ی همین دندان تصمیم بگیرد.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#دندان_۶"
@@ -8262,12 +9394,32 @@
    ]
   },
   {
+   "key": "مولر_مندیبل",
+   "tag": "#مولر_مندیبل",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "مولر فک پایین.",
+   "use_when": "مقاله تصمیمش مختصِ این ناحیه باشد.",
+   "aliases": [
+    "مولر فک پایین",
+    "مولر پایین",
+    "mandibular molar"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "chairside/chairside-3"
+   ]
+  },
+  {
    "key": "میدلاین",
    "tag": "#میدلاین",
    "domain": "clinical",
    "words": 1,
    "definition": "خط وسط و هماهنگی‌اش.",
    "use_when": "مقاله میدلاین را معیارِ تصمیم بداند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
@@ -8282,6 +9434,7 @@
    "words": 3,
    "definition": "نسبتِ اهرمیِ تاج به ریشه.",
    "use_when": "مقاله این نسبت را معیار بداند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
@@ -8296,11 +9449,32 @@
    "words": 1,
    "definition": "ارجاع به دکتر نشاطی به‌عنوان منبعِ این مطلب.",
    "use_when": "روی مدخل‌هایی که مطلبِ ایشان بازنشر شده.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
    "content_ids": [
     "sharehub/share-6"
+   ]
+  },
+  {
+   "key": "نمای_ریج",
+   "tag": "#نمای_ریج",
+   "domain": null,
+   "words": 2,
+   "definition": "دیده شدنِ بیش‌ازحد ریج و لثه در لبخند.",
+   "use_when": "مقاله این نما را مشکلِ طراحی بداند.",
+   "aliases": [
+    "نمایش ریج",
+    "گامی اسمایل",
+    "gummy smile",
+    "لبخند لثه ای"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "chairside/chairside-8"
    ]
   },
   {
@@ -8310,11 +9484,31 @@
    "words": 2,
    "definition": "نیروی گوه‌ای که تماسِ مقابل روی شیب کاسپ ایجاد می‌کند و دندان را جابه‌جا می‌کند.",
    "use_when": "مقاله این نیرو را عاملِ باز شدن کانتکت بداند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
    "content_ids": [
     "metanotes/meta-12"
+   ]
+  },
+  {
+   "key": "هدایت_طرفی",
+   "tag": "#هدایت_طرفی",
+   "domain": null,
+   "words": 2,
+   "definition": "الگوی هدایتِ حرکات طرفی.",
+   "use_when": "مقاله ناهماهنگیِ الگوی طرفی را مسئله بداند.",
+   "aliases": [
+    "گایدنس طرفی",
+    "lateral guidance",
+    "هدایت جانبی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "chairside/chairside-15"
    ]
   },
   {
@@ -8324,6 +9518,7 @@
    "words": 2,
    "definition": "هوش مصنوعی به‌عنوان تقویت‌کننده‌ی قضاوت انسان، نه جایگزینش.",
    "use_when": "مقاله همین نسبت را تعریف کند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#Augmented_Intelligence"
@@ -8334,12 +9529,13 @@
    ]
   },
   {
-   "key": "هوش_مصنوعی_رادیوگرافی",
+   "key": "هوش_مصنوعی_رادیوگرافی_تشخیصی",
    "tag": "#هوش_مصنوعی_رادیوگرافی",
    "domain": "ai",
-   "words": 3,
+   "words": 5,
    "definition": "نرم‌افزاری که روی رادیوگرافی ضایعه یا سطح استخوان را علامت می‌زند — تصویری که اغلب با ChatGPT اشتباه گرفته می‌شود.",
    "use_when": "مقاله همین دسته را موضوع یا نقطه‌ی تمایز قرار دهد.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
@@ -8354,6 +9550,7 @@
    "words": 1,
    "definition": "سوراخ/کانالِ تخلیه در روکش سمان‌شونده برای خروجِ سمان اضافه.",
    "use_when": "مقاله ونت را راهکار بداند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
@@ -8368,6 +9565,7 @@
    "words": 1,
    "definition": "عملکردِ خارج از فانکشنِ طبیعی — کلنچ، بروکسیسم.",
    "use_when": "مقاله نیروی پارافانکشنال را عاملِ تصمیم بداند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
@@ -8382,6 +9580,7 @@
    "words": 1,
    "definition": "پاپیلای بین‌دندانی و حفظ یا بازسازی‌اش.",
    "use_when": "مقاله سرنوشتِ پاپیلا را تعیین کند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
@@ -8396,6 +9595,7 @@
    "words": 1,
    "definition": "حرکتِ پیش‌رونده‌ی مندیبل.",
    "use_when": "مقاله تماس‌های این حرکت را تنظیم کند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
@@ -8410,6 +9610,7 @@
    "words": 4,
    "definition": "پروتزی که تکیه‌گاهش ایمپلنت است.",
    "use_when": "همراه یک تگ مشخص‌تر بیاید.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
@@ -8424,11 +9625,31 @@
    "words": 2,
    "definition": "پروتکلِ باندینگ که بقای ترمیمِ ادهزیو به آن وابسته است.",
    "use_when": "مقاله پروتکل را عاملِ نتیجه بداند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
    "content_ids": [
     "metanotes/meta-14"
+   ]
+  },
+  {
+   "key": "پروپریوسپشن",
+   "tag": "#پروپریوسپشن",
+   "domain": null,
+   "words": 1,
+   "definition": "حسِ وضعیتیِ دندان و نقشش در تحملِ الگوی اکلوزال.",
+   "use_when": "مقاله این حس را عاملِ علامت‌دار شدن بداند.",
+   "aliases": [
+    "proprioception",
+    "حس عمقی",
+    "آگاهی اکلوزال"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "chairside/chairside-15"
    ]
   },
   {
@@ -8438,6 +9659,7 @@
    "words": 2,
    "definition": "پست ریختگی/فلزی در برابر فایبر.",
    "use_when": "مقاله بین این دو مقایسه یا انتخاب کند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
@@ -8452,11 +9674,31 @@
    "words": 3,
    "definition": "پلن کردن از رستوریشن نهایی به عقب — «چه چیزی می‌خواهیم تحویل دهیم» به‌جای «کجا ایمپلنت بگذاریم».",
    "use_when": "مقاله جهتِ پلنینگ را از پروتز به جراحی بداند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
    "content_ids": [
     "episodes/episode-156"
+   ]
+  },
+  {
+   "key": "پوسیدگی_عودکننده",
+   "tag": "#پوسیدگی_عودکننده",
+   "domain": null,
+   "words": 2,
+   "definition": "پوسیدگیِ برگشته در حاشیه‌ی ترمیم قبلی.",
+   "use_when": "مقاله عود پوسیدگی را یافته‌ی تعیین‌کننده بداند.",
+   "aliases": [
+    "عود پوسیدگی",
+    "پوسیدگی ثانویه",
+    "recurrent caries"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "chairside/chairside-6"
    ]
   },
   {
@@ -8466,6 +9708,7 @@
    "words": 1,
    "definition": "واحدِ معلقِ پروتز روی فضای بی‌دندان.",
    "use_when": "مقاله طراحی یا اندیکاسیون پونتیک را بگوید.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
@@ -8480,6 +9723,7 @@
    "words": 3,
    "definition": "پیچی که داخل ایمپلنت شکسته و باید خارج شود.",
    "use_when": "مقاله روشِ خارج کردن یا پیشگیری بدهد.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
@@ -8494,11 +9738,32 @@
    "words": 3,
    "definition": "پیچی که گلِ آن آسیب دیده و نه سفت می‌شود نه باز.",
    "use_when": "مقاله علت یا راه‌حلِ هرز شدن را بگوید.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
    "content_ids": [
     "sharehub/share-1"
+   ]
+  },
+  {
+   "key": "پیگیری_زمانی",
+   "tag": "#پیگیری_زمانی",
+   "domain": null,
+   "words": 2,
+   "definition": "گذاشتنِ زمان به‌عنوان ابزار تشخیصی، به‌جای تصمیم فوری.",
+   "use_when": "مقاله صبر کردن را روشِ تولید داده بداند.",
+   "aliases": [
+    "زمان به عنوان داده",
+    "مشاهده در زمان",
+    "فالوآپ",
+    "follow up"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "chairside/chairside-13"
    ]
   },
   {
@@ -8508,11 +9773,31 @@
    "words": 2,
    "definition": "کاسپ‌های حامل اکلوژن — پالاتال در فک بالا، باکال در فک پایین — که ارتفاعشان باید حفظ شود.",
    "use_when": "مقاله درباره‌ی حفظ یا بازسازی ارتفاع و نقش این کاسپ‌ها حرف بزند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
    "content_ids": [
     "photocast/episode-2"
+   ]
+  },
+  {
+   "key": "کانتور_ترمیم",
+   "tag": "#کانتور_ترمیم",
+   "domain": null,
+   "words": 2,
+   "definition": "فرمِ بیرونیِ ترمیم و اثرش بر بافت اطراف.",
+   "use_when": "مقاله کانتور را عاملِ مشکل بداند.",
+   "aliases": [
+    "کانتور رستوریشن",
+    "overcontour",
+    "اورکانتور"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "chairside/chairside-7"
    ]
   },
   {
@@ -8522,6 +9807,7 @@
    "words": 2,
    "definition": "کانتکت پروگزیمالِ بیش‌ازحد محکم که مانع نشستن کامل روکش می‌شود.",
    "use_when": "مقاله کانتکت سنگین را عاملِ یک مشکل بداند یا تنظیمش کند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
@@ -8536,6 +9822,7 @@
    "words": 1,
    "definition": "پر کردنِ جای خالی با یک روایتِ منسجم — بی‌آنکه سیستم بداند دارد می‌سازد.",
    "use_when": "مقاله سازوکارِ درونیِ این پرکردن را توضیح دهد.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#Confabulation"
@@ -8552,6 +9839,7 @@
    "words": 1,
    "definition": "رابطه‌ی کلاس I انگل.",
    "use_when": "مقاله طبقه‌بندیِ رابطه را عاملِ تصمیم بداند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
@@ -8566,6 +9854,7 @@
    "words": 1,
    "definition": "سرویسِ Claude.",
    "use_when": "مقاله مشخصاً به این سرویس بپردازد.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
@@ -8580,6 +9869,7 @@
    "words": 2,
    "definition": "کورِ بازسازی‌کننده‌ی تاج پیش از روکش.",
    "use_when": "مقاله ساخت یا طراحی کور را تعیین کند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
@@ -8594,6 +9884,7 @@
    "words": 2,
    "definition": "قابل‌پیش‌بینی بودن و تمیزیِ نتیجه‌ی تراش — نه اصولِ کتابی، بلکه آنچه در عمل تراش را بهتر می‌کند.",
    "use_when": "مقاله به «تراشم خوب درنمی‌آید، چه کار کنم» جواب بدهد. برای مقاله‌ای که فقط تراش را انجام می‌دهد به کار نرود.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
@@ -8608,6 +9899,7 @@
    "words": 2,
    "definition": "هدایتِ حرکات طرفی توسط کانین.",
    "use_when": "مقاله گایدنس را ارزیابی یا حفظ کند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
@@ -8622,6 +9914,7 @@
    "words": 3,
    "definition": "کار کردنِ عملی با مدل در قالب یک گفت‌وگو.",
    "use_when": "مقاله روندِ گفت‌وگو را هدایت کند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
@@ -8636,6 +9929,7 @@
    "words": 2,
    "definition": "Google Play.",
    "use_when": "فقط در راهنمای عملیِ پرداخت.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
@@ -8650,6 +9944,7 @@
    "words": 3,
    "definition": "فاصله‌ی بین انتهای پست و گوتاپرکای باقی‌مانده.",
    "use_when": "مقاله درباره‌ی اهمیت یا بی‌اهمیتیِ همین فاصله باشد.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
@@ -8664,6 +9959,7 @@
    "words": 2,
    "definition": "گیر کردن غذا در فضای بین‌دندانی — شکایتِ اصلیِ کانتکت باز.",
    "use_when": "مقاله گیر غذایی را نشانه یا پیامد بداند.",
+   "aliases": [],
    "variants": [],
    "co_tags": [
     "#Food_Impaction"
@@ -8680,6 +9976,7 @@
    "words": 2,
    "definition": "گیفت‌کارت به‌عنوان مسیرِ پرداخت وقتی کارت بانکی وصل نمی‌شود.",
    "use_when": "مقاله همین مسیر پرداخت را توضیح دهد.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 1,
@@ -8688,97 +9985,245 @@
    ]
   },
   {
-   "key": "implant",
-   "tag": "#Implant",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "",
-   "use_when": "",
-   "variants": [],
-   "co_tags": [],
-   "count": 0,
-   "content_ids": []
-  },
-  {
-   "key": "peri_implant_health",
+   "key": "peri_ایمپلنت_health",
    "tag": "#Peri_Implant_Health",
    "domain": "clinical",
    "words": 3,
    "definition": "",
    "use_when": "",
+   "aliases": [],
    "variants": [
     "#PeriImplantHealth"
    ],
    "co_tags": [],
    "count": 0,
    "content_ids": []
+  },
+  {
+   "key": "ایمپلنت",
+   "tag": "#Implant",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "aliases": [],
+   "variants": [],
+   "co_tags": [],
+   "count": 0,
+   "content_ids": []
   }
  ],
  "aliases": {
+  "ارتودنسی قبل از لمینت": "ارتودنسی پیش از زیبایی",
+  "adhesive restoration": "ترمیم ادهزیو",
+  "انتخاب اباتمنت پایه": "انتخاب پایه",
+  "cervical resorption": "تحلیل سرویکال",
   "دندونپزشکی دیجیتال": "دندانپزشکی دیجیتال",
+  "abutment selection": "انتخاب پایه",
+  "ارتو قبل از زیبایی": "ارتودنسی پیش از زیبایی",
+  "زمان به عنوان داده": "پیگیری زمانی",
   "تصمیم گیری درمانی": "تصمیم درمانی",
   "تصمیم گیری بالینی": "تصمیم درمانی",
   "digital dentistry": "دندانپزشکی دیجیتال",
+  "crown lengthening": "افزایش طول تاج",
+  "خارج کردن ایمپلنت": "اکسپلنت ایمپلنت",
+  "interdisciplinary": "درمان درمان بین رشته ای",
+  "restorative space": "فضای رستوریتیو",
+  "از دست رفتن دندان": "فقدان دندان",
   "fixed prosthesis": "پروتز ثابت",
   "دیجیتال دنتیستری": "دندانپزشکی دیجیتال",
   "proximal contact": "کانتکت باز",
+  "فاصله بین دندانی": "دیاستم",
+  "نکروز استخوان فک": "mronj",
+  "composite veneer": "veneer کامپوزیت",
+  "مرحله بندی درمان": "استیج بندی درمان",
+  "ریزورپشن سرویکال": "تحلیل سرویکال",
+  "تحلیل گردن دندان": "تحلیل سرویکال",
+  "تخریب وسیع داخلی": "تخریب داخلی",
+  "قرارگیری ایمپلنت": "جایگذاری ایمپلنت",
+  "مولتی دیسیپلینری": "درمان درمان بین رشته ای",
+  "mandibular molar": "مولر مندیبل",
+  "lateral guidance": "هدایت طرفی",
+  "recurrent caries": "پوسیدگی عودکننده",
+  "خارج کردن دندان": "کشیدن دندان",
+  "عدم پذیرش بیمار": "شروع نکردن درمان",
+  "برداشتن پوسیدگی": "برداشت پوسیدگی",
+  "ساپورت اکلوزالی": "ساپورت خلفی",
+  "برداشتن ایمپلنت": "اکسپلنت ایمپلنت",
+  "خارج کردن ترمیم": "برداشت ترمیم",
+  "شناسایی ایمپلنت": "برند ایمپلنت",
+  "بیولوژیکال ویدث": "بیولوژیک ویدث",
+  "درمان ریشه مجدد": "درمان مجدد ریشه",
+  "ایمپلنت در ساکت": "فرش ساکت",
+  "بی دندانی موضعی": "فقدان دندان",
+  "آناتومی استخوان": "معماری استخوان",
+  "کانتور رستوریشن": "کانتور ترمیم",
   "treatment plan": "طرح درمان",
   "تحلیل استخوانی": "تحلیل استخوان",
   "dental ceramic": "سرامیک دندانی",
+  "پیش آگهی دندان": "پروگنوز دندان دندان",
+  "رویش بیش از حد": "سوپرااراپشن",
+  "caries removal": "برداشت پوسیدگی",
+  "ریشه های کوتاه": "ریشه کوتاه",
+  "case selection": "انتخاب بیمار",
+  "فرو بردن دندان": "اینتروژن ارتودنسی ارتودنسی",
+  "باز کردن ترمیم": "برداشت ترمیم",
+  "bisphosphonate": "بیس فسفونات",
+  "biologic width": "بیولوژیک ویدث",
+  "فاصله بیولوژیک": "بیولوژیک ویدث",
+  "ایمپرشن اشتباه": "خطای قالبگیری",
+  "proprioception": "پروپریوسپشن",
+  "پوسیدگی ثانویه": "پوسیدگی عودکننده",
+  "مشاهده در زمان": "پیگیری زمانی",
   "prosthodontics": "پروتز",
+  "ویزیت کلینیکی": "کیس بالینی",
   "post and core": "پست و کور",
   "فینیشینگ لاین": "فینیش لاین",
+  "کراون لنتنینگ": "افزایش طول تاج",
+  "supraeruption": "سوپرااراپشن",
   "دی سمانتاسیون": "debonding",
+  "استئونکروز فک": "mronj",
+  "osteonecrosis": "mronj",
+  "کامپوزیت ونیر": "veneer کامپوزیت",
+  "برداشتن ترمیم": "برداشت ترمیم",
+  "سیستم ایمپلنت": "برند ایمپلنت",
+  "پوسیدگی داخلی": "تخریب داخلی",
+  "پوزیشن فیکسچر": "جایگذاری ایمپلنت",
+  "supernumerary": "دندان اضافه",
+  "مولر فک پایین": "مولر مندیبل",
+  "آگاهی اکلوزال": "پروپریوسپشن",
   "تصمیم بالینی": "تصمیم درمانی",
   "تصمیم پروتزی": "تصمیم درمانی",
   "over denture": "اوردنچر",
   "resin cement": "سمان رزینی",
+  "رد طرح درمان": "شروع نکردن درمان",
+  "نپذیرفتن کیس": "شروع نکردن درمان",
+  "oral hygiene": "بهداشت دهان",
+  "بهداشت دهانی": "بهداشت دهان",
+  "استتیک قدامی": "زیبایی قدامی",
   "open contact": "کانتکت باز",
   "دیسمانتاسیون": "debonding",
+  "ارزیابی پایه": "انتخاب پایه",
+  "ترمیم چسبنده": "ترمیم ادهزیو",
+  "مداخله نکردن": "عدم مداخله",
+  "مارک ایمپلنت": "برند ایمپلنت",
+  "عرض بیولوژیک": "بیولوژیک ویدث",
+  "دیواره باریک": "دیواره نازک",
+  "ضخامت دیواره": "دیواره نازک",
+  "نازکی دیواره": "دیواره نازک",
+  "fresh socket": "فرش ساکت",
+  "فضای بازسازی": "فضای رستوریتیو",
+  "بون آرکیتکچر": "معماری استخوان",
+  "لبخند لثه ای": "نمای ریج",
   "آرتیکولاسیون": "ارتیکولاسیون",
   "articulation": "ارتیکولاسیون",
+  "بایو میمتیک": "بیومیمتیک",
+  "case report": "کیس بالینی",
   "پست اند کور": "پست و کور",
   "تریتمنت پلن": "طرح درمان",
+  "بایو مکانیک": "بیومکانیک",
   "overdenture": "اوردنچر",
   "periodontal": "پریودنتال",
-  "بایو میمتیک": "بیومیمتیک",
-  "بایو مکانیک": "بیومکانیک",
   "اندودانتیکس": "اندودنتیکس",
   "اندودونتیکس": "اندودنتیکس",
-  "پروتز فیکس": "پروتز ثابت",
-  "پلن درمانی": "طرح درمان",
-  "پریودونتال": "پریودنتال",
+  "اورال هایژن": "بهداشت دهان",
+  "زیبایی قدام": "زیبایی قدامی",
+  "حذف پوسیدگی": "برداشت پوسیدگی",
+  "اکلوژن خلفی": "ساپورت خلفی",
+  "درمان نکردن": "عدم مداخله",
+  "سی بی سی تی": "cbct",
+  "ارجاع بیمار": "ارجاع تخصصی",
+  "osteoplasty": "استئوپلاستی",
+  "پذیرش بیمار": "انتخاب بیمار",
+  "عمق ایمپلنت": "جایگذاری ایمپلنت",
+  "retreatment": "درمان مجدد ریشه",
+  "سوپرانومرری": "دندان اضافه",
+  "دندان مازاد": "دندان اضافه",
+  "ارزیابی فضا": "فضای ارتودنسی",
+  "فضای پروتزی": "فضای رستوریتیو",
+  "فرم استخوان": "معماری استخوان",
+  "گامی اسمایل": "نمای ریج",
+  "gummy smile": "نمای ریج",
+  "گایدنس طرفی": "هدایت طرفی",
+  "هدایت جانبی": "هدایت طرفی",
+  "عود پوسیدگی": "پوسیدگی عودکننده",
+  "overcontour": "کانتور ترمیم",
   "بایومیمتیک": "بیومیمتیک",
   "بیو میمتیک": "بیومیمتیک",
   "بیومی متیک": "بیومیمتیک",
+  "پروتز فیکس": "پروتز ثابت",
+  "کیس ریپورت": "کیس بالینی",
+  "پلن درمانی": "طرح درمان",
   "بایومکانیک": "بیومکانیک",
   "بیو مکانیک": "بیومکانیک",
+  "پریودونتال": "پریودنتال",
+  "پروتز کامل": "پروتز متحرک",
+  "extraction": "کشیدن دندان",
+  "پری اپیکال": "رادیوگرافی تشخیصی تشخیصی",
+  "short root": "ریشه کوتاه",
+  "فرول ندارد": "نبود فرول",
+  "بیسفسفونات": "بیس فسفونات",
+  "بی فسفونات": "بیس فسفونات",
+  "درد نامشخص": "درد مبهم",
+  "ری تریتمنت": "درمان مجدد ریشه",
+  "خم شدن پست": "شکست پست",
+  "مولر پایین": "مولر مندیبل",
   "کامپلیکیشن": "عوارض",
+  "occlusion": "اکلوژن",
+  "زیرکونیوم": "زیرکونیا",
   "زیرکونیای": "زیرکونیا",
-  "aesthetic": "زیبایی",
+  "chairside": "چیرساید",
+  "گزارش کیس": "کیس بالینی",
   "پلن درمان": "طرح درمان",
+  "aesthetic": "زیبایی",
   "bone loss": "تحلیل استخوان",
   "سمان رزین": "سمان رزینی",
   "composite": "کامپوزیت",
-  "occlusion": "اکلوژن",
-  "زیرکونیوم": "زیرکونیا",
+  "prognosis": "پروگنوز دندان دندان",
+  "اکستراکشن": "کشیدن دندان",
+  "پانورامیک": "رادیوگرافی تشخیصی تشخیصی",
+  "تماس خلفی": "ساپورت خلفی",
+  "عدم درمان": "عدم مداخله",
+  "بدون فرول": "نبود فرول",
+  "پری مولار": "پرمولر",
   "کانتیلیور": "کانتی لیور",
+  "cone beam": "cbct",
+  "اصلاح ریج": "استئوپلاستی",
+  "intrusion": "اینتروژن ارتودنسی ارتودنسی",
+  "خطای قالب": "خطای قالبگیری",
+  "شکستن پست": "شکست پست",
+  "ساکت تازه": "فرش ساکت",
+  "فضای ارتو": "فضای ارتودنسی",
+  "نمایش ریج": "نمای ریج",
+  "follow up": "پیگیری زمانی",
+  "اورکانتور": "کانتور ترمیم",
   "کمپلیکیشن": "عوارض",
   "ایمپلانت": "ایمپلنت",
   "اکلوزیون": "اکلوژن",
+  "زیرکونیم": "زیرکونیا",
   "zirconia": "زیرکونیا",
-  "esthetic": "زیبایی",
+  "چیر ساید": "چیرساید",
   "abutment": "اباتمنت",
+  "esthetic": "زیبایی",
   "adhesive": "ادهزیو",
   "اوردنچور": "اوردنچر",
-  "فرول اثر": "فرول",
-  "اثر فرول": "فرول",
-  "زیرکونیم": "زیرکونیا",
+  "اکسترکشن": "کشیدن دندان",
   "بروکسیسم": "براکسیسم",
   "براکسیزم": "براکسیسم",
   "بروکسیزم": "براکسیسم",
+  "اکستروژن": "سوپرااراپشن",
   "دباندینگ": "debonding",
+  "diastema": "دیاستم",
+  "عدم فرول": "نبود فرول",
+  "پره مولر": "پرمولر",
+  "premolar": "پرمولر",
   "کانتیلور": "کانتی لیور",
+  "referral": "ارجاع تخصصی",
+  "کاهش ریج": "استئوپلاستی",
+  "استیجینگ": "استیج بندی درمان",
+  "رد بیمار": "انتخاب بیمار",
+  "فرول اثر": "فرول",
+  "اثر فرول": "فرول",
   "اکلوزالی": "اکلوزال",
   "آرتیکوله": "ارتیکولاسیون",
   "implant": "ایمپلنت",
@@ -8788,16 +10233,26 @@
   "ابوتمنت": "اباتمنت",
   "آباتمنت": "اباتمنت",
   "ferrule": "فرول",
+  "denture": "پروتز متحرک",
+  "شهابیان": "دکتر دکتر shahabian",
+  "لنتنینگ": "افزایش طول تاج",
+  "دیاستما": "دیاستم",
+  "staging": "استیج بندی درمان",
+  "explant": "اکسپلنت ایمپلنت",
+  "درد گنگ": "درد مبهم",
+  "حس عمقی": "پروپریوسپشن",
   "لامینیت": "لمینیت",
   "اکلوژال": "اکلوزال",
   "اکلوژنی": "اکلوزال",
   "امرجنسی": "امرجنس",
-  "شهابیان": "shahabian",
   "استتیک": "زیبایی",
   "ادهسیو": "ادهزیو",
-  "سیگاری": "دخانیات",
   "خط ختم": "فینیش لاین",
+  "سیگاری": "دخانیات",
   "تنباکو": "دخانیات",
+  "کن بیم": "cbct",
+  "ریفرال": "ارجاع تخصصی",
+  "فالوآپ": "پیگیری زمانی",
   "لامینت": "لمینیت",
   "پارسیل": "پارشیال",
   "اورجنس": "امرجنس",
@@ -8808,7 +10263,35 @@
   "لمینت": "لمینیت",
   "پارشل": "پارشیال",
   "پریو": "پریودنتال",
-  "ونیر": "veneer"
+  "دنچر": "پروتز متحرک",
+  "ونیر": "veneer",
+  "opg": "رادیوگرافی تشخیصی تشخیصی"
  },
- "aliases_about": "Orthographic variants of ONE word, applied to both tag and query before tokenizing. Not synonyms (those are co_tags) and not dead forms (those are variants). Mirrored into plus/content-index.json for the API."
+ "aliases_about": "Orthographic variants of ONE word, applied to both tag and query before tokenizing. Not synonyms (those are co_tags) and not dead forms (those are variants). Mirrored into plus/content-index.json for the API.",
+ "manual_aliases": {
+  "prosthodontics": "پروتز",
+  "آرتیکولاسیون": "ارتیکولاسیون",
+  "articulation": "ارتیکولاسیون",
+  "بین رشته ای": "درمان درمان بین رشته ای",
+  "رادیوگرافی": "رادیوگرافی تشخیصی تشخیصی",
+  "کامپلیکیشن": "عوارض",
+  "کمپلیکیشن": "عوارض",
+  "اینتروژن": "اینتروژن ارتودنسی ارتودنسی",
+  "فرول اثر": "فرول",
+  "اثر فرول": "فرول",
+  "اکلوزالی": "اکلوزال",
+  "آرتیکوله": "ارتیکولاسیون",
+  "پروگنوز": "پروگنوز دندان دندان",
+  "لامینیت": "لمینیت",
+  "اکلوژال": "اکلوزال",
+  "اکلوژنی": "اکلوزال",
+  "امرجنسی": "امرجنس",
+  "لامینت": "لمینیت",
+  "پارسیل": "پارشیال",
+  "اورجنس": "امرجنس",
+  "اسمارت": "smart",
+  "لمینت": "لمینیت",
+  "پارشل": "پارشیال",
+  "ونیر": "veneer"
+ }
 }
