@@ -1,0 +1,5366 @@
+{
+ "version": 1,
+ "about": "Canonical hashtag vocabulary for DentCast. The reference owns the vocabulary; dentcast-brain.json owns the assignment. `count` and `content_ids` are derived — run tools/hashtag_ref.py --sync.",
+ "enforced_types": [],
+ "concepts": [
+  {
+   "key": "ایمپلنت",
+   "tag": "#ایمپلنت",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 85,
+   "content_ids": [
+    "episodes/episode-23",
+    "episodes/episode-24",
+    "episodes/episode-25",
+    "episodes/episode-26",
+    "episodes/episode-31",
+    "episodes/episode-45",
+    "episodes/episode-52",
+    "episodes/episode-59",
+    "episodes/episode-60",
+    "episodes/episode-62",
+    "episodes/episode-63",
+    "episodes/episode-64",
+    "episodes/episode-80",
+    "episodes/episode-81",
+    "episodes/episode-82",
+    "episodes/episode-83",
+    "episodes/episode-84",
+    "episodes/episode-102",
+    "episodes/episode-106",
+    "episodes/episode-112",
+    "episodes/episode-115",
+    "episodes/episode-119-1",
+    "episodes/episode-121-1",
+    "episodes/episode-123-5",
+    "episodes/episode-123-6",
+    "episodes/episode-126-1",
+    "episodes/episode-130",
+    "episodes/episode-139",
+    "episodes/episode-146",
+    "episodes/episode-147-2",
+    "episodes/episode-150-2",
+    "episodes/episode-151",
+    "insight/insight-3",
+    "insight/insight-7",
+    "insight/insight-9",
+    "insight/insight-10",
+    "insight/insight-12",
+    "insight/insight-13",
+    "insight/insight-16",
+    "litecast/lite-CAST2",
+    "litecast/lite-CAST3",
+    "litecast/lite-CAST4",
+    "litecast/lite-CAST5",
+    "litecast/lite-CAST8",
+    "notecast/episode-23",
+    "notecast/episode-24",
+    "metanotes/meta-2",
+    "metanotes/meta-3",
+    "metanotes/meta-4",
+    "metanotes/meta-5",
+    "metanotes/meta-6",
+    "litecast/lite-CAST10",
+    "litecast/lite-CAST9",
+    "episodes/episode-152",
+    "litecast/lite-CAST11",
+    "litecast/lite-CAST12",
+    "litecast/lite-CAST13",
+    "litecast/lite-CAST14",
+    "litecast/lite-CAST15",
+    "litecast/lite-CAST17",
+    "litecast/lite-CAST18",
+    "litecast/lite-CAST19",
+    "dentcast-plus/video-4",
+    "episodes/episode-153",
+    "insight/insight-22",
+    "notecast/episode-30",
+    "chairside/chairside-2",
+    "dentcast-plus/video-5",
+    "chairside/chairside-3",
+    "metanotes/meta-10",
+    "notecast/episode-31",
+    "insight/insight-24",
+    "insight/insight-26",
+    "insight/insight-30",
+    "insight/insight-31",
+    "chairside/chairside-6",
+    "chairside/chairside-10",
+    "chairside/chairside-12",
+    "insight/insight-38",
+    "chairside/chairside-14",
+    "episodes/episode-157",
+    "chairside/chairside-16",
+    "episodes/episode-158",
+    "episodes/episode-159",
+    "insight/insight-52"
+   ]
+  },
+  {
+   "key": "بیومیمتیک",
+   "tag": "#بیومیمتیک",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 50,
+   "content_ids": [
+    "episodes/episode-4",
+    "episodes/episode-5",
+    "episodes/episode-6",
+    "episodes/episode-7",
+    "episodes/episode-53",
+    "episodes/episode-54",
+    "episodes/episode-55",
+    "episodes/episode-57",
+    "episodes/episode-65",
+    "episodes/episode-66",
+    "episodes/episode-67",
+    "episodes/episode-72",
+    "episodes/episode-73",
+    "episodes/episode-74",
+    "episodes/episode-75",
+    "episodes/episode-77",
+    "episodes/episode-79",
+    "episodes/episode-90",
+    "episodes/episode-91",
+    "episodes/episode-92",
+    "episodes/episode-93",
+    "episodes/episode-94",
+    "episodes/episode-123",
+    "episodes/episode-137",
+    "dentai/dentai-1",
+    "dentai/dentai-4",
+    "dentai/dentai-5",
+    "insight/insight-4",
+    "notecast/episode-6",
+    "notecast/episode-7",
+    "notecast/episode-8",
+    "notecast/episode-12",
+    "notecast/episode-13",
+    "notecast/episode-15",
+    "notecast/episode-16",
+    "notecast/episode-17",
+    "notecast/episode-18",
+    "notecast/episode-19",
+    "notecast/episode-20",
+    "notecast/episode-21",
+    "dentai/dentai-11",
+    "dentai/dentai-12",
+    "dentai/dentai-13",
+    "dentai/dentai-14",
+    "dentai/dentai-15",
+    "dentai/dentai-16",
+    "dentai/dentai-17",
+    "dentai/dentai-18",
+    "dentai/dentai-19",
+    "dentai/dentai-20"
+   ]
+  },
+  {
+   "key": "اکلوژن",
+   "tag": "#اکلوژن",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 38,
+   "content_ids": [
+    "episodes/episode-14",
+    "episodes/episode-23",
+    "episodes/episode-35",
+    "episodes/episode-60",
+    "episodes/episode-123-2",
+    "episodes/episode-126",
+    "episodes/episode-131",
+    "episodes/episode-132",
+    "episodes/episode-142",
+    "episodes/episode-143",
+    "episodes/episode-144",
+    "episodes/episode-145",
+    "insight/insight-1",
+    "insight/insight-2",
+    "insight/insight-6",
+    "insight/insight-8",
+    "insight/insight-12",
+    "insight/insight-13",
+    "photocast/episode-2",
+    "photocast/episode-3",
+    "dentcast-plus/video-2",
+    "notecast/episode-14",
+    "notecast/episode-23",
+    "dentcast-plus/video-3",
+    "insight/insight-21",
+    "episodes/episode-154",
+    "sharehub/share-5",
+    "insight/insight-24",
+    "episodes/episode-155",
+    "insight/insight-27",
+    "dentcast-plus/video-6",
+    "chairside/chairside-11",
+    "insight/insight-37",
+    "chairside/chairside-15",
+    "sharehub/share-6",
+    "insight/insight-43",
+    "dentai/dentai-26",
+    "chairside/chairside-23"
+   ]
+  },
+  {
+   "key": "پروتز_ثابت",
+   "tag": "#پروتز_ثابت",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 29,
+   "content_ids": [
+    "episodes/episode-88",
+    "episodes/episode-95",
+    "episodes/episode-106",
+    "episodes/episode-112",
+    "episodes/episode-113",
+    "episodes/episode-121",
+    "episodes/episode-123",
+    "episodes/episode-124",
+    "episodes/episode-126",
+    "episodes/episode-132",
+    "episodes/episode-136",
+    "episodes/episode-147-5",
+    "notecast/episode-14",
+    "notecast/episode-20",
+    "notecast/episode-21",
+    "insight/insight-18",
+    "dentai/dentai-7",
+    "metanotes/meta-9",
+    "insight/insight-24",
+    "insight/insight-25",
+    "insight/insight-27",
+    "insight/insight-28",
+    "insight/insight-29",
+    "insight/insight-32",
+    "sharehub/share-6",
+    "insight/insight-44",
+    "insight/insight-49",
+    "insight/insight-54",
+    "sharehub/share-10"
+   ]
+  },
+  {
+   "key": "زیرکونیا",
+   "tag": "#زیرکونیا",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 27,
+   "content_ids": [
+    "episodes/episode-11",
+    "episodes/episode-17",
+    "episodes/episode-18",
+    "episodes/episode-87",
+    "episodes/episode-88",
+    "episodes/episode-89",
+    "episodes/episode-107",
+    "episodes/episode-122-5",
+    "episodes/episode-123-4",
+    "episodes/episode-136",
+    "episodes/episode-139",
+    "episodes/episode-140",
+    "episodes/episode-146",
+    "insight/insight-5",
+    "notecast/episode-2",
+    "notecast/episode-3",
+    "notecast/episode-5",
+    "notecast/episode-8",
+    "notecast/episode-11",
+    "notecast/episode-13",
+    "notecast/episode-17",
+    "notecast/episode-18",
+    "notecast/episode-30",
+    "insight/insight-27",
+    "insight/insight-28",
+    "insight/insight-29",
+    "dentai/dentai-26"
+   ]
+  },
+  {
+   "key": "دنتوپدیا",
+   "tag": "#دنتوپدیا",
+   "domain": "brand",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 26,
+   "content_ids": [
+    "episodes/episode-106-1",
+    "episodes/episode-107-1",
+    "episodes/episode-109-1",
+    "episodes/episode-109-2",
+    "episodes/episode-110-1",
+    "episodes/episode-111-1",
+    "episodes/episode-118-1",
+    "episodes/episode-119-1",
+    "episodes/episode-120-1",
+    "episodes/episode-121-1",
+    "episodes/episode-122-4",
+    "episodes/episode-123-2",
+    "episodes/episode-143-1",
+    "episodes/episode-144-1",
+    "episodes/episode-144-2",
+    "episodes/episode-147-1",
+    "episodes/episode-147-3",
+    "episodes/episode-147-5",
+    "episodes/episode-147-6",
+    "episodes/episode-147-7",
+    "episodes/episode-147-8",
+    "episodes/episode-147-9",
+    "episodes/episode-148-1",
+    "episodes/episode-148-2",
+    "episodes/episode-149-2",
+    "episodes/episode-150-1"
+   ]
+  },
+  {
+   "key": "پروتز_ایمپلنت",
+   "tag": "#پروتز_ایمپلنت",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 26,
+   "content_ids": [
+    "episodes/episode-83",
+    "episodes/episode-102",
+    "episodes/episode-105",
+    "episodes/episode-110",
+    "episodes/episode-111",
+    "episodes/episode-121-1",
+    "episodes/episode-123-5",
+    "episodes/episode-140",
+    "episodes/episode-141",
+    "insight/insight-3",
+    "sharehub/share-4",
+    "insight/insight-22",
+    "metanotes/meta-8",
+    "metanotes/meta-10",
+    "notecast/episode-31",
+    "insight/insight-26",
+    "insight/insight-30",
+    "insight/insight-31",
+    "chairside/chairside-10",
+    "chairside/chairside-11",
+    "chairside/chairside-12",
+    "insight/insight-35",
+    "episodes/episode-157",
+    "chairside/chairside-17",
+    "episodes/episode-158",
+    "episodes/episode-159"
+   ]
+  },
+  {
+   "key": "باندینگ",
+   "tag": "#باندینگ",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 22,
+   "content_ids": [
+    "episodes/episode-4",
+    "episodes/episode-5",
+    "episodes/episode-6",
+    "episodes/episode-11",
+    "episodes/episode-16",
+    "episodes/episode-36",
+    "episodes/episode-42",
+    "episodes/episode-43",
+    "episodes/episode-44",
+    "episodes/episode-101",
+    "dentai/dentai-4",
+    "dentai/dentai-5",
+    "notecast/episode-4",
+    "notecast/episode-5",
+    "notecast/episode-6",
+    "notecast/episode-7",
+    "notecast/episode-16",
+    "notecast/episode-18",
+    "dentai/dentai-8",
+    "dentai/dentai-9",
+    "dentai/dentai-16",
+    "dentai/dentai-17"
+   ]
+  },
+  {
+   "key": "تصمیم_درمانی",
+   "tag": "#تصمیم_درمانی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 22,
+   "content_ids": [
+    "metanotes/meta-1",
+    "metanotes/meta-2",
+    "metanotes/meta-3",
+    "metanotes/meta-4",
+    "metanotes/meta-5",
+    "metanotes/meta-6",
+    "litecast/lite-CAST11",
+    "insight/insight-20",
+    "chairside/chairside-1",
+    "chairside/chairside-3",
+    "chairside/chairside-4",
+    "metanotes/meta-9",
+    "insight/insight-23",
+    "insight/insight-24",
+    "insight/insight-25",
+    "insight/insight-26",
+    "insight/insight-27",
+    "insight/insight-28",
+    "insight/insight-29",
+    "chairside/chairside-14",
+    "chairside/chairside-16",
+    "chairside/chairside-21"
+   ]
+  },
+  {
+   "key": "سرامیک",
+   "tag": "#سرامیک",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 21,
+   "content_ids": [
+    "episodes/episode-8",
+    "episodes/episode-12",
+    "episodes/episode-15",
+    "episodes/episode-16",
+    "episodes/episode-17",
+    "episodes/episode-18",
+    "episodes/episode-29",
+    "episodes/episode-30",
+    "episodes/episode-55",
+    "episodes/episode-56",
+    "episodes/episode-57",
+    "episodes/episode-58",
+    "episodes/episode-68",
+    "episodes/episode-69",
+    "insight/insight-5",
+    "notecast/episode-5",
+    "notecast/episode-8",
+    "notecast/episode-12",
+    "notecast/episode-15",
+    "notecast/episode-16",
+    "notecast/episode-30"
+   ]
+  },
+  {
+   "key": "اینسایت",
+   "tag": "#اینسایت",
+   "domain": "brand",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 19,
+   "content_ids": [
+    "episodes/episode-122-1",
+    "episodes/episode-122-2",
+    "episodes/episode-122-3",
+    "episodes/episode-122-5",
+    "episodes/episode-122-6",
+    "episodes/episode-123-1",
+    "episodes/episode-123-3",
+    "episodes/episode-123-4",
+    "episodes/episode-123-5",
+    "episodes/episode-123-6",
+    "episodes/episode-124-1",
+    "episodes/episode-125-1",
+    "episodes/episode-125-2",
+    "episodes/episode-125-3",
+    "episodes/episode-126-1",
+    "episodes/episode-128-1",
+    "episodes/episode-128-2",
+    "episodes/episode-130-1",
+    "episodes/episode-147-2"
+   ]
+  },
+  {
+   "key": "پست_و_کور",
+   "tag": "#پست_و_کور",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 19,
+   "content_ids": [
+    "episodes/episode-36",
+    "episodes/episode-47",
+    "episodes/episode-49",
+    "episodes/episode-125-3",
+    "episodes/episode-129",
+    "insight/insight-12",
+    "insight/insight-15",
+    "insight/insight-17",
+    "insight/insight-20",
+    "insight/insight-21",
+    "metanotes/meta-9",
+    "chairside/chairside-5",
+    "insight/insight-39",
+    "insight/insight-41",
+    "notecast/episode-36",
+    "chairside/chairside-20",
+    "dentai/dentai-27",
+    "metanotes/meta-15",
+    "metanotes/meta-19"
+   ]
+  },
+  {
+   "key": "زیبایی",
+   "tag": "#زیبایی",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 17,
+   "content_ids": [
+    "episodes/episode-13",
+    "episodes/episode-28",
+    "episodes/episode-32",
+    "episodes/episode-33",
+    "episodes/episode-37",
+    "episodes/episode-39",
+    "episodes/episode-46",
+    "episodes/episode-61",
+    "episodes/episode-68",
+    "episodes/episode-70",
+    "episodes/episode-116",
+    "episodes/episode-119",
+    "episodes/episode-122-3",
+    "episodes/episode-141",
+    "episodes/episode-147",
+    "notecast/episode-13",
+    "notecast/episode-32"
+   ]
+  },
+  {
+   "key": "متانوت",
+   "tag": "#متانوت",
+   "domain": "brand",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 17,
+   "content_ids": [
+    "metanotes/meta-1",
+    "metanotes/meta-2",
+    "metanotes/meta-3",
+    "metanotes/meta-4",
+    "metanotes/meta-5",
+    "metanotes/meta-6",
+    "metanotes/meta-7",
+    "metanotes/meta-8",
+    "metanotes/meta-9",
+    "metanotes/meta-12",
+    "metanotes/meta-13",
+    "metanotes/meta-14",
+    "metanotes/meta-15",
+    "metanotes/meta-16",
+    "metanotes/meta-17",
+    "metanotes/meta-18",
+    "metanotes/meta-19"
+   ]
+  },
+  {
+   "key": "dentai",
+   "tag": "#DentAI",
+   "domain": "brand",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 15,
+   "content_ids": [
+    "dentai/dentai-1",
+    "dentai/dentai-2",
+    "dentai/dentai-3",
+    "dentai/dentai-4",
+    "dentai/dentai-5",
+    "dentai/dentai-6",
+    "dentai/dentai-7",
+    "dentai/dentai-8",
+    "dentai/dentai-9",
+    "dentai/dentai-10",
+    "dentai/dentai-11",
+    "dentai/dentai-12",
+    "dentai/dentai-26",
+    "dentai/dentai-27",
+    "dentai/dentai-28"
+   ]
+  },
+  {
+   "key": "اباتمنت",
+   "tag": "#اباتمنت",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 15,
+   "content_ids": [
+    "episodes/episode-80",
+    "episodes/episode-81",
+    "episodes/episode-102",
+    "episodes/episode-103",
+    "episodes/episode-104",
+    "episodes/episode-115",
+    "litecast/lite-CAST10",
+    "litecast/lite-CAST18",
+    "dentcast-plus/video-4",
+    "metanotes/meta-8",
+    "dentcast-plus/video-5",
+    "insight/insight-35",
+    "insight/insight-44",
+    "insight/insight-52",
+    "insight/insight-60"
+   ]
+  },
+  {
+   "key": "دندانپزشکی_دیجیتال",
+   "tag": "#دندانپزشکی_دیجیتال",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 15,
+   "content_ids": [
+    "episodes/episode-98",
+    "episodes/episode-105",
+    "episodes/episode-106-2",
+    "episodes/episode-122-2",
+    "episodes/episode-123-1",
+    "episodes/episode-144-2",
+    "episodes/episode-147-9",
+    "episodes/episode-149-2",
+    "litecast/lite-CAST9",
+    "litecast/lite-CAST14",
+    "insight/insight-33",
+    "insight/insight-40",
+    "metanotes/meta-15",
+    "metanotes/meta-16",
+    "dentai/dentai-28"
+   ]
+  },
+  {
+   "key": "روکش_ایمپلنت",
+   "tag": "#روکش_ایمپلنت",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 15,
+   "content_ids": [
+    "episodes/episode-125-1",
+    "episodes/episode-147",
+    "episodes/episode-148-2",
+    "litecast/lite-CAST10",
+    "litecast/lite-CAST12",
+    "litecast/lite-CAST16",
+    "litecast/lite-CAST18",
+    "dentcast-plus/video-4",
+    "sharehub/share-4",
+    "dentcast-plus/video-5",
+    "metanotes/meta-10",
+    "insight/insight-30",
+    "chairside/chairside-17",
+    "insight/insight-46",
+    "insight/insight-53"
+   ]
+  },
+  {
+   "key": "طرح_درمان",
+   "tag": "#طرح_درمان",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 14,
+   "content_ids": [
+    "episodes/episode-116",
+    "episodes/episode-119-1",
+    "episodes/episode-120",
+    "episodes/episode-123-5",
+    "episodes/episode-124",
+    "episodes/episode-150-2",
+    "insight/insight-19",
+    "chairside/chairside-6",
+    "chairside/chairside-11",
+    "chairside/chairside-12",
+    "chairside/chairside-19",
+    "chairside/chairside-20",
+    "chairside/chairside-21",
+    "chairside/chairside-22"
+   ]
+  },
+  {
+   "key": "هوش_مصنوعی",
+   "tag": "#هوش_مصنوعی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 14,
+   "content_ids": [
+    "episodes/episode-109",
+    "episodes/episode-109-2",
+    "episodes/episode-149-1",
+    "dentai/promptologist/prompt1-1",
+    "dentai/promptologist/prompt1-2",
+    "dentai/promptologist/prompt1-3",
+    "dentai/promptologist/prompt1-append1",
+    "dentai/promptologist/prompt1-4",
+    "dentai/promptologist/prompt1-5",
+    "dentai/promptologist/prompt2-1",
+    "dentai/promptologist/prompt3-1",
+    "dentai/promptologist/prompt4-1",
+    "dentai/promptologist/prompt4-2",
+    "dentai/dentai-28"
+   ]
+  },
+  {
+   "key": "روکش",
+   "tag": "#روکش",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 13,
+   "content_ids": [
+    "episodes/episode-2",
+    "episodes/episode-8",
+    "episodes/episode-9",
+    "episodes/episode-10",
+    "insight/insight-17",
+    "dentcast-plus/video-6",
+    "metanotes/meta-12",
+    "chairside/chairside-6",
+    "chairside/chairside-9",
+    "chairside/chairside-15",
+    "insight/insight-44",
+    "insight/insight-49",
+    "chairside/chairside-22"
+   ]
+  },
+  {
+   "key": "فرول",
+   "tag": "#فرول",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 12,
+   "content_ids": [
+    "episodes/episode-47",
+    "episodes/episode-48",
+    "episodes/episode-49",
+    "insight/insight-4",
+    "insight/insight-7",
+    "insight/insight-13",
+    "chairside/chairside-5",
+    "chairside/chairside-6",
+    "chairside/chairside-9",
+    "dentai/dentai-27",
+    "metanotes/meta-15",
+    "metanotes/meta-19"
+   ]
+  },
+  {
+   "key": "share_hub",
+   "tag": "#Share_Hub",
+   "domain": "brand",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 11,
+   "content_ids": [
+    "sharehub/share-1",
+    "sharehub/share-2",
+    "sharehub/share-3",
+    "sharehub/share-4",
+    "sharehub/share-5",
+    "sharehub/share-6",
+    "sharehub/share-7",
+    "sharehub/share-8",
+    "sharehub/share-9",
+    "sharehub/share-10",
+    "sharehub/share-11"
+   ]
+  },
+  {
+   "key": "ادهزیو",
+   "tag": "#ادهزیو",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 11,
+   "content_ids": [
+    "episodes/episode-4",
+    "episodes/episode-5",
+    "episodes/episode-7",
+    "episodes/episode-9",
+    "episodes/episode-71",
+    "episodes/episode-101",
+    "episodes/episode-137",
+    "notecast/episode-2",
+    "notecast/episode-4",
+    "notecast/episode-5",
+    "notecast/episode-6"
+   ]
+  },
+  {
+   "key": "اوردنچر",
+   "tag": "#اوردنچر",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 11,
+   "content_ids": [
+    "episodes/episode-27",
+    "episodes/episode-50",
+    "episodes/episode-51",
+    "episodes/episode-52",
+    "episodes/episode-144-1",
+    "episodes/episode-147-6",
+    "litecast/lite-CAST2",
+    "litecast/lite-CAST4",
+    "notecast/episode-27",
+    "chairside/chairside-8",
+    "chairside/chairside-11"
+   ]
+  },
+  {
+   "key": "بیومکانیک",
+   "tag": "#بیومکانیک",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 11,
+   "content_ids": [
+    "episodes/episode-48",
+    "episodes/episode-63",
+    "episodes/episode-125-3",
+    "episodes/episode-128",
+    "episodes/episode-147-5",
+    "episodes/episode-148-1",
+    "insight/insight-13",
+    "notecast/episode-23",
+    "notecast/episode-24",
+    "insight/insight-24",
+    "metanotes/meta-11"
+   ]
+  },
+  {
+   "key": "لمینیت",
+   "tag": "#لمینیت",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 11,
+   "content_ids": [
+    "episodes/episode-9",
+    "episodes/episode-10",
+    "episodes/episode-12",
+    "episodes/episode-19",
+    "episodes/episode-37",
+    "episodes/episode-38",
+    "episodes/episode-39",
+    "episodes/episode-148",
+    "metanotes/meta-1",
+    "chairside/chairside-1",
+    "insight/insight-37"
+   ]
+  },
+  {
+   "key": "chatgpt",
+   "tag": "#ChatGPT",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 10,
+   "content_ids": [
+    "dentai/promptologist/prompt1-1",
+    "dentai/promptologist/prompt1-2",
+    "dentai/promptologist/prompt1-3",
+    "dentai/promptologist/prompt1-append1",
+    "dentai/promptologist/prompt1-4",
+    "dentai/promptologist/prompt1-5",
+    "dentai/promptologist/prompt3-1",
+    "dentai/promptologist/prompt4-1",
+    "dentai/promptologist/prompt4-2",
+    "dentai/dentai-28"
+   ]
+  },
+  {
+   "key": "llm",
+   "tag": "#LLM",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 10,
+   "content_ids": [
+    "dentai/promptologist/prompt1-1",
+    "dentai/promptologist/prompt1-2",
+    "dentai/promptologist/prompt1-3",
+    "dentai/promptologist/prompt1-4",
+    "dentai/promptologist/prompt1-5",
+    "dentai/promptologist/prompt2-1",
+    "dentai/promptologist/prompt3-1",
+    "dentai/promptologist/prompt4-1",
+    "dentai/promptologist/prompt4-2",
+    "dentai/dentai-28"
+   ]
+  },
+  {
+   "key": "تحلیل_استخوان",
+   "tag": "#تحلیل_استخوان",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 10,
+   "content_ids": [
+    "episodes/episode-59",
+    "episodes/episode-110",
+    "episodes/episode-111",
+    "episodes/episode-130",
+    "litecast/lite-CAST3",
+    "litecast/lite-CAST4",
+    "notecast/episode-23",
+    "notecast/episode-24",
+    "metanotes/meta-4",
+    "chairside/chairside-14"
+   ]
+  },
+  {
+   "key": "سرامیک_دندانی",
+   "tag": "#سرامیک_دندانی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 10,
+   "content_ids": [
+    "episodes/episode-89",
+    "episodes/episode-149",
+    "notecast/episode-8",
+    "notecast/episode-9",
+    "notecast/episode-10",
+    "notecast/episode-17",
+    "notecast/episode-19",
+    "notecast/episode-29",
+    "dentai/dentai-25",
+    "episodes/episode-159-1"
+   ]
+  },
+  {
+   "key": "سمان_رزینی",
+   "tag": "#سمان_رزینی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 10,
+   "content_ids": [
+    "episodes/episode-43",
+    "episodes/episode-148",
+    "notecast/episode-3",
+    "notecast/episode-6",
+    "notecast/episode-7",
+    "notecast/episode-11",
+    "notecast/episode-16",
+    "notecast/episode-19",
+    "dentai/dentai-27",
+    "insight/insight-59"
+   ]
+  },
+  {
+   "key": "پرامپتولوژیست",
+   "tag": "#پرامپتولوژیست",
+   "domain": "brand",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 10,
+   "content_ids": [
+    "dentai/promptologist/prompt1-1",
+    "dentai/promptologist/prompt1-2",
+    "dentai/promptologist/prompt1-3",
+    "dentai/promptologist/prompt1-append1",
+    "dentai/promptologist/prompt1-4",
+    "dentai/promptologist/prompt1-5",
+    "dentai/promptologist/prompt2-1",
+    "dentai/promptologist/prompt3-1",
+    "dentai/promptologist/prompt4-1",
+    "dentai/promptologist/prompt4-2"
+   ]
+  },
+  {
+   "key": "پریودنتال",
+   "tag": "#پریودنتال",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 10,
+   "content_ids": [
+    "episodes/episode-150-2",
+    "insight/insight-7",
+    "insight/insight-14",
+    "metanotes/meta-1",
+    "metanotes/meta-2",
+    "metanotes/meta-3",
+    "metanotes/meta-4",
+    "chairside/chairside-7",
+    "insight/insight-32",
+    "chairside/chairside-14"
+   ]
+  },
+  {
+   "key": "کامپوزیت",
+   "tag": "#کامپوزیت",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 10,
+   "content_ids": [
+    "episodes/episode-44",
+    "episodes/episode-122",
+    "episodes/episode-123-3",
+    "episodes/episode-128-2",
+    "dentai/dentai-6",
+    "litecast/lite-CAST7",
+    "dentai/dentai-8",
+    "dentai/dentai-9",
+    "insight/insight-23",
+    "dentai/dentai-22"
+   ]
+  },
+  {
+   "key": "ailiteracy",
+   "tag": "#AILiteracy",
+   "domain": "ai",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 9,
+   "content_ids": [
+    "dentai/promptologist/prompt1-1",
+    "dentai/promptologist/prompt1-2",
+    "dentai/promptologist/prompt1-3",
+    "dentai/promptologist/prompt1-4",
+    "dentai/promptologist/prompt1-5",
+    "dentai/promptologist/prompt2-1",
+    "dentai/promptologist/prompt3-1",
+    "dentai/promptologist/prompt4-1",
+    "dentai/promptologist/prompt4-2"
+   ]
+  },
+  {
+   "key": "curated_content",
+   "tag": "#Curated_Content",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 9,
+   "content_ids": [
+    "sharehub/share-1",
+    "sharehub/share-2",
+    "sharehub/share-3",
+    "sharehub/share-4",
+    "sharehub/share-5",
+    "sharehub/share-6",
+    "sharehub/share-7",
+    "sharehub/share-8",
+    "sharehub/share-9"
+   ]
+  },
+  {
+   "key": "dentalai",
+   "tag": "#DentalAI",
+   "domain": "ai",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 9,
+   "content_ids": [
+    "dentai/promptologist/prompt1-1",
+    "dentai/promptologist/prompt1-2",
+    "dentai/promptologist/prompt1-3",
+    "dentai/promptologist/prompt1-4",
+    "dentai/promptologist/prompt1-5",
+    "dentai/promptologist/prompt2-1",
+    "dentai/promptologist/prompt3-1",
+    "dentai/promptologist/prompt4-1",
+    "dentai/promptologist/prompt4-2"
+   ]
+  },
+  {
+   "key": "آگاهی_درمانی",
+   "tag": "#آگاهی_درمانی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 9,
+   "content_ids": [
+    "litecast/lite-CAST11",
+    "litecast/lite-CAST12",
+    "litecast/lite-CAST13",
+    "litecast/lite-CAST14",
+    "litecast/lite-CAST15",
+    "litecast/lite-CAST16",
+    "litecast/lite-CAST17",
+    "litecast/lite-CAST18",
+    "litecast/lite-CAST19"
+   ]
+  },
+  {
+   "key": "سواد_هوش_مصنوعی",
+   "tag": "#سواد_هوش_مصنوعی",
+   "domain": "ai",
+   "words": 3,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 9,
+   "content_ids": [
+    "dentai/promptologist/prompt1-1",
+    "dentai/promptologist/prompt1-2",
+    "dentai/promptologist/prompt1-3",
+    "dentai/promptologist/prompt1-4",
+    "dentai/promptologist/prompt1-5",
+    "dentai/promptologist/prompt2-1",
+    "dentai/promptologist/prompt3-1",
+    "dentai/promptologist/prompt4-1",
+    "dentai/promptologist/prompt4-2"
+   ]
+  },
+  {
+   "key": "هوش_مصنوعی_دندانپزشکی",
+   "tag": "#هوش_مصنوعی_دندانپزشکی",
+   "domain": "ai",
+   "words": 3,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 9,
+   "content_ids": [
+    "dentai/promptologist/prompt1-1",
+    "dentai/promptologist/prompt1-2",
+    "dentai/promptologist/prompt1-3",
+    "dentai/promptologist/prompt1-4",
+    "dentai/promptologist/prompt1-5",
+    "dentai/promptologist/prompt2-1",
+    "dentai/promptologist/prompt3-1",
+    "dentai/promptologist/prompt4-1",
+    "dentai/promptologist/prompt4-2"
+   ]
+  },
+  {
+   "key": "biomimetic",
+   "tag": "#biomimetic",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 8,
+   "content_ids": [
+    "notecast/episode-10",
+    "notecast/episode-11",
+    "dentai/dentai-11",
+    "dentai/dentai-16",
+    "dentai/dentai-17",
+    "dentai/dentai-18",
+    "dentai/dentai-19",
+    "dentai/dentai-20"
+   ]
+  },
+  {
+   "key": "tmd",
+   "tag": "#TMD",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 8,
+   "content_ids": [
+    "episodes/episode-85",
+    "episodes/episode-86",
+    "episodes/episode-142",
+    "episodes/episode-143",
+    "episodes/episode-144",
+    "episodes/episode-145",
+    "insight/insight-8",
+    "episodes/episode-154"
+   ]
+  },
+  {
+   "key": "zeroboneloss",
+   "tag": "#ZeroBoneLoss",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 8,
+   "content_ids": [
+    "episodes/episode-110",
+    "episodes/episode-111",
+    "episodes/episode-112",
+    "episodes/episode-115",
+    "episodes/episode-130",
+    "episodes/episode-139",
+    "episodes/episode-140",
+    "episodes/episode-146"
+   ]
+  },
+  {
+   "key": "مدل_زبانی",
+   "tag": "#مدل_زبانی",
+   "domain": "ai",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 8,
+   "content_ids": [
+    "dentai/promptologist/prompt1-2",
+    "dentai/promptologist/prompt1-3",
+    "dentai/promptologist/prompt1-4",
+    "dentai/promptologist/prompt1-5",
+    "dentai/promptologist/prompt2-1",
+    "dentai/promptologist/prompt3-1",
+    "dentai/promptologist/prompt4-1",
+    "dentai/promptologist/prompt4-2"
+   ]
+  },
+  {
+   "key": "پروتز_دندانی",
+   "tag": "#پروتز_دندانی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 8,
+   "content_ids": [
+    "litecast/lite-CAST16",
+    "litecast/lite-CAST17",
+    "litecast/lite-CAST18",
+    "chairside/chairside-5",
+    "chairside/chairside-11",
+    "insight/insight-34",
+    "chairside/chairside-12",
+    "insight/insight-41"
+   ]
+  },
+  {
+   "key": "پوسیدگی",
+   "tag": "#پوسیدگی",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 8,
+   "content_ids": [
+    "episodes/episode-65",
+    "episodes/episode-66",
+    "episodes/episode-67",
+    "episodes/episode-134",
+    "episodes/episode-135",
+    "dentai/dentai-12",
+    "chairside/chairside-9",
+    "sharehub/share-7"
+   ]
+  },
+  {
+   "key": "ترمیم_غیرمستقیم",
+   "tag": "#ترمیم_غیرمستقیم",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 7,
+   "content_ids": [
+    "episodes/episode-122",
+    "episodes/episode-137",
+    "notecast/episode-8",
+    "notecast/episode-11",
+    "notecast/episode-12",
+    "notecast/episode-15",
+    "notecast/episode-18"
+   ]
+  },
+  {
+   "key": "تصمیم_بالینی",
+   "tag": "#تصمیم_بالینی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 7,
+   "content_ids": [
+    "metanotes/meta-8",
+    "chairside/chairside-17",
+    "insight/insight-45",
+    "insight/insight-46",
+    "insight/insight-47",
+    "insight/insight-48",
+    "insight/insight-49"
+   ]
+  },
+  {
+   "key": "درمان_ایمپلنت",
+   "tag": "#درمان_ایمپلنت",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 7,
+   "content_ids": [
+    "litecast/lite-CAST12",
+    "litecast/lite-CAST13",
+    "litecast/lite-CAST14",
+    "litecast/lite-CAST15",
+    "litecast/lite-CAST16",
+    "litecast/lite-CAST17",
+    "litecast/lite-CAST19"
+   ]
+  },
+  {
+   "key": "prosthodontics",
+   "tag": "#Prosthodontics",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 6,
+   "content_ids": [
+    "notecast/episode-27",
+    "insight/insight-34",
+    "insight/insight-36",
+    "episodes/episode-156",
+    "insight/insight-37",
+    "insight/insight-38"
+   ]
+  },
+  {
+   "key": "اورلی",
+   "tag": "#اورلی",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 6,
+   "content_ids": [
+    "episodes/episode-55",
+    "episodes/episode-56",
+    "episodes/episode-57",
+    "episodes/episode-58",
+    "dentai/dentai-25",
+    "episodes/episode-159-1"
+   ]
+  },
+  {
+   "key": "ایمپلنت_فوری",
+   "tag": "#ایمپلنت_فوری",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 6,
+   "content_ids": [
+    "episodes/episode-125-2",
+    "episodes/episode-150",
+    "litecast/lite-CAST13",
+    "litecast/lite-CAST15",
+    "episodes/episode-157",
+    "episodes/episode-158"
+   ]
+  },
+  {
+   "key": "تراش_دندان",
+   "tag": "#تراش_دندان",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 6,
+   "content_ids": [
+    "episodes/episode-95",
+    "episodes/episode-113",
+    "episodes/episode-122-5",
+    "dentcast-plus/video-1",
+    "dentai/dentai-10",
+    "insight/insight-54"
+   ]
+  },
+  {
+   "key": "دقت_اسکن",
+   "tag": "#دقت_اسکن",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 6,
+   "content_ids": [
+    "episodes/episode-122-2",
+    "episodes/episode-128-1",
+    "episodes/episode-133",
+    "sharehub/share-2",
+    "dentai/dentai-21",
+    "metanotes/meta-16"
+   ]
+  },
+  {
+   "key": "دنتکست_پلاس",
+   "tag": "#دنتکست_پلاس",
+   "domain": "brand",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 6,
+   "content_ids": [
+    "dentcast-plus/video-1",
+    "dentcast-plus/video-2",
+    "dentcast-plus/video-3",
+    "dentcast-plus/video-4",
+    "dentcast-plus/video-5",
+    "dentcast-plus/video-6"
+   ]
+  },
+  {
+   "key": "طراحی_لبخند",
+   "tag": "#طراحی_لبخند",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 6,
+   "content_ids": [
+    "episodes/episode-28",
+    "episodes/episode-38",
+    "episodes/episode-46",
+    "episodes/episode-150-1",
+    "litecast/lite-CAST7",
+    "notecast/episode-28"
+   ]
+  },
+  {
+   "key": "گایدلاین",
+   "tag": "#گایدلاین",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 6,
+   "content_ids": [
+    "episodes/episode-121",
+    "episodes/episode-123",
+    "episodes/episode-124",
+    "episodes/episode-127",
+    "episodes/episode-134",
+    "episodes/episode-135"
+   ]
+  },
+  {
+   "key": "dme",
+   "tag": "#DME",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 5,
+   "content_ids": [
+    "episodes/episode-75",
+    "episodes/episode-76",
+    "episodes/episode-77",
+    "episodes/episode-78",
+    "notecast/episode-7"
+   ]
+  },
+  {
+   "key": "hallucination",
+   "tag": "#Hallucination",
+   "domain": "ai",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 5,
+   "content_ids": [
+    "dentai/promptologist/prompt1-1",
+    "dentai/promptologist/prompt1-3",
+    "dentai/promptologist/prompt1-4",
+    "dentai/promptologist/prompt1-5",
+    "dentai/promptologist/prompt2-1"
+   ]
+  },
+  {
+   "key": "ids",
+   "tag": "#IDS",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 5,
+   "content_ids": [
+    "notecast/episode-6",
+    "notecast/episode-7",
+    "dentai/dentai-17",
+    "dentai/dentai-19",
+    "dentai/dentai-20"
+   ]
+  },
+  {
+   "key": "tibase",
+   "tag": "#TiBase",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 5,
+   "content_ids": [
+    "episodes/episode-104",
+    "episodes/episode-105",
+    "episodes/episode-106",
+    "insight/insight-10",
+    "insight/insight-31"
+   ]
+  },
+  {
+   "key": "آنله",
+   "tag": "#آنله",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 5,
+   "content_ids": [
+    "episodes/episode-123-3",
+    "episodes/episode-137",
+    "notecast/episode-6",
+    "dentai/dentai-25",
+    "episodes/episode-159-1"
+   ]
+  },
+  {
+   "key": "اسکنر_داخل_دهانی",
+   "tag": "#اسکنر_داخل_دهانی",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 5,
+   "content_ids": [
+    "episodes/episode-122-2",
+    "episodes/episode-128-1",
+    "episodes/episode-149-2",
+    "sharehub/share-2",
+    "metanotes/meta-16"
+   ]
+  },
+  {
+   "key": "ایمپلنت_دیجیتال",
+   "tag": "#ایمپلنت_دیجیتال",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 5,
+   "content_ids": [
+    "episodes/episode-104",
+    "episodes/episode-133",
+    "litecast/lite-CAST9",
+    "sharehub/share-2",
+    "litecast/lite-CAST14"
+   ]
+  },
+  {
+   "key": "تشخیص_افتراقی",
+   "tag": "#تشخیص_افتراقی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 5,
+   "content_ids": [
+    "insight/insight-11",
+    "insight/insight-23",
+    "insight/insight-25",
+    "chairside/chairside-18",
+    "chairside/chairside-27"
+   ]
+  },
+  {
+   "key": "تنظیم_اکلوژن",
+   "tag": "#تنظیم_اکلوژن",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 5,
+   "content_ids": [
+    "insight/insight-1",
+    "sharehub/share-6",
+    "dentai/dentai-27",
+    "insight/insight-54",
+    "insight/insight-56"
+   ]
+  },
+  {
+   "key": "توهم_هوش_مصنوعی",
+   "tag": "#توهم_هوش_مصنوعی",
+   "domain": "ai",
+   "words": 3,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 5,
+   "content_ids": [
+    "dentai/promptologist/prompt1-1",
+    "dentai/promptologist/prompt1-3",
+    "dentai/promptologist/prompt1-4",
+    "dentai/promptologist/prompt1-5",
+    "dentai/promptologist/prompt2-1"
+   ]
+  },
+  {
+   "key": "جراحی_ایمپلنت",
+   "tag": "#جراحی_ایمپلنت",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 5,
+   "content_ids": [
+    "episodes/episode-130-1",
+    "episodes/episode-150",
+    "litecast/lite-CAST8",
+    "litecast/lite-CAST13",
+    "sharehub/share-9"
+   ]
+  },
+  {
+   "key": "دکتر_شهابیان",
+   "tag": "#دکتر_شهابیان",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 5,
+   "content_ids": [
+    "chairside/chairside-23",
+    "chairside/chairside-24",
+    "chairside/chairside-25",
+    "chairside/chairside-26",
+    "chairside/chairside-27"
+   ]
+  },
+  {
+   "key": "سایش_دندانی",
+   "tag": "#سایش_دندانی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 5,
+   "content_ids": [
+    "episodes/episode-34",
+    "episodes/episode-35",
+    "notecast/episode-34",
+    "notecast/episode-35",
+    "dentai/dentai-26"
+   ]
+  },
+  {
+   "key": "سلامت_دهان",
+   "tag": "#سلامت_دهان",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 5,
+   "content_ids": [
+    "litecast/lite-CAST1",
+    "litecast/lite-CAST3",
+    "litecast/lite-CAST5",
+    "litecast/lite-CAST19",
+    "sharehub/share-7"
+   ]
+  },
+  {
+   "key": "سمان",
+   "tag": "#سمان",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 5,
+   "content_ids": [
+    "episodes/episode-2",
+    "episodes/episode-3",
+    "insight/insight-5",
+    "dentcast-plus/video-4",
+    "dentcast-plus/video-5"
+   ]
+  },
+  {
+   "key": "فلدسپاتیک",
+   "tag": "#فلدسپاتیک",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 5,
+   "content_ids": [
+    "notecast/episode-8",
+    "notecast/episode-9",
+    "notecast/episode-10",
+    "notecast/episode-16",
+    "dentai/dentai-26"
+   ]
+  },
+  {
+   "key": "قالبگیری",
+   "tag": "#قالبگیری",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 5,
+   "content_ids": [
+    "episodes/episode-20",
+    "episodes/episode-21",
+    "notecast/episode-20",
+    "notecast/episode-21",
+    "metanotes/meta-9"
+   ]
+  },
+  {
+   "key": "ویزیت_کلینیکی",
+   "tag": "#ویزیت_کلینیکی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 5,
+   "content_ids": [
+    "chairside/chairside-1",
+    "chairside/chairside-2",
+    "chairside/chairside-3",
+    "chairside/chairside-4",
+    "chairside/chairside-5"
+   ]
+  },
+  {
+   "key": "چیرساید",
+   "tag": "#چیرساید",
+   "domain": "brand",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 5,
+   "content_ids": [
+    "chairside/chairside-1",
+    "chairside/chairside-2",
+    "chairside/chairside-3",
+    "chairside/chairside-4",
+    "chairside/chairside-5"
+   ]
+  },
+  {
+   "key": "کیس_بالینی",
+   "tag": "#کیس_بالینی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 5,
+   "content_ids": [
+    "chairside/chairside-18",
+    "chairside/chairside-19",
+    "chairside/chairside-20",
+    "chairside/chairside-21",
+    "chairside/chairside-22"
+   ]
+  },
+  {
+   "key": "گزارش_کیس",
+   "tag": "#گزارش_کیس",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 5,
+   "content_ids": [
+    "chairside/chairside-23",
+    "chairside/chairside-24",
+    "chairside/chairside-25",
+    "chairside/chairside-26",
+    "chairside/chairside-27"
+   ]
+  },
+  {
+   "key": "adhesive_dentistry",
+   "tag": "#adhesive dentistry",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 4,
+   "content_ids": [
+    "dentai/dentai-16",
+    "dentai/dentai-17",
+    "dentai/dentai-18",
+    "dentai/dentai-19"
+   ]
+  },
+  {
+   "key": "digitaldentistry",
+   "tag": "#DigitalDentistry",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 4,
+   "content_ids": [
+    "episodes/episode-149-2",
+    "insight/insight-33",
+    "episodes/episode-156",
+    "insight/insight-38"
+   ]
+  },
+  {
+   "key": "generativeai",
+   "tag": "#GenerativeAI",
+   "domain": "ai",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 4,
+   "content_ids": [
+    "dentai/promptologist/prompt1-1",
+    "dentai/promptologist/prompt1-2",
+    "dentai/promptologist/prompt1-3",
+    "dentai/promptologist/prompt1-4"
+   ]
+  },
+  {
+   "key": "globaldiagnosis",
+   "tag": "#GlobalDiagnosis",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 4,
+   "content_ids": [
+    "episodes/episode-116",
+    "episodes/episode-117",
+    "episodes/episode-119",
+    "episodes/episode-120"
+   ]
+  },
+  {
+   "key": "nccl",
+   "tag": "#NCCL",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 4,
+   "content_ids": [
+    "episodes/episode-125",
+    "episodes/episode-126",
+    "episodes/episode-127",
+    "dentai/dentai-5"
+   ]
+  },
+  {
+   "key": "resin_coating",
+   "tag": "#resin coating",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 4,
+   "content_ids": [
+    "dentai/dentai-17",
+    "dentai/dentai-18",
+    "dentai/dentai-19",
+    "dentai/dentai-20"
+   ]
+  },
+  {
+   "key": "vd",
+   "tag": "#VD",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 4,
+   "content_ids": [
+    "insight/insight-12",
+    "notecast/episode-14",
+    "episodes/episode-155",
+    "insight/insight-51"
+   ]
+  },
+  {
+   "key": "vdo",
+   "tag": "#VDO",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 4,
+   "content_ids": [
+    "insight/insight-6",
+    "insight/insight-12",
+    "episodes/episode-154",
+    "episodes/episode-155"
+   ]
+  },
+  {
+   "key": "اتچمنت",
+   "tag": "#اتچمنت",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 4,
+   "content_ids": [
+    "episodes/episode-27",
+    "episodes/episode-50",
+    "episodes/episode-51",
+    "episodes/episode-147-6"
+   ]
+  },
+  {
+   "key": "استاپ_خلفی",
+   "tag": "#استاپ_خلفی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 4,
+   "content_ids": [
+    "insight/insight-6",
+    "insight/insight-12",
+    "insight/insight-21",
+    "insight/insight-43"
+   ]
+  },
+  {
+   "key": "اسکن_دیجیتال",
+   "tag": "#اسکن_دیجیتال",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 4,
+   "content_ids": [
+    "litecast/lite-CAST14",
+    "insight/insight-26",
+    "insight/insight-33",
+    "insight/insight-51"
+   ]
+  },
+  {
+   "key": "اندوکراون",
+   "tag": "#اندوکراون",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 4,
+   "content_ids": [
+    "episodes/episode-40",
+    "episodes/episode-41",
+    "dentai/dentai-27",
+    "metanotes/meta-15"
+   ]
+  },
+  {
+   "key": "ترمیم_خلفی",
+   "tag": "#ترمیم_خلفی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 4,
+   "content_ids": [
+    "episodes/episode-121",
+    "episodes/episode-123",
+    "episodes/episode-124",
+    "episodes/episode-147-3"
+   ]
+  },
+  {
+   "key": "تشخیص_پوسیدگی",
+   "tag": "#تشخیص_پوسیدگی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 4,
+   "content_ids": [
+    "dentai/dentai-4",
+    "dentai/promptologist/prompt1-1",
+    "dentai/promptologist/prompt1-2",
+    "dentai/promptologist/prompt1-3"
+   ]
+  },
+  {
+   "key": "حفظ_دندان",
+   "tag": "#حفظ_دندان",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 4,
+   "content_ids": [
+    "episodes/episode-150-2",
+    "metanotes/meta-6",
+    "chairside/chairside-4",
+    "chairside/chairside-16"
+   ]
+  },
+  {
+   "key": "دنتکست",
+   "tag": "#دنتکست",
+   "domain": "brand",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 4,
+   "content_ids": [
+    "episodes/episode-1",
+    "episodes/episode-100",
+    "episodes/episode-155",
+    "episodes/episode-156"
+   ]
+  },
+  {
+   "key": "دندان_قدامی",
+   "tag": "#دندان_قدامی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 4,
+   "content_ids": [
+    "episodes/episode-147-7",
+    "insight/insight-4",
+    "chairside/chairside-4",
+    "chairside/chairside-22"
+   ]
+  },
+  {
+   "key": "دنچر",
+   "tag": "#دنچر",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 4,
+   "content_ids": [
+    "episodes/episode-118-1",
+    "episodes/episode-147-1",
+    "litecast/lite-CAST2",
+    "chairside/chairside-8"
+   ]
+  },
+  {
+   "key": "دیجیتال",
+   "tag": "#دیجیتال",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 4,
+   "content_ids": [
+    "episodes/episode-97",
+    "episodes/episode-128-1",
+    "insight/insight-31",
+    "insight/insight-35"
+   ]
+  },
+  {
+   "key": "روکش_موقت",
+   "tag": "#روکش_موقت",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 4,
+   "content_ids": [
+    "episodes/episode-125-2",
+    "insight/insight-21",
+    "insight/insight-42",
+    "insight/insight-50"
+   ]
+  },
+  {
+   "key": "شکست_ایمپلنت",
+   "tag": "#شکست_ایمپلنت",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 4,
+   "content_ids": [
+    "episodes/episode-130-1",
+    "sharehub/share-9",
+    "chairside/chairside-23",
+    "sharehub/share-11"
+   ]
+  },
+  {
+   "key": "فایبر_پست",
+   "tag": "#فایبر_پست",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 4,
+   "content_ids": [
+    "episodes/episode-125-3",
+    "episodes/episode-128",
+    "episodes/episode-129",
+    "metanotes/meta-7"
+   ]
+  },
+  {
+   "key": "فینیش_لاین",
+   "tag": "#فینیش_لاین",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 4,
+   "content_ids": [
+    "notecast/episode-20",
+    "notecast/episode-21",
+    "insight/insight-18",
+    "chairside/chairside-12"
+   ]
+  },
+  {
+   "key": "لیتیوم_دی_سیلیکات",
+   "tag": "#لیتیوم_دی_سیلیکات",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 4,
+   "content_ids": [
+    "notecast/episode-8",
+    "notecast/episode-9",
+    "notecast/episode-10",
+    "dentai/dentai-26"
+   ]
+  },
+  {
+   "key": "نگهداری_دندان",
+   "tag": "#نگهداری_دندان",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 4,
+   "content_ids": [
+    "episodes/episode-151",
+    "episodes/episode-152",
+    "episodes/episode-153",
+    "chairside/chairside-13"
+   ]
+  },
+  {
+   "key": "هوش_مصنوعی_مولد",
+   "tag": "#هوش_مصنوعی_مولد",
+   "domain": "ai",
+   "words": 3,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 4,
+   "content_ids": [
+    "dentai/promptologist/prompt1-1",
+    "dentai/promptologist/prompt1-2",
+    "dentai/promptologist/prompt1-3",
+    "dentai/promptologist/prompt1-4"
+   ]
+  },
+  {
+   "key": "ونیر_سرامیکی",
+   "tag": "#ونیر_سرامیکی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 4,
+   "content_ids": [
+    "episodes/episode-122-3",
+    "episodes/episode-124-1",
+    "litecast/lite-CAST7",
+    "notecast/episode-19"
+   ]
+  },
+  {
+   "key": "پروتز_متحرک",
+   "tag": "#پروتز_متحرک",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 4,
+   "content_ids": [
+    "episodes/episode-118-1",
+    "episodes/episode-147-1",
+    "chairside/chairside-8",
+    "notecast/episode-33"
+   ]
+  },
+  {
+   "key": "کشیدن_دندان",
+   "tag": "#کشیدن_دندان",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 4,
+   "content_ids": [
+    "episodes/episode-151",
+    "episodes/episode-152",
+    "episodes/episode-153",
+    "chairside/chairside-21"
+   ]
+  },
+  {
+   "key": "گروپ_فانکشن",
+   "tag": "#گروپ_فانکشن",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 4,
+   "content_ids": [
+    "episodes/episode-132",
+    "chairside/chairside-15",
+    "sharehub/share-6",
+    "insight/insight-47"
+   ]
+  },
+  {
+   "key": "biobase",
+   "tag": "#biobase",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 3,
+   "content_ids": [
+    "dentai/dentai-17",
+    "dentai/dentai-18",
+    "dentai/dentai-20"
+   ]
+  },
+  {
+   "key": "cl",
+   "tag": "#CL",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 3,
+   "content_ids": [
+    "episodes/episode-75",
+    "episodes/episode-76",
+    "episodes/episode-78"
+   ]
+  },
+  {
+   "key": "diagnosticai",
+   "tag": "#DiagnosticAI",
+   "domain": "ai",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 3,
+   "content_ids": [
+    "dentai/promptologist/prompt1-1",
+    "dentai/promptologist/prompt1-2",
+    "dentai/promptologist/prompt1-3"
+   ]
+  },
+  {
+   "key": "implant",
+   "tag": "#Implant",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 3,
+   "content_ids": [
+    "episodes/episode-156",
+    "episodes/episode-157",
+    "episodes/episode-158"
+   ]
+  },
+  {
+   "key": "implantplanning",
+   "tag": "#ImplantPlanning",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 3,
+   "content_ids": [
+    "episodes/episode-156",
+    "episodes/episode-157",
+    "episodes/episode-158"
+   ]
+  },
+  {
+   "key": "implantprosthetics",
+   "tag": "#ImplantProsthetics",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 3,
+   "content_ids": [
+    "episodes/episode-157",
+    "episodes/episode-158",
+    "episodes/episode-159"
+   ]
+  },
+  {
+   "key": "implantrestoration",
+   "tag": "#ImplantRestoration",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 3,
+   "content_ids": [
+    "episodes/episode-157",
+    "episodes/episode-158",
+    "episodes/episode-159"
+   ]
+  },
+  {
+   "key": "occlusion",
+   "tag": "#Occlusion",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 3,
+   "content_ids": [
+    "notecast/episode-24",
+    "sharehub/share-5",
+    "sharehub/share-6"
+   ]
+  },
+  {
+   "key": "peek",
+   "tag": "#PEEK",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 3,
+   "content_ids": [
+    "episodes/episode-96",
+    "episodes/episode-97",
+    "episodes/episode-98"
+   ]
+  },
+  {
+   "key": "promptengineering",
+   "tag": "#PromptEngineering",
+   "domain": "ai",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 3,
+   "content_ids": [
+    "dentai/promptologist/prompt3-1",
+    "dentai/promptologist/prompt4-1",
+    "dentai/promptologist/prompt4-2"
+   ]
+  },
+  {
+   "key": "snaponsmile",
+   "tag": "#SnapOnSmile",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 3,
+   "content_ids": [
+    "episodes/episode-32",
+    "episodes/episode-33",
+    "notecast/episode-33"
+   ]
+  },
+  {
+   "key": "ارتودنسی",
+   "tag": "#ارتودنسی",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 3,
+   "content_ids": [
+    "insight/insight-19",
+    "sharehub/share-5",
+    "insight/insight-38"
+   ]
+  },
+  {
+   "key": "اسکن_داخل_دهانی",
+   "tag": "#اسکن_داخل_دهانی",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 3,
+   "content_ids": [
+    "sharehub/share-2",
+    "insight/insight-33",
+    "insight/insight-40"
+   ]
+  },
+  {
+   "key": "اندو",
+   "tag": "#اندو",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 3,
+   "content_ids": [
+    "insight/insight-7",
+    "insight/insight-11",
+    "metanotes/meta-11"
+   ]
+  },
+  {
+   "key": "ایزولاسیون",
+   "tag": "#ایزولاسیون",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 3,
+   "content_ids": [
+    "notecast/episode-7",
+    "insight/insight-36",
+    "insight/insight-54"
+   ]
+  },
+  {
+   "key": "ایمپلنت_دندانی",
+   "tag": "#ایمپلنت_دندانی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 3,
+   "content_ids": [
+    "episodes/episode-103",
+    "litecast/lite-CAST12",
+    "sharehub/share-9"
+   ]
+  },
+  {
+   "key": "اینله",
+   "tag": "#اینله",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 3,
+   "content_ids": [
+    "episodes/episode-12",
+    "notecast/episode-6",
+    "notecast/episode-7"
+   ]
+  },
+  {
+   "key": "باندینگ_سرامیک",
+   "tag": "#باندینگ_سرامیک",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 3,
+   "content_ids": [
+    "episodes/episode-136",
+    "notecast/episode-9",
+    "notecast/episode-10"
+   ]
+  },
+  {
+   "key": "براکسیسم",
+   "tag": "#براکسیسم",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 3,
+   "content_ids": [
+    "insight/insight-27",
+    "dentai/dentai-23",
+    "dentai/dentai-26"
+   ]
+  },
+  {
+   "key": "بعد_عمودی",
+   "tag": "#بعد_عمودی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 3,
+   "content_ids": [
+    "notecast/episode-14",
+    "insight/insight-51",
+    "insight/insight-60"
+   ]
+  },
+  {
+   "key": "بهداشت_دهان",
+   "tag": "#بهداشت_دهان",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 3,
+   "content_ids": [
+    "litecast/lite-CAST1",
+    "litecast/lite-CAST6",
+    "chairside/chairside-25"
+   ]
+  },
+  {
+   "key": "بیولوژی_ایمپلنت",
+   "tag": "#بیولوژی_ایمپلنت",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 3,
+   "content_ids": [
+    "episodes/episode-148-1",
+    "notecast/episode-23",
+    "notecast/episode-24"
+   ]
+  },
+  {
+   "key": "تجهیزات_دندانپزشکی",
+   "tag": "#تجهیزات_دندانپزشکی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 3,
+   "content_ids": [
+    "episodes/episode-106-1",
+    "episodes/episode-107-1",
+    "episodes/episode-110-1"
+   ]
+  },
+  {
+   "key": "تحویل_روکش",
+   "tag": "#تحویل_روکش",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 3,
+   "content_ids": [
+    "dentcast-plus/video-2",
+    "dentcast-plus/video-3",
+    "insight/insight-52"
+   ]
+  },
+  {
+   "key": "تراش_روکش",
+   "tag": "#تراش_روکش",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 3,
+   "content_ids": [
+    "episodes/episode-114",
+    "insight/insight-49",
+    "sharehub/share-10"
+   ]
+  },
+  {
+   "key": "توتال_اچ",
+   "tag": "#توتال_اچ",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 3,
+   "content_ids": [
+    "notecast/episode-4",
+    "notecast/episode-5",
+    "notecast/episode-6"
+   ]
+  },
+  {
+   "key": "درمان_غیرتهاجمی",
+   "tag": "#درمان_غیرتهاجمی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 3,
+   "content_ids": [
+    "notecast/episode-33",
+    "notecast/episode-34",
+    "notecast/episode-35"
+   ]
+  },
+  {
+   "key": "رشد_فک",
+   "tag": "#رشد_فک",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 3,
+   "content_ids": [
+    "episodes/episode-62",
+    "episodes/episode-63",
+    "episodes/episode-64"
+   ]
+  },
+  {
+   "key": "روکش_دندان",
+   "tag": "#روکش_دندان",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 3,
+   "content_ids": [
+    "episodes/episode-113",
+    "photocast/episode-3",
+    "dentcast-plus/video-1"
+   ]
+  },
+  {
+   "key": "روکش_سرامیکی",
+   "tag": "#روکش_سرامیکی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 3,
+   "content_ids": [
+    "insight/insight-28",
+    "insight/insight-29",
+    "insight/insight-32"
+   ]
+  },
+  {
+   "key": "زیبایی_دندان",
+   "tag": "#زیبایی_دندان",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 3,
+   "content_ids": [
+    "episodes/episode-118",
+    "litecast/lite-CAST7",
+    "notecast/episode-28"
+   ]
+  },
+  {
+   "key": "سلف_اچ",
+   "tag": "#سلف_اچ",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 3,
+   "content_ids": [
+    "dentai/dentai-5",
+    "notecast/episode-4",
+    "notecast/episode-5"
+   ]
+  },
+  {
+   "key": "سمان_دندانی",
+   "tag": "#سمان_دندانی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 3,
+   "content_ids": [
+    "notecast/episode-2",
+    "sharehub/share-4",
+    "insight/insight-59"
+   ]
+  },
+  {
+   "key": "سمان_کردن",
+   "tag": "#سمان_کردن",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 3,
+   "content_ids": [
+    "episodes/episode-138",
+    "episodes/episode-149",
+    "sharehub/share-4"
+   ]
+  },
+  {
+   "key": "سوپرااراپشن",
+   "tag": "#سوپرااراپشن",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 3,
+   "content_ids": [
+    "insight/insight-6",
+    "insight/insight-46",
+    "chairside/chairside-19"
+   ]
+  },
+  {
+   "key": "فایبرپست",
+   "tag": "#فایبرپست",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 3,
+   "content_ids": [
+    "episodes/episode-42",
+    "episodes/episode-43",
+    "episodes/episode-79"
+   ]
+  },
+  {
+   "key": "فوتوکست",
+   "tag": "#فوتوکست",
+   "domain": "brand",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 3,
+   "content_ids": [
+    "photocast/episode-1",
+    "photocast/episode-2",
+    "photocast/episode-3"
+   ]
+  },
+  {
+   "key": "لمینیت_سرامیکی",
+   "tag": "#لمینیت_سرامیکی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 3,
+   "content_ids": [
+    "dentai/dentai-10",
+    "notecast/episode-37",
+    "notecast/episode-38"
+   ]
+  },
+  {
+   "key": "مدیریت_ریسک",
+   "tag": "#مدیریت_ریسک",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 3,
+   "content_ids": [
+    "insight/insight-20",
+    "insight/insight-21",
+    "insight/insight-22"
+   ]
+  },
+  {
+   "key": "ناحیه_زیبایی",
+   "tag": "#ناحیه_زیبایی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 3,
+   "content_ids": [
+    "episodes/episode-125-2",
+    "episodes/episode-150",
+    "insight/insight-9"
+   ]
+  },
+  {
+   "key": "هوش_مصنوعی_تشخیصی",
+   "tag": "#هوش_مصنوعی_تشخیصی",
+   "domain": "ai",
+   "words": 3,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 3,
+   "content_ids": [
+    "dentai/promptologist/prompt1-1",
+    "dentai/promptologist/prompt1-2",
+    "dentai/promptologist/prompt1-3"
+   ]
+  },
+  {
+   "key": "هیلینگ_اباتمنت",
+   "tag": "#هیلینگ_اباتمنت",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 3,
+   "content_ids": [
+    "episodes/episode-157",
+    "episodes/episode-158",
+    "insight/insight-50"
+   ]
+  },
+  {
+   "key": "پرامپت_نویسی",
+   "tag": "#پرامپت_نویسی",
+   "domain": "ai",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 3,
+   "content_ids": [
+    "dentai/promptologist/prompt3-1",
+    "dentai/promptologist/prompt4-1",
+    "dentai/promptologist/prompt4-2"
+   ]
+  },
+  {
+   "key": "پروتز_زیبایی",
+   "tag": "#پروتز_زیبایی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 3,
+   "content_ids": [
+    "episodes/episode-118",
+    "episodes/episode-120",
+    "episodes/episode-148"
+   ]
+  },
+  {
+   "key": "پروفایل_امرجنس",
+   "tag": "#پروفایل_امرجنس",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 3,
+   "content_ids": [
+    "episodes/episode-157",
+    "episodes/episode-158",
+    "insight/insight-50"
+   ]
+  },
+  {
+   "key": "پیش_آگهی",
+   "tag": "#پیش_آگهی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 3,
+   "content_ids": [
+    "metanotes/meta-1",
+    "metanotes/meta-2",
+    "metanotes/meta-3"
+   ]
+  },
+  {
+   "key": "پیچ_ایمپلنت",
+   "tag": "#پیچ_ایمپلنت",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 3,
+   "content_ids": [
+    "litecast/lite-CAST10",
+    "sharehub/share-1",
+    "litecast/lite-CAST17"
+   ]
+  },
+  {
+   "key": "کانتکت",
+   "tag": "#کانتکت",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 3,
+   "content_ids": [
+    "dentcast-plus/video-3",
+    "insight/insight-29",
+    "metanotes/meta-12"
+   ]
+  },
+  {
+   "key": "کانین_رایز",
+   "tag": "#کانین_رایز",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 3,
+   "content_ids": [
+    "episodes/episode-132",
+    "chairside/chairside-15",
+    "sharehub/share-6"
+   ]
+  },
+  {
+   "key": "3dimplantpositioning",
+   "tag": "#3DImplantPositioning",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-157",
+    "episodes/episode-158"
+   ]
+  },
+  {
+   "key": "ai",
+   "tag": "#AI",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-109",
+    "episodes/episode-149-1"
+   ]
+  },
+  {
+   "key": "allon4",
+   "tag": "#AllOn4",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-108",
+    "episodes/episode-144-1"
+   ]
+  },
+  {
+   "key": "angledscrewchannel",
+   "tag": "#AngledScrewChannel",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-157",
+    "episodes/episode-158"
+   ]
+  },
+  {
+   "key": "biologicalwidth",
+   "tag": "#BiologicalWidth",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-75",
+    "episodes/episode-76"
+   ]
+  },
+  {
+   "key": "biomechanics",
+   "tag": "#Biomechanics",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "notecast/episode-27",
+    "insight/insight-55"
+   ]
+  },
+  {
+   "key": "biorestorativeconcept",
+   "tag": "#BioRestorativeConcept",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-157",
+    "episodes/episode-158"
+   ]
+  },
+  {
+   "key": "bonelevelimplant",
+   "tag": "#BoneLevelImplant",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-157",
+    "episodes/episode-158"
+   ]
+  },
+  {
+   "key": "bopt",
+   "tag": "#BOPT",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-95",
+    "insight/insight-18"
+   ]
+  },
+  {
+   "key": "bruxism",
+   "tag": "#bruxism",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "dentai/dentai-23",
+    "dentai/dentai-26"
+   ]
+  },
+  {
+   "key": "cad_cam",
+   "tag": "#CAD_CAM",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "insight/insight-30",
+    "insight/insight-31"
+   ]
+  },
+  {
+   "key": "cadcam",
+   "tag": "#CADCAM",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-96",
+    "episodes/episode-104"
+   ]
+  },
+  {
+   "key": "dahl",
+   "tag": "#Dahl",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-34",
+    "episodes/episode-35"
+   ]
+  },
+  {
+   "key": "dahlconcept",
+   "tag": "#DahlConcept",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "notecast/episode-34",
+    "notecast/episode-35"
+   ]
+  },
+  {
+   "key": "decoupling",
+   "tag": "#Decoupling",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-72",
+    "episodes/episode-73"
+   ]
+  },
+  {
+   "key": "dentalimpression",
+   "tag": "#DentalImpression",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "notecast/episode-20",
+    "insight/insight-34"
+   ]
+  },
+  {
+   "key": "dentaltips",
+   "tag": "#DentalTips",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "insight/insight-36",
+    "insight/insight-37"
+   ]
+  },
+  {
+   "key": "digitalimplantplanning",
+   "tag": "#DigitalImplantPlanning",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-157",
+    "episodes/episode-158"
+   ]
+  },
+  {
+   "key": "emergenceprofile",
+   "tag": "#EmergenceProfile",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-157",
+    "episodes/episode-158"
+   ]
+  },
+  {
+   "key": "feldspathic_porcelain",
+   "tag": "#feldspathic_porcelain",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "dentai/dentai-25",
+    "dentai/dentai-26"
+   ]
+  },
+  {
+   "key": "healingabutment",
+   "tag": "#HealingAbutment",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-157",
+    "episodes/episode-158"
+   ]
+  },
+  {
+   "key": "hf",
+   "tag": "#HF",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "notecast/episode-9",
+    "notecast/episode-10"
+   ]
+  },
+  {
+   "key": "hybrid_layer",
+   "tag": "#hybrid layer",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "dentai/dentai-16",
+    "dentai/dentai-19"
+   ]
+  },
+  {
+   "key": "immediate_dentin_sealing",
+   "tag": "#Immediate_Dentin_Sealing",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "notecast/episode-6",
+    "notecast/episode-7"
+   ]
+  },
+  {
+   "key": "immediateimplant",
+   "tag": "#ImmediateImplant",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-157",
+    "episodes/episode-158"
+   ]
+  },
+  {
+   "key": "implant_prosthesis",
+   "tag": "#Implant_Prosthesis",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "notecast/episode-24",
+    "insight/insight-57"
+   ]
+  },
+  {
+   "key": "implant_prosthetics",
+   "tag": "#Implant_Prosthetics",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "sharehub/share-1",
+    "sharehub/share-4"
+   ]
+  },
+  {
+   "key": "implant_survival",
+   "tag": "#Implant_Survival",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "notecast/episode-25",
+    "notecast/episode-26"
+   ]
+  },
+  {
+   "key": "impressiontechnique",
+   "tag": "#ImpressionTechnique",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "notecast/episode-21",
+    "insight/insight-34"
+   ]
+  },
+  {
+   "key": "jumpinggap",
+   "tag": "#JumpingGap",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-157",
+    "episodes/episode-158"
+   ]
+  },
+  {
+   "key": "laminateveneer",
+   "tag": "#LaminateVeneer",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "insight/insight-36",
+    "insight/insight-37"
+   ]
+  },
+  {
+   "key": "lithium_disilicate",
+   "tag": "#lithium_disilicate",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "dentai/dentai-25",
+    "dentai/dentai-26"
+   ]
+  },
+  {
+   "key": "ltd",
+   "tag": "#LTD",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "notecast/episode-17",
+    "insight/insight-27"
+   ]
+  },
+  {
+   "key": "mdp",
+   "tag": "#MDP",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "notecast/episode-5",
+    "notecast/episode-11"
+   ]
+  },
+  {
+   "key": "mih",
+   "tag": "#MIH",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "dentai/dentai-2",
+    "photocast/episode-3"
+   ]
+  },
+  {
+   "key": "notebooklm",
+   "tag": "#NotebookLM",
+   "domain": "ai",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "dentai/promptologist/prompt1-5",
+    "dentai/promptologist/prompt2-1"
+   ]
+  },
+  {
+   "key": "occlusal_adjustment",
+   "tag": "#Occlusal_Adjustment",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "insight/insight-54",
+    "insight/insight-56"
+   ]
+  },
+  {
+   "key": "oneabutmentonetime",
+   "tag": "#OneAbutmentOneTime",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-157",
+    "episodes/episode-158"
+   ]
+  },
+  {
+   "key": "periimplanthealth",
+   "tag": "#PeriImplantHealth",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-157",
+    "episodes/episode-158"
+   ]
+  },
+  {
+   "key": "periimplantphenotype",
+   "tag": "#PeriImplantPhenotype",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-157",
+    "episodes/episode-158"
+   ]
+  },
+  {
+   "key": "peripheral_rim_fracture",
+   "tag": "#peripheral rim fracture",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "dentai/dentai-13",
+    "dentai/dentai-14"
+   ]
+  },
+  {
+   "key": "pfm",
+   "tag": "#PFM",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-125-1",
+    "insight/insight-10"
+   ]
+  },
+  {
+   "key": "platformswitch",
+   "tag": "#PlatformSwitch",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-82",
+    "episodes/episode-83"
+   ]
+  },
+  {
+   "key": "prf",
+   "tag": "#prf",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "dentai/dentai-13",
+    "dentai/dentai-14"
+   ]
+  },
+  {
+   "key": "psz",
+   "tag": "#PSZ",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "dentai/dentai-11",
+    "dentai/dentai-15"
+   ]
+  },
+  {
+   "key": "saucerization",
+   "tag": "#Saucerization",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-157",
+    "episodes/episode-158"
+   ]
+  },
+  {
+   "key": "sda",
+   "tag": "#SDA",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-160",
+    "metanotes/meta-17"
+   ]
+  },
+  {
+   "key": "smartventcrown",
+   "tag": "#SmartVentCrown",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-148-2",
+    "metanotes/meta-10"
+   ]
+  },
+  {
+   "key": "smiledesign",
+   "tag": "#SmileDesign",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-118",
+    "notecast/episode-28"
+   ]
+  },
+  {
+   "key": "softtissuemanagement",
+   "tag": "#SoftTissueManagement",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-157",
+    "episodes/episode-158"
+   ]
+  },
+  {
+   "key": "tissuelevelimplant",
+   "tag": "#TissueLevelImplant",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-157",
+    "episodes/episode-158"
+   ]
+  },
+  {
+   "key": "tooth_preparation",
+   "tag": "#Tooth_Preparation",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "insight/insight-54",
+    "sharehub/share-10"
+   ]
+  },
+  {
+   "key": "transformation_toughening",
+   "tag": "#Transformation_Toughening",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "notecast/episode-17",
+    "notecast/episode-18"
+   ]
+  },
+  {
+   "key": "verticaldimension",
+   "tag": "#VerticalDimension",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-154",
+    "episodes/episode-155"
+   ]
+  },
+  {
+   "key": "آمالگام",
+   "tag": "#آمالگام",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "insight/insight-49",
+    "dentai/dentai-22"
+   ]
+  },
+  {
+   "key": "آنالیز_لبخند",
+   "tag": "#آنالیز_لبخند",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-118",
+    "notecast/episode-28"
+   ]
+  },
+  {
+   "key": "اباتمنت_کاستوم",
+   "tag": "#اباتمنت_کاستوم",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-123-6",
+    "insight/insight-48"
+   ]
+  },
+  {
+   "key": "اجزای_ایمپلنت",
+   "tag": "#اجزای_ایمپلنت",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "litecast/lite-CAST17",
+    "litecast/lite-CAST18"
+   ]
+  },
+  {
+   "key": "ارزیابی_دندان",
+   "tag": "#ارزیابی_دندان",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "insight/insight-14",
+    "chairside/chairside-9"
+   ]
+  },
+  {
+   "key": "استخوان",
+   "tag": "#استخوان",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-23",
+    "episodes/episode-26"
+   ]
+  },
+  {
+   "key": "اسلایدکست",
+   "tag": "#اسلایدکست",
+   "domain": "brand",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-147-4",
+    "episodes/episode-149-1"
+   ]
+  },
+  {
+   "key": "اسپلینت",
+   "tag": "#اسپلینت",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "insight/insight-16",
+    "metanotes/meta-18"
+   ]
+  },
+  {
+   "key": "اسپلینت_ایمپلنت",
+   "tag": "#اسپلینت_ایمپلنت",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-147-5",
+    "notecast/episode-26"
+   ]
+  },
+  {
+   "key": "اسکرو_سمنتد",
+   "tag": "#اسکرو_سمنتد",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-31",
+    "sharehub/share-4"
+   ]
+  },
+  {
+   "key": "اسکروسمنت",
+   "tag": "#اسکروسمنت",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "notecast/episode-31",
+    "insight/insight-47"
+   ]
+  },
+  {
+   "key": "اسکن_بادی",
+   "tag": "#اسکن_بادی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-133",
+    "insight/insight-35"
+   ]
+  },
+  {
+   "key": "اسکن_دهانی",
+   "tag": "#اسکن_دهانی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "litecast/lite-CAST8",
+    "litecast/lite-CAST9"
+   ]
+  },
+  {
+   "key": "افزایش_vd",
+   "tag": "#افزایش_VD",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "notecast/episode-14",
+    "insight/insight-43"
+   ]
+  },
+  {
+   "key": "افزایش_طول_تاج",
+   "tag": "#افزایش_طول_تاج",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "chairside/chairside-16",
+    "chairside/chairside-21"
+   ]
+  },
+  {
+   "key": "امبراژور",
+   "tag": "#امبراژور",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "insight/insight-16",
+    "insight/insight-32"
+   ]
+  },
+  {
+   "key": "اناملوپلاستی",
+   "tag": "#اناملوپلاستی",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "insight/insight-10",
+    "insight/insight-46"
+   ]
+  },
+  {
+   "key": "انتخاب_سمان",
+   "tag": "#انتخاب_سمان",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "notecast/episode-2",
+    "notecast/episode-3"
+   ]
+  },
+  {
+   "key": "اندودانتیکس",
+   "tag": "#اندودانتیکس",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "insight/insight-17",
+    "insight/insight-39"
+   ]
+  },
+  {
+   "key": "اندودنتیکس",
+   "tag": "#اندودنتیکس",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "photocast/episode-3",
+    "notecast/episode-36"
+   ]
+  },
+  {
+   "key": "اوکیسون",
+   "tag": "#اوکیسون",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-142",
+    "episodes/episode-144"
+   ]
+  },
+  {
+   "key": "اچ_سرامیک",
+   "tag": "#اچ_سرامیک",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "notecast/episode-9",
+    "notecast/episode-10"
+   ]
+  },
+  {
+   "key": "ایمنی_بیمار",
+   "tag": "#ایمنی_بیمار",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-22",
+    "notecast/episode-22"
+   ]
+  },
+  {
+   "key": "ایمپلنت_فول_ماوس",
+   "tag": "#ایمپلنت_فول_ماوس",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-108",
+    "episodes/episode-144-1"
+   ]
+  },
+  {
+   "key": "ایمپلنت_کوتاه",
+   "tag": "#ایمپلنت_کوتاه",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "notecast/episode-24",
+    "notecast/episode-25"
+   ]
+  },
+  {
+   "key": "بارگذاری_ایمپلنت",
+   "tag": "#بارگذاری_ایمپلنت",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-52",
+    "litecast/lite-CAST13"
+   ]
+  },
+  {
+   "key": "بازسازی_ریشه",
+   "tag": "#بازسازی_ریشه",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-128",
+    "episodes/episode-147-7"
+   ]
+  },
+  {
+   "key": "بافت_نرم",
+   "tag": "#بافت_نرم",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-140",
+    "chairside/chairside-16"
+   ]
+  },
+  {
+   "key": "باند",
+   "tag": "#باند",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-9",
+    "episodes/episode-10"
+   ]
+  },
+  {
+   "key": "بایوبیس",
+   "tag": "#بایوبیس",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "dentai/dentai-18",
+    "dentai/dentai-20"
+   ]
+  },
+  {
+   "key": "بقای_ایمپلنت",
+   "tag": "#بقای_ایمپلنت",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "notecast/episode-25",
+    "notecast/episode-26"
+   ]
+  },
+  {
+   "key": "بقای_ترمیم",
+   "tag": "#بقای_ترمیم",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "dentai/dentai-25",
+    "metanotes/meta-14"
+   ]
+  },
+  {
+   "key": "بلیچینگ",
+   "tag": "#بلیچینگ",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-61",
+    "episodes/episode-70"
+   ]
+  },
+  {
+   "key": "بیو_رستوریتیو",
+   "tag": "#بیو_رستوریتیو",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-157",
+    "episodes/episode-158"
+   ]
+  },
+  {
+   "key": "تحلیل_مطالعه",
+   "tag": "#تحلیل_مطالعه",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "metanotes/meta-4",
+    "metanotes/meta-5"
+   ]
+  },
+  {
+   "key": "ترمیم_بیومیمتیک",
+   "tag": "#ترمیم_بیومیمتیک",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "insight/insight-4",
+    "dentai/dentai-11"
+   ]
+  },
+  {
+   "key": "ترمیم_مستقیم",
+   "tag": "#ترمیم_مستقیم",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-123-3",
+    "episodes/episode-128-2"
+   ]
+  },
+  {
+   "key": "ترک_عاجی",
+   "tag": "#ترک عاجی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "dentai/dentai-13",
+    "dentai/dentai-14"
+   ]
+  },
+  {
+   "key": "تری_قالبگیری",
+   "tag": "#تری_قالبگیری",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "notecast/episode-20",
+    "insight/insight-34"
+   ]
+  },
+  {
+   "key": "تصمیم_گیری_درمان",
+   "tag": "#تصمیم_گیری_درمان",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "chairside/chairside-13",
+    "insight/insight-39"
+   ]
+  },
+  {
+   "key": "تفکر_بالینی",
+   "tag": "#تفکر_بالینی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "metanotes/meta-6",
+    "metanotes/meta-7"
+   ]
+  },
+  {
+   "key": "تماس_باز",
+   "tag": "#تماس_باز",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "photocast/episode-1",
+    "insight/insight-29"
+   ]
+  },
+  {
+   "key": "حفظ_مینا",
+   "tag": "#حفظ_مینا",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "sharehub/share-8",
+    "notecast/episode-38"
+   ]
+  },
+  {
+   "key": "داوسون",
+   "tag": "#داوسون",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-142",
+    "episodes/episode-144"
+   ]
+  },
+  {
+   "key": "درد_ارجاعی",
+   "tag": "#درد_ارجاعی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "insight/insight-11",
+    "insight/insight-45"
+   ]
+  },
+  {
+   "key": "درمان_ریشه",
+   "tag": "#درمان_ریشه",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "insight/insight-20",
+    "chairside/chairside-4"
+   ]
+  },
+  {
+   "key": "دندان_مصنوعی",
+   "tag": "#دندان_مصنوعی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "litecast/lite-CAST2",
+    "litecast/lite-CAST4"
+   ]
+  },
+  {
+   "key": "دندانپزشکی_ترمیمی",
+   "tag": "#دندانپزشکی_ترمیمی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "notecast/episode-2",
+    "notecast/episode-3"
+   ]
+  },
+  {
+   "key": "دندانپزشکی_هوشمند",
+   "tag": "#دندانپزشکی_هوشمند",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-109",
+    "episodes/episode-149-1"
+   ]
+  },
+  {
+   "key": "رد_طرح_درمان",
+   "tag": "#رد_طرح_درمان",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "chairside/chairside-25",
+    "chairside/chairside-26"
+   ]
+  },
+  {
+   "key": "رزین_ماتریکس",
+   "tag": "#رزین_ماتریکس",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "notecast/episode-29",
+    "notecast/episode-30"
+   ]
+  },
+  {
+   "key": "ریسک_فاکتور",
+   "tag": "#ریسک_فاکتور",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-130-1",
+    "dentai/dentai-23"
+   ]
+  },
+  {
+   "key": "ریشه_کوتاه",
+   "tag": "#ریشه_کوتاه",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "chairside/chairside-16",
+    "insight/insight-55"
+   ]
+  },
+  {
+   "key": "زیرو_بون_لاس",
+   "tag": "#زیرو_بون_لاس",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-141",
+    "episodes/episode-147"
+   ]
+  },
+  {
+   "key": "زیرکونیا_مونولیتیک",
+   "tag": "#زیرکونیا_مونولیتیک",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-125-1",
+    "insight/insight-42"
+   ]
+  },
+  {
+   "key": "ساپورت_خلفی",
+   "tag": "#ساپورت_خلفی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "insight/insight-21",
+    "chairside/chairside-11"
+   ]
+  },
+  {
+   "key": "سایش_دندان",
+   "tag": "#سایش_دندان",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-125",
+    "sharehub/share-11"
+   ]
+  },
+  {
+   "key": "سایلان",
+   "tag": "#سایلان",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "notecast/episode-10",
+    "notecast/episode-12"
+   ]
+  },
+  {
+   "key": "سمان_ادهزیو",
+   "tag": "#سمان_ادهزیو",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "notecast/episode-3",
+    "insight/insight-59"
+   ]
+  },
+  {
+   "key": "سمان_موقت",
+   "tag": "#سمان_موقت",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "insight/insight-44",
+    "insight/insight-59"
+   ]
+  },
+  {
+   "key": "سندبلاست",
+   "tag": "#سندبلاست",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "notecast/episode-11",
+    "notecast/episode-18"
+   ]
+  },
+  {
+   "key": "سینوس_لیفت",
+   "tag": "#سینوس_لیفت",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-25",
+    "notecast/episode-25"
+   ]
+  },
+  {
+   "key": "سیگار",
+   "tag": "#سیگار",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-147-2",
+    "sharehub/share-9"
+   ]
+  },
+  {
+   "key": "شل_شدن_پیچ",
+   "tag": "#شل_شدن_پیچ",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-123-6",
+    "insight/insight-47"
+   ]
+  },
+  {
+   "key": "طراحی_ایمپلنت",
+   "tag": "#طراحی_ایمپلنت",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-157",
+    "episodes/episode-158"
+   ]
+  },
+  {
+   "key": "طراحی_فریم_ورک",
+   "tag": "#طراحی_فریم_ورک",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "notecast/episode-13",
+    "dentai/dentai-7"
+   ]
+  },
+  {
+   "key": "طراحی_پروتز",
+   "tag": "#طراحی_پروتز",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-112",
+    "sharehub/share-3"
+   ]
+  },
+  {
+   "key": "طرح_درمانی",
+   "tag": "#طرح_درمانی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "insight/insight-13",
+    "insight/insight-14"
+   ]
+  },
+  {
+   "key": "عدم_مداخله",
+   "tag": "#عدم_مداخله",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "insight/insight-8",
+    "chairside/chairside-3"
+   ]
+  },
+  {
+   "key": "عرض_بیولوژیک",
+   "tag": "#عرض_بیولوژیک",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "notecast/episode-13",
+    "insight/insight-50"
+   ]
+  },
+  {
+   "key": "عوارض_ایمپلنت",
+   "tag": "#عوارض_ایمپلنت",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "insight/insight-22",
+    "episodes/episode-159"
+   ]
+  },
+  {
+   "key": "فالوآپ_ایمپلنت",
+   "tag": "#فالوآپ_ایمپلنت",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "litecast/lite-CAST10",
+    "litecast/lite-CAST19"
+   ]
+  },
+  {
+   "key": "فرمیتوس",
+   "tag": "#فرمیتوس",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-123-2",
+    "dentcast-plus/video-2"
+   ]
+  },
+  {
+   "key": "فنوتیپ_پری_ایمپلنت",
+   "tag": "#فنوتیپ_پری_ایمپلنت",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-157",
+    "episodes/episode-158"
+   ]
+  },
+  {
+   "key": "فینیشینگ_لاین",
+   "tag": "#فینیشینگ_لاین",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-114",
+    "notecast/episode-37"
+   ]
+  },
+  {
+   "key": "قدرت_باند",
+   "tag": "#قدرت_باند",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "dentai/dentai-4",
+    "dentai/dentai-16"
+   ]
+  },
+  {
+   "key": "قضاوت_بالینی",
+   "tag": "#قضاوت_بالینی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "chairside/chairside-18",
+    "dentai/promptologist/prompt1-5"
+   ]
+  },
+  {
+   "key": "لبه_اینسایزال",
+   "tag": "#لبه_اینسایزال",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "sharehub/share-8",
+    "chairside/chairside-19"
+   ]
+  },
+  {
+   "key": "مارجین_روکش",
+   "tag": "#مارجین_روکش",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "chairside/chairside-12",
+    "insight/insight-50"
+   ]
+  },
+  {
+   "key": "متاآنالیز",
+   "tag": "#متاآنالیز",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "dentai/dentai-7",
+    "dentai/dentai-26"
+   ]
+  },
+  {
+   "key": "متریال_پروتزی",
+   "tag": "#متریال_پروتزی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-115",
+    "episodes/episode-139"
+   ]
+  },
+  {
+   "key": "مولر_سوم",
+   "tag": "#مولر_سوم",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "insight/insight-8",
+    "insight/insight-41"
+   ]
+  },
+  {
+   "key": "مینای_دندان",
+   "tag": "#مینای_دندان",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "dentai/dentai-1",
+    "dentai/dentai-2"
+   ]
+  },
+  {
+   "key": "ونیر",
+   "tag": "#ونیر",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "notecast/episode-6",
+    "metanotes/meta-1"
+   ]
+  },
+  {
+   "key": "پاسکال_مانیه",
+   "tag": "#پاسکال_مانیه",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-90",
+    "notecast/episode-6"
+   ]
+  },
+  {
+   "key": "پترن_رزین",
+   "tag": "#پترن_رزین",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "insight/insight-51",
+    "insight/insight-60"
+   ]
+  },
+  {
+   "key": "پروتز_دیجیتال",
+   "tag": "#پروتز_دیجیتال",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-96",
+    "litecast/lite-CAST9"
+   ]
+  },
+  {
+   "key": "پروتز_پارسیل",
+   "tag": "#پروتز_پارسیل",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-126-1",
+    "insight/insight-58"
+   ]
+  },
+  {
+   "key": "پروتکل_باندینگ",
+   "tag": "#پروتکل_باندینگ",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-129",
+    "episodes/episode-149"
+   ]
+  },
+  {
+   "key": "پروگزیمال",
+   "tag": "#پروگزیمال",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "insight/insight-29",
+    "insight/insight-49"
+   ]
+  },
+  {
+   "key": "پروگنوز",
+   "tag": "#پروگنوز",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "chairside/chairside-13",
+    "chairside/chairside-14"
+   ]
+  },
+  {
+   "key": "پروگنوز_دندان",
+   "tag": "#پروگنوز_دندان",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "chairside/chairside-9",
+    "chairside/chairside-21"
+   ]
+  },
+  {
+   "key": "پری_ایمپلنتایتس",
+   "tag": "#پری_ایمپلنتایتس",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-122-1",
+    "episodes/episode-148-1"
+   ]
+  },
+  {
+   "key": "پری_ایمپلنتایتیس",
+   "tag": "#پری_ایمپلنتایتیس",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "insight/insight-16",
+    "notecast/episode-23"
+   ]
+  },
+  {
+   "key": "پست_و_کور",
+   "tag": "#پست و کور",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "insight/insight-28",
+    "metanotes/meta-11"
+   ]
+  },
+  {
+   "key": "پلنینگ_ایمپلنت",
+   "tag": "#پلنینگ_ایمپلنت",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-157",
+    "episodes/episode-158"
+   ]
+  },
+  {
+   "key": "پوسیدگی_ثانویه",
+   "tag": "#پوسیدگی_ثانویه",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "insight/insight-23",
+    "dentai/dentai-22"
+   ]
+  },
+  {
+   "key": "پوسیدگی_دندان",
+   "tag": "#پوسیدگی_دندان",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "dentai/dentai-3",
+    "sharehub/share-7"
+   ]
+  },
+  {
+   "key": "پیشگیری",
+   "tag": "#پیشگیری",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-111-1",
+    "litecast/lite-CAST1"
+   ]
+  },
+  {
+   "key": "پیچ_اباتمنت",
+   "tag": "#پیچ_اباتمنت",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "insight/insight-22",
+    "insight/insight-48"
+   ]
+  },
+  {
+   "key": "کارآزمایی_بالینی_تصادفی",
+   "tag": "#کارآزمایی_بالینی_تصادفی",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "notecast/episode-25",
+    "notecast/episode-26"
+   ]
+  },
+  {
+   "key": "کانتکت_باز",
+   "tag": "#کانتکت_باز",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-121-1",
+    "episodes/episode-159"
+   ]
+  },
+  {
+   "key": "کانسپت_دال",
+   "tag": "#کانسپت_دال",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "notecast/episode-34",
+    "notecast/episode-35"
+   ]
+  },
+  {
+   "key": "کانکشن_ایمپلنت",
+   "tag": "#کانکشن_ایمپلنت",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-81",
+    "insight/insight-9"
+   ]
+  },
+  {
+   "key": "کتاب_رابینز",
+   "tag": "#کتاب_رابینز",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-116",
+    "episodes/episode-119"
+   ]
+  },
+  {
+   "key": "گلاس_آینومر",
+   "tag": "#گلاس_آینومر",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "notecast/episode-2",
+    "insight/insight-59"
+   ]
+  },
+  {
+   "key": "یونیورسال_باند",
+   "tag": "#یونیورسال_باند",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "count": 2,
+   "content_ids": [
+    "notecast/episode-4",
+    "notecast/episode-5"
+   ]
+  }
+ ]
+}
