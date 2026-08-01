@@ -1,7 +1,9 @@
 {
  "version": 1,
  "about": "Canonical hashtag vocabulary for DentCast. The reference owns the vocabulary; dentcast-brain.json owns the assignment. `count` and `content_ids` are derived — run tools/hashtag_ref.py --sync.",
- "enforced_types": [],
+ "enforced_types": [
+  "photocast"
+ ],
  "concepts": [
   {
    "key": "ایمپلنت",
@@ -173,7 +175,7 @@
    "use_when": "چتر عام اکلوژن. همیشه در کنار یک مفهوم مشخص‌تر بیاید، نه به‌تنهایی.",
    "variants": [],
    "co_tags": [],
-   "count": 38,
+   "count": 37,
    "content_ids": [
     "episodes/episode-14",
     "episodes/episode-23",
@@ -194,7 +196,6 @@
     "insight/insight-12",
     "insight/insight-13",
     "photocast/episode-2",
-    "photocast/episode-3",
     "dentcast-plus/video-2",
     "notecast/episode-14",
     "notecast/episode-23",
@@ -262,11 +263,11 @@
    "tag": "#زیرکونیا",
    "domain": "clinical",
    "words": 1,
-   "definition": "",
-   "use_when": "",
+   "definition": "زیرکونیای دندانی به‌عنوان متریال رستوریشن.",
+   "use_when": "مقاله انتخاب، آماده‌سازی یا رفتار بالینی زیرکونیا را تعیین کند.",
    "variants": [],
    "co_tags": [],
-   "count": 27,
+   "count": 28,
    "content_ids": [
     "episodes/episode-11",
     "episodes/episode-17",
@@ -282,6 +283,7 @@
     "episodes/episode-140",
     "episodes/episode-146",
     "insight/insight-5",
+    "photocast/episode-3",
     "notecast/episode-2",
     "notecast/episode-3",
     "notecast/episode-5",
@@ -3060,8 +3062,8 @@
    "tag": "#روکش_دندان",
    "domain": "clinical",
    "words": 2,
-   "definition": "",
-   "use_when": "",
+   "definition": "پوشش کامل تاج دندان طبیعی.",
+   "use_when": "مفهوم پایه‌ی روکش روی دندان طبیعی — نه روی ایمپلنت (#روکش_ایمپلنت).",
    "variants": [],
    "co_tags": [],
    "count": 3,
@@ -3878,8 +3880,8 @@
    "tag": "#MIH",
    "domain": "clinical",
    "words": 1,
-   "definition": "",
-   "use_when": "",
+   "definition": "Molar Incisor Hypomineralization — نقص کیفی مینا در مولر اول دائمی و ثنایاها.",
+   "use_when": "مقاله MIH را تشخیص بدهد یا ترمیم/پوشش دندان مبتلا را تعیین کند.",
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -4429,21 +4431,6 @@
    ]
   },
   {
-   "key": "اندودنتیکس",
-   "tag": "#اندودنتیکس",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "",
-   "use_when": "",
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "photocast/episode-3",
-    "notecast/episode-36"
-   ]
-  },
-  {
    "key": "اوکیسون",
    "tag": "#اوکیسون",
    "domain": "clinical",
@@ -4846,6 +4833,23 @@
    "content_ids": [
     "episodes/episode-109",
     "episodes/episode-149-1"
+   ]
+  },
+  {
+   "key": "دندانپزشکی_کودکان",
+   "tag": "#دندانپزشکی_کودکان",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "همان دامنه‌ی #اطفال، با واژه‌ی «کودکان».",
+   "use_when": "همیشه همراه #اطفال. این دو هیچ کلمه‌ی مشترکی ندارند و هرکدام درِ جداگانه‌ای هستند.",
+   "variants": [],
+   "co_tags": [
+    "#اطفال"
+   ],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-111-1",
+    "photocast/episode-3"
    ]
   },
   {
@@ -5689,6 +5693,66 @@
    ]
   },
   {
+   "key": "ssc",
+   "tag": "#SSC",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "سرنامِ Stainless Steel Crown.",
+   "use_when": "همیشه همراه #روکش_استیل — درِ ورودیِ انگلیسیِ همان مفهوم.",
+   "variants": [],
+   "co_tags": [
+    "#روکش_استیل"
+   ],
+   "count": 1,
+   "content_ids": [
+    "photocast/episode-3"
+   ]
+  },
+  {
+   "key": "اطفال",
+   "tag": "#اطفال",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "بیمار کودک و نوجوان؛ ملاحظاتی که از رشد، همکاری و رویش می‌آید.",
+   "use_when": "مقاله تصمیمش را به سنِ رشد گره بزند، نه صرفاً بیمار جوان داشته باشد.",
+   "variants": [],
+   "co_tags": [
+    "#دندانپزشکی_کودکان"
+   ],
+   "count": 1,
+   "content_ids": [
+    "photocast/episode-3"
+   ]
+  },
+  {
+   "key": "اندودنتیکس",
+   "tag": "#اندودنتیکس",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "notecast/episode-36"
+   ]
+  },
+  {
+   "key": "اندیکاسیون_روکش",
+   "tag": "#اندیکاسیون_روکش",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "معیارهای عبور از ترمیم به روکش: ضخامت دیواره، وسعت تخریب، بار اکلوزالی، ضعف ساختاری پس از اندو.",
+   "use_when": "مقاله بگوید کِی باید روکش کرد و کِی ترمیم کافی است. این تگ جای تگ‌های تک‌عاملی (بروکسیسم، اندو، ...) را می‌گیرد وقتی مقاله آن‌ها را فقط به‌عنوان معیار فهرست می‌کند.",
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "photocast/episode-3"
+   ]
+  },
+  {
    "key": "بازسازی_درد",
    "tag": "#بازسازی_درد",
    "domain": "clinical",
@@ -5745,6 +5809,40 @@
    ]
   },
   {
+   "key": "دندان_۶",
+   "tag": "#دندان_۶",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "همان #مولر_اول_دائمی، با نام محاوره‌ای.",
+   "use_when": "همیشه همراه #مولر_اول_دائمی. جایگزین #دندان۶ که چون بین «دندان» و «۶» جداکننده نداشت به یک توکنِ «دندان۶» تبدیل می‌شد و با هیچ پرسشی تطبیق نمی‌خورد.",
+   "variants": [
+    "#دندان۶"
+   ],
+   "co_tags": [
+    "#مولر_اول_دائمی"
+   ],
+   "count": 1,
+   "content_ids": [
+    "photocast/episode-3"
+   ]
+  },
+  {
+   "key": "روکش_استیل",
+   "tag": "#روکش_استیل",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "Stainless Steel Crown — روکش پیش‌ساخته‌ی فلزی، انتخاب سریع و محافظه‌کارانه در سنین ۸ تا ۱۲.",
+   "use_when": "مقاله SSC را تجویز، رد، یا با گزینه‌ی دیگری مقایسه کند.",
+   "variants": [],
+   "co_tags": [
+    "#SSC"
+   ],
+   "count": 1,
+   "content_ids": [
+    "photocast/episode-3"
+   ]
+  },
+  {
    "key": "قانون_bull",
    "tag": "#قانون_BULL",
    "domain": "clinical",
@@ -5756,6 +5854,22 @@
    "count": 1,
    "content_ids": [
     "photocast/episode-2"
+   ]
+  },
+  {
+   "key": "مولر_اول_دائمی",
+   "tag": "#مولر_اول_دائمی",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "اولین مولر دائمی؛ زودترین دندان دائمی که رویش پیدا می‌کند و مرجع اکلوژن و رشد فک است.",
+   "use_when": "مقاله درباره‌ی همین دندان تصمیم بگیرد.",
+   "variants": [],
+   "co_tags": [
+    "#دندان_۶"
+   ],
+   "count": 1,
+   "content_ids": [
+    "photocast/episode-3"
    ]
   },
   {
