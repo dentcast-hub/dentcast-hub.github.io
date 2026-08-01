@@ -44,6 +44,7 @@ export async function resetDb(): Promise<void> {
       when 'prize_days' then '3'
       when 'prize_cooldown_weeks' then '2'
       when 'prize_winners_per_group' then '1'
+      when 'prize_min_group_size' then '3'
       else value end,
       locked = false, locked_at = null;
     `);

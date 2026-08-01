@@ -47,9 +47,15 @@ async function grantPrizeForWeek(weekStart: string, now: Date): Promise<number> 
     // is the week, so "two weeks off" should mean two league weeks regardless of
     // when in the day the sweep happened to run, or how long the grant lasted.
 
-    // Every finalized group of the week that is big enough to be a real
-    // contest. An undersized group awards nothing, for the same reason
-    // finalizeWeek refuses to promote out of one: four people is not a race.
+    // Every finalized group big enough for "first place" to mean something.
+    //
+    // This floor is prize_min_group_size (3), NOT the min_valid_group_size (6)
+    // that gates promotion — deliberately different questions. Six is right for
+    // deciding who changes tier; but gating the prize on it created a dead end,
+    // because finalizeWeek also refuses to promote out of an undersized group.
+    // A user who climbed into a thin upper tier could then neither win nor
+    // advance, while the group they left kept winning every week — climbing made
+    // them worse off. Three, not zero: a group of one would auto-win for nothing.
     const groups = (await client.query<{ id: string }>(
       `select l.id
          from leagues l
@@ -58,7 +64,7 @@ async function grantPrizeForWeek(weekStart: string, now: Date): Promise<number> 
         group by l.id
        having count(lm.id) >= $2
         order by l.id`,
-      [weekStart, cfg.min_valid_group_size],
+      [weekStart, cfg.prize_min_group_size],
     )).rows;
 
     let granted = 0;

@@ -121,12 +121,40 @@ describe('grantWeeklyPrizes — top of every valid group', () => {
     expect(await tierOfUser(b[0])).toBe('premium');
   });
 
-  it('awards nothing in an undersized group — four people is not a race', async () => {
+  it('still awards in a group too small to PROMOTE from — climbing must not cost you', async () => {
+    // Four is below min_valid_group_size (6), so finalizeWeek gives this group
+    // no promotions. The prize floor is separate (3) precisely so a user who
+    // climbed into a thin upper tier is not left unable to win OR advance while
+    // the group they left behind keeps winning.
     const small = await seedGroup('composite', [90, 80, 70, 60], WEEK, 4);
     await finalizeWeek(WEEK);
 
+    expect((await grantWeeklyPrizes(NEAR_WEEK)).granted).toBe(1);
+    expect(await tierOfUser(small[0])).toBe('premium');
+    expect(await tierOfUser(small[1])).toBe('free');
+  });
+
+  it('awards nothing below the prize floor — first of two is not a result', async () => {
+    const tiny = await seedGroup('composite', [90, 80], WEEK, 2);
+    await finalizeWeek(WEEK);
+
     expect((await grantWeeklyPrizes(NEAR_WEEK)).granted).toBe(0);
-    for (const id of small) expect(await tierOfUser(id)).toBe('free');
+    for (const id of tiny) expect(await tierOfUser(id)).toBe('free');
+  });
+
+  it('awards at exactly the prize floor', async () => {
+    const three = await seedGroup('composite', [90, 80, 70], WEEK, 3);
+    await finalizeWeek(WEEK);
+
+    expect((await grantWeeklyPrizes(NEAR_WEEK)).granted).toBe(1);
+    expect(await tierOfUser(three[0])).toBe('premium');
+  });
+
+  it('keeps the two floors distinct, so neither change silently moves the other', async () => {
+    const cfg = await getLeagueConfig();
+    expect(cfg.prize_min_group_size, 'prize floor').toBe(3);
+    expect(cfg.min_valid_group_size, 'promotion floor').toBe(6);
+    expect(cfg.prize_min_group_size).toBeLessThan(cfg.min_valid_group_size);
   });
 
   it('sets the configured prize length and marks the winner in premium_grants', async () => {
