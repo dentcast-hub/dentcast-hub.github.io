@@ -29,6 +29,9 @@ export interface LeagueConfig {
   prize_days: number;             // how long a granted premium lasts
   prize_cooldown_weeks: number;   // a winner sits out this many weeks
   prize_winners_per_group: number;
+  /** Floor for winning a PRIZE — lower than min_valid_group_size, which is the
+   *  floor for PROMOTION. See migration 0017 for why the two are separate. */
+  prize_min_group_size: number;
   // Legacy 0006 keys — kept for back-compat, no longer read by awardLeagueXp.
   xp_per_active_day: number;
   xp_per_highlight: number;
@@ -41,7 +44,7 @@ export const NUMERIC_KEYS: Array<keyof LeagueConfig> = [
   'group_size_current', 'promotion_pct', 'demotion_pct', 'min_valid_group_size',
   'promotion_min_weekly_xp', 'cooldown_weeks', 'max_active_tier_order',
   'xp_active_bonus', 'xp_read', 'xp_listen', 'xp_highlight', 'xp_highlight_cap', 'xp_review',
-  'prize_days', 'prize_cooldown_weeks', 'prize_winners_per_group',
+  'prize_days', 'prize_cooldown_weeks', 'prize_winners_per_group', 'prize_min_group_size',
   'xp_per_active_day', 'xp_per_highlight',
 ];
 
