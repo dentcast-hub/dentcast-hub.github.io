@@ -26,7 +26,7 @@ DIVISION OF TRUTH
 
 `content_ids`/`count` on each concept are therefore DERIVED: --sync recomputes
 them from the brain and they must never be hand-edited. Everything else
-(key/tag/domain/definition/use_when/variants) is a human decision.
+(key/tag/domain/definition/use_when/aliases/variants/co_tags) is a human decision.
 
 USAGE
   hashtag_ref.py --seed          create the file from tags already used >= 2x
@@ -36,6 +36,26 @@ USAGE
   hashtag_ref.py --words TAG     show how the assistant tokenizes a tag
   hashtag_ref.py --apply BATCH   run one reviewed campaign batch (see below)
   hashtag_ref.py --simulate Q    rank the real tags for a query, as the engine does
+  hashtag_ref.py --say TAG F...  record other ways dentists write/say one tag
+
+SPELLINGS A DENTIST ACTUALLY USES
+---------------------------------
+The matcher compares words literally, so "بیومیمتیک", "بایومیمتیک" and
+"بایو میمتیک" are three unrelated tokens and two of the three miss. Each concept
+therefore carries an `aliases` list of every other form the same thing is
+written or said in, kept ON the concept so whoever adds one has the definition
+in front of them:
+
+  hashtag_ref.py --say "#بیومیمتیک" "بایو میمتیک" "بایومیمتیک"
+
+--sync compiles them all into the file's top-level `aliases` table, which is
+what the tokenizer here and case-assistant.ts both read (via
+plus/content-index.json). Adding a spelling is a data edit, never a code change.
+
+An alias is a substitution over the whole normalized string, so a careless one
+is destructive - aliasing "سیگار" to "دخانیات" would rewrite the unrelated tag
+#بیمار_سیگاری into "بیمار دخانیات". compile_aliases() refuses any alias that is
+a word of, or a substring of, a DIFFERENT concept, and reports it instead.
 
 BATCH FILES
 -----------
@@ -259,7 +279,7 @@ def guess_domain(rec: dict, type_totals: Counter) -> str:
 
 # Field order every concept is written with, so the file stays diffable.
 CONCEPT_FIELDS = ("key", "tag", "domain", "words", "definition", "use_when",
-                  "variants", "co_tags", "count", "content_ids")
+                  "aliases", "variants", "co_tags", "count", "content_ids")
 
 
 def normalize_concept(c: dict) -> dict:
@@ -272,6 +292,11 @@ def normalize_concept(c: dict) -> dict:
     #             a tag only on its own words, so "#کانتکت_باز" and "#تماس_باز"
     #             — no shared word — are two independent doors to one concept, and
     #             collapsing them would delete one of them. Applied together.
+    # Every other way a dentist writes or says THIS concept. Authored here, on
+    # the concept itself, so the person adding them has the definition in front
+    # of them; --sync compiles all of them into the file's top-level `aliases`
+    # table, which is what the tokenizer and the API actually read.
+    c.setdefault("aliases", [])
     c.setdefault("variants", [])
     c.setdefault("co_tags", [])
     c["key"] = normalize_fa(c["tag"]).replace(" ", "_")
@@ -395,6 +420,38 @@ def cmd_apply(path: str) -> None:
     cmd_sync()
 
 
+def compile_aliases(ref: dict) -> list:
+    """
+    Fold every concept's `aliases` into the top-level table the tokenizer reads.
+
+    An alias is a plain string substitution over the whole normalized query, so
+    a careless one is destructive: an alias "پست" would rewrite every tag
+    containing that word. Two rules make that impossible to do by accident -
+    an alias may not already be a word of some OTHER concept, and it may not be
+    a substring of a different concept's normalized form. Offenders are reported
+    and skipped rather than silently applied.
+    """
+    table, problems = {}, []
+    # Normalized text of every concept, computed WITHOUT aliases so the guard
+    # sees the raw vocabulary rather than the one it is about to change.
+    raw = {c["tag"]: " ".join(c["key"].split("_")) for c in ref["concepts"]}
+    for c in ref["concepts"]:
+        target = " ".join(c["key"].split("_"))
+        for a in c.get("aliases") or []:
+            a = normalize_fa(a)
+            if not a or a == target:
+                continue
+            for other_tag, other in raw.items():
+                if other_tag == c["tag"]:
+                    continue
+                if a in other.split(" ") or a in other:
+                    problems.append(f'{c["tag"]}: alias "{a}" collides with {other_tag}')
+                    break
+            else:
+                table[a] = target
+    return [table, problems]
+
+
 def cmd_sync() -> None:
     ref = load_ref()
     tags = brain_tag_map(load_brain())
@@ -407,9 +464,19 @@ def cmd_sync() -> None:
             c["count"] = len(cids)
             changed += 1
         c["words"] = len(words(c["tag"]))
+    table, problems = compile_aliases(ref)
+    # Hand-written entries in the top-level table that no concept claims are
+    # kept (the campaign seeded some before the per-concept field existed).
+    for k, v in (ref.get("aliases") or {}).items():
+        table.setdefault(k, v)
+    ref["aliases"] = dict(sorted(table.items(), key=lambda kv: -len(kv[0])))
     write_ref(ref)
+    global _alias_cache
+    _alias_cache = None
     print(f"Synced {len(ref['concepts'])} concepts from the brain "
-          f"({changed} updated).")
+          f"({changed} updated); {len(table)} aliases compiled.")
+    for p_ in problems:
+        print(f"  SKIPPED — {p_}", file=sys.stderr)
 
 
 def cmd_backlog(only_type: str | None) -> None:
@@ -516,6 +583,24 @@ def cmd_simulate(query: str) -> None:
         print("(nothing cleared the 0.5 threshold — falls back to the pillar tree)")
 
 
+def cmd_say(tag: str, forms: list) -> None:
+    """Add spoken/written variants to one concept, then recompile."""
+    ref = load_ref()
+    c = by_tag(ref).get(tag)
+    if not c:
+        sys.exit(f"{tag} has no reference entry — add the concept first.")
+    if not forms:
+        print(f'{tag}: {c.get("aliases") or []}')
+        return
+    c.setdefault("aliases", [])
+    for f in forms:
+        if f not in c["aliases"]:
+            c["aliases"].append(f)
+    write_ref(ref)
+    print(f'{tag} now also matches: {", ".join(c["aliases"])}')
+    cmd_sync()
+
+
 def cmd_check() -> None:
     ref, brain = load_ref(), load_brain()
     enforced = set(ref.get("enforced_types") or [])
@@ -563,6 +648,9 @@ def main() -> None:
     g.add_argument("--words", metavar="TAG")
     g.add_argument("--apply", metavar="BATCH")
     g.add_argument("--simulate", metavar="QUERY")
+    g.add_argument("--say", nargs="+", metavar=("TAG", "FORM"),
+                   help='record other ways a dentist writes/says a tag: '
+                        '--say "#بیومیمتیک" "بایو میمتیک" "بایومیمتیک"')
     a = p.parse_args()
 
     if a.seed:
@@ -575,6 +663,8 @@ def main() -> None:
         cmd_apply(a.apply)
     elif a.simulate:
         cmd_simulate(a.simulate)
+    elif a.say:
+        cmd_say(a.say[0], a.say[1:])
     elif a.words is not None:
         print(words(a.words))
     else:
