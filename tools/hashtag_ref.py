@@ -120,13 +120,25 @@ _alias_cache = None
 
 
 def apply_aliases(s: str) -> str:
+    """
+    Substitute on WHOLE words only.
+
+    A blind string replace is destructive: "سیگار" -> "دخانیات" would turn the
+    unrelated "بیمار سیگاری" into "بیمار دخانیاتی", and "implant" -> "ایمپلنت"
+    would maul "peri implantitis". Padding with spaces and matching " x " means
+    an alias can only ever replace a complete word (or a complete run of words),
+    never cut into one - so the same table that lets "implant planning" become
+    "ایمپلنت planning" leaves "implantitis" alone.
+    """
     global _alias_cache
     if _alias_cache is None:
         _alias_cache = _aliases()
+    padded = f" {s} "
     for bad, good in _alias_cache:
-        if bad in s:
-            s = s.replace(bad, good)
-    return s
+        needle = f" {bad} "
+        while needle in padded:
+            padded = padded.replace(needle, f" {good} ")
+    return padded.strip()
 
 
 def normalize_fa(s: str) -> str:
@@ -425,11 +437,21 @@ def compile_aliases(ref: dict) -> list:
     Fold every concept's `aliases` into the top-level table the tokenizer reads.
 
     An alias is a plain string substitution over the whole normalized query, so
-    a careless one is destructive: an alias "پست" would rewrite every tag
-    containing that word. Two rules make that impossible to do by accident -
-    an alias may not already be a word of some OTHER concept, and it may not be
-    a substring of a different concept's normalized form. Offenders are reported
-    and skipped rather than silently applied.
+    the destructive case is an alias landing INSIDE another word: aliasing
+    "سیگار" to "دخانیات" turns the unrelated #بیمار_سیگاری into "بیمار دخانیاتی",
+    a word that now matches nothing at all. Same for "کراون" inside #اندوکراون.
+
+    Matching another concept on a WHOLE word is a different thing and is
+    allowed: aliasing "implant" to "ایمپلنت" rewrites #Implant_Planning to
+    "ایمپلنت planning", which is simply the same concept said consistently, and
+    is how a Latin-script query reaches Persian tags at all.
+
+    apply_aliases() substitutes on whole words only, so cutting into a word is
+    already impossible and nothing needs rejecting for that. What is left worth
+    saying out loud is when an alias will ALSO rewrite a different concept -
+    usually right (a Latin-script tag becoming reachable in Persian), but it is
+    the one thing a person adding a spelling should see rather than discover.
+    Reported, not blocked.
     """
     table, problems = {}, []
     # Normalized text of every concept, computed WITHOUT aliases so the guard
@@ -444,11 +466,11 @@ def compile_aliases(ref: dict) -> list:
             for other_tag, other in raw.items():
                 if other_tag == c["tag"]:
                     continue
-                if a in other.split(" ") or a in other:
-                    problems.append(f'{c["tag"]}: alias "{a}" collides with {other_tag}')
+                if f" {a} " in f" {other} ":
+                    problems.append(
+                        f'{c["tag"]}: alias "{a}" also rewrites {other_tag}')
                     break
-            else:
-                table[a] = target
+            table[a] = target
     return [table, problems]
 
 
@@ -476,7 +498,7 @@ def cmd_sync() -> None:
     print(f"Synced {len(ref['concepts'])} concepts from the brain "
           f"({changed} updated); {len(table)} aliases compiled.")
     for p_ in problems:
-        print(f"  SKIPPED — {p_}", file=sys.stderr)
+        print(f"  note: {p_}", file=sys.stderr)
 
 
 def cmd_backlog(only_type: str | None) -> None:

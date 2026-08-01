@@ -107,6 +107,10 @@
     "episodes/episode-158",
     "episodes/episode-159",
     "insight/insight-52"
+   ],
+   "aliases": [
+    "implant",
+    "ایمپلانت"
    ]
   },
   {
@@ -232,7 +236,8 @@
     "chairside/chairside-23"
    ],
    "aliases": [
-    "occlusion"
+    "occlusion",
+    "اکلوزیون"
    ]
   },
   {
@@ -280,6 +285,10 @@
     "insight/insight-44",
     "insight/insight-49",
     "insight/insight-54"
+   ],
+   "aliases": [
+    "پروتز فیکس",
+    "fixed prosthesis"
    ]
   },
   {
@@ -325,6 +334,12 @@
     "insight/insight-49",
     "metanotes/meta-13",
     "chairside/chairside-21"
+   ],
+   "aliases": [
+    "تصمیم گیری درمانی",
+    "تصمیم بالینی",
+    "تصمیم گیری بالینی",
+    "تصمیم پروتزی"
    ]
   },
   {
@@ -369,7 +384,9 @@
    ],
    "aliases": [
     "زیرکونیوم",
-    "زیرکونیم"
+    "زیرکونیم",
+    "zirconia",
+    "زیرکونیای"
    ]
   },
   {
@@ -485,6 +502,9 @@
     "dentai/dentai-9",
     "dentai/dentai-16",
     "dentai/dentai-17"
+   ],
+   "aliases": [
+    "bonding"
    ]
   },
   {
@@ -522,6 +542,11 @@
     "dentai/dentai-27",
     "metanotes/meta-15",
     "metanotes/meta-19"
+   ],
+   "aliases": [
+    "post and core",
+    "پست اند کور",
+    "پست کور"
    ]
   },
   {
@@ -556,6 +581,9 @@
     "notecast/episode-15",
     "notecast/episode-16",
     "notecast/episode-30"
+   ],
+   "aliases": [
+    "ceramic"
    ]
   },
   {
@@ -650,6 +678,11 @@
     "metanotes/meta-15",
     "metanotes/meta-16",
     "dentai/dentai-28"
+   ],
+   "aliases": [
+    "digital dentistry",
+    "دندونپزشکی دیجیتال",
+    "دیجیتال دنتیستری"
    ]
   },
   {
@@ -680,6 +713,11 @@
     "episodes/episode-147",
     "notecast/episode-13",
     "notecast/episode-32"
+   ],
+   "aliases": [
+    "استتیک",
+    "esthetic",
+    "aesthetic"
    ]
   },
   {
@@ -710,6 +748,12 @@
     "chairside/chairside-21",
     "chairside/chairside-22",
     "episodes/episode-160"
+   ],
+   "aliases": [
+    "treatment plan",
+    "پلن درمان",
+    "پلن درمانی",
+    "تریتمنت پلن"
    ]
   },
   {
@@ -739,6 +783,11 @@
     "insight/insight-44",
     "insight/insight-52",
     "insight/insight-60"
+   ],
+   "aliases": [
+    "abutment",
+    "ابوتمنت",
+    "آباتمنت"
    ]
   },
   {
@@ -881,6 +930,10 @@
     "insight/insight-44",
     "insight/insight-49",
     "chairside/chairside-22"
+   ],
+   "aliases": [
+    "crown",
+    "کراون"
    ]
   },
   {
@@ -1011,6 +1064,10 @@
     "notecast/episode-4",
     "notecast/episode-5",
     "notecast/episode-6"
+   ],
+   "aliases": [
+    "adhesive",
+    "ادهسیو"
    ]
   },
   {
@@ -1035,6 +1092,11 @@
     "notecast/episode-27",
     "chairside/chairside-8",
     "chairside/chairside-11"
+   ],
+   "aliases": [
+    "overdenture",
+    "اوردنچور",
+    "over denture"
    ]
   },
   {
@@ -1083,6 +1145,10 @@
     "notecast/episode-24",
     "metanotes/meta-4",
     "chairside/chairside-14"
+   ],
+   "aliases": [
+    "bone loss",
+    "تحلیل استخوانی"
    ]
   },
   {
@@ -1106,6 +1172,9 @@
     "notecast/episode-29",
     "dentai/dentai-25",
     "episodes/episode-159-1"
+   ],
+   "aliases": [
+    "dental ceramic"
    ]
   },
   {
@@ -1129,6 +1198,10 @@
     "notecast/episode-19",
     "dentai/dentai-27",
     "insight/insight-59"
+   ],
+   "aliases": [
+    "resin cement",
+    "سمان رزین"
    ]
   },
   {
@@ -1175,6 +1248,11 @@
     "chairside/chairside-7",
     "insight/insight-32",
     "chairside/chairside-14"
+   ],
+   "aliases": [
+    "periodontal",
+    "پریو",
+    "پریودونتال"
    ]
   },
   {
@@ -1198,6 +1276,9 @@
     "dentai/dentai-9",
     "insight/insight-23",
     "dentai/dentai-22"
+   ],
+   "aliases": [
+    "composite"
    ]
   },
   {
@@ -8634,27 +8715,62 @@
   }
  ],
  "aliases": {
+  "دندونپزشکی دیجیتال": "دندانپزشکی دیجیتال",
+  "تصمیم گیری درمانی": "تصمیم درمانی",
+  "تصمیم گیری بالینی": "تصمیم درمانی",
+  "digital dentistry": "دندانپزشکی دیجیتال",
+  "fixed prosthesis": "پروتز ثابت",
+  "دیجیتال دنتیستری": "دندانپزشکی دیجیتال",
+  "proximal contact": "کانتکت باز",
+  "treatment plan": "طرح درمان",
+  "تحلیل استخوانی": "تحلیل استخوان",
+  "dental ceramic": "سرامیک دندانی",
   "prosthodontics": "پروتز",
+  "post and core": "پست و کور",
   "فینیشینگ لاین": "فینیش لاین",
   "دی سمانتاسیون": "debonding",
+  "تصمیم بالینی": "تصمیم درمانی",
+  "تصمیم پروتزی": "تصمیم درمانی",
+  "over denture": "اوردنچر",
+  "resin cement": "سمان رزینی",
   "open contact": "کانتکت باز",
   "دیسمانتاسیون": "debonding",
   "آرتیکولاسیون": "ارتیکولاسیون",
   "articulation": "ارتیکولاسیون",
+  "پست اند کور": "پست و کور",
+  "تریتمنت پلن": "طرح درمان",
+  "overdenture": "اوردنچر",
+  "periodontal": "پریودنتال",
   "بایو میمتیک": "بیومیمتیک",
   "بایو مکانیک": "بیومکانیک",
   "اندودانتیکس": "اندودنتیکس",
   "اندودونتیکس": "اندودنتیکس",
+  "پروتز فیکس": "پروتز ثابت",
+  "پلن درمانی": "طرح درمان",
+  "پریودونتال": "پریودنتال",
   "بایومیمتیک": "بیومیمتیک",
   "بیو میمتیک": "بیومیمتیک",
   "بیومی متیک": "بیومیمتیک",
   "بایومکانیک": "بیومکانیک",
   "بیو مکانیک": "بیومکانیک",
   "کامپلیکیشن": "عوارض",
+  "زیرکونیای": "زیرکونیا",
+  "aesthetic": "زیبایی",
+  "پلن درمان": "طرح درمان",
+  "bone loss": "تحلیل استخوان",
+  "سمان رزین": "سمان رزینی",
+  "composite": "کامپوزیت",
   "occlusion": "اکلوژن",
   "زیرکونیوم": "زیرکونیا",
   "کانتیلیور": "کانتی لیور",
   "کمپلیکیشن": "عوارض",
+  "ایمپلانت": "ایمپلنت",
+  "اکلوزیون": "اکلوژن",
+  "zirconia": "زیرکونیا",
+  "esthetic": "زیبایی",
+  "abutment": "اباتمنت",
+  "adhesive": "ادهزیو",
+  "اوردنچور": "اوردنچر",
   "فرول اثر": "فرول",
   "اثر فرول": "فرول",
   "زیرکونیم": "زیرکونیا",
@@ -8665,20 +8781,33 @@
   "کانتیلور": "کانتی لیور",
   "اکلوزالی": "اکلوزال",
   "آرتیکوله": "ارتیکولاسیون",
+  "implant": "ایمپلنت",
+  "bonding": "باندینگ",
+  "پست کور": "پست و کور",
+  "ceramic": "سرامیک",
+  "ابوتمنت": "اباتمنت",
+  "آباتمنت": "اباتمنت",
   "ferrule": "فرول",
   "لامینیت": "لمینیت",
   "اکلوژال": "اکلوزال",
   "اکلوژنی": "اکلوزال",
   "امرجنسی": "امرجنس",
   "شهابیان": "shahabian",
+  "استتیک": "زیبایی",
+  "ادهسیو": "ادهزیو",
+  "سیگاری": "دخانیات",
   "خط ختم": "فینیش لاین",
   "تنباکو": "دخانیات",
   "لامینت": "لمینیت",
   "پارسیل": "پارشیال",
   "اورجنس": "امرجنس",
   "اسمارت": "smart",
+  "crown": "روکش",
+  "کراون": "روکش",
+  "سیگار": "دخانیات",
   "لمینت": "لمینیت",
   "پارشل": "پارشیال",
+  "پریو": "پریودنتال",
   "ونیر": "veneer"
  },
  "aliases_about": "Orthographic variants of ONE word, applied to both tag and query before tokenizing. Not synonyms (those are co_tags) and not dead forms (those are variants). Mirrored into plus/content-index.json for the API."

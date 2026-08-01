@@ -150,11 +150,17 @@ function normalizeFa(s: string): string {
     .replace(/\s+/g, ' ')
     .trim();
 
-  let out = base;
+  // Whole words only. A blind replace would maul the words it lands inside:
+  // "سیگار" -> "دخانیات" turns the unrelated "بیمار سیگاری" into
+  // "بیمار دخانیاتی", and "implant" -> "ایمپلنت" would eat "peri implantitis".
+  // Padding and matching " x " means an alias replaces a complete word, or a
+  // complete run of words, and nothing else.
+  let padded = ` ${base} `;
   for (const [variant, canonical] of aliases()) {
-    if (out.includes(variant)) out = out.split(variant).join(canonical);
+    const needle = ` ${variant} `;
+    while (padded.includes(needle)) padded = padded.split(needle).join(` ${canonical} `);
   }
-  return out;
+  return padded.trim();
 }
 
 // Common connector/filler words, dropped before matching. Without this a
