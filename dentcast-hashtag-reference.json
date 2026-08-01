@@ -480,6 +480,40 @@
    ]
   },
   {
+   "key": "پست_و_کور",
+   "tag": "#پست_و_کور",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "co_tags": [],
+   "count": 21,
+   "content_ids": [
+    "episodes/episode-36",
+    "episodes/episode-47",
+    "episodes/episode-49",
+    "episodes/episode-125-3",
+    "episodes/episode-129",
+    "insight/insight-12",
+    "insight/insight-15",
+    "insight/insight-17",
+    "insight/insight-20",
+    "insight/insight-21",
+    "metanotes/meta-9",
+    "insight/insight-28",
+    "metanotes/meta-11",
+    "chairside/chairside-5",
+    "insight/insight-39",
+    "insight/insight-41",
+    "notecast/episode-36",
+    "chairside/chairside-20",
+    "dentai/dentai-27",
+    "metanotes/meta-15",
+    "metanotes/meta-19"
+   ]
+  },
+  {
    "key": "اینسایت",
    "tag": "#اینسایت",
    "domain": "brand",
@@ -509,38 +543,6 @@
     "episodes/episode-128-2",
     "episodes/episode-130-1",
     "episodes/episode-147-2"
-   ]
-  },
-  {
-   "key": "پست_و_کور",
-   "tag": "#پست_و_کور",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "",
-   "use_when": "",
-   "variants": [],
-   "co_tags": [],
-   "count": 19,
-   "content_ids": [
-    "episodes/episode-36",
-    "episodes/episode-47",
-    "episodes/episode-49",
-    "episodes/episode-125-3",
-    "episodes/episode-129",
-    "insight/insight-12",
-    "insight/insight-15",
-    "insight/insight-17",
-    "insight/insight-20",
-    "insight/insight-21",
-    "metanotes/meta-9",
-    "chairside/chairside-5",
-    "insight/insight-39",
-    "insight/insight-41",
-    "notecast/episode-36",
-    "chairside/chairside-20",
-    "dentai/dentai-27",
-    "metanotes/meta-15",
-    "metanotes/meta-19"
    ]
   },
   {
@@ -1485,6 +1487,25 @@
    ]
   },
   {
+   "key": "اسکنر_داخل_دهانی",
+   "tag": "#اسکنر_داخل_دهانی",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "co_tags": [],
+   "count": 6,
+   "content_ids": [
+    "episodes/episode-122-2",
+    "episodes/episode-128-1",
+    "episodes/episode-149-2",
+    "sharehub/share-2",
+    "dentai/dentai-21",
+    "metanotes/meta-16"
+   ]
+  },
+  {
    "key": "اورلی",
    "tag": "#اورلی",
    "domain": "clinical",
@@ -1727,24 +1748,6 @@
    ]
   },
   {
-   "key": "اسکنر_داخل_دهانی",
-   "tag": "#اسکنر_داخل_دهانی",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "",
-   "use_when": "",
-   "variants": [],
-   "co_tags": [],
-   "count": 5,
-   "content_ids": [
-    "episodes/episode-122-2",
-    "episodes/episode-128-1",
-    "episodes/episode-149-2",
-    "sharehub/share-2",
-    "metanotes/meta-16"
-   ]
-  },
-  {
    "key": "ایمپلنت_دیجیتال",
    "tag": "#ایمپلنت_دیجیتال",
    "domain": "clinical",
@@ -1904,6 +1907,24 @@
     "notecast/episode-20",
     "notecast/episode-21",
     "metanotes/meta-9"
+   ]
+  },
+  {
+   "key": "لیتیوم_دی_سیلیکات",
+   "tag": "#لیتیوم_دی_سیلیکات",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "co_tags": [],
+   "count": 5,
+   "content_ids": [
+    "notecast/episode-8",
+    "notecast/episode-9",
+    "notecast/episode-10",
+    "metanotes/meta-14",
+    "dentai/dentai-26"
    ]
   },
   {
@@ -2370,20 +2391,20 @@
    ]
   },
   {
-   "key": "لیتیوم_دی_سیلیکات",
-   "tag": "#لیتیوم_دی_سیلیکات",
+   "key": "لمینیت_سرامیکی",
+   "tag": "#لمینیت_سرامیکی",
    "domain": "clinical",
-   "words": 3,
+   "words": 2,
    "definition": "",
    "use_when": "",
    "variants": [],
    "co_tags": [],
    "count": 4,
    "content_ids": [
-    "notecast/episode-8",
-    "notecast/episode-9",
-    "notecast/episode-10",
-    "dentai/dentai-26"
+    "dentai/dentai-10",
+    "metanotes/meta-13",
+    "notecast/episode-37",
+    "notecast/episode-38"
    ]
   },
   {
@@ -2505,6 +2526,22 @@
    ]
   },
   {
+   "key": "bruxism",
+   "tag": "#bruxism",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "dentai/dentai-23",
+    "dentai/dentai-26",
+    "sharehub/share-11"
+   ]
+  },
+  {
    "key": "cl",
    "tag": "#CL",
    "domain": "clinical",
@@ -2534,6 +2571,22 @@
     "dentai/promptologist/prompt1-1",
     "dentai/promptologist/prompt1-2",
     "dentai/promptologist/prompt1-3"
+   ]
+  },
+  {
+   "key": "immediate_dentin_sealing",
+   "tag": "#Immediate_Dentin_Sealing",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "notecast/episode-6",
+    "notecast/episode-7",
+    "dentai/dentai-17"
    ]
   },
   {
@@ -2681,6 +2734,22 @@
    ]
   },
   {
+   "key": "اسکن_بادی",
+   "tag": "#اسکن_بادی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "episodes/episode-133",
+    "insight/insight-31",
+    "insight/insight-35"
+   ]
+  },
+  {
    "key": "اسکن_داخل_دهانی",
    "tag": "#اسکن_داخل_دهانی",
    "domain": "clinical",
@@ -2694,6 +2763,22 @@
     "sharehub/share-2",
     "insight/insight-33",
     "insight/insight-40"
+   ]
+  },
+  {
+   "key": "افزایش_طول_تاج",
+   "tag": "#افزایش_طول_تاج",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "chairside/chairside-6",
+    "chairside/chairside-16",
+    "chairside/chairside-21"
    ]
   },
   {
@@ -2889,6 +2974,24 @@
    ]
   },
   {
+   "key": "تماس_باز",
+   "tag": "#تماس_باز",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "نبودِ تماس پروگزیمالِ مؤثر بین دو دندان مجاور؛ معمولاً با گیر کردن غذا و درد موضعی بروز می‌کند.",
+   "use_when": "مقاله کانتکت باز را تشخیص بدهد، علتش را بررسی کند، یا راه اصلاحش را بگوید.",
+   "variants": [],
+   "co_tags": [
+    "#کانتکت_باز"
+   ],
+   "count": 3,
+   "content_ids": [
+    "photocast/episode-1",
+    "insight/insight-29",
+    "metanotes/meta-12"
+   ]
+  },
+  {
    "key": "توتال_اچ",
    "tag": "#توتال_اچ",
    "domain": "clinical",
@@ -2902,6 +3005,22 @@
     "notecast/episode-4",
     "notecast/episode-5",
     "notecast/episode-6"
+   ]
+  },
+  {
+   "key": "درمان_ریشه",
+   "tag": "#درمان_ریشه",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "insight/insight-20",
+    "chairside/chairside-4",
+    "metanotes/meta-11"
    ]
   },
   {
@@ -3078,22 +3197,6 @@
     "photocast/episode-1",
     "photocast/episode-2",
     "photocast/episode-3"
-   ]
-  },
-  {
-   "key": "لمینیت_سرامیکی",
-   "tag": "#لمینیت_سرامیکی",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "",
-   "use_when": "",
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "dentai/dentai-10",
-    "notecast/episode-37",
-    "notecast/episode-38"
    ]
   },
   {
@@ -3426,21 +3529,6 @@
    ]
   },
   {
-   "key": "bruxism",
-   "tag": "#bruxism",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "",
-   "use_when": "",
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "dentai/dentai-23",
-    "dentai/dentai-26"
-   ]
-  },
-  {
    "key": "cad_cam",
    "tag": "#CAD_CAM",
    "domain": "clinical",
@@ -3633,21 +3721,6 @@
    "content_ids": [
     "dentai/dentai-16",
     "dentai/dentai-19"
-   ]
-  },
-  {
-   "key": "immediate_dentin_sealing",
-   "tag": "#Immediate_Dentin_Sealing",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "",
-   "use_when": "",
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "notecast/episode-6",
-    "notecast/episode-7"
    ]
   },
   {
@@ -4266,21 +4339,6 @@
    ]
   },
   {
-   "key": "اسکن_بادی",
-   "tag": "#اسکن_بادی",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "",
-   "use_when": "",
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "episodes/episode-133",
-    "insight/insight-35"
-   ]
-  },
-  {
    "key": "اسکن_دهانی",
    "tag": "#اسکن_دهانی",
    "domain": "clinical",
@@ -4308,21 +4366,6 @@
    "content_ids": [
     "notecast/episode-14",
     "insight/insight-43"
-   ]
-  },
-  {
-   "key": "افزایش_طول_تاج",
-   "tag": "#افزایش_طول_تاج",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "",
-   "use_when": "",
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "chairside/chairside-16",
-    "chairside/chairside-21"
    ]
   },
   {
@@ -4716,23 +4759,6 @@
    ]
   },
   {
-   "key": "تماس_باز",
-   "tag": "#تماس_باز",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "نبودِ تماس پروگزیمالِ مؤثر بین دو دندان مجاور؛ معمولاً با گیر کردن غذا و درد موضعی بروز می‌کند.",
-   "use_when": "مقاله کانتکت باز را تشخیص بدهد، علتش را بررسی کند، یا راه اصلاحش را بگوید.",
-   "variants": [],
-   "co_tags": [
-    "#کانتکت_باز"
-   ],
-   "count": 2,
-   "content_ids": [
-    "photocast/episode-1",
-    "insight/insight-29"
-   ]
-  },
-  {
    "key": "حفظ_مینا",
    "tag": "#حفظ_مینا",
    "domain": "clinical",
@@ -4775,21 +4801,6 @@
    "content_ids": [
     "insight/insight-11",
     "insight/insight-45"
-   ]
-  },
-  {
-   "key": "درمان_ریشه",
-   "tag": "#درمان_ریشه",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "",
-   "use_when": "",
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "insight/insight-20",
-    "chairside/chairside-4"
    ]
   },
   {
@@ -5513,21 +5524,6 @@
    ]
   },
   {
-   "key": "پست_و_کور",
-   "tag": "#پست و کور",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "",
-   "use_when": "",
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "insight/insight-28",
-    "metanotes/meta-11"
-   ]
-  },
-  {
    "key": "پلنینگ_ایمپلنت",
    "tag": "#پلنینگ_ایمپلنت",
    "domain": "clinical",
@@ -5775,6 +5771,18 @@
    "content_ids": [
     "photocast/episode-2"
    ]
+  },
+  {
+   "key": "پست_و_کور",
+   "tag": "#پست و کور",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "variants": [],
+   "co_tags": [],
+   "count": 0,
+   "content_ids": []
   }
  ]
 }

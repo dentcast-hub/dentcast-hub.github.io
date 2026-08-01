@@ -1,0 +1,28 @@
+{
+  "type": "__global__",
+  "note": "Campaign step 2 - collapse surface forms that the tokenizer already reads as one tag. No judgement involved; the concepts are identical.",
+  "renames": {
+    "#پست و کور": "#پست_و_کور",
+    "#اسکنر_داخل‌دهانی": "#اسکنر_داخل_دهانی",
+    "#اسکن‌بادی": "#اسکن_بادی",
+    "#ترک مینایی": "#ترک_مینایی",
+    "#تماس باز": "#تماس_باز",
+    "#immediate dentin sealing": "#Immediate_Dentin_Sealing",
+    "#لیتیوم_دی‌سیلیکات": "#لیتیوم_دی_سیلیکات",
+    "#intraoral scanner": "#Intraoral_Scanner",
+    "#درمان ریشه": "#درمان_ریشه",
+    "#systematic review": "#Systematic_Review",
+    "#systematic_review": "#Systematic_Review",
+    "#لمینیت سرامیکی": "#لمینیت_سرامیکی",
+    "#peri_implantitis": "#Peri_Implantitis",
+    "#برداشت پوسیدگی": "#برداشت_پوسیدگی",
+    "#شیب کاسپی": "#شیب_کاسپی",
+    "#افزایش طول تاج": "#افزایش_طول_تاج",
+    "#Bruxism": "#bruxism",
+    "#tooth wear": "#tooth_wear",
+    "#resistance_form": "#Resistance_Form",
+    "#limiting_taper": "#Limiting_Taper",
+    "#snap on smile": "#snap-on-smile",
+    "#درمان_محافظه_کارانه": "#درمان_محافظه‌کارانه"
+  }
+}
