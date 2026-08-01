@@ -207,3 +207,27 @@ describe('GET /health', () => {
     expect(Object.keys(body).sort()).toEqual(['built_at', 'commit', 'ok', 'version']);
   });
 });
+
+describe('GET /admin/ai/health?deep=1', () => {
+  it('omits the generation timing unless explicitly asked (it costs tokens)', async () => {
+    const res = await app.inject({
+      method: 'GET', url: '/admin/ai/health', headers: { authorization: basic },
+    });
+    expect(res.json().deep).toBeNull();
+  });
+
+  it('times one real round when asked', async () => {
+    // The suite pins AI_PROVIDER=stub, so this exercises the plumbing offline:
+    // the stub answers instantly and the shape is what matters.
+    const res = await app.inject({
+      method: 'GET', url: '/admin/ai/health?deep=1', headers: { authorization: basic },
+    });
+
+    const deep = res.json().deep;
+    expect(deep).not.toBeNull();
+    expect(deep.ok).toBe(true);
+    expect(typeof deep.ms).toBe('number');
+    // Says what it timed, so a 1ms stub result can never read as a fast model.
+    expect(deep.provider).toBe('stub');
+  });
+});
