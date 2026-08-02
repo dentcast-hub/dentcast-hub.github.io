@@ -24,7 +24,7 @@
    "aliases": [],
    "variants": [],
    "co_tags": [],
-   "count": 165,
+   "count": 171,
    "content_ids": [
     "episodes/episode-1",
     "episodes/episode-2",
@@ -184,6 +184,12 @@
     "episodes/episode-128",
     "episodes/episode-128-1",
     "episodes/episode-128-2",
+    "episodes/episode-129",
+    "episodes/episode-130",
+    "episodes/episode-130-1",
+    "episodes/episode-131",
+    "episodes/episode-132",
+    "episodes/episode-133",
     "episodes/episode-154",
     "episodes/episode-155",
     "episodes/episode-156",
@@ -1370,6 +1376,39 @@
    ]
   },
   {
+   "key": "سمان_رزینی",
+   "tag": "#سمان_رزینی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "aliases": [
+    "resin cement",
+    "سمان رزین"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 16,
+   "content_ids": [
+    "episodes/episode-3",
+    "episodes/episode-11",
+    "episodes/episode-19",
+    "episodes/episode-43",
+    "episodes/episode-129",
+    "episodes/episode-148",
+    "insight/insight-5",
+    "notecast/episode-3",
+    "notecast/episode-6",
+    "notecast/episode-7",
+    "notecast/episode-11",
+    "notecast/episode-16",
+    "notecast/episode-19",
+    "insight/insight-36",
+    "dentai/dentai-27",
+    "insight/insight-59"
+   ]
+  },
+  {
    "key": "لمینیت_سرامیکی",
    "tag": "#لمینیت_سرامیکی",
    "domain": "clinical",
@@ -1430,38 +1469,6 @@
     "chairside/chairside-18",
     "insight/insight-45",
     "chairside/chairside-27"
-   ]
-  },
-  {
-   "key": "سمان_رزینی",
-   "tag": "#سمان_رزینی",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "",
-   "use_when": "",
-   "aliases": [
-    "resin cement",
-    "سمان رزین"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 15,
-   "content_ids": [
-    "episodes/episode-3",
-    "episodes/episode-11",
-    "episodes/episode-19",
-    "episodes/episode-43",
-    "episodes/episode-148",
-    "insight/insight-5",
-    "notecast/episode-3",
-    "notecast/episode-6",
-    "notecast/episode-7",
-    "notecast/episode-11",
-    "notecast/episode-16",
-    "notecast/episode-19",
-    "insight/insight-36",
-    "dentai/dentai-27",
-    "insight/insight-59"
    ]
   },
   {
@@ -1818,36 +1825,6 @@
    ]
   },
   {
-   "key": "تحلیل_استخوان",
-   "tag": "#تحلیل_استخوان",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "از دست رفتنِ استخوانِ اطرافِ دندان یا ایمپلنت.",
-   "use_when": "مقاله تحلیل استخوان را پیامد یا معیار قرار دهد.",
-   "aliases": [
-    "bone loss",
-    "تحلیل استخوانی",
-    "استخوان",
-    "تغییرات استخوان"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 11,
-   "content_ids": [
-    "episodes/episode-23",
-    "episodes/episode-24",
-    "episodes/episode-26",
-    "episodes/episode-59",
-    "episodes/episode-130",
-    "litecast/lite-CAST3",
-    "litecast/lite-CAST4",
-    "notecast/episode-23",
-    "notecast/episode-24",
-    "metanotes/meta-4",
-    "chairside/chairside-14"
-   ]
-  },
-  {
    "key": "سواد_هوش_مصنوعی",
    "tag": "#سواد_هوش_مصنوعی",
    "domain": "ai",
@@ -1906,6 +1883,35 @@
     "dentai/promptologist/prompt4-1",
     "dentai/promptologist/prompt4-2",
     "dentai/dentai-28"
+   ]
+  },
+  {
+   "key": "تحلیل_استخوان",
+   "tag": "#تحلیل_استخوان",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "از دست رفتنِ استخوانِ اطرافِ دندان یا ایمپلنت.",
+   "use_when": "مقاله تحلیل استخوان را پیامد یا معیار قرار دهد.",
+   "aliases": [
+    "bone loss",
+    "تحلیل استخوانی",
+    "استخوان",
+    "تغییرات استخوان"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 10,
+   "content_ids": [
+    "episodes/episode-23",
+    "episodes/episode-24",
+    "episodes/episode-26",
+    "episodes/episode-59",
+    "litecast/lite-CAST3",
+    "litecast/lite-CAST4",
+    "notecast/episode-23",
+    "notecast/episode-24",
+    "metanotes/meta-4",
+    "chairside/chairside-14"
    ]
   },
   {
@@ -3080,6 +3086,28 @@
    ]
   },
   {
+   "key": "بازسازی_کامل_دهان",
+   "tag": "#بازسازی_کامل_دهان",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "Full mouth rehabilitation — بازسازی همه‌ی دندان‌ها در یک طرح واحد.",
+   "use_when": "مقاله تصمیمش را در مقیاس کل دهان بگیرد، نه یک دندان.",
+   "aliases": [],
+   "variants": [],
+   "co_tags": [
+    "#Full_Mouth_Rehabilitation"
+   ],
+   "count": 6,
+   "content_ids": [
+    "episodes/episode-131",
+    "insight/insight-2",
+    "insight/insight-21",
+    "episodes/episode-155",
+    "metanotes/meta-17",
+    "insight/insight-60"
+   ]
+  },
+  {
    "key": "بیولوژیک_ویدث",
    "tag": "#بیولوژیک_ویدث",
    "domain": "clinical",
@@ -3109,6 +3137,33 @@
     "notecast/episode-13",
     "insight/insight-18",
     "chairside/chairside-7"
+   ]
+  },
+  {
+   "key": "تحلیل_استخوان_کرستال",
+   "tag": "#تحلیل_استخوان_کرستال",
+   "domain": null,
+   "words": 3,
+   "definition": "MBL — تحلیل استخوانِ حاشیه‌ای اطراف ایمپلنت.",
+   "use_when": "مقاله MBL را پیامدِ کمّی گزارش کند.",
+   "aliases": [
+    "marginal bone loss",
+    "MBL",
+    "تحلیل استخوان حاشیه ای",
+    "تحلیل کرستال",
+    "تحلیل استخوان مارژینال",
+    "استخوان مارژینال"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 6,
+   "content_ids": [
+    "episodes/episode-59",
+    "episodes/episode-82",
+    "episodes/episode-110",
+    "episodes/episode-111",
+    "episodes/episode-130",
+    "notecast/episode-26"
    ]
   },
   {
@@ -3324,6 +3379,59 @@
    ]
   },
   {
+   "key": "پروفایل_امرجنس",
+   "tag": "#پروفایل_امرجنس",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "Emergence Profile — کانتورِ خروجِ رستوریشن از زیرِ لثه که فرمِ بافتِ نرم و سلامتِ آن را تعیین می‌کند.",
+   "use_when": "مقاله پروفایلِ امرجنس را متغیرِ طراحی یا سلامتِ بافت بداند.",
+   "aliases": [
+    "emergence profile",
+    "پروفایل ظهور",
+    "پروفایل خروج",
+    "کانتور امرجنس"
+   ],
+   "variants": [],
+   "co_tags": [
+    "#Emergence_Profile"
+   ],
+   "count": 6,
+   "content_ids": [
+    "episodes/episode-112",
+    "episodes/episode-125-2",
+    "episodes/episode-130",
+    "chairside/chairside-10",
+    "episodes/episode-158",
+    "insight/insight-50"
+   ]
+  },
+  {
+   "key": "کانین_رایز",
+   "tag": "#کانین_رایز",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "Canine Guidance/Rise — جدا شدنِ دندان‌های خلفی در حرکتِ لترال به‌وسیله‌ی هدایتِ نیش.",
+   "use_when": "مقاله هدایتِ کانین را طرحِ اکلوزال انتخاب یا مقایسه کند.",
+   "aliases": [
+    "canine rise",
+    "canine guidance",
+    "کانین رایز",
+    "هدایت کانین",
+    "راهنمای نیش"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 6,
+   "content_ids": [
+    "episodes/episode-131",
+    "episodes/episode-132",
+    "dentcast-plus/video-6",
+    "insight/insight-37",
+    "chairside/chairside-15",
+    "sharehub/share-6"
+   ]
+  },
+  {
    "key": "کشیدن_دندان",
    "tag": "#کشیدن_دندان",
    "domain": null,
@@ -3366,6 +3474,31 @@
     "episodes/episode-127",
     "episodes/episode-134",
     "episodes/episode-135"
+   ]
+  },
+  {
+   "key": "گروپ_فانکشن",
+   "tag": "#گروپ_فانکشن",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "Group Function — طرحِ اکلوزالی که در حرکتِ لترال چند دندانِ خلفیِ سمتِ کارگر هم‌زمان تماس دارند.",
+   "use_when": "مقاله گروپ‌فانکشن را طرحِ اکلوزال انتخاب یا مقایسه کند.",
+   "aliases": [
+    "group function",
+    "گروپ فانکشن",
+    "فانکشن گروهی",
+    "عملکرد گروهی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 6,
+   "content_ids": [
+    "episodes/episode-131",
+    "episodes/episode-132",
+    "dentcast-plus/video-6",
+    "chairside/chairside-15",
+    "sharehub/share-6",
+    "insight/insight-47"
    ]
   },
   {
@@ -3590,53 +3723,6 @@
     "metanotes/meta-17",
     "sharehub/share-11",
     "insight/insight-60"
-   ]
-  },
-  {
-   "key": "بازسازی_کامل_دهان",
-   "tag": "#بازسازی_کامل_دهان",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "Full mouth rehabilitation — بازسازی همه‌ی دندان‌ها در یک طرح واحد.",
-   "use_when": "مقاله تصمیمش را در مقیاس کل دهان بگیرد، نه یک دندان.",
-   "aliases": [],
-   "variants": [],
-   "co_tags": [
-    "#Full_Mouth_Rehabilitation"
-   ],
-   "count": 5,
-   "content_ids": [
-    "insight/insight-2",
-    "insight/insight-21",
-    "episodes/episode-155",
-    "metanotes/meta-17",
-    "insight/insight-60"
-   ]
-  },
-  {
-   "key": "تحلیل_استخوان_کرستال",
-   "tag": "#تحلیل_استخوان_کرستال",
-   "domain": null,
-   "words": 3,
-   "definition": "MBL — تحلیل استخوانِ حاشیه‌ای اطراف ایمپلنت.",
-   "use_when": "مقاله MBL را پیامدِ کمّی گزارش کند.",
-   "aliases": [
-    "marginal bone loss",
-    "MBL",
-    "تحلیل استخوان حاشیه ای",
-    "تحلیل کرستال",
-    "تحلیل استخوان مارژینال",
-    "استخوان مارژینال"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 5,
-   "content_ids": [
-    "episodes/episode-59",
-    "episodes/episode-82",
-    "episodes/episode-110",
-    "episodes/episode-111",
-    "notecast/episode-26"
    ]
   },
   {
@@ -3950,27 +4036,6 @@
    ]
   },
   {
-   "key": "پروفایل_امرجنس",
-   "tag": "#پروفایل_امرجنس",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "شکلِ گذرِ رستوریشن از سطح ایمپلنت تا لبه‌ی لثه؛ تعیین‌کننده‌ی فرم و ثبات بافت نرم.",
-   "use_when": "مقاله پروفایل امرجنس را طراحی یا ارزیابی کند.",
-   "aliases": [],
-   "variants": [],
-   "co_tags": [
-    "#Emergence_Profile"
-   ],
-   "count": 5,
-   "content_ids": [
-    "episodes/episode-112",
-    "episodes/episode-125-2",
-    "chairside/chairside-10",
-    "episodes/episode-158",
-    "insight/insight-50"
-   ]
-  },
-  {
    "key": "پلنینگ_ایمپلنت",
    "tag": "#پلنینگ_ایمپلنت",
    "domain": "clinical",
@@ -4015,22 +4080,28 @@
    ]
   },
   {
-   "key": "کانین_رایز",
-   "tag": "#کانین_رایز",
+   "key": "کتاب_لینکویچیوس",
+   "tag": "#کتاب_لینکویچیوس",
    "domain": "clinical",
    "words": 2,
-   "definition": "هدایت کانینی — جدا شدن دندان‌های خلفی در حرکات طرفی به‌واسطه‌ی کانین.",
-   "use_when": "مقاله وجود یا نبودِ کانین رایز را ارزیابی کند؛ نبودش مقدمه‌ی گروپ فانکشن است.",
-   "aliases": [],
+   "definition": "کتابِ Zero Bone Loss Concepts اثرِ Tomas Linkevicius — مرجعِ حفظِ استخوانِ کرستالِ اطرافِ ایمپلنت.",
+   "use_when": "مقاله فصلی از کتاب لینکویچیوس را مرور کند.",
+   "aliases": [
+    "linkevicius",
+    "لینکویچیوس",
+    "لینکوییسیوس",
+    "کتاب لینکویچیوس",
+    "zero bone loss concepts"
+   ],
    "variants": [],
    "co_tags": [],
    "count": 5,
    "content_ids": [
-    "episodes/episode-132",
-    "dentcast-plus/video-6",
-    "insight/insight-37",
-    "chairside/chairside-15",
-    "sharehub/share-6"
+    "episodes/episode-110",
+    "episodes/episode-111",
+    "episodes/episode-112",
+    "episodes/episode-115",
+    "episodes/episode-130"
    ]
   },
   {
@@ -4059,25 +4130,6 @@
     "episodes/episode-92",
     "episodes/episode-93",
     "episodes/episode-94"
-   ]
-  },
-  {
-   "key": "گروپ_فانکشن",
-   "tag": "#گروپ_فانکشن",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "الگوی اکلوزالی که در حرکات طرفی، علاوه بر کانین، دندان‌های خلفی هم درگیر می‌شوند.",
-   "use_when": "مقاله گروپ فانکشن را تشخیص بدهد یا تصمیمش را بر آن بنا کند.",
-   "aliases": [],
-   "variants": [],
-   "co_tags": [],
-   "count": 5,
-   "content_ids": [
-    "episodes/episode-132",
-    "dentcast-plus/video-6",
-    "chairside/chairside-15",
-    "sharehub/share-6",
-    "insight/insight-47"
    ]
   },
   {
@@ -4354,6 +4406,28 @@
     "insight/insight-29",
     "metanotes/meta-12",
     "episodes/episode-159"
+   ]
+  },
+  {
+   "key": "استئواینتگریشن",
+   "tag": "#استئواینتگریشن",
+   "domain": null,
+   "words": 1,
+   "definition": "جوش‌خوردنِ ایمپلنت به استخوان.",
+   "use_when": "مقاله این فرایند یا اختلالش را بررسی کند.",
+   "aliases": [
+    "osseointegration",
+    "اسئواینتگریشن",
+    "اینتگریشن"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "episodes/episode-130-1",
+    "notecast/episode-23",
+    "notecast/episode-26",
+    "sharehub/share-9"
    ]
   },
   {
@@ -4948,30 +5022,6 @@
    ]
   },
   {
-   "key": "کتاب_لینکویچیوس",
-   "tag": "#کتاب_لینکویچیوس",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "کتابِ Zero Bone Loss Concepts اثرِ Tomas Linkevicius — مرجعِ حفظِ استخوانِ کرستالِ اطرافِ ایمپلنت.",
-   "use_when": "مقاله فصلی از کتاب لینکویچیوس را مرور کند.",
-   "aliases": [
-    "linkevicius",
-    "لینکویچیوس",
-    "لینکوییسیوس",
-    "کتاب لینکویچیوس",
-    "zero bone loss concepts"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 4,
-   "content_ids": [
-    "episodes/episode-110",
-    "episodes/episode-111",
-    "episodes/episode-112",
-    "episodes/episode-115"
-   ]
-  },
-  {
    "key": "کور_ریختگی",
    "tag": "#کور_ریختگی",
    "domain": "clinical",
@@ -5230,27 +5280,6 @@
     "episodes/episode-108",
     "episodes/episode-122-1",
     "insight/insight-10"
-   ]
-  },
-  {
-   "key": "استئواینتگریشن",
-   "tag": "#استئواینتگریشن",
-   "domain": null,
-   "words": 1,
-   "definition": "جوش‌خوردنِ ایمپلنت به استخوان.",
-   "use_when": "مقاله این فرایند یا اختلالش را بررسی کند.",
-   "aliases": [
-    "osseointegration",
-    "اسئواینتگریشن",
-    "اینتگریشن"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "notecast/episode-23",
-    "notecast/episode-26",
-    "sharehub/share-9"
    ]
   },
   {
@@ -16860,6 +16889,7 @@
   "ترنسفورمیشن توفنینگ": "transformation toughening",
   "pediatric dentistry": "دندانپزشکی کودکان",
   "brand compatibility": "سازگاری برند",
+  "fracture resistance": "مقاومت به شکست",
   "multi unit abutment": "مولتی یونیت اباتمنت",
   "crown implant ratio": "نسبت تاج به ایمپلنت",
   "اکستراکشن و ایمپلنت": "کشیدن و ایمپلنت",
@@ -16877,7 +16907,6 @@
   "keratinized gingiva": "لثه کراتینیزه",
   "hidden malocclusion": "مال اکلوژن پنهان",
   "patient examination": "معاینه بیمار",
-  "fracture resistance": "مقاومت به شکست",
   "bonding generations": "نسل باندینگ",
   "interocclusal space": "کمبود فضای عمودی",
   "gingival retraction": "کنترل لثه",
@@ -16929,6 +16958,7 @@
   "بالا آوردن مارجین": "dme",
   "دیپ مارژین الویشن": "dme",
   "systematic review": "متاآنالیز",
+  "emergence profile": "پروفایل امرجنس",
   "surface treatment": "آماده سازی سرامیک",
   "immediate loading": "زمان لود ایمپلنت",
   "primary stability": "ثبات اولیه",
@@ -16978,16 +17008,16 @@
   "peri implantitis": "پری ایمپلنتیتیس",
   "بیومیمتیک ترمیمی": "ترمیم بیومیمتیک",
   "biological width": "بیولوژیک ویدث",
+  "استخوان مارژینال": "تحلیل استخوان کرستال",
   "bonding protocol": "پروتکل باند",
   "cement selection": "انتخاب سمان",
-  "استخوان مارژینال": "تحلیل استخوان کرستال",
   "کاهش تنش با زمان": "dwt",
   "از دست رفتن تماس": "از دست رفتن کانتکت",
+  "osseointegration": "استئواینتگریشن",
   "اشتباه لابراتوار": "خطای لابراتوار",
   "loading protocol": "زمان لود ایمپلنت",
   "temporary cement": "سمان موقت",
   "proximal contact": "کانتکت باز",
-  "osseointegration": "استئواینتگریشن",
   "insertion torque": "ثبات اولیه",
   "درمان طولانی مدت": "درمان بلندمدت",
   "مولتی دیسیپلینری": "درمان بین رشته ای",
@@ -17008,6 +17038,7 @@
   "فاصله بین دندانی": "دیاستم",
   "ceramic fracture": "شکست سرامیک",
   "framework design": "طراحی فریم ورک",
+  "load to fracture": "مقاومت به شکست",
   "نسبت تاج ایمپلنت": "نسبت تاج به ایمپلنت",
   "دی کانتامیناسیون": "پاکسازی سرامیک",
   "تمیز کردن سرامیک": "پاکسازی سرامیک",
@@ -17049,7 +17080,6 @@
   "edentulous space": "فضای بی دندان",
   "attached gingiva": "لثه کراتینیزه",
   "مفصل گیجگاهی فکی": "مفصل فکی",
-  "load to fracture": "مقاومت به شکست",
   "mandibular molar": "مولر مندیبل",
   "ارگونومی کلینیکی": "نظم کلینیکی",
   "composite veneer": "ونیر کامپوزیت",
@@ -17068,6 +17098,7 @@
   "ceramic bonding": "باندینگ سرامیک",
   "بیولوژیکال ویدث": "بیولوژیک ویدث",
   "silane coupling": "سایلان",
+  "canine guidance": "کانین رایز",
   "خارج کردن دندان": "کشیدن دندان",
   "global analysis": "global diagnosis",
   "ایمپلنت تمام فک": "ایمپلنت فول آرچ",
@@ -17164,6 +17195,7 @@
   "فاصله بیولوژیک": "بیولوژیک ویدث",
   "مرور سیستماتیک": "متاآنالیز",
   "پروتکل باندینگ": "پروتکل باند",
+  "group function": "گروپ فانکشن",
   "تورک بیش از حد": "تورک پیچ",
   "سمان کردن روکش": "سمان کردن",
   "زیرکونیای شفاف": "نسل زیرکونیا",
@@ -17267,16 +17299,17 @@
   "titanium base": "تیتانیوم بیس",
   "meta analysis": "متاآنالیز",
   "پروتکل ادهزیو": "پروتکل باند",
+  "کانتور امرجنس": "پروفایل امرجنس",
   "رستوریشن خلفی": "ترمیم خلفی",
   "زیرکونیا شفاف": "نسل زیرکونیا",
   "ضایعه سرویکال": "nccl",
+  "اسئواینتگریشن": "استئواینتگریشن",
   "screwmentable": "اسکروسمنت",
   "ترمیم زیر لثه": "ترمیم ساب جینجیوال",
   "resin coating": "رزین کوتینگ",
   "supraeruption": "سوپرااراپشن",
   "مرجین سرامیکی": "مارجین روکش",
   "دی سمانتاسیون": "debonding",
-  "اسئواینتگریشن": "استئواینتگریشن",
   "گایدلاین تراش": "اصول تراش",
   "فضای امبراژور": "امبراژور",
   "short implant": "ایمپلنت کوتاه",
@@ -17404,10 +17437,14 @@
   "ارزیابی پایه": "انتخاب پایه",
   "عرض بیولوژیک": "بیولوژیک ویدث",
   "بیولوژیک ویث": "بیولوژیک ویدث",
+  "تحلیل کرستال": "تحلیل استخوان کرستال",
   "ترمیم چسبنده": "ترمیم ادهزیو",
   "non invasive": "درمان غیرتهاجمی",
+  "پروفایل ظهور": "پروفایل امرجنس",
+  "پروفایل خروج": "پروفایل امرجنس",
+  "فانکشن گروهی": "گروپ فانکشن",
+  "عملکرد گروهی": "گروپ فانکشن",
   "تشخیص گلوبال": "global diagnosis",
-  "تحلیل کرستال": "تحلیل استخوان کرستال",
   "چسباندن روکش": "سمان کردن",
   "pascal magne": "کتاب مانیه",
   "پاسکال مانیه": "کتاب مانیه",
@@ -17450,6 +17487,7 @@
   "دیواره باریک": "دیواره نازک",
   "ضخامت دیواره": "دیواره نازک",
   "مداخله نکردن": "عدم مداخله",
+  "استحکام شکست": "مقاومت به شکست",
   "prescription": "نسخه نویسی",
   "oblique load": "نیروی مایل",
   "hybrid layer": "هیبرید لیر",
@@ -17509,7 +17547,6 @@
   "ارزیابی تیمی": "مشاوره تیمی",
   "مشاوره تخصصی": "مشاوره تیمی",
   "بون آرکیتکچر": "معماری استخوان",
-  "استحکام شکست": "مقاومت به شکست",
   "لبخند لثه ای": "نمای ریج",
   "نوروماسکولار": "هماهنگی عصبی عضلانی",
   "internal hex": "هگز ایمپلنت",
@@ -17545,10 +17582,15 @@
   "سی ای دی کم": "cad cam",
   "باند سرامیک": "باندینگ سرامیک",
   "زیبایی قدام": "زیبایی قدامی",
+  "canine rise": "کانین رایز",
+  "هدایت کانین": "کانین رایز",
+  "راهنمای نیش": "کانین رایز",
   "over torque": "تورک پیچ",
   "cementation": "سمان کردن",
   "feldspathic": "فلدسپاتیک",
   "passive fit": "فیت پروتز",
+  "linkevicius": "کتاب لینکویچیوس",
+  "لینکوییسیوس": "کتاب لینکویچیوس",
   "ball o ring": "اتچمنت اوردنچر",
   "ساپورت خلفی": "استاپ خلفی",
   "ایزوله کردن": "ایزولاسیون",
@@ -17558,8 +17600,6 @@
   "مارژین دقیق": "مارجین روکش",
   "deep caries": "پوسیدگی عمیق",
   "overcontour": "اورکانتور",
-  "linkevicius": "کتاب لینکویچیوس",
-  "لینکوییسیوس": "کتاب لینکویچیوس",
   "ریموال ونیر": "debonding",
   "اسکرو ریتین": "اتصال پیچ شونده",
   "root dentin": "باند به عاج ریشه",
@@ -17844,6 +17884,7 @@
   "آل آن فور": "ایمپلنت فول آرچ",
   "دیکاپلینگ": "dwt",
   "اسکن بادی": "scan body",
+  "اینتگریشن": "استئواینتگریشن",
   "تماس خلفی": "ساپورت خلفی",
   "اسکروسمنت": "اسکرو سمنتد",
   "isolation": "ایزولاسیون",
@@ -17851,7 +17892,6 @@
   "پانورامیک": "رادیوگرافی تشخیصی",
   "اورکانتور": "کانتور ترمیم",
   "دیباندینگ": "debonding",
-  "اینتگریشن": "استئواینتگریشن",
   "embrasure": "امبراژور",
   "self etch": "سلف اچ",
   "طراحی تاج": "طراحی روکش",
@@ -18295,8 +18335,8 @@
   "ios": "اسکنر داخل دهانی",
   "تمپ": "روکش موقت",
   "dsd": "طراحی لبخند",
-  "gad": "global diagnosis",
   "mbl": "تحلیل استخوان کرستال",
+  "gad": "global diagnosis",
   "fit": "فیت پروتز",
   "دال": "dahl concept",
   "icl": "از دست رفتن کانتکت",
