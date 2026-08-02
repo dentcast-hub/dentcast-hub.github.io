@@ -1,0 +1,19 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 74 - episodes 49 and 50. Episode 49 (Ferrule part 3, designing resistant restorations) -> #فرول + #پست_و_کور + #بیومکانیک. Episode 50 (start of overdenture attachment-selection pathway) -> #اوردنچر + #اتچمنت + #اتچمنت_اوردنچر. Existing concepts only.",
+ "concepts": [],
+ "articles": {
+  "episodes/episode-49": [
+   "#دنتکست",
+   "#فرول",
+   "#پست_و_کور",
+   "#بیومکانیک"
+  ],
+  "episodes/episode-50": [
+   "#دنتکست",
+   "#اوردنچر",
+   "#اتچمنت",
+   "#اتچمنت_اوردنچر"
+  ]
+ }
+}

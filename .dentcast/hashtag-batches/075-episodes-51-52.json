@@ -1,0 +1,20 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 75 - episodes 51 and 52. Episode 51 (overdenture attachment-selection pathway, part 2) -> #اوردنچر + #اتچمنت + #اتچمنت_اوردنچر. Episode 52 (implant loading protocols in overdentures; its keywords are Immediate/Early Loading) -> #اوردنچر + #ایمپلنت + #بارگذاری_ایمپلنت + #زمان_لود_ایمپلنت. Existing concepts only.",
+ "concepts": [],
+ "articles": {
+  "episodes/episode-51": [
+   "#دنتکست",
+   "#اوردنچر",
+   "#اتچمنت",
+   "#اتچمنت_اوردنچر"
+  ],
+  "episodes/episode-52": [
+   "#دنتکست",
+   "#اوردنچر",
+   "#ایمپلنت",
+   "#بارگذاری_ایمپلنت",
+   "#زمان_لود_ایمپلنت"
+  ]
+ }
+}
