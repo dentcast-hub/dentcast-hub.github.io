@@ -1,0 +1,37 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 125 - Insight inserts 125.2 and 125.3. Episode 125.2 (immediate provisionalization and soft-tissue shaping in the esthetic zone) -> #ایمپلنت_فوری + #روکش_موقت + #پروفایل_امرجنس + #ناحیه_زیبایی + #اینسایت (all existing). Episode 125.3 (FEA of post material stress distribution) adds an #FEA concept, then -> #پست_و_کور + #فایبر_پست + #بیومکانیک + #FEA + #اینسایت.",
+ "concepts": [
+  {
+   "tag": "#FEA",
+   "domain": "clinical",
+   "definition": "آنالیزِ اجزاءِ محدود — مدل‌سازیِ عددیِ توزیعِ تنش در دندان و رستوریشن.",
+   "use_when": "مقاله از FEA برای تحلیلِ تنش استفاده کند.",
+   "aliases": [
+    "finite element analysis",
+    "اجزا محدود",
+    "اجزای محدود",
+    "آنالیز المان محدود",
+    "finite element"
+   ]
+  }
+ ],
+ "articles": {
+  "episodes/episode-125-2": [
+   "#دنتکست",
+   "#ایمپلنت_فوری",
+   "#روکش_موقت",
+   "#پروفایل_امرجنس",
+   "#ناحیه_زیبایی",
+   "#اینسایت"
+  ],
+  "episodes/episode-125-3": [
+   "#دنتکست",
+   "#پست_و_کور",
+   "#فایبر_پست",
+   "#بیومکانیک",
+   "#FEA",
+   "#اینسایت"
+  ]
+ }
+}

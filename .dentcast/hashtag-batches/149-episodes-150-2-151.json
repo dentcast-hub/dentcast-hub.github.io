@@ -1,0 +1,24 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 149 - Dentopedia insert 150.2 and episode 151. Episode 150.2 (keep the tooth or extract & implant? a debate) -> #دنتوپدیا + #حفظ_دندان + #پروگنوز_دندان + #ایمپلنت + #طرح_درمان + #پریودنتال. Episode 151 (extract-or-preserve decision, part 1) -> #کشیدن_دندان + #حفظ_دندان + #پروگنوز_دندان + #ایمپلنت + #طرح_درمان. All existing concepts.",
+ "concepts": [],
+ "articles": {
+  "episodes/episode-150-2": [
+   "#دنتکست",
+   "#دنتوپدیا",
+   "#حفظ_دندان",
+   "#پروگنوز_دندان",
+   "#ایمپلنت",
+   "#طرح_درمان",
+   "#پریودنتال"
+  ],
+  "episodes/episode-151": [
+   "#دنتکست",
+   "#کشیدن_دندان",
+   "#حفظ_دندان",
+   "#پروگنوز_دندان",
+   "#ایمپلنت",
+   "#طرح_درمان"
+  ]
+ }
+}

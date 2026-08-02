@@ -1,0 +1,20 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 95 - episodes 91 and 92, continuing Magne chapter 1. Both -> #بیومیمتیک + #کتاب_مانیه + #درمان_محافظه‌کارانه (their variant book tags were already merged onto #کتاب_مانیه in step 94). Episode 92 additionally names tooth structure/behaviour, so it also carries #ترمیم_بیومیمتیک. Existing concepts only.",
+ "concepts": [],
+ "articles": {
+  "episodes/episode-91": [
+   "#دنتکست",
+   "#بیومیمتیک",
+   "#کتاب_مانیه",
+   "#درمان_محافظه‌کارانه"
+  ],
+  "episodes/episode-92": [
+   "#دنتکست",
+   "#بیومیمتیک",
+   "#کتاب_مانیه",
+   "#ترمیم_بیومیمتیک",
+   "#درمان_محافظه‌کارانه"
+  ]
+ }
+}

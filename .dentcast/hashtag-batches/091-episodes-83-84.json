@@ -1,0 +1,22 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 91 - episodes 83 and 84. Episode 83 (Platform Switch finale) -> #پلتفرم_سویچ + #ایمپلنت + #پروتز_ایمپلنت. Episode 84 (abutment screw clinical points) folds the CamelCase backlog #Abutment_Screw into the existing #پیچ_اباتمنت (its alias list already carries 'abutment screw'), then -> #پیچ_اباتمنت + #ایمپلنت + #تورک_پیچ.",
+ "concepts": [],
+ "renames": {
+  "#Abutment_Screw": "#پیچ_اباتمنت"
+ },
+ "articles": {
+  "episodes/episode-83": [
+   "#دنتکست",
+   "#پلتفرم_سویچ",
+   "#ایمپلنت",
+   "#پروتز_ایمپلنت"
+  ],
+  "episodes/episode-84": [
+   "#دنتکست",
+   "#پیچ_اباتمنت",
+   "#ایمپلنت",
+   "#تورک_پیچ"
+  ]
+ }
+}

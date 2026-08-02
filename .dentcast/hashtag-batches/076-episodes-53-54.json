@@ -1,0 +1,19 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 76 - episodes 53 and 54, the biomimetic-dentistry intro pair. Both -> #بیومیمتیک + #ترمیم_بیومیمتیک + #درمان_محافظه‌کارانه (the 'محافظه‌کارانه/تقویت دندان' the episodes resolve). Existing concepts only.",
+ "concepts": [],
+ "articles": {
+  "episodes/episode-53": [
+   "#دنتکست",
+   "#بیومیمتیک",
+   "#ترمیم_بیومیمتیک",
+   "#درمان_محافظه‌کارانه"
+  ],
+  "episodes/episode-54": [
+   "#دنتکست",
+   "#بیومیمتیک",
+   "#ترمیم_بیومیمتیک",
+   "#درمان_محافظه‌کارانه"
+  ]
+ }
+}

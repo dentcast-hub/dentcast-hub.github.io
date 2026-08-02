@@ -1,0 +1,18 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 86 - episodes 73 and 74, closing the Decoupling With Time series. Episode 73 -> #بیومیمتیک + #DWT (its 'کاهش تنش/استرس ترمیمی' wording already folds via DWT's aliases). Episode 74 (finale, effect on restoration durability) drops the weak single-word backlog tag #تنش (its concept is DWT's stress-decoupling, already reachable) and -> #بیومیمتیک + #DWT + #دوام_ترمیم.",
+ "concepts": [],
+ "articles": {
+  "episodes/episode-73": [
+   "#دنتکست",
+   "#بیومیمتیک",
+   "#DWT"
+  ],
+  "episodes/episode-74": [
+   "#دنتکست",
+   "#بیومیمتیک",
+   "#DWT",
+   "#دوام_ترمیم"
+  ]
+ }
+}

@@ -1,0 +1,22 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 98 - episodes 97 and 98, continuing PEEK CAD-CAM. The bare backlog #دیجیتال (shares the 'دیجیتال' token with #دندانپزشکی_دیجیتال) is folded onto it (also cleans ep128-1's copy). Episode 97 -> #PEEK + #پروتز_دیجیتال + #دندانپزشکی_دیجیتال. Episode 98 (indications + clinical decision) -> #PEEK + #دندانپزشکی_دیجیتال + #انتخاب_متریال.",
+ "concepts": [],
+ "renames": {
+  "#دیجیتال": "#دندانپزشکی_دیجیتال"
+ },
+ "articles": {
+  "episodes/episode-97": [
+   "#دنتکست",
+   "#PEEK",
+   "#پروتز_دیجیتال",
+   "#دندانپزشکی_دیجیتال"
+  ],
+  "episodes/episode-98": [
+   "#دنتکست",
+   "#PEEK",
+   "#دندانپزشکی_دیجیتال",
+   "#انتخاب_متریال"
+  ]
+ }
+}

@@ -1,0 +1,41 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 58 - episodes 17 and 18, the two-part translucent-zirconia series. Both join the existing #نسل_زیرکونیا concept, which gains the pages' own query form 'زیرکونیای شفاف'. Episode 17 (structure and properties) also carries #فاز_زیرکونیا (the structure of translucent zirconia IS its cubic-phase content) and #ترانسلوسنسی; episode 18 (clinical selection criteria) carries #انتخاب_متریال.",
+ "concepts": [
+  {
+   "tag": "#نسل_زیرکونیا",
+   "domain": "clinical",
+   "definition": "نسل‌های زیرکونیا (3Y تا 5Y) — سازشِ میانِ استحکام و شفافیت.",
+   "use_when": "مقاله نسل‌ها یا زیرکونیای ترنسلوسنت را مقایسه یا معرفی کند.",
+   "aliases": [
+    "3Y",
+    "4Y",
+    "5Y",
+    "نسل زیرکونیا",
+    "زیرکونیا ترنسلوسنت",
+    "generation zirconia",
+    "زیرکونیای شفاف",
+    "زیرکونیا شفاف",
+    "translucent zirconia"
+   ]
+  }
+ ],
+ "articles": {
+  "episodes/episode-17": [
+   "#دنتکست",
+   "#زیرکونیا",
+   "#سرامیک",
+   "#نسل_زیرکونیا",
+   "#فاز_زیرکونیا",
+   "#ترانسلوسنسی"
+  ],
+  "episodes/episode-18": [
+   "#دنتکست",
+   "#زیرکونیا",
+   "#سرامیک",
+   "#نسل_زیرکونیا",
+   "#انتخاب_متریال",
+   "#ترانسلوسنسی"
+  ]
+ }
+}

@@ -1,0 +1,25 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 117 - Insight inserts 122.2 and 122.3, existing concepts. Episode 122.2 (scan speed vs accuracy) -> #اسکنر_داخل_دهانی + #دندانپزشکی_دیجیتال + #دقت_اسکن + #اینسایت. Episode 122.3 (ceramic veneer on endo-treated teeth) folds the spaced variant #دندان_اندو_شده onto #دندان_اندوشده (alias already there), then -> #ونیر_سرامیکی + #دندان_اندوشده + #باندینگ_سرامیک + #زیبایی + #اینسایت.",
+ "concepts": [],
+ "renames": {
+  "#دندان_اندو_شده": "#دندان_اندوشده"
+ },
+ "articles": {
+  "episodes/episode-122-2": [
+   "#دنتکست",
+   "#اسکنر_داخل_دهانی",
+   "#دندانپزشکی_دیجیتال",
+   "#دقت_اسکن",
+   "#اینسایت"
+  ],
+  "episodes/episode-122-3": [
+   "#دنتکست",
+   "#ونیر_سرامیکی",
+   "#دندان_اندوشده",
+   "#باندینگ_سرامیک",
+   "#زیبایی",
+   "#اینسایت"
+  ]
+ }
+}

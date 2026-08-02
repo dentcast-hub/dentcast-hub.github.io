@@ -1,0 +1,58 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 137 - Dentopedia insert 143.1 and episode 144. Episode 143.1 (practice branding/marketing) adds three practice-management concepts #برندینگ, #مدیریت_مطب, #مارکتینگ_دندانپزشکی, then -> #دنتوپدیا + #برندینگ + #مدیریت_مطب + #مارکتینگ_دندانپزشکی. Episode 144 (TMD Dawson-to-Okeson part 3, joint pathology) -> #TMD + #مفصل_فکی + #اکلوژن + #داوسون + #اوکیسون.",
+ "concepts": [
+  {
+   "tag": "#برندینگ",
+   "domain": "brand",
+   "definition": "برندسازیِ شخصی و مطب در دندانپزشکی.",
+   "use_when": "مقاله برندینگ/هویتِ برند را موضوع داشته باشد.",
+   "aliases": [
+    "branding",
+    "برند شخصی",
+    "پرسونال برندینگ",
+    "personal branding"
+   ]
+  },
+  {
+   "tag": "#مدیریت_مطب",
+   "domain": "brand",
+   "definition": "مدیریتِ کسب‌وکارِ مطبِ دندانپزشکی.",
+   "use_when": "مقاله مدیریت یا اقتصادِ مطب را موضوع داشته باشد.",
+   "aliases": [
+    "practice management",
+    "مدیریت کلینیک",
+    "اداره مطب"
+   ]
+  },
+  {
+   "tag": "#مارکتینگ_دندانپزشکی",
+   "domain": "brand",
+   "definition": "بازاریابیِ خدماتِ دندانپزشکی و جذبِ بیمار.",
+   "use_when": "مقاله مارکتینگ/جذبِ بیمار را موضوع داشته باشد.",
+   "aliases": [
+    "dental marketing",
+    "بازاریابی دندانپزشکی",
+    "جذب بیمار",
+    "مارکتینگ"
+   ]
+  }
+ ],
+ "articles": {
+  "episodes/episode-143-1": [
+   "#دنتکست",
+   "#دنتوپدیا",
+   "#برندینگ",
+   "#مدیریت_مطب",
+   "#مارکتینگ_دندانپزشکی"
+  ],
+  "episodes/episode-144": [
+   "#دنتکست",
+   "#TMD",
+   "#مفصل_فکی",
+   "#اکلوژن",
+   "#داوسون",
+   "#اوکیسون"
+  ]
+ }
+}

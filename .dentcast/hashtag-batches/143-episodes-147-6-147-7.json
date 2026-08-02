@@ -1,0 +1,39 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 143 - Dentopedia inserts 147.6 and 147.7. Episode 147.6 (overdentures A-Z) folds backlog #ایمپلنت_متحرک onto #اوردنچر (implant-overdenture aliases added), then -> #دنتوپدیا + #اوردنچر + #اتچمنت_اوردنچر + #ایمپلنت. Episode 147.7 (posts in anterior teeth, 2015-2025 review) -> #دنتوپدیا + #فایبر_پست + #پست_و_کور + #دندان_قدامی + #فرول (existing).",
+ "concepts": [
+  {
+   "tag": "#اوردنچر",
+   "domain": "clinical",
+   "definition": "پروتزِ متحرکِ کاملِ متکی بر ایمپلنت یا ریشه با اتچمنت.",
+   "use_when": "مقاله اوردنچر را موضوع داشته باشد.",
+   "aliases": [
+    "overdenture",
+    "اوردنچور",
+    "over denture",
+    "ایمپلنت متحرک",
+    "دنچر متکی بر ایمپلنت"
+   ]
+  }
+ ],
+ "renames": {
+  "#ایمپلنت_متحرک": "#اوردنچر"
+ },
+ "articles": {
+  "episodes/episode-147-6": [
+   "#دنتکست",
+   "#دنتوپدیا",
+   "#اوردنچر",
+   "#اتچمنت_اوردنچر",
+   "#ایمپلنت"
+  ],
+  "episodes/episode-147-7": [
+   "#دنتکست",
+   "#دنتوپدیا",
+   "#فایبر_پست",
+   "#پست_و_کور",
+   "#دندان_قدامی",
+   "#فرول"
+  ]
+ }
+}

@@ -1,0 +1,64 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 116 - episode 122 and the Insight insert 122.1. Episode 122 (posterior guideline part 2, cuspal coverage) adds a #پوشش_کاسپ concept, then -> #ترمیم_خلفی + #پوشش_کاسپ + #ترمیم_غیرمستقیم + #کامپوزیت. Episode 122.1 (screw vs cement, peri-implant disease): the spelling variant #پری_ایمپلنتایتس folds onto #پری_ایمپلنتیتیس (share 'پری'; variant spelling added as alias), backlog #اسکرو_ریتین folds onto #اتصال_پیچ_شونده, and a #سمان_ریتین (cement-retained) concept is added; article -> #پری_ایمپلنتیتیس + #اتصال_پیچ_شونده + #سمان_ریتین + #سمان_باقیمانده + #اینسایت.",
+ "concepts": [
+  {
+   "tag": "#پوشش_کاسپ",
+   "domain": "clinical",
+   "definition": "پوشاندنِ کاسپ در ترمیمِ خلفیِ وسیع برای مهارِ شکست — تصمیمِ کلیدیِ اینله در برابر آنله/روکش.",
+   "use_when": "مقاله تصمیمِ پوششِ کاسپ را موضوع داشته باشد.",
+   "aliases": [
+    "cuspal coverage",
+    "پوشش کاسپ",
+    "کاور کاسپ",
+    "cusp coverage"
+   ]
+  },
+  {
+   "tag": "#پری_ایمپلنتیتیس",
+   "domain": "clinical",
+   "definition": "التهابِ پیشرونده‌ی بافتِ اطرافِ ایمپلنت با از دست رفتنِ استخوان.",
+   "use_when": "مقاله پری‌ایمپلنتایتیس را تشخیص، ریسک یا درمان کند.",
+   "aliases": [
+    "peri-implantitis",
+    "پری ایمپلنتایتس",
+    "پری ایمپلنتیت",
+    "پری‌ایمپلنت دیزیز",
+    "peri implant disease"
+   ]
+  },
+  {
+   "tag": "#سمان_ریتین",
+   "domain": "clinical",
+   "definition": "پروتزِ ایمپلنتِ سمان‌شونده — در برابرِ پیچ‌شونده؛ ریسکِ سمانِ باقیمانده و بیماریِ پری‌ایمپلنت.",
+   "use_when": "مقاله رویکردِ سمان‌شونده را انتخاب یا مقایسه کند.",
+   "aliases": [
+    "cement retained",
+    "سمان ریتین",
+    "سمان شونده",
+    "cement-retained"
+   ]
+  }
+ ],
+ "renames": {
+  "#پری_ایمپلنتایتس": "#پری_ایمپلنتیتیس",
+  "#اسکرو_ریتین": "#اتصال_پیچ_شونده"
+ },
+ "articles": {
+  "episodes/episode-122": [
+   "#دنتکست",
+   "#ترمیم_خلفی",
+   "#پوشش_کاسپ",
+   "#ترمیم_غیرمستقیم",
+   "#کامپوزیت"
+  ],
+  "episodes/episode-122-1": [
+   "#دنتکست",
+   "#پری_ایمپلنتیتیس",
+   "#اتصال_پیچ_شونده",
+   "#سمان_ریتین",
+   "#سمان_باقیمانده",
+   "#اینسایت"
+  ]
+ }
+}

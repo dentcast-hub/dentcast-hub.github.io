@@ -1,0 +1,50 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 146 - Dentopedia insert 148.2 and episode 149. Episode 148.2 (Shahabian's Smart Vent Crown concept) folds backlog #کانسپت_شهابیان onto the existing #دکتر_شهابیان (author aliases added) and enriches #Smart_Vent_Crown with SVC aliases, then -> #دنتوپدیا + #دکتر_شهابیان + #Smart_Vent_Crown + #روکش_ایمپلنت + #سمان_باقیمانده. Episode 149 (resin-cement selection part 2, cementation technique) -> #سمان_کردن + #پروتکل_باندینگ + #سمان_رزینی + #سرامیک_دندانی.",
+ "concepts": [
+  {
+   "tag": "#Smart_Vent_Crown",
+   "domain": "clinical",
+   "definition": "Smart Vent Crown (SVC) — روکشِ ایمپلنتِ سمانی با سوراخِ ونت برای خروجِ سمانِ اضافه و بازیابی‌پذیری، کانسپتِ دکتر شهابیان.",
+   "use_when": "مقاله SVC یا مدیریتِ سمان با ونت را موضوع داشته باشد.",
+   "aliases": [
+    "smart vent crown",
+    "svc",
+    "ونت هول",
+    "vent hole"
+   ]
+  },
+  {
+   "tag": "#دکتر_شهابیان",
+   "domain": "brand",
+   "definition": "دکتر فؤاد شهابیان — میزبانِ دنتکست و صاحبِ کانسپت‌های اختصاصی.",
+   "use_when": "روی محتوایی که کانسپتِ شخصیِ او موضوع است.",
+   "aliases": [
+    "شهابیان",
+    "کانسپت شهابیان",
+    "foad shahabian",
+    "دکتر فواد شهابیان"
+   ]
+  }
+ ],
+ "renames": {
+  "#کانسپت_شهابیان": "#دکتر_شهابیان"
+ },
+ "articles": {
+  "episodes/episode-148-2": [
+   "#دنتکست",
+   "#دنتوپدیا",
+   "#دکتر_شهابیان",
+   "#Smart_Vent_Crown",
+   "#روکش_ایمپلنت",
+   "#سمان_باقیمانده"
+  ],
+  "episodes/episode-149": [
+   "#دنتکست",
+   "#سمان_کردن",
+   "#پروتکل_باندینگ",
+   "#سمان_رزینی",
+   "#سرامیک_دندانی"
+  ]
+ }
+}

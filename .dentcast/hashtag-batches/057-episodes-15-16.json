@@ -1,0 +1,48 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 57 - episodes 15 and 16. Episode 15 (longevity of ceramic onlays) joins #آنله + #دوام_ترمیم (page keyword 'طول عمر سرامیک' added as alias) + #انتخاب_متریال (caption credits materials and design). Episode 16 (adhesive over etched+silanated porcelain) promotes backlog tag #پرسلن to a concept and joins the ceramic-prep family + #قدرت_باند (the caption's claim is about bond strength). Pre-existing #دوام_ترمیم/#بقای_رستوریشن overlap noted but not merged here.",
+ "concepts": [
+  {
+   "tag": "#پرسلن",
+   "domain": "clinical",
+   "definition": "پرسلنِ دندانی — سرامیکِ شیشه‌ایِ کلاسیک که با HF اچ و سایلانیزه می‌شود.",
+   "use_when": "مقاله رفتار یا آماده‌سازی پرسلن را مشخصاً موضوع داشته باشد.",
+   "aliases": [
+    "porcelain",
+    "پرسلین",
+    "پرسلان"
+   ]
+  },
+  {
+   "tag": "#دوام_ترمیم",
+   "domain": "clinical",
+   "definition": "دوامِ بلندمدتِ ترمیم و عواملی که آن را تعیین می‌کنند.",
+   "use_when": "مقاله بقا یا طولِ عمرِ ترمیم را بسنجد.",
+   "aliases": [
+    "دوام ترمیم",
+    "طول عمر سرامیک",
+    "دوام بلندمدت"
+   ]
+  }
+ ],
+ "articles": {
+  "episodes/episode-15": [
+   "#دنتکست",
+   "#آنله",
+   "#سرامیک",
+   "#دوام_ترمیم",
+   "#ترمیم_غیرمستقیم",
+   "#انتخاب_متریال"
+  ],
+  "episodes/episode-16": [
+   "#دنتکست",
+   "#پرسلن",
+   "#سرامیک",
+   "#باندینگ",
+   "#اچ_سرامیک",
+   "#سایلان",
+   "#آماده_سازی_سرامیک",
+   "#قدرت_باند"
+  ]
+ }
+}

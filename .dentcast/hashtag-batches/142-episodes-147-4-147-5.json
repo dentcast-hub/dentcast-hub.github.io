@@ -1,0 +1,48 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 142 - SlideCast 147.4 and Dentopedia 147.5. Episode 147.4 (chameleon effect in composite) adds an #اسلایدکست series concept and an #اثر_آفتاب_پرست concept (absorbing #ترمیم_همرنگ wording as aliases), then -> #اسلایدکست + #اثر_آفتاب_پرست + #کامپوزیت + #انتخاب_shade + #زیبایی. Episode 147.5 (splinting implant to tooth) -> #دنتوپدیا + #اسپلینت_ایمپلنت + #بریج_دندان_ایمپلنت + #بیومکانیک + #پروتز_ثابت (existing).",
+ "concepts": [
+  {
+   "tag": "#اسلایدکست",
+   "domain": "brand",
+   "definition": "سریِ اسلایدکستِ دنتکست — ارائه‌ی مصور/اسلایدی یک موضوع.",
+   "use_when": "روی اپیزودهای فرمتِ اسلایدکست.",
+   "aliases": [
+    "slidecast",
+    "اسلاید کست"
+   ]
+  },
+  {
+   "tag": "#اثر_آفتاب_پرست",
+   "domain": "clinical",
+   "definition": "Chameleon/Blending Effect — هم‌رنگ شدنِ کامپوزیت با دندانِ مجاور و کاهشِ نیاز به تطبیقِ دقیقِ شید.",
+   "use_when": "مقاله اثرِ بلندینگ/آفتاب‌پرست را موضوع داشته باشد.",
+   "aliases": [
+    "chameleon effect",
+    "اثر آفتاب پرست",
+    "blending effect",
+    "ترمیم همرنگ",
+    "color blending",
+    "هم رنگی"
+   ]
+  }
+ ],
+ "articles": {
+  "episodes/episode-147-4": [
+   "#دنتکست",
+   "#اسلایدکست",
+   "#اثر_آفتاب_پرست",
+   "#کامپوزیت",
+   "#انتخاب_shade",
+   "#زیبایی"
+  ],
+  "episodes/episode-147-5": [
+   "#دنتکست",
+   "#دنتوپدیا",
+   "#اسپلینت_ایمپلنت",
+   "#بریج_دندان_ایمپلنت",
+   "#بیومکانیک",
+   "#پروتز_ثابت"
+  ]
+ }
+}

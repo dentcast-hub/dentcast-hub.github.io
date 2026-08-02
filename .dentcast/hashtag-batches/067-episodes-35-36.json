@@ -1,0 +1,21 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 67 - episodes 35 and 36, both to existing concepts. Episode 35 (Dahl part 2, gradual occlusal correction + VD rebuild) -> #Dahl_Concept + #سایش_آنتاگونیست + #اکلوژن + #افزایش_VD. Episode 36 (bonding a post to root dentin, reduced bond strength) -> #باندینگ + #پست_و_کور + #باند_به_عاج_ریشه + #قدرت_باند. No new vocabulary.",
+ "concepts": [],
+ "articles": {
+  "episodes/episode-35": [
+   "#دنتکست",
+   "#Dahl_Concept",
+   "#سایش_آنتاگونیست",
+   "#اکلوژن",
+   "#افزایش_VD"
+  ],
+  "episodes/episode-36": [
+   "#دنتکست",
+   "#باندینگ",
+   "#پست_و_کور",
+   "#باند_به_عاج_ریشه",
+   "#قدرت_باند"
+  ]
+ }
+}

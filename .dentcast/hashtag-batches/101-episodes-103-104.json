@@ -1,0 +1,41 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 101 - episodes 103 and 104. New concept #تیتانیوم_بیس (Ti-Base) absorbs the glued backlog #TiBase on ep104. The bare backlog #ایمپلنت_دندانی is folded onto #ایمپلنت (shares 'ایمپلنت'). Episode 103 (abutment selection part 2, soft-tissue impact) -> #اباتمنت + #ایمپلنت + #انتخاب_پایه + #تیتانیوم_بیس. Episode 104 (Ti-Base part 1) -> #تیتانیوم_بیس + #ایمپلنت_دیجیتال + #اباتمنت + #CAD_CAM.",
+ "concepts": [
+  {
+   "tag": "#تیتانیوم_بیس",
+   "domain": "clinical",
+   "definition": "Ti-Base — پایه‌ی تیتانیومیِ پیش‌ساخته که مزوستراکچرِ سرامیکی روی آن سمان می‌شود؛ اتصالِ فلز-ایمپلنت و زیباییِ سرامیک را جمع می‌کند.",
+   "use_when": "مقاله Ti-Base را انتخاب، مقایسه یا کاربردش را موضوع داشته باشد.",
+   "aliases": [
+    "ti base",
+    "ti-base",
+    "تیتانیوم بیس",
+    "تای بیس",
+    "tibase",
+    "titanium base",
+    "مزوستراکچر"
+   ]
+  }
+ ],
+ "renames": {
+  "#TiBase": "#تیتانیوم_بیس",
+  "#ایمپلنت_دندانی": "#ایمپلنت"
+ },
+ "articles": {
+  "episodes/episode-103": [
+   "#دنتکست",
+   "#اباتمنت",
+   "#ایمپلنت",
+   "#انتخاب_پایه",
+   "#تیتانیوم_بیس"
+  ],
+  "episodes/episode-104": [
+   "#دنتکست",
+   "#تیتانیوم_بیس",
+   "#ایمپلنت_دیجیتال",
+   "#اباتمنت",
+   "#CAD_CAM"
+  ]
+ }
+}

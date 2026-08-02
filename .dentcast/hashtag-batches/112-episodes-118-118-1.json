@@ -1,0 +1,39 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 112 - episode 118 and Dentopedia micro-episode 118.1. Episode 118 (Global Diagnosis smile analysis) folds backlog #آنالیز_لبخند and #Smile_Design onto #طراحی_لبخند (its aliases already carry both), then -> #طراحی_لبخند + #Global_Diagnosis + #زیبایی_دندان + #پروتز_زیبایی. Episode 118.1 (flangeless dentures) adds a #دنچر_بدون_فلنج concept, then -> #دنتوپدیا + #پروتز_متحرک + #دنچر_بدون_فلنج + #زیبایی.",
+ "concepts": [
+  {
+   "tag": "#دنچر_بدون_فلنج",
+   "domain": "clinical",
+   "definition": "دنچری که فلنجِ باکالِ لثه‌ای ندارد — برای شرایطِ آناتومیک یا زیباییِ خاص.",
+   "use_when": "مقاله دنچرِ بدون فلنج را موضوع داشته باشد.",
+   "aliases": [
+    "flangeless denture",
+    "دنچر بدون فلنج",
+    "flangeless",
+    "دنچر بدون لثه",
+    "بدون فلنج"
+   ]
+  }
+ ],
+ "renames": {
+  "#آنالیز_لبخند": "#طراحی_لبخند",
+  "#Smile_Design": "#طراحی_لبخند"
+ },
+ "articles": {
+  "episodes/episode-118": [
+   "#دنتکست",
+   "#طراحی_لبخند",
+   "#Global_Diagnosis",
+   "#زیبایی_دندان",
+   "#پروتز_زیبایی"
+  ],
+  "episodes/episode-118-1": [
+   "#دنتکست",
+   "#دنتوپدیا",
+   "#پروتز_متحرک",
+   "#دنچر_بدون_فلنج",
+   "#زیبایی"
+  ]
+ }
+}

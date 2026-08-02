@@ -1,0 +1,53 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 106 - Dentopedia micro-episodes 109.1 and 109.2. Episode 109.1 (loupe/magnification terminology) folds backlog #بزرگنمایی and #لوپ_چشمی onto the existing #بزرگ‌نمایی (its aliases already carry 'بزرگنمایی'/'لوپ') and #تجهیزات onto #تجهیزات_دندانپزشکی, then -> #دنتوپدیا + #بزرگ‌نمایی + #تجهیزات_دندانپزشکی. Episode 109.2 (interview on the AI learning path) adds a #مصاحبه concept, folds backlog #یادگیری_AI onto #سواد_هوش_مصنوعی (AI-learning aliases added), then -> #دنتوپدیا + #مصاحبه + #هوش_مصنوعی + #سواد_هوش_مصنوعی.",
+ "concepts": [
+  {
+   "tag": "#مصاحبه",
+   "domain": "brand",
+   "definition": "قالبِ گفت‌وگو/مصاحبه با مهمان.",
+   "use_when": "روی اپیزودِ مصاحبه‌محور.",
+   "aliases": [
+    "interview",
+    "گفتگو",
+    "گفت و گو"
+   ]
+  },
+  {
+   "tag": "#سواد_هوش_مصنوعی",
+   "domain": "ai",
+   "definition": "سوادِ هوشِ مصنوعی — مفاهیمِ پایه‌ی AI، یادگیریِ ماشین و یادگیریِ عمیق برای دندانپزشک.",
+   "use_when": "مقاله مفاهیمِ پایه یا مسیرِ یادگیریِ هوش مصنوعی را آموزش دهد.",
+   "aliases": [
+    "یادگیری ماشین",
+    "machine learning",
+    "deep learning",
+    "یادگیری عمیق",
+    "یادگیری ai",
+    "ai research",
+    "مسیر یادگیری هوش مصنوعی"
+   ]
+  }
+ ],
+ "renames": {
+  "#بزرگنمایی": "#بزرگ‌نمایی",
+  "#لوپ_چشمی": "#بزرگ‌نمایی",
+  "#تجهیزات": "#تجهیزات_دندانپزشکی",
+  "#یادگیری_AI": "#سواد_هوش_مصنوعی"
+ },
+ "articles": {
+  "episodes/episode-109-1": [
+   "#دنتکست",
+   "#دنتوپدیا",
+   "#بزرگ‌نمایی",
+   "#تجهیزات_دندانپزشکی"
+  ],
+  "episodes/episode-109-2": [
+   "#دنتکست",
+   "#دنتوپدیا",
+   "#مصاحبه",
+   "#هوش_مصنوعی",
+   "#سواد_هوش_مصنوعی"
+  ]
+ }
+}

@@ -1,0 +1,63 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 107 - episode 110 and Dentopedia micro-episode 110.1. Episode 110 (Zero Bone Loss Concepts book, prosthetic section part 1) adds a book concept #کتاب_لینکویچیوس (absorbing backlog #کتاب_لینکوییسیوس), then -> #Zero_Bone_Loss + #پروتز_ایمپلنت + #تحلیل_استخوان_کرستال + #کتاب_لینکویچیوس. Episode 110.1 (portable X-ray safety) adds #رادیولوژی and #ایمنی_پرتو concepts, then -> #دنتوپدیا + #رادیولوژی + #ایمنی_پرتو + #تجهیزات_دندانپزشکی.",
+ "concepts": [
+  {
+   "tag": "#کتاب_لینکویچیوس",
+   "domain": "clinical",
+   "definition": "کتابِ Zero Bone Loss Concepts اثرِ Tomas Linkevicius — مرجعِ حفظِ استخوانِ کرستالِ اطرافِ ایمپلنت.",
+   "use_when": "مقاله فصلی از کتاب لینکویچیوس را مرور کند.",
+   "aliases": [
+    "linkevicius",
+    "لینکویچیوس",
+    "لینکوییسیوس",
+    "کتاب لینکویچیوس",
+    "zero bone loss concepts"
+   ]
+  },
+  {
+   "tag": "#رادیولوژی",
+   "domain": "clinical",
+   "definition": "رادیولوژیِ دهان، فک و صورت — تصویربرداری و ملاحظاتِ آن.",
+   "use_when": "مقاله رادیولوژی یا تصویربرداری را موضوع داشته باشد.",
+   "aliases": [
+    "radiology",
+    "رادیولوژی دهان",
+    "تصویربرداری",
+    "imaging"
+   ]
+  },
+  {
+   "tag": "#ایمنی_پرتو",
+   "domain": "clinical",
+   "definition": "ایمنیِ پرتو و حفاظت در برابرِ اشعه‌ی رادیوگرافی.",
+   "use_when": "مقاله ایمنیِ اشعه/دُز پرتو را موضوع داشته باشد.",
+   "aliases": [
+    "radiation safety",
+    "ایمنی اشعه",
+    "حفاظت پرتو",
+    "دز اشعه",
+    "ALARA"
+   ]
+  }
+ ],
+ "renames": {
+  "#کتاب_لینکوییسیوس": "#کتاب_لینکویچیوس"
+ },
+ "articles": {
+  "episodes/episode-110": [
+   "#دنتکست",
+   "#Zero_Bone_Loss",
+   "#پروتز_ایمپلنت",
+   "#تحلیل_استخوان_کرستال",
+   "#کتاب_لینکویچیوس"
+  ],
+  "episodes/episode-110-1": [
+   "#دنتکست",
+   "#دنتوپدیا",
+   "#رادیولوژی",
+   "#ایمنی_پرتو",
+   "#تجهیزات_دندانپزشکی"
+  ]
+ }
+}

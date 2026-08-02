@@ -1,0 +1,48 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 99 - episodes 99 and 100. Episode 99 (Resin Infiltration for white-spot lesions) folds three backlog tags onto canonical forms: #Resin_Infiltration -> #رزین_اینفیلتریشن (alias 'resin infiltration' already there), #ضایعات_سفید -> #لکه_سفید (white-lesion aliases added here), and the variant #ترمیم_محافظه‌کارانه -> #درمان_محافظه‌کارانه (shares 'محافظه‌کارانه'); article -> #رزین_اینفیلتریشن + #لکه_سفید + #درمان_محافظه‌کارانه. Episode 100 (the 100th-episode milestone conversation, no clinical content) keeps its brand tag and promotes #صدمین_قسمت to a brand milestone concept so it leaves the backlog.",
+ "concepts": [
+  {
+   "tag": "#لکه_سفید",
+   "domain": "clinical",
+   "definition": "ضایعه‌ی سفیدِ مینایی (دمینرالیزه) پیش از حفره‌شدن.",
+   "use_when": "مقاله ضایعه‌ی سفید/WSL را تشخیص یا درمان کند.",
+   "aliases": [
+    "white spot",
+    "وایت اسپات",
+    "لکه سفید مینایی",
+    "ضایعات سفید",
+    "ضایعه سفید",
+    "WSL",
+    "white spot lesion"
+   ]
+  },
+  {
+   "tag": "#صدمین_قسمت",
+   "domain": "brand",
+   "definition": "اپیزودِ صدمِ دنتکست — نقطه‌ی عطفِ برنامه.",
+   "use_when": "روی اپیزودِ میلستونِ صدم.",
+   "aliases": [
+    "صدمین اپیزود",
+    "قسمت صدم"
+   ]
+  }
+ ],
+ "renames": {
+  "#Resin_Infiltration": "#رزین_اینفیلتریشن",
+  "#ضایعات_سفید": "#لکه_سفید",
+  "#ترمیم_محافظه‌کارانه": "#درمان_محافظه‌کارانه"
+ },
+ "articles": {
+  "episodes/episode-99": [
+   "#دنتکست",
+   "#رزین_اینفیلتریشن",
+   "#لکه_سفید",
+   "#درمان_محافظه‌کارانه"
+  ],
+  "episodes/episode-100": [
+   "#دنتکست",
+   "#صدمین_قسمت"
+  ]
+ }
+}

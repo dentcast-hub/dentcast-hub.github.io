@@ -1,0 +1,19 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 93 - episodes 87 and 88, the scientific-zirconia-review pair (existing concepts). Episode 87 (part 1, types and prosthetic uses) -> #زیرکونیا + #سرامیک + #پروتز_ثابت. Episode 88 (part 2, structural/mechanical properties, translucent zirconia) -> #زیرکونیا + #پروتز_ثابت + #نسل_زیرکونیا.",
+ "concepts": [],
+ "articles": {
+  "episodes/episode-87": [
+   "#دنتکست",
+   "#زیرکونیا",
+   "#سرامیک",
+   "#پروتز_ثابت"
+  ],
+  "episodes/episode-88": [
+   "#دنتکست",
+   "#زیرکونیا",
+   "#پروتز_ثابت",
+   "#نسل_زیرکونیا"
+  ]
+ }
+}

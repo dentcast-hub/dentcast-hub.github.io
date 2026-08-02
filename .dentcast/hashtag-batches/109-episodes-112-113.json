@@ -1,0 +1,41 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 109 - episodes 112 and 113. Episode 112 (ZBL prosthetic part 3, emergence profile + restoration design) -> #Zero_Bone_Loss + #پروتز_ثابت + #ایمپلنت + #پروفایل_امرجنس + #طراحی_پروتز + #کتاب_لینکویچیوس. Episode 113 (Goodacre tooth-prep guidelines, part 1) folds backlog #Goodacre onto #اصول_تراش (Goodacre aliases added), then -> #تراش_دندان + #اصول_تراش + #پروتز_ثابت + #total_occlusal_convergence + #روکش_دندان.",
+ "concepts": [
+  {
+   "tag": "#اصول_تراش",
+   "domain": "clinical",
+   "definition": "اصولِ علمیِ تراشِ دندان برای روکش — تیپر، گیر و ثبات، حفظِ ساختار (مرجعِ Goodacre).",
+   "use_when": "مقاله گایدلاینِ تراش را آموزش یا مرور کند.",
+   "aliases": [
+    "goodacre",
+    "گودیکر",
+    "اصول تراش",
+    "principles of preparation",
+    "گایدلاین تراش"
+   ]
+  }
+ ],
+ "renames": {
+  "#Goodacre": "#اصول_تراش"
+ },
+ "articles": {
+  "episodes/episode-112": [
+   "#دنتکست",
+   "#Zero_Bone_Loss",
+   "#پروتز_ثابت",
+   "#ایمپلنت",
+   "#پروفایل_امرجنس",
+   "#طراحی_پروتز",
+   "#کتاب_لینکویچیوس"
+  ],
+  "episodes/episode-113": [
+   "#دنتکست",
+   "#تراش_دندان",
+   "#اصول_تراش",
+   "#پروتز_ثابت",
+   "#total_occlusal_convergence",
+   "#روکش_دندان"
+  ]
+ }
+}

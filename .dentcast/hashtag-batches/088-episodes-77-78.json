@@ -1,0 +1,22 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 88 - episodes 77 and 78, the gingival-extension posterior-restoration classification pair. Episode 77 (part 1, surgery vs DME) -> #DME + #افزایش_طول_تاج + #ترمیم_ساب_جینجیوال + #بیومیمتیک. Episode 78 (part 2, treatment planning) - this is #CL's home turf, so its abbreviation is now replaced by #افزایش_طول_تاج (removing the last #CL from the brain), then -> #DME + #افزایش_طول_تاج + #ترمیم_ساب_جینجیوال + #طرح_درمان + #بیومیمتیک.",
+ "concepts": [],
+ "articles": {
+  "episodes/episode-77": [
+   "#دنتکست",
+   "#DME",
+   "#افزایش_طول_تاج",
+   "#ترمیم_ساب_جینجیوال",
+   "#بیومیمتیک"
+  ],
+  "episodes/episode-78": [
+   "#دنتکست",
+   "#DME",
+   "#افزایش_طول_تاج",
+   "#ترمیم_ساب_جینجیوال",
+   "#طرح_درمان",
+   "#بیومیمتیک"
+  ]
+ }
+}

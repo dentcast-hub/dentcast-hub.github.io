@@ -1,0 +1,21 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 68 - episodes 37 and 38 on laminate preparation. Episode 37 (indications for opening the contact during laminate prep) -> #لمینیت_سرامیکی + #تراش_لمینیت + #باز_کردن_کانتکت + #زیبایی; single-word backlog #تراش dropped (its token still reaches via #تراش_لمینیت/#تراش_دندان). Episode 38 (mockup-driven laminate prep) -> #لمینیت_سرامیکی + #تراش_لمینیت + #موک_آپ + #طراحی_لبخند; backlog #ماکاپ replaced by the canonical #موک_آپ whose alias list already carries 'ماکاپ', so the query folds. No new concepts.",
+ "concepts": [],
+ "articles": {
+  "episodes/episode-37": [
+   "#دنتکست",
+   "#لمینیت_سرامیکی",
+   "#تراش_لمینیت",
+   "#باز_کردن_کانتکت",
+   "#زیبایی"
+  ],
+  "episodes/episode-38": [
+   "#دنتکست",
+   "#لمینیت_سرامیکی",
+   "#تراش_لمینیت",
+   "#موک_آپ",
+   "#طراحی_لبخند"
+  ]
+ }
+}

@@ -1,0 +1,19 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 89 - episodes 79 and 80, both to existing concepts. Episode 79 (fiber-post clinical selection/prep) -> #فایبر_پست + #پست_و_کور + #بیومیمتیک. Episode 80 (implant fixture-abutment connections) replaces the bare backlog tag #کانکشن with the canonical #کانکشن_ایمپلنت (its alias list already carries 'کانکشن'), then -> #ایمپلنت + #اباتمنت + #کانکشن_ایمپلنت.",
+ "concepts": [],
+ "articles": {
+  "episodes/episode-79": [
+   "#دنتکست",
+   "#فایبر_پست",
+   "#پست_و_کور",
+   "#بیومیمتیک"
+  ],
+  "episodes/episode-80": [
+   "#دنتکست",
+   "#ایمپلنت",
+   "#اباتمنت",
+   "#کانکشن_ایمپلنت"
+  ]
+ }
+}

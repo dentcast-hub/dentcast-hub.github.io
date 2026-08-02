@@ -1,0 +1,37 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 70 - episodes 41 and 42. Episode 41 (systematic review of endocrown success/materials) -> #اندوکراون + #دندان_اندوشده + #انتخاب_متریال + #دوام_ترمیم. Episode 42 (fiber-post surface prep -> bond strength) consolidates the glued duplicate #فایبرپست into the canonical #فایبر_پست (shares no token, so folded via alias + renamed, no door closed), then carries #فایبر_پست + #باندینگ + #قدرت_باند + #پست_و_کور.",
+ "concepts": [
+  {
+   "tag": "#فایبر_پست",
+   "domain": "clinical",
+   "definition": "پستِ فایبری هم‌مدولِ عاج برای بازسازیِ دندانِ اندوشده.",
+   "use_when": "مقاله فایبرپست را انتخاب، آماده‌سازی یا ارزیابی کند.",
+   "aliases": [
+    "fiber post",
+    "فایبرپست",
+    "فایبر پست",
+    "پست فایبر"
+   ]
+  }
+ ],
+ "renames": {
+  "#فایبرپست": "#فایبر_پست"
+ },
+ "articles": {
+  "episodes/episode-41": [
+   "#دنتکست",
+   "#اندوکراون",
+   "#دندان_اندوشده",
+   "#انتخاب_متریال",
+   "#دوام_ترمیم"
+  ],
+  "episodes/episode-42": [
+   "#دنتکست",
+   "#فایبر_پست",
+   "#باندینگ",
+   "#قدرت_باند",
+   "#پست_و_کور"
+  ]
+ }
+}

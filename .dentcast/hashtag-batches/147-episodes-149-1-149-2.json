@@ -1,0 +1,24 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 147 - SlideCast 149.1 and Dentopedia 149.2. Episode 149.1 (AI basics for dentists) -> #هوش_مصنوعی + #سواد_هوش_مصنوعی + #دندانپزشکی_هوشمند + #اسلایدکست (established DentAI vocabulary, no merges). Episode 149.2 (digital dentistry deep dive) folds the CamelCase backlog #Digital_Dentistry onto #دندانپزشکی_دیجیتال (alias already there), then -> #دندانپزشکی_دیجیتال + #اسکنر_داخل_دهانی + #CAD_CAM + #دنتوپدیا.",
+ "concepts": [],
+ "renames": {
+  "#Digital_Dentistry": "#دندانپزشکی_دیجیتال"
+ },
+ "articles": {
+  "episodes/episode-149-1": [
+   "#دنتکست",
+   "#هوش_مصنوعی",
+   "#سواد_هوش_مصنوعی",
+   "#دندانپزشکی_هوشمند",
+   "#اسلایدکست"
+  ],
+  "episodes/episode-149-2": [
+   "#دنتکست",
+   "#دندانپزشکی_دیجیتال",
+   "#اسکنر_داخل_دهانی",
+   "#CAD_CAM",
+   "#دنتوپدیا"
+  ]
+ }
+}

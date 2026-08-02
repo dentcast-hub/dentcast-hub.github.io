@@ -1,0 +1,61 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 118 - Dentopedia 122.4 and Insight 122.5. Episode 122.4 (computer-controlled painless anesthesia) adds #بی‌حسی and #تزریق_بی‌درد concepts, then -> #دنتوپدیا + #بی‌حسی + #تزریق_بی‌درد + #راحتی_بیمار. Episode 122.5 (diamond-bur cutting efficiency on zirconia) adds a #فرز_الماسه concept, then -> #زیرکونیا + #تراش_دندان + #فرز_الماسه + #اینسایت.",
+ "concepts": [
+  {
+   "tag": "#بی‌حسی",
+   "domain": "clinical",
+   "definition": "بی‌حسیِ موضعیِ دندانپزشکی و ملاحظاتِ آن.",
+   "use_when": "مقاله بی‌حسی/آنستزی را موضوع داشته باشد.",
+   "aliases": [
+    "anesthesia",
+    "آنستزی",
+    "بی حسی موضعی",
+    "local anesthesia",
+    "بیحسی"
+   ]
+  },
+  {
+   "tag": "#تزریق_بی‌درد",
+   "domain": "clinical",
+   "definition": "تزریقِ کم‌درد/بی‌درد — از جمله سیستم‌های تزریقِ کنترل‌شده‌ی کامپیوتری.",
+   "use_when": "مقاله کاهشِ دردِ تزریق یا تزریقِ کامپیوتری را موضوع داشته باشد.",
+   "aliases": [
+    "painless injection",
+    "تزریق بدون درد",
+    "تزریق کامپیوتری",
+    "computer controlled anesthesia",
+    "تزریق بی درد"
+   ]
+  },
+  {
+   "tag": "#فرز_الماسه",
+   "domain": "clinical",
+   "definition": "فرزِ الماسه و کاراییِ برشِ آن بر حسبِ گریت و ماده‌ی هدف.",
+   "use_when": "مقاله انتخاب یا کاراییِ فرز را موضوع داشته باشد.",
+   "aliases": [
+    "diamond bur",
+    "فرز الماسی",
+    "grit",
+    "گریت فرز",
+    "cutting efficiency"
+   ]
+  }
+ ],
+ "articles": {
+  "episodes/episode-122-4": [
+   "#دنتکست",
+   "#دنتوپدیا",
+   "#بی‌حسی",
+   "#تزریق_بی‌درد",
+   "#راحتی_بیمار"
+  ],
+  "episodes/episode-122-5": [
+   "#دنتکست",
+   "#زیرکونیا",
+   "#تراش_دندان",
+   "#فرز_الماسه",
+   "#اینسایت"
+  ]
+ }
+}

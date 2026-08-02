@@ -1,0 +1,35 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 85 - episodes 71 and 72. Episode 71 (bonding to metal) -> #باند_به_فلز + #ادهزیو + #قدرت_باند (the 'دوام باند' it resolves). Episode 72 (Decoupling With Time, part 1) folds the backlog #Decoupling into the existing #DWT (whose aliases already carry 'decoupling with time'); adds the Persian 'کاهش تنش'/'دیکاپلینگ' spellings to #DWT so the episode's own wording resolves, then -> #بیومیمتیک + #DWT.",
+ "concepts": [
+  {
+   "tag": "#DWT",
+   "domain": "clinical",
+   "definition": "Decoupling With Time — گذاشتنِ فاصله‌ی زمانی میانِ لایه‌های باند تا تنشِ انقباضِ پلیمریزاسیون پیش از بارگذاریِ نهایی آزاد شود.",
+   "use_when": "مقاله اصلِ decoupling/کاهشِ تنش با زمان را به‌کار گیرد.",
+   "aliases": [
+    "decoupling with time",
+    "جداسازی با زمان",
+    "دیکاپلینگ",
+    "decoupling",
+    "کاهش تنش با زمان"
+   ]
+  }
+ ],
+ "renames": {
+  "#Decoupling": "#DWT"
+ },
+ "articles": {
+  "episodes/episode-71": [
+   "#دنتکست",
+   "#باند_به_فلز",
+   "#ادهزیو",
+   "#قدرت_باند"
+  ],
+  "episodes/episode-72": [
+   "#دنتکست",
+   "#بیومیمتیک",
+   "#DWT"
+  ]
+ }
+}

@@ -1,0 +1,40 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 119 - Insight insert 122.6 and episode 123. Episode 122.6 (cement cytotoxicity for peri-implant soft tissue) folds backlog #سمان_دندانپزشکی onto #سمان_دندانی (shares 'سمان'), adds a #زیست_سازگاری concept, then -> #سمان_دندانی + #زیست_سازگاری + #مدیریت_بافت_نرم + #پری_ایمپلنتیتیس + #اینسایت. Episode 123 (posterior guideline part 3, onlay vs crown by remaining structure) -> #ترمیم_خلفی + #پروتز_ثابت + #بیومیمتیک + #گایدلاین + #فرم_رزیستنس.",
+ "concepts": [
+  {
+   "tag": "#زیست_سازگاری",
+   "domain": "clinical",
+   "definition": "زیست‌سازگاریِ ماده — واکنشِ بافت به آن، شاملِ سمیتِ سلولی (سایتوتوکسیسیتی).",
+   "use_when": "مقاله زیست‌سازگاری یا سمیتِ سلولیِ ماده را ارزیابی کند.",
+   "aliases": [
+    "biocompatibility",
+    "زیست سازگاری",
+    "سایتوتوکسیسیتی",
+    "cytotoxicity",
+    "سمیت سلولی"
+   ]
+  }
+ ],
+ "renames": {
+  "#سمان_دندانپزشکی": "#سمان_دندانی"
+ },
+ "articles": {
+  "episodes/episode-122-6": [
+   "#دنتکست",
+   "#سمان_دندانی",
+   "#زیست_سازگاری",
+   "#مدیریت_بافت_نرم",
+   "#پری_ایمپلنتیتیس",
+   "#اینسایت"
+  ],
+  "episodes/episode-123": [
+   "#دنتکست",
+   "#ترمیم_خلفی",
+   "#پروتز_ثابت",
+   "#بیومیمتیک",
+   "#گایدلاین",
+   "#فرم_رزیستنس"
+  ]
+ }
+}

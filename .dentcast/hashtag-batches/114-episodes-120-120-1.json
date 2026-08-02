@@ -1,0 +1,58 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 114 - episode 120 and Dentopedia micro-episode 120.1. Episode 120 (Global Diagnosis five-questions wrap-up) adds a #کتاب_خوانی series concept (the umbrella for the book-review episodes), then -> #Global_Diagnosis + #کتاب_رابینز + #طرح_درمان + #پروتز_زیبایی + #کتاب_خوانی. Episode 120.1 (incisal-edge position + phonetics) adds #لبه_انسیزال and #فونتیک concepts, then -> #دنتوپدیا + #لبه_انسیزال + #فونتیک + #زیبایی.",
+ "concepts": [
+  {
+   "tag": "#کتاب_خوانی",
+   "domain": "brand",
+   "definition": "سریِ مرورِ فصل‌به‌فصلِ کتاب‌های مرجعِ دندانپزشکی در دنتکست.",
+   "use_when": "روی اپیزودهایی که یک کتابِ مرجع را مرور می‌کنند.",
+   "aliases": [
+    "کتابخوانی",
+    "مرور کتاب",
+    "book review"
+   ]
+  },
+  {
+   "tag": "#لبه_انسیزال",
+   "domain": "clinical",
+   "definition": "موقعیتِ لبه‌ی انسیزالِ دندان‌های قدامی — نقطه‌ی شروعِ طراحیِ زیبایی و مؤثر بر فونتیک.",
+   "use_when": "مقاله موقعیتِ لبه‌ی انسیزال را متغیرِ تصمیم قرار دهد.",
+   "aliases": [
+    "incisal edge",
+    "لبه برنده",
+    "incisal edge position",
+    "موقعیت لبه انسیزال"
+   ]
+  },
+  {
+   "tag": "#فونتیک",
+   "domain": "clinical",
+   "definition": "ملاحظاتِ گفتاری/فونتیک در طراحیِ پروتز و دندان‌های قدامی.",
+   "use_when": "مقاله فونتیک را معیارِ طراحی قرار دهد.",
+   "aliases": [
+    "phonetics",
+    "فونتیک",
+    "گفتار",
+    "تلفظ"
+   ]
+  }
+ ],
+ "articles": {
+  "episodes/episode-120": [
+   "#دنتکست",
+   "#Global_Diagnosis",
+   "#کتاب_رابینز",
+   "#طرح_درمان",
+   "#پروتز_زیبایی",
+   "#کتاب_خوانی"
+  ],
+  "episodes/episode-120-1": [
+   "#دنتکست",
+   "#دنتوپدیا",
+   "#لبه_انسیزال",
+   "#فونتیک",
+   "#زیبایی"
+  ]
+ }
+}
