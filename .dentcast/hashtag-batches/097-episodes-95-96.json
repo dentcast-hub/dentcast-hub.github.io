@@ -1,0 +1,41 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 97 - episodes 95 and 96. Episode 95 (BOPT prep concept, biologic vertical prep + gingival management) -> #BOPT (its alias already ties it to the #Finish_Zone family) + #تراش_عمودی (the 'بدون شانه/شولدر' door) + #پروتز_ثابت + #فینیش_لاین. Episode 96 (PEEK CAD-CAM, part 1): the glued backlog #CADCAM and the bare #کدکم both share no token with #CAD_CAM, so they are folded via aliases (added to #CAD_CAM here) and then renamed - keeping every spelling reachable. Article -> #PEEK + #پروتز_دیجیتال + #CAD_CAM.",
+ "concepts": [
+  {
+   "tag": "#CAD_CAM",
+   "domain": "clinical",
+   "definition": "طراحی و ساختِ کامپیوتریِ رستوریشن — اسکن، دیزاین و میلینگ/پرینت.",
+   "use_when": "مقاله جریانِ CAD/CAM یا میلینگ را موضوع داشته باشد.",
+   "aliases": [
+    "cad cam",
+    "کدکم",
+    "cad/cam",
+    "میلینگ",
+    "milling",
+    "cadcam",
+    "کد کم",
+    "سی ای دی کم"
+   ]
+  }
+ ],
+ "renames": {
+  "#CADCAM": "#CAD_CAM",
+  "#کدکم": "#CAD_CAM"
+ },
+ "articles": {
+  "episodes/episode-95": [
+   "#دنتکست",
+   "#BOPT",
+   "#تراش_عمودی",
+   "#پروتز_ثابت",
+   "#فینیش_لاین"
+  ],
+  "episodes/episode-96": [
+   "#دنتکست",
+   "#PEEK",
+   "#پروتز_دیجیتال",
+   "#CAD_CAM"
+  ]
+ }
+}

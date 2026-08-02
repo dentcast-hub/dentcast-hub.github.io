@@ -24,7 +24,7 @@
    "aliases": [],
    "variants": [],
    "co_tags": [],
-   "count": 100,
+   "count": 104,
    "content_ids": [
     "episodes/episode-1",
     "episodes/episode-2",
@@ -118,6 +118,10 @@
     "episodes/episode-90",
     "episodes/episode-91",
     "episodes/episode-92",
+    "episodes/episode-93",
+    "episodes/episode-94",
+    "episodes/episode-95",
+    "episodes/episode-96",
     "episodes/episode-100",
     "episodes/episode-154",
     "episodes/episode-155",
@@ -1591,6 +1595,37 @@
    ]
   },
   {
+   "key": "درمان_محافظه_کارانه",
+   "tag": "#درمان_محافظه‌کارانه",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "کم‌ترین برداشتِ ساختار برای رسیدن به نتیجه‌ی قابل قبول.",
+   "use_when": "مقاله محافظه‌کاری را معیارِ انتخاب بداند.",
+   "aliases": [
+    "درمان محافظه کارانه",
+    "کانسرواتیو",
+    "conservative",
+    "حداقل برداشت"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 12,
+   "content_ids": [
+    "episodes/episode-53",
+    "episodes/episode-54",
+    "episodes/episode-57",
+    "episodes/episode-58",
+    "episodes/episode-90",
+    "episodes/episode-91",
+    "episodes/episode-92",
+    "episodes/episode-93",
+    "episodes/episode-94",
+    "dentai/dentai-3",
+    "insight/insight-20",
+    "notecast/episode-38"
+   ]
+  },
+  {
    "key": "دوام_ترمیم",
    "tag": "#دوام_ترمیم",
    "domain": "clinical",
@@ -1778,35 +1813,6 @@
     "insight/insight-44",
     "insight/insight-54",
     "insight/insight-56"
-   ]
-  },
-  {
-   "key": "درمان_محافظه_کارانه",
-   "tag": "#درمان_محافظه‌کارانه",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "کم‌ترین برداشتِ ساختار برای رسیدن به نتیجه‌ی قابل قبول.",
-   "use_when": "مقاله محافظه‌کاری را معیارِ انتخاب بداند.",
-   "aliases": [
-    "درمان محافظه کارانه",
-    "کانسرواتیو",
-    "conservative",
-    "حداقل برداشت"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 10,
-   "content_ids": [
-    "episodes/episode-53",
-    "episodes/episode-54",
-    "episodes/episode-57",
-    "episodes/episode-58",
-    "episodes/episode-90",
-    "episodes/episode-91",
-    "episodes/episode-92",
-    "dentai/dentai-3",
-    "insight/insight-20",
-    "notecast/episode-38"
    ]
   },
   {
@@ -2178,6 +2184,35 @@
    ]
   },
   {
+   "key": "فینیش_لاین",
+   "tag": "#فینیش_لاین",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "خط ختم تراش — مرزی که مارجین رستوریشن روی آن می‌نشیند.",
+   "use_when": "مقاله شکل، موقعیت، یا کیفیت خط ختم را تعیین کند.",
+   "aliases": [
+    "فینیشینگ لاین",
+    "فینیش‌لاین",
+    "خط ختم"
+   ],
+   "variants": [
+    "#فینیشینگ_لاین"
+   ],
+   "co_tags": [],
+   "count": 9,
+   "content_ids": [
+    "episodes/episode-95",
+    "episodes/episode-114",
+    "dentcast-plus/video-1",
+    "notecast/episode-20",
+    "notecast/episode-21",
+    "insight/insight-18",
+    "chairside/chairside-12",
+    "insight/insight-40",
+    "notecast/episode-37"
+   ]
+  },
+  {
    "key": "قالب_گیری_دیجیتال",
    "tag": "#قالب‌گیری_دیجیتال",
    "domain": "clinical",
@@ -2466,34 +2501,6 @@
    ]
   },
   {
-   "key": "فینیش_لاین",
-   "tag": "#فینیش_لاین",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "خط ختم تراش — مرزی که مارجین رستوریشن روی آن می‌نشیند.",
-   "use_when": "مقاله شکل، موقعیت، یا کیفیت خط ختم را تعیین کند.",
-   "aliases": [
-    "فینیشینگ لاین",
-    "فینیش‌لاین",
-    "خط ختم"
-   ],
-   "variants": [
-    "#فینیشینگ_لاین"
-   ],
-   "co_tags": [],
-   "count": 8,
-   "content_ids": [
-    "episodes/episode-114",
-    "dentcast-plus/video-1",
-    "notecast/episode-20",
-    "notecast/episode-21",
-    "insight/insight-18",
-    "chairside/chairside-12",
-    "insight/insight-40",
-    "notecast/episode-37"
-   ]
-  },
-  {
    "key": "لیتیوم_دی_سیلیکات",
    "tag": "#لیتیوم_دی_سیلیکات",
    "domain": "clinical",
@@ -2565,6 +2572,30 @@
     "insight/insight-49",
     "insight/insight-54",
     "sharehub/share-10"
+   ]
+  },
+  {
+   "key": "ترمیم_بیومیمتیک",
+   "tag": "#ترمیم_بیومیمتیک",
+   "domain": null,
+   "words": 2,
+   "definition": "ترمیمی که رفتار مکانیکی دندان طبیعی را بازسازی می‌کند.",
+   "use_when": "مقاله در چارچوب بیومیمتیک تصمیم بگیرد.",
+   "aliases": [
+    "biomimetic restoration",
+    "بیومیمتیک ترمیمی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 7,
+   "content_ids": [
+    "episodes/episode-53",
+    "episodes/episode-54",
+    "episodes/episode-92",
+    "episodes/episode-93",
+    "episodes/episode-94",
+    "insight/insight-4",
+    "dentai/dentai-11"
    ]
   },
   {
@@ -2715,6 +2746,37 @@
     "chairside/chairside-13",
     "chairside/chairside-14",
     "chairside/chairside-21"
+   ]
+  },
+  {
+   "key": "cad_cam",
+   "tag": "#CAD_CAM",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "طراحی و ساختِ کامپیوتریِ رستوریشن — اسکن، دیزاین و میلینگ/پرینت.",
+   "use_when": "مقاله جریانِ CAD/CAM یا میلینگ را موضوع داشته باشد.",
+   "aliases": [
+    "cad cam",
+    "کدکم",
+    "cad/cam",
+    "میلینگ",
+    "milling",
+    "cadcam",
+    "کد کم",
+    "سی ای دی کم"
+   ],
+   "variants": [
+    "#CADCAM"
+   ],
+   "co_tags": [],
+   "count": 6,
+   "content_ids": [
+    "episodes/episode-96",
+    "episodes/episode-104",
+    "episodes/episode-133",
+    "insight/insight-30",
+    "insight/insight-31",
+    "insight/insight-35"
    ]
   },
   {
@@ -3330,47 +3392,6 @@
    ]
   },
   {
-   "key": "تراش_دندان",
-   "tag": "#تراش_دندان",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "چترِ عامِ تراش دندان.",
-   "use_when": "همراه یک تگ مشخص‌تر بیاید.",
-   "aliases": [],
-   "variants": [],
-   "co_tags": [],
-   "count": 5,
-   "content_ids": [
-    "episodes/episode-95",
-    "episodes/episode-113",
-    "episodes/episode-122-5",
-    "dentcast-plus/video-1",
-    "dentai/dentai-10"
-   ]
-  },
-  {
-   "key": "ترمیم_بیومیمتیک",
-   "tag": "#ترمیم_بیومیمتیک",
-   "domain": null,
-   "words": 2,
-   "definition": "ترمیمی که رفتار مکانیکی دندان طبیعی را بازسازی می‌کند.",
-   "use_when": "مقاله در چارچوب بیومیمتیک تصمیم بگیرد.",
-   "aliases": [
-    "biomimetic restoration",
-    "بیومیمتیک ترمیمی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 5,
-   "content_ids": [
-    "episodes/episode-53",
-    "episodes/episode-54",
-    "episodes/episode-92",
-    "insight/insight-4",
-    "dentai/dentai-11"
-   ]
-  },
-  {
    "key": "جراحی_ایمپلنت",
    "tag": "#جراحی_ایمپلنت",
    "domain": "clinical",
@@ -3601,6 +3622,34 @@
     "insight/insight-37",
     "chairside/chairside-15",
     "sharehub/share-6"
+   ]
+  },
+  {
+   "key": "کتاب_مانیه",
+   "tag": "#کتاب_مانیه",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "کتابِ Biomimetic Restorative Dentistry اثرِ پاسکال مانیه — مرجعِ اصولِ بیومیمتیکِ ترمیمی.",
+   "use_when": "مقاله فصلی از کتاب مانیه را مرور کند.",
+   "aliases": [
+    "pascal magne",
+    "پاسکال مانیه",
+    "کتاب مانیه",
+    "مانیه",
+    "magne",
+    "biomimetic restorative dentistry"
+   ],
+   "variants": [
+    "#پاسکال_مانیه"
+   ],
+   "co_tags": [],
+   "count": 5,
+   "content_ids": [
+    "episodes/episode-90",
+    "episodes/episode-91",
+    "episodes/episode-92",
+    "episodes/episode-93",
+    "episodes/episode-94"
    ]
   },
   {
@@ -4021,6 +4070,24 @@
     "episodes/episode-45",
     "episodes/episode-52",
     "litecast/lite-CAST13"
+   ]
+  },
+  {
+   "key": "تراش_دندان",
+   "tag": "#تراش_دندان",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "چترِ عامِ تراش دندان.",
+   "use_when": "همراه یک تگ مشخص‌تر بیاید.",
+   "aliases": [],
+   "variants": [],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "episodes/episode-113",
+    "episodes/episode-122-5",
+    "dentcast-plus/video-1",
+    "dentai/dentai-10"
    ]
   },
   {
@@ -4559,33 +4626,6 @@
    ]
   },
   {
-   "key": "کتاب_مانیه",
-   "tag": "#کتاب_مانیه",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "کتابِ Biomimetic Restorative Dentistry اثرِ پاسکال مانیه — مرجعِ اصولِ بیومیمتیکِ ترمیمی.",
-   "use_when": "مقاله فصلی از کتاب مانیه را مرور کند.",
-   "aliases": [
-    "pascal magne",
-    "پاسکال مانیه",
-    "کتاب مانیه",
-    "مانیه",
-    "magne",
-    "biomimetic restorative dentistry"
-   ],
-   "variants": [
-    "#پاسکال_مانیه"
-   ],
-   "co_tags": [],
-   "count": 4,
-   "content_ids": [
-    "episodes/episode-90",
-    "episodes/episode-91",
-    "episodes/episode-92",
-    "episodes/episode-94"
-   ]
-  },
-  {
    "key": "کور_ریختگی",
    "tag": "#کور_ریختگی",
    "domain": "clinical",
@@ -4641,29 +4681,6 @@
     "dentai/dentai-23",
     "dentai/dentai-26",
     "sharehub/share-11"
-   ]
-  },
-  {
-   "key": "cad_cam",
-   "tag": "#CAD_CAM",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "طراحی و ساختِ کامپیوتری.",
-   "use_when": "مقاله در همین جریانِ کار تصمیم بگیرد.",
-   "aliases": [
-    "cad cam",
-    "کدکم",
-    "cad/cam",
-    "میلینگ",
-    "milling"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "insight/insight-30",
-    "insight/insight-31",
-    "insight/insight-35"
    ]
   },
   {
@@ -6394,22 +6411,6 @@
    ]
   },
   {
-   "key": "cadcam",
-   "tag": "#CADCAM",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "",
-   "use_when": "",
-   "aliases": [],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "episodes/episode-96",
-    "episodes/episode-104"
-   ]
-  },
-  {
    "key": "caries_detector",
    "tag": "#Caries_Detector",
    "domain": null,
@@ -7463,6 +7464,27 @@
    "content_ids": [
     "dentcast-plus/video-6",
     "chairside/chairside-15"
+   ]
+  },
+  {
+   "key": "تراش_عمودی",
+   "tag": "#تراش_عمودی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "تراشِ بدون شانه‌ی مشخص، با فرز نایف‌اج.",
+   "use_when": "مقاله تراش عمودی را انتخابِ آگاهانه بداند.",
+   "aliases": [
+    "vertical prep",
+    "تراش ورتیکال",
+    "vertical preparation",
+    "بدون شولدر"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-95",
+    "insight/insight-18"
    ]
   },
   {
@@ -11501,26 +11523,6 @@
    "count": 1,
    "content_ids": [
     "insight/insight-46"
-   ]
-  },
-  {
-   "key": "تراش_عمودی",
-   "tag": "#تراش_عمودی",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "تراشِ بدون شانه‌ی مشخص، با فرز نایف‌اج.",
-   "use_when": "مقاله تراش عمودی را انتخابِ آگاهانه بداند.",
-   "aliases": [
-    "vertical prep",
-    "تراش ورتیکال",
-    "vertical preparation",
-    "بدون شولدر"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "insight/insight-18"
    ]
   },
   {
@@ -16016,8 +16018,8 @@
   "sequence of preparation": "ترتیب تراش",
   "سیستم پایدار بدون علامت": "سیستم پایدار",
   "temporomandibular joint": "مفصل فکی",
-  "overdenture attachment": "اتچمنت اوردنچر",
   "biomimetic restoration": "ترمیم بیومیمتیک",
+  "overdenture attachment": "اتچمنت اوردنچر",
   "تحلیل استخوان حاشیه ای": "تحلیل استخوان کرستال",
   "تحلیل استخوان مارژینال": "تحلیل استخوان کرستال",
   "oxygen inhibited layer": "لایه مهار اکسیژن",
@@ -16162,11 +16164,11 @@
   "fixed prosthesis": "پروتز ثابت",
   "دیجیتال دنتیستری": "دندانپزشکی دیجیتال",
   "طبقه بندی سرامیک": "سرامیک دندانی",
+  "بیومیمتیک ترمیمی": "ترمیم بیومیمتیک",
   "biological width": "بیولوژیک ویدث",
   "bonding protocol": "پروتکل باند",
   "cement selection": "انتخاب سمان",
   "کاهش تنش با زمان": "dwt",
-  "بیومیمتیک ترمیمی": "ترمیم بیومیمتیک",
   "اشتباه لابراتوار": "خطای لابراتوار",
   "loading protocol": "زمان لود ایمپلنت",
   "temporary cement": "سمان موقت",
@@ -16519,13 +16521,13 @@
   "resin cement": "سمان رزینی",
   "انواع سرامیک": "سرامیک دندانی",
   "مواد سرامیکی": "سرامیک دندانی",
+  "conservative": "درمان محافظه کارانه",
+  "حداقل برداشت": "درمان محافظه کارانه",
   "دوام بلندمدت": "دوام ترمیم",
   "over denture": "اوردنچر",
   "اسکن دیجیتال": "قالب گیری دیجیتال",
   "آنله سرامیکی": "آنله",
   "hydrofluoric": "اچ سرامیک",
-  "conservative": "درمان محافظه کارانه",
-  "حداقل برداشت": "درمان محافظه کارانه",
   "فضای بازسازی": "فضای رستوریتیو",
   "اینگات ایمکس": "لیتیوم دی سیلیکات",
   "استتیک قدامی": "زیبایی قدامی",
@@ -16539,6 +16541,8 @@
   "دیزاین لبخند": "طراحی لبخند",
   "آنالیز لبخند": "طراحی لبخند",
   "چسباندن روکش": "سمان کردن",
+  "pascal magne": "کتاب مانیه",
+  "پاسکال مانیه": "کتاب مانیه",
   "screw cement": "اسکروسمنت",
   "خطای دیجیتال": "خطای لابراتوار",
   "لود زودهنگام": "زمان لود ایمپلنت",
@@ -16559,8 +16563,6 @@
   "crown design": "طراحی روکش",
   "wisdom tooth": "مولر سوم",
   "ناحیه استتیک": "ناحیه زیبایی",
-  "pascal magne": "کتاب مانیه",
-  "پاسکال مانیه": "کتاب مانیه",
   "core buildup": "کور بیلدآپ",
   "کریز دیتکتور": "caries detector",
   "دیسمانتاسیون": "debonding",
@@ -16674,6 +16676,7 @@
   "مارژین دقیق": "مارجین روکش",
   "deep caries": "پوسیدگی عمیق",
   "overcontour": "اورکانتور",
+  "سی ای دی کم": "cad cam",
   "برداشت روکش": "برداشت ترمیم",
   "اورال هایژن": "بهداشت دهان",
   "risk factor": "ریسک فاکتور",
@@ -16784,9 +16787,9 @@
   "پلن درمانی": "طرح درمان",
   "بایومکانیک": "بیومکانیک",
   "بیو مکانیک": "بیومکانیک",
+  "کانسرواتیو": "درمان محافظه کارانه",
   "fiber post": "فایبر پست",
   "پریودونتال": "پریودنتال",
-  "کانسرواتیو": "درمان محافظه کارانه",
   "impression": "قالبگیری",
   "پروتز کامل": "پروتز متحرک",
   "دیپ مارجین": "dme",
@@ -17231,6 +17234,7 @@
   "مارژین": "مارجین روکش",
   "margin": "مارجین روکش",
   "میلینگ": "cad cam",
+  "cadcam": "cad cam",
   "شفافیت": "ترانسلوسنسی",
   "اپسیتی": "ترانسلوسنسی",
   "dentin": "عاج",
@@ -17282,8 +17286,9 @@
   "e max": "لیتیوم دی سیلیکات",
   "ایمکس": "لیتیوم دی سیلیکات",
   "سیلان": "سایلان",
-  "مرجین": "مارجین روکش",
   "magne": "کتاب مانیه",
+  "مرجین": "مارجین روکش",
+  "کد کم": "cad cam",
   "aging": "ltd",
   "سیگار": "دخانیات",
   "ماکاپ": "موک آپ",
