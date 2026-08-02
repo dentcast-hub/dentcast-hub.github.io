@@ -27,8 +27,9 @@ alwaysApply: false
 `2.5` کپسول «کاوش بیشتر» · `2.6` صفحهٔ فهرست نوع · `3` ممیزی تاریخ/متا ·
 `4` integrity · `4.5` اپیزود والد (NoteCast) · `4.6` prev/next (Promptologist) ·
 `4.7` بک‌لینک دانشنامه · `4.8` لینک درون‌متنی · `4.9` «کاوش بیشتر» صفحهٔ جدید ·
-`4.10` شاخهٔ پیپر · `4.11` فلش‌کارت · `4.12` کوییز · `5` انتری brain ·
-`5.5` تأیید پیلار · `5.6` مسیر یادگیری · `6` پالس · `7` بامپ نسخه · `8` بیلدها
+`4.10` شاخهٔ پیپر · `4.11` فلش‌کارت · `4.12` کوییز ·
+`5.0` استانداردسازی هشتگ (رزولوِ هر تگ در `dentcast-hashtag-reference.json`؛ موجود دوباره استفاده، نو با تعریف+الیاس ساخته شود — Hard Rule 15) ·
+`5` انتری brain · `5.5` تأیید پیلار · `5.6` مسیر یادگیری · `6` پالس · `7` بامپ نسخه · `8` بیلدها
 → **فاز D** (نسخهٔ انگلیسی + تاگل) → **فاز E** (مارکر نوتیف) → گزارش نهایی.
 
 جدول «انجام‌شده یعنی چه» برای هر ردیف: `agent-parity.md` بخش ۴.
@@ -55,7 +56,8 @@ python tools/build_episodes.py            # فقط اگر dentcast.json تغیی
 node tools/build_flashcards_index.mjs     # مگر LiteCast
 node tools/build_quiz_index.mjs           # مگر LiteCast
 python3 .github/scripts/inject_img_attrs.py
-node tools/build_plus_index.mjs           # هر publish که brain را تغییر داده
+node tools/build_plus_index.mjs           # هر publish که brain را تغییر داده (تگ‌ها + جدول الیاس هشتگ را هم آینه می‌کند)
+python3 tools/hashtag_ref.py --check      # هر تگِ brain باید کانونیکالِ کتابخانه باشد (Hard Rule 15 / گام ۵.۰)
 python tools/stamp-version.py             # همیشه آخر
 ```
 
