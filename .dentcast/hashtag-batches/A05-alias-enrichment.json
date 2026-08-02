@@ -1,0 +1,390 @@
+{
+ "type": "episodes",
+ "note": "Alias enrichment 5 (final) - remaining no-alias clinical concepts (implant complications/components, occlusion movements, restoration, prep, indices, study/method references). Aliases only; validated against the live alias table, every concept word-set, trapped folded forms and count-0 dead forms.",
+ "concepts": [
+  {
+   "tag": "#سمنتیشن",
+   "aliases": [
+    "سمانت",
+    "لوت کردن",
+    "سمان گذاری"
+   ]
+  },
+  {
+   "tag": "#سیلیکون_رپلیکا",
+   "aliases": [
+    "silicone replica",
+    "رپلیکا سیلیکونی",
+    "رپلیکای اباتمنت"
+   ]
+  },
+  {
+   "tag": "#طراحی_ایمپلنت",
+   "aliases": [
+    "implant design",
+    "دیزاین سیستم ایمپلنت",
+    "طراحی فیکسچر"
+   ]
+  },
+  {
+   "tag": "#طراحی_خودمحافظ",
+   "aliases": [
+    "self protective design",
+    "طراحی خود محافظ",
+    "دیزاین دفنسیو"
+   ]
+  },
+  {
+   "tag": "#ظرفیت_بافری",
+   "aliases": [
+    "buffering capacity",
+    "ظرفیت بافر بزاق",
+    "توان بافری"
+   ]
+  },
+  {
+   "tag": "#عوارض_مکانیکی",
+   "aliases": [
+    "mechanical complications",
+    "عارضه مکانیکی",
+    "شکست قطعات پروتز"
+   ]
+  },
+  {
+   "tag": "#فاصله_ایمپلنت",
+   "aliases": [
+    "implant spacing",
+    "فاصله بین ایمپلنت",
+    "distance فیکسچر"
+   ]
+  },
+  {
+   "tag": "#فقدان_مولر",
+   "aliases": [
+    "missing molar",
+    "نبود مولر",
+    "از دست دادن مولر"
+   ]
+  },
+  {
+   "tag": "#قانون_BULL",
+   "aliases": [
+    "bull rule",
+    "قانون بول",
+    "buccal upper lower lingual"
+   ]
+  },
+  {
+   "tag": "#لتروتروزیو",
+   "aliases": [
+    "laterotrusion",
+    "حرکت طرفی مندیبل",
+    "لترال مندیبل"
+   ]
+  },
+  {
+   "tag": "#مدل_تصمیم",
+   "aliases": [
+    "decision model",
+    "چارچوب تصمیم",
+    "مدل تصمیم گیری"
+   ]
+  },
+  {
+   "tag": "#مولر_اول_دائمی",
+   "aliases": [
+    "first permanent molar",
+    "مولر اول دائم",
+    "شش سالگی"
+   ]
+  },
+  {
+   "tag": "#نیروی_وج",
+   "aliases": [
+    "wedging force",
+    "نیروی گوه ای",
+    "فشار وج"
+   ]
+  },
+  {
+   "tag": "#ونت",
+   "aliases": [
+    "vent",
+    "ونت هول روکش",
+    "سوراخ تخلیه سمان"
+   ]
+  },
+  {
+   "tag": "#ونیر",
+   "aliases": [
+    "veneer",
+    "ونیر دندان",
+    "روکش ونیر"
+   ]
+  },
+  {
+   "tag": "#پاپیلا",
+   "aliases": [
+    "papilla",
+    "پاپیلای لثه",
+    "لثه بین دندانی"
+   ]
+  },
+  {
+   "tag": "#پروتروزیو",
+   "aliases": [
+    "protrusion",
+    "حرکت پیش رونده مندیبل",
+    "پروتروژن"
+   ]
+  },
+  {
+   "tag": "#پروتز_متکی_بر_ایمپلنت",
+   "aliases": [
+    "implant supported prosthesis",
+    "implant retained"
+   ]
+  },
+  {
+   "tag": "#پست_فلزی",
+   "aliases": [
+    "metal post",
+    "پست ریختگی فلزی",
+    "کست پست"
+   ]
+  },
+  {
+   "tag": "#پلنینگ_پروتز_محور",
+   "aliases": [
+    "prosthetically driven planning",
+    "پلن پروتز محور",
+    "restorative driven"
+   ]
+  },
+  {
+   "tag": "#پونتیک",
+   "aliases": [
+    "pontic",
+    "پانتیک",
+    "واحد معلق بریج"
+   ]
+  },
+  {
+   "tag": "#پیچ_شکسته_ایمپلنت",
+   "aliases": [
+    "fractured implant screw",
+    "پیچ شکسته داخل ایمپلنت",
+    "خارج کردن پیچ شکسته"
+   ]
+  },
+  {
+   "tag": "#پیچ_هرز_شده",
+   "aliases": [
+    "گل پیچ خراب"
+   ]
+  },
+  {
+   "tag": "#کاسپ_فانکشنال",
+   "aliases": [
+    "functional cusp",
+    "کاسپ حامل",
+    "کاسپ فانکشن"
+   ]
+  },
+  {
+   "tag": "#کانتکت_سنگین",
+   "aliases": [
+    "heavy contact",
+    "کنتاکت محکم",
+    "تماس سفت"
+   ]
+  },
+  {
+   "tag": "#کلاس_یک",
+   "aliases": [
+    "class 1",
+    "کلاس یک انگل",
+    "class i"
+   ]
+  },
+  {
+   "tag": "#کور_دندانی",
+   "aliases": [
+    "dental core",
+    "کور بازسازی",
+    "بیلد آپ کور"
+   ]
+  },
+  {
+   "tag": "#کیفیت_تراش",
+   "aliases": [
+    "preparation quality",
+    "کیفیت پرپ",
+    "تمیزی تراش"
+   ]
+  },
+  {
+   "tag": "#گایدنس_کانین",
+   "aliases": [
+    "canine guided",
+    "راهنمایی کانین",
+    "هدایت طرفی کانین"
+   ]
+  },
+  {
+   "tag": "#گپ_پست_و_گوتا",
+   "aliases": [
+    "post gutta gap",
+    "فاصله پست و گوتا",
+    "گپ پست گوتاپرکا"
+   ]
+  },
+  {
+   "tag": "#Adjacent_Tooth",
+   "aliases": [
+    "دندان مجاور",
+    "دندان کناری ایمپلنت"
+   ]
+  },
+  {
+   "tag": "#Bone_Level_Implant",
+   "aliases": [
+    "ایمپلنت بون لول",
+    "ایمپلنت سطح استخوان"
+   ]
+  },
+  {
+   "tag": "#Immediate_Implant",
+   "aliases": [
+    "کاشت فوری دندان"
+   ]
+  },
+  {
+   "tag": "#Jumping_Gap",
+   "aliases": [
+    "جامپینگ گپ",
+    "فاصله جامپینگ",
+    "gap فضای اطراف ایمپلنت"
+   ]
+  },
+  {
+   "tag": "#Limiting_Taper",
+   "aliases": [
+    "تیپر حدی",
+    "حد تیپر رزیستنس",
+    "limiting convergence"
+   ]
+  },
+  {
+   "tag": "#One_Abutment_One_Time",
+   "aliases": [
+    "یک اباتمنت یک بار",
+    "وان اباتمنت وان تایم",
+    "oaot"
+   ]
+  },
+  {
+   "tag": "#Peri_Implant_Phenotype",
+   "aliases": [
+    "فنوتیپ اطراف ایمپلنت",
+    "peri implant biotype"
+   ]
+  },
+  {
+   "tag": "#Rasperini",
+   "aliases": [
+    "راسپرینی",
+    "مطالعه راسپرینی"
+   ]
+  },
+  {
+   "tag": "#Saucerization",
+   "aliases": [
+    "ساسریزیشن",
+    "تحلیل بشقابی استخوان",
+    "saucer"
+   ]
+  },
+  {
+   "tag": "#Shahabian_Concept",
+   "aliases": [
+    "طرح شهابیان"
+   ]
+  },
+  {
+   "tag": "#Tissue_Level_Implant",
+   "aliases": [
+    "ایمپلنت تیشو لول",
+    "ایمپلنت سطح بافت"
+   ]
+  },
+  {
+   "tag": "#Type2_Diabetes",
+   "aliases": [
+    "دیابت نوع دو",
+    "دیابت تیپ ۲",
+    "type 2 diabetes"
+   ]
+  },
+  {
+   "tag": "#ایمپلنت_فول_ماوس",
+   "aliases": [
+    "full mouth implant",
+    "ایمپلنت تمام دهان",
+    "فول ماوس ایمپلنت"
+   ]
+  },
+  {
+   "tag": "#بیمار_آشنا",
+   "aliases": [
+    "familiar patient",
+    "بیمار آشنا و فامیل",
+    "درمان آشنایان"
+   ]
+  },
+  {
+   "tag": "#تطابق_مارژینال",
+   "aliases": [
+    "انطباق لبه"
+   ]
+  },
+  {
+   "tag": "#دریفت_مزیالی",
+   "aliases": [
+    "حرکت مزیالی دندان",
+    "دریفت به مزیال"
+   ]
+  },
+  {
+   "tag": "#فنوتیپ_پری_ایمپلنت",
+   "aliases": [
+    "بایوتایپ پری ایمپلنت",
+    "ضخامت بافت اطراف ایمپلنت"
+   ]
+  },
+  {
+   "tag": "#Crown_Preparation",
+   "aliases": [
+    "تراش روکش کامل",
+    "پرپ کراون",
+    "آماده سازی برای روکش"
+   ]
+  },
+  {
+   "tag": "#Tooth_Preparation",
+   "aliases": [
+    "تراش دندان عمومی",
+    "پرپ دندان کلی",
+    "آماده سازی دندان"
+   ]
+  },
+  {
+   "tag": "#Implant_Prosthetics",
+   "aliases": [
+    "پروتز ایمپلنت انگلیسی",
+    "ایمپلنت پراستتیکس"
+   ]
+  }
+ ],
+ "articles": {}
+}
