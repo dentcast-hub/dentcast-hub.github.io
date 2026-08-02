@@ -222,7 +222,7 @@
    "aliases": [],
    "variants": [],
    "co_tags": [],
-   "count": 72,
+   "count": 76,
    "content_ids": [
     "episodes/episode-1",
     "episodes/episode-2",
@@ -288,6 +288,10 @@
     "episodes/episode-62",
     "episodes/episode-63",
     "episodes/episode-64",
+    "episodes/episode-65",
+    "episodes/episode-66",
+    "episodes/episode-67",
+    "episodes/episode-68",
     "episodes/episode-100",
     "episodes/episode-154",
     "episodes/episode-155",
@@ -2005,6 +2009,33 @@
    ]
   },
   {
+   "key": "برداشت_پوسیدگی",
+   "tag": "#برداشت_پوسیدگی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "حذفِ کاملِ پوسیدگی پیش از قضاوت درباره‌ی ساختارِ باقی‌مانده.",
+   "use_when": "مقاله برداشتِ کامل پوسیدگی را شرطِ تصمیم بداند.",
+   "aliases": [
+    "حذف پوسیدگی",
+    "برداشتن پوسیدگی",
+    "caries removal"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 9,
+   "content_ids": [
+    "episodes/episode-65",
+    "episodes/episode-66",
+    "episodes/episode-67",
+    "dentai/dentai-3",
+    "dentai/dentai-11",
+    "dentai/dentai-12",
+    "dentai/dentai-15",
+    "chairside/chairside-9",
+    "insight/insight-49"
+   ]
+  },
+  {
    "key": "دقت_اسکن",
    "tag": "#دقت_اسکن",
    "domain": null,
@@ -2369,32 +2400,6 @@
    ]
   },
   {
-   "key": "پوسیدگی",
-   "tag": "#پوسیدگی",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "ضایعه‌ی پوسیدگی و عواملش.",
-   "use_when": "همراه یک تگ مشخص‌تر بیاید.",
-   "aliases": [],
-   "variants": [
-    "#پوسیدگی_دندان"
-   ],
-   "co_tags": [
-    "#Dental_Caries"
-   ],
-   "count": 8,
-   "content_ids": [
-    "episodes/episode-65",
-    "episodes/episode-66",
-    "episodes/episode-67",
-    "episodes/episode-134",
-    "episodes/episode-135",
-    "dentai/dentai-3",
-    "dentai/dentai-12",
-    "sharehub/share-7"
-   ]
-  },
-  {
    "key": "اورلی",
    "tag": "#اورلی",
    "domain": null,
@@ -2683,30 +2688,6 @@
     "episodes/episode-136",
     "notecast/episode-9",
     "notecast/episode-10"
-   ]
-  },
-  {
-   "key": "برداشت_پوسیدگی",
-   "tag": "#برداشت_پوسیدگی",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "حذفِ کاملِ پوسیدگی پیش از قضاوت درباره‌ی ساختارِ باقی‌مانده.",
-   "use_when": "مقاله برداشتِ کامل پوسیدگی را شرطِ تصمیم بداند.",
-   "aliases": [
-    "حذف پوسیدگی",
-    "برداشتن پوسیدگی",
-    "caries removal"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 6,
-   "content_ids": [
-    "dentai/dentai-3",
-    "dentai/dentai-11",
-    "dentai/dentai-12",
-    "dentai/dentai-15",
-    "chairside/chairside-9",
-    "insight/insight-49"
    ]
   },
   {
@@ -3032,6 +3013,28 @@
     "dentai/promptologist/prompt1-4",
     "dentai/promptologist/prompt3-1",
     "dentai/dentai-28"
+   ]
+  },
+  {
+   "key": "psz",
+   "tag": "#PSZ",
+   "domain": null,
+   "words": 1,
+   "definition": "Peripheral Seal Zone — محیطی که باید کاملاً عاری از پوسیدگی شود.",
+   "use_when": "مقاله منطقِ برداشت محیطی را شرح دهد.",
+   "aliases": [
+    "peripheral seal zone",
+    "سیل محیطی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 5,
+   "content_ids": [
+    "episodes/episode-65",
+    "episodes/episode-66",
+    "episodes/episode-67",
+    "dentai/dentai-11",
+    "dentai/dentai-15"
    ]
   },
   {
@@ -3448,6 +3451,29 @@
     "episodes/episode-157",
     "episodes/episode-158",
     "chairside/chairside-24"
+   ]
+  },
+  {
+   "key": "پوسیدگی",
+   "tag": "#پوسیدگی",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "ضایعه‌ی پوسیدگی و عواملش.",
+   "use_when": "همراه یک تگ مشخص‌تر بیاید.",
+   "aliases": [],
+   "variants": [
+    "#پوسیدگی_دندان"
+   ],
+   "co_tags": [
+    "#Dental_Caries"
+   ],
+   "count": 5,
+   "content_ids": [
+    "episodes/episode-134",
+    "episodes/episode-135",
+    "dentai/dentai-3",
+    "dentai/dentai-12",
+    "sharehub/share-7"
    ]
   },
   {
@@ -4244,6 +4270,27 @@
    ]
   },
   {
+   "key": "پوسیدگی_عمیق",
+   "tag": "#پوسیدگی_عمیق",
+   "domain": null,
+   "words": 2,
+   "definition": "ضایعه‌ای که نزدیک پالپ رسیده.",
+   "use_when": "مقاله برخورد با پوسیدگی عمیق را تعیین کند.",
+   "aliases": [
+    "deep caries",
+    "ضایعه عمیق"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "episodes/episode-65",
+    "episodes/episode-67",
+    "insight/insight-7",
+    "dentai/dentai-11"
+   ]
+  },
+  {
    "key": "پیچ_ایمپلنت",
    "tag": "#پیچ_ایمپلنت",
    "domain": "clinical",
@@ -4640,6 +4687,27 @@
     "insight/insight-7",
     "insight/insight-16",
     "insight/insight-32"
+   ]
+  },
+  {
+   "key": "انتخاب_shade",
+   "tag": "#انتخاب_shade",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "انتخابِ رنگِ کار، شامل رنگِ سمان.",
+   "use_when": "مقاله رنگ را متغیرِ تصمیم بداند.",
+   "aliases": [
+    "shade selection",
+    "انتخاب رنگ",
+    "shade"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "episodes/episode-68",
+    "insight/insight-5",
+    "insight/insight-42"
    ]
   },
   {
@@ -6546,25 +6614,6 @@
    ]
   },
   {
-   "key": "psz",
-   "tag": "#PSZ",
-   "domain": null,
-   "words": 1,
-   "definition": "Peripheral Seal Zone — محیطی که باید کاملاً عاری از پوسیدگی شود.",
-   "use_when": "مقاله منطقِ برداشت محیطی را شرح دهد.",
-   "aliases": [
-    "peripheral seal zone",
-    "سیل محیطی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "dentai/dentai-11",
-    "dentai/dentai-15"
-   ]
-  },
-  {
    "key": "residual_cement",
    "tag": "#Residual_Cement",
    "domain": "clinical",
@@ -6894,26 +6943,6 @@
    "content_ids": [
     "insight/insight-10",
     "insight/insight-46"
-   ]
-  },
-  {
-   "key": "انتخاب_shade",
-   "tag": "#انتخاب_shade",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "انتخابِ رنگِ کار، شامل رنگِ سمان.",
-   "use_when": "مقاله رنگ را متغیرِ تصمیم بداند.",
-   "aliases": [
-    "shade selection",
-    "انتخاب رنگ",
-    "shade"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "insight/insight-5",
-    "insight/insight-42"
    ]
   },
   {
@@ -8701,25 +8730,6 @@
    "content_ids": [
     "episodes/episode-122-1",
     "episodes/episode-148-1"
-   ]
-  },
-  {
-   "key": "پوسیدگی_عمیق",
-   "tag": "#پوسیدگی_عمیق",
-   "domain": null,
-   "words": 2,
-   "definition": "ضایعه‌ای که نزدیک پالپ رسیده.",
-   "use_when": "مقاله برخورد با پوسیدگی عمیق را تعیین کند.",
-   "aliases": [
-    "deep caries",
-    "ضایعه عمیق"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "insight/insight-7",
-    "dentai/dentai-11"
    ]
   },
   {
@@ -15879,10 +15889,10 @@
   "alleman deliperi rule": "قانون آلمان دلیپری",
   "indirect restoration": "ترمیم غیرمستقیم",
   "adhesive restoration": "ترمیم ادهزیو",
+  "peripheral seal zone": "psz",
   "resin matrix ceramic": "سرامیک هیبرید",
   "dual step impression": "قالبگیری دو مرحله ای",
   "translucent zirconia": "نسل زیرکونیا",
-  "peripheral seal zone": "psz",
   "self adhesive cement": "سمان سلف ادهزیو",
   "decoupling with time": "dwt",
   "diagnostic reasoning": "استدلال تشخیصی",
@@ -15963,6 +15973,7 @@
   "surface treatment": "آماده سازی سرامیک",
   "immediate loading": "زمان لود ایمپلنت",
   "primary stability": "ثبات اولیه",
+  "long term outcome": "درمان بلندمدت",
   "interdisciplinary": "درمان بین رشته ای",
   "universal bonding": "یونیورسال باند",
   "باندینگ یونیورسال": "یونیورسال باند",
@@ -15970,7 +15981,6 @@
   "occlusal overload": "اورلود اکلوزالی",
   "برجستگی بیش از حد": "اورکانتور",
   "removal technique": "تکنیک خارج سازی",
-  "long term outcome": "درمان بلندمدت",
   "مدل سه بعدی نتیجه": "موقتی به عنوان مرجع",
   "نقطه پایان برداشت": "cre",
   "visual perception": "ادراک بصری",
@@ -16005,6 +16015,7 @@
   "از دست رفتن تماس": "از دست رفتن کانتکت",
   "osseointegration": "استئواینتگریشن",
   "insertion torque": "ثبات اولیه",
+  "درمان طولانی مدت": "درمان بلندمدت",
   "مولتی دیسیپلینری": "درمان بین رشته ای",
   "سایش دندان مقابل": "سایش آنتاگونیست",
   "فایل کتابخانه ای": "لایبرری دیجیتال",
@@ -16018,7 +16029,6 @@
   "قابلیت تمیز کردن": "بهداشت پذیری",
   "استخوان مارژینال": "تحلیل استخوان کرستال",
   "drug interaction": "تداخل دارویی",
-  "درمان طولانی مدت": "درمان بلندمدت",
   "فاصله بین دندانی": "دیاستم",
   "کاهش درد حین کار": "راحتی بیمار",
   "framework design": "طراحی فریم ورک",
@@ -16067,9 +16077,9 @@
   "تغییرات استخوان": "تحلیل استخوان",
   "ترمیم کامپوزیتی": "کامپوزیت",
   "ceramic etching": "اچ سرامیک",
+  "برداشتن پوسیدگی": "برداشت پوسیدگی",
   "temporary crown": "روکش موقت",
   "ceramic bonding": "باندینگ سرامیک",
-  "برداشتن پوسیدگی": "برداشت پوسیدگی",
   "silane coupling": "سایلان",
   "خارج کردن دندان": "کشیدن دندان",
   "پرسلن فلدسپاتیک": "فلدسپاتیک",
@@ -16139,9 +16149,9 @@
   "dental ceramic": "سرامیک دندانی",
   "تحلیل استخوانی": "تحلیل استخوان",
   "طول عمر سرامیک": "دوام ترمیم",
+  "caries removal": "برداشت پوسیدگی",
   "پیش آگهی دندان": "پروگنوز دندان",
   "باند به سرامیک": "باندینگ سرامیک",
-  "caries removal": "برداشت پوسیدگی",
   "دندان اندو شده": "دندان اندوشده",
   "مرور سیستماتیک": "متاآنالیز",
   "پروتکل باندینگ": "پروتکل باند",
@@ -16243,6 +16253,8 @@
   "short implant": "ایمپلنت کوتاه",
   "برداشتن ترمیم": "برداشت ترمیم",
   "سیستم ایمپلنت": "برند ایمپلنت",
+  "نتایج بلندمدت": "درمان بلندمدت",
+  "پیامد بلندمدت": "درمان بلندمدت",
   "هیبرید سرامیک": "سرامیک هیبرید",
   "esthetic zone": "ناحیه زیبایی",
   "زیرکونیا شفاف": "نسل زیرکونیا",
@@ -16261,8 +16273,6 @@
   "pulp vitality": "حفظ پالپ",
   "referred pain": "درد ارجاعی",
   "درد ارجاع شده": "درد ارجاعی",
-  "نتایج بلندمدت": "درمان بلندمدت",
-  "پیامد بلندمدت": "درمان بلندمدت",
   "فاز تتراگونال": "فاز زیرکونیا",
   "آلودگی سرامیک": "پاکسازی سرامیک",
   "دیکانتامینیشن": "پاکسازی سرامیک",
@@ -16464,17 +16474,17 @@
   "articulation": "ارتیکولاسیون",
   "بایو میمتیک": "بیومیمتیک",
   "case report": "کیس بالینی",
-  "پست اند کور": "پست و کور",
   "تریتمنت پلن": "طرح درمان",
+  "پست اند کور": "پست و کور",
   "بایو مکانیک": "بیومکانیک",
   "overdenture": "اوردنچر",
   "periodontal": "پریودنتال",
   "هیدروفلوریک": "اچ سرامیک",
+  "حذف پوسیدگی": "برداشت پوسیدگی",
   "provisional": "روکش موقت",
   "فضای پروتزی": "فضای رستوریتیو",
   "زیبایی قدام": "زیبایی قدامی",
   "باند سرامیک": "باندینگ سرامیک",
-  "حذف پوسیدگی": "برداشت پوسیدگی",
   "تنسایل باند": "قدرت باند",
   "cementation": "سمان کردن",
   "feldspathic": "فلدسپاتیک",
@@ -16497,6 +16507,7 @@
   "ناحیه لبخند": "ناحیه زیبایی",
   "گایدنس طرفی": "هدایت طرفی",
   "هدایت جانبی": "هدایت طرفی",
+  "deep caries": "پوسیدگی عمیق",
   "buccal cusp": "کاسپ باکال",
   "ارتفاع کاسپ": "کاسپ باکال",
   "کور بیلد آپ": "کور بیلدآپ",
@@ -16516,7 +16527,6 @@
   "mclaren law": "قانون مکلارن",
   "لایه هیبرید": "هیبرید لیر",
   "الگوی رزینی": "پترن رزین",
-  "deep caries": "پوسیدگی عمیق",
   "ایمپکشن غذا": "گیر غذایی",
   "سی بی سی تی": "cbct",
   "بی او پی تی": "finish zone",
@@ -16620,6 +16630,7 @@
   "jaw growth": "رشد فک",
   "design تاج": "طراحی روکش",
   "زون استتیک": "ناحیه زیبایی",
+  "ضایعه عمیق": "پوسیدگی عمیق",
   "گلس آینومر": "گلاس آینومر",
   "گلس سرامیک": "گلاس سرامیک",
   "هیدروترمال": "ltd",
@@ -16643,7 +16654,6 @@
   "فرز نیف اج": "نایف اج",
   "فرول ندارد": "نبود فرول",
   "تجویز دارو": "نسخه نویسی",
-  "ضایعه عمیق": "پوسیدگی عمیق",
   "ضخامت کاغذ": "کاغذ آرتیکولاسیون",
   "مدل پرینتی": "کست پرینتی",
   "ناحیه ایمن": "کنترل عمق",
@@ -16734,6 +16744,7 @@
   "اکستراکشن": "کشیدن دندان",
   "کدام سمان": "انتخاب سمان",
   "endocrown": "اندوکراون",
+  "سیل محیطی": "psz",
   "اسکن بادی": "scan body",
   "تماس خلفی": "ساپورت خلفی",
   "اسکروسمنت": "اسکرو سمنتد",
@@ -16751,7 +16762,6 @@
   "پری مولار": "پرمولر",
   "کانتیلیور": "کانتی لیور",
   "lab check": "کنترل کار لابراتوار",
-  "سیل محیطی": "psz",
   "تیرگی لثه": "اثر چتر",
   "bleaching": "بلیچینگ",
   "whitening": "بلیچینگ",

@@ -1,0 +1,20 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 82 - episodes 65 and 66, the Peripheral Seal Zone / caries-removal series (parts 1-2). Both -> #PSZ (aliases already carry 'peripheral seal zone') + #برداشت_پوسیدگی + #بیومیمتیک. Episode 65 (moderate-to-deep lesions) also #پوسیدگی_عمیق. Existing concepts only.",
+ "concepts": [],
+ "articles": {
+  "episodes/episode-65": [
+   "#دنتکست",
+   "#PSZ",
+   "#برداشت_پوسیدگی",
+   "#پوسیدگی_عمیق",
+   "#بیومیمتیک"
+  ],
+  "episodes/episode-66": [
+   "#دنتکست",
+   "#PSZ",
+   "#برداشت_پوسیدگی",
+   "#بیومیمتیک"
+  ]
+ }
+}

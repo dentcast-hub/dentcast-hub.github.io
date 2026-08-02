@@ -1,0 +1,20 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 83 - episodes 67 and 68. Episode 67 (PSZ finale, avoiding restoration failure) -> #PSZ + #برداشت_پوسیدگی + #پوسیدگی_عمیق + #بیومیمتیک. Episode 68 (factors driving final shade outcome) replaces the bare backlog tag #Shade with the canonical #انتخاب_shade (its alias list already carries 'shade'), then -> #انتخاب_shade + #زیبایی + #سرامیک. No new concepts.",
+ "concepts": [],
+ "articles": {
+  "episodes/episode-67": [
+   "#دنتکست",
+   "#PSZ",
+   "#برداشت_پوسیدگی",
+   "#پوسیدگی_عمیق",
+   "#بیومیمتیک"
+  ],
+  "episodes/episode-68": [
+   "#دنتکست",
+   "#انتخاب_shade",
+   "#زیبایی",
+   "#سرامیک"
+  ]
+ }
+}
