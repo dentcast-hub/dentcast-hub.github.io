@@ -24,7 +24,7 @@
    "aliases": [],
    "variants": [],
    "co_tags": [],
-   "count": 123,
+   "count": 127,
    "content_ids": [
     "episodes/episode-1",
     "episodes/episode-2",
@@ -142,6 +142,10 @@
     "episodes/episode-109-2",
     "episodes/episode-110",
     "episodes/episode-110-1",
+    "episodes/episode-111",
+    "episodes/episode-111-1",
+    "episodes/episode-112",
+    "episodes/episode-113",
     "episodes/episode-154",
     "episodes/episode-155",
     "episodes/episode-156",
@@ -1628,37 +1632,6 @@
    ]
   },
   {
-   "key": "تحلیل_استخوان",
-   "tag": "#تحلیل_استخوان",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "از دست رفتنِ استخوانِ اطرافِ دندان یا ایمپلنت.",
-   "use_when": "مقاله تحلیل استخوان را پیامد یا معیار قرار دهد.",
-   "aliases": [
-    "bone loss",
-    "تحلیل استخوانی",
-    "استخوان",
-    "تغییرات استخوان"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 12,
-   "content_ids": [
-    "episodes/episode-23",
-    "episodes/episode-24",
-    "episodes/episode-26",
-    "episodes/episode-59",
-    "episodes/episode-111",
-    "episodes/episode-130",
-    "litecast/lite-CAST3",
-    "litecast/lite-CAST4",
-    "notecast/episode-23",
-    "notecast/episode-24",
-    "metanotes/meta-4",
-    "chairside/chairside-14"
-   ]
-  },
-  {
    "key": "دوام_ترمیم",
    "tag": "#دوام_ترمیم",
    "domain": "clinical",
@@ -1767,6 +1740,36 @@
     "notecast/episode-27",
     "chairside/chairside-8",
     "chairside/chairside-11"
+   ]
+  },
+  {
+   "key": "تحلیل_استخوان",
+   "tag": "#تحلیل_استخوان",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "از دست رفتنِ استخوانِ اطرافِ دندان یا ایمپلنت.",
+   "use_when": "مقاله تحلیل استخوان را پیامد یا معیار قرار دهد.",
+   "aliases": [
+    "bone loss",
+    "تحلیل استخوانی",
+    "استخوان",
+    "تغییرات استخوان"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 11,
+   "content_ids": [
+    "episodes/episode-23",
+    "episodes/episode-24",
+    "episodes/episode-26",
+    "episodes/episode-59",
+    "episodes/episode-130",
+    "litecast/lite-CAST3",
+    "litecast/lite-CAST4",
+    "notecast/episode-23",
+    "notecast/episode-24",
+    "metanotes/meta-4",
+    "chairside/chairside-14"
    ]
   },
   {
@@ -3512,6 +3515,32 @@
    ]
   },
   {
+   "key": "تحلیل_استخوان_کرستال",
+   "tag": "#تحلیل_استخوان_کرستال",
+   "domain": null,
+   "words": 3,
+   "definition": "MBL — تحلیل استخوانِ حاشیه‌ای اطراف ایمپلنت.",
+   "use_when": "مقاله MBL را پیامدِ کمّی گزارش کند.",
+   "aliases": [
+    "marginal bone loss",
+    "MBL",
+    "تحلیل استخوان حاشیه ای",
+    "تحلیل کرستال",
+    "تحلیل استخوان مارژینال",
+    "استخوان مارژینال"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 5,
+   "content_ids": [
+    "episodes/episode-59",
+    "episodes/episode-82",
+    "episodes/episode-110",
+    "episodes/episode-111",
+    "notecast/episode-26"
+   ]
+  },
+  {
    "key": "تحویل_روکش",
    "tag": "#تحویل_روکش",
    "domain": "clinical",
@@ -4218,31 +4247,6 @@
    ]
   },
   {
-   "key": "تحلیل_استخوان_کرستال",
-   "tag": "#تحلیل_استخوان_کرستال",
-   "domain": null,
-   "words": 3,
-   "definition": "MBL — تحلیل استخوانِ حاشیه‌ای اطراف ایمپلنت.",
-   "use_when": "مقاله MBL را پیامدِ کمّی گزارش کند.",
-   "aliases": [
-    "marginal bone loss",
-    "MBL",
-    "تحلیل استخوان حاشیه ای",
-    "تحلیل کرستال",
-    "تحلیل استخوان مارژینال",
-    "استخوان مارژینال"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 4,
-   "content_ids": [
-    "episodes/episode-59",
-    "episodes/episode-82",
-    "episodes/episode-110",
-    "notecast/episode-26"
-   ]
-  },
-  {
    "key": "تراش_دندان",
    "tag": "#تراش_دندان",
    "domain": "clinical",
@@ -4645,6 +4649,28 @@
    ]
   },
   {
+   "key": "مدیریت_بافت_نرم",
+   "tag": "#مدیریت_بافت_نرم",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "حفظ و شکل‌دهی بافت نرم اطراف ایمپلنت.",
+   "use_when": "مقاله بافت نرم را هدفِ تصمیم بداند، نه صرفاً ذکرش کند.",
+   "aliases": [],
+   "variants": [
+    "#بافت_نرم"
+   ],
+   "co_tags": [
+    "#Soft_Tissue_Management"
+   ],
+   "count": 4,
+   "content_ids": [
+    "episodes/episode-111",
+    "episodes/episode-140",
+    "episodes/episode-158",
+    "insight/insight-50"
+   ]
+  },
+  {
    "key": "نشست_روکش",
    "tag": "#نشست_روکش",
    "domain": "clinical",
@@ -4663,6 +4689,26 @@
     "insight/insight-30",
     "insight/insight-44",
     "sharehub/share-10"
+   ]
+  },
+  {
+   "key": "پروفایل_امرجنس",
+   "tag": "#پروفایل_امرجنس",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "شکلِ گذرِ رستوریشن از سطح ایمپلنت تا لبه‌ی لثه؛ تعیین‌کننده‌ی فرم و ثبات بافت نرم.",
+   "use_when": "مقاله پروفایل امرجنس را طراحی یا ارزیابی کند.",
+   "aliases": [],
+   "variants": [],
+   "co_tags": [
+    "#Emergence_Profile"
+   ],
+   "count": 4,
+   "content_ids": [
+    "episodes/episode-112",
+    "chairside/chairside-10",
+    "episodes/episode-158",
+    "insight/insight-50"
    ]
   },
   {
@@ -5022,6 +5068,29 @@
     "notecast/episode-23",
     "notecast/episode-26",
     "sharehub/share-9"
+   ]
+  },
+  {
+   "key": "اصول_تراش",
+   "tag": "#اصول_تراش",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "اصولِ علمیِ تراشِ دندان برای روکش — تیپر، گیر و ثبات، حفظِ ساختار (مرجعِ Goodacre).",
+   "use_when": "مقاله گایدلاینِ تراش را آموزش یا مرور کند.",
+   "aliases": [
+    "goodacre",
+    "گودیکر",
+    "اصول تراش",
+    "principles of preparation",
+    "گایدلاین تراش"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "episodes/episode-113",
+    "episodes/episode-114",
+    "dentcast-plus/video-1"
    ]
   },
   {
@@ -5844,27 +5913,6 @@
    ]
   },
   {
-   "key": "مدیریت_بافت_نرم",
-   "tag": "#مدیریت_بافت_نرم",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "حفظ و شکل‌دهی بافت نرم اطراف ایمپلنت.",
-   "use_when": "مقاله بافت نرم را هدفِ تصمیم بداند، نه صرفاً ذکرش کند.",
-   "aliases": [],
-   "variants": [
-    "#بافت_نرم"
-   ],
-   "co_tags": [
-    "#Soft_Tissue_Management"
-   ],
-   "count": 3,
-   "content_ids": [
-    "episodes/episode-140",
-    "episodes/episode-158",
-    "insight/insight-50"
-   ]
-  },
-  {
    "key": "مدیریت_ریسک",
    "tag": "#مدیریت_ریسک",
    "domain": "clinical",
@@ -6132,25 +6180,6 @@
    ]
   },
   {
-   "key": "پروفایل_امرجنس",
-   "tag": "#پروفایل_امرجنس",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "شکلِ گذرِ رستوریشن از سطح ایمپلنت تا لبه‌ی لثه؛ تعیین‌کننده‌ی فرم و ثبات بافت نرم.",
-   "use_when": "مقاله پروفایل امرجنس را طراحی یا ارزیابی کند.",
-   "aliases": [],
-   "variants": [],
-   "co_tags": [
-    "#Emergence_Profile"
-   ],
-   "count": 3,
-   "content_ids": [
-    "chairside/chairside-10",
-    "episodes/episode-158",
-    "insight/insight-50"
-   ]
-  },
-  {
    "key": "پلی_کریستالین",
    "tag": "#پلی_کریستالین",
    "domain": null,
@@ -6332,6 +6361,29 @@
     "episodes/episode-80",
     "episodes/episode-81",
     "insight/insight-9"
+   ]
+  },
+  {
+   "key": "کتاب_لینکویچیوس",
+   "tag": "#کتاب_لینکویچیوس",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "کتابِ Zero Bone Loss Concepts اثرِ Tomas Linkevicius — مرجعِ حفظِ استخوانِ کرستالِ اطرافِ ایمپلنت.",
+   "use_when": "مقاله فصلی از کتاب لینکویچیوس را مرور کند.",
+   "aliases": [
+    "linkevicius",
+    "لینکویچیوس",
+    "لینکوییسیوس",
+    "کتاب لینکویچیوس",
+    "zero bone loss concepts"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "episodes/episode-110",
+    "episodes/episode-111",
+    "episodes/episode-112"
    ]
   },
   {
@@ -6901,6 +6953,22 @@
    ]
   },
   {
+   "key": "total_occlusal_convergence",
+   "tag": "#total_occlusal_convergence",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "زاویه‌ی همگراییِ کلِ دیواره‌های تراش.",
+   "use_when": "مقاله زاویه‌ی تراش را کمّی کند.",
+   "aliases": [],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-113",
+    "sharehub/share-10"
+   ]
+  },
+  {
    "key": "transformation_toughening",
    "tag": "#Transformation_Toughening",
    "domain": null,
@@ -7119,22 +7187,6 @@
    "content_ids": [
     "litecast/lite-CAST8",
     "litecast/lite-CAST9"
-   ]
-  },
-  {
-   "key": "اصول_تراش",
-   "tag": "#اصول_تراش",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "قواعد حاکم بر تراش: تیپر، ارتفاع، رزیستنس و ریتنشن، خط ختم.",
-   "use_when": "مقاله قاعده‌ای برای تراش بدهد یا آن را ارزیابی کند.",
-   "aliases": [],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "episodes/episode-114",
-    "dentcast-plus/video-1"
    ]
   },
   {
@@ -7985,10 +8037,17 @@
    "tag": "#دندانپزشکی_کودکان",
    "domain": "clinical",
    "words": 2,
-   "definition": "همان دامنه‌ی #اطفال، با واژه‌ی «کودکان».",
-   "use_when": "همیشه همراه #اطفال. این دو هیچ کلمه‌ی مشترکی ندارند و هرکدام درِ جداگانه‌ای هستند.",
-   "aliases": [],
-   "variants": [],
+   "definition": "دندانپزشکیِ کودکان و ملاحظاتِ آن.",
+   "use_when": "مقاله موضوعِ اطفال/کودکان داشته باشد.",
+   "aliases": [
+    "pediatric dentistry",
+    "دندانپزشکی اطفال",
+    "اطفال",
+    "کودکان"
+   ],
+   "variants": [
+    "#اطفال"
+   ],
    "co_tags": [
     "#اطفال"
    ],
@@ -10361,21 +10420,6 @@
    ]
   },
   {
-   "key": "total_occlusal_convergence",
-   "tag": "#total_occlusal_convergence",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "زاویه‌ی همگراییِ کلِ دیواره‌های تراش.",
-   "use_when": "مقاله زاویه‌ی تراش را کمّی کند.",
-   "aliases": [],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "sharehub/share-10"
-   ]
-  },
-  {
    "key": "type2_diabetes",
    "tag": "#Type2_Diabetes",
    "domain": "clinical",
@@ -10858,23 +10902,6 @@
    "count": 1,
    "content_ids": [
     "metanotes/meta-13"
-   ]
-  },
-  {
-   "key": "اطفال",
-   "tag": "#اطفال",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "بیمار کودک و نوجوان؛ ملاحظاتی که از رشد، همکاری و رویش می‌آید.",
-   "use_when": "مقاله تصمیمش را به سنِ رشد گره بزند، نه صرفاً بیمار جوان داشته باشد.",
-   "aliases": [],
-   "variants": [],
-   "co_tags": [
-    "#دندانپزشکی_کودکان"
-   ],
-   "count": 1,
-   "content_ids": [
-    "photocast/episode-3"
    ]
   },
   {
@@ -14022,6 +14049,27 @@
    ]
   },
   {
+   "key": "فیشور_سیلانت",
+   "tag": "#فیشور_سیلانت",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "پوششِ رزینیِ شیارهای اکلوزال برای پیشگیری از پوسیدگی.",
+   "use_when": "مقاله فیشورسیلانت را موضوع یا گزینه‌ی پیشگیری قرار دهد.",
+   "aliases": [
+    "fissure sealant",
+    "سیلانت",
+    "سیلانت تراپی",
+    "شیار پوش",
+    "pit and fissure sealant"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "episodes/episode-111-1"
+   ]
+  },
+  {
    "key": "فیشیال_فلو",
    "tag": "#فیشیال_فلو",
    "domain": "clinical",
@@ -15405,27 +15453,6 @@
    ]
   },
   {
-   "key": "کتاب_لینکویچیوس",
-   "tag": "#کتاب_لینکویچیوس",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "کتابِ Zero Bone Loss Concepts اثرِ Tomas Linkevicius — مرجعِ حفظِ استخوانِ کرستالِ اطرافِ ایمپلنت.",
-   "use_when": "مقاله فصلی از کتاب لینکویچیوس را مرور کند.",
-   "aliases": [
-    "linkevicius",
-    "لینکویچیوس",
-    "لینکوییسیوس",
-    "کتاب لینکویچیوس",
-    "zero bone loss concepts"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "episodes/episode-110"
-   ]
-  },
-  {
    "key": "کدگذاری_هندپیس",
    "tag": "#کدگذاری_هندپیس",
    "domain": "clinical",
@@ -16269,6 +16296,7 @@
   "airborne particle abrasion": "سندبلاست",
   "non functional third molar": "دندان عقل بدون آنتاگونیست",
   "randomized clinical trial": "کارآزمایی تصادفی",
+  "principles of preparation": "اصول تراش",
   "دیواره کمتر از یک میلیمتر": "دیواره نازک",
   "crown during orthodontics": "روکش در ارتو",
   "immediate dentin sealing": "ids",
@@ -16283,17 +16311,18 @@
   "بازگرداندن به لابراتوار": "کنترل کار لابراتوار",
   "peripheral rim fracture": "prf",
   "oxygen inhibition layer": "لایه مهار اکسیژن",
+  "zero bone loss concepts": "کتاب لینکویچیوس",
   "caries removal endpoint": "cre",
   "open gingival embrasure": "بلک تراینگل",
   "functional interference": "تداخل فانکشنال",
   "sequence of preparation": "ترتیب تراش",
   "سیستم پایدار بدون علامت": "سیستم پایدار",
+  "pit and fissure sealant": "فیشور سیلانت",
   "temporomandibular joint": "مفصل فکی",
-  "zero bone loss concepts": "کتاب لینکویچیوس",
   "biomimetic restoration": "ترمیم بیومیمتیک",
-  "overdenture attachment": "اتچمنت اوردنچر",
   "تحلیل استخوان حاشیه ای": "تحلیل استخوان کرستال",
   "تحلیل استخوان مارژینال": "تحلیل استخوان کرستال",
+  "overdenture attachment": "اتچمنت اوردنچر",
   "oxygen inhibited layer": "لایه مهار اکسیژن",
   "extraction and implant": "کشیدن و ایمپلنت",
   "crack removal endpoint": "crre",
@@ -16340,6 +16369,7 @@
   "caries detector dye": "caries detector",
   "محلول تشخیص پوسیدگی": "caries detector",
   "ترنسفورمیشن توفنینگ": "transformation toughening",
+  "pediatric dentistry": "دندانپزشکی کودکان",
   "brand compatibility": "سازگاری برند",
   "multi unit abutment": "مولتی یونیت اباتمنت",
   "crown implant ratio": "نسبت تاج به ایمپلنت",
@@ -16368,8 +16398,8 @@
   "بدون تحلیل استخوان": "zero bone loss",
   "lithium disilicate": "لیتیوم دی سیلیکات",
   "abutment selection": "انتخاب پایه",
-  "زیرکونیا ترنسلوسنت": "نسل زیرکونیا",
   "marginal bone loss": "تحلیل استخوان کرستال",
+  "زیرکونیا ترنسلوسنت": "نسل زیرکونیا",
   "ثبات اولیه ایمپلنت": "ثبات اولیه",
   "implant connection": "کانکشن ایمپلنت",
   "universal adhesive": "یونیورسال باند",
@@ -16449,8 +16479,8 @@
   "biological width": "بیولوژیک ویدث",
   "bonding protocol": "پروتکل باند",
   "cement selection": "انتخاب سمان",
-  "کاهش تنش با زمان": "dwt",
   "استخوان مارژینال": "تحلیل استخوان کرستال",
+  "کاهش تنش با زمان": "dwt",
   "اشتباه لابراتوار": "خطای لابراتوار",
   "loading protocol": "زمان لود ایمپلنت",
   "temporary cement": "سمان موقت",
@@ -16472,6 +16502,7 @@
   "implant survival": "بقای ایمپلنت",
   "قابلیت تمیز کردن": "بهداشت پذیری",
   "drug interaction": "تداخل دارویی",
+  "دندانپزشکی اطفال": "دندانپزشکی کودکان",
   "فاصله بین دندانی": "دیاستم",
   "کاهش درد حین کار": "راحتی بیمار",
   "framework design": "طراحی فریم ورک",
@@ -16590,6 +16621,7 @@
   "palatal ferrule": "فرول پالاتال",
   "از دست رفتن فضا": "فضا کجا رفته",
   "بی دندانی موضعی": "فقدان دندان",
+  "fissure sealant": "فیشور سیلانت",
   "reference tooth": "مرجع آناتومیک",
   "fixed reference": "مرجع ثابت",
   "حذف درجات آزادی": "مرجع ثابت",
@@ -16606,8 +16638,8 @@
   "جینگوال ریترکشن": "کنترل لثه",
   "treatment plan": "طرح درمان",
   "dental ceramic": "سرامیک دندانی",
-  "تحلیل استخوانی": "تحلیل استخوان",
   "طول عمر سرامیک": "دوام ترمیم",
+  "تحلیل استخوانی": "تحلیل استخوان",
   "caries removal": "برداشت پوسیدگی",
   "پیش آگهی دندان": "پروگنوز دندان",
   "باند به سرامیک": "باندینگ سرامیک",
@@ -16731,6 +16763,7 @@
   "glass ionomer": "گلاس آینومر",
   "glass ceramic": "گلاس سرامیک",
   "دی سمانتاسیون": "debonding",
+  "گایدلاین تراش": "اصول تراش",
   "enameloplasty": "اناملوپلاستی",
   "break contact": "باز کردن کانتکت",
   "metal bonding": "باند به فلز",
@@ -16840,11 +16873,11 @@
   "دیزاین لبخند": "طراحی لبخند",
   "آنالیز لبخند": "طراحی لبخند",
   "ارزیابی پایه": "انتخاب پایه",
+  "تحلیل کرستال": "تحلیل استخوان کرستال",
   "چسباندن روکش": "سمان کردن",
   "pascal magne": "کتاب مانیه",
   "پاسکال مانیه": "کتاب مانیه",
   "screw cement": "اسکروسمنت",
-  "تحلیل کرستال": "تحلیل استخوان کرستال",
   "خطای دیجیتال": "خطای لابراتوار",
   "لود زودهنگام": "زمان لود ایمپلنت",
   "سمان آزمایشی": "سمان موقت",
@@ -16926,6 +16959,7 @@
   "صدمین اپیزود": "صدمین قسمت",
   "fresh socket": "فرش ساکت",
   "درگیری فورکا": "فورکا",
+  "سیلانت تراپی": "فیشور سیلانت",
   "localization": "لوکالیزیشن درد",
   "مدیریت ضایعه": "مدیریت پوسیدگی",
   "medico legal": "مسئولیت حرفه ای",
@@ -17012,6 +17046,8 @@
   "ضایعات سفید": "لکه سفید",
   "لایه هیبرید": "هیبرید لیر",
   "الگوی رزینی": "پترن رزین",
+  "linkevicius": "کتاب لینکویچیوس",
+  "لینکوییسیوس": "کتاب لینکویچیوس",
   "ایمپکشن غذا": "گیر غذایی",
   "سی بی سی تی": "cbct",
   "بی او پی تی": "finish zone",
@@ -17079,8 +17115,6 @@
   "کانال چهارم": "کانال میس شده",
   "کانتور مقعر": "کانتور محدب",
   "loss of vdo": "کاهش vdo",
-  "linkevicius": "کتاب لینکویچیوس",
-  "لینکوییسیوس": "کتاب لینکویچیوس",
   "cross mount": "کراس مانت",
   "مانت متقاطع": "کراس مانت",
   "blow drying": "کنترل رطوبت",
@@ -17415,6 +17449,7 @@
   "فرم زینی": "ridge lap",
   "تخمین vd": "vd تخمینی",
   "استیجینگ": "استیج بندی درمان",
+  "goodacre": "اصول تراش",
   "ریشیپینگ": "اناملوپلاستی",
   "باند فلز": "باند به فلز",
   "وایتنینگ": "بلیچینگ",
@@ -17460,6 +17495,7 @@
   "chipping": "شکست سرامیک",
   "شیار عمق": "شیار راهنما",
   "قسمت صدم": "صدمین قسمت",
+  "شیار پوش": "فیشور سیلانت",
   "فضای کار": "مدیریت دسترسی",
   "مرجع فرم": "مرجع آناتومیک",
   "کار تیمی": "مشاوره تیمی",
@@ -17576,6 +17612,7 @@
   "exocad": "لایبرری دیجیتال",
   "10 mdp": "mdp",
   "ریج لپ": "ridge lap",
+  "گودیکر": "اصول تراش",
   "خط ترک": "ترک مینایی",
   "سیگاری": "دخانیات",
   "تنباکو": "دخانیات",
@@ -17629,6 +17666,7 @@
   "aging": "ltd",
   "loupe": "بزرگ نمایی",
   "سیگار": "دخانیات",
+  "اطفال": "دندانپزشکی کودکان",
   "ماکاپ": "موک آپ",
   "موکاپ": "موک آپ",
   "دمینگ": "posterior damming",
@@ -17674,9 +17712,9 @@
   "ios": "اسکنر داخل دهانی",
   "تمپ": "روکش موقت",
   "dsd": "طراحی لبخند",
+  "mbl": "تحلیل استخوان کرستال",
   "fit": "فیت پروتز",
   "دال": "dahl concept",
-  "mbl": "تحلیل استخوان کرستال",
   "opg": "رادیوگرافی تشخیصی",
   "icl": "از دست رفتن کانتکت",
   "isq": "ثبات اولیه",
