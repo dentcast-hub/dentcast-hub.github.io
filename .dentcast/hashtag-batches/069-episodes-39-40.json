@@ -1,0 +1,36 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 69 - episodes 39 and 40. Episode 39 (Black Triangle correction) promotes the glued CamelCase backlog tag #Black_Triangle into a Persian-doored concept #بلک_تراینگل (a Persian site had no reachable door before); the English form folds via a 'black triangle' alias and #Black_Triangle is renamed onto it. Article -> #بلک_تراینگل + #زیبایی + #لمینیت_سرامیکی. Episode 40 (endocrown intro) -> #اندوکراون + #دندان_اندوشده (existing concepts).",
+ "concepts": [
+  {
+   "tag": "#بلک_تراینگل",
+   "domain": "clinical",
+   "definition": "Black Triangle — فضای بازِ مثلثیِ زیرِ کانتکت که پاپیلا آن را پر نمی‌کند و در زیبایی مشکل‌ساز می‌شود.",
+   "use_when": "مقاله بلک تراینگل را تعریف یا اصلاح کند.",
+   "aliases": [
+    "black triangle",
+    "بلک تراینگل",
+    "مثلث سیاه",
+    "فاصله لثه ای",
+    "open gingival embrasure",
+    "امبراژور باز"
+   ]
+  }
+ ],
+ "renames": {
+  "#Black_Triangle": "#بلک_تراینگل"
+ },
+ "articles": {
+  "episodes/episode-39": [
+   "#دنتکست",
+   "#بلک_تراینگل",
+   "#زیبایی",
+   "#لمینیت_سرامیکی"
+  ],
+  "episodes/episode-40": [
+   "#دنتکست",
+   "#اندوکراون",
+   "#دندان_اندوشده"
+  ]
+ }
+}
