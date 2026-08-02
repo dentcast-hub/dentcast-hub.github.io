@@ -24,7 +24,7 @@
    "aliases": [],
    "variants": [],
    "co_tags": [],
-   "count": 92,
+   "count": 96,
    "content_ids": [
     "episodes/episode-1",
     "episodes/episode-2",
@@ -110,6 +110,10 @@
     "episodes/episode-82",
     "episodes/episode-83",
     "episodes/episode-84",
+    "episodes/episode-85",
+    "episodes/episode-86",
+    "episodes/episode-87",
+    "episodes/episode-88",
     "episodes/episode-100",
     "episodes/episode-154",
     "episodes/episode-155",
@@ -586,6 +590,54 @@
    ]
   },
   {
+   "key": "پروتز_ثابت",
+   "tag": "#پروتز_ثابت",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "aliases": [
+    "پروتز فیکس",
+    "fixed prosthesis"
+   ],
+   "variants": [
+    "#Prosthodontics",
+    "#پروتز_دندانی"
+   ],
+   "co_tags": [],
+   "count": 28,
+   "content_ids": [
+    "episodes/episode-87",
+    "episodes/episode-88",
+    "episodes/episode-95",
+    "episodes/episode-106",
+    "episodes/episode-112",
+    "episodes/episode-113",
+    "episodes/episode-121",
+    "episodes/episode-123",
+    "episodes/episode-124",
+    "episodes/episode-126",
+    "episodes/episode-132",
+    "episodes/episode-136",
+    "episodes/episode-147-5",
+    "notecast/episode-14",
+    "notecast/episode-20",
+    "notecast/episode-21",
+    "insight/insight-18",
+    "dentai/dentai-7",
+    "litecast/lite-CAST16",
+    "litecast/lite-CAST17",
+    "litecast/lite-CAST18",
+    "metanotes/meta-9",
+    "insight/insight-24",
+    "insight/insight-25",
+    "insight/insight-29",
+    "insight/insight-34",
+    "insight/insight-49",
+    "insight/insight-54"
+   ]
+  },
+  {
    "key": "دنتوپدیا",
    "tag": "#دنتوپدیا",
    "domain": "brand",
@@ -624,53 +676,6 @@
     "episodes/episode-149-2",
     "episodes/episode-150-1",
     "episodes/episode-159-1"
-   ]
-  },
-  {
-   "key": "پروتز_ثابت",
-   "tag": "#پروتز_ثابت",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "",
-   "use_when": "",
-   "aliases": [
-    "پروتز فیکس",
-    "fixed prosthesis"
-   ],
-   "variants": [
-    "#Prosthodontics",
-    "#پروتز_دندانی"
-   ],
-   "co_tags": [],
-   "count": 27,
-   "content_ids": [
-    "episodes/episode-88",
-    "episodes/episode-95",
-    "episodes/episode-106",
-    "episodes/episode-112",
-    "episodes/episode-113",
-    "episodes/episode-121",
-    "episodes/episode-123",
-    "episodes/episode-124",
-    "episodes/episode-126",
-    "episodes/episode-132",
-    "episodes/episode-136",
-    "episodes/episode-147-5",
-    "notecast/episode-14",
-    "notecast/episode-20",
-    "notecast/episode-21",
-    "insight/insight-18",
-    "dentai/dentai-7",
-    "litecast/lite-CAST16",
-    "litecast/lite-CAST17",
-    "litecast/lite-CAST18",
-    "metanotes/meta-9",
-    "insight/insight-24",
-    "insight/insight-25",
-    "insight/insight-29",
-    "insight/insight-34",
-    "insight/insight-49",
-    "insight/insight-54"
    ]
   },
   {
@@ -1038,7 +1043,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 22,
+   "count": 23,
    "content_ids": [
     "episodes/episode-8",
     "episodes/episode-12",
@@ -1054,6 +1059,7 @@
     "episodes/episode-58",
     "episodes/episode-68",
     "episodes/episode-69",
+    "episodes/episode-87",
     "insight/insight-5",
     "notecast/episode-3",
     "notecast/episode-5",
@@ -2217,9 +2223,14 @@
    "tag": "#TMD",
    "domain": "clinical",
    "words": 1,
-   "definition": "اختلالات مفصل گیجگاهی‌فکی و عضلات ماضغه.",
-   "use_when": "مقاله TMD را در تصمیم دخالت بدهد.",
-   "aliases": [],
+   "definition": "اختلالاتِ گیجگاهی-فکی — طیفِ دردها و ناکارآمدی‌های عضلانی و مفصلیِ سیستمِ فک.",
+   "use_when": "مقاله TMD را تشخیص، افتراق یا درمان کند.",
+   "aliases": [
+    "temporomandibular disorder",
+    "اختلال گیجگاهی فکی",
+    "اختلال مفصل فکی",
+    "تی ام دی"
+   ],
    "variants": [],
    "co_tags": [],
    "count": 8,
@@ -4387,6 +4398,34 @@
    ]
   },
   {
+   "key": "نسل_زیرکونیا",
+   "tag": "#نسل_زیرکونیا",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "نسل‌های زیرکونیا (3Y تا 5Y) — سازشِ میانِ استحکام و شفافیت.",
+   "use_when": "مقاله نسل‌ها یا زیرکونیای ترنسلوسنت را مقایسه یا معرفی کند.",
+   "aliases": [
+    "3Y",
+    "4Y",
+    "5Y",
+    "نسل زیرکونیا",
+    "زیرکونیا ترنسلوسنت",
+    "generation zirconia",
+    "زیرکونیای شفاف",
+    "زیرکونیا شفاف",
+    "translucent zirconia"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "episodes/episode-17",
+    "episodes/episode-18",
+    "episodes/episode-88",
+    "insight/insight-27"
+   ]
+  },
+  {
    "key": "نشست_روکش",
    "tag": "#نشست_روکش",
    "domain": "clinical",
@@ -5763,33 +5802,6 @@
     "episodes/episode-125-2",
     "episodes/episode-150",
     "insight/insight-9"
-   ]
-  },
-  {
-   "key": "نسل_زیرکونیا",
-   "tag": "#نسل_زیرکونیا",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "نسل‌های زیرکونیا (3Y تا 5Y) — سازشِ میانِ استحکام و شفافیت.",
-   "use_when": "مقاله نسل‌ها یا زیرکونیای ترنسلوسنت را مقایسه یا معرفی کند.",
-   "aliases": [
-    "3Y",
-    "4Y",
-    "5Y",
-    "نسل زیرکونیا",
-    "زیرکونیا ترنسلوسنت",
-    "generation zirconia",
-    "زیرکونیای شفاف",
-    "زیرکونیا شفاف",
-    "translucent zirconia"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "episodes/episode-17",
-    "episodes/episode-18",
-    "insight/insight-27"
    ]
   },
   {
@@ -12030,6 +12042,27 @@
    ]
   },
   {
+   "key": "داخل_کپسولی",
+   "tag": "#داخل_کپسولی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "اختلالاتِ داخلِ کپسولِ مفصل — جابه‌جاییِ دیسک، کلیک و قفلِ مفصلی.",
+   "use_when": "مقاله مشکلِ داخل‌کپسولی/دیسک را تشخیص یا مرور کند.",
+   "aliases": [
+    "intracapsular",
+    "جابجایی دیسک",
+    "disc displacement",
+    "کلیک مفصل",
+    "internal derangement"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "episodes/episode-86"
+   ]
+  },
+  {
    "key": "داروشناسی",
    "tag": "#داروشناسی",
    "domain": "clinical",
@@ -12046,6 +12079,26 @@
    "count": 1,
    "content_ids": [
     "episodes/episode-22"
+   ]
+  },
+  {
+   "key": "درد_فکی",
+   "tag": "#درد_فکی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "دردِ ناحیه‌ی فک و صورت — دردِ اوروفاسیال و افتراقِ منشأ آن.",
+   "use_when": "مقاله دردِ فکی/اوروفاسیال را افتراق یا مدیریت کند.",
+   "aliases": [
+    "jaw pain",
+    "درد اوروفاسیال",
+    "orofacial pain",
+    "درد صورت"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "episodes/episode-85"
    ]
   },
   {
@@ -13362,6 +13415,26 @@
    ]
   },
   {
+   "key": "عضلات_ماضغه",
+   "tag": "#عضلات_ماضغه",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "عضلاتِ جونده (ماستر، تمپورالیس، پتریگوئیدها) و دردِ عضلانیِ منشأ گرفته از آن‌ها.",
+   "use_when": "مقاله دردِ عضلانیِ ماضغه را موضوع داشته باشد.",
+   "aliases": [
+    "masticatory muscle",
+    "عضلات جونده",
+    "درد عضلانی ماضغه",
+    "میوژنیک"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "episodes/episode-85"
+   ]
+  },
+  {
    "key": "علت_نامشخص",
    "tag": "#علت_نامشخص",
    "domain": "clinical",
@@ -14085,6 +14158,26 @@
    "count": 1,
    "content_ids": [
     "chairside/chairside-16"
+   ]
+  },
+  {
+   "key": "مفصل_فکی",
+   "tag": "#مفصل_فکی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "مفصلِ گیجگاهی-فکی (TMJ) و ساختارهای داخلِ آن مثل دیسک.",
+   "use_when": "مقاله خودِ مفصل یا اجزای آن را موضوع داشته باشد.",
+   "aliases": [
+    "TMJ",
+    "مفصل گیجگاهی فکی",
+    "temporomandibular joint",
+    "مفصل تمپورومندیبولار"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "episodes/episode-86"
    ]
   },
   {
@@ -15876,6 +15969,7 @@
   "ceramic surface preparation": "آماده سازی سرامیک",
   "low temperature degradation": "ltd",
   "radiographic interpretation": "تفسیر رادیوگرافی",
+  "temporomandibular disorder": "tmd",
   "interproximal contact loss": "از دست رفتن کانتکت",
   "airborne particle abrasion": "سندبلاست",
   "non functional third molar": "دندان عقل بدون آنتاگونیست",
@@ -15898,6 +15992,7 @@
   "functional interference": "تداخل فانکشنال",
   "sequence of preparation": "ترتیب تراش",
   "سیستم پایدار بدون علامت": "سیستم پایدار",
+  "temporomandibular joint": "مفصل فکی",
   "overdenture attachment": "اتچمنت اوردنچر",
   "biomimetic restoration": "ترمیم بیومیمتیک",
   "تحلیل استخوان حاشیه ای": "تحلیل استخوان کرستال",
@@ -15932,21 +16027,23 @@
   "tooth implant bridge": "بریج دندان ایمپلنت",
   "vertical preparation": "تراش عمودی",
   "lab processing error": "خطای ساخت",
+  "internal derangement": "داخل کپسولی",
   "ترمیم کامپوزیت قدیمی": "ریپیر کامپوزیت",
   "هماهنگی صورت و لبخند": "فیشیال فلو",
   "large language model": "مدل زبانی بزرگ",
+  "مفصل تمپورومندیبولار": "مفصل فکی",
   "angled screw channel": "کانال پیچ زاویه دار",
   "mechanical retention": "گیر مکانیکی",
   "monolithic zirconia": "زیرکونیا مونولیتیک",
   "انتخاب اباتمنت پایه": "انتخاب پایه",
   "generation zirconia": "نسل زیرکونیا",
+  "پیچ اباتمنت ایمپلنت": "پیچ اباتمنت",
   "caries detector dye": "caries detector",
   "محلول تشخیص پوسیدگی": "caries detector",
   "ترنسفورمیشن توفنینگ": "transformation toughening",
   "root dentin bonding": "باند به عاج ریشه",
   "brand compatibility": "سازگاری برند",
   "crown implant ratio": "نسبت تاج به ایمپلنت",
-  "پیچ اباتمنت ایمپلنت": "پیچ اباتمنت",
   "اکستراکشن و ایمپلنت": "کشیدن و ایمپلنت",
   "snow plow technique": "snow plow",
   "non vital bleaching": "اینترنال بلیچینگ",
@@ -15968,6 +16065,7 @@
   "دندونپزشکی دیجیتال": "دندانپزشکی دیجیتال",
   "رستوریشن غیرمستقیم": "ترمیم غیرمستقیم",
   "digital impression": "قالب گیری دیجیتال",
+  "اختلال گیجگاهی فکی": "tmd",
   "lithium disilicate": "لیتیوم دی سیلیکات",
   "abutment selection": "انتخاب پایه",
   "marginal bone loss": "تحلیل استخوان کرستال",
@@ -15986,6 +16084,7 @@
   "internal bleaching": "اینترنال بلیچینگ",
   "resin infiltration": "رزین اینفیلتریشن",
   "staged cementation": "سمان مرحله ای",
+  "masticatory muscle": "عضلات ماضغه",
   "erosive tooth wear": "فرسایش دندان",
   "hydraulic pressure": "فشار هیدرولیک",
   "قابل رویت در لبخند": "ناحیه لبخند",
@@ -16023,6 +16122,7 @@
   "staging abutments": "ترتیب ساخت اباتمنت",
   "crown replacement": "تعویض روکش",
   "خواندن رادیوگرافی": "تفسیر رادیوگرافی",
+  "disc displacement": "داخل کپسولی",
   "رادیوگرافی کنترلی": "رادیوگرافی کنترل",
   "definitive cement": "سمان دائم",
   "secondary failure": "شکست ثانویه",
@@ -16099,9 +16199,11 @@
   "سمان روی ایمپلنت": "سمان ایمپلنت",
   "permanent cement": "سمان دائم",
   "ceramic fracture": "شکست سرامیک",
+  "درد عضلانی ماضغه": "عضلات ماضغه",
   "unclear etiology": "علت نامشخص",
   "edentulous space": "فضای بی دندان",
   "attached gingiva": "لثه کراتینیزه",
+  "مفصل گیجگاهی فکی": "مفصل فکی",
   "load to fracture": "مقاومت به شکست",
   "mandibular molar": "مولر مندیبل",
   "ارگونومی کلینیکی": "نظم کلینیکی",
@@ -16113,6 +16215,7 @@
   "تغییرات استخوان": "تحلیل استخوان",
   "ترمیم کامپوزیتی": "کامپوزیت",
   "برداشتن پوسیدگی": "برداشت پوسیدگی",
+  "اختلال مفصل فکی": "tmd",
   "ceramic etching": "اچ سرامیک",
   "temporary crown": "روکش موقت",
   "ceramic bonding": "باندینگ سرامیک",
@@ -16199,16 +16302,17 @@
   "سمان کردن روکش": "سمان کردن",
   "اسنپ آن اسمایل": "snap on smile",
   "posterior stop": "استاپ خلفی",
+  "تورک بیش از حد": "تورک پیچ",
   "immediate load": "زمان لود ایمپلنت",
   "رویش بیش از حد": "سوپرااراپشن",
   "باز شدن کانتکت": "از دست رفتن کانتکت",
   "etch and rinse": "اچ اند رینس",
   "خارج کردن روکش": "برداشت ترمیم",
   "باز کردن ترمیم": "برداشت ترمیم",
-  "تورک بیش از حد": "تورک پیچ",
   "تغییرات اسکلتی": "رشد فک",
   "زیرکونیای شفاف": "نسل زیرکونیا",
   "پلی کریستالاین": "پلی کریستالین",
+  "abutment screw": "پیچ اباتمنت",
   "universal bond": "یونیورسال باند",
   "باند یونیورسال": "یونیورسال باند",
   "شکست لبه محیطی": "prf",
@@ -16225,7 +16329,6 @@
   "mock up driven": "موک آپ",
   "میدلاین پروتزی": "میدلاین",
   "proprioception": "پروپریوسپشن",
-  "abutment screw": "پیچ اباتمنت",
   "food impaction": "گیر غذایی",
   "مسدود کردن تری": "posterior damming",
   "screw retained": "اتصال پیچ شونده",
@@ -16246,6 +16349,8 @@
   "خطای اسکن بادی": "خطای داده",
   "ایمپرشن اشتباه": "خطای قالبگیری",
   "پیست کنارزننده": "خمیر کنارزننده",
+  "درد اوروفاسیال": "درد فکی",
+  "orofacial pain": "درد فکی",
   "abutment tooth": "دندان پایه",
   "چک رادیوگرافیک": "رادیوگرافی کنترل",
   "تعمیر کامپوزیت": "ریپیر کامپوزیت",
@@ -16299,6 +16404,7 @@
   "esthetic zone": "ناحیه زیبایی",
   "زیرکونیا شفاف": "نسل زیرکونیا",
   "پوسیدگی ثانوی": "پوسیدگی ثانویه",
+  "اسکرو اباتمنت": "پیچ اباتمنت",
   "اتصال ایمپلنت": "کانکشن ایمپلنت",
   "glass ionomer": "گلاس آینومر",
   "glass ceramic": "گلاس سرامیک",
@@ -16319,7 +16425,6 @@
   "دیکانتامینیشن": "پاکسازی سرامیک",
   "pattern resin": "پترن رزین",
   "آگاهی اکلوزال": "پروپریوسپشن",
-  "اسکرو اباتمنت": "پیچ اباتمنت",
   "کاربن اکلوزال": "کاغذ آرتیکولاسیون",
   "کست پرینت شده": "کست پرینتی",
   "depth control": "کنترل عمق",
@@ -16350,6 +16455,7 @@
   "روش سمان کردن": "تکنیک سمان",
   "پوزیشن فیکسچر": "جایگذاری ایمپلنت",
   "حرکت پیشگرایی": "حرکت پروتروزیو",
+  "intracapsular": "داخل کپسولی",
   "access cavity": "دسترسی کانال",
   "supernumerary": "دندان اضافه",
   "ساپورت دندانی": "دندان پایه",
@@ -16476,6 +16582,7 @@
   "حرکات لترالی": "حرکات اکسکورسیو",
   "خطای لایبرری": "خطای داده",
   "خمیر ریترکشن": "خمیر کنارزننده",
+  "جابجایی دیسک": "داخل کپسولی",
   "pharmacology": "داروشناسی",
   "تشخیص با حذف": "درمان از طریق تفریق",
   "عقل بی مقابل": "دندان عقل بدون آنتاگونیست",
@@ -16536,6 +16643,7 @@
   "ساپورت خلفی": "استاپ خلفی",
   "ایزوله کردن": "ایزولاسیون",
   "subgingival": "ترمیم ساب جینجیوال",
+  "over torque": "تورک پیچ",
   "ایمیدیت لود": "زمان لود ایمپلنت",
   "سوپرا اراپت": "سوپرااراپشن",
   "مارژین دقیق": "مارجین روکش",
@@ -16543,7 +16651,6 @@
   "overcontour": "اورکانتور",
   "برداشت روکش": "برداشت ترمیم",
   "اورال هایژن": "بهداشت دهان",
-  "over torque": "تورک پیچ",
   "risk factor": "ریسک فاکتور",
   "سایش دندانی": "سایش آنتاگونیست",
   "لق شدن روکش": "شل شدن پیچ",
@@ -16609,6 +16716,7 @@
   "شک به دندان": "شک به پرپ",
   "شکست تاخیری": "شکست ثانویه",
   "فرم دهی لثه": "شکل دهی بافت",
+  "عضلات جونده": "عضلات ماضغه",
   "glass phase": "فاز گلاس",
   "فاز شیشه ای": "فاز گلاس",
   "ارزیابی فضا": "فضای ارتودنسی",
@@ -16860,6 +16968,7 @@
   "excursive": "حرکات اکسکورسیو",
   "خطای دیتا": "خطای داده",
   "خطای قالب": "خطای قالبگیری",
+  "کلیک مفصل": "داخل کپسولی",
   "حذف متغیر": "درمان از طریق تفریق",
   "clenching": "دندان قروچه",
   "deep bite": "دیپ بایت",
@@ -16918,6 +17027,7 @@
   "فایبرپست": "فایبر پست",
   "trueness": "دقت اسکن",
   "صحت اسکن": "دقت اسکن",
+  "تی ام دی": "tmd",
   "دی ام ای": "dme",
   "آی دی اس": "ids",
   "اکسترکشن": "کشیدن دندان",
@@ -16986,6 +17096,8 @@
   "bitewing": "تفسیر رادیوگرافی",
   "sequence": "توالی باند",
   "قفل ذهنی": "تونل ویژن",
+  "jaw pain": "درد فکی",
+  "درد صورت": "درد فکی",
   "grinding": "دندان قروچه",
   "کلینچینگ": "دندان قروچه",
   "گگ رفلکس": "رفلکس گگ",
@@ -17064,6 +17176,7 @@
   "c shape": "سی شیپ",
   "دپث کات": "شیار راهنما",
   "شیمستاک": "شیم استاک",
+  "میوژنیک": "عضلات ماضغه",
   "erosion": "فرسایش دندان",
   "آرچ فرم": "فرم قوس",
   "فورکیشن": "فورکا",
@@ -17089,12 +17202,12 @@
   "silane": "سایلان",
   "misfit": "فیت پروتز",
   "رابردم": "ایزولاسیون",
+  "torque": "تورک پیچ",
   "مارژین": "مارجین روکش",
   "margin": "مارجین روکش",
   "میلینگ": "cad cam",
   "شفافیت": "ترانسلوسنسی",
   "اپسیتی": "ترانسلوسنسی",
-  "torque": "تورک پیچ",
   "dentin": "عاج",
   "exocad": "لایبرری دیجیتال",
   "10 mdp": "mdp",
@@ -17208,6 +17321,7 @@
   "لوپ": "بزرگ نمایی",
   "بقا": "بقای رستوریشن",
   "بیس": "لاینر",
+  "tmj": "مفصل فکی",
   "mua": "مولتی یونیت اباتمنت",
   "hex": "هگز ایمپلنت",
   "asc": "کانال پیچ زاویه دار",
