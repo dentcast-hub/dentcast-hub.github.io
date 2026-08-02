@@ -393,6 +393,52 @@
    ]
   },
   {
+   "key": "دنتکست",
+   "tag": "#دنتکست",
+   "domain": "brand",
+   "words": 1,
+   "definition": "نام خودِ پادکست.",
+   "use_when": "تگِ سریِ پوشه‌ی episodes: روی هر اپیزودِ صوتیِ دنتکست؛ و روی مدخل‌هایی که خودِ دنتکست موضوعشان است.",
+   "aliases": [],
+   "variants": [],
+   "co_tags": [],
+   "count": 32,
+   "content_ids": [
+    "episodes/episode-1",
+    "episodes/episode-2",
+    "episodes/episode-3",
+    "episodes/episode-4",
+    "episodes/episode-5",
+    "episodes/episode-6",
+    "episodes/episode-7",
+    "episodes/episode-8",
+    "episodes/episode-9",
+    "episodes/episode-10",
+    "episodes/episode-11",
+    "episodes/episode-12",
+    "episodes/episode-13",
+    "episodes/episode-14",
+    "episodes/episode-15",
+    "episodes/episode-16",
+    "episodes/episode-17",
+    "episodes/episode-18",
+    "episodes/episode-19",
+    "episodes/episode-20",
+    "episodes/episode-21",
+    "episodes/episode-22",
+    "episodes/episode-23",
+    "episodes/episode-24",
+    "episodes/episode-100",
+    "episodes/episode-154",
+    "episodes/episode-155",
+    "episodes/episode-156",
+    "episodes/episode-157",
+    "episodes/episode-158",
+    "episodes/episode-159",
+    "episodes/episode-160"
+   ]
+  },
+  {
    "key": "پروتز_ایمپلنت",
    "tag": "#پروتز_ایمپلنت",
    "domain": "clinical",
@@ -868,6 +914,47 @@
    ]
   },
   {
+   "key": "طرح_درمان",
+   "tag": "#طرح_درمان",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "انتخاب مسیر درمان در سطح کل کیس.",
+   "use_when": "مقاله بین مسیرهای درمانی تصمیم بگیرد.",
+   "aliases": [
+    "treatment plan",
+    "پلن درمان",
+    "پلن درمانی",
+    "تریتمنت پلن"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 22,
+   "content_ids": [
+    "episodes/episode-14",
+    "episodes/episode-116",
+    "episodes/episode-119-1",
+    "episodes/episode-120",
+    "episodes/episode-123-5",
+    "episodes/episode-124",
+    "episodes/episode-150-2",
+    "insight/insight-13",
+    "insight/insight-14",
+    "insight/insight-19",
+    "sharehub/share-5",
+    "chairside/chairside-6",
+    "chairside/chairside-11",
+    "episodes/episode-156",
+    "insight/insight-38",
+    "chairside/chairside-19",
+    "chairside/chairside-20",
+    "chairside/chairside-21",
+    "chairside/chairside-22",
+    "episodes/episode-160",
+    "chairside/chairside-24",
+    "chairside/chairside-26"
+   ]
+  },
+  {
    "key": "پست_و_کور",
    "tag": "#پست_و_کور",
    "domain": "clinical",
@@ -946,80 +1033,6 @@
     "notecast/episode-32",
     "notecast/episode-33",
     "insight/insight-46"
-   ]
-  },
-  {
-   "key": "طرح_درمان",
-   "tag": "#طرح_درمان",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "انتخاب مسیر درمان در سطح کل کیس.",
-   "use_when": "مقاله بین مسیرهای درمانی تصمیم بگیرد.",
-   "aliases": [
-    "treatment plan",
-    "پلن درمان",
-    "پلن درمانی",
-    "تریتمنت پلن"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 21,
-   "content_ids": [
-    "episodes/episode-116",
-    "episodes/episode-119-1",
-    "episodes/episode-120",
-    "episodes/episode-123-5",
-    "episodes/episode-124",
-    "episodes/episode-150-2",
-    "insight/insight-13",
-    "insight/insight-14",
-    "insight/insight-19",
-    "sharehub/share-5",
-    "chairside/chairside-6",
-    "chairside/chairside-11",
-    "episodes/episode-156",
-    "insight/insight-38",
-    "chairside/chairside-19",
-    "chairside/chairside-20",
-    "chairside/chairside-21",
-    "chairside/chairside-22",
-    "episodes/episode-160",
-    "chairside/chairside-24",
-    "chairside/chairside-26"
-   ]
-  },
-  {
-   "key": "دنتکست",
-   "tag": "#دنتکست",
-   "domain": "brand",
-   "words": 1,
-   "definition": "نام خودِ پادکست.",
-   "use_when": "تگِ سریِ پوشه‌ی episodes: روی هر اپیزودِ صوتیِ دنتکست؛ و روی مدخل‌هایی که خودِ دنتکست موضوعشان است.",
-   "aliases": [],
-   "variants": [],
-   "co_tags": [],
-   "count": 20,
-   "content_ids": [
-    "episodes/episode-1",
-    "episodes/episode-2",
-    "episodes/episode-3",
-    "episodes/episode-4",
-    "episodes/episode-5",
-    "episodes/episode-6",
-    "episodes/episode-7",
-    "episodes/episode-8",
-    "episodes/episode-9",
-    "episodes/episode-10",
-    "episodes/episode-11",
-    "episodes/episode-12",
-    "episodes/episode-100",
-    "episodes/episode-154",
-    "episodes/episode-155",
-    "episodes/episode-156",
-    "episodes/episode-157",
-    "episodes/episode-158",
-    "episodes/episode-159",
-    "episodes/episode-160"
    ]
   },
   {
@@ -1162,6 +1175,38 @@
    ]
   },
   {
+   "key": "سمان_رزینی",
+   "tag": "#سمان_رزینی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "aliases": [
+    "resin cement",
+    "سمان رزین"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 15,
+   "content_ids": [
+    "episodes/episode-3",
+    "episodes/episode-11",
+    "episodes/episode-19",
+    "episodes/episode-43",
+    "episodes/episode-148",
+    "insight/insight-5",
+    "notecast/episode-3",
+    "notecast/episode-6",
+    "notecast/episode-7",
+    "notecast/episode-11",
+    "notecast/episode-16",
+    "notecast/episode-19",
+    "insight/insight-36",
+    "dentai/dentai-27",
+    "insight/insight-59"
+   ]
+  },
+  {
    "key": "ادهزیو",
    "tag": "#ادهزیو",
    "domain": "clinical",
@@ -1225,37 +1270,6 @@
    ]
   },
   {
-   "key": "سمان_رزینی",
-   "tag": "#سمان_رزینی",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "",
-   "use_when": "",
-   "aliases": [
-    "resin cement",
-    "سمان رزین"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 14,
-   "content_ids": [
-    "episodes/episode-3",
-    "episodes/episode-11",
-    "episodes/episode-43",
-    "episodes/episode-148",
-    "insight/insight-5",
-    "notecast/episode-3",
-    "notecast/episode-6",
-    "notecast/episode-7",
-    "notecast/episode-11",
-    "notecast/episode-16",
-    "notecast/episode-19",
-    "insight/insight-36",
-    "dentai/dentai-27",
-    "insight/insight-59"
-   ]
-  },
-  {
    "key": "فرول",
    "tag": "#فرول",
    "domain": "clinical",
@@ -1314,6 +1328,65 @@
    ]
   },
   {
+   "key": "انتخاب_متریال",
+   "tag": "#انتخاب_متریال",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "انتخاب جنس رستوریشن بر اساس شرایط کیس.",
+   "use_when": "مقاله بین متریال‌ها انتخاب کند.",
+   "aliases": [],
+   "variants": [],
+   "co_tags": [],
+   "count": 13,
+   "content_ids": [
+    "episodes/episode-15",
+    "episodes/episode-18",
+    "episodes/episode-141",
+    "dentai/dentai-6",
+    "insight/insight-10",
+    "notecast/episode-8",
+    "notecast/episode-29",
+    "notecast/episode-30",
+    "insight/insight-27",
+    "insight/insight-42",
+    "episodes/episode-158",
+    "episodes/episode-159-1",
+    "insight/insight-57"
+   ]
+  },
+  {
+   "key": "ترمیم_غیرمستقیم",
+   "tag": "#ترمیم_غیرمستقیم",
+   "domain": null,
+   "words": 2,
+   "definition": "رستوریشنی که بیرون دهان ساخته و بعد باند می‌شود.",
+   "use_when": "مقاله بین مستقیم و غیرمستقیم انتخاب کند.",
+   "aliases": [
+    "indirect restoration",
+    "رستوریشن غیرمستقیم",
+    "اینله",
+    "inlay"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 13,
+   "content_ids": [
+    "episodes/episode-6",
+    "episodes/episode-7",
+    "episodes/episode-9",
+    "episodes/episode-15",
+    "episodes/episode-122",
+    "episodes/episode-137",
+    "notecast/episode-6",
+    "notecast/episode-7",
+    "notecast/episode-8",
+    "notecast/episode-11",
+    "notecast/episode-15",
+    "notecast/episode-18",
+    "episodes/episode-159-1"
+   ]
+  },
+  {
    "key": "تشخیص_افتراقی",
    "tag": "#تشخیص_افتراقی",
    "domain": "clinical",
@@ -1341,34 +1414,63 @@
    ]
   },
   {
-   "key": "ترمیم_غیرمستقیم",
-   "tag": "#ترمیم_غیرمستقیم",
-   "domain": null,
+   "key": "بعد_عمودی",
+   "tag": "#بعد_عمودی",
+   "domain": "clinical",
    "words": 2,
-   "definition": "رستوریشنی که بیرون دهان ساخته و بعد باند می‌شود.",
-   "use_when": "مقاله بین مستقیم و غیرمستقیم انتخاب کند.",
+   "definition": "Vertical Dimension — ارتفاع عمودی صورت در اکلوژن؛ متغیری که تغییرش کل بازسازی را جابه‌جا می‌کند.",
+   "use_when": "مقاله بعد عمودی را بسنجد، تغییر بدهد، یا درباره‌ی تغییرش تصمیم بگیرد.",
+   "aliases": [],
+   "variants": [],
+   "co_tags": [
+    "#Vertical_Dimension",
+    "#VDO"
+   ],
+   "count": 12,
+   "content_ids": [
+    "episodes/episode-14",
+    "insight/insight-2",
+    "insight/insight-6",
+    "insight/insight-12",
+    "notecast/episode-14",
+    "episodes/episode-154",
+    "episodes/episode-155",
+    "insight/insight-43",
+    "notecast/episode-34",
+    "notecast/episode-35",
+    "insight/insight-51",
+    "insight/insight-60"
+   ]
+  },
+  {
+   "key": "تحلیل_استخوان",
+   "tag": "#تحلیل_استخوان",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "از دست رفتنِ استخوانِ اطرافِ دندان یا ایمپلنت.",
+   "use_when": "مقاله تحلیل استخوان را پیامد یا معیار قرار دهد.",
    "aliases": [
-    "indirect restoration",
-    "رستوریشن غیرمستقیم",
-    "اینله",
-    "inlay"
+    "bone loss",
+    "تحلیل استخوانی",
+    "استخوان",
+    "تغییرات استخوان"
    ],
    "variants": [],
    "co_tags": [],
    "count": 12,
    "content_ids": [
-    "episodes/episode-6",
-    "episodes/episode-7",
-    "episodes/episode-9",
-    "episodes/episode-122",
-    "episodes/episode-137",
-    "notecast/episode-6",
-    "notecast/episode-7",
-    "notecast/episode-8",
-    "notecast/episode-11",
-    "notecast/episode-15",
-    "notecast/episode-18",
-    "episodes/episode-159-1"
+    "episodes/episode-23",
+    "episodes/episode-24",
+    "episodes/episode-59",
+    "episodes/episode-110",
+    "episodes/episode-111",
+    "episodes/episode-130",
+    "litecast/lite-CAST3",
+    "litecast/lite-CAST4",
+    "notecast/episode-23",
+    "notecast/episode-24",
+    "metanotes/meta-4",
+    "chairside/chairside-14"
    ]
   },
   {
@@ -1453,31 +1555,6 @@
    ]
   },
   {
-   "key": "انتخاب_متریال",
-   "tag": "#انتخاب_متریال",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "انتخاب جنس رستوریشن بر اساس شرایط کیس.",
-   "use_when": "مقاله بین متریال‌ها انتخاب کند.",
-   "aliases": [],
-   "variants": [],
-   "co_tags": [],
-   "count": 11,
-   "content_ids": [
-    "episodes/episode-141",
-    "dentai/dentai-6",
-    "insight/insight-10",
-    "notecast/episode-8",
-    "notecast/episode-29",
-    "notecast/episode-30",
-    "insight/insight-27",
-    "insight/insight-42",
-    "episodes/episode-158",
-    "episodes/episode-159-1",
-    "insight/insight-57"
-   ]
-  },
-  {
    "key": "اوردنچر",
    "tag": "#اوردنچر",
    "domain": "clinical",
@@ -1507,34 +1584,6 @@
    ]
   },
   {
-   "key": "بعد_عمودی",
-   "tag": "#بعد_عمودی",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "Vertical Dimension — ارتفاع عمودی صورت در اکلوژن؛ متغیری که تغییرش کل بازسازی را جابه‌جا می‌کند.",
-   "use_when": "مقاله بعد عمودی را بسنجد، تغییر بدهد، یا درباره‌ی تغییرش تصمیم بگیرد.",
-   "aliases": [],
-   "variants": [],
-   "co_tags": [
-    "#Vertical_Dimension",
-    "#VDO"
-   ],
-   "count": 11,
-   "content_ids": [
-    "insight/insight-2",
-    "insight/insight-6",
-    "insight/insight-12",
-    "notecast/episode-14",
-    "episodes/episode-154",
-    "episodes/episode-155",
-    "insight/insight-43",
-    "notecast/episode-34",
-    "notecast/episode-35",
-    "insight/insight-51",
-    "insight/insight-60"
-   ]
-  },
-  {
    "key": "llm",
    "tag": "#LLM",
    "domain": "ai",
@@ -1558,33 +1607,6 @@
     "dentai/promptologist/prompt4-1",
     "dentai/promptologist/prompt4-2",
     "dentai/dentai-28"
-   ]
-  },
-  {
-   "key": "تحلیل_استخوان",
-   "tag": "#تحلیل_استخوان",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "",
-   "use_when": "",
-   "aliases": [
-    "bone loss",
-    "تحلیل استخوانی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 10,
-   "content_ids": [
-    "episodes/episode-59",
-    "episodes/episode-110",
-    "episodes/episode-111",
-    "episodes/episode-130",
-    "litecast/lite-CAST3",
-    "litecast/lite-CAST4",
-    "notecast/episode-23",
-    "notecast/episode-24",
-    "metanotes/meta-4",
-    "chairside/chairside-14"
    ]
   },
   {
@@ -1903,7 +1925,7 @@
    "key": "قالب_گیری_دیجیتال",
    "tag": "#قالب‌گیری_دیجیتال",
    "domain": "clinical",
-   "words": 3,
+   "words": 2,
    "definition": "ثبتِ دیجیتالِ آرچ با اسکنر، به‌جای قالب سنتی.",
    "use_when": "مقاله دقت یا پروتکلِ ثبت دیجیتال را بررسی کند.",
    "aliases": [
@@ -2022,6 +2044,34 @@
    ]
   },
   {
+   "key": "آنله",
+   "tag": "#آنله",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "ترمیمِ پوششیِ کاسپ، بدون روکشِ کامل.",
+   "use_when": "مقاله آنله را انتخاب یا ارزیابی کند.",
+   "aliases": [
+    "onlay",
+    "آنلی",
+    "انله",
+    "انلی",
+    "آنله سرامیکی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 8,
+   "content_ids": [
+    "episodes/episode-15",
+    "episodes/episode-123-3",
+    "episodes/episode-137",
+    "notecast/episode-15",
+    "insight/insight-39",
+    "dentai/dentai-25",
+    "episodes/episode-159-1",
+    "metanotes/meta-14"
+   ]
+  },
+  {
    "key": "اسکنر_داخل_دهانی",
    "tag": "#اسکنر_داخل_دهانی",
    "domain": "clinical",
@@ -2045,6 +2095,34 @@
     "insight/insight-40",
     "dentai/dentai-21",
     "metanotes/meta-16"
+   ]
+  },
+  {
+   "key": "اچ_سرامیک",
+   "tag": "#اچ_سرامیک",
+   "domain": null,
+   "words": 2,
+   "definition": "اچ کردنِ سطح سرامیک با هیدروفلوریک.",
+   "use_when": "مقاله پروتکل اچ سرامیک را تعیین کند.",
+   "aliases": [
+    "HF",
+    "هیدروفلوریک",
+    "hydrofluoric",
+    "اچ HF",
+    "ceramic etching"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 8,
+   "content_ids": [
+    "episodes/episode-10",
+    "episodes/episode-16",
+    "notecast/episode-9",
+    "notecast/episode-10",
+    "notecast/episode-12",
+    "notecast/episode-16",
+    "notecast/episode-29",
+    "insight/insight-42"
    ]
   },
   {
@@ -2181,30 +2259,24 @@
    ]
   },
   {
-   "key": "آنله",
-   "tag": "#آنله",
+   "key": "افزایش_vd",
+   "tag": "#افزایش_VD",
    "domain": "clinical",
-   "words": 1,
-   "definition": "ترمیمِ پوششیِ کاسپ، بدون روکشِ کامل.",
-   "use_when": "مقاله آنله را انتخاب یا ارزیابی کند.",
-   "aliases": [
-    "onlay",
-    "آنلی",
-    "انله",
-    "انلی",
-    "آنله سرامیکی"
-   ],
+   "words": 2,
+   "definition": "بالا بردن بعد عمودی — تصمیمی که فضا می‌سازد و همزمان ریسک می‌آورد.",
+   "use_when": "مقاله درباره‌ی خودِ افزایش VD تصمیم بگیرد: اندیکاسیون، مقدار، یا ریسک.",
+   "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 7,
    "content_ids": [
-    "episodes/episode-123-3",
-    "episodes/episode-137",
-    "notecast/episode-15",
-    "insight/insight-39",
-    "dentai/dentai-25",
-    "episodes/episode-159-1",
-    "metanotes/meta-14"
+    "episodes/episode-14",
+    "insight/insight-12",
+    "notecast/episode-14",
+    "episodes/episode-154",
+    "episodes/episode-155",
+    "insight/insight-43",
+    "notecast/episode-35"
    ]
   },
   {
@@ -2229,33 +2301,6 @@
     "dentai/dentai-25",
     "episodes/episode-159-1",
     "metanotes/meta-14"
-   ]
-  },
-  {
-   "key": "اچ_سرامیک",
-   "tag": "#اچ_سرامیک",
-   "domain": null,
-   "words": 2,
-   "definition": "اچ کردنِ سطح سرامیک با هیدروفلوریک.",
-   "use_when": "مقاله پروتکل اچ سرامیک را تعیین کند.",
-   "aliases": [
-    "HF",
-    "هیدروفلوریک",
-    "hydrofluoric",
-    "اچ HF",
-    "ceramic etching"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 7,
-   "content_ids": [
-    "episodes/episode-10",
-    "notecast/episode-9",
-    "notecast/episode-10",
-    "notecast/episode-12",
-    "notecast/episode-16",
-    "notecast/episode-29",
-    "insight/insight-42"
    ]
   },
   {
@@ -2301,6 +2346,57 @@
    ]
   },
   {
+   "key": "دوام_ترمیم",
+   "tag": "#دوام_ترمیم",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "دوامِ بلندمدتِ ترمیم و عواملی که آن را تعیین می‌کنند.",
+   "use_when": "مقاله بقا یا طولِ عمرِ ترمیم را بسنجد.",
+   "aliases": [
+    "دوام ترمیم",
+    "طول عمر سرامیک",
+    "دوام بلندمدت"
+   ],
+   "variants": [
+    "#بقای_ترمیم"
+   ],
+   "co_tags": [],
+   "count": 7,
+   "content_ids": [
+    "episodes/episode-15",
+    "dentai/dentai-5",
+    "notecast/episode-15",
+    "dentai/dentai-22",
+    "dentai/dentai-25",
+    "episodes/episode-159-1",
+    "metanotes/meta-14"
+   ]
+  },
+  {
+   "key": "زیبایی_قدامی",
+   "tag": "#زیبایی_قدامی",
+   "domain": null,
+   "words": 2,
+   "definition": "نتیجه‌ی زیبایی در ناحیه‌ی قدام.",
+   "use_when": "مقاله تصمیمش را بر معیار زیبایی قدام بنا کند.",
+   "aliases": [
+    "استتیک قدامی",
+    "زیبایی قدام"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 7,
+   "content_ids": [
+    "episodes/episode-13",
+    "notecast/episode-28",
+    "chairside/chairside-1",
+    "insight/insight-28",
+    "chairside/chairside-8",
+    "chairside/chairside-16",
+    "insight/insight-55"
+   ]
+  },
+  {
    "key": "فایبر_پست",
    "tag": "#فایبر_پست",
    "domain": "clinical",
@@ -2326,9 +2422,13 @@
    "tag": "#قالبگیری",
    "domain": "clinical",
    "words": 1,
-   "definition": "",
-   "use_when": "",
-   "aliases": [],
+   "definition": "ثبتِ وضعیتِ دهان برای ساختِ کار — چترِ عامِ قالب‌گیری.",
+   "use_when": "همراه تگ مشخص‌ترِ تکنیک بیاید، نه به‌تنهایی.",
+   "aliases": [
+    "impression",
+    "ایمپرشن",
+    "قالب گیری"
+   ],
    "variants": [],
    "co_tags": [],
    "count": 7,
@@ -2469,26 +2569,6 @@
    ]
   },
   {
-   "key": "افزایش_vd",
-   "tag": "#افزایش_VD",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "بالا بردن بعد عمودی — تصمیمی که فضا می‌سازد و همزمان ریسک می‌آورد.",
-   "use_when": "مقاله درباره‌ی خودِ افزایش VD تصمیم بگیرد: اندیکاسیون، مقدار، یا ریسک.",
-   "aliases": [],
-   "variants": [],
-   "co_tags": [],
-   "count": 6,
-   "content_ids": [
-    "insight/insight-12",
-    "notecast/episode-14",
-    "episodes/episode-154",
-    "episodes/episode-155",
-    "insight/insight-43",
-    "notecast/episode-35"
-   ]
-  },
-  {
    "key": "باندینگ_سرامیک",
    "tag": "#باندینگ_سرامیک",
    "domain": "clinical",
@@ -2557,48 +2637,27 @@
    ]
   },
   {
-   "key": "دوام_ترمیم",
-   "tag": "#دوام_ترمیم",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "طول عمر بالینیِ ترمیم و آنچه آن را تعیین می‌کند.",
-   "use_when": "مقاله بقا یا شکست ترمیم را در طول زمان بررسی کند.",
-   "aliases": [],
-   "variants": [
-    "#بقای_ترمیم"
-   ],
-   "co_tags": [],
-   "count": 6,
-   "content_ids": [
-    "dentai/dentai-5",
-    "notecast/episode-15",
-    "dentai/dentai-22",
-    "dentai/dentai-25",
-    "episodes/episode-159-1",
-    "metanotes/meta-14"
-   ]
-  },
-  {
-   "key": "زیبایی_قدامی",
-   "tag": "#زیبایی_قدامی",
+   "key": "سایلان",
+   "tag": "#سایلان",
    "domain": null,
-   "words": 2,
-   "definition": "نتیجه‌ی زیبایی در ناحیه‌ی قدام.",
-   "use_when": "مقاله تصمیمش را بر معیار زیبایی قدام بنا کند.",
+   "words": 1,
+   "definition": "عاملِ جفت‌کننده‌ی بین سرامیک و رزین.",
+   "use_when": "مقاله نقش یا پروتکلِ سایلان را شرح دهد.",
    "aliases": [
-    "استتیک قدامی",
-    "زیبایی قدام"
+    "silane",
+    "سیلان",
+    "silane coupling"
    ],
    "variants": [],
    "co_tags": [],
    "count": 6,
    "content_ids": [
-    "notecast/episode-28",
-    "chairside/chairside-1",
-    "insight/insight-28",
-    "chairside/chairside-8",
-    "chairside/chairside-16",
-    "insight/insight-55"
+    "episodes/episode-10",
+    "episodes/episode-16",
+    "notecast/episode-10",
+    "notecast/episode-12",
+    "notecast/episode-16",
+    "insight/insight-42"
    ]
   },
   {
@@ -2784,6 +2843,25 @@
     "episodes/episode-106",
     "insight/insight-10",
     "insight/insight-31"
+   ]
+  },
+  {
+   "key": "vdo",
+   "tag": "#VDO",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "سرنامِ Vertical Dimension of Occlusion.",
+   "use_when": "همراه #بعد_عمودی — درِ ورودیِ سرنامی همان مفهوم.",
+   "aliases": [],
+   "variants": [],
+   "co_tags": [],
+   "count": 5,
+   "content_ids": [
+    "episodes/episode-14",
+    "insight/insight-6",
+    "insight/insight-12",
+    "episodes/episode-154",
+    "episodes/episode-155"
    ]
   },
   {
@@ -3028,29 +3106,6 @@
     "dentcast-plus/video-1",
     "notecast/episode-13",
     "insight/insight-25"
-   ]
-  },
-  {
-   "key": "سایلان",
-   "tag": "#سایلان",
-   "domain": null,
-   "words": 1,
-   "definition": "عاملِ جفت‌کننده‌ی بین سرامیک و رزین.",
-   "use_when": "مقاله نقش یا پروتکلِ سایلان را شرح دهد.",
-   "aliases": [
-    "silane",
-    "سیلان",
-    "silane coupling"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 5,
-   "content_ids": [
-    "episodes/episode-10",
-    "notecast/episode-10",
-    "notecast/episode-12",
-    "notecast/episode-16",
-    "insight/insight-42"
    ]
   },
   {
@@ -3337,21 +3392,44 @@
    ]
   },
   {
-   "key": "vdo",
-   "tag": "#VDO",
+   "key": "vd",
+   "tag": "#VD",
    "domain": "clinical",
    "words": 1,
-   "definition": "سرنامِ Vertical Dimension of Occlusion.",
-   "use_when": "همراه #بعد_عمودی — درِ ورودیِ سرنامی همان مفهوم.",
+   "definition": "سرنامِ کوتاه‌ترِ Vertical Dimension.",
+   "use_when": "همراه #بعد_عمودی.",
    "aliases": [],
    "variants": [],
    "co_tags": [],
    "count": 4,
    "content_ids": [
-    "insight/insight-6",
-    "insight/insight-12",
+    "episodes/episode-14",
+    "notecast/episode-14",
     "episodes/episode-154",
     "episodes/episode-155"
+   ]
+  },
+  {
+   "key": "آماده_سازی_سرامیک",
+   "tag": "#آماده_سازی_سرامیک",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "آماده‌سازیِ سطحِ سرامیک پیش از باند — اچ، سندبلاست، سایلان — بسته به جنسِ سرامیک.",
+   "use_when": "مقاله پروتکلِ آماده‌سازی سطح سرامیک را آموزش یا مقایسه کند.",
+   "aliases": [
+    "آماده سازی سرامیک",
+    "surface treatment",
+    "ceramic surface preparation",
+    "آماده سازی سطح سرامیک"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "episodes/episode-9",
+    "episodes/episode-10",
+    "episodes/episode-11",
+    "episodes/episode-16"
    ]
   },
   {
@@ -3804,6 +3882,28 @@
    ]
   },
   {
+   "key": "قدرت_باند",
+   "tag": "#قدرت_باند",
+   "domain": null,
+   "words": 2,
+   "definition": "استحکام اتصال رزین به بافت دندان.",
+   "use_when": "مقاله قدرت باند را بسنجد یا مقایسه کند.",
+   "aliases": [
+    "bond strength",
+    "استحکام باند",
+    "تنسایل باند"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "episodes/episode-16",
+    "dentai/dentai-4",
+    "insight/insight-4",
+    "dentai/dentai-16"
+   ]
+  },
+  {
    "key": "مارجین_روکش",
    "tag": "#مارجین_روکش",
    "domain": "clinical",
@@ -4162,23 +4262,6 @@
    ]
   },
   {
-   "key": "vd",
-   "tag": "#VD",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "سرنامِ کوتاه‌ترِ Vertical Dimension.",
-   "use_when": "همراه #بعد_عمودی.",
-   "aliases": [],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "notecast/episode-14",
-    "episodes/episode-154",
-    "episodes/episode-155"
-   ]
-  },
-  {
    "key": "vertical_dimension",
    "tag": "#Vertical_Dimension",
    "domain": "clinical",
@@ -4197,28 +4280,6 @@
     "notecast/episode-14",
     "episodes/episode-154",
     "episodes/episode-155"
-   ]
-  },
-  {
-   "key": "آماده_سازی_سرامیک",
-   "tag": "#آماده_سازی_سرامیک",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "آماده‌سازیِ سطحِ سرامیک پیش از باند — اچ، سندبلاست، سایلان — بسته به جنسِ سرامیک.",
-   "use_when": "مقاله پروتکلِ آماده‌سازی سطح سرامیک را آموزش یا مقایسه کند.",
-   "aliases": [
-    "آماده سازی سرامیک",
-    "surface treatment",
-    "ceramic surface preparation",
-    "آماده سازی سطح سرامیک"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "episodes/episode-9",
-    "episodes/episode-10",
-    "episodes/episode-11"
    ]
   },
   {
@@ -4549,6 +4610,28 @@
     "metanotes/meta-4",
     "metanotes/meta-5",
     "metanotes/meta-14"
+   ]
+  },
+  {
+   "key": "ترانسلوسنسی",
+   "tag": "#ترانسلوسنسی",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "میزانِ عبورِ نور از رستوریشن.",
+   "use_when": "مقاله ترانسلوسنسی را عاملِ نتیجه‌ی رنگی بداند.",
+   "aliases": [
+    "translucency",
+    "شفافیت",
+    "اپسیتی",
+    "opacity"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "episodes/episode-17",
+    "episodes/episode-18",
+    "insight/insight-5"
    ]
   },
   {
@@ -4946,6 +5029,28 @@
    ]
   },
   {
+   "key": "طراحی_روکش",
+   "tag": "#طراحی_روکش",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "طراحیِ فرم و کانتورِ تاج در نرم‌افزار یا لابراتوار.",
+   "use_when": "مقاله فرمِ طراحی‌شده را موضوعِ تصمیم قرار دهد.",
+   "aliases": [
+    "crown design",
+    "دیزاین روکش",
+    "طراحی تاج",
+    "design تاج"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "episodes/episode-13",
+    "insight/insight-33",
+    "insight/insight-53"
+   ]
+  },
+  {
    "key": "عاج",
    "tag": "#عاج",
    "domain": null,
@@ -5038,24 +5143,25 @@
    ]
   },
   {
-   "key": "قدرت_باند",
-   "tag": "#قدرت_باند",
+   "key": "قالبگیری_دو_مرحله_ای",
+   "tag": "#قالبگیری_دو_مرحله_ای",
    "domain": null,
-   "words": 2,
-   "definition": "استحکام اتصال رزین به بافت دندان.",
-   "use_when": "مقاله قدرت باند را بسنجد یا مقایسه کند.",
+   "words": 4,
+   "definition": "تکنیک پوتی-واش دومرحله‌ای.",
+   "use_when": "مقاله همین تکنیک را شرح دهد.",
    "aliases": [
-    "bond strength",
-    "استحکام باند",
-    "تنسایل باند"
+    "dual step impression",
+    "two step",
+    "پوتی واش",
+    "دو مرحله ای"
    ],
    "variants": [],
    "co_tags": [],
    "count": 3,
    "content_ids": [
-    "dentai/dentai-4",
-    "insight/insight-4",
-    "dentai/dentai-16"
+    "episodes/episode-20",
+    "episodes/episode-21",
+    "notecast/episode-21"
    ]
   },
   {
@@ -5180,6 +5286,33 @@
     "episodes/episode-125-2",
     "episodes/episode-150",
     "insight/insight-9"
+   ]
+  },
+  {
+   "key": "نسل_زیرکونیا",
+   "tag": "#نسل_زیرکونیا",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "نسل‌های زیرکونیا (3Y تا 5Y) — سازشِ میانِ استحکام و شفافیت.",
+   "use_when": "مقاله نسل‌ها یا زیرکونیای ترنسلوسنت را مقایسه یا معرفی کند.",
+   "aliases": [
+    "3Y",
+    "4Y",
+    "5Y",
+    "نسل زیرکونیا",
+    "زیرکونیا ترنسلوسنت",
+    "generation zirconia",
+    "زیرکونیای شفاف",
+    "زیرکونیا شفاف",
+    "translucent zirconia"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "episodes/episode-17",
+    "episodes/episode-18",
+    "insight/insight-27"
    ]
   },
   {
@@ -6325,6 +6458,28 @@
    ]
   },
   {
+   "key": "اثر_چتر",
+   "tag": "#اثر_چتر",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "Umbrella Effect — سایه‌ی لب روی دندان‌ها و لثه که ادراکِ رنگ و تیرگی را عوض می‌کند.",
+   "use_when": "مقاله umbrella effect را در استدلال زیبایی به‌کار گیرد.",
+   "aliases": [
+    "umbrella effect",
+    "اثر امبرلا",
+    "تیرگی لثه",
+    "آمبرلا افکت",
+    "امبرلا افکت"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-13",
+    "notecast/episode-13"
+   ]
+  },
+  {
    "key": "اجزای_ایمپلنت",
    "tag": "#اجزای_ایمپلنت",
    "domain": "clinical",
@@ -6338,22 +6493,6 @@
    "content_ids": [
     "litecast/lite-CAST17",
     "litecast/lite-CAST18"
-   ]
-  },
-  {
-   "key": "استخوان",
-   "tag": "#استخوان",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "",
-   "use_when": "",
-   "aliases": [],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "episodes/episode-23",
-    "episodes/episode-26"
    ]
   },
   {
@@ -6536,6 +6675,26 @@
    "content_ids": [
     "metanotes/meta-7",
     "metanotes/meta-15"
+   ]
+  },
+  {
+   "key": "اورلود_اکلوزالی",
+   "tag": "#اورلود_اکلوزالی",
+   "domain": null,
+   "words": 2,
+   "definition": "بارِ اکلوزالیِ بیش از تحملِ سیستم.",
+   "use_when": "مقاله اورلود را علتِ تحلیل یا شکست بداند.",
+   "aliases": [
+    "occlusal overload",
+    "اورلود",
+    "بار اکلوزالی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-23",
+    "notecast/episode-23"
    ]
   },
   {
@@ -6790,6 +6949,26 @@
    "content_ids": [
     "insight/insight-8",
     "insight/insight-56"
+   ]
+  },
+  {
+   "key": "تداخل_دارویی",
+   "tag": "#تداخل_دارویی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "تداخلِ بینِ داروها که اثر یا ایمنیِ درمان را تغییر می‌دهد.",
+   "use_when": "مقاله تداخل مشخصی را تحلیل یا فهرست کند.",
+   "aliases": [
+    "drug interaction",
+    "تداخل دارو",
+    "تداخل داروها"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-22",
+    "notecast/episode-22"
    ]
   },
   {
@@ -7610,27 +7789,6 @@
    ]
   },
   {
-   "key": "طراحی_روکش",
-   "tag": "#طراحی_روکش",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "طراحیِ فرم و کانتورِ تاج در نرم‌افزار یا لابراتوار.",
-   "use_when": "مقاله فرمِ طراحی‌شده را موضوعِ تصمیم قرار دهد.",
-   "aliases": [
-    "crown design",
-    "دیزاین روکش",
-    "طراحی تاج",
-    "design تاج"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "insight/insight-33",
-    "insight/insight-53"
-   ]
-  },
-  {
    "key": "طراحی_فریم_ورک",
    "tag": "#طراحی_فریم_ورک",
    "domain": null,
@@ -7685,6 +7843,27 @@
    "content_ids": [
     "insight/insight-8",
     "chairside/chairside-3"
+   ]
+  },
+  {
+   "key": "فاز_زیرکونیا",
+   "tag": "#فاز_زیرکونیا",
+   "domain": null,
+   "words": 2,
+   "definition": "فازهای بلوریِ زیرکونیا و اثرشان بر استحکام و شفافیت.",
+   "use_when": "مقاله ترکیبِ فازی را عاملِ رفتار بداند.",
+   "aliases": [
+    "tetragonal",
+    "فاز تتراگونال",
+    "فاز مکعبی",
+    "cubic phase"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-17",
+    "notecast/episode-17"
    ]
   },
   {
@@ -7890,6 +8069,28 @@
    ]
   },
   {
+   "key": "نسبت_تاج_به_ایمپلنت",
+   "tag": "#نسبت_تاج_به_ایمپلنت",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "نسبتِ ارتفاعِ تاج به طولِ ایمپلنت و اثرش بر اهرمِ نیرو و تحلیلِ استخوان.",
+   "use_when": "مقاله C/I ratio را متغیرِ تصمیم یا ریسک بداند.",
+   "aliases": [
+    "crown implant ratio",
+    "C/I ratio",
+    "نسبت تاج ایمپلنت",
+    "CIR",
+    "نسبت تاج به ایمپلنت"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-24",
+    "notecast/episode-24"
+   ]
+  },
+  {
    "key": "نسبت_تاج_به_ریشه",
    "tag": "#نسبت_تاج_به_ریشه",
    "domain": "clinical",
@@ -7903,6 +8104,25 @@
    "content_ids": [
     "insight/insight-55",
     "metanotes/meta-18"
+   ]
+  },
+  {
+   "key": "نسخه_نویسی",
+   "tag": "#نسخه_نویسی",
+   "domain": null,
+   "words": 2,
+   "definition": "تجویزِ دارو در مطب دندانپزشکی.",
+   "use_when": "مقاله اصولِ تجویز را بگوید.",
+   "aliases": [
+    "prescription",
+    "تجویز دارو"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-22",
+    "notecast/episode-22"
    ]
   },
   {
@@ -8022,6 +8242,26 @@
    "content_ids": [
     "episodes/episode-12",
     "notecast/episode-12"
+   ]
+  },
+  {
+   "key": "پایداری_رنگ",
+   "tag": "#پایداری_رنگ",
+   "domain": null,
+   "words": 2,
+   "definition": "مقاومتِ رنگِ رستوریشن در طول زمان.",
+   "use_when": "مقاله تغییر رنگ را بسنجد.",
+   "aliases": [
+    "color stability",
+    "ثبات رنگ",
+    "تغییر رنگ"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-19",
+    "notecast/episode-19"
    ]
   },
   {
@@ -9781,25 +10021,6 @@
    ]
   },
   {
-   "key": "اثر_چتر",
-   "tag": "#اثر_چتر",
-   "domain": null,
-   "words": 2,
-   "definition": "دیده شدنِ تیرگیِ زیرین از لبه‌ی لثه.",
-   "use_when": "مقاله این پدیده را تشخیص یا رفع کند.",
-   "aliases": [
-    "umbrella effect",
-    "اثر امبرلا",
-    "تیرگی لثه"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "notecast/episode-13"
-   ]
-  },
-  {
    "key": "ادراک_بصری",
    "tag": "#ادراک_بصری",
    "domain": "clinical",
@@ -9943,6 +10164,41 @@
    "count": 1,
    "content_ids": [
     "insight/insight-21"
+   ]
+  },
+  {
+   "key": "استتیک_ویدث",
+   "tag": "#استتیک_ویدث",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "Esthetic Width — پهنای نمایانِ دندان در لبخند که طراحیِ روکش قدامی باید حفظش کند.",
+   "use_when": "مقاله esthetic width را تعریف یا در طراحی به‌کار گیرد.",
+   "aliases": [
+    "esthetic width",
+    "استتیک ویدث",
+    "عرض استتیک",
+    "اسثتیک ویدث"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "episodes/episode-13"
+   ]
+  },
+  {
+   "key": "استخوان",
+   "tag": "#استخوان",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "aliases": [],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "episodes/episode-26"
    ]
   },
   {
@@ -10179,25 +10435,6 @@
    "count": 1,
    "content_ids": [
     "photocast/episode-3"
-   ]
-  },
-  {
-   "key": "اورلود_اکلوزالی",
-   "tag": "#اورلود_اکلوزالی",
-   "domain": null,
-   "words": 2,
-   "definition": "بارِ اکلوزالیِ بیش از تحملِ سیستم.",
-   "use_when": "مقاله اورلود را علتِ تحلیل یا شکست بداند.",
-   "aliases": [
-    "occlusal overload",
-    "اورلود",
-    "بار اکلوزالی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "notecast/episode-23"
    ]
   },
   {
@@ -10898,24 +11135,6 @@
    ]
   },
   {
-   "key": "تداخل_دارویی",
-   "tag": "#تداخل_دارویی",
-   "domain": null,
-   "words": 2,
-   "definition": "برهم‌کنشِ داروها با درمان دندانپزشکی.",
-   "use_when": "مقاله یک تداخل مشخص را هشدار بدهد.",
-   "aliases": [
-    "drug interaction",
-    "تداخل دارو"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "notecast/episode-22"
-   ]
-  },
-  {
    "key": "تداخل_فانکشنال",
    "tag": "#تداخل_فانکشنال",
    "domain": "clinical",
@@ -10973,26 +11192,6 @@
    "count": 1,
    "content_ids": [
     "insight/insight-18"
-   ]
-  },
-  {
-   "key": "ترانسلوسنسی",
-   "tag": "#ترانسلوسنسی",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "میزانِ عبورِ نور از رستوریشن.",
-   "use_when": "مقاله ترانسلوسنسی را عاملِ نتیجه‌ی رنگی بداند.",
-   "aliases": [
-    "translucency",
-    "شفافیت",
-    "اپسیتی",
-    "opacity"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "insight/insight-5"
    ]
   },
   {
@@ -11568,6 +11767,25 @@
    "count": 1,
    "content_ids": [
     "insight/insight-40"
+   ]
+  },
+  {
+   "key": "داروشناسی",
+   "tag": "#داروشناسی",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "داروشناسیِ کاربردی برای دندانپزشک — اثر، عارضه و ملاحظاتِ تجویز.",
+   "use_when": "مقاله استدلالِ دارویی داشته باشد، نه صرفاً نامِ یک دارو.",
+   "aliases": [
+    "فارماکولوژی",
+    "pharmacology",
+    "دارو"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "episodes/episode-22"
    ]
   },
   {
@@ -12955,26 +13173,6 @@
    ]
   },
   {
-   "key": "فاز_زیرکونیا",
-   "tag": "#فاز_زیرکونیا",
-   "domain": null,
-   "words": 2,
-   "definition": "فازهای بلوریِ زیرکونیا و اثرشان بر استحکام و شفافیت.",
-   "use_when": "مقاله ترکیبِ فازی را عاملِ رفتار بداند.",
-   "aliases": [
-    "tetragonal",
-    "فاز تتراگونال",
-    "فاز مکعبی",
-    "cubic phase"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "notecast/episode-17"
-   ]
-  },
-  {
    "key": "فاز_گلاس",
    "tag": "#فاز_گلاس",
    "domain": "clinical",
@@ -13281,26 +13479,6 @@
    "count": 1,
    "content_ids": [
     "dentai/dentai-6"
-   ]
-  },
-  {
-   "key": "قالبگیری_دو_مرحله_ای",
-   "tag": "#قالبگیری_دو_مرحله_ای",
-   "domain": null,
-   "words": 4,
-   "definition": "تکنیک پوتی-واش دومرحله‌ای.",
-   "use_when": "مقاله همین تکنیک را شرح دهد.",
-   "aliases": [
-    "dual step impression",
-    "two step",
-    "پوتی واش",
-    "دو مرحله ای"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "notecast/episode-21"
    ]
   },
   {
@@ -13842,43 +14020,6 @@
    ]
   },
   {
-   "key": "نسبت_تاج_به_ایمپلنت",
-   "tag": "#نسبت_تاج_به_ایمپلنت",
-   "domain": null,
-   "words": 3,
-   "definition": "C/I ratio — نسبتِ اهرمیِ تاج به فیکسچر.",
-   "use_when": "مقاله این نسبت را معیار بداند.",
-   "aliases": [
-    "crown implant ratio",
-    "C/I ratio",
-    "نسبت تاج ایمپلنت"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "notecast/episode-24"
-   ]
-  },
-  {
-   "key": "نسخه_نویسی",
-   "tag": "#نسخه_نویسی",
-   "domain": null,
-   "words": 2,
-   "definition": "تجویزِ دارو در مطب دندانپزشکی.",
-   "use_when": "مقاله اصولِ تجویز را بگوید.",
-   "aliases": [
-    "prescription",
-    "تجویز دارو"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "notecast/episode-22"
-   ]
-  },
-  {
    "key": "نسل_باندینگ",
    "tag": "#نسل_باندینگ",
    "domain": "clinical",
@@ -13897,28 +14038,6 @@
    "count": 1,
    "content_ids": [
     "episodes/episode-4"
-   ]
-  },
-  {
-   "key": "نسل_زیرکونیا",
-   "tag": "#نسل_زیرکونیا",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "3Y در برابر 4Y و 5Y — معاوضه‌ی استحکام با ترانسلوسنسی و مقاومت به LTD.",
-   "use_when": "مقاله بین نسل‌های زیرکونیا انتخاب کند.",
-   "aliases": [
-    "3Y",
-    "4Y",
-    "5Y",
-    "نسل زیرکونیا",
-    "زیرکونیا ترنسلوسنت",
-    "generation zirconia"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "insight/insight-27"
    ]
   },
   {
@@ -14260,22 +14379,22 @@
    ]
   },
   {
-   "key": "پایداری_رنگ",
-   "tag": "#پایداری_رنگ",
-   "domain": null,
-   "words": 2,
-   "definition": "مقاومتِ رنگِ رستوریشن در طول زمان.",
-   "use_when": "مقاله تغییر رنگ را بسنجد.",
+   "key": "پرسلن",
+   "tag": "#پرسلن",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "پرسلنِ دندانی — سرامیکِ شیشه‌ایِ کلاسیک که با HF اچ و سایلانیزه می‌شود.",
+   "use_when": "مقاله رفتار یا آماده‌سازی پرسلن را مشخصاً موضوع داشته باشد.",
    "aliases": [
-    "color stability",
-    "ثبات رنگ",
-    "تغییر رنگ"
+    "porcelain",
+    "پرسلین",
+    "پرسلان"
    ],
    "variants": [],
    "co_tags": [],
    "count": 1,
    "content_ids": [
-    "notecast/episode-19"
+    "episodes/episode-16"
    ]
   },
   {
@@ -15504,8 +15623,8 @@
   "basic erosive wear examination": "bewe",
   "endodontically treated teeth": "دندان اندوشده",
   "non carious cervical lesion": "nccl",
-  "low temperature degradation": "ltd",
   "ceramic surface preparation": "آماده سازی سرامیک",
+  "low temperature degradation": "ltd",
   "radiographic interpretation": "تفسیر رادیوگرافی",
   "interproximal contact loss": "از دست رفتن کانتکت",
   "airborne particle abrasion": "سندبلاست",
@@ -15547,6 +15666,8 @@
   "روکش های به هم چسبیده": "روکش اسپلینت",
   "alleman deliperi rule": "قانون آلمان دلیپری",
   "indirect restoration": "ترمیم غیرمستقیم",
+  "dual step impression": "قالبگیری دو مرحله ای",
+  "translucent zirconia": "نسل زیرکونیا",
   "peripheral seal zone": "psz",
   "adhesive restoration": "ترمیم ادهزیو",
   "resin matrix ceramic": "سرامیک هیبرید",
@@ -15558,12 +15679,12 @@
   "vertical preparation": "تراش عمودی",
   "lab processing error": "خطای ساخت",
   "self adhesive cement": "سمان سلف ادهزیو",
-  "dual step impression": "قالبگیری دو مرحله ای",
   "large language model": "مدل زبانی بزرگ",
   "angled screw channel": "کانال پیچ زاویه دار",
   "mechanical retention": "گیر مکانیکی",
   "monolithic zirconia": "زیرکونیا مونولیتیک",
   "انتخاب اباتمنت پایه": "انتخاب پایه",
+  "generation zirconia": "نسل زیرکونیا",
   "caries detector dye": "caries detector",
   "محلول تشخیص پوسیدگی": "caries detector",
   "ترنسفورمیشن توفنینگ": "transformation toughening",
@@ -15586,13 +15707,13 @@
   "multi unit abutment": "مولتی یونیت اباتمنت",
   "crown implant ratio": "نسبت تاج به ایمپلنت",
   "bonding generations": "نسل باندینگ",
-  "generation zirconia": "نسل زیرکونیا",
   "interocclusal space": "کمبود فضای عمودی",
   "gingival retraction": "کنترل لثه",
   "دندونپزشکی دیجیتال": "دندانپزشکی دیجیتال",
   "رستوریشن غیرمستقیم": "ترمیم غیرمستقیم",
   "digital impression": "قالب گیری دیجیتال",
   "abutment selection": "انتخاب پایه",
+  "زیرکونیا ترنسلوسنت": "نسل زیرکونیا",
   "universal adhesive": "یونیورسال باند",
   "ثبات اولیه ایمپلنت": "ثبات اولیه",
   "sinus augmentation": "سینوس لیفت",
@@ -15609,7 +15730,6 @@
   "erosive tooth wear": "فرسایش دندان",
   "hydraulic pressure": "فشار هیدرولیک",
   "قابل رویت در لبخند": "ناحیه لبخند",
-  "زیرکونیا ترنسلوسنت": "نسل زیرکونیا",
   "failure prediction": "پیش بینی شکست",
   "زمان به عنوان داده": "پیگیری زمانی",
   "flowable composite": "کامپوزیت فلو",
@@ -15623,12 +15743,12 @@
   "دیپ مارژین الویشن": "dme",
   "systematic review": "متاآنالیز",
   "crown lengthening": "افزایش طول تاج",
+  "surface treatment": "آماده سازی سرامیک",
   "interdisciplinary": "درمان بین رشته ای",
   "دندان عصب کشی شده": "دندان اندوشده",
   "universal bonding": "یونیورسال باند",
   "باندینگ یونیورسال": "یونیورسال باند",
   "چقرمگی تحول یافته": "transformation toughening",
-  "surface treatment": "آماده سازی سرامیک",
   "برجستگی بیش از حد": "اورکانتور",
   "removal technique": "تکنیک خارج سازی",
   "primary stability": "ثبات اولیه",
@@ -15676,11 +15796,14 @@
   "مرحله بندی درمان": "استیج بندی درمان",
   "implant survival": "بقای ایمپلنت",
   "قابلیت تمیز کردن": "بهداشت پذیری",
+  "drug interaction": "تداخل دارویی",
   "بیومیمتیک ترمیمی": "ترمیم بیومیمتیک",
   "insertion torque": "ثبات اولیه",
   "فاصله بین دندانی": "دیاستم",
   "کاهش درد حین کار": "راحتی بیمار",
   "framework design": "طراحی فریم ورک",
+  "دی کانتامیناسیون": "پاکسازی سرامیک",
+  "تمیز کردن سرامیک": "پاکسازی سرامیک",
   "اینترنال ایمپلنت": "کانکشن ایمپلنت",
   "3d printed model": "کست پرینتی",
   "کشیدن و جایگزینی": "کشیدن و ایمپلنت",
@@ -15693,7 +15816,6 @@
   "ریزورپشن سرویکال": "تحلیل سرویکال",
   "تحلیل گردن دندان": "تحلیل سرویکال",
   "تخریب وسیع داخلی": "تخریب داخلی",
-  "drug interaction": "تداخل دارویی",
   "کوتاه کردن مقابل": "تراش آنتاگونیست",
   "ترتیب آماده سازی": "ترتیب تراش",
   "اصلاح آنتاگونیست": "تعدیل آنتاگونیست",
@@ -15718,19 +15840,18 @@
   "نسبت تاج ایمپلنت": "نسبت تاج به ایمپلنت",
   "ارگونومی کلینیکی": "نظم کلینیکی",
   "composite veneer": "ونیر کامپوزیت",
-  "دی کانتامیناسیون": "پاکسازی سرامیک",
-  "تمیز کردن سرامیک": "پاکسازی سرامیک",
   "recurrent caries": "پوسیدگی عودکننده",
   "افت ارتفاع عمودی": "کاهش vdo",
   "moisture control": "کنترل رطوبت",
   "بیلدآپ کامپوزیتی": "کور کامپوزیتی",
+  "تغییرات استخوان": "تحلیل استخوان",
   "ترمیم کامپوزیتی": "کامپوزیت",
-  "temporary crown": "روکش موقت",
   "ceramic etching": "اچ سرامیک",
-  "برداشتن پوسیدگی": "برداشت پوسیدگی",
-  "خارج کردن دندان": "کشیدن دندان",
+  "temporary crown": "روکش موقت",
   "ceramic bonding": "باندینگ سرامیک",
+  "برداشتن پوسیدگی": "برداشت پوسیدگی",
   "silane coupling": "سایلان",
+  "خارج کردن دندان": "کشیدن دندان",
   "پرسلن فلدسپاتیک": "فلدسپاتیک",
   "عدم پذیرش بیمار": "شروع نکردن درمان",
   "کانتور رستوریشن": "کانتور ترمیم",
@@ -15741,6 +15862,7 @@
   "لایبرری ایمپلنت": "لایبرری دیجیتال",
   "کنترل لابراتوار": "کنترل کار لابراتوار",
   "چک قبل از تحویل": "کنترل کار لابراتوار",
+  "umbrella effect": "اثر چتر",
   "shade selection": "انتخاب shade",
   "endodontic test": "تست اندو",
   "stitching error": "خطای استیچینگ",
@@ -15749,6 +15871,8 @@
   "زینک فسفات سمان": "زینک فسفات",
   "ناسازگاری قطعات": "سازگاری برند",
   "نیروی زاویه دار": "نیروی مایل",
+  "decontamination": "پاکسازی سرامیک",
+  "color stability": "پایداری رنگ",
   "partial denture": "پروتز پارسیل",
   "پارسیل دفینیتیو": "پروتز پارسیل",
   "polycrystalline": "پلی کریستالین",
@@ -15758,7 +15882,6 @@
   "implant abscess": "آبسه ایمپلنت",
   "آگاهی به اکلوژن": "آگاهی اکلوزال",
   "angled abutment": "اباتمنت زاویه دار",
-  "umbrella effect": "اثر چتر",
   "برداشتن ایمپلنت": "اکسپلنت ایمپلنت",
   "جدا کردن کانتکت": "باز کردن کانتکت",
   "limited opening": "بازشدن محدود دهان",
@@ -15787,19 +15910,18 @@
   "نسل های باندینگ": "نسل باندینگ",
   "غیرقابل نگهداری": "هپلس",
   "polish vs glaze": "پالیش یا گلیز",
-  "decontamination": "پاکسازی سرامیک",
-  "color stability": "پایداری رنگ",
   "residual caries": "پوسیدگی جامانده",
   "کانال پیدا نشده": "کانال میس شده",
   "جینگوال ریترکشن": "کنترل لثه",
   "treatment plan": "طرح درمان",
   "dental ceramic": "سرامیک دندانی",
   "تحلیل استخوانی": "تحلیل استخوان",
+  "طول عمر سرامیک": "دوام ترمیم",
   "پیش آگهی دندان": "پروگنوز دندان",
+  "باند به سرامیک": "باندینگ سرامیک",
   "caries removal": "برداشت پوسیدگی",
   "مرور سیستماتیک": "متاآنالیز",
   "پروتکل باندینگ": "پروتکل باند",
-  "باند به سرامیک": "باندینگ سرامیک",
   "سمان کردن روکش": "سمان کردن",
   "اسنپ آن اسمایل": "snap on smile",
   "posterior stop": "استاپ خلفی",
@@ -15812,6 +15934,7 @@
   "فاصله بیولوژیک": "بیولوژیک ویدث",
   "تورک بیش از حد": "تورک پیچ",
   "دندان اندو شده": "دندان اندوشده",
+  "زیرکونیای شفاف": "نسل زیرکونیا",
   "universal bond": "یونیورسال باند",
   "باند یونیورسال": "یونیورسال باند",
   "شکست لبه محیطی": "prf",
@@ -15832,6 +15955,7 @@
   "مسدود کردن تری": "posterior damming",
   "screw retained": "اتصال پیچ شونده",
   "temporary stop": "استاپ موقت",
+  "esthetic width": "استتیک ویدث",
   "استدلال بالینی": "استدلال تشخیصی",
   "case selection": "انتخاب بیمار",
   "angled implant": "ایمپلنت زاویه دار",
@@ -15884,13 +16008,14 @@
   "ضایعه سرویکال": "nccl",
   "resin coating": "رزین کوتینگ",
   "supraeruption": "سوپرااراپشن",
+  "bond strength": "قدرت باند",
   "مرجین سرامیکی": "مارجین روکش",
   "اسئواینتگریشن": "استئواینتگریشن",
   "فضای امبراژور": "امبراژور",
   "برداشتن ترمیم": "برداشت ترمیم",
   "سیستم ایمپلنت": "برند ایمپلنت",
-  "bond strength": "قدرت باند",
   "esthetic zone": "ناحیه زیبایی",
+  "زیرکونیا شفاف": "نسل زیرکونیا",
   "پوسیدگی ثانوی": "پوسیدگی ثانویه",
   "glass ionomer": "گلاس آینومر",
   "glass ceramic": "گلاس سرامیک",
@@ -15907,6 +16032,9 @@
   "referred pain": "درد ارجاعی",
   "درد ارجاع شده": "درد ارجاعی",
   "هیبرید سرامیک": "سرامیک هیبرید",
+  "فاز تتراگونال": "فاز زیرکونیا",
+  "آلودگی سرامیک": "پاکسازی سرامیک",
+  "دیکانتامینیشن": "پاکسازی سرامیک",
   "pattern resin": "پترن رزین",
   "آگاهی اکلوزال": "پروپریوسپشن",
   "اسکرو اباتمنت": "پیچ اباتمنت",
@@ -15956,7 +16084,6 @@
   "نوار ۸ میکرون": "شیم استاک",
   "بیولوژیک ویدث": "عرض بیولوژیک",
   "بدون علت واضح": "علت نامشخص",
-  "فاز تتراگونال": "فاز زیرکونیا",
   "تعیین محل درد": "لوکالیزیشن درد",
   "کلاس دو پنهان": "مال اکلوژن پنهان",
   "مسئولیت حقوقی": "مسئولیت حرفه ای",
@@ -15967,8 +16094,6 @@
   "lateral force": "نیروی لترال",
   "neuromuscular": "هماهنگی عصبی عضلانی",
   "کامپوزیت ونیر": "ونیر کامپوزیت",
-  "آلودگی سرامیک": "پاکسازی سرامیک",
-  "دیکانتامینیشن": "پاکسازی سرامیک",
   "نگاه به آینده": "پیش بینی شکست",
   "کانال جامانده": "کانال میس شده",
   "برجستگی باکال": "کانتور باکال",
@@ -15986,11 +16111,12 @@
   "مواد سرامیکی": "سرامیک دندانی",
   "over denture": "اوردنچر",
   "اسکن دیجیتال": "قالب گیری دیجیتال",
-  "فضای بازسازی": "فضای رستوریتیو",
   "آنله سرامیکی": "آنله",
   "hydrofluoric": "اچ سرامیک",
-  "سیل فوری عاج": "ids",
+  "فضای بازسازی": "فضای رستوریتیو",
+  "دوام بلندمدت": "دوام ترمیم",
   "استتیک قدامی": "زیبایی قدامی",
+  "سیل فوری عاج": "ids",
   "smile design": "طراحی لبخند",
   "دیزاین لبخند": "طراحی لبخند",
   "آنالیز لبخند": "طراحی لبخند",
@@ -16000,6 +16126,7 @@
   "سمان آزمایشی": "سمان موقت",
   "رد طرح درمان": "شروع نکردن درمان",
   "نپذیرفتن کیس": "شروع نکردن درمان",
+  "استحکام باند": "قدرت باند",
   "open contact": "کانتکت باز",
   "ارزیابی پایه": "انتخاب پایه",
   "مارک ایمپلنت": "برند ایمپلنت",
@@ -16007,11 +16134,12 @@
   "بهداشت دهانی": "بهداشت دهان",
   "عرض بیولوژیک": "بیولوژیک ویدث",
   "بیولوژیک ویث": "بیولوژیک ویدث",
+  "translucency": "ترانسلوسنسی",
   "dentin crack": "ترک عاجی",
   "conservative": "درمان محافظه کارانه",
   "حداقل برداشت": "درمان محافظه کارانه",
   "شل شدن اسکرو": "شل شدن پیچ",
-  "استحکام باند": "قدرت باند",
+  "crown design": "طراحی روکش",
   "wisdom tooth": "مولر سوم",
   "ناحیه استتیک": "ناحیه زیبایی",
   "core buildup": "کور بیلدآپ",
@@ -16025,6 +16153,7 @@
   "ایمپلنت شورت": "ایمپلنت کوتاه",
   "metal primer": "باند به فلز",
   "interference": "تداخل اکلوزالی",
+  "تداخل داروها": "تداخل دارویی",
   "ترمیم چسبنده": "ترمیم ادهزیو",
   "error source": "تفکیک منشأ خطا",
   "درآوردن قطعه": "تکنیک خارج سازی",
@@ -16032,8 +16161,8 @@
   "دیواره باریک": "دیواره نازک",
   "ضخامت دیواره": "دیواره نازک",
   "متال پالاتال": "روکش pfm",
-  "crown design": "طراحی روکش",
   "مداخله نکردن": "عدم مداخله",
+  "prescription": "نسخه نویسی",
   "oblique load": "نیروی مایل",
   "hybrid layer": "هیبرید لیر",
   "لایه هیبریدی": "هیبرید لیر",
@@ -16056,11 +16185,11 @@
   "proximal box": "باکس پروگزیمال",
   "تحلیل کرستال": "تحلیل استخوان کرستال",
   "تراش ورتیکال": "تراش عمودی",
-  "translucency": "ترانسلوسنسی",
   "تناسب اندازه": "تناسب با مجاور",
   "حرکات لترالی": "حرکات اکسکورسیو",
   "خطای لایبرری": "خطای داده",
   "خمیر ریترکشن": "خمیر کنارزننده",
+  "pharmacology": "داروشناسی",
   "تشخیص با حذف": "درمان از طریق تفریق",
   "عقل بی مقابل": "دندان عقل بدون آنتاگونیست",
   "ساییدن دندان": "دندان قروچه",
@@ -16084,7 +16213,6 @@
   "مشاوره تخصصی": "مشاوره تیمی",
   "بون آرکیتکچر": "معماری استخوان",
   "استحکام شکست": "مقاومت به شکست",
-  "prescription": "نسخه نویسی",
   "لبخند لثه ای": "نمای ریج",
   "نوروماسکولار": "هماهنگی عصبی عضلانی",
   "internal hex": "هگز ایمپلنت",
@@ -16103,23 +16231,24 @@
   "articulation": "ارتیکولاسیون",
   "بایو میمتیک": "بیومیمتیک",
   "case report": "کیس بالینی",
-  "پست اند کور": "پست و کور",
   "تریتمنت پلن": "طرح درمان",
+  "پست اند کور": "پست و کور",
   "بایو مکانیک": "بیومکانیک",
   "overdenture": "اوردنچر",
   "periodontal": "پریودنتال",
+  "هیدروفلوریک": "اچ سرامیک",
   "provisional": "روکش موقت",
   "فضای پروتزی": "فضای رستوریتیو",
-  "هیدروفلوریک": "اچ سرامیک",
-  "حذف پوسیدگی": "برداشت پوسیدگی",
   "زیبایی قدام": "زیبایی قدامی",
   "باند سرامیک": "باندینگ سرامیک",
+  "حذف پوسیدگی": "برداشت پوسیدگی",
   "cementation": "سمان کردن",
   "feldspathic": "فلدسپاتیک",
   "passive fit": "فیت پروتز",
   "ساپورت خلفی": "استاپ خلفی",
   "ایزوله کردن": "ایزولاسیون",
   "سوپرا اراپت": "سوپرااراپشن",
+  "تنسایل باند": "قدرت باند",
   "مارژین دقیق": "مارجین روکش",
   "overcontour": "اورکانتور",
   "برداشت روکش": "برداشت ترمیم",
@@ -16128,7 +16257,7 @@
   "risk factor": "ریسک فاکتور",
   "سایش دندانی": "سایش آنتاگونیست",
   "لق شدن روکش": "شل شدن پیچ",
-  "تنسایل باند": "قدرت باند",
+  "دیزاین روکش": "طراحی روکش",
   "third molar": "مولر سوم",
   "ناحیه لبخند": "ناحیه زیبایی",
   "گایدنس طرفی": "هدایت طرفی",
@@ -16136,6 +16265,8 @@
   "buccal cusp": "کاسپ باکال",
   "ارتفاع کاسپ": "کاسپ باکال",
   "کور بیلد آپ": "کور بیلدآپ",
+  "آمبرلا افکت": "اثر چتر",
+  "امبرلا افکت": "اثر چتر",
   "اندودانتیکس": "اندودنتیکس",
   "اندودونتیکس": "اندودنتیکس",
   "سلامت بیمار": "ایمنی بیمار",
@@ -16144,8 +16275,8 @@
   "subgingival": "ترمیم ساب جینجیوال",
   "درد انتقالی": "درد ارجاعی",
   "متال سرامیک": "روکش pfm",
-  "دیزاین روکش": "طراحی روکش",
   "درمان نکردن": "عدم مداخله",
+  "cubic phase": "فاز زیرکونیا",
   "لایه هیبرید": "هیبرید لیر",
   "الگوی رزینی": "پترن رزین",
   "deep caries": "پوسیدگی عمیق",
@@ -16160,6 +16291,7 @@
   "osteoplasty": "استئوپلاستی",
   "ساپورت موقت": "استاپ موقت",
   "بالشتک موقت": "استاپ موقت",
+  "اسثتیک ویدث": "استتیک ویدث",
   "smear layer": "اسمیر لایر",
   "reverse jig": "اسپرو",
   "پذیرش بیمار": "انتخاب بیمار",
@@ -16173,6 +16305,7 @@
   "عمق ایمپلنت": "جایگذاری ایمپلنت",
   "رد کردن علل": "حذف گام به گام",
   "خطای میلینگ": "خطای ساخت",
+  "فارماکولوژی": "داروشناسی",
   "retreatment": "ریتریتمنت",
   "سوپرانومرری": "دندان اضافه",
   "دندان مازاد": "دندان اضافه",
@@ -16187,7 +16320,6 @@
   "شک به دندان": "شک به پرپ",
   "شکست تاخیری": "شکست ثانویه",
   "فرم دهی لثه": "شکل دهی بافت",
-  "cubic phase": "فاز زیرکونیا",
   "glass phase": "فاز گلاس",
   "فاز شیشه ای": "فاز گلاس",
   "ارزیابی فضا": "فضای ارتودنسی",
@@ -16230,6 +16362,7 @@
   "بایومکانیک": "بیومکانیک",
   "بیو مکانیک": "بیومکانیک",
   "پریودونتال": "پریودنتال",
+  "impression": "قالبگیری",
   "پروتز کامل": "پروتز متحرک",
   "دیپ مارجین": "dme",
   "extraction": "کشیدن دندان",
@@ -16242,6 +16375,7 @@
   "total etch": "اچ اند رینس",
   "ترک در عاج": "ترک عاجی",
   "کانسرواتیو": "درمان محافظه کارانه",
+  "design تاج": "طراحی روکش",
   "زون استتیک": "ناحیه زیبایی",
   "گلس آینومر": "گلاس آینومر",
   "گلس سرامیک": "گلاس سرامیک",
@@ -16250,21 +16384,24 @@
   "هیدروترمال": "ltd",
   "پی ام ام ا": "pmma",
   "اکریل موقت": "pmma",
+  "اثر امبرلا": "اثر چتر",
   "اسکرو سمنت": "اسکروسمنت",
   "اصلاح مینا": "اناملوپلاستی",
   "انتخاب رنگ": "انتخاب shade",
   "تداخل تماس": "تداخل اکلوزالی",
+  "تداخل دارو": "تداخل دارویی",
   "craze line": "ترک مینایی",
   "vital pulp": "حفظ پالپ",
   "short root": "ریشه کوتاه",
   "sinus lift": "سینوس لیفت",
   "لیفت سینوس": "سینوس لیفت",
-  "design تاج": "طراحی روکش",
+  "tetragonal": "فاز زیرکونیا",
   "موقتی مرجع": "موقتی به عنوان مرجع",
   "knife edge": "نایف اج",
   "لبه چاقویی": "نایف اج",
   "فرز نیف اج": "نایف اج",
   "فرول ندارد": "نبود فرول",
+  "تجویز دارو": "نسخه نویسی",
   "ضایعه عمیق": "پوسیدگی عمیق",
   "ضخامت کاغذ": "کاغذ آرتیکولاسیون",
   "مدل پرینتی": "کست پرینتی",
@@ -16274,7 +16411,7 @@
   "رزین باندد": "rbfdp",
   "pre milled": "اباتمنت پریمیل",
   "بال اورینگ": "اتچمنت اوردنچر",
-  "اثر امبرلا": "اثر چتر",
+  "عرض استتیک": "استتیک ویدث",
   "لایه اسمیر": "اسمیر لایر",
   "اتصال روکش": "اسپلینت پروتزی",
   "ایمپلنت کج": "ایمپلنت زاویه دار",
@@ -16284,7 +16421,6 @@
   "بیسفسفونات": "بیس فسفونات",
   "بی فسفونات": "بیس فسفونات",
   "edentulous": "بیمار بی دندان",
-  "تداخل دارو": "تداخل دارویی",
   "بدون شولدر": "تراش عمودی",
   "توالی تراش": "ترتیب تراش",
   "probe test": "تست سوند",
@@ -16315,7 +16451,6 @@
   "prep doubt": "شک به پرپ",
   "شکست ثانوی": "شکست ثانویه",
   "خم شدن پست": "شکست پست",
-  "tetragonal": "فاز زیرکونیا",
   "سایش اسیدی": "فرسایش دندان",
   "قوس دندانی": "فرم قوس",
   "لثه چسبنده": "لثه کراتینیزه",
@@ -16332,7 +16467,6 @@
   "smile zone": "ناحیه لبخند",
   "داخل لبخند": "ناحیه لبخند",
   "نخ زیر لثه": "نخ زیرلثه",
-  "تجویز دارو": "نسخه نویسی",
   "نسل ادهزیو": "نسل باندینگ",
   "فشار لترال": "نیروی لترال",
   "ژنژیوکتومی": "ژینژیوکتومی",
@@ -16347,13 +16481,14 @@
   "گزارش کیس": "کیس بالینی",
   "زیرکونیوم": "زیرکونیا",
   "زیرکونیای": "زیرکونیا",
-  "aesthetic": "زیبایی",
   "پلن درمان": "طرح درمان",
+  "aesthetic": "زیبایی",
   "سمان رزین": "سمان رزینی",
   "bone loss": "تحلیل استخوان",
   "composite": "کامپوزیت",
   "precision": "دقت اسکن",
   "پروویژنال": "روکش موقت",
+  "قالب گیری": "قالبگیری",
   "prognosis": "پروگنوز دندان",
   "اکستراکشن": "کشیدن دندان",
   "کدام سمان": "انتخاب سمان",
@@ -16368,6 +16503,7 @@
   "اینتگریشن": "استئواینتگریشن",
   "embrasure": "امبراژور",
   "self etch": "سلف اچ",
+  "طراحی تاج": "طراحی روکش",
   "عاج دندان": "عاج",
   "دندان عقل": "مولر سوم",
   "هیلینگ کپ": "هیلینگ اباتمنت",
@@ -16375,6 +16511,7 @@
   "کانتیلیور": "کانتی لیور",
   "lab check": "کنترل کار لابراتوار",
   "سیل محیطی": "psz",
+  "تیرگی لثه": "اثر چتر",
   "کریز لاین": "ترک مینایی",
   "pulp test": "تست اندو",
   "تفکیک خطا": "تفکیک منشأ خطا",
@@ -16385,11 +16522,12 @@
   "خطای دوخت": "خطای استیچینگ",
   "فسفات روی": "زینک فسفات",
   "sandblast": "سندبلاست",
-  "طراحی تاج": "طراحی روکش",
   "عدم درمان": "عدم مداخله",
+  "فاز مکعبی": "فاز زیرکونیا",
   "تست موقتی": "موقتی به عنوان مرجع",
   "بدون فرول": "نبود فرول",
   "فشار مایل": "نیروی مایل",
+  "تغییر رنگ": "پایداری رنگ",
   "safe zone": "کنترل عمق",
   "cone beam": "cbct",
   "تشریح ترک": "crre",
@@ -16400,7 +16538,6 @@
   "ankylosed": "آنکیلوز",
   "ankylosis": "آنکیلوز",
   "بدون حرکت": "آنکیلوز",
-  "تیرگی لثه": "اثر چتر",
   "بررسی فضا": "ارزیابی فضا",
   "کنترل فضا": "ارزیابی فضا",
   "اصلاح ریج": "استئوپلاستی",
@@ -16439,7 +16576,6 @@
   "شکستن پیچ": "شکست پیچ",
   "depth cut": "شیار راهنما",
   "shimstock": "شیم استاک",
-  "فاز مکعبی": "فاز زیرکونیا",
   "فاز گلاسی": "فاز گلاس",
   "ساکت تازه": "فرش ساکت",
   "arch form": "فرم قوس",
@@ -16460,7 +16596,7 @@
   "بار جانبی": "نیروی لترال",
   "بدون امید": "هپلس",
   "polishing": "پالیش نهایی",
-  "تغییر رنگ": "پایداری رنگ",
+  "porcelain": "پرسلن",
   "پیزوسرجری": "پیزو",
   "follow up": "پیگیری زمانی",
   "هموستاتیک": "کنترل خونریزی",
@@ -16498,6 +16634,8 @@
   "براکسیزم": "براکسیسم",
   "بروکسیزم": "براکسیسم",
   "عامل خطر": "ریسک فاکتور",
+  "two step": "قالبگیری دو مرحله ای",
+  "پوتی واش": "قالبگیری دو مرحله ای",
   "پره مولر": "پرمولر",
   "premolar": "پرمولر",
   "کانتیلور": "کانتی لیور",
@@ -16521,6 +16659,8 @@
   "کامپتیبل": "سازگاری برند",
   "عدم فرول": "نبود فرول",
   "بار مایل": "نیروی مایل",
+  "cleaning": "پاکسازی سرامیک",
+  "ثبات رنگ": "پایداری رنگ",
   "arti fol": "کاغذ آرتیکولاسیون",
   "آرتی فول": "کاغذ آرتیکولاسیون",
   "عمق تراش": "کنترل عمق",
@@ -16549,16 +16689,12 @@
   "c shaped": "سی شیپ",
   "chipping": "شکست سرامیک",
   "شیار عمق": "شیار راهنما",
-  "two step": "قالبگیری دو مرحله ای",
-  "پوتی واش": "قالبگیری دو مرحله ای",
   "فضای کار": "مدیریت دسترسی",
   "مرجع فرم": "مرجع آناتومیک",
   "کار تیمی": "مشاوره تیمی",
   "ترک سطحی": "میکروترک",
   "نظم کاری": "نظم کلینیکی",
   "hopeless": "هپلس",
-  "cleaning": "پاکسازی سرامیک",
-  "ثبات رنگ": "پایداری رنگ",
   "پیزو تیپ": "پیزو",
   "flowable": "کامپوزیت فلو",
   "مسیر پیچ": "کانال پیچ زاویه دار",
@@ -16577,11 +16713,13 @@
   "آباتمنت": "اباتمنت",
   "ferrule": "فرول",
   "overlay": "اورلی",
+  "ایمپرشن": "قالبگیری",
   "denture": "پروتز متحرک",
   "لنتنینگ": "افزایش طول تاج",
   "milling": "cad cam",
   "امبرژور": "امبراژور",
   "biobase": "بایوبیس",
+  "opacity": "ترانسلوسنسی",
   "لقی پیچ": "شل شدن پیچ",
   "library": "لایبرری دیجیتال",
   "amalgam": "آمالگام",
@@ -16603,7 +16741,6 @@
   "ترسیموس": "بازشدن محدود دهان",
   "trismus": "بازشدن محدود دهان",
   "فول آرچ": "بیمار بی دندان",
-  "opacity": "ترانسلوسنسی",
   "tracing": "تریس آبسه",
   "یکی یکی": "حذف گام به گام",
   "tactile": "حس لامسه",
@@ -16646,6 +16783,8 @@
   "مارژین": "مارجین روکش",
   "margin": "مارجین روکش",
   "میلینگ": "cad cam",
+  "شفافیت": "ترانسلوسنسی",
+  "اپسیتی": "ترانسلوسنسی",
   "torque": "تورک پیچ",
   "dentin": "عاج",
   "exocad": "لایبرری دیجیتال",
@@ -16664,8 +16803,6 @@
   "opaque": "اوپکر",
   "ایسموس": "ایستموس",
   "try in": "ترای این",
-  "شفافیت": "ترانسلوسنسی",
-  "اپسیتی": "ترانسلوسنسی",
   "فیستول": "تریس آبسه",
   "حس دست": "حس لامسه",
   "واترجت": "سوپرفلاس",
@@ -16678,6 +16815,8 @@
   "ایندکس": "هگز ایمپلنت",
   "پرداخت": "پالیش نهایی",
   "polish": "پالیش نهایی",
+  "پرسلین": "پرسلن",
+  "پرسلان": "پرسلن",
   "فالوآپ": "پیگیری زمانی",
   "convex": "کانتور محدب",
   "نخ کشی": "کنترل لثه",
@@ -16690,9 +16829,9 @@
   "inlay": "ترمیم غیرمستقیم",
   "crown": "روکش",
   "کراون": "روکش",
-  "موقتی": "روکش موقت",
   "onlay": "آنله",
   "اچ hf": "اچ سرامیک",
+  "موقتی": "روکش موقت",
   "سیلان": "سایلان",
   "مرجین": "مارجین روکش",
   "aging": "ltd",
@@ -16724,6 +16863,7 @@
   "اوپک": "اوپکر",
   "تیلت": "ایمپلنت زاویه دار",
   "پروو": "ترای این",
+  "دارو": "داروشناسی",
   "اکسس": "دسترسی کانال",
   "icon": "رزین اینفیلتریشن",
   "تهوع": "رفلکس گگ",
@@ -16753,16 +16893,17 @@
   "mbl": "تحلیل استخوان کرستال",
   "بیس": "لاینر",
   "mua": "مولتی یونیت اباتمنت",
+  "cir": "نسبت تاج به ایمپلنت",
   "hex": "هگز ایمپلنت",
   "asc": "کانال پیچ زاویه دار",
   "درگ": "کشیدگی قالب",
   "hf": "اچ سرامیک",
   "bw": "بیولوژیک ویدث",
-  "gi": "گلاس آینومر",
-  "cr": "رابطه مرکزی",
   "3y": "نسل زیرکونیا",
   "4y": "نسل زیرکونیا",
-  "5y": "نسل زیرکونیا"
+  "5y": "نسل زیرکونیا",
+  "gi": "گلاس آینومر",
+  "cr": "رابطه مرکزی"
  },
  "aliases_about": "Orthographic variants of ONE word, applied to both tag and query before tokenizing. Not synonyms (those are co_tags) and not dead forms (those are variants). Mirrored into plus/content-index.json for the API.",
  "manual_aliases": {

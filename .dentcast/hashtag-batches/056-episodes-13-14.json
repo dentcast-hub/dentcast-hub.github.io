@@ -1,0 +1,50 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 56 - episodes 13 and 14. Episode 13 is the site's article on esthetic width, so it gets a dedicated #استتیک_ویدث concept, joins the existing #اثر_چتر (page keyword spelling 'آمبرلا افکت' added as alias) plus #زیبایی_قدامی/#طراحی_روکش. Episode 14 (raising VD) joins the existing VD family exactly as episodes 154-155 carry it: #افزایش_VD, #بعد_عمودی, #VD, #VDO, #اکلوژن, #طرح_درمان.",
+ "concepts": [
+  {
+   "tag": "#استتیک_ویدث",
+   "domain": "clinical",
+   "definition": "Esthetic Width — پهنای نمایانِ دندان در لبخند که طراحیِ روکش قدامی باید حفظش کند.",
+   "use_when": "مقاله esthetic width را تعریف یا در طراحی به‌کار گیرد.",
+   "aliases": [
+    "esthetic width",
+    "استتیک ویدث",
+    "عرض استتیک",
+    "اسثتیک ویدث"
+   ]
+  },
+  {
+   "tag": "#اثر_چتر",
+   "domain": "clinical",
+   "definition": "Umbrella Effect — سایه‌ی لب روی دندان‌ها و لثه که ادراکِ رنگ و تیرگی را عوض می‌کند.",
+   "use_when": "مقاله umbrella effect را در استدلال زیبایی به‌کار گیرد.",
+   "aliases": [
+    "umbrella effect",
+    "اثر امبرلا",
+    "تیرگی لثه",
+    "آمبرلا افکت",
+    "امبرلا افکت"
+   ]
+  }
+ ],
+ "articles": {
+  "episodes/episode-13": [
+   "#دنتکست",
+   "#استتیک_ویدث",
+   "#اثر_چتر",
+   "#زیبایی_قدامی",
+   "#طراحی_روکش",
+   "#زیبایی"
+  ],
+  "episodes/episode-14": [
+   "#دنتکست",
+   "#افزایش_VD",
+   "#بعد_عمودی",
+   "#VD",
+   "#VDO",
+   "#اکلوژن",
+   "#طرح_درمان"
+  ]
+ }
+}

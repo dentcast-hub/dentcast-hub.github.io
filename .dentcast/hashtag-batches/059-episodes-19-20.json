@@ -1,0 +1,18 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 59 - episodes 19 and 20. Both land on exact existing concepts, no new vocabulary. Episode 19 (color stability of ceramic laminates; the caption credits ceramic type and resin cement) -> #پایداری_رنگ + #لمینیت_سرامیکی + #سمان_رزینی. Episode 20 (two-step impression technique) -> #قالبگیری_دو_مرحله_ای + #قالبگیری.",
+ "concepts": [],
+ "articles": {
+  "episodes/episode-19": [
+   "#دنتکست",
+   "#لمینیت_سرامیکی",
+   "#پایداری_رنگ",
+   "#سمان_رزینی"
+  ],
+  "episodes/episode-20": [
+   "#دنتکست",
+   "#قالبگیری",
+   "#قالبگیری_دو_مرحله_ای"
+  ]
+ }
+}
