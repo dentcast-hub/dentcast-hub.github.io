@@ -1,0 +1,22 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 110 - episodes 114 and 115, existing concepts. Episode 114 (Goodacre part 2, finish line + structure conservation) -> #تراش_روکش + #فینیش_لاین + #اصول_تراش. Episode 115 (ZBL part 4, abutment selection + material) -> #اباتمنت + #انتخاب_پایه + #Zero_Bone_Loss + #متریال_پروتزی + #ایمپلنت + #کتاب_لینکویچیوس.",
+ "concepts": [],
+ "articles": {
+  "episodes/episode-114": [
+   "#دنتکست",
+   "#تراش_روکش",
+   "#فینیش_لاین",
+   "#اصول_تراش"
+  ],
+  "episodes/episode-115": [
+   "#دنتکست",
+   "#اباتمنت",
+   "#انتخاب_پایه",
+   "#Zero_Bone_Loss",
+   "#متریال_پروتزی",
+   "#ایمپلنت",
+   "#کتاب_لینکویچیوس"
+  ]
+ }
+}
