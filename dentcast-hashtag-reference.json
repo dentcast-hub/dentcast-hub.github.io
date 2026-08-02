@@ -24,7 +24,7 @@
    "aliases": [],
    "variants": [],
    "co_tags": [],
-   "count": 115,
+   "count": 119,
    "content_ids": [
     "episodes/episode-1",
     "episodes/episode-2",
@@ -134,6 +134,10 @@
     "episodes/episode-106",
     "episodes/episode-106-1",
     "episodes/episode-106-2",
+    "episodes/episode-107",
+    "episodes/episode-107-1",
+    "episodes/episode-108",
+    "episodes/episode-109",
     "episodes/episode-154",
     "episodes/episode-155",
     "episodes/episode-156",
@@ -158,7 +162,7 @@
     "#ایمپلنت_دندانی"
    ],
    "co_tags": [],
-   "count": 86,
+   "count": 87,
    "content_ids": [
     "episodes/episode-23",
     "episodes/episode-24",
@@ -180,6 +184,7 @@
     "episodes/episode-102",
     "episodes/episode-103",
     "episodes/episode-106",
+    "episodes/episode-108",
     "episodes/episode-112",
     "episodes/episode-115",
     "episodes/episode-119-1",
@@ -1095,6 +1100,46 @@
    ]
   },
   {
+   "key": "زیبایی",
+   "tag": "#زیبایی",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "aliases": [
+    "استتیک",
+    "esthetic",
+    "aesthetic"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 22,
+   "content_ids": [
+    "episodes/episode-13",
+    "episodes/episode-28",
+    "episodes/episode-32",
+    "episodes/episode-33",
+    "episodes/episode-37",
+    "episodes/episode-39",
+    "episodes/episode-46",
+    "episodes/episode-61",
+    "episodes/episode-68",
+    "episodes/episode-70",
+    "episodes/episode-107",
+    "episodes/episode-116",
+    "episodes/episode-119",
+    "episodes/episode-122-3",
+    "episodes/episode-141",
+    "episodes/episode-147",
+    "notecast/episode-13",
+    "notecast/episode-19",
+    "notecast/episode-28",
+    "notecast/episode-32",
+    "notecast/episode-33",
+    "insight/insight-46"
+   ]
+  },
+  {
    "key": "بیومکانیک",
    "tag": "#بیومکانیک",
    "domain": "clinical",
@@ -1131,45 +1176,6 @@
     "insight/insight-57",
     "insight/insight-58",
     "chairside/chairside-26"
-   ]
-  },
-  {
-   "key": "زیبایی",
-   "tag": "#زیبایی",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "",
-   "use_when": "",
-   "aliases": [
-    "استتیک",
-    "esthetic",
-    "aesthetic"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 21,
-   "content_ids": [
-    "episodes/episode-13",
-    "episodes/episode-28",
-    "episodes/episode-32",
-    "episodes/episode-33",
-    "episodes/episode-37",
-    "episodes/episode-39",
-    "episodes/episode-46",
-    "episodes/episode-61",
-    "episodes/episode-68",
-    "episodes/episode-70",
-    "episodes/episode-116",
-    "episodes/episode-119",
-    "episodes/episode-122-3",
-    "episodes/episode-141",
-    "episodes/episode-147",
-    "notecast/episode-13",
-    "notecast/episode-19",
-    "notecast/episode-28",
-    "notecast/episode-32",
-    "notecast/episode-33",
-    "insight/insight-46"
    ]
   },
   {
@@ -1891,6 +1897,37 @@
    ]
   },
   {
+   "key": "سواد_هوش_مصنوعی",
+   "tag": "#سواد_هوش_مصنوعی",
+   "domain": "ai",
+   "words": 3,
+   "definition": "سوادِ هوشِ مصنوعی — مفاهیمِ پایه‌ی AI، یادگیریِ ماشین و یادگیریِ عمیق برای دندانپزشک.",
+   "use_when": "مقاله مفاهیمِ پایه‌ی هوش مصنوعی را آموزش دهد.",
+   "aliases": [
+    "یادگیری ماشین",
+    "machine learning",
+    "deep learning",
+    "یادگیری عمیق"
+   ],
+   "variants": [],
+   "co_tags": [
+    "#AI_Literacy"
+   ],
+   "count": 10,
+   "content_ids": [
+    "episodes/episode-109",
+    "dentai/promptologist/prompt1-1",
+    "dentai/promptologist/prompt1-2",
+    "dentai/promptologist/prompt1-3",
+    "dentai/promptologist/prompt1-4",
+    "dentai/promptologist/prompt1-5",
+    "dentai/promptologist/prompt2-1",
+    "dentai/promptologist/prompt3-1",
+    "dentai/promptologist/prompt4-1",
+    "dentai/promptologist/prompt4-2"
+   ]
+  },
+  {
    "key": "فایبر_پست",
    "tag": "#فایبر_پست",
    "domain": "clinical",
@@ -2213,31 +2250,6 @@
     "dentai/dentai-21",
     "insight/insight-51",
     "metanotes/meta-16"
-   ]
-  },
-  {
-   "key": "سواد_هوش_مصنوعی",
-   "tag": "#سواد_هوش_مصنوعی",
-   "domain": "ai",
-   "words": 3,
-   "definition": "فهمِ اینکه مدل چیست، چطور کار می‌کند و کجا نباید به آن اعتماد کرد.",
-   "use_when": "مقاله به فهمِ ابزار کمک کند، نه به انجام یک کار با آن.",
-   "aliases": [],
-   "variants": [],
-   "co_tags": [
-    "#AI_Literacy"
-   ],
-   "count": 9,
-   "content_ids": [
-    "dentai/promptologist/prompt1-1",
-    "dentai/promptologist/prompt1-2",
-    "dentai/promptologist/prompt1-3",
-    "dentai/promptologist/prompt1-4",
-    "dentai/promptologist/prompt1-5",
-    "dentai/promptologist/prompt2-1",
-    "dentai/promptologist/prompt3-1",
-    "dentai/promptologist/prompt4-1",
-    "dentai/promptologist/prompt4-2"
    ]
   },
   {
@@ -3133,6 +3145,28 @@
    ]
   },
   {
+   "key": "هوش_مصنوعی_دندانپزشکی",
+   "tag": "#هوش_مصنوعی_دندانپزشکی",
+   "domain": "ai",
+   "words": 3,
+   "definition": "کاربرد هوش مصنوعی در دندانپزشکی.",
+   "use_when": "مقاله کاربرد را در بافتِ دندانپزشکی قرار دهد.",
+   "aliases": [],
+   "variants": [],
+   "co_tags": [
+    "#Dental_AI"
+   ],
+   "count": 6,
+   "content_ids": [
+    "episodes/episode-109",
+    "dentai/promptologist/prompt1-1",
+    "dentai/promptologist/prompt1-2",
+    "dentai/promptologist/prompt1-4",
+    "dentai/promptologist/prompt3-1",
+    "dentai/dentai-28"
+   ]
+  },
+  {
    "key": "پروتکل_باند",
    "tag": "#پروتکل_باند",
    "domain": null,
@@ -3418,6 +3452,34 @@
    ]
   },
   {
+   "key": "ایمپلنت_فول_آرچ",
+   "tag": "#ایمپلنت_فول_آرچ",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "بازسازیِ تمامِ قوسِ فک روی ایمپلنت — از جمله پروتکل‌هایی مثل All-on-4/All-on-6.",
+   "use_when": "مقاله درمانِ فول‌آرچِ ایمپلنت را موضوع داشته باشد.",
+   "aliases": [
+    "all on 4",
+    "all-on-4",
+    "آل آن فور",
+    "allon4",
+    "ایمپلنت تمام فک",
+    "all on 6"
+   ],
+   "variants": [],
+   "co_tags": [
+    "#Full_Arch_Implant"
+   ],
+   "count": 5,
+   "content_ids": [
+    "episodes/episode-108",
+    "insight/insight-51",
+    "metanotes/meta-17",
+    "sharehub/share-11",
+    "insight/insight-60"
+   ]
+  },
+  {
    "key": "بازسازی_کامل_دهان",
    "tag": "#بازسازی_کامل_دهان",
    "domain": "clinical",
@@ -3607,24 +3669,32 @@
    ]
   },
   {
-   "key": "هوش_مصنوعی_دندانپزشکی",
-   "tag": "#هوش_مصنوعی_دندانپزشکی",
-   "domain": "ai",
-   "words": 3,
-   "definition": "کاربرد هوش مصنوعی در دندانپزشکی.",
-   "use_when": "مقاله کاربرد را در بافتِ دندانپزشکی قرار دهد.",
-   "aliases": [],
-   "variants": [],
-   "co_tags": [
-    "#Dental_AI"
+   "key": "نسل_زیرکونیا",
+   "tag": "#نسل_زیرکونیا",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "نسل‌های زیرکونیا (3Y تا 5Y) — سازشِ میانِ استحکام و شفافیت.",
+   "use_when": "مقاله نسل‌ها یا زیرکونیای ترنسلوسنت را مقایسه یا معرفی کند.",
+   "aliases": [
+    "3Y",
+    "4Y",
+    "5Y",
+    "نسل زیرکونیا",
+    "زیرکونیا ترنسلوسنت",
+    "generation zirconia",
+    "زیرکونیای شفاف",
+    "زیرکونیا شفاف",
+    "translucent zirconia"
    ],
+   "variants": [],
+   "co_tags": [],
    "count": 5,
    "content_ids": [
-    "dentai/promptologist/prompt1-1",
-    "dentai/promptologist/prompt1-2",
-    "dentai/promptologist/prompt1-4",
-    "dentai/promptologist/prompt3-1",
-    "dentai/dentai-28"
+    "episodes/episode-17",
+    "episodes/episode-18",
+    "episodes/episode-88",
+    "episodes/episode-107",
+    "insight/insight-27"
    ]
   },
   {
@@ -4101,26 +4171,6 @@
    ]
   },
   {
-   "key": "ایمپلنت_فول_آرچ",
-   "tag": "#ایمپلنت_فول_آرچ",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "بازسازیِ کاملِ یک فک با ایمپلنت.",
-   "use_when": "مقاله تصمیمش در مقیاسِ کلِ قوس باشد.",
-   "aliases": [],
-   "variants": [],
-   "co_tags": [
-    "#Full_Arch_Implant"
-   ],
-   "count": 4,
-   "content_ids": [
-    "insight/insight-51",
-    "metanotes/meta-17",
-    "sharehub/share-11",
-    "insight/insight-60"
-   ]
-  },
-  {
    "key": "بارگذاری_ایمپلنت",
    "tag": "#بارگذاری_ایمپلنت",
    "domain": "clinical",
@@ -4538,34 +4588,6 @@
     "chairside/chairside-12",
     "chairside/chairside-18",
     "insight/insight-50"
-   ]
-  },
-  {
-   "key": "نسل_زیرکونیا",
-   "tag": "#نسل_زیرکونیا",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "نسل‌های زیرکونیا (3Y تا 5Y) — سازشِ میانِ استحکام و شفافیت.",
-   "use_when": "مقاله نسل‌ها یا زیرکونیای ترنسلوسنت را مقایسه یا معرفی کند.",
-   "aliases": [
-    "3Y",
-    "4Y",
-    "5Y",
-    "نسل زیرکونیا",
-    "زیرکونیا ترنسلوسنت",
-    "generation zirconia",
-    "زیرکونیای شفاف",
-    "زیرکونیا شفاف",
-    "translucent zirconia"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 4,
-   "content_ids": [
-    "episodes/episode-17",
-    "episodes/episode-18",
-    "episodes/episode-88",
-    "insight/insight-27"
    ]
   },
   {
@@ -5012,23 +5034,6 @@
     "dentai/dentai-5",
     "notecast/episode-4",
     "notecast/episode-5"
-   ]
-  },
-  {
-   "key": "ایمپلنت_فول_ماوس",
-   "tag": "#ایمپلنت_فول_ماوس",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "",
-   "use_when": "",
-   "aliases": [],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "episodes/episode-108",
-    "episodes/episode-123-4",
-    "episodes/episode-144-1"
    ]
   },
   {
@@ -6427,38 +6432,6 @@
    ]
   },
   {
-   "key": "ai",
-   "tag": "#AI",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "",
-   "use_when": "",
-   "aliases": [],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "episodes/episode-109",
-    "episodes/episode-149-1"
-   ]
-  },
-  {
-   "key": "allon4",
-   "tag": "#AllOn4",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "",
-   "use_when": "",
-   "aliases": [],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "episodes/episode-108",
-    "episodes/episode-144-1"
-   ]
-  },
-  {
    "key": "anti_rotation",
    "tag": "#anti_rotation",
    "domain": "clinical",
@@ -7006,6 +6979,26 @@
    ]
   },
   {
+   "key": "اتصال_پیچ_شونده",
+   "tag": "#اتصال_پیچ_شونده",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "رستوریشنِ اسکرو-ریتین، در برابر سمان‌شونده.",
+   "use_when": "مقاله پیچ‌شونده بودن را انتخابِ آگاهانه بداند.",
+   "aliases": [
+    "screw retained",
+    "پیچ شونده",
+    "اسکرو ریتین"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-108",
+    "insight/insight-10"
+   ]
+  },
+  {
    "key": "اثر_چتر",
    "tag": "#اثر_چتر",
    "domain": "clinical",
@@ -7279,6 +7272,22 @@
    "content_ids": [
     "episodes/episode-22",
     "notecast/episode-22"
+   ]
+  },
+  {
+   "key": "ایمپلنت_فول_ماوس",
+   "tag": "#ایمپلنت_فول_ماوس",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "",
+   "use_when": "",
+   "aliases": [],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-123-4",
+    "episodes/episode-144-1"
    ]
   },
   {
@@ -7919,11 +7928,15 @@
   {
    "key": "دندانپزشکی_هوشمند",
    "tag": "#دندانپزشکی_هوشمند",
-   "domain": "clinical",
+   "domain": "ai",
    "words": 2,
-   "definition": "",
-   "use_when": "",
-   "aliases": [],
+   "definition": "دندانپزشکیِ مبتنی بر فناوری‌های هوشمند و دیجیتال.",
+   "use_when": "مقاله کاربردِ فناوریِ هوشمند در دندانپزشکی را موضوع داشته باشد.",
+   "aliases": [
+    "smart dentistry",
+    "دندانپزشکی هوشمند",
+    "فناوری دندانپزشکی"
+   ],
    "variants": [],
    "co_tags": [],
    "count": 2,
@@ -8515,6 +8528,27 @@
    "content_ids": [
     "insight/insight-19",
     "insight/insight-38"
+   ]
+  },
+  {
+   "key": "مولتی_یونیت_اباتمنت",
+   "tag": "#مولتی_یونیت_اباتمنت",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "Multi-Unit Abutment — اباتمنتِ واسطه که پروتزِ پیچ‌شونده‌ی چندواحدی را از سطحِ لثه می‌گیرد و زاویه‌ی فیکسچرها را جبران می‌کند.",
+   "use_when": "مقاله MUA را انتخاب یا کاربردش را موضوع داشته باشد.",
+   "aliases": [
+    "multi unit",
+    "مولتی یونیت",
+    "MUA",
+    "multi-unit abutment"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-108",
+    "insight/insight-57"
    ]
   },
   {
@@ -9141,6 +9175,36 @@
    "count": 1,
    "content_ids": [
     "episodes/episode-159"
+   ]
+  },
+  {
+   "key": "ai",
+   "tag": "#AI",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "aliases": [],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "episodes/episode-149-1"
+   ]
+  },
+  {
+   "key": "allon4",
+   "tag": "#AllOn4",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "",
+   "use_when": "",
+   "aliases": [],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "episodes/episode-144-1"
    ]
   },
   {
@@ -10438,25 +10502,6 @@
    "count": 1,
    "content_ids": [
     "episodes/episode-123-6"
-   ]
-  },
-  {
-   "key": "اتصال_پیچ_شونده",
-   "tag": "#اتصال_پیچ_شونده",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "رستوریشنِ اسکرو-ریتین، در برابر سمان‌شونده.",
-   "use_when": "مقاله پیچ‌شونده بودن را انتخابِ آگاهانه بداند.",
-   "aliases": [
-    "screw retained",
-    "پیچ شونده",
-    "اسکرو ریتین"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "insight/insight-10"
    ]
   },
   {
@@ -12953,6 +12998,28 @@
    ]
   },
   {
+   "key": "زیرکونیا_مولتی_لیر",
+   "tag": "#زیرکونیا_مولتی_لیر",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "زیرکونیای چندلایه با گرادیانِ رنگ و استحکام در ضخامت بلوک — زیباییِ طبیعی‌تر بدون لایه‌گذاریِ دستی.",
+   "use_when": "مقاله زیرکونیای مولتی‌لیر/گرادینت را موضوع داشته باشد.",
+   "aliases": [
+    "multilayer zirconia",
+    "مولتی لیر",
+    "زیرکونیا چند لایه",
+    "گرادینت",
+    "gradient multilayered",
+    "زیرکونیا گرادینت"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "episodes/episode-107"
+   ]
+  },
+  {
    "key": "ساپورت_خلفی",
    "tag": "#ساپورت_خلفی",
    "domain": null,
@@ -14321,26 +14388,6 @@
    ]
   },
   {
-   "key": "مولتی_یونیت_اباتمنت",
-   "tag": "#مولتی_یونیت_اباتمنت",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "اباتمنتِ چندواحدی — گران، و همیشه لازم نیست.",
-   "use_when": "مقاله ضرورت یا عدمِ ضرورتِ آن را بسنجد.",
-   "aliases": [
-    "multi unit",
-    "مولتی یونیت",
-    "MUA",
-    "multi-unit abutment"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "insight/insight-57"
-   ]
-  },
-  {
    "key": "مولر_اول_دائمی",
    "tag": "#مولر_اول_دائمی",
    "domain": "clinical",
@@ -15284,6 +15331,29 @@
    ]
   },
   {
+   "key": "کدگذاری_هندپیس",
+   "tag": "#کدگذاری_هندپیس",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "کدِ رنگیِ نوارِ هندپیس (قرمز/آبی/سبز) که نسبتِ دورِ آنگل به موتور را نشان می‌دهد.",
+   "use_when": "مقاله رنگ‌بندی یا نسبتِ دورِ هندپیس را موضوع داشته باشد.",
+   "aliases": [
+    "رنگ بندی هندپیس",
+    "کدگذاری هندپیس",
+    "نوار رنگی هندپیس",
+    "نسبت دور هندپیس",
+    "gear ratio",
+    "آنگل",
+    "contra angle"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "episodes/episode-107-1"
+   ]
+  },
+  {
    "key": "کراس_مانت",
    "tag": "#کراس_مانت",
    "domain": null,
@@ -16142,12 +16212,13 @@
   "adjustment antagonist": "تعدیل آنتاگونیست",
   "cementation technique": "تکنیک سمان",
   "روکش های به هم چسبیده": "روکش اسپلینت",
+  "gradient multilayered": "زیرکونیا مولتی لیر",
   "alleman deliperi rule": "قانون آلمان دلیپری",
   "indirect restoration": "ترمیم غیرمستقیم",
   "adhesive restoration": "ترمیم ادهزیو",
   "peripheral seal zone": "psz",
-  "decoupling with time": "dwt",
   "translucent zirconia": "نسل زیرکونیا",
+  "decoupling with time": "dwt",
   "resin matrix ceramic": "سرامیک هیبرید",
   "dual step impression": "قالبگیری دو مرحله ای",
   "vertical preparation": "تراش عمودی",
@@ -16165,8 +16236,8 @@
   "angled screw channel": "کانال پیچ زاویه دار",
   "mechanical retention": "گیر مکانیکی",
   "انتخاب اباتمنت پایه": "انتخاب پایه",
-  "monolithic zirconia": "زیرکونیا مونولیتیک",
   "generation zirconia": "نسل زیرکونیا",
+  "monolithic zirconia": "زیرکونیا مونولیتیک",
   "root dentin bonding": "باند به عاج ریشه",
   "پیچ اباتمنت ایمپلنت": "پیچ اباتمنت",
   "caries detector dye": "caries detector",
@@ -16181,6 +16252,7 @@
   "cervical resorption": "تحلیل سرویکال",
   "protrusive movement": "حرکت پروتروزیو",
   "لکه تیره رادیوگرافی": "رادیولوسنسی",
+  "multilayer zirconia": "زیرکونیا مولتی لیر",
   "implant cementation": "سمان ایمپلنت",
   "restoration failure": "شکست ترمیم",
   "tissue conditioning": "شکل دهی بافت",
@@ -16225,9 +16297,9 @@
   "تصمیم گیری بالینی": "تصمیم درمانی",
   "digital dentistry": "دندانپزشکی دیجیتال",
   "ترمیم با کامپوزیت": "کامپوزیت",
+  "intraoral scanner": "اسکنر داخل دهانی",
   "crown lengthening": "افزایش طول تاج",
   "scanning accuracy": "دقت اسکن",
-  "intraoral scanner": "اسکنر داخل دهانی",
   "restorative space": "فضای رستوریتیو",
   "بالا آوردن مارجین": "dme",
   "دیپ مارژین الویشن": "dme",
@@ -16244,6 +16316,7 @@
   "occlusal overload": "اورلود اکلوزالی",
   "برجستگی بیش از حد": "اورکانتور",
   "removal technique": "تکنیک خارج سازی",
+  "فناوری دندانپزشکی": "دندانپزشکی هوشمند",
   "white spot lesion": "لکه سفید",
   "مدل سه بعدی نتیجه": "موقتی به عنوان مرجع",
   "نقطه پایان برداشت": "cre",
@@ -16256,6 +16329,7 @@
   "خواندن رادیوگرافی": "تفسیر رادیوگرافی",
   "disc displacement": "داخل کپسولی",
   "رادیوگرافی کنترلی": "رادیوگرافی کنترل",
+  "زیرکونیا چند لایه": "زیرکونیا مولتی لیر",
   "definitive cement": "سمان دائم",
   "secondary failure": "شکست ثانویه",
   "فقدان دندان مجاور": "فضای بی دندان",
@@ -16265,13 +16339,14 @@
   "at home whitening": "هوم بلیچ",
   "پوسیدگی باقیمانده": "پوسیدگی جامانده",
   "پوسیدگی زیر ترمیم": "پوسیدگی جامانده",
+  "infection control": "کنترل عفونت",
   "retention control": "کنترل گیر",
   "anterior guidance": "گایدنس قدامی",
-  "infection control": "کنترل عفونت",
   "کلینیکال اینسایت": "اینسایت",
   "fixed prosthesis": "پروتز ثابت",
   "دیجیتال دنتیستری": "دندانپزشکی دیجیتال",
   "طبقه بندی سرامیک": "سرامیک دندانی",
+  "machine learning": "سواد هوش مصنوعی",
   "بیومیمتیک ترمیمی": "ترمیم بیومیمتیک",
   "biological width": "بیولوژیک ویدث",
   "bonding protocol": "پروتکل باند",
@@ -16329,11 +16404,14 @@
   "کدری رادیوگرافیک": "رادیواپسیته",
   "ناحیه رادیولوسنت": "رادیولوسنسی",
   "composite repair": "ریپیر کامپوزیت",
+  "زیرکونیا گرادینت": "زیرکونیا مولتی لیر",
   "سمان روی ایمپلنت": "سمان ایمپلنت",
   "permanent cement": "سمان دائم",
   "ceramic fracture": "شکست سرامیک",
   "درد عضلانی ماضغه": "عضلات ماضغه",
   "unclear etiology": "علت نامشخص",
+  "scan file format": "فرمت اسکن",
+  "فرمت خروجی اسکنر": "فرمت اسکن",
   "edentulous space": "فضای بی دندان",
   "attached gingiva": "لثه کراتینیزه",
   "مفصل گیجگاهی فکی": "مفصل فکی",
@@ -16343,10 +16421,9 @@
   "composite veneer": "ونیر کامپوزیت",
   "recurrent caries": "پوسیدگی عودکننده",
   "افت ارتفاع عمودی": "کاهش vdo",
+  "نوار رنگی هندپیس": "کدگذاری هندپیس",
   "moisture control": "کنترل رطوبت",
   "بیلدآپ کامپوزیتی": "کور کامپوزیتی",
-  "scan file format": "فرمت اسکن",
-  "فرمت خروجی اسکنر": "فرمت اسکن",
   "تغییرات استخوان": "تحلیل استخوان",
   "ترمیم کامپوزیتی": "کامپوزیت",
   "برداشتن پوسیدگی": "برداشت پوسیدگی",
@@ -16359,6 +16436,7 @@
   "خارج کردن دندان": "کشیدن دندان",
   "پرسلن فلدسپاتیک": "فلدسپاتیک",
   "جداسازی با زمان": "dwt",
+  "ایمپلنت تمام فک": "ایمپلنت فول آرچ",
   "عدم پذیرش بیمار": "شروع نکردن درمان",
   "کانتور رستوریشن": "کانتور ترمیم",
   "shade selection": "انتخاب shade",
@@ -16376,6 +16454,7 @@
   "سفید کردن دندان": "بلیچینگ",
   "endodontic test": "تست اندو",
   "stitching error": "خطای استیچینگ",
+  "smart dentistry": "دندانپزشکی هوشمند",
   "patient comfort": "راحتی بیمار",
   "راحتی حین درمان": "راحتی بیمار",
   "زینک فسفات سمان": "زینک فسفات",
@@ -16408,6 +16487,7 @@
   "fatigue failure": "شکست ثانویه",
   "اتیولوژی نامشخص": "علت نامشخص",
   "ایمپلنت در ساکت": "فرش ساکت",
+  "فرمت فایل اسکنر": "فرمت اسکن",
   "palatal ferrule": "فرول پالاتال",
   "از دست رفتن فضا": "فضا کجا رفته",
   "بی دندانی موضعی": "فقدان دندان",
@@ -16421,9 +16501,10 @@
   "polish vs glaze": "پالیش یا گلیز",
   "residual caries": "پوسیدگی جامانده",
   "کانال پیدا نشده": "کانال میس شده",
-  "جینگوال ریترکشن": "کنترل لثه",
-  "فرمت فایل اسکنر": "فرمت اسکن",
+  "رنگ بندی هندپیس": "کدگذاری هندپیس",
+  "نسبت دور هندپیس": "کدگذاری هندپیس",
   "anti retraction": "کنترل عفونت",
+  "جینگوال ریترکشن": "کنترل لثه",
   "treatment plan": "طرح درمان",
   "dental ceramic": "سرامیک دندانی",
   "تحلیل استخوانی": "تحلیل استخوان",
@@ -16437,12 +16518,12 @@
   "مرور سیستماتیک": "متاآنالیز",
   "پروتکل باندینگ": "پروتکل باند",
   "سمان کردن روکش": "سمان کردن",
+  "زیرکونیای شفاف": "نسل زیرکونیا",
   "اسنپ آن اسمایل": "snap on smile",
   "posterior stop": "استاپ خلفی",
   "تورک بیش از حد": "تورک پیچ",
   "immediate load": "زمان لود ایمپلنت",
   "رویش بیش از حد": "سوپرااراپشن",
-  "زیرکونیای شفاف": "نسل زیرکونیا",
   "باز شدن کانتکت": "از دست رفتن کانتکت",
   "etch and rinse": "اچ اند رینس",
   "خارج کردن روکش": "برداشت ترمیم",
@@ -16519,20 +16600,22 @@
   "prosthodontics": "پروتز",
   "ویزیت کلینیکی": "کیس بالینی",
   "post and core": "پست و کور",
-  "کراون لنتنینگ": "افزایش طول تاج",
-  "فینیشینگ لاین": "فینیش لاین",
   "اسکنر دیجیتال": "اسکنر داخل دهانی",
+  "کراون لنتنینگ": "افزایش طول تاج",
+  "یادگیری ماشین": "سواد هوش مصنوعی",
+  "deep learning": "سواد هوش مصنوعی",
+  "فینیشینگ لاین": "فینیش لاین",
   "bond strength": "قدرت باند",
   "titanium base": "تیتانیوم بیس",
   "meta analysis": "متاآنالیز",
   "پروتکل ادهزیو": "پروتکل باند",
+  "زیرکونیا شفاف": "نسل زیرکونیا",
   "ضایعه سرویکال": "nccl",
   "screwmentable": "اسکروسمنت",
   "ترمیم زیر لثه": "ترمیم ساب جینجیوال",
   "resin coating": "رزین کوتینگ",
   "supraeruption": "سوپرااراپشن",
   "مرجین سرامیکی": "مارجین روکش",
-  "زیرکونیا شفاف": "نسل زیرکونیا",
   "اسئواینتگریشن": "استئواینتگریشن",
   "فضای امبراژور": "امبراژور",
   "short implant": "ایمپلنت کوتاه",
@@ -16639,6 +16722,7 @@
   "حداقل برداشت": "درمان محافظه کارانه",
   "دوام بلندمدت": "دوام ترمیم",
   "over denture": "اوردنچر",
+  "یادگیری عمیق": "سواد هوش مصنوعی",
   "اسکن دیجیتال": "قالب گیری دیجیتال",
   "آنله سرامیکی": "آنله",
   "hydrofluoric": "اچ سرامیک",
@@ -16755,15 +16839,16 @@
   "design check": "چک قبل از ساخت",
   "gingivectomy": "ژینژیوکتومی",
   "missed canal": "کانال میس شده",
+  "contra angle": "کدگذاری هندپیس",
   "کراس مانتینگ": "کراس مانت",
   "cold welding": "کلد ولدینگ",
   "گیر کردن پیچ": "کلد ولدینگ",
   "فضای بین فکی": "کمبود فضای عمودی",
+  "آنتی ریترکشن": "کنترل عفونت",
+  "برگشت مایعات": "کنترل عفونت",
   "کور کامپوزیت": "کور کامپوزیتی",
   "پلیمریزاسیون": "کیور",
   "friction fit": "گیر مکانیکی",
-  "آنتی ریترکشن": "کنترل عفونت",
-  "برگشت مایعات": "کنترل عفونت",
   "آرتیکولاسیون": "ارتیکولاسیون",
   "articulation": "ارتیکولاسیون",
   "بایو میمتیک": "بیومیمتیک",
@@ -17024,6 +17109,7 @@
   "ژنژیوکتومی": "ژینژیوکتومی",
   "برداشت لثه": "ژینژیوکتومی",
   "فرم کانتور": "کانتور محدب",
+  "gear ratio": "کدگذاری هندپیس",
   "hemostasis": "کنترل خونریزی",
   "light cure": "کیور",
   "سطح راهنما": "گاید پلین",
@@ -17053,6 +17139,7 @@
   "تماس خلفی": "ساپورت خلفی",
   "اسکروسمنت": "اسکرو سمنتد",
   "isolation": "ایزولاسیون",
+  "آل آن فور": "ایمپلنت فول آرچ",
   "lab error": "خطای لابراتوار",
   "پانورامیک": "رادیوگرافی تشخیصی",
   "اورکانتور": "کانتور ترمیم",
@@ -17114,6 +17201,7 @@
   "تریس کردن": "تریس آبسه",
   "عبور سوند": "تست سوند",
   "بایت وینگ": "تفسیر رادیوگرافی",
+  "handpiece": "توربین",
   "دید تونلی": "تونل ویژن",
   "excursive": "حرکات اکسکورسیو",
   "خطای دیتا": "خطای داده",
@@ -17161,10 +17249,9 @@
   "پیزوسرجری": "پیزو",
   "follow up": "پیگیری زمانی",
   "هموستاتیک": "کنترل خونریزی",
+  "suck back": "کنترل عفونت",
   "میزان گیر": "کنترل گیر",
   "اسکن وسیع": "گسترش اسکن",
-  "handpiece": "توربین",
-  "suck back": "کنترل عفونت",
   "کمپلیکیشن": "عوارض",
   "ایمپلانت": "ایمپلنت",
   "اکلوزیون": "اکلوژن",
@@ -17191,6 +17278,8 @@
   "بار کلیپ": "اتچمنت اوردنچر",
   "bar clip": "اتچمنت اوردنچر",
   "ایزولیشن": "ایزولاسیون",
+  "all on 4": "ایمپلنت فول آرچ",
+  "all on 6": "ایمپلنت فول آرچ",
   "رزین کوت": "رزین کوتینگ",
   "لود فوری": "زمان لود ایمپلنت",
   "ارلی لود": "زمان لود ایمپلنت",
@@ -17247,6 +17336,7 @@
   "ترای این": "تثبیت موقت روکش",
   "bitewing": "تفسیر رادیوگرافی",
   "sequence": "توالی باند",
+  "ایرروتور": "توربین",
   "قفل ذهنی": "تونل ویژن",
   "jaw pain": "درد فکی",
   "درد صورت": "درد فکی",
@@ -17271,7 +17361,6 @@
   "مسیر پیچ": "کانال پیچ زاویه دار",
   "dragging": "کشیدگی قالب",
   "خشک کردن": "کنترل رطوبت",
-  "ایرروتور": "توربین",
   "فرول اثر": "فرول",
   "اثر فرول": "فرول",
   "اکلوزالی": "اکلوزال",
@@ -17321,12 +17410,15 @@
   "trismus": "بازشدن محدود دهان",
   "فول آرچ": "بیمار بی دندان",
   "tracing": "تریس آبسه",
+  "turbine": "توربین",
+  "airotor": "توربین",
   "یکی یکی": "حذف گام به گام",
   "tactile": "حس لامسه",
   "expasyl": "خمیر کنارزننده",
   "درد گنگ": "درد مبهم",
   "اوریفیس": "دسترسی کانال",
   "orifice": "دسترسی کانال",
+  "گرادینت": "زیرکونیا مولتی لیر",
   "ری سمان": "سمان مجدد",
   "کم واحد": "سگمنته کردن",
   "c shape": "سی شیپ",
@@ -17345,8 +17437,6 @@
   "جوش سرد": "کلد ولدینگ",
   "ریترکشن": "کنترل لثه",
   "کیورینگ": "کیور",
-  "turbine": "توربین",
-  "airotor": "توربین",
   "لامینیت": "لمینیت",
   "اکلوژال": "اکلوزال",
   "اکلوژنی": "اکلوزال",
@@ -17363,6 +17453,7 @@
   "silane": "سایلان",
   "misfit": "فیت پروتز",
   "رابردم": "ایزولاسیون",
+  "allon4": "ایمپلنت فول آرچ",
   "torque": "تورک پیچ",
   "مارژین": "مارجین روکش",
   "margin": "مارجین روکش",
@@ -17388,6 +17479,7 @@
   "ایسموس": "ایستموس",
   "try in": "ترای این",
   "فیستول": "تریس آبسه",
+  "هندپیس": "توربین",
   "حس دست": "حس لامسه",
   "واترجت": "سوپرفلاس",
   "چیپینگ": "شکست سرامیک",
@@ -17401,10 +17493,9 @@
   "پرسلان": "پرسلن",
   "فالوآپ": "پیگیری زمانی",
   "convex": "کانتور محدب",
+  "ساک بک": "کنترل عفونت",
   "نخ کشی": "کنترل لثه",
   "curing": "کیور",
-  "هندپیس": "توربین",
-  "ساک بک": "کنترل عفونت",
   "لامینت": "لمینیت",
   "پارسیل": "پارشیال",
   "اورجنس": "امرجنس",
@@ -17463,6 +17554,7 @@
   "base": "لاینر",
   "gpt4": "مدل زبانی بزرگ",
   "ptfe": "نوار تفلون",
+  "آنگل": "کدگذاری هندپیس",
   "ونیر": "veneer",
   "ios": "اسکنر داخل دهانی",
   "تمپ": "روکش موقت",
@@ -17486,15 +17578,15 @@
   "رنچ": "آچار ایمپلنت",
   "لوپ": "بزرگ نمایی",
   "بقا": "بقای رستوریشن",
+  "stl": "فرمت اسکن",
+  "obj": "فرمت اسکن",
+  "ply": "فرمت اسکن",
   "بیس": "لاینر",
   "tmj": "مفصل فکی",
   "mua": "مولتی یونیت اباتمنت",
   "hex": "هگز ایمپلنت",
   "asc": "کانال پیچ زاویه دار",
   "درگ": "کشیدگی قالب",
-  "stl": "فرمت اسکن",
-  "obj": "فرمت اسکن",
-  "ply": "فرمت اسکن",
   "hf": "اچ سرامیک",
   "bw": "بیولوژیک ویدث",
   "3y": "نسل زیرکونیا",

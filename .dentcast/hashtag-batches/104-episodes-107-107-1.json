@@ -1,0 +1,50 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 104 - episode 107 and Dentopedia micro-episode 107.1. Episode 107 (gradient multilayer zirconia) adds #زیرکونیا_مولتی_لیر (absorbing backlog #مولتی_لیر), then -> #زیرکونیا + #زیرکونیا_مولتی_لیر + #نسل_زیرکونیا + #زیبایی. Episode 107.1 (handpiece color-coding / gear ratios) adds #کدگذاری_هندپیس for the topic it resolves, then -> #دنتوپدیا + #کدگذاری_هندپیس + #تجهیزات_دندانپزشکی. The bare backlog #هندپیس and #آنگل are folded as aliases onto #کدگذاری_هندپیس's neighbourhood (kept reachable).",
+ "concepts": [
+  {
+   "tag": "#زیرکونیا_مولتی_لیر",
+   "domain": "clinical",
+   "definition": "زیرکونیای چندلایه با گرادیانِ رنگ و استحکام در ضخامت بلوک — زیباییِ طبیعی‌تر بدون لایه‌گذاریِ دستی.",
+   "use_when": "مقاله زیرکونیای مولتی‌لیر/گرادینت را موضوع داشته باشد.",
+   "aliases": [
+    "multilayer zirconia",
+    "مولتی لیر",
+    "زیرکونیا چند لایه",
+    "گرادینت",
+    "gradient multilayered",
+    "زیرکونیا گرادینت"
+   ]
+  },
+  {
+   "tag": "#کدگذاری_هندپیس",
+   "domain": "clinical",
+   "definition": "کدِ رنگیِ نوارِ هندپیس (قرمز/آبی/سبز) که نسبتِ دورِ آنگل به موتور را نشان می‌دهد.",
+   "use_when": "مقاله رنگ‌بندی یا نسبتِ دورِ هندپیس را موضوع داشته باشد.",
+   "aliases": [
+    "رنگ بندی هندپیس",
+    "کدگذاری هندپیس",
+    "نوار رنگی هندپیس",
+    "نسبت دور هندپیس",
+    "gear ratio",
+    "آنگل",
+    "contra angle"
+   ]
+  }
+ ],
+ "articles": {
+  "episodes/episode-107": [
+   "#دنتکست",
+   "#زیرکونیا",
+   "#زیرکونیا_مولتی_لیر",
+   "#نسل_زیرکونیا",
+   "#زیبایی"
+  ],
+  "episodes/episode-107-1": [
+   "#دنتکست",
+   "#دنتوپدیا",
+   "#کدگذاری_هندپیس",
+   "#تجهیزات_دندانپزشکی"
+  ]
+ }
+}
