@@ -125,7 +125,7 @@
    "aliases": [],
    "variants": [],
    "co_tags": [],
-   "count": 80,
+   "count": 84,
    "content_ids": [
     "episodes/episode-1",
     "episodes/episode-2",
@@ -199,6 +199,10 @@
     "episodes/episode-70",
     "episodes/episode-71",
     "episodes/episode-72",
+    "episodes/episode-73",
+    "episodes/episode-74",
+    "episodes/episode-75",
+    "episodes/episode-76",
     "episodes/episode-100",
     "episodes/episode-154",
     "episodes/episode-155",
@@ -1644,6 +1648,37 @@
    ]
   },
   {
+   "key": "دوام_ترمیم",
+   "tag": "#دوام_ترمیم",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "دوامِ بلندمدتِ ترمیم و عواملی که آن را تعیین می‌کنند.",
+   "use_when": "مقاله بقا یا طولِ عمرِ ترمیم را بسنجد.",
+   "aliases": [
+    "دوام ترمیم",
+    "طول عمر سرامیک",
+    "دوام بلندمدت"
+   ],
+   "variants": [
+    "#بقای_ترمیم"
+   ],
+   "co_tags": [],
+   "count": 11,
+   "content_ids": [
+    "episodes/episode-15",
+    "episodes/episode-41",
+    "episodes/episode-55",
+    "episodes/episode-56",
+    "episodes/episode-74",
+    "dentai/dentai-5",
+    "notecast/episode-15",
+    "dentai/dentai-22",
+    "dentai/dentai-25",
+    "episodes/episode-159-1",
+    "metanotes/meta-14"
+   ]
+  },
+  {
    "key": "سایش_دندان",
    "tag": "#سایش_دندان",
    "domain": "clinical",
@@ -1744,36 +1779,6 @@
     "insight/insight-28",
     "chairside/chairside-19",
     "chairside/chairside-22"
-   ]
-  },
-  {
-   "key": "دوام_ترمیم",
-   "tag": "#دوام_ترمیم",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "دوامِ بلندمدتِ ترمیم و عواملی که آن را تعیین می‌کنند.",
-   "use_when": "مقاله بقا یا طولِ عمرِ ترمیم را بسنجد.",
-   "aliases": [
-    "دوام ترمیم",
-    "طول عمر سرامیک",
-    "دوام بلندمدت"
-   ],
-   "variants": [
-    "#بقای_ترمیم"
-   ],
-   "co_tags": [],
-   "count": 10,
-   "content_ids": [
-    "episodes/episode-15",
-    "episodes/episode-41",
-    "episodes/episode-55",
-    "episodes/episode-56",
-    "dentai/dentai-5",
-    "notecast/episode-15",
-    "dentai/dentai-22",
-    "dentai/dentai-25",
-    "episodes/episode-159-1",
-    "metanotes/meta-14"
    ]
   },
   {
@@ -2434,6 +2439,31 @@
    ]
   },
   {
+   "key": "افزایش_طول_تاج",
+   "tag": "#افزایش_طول_تاج",
+   "domain": null,
+   "words": 3,
+   "definition": "crown lengthening — به‌دست آوردن ساختار با جابه‌جایی لثه و استخوان.",
+   "use_when": "مقاله این جراحی را تجویز، رد، یا هزینه‌اش را بسنجد.",
+   "aliases": [
+    "کراون لنتنینگ",
+    "crown lengthening",
+    "لنتنینگ"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 7,
+   "content_ids": [
+    "episodes/episode-75",
+    "episodes/episode-76",
+    "insight/insight-7",
+    "chairside/chairside-6",
+    "chairside/chairside-16",
+    "chairside/chairside-21",
+    "insight/insight-55"
+   ]
+  },
+  {
    "key": "اورلی",
    "tag": "#اورلی",
    "domain": null,
@@ -2726,6 +2756,38 @@
     "episodes/episode-136",
     "notecast/episode-9",
     "notecast/episode-10"
+   ]
+  },
+  {
+   "key": "بیولوژیک_ویدث",
+   "tag": "#بیولوژیک_ویدث",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "Biological Width — پهنای اتصالِ بیولوژیکِ اپیتلیوم و بافتِ همبند روی استخوان که مارجینِ ترمیم نباید به آن تجاوز کند.",
+   "use_when": "مقاله عرضِ بیولوژیک را در تصمیمِ ترمیم/جراحی به‌کار گیرد.",
+   "aliases": [
+    "biologic width",
+    "bw",
+    "عرض بیولوژیک",
+    "فاصله بیولوژیک",
+    "بیولوژیک ویث",
+    "biological width",
+    "بیولوژیکال ویدث"
+   ],
+   "variants": [
+    "#عرض_بیولوژیک",
+    "#BiologicalWidth",
+    "#Biological_Width"
+   ],
+   "co_tags": [],
+   "count": 6,
+   "content_ids": [
+    "episodes/episode-75",
+    "episodes/episode-76",
+    "insight/insight-7",
+    "notecast/episode-13",
+    "insight/insight-18",
+    "chairside/chairside-7"
    ]
   },
   {
@@ -3106,29 +3168,6 @@
     "insight/insight-26",
     "notecast/episode-33",
     "metanotes/meta-18"
-   ]
-  },
-  {
-   "key": "افزایش_طول_تاج",
-   "tag": "#افزایش_طول_تاج",
-   "domain": null,
-   "words": 3,
-   "definition": "crown lengthening — به‌دست آوردن ساختار با جابه‌جایی لثه و استخوان.",
-   "use_when": "مقاله این جراحی را تجویز، رد، یا هزینه‌اش را بسنجد.",
-   "aliases": [
-    "کراون لنتنینگ",
-    "crown lengthening",
-    "لنتنینگ"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 5,
-   "content_ids": [
-    "insight/insight-7",
-    "chairside/chairside-6",
-    "chairside/chairside-16",
-    "chairside/chairside-21",
-    "insight/insight-55"
    ]
   },
   {
@@ -3555,6 +3594,32 @@
     "episodes/episode-35",
     "notecast/episode-34",
     "notecast/episode-35"
+   ]
+  },
+  {
+   "key": "dwt",
+   "tag": "#DWT",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "Decoupling With Time — گذاشتنِ فاصله‌ی زمانی میانِ لایه‌های باند تا تنشِ انقباضِ پلیمریزاسیون پیش از بارگذاریِ نهایی آزاد شود.",
+   "use_when": "مقاله اصلِ decoupling/کاهشِ تنش با زمان را به‌کار گیرد.",
+   "aliases": [
+    "decoupling with time",
+    "جداسازی با زمان",
+    "دیکاپلینگ",
+    "decoupling",
+    "کاهش تنش با زمان"
+   ],
+   "variants": [
+    "#Decoupling"
+   ],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "episodes/episode-72",
+    "episodes/episode-73",
+    "episodes/episode-74",
+    "dentai/dentai-19"
    ]
   },
   {
@@ -4486,23 +4551,6 @@
    ]
   },
   {
-   "key": "cl",
-   "tag": "#CL",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "",
-   "use_when": "",
-   "aliases": [],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "episodes/episode-75",
-    "episodes/episode-76",
-    "episodes/episode-78"
-   ]
-  },
-  {
    "key": "diagnostic_ai",
    "tag": "#Diagnostic_AI",
    "domain": "ai",
@@ -4521,31 +4569,6 @@
     "dentai/promptologist/prompt1-1",
     "dentai/promptologist/prompt1-2",
     "dentai/promptologist/prompt1-3"
-   ]
-  },
-  {
-   "key": "dwt",
-   "tag": "#DWT",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "Decoupling With Time — گذاشتنِ فاصله‌ی زمانی میانِ لایه‌های باند تا تنشِ انقباضِ پلیمریزاسیون پیش از بارگذاریِ نهایی آزاد شود.",
-   "use_when": "مقاله اصلِ decoupling/کاهشِ تنش با زمان را به‌کار گیرد.",
-   "aliases": [
-    "decoupling with time",
-    "جداسازی با زمان",
-    "دیکاپلینگ",
-    "decoupling",
-    "کاهش تنش با زمان"
-   ],
-   "variants": [
-    "#Decoupling"
-   ],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "episodes/episode-72",
-    "episodes/episode-73",
-    "dentai/dentai-19"
    ]
   },
   {
@@ -4974,29 +4997,6 @@
     "episodes/episode-156",
     "episodes/episode-157",
     "episodes/episode-158"
-   ]
-  },
-  {
-   "key": "بیولوژیک_ویدث",
-   "tag": "#بیولوژیک_ویدث",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "فاصله‌ی زیستیِ بین لبه‌ی ترمیم و استخوان، که باید تأمین شود یا دندان قابل بازسازی نیست.",
-   "use_when": "مقاله تأمین‌شدن یا نشدنِ این فاصله را عاملِ تصمیم بداند.",
-   "aliases": [
-    "biologic width",
-    "bw",
-    "عرض بیولوژیک",
-    "فاصله بیولوژیک",
-    "بیولوژیک ویث"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "insight/insight-7",
-    "insight/insight-18",
-    "chairside/chairside-7"
    ]
   },
   {
@@ -6238,24 +6238,6 @@
    "content_ids": [
     "dentcast-plus/video-4",
     "dentcast-plus/video-5"
-   ]
-  },
-  {
-   "key": "biological_width",
-   "tag": "#Biological_Width",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "",
-   "use_when": "",
-   "aliases": [],
-   "variants": [
-    "#BiologicalWidth"
-   ],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "episodes/episode-75",
-    "episodes/episode-76"
    ]
   },
   {
@@ -9159,6 +9141,21 @@
    "count": 1,
    "content_ids": [
     "chairside/chairside-17"
+   ]
+  },
+  {
+   "key": "cl",
+   "tag": "#CL",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "aliases": [],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "episodes/episode-78"
    ]
   },
   {
@@ -13354,24 +13351,6 @@
    ]
   },
   {
-   "key": "عرض_بیولوژیک",
-   "tag": "#عرض_بیولوژیک",
-   "domain": null,
-   "words": 2,
-   "definition": "فاصله‌ی زیستیِ بین لبه‌ی ترمیم و استخوان.",
-   "use_when": "مقاله رعایت یا تجاوز به آن را بررسی کند.",
-   "aliases": [
-    "biologic width",
-    "بیولوژیک ویدث"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "notecast/episode-13"
-   ]
-  },
-  {
    "key": "علت_نامشخص",
    "tag": "#علت_نامشخص",
    "domain": "clinical",
@@ -15918,11 +15897,11 @@
   "indirect restoration": "ترمیم غیرمستقیم",
   "adhesive restoration": "ترمیم ادهزیو",
   "peripheral seal zone": "psz",
+  "decoupling with time": "dwt",
   "resin matrix ceramic": "سرامیک هیبرید",
   "dual step impression": "قالبگیری دو مرحله ای",
   "translucent zirconia": "نسل زیرکونیا",
   "self adhesive cement": "سمان سلف ادهزیو",
-  "decoupling with time": "dwt",
   "diagnostic reasoning": "استدلال تشخیصی",
   "prosthetic splinting": "اسپلینت پروتزی",
   "proximal preparation": "باکس پروگزیمال",
@@ -16037,6 +16016,7 @@
   "طبقه بندی سرامیک": "سرامیک دندانی",
   "bonding protocol": "پروتکل باند",
   "cement selection": "انتخاب سمان",
+  "کاهش تنش با زمان": "dwt",
   "بیومیمتیک ترمیمی": "ترمیم بیومیمتیک",
   "اشتباه لابراتوار": "خطای لابراتوار",
   "loading protocol": "زمان لود ایمپلنت",
@@ -16044,6 +16024,7 @@
   "proximal contact": "کانتکت باز",
   "از دست رفتن تماس": "از دست رفتن کانتکت",
   "osseointegration": "استئواینتگریشن",
+  "biological width": "بیولوژیک ویدث",
   "insertion torque": "ثبات اولیه",
   "درمان طولانی مدت": "درمان بلندمدت",
   "مولتی دیسیپلینری": "درمان بین رشته ای",
@@ -16070,7 +16051,6 @@
   "کشیدن و جایگزینی": "کشیدن و ایمپلنت",
   "غربالگری ساییدگی": "bewe",
   "crack dissection": "crre",
-  "کاهش تنش با زمان": "dwt",
   "سلسله مراتب باند": "hob",
   "نکروز استخوان فک": "mronj",
   "mineral trioxide": "mta",
@@ -16114,10 +16094,12 @@
   "silane coupling": "سایلان",
   "خارج کردن دندان": "کشیدن دندان",
   "پرسلن فلدسپاتیک": "فلدسپاتیک",
+  "جداسازی با زمان": "dwt",
   "عدم پذیرش بیمار": "شروع نکردن درمان",
   "کانتور رستوریشن": "کانتور ترمیم",
   "shade selection": "انتخاب shade",
   "شناسایی ایمپلنت": "برند ایمپلنت",
+  "بیولوژیکال ویدث": "بیولوژیک ویدث",
   "impression tray": "تری قالبگیری",
   "skeletal change": "رشد فک",
   "antagonist wear": "سایش آنتاگونیست",
@@ -16140,7 +16122,6 @@
   "color stability": "پایداری رنگ",
   "partial denture": "پروتز پارسیل",
   "پارسیل دفینیتیو": "پروتز پارسیل",
-  "جداسازی با زمان": "dwt",
   "بستن انتهای تری": "posterior damming",
   "maryland bridge": "rbfdp",
   "implant abscess": "آبسه ایمپلنت",
@@ -16195,7 +16176,7 @@
   "etch and rinse": "اچ اند رینس",
   "خارج کردن روکش": "برداشت ترمیم",
   "باز کردن ترمیم": "برداشت ترمیم",
-  "biologic width": "عرض بیولوژیک",
+  "biologic width": "بیولوژیک ویدث",
   "فاصله بیولوژیک": "بیولوژیک ویدث",
   "تورک بیش از حد": "تورک پیچ",
   "تغییرات اسکلتی": "رشد فک",
@@ -16355,7 +16336,6 @@
   "tribochemical": "سیلیکا کوتینگ",
   "پریدگی سرامیک": "شکست سرامیک",
   "نوار ۸ میکرون": "شیم استاک",
-  "بیولوژیک ویدث": "عرض بیولوژیک",
   "بدون علت واضح": "علت نامشخص",
   "تعیین محل درد": "لوکالیزیشن درد",
   "کلاس دو پنهان": "مال اکلوژن پنهان",
@@ -16393,13 +16373,13 @@
   "conservative": "درمان محافظه کارانه",
   "حداقل برداشت": "درمان محافظه کارانه",
   "استتیک قدامی": "زیبایی قدامی",
+  "استحکام باند": "قدرت باند",
   "سیل فوری عاج": "ids",
   "ترمیم چسبنده": "ترمیم ادهزیو",
   "non invasive": "درمان غیرتهاجمی",
   "smile design": "طراحی لبخند",
   "دیزاین لبخند": "طراحی لبخند",
   "آنالیز لبخند": "طراحی لبخند",
-  "استحکام باند": "قدرت باند",
   "چسباندن روکش": "سمان کردن",
   "screw cement": "اسکروسمنت",
   "خطای دیجیتال": "خطای لابراتوار",
@@ -16519,8 +16499,8 @@
   "provisional": "روکش موقت",
   "فضای پروتزی": "فضای رستوریتیو",
   "زیبایی قدام": "زیبایی قدامی",
-  "باند سرامیک": "باندینگ سرامیک",
   "تنسایل باند": "قدرت باند",
+  "باند سرامیک": "باندینگ سرامیک",
   "cementation": "سمان کردن",
   "feldspathic": "فلدسپاتیک",
   "passive fit": "فیت پروتز",
@@ -16655,6 +16635,7 @@
   "انواع سمان": "انتخاب سمان",
   "کانسپت دال": "dahl concept",
   "دال کانسپت": "dahl concept",
+  "decoupling": "dwt",
   "بال اورینگ": "اتچمنت اوردنچر",
   "استاپ عقبی": "استاپ خلفی",
   "اسکرو سمنت": "اسکروسمنت",
@@ -16693,7 +16674,6 @@
   "ضخامت کاغذ": "کاغذ آرتیکولاسیون",
   "مدل پرینتی": "کست پرینتی",
   "ناحیه ایمن": "کنترل عمق",
-  "decoupling": "dwt",
   "ناحیه آرنج": "elbow zone",
   "hall crown": "hall technique",
   "رزین باندد": "rbfdp",
@@ -16782,6 +16762,7 @@
   "سیل محیطی": "psz",
   "کدام سمان": "انتخاب سمان",
   "endocrown": "اندوکراون",
+  "دیکاپلینگ": "dwt",
   "اسکن بادی": "scan body",
   "تماس خلفی": "ساپورت خلفی",
   "اسکروسمنت": "اسکرو سمنتد",
@@ -16824,7 +16805,6 @@
   "safe zone": "کنترل عمق",
   "cone beam": "cbct",
   "تشریح ترک": "crre",
-  "دیکاپلینگ": "dwt",
   "فینیش زون": "finish zone",
   "هال تکنیک": "hall technique",
   "راینی ریج": "rainey ridge",

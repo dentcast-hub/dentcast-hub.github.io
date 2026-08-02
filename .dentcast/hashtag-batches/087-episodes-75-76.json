@@ -1,0 +1,40 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 87 - episodes 75 and 76, the Biological-Width / DME-vs-CL comparison pair. Consolidations: the duplicate #عرض_بیولوژیک (shares 'بیولوژیک' with the higher-count #بیولوژیک_ویدث) is merged onto #بیولوژیک_ویدث, and the CamelCase backlog #Biological_Width folds onto it too via a 'biological width' alias. The bare abbreviation #CL on these two articles means Crown Lengthening, so it is replaced in-place by #افزایش_طول_تاج (NOT renamed globally - #CL also sits on episode-78 where it is out of scope). Both articles -> #بیولوژیک_ویدث + #DME + #افزایش_طول_تاج; episode 75 keeps #بیومیمتیک.",
+ "concepts": [
+  {
+   "tag": "#بیولوژیک_ویدث",
+   "domain": "clinical",
+   "definition": "Biological Width — پهنای اتصالِ بیولوژیکِ اپیتلیوم و بافتِ همبند روی استخوان که مارجینِ ترمیم نباید به آن تجاوز کند.",
+   "use_when": "مقاله عرضِ بیولوژیک را در تصمیمِ ترمیم/جراحی به‌کار گیرد.",
+   "aliases": [
+    "biologic width",
+    "bw",
+    "عرض بیولوژیک",
+    "فاصله بیولوژیک",
+    "بیولوژیک ویث",
+    "biological width",
+    "بیولوژیکال ویدث"
+   ]
+  }
+ ],
+ "renames": {
+  "#عرض_بیولوژیک": "#بیولوژیک_ویدث",
+  "#Biological_Width": "#بیولوژیک_ویدث"
+ },
+ "articles": {
+  "episodes/episode-75": [
+   "#دنتکست",
+   "#بیولوژیک_ویدث",
+   "#DME",
+   "#افزایش_طول_تاج",
+   "#بیومیمتیک"
+  ],
+  "episodes/episode-76": [
+   "#دنتکست",
+   "#بیولوژیک_ویدث",
+   "#DME",
+   "#افزایش_طول_تاج"
+  ]
+ }
+}
