@@ -24,7 +24,7 @@
    "aliases": [],
    "variants": [],
    "co_tags": [],
-   "count": 104,
+   "count": 107,
    "content_ids": [
     "episodes/episode-1",
     "episodes/episode-2",
@@ -122,6 +122,9 @@
     "episodes/episode-94",
     "episodes/episode-95",
     "episodes/episode-96",
+    "episodes/episode-97",
+    "episodes/episode-98",
+    "episodes/episode-99",
     "episodes/episode-100",
     "episodes/episode-154",
     "episodes/episode-155",
@@ -1234,13 +1237,14 @@
    "aliases": [],
    "variants": [],
    "co_tags": [],
-   "count": 16,
+   "count": 17,
    "content_ids": [
     "episodes/episode-15",
     "episodes/episode-18",
     "episodes/episode-41",
     "episodes/episode-69",
     "episodes/episode-89",
+    "episodes/episode-98",
     "episodes/episode-141",
     "dentai/dentai-6",
     "insight/insight-10",
@@ -1252,6 +1256,42 @@
     "episodes/episode-158",
     "episodes/episode-159-1",
     "insight/insight-57"
+   ]
+  },
+  {
+   "key": "دندانپزشکی_دیجیتال",
+   "tag": "#دندانپزشکی_دیجیتال",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "aliases": [
+    "digital dentistry",
+    "دندونپزشکی دیجیتال",
+    "دیجیتال دنتیستری"
+   ],
+   "variants": [
+    "#دیجیتال"
+   ],
+   "co_tags": [],
+   "count": 16,
+   "content_ids": [
+    "episodes/episode-97",
+    "episodes/episode-98",
+    "episodes/episode-105",
+    "episodes/episode-106-2",
+    "episodes/episode-122-2",
+    "episodes/episode-123-1",
+    "episodes/episode-128-1",
+    "episodes/episode-144-2",
+    "episodes/episode-147-9",
+    "episodes/episode-149-2",
+    "litecast/lite-CAST9",
+    "sharehub/share-2",
+    "litecast/lite-CAST14",
+    "episodes/episode-156",
+    "metanotes/meta-15",
+    "metanotes/meta-16"
    ]
   },
   {
@@ -1349,38 +1389,6 @@
     "notecast/episode-6",
     "dentai/dentai-8",
     "dentai/dentai-16"
-   ]
-  },
-  {
-   "key": "دندانپزشکی_دیجیتال",
-   "tag": "#دندانپزشکی_دیجیتال",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "",
-   "use_when": "",
-   "aliases": [
-    "digital dentistry",
-    "دندونپزشکی دیجیتال",
-    "دیجیتال دنتیستری"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 14,
-   "content_ids": [
-    "episodes/episode-98",
-    "episodes/episode-105",
-    "episodes/episode-106-2",
-    "episodes/episode-122-2",
-    "episodes/episode-123-1",
-    "episodes/episode-144-2",
-    "episodes/episode-147-9",
-    "episodes/episode-149-2",
-    "litecast/lite-CAST9",
-    "sharehub/share-2",
-    "litecast/lite-CAST14",
-    "episodes/episode-156",
-    "metanotes/meta-15",
-    "metanotes/meta-16"
    ]
   },
   {
@@ -1566,6 +1574,38 @@
    ]
   },
   {
+   "key": "درمان_محافظه_کارانه",
+   "tag": "#درمان_محافظه‌کارانه",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "کم‌ترین برداشتِ ساختار برای رسیدن به نتیجه‌ی قابل قبول.",
+   "use_when": "مقاله محافظه‌کاری را معیارِ انتخاب بداند.",
+   "aliases": [
+    "درمان محافظه کارانه",
+    "کانسرواتیو",
+    "conservative",
+    "حداقل برداشت"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 13,
+   "content_ids": [
+    "episodes/episode-53",
+    "episodes/episode-54",
+    "episodes/episode-57",
+    "episodes/episode-58",
+    "episodes/episode-90",
+    "episodes/episode-91",
+    "episodes/episode-92",
+    "episodes/episode-93",
+    "episodes/episode-94",
+    "episodes/episode-99",
+    "dentai/dentai-3",
+    "insight/insight-20",
+    "notecast/episode-38"
+   ]
+  },
+  {
    "key": "بعد_عمودی",
    "tag": "#بعد_عمودی",
    "domain": "clinical",
@@ -1592,37 +1632,6 @@
     "notecast/episode-35",
     "insight/insight-51",
     "insight/insight-60"
-   ]
-  },
-  {
-   "key": "درمان_محافظه_کارانه",
-   "tag": "#درمان_محافظه‌کارانه",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "کم‌ترین برداشتِ ساختار برای رسیدن به نتیجه‌ی قابل قبول.",
-   "use_when": "مقاله محافظه‌کاری را معیارِ انتخاب بداند.",
-   "aliases": [
-    "درمان محافظه کارانه",
-    "کانسرواتیو",
-    "conservative",
-    "حداقل برداشت"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 12,
-   "content_ids": [
-    "episodes/episode-53",
-    "episodes/episode-54",
-    "episodes/episode-57",
-    "episodes/episode-58",
-    "episodes/episode-90",
-    "episodes/episode-91",
-    "episodes/episode-92",
-    "episodes/episode-93",
-    "episodes/episode-94",
-    "dentai/dentai-3",
-    "insight/insight-20",
-    "notecast/episode-38"
    ]
   },
   {
@@ -6031,6 +6040,23 @@
    ]
   },
   {
+   "key": "پروتز_دیجیتال",
+   "tag": "#پروتز_دیجیتال",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "aliases": [],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "episodes/episode-96",
+    "episodes/episode-97",
+    "litecast/lite-CAST9"
+   ]
+  },
+  {
    "key": "پروتز_زیبایی",
    "tag": "#پروتز_زیبایی",
    "domain": "clinical",
@@ -7925,22 +7951,6 @@
    ]
   },
   {
-   "key": "دیجیتال",
-   "tag": "#دیجیتال",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "",
-   "use_when": "",
-   "aliases": [],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "episodes/episode-97",
-    "episodes/episode-128-1"
-   ]
-  },
-  {
    "key": "دیواره_نازک",
    "tag": "#دیواره_نازک",
    "domain": "clinical",
@@ -7978,6 +7988,26 @@
    "content_ids": [
     "insight/insight-3",
     "insight/insight-56"
+   ]
+  },
+  {
+   "key": "رزین_اینفیلتریشن",
+   "tag": "#رزین_اینفیلتریشن",
+   "domain": null,
+   "words": 2,
+   "definition": "نفوذ رزین در ضایعه، به‌جای تراش و ونیر.",
+   "use_when": "مقاله این تکنیک را تجویز یا ارزیابی کند.",
+   "aliases": [
+    "resin infiltration",
+    "اینفیلتریشن",
+    "icon"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-99",
+    "dentai/dentai-2"
    ]
   },
   {
@@ -8407,6 +8437,30 @@
    ]
   },
   {
+   "key": "لکه_سفید",
+   "tag": "#لکه_سفید",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "ضایعه‌ی سفیدِ مینایی (دمینرالیزه) پیش از حفره‌شدن.",
+   "use_when": "مقاله ضایعه‌ی سفید/WSL را تشخیص یا درمان کند.",
+   "aliases": [
+    "white spot",
+    "وایت اسپات",
+    "لکه سفید مینایی",
+    "ضایعات سفید",
+    "ضایعه سفید",
+    "WSL",
+    "white spot lesion"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-99",
+    "dentai/dentai-2"
+   ]
+  },
+  {
    "key": "متریال_پروتزی",
    "tag": "#متریال_پروتزی",
    "domain": "clinical",
@@ -8761,22 +8815,6 @@
    "content_ids": [
     "insight/insight-51",
     "insight/insight-60"
-   ]
-  },
-  {
-   "key": "پروتز_دیجیتال",
-   "tag": "#پروتز_دیجیتال",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "",
-   "use_when": "",
-   "aliases": [],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "episodes/episode-96",
-    "litecast/lite-CAST9"
    ]
   },
   {
@@ -12585,25 +12623,6 @@
    ]
   },
   {
-   "key": "رزین_اینفیلتریشن",
-   "tag": "#رزین_اینفیلتریشن",
-   "domain": null,
-   "words": 2,
-   "definition": "نفوذ رزین در ضایعه، به‌جای تراش و ونیر.",
-   "use_when": "مقاله این تکنیک را تجویز یا ارزیابی کند.",
-   "aliases": [
-    "resin infiltration",
-    "اینفیلتریشن",
-    "icon"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "dentai/dentai-2"
-   ]
-  },
-  {
    "key": "رست_سیت",
    "tag": "#رست_سیت",
    "domain": "clinical",
@@ -13407,6 +13426,24 @@
    ]
   },
   {
+   "key": "صدمین_قسمت",
+   "tag": "#صدمین_قسمت",
+   "domain": "brand",
+   "words": 2,
+   "definition": "اپیزودِ صدمِ دنتکست — نقطه‌ی عطفِ برنامه.",
+   "use_when": "روی اپیزودِ میلستونِ صدم.",
+   "aliases": [
+    "صدمین اپیزود",
+    "قسمت صدم"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "episodes/episode-100"
+   ]
+  },
+  {
    "key": "طراحی_ایمپلنت",
    "tag": "#طراحی_ایمپلنت",
    "domain": "clinical",
@@ -13944,25 +13981,6 @@
    "count": 1,
    "content_ids": [
     "insight/insight-45"
-   ]
-  },
-  {
-   "key": "لکه_سفید",
-   "tag": "#لکه_سفید",
-   "domain": null,
-   "words": 2,
-   "definition": "ضایعه‌ی سفیدِ مینایی، فلوروزیس یا دمینرالیزه.",
-   "use_when": "مقاله درمان لکه‌ی سفید را بررسی کند.",
-   "aliases": [
-    "white spot",
-    "وایت اسپات",
-    "لکه سفید مینایی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "dentai/dentai-2"
    ]
   },
   {
@@ -16045,12 +16063,12 @@
   "translucent zirconia": "نسل زیرکونیا",
   "resin matrix ceramic": "سرامیک هیبرید",
   "dual step impression": "قالبگیری دو مرحله ای",
+  "vertical preparation": "تراش عمودی",
   "self adhesive cement": "سمان سلف ادهزیو",
   "diagnostic reasoning": "استدلال تشخیصی",
   "prosthetic splinting": "اسپلینت پروتزی",
   "proximal preparation": "باکس پروگزیمال",
   "tooth implant bridge": "بریج دندان ایمپلنت",
-  "vertical preparation": "تراش عمودی",
   "lab processing error": "خطای ساخت",
   "internal derangement": "داخل کپسولی",
   "ترمیم کامپوزیت قدیمی": "ریپیر کامپوزیت",
@@ -16153,6 +16171,7 @@
   "secondary failure": "شکست ثانویه",
   "فقدان دندان مجاور": "فضای بی دندان",
   "از دست رفتن دندان": "فقدان دندان",
+  "white spot lesion": "لکه سفید",
   "access management": "مدیریت دسترسی",
   "caries management": "مدیریت پوسیدگی",
   "at home whitening": "هوم بلیچ",
@@ -16440,6 +16459,7 @@
   "office bleach": "بلیچینگ",
   "cleansability": "بهداشت پذیری",
   "تداخل اکلوزال": "تداخل اکلوزالی",
+  "vertical prep": "تراش عمودی",
   "discoloration": "تغییر رنگ",
   "ریشه یابی خطا": "تفکیک منشأ خطا",
   "pulp vitality": "حفظ پالپ",
@@ -16472,7 +16492,6 @@
   "پوسیدگی داخلی": "تخریب داخلی",
   "تداخل دینامیک": "تداخل فانکشنال",
   "بررسی دینامیک": "تداخل فانکشنال",
-  "vertical prep": "تراش عمودی",
   "ترتیب اباتمنت": "ترتیب ساخت اباتمنت",
   "عوض کردن روکش": "تعویض روکش",
   "توالی باندینگ": "توالی باند",
@@ -16576,6 +16595,7 @@
   "بلیچینگ مطبی": "بلیچینگ",
   "interference": "تداخل اکلوزالی",
   "تداخل داروها": "تداخل دارویی",
+  "تراش ورتیکال": "تراش عمودی",
   "error source": "تفکیک منشأ خطا",
   "درآوردن قطعه": "تکنیک خارج سازی",
   "دیواره باریک": "دیواره نازک",
@@ -16604,7 +16624,6 @@
   "proximal box": "باکس پروگزیمال",
   "فاصله لثه ای": "بلک تراینگل",
   "امبراژور باز": "بلک تراینگل",
-  "تراش ورتیکال": "تراش عمودی",
   "تناسب اندازه": "تناسب با مجاور",
   "حرکات لترالی": "حرکات اکسکورسیو",
   "خطای لایبرری": "خطای داده",
@@ -16647,6 +16666,7 @@
   "کور کامپوزیت": "کور کامپوزیتی",
   "پلیمریزاسیون": "کیور",
   "friction fit": "گیر مکانیکی",
+  "صدمین اپیزود": "صدمین قسمت",
   "آرتیکولاسیون": "ارتیکولاسیون",
   "articulation": "ارتیکولاسیون",
   "بایو میمتیک": "بیومیمتیک",
@@ -16662,6 +16682,7 @@
   "فضای پروتزی": "فضای رستوریتیو",
   "زیبایی قدام": "زیبایی قدامی",
   "تنسایل باند": "قدرت باند",
+  "سی ای دی کم": "cad cam",
   "باند سرامیک": "باندینگ سرامیک",
   "cementation": "سمان کردن",
   "feldspathic": "فلدسپاتیک",
@@ -16676,7 +16697,6 @@
   "مارژین دقیق": "مارجین روکش",
   "deep caries": "پوسیدگی عمیق",
   "overcontour": "اورکانتور",
-  "سی ای دی کم": "cad cam",
   "برداشت روکش": "برداشت ترمیم",
   "اورال هایژن": "بهداشت دهان",
   "risk factor": "ریسک فاکتور",
@@ -16751,6 +16771,7 @@
   "ناحیه فورکا": "فورکا",
   "facial flow": "فیشیال فلو",
   "اندازه ذرات": "فیلر",
+  "ضایعات سفید": "لکه سفید",
   "دندان قرینه": "مرجع آناتومیک",
   "جنبه قانونی": "مسئولیت حرفه ای",
   "فرم استخوان": "معماری استخوان",
@@ -16822,6 +16843,7 @@
   "اصلاح مینا": "اناملوپلاستی",
   "تداخل تماس": "تداخل اکلوزالی",
   "تداخل دارو": "تداخل دارویی",
+  "بدون شولدر": "تراش عمودی",
   "craze line": "ترک مینایی",
   "اختلاف رنگ": "تغییر رنگ",
   "vital pulp": "حفظ پالپ",
@@ -16852,7 +16874,6 @@
   "بیسفسفونات": "بیس فسفونات",
   "بی فسفونات": "بیس فسفونات",
   "edentulous": "بیمار بی دندان",
-  "بدون شولدر": "تراش عمودی",
   "توالی تراش": "ترتیب تراش",
   "probe test": "تست سوند",
   "چک با سوند": "تست سوند",
@@ -16886,6 +16907,7 @@
   "لثه چسبنده": "لثه کراتینیزه",
   "white spot": "لکه سفید",
   "وایت اسپات": "لکه سفید",
+  "ضایعه سفید": "لکه سفید",
   "hinge axis": "محور لولایی",
   "هینج اکسیس": "محور لولایی",
   "دید مستقیم": "مدیریت دسترسی",
@@ -17146,6 +17168,7 @@
   "مسیر پیچ": "کانال پیچ زاویه دار",
   "dragging": "کشیدگی قالب",
   "خشک کردن": "کنترل رطوبت",
+  "قسمت صدم": "صدمین قسمت",
   "فرول اثر": "فرول",
   "اثر فرول": "فرول",
   "اکلوزالی": "اکلوزال",
@@ -17162,11 +17185,11 @@
   "overlay": "اورلی",
   "ایمپرشن": "قالبگیری",
   "denture": "پروتز متحرک",
+  "milling": "cad cam",
   "اصل دال": "dahl concept",
   "لوکیتور": "اتچمنت اوردنچر",
   "locator": "اتچمنت اوردنچر",
   "زیر لثه": "ترمیم ساب جینجیوال",
-  "milling": "cad cam",
   "امبرژور": "امبراژور",
   "biobase": "بایوبیس",
   "opacity": "ترانسلوسنسی",
@@ -17227,14 +17250,14 @@
   "ادهسیو": "ادهزیو",
   "خط ختم": "فینیش لاین",
   "اورلای": "اورلی",
+  "میلینگ": "cad cam",
+  "cadcam": "cad cam",
   "silane": "سایلان",
   "misfit": "فیت پروتز",
   "رابردم": "ایزولاسیون",
   "torque": "تورک پیچ",
   "مارژین": "مارجین روکش",
   "margin": "مارجین روکش",
-  "میلینگ": "cad cam",
-  "cadcam": "cad cam",
   "شفافیت": "ترانسلوسنسی",
   "اپسیتی": "ترانسلوسنسی",
   "dentin": "عاج",
@@ -17285,10 +17308,10 @@
   "موقتی": "روکش موقت",
   "e max": "لیتیوم دی سیلیکات",
   "ایمکس": "لیتیوم دی سیلیکات",
+  "کد کم": "cad cam",
   "سیلان": "سایلان",
   "magne": "کتاب مانیه",
   "مرجین": "مارجین روکش",
-  "کد کم": "cad cam",
   "aging": "ltd",
   "سیگار": "دخانیات",
   "ماکاپ": "موک آپ",
@@ -17352,6 +17375,7 @@
   "لوپ": "بزرگ نمایی",
   "بقا": "بقای رستوریشن",
   "بیس": "لاینر",
+  "wsl": "لکه سفید",
   "tmj": "مفصل فکی",
   "mua": "مولتی یونیت اباتمنت",
   "hex": "هگز ایمپلنت",
