@@ -7,6 +7,7 @@
   "dentai",
   "dentcast",
   "dentcast_plus",
+  "episodes",
   "meta",
   "notecast",
   "photocast",
@@ -24,7 +25,7 @@
    "aliases": [],
    "variants": [],
    "co_tags": [],
-   "count": 201,
+   "count": 209,
    "content_ids": [
     "episodes/episode-1",
     "episodes/episode-2",
@@ -220,6 +221,14 @@
     "episodes/episode-148-1",
     "episodes/episode-148-2",
     "episodes/episode-149",
+    "episodes/episode-149-1",
+    "episodes/episode-149-2",
+    "episodes/episode-150",
+    "episodes/episode-150-1",
+    "episodes/episode-150-2",
+    "episodes/episode-151",
+    "episodes/episode-152",
+    "episodes/episode-153",
     "episodes/episode-154",
     "episodes/episode-155",
     "episodes/episode-156",
@@ -616,6 +625,56 @@
    ]
   },
   {
+   "key": "طرح_درمان",
+   "tag": "#طرح_درمان",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "انتخاب مسیر درمان در سطح کل کیس.",
+   "use_when": "مقاله بین مسیرهای درمانی تصمیم بگیرد.",
+   "aliases": [
+    "treatment plan",
+    "پلن درمان",
+    "پلن درمانی",
+    "تریتمنت پلن"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 31,
+   "content_ids": [
+    "episodes/episode-14",
+    "episodes/episode-25",
+    "episodes/episode-64",
+    "episodes/episode-78",
+    "episodes/episode-116",
+    "episodes/episode-117",
+    "episodes/episode-119",
+    "episodes/episode-119-1",
+    "episodes/episode-120",
+    "episodes/episode-121",
+    "episodes/episode-123-5",
+    "episodes/episode-124",
+    "episodes/episode-150-2",
+    "episodes/episode-151",
+    "insight/insight-13",
+    "insight/insight-14",
+    "insight/insight-19",
+    "episodes/episode-152",
+    "episodes/episode-153",
+    "sharehub/share-5",
+    "chairside/chairside-6",
+    "chairside/chairside-11",
+    "episodes/episode-156",
+    "insight/insight-38",
+    "chairside/chairside-19",
+    "chairside/chairside-20",
+    "chairside/chairside-21",
+    "chairside/chairside-22",
+    "episodes/episode-160",
+    "chairside/chairside-24",
+    "chairside/chairside-26"
+   ]
+  },
+  {
    "key": "پروتز_ایمپلنت",
    "tag": "#پروتز_ایمپلنت",
    "domain": "clinical",
@@ -660,6 +719,49 @@
    ]
   },
   {
+   "key": "دنتوپدیا",
+   "tag": "#دنتوپدیا",
+   "domain": "brand",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "aliases": [],
+   "variants": [],
+   "co_tags": [],
+   "count": 29,
+   "content_ids": [
+    "episodes/episode-106-1",
+    "episodes/episode-106-2",
+    "episodes/episode-107-1",
+    "episodes/episode-109-1",
+    "episodes/episode-109-2",
+    "episodes/episode-110-1",
+    "episodes/episode-111-1",
+    "episodes/episode-118-1",
+    "episodes/episode-119-1",
+    "episodes/episode-120-1",
+    "episodes/episode-121-1",
+    "episodes/episode-122-4",
+    "episodes/episode-123-2",
+    "episodes/episode-143-1",
+    "episodes/episode-144-1",
+    "episodes/episode-144-2",
+    "episodes/episode-147-1",
+    "episodes/episode-147-3",
+    "episodes/episode-147-5",
+    "episodes/episode-147-6",
+    "episodes/episode-147-7",
+    "episodes/episode-147-8",
+    "episodes/episode-147-9",
+    "episodes/episode-148-1",
+    "episodes/episode-148-2",
+    "episodes/episode-149-2",
+    "episodes/episode-150-1",
+    "episodes/episode-150-2",
+    "episodes/episode-159-1"
+   ]
+  },
+  {
    "key": "dentai",
    "tag": "#DentAI",
    "domain": "brand",
@@ -699,95 +801,6 @@
     "dentai/dentai-26",
     "dentai/dentai-27",
     "dentai/dentai-28"
-   ]
-  },
-  {
-   "key": "دنتوپدیا",
-   "tag": "#دنتوپدیا",
-   "domain": "brand",
-   "words": 1,
-   "definition": "",
-   "use_when": "",
-   "aliases": [],
-   "variants": [],
-   "co_tags": [],
-   "count": 28,
-   "content_ids": [
-    "episodes/episode-106-1",
-    "episodes/episode-106-2",
-    "episodes/episode-107-1",
-    "episodes/episode-109-1",
-    "episodes/episode-109-2",
-    "episodes/episode-110-1",
-    "episodes/episode-111-1",
-    "episodes/episode-118-1",
-    "episodes/episode-119-1",
-    "episodes/episode-120-1",
-    "episodes/episode-121-1",
-    "episodes/episode-122-4",
-    "episodes/episode-123-2",
-    "episodes/episode-143-1",
-    "episodes/episode-144-1",
-    "episodes/episode-144-2",
-    "episodes/episode-147-1",
-    "episodes/episode-147-3",
-    "episodes/episode-147-5",
-    "episodes/episode-147-6",
-    "episodes/episode-147-7",
-    "episodes/episode-147-8",
-    "episodes/episode-147-9",
-    "episodes/episode-148-1",
-    "episodes/episode-148-2",
-    "episodes/episode-149-2",
-    "episodes/episode-150-1",
-    "episodes/episode-159-1"
-   ]
-  },
-  {
-   "key": "طرح_درمان",
-   "tag": "#طرح_درمان",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "انتخاب مسیر درمان در سطح کل کیس.",
-   "use_when": "مقاله بین مسیرهای درمانی تصمیم بگیرد.",
-   "aliases": [
-    "treatment plan",
-    "پلن درمان",
-    "پلن درمانی",
-    "تریتمنت پلن"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 28,
-   "content_ids": [
-    "episodes/episode-14",
-    "episodes/episode-25",
-    "episodes/episode-64",
-    "episodes/episode-78",
-    "episodes/episode-116",
-    "episodes/episode-117",
-    "episodes/episode-119",
-    "episodes/episode-119-1",
-    "episodes/episode-120",
-    "episodes/episode-121",
-    "episodes/episode-123-5",
-    "episodes/episode-124",
-    "episodes/episode-150-2",
-    "insight/insight-13",
-    "insight/insight-14",
-    "insight/insight-19",
-    "sharehub/share-5",
-    "chairside/chairside-6",
-    "chairside/chairside-11",
-    "episodes/episode-156",
-    "insight/insight-38",
-    "chairside/chairside-19",
-    "chairside/chairside-20",
-    "chairside/chairside-21",
-    "chairside/chairside-22",
-    "episodes/episode-160",
-    "chairside/chairside-24",
-    "chairside/chairside-26"
    ]
   },
   {
@@ -1374,6 +1387,45 @@
    ]
   },
   {
+   "key": "دندانپزشکی_دیجیتال",
+   "tag": "#دندانپزشکی_دیجیتال",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "aliases": [
+    "digital dentistry",
+    "دندونپزشکی دیجیتال",
+    "دیجیتال دنتیستری"
+   ],
+   "variants": [
+    "#دیجیتال",
+    "#DigitalDentistry",
+    "#Digital_Dentistry"
+   ],
+   "co_tags": [],
+   "count": 17,
+   "content_ids": [
+    "episodes/episode-97",
+    "episodes/episode-98",
+    "episodes/episode-105",
+    "episodes/episode-106-2",
+    "episodes/episode-122-2",
+    "episodes/episode-123-1",
+    "episodes/episode-128-1",
+    "episodes/episode-144-2",
+    "episodes/episode-147-9",
+    "episodes/episode-149-2",
+    "episodes/episode-150-1",
+    "litecast/lite-CAST9",
+    "sharehub/share-2",
+    "litecast/lite-CAST14",
+    "episodes/episode-156",
+    "metanotes/meta-15",
+    "metanotes/meta-16"
+   ]
+  },
+  {
    "key": "سمان_رزینی",
    "tag": "#سمان_رزینی",
    "domain": "clinical",
@@ -1408,39 +1460,33 @@
    ]
   },
   {
-   "key": "دندانپزشکی_دیجیتال",
-   "tag": "#دندانپزشکی_دیجیتال",
+   "key": "تشخیص_افتراقی",
+   "tag": "#تشخیص_افتراقی",
    "domain": "clinical",
    "words": 2,
-   "definition": "",
-   "use_when": "",
-   "aliases": [
-    "digital dentistry",
-    "دندونپزشکی دیجیتال",
-    "دیجیتال دنتیستری"
-   ],
-   "variants": [
-    "#دیجیتال"
-   ],
+   "definition": "رسیدن به علت با رد کردن گزینه‌های رقیب، نه با تأیید مستقیم اولین حدس.",
+   "use_when": "مقاله چند علت محتمل را کنار هم بگذارد و یکی‌یکی ردشان کند.",
+   "aliases": [],
+   "variants": [],
    "co_tags": [],
    "count": 16,
    "content_ids": [
-    "episodes/episode-97",
-    "episodes/episode-98",
-    "episodes/episode-105",
-    "episodes/episode-106-2",
-    "episodes/episode-122-2",
-    "episodes/episode-123-1",
-    "episodes/episode-128-1",
-    "episodes/episode-144-2",
-    "episodes/episode-147-9",
-    "episodes/episode-149-2",
-    "litecast/lite-CAST9",
-    "sharehub/share-2",
-    "litecast/lite-CAST14",
-    "episodes/episode-156",
-    "metanotes/meta-15",
-    "metanotes/meta-16"
+    "episodes/episode-117",
+    "episodes/episode-119",
+    "dentai/dentai-1",
+    "insight/insight-9",
+    "insight/insight-11",
+    "photocast/episode-1",
+    "episodes/episode-152",
+    "insight/insight-23",
+    "insight/insight-25",
+    "dentai/dentai-13",
+    "dentai/dentai-14",
+    "chairside/chairside-7",
+    "insight/insight-43",
+    "chairside/chairside-18",
+    "insight/insight-45",
+    "chairside/chairside-27"
    ]
   },
   {
@@ -1517,35 +1563,6 @@
     "notecast/episode-15",
     "notecast/episode-18",
     "episodes/episode-159-1"
-   ]
-  },
-  {
-   "key": "تشخیص_افتراقی",
-   "tag": "#تشخیص_افتراقی",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "رسیدن به علت با رد کردن گزینه‌های رقیب، نه با تأیید مستقیم اولین حدس.",
-   "use_when": "مقاله چند علت محتمل را کنار هم بگذارد و یکی‌یکی ردشان کند.",
-   "aliases": [],
-   "variants": [],
-   "co_tags": [],
-   "count": 15,
-   "content_ids": [
-    "episodes/episode-117",
-    "episodes/episode-119",
-    "dentai/dentai-1",
-    "insight/insight-9",
-    "insight/insight-11",
-    "photocast/episode-1",
-    "insight/insight-23",
-    "insight/insight-25",
-    "dentai/dentai-13",
-    "dentai/dentai-14",
-    "chairside/chairside-7",
-    "insight/insight-43",
-    "chairside/chairside-18",
-    "insight/insight-45",
-    "chairside/chairside-27"
    ]
   },
   {
@@ -1822,6 +1839,42 @@
    ]
   },
   {
+   "key": "سواد_هوش_مصنوعی",
+   "tag": "#سواد_هوش_مصنوعی",
+   "domain": "ai",
+   "words": 3,
+   "definition": "سوادِ هوشِ مصنوعی — مفاهیمِ پایه‌ی AI، یادگیریِ ماشین و یادگیریِ عمیق برای دندانپزشک.",
+   "use_when": "مقاله مفاهیمِ پایه یا مسیرِ یادگیریِ هوش مصنوعی را آموزش دهد.",
+   "aliases": [
+    "یادگیری ماشین",
+    "machine learning",
+    "deep learning",
+    "یادگیری عمیق",
+    "یادگیری ai",
+    "ai research",
+    "مسیر یادگیری هوش مصنوعی"
+   ],
+   "variants": [],
+   "co_tags": [
+    "#AI_Literacy"
+   ],
+   "count": 12,
+   "content_ids": [
+    "episodes/episode-109",
+    "episodes/episode-109-2",
+    "episodes/episode-149-1",
+    "dentai/promptologist/prompt1-1",
+    "dentai/promptologist/prompt1-2",
+    "dentai/promptologist/prompt1-3",
+    "dentai/promptologist/prompt1-4",
+    "dentai/promptologist/prompt1-5",
+    "dentai/promptologist/prompt2-1",
+    "dentai/promptologist/prompt3-1",
+    "dentai/promptologist/prompt4-1",
+    "dentai/promptologist/prompt4-2"
+   ]
+  },
+  {
    "key": "کامپوزیت",
    "tag": "#کامپوزیت",
    "domain": "clinical",
@@ -1933,38 +1986,35 @@
    ]
   },
   {
-   "key": "سواد_هوش_مصنوعی",
-   "tag": "#سواد_هوش_مصنوعی",
-   "domain": "ai",
-   "words": 3,
-   "definition": "سوادِ هوشِ مصنوعی — مفاهیمِ پایه‌ی AI، یادگیریِ ماشین و یادگیریِ عمیق برای دندانپزشک.",
-   "use_when": "مقاله مفاهیمِ پایه یا مسیرِ یادگیریِ هوش مصنوعی را آموزش دهد.",
+   "key": "پروگنوز_دندان",
+   "tag": "#پروگنوز_دندان",
+   "domain": null,
+   "words": 2,
+   "definition": "پیش‌بینیِ سرنوشت یک دندانِ مشخص پیش از سرمایه‌گذاری روی آن.",
+   "use_when": "مقاله پیش از درمان قطعی پروگنوز را بسنجد.",
    "aliases": [
-    "یادگیری ماشین",
-    "machine learning",
-    "deep learning",
-    "یادگیری عمیق",
-    "یادگیری ai",
-    "ai research",
-    "مسیر یادگیری هوش مصنوعی"
+    "پروگنوز",
+    "prognosis",
+    "پیش آگهی دندان"
    ],
-   "variants": [],
-   "co_tags": [
-    "#AI_Literacy"
+   "variants": [
+    "#پروگنوز",
+    "#ارزیابی_دندان"
    ],
+   "co_tags": [],
    "count": 11,
    "content_ids": [
-    "episodes/episode-109",
-    "episodes/episode-109-2",
-    "dentai/promptologist/prompt1-1",
-    "dentai/promptologist/prompt1-2",
-    "dentai/promptologist/prompt1-3",
-    "dentai/promptologist/prompt1-4",
-    "dentai/promptologist/prompt1-5",
-    "dentai/promptologist/prompt2-1",
-    "dentai/promptologist/prompt3-1",
-    "dentai/promptologist/prompt4-1",
-    "dentai/promptologist/prompt4-2"
+    "episodes/episode-150-2",
+    "episodes/episode-151",
+    "insight/insight-7",
+    "insight/insight-14",
+    "episodes/episode-152",
+    "episodes/episode-153",
+    "chairside/chairside-4",
+    "chairside/chairside-9",
+    "chairside/chairside-13",
+    "chairside/chairside-14",
+    "chairside/chairside-21"
    ]
   },
   {
@@ -2584,6 +2634,39 @@
    ]
   },
   {
+   "key": "cad_cam",
+   "tag": "#CAD_CAM",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "طراحی و ساختِ کامپیوتریِ رستوریشن — اسکن، دیزاین و میلینگ/پرینت.",
+   "use_when": "مقاله جریانِ CAD/CAM یا میلینگ را موضوع داشته باشد.",
+   "aliases": [
+    "cad cam",
+    "کدکم",
+    "cad/cam",
+    "میلینگ",
+    "milling",
+    "cadcam",
+    "کد کم",
+    "سی ای دی کم"
+   ],
+   "variants": [
+    "#CADCAM"
+   ],
+   "co_tags": [],
+   "count": 8,
+   "content_ids": [
+    "episodes/episode-96",
+    "episodes/episode-104",
+    "episodes/episode-123-1",
+    "episodes/episode-133",
+    "episodes/episode-149-2",
+    "insight/insight-30",
+    "insight/insight-31",
+    "insight/insight-35"
+   ]
+  },
+  {
    "key": "chatgpt",
    "tag": "#ChatGPT",
    "domain": "ai",
@@ -2763,38 +2846,6 @@
     "dentai/dentai-4",
     "insight/insight-4",
     "dentai/dentai-16"
-   ]
-  },
-  {
-   "key": "cad_cam",
-   "tag": "#CAD_CAM",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "طراحی و ساختِ کامپیوتریِ رستوریشن — اسکن، دیزاین و میلینگ/پرینت.",
-   "use_when": "مقاله جریانِ CAD/CAM یا میلینگ را موضوع داشته باشد.",
-   "aliases": [
-    "cad cam",
-    "کدکم",
-    "cad/cam",
-    "میلینگ",
-    "milling",
-    "cadcam",
-    "کد کم",
-    "سی ای دی کم"
-   ],
-   "variants": [
-    "#CADCAM"
-   ],
-   "co_tags": [],
-   "count": 7,
-   "content_ids": [
-    "episodes/episode-96",
-    "episodes/episode-104",
-    "episodes/episode-123-1",
-    "episodes/episode-133",
-    "insight/insight-30",
-    "insight/insight-31",
-    "insight/insight-35"
    ]
   },
   {
@@ -3091,34 +3142,6 @@
     "dentai/dentai-8",
     "insight/insight-36",
     "dentai/dentai-25"
-   ]
-  },
-  {
-   "key": "پروگنوز_دندان",
-   "tag": "#پروگنوز_دندان",
-   "domain": null,
-   "words": 2,
-   "definition": "پیش‌بینیِ سرنوشت یک دندانِ مشخص پیش از سرمایه‌گذاری روی آن.",
-   "use_when": "مقاله پیش از درمان قطعی پروگنوز را بسنجد.",
-   "aliases": [
-    "پروگنوز",
-    "prognosis",
-    "پیش آگهی دندان"
-   ],
-   "variants": [
-    "#پروگنوز",
-    "#ارزیابی_دندان"
-   ],
-   "co_tags": [],
-   "count": 7,
-   "content_ids": [
-    "insight/insight-7",
-    "insight/insight-14",
-    "chairside/chairside-4",
-    "chairside/chairside-9",
-    "chairside/chairside-13",
-    "chairside/chairside-14",
-    "chairside/chairside-21"
    ]
   },
   {
@@ -6942,24 +6965,6 @@
    ]
   },
   {
-   "key": "digital_dentistry",
-   "tag": "#Digital_Dentistry",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "",
-   "use_when": "",
-   "aliases": [],
-   "variants": [
-    "#DigitalDentistry"
-   ],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "episodes/episode-149-2",
-    "sharehub/share-2"
-   ]
-  },
-  {
    "key": "digital_implant_planning",
    "tag": "#Digital_Implant_Planning",
    "domain": "clinical",
@@ -9641,21 +9646,6 @@
    ]
   },
   {
-   "key": "ai",
-   "tag": "#AI",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "",
-   "use_when": "",
-   "aliases": [],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "episodes/episode-149-1"
-   ]
-  },
-  {
    "key": "angled_screw_channel",
    "tag": "#Angled_Screw_Channel",
    "domain": "clinical",
@@ -12079,6 +12069,27 @@
    "count": 1,
    "content_ids": [
     "sharehub/share-9"
+   ]
+  },
+  {
+   "key": "بیمار_مجازی",
+   "tag": "#بیمار_مجازی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "Virtual Patient — تلفیقِ اسکنِ صورت، CBCT و اسکنِ داخل‌دهانی در یک مدلِ دیجیتالِ یکپارچه برای طراحیِ درمان.",
+   "use_when": "مقاله بیمارِ مجازی/تلفیقِ داده‌های دیجیتال را موضوع داشته باشد.",
+   "aliases": [
+    "virtual patient",
+    "بیمار مجازی",
+    "face scan",
+    "همپوشانی فایل ها",
+    "تلفیق داده دیجیتال"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "episodes/episode-150-1"
    ]
   },
   {
@@ -16568,6 +16579,27 @@
    ]
   },
   {
+   "key": "کنسنسوس_iti",
+   "tag": "#کنسنسوس_ITI",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "بیانیه‌های اجماعیِ ITI — توصیه‌های مبتنی بر شواهد برای درمانِ ایمپلنت.",
+   "use_when": "مقاله به کنسنسوسِ ITI استناد یا آن را مرور کند.",
+   "aliases": [
+    "iti consensus",
+    "کنسنسوس iti",
+    "بیانیه اجماع",
+    "consensus statement",
+    "iti"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "episodes/episode-150"
+   ]
+  },
+  {
    "key": "کور_دندانی",
    "tag": "#کور_دندانی",
    "domain": "clinical",
@@ -16794,6 +16826,19 @@
    "tag": "#adhesive dentistry",
    "domain": "clinical",
    "words": 2,
+   "definition": "",
+   "use_when": "",
+   "aliases": [],
+   "variants": [],
+   "co_tags": [],
+   "count": 0,
+   "content_ids": []
+  },
+  {
+   "key": "ai",
+   "tag": "#AI",
+   "domain": "clinical",
+   "words": 1,
    "definition": "",
    "use_when": "",
    "aliases": [],
@@ -17320,6 +17365,7 @@
   "bonding generations": "نسل باندینگ",
   "interocclusal space": "کمبود فضای عمودی",
   "gingival retraction": "کنترل لثه",
+  "consensus statement": "کنسنسوس iti",
   "دندونپزشکی دیجیتال": "دندانپزشکی دیجیتال",
   "رستوریشن غیرمستقیم": "ترمیم غیرمستقیم",
   "بدون تحلیل استخوان": "zero bone loss",
@@ -17345,6 +17391,7 @@
   "ارتو قبل از زیبایی": "ارتودنسی پیش از زیبایی",
   "clinical reasoning": "استدلال تشخیصی",
   "internal bleaching": "اینترنال بلیچینگ",
+  "تلفیق داده دیجیتال": "بیمار مجازی",
   "painless injection": "تزریق بی درد",
   "flangeless denture": "دنچر بدون فلنج",
   "staged cementation": "سمان مرحله ای",
@@ -17369,10 +17416,10 @@
   "دندان عصب کشی شده": "دندان اندوشده",
   "بالا آوردن مارجین": "dme",
   "دیپ مارژین الویشن": "dme",
+  "دکتر فواد شهابیان": "دکتر شهابیان",
   "systematic review": "متاآنالیز",
   "emergence profile": "پروفایل امرجنس",
   "surface treatment": "آماده سازی سرامیک",
-  "دکتر فواد شهابیان": "دکتر شهابیان",
   "immediate loading": "زمان لود ایمپلنت",
   "primary stability": "ثبات اولیه",
   "long term outcome": "درمان بلندمدت",
@@ -17474,6 +17521,7 @@
   "radiation safety": "ایمنی پرتو",
   "sleeping implant": "ایمپلنت خواب",
   "local anesthesia": "بی حسی",
+  "همپوشانی فایل ها": "بیمار مجازی",
   "ریزورپشن سرویکال": "تحلیل سرویکال",
   "تحلیل گردن دندان": "تحلیل سرویکال",
   "تخریب وسیع داخلی": "تخریب داخلی",
@@ -17572,6 +17620,7 @@
   "بازشدگی کم دهان": "بازشدن محدود دهان",
   "bracket bonding": "باندینگ براکت",
   "پرسونال برندینگ": "برندینگ",
+  "virtual patient": "بیمار مجازی",
   "visual feedback": "بیوفیدبک دیداری",
   "implant biology": "بیولوژی ایمپلنت",
   "occlusal trauma": "ترومای اکلوزال",
@@ -17616,18 +17665,18 @@
   "dental ceramic": "سرامیک دندانی",
   "تحلیل استخوانی": "تحلیل استخوان",
   "طول عمر سرامیک": "دوام ترمیم",
+  "پیش آگهی دندان": "پروگنوز دندان",
   "caries removal": "برداشت پوسیدگی",
   "باند به سرامیک": "باندینگ سرامیک",
   "دندان اندو شده": "دندان اندوشده",
   "پروتکل باندینگ": "پروتکل باند",
-  "پیش آگهی دندان": "پروگنوز دندان",
   "biologic width": "بیولوژیک ویدث",
   "فاصله بیولوژیک": "بیولوژیک ویدث",
+  "کانسپت شهابیان": "دکتر شهابیان",
+  "foad shahabian": "دکتر شهابیان",
   "مرور سیستماتیک": "متاآنالیز",
   "group function": "گروپ فانکشن",
   "تورک بیش از حد": "تورک پیچ",
-  "کانسپت شهابیان": "دکتر شهابیان",
-  "foad shahabian": "دکتر شهابیان",
   "سمان کردن روکش": "سمان کردن",
   "زیرکونیای شفاف": "نسل زیرکونیا",
   "اسنپ آن اسمایل": "snap on smile",
@@ -17724,9 +17773,9 @@
   "prosthodontics": "پروتز",
   "post and core": "پست و کور",
   "ویزیت کلینیکی": "کیس بالینی",
-  "ایمپلنت متحرک": "اوردنچر",
   "یادگیری ماشین": "سواد هوش مصنوعی",
   "deep learning": "سواد هوش مصنوعی",
+  "ایمپلنت متحرک": "اوردنچر",
   "periodontitis": "پریودنتال",
   "اسکنر دیجیتال": "اسکنر داخل دهانی",
   "کراون لنتنینگ": "افزایش طول تاج",
@@ -17853,6 +17902,7 @@
   "فضای عمودی کم": "کمبود فضای عمودی",
   "بند آوردن خون": "کنترل خونریزی",
   "گیر کنترل شده": "کنترل گیر",
+  "iti consensus": "کنسنسوس iti",
   "راهنمای قدامی": "گایدنس قدامی",
   "extended scan": "گسترش اسکن",
   "تصمیم بالینی": "تصمیم درمانی",
@@ -17864,8 +17914,8 @@
   "conservative": "درمان محافظه کارانه",
   "حداقل برداشت": "درمان محافظه کارانه",
   "دوام بلندمدت": "دوام ترمیم",
-  "over denture": "اوردنچر",
   "یادگیری عمیق": "سواد هوش مصنوعی",
+  "over denture": "اوردنچر",
   "زیرو بون لاس": "zero bone loss",
   "آنله سرامیکی": "آنله",
   "اسکن دیجیتال": "قالب گیری دیجیتال",
@@ -18008,6 +18058,7 @@
   "فضای بین فکی": "کمبود فضای عمودی",
   "آنتی ریترکشن": "کنترل عفونت",
   "برگشت مایعات": "کنترل عفونت",
+  "بیانیه اجماع": "کنسنسوس iti",
   "کور کامپوزیت": "کور کامپوزیتی",
   "پلیمریزاسیون": "کیور",
   "friction fit": "گیر مکانیکی",
@@ -18018,15 +18069,15 @@
   "پست اند کور": "پست و کور",
   "case report": "کیس بالینی",
   "بایو مکانیک": "بیومکانیک",
-  "overdenture": "اوردنچر",
   "ai research": "سواد هوش مصنوعی",
+  "overdenture": "اوردنچر",
   "حذف پوسیدگی": "برداشت پوسیدگی",
   "periodontal": "پریودنتال",
+  "سی ای دی کم": "cad cam",
   "هیدروفلوریک": "اچ سرامیک",
   "provisional": "روکش موقت",
   "فضای پروتزی": "فضای رستوریتیو",
   "تنسایل باند": "قدرت باند",
-  "سی ای دی کم": "cad cam",
   "باند سرامیک": "باندینگ سرامیک",
   "زیبایی قدام": "زیبایی قدامی",
   "linkevicius": "کتاب لینکویچیوس",
@@ -18333,12 +18384,12 @@
   "سمان رزین": "سمان رزینی",
   "bone loss": "تحلیل استخوان",
   "composite": "کامپوزیت",
+  "prognosis": "پروگنوز دندان",
   "precision": "دقت اسکن",
   "پست فایبر": "فایبر پست",
   "پریودنتیت": "پریودنتال",
   "پروویژنال": "روکش موقت",
   "قالب گیری": "قالبگیری",
-  "prognosis": "پروگنوز دندان",
   "کدام سمان": "انتخاب سمان",
   "آل آن فور": "ایمپلنت فول آرچ",
   "بدون تراش": "درمان غیرتهاجمی",
@@ -18412,6 +18463,7 @@
   "برند شخصی": "برندینگ",
   "مثلث سیاه": "بلک تراینگل",
   "full arch": "بیمار بی دندان",
+  "face scan": "بیمار مجازی",
   "آینه دستی": "بیوفیدبک دیداری",
   "تریس کردن": "تریس آبسه",
   "عبور سوند": "تست سوند",
@@ -18753,9 +18805,9 @@
   "onlay": "آنله",
   "e max": "لیتیوم دی سیلیکات",
   "ایمکس": "لیتیوم دی سیلیکات",
+  "کد کم": "cad cam",
   "اچ hf": "اچ سرامیک",
   "موقتی": "روکش موقت",
-  "کد کم": "cad cam",
   "سیلان": "سایلان",
   "magne": "کتاب مانیه",
   "مرجین": "مارجین روکش",

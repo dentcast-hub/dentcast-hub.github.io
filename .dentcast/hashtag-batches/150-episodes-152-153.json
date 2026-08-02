@@ -1,0 +1,25 @@
+{
+ "type": "episodes",
+ "enforce": true,
+ "note": "Campaign step 150 - episodes 152 and 153, the FINAL untyped episodes (extract-or-preserve decision, parts 2-3). Episode 152 -> #کشیدن_دندان + #حفظ_دندان + #پروگنوز_دندان + #تشخیص_افتراقی + #طرح_درمان + #ایمپلنت. Episode 153 (final wrap-up) -> #کشیدن_دندان + #حفظ_دندان + #پروگنوز_دندان + #طرح_درمان + #ایمپلنت. All existing concepts. This step completes the episodes type (all 202 articles) and adds it to enforced_types - backlog is 0, so every episode now carries only canonical tags.",
+ "concepts": [],
+ "articles": {
+  "episodes/episode-152": [
+   "#دنتکست",
+   "#کشیدن_دندان",
+   "#حفظ_دندان",
+   "#پروگنوز_دندان",
+   "#تشخیص_افتراقی",
+   "#طرح_درمان",
+   "#ایمپلنت"
+  ],
+  "episodes/episode-153": [
+   "#دنتکست",
+   "#کشیدن_دندان",
+   "#حفظ_دندان",
+   "#پروگنوز_دندان",
+   "#طرح_درمان",
+   "#ایمپلنت"
+  ]
+ }
+}
