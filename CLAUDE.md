@@ -1,5 +1,20 @@
 # DentCast Repo — Publishing Protocol
 
+> **Agent parity — read before acting.** This repo is worked on by more than one
+> agent (Claude Code, Cursor, Codex/GPT). The behavioral contract that makes
+> their output identical — conversation language, which confirmation gates are
+> never automatic, what to do when a capability (web search, Google Drive,
+> ffprobe) is missing, the deterministic hash/build/validate commands, the
+> output-parity checklist, and the git protocol — lives in
+> **`.dentcast/workflows/agent-parity.md`**. `AGENTS.md` at the repo root is the
+> agent-neutral mirror of this file, and `.cursor/rules/*.mdc` are Cursor's
+> routers into the same canonical workflows.
+>
+> **Maintenance rule:** if you change a trigger, a rule, or a section here, make
+> the same change to `AGENTS.md` and `.cursor/rules/dentcast-router.mdc` **in the
+> same commit**. Logic lives in the canonical workflow files; routers only point
+> at them; behavior lives in `agent-parity.md`. None of them duplicates another.
+
 This repo powers DentCast. When the user brings new content to publish:
 
 1. Read `.dentcast/workflows/README.md` and follow it strictly.
@@ -108,7 +123,8 @@ guess.**
 - `tools/` — Python scripts including the main index builder.
 - `index.html` — homepage with Pulse section + latest-content widget.
 - Each content type has its own directory at the repo root (e.g., `/notecast/`, `/insight/`, `/litecast/`, etc.). Confirm exact paths from the URLs stored in brain entries.
-- `.dentcast/workflows/` — publishing workflows.
+- `.dentcast/workflows/` — publishing workflows (+ `agent-parity.md`, the cross-agent behavior contract).
+- `AGENTS.md` (repo root) — agent-neutral mirror of this file, for Cursor / Codex / any other agent. `.cursor/rules/*.mdc` — Cursor routers into the same canonical workflows. All three are kept in sync (see the maintenance rule at the top).
 - `spot/` — central config-driven ad system ("Spot"; the name is deliberately neutral — EasyList's generic `##.dc-ad` rule hid the old `/ads/` + `dc-ad` naming under every adblocker, so never use "ad/ads" in this system's file names, paths, classes, ids, or data attributes). `spot/spot-config.json` is the single source of truth (master + per-slot on/off, premium/sponsor creatives, rotation sequence, per-creative `slots`/`audience` targeting); `spot/spot.js` is injected on every page by a loader hook at the end of `dc-nav.js`. Anonymous + free Plus users see ads; premium users see none; anything switched off leaves zero trace. Docs: `spot/README.md`. No page carries ad markup — never hardcode ads into pages.
 - `plus/pathways.json` — DentCast Plus learning pathways (spec §5 schema; premium Phase 3). A pathway is a curated learning journey, **not** a pillar view: unlike a pillar (one home per item), the **same item can belong to many pathways**, placed at the right prerequisite→advanced position in each. Every specialist publish assigns the new content to its pathway(s) via **workflow step 5.6** (semantic, ask-if-unsure). Tools: `tools/pathway_place.py` (placement proposal + `--insert` + `--coverage`) and `tools/pathway_scout.py` (candidate search + `--steps` + `--coverage`). Catalog/doctrine: `reports/pathways-catalog-2026-07-22.md`. Backend infra is live — `plus-api/src/pathways.ts` loads it (cached, reload-on-change like `content-index.ts`) and `GET/POST /pathways*` (premium-gated) + `GET /me`'s `active_pathway` read through it; `user_pathways` holds enrollment + a derived `current_step`/`completed_at` cache (never advanced by a client call — recomputed from highlights/`user_activity` on every read). Editing the file needs an API redeploy to take effect in production (baked in via `PATHWAYS_PATH`, same as `CONTENT_INDEX_PATH`). Frontend is live too — `/plus/pathways.html` (catalog), `/plus/pathway.html?id=` (step list + enroll), and a "مسیر یادگیری" block on the `/plus/` dashboard (`plus/js/pathways.js` is the shared renderer).
 - **Collections** (premium Phase 3; spec §4's `collections`/`collection_items`, provisioned since migration 0001, live since migration 0012's indexes). Unlike a pathway (founder-curated) or a topic archive (auto-grouped by taxonomy), a collection is **entirely the user's own** — any mix of their own highlights and whole pages, no taxonomy coupling. Backend: `plus-api/src/routes/collections.ts` (full CRUD + idempotent item-add, all `requirePremium`). Frontend: `/plus/collections.html` (catalog), `/plus/collection.html?id=` (items, rename, delete), a "کالکشن‌ها" block on the `/plus/` dashboard, and the **"افزودن به کالکشن"** entry points — a dual-target toolbar button in the workbench (selected highlight, or the whole page if none is selected — same pattern as the یادداشت button) and a per-row button on the dashboard's recent-highlights list. All three go through `plus/js/collections.js`'s `openCollectionPicker()`, which also owns the free-tier gate message (shown on click, not a locked page).

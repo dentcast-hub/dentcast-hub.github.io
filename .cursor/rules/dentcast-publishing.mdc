@@ -1,0 +1,62 @@
+---
+description: Publishing new DentCast content of any type (NoteCast, Insight, LiteCast, DentAI, Promptologist, MetaNote, Chairside, PhotoCast, ShareHub, DentCast+, episode, glossary). Use when the user brings a new متن / post / episode / article to publish on the site, or says «متن جدید دارم» / «این رو منتشر کن».
+alwaysApply: false
+---
+
+# انتشار محتوای جدید — Cursor
+
+**فایل کانونی: `.dentcast/workflows/README.md` (بیش از ۱۲۰۰ خط).**
+کامل بخوانش — از اول تا آخر — بعد شروع کن. خواندن بخشی از آن و شروع کار، نقض
+است. رفتار مشترک: `.dentcast/workflows/agent-parity.md`.
+
+## قبل از شروع
+
+1. `dentcast-brain.json` را بخوان؛ دسته‌ها و آخرین انتریِ هم‌دسته را دربیاور.
+2. تاکسونومی زندهٔ پیلارها را از `tools/build_pillar.py` بخوان (هرگز هاردکد):
+   ```bash
+   python -c "import sys; sys.path.insert(0,'tools'); from build_pillar import PILLARS; import json; print(json.dumps({k:[s['slug'] for s in v['subtopics']] for k,v in PILLARS.items()}, ensure_ascii=False))"
+   ```
+3. مطمئن شو حالت کاری `main` را بازتاب می‌دهد (Hard Rule 8) — بیلدرها و
+   تاکسونومی فقط از آنجا معتبرند.
+
+## ترتیب گام‌ها (هیچ‌کدام حذف نمی‌شود؛ اجرانشده = گزارشِ صریحِ اسکیپ)
+
+فاز ۰ (روتینگ متن/پیپر) → فاز A (کشف) → فاز B (سوال‌های ۱، ۲، ۳، **۳.۵ de-AI**،
+۴، ۴.۷، ۵) → فاز C:
+`0` (شاخهٔ LiteCast) · `1` قفل تمپلیت+هش · `2` ساخت صفحه · `2.4` پیلار/ساب‌تاپیک ·
+`2.5` کپسول «کاوش بیشتر» · `2.6` صفحهٔ فهرست نوع · `3` ممیزی تاریخ/متا ·
+`4` integrity · `4.5` اپیزود والد (NoteCast) · `4.6` prev/next (Promptologist) ·
+`4.7` بک‌لینک دانشنامه · `4.8` لینک درون‌متنی · `4.9` «کاوش بیشتر» صفحهٔ جدید ·
+`4.10` شاخهٔ پیپر · `4.11` فلش‌کارت · `4.12` کوییز · `5` انتری brain ·
+`5.5` تأیید پیلار · `5.6` مسیر یادگیری · `6` پالس · `7` بامپ نسخه · `8` بیلدها
+→ **فاز D** (نسخهٔ انگلیسی + تاگل) → **فاز E** (مارکر نوتیف) → گزارش نهایی.
+
+جدول «انجام‌شده یعنی چه» برای هر ردیف: `agent-parity.md` بخش ۴.
+
+## پرتکرارترین خطاهایی که اینجا رخ می‌دهد
+
+- **۴.۷/۴.۸/۴.۹ را اسکیپ کردن چون «تمپلیت کلون‌شده لینک نداشت»** — صریحاً ممنوع
+  (Hard Rule 11). تحلیل معنایی **تازه** روی همین بدنه الزامی است؛ نتیجهٔ صفر هم
+  باید صریح گزارش شود.
+- **فراموش‌کردن فاز D** — صفحه بدون آینهٔ انگلیسی و بدون تاگل fa↔en ناقص است
+  (Hard Rule 12؛ تنها استثنا LiteCast).
+- **درج انتری در وسط brain** — همیشه انتهای کل آرایه.
+- **حدس‌زدن مدت زمان صوت یا هر عددی** — بپرس (Hard Rule 13).
+- **نداشتن پاراگراف نثر قبل از اولین `<ul>`** — کارتِ تبلیغِ درون‌مقاله جا
+  نمی‌گیرد؛ و آن پاراگراف باید جدا تأیید بگیرد.
+- **بیلدرها را ندویدن یا ترتیبشان را عوض‌کردن** — `stamp-version.py` همیشه آخر.
+
+## بیلدها (فاز C گام ۸)
+
+```bash
+python tools/update-homepage-counters.py
+python tools/build_pillar.py all
+python tools/build_episodes.py            # فقط اگر dentcast.json تغییر کرده
+node tools/build_flashcards_index.mjs     # مگر LiteCast
+node tools/build_quiz_index.mjs           # مگر LiteCast
+python3 .github/scripts/inject_img_attrs.py
+node tools/build_plus_index.mjs           # هر publish که brain را تغییر داده
+python tools/stamp-version.py             # همیشه آخر
+```
+
+بعد از بیلد: `git diff -G'\?v=' pillar/` را ببین که نسخهٔ اسِت‌ها عقب نرفته باشد.
