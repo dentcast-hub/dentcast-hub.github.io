@@ -1,0 +1,36 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 124 - episode 125 and Insight insert 125.1. Episode 125 (NCCL etiology, Goodacre) adds an #ابفرکشن concept, then -> #NCCL + #سایش_دندان + #ابفرکشن. Episode 125.1 (zirconia vs PFM posterior implant crown) folds the bare backlog #PFM onto #روکش_PFM (alias 'PFM' already there), then -> #زیرکونیا_مونولیتیک + #روکش_PFM + #روکش_ایمپلنت + #اینسایت.",
+ "concepts": [
+  {
+   "tag": "#ابفرکشن",
+   "domain": "clinical",
+   "definition": "Abfraction — از دست رفتنِ نسجِ طوقِ دندان بر اثرِ خمشِ ناشی از نیرویِ اکلوزالی، جدا از پوسیدگی.",
+   "use_when": "مقاله ابفرکشن را مکانیزمِ ضایعه‌ی سرویکال بداند.",
+   "aliases": [
+    "abfraction",
+    "ابفراکشن",
+    "خمش سرویکال",
+    "ضایعه خمشی"
+   ]
+  }
+ ],
+ "renames": {
+  "#PFM": "#روکش_PFM"
+ },
+ "articles": {
+  "episodes/episode-125": [
+   "#دنتکست",
+   "#NCCL",
+   "#سایش_دندان",
+   "#ابفرکشن"
+  ],
+  "episodes/episode-125-1": [
+   "#دنتکست",
+   "#زیرکونیا_مونولیتیک",
+   "#روکش_PFM",
+   "#روکش_ایمپلنت",
+   "#اینسایت"
+  ]
+ }
+}
