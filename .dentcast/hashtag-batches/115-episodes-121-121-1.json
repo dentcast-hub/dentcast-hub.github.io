@@ -1,0 +1,38 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 115 - episode 121 and Dentopedia micro-episode 121.1. Episode 121 (posterior-restoration guideline part 1) folds the CamelCase backlog #Posterior_Restoration onto #ترمیم_خلفی (alias added), then -> #ترمیم_خلفی + #پروتز_ثابت + #گایدلاین + #طرح_درمان. Episode 121.1 (managing open contacts around implants) -> #دنتوپدیا + #کانتکت_باز + #از_دست_رفتن_کانتکت + #گیر_غذایی + #ایمپلنت + #پروتز_ایمپلنت (all existing).",
+ "concepts": [
+  {
+   "tag": "#ترمیم_خلفی",
+   "domain": "clinical",
+   "definition": "رستوریشنِ دندان‌های خلفی و انتخابِ نوعِ آن بر پایه‌ی میزانِ تخریب.",
+   "use_when": "مقاله انتخاب یا اجرای ترمیمِ خلفی را موضوع داشته باشد.",
+   "aliases": [
+    "posterior restoration",
+    "ترمیم خلفی",
+    "رستوریشن خلفی"
+   ]
+  }
+ ],
+ "renames": {
+  "#Posterior_Restoration": "#ترمیم_خلفی"
+ },
+ "articles": {
+  "episodes/episode-121": [
+   "#دنتکست",
+   "#ترمیم_خلفی",
+   "#پروتز_ثابت",
+   "#گایدلاین",
+   "#طرح_درمان"
+  ],
+  "episodes/episode-121-1": [
+   "#دنتکست",
+   "#دنتوپدیا",
+   "#کانتکت_باز",
+   "#از_دست_رفتن_کانتکت",
+   "#گیر_غذایی",
+   "#ایمپلنت",
+   "#پروتز_ایمپلنت"
+  ]
+ }
+}
