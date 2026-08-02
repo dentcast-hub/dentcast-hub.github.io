@@ -1,0 +1,61 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 84 - episodes 69 and 70. Episode 69 (eMax ingot types) folds the backlog brand tag #ایمکس into #لیتیوم_دی_سیلیکات (eMax IS lithium disilicate; shares no token, so aliased + renamed, door kept), then -> #لیتیوم_دی_سیلیکات + #سرامیک + #انتخاب_متریال. Episode 70 (office vs home bleaching) promotes backlog #هوم_بلیچ to a home-bleaching concept and adds an 'office bleach' alias to #بلیچینگ so the office side is reachable too, then -> #بلیچینگ + #هوم_بلیچ + #زیبایی.",
+ "concepts": [
+  {
+   "tag": "#لیتیوم_دی_سیلیکات",
+   "domain": "clinical",
+   "definition": "گلاس‌سرامیکِ لیتیوم‌دی‌سیلیکات (اِمکس) — تعادلِ استحکام و زیبایی برای ونیر، اینله/آنله و روکشِ تک‌واحدی.",
+   "use_when": "مقاله لیتیوم‌دی‌سیلیکات یا اِمکس را انتخاب یا ارزیابی کند.",
+   "aliases": [
+    "lithium disilicate",
+    "emax",
+    "e.max",
+    "ایمکس",
+    "امکس",
+    "اینگات ایمکس"
+   ]
+  },
+  {
+   "tag": "#بلیچینگ",
+   "domain": "clinical",
+   "definition": "سفید کردنِ دندان با عواملِ اکسیدکننده.",
+   "use_when": "مقاله بلیچینگ را موضوع یا گزینه‌ی درمان قرار دهد.",
+   "aliases": [
+    "bleaching",
+    "سفید کردن دندان",
+    "whitening",
+    "وایتنینگ",
+    "office bleach",
+    "آفیس بلیچ",
+    "بلیچینگ مطبی"
+   ]
+  },
+  {
+   "tag": "#هوم_بلیچ",
+   "domain": "clinical",
+   "definition": "بلیچینگِ خانگی با تری و ژلِ کم‌غلظت زیرِ نظرِ دندانپزشک.",
+   "use_when": "مقاله بلیچینگ خانگی را در برابر مطبی بسنجد یا تجویز کند.",
+   "aliases": [
+    "home bleach",
+    "بلیچینگ خانگی",
+    "هوم بلیچ",
+    "at home whitening"
+   ]
+  }
+ ],
+ "articles": {
+  "episodes/episode-69": [
+   "#دنتکست",
+   "#لیتیوم_دی_سیلیکات",
+   "#سرامیک",
+   "#انتخاب_متریال"
+  ],
+  "episodes/episode-70": [
+   "#دنتکست",
+   "#بلیچینگ",
+   "#هوم_بلیچ",
+   "#زیبایی"
+  ]
+ }
+}
