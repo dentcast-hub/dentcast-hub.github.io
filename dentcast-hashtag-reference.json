@@ -24,7 +24,7 @@
    "aliases": [],
    "variants": [],
    "co_tags": [],
-   "count": 131,
+   "count": 135,
    "content_ids": [
     "episodes/episode-1",
     "episodes/episode-2",
@@ -150,6 +150,10 @@
     "episodes/episode-115",
     "episodes/episode-116",
     "episodes/episode-117",
+    "episodes/episode-118",
+    "episodes/episode-118-1",
+    "episodes/episode-119",
+    "episodes/episode-119-1",
     "episodes/episode-154",
     "episodes/episode-155",
     "episodes/episode-156",
@@ -720,6 +724,52 @@
    ]
   },
   {
+   "key": "طرح_درمان",
+   "tag": "#طرح_درمان",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "انتخاب مسیر درمان در سطح کل کیس.",
+   "use_when": "مقاله بین مسیرهای درمانی تصمیم بگیرد.",
+   "aliases": [
+    "treatment plan",
+    "پلن درمان",
+    "پلن درمانی",
+    "تریتمنت پلن"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 27,
+   "content_ids": [
+    "episodes/episode-14",
+    "episodes/episode-25",
+    "episodes/episode-64",
+    "episodes/episode-78",
+    "episodes/episode-116",
+    "episodes/episode-117",
+    "episodes/episode-119",
+    "episodes/episode-119-1",
+    "episodes/episode-120",
+    "episodes/episode-123-5",
+    "episodes/episode-124",
+    "episodes/episode-150-2",
+    "insight/insight-13",
+    "insight/insight-14",
+    "insight/insight-19",
+    "sharehub/share-5",
+    "chairside/chairside-6",
+    "chairside/chairside-11",
+    "episodes/episode-156",
+    "insight/insight-38",
+    "chairside/chairside-19",
+    "chairside/chairside-20",
+    "chairside/chairside-21",
+    "chairside/chairside-22",
+    "episodes/episode-160",
+    "chairside/chairside-24",
+    "chairside/chairside-26"
+   ]
+  },
+  {
    "key": "چیرساید",
    "tag": "#چیرساید",
    "domain": "brand",
@@ -900,51 +950,6 @@
    ]
   },
   {
-   "key": "طرح_درمان",
-   "tag": "#طرح_درمان",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "انتخاب مسیر درمان در سطح کل کیس.",
-   "use_when": "مقاله بین مسیرهای درمانی تصمیم بگیرد.",
-   "aliases": [
-    "treatment plan",
-    "پلن درمان",
-    "پلن درمانی",
-    "تریتمنت پلن"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 26,
-   "content_ids": [
-    "episodes/episode-14",
-    "episodes/episode-25",
-    "episodes/episode-64",
-    "episodes/episode-78",
-    "episodes/episode-116",
-    "episodes/episode-117",
-    "episodes/episode-119-1",
-    "episodes/episode-120",
-    "episodes/episode-123-5",
-    "episodes/episode-124",
-    "episodes/episode-150-2",
-    "insight/insight-13",
-    "insight/insight-14",
-    "insight/insight-19",
-    "sharehub/share-5",
-    "chairside/chairside-6",
-    "chairside/chairside-11",
-    "episodes/episode-156",
-    "insight/insight-38",
-    "chairside/chairside-19",
-    "chairside/chairside-20",
-    "chairside/chairside-21",
-    "chairside/chairside-22",
-    "episodes/episode-160",
-    "chairside/chairside-24",
-    "chairside/chairside-26"
-   ]
-  },
-  {
    "key": "تصمیم_درمانی",
    "tag": "#تصمیم_درمانی",
    "domain": "clinical",
@@ -1074,6 +1079,47 @@
    ]
   },
   {
+   "key": "زیبایی",
+   "tag": "#زیبایی",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "aliases": [
+    "استتیک",
+    "esthetic",
+    "aesthetic"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 23,
+   "content_ids": [
+    "episodes/episode-13",
+    "episodes/episode-28",
+    "episodes/episode-32",
+    "episodes/episode-33",
+    "episodes/episode-37",
+    "episodes/episode-39",
+    "episodes/episode-46",
+    "episodes/episode-61",
+    "episodes/episode-68",
+    "episodes/episode-70",
+    "episodes/episode-107",
+    "episodes/episode-116",
+    "episodes/episode-118-1",
+    "episodes/episode-119",
+    "episodes/episode-122-3",
+    "episodes/episode-141",
+    "episodes/episode-147",
+    "notecast/episode-13",
+    "notecast/episode-19",
+    "notecast/episode-28",
+    "notecast/episode-32",
+    "notecast/episode-33",
+    "insight/insight-46"
+   ]
+  },
+  {
    "key": "سرامیک",
    "tag": "#سرامیک",
    "domain": "clinical",
@@ -1110,46 +1156,6 @@
     "notecast/episode-15",
     "notecast/episode-16",
     "notecast/episode-30"
-   ]
-  },
-  {
-   "key": "زیبایی",
-   "tag": "#زیبایی",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "",
-   "use_when": "",
-   "aliases": [
-    "استتیک",
-    "esthetic",
-    "aesthetic"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 22,
-   "content_ids": [
-    "episodes/episode-13",
-    "episodes/episode-28",
-    "episodes/episode-32",
-    "episodes/episode-33",
-    "episodes/episode-37",
-    "episodes/episode-39",
-    "episodes/episode-46",
-    "episodes/episode-61",
-    "episodes/episode-68",
-    "episodes/episode-70",
-    "episodes/episode-107",
-    "episodes/episode-116",
-    "episodes/episode-119",
-    "episodes/episode-122-3",
-    "episodes/episode-141",
-    "episodes/episode-147",
-    "notecast/episode-13",
-    "notecast/episode-19",
-    "notecast/episode-28",
-    "notecast/episode-32",
-    "notecast/episode-33",
-    "insight/insight-46"
    ]
   },
   {
@@ -1363,6 +1369,35 @@
    ]
   },
   {
+   "key": "تشخیص_افتراقی",
+   "tag": "#تشخیص_افتراقی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "رسیدن به علت با رد کردن گزینه‌های رقیب، نه با تأیید مستقیم اولین حدس.",
+   "use_when": "مقاله چند علت محتمل را کنار هم بگذارد و یکی‌یکی ردشان کند.",
+   "aliases": [],
+   "variants": [],
+   "co_tags": [],
+   "count": 15,
+   "content_ids": [
+    "episodes/episode-117",
+    "episodes/episode-119",
+    "dentai/dentai-1",
+    "insight/insight-9",
+    "insight/insight-11",
+    "photocast/episode-1",
+    "insight/insight-23",
+    "insight/insight-25",
+    "dentai/dentai-13",
+    "dentai/dentai-14",
+    "chairside/chairside-7",
+    "insight/insight-43",
+    "chairside/chairside-18",
+    "insight/insight-45",
+    "chairside/chairside-27"
+   ]
+  },
+  {
    "key": "سمان_رزینی",
    "tag": "#سمان_رزینی",
    "domain": "clinical",
@@ -1423,34 +1458,6 @@
     "notecast/episode-6",
     "dentai/dentai-8",
     "dentai/dentai-16"
-   ]
-  },
-  {
-   "key": "تشخیص_افتراقی",
-   "tag": "#تشخیص_افتراقی",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "رسیدن به علت با رد کردن گزینه‌های رقیب، نه با تأیید مستقیم اولین حدس.",
-   "use_when": "مقاله چند علت محتمل را کنار هم بگذارد و یکی‌یکی ردشان کند.",
-   "aliases": [],
-   "variants": [],
-   "co_tags": [],
-   "count": 14,
-   "content_ids": [
-    "episodes/episode-117",
-    "dentai/dentai-1",
-    "insight/insight-9",
-    "insight/insight-11",
-    "photocast/episode-1",
-    "insight/insight-23",
-    "insight/insight-25",
-    "dentai/dentai-13",
-    "dentai/dentai-14",
-    "chairside/chairside-7",
-    "insight/insight-43",
-    "chairside/chairside-18",
-    "insight/insight-45",
-    "chairside/chairside-27"
    ]
   },
   {
@@ -2733,6 +2740,36 @@
    ]
   },
   {
+   "key": "طراحی_لبخند",
+   "tag": "#طراحی_لبخند",
+   "domain": null,
+   "words": 2,
+   "definition": "آنالیز و طراحیِ نسبت‌های لبخند.",
+   "use_when": "مقاله قاعده‌ای برای طراحی لبخند بدهد.",
+   "aliases": [
+    "smile design",
+    "دیزاین لبخند",
+    "آنالیز لبخند",
+    "DSD"
+   ],
+   "variants": [
+    "#آنالیز_لبخند",
+    "#SmileDesign",
+    "#Smile_Design"
+   ],
+   "co_tags": [],
+   "count": 7,
+   "content_ids": [
+    "episodes/episode-28",
+    "episodes/episode-38",
+    "episodes/episode-46",
+    "episodes/episode-118",
+    "episodes/episode-150-1",
+    "litecast/lite-CAST7",
+    "notecast/episode-28"
+   ]
+  },
+  {
    "key": "قالبگیری",
    "tag": "#قالبگیری",
    "domain": "clinical",
@@ -3139,31 +3176,6 @@
    ]
   },
   {
-   "key": "طراحی_لبخند",
-   "tag": "#طراحی_لبخند",
-   "domain": null,
-   "words": 2,
-   "definition": "آنالیز و طراحیِ نسبت‌های لبخند.",
-   "use_when": "مقاله قاعده‌ای برای طراحی لبخند بدهد.",
-   "aliases": [
-    "smile design",
-    "دیزاین لبخند",
-    "آنالیز لبخند",
-    "DSD"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 6,
-   "content_ids": [
-    "episodes/episode-28",
-    "episodes/episode-38",
-    "episodes/episode-46",
-    "episodes/episode-150-1",
-    "litecast/lite-CAST7",
-    "notecast/episode-28"
-   ]
-  },
-  {
    "key": "متاآنالیز",
    "tag": "#متاآنالیز",
    "domain": null,
@@ -3324,6 +3336,33 @@
     "dentai/promptologist/prompt1-4",
     "dentai/promptologist/prompt3-1",
     "dentai/dentai-28"
+   ]
+  },
+  {
+   "key": "global_diagnosis",
+   "tag": "#Global_Diagnosis",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "سیستمِ Global Diagnosis (Robbins) — چارچوبِ تشخیصِ سلسله‌مراتبیِ زیبایی و بازسازی بر پایه‌ی موقعیتِ لبه‌ی انسیزال و لثه.",
+   "use_when": "مقاله سیستم Global Diagnosis یا فرمِ آن را به‌کار گیرد.",
+   "aliases": [
+    "global diagnosis",
+    "تشخیص گلوبال",
+    "فرم gad",
+    "gad",
+    "global analysis"
+   ],
+   "variants": [
+    "#GlobalDiagnosis"
+   ],
+   "co_tags": [],
+   "count": 5,
+   "content_ids": [
+    "episodes/episode-116",
+    "episodes/episode-117",
+    "episodes/episode-118",
+    "episodes/episode-119",
+    "episodes/episode-120"
    ]
   },
   {
@@ -3907,32 +3946,6 @@
     "episodes/episode-73",
     "episodes/episode-74",
     "dentai/dentai-19"
-   ]
-  },
-  {
-   "key": "global_diagnosis",
-   "tag": "#Global_Diagnosis",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "سیستمِ Global Diagnosis (Robbins) — چارچوبِ تشخیصِ سلسله‌مراتبیِ زیبایی و بازسازی بر پایه‌ی موقعیتِ لبه‌ی انسیزال و لثه.",
-   "use_when": "مقاله سیستم Global Diagnosis یا فرمِ آن را به‌کار گیرد.",
-   "aliases": [
-    "global diagnosis",
-    "تشخیص گلوبال",
-    "فرم gad",
-    "gad",
-    "global analysis"
-   ],
-   "variants": [
-    "#GlobalDiagnosis"
-   ],
-   "co_tags": [],
-   "count": 4,
-   "content_ids": [
-    "episodes/episode-116",
-    "episodes/episode-117",
-    "episodes/episode-119",
-    "episodes/episode-120"
    ]
   },
   {
@@ -5556,6 +5569,23 @@
     "insight/insight-2",
     "metanotes/meta-16",
     "insight/insight-60"
+   ]
+  },
+  {
+   "key": "جایگزینی_دندان",
+   "tag": "#جایگزینی_دندان",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "تصمیم به جایگزین کردن دندانِ از دست رفته — و اینکه گاهی جوابش «نه» است.",
+   "use_when": "مقاله ضرورت یا عدم ضرورتِ جایگزینی را بررسی کند.",
+   "aliases": [],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "episodes/episode-119-1",
+    "litecast/lite-CAST12",
+    "episodes/episode-160"
    ]
   },
   {
@@ -7811,22 +7841,6 @@
    "content_ids": [
     "dentcast-plus/video-4",
     "dentcast-plus/video-5"
-   ]
-  },
-  {
-   "key": "جایگزینی_دندان",
-   "tag": "#جایگزینی_دندان",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "تصمیم به جایگزین کردن دندانِ از دست رفته — و اینکه گاهی جوابش «نه» است.",
-   "use_when": "مقاله ضرورت یا عدم ضرورتِ جایگزینی را بررسی کند.",
-   "aliases": [],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "litecast/lite-CAST12",
-    "episodes/episode-160"
    ]
   },
   {
@@ -10248,23 +10262,6 @@
    ]
   },
   {
-   "key": "smile_design",
-   "tag": "#Smile_Design",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "",
-   "use_when": "",
-   "aliases": [],
-   "variants": [
-    "#SmileDesign"
-   ],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "episodes/episode-118"
-   ]
-  },
-  {
    "key": "smoking",
    "tag": "#Smoking",
    "domain": "clinical",
@@ -10467,21 +10464,6 @@
    "count": 1,
    "content_ids": [
     "insight/insight-9"
-   ]
-  },
-  {
-   "key": "آنالیز_لبخند",
-   "tag": "#آنالیز_لبخند",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "",
-   "use_when": "",
-   "aliases": [],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "episodes/episode-118"
    ]
   },
   {
@@ -11406,6 +11388,27 @@
    "count": 1,
    "content_ids": [
     "insight/insight-12"
+   ]
+  },
+  {
+   "key": "بریج",
+   "tag": "#بریج",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "پروتزِ ثابتِ چندواحدی که فضای بی‌دندانی را با اتکا به دندان‌های پایه پر می‌کند (FPD).",
+   "use_when": "مقاله بریج/پروتزِ ثابتِ چندواحدی را موضوع یا گزینه‌ی درمان قرار دهد.",
+   "aliases": [
+    "bridge",
+    "FPD",
+    "بریج دندانی",
+    "fixed partial denture",
+    "پروتز ثابت چند واحدی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "episodes/episode-119-1"
    ]
   },
   {
@@ -12577,6 +12580,27 @@
    "count": 1,
    "content_ids": [
     "photocast/episode-3"
+   ]
+  },
+  {
+   "key": "دنچر_بدون_فلنج",
+   "tag": "#دنچر_بدون_فلنج",
+   "domain": "clinical",
+   "words": 4,
+   "definition": "دنچری که فلنجِ باکالِ لثه‌ای ندارد — برای شرایطِ آناتومیک یا زیباییِ خاص.",
+   "use_when": "مقاله دنچرِ بدون فلنج را موضوع داشته باشد.",
+   "aliases": [
+    "flangeless denture",
+    "دنچر بدون فلنج",
+    "flangeless",
+    "دنچر بدون لثه",
+    "بدون فلنج"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "episodes/episode-118-1"
    ]
   },
   {
@@ -16374,6 +16398,7 @@
   "روکش های به هم چسبیده": "روکش اسپلینت",
   "gradient multilayered": "زیرکونیا مولتی لیر",
   "alleman deliperi rule": "قانون آلمان دلیپری",
+  "fixed partial denture": "بریج",
   "indirect restoration": "ترمیم غیرمستقیم",
   "adhesive restoration": "ترمیم ادهزیو",
   "peripheral seal zone": "psz",
@@ -16395,6 +16420,7 @@
   "مفصل تمپورومندیبولار": "مفصل فکی",
   "angled screw channel": "کانال پیچ زاویه دار",
   "mechanical retention": "گیر مکانیکی",
+  "پروتز ثابت چند واحدی": "بریج",
   "انتخاب اباتمنت پایه": "انتخاب پایه",
   "generation zirconia": "نسل زیرکونیا",
   "monolithic zirconia": "زیرکونیا مونولیتیک",
@@ -16421,11 +16447,11 @@
   "soft tissue shaping": "شکل دهی بافت",
   "keratinized gingiva": "لثه کراتینیزه",
   "hidden malocclusion": "مال اکلوژن پنهان",
+  "patient examination": "معاینه بیمار",
   "fracture resistance": "مقاومت به شکست",
   "bonding generations": "نسل باندینگ",
   "interocclusal space": "کمبود فضای عمودی",
   "gingival retraction": "کنترل لثه",
-  "patient examination": "معاینه بیمار",
   "دندونپزشکی دیجیتال": "دندانپزشکی دیجیتال",
   "رستوریشن غیرمستقیم": "ترمیم غیرمستقیم",
   "digital impression": "قالب گیری دیجیتال",
@@ -16448,6 +16474,7 @@
   "ارتو قبل از زیبایی": "ارتودنسی پیش از زیبایی",
   "clinical reasoning": "استدلال تشخیصی",
   "internal bleaching": "اینترنال بلیچینگ",
+  "flangeless denture": "دنچر بدون فلنج",
   "staged cementation": "سمان مرحله ای",
   "masticatory muscle": "عضلات ماضغه",
   "erosive tooth wear": "فرسایش دندان",
@@ -16599,10 +16626,10 @@
   "بیولوژیکال ویدث": "بیولوژیک ویدث",
   "silane coupling": "سایلان",
   "خارج کردن دندان": "کشیدن دندان",
+  "global analysis": "global diagnosis",
   "ایمپلنت تمام فک": "ایمپلنت فول آرچ",
   "پرسلن فلدسپاتیک": "فلدسپاتیک",
   "جداسازی با زمان": "dwt",
-  "global analysis": "global diagnosis",
   "عدم پذیرش بیمار": "شروع نکردن درمان",
   "کانتور رستوریشن": "کانتور ترمیم",
   "shade selection": "انتخاب shade",
@@ -16754,6 +16781,7 @@
   "منشا کمبود فضا": "فضا کجا رفته",
   "class ii div 1": "مال اکلوژن پنهان",
   "false positive": "مثبت کاذب",
+  "معاینه کلینیکی": "معاینه بیمار",
   "stripped screw": "هرز شدن پیچ",
   "هرز شدن گل پیچ": "هرز شدن پیچ",
   "post and crown": "پست و روکش",
@@ -16765,7 +16793,6 @@
   "cross mounting": "کراس مانت",
   "کشیده شدن قالب": "کشیدگی قالب",
   "composite core": "کور کامپوزیتی",
-  "معاینه کلینیکی": "معاینه بیمار",
   "prosthodontics": "پروتز",
   "ویزیت کلینیکی": "کیس بالینی",
   "post and core": "پست و کور",
@@ -16851,6 +16878,7 @@
   "access cavity": "دسترسی کانال",
   "supernumerary": "دندان اضافه",
   "ساپورت دندانی": "دندان پایه",
+  "دنچر بدون لثه": "دنچر بدون فلنج",
   "دیپ بایت شدید": "دیپ بایت",
   "سنتریک ریلیشن": "رابطه مرکزی",
   "روکش حین ارتو": "روکش در ارتو",
@@ -16867,6 +16895,8 @@
   "مسئولیت حقوقی": "مسئولیت حرفه ای",
   "مسئولیت پزشکی": "مسئولیت حرفه ای",
   "team approach": "مشاوره تیمی",
+  "معاینه بالینی": "معاینه بیمار",
+  "clinical exam": "معاینه بیمار",
   "مولر فک پایین": "مولر مندیبل",
   "سیستم باندینگ": "نسل باندینگ",
   "lateral force": "نیروی لترال",
@@ -16883,8 +16913,6 @@
   "گیر کنترل شده": "کنترل گیر",
   "راهنمای قدامی": "گایدنس قدامی",
   "extended scan": "گسترش اسکن",
-  "معاینه بالینی": "معاینه بیمار",
-  "clinical exam": "معاینه بیمار",
   "تصمیم بالینی": "تصمیم درمانی",
   "تصمیم پروتزی": "تصمیم درمانی",
   "resin cement": "سمان رزینی",
@@ -16903,20 +16931,20 @@
   "استحکام باند": "قدرت باند",
   "اینگات ایمکس": "لیتیوم دی سیلیکات",
   "استتیک قدامی": "زیبایی قدامی",
+  "smile design": "طراحی لبخند",
+  "دیزاین لبخند": "طراحی لبخند",
+  "آنالیز لبخند": "طراحی لبخند",
   "سیل فوری عاج": "ids",
   "ارزیابی پایه": "انتخاب پایه",
   "عرض بیولوژیک": "بیولوژیک ویدث",
   "بیولوژیک ویث": "بیولوژیک ویدث",
   "ترمیم چسبنده": "ترمیم ادهزیو",
   "non invasive": "درمان غیرتهاجمی",
-  "smile design": "طراحی لبخند",
-  "دیزاین لبخند": "طراحی لبخند",
-  "آنالیز لبخند": "طراحی لبخند",
+  "تشخیص گلوبال": "global diagnosis",
   "تحلیل کرستال": "تحلیل استخوان کرستال",
   "چسباندن روکش": "سمان کردن",
   "pascal magne": "کتاب مانیه",
   "پاسکال مانیه": "کتاب مانیه",
-  "تشخیص گلوبال": "global diagnosis",
   "screw cement": "اسکروسمنت",
   "خطای دیجیتال": "خطای لابراتوار",
   "لود زودهنگام": "زمان لود ایمپلنت",
@@ -17162,6 +17190,7 @@
   "هدایت قدامی": "گایدنس قدامی",
   "محدوده اسکن": "گسترش اسکن",
   "گیر اصطکاکی": "گیر مکانیکی",
+  "بریج دندانی": "بریج",
   "بایومیمتیک": "بیومیمتیک",
   "بیو میمتیک": "بیومیمتیک",
   "بیومی متیک": "بیومیمتیک",
@@ -17256,6 +17285,7 @@
   "درد نامشخص": "درد مبهم",
   "ری تریتمنت": "ریتریتمنت",
   "پایه پروتز": "دندان پایه",
+  "flangeless": "دنچر بدون فلنج",
   "رادیولوسنت": "رادیولوسنسی",
   "periapical": "رادیوگرافی کنترل",
   "gag reflex": "رفلکس گگ",
@@ -17567,8 +17597,8 @@
   "milling": "cad cam",
   "ti base": "تیتانیوم بیس",
   "تای بیس": "تیتانیوم بیس",
-  "اصل دال": "dahl concept",
   "فرم gad": "global diagnosis",
+  "اصل دال": "dahl concept",
   "لوکیتور": "اتچمنت اوردنچر",
   "locator": "اتچمنت اوردنچر",
   "زیر لثه": "ترمیم ساب جینجیوال",
@@ -17687,6 +17717,7 @@
   "ساک بک": "کنترل عفونت",
   "نخ کشی": "کنترل لثه",
   "curing": "کیور",
+  "bridge": "بریج",
   "لامینت": "لمینیت",
   "پارسیل": "پارشیال",
   "اورجنس": "امرجنس",
@@ -17753,10 +17784,10 @@
   "ios": "اسکنر داخل دهانی",
   "تمپ": "روکش موقت",
   "dsd": "طراحی لبخند",
+  "gad": "global diagnosis",
   "mbl": "تحلیل استخوان کرستال",
   "fit": "فیت پروتز",
   "دال": "dahl concept",
-  "gad": "global diagnosis",
   "opg": "رادیوگرافی تشخیصی",
   "icl": "از دست رفتن کانتکت",
   "isq": "ثبات اولیه",
@@ -17782,6 +17813,7 @@
   "hex": "هگز ایمپلنت",
   "asc": "کانال پیچ زاویه دار",
   "درگ": "کشیدگی قالب",
+  "fpd": "بریج",
   "hf": "اچ سرامیک",
   "bw": "بیولوژیک ویدث",
   "3y": "نسل زیرکونیا",
