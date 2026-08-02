@@ -35,6 +35,8 @@
     - **Genuine uncertainty still stops and asks — but as a short menu, not an open question.** Multiple plausible pillars/subtopics, a borderline or tangential enrichment candidate, a gap or irregularity in the number sequence, two precedents that could each govern a schema shape, or any other spot where a wrong pick would need to be walked back — stop and ask. Phrase it as a small set of concrete, named options (the candidate pillars, "link it / skip it", the competing precedents) rather than a free-form question, so confirming is a single pick. Fall back to open-ended phrasing only when the options genuinely can't be enumerated (e.g. "what should the Pulse sentence say" when no usable convention exists yet).
     - **Reporting is not optional either way.** Whether a call was auto-applied or asked-and-confirmed, the final summary must say which happened and why, exactly as today — auto-applied items are not silent just because they skipped the question.
 
+15. **Hashtags are a standardized vocabulary, not free text — `dentcast-hashtag-reference.json` is their single source of truth.** Every `#hashtag` written to a brain entry (and shown as a page chip) MUST be a **canonical concept** in the reference library — the same library the AI case-assistant search reads (mirrored into `plus/content-index.json` by `tools/build_plus_index.mjs`). Before writing any hashtag: **(a) resolve first** — check each proposed concept against the library with `python3 tools/hashtag_ref.py --simulate "<phrase>"`, which tokenizes through the alias layer, so a concept already present under **any** spelling (Persian/English/variant) is found; **(b) reuse if it exists** — use that concept's **canonical `#tag`** verbatim; **(c) mint only if genuinely absent** — add a new canonical concept to the library (with `definition`, `use_when`, and the alternative spellings a dentist would type as `aliases`) via a `.dentcast/hashtag-batches/*.json` batch + `hashtag_ref.py --apply`, then use it. Four invariants, non-negotiable: **an alias is never used as a tag** (the canonical form always wins); **a canonical `#tag` is never filed as another concept's alias** (only non-canonical spellings go in `aliases`); **no duplicate concept when one already covers it** (reuse, don't re-mint); **every brain tag has a library entry** — `--apply` enforces this and `--check` must stay green. This does **not** override Hard Rule 13: the hashtags are still proposals shown to the user for confirmation — this rule governs *how a confirmed concept becomes a canonical tag*, and forbids inventing a fresh spelling when the vocabulary already has one. Operationalized in **Phase C step 5.0**; the campaign that seeded the library is `.dentcast/hashtag-campaign-handoff.md`.
+
 ## Phase 0 — Routing: is there an attached paper file? is there text to publish?
 
 Before anything else, classify what the user handed you along two independent axes:
@@ -946,9 +948,50 @@ open/comparison-shaped); confirm no question `name` on the page contains a
 deictic reference per (a); and list any question you rewrote/dropped for
 compliance and anything you asked the user about.
 
+### 5.0. Hashtag standardization against the reference library (Hard Rule 15)
+
+The entry's `hashtags` are a **standardized vocabulary** governed by `dentcast-hashtag-reference.json` — the canonical library the AI case-assistant search reads (mirrored into `plus/content-index.json`, which the live API loads with auto-reload). Settle the **final canonical hashtag list here**, before it is consumed by the brain write (step 5) and the page's visible chips. This runs on **every publish that writes a brain entry** — LiteCast included (its brain is `litecast/lite-glossary.json`; run the same discipline against the library). The `dentcast_cabinet_full_catalog.json` paper `tags` are a **separate** kebab-style system and are **out of scope here** (step 4.10 owns them).
+
+**Step 1 — Draft the concepts.** From the confirmed text, draft the genuinely semantic concepts the article *resolves* (Rule: tag what it resolves, not what it merely mentions) — golden length **2–3 words**, no junk/generic tags, and include the article's own series/name tag where the type uses one. These are concepts to look up, not final tags yet. They remain proposals under Hard Rule 13 (shown to the user).
+
+**Step 2 — Resolve each against the library. Reuse before you mint.**
+```bash
+python3 tools/hashtag_ref.py --simulate "<concept phrase a dentist would type>"
+```
+The phrase is tokenized through the alias layer, so a concept already in the library under **any** spelling surfaces as the top canonical `#tag`. If a real concept already covers it → use that **canonical `#tag`** verbatim on the article. **Never invent a second spelling; never write the alias form as the tag** (Hard Rule 15). (`--words "<tag>"` shows how the engine tokenizes something; `--backlog <type>` lists brain tags with no reference entry.)
+
+**Step 3 — Mint only what's genuinely new.** For a concept the library truly lacks, add a canonical entry via a batch file, then apply it:
+```jsonc
+// .dentcast/hashtag-batches/NNN-<short-name>.json  (NNN = next number in that dir)
+{ "type": "<locked-type>",
+  "concepts": [{
+    "tag": "#<canonical>",                 // 2–3 words, same Persian underscore style as neighbours
+    "domain": "clinical | ai | brand",
+    "definition": "<what the concept IS>",  // real; never fabricate to fill the field
+    "use_when": "<when an article may carry it>",
+    "aliases": ["<english equivalent>", "<spelling/script variant>", "<synonym a dentist types>"]
+  }],
+  "articles": { "<content_id>": ["#<canonical>", "…the article's full canonical tag list…"] } }
+```
+```bash
+python3 tools/hashtag_ref.py --apply .dentcast/hashtag-batches/NNN-<short-name>.json
+```
+Rules for a new concept: **only non-canonical spellings go in `aliases`** — an existing canonical `#tag` is **never** filed as another concept's alias (Hard Rule 15); an alias must not equal another concept's word-set or an alias already in use (the compiler reports collisions — heed them). The guard **refuses** any tag lacking a library entry and any door-closing merge/rename — **fix what it flags, never force it** (`allow_lossy` is almost never right).
+
+**Step 4 — Write canonical tags everywhere, then verify.** Only canonical `#tag`s reach the brain `hashtags` (step 5) and the page's visible chips. **For episodes**, `--apply` rewrites the on-page chips from the brain and `tools/build_episodes.py` (step 8) regenerates `episodes.html`; **for other types**, set the cloned page's chip markup to the canonical list by hand so page and brain agree. Then:
+```bash
+python3 tools/hashtag_ref.py --sync      # recompute counts + compile the alias table into the reference
+node tools/build_plus_index.mjs          # mirror tags+aliases into plus/content-index.json (the live search reads this)
+python3 tools/hashtag_ref.py --check     # every enforced type carries only canonical tags — MUST pass
+python3 tools/hashtag_ref.py --simulate "<a real question a dentist would type at this article>"   # confirm it is reachable, ideally rank-1
+```
+**Report:** which proposed concepts **reused** an existing canonical tag, which were **newly minted** (and their aliases), plus the `--check` result and the `--simulate` rank. (`build_plus_index.mjs` also runs in step 8's rebuild list — running it here too is idempotent and keeps the live index current immediately.)
+
 ### 5. Brain entry
 
 `dentcast-brain.json` is a **single flat array of all entries — there are no per-type sections.** Read it. Find the most recent entry of the LOCKED category and use it as the **schema template**.
+
+**The `hashtags` field is the canonical list resolved in step 5.0 (Hard Rule 15) — do not re-invent or re-spell tags here.** Every tag written must already be a canonical concept in `dentcast-hashtag-reference.json`; if step 5.0 was skipped, go back and run it before writing this entry.
 
 **Schema templating stays category-locked, even though physical placement does not.** Match the locked category by its `type` field — or, for the core podcast episodes, by the **absence of a `type` field** (the 202 episode entries have no `type` key at all). Don't confuse "where to put it" (end of the whole array) with "what shape to give it" (the most recent same-category entry).
 
@@ -1113,7 +1156,7 @@ Run the builders from the project root, in this order. Capture stdout/stderr for
 4. **Flashcards index builder — run whenever step 4.11 added a `DefinedTermSet` to the new page.** Run `node tools/build_flashcards_index.mjs`. It scans every page site-wide for `DefinedTermSet` JSON-LD (skipping LiteCast and `/en/` mirrors) and regenerates `plus/flashcards-index.json` from scratch — **never hand-edit that file**, this builder is its only writer. Skip only on the documented "4.11: skipped — LiteCast" publishes.
 4b. **Quiz index builder — run on every non-LiteCast publish that produced a page (step 4.12).** Run `node tools/build_quiz_index.mjs`. It scans every page's `FAQPage` JSON-LD site-wide (skipping LiteCast, `/en/` mirrors, and homepage), keeps only the binary (yes/no) questions whose answer opens with an explicit «بله»/«خیر» verdict, and regenerates `plus/quiz-index.json` from scratch — **never hand-edit that file**, this builder is its only writer. It prints `<pages>, <questions> binary questions (of <N> FAQ items scanned)`; the "scanned − kept" gap is the open/hedged questions correctly left out of the scored bank. Skip only on the documented "4.12: skipped — LiteCast" publishes.
 5. **Image attributes backfill.** Run `python3 .github/scripts/inject_img_attrs.py` (idempotent, cheap). New pages cloned in this publish may carry images without intrinsic `width`/`height` (CLS) or `alt`; this backfills them site-wide. `--check` mode exists for CI.
-5b. **Plus content-index builder — run on every publish that wrote/changed a brain entry (i.e. every non-paper-only publish).** Run `node tools/build_plus_index.mjs`. It regenerates `plus/content-index.json` from `dentcast-brain.json` (+ `glossary/glossary.json` + the pillar pages) — the single taxonomy model the **DentCast Plus «میز کار» dashboard navigation tree** and the homepage "last read" resolver both read (`content_id` → `{cluster, subtopic, type, title, url}`). **A stale content-index silently drops the new page from the میز کار tree**, so this builder must run whenever brain content changes. It is the only writer of `plus/content-index.json` — never hand-edit that file. (Note: the `notify-new-articles` Action's sibling CI job `sitemap_only.yml` also runs this builder — and `gen_sitemap.py` — on push to `main`, so the live site self-heals even if this local step is missed; running it here keeps the committed tree correct and the local step-8 verification honest. The **«seen» ticks and study-mode/میز کار activation are separate and path-based** — they need no builder, only that the page lives under a ticked folder and appears on its landing page.)
+5b. **Plus content-index builder — run on every publish that wrote/changed a brain entry (i.e. every non-paper-only publish).** Run `node tools/build_plus_index.mjs`. It regenerates `plus/content-index.json` from `dentcast-brain.json` (+ `glossary/glossary.json` + the pillar pages) — the single taxonomy model the **DentCast Plus «میز کار» dashboard navigation tree** and the homepage "last read" resolver both read (`content_id` → `{cluster, subtopic, type, title, url}`). **It also mirrors the standardized hashtag vocabulary** — every real `#tag` and the compiled **alias table** from `dentcast-hashtag-reference.json` — into `content-index.json`, which is what the AI case-assistant search folds queries and hashtags through (Hard Rule 15 / step 5.0). If step 5.0 minted or re-aliased any concept, this run is what carries it to the live search, so it must run after that. **A stale content-index silently drops the new page from the میز کار tree**, so this builder must run whenever brain content changes. It is the only writer of `plus/content-index.json` — never hand-edit that file. (Note: the `notify-new-articles` Action's sibling CI job `sitemap_only.yml` also runs this builder — and `gen_sitemap.py` — on push to `main`, so the live site self-heals even if this local step is missed; running it here keeps the committed tree correct and the local step-8 verification honest. The **«seen» ticks and study-mode/میز کار activation are separate and path-based** — they need no builder, only that the page lives under a ticked folder and appears on its landing page.)
 6. **Version stamper — always run LAST.** Run `python tools/stamp-version.py` (step 7). It must run **after** the other builders so the content hash reflects the final state and so it overwrites any version strings they emitted. Report the old → new content version.
 
 After the pillar builder finishes, verify:
