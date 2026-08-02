@@ -1,0 +1,59 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 53 - episodes 7 and 8. Episode 7 (DME) joins the existing #DME concept; the page's own keyword spelling 'دیپ مارژین الویشن' becomes an alias, and 'ایزولیشن' is added as a spelling of #ایزولاسیون (DME resolves the cannot-isolate-deep-margin problem, so the tag is earned, not mentioned). #بیومیمتیک kept: DME, like IDS, is a technique of the adhesive/biomimetic school. Episode 8 (ceramic classification) joins #سرامیک_دندانی with the query forms 'انواع سرامیک'/'طبقه بندی سرامیک' as aliases.",
+ "concepts": [
+  {
+   "tag": "#DME",
+   "domain": "clinical",
+   "definition": "Deep Margin Elevation — بالا آوردنِ مارجینِ عمیق با کامپوزیت تا ایزولاسیون و باندِ ترمیمِ غیرمستقیم ممکن شود.",
+   "use_when": "مقاله DME را آموزش یا ارزیابی کند.",
+   "aliases": [
+    "deep margin elevation",
+    "دی ام ای",
+    "بالا آوردن مارجین",
+    "دیپ مارژین الویشن",
+    "دیپ مارجین"
+   ]
+  },
+  {
+   "tag": "#ایزولاسیون",
+   "domain": "clinical",
+   "definition": "خشک و ایزوله نگه داشتنِ میدانِ کار برای باندِ قابل‌اعتماد.",
+   "use_when": "مقاله ایزولاسیون را شرط یا مانع درمان بداند.",
+   "aliases": [
+    "isolation",
+    "رابردم",
+    "ایزوله کردن",
+    "ایزولیشن"
+   ]
+  },
+  {
+   "tag": "#سرامیک_دندانی",
+   "domain": "clinical",
+   "definition": "خانواده‌ی سرامیک‌های دندانی و دسته‌بندی‌شان.",
+   "use_when": "مقاله انواع سرامیک را دسته‌بندی یا مقایسه کند.",
+   "aliases": [
+    "dental ceramic",
+    "انواع سرامیک",
+    "طبقه بندی سرامیک",
+    "مواد سرامیکی"
+   ]
+  }
+ ],
+ "articles": {
+  "episodes/episode-7": [
+   "#دنتکست",
+   "#DME",
+   "#ترمیم_غیرمستقیم",
+   "#ادهزیو",
+   "#ایزولاسیون",
+   "#بیومیمتیک"
+  ],
+  "episodes/episode-8": [
+   "#دنتکست",
+   "#سرامیک",
+   "#سرامیک_دندانی",
+   "#روکش"
+  ]
+ }
+}

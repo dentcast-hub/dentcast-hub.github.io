@@ -1,0 +1,49 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 50 - episodes 1 and 2. Opens the episodes type. Episode 1 is the podcast's own intro (brand only, unchanged). Episode 2 (cement classification + selection for crowns) grounded by its own notecast (notecast/episode-2). No new concepts: every tag already exists in the reference. Fills the empty definition of #سمان_کردن (episodes own it) and codifies the series role of #دنتکست that episodes 154-160 already practice.",
+ "concepts": [
+  {
+   "tag": "#دنتکست",
+   "domain": "brand",
+   "definition": "نام خودِ پادکست.",
+   "use_when": "تگِ سریِ پوشه‌ی episodes: روی هر اپیزودِ صوتیِ دنتکست؛ و روی مدخل‌هایی که خودِ دنتکست موضوعشان است.",
+   "aliases": []
+  },
+  {
+   "tag": "#سمان_کردن",
+   "domain": "clinical",
+   "definition": "عملِ سمان کردنِ رستوریشن — اصول و مراحلِ نشاندنِ روکش با سمان.",
+   "use_when": "مقاله خودِ عملِ سمان کردن (اصول، مراحل، تکنیک) را آموزش دهد، نه صرفاً انتخابِ سمان.",
+   "aliases": [
+    "سمان کردن",
+    "سمان کردن روکش",
+    "چسباندن روکش",
+    "cementation"
+   ]
+  },
+  {
+   "tag": "#انتخاب_سمان",
+   "domain": "clinical",
+   "definition": "انتخاب سمان بر اساس متریال، گیر و شرایط کیس.",
+   "use_when": "مقاله بین سمان‌ها انتخاب کند.",
+   "aliases": [
+    "کدام سمان",
+    "سمان مناسب",
+    "cement selection",
+    "انواع سمان"
+   ]
+  }
+ ],
+ "articles": {
+  "episodes/episode-1": [
+   "#دنتکست"
+  ],
+  "episodes/episode-2": [
+   "#دنتکست",
+   "#سمان",
+   "#انتخاب_سمان",
+   "#سمان_کردن",
+   "#روکش"
+  ]
+ }
+}

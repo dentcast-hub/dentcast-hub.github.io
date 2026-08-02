@@ -1,0 +1,34 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 51 - episodes 3 and 4. Episode 3 (resin-cement focus, grounded by notecast/episode-3) gets the cement concepts it actually resolves. Episode 4 is THE bonding-generations article, so it gets a dedicated #نسل_باندینگ concept; #بیومیمتیک is removed from it as a copy-paste tag (caption/keywords are purely about adhesive generations; 52 other articles keep that door open).",
+ "concepts": [
+  {
+   "tag": "#نسل_باندینگ",
+   "domain": "clinical",
+   "definition": "دسته‌بندیِ سیستم‌های باندینگ به نسل‌ها — از اچ-اند-رینسِ چندمرحله‌ای تا سلف‌اچ و یونیورسال — و تفاوتِ عملکردشان.",
+   "use_when": "مقاله نسل‌های باندینگ را مرور یا مقایسه کند.",
+   "aliases": [
+    "نسل باندینگ",
+    "نسل های باندینگ",
+    "نسل ادهزیو",
+    "bonding generations",
+    "سیستم باندینگ"
+   ]
+  }
+ ],
+ "articles": {
+  "episodes/episode-3": [
+   "#دنتکست",
+   "#سمان",
+   "#سمان_رزینی",
+   "#انتخاب_سمان",
+   "#سمان_کردن"
+  ],
+  "episodes/episode-4": [
+   "#دنتکست",
+   "#باندینگ",
+   "#ادهزیو",
+   "#نسل_باندینگ"
+  ]
+ }
+}
