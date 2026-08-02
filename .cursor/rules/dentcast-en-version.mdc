@@ -1,0 +1,48 @@
+---
+description: Producing the English (en) mirror of an existing DentCast page plus the fa↔en language toggle. Use when the user says «… رو انگلیسی کن» / «نسخهٔ انگلیسیِ …», or when Phase D of a publish needs the English counterpart.
+alwaysApply: false
+---
+
+# نسخهٔ انگلیسی — Cursor
+
+**فایل کانونی: `.dentcast/workflows/en-version.md`.** کامل بخوانش، بعد شروع کن.
+رفتار مشترک: `.dentcast/workflows/agent-parity.md`.
+
+**از روتر انتشار استفاده نکن.** این ورکفلو محتوای جدید نمی‌سازد — فقط یک صفحهٔ
+منتشرشدهٔ موجود را ترجمه می‌کند.
+
+## دو مسیر ورود
+
+1. تریگر مستقیم کاربر («… رو انگلیسی کن») — برای صفحه‌های قدیمی که آینهٔ en ندارند.
+2. **فاز D** ورکفلوی انتشار — خودکار، در انتهای هر publish روی `.org`.
+   همان ماشین، همان قواعد.
+
+## نکات که بیشترین اشتباه سرشان رخ می‌دهد
+
+- **مسیر مکانیکی است:** `/{type}/en/{same-filename}.html`. نه تغییر نام، نه flatten.
+- **chrome از `metanotes/en/meta-1.html`، بدنه از نوعِ خودِ صفحهٔ منبع.** صفحهٔ en
+  باید مثل نوع خودش به انگلیسی دربیاید، نه مثل یک متانوت.
+- **`metanotes/en/meta-1.html` فقط خوانده می‌شود** — هشش در انتها باید تغییر
+  نکرده باشد.
+- **تاگل واقعیِ per-document، روی هر دو طرف**، و دقیقاً معکوس هم:
+  en → `../{file}.html` («فارسی») و fa → `en/{file}.html` («English»). هیچ‌وقت
+  به meta-1 لینک نده. CSS مربوط به `.lang-btn` هم باید در صفحهٔ fa باشد.
+- **صفحهٔ en از اکوسیستم brain بیرون است:** نه انتری brain، نه خط پالس، نه
+  کپسول «کاوش بیشتر»، نه ۴.۷/۴.۸/۴.۹.
+- **دقیقاً دو فایل تغییر می‌کند:** صفحهٔ en جدید + صفحهٔ fa منبع.
+- **`/dc-article.css` را به صفحهٔ en لینک نکن** (RTL است) — معادل LTR درون‌خطی.
+- **گلاسِ تکراری را حذف کن:** «اسکن‌بادی (Scanbody)» در انگلیسی نباید بشود
+  `scanbody (Scanbody)`.
+
+## دستورها
+
+```bash
+sha256sum metanotes/en/meta-1.html <source-fa-page>   # قبل و بعد
+python3 .github/scripts/inject_hreflang.py            # جفت‌سازی دیسک‌محور
+python3 .github/scripts/gen_sitemap.py
+python tools/stamp-version.py                         # آخر
+# چک گلاس تکراری:
+python3 -c "import re,sys; t=open(sys.argv[1],encoding='utf-8').read(); print([m.group(0) for m in re.finditer(r'\b([A-Za-z][A-Za-z-]{2,30})\s*\(\s*\1\s*\)', t, re.I)])" <en-page>
+```
+
+**LiteCast استثناست:** فقط `.ir`، بدون hreflang، بدون آینهٔ en و بدون تاگل.
