@@ -133,7 +133,8 @@ python tools/build_episodes.py            # فقط اگر dentcast.json تغیی
 node tools/build_flashcards_index.mjs     # مگر اینکه ۴.۱۱ اسکیپ شده باشد (LiteCast)
 node tools/build_quiz_index.mjs           # مگر اینکه ۴.۱۲ اسکیپ شده باشد (LiteCast)
 python3 .github/scripts/inject_img_attrs.py
-node tools/build_plus_index.mjs           # هر publish که brain را تغییر داده
+node tools/build_plus_index.mjs           # هر publish که brain را تغییر داده (تگ‌ها + جدول الیاس هشتگ را هم آینه می‌کند)
+python3 tools/hashtag_ref.py --check      # هر تگِ brain باید conceptِ کانونیکالِ کتابخانه باشد (Hard Rule 15 / گام ۵.۰) — باید سبز بماند
 python tools/stamp-version.py             # همیشه آخر
 
 # فاز D (نسخهٔ انگلیسی)
