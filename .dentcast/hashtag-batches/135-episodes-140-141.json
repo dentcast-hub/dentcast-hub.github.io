@@ -1,0 +1,23 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 135 - episodes 140 and 141 (ZBL prosthetic-material parts 2-3), existing concepts. Episode 140 (soft-tissue response to material) -> #پروتز_ایمپلنت + #مدیریت_بافت_نرم + #زیست_سازگاری + #زیرکونیا + #Zero_Bone_Loss. Episode 141 (subgingival material, polished zirconia, plaque) -> #انتخاب_متریال + #پروتز_ایمپلنت + #ترمیم_ساب_جینجیوال + #زیبایی + #Zero_Bone_Loss (canonical form; the Persian #زیرو_بون_لاس it carried is already unified via alias).",
+ "concepts": [],
+ "articles": {
+  "episodes/episode-140": [
+   "#دنتکست",
+   "#پروتز_ایمپلنت",
+   "#مدیریت_بافت_نرم",
+   "#زیست_سازگاری",
+   "#زیرکونیا",
+   "#Zero_Bone_Loss"
+  ],
+  "episodes/episode-141": [
+   "#دنتکست",
+   "#انتخاب_متریال",
+   "#پروتز_ایمپلنت",
+   "#ترمیم_ساب_جینجیوال",
+   "#زیبایی",
+   "#Zero_Bone_Loss"
+  ]
+ }
+}

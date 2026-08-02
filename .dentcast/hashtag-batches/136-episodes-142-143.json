@@ -1,0 +1,38 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 136 - episodes 142 and 143 (TMD, Dawson to Okeson, parts 1-2). Episode 142 -> #TMD + #اکلوژن + #داوسون + #اوکیسون. Episode 143 folds the backlog #درد_فک onto #درد_فکی (shares 'درد'; 'درد فک' alias added), then -> #TMD + #درد_فکی + #اکلوژن + #رابطه_مرکزی.",
+ "concepts": [
+  {
+   "tag": "#درد_فکی",
+   "domain": "clinical",
+   "definition": "دردِ ناحیه‌ی فک و صورت — دردِ اوروفاسیال و افتراقِ منشأ آن.",
+   "use_when": "مقاله دردِ فکی/اوروفاسیال را افتراق یا مدیریت کند.",
+   "aliases": [
+    "jaw pain",
+    "درد اوروفاسیال",
+    "orofacial pain",
+    "درد صورت",
+    "درد فک"
+   ]
+  }
+ ],
+ "renames": {
+  "#درد_فک": "#درد_فکی"
+ },
+ "articles": {
+  "episodes/episode-142": [
+   "#دنتکست",
+   "#TMD",
+   "#اکلوژن",
+   "#داوسون",
+   "#اوکیسون"
+  ],
+  "episodes/episode-143": [
+   "#دنتکست",
+   "#TMD",
+   "#درد_فکی",
+   "#اکلوژن",
+   "#رابطه_مرکزی"
+  ]
+ }
+}
