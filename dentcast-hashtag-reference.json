@@ -24,7 +24,7 @@
    "aliases": [],
    "variants": [],
    "co_tags": [],
-   "count": 111,
+   "count": 115,
    "content_ids": [
     "episodes/episode-1",
     "episodes/episode-2",
@@ -130,6 +130,10 @@
     "episodes/episode-102",
     "episodes/episode-103",
     "episodes/episode-104",
+    "episodes/episode-105",
+    "episodes/episode-106",
+    "episodes/episode-106-1",
+    "episodes/episode-106-2",
     "episodes/episode-154",
     "episodes/episode-155",
     "episodes/episode-156",
@@ -609,6 +613,48 @@
    ]
   },
   {
+   "key": "دنتوپدیا",
+   "tag": "#دنتوپدیا",
+   "domain": "brand",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "aliases": [],
+   "variants": [],
+   "co_tags": [],
+   "count": 28,
+   "content_ids": [
+    "episodes/episode-106-1",
+    "episodes/episode-106-2",
+    "episodes/episode-107-1",
+    "episodes/episode-109-1",
+    "episodes/episode-109-2",
+    "episodes/episode-110-1",
+    "episodes/episode-111-1",
+    "episodes/episode-118-1",
+    "episodes/episode-119-1",
+    "episodes/episode-120-1",
+    "episodes/episode-121-1",
+    "episodes/episode-122-4",
+    "episodes/episode-123-2",
+    "episodes/episode-143-1",
+    "episodes/episode-144-1",
+    "episodes/episode-144-2",
+    "episodes/episode-147-1",
+    "episodes/episode-147-3",
+    "episodes/episode-147-5",
+    "episodes/episode-147-6",
+    "episodes/episode-147-7",
+    "episodes/episode-147-8",
+    "episodes/episode-147-9",
+    "episodes/episode-148-1",
+    "episodes/episode-148-2",
+    "episodes/episode-149-2",
+    "episodes/episode-150-1",
+    "episodes/episode-159-1"
+   ]
+  },
+  {
    "key": "پروتز_ثابت",
    "tag": "#پروتز_ثابت",
    "domain": "clinical",
@@ -654,47 +700,6 @@
     "insight/insight-34",
     "insight/insight-49",
     "insight/insight-54"
-   ]
-  },
-  {
-   "key": "دنتوپدیا",
-   "tag": "#دنتوپدیا",
-   "domain": "brand",
-   "words": 1,
-   "definition": "",
-   "use_when": "",
-   "aliases": [],
-   "variants": [],
-   "co_tags": [],
-   "count": 27,
-   "content_ids": [
-    "episodes/episode-106-1",
-    "episodes/episode-107-1",
-    "episodes/episode-109-1",
-    "episodes/episode-109-2",
-    "episodes/episode-110-1",
-    "episodes/episode-111-1",
-    "episodes/episode-118-1",
-    "episodes/episode-119-1",
-    "episodes/episode-120-1",
-    "episodes/episode-121-1",
-    "episodes/episode-122-4",
-    "episodes/episode-123-2",
-    "episodes/episode-143-1",
-    "episodes/episode-144-1",
-    "episodes/episode-144-2",
-    "episodes/episode-147-1",
-    "episodes/episode-147-3",
-    "episodes/episode-147-5",
-    "episodes/episode-147-6",
-    "episodes/episode-147-7",
-    "episodes/episode-147-8",
-    "episodes/episode-147-9",
-    "episodes/episode-148-1",
-    "episodes/episode-148-2",
-    "episodes/episode-149-2",
-    "episodes/episode-150-1",
-    "episodes/episode-159-1"
    ]
   },
   {
@@ -1168,6 +1173,43 @@
    ]
   },
   {
+   "key": "اباتمنت",
+   "tag": "#اباتمنت",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "قطعه‌ی واسط بین ایمپلنت و روکش.",
+   "use_when": "مقاله طراحی، انتخاب یا مشکلی از اباتمنت را تعیین تکلیف کند.",
+   "aliases": [
+    "abutment",
+    "ابوتمنت",
+    "آباتمنت"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 19,
+   "content_ids": [
+    "episodes/episode-80",
+    "episodes/episode-81",
+    "episodes/episode-102",
+    "episodes/episode-103",
+    "episodes/episode-104",
+    "episodes/episode-105",
+    "episodes/episode-106",
+    "episodes/episode-115",
+    "litecast/lite-CAST10",
+    "litecast/lite-CAST18",
+    "dentcast-plus/video-4",
+    "metanotes/meta-8",
+    "dentcast-plus/video-5",
+    "insight/insight-35",
+    "episodes/episode-157",
+    "insight/insight-44",
+    "insight/insight-52",
+    "chairside/chairside-23",
+    "insight/insight-60"
+   ]
+  },
+  {
    "key": "متانوت",
    "tag": "#متانوت",
    "domain": "brand",
@@ -1198,41 +1240,6 @@
     "metanotes/meta-17",
     "metanotes/meta-18",
     "metanotes/meta-19"
-   ]
-  },
-  {
-   "key": "اباتمنت",
-   "tag": "#اباتمنت",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "قطعه‌ی واسط بین ایمپلنت و روکش.",
-   "use_when": "مقاله طراحی، انتخاب یا مشکلی از اباتمنت را تعیین تکلیف کند.",
-   "aliases": [
-    "abutment",
-    "ابوتمنت",
-    "آباتمنت"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 17,
-   "content_ids": [
-    "episodes/episode-80",
-    "episodes/episode-81",
-    "episodes/episode-102",
-    "episodes/episode-103",
-    "episodes/episode-104",
-    "episodes/episode-115",
-    "litecast/lite-CAST10",
-    "litecast/lite-CAST18",
-    "dentcast-plus/video-4",
-    "metanotes/meta-8",
-    "dentcast-plus/video-5",
-    "insight/insight-35",
-    "episodes/episode-157",
-    "insight/insight-44",
-    "insight/insight-52",
-    "chairside/chairside-23",
-    "insight/insight-60"
    ]
   },
   {
@@ -2043,6 +2050,39 @@
    ]
   },
   {
+   "key": "اسکنر_داخل_دهانی",
+   "tag": "#اسکنر_داخل_دهانی",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "اسکنرِ داخل‌دهانی که قالبِ دیجیتالِ مستقیم می‌گیرد.",
+   "use_when": "مقاله اسکنر داخل‌دهانی را موضوع داشته باشد.",
+   "aliases": [
+    "intraoral scanner",
+    "اسکنر داخل دهانی",
+    "اسکنر دیجیتال",
+    "IOS",
+    "اسکنر"
+   ],
+   "variants": [
+    "#اسکن_داخل_دهانی"
+   ],
+   "co_tags": [
+    "#Intraoral_Scanner"
+   ],
+   "count": 9,
+   "content_ids": [
+    "episodes/episode-106-2",
+    "episodes/episode-122-2",
+    "episodes/episode-128-1",
+    "episodes/episode-149-2",
+    "sharehub/share-2",
+    "insight/insight-33",
+    "insight/insight-40",
+    "dentai/dentai-21",
+    "metanotes/meta-16"
+   ]
+  },
+  {
    "key": "افتادن_روکش",
    "tag": "#افتادن_روکش",
    "domain": "clinical",
@@ -2382,32 +2422,6 @@
     "dentai/dentai-25",
     "episodes/episode-159-1",
     "metanotes/meta-14"
-   ]
-  },
-  {
-   "key": "اسکنر_داخل_دهانی",
-   "tag": "#اسکنر_داخل_دهانی",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "اسکنر داخل‌دهانی و اصولِ درستِ کار با آن.",
-   "use_when": "مقاله دقت، تکنیک یا محدودیتِ اسکن را بررسی کند.",
-   "aliases": [],
-   "variants": [
-    "#اسکن_داخل_دهانی"
-   ],
-   "co_tags": [
-    "#Intraoral_Scanner"
-   ],
-   "count": 8,
-   "content_ids": [
-    "episodes/episode-122-2",
-    "episodes/episode-128-1",
-    "episodes/episode-149-2",
-    "sharehub/share-2",
-    "insight/insight-33",
-    "insight/insight-40",
-    "dentai/dentai-21",
-    "metanotes/meta-16"
    ]
   },
   {
@@ -4819,7 +4833,7 @@
    "key": "intraoral_scanner",
    "tag": "#Intraoral_Scanner",
    "domain": "clinical",
-   "words": 2,
+   "words": 3,
    "definition": "همان #اسکنر_داخل_دهانی، با اصطلاح انگلیسی.",
    "use_when": "همیشه همراه #اسکنر_داخل_دهانی.",
    "aliases": [],
@@ -11798,6 +11812,27 @@
    ]
   },
   {
+   "key": "توربین",
+   "tag": "#توربین",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "توربینِ پرسرعت (هندپیسِ ایرروتور) و ملاحظاتِ کارکرد و ایمنیِ آن.",
+   "use_when": "مقاله خودِ توربین/هندپیس را موضوع داشته باشد.",
+   "aliases": [
+    "turbine",
+    "هندپیس",
+    "ایرروتور",
+    "airotor",
+    "handpiece"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "episodes/episode-106-1"
+   ]
+  },
+  {
    "key": "توروس_مندیبولاریس",
    "tag": "#توروس_مندیبولاریس",
    "domain": "clinical",
@@ -13645,6 +13680,29 @@
    ]
   },
   {
+   "key": "فرمت_اسکن",
+   "tag": "#فرمت_اسکن",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "فرمت‌های خروجیِ اسکنرِ داخل‌دهانی (STL بی‌رنگ، OBJ/PLY رنگی) و تفاوتشان.",
+   "use_when": "مقاله فرمتِ فایلِ اسکن را موضوع داشته باشد.",
+   "aliases": [
+    "stl",
+    "obj",
+    "ply",
+    "فرمت فایل اسکنر",
+    "فرمت اسکن",
+    "scan file format",
+    "فرمت خروجی اسکنر"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "episodes/episode-106-2"
+   ]
+  },
+  {
    "key": "فرمت_خروجی",
    "tag": "#فرمت_خروجی",
    "domain": "ai",
@@ -15375,6 +15433,29 @@
    ]
   },
   {
+   "key": "کنترل_عفونت",
+   "tag": "#کنترل_عفونت",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "کنترلِ عفونت در مطب — از جمله جلوگیری از برگشتِ مایعات (Suck-Back) با سیستمِ آنتی‌ریترکشن.",
+   "use_when": "مقاله کنترل عفونت یا مکانیزمِ آلودگیِ متقابل را موضوع داشته باشد.",
+   "aliases": [
+    "infection control",
+    "کنترل عفونت",
+    "آنتی ریترکشن",
+    "anti retraction",
+    "suck back",
+    "ساک بک",
+    "برگشت مایعات"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "episodes/episode-106-1"
+   ]
+  },
+  {
    "key": "کنترل_لثه",
    "tag": "#کنترل_لثه",
    "domain": null,
@@ -16146,6 +16227,7 @@
   "ترمیم با کامپوزیت": "کامپوزیت",
   "crown lengthening": "افزایش طول تاج",
   "scanning accuracy": "دقت اسکن",
+  "intraoral scanner": "اسکنر داخل دهانی",
   "restorative space": "فضای رستوریتیو",
   "بالا آوردن مارجین": "dme",
   "دیپ مارژین الویشن": "dme",
@@ -16185,6 +16267,7 @@
   "پوسیدگی زیر ترمیم": "پوسیدگی جامانده",
   "retention control": "کنترل گیر",
   "anterior guidance": "گایدنس قدامی",
+  "infection control": "کنترل عفونت",
   "کلینیکال اینسایت": "اینسایت",
   "fixed prosthesis": "پروتز ثابت",
   "دیجیتال دنتیستری": "دندانپزشکی دیجیتال",
@@ -16262,6 +16345,8 @@
   "افت ارتفاع عمودی": "کاهش vdo",
   "moisture control": "کنترل رطوبت",
   "بیلدآپ کامپوزیتی": "کور کامپوزیتی",
+  "scan file format": "فرمت اسکن",
+  "فرمت خروجی اسکنر": "فرمت اسکن",
   "تغییرات استخوان": "تحلیل استخوان",
   "ترمیم کامپوزیتی": "کامپوزیت",
   "برداشتن پوسیدگی": "برداشت پوسیدگی",
@@ -16337,6 +16422,8 @@
   "residual caries": "پوسیدگی جامانده",
   "کانال پیدا نشده": "کانال میس شده",
   "جینگوال ریترکشن": "کنترل لثه",
+  "فرمت فایل اسکنر": "فرمت اسکن",
+  "anti retraction": "کنترل عفونت",
   "treatment plan": "طرح درمان",
   "dental ceramic": "سرامیک دندانی",
   "تحلیل استخوانی": "تحلیل استخوان",
@@ -16434,7 +16521,9 @@
   "post and core": "پست و کور",
   "کراون لنتنینگ": "افزایش طول تاج",
   "فینیشینگ لاین": "فینیش لاین",
+  "اسکنر دیجیتال": "اسکنر داخل دهانی",
   "bond strength": "قدرت باند",
+  "titanium base": "تیتانیوم بیس",
   "meta analysis": "متاآنالیز",
   "پروتکل ادهزیو": "پروتکل باند",
   "ضایعه سرویکال": "nccl",
@@ -16541,7 +16630,6 @@
   "گیر کنترل شده": "کنترل گیر",
   "راهنمای قدامی": "گایدنس قدامی",
   "extended scan": "گسترش اسکن",
-  "titanium base": "تیتانیوم بیس",
   "تصمیم بالینی": "تصمیم درمانی",
   "تصمیم پروتزی": "تصمیم درمانی",
   "resin cement": "سمان رزینی",
@@ -16566,11 +16654,11 @@
   "smile design": "طراحی لبخند",
   "دیزاین لبخند": "طراحی لبخند",
   "آنالیز لبخند": "طراحی لبخند",
+  "ارزیابی پایه": "انتخاب پایه",
   "چسباندن روکش": "سمان کردن",
   "pascal magne": "کتاب مانیه",
   "پاسکال مانیه": "کتاب مانیه",
   "screw cement": "اسکروسمنت",
-  "ارزیابی پایه": "انتخاب پایه",
   "خطای دیجیتال": "خطای لابراتوار",
   "لود زودهنگام": "زمان لود ایمپلنت",
   "سمان آزمایشی": "سمان موقت",
@@ -16674,6 +16762,8 @@
   "کور کامپوزیت": "کور کامپوزیتی",
   "پلیمریزاسیون": "کیور",
   "friction fit": "گیر مکانیکی",
+  "آنتی ریترکشن": "کنترل عفونت",
+  "برگشت مایعات": "کنترل عفونت",
   "آرتیکولاسیون": "ارتیکولاسیون",
   "articulation": "ارتیکولاسیون",
   "بایو میمتیک": "بیومیمتیک",
@@ -16822,6 +16912,7 @@
   "impression": "قالبگیری",
   "پروتز کامل": "پروتز متحرک",
   "دیپ مارجین": "dme",
+  "مزوستراکچر": "تیتانیوم بیس",
   "غیر تهاجمی": "درمان غیرتهاجمی",
   "extraction": "کشیدن دندان",
   "سمان مناسب": "انتخاب سمان",
@@ -16936,7 +17027,6 @@
   "hemostasis": "کنترل خونریزی",
   "light cure": "کیور",
   "سطح راهنما": "گاید پلین",
-  "مزوستراکچر": "تیتانیوم بیس",
   "کامپلیکیشن": "عوارض",
   "occlusion": "اکلوژن",
   "chairside": "چیرساید",
@@ -17073,6 +17163,8 @@
   "هموستاتیک": "کنترل خونریزی",
   "میزان گیر": "کنترل گیر",
   "اسکن وسیع": "گسترش اسکن",
+  "handpiece": "توربین",
+  "suck back": "کنترل عفونت",
   "کمپلیکیشن": "عوارض",
   "ایمپلانت": "ایمپلنت",
   "اکلوزیون": "اکلوژن",
@@ -17179,6 +17271,7 @@
   "مسیر پیچ": "کانال پیچ زاویه دار",
   "dragging": "کشیدگی قالب",
   "خشک کردن": "کنترل رطوبت",
+  "ایرروتور": "توربین",
   "فرول اثر": "فرول",
   "اثر فرول": "فرول",
   "اکلوزالی": "اکلوزال",
@@ -17196,6 +17289,8 @@
   "ایمپرشن": "قالبگیری",
   "denture": "پروتز متحرک",
   "milling": "cad cam",
+  "ti base": "تیتانیوم بیس",
+  "تای بیس": "تیتانیوم بیس",
   "اصل دال": "dahl concept",
   "لوکیتور": "اتچمنت اوردنچر",
   "locator": "اتچمنت اوردنچر",
@@ -17250,8 +17345,8 @@
   "جوش سرد": "کلد ولدینگ",
   "ریترکشن": "کنترل لثه",
   "کیورینگ": "کیور",
-  "ti base": "تیتانیوم بیس",
-  "تای بیس": "تیتانیوم بیس",
+  "turbine": "توربین",
+  "airotor": "توربین",
   "لامینیت": "لمینیت",
   "اکلوژال": "اکلوزال",
   "اکلوژنی": "اکلوزال",
@@ -17264,6 +17359,7 @@
   "اورلای": "اورلی",
   "میلینگ": "cad cam",
   "cadcam": "cad cam",
+  "tibase": "تیتانیوم بیس",
   "silane": "سایلان",
   "misfit": "فیت پروتز",
   "رابردم": "ایزولاسیون",
@@ -17307,7 +17403,8 @@
   "convex": "کانتور محدب",
   "نخ کشی": "کنترل لثه",
   "curing": "کیور",
-  "tibase": "تیتانیوم بیس",
+  "هندپیس": "توربین",
+  "ساک بک": "کنترل عفونت",
   "لامینت": "لمینیت",
   "پارسیل": "پارشیال",
   "اورجنس": "امرجنس",
@@ -17367,6 +17464,7 @@
   "gpt4": "مدل زبانی بزرگ",
   "ptfe": "نوار تفلون",
   "ونیر": "veneer",
+  "ios": "اسکنر داخل دهانی",
   "تمپ": "روکش موقت",
   "dsd": "طراحی لبخند",
   "fit": "فیت پروتز",
@@ -17394,6 +17492,9 @@
   "hex": "هگز ایمپلنت",
   "asc": "کانال پیچ زاویه دار",
   "درگ": "کشیدگی قالب",
+  "stl": "فرمت اسکن",
+  "obj": "فرمت اسکن",
+  "ply": "فرمت اسکن",
   "hf": "اچ سرامیک",
   "bw": "بیولوژیک ویدث",
   "3y": "نسل زیرکونیا",

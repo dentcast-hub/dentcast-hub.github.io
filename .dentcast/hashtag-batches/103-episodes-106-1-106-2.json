@@ -1,0 +1,84 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 103 - the two Dentopedia micro-episodes 106.1 and 106.2. Episode 106.1 (Suck-Back in turbines, infection control) adds two concepts: #توربین (handpiece/turbine) and #کنترل_عفونت (infection control, absorbing the Suck-Back/anti-retraction mechanism as aliases), then -> #دنتوپدیا + #توربین + #کنترل_عفونت + #تجهیزات_دندانپزشکی. Episode 106.2 (scanner file formats STL/OBJ/PLY) folds the backlog #اسکنر_دیجیتال onto #اسکنر_داخل_دهانی and creates #فرمت_اسکن absorbing the three format-abbreviation backlog tags #STL/#OBJ/#PLY as aliases, then -> #دنتوپدیا + #اسکنر_داخل_دهانی + #فرمت_اسکن + #دندانپزشکی_دیجیتال.",
+ "concepts": [
+  {
+   "tag": "#توربین",
+   "domain": "clinical",
+   "definition": "توربینِ پرسرعت (هندپیسِ ایرروتور) و ملاحظاتِ کارکرد و ایمنیِ آن.",
+   "use_when": "مقاله خودِ توربین/هندپیس را موضوع داشته باشد.",
+   "aliases": [
+    "turbine",
+    "هندپیس",
+    "ایرروتور",
+    "airotor",
+    "handpiece"
+   ]
+  },
+  {
+   "tag": "#کنترل_عفونت",
+   "domain": "clinical",
+   "definition": "کنترلِ عفونت در مطب — از جمله جلوگیری از برگشتِ مایعات (Suck-Back) با سیستمِ آنتی‌ریترکشن.",
+   "use_when": "مقاله کنترل عفونت یا مکانیزمِ آلودگیِ متقابل را موضوع داشته باشد.",
+   "aliases": [
+    "infection control",
+    "کنترل عفونت",
+    "آنتی ریترکشن",
+    "anti retraction",
+    "suck back",
+    "ساک بک",
+    "برگشت مایعات"
+   ]
+  },
+  {
+   "tag": "#فرمت_اسکن",
+   "domain": "clinical",
+   "definition": "فرمت‌های خروجیِ اسکنرِ داخل‌دهانی (STL بی‌رنگ، OBJ/PLY رنگی) و تفاوتشان.",
+   "use_when": "مقاله فرمتِ فایلِ اسکن را موضوع داشته باشد.",
+   "aliases": [
+    "stl",
+    "obj",
+    "ply",
+    "فرمت فایل اسکنر",
+    "فرمت اسکن",
+    "scan file format",
+    "فرمت خروجی اسکنر"
+   ]
+  },
+  {
+   "tag": "#اسکنر_داخل_دهانی",
+   "domain": "clinical",
+   "definition": "اسکنرِ داخل‌دهانی که قالبِ دیجیتالِ مستقیم می‌گیرد.",
+   "use_when": "مقاله اسکنر داخل‌دهانی را موضوع داشته باشد.",
+   "aliases": [
+    "intraoral scanner",
+    "اسکنر داخل دهانی",
+    "اسکنر دیجیتال",
+    "IOS",
+    "اسکنر"
+   ]
+  }
+ ],
+ "renames": {
+  "#اسکنر_دیجیتال": "#اسکنر_داخل_دهانی",
+  "#STL": "#فرمت_اسکن",
+  "#OBJ": "#فرمت_اسکن",
+  "#PLY": "#فرمت_اسکن"
+ },
+ "articles": {
+  "episodes/episode-106-1": [
+   "#دنتکست",
+   "#دنتوپدیا",
+   "#توربین",
+   "#کنترل_عفونت",
+   "#تجهیزات_دندانپزشکی"
+  ],
+  "episodes/episode-106-2": [
+   "#دنتکست",
+   "#دنتوپدیا",
+   "#اسکنر_داخل_دهانی",
+   "#فرمت_اسکن",
+   "#دندانپزشکی_دیجیتال"
+  ]
+ }
+}
