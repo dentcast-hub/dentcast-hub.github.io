@@ -1,0 +1,19 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 64 - episodes 29 and 30, the updated-ceramic-classification pair. Both -> #سرامیک + #سرامیک_دندانی (the 'انواع/طبقه بندی سرامیک' aliases added in step 53 already serve them). Episode 30 additionally carries the two families it actually resolves: #پلی_کریستالین and #سرامیک_هیبرید (resin-matrix ceramic). No new concepts.",
+ "concepts": [],
+ "articles": {
+  "episodes/episode-29": [
+   "#دنتکست",
+   "#سرامیک",
+   "#سرامیک_دندانی"
+  ],
+  "episodes/episode-30": [
+   "#دنتکست",
+   "#سرامیک",
+   "#سرامیک_دندانی",
+   "#پلی_کریستالین",
+   "#سرامیک_هیبرید"
+  ]
+ }
+}
