@@ -1,0 +1,48 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 126 - episode 126 and Insight insert 126.1. Episode 126 (NCCL part 2, occlusion's role + differential dx) adds a #حساسیت_دندانی concept, then -> #NCCL + #اکلوژن + #حساسیت_دندانی + #پروتز_ثابت. Episode 126.1 (free-end: implant vs partial denture) adds a #فری_اند concept, then -> #فری_اند + #پروتز_پارسیل + #ایمپلنت + #اینسایت.",
+ "concepts": [
+  {
+   "tag": "#حساسیت_دندانی",
+   "domain": "clinical",
+   "definition": "حساسیتِ عاجی — دردِ کوتاهِ ناشی از تحریکِ عاجِ اکسپوز، به‌ویژه در ضایعاتِ طوق.",
+   "use_when": "مقاله حساسیتِ دندانی/عاجی را موضوع داشته باشد.",
+   "aliases": [
+    "dentin hypersensitivity",
+    "حساسیت عاجی",
+    "حساسیت طوق",
+    "tooth sensitivity",
+    "حساسیت دندان"
+   ]
+  },
+  {
+   "tag": "#فری_اند",
+   "domain": "clinical",
+   "definition": "Free-End Saddle — فضای بی‌دندانیِ انتهاییِ بدونِ دندانِ خلفی (کلاس ۱ کندی) و انتخابِ ایمپلنت در برابرِ پارسیل.",
+   "use_when": "مقاله درمانِ فری‌اند/کلاس ۱ کندی را موضوع داشته باشد.",
+   "aliases": [
+    "free end",
+    "فری اند",
+    "free-end saddle",
+    "کلاس یک کندی",
+    "انتهای آزاد"
+   ]
+  }
+ ],
+ "articles": {
+  "episodes/episode-126": [
+   "#دنتکست",
+   "#NCCL",
+   "#اکلوژن",
+   "#حساسیت_دندانی",
+   "#پروتز_ثابت"
+  ],
+  "episodes/episode-126-1": [
+   "#دنتکست",
+   "#فری_اند",
+   "#پروتز_پارسیل",
+   "#ایمپلنت",
+   "#اینسایت"
+  ]
+ }
+}

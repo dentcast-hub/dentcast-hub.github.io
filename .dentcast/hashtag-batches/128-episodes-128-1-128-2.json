@@ -1,0 +1,24 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 128 - Insight inserts 128.1 and 128.2. Episode 128.1 (scanner trueness & precision) -> #اسکنر_داخل_دهانی + #دقت_اسکن + #دندانپزشکی_دیجیتال + #اینسایت (all existing). Episode 128.2 (cavity design & composite fracture strength) folds backlog #استحکام_شکست onto #مقاومت_به_شکست (alias already there), then -> #کامپوزیت + #ترمیم_مستقیم + #مقاومت_به_شکست + #اینسایت.",
+ "concepts": [],
+ "renames": {
+  "#استحکام_شکست": "#مقاومت_به_شکست"
+ },
+ "articles": {
+  "episodes/episode-128-1": [
+   "#دنتکست",
+   "#اسکنر_داخل_دهانی",
+   "#دقت_اسکن",
+   "#دندانپزشکی_دیجیتال",
+   "#اینسایت"
+  ],
+  "episodes/episode-128-2": [
+   "#دنتکست",
+   "#کامپوزیت",
+   "#ترمیم_مستقیم",
+   "#مقاومت_به_شکست",
+   "#اینسایت"
+  ]
+ }
+}

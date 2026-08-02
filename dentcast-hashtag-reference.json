@@ -24,7 +24,7 @@
    "aliases": [],
    "variants": [],
    "co_tags": [],
-   "count": 159,
+   "count": 165,
    "content_ids": [
     "episodes/episode-1",
     "episodes/episode-2",
@@ -178,6 +178,12 @@
     "episodes/episode-125-1",
     "episodes/episode-125-2",
     "episodes/episode-125-3",
+    "episodes/episode-126",
+    "episodes/episode-126-1",
+    "episodes/episode-127",
+    "episodes/episode-128",
+    "episodes/episode-128-1",
+    "episodes/episode-128-2",
     "episodes/episode-154",
     "episodes/episode-155",
     "episodes/episode-156",
@@ -931,6 +937,54 @@
    ]
   },
   {
+   "key": "پست_و_کور",
+   "tag": "#پست_و_کور",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "پست و کور — بازسازیِ ساختارِ ازدست‌رفته‌ی دندانِ اندوشده برای نگه‌داریِ روکش.",
+   "use_when": "مقاله پست/کور را موضوع داشته باشد.",
+   "aliases": [
+    "post and core",
+    "پست اند کور",
+    "پست کور",
+    "پست دندان",
+    "پست داخل کانال"
+   ],
+   "variants": [
+    "#پست و کور"
+   ],
+   "co_tags": [],
+   "count": 26,
+   "content_ids": [
+    "episodes/episode-36",
+    "episodes/episode-42",
+    "episodes/episode-47",
+    "episodes/episode-48",
+    "episodes/episode-49",
+    "episodes/episode-79",
+    "episodes/episode-125-3",
+    "episodes/episode-128",
+    "episodes/episode-129",
+    "insight/insight-12",
+    "insight/insight-15",
+    "insight/insight-17",
+    "insight/insight-20",
+    "metanotes/meta-7",
+    "insight/insight-21",
+    "metanotes/meta-9",
+    "insight/insight-28",
+    "metanotes/meta-11",
+    "chairside/chairside-5",
+    "insight/insight-39",
+    "insight/insight-41",
+    "notecast/episode-36",
+    "chairside/chairside-20",
+    "dentai/dentai-27",
+    "metanotes/meta-15",
+    "metanotes/meta-19"
+   ]
+  },
+  {
    "key": "تصمیم_درمانی",
    "tag": "#تصمیم_درمانی",
    "domain": "clinical",
@@ -1019,51 +1073,6 @@
     "notecast/episode-30",
     "insight/insight-27",
     "dentai/dentai-26"
-   ]
-  },
-  {
-   "key": "پست_و_کور",
-   "tag": "#پست_و_کور",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "مجموعه‌ی پست و کور برای بازسازی دندان اندوشده.",
-   "use_when": "همراه یک تگ مشخص‌تر بیاید.",
-   "aliases": [
-    "post and core",
-    "پست اند کور",
-    "پست کور"
-   ],
-   "variants": [
-    "#پست و کور"
-   ],
-   "co_tags": [],
-   "count": 25,
-   "content_ids": [
-    "episodes/episode-36",
-    "episodes/episode-42",
-    "episodes/episode-47",
-    "episodes/episode-48",
-    "episodes/episode-49",
-    "episodes/episode-79",
-    "episodes/episode-125-3",
-    "episodes/episode-129",
-    "insight/insight-12",
-    "insight/insight-15",
-    "insight/insight-17",
-    "insight/insight-20",
-    "metanotes/meta-7",
-    "insight/insight-21",
-    "metanotes/meta-9",
-    "insight/insight-28",
-    "metanotes/meta-11",
-    "chairside/chairside-5",
-    "insight/insight-39",
-    "insight/insight-41",
-    "notecast/episode-36",
-    "chairside/chairside-20",
-    "dentai/dentai-27",
-    "metanotes/meta-15",
-    "metanotes/meta-19"
    ]
   },
   {
@@ -1704,6 +1713,32 @@
    ]
   },
   {
+   "key": "سایش_دندان",
+   "tag": "#سایش_دندان",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "از دست رفتنِ ساختار در اثر نیروهای مکرر.",
+   "use_when": "مقاله سایش را بسنجد یا مدیریت کند.",
+   "aliases": [],
+   "variants": [],
+   "co_tags": [],
+   "count": 12,
+   "content_ids": [
+    "episodes/episode-34",
+    "episodes/episode-125",
+    "episodes/episode-127",
+    "insight/insight-6",
+    "insight/insight-11",
+    "insight/insight-43",
+    "notecast/episode-34",
+    "notecast/episode-35",
+    "dentai/dentai-24",
+    "dentai/dentai-26",
+    "chairside/chairside-23",
+    "sharehub/share-11"
+   ]
+  },
+  {
    "key": "curated_content",
    "tag": "#Curated_Content",
    "domain": "brand",
@@ -1810,31 +1845,6 @@
     "notecast/episode-24",
     "metanotes/meta-4",
     "chairside/chairside-14"
-   ]
-  },
-  {
-   "key": "سایش_دندان",
-   "tag": "#سایش_دندان",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "از دست رفتنِ ساختار در اثر نیروهای مکرر.",
-   "use_when": "مقاله سایش را بسنجد یا مدیریت کند.",
-   "aliases": [],
-   "variants": [],
-   "co_tags": [],
-   "count": 11,
-   "content_ids": [
-    "episodes/episode-34",
-    "episodes/episode-125",
-    "insight/insight-6",
-    "insight/insight-11",
-    "insight/insight-43",
-    "notecast/episode-34",
-    "notecast/episode-35",
-    "dentai/dentai-24",
-    "dentai/dentai-26",
-    "chairside/chairside-23",
-    "sharehub/share-11"
    ]
   },
   {
@@ -8761,6 +8771,26 @@
    ]
   },
   {
+   "key": "مقاومت_به_شکست",
+   "tag": "#مقاومت_به_شکست",
+   "domain": null,
+   "words": 2,
+   "definition": "بارِ لازم برای شکستنِ مجموعه‌ی دندان و ترمیم.",
+   "use_when": "مقاله این مقاومت را بسنجد یا مقایسه کند.",
+   "aliases": [
+    "fracture resistance",
+    "load to fracture",
+    "استحکام شکست"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-128-2",
+    "dentai/dentai-27"
+   ]
+  },
+  {
    "key": "موقتی_به_عنوان_مرجع",
    "tag": "#موقتی_به‌عنوان_مرجع",
    "domain": "clinical",
@@ -12378,6 +12408,27 @@
    ]
   },
   {
+   "key": "حساسیت_دندانی",
+   "tag": "#حساسیت_دندانی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "حساسیتِ عاجی — دردِ کوتاهِ ناشی از تحریکِ عاجِ اکسپوز، به‌ویژه در ضایعاتِ طوق.",
+   "use_when": "مقاله حساسیتِ دندانی/عاجی را موضوع داشته باشد.",
+   "aliases": [
+    "dentin hypersensitivity",
+    "حساسیت عاجی",
+    "حساسیت طوق",
+    "tooth sensitivity",
+    "حساسیت دندان"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "episodes/episode-126"
+   ]
+  },
+  {
    "key": "خرید_اشتراک",
    "tag": "#خرید_اشتراک",
    "domain": "ai",
@@ -14171,6 +14222,27 @@
    ]
   },
   {
+   "key": "فری_اند",
+   "tag": "#فری_اند",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "Free-End Saddle — فضای بی‌دندانیِ انتهاییِ بدونِ دندانِ خلفی (کلاس ۱ کندی) و انتخابِ ایمپلنت در برابرِ پارسیل.",
+   "use_when": "مقاله درمانِ فری‌اند/کلاس ۱ کندی را موضوع داشته باشد.",
+   "aliases": [
+    "free end",
+    "فری اند",
+    "free-end saddle",
+    "کلاس یک کندی",
+    "انتهای آزاد"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "episodes/episode-126-1"
+   ]
+  },
+  {
    "key": "فشار_هیدرولیک",
    "tag": "#فشار_هیدرولیک",
    "domain": "clinical",
@@ -14856,25 +14928,6 @@
    "count": 1,
    "content_ids": [
     "episodes/episode-86"
-   ]
-  },
-  {
-   "key": "مقاومت_به_شکست",
-   "tag": "#مقاومت_به_شکست",
-   "domain": null,
-   "words": 2,
-   "definition": "بارِ لازم برای شکستنِ مجموعه‌ی دندان و ترمیم.",
-   "use_when": "مقاله این مقاومت را بسنجد یا مقایسه کند.",
-   "aliases": [
-    "fracture resistance",
-    "load to fracture",
-    "استحکام شکست"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "dentai/dentai-27"
    ]
   },
   {
@@ -16745,6 +16798,7 @@
   "open gingival embrasure": "بلک تراینگل",
   "functional interference": "تداخل فانکشنال",
   "sequence of preparation": "ترتیب تراش",
+  "dentin hypersensitivity": "حساسیت دندانی",
   "سیستم پایدار بدون علامت": "سیستم پایدار",
   "pit and fissure sealant": "فیشور سیلانت",
   "temporomandibular joint": "مفصل فکی",
@@ -16898,6 +16952,7 @@
   "staging abutments": "ترتیب ساخت اباتمنت",
   "crown replacement": "تعویض روکش",
   "خواندن رادیوگرافی": "تفسیر رادیوگرافی",
+  "tooth sensitivity": "حساسیت دندانی",
   "disc displacement": "داخل کپسولی",
   "رادیوگرافی کنترلی": "رادیوگرافی کنترل",
   "زیرکونیا چند لایه": "زیرکونیا مولتی لیر",
@@ -17076,6 +17131,7 @@
   "ایمپلنت در ساکت": "فرش ساکت",
   "فرمت فایل اسکنر": "فرمت اسکن",
   "palatal ferrule": "فرول پالاتال",
+  "free end saddle": "فری اند",
   "از دست رفتن فضا": "فضا کجا رفته",
   "بی دندانی موضعی": "فقدان دندان",
   "fissure sealant": "فیشور سیلانت",
@@ -17096,6 +17152,7 @@
   "anti retraction": "کنترل عفونت",
   "جینگوال ریترکشن": "کنترل لثه",
   "treatment plan": "طرح درمان",
+  "پست داخل کانال": "پست و کور",
   "dental ceramic": "سرامیک دندانی",
   "طول عمر سرامیک": "دوام ترمیم",
   "تحلیل استخوانی": "تحلیل استخوان",
@@ -17420,6 +17477,7 @@
   "تطابق لبه ای": "تطابق مارجینال",
   "تناسب اندازه": "تناسب با مجاور",
   "حرکات لترالی": "حرکات اکسکورسیو",
+  "حساسیت دندان": "حساسیت دندانی",
   "خطای لایبرری": "خطای داده",
   "خمیر ریترکشن": "خمیر کنارزننده",
   "جابجایی دیسک": "داخل کپسولی",
@@ -17440,6 +17498,7 @@
   "تریبوشیمیکال": "سیلیکا کوتینگ",
   "صدمین اپیزود": "صدمین قسمت",
   "fresh socket": "فرش ساکت",
+  "کلاس یک کندی": "فری اند",
   "درگیری فورکا": "فورکا",
   "سیلانت تراپی": "فیشور سیلانت",
   "incisal edge": "لبه انسیزال",
@@ -17559,6 +17618,7 @@
   "تعویض پروتز": "تعویض روکش",
   "عمق ایمپلنت": "جایگذاری ایمپلنت",
   "رد کردن علل": "حذف گام به گام",
+  "حساسیت عاجی": "حساسیت دندانی",
   "خطای میلینگ": "خطای ساخت",
   "فارماکولوژی": "داروشناسی",
   "retreatment": "ریتریتمنت",
@@ -17580,6 +17640,7 @@
   "glass phase": "فاز گلاس",
   "فاز شیشه ای": "فاز گلاس",
   "diamond bur": "فرز الماسه",
+  "انتهای آزاد": "فری اند",
   "ارزیابی فضا": "فضای ارتودنسی",
   "ناحیه فورکا": "فورکا",
   "facial flow": "فیشیال فلو",
@@ -17709,6 +17770,7 @@
   "proportion": "تناسب با مجاور",
   "ترتیب باند": "توالی باند",
   "protrusive": "حرکت پروتروزیو",
+  "حساسیت طوق": "حساسیت دندانی",
   "data error": "خطای داده",
   "خطای پروسس": "خطای ساخت",
   "درد نامشخص": "درد مبهم",
@@ -17762,6 +17824,7 @@
   "پلن درمان": "طرح درمان",
   "chairside": "چیرساید",
   "گزارش کیس": "کیس بالینی",
+  "پست دندان": "پست و کور",
   "زیرکونیوم": "زیرکونیا",
   "زیرکونیای": "زیرکونیا",
   "aesthetic": "زیبایی",
@@ -18005,6 +18068,7 @@
   "شیار عمق": "شیار راهنما",
   "قسمت صدم": "صدمین قسمت",
   "گریت فرز": "فرز الماسه",
+  "free end": "فری اند",
   "شیار پوش": "فیشور سیلانت",
   "فضای کار": "مدیریت دسترسی",
   "مرجع فرم": "مرجع آناتومیک",
