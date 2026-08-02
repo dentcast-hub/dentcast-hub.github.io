@@ -1,0 +1,19 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 73 - episodes 47 and 48, the two-part Ferrule series, both to existing concepts. Episode 47 (Ferrule Effect and post-and-core stability) -> #فرول + #پست_و_کور + #دندان_اندوشده (ferrule matters for endo-treated abutments). Episode 48 (ferrule biomechanics) -> #فرول + #بیومکانیک + #پست_و_کور. No new vocabulary; 'ferrule' alias already carries the English 'Ferrule Effect' query.",
+ "concepts": [],
+ "articles": {
+  "episodes/episode-47": [
+   "#دنتکست",
+   "#فرول",
+   "#پست_و_کور",
+   "#دندان_اندوشده"
+  ],
+  "episodes/episode-48": [
+   "#دنتکست",
+   "#فرول",
+   "#بیومکانیک",
+   "#پست_و_کور"
+  ]
+ }
+}

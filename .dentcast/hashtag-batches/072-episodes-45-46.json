@@ -1,0 +1,55 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 72 - episodes 45 and 46. Episode 45 (immediate vs early loading) folds the two CamelCase backlog tags #Immediate_Load and #Early_Load into the existing loading-timing concept #زمان_لود_ایمپلنت (share no token, so aliased + renamed, doors kept), then -> #ایمپلنت + #زمان_لود_ایمپلنت + #بارگذاری_ایمپلنت + #ثبات_اولیه. Episode 46 (Facial Flow smile design) promotes CamelCase #Facial_Flow to a Persian-doored #فیشیال_فلو, then -> #طراحی_لبخند + #فیشیال_فلو + #زیبایی.",
+ "concepts": [
+  {
+   "tag": "#زمان_لود_ایمپلنت",
+   "domain": "clinical",
+   "definition": "زمان‌بندیِ بارگذاریِ ایمپلنت — فوری، زودهنگام یا تأخیری — و اثرش بر ثبات و موفقیت.",
+   "use_when": "مقاله زمانِ لود را انتخاب یا مقایسه کند.",
+   "aliases": [
+    "loading protocol",
+    "immediate loading",
+    "لود فوری",
+    "لود زودهنگام",
+    "زمان لود",
+    "immediate load",
+    "ایمیدیت لود",
+    "early load",
+    "ارلی لود"
+   ]
+  },
+  {
+   "tag": "#فیشیال_فلو",
+   "domain": "clinical",
+   "definition": "Facial Flow — هم‌راستا کردنِ طرحِ لبخند با خطوط و جریانِ صورت برای هماهنگیِ چهره و دندان.",
+   "use_when": "مقاله اصلِ Facial Flow را در طراحی لبخند به‌کار گیرد.",
+   "aliases": [
+    "facial flow",
+    "فیشیال فلو",
+    "هماهنگی صورت و لبخند",
+    "فلوی صورت"
+   ]
+  }
+ ],
+ "renames": {
+  "#Immediate_Load": "#زمان_لود_ایمپلنت",
+  "#Early_Load": "#زمان_لود_ایمپلنت",
+  "#Facial_Flow": "#فیشیال_فلو"
+ },
+ "articles": {
+  "episodes/episode-45": [
+   "#دنتکست",
+   "#ایمپلنت",
+   "#زمان_لود_ایمپلنت",
+   "#بارگذاری_ایمپلنت",
+   "#ثبات_اولیه"
+  ],
+  "episodes/episode-46": [
+   "#دنتکست",
+   "#طراحی_لبخند",
+   "#فیشیال_فلو",
+   "#زیبایی"
+  ]
+ }
+}
