@@ -5,7 +5,9 @@ import { getLeagueConfig } from './league-config.js';
 
 /**
  * Weekly league prize: after finalizeWeek() has written final_rank for a week,
- * grant premium for a few days to the TOP OF EVERY VALID GROUP.
+ * grant premium for a few days to the TOP OF EVERY VALID GROUP — up to
+ * prize_winners_per_group of them, scaled down in groups too small to carry that
+ * many (see winnersTarget below).
  *
  * Group-level, not tier-level, and that is the whole point. The rule used to
  * stop at the highest tier that had a finalized group, which meant the week any
@@ -56,8 +58,8 @@ async function grantPrizeForWeek(weekStart: string, now: Date): Promise<number> 
     // A user who climbed into a thin upper tier could then neither win nor
     // advance, while the group they left kept winning every week — climbing made
     // them worse off. Three, not zero: a group of one would auto-win for nothing.
-    const groups = (await client.query<{ id: string }>(
-      `select l.id
+    const groups = (await client.query<{ id: string; size: number }>(
+      `select l.id, count(lm.id)::int as size
          from leagues l
          join league_members lm on lm.league_id = l.id
         where l.week_start = $1 and l.status = 'finalized'
@@ -69,6 +71,25 @@ async function grantPrizeForWeek(weekStart: string, now: Date): Promise<number> 
 
     let granted = 0;
     for (const g of groups) {
+      // How many winners THIS group may have. prize_winners_per_group is a
+      // ceiling, not a quota: it is scaled down by how many whole
+      // prize_min_group_size blocks the group actually contains.
+      //
+      // A flat count breaks in exactly the place the prize matters most. Upper
+      // tiers hold few people, so their groups never reach capacity — with a
+      // flat 2, a composite group of 3 would crown 2 of its 3 members, and
+      // "first in your group" would mean less the higher you climbed. Scaling
+      // keeps the ratio roughly constant instead: 3-5 members award 1, 6+ award
+      // 2, and a full 15-member group is still held to the configured ceiling.
+      //
+      // The HAVING above already guarantees size >= prize_min_group_size, so
+      // the floor division is always >= 1 and no group that qualified for the
+      // prize can end up with zero winners.
+      const winnersTarget = Math.min(
+        cfg.prize_winners_per_group,
+        Math.floor(g.size / cfg.prize_min_group_size),
+      );
+
       // Ranked members of this group. We walk down rather than taking the top N
       // outright: a member on cooldown passes the prize DOWN to the next one,
       // instead of the group silently awarding nothing that week.
@@ -94,7 +115,7 @@ async function grantPrizeForWeek(weekStart: string, now: Date): Promise<number> 
 
       let winnersHere = existing;
       for (const m of members) {
-        if (winnersHere >= cfg.prize_winners_per_group) break;
+        if (winnersHere >= winnersTarget) break;
 
         // Cooldown: won recently enough that it is somebody else's turn.
         if (cfg.prize_cooldown_weeks > 0) {
