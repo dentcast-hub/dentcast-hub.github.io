@@ -222,7 +222,7 @@
    "aliases": [],
    "variants": [],
    "co_tags": [],
-   "count": 64,
+   "count": 68,
    "content_ids": [
     "episodes/episode-1",
     "episodes/episode-2",
@@ -280,6 +280,10 @@
     "episodes/episode-54",
     "episodes/episode-55",
     "episodes/episode-56",
+    "episodes/episode-57",
+    "episodes/episode-58",
+    "episodes/episode-59",
+    "episodes/episode-60",
     "episodes/episode-100",
     "episodes/episode-154",
     "episodes/episode-155",
@@ -1033,6 +1037,45 @@
    ]
   },
   {
+   "key": "بیومکانیک",
+   "tag": "#بیومکانیک",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "aliases": [
+    "بایو مکانیک",
+    "بایومکانیک",
+    "بیو مکانیک"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 21,
+   "content_ids": [
+    "episodes/episode-48",
+    "episodes/episode-49",
+    "episodes/episode-60",
+    "episodes/episode-63",
+    "episodes/episode-125-3",
+    "episodes/episode-128",
+    "episodes/episode-147-5",
+    "episodes/episode-148-1",
+    "insight/insight-13",
+    "notecast/episode-23",
+    "notecast/episode-24",
+    "notecast/episode-27",
+    "insight/insight-24",
+    "metanotes/meta-11",
+    "chairside/chairside-11",
+    "chairside/chairside-23",
+    "insight/insight-55",
+    "metanotes/meta-18",
+    "insight/insight-57",
+    "insight/insight-58",
+    "chairside/chairside-26"
+   ]
+  },
+  {
    "key": "زیبایی",
    "tag": "#زیبایی",
    "domain": "clinical",
@@ -1069,44 +1112,6 @@
     "notecast/episode-32",
     "notecast/episode-33",
     "insight/insight-46"
-   ]
-  },
-  {
-   "key": "بیومکانیک",
-   "tag": "#بیومکانیک",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "",
-   "use_when": "",
-   "aliases": [
-    "بایو مکانیک",
-    "بایومکانیک",
-    "بیو مکانیک"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 20,
-   "content_ids": [
-    "episodes/episode-48",
-    "episodes/episode-49",
-    "episodes/episode-63",
-    "episodes/episode-125-3",
-    "episodes/episode-128",
-    "episodes/episode-147-5",
-    "episodes/episode-148-1",
-    "insight/insight-13",
-    "notecast/episode-23",
-    "notecast/episode-24",
-    "notecast/episode-27",
-    "insight/insight-24",
-    "metanotes/meta-11",
-    "chairside/chairside-11",
-    "chairside/chairside-23",
-    "insight/insight-55",
-    "metanotes/meta-18",
-    "insight/insight-57",
-    "insight/insight-58",
-    "chairside/chairside-26"
    ]
   },
   {
@@ -2451,6 +2456,32 @@
    ]
   },
   {
+   "key": "درمان_محافظه_کارانه",
+   "tag": "#درمان_محافظه‌کارانه",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "کم‌ترین برداشتِ ساختار برای رسیدن به نتیجه‌ی قابل قبول.",
+   "use_when": "مقاله محافظه‌کاری را معیارِ انتخاب بداند.",
+   "aliases": [
+    "درمان محافظه کارانه",
+    "کانسرواتیو",
+    "conservative",
+    "حداقل برداشت"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 7,
+   "content_ids": [
+    "episodes/episode-53",
+    "episodes/episode-54",
+    "episodes/episode-57",
+    "episodes/episode-58",
+    "dentai/dentai-3",
+    "insight/insight-20",
+    "notecast/episode-38"
+   ]
+  },
+  {
    "key": "زیبایی_قدامی",
    "tag": "#زیبایی_قدامی",
    "domain": null,
@@ -2691,6 +2722,29 @@
     "sharehub/share-8",
     "notecast/episode-37",
     "notecast/episode-38"
+   ]
+  },
+  {
+   "key": "ترمیم_ادهزیو",
+   "tag": "#ترمیم_ادهزیو",
+   "domain": null,
+   "words": 2,
+   "definition": "بازسازی چسبنده به‌جای پوششِ کامل.",
+   "use_when": "مقاله بین ترمیم ادهزیو و روکش انتخاب کند.",
+   "aliases": [
+    "ترمیم چسبنده",
+    "adhesive restoration"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 6,
+   "content_ids": [
+    "episodes/episode-55",
+    "episodes/episode-56",
+    "episodes/episode-57",
+    "episodes/episode-58",
+    "chairside/chairside-22",
+    "chairside/chairside-27"
    ]
   },
   {
@@ -3217,30 +3271,6 @@
     "litecast/lite-CAST8",
     "litecast/lite-CAST13",
     "sharehub/share-9"
-   ]
-  },
-  {
-   "key": "درمان_محافظه_کارانه",
-   "tag": "#درمان_محافظه‌کارانه",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "کم‌ترین برداشتِ ساختار برای رسیدن به نتیجه‌ی قابل قبول.",
-   "use_when": "مقاله محافظه‌کاری را معیارِ انتخاب بداند.",
-   "aliases": [
-    "درمان محافظه کارانه",
-    "کانسرواتیو",
-    "conservative",
-    "حداقل برداشت"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 5,
-   "content_ids": [
-    "episodes/episode-53",
-    "episodes/episode-54",
-    "dentai/dentai-3",
-    "insight/insight-20",
-    "notecast/episode-38"
    ]
   },
   {
@@ -3826,27 +3856,6 @@
     "episodes/episode-45",
     "episodes/episode-52",
     "litecast/lite-CAST13"
-   ]
-  },
-  {
-   "key": "ترمیم_ادهزیو",
-   "tag": "#ترمیم_ادهزیو",
-   "domain": null,
-   "words": 2,
-   "definition": "بازسازی چسبنده به‌جای پوششِ کامل.",
-   "use_when": "مقاله بین ترمیم ادهزیو و روکش انتخاب کند.",
-   "aliases": [
-    "ترمیم چسبنده",
-    "adhesive restoration"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 4,
-   "content_ids": [
-    "episodes/episode-55",
-    "episodes/episode-56",
-    "chairside/chairside-22",
-    "chairside/chairside-27"
    ]
   },
   {
@@ -7151,6 +7160,29 @@
    "content_ids": [
     "insight/insight-16",
     "insight/insight-32"
+   ]
+  },
+  {
+   "key": "تحلیل_استخوان_کرستال",
+   "tag": "#تحلیل_استخوان_کرستال",
+   "domain": null,
+   "words": 3,
+   "definition": "MBL — تحلیل استخوانِ حاشیه‌ای اطراف ایمپلنت.",
+   "use_when": "مقاله MBL را پیامدِ کمّی گزارش کند.",
+   "aliases": [
+    "marginal bone loss",
+    "MBL",
+    "تحلیل استخوان حاشیه ای",
+    "تحلیل کرستال",
+    "تحلیل استخوان مارژینال",
+    "استخوان مارژینال"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-59",
+    "notecast/episode-26"
    ]
   },
   {
@@ -11237,26 +11269,6 @@
    "count": 1,
    "content_ids": [
     "insight/insight-44"
-   ]
-  },
-  {
-   "key": "تحلیل_استخوان_کرستال",
-   "tag": "#تحلیل_استخوان_کرستال",
-   "domain": null,
-   "words": 3,
-   "definition": "MBL — تحلیل استخوانِ حاشیه‌ای اطراف ایمپلنت.",
-   "use_when": "مقاله MBL را پیامدِ کمّی گزارش کند.",
-   "aliases": [
-    "marginal bone loss",
-    "MBL",
-    "تحلیل استخوان حاشیه ای",
-    "تحلیل کرستال"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "notecast/episode-26"
    ]
   },
   {
@@ -15787,11 +15799,12 @@
   "سیستم پایدار بدون علامت": "سیستم پایدار",
   "overdenture attachment": "اتچمنت اوردنچر",
   "biomimetic restoration": "ترمیم بیومیمتیک",
+  "تحلیل استخوان حاشیه ای": "تحلیل استخوان کرستال",
+  "تحلیل استخوان مارژینال": "تحلیل استخوان کرستال",
   "oxygen inhibited layer": "لایه مهار اکسیژن",
   "extraction and implant": "کشیدن و ایمپلنت",
   "crack removal endpoint": "crre",
   "اتصال دندان به ایمپلنت": "بریج دندان ایمپلنت",
-  "تحلیل استخوان حاشیه ای": "تحلیل استخوان کرستال",
   "هماهنگی با دندان کناری": "تناسب با مجاور",
   "systematic elimination": "حذف گام به گام",
   "باند به کامپوزیت قدیمی": "ریپیر کامپوزیت",
@@ -15805,11 +15818,11 @@
   "روکش های به هم چسبیده": "روکش اسپلینت",
   "alleman deliperi rule": "قانون آلمان دلیپری",
   "indirect restoration": "ترمیم غیرمستقیم",
+  "adhesive restoration": "ترمیم ادهزیو",
   "resin matrix ceramic": "سرامیک هیبرید",
   "dual step impression": "قالبگیری دو مرحله ای",
   "translucent zirconia": "نسل زیرکونیا",
   "peripheral seal zone": "psz",
-  "adhesive restoration": "ترمیم ادهزیو",
   "self adhesive cement": "سمان سلف ادهزیو",
   "decoupling with time": "dwt",
   "diagnostic reasoning": "استدلال تشخیصی",
@@ -15857,6 +15870,7 @@
   "ثبات اولیه ایمپلنت": "ثبات اولیه",
   "زیرکونیا ترنسلوسنت": "نسل زیرکونیا",
   "universal adhesive": "یونیورسال باند",
+  "marginal bone loss": "تحلیل استخوان کرستال",
   "sinus augmentation": "سینوس لیفت",
   "incomplete seating": "نشست ناقص",
   "پروتز پارسیل متحرک": "پروتز پارسیل",
@@ -15865,7 +15879,6 @@
   "occlusal awareness": "آگاهی اکلوزال",
   "ارتو قبل از زیبایی": "ارتودنسی پیش از زیبایی",
   "clinical reasoning": "استدلال تشخیصی",
-  "marginal bone loss": "تحلیل استخوان کرستال",
   "resin infiltration": "رزین اینفیلتریشن",
   "staged cementation": "سمان مرحله ای",
   "erosive tooth wear": "فرسایش دندان",
@@ -15940,6 +15953,7 @@
   "مرحله بندی درمان": "استیج بندی درمان",
   "implant survival": "بقای ایمپلنت",
   "قابلیت تمیز کردن": "بهداشت پذیری",
+  "استخوان مارژینال": "تحلیل استخوان کرستال",
   "drug interaction": "تداخل دارویی",
   "فاصله بین دندانی": "دیاستم",
   "کاهش درد حین کار": "راحتی بیمار",
@@ -16256,20 +16270,21 @@
   "انواع سرامیک": "سرامیک دندانی",
   "مواد سرامیکی": "سرامیک دندانی",
   "over denture": "اوردنچر",
+  "دوام بلندمدت": "دوام ترمیم",
   "اسکن دیجیتال": "قالب گیری دیجیتال",
   "آنله سرامیکی": "آنله",
   "hydrofluoric": "اچ سرامیک",
-  "دوام بلندمدت": "دوام ترمیم",
   "فضای بازسازی": "فضای رستوریتیو",
+  "conservative": "درمان محافظه کارانه",
+  "حداقل برداشت": "درمان محافظه کارانه",
   "استتیک قدامی": "زیبایی قدامی",
   "سیل فوری عاج": "ids",
+  "ترمیم چسبنده": "ترمیم ادهزیو",
   "non invasive": "درمان غیرتهاجمی",
   "smile design": "طراحی لبخند",
   "دیزاین لبخند": "طراحی لبخند",
   "آنالیز لبخند": "طراحی لبخند",
   "استحکام باند": "قدرت باند",
-  "conservative": "درمان محافظه کارانه",
-  "حداقل برداشت": "درمان محافظه کارانه",
   "چسباندن روکش": "سمان کردن",
   "screw cement": "اسکروسمنت",
   "خطای دیجیتال": "خطای لابراتوار",
@@ -16302,9 +16317,9 @@
   "over contour": "اورکانتور",
   "باند به ریشه": "باند به عاج ریشه",
   "metal primer": "باند به فلز",
+  "تحلیل کرستال": "تحلیل استخوان کرستال",
   "interference": "تداخل اکلوزالی",
   "تداخل داروها": "تداخل دارویی",
-  "ترمیم چسبنده": "ترمیم ادهزیو",
   "error source": "تفکیک منشأ خطا",
   "درآوردن قطعه": "تکنیک خارج سازی",
   "دیواره باریک": "دیواره نازک",
@@ -16332,7 +16347,6 @@
   "proximal box": "باکس پروگزیمال",
   "فاصله لثه ای": "بلک تراینگل",
   "امبراژور باز": "بلک تراینگل",
-  "تحلیل کرستال": "تحلیل استخوان کرستال",
   "تراش ورتیکال": "تراش عمودی",
   "تناسب اندازه": "تناسب با مجاور",
   "حرکات لترالی": "حرکات اکسکورسیو",
@@ -16513,6 +16527,7 @@
   "بیو مکانیک": "بیومکانیک",
   "fiber post": "فایبر پست",
   "پریودونتال": "پریودنتال",
+  "کانسرواتیو": "درمان محافظه کارانه",
   "impression": "قالبگیری",
   "پروتز کامل": "پروتز متحرک",
   "دیپ مارجین": "dme",
@@ -16520,7 +16535,6 @@
   "extraction": "کشیدن دندان",
   "سمان مناسب": "انتخاب سمان",
   "انواع سمان": "انتخاب سمان",
-  "کانسرواتیو": "درمان محافظه کارانه",
   "کانسپت دال": "dahl concept",
   "دال کانسپت": "dahl concept",
   "بال اورینگ": "اتچمنت اوردنچر",
@@ -17046,6 +17060,7 @@
   "عقل": "مولر سوم",
   "rct": "کارآزمایی تصادفی",
   "cdd": "caries detector",
+  "mbl": "تحلیل استخوان کرستال",
   "oil": "لایه مهار اکسیژن",
   "cir": "نسبت تاج به ایمپلنت",
   "ریگ": "پترن رزین",
@@ -17053,7 +17068,6 @@
   "رنچ": "آچار ایمپلنت",
   "لوپ": "بزرگ نمایی",
   "بقا": "بقای رستوریشن",
-  "mbl": "تحلیل استخوان کرستال",
   "بیس": "لاینر",
   "mua": "مولتی یونیت اباتمنت",
   "hex": "هگز ایمپلنت",

@@ -1,0 +1,22 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 78 - episodes 57 and 58, closing the ceramic-overlay-prep series. Both -> #اورلی + #سرامیک + #ترمیم_ادهزیو + #درمان_محافظه‌کارانه. Episode 57 keeps #بیومیمتیک. Existing concepts only.",
+ "concepts": [],
+ "articles": {
+  "episodes/episode-57": [
+   "#دنتکست",
+   "#اورلی",
+   "#سرامیک",
+   "#ترمیم_ادهزیو",
+   "#درمان_محافظه‌کارانه",
+   "#بیومیمتیک"
+  ],
+  "episodes/episode-58": [
+   "#دنتکست",
+   "#اورلی",
+   "#سرامیک",
+   "#ترمیم_ادهزیو",
+   "#درمان_محافظه‌کارانه"
+  ]
+ }
+}
