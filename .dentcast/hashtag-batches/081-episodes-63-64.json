@@ -1,0 +1,21 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 81 - episodes 63 and 64, closing the jaw-growth-and-implants series (existing concepts). Episode 63 (skeletal change and implant behaviour) -> #ایمپلنت + #رشد_فک + #بیومکانیک + #درمان_بلندمدت. Episode 64 (final wrap-up, decision-making and risk) -> #ایمپلنت + #رشد_فک + #درمان_بلندمدت + #طرح_درمان.",
+ "concepts": [],
+ "articles": {
+  "episodes/episode-63": [
+   "#دنتکست",
+   "#ایمپلنت",
+   "#رشد_فک",
+   "#بیومکانیک",
+   "#درمان_بلندمدت"
+  ],
+  "episodes/episode-64": [
+   "#دنتکست",
+   "#ایمپلنت",
+   "#رشد_فک",
+   "#درمان_بلندمدت",
+   "#طرح_درمان"
+  ]
+ }
+}
