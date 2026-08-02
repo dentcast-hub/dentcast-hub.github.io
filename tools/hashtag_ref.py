@@ -407,9 +407,20 @@ def cmd_apply(path: str) -> None:
     # live BEFORE the door-check below runs - otherwise a rename the batch
     # deliberately covered with an alias is rejected for lacking one.
     global _alias_cache
-    table, _ = compile_aliases(ref)
-    for k, v in (ref.get("aliases") or {}).items():
+    # The door-check must see the table as it will be AFTER the merge, so the
+    # concepts this batch retires are excluded. With them still in, a merge that
+    # moves the dying concept's name onto the survivor builds a two-cycle out of
+    # the pair — "scan body" -> "اسکن بادی" from the survivor and "اسکن بادی" ->
+    # "scan body" from the concept about to be deleted — and the check then
+    # rejects the very merge that dissolves it.
+    shadow = {"concepts": [c for c in ref["concepts"] if c["tag"] not in renames]}
+    table, _ = compile_aliases(shadow)
+    for k, v in (ref.get("manual_aliases") or {}).items():
         table.setdefault(k, v)
+    # Fold chains here too: compile_aliases emits one-hop targets, so without
+    # this the check runs against a table the engine will never actually use and
+    # rejects renames whose two spellings do converge once the chain is flat.
+    resolve_chains(table)
     _alias_cache = sorted(table.items(), key=lambda kv: -len(kv[0]))
     _reset_index()
 
@@ -552,6 +563,104 @@ def compile_aliases(ref: dict) -> list:
     return [table, problems]
 
 
+def resolve_chains(table: dict) -> list:
+    """
+    Rewrite every alias target to its FIXED POINT under the table itself.
+
+    apply_aliases() makes a single left-to-right pass and emits a replacement
+    PAST the cursor, so a replacement is never itself re-substituted. That is
+    what stops an alias from rewriting its own output forever — but it also
+    means a chain resolves exactly one hop, and which hop you land on depends
+    on which spelling you happened to type:
+
+        "زیرو بون لاس" -> "zero bone loss"        (typed as the alias: stops here)
+        "#Zero_Bone_Loss" -> "zero تحلیل استخوان" ("bone loss" is itself an alias)
+
+    Two spellings of one concept then normalize to two different strings and
+    never match each other — the exact failure the alias table exists to
+    prevent. Resolving targets here makes the single pass equivalent to full
+    closure, so every spelling of a concept lands on the same terminal form no
+    matter which door it came through.
+
+    Cycles (a -> b, b -> a) cannot be resolved into a terminal form, so they are
+    reported and left at one hop rather than looped over until the iteration cap.
+    """
+    # Bucketed by first token, longest pattern first, for the same reason
+    # _alias_index() is: scanning every pattern at every token position turns a
+    # --sync into minutes.
+    def index_of(tbl):
+        buckets = {}
+        for bad, good in tbl.items():
+            parts = bad.split(" ")
+            if parts and parts[0]:
+                buckets.setdefault(parts[0], []).append((parts, good.split(" ")))
+        for v in buckets.values():
+            v.sort(key=lambda pg: -len(pg[0]))
+        return buckets
+
+    def one_pass(index, s):
+        toks, out, i = s.split(" "), [], 0
+        while i < len(toks):
+            hit = None
+            for parts, good in index.get(toks[i], ()):
+                if toks[i:i + len(parts)] == parts:
+                    hit = (len(parts), good)
+                    break
+            if hit:
+                out.extend(hit[1])
+                i += hit[0]
+            else:
+                out.append(toks[i])
+                i += 1
+        return " ".join(out)
+
+    def contains(hay: str, needle: str) -> bool:
+        h, n = hay.split(" "), needle.split(" ")
+        return any(h[i:i + len(n)] == n for i in range(len(h)))
+
+    # Every alias is resolved independently, against the ORIGINAL table and from
+    # its OWN original target. Folding in place instead lets a half-resolved
+    # target feed the next alias's resolution: the first attempt at this grew
+    # "کوتاه شدن قوس" into "فرم فرم فرم ... قوس دندانی کوتاه شده" before any
+    # guard fired, because the runaway was reached THROUGH another entry rather
+    # than by that entry's own pattern.
+    index, problems, resolved = index_of(table), [], {}
+    for a, target in table.items():
+        cur, seen, ok = target, {target}, True
+        for _ in range(8):
+            nxt = one_pass(index, cur)
+            if nxt == cur:
+                break
+            # Folding can PRODUCE the self-reference compile_aliases rejects up
+            # front, because the pattern only appears once the chain is flat.
+            # Real case: "قوس کوتاه شده" -> "قوس دندانی کوتاه شده" with
+            # "قوس دندانی" -> "فرم قوس" folds to "فرم قوس کوتاه شده", which now
+            # contains the alias's own pattern and grows a token per round.
+            if contains(nxt, a) or nxt in seen:
+                ok = False
+                break
+            seen.add(nxt)
+            cur = nxt
+        else:
+            ok = False
+        if ok:
+            resolved[a] = cur
+        else:
+            resolved[a] = target      # keep the unfolded form, never a half-fold
+            problems.append(
+                f'alias "{a}" -> "{target}" cannot be folded flat (a cycle, or folding '
+                f'reproduces its own pattern). Left at one hop — the spellings it joins '
+                f'may not reach each other.')
+
+    table.clear()
+    for a, target in resolved.items():
+        # Identity after folding: both sides already normalize to the same
+        # string, so the row does nothing and only clutters the chain check.
+        if a != target:
+            table[a] = target
+    return problems
+
+
 def cmd_sync() -> None:
     ref = load_ref()
     tags = brain_tag_map(load_brain())
@@ -575,6 +684,9 @@ def cmd_sync() -> None:
             problems.append(f'manual alias "{k}" is contained in its own target — dropped')
             continue
         table.setdefault(k, v)
+    # Fold chains flat AFTER manual_aliases are in, so a chain that runs through
+    # a manual entry is resolved too.
+    problems += resolve_chains(table)
     ref["aliases"] = dict(sorted(table.items(), key=lambda kv: -len(kv[0])))
     write_ref(ref)
     global _alias_cache
@@ -733,6 +845,20 @@ def cmd_check() -> None:
             if v in live:
                 errors.append(f"{v} is a recorded variant of {c['tag']} "
                               f"but is still used in the brain")
+
+    # An alias target that is itself an alias key is a chain, and the tokenizer
+    # resolves a chain only one hop — so the two spellings it was meant to unify
+    # land on different strings and stop matching each other. --sync folds these
+    # flat; this catches a hand-edited reference that reintroduces one.
+    table = ref.get("aliases") or {}
+    for a, target in table.items():
+        toks = target.split(" ")
+        for k in table:
+            parts = k.split(" ")
+            if k != a and any(toks[i:i + len(parts)] == parts for i in range(len(toks))):
+                errors.append(f'alias "{a}" -> "{target}" chains through "{k}" '
+                              f'— run --sync to fold it flat')
+                break
 
     if errors:
         print(f"check FAILED ({len(errors)} problem(s)) "
