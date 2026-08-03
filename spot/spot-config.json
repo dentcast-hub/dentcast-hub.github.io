@@ -16,7 +16,7 @@
   "seen": { "ratio": 0.5, "ms": 1000 },
   "rotation": {
     "advance": "session",
-    "session_minutes": 30,
+    "session_minutes": 1,
     "sequence": ["idc-welcome", "idc-platform", "idc-launch", "premium"]
   },
   "creatives": {
