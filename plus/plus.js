@@ -73,7 +73,10 @@ function showInvitation(anchorBtn, onProceed) {
 // article pages (initArticle) and the desktop 3-column viewer (mountArticleWorkbench).
 async function setupWorkbench({ proseRoot, contentId }) {
   const Workbench = await loadWorkbench();
-  const wb = new Workbench({ contentId, proseRoot });
+  // onChange keeps the button below in sync with the mode no matter WHO changed
+  // it. The toolbar's own ✕ خروج calls wb.exit() directly, so without this the
+  // article button kept saying «خروج از میز کار» after the workbench had closed.
+  const wb = new Workbench({ contentId, proseRoot, onChange: () => updateBtn() });
   const btn = injectWorkbenchButton(proseRoot, contentId);
 
   // Reading-completion signal: started only for a signed-in reader (the /activity
