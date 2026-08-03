@@ -70,6 +70,32 @@ jobs:
           stamp "spot/spot.js"          "application/javascript; charset=utf-8"
           stamp "spot/spot-config.json" "application/json; charset=utf-8"
 
+          # The Plus app needs the same treatment for a stronger reason: it has
+          # no cache-busting lever at all. Its page entry points are still
+          # loaded as `?v=1` (never bumped since they were written) and its 141
+          # internal ES imports — `import { API_BASES } from './config.js'` and
+          # friends — carry no query string whatsoever, because a module
+          # specifier is a plain path. On .org the _headers `/plus/*` no-cache
+          # rule is what keeps those honest; on .ir nothing did, so a stale
+          # module could survive indefinitely with no version to bump.
+          #
+          # One pass per extension with an explicit Content-Type: a recursive
+          # copy re-guesses the type per key, and a mis-guessed module is worse
+          # than a stale one (the browser refuses to execute it outright).
+          stamp_tree() {
+            aws s3 cp "s3://$ARVAN_BUCKET/plus/" "s3://$ARVAN_BUCKET/plus/" \
+              --endpoint-url "$ARVAN_ENDPOINT" \
+              --recursive --exclude "*" --include "$1" \
+              --cache-control "no-cache" \
+              --content-type "$2" \
+              --metadata-directive REPLACE
+          }
+          stamp_tree "*.js"          "application/javascript; charset=utf-8"
+          stamp_tree "*.css"         "text/css; charset=utf-8"
+          stamp_tree "*.html"        "text/html; charset=utf-8"
+          stamp_tree "*.json"        "application/json; charset=utf-8"
+          stamp_tree "*.webmanifest" "application/manifest+json; charset=utf-8"
+
       # vCard must be served as text/vcard so phones open it as a contact
       # (mimetype guessing may fall back to octet-stream → forced download).
       - name: Fix Content-Type for vCard files
