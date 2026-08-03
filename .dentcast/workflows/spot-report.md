@@ -213,8 +213,9 @@ Two slots shipped on **2026-07-28** and have no data before that day:
 
 Two comparisons worth adding unprompted when the data allows:
 
-- **سهم هر تبلیغ در برابر سهم زمان‌هایش** — with `advance: "session"`, a
-  campaign holding 2 of 4 زمان‌ها should land near half the impressions. A big
+- **سهم هر تبلیغ در برابر سهم زمان‌هایش** — with `advance: "view"` (از
+  ۱۴۰۵/۰۵/۱۲؛ پیش از آن `"session"` بود), a campaign holding 2 of 4 زمان‌ها
+  should land near half the impressions. A big
   gap means an `audience`/`slots` gate is quietly falling back (`ads.md`
   rule 9's silent surprise).
 - **مهمان در برابر پلاس** — the split is a real audience fact (not a sampling

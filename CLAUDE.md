@@ -74,9 +74,10 @@ That workflow interviews for the gaps (sponsor vs internal, link, copy,
 image, slots, rotation share) and files sponsors so they automatically ship
 with `rel="sponsored"` (Google compliance). Never hardcode an ad into a page.
 **Always ask which of the four زمان‌ها (rotation beats) the new ad takes and
-what fills the rest** — the rotation advances once per **session**, so a
-four-entry `rotation.sequence` = four visits, and an ad assigned to no beat
-renders never (ads.md hard rule 6 + Phase B question 6).
+what fills the rest** — the rotation advances once per **ad-showing page
+view**, so a four-entry `rotation.sequence` = four page views (four refreshes,
+or four articles, is one full lap), and an ad assigned to no beat renders never
+(ads.md hard rule 6 + Phase B question 6).
 
 ## Ad-reporting protocol (trigger)
 
