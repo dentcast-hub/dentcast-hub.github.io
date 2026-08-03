@@ -248,13 +248,21 @@ def normalize(s):
 # entry lookup
 # --------------------------------------------------------------------------
 
+def entry_url(e):
+    """The brain has TWO legitimate url keys: most types carry `page_url`,
+    while sharehub and most notecast entries carry `url`. Hard Rule 6 locks
+    each type to its own predecessor's shape, so the gate must read both
+    rather than expect one."""
+    return e.get("page_url") or e.get("url")
+
+
 def load_entry(content_id):
     """Return (entry, kind, brain) for a content_id, from whichever source of
     truth owns that type."""
     brain = json.loads(read("dentcast-brain.json"))
     url = "/" + content_id + ".html"
     for i, e in enumerate(brain):
-        if e.get("page_url") == url:
+        if entry_url(e) == url:
             return e, ("brain", i, len(brain)), brain
     lite = json.loads(read("litecast/lite-glossary.json"))["LightGlossary"]
     for i, e in enumerate(lite):
@@ -276,7 +284,7 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
     exactly what a fresh publish must satisfy."""
     entry, (kind, idx, total), brain = load_entry(content_id)
     if entry is None:
-        rep.fail("5 brain", f"no entry whose page_url is /{content_id}.html",
+        rep.fail("5 brain", f"no entry whose page_url/url is /{content_id}.html",
                  "step 5 — append the entry at the END of the flat array")
         return rep
 
@@ -303,9 +311,15 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
                   f"extra={sorted(set(entry) - set(prev))} missing={sorted(set(prev) - set(entry))}",
                   "Hard Rule 5 — no invented, no dropped fields")
 
-    ids = [e.get("id") for e in brain if e.get("id")]
+    # `id` is unique PER TYPE, not site-wide: notecast and sharehub both number
+    # their entries "1", "2", "3"… so a global count collides on every one of
+    # them. The real defect this catches is two entries of the SAME type
+    # claiming the same id.
+    ids = [e.get("id") for e in brain
+           if e.get("id") and (e.get("type") or "episode") == etype]
     rep.check(ids.count(entry.get("id")) <= 1, "5 brain",
-              f"id {entry.get('id')} is unique", f"id {entry.get('id')} appears twice")
+              f"id {entry.get('id')} is unique within {etype}",
+              f"id {entry.get('id')} appears twice within {etype}")
 
     # ---------------- pillar ----------------
     pillar = entry.get("pillar") or {}
@@ -709,12 +723,12 @@ def main():
     targets = []
     if args.all:
         for e in json.loads(read("dentcast-brain.json")):
-            u = e.get("page_url")
+            u = entry_url(e)
             if u and exists(u.lstrip("/")):
                 targets.append(u.lstrip("/")[:-5])
     elif args.last:
         brain = json.loads(read("dentcast-brain.json"))
-        targets = [brain[-1]["page_url"].lstrip("/")[:-5]]
+        targets = [entry_url(brain[-1]).lstrip("/")[:-5]]
     elif args.content_id:
         targets = [args.content_id.strip("/").removesuffix(".html")]
     else:
