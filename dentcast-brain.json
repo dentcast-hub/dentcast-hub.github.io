@@ -12700,5 +12700,39 @@
       "secondary": [],
       "subtopic": "ai"
     }
+  },
+  {
+    "type": "chairside",
+    "id": "chairside-28",
+    "title": "درد مبهم در دندان اندو‌شده: وقتی اورهنگ و روکش مجاور، متهم اصلی می‌شوند",
+    "caption": "در این کیس Chairside بررسی می‌کنیم چرا دردِ مزمنِ دندانِ اندو‌شده می‌تواند از اورهنگ و روکشِ مجاور بیاید نه از مشکلِ ریشه؛ از افتراقِ اندو، فورکا و التهابِ لثه تا حفظِ پری‌مولار با ferrule سه‌دیواره.",
+    "hashtags": [
+      "#چیرساید",
+      "#کیس_بالینی",
+      "#دکتر_شهابیان",
+      "#اورهنگ",
+      "#تشخیص_افتراقی",
+      "#گیر_غذایی",
+      "#فرول",
+      "#روکش_ایمپلنت",
+      "#فورکا",
+      "#طرح_درمان"
+    ],
+    "keywords": [
+      "overhang restoration food impaction",
+      "endodontically treated molar pain differential",
+      "furcation involvement clinical probe",
+      "percussion test periapical lesion",
+      "adjacent implant crown delivery sequencing",
+      "three-wall ferrule premolar preservation",
+      "periodontal inflammation overhang",
+      "second opinion extraction versus restoration"
+    ],
+    "page_url": "/chairside/chairside-28.html",
+    "pillar": {
+      "primary": "treatment-planning",
+      "secondary": [],
+      "subtopic": "comprehensive-diagnosis"
+    }
   }
 ]

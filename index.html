@@ -3458,10 +3458,10 @@ a.dc-list-card--pillar {
           </div>
         </div>
         <ul class="dc-pulse-list">
+          <li>یک <a href="/chairside/chairside-28.html">کیس Chairside</a> درباره‌ی دردِ مبهمِ دندانِ اندو‌شده وقتی اورهنگ و روکشِ مجاور متهم اصلی‌اند منتشر شد · ۱۲ مرداد</li>
           <li>قسمت ۳ از فصل ۴ <a href="/dentai/promptologist/prompt4-3.html">پرامپتولوژیست</a> درباره‌ی اینکه نقش‌دادن به مدل چه می‌کند و چه نمی‌کند منتشر شد · ۱۲ مرداد</li>
           <li><strong>از این به بعد هر مطلب جدید در سایت به صورت اتوماتیک به کانال <a href="https://t.me/dentcast" target="_blank" rel="noopener">دنت‌کست در تلگرام</a> ارسال میشه</strong></li>
           <li>یک <a href="/insight/insight-60.html">اینسایت بالینی</a> درباره‌ی راهکار مدیریت عدم قطعیت VD و رابطه‌ی فکی در بیماران تمام‌فک منتشر شد · ۹ مرداد</li>
-          <li>یک <a href="/chairside/chairside-27.html">کیس Chairside</a> درباره‌ی تناقضِ توصیهٔ درمانیِ قبلی با اصولِ ادهزیو در ارزیابیِ نیازِ روکش منتشر شد · ۸ مرداد</li>
         </ul>
       </div>
 
@@ -3482,9 +3482,9 @@ a.dc-list-card--pillar {
           <p class="dc-rail-title">کور باید روی دندان را بپوشاند؟ بازخوانی یک قاعده‌ی جاافتاده</p>
           <span class="dc-rail-meta">تازه‌ترین مطلب</span>
         </a>
-        <a class="dc-rail-card" data-cat="chairside" href="/chairside/chairside-27.html">
+        <a class="dc-rail-card" data-cat="chairside" href="/chairside/chairside-28.html">
           <span class="dc-type-chip t-chair">Chairside</span>
-          <p class="dc-rail-title">وقتی توصیهٔ همکارِ قبلی، خودش یک دادهٔ تشخیصی است</p>
+          <p class="dc-rail-title">درد مبهم در دندان اندو‌شده: وقتی اورهنگ و روکش مجاور، متهم اصلی می‌شوند</p>
           <span class="dc-rail-meta">تازه‌ترین مطلب</span>
         </a>
         <a class="dc-rail-card" data-cat="dentai" href="/dentai/dentai-28.html">
@@ -3619,7 +3619,7 @@ a.dc-list-card--pillar {
           <span class="k">ساعت محتوای صوتی</span>
         </div>
         <div class="hero-stat" role="listitem">
-          <span class="v"><!-- COUNTER:CONTENT:START -->۵۷۱<!-- COUNTER:CONTENT:END --></span>
+          <span class="v"><!-- COUNTER:CONTENT:START -->۵۷۲<!-- COUNTER:CONTENT:END --></span>
           <span class="k">مطلب و مدخل آموزشی</span>
         </div>
       </div>
@@ -4281,7 +4281,7 @@ scrollBody.addEventListener('touchend',e=>{
     if(p) p.textContent=title;
     a.href=url;
   }
-  fetch('/dentcast-brain.json?v=cdac20ed5f',{cache:'no-store'}).then(function(r){return r.json();}).then(function(arr){
+  fetch('/dentcast-brain.json?v=2e77937f1a',{cache:'no-store'}).then(function(r){return r.json();}).then(function(arr){
     if(!Array.isArray(arr)) return;
     var latest={}, pool=[];
     arr.forEach(function(e){
@@ -4613,7 +4613,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 <script>
 /* ── LAST 30 UPDATES ── */
 (function(){
-  const FEED_URL='/dentcast-brain.json?v=cdac20ed5f';
+  const FEED_URL='/dentcast-brain.json?v=2e77937f1a';
   const el=document.getElementById('dcLast3Updates');
   if(!el) return;
   function extractArray(json){if(Array.isArray(json))return json;const cands=[json?.items,json?.data,json?.entries,json?.feed].filter(Boolean);for(const c of cands)if(Array.isArray(c))return c;for(const k in(json||{})){const v=json[k];if(Array.isArray(v))return v;if(v&&typeof v==='object'&&Array.isArray(v.items))return v.items;}return[];}
@@ -4869,7 +4869,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 
   function getBrain(){
     if(brainCache) return Promise.resolve(brainCache);
-    return fetch('/dentcast-brain.json?v=cdac20ed5f', {cache:'no-store'})
+    return fetch('/dentcast-brain.json?v=2e77937f1a', {cache:'no-store'})
       .then(r => r.ok ? r.json() : [])
       .then(d => { brainCache = Array.isArray(d) ? d : []; return brainCache; })
       .catch(() => { brainCache = []; return []; });

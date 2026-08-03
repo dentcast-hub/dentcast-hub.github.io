@@ -643,7 +643,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 31,
+   "count": 32,
    "content_ids": [
     "episodes/episode-14",
     "episodes/episode-25",
@@ -675,7 +675,8 @@
     "chairside/chairside-22",
     "episodes/episode-160",
     "chairside/chairside-24",
-    "chairside/chairside-26"
+    "chairside/chairside-26",
+    "chairside/chairside-28"
    ]
   },
   {
@@ -865,6 +866,101 @@
    ]
   },
   {
+   "key": "چیرساید",
+   "tag": "#چیرساید",
+   "domain": "brand",
+   "words": 1,
+   "definition": "نام سری چیرساید — یادداشت کوتاه از یک ویزیت واقعی، با تصمیمی که سر یونیت گرفته شد.",
+   "use_when": "روی هر مدخل چیرساید، و هیچ‌جای دیگر.",
+   "aliases": [
+    "chairside",
+    "چیر ساید"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 28,
+   "content_ids": [
+    "chairside/chairside-1",
+    "chairside/chairside-2",
+    "chairside/chairside-3",
+    "chairside/chairside-4",
+    "chairside/chairside-5",
+    "chairside/chairside-6",
+    "chairside/chairside-7",
+    "chairside/chairside-8",
+    "chairside/chairside-9",
+    "chairside/chairside-10",
+    "chairside/chairside-11",
+    "chairside/chairside-12",
+    "chairside/chairside-13",
+    "chairside/chairside-14",
+    "chairside/chairside-15",
+    "chairside/chairside-16",
+    "chairside/chairside-17",
+    "chairside/chairside-18",
+    "chairside/chairside-19",
+    "chairside/chairside-20",
+    "chairside/chairside-21",
+    "chairside/chairside-22",
+    "chairside/chairside-23",
+    "chairside/chairside-24",
+    "chairside/chairside-25",
+    "chairside/chairside-26",
+    "chairside/chairside-27",
+    "chairside/chairside-28"
+   ]
+  },
+  {
+   "key": "کیس_بالینی",
+   "tag": "#کیس_بالینی",
+   "domain": "brand",
+   "words": 2,
+   "definition": "گزارش یک کیس واقعی، از شرح مراجعه تا تصمیم.",
+   "use_when": "روی مدخل‌هایی که ساختارشان گزارش کیس است.",
+   "aliases": [
+    "ویزیت کلینیکی",
+    "گزارش کیس",
+    "کیس ریپورت",
+    "case report"
+   ],
+   "variants": [
+    "#ویزیت_کلینیکی",
+    "#گزارش_کیس"
+   ],
+   "co_tags": [],
+   "count": 28,
+   "content_ids": [
+    "chairside/chairside-1",
+    "chairside/chairside-2",
+    "chairside/chairside-3",
+    "chairside/chairside-4",
+    "chairside/chairside-5",
+    "chairside/chairside-6",
+    "chairside/chairside-7",
+    "chairside/chairside-8",
+    "chairside/chairside-9",
+    "chairside/chairside-10",
+    "chairside/chairside-11",
+    "chairside/chairside-12",
+    "chairside/chairside-13",
+    "chairside/chairside-14",
+    "chairside/chairside-15",
+    "chairside/chairside-16",
+    "chairside/chairside-17",
+    "chairside/chairside-18",
+    "chairside/chairside-19",
+    "chairside/chairside-20",
+    "chairside/chairside-21",
+    "chairside/chairside-22",
+    "chairside/chairside-23",
+    "chairside/chairside-24",
+    "chairside/chairside-25",
+    "chairside/chairside-26",
+    "chairside/chairside-27",
+    "chairside/chairside-28"
+   ]
+  },
+  {
    "key": "پست_و_کور",
    "tag": "#پست_و_کور",
    "domain": "clinical",
@@ -911,99 +1007,6 @@
     "dentai/dentai-27",
     "metanotes/meta-15",
     "metanotes/meta-19"
-   ]
-  },
-  {
-   "key": "چیرساید",
-   "tag": "#چیرساید",
-   "domain": "brand",
-   "words": 1,
-   "definition": "نام سری چیرساید — یادداشت کوتاه از یک ویزیت واقعی، با تصمیمی که سر یونیت گرفته شد.",
-   "use_when": "روی هر مدخل چیرساید، و هیچ‌جای دیگر.",
-   "aliases": [
-    "chairside",
-    "چیر ساید"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 27,
-   "content_ids": [
-    "chairside/chairside-1",
-    "chairside/chairside-2",
-    "chairside/chairside-3",
-    "chairside/chairside-4",
-    "chairside/chairside-5",
-    "chairside/chairside-6",
-    "chairside/chairside-7",
-    "chairside/chairside-8",
-    "chairside/chairside-9",
-    "chairside/chairside-10",
-    "chairside/chairside-11",
-    "chairside/chairside-12",
-    "chairside/chairside-13",
-    "chairside/chairside-14",
-    "chairside/chairside-15",
-    "chairside/chairside-16",
-    "chairside/chairside-17",
-    "chairside/chairside-18",
-    "chairside/chairside-19",
-    "chairside/chairside-20",
-    "chairside/chairside-21",
-    "chairside/chairside-22",
-    "chairside/chairside-23",
-    "chairside/chairside-24",
-    "chairside/chairside-25",
-    "chairside/chairside-26",
-    "chairside/chairside-27"
-   ]
-  },
-  {
-   "key": "کیس_بالینی",
-   "tag": "#کیس_بالینی",
-   "domain": "brand",
-   "words": 2,
-   "definition": "گزارش یک کیس واقعی، از شرح مراجعه تا تصمیم.",
-   "use_when": "روی مدخل‌هایی که ساختارشان گزارش کیس است.",
-   "aliases": [
-    "ویزیت کلینیکی",
-    "گزارش کیس",
-    "کیس ریپورت",
-    "case report"
-   ],
-   "variants": [
-    "#ویزیت_کلینیکی",
-    "#گزارش_کیس"
-   ],
-   "co_tags": [],
-   "count": 27,
-   "content_ids": [
-    "chairside/chairside-1",
-    "chairside/chairside-2",
-    "chairside/chairside-3",
-    "chairside/chairside-4",
-    "chairside/chairside-5",
-    "chairside/chairside-6",
-    "chairside/chairside-7",
-    "chairside/chairside-8",
-    "chairside/chairside-9",
-    "chairside/chairside-10",
-    "chairside/chairside-11",
-    "chairside/chairside-12",
-    "chairside/chairside-13",
-    "chairside/chairside-14",
-    "chairside/chairside-15",
-    "chairside/chairside-16",
-    "chairside/chairside-17",
-    "chairside/chairside-18",
-    "chairside/chairside-19",
-    "chairside/chairside-20",
-    "chairside/chairside-21",
-    "chairside/chairside-22",
-    "chairside/chairside-23",
-    "chairside/chairside-24",
-    "chairside/chairside-25",
-    "chairside/chairside-26",
-    "chairside/chairside-27"
    ]
   },
   {
@@ -1096,6 +1099,50 @@
    ]
   },
   {
+   "key": "روکش_ایمپلنت",
+   "tag": "#روکش_ایمپلنت",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "روکشِ متکی بر ایمپلنت، در تمایز با روکش روی دندان طبیعی.",
+   "use_when": "مقاله تصمیمش مختص روکش ایمپلنت باشد.",
+   "aliases": [
+    "implant crown",
+    "روکش روی ایمپلنت",
+    "روکش ایمپلنتی",
+    "کراون ایمپلنت"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 25,
+   "content_ids": [
+    "episodes/episode-125-1",
+    "episodes/episode-139",
+    "episodes/episode-147",
+    "episodes/episode-148-2",
+    "insight/insight-9",
+    "insight/insight-10",
+    "litecast/lite-CAST10",
+    "litecast/lite-CAST12",
+    "litecast/lite-CAST16",
+    "litecast/lite-CAST18",
+    "dentcast-plus/video-4",
+    "sharehub/share-4",
+    "dentcast-plus/video-5",
+    "metanotes/meta-10",
+    "insight/insight-30",
+    "insight/insight-33",
+    "chairside/chairside-12",
+    "chairside/chairside-17",
+    "insight/insight-46",
+    "insight/insight-47",
+    "insight/insight-50",
+    "insight/insight-52",
+    "insight/insight-53",
+    "insight/insight-57",
+    "chairside/chairside-28"
+   ]
+  },
+  {
    "key": "زیبایی",
    "tag": "#زیبایی",
    "domain": "clinical",
@@ -1180,49 +1227,6 @@
     "notecast/episode-30",
     "insight/insight-27",
     "dentai/dentai-26"
-   ]
-  },
-  {
-   "key": "روکش_ایمپلنت",
-   "tag": "#روکش_ایمپلنت",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "روکشِ متکی بر ایمپلنت، در تمایز با روکش روی دندان طبیعی.",
-   "use_when": "مقاله تصمیمش مختص روکش ایمپلنت باشد.",
-   "aliases": [
-    "implant crown",
-    "روکش روی ایمپلنت",
-    "روکش ایمپلنتی",
-    "کراون ایمپلنت"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 24,
-   "content_ids": [
-    "episodes/episode-125-1",
-    "episodes/episode-139",
-    "episodes/episode-147",
-    "episodes/episode-148-2",
-    "insight/insight-9",
-    "insight/insight-10",
-    "litecast/lite-CAST10",
-    "litecast/lite-CAST12",
-    "litecast/lite-CAST16",
-    "litecast/lite-CAST18",
-    "dentcast-plus/video-4",
-    "sharehub/share-4",
-    "dentcast-plus/video-5",
-    "metanotes/meta-10",
-    "insight/insight-30",
-    "insight/insight-33",
-    "chairside/chairside-12",
-    "chairside/chairside-17",
-    "insight/insight-46",
-    "insight/insight-47",
-    "insight/insight-50",
-    "insight/insight-52",
-    "insight/insight-53",
-    "insight/insight-57"
    ]
   },
   {
@@ -1413,6 +1417,40 @@
    ]
   },
   {
+   "key": "تشخیص_افتراقی",
+   "tag": "#تشخیص_افتراقی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "رسیدن به علت با رد کردن گزینه‌های رقیب، نه با تأیید مستقیم اولین حدس.",
+   "use_when": "مقاله چند علت محتمل را کنار هم بگذارد و یکی‌یکی ردشان کند.",
+   "aliases": [
+    "differential diagnosis",
+    "افتراق تشخیصی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 17,
+   "content_ids": [
+    "episodes/episode-117",
+    "episodes/episode-119",
+    "dentai/dentai-1",
+    "insight/insight-9",
+    "insight/insight-11",
+    "photocast/episode-1",
+    "episodes/episode-152",
+    "insight/insight-23",
+    "insight/insight-25",
+    "dentai/dentai-13",
+    "dentai/dentai-14",
+    "chairside/chairside-7",
+    "insight/insight-43",
+    "chairside/chairside-18",
+    "insight/insight-45",
+    "chairside/chairside-27",
+    "chairside/chairside-28"
+   ]
+  },
+  {
    "key": "دندانپزشکی_دیجیتال",
    "tag": "#دندانپزشکی_دیجیتال",
    "domain": "clinical",
@@ -1486,36 +1524,35 @@
    ]
   },
   {
-   "key": "تشخیص_افتراقی",
-   "tag": "#تشخیص_افتراقی",
+   "key": "فرول",
+   "tag": "#فرول",
    "domain": "clinical",
-   "words": 2,
-   "definition": "رسیدن به علت با رد کردن گزینه‌های رقیب، نه با تأیید مستقیم اولین حدس.",
-   "use_when": "مقاله چند علت محتمل را کنار هم بگذارد و یکی‌یکی ردشان کند.",
+   "words": 1,
+   "definition": "حلقه‌ی دیواره‌ی سالمِ دندان که روکش رویش می‌نشیند.",
+   "use_when": "مقاله فرول را شرطِ تصمیم بداند.",
    "aliases": [
-    "differential diagnosis",
-    "افتراق تشخیصی"
+    "ferrule"
    ],
    "variants": [],
    "co_tags": [],
    "count": 16,
    "content_ids": [
-    "episodes/episode-117",
-    "episodes/episode-119",
-    "dentai/dentai-1",
-    "insight/insight-9",
-    "insight/insight-11",
-    "photocast/episode-1",
-    "episodes/episode-152",
-    "insight/insight-23",
-    "insight/insight-25",
-    "dentai/dentai-13",
-    "dentai/dentai-14",
-    "chairside/chairside-7",
-    "insight/insight-43",
-    "chairside/chairside-18",
-    "insight/insight-45",
-    "chairside/chairside-27"
+    "episodes/episode-47",
+    "episodes/episode-48",
+    "episodes/episode-49",
+    "episodes/episode-147-7",
+    "insight/insight-4",
+    "insight/insight-7",
+    "insight/insight-13",
+    "chairside/chairside-5",
+    "chairside/chairside-6",
+    "chairside/chairside-9",
+    "dentai/dentai-27",
+    "metanotes/meta-15",
+    "metanotes/meta-19",
+    "insight/insight-58",
+    "chairside/chairside-27",
+    "chairside/chairside-28"
    ]
   },
   {
@@ -1594,37 +1631,6 @@
     "notecast/episode-15",
     "notecast/episode-18",
     "episodes/episode-159-1"
-   ]
-  },
-  {
-   "key": "فرول",
-   "tag": "#فرول",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "حلقه‌ی دیواره‌ی سالمِ دندان که روکش رویش می‌نشیند.",
-   "use_when": "مقاله فرول را شرطِ تصمیم بداند.",
-   "aliases": [
-    "ferrule"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 15,
-   "content_ids": [
-    "episodes/episode-47",
-    "episodes/episode-48",
-    "episodes/episode-49",
-    "episodes/episode-147-7",
-    "insight/insight-4",
-    "insight/insight-7",
-    "insight/insight-13",
-    "chairside/chairside-5",
-    "chairside/chairside-6",
-    "chairside/chairside-9",
-    "dentai/dentai-27",
-    "metanotes/meta-15",
-    "metanotes/meta-19",
-    "insight/insight-58",
-    "chairside/chairside-27"
    ]
   },
   {
@@ -3103,6 +3109,32 @@
    ]
   },
   {
+   "key": "دکتر_شهابیان",
+   "tag": "#دکتر_شهابیان",
+   "domain": "brand",
+   "words": 2,
+   "definition": "دکتر فؤاد شهابیان — میزبانِ دنتکست و صاحبِ کانسپت‌های اختصاصی.",
+   "use_when": "روی محتوایی که کانسپتِ شخصیِ او موضوع است.",
+   "aliases": [
+    "شهابیان",
+    "کانسپت شهابیان",
+    "foad shahabian",
+    "دکتر فواد شهابیان"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 7,
+   "content_ids": [
+    "episodes/episode-148-2",
+    "chairside/chairside-23",
+    "chairside/chairside-24",
+    "chairside/chairside-25",
+    "chairside/chairside-26",
+    "chairside/chairside-27",
+    "chairside/chairside-28"
+   ]
+  },
+  {
    "key": "زیبایی_قدامی",
    "tag": "#زیبایی_قدامی",
    "domain": null,
@@ -3674,31 +3706,6 @@
     "dentcast-plus/video-4",
     "dentcast-plus/video-5",
     "dentcast-plus/video-6"
-   ]
-  },
-  {
-   "key": "دکتر_شهابیان",
-   "tag": "#دکتر_شهابیان",
-   "domain": "brand",
-   "words": 2,
-   "definition": "دکتر فؤاد شهابیان — میزبانِ دنتکست و صاحبِ کانسپت‌های اختصاصی.",
-   "use_when": "روی محتوایی که کانسپتِ شخصیِ او موضوع است.",
-   "aliases": [
-    "شهابیان",
-    "کانسپت شهابیان",
-    "foad shahabian",
-    "دکتر فواد شهابیان"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 6,
-   "content_ids": [
-    "episodes/episode-148-2",
-    "chairside/chairside-23",
-    "chairside/chairside-24",
-    "chairside/chairside-25",
-    "chairside/chairside-26",
-    "chairside/chairside-27"
    ]
   },
   {
@@ -5507,6 +5514,32 @@
    ]
   },
   {
+   "key": "گیر_غذایی",
+   "tag": "#گیر_غذایی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "گیر کردنِ غذا در فضای بین‌دندانی.",
+   "use_when": "مقاله گیر غذایی را نشانه یا پیامدِ یک تصمیم بداند.",
+   "aliases": [
+    "food impaction",
+    "گیر کردن غذا",
+    "ایمپکشن غذا"
+   ],
+   "variants": [
+    "#Food_Impaction"
+   ],
+   "co_tags": [
+    "#Food_Impaction"
+   ],
+   "count": 4,
+   "content_ids": [
+    "episodes/episode-121-1",
+    "insight/insight-7",
+    "episodes/episode-159",
+    "chairside/chairside-28"
+   ]
+  },
+  {
    "key": "bio_restorative_concept",
    "tag": "#Bio_Restorative_Concept",
    "domain": "clinical",
@@ -7222,31 +7255,6 @@
    ]
   },
   {
-   "key": "گیر_غذایی",
-   "tag": "#گیر_غذایی",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "گیر کردنِ غذا در فضای بین‌دندانی.",
-   "use_when": "مقاله گیر غذایی را نشانه یا پیامدِ یک تصمیم بداند.",
-   "aliases": [
-    "food impaction",
-    "گیر کردن غذا",
-    "ایمپکشن غذا"
-   ],
-   "variants": [
-    "#Food_Impaction"
-   ],
-   "co_tags": [
-    "#Food_Impaction"
-   ],
-   "count": 3,
-   "content_ids": [
-    "episodes/episode-121-1",
-    "insight/insight-7",
-    "episodes/episode-159"
-   ]
-  },
-  {
    "key": "یونیورسال_باند",
    "tag": "#یونیورسال_باند",
    "domain": "clinical",
@@ -8011,6 +8019,26 @@
    "content_ids": [
     "episodes/episode-23",
     "notecast/episode-23"
+   ]
+  },
+  {
+   "key": "اورهنگ",
+   "tag": "#اورهنگ",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "لبه‌ی اضافیِ ترمیمِ قدیمی نزدیک لثه.",
+   "use_when": "مقاله برداشتنِ اورهنگ را علتِ تماس با لثه بداند.",
+   "aliases": [
+    "overhang",
+    "اورهنگ",
+    "لبه اضافه"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "insight/insight-40",
+    "chairside/chairside-28"
    ]
   },
   {
@@ -9313,6 +9341,27 @@
    "content_ids": [
     "episodes/episode-123-2",
     "dentcast-plus/video-2"
+   ]
+  },
+  {
+   "key": "فورکا",
+   "tag": "#فورکا",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "ناحیه‌ی دوشاخه شدنِ ریشه‌ها — مرزی که جراحیِ افزایش طول تاج نباید از آن رد شود.",
+   "use_when": "مقاله درگیریِ فورکا را محدودیت یا ریسک بداند.",
+   "aliases": [
+    "furcation",
+    "درگیری فورکا",
+    "فورکیشن",
+    "ناحیه فورکا"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "insight/insight-7",
+    "chairside/chairside-28"
    ]
   },
   {
@@ -11913,25 +11962,6 @@
    "count": 1,
    "content_ids": [
     "photocast/episode-3"
-   ]
-  },
-  {
-   "key": "اورهنگ",
-   "tag": "#اورهنگ",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "لبه‌ی اضافیِ ترمیمِ قدیمی نزدیک لثه.",
-   "use_when": "مقاله برداشتنِ اورهنگ را علتِ تماس با لثه بداند.",
-   "aliases": [
-    "overhang",
-    "اورهنگ",
-    "لبه اضافه"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "insight/insight-40"
    ]
   },
   {
@@ -15443,26 +15473,6 @@
    "count": 1,
    "content_ids": [
     "episodes/episode-144-2"
-   ]
-  },
-  {
-   "key": "فورکا",
-   "tag": "#فورکا",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "ناحیه‌ی دوشاخه شدنِ ریشه‌ها — مرزی که جراحیِ افزایش طول تاج نباید از آن رد شود.",
-   "use_when": "مقاله درگیریِ فورکا را محدودیت یا ریسک بداند.",
-   "aliases": [
-    "furcation",
-    "درگیری فورکا",
-    "فورکیشن",
-    "ناحیه فورکا"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "insight/insight-7"
    ]
   },
   {
