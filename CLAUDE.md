@@ -23,6 +23,15 @@ This repo powers DentCast. When the user brings new content to publish:
 4. The "latest content" widget on the homepage reads the LAST entries from `dentcast-brain.json`. Therefore, every new entry MUST be appended at the END of its category in the brain — never inserted mid-list.
 5. Auto-discover whatever you can. Ask the user only for things you genuinely cannot determine.
 6. Brain entry schema is sacred. Never add new fields to a brain entry that don't exist on previous same-category entries. Match the existing shape exactly.
+7. A string the user supplied is **copied, not re-typed** (Hard Rule 16). A ZWNJ (`U+200C`) is not a space — «اندو‌شده» ≠ «اندو شده» — and widening their caption by a clause is a rewrite, not a copy. Propose changes; never make them in passing.
+8. Correcting a title or caption after the fact is a **sweep, not a spot edit** (Hard Rule 17). A title lives on ~8 surfaces and a caption on ~4 (including the en mirror); all of them change in the same commit, then the builders re-run.
+9. **A publish ends with a green gate, not with a claim.** After Phase E, run Phase F and paste its summary line into the report:
+   ```bash
+   python3 tools/verify_publish.py <content_id> \
+     --expect-title "<title exactly as the user wrote it>" \
+     --expect-caption "<caption exactly as the user wrote it>"
+   ```
+   Non-zero exit = the publish is incomplete. Every `FAIL` row prints its own fix command. The gate does not replace any step — it catches what a long checklist forgets (a builder run out of order, a surface a correction missed, an invisible character that changed).
 
 ## English-version protocol (trigger)
 
