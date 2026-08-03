@@ -421,6 +421,13 @@ a.dc-spot-link:active { transform: scale(0.99); }
    itself and centre it: never taller than roughly a third of a laptop screen,
    identical on mobile (where the cap simply never binds). */
 .dc-spot--art { max-width: 560px; margin-inline: auto; }
+/* …except in the Plus views, which are built entirely out of stacked
+   full-width sections (.dcp-dash-sec spans the whole ~760px column). A card
+   200px narrower than the box directly above it reads as a layout bug there,
+   not as a smaller ad, so these two slots opt out of the cap and match their
+   neighbours exactly. Two classes, so this wins over the rule above on
+   specificity regardless of order. */
+.dc-spot--dashboard.dc-spot--art, .dc-spot--profile.dc-spot--art { max-width: none; }
 .dc-spot--art .dc-spot-link {
   display: block;
   padding: 0.5rem;
