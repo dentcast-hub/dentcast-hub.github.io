@@ -453,6 +453,13 @@ a.dc-spot-link:active { transform: scale(0.99); }
 @media (max-width: 480px) {
   .dc-spot-link { flex-wrap: wrap; }
   .dc-spot-cta { margin-inline-start: auto; }
+  /* A wide creative sized by the column width is fine on a laptop, where the
+     card is capped at 560px — but on a phone the column IS the screen, so the
+     same 1.8:1 artwork became a third of the viewport. Here the HEIGHT leads
+     instead: the image is capped and the frame shrinks to fit it, so the card
+     stays a strip and never has a dark gutter beside the artwork. */
+  .dc-spot--art .dc-spot-link { width: fit-content; max-width: 100%; margin-inline: auto; }
+  .dc-spot-art-img { width: auto; height: auto; max-height: 140px; margin-inline: auto; }
 }
 `;
 
