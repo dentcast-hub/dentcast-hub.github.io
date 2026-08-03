@@ -31,6 +31,45 @@ jobs:
             --exclude ".git/*" \
             --exclude ".github/*"
 
+      # Cache parity with .org — the .ir mirror's silent-staleness guard.
+      #
+      # The repo's _headers file marks dc-nav.js and /plus/* as no-cache, but
+      # only Cloudflare (.org) reads that file; Arvan ignores it entirely (see
+      # the comment in _headers itself). So on .ir those objects can be served
+      # from an edge/browser cache long after a deploy — and dc-nav.js is the
+      # file that carries the SPOT_V stamp which busts spot.js.
+      #
+      # That combination fails in the worst possible way: a cached dc-nav.js
+      # keeps asking for the OLD spot.js while spot-config.json (fetched
+      # no-store) is already the NEW one. An old build silently drops every
+      # creative it does not understand — on 2026-08-03 that meant all four
+      # rotation beats on .ir fell back to the house ad while .org showed the
+      # sponsor's campaign correctly. Nothing errored; the ads simply were not
+      # there. Stamping no-cache on the three files that must never go stale
+      # makes .ir revalidate like .org does.
+      - name: Force revalidation on the cache-sensitive files
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.ARVAN_ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.ARVAN_SECRET_KEY }}
+          AWS_EC2_METADATA_DISABLED: "true"
+          ARVAN_BUCKET: ${{ secrets.ARVAN_BUCKET }}
+          ARVAN_ENDPOINT: ${{ secrets.ARVAN_ENDPOINT }}
+        run: |
+          set -e
+          # Content-Type is passed explicitly: with --metadata-directive REPLACE
+          # the CLI re-guesses it, and a wrong guess on a module is worse than a
+          # stale cache (the browser refuses to execute it).
+          stamp() {
+            aws s3 cp "s3://$ARVAN_BUCKET/$1" "s3://$ARVAN_BUCKET/$1" \
+              --endpoint-url "$ARVAN_ENDPOINT" \
+              --cache-control "no-cache" \
+              --content-type "$2" \
+              --metadata-directive REPLACE
+          }
+          stamp "dc-nav.js"             "application/javascript; charset=utf-8"
+          stamp "spot/spot.js"          "application/javascript; charset=utf-8"
+          stamp "spot/spot-config.json" "application/json; charset=utf-8"
+
       # vCard must be served as text/vcard so phones open it as a contact
       # (mimetype guessing may fall back to octet-stream → forced download).
       - name: Fix Content-Type for vCard files
