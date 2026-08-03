@@ -8,9 +8,15 @@ import { serializeRange, anchorQuote, wrapRange, unwrapMarks, fullText, hashText
 import { openCollectionPicker } from './collections.js';
 
 export class Workbench {
-  constructor({ contentId, proseRoot }) {
+  // onChange fires on EVERY enter/exit, including the toolbar's own ✕ خروج. The
+  // میز کار button above the article lives outside this class (plus.js), so
+  // without this callback exiting from the toolbar left that button still
+  // reading «خروج از میز کار» / aria-pressed="true" — the mode was off but the
+  // button said it was on.
+  constructor({ contentId, proseRoot, onChange = null }) {
     this.contentId = contentId;
     this.root = proseRoot;
+    this.onChange = onChange;
     this.active = false;
     // Colour is the only persistent choice (one is always active, yellow by
     // default). Tools are momentary actions, not modes: you select text, then
@@ -28,9 +34,12 @@ export class Workbench {
 
   isActive() { return this.active; }
 
+  _notify() { if (this.onChange) { try { this.onChange(this.active); } catch (_) { /* never break the mode on a UI hook */ } } }
+
   async enter() {
     if (this.active) return;
     this.active = true;
+    this._notify();
     document.body.classList.add('dcp-study');
     sessionStorage.setItem(SS_MODE + this.contentId, 'study');
     this._buildToolbar();
@@ -52,6 +61,7 @@ export class Workbench {
   exit() {
     if (!this.active) return;
     this.active = false;
+    this._notify();
     document.body.classList.remove('dcp-study');
     sessionStorage.removeItem(SS_MODE + this.contentId);
     for (const { marks } of this.items.values()) unwrapMarks(marks);
@@ -224,7 +234,6 @@ export class Workbench {
     for (const h of list) this._renderOne(h);
     this._recountToc();
     this._renderNotes();
-    this._renderFailed();
   }
 
   _renderOne(h) {
@@ -232,7 +241,6 @@ export class Workbench {
     if (!range) {
       this.failed.push(h);
       this.items.set(h.id, { data: h, marks: [] });
-      this._renderFailed();
       return;
     }
     let cls = 'dcp-hl';
@@ -357,7 +365,6 @@ export class Workbench {
       this._closeEditor();
       this._recountToc();
       this._renderNotes();
-      this._renderFailed();
     } catch (e) { this._toast('حذف ناموفق بود.'); }
   }
 
@@ -444,23 +451,13 @@ export class Workbench {
     }
   }
 
-  // --- failed anchors (sidebar fallback) ------------------------------------
-  _renderFailed() {
-    if (this.ui.failed) { this.ui.failed.remove(); this.ui.failed = null; }
-    if (!this.failed.length) return;
-    const list = el('div', { class: 'dcp-failed-list' },
-      this.failed.map((h) => el('div', { class: 'dcp-failed-item' }, [
-        el('div', { class: 'dcp-failed-quote' }, '«' + h.exact.slice(0, 90) + '»'),
-        h.note ? el('div', { class: 'dcp-note-text' }, [el('b', {}, 'یادداشت شما: '), renderNoteLines(h.note)]) : null,
-      ])));
-    const panel = el('aside', { class: 'dcp-failed-panel', 'aria-label': 'هایلایت‌های بدون جایگاه' }, [
-      el('div', { class: 'dcp-panel-head' }, 'هایلایت‌هایی که جای‌گذاری نشدند'),
-      el('p', { class: 'dcp-failed-note' }, 'متن این هایلایت‌ها در نسخه فعلی صفحه پیدا نشد، اما داده شما حفظ شده است.'),
-      list,
-    ]);
-    document.body.appendChild(panel);
-    this.ui.failed = panel;
-  }
+  // --- orphaned anchors -----------------------------------------------------
+  // A highlight whose stored text no longer exists in the page (the article was
+  // edited after it was made) is kept in `this.failed` so it is never treated as
+  // deleted — its data lives on and still shows in the archive / پیشخوان. It is
+  // deliberately NOT surfaced on the article itself: the old floating
+  // «هایلایت‌هایی که جای‌گذاری نشدند» panel sat above the toolbar and read as an
+  // error the reader can do nothing about. Silent here, intact everywhere else.
 
   // --- note button ----------------------------------------------------------
   // Writes a note ON the currently-selected highlight (the last one created or
