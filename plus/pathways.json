@@ -458,6 +458,10 @@
         "milestone": false
       },
       {
+        "content_id": "chairside/chairside-28",
+        "milestone": false
+      },
+      {
         "content_id": "dentcast-plus/video-3",
         "milestone": false
       },
@@ -904,6 +908,10 @@
       {
         "content_id": "chairside/chairside-23",
         "milestone": true
+      },
+      {
+        "content_id": "chairside/chairside-28",
+        "milestone": false
       },
       {
         "content_id": "episodes/episode-60",
@@ -1371,6 +1379,10 @@
         "milestone": false
       },
       {
+        "content_id": "chairside/chairside-28",
+        "milestone": false
+      },
+      {
         "content_id": "insight/insight-32",
         "milestone": false
       },
@@ -1678,6 +1690,10 @@
       },
       {
         "content_id": "chairside/chairside-7",
+        "milestone": false
+      },
+      {
+        "content_id": "chairside/chairside-28",
         "milestone": false
       },
       {
