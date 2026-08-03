@@ -17,7 +17,7 @@
   "rotation": {
     "advance": "session",
     "session_minutes": 30,
-    "sequence": ["premium", "premium", "premium", "premium"]
+    "sequence": ["idc-welcome", "idc-platform", "idc-launch", "premium"]
   },
   "creatives": {
     "premium": {
@@ -67,7 +67,43 @@
         "image": null,
         "weight": 1,
         "audience": ["plus"],
-        "note": "تبلیغ داخلی (خانگی) — پولی نیست و لینکش داخلی است، پس rel=\"sponsored\" نمی‌گیرد. جایگزین brand-invite برای کاربر لاگین‌شده؛ هر چهار زمانِ کاربر پلاس را می‌گیرد"
+        "note": "تبلیغ داخلی (خانگی) — پولی نیست و لینکش داخلی است، پس rel=\"sponsored\" نمی‌گیرد. جایگزین brand-invite برای کاربر لاگین‌شده؛ از ۱۴۰۵/۰۵/۱۲ فقط زمانِ چهارم را می‌گیرد (سه زمان اول کمپین iDC است)"
+      },
+      {
+        "id": "idc-welcome",
+        "enabled": true,
+        "badge": "حامی دنت‌کست",
+        "title": "",
+        "text": "",
+        "cta": "",
+        "url": "",
+        "image": "/spot/img/idc-welcome.webp",
+        "weight": 1,
+        "note": "کمپین iDesign Center — کارتِ فقط‌عکس و بدون اکشن (url خالی = کارت کلیک‌پذیر نیست، پس rel و کلیک هم ندارد). عکس: «به آینده دیزاین خوش آمدید — Powered by Ai». زمانِ ۱ از ۴. منبع: ad_photos/ad2.webp"
+      },
+      {
+        "id": "idc-platform",
+        "enabled": true,
+        "badge": "حامی دنت‌کست",
+        "title": "",
+        "text": "",
+        "cta": "",
+        "url": "",
+        "image": "/spot/img/idc-platform.webp",
+        "weight": 1,
+        "note": "کمپین iDesign Center — کارتِ فقط‌عکس و بدون اکشن. عکس: «اولین پلتفرم دنتال مبتنی بر Ai». زمانِ ۲ از ۴. منبع: ad_photos/ad3.webp"
+      },
+      {
+        "id": "idc-launch",
+        "enabled": true,
+        "badge": "حامی دنت‌کست",
+        "title": "",
+        "text": "",
+        "cta": "",
+        "url": "",
+        "image": "/spot/img/idc-launch.webp",
+        "weight": 1,
+        "note": "کمپین iDesign Center — کارتِ فقط‌عکس و بدون اکشن. عکس: «لانچ در اکسیدا — ۳ شهریور». زمانِ ۳ از ۴. تاریخِ روی عکس ۱۴۰۵/۰۶/۰۳ است؛ موتور زمان‌بند ندارد، پس بعد از آن تاریخ باید دستی خاموش شود"
       }
     ]
   }
