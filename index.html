@@ -3532,6 +3532,7 @@ a.dc-list-card--pillar {
           </div>
         </div>
         <ul class="dc-pulse-list">
+          <li>یک <a href="/sharehub/share-13.html">مطلب Share Hub</a> درباره‌ی دیابت و ایمپلنت دندانی، از تصمیم قبل از جراحی تا نگهداری بلندمدت منتشر شد · ۱۳ مرداد</li>
           <li>یک <a href="/chairside/chairside-29.html">کیس Chairside</a> دربارهٔ تغییرِ رنگِ دندانِ اندو‌شده و روکشی که هنوز لازم نبود منتشر شد · ۱۳ مرداد</li>
           <li>یک <a href="/sharehub/share-12.html">مطلب Share Hub</a> درباره‌ی نورالژی تریژمینال و آنچه دندانپزشک عمومی باید بداند منتشر شد · ۱۲ مرداد</li>
           <li>یک <a href="/chairside/chairside-28.html">کیس Chairside</a> درباره‌ی دردِ مبهمِ دندانِ اندو‌شده و سهل‌انگاریِ متخصصِ پریو منتشر شد · ۱۲ مرداد</li>
@@ -3571,9 +3572,9 @@ a.dc-list-card--pillar {
           <p class="dc-rail-title">پرامپتولوژیست — نقش‌دادن: چه می‌کند و چه نمی‌کند</p>
           <span class="dc-rail-meta">تازه‌ترین مطلب</span>
         </a>
-        <a class="dc-rail-card" data-cat="sharehub" href="/sharehub/share-12.html">
+        <a class="dc-rail-card" data-cat="sharehub" href="/sharehub/share-13.html">
           <span class="dc-type-chip t-share">ShareHub</span>
-          <p class="dc-rail-title">نورالژی تریژمینال، آنچه یک دندانپزشک عمومی باید بداند</p>
+          <p class="dc-rail-title">دیابت و ایمپلنت دندانی: از تصمیم قبل از جراحی تا نگهداری بلندمدت</p>
           <span class="dc-rail-meta">تازه‌ترین مطلب</span>
         </a>
         <a class="dc-rail-card" data-cat="dentcast_plus" href="/dentcast-plus/video-6.html">
@@ -3693,7 +3694,7 @@ a.dc-list-card--pillar {
           <span class="k">ساعت محتوای صوتی</span>
         </div>
         <div class="hero-stat" role="listitem">
-          <span class="v"><!-- COUNTER:CONTENT:START -->۵۷۴<!-- COUNTER:CONTENT:END --></span>
+          <span class="v"><!-- COUNTER:CONTENT:START -->۵۷۵<!-- COUNTER:CONTENT:END --></span>
           <span class="k">مطلب و مدخل آموزشی</span>
         </div>
       </div>
@@ -4369,7 +4370,7 @@ scrollBody.addEventListener('touchend',e=>{
     if(p) p.textContent=title;
     a.href=url;
   }
-  fetch('/dentcast-brain.json?v=e374048866',{cache:'no-store'}).then(function(r){return r.json();}).then(function(arr){
+  fetch('/dentcast-brain.json?v=9ccc30b991',{cache:'no-store'}).then(function(r){return r.json();}).then(function(arr){
     if(!Array.isArray(arr)) return;
     var latest={}, pool=[];
     arr.forEach(function(e){
@@ -4701,7 +4702,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 <script>
 /* ── LAST 30 UPDATES ── */
 (function(){
-  const FEED_URL='/dentcast-brain.json?v=e374048866';
+  const FEED_URL='/dentcast-brain.json?v=9ccc30b991';
   const el=document.getElementById('dcLast3Updates');
   if(!el) return;
   function extractArray(json){if(Array.isArray(json))return json;const cands=[json?.items,json?.data,json?.entries,json?.feed].filter(Boolean);for(const c of cands)if(Array.isArray(c))return c;for(const k in(json||{})){const v=json[k];if(Array.isArray(v))return v;if(v&&typeof v==='object'&&Array.isArray(v.items))return v.items;}return[];}
@@ -4957,7 +4958,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 
   function getBrain(){
     if(brainCache) return Promise.resolve(brainCache);
-    return fetch('/dentcast-brain.json?v=e374048866', {cache:'no-store'})
+    return fetch('/dentcast-brain.json?v=9ccc30b991', {cache:'no-store'})
       .then(r => r.ok ? r.json() : [])
       .then(d => { brainCache = Array.isArray(d) ? d : []; return brainCache; })
       .catch(() => { brainCache = []; return []; });
