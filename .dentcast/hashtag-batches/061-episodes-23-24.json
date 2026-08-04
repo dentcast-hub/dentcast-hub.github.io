@@ -1,0 +1,46 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 61 - episodes 23 and 24, both on peri-implant bone loss. Episode 23 (occlusal overload -> bone loss) joins #ایمپلنت + #اورلود_اکلوزالی + #تحلیل_استخوان + #اکلوژن; #استخوان single-use tag dropped, its word kept alive as an alias of #تحلیل_استخوان. Episode 24 (Crown-Implant Ratio) resolves the backlog #CIR tag into an alias of the existing #نسبت_تاج_به_ایمپلنت concept, and joins #تحلیل_استخوان.",
+ "concepts": [
+  {
+   "tag": "#تحلیل_استخوان",
+   "domain": "clinical",
+   "definition": "از دست رفتنِ استخوانِ اطرافِ دندان یا ایمپلنت.",
+   "use_when": "مقاله تحلیل استخوان را پیامد یا معیار قرار دهد.",
+   "aliases": [
+    "bone loss",
+    "تحلیل استخوانی",
+    "استخوان",
+    "تغییرات استخوان"
+   ]
+  },
+  {
+   "tag": "#نسبت_تاج_به_ایمپلنت",
+   "domain": "clinical",
+   "definition": "نسبتِ ارتفاعِ تاج به طولِ ایمپلنت و اثرش بر اهرمِ نیرو و تحلیلِ استخوان.",
+   "use_when": "مقاله C/I ratio را متغیرِ تصمیم یا ریسک بداند.",
+   "aliases": [
+    "crown implant ratio",
+    "C/I ratio",
+    "نسبت تاج ایمپلنت",
+    "CIR",
+    "نسبت تاج به ایمپلنت"
+   ]
+  }
+ ],
+ "articles": {
+  "episodes/episode-23": [
+   "#دنتکست",
+   "#ایمپلنت",
+   "#اورلود_اکلوزالی",
+   "#تحلیل_استخوان",
+   "#اکلوژن"
+  ],
+  "episodes/episode-24": [
+   "#دنتکست",
+   "#ایمپلنت",
+   "#نسبت_تاج_به_ایمپلنت",
+   "#تحلیل_استخوان"
+  ]
+ }
+}

@@ -1,0 +1,36 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 132 - episodes 134 and 135, the MID caries-treatment guideline pair. Episode 134 folds backlog #ترمیم_کم_تهاجمی onto #حداقل_تهاجم (MID/minimal-intervention aliases added), then -> #پوسیدگی + #مدیریت_پوسیدگی + #حداقل_تهاجم + #گایدلاین. Episode 135 (deep-caries management) -> #پوسیدگی + #حداقل_تهاجم + #برداشت_پوسیدگی + #گایدلاین.",
+ "concepts": [
+  {
+   "tag": "#حداقل_تهاجم",
+   "domain": "clinical",
+   "definition": "دندانپزشکیِ کم‌تهاجم (MID) — حفظِ حداکثری ساختار و مداخله‌ی به‌اندازه.",
+   "use_when": "مقاله رویکردِ کم‌تهاجم را مبنا قرار دهد.",
+   "aliases": [
+    "minimal intervention",
+    "MID",
+    "ترمیم کم تهاجمی",
+    "کم تهاجم",
+    "minimally invasive",
+    "دندانپزشکی کم تهاجم"
+   ]
+  }
+ ],
+ "articles": {
+  "episodes/episode-134": [
+   "#دنتکست",
+   "#پوسیدگی",
+   "#مدیریت_پوسیدگی",
+   "#حداقل_تهاجم",
+   "#گایدلاین"
+  ],
+  "episodes/episode-135": [
+   "#دنتکست",
+   "#پوسیدگی",
+   "#حداقل_تهاجم",
+   "#برداشت_پوسیدگی",
+   "#گایدلاین"
+  ]
+ }
+}

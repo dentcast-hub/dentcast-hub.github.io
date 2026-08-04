@@ -26,6 +26,12 @@ ENV NODE_ENV=production
 # The content index and pathway definitions are baked in (see COPY below).
 ENV CONTENT_INDEX_PATH=/app/content-index.json
 ENV PATHWAYS_PATH=/app/pathways.json
+# ...and where to refresh them from while the container runs, so publishing an
+# article no longer means building an image. The baked copies above stay the
+# boot value and the fallback; these are only ever an upgrade. Both mirrors are
+# listed because they fail independently (Arvan vs Cloudflare).
+ENV CONTENT_INDEX_URL=https://dentcast.ir/plus/content-index.json,https://dentcast.org/plus/content-index.json
+ENV PATHWAYS_URL=https://dentcast.ir/plus/pathways.json,https://dentcast.org/plus/pathways.json
 WORKDIR /app
 
 # Prod dependencies only.

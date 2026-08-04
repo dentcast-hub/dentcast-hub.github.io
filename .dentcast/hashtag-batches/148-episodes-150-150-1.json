@@ -1,0 +1,48 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 148 - episode 150 and Dentopedia insert 150.1. Episode 150 (immediate implant in the esthetic zone, ITI Consensus 2023) adds a #کنسنسوس_ITI concept, then -> #ایمپلنت_فوری + #ناحیه_زیبایی + #جراحی_ایمپلنت + #کنسنسوس_ITI. Episode 150.1 (the virtual patient) adds a #بیمار_مجازی concept, then -> #دنتوپدیا + #بیمار_مجازی + #طراحی_لبخند + #دندانپزشکی_دیجیتال.",
+ "concepts": [
+  {
+   "tag": "#کنسنسوس_ITI",
+   "domain": "clinical",
+   "definition": "بیانیه‌های اجماعیِ ITI — توصیه‌های مبتنی بر شواهد برای درمانِ ایمپلنت.",
+   "use_when": "مقاله به کنسنسوسِ ITI استناد یا آن را مرور کند.",
+   "aliases": [
+    "iti consensus",
+    "کنسنسوس iti",
+    "بیانیه اجماع",
+    "consensus statement",
+    "iti"
+   ]
+  },
+  {
+   "tag": "#بیمار_مجازی",
+   "domain": "clinical",
+   "definition": "Virtual Patient — تلفیقِ اسکنِ صورت، CBCT و اسکنِ داخل‌دهانی در یک مدلِ دیجیتالِ یکپارچه برای طراحیِ درمان.",
+   "use_when": "مقاله بیمارِ مجازی/تلفیقِ داده‌های دیجیتال را موضوع داشته باشد.",
+   "aliases": [
+    "virtual patient",
+    "بیمار مجازی",
+    "face scan",
+    "همپوشانی فایل ها",
+    "تلفیق داده دیجیتال"
+   ]
+  }
+ ],
+ "articles": {
+  "episodes/episode-150": [
+   "#دنتکست",
+   "#ایمپلنت_فوری",
+   "#ناحیه_زیبایی",
+   "#جراحی_ایمپلنت",
+   "#کنسنسوس_ITI"
+  ],
+  "episodes/episode-150-1": [
+   "#دنتکست",
+   "#دنتوپدیا",
+   "#بیمار_مجازی",
+   "#طراحی_لبخند",
+   "#دندانپزشکی_دیجیتال"
+  ]
+ }
+}

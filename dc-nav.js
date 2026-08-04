@@ -2150,7 +2150,7 @@
 (function () {
   if (window.__dcPlusLoaded) return;
   window.__dcPlusLoaded = true;
-  var V = '44';
+  var V = '49';
 
   /* Anti-FOUC for the Plus header. Plus (mobile only) relocates the music +
      articles buttons from the topbar into the tool drawer and adds the person
@@ -2201,7 +2201,7 @@
 (function () {
   if (window.__dcSpotLoaded) return;
   window.__dcSpotLoaded = true;
-  var SPOT_V = '23';
+  var SPOT_V = '27';
   var js = document.createElement('script');
   js.type = 'module';
   js.src = '/spot/spot.js?v=' + SPOT_V;
@@ -2257,5 +2257,32 @@
     };
     if (document.readyState === 'complete') registerSW();
     else window.addEventListener('load', registerSW);
+  }
+})();
+
+/* ── E-NAMAD trust seal — host gate ──────────────────────────────────────────
+   The seal is issued for ONE domain. Ours is registered to dentcast.ir, and
+   enamad's logo.aspx renders from the request's referrer: on any other host it
+   answers with an "invalid seal" image. So this is the one place the .org/.ir
+   mirrors deliberately differ — the site-wide "no per-domain logic" rule
+   (CLAUDE.md) exists so the GA tag and asset URLs stay identical, not to force
+   a broken badge onto .org.
+
+   The markup ships statically in the pages (index.html footer + col-A sidebar,
+   about.html contact section) rather than being injected from here, so any
+   crawler — enamad's included — sees the verbatim <a>/<img> with the id, Code
+   and referrerpolicy attributes it checks for. This pass only *removes* it off
+   dentcast.ir. The images carry loading="lazy" and both seals sit below the
+   fold on load, so on .org the request has normally not fired by the time this
+   runs; removal makes sure it never will. */
+(function () {
+  if (location.hostname.indexOf('dentcast.ir') !== -1) return;
+  var seals = document.querySelectorAll('.dc-trustseal');
+  for (var i = 0; i < seals.length; i++) {
+    /* about.html wraps its seal in a titled .content-box — drop the whole box,
+       otherwise the host is left with a heading and a paragraph introducing
+       nothing. index.html's two seals have no such wrapper. */
+    var box = seals[i].closest('.dc-trustseal-box');
+    (box || seals[i]).remove();
   }
 })();

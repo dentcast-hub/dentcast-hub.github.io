@@ -1,0 +1,53 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 60 - episodes 21 and 22. Episode 21 (two-step impression, part 2) drops the single-use #ایمپرشن tag; the word survives as an alias on #قالبگیری, so the door stays open without burning a pool slot. Episode 22 (three critical drug interactions) promotes backlog tag #داروشناسی to a concept and joins #تداخل_دارویی + #ایمنی_بیمار + #نسخه_نویسی (the caption names prescription writing explicitly).",
+ "concepts": [
+  {
+   "tag": "#قالبگیری",
+   "domain": "clinical",
+   "definition": "ثبتِ وضعیتِ دهان برای ساختِ کار — چترِ عامِ قالب‌گیری.",
+   "use_when": "همراه تگ مشخص‌ترِ تکنیک بیاید، نه به‌تنهایی.",
+   "aliases": [
+    "impression",
+    "ایمپرشن",
+    "قالب گیری"
+   ]
+  },
+  {
+   "tag": "#داروشناسی",
+   "domain": "clinical",
+   "definition": "داروشناسیِ کاربردی برای دندانپزشک — اثر، عارضه و ملاحظاتِ تجویز.",
+   "use_when": "مقاله استدلالِ دارویی داشته باشد، نه صرفاً نامِ یک دارو.",
+   "aliases": [
+    "فارماکولوژی",
+    "pharmacology",
+    "دارو"
+   ]
+  },
+  {
+   "tag": "#تداخل_دارویی",
+   "domain": "clinical",
+   "definition": "تداخلِ بینِ داروها که اثر یا ایمنیِ درمان را تغییر می‌دهد.",
+   "use_when": "مقاله تداخل مشخصی را تحلیل یا فهرست کند.",
+   "aliases": [
+    "drug interaction",
+    "تداخل دارو",
+    "تداخل داروها"
+   ]
+  }
+ ],
+ "articles": {
+  "episodes/episode-21": [
+   "#دنتکست",
+   "#قالبگیری",
+   "#قالبگیری_دو_مرحله_ای"
+  ],
+  "episodes/episode-22": [
+   "#دنتکست",
+   "#داروشناسی",
+   "#تداخل_دارویی",
+   "#ایمنی_بیمار",
+   "#نسخه_نویسی"
+  ]
+ }
+}

@@ -37,7 +37,7 @@
   <main class="dcp-page-main">
     <div id="dcp-root"></div>
   </main>
-  <script type="module" src="/plus/js/dashboard-page.js?v=1"></script>
+  <script type="module" src="/plus/js/dashboard-page.js?v=2"></script>
   <!-- DentCast Spot loader — this standalone page renders the SAME dashboard
        view as the header overlay (which gets Spot via dc-nav.js's own loader),
        but it does not load dc-nav.js itself (it has its own minimal header, not
@@ -48,7 +48,7 @@
     (function () {
       if (window.__dcSpotLoaded) return;
       window.__dcSpotLoaded = true;
-      var SPOT_V = '19';
+      var SPOT_V = '27';
       var js = document.createElement('script');
       js.type = 'module';
       js.src = '/spot/spot.js?v=' + SPOT_V;

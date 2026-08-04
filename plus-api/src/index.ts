@@ -7,6 +7,7 @@ import {
   startAssistantLearningScheduler,
 } from './scheduler.js';
 import { startBalePolling } from './services/bale-updates.js';
+import { startContentRefresh } from './content-refresh.js';
 
 async function main(): Promise<void> {
   const app = await buildServer();
@@ -26,6 +27,11 @@ async function main(): Promise<void> {
   // Bale connect worker: long-polls getUpdates and links chat_ids (no-op without
   // a BALE_BOT_TOKEN). Primary path since Bale's webhook delivery is unreliable.
   const stopBalePolling = startBalePolling();
+  // Pull the published taxonomy/pathways instead of waiting for the next image
+  // build: the files are baked in at build time, so without this every article
+  // published on the static site needs a redeploy before the assistant, the
+  // dashboard tree and the pathway pages can see it.
+  const stopContentRefresh = startContentRefresh();
 
   const shutdown = async (signal: string) => {
     app.log.info(`${signal} received, shutting down`);
@@ -37,6 +43,7 @@ async function main(): Promise<void> {
     stopReviewReminder();
     stopAssistantLearning();
     stopBalePolling();
+    stopContentRefresh();
     await app.close();
     await closePool();
     process.exit(0);

@@ -1,0 +1,24 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 96 - episodes 93 and 94, closing Magne chapter 1. Episode 93 folds the backlog #بیومیمتیک_ترمیمی into the existing #ترمیم_بیومیمتیک (whose aliases already carry 'بیومیمتیک ترمیمی'), then -> #بیومیمتیک + #کتاب_مانیه + #ترمیم_بیومیمتیک + #درمان_محافظه‌کارانه. Episode 94 (chapter-1 finale) -> the same set.",
+ "concepts": [],
+ "renames": {
+  "#بیومیمتیک_ترمیمی": "#ترمیم_بیومیمتیک"
+ },
+ "articles": {
+  "episodes/episode-93": [
+   "#دنتکست",
+   "#بیومیمتیک",
+   "#کتاب_مانیه",
+   "#ترمیم_بیومیمتیک",
+   "#درمان_محافظه‌کارانه"
+  ],
+  "episodes/episode-94": [
+   "#دنتکست",
+   "#بیومیمتیک",
+   "#کتاب_مانیه",
+   "#ترمیم_بیومیمتیک",
+   "#درمان_محافظه‌کارانه"
+  ]
+ }
+}

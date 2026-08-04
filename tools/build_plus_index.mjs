@@ -139,6 +139,10 @@ for (const e of brain) {
 // Fold glossary terms into the SAME maps so they show in the dashboard tree and
 // resolve for the homepage "continue" line. Each term carries slug/url/fa_title
 // and its own pillar, so it slots into clusters just like brain content.
+const hashtagAliases = existsSync(resolve(root,'dentcast-hashtag-reference.json'))
+  ? (JSON.parse(read('dentcast-hashtag-reference.json')).aliases || {})
+  : {};
+
 const glossaryTerms = JSON.parse(read('glossary/glossary.json')).glossary || [];
 for (const e of glossaryTerms) {
   const url = e.url;
@@ -207,6 +211,10 @@ const out = {
   tagCount: tags.length,
   folders,
   clusters,
+  // Orthographic/transliteration variants of one word. case-assistant.ts must
+  // apply these to BOTH the tag and the query before tokenizing, otherwise
+  // "بایو میمتیک" and "بیومیمتیک" are unrelated tokens and one of them misses.
+  aliases: hashtagAliases,
   tags,
   byContent,
 };

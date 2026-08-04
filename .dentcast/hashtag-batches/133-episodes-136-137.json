@@ -1,0 +1,36 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 133 - episodes 136 and 137. Episode 136 (ceramic surface treatment) folds the spelling variant #لامینیت onto #لمینیت_سرامیکی (alias added), then -> #آماده_سازی_سرامیک + #باندینگ_سرامیک + #سایلان + #زیرکونیا + #پروتز_ثابت. Episode 137 (indirect posterior adhesive, part 1) -> #ترمیم_غیرمستقیم + #آنله + #بیومیمتیک + #ادهزیو.",
+ "concepts": [
+  {
+   "tag": "#لمینیت_سرامیکی",
+   "domain": "clinical",
+   "definition": "ونیر/لمینیتِ سرامیکی — رستوریشنِ نازکِ باندشونده‌ی زیبایی.",
+   "use_when": "مقاله لمینیتِ سرامیکی را موضوع داشته باشد.",
+   "aliases": [
+    "ceramic laminate",
+    "لامینیت",
+    "لمینت",
+    "لامینیت سرامیکی",
+    "veneer laminate"
+   ]
+  }
+ ],
+ "articles": {
+  "episodes/episode-136": [
+   "#دنتکست",
+   "#آماده_سازی_سرامیک",
+   "#باندینگ_سرامیک",
+   "#سایلان",
+   "#زیرکونیا",
+   "#پروتز_ثابت"
+  ],
+  "episodes/episode-137": [
+   "#دنتکست",
+   "#ترمیم_غیرمستقیم",
+   "#آنله",
+   "#بیومیمتیک",
+   "#ادهزیو"
+  ]
+ }
+}

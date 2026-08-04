@@ -1,0 +1,71 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 80 - episodes 61 and 62. Episode 61 (external + internal bleaching) gives #بلیچینگ a proper alias set and promotes backlog #اینترنال_بلیچینگ to its own concept (a distinct non-vital/walking-bleach technique), then -> #بلیچینگ + #اینترنال_بلیچینگ + #تغییر_رنگ + #زیبایی. Episode 62 (jaw growth's effect on long-term implant outcomes, part 1) gives #رشد_فک aliases and promotes backlog #درمان_بلندمدت to a long-term-outcome concept, then -> #ایمپلنت + #رشد_فک + #درمان_بلندمدت.",
+ "concepts": [
+  {
+   "tag": "#بلیچینگ",
+   "domain": "clinical",
+   "definition": "سفید کردنِ دندان با عواملِ اکسیدکننده.",
+   "use_when": "مقاله بلیچینگ را موضوع یا گزینه‌ی درمان قرار دهد.",
+   "aliases": [
+    "bleaching",
+    "سفید کردن دندان",
+    "whitening",
+    "وایتنینگ"
+   ]
+  },
+  {
+   "tag": "#اینترنال_بلیچینگ",
+   "domain": "clinical",
+   "definition": "بلیچینگِ داخلیِ دندانِ اندوشده‌ی تغییررنگ‌داده — عاملِ سفیدکننده داخلِ محفظه‌ی پالپ.",
+   "use_when": "مقاله بلیچینگ داخلی/واکینگ‌بلیچ را موضوع داشته باشد.",
+   "aliases": [
+    "internal bleaching",
+    "بلیچینگ داخلی",
+    "واکینگ بلیچ",
+    "walking bleach",
+    "non vital bleaching"
+   ]
+  },
+  {
+   "tag": "#رشد_فک",
+   "domain": "clinical",
+   "definition": "رشد و تغییراتِ اسکلتیِ فک که پس از بلوغ هم ادامه دارد و موقعیتِ دندان و ایمپلنت را جابه‌جا می‌کند.",
+   "use_when": "مقاله رشدِ فکی را متغیرِ تصمیم یا ریسک بداند.",
+   "aliases": [
+    "jaw growth",
+    "رشد فکی",
+    "رشد فکین",
+    "تغییرات اسکلتی",
+    "skeletal change"
+   ]
+  },
+  {
+   "tag": "#درمان_بلندمدت",
+   "domain": "clinical",
+   "definition": "نتیجه و پایداریِ درمان در بازه‌ی بلندمدت و آنچه در طول سال‌ها تغییر می‌کند.",
+   "use_when": "مقاله پیامدِ بلندمدتِ درمان را ارزیابی کند.",
+   "aliases": [
+    "نتایج بلندمدت",
+    "long term outcome",
+    "پیامد بلندمدت",
+    "درمان طولانی مدت"
+   ]
+  }
+ ],
+ "articles": {
+  "episodes/episode-61": [
+   "#دنتکست",
+   "#بلیچینگ",
+   "#اینترنال_بلیچینگ",
+   "#تغییر_رنگ",
+   "#زیبایی"
+  ],
+  "episodes/episode-62": [
+   "#دنتکست",
+   "#ایمپلنت",
+   "#رشد_فک",
+   "#درمان_بلندمدت"
+  ]
+ }
+}

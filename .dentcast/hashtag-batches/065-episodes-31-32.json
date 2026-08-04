@@ -1,0 +1,34 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 65 - episodes 31 and 32. Episode 31 (screw-cemented implant restorations) -> #ایمپلنت + #پروتز_ایمپلنت + #اسکرو_سمنتد + #سمان_باقیمانده (the 'کنترل سمان' benefit it resolves). While here, fold the glued-token duplicate #اسکروسمنت (one token, shares nothing with #اسکرو_سمنتد's two tokens - the §5 glued-token failure) into #اسکرو_سمنتد via aliases, so both spellings and the two notecast/insight articles carrying #اسکروسمنت now match the same words. No rename, so no door closes. Episode 32 (Snap-on Smile) -> #Snap_On_Smile + #درمان_غیرتهاجمی (its 'بدون تراش' keyword) + #زیبایی.",
+ "concepts": [
+  {
+   "tag": "#اسکرو_سمنتد",
+   "domain": "clinical",
+   "definition": "رستوریشنِ ایمپلنتِ اسکرو-سمنتد — سمان‌شده خارج دهان روی اباتمنتِ پیچ‌شونده، برای حذفِ سمانِ زیرلثه‌ای و حفظِ سرویس‌پذیری.",
+   "use_when": "مقاله رویکردِ اسکرو-سمنتد را انتخاب یا ارزیابی کند.",
+   "aliases": [
+    "screwmentable",
+    "اسکروسمنت",
+    "اسکرو سمنت",
+    "screw cement",
+    "اسکرو سمنتد"
+   ]
+  }
+ ],
+ "articles": {
+  "episodes/episode-31": [
+   "#دنتکست",
+   "#ایمپلنت",
+   "#پروتز_ایمپلنت",
+   "#اسکرو_سمنتد",
+   "#سمان_باقیمانده"
+  ],
+  "episodes/episode-32": [
+   "#دنتکست",
+   "#Snap_On_Smile",
+   "#درمان_غیرتهاجمی",
+   "#زیبایی"
+  ]
+ }
+}

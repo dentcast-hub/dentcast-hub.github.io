@@ -1,0 +1,18 @@
+{
+  "type": "sharehub",
+  "note": "Alias enrichment for #دیابت. Found while publishing sharehub/share-13: a dentist typing «بیمار دیابتیک» — the most natural clinical phrasing — never reached #دیابت, because the concept only carried «diabetes», «مرض قند» and «بیماری قند». The adjectival forms tokenize as their own words (دیابتیک / دیابتی / diabetic are NOT stemmed to دیابت), so without them the query simply missed the concept. NOTE for future batches: `aliases` REPLACES the concept's list, it does not merge — so the three pre-existing aliases are repeated here on purpose. Aliases only; no new concept, no retagging.",
+  "concepts": [
+    {
+      "tag": "#دیابت",
+      "aliases": [
+        "diabetes",
+        "مرض قند",
+        "بیماری قند",
+        "دیابتیک",
+        "دیابتی",
+        "diabetic"
+      ]
+    }
+  ],
+  "articles": {}
+}

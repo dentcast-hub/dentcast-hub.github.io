@@ -1,0 +1,21 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 62 - episodes 25 and 26. Both map to existing concepts. Episode 25 (short implant vs sinus lift in posterior maxilla) -> #ایمپلنت + #ایمپلنت_کوتاه + #سینوس_لیفت + #طرح_درمان (it resolves a treatment choice). Episode 26 (loading timing -> bone loss) -> #ایمپلنت + #بارگذاری_ایمپلنت + #زمان_لود_ایمپلنت + #تحلیل_استخوان; single-use #بارگذاری and #استخوان dropped, both words already reachable through the compound tags / #تحلیل_استخوان alias, so no door closes.",
+ "concepts": [],
+ "articles": {
+  "episodes/episode-25": [
+   "#دنتکست",
+   "#ایمپلنت",
+   "#ایمپلنت_کوتاه",
+   "#سینوس_لیفت",
+   "#طرح_درمان"
+  ],
+  "episodes/episode-26": [
+   "#دنتکست",
+   "#ایمپلنت",
+   "#بارگذاری_ایمپلنت",
+   "#زمان_لود_ایمپلنت",
+   "#تحلیل_استخوان"
+  ]
+ }
+}

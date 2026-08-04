@@ -1,0 +1,19 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 79 - episodes 59 and 60. Episode 59 (factors driving marginal bone loss around implants) replaces the bare backlog tag #MBL with the canonical #تحلیل_استخوان_کرستال (its alias list already carries 'MBL'/'marginal bone loss', so the acronym still folds), then -> #ایمپلنت + #تحلیل_استخوان_کرستال + #تحلیل_استخوان. Episode 60 (occlusion in implant treatment) -> #ایمپلنت + #اکلوژن + #بیومکانیک.",
+ "concepts": [],
+ "articles": {
+  "episodes/episode-59": [
+   "#دنتکست",
+   "#ایمپلنت",
+   "#تحلیل_استخوان_کرستال",
+   "#تحلیل_استخوان"
+  ],
+  "episodes/episode-60": [
+   "#دنتکست",
+   "#ایمپلنت",
+   "#اکلوژن",
+   "#بیومکانیک"
+  ]
+ }
+}

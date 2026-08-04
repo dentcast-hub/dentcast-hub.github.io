@@ -1,0 +1,143 @@
+{
+  "type": "clinical",
+  "note": "Retire 14 concepts that were already filed as an alias of a live concept and carry no articles. A canonical tag must never also be another concept's alias — it makes the alias table a chain, and the tokenizer resolves a chain only one hop, so the two spellings land on different tags. No brain entry changes: every retired tag has count 0.",
+  "concepts": [
+    {
+      "tag": "#ایمپلنت",
+      "aliases": [
+        "implant",
+        "ایمپلانت"
+      ]
+    },
+    {
+      "tag": "#ترمیم_غیرمستقیم",
+      "aliases": [
+        "indirect restoration",
+        "رستوریشن غیرمستقیم",
+        "اینله",
+        "inlay",
+        "اینله آنله",
+        "اینله و آنله"
+      ]
+    },
+    {
+      "tag": "#تحلیل_استخوان",
+      "aliases": [
+        "bone loss",
+        "تحلیل استخوانی",
+        "استخوان",
+        "تغییرات استخوان"
+      ]
+    },
+    {
+      "tag": "#Zero_Bone_Loss",
+      "aliases": [
+        "زیرو بون لاس",
+        "بدون تحلیل استخوان"
+      ]
+    },
+    {
+      "tag": "#لیتیوم_دی_سیلیکات",
+      "aliases": [
+        "lithium disilicate",
+        "emax",
+        "e.max",
+        "ایمکس",
+        "امکس",
+        "اینگات ایمکس",
+        "لیتیوم دیسیلیکات"
+      ]
+    },
+    {
+      "tag": "#اچ_سرامیک",
+      "aliases": [
+        "HF",
+        "هیدروفلوریک",
+        "hydrofluoric",
+        "اچ HF",
+        "ceramic etching",
+        "hf"
+      ]
+    },
+    {
+      "tag": "#IDS",
+      "aliases": [
+        "immediate dentin sealing",
+        "سیل فوری عاج",
+        "آی دی اس"
+      ]
+    },
+    {
+      "tag": "#ایمپلنت_فول_آرچ",
+      "aliases": [
+        "all on 4",
+        "all-on-4",
+        "آل آن فور",
+        "allon4",
+        "ایمپلنت تمام فک",
+        "all on 6"
+      ]
+    },
+    {
+      "tag": "#فلدسپاتیک",
+      "aliases": [
+        "feldspathic",
+        "feldspathic porcelain",
+        "پرسلن فلدسپاتیک"
+      ]
+    },
+    {
+      "tag": "#رزین_کوتینگ",
+      "aliases": [
+        "resin coating",
+        "رزین کوت"
+      ]
+    },
+    {
+      "tag": "#بایوبیس",
+      "aliases": [
+        "biobase",
+        "بایو بیس"
+      ]
+    },
+    {
+      "tag": "#PRF",
+      "aliases": [
+        "peripheral rim fracture",
+        "شکست لبه محیطی"
+      ]
+    },
+    {
+      "tag": "#بقای_ایمپلنت",
+      "aliases": [
+        "implant survival",
+        "بقای فیکسچر"
+      ]
+    },
+    {
+      "tag": "#هیبرید_لیر",
+      "aliases": [
+        "hybrid layer",
+        "لایه هیبرید",
+        "لایه هیبریدی"
+      ]
+    }
+  ],
+  "renames": {
+    "#Implant": "#ایمپلنت",
+    "#اینله": "#ترمیم_غیرمستقیم",
+    "#استخوان": "#تحلیل_استخوان",
+    "#زیرو_بون_لاس": "#Zero_Bone_Loss",
+    "#lithium_disilicate": "#لیتیوم_دی_سیلیکات",
+    "#HF": "#اچ_سرامیک",
+    "#Immediate_Dentin_Sealing": "#IDS",
+    "#AllOn4": "#ایمپلنت_فول_آرچ",
+    "#feldspathic_porcelain": "#فلدسپاتیک",
+    "#resin coating": "#رزین_کوتینگ",
+    "#biobase": "#بایوبیس",
+    "#peripheral rim fracture": "#PRF",
+    "#Implant_Survival": "#بقای_ایمپلنت",
+    "#hybrid layer": "#هیبرید_لیر"
+  },
+  "articles": {}
+}

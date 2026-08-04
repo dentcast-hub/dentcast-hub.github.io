@@ -1,0 +1,36 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 90 - episodes 81 and 82. Episode 81 (implant-connection finale) -> #ایمپلنت + #کانکشن_ایمپلنت + #اباتمنت. Episode 82 (Platform Switch part 1, marginal bone preservation) needs a new concept: #پلتفرم_سویچ, into which the CamelCase backlog #Platform_Switch folds; article -> #پلتفرم_سویچ + #ایمپلنت + #تحلیل_استخوان_کرستال.",
+ "concepts": [
+  {
+   "tag": "#پلتفرم_سویچ",
+   "domain": "clinical",
+   "definition": "Platform Switching — استفاده از اباتمنتی باریک‌تر از قطرِ پلتفرمِ ایمپلنت تا اتصالِ ایمپلنت-اباتمنت به داخل جابه‌جا و استخوانِ کرستال حفظ شود.",
+   "use_when": "مقاله پلتفرم سویچ را موضوع یا عاملِ حفظ استخوان بداند.",
+   "aliases": [
+    "platform switch",
+    "platform switching",
+    "پلتفرم سویچ",
+    "پلتفرم سوئیچ",
+    "پلتفرم سوییچینگ"
+   ]
+  }
+ ],
+ "renames": {
+  "#Platform_Switch": "#پلتفرم_سویچ"
+ },
+ "articles": {
+  "episodes/episode-81": [
+   "#دنتکست",
+   "#ایمپلنت",
+   "#کانکشن_ایمپلنت",
+   "#اباتمنت"
+  ],
+  "episodes/episode-82": [
+   "#دنتکست",
+   "#پلتفرم_سویچ",
+   "#ایمپلنت",
+   "#تحلیل_استخوان_کرستال"
+  ]
+ }
+}

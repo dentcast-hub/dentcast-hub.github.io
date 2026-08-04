@@ -1,0 +1,572 @@
+{
+ "type": "episodes",
+ "note": "Alias enrichment 4 - clinical concepts (implant prosthetics/components, occlusion & interferences, restoration/prep, diagnostics, brand refs) with no aliases. Aliases only; validated against the live alias table, every concept word-set, and skipping trapped folded forms.",
+ "concepts": [
+  {
+   "tag": "#پروتز_ایمپلنت",
+   "aliases": [
+    "پروتز روی ایمپلنت",
+    "پروتز ایمپلنتی",
+    "روکش گذاری ایمپلنت"
+   ]
+  },
+  {
+   "tag": "#Curated_Content",
+   "aliases": [
+    "محتوای گلچین شده",
+    "کیوریتد",
+    "بازنشر محتوا"
+   ]
+  },
+  {
+   "tag": "#دندان_قدامی",
+   "aliases": [
+    "anterior teeth",
+    "دندان جلویی",
+    "دندان های جلو"
+   ]
+  },
+  {
+   "tag": "#آگاهی_درمانی",
+   "aliases": [
+    "آگاهی بیمار",
+    "patient awareness",
+    "سواد درمانی بیمار"
+   ]
+  },
+  {
+   "tag": "#حفظ_دندان",
+   "aliases": [
+    "tooth preservation",
+    "نگه داشتن دندان",
+    "tooth retention"
+   ]
+  },
+  {
+   "tag": "#گایدلاین",
+   "aliases": [
+    "guideline",
+    "راهنمای بالینی",
+    "دستورالعمل بالینی"
+   ]
+  },
+  {
+   "tag": "#VDO",
+   "aliases": [
+    "vertical dimension of occlusion",
+    "وی دی او",
+    "بعد عمودی اکلوزال"
+   ]
+  },
+  {
+   "tag": "#VD",
+   "aliases": [
+    "وی دی",
+    "دایمنشن"
+   ]
+  },
+  {
+   "tag": "#بارگذاری_ایمپلنت",
+   "aliases": [
+    "implant loading",
+    "لود ایمپلنت",
+    "بارگذاری فیکسچر"
+   ]
+  },
+  {
+   "tag": "#PDL",
+   "aliases": [
+    "periodontal ligament",
+    "لیگامان پریودنتال",
+    "پی دی ال"
+   ]
+  },
+  {
+   "tag": "#PEEK",
+   "aliases": [
+    "پیک",
+    "پلی اتر اتر کتون",
+    "پلیمر peek"
+   ]
+  },
+  {
+   "tag": "#بیو_رستوریتیو",
+   "aliases": [
+    "bio restorative",
+    "بایو رستوریتیو",
+    "کانسپت بیو رستوریتیو"
+   ]
+  },
+  {
+   "tag": "#سمان_دندانی",
+   "aliases": [
+    "dental cement",
+    "سمان دندان",
+    "سمنت دندانی"
+   ]
+  },
+  {
+   "tag": "#MIH",
+   "aliases": [
+    "molar incisor hypomineralization",
+    "هایپومینرالیزیشن",
+    "ام آی اچ"
+   ]
+  },
+  {
+   "tag": "#SDA",
+   "aliases": [
+    "shortened dental arch",
+    "اس دی ای",
+    "قوس کوتاه"
+   ]
+  },
+  {
+   "tag": "#total_occlusal_convergence",
+   "aliases": [
+    "toc",
+    "زاویه همگرایی",
+    "تیپر کلی تراش"
+   ]
+  },
+  {
+   "tag": "#ابزار_ایمپلنت",
+   "aliases": [
+    "implant kit",
+    "کیت ایمپلنت"
+   ]
+  },
+  {
+   "tag": "#اجزای_ایمپلنت",
+   "aliases": [
+    "implant components",
+    "قطعات ایمپلنت",
+    "کامپوننت ایمپلنت"
+   ]
+  },
+  {
+   "tag": "#اسکن_دهانی",
+   "aliases": [
+    "oral scan",
+    "اسکن دهان",
+    "intraoral scan"
+   ]
+  },
+  {
+   "tag": "#اندو",
+   "aliases": [
+    "endo",
+    "درمان اندو"
+   ]
+  },
+  {
+   "tag": "#اندودنتیکس_ترمیمی",
+   "aliases": [
+    "restorative endodontics",
+    "اندو ترمیمی",
+    "بازسازی دندان اندو"
+   ]
+  },
+  {
+   "tag": "#اوکیسون",
+   "aliases": [
+    "okeson",
+    "جفری اوکیسون"
+   ]
+  },
+  {
+   "tag": "#باند",
+   "aliases": [
+    "bond",
+    "چسب دندانی",
+    "باند زدن"
+   ]
+  },
+  {
+   "tag": "#تحلیل_مفهومی",
+   "aliases": [
+    "concept analysis",
+    "واکاوی مفهوم",
+    "تحلیل معنایی"
+   ]
+  },
+  {
+   "tag": "#تحویل_پروتز",
+   "aliases": [
+    "prosthesis delivery",
+    "دلیوری پروتز",
+    "تحویل کار پروتز"
+   ]
+  },
+  {
+   "tag": "#تداخل_سمت_کارگر",
+   "aliases": [
+    "working side interference",
+    "تداخل سمت working",
+    "اینترفیرنس کارگر"
+   ]
+  },
+  {
+   "tag": "#ترمیم_مستقیم",
+   "aliases": [
+    "direct restoration",
+    "ترمیم دایرکت",
+    "ترمیم مستقیم کامپوزیت"
+   ]
+  },
+  {
+   "tag": "#تطابق_بیمار",
+   "aliases": [
+    "patient adaptation",
+    "سازگاری بیمار",
+    "تطبیق بیمار"
+   ]
+  },
+  {
+   "tag": "#تماس_زودرس",
+   "aliases": [
+    "premature contact",
+    "تماس زودهنگام",
+    "کنتاکت زودرس"
+   ]
+  },
+  {
+   "tag": "#ثبات_قبل_از_سمان",
+   "aliases": [
+    "stability before cementation",
+    "بی حرکتی قبل سمان",
+    "چک ثبات روکش"
+   ]
+  },
+  {
+   "tag": "#حداقل_مداخله",
+   "aliases": [
+    "کمترین مداخله",
+    "حداقل دخالت"
+   ]
+  },
+  {
+   "tag": "#حفظ_مینا",
+   "aliases": [
+    "enamel preservation",
+    "حفظ انامل",
+    "نگه داشتن مینا"
+   ]
+  },
+  {
+   "tag": "#داوسون",
+   "aliases": [
+    "dawson",
+    "پیتر داوسون"
+   ]
+  },
+  {
+   "tag": "#درد_بعد_از_روکش",
+   "aliases": [
+    "post crown pain",
+    "درد پس از روکش",
+    "درد بعد از سمان"
+   ]
+  },
+  {
+   "tag": "#دندان_مصنوعی",
+   "aliases": [
+    "denture teeth",
+    "دندان مصنوعی متحرک",
+    "دست دندان"
+   ]
+  },
+  {
+   "tag": "#دندانپزشکی_زیبایی",
+   "aliases": [
+    "cosmetic dentistry",
+    "esthetic dentistry",
+    "دندانپزشکی کازمتیک"
+   ]
+  },
+  {
+   "tag": "#زیبایی_دندان",
+   "aliases": [
+    "dental esthetics",
+    "زیبایی دندانی",
+    "استتیک دندان"
+   ]
+  },
+  {
+   "tag": "#سختی_تکیه_گاه",
+   "aliases": [
+    "abutment rigidity",
+    "سفتی تکیه گاه",
+    "استیفنس تکیه گاه"
+   ]
+  },
+  {
+   "tag": "#شکست_پرسلن",
+   "aliases": [
+    "porcelain fracture",
+    "چیپ پرسلن",
+    "شکست چینی"
+   ]
+  },
+  {
+   "tag": "#ضد_چرخش",
+   "aliases": [
+    "آنتی روتیشن",
+    "ضد چرخش اباتمنت"
+   ]
+  },
+  {
+   "tag": "#طراحی_پروتز",
+   "aliases": [
+    "prosthesis design",
+    "دیزاین پروتز",
+    "طراحی کار پروتز"
+   ]
+  },
+  {
+   "tag": "#فالوآپ_ایمپلنت",
+   "aliases": [
+    "implant follow up",
+    "پیگیری ایمپلنت",
+    "فالو آپ ایمپلنت"
+   ]
+  },
+  {
+   "tag": "#فرمیتوس",
+   "aliases": [
+    "fremitus",
+    "لرزش دندان",
+    "فرمایتوس"
+   ]
+  },
+  {
+   "tag": "#قضاوت_بالینی",
+   "aliases": [
+    "clinical judgment",
+    "قضاوت کلینیکی",
+    "داوری بالینی"
+   ]
+  },
+  {
+   "tag": "#لبه_اینسایزال",
+   "aliases": [
+    "incisal edge preparation",
+    "لبه برنده لمینت",
+    "تراش لبه انسیزال"
+   ]
+  },
+  {
+   "tag": "#نسبت_تاج_به_ریشه",
+   "aliases": [
+    "crown root ratio",
+    "نسبت تاج ریشه",
+    "c/r ratio"
+   ]
+  },
+  {
+   "tag": "#پارافانکشن",
+   "aliases": [
+    "parafunction",
+    "پارافانکشنال",
+    "عادت پارافانکشنال"
+   ]
+  },
+  {
+   "tag": "#پیشگیری",
+   "aliases": [
+    "prevention",
+    "پیشگیرانه",
+    "پروفیلاکسی"
+   ]
+  },
+  {
+   "tag": "#کانتکت_پروگزیمال",
+   "aliases": [
+    "تماس پروگزیمالی",
+    "کنتاکت مجاور"
+   ]
+  },
+  {
+   "tag": "#ADA",
+   "aliases": [
+    "american dental association",
+    "انجمن دندانپزشکی آمریکا"
+   ]
+  },
+  {
+   "tag": "#DMFT",
+   "aliases": [
+    "دی ام اف تی",
+    "شاخص پوسیدگی dmft"
+   ]
+  },
+  {
+   "tag": "#SPT",
+   "aliases": [
+    "supportive periodontal therapy",
+    "درمان نگهدارنده پریو",
+    "اس پی تی"
+   ]
+  },
+  {
+   "tag": "#SSC",
+   "aliases": [
+    "اس اس سی",
+    "روکش استنلس استیل"
+   ]
+  },
+  {
+   "tag": "#Success",
+   "aliases": [
+    "ساکسس",
+    "معیار موفقیت درمان"
+   ]
+  },
+  {
+   "tag": "#Survival",
+   "aliases": [
+    "سروایوال",
+    "بقای درمان"
+   ]
+  },
+  {
+   "tag": "#اصول_درمانی",
+   "aliases": [
+    "treatment principles",
+    "اصول درمان",
+    "پرنسیپل درمانی"
+   ]
+  },
+  {
+   "tag": "#ایمپلنت_قدامی",
+   "aliases": [
+    "ایمپلنت ناحیه قدام",
+    "ایمپلنت جلو",
+    "ایمپلنت زون زیبایی"
+   ]
+  },
+  {
+   "tag": "#بات_جوینت",
+   "aliases": [
+    "اتصال سربه سر",
+    "لبه بات"
+   ]
+  },
+  {
+   "tag": "#بازسازی_درد",
+   "aliases": [
+    "pain reproduction",
+    "بازآفرینی درد",
+    "تکرار درد بیمار"
+   ]
+  },
+  {
+   "tag": "#بازسازی_ریشه",
+   "aliases": [
+    "root reconstruction",
+    "بازسازی دندان اندوشده",
+    "بیلد آپ ریشه"
+   ]
+  },
+  {
+   "tag": "#بزاق",
+   "aliases": [
+    "آب دهان",
+    "بزاق دهان"
+   ]
+  },
+  {
+   "tag": "#بستن_کانتکت",
+   "aliases": [
+    "closing contact",
+    "بستن تماس",
+    "اصلاح کانتکت باز"
+   ]
+  },
+  {
+   "tag": "#توروس_مندیبولاریس",
+   "aliases": [
+    "توروس مندیبل",
+    "برجستگی لینگوال"
+   ]
+  },
+  {
+   "tag": "#تکرار_کار",
+   "aliases": [
+    "remake",
+    "ساخت دوباره",
+    "ریمیک کار"
+   ]
+  },
+  {
+   "tag": "#تکنیک_گورل",
+   "aliases": [
+    "gurel technique",
+    "تکنیک گورل ماکاپ",
+    "تراش گورل"
+   ]
+  },
+  {
+   "tag": "#رابطه_کانینی",
+   "aliases": [
+    "canine relationship",
+    "رابطه کانین",
+    "کلاس کانین"
+   ]
+  },
+  {
+   "tag": "#راک_روکش",
+   "aliases": [
+    "crown rocking",
+    "لق زدن روکش",
+    "تکان روکش"
+   ]
+  },
+  {
+   "tag": "#رجیستریشن_دیجیتال",
+   "aliases": [
+    "digital registration",
+    "رجیستری دیجیتال",
+    "ثبت رابطه دیجیتال"
+   ]
+  },
+  {
+   "tag": "#روکش_استیل",
+   "aliases": [
+    "stainless steel crown",
+    "استیل کراون",
+    "روکش فلزی کودکان"
+   ]
+  },
+  {
+   "tag": "#رویش_مداوم",
+   "aliases": [
+    "رویش پیوسته",
+    "اروپشن مداوم"
+   ]
+  },
+  {
+   "tag": "#ریچموند_کراون",
+   "aliases": [
+    "richmond crown",
+    "روکش ریچموند"
+   ]
+  },
+  {
+   "tag": "#زیبایی_ایمپلنت",
+   "aliases": [
+    "استتیک ایمپلنت",
+    "زیبایی درمان ایمپلنت"
+   ]
+  },
+  {
+   "tag": "#سمان_ادهزیو",
+   "aliases": [
+    "adhesive cement",
+    "سمان چسبنده",
+    "ادهزیو سمنت"
+   ]
+  }
+ ],
+ "articles": {}
+}

@@ -196,18 +196,39 @@ function allowedIn(creative, slotName, audience) {
   return slotOk && audOk;
 }
 
+// What makes a creative renderable at all. A url used to be the only answer,
+// because every card was a link. An IMAGE-ONLY campaign has no action by design
+// — the whole message is baked into the artwork and there is nowhere to send the
+// visitor — so artwork alone is enough to render. A creative with neither is an
+// empty placeholder (the `example-sponsor` stub) and still renders never.
+function renderable(creative) {
+  return !!(creative.url || creative.image);
+}
+
+// A HOUSE creative is one of ours: the premium card, or a sponsor-array entry
+// that points somewhere internal / non-crawlable (the `/plus/` league card, the
+// `mailto:` brand-invite placeholder). A PAID placement is by definition an
+// external http(s) link (ads.md rule 2) — or, for an image-only banner, no link
+// at all. Used by the `premium` rotation step: "show the house ad" must not be
+// able to resolve to a paid sponsor just because the house card for THIS
+// audience was targeted away (see pickCreative).
+function isHouse(creative) {
+  return !!creative.url && !/^https?:\/\//.test(creative.url);
+}
+
 function enabledSponsors(cfg, slotName, audience) {
   const list = (cfg.creatives && cfg.creatives.sponsors) || [];
-  return list.filter((s) => s && s.enabled && s.url && allowedIn(s, slotName, audience));
+  return list.filter((s) => s && s.enabled && renderable(s) && allowedIn(s, slotName, audience));
 }
 
 function premiumCreative(cfg, slotName, audience) {
   const p = cfg.creatives && cfg.creatives.premium;
-  return p && p.enabled !== false && p.url && allowedIn(p, slotName, audience) ? p : null;
+  return p && p.enabled !== false && renderable(p) && allowedIn(p, slotName, audience) ? p : null;
 }
 
-function nextSponsor(cfg, slotName, audience) {
-  const sponsors = enabledSponsors(cfg, slotName, audience);
+function pickSponsor(cfg, slotName, audience, only) {
+  let sponsors = enabledSponsors(cfg, slotName, audience);
+  if (only) sponsors = sponsors.filter(only);
   if (!sponsors.length) return null;
   const pool = [];
   sponsors.forEach((s) => {
@@ -218,6 +239,14 @@ function nextSponsor(cfg, slotName, audience) {
   // so every slot on the page, and every page of a held session, resolves the
   // same sponsor.
   return pool[lsGet(K_RR) % pool.length];
+}
+
+function nextSponsor(cfg, slotName, audience) {
+  return pickSponsor(cfg, slotName, audience);
+}
+
+function nextHouse(cfg, slotName, audience) {
+  return pickSponsor(cfg, slotName, audience, isHouse);
 }
 
 // One creative per page view: every slot on the page shows the same campaign,
@@ -231,7 +260,18 @@ function pickCreative(cfg, slotName, audience) {
     ? cfg.rotation.sequence
     : ['premium'];
   const step = seq[lsGet(K_TICK) % seq.length];
-  if (step === 'premium') return premiumCreative(cfg, slotName, audience) || nextSponsor(cfg, slotName, audience);
+  // A `premium` step means "this beat belongs to the house". The house card is
+  // audience-split (the anon «شروع رایگان» creative vs. the signed-in «جایزهٔ
+  // لیگ» one), so for the audience the premium creative is NOT targeted at, the
+  // beat has to look for the other HOUSE card before it may reach a paid
+  // sponsor — otherwise a campaign the config gave three beats silently wins the
+  // fourth one too, for signed-in visitors only. Paid sponsors stay as the last
+  // resort so a config with no house card at all still renders something.
+  if (step === 'premium') {
+    return premiumCreative(cfg, slotName, audience)
+      || nextHouse(cfg, slotName, audience)
+      || nextSponsor(cfg, slotName, audience);
+  }
   if (step === 'sponsor') return nextSponsor(cfg, slotName, audience) || premiumCreative(cfg, slotName, audience);
   // a specific sponsor id
   const named = enabledSponsors(cfg, slotName, audience).find((s) => s.id === step);
@@ -330,8 +370,12 @@ body.dcp-study .dc-spot { display: none !important; }
   color: var(--txt, #0a1a33);
   transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
 }
-.dc-spot-link:hover { border-color: #f5a208; box-shadow: 0 4px 14px rgba(245, 162, 8, 0.18); }
-.dc-spot-link:active { transform: scale(0.99); }
+/* Hover/press feedback belongs to cards that actually GO somewhere. An
+   action-less banner renders as a <div>, so these are scoped to <a> — a card
+   that lights up under the cursor and then does nothing when clicked is a
+   broken promise, not a style. */
+a.dc-spot-link:hover { border-color: #f5a208; box-shadow: 0 4px 14px rgba(245, 162, 8, 0.18); }
+a.dc-spot-link:active { transform: scale(0.99); }
 .dc-spot-img { width: 44px; height: 44px; border-radius: 10px; object-fit: cover; flex: 0 0 auto; }
 .dc-spot-body { flex: 1 1 auto; min-width: 0; }
 .dc-spot-badge {
@@ -365,6 +409,46 @@ body.dcp-study .dc-spot { display: none !important; }
   background: #f5a208;
   box-shadow: 0 2px 8px rgba(245, 162, 8, 0.35);
 }
+/* ── image-only banner ──────────────────────────────────────────────────────
+   The advertiser's artwork carries the whole message, so the card gets out of
+   its way: no flex row, no amber wash over the picture, a thin frame instead of
+   the 2px border, and a quiet label above it. The image keeps its own aspect
+   ratio (width:100%, height:auto) — never cropped to a fixed box, because the
+   copy is inside the picture and a crop would cut words off. */
+/* A wide creative keeps its own aspect ratio, so on a desktop container the
+   card's WIDTH decides its height — at full container width a 1.8:1 banner
+   becomes a wall of artwork that dwarfs the article around it. Cap the card
+   itself and centre it: never taller than roughly a third of a laptop screen,
+   identical on mobile (where the cap simply never binds). */
+.dc-spot--art { max-width: 560px; margin-inline: auto; }
+/* …except in the Plus views, which are built entirely out of stacked
+   full-width sections (.dcp-dash-sec spans the whole ~760px column). A card
+   200px narrower than the box directly above it reads as a layout bug there,
+   not as a smaller ad, so these two slots opt out of the cap and match their
+   neighbours exactly. Two classes, so this wins over the rule above on
+   specificity regardless of order. */
+.dc-spot--dashboard.dc-spot--art, .dc-spot--profile.dc-spot--art { max-width: none; }
+.dc-spot--art .dc-spot-link {
+  display: block;
+  padding: 0.5rem;
+  background: var(--card-bg, #ffffff);
+  border-width: 1px;
+  border-color: rgba(245, 162, 8, 0.3);
+}
+[data-theme="dark"] .dc-spot--art .dc-spot-link { background: var(--card-bg, #1e2c3a); }
+.dc-spot--art .dc-spot-badge {
+  display: block;
+  margin: 0.125rem 0.25rem 0.4375rem;
+  padding: 0;
+  background: none;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  color: var(--txt, #0a1a33);
+  opacity: 0.55;
+}
+[data-theme="dark"] .dc-spot--art .dc-spot-badge { color: var(--txt, #e8eef5); background: none; opacity: 0.6; }
+.dc-spot-art-img { display: block; width: 100%; height: auto; border-radius: 10px; }
 .dc-spot--article { margin: 1.5rem 0; }
 .dc-spot--article .dc-spot-text, .dc-spot--article .dc-spot-title { margin-top: 0.25rem; }
 .dc-spot--dashboard, .dc-spot--profile { margin: 1.125rem 0; }
@@ -376,6 +460,13 @@ body.dcp-study .dc-spot { display: none !important; }
 @media (max-width: 480px) {
   .dc-spot-link { flex-wrap: wrap; }
   .dc-spot-cta { margin-inline-start: auto; }
+  /* No phone-specific sizing for the art card ON PURPOSE. A fixed max-height
+     here did shorten it, but it also shrank the frame down to the image's own
+     width, and a card narrower than every other card on the page reads as a
+     mistake rather than as a smaller ad. The card keeps the column width like
+     the rest of the boxes, and the artwork scales with it — width leads,
+     height follows. The 560px cap above still holds on a laptop, where the
+     column is wider than any creative needs to be. */
 }
 `;
 
@@ -394,20 +485,66 @@ function isSponsor(creative) {
   return creative.id !== 'premium';
 }
 
+// A BANNER creative is artwork and nothing else: the offer, the brand and the
+// call to action are all inside the image the advertiser supplied, so the card
+// must not wrap it in the site's own title/text/CTA furniture. It also must not
+// shrink it into the 44px square thumb — that slot exists to sit BESIDE a
+// headline, and a 1280-wide banner in it is unreadable. Detected from the
+// creative itself (image, no copy) rather than a new config field, so the
+// existing entry schema is untouched.
+function isBanner(creative) {
+  return !!creative.image && !creative.title && !creative.text && !creative.cta;
+}
+
 function buildCard(creative, slotName) {
   injectCss();
+  const banner = isBanner(creative);
   const aside = document.createElement('aside');
-  aside.className = 'dc-spot dc-spot--' + slotName + (isSponsor(creative) ? ' dc-spot--sponsor' : ' dc-spot--premium');
+  aside.className = 'dc-spot dc-spot--' + slotName
+    + (isSponsor(creative) ? ' dc-spot--sponsor' : ' dc-spot--premium')
+    + (banner ? ' dc-spot--art' : '');
   aside.setAttribute('data-dc-spot', creative.id || '');
 
-  const a = document.createElement('a');
+  // No url = no action, by the advertiser's choice: the card is then a plain
+  // container, never an <a>. It has no href to follow, no target, no rel to get
+  // right, and it emits no ad_click — an image nobody can click cannot be
+  // clicked, so counting clicks on it would be inventing data.
+  const linked = !!creative.url;
+  const a = document.createElement(linked ? 'a' : 'div');
   a.className = 'dc-spot-link';
-  a.href = creative.url;
-  const external = /^https?:\/\//.test(creative.url);
-  if (external) a.target = '_blank';
-  // rel="sponsored" is Google link-scheme compliance — it only applies to
-  // crawlable http(s) links. mailto:/internal urls (house placeholders) get none.
-  a.rel = external ? (isSponsor(creative) ? 'sponsored noopener' : 'noopener') : '';
+  if (linked) {
+    a.href = creative.url;
+    const external = /^https?:\/\//.test(creative.url);
+    if (external) a.target = '_blank';
+    // rel="sponsored" is Google link-scheme compliance — it only applies to
+    // crawlable http(s) links. mailto:/internal urls (house placeholders) get none.
+    a.rel = external ? (isSponsor(creative) ? 'sponsored noopener' : 'noopener') : '';
+    a.addEventListener('click', () => {
+      track('ad_click', { ad_slot: slotName, ad_creative: creative.id || 'unknown', viewer: viewerNow() });
+      report('click', slotName, creative.id);
+    });
+  }
+
+  const badge = document.createElement('span');
+  badge.className = 'dc-spot-badge';
+  badge.textContent = creative.badge || (isSponsor(creative) ? 'حمایت‌شده' : 'دنت‌کست پلاس');
+
+  if (banner) {
+    // Disclosure first, artwork second — the label sits ABOVE the image, never
+    // over it: a badge painted onto someone's creative covers whatever is
+    // underneath and reads as damage, not as a label.
+    a.appendChild(badge);
+    const img = document.createElement('img');
+    img.className = 'dc-spot-art-img';
+    img.src = creative.image;
+    img.alt = '';
+    img.loading = 'lazy';
+    img.decoding = 'async';
+    a.appendChild(img);
+    aside.appendChild(a);
+    armSeen(aside, creative, slotName);
+    return aside;
+  }
 
   if (creative.image) {
     const img = document.createElement('img');
@@ -420,9 +557,6 @@ function buildCard(creative, slotName) {
 
   const body = document.createElement('div');
   body.className = 'dc-spot-body';
-  const badge = document.createElement('span');
-  badge.className = 'dc-spot-badge';
-  badge.textContent = creative.badge || (isSponsor(creative) ? 'حمایت‌شده' : 'دنت‌کست پلاس');
   body.appendChild(badge);
   if (creative.title) {
     const t = document.createElement('strong');
@@ -445,10 +579,6 @@ function buildCard(creative, slotName) {
     a.appendChild(cta);
   }
 
-  a.addEventListener('click', () => {
-    track('ad_click', { ad_slot: slotName, ad_creative: creative.id || 'unknown', viewer: viewerNow() });
-    report('click', slotName, creative.id);
-  });
   aside.appendChild(a);
   // Every card counts itself, once it has actually been seen. Doing it here (the
   // one place a card is ever built) means no placement can be added later that

@@ -1,0 +1,51 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 130 - Insight insert 130.1 and episode 131. Episode 130.1 (early implant failure) -> #شکست_ایمپلنت + #ریسک_فاکتور + #جراحی_ایمپلنت + #استئواینتگریشن + #اینسایت (all existing). Episode 131 (canine rise vs group function, part 1) adds a #گروپ_فانکشن concept, folds backlog #Canine_Rise onto #کانین_رایز (alias added), then -> #اکلوژن + #کانین_رایز + #گروپ_فانکشن + #بازسازی_کامل_دهان.",
+ "concepts": [
+  {
+   "tag": "#گروپ_فانکشن",
+   "domain": "clinical",
+   "definition": "Group Function — طرحِ اکلوزالی که در حرکتِ لترال چند دندانِ خلفیِ سمتِ کارگر هم‌زمان تماس دارند.",
+   "use_when": "مقاله گروپ‌فانکشن را طرحِ اکلوزال انتخاب یا مقایسه کند.",
+   "aliases": [
+    "group function",
+    "گروپ فانکشن",
+    "فانکشن گروهی",
+    "عملکرد گروهی"
+   ]
+  },
+  {
+   "tag": "#کانین_رایز",
+   "domain": "clinical",
+   "definition": "Canine Guidance/Rise — جدا شدنِ دندان‌های خلفی در حرکتِ لترال به‌وسیله‌ی هدایتِ نیش.",
+   "use_when": "مقاله هدایتِ کانین را طرحِ اکلوزال انتخاب یا مقایسه کند.",
+   "aliases": [
+    "canine rise",
+    "canine guidance",
+    "کانین رایز",
+    "هدایت کانین",
+    "راهنمای نیش"
+   ]
+  }
+ ],
+ "renames": {
+  "#Canine_Rise": "#کانین_رایز"
+ },
+ "articles": {
+  "episodes/episode-130-1": [
+   "#دنتکست",
+   "#شکست_ایمپلنت",
+   "#ریسک_فاکتور",
+   "#جراحی_ایمپلنت",
+   "#استئواینتگریشن",
+   "#اینسایت"
+  ],
+  "episodes/episode-131": [
+   "#دنتکست",
+   "#اکلوژن",
+   "#کانین_رایز",
+   "#گروپ_فانکشن",
+   "#بازسازی_کامل_دهان"
+  ]
+ }
+}

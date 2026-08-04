@@ -1,0 +1,33 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 63 - episodes 27 and 28, both to existing concepts. Episode 27 (attachment comparison in overdentures) -> #اوردنچر + #اتچمنت + #اتچمنت_اوردنچر (the specific concept, aliases already cover locator/ball/bar). Episode 28 (McLaren's smile-design rules) -> #طراحی_لبخند + #قانون_مکلارن + #زیبایی; the page keyword spelling 'مک لارن' added as alias of #قانون_مکلارن so the spaced form folds to the canonical.",
+ "concepts": [
+  {
+   "tag": "#قانون_مکلارن",
+   "domain": "clinical",
+   "definition": "قوانینِ تناسبِ مک‌لارن (۴.۲.۲ و ۱.۲.۳.۴.۵) برای طراحیِ لبخند.",
+   "use_when": "مقاله قوانین مک‌لارن را آموزش یا به‌کار گیرد.",
+   "aliases": [
+    "mclaren",
+    "مکلارن",
+    "mclaren law",
+    "مک لارن",
+    "قانون مکلارن"
+   ]
+  }
+ ],
+ "articles": {
+  "episodes/episode-27": [
+   "#دنتکست",
+   "#اوردنچر",
+   "#اتچمنت",
+   "#اتچمنت_اوردنچر"
+  ],
+  "episodes/episode-28": [
+   "#دنتکست",
+   "#طراحی_لبخند",
+   "#قانون_مکلارن",
+   "#زیبایی"
+  ]
+ }
+}

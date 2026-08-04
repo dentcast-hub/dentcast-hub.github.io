@@ -63,11 +63,11 @@ THIS workflow — never the publishing router, even if the user also pastes
    the literal cyclic array the user picked
    (e.g. `["premium","premium","sponsor-x","sponsor-x"]`). Only the user
    changes the NUMBER of beats. **The unit of that array is
-   `rotation.advance`** — `"session"` (current setting) means one step per
-   visit, so a four-entry array = «هر زمان یک سشنِ کاربر»; `"view"` means
-   one step per ad-showing page view. Always echo the pattern in the unit
-   that is actually configured — «هر ۴ بار» is ambiguous until you say
-   بار = بازدید or بار = سشن.
+   `rotation.advance`** — `"view"` (current setting) means one step per
+   ad-showing page view, so a four-entry array = «هر زمان یک بازدیدِ صفحه»
+   (چهار بار ریفرش = یک دور کامل); `"session"` means one step per visit.
+   Always echo the pattern in the unit that is actually configured — «هر ۴
+   بار» is ambiguous until you say بار = بازدید or بار = سشن.
 7. **Config edits are live instantly; engine edits need a version bump.**
    `spot-config.json` is fetched `no-store` — publish is commit+push, done.
    Only if `spot/spot.js` itself changes, bump `SPOT_V` in the ads loader
@@ -112,13 +112,12 @@ request is management-only (toggle/share change), apply it directly —
 Phase B collapses to confirming the one thing being changed.
 
 **Read the rotation as a numbered map of زمان‌ها before asking anything.**
-`rotation.advance` is `"session"` and `rotation.sequence` currently has four
-entries — four **زمان** (beats), one per visit, all four parked on `premium`
-(rotation structurally present, effectively off). Write the map down for
-yourself, because Phase B question 6 quotes it back to the user:
+`rotation.advance` is `"view"` and `rotation.sequence` currently has four
+entries — four **زمان** (beats), one per ad-showing page view. Write the map
+down for yourself, because Phase B question 6 quotes it back to the user:
 
 ```
-زمان ۱ = premium   زمان ۲ = premium   زمان ۳ = premium   زمان ۴ = premium
+زمان ۱ = idc-welcome   زمان ۲ = premium   زمان ۳ = idc-platform   زمان ۴ = idc-launch
 ```
 
 Never assume the array is still four long or still all-`premium` — re-read it
@@ -165,15 +164,15 @@ combined question message, with concrete options where possible:
    `sponsor-x` on a four-beat rotation:
 
    ```jsonc
-   ["sponsor-x","sponsor-x","sponsor-x","sponsor-x"]  // هر ۴ سشن همین تبلیغ
+   ["sponsor-x","sponsor-x","sponsor-x","sponsor-x"]  // هر ۴ بازدید همین تبلیغ
    ["premium","premium","sponsor-x","sponsor-x"]      // دو زمان این، دو زمان پریمیوم
    ["premium","premium","premium","sponsor-x"]        // فقط یک زمان از چهار
    ["premium","sponsor-x","sponsor-x","sponsor-x"]    // سه زمان این، یکی پریمیوم
    ```
 
-   Say plainly what the chosen array means in visits: «هر ۴ سشنِ کاربر، ۲ سشن
-   این تبلیغ را می‌بیند و ۲ سشن پریمیوم را» — بار here means سشن, not بازدید
-   صفحه (rule 6). Ask about **beat ORDER** only if the user cares; otherwise
+   Say plainly what the chosen array means: «از هر ۴ بازدیدِ صفحه، ۲ بازدید
+   این تبلیغ را می‌بیند و ۲ بازدید پریمیوم را» — بار here means بازدیدِ صفحه,
+   not سشن (rule 6). Ask about **beat ORDER** only if the user cares; otherwise
    place the new ad in the LAST beats of the array (a first-visit ad is the
    pushiest slot — don't hand it over without being asked). Changing the
    NUMBER of زمان‌ها (سه‌زمانه، پنج‌زمانه…) is a separate, explicit request:
@@ -217,11 +216,11 @@ combined question message, with concrete options where possible:
 
    ```
    زمان ۱ = premium   زمان ۲ = premium   زمان ۳ = sponsor-x   زمان ۴ = sponsor-x
-   → از هر ۴ سشنِ کاربر: ۲ سشن پریمیوم، ۲ سشن sponsor-x
+   → از هر ۴ بازدیدِ صفحه: ۲ بازدید پریمیوم، ۲ بازدید sponsor-x
    ```
 
-   Always state the unit as **سشن** (not «نمایش»/«بار») while
-   `advance: "session"` is set. If audience/slot targeting means a viewer
+   Always state the unit as **بازدیدِ صفحه** (not «سشن») while
+   `advance: "view"` is set. If audience/slot targeting means a viewer
    class never actually reaches this ad's beat (e.g. the ad is
    `audience: ["plus"]` and the beat falls back for anon), say so — that is
    the exact silent surprise rule 9 exists to catch.

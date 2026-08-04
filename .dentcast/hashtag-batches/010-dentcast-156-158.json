@@ -1,0 +1,153 @@
+{
+  "type": "dentcast",
+  "note": "Campaign step 10 — episodes 156/157/158, the Bio-Restorative three-parter. 157 and 158 carried 28 IDENTICAL tags; differentiated from their own descriptions.",
+  "concepts": [
+    {
+      "tag": "#بیو_رستوریتیو",
+      "domain": "clinical",
+      "definition": "رویکردی که جراحی و پروتز ایمپلنت را یک سیستم واحد می‌بیند، نه دو مرحله‌ی پشت‌سرهم.",
+      "use_when": "مقاله درباره‌ی همین کانسپت باشد.",
+      "co_tags": ["#Bio_Restorative_Concept"]
+    },
+    {
+      "tag": "#Bio_Restorative_Concept",
+      "domain": "clinical",
+      "definition": "همان #بیو_رستوریتیو، با نام انگلیسی کانسپت.",
+      "use_when": "همیشه همراه #بیو_رستوریتیو.",
+      "variants": ["#Bio_Restorative"],
+      "co_tags": ["#بیو_رستوریتیو"]
+    },
+    {
+      "tag": "#پلنینگ_پروتز_محور",
+      "domain": "clinical",
+      "definition": "پلن کردن از رستوریشن نهایی به عقب — «چه چیزی می‌خواهیم تحویل دهیم» به‌جای «کجا ایمپلنت بگذاریم».",
+      "use_when": "مقاله جهتِ پلنینگ را از پروتز به جراحی بداند."
+    },
+    {
+      "tag": "#پلنینگ_ایمپلنت",
+      "domain": "clinical",
+      "definition": "مرحله‌ی طراحی درمان ایمپلنت پیش از جراحی.",
+      "use_when": "مقاله تصمیمی از جنس پلنینگ بگیرد.",
+      "co_tags": ["#Implant_Planning"]
+    },
+    {
+      "tag": "#Implant_Planning",
+      "domain": "clinical",
+      "definition": "همان #پلنینگ_ایمپلنت، با اصطلاح انگلیسی.",
+      "use_when": "همیشه همراه #پلنینگ_ایمپلنت.",
+      "co_tags": ["#پلنینگ_ایمپلنت"]
+    },
+    {
+      "tag": "#پوزیشن_ایمپلنت",
+      "domain": "clinical",
+      "definition": "موقعیت سه‌بعدی فیکسچر در استخوان — عمق، زاویه و جهت.",
+      "use_when": "مقاله درباره‌ی جایگذاری و پیامدهای پوزیشن تصمیم بگیرد.",
+      "co_tags": ["#3D_Implant_Positioning"]
+    },
+    {
+      "tag": "#3D_Implant_Positioning",
+      "domain": "clinical",
+      "definition": "همان #پوزیشن_ایمپلنت، با اصطلاح انگلیسی.",
+      "use_when": "همیشه همراه #پوزیشن_ایمپلنت.",
+      "co_tags": ["#پوزیشن_ایمپلنت"]
+    },
+    {
+      "tag": "#پروفایل_امرجنس",
+      "domain": "clinical",
+      "definition": "شکلِ گذرِ رستوریشن از سطح ایمپلنت تا لبه‌ی لثه؛ تعیین‌کننده‌ی فرم و ثبات بافت نرم.",
+      "use_when": "مقاله پروفایل امرجنس را طراحی یا ارزیابی کند.",
+      "co_tags": ["#Emergence_Profile"]
+    },
+    {
+      "tag": "#Emergence_Profile",
+      "domain": "clinical",
+      "definition": "همان #پروفایل_امرجنس، با اصطلاح انگلیسی.",
+      "use_when": "همیشه همراه #پروفایل_امرجنس.",
+      "co_tags": ["#پروفایل_امرجنس"]
+    },
+    {
+      "tag": "#نوع_ریتنشن",
+      "domain": "clinical",
+      "definition": "انتخاب بین پروتز اسکرو-ریتین و سمان-ریتین.",
+      "use_when": "مقاله بین این دو انتخاب کند یا پیامدهایش را بگوید."
+    },
+    {
+      "tag": "#مدیریت_بافت_نرم",
+      "domain": "clinical",
+      "definition": "حفظ و شکل‌دهی بافت نرم اطراف ایمپلنت.",
+      "use_when": "مقاله بافت نرم را هدفِ تصمیم بداند، نه صرفاً ذکرش کند.",
+      "co_tags": ["#Soft_Tissue_Management"]
+    },
+    {
+      "tag": "#Soft_Tissue_Management",
+      "domain": "clinical",
+      "definition": "همان #مدیریت_بافت_نرم، با اصطلاح انگلیسی.",
+      "use_when": "همیشه همراه #مدیریت_بافت_نرم.",
+      "co_tags": ["#مدیریت_بافت_نرم"]
+    },
+    {
+      "tag": "#انتخاب_متریال",
+      "domain": "clinical",
+      "definition": "انتخاب جنس رستوریشن بر اساس شرایط کیس.",
+      "use_when": "مقاله بین متریال‌ها انتخاب کند."
+    },
+    {
+      "tag": "#فنوتیپ_پری_ایمپلنت",
+      "domain": "clinical",
+      "definition": "ضخامت و کیفیت بافت نرم اطراف ایمپلنت به‌عنوان یک متغیر پیش‌بینی‌کننده.",
+      "use_when": "مقاله فنوتیپ را بسنجد یا تغییرش بدهد.",
+      "co_tags": ["#Peri_Implant_Phenotype"]
+    },
+    {
+      "tag": "#ایمپلنت_فوری",
+      "domain": "clinical",
+      "definition": "جایگذاری ایمپلنت در همان جلسه‌ی کشیدن دندان.",
+      "use_when": "مقاله درباره‌ی اندیکاسیون یا اجرای ایمپلنت فوری باشد.",
+      "co_tags": ["#Immediate_Implant"]
+    },
+    {
+      "tag": "#هیلینگ_اباتمنت",
+      "domain": "clinical",
+      "definition": "اباتمنت موقتی که در دوره‌ی ترمیم، فرم بافت نرم را نگه می‌دارد.",
+      "use_when": "مقاله انتخاب یا نقش هیلینگ اباتمنت را تعیین کند.",
+      "co_tags": ["#Healing_Abutment"]
+    },
+    {
+      "tag": "#طراحی_ایمپلنت",
+      "domain": "clinical",
+      "definition": "طراحی خودِ سیستم ایمپلنت و کامپوننت‌هایش.",
+      "use_when": "مقاله ویژگی طراحی فیکسچر یا کامپوننت را دخیل بداند."
+    },
+    {
+      "tag": "#پروتز_ایمپلنت",
+      "domain": "clinical",
+      "definition": "بخش پروتزیِ درمان ایمپلنت.",
+      "use_when": "همراه یک تگ مشخص‌تر بیاید."
+    }
+  ],
+  "articles": {
+    "episodes/episode-156": [
+      "#دنتکست", "#ایمپلنت", "#بیو_رستوریتیو", "#Bio_Restorative_Concept",
+      "#پلنینگ_ایمپلنت", "#Implant_Planning", "#پلنینگ_پروتز_محور",
+      "#Digital_Implant_Planning", "#دندانپزشکی_دیجیتال", "#پروتز_ایمپلنت",
+      "#طرح_درمان"
+    ],
+    "episodes/episode-157": [
+      "#دنتکست", "#ایمپلنت", "#بیو_رستوریتیو", "#Bio_Restorative_Concept",
+      "#پلنینگ_ایمپلنت", "#Implant_Planning", "#پوزیشن_ایمپلنت",
+      "#3D_Implant_Positioning", "#طراحی_ایمپلنت", "#اباتمنت",
+      "#هیلینگ_اباتمنت", "#Healing_Abutment", "#One_Abutment_One_Time",
+      "#فنوتیپ_پری_ایمپلنت", "#Peri_Implant_Phenotype", "#ایمپلنت_فوری",
+      "#Immediate_Implant", "#Jumping_Gap", "#Saucerization",
+      "#Bone_Level_Implant", "#Tissue_Level_Implant", "#پروتز_ایمپلنت"
+    ],
+    "episodes/episode-158": [
+      "#دنتکست", "#ایمپلنت", "#بیو_رستوریتیو", "#Bio_Restorative_Concept",
+      "#پلنینگ_ایمپلنت", "#Implant_Planning", "#پروفایل_امرجنس",
+      "#Emergence_Profile", "#نوع_ریتنشن", "#انتخاب_متریال",
+      "#مدیریت_بافت_نرم", "#Soft_Tissue_Management", "#Angled_Screw_Channel",
+      "#Digital_Implant_Planning", "#پروتز_ایمپلنت", "#Implant_Restoration"
+    ]
+  },
+  "renames": { "#Bio_Restorative": "#Bio_Restorative_Concept" }
+}

@@ -15,6 +15,17 @@
       document.head.appendChild(ga);
     });
   </script>
+  <!-- E-NAMAD host guard. The trust seal is registered to dentcast.ir alone and
+       enamad's logo.aspx renders from the referrer, so on the .org mirror it
+       would answer with an "invalid seal" badge. Flagging the host here — before
+       the body is parsed — is what keeps the empty white chip from flashing on
+       .org; dc-nav.js then removes the node outright. The seal markup itself
+       stays verbatim in the HTML so crawlers still read the id/Code it checks. -->
+  <script>
+    if (location.hostname.indexOf('dentcast.ir') === -1) {
+      document.documentElement.className += ' dc-no-seal';
+    }
+  </script>
   <meta charset="utf-8">
   <link rel="preload" as="font" href="/fonts/Vazirmatn[wght].woff2" type="font/woff2" crossorigin>
   <link rel="icon" href="/logo-v2.png" type="image/png" sizes="192x192">
@@ -1273,10 +1284,73 @@ body.dc-radar-mode{ overflow:hidden; }
 footer{
   color:var(--txt3); font-size:.78rem;
   text-align:center; line-height:1.8;
-  padding:1rem 1rem 0.375rem;
+  /* This footer renders on the mobile shell only (desktop hides it), where
+     .dc-bottom-nav is position:fixed over the bottom ~4rem of the viewport.
+     The bottom padding is what lets the last line — and the trust seal above
+     it — clear that bar instead of scrolling in behind it. */
+  padding:1rem 1rem 5rem;
   border-top:1px solid var(--border2);
   transition:all var(--tr2);
 }
+
+/* =====================================================
+   E-NAMAD TRUST SEAL — نماد اعتماد الکترونیکی
+   Mirrors the .dc-trustseal block in dc-theme.css (index
+   loads no shared CSS). Two homes on this page: the
+   footer (mobile shell) and .dcd-a-seal in the col-A
+   sidebar (desktop shell, where the footer is hidden).
+   The seal is issued for dentcast.ir alone and its
+   logo.aspx renders from the referrer, so dc-nav.js
+   removes these nodes on any other host; loading="lazy"
+   keeps the request from firing there in the first place.
+   White chip in both themes on purpose — the seal artwork
+   assumes a light background. The fixed box reserves the
+   space so nothing shifts when the image lands.
+===================================================== */
+.dc-trustseal{
+  display:flex; justify-content:center;
+  margin:0 auto 0.875rem;
+}
+.dc-trustseal a{
+  display:flex; align-items:center; justify-content:center;
+  width:5.5rem; height:6.5rem;
+  padding:0.3125rem;
+  background:#fff;
+  border:1px solid var(--border2);
+  border-radius:var(--r-md);
+  box-shadow:0 2px 8px rgba(0,0,0,.07);
+  transition:transform var(--tr), box-shadow var(--tr);
+}
+.dc-trustseal a:hover{
+  transform:translateY(-1px);
+  box-shadow:0 6px 16px rgba(0,0,0,.13);
+}
+.dc-trustseal img{
+  max-width:100%; max-height:100%;
+  width:auto; height:auto; display:block;
+}
+
+/* Sidebar variant: the col-A rail is dark navy in both themes, so the chip
+   gets the sidebar's own divider rather than the page border, and a slightly
+   smaller box to sit quietly above the tool buttons. */
+.dcd-a-seal{
+  flex-shrink:0;
+  padding:0.625rem 0.5rem 0.4375rem;
+  border-top:1px solid var(--sb-div);
+  margin:0;
+}
+.dcd-a-seal a{
+  width:4.5rem; height:5.5rem;
+  border-color:rgba(255,255,255,.14);
+  box-shadow:0 2px 10px rgba(0,0,0,.28);
+}
+.dcd-a-seal a:hover{ box-shadow:0 6px 18px rgba(0,0,0,.38); }
+
+/* Set by the head guard on every host that is not dentcast.ir, before the body
+   is parsed, so the chip never flashes. dc-nav.js removes the node right after;
+   this is only what covers the gap between parse and that script. */
+.dc-no-seal .dc-trustseal,
+.dc-no-seal .dc-trustseal-box{ display:none!important; }
 
 /* ── ACTIVATION ── */
 #dc-desktop-root{ display:none; }
@@ -3458,10 +3532,11 @@ a.dc-list-card--pillar {
           </div>
         </div>
         <ul class="dc-pulse-list">
-          <li><strong>از این به بعد هر مطلب جدید در سایت به صورت اتوماتیک به کانال <a href="https://t.me/dentcast" target="_blank" rel="noopener">دنت‌کست در تلگرام</a> ارسال میشه</strong></li>
-          <li>یک <a href="/insight/insight-60.html">اینسایت بالینی</a> درباره‌ی راهکار مدیریت عدم قطعیت VD و رابطه‌ی فکی در بیماران تمام‌فک منتشر شد · ۹ مرداد</li>
-          <li>یک <a href="/chairside/chairside-27.html">کیس Chairside</a> درباره‌ی تناقضِ توصیهٔ درمانیِ قبلی با اصولِ ادهزیو در ارزیابیِ نیازِ روکش منتشر شد · ۸ مرداد</li>
-          <li>یک <a href="/insight/insight-59.html">اینسایت بالینی</a> درباره‌ی چرایی استفاده از زینک فسفات برای سمان‌کردن روکش منتشر شد · ۷ مرداد</li>
+          <li>یک <a href="/sharehub/share-13.html">مطلب Share Hub</a> درباره‌ی دیابت و ایمپلنت دندانی، از تصمیم قبل از جراحی تا نگهداری بلندمدت منتشر شد · ۱۳ مرداد</li>
+          <li>یک <a href="/chairside/chairside-29.html">کیس Chairside</a> دربارهٔ تغییرِ رنگِ دندانِ اندو‌شده و روکشی که هنوز لازم نبود منتشر شد · ۱۳ مرداد</li>
+          <li>یک <a href="/sharehub/share-12.html">مطلب Share Hub</a> درباره‌ی نورالژی تریژمینال و آنچه دندانپزشک عمومی باید بداند منتشر شد · ۱۲ مرداد</li>
+          <li>یک <a href="/chairside/chairside-28.html">کیس Chairside</a> درباره‌ی دردِ مبهمِ دندانِ اندو‌شده و سهل‌انگاریِ متخصصِ پریو منتشر شد · ۱۲ مرداد</li>
+          <li>قسمت ۳ از فصل ۴ <a href="/dentai/promptologist/prompt4-3.html">پرامپتولوژیست</a> درباره‌ی اینکه نقش‌دادن به مدل چه می‌کند و چه نمی‌کند منتشر شد · ۱۲ مرداد</li>
         </ul>
       </div>
 
@@ -3482,9 +3557,9 @@ a.dc-list-card--pillar {
           <p class="dc-rail-title">کور باید روی دندان را بپوشاند؟ بازخوانی یک قاعده‌ی جاافتاده</p>
           <span class="dc-rail-meta">تازه‌ترین مطلب</span>
         </a>
-        <a class="dc-rail-card" data-cat="chairside" href="/chairside/chairside-27.html">
+        <a class="dc-rail-card" data-cat="chairside" href="/chairside/chairside-29.html">
           <span class="dc-type-chip t-chair">Chairside</span>
-          <p class="dc-rail-title">وقتی توصیهٔ همکارِ قبلی، خودش یک دادهٔ تشخیصی است</p>
+          <p class="dc-rail-title">تغییر رنگِ دندانِ اندو‌شده و روکشی که هنوز لازم نبود</p>
           <span class="dc-rail-meta">تازه‌ترین مطلب</span>
         </a>
         <a class="dc-rail-card" data-cat="dentai" href="/dentai/dentai-28.html">
@@ -3492,14 +3567,14 @@ a.dc-list-card--pillar {
           <p class="dc-rail-title">وقتی هوش مصنوعی تنها بهتر از پزشکِ مجهز به هوش مصنوعی عمل می‌کند</p>
           <span class="dc-rail-meta">تازه‌ترین مطلب</span>
         </a>
-        <a class="dc-rail-card" data-cat="promptologist" href="/dentai/promptologist/prompt4-2.html">
+        <a class="dc-rail-card" data-cat="promptologist" href="/dentai/promptologist/prompt4-3.html">
           <span class="dc-type-chip t-ai">Promptologist</span>
-          <p class="dc-rail-title">پرامپتولوژیست — بگو چه بکند نه اینکه چه نکند</p>
+          <p class="dc-rail-title">پرامپتولوژیست — نقش‌دادن: چه می‌کند و چه نمی‌کند</p>
           <span class="dc-rail-meta">تازه‌ترین مطلب</span>
         </a>
-        <a class="dc-rail-card" data-cat="sharehub" href="/sharehub/share-11.html">
+        <a class="dc-rail-card" data-cat="sharehub" href="/sharehub/share-13.html">
           <span class="dc-type-chip t-share">ShareHub</span>
-          <p class="dc-rail-title">استخوان حجیم، نشانه بروکسیسم قدیمی؟ بحثی درباره ایمپلنت فول آرچ</p>
+          <p class="dc-rail-title">دیابت و ایمپلنت دندانی: از تصمیم قبل از جراحی تا نگهداری بلندمدت</p>
           <span class="dc-rail-meta">تازه‌ترین مطلب</span>
         </a>
         <a class="dc-rail-card" data-cat="dentcast_plus" href="/dentcast-plus/video-6.html">
@@ -3619,7 +3694,7 @@ a.dc-list-card--pillar {
           <span class="k">ساعت محتوای صوتی</span>
         </div>
         <div class="hero-stat" role="listitem">
-          <span class="v"><!-- COUNTER:CONTENT:START -->۵۷۰<!-- COUNTER:CONTENT:END --></span>
+          <span class="v"><!-- COUNTER:CONTENT:START -->۵۷۵<!-- COUNTER:CONTENT:END --></span>
           <span class="k">مطلب و مدخل آموزشی</span>
         </div>
       </div>
@@ -4014,6 +4089,14 @@ a.dc-list-card--pillar {
 
     </div><!-- /dcd-tree -->
 
+    <!-- نماد اعتماد الکترونیکی (enamad). The <footer> is display:none on the
+         desktop shell, so the sidebar is the homepage's only desktop home for
+         it. Its own row above the tool buttons, inside the fixed-width col-A —
+         nothing in the 3-column grid moves. dc-nav.js drops it off .ir. -->
+    <div class="dcd-a-seal dc-trustseal">
+      <a referrerpolicy='origin' target='_blank' href='https://trustseal.enamad.ir/?id=7173641&Code=1JNpptoXEnQlKFUqawxi6IG65bKVLl9m'><img referrerpolicy='origin' src='https://trustseal.enamad.ir/logo.aspx?id=7173641&Code=1JNpptoXEnQlKFUqawxi6IG65bKVLl9m' alt='نماد اعتماد الکترونیکی دنت‌کست' loading='lazy' style='cursor:pointer' code='1JNpptoXEnQlKFUqawxi6IG65bKVLl9m'></a>
+    </div>
+
     <div class="dcd-col-a-footer">
       <button class="dcd-a-footer-btn" id="dcdThemeBtn"><span><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M20.5 14.2A8.2 8.2 0 0 1 9.8 3.5 8.8 8.8 0 1 0 20.5 14.2z"/></svg></span> تم</button>
       <button class="dcd-a-footer-btn" id="dcdPwaBtn"><span><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M10 18h4"/><path d="M12 7v6"/><path d="m9.5 10.5 2.5 2.5 2.5-2.5"/></svg></span> نصب</button>
@@ -4136,6 +4219,12 @@ a.dc-list-card--pillar {
 <!-- DARK/LIGHT TOGGLE -->
 
 <footer>
+  <!-- نماد اعتماد الکترونیکی (enamad) — mobile/tablet only: this footer is
+       display:none under body.dc-desktop-ui, where the col-A seal takes over.
+       Last element on the page, so growing it shifts nothing above it. -->
+  <div class="dc-trustseal">
+    <a referrerpolicy='origin' target='_blank' href='https://trustseal.enamad.ir/?id=7173641&Code=1JNpptoXEnQlKFUqawxi6IG65bKVLl9m'><img referrerpolicy='origin' src='https://trustseal.enamad.ir/logo.aspx?id=7173641&Code=1JNpptoXEnQlKFUqawxi6IG65bKVLl9m' alt='نماد اعتماد الکترونیکی دنت‌کست' loading='lazy' style='cursor:pointer' code='1JNpptoXEnQlKFUqawxi6IG65bKVLl9m'></a>
+  </div>
   اهواز – کیانپارس، مطب دکتر فواد شهابیان<br>
   تلفن: 33380090-061 &nbsp;|&nbsp; DentCast © 1404
 </footer>
@@ -4281,7 +4370,7 @@ scrollBody.addEventListener('touchend',e=>{
     if(p) p.textContent=title;
     a.href=url;
   }
-  fetch('/dentcast-brain.json?v=cac4308e04',{cache:'no-store'}).then(function(r){return r.json();}).then(function(arr){
+  fetch('/dentcast-brain.json?v=9ccc30b991',{cache:'no-store'}).then(function(r){return r.json();}).then(function(arr){
     if(!Array.isArray(arr)) return;
     var latest={}, pool=[];
     arr.forEach(function(e){
@@ -4358,7 +4447,7 @@ scrollBody.addEventListener('touchend',e=>{
 </script>
 
 <!-- Theme toggle behavior moved to /dc-nav.js (single source) -->
-<script src="/dc-nav.js?v=38" defer></script>
+<script src="/dc-nav.js?v=39" defer></script>
 
 <!-- Toolbar drawer toggle is handled by /dc-nav.js (single source) -->
 
@@ -4613,7 +4702,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 <script>
 /* ── LAST 30 UPDATES ── */
 (function(){
-  const FEED_URL='/dentcast-brain.json?v=cac4308e04';
+  const FEED_URL='/dentcast-brain.json?v=9ccc30b991';
   const el=document.getElementById('dcLast3Updates');
   if(!el) return;
   function extractArray(json){if(Array.isArray(json))return json;const cands=[json?.items,json?.data,json?.entries,json?.feed].filter(Boolean);for(const c of cands)if(Array.isArray(c))return c;for(const k in(json||{})){const v=json[k];if(Array.isArray(v))return v;if(v&&typeof v==='object'&&Array.isArray(v.items))return v.items;}return[];}
@@ -4869,7 +4958,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 
   function getBrain(){
     if(brainCache) return Promise.resolve(brainCache);
-    return fetch('/dentcast-brain.json?v=cac4308e04', {cache:'no-store'})
+    return fetch('/dentcast-brain.json?v=9ccc30b991', {cache:'no-store'})
       .then(r => r.ok ? r.json() : [])
       .then(d => { brainCache = Array.isArray(d) ? d : []; return brainCache; })
       .catch(() => { brainCache = []; return []; });
@@ -5032,8 +5121,12 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
       const doc  = new DOMParser().parseFromString(html, 'text/html');
 
       /* Remove all chrome elements from fetched document */
+      /* .dc-trustseal goes with the chrome: the shell already shows the seal
+         in the col-A sidebar, and a second copy inside the reader would both
+         duplicate it and escape the dentcast.ir host gate — dc-nav.js is
+         stripped from this document, so nothing would remove it on .org. */
       ['header.dc-topbar','#dcToolbarDrawer','#dcRadarOverlay',
-       '#dcGlobalBox','.dc-site-footer','footer',
+       '#dcGlobalBox','.dc-site-footer','footer','.dc-trustseal',
        '#dc-theme-toggle','.dc-search-overlay',
        'script[src*="dc-nav"]','script[src*="global-search"]']
         .forEach(sel => doc.querySelectorAll(sel).forEach(el => el.remove()));

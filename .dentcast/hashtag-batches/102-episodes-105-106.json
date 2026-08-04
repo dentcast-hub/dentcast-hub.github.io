@@ -1,0 +1,21 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 102 - episodes 105 and 106, closing the Ti-Base series (existing concepts). Episode 105 (lab/clinical protocols) -> #تیتانیوم_بیس + #پروتز_ایمپلنت + #دندانپزشکی_دیجیتال + #اباتمنت. Episode 106 (wrap-up, comparison) -> #تیتانیوم_بیس + #ایمپلنت + #پروتز_ثابت + #اباتمنت.",
+ "concepts": [],
+ "articles": {
+  "episodes/episode-105": [
+   "#دنتکست",
+   "#تیتانیوم_بیس",
+   "#پروتز_ایمپلنت",
+   "#دندانپزشکی_دیجیتال",
+   "#اباتمنت"
+  ],
+  "episodes/episode-106": [
+   "#دنتکست",
+   "#تیتانیوم_بیس",
+   "#ایمپلنت",
+   "#پروتز_ثابت",
+   "#اباتمنت"
+  ]
+ }
+}

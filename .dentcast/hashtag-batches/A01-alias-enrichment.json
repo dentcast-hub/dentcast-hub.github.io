@@ -1,0 +1,276 @@
+{
+ "type": "episodes",
+ "note": "Alias enrichment 1 - add real alternative spellings/English equivalents/synonyms to no-alias concepts (brand series names, high-count crown/implant/prep/caries clinical concepts). No article or tag changes; aliases only. Candidates validated against the live alias table and every concept word-set so none collides or hijacks an existing door.",
+ "concepts": [
+  {
+   "tag": "#دنتکست",
+   "aliases": [
+    "dentcast",
+    "دنت کست"
+   ]
+  },
+  {
+   "tag": "#دنتوپدیا",
+   "aliases": [
+    "dentopedia"
+   ]
+  },
+  {
+   "tag": "#متانوت",
+   "aliases": [
+    "metanote",
+    "متا نوت",
+    "meta note"
+   ]
+  },
+  {
+   "tag": "#Share_Hub",
+   "aliases": [
+    "شیرهاب",
+    "شر هاب"
+   ]
+  },
+  {
+   "tag": "#پرامپتولوژیست",
+   "aliases": [
+    "promptologist",
+    "پرامپتولوژی"
+   ]
+  },
+  {
+   "tag": "#فوتوکست",
+   "aliases": [
+    "photocast",
+    "فوتو کست"
+   ]
+  },
+  {
+   "tag": "#دنتکست_پلاس",
+   "aliases": [
+    "dentcast plus"
+   ]
+  },
+  {
+   "tag": "#نشاطی",
+   "aliases": [
+    "دکتر نشاطی",
+    "neshati"
+   ]
+  },
+  {
+   "tag": "#DentAI",
+   "aliases": [
+    "دنت ای آی",
+    "dent ai"
+   ]
+  },
+  {
+   "tag": "#روکش_ایمپلنت",
+   "aliases": [
+    "implant crown",
+    "روکش روی ایمپلنت",
+    "روکش ایمپلنتی",
+    "کراون ایمپلنت"
+   ]
+  },
+  {
+   "tag": "#انتخاب_متریال",
+   "aliases": [
+    "material selection",
+    "انتخاب ماده",
+    "انتخاب جنس رستوریشن"
+   ]
+  },
+  {
+   "tag": "#تشخیص_افتراقی",
+   "aliases": [
+    "differential diagnosis",
+    "افتراق تشخیصی"
+   ]
+  },
+  {
+   "tag": "#سایش_دندان",
+   "aliases": [
+    "tooth wear",
+    "ساییدگی دندان",
+    "attrition",
+    "ساییدگی"
+   ]
+  },
+  {
+   "tag": "#تنظیم_اکلوژن",
+   "aliases": [
+    "سلکتیو گرایندینگ",
+    "میزان کردن اکلوژن",
+    "تنظیم اکلوزال",
+    "occlusal equilibration"
+   ]
+  },
+  {
+   "tag": "#تراش_روکش",
+   "aliases": [
+    "تراش برای روکش",
+    "پرپ روکش",
+    "آماده سازی روکش"
+   ]
+  },
+  {
+   "tag": "#افتادن_روکش",
+   "aliases": [
+    "loose crown",
+    "کندگی روکش",
+    "جدا شدن روکش"
+   ]
+  },
+  {
+   "tag": "#بعد_عمودی",
+   "aliases": [
+    "ارتفاع عمودی",
+    "دایمنشن عمودی",
+    "بعد عمودی صورت"
+   ]
+  },
+  {
+   "tag": "#افزایش_VD",
+   "aliases": [
+    "بالا بردن بعد عمودی",
+    "افزایش بعد عمودی",
+    "افزایش دایمنشن عمودی"
+   ]
+  },
+  {
+   "tag": "#تراش_لمینیت",
+   "aliases": [
+    "تراش ونیر",
+    "veneer preparation",
+    "پرپ لمینت",
+    "تراش برای لمینت"
+   ]
+  },
+  {
+   "tag": "#جراحی_ایمپلنت",
+   "aliases": [
+    "implant surgery",
+    "جراحی کاشت",
+    "کاشت ایمپلنت",
+    "سرجری ایمپلنت"
+   ]
+  },
+  {
+   "tag": "#سمان_باقیمانده",
+   "aliases": [
+    "سمان اضافه",
+    "باقیمانده سمان",
+    "سمان زیر لثه",
+    "excess cement"
+   ]
+  },
+  {
+   "tag": "#تحویل_روکش",
+   "aliases": [
+    "crown delivery",
+    "دلیوری روکش",
+    "جلسه تحویل روکش",
+    "تحویل کار"
+   ]
+  },
+  {
+   "tag": "#روکش_دندان",
+   "aliases": [
+    "tooth crown",
+    "روکش روی دندان طبیعی",
+    "full crown",
+    "کراون دندان"
+   ]
+  },
+  {
+   "tag": "#پوسیدگی",
+   "aliases": [
+    "caries",
+    "کاریز",
+    "پوسیدگی دندان"
+   ]
+  },
+  {
+   "tag": "#تراش_دندان",
+   "aliases": [
+    "پرپ دندان",
+    "prep دندان"
+   ]
+  },
+  {
+   "tag": "#درمان_ریشه",
+   "aliases": [
+    "root canal",
+    "روت کانال",
+    "عصب کشی",
+    "درمان کانال ریشه"
+   ]
+  },
+  {
+   "tag": "#روکش_سرامیکی",
+   "aliases": [
+    "ceramic crown",
+    "روکش سرامیک",
+    "کراون سرامیکی",
+    "all ceramic crown"
+   ]
+  },
+  {
+   "tag": "#سمان",
+   "aliases": [
+    "لوتینگ",
+    "luting",
+    "لایه سمان"
+   ]
+  },
+  {
+   "tag": "#شکست_ایمپلنت",
+   "aliases": [
+    "از دست رفتن ایمپلنت",
+    "فیلور ایمپلنت",
+    "ناموفق بودن ایمپلنت"
+   ]
+  },
+  {
+   "tag": "#فرم_رزیستنس",
+   "aliases": [
+    "مقاومت تراش",
+    "فرم مقاومت"
+   ]
+  },
+  {
+   "tag": "#نشست_روکش",
+   "aliases": [
+    "نشستن روکش",
+    "سیت روکش",
+    "crown seating"
+   ]
+  },
+  {
+   "tag": "#کانتکت",
+   "aliases": [
+    "کنتاکت",
+    "کانتکت پوینت"
+   ]
+  },
+  {
+   "tag": "#کور_ریختگی",
+   "aliases": [
+    "cast core",
+    "کست کور",
+    "کور ریختگی فلزی",
+    "پست ریختگی"
+   ]
+  },
+  {
+   "tag": "#پیچ_ایمپلنت",
+   "aliases": [
+    "implant screw",
+    "اسکرو ایمپلنت",
+    "پیچ پروتز"
+   ]
+  }
+ ],
+ "articles": {}
+}

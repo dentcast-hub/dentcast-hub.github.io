@@ -447,14 +447,6 @@ body.dcp-study { padding-bottom: 90px; }
 .dcp-note-list { margin: 0; padding-inline-start: 1.3em; line-height: 1.8; }
 .dcp-note-list li { margin: 2px 0; }
 
-.dcp-failed-panel {
-  position: fixed; bottom: 96px; inset-inline-end: 14px; z-index: 8000; width: 280px; max-height: 50vh; overflow: auto;
-  background: var(--dcp-surface); border: 1px solid #e0a; border-radius: var(--dcp-radius); box-shadow: var(--dcp-shadow); padding: 12px;
-}
-.dcp-failed-note { font-size: .85rem; opacity: .75; line-height: 1.7; }
-.dcp-failed-item { border-top: 1px solid var(--dcp-line); padding: 8px 0; }
-.dcp-failed-quote { line-height: 1.8; }
-
 /* ---- editor popover ------------------------------------------------------ */
 /* Docked just ABOVE the workbench toolbar (never under it) and viewport-fixed, so
    the note editor is always visible. `--dcp-editor-dock` is the live offset JS keeps

@@ -1,0 +1,40 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 113 - episode 119 and Dentopedia micro-episode 119.1. Episode 119 (Global Diagnosis five diagnostic questions) folds the backlog #تشخیص_درمان onto #طرح_درمان (shares 'درمان'), then -> #Global_Diagnosis + #کتاب_رابینز + #تشخیص_افتراقی + #طرح_درمان + #زیبایی. Episode 119.1 (Bridge vs Implant) adds a general #بریج (fixed partial denture) concept the site lacked, then -> #دنتوپدیا + #بریج + #ایمپلنت + #جایگزینی_دندان + #طرح_درمان.",
+ "concepts": [
+  {
+   "tag": "#بریج",
+   "domain": "clinical",
+   "definition": "پروتزِ ثابتِ چندواحدی که فضای بی‌دندانی را با اتکا به دندان‌های پایه پر می‌کند (FPD).",
+   "use_when": "مقاله بریج/پروتزِ ثابتِ چندواحدی را موضوع یا گزینه‌ی درمان قرار دهد.",
+   "aliases": [
+    "bridge",
+    "FPD",
+    "بریج دندانی",
+    "fixed partial denture",
+    "پروتز ثابت چند واحدی"
+   ]
+  }
+ ],
+ "renames": {
+  "#تشخیص_درمان": "#طرح_درمان"
+ },
+ "articles": {
+  "episodes/episode-119": [
+   "#دنتکست",
+   "#Global_Diagnosis",
+   "#کتاب_رابینز",
+   "#تشخیص_افتراقی",
+   "#طرح_درمان",
+   "#زیبایی"
+  ],
+  "episodes/episode-119-1": [
+   "#دنتکست",
+   "#دنتوپدیا",
+   "#بریج",
+   "#ایمپلنت",
+   "#جایگزینی_دندان",
+   "#طرح_درمان"
+  ]
+ }
+}

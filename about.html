@@ -15,6 +15,17 @@
       document.head.appendChild(ga);
     });
   </script>
+  <!-- E-NAMAD host guard. The trust seal is registered to dentcast.ir alone and
+       enamad's logo.aspx renders from the referrer, so on the .org mirror it
+       would answer with an "invalid seal" badge. Flagging the host here — before
+       the body is parsed — is what keeps the empty white chip from flashing on
+       .org; dc-nav.js then removes the node outright. The seal markup itself
+       stays verbatim in the HTML so crawlers still read the id/Code it checks. -->
+  <script>
+    if (location.hostname.indexOf('dentcast.ir') === -1) {
+      document.documentElement.className += ' dc-no-seal';
+    }
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -570,6 +581,17 @@ main.about-page {
     </div>
   </div>
 
+  <!-- نماد اعتماد الکترونیکی (enamad) — dentcast.ir only; dc-nav.js drops it elsewhere -->
+  <div class="content-box dc-trustseal-box">
+    <h2>نماد اعتماد الکترونیکی</h2>
+    <p style="font-size:.88rem;color:var(--txt2);line-height:1.75;margin-bottom:0.875rem;">
+      دنت‌کست دارای نماد اعتماد الکترونیکی از مرکز توسعهٔ تجارت الکترونیکی است. برای مشاهدهٔ اطلاعات ثبت‌شده، روی نماد کلیک کنید.
+    </p>
+    <div class="dc-trustseal">
+      <a referrerpolicy='origin' target='_blank' href='https://trustseal.enamad.ir/?id=7173641&Code=1JNpptoXEnQlKFUqawxi6IG65bKVLl9m'><img referrerpolicy='origin' src='https://trustseal.enamad.ir/logo.aspx?id=7173641&Code=1JNpptoXEnQlKFUqawxi6IG65bKVLl9m' alt='نماد اعتماد الکترونیکی دنت‌کست' loading='lazy' style='cursor:pointer' code='1JNpptoXEnQlKFUqawxi6IG65bKVLl9m'></a>
+    </div>
+  </div>
+
   <!-- Footer -->
   <footer class="about-footer dc-site-footer">
     <a href="/">بازگشت به صفحهٔ اصلی</a>
@@ -583,7 +605,7 @@ main.about-page {
 
 <!-- Scripts -->
 <script src="/global-search.js?v=6" defer></script>
-<script src="/dc-nav.js?v=38" defer></script>
+<script src="/dc-nav.js?v=39" defer></script>
 <script src="/global-search-ui.js?v=2" defer></script>
 
 <!-- Analytics -->

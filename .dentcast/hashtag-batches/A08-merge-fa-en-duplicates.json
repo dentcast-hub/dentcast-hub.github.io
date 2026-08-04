@@ -1,0 +1,104 @@
+{
+  "type": "clinical",
+  "note": "Merge 10 concepts that existed twice — once in Persian, once in English — into their Persian form. Both spellings normalize identically, so they always tied on score and split their articles across two entries, and the tie-break (fewer articles first) put the smaller English copy above the Persian one. The English name and every alias move onto the survivor, so a Latin-script query still reaches it.",
+  "concepts": [
+    {
+      "tag": "#اسکن_بادی",
+      "aliases": [
+        "scanbody",
+        "اسکن بادی ایمپلنت",
+        "scan body"
+      ]
+    },
+    {
+      "tag": "#اسکنر_داخل_دهانی",
+      "aliases": [
+        "intraoral scanner",
+        "اسکنر دیجیتال",
+        "IOS",
+        "اسکنر"
+      ]
+    },
+    {
+      "tag": "#سمان_ریتین",
+      "aliases": [
+        "cement retained",
+        "سمان شونده",
+        "cement-retained"
+      ]
+    },
+    {
+      "tag": "#پری_ایمپلنتیتیس",
+      "aliases": [
+        "peri-implantitis",
+        "پری ایمپلنتایتس",
+        "پری ایمپلنتیت",
+        "پری‌ایمپلنت دیزیز",
+        "peri implant disease",
+        "peri implantitis"
+      ]
+    },
+    {
+      "tag": "#پروفایل_امرجنس",
+      "aliases": [
+        "emergence profile",
+        "پروفایل ظهور",
+        "پروفایل خروج",
+        "کانتور امرجنس"
+      ]
+    },
+    {
+      "tag": "#از_دست_رفتن_کانتکت",
+      "aliases": [
+        "ICL",
+        "interproximal contact loss",
+        "باز شدن کانتکت",
+        "از دست رفتن تماس"
+      ]
+    },
+    {
+      "tag": "#هیلینگ_اباتمنت",
+      "aliases": [
+        "healing abutment",
+        "هیلینگ",
+        "هیلینگ کپ"
+      ]
+    },
+    {
+      "tag": "#گیر_غذایی",
+      "aliases": [
+        "food impaction",
+        "گیر کردن غذا",
+        "ایمپکشن غذا"
+      ]
+    },
+    {
+      "tag": "#ایمنی_بیمار",
+      "aliases": [
+        "patient safety",
+        "سلامت بیمار"
+      ]
+    },
+    {
+      "tag": "#کانال_پیچ_زاویه_دار",
+      "aliases": [
+        "angled screw channel",
+        "ASC",
+        "مسیر پیچ"
+      ]
+    }
+  ],
+  "renames": {
+    "#Scan_Body": "#اسکن_بادی",
+    "#Intraoral_Scanner": "#اسکنر_داخل_دهانی",
+    "#Cement_Retained": "#سمان_ریتین",
+    "#Peri_Implantitis": "#پری_ایمپلنتیتیس",
+    "#Emergence_Profile": "#پروفایل_امرجنس",
+    "#Interproximal_Contact_Loss": "#از_دست_رفتن_کانتکت",
+    "#Healing_Abutment": "#هیلینگ_اباتمنت",
+    "#Food_Impaction": "#گیر_غذایی",
+    "#Patient_Safety": "#ایمنی_بیمار",
+    "#Angled_Screw_Channel": "#کانال_پیچ_زاویه_دار"
+  },
+  "articles": {}
+}

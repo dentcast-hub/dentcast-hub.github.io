@@ -264,3 +264,75 @@ describe('an impression means seen, not rendered', () => {
     expect(posts).toHaveLength(1);
   });
 });
+
+// A campaign can be pure artwork with nowhere to go: the offer, the brand and
+// the date all live inside the image, and the advertiser asked for no action at
+// all. Two things must then hold — the card is not a link (so it cannot promise
+// a click it will not honour, and cannot report one), and the artwork is shown
+// at full width instead of being cropped into the 44px headline thumb.
+describe('an image-only campaign renders as artwork, not as a link', () => {
+  const creatives = JSON.parse(JSON.stringify(CONFIG.creatives));
+  const sequence = [...CONFIG.rotation.sequence];
+  afterEach(() => {
+    (CONFIG as any).creatives = JSON.parse(JSON.stringify(creatives));
+    CONFIG.rotation.sequence = [...sequence];
+  });
+
+  const artOnly = {
+    enabled: true, id: 'art-only', badge: 'حامی دنت‌کست', title: '', text: '', cta: '',
+    url: '', image: '/spot/img/idc-welcome.webp', weight: 1,
+  };
+
+  it('renders the artwork with no anchor, no CTA, and reports no click', async () => {
+    (CONFIG.creatives as any).sponsors = [artOnly];
+    CONFIG.rotation.sequence = ['art-only'];
+    await boot();
+
+    const card = document.querySelector('.dc-spot')!;
+    expect(card.classList.contains('dc-spot--art')).toBe(true);
+    expect(card.querySelector('a'), 'no url means no link — not even an empty one').toBeNull();
+    expect(card.querySelector('.dc-spot-cta')).toBeNull();
+    expect(card.querySelector('.dc-spot-title')).toBeNull();
+    expect(card.querySelector('.dc-spot-img'), 'the 44px thumb would crop the copy').toBeNull();
+    expect(card.querySelector('.dc-spot-art-img')?.getAttribute('src')).toBe('/spot/img/idc-welcome.webp');
+    // Disclosure survives the stripped-down layout: an unlabelled ad is the one
+    // thing this card may not become.
+    expect(card.querySelector('.dc-spot-badge')?.textContent).toBe('حامی دنت‌کست');
+
+    await seen();
+    expect(posts).toHaveLength(1);
+    expect(posts[0].body).toEqual({ event: 'spot_impression', content_id: 'home:art-only' });
+
+    (card.firstElementChild as HTMLElement).click();
+    await tick(100);
+    expect(posts, 'there is nothing to click, so there is nothing to count').toHaveLength(1);
+  });
+
+  // The `premium` beat means "this session belongs to the house". The house card
+  // is audience-split, so for a signed-in visitor the anon-targeted premium
+  // creative does not apply — and the beat must then find the OTHER house card,
+  // never hand the session to a paid campaign that was given its own beats.
+  it('keeps the premium beat on the house card for a signed-in visitor', async () => {
+    (CONFIG.creatives as any).sponsors = [
+      {
+        enabled: true, id: 'league-prize', badge: 'b', title: 'league', text: '', cta: 'c',
+        url: '/plus/', image: null, weight: 1, audience: ['plus'],
+      },
+      artOnly,
+    ];
+    CONFIG.rotation.sequence = ['premium'];
+    // A cursor position where the weighted sponsor pool would land on the paid
+    // campaign — which is exactly what used to happen.
+    localStorage.setItem('dcAds.rr', '1');
+    me.user = { tier: 'free' }; me.status = 'user';
+    await boot();
+    expect(creativeShown()).toBe('league-prize');
+  });
+
+  it('still serves the anon house card on that same beat', async () => {
+    (CONFIG.creatives as any).sponsors = [artOnly];
+    CONFIG.rotation.sequence = ['premium'];
+    await boot();
+    expect(creativeShown()).toBe('premium');
+  });
+});

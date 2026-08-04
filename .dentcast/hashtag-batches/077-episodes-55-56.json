@@ -1,0 +1,22 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 77 - episodes 55 and 56, the bonded-ceramic-overlay prep pair. Both -> #اورلی + #سرامیک + #ترمیم_ادهزیو (the 'باند شونده' door) + #دوام_ترمیم (both promise longer survival). Episode 55 keeps #بیومیمتیک (bonded overlay is a biomimetic technique it names). Existing concepts only.",
+ "concepts": [],
+ "articles": {
+  "episodes/episode-55": [
+   "#دنتکست",
+   "#اورلی",
+   "#سرامیک",
+   "#ترمیم_ادهزیو",
+   "#دوام_ترمیم",
+   "#بیومیمتیک"
+  ],
+  "episodes/episode-56": [
+   "#دنتکست",
+   "#اورلی",
+   "#سرامیک",
+   "#ترمیم_ادهزیو",
+   "#دوام_ترمیم"
+  ]
+ }
+}

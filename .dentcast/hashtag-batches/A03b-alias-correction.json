@@ -1,0 +1,49 @@
+{
+ "type": "episodes",
+ "note": "Alias enrichment 3b (correction) - three concepts touched in step 3 (#رابردم, #اسکن_بادی, #اسکن_دیجیتال) are folded forms whose own name rewrites to a canonical, so aliases placed on them land on an unstable token and never resolve. Clear those, and instead add the intended alternative spellings to the STABLE canonical the family folds to (#ایزولاسیون, #Scan_Body, #قالب‌گیری_دیجیتال), preserving each canonical's existing aliases.",
+ "concepts": [
+  {
+   "tag": "#رابردم",
+   "aliases": []
+  },
+  {
+   "tag": "#اسکن_بادی",
+   "aliases": []
+  },
+  {
+   "tag": "#اسکن_دیجیتال",
+   "aliases": []
+  },
+  {
+   "tag": "#ایزولاسیون",
+   "aliases": [
+    "isolation",
+    "رابردم",
+    "ایزوله کردن",
+    "ایزولیشن",
+    "rubber dam",
+    "رابر دم"
+   ]
+  },
+  {
+   "tag": "#Scan_Body",
+   "aliases": [
+    "اسکن بادی",
+    "scanbody",
+    "اسکن‌بادی",
+    "اسکن بادی ایمپلنت"
+   ]
+  },
+  {
+   "tag": "#قالب‌گیری_دیجیتال",
+   "aliases": [
+    "قالب گیری دیجیتال",
+    "digital impression",
+    "اسکن دیجیتال",
+    "digital scan",
+    "دیجیتال اسکن"
+   ]
+  }
+ ],
+ "articles": {}
+}

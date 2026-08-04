@@ -1,0 +1,54 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 141 - Insight 147.2 and Dentopedia 147.3. Episode 147.2 (smoking + periodontitis implant risk) folds backlog #پریودنتیت onto #پریودنتال (aliases added), then -> #ایمپلنت + #دخانیات + #پریودنتال + #ریسک_فاکتور + #اینسایت. Episode 147.3 (Stela Automix restorative material) adds a #جایگزین_آمالگام concept (absorbing the product name Stela as an alias), then -> #دنتوپدیا + #جایگزین_آمالگام + #ترمیم_خلفی + #کامپوزیت.",
+ "concepts": [
+  {
+   "tag": "#پریودنتال",
+   "domain": "clinical",
+   "definition": "بافتِ نگه‌دارنده‌ی دندان و بیماری‌های آن (شاملِ پریودنتیت).",
+   "use_when": "مقاله موضوعِ پریو/بیماریِ لثه داشته باشد.",
+   "aliases": [
+    "periodontal",
+    "پریو",
+    "پریودونتال",
+    "پریودنتیت",
+    "periodontitis",
+    "بیماری لثه"
+   ]
+  },
+  {
+   "tag": "#جایگزین_آمالگام",
+   "domain": "clinical",
+   "definition": "موادِ ترمیمیِ جایگزینِ آمالگام برای کلاسِ ۱ و ۲ — از جمله کامپوزیت‌های سلف‌کیورِ نسلِ جدید.",
+   "use_when": "مقاله ماده‌ی جایگزینِ آمالگام را معرفی یا ارزیابی کند.",
+   "aliases": [
+    "amalgam alternative",
+    "جایگزین آمالگام",
+    "stela",
+    "stela automix",
+    "کامپوزیت سلف کیور"
+   ]
+  }
+ ],
+ "renames": {
+  "#پریودنتیت": "#پریودنتال",
+  "#Stela": "#جایگزین_آمالگام"
+ },
+ "articles": {
+  "episodes/episode-147-2": [
+   "#دنتکست",
+   "#ایمپلنت",
+   "#دخانیات",
+   "#پریودنتال",
+   "#ریسک_فاکتور",
+   "#اینسایت"
+  ],
+  "episodes/episode-147-3": [
+   "#دنتکست",
+   "#دنتوپدیا",
+   "#جایگزین_آمالگام",
+   "#ترمیم_خلفی",
+   "#کامپوزیت"
+  ]
+ }
+}

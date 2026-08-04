@@ -150,6 +150,42 @@ describe('grantWeeklyPrizes — top of every valid group', () => {
     expect(await tierOfUser(three[0])).toBe('premium');
   });
 
+  it('awards prize_winners_per_group when the group is big enough to carry them', async () => {
+    await setPrizeCfg('prize_winners_per_group', '2');
+    const g = await seedGroup('acrylic', [90, 80, 70], WEEK, 6);
+    await finalizeWeek(WEEK);
+
+    expect((await grantWeeklyPrizes(NEAR_WEEK)).granted).toBe(2);
+    expect(await tierOfUser(g[0])).toBe('premium');
+    expect(await tierOfUser(g[1])).toBe('premium');
+    expect(await tierOfUser(g[2])).toBe('free');
+  });
+
+  it('scales the winner count down in a thin group, so climbing never cheapens the prize', async () => {
+    // The reason this exists: upper tiers hold few people, so their groups never
+    // fill. With a flat 2 a composite group of 3 would crown two thirds of its
+    // members, and first place would mean LESS the higher you climbed.
+    await setPrizeCfg('prize_winners_per_group', '2');
+    const thin = await seedGroup('composite', [90, 80, 70], WEEK, 3);
+    await finalizeWeek(WEEK);
+
+    expect((await grantWeeklyPrizes(NEAR_WEEK)).granted).toBe(1);
+    expect(await tierOfUser(thin[0])).toBe('premium');
+    expect(await tierOfUser(thin[1])).toBe('free');
+  });
+
+  it('needs a WHOLE extra prize-floor block before it hands out a second prize', async () => {
+    // Five is one short of two blocks of three, so it still awards one. The
+    // step, not a ratio, is what keeps the count predictable to a user.
+    await setPrizeCfg('prize_winners_per_group', '2');
+    const five = await seedGroup('amalgam', [90, 80, 70], WEEK, 5);
+    await finalizeWeek(WEEK);
+
+    expect((await grantWeeklyPrizes(NEAR_WEEK)).granted).toBe(1);
+    expect(await tierOfUser(five[0])).toBe('premium');
+    expect(await tierOfUser(five[1])).toBe('free');
+  });
+
   it('keeps the two floors distinct, so neither change silently moves the other', async () => {
     const cfg = await getLeagueConfig();
     expect(cfg.prize_min_group_size, 'prize floor').toBe(3);

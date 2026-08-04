@@ -1,0 +1,40 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 94 - episodes 89 and 90. Episode 89 (zirconia-review finale, clinical selection + longevity) -> #زیرکونیا + #سرامیک_دندانی + #دوام_ترمیم + #انتخاب_متریال. Episode 90 (Pascal Magne biomimetic book, chapter 1 part 1) introduces a single book concept #کتاب_مانیه that absorbs three scattered variants of the same book across the brain (#پاسکال_مانیه on ep90, #کتاب_مانیِه on ep91, #کتاب_پاسکال_مانیه on ep94 - all share the 'مانیه' token, safe renames); article -> #بیومیمتیک + #کتاب_مانیه + #درمان_محافظه‌کارانه.",
+ "concepts": [
+  {
+   "tag": "#کتاب_مانیه",
+   "domain": "clinical",
+   "definition": "کتابِ Biomimetic Restorative Dentistry اثرِ پاسکال مانیه — مرجعِ اصولِ بیومیمتیکِ ترمیمی.",
+   "use_when": "مقاله فصلی از کتاب مانیه را مرور کند.",
+   "aliases": [
+    "pascal magne",
+    "پاسکال مانیه",
+    "کتاب مانیه",
+    "مانیه",
+    "magne",
+    "biomimetic restorative dentistry"
+   ]
+  }
+ ],
+ "renames": {
+  "#پاسکال_مانیه": "#کتاب_مانیه",
+  "#کتاب_مانیِه": "#کتاب_مانیه",
+  "#کتاب_پاسکال_مانیه": "#کتاب_مانیه"
+ },
+ "articles": {
+  "episodes/episode-89": [
+   "#دنتکست",
+   "#زیرکونیا",
+   "#سرامیک_دندانی",
+   "#دوام_ترمیم",
+   "#انتخاب_متریال"
+  ],
+  "episodes/episode-90": [
+   "#دنتکست",
+   "#بیومیمتیک",
+   "#کتاب_مانیه",
+   "#درمان_محافظه‌کارانه"
+  ]
+ }
+}

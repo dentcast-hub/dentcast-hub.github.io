@@ -126,11 +126,26 @@ variables** on the container:
 | `STREAK_TIMEZONE` | `Asia/Tehran` |
 | `CONTENT_INDEX_PATH` | leave unset — baked into the image at `/app/content-index.json` |
 | `PATHWAYS_PATH` | leave unset — baked into the image at `/app/pathways.json` |
+| `CONTENT_INDEX_URL` | leave unset — the Dockerfile points it at the `.ir`/`.org` mirrors |
+| `PATHWAYS_URL` | leave unset — same |
+| `CONTENT_REFRESH_SECONDS` | leave unset — defaults to 300 |
 
-> `CONTENT_INDEX_PATH` and `PATHWAYS_PATH` are already defaulted by the
-> Dockerfile. Both are baked in at build time, so **rebuild/redeploy the API
-> image whenever new content ships or a pathway is edited** if you want the
-> dashboard tree / pathway pages to reflect the change.
+> **Publishing content no longer needs a redeploy** (changed 2026-08-04). All
+> four of the variables above are defaulted by the Dockerfile. The two `_PATH`
+> files are still baked in at build time, but they are now only the boot value
+> and the fallback: `content-refresh.ts` re-fetches the published
+> `content-index.json` / `pathways.json` from the live site every
+> `CONTENT_REFRESH_SECONDS` (default 5 min), so an article published on the
+> static site reaches the assistant, the dashboard tree and the pathway pages on
+> its own.
+>
+> A refresh can only ever be an upgrade: the payload must parse and pass a shape
+> check (all four collections present, at least one content item — an empty but
+> structurally valid file is refused precisely because it would silently blank
+> the taxonomy), and if every mirror fails the last good copy keeps serving.
+>
+> You still rebuild the image for **code** changes and migrations, and one last
+> time to pick this mechanism up.
 
 ---
 

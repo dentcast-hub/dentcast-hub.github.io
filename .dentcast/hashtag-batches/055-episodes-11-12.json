@@ -1,0 +1,35 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 55 - episodes 11 and 12. Episode 11 (zirconia surface prep for resin cements) joins #زیرکونیا + #آماده_سازی_سرامیک + #سمان_رزینی (the caption names resin cements as the target). Episode 12 (cleaning contaminated ceramic surfaces) joins the existing #پاکسازی_سرامیک; the page's own spellings 'دی کانتامیناسیون'/'تمیز کردن سرامیک' become aliases. #لمینیت_سرامیکی and #اینله dropped from episode 12: the article resolves decontamination of any ceramic restoration, not laminate- or inlay-specific questions, and the 'اینله' door stays open via the alias on #ترمیم_غیرمستقیم.",
+ "concepts": [
+  {
+   "tag": "#پاکسازی_سرامیک",
+   "domain": "clinical",
+   "definition": "پاک‌سازیِ سطحِ سرامیکِ آلوده (بزاق، خون، ترای‌این) پیش از باند.",
+   "use_when": "مقاله پروتکل تمیز کردن سطح سرامیک را موضوع داشته باشد.",
+   "aliases": [
+    "cleaning",
+    "آلودگی سرامیک",
+    "دیکانتامینیشن",
+    "دی کانتامیناسیون",
+    "decontamination",
+    "تمیز کردن سرامیک"
+   ]
+  }
+ ],
+ "articles": {
+  "episodes/episode-11": [
+   "#دنتکست",
+   "#زیرکونیا",
+   "#باندینگ",
+   "#آماده_سازی_سرامیک",
+   "#سمان_رزینی"
+  ],
+  "episodes/episode-12": [
+   "#دنتکست",
+   "#سرامیک",
+   "#پاکسازی_سرامیک",
+   "#باندینگ_سرامیک"
+  ]
+ }
+}

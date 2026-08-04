@@ -1,0 +1,35 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 134 - episodes 138 and 139. Episode 138 (indirect posterior adhesive, part 2, cementation) adds a #ترمیم_سرامیکی concept, then -> #سمان_کردن + #ترمیم_سرامیکی + #آنله + #پروتکل_باند. Episode 139 (ZBL prosthetic-material part 1) -> #Zero_Bone_Loss + #متریال_پروتزی + #روکش_ایمپلنت + #ایمپلنت + #زیرکونیا + #کتاب_لینکویچیوس.",
+ "concepts": [
+  {
+   "tag": "#ترمیم_سرامیکی",
+   "domain": "clinical",
+   "definition": "رستوریشنِ سرامیکیِ غیرمستقیم — اینله/آنله/روکشِ سرامیکی و مراحلِ سمان/باندِ آن.",
+   "use_when": "مقاله رستوریشنِ سرامیکی را موضوع داشته باشد.",
+   "aliases": [
+    "ceramic restoration",
+    "ترمیم سرامیک",
+    "رستوریشن سرامیکی"
+   ]
+  }
+ ],
+ "articles": {
+  "episodes/episode-138": [
+   "#دنتکست",
+   "#سمان_کردن",
+   "#ترمیم_سرامیکی",
+   "#آنله",
+   "#پروتکل_باند"
+  ],
+  "episodes/episode-139": [
+   "#دنتکست",
+   "#Zero_Bone_Loss",
+   "#متریال_پروتزی",
+   "#روکش_ایمپلنت",
+   "#ایمپلنت",
+   "#زیرکونیا",
+   "#کتاب_لینکویچیوس"
+  ]
+ }
+}

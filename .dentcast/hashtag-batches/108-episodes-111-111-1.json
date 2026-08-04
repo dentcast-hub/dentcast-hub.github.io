@@ -1,0 +1,52 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 108 - episode 111 and Dentopedia micro-episode 111.1. Episode 111 (ZBL prosthetic part 2, soft-tissue management) folds backlog #لینکوییسیوس onto #کتاب_لینکویچیوس, then -> #Zero_Bone_Loss + #پروتز_ایمپلنت + #تحلیل_استخوان_کرستال + #مدیریت_بافت_نرم + #کتاب_لینکویچیوس. Episode 111.1 (fissure sealant clinical points) adds a #فیشور_سیلانت concept and folds the duplicate #اطفال onto #دندانپزشکی_کودکان, then -> #دنتوپدیا + #فیشور_سیلانت + #دندانپزشکی_کودکان + #پیشگیری.",
+ "concepts": [
+  {
+   "tag": "#فیشور_سیلانت",
+   "domain": "clinical",
+   "definition": "پوششِ رزینیِ شیارهای اکلوزال برای پیشگیری از پوسیدگی.",
+   "use_when": "مقاله فیشورسیلانت را موضوع یا گزینه‌ی پیشگیری قرار دهد.",
+   "aliases": [
+    "fissure sealant",
+    "سیلانت",
+    "سیلانت تراپی",
+    "شیار پوش",
+    "pit and fissure sealant"
+   ]
+  },
+  {
+   "tag": "#دندانپزشکی_کودکان",
+   "domain": "clinical",
+   "definition": "دندانپزشکیِ کودکان و ملاحظاتِ آن.",
+   "use_when": "مقاله موضوعِ اطفال/کودکان داشته باشد.",
+   "aliases": [
+    "pediatric dentistry",
+    "دندانپزشکی اطفال",
+    "اطفال",
+    "کودکان"
+   ]
+  }
+ ],
+ "renames": {
+  "#لینکوییسیوس": "#کتاب_لینکویچیوس",
+  "#اطفال": "#دندانپزشکی_کودکان"
+ },
+ "articles": {
+  "episodes/episode-111": [
+   "#دنتکست",
+   "#Zero_Bone_Loss",
+   "#پروتز_ایمپلنت",
+   "#تحلیل_استخوان_کرستال",
+   "#مدیریت_بافت_نرم",
+   "#کتاب_لینکویچیوس"
+  ],
+  "episodes/episode-111-1": [
+   "#دنتکست",
+   "#دنتوپدیا",
+   "#فیشور_سیلانت",
+   "#دندانپزشکی_کودکان",
+   "#پیشگیری"
+  ]
+ }
+}

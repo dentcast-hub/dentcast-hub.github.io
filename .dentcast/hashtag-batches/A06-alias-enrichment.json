@@ -1,0 +1,39 @@
+{
+ "type": "episodes",
+ "note": "Alias enrichment 6 - the last four alias-less clinical/AI concepts with live articles (#Digital_Implant_Planning, #Implant_Restoration, #Few_Shot_Prompting, #retention_form). Aliases only; validated.",
+ "concepts": [
+  {
+   "tag": "#Digital_Implant_Planning",
+   "aliases": [
+    "پلنینگ دیجیتال ایمپلنت",
+    "طراحی دیجیتال ایمپلنت",
+    "planning دیجیتال ایمپلنت"
+   ]
+  },
+  {
+   "tag": "#Implant_Restoration",
+   "aliases": [
+    "بازسازی ایمپلنت",
+    "رستوریشن ایمپلنت",
+    "ترمیم روی ایمپلنت"
+   ]
+  },
+  {
+   "tag": "#Few_Shot_Prompting",
+   "aliases": [
+    "فیو شات",
+    "نمونه دادن به مدل",
+    "few shot prompt"
+   ]
+  },
+  {
+   "tag": "#retention_form",
+   "aliases": [
+    "فرم گیر",
+    "گیر تراش",
+    "ریتنشن فرم"
+   ]
+  }
+ ],
+ "articles": {}
+}

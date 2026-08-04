@@ -1,0 +1,74 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 105 - episodes 108 and 109. Episode 108 (Multi-Unit Abutments in full-arch cases): #Multi_Unit folded onto #مولتی_یونیت_اباتمنت, and the canonical #ایمپلنت_فول_آرچ is enriched with all-on-4 / full-mouth aliases so those queries reach it (the pre-existing glued/cross-script variants #ایمپلنت_فول_ماوس/#AllOn4/#Full_Arch_Implant are left on their own enforced-type articles - the guard flags renaming them as lossy). Article -> #مولتی_یونیت_اباتمنت + #ایمپلنت_فول_آرچ + #ایمپلنت + #اتصال_پیچ_شونده. Episode 109 (AI-in-dentistry basics) uses the established DentAI AI vocabulary as-is, no merges: -> #هوش_مصنوعی (general-AI umbrella) + #سواد_هوش_مصنوعی (literacy/basics) + #هوش_مصنوعی_دندانپزشکی + #دندانپزشکی_هوشمند; the ML/deep-learning wording is added as aliases on #سواد_هوش_مصنوعی.",
+ "concepts": [
+  {
+   "tag": "#ایمپلنت_فول_آرچ",
+   "domain": "clinical",
+   "definition": "بازسازیِ تمامِ قوسِ فک روی ایمپلنت — از جمله پروتکل‌هایی مثل All-on-4/All-on-6.",
+   "use_when": "مقاله درمانِ فول‌آرچِ ایمپلنت را موضوع داشته باشد.",
+   "aliases": [
+    "all on 4",
+    "all-on-4",
+    "آل آن فور",
+    "allon4",
+    "ایمپلنت تمام فک",
+    "all on 6"
+   ]
+  },
+  {
+   "tag": "#مولتی_یونیت_اباتمنت",
+   "domain": "clinical",
+   "definition": "Multi-Unit Abutment — اباتمنتِ واسطه که پروتزِ پیچ‌شونده‌ی چندواحدی را از سطحِ لثه می‌گیرد و زاویه‌ی فیکسچرها را جبران می‌کند.",
+   "use_when": "مقاله MUA را انتخاب یا کاربردش را موضوع داشته باشد.",
+   "aliases": [
+    "multi unit",
+    "مولتی یونیت",
+    "MUA",
+    "multi-unit abutment"
+   ]
+  },
+  {
+   "tag": "#سواد_هوش_مصنوعی",
+   "domain": "ai",
+   "definition": "سوادِ هوشِ مصنوعی — مفاهیمِ پایه‌ی AI، یادگیریِ ماشین و یادگیریِ عمیق برای دندانپزشک.",
+   "use_when": "مقاله مفاهیمِ پایه‌ی هوش مصنوعی را آموزش دهد.",
+   "aliases": [
+    "یادگیری ماشین",
+    "machine learning",
+    "deep learning",
+    "یادگیری عمیق"
+   ]
+  },
+  {
+   "tag": "#دندانپزشکی_هوشمند",
+   "domain": "ai",
+   "definition": "دندانپزشکیِ مبتنی بر فناوری‌های هوشمند و دیجیتال.",
+   "use_when": "مقاله کاربردِ فناوریِ هوشمند در دندانپزشکی را موضوع داشته باشد.",
+   "aliases": [
+    "smart dentistry",
+    "دندانپزشکی هوشمند",
+    "فناوری دندانپزشکی"
+   ]
+  }
+ ],
+ "renames": {
+  "#Multi_Unit": "#مولتی_یونیت_اباتمنت"
+ },
+ "articles": {
+  "episodes/episode-108": [
+   "#دنتکست",
+   "#مولتی_یونیت_اباتمنت",
+   "#ایمپلنت_فول_آرچ",
+   "#ایمپلنت",
+   "#اتصال_پیچ_شونده"
+  ],
+  "episodes/episode-109": [
+   "#دنتکست",
+   "#هوش_مصنوعی",
+   "#سواد_هوش_مصنوعی",
+   "#هوش_مصنوعی_دندانپزشکی",
+   "#دندانپزشکی_هوشمند"
+  ]
+ }
+}

@@ -1,0 +1,21 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 131 - episodes 132 and 133, existing concepts. Episode 132 (canine rise vs group function, part 2) -> #اکلوژن + #گروپ_فانکشن + #کانین_رایز + #پروتز_ثابت. Episode 133 (scan bodies for implant scan accuracy) -> #اسکن_بادی + #ایمپلنت_دیجیتال + #دقت_اسکن + #CAD_CAM.",
+ "concepts": [],
+ "articles": {
+  "episodes/episode-132": [
+   "#دنتکست",
+   "#اکلوژن",
+   "#گروپ_فانکشن",
+   "#کانین_رایز",
+   "#پروتز_ثابت"
+  ],
+  "episodes/episode-133": [
+   "#دنتکست",
+   "#اسکن_بادی",
+   "#ایمپلنت_دیجیتال",
+   "#دقت_اسکن",
+   "#CAD_CAM"
+  ]
+ }
+}

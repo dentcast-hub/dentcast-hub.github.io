@@ -103,6 +103,18 @@ function scoreBlock(progress) {
     ]),
   ]);
 
+  // Where the points came from. The per-content line is the whole point of the
+  // component: a listener who finishes a second episode on a day they were
+  // already active sees this number move even though the day bonus did not.
+  const done = progress.score_content_completed || 0;
+  if (done) {
+    wrap.appendChild(el('p', { class: 'dcp-score-parts' },
+      faNum(done) + ' محتوا را تمام کرده‌اید (هرکدام '
+      + faNum(progress.score_points_per_content || 5) + ' امتیاز) و '
+      + faNum(progress.score_active_days || 0) + ' روز فعال بوده‌اید (هرکدام '
+      + faNum(progress.score_points_per_active_day || 10) + ' امتیاز).'));
+  }
+
   const icons = el('span', { class: 'dcp-freeze-icons', 'aria-hidden': 'true' });
   for (let i = 0; i < Math.max(1, available); i += 1) {
     icons.appendChild(el('span', { class: 'dcp-freeze-ico' + (i < available ? '' : ' is-empty') }, '🛡️'));
@@ -332,7 +344,7 @@ export async function renderDashboard(root, { me: preMe } = {}) {
     // NOTE: امتیاز (all-time, unlocks shields at thresholds, never spent) and XP
     // هفتگی (ranks the league, resets weekly) are two separate quantities in the
     // API — never describe one as feeding the other, and never as a balance.
-    section('امتیاز شما', 'امتیاز با فعالیت شما بالا می‌رود، همیشه می‌ماند و کم نمی‌شود؛ با آن سپر می‌گیرید. لیگ هفتگی جداست و روی XP همان هفته حساب می‌شود.', scoreBlock(progress)),
+    section('امتیاز شما', 'هر پادکستِ تازه‌ای که گوش می‌دهید و هر مقاله‌ای که تمام می‌کنید امتیاز دارد، به‌علاوه‌ی هر روزِ فعال و هر هایلایت. امتیاز همیشه می‌ماند و کم نمی‌شود؛ با آن سپر می‌گیرید. لیگ هفتگی جداست و روی XP همان هفته حساب می‌شود.', scoreBlock(progress)),
     section('هایلایت‌های اخیر', null, recentWrap),
   );
 

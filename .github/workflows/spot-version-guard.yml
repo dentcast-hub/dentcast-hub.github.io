@@ -1,0 +1,46 @@
+name: Spot loader version guard
+
+# spot/spot.js is loaded by THREE separate loader snippets — the primary hook at
+# the end of dc-nav.js, plus an inline copy in each of the two standalone Plus
+# views (/plus/index.html, /plus/profile.html), which do not pull in dc-nav.js.
+# Every one of them stamps the cache-busting ?v= from its own SPOT_V constant.
+#
+# Nothing enforced that the three stayed equal, and on 2026-08-03 they had
+# drifted: dc-nav.js was on 23 while both Plus pages were still on 19 — four
+# engine versions behind, since 2026-08-02. The failure is silent and one-sided:
+# the Plus dashboard and profile kept executing an OLD spot.js, which does not
+# understand image-only creatives and therefore dropped the whole sponsor
+# campaign, falling back to the house card on every single rotation beat, while
+# the rest of the site rotated normally.
+#
+# A version bump is worthless if one loader never gets it, so equality is checked
+# in CI rather than trusted to a checklist.
+on: [push, pull_request]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: All three spot loaders must stamp the same SPOT_V
+        run: |
+          files="dc-nav.js plus/index.html plus/profile.html"
+          rc=0
+          vals=""
+          for f in $files; do
+            v=$(grep -oE "var SPOT_V = '[0-9]+'" "$f" | grep -oE "[0-9]+" | head -1)
+            if [ -z "$v" ]; then
+              echo "::error file=$f::no SPOT_V found - the spot loader is missing or was renamed"
+              rc=1
+            else
+              echo "  $f -> SPOT_V=$v"
+              vals="$vals $v"
+            fi
+          done
+          [ "$rc" -ne 0 ] && exit 1
+          uniq_count=$(echo $vals | tr ' ' '\n' | sort -u | wc -l)
+          if [ "$uniq_count" -ne 1 ]; then
+            echo "::error::SPOT_V differs between loaders ($vals). Every loader must stamp the same version, or the views using the stale one keep running an old spot.js. See spot/README.md."
+            exit 1
+          fi
+          echo "OK - all three loaders agree."

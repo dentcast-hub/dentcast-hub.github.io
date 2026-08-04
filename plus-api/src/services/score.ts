@@ -6,7 +6,21 @@ import { config } from '../config.js';
  * and the streak engine (auto-consume on a missed day). Kept in one place so the
  * number the user sees and the number the engine spends never drift apart.
  *
- * Score = active_days * 10 + total_highlights (activity-log derived, monotonic).
+ * Score = active_days * 10 + content_completed * 5 + total_highlights
+ * (activity-log derived, monotonic).
+ *
+ * `content_completed` counts each (action, content) pair ONCE FOR ALL TIME, so
+ * every new episode heard or article finished pays, while replaying the same
+ * file does not — otherwise leaving one episode on loop would beat working
+ * through twenty. Reading and listening are counted separately for the same
+ * page (a NoteCast that is both read and heard pays twice), which is exactly
+ * how the league already treats xp_read vs xp_listen.
+ *
+ * Before this component existed, consumption only ever bought the day's first
+ * +10: a second podcast on the same day moved the number by nothing, and since
+ * podcast pages are excluded from the workbench they could not earn highlight
+ * points either. Listeners were told «با خواندن، گوش‌دادن، هایلایت و مرور
+ * امتیاز می‌گیری» and then watched the score sit still.
  *
  * Shields get PROGRESSIVELY MORE EXPENSIVE: the first costs SHIELD_BASE, and
  * every next one costs SHIELD_STEP more than the one before (200, 250, 300 …).
@@ -31,9 +45,50 @@ export const SHIELD_STEP = 50;  // each further shield costs this much more
 // are intentionally the same today.
 export const SCORING_ACTIONS = ['article_completed', 'episode_listened', 'highlight_created', 'card_reviewed_manual', 'review_finished'];
 
+/**
+ * The consumption actions that additionally pay PER PIECE OF CONTENT. A strict
+ * subset of SCORING_ACTIONS: a highlight already pays per highlight, and a card
+ * review is not a piece of content.
+ */
+export const CONSUMPTION_ACTIONS = ['article_completed', 'episode_listened'];
+
+export const POINTS_PER_ACTIVE_DAY = 10;
+export const POINTS_PER_CONTENT = 5; // half a day: visible, but the daily habit still leads
+
 type Db = pg.Pool | pg.PoolClient;
 
-export interface ScoreBreakdown { score: number; active_days: number; total_highlights: number; }
+export interface ScoreBreakdown {
+  score: number; active_days: number; content_completed: number; total_highlights: number;
+}
+
+/**
+ * The whole formula as one SQL select over `profiles p`, producing (id, score).
+ * The per-user number (computeScore), the rank query in /progress and the KPI
+ * count all read from this, because they used to be three hand-copied copies of
+ * the arithmetic — and a formula change had to find all three or the score a
+ * user saw would silently disagree with the rank they were given for it.
+ * Callers pass their own placeholder numbers since each query binds differently.
+ */
+export function scoreSelectSql(p: { tz: string; scoring: string; consumption: string }): string {
+  return `select p.id,
+                 coalesce(ad.n, 0) * ${POINTS_PER_ACTIVE_DAY}
+               + coalesce(cc.n, 0) * ${POINTS_PER_CONTENT}
+               + coalesce(hl.n, 0) as score
+            from profiles p
+            left join (
+              select user_id, count(distinct (created_at at time zone ${p.tz})::date) as n
+                from user_activity where action = any(${p.scoring}) group by user_id
+            ) ad on ad.user_id = p.id
+            left join (
+              select user_id, count(distinct (action, content_id)) as n
+                from user_activity
+               where action = any(${p.consumption}) and content_id is not null
+               group by user_id
+            ) cc on cc.user_id = p.id
+            left join (
+              select user_id, count(*) as n from highlights group by user_id
+            ) hl on hl.user_id = p.id`;
+}
 
 /** Compute a user's score and its parts from the activity log + highlights. */
 export async function computeScore(db: Db, userId: string): Promise<ScoreBreakdown> {
@@ -42,13 +97,25 @@ export async function computeScore(db: Db, userId: string): Promise<ScoreBreakdo
        from user_activity where user_id = $1 and action = any($3)`,
     [userId, config.streakTimezone, SCORING_ACTIONS],
   );
+  // count(distinct (action, content_id)): the row constructor keeps reading and
+  // listening to the SAME page as two engagements, and collapses replays of one.
+  const cc = await db.query<{ n: number }>(
+    `select count(distinct (action, content_id))::int as n
+       from user_activity
+      where user_id = $1 and action = any($2) and content_id is not null`,
+    [userId, CONSUMPTION_ACTIONS],
+  );
   const hl = await db.query<{ n: number }>(
     `select count(*)::int as n from highlights where user_id = $1`,
     [userId],
   );
   const active_days = ad.rows[0]?.n ?? 0;
+  const content_completed = cc.rows[0]?.n ?? 0;
   const total_highlights = hl.rows[0]?.n ?? 0;
-  return { score: active_days * 10 + total_highlights, active_days, total_highlights };
+  const score = active_days * POINTS_PER_ACTIVE_DAY
+    + content_completed * POINTS_PER_CONTENT
+    + total_highlights;
+  return { score, active_days, content_completed, total_highlights };
 }
 
 /** How many shields the user has already spent (append-only log is the source). */

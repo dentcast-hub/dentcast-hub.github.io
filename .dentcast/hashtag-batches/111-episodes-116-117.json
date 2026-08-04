@@ -1,0 +1,50 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 111 - episodes 116 and 117, the Global Diagnosis (Robbins) book series. Episode 116 (part 1) -> #Global_Diagnosis + #کتاب_رابینز + #طرح_درمان + #زیبایی. Episode 117 (GAD form + examination) adds a #معاینه_بیمار concept and folds the backlog #فرم_GAD onto #Global_Diagnosis (GAD-form aliases added), then -> #Global_Diagnosis + #معاینه_بیمار + #تشخیص_افتراقی + #طرح_درمان.",
+ "concepts": [
+  {
+   "tag": "#Global_Diagnosis",
+   "domain": "clinical",
+   "definition": "سیستمِ Global Diagnosis (Robbins) — چارچوبِ تشخیصِ سلسله‌مراتبیِ زیبایی و بازسازی بر پایه‌ی موقعیتِ لبه‌ی انسیزال و لثه.",
+   "use_when": "مقاله سیستم Global Diagnosis یا فرمِ آن را به‌کار گیرد.",
+   "aliases": [
+    "global diagnosis",
+    "تشخیص گلوبال",
+    "فرم gad",
+    "gad",
+    "global analysis"
+   ]
+  },
+  {
+   "tag": "#معاینه_بیمار",
+   "domain": "clinical",
+   "definition": "معاینه‌ی سیستماتیکِ بیمار و ثبتِ یافته‌ها پیش از تشخیص و طرحِ درمان.",
+   "use_when": "مقاله مراحلِ معاینه‌ی بالینی را موضوع داشته باشد.",
+   "aliases": [
+    "patient examination",
+    "معاینه کلینیکی",
+    "معاینه بالینی",
+    "clinical exam"
+   ]
+  }
+ ],
+ "renames": {
+  "#فرم_GAD": "#Global_Diagnosis"
+ },
+ "articles": {
+  "episodes/episode-116": [
+   "#دنتکست",
+   "#Global_Diagnosis",
+   "#کتاب_رابینز",
+   "#طرح_درمان",
+   "#زیبایی"
+  ],
+  "episodes/episode-117": [
+   "#دنتکست",
+   "#Global_Diagnosis",
+   "#معاینه_بیمار",
+   "#تشخیص_افتراقی",
+   "#طرح_درمان"
+  ]
+ }
+}

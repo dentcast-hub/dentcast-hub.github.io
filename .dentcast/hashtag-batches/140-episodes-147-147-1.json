@@ -1,0 +1,45 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 140 - episode 147 and Dentopedia insert 147.1. Episode 147 (best supragingival material, ZBL part 2) adds a #متریال_سوپراجینجیوال concept, then -> #روکش_ایمپلنت + #متریال_سوپراجینجیوال + #Zero_Bone_Loss + #زیبایی. Episode 147.1 (BPS complete-denture system) adds a #BPS concept, then -> #دنتوپدیا + #BPS + #پروتز_متحرک.",
+ "concepts": [
+  {
+   "tag": "#متریال_سوپراجینجیوال",
+   "domain": "clinical",
+   "definition": "ماده‌ی بخشِ بالای لثه‌ی روکشِ ایمپلنت — انتخاب بر پایه‌ی زیبایی، پالیش‌پذیری و سایشِ دندانِ مقابل.",
+   "use_when": "مقاله انتخابِ ماده‌ی سوپراجینجیوال را موضوع داشته باشد.",
+   "aliases": [
+    "supragingival material",
+    "متریال سوپراجینجیوال",
+    "ماده بالای لثه",
+    "supragingival"
+   ]
+  },
+  {
+   "tag": "#BPS",
+   "domain": "clinical",
+   "definition": "Biofunctional Prosthetic System — سیستمِ استانداردِ ساختِ دنچرِ کاملِ ایوکلار با قالب‌گیری و رکوردگیریِ فانکشنال.",
+   "use_when": "مقاله سیستمِ BPS دنچر را موضوع داشته باشد.",
+   "aliases": [
+    "biofunctional prosthetic system",
+    "بی پی اس",
+    "دنچر bps",
+    "ایوکلار bps"
+   ]
+  }
+ ],
+ "articles": {
+  "episodes/episode-147": [
+   "#دنتکست",
+   "#روکش_ایمپلنت",
+   "#متریال_سوپراجینجیوال",
+   "#Zero_Bone_Loss",
+   "#زیبایی"
+  ],
+  "episodes/episode-147-1": [
+   "#دنتکست",
+   "#دنتوپدیا",
+   "#BPS",
+   "#پروتز_متحرک"
+  ]
+ }
+}

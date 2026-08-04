@@ -1,0 +1,47 @@
+---
+description: DentCast Plus / Premium surfaces — learning pathways, collections, Leitner flashcards, the scored quiz bank, the میز کار content index, and the new-article push. Use when working on anything under plus/ or plus-api/, or when a publish must update a Plus/Premium artifact.
+globs: plus/**,plus-api/**,tools/build_plus_index.mjs,tools/build_flashcards_index.mjs,tools/build_quiz_index.mjs,tools/pathway_*.py
+alwaysApply: false
+---
+
+# Plus / Premium — Cursor
+
+نقشهٔ کامل در `AGENTS.md` بخش ۷. منطقِ گام‌ها در `.dentcast/workflows/README.md`.
+
+## چه چیزی با هر publish به‌روز می‌شود
+
+| سطح | آرتیفکت | گامِ ورکفلو | بیلدر (تنها نویسنده) |
+|---|---|---|---|
+| Plus | درخت ناوبریِ «میز کار» | همیشه (brain تغییر کرده) | `node tools/build_plus_index.mjs` → `plus/content-index.json` |
+| Plus/Premium | فلش‌کارت Leitner | `4.11` — `DefinedTermSet` روی خودِ صفحه | `node tools/build_flashcards_index.mjs` → `plus/flashcards-index.json` |
+| Plus/Premium | کوییز نمره‌دار | `4.12` — `FAQPage` روی خودِ صفحه | `node tools/build_quiz_index.mjs` → `plus/quiz-index.json` |
+| Premium | مسیر یادگیری | `5.6` | `python3 tools/pathway_place.py --insert …` → `plus/pathways.json` |
+| Plus/Premium | نوتیف مطلب جدید | فاز E | `<meta name="dc-notify" content="true">` در `<head>` |
+| Premium | کالکشن‌ها | — | مالِ کاربر است؛ publish کاری با آن ندارد |
+
+**هیچ‌کدام از فایل‌های ایندکس را دستی ویرایش نکن** — `content-index.json`،
+`flashcards-index.json`، `quiz-index.json` تماماً تولیدی‌اند. تنها فایل Plus که
+دستی (از طریق ابزارش) نوشته می‌شود `plus/pathways.json` است.
+
+## قواعدی که زیاد اشتباه می‌شوند
+
+- **pathway ≠ pillar.** pillar خانهٔ آیتم است (دقیقاً یکی، گام ۲.۴). pathway یک
+  سفر یادگیری است و **یک آیتم می‌تواند در چند pathway باشد**، هر بار در جای درستِ
+  پیش‌نیاز→پیشرفته. pillarِ آیتم هیچ نقشی در انتخاب pathway ندارد. تصمیم
+  **معنایی** است؛ مرزی بود، بپرس.
+  ```bash
+  python3 tools/pathway_place.py <content_id>              # کاندیدها + anchor پیشنهادی
+  python3 tools/pathway_place.py --insert <content_id> --pathway <id> --after <anchor> [--milestone]
+  python3 tools/pathway_place.py --coverage                # تأیید
+  ```
+  ویرایش `plus/pathways.json` دیگر redeploy API نمی‌خواهد — `content-refresh.ts`
+  فایل منتشرشده را در حال اجرا دوباره می‌گیرد.
+- **فلش‌کارت یک مفهوم است، نه یک سوال.** `DefinedTerm` اتمی؛ کپیِ کلمه‌به‌کلمهٔ
+  FAQ ممنوع؛ سوال‌های مقایسه‌ای/تصمیمی کارت نمی‌شوند (و اسکیپشان گزارش می‌شود).
+  `@id`ها بعد از انتشار **پایدار**اند (رکوردهای `card_state` به همان fragment
+  گره خورده‌اند) — با اصلاح متن، شماره‌گذاری را جابه‌جا نکن.
+- **کوییز فقط سوال‌های باینری را برمی‌دارد** که پاسخشان با «بله»/«خیر» شروع شود.
+  سوال باید standalone باشد — «این کیس»/«این مطالعه» ممنوع. «بستگی دارد»ِ صادق
+  را به بله/خیرِ دروغین تبدیل نکن؛ درست است که از بانکِ نمره‌دار بیرون بماند.
+- **LiteCast از همهٔ این‌ها بیرون است** (بیمارمحور است): نه فلش‌کارت، نه کوییز،
+  نه pathway، نه نوتیف. هر بار به‌صورت «اسکیپ — LiteCast» گزارش می‌شود.

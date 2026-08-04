@@ -1,0 +1,50 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 123 - episode 124 and Insight insert 124.1. Episode 124 (posterior guideline wrap-up, decision algorithm) -> #ترمیم_خلفی + #پروتز_ثابت + #طرح_درمان + #گایدلاین + #بیومیمتیک. Episode 124.1 (laser debonding of veneers) adds a #لیزر_دندانپزشکی concept and folds backlog #ریموال_ونیر onto #debonding (aliases added), then -> #لیزر_دندانپزشکی + #ونیر_سرامیکی + #debonding + #اینسایت.",
+ "concepts": [
+  {
+   "tag": "#لیزر_دندانپزشکی",
+   "domain": "clinical",
+   "definition": "کاربردِ لیزر در دندانپزشکی — از جمله دی‌باندینگِ سرامیک با Er:YAG.",
+   "use_when": "مقاله کاربردِ لیزر را موضوع داشته باشد.",
+   "aliases": [
+    "dental laser",
+    "لیزر",
+    "er:yag",
+    "لیزر اربیوم",
+    "laser dentistry"
+   ]
+  },
+  {
+   "tag": "#debonding",
+   "domain": "clinical",
+   "definition": "جدا کردنِ رستوریشنِ باندشده از دندان — از جمله دی‌باندینگِ ونیر با لیزر.",
+   "use_when": "مقاله دی‌باندینگ/خارج‌سازیِ ترمیمِ باندشده را موضوع داشته باشد.",
+   "aliases": [
+    "دباندینگ",
+    "دی سمانتاسیون",
+    "دیسمانتاسیون",
+    "ریموال ونیر",
+    "veneer removal",
+    "خارج کردن ونیر"
+   ]
+  }
+ ],
+ "articles": {
+  "episodes/episode-124": [
+   "#دنتکست",
+   "#ترمیم_خلفی",
+   "#پروتز_ثابت",
+   "#طرح_درمان",
+   "#گایدلاین",
+   "#بیومیمتیک"
+  ],
+  "episodes/episode-124-1": [
+   "#دنتکست",
+   "#لیزر_دندانپزشکی",
+   "#ونیر_سرامیکی",
+   "#debonding",
+   "#اینسایت"
+  ]
+ }
+}

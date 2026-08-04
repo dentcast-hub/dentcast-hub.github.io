@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<!-- data-dc-no-header: opt out of the shared (Persian/RTL) header injected by dc-nav.js; this page keeps its own English/LTR header. -->
+<html lang="en" dir="ltr" data-dc-no-header>
+<head>
+  <!-- Google Analytics (deferred: loads only after the page is fully rendered) -->
+  <script>
+    window.addEventListener('load', function () {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-GMM0WC8X3M');
+      var ga = document.createElement('script');
+      ga.async = true;
+      ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-GMM0WC8X3M';
+      document.head.appendChild(ga);
+    });
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Role Prompting: What It Does and What It Doesn't | Promptologist | DentCast</title>
+  <meta name="description" content="Chapter 4, Part 3: Giving the model a role (&quot;you are a periodontist&quot;) changes the tone and the angle it writes from, but it does not increase what the model knows. Why the &quot;expert&quot; label only adds surface credibility, three practical rules that make a role work, and why the best use of a role is to change the angle, not to raise the authority.">
+  <link rel="canonical" href="https://dentcast.org/dentai/promptologist/en/prompt4-3.html">
+  <link rel="alternate" hreflang="fa-IR" href="https://dentcast.ir/dentai/promptologist/prompt4-3.html">
+  <link rel="alternate" hreflang="fa" href="https://dentcast.org/dentai/promptologist/prompt4-3.html">
+  <link rel="alternate" hreflang="en" href="https://dentcast.org/dentai/promptologist/en/prompt4-3.html">
+  <link rel="alternate" hreflang="x-default" href="https://dentcast.org/dentai/promptologist/prompt4-3.html">
+  <meta name="author" content="Dr. Foad Shahabian">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:site_name" content="DentCast">
+  <meta property="og:title" content="Role Prompting: What It Does and What It Doesn't | DentCast">
+  <meta property="og:description" content="Chapter 4, Part 3: Giving the model a role (&quot;you are a periodontist&quot;) changes the tone and the angle it writes from, but it does not increase what the model knows. Why the &quot;expert&quot; label only adds surface credibility, three practical rules that make a role work, and why the best use of a role is to change the angle, not to raise the authority.">
+  <meta property="og:url" content="https://dentcast.org/dentai/promptologist/en/prompt4-3.html">
+  <meta property="og:image" content="https://dentcast.org/dentcast-cover.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Role Prompting: What It Does and What It Doesn't | DentCast">
+  <meta name="twitter:description" content="Chapter 4, Part 3: Giving the model a role changes the tone and the angle it writes from, but not what the model knows. Why the &quot;expert&quot; label only adds surface credibility, and three practical rules that make a role work.">
+  <meta name="twitter:image" content="https://dentcast.org/dentcast-cover.webp">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://dentcast.org/dentai/promptologist/en/prompt4-3.html#article",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://dentcast.org/dentai/promptologist/en/prompt4-3.html"
+      },
+      "url": "https://dentcast.org/dentai/promptologist/en/prompt4-3.html",
+      "headline": "Role Prompting: What It Does and What It Doesn't",
+      "description": "Chapter 4, Part 3: Giving the model a role (\"you are a periodontist\") changes the tone and the angle it writes from, but it does not increase what the model knows. Why the \"expert\" label only adds surface credibility, three practical rules that make a role work, and why the best use of a role is to change the angle, not to raise the authority.",
+      "datePublished": "2026-08-03",
+      "dateModified": "2026-08-03",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://dentcast.org/dentcast-cover.webp",
+        "width": 1200,
+        "height": 630
+      },
+      "inLanguage": "en",
+      "isPartOf": {
+        "@type": "CreativeWorkSeries",
+        "name": "Promptologist",
+        "url": "https://dentcast.org/dentai/promptologist"
+      },
+      "author": {
+        "@id": "https://dentcast.org/#person-foad"
+      },
+      "publisher": {
+        "@id": "https://dentcast.org/#org-dentcast"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DentCast",
+          "item": "https://dentcast.org/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Promptologist",
+          "item": "https://dentcast.org/dentai/promptologist"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Role Prompting: What It Does and What It Doesn't",
+          "item": "https://dentcast.org/dentai/promptologist/en/prompt4-3.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+  <script>(function(){var s=localStorage.getItem('dc-theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme','dark');})();</script>
+  <link rel="preload" as="font" href="/fonts/Vazirmatn[wght].woff2" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/dc-theme.css">
+  <link rel="stylesheet" href="/dc-nav.css?v=13">
+  <link rel="stylesheet" href="/global-search.css?v=2">
+  <link rel="icon" href="/logo-v2.png" type="image/png" sizes="512x512">
+  <meta name="theme-color" content="#F3F5F7">
+  <style>
+@font-face{font-family:'Vazirmatn';src:url('/fonts/Vazirmatn[wght].woff2') format('woff2');font-display:swap;}
+body{font-family:'Vazirmatn',system-ui,-apple-system,sans-serif;}
+.ep-page{max-width:47.5rem;margin:0 auto;padding:2.5rem 1.25rem 5rem;}
+.ep-back{display:inline-flex;align-items:center;gap:0.375rem;font-size:.85rem;color:var(--txt3);text-decoration:none;margin-bottom:1.75rem;transition:color .15s;}
+.ep-back:hover{color:var(--ac);}
+.ep-box{background:var(--card-bg);border:1px solid var(--card-border);border-radius:1.125rem;box-shadow:var(--card-sh);overflow:hidden;margin-bottom:1.25rem;}
+.ep-box-head{padding:1.75rem 1.75rem 1.25rem;border-bottom:1px solid var(--card-border);}
+.ep-badge{display:inline-flex;align-items:center;background:var(--chip-bg);border:1px solid var(--chip-bd);color:var(--chip-txt);font-size:.72rem;font-weight:700;padding:0.1875rem 0.75rem;border-radius:3.125rem;margin-bottom:0.875rem;letter-spacing:.03em;}
+.ep-badge.sub{background:var(--surface2);color:var(--txt3);}
+.ep-title{font-size:1.55rem;font-weight:800;color:var(--txt);line-height:1.45;margin:0 0 0.75rem;}
+.ep-meta{display:flex;gap:1.125rem;font-size:.8rem;color:var(--txt3);flex-wrap:wrap;}
+.ep-section{padding:1.375rem 1.75rem 0;}
+.ep-section:last-child{padding-bottom:1.75rem;}
+.ep-section-label{font-size:1rem;font-weight:700;color:var(--ac);border-left:4px solid var(--ac);padding-left:0.75rem;margin-bottom:0.875rem;}
+.ep-caption{font-size:.95rem;color:var(--txt);line-height:1.9;margin:0;}
+.ep-chips{display:flex;flex-wrap:wrap;gap:0.5rem;}
+.ep-chip{background:var(--chip-bg);border:1px solid var(--chip-bd);color:var(--chip-txt);font-size:.78rem;padding:0.25rem 0.75rem;border-radius:3.125rem;}
+.ep-chip-link{text-decoration:none;transition:background .15s,color .15s;}
+.ep-chip-link:hover{background:var(--ac);color:#fff;border-color:var(--ac);}
+.ep-tags{display:flex;flex-wrap:wrap;gap:0.5rem;}
+.ep-hashtag{font-size:.8rem;color:var(--ac);font-weight:600;}
+.ep-nav{display:flex;justify-content:space-between;gap:0.75rem;margin-top:1.75rem;}
+.ep-nav-btn{flex:1;text-align:center;padding:0.75rem 1rem;border:1px solid var(--card-border);border-radius:0.75rem;text-decoration:none;font-size:.85rem;font-weight:600;color:var(--txt2);background:var(--card-bg);transition:all .15s;}
+.ep-nav-btn:hover{border-color:var(--ac);color:var(--ac);}
+.ep-nav-empty{cursor:default;opacity:.3;pointer-events:none;}
+@media(max-width:480px){.ep-title{font-size:1.25rem;}.ep-box-head,.ep-section{padding-right:1.125rem;padding-left:1.125rem;}}
+.lang-btn{
+  display: flex;
+  width: fit-content;
+  max-width: 100%;
+  align-items: center;
+  gap: 0.375rem;
+  margin: 0 auto 1.125rem 0;
+  background: rgba(255,255,255,0.92);
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 0.75rem;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #0b5fff;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  cursor: pointer;
+  transition: transform .18s ease, background .18s ease;
+}
+.lang-btn:hover{
+  background:#fff;
+  transform: scale(1.03);
+}
+  </style>
+</head>
+<body>
+
+<!-- ── TOP BAR (English chrome, cloned from metanotes/en/meta-1.html) ── -->
+<header class="dc-topbar">
+  <div class="dc-topbar-actions">
+    <a href="/" aria-label="DentCast Homepage" style="display:flex;align-items:center;margin-left:0.5rem;flex-shrink:0;">
+      <img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;">
+    </a>
+    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="Tools" aria-expanded="false"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
+    <button class="dc-topbar-btn" id="btn-radar-topbar" aria-label="Radar"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="m12 12 7-7"/><path d="M12 12h.01"/></svg></button>
+    <button class="dc-topbar-btn dcOpenSearch" aria-label="Search"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+  </div>
+  <div class="dc-topbar-brand">
+    <div class="dc-topbar-brand-name">DentCast</div>
+    <span class="dc-topbar-brand-sub">Dr. Foad Shahabian</span>
+  </div>
+</header>
+
+<!-- ── TOOLBAR DRAWER ── -->
+<div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">
+  <div class="dc-toolbar-drawer-inner">
+    <span class="dc-toolbar-drawer-label">Tools</span>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M10 18h4"/><path d="M12 7v6"/><path d="m9.5 10.5 2.5 2.5 2.5-2.5"/></svg></span><span class="dc-drawer-tool-txt">Install</span>
+    </button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-consult">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span class="dc-drawer-tool-txt">Contact</span>
+    </button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-about">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M12 3l1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></svg></span><span class="dc-drawer-tool-txt">About</span>
+    </button>
+  </div>
+</div>
+
+<!-- ── RADAR OVERLAY ── -->
+<div id="dcRadarOverlay" class="radar-overlay" aria-hidden="true">
+  <div class="radar-overlay-header">
+    <button id="dcCloseRadarOverlay" class="radar-close-btn">&times;</button>
+    <div class="radar-header-title">رادار دنت‌کست (جایگزین گوگل)</div>
+  </div>
+  <div class="radar-overlay-body">
+    <div class="radar-search-box">
+      <input type="text" id="dcRadarInput" placeholder="نام سایت، زمینه فعالیت یا کلمه کلیدی..." autocomplete="off">
+    </div>
+    <div id="dcRadarResults" class="radar-results">
+      <div class="radar-initial-msg">برای جستجو در بین سایت‌های دندانپزشکی، تایپ کنید...</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── GLOBAL SEARCH ── -->
+<div class="dc-global-filter-box" id="dcGlobalBox">
+  <button class="dc-close-results"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+  <h3 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h3>
+  <input id="dcSearch" class="dc-search-input" placeholder="جستجو در همهٔ بخش‌های دنت‌کست…">
+  <div class="dc-filter-list">
+    <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
+    <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
+    <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
+    <button class="dc-filter-btn active" data-type="litecast">لایت‌کست</button>
+    <button class="dc-filter-btn active" data-type="photocast">فوتوکست</button>
+    <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
+    <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
+    <button class="dc-filter-btn active" data-type="promptologist">پرامپتولوژیست</button>
+  </div>
+  <div class="dc-results-box" id="dcResults"></div>
+</div>
+
+<!-- ── MAIN CONTENT (Promptologist structure, translated, LTR) ── -->
+<main class="article-content-wrap ep-page">
+  <a href="/dentai/promptologist/" class="ep-back">&#8592; Back to Promptologist</a>
+
+  <!-- 🌐 Persian Version (SEO-friendly language toggle) -->
+  <a class="lang-btn" href="../prompt4-3.html" rel="noopener">
+    <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20"/><path d="M12 2a15 15 0 0 0 0 20"/></svg> فارسی
+  </a>
+
+  <div class="ep-box">
+    <div class="ep-box-head">
+      <div class="ep-badge">Season 4 · Part 3</div>
+      <h1 class="ep-title">Role Prompting: What It Does and What It Doesn't</h1>
+      <div class="ep-meta">
+        <span>&#9201; 6 min read</span>
+      </div>
+    </div>
+
+    <div class="ep-section">
+      <h2 class="ep-section-label">This Part</h2>
+      <div class="ep-caption">If you have heard anything at all about prompt writing, it was probably this: give the model a role. &ldquo;You are a periodontist with twenty years of experience.&rdquo; It is the most famous piece of advice in this field, and it heads most of the lists. It does work &mdash; just not quite in the way it is usually imagined. And because that misconception leads straight to the thing this whole book is sensitive about, let us open it up honestly.<br><br>First, what it actually does. When you give the model a role, you are telling it which of the thousand ways of speaking it knows to pick. &ldquo;You are a periodontist explaining to a general practitioner&rdquo; produces one text; &ldquo;you are a dentist talking to an anxious patient&rdquo; produces a completely different one. The vocabulary changes, the assumed level of the audience changes, the tone changes, even the sentence length. And that is no small thing; for your everyday work it is in fact very useful.<br><br>An example. If you write &ldquo;explain crestal resorption,&rdquo; you get a neutral text. If you write &ldquo;as a periodontist, explain crestal resorption to a general dentist who wants to know when to refer the patient,&rdquo; the text is written from the outset from the angle of referral and decision thresholds, not from definition and etiology. The role changed the direction of the gaze.<br><br>Now for what it does not do &mdash; which matters more.<br><br>Giving a role does not increase the model's knowledge. With &ldquo;you are a periodontist,&rdquo; the model learns nothing it did not know a moment earlier. It had the same information; it is simply taking it off a different shelf now and arranging it in a different tone. If it had something wrong, taking on the role of an expert does not fix it; it only says that same wrong thing with more confidence.<br><br>And this is exactly where the danger lies. The label &ldquo;expert with twenty years of experience&rdquo; on top of an answer acts, for the reader, like a stamp of credibility. The answer looks more professional, more assured, more familiar to the ear of someone who has read specialist texts for years. But you put that credibility there in the prompt; the model did not earn it. In effect you told the model to produce the voice of expertise, and it did. If you remember, <a href="prompt2-1.html" class="ep-related-link" style="display:inline;padding:0;border:none;font-size:inherit;">Chapter Two</a> was about exactly this gap: the model has learned the voice of expertise, not expertise itself. Giving a role turns that voice up without adding a particle of substance behind it.<br><br>So use role prompting for what it is: a regulator of tone and angle, not an enhancer of accuracy. Use it that way and it does its own job well.<br><br>Three practical pieces of advice that make a role work better.<br><br><strong>State the role together with the audience, not on its own.</strong> &ldquo;You are a periodontist&rdquo; is half the job. &ldquo;You are a periodontist explaining this to a patient&rdquo; is the whole job. What really shapes the output is the combination of the two; a role on its own, with no indication of who it is speaking to, makes little difference.<br><br><strong>Give a realistic role, not an inflated one.</strong> &ldquo;A world-leading expert with forty years of experience and a hundred publications&rdquo; adds nothing to the quality; it only makes the tone more arrogant and more categorical, which is worse for you, not better. That extra certainty is precisely what makes the answer harder to weigh.<br><br><strong>For simple tasks you don't need it.</strong> If you want a text summarized or a table built, a role makes almost no difference. A role is worth it when the output is meant to have a particular tone and a particular audience.<br><br>And one good use of a role that gets less thought: use the role to change the angle, not to raise the authority. Ask for the same subject once in the voice of someone explaining it to a patient and once in the voice of someone writing for a colleague. You get two different texts, and each shows something the other did not. This is effectively a thinking tool, and squarely within the range where the model is genuinely useful.<br><br>So far in this chapter you have done three things, all of them about the text of the request itself: you set the shape of the output, you put an instruction where a prohibition would have been, and you calibrated the role correctly. In the final part we step outside the sentences themselves and turn to method: how to carry a large task forward, where to stop the model so it doesn't conclude prematurely, and how to hand the writing of the prompt itself over to the model.</div>
+    </div>
+    <div class="ep-section">
+      <h2 class="ep-section-label">Keywords</h2>
+      <div class="ep-chips">
+        <span class="ep-chip">Role Prompting (Giving the Model a Role)</span>
+        <span class="ep-chip">Role Plus Audience</span>
+        <span class="ep-chip">A Realistic Role over an Inflated One</span>
+        <span class="ep-chip">The Voice of Expertise vs. Expertise Itself</span>
+        <span class="ep-chip">Using a Role to Shift the Angle</span>
+        <span class="ep-chip">Large Language Model (LLM)</span>
+        <span class="ep-chip">ChatGPT</span>
+        <span class="ep-chip">AI Literacy</span>
+      </div>
+    </div>
+    <div class="ep-section">
+      <h2 class="ep-section-label">Tags</h2>
+      <div class="ep-tags"><span class="ep-hashtag">#AI</span><span class="ep-hashtag">#ChatGPT</span><span class="ep-hashtag">#LLM</span><span class="ep-hashtag">#LanguageModel</span><span class="ep-hashtag">#AIinDentistry</span><span class="ep-hashtag">#DentalAI</span><span class="ep-hashtag">#PromptEngineering</span><span class="ep-hashtag">#RolePrompting</span><span class="ep-hashtag">#FalseConfidence</span><span class="ep-hashtag">#AILiteracy</span><span class="ep-hashtag">#Promptologist</span></div>
+    </div>
+  </div>
+  <!-- Series prev/next (en tier). Targets are en counterparts only.
+       Previous part en page (en/prompt4-2.html) exists, so the previous
+       slot links to it; there is no next part yet, so the next slot stays a
+       disabled placeholder. -->
+  <div class="ep-nav">
+    <a href="prompt4-2.html" class="ep-nav-btn">&#8592; Previous Part</a>
+    <span class="ep-nav-btn ep-nav-empty">Next Part &#8594;</span>
+  </div>
+</main>
+
+<script src="/global-search.js?v=6" defer></script>
+<script src="/dc-nav.js?v=39" defer></script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 54 - episodes 9 and 10, both on ceramic surface preparation. New concept #آماده_سازی_سرامیک (the pages' own keyword; no existing form covers the 'آماده سازی' door). Episode 9 keeps #لمینیت_سرامیکی (caption names laminate as the target of the prep) and keeps #باند/#ادهزیو; #روکش dropped from both as unearned umbrella (surface prep is about bonded ceramics, and 11+ articles keep that door). Episode 10 gets #سایلان + #اچ_سرامیک (its own keywords); #لمینیت_سرامیکی dropped there as copy-paste. 'باند سرامیک' added as alias of #باندینگ_سرامیک so the bare two-word query folds to the canonical.",
+ "concepts": [
+  {
+   "tag": "#آماده_سازی_سرامیک",
+   "domain": "clinical",
+   "definition": "آماده‌سازیِ سطحِ سرامیک پیش از باند — اچ، سندبلاست، سایلان — بسته به جنسِ سرامیک.",
+   "use_when": "مقاله پروتکلِ آماده‌سازی سطح سرامیک را آموزش یا مقایسه کند.",
+   "aliases": [
+    "آماده سازی سرامیک",
+    "surface treatment",
+    "ceramic surface preparation",
+    "آماده سازی سطح سرامیک"
+   ]
+  },
+  {
+   "tag": "#باندینگ_سرامیک",
+   "domain": "clinical",
+   "definition": "باند کردنِ رستوریشنِ سرامیکی به دندان.",
+   "use_when": "مقاله باند سرامیک را موضوع اصلی داشته باشد.",
+   "aliases": [
+    "ceramic bonding",
+    "باند به سرامیک",
+    "باند سرامیک"
+   ]
+  }
+ ],
+ "articles": {
+  "episodes/episode-9": [
+   "#دنتکست",
+   "#آماده_سازی_سرامیک",
+   "#باندینگ_سرامیک",
+   "#ادهزیو",
+   "#باند",
+   "#لمینیت_سرامیکی",
+   "#ترمیم_غیرمستقیم"
+  ],
+  "episodes/episode-10": [
+   "#دنتکست",
+   "#سایلان",
+   "#آماده_سازی_سرامیک",
+   "#باندینگ_سرامیک",
+   "#اچ_سرامیک",
+   "#باند"
+  ]
+ }
+}

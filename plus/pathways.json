@@ -122,6 +122,10 @@
         "milestone": false
       },
       {
+        "content_id": "sharehub/share-12",
+        "milestone": false
+      },
+      {
         "content_id": "episodes/episode-142",
         "milestone": false
       },
@@ -216,6 +220,10 @@
       },
       {
         "content_id": "sharehub/share-9",
+        "milestone": false
+      },
+      {
+        "content_id": "sharehub/share-13",
         "milestone": false
       },
       {
@@ -435,6 +443,10 @@
       {
         "content_id": "dentai/promptologist/prompt4-2",
         "milestone": true
+      },
+      {
+        "content_id": "dentai/promptologist/prompt4-3",
+        "milestone": false
       }
     ],
     "reserved": {}
@@ -451,6 +463,10 @@
       },
       {
         "content_id": "chairside/chairside-7",
+        "milestone": false
+      },
+      {
+        "content_id": "chairside/chairside-28",
         "milestone": false
       },
       {
@@ -532,6 +548,10 @@
       },
       {
         "content_id": "metanotes/meta-3",
+        "milestone": false
+      },
+      {
+        "content_id": "sharehub/share-13",
         "milestone": false
       },
       {
@@ -900,6 +920,10 @@
       {
         "content_id": "chairside/chairside-23",
         "milestone": true
+      },
+      {
+        "content_id": "chairside/chairside-28",
+        "milestone": false
       },
       {
         "content_id": "episodes/episode-60",
@@ -1367,6 +1391,14 @@
         "milestone": false
       },
       {
+        "content_id": "chairside/chairside-28",
+        "milestone": false
+      },
+      {
+        "content_id": "chairside/chairside-29",
+        "milestone": false
+      },
+      {
         "content_id": "insight/insight-32",
         "milestone": false
       },
@@ -1437,6 +1469,10 @@
       },
       {
         "content_id": "episodes/episode-61",
+        "milestone": false
+      },
+      {
+        "content_id": "chairside/chairside-29",
         "milestone": false
       },
       {
@@ -1674,6 +1710,18 @@
       },
       {
         "content_id": "chairside/chairside-7",
+        "milestone": false
+      },
+      {
+        "content_id": "chairside/chairside-28",
+        "milestone": false
+      },
+      {
+        "content_id": "chairside/chairside-29",
+        "milestone": false
+      },
+      {
+        "content_id": "sharehub/share-12",
         "milestone": false
       },
       {
@@ -2157,6 +2205,10 @@
       },
       {
         "content_id": "chairside/chairside-27",
+        "milestone": false
+      },
+      {
+        "content_id": "chairside/chairside-29",
         "milestone": false
       },
       {

@@ -1,0 +1,49 @@
+{
+  "type": "promptologist",
+  "note": "Publish of prompt4-3 (فصل ۴ قسمت ۳ — نقش‌دادن). Mints the two role-prompting concepts the library lacked; every other tag on the article reuses an existing canonical concept.",
+  "concepts": [
+    {
+      "tag": "#نقش_دادن",
+      "domain": "ai",
+      "definition": "دادنِ یک نقش/پرسونا به مدل در پرامپت («تو یک متخصصِ پریو هستی») تا سبکِ بیان و زاویه‌ی نگاهِ خروجی تعیین شود.",
+      "use_when": "مقاله درباره‌ی خودِ تکنیکِ نقش‌دادن باشد — چه می‌کند، چه نمی‌کند، و چطور درست تنظیمش کنیم.",
+      "aliases": [
+        "نقش دهی",
+        "تعیین نقش",
+        "پرسونا",
+        "نقش متخصص",
+        "persona"
+      ]
+    },
+    {
+      "tag": "#Role_Prompting",
+      "domain": "ai",
+      "definition": "The prompting technique of assigning the model a role or persona to steer tone, assumed audience and framing of the output.",
+      "use_when": "معادلِ لاتینِ #نقش_دادن؛ روی همان مقاله‌هایی که آن تگ را دارند، تا کوئریِ انگلیسی هم به مطلب برسد.",
+      "aliases": [
+        "role play prompt",
+        "persona prompting",
+        "act as prompt"
+      ],
+      "co_tags": [
+        "#نقش_دادن"
+      ]
+    }
+  ],
+  "articles": {
+    "dentai/promptologist/prompt4-3": [
+      "#پرامپتولوژیست",
+      "#هوش_مصنوعی",
+      "#سواد_هوش_مصنوعی",
+      "#AI_Literacy",
+      "#ChatGPT",
+      "#پرامپت_نویسی",
+      "#Prompt_Engineering",
+      "#نقش_دادن",
+      "#Role_Prompting",
+      "#اطمینان_کاذب",
+      "#مدل_زبانی",
+      "#LLM"
+    ]
+  }
+}

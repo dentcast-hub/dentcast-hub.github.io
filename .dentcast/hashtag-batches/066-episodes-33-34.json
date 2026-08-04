@@ -1,0 +1,39 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 66 - episodes 33 and 34. Episode 33 (Snap-on Smile part 2, indications/limits) -> #Snap_On_Smile + #درمان_غیرتهاجمی + #زیبایی. Episode 34 (Dahl Concept part 1) consolidates a three-way split: canonical #Dahl_Concept absorbs the glued English variant #Dahl (shares the 'dahl' token, safe rename) and the bare Persian #دال (folded via a 'دال' alias so the standalone Persian form reaches the concept). Episode 34 then carries #Dahl_Concept + #سایش_دندان + #سایش_آنتاگونیست + #افزایش_VD (Dahl raises VD without prep).",
+ "concepts": [
+  {
+   "tag": "#Dahl_Concept",
+   "domain": "clinical",
+   "definition": "Dahl Concept — ایجادِ فضای بین‌دندانیِ موضعی برای بازسازیِ دندان‌های ساییده بدون تراشِ گسترده، با بهره از رویشِ جبرانی.",
+   "use_when": "مقاله اصل دال یا کاربردش در سایش را موضوع داشته باشد.",
+   "aliases": [
+    "کانسپت دال",
+    "dahl",
+    "دال کانسپت",
+    "دال",
+    "dahl concept",
+    "اصل دال"
+   ]
+  }
+ ],
+ "renames": {
+  "#Dahl": "#Dahl_Concept",
+  "#دال": "#Dahl_Concept"
+ },
+ "articles": {
+  "episodes/episode-33": [
+   "#دنتکست",
+   "#Snap_On_Smile",
+   "#درمان_غیرتهاجمی",
+   "#زیبایی"
+  ],
+  "episodes/episode-34": [
+   "#دنتکست",
+   "#Dahl_Concept",
+   "#سایش_دندان",
+   "#سایش_آنتاگونیست",
+   "#افزایش_VD"
+  ]
+ }
+}

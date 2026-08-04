@@ -1,0 +1,39 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 100 - episodes 101 and 102. Episode 101 (bonding to root dentin) folds backlog #دنتین_ریشه onto #باند_به_عاج_ریشه (shares 'ریشه'; 'دنتین ریشه'/'root dentin' aliases added), then -> #باندینگ + #باند_به_عاج_ریشه + #ادهزیو + #قدرت_باند. Episode 102 (abutment selection, part 1) folds CamelCase #Abutment_Selection onto the existing #انتخاب_پایه (alias 'abutment selection' already there), then -> #اباتمنت + #ایمپلنت + #پروتز_ایمپلنت + #انتخاب_پایه.",
+ "concepts": [
+  {
+   "tag": "#باند_به_عاج_ریشه",
+   "domain": "clinical",
+   "definition": "باند به عاجِ ریشه — دشوارتر از عاجِ تاجی به‌خاطرِ توبول‌های کم‌تر و شرایطِ سخت‌ترِ ایزولاسیون.",
+   "use_when": "مقاله باند به دنتینِ ریشه را موضوع داشته باشد.",
+   "aliases": [
+    "root dentin bonding",
+    "باند به ریشه",
+    "عاج ریشه",
+    "دنتین ریشه",
+    "root dentin"
+   ]
+  }
+ ],
+ "renames": {
+  "#دنتین_ریشه": "#باند_به_عاج_ریشه",
+  "#Abutment_Selection": "#انتخاب_پایه"
+ },
+ "articles": {
+  "episodes/episode-101": [
+   "#دنتکست",
+   "#باندینگ",
+   "#باند_به_عاج_ریشه",
+   "#ادهزیو",
+   "#قدرت_باند"
+  ],
+  "episodes/episode-102": [
+   "#دنتکست",
+   "#اباتمنت",
+   "#ایمپلنت",
+   "#پروتز_ایمپلنت",
+   "#انتخاب_پایه"
+  ]
+ }
+}

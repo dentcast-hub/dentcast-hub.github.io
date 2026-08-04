@@ -1,0 +1,81 @@
+{
+ "type": "episodes",
+ "note": "Campaign step 92 - episodes 85 and 86, the TMD pair. #TMD gains a real alias set. Episode 85 (masticatory-muscle disorders) promotes backlog #عضلات_ماضغه (myogenous pain) to a concept and backlog #درد_فکی to an orofacial-pain concept, then -> #TMD + #عضلات_ماضغه + #درد_فکی. Episode 86 (intracapsular disorders) promotes backlog #داخل_کپسولی and adds a #مفصل_فکی (TMJ) concept, then -> #TMD + #مفصل_فکی + #داخل_کپسولی; the too-generic #فک_و_صورت is dropped (its 'فک' reaches #درد_فکی/#مفصل_فکی).",
+ "concepts": [
+  {
+   "tag": "#TMD",
+   "domain": "clinical",
+   "definition": "اختلالاتِ گیجگاهی-فکی — طیفِ دردها و ناکارآمدی‌های عضلانی و مفصلیِ سیستمِ فک.",
+   "use_when": "مقاله TMD را تشخیص، افتراق یا درمان کند.",
+   "aliases": [
+    "temporomandibular disorder",
+    "اختلال گیجگاهی فکی",
+    "اختلال مفصل فکی",
+    "تی ام دی"
+   ]
+  },
+  {
+   "tag": "#عضلات_ماضغه",
+   "domain": "clinical",
+   "definition": "عضلاتِ جونده (ماستر، تمپورالیس، پتریگوئیدها) و دردِ عضلانیِ منشأ گرفته از آن‌ها.",
+   "use_when": "مقاله دردِ عضلانیِ ماضغه را موضوع داشته باشد.",
+   "aliases": [
+    "masticatory muscle",
+    "عضلات جونده",
+    "درد عضلانی ماضغه",
+    "میوژنیک"
+   ]
+  },
+  {
+   "tag": "#درد_فکی",
+   "domain": "clinical",
+   "definition": "دردِ ناحیه‌ی فک و صورت — دردِ اوروفاسیال و افتراقِ منشأ آن.",
+   "use_when": "مقاله دردِ فکی/اوروفاسیال را افتراق یا مدیریت کند.",
+   "aliases": [
+    "jaw pain",
+    "درد اوروفاسیال",
+    "orofacial pain",
+    "درد صورت"
+   ]
+  },
+  {
+   "tag": "#مفصل_فکی",
+   "domain": "clinical",
+   "definition": "مفصلِ گیجگاهی-فکی (TMJ) و ساختارهای داخلِ آن مثل دیسک.",
+   "use_when": "مقاله خودِ مفصل یا اجزای آن را موضوع داشته باشد.",
+   "aliases": [
+    "TMJ",
+    "مفصل گیجگاهی فکی",
+    "temporomandibular joint",
+    "مفصل تمپورومندیبولار"
+   ]
+  },
+  {
+   "tag": "#داخل_کپسولی",
+   "domain": "clinical",
+   "definition": "اختلالاتِ داخلِ کپسولِ مفصل — جابه‌جاییِ دیسک، کلیک و قفلِ مفصلی.",
+   "use_when": "مقاله مشکلِ داخل‌کپسولی/دیسک را تشخیص یا مرور کند.",
+   "aliases": [
+    "intracapsular",
+    "جابجایی دیسک",
+    "disc displacement",
+    "کلیک مفصل",
+    "internal derangement"
+   ]
+  }
+ ],
+ "articles": {
+  "episodes/episode-85": [
+   "#دنتکست",
+   "#TMD",
+   "#عضلات_ماضغه",
+   "#درد_فکی"
+  ],
+  "episodes/episode-86": [
+   "#دنتکست",
+   "#TMD",
+   "#مفصل_فکی",
+   "#داخل_کپسولی"
+  ]
+ }
+}
