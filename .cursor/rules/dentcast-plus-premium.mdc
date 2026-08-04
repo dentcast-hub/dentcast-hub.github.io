@@ -34,7 +34,8 @@ alwaysApply: false
   python3 tools/pathway_place.py --insert <content_id> --pathway <id> --after <anchor> [--milestone]
   python3 tools/pathway_place.py --coverage                # تأیید
   ```
-  ویرایش `plus/pathways.json` برای اثر روی production نیاز به redeploy API دارد.
+  ویرایش `plus/pathways.json` دیگر redeploy API نمی‌خواهد — `content-refresh.ts`
+  فایل منتشرشده را در حال اجرا دوباره می‌گیرد.
 - **فلش‌کارت یک مفهوم است، نه یک سوال.** `DefinedTerm` اتمی؛ کپیِ کلمه‌به‌کلمهٔ
   FAQ ممنوع؛ سوال‌های مقایسه‌ای/تصمیمی کارت نمی‌شوند (و اسکیپشان گزارش می‌شود).
   `@id`ها بعد از انتشار **پایدار**اند (رکوردهای `card_state` به همان fragment

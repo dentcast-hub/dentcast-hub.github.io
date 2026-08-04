@@ -268,6 +268,17 @@ export const config = {
   // Path to plus/pathways.json (spec section 5 — versioned in the repo, no DB).
   // Defaults to the repo's plus/ dir in dev; set explicitly in the container.
   pathwaysPath: process.env.PATHWAYS_PATH || '',
+
+  // Where to re-fetch those two files from at runtime (content-refresh.ts).
+  // The paths above are the boot value and the permanent fallback; these URLs
+  // are what stop every publish from needing an image rebuild. Comma-separated
+  // so the two mirrors can cover each other. Empty = feature off (dev default,
+  // where the on-disk file is already the live one).
+  content: {
+    indexUrls: list('CONTENT_INDEX_URL', []),
+    pathwaysUrls: list('PATHWAYS_URL', []),
+    refreshSeconds: int('CONTENT_REFRESH_SECONDS', 300),
+  },
 };
 
 export type Config = typeof config;

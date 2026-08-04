@@ -27,13 +27,46 @@ export interface Pathway {
 
 let cached: Pathway[] | null = null;
 let cachedMtimeMs = 0;
+/** Set by content-refresh.ts once a published copy has been fetched and validated. */
+let remote: Pathway[] | null = null;
 
 function defaultPath(): string {
   const here = dirname(fileURLToPath(import.meta.url)); // plus-api/src (or dist)
   return resolve(here, '..', '..', 'plus', 'pathways.json');
 }
 
+/**
+ * Adopt a freshly published pathways file (see applyRemoteIndex for the why).
+ *
+ * An empty array is refused for the same reason an empty index is: it passes
+ * every structural check while wiping every pathway page, and editing a pathway
+ * never produces one. Genuinely shipping zero pathways is a deploy-time
+ * decision, so it stays a deploy-time action.
+ *
+ * @returns true if the payload was adopted.
+ */
+export function applyRemotePathways(raw: unknown): boolean {
+  if (!Array.isArray(raw) || raw.length === 0) return false;
+  const ok = raw.every((p) => p && typeof p === 'object'
+    && typeof (p as Pathway).id === 'string'
+    && Array.isArray((p as Pathway).steps));
+  if (!ok) return false;
+  remote = raw as Pathway[];
+  return true;
+}
+
+/** Which copy is being served — for the boot/refresh log and for tests. */
+export function pathwaysSource(): string {
+  return remote ? `published (${remote.length} pathway(s))` : 'image/disk';
+}
+
+/** Test-only: forget the fetched copy so a case can start from the baked file. */
+export function resetRemotePathways(): void {
+  remote = null;
+}
+
 export function getPathways(): Pathway[] {
+  if (remote) return remote;
   const path = config.pathwaysPath || defaultPath();
   try {
     const mtime = statSync(path).mtimeMs;

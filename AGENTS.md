@@ -223,8 +223,11 @@ Plus/Premium تبدیل می‌کند. همهٔ این‌ها گام‌های خ
   `GET /me` از همان می‌خوانند؛ `user_pathways` ثبت‌نام + کشِ مشتقِ
   `current_step`/`completed_at` را نگه می‌دارد (هرگز با فراخوانی کلاینت جلو
   نمی‌رود — در هر خواندن از highlightها/`user_activity` بازمحاسبه می‌شود).
-  ویرایش این فایل برای اثر روی production نیاز به redeploy API دارد (از طریق
-  `PATHWAYS_PATH`، مثل `CONTENT_INDEX_PATH`). فرانت هم فعال است:
+  ویرایش این فایل دیگر redeploy API نمی‌خواهد: نسخهٔ بیک‌شده در `PATHWAYS_PATH`
+  فقط مقدار بوت است و `plus-api/src/content-refresh.ts` هر چند دقیقه فایل
+  منتشرشدهٔ `plus/pathways.json` (و `plus/content-index.json`) را از خود سایت
+  دوباره می‌گیرد — با اعتبارسنجی، فقط رو به جلو، و در هر شکستی آخرین نسخهٔ سالم
+  می‌ماند. فرانت هم فعال است:
   `/plus/pathways.html` (کاتالوگ)، `/plus/pathway.html?id=` (فهرست گام‌ها +
   ثبت‌نام)، و بلاک «مسیر یادگیری» در داشبورد `/plus/`
   (`plus/js/pathways.js` رندرکنندهٔ مشترک).

@@ -20,6 +20,8 @@ interface IndexFile { version: number; folders: Folder[]; clusters: Cluster[]; t
 
 let cached: IndexFile | null = null;
 let cachedMtimeMs = 0;
+/** Set by content-refresh.ts once a published copy has been fetched and validated. */
+let remote: IndexFile | null = null;
 
 function defaultPath(): string {
   const here = dirname(fileURLToPath(import.meta.url)); // plus-api/src (or dist)
@@ -27,11 +29,50 @@ function defaultPath(): string {
 }
 
 /**
- * Load the index, reloading automatically when the file changes on disk (so
- * newly published content is reflected without an API restart; the dashboard
- * checks for new content each time it opens).
+ * Adopt a freshly published index fetched from the live site (content-refresh.ts).
+ *
+ * In production the on-disk copy is baked into the image, so the mtime reload
+ * below never fires and every publish would otherwise need a rebuild. This is
+ * the way in — and it is deliberately hard to walk through. The payload must
+ * parse, carry all four collections, and describe at least one content item;
+ * anything else (an HTML error page from a CDN, a half-written file, a
+ * successful request for the wrong URL) is refused and the current copy stands.
+ *
+ * The empty-index check is the important one: a valid-but-empty file would be
+ * accepted by every structural test and would silently blank the dashboard tree
+ * and the assistant's whole catalog. A publish never empties this file, so an
+ * empty one means something upstream broke, and "keep yesterday's taxonomy" is
+ * always the better answer than "serve nothing".
+ *
+ * @returns true if the payload was adopted.
+ */
+export function applyRemoteIndex(raw: unknown): boolean {
+  const idx = raw as IndexFile | null;
+  if (!idx || typeof idx !== 'object') return false;
+  if (!Array.isArray(idx.folders) || !Array.isArray(idx.clusters) || !Array.isArray(idx.tags)) return false;
+  if (!idx.byContent || typeof idx.byContent !== 'object' || Array.isArray(idx.byContent)) return false;
+  if (Object.keys(idx.byContent).length === 0) return false;
+  remote = idx;
+  return true;
+}
+
+/** Which copy is being served — for the boot/refresh log and for tests. */
+export function indexSource(): string {
+  return remote ? `published (version ${remote.version ?? 0})` : 'image/disk';
+}
+
+/** Test-only: forget the fetched copy so a case can start from the baked file. */
+export function resetRemoteIndex(): void {
+  remote = null;
+}
+
+/**
+ * Load the index. A published copy fetched at runtime wins; otherwise the file
+ * on disk is used, reloaded automatically when its mtime changes (which is what
+ * happens in local development, where the file is the repo's own).
  */
 export function getIndex(): IndexFile {
+  if (remote) return remote;
   const path = config.contentIndexPath || defaultPath();
   try {
     const mtime = statSync(path).mtimeMs;
