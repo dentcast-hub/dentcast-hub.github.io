@@ -280,7 +280,21 @@ function trackListening(contentId, audioEl) {
   if (sharedListen && sharedListen.stop) { try { sharedListen.stop(); } catch (_) { /* ignore */ } }
   sharedListen = initListeningTracker({ contentId, audioEl });
 }
-if (typeof window !== 'undefined') window.dcpTrackListening = trackListening;
+if (typeof window !== 'undefined') {
+  window.dcpTrackListening = trackListening;
+  // Drain the episode the shared player loaded BEFORE this module finished
+  // evaluating. dc-nav.js injects plus.js as an async module while player.html's
+  // inline script runs during parse, so loadEpisode routinely wins that race and
+  // used to find no hook at all — leaving the restored/default episode (the one
+  // the user usually just presses play on) untracked until they picked another
+  // from the list. Draining in the same statement that defines the hook closes
+  // the window in both orders: whichever side runs first, the tracker attaches.
+  const pending = window.dcpPendingListen;
+  if (pending && pending.contentId && pending.audioEl) {
+    window.dcpPendingListen = null; // consumed; the player calls the hook directly from now on
+    trackListening(pending.contentId, pending.audioEl);
+  }
+}
 
 function boot() {
   try {
