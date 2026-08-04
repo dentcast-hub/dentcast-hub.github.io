@@ -827,3 +827,59 @@ body:has(.dc-topbar) .back:hover {
     scroll-behavior: auto !important;
   }
 }
+
+/* =====================================================
+   E-NAMAD TRUST SEAL — نماد اعتماد الکترونیکی
+   The seal is issued for ONE domain (dentcast.ir), and
+   enamad's logo.aspx renders from the referrer: served
+   under dentcast.org it returns an "invalid" image. So
+   unlike the GA tag, this one IS host-gated — dc-nav.js
+   removes .dc-trustseal on any host that is not
+   dentcast.ir, and the <img> is loading="lazy" so on
+   .org the request usually never leaves the browser.
+   The chip is white in BOTH themes on purpose: the seal
+   artwork assumes a light background and reads as a
+   smudge on the dark surface. Fixed box reserves its
+   space, so nothing shifts when the image lands (CLS).
+   The <a>/<img> attributes enamad verifies —
+   referrerpolicy, id, Code — are carried verbatim.
+===================================================== */
+.dc-trustseal {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+}
+.dc-trustseal a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 5.5rem;
+  height: 6.5rem;
+  padding: 0.3125rem;
+  background: #ffffff;
+  border: 1px solid var(--border2);
+  border-radius: var(--r-md);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .07);
+  transition: transform var(--tr), box-shadow var(--tr);
+}
+.dc-trustseal a:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, .13);
+}
+.dc-trustseal img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  display: block;
+}
+
+/* Set by the head guard on every host that is not dentcast.ir, before the body
+   is parsed, so the chip never flashes. dc-nav.js removes the node right after;
+   this is only what covers the gap between parse and that script. The whole
+   .dc-trustseal-box goes with it — otherwise about.html is left with a heading
+   and a paragraph introducing nothing. */
+.dc-no-seal .dc-trustseal,
+.dc-no-seal .dc-trustseal-box {
+  display: none !important;
+}
