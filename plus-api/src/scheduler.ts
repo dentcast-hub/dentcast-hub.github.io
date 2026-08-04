@@ -109,12 +109,23 @@ export function startStreakReminderScheduler(): () => void {
  * Also drives the weekly premium prize: grantWeeklyPrizes() flips a winner's
  * profiles.tier the INSTANT their week finalizes (never held for the awake
  * window — only the push about it waits, exactly like promotion/demotion
- * already works), and expirePremiumPrizes() reverts anyone whose 7 days are up.
- * Both are cheap idempotent daily re-scans, same self-healing shape as
+ * already works), and expirePremiumPrizes() reverts anyone whose prize_days are
+ * up. Both are cheap idempotent daily re-scans, same self-healing shape as
  * finalizeDueWeeks itself.
+ *
+ * The expiry sweep ALSO runs once at startup. It is the only thing that ever
+ * reverts an expired prize — nothing expires lazily on read, so /me would keep
+ * answering `premium` — and this process is deployed by hand. A deploy that
+ * happens to straddle 00:00 Tehran would otherwise skip that night's sweep
+ * entirely and leave every winner premium until the next midnight.
  */
 export function startLeagueScheduler(): () => void {
   let timer: NodeJS.Timeout;
+
+  void expirePremiumPrizes(new Date()).catch((err) => {
+    // eslint-disable-next-line no-console
+    console.error('[premium-prize] boot expiry sweep failed', err);
+  });
 
   const schedule = () => {
     const delay = msUntilNextRun(new Date(), 0, config.streakTimezone); // 00:00 Tehran

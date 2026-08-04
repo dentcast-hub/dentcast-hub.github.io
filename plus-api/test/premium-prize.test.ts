@@ -320,6 +320,46 @@ describe('expirePremiumPrizes', () => {
     expect((await grantRow(ids[0]))!.revoked_at).not.toBeNull();
   });
 
+  it('reverts on the prize_days boundary even when the expiring sweep is quicker than the granting one', async () => {
+    // The bug this pins: expires_at used to be `granted instant + N days`, so it
+    // inherited whatever latency the granting run carried. That run finalizes a
+    // whole week first and reaches the grant a few seconds INTO 00:00; the run
+    // that expires it has no week to finalize and gets there sooner. The daily
+    // `expires_at <= now` check then missed by those seconds and the winner kept
+    // premium for an extra full day, decided by which job happened to be faster.
+    //
+    // Simulated exactly that way: grant late in the minute, expire early in it.
+    const ids = await seedGroup('composite', [90, 80]);
+    await finalizeWeek(WEEK);
+    const cfg = await getLeagueConfig();
+
+    const slowGrantRun = new Date('2026-02-08T00:00:04.000+03:30');
+    await grantWeeklyPrizes(slowGrantRun);
+
+    const quickExpiryRun = new Date(
+      new Date('2026-02-08T00:00:00.000+03:30').getTime() + cfg.prize_days * 86_400_000 + 500,
+    );
+    expect(quickExpiryRun.getTime()).toBeLessThan(slowGrantRun.getTime() + cfg.prize_days * 86_400_000);
+
+    const res = await expirePremiumPrizes(quickExpiryRun);
+    expect(res.expired).toBe(1);
+    expect(await tierOfUser(ids[0])).toBe('free');
+  });
+
+  it('gives the winner exactly prize_days, so the banner length is not a rounding artefact', async () => {
+    const ids = await seedGroup('composite', [90, 80]);
+    await finalizeWeek(WEEK);
+    await grantWeeklyPrizes(new Date('2026-02-08T00:00:04.000+03:30'));
+    const cfg = await getLeagueConfig();
+
+    const row = await pool.query<{ granted_at: Date; expires_at: Date }>(
+      'select granted_at, expires_at from premium_grants where user_id = $1',
+      [ids[0]],
+    );
+    const spanMs = row.rows[0].expires_at.getTime() - row.rows[0].granted_at.getTime();
+    expect(spanMs).toBe(cfg.prize_days * 86_400_000);
+  });
+
   it('does NOT revert a repeat winner who holds a newer, still-active grant', async () => {
     // Winning twice in consecutive weeks is only possible with the cooldown
     // off; with it on, the pass-down rule means somebody else wins instead.
