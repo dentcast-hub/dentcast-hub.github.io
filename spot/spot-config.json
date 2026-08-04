@@ -77,9 +77,9 @@
         "text": "",
         "cta": "",
         "url": "",
-        "image": "/spot/img/idc-welcome.webp",
+        "image": "/spot/img/idc-welcome-2.webp",
         "weight": 1,
-        "note": "کمپین iDesign Center — کارتِ فقط‌عکس و بدون اکشن (url خالی = کارت کلیک‌پذیر نیست، پس rel و کلیک هم ندارد). عکس: «به آینده دیزاین خوش آمدید — Powered by Ai». زمانِ ۱ از ۴. منبع: ad_photos/ad2.webp"
+        "note": "کمپین iDesign Center — کارتِ فقط‌عکس و بدون اکشن (url خالی = کارت کلیک‌پذیر نیست، پس rel و کلیک هم ندارد). عکس: «به آینده دیزاین خوش آمدید — Powered by Ai». زمانِ ۱ از ۴. منبع: ad_photos/ad3.webp (نسخهٔ ۱۴۰۵/۰۵/۱۳)"
       },
       {
         "id": "idc-platform",
@@ -89,9 +89,9 @@
         "text": "",
         "cta": "",
         "url": "",
-        "image": "/spot/img/idc-platform.webp",
+        "image": "/spot/img/idc-platform-2.webp",
         "weight": 1,
-        "note": "کمپین iDesign Center — کارتِ فقط‌عکس و بدون اکشن. عکس: «اولین پلتفرم دنتال مبتنی بر Ai». زمانِ ۳ از ۴. منبع: ad_photos/ad3.webp"
+        "note": "کمپین iDesign Center — کارتِ فقط‌عکس و بدون اکشن. عکس: «اولین پلتفرم دنتال مبتنی بر Ai». زمانِ ۳ از ۴. منبع: ad_photos/ad2.webp (نسخهٔ ۱۴۰۵/۰۵/۱۳)"
       },
       {
         "id": "idc-launch",
@@ -101,9 +101,9 @@
         "text": "",
         "cta": "",
         "url": "",
-        "image": "/spot/img/idc-launch.webp",
+        "image": "/spot/img/idc-launch-2.webp",
         "weight": 1,
-        "note": "کمپین iDesign Center — کارتِ فقط‌عکس و بدون اکشن. عکس: «لانچ در اکسیدا — ۳ شهریور». زمانِ ۴ از ۴. تاریخِ روی عکس ۱۴۰۵/۰۶/۰۳ است؛ موتور زمان‌بند ندارد، پس بعد از آن تاریخ باید دستی خاموش شود"
+        "note": "کمپین iDesign Center — کارتِ فقط‌عکس و بدون اکشن. عکس: «لانچ در اکسیدا — ۳ شهریور». زمانِ ۴ از ۴. منبع: ad_photos/ad1.webp (نسخهٔ ۱۴۰۵/۰۵/۱۳). تاریخِ روی عکس ۱۴۰۵/۰۶/۰۳ است؛ موتور زمان‌بند ندارد، پس بعد از آن تاریخ باید دستی خاموش شود"
       }
     ]
   }
