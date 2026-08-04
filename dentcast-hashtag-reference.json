@@ -643,7 +643,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 32,
+   "count": 33,
    "content_ids": [
     "episodes/episode-14",
     "episodes/episode-25",
@@ -676,7 +676,8 @@
     "episodes/episode-160",
     "chairside/chairside-24",
     "chairside/chairside-26",
-    "chairside/chairside-28"
+    "chairside/chairside-28",
+    "chairside/chairside-29"
    ]
   },
   {
@@ -773,6 +774,103 @@
    ]
   },
   {
+   "key": "چیرساید",
+   "tag": "#چیرساید",
+   "domain": "brand",
+   "words": 1,
+   "definition": "نام سری چیرساید — یادداشت کوتاه از یک ویزیت واقعی، با تصمیمی که سر یونیت گرفته شد.",
+   "use_when": "روی هر مدخل چیرساید، و هیچ‌جای دیگر.",
+   "aliases": [
+    "chairside",
+    "چیر ساید"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 29,
+   "content_ids": [
+    "chairside/chairside-1",
+    "chairside/chairside-2",
+    "chairside/chairside-3",
+    "chairside/chairside-4",
+    "chairside/chairside-5",
+    "chairside/chairside-6",
+    "chairside/chairside-7",
+    "chairside/chairside-8",
+    "chairside/chairside-9",
+    "chairside/chairside-10",
+    "chairside/chairside-11",
+    "chairside/chairside-12",
+    "chairside/chairside-13",
+    "chairside/chairside-14",
+    "chairside/chairside-15",
+    "chairside/chairside-16",
+    "chairside/chairside-17",
+    "chairside/chairside-18",
+    "chairside/chairside-19",
+    "chairside/chairside-20",
+    "chairside/chairside-21",
+    "chairside/chairside-22",
+    "chairside/chairside-23",
+    "chairside/chairside-24",
+    "chairside/chairside-25",
+    "chairside/chairside-26",
+    "chairside/chairside-27",
+    "chairside/chairside-28",
+    "chairside/chairside-29"
+   ]
+  },
+  {
+   "key": "کیس_بالینی",
+   "tag": "#کیس_بالینی",
+   "domain": "brand",
+   "words": 2,
+   "definition": "گزارش یک کیس واقعی، از شرح مراجعه تا تصمیم.",
+   "use_when": "روی مدخل‌هایی که ساختارشان گزارش کیس است.",
+   "aliases": [
+    "ویزیت کلینیکی",
+    "گزارش کیس",
+    "کیس ریپورت",
+    "case report"
+   ],
+   "variants": [
+    "#ویزیت_کلینیکی",
+    "#گزارش_کیس"
+   ],
+   "co_tags": [],
+   "count": 29,
+   "content_ids": [
+    "chairside/chairside-1",
+    "chairside/chairside-2",
+    "chairside/chairside-3",
+    "chairside/chairside-4",
+    "chairside/chairside-5",
+    "chairside/chairside-6",
+    "chairside/chairside-7",
+    "chairside/chairside-8",
+    "chairside/chairside-9",
+    "chairside/chairside-10",
+    "chairside/chairside-11",
+    "chairside/chairside-12",
+    "chairside/chairside-13",
+    "chairside/chairside-14",
+    "chairside/chairside-15",
+    "chairside/chairside-16",
+    "chairside/chairside-17",
+    "chairside/chairside-18",
+    "chairside/chairside-19",
+    "chairside/chairside-20",
+    "chairside/chairside-21",
+    "chairside/chairside-22",
+    "chairside/chairside-23",
+    "chairside/chairside-24",
+    "chairside/chairside-25",
+    "chairside/chairside-26",
+    "chairside/chairside-27",
+    "chairside/chairside-28",
+    "chairside/chairside-29"
+   ]
+  },
+  {
    "key": "dentai",
    "tag": "#DentAI",
    "domain": "brand",
@@ -863,101 +961,6 @@
     "insight/insight-34",
     "insight/insight-49",
     "insight/insight-54"
-   ]
-  },
-  {
-   "key": "چیرساید",
-   "tag": "#چیرساید",
-   "domain": "brand",
-   "words": 1,
-   "definition": "نام سری چیرساید — یادداشت کوتاه از یک ویزیت واقعی، با تصمیمی که سر یونیت گرفته شد.",
-   "use_when": "روی هر مدخل چیرساید، و هیچ‌جای دیگر.",
-   "aliases": [
-    "chairside",
-    "چیر ساید"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 28,
-   "content_ids": [
-    "chairside/chairside-1",
-    "chairside/chairside-2",
-    "chairside/chairside-3",
-    "chairside/chairside-4",
-    "chairside/chairside-5",
-    "chairside/chairside-6",
-    "chairside/chairside-7",
-    "chairside/chairside-8",
-    "chairside/chairside-9",
-    "chairside/chairside-10",
-    "chairside/chairside-11",
-    "chairside/chairside-12",
-    "chairside/chairside-13",
-    "chairside/chairside-14",
-    "chairside/chairside-15",
-    "chairside/chairside-16",
-    "chairside/chairside-17",
-    "chairside/chairside-18",
-    "chairside/chairside-19",
-    "chairside/chairside-20",
-    "chairside/chairside-21",
-    "chairside/chairside-22",
-    "chairside/chairside-23",
-    "chairside/chairside-24",
-    "chairside/chairside-25",
-    "chairside/chairside-26",
-    "chairside/chairside-27",
-    "chairside/chairside-28"
-   ]
-  },
-  {
-   "key": "کیس_بالینی",
-   "tag": "#کیس_بالینی",
-   "domain": "brand",
-   "words": 2,
-   "definition": "گزارش یک کیس واقعی، از شرح مراجعه تا تصمیم.",
-   "use_when": "روی مدخل‌هایی که ساختارشان گزارش کیس است.",
-   "aliases": [
-    "ویزیت کلینیکی",
-    "گزارش کیس",
-    "کیس ریپورت",
-    "case report"
-   ],
-   "variants": [
-    "#ویزیت_کلینیکی",
-    "#گزارش_کیس"
-   ],
-   "co_tags": [],
-   "count": 28,
-   "content_ids": [
-    "chairside/chairside-1",
-    "chairside/chairside-2",
-    "chairside/chairside-3",
-    "chairside/chairside-4",
-    "chairside/chairside-5",
-    "chairside/chairside-6",
-    "chairside/chairside-7",
-    "chairside/chairside-8",
-    "chairside/chairside-9",
-    "chairside/chairside-10",
-    "chairside/chairside-11",
-    "chairside/chairside-12",
-    "chairside/chairside-13",
-    "chairside/chairside-14",
-    "chairside/chairside-15",
-    "chairside/chairside-16",
-    "chairside/chairside-17",
-    "chairside/chairside-18",
-    "chairside/chairside-19",
-    "chairside/chairside-20",
-    "chairside/chairside-21",
-    "chairside/chairside-22",
-    "chairside/chairside-23",
-    "chairside/chairside-24",
-    "chairside/chairside-25",
-    "chairside/chairside-26",
-    "chairside/chairside-27",
-    "chairside/chairside-28"
    ]
   },
   {
@@ -1345,6 +1348,42 @@
    ]
   },
   {
+   "key": "تشخیص_افتراقی",
+   "tag": "#تشخیص_افتراقی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "رسیدن به علت با رد کردن گزینه‌های رقیب، نه با تأیید مستقیم اولین حدس.",
+   "use_when": "مقاله چند علت محتمل را کنار هم بگذارد و یکی‌یکی ردشان کند.",
+   "aliases": [
+    "differential diagnosis",
+    "افتراق تشخیصی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 19,
+   "content_ids": [
+    "episodes/episode-117",
+    "episodes/episode-119",
+    "dentai/dentai-1",
+    "insight/insight-9",
+    "insight/insight-11",
+    "photocast/episode-1",
+    "episodes/episode-152",
+    "insight/insight-23",
+    "insight/insight-25",
+    "dentai/dentai-13",
+    "dentai/dentai-14",
+    "chairside/chairside-7",
+    "insight/insight-43",
+    "chairside/chairside-18",
+    "insight/insight-45",
+    "chairside/chairside-27",
+    "chairside/chairside-28",
+    "sharehub/share-12",
+    "chairside/chairside-29"
+   ]
+  },
+  {
    "key": "متانوت",
    "tag": "#متانوت",
    "domain": "brand",
@@ -1379,41 +1418,6 @@
     "metanotes/meta-17",
     "metanotes/meta-18",
     "metanotes/meta-19"
-   ]
-  },
-  {
-   "key": "تشخیص_افتراقی",
-   "tag": "#تشخیص_افتراقی",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "رسیدن به علت با رد کردن گزینه‌های رقیب، نه با تأیید مستقیم اولین حدس.",
-   "use_when": "مقاله چند علت محتمل را کنار هم بگذارد و یکی‌یکی ردشان کند.",
-   "aliases": [
-    "differential diagnosis",
-    "افتراق تشخیصی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 18,
-   "content_ids": [
-    "episodes/episode-117",
-    "episodes/episode-119",
-    "dentai/dentai-1",
-    "insight/insight-9",
-    "insight/insight-11",
-    "photocast/episode-1",
-    "episodes/episode-152",
-    "insight/insight-23",
-    "insight/insight-25",
-    "dentai/dentai-13",
-    "dentai/dentai-14",
-    "chairside/chairside-7",
-    "insight/insight-43",
-    "chairside/chairside-18",
-    "insight/insight-45",
-    "chairside/chairside-27",
-    "chairside/chairside-28",
-    "sharehub/share-12"
    ]
   },
   {
@@ -1699,6 +1703,39 @@
    ]
   },
   {
+   "key": "درمان_محافظه_کارانه",
+   "tag": "#درمان_محافظه‌کارانه",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "کم‌ترین برداشتِ ساختار برای رسیدن به نتیجه‌ی قابل قبول.",
+   "use_when": "مقاله محافظه‌کاری را معیارِ انتخاب بداند.",
+   "aliases": [
+    "درمان محافظه کارانه",
+    "کانسرواتیو",
+    "conservative",
+    "حداقل برداشت"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 14,
+   "content_ids": [
+    "episodes/episode-53",
+    "episodes/episode-54",
+    "episodes/episode-57",
+    "episodes/episode-58",
+    "episodes/episode-90",
+    "episodes/episode-91",
+    "episodes/episode-92",
+    "episodes/episode-93",
+    "episodes/episode-94",
+    "episodes/episode-99",
+    "dentai/dentai-3",
+    "insight/insight-20",
+    "notecast/episode-38",
+    "chairside/chairside-29"
+   ]
+  },
+  {
    "key": "سرامیک_دندانی",
    "tag": "#سرامیک_دندانی",
    "domain": "clinical",
@@ -1729,38 +1766,6 @@
     "insight/insight-27",
     "dentai/dentai-25",
     "episodes/episode-159-1"
-   ]
-  },
-  {
-   "key": "درمان_محافظه_کارانه",
-   "tag": "#درمان_محافظه‌کارانه",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "کم‌ترین برداشتِ ساختار برای رسیدن به نتیجه‌ی قابل قبول.",
-   "use_when": "مقاله محافظه‌کاری را معیارِ انتخاب بداند.",
-   "aliases": [
-    "درمان محافظه کارانه",
-    "کانسرواتیو",
-    "conservative",
-    "حداقل برداشت"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 13,
-   "content_ids": [
-    "episodes/episode-53",
-    "episodes/episode-54",
-    "episodes/episode-57",
-    "episodes/episode-58",
-    "episodes/episode-90",
-    "episodes/episode-91",
-    "episodes/episode-92",
-    "episodes/episode-93",
-    "episodes/episode-94",
-    "episodes/episode-99",
-    "dentai/dentai-3",
-    "insight/insight-20",
-    "notecast/episode-38"
    ]
   },
   {
@@ -2079,6 +2084,34 @@
    ]
   },
   {
+   "key": "روکش",
+   "tag": "#روکش",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "چترِ عامِ روکش.",
+   "use_when": "همراه یک تگ مشخص‌تر بیاید، نه به‌تنهایی.",
+   "aliases": [
+    "crown",
+    "کراون"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 11,
+   "content_ids": [
+    "episodes/episode-2",
+    "episodes/episode-8",
+    "dentcast-plus/video-6",
+    "metanotes/meta-12",
+    "chairside/chairside-6",
+    "chairside/chairside-9",
+    "chairside/chairside-15",
+    "insight/insight-49",
+    "chairside/chairside-22",
+    "chairside/chairside-27",
+    "chairside/chairside-29"
+   ]
+  },
+  {
    "key": "مدل_زبانی",
    "tag": "#مدل_زبانی",
    "domain": "ai",
@@ -2140,7 +2173,7 @@
    "key": "پروگنوز_دندان",
    "tag": "#پروگنوز_دندان",
    "domain": null,
-   "words": 4,
+   "words": 2,
    "definition": "پیش‌بینیِ سرنوشت یک دندانِ مشخص پیش از سرمایه‌گذاری روی آن.",
    "use_when": "مقاله پیش از درمان قطعی پروگنوز را بسنجد.",
    "aliases": [
@@ -2342,33 +2375,6 @@
     "insight/insight-28",
     "chairside/chairside-19",
     "chairside/chairside-22"
-   ]
-  },
-  {
-   "key": "روکش",
-   "tag": "#روکش",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "چترِ عامِ روکش.",
-   "use_when": "همراه یک تگ مشخص‌تر بیاید، نه به‌تنهایی.",
-   "aliases": [
-    "crown",
-    "کراون"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 10,
-   "content_ids": [
-    "episodes/episode-2",
-    "episodes/episode-8",
-    "dentcast-plus/video-6",
-    "metanotes/meta-12",
-    "chairside/chairside-6",
-    "chairside/chairside-9",
-    "chairside/chairside-15",
-    "insight/insight-49",
-    "chairside/chairside-22",
-    "chairside/chairside-27"
    ]
   },
   {
@@ -2883,6 +2889,33 @@
    ]
   },
   {
+   "key": "دکتر_شهابیان",
+   "tag": "#دکتر_شهابیان",
+   "domain": "brand",
+   "words": 2,
+   "definition": "دکتر فؤاد شهابیان — میزبانِ دنتکست و صاحبِ کانسپت‌های اختصاصی.",
+   "use_when": "روی محتوایی که کانسپتِ شخصیِ او موضوع است.",
+   "aliases": [
+    "شهابیان",
+    "کانسپت شهابیان",
+    "foad shahabian",
+    "دکتر فواد شهابیان"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 8,
+   "content_ids": [
+    "episodes/episode-148-2",
+    "chairside/chairside-23",
+    "chairside/chairside-24",
+    "chairside/chairside-25",
+    "chairside/chairside-26",
+    "chairside/chairside-27",
+    "chairside/chairside-28",
+    "chairside/chairside-29"
+   ]
+  },
+  {
    "key": "روکش_موقت",
    "tag": "#روکش_موقت",
    "domain": null,
@@ -3109,32 +3142,6 @@
     "insight/insight-4",
     "insight/insight-39",
     "dentai/dentai-27"
-   ]
-  },
-  {
-   "key": "دکتر_شهابیان",
-   "tag": "#دکتر_شهابیان",
-   "domain": "brand",
-   "words": 2,
-   "definition": "دکتر فؤاد شهابیان — میزبانِ دنتکست و صاحبِ کانسپت‌های اختصاصی.",
-   "use_when": "روی محتوایی که کانسپتِ شخصیِ او موضوع است.",
-   "aliases": [
-    "شهابیان",
-    "کانسپت شهابیان",
-    "foad shahabian",
-    "دکتر فواد شهابیان"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 7,
-   "content_ids": [
-    "episodes/episode-148-2",
-    "chairside/chairside-23",
-    "chairside/chairside-24",
-    "chairside/chairside-25",
-    "chairside/chairside-26",
-    "chairside/chairside-27",
-    "chairside/chairside-28"
    ]
   },
   {
@@ -5036,7 +5043,7 @@
    "key": "رادیوگرافی_تشخیصی",
    "tag": "#رادیوگرافی_تشخیصی",
    "domain": null,
-   "words": 4,
+   "words": 2,
    "definition": "انتخاب و تفسیرِ درستِ تصویر — پانورامیک در برابر پری‌اپیکال.",
    "use_when": "مقاله کفایت یا نارساییِ یک تصویر را مسئله بداند.",
    "aliases": [
@@ -5778,6 +5785,27 @@
    ]
   },
   {
+   "key": "ارجاع_تخصصی",
+   "tag": "#ارجاع_تخصصی",
+   "domain": null,
+   "words": 2,
+   "definition": "فرستادنِ کیس به تخصصِ دیگر به‌جای ادامه دادن.",
+   "use_when": "مقاله ارجاع را تصمیمِ درست بداند.",
+   "aliases": [
+    "ریفرال",
+    "referral",
+    "ارجاع بیمار"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "chairside/chairside-22",
+    "sharehub/share-12",
+    "chairside/chairside-29"
+   ]
+  },
+  {
    "key": "اصول_تراش",
    "tag": "#اصول_تراش",
    "domain": "clinical",
@@ -6149,6 +6177,28 @@
    ]
   },
   {
+   "key": "تغییر_رنگ",
+   "tag": "#تغییر_رنگ",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "تغییرِ رنگِ رستوریشن یا دندان پس از درمان.",
+   "use_when": "مقاله علت یا رفعِ تغییر رنگ را بگوید.",
+   "aliases": [
+    "discoloration",
+    "دیس کالریشن",
+    "رنگ گرفتن",
+    "اختلاف رنگ"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "episodes/episode-61",
+    "insight/insight-5",
+    "chairside/chairside-29"
+   ]
+  },
+  {
    "key": "تماس_باز",
    "tag": "#تماس_باز",
    "domain": "clinical",
@@ -6374,7 +6424,7 @@
    "key": "درمان_بین_رشته_ای",
    "tag": "#درمان_بین_رشته_ای",
    "domain": null,
-   "words": 6,
+   "words": 4,
    "definition": "درمانی که تصمیمش بین دو تخصص تقسیم شده.",
    "use_when": "مقاله هماهنگی بین تخصص‌ها را مسئله بداند.",
    "aliases": [
@@ -7914,26 +7964,6 @@
    ]
   },
   {
-   "key": "ارجاع_تخصصی",
-   "tag": "#ارجاع_تخصصی",
-   "domain": null,
-   "words": 2,
-   "definition": "فرستادنِ کیس به تخصصِ دیگر به‌جای ادامه دادن.",
-   "use_when": "مقاله ارجاع را تصمیمِ درست بداند.",
-   "aliases": [
-    "ریفرال",
-    "referral",
-    "ارجاع بیمار"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "chairside/chairside-22",
-    "sharehub/share-12"
-   ]
-  },
-  {
    "key": "استیج_بندی_درمان",
    "tag": "#استیج_بندی_درمان",
    "domain": null,
@@ -8234,6 +8264,28 @@
    "content_ids": [
     "episodes/episode-144-1",
     "insight/insight-47"
+   ]
+  },
+  {
+   "key": "اینترنال_بلیچینگ",
+   "tag": "#اینترنال_بلیچینگ",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "بلیچینگِ داخلیِ دندانِ اندوشده‌ی تغییررنگ‌داده — عاملِ سفیدکننده داخلِ محفظه‌ی پالپ.",
+   "use_when": "مقاله بلیچینگ داخلی/واکینگ‌بلیچ را موضوع داشته باشد.",
+   "aliases": [
+    "internal bleaching",
+    "بلیچینگ داخلی",
+    "واکینگ بلیچ",
+    "walking bleach",
+    "non vital bleaching"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-61",
+    "chairside/chairside-29"
    ]
   },
   {
@@ -8570,27 +8622,6 @@
    "content_ids": [
     "notecast/episode-14",
     "episodes/episode-155"
-   ]
-  },
-  {
-   "key": "تغییر_رنگ",
-   "tag": "#تغییر_رنگ",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "تغییرِ رنگِ رستوریشن یا دندان پس از درمان.",
-   "use_when": "مقاله علت یا رفعِ تغییر رنگ را بگوید.",
-   "aliases": [
-    "discoloration",
-    "دیس کالریشن",
-    "رنگ گرفتن",
-    "اختلاف رنگ"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "episodes/episode-61",
-    "insight/insight-5"
    ]
   },
   {
@@ -12268,31 +12299,10 @@
    ]
   },
   {
-   "key": "اینترنال_بلیچینگ",
-   "tag": "#اینترنال_بلیچینگ",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "بلیچینگِ داخلیِ دندانِ اندوشده‌ی تغییررنگ‌داده — عاملِ سفیدکننده داخلِ محفظه‌ی پالپ.",
-   "use_when": "مقاله بلیچینگ داخلی/واکینگ‌بلیچ را موضوع داشته باشد.",
-   "aliases": [
-    "internal bleaching",
-    "بلیچینگ داخلی",
-    "واکینگ بلیچ",
-    "walking bleach",
-    "non vital bleaching"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "episodes/episode-61"
-   ]
-  },
-  {
    "key": "اینتروژن_ارتودنسی",
    "tag": "#اینتروژن_ارتودنسی",
    "domain": null,
-   "words": 4,
+   "words": 2,
    "definition": "فرو بردنِ ارتودنتیکِ دندانِ سوپرااراپت برای بازپس‌گیریِ فضا.",
    "use_when": "مقاله اینتروژن را راه‌حل بداند.",
    "aliases": [
@@ -13137,7 +13147,7 @@
    "key": "تفسیر_رادیوگرافی",
    "tag": "#تفسیر_رادیوگرافی",
    "domain": "clinical",
-   "words": 4,
+   "words": 2,
    "definition": "خواندنِ الگو — مرزِ صاف در برابر مرزِ منتشر — نه صرفاً دیدنِ لکه.",
    "use_when": "مقاله معیارِ تمایزِ تصویری بدهد.",
    "aliases": [
@@ -14099,7 +14109,7 @@
    "key": "رادیوگرافی_کنترل",
    "tag": "#رادیوگرافی_کنترل",
    "domain": "clinical",
-   "words": 4,
+   "words": 2,
    "definition": "پری‌اپیکالِ صحیح، به‌عنوان تأییدِ قطعیِ نشست.",
    "use_when": "مقاله رادیوگرافی را تأییدِ نهایی بداند، نه حس.",
    "aliases": [
@@ -16445,7 +16455,7 @@
    "key": "هوش_مصنوعی_رادیوگرافی",
    "tag": "#هوش_مصنوعی_رادیوگرافی",
    "domain": "ai",
-   "words": 5,
+   "words": 3,
    "definition": "نرم‌افزاری که روی رادیوگرافی ضایعه یا سطح استخوان را علامت می‌زند — تصویری که اغلب با ChatGPT اشتباه گرفته می‌شود.",
    "use_when": "مقاله همین دسته را موضوع یا نقطه‌ی تمایز قرار دهد.",
    "aliases": [

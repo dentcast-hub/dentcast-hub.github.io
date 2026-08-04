@@ -12775,5 +12775,39 @@
       "secondary": [],
       "subtopic": "tmd-orofacial-pain"
     }
+  },
+  {
+    "type": "chairside",
+    "id": "chairside-29",
+    "title": "تغییر رنگِ دندانِ اندو‌شده و روکشی که هنوز لازم نبود",
+    "caption": "در این کیس Chairside بررسی می‌کنیم چرا تغییرِ رنگِ یک دندانِ اندو‌شده به‌تنهایی اندیکاسیونِ روکش نیست؛ از افتراقِ علتِ داخلیِ تغییرِ رنگ تا ارزیابیِ ساختارِ باقی‌ماندهٔ تاج و ارجاع برای سفید کردنِ داخلی پیش از پذیرفتنِ تراشِ فوری.",
+    "hashtags": [
+      "#چیرساید",
+      "#کیس_بالینی",
+      "#دکتر_شهابیان",
+      "#طرح_درمان",
+      "#تشخیص_افتراقی",
+      "#تغییر_رنگ",
+      "#اینترنال_بلیچینگ",
+      "#درمان_محافظه‌کارانه",
+      "#روکش",
+      "#ارجاع_تخصصی"
+    ],
+    "keywords": [
+      "endodontically treated tooth intrinsic discoloration",
+      "retained gutta-percha pulp chamber",
+      "internal bleaching versus full crown preparation",
+      "differential diagnosis of tooth discoloration",
+      "premature crown request second opinion",
+      "conservative treatment tooth structure preservation",
+      "irreversible tooth preparation decision",
+      "restorative specialist referral internal bleaching"
+    ],
+    "page_url": "/chairside/chairside-29.html",
+    "pillar": {
+      "primary": "treatment-planning",
+      "secondary": [],
+      "subtopic": "comprehensive-diagnosis"
+    }
   }
 ]
