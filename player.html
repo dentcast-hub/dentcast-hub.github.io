@@ -711,10 +711,23 @@ downloadBtn.setAttribute("download", "");
 
   /* سیگنال شنیدن (Plus): این پلیرِ مشترک اپیزودها را عوض می‌کند، پس در هر
      تعویض، ردیابِ قبلی برچیده و یک ردیابِ تازه برای content_id جدید شروع می‌شود.
-     plus.js (که dc-nav روی همه‌ی صفحات لود می‌کند) این قلاب را تعریف می‌کند؛
-     نبودنش هرگز پلیر را نمی‌شکند (progressive enhancement). */
-  if (window.dcpTrackListening && ep.episode != null) {
-    try { window.dcpTrackListening("episodes/episode-" + epSlug(ep.episode), audio); } catch (_) {}
+     plus.js (که dc-nav روی همه‌ی صفحات لود می‌کند) این قلاب را تعریف می‌کند.
+
+     ترتیب اجرا تضمین‌شده نیست: plus.js یک ماژولِ async است، ولی همین اسکریپت
+     inline حین parse اجرا می‌شود و fetchِ فهرست اپیزودها را زودتر شروع می‌کند.
+     پس اولین loadEpisode (اپیزودِ بازیابی‌شده یا پیش‌فرض — همانی که کاربر
+     معمولاً مستقیم play می‌زند) می‌تواند قبل از تعریفِ قلاب اجرا شود. قبلاً یک
+     چکِ یک‌باره بود و آن اپیزود بی‌ردیاب می‌ماند. حالا اگر قلاب نبود، «قصدِ
+     فعلی» در یک متغیر سراسری می‌ماند و plus.js موقع بوت مصرفش می‌کند.
+     تک‌خانه‌ای است نه صف: فقط اپیزودِ جاری اهمیت دارد.
+     نبودنِ Plus هرگز پلیر را نمی‌شکند (progressive enhancement). */
+  if (ep.episode != null) {
+    var listenId = "episodes/episode-" + epSlug(ep.episode);
+    if (window.dcpTrackListening) {
+      try { window.dcpTrackListening(listenId, audio); } catch (_) {}
+    } else {
+      window.dcpPendingListen = { contentId: listenId, audioEl: audio };
+    }
   }
 
   /* تغییر اپیزود = نوشتن فوری رکورد (در حین بازیابی سرکوب می‌شود تا

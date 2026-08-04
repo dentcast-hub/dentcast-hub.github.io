@@ -251,15 +251,27 @@ async function initSeenTicks() {
 // fills that slot on desktop as well.
 
 // Listening signal (audio twin of the reading tracker). Two entry points:
-//  1. Episode pages carry their own <audio id="ep-audio"> and their URL IS the
-//     episode, so we attach here using the page's own content_id.
+//  1. An audio content page carries its own <audio> and its URL IS the episode,
+//     so we attach here using the page's own content_id. Podcast episode pages
+//     tag it #ep-audio because their custom transport needs the handle; NoteCast
+//     pages ship a bare native <audio controls> with NO id, so the id lookup
+//     alone found nothing there and listening earned nothing on 40 pages. Hence
+//     the fallback to the first <audio> inside <main>.
+//     Scoped to <main> deliberately: player.html's shared <audio id="dc-audio">
+//     sits OUTSIDE <main> (.dc-wrapper > .dc-main-player), so the fallback can
+//     never grab it and mislog every episode under the content_id "player" — it
+//     wires itself through entry point 2 instead.
+//     #ep-audio stays first so episode pages resolve exactly as before, and the
+//     separate #ep-audio gate in initArticle is deliberately NOT relaxed:
+//     NoteCast keeps its میز کار (it is a text page that also has audio) and
+//     merely gains the listening signal it was missing.
 //  2. The shared player (player.html) plays many episodes over its lifetime from
 //     one <audio> element, so it calls window.dcpTrackListening(contentId, audio)
 //     on each episode switch; we tear down the previous tracker and start a fresh
 //     one for the new content_id.
 function initListening() {
-  const audioEl = document.getElementById('ep-audio');
-  if (!audioEl) return; // not an episode page (the shared player wires itself)
+  const audioEl = document.getElementById('ep-audio') || document.querySelector('main audio');
+  if (!audioEl) return; // no page-owned audio here (the shared player wires itself)
   initListeningTracker({ contentId: detectContentId(), audioEl });
 }
 
@@ -268,7 +280,21 @@ function trackListening(contentId, audioEl) {
   if (sharedListen && sharedListen.stop) { try { sharedListen.stop(); } catch (_) { /* ignore */ } }
   sharedListen = initListeningTracker({ contentId, audioEl });
 }
-if (typeof window !== 'undefined') window.dcpTrackListening = trackListening;
+if (typeof window !== 'undefined') {
+  window.dcpTrackListening = trackListening;
+  // Drain the episode the shared player loaded BEFORE this module finished
+  // evaluating. dc-nav.js injects plus.js as an async module while player.html's
+  // inline script runs during parse, so loadEpisode routinely wins that race and
+  // used to find no hook at all — leaving the restored/default episode (the one
+  // the user usually just presses play on) untracked until they picked another
+  // from the list. Draining in the same statement that defines the hook closes
+  // the window in both orders: whichever side runs first, the tracker attaches.
+  const pending = window.dcpPendingListen;
+  if (pending && pending.contentId && pending.audioEl) {
+    window.dcpPendingListen = null; // consumed; the player calls the hook directly from now on
+    trackListening(pending.contentId, pending.audioEl);
+  }
+}
 
 function boot() {
   try {
