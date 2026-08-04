@@ -283,6 +283,21 @@ Plus/Premium تبدیل می‌کند. همهٔ این‌ها گام‌های خ
     `connect-src https://*.google-analytics.com https://*.analytics.google.com`
     را اجازه بدهد. (فعلاً هیچ CSPای در این ریپو نیست.)
 
+- **preconnect به API روی همهٔ صفحه‌ها.** هر صفحهٔ HTML در ابتدای `<head>` دو
+  لینک `preconnect` به `api.dentcast.ir` و `api.dentcast.org` با `crossorigin`
+  دارد. تزئینی نیست، مسئلهٔ درستیِ اسپانسر پولی است: کارت Spot تا جواب `/me`
+  رندر نمی‌شود (همان قفلی که «پریمیوم تبلیغ نمی‌بیند» را واقعی می‌کند و
+  **نباید** شل شود)، پس در صفحهٔ اول هر تب هندشیکِ سردِ DNS+TLS دقیقاً جلوی
+  ایمپرشن اسپانسر می‌نشست — اندازه‌گیری‌شده ۲.۷ تا ۳ ثانیه تا اولین کارت، در
+  برابر ۷۰ تا ۱۷۰ میلی‌ثانیه در ریفرش.
+  - تزریق‌کننده: `.github/scripts/inject_preconnect.py` (idempotent، با
+    `--check`). `tools/build_pillar.py` مقدار `PRECONNECT_SNIPPET` را می‌نویسد و
+    `tools/episodes_template.html` آن را درون‌خطی دارد.
+  - **`crossorigin` الزامی است**: API با credentials صدا زده می‌شود و اتصالِ
+    ناشناس برای درخواست CORSِ credentialed بازاستفاده نمی‌شود.
+  - هر دو میزبان روی همهٔ صفحه‌ها عمدی‌اند — دو کدبیس آینهٔ هم‌اند و منطق
+    per-domain ممنوع است.
+
 - **نماد اعتماد الکترونیکی (enamad) — سه جایگاه، فقط روی dentcast.ir.** نماد
   دقیقاً روی سه سطح است و عنصر per-page **نیست**: فوتر `index.html` (شلِ
   موبایل)، ردیف `.dcd-a-seal` در سایدبار ستون A همان فایل (شلِ دسکتاپ، جایی که

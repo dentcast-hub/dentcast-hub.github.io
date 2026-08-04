@@ -38,6 +38,17 @@ from pathlib import Path
 # .ir codebases are mirrors; the same tag intentionally deploys to both
 # (no per-domain logic). Keep in sync with .github/scripts/inject_ga.py.
 # -------------------------------------------------------------------
+# Open the API connection while the HTML is still parsing. /me gates the Spot
+# card (that gate is what keeps a premium visitor ad-free and is not
+# negotiable), so on a first visit the TLS handshake sat directly in front of
+# the sponsor's impression. `crossorigin` is required: the API is called with
+# credentials, and an anonymous preconnect would not be reused for it.
+# Keep in sync with .github/scripts/inject_preconnect.py.
+PRECONNECT_SNIPPET = (
+    '  <link rel="preconnect" href="https://api.dentcast.ir" crossorigin>\n'
+    '  <link rel="preconnect" href="https://api.dentcast.org" crossorigin>\n'
+)
+
 GA_DEFERRED_SNIPPET = (
     '  <!-- Google Analytics (deferred: loads only after the page is fully rendered) -->\n'
     '  <script>\n'
@@ -611,7 +622,7 @@ def render_page(slug, cfg, intro_html, cards_html, flat_ordered):
         '<!DOCTYPE html>\n'
         '<html lang="fa" dir="rtl">\n'
         '<head>\n'
-        + GA_DEFERRED_SNIPPET +
+        + PRECONNECT_SNIPPET + GA_DEFERRED_SNIPPET +
         '  <meta charset="UTF-8">\n'
         '  <meta name="viewport" content="width=device-width, initial-scale=1">\n'
         '  <title>' + esc(cfg["page_title"]) + '</title>\n'
@@ -1292,7 +1303,7 @@ def _render_index_page(pillars_info, cards_html):
         '<!DOCTYPE html>\n'
         '<html lang="fa" dir="rtl">\n'
         '<head>\n'
-        + GA_DEFERRED_SNIPPET +
+        + PRECONNECT_SNIPPET + GA_DEFERRED_SNIPPET +
         '  <meta charset="UTF-8">\n'
         '  <meta name="viewport" content="width=device-width, initial-scale=1">\n'
         '  <title>' + esc(page_title) + '</title>\n'

@@ -164,6 +164,25 @@ guess.**
     ```
   - If a Content-Security-Policy is ever added, it must allow `script-src https://www.googletagmanager.com` and `connect-src https://*.google-analytics.com https://*.analytics.google.com`. (No CSP currently exists in this repo.)
 
+- **API preconnect on every page.** Every HTML page carries
+  `<link rel="preconnect" href="https://api.dentcast.ir" crossorigin>` and the
+  same for `.org`, at the very top of `<head>`. This is a paid-sponsor
+  correctness issue, not a micro-optimisation: the Spot card cannot render
+  until `/me` answers (that gate is what makes "premium sees no ads" true, and
+  it is **not** to be relaxed), so on the first page of a tab the cold DNS +
+  TLS handshake sat directly in front of the sponsor's impression — measured
+  2.7–3.0s to first card, against 70–170ms on a refresh. Preconnect moves the
+  handshake into HTML parsing instead.
+  - Injector: `.github/scripts/inject_preconnect.py` (idempotent; `--check`
+    fails if any page is missing it). `tools/build_pillar.py` emits
+    `PRECONNECT_SNIPPET`; `tools/episodes_template.html` carries it inline.
+  - **`crossorigin` is required and not decoration** — the API is called with
+    credentials, and a connection opened in anonymous mode is not reused for a
+    credentialed CORS request, so dropping it silently undoes the whole thing.
+  - Both hosts are listed on every page on purpose: the two codebases are
+    mirrors and per-domain logic is forbidden. The unused socket is idle and
+    the browser drops it.
+
 - **E-NAMAD trust seal (نماد اعتماد الکترونیکی) — three placements, dentcast.ir only.** The seal lives on exactly three surfaces and is **not** a per-page element: `index.html`'s `<footer>` (mobile shell), `index.html`'s `.dcd-a-seal` row in the col-A sidebar (desktop shell, where that footer is `display:none`), and `about.html`'s `.dc-trustseal-box` under the contact card. Do **not** clone it onto content pages — every copy is a request to enamad's server for zero trust value on an article page.
   - **This is the one deliberate exception to "no per-domain logic".** The seal is issued for a single domain (ours: `dentcast.ir`) and `trustseal.enamad.ir/logo.aspx` renders from the request's referrer, so on the `.org` mirror it answers with an *invalid seal* image. Two layers gate it: an inline `<head>` guard in both pages sets `dc-no-seal` on `<html>` off `.ir` (hides it before the body parses, no flash), and a block at the end of `dc-nav.js` removes the node outright. The images are `loading="lazy"` and both seals sit below the fold, so on `.org` the request normally never fires.
   - **The `<a>`/`<img>` attributes enamad verifies are copied verbatim and never rewritten** — `referrerpolicy='origin'`, `id`, `Code`, and the `code` attribute on the `<img>`. Only `alt`, `loading` and the wrapper are ours. The markup ships **statically in the HTML** (never JS-injected) so enamad's own crawler reads it.

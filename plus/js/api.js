@@ -56,13 +56,33 @@ async function pickBase() {
   if (resolvedBase) return resolvedBase;
   const cached = ssGet(SS_BASE);
   if (cached && API_BASES.indexOf(cached) !== -1) { resolvedBase = cached; return cached; }
-  for (const base of API_BASES) {
-    try {
-      const res = await fetch(base + '/health', {
-        method: 'GET', credentials: 'include', cache: 'no-store', signal: probeSignal(),
-      });
-      if (res.ok) { resolvedBase = base; ssSet(SS_BASE, base); return base; }
-    } catch (_) { /* timed out or unreachable — try the next mirror */ }
+  // Probe every mirror CONCURRENTLY but honour them in ORDER. The distinction
+  // matters in both directions:
+  //
+  //   - concurrent, because probing them one after another meant a slow first
+  //     mirror was paid in full before the second was even contacted, and that
+  //     wait sits directly in front of /me — which the ad card waits on.
+  //   - in order, because the order is a correctness rule, not a preference:
+  //     each site must talk to its OWN api host so the session cookie stays
+  //     same-site (see defaultBases()). A plain race would hand .ir to
+  //     api.dentcast.org whenever it merely answered first, and the login
+  //     cookie would be dropped.
+  //
+  // So the second mirror is already in flight and warm by the time the first
+  // one is given up on — the failover costs a timeout, not a round trip.
+  const attempts = API_BASES.map((base) => fetch(base + '/health', {
+    method: 'GET', credentials: 'include', cache: 'no-store', signal: probeSignal(),
+  }));
+  // A rejection nobody is awaiting yet is an unhandled rejection in some
+  // browsers; neutralise each one now and read the outcome below.
+  const settled = attempts.map((p) => p.then((res) => res, () => null));
+  for (let i = 0; i < API_BASES.length; i++) {
+    const res = await settled[i];
+    if (res && res.ok) {
+      resolvedBase = API_BASES[i];
+      ssSet(SS_BASE, resolvedBase);
+      return resolvedBase;
+    }
   }
   // Fall back to the first configured base so callers still get a real error.
   resolvedBase = API_BASES[0];

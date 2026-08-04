@@ -52,7 +52,7 @@ HEAD_OPEN_RE = re.compile(r"(<head(?:\s[^>]*)?>[ \t]*\n)", re.IGNORECASE)
 def iter_html_files():
     for dirpath, dirnames, filenames in os.walk(REPO_ROOT):
         # Don't descend into VCS / CI plumbing.
-        dirnames[:] = [d for d in dirnames if d not in (".git", ".github")]
+        dirnames[:] = [d for d in dirnames if d not in (".git", ".github", "node_modules")]
         for name in filenames:
             if name.lower().endswith(".html"):
                 yield os.path.join(dirpath, name)

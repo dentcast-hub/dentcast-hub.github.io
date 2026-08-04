@@ -36,4 +36,33 @@ describe('failover deadline', () => {
     const { apiBase } = await import('/plus/js/api.js');
     expect(await apiBase()).toBe('https://api.slow.test');
   });
+
+  // Order is a correctness rule, not a preference: each site must use its own
+  // api host or the session cookie is cross-site and gets dropped. A plain race
+  // would break that the moment the secondary merely answered first.
+  it('keeps the first mirror even when the second answers sooner', async () => {
+    globalThis.fetch = vi.fn((url: any) => new Promise((resolve) => {
+      const slow = String(url).includes('slow');
+      setTimeout(() => resolve({ ok: true, status: 200 } as any), slow ? 300 : 10);
+    })) as any;
+    const { apiBase } = await import('/plus/js/api.js');
+    expect(await apiBase()).toBe('https://api.slow.test');
+  });
+
+  // ...and both are contacted at once, so failing over costs a deadline rather
+  // than a second round trip.
+  it('probes every mirror concurrently', async () => {
+    const started: number[] = [];
+    globalThis.fetch = vi.fn((url: any, init: any = {}) => {
+      started.push(Date.now());
+      if (String(url).includes('slow')) {
+        return new Promise((_r, reject) => init.signal?.addEventListener('abort', () => reject(new Error('x'))));
+      }
+      return new Promise((resolve) => setTimeout(() => resolve({ ok: true, status: 200 } as any), 200));
+    }) as any;
+    const { apiBase } = await import('/plus/js/api.js');
+    await apiBase();
+    expect(started).toHaveLength(2);
+    expect(started[1] - started[0], 'the second probe must not wait for the first').toBeLessThan(50);
+  }, 20000);
 });
