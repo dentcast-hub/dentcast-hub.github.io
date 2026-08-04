@@ -139,7 +139,7 @@ async function renderLoggedIn(card, user) {
   ]);
 
   // Score (⭐) sits inline beside the streak: the all-time total from score.ts
-  // (active_days*10 + highlights). It UNLOCKS streak shields at thresholds — it
+  // (active_days*10 + content_completed*5 + highlights). It UNLOCKS shields — it
   // is never spent, because there is no stored balance at all: score is derived
   // from the activity log, so it can only grow. It is also NOT the league
   // currency — the league ranks on weekly_xp, a separate per-action quantity
@@ -199,10 +199,16 @@ async function renderLoggedIn(card, user) {
   // from the same `freezes` payload (never hardcoded numbers) and says the same
   // thing the پیشخوان says, so the two explanations can't drift apart.
   const shieldCapEl = fz ? el('span', { class: 'dc-plus-capline' }, shieldCapText(fz)) : null;
+  // Read the rates off the payload, never hardcoded — same rule the shield line
+  // follows, so retuning them server-side can't leave this caption lying.
+  const perContent = progress.score_points_per_content || 5;
+  const perDay = progress.score_points_per_active_day || 10;
   const scoreCap = el('p', { class: 'dc-plus-scorecap', hidden: true }, [
     el('span', { class: 'dc-plus-capline' },
-      '⭐ با خواندن، گوش‌دادن، هایلایت و مرور امتیاز می‌گیری. امتیاز همیشه برایت می‌ماند '
-      + 'و با آن سپر می‌گیری.'),
+      '⭐ هر پادکستِ تازه‌ای که گوش می‌دهی و هر مقاله‌ای که تمام می‌کنی '
+      + faNum(perContent) + ' امتیاز دارد، هر روزِ فعال ' + faNum(perDay) + ' امتیاز، '
+      + 'و هر هایلایت ۱ امتیاز. همان محتوا بارِ دوم دوباره حساب نمی‌شود. '
+      + 'امتیاز همیشه برایت می‌ماند و با آن سپر می‌گیری.'),
     el('span', { class: 'dc-plus-capline' },
       '🏆 XP چیز دیگری است: هر هفته از صفر شروع می‌شود و فقط جایگاهت در لیگِ آن هفته را می‌سازد.'),
     shieldCapEl,

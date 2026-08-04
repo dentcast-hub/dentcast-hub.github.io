@@ -8,6 +8,7 @@ import { getConsumedContentIds } from '../services/consumption.js';
 import {
   computeScore, freezesUsedCount, freezesAvailable, pointsToNextFreeze,
   SHIELD_BASE, SHIELD_STEP, shieldCost, shieldsGranted, SCORING_ACTIONS,
+  CONSUMPTION_ACTIONS, POINTS_PER_CONTENT, POINTS_PER_ACTIVE_DAY, scoreSelectSql,
 } from '../services/score.js';
 import { dayInTz, previousDay, nextDay, weekStartSaturday } from '../services/time.js';
 
@@ -147,9 +148,12 @@ export async function dashboardRoutes(app: FastifyInstance): Promise<void> {
     }));
 
     // Score: a concrete, activity-log-derived metric, ready for a future
-    // leaderboard. Base = qualifying active days (monotonic) plus a small
-    // per-highlight bonus. Streak is the headline; this is the comparable total.
-    const { score, active_days: activeDays } = await computeScore(pool, userId);
+    // leaderboard. Qualifying active days, plus each episode heard / article
+    // finished once for all time, plus a small per-highlight bonus. Streak is
+    // the headline; this is the comparable total.
+    const {
+      score, active_days: activeDays, content_completed: contentCompleted,
+    } = await computeScore(pool, userId);
     const totalHl = stats.rows[0]?.total_highlights ?? 0;
 
     // Streak shields (سپر استریک): unlocked at rising score thresholds (200, then
@@ -175,20 +179,11 @@ export async function dashboardRoutes(app: FastifyInstance): Promise<void> {
     if (score >= 1) {
       const rk = await pool.query<{ ahead: number }>(
         `with scores as (
-           select p.id,
-                  coalesce(ad.n, 0) * 10 + coalesce(hl.n, 0) as score
-             from profiles p
-             left join (
-               select user_id, count(distinct (created_at at time zone $2)::date) as n
-                 from user_activity where action = any($3) group by user_id
-             ) ad on ad.user_id = p.id
-             left join (
-               select user_id, count(*) as n from highlights group by user_id
-             ) hl on hl.user_id = p.id
+           ${scoreSelectSql({ tz: '$2', scoring: '$3', consumption: '$4' })}
          )
          select count(*) filter (where score > $1)::int as ahead
            from scores`,
-        [score, config.streakTimezone, SCORING_ACTIONS],
+        [score, config.streakTimezone, SCORING_ACTIONS, CONSUMPTION_ACTIONS],
       );
       rank = (rk.rows[0]?.ahead ?? 0) + 1;
     }
@@ -202,6 +197,12 @@ export async function dashboardRoutes(app: FastifyInstance): Promise<void> {
       folder_progress,
       score,
       score_active_days: activeDays,
+      // Episodes heard + articles finished, counted once each for all time, and
+      // what one is worth — so the card can say where the points came from
+      // instead of leaving a listener to guess why the number moved.
+      score_content_completed: contentCompleted,
+      score_points_per_content: POINTS_PER_CONTENT,
+      score_points_per_active_day: POINTS_PER_ACTIVE_DAY,
       rank,
       freezes: {
         available: freezesAvail,

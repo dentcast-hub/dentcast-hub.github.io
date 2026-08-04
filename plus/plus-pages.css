@@ -164,6 +164,8 @@ a.dcp-progress-row:hover { text-decoration: none; }
    the icons, never in a lighter label. */
 .dcp-freeze-label { color: var(--txt, #0a1a33); font-weight: 600; opacity: 1; }
 .dcp-freeze-hint { margin: 0; color: var(--txt2, #4a5f85); font-size: .8rem; line-height: 1.7; }
+/* Score breakdown: same muted voice as the shield hint, sits under the number. */
+.dcp-score-parts { margin: 0; color: var(--txt2, #4a5f85); font-size: .8rem; line-height: 1.7; }
 
 /* ---- recent highlights (each removable) ---------------------------------- */
 .dcp-recent-list { display: flex; flex-direction: column; }

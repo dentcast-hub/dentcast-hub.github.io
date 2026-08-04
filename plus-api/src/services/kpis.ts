@@ -1,7 +1,7 @@
 import { pool } from '../db.js';
 import { config } from '../config.js';
 import { QUALIFYING_ACTIONS } from './streak.js';
-import { SCORING_ACTIONS } from './score.js';
+import { SCORING_ACTIONS, CONSUMPTION_ACTIONS, scoreSelectSql } from './score.js';
 
 /**
  * Founder KPIs 1-6 (spec section 7), computed from user_activity + anon_events.
@@ -141,14 +141,10 @@ export async function computeKpis(): Promise<Kpis> {
   // ...and users with a real score (>= 1), derived exactly like computeScore.
   const scored = await pool.query<{ n: number }>(
     `with scores as (
-       select p.id, coalesce(ad.n, 0) * 10 + coalesce(hl.n, 0) as score
-         from profiles p
-         left join (select user_id, count(distinct (created_at at time zone $1)::date) as n
-                      from user_activity where action = any($2) group by user_id) ad on ad.user_id = p.id
-         left join (select user_id, count(*) as n from highlights group by user_id) hl on hl.user_id = p.id
+       ${scoreSelectSql({ tz: '$1', scoring: '$2', consumption: '$3' })}
      )
      select count(*) filter (where score >= 1)::int as n from scores`,
-    [tz, Array.from(SCORING_ACTIONS)],
+    [tz, Array.from(SCORING_ACTIONS), Array.from(CONSUMPTION_ACTIONS)],
   );
 
   return {
