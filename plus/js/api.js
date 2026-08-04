@@ -27,15 +27,42 @@ function ssClear(key) {
 
 let resolvedBase = null;
 
+// A hanging host is worse than a dead one: an unreachable base that REFUSES the
+// connection fails in milliseconds and we move on, but one that simply never
+// answers used to hold the whole chain open for the browser's own timeout —
+// tens of seconds. That is not theoretical here: .org probes api.dentcast.org
+// (Cloudflare) first, which from an Iranian mobile network is exactly the leg
+// that stalls rather than refusing. Everything downstream waits on this: /me,
+// and therefore Spot's card, and therefore the sponsor's impression.
+//
+// So each probe gets its own short deadline. It only has to answer "are you
+// there", so a base that cannot manage that in PROBE_TIMEOUT_MS is not the base
+// we want to spend the visit on — fail over now, not in twenty seconds.
+const PROBE_TIMEOUT_MS = 1500;
+
+function probeSignal() {
+  // AbortSignal.timeout is not in older WebViews (Telegram's in-app browser on
+  // an old Android). Falling back to no signal keeps the old behaviour there
+  // rather than throwing — slow beats broken.
+  try {
+    if (typeof AbortSignal !== 'undefined' && typeof AbortSignal.timeout === 'function') {
+      return AbortSignal.timeout(PROBE_TIMEOUT_MS);
+    }
+  } catch (_) { /* fall through */ }
+  return undefined;
+}
+
 async function pickBase() {
   if (resolvedBase) return resolvedBase;
   const cached = ssGet(SS_BASE);
   if (cached && API_BASES.indexOf(cached) !== -1) { resolvedBase = cached; return cached; }
   for (const base of API_BASES) {
     try {
-      const res = await fetch(base + '/health', { method: 'GET', credentials: 'include', cache: 'no-store' });
+      const res = await fetch(base + '/health', {
+        method: 'GET', credentials: 'include', cache: 'no-store', signal: probeSignal(),
+      });
       if (res.ok) { resolvedBase = base; ssSet(SS_BASE, base); return base; }
-    } catch (_) { /* try next */ }
+    } catch (_) { /* timed out or unreachable — try the next mirror */ }
   }
   // Fall back to the first configured base so callers still get a real error.
   resolvedBase = API_BASES[0];
