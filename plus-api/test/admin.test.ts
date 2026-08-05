@@ -120,6 +120,124 @@ describe('POST /admin/users/set-tier', () => {
   });
 });
 
+describe('admin subscriptions', () => {
+  const PHONE = '09121800002';
+  const grant = (payload: Record<string, unknown>, url = '/admin/subscriptions/grant') =>
+    app.inject({ method: 'POST', url, headers: { authorization: basic }, payload });
+
+  it('requires admin auth on every subscription endpoint', async () => {
+    for (const url of [
+      '/admin/subscriptions/grant',
+      '/admin/subscriptions/grant-lifetime',
+      '/admin/subscriptions/revoke',
+    ]) {
+      const res = await app.inject({ method: 'POST', url, payload: { phone: PHONE, months: 6 } });
+      expect(res.statusCode).toBe(401);
+    }
+    const read = await app.inject({ method: 'GET', url: `/admin/subscriptions?phone=${PHONE}` });
+    expect(read.statusCode).toBe(401);
+  });
+
+  it('gifts N months and reports the resulting expiry', async () => {
+    await loginAs(app, PHONE);
+
+    const res = await grant({ phone: PHONE, months: 6 });
+    expect(res.statusCode).toBe(200);
+    const body = res.json();
+    expect(body.is_premium).toBe(true);
+    expect(body.subscription.is_founder).toBe(false);
+    expect(body.subscription.expires_at).toBeTruthy();
+    expect(body.days_left).toBeGreaterThan(175);
+
+    const row = await pool.query('select tier from profiles where phone = $1', [PHONE]);
+    expect(row.rows[0].tier).toBe('premium');
+  });
+
+  it('extends rather than replaces, so gifting never costs paid days', async () => {
+    await loginAs(app, PHONE);
+    const first = (await grant({ phone: PHONE, months: 6 })).json();
+    const second = (await grant({ phone: PHONE, months: 1 })).json();
+
+    expect(new Date(second.subscription.expires_at).getTime())
+      .toBeGreaterThan(new Date(first.subscription.expires_at).getTime());
+  });
+
+  it('gifts a lifetime account with no end date', async () => {
+    await loginAs(app, PHONE);
+
+    const res = await grant({ phone: PHONE }, '/admin/subscriptions/grant-lifetime');
+    expect(res.statusCode).toBe(200);
+    const body = res.json();
+    expect(body.subscription.is_founder).toBe(true);
+    expect(body.subscription.expires_at).toBeNull();
+    expect(body.days_left).toBeNull();
+    expect(body.is_premium).toBe(true);
+  });
+
+  it('will not let a months typo hand out a permanent account', async () => {
+    await loginAs(app, PHONE);
+    // 'lifetime' is not a month count — it is a different endpoint entirely.
+    expect((await grant({ phone: PHONE, months: 'lifetime' })).statusCode).toBe(400);
+    expect((await grant({ phone: PHONE, months: 0 })).statusCode).toBe(400);
+    expect((await grant({ phone: PHONE, months: 61 })).statusCode).toBe(400);
+    expect((await grant({ phone: PHONE, months: 1.5 })).statusCode).toBe(400);
+
+    const read = await app.inject({
+      method: 'GET', url: `/admin/subscriptions?phone=${PHONE}`, headers: { authorization: basic },
+    });
+    expect(read.json().subscription).toBeNull();
+  });
+
+  it('reads back the current state without changing it', async () => {
+    await loginAs(app, PHONE);
+    await grant({ phone: PHONE, months: 2 });
+
+    const res = await app.inject({
+      method: 'GET', url: `/admin/subscriptions?phone=${PHONE}`, headers: { authorization: basic },
+    });
+    expect(res.statusCode).toBe(200);
+    expect(res.json().is_premium).toBe(true);
+    expect(res.json().subscription.plan).toBe('paid');
+  });
+
+  it('reports no subscription for someone who has none', async () => {
+    await loginAs(app, PHONE);
+    const res = await app.inject({
+      method: 'GET', url: `/admin/subscriptions?phone=${PHONE}`, headers: { authorization: basic },
+    });
+    expect(res.json().subscription).toBeNull();
+    expect(res.json().is_premium).toBe(false);
+    expect(res.json().days_left).toBeNull();
+  });
+
+  it('revokes a mistaken gift', async () => {
+    await loginAs(app, PHONE);
+    await grant({ phone: PHONE }, '/admin/subscriptions/grant-lifetime');
+
+    const res = await grant({ phone: PHONE }, '/admin/subscriptions/revoke');
+    expect(res.statusCode).toBe(200);
+    expect(res.json().removed).toBe(true);
+    expect(res.json().subscription).toBeNull();
+
+    const again = await grant({ phone: PHONE }, '/admin/subscriptions/revoke');
+    expect(again.json().removed).toBe(false);
+  });
+
+  it('404s an unknown phone and 400s an invalid one', async () => {
+    expect((await grant({ phone: '09129999999', months: 6 })).statusCode).toBe(404);
+    expect((await grant({ phone: 'not-a-phone', months: 6 })).statusCode).toBe(400);
+    expect((await grant({ phone: '09129999999' }, '/admin/subscriptions/grant-lifetime')).statusCode).toBe(404);
+    expect((await grant({ phone: '09129999999' }, '/admin/subscriptions/revoke')).statusCode).toBe(404);
+  });
+
+  it('accepts the phone in any of the forms a human types it', async () => {
+    await loginAs(app, PHONE); // stored normalized
+    const res = await grant({ phone: '+98' + PHONE.slice(1), months: 1 });
+    expect(res.statusCode).toBe(200);
+    expect(res.json().phone).toBe(PHONE);
+  });
+});
+
 describe('admin KPIs', () => {
   it('computes the six KPIs from activity + anon events', async () => {
     // an anonymous demand signal

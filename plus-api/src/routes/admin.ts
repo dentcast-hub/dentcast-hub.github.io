@@ -1,4 +1,4 @@
-import type { FastifyInstance } from 'fastify';
+import type { FastifyInstance, FastifyReply } from 'fastify';
 import { requireAdmin } from '../middleware/basic-auth.js';
 import { computeKpis, type Kpis } from '../services/kpis.js';
 import {
@@ -9,6 +9,10 @@ import { runStreakReminders } from '../services/streak-reminder.js';
 import { one } from '../db.js';
 import { normalizePhone } from '../services/phone.js';
 import {
+  activateMonths, grantLifetime, revokeSubscription, getSubscription, isPremiumNow,
+  type Subscription,
+} from '../services/subscription.js';
+import {
   getSpotStats, defaultRange, isCalendarDay, SPOT_HOSTS, type GroupBy,
 } from '../services/spot-stats.js';
 import { withPageViews } from '../services/view-stats.js';
@@ -18,6 +22,30 @@ import {
 } from '../providers/outbound.js';
 import { config } from '../config.js';
 import type { NotificationMessage } from '../providers/notifications/types.js';
+
+/** Days from now until `expires_at`, rounded up; null for a lifetime account. */
+function daysLeft(sub: Subscription | null): number | null {
+  if (!sub?.expires_at) return null;
+  return Math.max(0, Math.ceil((sub.expires_at.getTime() - Date.now()) / 86_400_000));
+}
+
+/** The shape every admin subscription endpoint answers with. */
+function subscriptionView(phone: string, userId: string, sub: Subscription | null) {
+  return {
+    ok: true,
+    user_id: userId,
+    phone,
+    subscription: sub && {
+      status: sub.status,
+      plan: sub.plan,
+      started_at: sub.started_at,
+      expires_at: sub.expires_at,
+      is_founder: sub.is_founder,
+    },
+    is_premium: isPremiumNow(sub),
+    days_left: daysLeft(sub),
+  };
+}
 
 function fmtPct(v: number | null): string {
   return v == null ? '—' : v.toFixed(1) + '٪';
@@ -488,5 +516,92 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
     if (!row) return reply.code(404).send({ error: 'no_profile', message: 'این شماره هنوز ثبت‌نام نکرده.' });
 
     return reply.send({ ok: true, user_id: row.id, phone, tier });
+  });
+
+  // --- Subscriptions ---------------------------------------------------------
+  // Gifting premium by hand, through the same engine the payment gateway will
+  // use. These exist so that /admin/users/set-tier above never has to be reached
+  // for again: it writes `profiles.tier` and nothing else, which leaves an
+  // account premium with no subscription behind it — the exact shape the nightly
+  // sweep revokes. Anything granted here has a real subscription row, so it
+  // survives the sweep because it is genuinely valid, not because of an
+  // exception carved out for it.
+  //
+  // Keyed by phone rather than user_id: it is what the founder actually has when
+  // someone asks for access, and it is what /auth already identifies people by.
+
+  /** Resolve a raw phone to a profile, or reply with the right error. */
+  async function resolvePhone(
+    rawPhone: string,
+    reply: FastifyReply,
+  ): Promise<{ id: string; phone: string } | null> {
+    const phone = normalizePhone(rawPhone);
+    if (!phone) {
+      void reply.code(400).send({ error: 'invalid_phone', message: 'شماره‌ی موبایل معتبر نیست.' });
+      return null;
+    }
+    const row = await one<{ id: string }>('select id from profiles where phone = $1', [phone]);
+    if (!row) {
+      void reply.code(404).send({ error: 'no_profile', message: 'این شماره هنوز ثبت‌نام نکرده.' });
+      return null;
+    }
+    return { id: row.id, phone };
+  }
+
+  const phoneBody = (extra: Record<string, unknown> = {}, required: string[] = []) => ({
+    schema: {
+      body: {
+        type: 'object',
+        required: ['phone', ...required],
+        properties: { phone: { type: 'string' }, ...extra },
+      },
+    },
+  });
+
+  // GET /admin/subscriptions?phone= — read the state before changing it.
+  app.get('/admin/subscriptions', {
+    schema: { querystring: { type: 'object', required: ['phone'], properties: { phone: { type: 'string' } } } },
+  }, async (request, reply) => {
+    const { phone: rawPhone } = request.query as { phone: string };
+    const who = await resolvePhone(rawPhone, reply);
+    if (!who) return reply;
+    return reply.send(subscriptionView(who.phone, who.id, await getSubscription(who.id)));
+  });
+
+  // POST /admin/subscriptions/grant { phone, months } — gift N months.
+  // Extends an existing subscription rather than replacing it, so gifting a
+  // month to an unhappy paying subscriber adds a month instead of costing them
+  // whatever they had left.
+  app.post('/admin/subscriptions/grant',
+    phoneBody({ months: { type: 'integer', minimum: 1, maximum: 60 } }, ['months']),
+    async (request, reply) => {
+      const { phone: rawPhone, months } = request.body as { phone: string; months: number };
+      const who = await resolvePhone(rawPhone, reply);
+      if (!who) return reply;
+      const sub = await activateMonths(who.id, months, { source: 'admin' });
+      return reply.send(subscriptionView(who.phone, who.id, sub));
+    });
+
+  // POST /admin/subscriptions/grant-lifetime { phone } — premium with no end.
+  // Deliberately its own endpoint and not a `months: 'lifetime'` variant of the
+  // one above: a typo in a number field should never be able to give away a
+  // permanent account.
+  app.post('/admin/subscriptions/grant-lifetime', phoneBody(), async (request, reply) => {
+    const { phone: rawPhone } = request.body as { phone: string };
+    const who = await resolvePhone(rawPhone, reply);
+    if (!who) return reply;
+    const sub = await grantLifetime(who.id, { source: 'admin' });
+    return reply.send(subscriptionView(who.phone, who.id, sub));
+  });
+
+  // POST /admin/subscriptions/revoke { phone } — undo a mistaken gift.
+  // Leaves `profiles.tier` for the sweep to settle: a league prize may still be
+  // holding this account up, and revoking here has no way to know that.
+  app.post('/admin/subscriptions/revoke', phoneBody(), async (request, reply) => {
+    const { phone: rawPhone } = request.body as { phone: string };
+    const who = await resolvePhone(rawPhone, reply);
+    if (!who) return reply;
+    const removed = await revokeSubscription(who.id, { source: 'admin' });
+    return reply.send({ ...subscriptionView(who.phone, who.id, null), removed });
   });
 }
