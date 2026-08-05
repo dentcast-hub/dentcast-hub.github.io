@@ -23,8 +23,12 @@ import { pool, one, withTransaction, type Queryable } from '../db.js';
  * construction rather than by remembering to exclude it.
  */
 
-/** Where an activation came from. Recorded for audit; never branched on. */
-export type ActivationSource = 'payment' | 'admin';
+/**
+ * Where an activation came from. Recorded for audit; never branched on.
+ * 'backfill' is written only by migration 0019, for accounts that were premium
+ * before subscriptions existed.
+ */
+export type ActivationSource = 'payment' | 'admin' | 'backfill';
 
 /** `plan` for a bought/gifted subscription with a finite end date. */
 export const PLAN_PAID = 'paid';
