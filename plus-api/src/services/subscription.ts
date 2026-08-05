@@ -21,6 +21,42 @@ import { pool, one, query, withTransaction, type Queryable } from '../db.js';
  * A lifetime account is the same row with `expires_at = NULL` and `is_founder`
  * set — not a distant date — so it is invisible to the expiry sweep by
  * construction rather than by remembering to exclude it.
+ *
+ * ---------------------------------------------------------------------------
+ * THE `profiles.tier` CONTRACT
+ * ---------------------------------------------------------------------------
+ * `profiles.tier` is a DERIVED CACHE, never an input. It exists because every
+ * premium gate in the site and the API reads it (middleware/require-premium.ts,
+ * GET /me, the dashboard, the Spot ad system), and asking two tables on every
+ * request to answer "is this person premium" would be absurd. But it is only
+ * ever a projection of two authorities:
+ *
+ *   subscriptions   - bought, gifted, or founder. This file owns it.
+ *   premium_grants  - the weekly league prize. services/premium-prize.ts owns it.
+ *
+ * Exactly THREE places may write it, and each writes only in one direction:
+ *
+ *   1. activateMonths()/grantLifetime() here, via applyTier() - free -> premium,
+ *      the instant a subscription starts. Never the other way.
+ *   2. grantWeeklyPrizes() in premium-prize.ts               - free -> premium,
+ *      when a league week finalizes. Never the other way.
+ *   3. sweepExpiredSubscriptions() here, and its narrower sibling
+ *      expirePremiumPrizes()                                 - BOTH directions.
+ *      Only a sweep may take premium away, because only a sweep looks at every
+ *      authority at once and can therefore know that nothing else is still
+ *      holding the account up.
+ *
+ * The rule that keeps this honest: NOTHING sets tier as a way of granting
+ * access. Access is granted by writing a date; tier follows. A fourth writer
+ * that skips the date is not a shortcut, it is an account that the sweep will
+ * eventually and correctly revoke — which is exactly what POST
+ * /admin/users/set-tier used to manufacture, and why migration 0019 had to exist
+ * and that route is now a 410.
+ *
+ * Drift is not merely forbidden, it is repaired: the sweep's third phase
+ * promotes any account whose valid subscription the cache has fallen behind, so
+ * a cache that goes wrong for a reason nobody anticipated heals on its own
+ * within a day.
  */
 
 /**

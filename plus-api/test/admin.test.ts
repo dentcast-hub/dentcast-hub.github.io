@@ -75,8 +75,8 @@ describe('POST /admin/notify/test', () => {
   });
 });
 
-describe('POST /admin/users/set-tier', () => {
-  it('requires admin auth', async () => {
+describe('POST /admin/users/set-tier (retired)', () => {
+  it('still requires admin auth — a retired route is not an open one', async () => {
     const res = await app.inject({
       method: 'POST', url: '/admin/users/set-tier',
       payload: { phone: '09121800001', tier: 'premium' },
@@ -84,39 +84,27 @@ describe('POST /admin/users/set-tier', () => {
     expect(res.statusCode).toBe(401);
   });
 
-  it('flips an existing profile to premium and back to free', async () => {
-    await loginAs(app, '09121800001'); // creates the profile
+  it('answers 410 and names where the capability went', async () => {
+    await loginAs(app, '09121800001');
 
-    const up = await app.inject({
+    const res = await app.inject({
       method: 'POST', url: '/admin/users/set-tier',
       headers: { authorization: basic }, payload: { phone: '09121800001', tier: 'premium' },
     });
-    expect(up.statusCode).toBe(200);
-    expect(up.json()).toMatchObject({ ok: true, phone: '09121800001', tier: 'premium' });
-
-    const row = await pool.query('select tier from profiles where phone = $1', ['09121800001']);
-    expect(row.rows[0].tier).toBe('premium');
-
-    const down = await app.inject({
-      method: 'POST', url: '/admin/users/set-tier',
-      headers: { authorization: basic }, payload: { phone: '09121800001', tier: 'free' },
-    });
-    expect(down.statusCode).toBe(200);
-    expect(down.json().tier).toBe('free');
+    expect(res.statusCode).toBe(410);
+    expect(res.json().replaced_by).toContain('POST /admin/subscriptions/grant-lifetime');
   });
 
-  it('404s an unknown phone and 400s an invalid one', async () => {
-    const notFound = await app.inject({
+  it('no longer manufactures a premium account with nothing behind it', async () => {
+    await loginAs(app, '09121800001');
+    await app.inject({
       method: 'POST', url: '/admin/users/set-tier',
-      headers: { authorization: basic }, payload: { phone: '09129999999', tier: 'premium' },
+      headers: { authorization: basic }, payload: { phone: '09121800001', tier: 'premium' },
     });
-    expect(notFound.statusCode).toBe(404);
 
-    const invalid = await app.inject({
-      method: 'POST', url: '/admin/users/set-tier',
-      headers: { authorization: basic }, payload: { phone: 'not-a-phone', tier: 'premium' },
-    });
-    expect(invalid.statusCode).toBe(400);
+    // The exact shape migration 0019 had to clean up: premium, no subscription.
+    const row = await pool.query('select tier from profiles where phone = $1', ['09121800001']);
+    expect(row.rows[0].tier).toBe('free');
   });
 });
 
@@ -228,6 +216,39 @@ describe('admin subscriptions', () => {
     expect((await grant({ phone: 'not-a-phone', months: 6 })).statusCode).toBe(400);
     expect((await grant({ phone: '09129999999' }, '/admin/subscriptions/grant-lifetime')).statusCode).toBe(404);
     expect((await grant({ phone: '09129999999' }, '/admin/subscriptions/revoke')).statusCode).toBe(404);
+  });
+
+  it('runs the sweep on demand, so a revoke can take effect without waiting for midnight', async () => {
+    await loginAs(app, PHONE);
+    await grant({ phone: PHONE }, '/admin/subscriptions/grant-lifetime');
+    await grant({ phone: PHONE }, '/admin/subscriptions/revoke');
+
+    const res = await app.inject({
+      method: 'POST', url: '/admin/subscriptions/run-sweep', headers: { authorization: basic },
+    });
+    expect(res.statusCode).toBe(200);
+    expect(res.json().demoted).toBe(1);
+
+    const row = await pool.query('select tier from profiles where phone = $1', [PHONE]);
+    expect(row.rows[0].tier).toBe('free');
+  });
+
+  it('repairs a tier that has fallen out of step with a valid subscription', async () => {
+    await loginAs(app, PHONE);
+    await grant({ phone: PHONE, months: 6 });
+    await pool.query("update profiles set tier = 'free' where phone = $1", [PHONE]);
+
+    const res = await app.inject({
+      method: 'POST', url: '/admin/subscriptions/run-sweep', headers: { authorization: basic },
+    });
+    expect(res.json().promoted).toBe(1);
+    const row = await pool.query('select tier from profiles where phone = $1', [PHONE]);
+    expect(row.rows[0].tier).toBe('premium');
+  });
+
+  it('guards the sweep behind admin auth like every other run endpoint', async () => {
+    const res = await app.inject({ method: 'POST', url: '/admin/subscriptions/run-sweep' });
+    expect(res.statusCode).toBe(401);
   });
 
   it('accepts the phone in any of the forms a human types it', async () => {

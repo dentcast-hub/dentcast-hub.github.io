@@ -10,7 +10,7 @@ import { one } from '../db.js';
 import { normalizePhone } from '../services/phone.js';
 import {
   activateMonths, grantLifetime, revokeSubscription, getSubscription, isPremiumNow,
-  type Subscription,
+  sweepExpiredSubscriptions, type Subscription,
 } from '../services/subscription.js';
 import {
   getSpotStats, defaultRange, isCalendarDay, SPOT_HOSTS, type GroupBy,
@@ -490,33 +490,31 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
     });
   });
 
-  // POST /admin/users/set-tier { phone, tier } - manual premium/free override
-  // (no payment gateway yet; Phase 4). Founder-only testing/grandfathering tool,
-  // same shape as /admin/league/set-tier but for the premium tier field.
-  app.post('/admin/users/set-tier', {
-    schema: {
-      body: {
-        type: 'object',
-        required: ['phone', 'tier'],
-        properties: {
-          phone: { type: 'string' },
-          tier: { type: 'string', enum: ['free', 'premium'] },
-        },
-      },
-    },
-  }, async (request, reply) => {
-    const { phone: rawPhone, tier } = request.body as { phone: string; tier: 'free' | 'premium' };
-    const phone = normalizePhone(rawPhone);
-    if (!phone) return reply.code(400).send({ error: 'invalid_phone' });
-
-    const row = await one<{ id: string }>(
-      'update profiles set tier = $2 where phone = $1 returning id',
-      [phone, tier],
-    );
-    if (!row) return reply.code(404).send({ error: 'no_profile', message: 'این شماره هنوز ثبت‌نام نکرده.' });
-
-    return reply.send({ ok: true, user_id: row.id, phone, tier });
-  });
+  // POST /admin/users/set-tier — RETIRED, deliberately answering instead of
+  // vanishing.
+  //
+  // It wrote `profiles.tier` directly, which is now a derived cache with exactly
+  // three sanctioned writers (see the contract atop services/subscription.ts).
+  // Every account it ever touched became premium with nothing behind it, and
+  // migration 0019 exists solely to clean up after it — including the founders'
+  // own accounts, which the nightly sweep would otherwise have been right to
+  // revoke. Leaving it in place would keep manufacturing exactly the rows that
+  // migration had to repair.
+  //
+  // A 410 rather than a deleted route: whoever reaches for this has a real
+  // intention, and the useful answer names where it went. There is no 'premium'
+  // any more without saying for how long — which is the whole point.
+  app.post('/admin/users/set-tier', async (_request, reply) => reply.code(410).send({
+    error: 'gone',
+    message: 'این مسیر بازنشسته شده. برای هدیه‌ی اشتراک از /admin/subscriptions/grant '
+      + '(با months) یا /admin/subscriptions/grant-lifetime استفاده کنید، و برای پس‌گرفتن '
+      + 'از /admin/subscriptions/revoke.',
+    replaced_by: [
+      'POST /admin/subscriptions/grant',
+      'POST /admin/subscriptions/grant-lifetime',
+      'POST /admin/subscriptions/revoke',
+    ],
+  }));
 
   // --- Subscriptions ---------------------------------------------------------
   // Gifting premium by hand, through the same engine the payment gateway will
@@ -603,5 +601,19 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
     if (!who) return reply;
     const removed = await revokeSubscription(who.id, { source: 'admin' });
     return reply.send({ ...subscriptionView(who.phone, who.id, null), removed });
+  });
+
+  // POST /admin/subscriptions/run-sweep — run the nightly reconciliation now
+  // (the cron does this at 00:00 Asia/Tehran). Twin of run-free-digest.
+  //
+  // This is what makes "tier is derived" an operable claim rather than a comment:
+  // whatever `profiles.tier` currently says, one call puts it back in step with
+  // what people have paid for. It is the manual lever for a revoke that should
+  // take effect immediately, the way to watch a whole lifecycle in one sitting
+  // rather than across two midnights, and the recovery path if the timer ever
+  // dies unnoticed. Idempotent, so it is always safe to press.
+  app.post('/admin/subscriptions/run-sweep', async (_request, reply) => {
+    const result = await sweepExpiredSubscriptions(new Date());
+    return reply.send({ ok: true, ...result });
   });
 }
