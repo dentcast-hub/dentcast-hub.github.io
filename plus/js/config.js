@@ -43,6 +43,18 @@ export function irMirrorUrl() {
   return 'https://dentcast.ir' + location.pathname + location.search + location.hash;
 }
 
+// The price list, mirrored client-side.
+//
+// The server is the authority and its answer always wins — but the page must be
+// READABLE before that answer arrives, and still readable if it never does.
+// Everything a visitor came here to learn (what it costs, what the terms are,
+// what they get) is static; only "can we take money today" and "does this plan
+// still fit under this month's ceiling" genuinely need the API. Gating the whole
+// page on that call meant a visitor saw an error instead of a price whenever the
+// API was slow, down, or simply not deployed yet.
+export const PLAN_MONTHS = [1, 3, 6];
+export const MONTHLY_RIAL = 10000000; // 1,000,000 toman — mirrors PAYMENT_MONTHLY_RIAL
+
 // --- payments are .ir-only --------------------------------------------------
 // NOT the same question as isOrgHost() above, which gates the whole .org site
 // and is currently off. This one is a fact about the payment gateway rather

@@ -87,6 +87,10 @@ function buildUserPerson(user) {
         onclick: () => { closeMenu(); openOverlay('dashboard', 'پیشخوان', (root) => renderDashboard(root, { me: user })); } }, 'پیشخوان'),
       el('button', { class: 'dcp-person-item', type: 'button', role: 'menuitem',
         onclick: () => { closeMenu(); openOverlay('profile', 'پروفایل', (root) => renderProfile(root, { me: user })); } }, 'پروفایل'),
+      // Re-run the guided tour on demand (mobile shell only for now). On a
+      // non-home page startTour hands off to the homepage via /?tour=1.
+      tourMenuAvailable() ? el('button', { class: 'dcp-person-item', type: 'button', role: 'menuitem',
+        onclick: () => { closeMenu(); if (overlayOpen()) closeOverlay(); startTour({ manual: true }); } }, 'راهنمای سایت') : null,
       // Buying a subscription, reachable from the account menu itself and not
       // only from inside the profile — the shortest path from "I want this" to
       // the price. A LINK, not a button, so it opens in a new tab like any
@@ -98,10 +102,6 @@ function buildUserPerson(user) {
           href: pricingHref('header-menu'), onclick: () => closeMenu() },
         subscriptionMenuLabel(user))
         : null,
-      // Re-run the guided tour on demand (mobile shell only for now). On a
-      // non-home page startTour hands off to the homepage via /?tour=1.
-      tourMenuAvailable() ? el('button', { class: 'dcp-person-item', type: 'button', role: 'menuitem',
-        onclick: () => { closeMenu(); if (overlayOpen()) closeOverlay(); startTour({ manual: true }); } }, 'راهنمای سایت') : null,
       el('button', { class: 'dcp-person-item', type: 'button', role: 'menuitem',
         onclick: async () => { closeMenu(); await api.logout().catch(() => {}); location.reload(); } }, 'خروج'),
     ]);

@@ -15,7 +15,9 @@
 import { el } from './util.js';
 import { api, currentUser } from './api.js';
 import { openLoginModal } from './login-modal.js';
-import { PREMIUM_FEATURES, paymentsNeedIrHost, paymentsIrUrl } from './config.js';
+import {
+  PREMIUM_FEATURES, paymentsNeedIrHost, paymentsIrUrl, PLAN_MONTHS, MONTHLY_RIAL,
+} from './config.js';
 import { registerSW } from './pwa.js';
 
 const FA_DIGITS = '۰۱۲۳۴۵۶۷۸۹';
@@ -146,22 +148,27 @@ async function main() {
   // Which gate sent them here — so we can learn what people actually pay for.
   const from = new URLSearchParams(location.search).get('from') || '';
 
-  root.replaceChildren(el('p', { class: 'dcp-muted' }, 'در حال بارگذاری…'));
+  // What we can say without asking anyone. The API refines this below; it does
+  // not gate it. A page whose entire content sits behind a network call shows an
+  // error instead of a price every time that call is slow, blocked, or — as on
+  // the day this shipped — simply not deployed yet.
+  const fallback = {
+    enabled: false,
+    monthly_rial: MONTHLY_RIAL,
+    any_plan_available: true,
+    plans: PLAN_MONTHS.map((months) => ({
+      months, amount_rial: months * MONTHLY_RIAL, available: true, blocked_by: null,
+    })),
+    offline: true,
+  };
 
-  // The price list and the visitor load together; neither waits on the other.
-  const [info, user] = await Promise.all([
+  const [live, user] = await Promise.all([
     api.payPlans().catch(() => null),
     currentUser().catch(() => null),
   ]);
-
-  if (!info) {
-    root.replaceChildren(el('div', { class: 'dcp-gate' }, [
-      el('p', {}, 'فهرست اشتراک‌ها در دسترس نیست.'),
-      el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button',
-        onclick: () => location.reload() }, 'تلاش دوباره'),
-    ]));
-    return;
-  }
+  // The server's answer wins wherever it exists; where it does not, the page is
+  // still the page.
+  const info = live ? { ...live, offline: false } : fallback;
 
   // A founder has nothing to buy here; say so and send them back rather than
   // showing a price list that means nothing to them.
@@ -226,6 +233,17 @@ async function main() {
   };
 
   const drawAction = () => {
+    if (info.offline) {
+      // Prices shown, purchase not attemptable: saying "buy" and then failing
+      // is worse than saying we cannot reach the payment service right now.
+      action.replaceChildren(
+        el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button', disabled: 'disabled' },
+          'در دسترس نیست'),
+        el('p', { class: 'dcp-price-fine' },
+          'ارتباط با سرویس پرداخت برقرار نشد. کمی بعد دوباره امتحان کنید.'),
+      );
+      return;
+    }
     if (!info.enabled) {
       action.replaceChildren(
         el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button', disabled: 'disabled' },
@@ -256,7 +274,11 @@ async function main() {
   ];
 
   const notices = [];
-  if (!info.enabled) {
+  if (info.offline) {
+    // Deliberately silent here: "the gateway is not active yet" would be a
+    // claim, and when we could not reach the server we do not have one. The
+    // action area says the true thing — that we could not ask.
+  } else if (!info.enabled) {
     notices.push(notice('off', 'درگاه پرداخت هنوز فعال نیست'));
   } else if (!info.any_plan_available) {
     notices.push(notice('warn', 'ظرفیت فروش این ماه تکمیل شده است',
