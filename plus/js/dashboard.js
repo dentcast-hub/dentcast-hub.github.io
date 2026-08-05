@@ -289,7 +289,7 @@ async function collectionsBlock() {
   const strip = el('div', { class: 'dcp-cl-dash-strip' }, data.collections.slice(0, 4).map((c) => el('a', {
     class: 'dcp-cl-dash-board', href: '/plus/collection.html?id=' + encodeURIComponent(c.id),
   }, [
-    boardCover(c.preview),
+    boardCover(c.preview, c),
     el('span', { class: 'dcp-cl-dash-name' }, c.title),
     el('span', { class: 'dcp-cl-dash-count' }, faNum(c.item_count) + ' مورد'),
   ])));

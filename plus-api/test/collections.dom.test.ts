@@ -27,6 +27,18 @@ vi.mock('/plus/js/api.js', () => ({
       calls.push({ op: 'patch', args: [id, patch] });
       return Promise.resolve({ highlight: { id, ...patch } });
     },
+    updateCollection: (id: string, patch: any) => {
+      calls.push({ op: 'update', args: [id, patch] });
+      return Promise.resolve({ collection: { id, title: 'x', ...patch } });
+    },
+    orderCollectionItems: (id: string, itemIds: string[]) => {
+      calls.push({ op: 'order', args: [id, itemIds] });
+      const byId = new Map(board.items.map((i: any) => [i.id, i]));
+      const items = itemIds.length
+        ? itemIds.map((iid, n) => ({ ...byId.get(iid), position: n }))
+        : board.items.map((i: any) => ({ ...i, position: null }));
+      return Promise.resolve({ items });
+    },
   },
   currentUser: () => Promise.resolve({ tier: 'premium' }),
 }));
@@ -183,5 +195,125 @@ describe('one collection board', () => {
 
     expect(calls.find((c) => c.op === 'remove')!.args).toEqual(['c1', 'i1']);
     expect(document.querySelectorAll('.dcp-cl-pin')).toHaveLength(1);
+  });
+});
+
+// A board is the user's own shelf: it can carry an emoji, a colour and a line
+// of its own, and its items can be put in the order the user means (which
+// created_at cannot express).
+describe('board identity and arrangement', () => {
+  beforeEach(() => {
+    document.body.innerHTML = '<div id="root"></div>';
+    calls.length = 0;
+    collections = [{ id: 'c1', title: 'امتحان بورد', item_count: 3, created_at: '2026-07-01T10:00:00Z', last_item_at: null, preview: [] }];
+    board = {
+      id: 'c1', title: 'امتحان بورد', created_at: '2026-07-01T10:00:00Z',
+      description: null, emoji: null, color: null,
+      items: [
+        hlItem({ id: 'i1', highlight_id: 'hl-1', position: null }),
+        hlItem({ id: 'i2', highlight_id: 'hl-2', exact: 'دومی', position: null }),
+        pageItem({ id: 'i3', position: null }),
+      ],
+    };
+  });
+
+  it('saves emoji, colour, name and description in one edit', async () => {
+    await renderCollectionDetail(document.getElementById('root')!, 'c1');
+    ([...document.querySelectorAll('button')].find((b) => b.textContent === 'ویرایشِ کالکشن') as HTMLElement).click();
+
+    const box = document.querySelector('.dcp-cl-editbox') as HTMLElement;
+    expect(box, 'the edit panel opened inline').not.toBeNull();
+    (box.querySelector('.dcp-cl-emoji-input') as HTMLInputElement).value = '🦷';
+    (box.querySelector('.dcp-hlib-ta') as HTMLTextAreaElement).value = 'هرچه برای بورد لازم است';
+    (box.querySelector('.dcp-hlib-sw') as HTMLElement).click(); // first colour
+    ([...box.querySelectorAll('button')].find((b) => b.textContent === 'ذخیره') as HTMLElement).click();
+    await new Promise((r) => setTimeout(r, 0));
+
+    const update = calls.find((c) => c.op === 'update')!;
+    expect(update.args[0]).toBe('c1');
+    expect(update.args[1]).toMatchObject({
+      title: 'امتحان بورد', emoji: '🦷', color: 'blue', description: 'هرچه برای بورد لازم است',
+    });
+    expect(document.querySelector('.dcp-cl-editbox'), 'the panel closes on save').toBeNull();
+    expect(document.querySelector('.dcp-cl-title-emo')!.textContent).toBe('🦷');
+    expect(document.body.textContent).toContain('هرچه برای بورد لازم است');
+  });
+
+  it('an emoji suggestion fills the field without typing', async () => {
+    await renderCollectionDetail(document.getElementById('root')!, 'c1');
+    ([...document.querySelectorAll('button')].find((b) => b.textContent === 'ویرایشِ کالکشن') as HTMLElement).click();
+    const box = document.querySelector('.dcp-cl-editbox') as HTMLElement;
+    ([...box.querySelectorAll('.dcp-hlib-chip')].find((b) => b.textContent === '🦷') as HTMLElement).click();
+    expect((box.querySelector('.dcp-cl-emoji-input') as HTMLInputElement).value).toBe('🦷');
+  });
+
+  it('arrange mode moves an item and saves the WHOLE order', async () => {
+    await renderCollectionDetail(document.getElementById('root')!, 'c1');
+    expect(document.querySelector('.dcp-cl-arrange'), 'no arrange controls until you ask').toBeNull();
+
+    ([...document.querySelectorAll('.dcp-hlib-act')].find((b) => (b.textContent || '').includes('چیدمانِ دستی')) as HTMLElement).click();
+    const bars = [...document.querySelectorAll('.dcp-cl-arrange')];
+    expect(bars).toHaveLength(3);
+    expect(bars[0].textContent).toContain('۱ از ۳');
+    // The first item cannot go up, the last cannot go down.
+    expect((bars[0].querySelector('button') as HTMLButtonElement).disabled).toBe(true);
+
+    // Push the SECOND item up one place.
+    (bars[1].querySelector('button') as HTMLElement).click();
+    await new Promise((r) => setTimeout(r, 0));
+
+    const order = calls.find((c) => c.op === 'order')!;
+    expect(order.args[0]).toBe('c1');
+    expect(order.args[1], 'the whole board, in its new order').toEqual(['i2', 'i1', 'i3']);
+  });
+
+  it('«بازگشت به تازه‌ترین» clears the arrangement', async () => {
+    board.items = board.items.map((it: any, i: number) => ({ ...it, position: i }));
+    await renderCollectionDetail(document.getElementById('root')!, 'c1');
+    const reset = [...document.querySelectorAll('.dcp-hlib-act')]
+      .find((b) => (b.textContent || '').includes('بازگشت به تازه‌ترین')) as HTMLElement;
+    expect(reset.hasAttribute('hidden'), 'offered only on an arranged board').toBe(false);
+    reset.click();
+    await new Promise((r) => setTimeout(r, 0));
+
+    expect(calls.find((c) => c.op === 'order')!.args[1]).toEqual([]);
+  });
+
+  it('offers «چیدمانِ خودم» as a sort only when the board has one', async () => {
+    await renderCollectionDetail(document.getElementById('root')!, 'c1');
+    const opts = () => [...document.querySelectorAll('select option')].map((o) => o.textContent);
+    expect(opts()).not.toContain('چیدمانِ خودم');
+
+    board.items = board.items.map((it: any, i: number) => ({ ...it, position: i }));
+    await renderCollectionDetail(document.getElementById('root')!, 'c1');
+    expect(opts()[0]).toBe('چیدمانِ خودم');
+  });
+});
+
+// One more arrange-mode invariant, kept separate because it is about what the
+// mode HIDES: ↑/↓ order the whole board, so a filter that hides part of it
+// would move an item past cards that are not on screen.
+describe('arrange mode takes the filters off the table', () => {
+  beforeEach(() => {
+    document.body.innerHTML = '<div id="root"></div>';
+    calls.length = 0;
+    collections = [{ id: 'c1', title: 'برد', item_count: 3, created_at: '2026-07-01T10:00:00Z', last_item_at: null, preview: [] }];
+    board = {
+      id: 'c1', title: 'برد', created_at: '2026-07-01T10:00:00Z', description: null, emoji: null, color: null,
+      items: [hlItem({ id: 'i1' }), hlItem({ id: 'i2', highlight_id: 'hl-2', exact: 'دومی' }), pageItem({ id: 'i3' })],
+    };
+  });
+
+  it('clears and hides the filters, and shows every item', async () => {
+    await renderCollectionDetail(document.getElementById('root')!, 'c1');
+    const search = document.querySelector('input[type="search"]') as HTMLInputElement;
+    search.value = 'دومی';
+    search.dispatchEvent(new Event('input'));
+    expect(document.querySelectorAll('.dcp-cl-pin')).toHaveLength(1);
+
+    ([...document.querySelectorAll('.dcp-hlib-act')].find((b) => (b.textContent || '').includes('چیدمانِ دستی')) as HTMLElement).click();
+    expect(document.querySelectorAll('.dcp-cl-pin'), 'the whole board is on screen').toHaveLength(3);
+    expect(search.hasAttribute('hidden'), 'the search box steps aside').toBe(true);
+    expect((document.querySelector('.dcp-hlib-chips') as HTMLElement).hasAttribute('hidden')).toBe(true);
   });
 });

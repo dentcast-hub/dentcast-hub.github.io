@@ -221,6 +221,11 @@ export const api = {
   getCollection: (id) => request('/collections/' + encodeURIComponent(id)),
   createCollection: (title) => request('/collections', { method: 'POST', body: { title } }),
   renameCollection: (id, title) => request('/collections/' + encodeURIComponent(id), { method: 'PATCH', body: { title } }),
+  // A board's own identity (any subset of title/description/emoji/color; null clears one).
+  updateCollection: (id, patch) => request('/collections/' + encodeURIComponent(id), { method: 'PATCH', body: patch }),
+  // The board's own arrangement: the WHOLE order, every time (empty = back to newest-first).
+  orderCollectionItems: (id, itemIds) =>
+    request('/collections/' + encodeURIComponent(id) + '/items/order', { method: 'PUT', body: { item_ids: itemIds } }),
   deleteCollection: (id) => request('/collections/' + encodeURIComponent(id), { method: 'DELETE' }),
   addToCollection: (id, item) => request('/collections/' + encodeURIComponent(id) + '/items', { method: 'POST', body: item }),
   removeCollectionItem: (id, itemId) =>

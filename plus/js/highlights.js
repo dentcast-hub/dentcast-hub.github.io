@@ -179,8 +179,13 @@ export async function renderHighlightLibrary(container) {
   const state = readState();
 
   const countLine = el('p', { class: 'dcp-hlib-count' });
+  // The two premium study surfaces are one workflow (read here → file into a
+  // board), and neither is in the site nav, so each links to the other.
   const top = el('div', { class: 'dcp-pw-top' }, [
-    el('h2', { class: 'dcp-pw-heading' }, 'دفترچه‌ی هایلایت‌ها'),
+    el('div', { class: 'dcp-hlib-head' }, [
+      el('h2', { class: 'dcp-pw-heading' }, 'دفترچه‌ی هایلایت‌ها'),
+      el('a', { class: 'dcp-pw-alllink', href: '/plus/collections.html' }, '🗂 کالکشن‌ها'),
+    ]),
     el('p', { class: 'dcp-sec-hint' },
       'هرچه تا حالا هایلایت کرده‌ای، یکجا و کامل — با یادداشت‌های خودت. همین‌جا بخوان، همین‌جا ویرایش کن؛ «متنِ مقاله» هم تو را دقیقاً روی همان هایلایت می‌برد.'),
   ]);

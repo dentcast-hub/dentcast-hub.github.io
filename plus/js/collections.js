@@ -40,9 +40,37 @@ function coverTile(p) {
   }, TYPE_ICON[p.type] || '📄');
 }
 
-/** A board's cover: a small collage of up to 3 of its items (Pinterest's own board-cover shape). */
-export function boardCover(preview) {
-  const cover = el('div', { class: 'dcp-cl-cover dcp-cl-cover-' + Math.min(preview.length, 3) });
+// A board's own colour (chosen by its owner; the API validates the same six).
+// These are surfaces the title sits on, so each is a soft tint that works under
+// both themes rather than a saturated brand colour.
+export const BOARD_COLORS = [
+  { key: 'blue', fa: 'آبی', css: '#dbe9ff' },
+  { key: 'green', fa: 'سبز', css: '#d9f2e2' },
+  { key: 'amber', fa: 'کهربایی', css: '#fdeecd' },
+  { key: 'pink', fa: 'صورتی', css: '#fbdfe9' },
+  { key: 'purple', fa: 'بنفش', css: '#e6e0fb' },
+  { key: 'slate', fa: 'خاکستری', css: '#e2e8f0' },
+];
+const boardColorCss = (key) => (BOARD_COLORS.find((c) => c.key === key) || {}).css || null;
+
+/**
+ * A board's cover: the owner's own emoji if they set one, otherwise the
+ * Pinterest-style collage of its 3 most recent items. A shelf of identical
+ * generated covers is a shelf you cannot scan — the emoji is the fastest way
+ * to tell «امتحان بورد» from «کیس خانم ر.» at a glance.
+ */
+export function boardCover(preview, collection = null) {
+  const tint = collection && boardColorCss(collection.color);
+  if (collection && collection.emoji) {
+    return el('div', {
+      class: 'dcp-cl-cover dcp-cl-cover-emoji',
+      style: tint ? 'background:' + tint : null,
+    }, el('span', { class: 'dcp-cl-cover-emo' }, collection.emoji));
+  }
+  const cover = el('div', {
+    class: 'dcp-cl-cover dcp-cl-cover-' + Math.min(preview.length, 3),
+    style: tint && !preview.length ? 'background:' + tint : null,
+  });
   if (!preview.length) { cover.appendChild(el('span', { class: 'dcp-cl-cover-empty' }, '🗂')); return cover; }
   preview.slice(0, 3).forEach((p) => cover.appendChild(coverTile(p)));
   return cover;
@@ -138,7 +166,7 @@ function chooserCard({ title, hint, onPick, exclude = null, okText = 'اضافه
     }
     list.replaceChildren(...rows.map((c) => {
       const row = el('button', { class: 'dcp-cl-pick-row', type: 'button' }, [
-        boardCover(c.preview || []),
+        boardCover(c.preview || [], c),
         el('span', { class: 'dcp-cl-pick-txt' }, [
           el('span', { class: 'dcp-cl-pick-name' }, c.title),
           el('span', { class: 'dcp-cl-pick-count' }, faNum(c.item_count || 0) + ' مورد'),
@@ -244,9 +272,29 @@ export async function openCollectionPicker({ highlightId, contentId } = {}) {
  *
  * @param collectionId  the board it lives in (needed for move + remove)
  */
-function pinCard(item, collectionId, { onRemove, onChanged }) {
+function pinCard(item, collectionId, { onRemove, onChanged, arrange = null }) {
   const kindLabel = FOLDER_EN[item.type] || item.type;
   const pin = el('div', { class: 'dcp-cl-pin' });
+
+  // While the board is being arranged, the pin's own actions step aside for
+  // the two that matter — up and down. Position is shown as «۲ از ۷» so the
+  // move you just made is legible without counting cards.
+  function arrangeBar() {
+    const up = el('button', {
+      class: 'dcp-hlib-act', type: 'button', title: 'بالاتر', 'aria-label': 'انتقال به بالاتر',
+      disabled: arrange.index === 0 ? '' : null,
+    }, '↑');
+    const down = el('button', {
+      class: 'dcp-hlib-act', type: 'button', title: 'پایین‌تر', 'aria-label': 'انتقال به پایین‌تر',
+      disabled: arrange.index === arrange.total - 1 ? '' : null,
+    }, '↓');
+    up.addEventListener('click', () => arrange.move(-1));
+    down.addEventListener('click', () => arrange.move(1));
+    return el('div', { class: 'dcp-hlib-actions dcp-cl-pin-actions dcp-cl-arrange' }, [
+      up, down,
+      el('span', { class: 'dcp-cl-arrange-pos' }, faNum(arrange.index + 1) + ' از ' + faNum(arrange.total)),
+    ]);
+  }
 
   function paint() {
     // A highlight-pin shows the SAME solid pastel the article's own mark.dcp-hl
@@ -307,7 +355,7 @@ function pinCard(item, collectionId, { onRemove, onChanged }) {
       band,
       noteBlock(item.note),
       foot,
-      el('div', { class: 'dcp-hlib-actions dcp-cl-pin-actions' }, actions),
+      arrange ? arrangeBar() : el('div', { class: 'dcp-hlib-actions dcp-cl-pin-actions' }, actions),
     ].filter(Boolean));
   }
 
@@ -342,7 +390,13 @@ export async function renderCollectionsList(container) {
   if (!data) { container.replaceChildren(el('div', { class: 'dcp-empty' }, 'کالکشن‌ها در دسترس نیست.')); return; }
 
   const top = el('div', { class: 'dcp-pw-top' }, [
-    el('h2', { class: 'dcp-pw-heading' }, 'کالکشن‌ها'),
+    // The two premium study surfaces are one workflow (read in the دفترچه →
+    // file into a board), and neither is in the site nav, so each links to the
+    // other.
+    el('div', { class: 'dcp-hlib-head' }, [
+      el('h2', { class: 'dcp-pw-heading' }, 'کالکشن‌ها'),
+      el('a', { class: 'dcp-pw-alllink', href: '/plus/highlights.html' }, '🖍 دفترچه‌ی هایلایت‌ها'),
+    ]),
     el('p', { class: 'dcp-sec-hint' },
       'هایلایت‌ها یا کلِ یه مقاله/اپیزود رو تو پوشه‌های دلخواهِ خودت بریز — برای یه امتحان، یه بیمارِ خاص، یا هر موضوعی که خودت بخوای؛ برخلافِ آرشیوِ موضوعی، این چیدمان کاملاً دستِ خودته.'),
   ]);
@@ -386,14 +440,17 @@ export async function renderCollectionsList(container) {
       return;
     }
     grid.replaceChildren(...rows.map((c) => {
-      const ago = agoFa(c.last_item_at || c.created_at);
+      // Only ever "when something was last added" — dating an empty board by
+      // when it was created reads as activity that never happened.
+      const ago = agoFa(c.last_item_at);
       return el('a', { class: 'dcp-cl-board', href: '/plus/collection.html?id=' + encodeURIComponent(c.id) }, [
-        boardCover(c.preview),
+        boardCover(c.preview, c),
         el('div', { class: 'dcp-cl-board-meta' }, [
           el('p', { class: 'dcp-cl-board-title' }, c.title),
+          c.description ? el('p', { class: 'dcp-cl-board-desc' }, c.description) : null,
           el('p', { class: 'dcp-cl-board-count' },
             faNum(c.item_count) + ' مورد' + (ago ? ' · ' + ago : '')),
-        ]),
+        ].filter(Boolean)),
       ]);
     }));
   }
@@ -428,35 +485,102 @@ export async function renderCollectionDetail(container, id) {
     return;
   }
 
-  const titleEl = el('h2', { class: 'dcp-pw-detail-title' }, data.title);
-  const renameBtn = el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button' }, 'تغییرِ نام');
+  const titleEl = el('h2', { class: 'dcp-pw-detail-title' }, [
+    data.emoji ? el('span', { class: 'dcp-cl-title-emo' }, data.emoji) : null,
+    el('span', {}, data.title),
+  ].filter(Boolean));
+  const descEl = el('p', { class: 'dcp-cl-detail-desc' }, data.description || '');
+  descEl.hidden = !data.description;
+  const editBtn = el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button' }, 'ویرایشِ کالکشن');
   const deleteBtn = el('button', { class: 'dcp-btn dcp-btn-danger', type: 'button' }, 'حذفِ کالکشن');
-  const titleWrap = el('div', { class: 'dcp-cl-title-wrap' }, [titleEl]);
-  const actionsRow = el('div', { class: 'dcp-cl-detail-actions' }, [renameBtn, deleteBtn]);
+  const titleWrap = el('div', { class: 'dcp-cl-title-wrap' }, [titleEl, descEl]);
+  const actionsRow = el('div', { class: 'dcp-cl-detail-actions' }, [editBtn, deleteBtn]);
 
-  // Rename: swap the title for an inline input+save+cancel row (profile.js's
-  // pseudonym-field pattern), never a native prompt().
-  renameBtn.addEventListener('click', () => {
-    if (titleWrap.querySelector('.dcp-field-row')) return;
-    const input = el('input', { class: 'dcp-input', value: data.title, maxlength: '80' });
+  function repaintHead() {
+    titleEl.replaceChildren(...[
+      data.emoji ? el('span', { class: 'dcp-cl-title-emo' }, data.emoji) : null,
+      el('span', {}, data.title),
+    ].filter(Boolean));
+    descEl.textContent = data.description || '';
+    descEl.hidden = !data.description;
+  }
+
+  // Board identity: name, emoji, colour and a one-line description, in ONE
+  // inline panel with one save. A board is the user's own shelf; before this
+  // every shelf looked identical and only its name could ever change.
+  editBtn.addEventListener('click', () => {
+    if (titleWrap.querySelector('.dcp-cl-editbox')) return;
+
+    const nameInput = el('input', { class: 'dcp-input', value: data.title, maxlength: '80', 'aria-label': 'نامِ کالکشن' });
+    const emojiInput = el('input', {
+      class: 'dcp-input dcp-cl-emoji-input', value: data.emoji || '', maxlength: '8',
+      placeholder: '🗂', 'aria-label': 'ایموجی کالکشن',
+    });
+    const descInput = el('textarea', {
+      class: 'dcp-hlib-ta', rows: '2', maxlength: '400',
+      placeholder: 'این کالکشن برای چیست؟ (اختیاری)', 'aria-label': 'توضیحِ کالکشن',
+    });
+    descInput.value = data.description || '';
+
+    // A short list of ready-made emoji beside the free field: picking is one
+    // tap on a phone, where summoning the emoji keyboard is not.
+    const SUGGESTED = ['📚', '🦷', '🧪', '💊', '🩺', '📝', '⭐️', '🔥', '🎯', '🧠'];
+    const emojiRow = el('div', { class: 'dcp-hlib-erow' }, SUGGESTED.map((e) => {
+      const b = el('button', { class: 'dcp-hlib-chip', type: 'button', 'aria-label': 'ایموجی ' + e }, e);
+      b.addEventListener('click', () => { emojiInput.value = e; });
+      return b;
+    }));
+
+    let color = data.color || null;
+    const colorBtns = BOARD_COLORS.map((c) => {
+      const b = el('button', {
+        class: 'dcp-hlib-sw' + (c.key === color ? ' is-on' : ''), type: 'button',
+        style: 'background:' + c.css, title: c.fa, 'aria-label': 'رنگ ' + c.fa,
+      });
+      b.addEventListener('click', () => {
+        color = color === c.key ? null : c.key; // pressing the active one clears it
+        colorBtns.forEach((x) => x.classList.remove('is-on'));
+        if (color) b.classList.add('is-on');
+      });
+      return b;
+    });
+
+    const msg = el('span', { class: 'dcp-hlib-msg', role: 'status' });
     const save = el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button' }, 'ذخیره');
     const cancel = el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button' }, 'انصراف');
-    const row = el('div', { class: 'dcp-field-row' }, [input, save, cancel]);
-    cancel.onclick = () => row.remove();
-    save.onclick = async () => {
-      const next = input.value.trim();
-      if (!next) return;
+    const box = el('div', { class: 'dcp-cl-editbox' }, [
+      el('div', { class: 'dcp-hlib-erow' }, [emojiInput, nameInput]),
+      emojiRow,
+      el('div', { class: 'dcp-hlib-erow' }, colorBtns),
+      descInput,
+      el('div', { class: 'dcp-hlib-erow dcp-hlib-esave' }, [save, cancel, msg]),
+    ]);
+
+    cancel.addEventListener('click', () => box.remove());
+    save.addEventListener('click', async () => {
+      const next = nameInput.value.trim();
+      if (!next) { msg.textContent = 'اسمِ کالکشن نمی‌تواند خالی باشد.'; return; }
       save.disabled = true;
+      msg.textContent = '';
       try {
-        const { collection } = await api.renameCollection(id, next);
-        titleEl.textContent = collection.title;
-        data.title = collection.title;
-        row.remove();
-      } catch (_) { save.disabled = false; }
-    };
-    input.addEventListener('keydown', (e) => { if (e.key === 'Enter') save.click(); });
-    titleWrap.appendChild(row);
-    input.focus();
+        const { collection } = await api.updateCollection(id, {
+          title: next,
+          emoji: emojiInput.value.trim() || null,
+          color,
+          description: descInput.value.trim() || null,
+        });
+        Object.assign(data, collection);
+        repaintHead();
+        box.remove();
+        toast('ذخیره شد');
+      } catch (_) {
+        save.disabled = false;
+        msg.textContent = 'ذخیره نشد؛ ایموجی را ساده‌تر بگیر یا دوباره تلاش کن.';
+      }
+    });
+    nameInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') save.click(); });
+    titleWrap.appendChild(box);
+    nameInput.focus();
   });
 
   // Delete: inline "حذف شود؟" confirm row (dashboard.js's recent-highlight
@@ -489,15 +613,34 @@ export async function renderCollectionDetail(container, id) {
   const KINDS = [{ key: '', fa: 'همه' }, { key: 'highlight', fa: 'هایلایت‌ها' }, { key: 'page', fa: 'صفحه‌ها' }];
   let kind = '';
   const kindChips = el('div', { class: 'dcp-hlib-chips' });
-  const sortSel = el('select', { class: 'dcp-input dcp-hlib-select', 'aria-label': 'ترتیب' }, [
-    el('option', { value: 'recent' }, 'تازه‌ترین'),
-    el('option', { value: 'oldest' }, 'قدیمی‌ترین'),
-    el('option', { value: 'source' }, 'بر اساس مقاله'),
-  ]);
+  // A board that the owner has arranged by hand opens in THAT order, and says
+  // so — the sort control offers «چیدمانِ خودم» only once there is one.
+  const hasManual = () => data.items.some((it) => it.position != null);
+  const sortSel = el('select', { class: 'dcp-input dcp-hlib-select', 'aria-label': 'ترتیب' });
+  function paintSort() {
+    const current = sortSel.value;
+    sortSel.replaceChildren(...[
+      hasManual() ? el('option', { value: 'manual' }, 'چیدمانِ خودم') : null,
+      el('option', { value: 'recent' }, 'تازه‌ترین'),
+      el('option', { value: 'oldest' }, 'قدیمی‌ترین'),
+      el('option', { value: 'source' }, 'بر اساس مقاله'),
+    ].filter(Boolean));
+    sortSel.value = current && [...sortSel.options].some((o) => o.value === current)
+      ? current
+      : (hasManual() ? 'manual' : 'recent');
+  }
+
+  // Arranging is a MODE, not a permanent set of buttons on every card: outside
+  // it a board stays a clean reading surface. Inside it each pin grows ↑/↓
+  // controls — deliberately buttons, not drag: dragging a masonry card is
+  // unusable on a phone and invisible to a keyboard.
+  let arranging = false;
+  const arrangeBtn = el('button', { class: 'dcp-hlib-act', type: 'button' }, '⇅ چیدمانِ دستی');
+  const resetBtn = el('button', { class: 'dcp-hlib-act', type: 'button' }, 'بازگشت به تازه‌ترین');
   const countLine = el('p', { class: 'dcp-hlib-count' });
   const tools = el('div', { class: 'dcp-hlib-controls' }, [
     el('div', { class: 'dcp-hlib-row' }, [search, sortSel]),
-    el('div', { class: 'dcp-hlib-row dcp-hlib-row-tools' }, [kindChips, countLine]),
+    el('div', { class: 'dcp-hlib-row dcp-hlib-row-tools' }, [kindChips, countLine, arrangeBtn, resetBtn]),
   ]);
 
   const grid = el('div', { class: 'dcp-cl-pin-grid' });
@@ -508,8 +651,55 @@ export async function renderCollectionDetail(container, id) {
     renderItems();
   }
 
+  // Save the WHOLE order, every time: positions are then only ever fully
+  // written, so two tabs can never leave the board half-arranged.
+  async function saveOrder() {
+    try {
+      const { items } = await api.orderCollectionItems(id, data.items.map((i) => i.id));
+      data.items = items;
+    } catch (_) { toast('ذخیره‌ی چیدمان ناموفق بود', { icon: '⚠️' }); }
+    renderItems();
+  }
+
+  async function moveItem(itemId, delta) {
+    const from = data.items.findIndex((i) => i.id === itemId);
+    const to = from + delta;
+    if (from < 0 || to < 0 || to >= data.items.length) return;
+    const [row] = data.items.splice(from, 1);
+    data.items.splice(to, 0, row);
+    renderItems();          // move first, save after: the board must feel instant
+    await saveOrder();
+  }
+
+  arrangeBtn.addEventListener('click', () => {
+    arranging = !arranging;
+    if (arranging) {
+      // Arranging orders the WHOLE board, so it cannot run under a filter that
+      // is hiding part of it.
+      search.value = '';
+      kind = '';
+      sortSel.value = 'manual';
+    }
+    renderItems();
+  });
+
+  resetBtn.addEventListener('click', async () => {
+    try {
+      const { items } = await api.orderCollectionItems(id, []);
+      data.items = items;
+      arranging = false;
+      sortSel.value = 'recent';
+      toast('چیدمان به تازه‌ترین برگشت');
+    } catch (_) { toast('انجام نشد', { icon: '⚠️' }); }
+    renderItems();
+  });
+
   function renderItems() {
     tools.hidden = data.items.length < 4;
+    paintSort();
+    arrangeBtn.textContent = arranging ? '✓ پایانِ چیدمان' : '⇅ چیدمانِ دستی';
+    arrangeBtn.classList.toggle('is-on', arranging);
+    resetBtn.hidden = !hasManual();
     if (!data.items.length) {
       countLine.textContent = '';
       kindChips.replaceChildren();
@@ -531,14 +721,24 @@ export async function renderCollectionDetail(container, id) {
       return b;
     }));
 
-    const q = foldFa(search.value);
+    // Arranging orders the WHOLE board, so while it is on the filters step
+    // aside entirely: ↑/↓ over a filtered subset would move an item past cards
+    // that are not on screen.
+    search.hidden = arranging;
+    sortSel.hidden = arranging;
+    kindChips.hidden = arranging;
+
+    const q = arranging ? '' : foldFa(search.value);
     let rows = data.items.filter((it) => {
+      if (arranging) return true;
       if (kind === 'highlight' && !it.highlight_id) return false;
       if (kind === 'page' && it.highlight_id) return false;
       if (!q) return true;
       return foldFa(it.exact).includes(q) || foldFa(it.note).includes(q) || foldFa(it.title).includes(q);
     });
-    const sort = sortSel.value;
+    // `data.items` already arrives in the board's own display order (manual
+    // placement first, then newest), so 'manual'/'recent' need no client sort.
+    const sort = arranging ? 'manual' : sortSel.value;
     if (sort === 'oldest') rows = rows.slice().reverse();
     else if (sort === 'source') {
       rows = rows.slice().sort((a, b) => String(a.title).localeCompare(String(b.title), 'fa'));
@@ -554,9 +754,13 @@ export async function renderCollectionDetail(container, id) {
       grid.replaceChildren(el('div', { class: 'dcp-empty' }, 'موردی با این فیلترها پیدا نشد.'));
       return;
     }
-    grid.replaceChildren(...rows.map((item) => pinCard(item, id, {
+    grid.classList.toggle('is-arranging', arranging);
+    grid.replaceChildren(...rows.map((item, i) => pinCard(item, id, {
       onRemove: removeItem,
       onChanged: () => renderItems(),
+      arrange: arranging
+        ? { index: i, total: rows.length, move: (delta) => moveItem(item.id, delta) }
+        : null,
     })));
   }
   search.addEventListener('input', renderItems);

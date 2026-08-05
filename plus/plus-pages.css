@@ -570,3 +570,39 @@ a.dcp-progress-row:hover { text-decoration: none; }
 .dcp-hlib-jump[hidden], .dcp-hlib-cards[hidden], .dcp-hlib-controls[hidden],
 .dcp-hlib-row[hidden], .dcp-hlib-chips[hidden], .dcp-hlib-act[hidden],
 .dcp-hlib-actions[hidden], .dcp-skel-wrap[hidden] { display: none !important; }
+
+/* ---- a board's own identity (emoji / colour / description) -----------------
+   A shelf of identical generated covers is a shelf you cannot scan. All three
+   are optional: a board with none of them renders exactly as it did before. */
+.dcp-cl-cover-emoji { display: flex; align-items: center; justify-content: center; background: var(--dcp-chip-bg, rgba(11,95,255,.07)); }
+.dcp-cl-cover-emo { font-size: 2.4rem; line-height: 1; }
+.dcp-cl-board-desc {
+  margin: 0 0 2px; font-size: .78rem; color: var(--txt2, #4a5f85); line-height: 1.6;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.dcp-cl-title-emo { margin-inline-end: 8px; }
+.dcp-cl-detail-desc { margin: 4px 0 0; color: var(--txt2, #4a5f85); font-size: .9rem; line-height: 1.8; }
+.dcp-cl-editbox {
+  display: flex; flex-direction: column; gap: 8px; margin-top: 12px;
+  padding: 12px; border-radius: var(--r-md, 14px);
+  border: 1px solid var(--border, rgba(2,35,96,.14));
+  background: color-mix(in srgb, var(--surface, #fff) 70%, transparent);
+}
+.dcp-cl-editbox .dcp-input, .dcp-cl-editbox .dcp-hlib-ta {
+  background: var(--surface, #fff); color: var(--txt);
+  border: 1px solid var(--border, rgba(2,35,96,.14)); border-radius: 10px;
+  padding: 9px 12px; font: inherit;
+}
+.dcp-cl-editbox .dcp-hlib-erow > .dcp-input:not(.dcp-cl-emoji-input) { flex: 1 1 180px; }
+.dcp-cl-emoji-input { flex: 0 0 68px; text-align: center; font-size: 1.2rem; }
+
+/* Arrange mode: the board becomes one column (in a masonry, "up" and "down"
+   mean nothing) and every pin trades its actions for ↑/↓ + its position. */
+.dcp-cl-pin-grid.is-arranging { column-count: 1 !important; }
+.dcp-cl-arrange { justify-content: flex-start; }
+.dcp-cl-arrange-pos { font-size: .78rem; color: var(--txt2, #4a5f85); }
+.dcp-hlib-act.is-on { border-color: var(--ac, #0b5fff); color: var(--ac, #0b5fff) !important; font-weight: 700; }
+.dcp-hlib-act[disabled] { opacity: .4; cursor: default; }
+/* Page heading + its sibling-surface link on one line (the دفترچه ↔ کالکشن‌ها
+   pair; neither is in the site nav, so each is the other's way in). */
+.dcp-hlib-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
