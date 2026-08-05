@@ -1614,6 +1614,15 @@ body.dc-desktop-ui #dc-desktop-root{
 .dcd-divider{ height:0.0625rem; background:var(--sb-div); margin:0.3125rem 0.5rem; }
 
 /* Col-A footer */
+.dcd-a-subscribe{ padding:0.4375rem 0.5rem 0; flex-shrink:0; }
+.dcd-a-subscribe a{
+  display:flex; align-items:center; justify-content:center; gap:0.3125rem;
+  padding:0.4375rem 0.3125rem; border-radius:var(--r-md);
+  border:1px solid rgba(255,255,255,.16); background:rgba(255,255,255,.04);
+  color:var(--sb-txt); font-size:0.6875rem; text-decoration:none;
+  white-space:nowrap; transition:all var(--tr);
+}
+.dcd-a-subscribe a:hover{ background:rgba(255,255,255,.1); }
 .dcd-col-a-footer{
   padding:0.4375rem 0.5rem; border-top:1px solid var(--sb-div);
   display:flex; gap:0.3125rem; flex-shrink:0;
@@ -4104,6 +4113,15 @@ a.dc-list-card--pillar {
       <a referrerpolicy='origin' target='_blank' href='https://trustseal.enamad.ir/?id=7173641&Code=1JNpptoXEnQlKFUqawxi6IG65bKVLl9m'><img referrerpolicy='origin' src='https://trustseal.enamad.ir/logo.aspx?id=7173641&Code=1JNpptoXEnQlKFUqawxi6IG65bKVLl9m' alt='نماد اعتماد الکترونیکی دنت‌کست' loading='lazy' style='cursor:pointer' code='1JNpptoXEnQlKFUqawxi6IG65bKVLl9m'></a>
     </div>
 
+    <!-- Buying a subscription, on the desktop shell. The mobile topbar (and its
+         «اشتراک» drawer button) is display:none here, so without this row the
+         desktop homepage had no route to the price at all. Its own full-width
+         row rather than a fourth chip in the footer below: those are 10px and
+         flex:1, and a fourth would squeeze all of them. -->
+    <div class="dcd-a-subscribe">
+      <a href="/plus/pricing.html?from=desk-sidebar"><span><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M3 8l4.5 3L12 5l4.5 6L21 8l-1.8 9H4.8L3 8z"/><path d="M4.8 20h14.4"/></svg></span> خرید اشتراک پریمیوم</a>
+    </div>
+
     <div class="dcd-col-a-footer">
       <button class="dcd-a-footer-btn" id="dcdThemeBtn"><span><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M20.5 14.2A8.2 8.2 0 0 1 9.8 3.5 8.8 8.8 0 1 0 20.5 14.2z"/></svg></span> تم</button>
       <button class="dcd-a-footer-btn" id="dcdPwaBtn"><span><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M10 18h4"/><path d="M12 7v6"/><path d="m9.5 10.5 2.5 2.5 2.5-2.5"/></svg></span> نصب</button>
@@ -4454,7 +4472,7 @@ scrollBody.addEventListener('touchend',e=>{
 </script>
 
 <!-- Theme toggle behavior moved to /dc-nav.js (single source) -->
-<script src="/dc-nav.js?v=39" defer></script>
+<script src="/dc-nav.js?v=40" defer></script>
 
 <!-- Toolbar drawer toggle is handled by /dc-nav.js (single source) -->
 
@@ -4576,7 +4594,7 @@ document.getElementById('tool-consult')?.addEventListener('click',()=>{window.lo
 document.getElementById('tool-about')?.addEventListener('click',()=>{window.location.href='about.html';});
 </script>
 
-<script src="/global-search.js?v=4"></script>
+<script src="/global-search.js?v=7"></script>
 <script>if('serviceWorker'in navigator){navigator.serviceWorker.register('/service-worker.js').catch(()=>{});}</script>
 
 <script>

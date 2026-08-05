@@ -1,0 +1,82 @@
+{
+  "/dc-nav.css": {
+    "v": 14,
+    "hash": "1397aa3320ff2918"
+  },
+  "/dc-nav.js": {
+    "v": 40,
+    "hash": "dad7355b09db3de1"
+  },
+  "/global-search-ui.js": {
+    "v": 3,
+    "hash": "555bacb2c532f998"
+  },
+  "/global-search.css": {
+    "v": 3,
+    "hash": "7d9f3519179bc480"
+  },
+  "/global-search.js": {
+    "v": 7,
+    "hash": "bd50932cb1d75571"
+  },
+  "/plus/js/assistant-page.js": {
+    "v": 3,
+    "hash": "5b81e82d06e21bc5"
+  },
+  "/plus/js/cards-page.js": {
+    "v": 3,
+    "hash": "d591329d0a60ce97"
+  },
+  "/plus/js/collection-page.js": {
+    "v": 5,
+    "hash": "3818acff3c655da1"
+  },
+  "/plus/js/collections-page.js": {
+    "v": 5,
+    "hash": "be95093c64f8442e"
+  },
+  "/plus/js/dashboard-page.js": {
+    "v": 3,
+    "hash": "9819107dbf9f2410"
+  },
+  "/plus/js/highlights-page.js": {
+    "v": 4,
+    "hash": "de81d9e9430b2068"
+  },
+  "/plus/js/pathway-page.js": {
+    "v": 3,
+    "hash": "9072ec8119ee1e28"
+  },
+  "/plus/js/pathways-page.js": {
+    "v": 3,
+    "hash": "8af42a51aee7dbe4"
+  },
+  "/plus/js/pay-result-page.js": {
+    "v": 2,
+    "hash": "df69841e2a58f356"
+  },
+  "/plus/js/pricing-page.js": {
+    "v": 3,
+    "hash": "dd37e60005b78a03"
+  },
+  "/plus/js/profile-page.js": {
+    "v": 3,
+    "hash": "33e133ae1618b083"
+  },
+  "/plus/js/reading-compass-page.js": {
+    "v": 3,
+    "hash": "2da9d7e8da6edc08"
+  },
+  "/plus/plus-desktop.css": {
+    "v": 2,
+    "hash": "49753391b4c5ded3"
+  },
+  "/plus/plus-pages.css": {
+    "v": 2,
+    "hash": "401e740234e3ed2a"
+  },
+  "/plus/plus.css": {
+    "v": 2,
+    "hash": "e88a3d8623e959a4"
+  }
+}

@@ -258,7 +258,13 @@ async function main() {
   if (!root) return;
 
   // Which gate sent them here — so we can learn what people actually pay for.
-  const from = new URLSearchParams(location.search).get('from') || '';
+  const params = new URLSearchParams(location.search);
+  const from = params.get('from') || '';
+  // A plan chosen on the OTHER host. The rial gateway lives on .ir, so a visitor
+  // who picked «شش ماهه» on .org has to cross domains to pay — and arriving to
+  // find the choice reset to the default is how a two-host purchase starts
+  // feeling like two purchases.
+  const asked = Number(params.get('plan'));
 
   // What we can say without asking anyone. The API refines this below; it does
   // not gate it. A page whose entire content sits behind a network call shows an
@@ -298,7 +304,7 @@ async function main() {
 
   const needIr = paymentsNeedIrHost();
   const featured = pickFeatured(info.plans);
-  let selected = featured;
+  let selected = info.plans.some((p) => p.months === asked && p.available) ? asked : featured;
 
   const msg = el('p', { class: 'dcp-price-msg' });
   const action = el('div', { class: 'dcp-price-action' });
@@ -308,8 +314,17 @@ async function main() {
     grid.replaceChildren(...info.plans.map((p) => planCard(p, {
       featured: p.months === featured,
       selected: p.months === selected,
-      onPick: (m) => { selected = m; drawPlans(); },
+      onPick: (m) => { selected = m; drawPlans(); drawAction(); },
     })));
+  };
+
+  /** The same page on .ir, carrying the plan they just picked and where from. */
+  const irPricingUrl = () => {
+    const qs = new URLSearchParams();
+    if (from) qs.set('from', from);
+    if (selected) qs.set('plan', String(selected));
+    const tail = qs.toString();
+    return paymentsIrUrl('/plus/pricing.html' + (tail ? `?${tail}` : ''));
   };
 
   const buy = async () => {
@@ -342,11 +357,12 @@ async function main() {
     // bouncing would take it away from exactly the people it is for.
     if (needIr) {
       action.replaceChildren(
-        el('a', { class: 'dcp-btn dcp-btn-primary',
-          href: paymentsIrUrl('/plus/pricing.html' + location.search) },
-        'پرداخت ریالی در dentcast.ir'),
+        el('a', { class: 'dcp-btn dcp-btn-primary', href: irPricingUrl() },
+          'پرداخت ریالی در dentcast.ir'),
         el('p', { class: 'dcp-price-fine' },
-          'درگاه ریالی به دامنه‌ی dentcast.ir ثبت شده است. قیمت‌ها یکی است.'),
+          'درگاه ریالی به دامنه‌ی dentcast.ir ثبت شده است. همان طرح و همان قیمت آنجا '
+          + 'باز می‌شود؛ چون دامنه فرق دارد، یک بار همان‌جا وارد می‌شوید و پرداخت را '
+          + 'تمام می‌کنید. اشتراک روی همان حساب فعال می‌شود و در هر دو سایت کار می‌کند.'),
       );
       return;
     }

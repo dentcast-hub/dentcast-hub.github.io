@@ -1,0 +1,27 @@
+name: Asset cache-buster guard
+
+# The shared assets (dc-nav.js, the /plus/ entry modules, the shared CSS) are
+# loaded through a stamped URL — /dc-nav.js?v=39. The path never changes, so the
+# stamp is the ONLY thing that makes a returning visitor's browser fetch the new
+# file.
+#
+# On 2026-08-05 the «اشتراک» button was added to the toolbar drawer. Its markup
+# went into index.html (HTML, short cache — it arrived); its click handler went
+# into dc-nav.js, stamped ?v=39, unchanged. On dentcast.org the result was a
+# button that was visible and did nothing at all. Eight /plus/ entry modules
+# shipped in the same batch with the same omission.
+#
+# tools/asset_version.py fingerprints each asset's whole IMPORT GRAPH — the
+# missing button lived in premium-cta.js, which the entry modules import and
+# which carries no stamp of its own — and compares it with the version recorded
+# in .dentcast/asset-versions.json. Remembering to bump is not a thing anyone
+# should have to do.
+on: [push, pull_request]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Every ?v= stamp must match the content it points at
+        run: python3 tools/asset_version.py --check
