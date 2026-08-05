@@ -1,0 +1,78 @@
+{
+  "type": "promptologist",
+  "note": "Publish of prompt4-4 (فصل ۴ قسمت ۴ — روشِ کار). Mints the two workflow-level prompting concepts the library lacked: breaking a big task into verified steps, and having the model draft the prompt itself. Every other tag on the article reuses an existing canonical concept.",
+  "concepts": [
+    {
+      "tag": "#شکستن_کار",
+      "domain": "ai",
+      "definition": "تقسیمِ یک خواسته‌ی مرکب به چند درخواستِ پشت‌سرهم، که خروجیِ هر پله پیش از شروعِ پله‌ی بعد سنجیده می‌شود — از جمله گذاشتنِ ایست بینِ فهم و تصمیمِ مدل.",
+      "use_when": "مقاله روشِ پیش‌بردنِ کار با مدل را آموزش دهد، نه صرفاً متنِ یک پرامپتِ واحد را.",
+      "aliases": [
+        "task decomposition",
+        "شکستن درخواست",
+        "پرامپت مرحله ای",
+        "پله پله",
+        "step by step prompting",
+        "تقسیم کار"
+      ]
+    },
+    {
+      "tag": "#Task_Decomposition",
+      "domain": "ai",
+      "definition": "Breaking a compound request into a chain of smaller prompts whose output is checked at each step before the next one builds on it.",
+      "use_when": "معادلِ لاتینِ #شکستن_کار؛ روی همان مقاله‌هایی که آن تگ را دارند، تا کوئریِ انگلیسی هم به مطلب برسد.",
+      "aliases": [
+        "chained prompting",
+        "stepwise prompting",
+        "prompt chaining"
+      ],
+      "co_tags": [
+        "#شکستن_کار"
+      ]
+    },
+    {
+      "tag": "#متاپرامپت",
+      "domain": "ai",
+      "definition": "سپردنِ نوشتنِ خودِ پرامپت به مدل: هدف و شرایط برای مدل توضیح داده می‌شود و از او خواسته می‌شود فقط پرامپت را بنویسد، نه خروجیِ نهایی را.",
+      "use_when": "مقاله ساختنِ پرامپت به کمکِ خودِ مدل را به‌عنوان یک تکنیک معرفی کند.",
+      "aliases": [
+        "meta prompting",
+        "متا پرامپت",
+        "پرامپت نویسی با مدل",
+        "prompt generation",
+        "نوشتن پرامپت توسط مدل"
+      ]
+    },
+    {
+      "tag": "#Meta_Prompting",
+      "domain": "ai",
+      "definition": "Asking the model to write the prompt itself from a description of the goal, then editing that draft with context only the user has.",
+      "use_when": "معادلِ لاتینِ #متاپرامپت؛ روی همان مقاله‌هایی که آن تگ را دارند، تا کوئریِ انگلیسی هم به مطلب برسد.",
+      "aliases": [
+        "write me a prompt",
+        "prompt writing prompt"
+      ],
+      "co_tags": [
+        "#متاپرامپت"
+      ]
+    }
+  ],
+  "articles": {
+    "dentai/promptologist/prompt4-4": [
+      "#پرامپتولوژیست",
+      "#هوش_مصنوعی",
+      "#سواد_هوش_مصنوعی",
+      "#AI_Literacy",
+      "#ChatGPT",
+      "#پرامپت_نویسی",
+      "#Prompt_Engineering",
+      "#شکستن_کار",
+      "#Task_Decomposition",
+      "#متاپرامپت",
+      "#Meta_Prompting",
+      "#راستی_آزمایی",
+      "#مدل_زبانی",
+      "#LLM"
+    ]
+  }
+}

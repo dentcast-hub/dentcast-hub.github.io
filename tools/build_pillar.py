@@ -1552,6 +1552,10 @@ def _build_glossary_jsonld(terms_sorted):
 _GLOSSARY_HEAD_TOP = """<!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
+  <!-- Open the API connection while the HTML is still parsing: /me gates the
+       ad card, and on a first visit the TLS handshake was in front of it. -->
+  <link rel="preconnect" href="https://api.dentcast.ir" crossorigin>
+  <link rel="preconnect" href="https://api.dentcast.org" crossorigin>
   <!-- Google Analytics (deferred: loads only after the page is fully rendered) -->
   <script>
     window.addEventListener('load', function () {

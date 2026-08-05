@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <!-- Open the API connection while the HTML is still parsing: /me gates the
+       ad card, and on a first visit the TLS handshake was in front of it. -->
+  <link rel="preconnect" href="https://api.dentcast.ir" crossorigin>
+  <link rel="preconnect" href="https://api.dentcast.org" crossorigin>
+  <!-- Google Analytics (deferred: loads only after the page is fully rendered) -->
+  <script>
+    window.addEventListener('load', function () {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-GMM0WC8X3M');
+      var ga = document.createElement('script');
+      ga.async = true;
+      ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-GMM0WC8X3M';
+      document.head.appendChild(ga);
+    });
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="dc-notify" content="true">
+  <title>پرامپتولوژیست — روشِ کار، نه فقط متنِ درخواست | دنت‌کست</title>
+  <meta name="description" content="فصل ۴، قسمت ۴: سه قسمتِ گذشته درباره‌ی متنِ درخواست بود؛ این قسمت درباره‌ی روشِ کار است. چرا کارِ بزرگ را باید پله‌پله جلو برد، چرا بینِ فهم و تصمیم باید ایست گذاشت تا مدل زودتر از موعد نتیجه نگیرد، چرا پرامپتِ خوب را باید نگه داشت، و چرا می‌شود نوشتنِ خودِ پرامپت را به مدل سپرد — بی‌آنکه قضاوتِ نهایی از دستتان در برود.">
+  <link rel="canonical" href="https://dentcast.org/dentai/promptologist/prompt4-4.html">
+  <link rel="alternate" hreflang="fa-IR" href="https://dentcast.ir/dentai/promptologist/prompt4-4.html">
+  <link rel="alternate" hreflang="fa" href="https://dentcast.org/dentai/promptologist/prompt4-4.html">
+  <link rel="alternate" hreflang="en" href="https://dentcast.org/dentai/promptologist/en/prompt4-4.html">
+  <link rel="alternate" hreflang="x-default" href="https://dentcast.org/dentai/promptologist/prompt4-4.html">
+  <meta name="author" content="دکتر فواد شهابیان">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="fa_IR">
+  <meta property="og:site_name" content="DentCast">
+  <meta property="og:title" content="پرامپتولوژیست — روشِ کار، نه فقط متنِ درخواست | دنت‌کست">
+  <meta property="og:description" content="فصل ۴، قسمت ۴: سه قسمتِ گذشته درباره‌ی متنِ درخواست بود؛ این قسمت درباره‌ی روشِ کار است. چرا کارِ بزرگ را باید پله‌پله جلو برد، چرا بینِ فهم و تصمیم باید ایست گذاشت تا مدل زودتر از موعد نتیجه نگیرد، چرا پرامپتِ خوب را باید نگه داشت، و چرا می‌شود نوشتنِ خودِ پرامپت را به مدل سپرد — بی‌آنکه قضاوتِ نهایی از دستتان در برود.">
+  <meta property="og:url" content="https://dentcast.org/dentai/promptologist/prompt4-4.html">
+  <meta property="og:image" content="https://dentcast.org/dentcast-cover.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="پرامپتولوژیست — روشِ کار، نه فقط متنِ درخواست | دنت‌کست">
+  <meta name="twitter:description" content="فصل ۴، قسمت ۴: سه قسمتِ گذشته درباره‌ی متنِ درخواست بود؛ این قسمت درباره‌ی روشِ کار است. چرا کارِ بزرگ را باید پله‌پله جلو برد، چرا بینِ فهم و تصمیم باید ایست گذاشت تا مدل زودتر از موعد نتیجه نگیرد، چرا پرامپتِ خوب را باید نگه داشت، و چرا می‌شود نوشتنِ خودِ پرامپت را به مدل سپرد — بی‌آنکه قضاوتِ نهایی از دستتان در برود.">
+  <meta name="twitter:image" content="https://dentcast.org/dentcast-cover.webp">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://dentcast.org/dentai/promptologist/prompt4-4.html#article",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://dentcast.org/dentai/promptologist/prompt4-4.html"
+      },
+      "url": "https://dentcast.org/dentai/promptologist/prompt4-4.html",
+      "headline": "پرامپتولوژیست — روشِ کار، نه فقط متنِ درخواست",
+      "description": "فصل ۴، قسمت ۴: سه قسمتِ گذشته درباره‌ی متنِ درخواست بود؛ این قسمت درباره‌ی روشِ کار است. چرا کارِ بزرگ را باید پله‌پله جلو برد، چرا بینِ فهم و تصمیم باید ایست گذاشت تا مدل زودتر از موعد نتیجه نگیرد، چرا پرامپتِ خوب را باید نگه داشت، و چرا می‌شود نوشتنِ خودِ پرامپت را به مدل سپرد — بی‌آنکه قضاوتِ نهایی از دستتان در برود.",
+      "datePublished": "2026-08-05",
+      "dateModified": "2026-08-05",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://dentcast.org/dentcast-cover.webp",
+        "width": 1200,
+        "height": 630
+      },
+      "inLanguage": "fa",
+      "isPartOf": {
+        "@type": "CreativeWorkSeries",
+        "name": "پرامپتولوژیست",
+        "url": "https://dentcast.org/dentai/promptologist"
+      },
+      "author": {
+        "@id": "https://dentcast.org/#person-foad"
+      },
+      "publisher": {
+        "@id": "https://dentcast.org/#org-dentcast"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DentCast",
+          "item": "https://dentcast.org/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "پرامپتولوژیست",
+          "item": "https://dentcast.org/dentai/promptologist"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "روشِ کار، نه فقط متنِ درخواست",
+          "item": "https://dentcast.org/dentai/promptologist/prompt4-4.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://dentcast.org/dentai/promptologist/prompt4-4.html#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "آیا شکستنِ یک کارِ بزرگ به پرامپت‌های پشت‌سرهم نتیجه‌ی بهتری می‌دهد تا ریختنِ همه‌ی خواسته‌ها در یک درخواستِ واحد؟",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "بله؛ یک درخواستِ غول‌پیکر که هم‌زمان چند خواسته دارد، معمولاً هر کدام را نصفه‌نیمه تحویل می‌دهد — خلاصه‌ای سطحی، نقدی کلی و نتیجه‌ای که معلوم نیست از کجا آمده. وقتی همان کار پله‌پله جلو می‌رود، هر پله روی خروجیِ تأییدشده‌ی پله‌ی قبل ساخته می‌شود و یک بدفهمی همان اول گرفته می‌شود، نه سه لایه بعد که کلِ نتیجه‌گیری رویش بنا شده."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "منظور از گذاشتنِ ایست بینِ فهم و تصمیم در کار با مدل زبانی چیست و چه چیزی را عوض می‌کند؟",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "یعنی در پرامپتِ اول صریح جلوی نتیجه‌گیری گرفته می‌شود: «فعلاً فقط وضعیت را بررسی کن و گزارش بده؛ هنوز هیچ پیشنهادی نده.» دو چیز عوض می‌شود: مدل مجبور می‌شود فهمش را پیش از تصمیمش رو کند، و فهم چیزی است که کاربر می‌تواند بسنجد و اصلاح کند؛ و پیشنهادِ نهایی بعد روی همان فهمِ تأییدشده ساخته می‌شود، نه روی حدسِ اولِ مدل."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "آیا وقتی جوابِ اول از اساس بیراه است، وصله‌زدنِ همان گفت‌وگو بهتر از نوشتنِ دوباره‌ی پرامپت است؟",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "خیر؛ وقتی جوابِ اول از پایه بیراه بوده، ادامه‌دادن با «نه، منظورم این نبود» و «این را عوض کن» معمولاً همان مسیرِ غلط را وصله می‌زند. بهتر است خودِ درخواست از نو نوشته شود. در مقابل، پرامپتی که یک‌بار خروجیِ خوبی داده باید ذخیره شود تا دفعه‌ی بعد فقط جزئیاتش عوض شود."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "آیا می‌شود نوشتنِ خودِ پرامپت را به مدل سپرد؟",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "بله؛ می‌توان به مدل توضیح داد چه خروجی‌ای لازم است و از او خواست فقط پرامپتش را بنویسد، نه خودِ متن را. نتیجه معمولاً کامل‌تر از پیش‌نویسِ دستی است، چون مدل چیزهایی مثل طول، لحن، مخاطب و ساختار را که کاربر بدیهی فرض کرده بود صریح می‌کند. اما آن پرامپت پیش‌نویس است: شرایطِ خاصِ مطب و بیمارها را باید کاربر خودش به آن اضافه کند."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "آیا پرامپت‌نویسیِ خوب جوابِ مدل زبانی را درست‌تر می‌کند؟",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "خیر؛ پرامپتِ خوب خروجی را مربوط‌تر، دقیق‌تر و قابلِ‌استفاده‌تر می‌کند، ولی صحتِ محتوا را تضمین نمی‌کند. یک پرامپتِ عالی می‌تواند یک رفرنسِ جعلی یا یک عددِ اشتباه را در بهترین قالبِ ممکن و با روان‌ترین لحن تحویل دهد. مهارتِ پرامپت‌نویسی جای راستی‌آزمایی و نقشِ ناظرِ کاربر را نمی‌گیرد."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "DefinedTermSet",
+  "@id": "https://dentcast.org/dentai/promptologist/prompt4-4.html#flashcards",
+  "hasDefinedTerm": [
+    {
+      "@type": "DefinedTerm",
+      "@id": "https://dentcast.org/dentai/promptologist/prompt4-4.html#flashcards-c1",
+      "name": "شکستنِ کارِ بزرگ به پله (task decomposition)",
+      "description": "روشی برای کار با مدل زبانی که در آن یک خواسته‌ی مرکب به چند درخواستِ پشت‌سرهم تقسیم می‌شود و کاربر خروجیِ هر پله را پیش از شروعِ پله‌ی بعد می‌سنجد. اثرش این است که خطا در همان پله‌ای که رخ داده دیده می‌شود، به‌جای آنکه در لایه‌های بعدی پنهان بماند.",
+      "source": "faq",
+      "sourceFaqIndex": 0
+    },
+    {
+      "@type": "DefinedTerm",
+      "@id": "https://dentcast.org/dentai/promptologist/prompt4-4.html#flashcards-c2",
+      "name": "ایست بینِ فهم و تصمیم",
+      "description": "دستوری در پرامپت که مدل را موظف می‌کند اول وضعیت را گزارش کند و هیچ پیشنهادی ندهد. کارکردش جدا کردنِ مرحله‌ی فهم از مرحله‌ی تصمیم است تا فهمِ مدل قابلِ سنجش شود و تصمیمِ نهایی روی فهمِ تأییدشده بنشیند، نه روی حدسِ اولِ مدل.",
+      "source": "faq",
+      "sourceFaqIndex": 1
+    },
+    {
+      "@type": "DefinedTerm",
+      "@id": "https://dentcast.org/dentai/promptologist/prompt4-4.html#flashcards-c3",
+      "name": "پرامپت به‌عنوان پیش‌نویس",
+      "description": "نگاهی به پرامپت که آن را متنی قابلِ بازنویسی می‌داند، نه یک درخواستِ یک‌بارمصرف. پیامدِ عملی‌اش دو چیز است: وقتی جوابِ اول از پایه بیراه است پرامپت از نو نوشته می‌شود به‌جای وصله‌زدنِ گفت‌وگو، و پرامپتی که جواب داده ذخیره می‌شود تا دفعه‌ی بعد بازاستفاده شود.",
+      "source": "faq",
+      "sourceFaqIndex": 2
+    },
+    {
+      "@type": "DefinedTerm",
+      "@id": "https://dentcast.org/dentai/promptologist/prompt4-4.html#flashcards-c4",
+      "name": "متاپرامپت (سپردنِ نوشتنِ پرامپت به مدل)",
+      "description": "تکنیکی که در آن به‌جای نوشتنِ پرامپت، هدف و شرایط برای مدل توضیح داده می‌شود و از او خواسته می‌شود فقط خودِ پرامپت را بنویسد. حاصلش یک پیش‌نویسِ صریح‌تر است — طول، لحن، مخاطب و ساختار را روشن می‌کند — که هنوز به دانشِ زمینه‌ایِ کاربر برای تکمیل نیاز دارد.",
+      "source": "faq",
+      "sourceFaqIndex": 3
+    },
+    {
+      "@type": "DefinedTerm",
+      "@id": "https://dentcast.org/dentai/promptologist/prompt4-4.html#flashcards-c5",
+      "name": "مرزِ پرامپت‌نویسی در برابر نقشِ ناظر",
+      "description": "تفکیکی بنیادی: پرامپت‌نویسی روی مربوط‌بودن، دقت و قابلِ‌استفاده‌بودنِ شکلِ خروجی اثر می‌گذارد، اما بر صحتِ محتوا اثری ندارد. به همین دلیل راستی‌آزماییِ انسانی یک مرحله‌ی جداگانه و حذف‌نشدنی می‌ماند، هرچقدر هم پرامپت خوب نوشته شده باشد.",
+      "source": "faq",
+      "sourceFaqIndex": 4
+    }
+  ]
+}
+</script>
+  <script>(function(){var s=localStorage.getItem('dc-theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme','dark');})();</script>
+  <link rel="preload" as="font" href="/fonts/Vazirmatn[wght].woff2" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/dc-theme.css">
+  <link rel="stylesheet" href="/dc-nav.css?v=13">
+  <link rel="stylesheet" href="/global-search.css?v=2">
+  <link rel="icon" href="/logo-v2.png" type="image/png" sizes="512x512">
+  <meta name="theme-color" content="#F3F5F7">
+  <style>
+@font-face{font-family:'Vazirmatn';src:url('/fonts/Vazirmatn[wght].woff2') format('woff2');font-display:swap;}
+body{font-family:'Vazirmatn',system-ui,-apple-system,sans-serif;}
+.ep-page{max-width:47.5rem;margin:0 auto;padding:2.5rem 1.25rem 5rem;}
+.ep-back{display:inline-flex;align-items:center;gap:0.375rem;font-size:.85rem;color:var(--txt3);text-decoration:none;margin-bottom:1.75rem;transition:color .15s;}
+.ep-back:hover{color:var(--ac);}
+.ep-box{background:var(--card-bg);border:1px solid var(--card-border);border-radius:1.125rem;box-shadow:var(--card-sh);overflow:hidden;margin-bottom:1.25rem;}
+.ep-box-head{padding:1.75rem 1.75rem 1.25rem;border-bottom:1px solid var(--card-border);}
+.ep-badge{display:inline-flex;align-items:center;background:var(--chip-bg);border:1px solid var(--chip-bd);color:var(--chip-txt);font-size:.72rem;font-weight:700;padding:0.1875rem 0.75rem;border-radius:3.125rem;margin-bottom:0.875rem;letter-spacing:.03em;}
+.ep-badge.sub{background:var(--surface2);color:var(--txt3);}
+.ep-title{font-size:1.55rem;font-weight:800;color:var(--txt);line-height:1.45;margin:0 0 0.75rem;}
+.ep-meta{display:flex;gap:1.125rem;font-size:.8rem;color:var(--txt3);flex-wrap:wrap;}
+.ep-section{padding:1.375rem 1.75rem 0;}
+.ep-section:last-child{padding-bottom:1.75rem;}
+.ep-section-label{font-size:1rem;font-weight:700;color:var(--ac);border-right:4px solid var(--ac);padding-right:0.75rem;margin-bottom:0.875rem;}
+.ep-caption{font-size:.95rem;color:var(--txt);line-height:1.9;margin:0;}
+.ep-caption p{margin:0 0 1.8rem;}
+.ep-caption p:last-child{margin-bottom:0;}
+.ep-chips{display:flex;flex-wrap:wrap;gap:0.5rem;}
+.ep-chip{background:var(--chip-bg);border:1px solid var(--chip-bd);color:var(--chip-txt);font-size:.78rem;padding:0.25rem 0.75rem;border-radius:3.125rem;}
+.ep-chip-link{text-decoration:none;transition:background .15s,color .15s;}
+.ep-chip-link:hover{background:var(--ac);color:#fff;border-color:var(--ac);}
+.ep-tags{display:flex;flex-wrap:wrap;gap:0.5rem;}
+.ep-hashtag{font-size:.8rem;color:var(--ac);font-weight:600;}
+.ep-related-link{display:inline-flex;align-items:center;gap:0.375rem;font-size:.87rem;font-weight:600;color:var(--ac);text-decoration:none;padding:0.5rem 1rem;border:1px solid var(--ac);border-radius:0.625rem;transition:background .15s,color .15s;}
+.ep-related-link:hover{background:var(--ac);color:#fff;}
+.ep-nav{display:flex;justify-content:space-between;gap:0.75rem;margin-top:1.75rem;}
+.ep-nav-btn{flex:1;text-align:center;padding:0.75rem 1rem;border:1px solid var(--card-border);border-radius:0.75rem;text-decoration:none;font-size:.85rem;font-weight:600;color:var(--txt2);background:var(--card-bg);transition:all .15s;}
+.ep-nav-btn:hover{border-color:var(--ac);color:var(--ac);}
+.ep-nav-empty{cursor:default;opacity:.3;pointer-events:none;}
+@media(max-width:480px){.ep-title{font-size:1.25rem;}.ep-box-head,.ep-section{padding-right:1.125rem;padding-left:1.125rem;}}
+.lang-btn{display:flex;width:fit-content;max-width:100%;align-items:center;gap:0.375rem;margin:0 0 1.125rem auto;background:rgba(255,255,255,0.92);border:1px solid rgba(0,0,0,0.1);border-radius:0.75rem;padding:0.375rem 0.75rem;font-size:0.8125rem;font-weight:700;color:#0b5fff;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,0.12);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);cursor:pointer;transition:transform .18s ease,background .18s ease;}
+.lang-btn:hover{background:#fff;transform:scale(1.03);}
+  </style>
+</head>
+<body>
+<header class="dc-topbar">
+  <div class="dc-topbar-actions">
+    <a href="/" aria-label="صفحه اصلی دنت‌کست" style="display:flex;align-items:center;margin-left:0.5rem;flex-shrink:0;">
+      <img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;">
+    </a>
+    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="ابزارها" aria-expanded="false">&#9776;</button>
+    <button class="dc-topbar-btn" id="btn-radar-topbar" aria-label="رادار">&#128225;</button>
+    <button class="dc-topbar-btn dcOpenSearch" aria-label="جستجو">&#128269;</button>
+  </div>
+  <div class="dc-topbar-brand">
+    <div class="dc-topbar-brand-name">DentCast</div>
+    <a href="/about.html" class="dc-topbar-brand-sub">دکتر فواد شهابیان</a>
+  </div>
+</header>
+<div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">
+  <div class="dc-toolbar-drawer-inner">
+    <span class="dc-toolbar-drawer-label">ابزارها</span>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa"><span class="dc-drawer-tool-ico">&#128241;</span><span class="dc-drawer-tool-txt">نصب</span></button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-consult"><span class="dc-drawer-tool-ico">&#128231;</span><span class="dc-drawer-tool-txt">مشاوره</span></button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-about"><span class="dc-drawer-tool-ico">&#10024;</span><span class="dc-drawer-tool-txt">درباره</span></button>
+  </div>
+</div>
+<div id="dcRadarOverlay" class="radar-overlay" aria-hidden="true">
+  <div class="radar-overlay-header">
+    <button id="dcCloseRadarOverlay" class="radar-close-btn">&times;</button>
+    <div class="radar-header-title">رادار دنت‌کست (جایگزین گوگل)</div>
+  </div>
+  <div class="radar-overlay-body">
+    <div class="radar-search-box">
+      <input type="text" id="dcRadarInput" placeholder="نام سایت، زمینه فعالیت یا کلمه کلیدی..." autocomplete="off">
+    </div>
+    <div id="dcRadarResults" class="radar-results">
+      <div class="radar-initial-msg">برای جستجو در بین سایت‌های دندانپزشکی، تایپ کنید...</div>
+    </div>
+  </div>
+</div>
+
+<main class="article-content-wrap ep-page">
+  <a href="/dentai/promptologist/" class="ep-back">&#8592; بازگشت به پرامپتولوژیست</a>
+
+  <!-- 🌐 English Version (SEO-friendly language toggle) -->
+  <a class="lang-btn" href="en/prompt4-4.html" rel="noopener">
+    <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20"/><path d="M12 2a15 15 0 0 0 0 20"/></svg> English
+  </a>
+
+  <div class="ep-box">
+    <div class="ep-box-head">
+      <div class="ep-badge">فصل ۴ · قسمت ۴</div>
+      <h1 class="ep-title">روشِ کار، نه فقط متنِ درخواست</h1>
+      <div class="ep-meta">
+        <span>&#9201; ۷ دقیقه مطالعه</span>
+      </div>
+    </div>
+
+    <div class="ep-section">
+      <h2 class="ep-section-label">متنِ این قسمت</h2>
+      <div class="ep-caption"><p>سه قسمتِ گذشته درباره‌ی این بود که چه بنویسید. این قسمت درباره‌ی این است که چطور کار را جلو ببرید. تفاوتش را جدی بگیرید: می‌توانید هر سه حرکتِ قبل را بی‌نقص انجام دهید و باز هم نتیجه‌ی بدی بگیرید، فقط چون همه‌ی کار را در یک درخواستِ غول‌پیکر ریختید و منتظر یک جوابِ کامل ماندید.</p><p><strong>کارِ بزرگ را بشکنید</strong></p><p>فرض کنید یک مقاله‌ی بالینی دارید و می‌خواهید هم بفهمیدش، هم بدانید نتیجه‌اش به بیمارهای شما می‌خورد یا نه، هم خلاصه‌ای برای خودتان نگه دارید. اگر همه‌ی این‌ها را در یک پیام بریزید، جوابی می‌گیرید که هر سه کار را نصفه‌نیمه انجام داده: خلاصه‌ای سطحی، نقدی کلی، و نتیجه‌ای که معلوم نیست از کجا آمده.</p><p>همان کار، پله‌پله: اول فقط «روشِ کار و جمعیتِ موردِ مطالعه را توضیح بده». بعد که این را خواندید و فهمیدید با چه‌جور مطالعه‌ای طرفید: «حالا یافته‌های اصلی را بگو.» بعد: «با توجه به همین جمعیتِ مطالعه، این نتیجه برای بیمارِ معمولِ مطبِ یک دندانپزشکِ عمومی چقدر قابلِ تعمیم است؟»</p><p>چرا این بهتر جواب می‌دهد؟ چون در هر پله شما هم حضور دارید. پله‌ی دوم روی چیزی ساخته می‌شود که شما پله‌ی اول تأییدش کردید. اگر مدل جمعیتِ مطالعه را بد خوانده باشد، همان‌جا می‌گیریدش، نه اینکه سه لایه بعد بفهمید کلِ نتیجه‌گیری روی یک بدفهمی بنا شده.</p><p><strong>بینِ فهم و تصمیم، ایست بگذارید</strong></p><p>این یکی حالتِ خاص و قوی‌ترِ همان شکستن است، و شاید کاربردی‌ترین حرکتِ کلِ این فصل باشد.</p><p>عادتِ مدل این است که سریع به نتیجه برسد. سؤال را می‌خواند و تقریباً بلافاصله شروع می‌کند به پیشنهاددادن، حتی وقتی هنوز درست وضعیت را نخوانده. مشکل اینجاست که وقتی پیشنهاد ساخته شد، بقیه‌ی حرف‌هایش هم دور همان پیشنهاد می‌چرخد؛ عملاً از همان جمله‌ی اول شیب پیدا کرده.</p><p>راهِ حل ساده است: صریح جلوی نتیجه‌گیری را بگیرید.</p><p>«این شرحِ بیمار را بخوان. فعلاً فقط وضعیت را بررسی کن و گزارش بده: چه یافته‌هایی هست، چه چیزهایی مبهم یا ناقص است. هنوز هیچ پیشنهادی نده.»</p><p>گزارش که آمد، خودتان بازرسی‌اش می‌کنید. چیزی را جا انداخته؟ یافته‌ای را بد تفسیر کرده؟ همان‌جا اصلاح می‌کنید. و بعد:</p><p>«حالا بر اساسِ همین گزارش، گزینه‌ها را بگو.»</p><p>دو چیز اینجا اتفاق افتاد. اول، مدل مجبور شد فهمش را قبل از تصمیمش رو کند، و فهم چیزی است که شما می‌توانید بسنجید. دوم، پیشنهادِ نهایی روی فهمی ساخته شد که شما تأییدش کرده بودید، نه روی حدسِ اولِ مدل.</p><p>این همان نقشِ ناظری است که از <a href="/dentai/promptologist/prompt3-1.html" class="ep-related-link" style="display:inline;padding:0;border:none;font-size:inherit;">فصلِ سوم</a> با شماست، ولی این‌بار به‌جای اینکه بعد از جواب چک کنید، خودِ ساختارِ کار مجبورش می‌کند وسطِ راه بایستد و کارتش را نشان دهد.</p><p><strong>پرامپت پیش‌نویس است، نه شلیک</strong></p><p>عادتِ رایج این است که یک درخواست می‌نویسیم، جوابِ نامناسب می‌گیریم، و بعد شروع می‌کنیم به وصله‌زدنِ همان گفت‌وگو: «نه، منظورم این نبود»، «این را عوض کن»، «کوتاه‌ترش کن». گاهی جواب می‌دهد. ولی وقتی جوابِ اول از اساس بیراه بود، معمولاً بهتر است به‌جای وصله‌زدن، خودِ درخواست را از نو بنویسید.</p><p>یک عادتِ کوچک که خیلی کمک می‌کند: وقتی بالاخره پرامپتی ساختید که خروجیِ خوبی داد، نگهش دارید. جایی ذخیره‌اش کنید. اگر پرامپتی برای توضیحِ درمانِ ریشه به بیمار خوب جواب داد، دفعه‌ی بعد از صفر ننویسید؛ همان را بردارید و اسمِ درمان و مشخصاتِ بیمار را عوض کنید. این‌طور کم‌کم چند پرامپتِ آماده برای کارهای پرتکرارتان جمع می‌شود، و همین است که پرامپت‌نویسی را از یک تلاشِ هر بار از نو، به یک مهارتِ انباشته تبدیل می‌کند.</p><p><strong>پیش‌نویس را به خودِ مدل بسپارید</strong></p><p>و حالا حرکتی که تمامِ این فصل را سبک‌تر می‌کند: لازم نیست خودتان پرامپتِ خوب بنویسید. می‌توانید نوشتنش را به مدل بسپارید.</p><p>به‌جای اینکه با یک صفحه‌ی خالی کلنجار بروید، به مدل توضیح دهید چه می‌خواهید و از او بخواهید پرامپتش را بنویسد:</p><p>«می‌خواهم برای بیمارهایی که تازه ایمپلنت گذاشته‌اند یک متنِ آموزشِ مراقبت داشته باشم، ساده و قابلِ‌فهم، که بشود چاپش کرد و دستشان داد. برای این کار یک پرامپتِ خوب بنویس. خودِ متن را ننویس، فقط پرامپت را.»</p><p>چیزی که می‌گیرید معمولاً کامل‌تر از چیزی است که خودتان می‌نوشتید، چون مدل جاهایی را که شما بدیهی فرض کرده بودید صریح می‌کند: طول، لحن، مخاطب، ساختار.</p><p>ولی کار اینجا تمام نمی‌شود، و این نکته‌ی اصلی است. آن پرامپت را بخوانید و اصلاحش کنید. مدل نمی‌داند بیمارهای شما چه‌جور آدم‌هایی هستند، نمی‌داند در مطبِ شما چه چیزی جواب می‌دهد، نمی‌داند کدام نکته را همیشه باید تأکید کنید. آن‌ها را خودتان اضافه کنید. مدل پیش‌نویس را نوشت؛ قضاوتِ نهایی مالِ شماست.</p><p><strong>و یک یادآوریِ آخر</strong></p><p>همه‌ی آنچه در این فصل خواندید یک کار می‌کند: خروجی را مربوط‌تر، دقیق‌تر و قابلِ‌استفاده‌تر می‌کند. اما هیچ‌کدامشان جوابِ مدل را لزوماً درست‌تر نمی‌کند. یک پرامپتِ عالی می‌تواند یک <a href="/dentai/promptologist/prompt1-4.html" class="ep-related-link" style="display:inline;padding:0;border:none;font-size:inherit;">رفرنسِ جعلی</a> یا یک عددِ اشتباه را در بهترین قالبِ ممکن و با روان‌ترین لحن به دستتان بدهد. مهارتِ پرامپت‌نویسی جای نقشِ ناظر را نمی‌گیرد؛ فقط کارِ ناظر را دلپذیرتر می‌کند.</p><p>تا اینجا فهمیدید مدل چیست، کجا می‌لغزد، چطور با آن گفت‌وگو کنید و چطور درخواستتان را دقیق بنویسید. سؤالی که هنوز باز مانده، سؤالی است که یک کلینسین زودتر از همه می‌پرسد: این ابزار دقیقاً کجای کارِ بالینیِ من می‌نشیند، و کجا نباید بنشیند؟ فصلِ بعد همین است.</p></div>
+    </div>
+    <div class="ep-section">
+      <h2 class="ep-section-label">کلیدواژه‌ها</h2>
+      <div class="ep-chips">
+        <span class="ep-chip">شکستنِ کارِ بزرگ به پله</span>
+        <span class="ep-chip">ایست بینِ فهم و تصمیم</span>
+        <span class="ep-chip">پرامپت به‌عنوان پیش‌نویس</span>
+        <span class="ep-chip">نگه‌داشتنِ پرامپت‌های جواب‌داده</span>
+        <span class="ep-chip">سپردنِ نوشتنِ پرامپت به مدل</span>
+        <span class="ep-chip">مدل زبانی بزرگ (LLM)</span>
+        <span class="ep-chip">ChatGPT</span>
+        <span class="ep-chip">سواد هوش مصنوعی</span>
+      </div>
+    </div>
+    <div class="ep-section">
+      <h2 class="ep-section-label">برچسب‌ها</h2>
+      <div class="ep-tags"><span class="ep-hashtag">#پرامپتولوژیست</span><span class="ep-hashtag">#هوش_مصنوعی</span><span class="ep-hashtag">#سواد_هوش_مصنوعی</span><span class="ep-hashtag">#AI_Literacy</span><span class="ep-hashtag">#ChatGPT</span><span class="ep-hashtag">#پرامپت_نویسی</span><span class="ep-hashtag">#Prompt_Engineering</span><span class="ep-hashtag">#شکستن_کار</span><span class="ep-hashtag">#Task_Decomposition</span><span class="ep-hashtag">#متاپرامپت</span><span class="ep-hashtag">#Meta_Prompting</span><span class="ep-hashtag">#راستی_آزمایی</span><span class="ep-hashtag">#مدل_زبانی</span><span class="ep-hashtag">#LLM</span></div>
+    </div>
+
+    <div class="ep-section">
+      <h2 class="ep-section-label">محتوای مرتبط</h2>
+      <a href="/dentai/promptologist/" class="ep-related-link">بازگشت به فهرست پرامپتولوژیست</a>
+    </div>
+
+    <div class="dc-related-section">
+      <h2 class="dc-related-label">کاوش بیشتر</h2>
+      <div class="dc-related-capsules">
+        <a href="/glossary/" class="dc-related-capsule">دانشنامه</a>
+        <a href="/pillar/digital/" class="dc-related-capsule">فهرست موضوعی</a>
+        <a href="/dentai/promptologist/prompt4-3.html" class="dc-related-capsule">نقش‌دادن به مدل</a>
+        <a href="/dentai/promptologist/prompt3-1.html" class="dc-related-capsule">اولین گفت‌وگو با مدل</a>
+        <a href="/dentai/promptologist/prompt4-1.html" class="dc-related-capsule">شکلِ خروجی را تو تعیین کن</a>
+      </div>
+    </div>
+  </div>
+  <div class="ep-nav">
+    <a href="/dentai/promptologist/prompt4-3.html" class="ep-nav-btn">&#8592; قسمت قبلی</a>
+    <span class="ep-nav-btn ep-nav-empty">قسمت بعدی &#8594;</span>
+  </div>
+</main>
+
+<div class="dc-global-filter-box" id="dcGlobalBox">
+  <button class="dc-close-results">&#10006;</button>
+  <h3 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h3>
+  <input id="dcSearch" class="dc-search-input" placeholder="جستجو در همه بخش‌های دنت‌کست...">
+  <div class="dc-filter-list">
+    <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
+    <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
+    <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
+    <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
+    <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
+    <button class="dc-filter-btn active" data-type="promptologist">پرامپتولوژیست</button>
+    <button class="dc-filter-btn active" data-type="meta">metanote</button>
+    <button class="dc-filter-btn active" data-type="chairside">chairside</button>
+    <button class="dc-filter-btn active" data-type="sharehub">Share Hub</button>
+  </div>
+  <div class="dc-results-box" id="dcResults"></div>
+</div>
+<script src="/global-search.js?v=6" defer></script>
+<script src="/dc-nav.js?v=39" defer></script>
+</body>
+</html>
