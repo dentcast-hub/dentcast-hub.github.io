@@ -8,3 +8,7 @@ enrich_cache.json
 
 # Dev-only screenshot output (probe/shot scripts); the scripts stay, PNGs don't.
 scripts-dev/*.png
+
+# Stray root-level node_modules (a tool run from the repo root instead of
+# plus-api/); the real dependency tree lives in plus-api/node_modules.
+node_modules/
