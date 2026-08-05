@@ -820,3 +820,26 @@ a.dcp-progress-row:hover { text-decoration: none; }
 @media (prefers-color-scheme: dark) {
   .dcp-gift-warn { color: #e8b45f; background: rgba(232,180,95,.11); border-color: rgba(232,180,95,.28); }
 }
+
+/* The "I'm outside Iran" entry: a full-width row under the rial plans. It is
+   deliberately not a small link — a reader who cannot use the gateway above has
+   to be able to find this without knowing the words "gift card". */
+.dcp-gift-toggle {
+  display: flex; flex-direction: column; gap: 2px; align-items: flex-start;
+  width: 100%; box-sizing: border-box; margin-top: 14px; cursor: pointer;
+  font: inherit; text-align: start; padding: 13px 15px; border-radius: 14px;
+  background: var(--surface2, #f4f6fb); color: var(--txt);
+  border: 1px dashed var(--border, rgba(2,35,96,.22));
+}
+.dcp-gift-toggle:hover { border-color: rgba(var(--ac-rgb, 11,95,255), .5); }
+.dcp-gift-toggle:focus-visible { outline: 2px solid var(--ac, #0b5fff); outline-offset: 2px; }
+.dcp-gift-toggle-main { font-weight: 700; font-size: .96rem; }
+.dcp-gift-toggle-sub { font-size: .84rem; color: var(--txt2, #4a5f85); }
+
+/* The gift plan wears the plan card, so the term and the price read the same
+   way as the rial ones — but dashed, because it is paid for differently. */
+.dcp-plan.is-gift {
+  cursor: default; border-style: dashed;
+  border-color: rgba(var(--ac-rgb, 11,95,255), .45);
+  background: var(--surface, #fff);
+}

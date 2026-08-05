@@ -138,49 +138,72 @@ function whatYouGet() {
 }
 
 /**
- * The out-of-country route: a US Apple gift card.
+ * The out-of-country route: a US Apple gift card, presented AS A PLAN.
  *
- * The order of the steps is the design. The buyer gets their reference tag
- * BEFORE they are told to go and buy anything, because the tag has to be typed
- * into the shop's gift-message box at the moment of purchase — telling them
- * afterwards means a card that arrives matching nobody, and a hundred dollars
- * neither of us can trace.
+ * It used to sit as prose at the bottom of the page, and that was wrong twice
+ * over. A reader comparing terms saw three plans and no fourth; and the one
+ * thing they most need to know — that a hundred dollars buys ten months — was a
+ * sentence rather than a price on a card. So it wears the same card as the rial
+ * plans: term on one side, price on the other, read the same way.
  *
- * WE NEVER ASK FOR THE CODE. There is no field for one anywhere on this page.
- * A gift-card code is a bearer instrument: whoever reads it can spend it. Having
- * it emailed from the shop straight to us means it never passes through this
- * page, our API or our database, so there is nothing here worth stealing.
- *
- * The US warning is stated twice and unmissably, because it is the one mistake
- * that costs the buyer real money and cannot be undone: an Apple gift card
- * redeems only into an Apple ID of the same country.
+ * It is NOT mixed into that list, though. The list is in toman and every card in
+ * it is bought with one button; this is a different currency and a different
+ * process, and a $100 row sitting between ۳ ماهه and ۶ ماهه would read as a
+ * fourth thing to press rather than a different way to pay.
  */
-function giftSection(gift, user, onStart) {
-  const box = el('div', { class: 'dcp-gift' });
+function giftPlanCard(gift) {
+  return el('div', { class: 'dcp-plan is-gift' }, [
+    el('span', { class: 'dcp-plan-term' }, [
+      `${toFa(gift.months)} ماهه`,
+      el('span', { class: 'dcp-plan-why' }, 'با گیفت‌کارت اپلِ امریکا'),
+    ]),
+    el('span', { class: 'dcp-plan-price' }, [
+      toFa(gift.amount_usd),
+      el('span', { class: 'dcp-plan-unit' }, 'دلار'),
+    ]),
+  ]);
+}
 
-  const head = [
-    el('h2', { class: 'dcp-price-h2' }, 'خارج از ایران هستید؟'),
-    el('p', { class: 'dcp-gift-lead' },
-      `با ${toFa(gift.amount_usd)} دلار گیفت‌کارت اپلِ امریکا، ${toFa(gift.months)} ماه اشتراک پریمیوم فعال می‌شود.`),
-    el('p', { class: 'dcp-gift-warn' },
-      'حتماً گیفت‌کارت «امریکا» باشد. گیفت‌کارت اپل فقط در اپل‌آیدی همان کشور قابل استفاده است و کارت کشور دیگر به کار نمی‌آید.'),
-  ];
+/**
+ * The step before the card, and the reason the whole thing hangs together: a
+ * button that says the one thing a person abroad already knows about themselves.
+ *
+ * Someone in Toronto looking at three toman prices and a payment gateway they
+ * cannot reach has no way to guess that a route exists for them. They do not
+ * search a pricing page for "gift card" — they conclude the product is not sold
+ * where they live and close the tab. «خارج از ایران هستم» is findable because it
+ * describes the reader, not the mechanism.
+ */
+function giftToggle(gift, onOpen) {
+  const btn = el('button', { class: 'dcp-gift-toggle', type: 'button' }, [
+    el('span', { class: 'dcp-gift-toggle-main' }, 'خارج از ایران هستم'),
+    el('span', { class: 'dcp-gift-toggle-sub' },
+      `${toFa(gift.months)} ماه اشتراک با ${toFa(gift.amount_usd)} دلار گیفت‌کارت`),
+  ]);
+  btn.addEventListener('click', () => onOpen(btn));
+  return btn;
+}
 
+function giftIntro(gift, user, onStart) {
   const start = el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button' },
     user ? 'دریافت کد پیگیری' : 'ورود و دریافت کد پیگیری');
   start.addEventListener('click', () => onStart(start));
 
-  box.replaceChildren(...head, start,
-    el('p', { class: 'dcp-price-fine' }, 'کد گیفت‌کارت را هیچ‌جای این سایت وارد نمی‌کنید.'));
-  return box;
+  return el('div', { class: 'dcp-gift' }, [
+    el('h2', { class: 'dcp-price-h2' }, 'پرداخت از خارج از ایران'),
+    giftPlanCard(gift),
+    el('p', { class: 'dcp-gift-warn' },
+      'حتماً گیفت‌کارت «امریکا» باشد. گیفت‌کارت اپل فقط در اپل‌آیدی همان کشور قابل استفاده است و کارت کشور دیگر به کار نمی‌آید.'),
+    start,
+    el('p', { class: 'dcp-price-fine' }, 'کد گیفت‌کارت را هیچ‌جای این سایت وارد نمی‌کنید.'),
+  ]);
 }
 
 /** Once they have a tag: exactly what to do, in order. */
 function giftSteps(gift, reference) {
   const steps = [
-    ['کد پیگیری شما', null],
     [`یک گیفت‌کارت اپلِ امریکا به مبلغ ${toFa(gift.amount_usd)} دلار بخرید`,
-      'از آمازون یا هر فروشگاه معتبر دیگری. حتماً نسخه‌ی امریکا.'],
+      `از آمازون یا هر فروشگاه معتبر دیگری. حتماً نسخه‌ی امریکا. برابر ${toFa(gift.months)} ماه اشتراک است.`],
     ['گیرنده را این ایمیل بگذارید', gift.recipient_email],
     ['کد پیگیری بالا را در «پیام هدیه» بنویسید',
       'همین یک خط است که مشخص می‌کند کارت از طرف شماست.'],
@@ -189,11 +212,12 @@ function giftSteps(gift, reference) {
   ];
   return el('div', { class: 'dcp-gift' }, [
     el('h2', { class: 'dcp-price-h2' }, 'مراحل'),
+    giftPlanCard(gift),
     el('div', { class: 'dcp-gift-ref' }, [
       el('span', { class: 'dcp-gift-ref-label' }, 'کد پیگیری'),
       el('code', { class: 'dcp-gift-ref-code' }, reference),
     ]),
-    el('ol', { class: 'dcp-gift-steps' }, steps.slice(1).map(([t, d]) => el('li', {}, [
+    el('ol', { class: 'dcp-gift-steps' }, steps.map(([t, d]) => el('li', {}, [
       el('strong', {}, t), d ? el('span', {}, d) : null,
     ].filter(Boolean)))),
     el('p', { class: 'dcp-gift-warn' },
@@ -382,46 +406,62 @@ async function main() {
   drawAction();
 
   // --- the out-of-country rail ----------------------------------------------
-  // Independent of everything above: no Zibal, no monthly ceiling, no .ir.
+  // Independent of everything above: no Zibal, no monthly ceiling, no .ir. It
+  // sits directly under the rial plans rather than at the foot of the page,
+  // because it is an ALTERNATIVE to them and belongs where the choice is made.
   const giftWrap = el('div', {});
   const gift = info.gift_card;
 
-  const drawGift = (claim) => {
+  const drawGift = (claim, opened) => {
     if (!gift) { giftWrap.replaceChildren(); return; }
-    const done = claim && claim.status !== 'pending' ? giftStatus(claim) : null;
+
     if (claim && claim.status === 'pending') {
       giftWrap.replaceChildren(giftSteps(gift, claim.reference));
       return;
     }
-    giftWrap.replaceChildren(...[done, giftSection(gift, user, async (btn) => {
+    const done = claim ? giftStatus(claim) : null;
+
+    // Collapsed behind one button on .ir, where almost every visitor pays in
+    // rial and this would be noise — and open from the start where the rial
+    // gateway cannot serve them anyway, because there it is the only route.
+    if (!opened && !needIr) {
+      giftWrap.replaceChildren(...[done, giftToggle(gift, () => drawGift(claim, true))]
+        .filter(Boolean));
+      return;
+    }
+
+    giftWrap.replaceChildren(...[done, giftIntro(gift, user, async (btn) => {
       if (!user) {
         const res = await openLoginModal({ returnTo: location.pathname + location.search });
         if (res && res.user) location.reload();
         return;
       }
       btn.disabled = true;
+      btn.textContent = 'در حال ثبت…';
       try {
         const r = await api.giftStart();
-        drawGift({ status: 'pending', reference: r.reference });
+        drawGift({ status: 'pending', reference: r.reference }, true);
       } catch (err) {
         btn.disabled = false;
+        btn.textContent = 'دریافت کد پیگیری';
         msg.textContent = (err && err.message) || 'ثبت درخواست انجام نشد.';
       }
     })].filter(Boolean));
   };
 
-  drawGift(null);
+  drawGift(null, false);
   // A returning buyer must land on their own tag, not on a button that would
   // mint a second one.
   if (gift && user) {
-    api.giftStatus().then((r) => { if (r && r.redemption) drawGift(r.redemption); }).catch(() => {});
+    api.giftStatus()
+      .then((r) => { if (r && r.redemption) drawGift(r.redemption, true); })
+      .catch(() => {});
   }
 
   root.replaceChildren(el('div', { class: 'dcp-pricing' }, [
-    ...head, ...notices, grid, action,
+    ...head, ...notices, grid, action, giftWrap,
     el('h2', { class: 'dcp-price-h2' }, 'با پریمیوم چه چیزی اضافه می‌شود'),
     whatYouGet(),
-    giftWrap,
   ]));
 
   if (from && window.gtag) window.gtag('event', 'pricing_view', { from });
