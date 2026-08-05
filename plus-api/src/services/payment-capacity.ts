@@ -180,11 +180,20 @@ export async function canSellPlan(months: number, now: Date = new Date()): Promi
   return { ok: plan.available, blocked_by: plan.blocked_by, capacity };
 }
 
-/** What to tell a customer who could not be sold to. Never a bare error. */
+const FA_DIGITS = '۰۱۲۳۴۵۶۷۸۹';
+const toFa = (n: number): string => String(n).replace(/\d/g, (d) => FA_DIGITS[Number(d)]);
+
+/**
+ * What to tell a customer who could not be sold to. Never a bare error, and
+ * never a dead end while anything is still buyable: naming the largest plan
+ * that DOES fit turns "no" into a choice.
+ */
 export function capacityMessage(capacity: Capacity): string {
-  const cheapest = Math.min(...capacity.plans.map((p) => p.months));
-  return capacity.any_plan_available
-    ? `ظرفیت فروش این ماه رو به پایان است و این طرح دیگر جا نمی‌شود. `
-      + `طرح ${cheapest} ماهه هنوز در دسترس است.`
-    : 'ظرفیت فروش این ماه تکمیل شده است. به‌محض باز شدن ظرفیت به شما خبر می‌دهیم.';
+  const stillAvailable = capacity.plans.filter((p) => p.available).map((p) => p.months);
+  if (!stillAvailable.length) {
+    return 'ظرفیت فروش این ماه تکمیل شده است. به‌محض باز شدن ظرفیت به شما خبر می‌دهیم.';
+  }
+  const best = Math.max(...stillAvailable);
+  return 'ظرفیت فروش این ماه رو به پایان است و این طرح دیگر جا نمی‌شود. '
+    + `طرح ${toFa(best)} ماهه هنوز در دسترس است.`;
 }

@@ -238,6 +238,10 @@ export const config = {
     // under-counting means a customer is charged for a subscription that the
     // ceiling then refuses to activate. Set false once the answer is in hand.
     capCountsAttempts: bool('PAYMENT_CAP_COUNTS_ATTEMPTS', true),
+    // Where the customer's browser lands once we know the answer. On the SITE,
+    // not the API: the API's job ends at deciding, and a bare JSON body is not
+    // a thing to show somebody who has just paid.
+    resultUrl: str('PAYMENT_RESULT_URL', 'https://dentcast.ir/plus/pay-result.html'),
   },
 
   // Zibal IPG (درگاه پرداخت زیبال).

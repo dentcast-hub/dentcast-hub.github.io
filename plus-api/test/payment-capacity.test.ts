@@ -94,6 +94,10 @@ describe('capacity accounting', () => {
     expect(six.blocked_by).toBe('amount');
     // The shop is still open — a single boolean would have closed it.
     expect(cap.any_plan_available).toBe(true);
+    // The refusal names the LARGEST plan that still fits — 3 months here, not
+    // the cheapest — so a turned-away customer is offered a choice rather than
+    // a consolation prize. Persian digits, because it is shown to a person.
+    expect(capacityMessage(cap)).toContain('۳ ماهه');
   });
 
   it('closes entirely once even one month would overshoot', async () => {
