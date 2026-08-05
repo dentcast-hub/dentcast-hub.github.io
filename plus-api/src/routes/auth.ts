@@ -15,6 +15,7 @@ import { displayStreak } from '../services/streak.js';
 import { dayInTz } from '../services/time.js';
 import { getActivePathwaySummary } from '../services/active-pathway.js';
 import { getPendingPremiumGrant } from '../services/premium-prize.js';
+import { getSubscriptionSummary } from '../services/subscription.js';
 import { recordPageView } from '../services/view-stats.js';
 
 // The exact fields the Telegram Login Widget sends. Only these participate in
@@ -474,6 +475,16 @@ export async function authRoutes(app: FastifyInstance): Promise<void> {
       // time they see this, but the field is computed independent of tier so
       // there is no ordering assumption between the two).
       pending_premium_grant: await getPendingPremiumGrant(user.id),
+      // Where this account stands: expiry, days of access left, and whether it
+      // is a lifetime account. Null for anyone who has never subscribed, and
+      // null for a league-prize premium too — the prize is not a subscription
+      // and pending_premium_grant above is what speaks for it.
+      //
+      // Deliberately independent of `tier`: the renewal banner has to appear for
+      // someone whose days are running out, i.e. while they are still premium,
+      // and the "your subscription ended" message has to appear once they are
+      // not. A field that only existed for premium users could say neither.
+      subscription: await getSubscriptionSummary(user.id),
     };
     // due_card_count is premium-only and intentionally absent for free users.
     if (user.tier === 'premium') {

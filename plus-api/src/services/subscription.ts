@@ -1,5 +1,6 @@
 import { config } from '../config.js';
 import { pool, one, query, withTransaction, type Queryable } from '../db.js';
+import { dayInTz, dayDiff } from './time.js';
 
 /**
  * The subscription engine — the ONE place a premium subscription is created or
@@ -279,6 +280,62 @@ export async function revokeSubscription(
     }, client);
     return true;
   });
+}
+
+export interface SubscriptionSummary {
+  status: 'active' | 'expired';
+  plan: string;
+  is_founder: boolean;
+  expires_at: Date | null;
+  /** The last Tehran day of access, 'YYYY-MM-DD'. Null for a founder. */
+  expires_on: string | null;
+  /** Whole Tehran days of access left; 0 means "today is the last day". */
+  days_left: number | null;
+  is_premium: boolean;
+}
+
+/**
+ * The single answer to "where does this account stand", for GET /me, the admin
+ * tools, and every renewal prompt built on top of them.
+ *
+ * `days_left` COUNTS DAYS OF ACCESS, NOT HOURS UNTIL THE TIMESTAMP, and the
+ * difference is the whole reason this is one shared function rather than a line
+ * of arithmetic at each call site. Premium is settled at the Tehran day boundary
+ * by the sweep, so a subscription whose timestamp falls at 14:00 today still
+ * buys the whole of today. Dividing the raw interval would call that "1 day
+ * left" this morning and "0" this afternoon, from the same unchanged
+ * subscription — and then the three-day warning would fire on a different day
+ * depending on what time of day the user happened to open the site.
+ *
+ * Counting calendar days instead makes it stable: 0 means today is the last day,
+ * 3 means the warning is due, and the number only ever changes at midnight —
+ * the same instant the sweep acts on it.
+ */
+export function summarizeSubscription(
+  sub: Subscription | null,
+  now: Date = new Date(),
+): SubscriptionSummary | null {
+  if (!sub) return null;
+  const expiresOn = sub.expires_at ? dayInTz(sub.expires_at, config.streakTimezone) : null;
+  return {
+    status: sub.status,
+    plan: sub.plan,
+    is_founder: sub.is_founder,
+    expires_at: sub.expires_at,
+    expires_on: expiresOn,
+    days_left: expiresOn
+      ? Math.max(0, dayDiff(expiresOn, dayInTz(now, config.streakTimezone)))
+      : null,
+    is_premium: isPremiumNow(sub, now),
+  };
+}
+
+export async function getSubscriptionSummary(
+  userId: string,
+  now: Date = new Date(),
+  client: Queryable = pool,
+): Promise<SubscriptionSummary | null> {
+  return summarizeSubscription(await getSubscription(userId, client), now);
 }
 
 export interface SweepResult {

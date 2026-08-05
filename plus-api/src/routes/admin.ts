@@ -9,8 +9,8 @@ import { runStreakReminders } from '../services/streak-reminder.js';
 import { one } from '../db.js';
 import { normalizePhone } from '../services/phone.js';
 import {
-  activateMonths, grantLifetime, revokeSubscription, getSubscription, isPremiumNow,
-  sweepExpiredSubscriptions, type Subscription,
+  activateMonths, grantLifetime, revokeSubscription, getSubscription,
+  summarizeSubscription, sweepExpiredSubscriptions, type Subscription,
 } from '../services/subscription.js';
 import {
   getSpotStats, defaultRange, isCalendarDay, SPOT_HOSTS, type GroupBy,
@@ -23,27 +23,20 @@ import {
 import { config } from '../config.js';
 import type { NotificationMessage } from '../providers/notifications/types.js';
 
-/** Days from now until `expires_at`, rounded up; null for a lifetime account. */
-function daysLeft(sub: Subscription | null): number | null {
-  if (!sub?.expires_at) return null;
-  return Math.max(0, Math.ceil((sub.expires_at.getTime() - Date.now()) / 86_400_000));
-}
-
-/** The shape every admin subscription endpoint answers with. */
+/**
+ * The shape every admin subscription endpoint answers with. Built from the same
+ * summarizeSubscription() that GET /me uses, so "days left" cannot come to mean
+ * one thing to the founder and another to the user looking at their own banner.
+ */
 function subscriptionView(phone: string, userId: string, sub: Subscription | null) {
+  const summary = summarizeSubscription(sub);
   return {
     ok: true,
     user_id: userId,
     phone,
-    subscription: sub && {
-      status: sub.status,
-      plan: sub.plan,
-      started_at: sub.started_at,
-      expires_at: sub.expires_at,
-      is_founder: sub.is_founder,
-    },
-    is_premium: isPremiumNow(sub),
-    days_left: daysLeft(sub),
+    subscription: summary && { ...summary, started_at: sub!.started_at },
+    is_premium: summary?.is_premium ?? false,
+    days_left: summary?.days_left ?? null,
   };
 }
 

@@ -3,7 +3,8 @@ import { resetDb } from './helpers.js';
 import { pool, closePool } from '../src/db.js';
 import {
   activateMonths, grantLifetime, revokeSubscription, getSubscription, isPremiumNow,
-  sweepExpiredSubscriptions, PLAN_PAID, PLAN_FOUNDER,
+  sweepExpiredSubscriptions, summarizeSubscription, getSubscriptionSummary,
+  PLAN_PAID, PLAN_FOUNDER,
 } from '../src/services/subscription.js';
 
 /**
@@ -424,6 +425,83 @@ describe('sweepExpiredSubscriptions', () => {
     const r = await sweepExpiredSubscriptions(LATER);
     expect(r).toEqual({ expired: 0, demoted: 0, promoted: 0 });
     expect(await tierOf(user)).toBe('free');
+  });
+});
+
+describe('summarizeSubscription', () => {
+  /** Tehran is +03:30, so this instant is 14:00 on 5 Sept, Tehran time. */
+  const EXPIRES = new Date('2026-09-05T14:00:00+03:30');
+
+  async function subscribedUntil(expires: Date): Promise<string> {
+    const user = await makeUser();
+    await activateMonths(user, 1, { source: 'payment' });
+    await pool.query('update subscriptions set expires_at = $2 where user_id = $1',
+      [user, expires.toISOString()]);
+    return user;
+  }
+
+  it('counts days of access, so the number holds still all day', async () => {
+    const user = await subscribedUntil(EXPIRES);
+
+    // Same subscription, three moments of the same Tehran day. A raw interval
+    // division would slide from 3 to 2 across this span; the banner must not.
+    for (const at of ['2026-09-02T00:30:00+03:30', '2026-09-02T13:00:00+03:30', '2026-09-02T23:30:00+03:30']) {
+      const s = await getSubscriptionSummary(user, new Date(at));
+      expect(s!.days_left).toBe(3);
+    }
+  });
+
+  it('says 0 on the last day — the day is still theirs', async () => {
+    const user = await subscribedUntil(EXPIRES);
+
+    // 09:00, five hours before the timestamp: not "1 day left".
+    expect((await getSubscriptionSummary(user, new Date('2026-09-05T09:00:00+03:30')))!.days_left).toBe(0);
+    // 18:00, four hours after it: still 0, because the sweep has not come yet
+    // and the whole day was bought.
+    const evening = await getSubscriptionSummary(user, new Date('2026-09-05T18:00:00+03:30'));
+    expect(evening!.days_left).toBe(0);
+    expect(evening!.is_premium).toBe(false); // the timestamp has passed...
+    expect(evening!.status).toBe('active');  // ...but the sweep has not run
+  });
+
+  it('changes at midnight, the same instant the sweep acts', async () => {
+    const user = await subscribedUntil(EXPIRES);
+
+    expect((await getSubscriptionSummary(user, new Date('2026-09-04T23:59:00+03:30')))!.days_left).toBe(1);
+    expect((await getSubscriptionSummary(user, new Date('2026-09-05T00:01:00+03:30')))!.days_left).toBe(0);
+  });
+
+  it('never goes negative once the subscription is behind them', async () => {
+    const user = await subscribedUntil(EXPIRES);
+    const s = await getSubscriptionSummary(user, new Date('2026-11-01T00:00:00+03:30'));
+    expect(s!.days_left).toBe(0);
+    expect(s!.is_premium).toBe(false);
+  });
+
+  it('gives the Tehran calendar day, not the UTC one', async () => {
+    // 01:00 Tehran on 6 Sept is still 5 Sept in UTC — a client formatting the
+    // raw ISO string would render the wrong Jalali date for the whole evening.
+    const user = await subscribedUntil(new Date('2026-09-06T01:00:00+03:30'));
+    const s = await getSubscriptionSummary(user, new Date('2026-09-01T00:00:00+03:30'));
+    expect(s!.expires_at!.toISOString().slice(0, 10)).toBe('2026-09-05');
+    expect(s!.expires_on).toBe('2026-09-06');
+  });
+
+  it('has no countdown at all for a founder', async () => {
+    const user = await makeUser();
+    await grantLifetime(user, { source: 'admin' });
+
+    const s = await getSubscriptionSummary(user, new Date('2126-01-01T00:00:00Z'));
+    expect(s!.is_founder).toBe(true);
+    expect(s!.days_left).toBeNull();
+    expect(s!.expires_on).toBeNull();
+    expect(s!.is_premium).toBe(true);
+  });
+
+  it('is null for someone who never subscribed', async () => {
+    const user = await makeUser();
+    expect(await getSubscriptionSummary(user)).toBeNull();
+    expect(summarizeSubscription(null)).toBeNull();
   });
 });
 
