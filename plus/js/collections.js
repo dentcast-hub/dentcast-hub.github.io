@@ -12,6 +12,10 @@ import { api, currentUser } from './api.js';
 import { openLoginModal } from './login-modal.js';
 import { FOLDER_EN } from './content-index.js';
 import { PALETTE } from './config.js';
+import {
+  foldFa, highlightHref, hlMark, noteBlock, labelChip, actionBtn, asText,
+  copyToClipboard, toast, skeleton, confirmStrip, inlineEditor,
+} from './hl-view.js';
 
 const hlColorCss = (key) => (PALETTE.find((p) => p.key === key) || {}).css || '#eaecf5';
 
@@ -70,13 +74,6 @@ function openSheet(card) {
   requestAnimationFrame(() => { overlay.classList.add('is-open'); sheet.classList.add('is-open'); });
 }
 
-function toast(text) {
-  const t = el('div', { class: 'dcp-cl-toast' }, [el('span', { class: 'dcp-cl-toast-check' }, '✓'), el('span', {}, text)]);
-  document.body.appendChild(t);
-  requestAnimationFrame(() => t.classList.add('is-shown'));
-  setTimeout(() => { t.classList.remove('is-shown'); setTimeout(() => t.remove(), 300); }, 2400);
-}
-
 function gateCard({ title, sub, cta }) {
   return el('div', { class: 'dcp-sheet-card', role: 'dialog', 'aria-label': title }, [
     el('h2', { class: 'dcp-sheet-title' }, title),
@@ -85,30 +82,44 @@ function gateCard({ title, sub, cta }) {
   ]);
 }
 
-function pickerCard(target) {
+/**
+ * The board chooser sheet, shared by "add to collection" and "move to another
+ * collection" — both are the same question ("which board?"), so they are the
+ * same sheet, with a filter box once you own enough boards for scanning them to
+ * be work.
+ *
+ * @param onPick   async (collection) => void; the sheet closes on success
+ * @param exclude  a collection id to leave out (the one you are moving OUT of)
+ */
+function chooserCard({ title, hint, onPick, exclude = null, okText = 'اضافه شد' }) {
   const msg = el('div', { class: 'dcp-modal-msg', role: 'status' });
-  const list = el('div', { class: 'dcp-cl-picklist' }, el('div', { class: 'dcp-loading' }, 'در حال بارگذاری...'));
+  const list = el('div', { class: 'dcp-cl-picklist' }, skeleton(2));
+  const filter = el('input', {
+    type: 'search', class: 'dcp-input dcp-cl-pickfilter', placeholder: 'جستجوی کالکشن…',
+    'aria-label': 'جستجوی کالکشن',
+  });
+  filter.hidden = true;
 
   const newTitle = el('input', { type: 'text', class: 'dcp-input', placeholder: 'اسمِ کالکشنِ جدید', maxlength: '80' });
   const newBtn = el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button' }, '+ ساختن');
 
-  async function addTo(collectionId, title) {
+  async function pick(c) {
     try {
-      await api.addToCollection(collectionId, target);
+      await onPick(c);
       closeSheet();
-      toast('به «' + title + '» اضافه شد');
+      toast('«' + c.title + '» — ' + okText);
     } catch (_) {
-      msg.textContent = 'افزودن ناموفق بود؛ دوباره تلاش کنید.';
+      msg.textContent = 'انجام نشد؛ دوباره تلاش کنید.';
     }
   }
 
   newBtn.addEventListener('click', async () => {
-    const title = newTitle.value.trim();
-    if (!title) { msg.textContent = 'یک اسم برای کالکشن بنویس.'; return; }
+    const t = newTitle.value.trim();
+    if (!t) { msg.textContent = 'یک اسم برای کالکشن بنویس.'; return; }
     newBtn.disabled = true;
     try {
-      const { collection } = await api.createCollection(title);
-      await addTo(collection.id, collection.title);
+      const { collection } = await api.createCollection(t);
+      await pick(collection);
     } catch (_) {
       msg.textContent = 'ساختِ کالکشن ناموفق بود؛ دوباره تلاش کنید.';
       newBtn.disabled = false;
@@ -116,39 +127,85 @@ function pickerCard(target) {
   });
   newTitle.addEventListener('keydown', (e) => { if (e.key === 'Enter') newBtn.click(); });
 
-  api.listCollections().then(({ collections }) => {
-    if (!collections.length) {
-      list.replaceChildren(el('p', { class: 'dcp-cl-pick-empty' }, 'هنوز کالکشنی نساخته‌ای؛ یکی بساز:'));
+  let all = [];
+  function paintList() {
+    const q = foldFa(filter.value);
+    const rows = all.filter((c) => !q || foldFa(c.title).includes(q));
+    if (!rows.length) {
+      list.replaceChildren(el('p', { class: 'dcp-cl-pick-empty' },
+        all.length ? 'کالکشنی با این اسم نیست؛ می‌توانی همین‌جا بسازی:' : 'هنوز کالکشنی نساخته‌ای؛ یکی بساز:'));
       return;
     }
-    list.replaceChildren(...collections.map((c) => {
+    list.replaceChildren(...rows.map((c) => {
       const row = el('button', { class: 'dcp-cl-pick-row', type: 'button' }, [
-        boardCover(c.preview),
+        boardCover(c.preview || []),
         el('span', { class: 'dcp-cl-pick-txt' }, [
           el('span', { class: 'dcp-cl-pick-name' }, c.title),
-          el('span', { class: 'dcp-cl-pick-count' }, faNum(c.item_count) + ' مورد'),
+          el('span', { class: 'dcp-cl-pick-count' }, faNum(c.item_count || 0) + ' مورد'),
         ]),
       ]);
-      row.addEventListener('click', () => addTo(c.id, c.title));
+      row.addEventListener('click', () => pick(c));
       return row;
     }));
+  }
+
+  api.listCollections().then(({ collections }) => {
+    all = collections.filter((c) => c.id !== exclude);
+    filter.hidden = all.length < 6;
+    paintList();
   }).catch(() => { list.replaceChildren(el('div', { class: 'dcp-empty' }, 'کالکشن‌ها در دسترس نیست.')); });
+  filter.addEventListener('input', paintList);
 
   // «؟» reveal, same pattern as the homepage promo card's score caption and the
   // workbench's own two collection buttons: hidden by default, toggled inline.
-  const cap = el('p', { class: 'dcp-sheet-cap' },
-    'کالکشن یعنی یه پوشه‌ی دلخواه که خودت می‌سازی و هرچی خواستی توش می‌ریزی — برای یه امتحان، یه بیمارِ خاص، یا هر موضوعی که خودت بخوای.');
+  const cap = el('p', { class: 'dcp-sheet-cap' }, hint);
   cap.hidden = true;
   const infoBtn = el('button', { class: 'dcp-wb-info', type: 'button', title: 'کالکشن یعنی چی؟', 'aria-label': 'کالکشن یعنی چی؟' }, '؟');
   infoBtn.addEventListener('click', () => { cap.hidden = !cap.hidden; });
 
   return el('div', { class: 'dcp-sheet-card' }, [
-    el('div', { class: 'dcp-sheet-top' }, [el('h2', { class: 'dcp-sheet-title' }, 'افزودن به کالکشن'), infoBtn]),
+    el('div', { class: 'dcp-sheet-top' }, [el('h2', { class: 'dcp-sheet-title' }, title), infoBtn]),
     cap,
+    filter,
     list,
     el('div', { class: 'dcp-cl-picknew' }, [newTitle, newBtn]),
     msg,
   ]);
+}
+
+const PICKER_HINT = 'کالکشن یعنی یه پوشه‌ی دلخواه که خودت می‌سازی و هرچی خواستی توش می‌ریزی — برای یه امتحان، یه بیمارِ خاص، یا هر موضوعی که خودت بخوای.';
+
+function pickerCard(target) {
+  return chooserCard({
+    title: 'افزودن به کالکشن',
+    hint: PICKER_HINT,
+    okText: 'اضافه شد',
+    onPick: (c) => api.addToCollection(c.id, target),
+  });
+}
+
+/**
+ * Move one saved item to another board. There is no move endpoint and none is
+ * needed: add here, then let the caller's own remove take it off this board —
+ * and the add is idempotent at the DB level, so the worst case of a half
+ * finished move is the item sitting in both boards, never lost.
+ *
+ * `removeFromHere` is the board's OWN remove (API call + its in-memory model),
+ * so a move leaves the open board redrawn correctly and never deletes twice.
+ */
+export function openCollectionMove(item, fromCollectionId, removeFromHere) {
+  openSheet(chooserCard({
+    title: 'انتقال به کالکشنِ دیگر',
+    hint: PICKER_HINT,
+    okText: 'منتقل شد',
+    exclude: fromCollectionId,
+    onPick: async (c) => {
+      await api.addToCollection(c.id, item.highlight_id
+        ? { highlight_id: item.highlight_id }
+        : { content_id: item.content_id });
+      await removeFromHere(item.id);
+    },
+  }));
 }
 
 /**
@@ -177,40 +234,110 @@ export async function openCollectionPicker({ highlightId, contentId } = {}) {
 }
 
 // --- masonry "pin" (one saved item inside a board) --------------------------
-function pinCard(item, onRemove) {
+/**
+ * A pin is a CARD, not a link — the same rule the دفترچه follows, and for the
+ * same reason: a saved highlight used to be a colour band that, when clicked,
+ * threw you into the article with none of your marks drawn and no note in
+ * sight (user report, 2026-08-05). A pin now carries the note, the label and
+ * its own actions (edit / copy / move / open / remove), so a board is
+ * something you can actually study from.
+ *
+ * @param collectionId  the board it lives in (needed for move + remove)
+ */
+function pinCard(item, collectionId, { onRemove, onChanged }) {
   const kindLabel = FOLDER_EN[item.type] || item.type;
-  const removeBtn = el('button', { class: 'dcp-cl-pin-del', type: 'button', 'aria-label': 'حذف از کالکشن', title: 'حذف' }, '×');
+  const pin = el('div', { class: 'dcp-cl-pin' });
 
-  // A highlight-pin shows the SAME solid pastel the article's own mark.dcp-hl
-  // uses (never flattened to plain text); a page-pin gets its type color + icon.
-  const band = item.exact
-    ? el('div', { class: 'dcp-cl-pin-band' }, [
-        el('mark', { class: 'dcp-hl' + (item.underline ? ' dcp-underline' : ''), 'data-color': item.color || '' }, item.exact),
-      ])
-    : el('div', { class: 'dcp-cl-pin-band dcp-cl-pin-page', style: 'background:' + (TYPE_COVER_COLOR[item.type] || '#8aaac8') }, [
+  function paint() {
+    // A highlight-pin shows the SAME solid pastel the article's own mark.dcp-hl
+    // uses (never flattened to plain text); a page-pin gets its type color + icon.
+    const band = item.exact
+      ? el('div', { class: 'dcp-cl-pin-band' }, [hlMark(item)])
+      : el('div', { class: 'dcp-cl-pin-band dcp-cl-pin-page', style: 'background:' + (TYPE_COVER_COLOR[item.type] || '#8aaac8') }, [
         el('span', { class: 'dcp-cl-pin-ico' }, TYPE_ICON[item.type] || '📄'),
         el('span', {}, item.title),
       ]);
 
-  // A highlight-pin links to the highlight itself (?dcphl= — plus.js opens the
-  // workbench and scrolls to it); a page-pin links to the page.
-  const href = item.highlight_id
-    ? item.url + (item.url.includes('?') ? '&' : '?') + 'dcphl=' + encodeURIComponent(item.highlight_id)
-    : item.url;
-  const pin = el('div', { class: 'dcp-cl-pin' }, [
-    removeBtn,
-    el('a', { class: 'dcp-cl-pin-link', href }, [band, el('div', { class: 'dcp-cl-pin-foot' }, el('span', { dir: 'ltr' }, kindLabel))]),
-  ]);
-  removeBtn.addEventListener('click', async () => {
-    removeBtn.disabled = true;
-    try { await onRemove(item.id); pin.remove(); } catch (_) { removeBtn.disabled = false; }
-  });
+    const actions = [];
+    if (item.highlight_id) {
+      actions.push(actionBtn('✎ ویرایش', {
+        onClick: () => {
+          if (pin.querySelector('.dcp-hlib-editor')) return;
+          pin.appendChild(inlineEditor({ id: item.highlight_id, note: item.note, label: item.label, color: item.color }, {
+            onSaved: (updated) => {
+              Object.assign(item, { note: updated.note, label: updated.label, color: updated.color });
+              paint();
+              if (onChanged) onChanged(item);
+            },
+          }));
+        },
+      }));
+      actions.push(actionBtn('کپی', {
+        onClick: (e) => copyToClipboard(asText({ exact: item.exact, note: item.note }), e.currentTarget),
+      }));
+    }
+    actions.push(actionBtn('انتقال', {
+      title: 'انتقال به کالکشنِ دیگر',
+      onClick: () => openCollectionMove(item, collectionId, onRemove),
+    }));
+    // A highlight-item opens ON its highlight (?dcphl=); a page-item opens the page.
+    actions.push(actionBtn(item.highlight_id ? 'متنِ مقاله ›' : 'بازکردن ›', {
+      href: highlightHref(item.url, item.highlight_id),
+    }));
+    actions.push(actionBtn('حذف', {
+      danger: true,
+      onClick: () => {
+        if (pin.querySelector('.dcp-recent-confirm')) return;
+        pin.appendChild(confirmStrip('از این کالکشن حذف شود؟', async () => {
+          await onRemove(item.id);
+          toast('از کالکشن حذف شد');
+        }));
+      },
+    }));
+
+    const foot = el('div', { class: 'dcp-cl-pin-foot' }, [
+      el('a', { class: 'dcp-cl-pin-src', href: item.url }, [
+        el('span', { dir: 'ltr', class: 'dcp-hlib-folder' }, kindLabel),
+        item.highlight_id ? el('span', {}, item.title) : null,
+      ].filter(Boolean)),
+      labelChip(item.label),
+    ].filter(Boolean));
+
+    pin.replaceChildren(...[
+      band,
+      noteBlock(item.note),
+      foot,
+      el('div', { class: 'dcp-hlib-actions dcp-cl-pin-actions' }, actions),
+    ].filter(Boolean));
+  }
+
+  paint();
   return pin;
 }
 
+// "۳ روز پیش" — a relative day count is what a shelf of boards actually needs
+// (which one did I touch last?), not a formatted date nobody reads.
+function agoFa(iso) {
+  if (!iso) return null;
+  const days = Math.floor((Date.now() - new Date(iso).getTime()) / 86400000);
+  if (!Number.isFinite(days) || days < 0) return null;
+  if (days === 0) return 'امروز';
+  if (days === 1) return 'دیروز';
+  if (days < 30) return faNum(days) + ' روز پیش';
+  const months = Math.floor(days / 30);
+  return faNum(months) + ' ماه پیش';
+}
+
+const BOARD_SORTS = [
+  { key: 'recent', fa: 'تازه‌ترین' },
+  { key: 'active', fa: 'آخرین افزوده' },
+  { key: 'most', fa: 'پرمورد‌ترین' },
+  { key: 'title', fa: 'بر اساس نام' },
+];
+
 /** GET /plus/collections.html — every collection as a Pinterest-style board grid. */
 export async function renderCollectionsList(container) {
-  container.replaceChildren(el('div', { class: 'dcp-loading' }, 'در حال بارگذاری...'));
+  container.replaceChildren(skeleton(2));
   const data = await api.listCollections().catch(() => null);
   if (!data) { container.replaceChildren(el('div', { class: 'dcp-empty' }, 'کالکشن‌ها در دسترس نیست.')); return; }
 
@@ -224,25 +351,55 @@ export async function renderCollectionsList(container) {
   const createBtn = el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button' }, '+ کالکشنِ جدید');
   const createRow = el('div', { class: 'dcp-cl-picknew' }, [titleInput, createBtn]);
 
+  const search = el('input', {
+    type: 'search', class: 'dcp-input dcp-hlib-search', placeholder: 'جستجوی کالکشن…', 'aria-label': 'جستجوی کالکشن',
+  });
+  const sortSel = el('select', { class: 'dcp-input dcp-hlib-select', 'aria-label': 'ترتیب' },
+    BOARD_SORTS.map((s) => el('option', { value: s.key }, s.fa)));
+  // The search row only earns its space once there is something to search.
+  const tools = el('div', { class: 'dcp-hlib-row' }, [search, sortSel]);
+  tools.hidden = data.collections.length < 4;
+
   const grid = el('div', { class: 'dcp-cl-board-grid' });
 
-  function renderGrid(collections) {
-    if (!collections.length) {
-      grid.replaceChildren(el('div', { class: 'dcp-empty' }, [
+  function renderGrid() {
+    if (!data.collections.length) {
+      grid.replaceChildren(el('div', { class: 'dcp-empty dcp-hlib-empty' }, [
+        el('div', { class: 'dcp-hlib-empty-ico', 'aria-hidden': 'true' }, '🗂'),
         el('p', {}, 'هنوز کالکشنی نساختی.'),
-        el('p', { class: 'dcp-muted' }, 'یکی بساز و از میزکار یا هایلایت‌های اخیرِ داشبورد چیزی بهش اضافه کن.'),
+        el('p', { class: 'dcp-muted' }, 'یکی بساز، بعد از دفترچه‌ی هایلایت‌ها یا از میزکارِ هر مقاله چیزی بهش اضافه کن.'),
+        el('a', { class: 'dcp-btn dcp-btn-ghost', href: '/plus/highlights.html' }, 'رفتن به دفترچه‌ی هایلایت‌ها'),
       ]));
       return;
     }
-    grid.replaceChildren(...collections.map((c) => el('a', { class: 'dcp-cl-board', href: '/plus/collection.html?id=' + encodeURIComponent(c.id) }, [
-      boardCover(c.preview),
-      el('div', { class: 'dcp-cl-board-meta' }, [
-        el('p', { class: 'dcp-cl-board-title' }, c.title),
-        el('p', { class: 'dcp-cl-board-count' }, faNum(c.item_count) + ' مورد'),
-      ]),
-    ])));
+    const q = foldFa(search.value);
+    const rows = data.collections.filter((c) => !q || foldFa(c.title).includes(q));
+    const sort = sortSel.value;
+    if (sort === 'most') rows.sort((a, b) => (b.item_count || 0) - (a.item_count || 0));
+    else if (sort === 'title') rows.sort((a, b) => String(a.title).localeCompare(String(b.title), 'fa'));
+    else if (sort === 'active') {
+      rows.sort((a, b) => String(b.last_item_at || b.created_at).localeCompare(String(a.last_item_at || a.created_at)));
+    }
+
+    if (!rows.length) {
+      grid.replaceChildren(el('div', { class: 'dcp-empty' }, 'کالکشنی با این اسم پیدا نشد.'));
+      return;
+    }
+    grid.replaceChildren(...rows.map((c) => {
+      const ago = agoFa(c.last_item_at || c.created_at);
+      return el('a', { class: 'dcp-cl-board', href: '/plus/collection.html?id=' + encodeURIComponent(c.id) }, [
+        boardCover(c.preview),
+        el('div', { class: 'dcp-cl-board-meta' }, [
+          el('p', { class: 'dcp-cl-board-title' }, c.title),
+          el('p', { class: 'dcp-cl-board-count' },
+            faNum(c.item_count) + ' مورد' + (ago ? ' · ' + ago : '')),
+        ]),
+      ]);
+    }));
   }
-  renderGrid(data.collections);
+  search.addEventListener('input', renderGrid);
+  sortSel.addEventListener('change', renderGrid);
+  renderGrid();
 
   createBtn.addEventListener('click', async () => {
     const title = titleInput.value.trim();
@@ -256,12 +413,12 @@ export async function renderCollectionsList(container) {
   });
   titleInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') createBtn.click(); });
 
-  container.replaceChildren(top, createRow, grid);
+  container.replaceChildren(top, createRow, tools, grid);
 }
 
 /** GET /plus/collection.html?id=... — one board's masonry pin grid, rename/delete. */
 export async function renderCollectionDetail(container, id) {
-  container.replaceChildren(el('div', { class: 'dcp-loading' }, 'در حال بارگذاری...'));
+  container.replaceChildren(skeleton(2));
   const data = await api.getCollection(id).catch(() => null);
   if (!data) {
     container.replaceChildren(el('div', { class: 'dcp-empty' }, [
@@ -318,23 +475,93 @@ export async function renderCollectionDetail(container, id) {
     actionsRow.appendChild(confirmRow);
   });
 
+  const back = el('a', { class: 'dcp-back', href: '/plus/collections.html' }, '‹ همه‌ی کالکشن‌ها');
   const head = el('div', { class: 'dcp-pw-detail-head' }, [
+    back,
     el('div', { class: 'dcp-cl-detail-top' }, [titleWrap, actionsRow]),
   ]);
 
+  // --- filters over the board's own items ----------------------------------
+  const search = el('input', {
+    type: 'search', class: 'dcp-input dcp-hlib-search',
+    placeholder: 'جستجو در این کالکشن…', 'aria-label': 'جستجو در این کالکشن',
+  });
+  const KINDS = [{ key: '', fa: 'همه' }, { key: 'highlight', fa: 'هایلایت‌ها' }, { key: 'page', fa: 'صفحه‌ها' }];
+  let kind = '';
+  const kindChips = el('div', { class: 'dcp-hlib-chips' });
+  const sortSel = el('select', { class: 'dcp-input dcp-hlib-select', 'aria-label': 'ترتیب' }, [
+    el('option', { value: 'recent' }, 'تازه‌ترین'),
+    el('option', { value: 'oldest' }, 'قدیمی‌ترین'),
+    el('option', { value: 'source' }, 'بر اساس مقاله'),
+  ]);
+  const countLine = el('p', { class: 'dcp-hlib-count' });
+  const tools = el('div', { class: 'dcp-hlib-controls' }, [
+    el('div', { class: 'dcp-hlib-row' }, [search, sortSel]),
+    el('div', { class: 'dcp-hlib-row dcp-hlib-row-tools' }, [kindChips, countLine]),
+  ]);
+
   const grid = el('div', { class: 'dcp-cl-pin-grid' });
+
+  async function removeItem(itemId) {
+    await api.removeCollectionItem(id, itemId);
+    data.items = data.items.filter((i) => i.id !== itemId);
+    renderItems();
+  }
+
   function renderItems() {
+    tools.hidden = data.items.length < 4;
     if (!data.items.length) {
-      grid.replaceChildren(el('div', { class: 'dcp-empty' }, 'این کالکشن هنوز خالیه؛ از میزکارِ یه مقاله یا هایلایت‌های اخیرِ داشبورد چیزی بهش اضافه کن.'));
+      countLine.textContent = '';
+      kindChips.replaceChildren();
+      grid.replaceChildren(el('div', { class: 'dcp-empty dcp-hlib-empty' }, [
+        el('div', { class: 'dcp-hlib-empty-ico', 'aria-hidden': 'true' }, '📌'),
+        el('p', {}, 'این کالکشن هنوز خالیه.'),
+        el('p', { class: 'dcp-muted' }, 'از دفترچه‌ی هایلایت‌ها یا از میزکارِ هر مقاله، چیزی بهش اضافه کن.'),
+        el('a', { class: 'dcp-btn dcp-btn-primary', href: '/plus/highlights.html' }, 'رفتن به دفترچه‌ی هایلایت‌ها'),
+      ]));
       return;
     }
-    grid.replaceChildren(...data.items.map((item) => pinCard(item, async (itemId) => {
-      await api.removeCollectionItem(id, itemId);
-      data.items = data.items.filter((i) => i.id !== itemId);
-      if (!data.items.length) renderItems();
+
+    const counts = { '': data.items.length, highlight: 0, page: 0 };
+    for (const it of data.items) counts[it.highlight_id ? 'highlight' : 'page'] += 1;
+    kindChips.replaceChildren(...KINDS.map((k) => {
+      const b = el('button', { class: 'dcp-hlib-chip' + (k.key === kind ? ' is-on' : ''), type: 'button' },
+        [k.fa, el('span', { class: 'dcp-hlib-chipn' }, faNum(counts[k.key]))]);
+      b.addEventListener('click', () => { kind = k.key; renderItems(); });
+      return b;
+    }));
+
+    const q = foldFa(search.value);
+    let rows = data.items.filter((it) => {
+      if (kind === 'highlight' && !it.highlight_id) return false;
+      if (kind === 'page' && it.highlight_id) return false;
+      if (!q) return true;
+      return foldFa(it.exact).includes(q) || foldFa(it.note).includes(q) || foldFa(it.title).includes(q);
+    });
+    const sort = sortSel.value;
+    if (sort === 'oldest') rows = rows.slice().reverse();
+    else if (sort === 'source') {
+      rows = rows.slice().sort((a, b) => String(a.title).localeCompare(String(b.title), 'fa'));
+    }
+
+    countLine.replaceChildren(
+      el('b', {}, faNum(rows.length)),
+      document.createTextNode(rows.length === data.items.length
+        ? ' مورد' : ' از ' + faNum(data.items.length) + ' مورد'),
+    );
+
+    if (!rows.length) {
+      grid.replaceChildren(el('div', { class: 'dcp-empty' }, 'موردی با این فیلترها پیدا نشد.'));
+      return;
+    }
+    grid.replaceChildren(...rows.map((item) => pinCard(item, id, {
+      onRemove: removeItem,
+      onChanged: () => renderItems(),
     })));
   }
+  search.addEventListener('input', renderItems);
+  sortSel.addEventListener('change', renderItems);
   renderItems();
 
-  container.replaceChildren(head, grid);
+  container.replaceChildren(head, tools, grid);
 }

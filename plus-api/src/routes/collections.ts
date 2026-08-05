@@ -63,10 +63,14 @@ export async function collectionRoutes(app: FastifyInstance): Promise<void> {
   // without an extra round trip per collection.
   app.get('/collections', async (request, reply) => {
     const res = await pool.query<{
-      id: string; title: string; created_at: string;
+      id: string; title: string; created_at: string; last_item_at: string | null;
       items: Array<{ highlight_id: string | null; content_id: string; color: string | null }>;
     }>(
-      `select c.id, c.title, c.created_at,
+      // last_item_at is DERIVED (max of the items' created_at), never stored:
+      // "which board did I last add to" is the question a shelf of boards has
+      // to answer, and deriving it costs nothing over the join that is already
+      // here — a column would cost a migration and a write path to keep true.
+      `select c.id, c.title, c.created_at, max(ci.created_at) as last_item_at,
               coalesce(
                 json_agg(
                   json_build_object('highlight_id', ci.highlight_id, 'content_id', ci.content_id, 'color', h.color)
@@ -86,6 +90,7 @@ export async function collectionRoutes(app: FastifyInstance): Promise<void> {
       id: r.id,
       title: r.title,
       created_at: r.created_at,
+      last_item_at: r.last_item_at,
       item_count: r.items.length,
       preview: r.items.slice(0, 3).map((it) => ({
         kind: it.highlight_id ? 'highlight' : 'page',

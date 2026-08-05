@@ -3,7 +3,7 @@
 // installed app opens instantly. It deliberately does NOT cache article content
 // or API responses, so there is no false "works offline" claim: user data always
 // comes fresh from the API, and the shell shows a normal error when offline.
-const CACHE = 'dcp-shell-v19';
+const CACHE = 'dcp-shell-v20';
 const SHELL = [
   '/plus/',
   '/plus/index.html',
@@ -34,6 +34,7 @@ const SHELL = [
   '/plus/js/pathway-page.js',
   '/plus/js/collections.js',
   '/plus/js/collections-page.js',
+  '/plus/js/hl-view.js',
   '/plus/js/highlights.js',
   '/plus/js/highlights-page.js',
   '/plus/js/collection-page.js',

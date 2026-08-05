@@ -105,6 +105,24 @@ describe('GET /collections', () => {
     expect(pagePreview.type).toBe('episodes');
   });
 
+  // The catalog sorts by "last added to", so the list endpoint has to answer
+  // that question. It is DERIVED from the items (max created_at), never stored,
+  // so it can never drift from the board's real contents.
+  it('reports when each board was last added to, and null while it is empty', async () => {
+    await makePremium();
+    const empty = await createCollection('خالی');
+    const filled = await createCollection('پر');
+    const hl = await createHighlight('insight/insight-1');
+    await app.inject({ method: 'POST', url: `/collections/${filled}/items`, headers: { cookie }, payload: { highlight_id: hl } });
+
+    const res = await app.inject({ method: 'GET', url: '/collections', headers: { cookie } });
+    const byId = Object.fromEntries(res.json().collections.map((c) => [c.id, c]));
+    expect(byId[empty].last_item_at).toBeNull();
+    expect(byId[empty].item_count).toBe(0);
+    expect(byId[filled].last_item_at).toBeTruthy();
+    expect(new Date(byId[filled].last_item_at).getTime()).toBeGreaterThan(0);
+  });
+
   it('never lists another user\'s collection', async () => {
     await makePremium();
     await createCollection();

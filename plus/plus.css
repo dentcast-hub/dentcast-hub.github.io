@@ -662,21 +662,26 @@ a.dcp-cl-board {
 .dcp-cl-board-title { font-weight: 800; font-size: .92rem; margin: 0 0 2px; color: var(--dcp-ink); }
 .dcp-cl-board-count { font-size: .78rem; color: var(--dcp-muted); margin: 0; }
 
-/* pin masonry (one board's contents) */
-.dcp-cl-pin-grid { column-count: 2; column-gap: 12px; margin-top: 16px; }
-.dcp-cl-pin { break-inside: avoid; margin-bottom: 12px; position: relative; }
-.dcp-cl-pin-link { display: block; color: inherit; text-decoration: none; background: var(--dcp-surface); border: 1px solid var(--dcp-line); border-radius: var(--dcp-radius); overflow: hidden; box-shadow: var(--dcp-shadow); }
+/* pin masonry (one board's contents). A pin is a CARD, not a link: it carries
+   the highlight, its note, its label and its own actions, so the chrome that
+   used to live on the (now removed) inner <a> belongs to the pin itself. One
+   column on a phone — two columns of full cards is a wall, not a board. */
+.dcp-cl-pin-grid { column-count: 1; column-gap: 12px; margin-top: 16px; }
+@media (min-width: 620px) { .dcp-cl-pin-grid { column-count: 2; } }
+.dcp-cl-pin {
+  break-inside: avoid; margin-bottom: 12px; position: relative;
+  background: var(--dcp-surface); border: 1px solid var(--dcp-line);
+  border-radius: var(--dcp-radius); overflow: hidden; box-shadow: var(--dcp-shadow);
+}
 .dcp-cl-pin-band { padding: 14px 12px; }
 .dcp-cl-pin-band .dcp-hl { display: block; line-height: 1.9; font-size: .92rem; padding: 0; }
 .dcp-cl-pin-page { color: #fff; text-align: center; padding: 26px 12px; font-weight: 700; line-height: 1.7; }
 .dcp-cl-pin-ico { display: block; font-size: 1.5rem; margin-bottom: 8px; }
-.dcp-cl-pin-foot { padding: 7px 12px; font-size: .72rem; color: var(--dcp-muted); border-top: 1px solid var(--dcp-line); }
-.dcp-cl-pin-del {
-  position: absolute; top: 8px; inset-inline-start: 8px; z-index: 1; width: 26px; height: 26px;
-  border-radius: 50%; border: none; background: rgba(255, 255, 255, .88); color: #333;
-  font-size: 1.1rem; cursor: pointer; box-shadow: 0 1px 4px rgba(0, 0, 0, .25);
+.dcp-cl-pin-foot {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  padding: 7px 12px; font-size: .72rem; color: var(--dcp-muted);
+  border-top: 1px solid var(--dcp-line);
 }
-.dcp-cl-pin-del:hover { color: #c0392b; }
 
 /* the "افزودن به کالکشن" bottom sheet (Pinterest's own save-to-board shape).
    Mobile-first: slides up from the bottom; plus-desktop.css turns it into a
