@@ -1,7 +1,10 @@
 import { describe, it, expect, beforeEach, afterAll } from 'vitest';
 import type { FastifyInstance } from 'fastify';
-import { makeApp, resetDb, sessionCookieFrom } from './helpers.js';
+import { makeApp, resetDb, sessionCookieFrom, loginAs } from './helpers.js';
 import { pool } from '../src/db.js';
+import {
+  activateMonths, grantLifetime, sweepExpiredSubscriptions,
+} from '../src/services/subscription.js';
 
 let app: FastifyInstance;
 
@@ -132,5 +135,77 @@ describe('/me without a session', () => {
   it('returns 401', async () => {
     const res = await app.inject({ method: 'GET', url: '/me' });
     expect(res.statusCode).toBe(401);
+  });
+});
+
+describe('/me subscription state', () => {
+  const PHONE = '09121700001';
+
+  const me = async (cookie: string) =>
+    (await app.inject({ method: 'GET', url: '/me', headers: { cookie } })).json();
+
+  it('is null for someone who has never subscribed', async () => {
+    const cookie = await loginAs(app, PHONE);
+    const body = await me(cookie);
+    expect(body.tier).toBe('free');
+    expect(body.subscription).toBeNull();
+  });
+
+  it('carries the expiry, the day of access left, and the founder flag', async () => {
+    const cookie = await loginAs(app, PHONE);
+    const { id } = await me(cookie);
+    await activateMonths(id, 6, { source: 'payment' });
+
+    const body = await me(cookie);
+    expect(body.tier).toBe('premium');
+    expect(body.subscription.is_founder).toBe(false);
+    expect(body.subscription.is_premium).toBe(true);
+    expect(body.subscription.expires_at).toBeTruthy();
+    expect(body.subscription.expires_on).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+    expect(body.subscription.days_left).toBeGreaterThan(175);
+  });
+
+  it('says lifetime with no countdown for a founder', async () => {
+    const cookie = await loginAs(app, PHONE);
+    const { id } = await me(cookie);
+    await grantLifetime(id, { source: 'admin' });
+
+    const body = await me(cookie);
+    expect(body.subscription.is_founder).toBe(true);
+    expect(body.subscription.days_left).toBeNull();
+    expect(body.subscription.expires_on).toBeNull();
+  });
+
+  it('still describes the subscription after it lapses, so the client can say so', async () => {
+    const cookie = await loginAs(app, PHONE);
+    const { id } = await me(cookie);
+    await activateMonths(id, 1, { source: 'payment', now: new Date('2026-01-05T09:00:00Z') });
+    await sweepExpiredSubscriptions(new Date('2026-08-05T00:00:00Z'));
+
+    const body = await me(cookie);
+    // Back to free — and the field survives, because "your subscription ended,
+    // renew" is a message only a lapsed user needs to see.
+    expect(body.tier).toBe('free');
+    expect(body.subscription.is_premium).toBe(false);
+    expect(body.subscription.status).toBe('expired');
+    expect(body.subscription.days_left).toBe(0);
+  });
+
+  it('leaves a league-prize premium without a subscription of its own', async () => {
+    const cookie = await loginAs(app, PHONE);
+    const { id } = await me(cookie);
+    await pool.query(
+      `insert into premium_grants (user_id, week_start, granted_at, expires_at)
+       values ($1, '2026-02-07', now(), now() + interval '3 days')`,
+      [id],
+    );
+    await pool.query("update profiles set tier = 'premium' where id = $1", [id]);
+
+    const body = await me(cookie);
+    // Premium, but not a subscriber — pending_premium_grant is what speaks for
+    // the prize, and a renewal prompt must not appear for it.
+    expect(body.tier).toBe('premium');
+    expect(body.subscription).toBeNull();
+    expect(body.pending_premium_grant).not.toBeNull();
   });
 });

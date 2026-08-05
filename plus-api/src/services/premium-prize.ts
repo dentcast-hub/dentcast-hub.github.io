@@ -181,6 +181,9 @@ async function grantPrizeForWeek(weekStart: string, now: Date): Promise<number> 
         );
         if (!ins.rowCount) continue; // already granted for this week (idempotent re-run)
 
+        // Writer 2 of the three sanctioned `profiles.tier` writers (the contract
+        // is stated in full atop services/subscription.ts). Upward only: the
+        // grant row is the authority, this just projects it.
         await client.query("update profiles set tier = 'premium' where id = $1", [m.user_id]);
         granted += 1;
         winnersHere += 1;

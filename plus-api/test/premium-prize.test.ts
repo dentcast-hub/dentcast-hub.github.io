@@ -8,6 +8,7 @@ import { notifyPremiumPrizes, PREMIUM_FEATURE_TITLES } from '../src/services/pre
 import { readFile, readdir } from 'node:fs/promises';
 import { notifications } from '../src/providers/registry.js';
 import { getLeagueConfig } from '../src/services/league-config.js';
+import { activateMonths } from '../src/services/subscription.js';
 import { vi } from 'vitest';
 
 /**
@@ -422,10 +423,12 @@ describe('expirePremiumPrizes', () => {
     await finalizeWeek(WEEK);
     const past = new Date('2026-02-08T00:00:00Z');
     await grantWeeklyPrizes(past);
-    await pool.query(
-      `insert into subscriptions (user_id, status, plan) values ($1, 'active', 'yearly')`,
-      [ids[0]],
-    );
+    // Through the real engine, not a hand-written row: the fixture used to
+    // insert an active subscription with a NULL expires_at and is_founder false
+    // — "premium forever, but not a founder" — which migration 0018's lifetime
+    // CHECK now makes unrepresentable. A genuine 12-month subscription is what
+    // the test meant all along.
+    await activateMonths(ids[0], 12, { source: 'payment', now: past });
 
     const justAfter = new Date(past.getTime() + 8 * 86_400_000);
     await expirePremiumPrizes(justAfter);

@@ -1,4 +1,4 @@
-import type { FastifyInstance } from 'fastify';
+import type { FastifyInstance, FastifyReply } from 'fastify';
 import { requireAdmin } from '../middleware/basic-auth.js';
 import { computeKpis, type Kpis } from '../services/kpis.js';
 import {
@@ -9,6 +9,10 @@ import { runStreakReminders } from '../services/streak-reminder.js';
 import { one } from '../db.js';
 import { normalizePhone } from '../services/phone.js';
 import {
+  activateMonths, grantLifetime, revokeSubscription, getSubscription,
+  summarizeSubscription, sweepExpiredSubscriptions, type Subscription,
+} from '../services/subscription.js';
+import {
   getSpotStats, defaultRange, isCalendarDay, SPOT_HOSTS, type GroupBy,
 } from '../services/spot-stats.js';
 import { withPageViews } from '../services/view-stats.js';
@@ -18,6 +22,23 @@ import {
 } from '../providers/outbound.js';
 import { config } from '../config.js';
 import type { NotificationMessage } from '../providers/notifications/types.js';
+
+/**
+ * The shape every admin subscription endpoint answers with. Built from the same
+ * summarizeSubscription() that GET /me uses, so "days left" cannot come to mean
+ * one thing to the founder and another to the user looking at their own banner.
+ */
+function subscriptionView(phone: string, userId: string, sub: Subscription | null) {
+  const summary = summarizeSubscription(sub);
+  return {
+    ok: true,
+    user_id: userId,
+    phone,
+    subscription: summary && { ...summary, started_at: sub!.started_at },
+    is_premium: summary?.is_premium ?? false,
+    days_left: summary?.days_left ?? null,
+  };
+}
 
 function fmtPct(v: number | null): string {
   return v == null ? '—' : v.toFixed(1) + '٪';
@@ -462,31 +483,130 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
     });
   });
 
-  // POST /admin/users/set-tier { phone, tier } - manual premium/free override
-  // (no payment gateway yet; Phase 4). Founder-only testing/grandfathering tool,
-  // same shape as /admin/league/set-tier but for the premium tier field.
-  app.post('/admin/users/set-tier', {
+  // POST /admin/users/set-tier — RETIRED, deliberately answering instead of
+  // vanishing.
+  //
+  // It wrote `profiles.tier` directly, which is now a derived cache with exactly
+  // three sanctioned writers (see the contract atop services/subscription.ts).
+  // Every account it ever touched became premium with nothing behind it, and
+  // migration 0019 exists solely to clean up after it — including the founders'
+  // own accounts, which the nightly sweep would otherwise have been right to
+  // revoke. Leaving it in place would keep manufacturing exactly the rows that
+  // migration had to repair.
+  //
+  // A 410 rather than a deleted route: whoever reaches for this has a real
+  // intention, and the useful answer names where it went. There is no 'premium'
+  // any more without saying for how long — which is the whole point.
+  app.post('/admin/users/set-tier', async (_request, reply) => reply.code(410).send({
+    error: 'gone',
+    message: 'این مسیر بازنشسته شده. برای هدیه‌ی اشتراک از /admin/subscriptions/grant '
+      + '(با months) یا /admin/subscriptions/grant-lifetime استفاده کنید، و برای پس‌گرفتن '
+      + 'از /admin/subscriptions/revoke.',
+    replaced_by: [
+      'POST /admin/subscriptions/grant',
+      'POST /admin/subscriptions/grant-lifetime',
+      'POST /admin/subscriptions/revoke',
+    ],
+  }));
+
+  // --- Subscriptions ---------------------------------------------------------
+  // Gifting premium by hand, through the same engine the payment gateway will
+  // use. These exist so that /admin/users/set-tier above never has to be reached
+  // for again: it writes `profiles.tier` and nothing else, which leaves an
+  // account premium with no subscription behind it — the exact shape the nightly
+  // sweep revokes. Anything granted here has a real subscription row, so it
+  // survives the sweep because it is genuinely valid, not because of an
+  // exception carved out for it.
+  //
+  // Keyed by phone rather than user_id: it is what the founder actually has when
+  // someone asks for access, and it is what /auth already identifies people by.
+
+  /** Resolve a raw phone to a profile, or reply with the right error. */
+  async function resolvePhone(
+    rawPhone: string,
+    reply: FastifyReply,
+  ): Promise<{ id: string; phone: string } | null> {
+    const phone = normalizePhone(rawPhone);
+    if (!phone) {
+      void reply.code(400).send({ error: 'invalid_phone', message: 'شماره‌ی موبایل معتبر نیست.' });
+      return null;
+    }
+    const row = await one<{ id: string }>('select id from profiles where phone = $1', [phone]);
+    if (!row) {
+      void reply.code(404).send({ error: 'no_profile', message: 'این شماره هنوز ثبت‌نام نکرده.' });
+      return null;
+    }
+    return { id: row.id, phone };
+  }
+
+  const phoneBody = (extra: Record<string, unknown> = {}, required: string[] = []) => ({
     schema: {
       body: {
         type: 'object',
-        required: ['phone', 'tier'],
-        properties: {
-          phone: { type: 'string' },
-          tier: { type: 'string', enum: ['free', 'premium'] },
-        },
+        required: ['phone', ...required],
+        properties: { phone: { type: 'string' }, ...extra },
       },
     },
+  });
+
+  // GET /admin/subscriptions?phone= — read the state before changing it.
+  app.get('/admin/subscriptions', {
+    schema: { querystring: { type: 'object', required: ['phone'], properties: { phone: { type: 'string' } } } },
   }, async (request, reply) => {
-    const { phone: rawPhone, tier } = request.body as { phone: string; tier: 'free' | 'premium' };
-    const phone = normalizePhone(rawPhone);
-    if (!phone) return reply.code(400).send({ error: 'invalid_phone' });
+    const { phone: rawPhone } = request.query as { phone: string };
+    const who = await resolvePhone(rawPhone, reply);
+    if (!who) return reply;
+    return reply.send(subscriptionView(who.phone, who.id, await getSubscription(who.id)));
+  });
 
-    const row = await one<{ id: string }>(
-      'update profiles set tier = $2 where phone = $1 returning id',
-      [phone, tier],
-    );
-    if (!row) return reply.code(404).send({ error: 'no_profile', message: 'این شماره هنوز ثبت‌نام نکرده.' });
+  // POST /admin/subscriptions/grant { phone, months } — gift N months.
+  // Extends an existing subscription rather than replacing it, so gifting a
+  // month to an unhappy paying subscriber adds a month instead of costing them
+  // whatever they had left.
+  app.post('/admin/subscriptions/grant',
+    phoneBody({ months: { type: 'integer', minimum: 1, maximum: 60 } }, ['months']),
+    async (request, reply) => {
+      const { phone: rawPhone, months } = request.body as { phone: string; months: number };
+      const who = await resolvePhone(rawPhone, reply);
+      if (!who) return reply;
+      const sub = await activateMonths(who.id, months, { source: 'admin' });
+      return reply.send(subscriptionView(who.phone, who.id, sub));
+    });
 
-    return reply.send({ ok: true, user_id: row.id, phone, tier });
+  // POST /admin/subscriptions/grant-lifetime { phone } — premium with no end.
+  // Deliberately its own endpoint and not a `months: 'lifetime'` variant of the
+  // one above: a typo in a number field should never be able to give away a
+  // permanent account.
+  app.post('/admin/subscriptions/grant-lifetime', phoneBody(), async (request, reply) => {
+    const { phone: rawPhone } = request.body as { phone: string };
+    const who = await resolvePhone(rawPhone, reply);
+    if (!who) return reply;
+    const sub = await grantLifetime(who.id, { source: 'admin' });
+    return reply.send(subscriptionView(who.phone, who.id, sub));
+  });
+
+  // POST /admin/subscriptions/revoke { phone } — undo a mistaken gift.
+  // Leaves `profiles.tier` for the sweep to settle: a league prize may still be
+  // holding this account up, and revoking here has no way to know that.
+  app.post('/admin/subscriptions/revoke', phoneBody(), async (request, reply) => {
+    const { phone: rawPhone } = request.body as { phone: string };
+    const who = await resolvePhone(rawPhone, reply);
+    if (!who) return reply;
+    const removed = await revokeSubscription(who.id, { source: 'admin' });
+    return reply.send({ ...subscriptionView(who.phone, who.id, null), removed });
+  });
+
+  // POST /admin/subscriptions/run-sweep — run the nightly reconciliation now
+  // (the cron does this at 00:00 Asia/Tehran). Twin of run-free-digest.
+  //
+  // This is what makes "tier is derived" an operable claim rather than a comment:
+  // whatever `profiles.tier` currently says, one call puts it back in step with
+  // what people have paid for. It is the manual lever for a revoke that should
+  // take effect immediately, the way to watch a whole lifecycle in one sitting
+  // rather than across two midnights, and the recovery path if the timer ever
+  // dies unnoticed. Idempotent, so it is always safe to press.
+  app.post('/admin/subscriptions/run-sweep', async (_request, reply) => {
+    const result = await sweepExpiredSubscriptions(new Date());
+    return reply.send({ ok: true, ...result });
   });
 }

@@ -4,7 +4,7 @@ import { closePool } from './db.js';
 import {
   startArticleScheduler, startStreakReminderScheduler, startReactivationScheduler,
   startLeagueScheduler, startHeldNotificationsScheduler, startReviewReminderScheduler,
-  startAssistantLearningScheduler,
+  startAssistantLearningScheduler, startSubscriptionScheduler,
 } from './scheduler.js';
 import { startBalePolling } from './services/bale-updates.js';
 import { startContentRefresh } from './content-refresh.js';
@@ -14,8 +14,9 @@ async function main(): Promise<void> {
 
   // Daily jobs (Asia/Tehran): the free-article digest (21:00), the streak
   // reminder (20:00), the reactivation nudge for no-streak users (20:00), league
-  // finalization (00:00), the morning release of everything the awake window held
-  // overnight (09:00), and the premium review-cards-due reminder (09:00).
+  // finalization (00:00), the subscription expiry sweep (00:00), the morning
+  // release of everything the awake window held overnight (09:00), and the
+  // premium review-cards-due reminder (09:00).
   // Started here (not in buildServer) so tests never start real timers.
   const stopScheduler = startArticleScheduler();
   const stopStreakReminder = startStreakReminderScheduler();
@@ -24,6 +25,9 @@ async function main(): Promise<void> {
   const stopHeldNotifications = startHeldNotificationsScheduler();
   const stopReviewReminder = startReviewReminderScheduler();
   const stopAssistantLearning = startAssistantLearningScheduler();
+  // Its own timer, not chained behind the league's: the sweep is the last word
+  // on who is premium and must keep running on a night league finalization dies.
+  const stopSubscriptions = startSubscriptionScheduler();
   // Bale connect worker: long-polls getUpdates and links chat_ids (no-op without
   // a BALE_BOT_TOKEN). Primary path since Bale's webhook delivery is unreliable.
   const stopBalePolling = startBalePolling();
@@ -42,6 +46,7 @@ async function main(): Promise<void> {
     stopHeldNotifications();
     stopReviewReminder();
     stopAssistantLearning();
+    stopSubscriptions();
     stopBalePolling();
     stopContentRefresh();
     await app.close();
