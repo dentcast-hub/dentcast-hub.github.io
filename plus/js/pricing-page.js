@@ -126,18 +126,9 @@ function whatYouGet() {
     ...PREMIUM_FEATURES.map((f) => ({ title: f.title, hint: PITCH[f.title] || f.hint })),
     ...EXTRA_PERKS,
   ];
-  return el('div', {}, [
-    el('ul', { class: 'dcp-price-list' }, items.map((f) => el('li', {}, [
-      el('strong', {}, f.title), el('span', {}, f.hint),
-    ]))),
-    // The boundary, said plainly. Premium does not sell access to your own
-    // work — highlighting, notes and the in-article workbench are on every
-    // account and stay there. What it sells is the tools that work ACROSS all
-    // of it. Saying so is also the honest answer to "what am I paying for".
-    el('p', { class: 'dcp-price-note' },
-      'هایلایت، یادداشت و میز کارِ داخل مقاله روی همه‌ی حساب‌ها فعال است و فعال می‌ماند. '
-      + 'پریمیوم دسترسی به کارِ خودتان را نمی‌فروشد؛ ابزارهایی را اضافه می‌کند که روی همه‌ی آن با هم کار می‌کنند.'),
-  ]);
+  return el('ul', { class: 'dcp-price-list' }, items.map((f) => el('li', {}, [
+    el('strong', {}, f.title), el('span', {}, f.hint),
+  ])));
 }
 
 function notice(kind, title, body) {
