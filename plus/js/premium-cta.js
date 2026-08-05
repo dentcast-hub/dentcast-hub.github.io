@@ -12,12 +12,17 @@
 // only way to learn whether the review cards or the collections are what people
 // are really paying for.
 import { el } from './util.js';
+import { paymentsNeedIrHost, paymentsIrUrl } from './config.js';
 
 export const PRICING_URL = '/plus/pricing.html';
 
 /** Where a premium CTA points, remembering which surface it was pressed on. */
 export function pricingHref(from) {
-  return from ? `${PRICING_URL}?from=${encodeURIComponent(from)}` : PRICING_URL;
+  const path = from ? `${PRICING_URL}?from=${encodeURIComponent(from)}` : PRICING_URL;
+  // Cross to .ir here rather than letting the pricing page bounce them: one
+  // navigation instead of two, and the link's own href tells the truth about
+  // where it goes.
+  return paymentsNeedIrHost() ? paymentsIrUrl(path) : path;
 }
 
 /**

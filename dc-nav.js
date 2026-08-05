@@ -191,6 +191,7 @@
 '    <span class="dc-toolbar-drawer-label">ابزارها</span>' +
 '    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M10 18h4"/><path d="M12 7v6"/><path d="m9.5 10.5 2.5 2.5 2.5-2.5"/></svg></span><span class="dc-drawer-tool-txt">نصب</span></button>' +
 '    <button class="dc-drawer-tool-seg" type="button" id="tool-consult"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span class="dc-drawer-tool-txt">مشاوره</span></button>' +
+'    <button class="dc-drawer-tool-seg" type="button" id="tool-subscribe"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M3 8l4.5 3L12 5l4.5 6L21 8l-1.8 9H4.8L3 8z"/><path d="M4.8 20h14.4"/></svg></span><span class="dc-drawer-tool-txt">اشتراک</span></button>' +
 '    <button class="dc-drawer-tool-seg" type="button" id="tool-about"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M12 3l1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></svg></span><span class="dc-drawer-tool-txt">درباره</span></button>' +
 '  </div>' +
 '</div>';
@@ -1674,6 +1675,11 @@
     /* Drawer tool buttons. */
     if (t.closest('#tool-pwa'))     { handlePwaInstall(); return; }
     if (t.closest('#tool-consult')) { window.location.href = 'mailto:info@dentcast.ir'; return; }
+    // The ONLY entry to the price list that a signed-out visitor can find. The
+    // header person menu carries it too, but that menu only exists once you are
+    // logged in — which is exactly backwards for the page whose whole job is to
+    // be read before anyone has an account.
+    if (t.closest('#tool-subscribe')) { window.location.href = '/plus/pricing.html'; return; }
     if (t.closest('#tool-about'))   { window.location.href = '/about.html'; return; }
     /* Theme toggle moved into the drawer — reuse applyTheme, no 2nd listener. */
     if (t.closest('#btn-theme-drawer')) {

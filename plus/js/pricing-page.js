@@ -15,7 +15,7 @@
 import { el } from './util.js';
 import { api, currentUser } from './api.js';
 import { openLoginModal } from './login-modal.js';
-import { PREMIUM_FEATURES } from './config.js';
+import { PREMIUM_FEATURES, paymentsNeedIrHost, paymentsIrUrl } from './config.js';
 import { registerSW } from './pwa.js';
 
 const FA_DIGITS = '۰۱۲۳۴۵۶۷۸۹';
@@ -169,6 +169,20 @@ async function main() {
     root.replaceChildren(el('div', { class: 'dcp-gate' }, [
       el('p', {}, 'اشتراک شما مادام‌العمر است.'),
       el('a', { class: 'dcp-btn dcp-btn-primary', href: '/plus/' }, 'رفتن به پیشخوان'),
+    ]));
+    return;
+  }
+
+  // The gateway belongs to dentcast.ir. Moving them BEFORE they choose a plan
+  // rather than at the buy click: the alternative makes someone pick, press,
+  // and only then be told they are on the wrong site. The prices are identical
+  // and shown on the way, so nothing is hidden by the move.
+  if (paymentsNeedIrHost()) {
+    const go = paymentsIrUrl('/plus/pricing.html' + location.search);
+    root.replaceChildren(el('div', { class: 'dcp-gate' }, [
+      el('p', {}, 'خرید اشتراک روی نسخه‌ی dentcast.ir انجام می‌شود.'),
+      el('p', { class: 'dcp-muted' }, 'درگاه پرداخت به همان دامنه ثبت شده است؛ قیمت‌ها یکی است.'),
+      el('a', { class: 'dcp-btn dcp-btn-primary', href: go }, 'ادامه در dentcast.ir'),
     ]));
     return;
   }

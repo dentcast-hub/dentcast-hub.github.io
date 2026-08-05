@@ -12,6 +12,7 @@
 import { el } from './util.js';
 import { api, currentUser } from './api.js';
 import { registerSW } from './pwa.js';
+import { paymentsNeedIrHost, paymentsIrUrl } from './config.js';
 
 const FA_DIGITS = '۰۱۲۳۴۵۶۷۸۹';
 const toFa = (s) => String(s).replace(/\d/g, (d) => FA_DIGITS[Number(d)]);
@@ -118,6 +119,17 @@ async function main() {
   registerSW();
   const root = document.getElementById('dcp-root');
   if (!root) return;
+
+  // A payment can only have happened on .ir, so this page has nothing of its
+  // own to report anywhere else.
+  if (paymentsNeedIrHost()) {
+    root.replaceChildren(el('div', { class: 'dcp-gate' }, [
+      el('p', {}, 'وضعیت پرداخت روی نسخه‌ی dentcast.ir دیده می‌شود.'),
+      el('a', { class: 'dcp-btn dcp-btn-primary',
+        href: paymentsIrUrl('/plus/pay-result.html' + location.search) }, 'ادامه در dentcast.ir'),
+    ]));
+    return;
+  }
 
   const params = new URLSearchParams(location.search);
   const order = params.get('order') || '';

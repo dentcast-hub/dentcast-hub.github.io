@@ -43,6 +43,31 @@ export function irMirrorUrl() {
   return 'https://dentcast.ir' + location.pathname + location.search + location.hash;
 }
 
+// --- payments are .ir-only --------------------------------------------------
+// NOT the same question as isOrgHost() above, which gates the whole .org site
+// and is currently off. This one is a fact about the payment gateway rather
+// than a policy we chose: the Zibal merchant is registered to dentcast.ir, its
+// e-namad is issued for that domain, and the callback URL it will accept lives
+// there. A purchase begun on .org cannot be completed, whatever the .org gate
+// is set to — so it has to move BEFORE the customer picks a plan, not after.
+export function paymentsHost() {
+  return 'https://dentcast.ir';
+}
+
+/** True when a purchase started here could not be finished. */
+export function paymentsNeedIrHost() {
+  // The dev/localhost default is "fine": a local build has no gateway anyway,
+  // and bouncing a developer to production would be absurd.
+  const h = location.hostname;
+  if (h === 'localhost' || h === '127.0.0.1' || h === '') return false;
+  return h.indexOf('dentcast.ir') === -1;
+}
+
+/** Where to send them: the same page, on the host that can take the money. */
+export function paymentsIrUrl(path) {
+  return paymentsHost() + (path || location.pathname + location.search + location.hash);
+}
+
 // --- Web Push (VAPID) -------------------------------------------------------
 // Public application-server key for browser push. Safe to embed (it is public).
 // Override via window.DENTCAST_PLUS.vapidPublicKey; if left empty, the client
