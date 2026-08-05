@@ -2,7 +2,7 @@
 // anonymous visitors see the same premium-upsell shape pathways.html/cards.html
 // use; signed-in premium users get the real report (reading-compass.js).
 import { el } from './util.js';
-import { premiumCta, lapsedNote } from './premium-cta.js';
+import { premiumCta, lapsedNote, guestPremiumExtras } from './premium-cta.js';
 import { currentUser } from './api.js';
 import { openLoginModal } from './login-modal.js';
 import { renderReadingCompass } from './reading-compass.js';
@@ -14,7 +14,8 @@ function comingSoonGate(root, me) {
     el('p', {}, 'قطب‌نمای مطالعه، ویژه‌ی دنت‌کست پریمیوم است.'),
     el('p', { class: 'dcp-muted' },
       'با پریمیوم می‌بینید چند درصد از هر پیلار را خوانده‌اید، بیشترین مطالعه‌تان کجا بوده، و چه چیزی هنوز از دیدتان دور مانده — با دو دسته پیشنهاد: ادامه‌ی همان حیطه، یا کاوش حوزه‌ای تازه.'),
-    el('a', { class: 'dcp-btn dcp-btn-primary', href: '/plus/' }, 'رفتن به پیشخوان'),
+    premiumCta('gate-compass'),
+    el('a', { class: 'dcp-btn dcp-btn-ghost', href: '/plus/' }, 'رفتن به پیشخوان'),
   ].filter(Boolean)));
 }
 
@@ -30,7 +31,11 @@ async function main() {
       const res = await openLoginModal({ returnTo: '/plus/reading-compass.html' });
       if (res && res.user) location.reload();
     });
-    root.replaceChildren(el('div', { class: 'dcp-gate' }, [el('p', {}, 'برای دیدن قطب‌نمای مطالعه وارد شوید.'), btn]));
+    root.replaceChildren(el('div', { class: 'dcp-gate' }, [
+      el('p', {}, 'برای دیدن قطب‌نمای مطالعه وارد شوید.'),
+      btn,
+      ...guestPremiumExtras('guest-compass'),
+    ]));
     return;
   }
 

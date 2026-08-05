@@ -2,7 +2,7 @@
 // visitors see the same premium upsell shape the review page (cards.html) uses;
 // signed-in premium users get the real catalog (pathways.js).
 import { el } from './util.js';
-import { premiumCta, lapsedNote } from './premium-cta.js';
+import { premiumCta, lapsedNote, guestPremiumExtras } from './premium-cta.js';
 import { currentUser } from './api.js';
 import { openLoginModal } from './login-modal.js';
 import { renderPathwaysList } from './pathways.js';
@@ -30,7 +30,11 @@ async function main() {
       const res = await openLoginModal({ returnTo: '/plus/pathways.html' });
       if (res && res.user) location.reload();
     });
-    root.replaceChildren(el('div', { class: 'dcp-gate' }, [el('p', {}, 'برای دیدن مسیرهای یادگیری وارد شوید.'), btn]));
+    root.replaceChildren(el('div', { class: 'dcp-gate' }, [
+      el('p', {}, 'برای دیدن مسیرهای یادگیری وارد شوید.'),
+      btn,
+      ...guestPremiumExtras('guest-pathways'),
+    ]));
     return;
   }
 

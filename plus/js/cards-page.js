@@ -2,7 +2,7 @@
 // see the same "coming soon" explainer the free-version pivot introduced;
 // signed-in premium users get the real due-card queue (review.js).
 import { el } from './util.js';
-import { premiumCta, lapsedNote } from './premium-cta.js';
+import { premiumCta, lapsedNote, guestPremiumExtras } from './premium-cta.js';
 import { currentUser } from './api.js';
 import { openLoginModal } from './login-modal.js';
 import { renderReview } from './review.js';
@@ -30,7 +30,11 @@ async function main() {
       const res = await openLoginModal({ returnTo: '/plus/cards.html' });
       if (res && res.user) location.reload();
     });
-    root.replaceChildren(el('div', { class: 'dcp-gate' }, [el('p', {}, 'برای دیدن کارت‌های مرور وارد شوید.'), btn]));
+    root.replaceChildren(el('div', { class: 'dcp-gate' }, [
+      el('p', {}, 'برای دیدن کارت‌های مرور وارد شوید.'),
+      btn,
+      ...guestPremiumExtras('guest-cards'),
+    ]));
     return;
   }
 

@@ -1,7 +1,7 @@
 // /plus/collection.html?id=... — one collection's detail view (Phase 3). Same
 // premium gate shape as pathway.html/cards.html.
 import { el } from './util.js';
-import { premiumCta, lapsedNote } from './premium-cta.js';
+import { premiumCta, lapsedNote, guestPremiumExtras } from './premium-cta.js';
 import { currentUser } from './api.js';
 import { openLoginModal } from './login-modal.js';
 import { renderCollectionDetail } from './collections.js';
@@ -39,7 +39,11 @@ async function main() {
       const res = await openLoginModal({ returnTo });
       if (res && res.user) location.reload();
     });
-    root.replaceChildren(el('div', { class: 'dcp-gate' }, [el('p', {}, 'برای دیدن این کالکشن وارد شوید.'), btn]));
+    root.replaceChildren(el('div', { class: 'dcp-gate' }, [
+      el('p', {}, 'برای دیدن این کالکشن وارد شوید.'),
+      btn,
+      ...guestPremiumExtras('guest-collection'),
+    ]));
     return;
   }
 

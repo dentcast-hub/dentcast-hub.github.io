@@ -780,3 +780,7 @@ a.dcp-progress-row:hover { text-decoration: none; }
   .dcp-renew-urgent { background: rgba(232,180,95,.11); border-color: rgba(232,180,95,.28); }
   .dcp-renew-urgent .dcp-renew-title { color: #e8b45f; }
 }
+/* Locked feature card: the lock chip and its quiet way out, side by side. */
+.dcp-locked-card { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.dcp-locked-link { display: inline-block; text-decoration: none; }
+.dcp-locked-card .dcp-btn { padding: 6px 12px; font-size: .84rem; }

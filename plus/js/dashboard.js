@@ -8,6 +8,7 @@ import { leagueEntryButton } from './league.js';
 import { openCollectionPicker, boardCover } from './collections.js';
 import { LABELS, PALETTE, PREMIUM_FEATURES } from './config.js';
 import { renewalBanner } from './renewal-banner.js';
+import { premiumCta } from './premium-cta.js';
 
 const labelFa = (k) => (LABELS.find((l) => l.key === k) || {}).fa || '';
 const colorCss = (k) => (PALETTE.find((p) => p.key === k) || {}).css || 'transparent';
@@ -193,14 +194,20 @@ async function recentBlock(model, isPremium) {
 }
 
 // A free user's teaser for a LIVE premium feature: the section's own hint
-// already says what it does, so the locked card is just the link + a lock
-// chip - never a second paragraph repeating the same thing. The whole card
-// links to the feature's own page, which already shows the "این ویژگی
-// ویژه‌ی پریمیوم است" upsell to a free visitor (cards.html/pathways.html/
-// collections.html each already gate this way), so clicking is what "tells"
-// the user, with no separate message to keep in sync.
-function lockedFeatureCard(href) {
-  return el('a', { class: 'dcp-locked-card', href }, el('span', { class: 'dcp-soon-badge' }, '🔒 ویژه‌ی پریمیوم'));
+// already says what it does, so the locked card stays the lock chip + a way to
+// act — never a second paragraph repeating the section above it.
+//
+// The chip alone used to be the whole card, on the reasoning that clicking it
+// leads to the feature's page which explains the boundary there. True, but it
+// asked every interested reader to take a step in the dark first: a lock with
+// nothing beside it says "no" and offers nothing. Five of these sit down this
+// page, so the buy link is the quiet ghost variant — five loud buttons would
+// read as a dashboard that is mostly advertisement.
+function lockedFeatureCard(href, from) {
+  return el('div', { class: 'dcp-locked-card' }, [
+    el('a', { class: 'dcp-locked-link', href }, el('span', { class: 'dcp-soon-badge' }, '🔒 ویژه‌ی پریمیوم')),
+    premiumCta(from, { ghost: true }),
+  ]);
 }
 
 // "You won a week of premium" banner: the league's weekly top-tier prize
@@ -385,31 +392,31 @@ export async function renderDashboard(root, { me: preMe } = {}) {
   children.push(section(
     PREMIUM_FEATURES[0].title,
     PREMIUM_FEATURES[0].hint,
-    isPremium ? reviewDueBlock(me) : lockedFeatureCard('/plus/cards.html'),
+    isPremium ? reviewDueBlock(me) : lockedFeatureCard('/plus/cards.html', 'dash-cards'),
     'هایلایت‌هایی که تو مطالبِ مختلف زده‌اید، طبقِ زمان‌بندیِ علمیِ لایتنر، دقیقاً همون وقتی که وقتِ فراموش‌شدنشونه دوباره بهتان نشان داده می‌شود — همین باعث می‌شود واقعاً تو ذهنتان بماند.',
   ));
   children.push(section(
     PREMIUM_FEATURES[1].title,
     PREMIUM_FEATURES[1].hint,
-    isPremium ? pathwayBlock(me) : lockedFeatureCard('/plus/pathways.html'),
+    isPremium ? pathwayBlock(me) : lockedFeatureCard('/plus/pathways.html', 'dash-pathways'),
     'دیگر لازم نیست فکر کنید چه چیزی را بعد از چه چیزی بخوانید — خودمان مسیرِ یادگیریِ هر موضوع را قدم‌به‌قدم نشانتان می‌دهیم، تا در آن موضوع کاملاً مسلط شوید و مهارتِ واقعی پیدا کنید.',
   ));
   children.push(section(
     PREMIUM_FEATURES[2].title,
     PREMIUM_FEATURES[2].hint,
-    isPremium ? collectionsWrap : lockedFeatureCard('/plus/collections.html'),
+    isPremium ? collectionsWrap : lockedFeatureCard('/plus/collections.html', 'dash-collections'),
     'هر هایلایت یا مقاله‌ای که دلتان بخواهد را، بر اساسِ موضوعی که خودتان انتخاب می‌کنید، در یک پوشه‌ی دلخواه ذخیره می‌کنید — مثلاً برای یک امتحان، یک بیمارِ خاص، یا هر چیزِ دیگر.',
   ));
   children.push(section(
     PREMIUM_FEATURES[3].title,
     PREMIUM_FEATURES[3].hint,
-    isPremium ? compassWrap : lockedFeatureCard('/plus/reading-compass.html'),
+    isPremium ? compassWrap : lockedFeatureCard('/plus/reading-compass.html', 'dash-compass'),
     'نه حدسِ سلیقه، بلکه آمارِ واقعیِ خواندن‌ها: چند درصد از هر پیلار را پوشش داده‌اید و بیشترین مطالعه‌تان کجا بوده. بر همین اساس دو دسته پیشنهاد می‌دهد: مطالبِ نخوانده‌ی همان حیطه برای ادامه، و حوزه‌هایی که هنوز اصلاً سراغشان نرفته‌اید برای کاوش.',
   ));
   children.push(section(
     PREMIUM_FEATURES[4].title,
     PREMIUM_FEATURES[4].hint,
-    isPremium ? assistantBlock() : lockedFeatureCard('/plus/assistant.html'),
+    isPremium ? assistantBlock() : lockedFeatureCard('/plus/assistant.html', 'dash-assistant'),
     'فقط از بین چند گزینه انتخاب می‌کنی — نه گفتگوی آزاد. هوش مصنوعی هیچ تشخیص یا توصیه‌ی درمانی نمی‌دهد؛ فقط توضیحِ تو را به دسته‌بندی‌های خودِ سایت نگاشت می‌کند تا به مقاله‌ی مرتبط برسیم.',
   ));
 

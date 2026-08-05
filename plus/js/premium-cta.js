@@ -82,3 +82,26 @@ export function lapsedNote(me) {
   return 'اشتراک شما تمام شده است. هایلایت‌ها، یادداشت‌ها و کالکشن‌های شما محفوظ‌اند '
     + 'و با تمدید دوباره در دسترس‌تان قرار می‌گیرند.';
 }
+
+/**
+ * The two things a SIGNED-OUT visitor on a premium feature's page was missing.
+ *
+ * All eight of those pages used to say one thing to a guest — «برای دیدن X
+ * وارد شوید» — and nothing else. Somebody arriving from a search result at
+ * /plus/cards.html was told to sign in, with no hint that the thing they came
+ * for is premium or how one gets it; signing in then showed them a second wall
+ * they had no warning about. That sequence is what makes a site feel like it is
+ * hiding the ball.
+ *
+ * SIGN-IN STAYS THE PRIMARY ACTION and this comes after it, quieter. A
+ * signed-out visitor may already be a paying subscriber who is simply logged
+ * out on this device, and trying to sell a subscription to somebody who owns
+ * one is worse than saying nothing at all.
+ */
+export function guestPremiumExtras(from) {
+  return [
+    el('p', { class: 'dcp-muted' },
+      'این بخش ویژه‌ی اشتراک پریمیوم است. اگر اشتراک دارید وارد شوید.'),
+    premiumCta(from, { ghost: true }),
+  ];
+}

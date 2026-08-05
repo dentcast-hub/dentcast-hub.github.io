@@ -2,7 +2,7 @@
 // collections.html / cards.html / pathways.html: anonymous -> login, free ->
 // premium upsell, premium -> the real view.
 import { el } from './util.js';
-import { premiumCta, lapsedNote } from './premium-cta.js';
+import { premiumCta, lapsedNote, guestPremiumExtras } from './premium-cta.js';
 import { currentUser } from './api.js';
 import { openLoginModal } from './login-modal.js';
 import { renderHighlightLibrary } from './highlights.js';
@@ -33,7 +33,11 @@ async function main() {
       const res = await openLoginModal({ returnTo: '/plus/highlights.html' });
       if (res && res.user) location.reload();
     });
-    root.replaceChildren(el('div', { class: 'dcp-gate' }, [el('p', {}, 'برای دیدن هایلایت‌هایتان وارد شوید.'), btn]));
+    root.replaceChildren(el('div', { class: 'dcp-gate' }, [
+      el('p', {}, 'برای دیدن هایلایت‌هایتان وارد شوید.'),
+      btn,
+      ...guestPremiumExtras('guest-highlights'),
+    ]));
     return;
   }
 

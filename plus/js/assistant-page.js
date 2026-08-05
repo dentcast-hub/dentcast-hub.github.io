@@ -2,7 +2,7 @@
 // the same premium-upsell shape pathways.html/reading-compass.html use;
 // signed-in premium users get the real wizard (case-assistant.js).
 import { el } from './util.js';
-import { premiumCta, lapsedNote } from './premium-cta.js';
+import { premiumCta, lapsedNote, guestPremiumExtras } from './premium-cta.js';
 import { currentUser } from './api.js';
 import { openLoginModal } from './login-modal.js';
 import { renderCaseAssistant } from './case-assistant.js';
@@ -31,7 +31,11 @@ async function main() {
       const res = await openLoginModal({ returnTo: '/plus/assistant.html' });
       if (res && res.user) location.reload();
     });
-    root.replaceChildren(el('div', { class: 'dcp-gate' }, [el('p', {}, 'برای دیدن دستیار هوشمند وارد شوید.'), btn]));
+    root.replaceChildren(el('div', { class: 'dcp-gate' }, [
+      el('p', {}, 'برای دیدن دستیار هوشمند وارد شوید.'),
+      btn,
+      ...guestPremiumExtras('guest-assistant'),
+    ]));
     return;
   }
 
