@@ -17,6 +17,10 @@ import { pool, one, withTransaction, type Queryable } from '../db.js';
  * weeks poorer. Anchoring to `now` instead is the single most common way a
  * subscription system quietly steals time, and it is invisible until someone
  * complains.
+ *
+ * A lifetime account is the same row with `expires_at = NULL` and `is_founder`
+ * set — not a distant date — so it is invisible to the expiry sweep by
+ * construction rather than by remembering to exclude it.
  */
 
 /** Where an activation came from. Recorded for audit; never branched on. */
@@ -24,6 +28,9 @@ export type ActivationSource = 'payment' | 'admin';
 
 /** `plan` for a bought/gifted subscription with a finite end date. */
 export const PLAN_PAID = 'paid';
+
+/** `plan` for a lifetime account — founders, and anyone gifted one. */
+export const PLAN_FOUNDER = 'founder';
 
 export interface Subscription {
   user_id: string;
@@ -139,6 +146,98 @@ export async function activateMonths(
     }, client);
 
     return row;
+  });
+}
+
+/**
+ * Grant a lifetime subscription: premium with no end date, ever.
+ *
+ * Lifetime is expressed as `expires_at = NULL` rather than a date far in the
+ * future, and the difference is not stylistic. The expiry sweep selects rows by
+ * `expires_at <= now`, so a NULL is invisible to it by construction — there is
+ * no year in which a founder can be swept, no "2099" fixture quietly counting
+ * down, and nothing to remember to extend. Migration 0018's CHECK ties the two
+ * halves together in both directions, so a founder row can never carry a date
+ * and a dated row can never claim to be a founder.
+ *
+ * Idempotent: granting twice leaves one row and changes nothing the second time.
+ * Upgrading a paying subscriber DISCARDS their remaining paid days on purpose —
+ * lifetime strictly contains them, and keeping the old date around as a
+ * "fallback" is exactly how a founder ends up reverted by a sweep years later.
+ */
+export async function grantLifetime(
+  userId: string,
+  opts: { source: ActivationSource; now?: Date; meta?: Record<string, unknown> },
+): Promise<Subscription> {
+  const now = opts.now ?? new Date();
+
+  return withTransaction(async (client) => {
+    const existing = await one<Subscription>(
+      `select ${SUB_COLUMNS} from subscriptions where user_id = $1 for update`,
+      [userId],
+      client,
+    );
+    if (existing?.is_founder) return existing;
+
+    const row = (await one<Subscription>(
+      `insert into subscriptions (user_id, status, plan, started_at, expires_at, is_founder)
+       values ($1, 'active', $2, $3, null, true)
+       on conflict (user_id) do update
+          set status     = 'active',
+              plan       = excluded.plan,
+              expires_at = null,
+              is_founder = true
+        returning ${SUB_COLUMNS}`,
+      [userId, PLAN_FOUNDER, now.toISOString()],
+      client,
+    ))!;
+
+    await applyTier(userId, client);
+    await recordActivation(userId, {
+      kind: 'lifetime',
+      source: opts.source,
+      // What was given up, if anything — the only record that this account once
+      // had paid days on it, since the row itself no longer carries a date.
+      replaced_expires_at: existing?.expires_at ?? null,
+      ...opts.meta,
+    }, client);
+
+    return row;
+  });
+}
+
+/**
+ * Revoke a subscription outright — the undo for a mistaken gift, and (level 4)
+ * for a card-to-card payment that turns out not to have arrived.
+ *
+ * Deletes the row rather than marking it expired. An expired row and no row at
+ * all are the same thing to every reader, but only the delete makes a
+ * re-grant's `started_at` honest, and it keeps a revoked founder from lingering
+ * as an active-looking row. The audit event in `user_activity` is what survives.
+ *
+ * Does NOT touch `profiles.tier`: a league prize may still be holding this
+ * account up, and the expiry sweep is the only code that knows. Returns whether
+ * a row was actually removed.
+ */
+export async function revokeSubscription(
+  userId: string,
+  opts: { source: ActivationSource; meta?: Record<string, unknown> },
+): Promise<boolean> {
+  return withTransaction(async (client) => {
+    const gone = await one<Subscription>(
+      `delete from subscriptions where user_id = $1 returning ${SUB_COLUMNS}`,
+      [userId],
+      client,
+    );
+    if (!gone) return false;
+    await recordActivation(userId, {
+      kind: 'revoked',
+      source: opts.source,
+      was_founder: gone.is_founder,
+      replaced_expires_at: gone.expires_at,
+      ...opts.meta,
+    }, client);
+    return true;
   });
 }
 
