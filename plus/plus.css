@@ -395,6 +395,19 @@ mark.dcp-hl.dcp-underline[data-color="blue"]   { text-decoration-color: #a9d3f5;
 mark.dcp-hl.dcp-underline[data-color="pink"]   { text-decoration-color: #f6b8cf; } mark.dcp-hl.dcp-cloze[data-color="pink"]   { border-bottom-color: #f6b8cf; }
 mark.dcp-hl.dcp-underline[data-color="red"]    { text-decoration-color: #ff8080; } mark.dcp-hl.dcp-cloze[data-color="red"]    { border-bottom-color: #ff8080; }
 
+/* Arrived here from a ?dcphl=<id> link (the highlight library / the dashboard's
+   recent list / a collection): the mark is scrolled to and pulsed for a moment,
+   so on a screen of prose you can see WHICH one you came for. A ring, never a
+   colour change — the highlight's own colour is the user's. */
+mark.dcp-hl.dcp-hl-focus { animation: dcp-hl-pulse 1.1s ease-in-out 2; border-radius: 4px; }
+@keyframes dcp-hl-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(11, 95, 255, 0); }
+  50% { box-shadow: 0 0 0 4px rgba(11, 95, 255, .35); }
+}
+@media (prefers-reduced-motion: reduce) {
+  mark.dcp-hl.dcp-hl-focus { animation: none; box-shadow: 0 0 0 3px rgba(11, 95, 255, .35); }
+}
+
 /* ---- floating toolbar (bottom, ergonomic, avoids the fixed header) -------- */
 .dcp-toolbar {
   position: fixed; inset-inline: 0; bottom: 0; z-index: 9000;

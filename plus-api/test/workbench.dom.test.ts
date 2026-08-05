@@ -65,3 +65,41 @@ describe('workbench builds its study-mode UI', () => {
     expect(document.querySelector('.dcp-editor'), 'article note closed by the button').toBeNull();
   });
 });
+
+// focusHighlight() is what makes a ?dcphl=<id> link land ON the highlight
+// (plus.js calls it after entering study mode). Without it, following your own
+// note from the library / dashboard / a collection dropped you at the top of an
+// article that showed no marks at all (user report, 2026-08-05).
+describe('focusHighlight (?dcphl= deep links)', () => {
+  beforeEach(() => {
+    document.body.className = '';
+    document.body.innerHTML = '';
+    // jsdom has no layout, so scrollIntoView is not implemented.
+    (Element.prototype as any).scrollIntoView = vi.fn();
+  });
+
+  it('scrolls to the mark, flashes it, and makes it the selected highlight', async () => {
+    const root = setArticle();
+    const wb: any = new Workbench({ contentId: 'x/y', proseRoot: root });
+    await wb.enter();
+    wb._renderOne({
+      id: 'hl-1', content_id: 'x/y', exact: 'یک متن نمونه',
+      prefix: '', suffix: '', color: 'yellow', underline: false,
+      cloze_markers: [], note: null, label: null,
+    });
+
+    expect(wb.focusHighlight('hl-1')).toBe(true);
+    const mark = document.querySelector('mark.dcp-hl') as HTMLElement;
+    expect(mark, 'the highlight is drawn').not.toBeNull();
+    expect((mark.scrollIntoView as any).mock.calls.length, 'scrolled into view').toBeGreaterThan(0);
+    expect(mark.classList.contains('dcp-hl-focus'), 'flashed').toBe(true);
+    expect(wb._currentHl, 'selected, as if tapped').toBe('hl-1');
+  });
+
+  it('does nothing (and never throws) for an id that is not on this page', async () => {
+    const root = setArticle();
+    const wb: any = new Workbench({ contentId: 'x/y', proseRoot: root });
+    await wb.enter();
+    expect(wb.focusHighlight('not-here')).toBe(false);
+  });
+});

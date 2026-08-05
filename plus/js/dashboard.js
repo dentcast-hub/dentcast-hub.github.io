@@ -130,13 +130,25 @@ function scoreBlock(progress) {
   return wrap;
 }
 
-async function recentBlock(model) {
+// The dashboard's own short list: the six most recent highlights. It is a
+// PREVIEW, never the whole surface — a reader with highlights across dozens of
+// articles used to have nothing else (user report, 2026-08-05), so the footer
+// always says how many there really are and links into the full library
+// (/plus/highlights.html, premium). Six rows for every plan; what premium buys
+// is the library, not extra rows here.
+async function recentBlock(model, isPremium) {
   const data = await api.recentHighlights(6).catch(() => ({ highlights: [] }));
+  const total = data.total || data.highlights.length;
   if (!data.highlights.length) return el('div', { class: 'dcp-muted' }, 'هنوز هایلایتی ندارید.');
   const list = el('div', { class: 'dcp-recent-list' });
   for (const h of data.highlights) {
     const info = contentInfo(model, h.content_id);
-    const link = el('a', { class: 'dcp-recent-link', href: (info ? info.url : '#') + '#:~:text=' + encodeURIComponent(h.exact.slice(0, 100)) }, [
+    // ?dcphl=<id> makes the article open its workbench and scroll to THIS
+    // highlight (plus.js), so the row never lands you on a page where your own
+    // highlights are invisible until you press «میز کار» again. The text
+    // fragment stays as a fallback for a highlight whose anchor no longer
+    // matches the page.
+    const link = el('a', { class: 'dcp-recent-link', href: (info ? info.url : '#') + '?dcphl=' + encodeURIComponent(h.id) + '#:~:text=' + encodeURIComponent(h.exact.slice(0, 100)) }, [
       el('span', { class: 'dcp-recent-text' }, h.exact.slice(0, 70)),
       h.label ? el('span', { class: 'dcp-card-label' }, labelFa(h.label)) : null,
     ]);
@@ -164,7 +176,19 @@ async function recentBlock(model) {
     });
     list.appendChild(row);
   }
-  return list;
+
+  const countText = data.article_count
+    ? faNum(total) + ' هایلایت در ' + faNum(data.article_count) + ' مطلب'
+    : faNum(total) + ' هایلایت';
+  const foot = el('div', { class: 'dcp-recent-foot' }, [
+    el('span', {}, countText),
+    isPremium
+      ? el('a', { class: 'dcp-pw-alllink', href: '/plus/highlights.html' }, 'دفترچه‌ی هایلایت‌ها ›')
+      // Free: the same destination, which shows the upsell itself — one place
+      // that explains the boundary, never a second copy to keep in sync.
+      : el('a', { class: 'dcp-pw-alllink', href: '/plus/highlights.html' }, '🔒 دیدنِ همه یکجا'),
+  ]);
+  return el('div', {}, [list, foot]);
 }
 
 // A free user's teaser for a LIVE premium feature: the section's own hint
@@ -345,7 +369,7 @@ export async function renderDashboard(root, { me: preMe } = {}) {
     // هفتگی (ranks the league, resets weekly) are two separate quantities in the
     // API — never describe one as feeding the other, and never as a balance.
     section('امتیاز شما', 'هر پادکستِ تازه‌ای که گوش می‌دهید و هر مقاله‌ای که تمام می‌کنید امتیاز دارد، به‌علاوه‌ی هر روزِ فعال و هر هایلایت. امتیاز همیشه می‌ماند و کم نمی‌شود؛ با آن سپر می‌گیرید. لیگ هفتگی جداست و روی XP همان هفته حساب می‌شود.', scoreBlock(progress)),
-    section('هایلایت‌های اخیر', null, recentWrap),
+    section('هایلایت‌های اخیر', 'تازه‌ترین هایلایت‌هایتان؛ همه‌شان یکجا در دفترچه‌ی هایلایت‌ها.', recentWrap),
   );
 
   // The premium feature sections come after: the live block for premium, a
@@ -383,7 +407,7 @@ export async function renderDashboard(root, { me: preMe } = {}) {
   ));
 
   root.replaceChildren(...children.filter(Boolean));
-  recentWrap.replaceChildren(await recentBlock(model));
+  recentWrap.replaceChildren(await recentBlock(model, isPremium));
   if (isPremium) collectionsWrap.replaceChildren(await collectionsBlock());
   if (isPremium) compassWrap.replaceChildren(await compassBlock());
 }

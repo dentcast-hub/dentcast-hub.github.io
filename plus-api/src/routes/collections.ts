@@ -34,6 +34,10 @@ function resolveItem(row: ItemRow) {
   return {
     id: row.id,
     kind: row.highlight_id ? 'highlight' : 'page',
+    // Carried to the client so a highlight-pin can link with ?dcphl=<id> —
+    // landing ON the highlight with the workbench open instead of at the top of
+    // an article that shows none of the reader's marks yet.
+    highlight_id: row.highlight_id,
     content_id: row.content_id,
     title: info?.title ?? row.content_id,
     url: info?.url ?? `/${row.content_id}.html`,

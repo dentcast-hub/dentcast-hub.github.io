@@ -206,6 +206,7 @@ Plus/Premium تبدیل می‌کند. همهٔ این‌ها گام‌های خ
 | Plus/Premium | کوییز نمره‌دار | `FAQPage` روی خودِ صفحه → `plus/quiz-index.json` | گام ۴.۱۲ + `node tools/build_quiz_index.mjs` |
 | Premium | مسیرهای یادگیری (pathways) | `plus/pathways.json` | گام ۵.۶ — هر publish تخصصی (جز LiteCast) |
 | Premium | کالکشن‌ها | دیتابیس API (`collections`/`collection_items`) | کاربر می‌سازد؛ publish کاری ندارد |
+| Premium | دفترچهٔ هایلایت‌ها | دیتابیس API (`highlights`) → `/plus/highlights.html` | کاربر می‌سازد؛ publish کاری ندارد |
 | Plus/Premium | نوتیف مطلب جدید | `<meta name="dc-notify" content="true">` | فاز E — جز paper-only/LiteCast/glossary |
 
 جزئیات معماری:
@@ -231,6 +232,23 @@ Plus/Premium تبدیل می‌کند. همهٔ این‌ها گام‌های خ
   `/plus/pathways.html` (کاتالوگ)، `/plus/pathway.html?id=` (فهرست گام‌ها +
   ثبت‌نام)، و بلاک «مسیر یادگیری» در داشبورد `/plus/`
   (`plus/js/pathways.js` رندرکنندهٔ مشترک).
+- **دفترچهٔ هایلایت‌ها** (`/plus/highlights.html`، پریمیوم). تنها جایی که کاربر
+  **همهٔ** هایلایت‌هایش را یکجا، گروه‌بندی‌شده بر اساس مقاله و همراه یادداشت‌ها
+  مرور می‌کند — بدون رفتن به مقاله و بدون «میز کار». دلیل وجودش: پیش از آن
+  هایلایت‌ها عملاً یک‌طرفه بودند — داشبورد شش ردیف نشان می‌داد، هر ردیف لینکی به
+  مقاله بود، و صفحهٔ مقاله تا وقتی دوباره «میز کار» زده نشود هیچ نشانه‌ای از
+  هایلایت‌های کاربر نمی‌کشد (گزارش کاربر، ۲۰۲۶-۰۸-۰۵). بک‌اند:
+  `GET /highlights/library` (`requirePremium`) در
+  `plus-api/src/routes/highlights.ts`؛ `GET /highlights/recent` هم
+  `total`/`article_count` کلِ کتابخانه را در هر پلنی برمی‌گرداند. فرانت:
+  `plus/js/highlights.js` (رندرکننده) + `plus/js/highlights-page.js` (گیت). دو
+  ثابت: **هر هایلایت یک کارت است، نه لینک** (متن کامل + یادداشت، محتوای همان
+  ردیف است؛ «متنِ مقاله» فقط یکی از کنش‌های کوچک کنارش)، و **هر لینک به مقاله
+  `?dcphl=<highlight_id>` دارد** — آن‌وقت `plus.js` میز کار را باز می‌کند و
+  `Workbench.focusHighlight()` روی همان mark اسکرول می‌کند و لحظه‌ای می‌درخشاندش.
+  فهرست اخیرِ داشبورد و pinهای هایلایتِ کالکشن هم با همین لینک می‌روند. آنچه
+  پریمیوم می‌خرد **نمای تجمیعی** است، نه دسترسی به دادهٔ خود کاربر: شش ردیف
+  داشبورد، میز کارِ هر مقاله و `GET /export/highlights` روی همهٔ پلن‌ها می‌مانند.
 - **کالکشن‌ها** (فاز ۳ پریمیوم؛ `collections`/`collection_items` اسپک §۴، از
   migration 0001 provision شده، از ایندکس‌های migration 0012 زنده). برخلاف
   pathway (منتخبِ بنیان‌گذار) یا آرشیو موضوعی (گروه‌بندی خودکار با تاکسونومی)،

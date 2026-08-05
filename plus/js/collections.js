@@ -192,9 +192,14 @@ function pinCard(item, onRemove) {
         el('span', {}, item.title),
       ]);
 
+  // A highlight-pin links to the highlight itself (?dcphl= — plus.js opens the
+  // workbench and scrolls to it); a page-pin links to the page.
+  const href = item.highlight_id
+    ? item.url + (item.url.includes('?') ? '&' : '?') + 'dcphl=' + encodeURIComponent(item.highlight_id)
+    : item.url;
   const pin = el('div', { class: 'dcp-cl-pin' }, [
     removeBtn,
-    el('a', { class: 'dcp-cl-pin-link', href: item.url }, [band, el('div', { class: 'dcp-cl-pin-foot' }, el('span', { dir: 'ltr' }, kindLabel))]),
+    el('a', { class: 'dcp-cl-pin-link', href }, [band, el('div', { class: 'dcp-cl-pin-foot' }, el('span', { dir: 'ltr' }, kindLabel))]),
   ]);
   removeBtn.addEventListener('click', async () => {
     removeBtn.disabled = true;
