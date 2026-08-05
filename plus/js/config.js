@@ -55,6 +55,21 @@ export function irMirrorUrl() {
 export const PLAN_MONTHS = [1, 3, 6];
 export const MONTHLY_RIAL = 10000000; // 1,000,000 toman — mirrors PAYMENT_MONTHLY_RIAL
 
+// The out-of-country route, mirrored for the same reason as the prices above:
+// the section must be READABLE before the API answers, and still readable if it
+// never does. Every value here is configuration, not state — the server's copy
+// wins whenever it is reachable, and this is what the page shows meanwhile.
+//
+// It matters more here than for the rial plans: somebody abroad has no other
+// route at all, so a section that renders nothing until an API call succeeds
+// renders nothing at all for the exact person it was built for.
+export const GIFT_CARD = {
+  months: 10,
+  amount_usd: 100,
+  kind: 'apple_us',
+  recipient_email: 'foad.shahabian@gmail.com',
+};
+
 // --- payments are .ir-only --------------------------------------------------
 // NOT the same question as isOrgHost() above, which gates the whole .org site
 // and is currently off. This one is a fact about the payment gateway rather

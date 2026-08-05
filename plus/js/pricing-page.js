@@ -17,6 +17,7 @@ import { api, currentUser } from './api.js';
 import { openLoginModal } from './login-modal.js';
 import {
   PREMIUM_FEATURES, paymentsNeedIrHost, paymentsIrUrl, PLAN_MONTHS, MONTHLY_RIAL,
+  GIFT_CARD,
 } from './config.js';
 import { registerSW } from './pwa.js';
 
@@ -184,10 +185,13 @@ function giftToggle(gift, onOpen) {
   return btn;
 }
 
-function giftIntro(gift, user, onStart) {
-  const start = el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button' },
-    user ? 'دریافت کد پیگیری' : 'ورود و دریافت کد پیگیری');
-  start.addEventListener('click', () => onStart(start));
+function giftIntro(gift, user, onStart, offline) {
+  const start = offline
+    ? el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button', disabled: 'disabled' },
+      'در دسترس نیست')
+    : el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button' },
+      user ? 'دریافت کد پیگیری' : 'ورود و دریافت کد پیگیری');
+  if (!offline) start.addEventListener('click', () => onStart(start));
 
   return el('div', { class: 'dcp-gift' }, [
     el('h2', { class: 'dcp-price-h2' }, 'پرداخت از خارج از ایران'),
@@ -195,7 +199,9 @@ function giftIntro(gift, user, onStart) {
     el('p', { class: 'dcp-gift-warn' },
       'حتماً گیفت‌کارت «امریکا» باشد. گیفت‌کارت اپل فقط در اپل‌آیدی همان کشور قابل استفاده است و کارت کشور دیگر به کار نمی‌آید.'),
     start,
-    el('p', { class: 'dcp-price-fine' }, 'کد گیفت‌کارت را هیچ‌جای این سایت وارد نمی‌کنید.'),
+    el('p', { class: 'dcp-price-fine' }, offline
+      ? 'ارتباط با سرویس برقرار نشد. کمی بعد دوباره امتحان کنید.'
+      : 'کد گیفت‌کارت را هیچ‌جای این سایت وارد نمی‌کنید.'),
   ]);
 }
 
@@ -265,6 +271,10 @@ async function main() {
     plans: PLAN_MONTHS.map((months) => ({
       months, amount_rial: months * MONTHLY_RIAL, available: true, blocked_by: null,
     })),
+    // Present in the fallback, not only in the live answer. Leaving it out is
+    // what made the whole out-of-country section vanish whenever the API was
+    // unreachable — for the one group of people who have no other way to pay.
+    gift_card: GIFT_CARD,
     offline: true,
   };
 
@@ -446,7 +456,7 @@ async function main() {
         btn.textContent = 'دریافت کد پیگیری';
         msg.textContent = (err && err.message) || 'ثبت درخواست انجام نشد.';
       }
-    })].filter(Boolean));
+    }, info.offline)].filter(Boolean));
   };
 
   drawGift(null, false);
