@@ -8,6 +8,7 @@ import { grantWeeklyPrizes, expirePremiumPrizes } from './services/premium-prize
 import { notifyPremiumPrizes } from './services/premium-prize-notify.js';
 import { runReviewReminders } from './services/review-notify.js';
 import { attributeStrongSignals } from './services/assistant-learning.js';
+import { sweepExpiredSubscriptions } from './services/subscription.js';
 
 /**
  * Daily free-digest scheduler. Fires runFreeDigest() at freeDigestHour:00 in the
@@ -248,6 +249,50 @@ export function startReactivationScheduler(): () => void {
         .catch((err) => {
           // eslint-disable-next-line no-console
           console.error('[reactivation] run failed', err);
+        })
+        .finally(schedule);
+    }, delay);
+    if (typeof timer.unref === 'function') timer.unref();
+  };
+
+  schedule();
+  return () => clearTimeout(timer);
+}
+
+/**
+ * Daily subscription sweep at 00:00 Tehran: settle every subscription that fell
+ * due, and reconcile `profiles.tier` with what people have actually paid for.
+ *
+ * Runs at the day boundary because that is the unit the product speaks in — an
+ * account that ran out at 14:00 keeps premium until that night, which is up to a
+ * day of grace and always in the user's favour. See sweepExpiredSubscriptions()
+ * for why precision here would make the product worse rather than better.
+ *
+ * A SEPARATE timer from the league scheduler even though both fire at 00:00.
+ * They share an hour, not a purpose: the sweep is the last word on who is
+ * premium, and it must keep running unchanged on a night when league
+ * finalization throws. Chaining it behind finalizeDueWeeks would make a league
+ * bug quietly stop expiring subscriptions — the one job that must not depend on
+ * anything.
+ */
+export function startSubscriptionScheduler(): () => void {
+  let timer: NodeJS.Timeout;
+
+  const schedule = () => {
+    const delay = msUntilNextRun(new Date(), 0, config.streakTimezone); // 00:00 Tehran
+    timer = setTimeout(() => {
+      void sweepExpiredSubscriptions(new Date())
+        .then((r) => {
+          if (r.expired > 0 || r.demoted > 0 || r.promoted > 0) {
+            // eslint-disable-next-line no-console
+            console.log(
+              `[subscriptions] ${r.expired} expired, ${r.demoted} demoted, ${r.promoted} repaired`,
+            );
+          }
+        })
+        .catch((err) => {
+          // eslint-disable-next-line no-console
+          console.error('[subscriptions] sweep failed', err);
         })
         .finally(schedule);
     }, delay);

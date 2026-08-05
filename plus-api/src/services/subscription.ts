@@ -1,5 +1,5 @@
 import { config } from '../config.js';
-import { pool, one, withTransaction, type Queryable } from '../db.js';
+import { pool, one, query, withTransaction, type Queryable } from '../db.js';
 
 /**
  * The subscription engine — the ONE place a premium subscription is created or
@@ -243,6 +243,99 @@ export async function revokeSubscription(
     }, client);
     return true;
   });
+}
+
+export interface SweepResult {
+  /** Active subscriptions whose date passed, marked 'expired'. */
+  expired: number;
+  /** Accounts that lost premium because nothing valid was holding them up. */
+  demoted: number;
+  /** Accounts whose tier had fallen out of step with a valid subscription. */
+  promoted: number;
+}
+
+/**
+ * The daily reconciliation between what people have paid for and what
+ * `profiles.tier` says. Everything premium in this system is expressed as a
+ * date; this is the one job that turns those dates back into access.
+ *
+ * WHY A DAY BOUNDARY IS THE RIGHT GRANULARITY. `activateMonths` sets the expiry
+ * to the same time of day the subscription was bought, so subscriptions fall due
+ * at every hour of the clock. Running once a day at 00:00 Tehran therefore means
+ * an account that ran out at 14:00 keeps premium until that night — up to a day
+ * of grace, always in the user's favour, never against. That is a deliberate
+ * trade and it buys something real: one honest sentence for the whole product,
+ * "اشتراکت تا پایان روز X فعال است", instead of an expiry that lands mid-session
+ * and takes the workbench away between one click and the next. Precision here
+ * would be a worse product, not a better one.
+ *
+ * THREE PHASES, and the second is not implied by the first. Marking due rows
+ * 'expired' is not enough, because an account can also lose its footing by
+ * having its row deleted outright (revokeSubscription) — so the demotion phase
+ * scans PROFILES, asking of each premium account "is anything still holding this
+ * up?", rather than walking the rows that happened to expire tonight. Any
+ * account that drifts out of step for any reason, including one nobody has
+ * thought of yet, is picked up on the next run.
+ *
+ * The third phase is the same question inverted: a free account WITH a valid
+ * subscription is repaired rather than left broken. Together the two make
+ * `profiles.tier` genuinely derived — a cache that heals — instead of a value
+ * that merely happens to be right most of the time.
+ *
+ * INTERACTION WITH THE LEAGUE PRIZE. `premium_grants` is a second, independent
+ * source of premium, so the demotion phase requires BOTH to be absent before it
+ * takes anything away. It reads a grant as live only while `expires_at` is still
+ * in the future, which makes this sweep slightly more eager than
+ * expirePremiumPrizes() — a grant that fell due tonight but has not been marked
+ * revoked yet is already dead here. The two agree on the outcome; this one just
+ * does not need the bookkeeping to have caught up first, and the ordering of the
+ * two jobs is therefore not something anyone has to get right.
+ */
+export async function sweepExpiredSubscriptions(now: Date = new Date()): Promise<SweepResult> {
+  const nowIso = now.toISOString();
+
+  // Phase 1 — settle the rows themselves. Founder rows carry a NULL date and
+  // are excluded by the comparison, not by a special case.
+  const expired = await query(
+    `update subscriptions set status = 'expired'
+      where status = 'active' and expires_at is not null and expires_at <= $1`,
+    [nowIso],
+  );
+
+  // Phase 2 — take premium away from anyone nothing is holding up any more.
+  const demoted = await query(
+    `update profiles p set tier = 'free'
+      where p.tier = 'premium'
+        and not exists (
+          select 1 from subscriptions s
+           where s.user_id = p.id and s.status = 'active'
+             and (s.expires_at is null or s.expires_at > $1)
+        )
+        and not exists (
+          select 1 from premium_grants g
+           where g.user_id = p.id and g.revoked_at is null and g.expires_at > $1
+        )`,
+    [nowIso],
+  );
+
+  // Phase 3 — and give it back to anyone a valid subscription covers. Repairs
+  // drift in the harmless direction rather than waiting for a support message.
+  const promoted = await query(
+    `update profiles p set tier = 'premium'
+      where p.tier <> 'premium'
+        and exists (
+          select 1 from subscriptions s
+           where s.user_id = p.id and s.status = 'active'
+             and (s.expires_at is null or s.expires_at > $1)
+        )`,
+    [nowIso],
+  );
+
+  return {
+    expired: expired.rowCount ?? 0,
+    demoted: demoted.rowCount ?? 0,
+    promoted: promoted.rowCount ?? 0,
+  };
 }
 
 /**

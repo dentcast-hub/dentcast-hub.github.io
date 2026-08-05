@@ -3,7 +3,7 @@ import { resetDb } from './helpers.js';
 import { pool, closePool } from '../src/db.js';
 import {
   activateMonths, grantLifetime, revokeSubscription, getSubscription, isPremiumNow,
-  PLAN_PAID, PLAN_FOUNDER,
+  sweepExpiredSubscriptions, PLAN_PAID, PLAN_FOUNDER,
 } from '../src/services/subscription.js';
 
 /**
@@ -269,6 +269,161 @@ describe('revokeSubscription', () => {
     expect(fresh.started_at.toISOString().slice(0, 10)).toBe('2026-08-05');
     // And no paid days survived the revoke to be extended from.
     expect(daysBetween(fresh.expires_at!, new Date('2026-08-05T09:00:00Z'))).toBeLessThanOrEqual(31);
+  });
+});
+
+describe('sweepExpiredSubscriptions', () => {
+  const BOUGHT = new Date('2026-08-05T09:00:00Z');
+  /** Well past a one-month subscription bought at BOUGHT. */
+  const LATER = new Date('2026-10-01T00:00:00Z');
+
+  /** A live league prize — the second, independent source of premium. */
+  async function giveLeagueGrant(userId: string, expiresAt: Date): Promise<void> {
+    await pool.query(
+      `insert into premium_grants (user_id, week_start, granted_at, expires_at)
+       values ($1, '2026-02-07', now(), $2)`,
+      [userId, expiresAt.toISOString()],
+    );
+  }
+
+  it('expires a lapsed subscription and takes premium away', async () => {
+    const user = await makeUser();
+    await activateMonths(user, 1, { source: 'payment', now: BOUGHT });
+
+    const r = await sweepExpiredSubscriptions(LATER);
+
+    expect(r.expired).toBe(1);
+    expect(r.demoted).toBe(1);
+    expect((await getSubscription(user))!.status).toBe('expired');
+    expect(await tierOf(user)).toBe('free');
+  });
+
+  it('leaves a subscription that has not run out alone', async () => {
+    const user = await makeUser();
+    await activateMonths(user, 6, { source: 'payment', now: BOUGHT });
+
+    const r = await sweepExpiredSubscriptions(new Date('2026-09-01T00:00:00Z'));
+
+    expect(r.expired).toBe(0);
+    expect(r.demoted).toBe(0);
+    expect(await tierOf(user)).toBe('premium');
+  });
+
+  it('never touches a founder, in any year', async () => {
+    const user = await makeUser();
+    await grantLifetime(user, { source: 'admin' });
+
+    await sweepExpiredSubscriptions(new Date('2126-01-01T00:00:00Z'));
+
+    expect((await getSubscription(user))!.status).toBe('active');
+    expect(await tierOf(user)).toBe('premium');
+  });
+
+  it('gives up to a day of grace, always in the user\'s favour', async () => {
+    const user = await makeUser();
+    await activateMonths(user, 1, { source: 'payment', now: new Date('2026-08-05T14:00:00+03:30') });
+
+    // It runs out at 14:00 on 5 Sept. The sweep only ever fires at 00:00 Tehran,
+    // so the run that morning is too early to see it and the user keeps premium
+    // through the whole day — including the afternoon it technically ended.
+    await sweepExpiredSubscriptions(new Date('2026-09-05T00:00:00+03:30'));
+    expect(await tierOf(user)).toBe('premium');
+
+    // The next night settles it.
+    await sweepExpiredSubscriptions(new Date('2026-09-06T00:00:00+03:30'));
+    expect(await tierOf(user)).toBe('free');
+  });
+
+  it('is idempotent — a second run the same night changes nothing', async () => {
+    const user = await makeUser();
+    await activateMonths(user, 1, { source: 'payment', now: BOUGHT });
+
+    const first = await sweepExpiredSubscriptions(LATER);
+    const second = await sweepExpiredSubscriptions(LATER);
+
+    expect(first.expired).toBe(1);
+    expect(second).toEqual({ expired: 0, demoted: 0, promoted: 0 });
+  });
+
+  it('catches an account left premium by a revoke, which expired no row at all', async () => {
+    const user = await makeUser();
+    await grantLifetime(user, { source: 'admin' });
+    await revokeSubscription(user, { source: 'admin' });
+    expect(await tierOf(user)).toBe('premium'); // revoke deliberately left it
+
+    const r = await sweepExpiredSubscriptions(LATER);
+
+    expect(r.expired).toBe(0); // there was no row to expire
+    expect(r.demoted).toBe(1); // and yet the account is settled
+    expect(await tierOf(user)).toBe('free');
+  });
+
+  it('will not take premium from someone a league prize is still holding up', async () => {
+    const user = await makeUser();
+    await activateMonths(user, 1, { source: 'payment', now: BOUGHT });
+    await giveLeagueGrant(user, new Date('2026-10-20T00:00:00Z'));
+
+    const r = await sweepExpiredSubscriptions(LATER);
+
+    expect(r.expired).toBe(1);   // the subscription is settled
+    expect(r.demoted).toBe(0);   // but the prize still covers them
+    expect(await tierOf(user)).toBe('premium');
+  });
+
+  it('demotes a league winner whose grant fell due tonight, without waiting for the prize sweep', async () => {
+    const user = await makeUser();
+    await pool.query("update profiles set tier = 'premium' where id = $1", [user]);
+    // Due, but revoked_at not yet written — expirePremiumPrizes has not run.
+    await giveLeagueGrant(user, new Date('2026-09-30T00:00:00Z'));
+
+    const r = await sweepExpiredSubscriptions(LATER);
+
+    expect(r.demoted).toBe(1);
+    expect(await tierOf(user)).toBe('free');
+  });
+
+  it('repairs a free account that a valid subscription covers', async () => {
+    const user = await makeUser();
+    await activateMonths(user, 6, { source: 'payment', now: BOUGHT });
+    // Drift, however it happened.
+    await pool.query("update profiles set tier = 'free' where id = $1", [user]);
+
+    const r = await sweepExpiredSubscriptions(new Date('2026-09-01T00:00:00Z'));
+
+    expect(r.promoted).toBe(1);
+    expect(await tierOf(user)).toBe('premium');
+  });
+
+  it('does not promote a free account whose subscription already lapsed', async () => {
+    const user = await makeUser();
+    await activateMonths(user, 1, { source: 'payment', now: BOUGHT });
+    await sweepExpiredSubscriptions(LATER);
+
+    const again = await sweepExpiredSubscriptions(LATER);
+    expect(again.promoted).toBe(0);
+    expect(await tierOf(user)).toBe('free');
+  });
+
+  it('brings a lapsed account straight back when they renew', async () => {
+    const user = await makeUser();
+    await activateMonths(user, 1, { source: 'payment', now: BOUGHT });
+    await sweepExpiredSubscriptions(LATER);
+    expect(await tierOf(user)).toBe('free');
+
+    await activateMonths(user, 6, { source: 'payment', now: LATER });
+    expect(await tierOf(user)).toBe('premium');
+
+    // And the next sweep leaves the renewal alone.
+    const r = await sweepExpiredSubscriptions(new Date('2026-10-02T00:00:00Z'));
+    expect(r.demoted).toBe(0);
+    expect(await tierOf(user)).toBe('premium');
+  });
+
+  it('leaves a plain free user completely alone', async () => {
+    const user = await makeUser();
+    const r = await sweepExpiredSubscriptions(LATER);
+    expect(r).toEqual({ expired: 0, demoted: 0, promoted: 0 });
+    expect(await tierOf(user)).toBe('free');
   });
 });
 
