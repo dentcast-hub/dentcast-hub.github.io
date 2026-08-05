@@ -73,9 +73,27 @@ engine); week buckets start **Saturday**.
    present the two as the same thing.
 5. **دو دستهٔ بیننده، و پریمیوم هرگز.** Only `anon` (signed-out) and `plus`
    (signed-in, free) can generate ad events at all. `premium` never renders an
-   ad, so it never appears — see rule 2. Today the site has **no premium users
-   yet** (every account is `free`), so `by_viewer` splitting into `anon` + `plus`
-   is the complete picture, not a partial one.
+   ad, so it never appears in `by_viewer` — see rule 2. That split is therefore
+   the complete picture of ad inventory, not a partial one.
+
+   **ولی «پریمیوم» یک طبقه نیست — یک جایزهٔ سه‌روزهٔ لیگ است.** Nobody holds
+   premium as a plan: in the database every real account is `tier = 'free'`,
+   which is exactly what «پلاس» means. `premium` is only ever the prize granted
+   to the top of each valid league group for `prize_days` (3), after which
+   `expirePremiumPrizes` puts them back to `free`. At any moment the premium
+   population is that week's winners (≈1 per group) plus the founder's own two
+   accounts.
+
+   Two consequences a report must respect:
+   - The `page_views.premium` column in this endpoint is those prize holders and
+     the founder — never describe it as a paying tier.
+   - **Never read a tier-split metric as a plan comparison.** `/admin/kpis`
+     groups `d7_survival_by_tier` by `profiles.tier`, i.e. the CURRENT label —
+     so its `premium` row is this week's winners, who were selected *for being
+     the most active member of their group*. On 2026-08-04 that row read 50٪
+     against 6.1٪ for `free`, and hours later — when 12 winners reverted — the
+     same twelve people lifted the `free` row to 8.9٪. Same humans, opposite
+     conclusion. It is selection, not an effect; do not report it as one.
 6. **تاریخ شروع: ۱۴۰۵/۰۵/۰۴ (2026-07-26)** — the day the client emitter
    shipped. There is **no** ad data of any kind before it. For GA's `viewer`
    split the same date applies (custom dimensions are not retroactive). Any
