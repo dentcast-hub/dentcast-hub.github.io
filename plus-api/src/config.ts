@@ -240,6 +240,29 @@ export const config = {
     capCountsAttempts: bool('PAYMENT_CAP_COUNTS_ATTEMPTS', true),
   },
 
+  // Zibal IPG (درگاه پرداخت زیبال).
+  zibal: {
+    // 'zibal' is Zibal's own SANDBOX merchant: it drives the full request ->
+    // start -> callback -> verify round trip without moving money. It is the
+    // default on purpose — an unconfigured deployment is then in test mode
+    // rather than half-broken, and forgetting to set the real key cannot
+    // silently take a customer's money into nowhere.
+    merchant: str('ZIBAL_MERCHANT', 'zibal'),
+    baseUrl: str('ZIBAL_BASE_URL', 'https://gateway.zibal.ir'),
+    callbackUrl: str('ZIBAL_CALLBACK_URL', 'https://api.dentcast.ir/pay/callback'),
+    // Zibal's merchant registration whitelists ONE outbound IP, and this
+    // container's egress IP is not stable across redeploys (confirmed by the
+    // host, 2026-08-05). Set this to a fixed-IP forward proxy and every gateway
+    // call leaves from that address instead. Empty = direct, which is correct
+    // for a deployment that already has a stable egress IP — so this is a
+    // deployment concern, not a code path anyone has to remember.
+    egressProxyUrl: str('ZIBAL_EGRESS_PROXY_URL', ''),
+    // Longer than the notification timeout: a payment switch is slower than a
+    // messenger API, and a verify that times out is the expensive kind of
+    // failure — the customer has already paid.
+    timeoutMs: int('ZIBAL_TIMEOUT_MS', 25_000),
+  },
+
   // «دستیار هوشمند» (premium, spec's later AI phase): a narrow classifier, not a
   // chatbot — it turns a free-text case description into a short multiple-choice
   // narrowing round, options always drawn from our own taxonomy (never invented),
