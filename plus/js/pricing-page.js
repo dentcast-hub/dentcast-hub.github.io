@@ -114,13 +114,17 @@ const PITCH = {
 /**
  * Two real perks with no dashboard section of their own, so they are not in the
  * canonical array: ads (spot.js renders nothing at all for a premium visitor)
- * and the timing of new-article notifications. The ARTICLE is public to
- * everyone the moment it goes up and is never gated — what premium buys is
- * hearing about it at publish instead of in the next evening's digest.
+ * and the timing of the new-article notification.
+ *
+ * The notification line says ONE thing, because one thing is what it is. An
+ * earlier draft went on to explain that the article itself is open to everyone
+ * at publish — true, and about something nobody reading a price list was
+ * wondering. A benefit stated with a caveat attached reads as a benefit being
+ * walked back.
  */
 const EXTRA_PERKS = [
   { title: 'بدون تبلیغ', hint: 'هیچ تبلیغی، در هیچ صفحه‌ای.' },
-  { title: 'خبرِ مطلب تازه، همان لحظه', hint: 'به‌جای خلاصه‌ی شبانه‌ی روز بعد. خودِ مطلب برای همه از لحظه‌ی انتشار باز است.' },
+  { title: 'اطلاع فوری از مطلب تازه', hint: 'نوتیفیکیشن مطلب تازه بلافاصله پس از انتشار می‌رسد.' },
 ];
 
 function whatYouGet() {
