@@ -12,6 +12,7 @@ import {
   activateMonths, grantLifetime, revokeSubscription, getSubscription,
   summarizeSubscription, sweepExpiredSubscriptions, type Subscription,
 } from '../services/subscription.js';
+import { getCapacity } from '../services/payment-capacity.js';
 import {
   getSpotStats, defaultRange, isCalendarDay, SPOT_HOSTS, type GroupBy,
 } from '../services/spot-stats.js';
@@ -594,6 +595,17 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
     if (!who) return reply;
     const removed = await revokeSubscription(who.id, { source: 'admin' });
     return reply.send({ ...subscriptionView(who.phone, who.id, null), removed });
+  });
+
+  // GET /admin/payments/capacity — how much of this month's gateway ceiling is
+  // left, and which plans still fit under it.
+  //
+  // Reports the conservative count (what actually gates sales) alongside the
+  // verified-only count, because the gap between them IS the cost of not yet
+  // knowing whether Zibal forgives an abandoned payment. Seeing both is what
+  // turns PAYMENT_CAP_COUNTS_ATTEMPTS from a guess into a decision.
+  app.get('/admin/payments/capacity', async (_request, reply) => {
+    return reply.send({ ok: true, ...await getCapacity() });
   });
 
   // POST /admin/subscriptions/run-sweep — run the nightly reconciliation now

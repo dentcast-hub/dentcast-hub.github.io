@@ -206,6 +206,63 @@ export const config = {
     password: str('ADMIN_PASSWORD', 'change-me-admin-password'),
   },
 
+  // Payments. Prices are in RIAL everywhere in the code and the database
+  // (`payments.amount_rial`, and what Zibal's API expects); the site shows toman.
+  // One unit end to end, converted only at the moment of display — a system that
+  // carries both is a system that eventually charges ten times too much.
+  payments: {
+    // A month of premium: 1,000,000 toman.
+    monthlyRial: int('PAYMENT_MONTHLY_RIAL', 10_000_000),
+    // Plans offered on the pricing page, in months. 12 is deliberately absent
+    // until a real transaction proves the gateway accepts a single payment that
+    // large — that is answerable by selling one, not by asking.
+    planMonths: list('PAYMENT_PLAN_MONTHS', ['1', '3', '6']).map(Number),
+
+    // --- The monthly ceiling -------------------------------------------------
+    // Set by the e-namad کسب‌وکار خرد registration, not by us: 100,000,000 toman
+    // and 100 transactions per month. Both are hard — the gateway simply starts
+    // refusing once either is reached, and a refusal at that point looks to the
+    // customer exactly like a broken site.
+    capRial: int('PAYMENT_CAP_RIAL', 1_000_000_000),
+    capCount: int('PAYMENT_CAP_COUNT', 100),
+    // Which calendar the ceiling resets on. The cap comes from an Iranian
+    // regulator, so the Persian month is the default; flip to 'gregorian' if
+    // Zibal confirms otherwise. Getting this wrong does not fail loudly — it
+    // just makes the counter disagree with the gateway's for three weeks.
+    capCalendar: str('PAYMENT_CAP_CALENDAR', 'jalali'),
+    // Warn the founder once usage crosses this fraction of either ceiling.
+    capWarnAt: Number(str('PAYMENT_CAP_WARN_AT', '0.8')),
+    // Count every attempt that reached the gateway, not just the verified ones.
+    // We do not yet know whether Zibal's own counter forgives a failed payment;
+    // until it says so, over-counting only closes the shop slightly early, while
+    // under-counting means a customer is charged for a subscription that the
+    // ceiling then refuses to activate. Set false once the answer is in hand.
+    capCountsAttempts: bool('PAYMENT_CAP_COUNTS_ATTEMPTS', true),
+  },
+
+  // Zibal IPG (درگاه پرداخت زیبال).
+  zibal: {
+    // 'zibal' is Zibal's own SANDBOX merchant: it drives the full request ->
+    // start -> callback -> verify round trip without moving money. It is the
+    // default on purpose — an unconfigured deployment is then in test mode
+    // rather than half-broken, and forgetting to set the real key cannot
+    // silently take a customer's money into nowhere.
+    merchant: str('ZIBAL_MERCHANT', 'zibal'),
+    baseUrl: str('ZIBAL_BASE_URL', 'https://gateway.zibal.ir'),
+    callbackUrl: str('ZIBAL_CALLBACK_URL', 'https://api.dentcast.ir/pay/callback'),
+    // Zibal's merchant registration whitelists ONE outbound IP, and this
+    // container's egress IP is not stable across redeploys (confirmed by the
+    // host, 2026-08-05). Set this to a fixed-IP forward proxy and every gateway
+    // call leaves from that address instead. Empty = direct, which is correct
+    // for a deployment that already has a stable egress IP — so this is a
+    // deployment concern, not a code path anyone has to remember.
+    egressProxyUrl: str('ZIBAL_EGRESS_PROXY_URL', ''),
+    // Longer than the notification timeout: a payment switch is slower than a
+    // messenger API, and a verify that times out is the expensive kind of
+    // failure — the customer has already paid.
+    timeoutMs: int('ZIBAL_TIMEOUT_MS', 25_000),
+  },
+
   // «دستیار هوشمند» (premium, spec's later AI phase): a narrow classifier, not a
   // chatbot — it turns a free-text case description into a short multiple-choice
   // narrowing round, options always drawn from our own taxonomy (never invented),

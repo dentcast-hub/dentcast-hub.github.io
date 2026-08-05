@@ -26,6 +26,15 @@ import { config } from '../config.js';
 export interface OutboundOptions {
   /** Route through OUTBOUND_PROXY_URL when one is set. Default true; pass false for domestic hosts. */
   proxy?: boolean;
+  /**
+   * Use THIS proxy instead of the configured one, and use it regardless of
+   * `proxy`. For a destination that needs a specific egress address rather than
+   * merely a working route — the payment gateway, whose merchant registration
+   * whitelists one outbound IP, while this container's egress IP is not stable
+   * across redeploys. Empty string means direct, so an unset env var is simply
+   * "no proxy" rather than a misconfiguration.
+   */
+  proxyUrl?: string;
   /** Overrides config.outbound.timeoutMs. 0 disables the timeout. */
   timeoutMs?: number;
 }
@@ -45,23 +54,28 @@ export function proxyHost(): string | null {
   }
 }
 
-let dispatcherPromise: Promise<unknown> | null = null;
+// One dispatcher per proxy URL, built once and reused (each pools connections).
+// Keyed rather than single because the egress proxy a destination needs for its
+// IP is not the same proxy another needs for its route.
+const dispatchers = new Map<string, Promise<unknown>>();
 
 /**
  * undici's ProxyAgent, built once and reused (it pools connections). Imported
  * lazily so a deployment without a proxy never loads it, and a missing/broken
  * package degrades to a direct request with one warning instead of a crash.
  */
-async function proxyDispatcher(): Promise<unknown> {
-  if (!config.outbound.proxyUrl) return undefined;
+async function proxyDispatcher(proxyUrl: string = config.outbound.proxyUrl): Promise<unknown> {
+  if (!proxyUrl) return undefined;
+  let dispatcherPromise = dispatchers.get(proxyUrl);
   if (!dispatcherPromise) {
     dispatcherPromise = import('undici')
-      .then((u) => new u.ProxyAgent(config.outbound.proxyUrl) as unknown)
+      .then((u) => new u.ProxyAgent(proxyUrl) as unknown)
       .catch((err: unknown) => {
         // eslint-disable-next-line no-console
         console.warn(`[outbound] proxy unavailable, falling back to direct: ${(err as Error).message}`);
         return undefined;
       });
+    dispatchers.set(proxyUrl, dispatcherPromise);
   }
   return dispatcherPromise;
 }
@@ -79,8 +93,12 @@ export async function outboundFetch(
   const timeoutMs = opts.timeoutMs ?? config.outbound.timeoutMs;
   const full: RequestInit = { ...init };
   if (!full.signal && timeoutMs > 0) full.signal = AbortSignal.timeout(timeoutMs);
-  if (opts.proxy !== false) {
-    const dispatcher = await proxyDispatcher();
+  // An explicit proxyUrl wins over `proxy` in both directions: a destination
+  // that needs a particular egress address needs it whether or not the default
+  // proxy is in play, and must not silently fall back onto the wrong one.
+  const proxyUrl = opts.proxyUrl ?? (opts.proxy !== false ? config.outbound.proxyUrl : '');
+  if (proxyUrl) {
+    const dispatcher = await proxyDispatcher(proxyUrl);
     if (dispatcher) (full as unknown as Record<string, unknown>).dispatcher = dispatcher;
   }
   return fetch(url, full);
