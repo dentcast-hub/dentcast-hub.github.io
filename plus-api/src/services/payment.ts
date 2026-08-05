@@ -4,6 +4,7 @@ import { pool } from '../db.js';
 import { activateMonths, type Subscription } from './subscription.js';
 import { canSellPlan, planAmountRial, periodStamps, capacityMessage } from './payment-capacity.js';
 import { zibalRequest, zibalVerify, isSandbox } from './zibal.js';
+import { checkCapacityAlert } from './payment-cap-alert.js';
 
 /**
  * Buying a subscription, end to end. Two entry points — start a payment, settle
@@ -292,6 +293,12 @@ export async function settlePayment(trackId: string, now: Date = new Date()): Pr
       message: 'این پرداخت قبلاً تأیید شده و اشتراک شما فعال است.',
     };
   }
+
+  // Capacity only ever moves on a completed sale, so this is the moment the
+  // ceiling can be crossed. Fire-and-forget on purpose: the money is already
+  // taken and the subscription already granted — a notification that fails must
+  // not turn a successful purchase into an error.
+  void checkCapacityAlert(now).catch(() => { /* alerting never breaks a sale */ });
 
   return {
     outcome: 'activated',

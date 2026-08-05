@@ -245,6 +245,10 @@ export const config = {
     capCalendar: str('PAYMENT_CAP_CALENDAR', 'jalali'),
     // Warn the founder once usage crosses this fraction of either ceiling.
     capWarnAt: Number(str('PAYMENT_CAP_WARN_AT', '0.8')),
+    // Whose phone gets the "the ceiling is running out" message. Empty = nobody
+    // is told (the console line still fires), because there is no sensible
+    // default founder and guessing one would page a stranger.
+    capAlertPhone: str('PAYMENT_CAP_ALERT_PHONE', ''),
     // Count every attempt that reached the gateway, not just the verified ones.
     // We do not yet know whether Zibal's own counter forgives a failed payment;
     // until it says so, over-counting only closes the shop slightly early, while

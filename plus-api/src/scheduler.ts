@@ -9,6 +9,7 @@ import { notifyPremiumPrizes } from './services/premium-prize-notify.js';
 import { runReviewReminders } from './services/review-notify.js';
 import { attributeStrongSignals } from './services/assistant-learning.js';
 import { sweepExpiredSubscriptions } from './services/subscription.js';
+import { checkCapacityAlert } from './services/payment-cap-alert.js';
 
 /**
  * Daily free-digest scheduler. Fires runFreeDigest() at freeDigestHour:00 in the
@@ -293,7 +294,12 @@ export function startSubscriptionScheduler(): () => void {
     const delay = msUntilNextRun(new Date(), 0, config.streakTimezone); // 00:00 Tehran
     timer = setTimeout(() => {
       void sweepExpiredSubscriptions(new Date())
-        .then((r) => {
+        .then(async (r) => {
+          // Also the nightly safety net for the gateway ceiling. The alert
+          // normally fires the moment a payment pushes usage over the line;
+          // this catches a month that crept up on us while nothing was selling
+          // (a ceiling can also be reached by lowering it).
+          await checkCapacityAlert(new Date()).catch(() => {});
           if (r.expired > 0 || r.demoted > 0 || r.promoted > 0) {
             // eslint-disable-next-line no-console
             console.log(
