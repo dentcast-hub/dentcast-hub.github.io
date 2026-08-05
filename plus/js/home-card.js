@@ -2,6 +2,7 @@
 // Two states: anonymous invitation, and logged-in free daily status. NO due-card
 // counter for free users, not even a zero or a locked stub. No minutes target.
 import { el, faNum, streakIsActiveToday, STREAK_ACTIVITY_EVENT } from './util.js';
+import { pricingHref } from './premium-cta.js';
 import { currentUser, api } from './api.js';
 import { openLoginModal, openOrgNotice } from './login-modal.js';
 import { getModel, contentInfo } from './content-index.js';
@@ -71,6 +72,10 @@ function compassRow(me) {
     class: 'dc-plus-info', type: 'button', title: 'قطب‌نمای مطالعه چیست؟', 'aria-label': 'قطب‌نمای مطالعه چیست؟',
   }, '؟');
   info.addEventListener('click', () => { cap.hidden = !cap.hidden; });
+  // The explainer ends with somewhere to go: a reader who just opened it is
+  // exactly the person deciding whether premium is worth it.
+  cap.append(el('a', { class: 'dc-plus-caplink', href: pricingHref('home-compass') },
+    'خرید اشتراک پریمیوم'));
   return el('div', { class: 'dc-plus-compass-row' }, [link, info, cap]);
 }
 

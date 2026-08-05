@@ -201,6 +201,15 @@ export const api = {
   // premium prize: acknowledge the "you won a week of premium" dashboard banner
   premiumGrantSeen: () => request('/premium/grant/seen', { method: 'POST' }),
 
+  // --- payments -------------------------------------------------------------
+  // payPlans is PUBLIC (no session): the pricing page renders the price before
+  // it knows who is looking. payStart needs one, and asks for it at the moment
+  // of purchase rather than at the door.
+  payPlans: () => request('/pay/plans'),
+  payStart: (months) => request('/pay/start', { method: 'POST', body: { months } }),
+  payStatus: (order) => request('/pay/status', { query: { order } }),
+  paySettle: (order) => request('/pay/settle', { method: 'POST', body: { order } }),
+
   // premium: reading compass — coverage report over the user's own reading,
   // cross-referenced against the taxonomy and pathways (no interest guessing)
   readingCompass: () => request('/reading-compass'),

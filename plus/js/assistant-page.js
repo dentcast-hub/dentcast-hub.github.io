@@ -2,6 +2,7 @@
 // the same premium-upsell shape pathways.html/reading-compass.html use;
 // signed-in premium users get the real wizard (case-assistant.js).
 import { el } from './util.js';
+import { premiumCta } from './premium-cta.js';
 import { currentUser } from './api.js';
 import { openLoginModal } from './login-modal.js';
 import { renderCaseAssistant } from './case-assistant.js';
@@ -12,7 +13,8 @@ function comingSoonGate(root) {
     el('p', {}, 'دستیار هوشمند، ویژه‌ی دنت‌کست پریمیوم است.'),
     el('p', { class: 'dcp-muted' },
       'وضعیت بیمار را شرح می‌دهی و از بین چند گزینه انتخاب می‌کنی — نه گفتگوی آزاد، و نه تشخیص یا توصیه‌ی درمانی؛ فقط مسیر به مقاله‌ی مرتبطِ خودِ سایت.'),
-    el('a', { class: 'dcp-btn dcp-btn-primary', href: '/plus/' }, 'رفتن به پیشخوان'),
+    premiumCta('gate-assistant'),
+    el('a', { class: 'dcp-btn dcp-btn-ghost', href: '/plus/' }, 'رفتن به پیشخوان'),
   ]));
 }
 

@@ -8,6 +8,7 @@
 // /plus/collections.html, /plus/collection.html, the workbench's two
 // single-purpose collection buttons, and the dashboard.
 import { el, faNum } from './util.js';
+import { premiumCta } from './premium-cta.js';
 import { api, currentUser } from './api.js';
 import { openLoginModal } from './login-modal.js';
 import { FOLDER_EN } from './content-index.js';
@@ -254,7 +255,7 @@ export async function openCollectionPicker({ highlightId, contentId } = {}) {
     openSheet(gateCard({
       title: 'کالکشن‌ها ویژه‌ی پریمیوم است',
       sub: 'هایلایت‌ها و مطالعه‌ی شما همین حالا هم ثبت می‌شود؛ با پریمیوم، می‌توانید آن‌ها را در پوشه‌های دلخواهِ خودتان دسته‌بندی کنید.',
-      cta: el('a', { class: 'dcp-btn dcp-btn-primary', href: '/plus/' }, 'رفتن به پیشخوان'),
+      cta: premiumCta('gate-collection-sheet'),
     }));
     return;
   }

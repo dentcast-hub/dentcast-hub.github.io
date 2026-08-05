@@ -7,6 +7,12 @@ import { ensurePushSubscription, removePushSubscription, pushSupported } from '.
 import { telegramLoginEnabled, telegramCallbackUrl, telegramBotUsername } from './config.js';
 import { baleEnabled, baleDeepLink } from './config.js';
 import { leagueEntryButton } from './league.js';
+import { subscriptionCta } from './premium-cta.js';
+
+const JALALI_DAY = new Intl.DateTimeFormat('fa-IR-u-ca-persian', {
+  timeZone: 'Asia/Tehran', year: 'numeric', month: 'long', day: 'numeric',
+});
+const jalaliDay = (iso) => JALALI_DAY.format(new Date(iso));
 
 const WEEKDAY_FA = ['ی', 'د', 'س', 'چ', 'پ', 'ج', 'ش']; // Sun..Sat
 function weekdayLetter(dayStr) {
@@ -122,7 +128,29 @@ function planBlock(me) {
       msg.textContent = 'با رتبه‌ی برتر در لیگِ این هفته، یک هفته پریمیوم رایگان می‌گیری.';
     });
   }
-  return el('div', { class: 'dcp-plan-row' }, [plus, premium, msg]);
+
+  // Until payments shipped, this row could only ever say "win it in the league"
+  // — true, but not something a reader can act on today. The CTA is the missing
+  // half: earn it or buy it, both in the one place a person looks when they are
+  // wondering what they have.
+  const cta = subscriptionCta(me, 'profile');
+
+  // What they hold and until when, in the sentence the whole product uses. Only
+  // for a real subscription: league-prize premium has no expiry of its own, and
+  // pending_premium_grant already speaks for that.
+  const sub = me.subscription;
+  const until = sub && sub.is_founder
+    ? el('p', { class: 'dcp-plan-until' }, 'اشتراک شما مادام‌العمر است.')
+    : sub && sub.expires_at
+      ? el('p', { class: 'dcp-plan-until' },
+        `اشتراک شما تا پایان روز ${jalaliDay(sub.expires_at)} فعال است.`)
+      : null;
+
+  return el('div', { class: 'dcp-plan-block' }, [
+    el('div', { class: 'dcp-plan-row' }, [plus, premium, msg]),
+    until,
+    cta,
+  ].filter(Boolean));
 }
 
 function remindersBlock(me) {
