@@ -52,28 +52,21 @@ describe('paymentsNeedIrHost', () => {
 });
 
 describe('pricingHref', () => {
-  it('stays a plain path on .ir', async () => {
-    const m = await on('dentcast.ir');
-    expect(m.pricingHref('gate-cards')).toBe('/plus/pricing.html?from=gate-cards');
+  it('stays on whichever host the visitor is already on', async () => {
+    expect((await on('dentcast.ir')).pricingHref('gate-cards'))
+      .toBe('/plus/pricing.html?from=gate-cards');
+    // It used to cross straight to .ir, back when the rial gateway was the only
+    // way to pay and a .org visitor could do nothing on this page. The gift-card
+    // route has no Iranian-gateway constraint at all, and .org is precisely
+    // where the people it is for actually are — sending them to .ir would have
+    // handed them the one page they cannot use.
+    expect((await on('dentcast.org')).pricingHref('gate-cards'))
+      .toBe('/plus/pricing.html?from=gate-cards');
   });
 
-  it('crosses to .ir from anywhere else, in ONE navigation', async () => {
-    const m = await on('dentcast.org');
-    // Not a link to the local pricing page that then bounces: the href itself
-    // tells the truth about where it goes, so it survives "open in new tab" and
-    // a middle-click, and the customer never sees two page loads.
-    expect(m.pricingHref('gate-cards'))
-      .toBe('https://dentcast.ir/plus/pricing.html?from=gate-cards');
-  });
-
-  it('keeps the source tag across the hop, so attribution is not lost at the border', async () => {
-    const m = await on('dentcast.org');
-    expect(m.pricingHref('header-menu')).toContain('from=header-menu');
-  });
-
-  it('has no source tag to add when none was given', async () => {
-    expect((await on('dentcast.org')).pricingHref())
-      .toBe('https://dentcast.ir/plus/pricing.html');
+  it('keeps the source tag, so we learn which lock actually sells', async () => {
+    expect((await on('dentcast.org')).pricingHref('header-menu')).toContain('from=header-menu');
+    expect((await on('dentcast.ir')).pricingHref()).toBe('/plus/pricing.html');
   });
 });
 

@@ -280,18 +280,30 @@ export const config = {
 
   // Paying from outside Iran: a US Apple gift card, redeemed by hand.
   //
-  // OFF by default and deliberately so — the path exists and is tested, but
-  // turning it on is a decision about answering a manual queue across
-  // timezones, not a deployment. $100 buys 10 months at the current price.
+  // ON by default and independent of the Iranian gateway. The two are unrelated
+  // rails: Zibal's merchant registration, its e-namad and its .ir-only callback
+  // have nothing to do with somebody abroad buying a gift card, so this stays
+  // available while that is still dark — and works on the .org mirror, where
+  // most of the people it is for actually are.
+  //
+  // The CODE is never collected. The buyer is given a reference tag, has the
+  // card emailed to recipientEmail with that tag in the gift message, and the
+  // founder matches the two. See services/gift-redemption.ts.
   //
   // Nothing here counts against the e-namad monthly ceiling: that allowance
   // governs rial through Zibal, and a gift card is neither.
   giftCard: {
-    enabled: bool('GIFTCARD_ENABLED', false),
+    enabled: bool('GIFTCARD_ENABLED', true),
+    // US only, and not a preference: an Apple gift card redeems solely into an
+    // Apple ID of the same country, so a card from any other region is unusable
+    // however genuine it is.
     kind: str('GIFTCARD_KIND', 'apple_us'),
     months: int('GIFTCARD_MONTHS', 10),
-    /** Shown on the pricing page so nobody guesses which card to buy. */
     amountUsd: int('GIFTCARD_AMOUNT_USD', 100),
+    /** Where the shop emails the card. Shown to the buyer. */
+    recipientEmail: str('GIFTCARD_RECIPIENT_EMAIL', 'foad.shahabian@gmail.com'),
+    /** Whose phone hears "a card is on its way". Empty = console only. */
+    alertPhone: str('GIFTCARD_ALERT_PHONE', ''),
   },
 
   // Zibal IPG (درگاه پرداخت زیبال).

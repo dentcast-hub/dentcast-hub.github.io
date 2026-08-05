@@ -137,6 +137,84 @@ function whatYouGet() {
   ])));
 }
 
+/**
+ * The out-of-country route: a US Apple gift card.
+ *
+ * The order of the steps is the design. The buyer gets their reference tag
+ * BEFORE they are told to go and buy anything, because the tag has to be typed
+ * into the shop's gift-message box at the moment of purchase — telling them
+ * afterwards means a card that arrives matching nobody, and a hundred dollars
+ * neither of us can trace.
+ *
+ * WE NEVER ASK FOR THE CODE. There is no field for one anywhere on this page.
+ * A gift-card code is a bearer instrument: whoever reads it can spend it. Having
+ * it emailed from the shop straight to us means it never passes through this
+ * page, our API or our database, so there is nothing here worth stealing.
+ *
+ * The US warning is stated twice and unmissably, because it is the one mistake
+ * that costs the buyer real money and cannot be undone: an Apple gift card
+ * redeems only into an Apple ID of the same country.
+ */
+function giftSection(gift, user, onStart) {
+  const box = el('div', { class: 'dcp-gift' });
+
+  const head = [
+    el('h2', { class: 'dcp-price-h2' }, 'خارج از ایران هستید؟'),
+    el('p', { class: 'dcp-gift-lead' },
+      `با ${toFa(gift.amount_usd)} دلار گیفت‌کارت اپلِ امریکا، ${toFa(gift.months)} ماه اشتراک پریمیوم فعال می‌شود.`),
+    el('p', { class: 'dcp-gift-warn' },
+      'حتماً گیفت‌کارت «امریکا» باشد. گیفت‌کارت اپل فقط در اپل‌آیدی همان کشور قابل استفاده است و کارت کشور دیگر به کار نمی‌آید.'),
+  ];
+
+  const start = el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button' },
+    user ? 'دریافت کد پیگیری' : 'ورود و دریافت کد پیگیری');
+  start.addEventListener('click', () => onStart(start));
+
+  box.replaceChildren(...head, start,
+    el('p', { class: 'dcp-price-fine' }, 'کد گیفت‌کارت را هیچ‌جای این سایت وارد نمی‌کنید.'));
+  return box;
+}
+
+/** Once they have a tag: exactly what to do, in order. */
+function giftSteps(gift, reference) {
+  const steps = [
+    ['کد پیگیری شما', null],
+    [`یک گیفت‌کارت اپلِ امریکا به مبلغ ${toFa(gift.amount_usd)} دلار بخرید`,
+      'از آمازون یا هر فروشگاه معتبر دیگری. حتماً نسخه‌ی امریکا.'],
+    ['گیرنده را این ایمیل بگذارید', gift.recipient_email],
+    ['کد پیگیری بالا را در «پیام هدیه» بنویسید',
+      'همین یک خط است که مشخص می‌کند کارت از طرف شماست.'],
+    ['تمام — تا ۲۴ ساعت بررسی و فعال می‌شود',
+      'نتیجه همین‌جا و در پیشخوان شما دیده می‌شود.'],
+  ];
+  return el('div', { class: 'dcp-gift' }, [
+    el('h2', { class: 'dcp-price-h2' }, 'مراحل'),
+    el('div', { class: 'dcp-gift-ref' }, [
+      el('span', { class: 'dcp-gift-ref-label' }, 'کد پیگیری'),
+      el('code', { class: 'dcp-gift-ref-code' }, reference),
+    ]),
+    el('ol', { class: 'dcp-gift-steps' }, steps.slice(1).map(([t, d]) => el('li', {}, [
+      el('strong', {}, t), d ? el('span', {}, d) : null,
+    ].filter(Boolean)))),
+    el('p', { class: 'dcp-gift-warn' },
+      'بدون نوشتن کد پیگیری در پیام هدیه، کارت به حساب شما وصل نمی‌شود.'),
+  ]);
+}
+
+/** After the founder has answered. */
+function giftStatus(r) {
+  if (r.status === 'approved') {
+    return el('div', { class: 'dcp-price-notice is-ok' }, [
+      el('b', {}, 'گیفت‌کارت شما تأیید شد'), el('p', {}, 'اشتراک شما فعال است.')]);
+  }
+  if (r.status === 'rejected') {
+    return el('div', { class: 'dcp-price-notice is-warn' }, [
+      el('b', {}, 'گیفت‌کارت تأیید نشد'),
+      el('p', {}, r.note || 'برای پیگیری با ما تماس بگیرید.')]);
+  }
+  return null;
+}
+
 function notice(kind, title, body) {
   return el('div', { class: `dcp-price-notice is-${kind}` }, [
     el('b', {}, title),
@@ -184,20 +262,7 @@ async function main() {
     return;
   }
 
-  // The gateway belongs to dentcast.ir. Moving them BEFORE they choose a plan
-  // rather than at the buy click: the alternative makes someone pick, press,
-  // and only then be told they are on the wrong site. The prices are identical
-  // and shown on the way, so nothing is hidden by the move.
-  if (paymentsNeedIrHost()) {
-    const go = paymentsIrUrl('/plus/pricing.html' + location.search);
-    root.replaceChildren(el('div', { class: 'dcp-gate' }, [
-      el('p', {}, 'خرید اشتراک روی نسخه‌ی dentcast.ir انجام می‌شود.'),
-      el('p', { class: 'dcp-muted' }, 'درگاه پرداخت به همان دامنه ثبت شده است؛ قیمت‌ها یکی است.'),
-      el('a', { class: 'dcp-btn dcp-btn-primary', href: go }, 'ادامه در dentcast.ir'),
-    ]));
-    return;
-  }
-
+  const needIr = paymentsNeedIrHost();
   const featured = pickFeatured(info.plans);
   let selected = featured;
 
@@ -237,6 +302,20 @@ async function main() {
   };
 
   const drawAction = () => {
+    // The rial gateway is registered to dentcast.ir and cannot complete a
+    // payment anywhere else. Said here rather than by bouncing the whole page,
+    // because the gift-card route below works perfectly well on this host and
+    // bouncing would take it away from exactly the people it is for.
+    if (needIr) {
+      action.replaceChildren(
+        el('a', { class: 'dcp-btn dcp-btn-primary',
+          href: paymentsIrUrl('/plus/pricing.html' + location.search) },
+        'پرداخت ریالی در dentcast.ir'),
+        el('p', { class: 'dcp-price-fine' },
+          'درگاه ریالی به دامنه‌ی dentcast.ir ثبت شده است. قیمت‌ها یکی است.'),
+      );
+      return;
+    }
     if (info.offline) {
       // Prices shown, purchase not attemptable: saying "buy" and then failing
       // is worse than saying we cannot reach the payment service right now.
@@ -302,10 +381,47 @@ async function main() {
   drawPlans();
   drawAction();
 
+  // --- the out-of-country rail ----------------------------------------------
+  // Independent of everything above: no Zibal, no monthly ceiling, no .ir.
+  const giftWrap = el('div', {});
+  const gift = info.gift_card;
+
+  const drawGift = (claim) => {
+    if (!gift) { giftWrap.replaceChildren(); return; }
+    const done = claim && claim.status !== 'pending' ? giftStatus(claim) : null;
+    if (claim && claim.status === 'pending') {
+      giftWrap.replaceChildren(giftSteps(gift, claim.reference));
+      return;
+    }
+    giftWrap.replaceChildren(...[done, giftSection(gift, user, async (btn) => {
+      if (!user) {
+        const res = await openLoginModal({ returnTo: location.pathname + location.search });
+        if (res && res.user) location.reload();
+        return;
+      }
+      btn.disabled = true;
+      try {
+        const r = await api.giftStart();
+        drawGift({ status: 'pending', reference: r.reference });
+      } catch (err) {
+        btn.disabled = false;
+        msg.textContent = (err && err.message) || 'ثبت درخواست انجام نشد.';
+      }
+    })].filter(Boolean));
+  };
+
+  drawGift(null);
+  // A returning buyer must land on their own tag, not on a button that would
+  // mint a second one.
+  if (gift && user) {
+    api.giftStatus().then((r) => { if (r && r.redemption) drawGift(r.redemption); }).catch(() => {});
+  }
+
   root.replaceChildren(el('div', { class: 'dcp-pricing' }, [
     ...head, ...notices, grid, action,
     el('h2', { class: 'dcp-price-h2' }, 'با پریمیوم چه چیزی اضافه می‌شود'),
     whatYouGet(),
+    giftWrap,
   ]));
 
   if (from && window.gtag) window.gtag('event', 'pricing_view', { from });

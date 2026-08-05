@@ -622,13 +622,13 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
   app.post('/admin/gift/approve', {
     schema: {
       body: {
-        type: 'object', required: ['id'],
-        properties: { id: { type: 'string' }, note: { type: 'string' } },
+        type: 'object', required: ['reference'],
+        properties: { reference: { type: 'string' }, note: { type: 'string' } },
       },
     },
   }, async (request, reply) => {
-    const { id, note } = request.body as { id: string; note?: string };
-    const r = await approveRedemption(id, note);
+    const { reference, note } = request.body as { reference: string; note?: string };
+    const r = await approveRedemption(reference, note);
     if (!r.ok) return reply.code(404).send({ error: 'not_pending', message: r.message });
     return reply.send({
       ok: true, months: r.redemption!.months, expires_at: r.subscription!.expires_at,
@@ -639,13 +639,13 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
   app.post('/admin/gift/reject', {
     schema: {
       body: {
-        type: 'object', required: ['id', 'reason'],
-        properties: { id: { type: 'string' }, reason: { type: 'string', minLength: 3 } },
+        type: 'object', required: ['reference', 'reason'],
+        properties: { reference: { type: 'string' }, reason: { type: 'string', minLength: 3 } },
       },
     },
   }, async (request, reply) => {
-    const { id, reason } = request.body as { id: string; reason: string };
-    const r = await rejectRedemption(id, reason);
+    const { reference, reason } = request.body as { reference: string; reason: string };
+    const r = await rejectRedemption(reference, reason);
     if (!r.ok) return reply.code(404).send({ error: 'not_pending', message: r.message });
     return reply.send({ ok: true });
   });

@@ -784,3 +784,39 @@ a.dcp-progress-row:hover { text-decoration: none; }
 .dcp-locked-card { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 .dcp-locked-link { display: inline-block; text-decoration: none; }
 .dcp-locked-card .dcp-btn { padding: 6px 12px; font-size: .84rem; }
+
+/* ---------------------------------------------------------------------------
+   Gift card (paying from outside Iran).
+   The reference tag is the one thing on this page somebody has to retype into
+   another site, so it gets monospace, real size, and room to be selected.
+--------------------------------------------------------------------------- */
+.dcp-gift {
+  margin-top: 20px; padding: 16px; border-radius: 16px;
+  border: 1px solid var(--border, rgba(2,35,96,.12)); background: var(--surface2, #f4f6fb);
+  display: flex; flex-direction: column; gap: 10px;
+}
+.dcp-gift .dcp-price-h2 { margin: 0; padding: 0; }
+.dcp-gift-lead { margin: 0; font-size: .92rem; }
+.dcp-gift-warn {
+  margin: 0; font-size: .85rem; font-weight: 600; color: #9a6206;
+  background: rgba(154,98,6,.10); border: 1px solid rgba(154,98,6,.26);
+  border-radius: 10px; padding: 9px 11px;
+}
+.dcp-gift-ref {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  background: var(--surface, #fff); border: 1px dashed rgba(var(--ac-rgb, 11,95,255), .5);
+  border-radius: 12px; padding: 12px 14px;
+}
+.dcp-gift-ref-label { font-size: .82rem; color: var(--txt3, #62779a); }
+.dcp-gift-ref-code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace; direction: ltr;
+  font-size: 1.15rem; font-weight: 800; letter-spacing: .06em;
+  color: var(--ac, #0b5fff); user-select: all;
+}
+.dcp-gift-steps { margin: 0; padding-inline-start: 1.15rem; display: flex; flex-direction: column; gap: 9px; }
+.dcp-gift-steps li { font-size: .9rem; }
+.dcp-gift-steps strong { display: block; }
+.dcp-gift-steps span { color: var(--txt2, #4a5f85); font-size: .85rem; word-break: break-word; }
+@media (prefers-color-scheme: dark) {
+  .dcp-gift-warn { color: #e8b45f; background: rgba(232,180,95,.11); border-color: rgba(232,180,95,.28); }
+}

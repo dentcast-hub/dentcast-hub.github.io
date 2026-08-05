@@ -4,7 +4,7 @@ import { requireAuth } from '../middleware/auth.js';
 import { startPayment, settlePayment, getPaymentByTrackId, resultUrl } from '../services/payment.js';
 import { getCapacity } from '../services/payment-capacity.js';
 import { readCallback } from '../services/zibal.js';
-import { submitRedemption, latestRedemption } from '../services/gift-redemption.js';
+import { startRedemption, latestRedemption, giftInstructions } from '../services/gift-redemption.js';
 import { query } from '../db.js';
 
 /**
@@ -36,11 +36,11 @@ export async function payRoutes(app: FastifyInstance): Promise<void> {
       // worth paying for is served by the number even on a day we cannot take it.
       enabled: config.payments.enabled,
       // The out-of-country route. Advertised separately from `enabled` because
-      // the two are independent: the Iranian gateway being dark says nothing
-      // about whether a gift card can be handed over, and vice versa.
-      gift_card: config.giftCard.enabled
-        ? { months: config.giftCard.months, amount_usd: config.giftCard.amountUsd, kind: config.giftCard.kind }
-        : null,
+      // the two are independent rails: the Iranian gateway being dark says
+      // nothing about whether somebody abroad can send a gift card, and this one
+      // has no .ir constraint at all — it works on the .org mirror, where most
+      // of the people it is for actually are.
+      gift_card: config.giftCard.enabled ? giftInstructions() : null,
       monthly_rial: config.payments.monthlyRial,
       plans: capacity.plans,
       any_plan_available: capacity.any_plan_available,
@@ -173,39 +173,41 @@ export async function payRoutes(app: FastifyInstance): Promise<void> {
   // For anyone outside Iran, where no gateway on either side can reach the
   // other. Submitting puts a code in a queue a human answers; nothing is
   // granted until they do.
-  app.post('/pay/gift', {
-    preHandler: requireAuth,
-    schema: {
-      body: {
-        type: 'object', required: ['code'],
-        properties: { code: { type: 'string', minLength: 4, maxLength: 128 } },
-      },
-    },
-  }, async (request, reply) => {
-    const { code } = request.body as { code: string };
-    const r = await submitRedemption(request.user!.id, code);
+  // POST /pay/gift — open a claim and hand back the reference tag.
+  //
+  // Takes no code, on purpose. A gift-card code is a bearer instrument, so the
+  // flow is arranged so it goes from the shop to the founder's inbox without
+  // ever passing through this API. What comes back is the tag the buyer writes
+  // into the gift message, which is what matches the arriving card to them.
+  app.post('/pay/gift', { preHandler: requireAuth }, async (request, reply) => {
+    const r = await startRedemption(request.user!.id);
 
-    if (r.outcome === 'submitted') {
-      return reply.send({ ok: true, status: 'pending', message: r.message });
+    if (r.outcome === 'disabled') {
+      return reply.code(503).send({ error: r.outcome, message: r.message });
     }
-    // 503 for "switched off", 409 for "you already have one / that code is
-    // taken", 400 for a code that is not one. Three different problems, and a
-    // customer told the wrong one gives up on the right one.
-    const status = r.outcome === 'disabled' ? 503
-      : r.outcome === 'invalid_code' ? 400
-        : 409;
-    return reply.code(status).send({ error: r.outcome, message: r.message });
+    // 'already_pending' is not an error to show as one: they have a reference,
+    // and the useful thing is to hand them the same one again rather than tell
+    // them off for coming back.
+    return reply.send({
+      ...giftInstructions(),
+      ok: true,
+      reference: r.redemption!.reference,
+      months: r.redemption!.months,
+      reused: r.outcome === 'already_pending',
+    });
   });
 
   // Where the submitter checks back. Their own only.
   app.get('/pay/gift', { preHandler: requireAuth }, async (request, reply) => {
     const row = await latestRedemption(request.user!.id);
     return reply.send({
+      ...giftInstructions(),
       ok: true,
-      enabled: config.giftCard.enabled,
       redemption: row && {
+        reference: row.reference,
         status: row.status, months: row.months, kind: row.kind,
-        // The reason for a rejection travels back; the code never does.
+        // The reason for a rejection travels back to the buyer; an internal
+        // approval note does not.
         note: row.status === 'rejected' ? row.note : null,
         created_at: row.created_at, reviewed_at: row.reviewed_at,
       },

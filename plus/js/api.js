@@ -209,6 +209,10 @@ export const api = {
   payStart: (months) => request('/pay/start', { method: 'POST', body: { months } }),
   payStatus: (order) => request('/pay/status', { query: { order } }),
   paySettle: (order) => request('/pay/settle', { method: 'POST', body: { order } }),
+  // Gift card (outside Iran). No code is sent: this opens a claim and returns
+  // the reference tag the buyer puts in the gift message.
+  giftStart: () => request('/pay/gift', { method: 'POST' }),
+  giftStatus: () => request('/pay/gift'),
 
   // premium: reading compass — coverage report over the user's own reading,
   // cross-referenced against the taxonomy and pathways (no interest guessing)

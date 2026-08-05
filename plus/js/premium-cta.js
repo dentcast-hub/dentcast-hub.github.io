@@ -12,17 +12,20 @@
 // only way to learn whether the review cards or the collections are what people
 // are really paying for.
 import { el } from './util.js';
-import { paymentsNeedIrHost, paymentsIrUrl } from './config.js';
 
 export const PRICING_URL = '/plus/pricing.html';
 
 /** Where a premium CTA points, remembering which surface it was pressed on. */
 export function pricingHref(from) {
-  const path = from ? `${PRICING_URL}?from=${encodeURIComponent(from)}` : PRICING_URL;
-  // Cross to .ir here rather than letting the pricing page bounce them: one
-  // navigation instead of two, and the link's own href tells the truth about
-  // where it goes.
-  return paymentsNeedIrHost() ? paymentsIrUrl(path) : path;
+  // Always the local pricing page, on either host.
+  //
+  // This used to cross straight to .ir, back when the rial gateway was the only
+  // way to pay and a .org visitor could do nothing here. That is no longer
+  // true: the gift-card route has no Iranian-gateway constraint at all, and
+  // .org is precisely where the people it is for actually are. Sending them to
+  // .ir would have handed them the one page they cannot use. The pricing page
+  // itself now decides which of the two rails to offer, per host.
+  return from ? `${PRICING_URL}?from=${encodeURIComponent(from)}` : PRICING_URL;
 }
 
 /**
