@@ -180,3 +180,86 @@ describe('POST /activity', () => {
     expect(res.statusCode).toBe(400);
   });
 });
+
+// The premium library (/plus/highlights.html): every highlight, grouped by the
+// article it came from. Built after a reader reported that highlights spread
+// over dozens of articles were effectively unreachable — the dashboard's short
+// recent list was the only surface (2026-08-05).
+describe('GET /highlights/library (premium)', () => {
+  async function add(contentId: string, exact: string, label: string | null = null) {
+    const res = await app.inject({
+      method: 'POST', url: '/highlights', headers: { cookie },
+      payload: { content_id: contentId, exact, label },
+    });
+    expect(res.statusCode).toBe(201);
+    return res.json().highlight.id as string;
+  }
+
+  it('blocks a free user with 402 (the aggregated VIEW is the premium boundary)', async () => {
+    await add('insight/insight-1', 'یک نکته');
+    const res = await app.inject({ method: 'GET', url: '/highlights/library', headers: { cookie } });
+    expect(res.statusCode).toBe(402);
+    expect(res.json().error).toBe('premium_required');
+  });
+
+  it('requires authentication', async () => {
+    const res = await app.inject({ method: 'GET', url: '/highlights/library' });
+    expect(res.statusCode).toBe(401);
+  });
+
+  it('groups every highlight by article, newest-touched article first', async () => {
+    await add('insight/insight-1', 'اولین نکته‌ی مقاله‌ی یک');
+    await add('insight/insight-1', 'دومین نکته‌ی مقاله‌ی یک', 'important');
+    await add('notecast/notecast-1', 'تنها نکته‌ی نوت‌کست');
+    await pool.query(`update profiles set tier = 'premium' where phone = '09121200001'`);
+
+    const res = await app.inject({ method: 'GET', url: '/highlights/library', headers: { cookie } });
+    expect(res.statusCode).toBe(200);
+    const body = res.json();
+    expect(body.total).toBe(3);
+    expect(body.article_count).toBe(2);
+
+    // The most recently highlighted article leads.
+    expect(body.articles[0].content_id).toBe('notecast/notecast-1');
+    expect(body.articles[0].count).toBe(1);
+    expect(body.articles[0].folder).toBe('notecast');
+
+    const insight = body.articles[1];
+    expect(insight.content_id).toBe('insight/insight-1');
+    expect(insight.count).toBe(2);
+    // Within an article, creation order (roughly reading order) is preserved.
+    expect(insight.highlights.map((h: { exact: string }) => h.exact)).toEqual([
+      'اولین نکته‌ی مقاله‌ی یک', 'دومین نکته‌ی مقاله‌ی یک',
+    ]);
+    // Bodies AND notes come through: the page must be readable without opening
+    // the article — that is the whole point of the endpoint.
+    expect(insight.highlights[1].label).toBe('important');
+    expect(insight.url).toBeTruthy();
+  });
+
+  it('answers an empty library instead of erroring', async () => {
+    await pool.query(`update profiles set tier = 'premium' where phone = '09121200001'`);
+    const res = await app.inject({ method: 'GET', url: '/highlights/library', headers: { cookie } });
+    expect(res.statusCode).toBe(200);
+    expect(res.json()).toMatchObject({ total: 0, article_count: 0, articles: [] });
+  });
+});
+
+describe('GET /highlights/recent', () => {
+  it('carries whole-library counts alongside the page, on a free plan too', async () => {
+    for (const [cid, text] of [
+      ['insight/insight-1', 'یک'], ['insight/insight-1', 'دو'], ['notecast/notecast-1', 'سه'],
+    ]) {
+      await app.inject({
+        method: 'POST', url: '/highlights', headers: { cookie },
+        payload: { content_id: cid, exact: text },
+      });
+    }
+    const res = await app.inject({ method: 'GET', url: '/highlights/recent?limit=2', headers: { cookie } });
+    expect(res.statusCode).toBe(200);
+    const body = res.json();
+    expect(body.highlights).toHaveLength(2); // the page
+    expect(body.total).toBe(3);              // ...but the truth about the library
+    expect(body.article_count).toBe(2);
+  });
+});

@@ -451,6 +451,28 @@ export class Workbench {
     }
   }
 
+  /**
+   * Scroll to ONE highlight and flash it. Called after entering study mode from
+   * a ?dcphl=<id> deep link (plus.js) — the دفترچه‌ی هایلایت‌ها, the dashboard's
+   * recent list and a collection all link this way, so «متنِ مقاله» lands on the
+   * highlight itself instead of the top of an article whose highlights are not
+   * even drawn yet.
+   *
+   * Returns false when the id is unknown or its anchor no longer matches the
+   * page (an edited article — see the orphan note below); the caller just does
+   * nothing then, since the page is still the right page.
+   */
+  focusHighlight(id) {
+    const item = this.items.get(id);
+    if (!item || !item.marks || !item.marks.length) return false;
+    const mark = item.marks[0];
+    this._currentHl = id; // it becomes the selected highlight, as if tapped
+    mark.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    item.marks.forEach((m) => m.classList.add('dcp-hl-focus'));
+    setTimeout(() => item.marks.forEach((m) => m.classList.remove('dcp-hl-focus')), 2600);
+    return true;
+  }
+
   // --- orphaned anchors -----------------------------------------------------
   // A highlight whose stored text no longer exists in the page (the article was
   // edited after it was made) is kept in `this.failed` so it is never treated as

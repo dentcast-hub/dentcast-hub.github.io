@@ -178,6 +178,9 @@ export const api = {
   listHighlights: (content_id) => request('/highlights', { query: { content_id } }),
   listTopic: (topic) => request('/highlights', { query: { topic } }),
   recentHighlights: (limit = 8) => request('/highlights/recent', { query: { limit } }),
+  // premium: the whole library in one response, grouped by article (see
+  // highlights.js / /plus/highlights.html).
+  highlightLibrary: () => request('/highlights/library'),
   createHighlight: (h) => request('/highlights', { method: 'POST', body: h }),
   updateHighlight: (id, patch) => request('/highlights/' + id, { method: 'PATCH', body: patch }),
   deleteHighlight: (id) => request('/highlights/' + id, { method: 'DELETE' }),
@@ -218,6 +221,11 @@ export const api = {
   getCollection: (id) => request('/collections/' + encodeURIComponent(id)),
   createCollection: (title) => request('/collections', { method: 'POST', body: { title } }),
   renameCollection: (id, title) => request('/collections/' + encodeURIComponent(id), { method: 'PATCH', body: { title } }),
+  // A board's own identity (any subset of title/description/emoji/color; null clears one).
+  updateCollection: (id, patch) => request('/collections/' + encodeURIComponent(id), { method: 'PATCH', body: patch }),
+  // The board's own arrangement: the WHOLE order, every time (empty = back to newest-first).
+  orderCollectionItems: (id, itemIds) =>
+    request('/collections/' + encodeURIComponent(id) + '/items/order', { method: 'PUT', body: { item_ids: itemIds } }),
   deleteCollection: (id) => request('/collections/' + encodeURIComponent(id), { method: 'DELETE' }),
   addToCollection: (id, item) => request('/collections/' + encodeURIComponent(id) + '/items', { method: 'POST', body: item }),
   removeCollectionItem: (id, itemId) =>

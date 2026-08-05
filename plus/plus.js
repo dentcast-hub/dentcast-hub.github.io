@@ -130,6 +130,27 @@ async function setupWorkbench({ proseRoot, contentId }) {
   return { wb, updateBtn };
 }
 
+// ?dcphl=<highlight_id> — "take me to THIS highlight". Every link out of the
+// highlight library (/plus/highlights.html), the dashboard's recent list and a
+// collection carries it, because the article page draws none of the reader's
+// highlights until study mode is on: without this, following your own note
+// dropped you at the top of an article that looked untouched and you had to
+// press «میز کار» yourself to see anything (user report, 2026-08-05).
+function deepLinkHighlightId() {
+  try { return new URLSearchParams(location.search).get('dcphl') || null; }
+  catch (_) { return null; }
+}
+
+async function openDeepLinkedHighlight(wb, updateBtn, id) {
+  if (!id) return false;
+  if (!wb.isActive()) { await wb.enter(); if (updateBtn) updateBtn(); }
+  // enter() has already loaded and drawn the marks, so the id resolves now.
+  // A highlight whose anchor no longer matches an edited article simply does
+  // not scroll — the page itself is still the right destination.
+  wb.focusHighlight(id);
+  return true;
+}
+
 async function initArticle() {
   const main = document.querySelector('main.article-content-wrap');
   const proseRoot = findProseRoot();
@@ -145,6 +166,13 @@ async function initArticle() {
   // Post-login return-to-study (the funnel) or a remembered choice this session.
   // Never auto-enters on a fresh visit: sessionStorage is empty then.
   const user = await currentUser();
+  // A ?dcphl= link is an explicit "open my highlight" request and outranks both
+  // of those — it is the only case where a FIRST visit to a page opens study
+  // mode, and it is one the reader asked for by clicking.
+  if (user && await openDeepLinkedHighlight(wb, updateBtn, deepLinkHighlightId())) {
+    sessionStorage.removeItem(SS_RETURN_STUDY);
+    return;
+  }
   const returnStudy = sessionStorage.getItem(SS_RETURN_STUDY);
   if (user && returnStudy === location.pathname) {
     sessionStorage.removeItem(SS_RETURN_STUDY);
@@ -168,11 +196,16 @@ async function mountArticleWorkbench(root, url) {
   let proseRoot = null;
   for (const sel of PROSE_SELECTORS) { const found = root.querySelector(sel); if (found) { proseRoot = found; break; } }
   if (!proseRoot) return; // not an article (e.g. a viewer / patients panel)
-  const contentId = url.replace(/^\/+/, '').replace(/\.html$/i, '') || detectContentId();
+  // The url may carry ?dcphl=<id> (a highlight deep link) and/or a hash; neither
+  // is part of the content_id.
+  const [path, query] = url.split('#')[0].split('?');
+  const contentId = path.replace(/^\/+/, '').replace(/\.html$/i, '') || detectContentId();
   markViewed(contentId); // record the open for the landing-page "seen" ticks
   if (contentId.startsWith('episodes/')) return; // audio: seen tick only, no workbench
-  const { wb } = await setupWorkbench({ proseRoot, contentId });
+  const { wb, updateBtn } = await setupWorkbench({ proseRoot, contentId });
   desktopWb = wb;
+  const hlId = query ? new URLSearchParams(query).get('dcphl') : null;
+  if (hlId && await currentUser()) await openDeepLinkedHighlight(wb, updateBtn, hlId);
 }
 if (typeof window !== 'undefined') window.dcpMountArticleWorkbench = mountArticleWorkbench;
 

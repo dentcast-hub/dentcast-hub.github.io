@@ -1,8 +1,9 @@
 import type { FastifyInstance } from 'fastify';
 import { requireAuth } from '../middleware/auth.js';
+import { requirePremium } from '../middleware/require-premium.js';
 import { pool, withTransaction } from '../db.js';
 import { recordActivity } from '../services/activity.js';
-import { resolveTopic, folderLabel } from '../content-index.js';
+import { resolveTopic, folderLabel, getContentInfo, folderOf } from '../content-index.js';
 
 const LABELS = new Set(['important', 'unclear', 'clinical_pearl']);
 
@@ -77,15 +78,86 @@ export async function highlightRoutes(app: FastifyInstance): Promise<void> {
 
   // GET /highlights/recent?limit= -> the user's latest highlights (own dashboard;
   // bodies allowed here). Registered before :id routes; distinct method anyway.
+  //
+  // `total` / `article_count` describe the WHOLE library, not this page of it:
+  // the dashboard shows a handful of rows and needs to say how many there
+  // really are ("۱۲۳ هایلایت در ۲۴ مطلب") so the list never reads as "six is
+  // all I have". Both counts are cheap and returned on every plan — knowing how
+  // much of your own data exists is not a premium boundary.
   app.get('/highlights/recent', async (request, reply) => {
     const q = request.query as { limit?: string };
     const limit = Math.min(Math.max(parseInt(q.limit || '8', 10) || 8, 1), 50);
+    const [res, counts] = await Promise.all([
+      pool.query<HighlightRow>(
+        `select ${SELECT_COLS} from highlights
+          where user_id = $1 order by created_at desc limit $2`,
+        [request.user!.id, limit],
+      ),
+      pool.query<{ total: string; article_count: string }>(
+        `select count(*)::text as total, count(distinct content_id)::text as article_count
+           from highlights where user_id = $1`,
+        [request.user!.id],
+      ),
+    ]);
+    return reply.send({
+      highlights: res.rows,
+      total: Number(counts.rows[0]?.total || 0),
+      article_count: Number(counts.rows[0]?.article_count || 0),
+    });
+  });
+
+  // GET /highlights/library -> premium: EVERY highlight the user owns, grouped
+  // by the article it came from, with that article's title/url resolved here so
+  // the page can be read on its own.
+  //
+  // This is the answer to the complaint the feature was built on (user report,
+  // 2026-08-05): before it, the only way to see a highlight was to open the
+  // article it lives in and turn the workbench on, so a reader with highlights
+  // across forty articles had no way to review their own notes — the dashboard's
+  // six-row recent list was the whole surface. The bodies are already the
+  // user's own text; what premium buys is the aggregated VIEW over all of it,
+  // the same boundary collections and the review engine draw.
+  app.get('/highlights/library', { preHandler: requirePremium }, async (request, reply) => {
     const res = await pool.query<HighlightRow>(
       `select ${SELECT_COLS} from highlights
-        where user_id = $1 order by created_at desc limit $2`,
-      [request.user!.id, limit],
+        where user_id = $1 order by created_at asc`,
+      [request.user!.id],
     );
-    return reply.send({ highlights: res.rows });
+
+    // Group by content_id, keeping each article's highlights in creation order
+    // (roughly reading order) while the ARTICLES themselves are ordered by their
+    // most recent highlight — what you were last working on comes first.
+    const groups = new Map<string, { latest: string; highlights: HighlightRow[] }>();
+    for (const h of res.rows) {
+      let g = groups.get(h.content_id);
+      if (!g) { g = { latest: h.created_at, highlights: [] }; groups.set(h.content_id, g); }
+      g.highlights.push(h);
+      if (h.created_at > g.latest) g.latest = h.created_at;
+    }
+
+    const articles = [...groups.entries()]
+      .sort((a, b) => (a[1].latest < b[1].latest ? 1 : a[1].latest > b[1].latest ? -1 : 0))
+      .map(([contentId, g]) => {
+        const info = getContentInfo(contentId);
+        const folder = folderOf(contentId);
+        return {
+          content_id: contentId,
+          title: info?.title ?? contentId,
+          url: info?.url ?? `/${contentId}.html`,
+          type: info?.type ?? folder,
+          folder,
+          folder_fa: folderLabel(folder),
+          last_highlight_at: g.latest,
+          count: g.highlights.length,
+          highlights: g.highlights,
+        };
+      });
+
+    return reply.send({
+      total: res.rowCount ?? 0,
+      article_count: articles.length,
+      articles,
+    });
   });
 
   // POST /highlights  -> create highlight + its card_state row + log the event

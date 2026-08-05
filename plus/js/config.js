@@ -208,4 +208,10 @@ export const PREMIUM_FEATURES = [
   { title: 'کالکشن‌ها', hint: 'هایلایت‌ها و مقاله‌هاتو تو پوشه‌های دلخواهِ خودت بریز.' },
   { title: 'قطب‌نمای مطالعه', hint: 'وضعیت خواندن‌هایتان را نسبت به کل محتوای سایت و مسیرهای یادگیری می‌سنجد.' },
   { title: 'دستیار هوشمند', hint: 'شرایط بیمار را شرح بده؛ با چند گزینه به نزدیک‌ترین مقاله می‌رسیم.' },
+  // Appended at the END on purpose: dashboard.js addresses entries 0..4 by
+  // index and league.js shows slice(0, 3), so a new feature only ever goes
+  // last. This one has no section of its own — it lives in the dashboard's
+  // «هایلایت‌های اخیر» footer — but it belongs in every "what premium gives
+  // you" list (the prize banner reads the whole array).
+  { title: 'دفترچه‌ی هایلایت‌ها', hint: 'همه‌ی هایلایت‌هایت یکجا، با یادداشت‌ها و جستجو.' },
 ];
