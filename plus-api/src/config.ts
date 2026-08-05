@@ -206,6 +206,40 @@ export const config = {
     password: str('ADMIN_PASSWORD', 'change-me-admin-password'),
   },
 
+  // Payments. Prices are in RIAL everywhere in the code and the database
+  // (`payments.amount_rial`, and what Zibal's API expects); the site shows toman.
+  // One unit end to end, converted only at the moment of display — a system that
+  // carries both is a system that eventually charges ten times too much.
+  payments: {
+    // A month of premium: 1,000,000 toman.
+    monthlyRial: int('PAYMENT_MONTHLY_RIAL', 10_000_000),
+    // Plans offered on the pricing page, in months. 12 is deliberately absent
+    // until a real transaction proves the gateway accepts a single payment that
+    // large — that is answerable by selling one, not by asking.
+    planMonths: list('PAYMENT_PLAN_MONTHS', ['1', '3', '6']).map(Number),
+
+    // --- The monthly ceiling -------------------------------------------------
+    // Set by the e-namad کسب‌وکار خرد registration, not by us: 100,000,000 toman
+    // and 100 transactions per month. Both are hard — the gateway simply starts
+    // refusing once either is reached, and a refusal at that point looks to the
+    // customer exactly like a broken site.
+    capRial: int('PAYMENT_CAP_RIAL', 1_000_000_000),
+    capCount: int('PAYMENT_CAP_COUNT', 100),
+    // Which calendar the ceiling resets on. The cap comes from an Iranian
+    // regulator, so the Persian month is the default; flip to 'gregorian' if
+    // Zibal confirms otherwise. Getting this wrong does not fail loudly — it
+    // just makes the counter disagree with the gateway's for three weeks.
+    capCalendar: str('PAYMENT_CAP_CALENDAR', 'jalali'),
+    // Warn the founder once usage crosses this fraction of either ceiling.
+    capWarnAt: Number(str('PAYMENT_CAP_WARN_AT', '0.8')),
+    // Count every attempt that reached the gateway, not just the verified ones.
+    // We do not yet know whether Zibal's own counter forgives a failed payment;
+    // until it says so, over-counting only closes the shop slightly early, while
+    // under-counting means a customer is charged for a subscription that the
+    // ceiling then refuses to activate. Set false once the answer is in hand.
+    capCountsAttempts: bool('PAYMENT_CAP_COUNTS_ATTEMPTS', true),
+  },
+
   // «دستیار هوشمند» (premium, spec's later AI phase): a narrow classifier, not a
   // chatbot — it turns a free-text case description into a short multiple-choice
   // narrowing round, options always drawn from our own taxonomy (never invented),

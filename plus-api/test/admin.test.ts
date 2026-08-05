@@ -246,6 +246,27 @@ describe('admin subscriptions', () => {
     expect(row.rows[0].tier).toBe('premium');
   });
 
+  it('reports this month\'s gateway capacity, both counts side by side', async () => {
+    const res = await app.inject({
+      method: 'GET', url: '/admin/payments/capacity', headers: { authorization: basic },
+    });
+    expect(res.statusCode).toBe(200);
+    const body = res.json();
+    expect(body.calendar).toBe('jalali');
+    expect(body.cap_count).toBe(100);
+    expect(body.any_plan_available).toBe(true);
+    expect(body.plans.map((p: { months: number }) => p.months)).toEqual([1, 3, 6]);
+    // The conservative figure that gates sales, and the verified one that says
+    // what it actually cost — both, so the setting can be decided on evidence.
+    expect(body).toHaveProperty('used_count');
+    expect(body).toHaveProperty('used_count_verified');
+  });
+
+  it('guards the capacity readout behind admin auth', async () => {
+    const res = await app.inject({ method: 'GET', url: '/admin/payments/capacity' });
+    expect(res.statusCode).toBe(401);
+  });
+
   it('guards the sweep behind admin auth like every other run endpoint', async () => {
     const res = await app.inject({ method: 'POST', url: '/admin/subscriptions/run-sweep' });
     expect(res.statusCode).toBe(401);

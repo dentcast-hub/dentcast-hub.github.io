@@ -17,6 +17,39 @@ export function dayInTz(instant: Date | string | number, tz = config.streakTimez
   }).format(d);
 }
 
+/**
+ * The Jalali (Persian) calendar month containing `instant`, as 'YYYY-MM' —
+ * e.g. '1405-05' for Mordad 1405.
+ *
+ * Used by the payment-capacity counter, whose monthly cap is set by an Iranian
+ * regulator and therefore resets on the first of a PERSIAN month, not a
+ * Gregorian one. The two are never less than three weeks apart, so counting the
+ * wrong one would leave the counter reading nearly a full month of transactions
+ * that the gateway has already forgotten — turning customers away while real
+ * capacity sat unused.
+ *
+ * No library: Node ships full ICU, so the Persian calendar is a locale
+ * extension on the same Intl formatter the Gregorian helpers above already use.
+ * 'nu-latn' forces Latin digits — the default numbering for a Persian locale is
+ * Eastern Arabic ('۱۴۰۵'), which would make these strings unsortable and
+ * uncomparable to anything.
+ */
+export function jalaliMonth(instant: Date | string | number = new Date(), tz = config.streakTimezone): string {
+  const d = instant instanceof Date ? instant : new Date(instant);
+  const parts = new Intl.DateTimeFormat('en-u-ca-persian-nu-latn', {
+    timeZone: tz,
+    year: 'numeric',
+    month: '2-digit',
+  }).formatToParts(d);
+  const get = (t: string) => parts.find((p) => p.type === t)?.value ?? '';
+  return `${get('year')}-${get('month')}`;
+}
+
+/** The Gregorian calendar month containing `instant`, as 'YYYY-MM'. */
+export function gregorianMonth(instant: Date | string | number = new Date(), tz = config.streakTimezone): string {
+  return dayInTz(instant, tz).slice(0, 7);
+}
+
 /** `day` moved by n whole calendar days ('YYYY-MM-DD' in, 'YYYY-MM-DD' out). */
 export function addDays(day: string, n: number): string {
   const [y, m, d] = day.split('-').map(Number);
