@@ -14,6 +14,9 @@ import {
 } from '../services/subscription.js';
 import { getCapacity } from '../services/payment-capacity.js';
 import {
+  pendingRedemptions, approveRedemption, rejectRedemption,
+} from '../services/gift-redemption.js';
+import {
   getSpotStats, defaultRange, isCalendarDay, SPOT_HOSTS, type GroupBy,
 } from '../services/spot-stats.js';
 import { withPageViews } from '../services/view-stats.js';
@@ -606,6 +609,45 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
   // turns PAYMENT_CAP_COUNTS_ATTEMPTS from a guess into a decision.
   app.get('/admin/payments/capacity', async (_request, reply) => {
     return reply.send({ ok: true, ...await getCapacity() });
+  });
+
+  // --- gift-card queue -------------------------------------------------------
+  // The manual half of the out-of-country path: read the code into Apple, then
+  // say yes or no here. Approving extends the subscription in the same
+  // transaction that closes the queue entry.
+  app.get('/admin/gift/pending', async (_request, reply) => {
+    return reply.send({ ok: true, redemptions: await pendingRedemptions() });
+  });
+
+  app.post('/admin/gift/approve', {
+    schema: {
+      body: {
+        type: 'object', required: ['id'],
+        properties: { id: { type: 'string' }, note: { type: 'string' } },
+      },
+    },
+  }, async (request, reply) => {
+    const { id, note } = request.body as { id: string; note?: string };
+    const r = await approveRedemption(id, note);
+    if (!r.ok) return reply.code(404).send({ error: 'not_pending', message: r.message });
+    return reply.send({
+      ok: true, months: r.redemption!.months, expires_at: r.subscription!.expires_at,
+    });
+  });
+
+  // A reason is required, not optional — see rejectRedemption().
+  app.post('/admin/gift/reject', {
+    schema: {
+      body: {
+        type: 'object', required: ['id', 'reason'],
+        properties: { id: { type: 'string' }, reason: { type: 'string', minLength: 3 } },
+      },
+    },
+  }, async (request, reply) => {
+    const { id, reason } = request.body as { id: string; reason: string };
+    const r = await rejectRedemption(id, reason);
+    if (!r.ok) return reply.code(404).send({ error: 'not_pending', message: r.message });
+    return reply.send({ ok: true });
   });
 
   // POST /admin/subscriptions/run-sweep — run the nightly reconciliation now

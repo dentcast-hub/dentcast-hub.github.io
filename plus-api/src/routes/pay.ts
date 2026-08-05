@@ -4,6 +4,7 @@ import { requireAuth } from '../middleware/auth.js';
 import { startPayment, settlePayment, getPaymentByTrackId, resultUrl } from '../services/payment.js';
 import { getCapacity } from '../services/payment-capacity.js';
 import { readCallback } from '../services/zibal.js';
+import { submitRedemption, latestRedemption } from '../services/gift-redemption.js';
 import { query } from '../db.js';
 
 /**
@@ -34,6 +35,12 @@ export async function payRoutes(app: FastifyInstance): Promise<void> {
       // real and worth showing either way — someone deciding whether DentCast is
       // worth paying for is served by the number even on a day we cannot take it.
       enabled: config.payments.enabled,
+      // The out-of-country route. Advertised separately from `enabled` because
+      // the two are independent: the Iranian gateway being dark says nothing
+      // about whether a gift card can be handed over, and vice versa.
+      gift_card: config.giftCard.enabled
+        ? { months: config.giftCard.months, amount_usd: config.giftCard.amountUsd, kind: config.giftCard.kind }
+        : null,
       monthly_rial: config.payments.monthlyRial,
       plans: capacity.plans,
       any_plan_available: capacity.any_plan_available,
@@ -160,6 +167,49 @@ export async function payRoutes(app: FastifyInstance): Promise<void> {
 
     if (!row) return reply.code(404).send({ error: 'no_payment' });
     return reply.send({ ok: true, payment: row });
+  });
+
+  // --- gift cards ------------------------------------------------------------
+  // For anyone outside Iran, where no gateway on either side can reach the
+  // other. Submitting puts a code in a queue a human answers; nothing is
+  // granted until they do.
+  app.post('/pay/gift', {
+    preHandler: requireAuth,
+    schema: {
+      body: {
+        type: 'object', required: ['code'],
+        properties: { code: { type: 'string', minLength: 4, maxLength: 128 } },
+      },
+    },
+  }, async (request, reply) => {
+    const { code } = request.body as { code: string };
+    const r = await submitRedemption(request.user!.id, code);
+
+    if (r.outcome === 'submitted') {
+      return reply.send({ ok: true, status: 'pending', message: r.message });
+    }
+    // 503 for "switched off", 409 for "you already have one / that code is
+    // taken", 400 for a code that is not one. Three different problems, and a
+    // customer told the wrong one gives up on the right one.
+    const status = r.outcome === 'disabled' ? 503
+      : r.outcome === 'invalid_code' ? 400
+        : 409;
+    return reply.code(status).send({ error: r.outcome, message: r.message });
+  });
+
+  // Where the submitter checks back. Their own only.
+  app.get('/pay/gift', { preHandler: requireAuth }, async (request, reply) => {
+    const row = await latestRedemption(request.user!.id);
+    return reply.send({
+      ok: true,
+      enabled: config.giftCard.enabled,
+      redemption: row && {
+        status: row.status, months: row.months, kind: row.kind,
+        // The reason for a rejection travels back; the code never does.
+        note: row.status === 'rejected' ? row.note : null,
+        created_at: row.created_at, reviewed_at: row.reviewed_at,
+      },
+    });
   });
 
   // Retained for symmetry with the callback: a payment can be settled by asking

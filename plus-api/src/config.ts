@@ -278,6 +278,22 @@ export const config = {
     resultUrl: str('PAYMENT_RESULT_URL', 'https://dentcast.ir/plus/pay-result.html'),
   },
 
+  // Paying from outside Iran: a US Apple gift card, redeemed by hand.
+  //
+  // OFF by default and deliberately so — the path exists and is tested, but
+  // turning it on is a decision about answering a manual queue across
+  // timezones, not a deployment. $100 buys 10 months at the current price.
+  //
+  // Nothing here counts against the e-namad monthly ceiling: that allowance
+  // governs rial through Zibal, and a gift card is neither.
+  giftCard: {
+    enabled: bool('GIFTCARD_ENABLED', false),
+    kind: str('GIFTCARD_KIND', 'apple_us'),
+    months: int('GIFTCARD_MONTHS', 10),
+    /** Shown on the pricing page so nobody guesses which card to buy. */
+    amountUsd: int('GIFTCARD_AMOUNT_USD', 100),
+  },
+
   // Zibal IPG (درگاه پرداخت زیبال).
   zibal: {
     // 'zibal' is Zibal's own SANDBOX merchant: it drives the full request ->
