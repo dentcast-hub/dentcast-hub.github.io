@@ -5,6 +5,7 @@ import { config } from '../config.js';
 import { consume, HOUR_MS } from '../services/rate-limit.js';
 import { nextCaseStep } from '../services/case-assistant.js';
 import { recordFeedback } from '../services/assistant-learning.js';
+import { recordActivity } from '../services/activity.js';
 import type { NarrowHistoryEntry } from '../providers/ai/types.js';
 
 // «دستیار هوشمند» (premium): stateless narrowing wizard, not a chat — the client
@@ -31,6 +32,17 @@ export async function caseAssistantRoutes(app: FastifyInstance): Promise<void> {
 
     const history = Array.isArray(body.history) ? (body.history as NarrowHistoryEntry[]) : [];
     const step = await nextCaseStep(userId, description, history);
+
+    // The assistant is the only premium feature with a per-use cost, and it was
+    // the only one leaving no trace in user_activity — so a three-day prize
+    // winner could lean on it hard or never open it, and both looked identical.
+    // One row per round is the right unit: a call here is at most one model
+    // call (maxRounds bounds a single case, the limiter above bounds the hour).
+    //
+    // Recorded AFTER the step resolves, so a failed generation is not counted as
+    // a use. content_id stays null: this is a feature-usage row, and anything
+    // that derives progress from user_activity keys off content.
+    await recordActivity(userId, 'assistant_step', null, { round: history.length + 1 });
     return reply.send(step);
   });
 

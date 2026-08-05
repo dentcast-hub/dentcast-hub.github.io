@@ -1,6 +1,6 @@
 import { config } from '../config.js';
 import { pool, query, one, withTransaction } from '../db.js';
-import { dayInTz } from './time.js';
+import { dayInTz, addDays, startOfDayInstant } from './time.js';
 import { getLeagueConfig } from './league-config.js';
 
 /**
@@ -43,7 +43,25 @@ export interface PendingPremiumGrant {
 async function grantPrizeForWeek(weekStart: string, now: Date): Promise<number> {
   return withTransaction(async (client) => {
     const cfg = await getLeagueConfig(client);
-    const expiresAt = new Date(now.getTime() + cfg.prize_days * 86_400_000).toISOString();
+
+    // Both ends of a grant are anchored to Tehran midnight, not to the instant
+    // this sweep happened to reach them.
+    //
+    // Wall-clock arithmetic (`now + prize_days × 86_400_000`) made the prize
+    // length a race between two scheduler runs. The granting run does the heavy
+    // week finalization first, so its `now` lands a few seconds INTO 00:00; the
+    // expiring run three days later has no week to finalize and reaches its own
+    // `now` sooner. `expires_at <= now` then missed by those seconds and, since
+    // nothing expires lazily on read, the winner kept premium until the NEXT
+    // midnight — four days, not three, decided by which job was quicker.
+    //
+    // Midnight-to-midnight is exact, and it is also the honest reading of the
+    // promise: the winner banner and the push both say «۳ روز», which a reader
+    // understands as three calendar days ending at midnight, not as 72 hours
+    // from whenever a cron woke up.
+    const grantDay = dayInTz(now, config.streakTimezone);
+    const grantedAt = startOfDayInstant(grantDay).toISOString();
+    const expiresAt = startOfDayInstant(addDays(grantDay, cfg.prize_days)).toISOString();
     // A winner is ineligible for this many LEAGUE WEEKS. Measured against
     // week_start, not the grant's wall-clock timestamp: the unit of the league
     // is the week, so "two weeks off" should mean two league weeks regardless of
@@ -148,17 +166,18 @@ async function grantPrizeForWeek(weekStart: string, now: Date): Promise<number> 
           if ((ours.rows[0]?.n ?? 0) === 0) continue;
         }
 
-        // granted_at is written from the SAME instant expires_at was derived
-        // from, rather than left to the database clock. The winner banner shows
-        // the prize length as the difference between the two, so the pair has to
-        // be internally consistent — not merely consistent in production because
-        // both clocks happen to agree there.
+        // granted_at comes from the SAME day boundary expires_at was derived
+        // from, rather than from the database clock or the sweep's own instant.
+        // The winner banner shows the prize length as the difference between the
+        // two, so the pair has to be internally consistent — and anchored, their
+        // difference is exactly prize_days whole days instead of that minus
+        // however long the finalization ahead of it took.
         const ins = await client.query(
           `insert into premium_grants (user_id, week_start, granted_at, expires_at)
            values ($1, $2, $3, $4)
            on conflict (user_id, week_start) do nothing
            returning id`,
-          [m.user_id, weekStart, now.toISOString(), expiresAt],
+          [m.user_id, weekStart, grantedAt, expiresAt],
         );
         if (!ins.rowCount) continue; // already granted for this week (idempotent re-run)
 
