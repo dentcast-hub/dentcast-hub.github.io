@@ -60,3 +60,20 @@ export function subscriptionMenuLabel(me) {
   if (sub && sub.is_founder) return null;
   return me && me.tier === 'premium' && sub ? 'تمدید اشتراک' : 'خرید اشتراک پریمیوم';
 }
+
+/**
+ * The line a premium gate shows ABOVE its own explanation — or null.
+ *
+ * A reader who let a subscription lapse and a reader who never had one are
+ * standing in the same doorway with completely different questions. The second
+ * is asking what this is; the first is asking what happened to their work. A
+ * gate that answers only the first question reads, to somebody who has paid
+ * before, as though their highlights were taken away — which is exactly what
+ * did not happen, and exactly the thing that decides whether they come back.
+ */
+export function lapsedNote(me) {
+  const sub = me && me.subscription;
+  if (!sub || sub.is_founder || sub.is_premium) return null;
+  return 'اشتراک شما تمام شده است. هایلایت‌ها، یادداشت‌ها و کالکشن‌های شما محفوظ‌اند '
+    + 'و با تمدید دوباره در دسترس‌تان قرار می‌گیرند.';
+}

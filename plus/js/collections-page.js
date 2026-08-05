@@ -1,19 +1,20 @@
 // /plus/collections.html — the collections catalog (Phase 3). Same premium
 // gate shape as pathways.html/cards.html.
 import { el } from './util.js';
-import { premiumCta } from './premium-cta.js';
+import { premiumCta, lapsedNote } from './premium-cta.js';
 import { currentUser } from './api.js';
 import { openLoginModal } from './login-modal.js';
 import { renderCollectionsList } from './collections.js';
 import { registerSW } from './pwa.js';
 
-function comingSoonGate(root) {
+function comingSoonGate(root, me) {
   root.replaceChildren(el('div', { class: 'dcp-gate' }, [
+    lapsedNote(me) ? el('p', { class: 'dcp-gate-lapsed' }, lapsedNote(me)) : null,
     el('p', {}, 'کالکشن‌ها ویژه‌ی دنت‌کست پریمیوم است.'),
     el('p', { class: 'dcp-muted' }, 'هایلایت‌ها و مطالعه‌ی شما همین حالا هم ثبت می‌شود؛ با پریمیوم، می‌توانید آن‌ها را در پوشه‌های دلخواهِ خودتان دسته‌بندی کنید.'),
     premiumCta('gate-collections'),
     el('a', { class: 'dcp-btn dcp-btn-ghost', href: '/plus/' }, 'رفتن به پیشخوان'),
-  ]));
+  ].filter(Boolean)));
 }
 
 async function main() {
@@ -32,7 +33,7 @@ async function main() {
     return;
   }
 
-  if (user.tier !== 'premium') { comingSoonGate(root); return; }
+  if (user.tier !== 'premium') { comingSoonGate(root, user); return; }
 
   await renderCollectionsList(root);
 }

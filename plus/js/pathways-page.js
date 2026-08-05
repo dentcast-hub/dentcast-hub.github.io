@@ -2,19 +2,20 @@
 // visitors see the same premium upsell shape the review page (cards.html) uses;
 // signed-in premium users get the real catalog (pathways.js).
 import { el } from './util.js';
-import { premiumCta } from './premium-cta.js';
+import { premiumCta, lapsedNote } from './premium-cta.js';
 import { currentUser } from './api.js';
 import { openLoginModal } from './login-modal.js';
 import { renderPathwaysList } from './pathways.js';
 import { registerSW } from './pwa.js';
 
-function comingSoonGate(root) {
+function comingSoonGate(root, me) {
   root.replaceChildren(el('div', { class: 'dcp-gate' }, [
+    lapsedNote(me) ? el('p', { class: 'dcp-gate-lapsed' }, lapsedNote(me)) : null,
     el('p', {}, 'مسیرهای یادگیری، ویژه‌ی دنت‌کست پریمیوم است.'),
     el('p', { class: 'dcp-muted' }, 'هایلایت‌ها و مطالعه‌ی شما همین حالا هم ثبت می‌شود؛ با پریمیوم، پیشرفتتان در یک مسیرِ منظم دیده می‌شود.'),
     premiumCta('gate-pathways'),
     el('a', { class: 'dcp-btn dcp-btn-ghost', href: '/plus/' }, 'رفتن به پیشخوان'),
-  ]));
+  ].filter(Boolean)));
 }
 
 async function main() {
@@ -33,7 +34,7 @@ async function main() {
     return;
   }
 
-  if (user.tier !== 'premium') { comingSoonGate(root); return; }
+  if (user.tier !== 'premium') { comingSoonGate(root, user); return; }
 
   await renderPathwaysList(root);
 }

@@ -7,6 +7,7 @@ import { getModel, contentInfo, FOLDER_EN } from './content-index.js';
 import { leagueEntryButton } from './league.js';
 import { openCollectionPicker, boardCover } from './collections.js';
 import { LABELS, PALETTE, PREMIUM_FEATURES } from './config.js';
+import { renewalBanner } from './renewal-banner.js';
 
 const labelFa = (k) => (LABELS.find((l) => l.key === k) || {}).fa || '';
 const colorCss = (k) => (PALETTE.find((p) => p.key === k) || {}).css || 'transparent';
@@ -347,6 +348,12 @@ export async function renderDashboard(root, { me: preMe } = {}) {
   const children = [];
   // Unmissable, above even the hello line — see premiumGrantBanner().
   if (me.pending_premium_grant) children.push(premiumGrantBanner(me.pending_premium_grant));
+  // Above the greeting for the same reason the prize banner is: a subscription
+  // ending in two days changes what this whole page means, and it must not be
+  // something you scroll past. Returns null for everyone it does not concern —
+  // which is almost everyone, almost always.
+  const renew = renewalBanner(me, 'dashboard');
+  if (renew) children.push(renew);
   children.push(el('div', { class: 'dcp-dash-hello' }, 'سلام، ' + (me.display_name || '')));
 
   const isPremium = me.tier === 'premium';

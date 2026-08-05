@@ -2,19 +2,20 @@
 // see the same "coming soon" explainer the free-version pivot introduced;
 // signed-in premium users get the real due-card queue (review.js).
 import { el } from './util.js';
-import { premiumCta } from './premium-cta.js';
+import { premiumCta, lapsedNote } from './premium-cta.js';
 import { currentUser } from './api.js';
 import { openLoginModal } from './login-modal.js';
 import { renderReview } from './review.js';
 import { registerSW } from './pwa.js';
 
-function comingSoonGate(root) {
+function comingSoonGate(root, me) {
   root.replaceChildren(el('div', { class: 'dcp-gate' }, [
+    lapsedNote(me) ? el('p', { class: 'dcp-gate-lapsed' }, lapsedNote(me)) : null,
     el('p', {}, 'مرور فلش‌کارت‌های زمان‌بندی‌شده، ویژه‌ی دنت‌کست پریمیوم است.'),
     el('p', { class: 'dcp-muted' }, 'هایلایت‌های شما حفظ می‌شوند و در همان مقاله و در «هایلایت‌های اخیر» پیشخوان دیده می‌شوند.'),
     premiumCta('gate-cards'),
     el('a', { class: 'dcp-btn dcp-btn-ghost', href: '/plus/' }, 'رفتن به پیشخوان'),
-  ]));
+  ].filter(Boolean)));
 }
 
 async function main() {
@@ -33,7 +34,7 @@ async function main() {
     return;
   }
 
-  if (user.tier !== 'premium') { comingSoonGate(root); return; }
+  if (user.tier !== 'premium') { comingSoonGate(root, user); return; }
 
   const topic = new URLSearchParams(location.search).get('topic') || undefined;
   await renderReview(root, { topic });

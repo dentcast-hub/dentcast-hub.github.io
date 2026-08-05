@@ -746,3 +746,37 @@ a.dcp-progress-row:hover { text-decoration: none; }
   color: var(--txt3, #62779a);
   border-color: var(--border, rgba(2,35,96,.11));
 }
+
+/* ---------------------------------------------------------------------------
+   Renewal banner + the lapsed-reader line on a premium gate.
+
+   Three tones, and the quiet one is the important design decision: a warning
+   seven days out is information, not an emergency, and dressing it in red
+   teaches people to ignore the one that arrives on the last day.
+--------------------------------------------------------------------------- */
+.dcp-renew {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 8px;
+  padding: 14px 16px; border-radius: 16px; margin-bottom: 14px;
+  border: 1px solid var(--border, rgba(2,35,96,.12)); background: var(--surface2, #f4f6fb);
+}
+.dcp-renew-title { margin: 0; font-size: 1rem; font-weight: 800; }
+.dcp-renew-body { margin: 0; font-size: .88rem; color: var(--txt2, #4a5f85); }
+.dcp-renew .dcp-btn { margin-top: 2px; }
+
+.dcp-renew-soon { background: var(--surface2, #f4f6fb); }
+.dcp-renew-urgent { background: rgba(154,98,6,.10); border-color: rgba(154,98,6,.28); }
+.dcp-renew-urgent .dcp-renew-title { color: #9a6206; }
+/* Lapsed is deliberately NOT alarming: the message is that everything is safe. */
+.dcp-renew-lapsed { background: rgba(var(--ac-rgb, 11,95,255), .06); border-color: rgba(var(--ac-rgb, 11,95,255), .22); }
+
+.dcp-gate-lapsed {
+  margin: 0 0 2px; padding: 10px 13px; border-radius: 12px; max-width: 46ch;
+  background: rgba(var(--ac-rgb, 11,95,255), .06);
+  border: 1px solid rgba(var(--ac-rgb, 11,95,255), .22);
+  font-size: .88rem; color: var(--txt, #0a1a33);
+}
+
+@media (prefers-color-scheme: dark) {
+  .dcp-renew-urgent { background: rgba(232,180,95,.11); border-color: rgba(232,180,95,.28); }
+  .dcp-renew-urgent .dcp-renew-title { color: #e8b45f; }
+}

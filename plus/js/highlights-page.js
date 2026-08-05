@@ -2,14 +2,15 @@
 // collections.html / cards.html / pathways.html: anonymous -> login, free ->
 // premium upsell, premium -> the real view.
 import { el } from './util.js';
-import { premiumCta } from './premium-cta.js';
+import { premiumCta, lapsedNote } from './premium-cta.js';
 import { currentUser } from './api.js';
 import { openLoginModal } from './login-modal.js';
 import { renderHighlightLibrary } from './highlights.js';
 import { registerSW } from './pwa.js';
 
-function upsellGate(root) {
+function upsellGate(root, me) {
   root.replaceChildren(el('div', { class: 'dcp-gate' }, [
+    lapsedNote(me) ? el('p', { class: 'dcp-gate-lapsed' }, lapsedNote(me)) : null,
     el('p', {}, 'دفترچه‌ی هایلایت‌ها ویژه‌ی دنت‌کست پریمیوم است.'),
     // A free user's highlights are NOT locked away — they are on the dashboard
     // and inside each article's workbench. What premium adds is seeing all of
@@ -17,7 +18,7 @@ function upsellGate(root) {
     el('p', { class: 'dcp-muted' }, 'هایلایت‌های شما همین حالا هم ثبت می‌شود و در پیشخوان و داخلِ خودِ مقاله در دسترس است؛ با پریمیوم همه‌شان را یکجا، با یادداشت‌هایتان، می‌بینید و می‌توانید در بینشان جستجو کنید.'),
     premiumCta('gate-highlights'),
     el('a', { class: 'dcp-btn dcp-btn-ghost', href: '/plus/' }, 'رفتن به پیشخوان'),
-  ]));
+  ].filter(Boolean)));
 }
 
 async function main() {
@@ -36,7 +37,7 @@ async function main() {
     return;
   }
 
-  if (user.tier !== 'premium') { upsellGate(root); return; }
+  if (user.tier !== 'premium') { upsellGate(root, user); return; }
 
   await renderHighlightLibrary(root);
 }
