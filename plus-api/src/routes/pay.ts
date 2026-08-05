@@ -30,6 +30,10 @@ export async function payRoutes(app: FastifyInstance): Promise<void> {
   app.get('/pay/plans', async (_request, reply) => {
     const capacity = await getCapacity();
     return reply.send({
+      // Whether a purchase can actually be completed today. The prices below are
+      // real and worth showing either way — someone deciding whether DentCast is
+      // worth paying for is served by the number even on a day we cannot take it.
+      enabled: config.payments.enabled,
       monthly_rial: config.payments.monthlyRial,
       plans: capacity.plans,
       any_plan_available: capacity.any_plan_available,
@@ -53,6 +57,16 @@ export async function payRoutes(app: FastifyInstance): Promise<void> {
   }, async (request, reply) => {
     const { months } = request.body as { months: number };
     const user = request.user!;
+
+    // Checked here as well as on the pricing page: the page is static and
+    // cacheable, so a browser holding yesterday's copy would otherwise post
+    // straight past a switch that is off.
+    if (!config.payments.enabled) {
+      return reply.code(503).send({
+        error: 'payments_disabled',
+        message: 'درگاه پرداخت هنوز فعال نیست.',
+      });
+    }
 
     const result = await startPayment({
       userId: user.id,

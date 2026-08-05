@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <!-- Open the API connection while the HTML is still parsing: /me gates the
+       ad card, and on a first visit the TLS handshake was in front of it. -->
+  <link rel="preconnect" href="https://api.dentcast.ir" crossorigin>
+  <link rel="preconnect" href="https://api.dentcast.org" crossorigin>
+  <!-- Google Analytics (deferred: loads only after the page is fully rendered) -->
+  <script>
+    window.addEventListener('load', function () {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-GMM0WC8X3M');
+      var ga = document.createElement('script');
+      ga.async = true;
+      ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-GMM0WC8X3M';
+      document.head.appendChild(ga);
+    });
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Deliberately NOT noindex, unlike every other /plus/ page. Those are a
+       signed-in workbench and have nothing to offer a search result; this one
+       answers "how much does DentCast cost", which is a question people type
+       into Google before they will ever create an account. -->
+  <title>اشتراک پریمیوم | دنت‌کست</title>
+  <meta name="description" content="اشتراک پریمیوم دنت‌کست: میز کار، مرور فاصله‌دار، کالکشن‌ها، مسیرهای یادگیری و دستیار هوشمند — بدون تبلیغ.">
+  <link rel="manifest" href="/plus/manifest.webmanifest">
+  <meta name="theme-color" content="#f0f2f5">
+  <link rel="stylesheet" href="/dc-theme.css">
+  <link rel="stylesheet" href="/plus/plus.css?v=1">
+  <link rel="stylesheet" href="/plus/plus-pages.css?v=1">
+  <link rel="stylesheet" href="/plus/plus-desktop.css?v=1">
+  <link rel="alternate" hreflang="fa-IR" href="https://dentcast.ir/plus/pricing.html">
+  <link rel="alternate" hreflang="fa" href="https://dentcast.org/plus/pricing.html">
+  <link rel="alternate" hreflang="x-default" href="https://dentcast.org/plus/pricing.html">
+</head>
+<body class="dcp-page">
+  <header class="dcp-page-header">
+    <a class="dcp-page-brand" href="/plus/">دنت‌کست پریمیوم</a>
+    <a class="dcp-page-back" href="/">بازگشت به سایت</a>
+  </header>
+  <main class="dcp-page-main">
+    <div id="dcp-root"></div>
+  </main>
+  <script type="module" src="/plus/js/pricing-page.js?v=1"></script>
+</body>
+</html>

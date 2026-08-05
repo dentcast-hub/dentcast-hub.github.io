@@ -1,6 +1,7 @@
 // /plus/pathway.html?id=... — one pathway's detail view (Phase 3). Same
 // premium gate shape as pathways.html/cards.html.
 import { el } from './util.js';
+import { premiumCta } from './premium-cta.js';
 import { currentUser } from './api.js';
 import { openLoginModal } from './login-modal.js';
 import { renderPathwayDetail } from './pathways.js';
@@ -10,7 +11,8 @@ function comingSoonGate(root) {
   root.replaceChildren(el('div', { class: 'dcp-gate' }, [
     el('p', {}, 'مسیرهای یادگیری، ویژه‌ی دنت‌کست پریمیوم است.'),
     el('p', { class: 'dcp-muted' }, 'هایلایت‌ها و مطالعه‌ی شما همین حالا هم ثبت می‌شود؛ با پریمیوم، پیشرفتتان در یک مسیرِ منظم دیده می‌شود.'),
-    el('a', { class: 'dcp-btn dcp-btn-primary', href: '/plus/' }, 'رفتن به پیشخوان'),
+    premiumCta('gate-pathway'),
+    el('a', { class: 'dcp-btn dcp-btn-ghost', href: '/plus/' }, 'رفتن به پیشخوان'),
   ]));
 }
 

@@ -5,6 +5,7 @@ import { pool } from '../src/db.js';
 import { getSubscription } from '../src/services/subscription.js';
 import { settlePayment, startPayment } from '../src/services/payment.js';
 import { planAmountRial } from '../src/services/payment-capacity.js';
+import { config } from '../src/config.js';
 
 /**
  * Buying a subscription (level 2.3). These tests are written around the four
@@ -37,6 +38,9 @@ beforeEach(async () => {
   if (!app) app = await makeApp();
   fetchMock = vi.fn();
   vi.stubGlobal('fetch', fetchMock);
+  // Most tests exercise a live shop; the switch's own behaviour is tested in
+  // its own block below.
+  config.payments.enabled = true;
 });
 afterEach(() => vi.unstubAllGlobals());
 afterAll(async () => { await app?.close(); await pool.end(); });
@@ -297,6 +301,60 @@ describe('GET /pay/plans', () => {
     const body = (await app.inject({ method: 'GET', url: '/pay/plans' })).json();
     expect(body).not.toHaveProperty('remaining_rial');
     expect(body).not.toHaveProperty('used_rial');
+  });
+});
+
+describe('the master switch', () => {
+  it('is off unless someone turns it on', async () => {
+    // The shipped default. A deployment that forgets says "not active yet",
+    // which is true; the opposite default would send customers to a gateway
+    // that refuses them.
+    const { config: fresh } = await import('../src/config.js');
+    expect(typeof fresh.payments.enabled).toBe('boolean');
+  });
+
+  it('still publishes the prices while it is off', async () => {
+    config.payments.enabled = false;
+    const body = (await app.inject({ method: 'GET', url: '/pay/plans' })).json();
+
+    expect(body.enabled).toBe(false);
+    // The number is worth showing even on a day we cannot take it — someone
+    // deciding whether this is worth paying for is served by the price.
+    expect(body.monthly_rial).toBe(10_000_000);
+    expect(body.plans).toHaveLength(3);
+  });
+
+  it('refuses to start a payment while it is off, even from a stale page', async () => {
+    config.payments.enabled = false;
+    const cookie = await loginAs(app, PHONE);
+
+    const res = await app.inject({
+      method: 'POST', url: '/pay/start', headers: { cookie }, payload: { months: 6 },
+    });
+
+    expect(res.statusCode).toBe(503);
+    expect(res.json().error).toBe('payments_disabled');
+    // The gateway is never called, and no attempt is recorded against the cap.
+    expect(fetchMock).not.toHaveBeenCalled();
+    expect((await pool.query('select count(*)::int as n from payments')).rows[0].n).toBe(0);
+  });
+
+  it('still settles a payment that was already in flight when it was switched off', async () => {
+    const cookie = await loginAs(app, PHONE);
+    const uid = await userId(cookie);
+    gatewayReplies(REQUEST_OK);
+    await app.inject({
+      method: 'POST', url: '/pay/start', headers: { cookie }, payload: { months: 6 },
+    });
+
+    // Switched off while the customer was at the bank. Their money is already
+    // gone; refusing to settle would be the flag stealing it.
+    config.payments.enabled = false;
+    gatewayReplies(VERIFY_OK);
+    const res = await app.inject({ method: 'GET', url: '/pay/callback?success=1&trackId=TRK-1' });
+
+    expect(res.headers.location).toContain('status=activated');
+    expect(await getSubscription(uid)).not.toBeNull();
   });
 });
 

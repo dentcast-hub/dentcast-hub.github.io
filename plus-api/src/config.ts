@@ -211,6 +211,19 @@ export const config = {
   // One unit end to end, converted only at the moment of display — a system that
   // carries both is a system that eventually charges ten times too much.
   payments: {
+    // The master switch, OFF by default.
+    //
+    // The pricing page ships and is fully public before the gateway can take a
+    // single rial: Zibal's merchant registration whitelists one outbound IP and
+    // this container's egress address is not stable, so the buy button has to
+    // stay dark until that is settled. A flag rather than an unfinished page —
+    // the whole flow is built, tested and deployed, and goes live with one
+    // environment variable instead of a release.
+    //
+    // Default false so it is turned on deliberately. A deployment that forgets
+    // this shows "not active yet", which is true; the opposite default would
+    // send customers to a gateway that refuses them.
+    enabled: bool('PAYMENT_ENABLED', false),
     // A month of premium: 1,000,000 toman.
     monthlyRial: int('PAYMENT_MONTHLY_RIAL', 10_000_000),
     // Plans offered on the pricing page, in months. 12 is deliberately absent

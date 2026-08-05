@@ -832,3 +832,11 @@ html.dcp-touring #mobile-body { overflow: hidden; }
 @media (prefers-reduced-motion: reduce) {
   .dcp-tour-dim, .dcp-tour-ring, .dcp-tour-card { transition: none; }
 }
+
+/* The compass explainer ends with a way to act on it, not just a description. */
+.dc-plus-caplink {
+  display: inline-block; margin-top: 8px; font-weight: 700; font-size: .86rem;
+  color: var(--ac, #0b5fff); text-decoration: none;
+  border-bottom: 1px solid rgba(var(--ac-rgb, 11,95,255), .35);
+}
+.dc-plus-caplink:hover { border-bottom-color: currentColor; }

@@ -14,6 +14,7 @@ import { renderProfile } from './profile.js';
 import { maybeShowWelcome } from './welcome.js';
 import { startTour, maybeOfferTour, tourMenuAvailable, initTourAutostart } from './tour.js';
 import { maybeShowNotifPrompt } from './notif-prompt.js';
+import { subscriptionMenuLabel, pricingHref } from './premium-cta.js';
 
 // Inlined so it can never 404. Built via innerHTML on an HTML button (not
 // createElement('svg')) so the parser creates properly namespaced SVG nodes;
@@ -86,6 +87,17 @@ function buildUserPerson(user) {
         onclick: () => { closeMenu(); openOverlay('dashboard', 'پیشخوان', (root) => renderDashboard(root, { me: user })); } }, 'پیشخوان'),
       el('button', { class: 'dcp-person-item', type: 'button', role: 'menuitem',
         onclick: () => { closeMenu(); openOverlay('profile', 'پروفایل', (root) => renderProfile(root, { me: user })); } }, 'پروفایل'),
+      // Buying a subscription, reachable from the account menu itself and not
+      // only from inside the profile — the shortest path from "I want this" to
+      // the price. A LINK, not a button, so it opens in a new tab like any
+      // other destination. subscriptionMenuLabel returns null for a lifetime
+      // account and the null child is dropped: a founder is offered nothing
+      // rather than an item that would mean nothing to them.
+      subscriptionMenuLabel(user)
+        ? el('a', { class: 'dcp-person-item', role: 'menuitem',
+          href: pricingHref('header-menu'), onclick: () => closeMenu() },
+        subscriptionMenuLabel(user))
+        : null,
       // Re-run the guided tour on demand (mobile shell only for now). On a
       // non-home page startTour hands off to the homepage via /?tour=1.
       tourMenuAvailable() ? el('button', { class: 'dcp-person-item', type: 'button', role: 'menuitem',

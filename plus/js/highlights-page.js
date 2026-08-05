@@ -2,6 +2,7 @@
 // collections.html / cards.html / pathways.html: anonymous -> login, free ->
 // premium upsell, premium -> the real view.
 import { el } from './util.js';
+import { premiumCta } from './premium-cta.js';
 import { currentUser } from './api.js';
 import { openLoginModal } from './login-modal.js';
 import { renderHighlightLibrary } from './highlights.js';
@@ -14,7 +15,8 @@ function upsellGate(root) {
     // and inside each article's workbench. What premium adds is seeing all of
     // them together. Saying that plainly is the honest version of the upsell.
     el('p', { class: 'dcp-muted' }, 'هایلایت‌های شما همین حالا هم ثبت می‌شود و در پیشخوان و داخلِ خودِ مقاله در دسترس است؛ با پریمیوم همه‌شان را یکجا، با یادداشت‌هایتان، می‌بینید و می‌توانید در بینشان جستجو کنید.'),
-    el('a', { class: 'dcp-btn dcp-btn-primary', href: '/plus/' }, 'رفتن به پیشخوان'),
+    premiumCta('gate-highlights'),
+    el('a', { class: 'dcp-btn dcp-btn-ghost', href: '/plus/' }, 'رفتن به پیشخوان'),
   ]));
 }
 

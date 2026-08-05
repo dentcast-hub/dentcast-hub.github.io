@@ -606,3 +606,143 @@ a.dcp-progress-row:hover { text-decoration: none; }
 /* Page heading + its sibling-surface link on one line (the دفترچه ↔ کالکشن‌ها
    pair; neither is in the site nav, so each is the other's way in). */
 .dcp-hlib-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+
+/* ---------------------------------------------------------------------------
+   Pricing (/plus/pricing.html)
+
+   A plan is a <button>, not a card with a link inside: choosing a term is a
+   selection, not a navigation, and only the final button leaves the page. That
+   also gets keyboard behaviour and :disabled for free, which is what the
+   month's capacity ceiling needs — a plan that no longer fits must be visibly
+   and actually unpressable, not merely faded.
+--------------------------------------------------------------------------- */
+.dcp-pricing { display: flex; flex-direction: column; gap: 14px; }
+.dcp-price-title { font-size: 1.5rem; font-weight: 800; margin: 0; letter-spacing: -.01em; }
+.dcp-price-sub { margin: 0; color: var(--txt2, #4a5f85); }
+.dcp-price-h2 { font-size: 1.05rem; font-weight: 800; margin: 18px 0 0; }
+
+.dcp-plans { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
+
+.dcp-plan {
+  position: relative; font: inherit; text-align: start; cursor: pointer;
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  padding: 14px 15px; border-radius: 14px;
+  border: 1px solid var(--border, rgba(2,35,96,.11));
+  background: var(--surface, #fff); color: var(--txt);
+  transition: border-color .17s ease, box-shadow .17s ease, transform .17s ease;
+}
+.dcp-plan:hover:not([disabled]) { border-color: rgba(var(--ac-rgb, 11,95,255), .45); }
+.dcp-plan:focus-visible { outline: 2px solid var(--ac, #0b5fff); outline-offset: 2px; }
+
+.dcp-plan-term { font-weight: 700; font-size: 1rem; display: flex; flex-direction: column; gap: 1px; }
+.dcp-plan-why { font-weight: 400; font-size: .8rem; color: var(--txt3, #62779a); }
+.dcp-plan-blocked { font-weight: 600; font-size: .76rem; color: #9a6206; }
+.dcp-plan-price { font-weight: 800; font-size: 1.02rem; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.dcp-plan-unit { font-size: .78rem; font-weight: 600; color: var(--txt3, #62779a); margin-inline-start: 4px; }
+
+.dcp-plan.is-selected {
+  border-color: rgba(var(--ac-rgb, 11,95,255), .6);
+  box-shadow: 0 0 0 1px rgba(var(--ac-rgb, 11,95,255), .3);
+}
+.dcp-plan.is-featured {
+  background:
+    linear-gradient(180deg, rgba(var(--ac-rgb, 11,95,255), .055), transparent 70%),
+    var(--surface, #fff);
+}
+.dcp-plan.is-featured.is-selected { box-shadow: 0 0 0 1px rgba(var(--ac-rgb, 11,95,255), .3), 0 10px 26px rgba(var(--ac-rgb, 11,95,255), .16); }
+.dcp-plan-tag {
+  position: absolute; top: -9px; inset-inline-start: 14px;
+  background: var(--ac, #0b5fff); color: #fff; font-size: .68rem; font-weight: 700;
+  padding: 2px 9px; border-radius: 999px;
+}
+.dcp-plan.is-blocked, .dcp-plan[disabled] {
+  opacity: .55; cursor: not-allowed;
+  background: var(--surface2, #f4f6fb);
+}
+.dcp-plan.is-blocked .dcp-plan-price { text-decoration: line-through; text-decoration-thickness: 1px; }
+
+.dcp-price-action { display: flex; flex-direction: column; gap: 8px; align-items: stretch; margin-top: 4px; }
+.dcp-price-action .dcp-btn { width: 100%; padding: 13px 16px; }
+.dcp-price-fine { margin: 0; text-align: center; font-size: .8rem; color: var(--txt3, #62779a); }
+.dcp-price-msg:empty { display: none; }
+.dcp-price-msg { margin: 0; text-align: center; font-size: .86rem; color: #b3261e; }
+
+.dcp-price-notice { border-radius: 14px; padding: 12px 13px; font-size: .88rem; border: 1px solid; }
+.dcp-price-notice b { display: block; font-size: .93rem; margin-bottom: 2px; }
+.dcp-price-notice p { margin: 4px 0 0; }
+.dcp-price-notice.is-warn { background: rgba(154,98,6,.10); border-color: rgba(154,98,6,.26); }
+.dcp-price-notice.is-warn b { color: #9a6206; }
+.dcp-price-notice.is-ok { background: rgba(15,122,77,.10); border-color: rgba(15,122,77,.26); }
+.dcp-price-notice.is-ok b { color: #0f7a4d; }
+.dcp-price-notice.is-off { background: rgba(107,124,150,.10); border-color: var(--border, rgba(2,35,96,.11)); }
+.dcp-price-notice.is-off b { color: var(--txt2, #4a5f85); }
+
+.dcp-price-list { list-style: none; margin: 6px 0 0; padding: 0; display: flex; flex-direction: column; gap: 9px; }
+.dcp-price-list li { display: flex; flex-direction: column; gap: 1px; }
+.dcp-price-list strong { font-size: .96rem; }
+.dcp-price-list span { font-size: .86rem; color: var(--txt2, #4a5f85); }
+
+@media (prefers-color-scheme: dark) {
+  .dcp-plan-blocked, .dcp-price-notice.is-warn b { color: #e8b45f; }
+  .dcp-price-notice.is-warn { background: rgba(232,180,95,.11); border-color: rgba(232,180,95,.28); }
+  .dcp-price-notice.is-ok { background: rgba(95,211,155,.11); border-color: rgba(95,211,155,.28); }
+  .dcp-price-notice.is-ok b { color: #5fd39b; }
+  .dcp-price-msg { color: #f28079; }
+}
+
+/* ---------------------------------------------------------------------------
+   Payment result (/plus/pay-result.html)
+   Three verdicts share one shape. The "warn" one is not a lesser success —
+   it is the state where we genuinely do not know yet, and it has to read as
+   calm rather than as an error.
+--------------------------------------------------------------------------- */
+.dcp-pay { display: flex; flex-direction: column; gap: 16px; max-width: 460px; margin: 10px auto 0; }
+.dcp-pay-verdict { display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center; }
+.dcp-pay-glyph {
+  width: 58px; height: 58px; border-radius: 50%; display: grid; place-items: center;
+  font-size: 1.7rem; font-weight: 700; border: 1.5px solid;
+}
+.is-ok   .dcp-pay-glyph { background: rgba(15,122,77,.10);  border-color: rgba(15,122,77,.26);  color: #0f7a4d; }
+.is-warn .dcp-pay-glyph { background: rgba(154,98,6,.10);   border-color: rgba(154,98,6,.26);   color: #9a6206; }
+.is-stop .dcp-pay-glyph { background: rgba(179,38,30,.09);  border-color: rgba(179,38,30,.24);  color: #b3261e; }
+.dcp-pay-title { font-size: 1.2rem; font-weight: 800; margin: 0; }
+.dcp-pay-sub { margin: 0; color: var(--txt2, #4a5f85); max-width: 34ch; }
+
+.dcp-pay-receipt {
+  border: 1px dashed var(--border, rgba(2,35,96,.14)); border-radius: 14px;
+  background: var(--surface2, #f4f6fb); padding: 12px 14px; font-size: .88rem;
+}
+.dcp-pay-receipt dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 6px 12px; }
+.dcp-pay-receipt dt { color: var(--txt3, #62779a); }
+.dcp-pay-receipt dd { margin: 0; text-align: end; font-weight: 600; font-variant-numeric: tabular-nums; word-break: break-all; }
+
+.dcp-pay-note {
+  border: 1px solid rgba(154,98,6,.26); background: rgba(154,98,6,.10);
+  border-radius: 14px; padding: 11px 13px; font-size: .87rem;
+}
+.dcp-pay-note p { margin: 0; }
+.dcp-pay-actions { display: flex; flex-direction: column; gap: 8px; }
+.dcp-pay-actions .dcp-btn { width: 100%; text-align: center; padding: 13px 16px; }
+.dcp-pay-fine { margin: 0; text-align: center; font-size: .79rem; color: var(--txt3, #62779a); }
+
+@media (prefers-color-scheme: dark) {
+  .is-ok   .dcp-pay-glyph { background: rgba(95,211,155,.11); border-color: rgba(95,211,155,.28); color: #5fd39b; }
+  .is-warn .dcp-pay-glyph { background: rgba(232,180,95,.11); border-color: rgba(232,180,95,.28); color: #e8b45f; }
+  .is-stop .dcp-pay-glyph { background: rgba(242,128,121,.11); border-color: rgba(242,128,121,.26); color: #f28079; }
+  .dcp-pay-note { border-color: rgba(232,180,95,.28); background: rgba(232,180,95,.11); }
+}
+
+/* Profile: the subscription line + its CTA, under the plan chips. */
+.dcp-plan-block { display: flex; flex-direction: column; gap: 8px; }
+.dcp-plan-until { margin: 0; font-size: .88rem; color: var(--txt2, #4a5f85); }
+.dcp-plan-block > .dcp-btn { align-self: flex-start; }
+
+/* A disabled action must LOOK refused. Without this, .dcp-btn-primary keeps its
+   full brand blue and its shadow while being unclickable — the one styling bug
+   that actively invites the click it is going to reject. */
+.dcp-btn[disabled], .dcp-btn:disabled {
+  cursor: not-allowed; box-shadow: none; transform: none;
+  background: var(--surface2, #f4f6fb);
+  color: var(--txt3, #62779a);
+  border-color: var(--border, rgba(2,35,96,.11));
+}
