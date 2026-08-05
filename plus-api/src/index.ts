@@ -5,6 +5,7 @@ import {
   startArticleScheduler, startStreakReminderScheduler, startReactivationScheduler,
   startLeagueScheduler, startHeldNotificationsScheduler, startReviewReminderScheduler,
   startAssistantLearningScheduler, startSubscriptionScheduler,
+  startSubscriptionReminderScheduler,
 } from './scheduler.js';
 import { startBalePolling } from './services/bale-updates.js';
 import { startContentRefresh } from './content-refresh.js';
@@ -28,6 +29,8 @@ async function main(): Promise<void> {
   // Its own timer, not chained behind the league's: the sweep is the last word
   // on who is premium and must keep running on a night league finalization dies.
   const stopSubscriptions = startSubscriptionScheduler();
+  // Mid-morning, so "three days left" arrives when it can be acted on.
+  const stopSubscriptionReminders = startSubscriptionReminderScheduler();
   // Bale connect worker: long-polls getUpdates and links chat_ids (no-op without
   // a BALE_BOT_TOKEN). Primary path since Bale's webhook delivery is unreliable.
   const stopBalePolling = startBalePolling();
@@ -47,6 +50,7 @@ async function main(): Promise<void> {
     stopReviewReminder();
     stopAssistantLearning();
     stopSubscriptions();
+    stopSubscriptionReminders();
     stopBalePolling();
     stopContentRefresh();
     await app.close();

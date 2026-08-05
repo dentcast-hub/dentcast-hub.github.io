@@ -179,6 +179,23 @@ export const config = {
     hour: int('REVIEW_REMINDER_HOUR', 9),
   },
 
+  // Subscription renewal reminders: one `daysBefore` days out and one on the
+  // last day itself. Sent at reminder hour Tehran — mid-morning, so it lands
+  // when someone can act on it rather than at a boundary nobody is awake for.
+  //
+  // The SMS fallback is for accounts with no messenger and no browser push at
+  // all: the ONLY notification the site pays money to deliver, because it is the
+  // only one with a subscription on the other side of it. Iranian service lines
+  // carry registered templates, not free text, so this needs its own template in
+  // the SMS.ir panel with a single parameter (the expiry date). Left at 0, the
+  // SMS step is skipped entirely and the in-app + messenger paths still work.
+  subscriptionReminder: {
+    hour: int('SUBSCRIPTION_REMINDER_HOUR', 10),
+    daysBefore: int('SUBSCRIPTION_REMINDER_DAYS_BEFORE', 3),
+    smsTemplateId: int('SUBSCRIPTION_REMINDER_SMS_TEMPLATE_ID', 0),
+    smsParamName: str('SUBSCRIPTION_REMINDER_SMS_PARAM', 'DATE'),
+  },
+
   // Reactivation nudge for users with NO live streak: a gentle once-a-day
   // "start your streak" push (both channels). Opt-OUT (respects a disabled streak
   // reminder), and CAPPED at maxNudges since the user's last real activity, so a

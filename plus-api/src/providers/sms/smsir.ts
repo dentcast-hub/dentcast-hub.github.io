@@ -1,4 +1,4 @@
-import type { SmsSender } from './types.js';
+import type { SmsSender, TemplateParam } from './types.js';
 import { config } from '../../config.js';
 
 /**
@@ -31,6 +31,22 @@ export class SmsIrSender implements SmsSender {
   }
 
   async sendOtp(phone: string, code: string): Promise<void> {
+    return this.post(phone, this.templateId, [{ name: this.paramName, value: code }], true);
+  }
+
+  /**
+   * Any other registered template — the subscription reminder uses this. Same
+   * endpoint and envelope as the OTP path; only the template and its parameters
+   * differ, so there is one place that knows how SMS.ir answers.
+   */
+  async sendTemplate(phone: string, templateId: number, params: TemplateParam[]): Promise<void> {
+    return this.post(phone, templateId, params, false);
+  }
+
+  /** `secret` keeps a one-time code out of the error text; nothing else differs. */
+  private async post(
+    phone: string, templateId: number, parameters: TemplateParam[], secret: boolean,
+  ): Promise<void> {
     let res: Response;
     try {
       res = await fetch(this.endpoint, {
@@ -40,15 +56,11 @@ export class SmsIrSender implements SmsSender {
           accept: 'application/json',
           'x-api-key': this.apiKey,
         },
-        body: JSON.stringify({
-          mobile: phone,
-          templateId: this.templateId,
-          parameters: [{ name: this.paramName, value: code }],
-        }),
+        body: JSON.stringify({ mobile: phone, templateId, parameters }),
       });
     } catch (err) {
-      // Never leak the OTP into logs; surface only the transport failure.
-      throw new Error(`SMS.ir request failed: ${(err as Error).message}`);
+      // Never leak a one-time code into logs; surface only the transport failure.
+      throw new Error(`SMS.ir request failed${secret ? '' : ` (template ${templateId})`}: ${(err as Error).message}`);
     }
 
     // SMS.ir replies HTTP 200 with a JSON envelope; status === 1 means sent.

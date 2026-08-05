@@ -16,7 +16,15 @@ export type NotificationKind =
   /** Leitner cards are due (premium — the review schedule itself is premium). */
   | 'review'
   /** Won a week of premium as the weekly league's top-tier prize. */
-  | 'premium_prize';
+  | 'premium_prize'
+  /**
+   * A paid subscription is about to end, or ends today. UNCAPPED in
+   * notify-policy.ts: this is the only notification the site sends with money
+   * on the other side of it, and dropping it because the user already got a
+   * streak nudge that morning costs a renewal — the daily cap exists to stop us
+   * pestering people, not to ration the one message they actually need.
+   */
+  | 'subscription_expiry';
 
 /**
  * A message may be a plain string (messenger text) or a structured payload.

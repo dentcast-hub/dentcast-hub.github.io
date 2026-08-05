@@ -10,6 +10,7 @@ import { runReviewReminders } from './services/review-notify.js';
 import { attributeStrongSignals } from './services/assistant-learning.js';
 import { sweepExpiredSubscriptions } from './services/subscription.js';
 import { checkCapacityAlert } from './services/payment-cap-alert.js';
+import { runSubscriptionReminders } from './services/subscription-reminder.js';
 
 /**
  * Daily free-digest scheduler. Fires runFreeDigest() at freeDigestHour:00 in the
@@ -310,6 +311,46 @@ export function startSubscriptionScheduler(): () => void {
         .catch((err) => {
           // eslint-disable-next-line no-console
           console.error('[subscriptions] sweep failed', err);
+        })
+        .finally(schedule);
+    }, delay);
+    if (typeof timer.unref === 'function') timer.unref();
+  };
+
+  schedule();
+  return () => clearTimeout(timer);
+}
+
+/**
+ * The renewal reminders, at subscriptionReminder.hour Tehran (10:00 by default).
+ *
+ * Its own timer rather than a passenger on the midnight sweep, because the hour
+ * is the point: the sweep runs when nobody is awake, and a message telling
+ * somebody they have three days to renew is worth nothing if it arrives at
+ * 00:00 and is buried by morning. Mid-morning is when it can actually be acted
+ * on, and it is far from the 20:00/21:00 cluster the streak and digest already
+ * occupy.
+ *
+ * Daily and idempotent, so a missed run self-heals: a container that was down
+ * at 10:00 sends the same warnings at 10:00 tomorrow, and the ones already sent
+ * stay sent.
+ */
+export function startSubscriptionReminderScheduler(): () => void {
+  let timer: NodeJS.Timeout;
+
+  const schedule = () => {
+    const delay = msUntilNextRun(new Date(), config.subscriptionReminder.hour, config.streakTimezone);
+    timer = setTimeout(() => {
+      void runSubscriptionReminders(new Date())
+        .then((r) => {
+          if (r.soon > 0 || r.today > 0) {
+            // eslint-disable-next-line no-console
+            console.log(`[subscription-reminder] ${r.soon} ending soon, ${r.today} ending today`);
+          }
+        })
+        .catch((err) => {
+          // eslint-disable-next-line no-console
+          console.error('[subscription-reminder] run failed', err);
         })
         .finally(schedule);
     }, delay);
