@@ -746,3 +746,9 @@ a.dcp-progress-row:hover { text-decoration: none; }
   color: var(--txt3, #62779a);
   border-color: var(--border, rgba(2,35,96,.11));
 }
+/* The boundary line under the feature list: what premium does NOT take away. */
+.dcp-price-note {
+  margin: 14px 0 0; padding: 11px 13px; border-radius: 12px;
+  background: var(--surface2, #f4f6fb); border: 1px solid var(--border2, rgba(2,35,96,.06));
+  font-size: .85rem; color: var(--txt2, #4a5f85);
+}
