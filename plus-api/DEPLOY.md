@@ -147,6 +147,64 @@ variables** on the container:
 > You still rebuild the image for **code** changes and migrations, and one last
 > time to pick this mechanism up.
 
+### 4b. Payments (Zibal) — the switch that turns the buy button on
+
+The pricing page is public and complete before a single rial can be taken, and
+the site reads its state from the API rather than from its own code: the
+«هنوز فعال نیست» line on `/plus/pricing.html` is `enabled` from
+`GET /pay/plans`, which is `PAYMENT_ENABLED`. **So there is nothing to edit on
+the frontend to go live** — set the variable, redeploy the API, and the button
+appears by itself. (Editing the page instead would show a button that then gets
+a 503 from `POST /pay/start`, which checks the same flag.)
+
+| Var | Production value |
+|---|---|
+| `PAYMENT_ENABLED` | `false` until the gateway is proven; `true` opens the buy button |
+| `ZIBAL_MERCHANT` | the **real** merchant key from Zibal |
+| `ZIBAL_CALLBACK_URL` | `https://api.dentcast.ir/pay/callback` — must match what is registered with Zibal |
+| `ZIBAL_API_BASE_URL` | `https://pay.dentcast.ir` — our fixed-IP reverse proxy, so `/v1/request` and `/v1/verify` leave from the address Zibal whitelisted |
+| `ZIBAL_PROXY_TOKEN` | the shared secret that proxy demands as `X-Proxy-Token`; **set it with the line above or the proxy answers 403** |
+| `ZIBAL_EGRESS_PROXY_URL` | leave empty — that is the forward-proxy (CONNECT) route, and ours is the reverse proxy above |
+| `PAYMENT_MONTHLY_RIAL` | `10000000` (۱ میلیون تومان a month) |
+| `PAYMENT_PLAN_MONTHS` | `1,3,6` |
+| `PAYMENT_CAP_RIAL` / `PAYMENT_CAP_COUNT` | `1000000000` / `100` — the e-namad کسب‌وکار خرد ceiling |
+| `PAYMENT_CAP_ALERT_PHONE` | founder's number, warned as the monthly ceiling fills |
+| `PAYMENT_RESULT_URL` | leave unset unless the result page moves |
+| `GIFTCARD_RECIPIENT_EMAIL` | inbox the US Apple gift card is emailed to |
+| `GIFTCARD_ALERT_PHONE` | founder's number, told when a claim opens |
+| `SUBSCRIPTION_REMINDER_SMS_TEMPLATE_ID` | sms.ir template for the renewal reminder (SMS is the fallback when a user has no messenger) |
+
+**`ZIBAL_MERCHANT` defaults to `zibal`, which is Zibal's own SANDBOX merchant.**
+It runs the whole request → start → callback → verify round trip and moves no
+money — deliberately, so an unconfigured deployment is in test mode rather than
+half-broken. Turning `PAYMENT_ENABLED` on without replacing it gives you a
+gateway that looks completely normal, activates subscriptions, and takes
+nothing. Set both or neither.
+
+Going live, in order:
+
+```bash
+# 1. Is the API answering, and what does it say about payments?
+curl -s https://api.dentcast.ir/pay/plans | jq '{enabled, monthly_rial, any_plan_available}'
+#    enabled:false  -> PAYMENT_ENABLED is not set on the container yet
+
+# 2. Set PAYMENT_ENABLED=true + the real ZIBAL_MERCHANT, redeploy, then re-read:
+curl -s https://api.dentcast.ir/pay/plans | jq '{enabled, plans}'
+
+# 3. Buy one month with your own card. That is the only thing that proves the
+#    IP whitelist, the merchant key and the callback URL at once — a flag says
+#    nothing about whether Zibal will answer us.
+curl -s -u founder:PASSWORD https://api.dentcast.ir/admin/payments/capacity
+```
+
+A real purchase is the acceptance test on purpose. `PAYMENT_ENABLED` only says
+we are willing to sell; whether Zibal accepts *this* container is decided by the
+outbound IP its merchant registration whitelists, and the first person to find
+out must not be a customer. Only the two server-to-server calls go through
+`pay.dentcast.ir`; the `/start/<trackId>` page is opened by the customer's own
+browser and stays on `gateway.zibal.ir`, because the whitelist has nothing to do
+with their connection — and the proxy would 403 them anyway.
+
 ---
 
 ## 5. The `api.*` subdomain (DNS + TLS)
