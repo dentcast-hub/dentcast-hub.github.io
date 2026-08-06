@@ -3,6 +3,18 @@ name: Deploy DentCast to Arvan Object Storage
 on:
   push:
     branches: ["main"]   # اگر master است، بنویس master
+  # اجرای دستی از تبِ Actions.
+  #
+  # چرا لازم است: این ورک‌فلو تنها چیزی‌ست که dentcast.ir را می‌سازد (‏.org را
+  # خودِ GitHub Pages سرو می‌کند). ولی وقتی یک PR از راهِ API مرج می‌شود — نه با
+  # دکمهٔ وب یا با git push — گیت‌هاب رویدادِ push صادر نمی‌کند؛ رویداد dynamic
+  # می‌شود و فقط Pages راه می‌افتد. نتیجه‌اش این است که .org به‌روز می‌شود و .ir
+  # بی‌صدا عقب می‌ماند، بدون هیچ ران قرمزی که خبر بدهد (۲۰۲۶-۰۸-۰۶: دو مرجِ
+  # پشتِ سرِ هم این‌طور جا افتادند).
+  #
+  # با این ورودی، همگام‌سازیِ .ir همیشه یک دکمه فاصله دارد: Actions ← این
+  # ورک‌فلو ← Run workflow (روی main).
+  workflow_dispatch:
 
 jobs:
   deploy:
