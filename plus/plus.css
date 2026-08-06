@@ -768,7 +768,16 @@ a.dcp-cl-board {
 .dcp-messenger-provider.is-soon { opacity: .7; }
 .dcp-messenger-name { display: flex; align-items: center; gap: 8px; font-weight: 700; }
 
-.dcp-btn { font: inherit; font-weight: 600; padding: 10px 16px; border-radius: 10px; cursor: pointer; border: 1px solid var(--dcp-line); background: transparent; color: var(--dcp-ink); }
+/* box-sizing is stated, not inherited from the browser: .dcp-btn is worn by
+   both <button> and <a>, and the UA stylesheet gives border-box to form
+   controls only. So `width: 100%` on a .dcp-btn produced two different boxes —
+   an <a> kept the CSS default content-box and rendered 100% PLUS its 32px of
+   padding and 2px of border. On /plus/pricing.html that anchor exists only off
+   .ir («پرداخت ریالی در dentcast.ir», where the rial gateway is not), which is
+   why the same page was 392px wide inside a 358px column on .org and exactly
+   358px on .ir: 18px of horizontal document overflow, and in RTL that shifts
+   the whole page so every box reads as out of register. */
+.dcp-btn { box-sizing: border-box; font: inherit; font-weight: 600; padding: 10px 16px; border-radius: 10px; cursor: pointer; border: 1px solid var(--dcp-line); background: transparent; color: var(--dcp-ink); }
 .dcp-btn-primary { background: var(--dcp-accent); color: #fff; border-color: transparent; }
 .dcp-btn-ghost { background: transparent; }
 
