@@ -7,6 +7,7 @@ import { ensurePushSubscription, removePushSubscription, pushSupported } from '.
 import { telegramLoginEnabled, telegramCallbackUrl, telegramBotUsername } from './config.js';
 import { baleEnabled, baleDeepLink } from './config.js';
 import { leagueEntryButton } from './league.js';
+import { achievementsBody } from './achievements.js';
 import { subscriptionCta } from './premium-cta.js';
 
 const JALALI_DAY = new Intl.DateTimeFormat('fa-IR-u-ca-persian', {
@@ -487,12 +488,18 @@ function phoneBlock(me) {
 
 export async function renderProfile(root, { me: preMe } = {}) {
   root.replaceChildren(el('div', { class: 'dcp-loading' }, 'در حال بارگذاری...'));
-  const [me, stats, league] = await Promise.all([
+  const [me, stats, league, achievements] = await Promise.all([
     preMe ? Promise.resolve(preMe) : api.me().catch(() => null),
     api.profileStats().catch(() => ({ week: [], month_vs_month: null, records: {} })),
     api.league().catch(() => null),
+    // Every other block on this page survives its own request failing; this one
+    // does too. A profile that will not load because the trophy shelf is down
+    // would be a poor trade for a decoration.
+    api.achievements().catch(() => null),
   ]);
   if (!me) { root.replaceChildren(el('div', { class: 'dcp-gate' }, 'برای دیدن پروفایل وارد شوید.')); return; }
+
+  const achBody = achievementsBody(achievements);
 
   const logoutBtn = el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button' }, 'خروج از حساب');
   logoutBtn.addEventListener('click', async () => { await api.logout().catch(() => {}); location.href = '/'; });
@@ -506,6 +513,9 @@ export async function renderProfile(root, { me: preMe } = {}) {
       el('div', {}, [el('b', {}, faNum(stats.records?.current_streak || 0)), el('span', {}, 'استریک فعلی')]),
       el('div', {}, [el('b', {}, faNum(stats.records?.longest_streak || 0)), el('span', {}, 'بلندترین استریک')]),
     ])),
+    // «افتخارات» sits between رکوردها and لیگ من on purpose: records are the raw
+    // numbers it is built from, and the league is where its two medals are won.
+    ...(achBody ? [section('افتخارات', achBody)] : []),
     ...(league ? [section('لیگ من', leagueEntryButton(league))] : []),
     section('مقایسه ماه به ماه', stats.month_vs_month ? monthCompare(stats.month_vs_month) : el('div', { class: 'dcp-muted' }, '—')),
     section(me.phone ? 'شماره موبایل' : 'شماره موبایل (اختیاری)', phoneBlock(me)),

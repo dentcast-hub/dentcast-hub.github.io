@@ -23,15 +23,17 @@ RUN npm run build
 # ---- runtime stage ---------------------------------------------------------
 FROM node:20-alpine AS runtime
 ENV NODE_ENV=production
-# The content index and pathway definitions are baked in (see COPY below).
+# The content index, pathway definitions and badge catalog are baked in (see COPY below).
 ENV CONTENT_INDEX_PATH=/app/content-index.json
 ENV PATHWAYS_PATH=/app/pathways.json
+ENV BADGES_PATH=/app/badges.json
 # ...and where to refresh them from while the container runs, so publishing an
 # article no longer means building an image. The baked copies above stay the
 # boot value and the fallback; these are only ever an upgrade. Both mirrors are
 # listed because they fail independently (Arvan vs Cloudflare).
 ENV CONTENT_INDEX_URL=https://dentcast.ir/plus/content-index.json,https://dentcast.org/plus/content-index.json
 ENV PATHWAYS_URL=https://dentcast.ir/plus/pathways.json,https://dentcast.org/plus/pathways.json
+ENV BADGES_URL=https://dentcast.ir/plus/badges.json,https://dentcast.org/plus/badges.json
 WORKDIR /app
 
 # Prod dependencies only.
@@ -44,6 +46,7 @@ COPY --from=build /app/dist ./dist
 COPY plus-api/migrations ./migrations
 COPY plus/content-index.json ./content-index.json
 COPY plus/pathways.json ./pathways.json
+COPY plus/badges.json ./badges.json
 
 # Build stamp — what GET /health reports back.
 #

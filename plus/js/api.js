@@ -252,6 +252,10 @@ export const api = {
   exportHighlights: () => request('/export/highlights'),
 
   // weekly league (group view + acknowledge finalized outcome)
+  // achievements — the profile's «افتخارات» shelf. Free on every plan; three of
+  // the badges simply need premium tools to earn.
+  achievements: () => request('/achievements'),
+
   league: () => request('/league'),
   leagueOutcomeSeen: () => request('/league/outcome/seen', { method: 'POST' }),
 

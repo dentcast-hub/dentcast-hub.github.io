@@ -1,6 +1,7 @@
 import { config } from './config.js';
 import { applyRemoteIndex, indexSource } from './content-index.js';
 import { applyRemotePathways, pathwaysSource } from './pathways.js';
+import { applyRemoteBadges, badgesSource } from './badges.js';
 
 /**
  * Keeps the taxonomy index and the pathway definitions current WITHOUT a
@@ -57,6 +58,7 @@ async function fetchJson(urls: string[], label: string): Promise<unknown | null>
 /** Log only on a real change, so a healthy poll every few minutes stays silent. */
 let lastIndexSource = '';
 let lastPathwaysSource = '';
+let lastBadgesSource = '';
 
 export async function refreshOnce(): Promise<void> {
   if (config.content.indexUrls.length) {
@@ -86,6 +88,20 @@ export async function refreshOnce(): Promise<void> {
       console.log(`[content-refresh] pathways now served from ${src}`);
     }
   }
+
+  if (config.content.badgesUrls.length) {
+    const raw = await fetchJson(config.content.badgesUrls, 'badges');
+    if (raw !== null && !applyRemoteBadges(raw)) {
+      // eslint-disable-next-line no-console
+      console.warn('[content-refresh] badges: payload rejected by shape check; keeping the current copy');
+    }
+    const src = badgesSource();
+    if (src !== lastBadgesSource) {
+      lastBadgesSource = src;
+      // eslint-disable-next-line no-console
+      console.log(`[content-refresh] badges now served from ${src}`);
+    }
+  }
 }
 
 /**
@@ -95,7 +111,8 @@ export async function refreshOnce(): Promise<void> {
  * timer or touch the network — same rule the schedulers follow.
  */
 export function startContentRefresh(): () => void {
-  if (!config.content.indexUrls.length && !config.content.pathwaysUrls.length) {
+  if (!config.content.indexUrls.length && !config.content.pathwaysUrls.length
+      && !config.content.badgesUrls.length) {
     return () => { /* not configured: the baked files are the whole story */ };
   }
   // Fetch once at boot rather than waiting out the first interval, so a

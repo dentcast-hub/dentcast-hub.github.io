@@ -1,0 +1,224 @@
+// @vitest-environment jsdom
+// Drives the REAL shipped renderer (/plus/js/achievements.js). The section has
+// two rules that are purely visual, which means nothing but a DOM test can hold
+// them: a level is a ring COLOUR and never the word «طلا» on the wall, and a
+// still-secret badge must leak nothing at all — not its name, not its icon, not
+// its criterion. Both are one careless line away from breaking silently.
+import { describe, it, expect, beforeEach } from 'vitest';
+
+const { achievementsBody } = await import('/plus/js/achievements.js');
+
+/** A response shaped exactly like GET /achievements returns. */
+function payload(over: Record<string, unknown> = {}) {
+  return {
+    summary: { earned: 2, total: 4, bronze: 1, silver: 1, gold: 0 },
+    medals: [
+      {
+        key: 'medal_gold', title_fa: 'مدال طلا', earned: true, name_fa: 'طلای کامپوزیت',
+        tier: { slug: 'composite', name_fa: 'کامپوزیت', tier_order: 3 },
+        lead_fa: 'اولِ گروهت شدی.', detail_fa: 'جنسِ مدال از بالاترین لیگ می‌آید.',
+      },
+      {
+        key: 'medal_silver', title_fa: 'مدال نقره', earned: false, name_fa: 'مدال نقره',
+        tier: null, lead_fa: 'هنوز دومِ گروهت نشده‌ای.', detail_fa: 'مثل طلا فقط بالا می‌رود.',
+      },
+    ],
+    badges: [
+      {
+        key: 'quill', hidden: false, title_fa: 'قلم', icon: 'quill', group_fa: 'قلم و حاشیه',
+        premium: false, leveled: true, earned: true, level: 1, metal: 'silver',
+        value: 63, target: 300, ratio: 13 / 250, unit_fa: 'هایلایت',
+        lead_fa: 'پنجاه هایلایت.', detail_fa: 'هر هایلایت می‌ماند.',
+        levels: [
+          { tier: 'bronze', threshold: 1, unlock_fa: 'اولین هایلایتت.', done: true },
+          { tier: 'silver', threshold: 50, unlock_fa: 'پنجاه هایلایت.', done: true },
+          { tier: 'gold', threshold: 300, unlock_fa: 'سیصد هایلایت.', done: false },
+        ],
+      },
+      {
+        key: 'phoenix', hidden: false, title_fa: 'ققنوس', icon: 'phoenix', group_fa: 'عادت',
+        premium: false, leveled: false, earned: true, level: 0, metal: 'plain',
+        value: 1, target: null, ratio: 1, unit_fa: null,
+        lead_fa: 'بهت افتخار می‌کنم که برگشتی.', detail_fa: 'برگشتن سخت‌ترین قسمت است.',
+        levels: null,
+      },
+      {
+        key: 'eagle', hidden: false, title_fa: 'عقاب', icon: 'eagle', group_fa: 'ریتم',
+        premium: false, leveled: true, earned: false, level: -1, metal: null,
+        value: 0, target: 1, ratio: 0, unit_fa: 'بار',
+        lead_fa: 'مطلبی را در همان ساعتِ اولِ انتشارش بخوان.', detail_fa: 'ساعتِ اول یعنی شصت دقیقه.',
+        levels: [
+          { tier: 'bronze', threshold: 1, unlock_fa: 'زود رسیدی.', done: false },
+          { tier: 'silver', threshold: 5, unlock_fa: 'پنج بار.', done: false },
+          { tier: 'gold', threshold: 25, unlock_fa: 'بیست‌وپنج بار.', done: false },
+        ],
+      },
+      {
+        key: 'night_owl', hidden: true, title_fa: null, icon: null, group_fa: null,
+        premium: false, leveled: false, earned: false, level: -1, metal: null,
+        value: 0, target: 1, ratio: 0, unit_fa: null,
+        lead_fa: null, detail_fa: null, levels: null,
+      },
+    ],
+    ...over,
+  };
+}
+
+function mount(data = payload()) {
+  document.body.replaceChildren();
+  const body = achievementsBody(data);
+  if (body) document.body.appendChild(body);
+  return body;
+}
+
+function openTile(sel: string) {
+  document.querySelector<HTMLButtonElement>(sel)!.click();
+  return document.querySelector('.dcp-sheet-card')!;
+}
+
+beforeEach(() => { document.body.replaceChildren(); });
+
+describe('the section only exists when there is something to show', () => {
+  it('returns null for a missing or empty payload, so no empty card is drawn', () => {
+    expect(achievementsBody(null)).toBeNull();
+    expect(achievementsBody({ summary: {}, medals: [], badges: [] })).toBeNull();
+  });
+});
+
+describe('a level is a ring colour, never a word', () => {
+  it('never writes «طلا» anywhere on the wall', () => {
+    mount();
+    const wall = document.querySelector('.dcp-bg-wall')!;
+    expect(wall.textContent).not.toContain('طلا');
+    expect(wall.textContent).not.toContain('نقره');
+    expect(wall.textContent).not.toContain('برنز');
+  });
+
+  it('carries the level in the disc class instead', () => {
+    mount();
+    const tiles = [...document.querySelectorAll('.dcp-bg-tile')];
+    const quill = tiles.find((t) => t.textContent?.includes('قلم'))!;
+    expect(quill.querySelector('.dcp-bg-disc')!.className).toContain('is-silver');
+  });
+
+  it('gives an earned one-shot badge the accent, not a metal', () => {
+    mount();
+    const tiles = [...document.querySelectorAll('.dcp-bg-tile')];
+    const phoenix = tiles.find((t) => t.textContent?.includes('ققنوس'))!;
+    const cls = phoenix.querySelector('.dcp-bg-disc')!.className;
+    expect(cls).toContain('is-plain');
+    expect(cls).not.toMatch(/is-(bronze|silver|gold)/);
+  });
+
+  it('does write the metal in the medal row — but never on its own', () => {
+    mount();
+    const row = document.querySelector('.dcp-md-row')!;
+    expect(row.textContent).toContain('طلای کامپوزیت');
+    // The medal reuses the league's own tier gradient class, so it cannot drift
+    // from the tier badge it is meant to be the same object as.
+    expect(document.querySelector('.dcp-md-shield')!.className).toContain('dcp-tier-t3');
+  });
+});
+
+describe('a secret badge leaks nothing', () => {
+  it('shows only a «؟» tile, with no name, icon or criterion', () => {
+    mount();
+    const tiles = [...document.querySelectorAll('.dcp-bg-tile')];
+    const mystery = tiles.find((t) => t.querySelector('.is-mystery'))!;
+    expect(mystery).toBeTruthy();
+    expect(mystery.textContent!.replace(/\s/g, '')).toBe('؟؟');
+    expect(mystery.querySelector('svg')).toBeNull();
+  });
+
+  it('keeps the secret when opened, too', () => {
+    mount();
+    const tiles = [...document.querySelectorAll('.dcp-bg-tile')];
+    const mystery = tiles.find((t) => t.querySelector('.is-mystery')) as HTMLButtonElement;
+    mystery.click();
+    const card = document.querySelector('.dcp-sheet-card')!;
+    expect(card.textContent).toContain('پیدا کردنش خودِ جایزه است');
+    expect(card.textContent).not.toContain('جغد');
+    expect(card.querySelector('.dcp-ach-lv-list')).toBeNull();
+  });
+});
+
+describe('the progress bar', () => {
+  it('is left off a badge sitting at zero', () => {
+    mount();
+    const tiles = [...document.querySelectorAll('.dcp-bg-tile')];
+    const eagle = tiles.find((t) => t.textContent?.includes('عقاب'))!;
+    expect(eagle.querySelector('.dcp-bg-bar')).toBeNull();
+    expect(eagle.querySelector('.dcp-bg-bar-spacer')).toBeTruthy();
+  });
+
+  it('counts from the level already held, in Persian digits', () => {
+    mount();
+    const card = openTile('.dcp-bg-tile');
+    expect(card.querySelector('.dcp-ach-prog-lbl')!.textContent).toContain('تا سطحِ بعد');
+    expect(card.querySelector('.dcp-ach-prog-lbl')!.textContent).toContain('۶۳ از ۳۰۰');
+  });
+
+  it('replaces the bar with a statement once nothing is left to count', () => {
+    const data = payload();
+    Object.assign((data.badges as any[])[0], { level: 2, metal: 'gold', target: null, ratio: 1 });
+    (data.badges as any[])[0].levels[2].done = true;
+    mount(data);
+    const card = openTile('.dcp-bg-tile');
+    expect(card.textContent).toContain('بالاترین سطح');
+    expect(card.querySelector('.dcp-ach-prog-bar')).toBeNull();
+  });
+});
+
+describe('the badge sheet', () => {
+  it('lists every level with its own copy and marks the ones held', () => {
+    mount();
+    const card = openTile('.dcp-bg-tile');
+    const rows = [...card.querySelectorAll('.dcp-ach-lv')];
+    expect(rows).toHaveLength(3);
+    expect(rows.map((r) => r.className.includes('is-done'))).toEqual([true, true, false]);
+    // the first unheld level is the one being aimed at
+    expect(rows[2].className).toContain('is-next');
+    expect(rows[2].textContent).toContain('سیصد هایلایت');
+    expect(rows[2].textContent).toContain('۳۰۰ هایلایت'); // threshold + unit, Persian digits
+  });
+
+  it('leads with the reason it is lit, and with the ask when it is not', () => {
+    mount();
+    expect(openTile('.dcp-bg-tile')!.querySelector('.dcp-ach-lead')!.className)
+      .not.toContain('is-locked');
+
+    mount();
+    const tiles = [...document.querySelectorAll('.dcp-bg-tile')] as HTMLButtonElement[];
+    tiles.find((t) => t.textContent?.includes('عقاب'))!.click();
+    const lead = document.querySelector('.dcp-ach-lead')!;
+    expect(lead.className).toContain('is-locked');
+    expect(lead.textContent).toContain('ساعتِ اولِ انتشارش');
+  });
+
+  it('opens only one sheet at a time, and cleans the previous one up', async () => {
+    mount();
+    const tiles = [...document.querySelectorAll('.dcp-bg-tile')] as HTMLButtonElement[];
+    tiles[0].click();
+    tiles[1].click();
+    // The outgoing sheet stays in the DOM for the length of its exit transition
+    // and the incoming one is shown on the next frame — both are the shared
+    // component's contract, not leaks. Once that has settled, exactly one sheet
+    // is left standing and it is the one that was asked for.
+    await new Promise((r) => { setTimeout(r, 350); });
+    const overlays = document.querySelectorAll('.dcp-sheet-overlay');
+    expect(overlays).toHaveLength(1);
+    expect(overlays[0].className).toContain('is-open');
+    expect(overlays[0].textContent).toContain('ققنوس');
+  });
+});
+
+describe('the tally', () => {
+  it('counts what is held and omits a metal nobody has', () => {
+    mount();
+    const t = document.querySelector('.dcp-ach-tally')!;
+    expect(t.textContent).toContain('۲ از ۴ نشان');
+    expect(t.querySelectorAll('.dcp-ach-pip.is-g')).toHaveLength(0); // no golds yet
+    expect(t.querySelectorAll('.dcp-ach-pip.is-s')).toHaveLength(1);
+    expect(t.querySelectorAll('.dcp-ach-pip.is-b')).toHaveLength(1);
+  });
+});

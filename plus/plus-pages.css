@@ -851,3 +851,176 @@ a.dcp-progress-row:hover { text-decoration: none; }
   border-color: rgba(var(--ac-rgb, 11,95,255), .45);
   background: var(--surface, #fff);
 }
+
+/* ===== profile: «افتخارات» ================================================
+   Two metal scales meet in this one section — the league's seven dental
+   materials (the medals) and the badges' bronze/silver/gold. They are kept
+   apart by SHAPE, not by colour: a medal is the league's own tooth-shield
+   (reusing .dcp-tier-t1..t7 from plus.css verbatim, so a medal can never drift
+   from the tier badge it is meant to be), and a badge is a disc. The word
+   «طلا» is written only in the medal row; on the wall a level is the ring
+   colour and nothing else.
+
+   Dark vs lit is one class on the disc, deliberately: every badge is the same
+   monoline SVG in both states, so there is no second asset that could go stale
+   and no way for an unearned badge to look like a different object. */
+.dcp-ach-tally {
+  display: flex; align-items: center; flex-wrap: wrap; gap: 8px;
+  font-size: .84rem; font-weight: 700; color: var(--txt2, #4a5f85); margin: 2px 0 14px;
+}
+.dcp-ach-tally b { color: var(--txt, #0a1a33); font-size: .95rem; }
+.dcp-ach-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--border, rgba(2,35,96,.12)); }
+.dcp-ach-metal { display: inline-flex; align-items: center; gap: 4px; }
+.dcp-ach-pip { width: 10px; height: 10px; border-radius: 50%; display: inline-block; flex: none; }
+.dcp-ach-pip.is-b { background: linear-gradient(155deg, #e8c9a6, #b97a43); }
+.dcp-ach-pip.is-s { background: linear-gradient(155deg, #dfe5ec, #8e9aa8); }
+.dcp-ach-pip.is-g { background: linear-gradient(155deg, #f3dea1, #c99a2e); }
+
+/* ---- medal row ---- */
+.dcp-md-row {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px;
+  padding: 14px; border-radius: var(--r-md, 14px);
+  background: var(--surface2, #f4f6fb); border: 1px solid var(--border2, rgba(2,35,96,.06));
+}
+.dcp-md {
+  display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center;
+  background: none; border: 0; padding: 4px; font: inherit; color: inherit; cursor: pointer;
+}
+.dcp-md-shield {
+  position: relative; display: grid; place-items: center; width: 56px; height: 62px; color: #20303f;
+  clip-path: polygon(50% 0, 100% 20%, 100% 64%, 50% 100%, 0 64%, 0 20%);
+  filter: drop-shadow(0 4px 9px rgba(0, 0, 0, .28)); transition: transform var(--tr, .17s);
+}
+.dcp-md-shield::before {
+  content: ""; position: absolute; inset: 0; clip-path: inherit;
+  background: linear-gradient(180deg, rgba(255,255,255,.55), rgba(255,255,255,0) 45%);
+}
+.dcp-md-shield::after {
+  content: ""; position: absolute; inset: 0; clip-path: inherit;
+  box-shadow: inset 0 0 0 2px rgba(255,255,255,.35), inset 0 0 0 3px rgba(0,0,0,.06);
+}
+.dcp-md-shield.is-dark { color: #f4f8ff; }
+.dcp-md-shield.is-off {
+  background: var(--surface3, #eaecf5); filter: none; opacity: .5; color: var(--txt3, #62779a);
+}
+.dcp-md-shield.is-off::before, .dcp-md-shield.is-off::after { opacity: .35; }
+.dcp-md-ico { position: relative; z-index: 1; display: block; }
+.dcp-md-ico svg { width: 26px; height: 26px; display: block; }
+.dcp-md:hover .dcp-md-shield:not(.is-off) { transform: translateY(-2px); }
+.dcp-md:focus-visible { outline: 2px solid var(--ac, #0b5fff); outline-offset: 2px; border-radius: 12px; }
+.dcp-md-name { font-size: .84rem; font-weight: 800; line-height: 1.4; }
+.dcp-md-name.is-off { color: var(--txt3, #62779a); font-weight: 700; }
+.dcp-md-hint { font-size: .72rem; color: var(--txt3, #62779a); line-height: 1.6; max-width: 21ch; }
+
+/* ---- badge wall ---- */
+.dcp-bg-wall { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px 2px; }
+@media (max-width: 380px) { .dcp-bg-wall { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 640px) { .dcp-bg-wall { grid-template-columns: repeat(5, 1fr); } }
+.dcp-bg-tile {
+  display: flex; flex-direction: column; align-items: center; gap: 7px;
+  background: none; border: 0; padding: 8px 2px 10px; border-radius: 12px;
+  font: inherit; color: inherit; cursor: pointer; transition: background var(--tr, .17s);
+}
+.dcp-bg-tile:hover { background: var(--surface2, #f4f6fb); }
+.dcp-bg-tile:focus-visible { outline: 2px solid var(--ac, #0b5fff); outline-offset: 2px; }
+.dcp-bg-disc {
+  position: relative; display: grid; place-items: center; border-radius: 50%;
+  border: 2.5px solid var(--border, rgba(2,35,96,.12)); background: var(--surface2, #f4f6fb);
+  transition: border-color var(--tr, .17s);
+}
+.dcp-bg-disc.is-sm { width: 56px; height: 56px; }
+.dcp-bg-disc.is-md { width: 64px; height: 64px; }
+.dcp-bg-ico { display: block; }
+.dcp-bg-disc.is-sm .dcp-bg-ico svg { width: 25px; height: 25px; display: block; }
+.dcp-bg-disc.is-md .dcp-bg-ico svg { width: 29px; height: 29px; display: block; }
+.dcp-bg-disc.is-off { color: var(--txt3, #62779a); opacity: .42; border-style: dashed; }
+.dcp-bg-disc.is-on { color: var(--txt, #0a1a33); }
+.dcp-bg-disc.is-on.is-bronze {
+  border-color: #b97a43;
+  background: radial-gradient(circle at 32% 26%, rgba(185,122,67,.22), transparent 70%), var(--card-bg, #fff);
+}
+.dcp-bg-disc.is-on.is-silver {
+  border-color: #8e9aa8;
+  background: radial-gradient(circle at 32% 26%, rgba(142,154,168,.26), transparent 70%), var(--card-bg, #fff);
+}
+.dcp-bg-disc.is-on.is-gold {
+  border-color: #c99a2e;
+  background: radial-gradient(circle at 32% 26%, rgba(201,154,46,.26), transparent 70%), var(--card-bg, #fff);
+  box-shadow: 0 0 0 4px rgba(201,154,46,.12);
+}
+/* A one-shot badge has no metal to show, so it wears the accent — earned, but
+   plainly not part of the bronze/silver/gold ladder. */
+.dcp-bg-disc.is-on.is-plain {
+  border-color: var(--ac, #0b5fff);
+  background: radial-gradient(circle at 32% 26%, rgba(var(--ac-rgb, 11,95,255), .16), transparent 70%), var(--card-bg, #fff);
+}
+.dcp-bg-disc.is-mystery {
+  color: var(--txt3, #62779a); opacity: .5; border-style: dashed;
+  font-size: 1.2rem; font-weight: 800;
+}
+.dcp-bg-disc.is-mystery.is-md { font-size: 1.5rem; }
+.dcp-bg-name {
+  font-size: .72rem; font-weight: 700; text-align: center; line-height: 1.35;
+  color: var(--txt, #0a1a33);
+}
+.dcp-bg-name.is-off { color: var(--txt3, #62779a); font-weight: 600; }
+.dcp-bg-bar { width: 38px; height: 3px; border-radius: 2px; background: var(--border, rgba(2,35,96,.12)); overflow: hidden; }
+.dcp-bg-bar i { display: block; height: 100%; background: var(--ac, #0b5fff); border-radius: 2px; }
+.dcp-bg-bar-spacer { height: 3px; }
+
+/* ---- the sheet a badge or a medal opens ---- */
+.dcp-ach-sheet-hd { display: flex; gap: 14px; align-items: center; margin-bottom: 14px; }
+.dcp-ach-grp { font-size: .74rem; color: var(--txt3, #62779a); font-weight: 700; }
+.dcp-ach-lead { font-size: .95rem; line-height: 1.85; margin: 0; }
+.dcp-ach-lead.is-locked { color: var(--txt2, #4a5f85); }
+.dcp-ach-detail { font-size: .86rem; line-height: 1.85; color: var(--txt2, #4a5f85); margin: 10px 0 0; }
+.dcp-ach-lv-list { display: flex; flex-direction: column; gap: 8px; margin: 16px 0 0; padding: 0; list-style: none; }
+.dcp-ach-lv {
+  display: flex; gap: 11px; align-items: flex-start; padding: 11px 12px;
+  border-radius: var(--r-md, 14px); border: 1px solid var(--border2, rgba(2,35,96,.06));
+  background: var(--surface2, #f4f6fb);
+}
+.dcp-ach-lv.is-done { border-color: var(--border, rgba(2,35,96,.12)); }
+.dcp-ach-lv.is-next { border-color: var(--ac, #0b5fff); background: rgba(var(--ac-rgb, 11,95,255), .06); }
+.dcp-ach-lv .dcp-ach-pip { width: 14px; height: 14px; margin-top: 4px; border: 1.5px solid var(--border, rgba(2,35,96,.12)); }
+.dcp-ach-lv.is-pending .dcp-ach-pip { background: none; }
+.dcp-ach-lv-txt { font-size: .85rem; line-height: 1.7; flex: 1; }
+.dcp-ach-lv.is-pending .dcp-ach-lv-txt { color: var(--txt3, #62779a); }
+.dcp-ach-lv-need { font-size: .74rem; color: var(--txt3, #62779a); font-weight: 700; white-space: nowrap; margin-top: 3px; }
+.dcp-ach-lv-done { color: #1a9d5a; font-weight: 800; font-size: .8rem; white-space: nowrap; margin-top: 3px; }
+.dcp-ach-prog { margin-top: 16px; }
+.dcp-ach-prog-lbl {
+  display: flex; justify-content: space-between; font-size: .78rem;
+  color: var(--txt2, #4a5f85); font-weight: 700; margin-bottom: 6px;
+}
+.dcp-ach-prog-bar { height: 7px; border-radius: 4px; background: var(--surface3, #eaecf5); overflow: hidden; }
+.dcp-ach-prog-bar i { display: block; height: 100%; background: var(--ac, #0b5fff); border-radius: 4px; }
+.dcp-ach-close { margin-top: 20px; width: 100%; }
+
+/* The metals are literal colours, not tokens, so they need their own dark
+   values — the light bronze/silver/gold sit far too dark on #1e2c3a to read as
+   metal at all. Keyed on [data-theme="dark"] rather than prefers-color-scheme
+   because that is what dc-nav.js's toggle actually stamps on <html>: a reader
+   on a light OS who switches the site to dark gets the dark tokens from
+   dc-theme.css, and these rings have to follow them. */
+[data-theme="dark"] .dcp-ach-pip.is-b { background: linear-gradient(155deg, #7a5330, #d0925a); }
+[data-theme="dark"] .dcp-ach-pip.is-s { background: linear-gradient(155deg, #5b6672, #aab6c4); }
+[data-theme="dark"] .dcp-ach-pip.is-g { background: linear-gradient(155deg, #7d6320, #e3b849); }
+[data-theme="dark"] .dcp-bg-disc.is-on.is-bronze {
+  border-color: #d0925a;
+  background: radial-gradient(circle at 32% 26%, rgba(208,146,90,.22), transparent 70%), var(--card-bg, #1e2c3a);
+}
+[data-theme="dark"] .dcp-bg-disc.is-on.is-silver {
+  border-color: #aab6c4;
+  background: radial-gradient(circle at 32% 26%, rgba(170,182,196,.24), transparent 70%), var(--card-bg, #1e2c3a);
+}
+[data-theme="dark"] .dcp-bg-disc.is-on.is-gold {
+  border-color: #e3b849;
+  background: radial-gradient(circle at 32% 26%, rgba(227,184,73,.24), transparent 70%), var(--card-bg, #1e2c3a);
+  box-shadow: 0 0 0 4px rgba(227,184,73,.14);
+}
+[data-theme="dark"] .dcp-ach-lv-done { color: #4bcb8b; }
+/* The tier gradients are painted for a light ground; on dark they glare. A
+   touch less brightness keeps the shield reading as the same object as the one
+   on the league card without lighting up the whole section. */
+[data-theme="dark"] .dcp-md-shield:not(.is-off) { filter: drop-shadow(0 4px 9px rgba(0,0,0,.45)) brightness(.94); }
