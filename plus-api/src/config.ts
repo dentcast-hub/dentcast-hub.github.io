@@ -440,7 +440,12 @@ export const config = {
   // Defaults to the repo's plus/ dir in dev; set explicitly in the container.
   pathwaysPath: process.env.PATHWAYS_PATH || '',
 
-  // Where to re-fetch those two files from at runtime (content-refresh.ts).
+  // Path to plus/badges.json (the achievements catalog — versioned in the repo,
+  // no DB). Same story as pathwaysPath: repo default in dev, explicit in the
+  // container.
+  badgesPath: process.env.BADGES_PATH || '',
+
+  // Where to re-fetch those files from at runtime (content-refresh.ts).
   // The paths above are the boot value and the permanent fallback; these URLs
   // are what stop every publish from needing an image rebuild. Comma-separated
   // so the two mirrors can cover each other. Empty = feature off (dev default,
@@ -448,6 +453,7 @@ export const config = {
   content: {
     indexUrls: list('CONTENT_INDEX_URL', []),
     pathwaysUrls: list('PATHWAYS_URL', []),
+    badgesUrls: list('BADGES_URL', []),
     refreshSeconds: int('CONTENT_REFRESH_SECONDS', 300),
   },
 };

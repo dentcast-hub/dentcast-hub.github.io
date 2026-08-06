@@ -12,6 +12,7 @@ import { highlightRoutes } from './routes/highlights.js';
 import { articleNoteRoutes } from './routes/article-note.js';
 import { reviewRoutes } from './routes/review.js';
 import { pathwayRoutes } from './routes/pathways.js';
+import { achievementRoutes } from './routes/achievements.js';
 import { collectionRoutes } from './routes/collections.js';
 import { readingCompassRoutes } from './routes/reading-compass.js';
 import { caseAssistantRoutes } from './routes/case-assistant.js';
@@ -81,6 +82,7 @@ export async function buildServer(): Promise<FastifyInstance> {
   await app.register(articleNoteRoutes);
   await app.register(reviewRoutes);
   await app.register(pathwayRoutes);
+  await app.register(achievementRoutes);
   await app.register(collectionRoutes);
   await app.register(readingCompassRoutes);
   await app.register(caseAssistantRoutes);

@@ -8,9 +8,10 @@
     "visibility": "always = همیشه دیده می‌شود (خاکستری تا کسب) · mystery = تا کسب فقط یک کاشیِ «؟» است، چون کشف‌شدنش خودِ جایزه است · earned_only = تا کسب اصلاً وجود ندارد، چون شرطش دیگر برای کسی قابل‌کسب نیست و نمایشِ خاکستری‌اش فقط زخم می‌زند.",
     "wording_rule": "کلمهٔ «طلا» در دیوارِ نشان‌ها هرگز به‌صورت متن نوشته نمی‌شود — سطح فقط با رنگِ حلقهٔ دورِ نشان دیده می‌شود. «طلا» فقط در ردیفِ مدال‌های لیگ متن می‌شود، و آن‌جا هم هرگز تنها نمی‌آید: همیشه «طلای کامپوزیت»، نه «طلا».",
     "ordering": "ترتیبِ دیوار پویاست: کسب‌شده‌ها → نزدیک‌ترین‌ها به کسب → بقیه → کاشی‌های «؟». هرگز الفبایی، هرگز ثابت.",
-    "progress_rule": "هر نشانِ سطح‌دارِ کسب‌نشده باید نوارِ پیشرفت تا سطحِ بعد را نشان دهد («۶۸ از ۱۰۰»). وقتی به طلا رسید، به‌جای نوارِ پُر، تاریخِ کسب نوشته می‌شود — نوارِ پُر یعنی «چیزی نمانده»، مُهرِ تاریخ یعنی «این را فتح کردی»."
+    "progress_rule": "هر نشانِ سطح‌دارِ کسب‌نشده باید نوارِ پیشرفت تا سطحِ بعد را نشان دهد («۶۸ از ۱۰۰»). وقتی به طلا رسید، به‌جای نوارِ پُر، تاریخِ کسب نوشته می‌شود — نوارِ پُر یعنی «چیزی نمانده»، مُهرِ تاریخ یعنی «این را فتح کردی».",
+    "comparison": "ارزیابیِ هر نشان یک قاعده دارد و فقط یکی: value >= threshold. هر معیاری که ذاتاً برعکس است (مثل رتبهٔ ثبت‌نام در «پیشگام») در سرویس به یک صفر/یکِ مشتق تبدیل می‌شود، نه اینکه ارزیابی دو مسیر پیدا کند.",
+    "icons": "هر نشان یک آیکونِ خطیِ ۲۴×۲۴ دارد که با کلیدِ icon در achievements.js نگاشت می‌شود. هیچ فایلِ تصویری در کار نیست؛ خاموش و روشن فقط با کلاسِ CSS از هم جدا می‌شوند."
   },
-
   "_metrics": {
     "longest_streak": "profiles.longest_streak",
     "streak_comeback": "توالیِ روزهای فعالِ user_activity: یک فاصلهٔ پوشش‌نداده‌شده (بدون سپر) و بعد بازگشت. رویداد، نه شمارنده.",
@@ -32,10 +33,9 @@
     "review_sessions": "شمارشِ رویدادهای review_finished در user_activity",
     "collections": "count از جدول collections",
     "collection_items": "count از جدول collection_items",
-    "signup_order": "رتبهٔ profiles.created_at در میان همهٔ کاربران",
-    "league_best_rank_tier": "بالاترین league_tiers.tier_order در هفته‌هایی که کاربر آن رتبه را گرفته — فقط بالا می‌رود"
+    "league_best_rank_tier": "بالاترین league_tiers.tier_order در هفته‌هایی که کاربر آن رتبه را گرفته — فقط بالا می‌رود",
+    "founder_seat": "۱ اگر رتبهٔ profiles.created_at کاربر ≤ league-independent seat count (۵۰۰) باشد، وگرنه ۰"
   },
-
   "_validity_filter": {
     "note": "هر محاسبه‌ای که به رتبهٔ لیگ تکیه دارد (هر دو مدال و نشانِ resolute) باید این دو شرط را داشته باشد، وگرنه مدال دروغ می‌گوید.",
     "rules": [
@@ -43,18 +43,40 @@
       "weekly_xp > 0 — وگرنه اولین مدالِ خیلی از کاربران بابتِ هیچ‌کاری صادر می‌شود."
     ]
   },
-
   "groups": [
-    { "key": "habit",   "title_fa": "عادت" },
-    { "key": "library", "title_fa": "کتابخانه" },
-    { "key": "craft",   "title_fa": "قلم و حاشیه" },
-    { "key": "explore", "title_fa": "کاوش" },
-    { "key": "rhythm",  "title_fa": "ریتم" },
-    { "key": "league",  "title_fa": "لیگ" },
-    { "key": "premium", "title_fa": "ابزارهای پریمیوم" },
-    { "key": "origin",  "title_fa": "بی‌همتا" }
+    {
+      "key": "habit",
+      "title_fa": "عادت"
+    },
+    {
+      "key": "library",
+      "title_fa": "کتابخانه"
+    },
+    {
+      "key": "craft",
+      "title_fa": "قلم و حاشیه"
+    },
+    {
+      "key": "explore",
+      "title_fa": "کاوش"
+    },
+    {
+      "key": "rhythm",
+      "title_fa": "ریتم"
+    },
+    {
+      "key": "league",
+      "title_fa": "لیگ"
+    },
+    {
+      "key": "premium",
+      "title_fa": "ابزارهای پریمیوم"
+    },
+    {
+      "key": "origin",
+      "title_fa": "بی‌همتا"
+    }
   ],
-
   "medals": {
     "_note": "دو جایگاهِ ثابت در بالای بخش، از روز اول دیده می‌شوند. جنسِ هر مدال از بالاترین تیری می‌آید که کاربر آن رتبه را در آن گرفته، و فقط بالا می‌رود: سقوط در لیگ هرگز مدال را پایین نمی‌آورد. طلا و نقره مستقل از هم بالا می‌روند. اسم‌ها از league_tiers.name_fa خوانده می‌شوند، نه از این فایل.",
     "naming_template_fa": "{metal} {tier}",
@@ -82,11 +104,11 @@
       }
     ]
   },
-
   "badges": [
     {
       "key": "flame",
       "title_fa": "شعله",
+      "icon": "flame",
       "group": "habit",
       "premium": false,
       "leveled": true,
@@ -95,14 +117,28 @@
       "locked_fa": "هفت روزِ پیاپی فعال باش تا روشن شود.",
       "detail_fa": "استریک یعنی روزهایی که پشتِ سرِ هم برگشتی. یک روز غیبت از نو شروعش می‌کند — مگر اینکه سپر داشته باشی.",
       "levels": [
-        { "tier": "bronze", "threshold": 7,   "unlock_fa": "هفت روزِ پشتِ هم. از این‌جا به بعد دیگر تصمیم نیست، عادت است." },
-        { "tier": "silver", "threshold": 30,  "unlock_fa": "یک ماهِ کامل، بدون یک روزِ جاافتاده." },
-        { "tier": "gold",   "threshold": 100, "unlock_fa": "صد روز. این دیگر اسمش انضباط است." }
-      ]
+        {
+          "tier": "bronze",
+          "threshold": 7,
+          "unlock_fa": "هفت روزِ پشتِ هم. از این‌جا به بعد دیگر تصمیم نیست، عادت است."
+        },
+        {
+          "tier": "silver",
+          "threshold": 30,
+          "unlock_fa": "یک ماهِ کامل، بدون یک روزِ جاافتاده."
+        },
+        {
+          "tier": "gold",
+          "threshold": 100,
+          "unlock_fa": "صد روز. این دیگر اسمش انضباط است."
+        }
+      ],
+      "unit_fa": "روز"
     },
     {
       "key": "phoenix",
       "title_fa": "ققنوس",
+      "icon": "phoenix",
       "group": "habit",
       "premium": false,
       "leveled": false,
@@ -119,6 +155,7 @@
     {
       "key": "shieldbearer",
       "title_fa": "سپردار",
+      "icon": "shield",
       "group": "habit",
       "premium": false,
       "leveled": false,
@@ -130,10 +167,10 @@
       "detail_fa": "هر سپر یک روزِ نبودن را می‌بخشد و استریکت را زنده نگه می‌دارد. قیمتِ سپرِ بعدی همیشه از قبلی بیشتر است.",
       "_no_levels_reason": "مثل ققنوس: شمردنِ دفعات یعنی شمردنِ روزهای غیبت."
     },
-
     {
       "key": "listener",
       "title_fa": "شنونده",
+      "icon": "head",
       "group": "library",
       "premium": false,
       "leveled": true,
@@ -142,14 +179,28 @@
       "locked_fa": "اولین پادکستت را گوش کن.",
       "detail_fa": "شمارشِ اپیزودهای متفاوت است؛ شنیدنِ دوبارهٔ یک اپیزود چیزی اضافه نمی‌کند.",
       "levels": [
-        { "tier": "bronze", "threshold": 1,   "unlock_fa": "اولین پادکستت را شنیدی. صدا هم یک راهِ یادگیری است." },
-        { "tier": "silver", "threshold": 25,  "unlock_fa": "بیست‌وپنج اپیزود. دیگر از شنونده‌های همیشگی‌ای." },
-        { "tier": "gold",   "threshold": 100, "unlock_fa": "صد اپیزود. کمتر کسی این‌همه گوش داده." }
-      ]
+        {
+          "tier": "bronze",
+          "threshold": 1,
+          "unlock_fa": "اولین پادکستت را شنیدی. صدا هم یک راهِ یادگیری است."
+        },
+        {
+          "tier": "silver",
+          "threshold": 25,
+          "unlock_fa": "بیست‌وپنج اپیزود. دیگر از شنونده‌های همیشگی‌ای."
+        },
+        {
+          "tier": "gold",
+          "threshold": 100,
+          "unlock_fa": "صد اپیزود. کمتر کسی این‌همه گوش داده."
+        }
+      ],
+      "unit_fa": "اپیزود"
     },
     {
       "key": "reader",
       "title_fa": "خواننده",
+      "icon": "book",
       "group": "library",
       "premium": false,
       "leveled": true,
@@ -158,14 +209,28 @@
       "locked_fa": "اولین مطلبت را تا آخر بخوان.",
       "detail_fa": "شمارشِ مطالبِ متفاوتِ تمام‌شده؛ بازخوانیِ همان مطلب اضافه نمی‌شود.",
       "levels": [
-        { "tier": "bronze", "threshold": 1,   "unlock_fa": "اولین مطلبت را تا آخر خواندی." },
-        { "tier": "silver", "threshold": 25,  "unlock_fa": "بیست‌وپنج مطلبِ تمام‌شده. داری جدی پیش می‌روی." },
-        { "tier": "gold",   "threshold": 100, "unlock_fa": "صد مطلب. این دیگر یک کتابخانه است، نه یک عادت." }
-      ]
+        {
+          "tier": "bronze",
+          "threshold": 1,
+          "unlock_fa": "اولین مطلبت را تا آخر خواندی."
+        },
+        {
+          "tier": "silver",
+          "threshold": 25,
+          "unlock_fa": "بیست‌وپنج مطلبِ تمام‌شده. داری جدی پیش می‌روی."
+        },
+        {
+          "tier": "gold",
+          "threshold": 100,
+          "unlock_fa": "صد مطلب. این دیگر یک کتابخانه است، نه یک عادت."
+        }
+      ],
+      "unit_fa": "مطلب"
     },
     {
       "key": "storm",
       "title_fa": "طوفان",
+      "icon": "storm",
       "group": "library",
       "premium": false,
       "leveled": true,
@@ -174,15 +239,28 @@
       "locked_fa": "ده محتوا در یک هفته.",
       "detail_fa": "پرکارترین هفته‌ات، از شنبه تا جمعه.",
       "levels": [
-        { "tier": "bronze", "threshold": 10, "unlock_fa": "ده تا در یک هفته. هفتهٔ پرباری بود." },
-        { "tier": "silver", "threshold": 20, "unlock_fa": "بیست تا در هفت روز. سرعتت بالا رفته." },
-        { "tier": "gold",   "threshold": 40, "unlock_fa": "چهل تا در یک هفته. مطمئن نیستیم کِی خوابیدی." }
-      ]
+        {
+          "tier": "bronze",
+          "threshold": 10,
+          "unlock_fa": "ده تا در یک هفته. هفتهٔ پرباری بود."
+        },
+        {
+          "tier": "silver",
+          "threshold": 20,
+          "unlock_fa": "بیست تا در هفت روز. سرعتت بالا رفته."
+        },
+        {
+          "tier": "gold",
+          "threshold": 40,
+          "unlock_fa": "چهل تا در یک هفته. مطمئن نیستیم کِی خوابیدی."
+        }
+      ],
+      "unit_fa": "در هفته"
     },
-
     {
       "key": "quill",
       "title_fa": "قلم",
+      "icon": "quill",
       "group": "craft",
       "premium": false,
       "leveled": true,
@@ -191,14 +269,28 @@
       "locked_fa": "اولین جمله‌ای که برایت مهم بود را هایلایت کن.",
       "detail_fa": "هر هایلایت برای همیشه در کتابخانهٔ شخصی‌ات می‌ماند، حتی اگر سال‌ها بعد سراغش بروی.",
       "levels": [
-        { "tier": "bronze", "threshold": 1,   "unlock_fa": "اولین هایلایتت. از این‌جا به بعد هرچه بخوانی، می‌ماند." },
-        { "tier": "silver", "threshold": 50,  "unlock_fa": "پنجاه هایلایت. کتابخانه‌ات دارد شکل می‌گیرد." },
-        { "tier": "gold",   "threshold": 300, "unlock_fa": "سیصد هایلایت. این دیگر آرشیوِ شخصیِ توست." }
-      ]
+        {
+          "tier": "bronze",
+          "threshold": 1,
+          "unlock_fa": "اولین هایلایتت. از این‌جا به بعد هرچه بخوانی، می‌ماند."
+        },
+        {
+          "tier": "silver",
+          "threshold": 50,
+          "unlock_fa": "پنجاه هایلایت. کتابخانه‌ات دارد شکل می‌گیرد."
+        },
+        {
+          "tier": "gold",
+          "threshold": 300,
+          "unlock_fa": "سیصد هایلایت. این دیگر آرشیوِ شخصیِ توست."
+        }
+      ],
+      "unit_fa": "هایلایت"
     },
     {
       "key": "annotator",
       "title_fa": "حاشیه‌نویس",
+      "icon": "note",
       "group": "craft",
       "premium": false,
       "leveled": true,
@@ -207,15 +299,28 @@
       "locked_fa": "پای یکی از هایلایت‌هایت یادداشت بگذار.",
       "detail_fa": "هایلایت می‌گوید چه چیزی مهم بود؛ یادداشت می‌گوید چرا.",
       "levels": [
-        { "tier": "bronze", "threshold": 1,   "unlock_fa": "اولین یادداشتت. این همان‌جایی‌ست که خواندن تبدیل به فهمیدن می‌شود." },
-        { "tier": "silver", "threshold": 25,  "unlock_fa": "بیست‌وپنج یادداشت. داری با متن حرف می‌زنی، نه فقط می‌خوانی‌اش." },
-        { "tier": "gold",   "threshold": 100, "unlock_fa": "صد یادداشت. این‌ها را دیگر هیچ‌جای دیگری پیدا نمی‌کنی." }
-      ]
+        {
+          "tier": "bronze",
+          "threshold": 1,
+          "unlock_fa": "اولین یادداشتت. این همان‌جایی‌ست که خواندن تبدیل به فهمیدن می‌شود."
+        },
+        {
+          "tier": "silver",
+          "threshold": 25,
+          "unlock_fa": "بیست‌وپنج یادداشت. داری با متن حرف می‌زنی، نه فقط می‌خوانی‌اش."
+        },
+        {
+          "tier": "gold",
+          "threshold": 100,
+          "unlock_fa": "صد یادداشت. این‌ها را دیگر هیچ‌جای دیگری پیدا نمی‌کنی."
+        }
+      ],
+      "unit_fa": "یادداشت"
     },
-
     {
       "key": "explorer",
       "title_fa": "کاوشگر",
+      "icon": "compass",
       "group": "explore",
       "premium": false,
       "leveled": true,
@@ -224,14 +329,28 @@
       "locked_fa": "از سه بخشِ متفاوتِ دنت‌کست محتوا تمام کن.",
       "detail_fa": "دنت‌کست ده بخش دارد. این نشان می‌گوید از چند تای آن‌ها سر درآورده‌ای.",
       "levels": [
-        { "tier": "bronze", "threshold": 3,  "unlock_fa": "سه بخشِ متفاوت. داری اطراف را نگاه می‌کنی." },
-        { "tier": "silver", "threshold": 6,  "unlock_fa": "شش بخش از ده بخش. بیشترِ نقشه را دیده‌ای." },
-        { "tier": "gold",   "threshold": 10, "unlock_fa": "هر ده بخشِ دنت‌کست. جایی نمانده که سر نزده باشی." }
-      ]
+        {
+          "tier": "bronze",
+          "threshold": 3,
+          "unlock_fa": "سه بخشِ متفاوت. داری اطراف را نگاه می‌کنی."
+        },
+        {
+          "tier": "silver",
+          "threshold": 6,
+          "unlock_fa": "شش بخش از ده بخش. بیشترِ نقشه را دیده‌ای."
+        },
+        {
+          "tier": "gold",
+          "threshold": 10,
+          "unlock_fa": "هر ده بخشِ دنت‌کست. جایی نمانده که سر نزده باشی."
+        }
+      ],
+      "unit_fa": "بخش"
     },
     {
       "key": "conqueror",
       "title_fa": "فاتح",
+      "icon": "flag",
       "group": "explore",
       "premium": false,
       "leveled": true,
@@ -240,14 +359,28 @@
       "locked_fa": "یک بخش را تا آخرین مطلبش تمام کن.",
       "detail_fa": "تمام‌کردنِ یک بخشِ کامل — همهٔ نوت‌کست‌ها، یا همهٔ چیرسایدها. کمیاب‌ترین نشانِ این دیوار.",
       "levels": [
-        { "tier": "bronze", "threshold": 1, "unlock_fa": "یک بخش را تا آخرین صفحه تمام کردی." },
-        { "tier": "silver", "threshold": 3, "unlock_fa": "سه بخشِ کامل. این دیگر شانس نیست." },
-        { "tier": "gold",   "threshold": 5, "unlock_fa": "پنج بخشِ کامل. نصفِ دنت‌کست را فتح کرده‌ای." }
-      ]
+        {
+          "tier": "bronze",
+          "threshold": 1,
+          "unlock_fa": "یک بخش را تا آخرین صفحه تمام کردی."
+        },
+        {
+          "tier": "silver",
+          "threshold": 3,
+          "unlock_fa": "سه بخشِ کامل. این دیگر شانس نیست."
+        },
+        {
+          "tier": "gold",
+          "threshold": 5,
+          "unlock_fa": "پنج بخشِ کامل. نصفِ دنت‌کست را فتح کرده‌ای."
+        }
+      ],
+      "unit_fa": "بخشِ کامل"
     },
     {
       "key": "archaeologist",
       "title_fa": "باستان‌شناس",
+      "icon": "hourglass",
       "group": "explore",
       "premium": false,
       "leveled": false,
@@ -259,10 +392,10 @@
       "detail_fa": "خواندنِ محتوایی که بیش از دو سال از انتشارش گذشته.",
       "_why": "قرینهٔ عقاب است — یکی تازه‌ترین را شکار می‌کند، یکی قدیمی‌ترین را. و یک سودِ واقعی دارد: بیشترِ ۵۴۳ محتوای آرشیو هیچ‌وقت دیده نمی‌شود."
     },
-
     {
       "key": "eagle",
       "title_fa": "عقاب",
+      "icon": "eagle",
       "group": "rhythm",
       "premium": false,
       "leveled": true,
@@ -271,16 +404,30 @@
       "locked_fa": "مطلبی را در همان ساعتِ اولِ انتشارش بخوان.",
       "detail_fa": "ساعتِ اول یعنی شصت دقیقه بعد از انتشار. یک بارش شانس است؛ برای همین سطحِ طلایش با شانس به‌دست نمی‌آید.",
       "levels": [
-        { "tier": "bronze", "threshold": 1,  "unlock_fa": "زود رسیدی. مطلب هنوز داغ بود." },
-        { "tier": "silver", "threshold": 5,  "unlock_fa": "پنج بار در ساعتِ اول. این دیگر تصادفی نیست." },
-        { "tier": "gold",   "threshold": 25, "unlock_fa": "بیست‌وپنج بار. تو منتظر نمی‌مانی؛ کمین می‌کنی." }
+        {
+          "tier": "bronze",
+          "threshold": 1,
+          "unlock_fa": "زود رسیدی. مطلب هنوز داغ بود."
+        },
+        {
+          "tier": "silver",
+          "threshold": 5,
+          "unlock_fa": "پنج بار در ساعتِ اول. این دیگر تصادفی نیست."
+        },
+        {
+          "tier": "gold",
+          "threshold": 25,
+          "unlock_fa": "بیست‌وپنج بار. تو منتظر نمی‌مانی؛ کمین می‌کنی."
+        }
       ],
       "_caveat": "تنها نشانِ این فایل که گذشته‌نگر نیست: articles.published_at برای ردیف‌های قدیمی مقدارِ پیش‌فرضِ لحظهٔ ثبت را دارد، نه انتشارِ واقعی. باید فقط از تاریخِ راه‌اندازی به بعد محاسبه شود.",
-      "_fairness_note": "پریمیوم بلافاصله نوتیف می‌گیرد و رایگان دایجستِ ۰۳:۰۰ را. این عدم‌تقارن آگاهانه پذیرفته شده — بخشی از مزیتِ پریمیوم است — و نشان برای همه دیده و کسب می‌شود."
+      "_fairness_note": "پریمیوم بلافاصله نوتیف می‌گیرد و رایگان دایجستِ ۰۳:۰۰ را. این عدم‌تقارن آگاهانه پذیرفته شده — بخشی از مزیتِ پریمیوم است — و نشان برای همه دیده و کسب می‌شود.",
+      "unit_fa": "بار"
     },
     {
       "key": "night_owl",
       "title_fa": "جغدِ شب",
+      "icon": "moon",
       "group": "rhythm",
       "premium": false,
       "leveled": false,
@@ -294,6 +441,7 @@
     {
       "key": "dawn",
       "title_fa": "سحرخیز",
+      "icon": "dawn",
       "group": "rhythm",
       "premium": false,
       "leveled": false,
@@ -307,6 +455,7 @@
     {
       "key": "no_weekend",
       "title_fa": "بی‌تعطیلی",
+      "icon": "cal",
       "group": "rhythm",
       "premium": false,
       "leveled": false,
@@ -317,10 +466,10 @@
       "unlock_fa": "آخرِ هفته هم پای کار بودی.",
       "detail_fa": "پنجشنبه و جمعهٔ یک هفته، هر دو فعال."
     },
-
     {
       "key": "resolute",
       "title_fa": "مصمم",
+      "icon": "anchor",
       "group": "league",
       "premium": false,
       "leveled": true,
@@ -329,15 +478,28 @@
       "locked_fa": "چهار هفتهٔ پیاپی در لیگ بمان بدون اینکه سقوط کنی.",
       "detail_fa": "بلندترین زنجیرهٔ هفته‌هایی که یا سرِ جایت ماندی یا بالاتر رفتی.",
       "levels": [
-        { "tier": "bronze", "threshold": 4,  "unlock_fa": "چهار هفته بدون سقوط." },
-        { "tier": "silver", "threshold": 10, "unlock_fa": "ده هفته سرِ جایت ماندی یا بالاتر رفتی." },
-        { "tier": "gold",   "threshold": 26, "unlock_fa": "نیم سال، بدون حتی یک سقوط." }
-      ]
+        {
+          "tier": "bronze",
+          "threshold": 4,
+          "unlock_fa": "چهار هفته بدون سقوط."
+        },
+        {
+          "tier": "silver",
+          "threshold": 10,
+          "unlock_fa": "ده هفته سرِ جایت ماندی یا بالاتر رفتی."
+        },
+        {
+          "tier": "gold",
+          "threshold": 26,
+          "unlock_fa": "نیم سال، بدون حتی یک سقوط."
+        }
+      ],
+      "unit_fa": "هفته"
     },
-
     {
       "key": "wayfarer",
       "title_fa": "رهرو",
+      "icon": "route",
       "group": "premium",
       "premium": true,
       "leveled": true,
@@ -346,15 +508,29 @@
       "locked_fa": "یک مسیر آموزشی را از اول تا آخر برو.",
       "detail_fa": "مسیرِ آموزشی یک سفرِ چیده‌شده است: از پایه تا پیشرفته، به همان ترتیبی که باید.",
       "levels": [
-        { "tier": "bronze", "threshold": 1,    "unlock_fa": "اولین مسیرِ آموزشی‌ات تمام شد. از پایه تا پیشرفته، بدون پرش." },
-        { "tier": "silver", "threshold": 3,    "unlock_fa": "سه مسیرِ کامل. داری نقشه را می‌سازی." },
-        { "tier": "gold",   "threshold": "all", "unlock_fa": "همهٔ مسیرهای آموزشی. دیگر مسیری نمانده." }
+        {
+          "tier": "bronze",
+          "threshold": 1,
+          "unlock_fa": "اولین مسیرِ آموزشی‌ات تمام شد. از پایه تا پیشرفته، بدون پرش."
+        },
+        {
+          "tier": "silver",
+          "threshold": 3,
+          "unlock_fa": "سه مسیرِ کامل. داری نقشه را می‌سازی."
+        },
+        {
+          "tier": "gold",
+          "threshold": "all",
+          "unlock_fa": "همهٔ مسیرهای آموزشی. دیگر مسیری نمانده."
+        }
       ],
-      "_note": "آستانهٔ طلا عدد ثابت نیست: تعدادِ کلِ pathwayهای فعال در plus/pathways.json است، تا با اضافه‌شدنِ مسیرِ جدید خودبه‌خود جابه‌جا شود."
+      "_note": "آستانهٔ طلا عدد ثابت نیست: تعدادِ کلِ pathwayهای فعال در plus/pathways.json است، تا با اضافه‌شدنِ مسیرِ جدید خودبه‌خود جابه‌جا شود.",
+      "unit_fa": "مسیر"
     },
     {
       "key": "recaller",
       "title_fa": "یادآور",
+      "icon": "recall",
       "group": "premium",
       "premium": true,
       "leveled": true,
@@ -363,14 +539,28 @@
       "locked_fa": "یک جلسهٔ مرور را کامل کن.",
       "detail_fa": "مرورِ فاصله‌دار کاری می‌کند چیزی که خوانده‌ای، شش ماه بعد هم یادت باشد.",
       "levels": [
-        { "tier": "bronze", "threshold": 1,   "unlock_fa": "اولین جلسهٔ مرورت. فراموش‌کردن از این‌جا به بعد سخت‌تر می‌شود." },
-        { "tier": "silver", "threshold": 25,  "unlock_fa": "بیست‌وپنج جلسه مرور. داری روی چیزی که خوانده‌ای کار می‌کنی." },
-        { "tier": "gold",   "threshold": 100, "unlock_fa": "صد جلسه مرور. حافظه‌ات را ساختی، شانس نیاوردی." }
-      ]
+        {
+          "tier": "bronze",
+          "threshold": 1,
+          "unlock_fa": "اولین جلسهٔ مرورت. فراموش‌کردن از این‌جا به بعد سخت‌تر می‌شود."
+        },
+        {
+          "tier": "silver",
+          "threshold": 25,
+          "unlock_fa": "بیست‌وپنج جلسه مرور. داری روی چیزی که خوانده‌ای کار می‌کنی."
+        },
+        {
+          "tier": "gold",
+          "threshold": 100,
+          "unlock_fa": "صد جلسه مرور. حافظه‌ات را ساختی، شانس نیاوردی."
+        }
+      ],
+      "unit_fa": "جلسه"
     },
     {
       "key": "treasury",
       "title_fa": "گنجینه",
+      "icon": "chest",
       "group": "premium",
       "premium": true,
       "leveled": true,
@@ -379,22 +569,36 @@
       "locked_fa": "اولین کالکشنت را بساز.",
       "detail_fa": "کالکشن قفسهٔ کاملاً شخصیِ توست — هر ترکیبی از هایلایت‌ها و صفحه‌ها، بدون هیچ دسته‌بندیِ تحمیلی.",
       "levels": [
-        { "tier": "bronze", "threshold": 1,   "metric": "collections", "unlock_fa": "اولین کالکشنت ساخته شد. حالا یک قفسهٔ مالِ خودت داری." },
-        { "tier": "silver", "threshold": 50,  "unlock_fa": "پنجاه مورد در قفسه‌هایت." },
-        { "tier": "gold",   "threshold": 200, "unlock_fa": "دویست مورد. این دیگر یک کتابخانه‌ی چیده‌شده است." }
+        {
+          "tier": "bronze",
+          "threshold": 1,
+          "metric": "collections",
+          "unlock_fa": "اولین کالکشنت ساخته شد. حالا یک قفسهٔ مالِ خودت داری."
+        },
+        {
+          "tier": "silver",
+          "threshold": 50,
+          "unlock_fa": "پنجاه مورد در قفسه‌هایت."
+        },
+        {
+          "tier": "gold",
+          "threshold": 200,
+          "unlock_fa": "دویست مورد. این دیگر یک کتابخانه‌ی چیده‌شده است."
+        }
       ],
-      "_note": "برنز عمداً معیارِ متفاوتی دارد (خودِ ساختنِ اولین بورد)، چون ساختنِ قفسه و پرکردنش دو کارِ جدا هستند."
+      "_note": "برنز عمداً معیارِ متفاوتی دارد (خودِ ساختنِ اولین بورد)، چون ساختنِ قفسه و پرکردنش دو کارِ جدا هستند.",
+      "unit_fa": "مورد"
     },
-
     {
       "key": "founder_reader",
       "title_fa": "پیشگام",
+      "icon": "star",
       "group": "origin",
       "premium": false,
       "leveled": false,
       "visibility": "earned_only",
-      "metric": "signup_order",
-      "threshold": 500,
+      "metric": "founder_seat",
+      "threshold": 1,
       "locked_fa": null,
       "unlock_fa": "از اولین‌های دنت‌کست پلاسی. این نشان دیگر برای هیچ‌کس صادر نمی‌شود.",
       "detail_fa": "جزو پانصد کاربرِ اولِ دنت‌کست پلاس.",

@@ -8,6 +8,7 @@
 // /plus/collections.html, /plus/collection.html, the workbench's two
 // single-purpose collection buttons, and the dashboard.
 import { el, faNum } from './util.js';
+import { openSheet, closeSheet } from './sheet.js';
 import { premiumCta } from './premium-cta.js';
 import { api, currentUser } from './api.js';
 import { openLoginModal } from './login-modal.js';
@@ -77,31 +78,8 @@ export function boardCover(preview, collection = null) {
   return cover;
 }
 
-// --- bottom sheet (Pinterest's own "save to board" shape, localized) -------
-let sheetOverlay = null;
-function closeSheet() {
-  if (!sheetOverlay) return;
-  const { overlay, sheet } = sheetOverlay;
-  overlay.classList.remove('is-open');
-  sheet.classList.remove('is-open');
-  document.removeEventListener('keydown', onSheetKey);
-  setTimeout(() => overlay.remove(), 300);
-  sheetOverlay = null;
-}
-function onSheetKey(e) { if (e.key === 'Escape') closeSheet(); }
-
-function openSheet(card) {
-  closeSheet();
-  const sheet = el('div', { class: 'dcp-sheet', role: 'dialog', 'aria-modal': 'true' }, [
-    el('div', { class: 'dcp-sheet-handle' }),
-    card,
-  ]);
-  const overlay = el('div', { class: 'dcp-sheet-overlay', onclick: (e) => { if (e.target === overlay) closeSheet(); } }, [sheet]);
-  document.body.appendChild(overlay);
-  document.addEventListener('keydown', onSheetKey);
-  sheetOverlay = { overlay, sheet };
-  requestAnimationFrame(() => { overlay.classList.add('is-open'); sheet.classList.add('is-open'); });
-}
+// The bottom sheet now lives in sheet.js: the achievements wall needed the same
+// object, and a second copy is exactly what hl-view.js was created to prevent.
 
 function gateCard({ title, sub, cta }) {
   return el('div', { class: 'dcp-sheet-card', role: 'dialog', 'aria-label': title }, [
