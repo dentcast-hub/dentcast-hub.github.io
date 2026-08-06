@@ -44,19 +44,24 @@ const PITCH = {
  * walked back.
  *
  * The score multiplier is here only because the API now actually grants it
- * (score.ts's PREMIUM_SCORE_MULTIPLIER, stamped per earning by migration 0023).
+ * (score.ts's PREMIUM_POINTS_PER_ACTIVE_DAY, stamped per day by migration 0023).
  * It was held out of the first version of this list precisely because it was not
  * implemented yet, and a benefit printed beside a payment button has to be one
- * the buyer receives. Its sentence names the shields rather than the number,
- * because the shields are the only thing the score is ever spent on — a reader
- * has no use for «۱٫۲ برابر» unless they are told what it buys.
+ * the buyer receives.
+ *
+ * Its sentence says «۱۰ … ۱۲» rather than «۱٫۲ برابر» because that is both what
+ * the code does and the only version a reader can check against their own
+ * screen: the multiplier applies to the DAILY point and to nothing else, so
+ * quoting a ratio would invite someone to expect their highlights to grow by a
+ * fifth too. It then names the shields, because they are the only thing the
+ * score is ever spent on — the number means nothing without what it buys.
  */
 const EXTRA_PERKS = [
   { title: 'بدون تبلیغ', hint: 'هیچ تبلیغی، در هیچ صفحه‌ای.' },
   { title: 'اطلاع فوری از مطلب تازه', hint: 'نوتیفیکیشن مطلب تازه بلافاصله پس از انتشار می‌رسد.' },
   {
     title: 'ضریب بالاتر امتیاز',
-    hint: 'امتیازی که با اشتراک به دست می‌آورید ۱٫۲ برابر حساب می‌شود، پس سپرهای استریک زودتر می‌رسند.',
+    hint: 'هر روزی که فعال باشید به‌جای ۱۰ امتیاز، ۱۲ امتیاز می‌گیرید؛ سپرهای استریک زودتر می‌رسند.',
   },
 ];
 

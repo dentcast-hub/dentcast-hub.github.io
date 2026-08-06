@@ -3,7 +3,6 @@ import { requireAuth } from '../middleware/auth.js';
 import { requirePremium } from '../middleware/require-premium.js';
 import { pool, withTransaction } from '../db.js';
 import { recordActivity } from '../services/activity.js';
-import { getSubscription, isPremiumNow } from '../services/subscription.js';
 import { resolveTopic, folderLabel, getContentInfo, folderOf } from '../content-index.js';
 
 const LABELS = new Set(['important', 'unclear', 'clinical_pearl']);
@@ -192,15 +191,10 @@ export async function highlightRoutes(app: FastifyInstance): Promise<void> {
 
     const userId = request.user!.id;
     const created = await withTransaction(async (client) => {
-      // A highlight carries its own tier stamp because the score counts the LIVE
-      // table (`count(*) from highlights`, which falls again when one is
-      // deleted), not the append-only `highlight_created` events. Same rule as
-      // activity.ts: recorded at creation, never re-evaluated. See migration 0023.
-      const premium = isPremiumNow(await getSubscription(userId, client));
       const hl = await client.query<HighlightRow>(
         `insert into highlights
-           (user_id, content_id, exact, prefix, suffix, color, underline, cloze_markers, note, label, content_hash, premium)
-         values ($1,$2,$3,$4,$5,$6,$7,$8::jsonb,$9,$10,$11,$12)
+           (user_id, content_id, exact, prefix, suffix, color, underline, cloze_markers, note, label, content_hash)
+         values ($1,$2,$3,$4,$5,$6,$7,$8::jsonb,$9,$10,$11)
          returning ${SELECT_COLS}`,
         [
           userId,
@@ -214,7 +208,6 @@ export async function highlightRoutes(app: FastifyInstance): Promise<void> {
           b.note ?? null,
           b.label ?? null,
           b.content_hash ?? null,
-          premium,
         ],
       );
       const highlight = hl.rows[0];

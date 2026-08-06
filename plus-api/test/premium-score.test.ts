@@ -4,21 +4,26 @@ import { makeApp, resetDb, loginAs } from './helpers.js';
 import { pool } from '../src/db.js';
 import {
   computeScore, scoreSelectSql, combineScore,
-  POINTS_PER_ACTIVE_DAY, POINTS_PER_CONTENT, PREMIUM_SCORE_MULTIPLIER,
+  POINTS_PER_ACTIVE_DAY, POINTS_PER_CONTENT,
+  PREMIUM_SCORE_MULTIPLIER, PREMIUM_POINTS_PER_ACTIVE_DAY,
   SCORING_ACTIONS, CONSUMPTION_ACTIONS, shieldsGranted, SHIELD_BASE,
 } from '../src/services/score.js';
 import { activateMonths } from '../src/services/subscription.js';
 import { config } from '../src/config.js';
 
 /**
- * The premium score multiplier (×1.2).
+ * The premium score multiplier: a DAY earned while subscribed pays 12 instead
+ * of 10. Articles, episodes and highlights keep their face value on every plan.
  *
- * The property that matters most here is NOT that a subscriber earns more — it
- * is that nobody ever earns less. Score is spent on streak shields and compared
- * against other people's scores, and the whole design (a stamp written onto each
- * row at the moment it happens, rather than a condition evaluated at read time)
- * exists so that an expiring subscription takes nothing back. The expiry test
- * below is the one that would fail under the obvious implementation.
+ * Two properties carry the whole design, and each has a test here that fails
+ * under the obvious alternative implementation:
+ *
+ *   1. NOBODY EVER EARNS LESS. Score buys streak shields, so a multiplier
+ *      applied to the live total would take points — and shields — back from
+ *      anyone whose subscription lapsed. The stamp is written per day earned.
+ *   2. NO SCORE IS EVER FRACTIONAL. That is why the multiplier is on the daily
+ *      point and nowhere else: 10 × 1.2 = 12, but 1 × 1.2 = 1.2, so multiplying
+ *      highlights would need a rounding step that quietly eats earned points.
  */
 
 let app: FastifyInstance;
@@ -42,6 +47,11 @@ const read = (contentId: string) => app.inject({
   payload: { action: 'article_completed', content_id: contentId },
 });
 
+const highlight = (contentId: string, exact: string) => app.inject({
+  method: 'POST', url: '/highlights', headers: { cookie },
+  payload: { content_id: contentId, exact },
+});
+
 const score = async () => (await computeScore(pool, userId)).score;
 
 /** Make the account premium from now on. */
@@ -59,6 +69,14 @@ async function lapse(): Promise<void> {
   );
 }
 
+/** Backdate every activity row, so the next one lands on a fresh Tehran day. */
+async function newDay(): Promise<void> {
+  await pool.query(
+    "update user_activity set created_at = created_at - interval '1 day' where user_id = $1",
+    [userId],
+  );
+}
+
 /** The rank query's view of this user — the SQL mirror of computeScore. */
 async function scoreViaSql(): Promise<number> {
   const r = await pool.query<{ score: string }>(
@@ -70,28 +88,46 @@ async function scoreViaSql(): Promise<number> {
 }
 
 describe('the premium multiplier', () => {
+  it('the rule: a premium day is worth 12 where a free day is worth 10', () => {
+    expect(POINTS_PER_ACTIVE_DAY).toBe(10);
+    expect(PREMIUM_POINTS_PER_ACTIVE_DAY).toBe(12);
+    expect(PREMIUM_POINTS_PER_ACTIVE_DAY).toBe(POINTS_PER_ACTIVE_DAY * PREMIUM_SCORE_MULTIPLIER);
+  });
+
   it('leaves a free account exactly where it was', async () => {
     await read('insight/insight-20');
     await read('insight/insight-27');
 
-    // One active day + two articles, at face value. This is the pre-multiplier
-    // formula, and a free user must not be able to tell anything changed.
     expect(await score()).toBe(POINTS_PER_ACTIVE_DAY + 2 * POINTS_PER_CONTENT);
     expect((await computeScore(pool, userId)).premium_bonus).toBe(0);
   });
 
-  it('pays a subscriber 1.2× for what they earn while subscribed', async () => {
+  it('pays a subscriber 12 for the day and face value for everything else', async () => {
     await goPremium();
     await read('insight/insight-20');
     await read('insight/insight-27');
+    await highlight('insight/insight-20', 'یک تکه متن');
 
-    const base = POINTS_PER_ACTIVE_DAY + 2 * POINTS_PER_CONTENT;
-    expect(await score()).toBe(Math.floor(base * PREMIUM_SCORE_MULTIPLIER));
+    // 12 for the premium day + 2 articles × 5 + 1 highlight × 1 — the articles
+    // and the highlight are NOT multiplied.
+    expect(await score()).toBe(PREMIUM_POINTS_PER_ACTIVE_DAY + 2 * POINTS_PER_CONTENT + 1);
 
     const b = await computeScore(pool, userId);
-    expect(b.premium_bonus).toBe(Math.floor(base * PREMIUM_SCORE_MULTIPLIER) - base);
     expect(b.premium_days).toBe(1);
-    expect(b.premium_content).toBe(2);
+    expect(b.premium_bonus).toBe(2); // exactly the 10 → 12 difference, once
+  });
+
+  it('does not multiply articles, episodes or highlights', async () => {
+    await goPremium();
+    await read('insight/insight-20');
+    const afterDay = await score();
+
+    await read('insight/insight-27');
+    expect((await score()) - afterDay).toBe(POINTS_PER_CONTENT);       // 5, not 6
+
+    const afterSecond = await score();
+    await highlight('insight/insight-27', 'هایلایت');
+    expect((await score()) - afterSecond).toBe(1);                     // 1, not 1.2
   });
 
   it('THE POINT: an expiring subscription does not take a single point back', async () => {
@@ -102,126 +138,101 @@ describe('the premium multiplier', () => {
 
     await lapse();
 
-    // Not "less than before" and not "reset to base" — identical. Everything was
+    // Not "less than before" and not "reset to base" — identical. The day was
     // earned on a paid plan and keeps its weight for good.
     expect(await score()).toBe(whilePremium);
+    expect((await computeScore(pool, userId)).premium_bonus).toBe(2);
   });
 
-  it('and a lapsed subscriber simply stops being multiplied from then on', async () => {
+  it('and a lapsed subscriber simply stops earning 12 from then on', async () => {
     await goPremium();
-    await read('insight/insight-20');          // premium: day + content
+    await read('insight/insight-20');           // premium day
     const whilePremium = await score();
 
     await lapse();
-    await read('insight/insight-27');          // free: a second article, same day
+    await newDay();                             // …tomorrow, on a free plan
+    await read('insight/insight-27');
 
-    // The day was already bought at the premium rate and stays there; only the
-    // new article is added at face value.
-    expect(await score()).toBe(whilePremium + POINTS_PER_CONTENT);
+    const b = await computeScore(pool, userId);
+    expect(b.active_days).toBe(2);
+    expect(b.premium_days).toBe(1);             // yesterday keeps its rate
+    expect(await score()).toBe(whilePremium + POINTS_PER_ACTIVE_DAY + POINTS_PER_CONTENT);
   });
 
   it('a day that starts free and turns premium is paid as a premium day', async () => {
-    await read('insight/insight-20');          // free
+    await read('insight/insight-20');           // free
     await goPremium();
-    await read('insight/insight-27');          // premium, SAME Tehran day
+    await read('insight/insight-27');           // premium, SAME Tehran day
 
     const b = await computeScore(pool, userId);
-    // One active day in total, and it counts as the subscriber's — a day is one
-    // indivisible unit and the tie goes to the person who paid.
+    // A day is one indivisible unit and the tie goes to the person who paid.
     expect(b.active_days).toBe(1);
     expect(b.premium_days).toBe(1);
-    // …but only the second article is a premium content credit.
-    expect(b.content_completed).toBe(2);
-    expect(b.premium_content).toBe(1);
-
-    const base = POINTS_PER_ACTIVE_DAY + 2 * POINTS_PER_CONTENT;
-    const premiumPart = POINTS_PER_ACTIVE_DAY + POINTS_PER_CONTENT;
-    expect(b.score).toBe(Math.floor(base + premiumPart * (PREMIUM_SCORE_MULTIPLIER - 1)));
+    expect(b.score).toBe(PREMIUM_POINTS_PER_ACTIVE_DAY + 2 * POINTS_PER_CONTENT);
   });
 
-  it('counts a highlight made while premium at the premium rate', async () => {
+  it('buying a subscription does not re-price yesterday', async () => {
+    await read('insight/insight-20');           // a free day
+    await newDay();
     await goPremium();
-    await app.inject({
-      method: 'POST', url: '/highlights', headers: { cookie },
-      payload: { content_id: 'insight/insight-20', exact: 'یک تکه متن' },
-    });
+    await read('insight/insight-27');           // a premium day
 
     const b = await computeScore(pool, userId);
-    expect(b.total_highlights).toBe(1);
-    expect(b.premium_highlights).toBe(1);
+    expect(b.active_days).toBe(2);
+    expect(b.premium_days).toBe(1);             // not 2 — the same rule as the expiry case
+    expect(b.score).toBe(
+      POINTS_PER_ACTIVE_DAY + PREMIUM_POINTS_PER_ACTIVE_DAY + 2 * POINTS_PER_CONTENT,
+    );
   });
 
-  it('a highlight made on a free plan keeps its face value after upgrading', async () => {
-    await app.inject({
-      method: 'POST', url: '/highlights', headers: { cookie },
-      payload: { content_id: 'insight/insight-20', exact: 'متنِ رایگان' },
-    });
+  it('never reports a fractional score, whatever the mix', async () => {
     await goPremium();
+    for (const n of [1, 3, 7, 11, 13]) {
+      const { score: s, premium_bonus } = combineScore({
+        active_days: n, premium_days: n, content_completed: n, total_highlights: n,
+      });
+      expect(Number.isInteger(s)).toBe(true);
+      expect(Number.isInteger(premium_bonus)).toBe(true);
+      // No floor, no round: the exact arithmetic, stated independently here.
+      expect(s).toBe(n * 12 + n * 5 + n);
+    }
 
-    const b = await computeScore(pool, userId);
-    expect(b.total_highlights).toBe(1);
-    // Buying a subscription does not retroactively re-price yesterday's work —
-    // that is the same rule as the expiry case, pointing the other way.
-    expect(b.premium_highlights).toBe(0);
-  });
-
-  it('deleting a premium highlight removes it from both counts', async () => {
-    await goPremium();
-    const created = await app.inject({
-      method: 'POST', url: '/highlights', headers: { cookie },
-      payload: { content_id: 'insight/insight-20', exact: 'حذف‌شدنی' },
-    });
-    const id = created.json().highlight.id;
-    await app.inject({ method: 'DELETE', url: `/highlights/${id}`, headers: { cookie } });
-
-    const b = await computeScore(pool, userId);
-    expect(b.total_highlights).toBe(0);
-    expect(b.premium_highlights).toBe(0); // never negative, never orphaned
+    // …and through the real path, where an odd highlight count is the case that
+    // used to produce 8.4 before the multiplier moved onto the daily point.
+    await read('insight/insight-20');
+    for (let i = 0; i < 7; i += 1) await highlight('insight/insight-20', `تکه ${i}`);
+    const s = await score();
+    expect(Number.isInteger(s)).toBe(true);
+    expect(s).toBe(PREMIUM_POINTS_PER_ACTIVE_DAY + POINTS_PER_CONTENT + 7);
   });
 
   it('the SQL used for rank agrees with computeScore, free and premium alike', async () => {
     await read('insight/insight-20');
     expect(await scoreViaSql()).toBe(await score());   // free
 
+    await newDay();
     await goPremium();
     await read('insight/insight-27');
-    await app.inject({
-      method: 'POST', url: '/highlights', headers: { cookie },
-      payload: { content_id: 'insight/insight-27', exact: 'برای رتبه' },
-    });
+    await highlight('insight/insight-27', 'برای رتبه');
 
     // The two hand-written copies of the formula (one TS, one SQL) are the thing
     // most likely to drift, and a user whose rank disagreed with their own score
     // is exactly the bug the shared formula exists to prevent.
     expect(await scoreViaSql()).toBe(await score());
-    expect((await computeScore(pool, userId)).premium_bonus).toBeGreaterThan(0);
+    expect((await computeScore(pool, userId)).premium_bonus).toBe(2);
   });
 
-  it('reaches the first streak shield sooner than the same effort would free', async () => {
-    const parts = {
-      active_days: 17, content_completed: 0, total_highlights: 0,
-      premium_days: 0, premium_content: 0, premium_highlights: 0,
-    };
-    const free = combineScore(parts);
+  it('reaches the first streak shield sooner than the same days would free', () => {
+    const parts = { active_days: 17, content_completed: 0, total_highlights: 0 };
+    const free = combineScore({ ...parts, premium_days: 0 });
     const premium = combineScore({ ...parts, premium_days: 17 });
 
-    // 170 points of effort: not a shield on a free plan, one on a paid one.
+    // Seventeen days of showing up: not a shield on a free plan, one on a paid
+    // one. Free needs 20 days for the first shield, premium needs 17.
     expect(free.score).toBe(170);
     expect(shieldsGranted(free.score)).toBe(0);
     expect(premium.score).toBe(204);
     expect(premium.score).toBeGreaterThanOrEqual(SHIELD_BASE);
     expect(shieldsGranted(premium.score)).toBe(1);
-  });
-
-  it('never reports a fractional score', async () => {
-    // 1.2 × an odd number of highlight points is where a fraction would appear.
-    for (const n of [1, 3, 7, 11, 13]) {
-      const { score: s } = combineScore({
-        active_days: 0, content_completed: 0, total_highlights: n,
-        premium_days: 0, premium_content: 0, premium_highlights: n,
-      });
-      expect(Number.isInteger(s)).toBe(true);
-      expect(s).toBe(Math.floor(n * PREMIUM_SCORE_MULTIPLIER)); // floored, never rounded up
-    }
   });
 });
