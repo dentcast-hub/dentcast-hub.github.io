@@ -14,6 +14,7 @@ import { renderProfile } from './profile.js';
 import { maybeShowWelcome } from './welcome.js';
 import { startTour, maybeOfferTour, tourMenuAvailable, initTourAutostart } from './tour.js';
 import { maybeShowNotifPrompt } from './notif-prompt.js';
+import { maybeShowPremiumPopup } from './premium-popup.js';
 import { subscriptionMenuLabel, pricingHref } from './premium-cta.js';
 
 // Inlined so it can never 404. Built via innerHTML on an HTML button (not
@@ -162,6 +163,11 @@ export async function initHeader() {
     // Confirmed guest: invite them in with the first-visit welcome box (capped
     // per device), pulsing the person icon toward the login entry point.
     try { maybeShowWelcome({ personBtn: guestPerson }); } catch (_) { /* non-fatal */ }
+    // …and, on a session where that box did NOT speak, the premium offer. The
+    // order is deliberate: the sign-up card owns a guest's very first visit
+    // (homepage only, so a guest landing on an article gets the offer straight
+    // away), and premium-popup.js bows out of any session where welcome ran.
+    try { maybeShowPremiumPopup(null); } catch (_) { /* non-fatal */ }
     return; // guest header is correct; nothing to upgrade
   }
 
@@ -202,5 +208,9 @@ export async function initHeader() {
     // the first mobile login it fires right after the tour closes (see tour.js),
     // and on desktop or on later logins it fires here.
     maybeShowNotifPrompt(user);
+    // The premium offer, for a free account only — it stands down for a
+    // subscriber or a founder, and for any session where the tour or the
+    // notification nudge already appeared.
+    maybeShowPremiumPopup(user);
   } catch (_) { /* non-fatal */ }
 }

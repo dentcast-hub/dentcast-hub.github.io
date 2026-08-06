@@ -108,6 +108,63 @@
 .dcp-notif-prompt .dcp-notif-msg { display: block; margin: 0 0 10px; line-height: 1.8; }
 .dcp-notif-prompt .dcp-notif-msg:empty { display: none; }
 
+/* ---- first-visit premium offer (premium-popup.js) ------------------------ */
+/* Unlike the welcome box this one sits ABOVE the topbar (z 200) and takes the
+   whole viewport: it has no companion element in the header to leave lit, and
+   an aria-modal dialog with a live navigation bar behind it is a lie to a
+   screen reader. Backdrop clicks are not wired — closing is the × alone. */
+.dcp-pp-overlay {
+  /* Above the transient toast (10001), which is fixed near the bottom of the
+     viewport and otherwise lands exactly on the buy button. Below the dashboard
+     overlay (10050) and the league sheet (10090), neither of which can be opened
+     while this is up — the header they are reached from is behind it. */
+  position: fixed; inset: 0; z-index: 10005;
+  background: rgba(15, 23, 42, .58);
+  -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 16px;
+}
+/* The card is a fixed-height flex column, not a growing block: the list runs to
+   eight items and on a short phone the buy button would otherwise be pushed
+   below the fold of a card that itself cannot scroll. Body scrolls, footer
+   stays. */
+.dcp-pp-card {
+  position: relative; display: flex; flex-direction: column;
+  width: 100%; max-width: 440px; max-height: min(88vh, 720px);
+  box-sizing: border-box; overflow: hidden;
+  background: var(--dcp-surface, #fff); color: var(--dcp-ink, #1a2233);
+  border: 1px solid var(--dcp-line, rgba(0,0,0,.08)); border-radius: 18px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.38);
+}
+.dcp-pp-close {
+  position: absolute; top: 6px; inset-inline-end: 10px; z-index: 2;
+  background: none; border: none; padding: 4px 8px;
+  font-size: 1.9rem; line-height: 1; cursor: pointer; color: var(--dcp-ink, #1a2233);
+  opacity: .6;
+}
+.dcp-pp-close:hover { opacity: 1; }
+.dcp-pp-close:focus-visible { outline: 2px solid var(--dcp-accent, #0b5fff); outline-offset: 2px; border-radius: 8px; }
+.dcp-pp-body { flex: 1 1 auto; overflow-y: auto; padding: 20px 20px 14px; -webkit-overflow-scrolling: touch; }
+.dcp-pp-card:focus { outline: none; } /* focused on open for screen readers only */
+/* Room for the ×, on whichever side it is. The button is placed with
+   inset-inline-end, which on this RTL site is the LEFT — a physical margin here
+   reserved the gutter on the right and let the title run under the button. */
+.dcp-pp-title { margin: 0 0 12px; padding-inline-end: 34px; font-size: 1.06rem; line-height: 1.75; }
+.dcp-pp-sub { margin: 0 0 10px; font-size: .95rem; opacity: .85; }
+.dcp-pp-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 11px; }
+.dcp-pp-list li { display: flex; flex-direction: column; gap: 2px; }
+.dcp-pp-list strong { font-size: .97rem; font-weight: 700; }
+.dcp-pp-list span { font-size: .87rem; line-height: 1.75; color: var(--txt2, #4a5f85); }
+.dcp-pp-foot {
+  flex: 0 0 auto; padding: 12px 20px 16px;
+  border-top: 1px solid var(--dcp-line, rgba(0,0,0,.08));
+  background: var(--dcp-surface, #fff);
+}
+.dcp-pp-cta { display: block; width: 100%; box-sizing: border-box; text-align: center; text-decoration: none; }
+/* Hold the page still underneath, so a scroll gesture aimed at the card's list
+   does not drag the article behind it once the list hits its end. */
+html.dcp-pp-open, html.dcp-pp-open body { overflow: hidden; }
+
 /* Header person icon pulse while the welcome box is up. */
 @keyframes dcp-person-pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.28); } }
 .dcp-person-attention { animation: dcp-person-pulse 1.05s ease-in-out infinite; }
