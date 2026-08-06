@@ -6,7 +6,7 @@ import {
 } from '../services/article-notify.js';
 import { runReactivationNudges } from '../services/reactivation.js';
 import { runStreakReminders } from '../services/streak-reminder.js';
-import { one } from '../db.js';
+import { one, query } from '../db.js';
 import { normalizePhone } from '../services/phone.js';
 import {
   activateMonths, grantLifetime, revokeSubscription, getSubscription,
@@ -33,12 +33,22 @@ import type { NotificationMessage } from '../providers/notifications/types.js';
  * summarizeSubscription() that GET /me uses, so "days left" cannot come to mean
  * one thing to the founder and another to the user looking at their own banner.
  */
-function subscriptionView(phone: string, userId: string, sub: Subscription | null) {
+/**
+ * `phone` stays in the response for every existing reader, but it is null for a
+ * Telegram-only account — so username/display_name ride along, or the answer
+ * would name nobody.
+ */
+function subscriptionView(
+  who: { id: string; phone: string | null; username: string | null; display_name: string | null },
+  sub: Subscription | null,
+) {
   const summary = summarizeSubscription(sub);
   return {
     ok: true,
-    user_id: userId,
-    phone,
+    user_id: who.id,
+    phone: who.phone,
+    username: who.username,
+    display_name: who.display_name,
     subscription: summary && { ...summary, started_at: sub!.started_at },
     is_premium: summary?.is_premium ?? false,
     days_left: summary?.days_left ?? null,
@@ -523,45 +533,131 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
   // survives the sweep because it is genuinely valid, not because of an
   // exception carved out for it.
   //
-  // Keyed by phone rather than user_id: it is what the founder actually has when
-  // someone asks for access, and it is what /auth already identifies people by.
+  // IDENTIFIED BY PHONE **OR** TELEGRAM USERNAME **OR** USER ID.
+  //
+  // It used to be phone only, on the reasoning that a phone is what the founder
+  // has when somebody asks for access. That stopped being true the moment login
+  // with Telegram shipped: those accounts have no phone at all, so every
+  // endpoint here returned `no_profile` for them and there was no admin path to
+  // a real, paying-capable user. Found on 2026-08-06 when a Telegram-only
+  // account had to be granted lifetime premium by running the service function
+  // by hand — which is exactly the kind of thing an admin panel exists to stop.
+  //
+  // AMBIGUITY IS AN ERROR, NEVER A GUESS. Usernames are not unique across
+  // providers, and display names are not unique at all, so a lookup matching
+  // more than one account replies 409 with the candidates and changes nothing.
+  // The failure it prevents — giving away a permanent account to the wrong
+  // person — is silent, and the person who lost out never knows to complain.
 
-  /** Resolve a raw phone to a profile, or reply with the right error. */
-  async function resolvePhone(
-    rawPhone: string,
-    reply: FastifyReply,
-  ): Promise<{ id: string; phone: string } | null> {
-    const phone = normalizePhone(rawPhone);
-    if (!phone) {
-      void reply.code(400).send({ error: 'invalid_phone', message: 'شماره‌ی موبایل معتبر نیست.' });
-      return null;
-    }
-    const row = await one<{ id: string }>('select id from profiles where phone = $1', [phone]);
-    if (!row) {
-      void reply.code(404).send({ error: 'no_profile', message: 'این شماره هنوز ثبت‌نام نکرده.' });
-      return null;
-    }
-    return { id: row.id, phone };
+  interface ResolvedUser {
+    id: string;
+    phone: string | null;
+    username: string | null;
+    display_name: string | null;
   }
 
-  const phoneBody = (extra: Record<string, unknown> = {}, required: string[] = []) => ({
+  const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+  /**
+   * Resolve whatever the founder typed to exactly one profile, or reply with the
+   * right error. Tries the unambiguous keys first (id, then phone) and only then
+   * falls back to the human-typed ones.
+   */
+  async function resolveUser(
+    raw: string | undefined,
+    reply: FastifyReply,
+  ): Promise<ResolvedUser | null> {
+    const needle = (raw ?? '').trim();
+    if (!needle) {
+      void reply.code(400).send({
+        error: 'missing_user',
+        message: 'شماره‌ی موبایل، نام کاربری، یا شناسه‌ی کاربر را بفرست.',
+      });
+      return null;
+    }
+
+    const SELECT = `
+      select p.id,
+             nullif(p.phone, '')        as phone,
+             ai.username,
+             p.display_name
+        from profiles p
+        left join auth_identities ai on ai.user_id = p.id`;
+
+    let rows: ResolvedUser[];
+
+    if (UUID_RE.test(needle)) {
+      rows = (await query<ResolvedUser>(`${SELECT} where p.id = $1`, [needle])).rows;
+    } else {
+      const phone = normalizePhone(needle);
+      if (phone) {
+        rows = (await query<ResolvedUser>(`${SELECT} where p.phone = $1`, [phone])).rows;
+      } else {
+        // A handle. Accept a leading @ because that is how people paste them.
+        const handle = needle.replace(/^@/, '');
+        rows = (await query<ResolvedUser>(
+          `${SELECT} where lower(ai.username) = lower($1) or lower(p.display_name) = lower($1)`,
+          [handle],
+        )).rows;
+      }
+    }
+
+    // One profile can hold several auth identities, so collapse by profile id
+    // before deciding whether this was actually ambiguous.
+    const byId = new Map<string, ResolvedUser>();
+    for (const r of rows) {
+      const seen = byId.get(r.id);
+      // Prefer the row that carries a username, so the answer names them.
+      if (!seen || (!seen.username && r.username)) byId.set(r.id, r);
+    }
+    const found = [...byId.values()];
+
+    if (found.length === 0) {
+      void reply.code(404).send({ error: 'no_profile', message: 'کاربری با این مشخصات پیدا نشد.' });
+      return null;
+    }
+    if (found.length > 1) {
+      void reply.code(409).send({
+        error: 'ambiguous_user',
+        message: 'بیش از یک کاربر با این مشخصات هست. با شناسه‌ی کاربر دوباره بفرست.',
+        candidates: found.map((f) => ({
+          user_id: f.id, phone: f.phone, username: f.username, display_name: f.display_name,
+        })),
+      });
+      return null;
+    }
+    return found[0];
+  }
+
+  /**
+   * `user` is the field to use; `phone` stays accepted so nothing that already
+   * calls these endpoints breaks. Neither is required by the schema — which one
+   * is missing is decided in resolveUser, where the message can say so.
+   */
+  const userBody = (extra: Record<string, unknown> = {}, required: string[] = []) => ({
     schema: {
       body: {
         type: 'object',
-        required: ['phone', ...required],
-        properties: { phone: { type: 'string' }, ...extra },
+        required,
+        properties: { user: { type: 'string' }, phone: { type: 'string' }, ...extra },
       },
     },
   });
 
-  // GET /admin/subscriptions?phone= — read the state before changing it.
+  const pick = (b: { user?: string; phone?: string }) => b.user ?? b.phone;
+
+  // GET /admin/subscriptions?user= (or ?phone=) — read the state before changing it.
   app.get('/admin/subscriptions', {
-    schema: { querystring: { type: 'object', required: ['phone'], properties: { phone: { type: 'string' } } } },
+    schema: {
+      querystring: {
+        type: 'object',
+        properties: { user: { type: 'string' }, phone: { type: 'string' } },
+      },
+    },
   }, async (request, reply) => {
-    const { phone: rawPhone } = request.query as { phone: string };
-    const who = await resolvePhone(rawPhone, reply);
+    const who = await resolveUser(pick(request.query as { user?: string; phone?: string }), reply);
     if (!who) return reply;
-    return reply.send(subscriptionView(who.phone, who.id, await getSubscription(who.id)));
+    return reply.send(subscriptionView(who, await getSubscription(who.id)));
   });
 
   // POST /admin/subscriptions/grant { phone, months } — gift N months.
@@ -569,36 +665,34 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
   // month to an unhappy paying subscriber adds a month instead of costing them
   // whatever they had left.
   app.post('/admin/subscriptions/grant',
-    phoneBody({ months: { type: 'integer', minimum: 1, maximum: 60 } }, ['months']),
+    userBody({ months: { type: 'integer', minimum: 1, maximum: 60 } }, ['months']),
     async (request, reply) => {
-      const { phone: rawPhone, months } = request.body as { phone: string; months: number };
-      const who = await resolvePhone(rawPhone, reply);
+      const body = request.body as { user?: string; phone?: string; months: number };
+      const who = await resolveUser(pick(body), reply);
       if (!who) return reply;
-      const sub = await activateMonths(who.id, months, { source: 'admin' });
-      return reply.send(subscriptionView(who.phone, who.id, sub));
+      const sub = await activateMonths(who.id, body.months, { source: 'admin' });
+      return reply.send(subscriptionView(who, sub));
     });
 
   // POST /admin/subscriptions/grant-lifetime { phone } — premium with no end.
   // Deliberately its own endpoint and not a `months: 'lifetime'` variant of the
   // one above: a typo in a number field should never be able to give away a
   // permanent account.
-  app.post('/admin/subscriptions/grant-lifetime', phoneBody(), async (request, reply) => {
-    const { phone: rawPhone } = request.body as { phone: string };
-    const who = await resolvePhone(rawPhone, reply);
+  app.post('/admin/subscriptions/grant-lifetime', userBody(), async (request, reply) => {
+    const who = await resolveUser(pick(request.body as { user?: string; phone?: string }), reply);
     if (!who) return reply;
     const sub = await grantLifetime(who.id, { source: 'admin' });
-    return reply.send(subscriptionView(who.phone, who.id, sub));
+    return reply.send(subscriptionView(who, sub));
   });
 
   // POST /admin/subscriptions/revoke { phone } — undo a mistaken gift.
   // Leaves `profiles.tier` for the sweep to settle: a league prize may still be
   // holding this account up, and revoking here has no way to know that.
-  app.post('/admin/subscriptions/revoke', phoneBody(), async (request, reply) => {
-    const { phone: rawPhone } = request.body as { phone: string };
-    const who = await resolvePhone(rawPhone, reply);
+  app.post('/admin/subscriptions/revoke', userBody(), async (request, reply) => {
+    const who = await resolveUser(pick(request.body as { user?: string; phone?: string }), reply);
     if (!who) return reply;
     const removed = await revokeSubscription(who.id, { source: 'admin' });
-    return reply.send({ ...subscriptionView(who.phone, who.id, null), removed });
+    return reply.send({ ...subscriptionView(who, null), removed });
   });
 
   // GET /admin/payments/capacity — how much of this month's gateway ceiling is
