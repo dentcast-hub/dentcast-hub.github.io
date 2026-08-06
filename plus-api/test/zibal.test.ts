@@ -172,3 +172,71 @@ describe('gateway routing and mode', () => {
     expect(statusMessage(5)).toContain('موجودی');
   });
 });
+
+/**
+ * The fixed-IP reverse proxy (ZIBAL_API_BASE_URL). Zibal whitelists one outbound
+ * IP; pay.dentcast.ir supplies it. The rule these pin down is that the proxy
+ * moves the two SERVER calls and nothing else — send the customer's browser
+ * through it and they meet a 403, because a browser cannot carry the token.
+ */
+describe('routing through the fixed-IP reverse proxy', () => {
+  const original = { apiBaseUrl: config.zibal.apiBaseUrl, proxyToken: config.zibal.proxyToken };
+
+  beforeEach(() => {
+    config.zibal.apiBaseUrl = 'https://pay.dentcast.ir';
+    config.zibal.proxyToken = 'test-token-value';
+  });
+  afterEach(() => {
+    config.zibal.apiBaseUrl = original.apiBaseUrl;
+    config.zibal.proxyToken = original.proxyToken;
+  });
+
+  it('addresses /v1/request to the proxy and carries the token', async () => {
+    replyWith({ result: 100, trackId: 7 });
+    await zibalRequest({ amountRial: 10_000_000, orderId: 'x' });
+
+    const [url, init] = fetchMock.mock.calls[0];
+    expect(url).toBe('https://pay.dentcast.ir/v1/request');
+    expect((init as RequestInit).headers).toMatchObject({ 'x-proxy-token': 'test-token-value' });
+  });
+
+  it('addresses /v1/verify to the proxy too', async () => {
+    replyWith({ result: 100, amount: 1, status: 1 });
+    await zibalVerify('7');
+    expect(fetchMock.mock.calls[0][0]).toBe('https://pay.dentcast.ir/v1/verify');
+  });
+
+  it('still sends the CUSTOMER to the real gateway, never the proxy', async () => {
+    replyWith({ result: 100, trackId: 3313095131 });
+    const r = await zibalRequest({ amountRial: 10_000_000, orderId: 'x' });
+
+    // The whitelist is about our egress IP, not the buyer's connection — and the
+    // proxy would 403 a browser anyway.
+    expect(startUrl(42)).toBe('https://gateway.zibal.ir/start/42');
+    expect(r.redirectUrl).toBe('https://gateway.zibal.ir/start/3313095131');
+  });
+
+  it("reads the proxy's own 403 as a token problem, not a gateway outage", async () => {
+    // nginx answers a missing/wrong token with a plain-text 403, so .json() throws.
+    fetchMock.mockResolvedValue({
+      status: 403,
+      json: async () => { throw new Error('not json'); },
+    } as unknown as Response);
+
+    const r = await zibalVerify('7');
+
+    expect(r.ok).toBe(false);            // fail closed, as always
+    expect(r.message).toContain('X-Proxy-Token');
+  });
+
+  it('goes straight to the gateway, tokenless, when no proxy is configured', async () => {
+    config.zibal.apiBaseUrl = '';
+    config.zibal.proxyToken = '';
+    replyWith({ result: 100, trackId: 1 });
+    await zibalRequest({ amountRial: 10_000_000, orderId: 'x' });
+
+    const [url, init] = fetchMock.mock.calls[0];
+    expect(url).toBe('https://gateway.zibal.ir/v1/request');
+    expect((init as RequestInit).headers).not.toHaveProperty('x-proxy-token');
+  });
+});

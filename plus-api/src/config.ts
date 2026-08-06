@@ -314,14 +314,39 @@ export const config = {
     // rather than half-broken, and forgetting to set the real key cannot
     // silently take a customer's money into nowhere.
     merchant: str('ZIBAL_MERCHANT', 'zibal'),
+    // The gateway itself. This one owns `startUrl()` — the address the CUSTOMER'S
+    // BROWSER is sent to — so it must stay the real gateway even when the two
+    // server-to-server calls are routed elsewhere by apiBaseUrl below.
     baseUrl: str('ZIBAL_BASE_URL', 'https://gateway.zibal.ir'),
     callbackUrl: str('ZIBAL_CALLBACK_URL', 'https://api.dentcast.ir/pay/callback'),
-    // Zibal's merchant registration whitelists ONE outbound IP, and this
-    // container's egress IP is not stable across redeploys (confirmed by the
-    // host, 2026-08-05). Set this to a fixed-IP forward proxy and every gateway
-    // call leaves from that address instead. Empty = direct, which is correct
-    // for a deployment that already has a stable egress IP — so this is a
-    // deployment concern, not a code path anyone has to remember.
+    /**
+     * Where /v1/request and /v1/verify go. Empty = `baseUrl`, straight at the
+     * gateway.
+     *
+     * Zibal's merchant registration whitelists ONE outbound IP (confirmed by
+     * their support, 2026-08-05) and a container platform does not guarantee a
+     * stable egress address. `https://pay.dentcast.ir` is our fixed-IP REVERSE
+     * proxy (188.121.121.232, built 2026-08-06): it forwards the path, method
+     * and body verbatim to gateway.zibal.ir, so pointing this at it moves the
+     * source IP without changing a single request.
+     *
+     * Only the two server calls move. `startUrl()` keeps using `baseUrl`,
+     * because that URL is opened by the customer's browser: the IP whitelist
+     * does not apply to it, and the proxy would answer 403 anyway — it demands
+     * a token no browser sends.
+     */
+    apiBaseUrl: str('ZIBAL_API_BASE_URL', ''),
+    /**
+     * Shared secret the reverse proxy above requires, sent as `X-Proxy-Token`.
+     * The proxy 403s any request without it and strips the header before
+     * forwarding, so it never reaches Zibal. Empty when apiBaseUrl is empty.
+     */
+    proxyToken: str('ZIBAL_PROXY_TOKEN', ''),
+    // A FORWARD proxy (undici ProxyAgent — CONNECT), which is a different thing
+    // from apiBaseUrl above: that one is a reverse proxy the request is addressed
+    // to, this one is a tunnel the request is sent through. Either fixes the
+    // egress IP; use whichever the fixed-IP host actually runs. Ours is the
+    // reverse proxy, so this stays empty. Empty = direct.
     egressProxyUrl: str('ZIBAL_EGRESS_PROXY_URL', ''),
     // Longer than the notification timeout: a payment switch is slower than a
     // messenger API, and a verify that times out is the expensive kind of
