@@ -256,6 +256,78 @@ export async function zibalVerify(trackId: string): Promise<ZibalVerifyResult> {
   };
 }
 
+export interface ZibalInquiryResult {
+  /** The inquiry itself got an answer. Says NOTHING about the payment. */
+  ok: boolean;
+  /**
+   * Did money actually move? The only field callers should branch on.
+   * `null` means we could not tell — treat that as "ask again later", never as
+   * a no.
+   */
+  paid: boolean | null;
+  amountRial: number | null;
+  refNumber: string | null;
+  paidAt: string | null;
+  verifiedAt: string | null;
+  status: number | null;
+  statusText: string | null;
+  orderId: string | null;
+  message: string;
+}
+
+/**
+ * Ask what happened to a transaction WITHOUT settling it.
+ *
+ * This exists because `verify` is not a question — it is the act of settling,
+ * and Zibal answers a second one with 201 «قبلاً تأیید شده». So a caller that
+ * merely wants to know the state of an old pending row (the reconciler) cannot
+ * use verify: doing so would settle the payment at the gateway while our own
+ * ledger, which is not in that code path, stayed pending. Inquiry reads.
+ *
+ * THE TRAP THIS FUNCTION EXISTS TO HIDE: inquiry answers `result: 100` for any
+ * successful *lookup*, including a lookup of a transaction nobody ever paid.
+ * 100 here does not mean what 100 means in verify. Real payment lives in
+ * `paidAt`/`status`, which is why `paid` above is computed once, here, rather
+ * than left to every caller to get wrong.
+ */
+export async function zibalInquiry(trackId: string): Promise<ZibalInquiryResult> {
+  const { ok, body, error } = await post('/v1/inquiry', { trackId });
+
+  const empty: ZibalInquiryResult = {
+    ok: false, paid: null, amountRial: null, refNumber: null, paidAt: null,
+    verifiedAt: null, status: null, statusText: null, orderId: null,
+    message: error ?? 'خطای ارتباط با درگاه',
+  };
+  if (!ok) return empty;
+
+  const result = num(body.result);
+  // A lookup that did not even succeed tells us nothing about the money.
+  if (result !== RESULT_SUCCESS) return { ...empty, message: resultMessage(result) };
+
+  const status = num(body.status);
+  const paidAt = text(body.paidAt);
+
+  // Paid: the gateway stamped a time, or the status says settled/unsettled-but-paid.
+  // Not paid: a terminal status with no stamp. Anything else stays null so the
+  // reconciler leaves the row alone rather than closing a live payment.
+  let paid: boolean | null = null;
+  if (paidAt !== null || status === 1 || status === 2) paid = true;
+  else if (status !== null && status !== -2) paid = false;
+
+  return {
+    ok: true,
+    paid,
+    amountRial: num(body.amount),
+    refNumber: text(body.refNumber),
+    paidAt,
+    verifiedAt: text(body.verifiedAt),
+    status,
+    statusText: statusMessage(status),
+    orderId: text(body.orderId),
+    message: resultMessage(result),
+  };
+}
+
 /** What Zibal puts on the URL it sends the customer back to. Proof of nothing. */
 export interface ZibalCallbackParams {
   success: string | null;

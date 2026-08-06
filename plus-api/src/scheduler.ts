@@ -11,6 +11,7 @@ import { attributeStrongSignals } from './services/assistant-learning.js';
 import { sweepExpiredSubscriptions } from './services/subscription.js';
 import { checkCapacityAlert } from './services/payment-cap-alert.js';
 import { runSubscriptionReminders } from './services/subscription-reminder.js';
+import { reconcilePendingPayments } from './services/payment-reconcile.js';
 
 /**
  * Daily free-digest scheduler. Fires runFreeDigest() at freeDigestHour:00 in the
@@ -358,6 +359,50 @@ export function startSubscriptionReminderScheduler(): () => void {
   };
 
   schedule();
+  return () => clearTimeout(timer);
+}
+
+/**
+ * Resolve payments the customer never came back from. Every
+ * reconcileEveryMinutes, not once a day: the row it is looking for is somebody
+ * who has been charged and has no subscription, and Zibal reverses a
+ * transaction that is never verified — so this is a race against that window,
+ * not a tidying job.
+ *
+ * Runs once at STARTUP too, before the interval. This process is deployed by
+ * hand and can be down for a while; without the boot pass, a payment stranded
+ * during a deploy would wait out the whole interval on top of the outage. The
+ * sweep is idempotent and no-ops when there is nothing pending, so an extra run
+ * costs one query.
+ */
+export function startPaymentReconcileScheduler(): () => void {
+  let timer: NodeJS.Timeout;
+
+  const run = () =>
+    reconcilePendingPayments(new Date())
+      .then((r) => {
+        if (r.settled > 0 || r.closed > 0 || r.needsReview > 0) {
+          // eslint-disable-next-line no-console
+          console.log(
+            `[payment-reconcile] checked ${r.checked}: ${r.settled} settled, ${r.closed} closed, ${r.left} left${r.needsReview ? `, ${r.needsReview} NEED REVIEW` : ''}`,
+          );
+        }
+      })
+      .catch((err) => {
+        // eslint-disable-next-line no-console
+        console.error('[payment-reconcile] run failed', err);
+      });
+
+  void run();
+
+  const tick = () => {
+    timer = setTimeout(() => {
+      void run().finally(tick);
+    }, config.payments.reconcileEveryMinutes * 60 * 1000);
+    if (typeof timer.unref === 'function') timer.unref();
+  };
+
+  tick();
   return () => clearTimeout(timer);
 }
 

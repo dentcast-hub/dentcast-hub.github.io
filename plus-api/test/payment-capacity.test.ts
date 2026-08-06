@@ -129,18 +129,41 @@ describe('capacity accounting', () => {
     expect(cap.plans[0].blocked_by).toBe('count');
   });
 
-  it('counts abandoned attempts too, because we do not yet know that Zibal forgives them', async () => {
-    expect(config.payments.capCountsAttempts).toBe(true);
+  it('counts only real transactions — an abandoned checkout holds no capacity', async () => {
+    // The e-namad allowance governs money that actually moved (founder,
+    // 2026-08-06). Until then this counted attempts, on the theory that Zibal's
+    // own counter might not forgive them; the cost of that guess was two
+    // abandoned checkouts sitting on 4,000,000 toman of the monthly ceiling
+    // with nothing in the system able to release them.
+    expect(config.payments.capCountsAttempts).toBe(false);
     await addPayment({ months: 6, status: 'pending' });
     await addPayment({ months: 6, status: 'failed' });
     await addPayment({ months: 6, status: 'paid' });
 
     const cap = await getCapacity();
-    expect(cap.used_count).toBe(3);
-    // ...while still reporting what it actually cost, so the setting can be
-    // decided on evidence rather than argued about.
+    expect(cap.used_count).toBe(1);
+    expect(cap.used_rial).toBe(6 * MONTH_RIAL);
+    // Both readings still reported, so flipping the switch back stays a decision
+    // someone can make on evidence rather than an argument.
     expect(cap.used_count_verified).toBe(1);
     expect(cap.used_rial_verified).toBe(6 * MONTH_RIAL);
+  });
+
+  it('still counts every attempt when the switch is turned back on', async () => {
+    // The conservative reading is one env var away, not a code change — it
+    // matters if Zibal ever says its counter does charge for abandoned attempts.
+    config.payments.capCountsAttempts = true;
+    try {
+      await addPayment({ months: 6, status: 'pending' });
+      await addPayment({ months: 6, status: 'failed' });
+      await addPayment({ months: 6, status: 'paid' });
+
+      const cap = await getCapacity();
+      expect(cap.used_count).toBe(3);
+      expect(cap.used_count_verified).toBe(1);
+    } finally {
+      config.payments.capCountsAttempts = false;
+    }
   });
 
   it('raises near_limit once either ceiling crosses the warning threshold', async () => {
