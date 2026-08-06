@@ -211,11 +211,17 @@ describe('admin subscriptions', () => {
     expect(again.json().removed).toBe(false);
   });
 
-  it('404s an unknown phone and 400s an invalid one', async () => {
+  it('404s anything that matches nobody, on every endpoint', async () => {
     expect((await grant({ phone: '09129999999', months: 6 })).statusCode).toBe(404);
-    expect((await grant({ phone: 'not-a-phone', months: 6 })).statusCode).toBe(400);
     expect((await grant({ phone: '09129999999' }, '/admin/subscriptions/grant-lifetime')).statusCode).toBe(404);
     expect((await grant({ phone: '09129999999' }, '/admin/subscriptions/revoke')).statusCode).toBe(404);
+
+    // 'not-a-phone' used to be 400 invalid_phone. Since these endpoints started
+    // accepting a Telegram username as well, a non-numeric string is a perfectly
+    // plausible handle — so the honest answer is "no such user", not "that is a
+    // malformed phone number". 400 is now reserved for sending no identifier at
+    // all. See test/admin-resolve-user.test.ts.
+    expect((await grant({ phone: 'not-a-phone', months: 6 })).statusCode).toBe(404);
   });
 
   it('runs the sweep on demand, so a revoke can take effect without waiting for midnight', async () => {

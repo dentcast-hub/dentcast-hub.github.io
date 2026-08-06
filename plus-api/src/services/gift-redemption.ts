@@ -212,12 +212,33 @@ export async function rejectRedemption(reference: string, reason: string): Promi
     : { ok: false, redemption: null, subscription: null, message: 'این کد پیگیری در صف بررسی نیست.' };
 }
 
-/** The admin queue, oldest first — the order they should be answered in. */
-export async function pendingRedemptions(limit = 50): Promise<Array<Redemption & { phone: string }>> {
-  const res = await query<Redemption & { phone: string }>(
-    `select ${COLUMNS.split(', ').map((c) => `g.${c}`).join(', ')}, p.phone
-       from gift_redemptions g join profiles p on p.id = g.user_id
-      where g.status = 'pending' order by g.created_at asc limit $1`,
+export type PendingRedemption = Redemption & {
+  phone: string | null;
+  username: string | null;
+  display_name: string | null;
+};
+
+/**
+ * The admin queue, oldest first — the order they should be answered in.
+ *
+ * Carries username/display_name beside the phone because a Telegram-only buyer
+ * has no phone: with phone alone their row arrives blank, and «approve» becomes
+ * a decision about somebody the founder cannot identify. The LEFT JOIN on
+ * auth_identities matters for the same reason the inner one on profiles is
+ * safe — a profile always exists, an identity may not.
+ */
+export async function pendingRedemptions(limit = 50): Promise<PendingRedemption[]> {
+  const res = await query<PendingRedemption>(
+    `select ${COLUMNS.split(', ').map((c) => `g.${c}`).join(', ')},
+            nullif(p.phone, '') as phone,
+            max(ai.username)     as username,
+            p.display_name
+       from gift_redemptions g
+       join profiles p on p.id = g.user_id
+       left join auth_identities ai on ai.user_id = p.id
+      where g.status = 'pending'
+      group by ${COLUMNS.split(', ').map((c) => `g.${c}`).join(', ')}, p.phone, p.display_name
+      order by g.created_at asc limit $1`,
     [limit],
   );
   return res.rows;
