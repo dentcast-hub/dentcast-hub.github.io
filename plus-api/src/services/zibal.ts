@@ -29,9 +29,18 @@ import { outboundFetch, describeError } from '../providers/outbound.js';
  * WHY THE CALLS CAN GO THROUGH THEIR OWN PROXY. Zibal's merchant registration
  * whitelists one outbound IP (confirmed by their support, 2026-08-05) and a
  * container platform does not guarantee a stable egress address. Routing only
- * these calls through a fixed-IP forward proxy fixes that without moving the
- * rest of the API anywhere. When ZIBAL_EGRESS_PROXY_URL is empty the requests
- * go direct, which is exactly right for a host that already has a fixed IP.
+ * these calls through a fixed-IP host fixes that without moving the rest of the
+ * API anywhere. Two shapes of that are supported, and both default to empty so
+ * a host with its own fixed IP needs neither:
+ *
+ *   ZIBAL_API_BASE_URL    a REVERSE proxy the request is addressed to
+ *                         (ours: https://pay.dentcast.ir, + ZIBAL_PROXY_TOKEN)
+ *   ZIBAL_EGRESS_PROXY_URL  a FORWARD proxy the request is tunnelled through
+ *
+ * ONLY STEPS 1 AND 4 MOVE. Step 2 is the customer's own browser and always goes
+ * to the real gateway — `startUrl()` reads ZIBAL_BASE_URL, never the proxy. Send
+ * a browser at the reverse proxy and it gets a 403, because it cannot know the
+ * token; and the IP whitelist was never about the customer's connection anyway.
  */
 
 const RESULT_SUCCESS = 100;
@@ -132,11 +141,17 @@ async function post(
   body: Record<string, unknown>,
 ): Promise<{ ok: boolean; body: Record<string, unknown>; error: string | null }> {
   try {
+    // apiBaseUrl (the fixed-IP reverse proxy) when set, otherwise the gateway
+    // itself. NOT startUrl's base — see config.zibal.apiBaseUrl.
+    const base = config.zibal.apiBaseUrl || config.zibal.baseUrl;
+    const headers: Record<string, string> = { 'content-type': 'application/json' };
+    if (config.zibal.proxyToken) headers['x-proxy-token'] = config.zibal.proxyToken;
+
     const res = await outboundFetch(
-      `${config.zibal.baseUrl}${path}`,
+      `${base}${path}`,
       {
         method: 'POST',
-        headers: { 'content-type': 'application/json' },
+        headers,
         body: JSON.stringify({ merchant: config.zibal.merchant, ...body }),
       },
       { proxyUrl: config.zibal.egressProxyUrl, timeoutMs: config.zibal.timeoutMs },
@@ -144,7 +159,15 @@ async function post(
     // A non-2xx still carries a JSON error body often enough to be worth
     // reading; the result code below is what decides, not the HTTP status.
     const parsed = (await res.json().catch(() => null)) as Record<string, unknown> | null;
-    if (!parsed) return { ok: false, body: {}, error: `پاسخ نامعتبر از درگاه (HTTP ${res.status})` };
+    if (!parsed) {
+      // The proxy's own rejection, not the gateway's. Worth naming: a wrong or
+      // unset ZIBAL_PROXY_TOKEN otherwise reads as "the gateway is broken" and
+      // sends whoever is on call to Zibal's status page instead of to the env.
+      if (res.status === 403 && config.zibal.apiBaseUrl) {
+        return { ok: false, body: {}, error: 'پروکسی درگاه درخواست را رد کرد — X-Proxy-Token نادرست یا تنظیم‌نشده است' };
+      }
+      return { ok: false, body: {}, error: `پاسخ نامعتبر از درگاه (HTTP ${res.status})` };
+    }
     return { ok: true, body: parsed, error: null };
   } catch (err) {
     return { ok: false, body: {}, error: describeError(err, config.zibal.timeoutMs) };
