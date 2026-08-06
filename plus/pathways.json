@@ -1407,6 +1407,10 @@
         "milestone": false
       },
       {
+        "content_id": "insight/insight-61",
+        "milestone": false
+      },
+      {
         "content_id": "chairside/chairside-9",
         "milestone": false
       },
@@ -1494,6 +1498,10 @@
       {
         "content_id": "insight/insight-28",
         "milestone": true
+      },
+      {
+        "content_id": "insight/insight-61",
+        "milestone": false
       },
       {
         "content_id": "episodes/episode-4",
