@@ -3548,19 +3548,19 @@ a.dc-list-card--pillar {
           </div>
         </div>
         <ul class="dc-pulse-list">
+          <li>یک <a href="/insight/insight-61.html">اینسایت بالینی</a> درباره‌ی خطای دید روی کست و تنظیم طول روکش تک‌واحدیِ سانترال بر اساس تقارن امبراژورها منتشر شد · ۱۵ مرداد</li>
           <li>قسمت ۴ از فصل ۴ <a href="/dentai/promptologist/prompt4-4.html">پرامپتولوژیست</a> درباره‌ی روشِ کار با مدل — شکستنِ کارِ بزرگ و ایست پیش از نتیجه‌گیری — منتشر شد · ۱۴ مرداد</li>
           <li>یک <a href="/sharehub/share-13.html">مطلب Share Hub</a> درباره‌ی دیابت و ایمپلنت دندانی، از تصمیم قبل از جراحی تا نگهداری بلندمدت منتشر شد · ۱۳ مرداد</li>
           <li>یک <a href="/chairside/chairside-29.html">کیس Chairside</a> دربارهٔ تغییرِ رنگِ دندانِ اندو‌شده و روکشی که هنوز لازم نبود منتشر شد · ۱۳ مرداد</li>
           <li>یک <a href="/sharehub/share-12.html">مطلب Share Hub</a> درباره‌ی نورالژی تریژمینال و آنچه دندانپزشک عمومی باید بداند منتشر شد · ۱۲ مرداد</li>
-          <li>یک <a href="/chairside/chairside-28.html">کیس Chairside</a> درباره‌ی دردِ مبهمِ دندانِ اندو‌شده و سهل‌انگاریِ متخصصِ پریو منتشر شد · ۱۲ مرداد</li>
         </ul>
       </div>
 
       <div class="dc-home-sec"><h2 class="dc-home-sec-label">تازه‌های دنت‌کست</h2></div>
       <div class="dc-rail" id="dcLatestRail">
-        <a class="dc-rail-card" data-cat="clinical" href="/insight/insight-60.html">
+        <a class="dc-rail-card" data-cat="clinical" href="/insight/insight-61.html">
           <span class="dc-type-chip t-insight">Insight</span>
-          <p class="dc-rail-title">راهکاری مدیریت عدم قطعیت VD و رابطه‌ی فکی در بیماران تمام فک</p>
+          <p class="dc-rail-title">فریب خطای دید روی کست؛ راهکاری برای تنظیم روکش تک‌واحدی سانترال</p>
           <span class="dc-rail-meta">تازه‌ترین مطلب</span>
         </a>
         <a class="dc-rail-card" data-cat="notecast" href="/notecast/episode-38.html">
@@ -3710,7 +3710,7 @@ a.dc-list-card--pillar {
           <span class="k">ساعت محتوای صوتی</span>
         </div>
         <div class="hero-stat" role="listitem">
-          <span class="v"><!-- COUNTER:CONTENT:START -->۵۷۶<!-- COUNTER:CONTENT:END --></span>
+          <span class="v"><!-- COUNTER:CONTENT:START -->۵۷۷<!-- COUNTER:CONTENT:END --></span>
           <span class="k">مطلب و مدخل آموزشی</span>
         </div>
       </div>
@@ -4395,7 +4395,7 @@ scrollBody.addEventListener('touchend',e=>{
     if(p) p.textContent=title;
     a.href=url;
   }
-  fetch('/dentcast-brain.json?v=f8550ce947',{cache:'no-store'}).then(function(r){return r.json();}).then(function(arr){
+  fetch('/dentcast-brain.json?v=82c04b2ac7',{cache:'no-store'}).then(function(r){return r.json();}).then(function(arr){
     if(!Array.isArray(arr)) return;
     var latest={}, pool=[];
     arr.forEach(function(e){
@@ -4727,7 +4727,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 <script>
 /* ── LAST 30 UPDATES ── */
 (function(){
-  const FEED_URL='/dentcast-brain.json?v=f8550ce947';
+  const FEED_URL='/dentcast-brain.json?v=82c04b2ac7';
   const el=document.getElementById('dcLast3Updates');
   if(!el) return;
   function extractArray(json){if(Array.isArray(json))return json;const cands=[json?.items,json?.data,json?.entries,json?.feed].filter(Boolean);for(const c of cands)if(Array.isArray(c))return c;for(const k in(json||{})){const v=json[k];if(Array.isArray(v))return v;if(v&&typeof v==='object'&&Array.isArray(v.items))return v.items;}return[];}
@@ -4983,7 +4983,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 
   function getBrain(){
     if(brainCache) return Promise.resolve(brainCache);
-    return fetch('/dentcast-brain.json?v=f8550ce947', {cache:'no-store'})
+    return fetch('/dentcast-brain.json?v=82c04b2ac7', {cache:'no-store'})
       .then(r => r.ok ? r.json() : [])
       .then(d => { brainCache = Array.isArray(d) ? d : []; return brainCache; })
       .catch(() => { brainCache = []; return []; });
