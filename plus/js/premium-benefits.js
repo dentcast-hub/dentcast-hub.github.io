@@ -43,15 +43,26 @@ const PITCH = {
  * wondering. A benefit stated with a caveat attached reads as a benefit being
  * walked back.
  *
- * Deliberately NOT here: the streak score multiplier. It is not implemented —
- * the whole score formula is one SQL select in the API's score.ts and carries no
- * tier term at all — and a benefit listed beside a payment button has to be one
- * the buyer actually receives. Add it here on the day the API grants it, and it
- * appears on both the price page and the popup at once.
+ * The score multiplier is here only because the API now actually grants it
+ * (score.ts's PREMIUM_POINTS_PER_ACTIVE_DAY, stamped per day by migration 0023).
+ * It was held out of the first version of this list precisely because it was not
+ * implemented yet, and a benefit printed beside a payment button has to be one
+ * the buyer receives.
+ *
+ * Its sentence says «۱۰ … ۱۲» rather than «۱٫۲ برابر» because that is both what
+ * the code does and the only version a reader can check against their own
+ * screen: the multiplier applies to the DAILY point and to nothing else, so
+ * quoting a ratio would invite someone to expect their highlights to grow by a
+ * fifth too. It then names the shields, because they are the only thing the
+ * score is ever spent on — the number means nothing without what it buys.
  */
 const EXTRA_PERKS = [
   { title: 'بدون تبلیغ', hint: 'هیچ تبلیغی، در هیچ صفحه‌ای.' },
   { title: 'اطلاع فوری از مطلب تازه', hint: 'نوتیفیکیشن مطلب تازه بلافاصله پس از انتشار می‌رسد.' },
+  {
+    title: 'ضریب بالاتر امتیاز',
+    hint: 'هر روزی که فعال باشید به‌جای ۱۰ امتیاز، ۱۲ امتیاز می‌گیرید؛ سپرهای استریک زودتر می‌رسند.',
+  },
 ];
 
 /** Every premium benefit, in pitch order: `[{ title, hint }, …]`. */

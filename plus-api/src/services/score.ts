@@ -7,7 +7,8 @@ import { config } from '../config.js';
  * number the user sees and the number the engine spends never drift apart.
  *
  * Score = active_days * 10 + content_completed * 5 + total_highlights
- * (activity-log derived, monotonic).
+ * (activity-log derived, monotonic), except that a day earned while the account
+ * was premium pays PREMIUM_POINTS_PER_ACTIVE_DAY (12) instead of 10.
  *
  * `content_completed` counts each (action, content) pair ONCE FOR ALL TIME, so
  * every new episode heard or article finished pays, while replaying the same
@@ -55,10 +56,84 @@ export const CONSUMPTION_ACTIONS = ['article_completed', 'episode_listened'];
 export const POINTS_PER_ACTIVE_DAY = 10;
 export const POINTS_PER_CONTENT = 5; // half a day: visible, but the daily habit still leads
 
+/**
+ * What a premium subscriber's DAILY point is worth — the subscription perk.
+ *
+ * The multiplier sits on the active-day component alone, and that is a design
+ * choice, not a shortcut. Applied to the whole score it would have to multiply
+ * the per-highlight part too, where 1 × 1.2 = 1.2 — a fraction inside a number
+ * that is compared against integer shield thresholds and against other users'
+ * scores. Rounding it away would quietly eat points a user had earned (7
+ * highlights would pay 8, not 8.4), which is a rule nobody could be told with a
+ * straight face. On the daily point the arithmetic is exact: 10 becomes 12, and
+ * no score is ever fractional, so there is no rounding step to explain.
+ *
+ * It also aims the perk at the thing it pays for. Score's only use is streak
+ * shields, and the streak is a measure of showing up daily — so the reward for
+ * subscribing lands on the daily habit, not on how much was read in one sitting.
+ *
+ * Applied PER DAY EARNED, not to the total: `user_activity.premium` records the
+ * tier at the moment each event happened (migration 0023) and is never re-read
+ * afterwards. That is what keeps the "score is never deducted" rule true across
+ * an expiry — see the migration for why multiplying the live total instead would
+ * take points back from anyone whose subscription ran out.
+ *
+ * It is deliberately NOT a league advantage — league ranking reads `weekly_xp`
+ * on the membership row and never touches this number (league.ts).
+ */
+export const PREMIUM_SCORE_MULTIPLIER = 1.2;
+
+/**
+ * 12. Derived rather than written down so the two constants can never disagree,
+ * and asserted to be a whole number because the entire argument above rests on
+ * it: if POINTS_PER_ACTIVE_DAY is ever retuned to a value that makes this
+ * fractional, the score stops being an integer and the failure is silent.
+ */
+export const PREMIUM_POINTS_PER_ACTIVE_DAY = POINTS_PER_ACTIVE_DAY * PREMIUM_SCORE_MULTIPLIER;
+if (!Number.isInteger(PREMIUM_POINTS_PER_ACTIVE_DAY)) {
+  throw new Error(
+    `score: POINTS_PER_ACTIVE_DAY (${POINTS_PER_ACTIVE_DAY}) × PREMIUM_SCORE_MULTIPLIER `
+    + `(${PREMIUM_SCORE_MULTIPLIER}) must be a whole number of points, got `
+    + `${PREMIUM_POINTS_PER_ACTIVE_DAY}`,
+  );
+}
+
 type Db = pg.Pool | pg.PoolClient;
 
 export interface ScoreBreakdown {
-  score: number; active_days: number; content_completed: number; total_highlights: number;
+  score: number;
+  active_days: number; content_completed: number; total_highlights: number;
+  /** Of `active_days`, how many were earned while premium (a subset, not an extra). */
+  premium_days: number;
+  /** Points this account owes purely to the multiplier. Zero on a free plan. */
+  premium_bonus: number;
+}
+
+/** The three raw counts, plus how many of the active days were premium. */
+export interface ScoreParts {
+  active_days: number; content_completed: number; total_highlights: number;
+  premium_days: number;
+}
+
+/**
+ * The arithmetic, in ONE place, for the TS path and (mirrored) the SQL one.
+ *
+ * `premium_days` is a SUBSET of `active_days`, never an addition to it: a day on
+ * which a subscriber read something appears in both and is paid once, at the
+ * premium rate. So the free portion is always `active_days - premium_days`,
+ * which cannot go negative and needs no clamp.
+ *
+ * Every term is an integer, so the result is too — no floor, no round, nothing
+ * to explain to somebody comparing their number with a friend's.
+ */
+export function combineScore(p: ScoreParts): { score: number; premium_bonus: number } {
+  const freeDays = p.active_days - p.premium_days;
+  const premium_bonus = p.premium_days * (PREMIUM_POINTS_PER_ACTIVE_DAY - POINTS_PER_ACTIVE_DAY);
+  const score = freeDays * POINTS_PER_ACTIVE_DAY
+    + p.premium_days * PREMIUM_POINTS_PER_ACTIVE_DAY
+    + p.content_completed * POINTS_PER_CONTENT
+    + p.total_highlights;
+  return { score, premium_bonus };
 }
 
 /**
@@ -70,13 +145,21 @@ export interface ScoreBreakdown {
  * Callers pass their own placeholder numbers since each query binds differently.
  */
 export function scoreSelectSql(p: { tz: string; scoring: string; consumption: string }): string {
+  // `count(distinct …) filter (where premium)` is the SQL mirror of combineScore's
+  // subset rule. A day touched even once while premium counts as a premium day in
+  // full — a day is one indivisible unit, and the tie goes to the person who paid.
+  // Nothing here rounds: every coefficient is a whole number of points.
   return `select p.id,
-                 coalesce(ad.n, 0) * ${POINTS_PER_ACTIVE_DAY}
+                 ( coalesce(ad.n, 0) - coalesce(ad.pr, 0) ) * ${POINTS_PER_ACTIVE_DAY}
+               + coalesce(ad.pr, 0) * ${PREMIUM_POINTS_PER_ACTIVE_DAY}
                + coalesce(cc.n, 0) * ${POINTS_PER_CONTENT}
                + coalesce(hl.n, 0) as score
             from profiles p
             left join (
-              select user_id, count(distinct (created_at at time zone ${p.tz})::date) as n
+              select user_id,
+                     count(distinct (created_at at time zone ${p.tz})::date) as n,
+                     count(distinct (created_at at time zone ${p.tz})::date)
+                       filter (where premium) as pr
                 from user_activity where action = any(${p.scoring}) group by user_id
             ) ad on ad.user_id = p.id
             left join (
@@ -92,8 +175,10 @@ export function scoreSelectSql(p: { tz: string; scoring: string; consumption: st
 
 /** Compute a user's score and its parts from the activity log + highlights. */
 export async function computeScore(db: Db, userId: string): Promise<ScoreBreakdown> {
-  const ad = await db.query<{ n: number }>(
-    `select count(distinct (created_at at time zone $2)::date)::int as n
+  const ad = await db.query<{ n: number; pr: number }>(
+    `select count(distinct (created_at at time zone $2)::date)::int as n,
+            count(distinct (created_at at time zone $2)::date)
+              filter (where premium)::int as pr
        from user_activity where user_id = $1 and action = any($3)`,
     [userId, config.streakTimezone, SCORING_ACTIONS],
   );
@@ -109,13 +194,13 @@ export async function computeScore(db: Db, userId: string): Promise<ScoreBreakdo
     `select count(*)::int as n from highlights where user_id = $1`,
     [userId],
   );
-  const active_days = ad.rows[0]?.n ?? 0;
-  const content_completed = cc.rows[0]?.n ?? 0;
-  const total_highlights = hl.rows[0]?.n ?? 0;
-  const score = active_days * POINTS_PER_ACTIVE_DAY
-    + content_completed * POINTS_PER_CONTENT
-    + total_highlights;
-  return { score, active_days, content_completed, total_highlights };
+  const parts: ScoreParts = {
+    active_days: ad.rows[0]?.n ?? 0,
+    content_completed: cc.rows[0]?.n ?? 0,
+    total_highlights: hl.rows[0]?.n ?? 0,
+    premium_days: ad.rows[0]?.pr ?? 0,
+  };
+  return { ...parts, ...combineScore(parts) };
 }
 
 /** How many shields the user has already spent (append-only log is the source). */
