@@ -5,7 +5,7 @@ import {
   startArticleScheduler, startStreakReminderScheduler, startReactivationScheduler,
   startLeagueScheduler, startHeldNotificationsScheduler, startReviewReminderScheduler,
   startAssistantLearningScheduler, startSubscriptionScheduler,
-  startSubscriptionReminderScheduler,
+  startSubscriptionReminderScheduler, startPaymentReconcileScheduler,
 } from './scheduler.js';
 import { startBalePolling } from './services/bale-updates.js';
 import { startContentRefresh } from './content-refresh.js';
@@ -31,6 +31,10 @@ async function main(): Promise<void> {
   const stopSubscriptions = startSubscriptionScheduler();
   // Mid-morning, so "three days left" arrives when it can be acted on.
   const stopSubscriptionReminders = startSubscriptionReminderScheduler();
+  // Every 15 minutes, plus once at boot: finish or close payments the customer
+  // never came back from. Minutes rather than daily because the row it looks for
+  // is somebody already charged, and Zibal reverses an unverified transaction.
+  const stopPaymentReconcile = startPaymentReconcileScheduler();
   // Bale connect worker: long-polls getUpdates and links chat_ids (no-op without
   // a BALE_BOT_TOKEN). Primary path since Bale's webhook delivery is unreliable.
   const stopBalePolling = startBalePolling();
@@ -51,6 +55,7 @@ async function main(): Promise<void> {
     stopAssistantLearning();
     stopSubscriptions();
     stopSubscriptionReminders();
+    stopPaymentReconcile();
     stopBalePolling();
     stopContentRefresh();
     await app.close();

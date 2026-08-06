@@ -13,6 +13,7 @@ import {
   summarizeSubscription, sweepExpiredSubscriptions, type Subscription,
 } from '../services/subscription.js';
 import { getCapacity } from '../services/payment-capacity.js';
+import { reconcilePendingPayments } from '../services/payment-reconcile.js';
 import {
   pendingRedemptions, approveRedemption, rejectRedemption,
 } from '../services/gift-redemption.js';
@@ -609,6 +610,15 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
   // turns PAYMENT_CAP_COUNTS_ATTEMPTS from a guess into a decision.
   app.get('/admin/payments/capacity', async (_request, reply) => {
     return reply.send({ ok: true, ...await getCapacity() });
+  });
+
+  // Force the pending-payment sweep now instead of waiting for the next tick.
+  // The reason this is worth a button: the thing it resolves is somebody who has
+  // been charged and has no subscription, and they are usually on the phone
+  // while you read this. Safe to hammer — the sweep is idempotent, and it can
+  // only ever close a row the gateway positively said was never paid.
+  app.post('/admin/payments/reconcile', async (_request, reply) => {
+    return reply.send({ ok: true, ...await reconcilePendingPayments(new Date()) });
   });
 
   // --- gift-card queue -------------------------------------------------------

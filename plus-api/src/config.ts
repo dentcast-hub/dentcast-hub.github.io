@@ -267,11 +267,34 @@ export const config = {
     // default founder and guessing one would page a stranger.
     capAlertPhone: str('PAYMENT_CAP_ALERT_PHONE', ''),
     // Count every attempt that reached the gateway, not just the verified ones.
-    // We do not yet know whether Zibal's own counter forgives a failed payment;
-    // until it says so, over-counting only closes the shop slightly early, while
-    // under-counting means a customer is charged for a subscription that the
-    // ceiling then refuses to activate. Set false once the answer is in hand.
-    capCountsAttempts: bool('PAYMENT_CAP_COUNTS_ATTEMPTS', true),
+    //
+    // DEFAULTED FALSE on 2026-08-06: the founder confirmed the e-namad allowance
+    // governs REAL transactions, which is the answer the previous default was
+    // waiting on. It used to be true because we did not know whether Zibal's
+    // counter forgives an abandoned payment, and over-counting merely closed the
+    // shop early while under-counting could charge somebody for a subscription
+    // the ceiling then refused to activate.
+    //
+    // What made the old default expensive in practice: an abandoned checkout
+    // held its slice of the ceiling forever, because nothing ever closed a
+    // pending row. Two dead rows were sitting on 4,000,000 toman of the monthly
+    // 100,000,000 the day this changed. services/payment-reconcile.ts now closes
+    // them, so even flipped back to true the ceiling would no longer silt up.
+    capCountsAttempts: bool('PAYMENT_CAP_COUNTS_ATTEMPTS', false),
+    // --- Reconciling payments nobody came back from --------------------------
+    // How old a pending row must be before we ask the gateway about it. Well
+    // past any bank session: below this a `-1` just means the customer is still
+    // typing their card number, and closing the row would be a lie about a live
+    // payment.
+    reconcileAfterMinutes: int('PAYMENT_RECONCILE_AFTER_MINUTES', 30),
+    // How often the sweep runs. Minutes, not hours: an unsettled payment is a
+    // customer who has been charged and has nothing, and Zibal reverses a
+    // transaction that is never verified — so the window to put it right is
+    // finite and the cost of checking is one small query.
+    reconcileEveryMinutes: int('PAYMENT_RECONCILE_EVERY_MINUTES', 15),
+    // Rows per pass. A ceiling on the gateway calls one sweep can make; anything
+    // left over is simply picked up by the next pass.
+    reconcileBatch: int('PAYMENT_RECONCILE_BATCH', 50),
     // Where the customer's browser lands once we know the answer. On the SITE,
     // not the API: the API's job ends at deciding, and a bare JSON body is not
     // a thing to show somebody who has just paid.
