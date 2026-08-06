@@ -16,9 +16,10 @@ import { el } from './util.js';
 import { api, currentUser } from './api.js';
 import { openLoginModal } from './login-modal.js';
 import {
-  PREMIUM_FEATURES, paymentsNeedIrHost, paymentsIrUrl, PLAN_MONTHS, MONTHLY_RIAL,
+  paymentsNeedIrHost, paymentsIrUrl, PLAN_MONTHS, MONTHLY_RIAL,
   GIFT_CARD,
 } from './config.js';
+import { premiumBenefits } from './premium-benefits.js';
 import { registerSW } from './pwa.js';
 
 const FA_DIGITS = '۰۱۲۳۴۵۶۷۸۹';
@@ -86,54 +87,13 @@ function planCard(plan, { featured, onPick, selected }) {
 /**
  * WHAT PREMIUM ADDS.
  *
- * The NAMES come from PREMIUM_FEATURES — the list the dashboard and the
- * league-prize banner already read, kept in step with the API's copy by a test.
- * That is the thing which must never drift: a price list quietly naming a
- * feature the product no longer calls that is worse than no list. (The first
- * draft of this page hand-wrote its own and led with «میز کار», which every
- * account has had all along.)
- *
- * The SENTENCES are written here rather than reused, because those hints are
- * in-product tooltips and speak the dashboard's casual voice — «بریز», «بخون».
- * That voice is right beside a button someone already paid for and wrong on the
- * page asking them for a million toman. Same features, register to match the
- * moment.
- *
- * Keyed by title with a fallback to the shared hint, so a feature added to the
- * canonical list still appears here — described in its own words rather than
- * silently dropped from the thing people are paying against.
+ * The list itself now lives in premium-benefits.js, because the first-visit
+ * popup makes the same pitch and two hand-kept copies of nine sentences drift.
+ * (The first draft of this page hand-wrote its own and led with «میز کار»,
+ * which every account has had all along.)
  */
-const PITCH = {
-  'برای مرور امروز': 'هر هایلایت درست وقتی برمی‌گردد که در آستانه‌ی فراموش‌شدن است — نه زودتر، نه دیرتر.',
-  'مسیر یادگیری': 'مسیرهای آماده، از پیش‌نیاز تا پیشرفته و به ترتیب درست؛ لازم نیست خودتان ترتیب را کشف کنید.',
-  'کالکشن‌ها': 'هایلایت‌ها و مقاله‌ها را در پوشه‌های خودتان دسته‌بندی کنید — مستقل از موضوع‌بندی سایت.',
-  'قطب‌نمای مطالعه': 'نشان می‌دهد در هر حوزه کجا ایستاده‌اید و کدام بخش هنوز از دیدتان دور مانده است.',
-  'دستیار هوشمند': 'شرح کیس را می‌نویسید و با چند پرسش کوتاه به مرتبط‌ترین مطالب همین‌جا می‌رسید.',
-  'دفترچه‌ی هایلایت‌ها': 'همه‌ی هایلایت‌هایتان یکجا، با یادداشت‌ها و جستجو — نه فقط داخل تک‌تک مقاله‌ها.',
-};
-
-/**
- * Two real perks with no dashboard section of their own, so they are not in the
- * canonical array: ads (spot.js renders nothing at all for a premium visitor)
- * and the timing of the new-article notification.
- *
- * The notification line says ONE thing, because one thing is what it is. An
- * earlier draft went on to explain that the article itself is open to everyone
- * at publish — true, and about something nobody reading a price list was
- * wondering. A benefit stated with a caveat attached reads as a benefit being
- * walked back.
- */
-const EXTRA_PERKS = [
-  { title: 'بدون تبلیغ', hint: 'هیچ تبلیغی، در هیچ صفحه‌ای.' },
-  { title: 'اطلاع فوری از مطلب تازه', hint: 'نوتیفیکیشن مطلب تازه بلافاصله پس از انتشار می‌رسد.' },
-];
-
 function whatYouGet() {
-  const items = [
-    ...PREMIUM_FEATURES.map((f) => ({ title: f.title, hint: PITCH[f.title] || f.hint })),
-    ...EXTRA_PERKS,
-  ];
-  return el('ul', { class: 'dcp-price-list' }, items.map((f) => el('li', {}, [
+  return el('ul', { class: 'dcp-price-list' }, premiumBenefits().map((f) => el('li', {}, [
     el('strong', {}, f.title), el('span', {}, f.hint),
   ])));
 }
