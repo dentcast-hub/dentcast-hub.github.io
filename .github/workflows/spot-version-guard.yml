@@ -15,7 +15,7 @@ name: Spot loader version guard
 #
 # A version bump is worthless if one loader never gets it, so equality is checked
 # in CI rather than trusted to a checklist.
-on: [push, pull_request]
+on: [push, pull_request, workflow_dispatch]
 
 jobs:
   check:
