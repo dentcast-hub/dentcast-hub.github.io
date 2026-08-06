@@ -15,6 +15,27 @@ import { API_BASES } from './config.js';
 // request re-probes and can fail over to the other mirror.
 const SS_BASE = 'dcp:api-base';
 
+// The base that HOLDS THIS BROWSER'S SESSION COOKIE. Not a cache — a fact, and
+// the reason the two mirrors are not interchangeable once someone is logged in.
+//
+// The cookie is host-only (setSessionCookie sends no Domain), so a session that
+// lives on api.dentcast.ir is simply absent on api.dentcast.org even though the
+// same container answers both. Before this key existed, nothing anywhere
+// recorded which host that was, so every failover was free to move the browser
+// to the mirror where it has no cookie: /me came back 401, the header redrew as
+// a guest, and logging in again wrote the cookie to whichever host answered
+// that time — so the next page bounced right back. A 1.5s slow /health (one
+// container restart) was enough to start it, and because the resolved base was
+// kept in sessionStorage — which is per TAB — it hit one tab and not the next,
+// which is exactly why it read as "some people, today" rather than an outage.
+//
+// localStorage, not sessionStorage: a session outlives a tab, so the note about
+// where it lives has to as well. Written on any proof the cookie works on this
+// host (a /me that returns a profile, a successful OTP verify — the former also
+// covers the Telegram callback, since /me is the first thing the page does when
+// it lands back). Cleared on logout, and on nothing else.
+const LS_HOME = 'dcp:api-home';
+
 function ssGet(key) {
   try { return sessionStorage.getItem(key) || ''; } catch (_) { return ''; }
 }
@@ -24,8 +45,44 @@ function ssSet(key, v) {
 function ssClear(key) {
   try { sessionStorage.removeItem(key); } catch (_) { /* private mode */ }
 }
+function lsGet(key) {
+  try { return localStorage.getItem(key) || ''; } catch (_) { return ''; }
+}
 
 let resolvedBase = null;
+
+// Set by forgetBase() when the host we were talking to failed at the NETWORK
+// level. It lets this page load probe and fall over even though a home base is
+// pinned — otherwise a genuinely dead home host would take the public pages
+// (prices, the index) down with the session. It never rewrites the pin, and it
+// is module scope, so the next navigation on this static multi-page site starts
+// over honouring the pin: the moment the home host is back, so is the session.
+let pinBypass = false;
+
+/**
+ * Remember the base that just proved it carries this browser's session.
+ * Called on success only, and only writes when the value actually changes, so
+ * the common case (every page calls /me) is a read, not a write.
+ */
+function pinBase() {
+  if (!resolvedBase) return;
+  try {
+    if (localStorage.getItem(LS_HOME) !== resolvedBase) {
+      localStorage.setItem(LS_HOME, resolvedBase);
+    }
+  } catch (_) { /* private mode: fall back to the old probe-every-time behaviour */ }
+}
+
+/** Forget where the session lives. Logout is the ONLY caller — see LS_HOME. */
+function unpinBase() {
+  try { localStorage.removeItem(LS_HOME); } catch (_) { /* private mode */ }
+}
+
+/** Pass a resolved value through while pinning the base that produced it. */
+function keepBase(value) {
+  pinBase();
+  return value;
+}
 
 // A hanging host is worse than a dead one: an unreachable base that REFUSES the
 // connection fails in milliseconds and we move on, but one that simply never
@@ -54,6 +111,14 @@ function probeSignal() {
 
 async function pickBase() {
   if (resolvedBase) return resolvedBase;
+  // A pinned home base is not a preference and is not raced against anything:
+  // it is where the session cookie is, and any other host is a logout. So it
+  // short-circuits the probe entirely — which also takes one round trip off the
+  // front of /me for every logged-in visitor, and therefore off Spot's card.
+  if (!pinBypass) {
+    const home = lsGet(LS_HOME);
+    if (home && API_BASES.indexOf(home) !== -1) { resolvedBase = home; return home; }
+  }
   const cached = ssGet(SS_BASE);
   if (cached && API_BASES.indexOf(cached) !== -1) { resolvedBase = cached; return cached; }
   // Probe every mirror CONCURRENTLY but honour them in ORDER. The distinction
@@ -94,6 +159,10 @@ async function pickBase() {
 export function forgetBase() {
   resolvedBase = null;
   ssClear(SS_BASE);
+  // Deliberately NOT unpinBase(): a transient network error is the one thing
+  // that must not be able to move a session to the other host. Allow the
+  // fallback for this page load; keep the note about where the session lives.
+  pinBypass = true;
 }
 
 // The resolved (health-checked, failed-over) base, for callers that must build
@@ -150,12 +219,18 @@ async function request(path, { method = 'GET', body, query } = {}) {
 
 export const api = {
   // auth
-  me: () => request('/me'),
+  //
+  // me / verifyOtp pin the base (see LS_HOME): a /me that returns a profile and
+  // a verify that returns a session are the two proofs that the cookie works on
+  // the host that answered. A 401 rejects instead of resolving, so a signed-out
+  // /me never pins — only a real session does.
+  me: () => request('/me').then(keepBase),
   updateMe: (patch) => request('/me', { method: 'PATCH', body: patch }),
   profileStats: () => request('/profile/stats'),
   requestOtp: (phone) => request('/auth/otp/request', { method: 'POST', body: { phone } }),
   verifyOtp: (phone, code, return_to) =>
-    request('/auth/otp/verify', { method: 'POST', body: { phone, code, return_to } }),
+    request('/auth/otp/verify', { method: 'POST', body: { phone, code, return_to } })
+      .then(keepBase),
   // Prove a phone via OTP while logged in (e.g. a Telegram-only account), to
   // recover/merge an older phone account. Call requestOtp(phone) first.
   linkPhone: (phone, code) =>
@@ -166,7 +241,10 @@ export const api = {
   // token (the client builds the deep link from it) / disconnect.
   connectBale: () => request('/auth/bale/connect', { method: 'POST' }),
   unlinkBale: () => request('/auth/bale/unlink', { method: 'POST' }),
-  logout: () => request('/auth/logout', { method: 'POST' }),
+  // The one place the home base is forgotten. On success only: a logout that
+  // never reached the server left the session where it was, and so should the
+  // note that says where that is.
+  logout: () => request('/auth/logout', { method: 'POST' }).then((v) => { unpinBase(); return v; }),
 
   // activity + anon
   activity: (action, content_id, meta) =>
