@@ -4,7 +4,7 @@ import { makeApp, resetDb, loginAs } from './helpers.js';
 import { pool, one } from '../src/db.js';
 import { config } from '../src/config.js';
 import { notifications } from '../src/providers/registry.js';
-import { onArticlePublished, runFreeDigest, backfillExistingContent } from '../src/services/article-notify.js';
+import { onArticlePublished, runFreeDigest, backfillExistingContent, teaser } from '../src/services/article-notify.js';
 import { msUntilNextRun } from '../src/scheduler.js';
 import { WebPushNotificationSender } from '../src/providers/notifications/webpush.js';
 import { getIndex } from '../src/content-index.js';
@@ -82,6 +82,77 @@ describe('new-article Pulse text', () => {
     const msg = spy.mock.calls.at(-1)?.[1] as { body: string };
     expect(msg.body).toContain('• پالسِ یک');
     expect(msg.body).toContain('• پالسِ دو');
+    spy.mockRestore();
+  });
+
+  // The brain `caption` that feeds `pulse` is a full case summary for an Insight
+  // (~1200-1500 chars). Sent verbatim it spoiled the article and killed the
+  // click-through, so the body is cut exactly like the Telegram channel post.
+  const LONG_PULSE =
+    'روکش تک‌واحدی سانترال برای بیماری که دیاستم داشت و تمایلی به بستن فضا نشان نداد؛ '
+    + 'روکش سانترال چپ کمی پهن‌تر ساخته شد، اما چالش اصلی جای دیگری بود: روکش هنگام صحبت '
+    + 'کردن نسبت به خط لب کوتاه به نظر می‌رسید، بدون آنکه واقعاً از سانترال سمت راست کوچک‌تر '
+    + 'باشد. لبه‌ی اینسایزال سانترال سمت راست کمی شیب‌دار بود و لترال‌ها هم متقارن نبودند. '
+    + 'راه‌حل یک قانون تلفنی ساده بود: فقط تقارن امبراژورهای دو سانترال را یکسان دربیاور.';
+
+  it('cuts a long Pulse into a teaser instead of spoiling the whole article', async () => {
+    const spy = vi.spyOn(notifications, 'send').mockResolvedValue();
+    await makeUser('09120000093', 'premium', { newContent: true });
+    await onArticlePublished({
+      contentId: 'insight/long', title: 'ت', url: '/insight/long.html',
+      pulse: LONG_PULSE, publishedAt: T,
+    });
+    const msg = spy.mock.calls.at(-1)?.[1] as { body: string };
+    expect(msg.body.length).toBeLessThanOrEqual(202); // 200 + the ' …' marker
+    expect(msg.body.endsWith(' …')).toBe(true);
+    expect(msg.body.startsWith('روکش تک‌واحدی سانترال')).toBe(true);
+    // the payoff must NOT be in the notification
+    expect(msg.body).not.toContain('تقارن امبراژورهای دو سانترال');
+    spy.mockRestore();
+  });
+
+  it('leaves a short Pulse untouched — no ellipsis on a one-liner', () => {
+    expect(teaser('یک جملهٔ پالسِ تستی')).toBe('یک جملهٔ پالسِ تستی');
+    expect(teaser('  فاصله‌های   اضافی   جمع می‌شوند ')).toBe('فاصله‌های اضافی جمع می‌شوند');
+  });
+
+  it('cuts on the last sentence end before the limit', () => {
+    const t = teaser('الف '.repeat(30) + 'پایانِ جمله. ' + 'ب '.repeat(200));
+    expect(t.endsWith('پایانِ جمله. …')).toBe(true);
+    expect(t.length).toBeLessThanOrEqual(202);
+  });
+
+  it('falls back to a word boundary when no sentence end is usable', () => {
+    // The only "." sits at index 3 — below limit/3 (66) — so it is rejected as a
+    // cut point and the last space before the limit wins instead. Same branch,
+    // same result as one_line() in tools/announce_telegram_channel.py.
+    expect(teaser('الف. ' + 'ب'.repeat(300))).toBe('الف. …');
+    const words = teaser('کلمه '.repeat(100));
+    expect(words.endsWith('کلمه …')).toBe(true);
+    expect(words.length).toBeLessThanOrEqual(202);
+  });
+
+  it('the free digest teases each article too', async () => {
+    await makeUser('09120000094', 'free', { newContent: true });
+    const pub = new Date('2026-03-08T12:00:00Z');
+    await onArticlePublished({ contentId: 'insight/dl', title: 'a', url: '/insight/dl.html', pulse: LONG_PULSE, publishedAt: pub });
+    const spy = vi.spyOn(notifications, 'send').mockResolvedValue();
+    await runFreeDigest(new Date('2026-03-10T17:30:00Z'));
+    const msg = spy.mock.calls.at(-1)?.[1] as { body: string };
+    expect(msg.body.length).toBeLessThanOrEqual(202);
+    expect(msg.body.endsWith(' …')).toBe(true);
+    spy.mockRestore();
+  });
+
+  it('the full caption is still recorded — only the notification is cut', async () => {
+    const spy = vi.spyOn(notifications, 'send').mockResolvedValue();
+    await makeUser('09120000095', 'premium', { newContent: true });
+    await onArticlePublished({
+      contentId: 'insight/rec', title: 'ت', url: '/insight/rec.html',
+      pulse: LONG_PULSE, publishedAt: T,
+    });
+    const row = await one<{ pulse: string }>('select pulse from articles where content_id = $1', ['insight/rec']);
+    expect(row!.pulse).toBe(LONG_PULSE);
     spy.mockRestore();
   });
 

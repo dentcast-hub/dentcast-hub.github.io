@@ -93,7 +93,12 @@ def one_line(text, limit=200):
     single line, for an Insight it is a full ~1500-character summary. Posting the
     long one verbatim buries the link under a wall of text, so cut at the last
     sentence end before the limit — falling back to the last word — and mark the
-    cut so nobody mistakes it for the whole thing."""
+    cut so nobody mistakes it for the whole thing.
+
+    KEEP IN STEP with `teaser()` in plus-api/src/services/article-notify.ts: the
+    Plus push notifications are cut by a port of this function, so the channel
+    post and the push read the same. A change to the limit, the sentence-end set
+    or the fallback belongs in both."""
     if not text:
         return None
     text = " ".join(text.split())

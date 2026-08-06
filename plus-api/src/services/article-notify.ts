@@ -52,10 +52,42 @@ function sectionFa(contentId: string): string {
   }
 }
 
-/** The user-visible line for one article: its Pulse, else "a new article in {section}". */
+/**
+ * A notification is a teaser, not the article. The `pulse` column is fed by
+ * tools/notify_new_articles.py from the brain's `caption`, and that field is not
+ * one shape: a Promptologist caption is a single line, an Insight caption is a
+ * full ~1200-1500 character summary of the whole case. Sent verbatim, the push
+ * told the reader everything and left no reason to open the page.
+ *
+ * So the body is cut the same way the Telegram channel post already cuts it —
+ * KEEP THESE TWO IN STEP: this is a port of `one_line()` in
+ * tools/announce_telegram_channel.py (same 200-char limit, same sentence-end
+ * set, same word-boundary fallback, same trailing " …" so nobody mistakes the
+ * teaser for the whole thing).
+ *
+ * Truncation lives HERE, at send time, rather than in the notifier that writes
+ * the row: `articles.pulse` stays the complete record, both lanes (premium
+ * instant + free digest) go through this one function, and articles already
+ * recorded with a long caption are fixed retroactively without a backfill.
+ */
+const TEASER_LIMIT = 200;
+const SENTENCE_ENDS = ['.', '؟', '!', '؛', '?'];
+
+export function teaser(text: string, limit: number = TEASER_LIMIT): string {
+  const t = text.split(/\s+/).filter(Boolean).join(' ');
+  if (t.length <= limit) return t;
+  const window = t.slice(0, limit);
+  let cut = Math.max(...SENTENCE_ENDS.map((c) => window.lastIndexOf(c)));
+  if (cut < Math.floor(limit / 3)) cut = window.lastIndexOf(' '); // no usable sentence end
+  if (cut <= 0) cut = limit;
+  return window.slice(0, cut + 1).trimEnd() + ' …';
+}
+
+/** The user-visible line for one article: its Pulse (as a teaser), else "a new
+ *  article in {section}". */
 function articleLine(a: { pulse?: string | null; content_id: string }): string {
   const p = (a.pulse || '').trim();
-  return p || `مطلب جدیدی در ${sectionFa(a.content_id)} منتشر شد`;
+  return p ? teaser(p) : `مطلب جدیدی در ${sectionFa(a.content_id)} منتشر شد`;
 }
 
 /** Absolute URL for the (prepared) premium link. */
