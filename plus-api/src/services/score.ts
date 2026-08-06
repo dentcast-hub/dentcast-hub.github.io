@@ -7,7 +7,8 @@ import { config } from '../config.js';
  * number the user sees and the number the engine spends never drift apart.
  *
  * Score = active_days * 10 + content_completed * 5 + total_highlights
- * (activity-log derived, monotonic).
+ * (activity-log derived, monotonic), with everything earned while the account
+ * was premium weighted by PREMIUM_SCORE_MULTIPLIER.
  *
  * `content_completed` counts each (action, content) pair ONCE FOR ALL TIME, so
  * every new episode heard or article finished pays, while replaying the same
@@ -55,10 +56,62 @@ export const CONSUMPTION_ACTIONS = ['article_completed', 'episode_listened'];
 export const POINTS_PER_ACTIVE_DAY = 10;
 export const POINTS_PER_CONTENT = 5; // half a day: visible, but the daily habit still leads
 
+/**
+ * What a premium subscriber's points are worth — the subscription perk.
+ *
+ * Applied PER EARNING, not to the total: `user_activity.premium` and
+ * `highlights.premium` record the tier at the moment each thing happened
+ * (migration 0023) and are never re-read afterwards. That is what keeps the
+ * "score is never deducted" rule true across an expiry — see the migration for
+ * why multiplying the live total instead would take points back from anyone
+ * whose subscription ran out.
+ *
+ * It buys exactly one thing: streak shields arrive a fifth sooner, because
+ * shields are the only place score is ever spent. It is deliberately NOT a
+ * league advantage — league ranking reads `weekly_xp` on the membership row and
+ * never touches this number (league.ts).
+ */
+export const PREMIUM_SCORE_MULTIPLIER = 1.2;
+
 type Db = pg.Pool | pg.PoolClient;
 
 export interface ScoreBreakdown {
-  score: number; active_days: number; content_completed: number; total_highlights: number;
+  score: number;
+  active_days: number; content_completed: number; total_highlights: number;
+  /** The premium-earned subset of each count above (already inside the totals). */
+  premium_days: number; premium_content: number; premium_highlights: number;
+  /** Points this account owes purely to the multiplier. Zero on a free plan. */
+  premium_bonus: number;
+}
+
+/** The three raw counts plus how much of each was earned while premium. */
+export interface ScoreParts {
+  active_days: number; content_completed: number; total_highlights: number;
+  premium_days: number; premium_content: number; premium_highlights: number;
+}
+
+/**
+ * The arithmetic, in ONE place, for the TS path and (mirrored) the SQL one.
+ *
+ * The premium counts are SUBSETS of the totals, never additions to them: a day
+ * on which a subscriber read something appears in `active_days` once and in
+ * `premium_days` once, and is paid at the premium rate exactly once. So the
+ * free portion is always `total - premium`, which cannot go negative and needs
+ * no clamp.
+ *
+ * Floored, not rounded: score is compared against integer shield thresholds and
+ * against other users' scores, and flooring is the direction that never hands
+ * out a shield the points have not actually reached.
+ */
+export function combineScore(p: ScoreParts): { score: number; premium_bonus: number } {
+  const base = p.active_days * POINTS_PER_ACTIVE_DAY
+    + p.content_completed * POINTS_PER_CONTENT
+    + p.total_highlights;
+  const premiumBase = p.premium_days * POINTS_PER_ACTIVE_DAY
+    + p.premium_content * POINTS_PER_CONTENT
+    + p.premium_highlights;
+  const score = Math.floor(base + premiumBase * (PREMIUM_SCORE_MULTIPLIER - 1));
+  return { score, premium_bonus: score - base };
 }
 
 /**
@@ -70,52 +123,75 @@ export interface ScoreBreakdown {
  * Callers pass their own placeholder numbers since each query binds differently.
  */
 export function scoreSelectSql(p: { tz: string; scoring: string; consumption: string }): string {
+  // `count(distinct …) filter (where premium)` is the SQL mirror of combineScore's
+  // subset rule. A day (or a content pair) touched even once while premium counts
+  // as premium in full — it is one indivisible unit, and paying the whole of it at
+  // the subscriber's rate is both simpler and the direction that favours the
+  // person who paid.
+  const bonus = PREMIUM_SCORE_MULTIPLIER - 1;
   return `select p.id,
-                 coalesce(ad.n, 0) * ${POINTS_PER_ACTIVE_DAY}
-               + coalesce(cc.n, 0) * ${POINTS_PER_CONTENT}
-               + coalesce(hl.n, 0) as score
+                 floor(
+                     coalesce(ad.n, 0) * ${POINTS_PER_ACTIVE_DAY}
+                   + coalesce(cc.n, 0) * ${POINTS_PER_CONTENT}
+                   + coalesce(hl.n, 0)
+                   + ( coalesce(ad.pr, 0) * ${POINTS_PER_ACTIVE_DAY}
+                     + coalesce(cc.pr, 0) * ${POINTS_PER_CONTENT}
+                     + coalesce(hl.pr, 0) ) * ${bonus}
+                 )::bigint as score
             from profiles p
             left join (
-              select user_id, count(distinct (created_at at time zone ${p.tz})::date) as n
+              select user_id,
+                     count(distinct (created_at at time zone ${p.tz})::date) as n,
+                     count(distinct (created_at at time zone ${p.tz})::date)
+                       filter (where premium) as pr
                 from user_activity where action = any(${p.scoring}) group by user_id
             ) ad on ad.user_id = p.id
             left join (
-              select user_id, count(distinct (action, content_id)) as n
+              select user_id,
+                     count(distinct (action, content_id)) as n,
+                     count(distinct (action, content_id)) filter (where premium) as pr
                 from user_activity
                where action = any(${p.consumption}) and content_id is not null
                group by user_id
             ) cc on cc.user_id = p.id
             left join (
-              select user_id, count(*) as n from highlights group by user_id
+              select user_id, count(*) as n, count(*) filter (where premium) as pr
+                from highlights group by user_id
             ) hl on hl.user_id = p.id`;
 }
 
 /** Compute a user's score and its parts from the activity log + highlights. */
 export async function computeScore(db: Db, userId: string): Promise<ScoreBreakdown> {
-  const ad = await db.query<{ n: number }>(
-    `select count(distinct (created_at at time zone $2)::date)::int as n
+  const ad = await db.query<{ n: number; p: number }>(
+    `select count(distinct (created_at at time zone $2)::date)::int as n,
+            count(distinct (created_at at time zone $2)::date)
+              filter (where premium)::int as p
        from user_activity where user_id = $1 and action = any($3)`,
     [userId, config.streakTimezone, SCORING_ACTIONS],
   );
   // count(distinct (action, content_id)): the row constructor keeps reading and
   // listening to the SAME page as two engagements, and collapses replays of one.
-  const cc = await db.query<{ n: number }>(
-    `select count(distinct (action, content_id))::int as n
+  const cc = await db.query<{ n: number; p: number }>(
+    `select count(distinct (action, content_id))::int as n,
+            count(distinct (action, content_id)) filter (where premium)::int as p
        from user_activity
       where user_id = $1 and action = any($2) and content_id is not null`,
     [userId, CONSUMPTION_ACTIONS],
   );
-  const hl = await db.query<{ n: number }>(
-    `select count(*)::int as n from highlights where user_id = $1`,
+  const hl = await db.query<{ n: number; p: number }>(
+    `select count(*)::int as n, count(*) filter (where premium)::int as p
+       from highlights where user_id = $1`,
     [userId],
   );
-  const active_days = ad.rows[0]?.n ?? 0;
-  const content_completed = cc.rows[0]?.n ?? 0;
-  const total_highlights = hl.rows[0]?.n ?? 0;
-  const score = active_days * POINTS_PER_ACTIVE_DAY
-    + content_completed * POINTS_PER_CONTENT
-    + total_highlights;
-  return { score, active_days, content_completed, total_highlights };
+  const parts: ScoreParts = {
+    active_days: ad.rows[0]?.n ?? 0,
+    content_completed: cc.rows[0]?.n ?? 0,
+    total_highlights: hl.rows[0]?.n ?? 0,
+    premium_days: ad.rows[0]?.p ?? 0,
+    premium_content: cc.rows[0]?.p ?? 0,
+    premium_highlights: hl.rows[0]?.p ?? 0,
+  };
+  return { ...parts, ...combineScore(parts) };
 }
 
 /** How many shields the user has already spent (append-only log is the source). */

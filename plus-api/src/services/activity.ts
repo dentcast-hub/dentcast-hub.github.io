@@ -3,6 +3,7 @@ import { pool, withTransaction } from '../db.js';
 import { QUALIFYING_ACTIONS, applyStreak } from './streak.js';
 import { awardLeagueXp } from './league.js';
 import { dayInTz } from './time.js';
+import { getSubscription, isPremiumNow } from './subscription.js';
 
 /**
  * Append an event to the append-only `user_activity` log. This log is the single
@@ -24,11 +25,18 @@ async function insertAndScore(
   contentId: string | null,
   meta: Record<string, unknown>,
 ): Promise<{ id: number }> {
+  // The tier is stamped ON THE ROW, now, and never revisited. `subscriptions`
+  // keeps one row per user and no history (migration 0018), so this insert is
+  // the only moment at which "was this earned on a paid plan" is still knowable.
+  // Reading it later — when the score is computed — could only ever answer "is
+  // the account premium today", which would quietly restate every point a
+  // lapsed subscriber ever earned. See migration 0023.
+  const premium = isPremiumNow(await getSubscription(userId, client));
   const res = await client.query<{ id: number; created_at: Date }>(
-    `insert into user_activity (user_id, action, content_id, meta)
-     values ($1, $2, $3, $4::jsonb)
+    `insert into user_activity (user_id, action, content_id, meta, premium)
+     values ($1, $2, $3, $4::jsonb, $5)
      returning id, created_at`,
-    [userId, action, contentId, JSON.stringify(meta ?? {})],
+    [userId, action, contentId, JSON.stringify(meta ?? {}), premium],
   );
   const row = res.rows[0];
   if (QUALIFYING_ACTIONS.has(action)) {
