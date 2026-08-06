@@ -316,10 +316,17 @@ async function compassBlock() {
     ]);
   }
   const top = data.top_cluster;
+  // Same pairing as the compass's badge: «بیشترین مطالعه» is a ranking by the
+  // NUMBER of items read, the percent is that pillar's own coverage — name the
+  // count so the low percent next to it doesn't read as a contradiction.
+  const topLine = top
+    ? top.fa + ' (' + (typeof top.read === 'number' ? faNum(top.read) + ' مورد، ' : '')
+      + '٪' + faNum(top.coverage_pct) + ' پوشش)'
+    : '';
   return el('div', { class: 'dcp-pw-dash' }, [
     top ? el('div', {}, [
       el('span', { class: 'dcp-muted' }, 'بیشترین مطالعه‌تان: '),
-      el('b', {}, top.fa + ' (٪' + faNum(top.coverage_pct) + ' پوشش)'),
+      el('b', {}, topLine),
     ]) : null,
     allLink,
   ].filter(Boolean));

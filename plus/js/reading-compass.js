@@ -8,10 +8,27 @@ import { el, faNum } from './util.js';
 import { api } from './api.js';
 import { FOLDER_EN } from './content-index.js';
 
+// The badge and the percent next to it answer two DIFFERENT questions: the
+// badge ranks pillars by the raw NUMBER of items read (service's sort on
+// `read`), while the percent is that pillar's coverage (read ÷ its own size).
+// Because pillar sizes differ ~7x, the top-read pillar routinely shows the
+// LOWEST percent — «بیشترین مطالعه» on a ٪۴ row next to an unbadged ٪۱۰ row
+// reads as a bug (user report, 2026-08-06). Printing the count inside the
+// badge makes the unit it is ranking visible, so the two numbers stop looking
+// like one contradictory number.
+function topBadge(c) {
+  const label = 'بیشترین مطالعه';
+  if (typeof c.read !== 'number') return el('span', { class: 'dcp-progress-badge' }, label);
+  return el('span', {
+    class: 'dcp-progress-badge',
+    title: 'بیشترین تعدادِ محتوای خوانده‌شده در میان پیلارها — درصدِ کنارش پوششِ همین پیلار است، نه رتبه‌اش.',
+  }, [label + ' — ', el('b', {}, faNum(c.read) + ' مورد')]);
+}
+
 function coverageRow(c, isTop) {
   return el('div', { class: 'dcp-progress-row' }, [
     el('span', { class: 'dcp-progress-name' }, c.fa),
-    isTop ? el('span', { class: 'dcp-progress-badge' }, 'بیشترین مطالعه') : null,
+    isTop ? topBadge(c) : null,
     el('div', { class: 'dcp-progress-track' }, el('div', { class: 'dcp-progress-fill', style: 'width:' + c.coverage_pct + '%' })),
     el('span', { class: 'dcp-progress-val' }, '٪' + faNum(c.coverage_pct)),
   ].filter(Boolean));
