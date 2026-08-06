@@ -1,6 +1,9 @@
 name: Generate site indexes (sitemap + plus content index)
 
 on:
+  # اجرای دستی. این ورک‌فلو sitemap.xml و plus/content-index.json را تولید و
+  # کامیت می‌کند؛ اگر رانش در صف کنسل شود، ایندکس‌ها بی‌صدا عقب می‌مانند.
+  workflow_dispatch:
   push:
     branches: ["main"]
 

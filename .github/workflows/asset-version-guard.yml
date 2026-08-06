@@ -16,7 +16,7 @@ name: Asset cache-buster guard
 # which carries no stamp of its own — and compares it with the version recorded
 # in .dentcast/asset-versions.json. Remembering to bump is not a thing anyone
 # should have to do.
-on: [push, pull_request]
+on: [push, pull_request, workflow_dispatch]
 
 jobs:
   check:

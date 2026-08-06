@@ -3,7 +3,7 @@ name: NUL-byte guard
 # Backstop for the local .githooks/pre-commit guard: a local hook can be skipped
 # with --no-verify and does not exist in fresh/automated clones, so this CI check
 # is the un-bypassable guarantee that NUL-corrupted text files never reach the repo.
-on: [push, pull_request]
+on: [push, pull_request, workflow_dispatch]
 
 jobs:
   scan:
