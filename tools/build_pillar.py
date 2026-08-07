@@ -625,6 +625,15 @@ PREMIUM_CROWN = (
     '<path d="m3 7 4.5 4L12 4l4.5 7L21 7l-1.8 11H4.8z"/></svg>'
 )
 
+# The same chevron .pillar-card-arrow uses — it points inline-start, which in
+# RTL reads as "onward". A bare "←" in the label was at the mercy of bidi
+# reordering; an icon is not.
+PREMIUM_ARROW = (
+    '<svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" '
+    'stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">'
+    '<path d="m15 6-6 6 6 6"/></svg>'
+)
+
 
 # The premium layer. A module (not a classic script) on purpose: modules are
 # deferred by default, and a relative dynamic import inside one resolves
@@ -641,37 +650,73 @@ PREMIUM_SCRIPT_TAG = '<script type="module" src="/pillar/premium-index.js?v=3"><
 # sets --dcpb-rgb / --dcpb-rgb-d to its own accent, so the banner picks up
 # the pillar colour instead of introducing an eleventh one.
 PREMIUM_SPLIT_CSS = (
-    "    /* ── premium referral banner ── */\n"
+    "    /* ── premium referral banner ──\n"
+    "       Shaped like the site's own cards: --card-bg on --card-border at the\n"
+    "       same radius and shadow as a pillar row, with the accent showing only\n"
+    "       on the inline-start edge and the icon chip — the same restraint\n"
+    "       .pillar-subtopic-intro already uses. No gradient medallion: that one\n"
+    "       is plus.css's streak object and its orange belongs to nothing else\n"
+    "       on this page.\n"
+    "\n"
+    "       box-sizing is set here rather than assumed. This page has no global\n"
+    "       reset — body computes as content-box — so a padded element told to\n"
+    "       be 100% wide grows PAST its parent by exactly its padding, which is\n"
+    "       what pushed the button out of the card on a phone. */\n"
+    "    .pillar-premium-banner, .pillar-premium-banner * { box-sizing: border-box; }\n"
     "    .pillar-premium-banner {\n"
-    "      display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;\n"
-    "      margin: 0 0 1rem; padding: 0.8125rem 0.9375rem;\n"
+    "      display: flex; align-items: flex-start; gap: 0.75rem; flex-wrap: wrap;\n"
+    "      margin: 0 0 1rem; padding: 0.875rem 1rem;\n"
     "      background: var(--card-bg); border: 1px solid var(--card-border);\n"
+    "      border-inline-start: 3px solid rgba(var(--dcpb-rgb, 45,106,122), .45);\n"
     "      border-radius: var(--r-lg, 18px); box-shadow: var(--card-sh);\n"
-    "      background-image: radial-gradient(130% 140% at 96% 0%, rgba(var(--dcpb-rgb, 45,106,122), .11), transparent 58%);\n"
     "    }\n"
-    "    .pillar-premium-medal {\n"
-    "      flex: 0 0 auto; width: 2.25rem; height: 2.25rem; border-radius: 50%;\n"
-    "      display: grid; place-items: center; color: #fff;\n"
-    "      background: radial-gradient(120% 120% at 30% 20%, rgba(255,191,71,.45), transparent 60%),\n"
-    "                  conic-gradient(from 210deg, #ff5e3a, #ffbf47, #ff5e3a);\n"
-    "      box-shadow: 0 4px 12px rgba(255,94,58,.30), inset 0 0 0 1px rgba(255,255,255,.35);\n"
+    "    .pillar-premium-icon {\n"
+    "      flex: 0 0 auto; width: 2rem; height: 2rem; border-radius: var(--r-sm, 10px);\n"
+    "      display: grid; place-items: center;\n"
+    "      color: rgb(var(--dcpb-rgb, 45,106,122));\n"
+    "      background: rgba(var(--dcpb-rgb, 45,106,122), .10);\n"
+    "      border: 1px solid rgba(var(--dcpb-rgb, 45,106,122), .22);\n"
     "    }\n"
-    "    .pillar-premium-medal .dc-svg-icon { width: 1.05rem; height: 1.05rem; }\n"
-    "    .pillar-premium-text { flex: 1 1 15rem; min-width: 0; }\n"
-    "    .pillar-premium-title { margin: 0; font-size: .875rem; font-weight: 800; color: var(--txt); line-height: 1.6; }\n"
-    "    .pillar-premium-sub { margin: .1875rem 0 0; font-size: .78rem; line-height: 1.75; color: var(--txt3); }\n"
-    "    .pillar-premium-cta {\n"
-    "      flex: 0 0 auto; display: inline-flex; align-items: center; gap: .3125rem;\n"
-    "      padding: .5rem .875rem; border-radius: var(--r-f, 999px);\n"
-    "      font-size: .78rem; font-weight: 800; text-decoration: none; color: #fff;\n"
-    "      background: rgb(var(--dcpb-rgb, 45,106,122));\n"
-    "      box-shadow: 0 4px 12px rgba(var(--dcpb-rgb, 45,106,122), .28);\n"
-    "      transition: transform .12s ease, box-shadow .12s ease;\n"
+    "    .pillar-premium-icon .dc-svg-icon { width: 1.05rem; height: 1.05rem; }\n"
+    "    .pillar-premium-text { flex: 1 1 12rem; min-width: 0; }\n"
+    "    .pillar-premium-title { margin: 0; font-size: .875rem; font-weight: 800; color: var(--txt); line-height: 1.7; }\n"
+    "    .pillar-premium-sub { margin: .1875rem 0 0; font-size: .78rem; line-height: 1.8; color: var(--txt3); }\n"
+    "    /* Two classes deep on purpose: dc-theme.css's\n"
+    "       `body:has(.dc-topbar) main a { color: var(--ac) }` is (0,1,2) and\n"
+    "       outranks a single class, which is why the label rendered link-blue\n"
+    "       on a filled button. */\n"
+    "    .pillar-premium-banner .pillar-premium-cta {\n"
+    "      flex: 0 0 auto; display: inline-flex; align-items: center;\n"
+    "      justify-content: center; gap: .375rem;\n"
+    "      padding: .5625rem 1rem; border-radius: var(--r-f, 999px);\n"
+    "      font-size: .78rem; font-weight: 800; line-height: 1.6; text-decoration: none;\n"
+    "      color: #fff; background: var(--ac);\n"
+    "      box-shadow: 0 2px 8px rgba(var(--ac-rgb, 11,95,255), .28);\n"
+    "      transition: box-shadow var(--tr), transform var(--tr);\n"
     "    }\n"
-    "    .pillar-premium-cta:hover { transform: translateY(-1px); box-shadow: 0 7px 18px rgba(var(--dcpb-rgb, 45,106,122), .38); }\n"
-    "    [data-theme=\"dark\"] .pillar-premium-banner { background-image: radial-gradient(130% 140% at 96% 0%, rgba(var(--dcpb-rgb-d, 74,154,171), .16), transparent 58%); }\n"
-    "    [data-theme=\"dark\"] .pillar-premium-cta { background: rgb(var(--dcpb-rgb-d, 74,154,171)); color: #0e1621; box-shadow: 0 4px 12px rgba(var(--dcpb-rgb-d, 74,154,171), .30); }\n"
-    "    @media (max-width: 30rem) { .pillar-premium-cta { width: 100%; justify-content: center; } }\n"
+    "    /* The button keeps ONE colour on every pillar — the site's own action\n"
+    "       blue — while the card around it takes the pillar's accent. Filling it\n"
+    "       with the accent instead was tried and is not safe: white on ceramics'\n"
+    "       teal is 3.0:1 and on operative's sage 3.9:1, both under AA for text\n"
+    "       this size. The accent stays where it cannot hurt legibility. */\n"
+    "    .pillar-premium-banner .pillar-premium-cta .dc-svg-icon { width: .875rem; height: .875rem; }\n"
+    "    .pillar-premium-banner .pillar-premium-cta:hover {\n"
+    "      transform: translateY(-1px); box-shadow: 0 6px 16px rgba(var(--ac-rgb, 11,95,255), .38);\n"
+    "    }\n"
+    "    [data-theme=\"dark\"] .pillar-premium-banner { border-inline-start-color: rgba(var(--dcpb-rgb-d, 74,154,171), .50); }\n"
+    "    [data-theme=\"dark\"] .pillar-premium-icon {\n"
+    "      color: rgb(var(--dcpb-rgb-d, 74,154,171));\n"
+    "      background: rgba(var(--dcpb-rgb-d, 74,154,171), .14);\n"
+    "      border-color: rgba(var(--dcpb-rgb-d, 74,154,171), .30);\n"
+    "    }\n"
+    "    /* --ac is a LIGHT blue in dark mode, so the label flips to dark ink\n"
+    "       rather than staying white on it. */\n"
+    "    [data-theme=\"dark\"] .pillar-premium-banner .pillar-premium-cta { color: #0b1622; }\n"
+    "    /* No width rule at all on narrow screens: the button simply wraps to\n"
+    "       its own line and keeps its pill width, sitting under the icon at\n"
+    "       the inline start. Stretching it edge to edge was the overflow bug\n"
+    "       AND read as an app button rather than a quiet offer. */\n"
+    "    .pillar-premium-cta > span { white-space: nowrap; }\n"
     "\n"
     "    /* ── premium view active (drawn by premium-index.js) ── */\n"
     "    .pillar-premium-state {\n"
@@ -745,12 +790,13 @@ def render_premium_banner(title_fa, sub_fa, from_key):
     href = "/plus/pricing.html?from=" + from_key
     return (
         '    <aside class="pillar-premium-banner" data-premium-banner>\n'
-        '      <span class="pillar-premium-medal" aria-hidden="true">' + PREMIUM_CROWN + '</span>\n'
+        '      <span class="pillar-premium-icon" aria-hidden="true">' + PREMIUM_CROWN + '</span>\n'
         '      <div class="pillar-premium-text">\n'
         '        <p class="pillar-premium-title">' + esc(title_fa) + '</p>\n'
         '        <p class="pillar-premium-sub">' + esc(sub_fa) + '</p>\n'
         '      </div>\n'
-        '      <a class="pillar-premium-cta" href="' + href + '">فعال‌سازی پریمیوم ←</a>\n'
+        '      <a class="pillar-premium-cta" href="' + href + '">'
+        '<span>فعال‌سازی پریمیوم</span>' + PREMIUM_ARROW + '</a>\n'
         '    </aside>\n'
     )
 
