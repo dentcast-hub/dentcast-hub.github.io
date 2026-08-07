@@ -378,4 +378,63 @@ describe('the founder broadcast', () => {
     });
     expect(res.statusCode).toBe(401);
   });
+
+  // 2026-08-07: the founder pushed an announcement to every reader and got a 504.
+  // The fan-out is serial and per-user, so its duration grows with the audience;
+  // it outlived the gateway while the اطلاعیه row had been committed in the first
+  // millisecond. A 504 that cannot be retried (retrying duplicates the notice) and
+  // cannot be interpreted is the worst possible answer.
+  it('answers immediately and pushes in the background', async () => {
+    const res = await app.inject({
+      method: 'POST', url: '/admin/notices/broadcast',
+      headers: { authorization: auth },
+      payload: { title: 'اطلاعیهٔ فوری', body: 'متن', push: true },
+    });
+
+    expect(res.statusCode).toBe(200);
+    // 'queued' is an honest answer: accepted and running. It deliberately does
+    // NOT claim a delivered count, because at this point there isn't one.
+    expect(res.json().push).toBe('queued');
+    expect(res.json().broadcast_id).toBeTruthy();
+    // And the row every reader actually reads is already there.
+    const rows = (await app.inject({ method: 'GET', url: '/notices', headers: { cookie } })).json();
+    expect(rows.notices[0].title).toBe('اطلاعیهٔ فوری');
+  });
+
+  it('reports a held push as held, not as queued', async () => {
+    const hour = config.notify.awakeStartHour;
+    const end = config.notify.awakeEndHour;
+    // An empty window means "always awake"; make one that excludes right now.
+    config.notify.awakeStartHour = 3;
+    config.notify.awakeEndHour = 4;
+    try {
+      const res = await app.inject({
+        method: 'POST', url: '/admin/notices/broadcast',
+        headers: { authorization: auth },
+        payload: { title: 'نیمه‌شب', push: true },
+      });
+      expect(res.json().push).toBe('held');
+      expect(res.json().push_skipped).toBe('outside_awake_window');
+    } finally {
+      config.notify.awakeStartHour = hour;
+      config.notify.awakeEndHour = end;
+    }
+  });
+
+  it('gives every broadcast its own push tag', async () => {
+    // Web push REPLACES a notification whose tag is already on screen. With the
+    // old constant 'broadcast', a second announcement silently deleted the first
+    // from the reader's tray and they only ever saw the latest one.
+    const ids: string[] = [];
+    for (const title of ['اطلاعیهٔ یک', 'اطلاعیهٔ دو']) {
+      const res = await app.inject({
+        method: 'POST', url: '/admin/notices/broadcast',
+        headers: { authorization: auth }, payload: { title, push: true },
+      });
+      ids.push(res.json().broadcast_id);
+    }
+    expect(ids[0]).not.toBe(ids[1]);
+    // The tag is derived from that id, so distinct ids mean distinct tags.
+    expect(new Set(ids.map((i) => `broadcast:${i}`)).size).toBe(2);
+  });
 });
