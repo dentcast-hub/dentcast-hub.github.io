@@ -76,10 +76,11 @@ engine); week buckets start **Saturday**.
    ad, so it never appears in `by_viewer` — see rule 2. That split is therefore
    the complete picture of ad inventory, not a partial one.
 
-   **ولی «پریمیوم» یک طبقه نیست — یک جایزهٔ سه‌روزهٔ لیگ است.** Nobody holds
+   **ولی «پریمیوم» یک طبقه نیست — یک جایزهٔ دوروزهٔ لیگ است.** Nobody holds
    premium as a plan: in the database every real account is `tier = 'free'`,
    which is exactly what «پلاس» means. `premium` is only ever the prize granted
-   to the top of each valid league group for `prize_days` (3), after which
+   to the top of each valid league group for `prize_days` (2, three until
+   1405/05/16), after which
    `expirePremiumPrizes` puts them back to `free`. At any moment the premium
    population is that week's winners (≈1 per group) plus the founder's own two
    accounts.

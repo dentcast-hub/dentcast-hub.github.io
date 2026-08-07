@@ -50,14 +50,14 @@ async function grantPrizeForWeek(weekStart: string, now: Date): Promise<number> 
     // Wall-clock arithmetic (`now + prize_days × 86_400_000`) made the prize
     // length a race between two scheduler runs. The granting run does the heavy
     // week finalization first, so its `now` lands a few seconds INTO 00:00; the
-    // expiring run three days later has no week to finalize and reaches its own
+    // expiring run prize_days later has no week to finalize and reaches its own
     // `now` sooner. `expires_at <= now` then missed by those seconds and, since
     // nothing expires lazily on read, the winner kept premium until the NEXT
-    // midnight — four days, not three, decided by which job was quicker.
+    // midnight — a whole extra day, decided by which job was quicker.
     //
     // Midnight-to-midnight is exact, and it is also the honest reading of the
-    // promise: the winner banner and the push both say «۳ روز», which a reader
-    // understands as three calendar days ending at midnight, not as 72 hours
+    // promise: the winner banner and the push both say «N روز», which a reader
+    // understands as N calendar days ending at midnight, not as N × 24 hours
     // from whenever a cron woke up.
     const grantDay = dayInTz(now, config.streakTimezone);
     const grantedAt = startOfDayInstant(grantDay).toISOString();

@@ -196,7 +196,7 @@ describe('/me subscription state', () => {
     const { id } = await me(cookie);
     await pool.query(
       `insert into premium_grants (user_id, week_start, granted_at, expires_at)
-       values ($1, '2026-02-07', now(), now() + interval '3 days')`,
+       values ($1, '2026-02-07', now(), now() + interval '2 days')`,
       [id],
     );
     await pool.query("update profiles set tier = 'premium' where id = $1", [id]);
