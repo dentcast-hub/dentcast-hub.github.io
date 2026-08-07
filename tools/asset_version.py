@@ -82,7 +82,10 @@ def graph(entry: Path) -> list[Path]:
             rel = m.group('p') or m.groupdict().get('d')
             if rel:
                 queue.append((f.parent / rel.split('?')[0]).resolve())
-    return sorted(seen)
+    # Sort by the POSIX string, not by Path: Path ordering is platform-normalised
+    # (case-folded on Windows), so two machines could hash the same graph in two
+    # different orders. On Linux this is the identical order it always produced.
+    return sorted(seen, key=lambda p: p.relative_to(ROOT).as_posix())
 
 
 def fingerprint(asset: str) -> str:
@@ -91,7 +94,12 @@ def fingerprint(asset: str) -> str:
         raise FileNotFoundError(asset)
     h = hashlib.sha256()
     for f in graph(entry):
-        h.update(str(f.relative_to(ROOT)).encode())
+        # as_posix(), never str(): str(Path) is backslash-separated on Windows, so
+        # hashing it made the fingerprint PLATFORM-DEPENDENT — the same commit
+        # produced one digest on a Windows machine and another on the Linux CI
+        # runner, and --check could never pass from Windows. On Linux the two are
+        # the same string, so this changes no existing fingerprint.
+        h.update(f.relative_to(ROOT).as_posix().encode())
         h.update(f.read_bytes())
     return h.hexdigest()[:16]
 
