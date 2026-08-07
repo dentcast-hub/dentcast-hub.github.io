@@ -167,8 +167,7 @@ a 503 from `POST /pay/start`, which checks the same flag.)
 | `ZIBAL_API_BASE_URL` | `https://pay.dentcast.ir` — our fixed-IP reverse proxy, so `/v1/request` and `/v1/verify` leave from the address Zibal whitelisted |
 | `ZIBAL_PROXY_TOKEN` | the shared secret that proxy demands as `X-Proxy-Token`; **set it with the line above or the proxy answers 403** |
 | `ZIBAL_EGRESS_PROXY_URL` | leave empty — that is the forward-proxy (CONNECT) route, and ours is the reverse proxy above |
-| `PAYMENT_MONTHLY_RIAL` | `10000000` (۱ میلیون تومان a month) |
-| `PAYMENT_PLAN_MONTHS` | `1,3,6` |
+| `PAYMENT_PLAN_PRICES` | `1:12000000,3:33000000,6:60000000` — the price list in rial (`months:rial`), i.e. ۱٬۲۰۰٬۰۰۰ / ۳٬۳۰۰٬۰۰۰ / ۶٬۰۰۰٬۰۰۰ تومان. **The terms on offer are the terms listed here**, so this replaces both `PAYMENT_MONTHLY_RIAL` and `PAYMENT_PLAN_MONTHS` (both now ignored — remove them). Prices are deliberately non-linear: a longer term is cheaper per month. |
 | `PAYMENT_CAP_RIAL` / `PAYMENT_CAP_COUNT` | `1000000000` / `100` — the e-namad کسب‌وکار خرد ceiling |
 | `PAYMENT_CAP_ALERT_PHONE` | founder's number, warned as the monthly ceiling fills |
 | `PAYMENT_RESULT_URL` | leave unset unless the result page moves |
@@ -187,7 +186,7 @@ Going live, in order:
 
 ```bash
 # 1. Is the API answering, and what does it say about payments?
-curl -s https://api.dentcast.ir/pay/plans | jq '{enabled, monthly_rial, any_plan_available}'
+curl -s https://api.dentcast.ir/pay/plans | jq '{enabled, from_monthly_rial, any_plan_available}'
 #    enabled:false  -> PAYMENT_ENABLED is not set on the container yet
 
 # 2. Set PAYMENT_ENABLED=true + the real ZIBAL_MERCHANT, redeploy, then re-read:

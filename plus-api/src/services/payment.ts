@@ -107,7 +107,9 @@ export async function startPayment(params: {
     };
   }
 
-  const amountRial = planAmountRial(params.months);
+  // Non-null: canSellPlan() above already refused every term without a price
+  // ('unknown_plan'), so anything reaching this line is on the list.
+  const amountRial = planAmountRial(params.months)!;
   const orderId = mintOrderId(params.userId, params.months, now);
   const stamps = periodStamps(now);
 

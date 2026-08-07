@@ -643,10 +643,20 @@ a.dcp-progress-row:hover { text-decoration: none; }
 .dcp-plan:focus-visible { outline: 2px solid var(--ac, #0b5fff); outline-offset: 2px; }
 
 .dcp-plan-term { font-weight: 700; font-size: 1rem; display: flex; flex-direction: column; gap: 1px; }
+.dcp-plan-head { display: flex; align-items: center; gap: 7px; flex-wrap: wrap; }
+.dcp-plan-save {
+  font-size: .7rem; font-weight: 700; padding: 2px 7px; border-radius: 999px;
+  background: rgba(23,138,79,.12); color: #178a4f;
+}
 .dcp-plan-why { font-weight: 400; font-size: .8rem; color: var(--txt3, #62779a); }
 .dcp-plan-blocked { font-weight: 600; font-size: .76rem; color: #9a6206; }
-.dcp-plan-price { font-weight: 800; font-size: 1.02rem; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.dcp-plan-price {
+  font-weight: 800; font-size: 1.02rem; white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  display: flex; flex-direction: column; align-items: flex-end; gap: 1px;
+}
 .dcp-plan-unit { font-size: .78rem; font-weight: 600; color: var(--txt3, #62779a); margin-inline-start: 4px; }
+.dcp-plan-rate { font-size: .74rem; font-weight: 600; color: var(--txt3, #62779a); }
 
 .dcp-plan.is-selected {
   border-color: rgba(var(--ac-rgb, 11,95,255), .6);
@@ -692,6 +702,7 @@ a.dcp-progress-row:hover { text-decoration: none; }
 
 @media (prefers-color-scheme: dark) {
   .dcp-plan-blocked, .dcp-price-notice.is-warn b { color: #e8b45f; }
+  .dcp-plan-save { background: rgba(95,211,155,.14); color: #5fd39b; }
   .dcp-price-notice.is-warn { background: rgba(232,180,95,.11); border-color: rgba(232,180,95,.28); }
   .dcp-price-notice.is-ok { background: rgba(95,211,155,.11); border-color: rgba(95,211,155,.28); }
   .dcp-price-notice.is-ok b { color: #5fd39b; }

@@ -29,6 +29,61 @@ function list(name: string, fallback: string[]): string[] {
   return v.split(',').map((s) => s.trim()).filter(Boolean);
 }
 
+/**
+ * A price list: term in months -> price in rial, written "1:12000000,3:33000000".
+ *
+ * A table rather than a rate, because the price is no longer months × a monthly
+ * figure and cannot be recovered from one. Any formula would be a second place
+ * the ladder is decided, and the two would disagree the first time a term is
+ * repriced on its own.
+ */
+function priceList(name: string, fallback: Record<number, number>): Record<number, number> {
+  const v = process.env[name];
+  if (v === undefined || v === '') return fallback;
+  const out: Record<number, number> = {};
+  for (const pair of v.split(',').map((s) => s.trim()).filter(Boolean)) {
+    const [months, rial] = pair.split(':').map((s) => Number(s.trim()));
+    if (!Number.isInteger(months) || months < 1 || !Number.isFinite(rial) || rial <= 0) {
+      throw new Error(`Env var ${name} must look like "1:12000000,3:33000000,6:60000000"`);
+    }
+    out[months] = rial;
+  }
+  if (!Object.keys(out).length) throw new Error(`Env var ${name} lists no plan`);
+  return out;
+}
+
+// The price list, in rial (the site quotes toman: 12,000,000 rial = 1,200,000 toman).
+//
+// NON-LINEAR SINCE 2026-08-07, and that is the whole point of the table. It used
+// to be one monthly figure multiplied by the term, so every term cost the same
+// per month and a longer commitment bought nothing but fewer trips to the bank.
+// Now the month costs 1,200,000 toman, three months 1,100,000 a month and six
+// months 1,000,000 a month. Two things follow, both deliberate: the entry price
+// is 20% higher, which is the brake we want while seats are limited; and the
+// longer terms are the cheap ones, which moves buyers toward six months — one
+// transaction against the monthly regulatory ceiling instead of six, and one
+// decision instead of six chances to drop out.
+//
+// 12 months is deliberately absent until a real transaction proves the gateway
+// accepts a single payment that large — answerable by selling one, not by asking.
+const PLAN_PRICES_RIAL = priceList('PAYMENT_PLAN_PRICES', {
+  1: 12_000_000,  // 1,200,000 toman
+  3: 33_000_000,  // 3,300,000 toman  (1,100,000 a month)
+  6: 60_000_000,  // 6,000,000 toman  (1,000,000 a month)
+});
+
+// The terms on offer ARE the terms with a price. Derived rather than configured
+// separately, because a term listed with no price has no meaning and a price
+// with no term is never shown.
+const PLAN_MONTHS = Object.keys(PLAN_PRICES_RIAL)
+  .map(Number)
+  .sort((a, b) => a - b);
+
+// The cheapest per-month rate anywhere on the list — the «از ماهی … تومان»
+// number, and the only monthly figure that is still true now that the ladder
+// bends. NOT the price of the one-month plan.
+const FROM_MONTHLY_RIAL = Math.min(...PLAN_MONTHS.map((m) => PLAN_PRICES_RIAL[m] / m));
+
 export const config = {
   env: str('NODE_ENV', 'development'),
   isProd: str('NODE_ENV', 'development') === 'production',
@@ -241,12 +296,12 @@ export const config = {
     // this shows "not active yet", which is true; the opposite default would
     // send customers to a gateway that refuses them.
     enabled: bool('PAYMENT_ENABLED', false),
-    // A month of premium: 1,000,000 toman.
-    monthlyRial: int('PAYMENT_MONTHLY_RIAL', 10_000_000),
-    // Plans offered on the pricing page, in months. 12 is deliberately absent
-    // until a real transaction proves the gateway accepts a single payment that
-    // large — that is answerable by selling one, not by asking.
-    planMonths: list('PAYMENT_PLAN_MONTHS', ['1', '3', '6']).map(Number),
+    // What each term costs, and which terms exist. See PLAN_PRICES_RIAL above.
+    planPricesRial: PLAN_PRICES_RIAL,
+    planMonths: PLAN_MONTHS,
+    // The lowest per-month rate on the list, for the «از ماهی …» line only.
+    // Nothing is priced FROM it — planAmountRial reads the table.
+    fromMonthlyRial: FROM_MONTHLY_RIAL,
 
     // --- The monthly ceiling -------------------------------------------------
     // Set by the e-namad کسب‌وکار خرد registration, not by us: 100,000,000 toman

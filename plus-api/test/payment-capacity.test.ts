@@ -14,7 +14,13 @@ import { jalaliMonth, gregorianMonth } from '../src/services/time.js';
  * with 1/3/6-month plans a single boolean is wrong in both directions.
  */
 
-const MONTH_RIAL = 10_000_000;     // 1,000,000 toman
+// The published ladder, in rial. Non-linear on purpose: a longer term is
+// cheaper per month, so nothing here may be derived by multiplication.
+const PRICE: Record<number, number> = {
+  1: 12_000_000,  // 1,200,000 toman
+  3: 33_000_000,  // 3,300,000 toman  (1,100,000 a month)
+  6: 60_000_000,  // 6,000,000 toman  (1,000,000 a month)
+};
 const CAP_RIAL = 1_000_000_000;    // 100,000,000 toman
 
 let seq = 0;
@@ -58,9 +64,23 @@ describe('capacity accounting', () => {
     expect(cap.plans.map((p) => p.months)).toEqual([1, 3, 6]);
   });
 
-  it('prices a plan as months x the monthly rial price', () => {
-    expect(planAmountRial(1)).toBe(MONTH_RIAL);
-    expect(planAmountRial(6)).toBe(6 * MONTH_RIAL);
+  it('reads a plan price off the list instead of multiplying', () => {
+    expect(planAmountRial(1)).toBe(PRICE[1]);
+    expect(planAmountRial(3)).toBe(PRICE[3]);
+    expect(planAmountRial(6)).toBe(PRICE[6]);
+    // The ladder bends: each longer term costs less per month than the one
+    // before it. This is the property the whole table exists for — a rate times
+    // the term could not express it, and a linear price list would pass every
+    // other test in this file.
+    expect(PRICE[3] / 3).toBeLessThan(PRICE[1]);
+    expect(PRICE[6] / 6).toBeLessThan(PRICE[3] / 3);
+  });
+
+  it('has no price for a term it does not sell', () => {
+    // null, not a number invented by multiplication — this is what makes
+    // startPayment() refuse a made-up `months` instead of billing for it.
+    expect(planAmountRial(12)).toBeNull();
+    expect(planAmountRial(2)).toBeNull();
   });
 
   it('counts what has been sold this month', async () => {
@@ -69,8 +89,8 @@ describe('capacity accounting', () => {
 
     const cap = await getCapacity();
     expect(cap.used_count).toBe(2);
-    expect(cap.used_rial).toBe(7 * MONTH_RIAL);
-    expect(cap.remaining_rial).toBe(CAP_RIAL - 7 * MONTH_RIAL);
+    expect(cap.used_rial).toBe(PRICE[6] + PRICE[1]);
+    expect(cap.remaining_rial).toBe(CAP_RIAL - PRICE[6] - PRICE[1]);
   });
 
   it('ignores a payment from a previous month', async () => {
@@ -86,7 +106,7 @@ describe('capacity accounting', () => {
     for (let i = 0; i < 16; i += 1) await addPayment({ months: 6 });
 
     const cap = await getCapacity();
-    expect(cap.used_rial).toBe(96 * MONTH_RIAL);
+    expect(cap.used_rial).toBe(16 * PRICE[6]);
     expect(cap.plans.find((p) => p.months === 1)!.available).toBe(true);
     expect(cap.plans.find((p) => p.months === 3)!.available).toBe(true);
     const six = cap.plans.find((p) => p.months === 6)!;
@@ -142,11 +162,11 @@ describe('capacity accounting', () => {
 
     const cap = await getCapacity();
     expect(cap.used_count).toBe(1);
-    expect(cap.used_rial).toBe(6 * MONTH_RIAL);
+    expect(cap.used_rial).toBe(PRICE[6]);
     // Both readings still reported, so flipping the switch back stays a decision
     // someone can make on evidence rather than an argument.
     expect(cap.used_count_verified).toBe(1);
-    expect(cap.used_rial_verified).toBe(6 * MONTH_RIAL);
+    expect(cap.used_rial_verified).toBe(PRICE[6]);
   });
 
   it('still counts every attempt when the switch is turned back on', async () => {

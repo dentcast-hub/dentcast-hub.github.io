@@ -86,9 +86,17 @@ export function periodStamps(now: Date = new Date()): {
   return { period_jalali: jalaliMonth(now), period_gregorian: gregorianMonth(now) };
 }
 
-/** Rial price of an N-month subscription. */
-export function planAmountRial(months: number): number {
-  return months * config.payments.monthlyRial;
+/**
+ * Rial price of an N-month subscription, or null for a term we do not sell.
+ *
+ * A LOOKUP, NOT A CALCULATION. The ladder is non-linear on purpose (a longer
+ * term is cheaper per month), so there is no rate to multiply by; and an unknown
+ * term now has to answer "no" rather than invent a price for itself, which is
+ * what a multiplication would have done for any number a caller passed in.
+ */
+export function planAmountRial(months: number): number | null {
+  const amount = config.payments.planPricesRial[months];
+  return amount === undefined ? null : amount;
 }
 
 /**
@@ -132,7 +140,7 @@ export async function getCapacity(now: Date = new Date()): Promise<Capacity> {
   );
 
   const plans: PlanOffer[] = config.payments.planMonths.map((months) => {
-    const amount = planAmountRial(months);
+    const amount = planAmountRial(months)!; // planMonths ARE the priced terms
     // Order matters only for the message: when both ceilings block, naming the
     // amount is the more useful thing to say, since it is the one a smaller plan
     // can still get under.
