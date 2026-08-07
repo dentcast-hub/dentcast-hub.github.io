@@ -353,6 +353,14 @@ cause. Setting or clearing Telegram's proxy now cannot move web push at all.
 notifications in mind could reroute delivery. If one is set while no notification
 proxy is, the API logs a `[config]` warning at startup — it never acts on it.
 
+- `channels.telegram.breaker.open: true` → this channel is being **skipped right
+  now**, after `OUTBOUND_BREAKER_THRESHOLD` consecutive network failures. That is
+  deliberate, not a second fault: the send timeout is per user, so a dead channel
+  in a fan-out costs that timeout for every reader (on 2026-08-07 a broadcast ran
+  past the gateway timeout and left the whole API slow on Telegram timeouts alone).
+  `reopen_in_ms` says when the next trial request goes out; if the route answers,
+  the channel closes and resumes by itself with no deploy.
+
 `GET /admin/notify/health?probe=0` reports configuration only, without touching
 the network. Delivery failures are also logged now — grep the container log for
 `[notify:telegram:` and `[notify:webpush:` (a line with `failed=N` is a real

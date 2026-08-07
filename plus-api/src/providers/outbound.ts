@@ -157,6 +157,96 @@ export function webPushOptions(): { proxy?: string; timeout: number } {
   return o;
 }
 
+export interface BreakerStatus {
+  open: boolean;
+  consecutive_failures: number;
+  reopen_in_ms: number | null;
+}
+
+export interface CircuitBreaker {
+  /** May the next request go out? False means "skip this channel, cheaply". */
+  allow(): boolean;
+  /** The route answered — anything at all, including a 4xx. */
+  succeeded(): void;
+  /** The route did not answer (timeout / DNS / connection refused). */
+  failed(reason: string): void;
+  status(): BreakerStatus;
+}
+
+/**
+ * Fail fast on a channel whose host has gone away.
+ *
+ * WHY: the send timeout is per USER. A channel that is down still costs the full
+ * timeout for every reader in a fan-out, one after another — so on 2026-08-07 a
+ * broadcast to every reader spent minutes doing nothing but waiting on Telegram,
+ * blew past the gateway timeout (the founder saw a 504 and could not tell whether
+ * the announcement had gone out), and left the whole API slow for everyone while
+ * it ground through. The route was not going to come back inside that loop; the
+ * only thing the waiting bought was damage.
+ *
+ * Only NETWORK failures trip it. An HTTP answer — even 403 "bot was blocked by
+ * the user" — means the route is alive and this user is simply unreachable, which
+ * is a fact about them and not about the channel.
+ *
+ * It re-tries by itself: after the cooldown exactly ONE request is let through,
+ * and if the route answers, the channel closes and resumes. That keeps the
+ * property telegram.ts was written for — "the code path is intact and self-heals
+ * if the route returns" — while removing the cost of asking every single time.
+ */
+export function createCircuitBreaker(
+  name: string,
+  opts: { threshold?: number; cooldownMs?: number } = {},
+): CircuitBreaker {
+  const threshold = opts.threshold ?? config.outbound.breakerThreshold;
+  const cooldownMs = opts.cooldownMs ?? config.outbound.breakerCooldownMs;
+  let failures = 0;
+  let openUntil = 0; // 0 = closed
+
+  return {
+    allow(): boolean {
+      if (openUntil === 0) return true;
+      if (Date.now() < openUntil) return false;
+      // Half-open. Re-arming the timer BEFORE returning true is what makes this
+      // one trial request rather than a flood: everything behind it is refused
+      // again until the next cooldown elapses.
+      openUntil = Date.now() + cooldownMs;
+      // eslint-disable-next-line no-console
+      console.log(`[breaker:${name}] cooldown elapsed — letting one request through to test the route`);
+      return true;
+    },
+    succeeded(): void {
+      if (openUntil !== 0) {
+        // eslint-disable-next-line no-console
+        console.log(`[breaker:${name}] route answered — closing, channel resumes`);
+      }
+      failures = 0;
+      openUntil = 0;
+    },
+    failed(reason: string): void {
+      failures += 1;
+      if (failures >= threshold && openUntil === 0) {
+        openUntil = Date.now() + cooldownMs;
+        // Loud, once. The per-user warnings stop here, so without this line the
+        // channel would go quiet exactly when it died — the thing this whole
+        // subsystem exists to prevent.
+        // eslint-disable-next-line no-console
+        console.warn(
+          `[breaker:${name}] OPEN after ${failures} consecutive network failures (${reason}).`
+          + ` Skipping this channel for ${Math.round(cooldownMs / 1000)}s, then one trial request.`,
+        );
+      }
+    },
+    status(): BreakerStatus {
+      const open = openUntil > Date.now();
+      return {
+        open,
+        consecutive_failures: failures,
+        reopen_in_ms: open ? openUntil - Date.now() : null,
+      };
+    },
+  };
+}
+
 /** A network error's short, log-safe description (timeouts say so explicitly). */
 export function describeError(err: unknown, timeoutMs: number = config.outbound.timeoutMs): string {
   const e = err as { name?: string; message?: string; cause?: { message?: string } };

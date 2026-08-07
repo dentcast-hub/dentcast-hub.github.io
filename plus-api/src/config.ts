@@ -190,6 +190,16 @@ export const config = {
     // The /admin/notify/health reachability check fails fast — it is a diagnosis,
     // not a delivery.
     probeTimeoutMs: int('OUTBOUND_PROBE_TIMEOUT_MS', 5_000),
+    // Circuit breaker for a channel whose host has gone away (providers/outbound.ts).
+    // A DEAD channel must fail fast, not slowly: the timeout above is per USER, so
+    // a fan-out over N readers costs N x timeoutMs on a route that is not coming
+    // back within this run. On 2026-08-07 a broadcast to every reader took the
+    // API past the gateway timeout and left it degraded for minutes, entirely on
+    // Telegram timeouts. After `breakerThreshold` consecutive NETWORK failures the
+    // channel is skipped for `breakerCooldownMs`, then one trial request decides
+    // whether it is back — so a route that returns heals itself with no deploy.
+    breakerThreshold: int('OUTBOUND_BREAKER_THRESHOLD', 3),
+    breakerCooldownMs: int('OUTBOUND_BREAKER_COOLDOWN_MS', 300_000),
   },
 
   // External-login providers. Layered so a second provider (Bale, on the .ir

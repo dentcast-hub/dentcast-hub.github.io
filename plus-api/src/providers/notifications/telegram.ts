@@ -1,7 +1,16 @@
 import { config } from '../../config.js';
 import { one } from '../../db.js';
-import { outboundFetch, describeError } from '../outbound.js';
+import { outboundFetch, describeError, createCircuitBreaker, type BreakerStatus } from '../outbound.js';
 import { type NotificationSender, type NotificationKind, type NotificationMessage, messageText } from './types.js';
+
+// One breaker for the whole channel (the host is shared by every user). See
+// createCircuitBreaker for why a dead channel must fail fast rather than slowly.
+const breaker = createCircuitBreaker('telegram');
+
+/** For GET /admin/notify/health — "is this channel currently being skipped?". */
+export function telegramBreakerStatus(): BreakerStatus {
+  return breaker.status();
+}
 
 /**
  * Telegram notification sender. Stubbed for Phase 1: if no bot token is set (dev),
@@ -27,6 +36,11 @@ export class TelegramNotificationSender implements NotificationSender {
       return;
     }
 
+    // The channel is currently known-dead: skip without paying the timeout. No
+    // log line per user on purpose — the breaker already said it once, loudly,
+    // and a broadcast would otherwise write one line per reader.
+    if (!breaker.allow()) return;
+
     // api.telegram.org is INTERNATIONAL: from an Iranian pod it may be reachable
     // only through OUTBOUND_PROXY_URL, or not at all. outboundFetch adds that
     // proxy (when set) and a hard timeout, so an unreachable host fails in
@@ -38,6 +52,10 @@ export class TelegramNotificationSender implements NotificationSender {
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({ chat_id: telegramId, text }),
       });
+      // ANY answer means the route is alive. A 403 "bot was blocked by the user"
+      // is a fact about that reader, not about the channel, and must not count
+      // toward opening the breaker.
+      breaker.succeeded();
       if (!res.ok) {
         // fetch does NOT reject on a 4xx/5xx, so without this a failed send (e.g.
         // 403 "bot was blocked by the user", 400 "chat not found", bad token)
@@ -50,8 +68,10 @@ export class TelegramNotificationSender implements NotificationSender {
       // Network/DNS failure or timeout reaching api.telegram.org. A `fetch failed`
       // here with Bale still delivering means the pod lost international egress:
       // check GET /admin/notify/health, then set OUTBOUND_PROXY_URL.
+      const detail = describeError(err);
+      breaker.failed(detail);
       // eslint-disable-next-line no-console
-      console.warn(`[notify:telegram:${kind}] network error chat=${telegramId}: ${describeError(err)}`);
+      console.warn(`[notify:telegram:${kind}] network error chat=${telegramId}: ${detail}`);
     }
   }
 }

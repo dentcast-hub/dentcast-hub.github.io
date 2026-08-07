@@ -28,6 +28,7 @@ import {
   probe, proxyForChannel, hostOfProxy, outboundFetch, describeError,
   type ProbeResult, type NotifyChannel,
 } from '../providers/outbound.js';
+import { telegramBreakerStatus } from '../providers/notifications/telegram.js';
 import { config } from '../config.js';
 import type { NotificationMessage } from '../providers/notifications/types.js';
 
@@ -193,6 +194,58 @@ function renderHtml(k: Kpis): string {
 </div></body></html>`;
 }
 
+/**
+ * Push one broadcast to everyone it is addressed to. Runs DETACHED from the
+ * request (see the caller): it is serial and per-user, so its duration is a
+ * function of the audience, and the اطلاعیه row the readers actually read is
+ * already committed before this starts.
+ *
+ * Detached means nothing may escape: an unhandled rejection here would take the
+ * process down, and a silent one would leave a broadcast that reported `queued`
+ * and then vanished. So every send is caught per user, the whole run is caught
+ * again, and it always ends with one summary line naming the broadcast id.
+ */
+async function deliverBroadcast(
+  id: string,
+  audience: NoticeAudience,
+  message: NotificationMessage,
+  now: Date,
+): Promise<void> {
+  const started = Date.now();
+  let pushed = 0;
+  let failed = 0;
+  try {
+    const targets = await query<{ id: string }>(
+      `select id from profiles
+        where ($1 = 'all'
+            or ($1 = 'premium' and tier = 'premium')
+            or ($1 = 'free' and tier <> 'premium'))
+          and (telegram_id is not null or bale_id is not null
+               or exists (select 1 from push_subscriptions s where s.user_id = profiles.id))`,
+      [audience],
+    );
+    // eslint-disable-next-line no-console
+    console.log(`[broadcast:${id}] delivering to ${targets.rowCount} reader(s), audience=${audience}`);
+    for (const t of targets.rows) {
+      try {
+        if (await sendCapped(t.id, message, 'system', now, { inbox: false })) pushed += 1;
+      } catch {
+        failed += 1; // one dead device never stops the broadcast
+      }
+    }
+    // eslint-disable-next-line no-console
+    console.log(
+      `[broadcast:${id}] done pushed=${pushed} failed=${failed} in ${Date.now() - started}ms`,
+    );
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.error(
+      `[broadcast:${id}] ABORTED after pushed=${pushed} failed=${failed}: ${describeError(err)}`
+      + ' — the اطلاعیه row itself is unaffected and every reader still sees it.',
+    );
+  }
+}
+
 export async function adminRoutes(app: FastifyInstance): Promise<void> {
   app.addHook('preHandler', requireAdmin);
 
@@ -329,41 +382,41 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
     });
 
     const now = new Date();
-    let pushed = 0;
-    let pushSkipped: string | null = null;
+    let push: 'off' | 'queued' | 'held' = 'off';
     if (b.push) {
       if (!inAwakeWindow(now) && !b.force) {
         // Held rather than sent, and said out loud: the inbox already has it, so
         // nothing is lost by the founder pressing this again in the morning.
-        pushSkipped = 'outside_awake_window';
+        push = 'held';
       } else {
-        const targets = await query<{ id: string }>(
-          `select id from profiles
-            where ($1 = 'all'
-                or ($1 = 'premium' and tier = 'premium')
-                or ($1 = 'free' and tier <> 'premium'))
-              and (telegram_id is not null or bale_id is not null
-                   or exists (select 1 from push_subscriptions s where s.user_id = profiles.id))`,
-          [audience],
-        );
+        push = 'queued';
         const message: NotificationMessage = {
           title,
           body: (b.body || '').trim() || title,
           url: (b.url || '').trim() || '/plus/',
-          tag: 'broadcast',
+          // Unique per broadcast. Web push REPLACES a notification that carries a
+          // tag already on screen, so the constant 'broadcast' meant a second
+          // announcement silently deleted the first from the reader's tray — they
+          // would only ever see the latest one.
+          tag: `broadcast:${id}`,
         };
-        for (const t of targets.rows) {
-          try {
-            if (await sendCapped(t.id, message, 'system', now, { inbox: false })) pushed += 1;
-          } catch {
-            /* one dead device never stops the broadcast */
-          }
-        }
+        // NOT awaited. The fan-out is serial and per-user, so its duration grows
+        // with the audience; on 2026-08-07 it passed the gateway timeout and the
+        // founder got a 504 that said nothing about whether the announcement had
+        // gone out. The اطلاعیه row is already committed above and is what every
+        // reader actually reads, so there is nothing for the caller to wait for.
+        void deliverBroadcast(id, audience, message, now);
       }
     }
 
     return reply.send({
-      ok: true, broadcast_id: id, audience, pushed, push_skipped: pushSkipped,
+      ok: true,
+      broadcast_id: id,
+      audience,
+      // 'queued' means accepted and running, NOT delivered — read the
+      // [broadcast:<id>] log lines for the counts.
+      push,
+      push_skipped: push === 'held' ? 'outside_awake_window' : null,
     });
   });
 
@@ -430,6 +483,10 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
         enabled: on('telegram'),
         configured: Boolean(config.notify.telegramBotToken),
         bot_token: Boolean(config.notify.telegramBotToken),
+        // `open: true` means sends are being SKIPPED right now, cheaply, after
+        // repeated network failures. Without this the channel would be silently
+        // absent from every fan-out with nothing here saying why.
+        breaker: telegramBreakerStatus(),
       },
       bale: {
         enabled: on('bale'),
