@@ -263,26 +263,78 @@ describe('the celebration is acknowledged separately from the inbox', () => {
 const AWAKE = new Date('2026-02-10T11:00:00+03:30');
 const ASLEEP = new Date('2026-02-10T02:00:00+03:30');
 
-describe('the inbox has no schedule', () => {
-  // The awake window and the daily cap protect a PHONE and a bot token. Neither
-  // is involved in writing a row, so a publish at 02:00 is in اطلاعیه at 02:00 —
-  // for a free reader as much as a premium one, with no 24-hour digest delay and
-  // no opt-in toggle in the way.
-  it('puts a 02:00 publish in the inbox at 02:00, for a free reader', async () => {
-    const res = await onArticlePublished({
-      contentId: 'notecast/note-99', title: 'پوسیدگی پنهان', url: '/notecast/note-99.html',
-      pulse: 'یک جملهٔ بلندِ پالس که قرار نیست داخل اطلاعیه بیاید.', publishedAt: ASLEEP,
-    });
-    expect(res.deferred).toBe(true);       // the PUSH waited for morning…
-    expect(res.premiumRecipients).toBe(0);
+/** Make the test reader premium, which is the article lane's head-start tier. */
+async function goPremium(): Promise<void> {
+  await pool.query("update profiles set tier = 'premium' where id = $1", [await userId()]);
+}
 
-    const rows = await listNotices(await userId());   // …the notice did not
+/** Mark every recorded article as due for the free digest, on the injected clock. */
+async function makeFreeDue(): Promise<void> {
+  await pool.query("update articles set notify_free_after = '2026-01-01'");
+}
+
+describe('a new article is announced on one schedule, on both surfaces', () => {
+  // The 24-hour head start is what premium buys in this lane, and it has to mean
+  // the same thing everywhere or it means nothing. Announcing a publish to
+  // everybody in اطلاعیه the moment it happened would have handed a free reader
+  // the premium timing through a different door.
+  it('gives premium the row at publish and free nothing yet', async () => {
+    await goPremium();
+    await onArticlePublished({
+      contentId: 'notecast/note-99', title: 'پوسیدگی پنهان', url: '/notecast/note-99.html',
+      pulse: 'یک جملهٔ بلندِ پالس که قرار نیست داخل اطلاعیه بیاید.', publishedAt: AWAKE,
+    });
+    expect((await listNotices(await userId())).length).toBe(1);
+
+    // The same account, seen as a free reader: the row is addressed to a tier it
+    // is not in, and `audience` is resolved at READ time.
+    await pool.query("update profiles set tier = 'free' where id = $1", [await userId()]);
+    expect(await listNotices(await userId())).toEqual([]);
+    expect(await unreadNoticeCount(await userId())).toBe(0);
+  });
+
+  it('gives free the same row when the digest claims it a day later', async () => {
+    await onArticlePublished({
+      contentId: 'notecast/note-96', title: 'مطلبِ تازه', url: '/notecast/note-96.html',
+      publishedAt: AWAKE,
+    });
+    expect(await listNotices(await userId())).toEqual([]);   // free, still waiting
+
+    await makeFreeDue();
+    await runFreeDigest(AWAKE);
+    const rows = await listNotices(await userId());
     expect(rows.length).toBe(1);
     expect(rows[0].kind).toBe('article');
     expect(rows[0].unread).toBe(true);
   });
 
+  // The row is for every free reader, not only the ones who opted into push:
+  // that toggle is about being interrupted, and a row interrupts nobody.
+  it('gives a free reader the row even with notifications switched off', async () => {
+    await onArticlePublished({
+      contentId: 'notecast/note-95', title: 'مطلبِ تازه', url: '/notecast/note-95.html',
+      publishedAt: AWAKE,
+    });
+    await makeFreeDue();
+    const digest = await runFreeDigest(AWAKE);
+    expect(digest.recipients).toBe(0);                        // nobody opted in
+    expect((await listNotices(await userId())).length).toBe(1); // told anyway
+  });
+
+  // The awake window is the one thing the row does NOT inherit: it exists so a
+  // phone does not buzz at 02:00, and a row buzzes nothing.
+  it('does not hold a premium row for the night', async () => {
+    await goPremium();
+    const res = await onArticlePublished({
+      contentId: 'notecast/note-94', title: 'نیمه‌شب', url: '/notecast/note-94.html',
+      publishedAt: ASLEEP,
+    });
+    expect(res.deferred).toBe(true);                 // the PUSH waited for morning…
+    expect((await listNotices(await userId())).length).toBe(1); // …the row did not
+  });
+
   it('says where the article is, not what it argues', async () => {
+    await goPremium();
     await onArticlePublished({
       contentId: 'notecast/note-98', title: 'پوسیدگی پنهان', url: '/notecast/note-98.html',
       pulse: 'یک پاراگرافِ کاملاً طولانی دربارهٔ محتوای مقاله که در فهرست جایی ندارد.',
@@ -306,8 +358,7 @@ describe('the inbox has no schedule', () => {
       publishedAt: AWAKE,
     });
     // The free digest carries the same news in a longer wording, on a schedule.
-    // Due relative to the injected clock, not to the wall clock the suite runs on.
-    await pool.query("update articles set notify_free_after = '2026-01-01'");
+    await makeFreeDue();
     const digest = await runFreeDigest(AWAKE);
     expect(digest.recipients).toBe(1);
 
@@ -377,5 +428,21 @@ describe('the founder broadcast', () => {
       method: 'POST', url: '/admin/notices/broadcast', payload: { title: 'سلام' },
     });
     expect(res.statusCode).toBe(401);
+  });
+
+  // The article lane is tiered because a head start is what premium bought
+  // there. Site news is not a perk — it reaches everyone the moment it is sent,
+  // free and premium alike, with no schedule of any kind in the way.
+  it('reaches a free reader instantly, unlike an article', async () => {
+    const res = await app.inject({
+      method: 'POST', url: '/admin/notices/broadcast',
+      headers: { authorization: auth },
+      payload: { title: 'قابلیت تازه‌ای اضافه شد' },
+    });
+    expect(res.statusCode).toBe(200);
+    const rows = await listNotices(await userId());
+    expect(rows.length).toBe(1);
+    expect(rows[0].kind).toBe('system');
+    expect(rows[0].unread).toBe(true);
   });
 });

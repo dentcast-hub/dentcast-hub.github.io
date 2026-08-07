@@ -68,19 +68,32 @@ function articleLine(a: { pulse?: string | null; content_id: string }): string {
  * new exists, where it is, and what it is called. The article itself is one tap
  * away and says the rest better than any summary of it.
  *
- * It is also the reason this lane has no schedule. The awake window and the
- * daily cap exist to protect a phone and a bot token; neither is involved in
- * writing a row, so every reader — free and premium alike — has the news in
- * اطلاعیه the moment it is published, whatever the hour, and the push lane on
- * top of it stays exactly as careful as it was.
+ * ── Why this carries an audience ─────────────────────────────────────────────
+ *
+ * The 24-hour head start is what premium buys in this lane, and it has to mean
+ * the same thing on every surface or it means nothing: announcing a publish to
+ * everybody in اطلاعیه the moment it happens would have handed a free reader the
+ * premium timing through a different door, complete with a red dot pulling them
+ * to it. So the row follows exactly the schedule the push already follows —
+ * `premium` at publish, `free` when the digest claims the article a day later.
+ *
+ * What it deliberately does NOT inherit is the awake window. That exists so a
+ * phone does not buzz at 02:00, and a row buzzes nothing; holding it would delay
+ * news for a premium reader who is awake and looking, to protect them from an
+ * interruption that cannot happen. Access was never gated either way — the
+ * article is public, indexed and on the homepage widget from the moment it is
+ * published (principle 1); what premium buys is being TOLD first.
  */
-async function announceInApp(a: { content_id: string; title: string; url: string }): Promise<void> {
+async function announceInApp(
+  a: { content_id: string; title: string; url: string },
+  audience: 'premium' | 'free',
+): Promise<void> {
   await recordBroadcast({
     kind: 'article',
     title: `مطلب جدید در ${sectionFa(a.content_id)}`,
     body: a.title,
     url: a.url,
-    audience: 'all',
+    audience,
   });
 }
 
@@ -174,12 +187,17 @@ export async function onArticlePublished(input: PublishInput): Promise<{
   );
   if (!inserted) return { recorded: false, premiumRecipients: 0, deferred: false };
 
-  // اطلاعیه first, and unconditionally. A row is not an interruption, so none of
-  // the machinery that protects a phone applies to it: no awake window, no daily
-  // cap, no tier split, no 24-hour free delay. The insert is guarded by the
-  // `on conflict do nothing` above, so a duplicate publish event cannot announce
-  // the same article twice.
-  await announceInApp({ content_id: input.contentId, title: input.title, url: input.url });
+  // اطلاعیه first, at any hour — but for PREMIUM only, because this is the
+  // moment premium's head start begins. The free half of the same announcement
+  // is written by runFreeDigest a day later, from the same claim that releases
+  // the free push, so one schedule governs both surfaces.
+  //
+  // The insert is guarded by the `on conflict do nothing` above, so a duplicate
+  // publish event cannot announce the same article twice.
+  await announceInApp(
+    { content_id: input.contentId, title: input.title, url: input.url },
+    'premium',
+  );
 
   // Outside waking hours: recorded, not pushed. premium_notified_at stays null,
   // which is exactly what runPremiumBacklog() selects on in the morning.
@@ -313,6 +331,20 @@ export async function runFreeDigest(now: Date = new Date()): Promise<{
     url: only ? only.url : '/plus/', // web-push tap target only; no link in the text
     tag: 'article_free_digest',
   };
+  // The free half of the اطلاعیه announcement, released by the SAME claim that
+  // releases the free push — so the row and the notification can never disagree
+  // about when a free reader is told, which is the whole point of the 24-hour
+  // rule. One row per article rather than one bundled row: the inbox is a list,
+  // and each article deserves its own line and its own link, where the push has
+  // to fit everything into one message.
+  //
+  // Written regardless of how many people the push reaches: the row is for every
+  // free reader, not only the ones who opted into notifications — that toggle is
+  // about being interrupted, and a row interrupts nobody.
+  for (const a of claimed) {
+    await announceInApp({ content_id: a.content_id, title: a.title, url: a.url }, 'free');
+  }
+
   const recipients = await audience('free');
   await deliver(recipients, message, 'article_free_digest');
 
