@@ -1,6 +1,6 @@
 ---
-description: DentCast Plus / Premium surfaces — learning pathways, collections, Leitner flashcards, the scored quiz bank, the میز کار content index, and the new-article push. Use when working on anything under plus/ or plus-api/, or when a publish must update a Plus/Premium artifact.
-globs: plus/**,plus-api/**,tools/build_plus_index.mjs,tools/build_flashcards_index.mjs,tools/build_quiz_index.mjs,tools/pathway_*.py
+description: DentCast Plus / Premium surfaces — learning pathways, collections, Leitner flashcards, the scored quiz bank, the میز کار content index, the premium paper library (cabinet), and the new-article push. Use when working on anything under plus/ or plus-api/, on the cabinet catalogue, or when a publish must update a Plus/Premium artifact.
+globs: plus/**,plus-api/**,tools/build_plus_index.mjs,tools/build_flashcards_index.mjs,tools/build_quiz_index.mjs,tools/pathway_*.py,dentcast_cabinet_full_catalog*.json,dentcast_cabinet_search.html
 alwaysApply: false
 ---
 
