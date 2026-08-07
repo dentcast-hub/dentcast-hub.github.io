@@ -554,8 +554,13 @@ describe('what the winner is actually told', () => {
     const grant = me.json().pending_premium_grant;
     expect(grant.cooldown_weeks).toBe(2);
     // The banner derives the length from these two, so they must be usable.
+    // Read prize_days from the config rather than freezing a literal here: this
+    // assertion said 3 for a day after migration 0024 retuned the prize to two
+    // days, which is the same "copy outlived the config" failure the sibling
+    // test above exists to catch.
+    const cfg = await getLeagueConfig();
     const days = Math.round((new Date(grant.expires_at) - new Date(grant.granted_at)) / 86400000);
-    expect(days).toBe(3);
+    expect(days).toBe(cfg.prize_days);
     await app2.close();
   });
 });
