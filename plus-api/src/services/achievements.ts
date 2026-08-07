@@ -87,6 +87,7 @@ export async function computeAchievementFacts(
         shield_used: number; review_sessions: number;
         collections: number; collection_items: number;
         pathways_completed: number; signup_order: number;
+        shares: number;
       }>(
         `select
            (select count(*)::int from highlights where user_id = $1) as highlights,
@@ -110,7 +111,20 @@ export async function computeAchievementFacts(
              where user_id = $1 and completed_at is not null) as pathways_completed,
            (select count(*)::int from profiles p2
              where p2.created_at <= (select created_at from profiles where id = $1))
-             as signup_order`,
+             as signup_order,
+           -- «چراغ‌دار»: articles this reader passed on AFTER finishing them.
+           -- The read gate is the same one the league pays by (league.ts's
+           -- shareXp), and it is repeated here rather than relaxed: a badge that
+           -- lit for a share the league had refused to pay for would be the wall
+           -- and the ladder telling the reader two different things about the
+           -- same tap. Distinct content and no week window — the ladder is
+           -- weekly, a shelf is for life.
+           (select count(distinct s.content_id)::int from user_activity s
+             where s.user_id = $1 and s.action = 'content_shared' and s.content_id is not null
+               and exists (select 1 from user_activity r
+                            where r.user_id = $1 and r.action = 'article_completed'
+                              and r.content_id = s.content_id
+                              and r.created_at <= s.created_at)) as shares`,
         [userId],
       ),
 
@@ -274,6 +288,7 @@ export async function computeAchievementFacts(
     review_sessions: c.review_sessions,
     collections: c.collections,
     collection_items: c.collection_items,
+    shares: c.shares,
     // Inverted by nature (a LOWER signup order is better), so it is settled here
     // and handed on as a plain 0/1 — the evaluator only ever compares >=.
     founder_seat: c.signup_order > 0 && c.signup_order <= FOUNDER_SEATS ? 1 : 0,

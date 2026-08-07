@@ -32,7 +32,7 @@ const COMPUTED = new Set([
   'distinct_folders', 'folders_completed', 'archive_read', 'night_activity',
   'dawn_activity', 'weekend_pair', 'early_reads', 'weeks_no_demotion',
   'pathways_completed', 'review_sessions', 'collections', 'collection_items',
-  'founder_seat',
+  'shares', 'founder_seat',
 ]);
 
 beforeEach(async () => {
@@ -294,6 +294,39 @@ describe('GET /achievements', () => {
     expect(quill.lead_fa).toContain('اولین هایلایتت');
     expect(quill.levels.map((l: { done: boolean }) => l.done)).toEqual([true, false, false]);
     expect(body.summary.bronze).toBeGreaterThanOrEqual(1);
+  });
+
+  // «چراغ‌دار» is the one badge whose metric carries a precondition, and the
+  // precondition is the badge's whole meaning — so it is pinned here as well as
+  // in league.test.ts. The wall and the ladder must agree about a given tap:
+  // a badge that lit for a share the league had refused to pay for would be the
+  // two surfaces telling the reader different things about the same act.
+  const share = (contentId: string, action = 'content_shared') => app.inject({
+    method: 'POST', url: '/activity', headers: { cookie }, payload: { action, content_id: contentId },
+  });
+
+  it('leaves «چراغ‌دار» dark for sharing something that was never read', async () => {
+    await share('insight/insight-7');
+    const lamp = badgeOf(await get(), 'lamplighter');
+    expect(lamp.earned).toBe(false);
+    expect(lamp.value).toBe(0);
+    expect(lamp.lead_fa).toContain('تا آخر خوانده‌ای'); // the locked copy states the rule
+  });
+
+  it('lights «چراغ‌دار» bronze once the shared article was finished first', async () => {
+    await share('insight/insight-8', 'article_completed');
+    await share('insight/insight-8');
+    const lamp = badgeOf(await get(), 'lamplighter');
+    expect(lamp.earned).toBe(true);
+    expect(lamp.metal).toBe('bronze');
+    expect(lamp.value).toBe(1);
+    expect(lamp.target).toBe(10);
+  });
+
+  it('counts each article once however often it is sent on', async () => {
+    await share('insight/insight-8', 'article_completed');
+    for (let i = 0; i < 4; i += 1) await share('insight/insight-8');
+    expect(badgeOf(await get(), 'lamplighter').value).toBe(1);
   });
 });
 

@@ -53,6 +53,25 @@ export const SCORING_ACTIONS = ['article_completed', 'episode_listened', 'highli
  */
 export const CONSUMPTION_ACTIONS = ['article_completed', 'episode_listened'];
 
+/**
+ * Passing a page on to somebody else (the article header's «اشتراک‌گذاری»).
+ *
+ * Deliberately NOT in SCORING_ACTIONS, and deliberately not in the streak's
+ * QUALIFYING_ACTIONS either. Everything in those two sets is an act of STUDY,
+ * and the whole meaning of this number rests on that: the all-time score buys
+ * streak shields, and a shield is a claim about having shown up to read. A tap
+ * that recommends an article to a friend is a good thing to do and a bad thing
+ * to pay a shield for — it costs one second, and score is never deducted, so a
+ * mistake here would be permanent for every account at once.
+ *
+ * So sharing earns in exactly two places, both of which reset or saturate on
+ * their own: weekly league XP (league.ts, capped and gated), and the derived
+ * «چراغ‌دار» badge (achievements.ts). It never touches this file's arithmetic.
+ * The constant lives here anyway — beside the two sets it is excluded from — so
+ * that the exclusion is visible at the one place someone would think to undo it.
+ */
+export const SHARE_ACTION = 'content_shared';
+
 export const POINTS_PER_ACTIVE_DAY = 10;
 export const POINTS_PER_CONTENT = 5; // half a day: visible, but the daily habit still leads
 
