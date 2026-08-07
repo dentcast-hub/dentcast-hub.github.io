@@ -364,7 +364,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 80,
+   "count": 81,
    "content_ids": [
     "episodes/episode-122-1",
     "episodes/episode-122-2",
@@ -445,7 +445,8 @@
     "insight/insight-58",
     "insight/insight-59",
     "insight/insight-60",
-    "insight/insight-61"
+    "insight/insight-61",
+    "insight/insight-62"
    ]
   },
   {
@@ -1057,6 +1058,96 @@
    ]
   },
   {
+   "key": "روکش_ایمپلنت",
+   "tag": "#روکش_ایمپلنت",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "روکشِ متکی بر ایمپلنت، در تمایز با روکش روی دندان طبیعی.",
+   "use_when": "مقاله تصمیمش مختص روکش ایمپلنت باشد.",
+   "aliases": [
+    "implant crown",
+    "روکش روی ایمپلنت",
+    "روکش ایمپلنتی",
+    "کراون ایمپلنت"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 26,
+   "content_ids": [
+    "episodes/episode-125-1",
+    "episodes/episode-139",
+    "episodes/episode-147",
+    "episodes/episode-148-2",
+    "insight/insight-9",
+    "insight/insight-10",
+    "litecast/lite-CAST10",
+    "litecast/lite-CAST12",
+    "litecast/lite-CAST16",
+    "litecast/lite-CAST18",
+    "dentcast-plus/video-4",
+    "sharehub/share-4",
+    "dentcast-plus/video-5",
+    "metanotes/meta-10",
+    "insight/insight-30",
+    "insight/insight-33",
+    "chairside/chairside-12",
+    "chairside/chairside-17",
+    "insight/insight-46",
+    "insight/insight-47",
+    "insight/insight-50",
+    "insight/insight-52",
+    "insight/insight-53",
+    "insight/insight-57",
+    "chairside/chairside-28",
+    "insight/insight-62"
+   ]
+  },
+  {
+   "key": "زیرکونیا",
+   "tag": "#زیرکونیا",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "زیرکونیای دندانی به‌عنوان متریال رستوریشن.",
+   "use_when": "مقاله انتخاب، آماده‌سازی یا رفتار بالینی زیرکونیا را تعیین کند.",
+   "aliases": [
+    "زیرکونیوم",
+    "زیرکونیم",
+    "zirconia",
+    "زیرکونیای"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 26,
+   "content_ids": [
+    "episodes/episode-11",
+    "episodes/episode-17",
+    "episodes/episode-18",
+    "episodes/episode-87",
+    "episodes/episode-88",
+    "episodes/episode-89",
+    "episodes/episode-107",
+    "episodes/episode-122-5",
+    "episodes/episode-136",
+    "episodes/episode-139",
+    "episodes/episode-140",
+    "episodes/episode-146",
+    "insight/insight-5",
+    "photocast/episode-3",
+    "notecast/episode-2",
+    "notecast/episode-3",
+    "notecast/episode-5",
+    "notecast/episode-8",
+    "notecast/episode-11",
+    "notecast/episode-13",
+    "notecast/episode-17",
+    "notecast/episode-18",
+    "notecast/episode-30",
+    "insight/insight-27",
+    "dentai/dentai-26",
+    "insight/insight-62"
+   ]
+  },
+  {
    "key": "تصمیم_درمانی",
    "tag": "#تصمیم_درمانی",
    "domain": "clinical",
@@ -1104,50 +1195,6 @@
    ]
   },
   {
-   "key": "روکش_ایمپلنت",
-   "tag": "#روکش_ایمپلنت",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "روکشِ متکی بر ایمپلنت، در تمایز با روکش روی دندان طبیعی.",
-   "use_when": "مقاله تصمیمش مختص روکش ایمپلنت باشد.",
-   "aliases": [
-    "implant crown",
-    "روکش روی ایمپلنت",
-    "روکش ایمپلنتی",
-    "کراون ایمپلنت"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 25,
-   "content_ids": [
-    "episodes/episode-125-1",
-    "episodes/episode-139",
-    "episodes/episode-147",
-    "episodes/episode-148-2",
-    "insight/insight-9",
-    "insight/insight-10",
-    "litecast/lite-CAST10",
-    "litecast/lite-CAST12",
-    "litecast/lite-CAST16",
-    "litecast/lite-CAST18",
-    "dentcast-plus/video-4",
-    "sharehub/share-4",
-    "dentcast-plus/video-5",
-    "metanotes/meta-10",
-    "insight/insight-30",
-    "insight/insight-33",
-    "chairside/chairside-12",
-    "chairside/chairside-17",
-    "insight/insight-46",
-    "insight/insight-47",
-    "insight/insight-50",
-    "insight/insight-52",
-    "insight/insight-53",
-    "insight/insight-57",
-    "chairside/chairside-28"
-   ]
-  },
-  {
    "key": "زیبایی",
    "tag": "#زیبایی",
    "domain": "clinical",
@@ -1188,50 +1235,6 @@
     "notecast/episode-32",
     "notecast/episode-33",
     "insight/insight-46"
-   ]
-  },
-  {
-   "key": "زیرکونیا",
-   "tag": "#زیرکونیا",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "زیرکونیای دندانی به‌عنوان متریال رستوریشن.",
-   "use_when": "مقاله انتخاب، آماده‌سازی یا رفتار بالینی زیرکونیا را تعیین کند.",
-   "aliases": [
-    "زیرکونیوم",
-    "زیرکونیم",
-    "zirconia",
-    "زیرکونیای"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 25,
-   "content_ids": [
-    "episodes/episode-11",
-    "episodes/episode-17",
-    "episodes/episode-18",
-    "episodes/episode-87",
-    "episodes/episode-88",
-    "episodes/episode-89",
-    "episodes/episode-107",
-    "episodes/episode-122-5",
-    "episodes/episode-136",
-    "episodes/episode-139",
-    "episodes/episode-140",
-    "episodes/episode-146",
-    "insight/insight-5",
-    "photocast/episode-3",
-    "notecast/episode-2",
-    "notecast/episode-3",
-    "notecast/episode-5",
-    "notecast/episode-8",
-    "notecast/episode-11",
-    "notecast/episode-13",
-    "notecast/episode-17",
-    "notecast/episode-18",
-    "notecast/episode-30",
-    "insight/insight-27",
-    "dentai/dentai-26"
    ]
   },
   {
@@ -1326,7 +1329,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 19,
+   "count": 20,
    "content_ids": [
     "episodes/episode-80",
     "episodes/episode-81",
@@ -1346,7 +1349,8 @@
     "insight/insight-44",
     "insight/insight-52",
     "chairside/chairside-23",
-    "insight/insight-60"
+    "insight/insight-60",
+    "insight/insight-62"
    ]
   },
   {
@@ -2692,6 +2696,32 @@
    ]
   },
   {
+   "key": "زیبایی_قدامی",
+   "tag": "#زیبایی_قدامی",
+   "domain": null,
+   "words": 2,
+   "definition": "نتیجه‌ی زیبایی در ناحیه‌ی قدام.",
+   "use_when": "مقاله تصمیمش را بر معیار زیبایی قدام بنا کند.",
+   "aliases": [
+    "استتیک قدامی",
+    "زیبایی قدام"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 9,
+   "content_ids": [
+    "episodes/episode-13",
+    "notecast/episode-28",
+    "chairside/chairside-1",
+    "insight/insight-28",
+    "chairside/chairside-8",
+    "chairside/chairside-16",
+    "insight/insight-55",
+    "insight/insight-61",
+    "insight/insight-62"
+   ]
+  },
+  {
    "key": "فینیش_لاین",
    "tag": "#فینیش_لاین",
    "domain": "clinical",
@@ -2955,31 +2985,6 @@
     "chairside/chairside-2",
     "insight/insight-42",
     "insight/insight-55"
-   ]
-  },
-  {
-   "key": "زیبایی_قدامی",
-   "tag": "#زیبایی_قدامی",
-   "domain": null,
-   "words": 2,
-   "definition": "نتیجه‌ی زیبایی در ناحیه‌ی قدام.",
-   "use_when": "مقاله تصمیمش را بر معیار زیبایی قدام بنا کند.",
-   "aliases": [
-    "استتیک قدامی",
-    "زیبایی قدام"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 8,
-   "content_ids": [
-    "episodes/episode-13",
-    "notecast/episode-28",
-    "chairside/chairside-1",
-    "insight/insight-28",
-    "chairside/chairside-8",
-    "chairside/chairside-16",
-    "insight/insight-55",
-    "insight/insight-61"
    ]
   },
   {
@@ -3784,6 +3789,29 @@
    ]
   },
   {
+   "key": "زیرکونیا_مونولیتیک",
+   "tag": "#زیرکونیا_مونولیتیک",
+   "domain": null,
+   "words": 2,
+   "definition": "زیرکونیای یکپارچه بدون لایه‌ی پرسلن.",
+   "use_when": "مقاله رفتار مونولیتیک را بررسی کند.",
+   "aliases": [
+    "monolithic zirconia",
+    "مونولیتیک"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 6,
+   "content_ids": [
+    "episodes/episode-123-4",
+    "episodes/episode-125-1",
+    "notecast/episode-18",
+    "insight/insight-42",
+    "dentai/dentai-26",
+    "insight/insight-62"
+   ]
+  },
+  {
    "key": "سمان_باقیمانده",
    "tag": "#سمان_باقیمانده",
    "domain": "clinical",
@@ -4416,28 +4444,6 @@
     "dentai/dentai-23",
     "dentai/dentai-24",
     "sharehub/share-13"
-   ]
-  },
-  {
-   "key": "زیرکونیا_مونولیتیک",
-   "tag": "#زیرکونیا_مونولیتیک",
-   "domain": null,
-   "words": 2,
-   "definition": "زیرکونیای یکپارچه بدون لایه‌ی پرسلن.",
-   "use_when": "مقاله رفتار مونولیتیک را بررسی کند.",
-   "aliases": [
-    "monolithic zirconia",
-    "مونولیتیک"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 5,
-   "content_ids": [
-    "episodes/episode-123-4",
-    "episodes/episode-125-1",
-    "notecast/episode-18",
-    "insight/insight-42",
-    "dentai/dentai-26"
    ]
   },
   {
@@ -5102,6 +5108,29 @@
     "episodes/episode-122-5",
     "dentcast-plus/video-1",
     "dentai/dentai-10"
+   ]
+  },
+  {
+   "key": "تغییر_رنگ",
+   "tag": "#تغییر_رنگ",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "تغییرِ رنگِ رستوریشن یا دندان پس از درمان.",
+   "use_when": "مقاله علت یا رفعِ تغییر رنگ را بگوید.",
+   "aliases": [
+    "discoloration",
+    "دیس کالریشن",
+    "رنگ گرفتن",
+    "اختلاف رنگ"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "episodes/episode-61",
+    "insight/insight-5",
+    "chairside/chairside-29",
+    "insight/insight-62"
    ]
   },
   {
@@ -6198,28 +6227,6 @@
     "dentai/dentai-4",
     "dentai/promptologist/prompt1-1",
     "dentai/promptologist/prompt1-2"
-   ]
-  },
-  {
-   "key": "تغییر_رنگ",
-   "tag": "#تغییر_رنگ",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "تغییرِ رنگِ رستوریشن یا دندان پس از درمان.",
-   "use_when": "مقاله علت یا رفعِ تغییر رنگ را بگوید.",
-   "aliases": [
-    "discoloration",
-    "دیس کالریشن",
-    "رنگ گرفتن",
-    "اختلاف رنگ"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "episodes/episode-61",
-    "insight/insight-5",
-    "chairside/chairside-29"
    ]
   },
   {
@@ -12041,6 +12048,27 @@
    "count": 1,
    "content_ids": [
     "dentai/promptologist/prompt1-append1"
+   ]
+  },
+  {
+   "key": "اصلاح_رنگ_چیرساید",
+   "tag": "#اصلاح_رنگ_چیرساید",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "تکنیکی چیرسایدی برای اصلاح یا هماهنگ کردنِ رنگِ یک رستوریشن با تیره یا روشن کردنِ هدفمندِ سطحِ داخلیِ (Intaglio) آن — مثلاً با یک مدادِ استریل — بدون بازگشت به لابراتوار.",
+   "use_when": "مقاله دربارهٔ اصلاح یا هماهنگ‌سازیِ رنگِ یک رستوریشن به‌صورت چیرساید و بدون دخالتِ لابراتوار باشد.",
+   "aliases": [
+    "internal staining chairside",
+    "استین سطح داخلی",
+    "intaglio staining",
+    "رنگ‌آمیزی داخلی روکش",
+    "chairside shade correction"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "insight/insight-62"
    ]
   },
   {
@@ -18207,10 +18235,12 @@
   "non carious cervical lesion": "nccl",
   "low temperature degradation": "ltd",
   "american dental association": "ada",
+  "internal staining chairside": "اصلاح رنگ چیرساید",
   "radiographic interpretation": "تفسیر رادیوگرافی",
   "temporomandibular disorder": "tmd",
   "interproximal contact loss": "از دست رفتن کانتکت",
   "airborne particle abrasion": "سندبلاست",
+  "chairside shade correction": "اصلاح رنگ چیرساید",
   "non functional third molar": "مولر سوم بدون آنتاگونیست",
   "buccal upper lower lingual": "قانون bull",
   "principles of preparation": "اصول تراش",
@@ -18329,6 +18359,7 @@
   "diagnostic reasoning": "استدلال تشخیصی",
   "اسپلینت کردن ایمپلنت": "اسپلینت ایمپلنت",
   "prosthetic splinting": "اسپلینت پروتزی",
+  "رنگ آمیزی داخلی روکش": "اصلاح رنگ چیرساید",
   "treatment principles": "اصول درمانی",
   "proximal preparation": "باکس پروگزیمال",
   "پروتز ثابت چند واحدی": "بریج",
@@ -18350,8 +18381,8 @@
   "انتخاب جنس رستوریشن": "انتخاب متریال",
   "بالا بردن بعد عمودی": "افزایش vd",
   "انتخاب اباتمنت پایه": "انتخاب پایه",
-  "immediate placement": "ایمپلنت فوری",
   "monolithic zirconia": "زیرکونیا مونولیتیک",
+  "immediate placement": "ایمپلنت فوری",
   "از دست رفتن ایمپلنت": "شکست ایمپلنت",
   "ناموفق بودن ایمپلنت": "شکست ایمپلنت",
   "generation zirconia": "نسل زیرکونیا",
@@ -18546,6 +18577,7 @@
   "chained prompting": "شکستن کار",
   "axial wall height": "ارتفاع دیواره",
   "implant splinting": "اسپلینت ایمپلنت",
+  "intaglio staining": "اصلاح رنگ چیرساید",
   "خارج کردن ایمپلنت": "اکسپلنت ایمپلنت",
   "sleeping implants": "ایمپلنت خواب",
   "zygomatic implant": "ایمپلنت زایگوماتیک",
@@ -18824,6 +18856,7 @@
   "custom abutment": "اباتمنت کاستوم",
   "blending effect": "اثر آفتاب پرست",
   "ai subscription": "اشتراک هوش مصنوعی",
+  "استین سطح داخلی": "اصلاح رنگ چیرساید",
   "برداشتن ایمپلنت": "اکسپلنت ایمپلنت",
   "ایمپلنت دفن شده": "ایمپلنت خواب",
   "ایمپلنت زایگوما": "ایمپلنت زایگوماتیک",
@@ -19090,6 +19123,7 @@
   "ضایعه سرویکال": "nccl",
   "screwmentable": "اسکرو سمنتد",
   "فضای امبراژور": "امبراژور",
+  "discoloration": "پایداری رنگ",
   "resin coating": "رزین کوتینگ",
   "ceramic crown": "روکش سرامیکی",
   "کراون سرامیکی": "روکش سرامیکی",
@@ -19103,7 +19137,6 @@
   "short implant": "ایمپلنت کوتاه",
   "برداشتن ترمیم": "برداشت ترمیم",
   "سیستم ایمپلنت": "برند ایمپلنت",
-  "discoloration": "پایداری رنگ",
   "باز بودن تماس": "تماس باز",
   "دیستورشن اسکن": "خطای اسکن",
   "referred pain": "درد ارجاعی",
@@ -19273,12 +19306,12 @@
   "زیرو بون لاس": "zero تحلیل استخوان",
   "آنله سرامیکی": "آنله",
   "جدا شدن روکش": "افتادن روکش",
+  "استتیک قدامی": "زیبایی قدامی",
   "اسکن دیجیتال": "قالبگیری دیجیتال",
   "digital scan": "قالبگیری دیجیتال",
   "دیجیتال اسکن": "قالبگیری دیجیتال",
   "اینگات ایمکس": "لیتیوم دی سیلیکات",
   "hydrofluoric": "اچ سرامیک",
-  "استتیک قدامی": "زیبایی قدامی",
   "فضای بازسازی": "فضای رستوریتیو",
   "استحکام باند": "قدرت باند",
   "تحلیل کرستال": "تحلیل استخوان کرستال",
@@ -19482,10 +19515,10 @@
   "periodontal": "پریودنتال",
   "آگاهی بیمار": "آگاهی درمانی",
   "loose crown": "افتادن روکش",
+  "زیبایی قدام": "زیبایی قدامی",
   "سی ای دی کم": "cad cam",
   "هیدروفلوریک": "اچ سرامیک",
   "provisional": "روکش موقت",
-  "زیبایی قدام": "زیبایی قدامی",
   "فضای پروتزی": "فضای رستوریتیو",
   "تنسایل باند": "قدرت باند",
   "باند سرامیک": "باندینگ سرامیک",
@@ -19512,6 +19545,7 @@
   "ایزوله کردن": "ایزولاسیون",
   "اورال هایژن": "بهداشت دهان",
   "تجهیزات مطب": "تجهیزات دندانپزشکی",
+  "دیس کالریشن": "پایداری رنگ",
   "روکش سرامیک": "روکش سرامیکی",
   "ایمیدیت لود": "زمان بارگذاری ایمپلنت",
   "سوپرا اراپت": "سوپرااراپشن",
@@ -19527,7 +19561,6 @@
   "برداشت روکش": "برداشت ترمیم",
   "تشخیص کاریز": "تشخیص پوسیدگی",
   "کشف پوسیدگی": "تشخیص پوسیدگی",
-  "دیس کالریشن": "پایداری رنگ",
   "انحراف اسکن": "خطای اسکن",
   "درد انتقالی": "درد ارجاعی",
   "متال سرامیک": "روکش pfm",
@@ -19727,6 +19760,7 @@
   "انتخاب رنگ": "انتخاب shade",
   "rubber dam": "ایزولاسیون",
   "prep دندان": "تراش دندان",
+  "اختلاف رنگ": "پایداری رنگ",
   "root canal": "درمان ریشه",
   "پری اپیکال": "رادیوگرافی کنترل",
   "early load": "زمان بارگذاری ایمپلنت",
@@ -19743,7 +19777,6 @@
   "دنتین ریشه": "باند به عاج ریشه",
   "تداخل دارو": "تداخل دارویی",
   "ترک در عاج": "ترک عاجی",
-  "اختلاف رنگ": "پایداری رنگ",
   "ثبت اکلوژن": "ثبت رابطه",
   "رکورد گیری": "ثبت رابطه",
   "خطای اسکنر": "خطای اسکن",
@@ -19903,9 +19936,9 @@
   "گزارش کیس": "کیس اینسایت",
   "دنت ای آی": "dentai",
   "پست دندان": "پست و کور",
-  "aesthetic": "زیبایی",
   "زیرکونیوم": "زیرکونیا",
   "زیرکونیای": "زیرکونیا",
+  "aesthetic": "زیبایی",
   "meta note": "متانوت",
   "سمان رزین": "سمان رزینی",
   "bone loss": "تحلیل استخوان",
@@ -19937,6 +19970,7 @@
   "embrasure": "امبراژور",
   "isolation": "ایزولاسیون",
   "پرپ دندان": "تراش دندان",
+  "رنگ گرفتن": "پایداری رنگ",
   "روت کانال": "درمان ریشه",
   "پانورامیک": "رادیوگرافی تشخیصی",
   "لایه سمان": "سمان",
@@ -19946,7 +19980,6 @@
   "دیباندینگ": "debonding",
   "نقد مقاله": "تحلیل مطالعه",
   "pulp test": "تست اندو",
-  "رنگ گرفتن": "پایداری رنگ",
   "توزیع بار": "توزیع نیرو",
   "self etch": "سلف اچ",
   "طراحی تاج": "طراحی روکش",
@@ -20114,9 +20147,9 @@
   "اکلوزیون": "اکلوژن",
   "notecast": "نوت کست",
   "چیر ساید": "چیرساید",
-  "esthetic": "زیبایی",
   "زیرکونیم": "زیرکونیا",
   "zirconia": "زیرکونیا",
+  "esthetic": "زیبایی",
   "abutment": "اباتمنت",
   "metanote": "متانوت",
   "adhesive": "ادهزیو",

@@ -1030,6 +1030,10 @@
         "milestone": false
       },
       {
+        "content_id": "insight/insight-62",
+        "milestone": false
+      },
+      {
         "content_id": "episodes/episode-125-2",
         "milestone": false
       },
@@ -1252,6 +1256,10 @@
       },
       {
         "content_id": "insight/insight-29",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-62",
         "milestone": false
       },
       {
@@ -1498,6 +1506,10 @@
       {
         "content_id": "insight/insight-28",
         "milestone": true
+      },
+      {
+        "content_id": "insight/insight-62",
+        "milestone": false
       },
       {
         "content_id": "insight/insight-61",
@@ -1928,6 +1940,10 @@
       },
       {
         "content_id": "notecast/episode-8",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-62",
         "milestone": false
       },
       {

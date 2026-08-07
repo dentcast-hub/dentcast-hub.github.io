@@ -1,0 +1,31 @@
+{
+  "type": "clinical",
+  "note": "Publish of insight-62 (هم‌رنگ کردن دو روکش زیرکونیای مجاور؛ یک راه‌حل خلاقانه و سریع سر یونیت). Mints the one genuinely new concept the library lacked: chairside intraoral staining of a restoration's intaglio surface to correct/match its shade without returning to the laboratory. Every other tag reuses an existing canonical concept (#اینسایت, #زیرکونیا, #اباتمنت, #روکش_ایمپلنت, #زیرکونیا_مونولیتیک, #تغییر_رنگ, #زیبایی_قدامی).",
+  "concepts": [
+    {
+      "tag": "#اصلاح_رنگ_چیرساید",
+      "domain": "clinical",
+      "definition": "تکنیکی چیرسایدی برای اصلاح یا هماهنگ کردنِ رنگِ یک رستوریشن با تیره یا روشن کردنِ هدفمندِ سطحِ داخلیِ (Intaglio) آن — مثلاً با یک مدادِ استریل — بدون بازگشت به لابراتوار.",
+      "use_when": "مقاله دربارهٔ اصلاح یا هماهنگ‌سازیِ رنگِ یک رستوریشن به‌صورت چیرساید و بدون دخالتِ لابراتوار باشد.",
+      "aliases": [
+        "internal staining chairside",
+        "استین سطح داخلی",
+        "intaglio staining",
+        "رنگ‌آمیزی داخلی روکش",
+        "chairside shade correction"
+      ]
+    }
+  ],
+  "articles": {
+    "insight/insight-62": [
+      "#اینسایت",
+      "#زیرکونیا",
+      "#اباتمنت",
+      "#روکش_ایمپلنت",
+      "#زیرکونیا_مونولیتیک",
+      "#تغییر_رنگ",
+      "#زیبایی_قدامی",
+      "#اصلاح_رنگ_چیرساید"
+    ]
+  }
+}
