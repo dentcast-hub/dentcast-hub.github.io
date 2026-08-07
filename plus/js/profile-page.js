@@ -1,6 +1,7 @@
 // Controller for the standalone /plus/profile.html page. Renders the same
 // profile the header overlay uses. Requires login.
-import { currentUser } from './api.js';
+import { currentUser, meStatus } from './api.js';
+import { unreachableGate } from './premium-cta.js';
 import { openLoginModal } from './login-modal.js';
 import { renderProfile } from './profile.js';
 import { el } from './util.js';
@@ -11,6 +12,10 @@ async function main() {
   const root = document.getElementById('dcp-root');
   if (!root) return;
   const user = await currentUser();
+  // The API answered nothing — which is NOT the same as "no subscription".
+  // See unreachableGate: for the minutes an API is down, this gate used to
+  // tell paying subscribers to go and buy a subscription.
+  if (!user && meStatus() === 'error') { unreachableGate(root); return; }
   if (!user) {
     const btn = el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button' }, 'ورود');
     btn.addEventListener('click', async () => {

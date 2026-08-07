@@ -2,8 +2,8 @@
 // collections.html / cards.html / pathways.html: anonymous -> login, free ->
 // premium upsell, premium -> the real view.
 import { el } from './util.js';
-import { premiumCta, lapsedNote, guestPremiumExtras } from './premium-cta.js';
-import { currentUser } from './api.js';
+import { premiumCta, lapsedNote, guestPremiumExtras, unreachableGate } from './premium-cta.js';
+import { currentUser, meStatus } from './api.js';
 import { openLoginModal } from './login-modal.js';
 import { renderHighlightLibrary } from './highlights.js';
 import { registerSW } from './pwa.js';
@@ -27,6 +27,10 @@ async function main() {
   if (!root) return;
 
   const user = await currentUser();
+  // The API answered nothing — which is NOT the same as "no subscription".
+  // See unreachableGate: for the minutes an API is down, this gate used to
+  // tell paying subscribers to go and buy a subscription.
+  if (!user && meStatus() === 'error') { unreachableGate(root); return; }
   if (!user) {
     const btn = el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button' }, 'ورود');
     btn.addEventListener('click', async () => {
