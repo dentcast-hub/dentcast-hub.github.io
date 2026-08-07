@@ -74,8 +74,10 @@ export class WebPushNotificationSender implements NotificationSender {
         await webpush.sendNotification(
           { endpoint: s.endpoint, keys: { p256dh: s.p256dh, auth: s.auth } },
           payload,
-          // Proxy + timeout: FCM and APNs are international, so from an Iranian
-          // pod they are exactly as blockable as Telegram.
+          // Timeout always; proxy only if WEBPUSH_PROXY_URL is explicitly set.
+          // FCM and APNs are international and therefore blockable in principle,
+          // but they are reachable DIRECTLY from the pod today — so web push
+          // defaults to direct and no other channel's proxy can move it.
           webPushOptions(),
         );
         sent += 1;

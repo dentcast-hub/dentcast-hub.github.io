@@ -162,11 +162,28 @@ export const config = {
   // Outbound HTTP to the notification destinations (see providers/outbound.ts).
   // A container hosted in Iran may have no route to api.telegram.org / FCM / APNs
   // while domestic hosts (Bale) stay reachable — exactly the 2026-07-26 outage.
-  // OUTBOUND_PROXY_URL routes the INTERNATIONAL channels through a proxy
-  // (http://host:port, credentials allowed); empty = direct, the normal case.
-  // HTTPS_PROXY is honoured as a fallback so a platform-level setting also works.
+  //
+  // THE PROXY IS PER CHANNEL, and that is the whole point. It used to be ONE key
+  // shared by every international destination, which meant a proxy added to
+  // rescue Telegram was silently mounted on web push as well — and if that proxy
+  // could not reach FCM/APNs, it took a healthy channel down with it. One knob
+  // could not express "Telegram through a proxy, web push direct", so the
+  // failure it caused was invisible by construction.
+  //
+  //   OUTBOUND_PROXY_URL  — Telegram's route (http://host:port, credentials
+  //                         allowed). Empty = direct, the normal case.
+  //   WEBPUSH_PROXY_URL   — web push's OWN route. Empty = DIRECT. Web push is
+  //                         never routed by any other variable.
+  //   Bale is domestic and is never proxied at all (providers/outbound.ts).
+  //
+  // HTTPS_PROXY / https_proxy are deliberately NOT read here. They used to be a
+  // fallback for this key, which handed a platform-level variable — one nobody
+  // set with notifications in mind — the power to reroute delivery. Notification
+  // policy is set by notification variables only. A set-but-ignored HTTPS_PROXY
+  // is warned about at startup below rather than honoured in silence.
   outbound: {
-    proxyUrl: str('OUTBOUND_PROXY_URL', '') || str('HTTPS_PROXY', '') || str('https_proxy', ''),
+    proxyUrl: str('OUTBOUND_PROXY_URL', ''),
+    webPushProxyUrl: str('WEBPUSH_PROXY_URL', ''),
     // A plain fetch has no timeout: against a filtered host it can hang until the
     // socket dies, stalling every later user in a notification batch.
     timeoutMs: int('OUTBOUND_TIMEOUT_MS', 10_000),
@@ -512,5 +529,20 @@ export const config = {
     refreshSeconds: int('CONTENT_REFRESH_SECONDS', 300),
   },
 };
+
+// A platform-level proxy variable used to be a silent fallback for
+// OUTBOUND_PROXY_URL. It no longer is — but a deployment that was relying on
+// that fallback would otherwise discover the change as "Telegram stopped
+// working" with nothing to read anywhere. Goal: no channel changes its route in
+// silence, in EITHER direction.
+const strayProxy = ['HTTPS_PROXY', 'https_proxy'].filter((k) => (process.env[k] || '').trim());
+if (strayProxy.length > 0 && !config.outbound.proxyUrl) {
+  // eslint-disable-next-line no-console
+  console.warn(
+    `[config] ${strayProxy.join('/')} is set but is NOT used for notifications.`
+    + ' Set OUTBOUND_PROXY_URL to route Telegram, WEBPUSH_PROXY_URL to route web push.'
+    + ' Both are empty, so every notification channel is going direct.',
+  );
+}
 
 export type Config = typeof config;

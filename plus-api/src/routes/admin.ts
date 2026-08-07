@@ -23,7 +23,8 @@ import {
 import { withPageViews } from '../services/view-stats.js';
 import { notifications, ai } from '../providers/registry.js';
 import {
-  probe, proxyConfigured, proxyHost, outboundFetch, describeError, type ProbeResult,
+  probe, proxyForChannel, hostOfProxy, outboundFetch, describeError,
+  type ProbeResult, type NotifyChannel,
 } from '../providers/outbound.js';
 import { config } from '../config.js';
 import type { NotificationMessage } from '../providers/notifications/types.js';
@@ -295,11 +296,15 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
     if (withProbes) {
       const runs = targets.flatMap((t) => {
         // Domestic hosts are checked direct only. International hosts are checked
-        // direct AND (when a proxy is set) through it, so the answer distinguishes
-        // "the pod has no route" from "the proxy is broken".
-        const viaProxy = t.international && proxyConfigured();
+        // direct AND (when THAT CHANNEL has a proxy of its own) through it, so the
+        // answer distinguishes "the pod has no route" from "the proxy is broken"
+        // — per channel. Probing web push through Telegram's proxy would have
+        // reported a route web push does not use.
+        const own = proxyForChannel(t.channel as NotifyChannel);
         const list = [probe(t.url, { proxy: false }).then((r) => ({ ...r, channel: t.channel }))];
-        if (viaProxy) list.push(probe(t.url, { proxy: true }).then((r) => ({ ...r, channel: t.channel })));
+        if (t.international && own) {
+          list.push(probe(t.url, { proxyUrl: own }).then((r) => ({ ...r, channel: t.channel })));
+        }
         return list;
       });
       probes.push(...(await Promise.all(runs)));
@@ -313,15 +318,33 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
       return own.some((p) => p.ok);
     };
 
+    // Which env var routes this channel — so the advice below names the knob that
+    // actually moves it, instead of the one that used to move everything.
+    const PROXY_VAR: Record<string, string> = {
+      webpush: 'WEBPUSH_PROXY_URL',
+      telegram: 'OUTBOUND_PROXY_URL',
+    };
+    /** The route a channel takes right now: direct, or through which proxy. */
+    const routeOf = (name: string): { via: 'direct' | 'proxy'; proxy_host: string | null } => {
+      const url = proxyForChannel(name as NotifyChannel);
+      return { via: url ? 'proxy' : 'direct', proxy_host: hostOfProxy(url) };
+    };
+
     const problems: string[] = [];
     for (const [name, c] of Object.entries(channels)) {
       if (!c.enabled) continue;
       if (!c.configured) problems.push(`${name}: کلید/توکن در محیط اجرا تنظیم نشده — پیام بی‌صدا رد می‌شود.`);
       const r = reachable(name);
       if (r === false) {
+        const route = routeOf(name);
+        const knob = PROXY_VAR[name];
         problems.push(
           `${name}: هیچ‌کدام از مقصدهایش از این کانتینر در دسترس نیست`
-          + (proxyConfigured() ? ' (حتی از طریق پراکسی).' : ' — اگر بقیهٔ کانال‌ها سالم‌اند، خروجی بین‌الملل قطع است: OUTBOUND_PROXY_URL را تنظیم کن.'),
+          + (route.via === 'proxy'
+            ? ` (حتی از طریق پراکسیِ خودش، ${route.proxy_host}).`
+            : knob
+              ? ` — الان مستقیم می‌رود؛ اگر بقیهٔ کانال‌ها سالم‌اند، خروجی بین‌الملل قطع است: ${knob} را تنظیم کن.`
+              : '.'),
         );
       }
     }
@@ -331,12 +354,22 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
       ok: problems.length === 0,
       channel: notifications.name, // the fan-out actually in use, e.g. multi(webpush+telegram+bale)
       provider: config.notify.provider,
+      // Every channel states its OWN route. Without this the report could show a
+      // single global proxy while three channels took three different paths, and
+      // "which of them is even using it?" was left to the reader — which is how a
+      // proxy set for Telegram silently killed web push and nothing said so.
       channels: {
-        webpush: { ...channels.webpush, reachable: reachable('webpush') },
-        telegram: { ...channels.telegram, reachable: reachable('telegram') },
-        bale: { ...channels.bale, reachable: reachable('bale') },
+        webpush: { ...channels.webpush, reachable: reachable('webpush'), route: routeOf('webpush') },
+        telegram: { ...channels.telegram, reachable: reachable('telegram'), route: routeOf('telegram') },
+        bale: { ...channels.bale, reachable: reachable('bale'), route: routeOf('bale') },
       },
-      proxy: { configured: proxyConfigured(), host: proxyHost() },
+      proxy: {
+        // Per channel, never one number: Bale is null because it is domestic and
+        // deliberately not routable, not because nobody configured it.
+        webpush: hostOfProxy(proxyForChannel('webpush')),
+        telegram: hostOfProxy(proxyForChannel('telegram')),
+        bale: null,
+      },
       timeouts_ms: { send: config.outbound.timeoutMs, probe: config.outbound.probeTimeoutMs },
       probes,
       problems,
