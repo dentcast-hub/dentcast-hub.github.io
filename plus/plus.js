@@ -13,6 +13,7 @@ import { initHeader } from './js/header.js';
 import { initTourAutostart } from './js/tour.js';
 import { initReadingTracker } from './js/reading.js';
 import { initListeningTracker } from './js/listening.js';
+import { initShareScoring, buildShareButton } from './js/share.js';
 
 // Carry plus.js's own cache-busting version (?v=N, set by dc-nav.js) onto the
 // workbench module import. Article pages are OUTSIDE the /plus/ service-worker
@@ -44,11 +45,18 @@ function injectCollectionButton(contentId) {
   return { btn, info, cap };
 }
 
-function injectWorkbenchButton(proseRoot, contentId) {
+function injectWorkbenchButton(proseRoot, contentId, shareTarget) {
   const btn = el('button', { class: 'dcp-wb-button', type: 'button', 'aria-pressed': 'false' }, 'میز کار');
   const { btn: collectBtn, info: collectInfo, cap: collectCap } = injectCollectionButton(contentId);
+  // Share sits in this row on ONE surface only: the desktop shell, where
+  // dc-nav.js (and with it the chip above the prose) was stripped out of the
+  // fetched article. `#dcShareBtn` is that chip; if it is on the page, this row
+  // must not grow a second button for the same act.
+  const share = shareTarget && !document.getElementById('dcShareBtn')
+    ? buildShareButton(shareTarget)
+    : null;
   const bar = el('div', { class: 'dcp-wb-bar' }, [
-    el('div', { class: 'dcp-wb-row' }, [btn, collectBtn, collectInfo]),
+    el('div', { class: 'dcp-wb-row' }, [btn, collectBtn, collectInfo, share]),
     collectCap,
   ]);
   // Place it at the top of the article, just before the readable prose.
@@ -72,13 +80,13 @@ function showInvitation(anchorBtn, onProceed) {
 
 // Wire the میز کار button + study mode onto a prose root. Shared by standalone
 // article pages (initArticle) and the desktop 3-column viewer (mountArticleWorkbench).
-async function setupWorkbench({ proseRoot, contentId }) {
+async function setupWorkbench({ proseRoot, contentId, shareTarget }) {
   const Workbench = await loadWorkbench();
   // onChange keeps the button below in sync with the mode no matter WHO changed
   // it. The toolbar's own ✕ خروج calls wb.exit() directly, so without this the
   // article button kept saying «خروج از میز کار» after the workbench had closed.
   const wb = new Workbench({ contentId, proseRoot, onChange: () => updateBtn() });
-  const btn = injectWorkbenchButton(proseRoot, contentId);
+  const btn = injectWorkbenchButton(proseRoot, contentId, shareTarget);
 
   // Reading-completion signal: started only for a signed-in reader (the /activity
   // endpoint requires auth) and only once. Guarded so a mid-page login does not
@@ -202,8 +210,23 @@ async function mountArticleWorkbench(root, url) {
   const [path, query] = url.split('#')[0].split('?');
   const contentId = path.replace(/^\/+/, '').replace(/\.html$/i, '') || detectContentId();
   markViewed(contentId); // record the open for the landing-page "seen" ticks
+  // Re-aim share crediting at the article now on screen. Done BEFORE the
+  // episode early-return, because a podcast can be shared too — it just gets no
+  // workbench, and therefore no button of its own on this surface.
+  initShareScoring(contentId);
   if (contentId.startsWith('episodes/')) return; // audio: seen tick only, no workbench
-  const { wb, updateBtn } = await setupWorkbench({ proseRoot, contentId });
+  // The address bar still shows the homepage here, so the article's own URL has
+  // to be carried in — and stripped of ?dcphl / #hash, which are this reader's
+  // private position in the page, not part of what they mean to send anyone.
+  const shareUrl = new URL(path, location.origin).href;
+  const { wb, updateBtn } = await setupWorkbench({
+    proseRoot,
+    contentId,
+    shareTarget: () => ({
+      title: (root.querySelector('h1')?.textContent || document.title).trim(),
+      url: shareUrl,
+    }),
+  });
   desktopWb = wb;
   const hlId = query ? new URLSearchParams(query).get('dcphl') : null;
   if (hlId && await currentUser()) await openDeepLinkedHighlight(wb, updateBtn, hlId);
@@ -338,6 +361,11 @@ function boot() {
     initHomeCard(); // homepage personal card on all viewports (desktop + mobile)
     initHomeFeatures(); // homepage premium section, under the ad card (both layouts)
     markViewed(detectContentId()); // mark THIS content page seen on open (any folder, incl. episodes)
+    // Credit shares of THIS page. Wired at boot rather than inside the article
+    // path on purpose: dc-nav.js puts its share chip on every page built on the
+    // shared article layer, including the episode pages initArticle() bows out
+    // of, and a chip whose taps nobody listens for is worse than no chip.
+    initShareScoring(detectContentId());
     initSeenTicks(); // landing pages: green ticks next to already-seen content
     initTourAutostart(); // /?tour=1 handoff: start the guided tour on the homepage
   } catch (e) {

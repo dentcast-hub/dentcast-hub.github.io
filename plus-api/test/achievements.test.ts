@@ -32,7 +32,7 @@ const COMPUTED = new Set([
   'distinct_folders', 'folders_completed', 'archive_read', 'night_activity',
   'dawn_activity', 'weekend_pair', 'early_reads', 'weeks_no_demotion',
   'pathways_completed', 'review_sessions', 'collections', 'collection_items',
-  'founder_seat',
+  'shares', 'tiers_won', 'founder_seat',
 ]);
 
 beforeEach(async () => {
@@ -295,6 +295,39 @@ describe('GET /achievements', () => {
     expect(quill.levels.map((l: { done: boolean }) => l.done)).toEqual([true, false, false]);
     expect(body.summary.bronze).toBeGreaterThanOrEqual(1);
   });
+
+  // «چراغ‌دار» is the one badge whose metric carries a precondition, and the
+  // precondition is the badge's whole meaning — so it is pinned here as well as
+  // in league.test.ts. The wall and the ladder must agree about a given tap:
+  // a badge that lit for a share the league had refused to pay for would be the
+  // two surfaces telling the reader different things about the same act.
+  const share = (contentId: string, action = 'content_shared') => app.inject({
+    method: 'POST', url: '/activity', headers: { cookie }, payload: { action, content_id: contentId },
+  });
+
+  it('leaves «چراغ‌دار» dark for sharing something that was never read', async () => {
+    await share('insight/insight-7');
+    const lamp = badgeOf(await get(), 'lamplighter');
+    expect(lamp.earned).toBe(false);
+    expect(lamp.value).toBe(0);
+    expect(lamp.lead_fa).toContain('تا آخر خوانده‌ای'); // the locked copy states the rule
+  });
+
+  it('lights «چراغ‌دار» bronze once the shared article was finished first', async () => {
+    await share('insight/insight-8', 'article_completed');
+    await share('insight/insight-8');
+    const lamp = badgeOf(await get(), 'lamplighter');
+    expect(lamp.earned).toBe(true);
+    expect(lamp.metal).toBe('bronze');
+    expect(lamp.value).toBe(1);
+    expect(lamp.target).toBe(10);
+  });
+
+  it('counts each article once however often it is sent on', async () => {
+    await share('insight/insight-8', 'article_completed');
+    for (let i = 0; i < 4; i += 1) await share('insight/insight-8');
+    expect(badgeOf(await get(), 'lamplighter').value).toBe(1);
+  });
 });
 
 describe('a medal is never minted for doing nothing', () => {
@@ -339,5 +372,82 @@ describe('a medal is never minted for doing nothing', () => {
     expect(body.medals[0].earned).toBe(false);
     expect(body.medals[1].earned).toBe(true);
     expect(body.medals[1].name_fa).toBe('نقرهٔ آمالگام');
+  });
+});
+
+// «جلودار» and «سلطان» read the SAME query the medals do, and therefore inherit
+// the validity filter — but they ask it a different question ("how many tiers",
+// not "how high"), and that difference is where a plausible-looking mistake
+// hides: counting weeks instead of tiers, or counting a second place.
+describe('«جلودار» و «سلطان» — لیگ‌های متمایز، نه هفته‌ها', () => {
+  const win = (week: string, tierSlug: string) =>
+    finalizedWeek({ week, tierSlug, rank: 1, size: 8, weeklyXp: 40 });
+
+  it('counts one tier won three weeks running as one, not three', async () => {
+    await win('2026-04-04', 'acrylic');
+    await win('2026-04-11', 'acrylic');
+    await win('2026-04-18', 'acrylic');
+    const v = badgeOf(await get(), 'vanguard');
+    expect(v.value).toBe(1);
+    expect(v.earned).toBe(false); // bronze wants two DIFFERENT leagues
+    expect(v.target).toBe(2);
+  });
+
+  it('lights bronze on a second, different league', async () => {
+    await win('2026-04-04', 'acrylic');
+    await win('2026-04-11', 'amalgam');
+    const v = badgeOf(await get(), 'vanguard');
+    expect(v.earned).toBe(true);
+    expect(v.metal).toBe('bronze');
+    expect(v.value).toBe(2);
+    expect(v.target).toBe(4);
+  });
+
+  it('never counts a second place, however many leagues it happened in', async () => {
+    await finalizedWeek({ week: '2026-04-04', tierSlug: 'acrylic', rank: 2, size: 8, weeklyXp: 40 });
+    await finalizedWeek({ week: '2026-04-11', tierSlug: 'amalgam', rank: 2, size: 8, weeklyXp: 40 });
+    expect(badgeOf(await get(), 'vanguard').value).toBe(0);
+  });
+
+  it('carries the validity filter through from the medal query', async () => {
+    // Two different tiers, but both groups too small to be competitive. The
+    // medals already refuse these; the badge must refuse them for the same
+    // reason, or the wall would award a rank the medal row denies.
+    await finalizedWeek({ week: '2026-04-04', tierSlug: 'acrylic', rank: 1, size: 3, weeklyXp: 40 });
+    await finalizedWeek({ week: '2026-04-11', tierSlug: 'amalgam', rank: 1, size: 3, weeklyXp: 40 });
+    const body = await get();
+    expect(badgeOf(body, 'vanguard').value).toBe(0);
+    expect(body.medals[0].earned).toBe(false); // and the medal agrees
+  });
+
+  it('keeps «سلطان» dark short of all seven, and lights it on the seventh', async () => {
+    const ladder = ['acrylic', 'amalgam', 'composite', 'metal-ceramic',
+      'lithium-disilicate', 'zirconia', 'titanium'];
+    // Six of seven: «جلودار» is at its top level and «سلطان» is still one away.
+    for (let i = 0; i < 6; i += 1) await win(`2026-05-0${i + 2}`, ladder[i]);
+    let body = await get();
+    expect(badgeOf(body, 'vanguard').metal).toBe('gold');
+    const sultanBefore = badgeOf(body, 'sultan');
+    expect(sultanBefore.earned).toBe(false);
+    expect(sultanBefore.value).toBe(6);
+    expect(sultanBefore.target).toBe(7);
+
+    await win('2026-05-09', ladder[6]);
+    body = await get();
+    const sultan = badgeOf(body, 'sultan');
+    expect(sultan.earned).toBe(true);
+    // Above the ladder, not on it: a one-shot badge wears the accent ring, and
+    // the wall must not hand it a metal it has no level to justify.
+    expect(sultan.metal).toBe('plain');
+    expect(sultan.levels).toBeNull();
+    expect(sultan.lead_fa).toContain('هر هفت لیگ');
+  });
+
+  it('counts tiers that are not activated yet, since a finalized week is a fact', async () => {
+    // max_active_tier_order is 3 today, so tiers 4-7 cannot be reached now —
+    // but the metric reads finalized history, not the activation flag. If that
+    // ever diverged, «سلطان» would become unearnable even after the ladder opens.
+    await win('2026-06-06', 'zirconia');
+    expect(badgeOf(await get(), 'vanguard').value).toBe(1);
   });
 });

@@ -109,6 +109,12 @@ function buildCard(data, onClose) {
       el('li', {}, 'هر هایلایت: +' + n(xp.highlight, 1) + ' (تا ' + n(xp.highlight_cap, 3) + ' هایلایت در هر مقاله)'),
       el('li', {}, 'مرورِ کارت: +' + n(xp.review, 2)),
       el('li', {}, 'اولین فعالیتِ هر روز: +' + n(xp.active_bonus, 5)),
+      // The share line carries its own condition, because that condition is the
+      // whole rule: a tap on a page you have not finished pays nothing, and a
+      // reader who learns that from the absence of a number instead of from a
+      // sentence will read it as a bug.
+      el('li', {}, 'اشتراک‌گذاریِ مطلبی که تا آخر خوانده‌ای: +' + n(xp.share, 1)
+        + ' (تا ' + n(xp.share_cap, 5) + ' مطلب در هفته)'),
     ]),
     el('p', {}, 'فقط فعالیتِ همین هفته در لیگ حساب می‌شود و شنبه از نو صفر می‌شود.'),
   ]);

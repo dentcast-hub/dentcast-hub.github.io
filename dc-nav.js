@@ -684,16 +684,32 @@
 
         var shareBtn = document.createElement('button');
         shareBtn.type = 'button';
+        shareBtn.id = 'dcShareBtn'; /* plus.js checks for this: the desktop shell
+                                       strips this whole script out of the article
+                                       it fetches, and builds its own chip when
+                                       the id is absent. */
         shareBtn.className = 'dc-meta-chip';
         shareBtn.textContent = 'اشتراک‌گذاری';
+        /* A share earns league XP and lights «چراغ‌دار» — but this file is a
+           classic script and the session lives in the /plus/ module graph, so
+           it cannot report anything itself. It only announces the act;
+           plus/js/share.js is the sole listener. The mirror of util.js's
+           signalStreakActivity, pointing the other way. */
+        var dcShared = function () {
+          try { document.dispatchEvent(new CustomEvent('dcp:content-shared')); } catch (e) {}
+        };
         shareBtn.addEventListener('click', function () {
           if (navigator.share) {
-            navigator.share({ title: document.title, url: location.href }).catch(function () {});
+            /* A rejection here is the reader backing out of the share sheet —
+               the one honest "no" the platform gives us, so it earns nothing. */
+            navigator.share({ title: document.title, url: location.href })
+              .then(dcShared, function () {});
           } else if (navigator.clipboard && navigator.clipboard.writeText) {
             navigator.clipboard.writeText(location.href).then(function () {
               var prev = shareBtn.textContent;
               shareBtn.textContent = 'لینک کپی شد ✓';
               setTimeout(function () { shareBtn.textContent = prev; }, 1600);
+              dcShared();
             });
           }
         });
@@ -2289,7 +2305,7 @@
 (function () {
   if (window.__dcPlusLoaded) return;
   window.__dcPlusLoaded = true;
-  var V = '58';
+  var V = '60';
 
   /* Anti-FOUC for the Plus header. Plus (mobile only) relocates the music +
      articles buttons from the topbar into the tool drawer and adds the person

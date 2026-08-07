@@ -46,7 +46,25 @@ const ICONS = {
   route: '<circle cx="6.4" cy="18.4" r="2.3"/><circle cx="17.6" cy="5.6" r="2.3"/><path d="M6.4 16.1c0-5.4 11.2-5.2 11.2-8.2"/>',
   recall: '<path d="M20 12a8 8 0 1 1-2.9-6.2"/><path d="M20.4 4.2v4.2h-4.2"/><path d="M12 8.4v4l2.6 1.6"/>',
   chest: '<path d="M3.4 10.2h17.2v9.4H3.4z"/><path d="M3.4 10.2L5.6 6h12.8l2.2 4.2"/><path d="M12 10.2v9.4"/><path d="M9.6 14h4.8"/>',
+  // A lantern with a flame in it — «چراغ‌دار». Five strokes rather than one
+  // solid shape, because at the 25px the wall actually draws these a filled
+  // lantern collapses into a blob; the ring, cap, two waisted sides and base
+  // are what still read as a lantern that small (checked at size, not at 100%).
+  // The flame is deliberately the SAME curve as the `flame` badge above, scaled
+  // down: the two mean related things — one keeps the fire, the other carries it
+  // to somebody else — and a reader holding both should be able to see that.
+  lamp: '<path d="M10.5 4.2v-.7a1.5 1.5 0 0 1 3 0v.7"/><path d="M6.8 7.2 8.9 4.2h6.2l2.1 3"/><path d="M8.6 7.2c-.9 3.6-.9 6.6 0 9.8"/><path d="M15.4 7.2c.9 3.6.9 6.6 0 9.8"/><path d="M6.8 20 8.9 17h6.2l2.1 3z"/><path d="M12 8.8c2 2.6 3 3.7 3 5.6a3 3 0 0 1-6 0c0-1.2.55-2.15 1.45-3 .18.78.54 1.26 1.02 1.5-.4-.86-.6-2.2.53-4.1z"/>',
   star: '<path d="M12 3.4l2.7 5.5 6 .9-4.35 4.2 1.05 6-5.4-2.85L6.6 20l1.05-6L3.3 9.8l6-.9z"/>',
+  // Rank insignia — «جلودار». Three chevrons rather than anything pictorial:
+  // the two obvious pictures for "out in front" were a banner and a laurel, and
+  // at the 25px the wall draws these the banner was indistinguishable from
+  // `flag` (which «فاتح» already wears) and the laurel turned to mush. Stacked
+  // ranks also happen to say what the badge counts — it is the one league badge
+  // whose number only moves by climbing.
+  ranks: '<path d="M4.6 10.4 12 5l7.4 5.4"/><path d="M4.6 15 12 9.6 19.4 15"/><path d="M4.6 19.6 12 14.2l7.4 5.4"/>',
+  // «سلطان». The one badge that is above the metal ladder rather than on it, so
+  // it is drawn as the one object nothing else here could be mistaken for.
+  crown: '<path d="M3.6 8.2 7.3 11 12 4.8 16.7 11l3.7-2.8-1.7 9.6H5.3z"/><path d="M5.3 20.6h13.4"/>',
 };
 
 const METAL_PIP = { bronze: 'b', silver: 's', gold: 'g' };

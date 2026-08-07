@@ -25,6 +25,8 @@ export interface LeagueConfig {
   xp_highlight: number;      // per highlight...
   xp_highlight_cap: number;  // ...capped per article/week
   xp_review: number;         // manual card review
+  xp_share: number;          // passing on an article you finished (once per article/week)
+  xp_share_weekly_cap: number; // ...and at most this many articles a week
   // Weekly premium prize (0016). Winners are the top of every VALID group.
   prize_days: number;             // how long a granted premium lasts
   prize_cooldown_weeks: number;   // a winner sits out this many weeks
@@ -44,6 +46,7 @@ export const NUMERIC_KEYS: Array<keyof LeagueConfig> = [
   'group_size_current', 'promotion_pct', 'demotion_pct', 'min_valid_group_size',
   'promotion_min_weekly_xp', 'cooldown_weeks', 'max_active_tier_order',
   'xp_active_bonus', 'xp_read', 'xp_listen', 'xp_highlight', 'xp_highlight_cap', 'xp_review',
+  'xp_share', 'xp_share_weekly_cap',
   'prize_days', 'prize_cooldown_weeks', 'prize_winners_per_group', 'prize_min_group_size',
   'xp_per_active_day', 'xp_per_highlight',
 ];

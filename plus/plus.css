@@ -40,6 +40,19 @@
   color: var(--dcp-accent); background: transparent; border: 1.5px solid var(--dcp-accent);
 }
 .dcp-wb-collect:active { transform: scale(.97); }
+/* Share, on the desktop shell only (dc-nav.js's own chip is stripped from the
+   article the shell fetches). Quieter than the two buttons beside it — muted
+   ink, no accent border — because it is a courtesy, not one of the two things
+   this row exists to offer. */
+.dcp-wb-share {
+  font: inherit; font-weight: 600; font-size: .9rem;
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 7px 13px; border-radius: 999px; cursor: pointer;
+  color: var(--dcp-muted); background: transparent; border: 1px solid var(--dcp-line);
+}
+.dcp-wb-share:hover { color: var(--dcp-ink); border-color: var(--dcp-muted); }
+.dcp-wb-share:active { transform: scale(.97); }
+.dcp-wb-share:focus-visible { outline: 2px solid var(--dcp-accent); outline-offset: 2px; }
 /* «؟» reveal, reused by both the beside-میزکار button and the toolbar's own
    collection button - hidden by default, toggles a plain caption line. */
 .dcp-wb-info {

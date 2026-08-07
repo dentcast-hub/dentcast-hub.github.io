@@ -295,6 +295,56 @@ describe('GET /league — placement on first XP', () => {
     await act(cookie, 'episode_listened', 'episodes/episode-1');
     expect(await myXp(cookie)).toBe(10);
   });
+
+  // ── content_shared ────────────────────────────────────────────────────────
+  // The button behind these cases cannot be verified by anyone: navigator.share
+  // resolves on a dismissed sheet on some platforms, and the clipboard fallback
+  // reports nothing at all. So every rule below exists to make an unverifiable
+  // tap safe to pay for, and each is pinned separately.
+
+  it('a share of an UNREAD article pays nothing at all', async () => {
+    const cookie = await loginAs(app, '09120000006');
+    await act(cookie, 'content_shared', 'insight/insight-9');
+    // Not 1, and not 5 either: the share must not have bought the daily active
+    // bonus on the way past. `content_shared` is the one action that reaches
+    // awardLeagueXp without being a scoring action, so nothing has happened
+    // today that the league is willing to call activity — hence no group at all.
+    const body = (await app.inject({ method: 'GET', url: '/league', headers: { cookie } })).json();
+    expect(body.joined).toBe(false);
+  });
+
+  it('a share AFTER finishing the article pays xp_share, once per week', async () => {
+    const cookie = await loginAs(app, '09120000007');
+    await act(cookie, 'article_completed', 'insight/insight-3'); // 5 active + 5 read
+    await act(cookie, 'content_shared', 'insight/insight-3');    // +1
+    expect(await myXp(cookie)).toBe(11);
+    await act(cookie, 'content_shared', 'insight/insight-3');    // same page, same week
+    expect(await myXp(cookie)).toBe(11);
+  });
+
+  it('sharing mid-read does not burn the article\'s slot for the week', async () => {
+    // The realistic sequence: share it while reading, then finish it. If
+    // eligibility were "an article_completed row exists" rather than "the share
+    // came after one", that first tap would have spent the week's only slot for
+    // this page and the honest second share would pay nothing.
+    const cookie = await loginAs(app, '09120000008');
+    await act(cookie, 'content_shared', 'insight/insight-4');    // too early — 0
+    await act(cookie, 'article_completed', 'insight/insight-4'); // 5 active + 5 read
+    expect(await myXp(cookie)).toBe(10);
+    await act(cookie, 'content_shared', 'insight/insight-4');    // +1
+    expect(await myXp(cookie)).toBe(11);
+  });
+
+  it('stops paying past xp_share_weekly_cap, while reads keep paying', async () => {
+    await setConfig('xp_share_weekly_cap', '2');
+    const cookie = await loginAs(app, '09120000009');
+    for (const id of ['a', 'b', 'c']) {
+      await act(cookie, 'article_completed', `insight/share-${id}`);
+      await act(cookie, 'content_shared', `insight/share-${id}`);
+    }
+    // 5 active + 3 reads × 5 + 2 shares × 1 (the third is over the cap).
+    expect(await myXp(cookie)).toBe(22);
+  });
 });
 
 describe('POST /admin/league/config', () => {
@@ -384,6 +434,8 @@ describe('GET /league — the scoring table the explainer shows', () => {
       highlight_cap: cfg.xp_highlight_cap,
       review: cfg.xp_review,
       active_bonus: cfg.xp_active_bonus,
+      share: cfg.xp_share,
+      share_cap: cfg.xp_share_weekly_cap,
     });
   });
 

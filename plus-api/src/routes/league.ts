@@ -83,6 +83,8 @@ export async function leagueRoutes(app: FastifyInstance): Promise<void> {
         highlight_cap: cfg.xp_highlight_cap,
         review: cfg.xp_review,
         active_bonus: cfg.xp_active_bonus,
+        share: cfg.xp_share,
+        share_cap: cfg.xp_share_weekly_cap,
       },
       // Same reason as `xp` above: the weekly top-of-group prize length is a
       // league_config value a founder can retune, so the "stayed" nudge (asking

@@ -99,6 +99,32 @@ describe('per-content score', () => {
     expect(b.score).toBe(POINTS_PER_ACTIVE_DAY); // the active day, and nothing else
   });
 
+  // The single most consequential thing about sharing, and the one that would be
+  // invisible in review: if `content_shared` ever joined SCORING_ACTIONS or the
+  // streak's QUALIFYING_ACTIONS, one tap would mint an active day — worth 10
+  // points and a day of streak — and score is never deducted, so every account
+  // would keep it. Pinned as behaviour rather than trusted to a comment.
+  it('a share earns no all-time score and no active day', async () => {
+    await app.inject({
+      method: 'POST', url: '/activity', headers: { cookie },
+      payload: { action: 'content_shared', content_id: 'insight/insight-31' },
+    });
+    const b = await computeScore(pool, userId);
+    expect(b.score).toBe(0);
+    expect(b.active_days).toBe(0);
+    expect(b.content_completed).toBe(0);
+  });
+
+  it('a share of a FINISHED article still adds nothing beyond the read itself', async () => {
+    await read('insight/insight-32');
+    const before = await score();
+    await app.inject({
+      method: 'POST', url: '/activity', headers: { cookie },
+      payload: { action: 'content_shared', content_id: 'insight/insight-32' },
+    });
+    expect(await score()).toBe(before);
+  });
+
   it('a review or a highlight buys no per-content points', async () => {
     await app.inject({
       method: 'POST', url: '/activity', headers: { cookie },
