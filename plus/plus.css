@@ -327,6 +327,46 @@ html.dcp-pp-open, html.dcp-pp-open body { overflow: hidden; }
 .dc-plus-shield-n { font-size: 1.2rem; }
 .dc-plus-shield-lbl { font-weight: 400; opacity: .8; font-size: .9rem; }
 
+/* ---- homepage premium section (home-features.js) ------------------------- */
+/* Sits under the Spot card, in the homepage's OWN card grammar. The list-card
+   shell (.dc-list-card / -main / -title / -sub) is index.html's and is reused on
+   purpose, so these rows stay visually identical to «تولید اختصاصی دنت‌کست»
+   above them. Only the pieces that shell does not have live here.
+   The section header is NOT reused from index.html: those rules are scoped
+   #panel-studio, and the second copy of this section renders in the desktop
+   column-C feed, outside that panel. Same look, written once, works in both. */
+.dcp-hf { margin: 1.125rem 0 0; }
+.dcp-hf-sec { display: flex; align-items: center; justify-content: space-between; margin: 0 0 .7rem; }
+.dcp-hf-label {
+  font-size: .95rem; font-weight: 800; color: var(--txt, #0a1a33);
+  border-right: 4px solid var(--ac, #0b5fff); padding-right: .625rem;
+  margin: 0; line-height: 1.4;
+}
+.dcp-hf-more { font-size: .72rem; font-weight: 700; color: var(--ac, #0b5fff); text-decoration: none; }
+.dcp-hf-card { text-decoration: none; color: inherit; gap: .6rem; }
+.dcp-hf-ico {
+  flex: 0 0 auto; width: 2rem; height: 2rem; border-radius: 9px;
+  display: grid; place-items: center; color: var(--pr, #022360);
+  background: rgba(var(--ac-rgb, 11, 95, 255), .09);
+  border: 1px solid rgba(var(--ac-rgb, 11, 95, 255), .16);
+}
+.dcp-hf-ico svg {
+  width: 1rem; height: 1rem; display: block;
+  fill: none; stroke: currentColor; stroke-width: 2;
+  stroke-linecap: round; stroke-linejoin: round;
+}
+/* The state chip: a lock for a reader who does not have the feature, the
+   feature's own live value for a subscriber. One element, two states — never
+   two different components that could drift apart. */
+.dcp-hf-state {
+  flex: 0 0 auto; font-size: .7rem; font-weight: 800; line-height: 1.7;
+  padding: 3px 10px; border-radius: 999px; white-space: nowrap;
+  background: var(--surface2, #f4f6fb); color: var(--txt2, #4a5f85);
+}
+.dcp-hf-state.is-live { background: var(--chip-bg, rgba(11, 95, 255, .08)); color: var(--ac, #0b5fff); }
+/* The desktop column-C feed has no page padding of its own around this block. */
+.dcd-welcome-feed .dcp-hf { margin-top: .8rem; }
+
 /* ===== weekly league =================================================== */
 /* tier shield badge — material gradient per tier, low (acrylic) to high (titanium) */
 .dcp-tier {

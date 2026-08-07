@@ -8,6 +8,7 @@ import { openLoginModal, openOrgNotice } from './js/login-modal.js';
 import { openCollectionPicker } from './js/collections.js';
 import { el } from './js/util.js';
 import { initHomeCard } from './js/home-card.js';
+import { initHomeFeatures } from './js/home-features.js';
 import { initHeader } from './js/header.js';
 import { initTourAutostart } from './js/tour.js';
 import { initReadingTracker } from './js/reading.js';
@@ -335,6 +336,7 @@ function boot() {
     initArticle();
     initListening(); // episode-page audio → episode_listened
     initHomeCard(); // homepage personal card on all viewports (desktop + mobile)
+    initHomeFeatures(); // homepage premium section, under the ad card (both layouts)
     markViewed(detectContentId()); // mark THIS content page seen on open (any folder, incl. episodes)
     initSeenTicks(); // landing pages: green ticks next to already-seen content
     initTourAutostart(); // /?tour=1 handoff: start the guided tour on the homepage
