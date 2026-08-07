@@ -65,7 +65,8 @@ export const CONSUMPTION_ACTIONS = ['article_completed', 'episode_listened'];
  * mistake here would be permanent for every account at once.
  *
  * So sharing earns in exactly two places, both of which reset or saturate on
- * their own: weekly league XP (league.ts, capped and gated), and the derived
+ * their own: weekly league XP (league.ts — gated on having finished the article,
+ * once per page per week, and cappable though currently uncapped), and the derived
  * «چراغ‌دار» badge (achievements.ts). It never touches this file's arithmetic.
  * The constant lives here anyway — beside the two sets it is excluded from — so
  * that the exclusion is visible at the one place someone would think to undo it.

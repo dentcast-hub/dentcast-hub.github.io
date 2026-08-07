@@ -335,6 +335,23 @@ describe('GET /league — placement on first XP', () => {
     expect(await myXp(cookie)).toBe(11);
   });
 
+  // The shipped setting (migration 0028). Sharing is the one action that brings
+  // somebody NEW here, and at the original cap of 5 a whole week of it was worth
+  // one article read — a rule, not an incentive. Zero must mean NO ceiling, not
+  // "pays nothing", because the guard reads `cap > 0 && over` and getting that
+  // backwards would silently switch the whole reward off.
+  it('pays every eligible share when the cap is 0 (the shipped setting)', async () => {
+    await setConfig('xp_share_weekly_cap', '0');
+    const cookie = await loginAs(app, '09120000019');
+    for (const id of ['p', 'q', 'r', 's', 't', 'u', 'v']) {
+      await act(cookie, 'article_completed', `insight/free-${id}`);
+      await act(cookie, 'content_shared', `insight/free-${id}`);
+    }
+    // 5 active + 7 reads × 5 + 7 shares × 1 — nothing withheld, well past the
+    // old ceiling of five.
+    expect(await myXp(cookie)).toBe(47);
+  });
+
   it('stops paying past xp_share_weekly_cap, while reads keep paying', async () => {
     await setConfig('xp_share_weekly_cap', '2');
     const cookie = await loginAs(app, '09120000009');

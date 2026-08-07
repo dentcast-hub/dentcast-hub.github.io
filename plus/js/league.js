@@ -113,8 +113,14 @@ function buildCard(data, onClose) {
       // whole rule: a tap on a page you have not finished pays nothing, and a
       // reader who learns that from the absence of a number instead of from a
       // sentence will read it as a bug.
+      //
+      // The weekly ceiling is printed only when there IS one. It was removed
+      // (migration 0028) because sharing is the one action that brings someone
+      // new here and a five-article week was worth one article read; the knob
+      // stays, so this line has to survive it coming back — and must never
+      // render «تا ۰ مطلب در هفته», which reads as "sharing pays nothing".
       el('li', {}, 'اشتراک‌گذاریِ مطلبی که تا آخر خوانده‌ای: +' + n(xp.share, 1)
-        + ' (تا ' + n(xp.share_cap, 5) + ' مطلب در هفته)'),
+        + (Number(xp.share_cap) > 0 ? ' (تا ' + n(xp.share_cap, 5) + ' مطلب در هفته)' : '')),
     ]),
     el('p', {}, 'فقط فعالیتِ همین هفته در لیگ حساب می‌شود و شنبه از نو صفر می‌شود.'),
   ]);
