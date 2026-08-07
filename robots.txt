@@ -13,6 +13,13 @@ Disallow: /dentcast-music.json
 Disallow: /pillar/structure.json
 Disallow: /pillar/*/structure.json
 
+# Paper-cabinet catalogue — keep out of search results, same reason as the
+# music JSON above. The cabinet PAGE is handled by its own <meta robots
+# noindex> and is deliberately NOT listed here: disallowing it would stop
+# crawlers reading that tag, which is what makes the noindex work.
+Disallow: /dentcast_cabinet_full_catalog.json
+Disallow: /dentcast_cabinet_full_catalog.enriched.json
+
 # AI Crawlers — explicitly allowed
 User-agent: GPTBot
 Allow: /

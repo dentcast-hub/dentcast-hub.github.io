@@ -779,6 +779,13 @@ body{
 .dc-radar-hero:active .dc-radar-hero-btn{
   box-shadow:0 2px 8px rgba(var(--pr-rgb),.22);
 }
+/* Two hero cards now stack inside «موتور جستجوی دندانپزشکی». The first one
+   drops to a tight gap so they read as one pair; the second keeps the section's
+   own 1.375rem breathing room below it. */
+#btnOpenRadarMob{ margin-bottom:0.6rem; }
+#card-library .dcp-soon-badge{ font-size:0.66rem; padding:2px 8px; margin-top:0.3rem; }
+#card-library:focus-visible{ outline:2px solid var(--ac); outline-offset:3px; }
+
 [data-theme="dark"] .dc-radar-hero{
   background:
     radial-gradient(120% 140% at 100% 0%,
@@ -3768,6 +3775,22 @@ a.dc-list-card--pillar {
         <span class="dc-radar-hero-btn">جستجو</span>
       </div>
 
+      <!-- Library card — the SECOND card of this section, not a section of its
+           own. Radar searches other people's sites; the library searches ours.
+           They are one offer ("two search engines"), which is also the only
+           realistic way the radar gets looked at: the attention that arrives
+           for «۲۲۰۰ مقاله» lands on both. Premium; the gate is on the tap (see
+           the LIBRARY CARD script), never on the door of the page. -->
+      <div class="dc-radar-hero" id="card-library" role="button" tabindex="0" aria-label="کتابخانهٔ دنت‌کست">
+        <div class="dc-radar-hero-ico" aria-hidden="true"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"/></svg></div>
+        <div class="dc-radar-hero-main">
+          <div class="dc-radar-hero-txt">کتابخانهٔ دنت‌کست</div>
+          <div class="dc-radar-hero-sub">بیش از ۲۲۰۰ مقاله، دسته‌بندی‌شده و قابل جستجو</div>
+          <span class="dcp-soon-badge" id="card-library-lock">🔒 ویژه‌ی پریمیوم</span>
+        </div>
+        <span class="dc-radar-hero-btn">جستجو</span>
+      </div>
+
       <div class="dc-home-sec"><h2 class="dc-home-sec-label">پادکست</h2></div>
 
       <div class="dc-list-card" onclick="window.location.href='episodes.html?v=1'">
@@ -4472,7 +4495,7 @@ scrollBody.addEventListener('touchend',e=>{
 </script>
 
 <!-- Theme toggle behavior moved to /dc-nav.js (single source) -->
-<script src="/dc-nav.js?v=45" defer></script>
+<script src="/dc-nav.js?v=47" defer></script>
 
 <!-- Toolbar drawer toggle is handled by /dc-nav.js (single source) -->
 
@@ -4607,6 +4630,73 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
   history.pushState({dcRadar:true},'','#radar');
   if(!isRadarLoaded) loadRadarData();
 });
+</script>
+
+<script>
+/* ── LIBRARY CARD (premium) ──
+   The cabinet used to be reachable only from the hamburger's tool tray, which
+   is why 2200 curated papers were the least-known thing on the site.
+
+   Three rules this follows:
+   • The lock badge is drawn from a HINT, never from a guess. spot.js already
+     records this device's last CONFIRMED viewer class in localStorage, so a
+     premium user's first paint does not flash a lock while /me is in flight —
+     the same trick that keeps a premium user from seeing an ad appear and then
+     vanish. The hint only decides the BADGE; the tap always waits for /me.
+   • It fails OPEN, never closed. If /me cannot be asked at all (meStatus()
+     'error' — offline, API down), the tap goes through. A subscriber locked
+     out by a network blip is a far worse outcome than an anonymous visitor
+     getting in, and this is a product gate, not access control: the cabinet is
+     a static page and the catalogue is public.
+   • The message is the shared gateCard + premiumCta, so the wording and the
+     ?from= tracking live where every other premium gate's do. */
+(function(){
+  var card = document.getElementById('card-library');
+  if (!card) return;
+  var badge = document.getElementById('card-library-lock');
+  var CABINET = '/dentcast_cabinet_search.html';
+
+  function setBadge(isPremium){ if (badge) badge.style.display = isPremium ? 'none' : ''; }
+  try { if (localStorage.getItem('dcAds.vc') === 'premium') setBadge(true); } catch(e){}
+
+  /* Resolved the same way spot.js resolves it: the answer AND why it answered,
+     because "confirmed anonymous" and "could not ask" must not behave alike. */
+  function probe(){
+    return import('/plus/js/api.js')
+      .then(function(m){ return m.currentUser().then(function(user){ return { user: user, status: m.meStatus() }; }); })
+      .catch(function(){ return { user: null, status: 'error' }; });
+  }
+
+  function openGate(){
+    return Promise.all([import('/plus/js/sheet.js'), import('/plus/js/premium-cta.js')])
+      .then(function(mods){
+        mods[0].openSheet(mods[0].gateCard({
+          title: 'کتابخانهٔ دنت‌کست ویژه‌ی پریمیوم است',
+          sub: 'بیش از ۲۲۰۰ مقالهٔ دندان‌پزشکی، دسته‌بندی‌شده و قابل جستجو — با کلید یافته و خط پایانی بالینیِ هر مقاله.',
+          cta: mods[1].premiumCta('gate-library-archive'),
+        }));
+      })
+      .catch(function(){ window.location.href = '/plus/pricing.html?from=gate-library-archive'; });
+  }
+
+  function open(){
+    probe().then(function(p){
+      var isPremium = !!(p.user && p.user.tier === 'premium');
+      if (p.status !== 'error') setBadge(isPremium);
+      if (isPremium || p.status === 'error') { window.location.href = CABINET; return; }
+      openGate();
+    });
+  }
+
+  card.addEventListener('click', open);
+  card.addEventListener('keydown', function(e){
+    if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') { e.preventDefault(); open(); }
+  });
+
+  /* Settle the badge without waiting for a tap, so a subscriber is never left
+     looking at a lock that isn't theirs. */
+  probe().then(function(p){ if (p.status !== 'error') setBadge(!!(p.user && p.user.tier === 'premium')); });
+})();
 </script>
 
 <script>
