@@ -14,8 +14,11 @@ import { describe, it, expect, beforeEach, afterAll } from 'vitest';
 import type { FastifyInstance } from 'fastify';
 import { makeApp, resetDb, loginAs } from './helpers.js';
 import { pool } from '../src/db.js';
+import { config } from '../src/config.js';
 import { syncAchievements } from '../src/services/achievement-sync.js';
-import { listNotices, unreadNoticeCount, noticeCounters } from '../src/services/notices.js';
+import { listNotices, unreadNoticeCount, noticeCounters, recordBroadcast } from '../src/services/notices.js';
+import { onArticlePublished, runFreeDigest } from '../src/services/article-notify.js';
+import { sendCapped } from '../src/services/notify-policy.js';
 
 let app: FastifyInstance;
 let cookie: string;
@@ -251,5 +254,128 @@ describe('the celebration is acknowledged separately from the inbox', () => {
     const body = (await app.inject({ method: 'GET', url: '/me', headers: { cookie } })).json();
     expect(body.unread_notices).toBe(n);
     expect(body.pending_achievements).toBe(n);
+  });
+});
+
+// -------------------------------------------------------------- broadcasts ---
+
+/** Instants inside the awake window (09:00-22:00 Tehran) and safely outside it. */
+const AWAKE = new Date('2026-02-10T11:00:00+03:30');
+const ASLEEP = new Date('2026-02-10T02:00:00+03:30');
+
+describe('the inbox has no schedule', () => {
+  // The awake window and the daily cap protect a PHONE and a bot token. Neither
+  // is involved in writing a row, so a publish at 02:00 is in اطلاعیه at 02:00 —
+  // for a free reader as much as a premium one, with no 24-hour digest delay and
+  // no opt-in toggle in the way.
+  it('puts a 02:00 publish in the inbox at 02:00, for a free reader', async () => {
+    const res = await onArticlePublished({
+      contentId: 'notecast/note-99', title: 'پوسیدگی پنهان', url: '/notecast/note-99.html',
+      pulse: 'یک جملهٔ بلندِ پالس که قرار نیست داخل اطلاعیه بیاید.', publishedAt: ASLEEP,
+    });
+    expect(res.deferred).toBe(true);       // the PUSH waited for morning…
+    expect(res.premiumRecipients).toBe(0);
+
+    const rows = await listNotices(await userId());   // …the notice did not
+    expect(rows.length).toBe(1);
+    expect(rows[0].kind).toBe('article');
+    expect(rows[0].unread).toBe(true);
+  });
+
+  it('says where the article is, not what it argues', async () => {
+    await onArticlePublished({
+      contentId: 'notecast/note-98', title: 'پوسیدگی پنهان', url: '/notecast/note-98.html',
+      pulse: 'یک پاراگرافِ کاملاً طولانی دربارهٔ محتوای مقاله که در فهرست جایی ندارد.',
+      publishedAt: AWAKE,
+    });
+    const row = (await listNotices(await userId()))[0];
+    expect(row.title).toContain('مطلب جدید در');
+    expect(row.body).toBe('پوسیدگی پنهان');
+    // The Pulse belongs on a lock screen, never in a row the reader scans.
+    expect(row.body).not.toContain('پاراگراف');
+    expect(row.url).toBe('/notecast/note-98.html');
+  });
+
+  it('shows one publish once, however many pushes follow it', async () => {
+    await pool.query(
+      `update profiles set settings = '{"reminders":{"new_content":true}}'::jsonb where id = $1`,
+      [await userId()],
+    );
+    await onArticlePublished({
+      contentId: 'notecast/note-97', title: 'مطلبِ تازه', url: '/notecast/note-97.html',
+      publishedAt: AWAKE,
+    });
+    // The free digest carries the same news in a longer wording, on a schedule.
+    // Due relative to the injected clock, not to the wall clock the suite runs on.
+    await pool.query("update articles set notify_free_after = '2026-01-01'");
+    const digest = await runFreeDigest(AWAKE);
+    expect(digest.recipients).toBe(1);
+
+    const rows = await listNotices(await userId());
+    expect(rows.filter((r) => r.kind === 'article').length).toBe(1);
+    // …and its counter row still exists, or the daily cap would stop counting.
+    const counter = await pool.query<{ n: number }>(
+      "select count(*)::int n from notification_log where kind = 'article_free_digest' and delivered",
+      [],
+    );
+    expect(counter.rows[0].n).toBe(1);
+  });
+
+  it('never shows a reader news from before they existed', async () => {
+    await recordBroadcast({ kind: 'system', title: 'قبل از ثبت‌نامِ او' });
+    await pool.query("update notice_broadcasts set created_at = now() - interval '5 days'");
+    expect(await listNotices(await userId())).toEqual([]);
+    expect(await unreadNoticeCount(await userId())).toBe(0);
+  });
+
+  it('honours the audience a broadcast was addressed to', async () => {
+    await recordBroadcast({ kind: 'system', title: 'فقط برای پریمیوم', audience: 'premium' });
+    expect(await unreadNoticeCount(await userId())).toBe(0);
+
+    await pool.query("update profiles set tier = 'premium' where id = $1", [await userId()]);
+    expect(await unreadNoticeCount(await userId())).toBe(1);
+  });
+});
+
+describe('the founder broadcast', () => {
+  const auth = 'Basic ' + Buffer.from(
+    `${config.admin.user}:${config.admin.password}`,
+  ).toString('base64');
+
+  it('lands in every reader\'s inbox from one row, and turns the dot on', async () => {
+    const res = await app.inject({
+      method: 'POST', url: '/admin/notices/broadcast',
+      headers: { authorization: auth },
+      payload: { title: 'فردا سایت به‌روزرسانی می‌شود', body: 'حدود یک ساعت.' },
+    });
+    expect(res.statusCode).toBe(200);
+    expect(res.json().ok).toBe(true);
+
+    const me = (await app.inject({ method: 'GET', url: '/me', headers: { cookie } })).json();
+    expect(me.unread_notices).toBe(1);
+
+    const rows = (await app.inject({ method: 'GET', url: '/notices', headers: { cookie } })).json();
+    expect(rows.notices[0].title).toBe('فردا سایت به‌روزرسانی می‌شود');
+    expect(rows.notices[0].body).toBe('حدود یک ساعت.');
+
+    // …and seeing it takes the dot away.
+    await app.inject({ method: 'POST', url: '/notices/seen', headers: { cookie } });
+    const after = (await app.inject({ method: 'GET', url: '/me', headers: { cookie } })).json();
+    expect(after.unread_notices).toBe(0);
+  });
+
+  it('refuses an empty title rather than posting a blank row', async () => {
+    const res = await app.inject({
+      method: 'POST', url: '/admin/notices/broadcast',
+      headers: { authorization: auth }, payload: { title: '   ' },
+    });
+    expect(res.statusCode).toBe(400);
+  });
+
+  it('requires admin credentials', async () => {
+    const res = await app.inject({
+      method: 'POST', url: '/admin/notices/broadcast', payload: { title: 'سلام' },
+    });
+    expect(res.statusCode).toBe(401);
   });
 });

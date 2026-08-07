@@ -50,6 +50,37 @@ const KIND_TITLE_FA: Record<string, string> = {
   achievement: 'نشانِ تازه',
 };
 
+/** Who a broadcast is for, resolved against the reader's tier at READ time. */
+export type NoticeAudience = 'all' | 'free' | 'premium';
+
+export interface BroadcastInput {
+  /** The inbox label/icon key. Free text, not a NotificationKind: a broadcast
+   *  carries its own title and body, so nothing here is ever used to compose a
+   *  message — only to draw the row. */
+  kind: string;
+  title: string;
+  body?: string | null;
+  url?: string | null;
+  audience?: NoticeAudience;
+}
+
+/**
+ * Announce something to everybody with ONE row.
+ *
+ * Deliberately not a fan-out. The read state comes from the same watermark the
+ * personal rows use, so a broadcast needs no per-user record at all — which
+ * means it cannot half-send, cannot be retried into duplicates, and does not
+ * grow the table by the size of the audience every time an article is published.
+ */
+export async function recordBroadcast(input: BroadcastInput): Promise<string> {
+  const row = await one<{ id: string }>(
+    `insert into notice_broadcasts (kind, title, body, url, audience)
+     values ($1, $2, $3, $4, $5) returning id`,
+    [input.kind, input.title, input.body ?? null, input.url ?? null, input.audience ?? 'all'],
+  );
+  return row!.id;
+}
+
 export interface NoticeRow {
   id: string;
   kind: string;
@@ -83,7 +114,7 @@ export async function logNotice(
   userId: string,
   kind: NotificationKind,
   day: string,
-  parts: { title: string; body: string | null; url: string | null },
+  parts: { title: string | null; body: string | null; url: string | null },
   delivered: boolean,
   client: Queryable = pool,
 ): Promise<void> {
@@ -115,6 +146,37 @@ export async function recordInAppNotice(
 }
 
 /**
+ * Everything addressed to this reader, personal and broadcast, as one set.
+ *
+ * `title is not null` is the go-live guard on the personal side and it is
+ * load-bearing: every row written before this feature shipped carries the kind
+ * and the day but no message text. It is also what keeps a counter-only row out
+ * of the inbox — a push that went out with its own longer wording writes one of
+ * those on purpose (see sendCapped's `inbox: false`), because the daily cap
+ * counts rows and still needs one.
+ *
+ * On the broadcast side the two filters are `audience` and, just as important,
+ * `created_at > p.created_at`: a reader is never shown news from before they
+ * existed, which is what stops a fresh signup opening the inbox onto sixty days
+ * of publishes.
+ */
+const VISIBLE_NOTICES = `
+  select n.id::text as id, n.kind, n.title, n.body, n.url, n.created_at
+    from notification_log n
+   where n.user_id = p.id
+     and n.title is not null
+     and n.created_at > now() - ($2 || ' days')::interval
+  union all
+  select b.id::text as id, b.kind, b.title, b.body, b.url, b.created_at
+    from notice_broadcasts b
+   where b.created_at > p.created_at
+     and b.created_at > now() - ($2 || ' days')::interval
+     and (b.audience = 'all'
+          or (b.audience = 'premium' and p.tier = 'premium')
+          or (b.audience = 'free' and p.tier <> 'premium'))
+`;
+
+/**
  * The panel's rows, newest first.
  *
  * `title is not null` is the go-live guard and it is load-bearing: every row
@@ -126,15 +188,12 @@ export async function recordInAppNotice(
  */
 export async function listNotices(userId: string): Promise<NoticeRow[]> {
   const res = await query<NoticeRow>(
-    `select n.id, n.kind, n.title, n.body, n.url,
-            n.created_at,
-            (n.created_at > coalesce(p.notices_seen_at, to_timestamp(0))) as unread
-       from notification_log n
-       join profiles p on p.id = n.user_id
-      where n.user_id = $1
-        and n.title is not null
-        and n.created_at > now() - ($2 || ' days')::interval
-      order by n.created_at desc
+    `select t.id, t.kind, t.title, t.body, t.url, t.created_at,
+            (t.created_at > coalesce(p.notices_seen_at, to_timestamp(0))) as unread
+       from profiles p
+       cross join lateral (${VISIBLE_NOTICES}) t
+      where p.id = $1
+      order by t.created_at desc
       limit $3`,
     [userId, String(WINDOW_DAYS), MAX_ROWS],
   );
@@ -145,12 +204,10 @@ export async function listNotices(userId: string): Promise<NoticeRow[]> {
 export async function unreadNoticeCount(userId: string): Promise<number> {
   const row = await one<{ n: number }>(
     `select count(*)::int as n
-       from notification_log n
-       join profiles p on p.id = n.user_id
-      where n.user_id = $1
-        and n.title is not null
-        and n.created_at > coalesce(p.notices_seen_at, to_timestamp(0))
-        and n.created_at > now() - ($2 || ' days')::interval`,
+       from profiles p
+       cross join lateral (${VISIBLE_NOTICES}) t
+      where p.id = $1
+        and t.created_at > coalesce(p.notices_seen_at, to_timestamp(0))`,
     [userId, String(WINDOW_DAYS)],
   );
   return row?.n ?? 0;
@@ -179,11 +236,9 @@ export async function noticeCounters(
 ): Promise<{ unread_notices: number; pending_achievements: number }> {
   const row = await one<{ unread: number; pending: number }>(
     `select
-       (select count(*)::int from notification_log n
-         where n.user_id = p.id
-           and n.title is not null
-           and n.created_at > coalesce(p.notices_seen_at, to_timestamp(0))
-           and n.created_at > now() - ($2 || ' days')::interval) as unread,
+       (select count(*)::int
+          from (${VISIBLE_NOTICES}) t
+         where t.created_at > coalesce(p.notices_seen_at, to_timestamp(0))) as unread,
        (select count(*)::int from achievement_announcements a
          where a.user_id = p.id and a.seen_at is null) as pending
      from profiles p where p.id = $1`,

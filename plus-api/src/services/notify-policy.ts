@@ -128,14 +128,36 @@ export function inAwakeWindow(now: Date = new Date()): boolean {
  * no-op quietly for a user with no destination, and a dead device must not make
  * this throw into a caller's batch loop.
  */
+export interface SendOptions {
+  /**
+   * Whether this message should also appear in اطلاعیه. Default true.
+   *
+   * Pass `false` when the reader is ALREADY being told by a broadcast — the
+   * new-article lane is the case that exists: everyone gets one broadcast row
+   * the moment an article is published, and the premium push and the free
+   * digest that follow are the same news in a longer wording, on a schedule.
+   * Writing those to the inbox too would show the same publish twice, once
+   * short and once long.
+   *
+   * The row is still written, because the row IS the daily-cap counter — with
+   * no title, which is exactly the shape of every pre-inbox row and exactly
+   * what the inbox query already filters out.
+   */
+  inbox?: boolean;
+}
+
+const COUNTER_ONLY = { title: null as string | null, body: null, url: null };
+
 export async function sendCapped(
   userId: string,
   message: NotificationMessage | string,
   kind: NotificationKind,
   now: Date = new Date(),
+  opts: SendOptions = {},
 ): Promise<boolean> {
   const day = dayInTz(now, config.streakTimezone);
-  const parts = noticeParts(message, kind);
+  const inbox = opts.inbox !== false;
+  const parts = inbox ? noticeParts(message, kind) : COUNTER_ONLY;
 
   if (!UNCAPPED.has(kind)) {
     const already = await sentCountOn(userId, day);
@@ -146,7 +168,11 @@ export async function sendCapped(
       // tomorrow morning, and it was never right that the reader could not find
       // out at all. So the message still lands in اطلاعیه — it just does not
       // travel, and (delivered = false) keeps it out of the counter above.
-      await logNotice(userId, kind, day, parts, false);
+      //
+      // Nothing is written at all when the inbox is not this call's job: an
+      // undelivered, titleless row would be a counter entry for something that
+      // was never counted.
+      if (inbox) await logNotice(userId, kind, day, parts, false);
       return false;
     }
   }

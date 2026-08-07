@@ -26,6 +26,7 @@ import { api } from './api.js';
    of coloured chips reads as a status board, and none of these are statuses. */
 const KIND_ICON = {
   achievement: '🏅',
+  article: '📄',
   league: '🏆',
   article_premium: '📄',
   article_free_digest: '📄',
@@ -41,6 +42,7 @@ const KIND_ICON = {
    what a reader would call the thing that just arrived. */
 const KIND_FA = {
   achievement: 'افتخارات',
+  article: 'محتوای تازه',
   league: 'لیگ',
   article_premium: 'محتوای تازه',
   article_free_digest: 'محتوای تازه',
