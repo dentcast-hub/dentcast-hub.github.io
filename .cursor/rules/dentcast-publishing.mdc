@@ -76,15 +76,20 @@ python3 tools/verify_publish.py <content_id> \
 
 ```bash
 python tools/update-homepage-counters.py
-python tools/build_pillar.py all
+python tools/build_pillar.py all          # صفحهٔ هر پیلار + structure.json کنارش؛ هر دو commit می‌شوند
 python tools/build_episodes.py            # فقط اگر dentcast.json تغییر کرده
 node tools/build_flashcards_index.mjs     # مگر LiteCast
 node tools/build_quiz_index.mjs           # مگر LiteCast
 python3 .github/scripts/inject_img_attrs.py
 node tools/build_plus_index.mjs           # هر publish که brain را تغییر داده (تگ‌ها + جدول الیاس هشتگ را هم آینه می‌کند)
+                                          # زیرموضوع‌ها را از structure.json می‌خواند → حتماً بعد از build_pillar.py
 python3 tools/hashtag_ref.py --check      # هر تگِ brain باید کانونیکالِ کتابخانه باشد (Hard Rule 15 / گام ۵.۰)
 python tools/stamp-version.py             # همیشه آخر — و اگر بعدش چیزی نوشتی، دوباره
 ```
 
 بعد از بیلد: `git diff -G'\?v=' pillar/` را ببین که نسخهٔ اسِت‌ها عقب نرفته باشد.
+صفحهٔ پیلار **دو** خروجی دارد و فقط یکی‌شان موقع باز کردن صفحه دیده می‌شود: مطلبِ
+تازه باید هم در لیستِ تختِ `/pillar/<slug>/index.html` باشد (چون تازه‌ترین‌اول است،
+نزدیک بالا؛ اگر ته لیست بود یعنی صفحه‌اش `datePublished` ندارد) و هم زیرِ
+زیرموضوعش در `/pillar/<slug>/structure.json`. فاز F هر دو را چک می‌کند.
 بعدش **فاز F** را بگیر؛ اگر stamper واقعاً آخر نبوده، همان‌جا `FAIL` می‌دهد.
