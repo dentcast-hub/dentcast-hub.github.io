@@ -292,8 +292,15 @@ describe('GET /pay/plans', () => {
   it('is public — the price is visible without an account', async () => {
     const res = await app.inject({ method: 'GET', url: '/pay/plans' });
     expect(res.statusCode).toBe(200);
-    expect(res.json().monthly_rial).toBe(10_000_000);
+    // The floor of the ladder, not a rate: 1,000,000 toman is what a month
+    // costs inside the SIX-month plan, and no plan is priced by multiplying it.
+    expect(res.json().from_monthly_rial).toBe(10_000_000);
     expect(res.json().plans.map((p: { months: number }) => p.months)).toEqual([1, 3, 6]);
+    // The published ladder, whole. Every price is stated here rather than
+    // computed, because a formula in the test would agree with a formula in the
+    // code and neither would notice the day the two stop matching the price list.
+    expect(res.json().plans.map((p: { amount_rial: number }) => p.amount_rial))
+      .toEqual([12_000_000, 33_000_000, 60_000_000]);
     expect(res.json().sold_out).toBe(false);
   });
 
@@ -320,7 +327,7 @@ describe('the master switch', () => {
     expect(body.enabled).toBe(false);
     // The number is worth showing even on a day we cannot take it — someone
     // deciding whether this is worth paying for is served by the price.
-    expect(body.monthly_rial).toBe(10_000_000);
+    expect(body.from_monthly_rial).toBe(10_000_000);
     expect(body.plans).toHaveLength(3);
   });
 

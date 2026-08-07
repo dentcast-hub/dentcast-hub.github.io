@@ -41,7 +41,14 @@ export async function payRoutes(app: FastifyInstance): Promise<void> {
       // has no .ir constraint at all — it works on the .org mirror, where most
       // of the people it is for actually are.
       gift_card: config.giftCard.enabled ? giftInstructions() : null,
-      monthly_rial: config.payments.monthlyRial,
+      // The cheapest per-month rate on the list, for the «از ماهی …» line. The
+      // ladder bends (a longer term is cheaper per month), so this is a FLOOR,
+      // not a rate anything is priced from — every real price is in `plans`.
+      from_monthly_rial: config.payments.fromMonthlyRial,
+      // Same number under its old name, for a browser still holding the copy of
+      // pricing-page.js that reads `monthly_rial`. Removable once that cache is
+      // certainly gone.
+      monthly_rial: config.payments.fromMonthlyRial,
       plans: capacity.plans,
       any_plan_available: capacity.any_plan_available,
       // Deliberately NOT the remaining rial figure: how close we are to a

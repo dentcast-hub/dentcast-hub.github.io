@@ -16,7 +16,7 @@ import { el } from './util.js';
 import { api, currentUser } from './api.js';
 import { openLoginModal } from './login-modal.js';
 import {
-  paymentsNeedIrHost, paymentsIrUrl, PLAN_MONTHS, MONTHLY_RIAL,
+  paymentsNeedIrHost, paymentsIrUrl, PLAN_MONTHS, PLAN_PRICES_RIAL, FROM_MONTHLY_RIAL,
   GIFT_CARD,
 } from './config.js';
 import { premiumBenefits } from './premium-benefits.js';
@@ -38,25 +38,62 @@ const termName = (m) => TERM[m] || `${toFa(m)} ماهه`;
  *
  * Not a hardcoded "6", because the month's ceiling can take the six-month plan
  * away — and when it does, the highlight has to move rather than sit on a card
- * nobody can press. There is no discount to advertise (every month costs the
- * same), so the label says what the longer plan actually buys: not thinking
- * about it again for a while.
+ * nobody can press.
  */
 function pickFeatured(plans) {
   const buyable = plans.filter((p) => p.available);
   return buyable.length ? Math.max(...buyable.map((p) => p.months)) : null;
 }
 
-function planCard(plan, { featured, onPick, selected }) {
+/** What one month costs inside a given plan, in rial. */
+const monthlyRate = (plan) => plan.amount_rial / plan.months;
+
+/**
+ * The reference a discount is measured against: the per-month rate of the
+ * SHORTEST term on offer. It is read off the list rather than fixed at "the
+ * one-month plan" so the page keeps telling the truth if that plan is ever the
+ * one the ceiling takes away.
+ */
+const baseRate = (plans) => (plans.length
+  ? monthlyRate(plans.reduce((a, b) => (a.months <= b.months ? a : b)))
+  : 0);
+
+/** How much cheaper per month this plan is than the shortest, in whole percent. */
+function savingPercent(plan, base) {
+  if (!base) return 0;
+  const off = Math.round((1 - monthlyRate(plan) / base) * 100);
+  return off > 0 ? off : 0;
+}
+
+function planCard(plan, { featured, onPick, selected, base }) {
+  const saving = savingPercent(plan, base);
+
+  // The per-month rate, under the total. It is the number that makes the ladder
+  // legible: three prices in isolation only say "bigger", and the reason to take
+  // six months is that each of its months is the cheapest one we sell. Shown
+  // only where it differs from the total, since «۱٬۲۰۰٬۰۰۰ / ماهی ۱٬۲۰۰٬۰۰۰» on
+  // the one-month card is noise.
   const price = el('span', { class: 'dcp-plan-price' }, [
-    toman(plan.amount_rial),
-    el('span', { class: 'dcp-plan-unit' }, 'تومان'),
-  ]);
+    el('span', {}, [
+      toman(plan.amount_rial),
+      el('span', { class: 'dcp-plan-unit' }, 'تومان'),
+    ]),
+    plan.months > 1
+      ? el('span', { class: 'dcp-plan-rate' }, `ماهی ${toman(monthlyRate(plan))} تومان`)
+      : null,
+  ].filter(Boolean));
 
   const term = el('span', { class: 'dcp-plan-term' }, [
-    termName(plan.months),
+    el('span', { class: 'dcp-plan-head' }, [
+      termName(plan.months),
+      // ٪ before the number, as everywhere else on the site (dashboard.js,
+      // reading-compass.js) — «٪۱۷», never «۱۷٪».
+      saving ? el('span', { class: 'dcp-plan-save' }, `٪${toFa(saving)} ارزان‌تر`) : null,
+    ].filter(Boolean)),
     featured
-      ? el('span', { class: 'dcp-plan-why' }, 'یک بار پرداخت، خیالتان راحت')
+      ? el('span', { class: 'dcp-plan-why' }, saving
+        ? 'کم‌ترین هزینه‌ی ماهانه، یک بار پرداخت'
+        : 'یک بار پرداخت، خیالتان راحت')
       : null,
     !plan.available
       ? el('span', { class: 'dcp-plan-blocked' },
@@ -232,10 +269,10 @@ async function main() {
   // the day this shipped — simply not deployed yet.
   const fallback = {
     enabled: false,
-    monthly_rial: MONTHLY_RIAL,
+    from_monthly_rial: FROM_MONTHLY_RIAL,
     any_plan_available: true,
     plans: PLAN_MONTHS.map((months) => ({
-      months, amount_rial: months * MONTHLY_RIAL, available: true, blocked_by: null,
+      months, amount_rial: PLAN_PRICES_RIAL[months], available: true, blocked_by: null,
     })),
     // Present in the fallback, not only in the live answer. Leaving it out is
     // what made the whole out-of-country section vanish whenever the API was
@@ -270,10 +307,13 @@ async function main() {
   const action = el('div', { class: 'dcp-price-action' });
   const grid = el('div', { class: 'dcp-plans' });
 
+  const base = baseRate(info.plans);
+
   const drawPlans = () => {
     grid.replaceChildren(...info.plans.map((p) => planCard(p, {
       featured: p.months === featured,
       selected: p.months === selected,
+      base,
       onPick: (m) => { selected = m; drawPlans(); drawAction(); },
     })));
   };
@@ -360,8 +400,13 @@ async function main() {
 
   const head = [
     el('h1', { class: 'dcp-price-title' }, 'اشتراک پریمیوم'),
+    // «از ماهی …», not «هر ماه …»: the terms no longer cost the same per month,
+    // so a single monthly figure would be true of one card and wrong about the
+    // other two. `monthly_rial` is the old name of the same number, still read
+    // here for an API that has not been redeployed yet.
     el('p', { class: 'dcp-price-sub' },
-      `هر ماه ${toman(info.monthly_rial)} تومان — مدتش را خودتان انتخاب کنید.`),
+      `از ماهی ${toman(info.from_monthly_rial || info.monthly_rial)} تومان — `
+      + 'هرچه مدت بلندتر، ماه ارزان‌تر.'),
     el('p', { class: 'dcp-price-sub' },
       'شش ابزار برای اینکه آنچه می‌خوانید بماند و به کارتان بیاید، و سایتی بدون تبلیغ.'),
   ];

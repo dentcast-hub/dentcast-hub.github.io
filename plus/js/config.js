@@ -52,8 +52,24 @@ export function irMirrorUrl() {
 // still fit under this month's ceiling" genuinely need the API. Gating the whole
 // page on that call meant a visitor saw an error instead of a price whenever the
 // API was slow, down, or simply not deployed yet.
-export const PLAN_MONTHS = [1, 3, 6];
-export const MONTHLY_RIAL = 10000000; // 1,000,000 toman — mirrors PAYMENT_MONTHLY_RIAL
+//
+// The table is the price list, not a rate to multiply: since 2026-08-07 a longer
+// term costs LESS per month (1,200,000 / 1,100,000 / 1,000,000 toman a month), so
+// there is no single monthly figure the three prices can be derived from. Mirrors
+// PAYMENT_PLAN_PRICES on the API — keep the two in step.
+export const PLAN_PRICES_RIAL = {
+  1: 12000000, // 1,200,000 toman
+  3: 33000000, // 3,300,000 toman  (1,100,000 a month)
+  6: 60000000, // 6,000,000 toman  (1,000,000 a month)
+};
+
+export const PLAN_MONTHS = Object.keys(PLAN_PRICES_RIAL).map(Number).sort((a, b) => a - b);
+
+// The cheapest per-month rate on the list — what «از ماهی … تومان» quotes. NOT
+// the one-month price, and nothing is priced from it.
+export const FROM_MONTHLY_RIAL = Math.min(
+  ...PLAN_MONTHS.map((m) => PLAN_PRICES_RIAL[m] / m),
+);
 
 // The out-of-country route, mirrored for the same reason as the prices above:
 // the section must be READABLE before the API answers, and still readable if it
