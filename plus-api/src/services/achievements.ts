@@ -214,7 +214,7 @@ export async function computeAchievementFacts(
       // the UI itself calls non-competitive and members who earned no XP at all.
       // Without both conditions the first medal of most accounts would be minted
       // for having done nothing, which is the one thing a medal must never mean.
-      pool.query<{ final_rank: number; best: number }>(
+      pool.query<{ final_rank: number; best: number; won: number }>(
         `with sized as (
            select lm.user_id, lm.final_rank, lm.weekly_xp, l.tier_id,
                   count(*) over (partition by lm.league_id) as group_size
@@ -222,7 +222,13 @@ export async function computeAchievementFacts(
              join leagues l on l.id = lm.league_id
             where l.status = 'finalized' and lm.final_rank is not null
          )
-         select s.final_rank, max(t.tier_order)::int as best
+         -- "best" feeds the two medals (how HIGH you have ever finished);
+         -- "won" feeds «جلودار»/«سلطان» (how MANY different tiers you have won).
+         -- Both ride the same query on purpose: it already carries the validity
+         -- filter every league-rank calculation must have, and a second copy of
+         -- that filter is a second place for someone to forget it.
+         select s.final_rank, max(t.tier_order)::int as best,
+                count(distinct t.tier_order)::int as won
            from sized s join league_tiers t on t.id = s.tier_id
           where s.user_id = $1 and s.weekly_xp > 0 and s.group_size >= $2
             and s.final_rank in (1, 2)
@@ -284,6 +290,11 @@ export async function computeAchievementFacts(
     weekend_pair: weekend.rows[0]?.n ?? 0,
     early_reads: publishing.rows[0]?.early ?? 0,
     weeks_no_demotion: league.rows[0]?.n ?? 0,
+    // How many DIFFERENT tiers this reader has ever finished first in — rank 1
+    // only, so the silver medal's row is not counted. Winning «آکریل» three
+    // weeks running is one tier, not three: the number can only move by
+    // climbing, which is what makes «جلودار» mean what its name says.
+    tiers_won: medalRows.rows.find((r) => r.final_rank === 1)?.won ?? 0,
     pathways_completed: c.pathways_completed,
     review_sessions: c.review_sessions,
     collections: c.collections,
