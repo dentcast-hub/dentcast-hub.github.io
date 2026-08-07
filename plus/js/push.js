@@ -20,6 +20,27 @@ function urlBase64ToUint8Array(base64) {
   return out;
 }
 
+// Does this live subscription still belong to the key the server signs with? A
+// subscription is bound forever to the applicationServerKey it was created with,
+// while the server signs with whatever VAPID key its environment holds today.
+// When the two disagree the push service rejects every send with 403 — and 403 is
+// NOT one of the statuses the backend prunes (it prunes 404/410, the genuinely
+// gone ones), so the dead row survives every nightly batch and that user simply
+// never hears from us again.
+//
+// An unverifiable subscription (no `options`, unreadable key) counts as MATCHING
+// on purpose: we never destroy a subscription we merely failed to check.
+function keyMatches(sub, base64) {
+  const have = sub && sub.options && sub.options.applicationServerKey;
+  if (!have || !base64) return true;
+  let want;
+  try { want = urlBase64ToUint8Array(base64); } catch (_) { return true; }
+  const got = new Uint8Array(have);
+  if (got.length !== want.length) return false;
+  for (let i = 0; i < got.length; i++) { if (got[i] !== want[i]) return false; }
+  return true;
+}
+
 let vapidKeyPromise;
 async function getVapidKey() {
   if (VAPID_PUBLIC_KEY) return VAPID_PUBLIC_KEY;
@@ -65,8 +86,21 @@ export async function ensurePushSubscription() {
   let reg;
   try { reg = await pushRegistration(); } catch (_) { return 'error'; }
   let sub = await reg.pushManager.getSubscription();
+  const key = await getVapidKey();
+
+  // A subscription bound to a superseded VAPID key is worse than no subscription
+  // at all: it looks healthy here AND in the database, and fails 403 forever at
+  // send time. Drop it on both sides so the subscribe below mints a valid one.
+  // This is precisely what made "turn the switch off and then on again" the only
+  // cure anyone had found — off calls unsubscribe(), and so happened to rebuild it.
+  if (sub && !keyMatches(sub, key)) {
+    const dead = sub.endpoint;
+    try { await sub.unsubscribe(); } catch (_) { /* ignore */ }
+    try { await api.deletePushSubscription(dead); } catch (_) { /* ignore */ }
+    sub = null;
+  }
+
   if (!sub) {
-    const key = await getVapidKey();
     if (!key) return 'error';
     try {
       sub = await reg.pushManager.subscribe({
@@ -77,6 +111,33 @@ export async function ensurePushSubscription() {
   }
   try { await api.savePushSubscription(sub.toJSON()); } catch (_) { return 'error'; }
   return 'ok';
+}
+
+// Silent repair pass, safe to call on any page load for a signed-in reader who
+// has notifications switched on. Returns the same codes as ensurePushSubscription,
+// plus 'skipped' when it deliberately stood down.
+//
+// WHY IT EXISTS: a push subscription can go stale with nobody doing anything
+// wrong — the browser rotates its endpoint, the site's VAPID key is regenerated,
+// the user clears site data. Nothing in the product ever noticed. The stored
+// preference stayed on, the database still held its row, `push_subscribed` still
+// counted the user, and the only known cure was flipping the switch off and on by
+// hand. Nobody is going to do that on 89 accounts, so the repair has to be ours.
+//
+// Two deliberate limits. It NEVER raises the permission prompt: without a click
+// gesture Safari refuses it and Chrome demotes it to quiet UI, and a "Block" is
+// permanent — so it stands down unless permission is already granted. And it runs
+// once per tab session, so a reader who opens ten articles writes one row, not ten.
+const SS_HEALED = 'dcp:push:healed';
+
+export async function healPushSubscription() {
+  if (!pushSupported()) return 'unsupported';
+  if (Notification.permission !== 'granted') return 'skipped';
+  try {
+    if (sessionStorage.getItem(SS_HEALED) === '1') return 'skipped';
+    sessionStorage.setItem(SS_HEALED, '1');
+  } catch (_) { /* no sessionStorage (private mode): repair anyway, just unthrottled */ }
+  return ensurePushSubscription();
 }
 
 // Drop the browser subscription and tell the backend to forget it. Called when

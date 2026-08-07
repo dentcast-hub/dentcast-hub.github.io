@@ -14,6 +14,7 @@ import { renderProfile } from './profile.js';
 import { maybeShowWelcome } from './welcome.js';
 import { startTour, maybeOfferTour, tourMenuAvailable, initTourAutostart } from './tour.js';
 import { maybeShowNotifPrompt } from './notif-prompt.js';
+import { healPushSubscription } from './push.js';
 import { maybeShowPremiumPopup } from './premium-popup.js';
 import { subscriptionMenuLabel, pricingHref } from './premium-cta.js';
 
@@ -198,6 +199,17 @@ export async function initHeader() {
   } catch (e) {
     if (window.console) console.warn('[plus header] upgrade failed', e);
   }
+
+  // Repair a stale push subscription for a reader who has notifications ON.
+  // Deliberately here and not on the /plus/ dashboard: this is the one path that
+  // runs on EVERY page for a signed-in reader — the article they are actually
+  // reading — so a broken subscription heals wherever they happen to land,
+  // instead of waiting for a visit to a page they may never open. Silent, never
+  // prompts, once per tab session (see healPushSubscription).
+  try {
+    const rem = (user.settings && user.settings.reminders) || {};
+    if (rem.new_content || rem.streak) healPushSubscription().catch(() => {});
+  } catch (_) { /* non-fatal */ }
 
   // First login ever (account-scoped settings.tour_seen): offer the guided
   // tour. Guests get the welcome box above instead — never both.
