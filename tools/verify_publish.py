@@ -195,6 +195,26 @@ def content_version():
     return h.hexdigest()[:10]
 
 
+def episode_landing_title(content_id):
+    """The title episodes.html actually renders for this episode, or None.
+
+    Read through build_episodes.py's own clean_title() rather than
+    re-implementing the "1- " prefix strip here: the point of the check is
+    "does the page match its source", so it has to ask the builder what it
+    would render, not a second opinion about it."""
+    sys.path.insert(0, str(ROOT / "tools"))
+    from build_episodes import clean_title  # noqa: E402
+    num = Path(content_id).name.replace("episode-", "")
+    try:
+        eps = json.loads((ROOT / "dentcast.json").read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return None
+    for ep in eps:
+        if str(ep.get("episode", "")).strip() == num:
+            return clean_title(ep.get("title", "")) or None
+    return None
+
+
 def live_pillars():
     sys.path.insert(0, str(ROOT / "tools"))
     from build_pillar import PILLARS  # noqa: E402
@@ -607,7 +627,17 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
                       "Phase E — the notify Action keys off this marker")
 
     # ---------------- surfaces (Hard Rule 17) ----------------
+    # A type's landing page is normally <dir>/index.html. Episodes are the one
+    # exception: episodes/index.html is a noindex `http-equiv=refresh` stub
+    # pointing at /episodes.html, and the workflow says never to hand-edit it
+    # (Phase C step 8.3). Deriving the landing page from the directory therefore
+    # asked the redirect whether it links to the episode — which it never does,
+    # and never should — and failed all 209 episodes on a page that is working
+    # exactly as designed. The real landing page is episodes.html, built by
+    # tools/build_episodes.py.
     landing = f"{Path(content_id).parent}/index.html"
+    if landing == "episodes/index.html":
+        landing = "episodes.html"
     if exists(landing):
         land = read(landing)
         n = len(re.findall(re.escape(Path(content_id).name + ".html"), land))
@@ -617,11 +647,29 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
             li = re.search(r"<li>(?:(?!</li>).)*?" + re.escape(Path(content_id).name + ".html")
                            + r".*?</li>", land, re.S)
             if li:
-                rep.check(title in html.unescape(li.group(0)), "17 sweep",
-                          "landing-page label carries the exact title",
-                          f"landing-page label does not match the brain title: "
-                          f"{normalize(text_of(li.group(0)))!r}",
-                          "Hard Rule 17 — a title change is swept through every surface")
+                # An episode carries TWO legitimate titles: the podcast's own
+                # English name, which lives in dentcast.json and is what
+                # build_episodes.py renders onto episodes.html, and the Persian
+                # brain title used everywhere else. They are not a drift to be
+                # swept — episode 1 is "Simplified prosthodontics" on the
+                # landing page and «آشنایی با روند کار دنتکست» in the brain, and
+                # both are correct. So the label is checked against the source
+                # that actually renders it.
+                want, want_src = title, "the brain title"
+                if landing == "episodes.html":
+                    ep_title = episode_landing_title(content_id)
+                    if ep_title is None:
+                        rep.skip("17 sweep", "episode is not in dentcast.json — "
+                                             "nothing renders its landing label")
+                        want = None
+                    else:
+                        want, want_src = ep_title, "dentcast.json's title"
+                if want is not None:
+                    rep.check(want in html.unescape(li.group(0)), "17 sweep",
+                              "landing-page label carries the exact title",
+                              f"landing-page label does not match {want_src} "
+                              f"({want!r}): {normalize(text_of(li.group(0)))!r}",
+                              "Hard Rule 17 — a title change is swept through every surface")
 
     home = read("index.html")
     url = "/" + page_rel
