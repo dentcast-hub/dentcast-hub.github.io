@@ -45,7 +45,8 @@
       folder: '<path d="M3 7a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',
       ban: '<circle cx="12" cy="12" r="10"/><path d="m4.9 4.9 14.2 14.2"/>',
       hourglass: '<path d="M6 2h12"/><path d="M6 22h12"/><path d="M7 2v6l5 4-5 4v6"/><path d="M17 2v6l-5 4 5 4v6"/>',
-      article: '<path d="M15 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7z"/><path d="M15 3v4h4"/><path d="M9 9h2"/><path d="M9 13h6"/><path d="M9 17h6"/>'
+      article: '<path d="M15 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7z"/><path d="M15 3v4h4"/><path d="M9 9h2"/><path d="M9 13h6"/><path d="M9 17h6"/>',
+      sliders: '<path d="M4 7h9"/><path d="M17 7h3"/><circle cx="15" cy="7" r="2"/><path d="M4 17h3"/><path d="M11 17h9"/><circle cx="9" cy="17" r="2"/>'
     };
     if (!icons[name]) return '';
     return '<svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true">' + icons[name] + '</svg>';
@@ -240,6 +241,84 @@
      Injected idempotently, mirroring the radar/search pattern. */
   var DC_DRAWER_THEME_BTN =
 '<button class="dc-drawer-tool-seg" type="button" id="btn-theme-drawer" aria-label="تغییر تم"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M20.5 14.2A8.2 8.2 0 0 1 9.8 3.5 8.8 8.8 0 1 0 20.5 14.2z"/></svg></span><span class="dc-drawer-tool-txt">تم</span></button>';
+
+  /* ── SITE MENU inside the tool drawer ─────────────
+     The hamburger used to open a tray of TOOLS only, so from an article there
+     was no route to any section's landing page. It now opens the SITE: one
+     segment per section, in the same .dc-drawer-tool-seg shape and the same
+     4-column grid the tools already use — with the original tool tray folded
+     behind the last segment, «ابزار».
+
+     Three things this deliberately does NOT do:
+       • It never rebuilds, reorders or rewrites .dc-toolbar-drawer-inner. That
+         element and every button in it (نصب/مشاوره/اشتراک/درباره + the
+         injected رادار/جستجو/تم + plus/js/header.js's موسیقی/مقاله‌ها) stay
+         byte-identical, delegated handlers included; only their visibility is
+         now gated by the fold.
+       • It never touches the desktop app shell (.dcd-app in index.html) — that
+         sidebar owns its own navigation and is out of scope by design.
+       • It adds no new page: every entry points at a landing page that already
+         exists on disk.
+
+     پرامپتولوژیست lives UNDER /dentai/ on disk but stands on its own here, on
+     purpose: in this drawer a section is a destination, never a sub-menu.
+
+     Styling is injected from JS rather than added to dc-nav.css because
+     index.html loads no shared stylesheet — the same reason DC_MUSIC_CSS and
+     the skip-link styles are injected. */
+  var DC_DRAWER_MENU_ITEMS = [
+    ['/notecast/',                 'note',    'NoteCast'],
+    ['/dentai/promptologist/',     'message', 'پرامپتولوژیست'],
+    ['/dentai/',                   'bot',     'DentAI'],
+    ['/dentcast-plus/',            'play',    'DentCast+'],
+    ['/sharehub/',                 'link',    'Share Hub'],
+    ['/chairside/',                'tooth',   'Chairside'],
+    ['/insight/',                  'brain',   'Insight'],
+    ['/metanotes/',                'puzzle',  'Meta Note'],
+    ['/glossary/',                 'book',    'Glossary'],
+    ['/pillar/',                   'folder',  'Pillar'],
+    ['/litecast/',                 'globe',   'LiteCast'],
+    ['/photocast/',                'camera',  'PhotoCast'],
+    ['/episodes.html',             'mic',     'اپیزودها'],
+    ['/patients/cinematic.html',   'user',    'بیماران'],
+    ['/plus/',                     'sparkle', 'پلاس']
+  ];
+
+  var DC_DRAWER_MENU_HTML =
+'<div class="dc-drawer-menu-inner" id="dcDrawerMenu">' +
+'  <span class="dc-drawer-menu-label">بخش‌های سایت</span>' +
+     DC_DRAWER_MENU_ITEMS.map(function (it) {
+       return '<a class="dc-drawer-tool-seg" href="' + it[0] + '">' +
+              '<span class="dc-drawer-tool-ico">' + dcSvgIcon(it[1]) + '</span>' +
+/* dir="auto" per label, not one direction for the row: in an RTL document a
+   Latin name ending in punctuation is reordered — «DentCast+» renders as
+   «+DentCast». Resolving direction from each label's own first strong
+   character fixes that without forcing LTR on the Persian ones. */
+              '<span class="dc-drawer-tool-txt" dir="auto">' + it[2] + '</span></a>';
+     }).join('') +
+/* The sixteenth segment is the fold: it opens the tool tray underneath the
+   menu instead of navigating. Same segment shape as its neighbours so the
+   grid stays a clean 4×4. */
+'  <button class="dc-drawer-tool-seg" type="button" id="dc-drawer-tools-toggle" aria-expanded="false"><span class="dc-drawer-tool-ico">' + dcSvgIcon('sliders') + '</span><span class="dc-drawer-tool-txt">ابزار</span></button>' +
+'</div>';
+
+  var DC_DRAWER_MENU_CSS =
+/* Same 4-column grid as the tool tray on phones; on wide screens the drawer's
+   tools lay out as a scrolling row, but sixteen sections in one row would
+   clip, so the menu stays a grid there too and simply gets more columns. */
+'.dc-drawer-menu-inner{display:grid;grid-template-columns:repeat(4,1fr);gap:.125rem 0;padding:.375rem .625rem .25rem;box-sizing:border-box;}' +
+'@media (min-width:641px){.dc-drawer-menu-inner{grid-template-columns:repeat(8,1fr);}}' +
+'.dc-drawer-menu-label{grid-column:1 / -1;font-size:.68rem;font-weight:800;color:var(--txt3,#8a9cbe);white-space:nowrap;padding-bottom:.125rem;}' +
+'.dc-drawer-menu-inner .dc-drawer-tool-seg{padding:.5rem .25rem;}' +
+/* Self-contained icon sizing: a page that loads neither dc-nav.css nor
+   index.html's inline mirror still gets 1em glyphs, never full-size SVGs. */
+'.dc-drawer-menu-inner .dc-svg-icon{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}' +
+/* The fold. display:none rather than a height so the tray keeps its OWN
+   responsive layout — flex row on wide screens, 4-col grid on phones — for
+   the moment it comes back. */
+'#dcToolbarDrawer:not(.tools-open)>.dc-toolbar-drawer-inner{display:none;}' +
+'#dcToolbarDrawer.tools-open>.dc-drawer-menu-inner{border-bottom:1px solid var(--border,rgba(2,35,96,.10));padding-bottom:.375rem;}' +
+'#dc-drawer-tools-toggle[aria-expanded="true"]{background:rgba(var(--pr-rgb,2,35,96),.08);}';
 
   /* Floating SEARCH control styling (Change 3). The fixed bottom-left control
      that used to be the theme toggle is now a persistent SEARCH trigger
@@ -478,6 +557,24 @@
       fst.id = 'dc-float-search-style';
       fst.textContent = DC_FLOAT_SEARCH_CSS;
       (document.head || document.documentElement).appendChild(fst);
+    }
+
+    /* 3e) Prepend the SITE MENU to the drawer, so the drawer opens on the site
+           and the tool tray sits one fold below it. `afterbegin` on the drawer
+           itself — NOT on .dc-toolbar-drawer-inner — so the tray is never
+           reopened, reordered or re-parented. The menu carries its own class
+           (.dc-drawer-menu-inner), which is what keeps the radar/search/theme
+           injections above (they querySelector .dc-toolbar-drawer-inner, first
+           match wins) landing in the tray and not in the menu. Idempotent. */
+    if (!document.getElementById('dcDrawerMenu')) {
+      var drawerEl = document.getElementById('dcToolbarDrawer');
+      if (drawerEl) drawerEl.insertAdjacentHTML('afterbegin', DC_DRAWER_MENU_HTML);
+    }
+    if (!document.getElementById('dc-drawer-menu-style')) {
+      var mst = document.createElement('style');
+      mst.id = 'dc-drawer-menu-style';
+      mst.textContent = DC_DRAWER_MENU_CSS;
+      (document.head || document.documentElement).appendChild(mst);
     }
 
     /* 4) Music player: inject the panel (a sibling dropdown after the drawer)
@@ -1120,6 +1217,15 @@
     drawer.style.opacity    = '0';
   })();
 
+  /* Size the OPEN drawer to whatever it currently holds. Extracted from
+     toggleToolbarDrawer because the «ابزار» fold changes the content height
+     while the drawer is already open, and the height is an inline px value. */
+  function sizeToolbarDrawer() {
+    var drawer = document.getElementById('dcToolbarDrawer');
+    if (!drawer || !drawer.classList.contains('open')) return;
+    drawer.style.maxHeight = Math.max(80, drawer.scrollHeight) + 'px';
+  }
+
   /* Toggle logic — invoked by the delegated click handler. Reads its
      elements fresh on each call, so injection/replacement is transparent. */
   function toggleToolbarDrawer() {
@@ -1128,22 +1234,38 @@
     if (!drawerBtn || !drawer) return;
     var isOpen = drawer.classList.contains('open');
     if (!isOpen) {
-      /* OPEN — size to the actual content: on phones the tools now wrap into
-         two rows (see the drawer grid in dc-nav.css), so a fixed 80px would
-         clip the second row. scrollHeight is measurable even at max-height:0. */
+      /* OPEN — size to the actual content: the site menu wraps into four rows
+         and the tools into two (see the drawer grids), so a fixed 80px would
+         clip them. scrollHeight is measurable even at max-height:0. */
       drawer.classList.add('open');
-      drawer.style.maxHeight = Math.max(80, drawer.scrollHeight) + 'px';
+      sizeToolbarDrawer();
       drawer.style.opacity   = '1';
       drawerBtn.setAttribute('aria-expanded', 'true');
       drawer.setAttribute('aria-hidden', 'false');
     } else {
-      /* CLOSE */
-      drawer.classList.remove('open');
+      /* CLOSE — and refold the tools, so the drawer always reopens on the
+         site menu rather than wherever it was last left. */
+      drawer.classList.remove('open', 'tools-open');
+      var toolsBtn = document.getElementById('dc-drawer-tools-toggle');
+      if (toolsBtn) toolsBtn.setAttribute('aria-expanded', 'false');
       drawer.style.maxHeight = '0';
       drawer.style.opacity   = '0';
       drawerBtn.setAttribute('aria-expanded', 'false');
       drawer.setAttribute('aria-hidden', 'true');
     }
+  }
+
+  /* «ابزار» — folds the original tool tray in and out beneath the site menu.
+     It only flips a class on the drawer and re-measures: every tool button
+     keeps its own markup and its own delegated handler, untouched. */
+  function toggleDrawerTools() {
+    var drawer = document.getElementById('dcToolbarDrawer');
+    if (!drawer) return;
+    var open = !drawer.classList.contains('tools-open');
+    drawer.classList.toggle('tools-open', open);
+    var toolsBtn = document.getElementById('dc-drawer-tools-toggle');
+    if (toolsBtn) toolsBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    sizeToolbarDrawer();
   }
 
   /* ── TOOL BUTTONS ── */
@@ -1663,6 +1785,10 @@
        drawer — NOT #dcd-hdr-hamburger (desktop sidebar collapse in
        index.html). Never conflate the two. */
     if (t.closest('#btn-toolbar-toggle')) { dcHeaderOpenerClick('toolbar'); return; }
+    /* «ابزار» — the fold inside the drawer, NOT a header opener: it must not
+       go through dcHeaderOpenerClick, which would read the drawer as "already
+       open" and close it. */
+    if (t.closest('#dc-drawer-tools-toggle')) { toggleDrawerTools(); return; }
     /* Search trigger — a CLASS; the search button has no id. */
     if (t.closest('.dcOpenSearch'))       { openGlobalSearch();    return; }
     /* Music: trigger ONLY toggles the panel; play/pause is a SEPARATE control
