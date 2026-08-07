@@ -460,6 +460,79 @@ def fa_digits(n):
     return str(n).translate(table)
 
 
+# -------------------------------------------------------------------
+# Publication dates.
+#
+# Neither dentcast-brain.json nor glossary.json carries a date — the only
+# place a publication date exists is the JSON-LD inside each content page
+# itself. The flat (signed-out) list is ordered by that date, so the builder
+# has to go read it. Cheap in practice: ~530 small files, each read once per
+# run and memoised.
+#
+# An entry whose page carries no datePublished (the six /dentcast-plus/
+# videos) sorts to the END of the list rather than being guessed at, and
+# renders with no date chip at all. Undated items keep a stable order among
+# themselves (by URL) so a rebuild never reshuffles them.
+# -------------------------------------------------------------------
+_DATE_RE = re.compile(r'"datePublished"\s*:\s*"(\d{4}-\d{2}-\d{2})')
+_DATE_CACHE = {}
+
+
+def page_date(url):
+    """ISO date string for a root-relative page URL, or None."""
+    if url in _DATE_CACHE:
+        return _DATE_CACHE[url]
+    iso = None
+    if url.startswith("/"):
+        p = ROOT / url.lstrip("/")
+        if url.endswith("/"):
+            p = p / "index.html"
+        if p.is_file():
+            m = _DATE_RE.search(p.read_text(encoding="utf-8", errors="replace"))
+            if m:
+                iso = m.group(1)
+    _DATE_CACHE[url] = iso
+    return iso
+
+
+# Gregorian → Jalali. The site shows dates as Persian-calendar long form
+# everywhere it shows them at all (Intl 'fa-IR-u-ca-persian', see
+# plus/js/renewal-banner.js). Those are client-side; this list must be in the
+# HTML a crawler receives, so the conversion happens here at build time.
+_JALALI_MONTHS = ("فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور",
+                  "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند")
+
+
+def _to_jalali(gy, gm, gd):
+    g_dm = (0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334)
+    if gy > 1600:
+        jy, gy = 979, gy - 1600
+    else:
+        jy, gy = 0, gy - 621
+    gy2 = gy + 1 if gm > 2 else gy
+    days = (365 * gy + (gy2 + 3) // 4 - (gy2 + 99) // 100 + (gy2 + 399) // 400
+            - 80 + gd + g_dm[gm - 1])
+    jy += 33 * (days // 12053)
+    days %= 12053
+    jy += 4 * (days // 1461)
+    days %= 1461
+    if days > 365:
+        jy += (days - 1) // 365
+        days = (days - 1) % 365
+    if days < 186:
+        return jy, 1 + days // 31, 1 + days % 31
+    return jy, 7 + (days - 186) // 30, 1 + (days - 186) % 30
+
+
+def jalali_label(iso):
+    """'2026-08-06' -> '۱۵ مرداد ۱۴۰۵'. Empty string for a missing date."""
+    if not iso:
+        return ""
+    gy, gm, gd = (int(x) for x in iso.split("-"))
+    jy, jm, jd = _to_jalali(gy, gm, gd)
+    return fa_digits(jd) + " " + _JALALI_MONTHS[jm - 1] + " " + fa_digits(jy)
+
+
 def render_subtopic_card(sub_slug, sub_title, sub_symbol_id, items, intro_fa=""):
     count = len(items)
     items_html = "".join(render_item(it["entry"], it["source"]) for it in items)
@@ -484,6 +557,218 @@ def render_subtopic_card(sub_slug, sub_title, sub_symbol_id, items, intro_fa="")
         '      <div class="pillar-card-fade" aria-hidden="true"></div>\n'
         '    </div>\n'
         '  </details>\n'
+    )
+
+
+# -------------------------------------------------------------------
+# The signed-out surface: one flat, date-ordered list per pillar.
+#
+# The subtopic foldering and the clinical-chain order above are the premium
+# view. They are NOT emitted into the page — a crawler must see exactly one
+# copy of each link, in exactly the order a reader sees it, so the subtopic
+# structure ships beside the page as structure.json and is layered in by
+# /pillar/premium-index.js only after /me confirms a premium subscription.
+# -------------------------------------------------------------------
+def sort_by_date(items):
+    """Newest first. Undated items last, ordered by URL so a rebuild is stable."""
+    def k(it):
+        e = it["entry"]
+        url = (e.get("page_url") or e.get("url") or "")
+        iso = page_date(url)
+        # sort key inverted by hand rather than reverse=True, so the undated
+        # tail keeps its own ASCENDING url order instead of being flipped too.
+        return (0 if iso else 1, _invert_iso(iso), url.lower())
+    return sorted(items, key=k)
+
+
+def _invert_iso(iso):
+    """Descending-by-date as an ascending key: '2026-08-06' -> '7973-91-93'."""
+    if not iso:
+        return ""
+    return "".join(str(9 - int(c)) if c.isdigit() else c for c in iso)
+
+
+def render_flat_item(entry, source):
+    title = entry.get("title") or entry.get("fa_title") or "(بدون عنوان)"
+    url = entry.get("page_url") or entry.get("url") or "#"
+    tkey = detect_type(entry, source)
+    label_fa, symbol_id = TYPE_META[tkey]
+    iso = page_date(url)
+    date_html = (
+        '<time class="pillar-item-date" datetime="' + esc(iso) + '">'
+        + jalali_label(iso) + '</time>'
+        if iso else ''
+    )
+    return (
+        '        <li class="pillar-item" data-type="' + esc(tkey) + '">\n'
+        '          <a href="' + esc(url) + '" class="pillar-item-link">\n'
+        '            <span class="pillar-item-icon" aria-hidden="true">' + svg_icon(symbol_id) + '</span>\n'
+        '            <span class="pillar-item-body">\n'
+        '              <span class="pillar-item-title">' + esc(title) + '</span>\n'
+        '              <span class="pillar-item-meta">'
+        '<span class="pillar-item-kind">' + esc(label_fa) + '</span>' + date_html + '</span>\n'
+        '            </span>\n'
+        '          </a>\n'
+        '        </li>\n'
+    )
+
+
+# The one premium referral on these pages: one compact banner, at the top,
+# above the list it is talking about. It is written into the HTML directly
+# after <section class="pillar-intro">, which is also where spot.js anchors
+# the sponsor card (insertBefore(card, intro.nextSibling)) — so the sponsor
+# keeps the position it has today and the banner lands under it, flush
+# against the list. Replaced by premium-index.js once /me says premium.
+PREMIUM_CROWN = (
+    '<svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" '
+    'stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'
+    '<path d="m3 7 4.5 4L12 4l4.5 7L21 7l-1.8 11H4.8z"/></svg>'
+)
+
+
+# The premium layer. A module (not a classic script) on purpose: modules are
+# deferred by default, and a relative dynamic import inside one resolves
+# against the MODULE's URL — inside a classic script it would resolve against
+# the document, which differs between /pillar/ and /pillar/<slug>/.
+# NOTE: this ?v= is hardcoded here and NOT owned by tools/asset_version.py.
+# Raise it to match the live pages whenever --bump moves it, or the next
+# `build_pillar.py all` silently rolls every pillar page back to an old stamp.
+PREMIUM_SCRIPT_TAG = '<script type="module" src="/pillar/premium-index.js?v=3"></script>\n'
+
+# Styles for the two things this split introduces: the premium referral
+# banner (both page types) and the flat article list (pillar pages only).
+# Built entirely from tokens that already exist in dc-theme.css. Each page
+# sets --dcpb-rgb / --dcpb-rgb-d to its own accent, so the banner picks up
+# the pillar colour instead of introducing an eleventh one.
+PREMIUM_SPLIT_CSS = (
+    "    /* ── premium referral banner ── */\n"
+    "    .pillar-premium-banner {\n"
+    "      display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;\n"
+    "      margin: 0 0 1rem; padding: 0.8125rem 0.9375rem;\n"
+    "      background: var(--card-bg); border: 1px solid var(--card-border);\n"
+    "      border-radius: var(--r-lg, 18px); box-shadow: var(--card-sh);\n"
+    "      background-image: radial-gradient(130% 140% at 96% 0%, rgba(var(--dcpb-rgb, 45,106,122), .11), transparent 58%);\n"
+    "    }\n"
+    "    .pillar-premium-medal {\n"
+    "      flex: 0 0 auto; width: 2.25rem; height: 2.25rem; border-radius: 50%;\n"
+    "      display: grid; place-items: center; color: #fff;\n"
+    "      background: radial-gradient(120% 120% at 30% 20%, rgba(255,191,71,.45), transparent 60%),\n"
+    "                  conic-gradient(from 210deg, #ff5e3a, #ffbf47, #ff5e3a);\n"
+    "      box-shadow: 0 4px 12px rgba(255,94,58,.30), inset 0 0 0 1px rgba(255,255,255,.35);\n"
+    "    }\n"
+    "    .pillar-premium-medal .dc-svg-icon { width: 1.05rem; height: 1.05rem; }\n"
+    "    .pillar-premium-text { flex: 1 1 15rem; min-width: 0; }\n"
+    "    .pillar-premium-title { margin: 0; font-size: .875rem; font-weight: 800; color: var(--txt); line-height: 1.6; }\n"
+    "    .pillar-premium-sub { margin: .1875rem 0 0; font-size: .78rem; line-height: 1.75; color: var(--txt3); }\n"
+    "    .pillar-premium-cta {\n"
+    "      flex: 0 0 auto; display: inline-flex; align-items: center; gap: .3125rem;\n"
+    "      padding: .5rem .875rem; border-radius: var(--r-f, 999px);\n"
+    "      font-size: .78rem; font-weight: 800; text-decoration: none; color: #fff;\n"
+    "      background: rgb(var(--dcpb-rgb, 45,106,122));\n"
+    "      box-shadow: 0 4px 12px rgba(var(--dcpb-rgb, 45,106,122), .28);\n"
+    "      transition: transform .12s ease, box-shadow .12s ease;\n"
+    "    }\n"
+    "    .pillar-premium-cta:hover { transform: translateY(-1px); box-shadow: 0 7px 18px rgba(var(--dcpb-rgb, 45,106,122), .38); }\n"
+    "    [data-theme=\"dark\"] .pillar-premium-banner { background-image: radial-gradient(130% 140% at 96% 0%, rgba(var(--dcpb-rgb-d, 74,154,171), .16), transparent 58%); }\n"
+    "    [data-theme=\"dark\"] .pillar-premium-cta { background: rgb(var(--dcpb-rgb-d, 74,154,171)); color: #0e1621; box-shadow: 0 4px 12px rgba(var(--dcpb-rgb-d, 74,154,171), .30); }\n"
+    "    @media (max-width: 30rem) { .pillar-premium-cta { width: 100%; justify-content: center; } }\n"
+    "\n"
+    "    /* ── premium view active (drawn by premium-index.js) ── */\n"
+    "    .pillar-premium-state {\n"
+    "      display: flex; align-items: center; gap: .5rem; flex-wrap: wrap;\n"
+    "      margin: 0 0 1rem; padding: .5rem .8125rem;\n"
+    "      border: 1px dashed rgba(var(--dcpb-rgb, 45,106,122), .45);\n"
+    "      border-radius: var(--r-f, 999px); font-size: .78rem; color: var(--txt2);\n"
+    "      background: rgba(var(--dcpb-rgb, 45,106,122), .06);\n"
+    "    }\n"
+    "    .pillar-premium-state b { color: rgb(var(--dcpb-rgb, 45,106,122)); font-weight: 800; }\n"
+    "    .pillar-premium-state .spacer { flex: 1 1 auto; }\n"
+    "    .pillar-premium-state button {\n"
+    "      font: inherit; font-weight: 700; color: var(--txt3); background: none;\n"
+    "      border: 0; border-bottom: 1px dotted currentColor; padding: 0; cursor: pointer;\n"
+    "    }\n"
+    "    [data-theme=\"dark\"] .pillar-premium-state { border-color: rgba(var(--dcpb-rgb-d, 74,154,171), .45); background: rgba(var(--dcpb-rgb-d, 74,154,171), .10); }\n"
+    "    [data-theme=\"dark\"] .pillar-premium-state b { color: rgb(var(--dcpb-rgb-d, 74,154,171)); }\n"
+)
+
+FLAT_LIST_CSS = (
+    "    /* ── flat, date-ordered article list ── */\n"
+    "    .pillar-flat-head { display: flex; align-items: baseline; gap: .5rem; margin: 1.25rem 0 .5rem; padding: 0 .25rem; }\n"
+    "    .pillar-flat-head h2 { margin: 0; font-size: .95rem; font-weight: 800; color: var(--txt); }\n"
+    "    .pillar-flat-head .count { font-size: .8rem; font-weight: 700; color: rgb(var(--dcpb-rgb, 45,106,122));\n"
+    "      font-feature-settings: \"tnum\"; font-variant-numeric: tabular-nums; }\n"
+    "    [data-theme=\"dark\"] .pillar-flat-head .count { color: rgb(var(--dcpb-rgb-d, 74,154,171)); }\n"
+    "    .pillar-flat-note { margin: 0 .25rem .75rem; font-size: .76rem; color: var(--txt3); line-height: 1.8; }\n"
+    "    .pillar-flat-wrap { background: var(--card-bg); border: 1px solid var(--card-border);\n"
+    "      border-radius: var(--r-xl, 22px); box-shadow: var(--card-sh); overflow: hidden; }\n"
+    "    .pillar-flat-wrap .pillar-list { padding: .5rem .5rem .75rem; }\n"
+    "    .pillar-flat-wrap .pillar-item-link { align-items: flex-start; }\n"
+    "    .pillar-flat-wrap .pillar-item-title { display: block; }\n"
+    "    .pillar-item-body { flex: 1; min-width: 0; }\n"
+    "    .pillar-item-meta { display: flex; align-items: center; gap: .375rem; flex-wrap: wrap;\n"
+    "      margin-top: .1875rem; font-size: .7rem; font-weight: 600; color: var(--txt3); }\n"
+    "    .pillar-item-kind { padding: .0625rem .4375rem; border-radius: var(--r-f, 999px);\n"
+    "      background: var(--chip-bg); border: 1px solid var(--chip-bd); color: var(--chip-txt);\n"
+    "      font-size: .68rem; font-weight: 700; }\n"
+    "    .pillar-item-date { font-feature-settings: \"tnum\"; font-variant-numeric: tabular-nums; }\n"
+    "    /* `hidden` has to actually hide. premium-index.js swaps the two views\n"
+    "       with the hidden attribute, but .pillar-cards and .pillar-flat-head\n"
+    "       set `display` from a class, which outranks the UA stylesheet's\n"
+    "       [hidden] { display: none } — without this the two lists stack. */\n"
+    "    .pillar-cards[hidden], .pillar-flat-wrap[hidden],\n"
+    "    .pillar-flat-head[hidden], .pillar-flat-note[hidden] { display: none; }\n"
+)
+
+# Each pillar's accent as an rgb triple (light, dark) — the same pairs the
+# per-pillar rules below already use, exposed as variables so the banner and
+# the flat-list heading can pick them up without a rule per pillar.
+PILLAR_ACCENT_RGB = {
+    "bonding":            ("45,106,122",  "74,154,171"),
+    "ceramics":           ("28,165,165",  "61,214,196"),
+    "fixed-pros":         ("154,106,45",  "200,148,86"),
+    "implantology":       ("107,114,128", "156,163,175"),
+    "occlusion":          ("124,92,191",  "169,143,224"),
+    "esthetic":           ("168,83,107",  "199,125,146"),
+    "treatment-planning": ("74,90,138",   "125,140,192"),
+    "removable-pros":     ("156,102,68",  "192,138,99"),
+    "operative":          ("94,140,106",  "134,184,148"),
+    "digital":            ("107,91,149",  "157,142,199"),
+}
+
+
+def accent_vars_css(slug):
+    light, dark = PILLAR_ACCENT_RGB.get(slug, ("45,106,122", "74,154,171"))
+    return ("    :root { --dcpb-rgb: " + light + "; --dcpb-rgb-d: " + dark + "; }\n")
+
+
+def render_premium_banner(title_fa, sub_fa, from_key):
+    href = "/plus/pricing.html?from=" + from_key
+    return (
+        '    <aside class="pillar-premium-banner" data-premium-banner>\n'
+        '      <span class="pillar-premium-medal" aria-hidden="true">' + PREMIUM_CROWN + '</span>\n'
+        '      <div class="pillar-premium-text">\n'
+        '        <p class="pillar-premium-title">' + esc(title_fa) + '</p>\n'
+        '        <p class="pillar-premium-sub">' + esc(sub_fa) + '</p>\n'
+        '      </div>\n'
+        '      <a class="pillar-premium-cta" href="' + href + '">فعال‌سازی پریمیوم ←</a>\n'
+        '    </aside>\n'
+    )
+
+
+def pillar_banner_copy(cfg):
+    """Per-pillar banner sentence, derived from that pillar's own subtopics.
+
+    Deliberately not a fixed 'clinical chain' sentence: some pillars are
+    ordered as a treatment chain (fixed-pros: post-and-core → cementation),
+    others as a learning progression (bonding: basics → advanced). Naming the
+    first and last subtopic is true for both."""
+    subs = cfg["subtopics"]
+    first = subs[0]["title_fa"]
+    last = subs[-1]["title_fa"]
+    return (
+        cfg["h1_fa"] + " در پریمیوم زیرموضوع‌بندی می‌شود.",
+        fa_digits(len(subs)) + " زیرموضوع، به همان ترتیبی که باید خوانده شوند — "
+        "از «" + first + "» تا «" + last + "».",
     )
 
 
@@ -582,9 +867,11 @@ def build_pillar(slug):
     for it in collected:
         groups[it["entry"]["pillar"].get("subtopic")].append(it)
 
+    # ── the premium view: subtopic cards in clinical-chain order ────────────
+    # Unchanged in every respect except where it goes — it is written to
+    # structure.json instead of into the page.
     cards_html_parts = []
     counts = {}
-    flat_ordered = []
     for sub in cfg["subtopics"]:
         sub_slug  = sub["slug"]
         sub_title = sub["title_fa"]
@@ -593,29 +880,64 @@ def build_pillar(slug):
         items = sort_items(groups.get(sub_slug, []))
         counts[sub_slug] = len(items)
         cards_html_parts.append(render_subtopic_card(sub_slug, sub_title, sub_icon, items, sub_intro))
-        flat_ordered.extend(items)
     cards_html = "".join(cards_html_parts)
+
+    # ── the page itself: every item, flat, newest first ─────────────────────
+    # Built from `collected` rather than from the subtopic groups, so an entry
+    # that was filed with no subtopic (or a subtopic that has since been
+    # renamed in PILLARS) still reaches a reader and a crawler. Under the old
+    # grouped-only page such an entry was silently invisible.
+    flat_ordered = sort_by_date(collected)
+    orphans = len(collected) - sum(counts.values())
 
     intro_html = "\n".join(
         '      <p>' + p + '</p>' for p in cfg["intro_paragraphs"]
     )
 
-    page = render_page(slug, cfg, intro_html, cards_html, flat_ordered)
+    page = render_page(slug, cfg, intro_html, flat_ordered)
 
     out_dir = ROOT / "pillar" / slug
     out_dir.mkdir(parents=True, exist_ok=True)
     out_path = out_dir / "index.html"
     out_path.write_text(page, encoding="utf-8")
 
+    # Sidecar for the premium layer. Also the taxonomy source for
+    # tools/build_plus_index.mjs, which used to scrape the subtopic cards
+    # out of this page's HTML and cannot any more.
+    structure = {
+        "version": 1,
+        "slug": slug,
+        "title_fa": cfg["h1_fa"],
+        "subtopics": [
+            {"slug": s["slug"], "title_fa": s["title_fa"], "count": counts[s["slug"]]}
+            for s in cfg["subtopics"]
+        ],
+        "cards_html": cards_html,
+    }
+    struct_path = out_dir / "structure.json"
+    struct_path.write_text(
+        json.dumps(structure, ensure_ascii=False, separators=(",", ":")) + "\n",
+        encoding="utf-8")
+
     print("Built " + str(out_path.relative_to(ROOT)))
-    print("Total items: " + str(sum(counts.values())))
+    print("Total items: " + str(len(collected)) + " (flat, newest first)")
+    undated = sum(1 for it in collected
+                  if not page_date(it["entry"].get("page_url") or it["entry"].get("url") or ""))
+    if undated:
+        print("  no datePublished (sorted last): " + str(undated))
+    if orphans:
+        print("  !! " + str(orphans) + " item(s) have no matching subtopic — "
+              "listed on the page, absent from structure.json")
     for sub in cfg["subtopics"]:
         print("  " + sub["slug"].ljust(11) + " " + str(counts[sub["slug"]]))
     return out_path
 
 
-def render_page(slug, cfg, intro_html, cards_html, flat_ordered):
+def render_page(slug, cfg, intro_html, flat_ordered):
     canonical = "https://dentcast.org/pillar/" + slug + "/"
+    # The ItemList mirrors the order a reader actually sees, which is now the
+    # flat date order rather than the subtopic chain. Structured data that
+    # disagrees with the visible list is worse than none.
     jsonld_body = build_jsonld(cfg, canonical, flat_ordered)
 
     head = (
@@ -776,6 +1098,9 @@ def render_page(slug, cfg, intro_html, cards_html, flat_ordered):
         '    [data-theme="dark"] [data-pillar="operative"] .pillar-header-icon { color: #86b894; }\n'
         '    [data-pillar="digital"] .pillar-header-icon { color: #6b5b95; }\n'
         '    [data-theme="dark"] [data-pillar="digital"] .pillar-header-icon { color: #9d8ec7; }\n'
+        + accent_vars_css(slug)
+        + PREMIUM_SPLIT_CSS
+        + FLAT_LIST_CSS +
         '  </style>\n'
         '\n'
         "  <!-- Theme init verbatim from metanotes/index.html -->\n"
@@ -863,8 +1188,18 @@ def render_page(slug, cfg, intro_html, cards_html, flat_ordered):
         + intro_html + '\n'
         '    </section>\n'
         '\n'
-        '    <section class="pillar-cards" aria-label="دسته‌بندی موضوعی">\n'
-        + cards_html +
+        + render_premium_banner(*pillar_banner_copy(cfg), "pillar-" + slug) +
+        '\n'
+        '    <div class="pillar-flat-head">\n'
+        '      <h2>همهٔ مطالب ' + esc(cfg["h1_fa"]) + '</h2>\n'
+        '      <span class="count">' + fa_digits(len(flat_ordered)) + ' مطلب</span>\n'
+        '    </div>\n'
+        '    <p class="pillar-flat-note">به‌ترتیب تاریخ انتشار، از تازه‌ترین.</p>\n'
+        '\n'
+        '    <section class="pillar-flat-wrap" data-flat-list aria-label="همهٔ مطالب ' + esc(cfg["h1_fa"]) + '">\n'
+        '      <ul class="pillar-list">\n'
+        + "".join(render_flat_item(it["entry"], it["source"]) for it in flat_ordered) +
+        '      </ul>\n'
         '    </section>\n'
         '  </main>\n'
         '\n'
@@ -881,7 +1216,8 @@ def render_page(slug, cfg, intro_html, cards_html, flat_ordered):
         '<!-- Theme toggle behavior moved to /dc-nav.js (single source) -->\n'
         '<script src="/global-search.js?v=7"></script>\n'
         '<script src="/global-search-ui.js?v=3"></script>\n'
-        '<script src="/dc-nav.js?v=43" defer></script>\n'
+        '<script src="/dc-nav.js?v=45" defer></script>\n'
+        + PREMIUM_SCRIPT_TAG +
         '\n'
         '</body>\n'
         '</html>\n'
@@ -1194,6 +1530,11 @@ INDEX_INLINE_STYLE = (
     "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"digital\"] .pillar-card-name { color: #9d8ec7; }\n"
     "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"digital\"] .subtopic-chip { background: rgba(157,142,199,.18); color: #9d8ec7; }\n"
     "[data-theme=\"dark\"] .pillar-card-row[data-pillar=\"digital\"] .pillar-card-arrow { background: rgba(157,142,199,.15); border-color: rgba(157,142,199,.35); color: #9d8ec7; }\n"
+    "\n"
+    "/* The article count now sits inside each pillar's <h2>. Muted rather than\n"
+    "   accent-coloured so it reads as a quantity, not a second title. */\n"
+    ".pillar-card-count-inline { font-size: .8rem; font-weight: 700; color: var(--txt3);\n"
+    "  font-feature-settings: \"tnum\"; font-variant-numeric: tabular-nums; }\n"
     "</style>"
 )
 
@@ -1245,6 +1586,26 @@ def build_index():
     out_path = out_dir / "index.html"
     out_path.write_text(page, encoding="utf-8")
 
+    # The subtopic breakdown the cards no longer carry, for the premium layer.
+    # Keyed by slug so premium-index.js can fill each card in place.
+    hub_structure = {
+        "version": 1,
+        "total_subtopics": sum(p["subtopics"] for p in pillars_info),
+        "pillars": {
+            p["slug"]: {
+                "subtopic_count": p["subtopics"],
+                "subtopics": [
+                    {"title_fa": s["title_fa"], "count": s["count"]}
+                    for s in p["subtopic_list"]
+                ],
+            }
+            for p in pillars_info
+        },
+    }
+    (out_dir / "structure.json").write_text(
+        json.dumps(hub_structure, ensure_ascii=False, separators=(",", ":")) + "\n",
+        encoding="utf-8")
+
     print("Built " + str(out_path.relative_to(ROOT)))
     print("Pillars listed: " + str(len(pillars_info)))
     for info in pillars_info:
@@ -1253,25 +1614,20 @@ def build_index():
 
 
 def _render_index_card(info):
-    subtopic_lis = "".join(
-        '          <li>\n'
-        '            <span class="subtopic-label">' + esc(s["title_fa"]) + '</span>\n'
-        '            <span class="subtopic-chip">' + fa_digits(s["count"]) + '</span>\n'
-        '          </li>\n'
-        for s in info["subtopic_list"]
-    )
+    # The subtopic <ul> that used to live here is now premium-only and ships in
+    # structure.json. The count moves INTO the <h2> so the heading a crawler
+    # reads still says how much is behind it, and the empty <ul> stays in the
+    # markup as the mount point premium-index.js fills.
     return (
         '      <a class="pillar-card-row" data-pillar="' + esc(info["slug"]) + '" href="/pillar/' + esc(info["slug"]) + '/">\n'
         '        <div class="pillar-card-body">\n'
         '          <div class="pillar-card-header">\n'
         '            <span class="pillar-card-icon" aria-hidden="true">' + svg_icon(info["icon"]) + '</span>\n'
-        '            <h2 class="pillar-card-name">' + esc(info["h1_fa"]) + '</h2>\n'
+        '            <h2 class="pillar-card-name">' + esc(info["h1_fa"])
+        + ' <span class="pillar-card-count-inline">(' + fa_digits(info["items"]) + ' مطلب)</span></h2>\n'
         '          </div>\n'
         '          <p class="pillar-card-subtitle">' + esc(info["subtitle_fa_short"]) + '</p>\n'
-        '          <p class="pillar-card-meta">' + fa_digits(info["items"]) + ' مطلب · ' + fa_digits(info["subtopics"]) + ' زیرموضوع</p>\n'
-        '          <ul class="pillar-card-subtopics">\n'
-        + subtopic_lis +
-        '          </ul>\n'
+        '          <ul class="pillar-card-subtopics" hidden></ul>\n'
         '        </div>\n'
         '        <div class="pillar-card-arrow" aria-hidden="true">\n'
         '          <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6"/></svg>\n'
@@ -1289,13 +1645,13 @@ def _render_index_page(pillars_info, cards_html):
 
     total_pillars   = len(pillars_info)
     total_items     = sum(p["items"] for p in pillars_info)
-    total_subtopics = sum(p["subtopics"] for p in pillars_info)
 
+    # Two chips, not three: the زیرموضوع count belongs to a breakdown this page
+    # no longer shows. premium-index.js appends it when the subtopics arrive.
     stats_html = (
-        '      <div class="pillar-index-stats">\n'
+        '      <div class="pillar-index-stats" data-index-stats>\n'
         '        <span class="pillar-index-stat-chip"><span class="stat-value">' + fa_digits(total_pillars)   + '</span><span class="stat-label">موضوع</span></span>\n'
         '        <span class="pillar-index-stat-chip"><span class="stat-value">' + fa_digits(total_items)     + '</span><span class="stat-label">مطلب</span></span>\n'
-        '        <span class="pillar-index-stat-chip"><span class="stat-value">' + fa_digits(total_subtopics) + '</span><span class="stat-label">زیرموضوع</span></span>\n'
         '      </div>\n'
     )
 
@@ -1337,6 +1693,10 @@ def _render_index_page(pillars_info, cards_html):
         '  <link rel="stylesheet" href="/global-search.css?v=3">\n'
         '\n'
         '  ' + INDEX_INLINE_STYLE + '\n'
+        '  <style>\n'
+        + accent_vars_css("bonding")   # hub keeps the default teal
+        + PREMIUM_SPLIT_CSS +
+        '  </style>\n'
         '\n'
         "  <!-- Theme init verbatim from metanotes/index.html -->\n"
         "  <script>\n"
@@ -1428,6 +1788,12 @@ def _render_index_page(pillars_info, cards_html):
         + stats_html +
         '    </div>\n'
         '\n'
+        + render_premium_banner(
+            "همین نقشه، در پریمیوم زیرموضوع‌بندی می‌شود.",
+            "در پریمیوم مطالبِ هر موضوع به زیرموضوع‌ها تقسیم و به همان ترتیبی که "
+            "باید خوانده شوند چیده می‌شوند.",
+            "pillar-index") +
+        '\n'
         '    <div class="listWrap">\n'
         + cards_html +
         '    </div>\n'
@@ -1441,7 +1807,8 @@ def _render_index_page(pillars_info, cards_html):
         '<!-- Theme toggle behavior moved to /dc-nav.js (single source) -->\n'
         '<script src="/global-search.js?v=7"></script>\n'
         '<script src="/global-search-ui.js?v=3"></script>\n'
-        '<script src="/dc-nav.js?v=43" defer></script>\n'
+        '<script src="/dc-nav.js?v=45" defer></script>\n'
+        + PREMIUM_SCRIPT_TAG +
         '\n'
         '</body>\n'
         '</html>\n'
@@ -2154,7 +2521,7 @@ _GLOSSARY_TAIL = """<div class="dc-global-filter-box" id="dcGlobalBox">
   <div class="dc-results-box" id="dcResults"></div>
 </div>
 <script src="/global-search.js?v=7" defer></script>
-<script src="/dc-nav.js?v=43" defer></script>
+<script src="/dc-nav.js?v=45" defer></script>
 </body>
 </html>
 """
