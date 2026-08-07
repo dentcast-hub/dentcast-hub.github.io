@@ -176,7 +176,14 @@ def bump() -> int:
 
     changed_pages = 0
     for page in html_pages():
-        text = page.read_text(encoding='utf-8')
+        # newline='' on BOTH sides so a page's line endings survive the rewrite
+        # untouched. With the defaults, read_text() collapses them to '\n' and
+        # write_text() re-expands to os.linesep — which on Windows silently
+        # converted all 767 pages to CRLF, turning a one-token stamp edit into a
+        # whole-file diff. This tool changes a version number; it must change
+        # nothing else about the bytes it writes.
+        with open(page, 'r', encoding='utf-8', newline='') as fh:
+            text = fh.read()
 
         def swap(m: re.Match) -> str:
             v = new_version.get(m.group('path'))
@@ -184,15 +191,17 @@ def bump() -> int:
 
         out = REF_RE.sub(swap, text)
         if out != text:
-            page.write_text(out, encoding='utf-8')
+            with open(page, 'w', encoding='utf-8', newline='') as fh:
+                fh.write(out)
             changed_pages += 1
 
     for asset, v in new_version.items():
         manifest[asset] = {'v': v, 'hash': state[asset]['hash']}
     MANIFEST.parent.mkdir(parents=True, exist_ok=True)
-    MANIFEST.write_text(
-        json.dumps(dict(sorted(manifest.items())), indent=2, ensure_ascii=False) + '\n',
-        encoding='utf-8')
+    # newline='' for the same reason as the pages above: the manifest is LF in the
+    # repo and must not become CRLF just because it was written from Windows.
+    with open(MANIFEST, 'w', encoding='utf-8', newline='') as fh:
+        fh.write(json.dumps(dict(sorted(manifest.items())), indent=2, ensure_ascii=False) + '\n')
 
     for asset, v in sorted(new_version.items()):
         print(f'  {asset}  ->  ?v={v}')
