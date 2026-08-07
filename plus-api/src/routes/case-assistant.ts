@@ -34,7 +34,7 @@ export async function caseAssistantRoutes(app: FastifyInstance): Promise<void> {
     const step = await nextCaseStep(userId, description, history);
 
     // The assistant is the only premium feature with a per-use cost, and it was
-    // the only one leaving no trace in user_activity — so a three-day prize
+    // the only one leaving no trace in user_activity — so a two-day prize
     // winner could lean on it hard or never open it, and both looked identical.
     // One row per round is the right unit: a call here is at most one model
     // call (maxRounds bounds a single case, the limiter above bounds the hour).

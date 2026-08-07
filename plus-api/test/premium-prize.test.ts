@@ -205,7 +205,7 @@ describe('grantWeeklyPrizes — top of every valid group', () => {
     expect(g!.revoked_at).toBeNull();
     expect(g!.seen).toBe(false);
     const days = (new Date(g!.expires_at).getTime() - now.getTime()) / 86_400_000;
-    expect(Math.round(days), 'prize_days').toBe(3);
+    expect(Math.round(days), 'prize_days').toBe(2);
   });
 
   it('is idempotent: running it twice does not double-grant or duplicate rows', async () => {
@@ -368,7 +368,7 @@ describe('expirePremiumPrizes', () => {
     const ids = await seedGroup('composite', [90, 80]);
     await finalizeWeek(WEEK);
     const week1At = new Date('2026-02-08T00:00:00Z');
-    await grantWeeklyPrizes(week1At); // expires in 7 days from week1At
+    await grantWeeklyPrizes(week1At); // expires prize_days later, at Tehran midnight
 
     // Wins again the following week — a second grant row, still active.
     const WEEK2 = '2026-02-14';
@@ -399,15 +399,16 @@ describe('expirePremiumPrizes', () => {
         [lg2.rows[0].id, filler.rows[0].id, WEEK2, 10 - i],
       );
     }
-    // Clearly BEFORE week 1's exact expiry instant (2026-02-15T00:00:00Z), so
-    // this is an unambiguous "won again while still covered" case.
+    // Week 1's grant has fallen due by now but nothing has swept it yet (nothing
+    // expires lazily on read), so the account is still premium when the second
+    // grant lands on top of it — which is exactly the state this test is about.
     const week2At = new Date('2026-02-13T00:00:00Z');
     await finalizeWeek(WEEK2, week1At);
     await grantWeeklyPrizes(week2At); // extends ids[0]'s premium with a new grant row
     expect((await grantRow(ids[0], WEEK2))!.expires_at).not.toBeNull();
 
     // A moment when week 1's grant HAS expired but week 2's has not: week 1 ran
-    // 02-08 -> 02-11 and week 2 runs 02-13 -> 02-16 (prize_days = 3), so 02-14
+    // 02-08 -> 02-10 and week 2 runs 02-13 -> 02-15 (prize_days = 2), so 02-14
     // sits in the gap. Derived from prize_days, not a fixed offset — the old
     // +8d was arithmetic for the 7-day prize this replaced.
     await expirePremiumPrizes(new Date('2026-02-14T00:00:00Z'));
@@ -520,8 +521,8 @@ describe('what the winner is actually told', () => {
     const msg = await winAndAnnounce();
     const cfg = await getLeagueConfig();
 
-    expect(msg.body).toContain('۳ روز');
-    expect(cfg.prize_days, 'the copy must match the config, not a literal').toBe(3);
+    expect(msg.body).toContain('۲ روز');
+    expect(cfg.prize_days, 'the copy must match the config, not a literal').toBe(2);
     // The exact regression this test exists for: the copy promised a week long
     // after the prize became three days, so the winner lost premium on day four.
     expect(msg.body).not.toContain('یک هفته');
