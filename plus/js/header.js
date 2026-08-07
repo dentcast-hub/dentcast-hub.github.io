@@ -4,7 +4,7 @@
 //  - person icon (SVG): gray for guests -> login modal; blue for logged-in ->
 //    a toggle that opens a small menu (پیشخوان / پروفایل), each of which opens as
 //    an OVERLAY. Clicking the person again closes whatever is open.
-import { el, streakIsActiveToday, STREAK_ACTIVITY_EVENT } from './util.js';
+import { el, faNum, streakIsActiveToday, STREAK_ACTIVITY_EVENT } from './util.js';
 import { currentUser, api } from './api.js';
 import { isOrgHost, detectContentId } from './config.js';
 import { openLoginModal, openOrgNotice, openNameGate, nameIsChosen } from './login-modal.js';
@@ -16,6 +16,8 @@ import { startTour, maybeOfferTour, tourMenuAvailable, initTourAutostart } from 
 import { maybeShowNotifPrompt } from './notif-prompt.js';
 import { healPushSubscription } from './push.js';
 import { maybeShowPremiumPopup } from './premium-popup.js';
+import { renderNotices, NOTICES_SEEN_EVENT } from './notices.js';
+import { maybeCelebrate, ACHIEVEMENTS_SEEN_EVENT } from './achievements.js';
 import { subscriptionMenuLabel, pricingHref } from './premium-cta.js';
 
 // Inlined so it can never 404. Built via innerHTML on an HTML button (not
@@ -61,6 +63,36 @@ function personSvg(colorClass) {
   return btn;
 }
 
+/**
+ * The unread mark: a dot on the corner of the account icon, NOT a recolouring
+ * of the icon itself.
+ *
+ * The person icon is the identity indicator — gray means guest, blue means
+ * signed in — and turning it red would make one element carry two meanings and
+ * say both badly: a reader could no longer tell at a glance whether they are
+ * logged in, and red on an account icon reads as "something is wrong with your
+ * account" rather than "you have news". A corner dot keeps the identity colour
+ * intact, matches what every messaging app has already taught people, and can
+ * grow a number later without a redesign.
+ *
+ * Colour is never the whole signal: the aria-label carries the count too, so the
+ * mark exists for a screen reader and for anyone who cannot separate the hues.
+ */
+function paintPersonDot(btn, count) {
+  if (!btn) return;
+  let dot = btn.querySelector('.dcp-person-dot');
+  if (count > 0 && !dot) {
+    dot = el('i', { class: 'dcp-person-dot', 'aria-hidden': 'true' });
+    btn.appendChild(dot);
+  } else if (count <= 0 && dot) {
+    dot.remove();
+  }
+  btn.setAttribute(
+    'aria-label',
+    count > 0 ? 'حساب شما — ' + faNum(count) + ' اطلاعیهٔ خوانده‌نشده' : 'حساب شما',
+  );
+}
+
 function buildGuestPerson() {
   const btn = personSvg('is-guest');
   btn.setAttribute('aria-label', 'ورود');
@@ -78,6 +110,16 @@ function buildUserPerson(user) {
   const btn = personSvg('is-user');
   btn.setAttribute('aria-label', 'حساب شما');
   btn.setAttribute('aria-haspopup', 'true');
+  paintPersonDot(btn, user.unread_notices || 0);
+  // The dot goes out the moment the inbox or the celebration is acknowledged —
+  // both fire their own event so this does not have to poll /me or wait for a
+  // reload to stop claiming there is something unread.
+  document.addEventListener(NOTICES_SEEN_EVENT, () => paintPersonDot(btn, 0));
+  document.addEventListener(ACHIEVEMENTS_SEEN_EVENT, () => {
+    currentUser({ refresh: true })
+      .then((m) => paintPersonDot(btn, (m && m.unread_notices) || 0))
+      .catch(() => { /* leave the dot as it is rather than lie in either direction */ });
+  });
 
   let menu = null;
   const closeMenu = () => { if (menu) { menu.remove(); menu = null; document.removeEventListener('click', onDoc); } };
@@ -89,6 +131,17 @@ function buildUserPerson(user) {
         onclick: () => { closeMenu(); openOverlay('dashboard', 'پیشخوان', (root) => renderDashboard(root, { me: user })); } }, 'پیشخوان'),
       el('button', { class: 'dcp-person-item', type: 'button', role: 'menuitem',
         onclick: () => { closeMenu(); openOverlay('profile', 'پروفایل', (root) => renderProfile(root, { me: user })); } }, 'پروفایل'),
+      // اطلاعیه‌ها — an overlay, not a page: the host already exists, is
+      // layout-aware (it docks over column C on the desktop shell) and is what
+      // the two items above use. A third destination would have been a page, a
+      // route and a head, for a list.
+      el('button', { class: 'dcp-person-item dcp-person-item-notices', type: 'button', role: 'menuitem',
+        onclick: () => { closeMenu(); openOverlay('notices', 'اطلاعیه‌ها', renderNotices); } }, [
+        'اطلاعیه‌ها',
+        (user.unread_notices || 0) > 0
+          ? el('span', { class: 'dcp-person-pill' }, faNum(user.unread_notices))
+          : null,
+      ]),
       // Re-run the guided tour on demand (mobile shell only for now). On a
       // non-home page startTour hands off to the homepage via /?tour=1.
       tourMenuAvailable() ? el('button', { class: 'dcp-person-item', type: 'button', role: 'menuitem',

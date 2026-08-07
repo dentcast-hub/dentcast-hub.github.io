@@ -15,8 +15,12 @@ import { sendCapped, inAwakeWindow } from '../src/services/notify-policy.js';
  * they all go through.
  *
  * Delivery itself is the stub provider here; `notification_log` is the observable
- * — a row means the message was handed to the senders, no row means policy or
- * selection dropped it.
+ * — a DELIVERED row means the message was handed to the senders, no row means
+ * policy or selection dropped it.
+ *
+ * `delivered` matters since the in-app inbox shipped: the same table now also
+ * holds messages the cap refused to send, so every assertion about "was it sent"
+ * carries the filter (see logRows) and only the cap test below looks at both.
  */
 
 let seq = 0;
@@ -43,10 +47,19 @@ async function makeUser(tier: 'free' | 'premium', settings = '{}'): Promise<stri
   return r.rows[0].id;
 }
 
+/** Every stored row, delivered or not — what the inbox would show. */
+async function allRows(userId: string): Promise<number> {
+  const r = await pool.query<{ n: number }>(
+    'select count(*)::int n from notification_log where user_id = $1',
+    [userId],
+  );
+  return r.rows[0].n;
+}
+
 async function logRows(userId: string, kind?: string): Promise<number> {
   const r = await pool.query<{ n: number }>(
     `select count(*)::int n from notification_log
-      where user_id = $1 and ($2::text is null or kind = $2)`,
+      where user_id = $1 and delivered and ($2::text is null or kind = $2)`,
     [userId, kind ?? null],
   );
   return r.rows[0].n;
@@ -375,7 +388,10 @@ describe('free digest vs the awake window', () => {
 describe('sendCapped', () => {
   const msg = { title: 't', body: 'b' };
 
-  it('stops at the daily cap and drops the excess rather than queueing it', async () => {
+  // The cap governs the CHANNEL, not the reader's right to the news. Past the
+  // limit nothing travels — and the message still lands in اطلاعیه, marked
+  // undelivered so it cannot be counted against tomorrow's budget.
+  it('stops sending at the daily cap but keeps the excess in the inbox', async () => {
     const u = await makeUser('premium');
     const max = config.notify.maxPerDay;
 
@@ -383,7 +399,16 @@ describe('sendCapped', () => {
       expect(await sendCapped(u, msg, 'article_premium', AWAKE)).toBe(true);
     }
     expect(await sendCapped(u, msg, 'article_premium', AWAKE)).toBe(false);
-    expect(await logRows(u)).toBe(max);
+    expect(await logRows(u)).toBe(max);          // delivered: exactly the budget
+    expect(await allRows(u)).toBe(max + 1);      // stored: the refused one too
+
+    // The load-bearing bit: an undelivered row must never count as sent, or the
+    // cap would feed itself and quietly starve the user's push budget.
+    const undelivered = await pool.query<{ n: number }>(
+      'select count(*)::int n from notification_log where user_id = $1 and not delivered',
+      [u],
+    );
+    expect(undelivered.rows[0].n).toBe(1);
   });
 
   it('lets a founder broadcast through even when the user is capped out', async () => {

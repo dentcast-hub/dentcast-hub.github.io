@@ -15,6 +15,7 @@ import { displayStreak } from '../services/streak.js';
 import { dayInTz } from '../services/time.js';
 import { getActivePathwaySummary } from '../services/active-pathway.js';
 import { getPendingPremiumGrant } from '../services/premium-prize.js';
+import { noticeCounters } from '../services/notices.js';
 import { getSubscriptionSummary } from '../services/subscription.js';
 import { recordPageView } from '../services/view-stats.js';
 
@@ -485,6 +486,16 @@ export async function authRoutes(app: FastifyInstance): Promise<void> {
       // and the "your subscription ended" message has to appear once they are
       // not. A field that only existed for premium users could say neither.
       subscription: await getSubscriptionSummary(user.id),
+      // The two numbers behind the account icon. `unread_notices` paints the dot
+      // — a silent mark that never covers anything, so it is the one signal that
+      // is safe to show while somebody is mid-paragraph. `pending_achievements`
+      // is the celebration queue, which the client only ever opens on a calm
+      // surface (the profile or the dashboard), never on an article.
+      //
+      // Both are indexed counts on purpose: /me is called once per page view by
+      // every visitor, and it is the call the sponsor card waits on before it can
+      // render, so nothing expensive may be added to it.
+      ...(await noticeCounters(user.id)),
     };
     // due_card_count is premium-only and intentionally absent for free users.
     if (user.tier === 'premium') {

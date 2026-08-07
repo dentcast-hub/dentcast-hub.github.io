@@ -3,6 +3,7 @@ import { requireAuth } from '../middleware/auth.js';
 import { requirePremium } from '../middleware/require-premium.js';
 import { pool, withTransaction } from '../db.js';
 import { recordActivity } from '../services/activity.js';
+import { scheduleAchievementSync } from '../services/achievement-sync.js';
 import { getContentInfo } from '../content-index.js';
 
 // Premium: user-made freeform folders (spec §4's `collections`/
@@ -142,6 +143,7 @@ export async function collectionRoutes(app: FastifyInstance): Promise<void> {
     );
     const collection = res.rows[0];
     await recordActivity(request.user!.id, 'collection_created', null, { collection_id: collection.id });
+    scheduleAchievementSync(request.user!.id); // «گنجینه» counts boards and pins
     return reply.code(201).send({ collection: { ...collection, item_count: 0 } });
   });
 
@@ -351,6 +353,7 @@ export async function collectionRoutes(app: FastifyInstance): Promise<void> {
       [res.rows[0].id],
     );
     await recordActivity(userId, 'collection_item_added', contentId, { collection_id: id, highlight_id: highlightId });
+    scheduleAchievementSync(userId);
     return reply.code(201).send({ item: resolveItem(full.rows[0]) });
   });
 

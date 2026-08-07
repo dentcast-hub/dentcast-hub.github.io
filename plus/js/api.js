@@ -255,6 +255,19 @@ export const api = {
   // achievements — the profile's «افتخارات» shelf. Free on every plan; three of
   // the badges simply need premium tools to earn.
   achievements: () => request('/achievements'),
+  // The celebration queue: badges announced but not yet acknowledged. Separate
+  // from the wall above because it answers a different question — the wall is
+  // "what is true", this is "what have we not told you yet" — and only the
+  // second one can be spent. Mirrors leagueOutcomeSeen exactly.
+  achievementsPending: () => request('/achievements/pending'),
+  achievementsSeen: () => request('/achievements/seen', { method: 'POST' }),
+
+  // اطلاعیه — the in-app inbox behind the dot on the account icon. Free on
+  // every plan: these are the site's own messages to the reader, and the people
+  // who cannot see them any other way are exactly the ones who never granted
+  // push permission.
+  notices: () => request('/notices'),
+  noticesSeen: () => request('/notices/seen', { method: 'POST' }),
 
   league: () => request('/league'),
   leagueOutcomeSeen: () => request('/league/outcome/seen', { method: 'POST' }),

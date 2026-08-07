@@ -2,6 +2,7 @@ import { config } from '../config.js';
 import { one, query, withTransaction, type Queryable, pool } from '../db.js';
 import { getIndex, getFolders, folderOf } from '../content-index.js';
 import { sendCapped, inAwakeWindow } from './notify-policy.js';
+import { recordBroadcast } from './notices.js';
 import type { NotificationKind, NotificationMessage } from '../providers/notifications/types.js';
 
 /**
@@ -58,6 +59,31 @@ function articleLine(a: { pulse?: string | null; content_id: string }): string {
   return p || `مطلب جدیدی در ${sectionFa(a.content_id)} منتشر شد`;
 }
 
+/**
+ * The اطلاعیه version of a publish — short, and deliberately NOT the Pulse.
+ *
+ * The push says as much as it can, because it gets one shot at a lock screen.
+ * The inbox is a list the reader scans, and a paragraph about the article's
+ * argument is the wrong thing to put in a row: what they need is that something
+ * new exists, where it is, and what it is called. The article itself is one tap
+ * away and says the rest better than any summary of it.
+ *
+ * It is also the reason this lane has no schedule. The awake window and the
+ * daily cap exist to protect a phone and a bot token; neither is involved in
+ * writing a row, so every reader — free and premium alike — has the news in
+ * اطلاعیه the moment it is published, whatever the hour, and the push lane on
+ * top of it stays exactly as careful as it was.
+ */
+async function announceInApp(a: { content_id: string; title: string; url: string }): Promise<void> {
+  await recordBroadcast({
+    kind: 'article',
+    title: `مطلب جدید در ${sectionFa(a.content_id)}`,
+    body: a.title,
+    url: a.url,
+    audience: 'all',
+  });
+}
+
 /** Absolute URL for the (prepared) premium link. */
 function absUrl(url: string): string {
   if (/^https?:\/\//i.test(url)) return url;
@@ -86,11 +112,17 @@ async function audience(tier: 'free' | 'premium', client: Queryable = pool): Pro
  *  bookkeeping (premium_notified_at / free_notified_at) must not depend on delivery.
  *  Goes through sendCapped so a day with several publishes cannot become a push
  *  storm for one user; a capped recipient is silently skipped, same as one with
- *  no destination. */
+ *  no destination.
+ *
+ *  `inbox: false` throughout this lane: the reader was already told, in one
+ *  short line, by the broadcast written at publish time. These pushes are the
+ *  same news in a longer wording and on a schedule, and writing them to اطلاعیه
+ *  too would show one publish twice. They still write their counter row, which
+ *  is what the daily cap is counting. */
 async function deliver(userIds: string[], message: NotificationMessage, kind: NotificationKind): Promise<void> {
   for (const id of userIds) {
     try {
-      await sendCapped(id, message, kind);
+      await sendCapped(id, message, kind, new Date(), { inbox: false });
     } catch {
       /* delivery is best-effort; providers already skip missing destinations quietly */
     }
@@ -141,6 +173,13 @@ export async function onArticlePublished(input: PublishInput): Promise<{
       publishedAt.toISOString(), notifyFreeAfter.toISOString()],
   );
   if (!inserted) return { recorded: false, premiumRecipients: 0, deferred: false };
+
+  // اطلاعیه first, and unconditionally. A row is not an interruption, so none of
+  // the machinery that protects a phone applies to it: no awake window, no daily
+  // cap, no tier split, no 24-hour free delay. The insert is guarded by the
+  // `on conflict do nothing` above, so a duplicate publish event cannot announce
+  // the same article twice.
+  await announceInApp({ content_id: input.contentId, title: input.title, url: input.url });
 
   // Outside waking hours: recorded, not pushed. premium_notified_at stays null,
   // which is exactly what runPremiumBacklog() selects on in the morning.

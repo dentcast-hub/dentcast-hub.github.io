@@ -84,6 +84,9 @@ Auth: `POST /auth/otp/request`, `POST /auth/otp/verify`, `POST /auth/logout`,
 `GET /admin/spot/stats` (ad telemetry report),
 `POST /admin/articles/published` (the `article_published` event),
 `POST /admin/articles/run-free-digest` (manual digest run),
+`POST /admin/notices/broadcast` (the founder's own اطلاعیه — one row for
+everyone, lands instantly; `push: true` also sends it, respecting the awake
+window unless `force: true`; there is a form for it on the `GET /admin` page),
 `POST /admin/articles/backfill` (one-time go-live: record all existing pages as
 already-notified), and `GET /admin/notify/health` (can the channels actually
 deliver right now — config + reachability, sends nothing).

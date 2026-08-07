@@ -5,16 +5,22 @@ import { resetRateLimits } from '../src/services/rate-limit.js';
 import { clearOtpStore } from '../src/services/otp.js';
 import { clearBaleLinkStore } from '../src/services/bale-link.js';
 import { clearKeywordCache } from '../src/services/case-assistant.js';
+import { drainAchievementSyncs } from '../src/services/achievement-sync.js';
 
 /** Truncate all data tables and reset in-process stores. Call in beforeEach. */
 export async function resetDb(): Promise<void> {
+  // Several write routes schedule a badge sync off the response (see
+  // achievement-sync.ts). That promise outlives the request, so truncating on
+  // top of it deadlocks against the row locks it still holds — wait it out
+  // rather than making production code behave differently under test.
+  await drainAchievementSyncs();
   await pool.query(`
     truncate table
       profiles, user_activity, highlights, card_state,
       collections, collection_items, user_pathways,
       subscriptions, payments, gift_redemptions, certificates, anon_events,
       push_subscriptions, articles, auth_identities, spot_stats, view_stats,
-      notification_log,
+      notification_log, achievement_announcements, notice_broadcasts,
       assistant_rounds, assistant_tag_scores,
       leagues, league_members, league_weekly_stats, league_audit_log
     restart identity cascade

@@ -1035,3 +1035,71 @@ a.dcp-progress-row:hover { text-decoration: none; }
    touch less brightness keeps the shield reading as the same object as the one
    on the league card without lighting up the whole section. */
 [data-theme="dark"] .dcp-md-shield:not(.is-off) { filter: drop-shadow(0 4px 9px rgba(0,0,0,.45)) brightness(.94); }
+
+/* ===========================================================================
+   اطلاعیه — the in-app inbox (plus/js/notices.js), and the badge celebration
+   that shares its vocabulary.
+
+   A notice row is a CARD, not a link. Most of these have nowhere useful to go
+   (a streak nudge, a league result) and the ones that do say so with one small
+   action — the same rule the highlight library and the collection boards
+   already follow, so a saved object looks like the same kind of object
+   everywhere in Plus.
+   =========================================================================== */
+.dcp-nt-list { display: flex; flex-direction: column; gap: 10px; }
+.dcp-nt {
+  position: relative; display: grid; grid-template-columns: auto 1fr; gap: 11px;
+  padding: 12px 13px; border-radius: var(--r-md, 14px);
+  border: 1px solid var(--border2, rgba(2,35,96,.06));
+  background: var(--card-bg, #fff); overflow: hidden;
+}
+/* Unread is a tinted ground plus a rail, not a bold title: the title is the
+   message, and bolding it would make the same sentence look like two different
+   sentences before and after the watermark moves. */
+.dcp-nt.is-unread { background: rgba(var(--ac-rgb, 11,95,255), .05); border-color: var(--border, rgba(2,35,96,.12)); }
+.dcp-nt.is-unread::before {
+  content: ""; position: absolute; inset-inline-start: 0; top: 0; bottom: 0;
+  width: 3px; background: var(--ac, #0b5fff);
+}
+.dcp-nt-ico {
+  width: 32px; height: 32px; border-radius: 10px; display: grid; place-items: center;
+  background: var(--surface2, #f4f6fb); border: 1px solid var(--border2, rgba(2,35,96,.06));
+  font-size: 1rem; line-height: 1;
+}
+.dcp-nt-body { min-width: 0; }
+.dcp-nt-title { margin: 0 0 3px; font-size: .93rem; font-weight: 700; line-height: 1.6; }
+.dcp-nt-text { margin: 0; font-size: .85rem; line-height: 1.8; color: var(--txt2, #4a5f85); }
+.dcp-nt-meta {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+  margin-top: 6px; font-size: .74rem; color: var(--txt3, #62779a);
+}
+.dcp-nt-kind {
+  padding: 1px 7px; border-radius: 6px; font-weight: 700;
+  background: var(--surface2, #f4f6fb); border: 1px solid var(--border2, rgba(2,35,96,.06));
+}
+.dcp-nt-go { color: var(--ac, #0b5fff); font-weight: 700; text-decoration: none; }
+.dcp-nt-go:hover { text-decoration: underline; }
+
+.dcp-nt-empty { padding: 34px 16px; text-align: center; }
+.dcp-nt-empty-h { margin: 0 0 6px; font-size: 1rem; font-weight: 800; }
+.dcp-nt-empty-p { margin: 0; font-size: .87rem; line-height: 1.9; color: var(--txt2, #4a5f85); }
+
+/* ---- «نشانِ تازه»: the card that finally says a badge lit up ---- */
+.dcp-cel-hd { display: flex; gap: 14px; align-items: center; margin-bottom: 12px; }
+.dcp-cel-eyebrow {
+  display: block; font-size: .72rem; font-weight: 800; letter-spacing: .04em;
+  color: var(--ac, #0b5fff); margin-bottom: 2px;
+}
+.dcp-cel-why { margin: 0; font-size: .95rem; line-height: 1.9; }
+.dcp-cel-count { margin-top: 10px; font-size: .76rem; font-weight: 700; color: var(--txt3, #62779a); }
+.dcp-cel-actions { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+.dcp-cel-actions .dcp-btn { flex: 1 1 auto; text-align: center; text-decoration: none; }
+/* The disc arrives at its metal rather than simply being there — one short
+   settle, and nothing at all for a reader who asked for less motion. */
+@keyframes dcp-cel-pop { 0% { transform: scale(.72); opacity: 0; } 62% { transform: scale(1.06); } 100% { transform: scale(1); opacity: 1; } }
+.dcp-cel-hd .dcp-bg-disc, .dcp-cel-hd .dcp-md-shield { animation: dcp-cel-pop .34s cubic-bezier(.34,1.4,.64,1) both; }
+@media (prefers-reduced-motion: reduce) {
+  .dcp-cel-hd .dcp-bg-disc, .dcp-cel-hd .dcp-md-shield { animation: none; }
+}
+
+[data-theme="dark"] .dcp-nt.is-unread { background: rgba(var(--ac-rgb, 91,156,246), .10); }

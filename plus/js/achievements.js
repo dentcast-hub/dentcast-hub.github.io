@@ -1,4 +1,5 @@
 import { el, faNum } from './util.js';
+import { api } from './api.js';
 import { openSheet, closeSheet } from './sheet.js';
 
 /**
@@ -222,3 +223,97 @@ export function achievementsBody(data) {
     el('div', { class: 'dcp-bg-wall' }, data.badges.map(badgeTile)),
   ]);
 }
+
+/* ---------------------------------------------------------- celebration -- */
+
+/**
+ * «نشانِ تازه» — the card that finally says a badge lit up.
+ *
+ * Where this may open is the whole design, and it is a WHITELIST rather than
+ * "anywhere except an article": on the desktop shell an article is not a page at
+ * all (index.html fetches it and injects it into column C), so a reader mid
+ * paragraph is, by URL, on the homepage — and a blocklist would have covered
+ * their screen at exactly the wrong moment. A whitelist is also safe against the
+ * next page somebody adds, which stays silent by default.
+ *
+ * The two callers are the dashboard and the profile: surfaces the reader chose
+ * to open, where an interruption is not one. Everywhere else, the dot on the
+ * account icon is the entire announcement — it covers nothing, so it is the only
+ * thing safe to show while somebody is reading.
+ */
+function celebrationDisc(item) {
+  if (!item.icon) {
+    // A league medal: no monoline icon in the catalog, so it wears the shield
+    // the medal row already uses rather than borrowing a badge's glyph.
+    return el('span', { class: 'dcp-md-shield dcp-tier-t4' }, [icon('star', 'dcp-md-ico')]);
+  }
+  return el('span', {
+    class: 'dcp-bg-disc is-md is-on is-' + (item.metal || 'plain'),
+  }, [icon(item.icon, 'dcp-bg-ico')]);
+}
+
+function celebrationCard(items, onDone) {
+  let at = 0;
+  const card = el('div', { class: 'dcp-sheet-card dcp-cel', role: 'dialog', 'aria-modal': 'true' });
+
+  const paint = () => {
+    const item = items[at];
+    const more = items.length > 1;
+    card.replaceChildren(
+      el('div', { class: 'dcp-cel-hd' }, [
+        celebrationDisc(item),
+        el('div', {}, [
+          el('span', { class: 'dcp-cel-eyebrow' }, 'نشانِ تازه'),
+          el('h2', { class: 'dcp-sheet-title' }, item.title_fa),
+        ]),
+      ]),
+      // The reason, in the catalog's own words for the level actually reached.
+      // Never assembled here: a badge's copy is editorial and lives in
+      // badges.json, and this card must not be the one surface that paraphrases.
+      el('p', { class: 'dcp-cel-why' }, item.body_fa),
+      // Several at once is common — a first session can light three — and three
+      // overlays in a row is a punishment, not a reward. One card, paged.
+      more ? el('div', { class: 'dcp-cel-count' }, faNum(at + 1) + ' از ' + faNum(items.length)) : null,
+      el('div', { class: 'dcp-cel-actions' }, [
+        at < items.length - 1
+          ? el('button', {
+            class: 'dcp-btn dcp-btn-primary', type: 'button',
+            onclick: () => { at += 1; paint(); },
+          }, 'بعدی')
+          : el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button', onclick: onDone }, 'دیدم'),
+        el('a', { class: 'dcp-btn dcp-btn-ghost', href: '/plus/profile.html' }, 'دیوارِ افتخارات'),
+      ]),
+    );
+  };
+  paint();
+  return card;
+}
+
+/**
+ * Show any queued badge announcements, then acknowledge them.
+ *
+ * Acknowledged when the card is DISMISSED, not when it is fetched: a reader who
+ * closed a tab mid-card gets it again, which is the right way round for the one
+ * moment this feature exists to deliver. `pending` comes from /me, so a surface
+ * that already has the user costs nothing to gate on.
+ */
+export async function maybeCelebrate(me) {
+  if (!me || !me.pending_achievements) return;
+  let items = [];
+  try {
+    const res = await api.achievementsPending();
+    items = (res && res.items) || [];
+  } catch (_) { return; }
+  if (!items.length) return;
+
+  const done = () => {
+    closeSheet();
+    api.achievementsSeen()
+      .then(() => { document.dispatchEvent(new CustomEvent(ACHIEVEMENTS_SEEN_EVENT)); })
+      .catch(() => { /* it will simply be offered again next time */ });
+  };
+  openSheet(celebrationCard(items, done));
+}
+
+/** Fired once the celebration has been acknowledged, so the dot can go out. */
+export const ACHIEVEMENTS_SEEN_EVENT = 'dcp:achievements-seen';

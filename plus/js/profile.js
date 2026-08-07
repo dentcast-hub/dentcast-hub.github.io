@@ -7,7 +7,7 @@ import { ensurePushSubscription, removePushSubscription, pushSupported } from '.
 import { telegramLoginEnabled, telegramCallbackUrl, telegramBotUsername } from './config.js';
 import { baleEnabled, baleDeepLink } from './config.js';
 import { leagueEntryButton } from './league.js';
-import { achievementsBody } from './achievements.js';
+import { achievementsBody, maybeCelebrate } from './achievements.js';
 import { subscriptionCta } from './premium-cta.js';
 
 const JALALI_DAY = new Intl.DateTimeFormat('fa-IR-u-ca-persian', {
@@ -525,4 +525,11 @@ export async function renderProfile(root, { me: preMe } = {}) {
     section('یادآوری‌ها', remindersBlock(me)),
     el('div', { class: 'dcp-dash-sec' }, [logoutBtn]),
   );
+
+  // A calm surface: the reader opened this themselves, so a card in front of it
+  // is not an interruption. Deliberately AFTER the page is painted — landing on
+  // a loading spinner with a celebration over it would be the wrong order — and
+  // never on an article page, where the dot on the account icon is the whole
+  // announcement.
+  maybeCelebrate(me);
 }

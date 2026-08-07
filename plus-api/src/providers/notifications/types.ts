@@ -24,7 +24,15 @@ export type NotificationKind =
    * streak nudge that morning costs a renewal — the daily cap exists to stop us
    * pestering people, not to ration the one message they actually need.
    */
-  | 'subscription_expiry';
+  | 'subscription_expiry'
+  /**
+   * A badge or medal just lit up. IN-APP ONLY — written straight to the inbox by
+   * services/achievement-sync.ts and never handed to a sender. A badge lights
+   * while the reader is almost always already on the page, so a push would
+   * arrive at the one moment it is pure noise, and it would spend a slot of a
+   * budget that exists to protect a channel we do not get back once muted.
+   */
+  | 'achievement';
 
 /**
  * A message may be a plain string (messenger text) or a structured payload.

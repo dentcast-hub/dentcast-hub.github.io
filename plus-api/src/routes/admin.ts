@@ -21,6 +21,8 @@ import {
   getSpotStats, defaultRange, isCalendarDay, SPOT_HOSTS, type GroupBy,
 } from '../services/spot-stats.js';
 import { withPageViews } from '../services/view-stats.js';
+import { recordBroadcast, type NoticeAudience } from '../services/notices.js';
+import { sendCapped, inAwakeWindow } from '../services/notify-policy.js';
 import { notifications, ai } from '../providers/registry.js';
 import {
   probe, proxyForChannel, hostOfProxy, outboundFetch, describeError,
@@ -90,6 +92,19 @@ function renderHtml(k: Kpis): string {
   table{width:100%;border-collapse:collapse;margin-top:8px;background:#171e2d;border:1px solid #2a3448;border-radius:14px;overflow:hidden}
   th,td{padding:8px 12px;text-align:center;border-bottom:1px solid #2a3448}
   th{color:#93a1b8;font-weight:700}
+  form.bc{background:#171e2d;border:1px solid #2a3448;border-radius:14px;padding:14px 16px;margin-top:8px;
+    display:flex;flex-direction:column;gap:9px}
+  form.bc label{font-size:.82rem;color:#93a1b8}
+  form.bc input[type=text],form.bc textarea,form.bc select{width:100%;box-sizing:border-box;
+    background:#0f1420;color:#e8eef7;border:1px solid #2a3448;border-radius:9px;padding:9px 11px;
+    font:inherit;font-size:.92rem}
+  form.bc textarea{min-height:64px;resize:vertical}
+  form.bc .row{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+  form.bc .chk{display:flex;gap:6px;align-items:center;font-size:.86rem;color:#c8d4e6}
+  form.bc button{background:#2f7de0;color:#fff;border:0;border-radius:999px;padding:10px 22px;
+    font:inherit;font-weight:800;cursor:pointer;align-self:flex-start}
+  form.bc button:disabled{opacity:.55;cursor:default}
+  #bcOut{font-size:.85rem;color:#93a1b8;min-height:1.6em}
 </style></head><body><div class="wrap">
   <h1>پیشخوان بنیان‌گذار</h1>
   <div class="muted">تولید: ${k.generated_at} · منطقه زمانی: ${k.tz}</div>
@@ -117,6 +132,64 @@ function renderHtml(k: Kpis): string {
   <h3 style="margin-top:22px">KPI 4 — ماندگاری روز هفتم بر اساس پلن</h3>
   <table><thead><tr><th>پلن</th><th>گروه</th><th>مانده</th><th>درصد</th></tr></thead><tbody>${d7Rows}</tbody></table>
   <p class="muted" style="margin-top:14px">KPI ها از user_activity و anon_events محاسبه می‌شوند. تبدیل KPI 1 تقریبی است چون رویدادهای ناشناس هویت‌محور نیستند.</p>
+
+  <h3 style="margin-top:26px">اطلاعیهٔ بنیان‌گذار</h3>
+  <div class="muted">در «اطلاعیه‌ها»ی کاربر می‌نشیند و نقطهٔ قرمز را روشن می‌کند — همین حالا، در هر ساعتی. یک ردیف برای همه؛ چیزی برای هیچ‌کس جداگانه فرستاده نمی‌شود.</div>
+  <form class="bc" id="bcForm" onsubmit="return false">
+    <div><label for="bcTitle">عنوان</label><input id="bcTitle" type="text" maxlength="120" placeholder="مثلاً: فردا سایت حدود یک ساعت به‌روزرسانی می‌شود"></div>
+    <div><label for="bcBody">متن (اختیاری)</label><textarea id="bcBody" maxlength="600"></textarea></div>
+    <div class="row">
+      <div style="flex:1 1 200px"><label for="bcUrl">لینک (اختیاری)</label><input id="bcUrl" type="text" placeholder="/plus/"></div>
+      <div style="flex:0 0 160px"><label for="bcAud">مخاطب</label><select id="bcAud">
+        <option value="all">همه</option><option value="premium">فقط پریمیوم</option><option value="free">فقط رایگان</option>
+      </select></div>
+    </div>
+    <div class="row">
+      <label class="chk"><input id="bcPush" type="checkbox"> پوش/پیام‌رسان هم بفرست</label>
+      <label class="chk"><input id="bcForce" type="checkbox"> حتی خارج از ۹ تا ۲۲</label>
+    </div>
+    <button id="bcSend" type="button">ارسال</button>
+    <div id="bcOut"></div>
+  </form>
+  <script>
+  (function () {
+    var btn = document.getElementById('bcSend');
+    var out = document.getElementById('bcOut');
+    btn.addEventListener('click', function () {
+      var title = document.getElementById('bcTitle').value.trim();
+      if (!title) { out.textContent = 'عنوان لازم است.'; return; }
+      // The inbox row is instant and irreversible for anyone who reads it before
+      // you change your mind, so this asks once — the only guard that fits a
+      // broadcast, since there is no per-user row to unsend.
+      if (!confirm('این اطلاعیه برای همهٔ کاربرانِ انتخاب‌شده منتشر شود؟')) return;
+      btn.disabled = true; out.textContent = 'در حال ارسال...';
+      fetch('/admin/notices/broadcast', {
+        method: 'POST', credentials: 'include',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          title: title,
+          body: document.getElementById('bcBody').value.trim() || undefined,
+          url: document.getElementById('bcUrl').value.trim() || undefined,
+          audience: document.getElementById('bcAud').value,
+          push: document.getElementById('bcPush').checked,
+          force: document.getElementById('bcForce').checked
+        })
+      }).then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+        .then(function (res) {
+          btn.disabled = false;
+          if (!res.ok) { out.textContent = 'نشد: ' + (res.j.error || 'خطا'); return; }
+          var m = 'منتشر شد.';
+          if (res.j.push_skipped === 'outside_awake_window') {
+            m += ' پوش نرفت (خارج از ۹ تا ۲۲) — اطلاعیه سرِ جایش هست؛ صبح دوباره بزن یا تیکِ دوم را بزن.';
+          } else if (res.j.pushed) { m += ' پوش برای ' + res.j.pushed + ' نفر رفت.'; }
+          out.textContent = m;
+          document.getElementById('bcTitle').value = '';
+          document.getElementById('bcBody').value = '';
+        })
+        .catch(function () { btn.disabled = false; out.textContent = 'ارسال نشد.'; });
+    });
+  })();
+  </script>
 </div></body></html>`;
 }
 
@@ -202,6 +275,96 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
       contentId: b.content_id, title: b.title, url: b.url, pulse: b.pulse, publishedAt,
     });
     return reply.send({ ok: true, ...result });
+  });
+
+  /**
+   * POST /admin/notices/broadcast — the founder's own announcement.
+   *
+   *   { title, body?, url?, audience?: all|free|premium, push?: bool, force?: bool }
+   *
+   * The اطلاعیه row is written FIRST and always, at any hour: it interrupts
+   * nobody, so none of the machinery that protects a phone applies to it. One
+   * row serves every reader (services/notices.ts) — there is no fan-out, so this
+   * cannot half-send and cannot be retried into duplicates.
+   *
+   * `push` additionally puts it on phones. That part IS an interruption, so it
+   * respects the awake window by default even though the `system` kind is exempt
+   * from the daily cap — «uncapped» was always about a broadcast not eating a
+   * reader's budget, never about a licence to wake people at 03:00. `force`
+   * overrides it for the one case where that is the point.
+   *
+   * `inbox: false` on the push, because the broadcast above already said it; the
+   * row it does write is the counter row and carries no message.
+   */
+  app.post('/admin/notices/broadcast', {
+    schema: {
+      body: {
+        type: 'object',
+        required: ['title'],
+        properties: {
+          title: { type: 'string' },
+          body: { type: 'string' },
+          url: { type: 'string' },
+          audience: { type: 'string', enum: ['all', 'free', 'premium'] },
+          push: { type: 'boolean' },
+          force: { type: 'boolean' },
+        },
+      },
+    },
+  }, async (request, reply) => {
+    const b = request.body as {
+      title: string; body?: string; url?: string;
+      audience?: NoticeAudience; push?: boolean; force?: boolean;
+    };
+    const title = (b.title || '').trim();
+    if (!title) return reply.code(400).send({ error: 'empty_title' });
+    const audience: NoticeAudience = b.audience ?? 'all';
+
+    const id = await recordBroadcast({
+      kind: 'system',
+      title,
+      body: (b.body || '').trim() || null,
+      url: (b.url || '').trim() || null,
+      audience,
+    });
+
+    const now = new Date();
+    let pushed = 0;
+    let pushSkipped: string | null = null;
+    if (b.push) {
+      if (!inAwakeWindow(now) && !b.force) {
+        // Held rather than sent, and said out loud: the inbox already has it, so
+        // nothing is lost by the founder pressing this again in the morning.
+        pushSkipped = 'outside_awake_window';
+      } else {
+        const targets = await query<{ id: string }>(
+          `select id from profiles
+            where ($1 = 'all'
+                or ($1 = 'premium' and tier = 'premium')
+                or ($1 = 'free' and tier <> 'premium'))
+              and (telegram_id is not null or bale_id is not null
+                   or exists (select 1 from push_subscriptions s where s.user_id = profiles.id))`,
+          [audience],
+        );
+        const message: NotificationMessage = {
+          title,
+          body: (b.body || '').trim() || title,
+          url: (b.url || '').trim() || '/plus/',
+          tag: 'broadcast',
+        };
+        for (const t of targets.rows) {
+          try {
+            if (await sendCapped(t.id, message, 'system', now, { inbox: false })) pushed += 1;
+          } catch {
+            /* one dead device never stops the broadcast */
+          }
+        }
+      }
+    }
+
+    return reply.send({
+      ok: true, broadcast_id: id, audience, pushed, push_skipped: pushSkipped,
+    });
   });
 
   // POST /admin/articles/run-free-digest - manually trigger the free digest run

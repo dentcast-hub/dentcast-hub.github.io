@@ -4,8 +4,8 @@
     "hash": "1397aa3320ff2918"
   },
   "/dc-nav.js": {
-    "v": 49,
-    "hash": "af4eacda770b826a"
+    "v": 50,
+    "hash": "3c018aea981705fe"
   },
   "/global-search-ui.js": {
     "v": 5,
@@ -20,67 +20,67 @@
     "hash": "bd50932cb1d75571"
   },
   "/pillar/premium-index.js": {
-    "v": 6,
-    "hash": "a883823c198c74d9"
+    "v": 7,
+    "hash": "659e8078f980b502"
   },
   "/plus/js/assistant-page.js": {
-    "v": 8,
-    "hash": "6f4be632bf987871"
+    "v": 9,
+    "hash": "48af05637664c626"
   },
   "/plus/js/cards-page.js": {
-    "v": 8,
-    "hash": "cb5c28189a7e225c"
+    "v": 9,
+    "hash": "7d77b2ff06b7fa6f"
   },
   "/plus/js/collection-page.js": {
-    "v": 10,
-    "hash": "b328b6d72323c557"
+    "v": 11,
+    "hash": "1cff04b9a9583552"
   },
   "/plus/js/collections-page.js": {
-    "v": 10,
-    "hash": "496e44f599f434d3"
+    "v": 11,
+    "hash": "17fcaff8b6b263e9"
   },
   "/plus/js/dashboard-page.js": {
-    "v": 9,
-    "hash": "7ba3fb0eb7dc44bc"
+    "v": 10,
+    "hash": "058e733c4565b1af"
   },
   "/plus/js/highlights-page.js": {
-    "v": 9,
-    "hash": "2387b1b10074d6fd"
+    "v": 10,
+    "hash": "913be8b2de311836"
   },
   "/plus/js/pathway-page.js": {
-    "v": 8,
-    "hash": "f75be60fa3f3b566"
+    "v": 9,
+    "hash": "9c15fba3750139d6"
   },
   "/plus/js/pathways-page.js": {
-    "v": 8,
-    "hash": "20d13990897cbfcb"
+    "v": 9,
+    "hash": "87b7717dc20e9368"
   },
   "/plus/js/pay-result-page.js": {
-    "v": 7,
-    "hash": "42944fd498636022"
+    "v": 8,
+    "hash": "f91b8f7486c0f3d4"
   },
   "/plus/js/pricing-page.js": {
-    "v": 12,
-    "hash": "cbce7c1d7e90d276"
+    "v": 13,
+    "hash": "24cb69afdd76e9bb"
   },
   "/plus/js/profile-page.js": {
-    "v": 8,
-    "hash": "0275c11426d00a4f"
+    "v": 9,
+    "hash": "dbd1032a55d06fc3"
   },
   "/plus/js/reading-compass-page.js": {
-    "v": 9,
-    "hash": "5d7e8553eacfd5ad"
+    "v": 10,
+    "hash": "0a9a29c40b0a240e"
   },
   "/plus/plus-desktop.css": {
     "v": 5,
     "hash": "49753391b4c5ded3"
   },
   "/plus/plus-pages.css": {
-    "v": 8,
-    "hash": "8a55427b30416500"
+    "v": 9,
+    "hash": "05e986330a92c351"
   },
   "/plus/plus.css": {
-    "v": 7,
-    "hash": "5b58ac8372f9f485"
+    "v": 8,
+    "hash": "5bc193af8f215517"
   }
 }
