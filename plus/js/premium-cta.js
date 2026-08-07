@@ -15,6 +15,36 @@ import { el } from './util.js';
 
 export const PRICING_URL = '/plus/pricing.html';
 
+/**
+ * "We could not reach the server" — NOT "you are not a subscriber".
+ *
+ * currentUser() returns null on ANY failure, a 401 and an unreachable API alike
+ * (api.js). That is right for progressive enhancement, and wrong for a gate: for
+ * as long as the API is down — a redeploy is a few minutes of exactly that — every
+ * premium page told its paying readers to go and buy a subscription. On
+ * 2026-08-07 a subscriber messaged that premium «نمی‌شه», then that it worked a
+ * few minutes later; nothing had changed but the API coming back.
+ *
+ * The distinction already existed and was already understood: meStatus() was
+ * written for the ad system, whose comment says a premium visitor must not get an
+ * ad they paid never to see. The gates for the features people actually pay for
+ * were the ones still making that mistake. This is the shared answer, so a page
+ * that gates cannot forget it.
+ *
+ * Deliberately NOT an upsell and NOT a login prompt: it names the real cause, and
+ * offers the only thing that helps — trying again.
+ */
+export function unreachableGate(root) {
+  const retry = el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button' }, 'تلاش دوباره');
+  retry.addEventListener('click', () => location.reload());
+  root.replaceChildren(el('div', { class: 'dcp-gate' }, [
+    el('p', {}, 'ارتباط با سرور برقرار نشد.'),
+    el('p', { class: 'dcp-muted' }, 'این یعنی نتوانستیم حسابت را بخوانیم — نه این‌که اشتراک نداری. اگر مشترکی، اشتراکت سرِ جایش است؛ چند لحظه بعد دوباره تلاش کن.'),
+    retry,
+    el('a', { class: 'dcp-btn dcp-btn-ghost', href: '/plus/' }, 'رفتن به پیشخوان'),
+  ]));
+}
+
 /** Where a premium CTA points, remembering which surface it was pressed on. */
 export function pricingHref(from) {
   // Always the local pricing page, on either host.
