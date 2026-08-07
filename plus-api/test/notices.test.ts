@@ -385,20 +385,34 @@ describe('the founder broadcast', () => {
   // millisecond. A 504 that cannot be retried (retrying duplicates the notice) and
   // cannot be interpreted is the worst possible answer.
   it('answers immediately and pushes in the background', async () => {
-    const res = await app.inject({
-      method: 'POST', url: '/admin/notices/broadcast',
-      headers: { authorization: auth },
-      payload: { title: 'اطلاعیهٔ فوری', body: 'متن', push: true },
-    });
+    // Force the window OPEN rather than trusting the clock. Written without this,
+    // the test passed all afternoon and failed at 22:18 Tehran — the awake window
+    // had closed and the push was (correctly) 'held'. A test that only passes
+    // during office hours is a test that fails in CI at night, for no reason a
+    // reader of the failure could guess. start === end means "always awake".
+    const hour = config.notify.awakeStartHour;
+    const end = config.notify.awakeEndHour;
+    config.notify.awakeStartHour = 0;
+    config.notify.awakeEndHour = 0;
+    try {
+      const res = await app.inject({
+        method: 'POST', url: '/admin/notices/broadcast',
+        headers: { authorization: auth },
+        payload: { title: 'اطلاعیهٔ فوری', body: 'متن', push: true },
+      });
 
-    expect(res.statusCode).toBe(200);
-    // 'queued' is an honest answer: accepted and running. It deliberately does
-    // NOT claim a delivered count, because at this point there isn't one.
-    expect(res.json().push).toBe('queued');
-    expect(res.json().broadcast_id).toBeTruthy();
-    // And the row every reader actually reads is already there.
-    const rows = (await app.inject({ method: 'GET', url: '/notices', headers: { cookie } })).json();
-    expect(rows.notices[0].title).toBe('اطلاعیهٔ فوری');
+      expect(res.statusCode).toBe(200);
+      // 'queued' is an honest answer: accepted and running. It deliberately does
+      // NOT claim a delivered count, because at this point there isn't one.
+      expect(res.json().push).toBe('queued');
+      expect(res.json().broadcast_id).toBeTruthy();
+      // And the row every reader actually reads is already there.
+      const rows = (await app.inject({ method: 'GET', url: '/notices', headers: { cookie } })).json();
+      expect(rows.notices[0].title).toBe('اطلاعیهٔ فوری');
+    } finally {
+      config.notify.awakeStartHour = hour;
+      config.notify.awakeEndHour = end;
+    }
   });
 
   it('reports a held push as held, not as queued', async () => {

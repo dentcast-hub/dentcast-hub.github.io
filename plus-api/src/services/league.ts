@@ -117,9 +117,14 @@ export async function getOrCreateOpenLeague(
  *   2. ONCE PER (content, week), exactly like xp_read. Sending the same page to
  *      a second messenger is the same act, not a second one.
  *
- *   3. A WEEKLY CAP on how many distinct articles pay at all. Even at 1 XP an
- *      uncapped tap is a lane; capped, a whole week of sharing is worth about
- *      one article read, which is the size this deserves to be.
+ *   3. A WEEKLY CAP on how many distinct articles pay at all — available, and
+ *      currently OFF (`xp_share_weekly_cap = 0`, migration 0028). It shipped at
+ *      five, which against xp_read = 5 made a whole week of sharing worth one
+ *      article read: too small to be an incentive for the one action here that
+ *      brings somebody new to the site. Zero means no cap and the guard below
+ *      reads it that way, so the knob survives for the day this needs reining
+ *      in. What still bounds it is rules 1 and 2: the ceiling is articles you
+ *      have actually finished, counted once each.
  */
 async function shareXp(
   client: pg.PoolClient, cfg: { xp_share: number; xp_share_weekly_cap: number },
