@@ -3563,6 +3563,15 @@ a.dc-list-card--pillar {
         </ul>
       </div>
 
+      <!-- DentCast Plus premium section. Empty until /plus/js/home-features.js
+           fills it. It sits HERE, directly after the Pulse card, because that is
+           exactly where spot.js inserts the homepage ad (`pulse.nextSibling`) —
+           so the ad lands between the two and this section reads as sitting
+           under it, with no coordination between the two modules. When there is
+           no ad (a premium visitor, or the slot switched off) it simply moves up
+           under the Pulse. Keep it adjacent to #dcPulseCard. -->
+      <div id="dcPlusFeatures" class="dc-plus-features" aria-label="امکانات پریمیوم" hidden></div>
+
       <div class="dc-home-sec"><h2 class="dc-home-sec-label">تازه‌های دنت‌کست</h2></div>
       <div class="dc-rail" id="dcLatestRail">
         <a class="dc-rail-card" data-cat="clinical" href="/insight/insight-61.html">
@@ -4214,6 +4223,10 @@ a.dc-list-card--pillar {
             <ul class="dc-pulse-list"></ul>
           </div>
 
+          <!-- Same slot, the desktop layout's copy. Same rule: it stays directly
+               after #dcdPulse, which is the desktop anchor spot.js uses. -->
+          <div id="dcdPlusFeatures" class="dc-plus-features" aria-label="امکانات پریمیوم" hidden></div>
+
           <div class="dcd-latest">
             <div class="dcd-latest-head"><span class="dcd-latest-dot"></span>آخرین مطالب دنت‌کست</div>
             <div class="dcd-latest-grid" id="dcdLatest"></div>
@@ -4495,7 +4508,7 @@ scrollBody.addEventListener('touchend',e=>{
 </script>
 
 <!-- Theme toggle behavior moved to /dc-nav.js (single source) -->
-<script src="/dc-nav.js?v=50" defer></script>
+<script src="/dc-nav.js?v=51" defer></script>
 
 <!-- Toolbar drawer toggle is handled by /dc-nav.js (single source) -->
 

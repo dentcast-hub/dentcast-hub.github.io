@@ -2,7 +2,6 @@
 // Two states: anonymous invitation, and logged-in free daily status. NO due-card
 // counter for free users, not even a zero or a locked stub. No minutes target.
 import { el, faNum, streakIsActiveToday, STREAK_ACTIVITY_EVENT } from './util.js';
-import { pricingHref } from './premium-cta.js';
 import { currentUser, api } from './api.js';
 import { openLoginModal, openOrgNotice } from './login-modal.js';
 import { getModel, contentInfo } from './content-index.js';
@@ -51,32 +50,6 @@ function paintShields(host, available) {
     icons.push(el('span', { class: 'dc-plus-shield-ico' + (i < available ? '' : ' is-empty') }, '🛡️'));
   }
   host.replaceChildren(...icons);
-}
-
-// «قطب‌نمای مطالعه» homepage entry point. Premium: a plain link to the report.
-// Free: the same 🔒 lock badge the dashboard's locked-feature cards use, plus
-// a «؟» that reveals one line of explanation — so clicking is never how the
-// user first learns it's premium.
-function compassRow(me) {
-  const isPremium = me.tier === 'premium';
-  const link = el('a', { class: 'dc-plus-compass' + (isPremium ? '' : ' is-locked'), href: '/plus/reading-compass.html' }, [
-    el('span', { 'aria-hidden': 'true' }, '🧭'),
-    el('span', {}, 'قطب‌نمای مطالعه'),
-    isPremium ? null : el('span', { class: 'dcp-soon-badge' }, '🔒 پریمیوم'),
-  ].filter(Boolean));
-  if (isPremium) return el('div', { class: 'dc-plus-compass-row' }, link);
-
-  const cap = el('p', { class: 'dc-plus-scorecap', hidden: true }, el('span', { class: 'dc-plus-capline' },
-    'نشان می‌دهد چند درصد از هر پیلار را خوانده‌اید، بیشترین مطالعه‌تان کجا بوده، و چه حوزه‌ای هنوز از دیدتان دور مانده — با دو دسته پیشنهاد: ادامه‌ی همان حیطه یا کاوش حوزه‌ای تازه. ویژه‌ی پریمیوم است.'));
-  const info = el('button', {
-    class: 'dc-plus-info', type: 'button', title: 'قطب‌نمای مطالعه چیست؟', 'aria-label': 'قطب‌نمای مطالعه چیست؟',
-  }, '؟');
-  info.addEventListener('click', () => { cap.hidden = !cap.hidden; });
-  // The explainer ends with somewhere to go: a reader who just opened it is
-  // exactly the person deciding whether premium is worth it.
-  cap.append(el('a', { class: 'dc-plus-caplink', href: pricingHref('home-compass') },
-    'خرید اشتراک پریمیوم'));
-  return el('div', { class: 'dc-plus-compass-row' }, [link, info, cap]);
 }
 
 function renderAnon(card) {
@@ -235,16 +208,12 @@ async function renderLoggedIn(card, user) {
       el('span', {}, last.title),
     ]));
   }
-  // Premium-only due-card line. Never rendered for free users (not even zero).
-  if (me.tier === 'premium' && typeof me.due_card_count === 'number') {
-    rows.push(el('a', { class: 'dc-plus-due', href: '/plus/cards.html' },
-      faNum(me.due_card_count) + ' کارت برای مرور'));
-  }
-  // Trace of «قطب‌نمای مطالعه» on the homepage too, for both tiers: premium
-  // links straight through, free sees the same lock badge the dashboard's
-  // locked tiles use plus a «؟» explainer (same reveal pattern as the score
-  // caption above) so a click is never a surprise about what's behind it.
-  rows.push(compassRow(me));
+  // NOTE — no premium rows here any more. The due-card line and the locked
+  // «قطب‌نمای مطالعه» row both moved OUT of this card and into the homepage's
+  // own premium section under the ad (home-features.js): a lock is easy to miss
+  // inside a card about the reader's own state, and it crowds what it sits next
+  // to. This card is now only the reader's own material, and it is one row
+  // SHORTER than it was — never add a premium teaser back into it.
 
   // Row 3 — connection chips, demoted to a lighter row under a divider.
   rows.push(el('div', { class: 'dc-plus-connrow' }, [connectionsRow(me)]));
