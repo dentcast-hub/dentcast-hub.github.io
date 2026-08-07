@@ -1,86 +1,86 @@
 {
   "/dc-nav.css": {
-    "v": 14,
+    "v": 16,
     "hash": "1397aa3320ff2918"
   },
   "/dc-nav.js": {
-    "v": 47,
+    "v": 49,
     "hash": "af4eacda770b826a"
   },
   "/global-search-ui.js": {
-    "v": 3,
+    "v": 5,
     "hash": "555bacb2c532f998"
   },
   "/global-search.css": {
-    "v": 3,
+    "v": 5,
     "hash": "7d9f3519179bc480"
   },
   "/global-search.js": {
-    "v": 7,
+    "v": 9,
     "hash": "bd50932cb1d75571"
   },
   "/pillar/premium-index.js": {
-    "v": 4,
+    "v": 6,
     "hash": "a883823c198c74d9"
   },
   "/plus/js/assistant-page.js": {
-    "v": 5,
+    "v": 8,
     "hash": "6f4be632bf987871"
   },
   "/plus/js/cards-page.js": {
-    "v": 5,
+    "v": 8,
     "hash": "cb5c28189a7e225c"
   },
   "/plus/js/collection-page.js": {
-    "v": 8,
+    "v": 10,
     "hash": "b328b6d72323c557"
   },
   "/plus/js/collections-page.js": {
-    "v": 8,
+    "v": 10,
     "hash": "496e44f599f434d3"
   },
   "/plus/js/dashboard-page.js": {
-    "v": 7,
+    "v": 9,
     "hash": "7ba3fb0eb7dc44bc"
   },
   "/plus/js/highlights-page.js": {
-    "v": 7,
+    "v": 9,
     "hash": "2387b1b10074d6fd"
   },
   "/plus/js/pathway-page.js": {
-    "v": 5,
+    "v": 8,
     "hash": "f75be60fa3f3b566"
   },
   "/plus/js/pathways-page.js": {
-    "v": 5,
+    "v": 8,
     "hash": "20d13990897cbfcb"
   },
   "/plus/js/pay-result-page.js": {
-    "v": 4,
+    "v": 7,
     "hash": "42944fd498636022"
   },
   "/plus/js/pricing-page.js": {
-    "v": 9,
+    "v": 12,
     "hash": "cbce7c1d7e90d276"
   },
   "/plus/js/profile-page.js": {
-    "v": 6,
-    "hash": "ef3fbde8316918bf"
+    "v": 8,
+    "hash": "0275c11426d00a4f"
   },
   "/plus/js/reading-compass-page.js": {
-    "v": 6,
+    "v": 9,
     "hash": "5d7e8553eacfd5ad"
   },
   "/plus/plus-desktop.css": {
-    "v": 2,
+    "v": 5,
     "hash": "49753391b4c5ded3"
   },
   "/plus/plus-pages.css": {
-    "v": 5,
+    "v": 8,
     "hash": "8a55427b30416500"
   },
   "/plus/plus.css": {
-    "v": 4,
+    "v": 7,
     "hash": "5b58ac8372f9f485"
   }
 }
