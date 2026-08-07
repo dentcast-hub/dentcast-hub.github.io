@@ -58,22 +58,27 @@ for (const card of hub.split('pillar-card-row').slice(1)) {
   clusterOrder.push(key[1]);
 }
 
-// --- 2. Subcategories (subtopics) from each pillar page, in site order ------
+// --- 2. Subcategories (subtopics) from each pillar's structure.json ---------
+// The subtopic cards used to be scraped out of pillar/<c>/index.html. They are
+// no longer in that page: the page a signed-out visitor gets is one flat,
+// date-ordered list, and the subtopic foldering moved to the premium layer's
+// sidecar. structure.json is written by the same build_pillar.py run that
+// writes the page, from the same PILLARS taxonomy, so this is the same source
+// as before — just no longer read through markup.
 const subOrder = {}; // clusterKey -> [subKey...]
 const subFa = {}; // clusterKey -> { subKey: label }
 for (const c of clusterOrder) {
   subOrder[c] = [];
   subFa[c] = {};
-  const file = `pillar/${c}/index.html`;
-  if (!existsSync(resolve(root, file))) continue;
-  const html = read(file);
-  // Each chunk starts at a data-subtopic key and contains its pillar-card-title.
-  for (const chunk of html.split('data-subtopic="').slice(1)) {
-    const key = chunk.match(/^([a-z0-9-]+)"/);
-    const label = chunk.match(/pillar-card-title">\s*([^<]+?)\s*</);
-    if (!key || !label || subFa[c][key[1]]) continue;
-    subFa[c][key[1]] = label[1];
-    subOrder[c].push(key[1]);
+  const file = `pillar/${c}/structure.json`;
+  if (!existsSync(resolve(root, file))) {
+    console.warn(`  ! pillar/${c}/structure.json missing — run: python3 tools/build_pillar.py all`);
+    continue;
+  }
+  for (const s of JSON.parse(read(file)).subtopics || []) {
+    if (!s.slug || subFa[c][s.slug]) continue;
+    subFa[c][s.slug] = s.title_fa;
+    subOrder[c].push(s.slug);
   }
 }
 

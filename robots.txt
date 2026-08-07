@@ -3,6 +3,23 @@ Allow: /
 # Music player track metadata/links — keep out of search results
 Disallow: /dentcast-music.json
 
+# Premium arrangement of the topical index (subtopic foldering + reading order).
+# The indexable surface is the page itself: /pillar/ and /pillar/<slug>/ each
+# serve every link once, in one flat date order. These sidecars hold the SAME
+# links in a second arrangement, fetched by the browser after a premium
+# subscription is confirmed — a crawler reading them would see a duplicate of a
+# page it already has. Robots rules do not apply to the page's own fetch, so
+# this costs the premium layer nothing.
+Disallow: /pillar/structure.json
+Disallow: /pillar/*/structure.json
+
+# Paper-cabinet catalogue — keep out of search results, same reason as the
+# music JSON above. The cabinet PAGE is handled by its own <meta robots
+# noindex> and is deliberately NOT listed here: disallowing it would stop
+# crawlers reading that tag, which is what makes the noindex work.
+Disallow: /dentcast_cabinet_full_catalog.json
+Disallow: /dentcast_cabinet_full_catalog.enriched.json
+
 # AI Crawlers — explicitly allowed
 User-agent: GPTBot
 Allow: /

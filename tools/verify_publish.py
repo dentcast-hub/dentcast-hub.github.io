@@ -195,6 +195,26 @@ def content_version():
     return h.hexdigest()[:10]
 
 
+def episode_landing_title(content_id):
+    """The title episodes.html actually renders for this episode, or None.
+
+    Read through build_episodes.py's own clean_title() rather than
+    re-implementing the "1- " prefix strip here: the point of the check is
+    "does the page match its source", so it has to ask the builder what it
+    would render, not a second opinion about it."""
+    sys.path.insert(0, str(ROOT / "tools"))
+    from build_episodes import clean_title  # noqa: E402
+    num = Path(content_id).name.replace("episode-", "")
+    try:
+        eps = json.loads((ROOT / "dentcast.json").read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return None
+    for ep in eps:
+        if str(ep.get("episode", "")).strip() == num:
+            return clean_title(ep.get("title", "")) or None
+    return None
+
+
 def live_pillars():
     sys.path.insert(0, str(ROOT / "tools"))
     from build_pillar import PILLARS  # noqa: E402
@@ -607,7 +627,17 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
                       "Phase E — the notify Action keys off this marker")
 
     # ---------------- surfaces (Hard Rule 17) ----------------
+    # A type's landing page is normally <dir>/index.html. Episodes are the one
+    # exception: episodes/index.html is a noindex `http-equiv=refresh` stub
+    # pointing at /episodes.html, and the workflow says never to hand-edit it
+    # (Phase C step 8.3). Deriving the landing page from the directory therefore
+    # asked the redirect whether it links to the episode — which it never does,
+    # and never should — and failed all 209 episodes on a page that is working
+    # exactly as designed. The real landing page is episodes.html, built by
+    # tools/build_episodes.py.
     landing = f"{Path(content_id).parent}/index.html"
+    if landing == "episodes/index.html":
+        landing = "episodes.html"
     if exists(landing):
         land = read(landing)
         n = len(re.findall(re.escape(Path(content_id).name + ".html"), land))
@@ -617,11 +647,29 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
             li = re.search(r"<li>(?:(?!</li>).)*?" + re.escape(Path(content_id).name + ".html")
                            + r".*?</li>", land, re.S)
             if li:
-                rep.check(title in html.unescape(li.group(0)), "17 sweep",
-                          "landing-page label carries the exact title",
-                          f"landing-page label does not match the brain title: "
-                          f"{normalize(text_of(li.group(0)))!r}",
-                          "Hard Rule 17 — a title change is swept through every surface")
+                # An episode carries TWO legitimate titles: the podcast's own
+                # English name, which lives in dentcast.json and is what
+                # build_episodes.py renders onto episodes.html, and the Persian
+                # brain title used everywhere else. They are not a drift to be
+                # swept — episode 1 is "Simplified prosthodontics" on the
+                # landing page and «آشنایی با روند کار دنتکست» in the brain, and
+                # both are correct. So the label is checked against the source
+                # that actually renders it.
+                want, want_src = title, "the brain title"
+                if landing == "episodes.html":
+                    ep_title = episode_landing_title(content_id)
+                    if ep_title is None:
+                        rep.skip("17 sweep", "episode is not in dentcast.json — "
+                                             "nothing renders its landing label")
+                        want = None
+                    else:
+                        want, want_src = ep_title, "dentcast.json's title"
+                if want is not None:
+                    rep.check(want in html.unescape(li.group(0)), "17 sweep",
+                              "landing-page label carries the exact title",
+                              f"landing-page label does not match {want_src} "
+                              f"({want!r}): {normalize(text_of(li.group(0)))!r}",
+                              "Hard Rule 17 — a title change is swept through every surface")
 
     home = read("index.html")
     url = "/" + page_rel
@@ -662,6 +710,37 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
         if exists(pp):
             rep.check(url in read(pp), "8 pillar", f"listed on /{pp}",
                       f"not listed on /{pp}", "python3 tools/build_pillar.py all")
+
+        # The pillar page and its premium sidecar are two outputs of one build,
+        # and only one of them is visible when you open the page. A publish that
+        # rebuilt the page but not the sidecar (an interrupted run, a
+        # hand-edited HTML) leaves the article on the page for everyone and
+        # missing from the subtopic foldering for every premium subscriber —
+        # and from the میز کار tree, which reads its taxonomy from the same
+        # file. Nothing else catches that, so it is checked here.
+        ps = f"pillar/{pillar['primary']}/structure.json"
+        if exists(ps):
+            rep.check(url in read(ps), "8 pillar-structure",
+                      f"in /{ps} (premium subtopic view)",
+                      f"not in /{ps} — the page lists it but the premium view "
+                      f"and the میز کار tree do not",
+                      "python3 tools/build_pillar.py all")
+            sub = pillar.get("subtopic")
+            if sub:
+                try:
+                    subs = [s["slug"] for s in json.loads(read(ps)).get("subtopics", [])]
+                except (ValueError, TypeError):
+                    subs = []
+                rep.check(sub in subs, "8 pillar-structure",
+                          f"subtopic {sub!r} exists in /{ps}",
+                          f"subtopic {sub!r} is not one of {subs} — the entry "
+                          f"would be listed on the page but foldered nowhere",
+                          "check step 2.4's subtopic against PILLARS, then "
+                          "python3 tools/build_pillar.py all")
+        elif pillar["primary"] in live_pillars():
+            rep.check(False, "8 pillar-structure", f"/{ps} exists",
+                      f"/{ps} is missing — a structured pillar builds one",
+                      "python3 tools/build_pillar.py all")
 
     # ---------------- generated indexes ----------------
     ci = read("plus/content-index.json")

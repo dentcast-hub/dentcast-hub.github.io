@@ -8,7 +8,7 @@
 // /plus/collections.html, /plus/collection.html, the workbench's two
 // single-purpose collection buttons, and the dashboard.
 import { el, faNum } from './util.js';
-import { openSheet, closeSheet } from './sheet.js';
+import { openSheet, closeSheet, gateCard } from './sheet.js';
 import { premiumCta } from './premium-cta.js';
 import { api, currentUser } from './api.js';
 import { openLoginModal } from './login-modal.js';
@@ -80,14 +80,6 @@ export function boardCover(preview, collection = null) {
 
 // The bottom sheet now lives in sheet.js: the achievements wall needed the same
 // object, and a second copy is exactly what hl-view.js was created to prevent.
-
-function gateCard({ title, sub, cta }) {
-  return el('div', { class: 'dcp-sheet-card', role: 'dialog', 'aria-label': title }, [
-    el('h2', { class: 'dcp-sheet-title' }, title),
-    el('p', { class: 'dcp-sheet-sub' }, sub),
-    cta,
-  ]);
-}
 
 /**
  * The board chooser sheet, shared by "add to collection" and "move to another

@@ -48,3 +48,21 @@ export function openSheet(card) {
   sheetOverlay = { overlay, sheet };
   requestAnimationFrame(() => { overlay.classList.add('is-open'); sheet.classList.add('is-open'); });
 }
+
+/**
+ * The "this is premium" card, for any surface that gates on a tap rather than
+ * on a locked page: a title, one sentence on what premium adds, and the one
+ * canonical CTA (premium-cta.js) so the wording and the ?from= tracking stay in
+ * one place.
+ *
+ * It lived inside collections.js until the archive page's library card wanted
+ * the same object — same rule as the sheet itself, and as hl-view.js: the
+ * second caller moves the component here rather than drawing it twice.
+ */
+export function gateCard({ title, sub, cta }) {
+  return el('div', { class: 'dcp-sheet-card', role: 'dialog', 'aria-label': title }, [
+    el('h2', { class: 'dcp-sheet-title' }, title),
+    el('p', { class: 'dcp-sheet-sub' }, sub),
+    cta,
+  ]);
+}

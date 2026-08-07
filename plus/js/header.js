@@ -143,7 +143,7 @@ export async function initHeader() {
   // Move music + articles into the hamburger drawer (independent of the API).
   try {
     moveToDrawer(document.getElementById('btn-music-toggle'), 'موسیقی');
-    moveToDrawer(document.getElementById('btn-cabinet'), 'مقاله‌ها');
+    moveToDrawer(document.getElementById('btn-cabinet'), 'کتابخانه');
   } catch (_) { /* non-fatal */ }
 
   // Render the guest header SYNCHRONOUSLY so it is final from the first paint:
