@@ -9,6 +9,7 @@ import { openCollectionPicker, boardCover } from './collections.js';
 import { LABELS, PALETTE, PREMIUM_FEATURES } from './config.js';
 import { renewalBanner } from './renewal-banner.js';
 import { premiumCta } from './premium-cta.js';
+import { maybeCelebrate } from './achievements.js';
 
 const labelFa = (k) => (LABELS.find((l) => l.key === k) || {}).fa || '';
 const colorCss = (k) => (PALETTE.find((p) => p.key === k) || {}).css || 'transparent';
@@ -428,6 +429,11 @@ export async function renderDashboard(root, { me: preMe } = {}) {
   ));
 
   root.replaceChildren(...children.filter(Boolean));
+  // The second calm surface (the profile is the other): a page the reader chose
+  // to open, so the badge card is what they came to see rather than something
+  // covering what they were reading. Fired before the lazy blocks fill in — it
+  // is its own layer and does not wait on them.
+  maybeCelebrate(me);
   recentWrap.replaceChildren(await recentBlock(model, isPremium));
   if (isPremium) collectionsWrap.replaceChildren(await collectionsBlock());
   if (isPremium) compassWrap.replaceChildren(await compassBlock());

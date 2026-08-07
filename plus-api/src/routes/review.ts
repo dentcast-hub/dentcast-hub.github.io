@@ -3,6 +3,7 @@ import { requireAuth } from '../middleware/auth.js';
 import { requirePremium } from '../middleware/require-premium.js';
 import { pool, withTransaction } from '../db.js';
 import { recordActivity } from '../services/activity.js';
+import { scheduleAchievementSync } from '../services/achievement-sync.js';
 import { nextBox, intervalDaysForBox } from '../services/leitner.js';
 import { resolveTopic } from '../content-index.js';
 
@@ -124,6 +125,7 @@ export async function reviewRoutes(app: FastifyInstance): Promise<void> {
     });
 
     if (!updated) return reply.code(404).send({ error: 'not_found' });
+    scheduleAchievementSync(userId); // «مرورگر» counts finished sessions
     return reply.send({ card_state: updated });
   });
 }

@@ -4,6 +4,9 @@ import { getBadgeCatalog, evaluateBadge, type MetalTier } from '../badges.js';
 import { getTiers } from '../services/league.js';
 import { getPathways } from '../pathways.js';
 import { computeAchievementFacts } from '../services/achievements.js';
+import {
+  syncAchievements, pendingAnnouncements, markAnnouncementsSeen,
+} from '../services/achievement-sync.js';
 
 /**
  * GET /achievements — the profile's «افتخارات» section: two league medals and
@@ -110,6 +113,18 @@ export async function achievementRoutes(app: FastifyInstance): Promise<void> {
     const earned = badges.filter((b) => b.earned);
     const countMetal = (m: MetalTier) => earned.filter((b) => b.metal === m).length;
 
+    // Reconcile the announcement ledger with what this response just said, while
+    // the facts are still in hand — the profile page must not pay for the same
+    // ten queries twice. `force` skips the debounce: a reader who has the wall
+    // open is entitled to an answer current to the second, and this is the one
+    // call site where the work is already done.
+    //
+    // Fire-and-forget: the shelf renders whether or not the ledger caught up,
+    // and an announcement is worth exactly nothing if chasing it can 500 the
+    // page the announcement is about.
+    syncAchievements(user.id, { facts, force: true })
+      .catch(() => { /* the wall is the product; the ledger is bookkeeping */ });
+
     return reply.send({
       summary: {
         earned: earned.length,
@@ -121,5 +136,27 @@ export async function achievementRoutes(app: FastifyInstance): Promise<void> {
       medals,
       badges,
     });
+  });
+
+  /**
+   * GET /achievements/pending — the celebration queue: badges announced but not
+   * yet acknowledged, oldest first.
+   *
+   * Separate from the wall because it answers a different question. The wall is
+   * "what is true"; this is "what have we not told you yet", and only the second
+   * one can be spent. The client shows these as one card (with paging when
+   * several arrived together — three overlays in a row is a punishment, not a
+   * reward) and then calls POST /achievements/seen.
+   */
+  app.get('/achievements/pending', async (request, reply) => {
+    const items = await pendingAnnouncements(request.user!.id);
+    return reply.send({ items });
+  });
+
+  // POST /achievements/seen — acknowledge the celebration. Mirrors
+  // POST /league/outcome/seen and POST /premium/grant/seen exactly.
+  app.post('/achievements/seen', async (request, reply) => {
+    await markAnnouncementsSeen(request.user!.id);
+    return reply.send({ ok: true });
   });
 }

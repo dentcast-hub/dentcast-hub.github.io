@@ -2,6 +2,7 @@ import type { FastifyInstance } from 'fastify';
 import { config } from '../config.js';
 import { requireAuth } from '../middleware/auth.js';
 import { recordActivity } from '../services/activity.js';
+import { scheduleAchievementSync } from '../services/achievement-sync.js';
 import { consume, HOUR_MS } from '../services/rate-limit.js';
 import {
   SPOT_EVENTS, parseSpotContentId, recordSpotEvent, hostFromHeaders,
@@ -64,6 +65,11 @@ export async function activityRoutes(app: FastifyInstance): Promise<void> {
     // `card_reviewed_manual` counts for the streak but MUST NOT touch card_state.
     // recordActivity only appends to the log, so that invariant holds here.
     const row = await recordActivity(request.user!.id, action, content_id ?? null, meta ?? {});
+    // The badge wall stores nothing, so nothing else can notice that finishing
+    // this article just lit «خواننده». Debounced and off the response (see
+    // achievement-sync.ts): a reading session is twenty of these, and the reader
+    // is waiting on the tick, not on twenty-one derived metrics.
+    scheduleAchievementSync(request.user!.id);
     return reply.send({ ok: true, id: row.id });
   });
 }

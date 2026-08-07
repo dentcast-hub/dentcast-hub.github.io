@@ -3,6 +3,7 @@ import { requireAuth } from '../middleware/auth.js';
 import { requirePremium } from '../middleware/require-premium.js';
 import { pool, withTransaction } from '../db.js';
 import { recordActivity } from '../services/activity.js';
+import { scheduleAchievementSync } from '../services/achievement-sync.js';
 import { resolveTopic, folderLabel, getContentInfo, folderOf } from '../content-index.js';
 
 const LABELS = new Set(['important', 'unclear', 'clinical_pearl']);
@@ -222,6 +223,9 @@ export async function highlightRoutes(app: FastifyInstance): Promise<void> {
       return highlight;
     });
 
+    // After the transaction, never inside it: a sync that read the row before
+    // COMMIT would derive a number that is one short and file it as the truth.
+    scheduleAchievementSync(userId);
     return reply.code(201).send({ highlight: created });
   });
 
