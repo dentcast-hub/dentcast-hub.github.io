@@ -119,7 +119,8 @@ variables** on the container:
 | `VAPID_PUBLIC_KEY` | (from step 1) |
 | `VAPID_PRIVATE_KEY` | (from step 1) |
 | `VAPID_SUBJECT` | `mailto:foad.shahabian@gmail.com` |
-| `OUTBOUND_PROXY_URL` | leave empty unless the pod has no international egress — see below |
+| `OUTBOUND_PROXY_URL` | Telegram's egress route. Leave empty unless the pod has no route to it — see 5d |
+| `WEBPUSH_PROXY_URL` | web push's own route. Leave empty: FCM/APNs are reachable directly — see 5d |
 | `OUTBOUND_TIMEOUT_MS` | `10000` (optional; hard timeout per notification send) |
 | `ADMIN_USER` | `founder` |
 | `ADMIN_PASSWORD` | (a strong secret) |
@@ -321,11 +322,36 @@ Read the answer as follows:
 
 - `channels.<name>.configured: false` → the secret is missing from the container
   env (token / VAPID pair). The channel is skipping silently; re-enter the value.
+- `channels.<name>.route` → **the route that channel takes right now**:
+  `{"via":"direct","proxy_host":null}` or `{"via":"proxy","proxy_host":"…"}`.
+  Read this before anything else: a channel can only be broken by a proxy it is
+  actually using.
 - `channels.<name>.reachable: false` with Bale reachable → the pod has no route to
-  that host. Fix the egress in the ArvanCloud panel, or set `OUTBOUND_PROXY_URL`
-  to a proxy that can reach it (the international channels use it; Bale never does).
-- `proxy.configured: true` but the `via: "proxy"` probes fail → the proxy itself is
-  the broken part.
+  that host. Fix the egress in the ArvanCloud panel, or set **that channel's own**
+  proxy variable (below) to a proxy that can reach it.
+- A channel whose `route.via` is `"proxy"` and whose `via:"proxy"` probes fail
+  while its `via:"direct"` probes pass → **the proxy is the broken part**, and it
+  is strangling a channel that works without it. Clear that channel's variable.
+
+**The proxy is per channel, and each channel reads only its own variable:**
+
+| channel | variable | default |
+|---|---|---|
+| Telegram | `OUTBOUND_PROXY_URL` | direct |
+| web push | `WEBPUSH_PROXY_URL` | **direct** |
+| Bale | — (never proxied; domestic) | direct |
+
+This split exists because of a real outage: the two international channels shared
+one key, so a proxy set for Telegram was forced onto web push too. When it could
+not reach FCM/APNs, web push — which had been delivering fine on the direct route
+— died with it, while Bale kept working. The symptom was "only Bale arrives",
+which reads as an egress problem and sent the diagnosis away from the actual
+cause. Setting or clearing Telegram's proxy now cannot move web push at all.
+
+`HTTPS_PROXY` / `https_proxy` are **not** read. They used to be a fallback for
+`OUTBOUND_PROXY_URL`, which meant a platform-level variable nobody set with
+notifications in mind could reroute delivery. If one is set while no notification
+proxy is, the API logs a `[config]` warning at startup — it never acts on it.
 
 `GET /admin/notify/health?probe=0` reports configuration only, without touching
 the network. Delivery failures are also logged now — grep the container log for

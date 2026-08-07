@@ -13,9 +13,17 @@ import { config } from '../config.js';
  * senders make it visible (they log every failure), and /admin/notify/health
  * answers "is it happening right now?" without sending anything.
  *
- * The proxy is for INTERNATIONAL destinations only (Telegram, FCM, APNs). Bale is
- * domestic and always goes direct: routing it through an egress proxy adds a hop
- * that can only fail.
+ * THE PROXY IS PER CHANNEL (proxyForChannel below). It used to be one key shared
+ * by every international destination, and that is how a healthy channel died
+ * without a trace: a proxy set to rescue Telegram was mounted unconditionally on
+ * web push too, so if it could not reach FCM/APNs it killed web push — which had
+ * been working direct — while Bale, which is never proxied, kept delivering. The
+ * outward symptom ("only Bale arrives") pointed at egress, not at the knob that
+ * caused it. One key could not express "Telegram through a proxy, web push
+ * direct", so nobody could see, or fix, the difference.
+ *
+ * Bale is domestic and is never proxied: routing it through an egress proxy adds
+ * a hop that can only fail.
  */
 
 // The dispatcher is carried as `unknown` on purpose: @types/node and the undici
@@ -24,7 +32,9 @@ import { config } from '../config.js';
 // only ever travels from ProxyAgent straight into fetch().
 
 export interface OutboundOptions {
-  /** Route through OUTBOUND_PROXY_URL when one is set. Default true; pass false for domestic hosts. */
+  /** Route through the DEFAULT egress proxy (OUTBOUND_PROXY_URL, Telegram's) when
+   *  one is set. Default true; pass false for domestic hosts. A channel with its
+   *  own route passes `proxyUrl` instead — see proxyForChannel. */
   proxy?: boolean;
   /**
    * Use THIS proxy instead of the configured one, and use it regardless of
@@ -39,19 +49,47 @@ export interface OutboundOptions {
   timeoutMs?: number;
 }
 
-/** True when an egress proxy is configured (does not mean it works — see probe()). */
+/** The notification channels, as far as egress routing is concerned. */
+export type NotifyChannel = 'telegram' | 'webpush' | 'bale';
+
+/**
+ * The egress route for ONE channel. '' means direct.
+ *
+ * Each channel reads its own variable, so setting a proxy for one can never
+ * reroute another. Web push defaults to DIRECT and is moved only by
+ * WEBPUSH_PROXY_URL — not by OUTBOUND_PROXY_URL, and not by a platform-level
+ * HTTPS_PROXY (which config.ts no longer reads at all).
+ */
+export function proxyForChannel(channel: NotifyChannel): string {
+  switch (channel) {
+    // Domestic. Not configurable on purpose: there is no proxy that improves a
+    // route to tapi.bale.ai from inside Iran, only ones that can break it.
+    case 'bale': return '';
+    case 'webpush': return config.outbound.webPushProxyUrl;
+    case 'telegram': return config.outbound.proxyUrl;
+    default: return '';
+  }
+}
+
+/** host:port of a proxy URL, never its credentials — safe to return from /admin. */
+export function hostOfProxy(proxyUrl: string): string | null {
+  if (!proxyUrl) return null;
+  try {
+    return new URL(proxyUrl).host;
+  } catch {
+    return 'invalid-url';
+  }
+}
+
+/** True when the DEFAULT egress proxy (Telegram's) is configured. Says nothing
+ *  about whether it works — see probe() — or about any other channel. */
 export function proxyConfigured(): boolean {
   return Boolean(config.outbound.proxyUrl);
 }
 
-/** host:port of the proxy, never its credentials — safe to return from /admin. */
+/** host:port of the default egress proxy. */
 export function proxyHost(): string | null {
-  if (!config.outbound.proxyUrl) return null;
-  try {
-    return new URL(config.outbound.proxyUrl).host;
-  } catch {
-    return 'invalid-url';
-  }
+  return hostOfProxy(config.outbound.proxyUrl);
 }
 
 // One dispatcher per proxy URL, built once and reused (each pools connections).
@@ -110,7 +148,12 @@ export async function outboundFetch(
  */
 export function webPushOptions(): { proxy?: string; timeout: number } {
   const o: { proxy?: string; timeout: number } = { timeout: config.outbound.timeoutMs };
-  if (config.outbound.proxyUrl) o.proxy = config.outbound.proxyUrl;
+  // proxyForChannel('webpush'), never config.outbound.proxyUrl: this line is the
+  // regression. It used to read the shared key, so a proxy someone set for
+  // Telegram — or an HTTPS_PROXY nobody set for notifications at all — was
+  // forced onto FCM/APNs, and web push died on a route it never needed.
+  const proxy = proxyForChannel('webpush');
+  if (proxy) o.proxy = proxy;
   return o;
 }
 
@@ -127,6 +170,9 @@ export function describeError(err: unknown, timeoutMs: number = config.outbound.
 export interface ProbeResult {
   url: string;
   via: 'direct' | 'proxy';
+  /** host:port of the proxy this probe went through, null when direct. Named so
+   *  a health report can never leave "which proxy?" to the reader's memory. */
+  proxy_host: string | null;
   ok: boolean;
   status?: number;
   error?: string;
@@ -140,16 +186,24 @@ export interface ProbeResult {
  * carries no credentials, so it is safe on a read-only admin route.
  */
 export async function probe(url: string, opts: OutboundOptions = {}): Promise<ProbeResult> {
-  const via: 'direct' | 'proxy' = opts.proxy !== false && proxyConfigured() ? 'proxy' : 'direct';
+  // Resolved EXACTLY the way outboundFetch resolves it, so `via` can never
+  // disagree with the route the request actually took. It used to be computed
+  // from the global proxyConfigured(), which reported "proxy" for a probe sent
+  // through an explicit per-channel proxyUrl — and "proxy" for a channel that
+  // does not use that proxy at all. A diagnosis that mislabels its own route is
+  // worse than no diagnosis.
+  const proxyUrl = opts.proxyUrl ?? (opts.proxy !== false ? config.outbound.proxyUrl : '');
+  const via: 'direct' | 'proxy' = proxyUrl ? 'proxy' : 'direct';
   const timeoutMs = opts.timeoutMs ?? config.outbound.probeTimeoutMs;
+  const proxy_host = hostOfProxy(proxyUrl);
   const started = Date.now();
   try {
-    const res = await outboundFetch(url, { method: 'GET' }, { proxy: opts.proxy, timeoutMs });
+    const res = await outboundFetch(url, { method: 'GET' }, { proxy: opts.proxy, proxyUrl: opts.proxyUrl, timeoutMs });
     // Drop the body: we only needed the response line, and an undrained body
     // keeps the socket busy.
     await res.body?.cancel().catch(() => {});
-    return { url, via, ok: true, status: res.status, ms: Date.now() - started };
+    return { url, via, proxy_host, ok: true, status: res.status, ms: Date.now() - started };
   } catch (err) {
-    return { url, via, ok: false, error: describeError(err, timeoutMs), ms: Date.now() - started };
+    return { url, via, proxy_host, ok: false, error: describeError(err, timeoutMs), ms: Date.now() - started };
   }
 }

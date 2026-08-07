@@ -118,8 +118,10 @@ destinations underneath it.
   push are **international** (`api.telegram.org`, FCM, APNs); Bale is **domestic**.
   A container in Iran can therefore lose exactly the first two and keep the third —
   the 2026-07-26 outage. So every send is bounded by a timeout (a filtered host
-  used to hang the whole batch), the international channels honour
-  `OUTBOUND_PROXY_URL` (Bale always goes direct), and **every** failure is logged:
+  used to hang the whole batch), each international channel has its OWN egress
+  route — `OUTBOUND_PROXY_URL` for Telegram, `WEBPUSH_PROXY_URL` for web push,
+  both defaulting to direct, Bale never proxied — so a proxy set for one can no
+  longer silently kill another (2026-08-07), and **every** failure is logged:
   a channel that cannot deliver must never be silent again. `GET /admin/notify/health`
   reports config + reachability per channel without sending anything.
 

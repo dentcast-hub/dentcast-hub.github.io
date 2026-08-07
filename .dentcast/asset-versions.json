@@ -1,86 +1,86 @@
 {
   "/dc-nav.css": {
-    "v": 14,
+    "v": 16,
     "hash": "1397aa3320ff2918"
   },
   "/dc-nav.js": {
-    "v": 48,
+    "v": 50,
     "hash": "3c018aea981705fe"
   },
   "/global-search-ui.js": {
-    "v": 3,
+    "v": 5,
     "hash": "555bacb2c532f998"
   },
   "/global-search.css": {
-    "v": 3,
+    "v": 5,
     "hash": "7d9f3519179bc480"
   },
   "/global-search.js": {
-    "v": 7,
+    "v": 9,
     "hash": "bd50932cb1d75571"
   },
   "/pillar/premium-index.js": {
-    "v": 5,
+    "v": 7,
     "hash": "659e8078f980b502"
   },
   "/plus/js/assistant-page.js": {
-    "v": 6,
+    "v": 9,
     "hash": "48af05637664c626"
   },
   "/plus/js/cards-page.js": {
-    "v": 6,
+    "v": 9,
     "hash": "7d77b2ff06b7fa6f"
   },
   "/plus/js/collection-page.js": {
-    "v": 9,
+    "v": 11,
     "hash": "1cff04b9a9583552"
   },
   "/plus/js/collections-page.js": {
-    "v": 9,
+    "v": 11,
     "hash": "17fcaff8b6b263e9"
   },
   "/plus/js/dashboard-page.js": {
-    "v": 8,
+    "v": 10,
     "hash": "058e733c4565b1af"
   },
   "/plus/js/highlights-page.js": {
-    "v": 8,
+    "v": 10,
     "hash": "913be8b2de311836"
   },
   "/plus/js/pathway-page.js": {
-    "v": 6,
+    "v": 9,
     "hash": "9c15fba3750139d6"
   },
   "/plus/js/pathways-page.js": {
-    "v": 6,
+    "v": 9,
     "hash": "87b7717dc20e9368"
   },
   "/plus/js/pay-result-page.js": {
-    "v": 5,
+    "v": 8,
     "hash": "f91b8f7486c0f3d4"
   },
   "/plus/js/pricing-page.js": {
-    "v": 10,
+    "v": 13,
     "hash": "24cb69afdd76e9bb"
   },
   "/plus/js/profile-page.js": {
-    "v": 7,
-    "hash": "b52a05f58b60df9b"
+    "v": 9,
+    "hash": "dbd1032a55d06fc3"
   },
   "/plus/js/reading-compass-page.js": {
-    "v": 7,
+    "v": 10,
     "hash": "0a9a29c40b0a240e"
   },
   "/plus/plus-desktop.css": {
-    "v": 2,
+    "v": 5,
     "hash": "49753391b4c5ded3"
   },
   "/plus/plus-pages.css": {
-    "v": 6,
+    "v": 9,
     "hash": "05e986330a92c351"
   },
   "/plus/plus.css": {
-    "v": 6,
+    "v": 8,
     "hash": "5bc193af8f215517"
   }
 }

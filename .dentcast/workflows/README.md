@@ -80,6 +80,13 @@ client-side by `dentcast_cabinet_search.html` via `fetch`, and it is **not** par
 of the site version hash (step 7), so a paper-only addition needs **no** builder
 run and **no** version bump — Drive upload + catalog edit + commit is the whole job.
 
+The catalog is also deliberately **kept out of search**: `robots.txt` disallows
+both `dentcast_cabinet_full_catalog.json` and its `.enriched.json` sibling,
+`_headers` carries `X-Robots-Tag: noindex` for the catalog, and
+`dentcast_cabinet_search.html` carries its own `<meta robots noindex>`. Adding a
+paper therefore **never** touches `robots.txt` and **never** puts anything in a
+sitemap — leave both alone, and never "fix" the disallow.
+
 When there **is** text, proceed through Phases A–D as usual; the paper branch (if a
 file is attached) runs as step 4.10 inside Phase C.
 
@@ -752,6 +759,27 @@ socket`, `GBR`, `periimplantitis`, `biomimetic`, with nested paths like
    its key set matches the template enriched entry exactly, the Drive link is
    present, and the paper now appears/filters correctly in
    `dentcast_cabinet_search.html` (title, topic, tags, View/Download links).
+   **Open that page directly** — from the site the library is premium-gated
+   (`#card-library` on `index.html`'s archive tab opens it only for
+   `tier === 'premium'`), so tapping the card is not a way to check your work.
+   The page itself is still a plain static file and opens for anyone who knows
+   the URL; the gate is a product gate, not access control.
+7. **The paper-count claim.** `index.html` advertises the library with a
+   number — «بیش از ۲۲۰۰ مقاله» on the `#card-library` card and the same figure
+   in the premium gate sheet below it. It is a hand-written claim, not a count
+   read from the catalog, so it drifts as papers are added. After adding the
+   entry, count, then find every place the number lives:
+
+   ```bash
+   python3 -c "import json;print(len(json.load(open('dentcast_cabinet_full_catalog.json'))['papers']))"
+   grep -n '۲۲۰۰' index.html      # card copy, gate-sheet copy, and the card's own comment
+   ```
+
+   While the total is still under the next round hundred the claim stands and
+   nothing changes. Once it crosses one, update **every** hit in the same
+   commit — one sentence living on several surfaces, so Hard Rule 17's sweep
+   logic applies: never fix one and leave the others. (No version bump: the
+   claim is `index.html`'s own copy, not a shared asset.)
 
 #### Part 3 — Find the DOI on the web and add a first-author → DOI credit on the page (ShareHub style)
 
@@ -1358,7 +1386,7 @@ fix on its own, never a pattern to copy forward.
 - Pulse: which line was removed (the bottom one), and where the new line was inserted (one above the new bottom), with before/after diff
 - For NoteCast: parent episode page path; whether the related-content block existed already or was created; before/after hash of the parent episode page; diff of the inserted markup
 - For Promptologist (step 4.6): the new part's `ep-nav` previous slot wired to `<prev-id>.html` (next slot left as the empty placeholder); the previous part's page path with before/after hash, confirming its empty «next» placeholder was converted into a link to `<new-id>.html` (only that slot changed)
-- For any publish with an attached paper file (step 4.10 — triggered by the file, any type) — or the documented "skipped — no attached paper" line otherwise: **Part 1** — the Drive subfolder the paper was filed into (chosen semantically) and its `drive_view` URL; **Part 2** — the new `dentcast_cabinet_full_catalog.json` entry's `id`, `topic`/`topic_path`, `tags` (semantic + article-name), and the Drive link, with confirmation the key set matches the enriched-entry template and the paper surfaces in `dentcast_cabinet_search.html`; **Part 3** (only when a page was published) — the DOI and first author found on the web, the rendered first-author→DOI credit anchor (ShareHub `.author` style) and any `isBasedOn` update, with before/after page hash — or the "Part 3 skipped — paper-only (no page)" note on the paper-only fast path. Explicitly list anything you asked the user about and confirm nothing (subfolder/DOI/author/tags) was guessed
+- For any publish with an attached paper file (step 4.10 — triggered by the file, any type) — or the documented "skipped — no attached paper" line otherwise: **Part 1** — the Drive subfolder the paper was filed into (chosen semantically) and its `drive_view` URL; **Part 2** — the new `dentcast_cabinet_full_catalog.json` entry's `id`, `topic`/`topic_path`, `tags` (semantic + article-name), and the Drive link, with confirmation the key set matches the enriched-entry template and the paper surfaces in `dentcast_cabinet_search.html` (opened directly — the on-site route is premium-gated), plus the new `papers` total and whether it crossed a round hundred (if it did, the two paper-count strings in `index.html` were swept together; if not, say so explicitly); **Part 3** (only when a page was published) — the DOI and first author found on the web, the rendered first-author→DOI credit anchor (ShareHub `.author` style) and any `isBasedOn` update, with before/after page hash — or the "Part 3 skipped — paper-only (no page)" note on the paper-only fast path. Explicitly list anything you asked the user about and confirm nothing (subfolder/DOI/author/tags) was guessed
 - **Flashcards (step 4.11)** — or the documented "skipped — LiteCast" line: the `DefinedTermSet` block added to the page (term count and their `@id`s); how many came from `source: "faq"` vs `"authored"`; which FAQ entries (if any) were judged comparison/decision-shaped and skipped; confirmation no `name`/`description` is a verbatim FAQ copy; anything you asked the user about; confirmation `node tools/build_flashcards_index.mjs` was re-run in step 8 so `plus/flashcards-index.json` reflects the new page
 - **Quiz (step 4.12)** — or the documented "skipped — LiteCast" line: confirmation every FAQ question `name` is standalone (no article deixis per 4.12(a)); how many of the page's FAQ questions are binary/scored vs open (and that any binary answer opens with an explicit «بله»/«خیر» verdict); confirmation `node tools/build_quiz_index.mjs` was re-run in step 8 and the new page's binary count appears in `plus/quiz-index.json`
 - **Cross-linking completion gate (Hard Rule 11) — REQUIRED; the publish is incomplete if any of these is missing.** For **each** of steps 4.7, 4.8, 4.9, report its explicit outcome — never leave one unstated:

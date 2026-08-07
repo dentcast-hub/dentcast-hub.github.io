@@ -82,7 +82,10 @@ def graph(entry: Path) -> list[Path]:
             rel = m.group('p') or m.groupdict().get('d')
             if rel:
                 queue.append((f.parent / rel.split('?')[0]).resolve())
-    return sorted(seen)
+    # Sort by the POSIX string, not by Path: Path ordering is platform-normalised
+    # (case-folded on Windows), so two machines could hash the same graph in two
+    # different orders. On Linux this is the identical order it always produced.
+    return sorted(seen, key=lambda p: p.relative_to(ROOT).as_posix())
 
 
 def fingerprint(asset: str) -> str:
@@ -91,7 +94,12 @@ def fingerprint(asset: str) -> str:
         raise FileNotFoundError(asset)
     h = hashlib.sha256()
     for f in graph(entry):
-        h.update(str(f.relative_to(ROOT)).encode())
+        # as_posix(), never str(): str(Path) is backslash-separated on Windows, so
+        # hashing it made the fingerprint PLATFORM-DEPENDENT — the same commit
+        # produced one digest on a Windows machine and another on the Linux CI
+        # runner, and --check could never pass from Windows. On Linux the two are
+        # the same string, so this changes no existing fingerprint.
+        h.update(f.relative_to(ROOT).as_posix().encode())
         h.update(f.read_bytes())
     return h.hexdigest()[:16]
 
@@ -168,7 +176,14 @@ def bump() -> int:
 
     changed_pages = 0
     for page in html_pages():
-        text = page.read_text(encoding='utf-8')
+        # newline='' on BOTH sides so a page's line endings survive the rewrite
+        # untouched. With the defaults, read_text() collapses them to '\n' and
+        # write_text() re-expands to os.linesep — which on Windows silently
+        # converted all 767 pages to CRLF, turning a one-token stamp edit into a
+        # whole-file diff. This tool changes a version number; it must change
+        # nothing else about the bytes it writes.
+        with open(page, 'r', encoding='utf-8', newline='') as fh:
+            text = fh.read()
 
         def swap(m: re.Match) -> str:
             v = new_version.get(m.group('path'))
@@ -176,15 +191,17 @@ def bump() -> int:
 
         out = REF_RE.sub(swap, text)
         if out != text:
-            page.write_text(out, encoding='utf-8')
+            with open(page, 'w', encoding='utf-8', newline='') as fh:
+                fh.write(out)
             changed_pages += 1
 
     for asset, v in new_version.items():
         manifest[asset] = {'v': v, 'hash': state[asset]['hash']}
     MANIFEST.parent.mkdir(parents=True, exist_ok=True)
-    MANIFEST.write_text(
-        json.dumps(dict(sorted(manifest.items())), indent=2, ensure_ascii=False) + '\n',
-        encoding='utf-8')
+    # newline='' for the same reason as the pages above: the manifest is LF in the
+    # repo and must not become CRLF just because it was written from Windows.
+    with open(MANIFEST, 'w', encoding='utf-8', newline='') as fh:
+        fh.write(json.dumps(dict(sorted(manifest.items())), indent=2, ensure_ascii=False) + '\n')
 
     for asset, v in sorted(new_version.items()):
         print(f'  {asset}  ->  ?v={v}')
