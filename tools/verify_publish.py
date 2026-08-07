@@ -663,6 +663,37 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
             rep.check(url in read(pp), "8 pillar", f"listed on /{pp}",
                       f"not listed on /{pp}", "python3 tools/build_pillar.py all")
 
+        # The pillar page and its premium sidecar are two outputs of one build,
+        # and only one of them is visible when you open the page. A publish that
+        # rebuilt the page but not the sidecar (an interrupted run, a
+        # hand-edited HTML) leaves the article on the page for everyone and
+        # missing from the subtopic foldering for every premium subscriber —
+        # and from the میز کار tree, which reads its taxonomy from the same
+        # file. Nothing else catches that, so it is checked here.
+        ps = f"pillar/{pillar['primary']}/structure.json"
+        if exists(ps):
+            rep.check(url in read(ps), "8 pillar-structure",
+                      f"in /{ps} (premium subtopic view)",
+                      f"not in /{ps} — the page lists it but the premium view "
+                      f"and the میز کار tree do not",
+                      "python3 tools/build_pillar.py all")
+            sub = pillar.get("subtopic")
+            if sub:
+                try:
+                    subs = [s["slug"] for s in json.loads(read(ps)).get("subtopics", [])]
+                except (ValueError, TypeError):
+                    subs = []
+                rep.check(sub in subs, "8 pillar-structure",
+                          f"subtopic {sub!r} exists in /{ps}",
+                          f"subtopic {sub!r} is not one of {subs} — the entry "
+                          f"would be listed on the page but foldered nowhere",
+                          "check step 2.4's subtopic against PILLARS, then "
+                          "python3 tools/build_pillar.py all")
+        elif pillar["primary"] in live_pillars():
+            rep.check(False, "8 pillar-structure", f"/{ps} exists",
+                      f"/{ps} is missing — a structured pillar builds one",
+                      "python3 tools/build_pillar.py all")
+
     # ---------------- generated indexes ----------------
     ci = read("plus/content-index.json")
     if is_lite:
