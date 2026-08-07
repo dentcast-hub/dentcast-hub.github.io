@@ -276,9 +276,8 @@
     ['/insight/',                  'brain',   'Insight'],
     ['/metanotes/',                'puzzle',  'Meta Note'],
     ['/glossary/',                 'book',    'Glossary'],
-    ['/pillar/',                   'folder',  'Pillar'],
+    ['/pillar/',                   'folder',  'فهرست موضوعی'],
     ['/litecast/',                 'globe',   'LiteCast'],
-    ['/photocast/',                'camera',  'PhotoCast'],
     ['/episodes.html',             'mic',     'اپیزودها'],
     ['/patients/cinematic.html',   'user',    'بیماران'],
     ['/plus/',                     'sparkle', 'پلاس']
@@ -309,7 +308,15 @@
 '.dc-drawer-menu-inner{display:grid;grid-template-columns:repeat(4,1fr);gap:.125rem 0;padding:.375rem .625rem .25rem;box-sizing:border-box;}' +
 '@media (min-width:641px){.dc-drawer-menu-inner{grid-template-columns:repeat(8,1fr);}}' +
 '.dc-drawer-menu-label{grid-column:1 / -1;font-size:.68rem;font-weight:800;color:var(--txt3,#8a9cbe);white-space:nowrap;padding-bottom:.125rem;}' +
-'.dc-drawer-menu-inner .dc-drawer-tool-seg{padding:.5rem .25rem;}' +
+/* Top-aligned, not centred: one wrapped label makes its whole grid row taller,
+   and a centred cell would then float its icon below its neighbours'. Anchoring
+   every cell to the top keeps the icons on one line across the row and lets the
+   second text line simply hang. */
+'.dc-drawer-menu-inner .dc-drawer-tool-seg{padding:.5rem .25rem;justify-content:flex-start;}' +
+/* Section names are not tool names: a two-word one («فهرست موضوعی») is wider
+   than a quarter of a phone, and the tools' nowrap would push it out of its
+   cell. Let it wrap instead — the grid row grows and every cell stays centred. */
+'.dc-drawer-menu-inner .dc-drawer-tool-txt{white-space:normal;text-align:center;line-height:1.3;}' +
 /* Self-contained icon sizing: a page that loads neither dc-nav.css nor
    index.html's inline mirror still gets 1em glyphs, never full-size SVGs. */
 '.dc-drawer-menu-inner .dc-svg-icon{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}' +
