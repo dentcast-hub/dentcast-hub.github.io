@@ -32,6 +32,12 @@ export interface BadgeLevel {
   unlock_fa: string;
   /** Rare: a level that measures something different from its badge (treasury's bronze). */
   metric?: string;
+  /**
+   * Reaching this level mints a one-time subscription discount of this many
+   * percent (services/discount-credits.ts). Silver and gold levels carry it;
+   * bronzes and one-shot badges deliberately never do.
+   */
+  discount_percent?: number;
 }
 
 export interface Badge {

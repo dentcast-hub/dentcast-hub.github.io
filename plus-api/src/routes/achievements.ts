@@ -7,6 +7,11 @@ import { computeAchievementFacts } from '../services/achievements.js';
 import {
   syncAchievements, pendingAnnouncements, markAnnouncementsSeen,
 } from '../services/achievement-sync.js';
+import {
+  badgeCredits, grantCredits, spentSources, creditPercent, pickCredits,
+  CREDIT_CAP_PERCENT, type DiscountCredit,
+} from '../services/discount-credits.js';
+import { PILLAR_DISCOUNT_PERCENT } from '../services/pillar.js';
 
 /**
  * GET /achievements — the profile's «افتخارات» section: two league medals and
@@ -38,6 +43,22 @@ export async function achievementRoutes(app: FastifyInstance): Promise<void> {
     // Thresholds written as 'all' resolve against what exists right now, so
     // publishing a sixteenth pathway moves the goal instead of un-earning a gold.
     const totals: Record<string, number> = { pathways_completed: getPathways().length };
+
+    // The monetary layer: which one-time credits exist, and which are spent.
+    // Guarded as a unit — the wall predates the discount tables and must keep
+    // rendering if they are missing; a null here simply hides the money strip
+    // and the per-level chips, never the badges.
+    let spent: Set<string> | null = null;
+    let readyCredits: DiscountCredit[] = [];
+    try {
+      const grants = await grantCredits(user.id);
+      spent = await spentSources(user.id);
+      const mine = [...badgeCredits(facts), ...grants];
+      readyCredits = mine.filter((c) => !spent!.has(c.source));
+    } catch {
+      spent = null;
+      readyCredits = [];
+    }
     const groupName = new Map(catalog.groups.map((g) => [g.key, g.title_fa]));
     const tierByOrder = new Map(tiers.map((t) => [t.tier_order, t]));
 
@@ -79,9 +100,22 @@ export async function achievementRoutes(app: FastifyInstance): Promise<void> {
       // Finding it is the whole reward, and a tooltip would spend it.
       const hidden = b.visibility === 'mystery' && !e.earned;
       const levels = b.leveled && b.levels
-        ? b.levels.map((l, i) => ({
-          tier: l.tier, threshold: e.thresholds[i], unlock_fa: l.unlock_fa, done: e.level >= i,
-        }))
+        ? b.levels.map((l, i) => {
+          const done = e.level >= i;
+          const pct = typeof l.discount_percent === 'number' && l.discount_percent > 0
+            ? l.discount_percent
+            : null;
+          return {
+            tier: l.tier, threshold: e.thresholds[i], unlock_fa: l.unlock_fa, done,
+            // The money on this level, and where it stands: 'ready' | 'spent'
+            // for a reached level, 'future' for one still being climbed to.
+            // Null percent = a level that simply carries no money (bronzes).
+            discount_percent: pct,
+            discount_state: pct === null || spent === null
+              ? null
+              : !done ? 'future' : spent.has(`badge:${b.key}:${l.tier}`) ? 'spent' : 'ready',
+          };
+        })
         : null;
       return {
         key: b.key,
@@ -125,6 +159,18 @@ export async function achievementRoutes(app: FastifyInstance): Promise<void> {
     syncAchievements(user.id, { facts, force: true })
       .catch(() => { /* the wall is the product; the ledger is bookkeeping */ });
 
+    // The money strip's numbers. `ready_percent` is everything unspent (it can
+    // sit above the cap — the strip says the rest waits for a later purchase);
+    // `next_purchase_percent` is the figure /pay/start would actually apply
+    // right now, pillar included. Null when the credit tables were unreachable.
+    const pillarPct = (facts.metrics.pillar_seat ?? 0) > 0 ? PILLAR_DISCOUNT_PERCENT : 0;
+    const discount = spent === null ? null : {
+      ready_percent: creditPercent(readyCredits),
+      cap_percent: CREDIT_CAP_PERCENT,
+      pillar_percent: pillarPct,
+      next_purchase_percent: pillarPct + creditPercent(pickCredits(readyCredits)),
+    };
+
     return reply.send({
       summary: {
         earned: earned.length,
@@ -133,6 +179,7 @@ export async function achievementRoutes(app: FastifyInstance): Promise<void> {
         silver: countMetal('silver'),
         gold: countMetal('gold'),
       },
+      discount,
       medals,
       badges,
     });

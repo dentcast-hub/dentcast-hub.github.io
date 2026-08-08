@@ -4,8 +4,11 @@ import { requireAuth, loadUser } from '../middleware/auth.js';
 import { startPayment, settlePayment, getPaymentByTrackId, resultUrl } from '../services/payment.js';
 import { getCapacity } from '../services/payment-capacity.js';
 import {
-  pillarSeat, isPillarSeat, pillarAmountRial, PILLAR_DISCOUNT_PERCENT,
+  pillarSeat, isPillarSeat, PILLAR_DISCOUNT_PERCENT,
 } from '../services/pillar.js';
+import {
+  availableCredits, pickCredits, creditPercent, discountedRial, CREDIT_CAP_PERCENT,
+} from '../services/discount-credits.js';
 import { readCallback } from '../services/zibal.js';
 import { startRedemption, latestRedemption, giftInstructions } from '../services/gift-redemption.js';
 import { query } from '../db.js';
@@ -43,17 +46,26 @@ export async function payRoutes(app: FastifyInstance): Promise<void> {
     const user = await loadUser(request).catch(() => null);
     const seat = user ? await pillarSeat(user.id).catch(() => null) : null;
     const pillar = isPillarSeat(seat);
-    const plans = pillar
+    // The one-time credits this person could spend on a purchase opened right
+    // now — the same pick /pay/start will make, so the page never quotes a
+    // figure the till would then change. Guarded like the seat lookup: the one
+    // thing this route must never do is take the price list down.
+    const credits = user
+      ? await availableCredits(user.id).then(pickCredits).catch(() => [])
+      : [];
+    const creditPct = creditPercent(credits);
+    const totalPct = (pillar ? PILLAR_DISCOUNT_PERCENT : 0) + creditPct;
+    const plans = totalPct > 0
       ? capacity.plans.map((p) => ({
         ...p,
         // `amount_rial` stays "what this person pays" under its old name, so a
         // browser holding a cached pricing-page.js still shows the right total;
         // the list figure rides beside it for the strikethrough.
-        amount_rial: pillarAmountRial(p.amount_rial),
+        amount_rial: discountedRial(p.amount_rial, totalPct),
         list_amount_rial: p.amount_rial,
       }))
       : capacity.plans;
-    const fromMonthly = pillar && plans.length
+    const fromMonthly = totalPct > 0 && plans.length
       ? Math.min(...plans.map((p) => p.amount_rial / p.months))
       : config.payments.fromMonthlyRial;
 
@@ -80,6 +92,12 @@ export async function payRoutes(app: FastifyInstance): Promise<void> {
       // Present only for a seat-holder, so the page can say WHY its prices
       // differ from the ones a colleague's screen shows.
       pillar_discount: pillar ? { percent: PILLAR_DISCOUNT_PERCENT } : null,
+      // Same job for the one-time credits: how much of the personalised price
+      // is credits this purchase will CONSUME, so the page can say so before
+      // the pay button rather than after. Null when there is nothing to spend.
+      onetime_discount: creditPct > 0
+        ? { percent: creditPct, cap_percent: CREDIT_CAP_PERCENT }
+        : null,
       any_plan_available: capacity.any_plan_available,
       // Deliberately NOT the remaining rial figure: how close we are to a
       // regulatory ceiling is our business, and "3 seats left" is a pressure

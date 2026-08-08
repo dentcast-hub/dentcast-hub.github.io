@@ -128,9 +128,33 @@ function disc(b, size) {
   }, [icon(b.icon, 'dcp-bg-ico')]);
 }
 
+/**
+ * The value tag on a wall disc: what this badge's unspent levels are still
+ * worth («٪۲»), or a plain check once everything it minted has been spent.
+ * Bronzes, one-shot badges and the mysteries have no discount levels at all
+ * (that is the catalog's rule, not a filter here), so they render nothing —
+ * which also keeps a «؟» tile leaking nothing.
+ */
+function valuePip(b) {
+  if (!b.earned || !b.levels) return null;
+  let ready = 0;
+  let spent = 0;
+  for (const lv of b.levels) {
+    if (!lv.discount_percent) continue;
+    if (lv.discount_state === 'ready') ready += lv.discount_percent;
+    if (lv.discount_state === 'spent') spent += lv.discount_percent;
+  }
+  if (ready > 0) return el('span', { class: 'dcp-bg-val' }, '٪' + faNum(ready));
+  if (spent > 0) return el('span', { class: 'dcp-bg-val is-spent' }, '✓');
+  return null;
+}
+
 function badgeTile(b) {
+  const d = disc(b, 'is-sm');
+  const pip = valuePip(b);
+  if (pip) d.appendChild(pip);
   const kids = [
-    disc(b, 'is-sm'),
+    d,
     el('span', { class: 'dcp-bg-name' + (b.earned ? '' : ' is-off') }, b.hidden ? '؟' : b.title_fa),
   ];
   // A bar only where there is something to show: at zero it would be a row of
@@ -155,6 +179,24 @@ function closeRow() {
   }, 'بستن');
 }
 
+/**
+ * The money chip on one level of the sheet. Three states, always the percent
+ * and never the metal's name — a level stays a ring colour, not a word:
+ * ready («٪۱ · آمادهٔ استفاده»), spent («٪۱ · استفاده شد»), and future
+ * («٪۲ با کسب این سطح») under the next climb.
+ */
+function levelValueChip(lv) {
+  if (!lv.discount_percent || !lv.discount_state) return null;
+  const pct = '٪' + faNum(lv.discount_percent);
+  if (lv.discount_state === 'ready') {
+    return el('span', { class: 'dcp-ach-lv-val' }, pct + ' · آمادهٔ استفاده');
+  }
+  if (lv.discount_state === 'spent') {
+    return el('span', { class: 'dcp-ach-lv-val is-spent' }, pct + ' · استفاده شد');
+  }
+  return el('span', { class: 'dcp-ach-lv-val is-future' }, pct + ' با کسب این سطح');
+}
+
 function levelRow(lv, i, badge) {
   const isNext = !lv.done && badge.level === i - 1;
   return el('li', {
@@ -162,10 +204,13 @@ function levelRow(lv, i, badge) {
   }, [
     el('span', { class: 'dcp-ach-pip is-' + METAL_PIP[lv.tier] }),
     el('span', { class: 'dcp-ach-lv-txt' }, lv.unlock_fa),
-    lv.done
-      ? el('span', { class: 'dcp-ach-lv-done' }, '✓')
-      : el('span', { class: 'dcp-ach-lv-need' },
-        faNum(lv.threshold) + (badge.unit_fa ? ' ' + badge.unit_fa : '')),
+    el('span', { class: 'dcp-ach-lv-side' }, [
+      lv.done
+        ? el('span', { class: 'dcp-ach-lv-done' }, '✓')
+        : el('span', { class: 'dcp-ach-lv-need' },
+          faNum(lv.threshold) + (badge.unit_fa ? ' ' + badge.unit_fa : '')),
+      levelValueChip(lv),
+    ].filter(Boolean)),
   ]);
 }
 
@@ -234,6 +279,59 @@ function tally(s) {
 }
 
 /**
+ * The money strip above the wall: what the account's next purchase is worth.
+ *
+ * All figures come from GET /achievements' `discount` block and are derived
+ * there — this only phrases them. Two shapes: a «ستون» seat-holder sees the
+ * SUM their next renewal gets (permanent + one-time, e.g. ٪۲۶) with a chip
+ * per part; everyone else sees their ready one-time percent. Renders nothing
+ * when there is no money to speak of, so the wall predating this feature
+ * looks exactly as it always did.
+ */
+function discountStrip(d) {
+  if (!d) return null;
+  const ready = d.ready_percent || 0;
+  const pillar = d.pillar_percent || 0;
+  const next = d.next_purchase_percent || 0;
+  if (next <= 0) return null;
+
+  const kids = [
+    el('div', { class: 'dcp-disc-top' }, [
+      el('span', { class: 'dcp-disc-pct' + (pillar > 0 ? ' is-big' : '') }, '٪' + faNum(next)),
+      el('div', { class: 'dcp-disc-t' }, [
+        el('h3', {}, pillar > 0
+          ? `تمدید بعدی تو ٪${faNum(next)} ارزان‌تر است`
+          : `٪${faNum(next)} تخفیف آمادهٔ توست`),
+        el('p', {}, pillar > 0
+          ? 'قدردانیِ همیشگی ستون، به‌اضافهٔ تخفیف یک‌بارمصرفِ نشان‌هایت.'
+          : 'نشان‌های سطح دوم و سوم، هر کدام یک تخفیف یک‌بارمصرف دارند. در خرید بعدی خودکار کم می‌شود.'),
+      ]),
+    ]),
+  ];
+
+  if (pillar > 0 && ready > 0) {
+    kids.push(el('div', { class: 'dcp-disc-parts' }, [
+      el('span', { class: 'dcp-disc-chip' }, `ستون · ٪${faNum(pillar)} همیشگی`),
+      el('span', { class: 'dcp-disc-op' }, '+'),
+      el('span', { class: 'dcp-disc-chip' }, `نشان‌ها · ٪${faNum(next - pillar)} یک‌بارمصرف`),
+    ]));
+  }
+
+  if (ready > 0) {
+    kids.push(el('p', { class: 'dcp-disc-foot' },
+      ready > (d.cap_percent || 0)
+        ? `سهم نشان‌ها در هر خرید تا سقف ٪${faNum(d.cap_percent)} است؛ `
+          + `٪${faNum(ready - (next - pillar))} باقی‌مانده برای خریدهای بعد می‌ماند.`
+        : `در هر خرید تا سقف ٪${faNum(d.cap_percent)} اعمال می‌شود؛ باقی‌مانده برای خرید بعد می‌ماند.`));
+  }
+
+  kids.push(el('a', { class: 'dcp-disc-link', href: '/plus/pricing.html?from=achievements' },
+    'صفحهٔ اشتراک ›'));
+
+  return el('div', { class: 'dcp-disc' }, kids);
+}
+
+/**
  * The section body. Returns null when the catalog could not be loaded at all,
  * so the caller can leave the section out entirely rather than render an empty
  * card — a heading over nothing is worse than no heading.
@@ -242,9 +340,10 @@ export function achievementsBody(data) {
   if (!data || !Array.isArray(data.badges) || !data.badges.length) return null;
   return el('div', {}, [
     tally(data.summary),
+    discountStrip(data.discount),
     el('div', { class: 'dcp-md-row' }, (data.medals || []).map(medalTile)),
     el('div', { class: 'dcp-bg-wall' }, data.badges.map(badgeTile)),
-  ]);
+  ].filter(Boolean));
 }
 
 /* ---------------------------------------------------------- celebration -- */
@@ -282,7 +381,9 @@ function celebrationCard(items, onDone) {
   const paint = () => {
     const item = items[at];
     const more = items.length > 1;
-    card.replaceChildren(
+    // Built as a filtered array because replaceChildren() stringifies a bare
+    // null into a "null" text node rather than skipping it.
+    card.replaceChildren(...[
       el('div', { class: 'dcp-cel-hd' }, [
         celebrationDisc(item),
         el('div', {}, [
@@ -294,6 +395,13 @@ function celebrationCard(items, onDone) {
       // Never assembled here: a badge's copy is editorial and lives in
       // badges.json, and this card must not be the one surface that paraphrases.
       el('p', { class: 'dcp-cel-why' }, item.body_fa),
+      // The money, AFTER the catalog's own words: the discount is the badge's
+      // companion, never its reason — and this line is where a reader first
+      // learns the wall carries value at all.
+      item.discount_percent
+        ? el('span', { class: 'dcp-cel-val' },
+          `این نشان ٪${faNum(item.discount_percent)} تخفیف اشتراک با خودش آورد`)
+        : null,
       // Several at once is common — a first session can light three — and three
       // overlays in a row is a punishment, not a reward. One card, paged.
       more ? el('div', { class: 'dcp-cel-count' }, faNum(at + 1) + ' از ' + faNum(items.length)) : null,
@@ -306,7 +414,7 @@ function celebrationCard(items, onDone) {
           : el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button', onclick: onDone }, 'دیدم'),
         el('a', { class: 'dcp-btn dcp-btn-ghost', href: '/plus/profile.html' }, 'دیوارِ افتخارات'),
       ]),
-    );
+    ].filter(Boolean));
   };
   paint();
   return card;

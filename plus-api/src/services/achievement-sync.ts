@@ -244,7 +244,11 @@ export async function drainAchievementSyncs(): Promise<void> {
 
 /** The celebration's queue: what has been announced but not yet acknowledged. */
 export async function pendingAnnouncements(userId: string): Promise<
-  { key: string; title_fa: string; body_fa: string; icon: string | null; metal: string | null }[]
+  {
+    key: string; title_fa: string; body_fa: string; icon: string | null; metal: string | null;
+    /** The one-time discount the announced level minted, for the card's chip. */
+    discount_percent: number | null;
+  }[]
 > {
   const rows = await query<{ badge_key: string; level: number }>(
     `select badge_key, level from achievement_announcements
@@ -272,6 +276,7 @@ export async function pendingAnnouncements(userId: string): Promise<
         // The medal has no monoline badge icon; the client draws its shield.
         icon: null,
         metal: null,
+        discount_percent: null,
       });
       continue;
     }
@@ -289,6 +294,11 @@ export async function pendingAnnouncements(userId: string): Promise<
       // A level is a RING COLOUR, never a word — the client paints the ring from
       // this and the wall never writes «طلا» as text.
       metal: badge.leveled && badge.levels ? badge.levels[level]?.tier ?? null : null,
+      // The card's one extra line: what this level is worth. The money is the
+      // companion of the badge, never its reason, so the client shows it AFTER
+      // the catalog's own unlock copy.
+      discount_percent:
+        (badge.leveled && badge.levels ? badge.levels[level]?.discount_percent : null) ?? null,
     });
   }
   return out;

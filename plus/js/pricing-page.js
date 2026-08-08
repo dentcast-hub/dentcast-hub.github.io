@@ -442,6 +442,20 @@ async function main() {
       + `٪${toFa(info.pillar_discount.percent)} ارزان‌تر محاسبه شده‌اند — همیشه و در هر قیمتی.`));
   }
 
+  // The one-time credits (badge silver/gold levels, seasonal grants) already
+  // folded into the personalised prices above. Said out loud for two reasons:
+  // a discount with no visible cause reads as a pricing mistake, and «با همین
+  // خرید مصرف می‌شود» must be on screen BEFORE the pay button — one-time-ness
+  // is never allowed to be a surprise. Stacks under the pillar notice, so a
+  // seat-holder can read ٪۲۶ as ٪۲۰ + ٪۶.
+  if (info.onetime_discount) {
+    notices.push(notice('ok', 'تخفیف نشان‌های شما اعمال شد',
+      `٪${toFa(info.onetime_discount.percent)} تخفیف یک‌بارمصرفِ نشان‌هایتان روی قیمت‌های این `
+      + 'صفحه اعمال شده و با همین خرید مصرف می‌شود. '
+      + `سقف این تخفیف در هر خرید ٪${toFa(info.onetime_discount.cap_percent)} است؛ `
+      + 'نشان‌هایی که جا نشوند برای خرید بعد می‌مانند.'));
+  }
+
   // An existing subscriber is buying MORE time, not a first subscription — and
   // it must be clear that the days they already hold are added to, not replaced.
   if (user && user.subscription && user.subscription.expires_on) {
