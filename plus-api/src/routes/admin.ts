@@ -17,6 +17,9 @@ import { reconcilePendingPayments } from '../services/payment-reconcile.js';
 import { pillarRoster } from '../services/pillar.js';
 import { pillarWelcomeBackfill } from '../services/pillar-notify.js';
 import {
+  availableCredits, creditPercent, pickCredits, CREDIT_CAP_PERCENT,
+} from '../services/discount-credits.js';
+import {
   pendingRedemptions, approveRedemption, rejectRedemption,
 } from '../services/gift-redemption.js';
 import {
@@ -967,6 +970,71 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
   // the hour a batch of phones buzzes.
   app.post('/admin/pillar/welcome', async (_request, reply) => {
     return reply.send({ ok: true, ...await pillarWelcomeBackfill(new Date()) });
+  });
+
+  // --- one-time discount credits --------------------------------------------
+  // The founder's side of the generic credit engine (services/discount-credits.ts).
+  // Badge credits are derived and need no admin surface; these two endpoints
+  // exist for the credits that CANNOT be derived — a birthday, an Eid campaign,
+  // an apology — which become ordinary credits under the same per-purchase cap.
+
+  // POST /admin/discounts/grant { user|phone, percent, label, kind?, days? }
+  // One credit for one account. `label` is what the reader's own surfaces call
+  // it, so it is written in Persian here, once, and never assembled by code.
+  // `days` bounds a seasonal credit's life; omitted means it waits forever.
+  app.post('/admin/discounts/grant', userBody({
+    percent: { type: 'integer', minimum: 1, maximum: 100 },
+    label: { type: 'string', minLength: 1, maxLength: 120 },
+    kind: { type: 'string', maxLength: 40 },
+    days: { type: 'integer', minimum: 1, maximum: 3660 },
+  }, ['percent', 'label']), async (request, reply) => {
+    const body = request.body as {
+      user?: string; phone?: string; percent: number; label: string; kind?: string; days?: number;
+    };
+    const who = await resolveUser(pick(body), reply);
+    if (!who) return reply;
+    const grant = await one<{ id: string; percent: number; label_fa: string; expires_at: Date | null }>(
+      `insert into discount_grants (user_id, percent, kind, label_fa, expires_at)
+       values ($1, $2, $3, $4, case when $5::int is null then null else now() + ($5 || ' days')::interval end)
+       returning id, percent, label_fa, expires_at`,
+      [who.id, body.percent, body.kind || 'gift', body.label, body.days ?? null],
+    );
+    return reply.send({ ok: true, user_id: who.id, grant });
+  });
+
+  // GET /admin/discounts?user= — what this account could spend right now, and
+  // the full grant list. The badge credits appear here too, derived on the
+  // spot, so "چقدر تخفیف دارد؟" has one answer and this is where it lives.
+  app.get('/admin/discounts', {
+    schema: {
+      querystring: {
+        type: 'object',
+        properties: { user: { type: 'string' }, phone: { type: 'string' } },
+      },
+    },
+  }, async (request, reply) => {
+    const who = await resolveUser(pick(request.query as { user?: string; phone?: string }), reply);
+    if (!who) return reply;
+    const [ready, grants, redemptions] = await Promise.all([
+      availableCredits(who.id),
+      query('select id, percent, kind, label_fa, expires_at, created_at from discount_grants where user_id = $1 order by created_at desc', [who.id]),
+      query(
+        `select r.source, r.percent, r.created_at, p.status as payment_status, p.order_id
+           from discount_redemptions r join payments p on p.id = r.payment_id
+          where r.user_id = $1 order by r.created_at desc`,
+        [who.id],
+      ),
+    ]);
+    return reply.send({
+      ok: true,
+      user_id: who.id,
+      ready_percent: creditPercent(ready),
+      next_purchase_percent: creditPercent(pickCredits(ready)),
+      cap_percent: CREDIT_CAP_PERCENT,
+      ready_credits: ready,
+      grants: grants.rows,
+      redemptions: redemptions.rows,
+    });
   });
 
   // Force the pending-payment sweep now instead of waiting for the next tick.

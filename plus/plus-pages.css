@@ -1043,6 +1043,88 @@ a.dcp-progress-row:hover { text-decoration: none; }
    on the league card without lighting up the whole section. */
 [data-theme="dark"] .dcp-md-shield:not(.is-off) { filter: drop-shadow(0 4px 9px rgba(0,0,0,.45)) brightness(.94); }
 
+/* ---- the money layer: one-time discount credits --------------------------
+   Three additions to the wall, all reading from GET /achievements' discount
+   data: the strip above the medals (what the next purchase is worth), the
+   value tag on a disc (what this badge still holds), and the per-level chip
+   in the sheet. All of them say a PERCENT and never a metal's name — a level
+   stays a ring colour, not a word. Green marks money still spendable, the
+   same green ✓ already means "done" in the sheet. */
+.dcp-disc {
+  border: 1px solid var(--border, rgba(2,35,96,.10)); border-radius: var(--r-md, 14px);
+  background: var(--surface2, #f4f6fb); padding: 13px 14px; margin-bottom: 16px;
+}
+.dcp-disc-top { display: flex; align-items: center; gap: 13px; }
+.dcp-disc-pct {
+  flex: none; display: grid; place-items: center; width: 56px; height: 56px;
+  border-radius: 50%; border: 2.5px solid var(--ac, #0b5fff);
+  background: radial-gradient(circle at 32% 26%, rgba(var(--ac-rgb, 11,95,255), .16), transparent 70%), var(--card-bg, #fff);
+  font-size: 1.02rem; font-weight: 800; font-variant-numeric: tabular-nums;
+}
+.dcp-disc-pct.is-big {
+  border-color: #c99a2e; box-shadow: 0 0 0 4px rgba(201,154,46,.12);
+  background: radial-gradient(circle at 32% 26%, rgba(201,154,46,.26), transparent 70%), var(--card-bg, #fff);
+}
+.dcp-disc-t { min-width: 0; }
+.dcp-disc-t h3 { margin: 0 0 2px; font-size: .93rem; font-weight: 800; }
+.dcp-disc-t p { margin: 0; font-size: .79rem; color: var(--txt2, #4a5f85); line-height: 1.8; }
+.dcp-disc-parts { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 11px; }
+.dcp-disc-chip {
+  display: inline-flex; align-items: center; font-size: .75rem; font-weight: 800;
+  padding: 4px 11px; border-radius: 999px; font-variant-numeric: tabular-nums;
+  background: var(--card-bg, #fff); border: 1px solid var(--border, rgba(2,35,96,.10));
+  color: var(--txt2, #4a5f85);
+}
+.dcp-disc-op { font-size: .8rem; font-weight: 800; color: var(--txt3, #62779a); }
+.dcp-disc-foot { margin: 9px 2px 0; font-size: .72rem; color: var(--txt3, #62779a); line-height: 1.8; }
+.dcp-disc-link {
+  display: inline-block; margin-top: 6px; font-size: .78rem; font-weight: 800;
+  color: var(--ac, #0b5fff); text-decoration: none;
+}
+.dcp-disc-link:hover { text-decoration: underline; }
+
+.dcp-bg-val {
+  position: absolute; bottom: -5px; inset-inline-end: -8px;
+  font-size: .6rem; font-weight: 800; line-height: 1; padding: 3px 6px; border-radius: 999px;
+  background: var(--card-bg, #fff); border: 1.5px solid #1a9d5a; color: #1a9d5a;
+  font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+.dcp-bg-val.is-spent { border-color: var(--border, rgba(2,35,96,.12)); color: var(--txt3, #62779a); }
+
+.dcp-ach-lv-side {
+  display: flex; flex-direction: column; align-items: flex-end; gap: 5px; flex: none; margin-top: 3px;
+}
+.dcp-ach-lv-side .dcp-ach-lv-done, .dcp-ach-lv-side .dcp-ach-lv-need { margin-top: 0; }
+.dcp-ach-lv-val {
+  font-size: .69rem; font-weight: 800; white-space: nowrap; padding: 2.5px 9px; border-radius: 999px;
+  border: 1.5px solid #1a9d5a; color: #1a9d5a; background: var(--card-bg, #fff);
+  font-variant-numeric: tabular-nums;
+}
+.dcp-ach-lv-val.is-spent { border-color: var(--border, rgba(2,35,96,.12)); color: var(--txt3, #62779a); }
+.dcp-ach-lv-val.is-future { border-style: dashed; border-color: var(--border, rgba(2,35,96,.12)); color: var(--txt3, #62779a); }
+
+.dcp-cel-val {
+  display: inline-flex; align-items: center; margin-top: 12px;
+  font-size: .8rem; font-weight: 800; color: #1a9d5a;
+  border: 1.5px solid #1a9d5a; border-radius: 999px; padding: 6px 15px;
+  background: var(--card-bg, #fff);
+}
+
+/* Same dark-ground correction the ✓ already gets: the light green sits too
+   dark on #1e2c3a to read as "spendable". */
+[data-theme="dark"] .dcp-bg-val,
+[data-theme="dark"] .dcp-ach-lv-val,
+[data-theme="dark"] .dcp-cel-val { border-color: #4bcb8b; color: #4bcb8b; }
+[data-theme="dark"] .dcp-bg-val.is-spent,
+[data-theme="dark"] .dcp-ach-lv-val.is-spent,
+[data-theme="dark"] .dcp-ach-lv-val.is-future {
+  border-color: var(--border, rgba(255,255,255,.08)); color: var(--txt3, #6f8fb0);
+}
+[data-theme="dark"] .dcp-disc-pct.is-big {
+  border-color: #e3b849; box-shadow: 0 0 0 4px rgba(227,184,73,.14);
+  background: radial-gradient(circle at 32% 26%, rgba(227,184,73,.24), transparent 70%), var(--card-bg, #1e2c3a);
+}
+
 /* ===========================================================================
    اطلاعیه — the in-app inbox (plus/js/notices.js), and the badge celebration
    that shares its vocabulary.

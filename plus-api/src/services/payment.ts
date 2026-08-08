@@ -3,8 +3,12 @@ import { one, query, withTransaction, type Queryable } from '../db.js';
 import { pool } from '../db.js';
 import { activateMonths, type Subscription } from './subscription.js';
 import { canSellPlan, planAmountRial, periodStamps, capacityMessage } from './payment-capacity.js';
-import { pillarSeat, isPillarSeat, pillarAmountRial } from './pillar.js';
+import { pillarSeat, isPillarSeat, PILLAR_DISCOUNT_PERCENT } from './pillar.js';
 import { schedulePillarWelcome } from './pillar-notify.js';
+import {
+  availableCredits, pickCredits, creditPercent, discountedRial,
+  recordRedemptions, redemptionsForPayment, type DiscountCredit,
+} from './discount-credits.js';
 import { zibalRequest, zibalVerify, isSandbox } from './zibal.js';
 import { checkCapacityAlert } from './payment-cap-alert.js';
 
@@ -120,17 +124,38 @@ export async function startPayment(params: {
   // on purpose: the conservative reading can only refuse a sale slightly early,
   // never push one past the ceiling.
   const seat = await pillarSeat(params.userId);
-  const amountRial = isPillarSeat(seat) ? pillarAmountRial(listRial) : listRial;
+
+  // One-time discount credits (badge silver/gold levels, granted campaigns):
+  // capped per purchase, consumed by it, stacked ON TOP of the pillar percent.
+  // Guarded so the credit engine can never take the shop down — a purchase
+  // that misses a discount is an apology; a purchase that 500s is a lost sale.
+  let credits: DiscountCredit[] = [];
+  try {
+    credits = pickCredits(await availableCredits(params.userId, { now }));
+  } catch {
+    credits = [];
+  }
+  const totalPercent = (isPillarSeat(seat) ? PILLAR_DISCOUNT_PERCENT : 0) + creditPercent(credits);
+  const amountRial = totalPercent > 0 ? discountedRial(listRial, totalPercent) : listRial;
   const orderId = mintOrderId(params.userId, params.months, now);
   const stamps = periodStamps(now);
 
-  const payment = (await one<Payment>(
-    `insert into payments
-       (user_id, amount_rial, months, gateway, order_id, status, period_jalali, period_gregorian)
-     values ($1, $2, $3, 'zibal', $4, 'pending', $5, $6)
-     returning ${PAYMENT_COLUMNS}`,
-    [params.userId, amountRial, params.months, orderId, stamps.period_jalali, stamps.period_gregorian],
-  ))!;
+  // The row and the credits it consumes move together: a redemption row is what
+  // marks a credit spent (spentSources joins on this payment's status), so a
+  // discounted amount without its redemptions would let the same credit price
+  // two purchases.
+  const payment = (await withTransaction(async (client) => {
+    const row = (await one<Payment>(
+      `insert into payments
+         (user_id, amount_rial, months, gateway, order_id, status, period_jalali, period_gregorian)
+       values ($1, $2, $3, 'zibal', $4, 'pending', $5, $6)
+       returning ${PAYMENT_COLUMNS}`,
+      [params.userId, amountRial, params.months, orderId, stamps.period_jalali, stamps.period_gregorian],
+      client,
+    ))!;
+    await recordRedemptions(client, params.userId, row.id, credits);
+    return row;
+  }))!;
 
   const req = await zibalRequest({
     amountRial,
@@ -278,6 +303,11 @@ export async function settlePayment(trackId: string, now: Date = new Date()): Pr
   // startPayment priced from.
   const seat = await pillarSeat(existing.user_id);
 
+  // Same audit-only role for the one-time credits this payment consumed: the
+  // redemption rows explain why amount_rial sits below the list price, and the
+  // meta is what lets a human square that without re-deriving anything.
+  const credits = await redemptionsForPayment(existing.id).catch(() => []);
+
   // The activation and the ledger move together or not at all: a subscription
   // extended against a row still reading 'pending' would be extended again by
   // the next refresh.
@@ -303,6 +333,10 @@ export async function settlePayment(trackId: string, now: Date = new Date()): Pr
         amount_rial: existing.amount_rial,
         sandbox: isSandbox(),
         ...(isPillarSeat(seat) ? { pillar_seat: seat } : {}),
+        ...(credits.length ? {
+          discount_credit_percent: credits.reduce((s, c) => s + c.percent, 0),
+          discount_credit_sources: credits.map((c) => c.source),
+        } : {}),
         ...(reconciled ? { reconciled_from_already_verified: true } : {}),
       },
     });
