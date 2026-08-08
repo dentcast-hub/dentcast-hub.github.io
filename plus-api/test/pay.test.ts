@@ -280,7 +280,11 @@ describe('GET /pay/callback — the money-critical path', () => {
     await app.inject({
       method: 'POST', url: '/pay/start', headers: { cookie }, payload: { months: 6 },
     });
-    gatewayReplies({ ...VERIFY_OK, refNumber: 'REF-10' });
+    // The renewal is cheaper than the first purchase: one settled payment made
+    // this account a «ستون» seat-holder, so the gateway charged the discounted
+    // figure and must verify it back — the list amount would (rightly) be
+    // refused as a mismatch.
+    gatewayReplies({ ...VERIFY_OK, amount: 48_000_000, refNumber: 'REF-10' });
     await app.inject({ method: 'GET', url: '/pay/callback?success=1&trackId=TRK-2' });
 
     const second = await getSubscription(uid);
@@ -400,5 +404,129 @@ describe('settlePayment used directly', () => {
     expect(outcomes).toEqual(['activated', 'already_settled']);
     const subs = await pool.query('select count(*)::int as n from subscriptions where user_id = $1', [uid]);
     expect(subs.rows[0].n).toBe(1);
+  });
+});
+
+describe('«ستون» — the first-fifty renewal discount', () => {
+  const SIX_DISCOUNTED = 48_000_000; // 60,000,000 minus twenty percent, exactly
+
+  /** Seed a settled gateway purchase, which is what mints a seat. */
+  async function seedPaid(uid: string, orderId: string, verifiedAt: string): Promise<void> {
+    await pool.query(
+      `insert into payments (user_id, amount_rial, months, gateway, order_id, status,
+                             verified_at, period_jalali, period_gregorian)
+       values ($1, $2, 6, 'zibal', $3, 'paid', $4,
+               to_char(now(), 'YYYY-MM'), to_char(now(), 'YYYY-MM'))`,
+      [uid, SIX_MONTH_RIAL, orderId, verifiedAt],
+    );
+  }
+
+  it('never discounts a first purchase — the seat does not exist until the money arrives', async () => {
+    const cookie = await loginAs(app, PHONE);
+    gatewayReplies(REQUEST_OK);
+
+    const res = await app.inject({
+      method: 'POST', url: '/pay/start', headers: { cookie }, payload: { months: 6 },
+    });
+
+    expect(res.json().amount_rial).toBe(SIX_MONTH_RIAL);
+    const sent = JSON.parse((fetchMock.mock.calls[0][1] as RequestInit).body as string);
+    expect(sent.amount).toBe(SIX_MONTH_RIAL);
+  });
+
+  it('prices a seat-holder\'s renewal twenty percent down, at the gateway too', async () => {
+    const cookie = await loginAs(app, PHONE);
+    const uid = await userId(cookie);
+    await seedPaid(uid, 'first_buy', new Date().toISOString());
+
+    gatewayReplies(REQUEST_OK);
+    const res = await app.inject({
+      method: 'POST', url: '/pay/start', headers: { cookie }, payload: { months: 6 },
+    });
+
+    // Both the row and the gateway request carry the discounted figure, so the
+    // verify-time amount comparison keeps protecting the sale unchanged.
+    expect(res.json().amount_rial).toBe(SIX_DISCOUNTED);
+    const sent = JSON.parse((fetchMock.mock.calls[0][1] as RequestInit).body as string);
+    expect(sent.amount).toBe(SIX_DISCOUNTED);
+  });
+
+  it('settles the discounted renewal and files the seat in the activation audit', async () => {
+    const cookie = await loginAs(app, PHONE);
+    const uid = await userId(cookie);
+    await seedPaid(uid, 'first_buy', new Date().toISOString());
+
+    gatewayReplies(REQUEST_OK);
+    await app.inject({
+      method: 'POST', url: '/pay/start', headers: { cookie }, payload: { months: 6 },
+    });
+    gatewayReplies({ result: 100, status: 1, amount: SIX_DISCOUNTED, refNumber: 'REF-P' });
+
+    const res = await app.inject({ method: 'GET', url: '/pay/callback?success=1&trackId=TRK-1' });
+
+    expect(res.headers.location).toContain('status=activated');
+    const audit = await pool.query(
+      `select meta from user_activity
+        where user_id = $1 and action = 'subscription_activated'`,
+      [uid],
+    );
+    expect(audit.rows[0].meta.pillar_seat).toBe(1);
+    expect(audit.rows[0].meta.amount_rial).toBe(SIX_DISCOUNTED);
+  });
+
+  it('personalises GET /pay/plans for a seat-holder without touching the public answer', async () => {
+    const anon = (await app.inject({ method: 'GET', url: '/pay/plans' })).json();
+    expect(anon.pillar_discount).toBeNull();
+    expect(anon.plans.map((p: { amount_rial: number }) => p.amount_rial))
+      .toEqual([12_000_000, 33_000_000, 60_000_000]);
+
+    const cookie = await loginAs(app, PHONE);
+    const uid = await userId(cookie);
+    await seedPaid(uid, 'first_buy', new Date().toISOString());
+
+    const mine = (await app.inject({
+      method: 'GET', url: '/pay/plans', headers: { cookie },
+    })).json();
+
+    expect(mine.pillar_discount).toEqual({ percent: 20 });
+    // `amount_rial` keeps meaning "what this person pays" under its old name —
+    // a cached pricing-page.js shows the right total with no new field read.
+    const six = mine.plans.find((p: { months: number }) => p.months === 6);
+    expect(six.amount_rial).toBe(SIX_DISCOUNTED);
+    expect(six.list_amount_rial).toBe(SIX_MONTH_RIAL);
+    // The «از ماهی …» floor follows the personalised ladder.
+    expect(mine.from_monthly_rial).toBe(SIX_DISCOUNTED / 6);
+  });
+
+  it('seats are ordered by first settled payment, and a later payer sits behind', async () => {
+    const { pillarSeat } = await import('../src/services/pillar.js');
+    const first = await loginAs(app, PHONE);
+    const second = await loginAs(app, '09121600003');
+    const uid1 = await userId(first);
+    const uid2 = await userId(second);
+
+    // The second account settled EARLIER — seat order follows the money, not
+    // signup order and not row-insertion order.
+    await seedPaid(uid1, 'late', new Date('2026-08-02T10:00:00Z').toISOString());
+    await seedPaid(uid2, 'early', new Date('2026-08-01T10:00:00Z').toISOString());
+    // A second renewal must not mint a second seat.
+    await seedPaid(uid2, 'early_renewal', new Date('2026-08-03T10:00:00Z').toISOString());
+
+    expect(await pillarSeat(uid2)).toBe(1);
+    expect(await pillarSeat(uid1)).toBe(2);
+  });
+
+  it('closes the discount at seat fifty, and floors ragged prices toward the customer', async () => {
+    const { isPillarSeat, pillarAmountRial, PILLAR_SEATS } = await import('../src/services/pillar.js');
+    expect(PILLAR_SEATS).toBe(50);
+    expect(isPillarSeat(1)).toBe(true);
+    expect(isPillarSeat(50)).toBe(true);
+    expect(isPillarSeat(51)).toBe(false); // paid, but the seats were gone
+    expect(isPillarSeat(null)).toBe(false); // never paid
+    expect(pillarAmountRial(60_000_000)).toBe(48_000_000);
+    expect(pillarAmountRial(33_000_000)).toBe(26_400_000);
+    // A ladder price that does not divide cleanly is floored to a whole
+    // 1,000-toman step, never rounded up.
+    expect(pillarAmountRial(12_345_678)).toBe(9_870_000);
   });
 });
