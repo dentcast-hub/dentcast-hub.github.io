@@ -62,6 +62,24 @@ export async function activityRoutes(app: FastifyInstance): Promise<void> {
       return reply.send({ ok: true, counted: true });
     }
 
+    // A CEILING ON THE LOG ITSELF. Everything downstream of this row — league
+    // XP, the all-time score, the streak, the badge wall — trusts that a row
+    // means a human did something. Nothing else enforces that: the action
+    // vocabulary is open by design and `card_reviewed_manual` deliberately
+    // touches no state, so before this the endpoint would accept a loop of
+    // identical posts and pay for every one (2026-08-08: an account reached
+    // four figures of league XP inside a day).
+    //
+    // Set well above real use — a heavy reading session is a few dozen rows an
+    // hour, counting highlights — so this is never felt by a reader and only
+    // ever bites a script. It is the blunt outer wall; the per-action ceilings
+    // in league.ts are the shaped ones inside it.
+    const limit = consume(`activity:user:${request.user!.id}`, config.activity.maxPerUserPerHour, HOUR_MS);
+    if (!limit.allowed) {
+      reply.header('retry-after', Math.ceil(limit.retryAfterMs / 1000));
+      return reply.code(429).send({ error: 'rate_limited' });
+    }
+
     // `card_reviewed_manual` counts for the streak but MUST NOT touch card_state.
     // recordActivity only appends to the log, so that invariant holds here.
     const row = await recordActivity(request.user!.id, action, content_id ?? null, meta ?? {});

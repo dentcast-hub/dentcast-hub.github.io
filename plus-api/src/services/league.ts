@@ -354,6 +354,25 @@ export async function awardLeagueXp(
   };
 
   /**
+   * The same weekly count across SEVERAL actions at once.
+   *
+   * Review needs it: `card_reviewed_manual` (free) and `review_finished`
+   * (premium) are the same act on two plans, so they must share one ceiling —
+   * counting them apart would just hand anyone holding both a doubled lane.
+   * The current row is already inserted when this runs, so the comparison is
+   * `<= cap` and the Nth review of the week is the last one that pays.
+   */
+  const weekActionCountAny = async (acts: string[]): Promise<number> => {
+    const r = await client.query<{ n: number }>(
+      `select count(*)::int as n from user_activity
+        where user_id = $1 and action = any($2)
+          and (created_at at time zone $3)::date between $4::date and $5::date`,
+      [userId, acts, tz, week_start, week_end],
+    );
+    return r.rows[0]?.n ?? 0;
+  };
+
+  /**
    * A 0030 weight, if its weekly ceiling still has room. Zero cap = no cap.
    *
    * `distinctContent` has to match how the action is PAID, or the ceiling
@@ -394,7 +413,20 @@ export async function awardLeagueXp(
   } else if (action === 'highlight_created') {
     if (contentId && (await weekCount(action)) <= cfg.xp_highlight_cap) xpDelta += cfg.xp_highlight;
   } else if (action === 'card_reviewed_manual' || action === 'review_finished') {
-    xpDelta += cfg.xp_review;
+    // Capped since 2026-08-08, and it is the ONLY path that ever ran without a
+    // bound. `card_reviewed_manual` reaches this from POST /activity, which by
+    // design only appends a log row — no card, no highlight, no state of any
+    // kind is required — so an unbounded weight here was league XP (and
+    // all-time score, which buys streak shields) available in a loop.
+    //
+    // The two actions share one ceiling on purpose: they are the same act on
+    // two plans, and counting them separately would just double the lane for
+    // anyone holding both.
+    if (cfg.xp_review > 0) {
+      const reviewsThisWeek = await weekActionCountAny(['card_reviewed_manual', 'review_finished']);
+      const cap = cfg.xp_review_weekly_cap;
+      if (cap <= 0 || reviewsThisWeek <= cap) xpDelta += cfg.xp_review;
+    }
   } else if (action === SHARE_ACTION) {
     xpDelta += await shareXp(client, cfg, userId, contentId, tz, week_start, week_end);
   }

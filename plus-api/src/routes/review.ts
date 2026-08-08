@@ -96,8 +96,9 @@ export async function reviewRoutes(app: FastifyInstance): Promise<void> {
     const userId = request.user!.id;
 
     const updated = await withTransaction(async (client) => {
-      const cur = await client.query<{ box: number; content_id: string }>(
-        `select cs.box, h.content_id
+      const cur = await client.query<{ box: number; content_id: string; was_due: boolean }>(
+        `select cs.box, h.content_id,
+                (cs.next_review_at is null or cs.next_review_at <= now()) as was_due
            from card_state cs
            join highlights h on h.id = cs.highlight_id
           where cs.user_id = $1 and cs.highlight_id = $2
@@ -105,7 +106,7 @@ export async function reviewRoutes(app: FastifyInstance): Promise<void> {
         [userId, highlight_id],
       );
       if (cur.rowCount === 0) return null;
-      const { box: currentBox, content_id } = cur.rows[0];
+      const { box: currentBox, content_id, was_due: wasDue } = cur.rows[0];
       const box = nextBox(currentBox, result);
       const days = intervalDaysForBox(box);
 
@@ -120,7 +121,14 @@ export async function reviewRoutes(app: FastifyInstance): Promise<void> {
           returning box, next_review_at, reviewed_count`,
         [box, days, result, userId, highlight_id],
       );
-      await recordActivity(userId, 'review_finished', content_id, { highlight_id, result }, client);
+      // The card still moves — a reader who wants to drill something early is
+      // doing the right thing and the box should follow them. What an early
+      // review does NOT do is pay: recordActivity is what league.ts prices, so
+      // logging one for a card that was not due turned "press the same card
+      // again" into an XP tap. Due-ness, not the press, is the unit of study.
+      if (wasDue) {
+        await recordActivity(userId, 'review_finished', content_id, { highlight_id, result }, client);
+      }
       return res.rows[0];
     });
 

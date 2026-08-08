@@ -5,6 +5,7 @@ import { pool } from '../src/db.js';
 import { finalizeWeek } from '../src/services/league-finalize.js';
 import { getLeagueConfig } from '../src/services/league-config.js';
 import { config } from '../src/config.js';
+import { resetRateLimits } from '../src/services/rate-limit.js';
 
 const WEEK = '2026-01-03';       // opaque week key for finalize unit tests
 let seq = 0;
@@ -494,5 +495,79 @@ describe('GET /league — the scoring table the explainer shows', () => {
     const res = await app.inject({ method: 'GET', url: '/league', headers: { cookie } });
     expect(res.json().joined).toBe(false);
     expect(res.json().xp.read).toBeTypeOf('number');
+  });
+});
+
+// ------------------------------------------------- review was the open lane ---
+//
+// Reported 2026-08-08: an account entered the composite league and passed a
+// thousand weekly XP inside a day. Every earning path in league.ts is bounded —
+// reading pays once per (content, week), highlights cap at three an article,
+// pinning is once per page AND capped weekly, sharing needs the article finished
+// — except review, which was a bare `xpDelta += cfg.xp_review`.
+//
+// What made that severe rather than generous: `card_reviewed_manual` arrives
+// through POST /activity, which by design only appends a log row. No card, no
+// highlight, no state of any kind. So the cheapest thousand points in the
+// product was a loop of identical posts, and the same rows also inflate the
+// all-time score, which buys streak shields.
+describe('review XP cannot be farmed', () => {
+  let app: FastifyInstance;
+  beforeEach(async () => { await resetDb(); app = await makeApp(); resetRateLimits(); });
+
+  const act = (cookie: string, action: string, content_id?: string) => app.inject({
+    method: 'POST', url: '/activity', headers: { cookie }, payload: { action, content_id },
+  });
+  const myXp = async (cookie: string) => (await app.inject({
+    method: 'GET', url: '/league', headers: { cookie },
+  })).json().my_weekly_xp;
+
+  it('stops paying past the weekly ceiling, however many times it is called', async () => {
+    await setConfig('xp_review_weekly_cap', '3');
+    const cookie = await loginAs(app, '09120000031');
+
+    for (let i = 0; i < 20; i += 1) await act(cookie, 'card_reviewed_manual');
+
+    // 5 active-day bonus + 3 paying reviews × 2. The other seventeen paid nothing.
+    expect(await myXp(cookie)).toBe(11);
+  });
+
+  it('shares ONE ceiling between the free and premium review actions', async () => {
+    // They are the same act on two plans; separate ceilings would just double
+    // the lane for anyone holding both.
+    await setConfig('xp_review_weekly_cap', '2');
+    const cookie = await loginAs(app, '09120000032');
+
+    await act(cookie, 'card_reviewed_manual');
+    await act(cookie, 'review_finished');
+    await act(cookie, 'card_reviewed_manual');
+    await act(cookie, 'review_finished');
+
+    expect(await myXp(cookie)).toBe(9); // 5 + 2 paying reviews × 2
+  });
+
+  it('keeps paying uncapped when the ceiling is 0, like every other knob', async () => {
+    await setConfig('xp_review_weekly_cap', '0');
+    const cookie = await loginAs(app, '09120000033');
+
+    for (let i = 0; i < 6; i += 1) await act(cookie, 'card_reviewed_manual');
+
+    expect(await myXp(cookie)).toBe(17); // 5 + 6 × 2
+  });
+
+  it('refuses the loop itself once the hourly activity ceiling is hit', async () => {
+    // The blunt outer wall, independent of any per-action rule: whatever the
+    // action, the log will not accept an unbounded stream from one account.
+    const cookie = await loginAs(app, '09120000034');
+    const cap = config.activity.maxPerUserPerHour;
+    config.activity.maxPerUserPerHour = 5;
+    try {
+      const codes: number[] = [];
+      for (let i = 0; i < 8; i += 1) codes.push((await act(cookie, 'card_reviewed_manual')).statusCode);
+      expect(codes.filter((c) => c === 200)).toHaveLength(5);
+      expect(codes.filter((c) => c === 429)).toHaveLength(3);
+    } finally {
+      config.activity.maxPerUserPerHour = cap;
+    }
   });
 });

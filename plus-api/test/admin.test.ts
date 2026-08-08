@@ -451,3 +451,67 @@ describe('GET /admin/pillar — the «ستون» roster', () => {
     expect(second.json()).toMatchObject({ ok: true, holders: 2, welcomed: 0, already: 2 });
   });
 });
+
+describe('score forensics', () => {
+  // Added 2026-08-08, when a suspected farming account could not even be looked
+  // up: resolveUser matches exactly, and nothing anywhere reported where one
+  // account's points came from. Both gaps made a suspicion unanswerable.
+  const auth = 'Basic ' + Buffer.from(
+    `${config.admin.user}:${config.admin.password}`,
+  ).toString('base64');
+
+  it('finds an account by part of its display name', async () => {
+    const cookie = await loginAs(app, '09121400001');
+    await app.inject({
+      method: 'PATCH', url: '/me', headers: { cookie },
+      payload: { display_name: 'صدرا کریمی' },
+    });
+
+    const res = await app.inject({
+      method: 'GET', url: '/admin/users/search?q=' + encodeURIComponent('صدرا'),
+      headers: { authorization: auth },
+    });
+
+    expect(res.statusCode).toBe(200);
+    expect(res.json().users.map((u: { display_name: string }) => u.display_name))
+      .toContain('صدرا کریمی');
+  });
+
+  it('refuses a query too short to mean anything', async () => {
+    const res = await app.inject({
+      method: 'GET', url: '/admin/users/search?q=a', headers: { authorization: auth },
+    });
+    expect(res.statusCode).toBe(400);
+  });
+
+  it('breaks a score down by action, and exposes the per-minute burst', async () => {
+    const cookie = await loginAs(app, '09121400002');
+    for (let i = 0; i < 4; i += 1) {
+      await app.inject({
+        method: 'POST', url: '/activity', headers: { cookie },
+        payload: { action: 'card_reviewed_manual' },
+      });
+    }
+    await app.inject({
+      method: 'POST', url: '/activity', headers: { cookie },
+      payload: { action: 'article_completed', content_id: 'insight/insight-1' },
+    });
+
+    const res = await app.inject({
+      method: 'GET', url: '/admin/score?user=09121400002', headers: { authorization: auth },
+    });
+
+    expect(res.statusCode).toBe(200);
+    const rows = res.json().breakdown as Array<{ action: string; rows: number; max_per_minute: number }>;
+    const review = rows.find((r) => r.action === 'card_reviewed_manual')!;
+    expect(review.rows).toBe(4);
+    // The column the whole endpoint exists for: four in one minute is not reading.
+    expect(review.max_per_minute).toBe(4);
+    expect(rows.find((r) => r.action === 'article_completed')!.rows).toBe(1);
+  });
+
+  it('requires admin credentials', async () => {
+    const res = await app.inject({ method: 'GET', url: '/admin/score?user=09121400002' });
+    expect(res.statusCode).toBe(401);
+  });
+});
