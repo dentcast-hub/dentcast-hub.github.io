@@ -28,9 +28,13 @@ import { pool, one, type Queryable } from '../db.js';
  *     would make the order of the first fifty depend on when someone was at
  *     their desk. Real money over the gift rail is honoured, but not seated.
  *
- * The count is fixed at fifty and the discount at twenty percent, both by
- * decision (2026-08-08): like «پیشگام»'s five hundred, the number is a promise
- * to the people who already hold it and must never grow.
+ * The count is fixed at FIFTY-ONE and the discount at twenty percent, both by
+ * decision (2026-08-08): fifty seats for the readers the campaign promises
+ * them to, plus one because the founder's own account also pays through the
+ * gateway and would otherwise occupy a reader's seat. Every public word —
+ * badge copy, the campaign, the docs — keeps saying «پنجاه», and stays true:
+ * fifty readers hold seats. Like «پیشگام»'s five hundred, the number is a
+ * promise to the people who already hold it and must never grow again.
  *
  * THE FILL STATE IS A SECRET (decision 2026-08-08). An unearned «ستون» is
  * `earned_only` — invisible — and no reader-facing surface ever says whether
@@ -45,8 +49,11 @@ import { pool, one, type Queryable } from '../db.js';
  * auth, which is how they know when to stop advertising.
  */
 
-/** How many accounts can ever hold a «ستون» seat. Never grows. */
-export const PILLAR_SEATS = 50;
+/**
+ * How many accounts can ever hold a «ستون» seat: fifty readers plus the
+ * founder's own paid account (see the header note). Never grows.
+ */
+export const PILLAR_SEATS = 51;
 
 /** Whole-percent discount a seat-holder gets on every renewal, at any price. */
 export const PILLAR_DISCOUNT_PERCENT = 20;
