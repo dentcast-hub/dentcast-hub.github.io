@@ -74,6 +74,13 @@ function planCard(plan, { featured, onPick, selected, base }) {
   // only where it differs from the total, since «۱٬۲۰۰٬۰۰۰ / ماهی ۱٬۲۰۰٬۰۰۰» on
   // the one-month card is noise.
   const price = el('span', { class: 'dcp-plan-price' }, [
+    // The «ستون» strikethrough: when the API personalised this plan,
+    // list_amount_rial is the price everyone else pays and amount_rial the one
+    // this reader will actually be charged. Both shown — a discount nobody can
+    // see the size of is indistinguishable from no discount.
+    plan.list_amount_rial && plan.list_amount_rial !== plan.amount_rial
+      ? el('s', { class: 'dcp-plan-list' }, toman(plan.list_amount_rial))
+      : null,
     el('span', {}, [
       toman(plan.amount_rial),
       el('span', { class: 'dcp-plan-unit' }, 'تومان'),
@@ -424,6 +431,15 @@ async function main() {
   } else if (info.plans.some((p) => !p.available)) {
     notices.push(notice('warn', 'ظرفیت این ماه رو به پایان است',
       'طرح‌های بلندتر در سقف این ماه جا نمی‌شوند؛ طرح‌های کوتاه‌تر در دسترس‌اند.'));
+  }
+
+  // A «ستون» seat-holder's prices are already 20% down, silently — and a
+  // discount that does not say why it is there reads as a pricing mistake.
+  // ٪ before the number, as everywhere else on the site.
+  if (info.pillar_discount) {
+    notices.push(notice('ok', 'تخفیف دائمی «ستون» فعال است',
+      `به‌عنوان یکی از پنجاه خریدار اول، همه‌ی قیمت‌های این صفحه برای شما `
+      + `٪${toFa(info.pillar_discount.percent)} ارزان‌تر محاسبه شده‌اند — همیشه و در هر قیمتی.`));
   }
 
   // An existing subscriber is buying MORE time, not a first subscription — and

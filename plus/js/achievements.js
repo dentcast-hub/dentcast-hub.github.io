@@ -55,6 +55,11 @@ const ICONS = {
   // to somebody else — and a reader holding both should be able to see that.
   lamp: '<path d="M10.5 4.2v-.7a1.5 1.5 0 0 1 3 0v.7"/><path d="M6.8 7.2 8.9 4.2h6.2l2.1 3"/><path d="M8.6 7.2c-.9 3.6-.9 6.6 0 9.8"/><path d="M15.4 7.2c.9 3.6.9 6.6 0 9.8"/><path d="M6.8 20 8.9 17h6.2l2.1 3z"/><path d="M12 8.8c2 2.6 3 3.7 3 5.6a3 3 0 0 1-6 0c0-1.2.55-2.15 1.45-3 .18.78.54 1.26 1.02 1.5-.4-.86-.6-2.2.53-4.1z"/>',
   star: '<path d="M12 3.4l2.7 5.5 6 .9-4.35 4.2 1.05 6-5.4-2.85L6.6 20l1.05-6L3.3 9.8l6-.9z"/>',
+  // A column — «ستون». Two horizontal bars for the capital and base, three
+  // vertical flutes between them: at the 25px the wall draws these, the flutes
+  // are what keep it from collapsing into the letter π, and a pediment or any
+  // more architecture turned to mush (checked at size, like `lamp`).
+  pillar: '<path d="M4.8 4.6h14.4"/><path d="M6.4 7.2h11.2"/><path d="M8.4 7.2v9.6"/><path d="M12 7.2v9.6"/><path d="M15.6 7.2v9.6"/><path d="M6.4 16.8h11.2"/><path d="M4.8 19.4h14.4"/>',
   // Rank insignia — «جلودار». Three chevrons rather than anything pictorial:
   // the two obvious pictures for "out in front" were a banner and a laurel, and
   // at the 25px the wall draws these the banner was indistinguishable from

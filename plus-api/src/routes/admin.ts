@@ -14,6 +14,7 @@ import {
 } from '../services/subscription.js';
 import { getCapacity } from '../services/payment-capacity.js';
 import { reconcilePendingPayments } from '../services/payment-reconcile.js';
+import { pillarRoster } from '../services/pillar.js';
 import {
   pendingRedemptions, approveRedemption, rejectRedemption,
 } from '../services/gift-redemption.js';
@@ -946,6 +947,15 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
   // turns PAYMENT_CAP_COUNTS_ATTEMPTS from a guess into a decision.
   app.get('/admin/payments/capacity', async (_request, reply) => {
     return reply.send({ ok: true, ...await getCapacity() });
+  });
+
+  // GET /admin/pillar — the «ستون» roster: who holds the first-fifty seats and
+  // how many remain. THE ONLY SURFACE that ever reports the fill state, by
+  // decision (services/pillar.ts): "still open" would announce fewer than
+  // fifty paying accounts and "closed" would date the fiftieth, so readers get
+  // neither and this is how the founder knows when to stop advertising.
+  app.get('/admin/pillar', async (_request, reply) => {
+    return reply.send({ ok: true, ...await pillarRoster() });
   });
 
   // Force the pending-payment sweep now instead of waiting for the next tick.

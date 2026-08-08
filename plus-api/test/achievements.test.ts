@@ -32,7 +32,7 @@ const COMPUTED = new Set([
   'distinct_folders', 'folders_completed', 'archive_read', 'night_activity',
   'dawn_activity', 'weekend_pair', 'early_reads', 'weeks_no_demotion',
   'pathways_completed', 'review_sessions', 'collections', 'collection_items',
-  'shares', 'tiers_won', 'founder_seat',
+  'shares', 'tiers_won', 'founder_seat', 'pillar_seat',
 ]);
 
 beforeEach(async () => {
@@ -264,6 +264,29 @@ describe('GET /achievements', () => {
     const founder = badgeOf(body, 'founder_reader');
     expect(founder.earned).toBe(true);
     expect(founder.lead_fa).toContain('اولین‌های');
+  });
+
+  it('keeps «ستون» invisible until the account has actually paid, then lights it off the ledger', async () => {
+    // Absent, not dark: the fill state is a secret (the badge's
+    // _visibility_reason) — an unearned «ستون» on the wall would tell every
+    // reader whether we are still under fifty paying accounts.
+    const before = await get();
+    expect(badgeOf(before, 'pillar')).toBeUndefined();
+
+    // One settled gateway purchase — the same row services/pillar.ts ranks.
+    // Derived, not written: no badge row exists anywhere, only this payment.
+    const me = await userId();
+    await pool.query(
+      `insert into payments (user_id, amount_rial, months, gateway, order_id, status,
+                             verified_at, period_jalali, period_gregorian)
+       values ($1, 60000000, 6, 'zibal', 'pillar_test', 'paid', now(),
+               to_char(now(), 'YYYY-MM'), to_char(now(), 'YYYY-MM'))`,
+      [me],
+    );
+    const after = await get();
+    const lit = badgeOf(after, 'pillar');
+    expect(lit.earned).toBe(true);
+    expect(lit.lead_fa).toContain('بیست درصد');
   });
 
   it('puts earned badges first and mysteries last', async () => {

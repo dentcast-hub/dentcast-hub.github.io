@@ -123,6 +123,44 @@ describe('the published ladder', () => {
   });
 });
 
+describe('the «ستون» seat-holder view', () => {
+  const PILLAR = {
+    ...LIVE,
+    from_monthly_rial: 8_000_000,
+    pillar_discount: { percent: 20 },
+    plans: [
+      { months: 1, amount_rial: 9_600_000, list_amount_rial: 12_000_000, available: true, blocked_by: null },
+      { months: 3, amount_rial: 26_400_000, list_amount_rial: 33_000_000, available: true, blocked_by: null },
+      { months: 6, amount_rial: 48_000_000, list_amount_rial: 60_000_000, available: true, blocked_by: null },
+    ],
+  };
+
+  it('shows the discounted price as THE price, with the list struck through beside it', async () => {
+    const root = await renderPricing(PILLAR);
+    const six = cards(root)[2].querySelector('.dcp-plan-price')!;
+
+    // What will actually be charged is the number that reads as the price…
+    expect(six.textContent).toContain('۴٬۸۰۰٬۰۰۰');
+    // …and the list price is present, struck through, so the discount has a
+    // visible size instead of looking like a pricing mistake.
+    const struck = six.querySelector('.dcp-plan-list')!;
+    expect(struck.textContent).toContain('۶٬۰۰۰٬۰۰۰');
+  });
+
+  it('says why the prices are down, once, above the ladder', async () => {
+    const root = await renderPricing(PILLAR);
+    const noticeText = root.querySelector('.dcp-price-notice.is-ok')!.textContent!;
+    expect(noticeText).toContain('ستون');
+    expect(noticeText).toContain('٪۲۰');
+  });
+
+  it('adds no strikethrough for everyone else — the public ladder is untouched', async () => {
+    const root = await renderPricing(LIVE);
+    expect(root.querySelectorAll('.dcp-plan-list')).toHaveLength(0);
+    expect(root.querySelector('.dcp-price-notice.is-ok')).toBeNull();
+  });
+});
+
 describe('when the API cannot be reached', () => {
   it('still prints the real ladder from the client mirror', async () => {
     // The whole point of the fallback: a visitor who came to learn the price

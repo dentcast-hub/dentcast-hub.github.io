@@ -3,6 +3,7 @@ import { one, query, withTransaction, type Queryable } from '../db.js';
 import { pool } from '../db.js';
 import { activateMonths, type Subscription } from './subscription.js';
 import { canSellPlan, planAmountRial, periodStamps, capacityMessage } from './payment-capacity.js';
+import { pillarSeat, isPillarSeat, pillarAmountRial } from './pillar.js';
 import { zibalRequest, zibalVerify, isSandbox } from './zibal.js';
 import { checkCapacityAlert } from './payment-cap-alert.js';
 
@@ -109,7 +110,16 @@ export async function startPayment(params: {
 
   // Non-null: canSellPlan() above already refused every term without a price
   // ('unknown_plan'), so anything reaching this line is on the list.
-  const amountRial = planAmountRial(params.months)!;
+  const listRial = planAmountRial(params.months)!;
+
+  // «ستون»: a seat among the first fifty paying subscribers renews cheaper,
+  // forever. The seat is read from prior PAID rows (services/pillar.ts), so a
+  // first purchase is never discounted — the seat it would claim does not exist
+  // until this very payment settles. Capacity above was checked at LIST price
+  // on purpose: the conservative reading can only refuse a sale slightly early,
+  // never push one past the ceiling.
+  const seat = await pillarSeat(params.userId);
+  const amountRial = isPillarSeat(seat) ? pillarAmountRial(listRial) : listRial;
   const orderId = mintOrderId(params.userId, params.months, now);
   const stamps = periodStamps(now);
 
@@ -260,6 +270,13 @@ export async function settlePayment(trackId: string, now: Date = new Date()): Pr
     };
   }
 
+  // For the audit trail only, never for the amount: a «ستون» renewal's row
+  // deliberately reads below the list price, and the seat number recorded here
+  // is what squares our ledger against Zibal's panel without re-deriving it.
+  // Read BEFORE this payment flips to 'paid', the same vantage point
+  // startPayment priced from.
+  const seat = await pillarSeat(existing.user_id);
+
   // The activation and the ledger move together or not at all: a subscription
   // extended against a row still reading 'pending' would be extended again by
   // the next refresh.
@@ -284,6 +301,7 @@ export async function settlePayment(trackId: string, now: Date = new Date()): Pr
         ref_number: v.refNumber,
         amount_rial: existing.amount_rial,
         sandbox: isSandbox(),
+        ...(isPillarSeat(seat) ? { pillar_seat: seat } : {}),
         ...(reconciled ? { reconciled_from_already_verified: true } : {}),
       },
     });

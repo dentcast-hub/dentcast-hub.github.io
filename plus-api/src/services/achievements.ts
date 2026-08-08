@@ -3,6 +3,7 @@ import { config } from '../config.js';
 import { getFolders, folderOf } from '../content-index.js';
 import { getConsumedContentIds } from './consumption.js';
 import { getLeagueConfig } from './league-config.js';
+import { pillarSeat, isPillarSeat } from './pillar.js';
 import { QUALIFYING_ACTIONS } from './streak.js';
 import { dayDiff, nextDay } from './time.js';
 
@@ -78,8 +79,8 @@ export async function computeAchievementFacts(
   const consumption = ['article_completed', 'episode_listened'];
   const leagueCfg = await getLeagueConfig();
 
-  const [counts, clock, weekend, publishing, busiest, league, medalRows, days, frozen, consumed] =
-    await Promise.all([
+  const [counts, clock, weekend, publishing, busiest, league, medalRows, days, frozen, consumed,
+    seat] = await Promise.all([
       // ---- plain counters, one round trip -------------------------------------
       pool.query<{
         highlights: number; highlights_with_note: number;
@@ -252,6 +253,12 @@ export async function computeAchievementFacts(
       ),
 
       getConsumedContentIds(userId),
+
+      // ---- «ستون» — seat among the first paying subscribers -------------------
+      // Asked through services/pillar.ts, the same module startPayment prices
+      // the renewal discount from, so the wall and the till can never disagree
+      // about who holds a seat.
+      pillarSeat(userId),
     ]);
 
   // ---- folder breadth + folder completion ---------------------------------
@@ -303,6 +310,10 @@ export async function computeAchievementFacts(
     // Inverted by nature (a LOWER signup order is better), so it is settled here
     // and handed on as a plain 0/1 — the evaluator only ever compares >=.
     founder_seat: c.signup_order > 0 && c.signup_order <= FOUNDER_SEATS ? 1 : 0,
+    // Same normalisation as founder_seat: a seat NUMBER is inverted by nature,
+    // so it becomes a 0/1 here rather than teaching the evaluator a second
+    // direction.
+    pillar_seat: isPillarSeat(seat) ? 1 : 0,
   };
 
   const medals: Record<number, MedalState> = { 1: { best_tier_order: 0 }, 2: { best_tier_order: 0 } };

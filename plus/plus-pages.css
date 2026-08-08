@@ -657,6 +657,13 @@ a.dcp-progress-row:hover { text-decoration: none; }
 }
 .dcp-plan-unit { font-size: .78rem; font-weight: 600; color: var(--txt3, #62779a); margin-inline-start: 4px; }
 .dcp-plan-rate { font-size: .74rem; font-weight: 600; color: var(--txt3, #62779a); }
+/* The list price a «ستون» seat-holder is NOT paying, above their real price.
+   Muted and struck through — .is-blocked already means "line-through = not
+   buyable", so this one is small and grey to read as "not charged" instead. */
+.dcp-plan-list {
+  font-size: .74rem; font-weight: 600; color: var(--txt3, #62779a);
+  text-decoration: line-through; text-decoration-thickness: 1px;
+}
 
 .dcp-plan.is-selected {
   border-color: rgba(var(--ac-rgb, 11,95,255), .6);

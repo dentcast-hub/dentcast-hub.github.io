@@ -1,8 +1,11 @@
 import type { FastifyInstance } from 'fastify';
 import { config } from '../config.js';
-import { requireAuth } from '../middleware/auth.js';
+import { requireAuth, loadUser } from '../middleware/auth.js';
 import { startPayment, settlePayment, getPaymentByTrackId, resultUrl } from '../services/payment.js';
 import { getCapacity } from '../services/payment-capacity.js';
+import {
+  pillarSeat, isPillarSeat, pillarAmountRial, PILLAR_DISCOUNT_PERCENT,
+} from '../services/pillar.js';
 import { readCallback } from '../services/zibal.js';
 import { startRedemption, latestRedemption, giftInstructions } from '../services/gift-redemption.js';
 import { query } from '../db.js';
@@ -28,8 +31,32 @@ export async function payRoutes(app: FastifyInstance): Promise<void> {
   // someone to sign up before they can see the price is how you lose them.
   // Reports availability per plan, so the page can grey out what no longer fits
   // under this month's ceiling instead of failing at the last step.
-  app.get('/pay/plans', async (_request, reply) => {
+  app.get('/pay/plans', async (request, reply) => {
     const capacity = await getCapacity();
+
+    // Personalisation, not gating: the page stays public and the list is the
+    // same for everyone — but the browser sends its session cookie anyway
+    // (api.js always does), so when a «ستون» seat-holder is looking, quote the
+    // price they will actually be charged rather than a figure /pay/start
+    // would then undercut. Failure here falls back to the public answer: the
+    // one thing this must never do is take the price list down.
+    const user = await loadUser(request).catch(() => null);
+    const seat = user ? await pillarSeat(user.id).catch(() => null) : null;
+    const pillar = isPillarSeat(seat);
+    const plans = pillar
+      ? capacity.plans.map((p) => ({
+        ...p,
+        // `amount_rial` stays "what this person pays" under its old name, so a
+        // browser holding a cached pricing-page.js still shows the right total;
+        // the list figure rides beside it for the strikethrough.
+        amount_rial: pillarAmountRial(p.amount_rial),
+        list_amount_rial: p.amount_rial,
+      }))
+      : capacity.plans;
+    const fromMonthly = pillar && plans.length
+      ? Math.min(...plans.map((p) => p.amount_rial / p.months))
+      : config.payments.fromMonthlyRial;
+
     return reply.send({
       // Whether a purchase can actually be completed today. The prices below are
       // real and worth showing either way — someone deciding whether DentCast is
@@ -44,12 +71,15 @@ export async function payRoutes(app: FastifyInstance): Promise<void> {
       // The cheapest per-month rate on the list, for the «از ماهی …» line. The
       // ladder bends (a longer term is cheaper per month), so this is a FLOOR,
       // not a rate anything is priced from — every real price is in `plans`.
-      from_monthly_rial: config.payments.fromMonthlyRial,
+      from_monthly_rial: fromMonthly,
       // Same number under its old name, for a browser still holding the copy of
       // pricing-page.js that reads `monthly_rial`. Removable once that cache is
       // certainly gone.
-      monthly_rial: config.payments.fromMonthlyRial,
-      plans: capacity.plans,
+      monthly_rial: fromMonthly,
+      plans,
+      // Present only for a seat-holder, so the page can say WHY its prices
+      // differ from the ones a colleague's screen shows.
+      pillar_discount: pillar ? { percent: PILLAR_DISCOUNT_PERCENT } : null,
       any_plan_available: capacity.any_plan_available,
       // Deliberately NOT the remaining rial figure: how close we are to a
       // regulatory ceiling is our business, and "3 seats left" is a pressure
