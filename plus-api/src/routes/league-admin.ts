@@ -94,6 +94,54 @@ export async function leagueAdminRoutes(app: FastifyInstance): Promise<void> {
     });
   });
 
+  /**
+   * GET /admin/league/top?tier=&week=&limit= — the leaderboard, by name.
+   *
+   * /admin/league reports medians and fill; the members themselves were nowhere,
+   * so "who is at the top of composite this week, and with what?" could only be
+   * answered from the database by hand. That is the question every suspicion
+   * starts with — on 2026-08-08 an account passed a thousand weekly XP and the
+   * investigation stalled on not being able to name it.
+   *
+   * Sorted the way the league itself ranks: XP first, then who reached that
+   * total earlier (`first_reached_current_xp_at`), which is the tie-break
+   * league-finalize.ts uses. So row one here is the group's actual leader, not
+   * an approximation of them.
+   */
+  app.get('/admin/league/top', async (request, reply) => {
+    const q = request.query as { tier?: string; week?: string; limit?: string };
+    const cfg = await getLeagueConfig();
+    const week = q.week || leagueWeek(dayInTz(new Date(), cfg.timezone)).week_start;
+    const limit = Math.min(Math.max(Number(q.limit ?? 20) || 20, 1), 200);
+
+    const rows = await pool.query<{
+      user_id: string; display_name: string | null; tier_slug: string;
+      weekly_xp: number; group_size: number; league_id: string;
+      joined_at: string; first_reached_current_xp_at: string | null;
+    }>(
+      `select lm.user_id, p.display_name, t.slug as tier_slug, lm.weekly_xp,
+              lm.league_id, lm.joined_at, lm.first_reached_current_xp_at,
+              count(*) over (partition by lm.league_id)::int as group_size
+         from league_members lm
+         join leagues l       on l.id = lm.league_id
+         join league_tiers t  on t.id = l.tier_id
+         join profiles p      on p.id = lm.user_id
+        where l.week_start = $1
+          and ($2::text is null or t.slug = $2)
+        order by lm.weekly_xp desc, lm.first_reached_current_xp_at asc nulls last
+        limit $3`,
+      [week, q.tier ?? null, limit],
+    );
+
+    return reply.send({
+      ok: true,
+      week_start: week,
+      tier: q.tier ?? 'all',
+      count: rows.rowCount,
+      members: rows.rows,
+    });
+  });
+
   // POST /admin/league/config { key, value, reason?, force? } — change a league
   // behavioural number (spec 11: none of them are hardcoded, they all live in
   // league_config). Goes through setLeagueConfig, so the change is audited and a

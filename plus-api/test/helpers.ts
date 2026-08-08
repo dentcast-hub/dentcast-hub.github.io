@@ -39,9 +39,22 @@ export async function resetDb(): Promise<void> {
   // survive truncation — so reset the knobs back to their seed values, because
   // league_config is NOT truncated and a test that retunes one would otherwise
   // hand its change to every test that runs after it.
+  //
+  // The tier ROWS need the same treatment and did not have it. Tier activation
+  // is one-way in production (league-finalize.ts's selfTune only ever switches a
+  // tier on), so the suite's activation tests leave metal-ceramic active for
+  // every file that runs afterwards — and any assertion about which tiers exist
+  // then depends on file ORDER, which is exactly the kind of failure that shows
+  // up once, in someone else's unrelated commit.
+  await pool.query(`
+    update league_tiers
+       set is_active = (tier_order <= 3),
+           activated_at = case when tier_order <= 3 then coalesce(activated_at, now()) else null end
+  `);
   await pool.query(`
     update league_config set value = case key
       when 'group_size_current' then '8'
+      when 'min_group_capacity' then '3'
       when 'max_active_tier_order' then '3'
       when 'group_size_last_changed_week' then ''
       when 'promotion_min_weekly_xp' then '30'
@@ -71,6 +84,7 @@ export async function resetDb(): Promise<void> {
       when 'prize_cooldown_weeks' then '2'
       when 'prize_winners_per_group' then '1'
       when 'prize_min_group_size' then '3'
+      when 'top_tier_prize_days' then '3'
       else value end,
       locked = false, locked_at = null;
     `);

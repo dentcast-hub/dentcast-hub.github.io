@@ -51,10 +51,20 @@ export async function notifyPremiumPrizes(now: Date = new Date()): Promise<{ not
   if (!inAwakeWindow(now)) return { notified: 0 };
 
   const today = dayInTz(now, config.streakTimezone);
-  const due = await query<{ id: string; user_id: string }>(
-    `select g.id, g.user_id
+  // tier_order comes along because the prize is no longer one length for
+  // everybody (0033): the top tier's champion wins a longer one, and a push that
+  // named the wrong number would break the promise on the day it ran out. It is
+  // a LEFT join — a grant whose league row is somehow missing still gets its
+  // notification, with the ordinary wording.
+  const due = await query<{
+    id: string; user_id: string; granted_at: string; expires_at: string; tier_order: number | null;
+  }>(
+    `select g.id, g.user_id, g.granted_at, g.expires_at, t.tier_order
        from premium_grants g
        join profiles p on p.id = g.user_id
+       left join league_members lm on lm.user_id = g.user_id and lm.week_start = g.week_start
+       left join leagues l on l.id = lm.league_id
+       left join league_tiers t on t.id = l.tier_id
       where g.granted_at >= ($1::date - $2::int)
         and g.notified_at is null
         and coalesce((p.settings->'reminders'->>'streak')::boolean, true) = true
@@ -67,22 +77,38 @@ export async function notifyPremiumPrizes(now: Date = new Date()): Promise<{ not
     [today, FRESH_DAYS],
   );
 
-  // The length comes from league_config, never a literal. This copy said "one
-  // week" for a while after the prize became three days — a promise the system
-  // then broke on day four, which is worse than saying nothing. And "top of the
-  // league" became "top of your group": the user can see their group of 8 on
-  // screen, so it is both accurate now AND the more meaningful of the two.
+  // The length is read off the GRANT, never from a literal and no longer from
+  // league_config either. This copy said "one week" for a while after the prize
+  // became three days — a promise the system then broke on day four, which is
+  // worse than saying nothing; since 0033 the same drift is possible within a
+  // single week, because the top tier's prize is longer than everyone else's.
+  // The two timestamps are the thing that actually decides when premium ends, so
+  // they are the only honest source for a sentence about how long it lasts (the
+  // dashboard banner has always computed it this way — plus/js/dashboard.js).
+  //
+  // And "top of the league" became "top of your group": the user can see their
+  // group on screen, so it is both accurate AND the more meaningful of the two.
   const cfg = await getLeagueConfig();
-  const message: NotificationMessage = {
-    title: 'برنده شدی 🎉',
-    body: `نفر اولِ گروهت شدی — ${toFa(cfg.prize_days)} روز پرمیوم مهمانِ ما هستی: `
-      + `${faList(PREMIUM_FEATURE_TITLES)}.`,
-    url: '/plus/',
-    tag: 'premium_prize',
-  };
 
   let notified = 0;
   for (const g of due.rows) {
+    const days = Math.round(
+      (new Date(g.expires_at).getTime() - new Date(g.granted_at).getTime()) / 86_400_000,
+    );
+    // The highest active tier has no promotion to win, so first place there is
+    // the end of the ladder rather than a step on it. Naming that is the whole
+    // point of the longer prize — a champion who reads the same sentence as
+    // everybody else has no way to know they won something different.
+    const isChampion = g.tier_order != null && g.tier_order >= cfg.max_active_tier_order;
+    const message: NotificationMessage = {
+      title: isChampion ? 'قهرمان شدی 🏆' : 'برنده شدی 🎉',
+      body: (isChampion
+        ? `اولِ بالاترین لیگِ دنت‌کست شدی — ${toFa(days)} روز پرمیوم مهمانِ ما هستی: `
+        : `نفر اولِ گروهت شدی — ${toFa(days)} روز پرمیوم مهمانِ ما هستی: `)
+        + `${faList(PREMIUM_FEATURE_TITLES)}.`,
+      url: '/plus/',
+      tag: 'premium_prize',
+    };
     // Claim first; a dropped (capped) or failed delivery is not retried.
     await query('update premium_grants set notified_at = now() where id = $1', [g.id]);
     if (await sendCapped(g.user_id, message, 'premium_prize', now)) notified += 1;

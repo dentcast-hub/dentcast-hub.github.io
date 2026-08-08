@@ -10,6 +10,10 @@ import { pool, query, one } from '../db.js';
 
 export interface LeagueConfig {
   group_size_current: number;
+  /** Floor under a group's per-TIER capacity (0033). group_size_current is the
+   *  ceiling; see tierCapacity() in league.ts for why the two are not the same
+   *  number, and why a tier of one must not get a capacity of one. */
+  min_group_capacity: number;
   promotion_pct: number;
   demotion_pct: number;
   min_valid_group_size: number;
@@ -48,6 +52,9 @@ export interface LeagueConfig {
   /** Floor for winning a PRIZE — lower than min_valid_group_size, which is the
    *  floor for PROMOTION. See migration 0017 for why the two are separate. */
   prize_min_group_size: number;
+  /** Prize length in the highest ACTIVE tier, where nothing can be promoted and
+   *  the prize is therefore the entire outcome (0033). 0 = use prize_days. */
+  top_tier_prize_days: number;
   // Legacy 0006 keys — kept for back-compat, no longer read by awardLeagueXp.
   xp_per_active_day: number;
   xp_per_highlight: number;
@@ -57,7 +64,7 @@ export interface LeagueConfig {
 type Db = pg.Pool | pg.PoolClient;
 
 export const NUMERIC_KEYS: Array<keyof LeagueConfig> = [
-  'group_size_current', 'promotion_pct', 'demotion_pct', 'min_valid_group_size',
+  'group_size_current', 'min_group_capacity', 'promotion_pct', 'demotion_pct', 'min_valid_group_size',
   'promotion_min_weekly_xp', 'cooldown_weeks', 'max_active_tier_order',
   'xp_active_bonus', 'xp_read', 'xp_listen', 'xp_highlight', 'xp_highlight_cap', 'xp_review',
   'xp_share', 'xp_share_weekly_cap', 'xp_review_weekly_cap',
@@ -66,6 +73,7 @@ export const NUMERIC_KEYS: Array<keyof LeagueConfig> = [
   'xp_collection_created', 'xp_collection_created_weekly_cap',
   'xp_collection_item', 'xp_collection_item_weekly_cap',
   'prize_days', 'prize_cooldown_weeks', 'prize_winners_per_group', 'prize_min_group_size',
+  'top_tier_prize_days',
   'xp_per_active_day', 'xp_per_highlight',
 ];
 

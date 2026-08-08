@@ -61,7 +61,26 @@ async function grantPrizeForWeek(weekStart: string, now: Date): Promise<number> 
     // from whenever a cron woke up.
     const grantDay = dayInTz(now, config.streakTimezone);
     const grantedAt = startOfDayInstant(grantDay).toISOString();
-    const expiresAt = startOfDayInstant(addDays(grantDay, cfg.prize_days)).toISOString();
+
+    /**
+     * How long THIS group's prize lasts. Everywhere below the top it is
+     * prize_days; in the highest active tier it is top_tier_prize_days (0033),
+     * because that tier has no other outcome — `isTop` blocks promotion in
+     * finalizeWeek by definition, so first place there wins the prize and
+     * nothing else, having climbed the whole ladder to get there.
+     *
+     * Longer, not wider. Raising the winner COUNT at the top instead would run
+     * straight into winnersTarget below: upper tiers are thin, so a wider prize
+     * there crowns a large fraction of a small group and "first in your group"
+     * comes to mean less the higher you climb — the exact inversion that scaling
+     * exists to prevent. The length is the one dimension that can grow without
+     * touching how many people it takes to be first.
+     */
+    const prizeDaysFor = (tierOrder: number): number => (
+      tierOrder >= cfg.max_active_tier_order && cfg.top_tier_prize_days > 0
+        ? cfg.top_tier_prize_days
+        : cfg.prize_days
+    );
     // A winner is ineligible for this many LEAGUE WEEKS. Measured against
     // week_start, not the grant's wall-clock timestamp: the unit of the league
     // is the week, so "two weeks off" should mean two league weeks regardless of
@@ -76,12 +95,13 @@ async function grantPrizeForWeek(weekStart: string, now: Date): Promise<number> 
     // A user who climbed into a thin upper tier could then neither win nor
     // advance, while the group they left kept winning every week — climbing made
     // them worse off. Three, not zero: a group of one would auto-win for nothing.
-    const groups = (await client.query<{ id: string; size: number }>(
-      `select l.id, count(lm.id)::int as size
+    const groups = (await client.query<{ id: string; size: number; tier_order: number }>(
+      `select l.id, t.tier_order, count(lm.id)::int as size
          from leagues l
+         join league_tiers t on t.id = l.tier_id
          join league_members lm on lm.league_id = l.id
         where l.week_start = $1 and l.status = 'finalized'
-        group by l.id
+        group by l.id, t.tier_order
        having count(lm.id) >= $2
         order by l.id`,
       [weekStart, cfg.prize_min_group_size],
@@ -89,6 +109,9 @@ async function grantPrizeForWeek(weekStart: string, now: Date): Promise<number> 
 
     let granted = 0;
     for (const g of groups) {
+      const expiresAt = startOfDayInstant(
+        addDays(grantDay, prizeDaysFor(g.tier_order)),
+      ).toISOString();
       // How many winners THIS group may have. prize_winners_per_group is a
       // ceiling, not a quota: it is scaled down by how many whole
       // prize_min_group_size blocks the group actually contains.

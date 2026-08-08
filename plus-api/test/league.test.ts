@@ -6,6 +6,7 @@ import { finalizeWeek } from '../src/services/league-finalize.js';
 import { getLeagueConfig } from '../src/services/league-config.js';
 import { config } from '../src/config.js';
 import { resetRateLimits } from '../src/services/rate-limit.js';
+import { tierCapacity } from '../src/services/league.js';
 
 const WEEK = '2026-01-03';       // opaque week key for finalize unit tests
 let seq = 0;
@@ -219,10 +220,17 @@ describe('self-tuning — group size hysteresis + cooldown', () => {
 describe('self-tuning — tier activation', () => {
   it('activates the next tier when the top active tier had a full group', async () => {
     // composite (order 3) is top active; a full group there opens metal-ceramic.
-    await seedGroup('composite', 6, [
-      { xp: 60, at: T(1) }, { xp: 50, at: T(2) }, { xp: 40, at: T(3) },
-      { xp: 30, at: T(4) }, { xp: 20, at: T(5) }, { xp: 10, at: T(6) },
-    ]); // size 6 == capacity 6 -> filled
+    //
+    // "Full" is measured against group_size_current (8), NOT the group's own
+    // capacity_at_creation, since 0033 made capacity per-tier: the top tier's
+    // capacity is its own population, so a group there is full as soon as
+    // everybody has scored, and reading that as "the ladder is crowded" would
+    // unroll all seven tiers onto a handful of readers.
+    await seedGroup('composite', 8, [
+      { xp: 80, at: T(1) }, { xp: 70, at: T(2) }, { xp: 60, at: T(3) },
+      { xp: 50, at: T(4) }, { xp: 40, at: T(5) }, { xp: 30, at: T(6) },
+      { xp: 20, at: T(7) }, { xp: 10, at: T(8) },
+    ]); // size 8 == group_size_current -> a standard group filled
     await finalizeWeek(WEEK);
     const active = (await pool.query("select is_active from league_tiers where slug='metal-ceramic'")).rows[0].is_active;
     expect(active).toBe(true);
@@ -233,7 +241,7 @@ describe('self-tuning — tier activation', () => {
     await seedGroup('composite', 8, [
       { xp: 60, at: T(1) }, { xp: 50, at: T(2) }, { xp: 40, at: T(3) },
       { xp: 30, at: T(4) }, { xp: 20, at: T(5) }, { xp: 10, at: T(6) },
-    ]); // size 6 < capacity 8 -> not filled
+    ]); // size 6 < group_size_current 8 -> not a filled standard group
     await finalizeWeek(WEEK);
     expect((await pool.query("select is_active from league_tiers where slug='metal-ceramic'")).rows[0].is_active).toBe(false);
     expect((await pool.query("select value from league_config where key='max_active_tier_order'")).rows[0].value).toBe('3');
@@ -569,5 +577,138 @@ describe('review XP cannot be farmed', () => {
     } finally {
       config.activity.maxPerUserPerHour = cap;
     }
+  });
+});
+
+describe('GET /admin/league/top', () => {
+  // /admin/league reported medians and fill but never the members, so "who is
+  // at the top of composite this week, and with what?" needed a hand-written
+  // query against production. That is the first question every suspicion asks.
+  let app: FastifyInstance;
+  const auth = 'Basic ' + Buffer.from(
+    `${config.admin.user}:${config.admin.password}`,
+  ).toString('base64');
+  beforeEach(async () => { await resetDb(); app = await makeApp(); resetRateLimits(); });
+
+  it('requires admin credentials', async () => {
+    const res = await app.inject({ method: 'GET', url: '/admin/league/top' });
+    expect(res.statusCode).toBe(401);
+  });
+
+  it('names the members and ranks them the way the league itself does', async () => {
+    // Two readers, different totals — the bigger one must lead.
+    const a = await loginAs(app, '09120000041');
+    const b = await loginAs(app, '09120000042');
+    await app.inject({
+      method: 'PATCH', url: '/me', headers: { cookie: a }, payload: { display_name: 'کم‌امتیاز' },
+    });
+    await app.inject({
+      method: 'PATCH', url: '/me', headers: { cookie: b }, payload: { display_name: 'پرامتیاز' },
+    });
+    const act = (cookie: string, action: string, content_id?: string) => app.inject({
+      method: 'POST', url: '/activity', headers: { cookie }, payload: { action, content_id },
+    });
+    await act(a, 'article_completed', 'insight/insight-1');
+    for (const id of ['insight/insight-1', 'insight/insight-2', 'insight/insight-3']) {
+      await act(b, 'article_completed', id);
+    }
+
+    const res = await app.inject({
+      method: 'GET', url: '/admin/league/top', headers: { authorization: auth },
+    });
+
+    expect(res.statusCode).toBe(200);
+    const members = res.json().members as Array<{ display_name: string; weekly_xp: number }>;
+    expect(members[0].display_name).toBe('پرامتیاز');
+    expect(members[0].weekly_xp).toBeGreaterThan(members[1].weekly_xp);
+    // The name is the point: without it the row cannot be acted on.
+    expect(members.map((m) => m.display_name)).toContain('کم‌امتیاز');
+  });
+
+  it('filters to one tier when asked', async () => {
+    const a = await loginAs(app, '09120000043');
+    await app.inject({
+      method: 'POST', url: '/activity', headers: { cookie: a },
+      payload: { action: 'article_completed', content_id: 'insight/insight-1' },
+    });
+
+    const mine = await app.inject({
+      method: 'GET', url: '/admin/league/top?tier=acrylic', headers: { authorization: auth },
+    });
+    const other = await app.inject({
+      method: 'GET', url: '/admin/league/top?tier=titanium', headers: { authorization: auth },
+    });
+
+    expect(mine.json().count).toBeGreaterThan(0);
+    expect(other.json().count).toBe(0);
+  });
+});
+
+/**
+ * Per-tier group capacity (0033).
+ *
+ * group_size_current is self-tuned from the smoothed count of ALL weekly-active
+ * users, which is the right input for the bottom of the pyramid — where nearly
+ * everybody is — and structurally wrong at the top. On 2026-08-09 it stood at
+ * 15 while composite, the highest active tier, held 5 people: its one group had
+ * capacity 15, could never fill, and `filled` gates demotion, so the tier every
+ * reader is climbing towards was the only one with no way back down.
+ */
+describe('tierCapacity — a group is as big as its own tier can make it', () => {
+  beforeEach(async () => { await resetDb(); });
+
+  const populate = async (slug: string, n: number): Promise<string> => {
+    const tid = await tierId(slug);
+    for (let i = 0; i < n; i += 1) {
+      seq += 1;
+      await pool.query(
+        'insert into profiles (display_name, current_tier_id) values ($1, $2)', [`cap${seq}`, tid],
+      );
+    }
+    return tid;
+  };
+
+  it('a thin tier gets its own population, not the global size', async () => {
+    const tid = await populate('composite', 5);
+    const cfg = await getLeagueConfig();
+    expect(cfg.group_size_current, 'the global number this used to be').toBe(8);
+    expect(await tierCapacity(pool, tid, cfg)).toBe(5);
+  });
+
+  it('a crowded tier is unchanged — still capped at the global size', async () => {
+    // The whole point of leaving this alone: acrylic holds hundreds of profiles
+    // and must keep splitting into standard-sized groups exactly as before.
+    const tid = await populate('acrylic', 30);
+    const cfg = await getLeagueConfig();
+    expect(await tierCapacity(pool, tid, cfg)).toBe(cfg.group_size_current);
+  });
+
+  it('never drops below min_group_capacity, so a tier of one is not full at one', async () => {
+    // Unclamped, a tier holding a single person would be "full" immediately and
+    // demote its only member — ceil(1 × demotion_pct/100) = 1 — every week.
+    const tid = await populate('composite', 1);
+    const cfg = await getLeagueConfig();
+    expect(await tierCapacity(pool, tid, cfg)).toBe(cfg.min_group_capacity);
+    expect(cfg.min_group_capacity).toBe(3);
+  });
+
+  it('freezes that capacity onto the group a real scoring action creates', async () => {
+    // End to end rather than through the helper: the number has to reach
+    // leagues.capacity_at_creation, which is what finalizeWeek reads.
+    const app = await makeApp();
+    const tid = await populate('composite', 3);   // 3 dormant profiles...
+    const cookie = await loginAs(app, '09120000091');
+    await pool.query('update profiles set current_tier_id = $1 where phone = $2', [tid, '09120000091']);
+    await app.inject({
+      method: 'POST', url: '/activity', headers: { cookie },
+      payload: { action: 'article_completed', content_id: 'insight/insight-1' },
+    });
+
+    const row = await pool.query<{ capacity_at_creation: number }>(
+      `select l.capacity_at_creation from leagues l
+         join league_tiers t on t.id = l.tier_id where t.slug = 'composite'`,
+    );
+    expect(row.rows[0].capacity_at_creation, '3 dormant + the one who scored').toBe(4);
+    await app.close();
   });
 });
