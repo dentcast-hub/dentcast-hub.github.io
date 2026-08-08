@@ -1,12 +1,14 @@
 import type { FastifyInstance } from 'fastify';
 import { requireAuth } from '../middleware/auth.js';
-import { requirePremium } from '../middleware/require-premium.js';
 import { pool, withTransaction } from '../db.js';
 import { recordActivity } from '../services/activity.js';
 import { getConsumedContentIds } from '../services/consumption.js';
 import {
   getPathways, getPathwayById, resolveSteps, computeProgress, type PathwayProgress,
 } from '../pathways.js';
+import {
+  pathwayIsFree, isPremiumRequest, previewLockedBody, getQuotaCopy,
+} from '../services/quota.js';
 
 // Phase 3: curated learning pathways (spec sections 5 + 8). Definitions live in
 // plus/pathways.json (versioned, no DB, never mutated by this route); only
@@ -26,9 +28,23 @@ async function syncEnrollmentCache(userId: string, pathwayId: string, progress: 
   );
 }
 
+/**
+ * Which pathway a free reader may open, by POSITION in catalog order — the same
+ * one for everybody, always the first.
+ *
+ * Not "any one you pick": a per-user choice needs a counter to spend, an
+ * enrollment to spend it on, and an answer to "can I change my mind", none of
+ * which buys anything. A fixed first pathway is instead the product's own
+ * introduction — the thing two readers can discuss because they both did it.
+ */
+function freePathwayIds(isPremium: boolean): Set<string> {
+  const ids = new Set<string>();
+  getPathways().forEach((p, i) => { if (pathwayIsFree(i, isPremium)) ids.add(p.id); });
+  return ids;
+}
+
 export async function pathwayRoutes(app: FastifyInstance): Promise<void> {
   app.addHook('preHandler', requireAuth);
-  app.addHook('preHandler', requirePremium);
 
   // GET /pathways - every pathway with the caller's own progress overlaid,
   // enrolled or not: browsing gives credit for content already consumed before
@@ -41,7 +57,11 @@ export async function pathwayRoutes(app: FastifyInstance): Promise<void> {
       [userId],
     );
     const startedAt = new Map(enrolled.rows.map((r) => [r.pathway_id, r.started_at]));
+    const free = freePathwayIds(isPremiumRequest(request));
 
+    // The whole catalog is listed to everybody, locked ones included. This is
+    // the menu, not the meal: a reader who cannot see what they are missing has
+    // no reason to want it, and the titles are already public on the site.
     const pathways = getPathways().map((p) => {
       const progress = computeProgress(p, consumed);
       return {
@@ -51,10 +71,11 @@ export async function pathwayRoutes(app: FastifyInstance): Promise<void> {
         milestone_count: p.steps.filter((s) => s.milestone).length,
         enrolled: startedAt.has(p.id),
         started_at: startedAt.get(p.id) ?? null,
+        locked: !free.has(p.id),
         ...progress,
       };
     });
-    return reply.send({ pathways });
+    return reply.send({ pathways, locked_message: getQuotaCopy().pathways_fa });
   });
 
   // GET /pathways/:id - full step list resolved to title/url/type + per-step
@@ -65,6 +86,29 @@ export async function pathwayRoutes(app: FastifyInstance): Promise<void> {
     if (!pathway) return reply.code(404).send({ error: 'unknown_pathway' });
 
     const userId = request.user!.id;
+    const locked = !freePathwayIds(isPremiumRequest(request)).has(pathway.id);
+
+    // A locked pathway answers 200 with its cover and NO step list. The
+    // ORDERED LIST IS THE PRODUCT — "these six things, in this order" is the
+    // entire curation someone is paying for — so it is withheld here, in the
+    // process, rather than sent and hidden by the page. It is also why this is
+    // not a 404: the reader is meant to see that the pathway exists, how long
+    // it is, and what it is for.
+    if (locked) {
+      return reply.send({
+        id: pathway.id,
+        title_fa: pathway.title_fa,
+        description_fa: pathway.description_fa,
+        total_steps: pathway.steps.length,
+        milestone_count: pathway.steps.filter((s) => s.milestone).length,
+        enrolled: false,
+        started_at: null,
+        steps: [],
+        locked: true,
+        locked_message: getQuotaCopy().pathways_fa,
+      });
+    }
+
     const consumed = await getConsumedContentIds(userId);
     const progress = computeProgress(pathway, consumed);
     const steps = resolveSteps(pathway, consumed);
@@ -85,6 +129,7 @@ export async function pathwayRoutes(app: FastifyInstance): Promise<void> {
       enrolled,
       started_at: e.rows[0]?.started_at ?? null,
       steps,
+      locked: false,
       ...progress,
     });
   });
@@ -97,6 +142,10 @@ export async function pathwayRoutes(app: FastifyInstance): Promise<void> {
     if (!pathway) return reply.code(404).send({ error: 'unknown_pathway' });
 
     const userId = request.user!.id;
+    if (!freePathwayIds(isPremiumRequest(request)).has(pathway.id)) {
+      return reply.code(402).send(previewLockedBody(getQuotaCopy().pathways_fa));
+    }
+
     const consumed = await getConsumedContentIds(userId);
     const progress = computeProgress(pathway, consumed);
 

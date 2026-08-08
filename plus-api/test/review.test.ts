@@ -37,11 +37,58 @@ async function createHighlight(overrides: Record<string, unknown> = {}): Promise
   return res.json().highlight.id as string;
 }
 
-describe('requirePremium gate', () => {
-  it('blocks a free user with 402', async () => {
+describe('free-tier allowance', () => {
+  it('gives a free user the real queue, cut to today’s allowance', async () => {
     await createHighlight();
     const res = await app.inject({ method: 'GET', url: '/review/due', headers: { cookie } });
-    expect(res.statusCode).toBe(402);
+    expect(res.statusCode).toBe(200);
+    const body = res.json();
+    expect(body.due.length).toBeGreaterThan(0);
+    expect(body.quota.limit).toBe(3);
+    expect(body.quota.remaining).toBe(3);
+  });
+
+  it('refuses the answer that would go past the daily limit, and says when it lifts', async () => {
+    // One more highlight than the allowance, so the wall is hit on real cards.
+    const ids: string[] = [];
+    for (let i = 0; i < 4; i += 1) ids.push(await createHighlight({ exact: `متن شماره ${i}` }));
+
+    for (let i = 0; i < 3; i += 1) {
+      const ok = await app.inject({
+        method: 'POST', url: '/review/answer', headers: { cookie },
+        payload: { highlight_id: ids[i], result: 'remembered' },
+      });
+      expect(ok.statusCode).toBe(200);
+      expect(ok.json().quota.remaining).toBe(2 - i);
+    }
+
+    const blocked = await app.inject({
+      method: 'POST', url: '/review/answer', headers: { cookie },
+      payload: { highlight_id: ids[3], result: 'remembered' },
+    });
+    expect(blocked.statusCode).toBe(402);
+    expect(blocked.json().error).toBe('quota_exhausted');
+    expect(blocked.json().quota.resets_at).toBeTruthy();
+
+    // ...and the queue truncates to nothing rather than dangling cards that
+    // cannot be answered.
+    const due = await app.inject({ method: 'GET', url: '/review/due', headers: { cookie } });
+    expect(due.json().due).toEqual([]);
+  });
+
+  it('does not cap a premium user', async () => {
+    await makePremium();
+    const ids: string[] = [];
+    for (let i = 0; i < 4; i += 1) ids.push(await createHighlight({ exact: `پریمیوم ${i}` }));
+    for (const id of ids) {
+      const res = await app.inject({
+        method: 'POST', url: '/review/answer', headers: { cookie },
+        payload: { highlight_id: id, result: 'remembered' },
+      });
+      expect(res.statusCode).toBe(200);
+    }
+    const due = await app.inject({ method: 'GET', url: '/review/due', headers: { cookie } });
+    expect(due.json().quota.limit).toBeNull();
   });
 
   it('blocks an unauthenticated request with 401', async () => {

@@ -2,6 +2,7 @@ import { config } from './config.js';
 import { applyRemoteIndex, indexSource } from './content-index.js';
 import { applyRemotePathways, pathwaysSource } from './pathways.js';
 import { applyRemoteBadges, badgesSource } from './badges.js';
+import { applyRemoteQuota, quotaSource } from './quota.js';
 
 /**
  * Keeps the taxonomy index and the pathway definitions current WITHOUT a
@@ -59,6 +60,7 @@ async function fetchJson(urls: string[], label: string): Promise<unknown | null>
 let lastIndexSource = '';
 let lastPathwaysSource = '';
 let lastBadgesSource = '';
+let lastQuotaSource = '';
 
 export async function refreshOnce(): Promise<void> {
   if (config.content.indexUrls.length) {
@@ -102,6 +104,26 @@ export async function refreshOnce(): Promise<void> {
       console.log(`[content-refresh] badges now served from ${src}`);
     }
   }
+
+  // The free tier's allowances. This is the one file here that decides what a
+  // reader may DO rather than what they are shown, so a rejected payload is
+  // logged the same way but matters more: the API keeps the last limits it
+  // trusted, which is always the safe direction — a stale allowance is a
+  // slightly wrong price, while an empty one would lock every free reader out
+  // of every feature at once.
+  if (config.content.quotaUrls.length) {
+    const raw = await fetchJson(config.content.quotaUrls, 'quota');
+    if (raw !== null && !applyRemoteQuota(raw)) {
+      // eslint-disable-next-line no-console
+      console.warn('[content-refresh] quota: payload rejected by shape check; keeping the current copy');
+    }
+    const src = quotaSource();
+    if (src !== lastQuotaSource) {
+      lastQuotaSource = src;
+      // eslint-disable-next-line no-console
+      console.log(`[content-refresh] quota now served from ${src}`);
+    }
+  }
 }
 
 /**
@@ -112,7 +134,7 @@ export async function refreshOnce(): Promise<void> {
  */
 export function startContentRefresh(): () => void {
   if (!config.content.indexUrls.length && !config.content.pathwaysUrls.length
-      && !config.content.badgesUrls.length) {
+      && !config.content.badgesUrls.length && !config.content.quotaUrls.length) {
     return () => { /* not configured: the baked files are the whole story */ };
   }
   // Fetch once at boot rather than waiting out the first interval, so a

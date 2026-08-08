@@ -38,12 +38,41 @@ async function createHighlight(contentId = 'insight/insight-1'): Promise<string>
   return res.json().highlight.id as string;
 }
 
-describe('requirePremium gate', () => {
-  it('blocks a free user with 402 on every collections route', async () => {
+describe('free-tier allowance', () => {
+  it('lets a free user build one whole board, and refuses only the second', async () => {
+    const first = await app.inject({
+      method: 'POST', url: '/collections', headers: { cookie }, payload: { title: 'اولی' },
+    });
+    expect(first.statusCode).toBe(201);
+
+    const second = await app.inject({
+      method: 'POST', url: '/collections', headers: { cookie }, payload: { title: 'دومی' },
+    });
+    expect(second.statusCode).toBe(402);
+    expect(second.json().error).toBe('quota_exhausted');
+    // A lifetime cap does not refill, and must not pretend to.
+    expect(second.json().quota.resets_at).toBeNull();
+  });
+
+  it('never locks a free user out of boards they already own', async () => {
+    // The lapsed-subscriber case: boards made while premium stay fully usable.
+    await makePremium();
+    const a = await app.inject({
+      method: 'POST', url: '/collections', headers: { cookie }, payload: { title: 'یک' },
+    });
+    await app.inject({
+      method: 'POST', url: '/collections', headers: { cookie }, payload: { title: 'دو' },
+    });
+    await pool.query(`update profiles set tier = 'free' where phone = $1`, [phone]);
+
     const list = await app.inject({ method: 'GET', url: '/collections', headers: { cookie } });
-    expect(list.statusCode).toBe(402);
-    const create = await app.inject({ method: 'POST', url: '/collections', headers: { cookie }, payload: { title: 'x' } });
-    expect(create.statusCode).toBe(402);
+    expect(list.statusCode).toBe(200);
+    expect(list.json().collections).toHaveLength(2);
+
+    const board = await app.inject({
+      method: 'GET', url: `/collections/${a.json().collection.id}`, headers: { cookie },
+    });
+    expect(board.statusCode).toBe(200);
   });
 
   it('blocks an unauthenticated request with 401', async () => {

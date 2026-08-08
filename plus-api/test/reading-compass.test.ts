@@ -44,10 +44,29 @@ async function createHighlight(contentId: string): Promise<void> {
   expect(res.statusCode).toBe(201);
 }
 
-describe('requirePremium gate', () => {
-  it('blocks a free user with 402', async () => {
+describe('free-tier allowance', () => {
+  it('gives a free user the diagnosis but not the prescription', async () => {
     const res = await app.inject({ method: 'GET', url: '/reading-compass', headers: { cookie } });
-    expect(res.statusCode).toBe(402);
+    expect(res.statusCode).toBe(200);
+    const body = res.json();
+    // Coverage numbers are facts about the reader's own activity — never withheld.
+    expect(body).toHaveProperty('total_read');
+    expect(body).toHaveProperty('clusters');
+    // The named articles that would close the gap are what premium buys, and
+    // they are stripped in the process rather than hidden by the page.
+    expect(body.same_area).toEqual([]);
+    expect(body.unexplored).toEqual([]);
+    expect(body.blind_spots_locked).toBe(true);
+    // ...but their SIZE survives, because that is the argument.
+    expect(body.unexplored_count).toBeGreaterThan(0);
+  });
+
+  it('gives a premium user the full map', async () => {
+    await makePremium();
+    const res = await app.inject({ method: 'GET', url: '/reading-compass', headers: { cookie } });
+    expect(res.statusCode).toBe(200);
+    expect(res.json().blind_spots_locked).toBeUndefined();
+    expect(res.json().unexplored.length).toBeGreaterThan(0);
   });
 
   it('blocks an unauthenticated request with 401', async () => {

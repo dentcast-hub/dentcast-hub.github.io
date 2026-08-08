@@ -50,6 +50,52 @@ export function gregorianMonth(instant: Date | string | number = new Date(), tz 
   return dayInTz(instant, tz).slice(0, 7);
 }
 
+/**
+ * The Gregorian days on which the PERSIAN month containing `instant` begins and
+ * ends — `{ start, nextStart }`, both 'YYYY-MM-DD', where `nextStart` is the
+ * first day of the following month (i.e. the exclusive upper bound).
+ *
+ * The monthly free allowance resets on the first of a Persian month, not a
+ * Gregorian one, for the same reason payment-capacity's cap does: this is a
+ * Persian-language product and a reader who is told «۲ کیس در این ماه» means the
+ * month printed on their own calendar. The two boundaries are never less than
+ * three weeks apart, so counting the wrong one would hand out a second month's
+ * allowance in the middle of the first, or withhold it for three weeks after the
+ * month visibly turned over.
+ *
+ * Found by WALKING, not by arithmetic. A Persian month is 29, 30 or 31 days
+ * depending on the month and the leap year, and the leap rule is not the
+ * Gregorian one — so there is no offset to add. Instead each candidate day is
+ * put back through the same Intl formatter jalaliMonth() already uses and asked
+ * which month it lands in, which makes ICU the authority on the calendar rather
+ * than a rule reimplemented here. The walk is bounded at 32 steps (longer than
+ * any Persian month) so a formatter that ever stopped changing its answer would
+ * terminate with a wrong range rather than hang.
+ */
+export function jalaliMonthRange(
+  instant: Date = new Date(),
+  tz = config.streakTimezone,
+): { start: string; nextStart: string } {
+  const today = dayInTz(instant, tz);
+  const target = jalaliMonth(instant, tz);
+  const monthOf = (day: string): string => jalaliMonth(startOfDayInstant(day, tz), tz);
+
+  let start = today;
+  for (let i = 0; i < 32; i += 1) {
+    const prev = previousDay(start);
+    if (monthOf(prev) !== target) break;
+    start = prev;
+  }
+
+  let nextStart = nextDay(today);
+  for (let i = 0; i < 32; i += 1) {
+    if (monthOf(nextStart) !== target) break;
+    nextStart = nextDay(nextStart);
+  }
+
+  return { start, nextStart };
+}
+
 /** `day` moved by n whole calendar days ('YYYY-MM-DD' in, 'YYYY-MM-DD' out). */
 export function addDays(day: string, n: number): string {
   const [y, m, d] = day.split('-').map(Number);

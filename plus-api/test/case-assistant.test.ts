@@ -49,10 +49,54 @@ function next(body: unknown) {
   return app.inject({ method: 'POST', url: '/assistant/next', headers: { cookie }, payload: body });
 }
 
-describe('requirePremium gate', () => {
-  it('blocks a free user with 402', async () => {
-    const res = await next({ description: 'یک بیمار با شکستگی لبه‌ی دندان' });
-    expect(res.statusCode).toBe(402);
+describe('free-tier allowance', () => {
+  it('gives a free user two whole cases a month, then refuses the third', async () => {
+    const a = await next({ description: 'یک بیمار با شکستگی لبه‌ی دندان قدامی' });
+    expect(a.statusCode).toBe(200);
+    const b = await next({ description: 'بیمار با پوسیدگی عمیق در مولر دوم پایین' });
+    expect(b.statusCode).toBe(200);
+    expect(b.json().quota.remaining).toBe(0);
+
+    const c = await next({ description: 'بیمار با تحلیل استخوان اطراف ایمپلنت' });
+    expect(c.statusCode).toBe(402);
+    expect(c.json().error).toBe('quota_exhausted');
+  });
+
+  it('charges the CASE, not the round — narrowing an admitted case stays free', async () => {
+    const description = 'یک بیمار با شکستگی لبه‌ی دندان قدامی';
+    const first = await next({ description });
+    expect(first.statusCode).toBe(200);
+    const options = first.json().options ?? [];
+
+    // Continuing the SAME description must not spend a second case, even
+    // after the allowance would otherwise be gone.
+    await next({ description: 'یک توصیف کاملاً متفاوت برای مصرف سهمیه' });
+    const cont = await next({
+      description,
+      history: [{ question: first.json().question, answer: options[0] ?? { custom: 'چیز دیگری' } }],
+    });
+    expect(cont.statusCode).toBe(200);
+  });
+
+  it('cannot be walked past with a fabricated history', async () => {
+    // The wizard is stateless, so claiming to be mid-case is the obvious
+    // bypass. Identity comes from the server's hash of the description.
+    await next({ description: 'کیس اول برای مصرف سهمیه' });
+    await next({ description: 'کیس دوم برای مصرف سهمیه' });
+
+    const forged = await next({
+      description: 'یک کیس کاملاً تازه که سهمیه‌ای برایش نمانده',
+      history: [{ question: 'سوال ساختگی', answer: { custom: 'جواب ساختگی' } }],
+    });
+    expect(forged.statusCode).toBe(402);
+  });
+
+  it('does not cap a premium user', async () => {
+    await makePremium();
+    for (let i = 0; i < 4; i += 1) {
+      const res = await next({ description: `کیس شماره ${i} با شرایط متفاوت بالینی` });
+      expect(res.statusCode).toBe(200);
+    }
   });
 
   it('blocks an unauthenticated request with 401', async () => {

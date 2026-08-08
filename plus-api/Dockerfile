@@ -27,6 +27,7 @@ ENV NODE_ENV=production
 ENV CONTENT_INDEX_PATH=/app/content-index.json
 ENV PATHWAYS_PATH=/app/pathways.json
 ENV BADGES_PATH=/app/badges.json
+ENV QUOTA_PATH=/app/quota.json
 # ...and where to refresh them from while the container runs, so publishing an
 # article no longer means building an image. The baked copies above stay the
 # boot value and the fallback; these are only ever an upgrade. Both mirrors are
@@ -34,6 +35,7 @@ ENV BADGES_PATH=/app/badges.json
 ENV CONTENT_INDEX_URL=https://dentcast.ir/plus/content-index.json,https://dentcast.org/plus/content-index.json
 ENV PATHWAYS_URL=https://dentcast.ir/plus/pathways.json,https://dentcast.org/plus/pathways.json
 ENV BADGES_URL=https://dentcast.ir/plus/badges.json,https://dentcast.org/plus/badges.json
+ENV QUOTA_URL=https://dentcast.ir/plus/quota.json,https://dentcast.org/plus/quota.json
 WORKDIR /app
 
 # Prod dependencies only.
@@ -47,6 +49,7 @@ COPY plus-api/migrations ./migrations
 COPY plus/content-index.json ./content-index.json
 COPY plus/pathways.json ./pathways.json
 COPY plus/badges.json ./badges.json
+COPY plus/quota.json ./quota.json
 
 # Build stamp — what GET /health reports back.
 #

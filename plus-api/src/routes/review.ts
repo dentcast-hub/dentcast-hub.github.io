@@ -1,16 +1,25 @@
 import type { FastifyInstance } from 'fastify';
 import { requireAuth } from '../middleware/auth.js';
-import { requirePremium } from '../middleware/require-premium.js';
 import { pool, withTransaction } from '../db.js';
 import { recordActivity } from '../services/activity.js';
 import { scheduleAchievementSync } from '../services/achievement-sync.js';
 import { nextBox, intervalDaysForBox } from '../services/leitner.js';
 import { resolveTopic } from '../content-index.js';
+import {
+  quotaState, consumeQuota, isPremiumRequest, quotaExhaustedBody, type QuotaState,
+} from '../services/quota.js';
 
-// Phase 2: the premium Leitner review engine, scoped to highlights only (spec's
+// Phase 2: the Leitner review engine, scoped to highlights only (spec's
 // free/premium line — the card FORM is free, the SCHEDULE is premium). Notes
 // and content-authored flashcards are a later phase; card_state.highlight_id
 // stays `not null` on purpose until that phase lands.
+//
+// The SCHEDULE is still what premium buys, but it is no longer all-or-nothing:
+// a free reader gets the first few cards of the real queue, in the real order,
+// every day (see services/quota.ts). Both endpoints are bounded by the same
+// allowance, and deliberately in different ways — `/due` truncates so the
+// preview is honest about its own size, `/answer` refuses so the boundary
+// cannot be moved by a client that ignores the truncation.
 
 interface DueCardRow {
   highlight_id: string;
@@ -31,16 +40,24 @@ const DUE_COLS = `cs.highlight_id, h.content_id, h.exact, h.prefix, h.suffix, h.
 
 export async function reviewRoutes(app: FastifyInstance): Promise<void> {
   app.addHook('preHandler', requireAuth);
-  app.addHook('preHandler', requirePremium);
 
   // GET /review/due?topic=&limit= -> cards due now (never reviewed, or past their
   // next_review_at), earliest-due first. `topic` scopes to one folder/cluster the
   // same way GET /highlights?topic= does, so the review UI can live in-place on a
   // topic's own archive rather than only as one global queue.
+  //
+  // For a free reader the queue is cut to what they may still answer today, and
+  // `quota` rides along so the UI can say so before the last card rather than
+  // after it. The cut is applied to the SQL limit, not to the rendered list: a
+  // truncation the client performs is not a truncation.
   app.get('/review/due', async (request, reply) => {
     const q = request.query as { topic?: string; limit?: string };
-    const limit = Math.min(Math.max(parseInt(q.limit || '20', 10) || 20, 1), 50);
+    const asked = Math.min(Math.max(parseInt(q.limit || '20', 10) || 20, 1), 50);
     const userId = request.user!.id;
+
+    const quota = await quotaState(userId, 'review_cards', isPremiumRequest(request));
+    const limit = quota.remaining === null ? asked : Math.min(asked, quota.remaining);
+    if (limit <= 0) return reply.send({ due: [], quota });
 
     const params: unknown[] = [userId];
     let topicFilter = '';
@@ -70,7 +87,7 @@ export async function reviewRoutes(app: FastifyInstance): Promise<void> {
         limit $${params.length}`,
       params,
     );
-    return reply.send({ due: res.rows });
+    return reply.send({ due: res.rows, quota });
   });
 
   // POST /review/answer { highlight_id, result: 'remembered' | 'forgot' } ->
@@ -94,8 +111,20 @@ export async function reviewRoutes(app: FastifyInstance): Promise<void> {
       result: 'remembered' | 'forgot';
     };
     const userId = request.user!.id;
+    const isPremium = isPremiumRequest(request);
 
-    const updated = await withTransaction(async (client) => {
+    type Outcome =
+      | { kind: 'ok'; card: { box: number; next_review_at: string; reviewed_count: number }; quota: QuotaState }
+      | { kind: 'not_found' }
+      | { kind: 'exhausted'; quota: QuotaState };
+
+    const outcome = await withTransaction<Outcome>(async (client) => {
+      // Measured under this user's own advisory lock, held until the row that
+      // will be counted has committed. Anything looser and N parallel answers
+      // all read the same "used" and all pass.
+      const quota = await consumeQuota(client, userId, 'review_cards', isPremium);
+      if (!quota.allowed) return { kind: 'exhausted', quota };
+
       const cur = await client.query<{ box: number; content_id: string }>(
         `select cs.box, h.content_id
            from card_state cs
@@ -104,7 +133,7 @@ export async function reviewRoutes(app: FastifyInstance): Promise<void> {
           for update of cs`,
         [userId, highlight_id],
       );
-      if (cur.rowCount === 0) return null;
+      if (cur.rowCount === 0) return { kind: 'not_found' };
       const { box: currentBox, content_id } = cur.rows[0];
       const box = nextBox(currentBox, result);
       const days = intervalDaysForBox(box);
@@ -121,11 +150,16 @@ export async function reviewRoutes(app: FastifyInstance): Promise<void> {
         [box, days, result, userId, highlight_id],
       );
       await recordActivity(userId, 'review_finished', content_id, { highlight_id, result }, client);
-      return res.rows[0];
+      // The row above is the one the allowance counts, so the state reported
+      // back is recomputed from it rather than decremented by hand — the same
+      // reason nothing here stores a counter in the first place.
+      const spent = await quotaState(userId, 'review_cards', isPremium, new Date(), client);
+      return { kind: 'ok', card: res.rows[0], quota: spent };
     });
 
-    if (!updated) return reply.code(404).send({ error: 'not_found' });
+    if (outcome.kind === 'not_found') return reply.code(404).send({ error: 'not_found' });
+    if (outcome.kind === 'exhausted') return reply.code(402).send(quotaExhaustedBody(outcome.quota));
     scheduleAchievementSync(userId); // «مرورگر» counts finished sessions
-    return reply.send({ card_state: updated });
+    return reply.send({ card_state: outcome.card, quota: outcome.quota });
   });
 }

@@ -1,10 +1,12 @@
 import type { FastifyInstance } from 'fastify';
 import { requireAuth } from '../middleware/auth.js';
-import { requirePremium } from '../middleware/require-premium.js';
 import { pool, withTransaction } from '../db.js';
 import { recordActivity } from '../services/activity.js';
 import { scheduleAchievementSync } from '../services/achievement-sync.js';
 import { getContentInfo } from '../content-index.js';
+import {
+  consumeQuota, isPremiumRequest, quotaExhaustedBody, type QuotaState,
+} from '../services/quota.js';
 
 // Premium: user-made freeform folders (spec §4's `collections`/
 // `collection_items`, provisioned since migration 0001, unused until now).
@@ -72,9 +74,17 @@ function resolveItem(row: ItemRow) {
   };
 }
 
+// A free reader gets one whole board — created, filled, arranged, renamed and
+// deleted like any other. Only the SECOND one is what premium buys.
+//
+// Everything except creation is therefore left ungated on purpose. A lapsed
+// subscriber who built five boards keeps all five, keeps adding to them and
+// keeps reading them; they simply cannot start a sixth. Locking their own
+// existing boards behind a renewal would be taking back work they did, which is
+// the one thing a paywall must never do (see plus/js/premium-cta.js's
+// lapsedNote, which promises exactly that in writing).
 export async function collectionRoutes(app: FastifyInstance): Promise<void> {
   app.addHook('preHandler', requireAuth);
-  app.addHook('preHandler', requirePremium);
 
   // GET /collections - the user's own collections, newest first. Besides the
   // count, each carries a small `preview` (its 3 most recent items' color/type
@@ -136,15 +146,29 @@ export async function collectionRoutes(app: FastifyInstance): Promise<void> {
     },
   }, async (request, reply) => {
     const { title } = request.body as { title: string };
-    const res = await pool.query(
-      `insert into collections (user_id, title) values ($1, $2)
-       returning ${COLLECTION_COLS}`,
-      [request.user!.id, title.trim()],
-    );
-    const collection = res.rows[0];
-    await recordActivity(request.user!.id, 'collection_created', null, { collection_id: collection.id });
-    scheduleAchievementSync(request.user!.id); // «گنجینه» counts boards and pins
-    return reply.code(201).send({ collection: { ...collection, item_count: 0 } });
+    const userId = request.user!.id;
+    const isPremium = isPremiumRequest(request);
+
+    // Counted and inserted under one lock, so two taps on a slow connection
+    // cannot both see "0 boards" and both create one.
+    const outcome = await withTransaction<
+      { kind: 'exhausted'; quota: QuotaState } | { kind: 'ok'; collection: Record<string, unknown> }
+    >(async (client) => {
+      const quota = await consumeQuota(client, userId, 'collections', isPremium);
+      if (!quota.allowed) return { kind: 'exhausted', quota };
+      const res = await client.query(
+        `insert into collections (user_id, title) values ($1, $2)
+         returning ${COLLECTION_COLS}`,
+        [userId, title.trim()],
+      );
+      const collection = res.rows[0];
+      await recordActivity(userId, 'collection_created', null, { collection_id: collection.id }, client);
+      return { kind: 'ok', collection };
+    });
+
+    if (outcome.kind === 'exhausted') return reply.code(402).send(quotaExhaustedBody(outcome.quota));
+    scheduleAchievementSync(userId); // «گنجینه» counts boards and pins
+    return reply.code(201).send({ collection: { ...outcome.collection, item_count: 0 } });
   });
 
   // GET /collections/:id - one collection's items, resolved to title/url/type

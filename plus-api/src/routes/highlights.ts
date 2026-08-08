@@ -1,10 +1,10 @@
 import type { FastifyInstance } from 'fastify';
 import { requireAuth } from '../middleware/auth.js';
-import { requirePremium } from '../middleware/require-premium.js';
 import { pool, withTransaction } from '../db.js';
 import { recordActivity } from '../services/activity.js';
 import { scheduleAchievementSync } from '../services/achievement-sync.js';
 import { resolveTopic, folderLabel, getContentInfo, folderOf } from '../content-index.js';
+import { highlightLibraryRows, isPremiumRequest, getQuotaCopy } from '../services/quota.js';
 
 const LABELS = new Set(['important', 'unclear', 'clinical_pearl']);
 
@@ -118,11 +118,30 @@ export async function highlightRoutes(app: FastifyInstance): Promise<void> {
   // six-row recent list was the whole surface. The bodies are already the
   // user's own text; what premium buys is the aggregated VIEW over all of it,
   // the same boundary collections and the review engine draw.
-  app.get('/highlights/library', { preHandler: requirePremium }, async (request, reply) => {
-    const res = await pool.query<HighlightRow>(
-      `select ${SELECT_COLS} from highlights
-        where user_id = $1 order by created_at asc`,
+  //
+  // A free reader gets the most RECENT slice of it rather than a locked page.
+  // The cut is made in SQL, and it is deliberately taken from the newest end
+  // (then re-sorted back into reading order below): a truncation from the oldest
+  // end would show someone their first twenty highlights from a year ago and
+  // none of this week's, which is the least useful twenty of the set.
+  app.get('/highlights/library', async (request, reply) => {
+    const isPremium = isPremiumRequest(request);
+    const cap = highlightLibraryRows(isPremium);
+
+    const total = (await pool.query<{ n: number }>(
+      'select count(*)::int as n from highlights where user_id = $1',
       [request.user!.id],
+    )).rows[0]?.n ?? 0;
+
+    const res = await pool.query<HighlightRow>(
+      cap === null
+        ? `select ${SELECT_COLS} from highlights
+            where user_id = $1 order by created_at asc`
+        : `select * from (
+             select ${SELECT_COLS} from highlights
+              where user_id = $1 order by created_at desc limit $2
+           ) t order by created_at asc`,
+      cap === null ? [request.user!.id] : [request.user!.id, cap],
     );
 
     // Group by content_id, keeping each article's highlights in creation order
@@ -155,9 +174,18 @@ export async function highlightRoutes(app: FastifyInstance): Promise<void> {
       });
 
     return reply.send({
-      total: res.rowCount ?? 0,
+      // `total` is the whole library, not the slice — the CTA's argument is
+      // "you have 340 of these", which needs the real number even when only
+      // twenty came back.
+      total,
+      shown: res.rowCount ?? 0,
       article_count: articles.length,
       articles,
+      ...(cap === null ? {} : {
+        preview_limit: cap,
+        preview_truncated: total > (res.rowCount ?? 0),
+        locked_message: getQuotaCopy().highlight_library_fa,
+      }),
     });
   });
 

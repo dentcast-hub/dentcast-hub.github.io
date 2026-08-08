@@ -1,19 +1,26 @@
 import type { FastifyInstance } from 'fastify';
 import { requireAuth } from '../middleware/auth.js';
-import { requirePremium } from '../middleware/require-premium.js';
 import { config } from '../config.js';
 import { consume, HOUR_MS } from '../services/rate-limit.js';
-import { nextCaseStep } from '../services/case-assistant.js';
+import { nextCaseStep, caseRunHash } from '../services/case-assistant.js';
+import {
+  admitAssistantRun, isPremiumRequest, quotaExhaustedBody, quotaState,
+} from '../services/quota.js';
 import { recordFeedback } from '../services/assistant-learning.js';
 import { recordActivity } from '../services/activity.js';
 import type { NarrowHistoryEntry } from '../providers/ai/types.js';
 
-// «دستیار هوشمند» (premium): stateless narrowing wizard, not a chat — the client
-// resends the whole history every call, nothing is stored server-side. See
+// «دستیار هوشمند»: stateless narrowing wizard, not a chat — the client resends
+// the whole history every call, nothing is stored server-side. See
 // services/case-assistant.ts for the actual narrowing/resolution logic.
+//
+// A free reader gets a couple of whole CASES a month, not a couple of calls: the
+// allowance is spent when a new case is opened, and every round of narrowing
+// inside it is free. Charging per call would leave someone stranded three
+// questions into a case they were invited to start, which is worse than never
+// letting them start it.
 export async function caseAssistantRoutes(app: FastifyInstance): Promise<void> {
   app.addHook('preHandler', requireAuth);
-  app.addHook('preHandler', requirePremium);
 
   app.post('/assistant/next', async (request, reply) => {
     const userId = request.user!.id;
@@ -31,7 +38,29 @@ export async function caseAssistantRoutes(app: FastifyInstance): Promise<void> {
     if (!description) return reply.code(400).send({ error: 'description_required' });
 
     const history = Array.isArray(body.history) ? (body.history as NarrowHistoryEntry[]) : [];
-    const step = await nextCaseStep(userId, description, history);
+
+    // Is this a new case or the continuation of one already paid for? Decided
+    // from the SERVER's own hash of the description, never from the round number
+    // the client reports — the wizard is stateless, so a fabricated history is
+    // the obvious way to try to walk past the allowance, and this is the reason
+    // it does not work.
+    const isPremium = isPremiumRequest(request);
+    const admission = await admitAssistantRun(userId, caseRunHash(description), isPremium);
+    if (!admission.allowed) {
+      return reply.code(402).send(quotaExhaustedBody(admission.state));
+    }
+
+    let step;
+    try {
+      step = await nextCaseStep(userId, description, history);
+    } catch (err) {
+      // The case was never delivered, so it was never spent. Releasing here (and
+      // in the finally below) is what keeps «دو کیس در ماه» an honest promise
+      // when a model call times out.
+      admission.release();
+      throw err;
+    }
+    admission.release();
 
     // The assistant is the only premium feature with a per-use cost, and it was
     // the only one leaving no trace in user_activity — so a two-day prize
@@ -43,7 +72,12 @@ export async function caseAssistantRoutes(app: FastifyInstance): Promise<void> {
     // a use. content_id stays null: this is a feature-usage row, and anything
     // that derives progress from user_activity keys off content.
     await recordActivity(userId, 'assistant_step', null, { round: history.length + 1 });
-    return reply.send(step);
+
+    // Reported back so the wizard can show what is left without a second call.
+    // Read AFTER the round has been filed, so a newly-opened case is already
+    // counted in the number the reader sees.
+    const quota = await quotaState(userId, 'assistant_runs', isPremium);
+    return reply.send({ ...step, quota });
   });
 
   // POST /assistant/feedback { round_id, kind: 'up'|'down'|'click', option_key? }

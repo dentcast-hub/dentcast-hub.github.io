@@ -195,11 +195,33 @@ describe('GET /highlights/library (premium)', () => {
     return res.json().highlight.id as string;
   }
 
-  it('blocks a free user with 402 (the aggregated VIEW is the premium boundary)', async () => {
-    await add('insight/insight-1', 'یک نکته');
+  it('gives a free user the most recent slice, and the real total behind it', async () => {
+    // One more than the free preview so the truncation is exercised for real.
+    const cap = 20;
+    for (let i = 0; i < cap + 3; i += 1) await add('insight/insight-1', `نکته‌ی شماره ${i}`);
+
     const res = await app.inject({ method: 'GET', url: '/highlights/library', headers: { cookie } });
-    expect(res.statusCode).toBe(402);
-    expect(res.json().error).toBe('premium_required');
+    expect(res.statusCode).toBe(200);
+    const body = res.json();
+    expect(body.shown).toBe(cap);
+    expect(body.total).toBe(cap + 3); // the CTA's argument needs the real number
+    expect(body.preview_truncated).toBe(true);
+
+    // The slice is taken from the NEWEST end: the oldest three are the ones missing.
+    const texts = body.articles.flatMap((a: { highlights: Array<{ exact: string }> }) =>
+      a.highlights.map((h) => h.exact));
+    expect(texts).toContain(`نکته‌ی شماره ${cap + 2}`);
+    expect(texts).not.toContain('نکته‌ی شماره 0');
+  });
+
+  it('gives a premium user the whole library, untruncated', async () => {
+    for (let i = 0; i < 23; i += 1) await add('insight/insight-1', `نکته‌ی شماره ${i}`);
+    await pool.query(`update profiles set tier = 'premium' where phone = '09121200001'`);
+
+    const res = await app.inject({ method: 'GET', url: '/highlights/library', headers: { cookie } });
+    expect(res.statusCode).toBe(200);
+    expect(res.json().shown).toBe(23);
+    expect(res.json().preview_truncated).toBeUndefined();
   });
 
   it('requires authentication', async () => {

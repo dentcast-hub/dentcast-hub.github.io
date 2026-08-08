@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "_doc": "Free-tier allowances for every premium feature. Versioned in the repo like badges.json and pathways.json, NOT in the DB: these numbers exist to be retuned against what the funnel actually does, and a retune through a migration would be a deploy. plus-api/src/quota.ts loads it, content-refresh.ts re-fetches the published copy every few minutes, so changing a number here is a commit to the site. Nothing about a user lives in this file — every count is derived from data the product already keeps (see plus-api/src/services/quota.ts).",
+
+  "quotas": {
+    "review_cards": {
+      "limit": 3,
+      "period": "day",
+      "label_fa": "کارت مرور",
+      "exhausted_fa": "سه کارتِ امروزت را مرور کردی. فردا سه کارت تازه باز می‌شود — یا با پریمیوم، همین حالا تمام صف.",
+      "remaining_fa": "امروز {n} کارت رایگان مانده"
+    },
+    "assistant_runs": {
+      "limit": 2,
+      "period": "month",
+      "label_fa": "کیس دستیار هوشمند",
+      "exhausted_fa": "دو کیسِ این ماهت را پرسیدی. ماه بعد دو تای تازه باز می‌شود — یا با پریمیوم، بدون سقف.",
+      "remaining_fa": "این ماه {n} کیس رایگان مانده"
+    },
+    "collections": {
+      "limit": 1,
+      "period": "total",
+      "label_fa": "کالکشن",
+      "exhausted_fa": "کالکشنِ رایگانت ساخته شده. کالکشن‌های بیشتر با پریمیوم باز می‌شود؛ همینی که داری همیشه دستِ خودت می‌ماند.",
+      "remaining_fa": "{n} کالکشن رایگان مانده"
+    }
+  },
+
+  "previews": {
+    "_doc": "Truncations, not refusals: a free reader always gets an answer here, just less of it. Nothing in this block can ever return an error.",
+
+    "highlight_library_rows": 20,
+    "pathways_free_count": 1,
+    "compass_blind_spots": false,
+    "library_searches_per_day": 3
+  },
+
+  "copy": {
+    "highlight_library_fa": "بیست هایلایت آخرت را می‌بینی. کل دفترچه — با گروه‌بندی، جستجو و فیلترِ برچسب — با پریمیوم باز می‌شود.",
+    "pathways_fa": "مسیر اول کامل باز است. بقیه‌ی مسیرها با پریمیوم.",
+    "compass_fa": "درصد هر ستون را می‌بینی. نقشه‌ی دقیقِ آنچه از دیدت دور مانده، با پریمیوم.",
+    "library_fa": "سه جستجوی امروزت تمام شد. فهرست کامل مقاله‌ها همچنان باز است و می‌توانی مرورش کنی؛ جستجو و مرتب‌سازی با پریمیوم."
+  }
+}

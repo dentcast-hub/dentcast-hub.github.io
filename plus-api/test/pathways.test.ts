@@ -39,14 +39,53 @@ async function createHighlight(contentId: string): Promise<void> {
   expect(res.statusCode).toBe(201);
 }
 
-describe('requirePremium gate', () => {
-  it('blocks a free user with 402 on every pathway route', async () => {
-    const list = await app.inject({ method: 'GET', url: '/pathways', headers: { cookie } });
-    expect(list.statusCode).toBe(402);
+describe('free-tier allowance', () => {
+  // The free pathway is the FIRST in catalog order — the same one for everybody.
+  const LOCKED_ID = getPathways()[1].id;
+
+  it('opens the first pathway to a free user, in full', async () => {
     const detail = await app.inject({ method: 'GET', url: `/pathways/${PATHWAY_ID}`, headers: { cookie } });
-    expect(detail.statusCode).toBe(402);
+    expect(detail.statusCode).toBe(200);
+    expect(detail.json().locked).toBe(false);
+    expect(detail.json().steps.length).toBeGreaterThan(0);
+
     const enroll = await app.inject({ method: 'POST', url: `/pathways/${PATHWAY_ID}/enroll`, headers: { cookie } });
+    expect(enroll.statusCode).toBe(200);
+  });
+
+  it('lists the whole catalog but marks the rest locked', async () => {
+    const list = await app.inject({ method: 'GET', url: '/pathways', headers: { cookie } });
+    expect(list.statusCode).toBe(200);
+    const rows = list.json().pathways as Array<Record<string, unknown>>;
+    expect(rows).toHaveLength(getPathways().length);
+    expect(rows.find((p) => p.id === PATHWAY_ID)!.locked).toBe(false);
+    expect(rows.find((p) => p.id === LOCKED_ID)!.locked).toBe(true);
+  });
+
+  it('withholds a locked pathway’s STEPS while still describing it', async () => {
+    const detail = await app.inject({ method: 'GET', url: `/pathways/${LOCKED_ID}`, headers: { cookie } });
+    expect(detail.statusCode).toBe(200);
+    expect(detail.json().locked).toBe(true);
+    // The ordered list is the product; the cover is the pitch.
+    expect(detail.json().steps).toEqual([]);
+    expect(detail.json().title_fa).toBeTruthy();
+    expect(detail.json().total_steps).toBeGreaterThan(0);
+  });
+
+  it('refuses enrollment in a locked pathway', async () => {
+    const enroll = await app.inject({ method: 'POST', url: `/pathways/${LOCKED_ID}/enroll`, headers: { cookie } });
     expect(enroll.statusCode).toBe(402);
+    expect(enroll.json().error).toBe('premium_required');
+    const rows = await pool.query('select count(*)::int as n from user_pathways');
+    expect(rows.rows[0].n).toBe(0);
+  });
+
+  it('opens every pathway to a premium user', async () => {
+    await makePremium();
+    const detail = await app.inject({ method: 'GET', url: `/pathways/${LOCKED_ID}`, headers: { cookie } });
+    expect(detail.statusCode).toBe(200);
+    expect(detail.json().locked).toBe(false);
+    expect(detail.json().steps.length).toBeGreaterThan(0);
   });
 
   it('blocks an unauthenticated request with 401', async () => {

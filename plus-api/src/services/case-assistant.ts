@@ -198,6 +198,22 @@ function words(s: string): string[] {
 }
 
 /**
+ * The identity of one CASE, as the server computes it — the same hash
+ * nextCaseStep files every round under.
+ *
+ * Exported because it is also what the free-tier allowance is counted in
+ * (routes/case-assistant.ts). The assistant is stateless: the client resends
+ * the whole history on every call, so a limit keyed off the round number could
+ * be stepped over by sending a fabricated history and claiming to be mid-case.
+ * The hash cannot be, because it is derived here from the description the user
+ * actually sent — a different case is always a new run, and continuing the same
+ * one is always free, whatever the client says about itself.
+ */
+export function caseRunHash(description: string): string {
+  return hashDescription(normalizeFa(description));
+}
+
+/**
  * Score one real site tag against the AI's suggested phrases: the fraction of
  * the TAG's own words that appear somewhere among the suggestions. Scoring
  * off the tag (not the suggestion) means a short, specific tag needs its
