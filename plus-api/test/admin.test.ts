@@ -432,5 +432,22 @@ describe('GET /admin/pillar — the «ستون» roster', () => {
     // Seat order follows the money, not signup order and not insertion order.
     expect(body.holders.map((h: { seat: number; user_id: string }) => h.seat)).toEqual([1, 2]);
     expect(body.holders[0].user_id).toBe(await uid('09121710001'));
+
+    // --- the retroactive welcome ------------------------------------------
+    // First press thanks both never-thanked holders; the second press finds
+    // the ledger already carries them and sends nothing.
+    const first = await app.inject({
+      method: 'POST', url: '/admin/pillar/welcome', headers: { authorization: basic },
+    });
+    expect(first.json()).toMatchObject({ ok: true, holders: 2, welcomed: 2, already: 0 });
+    const logged = await pool.query(
+      "select count(*)::int as n from notification_log where kind = 'pillar_seat' and delivered",
+    );
+    expect(logged.rows[0].n).toBe(2);
+
+    const second = await app.inject({
+      method: 'POST', url: '/admin/pillar/welcome', headers: { authorization: basic },
+    });
+    expect(second.json()).toMatchObject({ ok: true, holders: 2, welcomed: 0, already: 2 });
   });
 });

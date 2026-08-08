@@ -15,6 +15,7 @@ import {
 import { getCapacity } from '../services/payment-capacity.js';
 import { reconcilePendingPayments } from '../services/payment-reconcile.js';
 import { pillarRoster } from '../services/pillar.js';
+import { pillarWelcomeBackfill } from '../services/pillar-notify.js';
 import {
   pendingRedemptions, approveRedemption, rejectRedemption,
 } from '../services/gift-redemption.js';
@@ -956,6 +957,16 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
   // neither and this is how the founder knows when to stop advertising.
   app.get('/admin/pillar', async (_request, reply) => {
     return reply.send({ ok: true, ...await pillarRoster() });
+  });
+
+  // POST /admin/pillar/welcome — thank every seat-holder never yet thanked.
+  // The retroactive half of the «ستون» welcome: seats minted before the
+  // welcome shipped get the same personal message the settle path now sends.
+  // Idempotent (once ever per account, enforced by the notification ledger),
+  // so it is safe to press twice — and manual on purpose, so the founder picks
+  // the hour a batch of phones buzzes.
+  app.post('/admin/pillar/welcome', async (_request, reply) => {
+    return reply.send({ ok: true, ...await pillarWelcomeBackfill(new Date()) });
   });
 
   // Force the pending-payment sweep now instead of waiting for the next tick.
