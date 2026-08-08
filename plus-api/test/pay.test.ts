@@ -516,12 +516,14 @@ describe('«ستون» — the first-fifty renewal discount', () => {
     expect(await pillarSeat(uid1)).toBe(2);
   });
 
-  it('closes the discount at seat fifty, and floors ragged prices toward the customer', async () => {
+  it('closes the discount at the last seat, and floors ragged prices toward the customer', async () => {
     const { isPillarSeat, pillarAmountRial, PILLAR_SEATS } = await import('../src/services/pillar.js');
-    expect(PILLAR_SEATS).toBe(50);
+    // 51, not 50: fifty seats for readers plus the founder's own paid account,
+    // so the public «پنجاه» stays true for the readers it is promised to.
+    expect(PILLAR_SEATS).toBe(51);
     expect(isPillarSeat(1)).toBe(true);
-    expect(isPillarSeat(50)).toBe(true);
-    expect(isPillarSeat(51)).toBe(false); // paid, but the seats were gone
+    expect(isPillarSeat(51)).toBe(true);
+    expect(isPillarSeat(52)).toBe(false); // paid, but the seats were gone
     expect(isPillarSeat(null)).toBe(false); // never paid
     expect(pillarAmountRial(60_000_000)).toBe(48_000_000);
     expect(pillarAmountRial(33_000_000)).toBe(26_400_000);

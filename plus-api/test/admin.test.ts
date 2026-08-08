@@ -426,7 +426,7 @@ describe('GET /admin/pillar — the «ستون» roster', () => {
       method: 'GET', url: '/admin/pillar', headers: { authorization: basic },
     });
     const body = res.json();
-    expect(body.seats_total).toBe(50);
+    expect(body.seats_total).toBe(51);
     expect(body.seats_taken).toBe(2);
     expect(body.open).toBe(true);
     // Seat order follows the money, not signup order and not insertion order.
