@@ -1,5 +1,6 @@
 import { config } from './config.js';
 import { runFreeDigest, runPremiumBacklog } from './services/article-notify.js';
+import { releaseHeldBroadcastPushes } from './services/broadcast.js';
 import { runStreakReminders } from './services/streak-reminder.js';
 import { runReactivationNudges } from './services/reactivation.js';
 import { finalizeDueWeeks } from './services/league-finalize.js';
@@ -196,6 +197,14 @@ export function startHeldNotificationsScheduler(): () => void {
         if (prizeNotified.notified > 0) {
           // eslint-disable-next-line no-console
           console.log(`[premium-prize] announced ${prizeNotified.notified} prize(s)`);
+        }
+        // The founder's own announcements, held overnight by the same window.
+        // Last of the four on purpose: a broadcast is `system` and uncapped, so
+        // it cannot eat a slot the three above still need.
+        const held = await releaseHeldBroadcastPushes(new Date());
+        if (held.released > 0 || held.stale > 0) {
+          // eslint-disable-next-line no-console
+          console.log(`[broadcast] released ${held.released} held push(es), dropped ${held.stale} stale`);
         }
       })()
         .catch((err) => {

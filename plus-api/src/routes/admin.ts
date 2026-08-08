@@ -21,8 +21,13 @@ import {
   getSpotStats, defaultRange, isCalendarDay, SPOT_HOSTS, type GroupBy,
 } from '../services/spot-stats.js';
 import { withPageViews } from '../services/view-stats.js';
-import { recordBroadcast, type NoticeAudience } from '../services/notices.js';
+import {
+  recordBroadcast, claimBroadcastPush, pendingBroadcastPushes, type NoticeAudience,
+} from '../services/notices.js';
 import { sendCapped, inAwakeWindow } from '../services/notify-policy.js';
+import {
+  deliverBroadcast, broadcastMessage, releaseHeldBroadcastPushes,
+} from '../services/broadcast.js';
 import { notifications, ai } from '../providers/registry.js';
 import {
   probe, proxyForChannel, hostOfProxy, outboundFetch, describeError,
@@ -180,9 +185,9 @@ function renderHtml(k: Kpis): string {
           btn.disabled = false;
           if (!res.ok) { out.textContent = 'نشد: ' + (res.j.error || 'خطا'); return; }
           var m = 'منتشر شد.';
-          if (res.j.push_skipped === 'outside_awake_window') {
-            m += ' پوش نرفت (خارج از ۹ تا ۲۲) — اطلاعیه سرِ جایش هست؛ صبح دوباره بزن یا تیکِ دوم را بزن.';
-          } else if (res.j.pushed) { m += ' پوش برای ' + res.j.pushed + ' نفر رفت.'; }
+          if (res.j.push === 'held') {
+            m += ' پوش نگه داشته شد (خارج از ۹ تا ۲۲) و صبح خودکار می‌رود؛ اطلاعیه همین حالا سرِ جایش هست. دوباره نزن — ردیف تکراری می‌سازد.';
+          } else if (res.j.push === 'queued') { m += ' پوش در حال ارسال است.'; }
           out.textContent = m;
           document.getElementById('bcTitle').value = '';
           document.getElementById('bcBody').value = '';
@@ -192,58 +197,6 @@ function renderHtml(k: Kpis): string {
   })();
   </script>
 </div></body></html>`;
-}
-
-/**
- * Push one broadcast to everyone it is addressed to. Runs DETACHED from the
- * request (see the caller): it is serial and per-user, so its duration is a
- * function of the audience, and the اطلاعیه row the readers actually read is
- * already committed before this starts.
- *
- * Detached means nothing may escape: an unhandled rejection here would take the
- * process down, and a silent one would leave a broadcast that reported `queued`
- * and then vanished. So every send is caught per user, the whole run is caught
- * again, and it always ends with one summary line naming the broadcast id.
- */
-async function deliverBroadcast(
-  id: string,
-  audience: NoticeAudience,
-  message: NotificationMessage,
-  now: Date,
-): Promise<void> {
-  const started = Date.now();
-  let pushed = 0;
-  let failed = 0;
-  try {
-    const targets = await query<{ id: string }>(
-      `select id from profiles
-        where ($1 = 'all'
-            or ($1 = 'premium' and tier = 'premium')
-            or ($1 = 'free' and tier <> 'premium'))
-          and (telegram_id is not null or bale_id is not null
-               or exists (select 1 from push_subscriptions s where s.user_id = profiles.id))`,
-      [audience],
-    );
-    // eslint-disable-next-line no-console
-    console.log(`[broadcast:${id}] delivering to ${targets.rowCount} reader(s), audience=${audience}`);
-    for (const t of targets.rows) {
-      try {
-        if (await sendCapped(t.id, message, 'system', now, { inbox: false })) pushed += 1;
-      } catch {
-        failed += 1; // one dead device never stops the broadcast
-      }
-    }
-    // eslint-disable-next-line no-console
-    console.log(
-      `[broadcast:${id}] done pushed=${pushed} failed=${failed} in ${Date.now() - started}ms`,
-    );
-  } catch (err) {
-    // eslint-disable-next-line no-console
-    console.error(
-      `[broadcast:${id}] ABORTED after pushed=${pushed} failed=${failed}: ${describeError(err)}`
-      + ' — the اطلاعیه row itself is unaffected and every reader still sees it.',
-    );
-  }
 }
 
 export async function adminRoutes(app: FastifyInstance): Promise<void> {
@@ -373,39 +326,40 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
     if (!title) return reply.code(400).send({ error: 'empty_title' });
     const audience: NoticeAudience = b.audience ?? 'all';
 
+    const now = new Date();
+    const wantsPush = Boolean(b.push);
+    const sendingNow = wantsPush && (inAwakeWindow(now) || Boolean(b.force));
+
     const id = await recordBroadcast({
       kind: 'system',
       title,
       body: (b.body || '').trim() || null,
       url: (b.url || '').trim() || null,
       audience,
+    }, {
+      // `push_requested` is what makes HOLDING different from dropping. Without
+      // it the only way to get a held push out was to broadcast again, which
+      // wrote a second row and showed every reader the same announcement twice.
+      pushRequested: wantsPush,
+      // Claimed up front when it is going out now, so the morning sweep never
+      // finds this row and sends it a second time.
+      pushedAt: sendingNow ? now : null,
     });
 
-    const now = new Date();
     let push: 'off' | 'queued' | 'held' = 'off';
-    if (b.push) {
-      if (!inAwakeWindow(now) && !b.force) {
-        // Held rather than sent, and said out loud: the inbox already has it, so
-        // nothing is lost by the founder pressing this again in the morning.
+    if (wantsPush) {
+      if (!sendingNow) {
+        // Held, not dropped: the inbox already has it, and the morning sweep
+        // (scheduler, at awakeStartHour) releases the push by itself.
         push = 'held';
       } else {
         push = 'queued';
-        const message: NotificationMessage = {
-          title,
-          body: (b.body || '').trim() || title,
-          url: (b.url || '').trim() || '/plus/',
-          // Unique per broadcast. Web push REPLACES a notification that carries a
-          // tag already on screen, so the constant 'broadcast' meant a second
-          // announcement silently deleted the first from the reader's tray — they
-          // would only ever see the latest one.
-          tag: `broadcast:${id}`,
-        };
-        // NOT awaited. The fan-out is serial and per-user, so its duration grows
-        // with the audience; on 2026-08-07 it passed the gateway timeout and the
-        // founder got a 504 that said nothing about whether the announcement had
-        // gone out. The اطلاعیه row is already committed above and is what every
-        // reader actually reads, so there is nothing for the caller to wait for.
-        void deliverBroadcast(id, audience, message, now);
+        // NOT awaited — see deliverBroadcast. The اطلاعیه row is already
+        // committed above and is what every reader actually reads, so there is
+        // nothing for the caller to wait for.
+        void deliverBroadcast(id, audience, broadcastMessage({
+          id, title, body: (b.body || '').trim() || null, url: (b.url || '').trim() || null,
+        }), now);
       }
     }
 
@@ -418,6 +372,41 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
       push,
       push_skipped: push === 'held' ? 'outside_awake_window' : null,
     });
+  });
+
+  /**
+   * POST /admin/notices/:id/push — send the push for a broadcast that already
+   * exists, WITHOUT writing a second one.
+   *
+   * The gap this fills: a broadcast published outside the awake window keeps its
+   * اطلاعیه row and holds its push. Before this, the only way to get that push
+   * out was to broadcast again — which wrote a second row and showed every
+   * reader the same announcement twice. So "held" was indistinguishable from
+   * "dropped", and the founder had to choose between a lost push and a duplicate.
+   *
+   * Idempotent by construction: claimBroadcastPush is an UPDATE guarded on
+   * `pushed_at is null`, so pressing this twice, or racing the morning sweep,
+   * sends once. `already_pushed` is a 200, not an error — the caller asked for
+   * the push to have happened and it has.
+   */
+  app.post('/admin/notices/:id/push', async (request, reply) => {
+    const { id } = request.params as { id: string };
+    if (!UUID_RE.test(id)) return reply.code(400).send({ error: 'bad_id' });
+
+    const row = await claimBroadcastPush(id);
+    if (!row) {
+      return reply.send({ ok: true, pushed: false, reason: 'already_pushed_or_not_pending' });
+    }
+    void deliverBroadcast(row.id, row.audience, broadcastMessage(row), new Date());
+    return reply.send({ ok: true, pushed: true, broadcast_id: row.id, push: 'queued' });
+  });
+
+  // POST /admin/notices/release-held — run the morning release now (the cron does
+  // this at NOTIFY_AWAKE_START_HOUR). Twin of run-free-digest: the manual lever
+  // for verifying the sweep without waiting for 09:00.
+  app.post('/admin/notices/release-held', async (_request, reply) => {
+    const result = await releaseHeldBroadcastPushes(new Date());
+    return reply.send({ ok: true, ...result });
   });
 
   // POST /admin/articles/run-free-digest - manually trigger the free digest run

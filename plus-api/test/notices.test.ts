@@ -19,6 +19,7 @@ import { syncAchievements } from '../src/services/achievement-sync.js';
 import { listNotices, unreadNoticeCount, noticeCounters, recordBroadcast } from '../src/services/notices.js';
 import { onArticlePublished, runFreeDigest } from '../src/services/article-notify.js';
 import { sendCapped } from '../src/services/notify-policy.js';
+import { releaseHeldBroadcastPushes } from '../src/services/broadcast.js';
 
 let app: FastifyInstance;
 let cookie: string;
@@ -450,5 +451,108 @@ describe('the founder broadcast', () => {
     expect(ids[0]).not.toBe(ids[1]);
     // The tag is derived from that id, so distinct ids mean distinct tags.
     expect(new Set(ids.map((i) => `broadcast:${i}`)).size).toBe(2);
+  });
+});
+
+// --------------------------------------------------- held pushes, released ---
+//
+// 2026-08-07, 22:56 Tehran. A broadcast published outside the awake window keeps
+// its اطلاعیه row and HOLDS its push — and before this, the only way to get that
+// push out was to broadcast again, which wrote a SECOND row and showed every
+// reader the same announcement twice. So "held" was indistinguishable from
+// "dropped": the founder had to choose between losing the push and duplicating
+// the notice. These pin the release paths that close it.
+describe('a push the awake window held', () => {
+  const auth = 'Basic ' + Buffer.from(
+    `${config.admin.user}:${config.admin.password}`,
+  ).toString('base64');
+
+  /** Broadcast with push:true while the window is shut. Returns its id. */
+  async function heldBroadcast(title = 'اطلاعیهٔ شبانه'): Promise<string> {
+    const start = config.notify.awakeStartHour;
+    const end = config.notify.awakeEndHour;
+    config.notify.awakeStartHour = 3;
+    config.notify.awakeEndHour = 4;
+    try {
+      const res = await app.inject({
+        method: 'POST', url: '/admin/notices/broadcast',
+        headers: { authorization: auth }, payload: { title, push: true },
+      });
+      expect(res.json().push).toBe('held');
+      return res.json().broadcast_id as string;
+    } finally {
+      config.notify.awakeStartHour = start;
+      config.notify.awakeEndHour = end;
+    }
+  }
+
+  it('is released by the morning sweep, without a second inbox row', async () => {
+    const id = await heldBroadcast();
+
+    const out = await releaseHeldBroadcastPushes(new Date());
+
+    expect(out.released).toBe(1);
+    // The whole point: one announcement, one row — the reader is not told twice.
+    const rows = (await app.inject({ method: 'GET', url: '/notices', headers: { cookie } })).json();
+    expect(rows.notices.filter((n: { title: string }) => n.title === 'اطلاعیهٔ شبانه')).toHaveLength(1);
+  });
+
+  it('is claimed, so a second sweep sends nothing', async () => {
+    await heldBroadcast();
+    expect((await releaseHeldBroadcastPushes(new Date())).released).toBe(1);
+    expect((await releaseHeldBroadcastPushes(new Date())).released).toBe(0);
+  });
+
+  it('can be released by hand, and the sweep then finds nothing left', async () => {
+    const id = await heldBroadcast();
+
+    const res = await app.inject({
+      method: 'POST', url: `/admin/notices/${id}/push`, headers: { authorization: auth },
+    });
+
+    expect(res.statusCode).toBe(200);
+    expect(res.json().pushed).toBe(true);
+    // The manual button and the sweep claim the same row, so they cannot both send.
+    expect((await releaseHeldBroadcastPushes(new Date())).released).toBe(0);
+  });
+
+  it('pressing the manual button twice sends once, and says so without erroring', async () => {
+    const id = await heldBroadcast();
+    const first = await app.inject({
+      method: 'POST', url: `/admin/notices/${id}/push`, headers: { authorization: auth },
+    });
+    const second = await app.inject({
+      method: 'POST', url: `/admin/notices/${id}/push`, headers: { authorization: auth },
+    });
+
+    expect(first.json().pushed).toBe(true);
+    // A 200, not an error: the caller asked for the push to have happened, and it has.
+    expect(second.statusCode).toBe(200);
+    expect(second.json().pushed).toBe(false);
+  });
+
+  it('a broadcast sent INSIDE the window is never released a second time', async () => {
+    const start = config.notify.awakeStartHour;
+    const end = config.notify.awakeEndHour;
+    config.notify.awakeStartHour = 0;
+    config.notify.awakeEndHour = 0; // always awake
+    try {
+      const res = await app.inject({
+        method: 'POST', url: '/admin/notices/broadcast',
+        headers: { authorization: auth }, payload: { title: 'روزانه', push: true },
+      });
+      expect(res.json().push).toBe('queued');
+    } finally {
+      config.notify.awakeStartHour = start;
+      config.notify.awakeEndHour = end;
+    }
+    // It claimed its own push on the way out, so the sweep must not re-send it.
+    expect((await releaseHeldBroadcastPushes(new Date())).released).toBe(0);
+  });
+
+  it('requires admin credentials on the manual button', async () => {
+    const id = await heldBroadcast();
+    const res = await app.inject({ method: 'POST', url: `/admin/notices/${id}/push` });
+    expect(res.statusCode).toBe(401);
   });
 });
