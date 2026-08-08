@@ -31,7 +31,7 @@
     "early_reads": "user_activity.created_at - articles.published_at < 1 hour، با join روی content_id",
     "weeks_no_demotion": "بلندترین زنجیرهٔ متوالیِ league_members.outcome <> 'demoted'",
     "pathways_completed": "user_pathways.completed_at is not null",
-    "review_sessions": "شمارشِ رویدادهای review_finished در user_activity",
+    "review_sessions": "شمارشِ روزهای متمایزی که در آن‌ها مرور انجام شده (نه تعدادِ کارت‌ها)",
     "collections": "count از جدول collections",
     "collection_items": "count از جدول collection_items",
     "shares": "count(distinct content_id) از user_activity where action='content_shared' — فقط محتوایی که کاربر برای آن article_completed هم دارد، و فقط اشتراک‌هایی که بعد از آن اتفاق افتاده‌اند. همان دروازه‌ای که XP لیگ با آن پرداخت می‌شود (league.ts، shareXp)، تا دیوار و نردبان دربارهٔ یک کار دو حرف نزنند.",
@@ -567,28 +567,28 @@
       "leveled": true,
       "visibility": "always",
       "metric": "review_sessions",
-      "locked_fa": "یک جلسهٔ مرور را کامل کن.",
-      "detail_fa": "مرورِ فاصله‌دار کاری می‌کند چیزی که خوانده‌ای، شش ماه بعد هم یادت باشد.",
+      "locked_fa": "یک روز را با مرور تمام کن.",
+      "detail_fa": "شمارشِ روزهایی که نشستی و مرور کردی، نه تعدادِ کارت‌ها — ششصد کارت بین نیمه‌شب و یک، باز هم یک روزِ مرور است. مرورِ فاصله‌دار کاری می‌کند چیزی که خوانده‌ای، شش ماه بعد هم یادت باشد؛ و فاصله در روز شمرده می‌شود، نه در کارت.",
       "levels": [
         {
           "tier": "bronze",
           "threshold": 1,
-          "unlock_fa": "اولین جلسهٔ مرورت. فراموش‌کردن از این‌جا به بعد سخت‌تر می‌شود."
+          "unlock_fa": "اولین روزِ مرورت. فراموش‌کردن از این‌جا به بعد سخت‌تر می‌شود."
         },
         {
           "tier": "silver",
-          "threshold": 25,
-          "unlock_fa": "بیست‌وپنج جلسه مرور. داری روی چیزی که خوانده‌ای کار می‌کنی.",
+          "threshold": 10,
+          "unlock_fa": "ده روز مرور کرده‌ای. داری روی چیزی که خوانده‌ای کار می‌کنی.",
           "discount_percent": 1
         },
         {
           "tier": "gold",
-          "threshold": 100,
-          "unlock_fa": "صد جلسه مرور. حافظه‌ات را ساختی، شانس نیاوردی.",
+          "threshold": 30,
+          "unlock_fa": "سی روز مرور. حافظه‌ات را ساختی، شانس نیاوردی.",
           "discount_percent": 2
         }
       ],
-      "unit_fa": "جلسه"
+      "unit_fa": "روز"
     },
     {
       "key": "treasury",

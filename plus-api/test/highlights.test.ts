@@ -45,14 +45,19 @@ describe('highlights CRUD + anchoring round-trip', () => {
     expect(hl.label).toBe('important');
     expect(hl.cloze_markers).toEqual([[0, 5]]);
 
-    // card_state row exists, box 1, next_review_at null
-    const cs = await pool.query(
+    // card_state row exists, box 1, and SCHEDULED a day out rather than due now.
+    // It used to be inserted with a null next_review_at, which every due check
+    // reads as "due" — so a highlight was answerable the instant it was written,
+    // and that is what the 2026-08-08 review farm ran on (routes/highlights.ts).
+    const cs = await pool.query<{ box: number; next_review_at: string }>(
       'select box, next_review_at from card_state where highlight_id = $1',
       [hl.id],
     );
     expect(cs.rowCount).toBe(1);
     expect(cs.rows[0].box).toBe(1);
-    expect(cs.rows[0].next_review_at).toBeNull();
+    const hours = (new Date(cs.rows[0].next_review_at).getTime() - Date.now()) / 3_600_000;
+    expect(hours).toBeGreaterThan(23);
+    expect(hours).toBeLessThan(25);
 
     // activity logged
     const act = await pool.query(

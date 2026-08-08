@@ -102,7 +102,22 @@ export async function computeAchievementFacts(
              as articles_completed,
            (select count(*)::int from user_activity
              where user_id = $1 and action = 'streak_freeze_used') as shield_used,
-           (select count(*)::int from user_activity
+           -- «یادآور» counts DAYS on which the reader reviewed, not answers.
+           --
+           -- It counted rows, and a row is one card. That made the badge's own
+           -- word — «جلسه» — false by about twenty to one for an honest studier,
+           -- and it made the badge farmable for money: a card is born due
+           -- (card_state is inserted with next_review_at = null), so creating
+           -- highlights and answering them straight away produced hundreds of
+           -- "sessions" in an afternoon, and silver/gold here mint real one-time
+           -- purchase discounts (٪۱ / ٪۲, see discount-credits.ts). On
+           -- 2026-08-08 one account logged 765 of them across 4 days.
+           --
+           -- A day is the unit that cannot be looped: answering six hundred
+           -- cards between midnight and one is still one day of reviewing, which
+           -- is also exactly what «جلسهٔ مرور» has always meant to a reader.
+           (select count(distinct (created_at at time zone $2)::date)::int
+              from user_activity
              where user_id = $1 and action = 'review_finished') as review_sessions,
            (select count(*)::int from collections where user_id = $1) as collections,
            (select count(*)::int from collection_items ci
@@ -126,7 +141,7 @@ export async function computeAchievementFacts(
                             where r.user_id = $1 and r.action = 'article_completed'
                               and r.content_id = s.content_id
                               and r.created_at <= s.created_at)) as shares`,
-        [userId],
+        [userId, tz], // tz: «یادآور» counts review DAYS, in Tehran
       ),
 
       // ---- hour-of-day, in Tehran --------------------------------------------
