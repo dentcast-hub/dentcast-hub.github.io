@@ -318,11 +318,20 @@ function discountStrip(d) {
   }
 
   if (ready > 0) {
-    kids.push(el('p', { class: 'dcp-disc-foot' },
-      ready > (d.cap_percent || 0)
-        ? `سهم نشان‌ها در هر خرید تا سقف ٪${faNum(d.cap_percent)} است؛ `
-          + `٪${faNum(ready - (next - pillar))} باقی‌مانده برای خریدهای بعد می‌ماند.`
-        : `در هر خرید تا سقف ٪${faNum(d.cap_percent)} اعمال می‌شود؛ باقی‌مانده برای خرید بعد می‌ماند.`));
+    // The cap belongs to the BADGE credits and to nothing else — payment.ts adds
+    // the «ستون» percent on top of it (`pillar + creditPercent(credits)`), so a
+    // seat-holder's permanent ٪۲۰ is never trimmed to fit. Both branches have to
+    // name that subject: an unowned «تا سقف ٪۱۰ اعمال می‌شود» reads to a
+    // seat-holder as a ceiling on their own discount, which is the opposite of
+    // what they were promised. The under-cap branch also used to claim a
+    // remainder that cannot exist — under the cap, everything applies.
+    const capLine = ready > (d.cap_percent || 0)
+      ? `سهم نشان‌ها در هر خرید تا سقف ٪${faNum(d.cap_percent)} است؛ `
+        + `٪${faNum(ready - (next - pillar))} باقی‌مانده برای خریدهای بعد می‌ماند.`
+      : `سهم نشان‌ها در هر خرید تا سقف ٪${faNum(d.cap_percent)} است.`;
+    kids.push(el('p', { class: 'dcp-disc-foot' }, pillar > 0
+      ? `${capLine} تخفیف ٪${faNum(pillar)} ستون جدا از این سقف است و همیشه می‌ماند.`
+      : capLine));
   }
 
   kids.push(el('a', { class: 'dcp-disc-link', href: '/plus/pricing.html?from=achievements' },
