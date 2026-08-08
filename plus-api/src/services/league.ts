@@ -164,14 +164,14 @@ async function shareXp(
 }
 
 /**
- * The premium-only actions that pay league XP (migration 0029). None of them is
+ * The premium-only actions that pay league XP (migration 0030). None of them is
  * a scoring action — they touch neither the streak nor the all-time score, and
  * that separation is the point: these buy a place in a WEEKLY ranking, not a
  * claim about having studied.
  *
  * Each is a real act performed on a `requirePremium` route, so the gate is
  * structural. `compass_viewed` and `assistant_step` are deliberately absent —
- * see migration 0029 for why (a page load, and our own inference bill).
+ * see migration 0030 for why (a page load, and our own inference bill).
  */
 export const PREMIUM_XP_ACTIONS = ['pathway_enrolled', 'collection_created', 'collection_item_added'];
 
@@ -270,7 +270,7 @@ async function pathwayStepXp(
  *   xp_review        — card_reviewed_manual / review_finished
  *   xp_share         — content_shared, gated + capped (shareXp above)
  *
- * and the premium earning paths (migration 0029), each capped per week:
+ * and the premium earning paths (migration 0030), each capped per week:
  *
  *   xp_pathway_step       — a consumed page that is a step of an ENROLLED pathway,
  *                           added on top of xp_read/xp_listen (pathwayStepXp above)
@@ -288,7 +288,7 @@ async function pathwayStepXp(
  * action of the day", and hand out xp_active_bonus for a tap — buying with one
  * second what the bonus exists to pay for showing up.
  *
- * Every 0029 payment is gated on hasPremiumAccess (see it for which notion of
+ * Every 0030 payment is gated on hasPremiumAccess (see it for which notion of
  * "premium" that is, and why it is not the row stamp). For the three premium
  * actions the check is near-redundant — their routes are `requirePremium` — but
  * recordActivity is a public function and the gate belongs where the payment
@@ -335,7 +335,7 @@ export async function awardLeagueXp(
 
   /**
    * How many times this action happened this week REGARDLESS of content — the
-   * unit the 0029 ceilings are counted in. Separate from weekCount() because
+   * unit the 0030 ceilings are counted in. Separate from weekCount() because
    * the two ask different questions of the same log: `collection_item_added`
    * needs both ("once for this page" AND "at most five pages a week"), and
    * `collection_created` carries no content at all, so weekCount's
@@ -354,7 +354,7 @@ export async function awardLeagueXp(
   };
 
   /**
-   * A 0029 weight, if its weekly ceiling still has room. Zero cap = no cap.
+   * A 0030 weight, if its weekly ceiling still has room. Zero cap = no cap.
    *
    * `distinctContent` has to match how the action is PAID, or the ceiling
    * counts rows that earned nothing. `collection_item_added` is the case: it is

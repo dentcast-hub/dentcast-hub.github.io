@@ -27,7 +27,7 @@ export interface LeagueConfig {
   xp_review: number;         // manual card review
   xp_share: number;          // passing on an article you finished (once per article/week)
   xp_share_weekly_cap: number; // ...and at most this many articles a week
-  // Premium earning paths (0029). Extra WAYS to earn, never a multiplier on an
+  // Premium earning paths (0030). Extra WAYS to earn, never a multiplier on an
   // existing weight — see that migration for why the league must stay plan-blind
   // in its per-action prices. Every one is capped per week.
   xp_pathway_step: number;              // consumed item that is a step of an enrolled pathway
