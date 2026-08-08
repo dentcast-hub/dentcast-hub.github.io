@@ -1,5 +1,6 @@
+import { one } from '../db.js';
 import { sendCapped } from './notify-policy.js';
-import { pillarSeat, isPillarSeat } from './pillar.js';
+import { pillarSeat, isPillarSeat, pillarRoster } from './pillar.js';
 import { scheduleAchievementSync } from './achievement-sync.js';
 import type { NotificationMessage } from '../providers/notifications/types.js';
 
@@ -33,6 +34,33 @@ const MESSAGE: NotificationMessage = {
 };
 
 /**
+ * Has this account ever been welcomed? A lifetime check, not per-day: the
+ * welcome is once ever, and this one predicate is what makes the settle path
+ * and the backfill unable to double-thank however they overlap.
+ */
+async function alreadyWelcomed(userId: string): Promise<boolean> {
+  const row = await one<{ x: number }>(
+    "select 1 as x from notification_log where user_id = $1 and kind = 'pillar_seat' limit 1",
+    [userId],
+  );
+  return !!row;
+}
+
+/**
+ * Thank one seat-holder, once ever. Returns true when the welcome actually
+ * went out this call.
+ */
+async function sendPillarWelcome(userId: string, now: Date): Promise<boolean> {
+  if (await alreadyWelcomed(userId)) return false;
+  await sendCapped(userId, MESSAGE, 'pillar_seat', now, { inbox: false });
+  // The wall's own machinery writes the اطلاعیه row and queues the
+  // celebration; poking it here means both exist by the time the reader
+  // lands back on the dashboard, not after their next highlight.
+  scheduleAchievementSync(userId);
+  return true;
+}
+
+/**
  * In-flight welcomes, so a test's truncate cannot deadlock against a send
  * still holding rows — same shape and same reason as drainAchievementSyncs.
  */
@@ -43,14 +71,33 @@ export function schedulePillarWelcome(userId: string, now: Date = new Date()): v
   const p = (async () => {
     const seat = await pillarSeat(userId);
     if (!isPillarSeat(seat)) return;
-    await sendCapped(userId, MESSAGE, 'pillar_seat', now, { inbox: false });
-    // The wall's own machinery writes the اطلاعیه row and queues the
-    // celebration; poking it here means both exist by the time the reader
-    // lands back on the dashboard, not after their next highlight.
-    scheduleAchievementSync(userId);
+    await sendPillarWelcome(userId, now);
   })().catch(() => { /* gratitude never breaks a sale */ });
   inFlight.add(p);
   void p.finally(() => inFlight.delete(p));
+}
+
+/**
+ * The retroactive half (founder's decision, 2026-08-08): the seats minted
+ * BEFORE the welcome existed deserve the same message. Walks the roster and
+ * thanks anyone never thanked; the lifetime predicate above makes it safe to
+ * run any number of times, and safe alongside a settle happening mid-walk.
+ * Triggered by POST /admin/pillar/welcome, deliberately manual: the founder
+ * picks the hour a batch of phones buzzes, the way the broadcast form does.
+ */
+export async function pillarWelcomeBackfill(
+  now: Date = new Date(),
+): Promise<{ holders: number; welcomed: number; already: number }> {
+  const roster = await pillarRoster();
+  let welcomed = 0;
+  for (const h of roster.holders) {
+    // Serial and per-holder caught, like deliverBroadcast: one dead device
+    // must not cost the rest of the roster their thank-you.
+    try {
+      if (await sendPillarWelcome(h.user_id, now)) welcomed += 1;
+    } catch { /* skip this holder; the next run's predicate retries them */ }
+  }
+  return { holders: roster.holders.length, welcomed, already: roster.holders.length - welcomed };
 }
 
 /** Wait for every scheduled welcome to finish. For tests and clean shutdown. */
