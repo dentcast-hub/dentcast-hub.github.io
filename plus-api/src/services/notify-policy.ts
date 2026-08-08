@@ -41,6 +41,11 @@ const UNCAPPED: ReadonlySet<NotificationKind> = new Set<NotificationKind>([
   // side of it, and a user who misses it because a streak reminder arrived
   // first simply lapses.
   'subscription_expiry',
+  // The «ستون» welcome. Once per lifetime by construction (see the kind's own
+  // doc), so it cannot pester — and it is the founder's one thank-you to a
+  // person who just paid, which must not be the message a streak nudge from
+  // that morning silently costs them.
+  'pillar_seat',
 ]);
 
 /**

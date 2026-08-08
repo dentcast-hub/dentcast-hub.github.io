@@ -32,7 +32,18 @@ export type NotificationKind =
    * arrive at the one moment it is pure noise, and it would spend a slot of a
    * budget that exists to protect a channel we do not get back once muted.
    */
-  | 'achievement';
+  | 'achievement'
+  /**
+   * A «ستون» seat was just minted — this account's FIRST settled purchase put
+   * it among the first paying subscribers (services/pillar.ts). Once per
+   * lifetime by construction: a renewal reads an already-existing seat and
+   * never sends this. The one badge whose moment happens OFF the site's calm
+   * surfaces (the reader is returning from a bank redirect), which is why it
+   * travels while 'achievement' deliberately does not — and it goes out with
+   * inbox:false, because achievement-sync writes the badge's own اطلاعیه row
+   * and the same news must never sit in the inbox twice.
+   */
+  | 'pillar_seat';
 
 /**
  * A message may be a plain string (messenger text) or a structured payload.
