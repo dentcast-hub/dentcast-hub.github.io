@@ -292,6 +292,16 @@ export const config = {
     maxPerIpPerHour: int('ANON_EVENT_MAX_PER_IP_PER_HOUR', 60),
   },
 
+  // The activity log's own ceiling (routes/activity.ts). Every score, streak and
+  // badge in the product is derived from these rows, and nothing else checks
+  // that a row means a human did something — the action vocabulary is open and
+  // `card_reviewed_manual` touches no state at all. Set far above real use: a
+  // heavy reading session is a few dozen rows an hour, so a reader never meets
+  // this and only a loop does.
+  activity: {
+    maxPerUserPerHour: int('ACTIVITY_MAX_PER_USER_PER_HOUR', 300),
+  },
+
   // Spot (ad) telemetry. Its own budget, an order of magnitude above the generic
   // anonymous-event cap: an impression fires per page view PER enabled slot, and
   // Iranian mobile networks put many readers behind one NAT address, so a 60/h

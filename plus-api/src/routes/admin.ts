@@ -953,6 +953,105 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
     return reply.send({ ok: true, ...await getCapacity() });
   });
 
+  /**
+   * GET /admin/users/search?q= — find an account by PART of a name.
+   *
+   * resolveUser matches exactly, which is right for "do this to that account"
+   * and useless for "who is صدرا?" — a display name is rarely the whole handle,
+   * and on 2026-08-08 that was the only thing standing between a suspected
+   * farming account and any look at its data.
+   */
+  app.get('/admin/users/search', async (request, reply) => {
+    const q = ((request.query as { q?: string }).q ?? '').trim();
+    if (q.length < 2) return reply.code(400).send({ error: 'query_too_short' });
+    const rows = await query<{
+      id: string; display_name: string | null; username: string | null;
+      phone: string | null; tier: string; created_at: string;
+    }>(
+      `select distinct p.id, p.display_name, ai.username, nullif(p.phone,'') as phone,
+              p.tier, p.created_at
+         from profiles p
+         left join auth_identities ai on ai.user_id = p.id
+        where p.display_name ilike '%' || $1 || '%'
+           or ai.username     ilike '%' || $1 || '%'
+        order by p.created_at desc
+        limit 25`,
+      [q],
+    );
+    return reply.send({ ok: true, count: rows.rowCount, users: rows.rows });
+  });
+
+  /**
+   * GET /admin/score?user=&hours= — where one account's points came from.
+   *
+   * The question this answers is "is this score real?", and before it existed
+   * the only way to ask was a direct connection to the production database —
+   * which is exactly the thing that makes a suspicion sit unexamined.
+   *
+   * `max_per_minute` is the column that matters. Every honest signal here is
+   * paced by a human: reading an article takes minutes, a highlight needs a
+   * selection, a review needs a card in front of you. One row a minute is a
+   * reader; thirty is a loop. The XP columns are what league.ts WOULD pay per
+   * row at today's weights, so a lane that is over-paying is visible as a
+   * number rather than as a hunch.
+   */
+  app.get('/admin/score', async (request, reply) => {
+    const q = request.query as { user?: string; phone?: string; hours?: string };
+    const who = await resolveUser(pick(q), reply);
+    if (!who) return reply;
+    const hours = Math.min(Math.max(Number(q.hours ?? 168) || 168, 1), 24 * 90);
+
+    const [breakdown, league, profile] = await Promise.all([
+      query<{
+        action: string; rows: number; distinct_content: number;
+        first_at: string; last_at: string; max_per_minute: number;
+      }>(
+        `select action,
+                count(*)::int                     as rows,
+                count(distinct content_id)::int   as distinct_content,
+                min(created_at)                   as first_at,
+                max(created_at)                   as last_at,
+                max(per_min)::int                 as max_per_minute
+           from (
+             select a.action, a.content_id, a.created_at,
+                    count(*) over (partition by a.action, date_trunc('minute', a.created_at)) as per_min
+               from user_activity a
+              where a.user_id = $1 and a.created_at > now() - ($2 || ' hours')::interval
+           ) t
+          group by action
+          order by rows desc`,
+        [who.id, String(hours)],
+      ),
+      one<{ weekly_xp: number; week_start: string; tier_slug: string | null }>(
+        `select lm.weekly_xp, l.week_start, t.slug as tier_slug
+           from league_members lm
+           join leagues l on l.id = lm.league_id
+           left join league_tiers t on t.id = l.tier_id
+          where lm.user_id = $1
+          order by l.week_start desc
+          limit 1`,
+        [who.id],
+      ),
+      one<{ created_at: string; current_streak: number; tier: string }>(
+        'select created_at, current_streak, tier from profiles where id = $1',
+        [who.id],
+      ),
+    ]);
+
+    return reply.send({
+      ok: true,
+      user_id: who.id,
+      display_name: who.display_name,
+      username: who.username,
+      account_created_at: profile?.created_at ?? null,
+      tier: profile?.tier ?? null,
+      current_streak: profile?.current_streak ?? null,
+      league: league ?? null,
+      window_hours: hours,
+      breakdown: breakdown.rows,
+    });
+  });
+
   // GET /admin/pillar — the «ستون» roster: who holds the first-fifty seats and
   // how many remain. THE ONLY SURFACE that ever reports the fill state, by
   // decision (services/pillar.ts): "still open" would announce fewer than
