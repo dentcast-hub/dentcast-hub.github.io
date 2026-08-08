@@ -72,13 +72,68 @@ export interface BroadcastInput {
  * means it cannot half-send, cannot be retried into duplicates, and does not
  * grow the table by the size of the audience every time an article is published.
  */
-export async function recordBroadcast(input: BroadcastInput): Promise<string> {
+export async function recordBroadcast(
+  input: BroadcastInput,
+  opts: { pushRequested?: boolean; pushedAt?: Date | null } = {},
+): Promise<string> {
   const row = await one<{ id: string }>(
-    `insert into notice_broadcasts (kind, title, body, url, audience)
-     values ($1, $2, $3, $4, $5) returning id`,
-    [input.kind, input.title, input.body ?? null, input.url ?? null, input.audience ?? 'all'],
+    `insert into notice_broadcasts (kind, title, body, url, audience, push_requested, pushed_at)
+     values ($1, $2, $3, $4, $5, $6, $7) returning id`,
+    [input.kind, input.title, input.body ?? null, input.url ?? null, input.audience ?? 'all',
+      opts.pushRequested ?? false, opts.pushedAt ?? null],
   );
   return row!.id;
+}
+
+/** A broadcast whose push was asked for and has not gone out yet. */
+export interface PendingBroadcastPush {
+  id: string;
+  title: string;
+  body: string | null;
+  url: string | null;
+  audience: NoticeAudience;
+  created_at: string;
+}
+
+/**
+ * CLAIM one broadcast's pending push, atomically. Returns the row when this call
+ * won the claim, null when there was nothing to send or somebody else took it.
+ *
+ * The claim IS the update: `pushed_at is null` in the WHERE and `pushed_at = now()`
+ * in the SET means two overlapping releases — the morning sweep and a founder
+ * pressing the button in the same minute — cannot both win, so an announcement
+ * can never reach the same phone twice. Claim-then-send, the same order the free
+ * digest and the premium backlog use, and for the same reason: a delivery that
+ * fails afterwards loses one push, while sending before claiming would re-send
+ * forever.
+ */
+export async function claimBroadcastPush(id: string): Promise<PendingBroadcastPush | null> {
+  return one<PendingBroadcastPush>(
+    `update notice_broadcasts
+        set pushed_at = now()
+      where id = $1 and push_requested and pushed_at is null
+      returning id::text as id, title, body, url, audience, created_at`,
+    [id],
+  );
+}
+
+/**
+ * Every broadcast still owing a push, oldest first.
+ *
+ * `maxAgeHours` bounds it for the same reason runPremiumBacklog has FRESH_DAYS:
+ * after an outage, a burst of stale announcements is worse than silence. The
+ * caller drops what is too old — and says so — rather than this hiding it.
+ */
+export async function pendingBroadcastPushes(maxAgeHours: number): Promise<PendingBroadcastPush[]> {
+  const res = await query<PendingBroadcastPush>(
+    `select id::text as id, title, body, url, audience, created_at
+       from notice_broadcasts
+      where push_requested and pushed_at is null
+        and created_at > now() - ($1 || ' hours')::interval
+      order by created_at asc`,
+    [String(maxAgeHours)],
+  );
+  return res.rows;
 }
 
 export interface NoticeRow {
