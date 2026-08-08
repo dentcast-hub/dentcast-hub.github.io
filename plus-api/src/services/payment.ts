@@ -4,6 +4,7 @@ import { pool } from '../db.js';
 import { activateMonths, type Subscription } from './subscription.js';
 import { canSellPlan, planAmountRial, periodStamps, capacityMessage } from './payment-capacity.js';
 import { pillarSeat, isPillarSeat, pillarAmountRial } from './pillar.js';
+import { schedulePillarWelcome } from './pillar-notify.js';
 import { zibalRequest, zibalVerify, isSandbox } from './zibal.js';
 import { checkCapacityAlert } from './payment-cap-alert.js';
 
@@ -319,6 +320,13 @@ export async function settlePayment(trackId: string, now: Date = new Date()): Pr
   // taken and the subscription already granted — a notification that fails must
   // not turn a successful purchase into an error.
   void checkCapacityAlert(now).catch(() => { /* alerting never breaks a sale */ });
+
+  // «ستون», the moment it can be minted: `seat` was read BEFORE this payment
+  // flipped to 'paid', so null means this settle was the account's first —
+  // the only instant a seat can appear. The welcome re-derives the seat from
+  // the moved ledger and says nothing if the last one was already gone; a
+  // renewal reads a non-null seat here and never enters at all.
+  if (seat === null) schedulePillarWelcome(existing.user_id, now);
 
   return {
     outcome: 'activated',

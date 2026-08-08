@@ -6,6 +6,7 @@ import { clearOtpStore } from '../src/services/otp.js';
 import { clearBaleLinkStore } from '../src/services/bale-link.js';
 import { clearKeywordCache } from '../src/services/case-assistant.js';
 import { drainAchievementSyncs } from '../src/services/achievement-sync.js';
+import { drainPillarWelcomes } from '../src/services/pillar-notify.js';
 
 /** Truncate all data tables and reset in-process stores. Call in beforeEach. */
 export async function resetDb(): Promise<void> {
@@ -13,6 +14,9 @@ export async function resetDb(): Promise<void> {
   // achievement-sync.ts). That promise outlives the request, so truncating on
   // top of it deadlocks against the row locks it still holds — wait it out
   // rather than making production code behave differently under test.
+  // The «ستون» welcome is the same shape and can itself schedule a sync, so
+  // it drains first.
+  await drainPillarWelcomes();
   await drainAchievementSyncs();
   await pool.query(`
     truncate table

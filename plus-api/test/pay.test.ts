@@ -498,6 +498,47 @@ describe('«ستون» — the first-fifty renewal discount', () => {
     expect(mine.from_monthly_rial).toBe(SIX_DISCOUNTED / 6);
   });
 
+  it('welcomes a fresh seat-holder personally, exactly once, off the first settle', async () => {
+    const { drainPillarWelcomes } = await import('../src/services/pillar-notify.js');
+    const cookie = await loginAs(app, PHONE);
+    const uid = await userId(cookie);
+
+    // First purchase settles -> the seat is minted -> the welcome travels.
+    gatewayReplies(REQUEST_OK);
+    await app.inject({
+      method: 'POST', url: '/pay/start', headers: { cookie }, payload: { months: 6 },
+    });
+    gatewayReplies(VERIFY_OK);
+    await app.inject({ method: 'GET', url: '/pay/callback?success=1&trackId=TRK-1' });
+    await drainPillarWelcomes();
+
+    const rows = await pool.query(
+      "select delivered, title from notification_log where user_id = $1 and kind = 'pillar_seat'",
+      [uid],
+    );
+    expect(rows.rows).toHaveLength(1);
+    expect(rows.rows[0].delivered).toBe(true);
+    // inbox:false -> a counter-only row with no title: the اطلاعیه row for the
+    // badge belongs to achievement-sync, and the same news must not sit in the
+    // inbox twice.
+    expect(rows.rows[0].title).toBeNull();
+
+    // The renewal reads an existing seat and must not thank twice.
+    gatewayReplies({ result: 100, trackId: 'TRK-2' });
+    await app.inject({
+      method: 'POST', url: '/pay/start', headers: { cookie }, payload: { months: 6 },
+    });
+    gatewayReplies({ ...VERIFY_OK, amount: SIX_DISCOUNTED, refNumber: 'REF-2' });
+    await app.inject({ method: 'GET', url: '/pay/callback?success=1&trackId=TRK-2' });
+    await drainPillarWelcomes();
+
+    const again = await pool.query(
+      "select count(*)::int as n from notification_log where user_id = $1 and kind = 'pillar_seat'",
+      [uid],
+    );
+    expect(again.rows[0].n).toBe(1);
+  });
+
   it('seats are ordered by first settled payment, and a later payer sits behind', async () => {
     const { pillarSeat } = await import('../src/services/pillar.js');
     const first = await loginAs(app, PHONE);
