@@ -40,10 +40,12 @@ async function tierOfUser(userId: string): Promise<string> {
 }
 
 async function grantRow(userId: string, week = WEEK): Promise<{
-  expires_at: string; revoked_at: string | null; notified_at: string | null; seen: boolean;
+  granted_at: string; expires_at: string;
+  revoked_at: string | null; notified_at: string | null; seen: boolean;
 } | null> {
   const r = await pool.query(
-    'select expires_at, revoked_at, notified_at, seen from premium_grants where user_id = $1 and week_start = $2',
+    `select granted_at, expires_at, revoked_at, notified_at, seen
+       from premium_grants where user_id = $1 and week_start = $2`,
     [userId, week],
   );
   return r.rows[0] ?? null;
@@ -195,7 +197,11 @@ describe('grantWeeklyPrizes — top of every valid group', () => {
   });
 
   it('sets the configured prize length and marks the winner in premium_grants', async () => {
-    const ids = await seedGroup('composite', [90, 80]);
+    // amalgam, not composite: since 0033 the HIGHEST ACTIVE tier pays
+    // top_tier_prize_days instead, so a fixture in composite would be measuring
+    // the champion's prize while claiming to measure everybody's. The champion
+    // path has its own describe block below.
+    const ids = await seedGroup('amalgam', [90, 80]);
     await finalizeWeek(WEEK);
     const now = new Date('2026-02-08T00:00:00Z');
     await grantWeeklyPrizes(now);
@@ -330,7 +336,7 @@ describe('expirePremiumPrizes', () => {
     // premium for an extra full day, decided by which job happened to be faster.
     //
     // Simulated exactly that way: grant late in the minute, expire early in it.
-    const ids = await seedGroup('composite', [90, 80]);
+    const ids = await seedGroup('amalgam', [90, 80]); // not the top tier — see 0033
     await finalizeWeek(WEEK);
     const cfg = await getLeagueConfig();
 
@@ -348,7 +354,8 @@ describe('expirePremiumPrizes', () => {
   });
 
   it('gives the winner exactly prize_days, so the banner length is not a rounding artefact', async () => {
-    const ids = await seedGroup('composite', [90, 80]);
+    const ids = await seedGroup('amalgam', [90, 80]); // not the top tier — see 0033
+
     await finalizeWeek(WEEK);
     await grantWeeklyPrizes(new Date('2026-02-08T00:00:04.000+03:30'));
     const cfg = await getLeagueConfig();
@@ -509,8 +516,11 @@ describe('what the winner is actually told', () => {
     return sent[0];
   }
 
-  async function winAndAnnounce(): Promise<{ title: string; body: string }> {
-    const ids = await seedGroup('composite', [90, 80]);
+  async function winAndAnnounce(tierSlug = 'amalgam'): Promise<{ title: string; body: string }> {
+    // Defaults to a middle tier: these tests are about the ordinary winner's
+    // copy, and since 0033 a composite fixture would silently be checking the
+    // champion's instead (longer prize, different wording).
+    const ids = await seedGroup(tierSlug, [90, 80]);
     await pool.query('update profiles set telegram_id = 700900 where id = $1', [ids[0]]);
     await finalizeWeek(WEEK);
     await grantWeeklyPrizes(AWAKE);
@@ -534,6 +544,20 @@ describe('what the winner is actually told', () => {
     expect(msg.body).toContain('۵ روز');
   });
 
+  it('tells the champion they are a champion, with the real length', async () => {
+    // The highest active tier's prize is longer (0033). If the champion reads
+    // the same sentence as everybody else, the thing they actually won is
+    // invisible to them — and the number in that sentence would be wrong.
+    const msg = await winAndAnnounce('composite');
+    const cfg = await getLeagueConfig();
+    const FA = '۰۱۲۳۴۵۶۷۸۹';
+    const fa = String(cfg.top_tier_prize_days).replace(/\d/g, (d) => FA[Number(d)]);
+
+    expect(msg.title).toContain('قهرمان');
+    expect(msg.body).toContain(`${fa} روز`);
+    expect(msg.body).not.toContain('نفر اولِ گروهت شدی');
+  });
+
   it('says GROUP, not league — the user can see their group and never their tier', async () => {
     const msg = await winAndAnnounce();
     expect(msg.body).toContain('گروهت');
@@ -542,7 +566,7 @@ describe('what the winner is actually told', () => {
 
   it('gives the banner the cooldown, so a winner knows why next week is quiet', async () => {
     const app2 = await makeApp();
-    const ids = await seedGroup('composite', [90, 80]);
+    const ids = await seedGroup('amalgam', [90, 80]); // not the top tier — see 0033
     await finalizeWeek(WEEK);
     await grantWeeklyPrizes(NEAR_WEEK);
 
@@ -607,5 +631,62 @@ describe('the premium features named in the prize', () => {
 
     expect(bannerTitles.length, 'found the banner list in plus/js/').toBeGreaterThan(0);
     expect(PREMIUM_FEATURE_TITLES).toEqual(bannerTitles);
+  });
+});
+
+/**
+ * The top of the ladder (0033).
+ *
+ * The highest active tier cannot promote anybody — `isTop` in finalizeWeek stops
+ * it by definition — so first place there is the end of the climb rather than a
+ * step on it, and until now it paid exactly what first place in the bottom tier
+ * paid. These pin the two halves of the answer: the prize is LONGER at the top,
+ * and it is longer without being WIDER.
+ */
+describe('the champion of the highest active tier', () => {
+  it('wins top_tier_prize_days instead of prize_days', async () => {
+    const top = await seedGroup('composite', [90, 80]);   // order 3 == max_active_tier_order
+    const mid = await seedGroup('amalgam', [90, 80]);     // order 2
+    await finalizeWeek(WEEK);
+    await grantWeeklyPrizes(NEAR_WEEK);
+
+    const cfg = await getLeagueConfig();
+    const lengthOf = async (userId: string): Promise<number> => {
+      const g = await grantRow(userId);
+      return Math.round(
+        (new Date(g!.expires_at).getTime() - new Date(g!.granted_at).getTime()) / 86_400_000,
+      );
+    };
+    expect(await lengthOf(top[0]), 'champion').toBe(cfg.top_tier_prize_days);
+    expect(await lengthOf(mid[0]), 'ordinary winner').toBe(cfg.prize_days);
+    expect(cfg.top_tier_prize_days).toBeGreaterThan(cfg.prize_days);
+  });
+
+  it('is longer, not wider — the top tier still crowns as few people as before', async () => {
+    // The reason the length is what grew: upper tiers are thin, so widening the
+    // prize there would crown a large fraction of a small group and make "first
+    // in your group" worth LESS the higher you climb.
+    const top = await seedGroup('composite', [90, 80, 70], WEEK, 3);
+    await finalizeWeek(WEEK);
+    const res = await grantWeeklyPrizes(NEAR_WEEK);
+
+    expect(res.granted).toBe(1);
+    expect(await grantRow(top[1]), 'rank 2 wins nothing at the top either').toBeNull();
+  });
+
+  it('falls back to prize_days when top_tier_prize_days is switched off', async () => {
+    // 0 means "no special length", exactly like every other ceiling in
+    // league_config — so this is one admin call away from being undone.
+    await setPrizeCfg('top_tier_prize_days', '0');
+    const top = await seedGroup('composite', [90, 80]);
+    await finalizeWeek(WEEK);
+    await grantWeeklyPrizes(NEAR_WEEK);
+
+    const cfg = await getLeagueConfig();
+    const g = await grantRow(top[0]);
+    const days = Math.round(
+      (new Date(g!.expires_at).getTime() - new Date(g!.granted_at).getTime()) / 86_400_000,
+    );
+    expect(days).toBe(cfg.prize_days);
   });
 });

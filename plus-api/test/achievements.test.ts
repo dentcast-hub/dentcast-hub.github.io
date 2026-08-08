@@ -474,3 +474,51 @@ describe('«جلودار» و «سلطان» — لیگ‌های متمایز، 
     expect(badgeOf(await get(), 'vanguard').value).toBe(1);
   });
 });
+
+/**
+ * «یادآور» counts DAYS of reviewing, not cards answered.
+ *
+ * It counted rows. A card is born due (card_state is inserted with
+ * next_review_at = null), so creating highlights and answering them straight
+ * away minted hundreds of "sessions" in an afternoon — and this badge's silver
+ * and gold mint REAL one-time purchase discounts (٪۱ / ٪۲). That made the wall
+ * a way to farm money off a subscription, which is the one thing it must not
+ * be. A day is the unit that cannot be looped.
+ */
+describe('«یادآور» — روزهای مرور، نه تعدادِ کارت‌ها', () => {
+  const reviewOn = async (day: string, times: number): Promise<void> => {
+    const uid = await userId();
+    for (let i = 0; i < times; i += 1) {
+      await pool.query(
+        `insert into user_activity (user_id, action, content_id, created_at)
+         values ($1, 'review_finished', $2, $3::timestamptz)`,
+        [uid, `insight/insight-${i % 5 + 1}`, `${day}T09:${String(i % 60).padStart(2, '0')}:00+03:30`],
+      );
+    }
+  };
+
+  // `level` is an index into the catalog's levels: -1 unearned, 0 bronze,
+  // 1 silver, 2 gold (evaluateBadge).
+  const BRONZE = 0;
+  const SILVER = 1;
+
+  it('six hundred cards in one night is one day, not six hundred sessions', async () => {
+    await reviewOn('2026-03-01', 600);
+    const badge = badgeOf(await get(), 'recaller');
+    expect(badge!.value).toBe(1);
+    expect(badge!.level, 'a night of looping must not reach a paying level').toBe(BRONZE);
+  });
+
+  it('the paying levels need real calendar days, and they pay a discount', async () => {
+    for (let d = 1; d <= 10; d += 1) {
+      await reviewOn(`2026-03-${String(d).padStart(2, '0')}`, 3);
+    }
+    const badge = badgeOf(await get(), 'recaller');
+    expect(badge!.value).toBe(10);
+    expect(badge!.level).toBe(SILVER);
+    // The reason the metric matters: this level is money.
+    const silver = getBadgeCatalog().badges.find((b: Badge) => b.key === 'recaller')!
+      .levels!.find((l) => l.tier === 'silver')!;
+    expect(silver.discount_percent).toBe(1);
+  });
+});

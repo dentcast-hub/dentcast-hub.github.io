@@ -121,9 +121,17 @@ export async function finalizeWeek(weekStart: string, now: Date = new Date()): P
     // --- self-tuning (only here; effective next week) ------------------------
     await selfTune(client, weekStart, cfg, {
       maxActiveOrder,
+      // Measured against group_size_current, NOT the group's own
+      // capacity_at_creation. Since 0033 capacity is per-tier and the top tier's
+      // capacity is its own population (tierCapacity in league.ts), so the top
+      // group is full the moment everyone in it has earned a point — and reading
+      // that as "the ladder is crowded, open the next rung" would unroll all
+      // seven tiers onto a handful of readers, one person per tier, which is the
+      // opposite of what activation is for. The question here has always been
+      // "did the top tier fill a STANDARD group", and that is what it now asks.
       hadFullTopGroup: groupsRes.rows.some(
         (g) => tierById.get(g.tier_id)!.tier_order === maxActiveOrder
-          && (sizeByGroup.get(g.id) ?? 0) >= g.capacity_at_creation,
+          && (sizeByGroup.get(g.id) ?? 0) >= cfg.group_size_current,
       ),
       nextTierId: byOrder.get(maxActiveOrder + 1)?.id ?? null,
     });

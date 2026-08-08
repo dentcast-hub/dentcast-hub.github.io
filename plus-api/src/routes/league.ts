@@ -107,7 +107,14 @@ export async function leagueRoutes(app: FastifyInstance): Promise<void> {
       // league_config value a founder can retune, so the "stayed" nudge (asking
       // the user to go for it next week) reads it from here instead of a
       // hardcoded number that would quietly start lying the moment it changed.
-      prize_days: cfg.prize_days,
+      //
+      // Since 0033 it also depends on WHICH tier is being nudged: the highest
+      // active one pays top_tier_prize_days, because it has no promotion to
+      // offer. Resolved from the reader's own tier — the nudge is about the week
+      // ahead, which they will spend where they are now.
+      prize_days: currentTier.tier_order >= cfg.max_active_tier_order && cfg.top_tier_prize_days > 0
+        ? cfg.top_tier_prize_days
+        : cfg.prize_days,
     };
 
     if (!mem) {

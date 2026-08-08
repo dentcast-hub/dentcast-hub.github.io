@@ -1,6 +1,8 @@
 import type { FastifyInstance } from 'fastify';
+import { config } from '../config.js';
 import { requireAuth } from '../middleware/auth.js';
 import { requirePremium } from '../middleware/require-premium.js';
+import { consume, HOUR_MS } from '../services/rate-limit.js';
 import { pool, withTransaction } from '../db.js';
 import { recordActivity } from '../services/activity.js';
 import { scheduleAchievementSync } from '../services/achievement-sync.js';
@@ -94,6 +96,20 @@ export async function reviewRoutes(app: FastifyInstance): Promise<void> {
       result: 'remembered' | 'forgot';
     };
     const userId = request.user!.id;
+
+    // The ceiling POST /activity has had since 2026-08-08, on the route that
+    // actually needed it. `was_due` below stops the SAME card paying twice, but
+    // a brand-new card is born due (card_state is inserted with
+    // next_review_at = null, which every due check reads as "now"), so a loop
+    // that creates highlights and answers them needs no repeats at all: 628
+    // highlights across 205 articles became 628 immediately-answerable cards,
+    // 420 of them inside one hour. The weekly XP cap bounds what that EARNS;
+    // this bounds what it can DO.
+    const limit = consume(`review:user:${userId}`, config.review.maxPerUserPerHour, HOUR_MS);
+    if (!limit.allowed) {
+      reply.header('retry-after', Math.ceil(limit.retryAfterMs / 1000));
+      return reply.code(429).send({ error: 'rate_limited' });
+    }
 
     const updated = await withTransaction(async (client) => {
       const cur = await client.query<{ box: number; content_id: string; was_due: boolean }>(

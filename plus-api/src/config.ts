@@ -302,6 +302,18 @@ export const config = {
     maxPerUserPerHour: int('ACTIVITY_MAX_PER_USER_PER_HOUR', 300),
   },
 
+  // The review engine's own ceiling (routes/review.ts). POST /review/answer
+  // writes the same `review_finished` rows POST /activity's limit above exists
+  // to bound, but it never passed through that limit — and it is the door the
+  // 2026-08-08 farm actually used: 420 answers in a single hour, against a route
+  // with no ceiling of any kind. Separate counter rather than a shared budget
+  // because the two have different honest volumes: GET /review/due serves at
+  // most 50 cards at a time, so 200 an hour is four full queues back to back,
+  // far past any real session and still nowhere near a script.
+  review: {
+    maxPerUserPerHour: int('REVIEW_MAX_PER_USER_PER_HOUR', 200),
+  },
+
   // Spot (ad) telemetry. Its own budget, an order of magnitude above the generic
   // anonymous-event cap: an impression fires per page view PER enabled slot, and
   // Iranian mobile networks put many readers behind one NAT address, so a 60/h

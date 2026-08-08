@@ -4,6 +4,7 @@ import { requirePremium } from '../middleware/require-premium.js';
 import { pool, withTransaction } from '../db.js';
 import { recordActivity } from '../services/activity.js';
 import { scheduleAchievementSync } from '../services/achievement-sync.js';
+import { intervalDaysForBox } from '../services/leitner.js';
 import { resolveTopic, folderLabel, getContentInfo, folderOf } from '../content-index.js';
 
 const LABELS = new Set(['important', 'unclear', 'clinical_pearl']);
@@ -212,12 +213,26 @@ export async function highlightRoutes(app: FastifyInstance): Promise<void> {
         ],
       );
       const highlight = hl.rows[0];
-      // Every highlight gets its card_state row on every plan (box 1, next null).
-      // Only the premium engine ever writes box/next_review_at.
+      // Every highlight gets its card_state row on every plan (box 1). Only the
+      // premium engine ever writes box/next_review_at after this.
+      //
+      // The card is scheduled, not born due. It used to be inserted with
+      // next_review_at = null, and every due check reads null as "now"
+      // (routes/review.ts, services/review-notify.ts, GET /me's due_card_count)
+      // — so a highlight was answerable the same second it was made. That is
+      // what the 2026-08-08 farm ran on: 628 highlights across 205 articles
+      // became 628 immediately-answerable cards, no repeats needed, and the
+      // `was_due` guard that stops the same card paying twice never applied.
+      //
+      // The interval is box 1's own, from the Leitner table rather than a
+      // literal here — the schedule already said a box-1 card comes back in a
+      // day, and being due at creation was the one point where the code
+      // disagreed with it. Reviewing a sentence you highlighted a moment ago is
+      // not spaced repetition; the space is the method.
       await client.query(
         `insert into card_state (user_id, highlight_id, box, next_review_at)
-         values ($1, $2, 1, null)`,
-        [userId, highlight.id],
+         values ($1, $2, 1, now() + ($3 || ' days')::interval)`,
+        [userId, highlight.id, intervalDaysForBox(1)],
       );
       await recordActivity(userId, 'highlight_created', highlight.content_id, { highlight_id: highlight.id }, client);
       return highlight;

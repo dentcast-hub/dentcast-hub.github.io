@@ -55,8 +55,42 @@ export async function effectiveTierId(client: pg.PoolClient, userId: string): Pr
 }
 
 /**
+ * How big a group of THIS tier may be — the ceiling that decides when a group is
+ * "full", which is what finalizeWeek's demotion is gated on.
+ *
+ * Not `group_size_current` on its own, which is one number for the whole ladder,
+ * self-tuned from the smoothed count of ALL weekly-active users. That is the
+ * right input for the bottom of the pyramid, where nearly everybody is, and it
+ * is structurally wrong at the top: on 2026-08-09 it stood at 15, derived from
+ * ~122 actives, while composite — the highest active tier — held 5 people in
+ * total. Its one group could therefore never fill, `filled` was never true, and
+ * nobody was ever demoted out of it. The tier every reader is climbing towards
+ * was the only one with no way down.
+ *
+ * So capacity is the tier's own population, clamped: `group_size_current` is the
+ * ceiling (a crowded tier still splits into standard-sized groups, exactly as
+ * before — acrylic's 258 profiles and amalgam's 43 both clamp straight back to
+ * 15, so this changes nothing for them), and `min_group_capacity` is the floor,
+ * because the unclamped formula breaks at the other end: a tier of one would be
+ * full at one member and demote that member every week for being last in a group
+ * of themselves.
+ *
+ * Population, not weekly actives: the pool that COULD show up this week is the
+ * honest denominator for "is this group as big as this tier can make it", and it
+ * does not swing with a quiet week. It only matters for thin tiers anyway —
+ * anything crowded is pinned to the ceiling either way.
+ */
+export async function tierCapacity(db: Db, tierId: string, cfg: LeagueConfig): Promise<number> {
+  const r = await db.query<{ n: number }>(
+    'select count(*)::int as n from profiles where current_tier_id = $1', [tierId],
+  );
+  const population = r.rows[0]?.n ?? 0;
+  return Math.max(cfg.min_group_capacity, Math.min(cfg.group_size_current, population));
+}
+
+/**
  * Get the current open group for (tier, week), or create one. Capacity is frozen
- * at creation from group_size_current. A full group is closed and the next open
+ * at creation from tierCapacity(). A full group is closed and the next open
  * one is created — enforced single-open by the partial unique index, so this is
  * race-safe (a lost create just re-selects the winner).
  */
@@ -449,7 +483,8 @@ export async function awardLeagueXp(
 
   // First XP of the week -> place into an open group of the user's current tier.
   const tierId = await effectiveTierId(client, userId);
-  const league = await getOrCreateOpenLeague(client, tierId, week_start, week_end, cfg.group_size_current);
+  const capacity = await tierCapacity(client, tierId, cfg);
+  const league = await getOrCreateOpenLeague(client, tierId, week_start, week_end, capacity);
   await client.query(
     `insert into league_members (league_id, user_id, week_start, weekly_xp, first_reached_current_xp_at)
      values ($1, $2, $3, $4, $5)
