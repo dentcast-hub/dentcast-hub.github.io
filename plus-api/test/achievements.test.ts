@@ -266,13 +266,12 @@ describe('GET /achievements', () => {
     expect(founder.lead_fa).toContain('اولین‌های');
   });
 
-  it('keeps «ستون» dark until the account has actually paid, then lights it off the ledger', async () => {
-    // Dark but visible: while seats remain the criterion is the invitation
-    // (visibility 'always' — see the badge's _visibility_caveat).
+  it('keeps «ستون» invisible until the account has actually paid, then lights it off the ledger', async () => {
+    // Absent, not dark: the fill state is a secret (the badge's
+    // _visibility_reason) — an unearned «ستون» on the wall would tell every
+    // reader whether we are still under fifty paying accounts.
     const before = await get();
-    const dark = badgeOf(before, 'pillar');
-    expect(dark.earned).toBe(false);
-    expect(dark.lead_fa).toContain('پنجاه');
+    expect(badgeOf(before, 'pillar')).toBeUndefined();
 
     // One settled gateway purchase — the same row services/pillar.ts ranks.
     // Derived, not written: no badge row exists anywhere, only this payment.

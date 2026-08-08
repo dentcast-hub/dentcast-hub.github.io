@@ -31,6 +31,18 @@ import { pool, one, type Queryable } from '../db.js';
  * The count is fixed at fifty and the discount at twenty percent, both by
  * decision (2026-08-08): like «پیشگام»'s five hundred, the number is a promise
  * to the people who already hold it and must never grow.
+ *
+ * THE FILL STATE IS A SECRET (decision 2026-08-08). An unearned «ستون» is
+ * `earned_only` — invisible — and no reader-facing surface ever says whether
+ * seats remain, because either answer is a subscriber count: "still open"
+ * announces fewer than fifty paying accounts, "closed" announces the day the
+ * fiftieth arrived. It also removes the disappointment this would otherwise
+ * manufacture — a wall inviting people toward a seat that the fifty-first
+ * buyer discovers was already gone. The campaign lives in the founder's own
+ * marketing, at the founder's own pacing; closure needs no announcement and no
+ * commit because isPillarSeat() simply stops at fifty; and the ONE surface
+ * that reports the roster is GET /admin/pillar, behind the founder's basic
+ * auth, which is how they know when to stop advertising.
  */
 
 /** How many accounts can ever hold a «ستون» seat. Never grows. */
@@ -91,4 +103,50 @@ export function isPillarSeat(seat: number | null): boolean {
 export function pillarAmountRial(listRial: number): number {
   const discounted = (listRial * (100 - PILLAR_DISCOUNT_PERCENT)) / 100;
   return Math.max(10_000, Math.floor(discounted / 10_000) * 10_000);
+}
+
+export interface PillarSeatHolder {
+  seat: number;
+  user_id: string;
+  display_name: string;
+  first_paid: Date;
+}
+
+export interface PillarRoster {
+  seats_total: number;
+  seats_taken: number;
+  open: boolean;
+  holders: PillarSeatHolder[];
+}
+
+/**
+ * The founder's private view, and the ONLY place the fill state is ever
+ * reported (see the secrecy note above). Served by GET /admin/pillar; nothing
+ * reader-facing may call this or repeat its numbers.
+ */
+export async function pillarRoster(client: Queryable = pool): Promise<PillarRoster> {
+  const r = await client.query<PillarSeatHolder>(
+    `with firsts as (
+       select user_id, min(coalesce(verified_at, created_at)) as first_paid
+         from payments
+        where status = 'paid'
+        group by user_id
+     )
+     select ranked.seat::int as seat, ranked.user_id, p.display_name, ranked.first_paid
+       from (
+         select user_id, first_paid,
+                row_number() over (order by first_paid, user_id) as seat
+           from firsts
+       ) ranked
+       join profiles p on p.id = ranked.user_id
+      where ranked.seat <= $1
+      order by ranked.seat`,
+    [PILLAR_SEATS],
+  );
+  return {
+    seats_total: PILLAR_SEATS,
+    seats_taken: r.rows.length,
+    open: r.rows.length < PILLAR_SEATS,
+    holders: r.rows,
+  };
 }

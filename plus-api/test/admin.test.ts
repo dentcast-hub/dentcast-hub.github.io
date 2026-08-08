@@ -397,3 +397,40 @@ describe('GET /admin/ai/health?deep=1', () => {
     expect(deep.provider).toBe('stub');
   });
 });
+
+describe('GET /admin/pillar — the «ستون» roster', () => {
+  it('requires admin auth — the fill state is the founder\'s alone', async () => {
+    const res = await app.inject({ method: 'GET', url: '/admin/pillar' });
+    expect(res.statusCode).toBe(401);
+  });
+
+  it('reports seats in settle order, and stays open below fifty', async () => {
+    // Two real accounts; the seat order must come from the ledger, not from
+    // who signed up first.
+    await loginAs(app, '09121710001');
+    await loginAs(app, '09121710002');
+    const uid = async (phone: string) => (await pool.query(
+      'select id from profiles where phone = $1', [phone],
+    )).rows[0].id;
+    const seed = (userId: string, order: string, at: string) => pool.query(
+      `insert into payments (user_id, amount_rial, months, gateway, order_id, status,
+                             verified_at, period_jalali, period_gregorian)
+       values ($1, 60000000, 6, 'zibal', $2, 'paid', $3,
+               to_char(now(), 'YYYY-MM'), to_char(now(), 'YYYY-MM'))`,
+      [userId, order, at],
+    );
+    await seed(await uid('09121710002'), 'second', '2026-08-02T09:00:00Z');
+    await seed(await uid('09121710001'), 'first', '2026-08-01T09:00:00Z');
+
+    const res = await app.inject({
+      method: 'GET', url: '/admin/pillar', headers: { authorization: basic },
+    });
+    const body = res.json();
+    expect(body.seats_total).toBe(50);
+    expect(body.seats_taken).toBe(2);
+    expect(body.open).toBe(true);
+    // Seat order follows the money, not signup order and not insertion order.
+    expect(body.holders.map((h: { seat: number; user_id: string }) => h.seat)).toEqual([1, 2]);
+    expect(body.holders[0].user_id).toBe(await uid('09121710001'));
+  });
+});
