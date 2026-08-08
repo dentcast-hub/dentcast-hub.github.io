@@ -65,8 +65,32 @@ export async function finalizeWeek(weekStart: string, now: Date = new Date()): P
       activeUsers += members.filter((m) => m.weekly_xp > 0).length;
       if (g.capacity_at_creation > 0) fillSum += size / g.capacity_at_creation;
 
-      const valid = size >= cfg.min_valid_group_size;
       const filled = size >= g.capacity_at_creation;
+      /**
+       * Is this a real competition?
+       *
+       * An ABSOLUTE floor answers that correctly at the bottom of the pyramid
+       * and is wrong at the top by construction. min_valid_group_size is 6;
+       * composite — the highest active tier — held 5 people in total on
+       * 2026-08-09, every one of them competing. Calling that "not a real
+       * group" told the five most engaged readers on the site that their league
+       * did not count, and left the tier everyone is climbing towards with no
+       * promotion (isTop), no demotion (invalid) and no medals
+       * (services/achievements.ts reads the same rule).
+       *
+       * So a group is also valid when it is FULL — when it holds everyone its
+       * tier had to offer. Since 0033 capacity is the tier's own population
+       * (tierCapacity in league.ts), so `filled` at the top means "the whole
+       * level is in this group", which is not a thin group, it is a
+       * championship. And `min_group_capacity` (3) is what keeps that honest:
+       * a tier of one or two cannot reach its own capacity, so it stays
+       * non-competitive instead of crowning someone for existing.
+       *
+       * capacity_at_creation is also why this needs no historical bookkeeping:
+       * it is frozen on the row, so "was that group valid" has the same answer
+       * a year later, whatever the tier's population has done since.
+       */
+      const valid = size >= cfg.min_valid_group_size || filled;
       const isTop = tier.tier_order >= maxActiveOrder;
       const isBottom = tier.tier_order <= 1;
       const promotedCount = Math.ceil((size * cfg.promotion_pct) / 100);

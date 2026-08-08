@@ -233,6 +233,7 @@ export async function computeAchievementFacts(
       pool.query<{ final_rank: number; best: number; won: number }>(
         `with sized as (
            select lm.user_id, lm.final_rank, lm.weekly_xp, l.tier_id,
+                  l.capacity_at_creation,
                   count(*) over (partition by lm.league_id) as group_size
              from league_members lm
              join leagues l on l.id = lm.league_id
@@ -246,7 +247,13 @@ export async function computeAchievementFacts(
          select s.final_rank, max(t.tier_order)::int as best,
                 count(distinct t.tier_order)::int as won
            from sized s join league_tiers t on t.id = s.tier_id
-          where s.user_id = $1 and s.weekly_xp > 0 and s.group_size >= $2
+          where s.user_id = $1 and s.weekly_xp > 0
+            -- The validity rule, and it must stay the same one league-finalize.ts
+            -- decides outcomes by: at or above the floor, OR full — a group
+            -- holding its whole tier (capacity is the tier's own population
+            -- since 0033). Without the second half the top of the ladder was the
+            -- one place a medal could never be minted, however hard it was won.
+            and (s.group_size >= $2 or s.group_size >= s.capacity_at_creation)
             and s.final_rank in (1, 2)
           group by s.final_rank`,
         [userId, leagueCfg.min_valid_group_size],

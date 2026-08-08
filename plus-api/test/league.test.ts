@@ -712,3 +712,96 @@ describe('tierCapacity — a group is as big as its own tier can make it', () =>
     await app.close();
   });
 });
+
+/**
+ * A full group is a valid group (2026-08-09).
+ *
+ * min_valid_group_size is an absolute floor, right at the bottom of the pyramid
+ * and wrong at the top by construction: composite held 5 people in total, all
+ * five competing, and the rule called that no competition — so the highest tier
+ * had no promotion (isTop), no demotion (invalid), and no medals
+ * (services/achievements.ts reads the same rule). A group that holds its whole
+ * tier is a championship, not a thin group.
+ */
+describe('validity — the floor OR a full group', () => {
+  it('a full group below the floor still decides outcomes', async () => {
+    // 5 members, capacity 5: the whole tier is in this group.
+    const { userIds } = await seedGroup('amalgam', 5, [
+      { xp: 90, at: T(1) }, { xp: 70, at: T(2) }, { xp: 50, at: T(3) },
+      { xp: 30, at: T(4) }, { xp: 10, at: T(5) },
+    ]);
+    const res = await finalizeWeek(WEEK);
+
+    expect(res.promotions, 'ceil(5 × 20%) = 1 up').toBe(1);
+    expect(res.demotions, 'and 1 down — the pyramid finally pushes both ways').toBe(1);
+    expect(await tierOf(userIds[0])).toBe('composite');
+    expect(await tierOf(userIds[4])).toBe('acrylic');
+  });
+
+  it('an UNDERfull group below the floor is still no competition', async () => {
+    // Same 5 members, but the tier could have offered 8 — so this is a thin
+    // group, which is exactly what the floor was written for.
+    const { userIds } = await seedGroup('amalgam', 8, [
+      { xp: 90, at: T(1) }, { xp: 70, at: T(2) }, { xp: 50, at: T(3) },
+      { xp: 30, at: T(4) }, { xp: 10, at: T(5) },
+    ]);
+    const res = await finalizeWeek(WEEK);
+
+    expect(res.promotions).toBe(0);
+    expect(res.demotions).toBe(0);
+    for (const uid of userIds) expect((await memberOf(uid)).outcome).toBe('stayed');
+  });
+
+  it('min_group_capacity keeps a tier of two from crowning anyone', async () => {
+    // Capacity can never go below 3 (tierCapacity), so two people cannot fill
+    // their tier and cannot manufacture a valid group out of each other.
+    const { userIds } = await seedGroup('amalgam', 3, [
+      { xp: 90, at: T(1) }, { xp: 10, at: T(2) },
+    ]);
+    const res = await finalizeWeek(WEEK);
+
+    expect(res.promotions).toBe(0);
+    expect(res.demotions).toBe(0);
+    expect(await tierOf(userIds[0])).toBe('amalgam');
+  });
+
+  it('the top tier now has a way DOWN, which it never had', async () => {
+    // composite is top active: no promotion by definition. Before this rule its
+    // group was never valid either, so nobody could leave it in any direction.
+    const { userIds } = await seedGroup('composite', 5, [
+      { xp: 90, at: T(1) }, { xp: 70, at: T(2) }, { xp: 50, at: T(3) },
+      { xp: 30, at: T(4) }, { xp: 10, at: T(5) },
+    ]);
+    const res = await finalizeWeek(WEEK);
+
+    expect(res.promotions, 'still no promotion out of the top').toBe(0);
+    expect(res.demotions).toBe(1);
+    expect(await tierOf(userIds[4])).toBe('amalgam');
+    expect(await tierOf(userIds[0])).toBe('composite');
+  });
+
+  it('GET /league drops neutral_mode for a full group', async () => {
+    const app = await makeApp();
+    const cookie = await loginAs(app, '09120000094');
+    const tid = await tierId('composite');
+    await pool.query('update profiles set current_tier_id = $1 where phone = $2', [tid, '09120000094']);
+    await app.inject({
+      method: 'POST', url: '/activity', headers: { cookie },
+      payload: { action: 'article_completed', content_id: 'insight/insight-1' },
+    });
+
+    // Alone at the top: capacity floors at min_group_capacity (3), so one member
+    // is NOT a full group and the plain list is still the honest view.
+    const thin = await app.inject({ method: 'GET', url: '/league', headers: { cookie } });
+    expect(thin.json().neutral_mode).toBe(true);
+
+    // Shrink the group to exactly what it holds — the "whole tier is here" case.
+    await pool.query(
+      `update leagues set capacity_at_creation = 1
+         where tier_id = $1 and week_start = (select max(week_start) from leagues)`, [tid],
+    );
+    const full = await app.inject({ method: 'GET', url: '/league', headers: { cookie } });
+    expect(full.json().neutral_mode).toBe(false);
+    await app.close();
+  });
+});

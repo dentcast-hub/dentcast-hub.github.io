@@ -65,6 +65,10 @@ const badgeOf = (body: { badges: Array<{ key: string }> }, key: string) =>
 async function finalizedWeek(opts: {
   week: string; tierSlug: string; rank: number; size: number; weeklyXp: number;
   outcome?: string;
+  /** The group's frozen capacity — its tier's own population since 0033. A
+   *  group that reaches it is valid however small it is, which is what makes a
+   *  medal reachable at the thin top of the ladder. Defaults clear of it. */
+  capacity?: number;
 }): Promise<void> {
   const me = await userId();
   const tier = await pool.query<{ id: string }>(
@@ -72,8 +76,8 @@ async function finalizedWeek(opts: {
   );
   const league = await pool.query<{ id: string }>(
     `insert into leagues (tier_id, week_start, week_end, status, capacity_at_creation)
-     values ($1, $2, ($2::date + 6), 'finalized', 8) returning id`,
-    [tier.rows[0].id, opts.week],
+     values ($1, $2, ($2::date + 6), 'finalized', $3) returning id`,
+    [tier.rows[0].id, opts.week, opts.capacity ?? 8],
   );
   const leagueId = league.rows[0].id;
   await pool.query(
@@ -520,5 +524,32 @@ describe('«یادآور» — روزهای مرور، نه تعدادِ کار�
     const silver = getBadgeCatalog().badges.find((b: Badge) => b.key === 'recaller')!
       .levels!.find((l) => l.tier === 'silver')!;
     expect(silver.discount_percent).toBe(1);
+  });
+});
+
+/**
+ * A medal at the thin top of the ladder.
+ *
+ * The validity filter is what stops a medal being minted for doing nothing, and
+ * it used to be an absolute floor — which made the highest tier, the hardest
+ * place on the site to finish first in, the one place a medal could never be
+ * minted at all. It now asks the same question league-finalize.ts asks: at or
+ * above the floor, OR full — a group holding its whole tier.
+ */
+describe('a medal follows the same validity rule as the league', () => {
+  it('awards gold in a small group that held its whole tier', async () => {
+    await finalizedWeek({
+      week: '2026-04-04', tierSlug: 'composite', rank: 1, size: 5, weeklyXp: 40, capacity: 5,
+    });
+    const medal = (await get()).medals.find((m: { key: string }) => m.key === 'medal_gold');
+    expect(medal.earned, 'five of five is a championship, not a thin group').toBe(true);
+  });
+
+  it('still refuses one that left room — the floor is intact where it belongs', async () => {
+    await finalizedWeek({
+      week: '2026-04-11', tierSlug: 'composite', rank: 1, size: 5, weeklyXp: 40, capacity: 15,
+    });
+    const medal = (await get()).medals.find((m: { key: string }) => m.key === 'medal_gold');
+    expect(medal.earned).toBe(false);
   });
 });

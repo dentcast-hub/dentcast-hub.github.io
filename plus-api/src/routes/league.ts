@@ -57,8 +57,10 @@ export async function leagueRoutes(app: FastifyInstance): Promise<void> {
       : null;
 
     // This week's membership.
-    const mem = (await pool.query<{ league_id: string; weekly_xp: number; tier_id: string }>(
-      `select lm.league_id, lm.weekly_xp, l.tier_id
+    const mem = (await pool.query<{
+      league_id: string; weekly_xp: number; tier_id: string; capacity_at_creation: number;
+    }>(
+      `select lm.league_id, lm.weekly_xp, l.tier_id, l.capacity_at_creation
          from league_members lm join leagues l on l.id = lm.league_id
         where lm.user_id = $1 and lm.week_start = $2`,
       [userId, week_start],
@@ -134,7 +136,12 @@ export async function leagueRoutes(app: FastifyInstance): Promise<void> {
     const size = rows.length;
     const promotion_zone = Math.ceil((size * cfg.promotion_pct) / 100);
     const demotion_zone = Math.ceil((size * cfg.demotion_pct) / 100);
-    const neutral_mode = size < cfg.min_valid_group_size;
+    // Same rule finalizeWeek decides outcomes by (see the comment there): below
+    // the floor AND not full. A group that holds its whole tier is a
+    // championship, not a thin group, and telling its members «گروه هنوز کوچک
+    // است؛ … وقتی گروه پر شود» was a promise the top tier could never see kept —
+    // its capacity IS its population, so "when it fills" is already now.
+    const neutral_mode = size < cfg.min_valid_group_size && size < mem.capacity_at_creation;
     const groupTier = tierById.get(mem.tier_id) ?? currentTier;
     const isTop = groupTier.tier_order >= cfg.max_active_tier_order;
     const isBottom = groupTier.tier_order <= 1;
