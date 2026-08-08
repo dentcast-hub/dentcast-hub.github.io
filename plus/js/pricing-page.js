@@ -452,7 +452,11 @@ async function main() {
     notices.push(notice('ok', 'تخفیف نشان‌های شما اعمال شد',
       `٪${toFa(info.onetime_discount.percent)} تخفیف یک‌بارمصرفِ نشان‌هایتان روی قیمت‌های این `
       + 'صفحه اعمال شده و با همین خرید مصرف می‌شود. '
-      + `سقف این تخفیف در هر خرید ٪${toFa(info.onetime_discount.cap_percent)} است؛ `
+      // «سقف تخفیفِ نشان‌ها», never «سقف این تخفیف»: the pillar notice is a
+      // SEPARATE card above this one, so an unowned «این» let a seat-holder read
+      // the ceiling as covering their permanent ٪۲۰ too. It does not — payment.ts
+      // adds the pillar percent on top of the capped credits.
+      + `سقف تخفیفِ نشان‌ها در هر خرید ٪${toFa(info.onetime_discount.cap_percent)} است؛ `
       + 'نشان‌هایی که جا نشوند برای خرید بعد می‌مانند.'));
   }
 

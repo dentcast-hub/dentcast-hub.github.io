@@ -222,3 +222,59 @@ describe('the tally', () => {
     expect(t.querySelectorAll('.dcp-ach-pip.is-b')).toHaveLength(1);
   });
 });
+
+// ------------------------------------------------------- the discount block ---
+//
+// Reported by the founder, 2026-08-08: the block told a «ستون» seat-holder that
+// «در هر خرید تا سقف ٪۱۰ اعمال می‌شود» — a sentence with no subject, which reads
+// as a ceiling on their own discount. It is not: payment.ts computes
+// `pillar + creditPercent(credits)`, so the permanent ٪۲۰ stacks ON TOP of the
+// cap and is never trimmed. The cap governs the one-time badge credits alone.
+//
+// Copy is exactly where this class of bug hides — the numbers were right the
+// whole time and every test stayed green.
+describe('the discount block says what the cap governs', () => {
+  const discount = (over: Record<string, unknown> = {}) => ({
+    discount: {
+      pillar_percent: 20, ready_percent: 6, next_purchase_percent: 26, cap_percent: 10, ...over,
+    },
+  });
+
+  it('never lets a seat-holder read the cap as covering their permanent ٪۲۰', () => {
+    mount(payload(discount()));
+    const foot = document.querySelector('.dcp-disc-foot')!.textContent!;
+
+    // The cap must name its subject...
+    expect(foot).toContain('سهم نشان‌ها');
+    // ...and the permanent discount must be said to sit outside it.
+    expect(foot).toContain('جدا از این سقف');
+    expect(foot).toContain('٪۲۰');
+  });
+
+  it('does the same when the badge credits are under the cap', () => {
+    // The branch most readers actually hit — and the one that had no subject.
+    mount(payload(discount({ ready_percent: 3, next_purchase_percent: 23 })));
+    const foot = document.querySelector('.dcp-disc-foot')!.textContent!;
+
+    expect(foot).toContain('سهم نشان‌ها');
+    expect(foot).toContain('جدا از این سقف');
+    // Under the cap nothing is held back, so it must not promise a remainder.
+    expect(foot).not.toContain('برای خرید بعد می‌ماند');
+  });
+
+  it('still explains the leftover when the credits overflow the cap', () => {
+    mount(payload(discount({ ready_percent: 14, next_purchase_percent: 30 })));
+    const foot = document.querySelector('.dcp-disc-foot')!.textContent!;
+
+    expect(foot).toContain('سهم نشان‌ها');
+    expect(foot).toContain('باقی‌مانده برای خریدهای بعد می‌ماند');
+  });
+
+  it('says nothing about a pillar discount to a reader who has none', () => {
+    mount(payload(discount({ pillar_percent: 0, ready_percent: 3, next_purchase_percent: 3 })));
+    const foot = document.querySelector('.dcp-disc-foot')!.textContent!;
+
+    expect(foot).toContain('سهم نشان‌ها');
+    expect(foot).not.toContain('ستون');
+  });
+});
