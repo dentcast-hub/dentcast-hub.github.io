@@ -263,6 +263,20 @@ async function usedFor(
     return (res.rows[0]?.n ?? 0) + inFlightCount(userId);
   }
 
+  if (key === 'library_papers') {
+    // DISTINCT paper, not distinct open. Re-opening one you already spent an
+    // allowance on is free forever — a reader who loses the tab, or comes back
+    // to a paper next week, has not consumed anything new, and charging them
+    // again would teach people to hoard downloads instead of reading.
+    const res = await client.query<{ n: number }>(
+      `select count(distinct content_id)::int as n from user_activity
+        where user_id = $1 and action = 'library_paper_opened'
+          and premium = false and created_at >= $2`,
+      [userId, from!.toISOString()],
+    );
+    return res.rows[0]?.n ?? 0;
+  }
+
   const res = await client.query<{ n: number }>(
     'select count(*)::int as n from collections where user_id = $1',
     [userId],

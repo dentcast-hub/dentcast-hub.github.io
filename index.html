@@ -3794,7 +3794,7 @@ a.dc-list-card--pillar {
         <div class="dc-radar-hero-main">
           <div class="dc-radar-hero-txt">کتابخانهٔ دنت‌کست</div>
           <div class="dc-radar-hero-sub">بیش از ۲۲۰۰ مقاله، دسته‌بندی‌شده و قابل جستجو</div>
-          <span class="dcp-soon-badge" id="card-library-lock">۳ جستجوی رایگان در روز</span>
+          <span class="dcp-soon-badge" id="card-library-lock">جستجو رایگان · مقاله‌ها با پریمیوم</span>
         </div>
         <span class="dc-radar-hero-btn">جستجو</span>
       </div>
@@ -4652,10 +4652,11 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
    THE TAP NO LONGER GATES. It used to open a "this is premium" sheet for
    anyone who was not a subscriber, which meant the 2200 papers were still
    invisible — the card advertised something nobody could look at. The cabinet
-   now opens for everybody and meters SEARCH instead (see the ALLOWANCE block in
-   dentcast_cabinet_search.html): three queries a day, after which the full list
-   is still there to browse but the search and sort controls are what premium
-   buys. Selling the tool over a corpus you can see beats selling a locked door.
+   now opens for everybody: searching, filtering and sorting the whole catalogue
+   are free, and what premium buys is the PAPER itself, resolved one at a time
+   by GET /library/paper/:id (plus-api/src/routes/library.ts). That is the only
+   boundary here the server can actually enforce, and it is the one worth
+   selling — the corpus is visible, the files are the product.
 
    The badge is still drawn from a HINT rather than a guess — spot.js records
    this device's last CONFIRMED viewer class in localStorage, so a subscriber's

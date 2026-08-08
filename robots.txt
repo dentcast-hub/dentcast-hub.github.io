@@ -19,6 +19,10 @@ Disallow: /pillar/*/structure.json
 # crawlers reading that tag, which is what makes the noindex work.
 Disallow: /dentcast_cabinet_full_catalog.json
 Disallow: /dentcast_cabinet_full_catalog.enriched.json
+# The cabinet's public index (titles/tags/ids, no links) — same page, same
+# reason. It is fetched by the page itself, and robots rules never apply to a
+# page's own fetch, so listing it costs the library nothing.
+Disallow: /plus/library-index.json
 
 # AI Crawlers — explicitly allowed
 User-agent: GPTBot

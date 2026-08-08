@@ -181,6 +181,12 @@ export const api = {
   // premium: the whole library in one response, grouped by article (see
   // highlights.js / /plus/highlights.html).
   highlightLibrary: () => request('/highlights/library'),
+  // One paper's Drive links, resolved server-side. This is the ONLY way the
+  // browser can obtain one: plus/library-index.json carries no link, so the
+  // subscription check and the free allowance cannot be walked around by
+  // reading the catalogue. Throws ApiError 401 (sign in) / 402 (allowance
+  // spent) / 404 (no file), which the cabinet page renders in place.
+  libraryPaper: (id) => request('/library/paper/' + encodeURIComponent(id)),
   createHighlight: (h) => request('/highlights', { method: 'POST', body: h }),
   updateHighlight: (id, patch) => request('/highlights/' + id, { method: 'PATCH', body: patch }),
   deleteHighlight: (id) => request('/highlights/' + id, { method: 'DELETE' }),

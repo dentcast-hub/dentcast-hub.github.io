@@ -28,10 +28,10 @@ import { config } from './config.js';
 
 export type QuotaPeriod = 'day' | 'month' | 'total';
 
-/** The three consumable allowances. A fourth would be a config edit + a call site. */
-export type QuotaKey = 'review_cards' | 'assistant_runs' | 'collections';
+/** The four consumable allowances. A fifth would be a config edit + a call site. */
+export type QuotaKey = 'review_cards' | 'assistant_runs' | 'collections' | 'library_papers';
 
-export const QUOTA_KEYS: QuotaKey[] = ['review_cards', 'assistant_runs', 'collections'];
+export const QUOTA_KEYS: QuotaKey[] = ['review_cards', 'assistant_runs', 'collections', 'library_papers'];
 
 export interface QuotaRule {
   limit: number;
@@ -48,7 +48,15 @@ export interface QuotaPreviews {
   pathways_free_count: number;
   /** Whether a free reader gets the blind-spot map or only the headline percentages. */
   compass_blind_spots: boolean;
-  /** Cabinet searches per device per day — enforced in the page, see the note below. */
+  /**
+   * RETIRED, kept so an older published quota.json still validates.
+   *
+   * The cabinet used to meter SEARCH with a localStorage counter, because a
+   * static page had nowhere to put a real gate. The boundary is the PAPER now
+   * (`library_papers` above), resolved one at a time through the API — so
+   * search and sort are free again and, for the first time, the limit is one
+   * the server actually enforces. Ship it as 0; nothing reads it.
+   */
   library_searches_per_day: number;
 }
 
@@ -98,6 +106,13 @@ const FALLBACK: QuotaConfig = {
       label_fa: 'کالکشن',
       exhausted_fa: 'کالکشنِ رایگانت ساخته شده است.',
       remaining_fa: '{n} کالکشن رایگان مانده',
+    },
+    library_papers: {
+      limit: 5,
+      period: 'month',
+      label_fa: 'مقاله‌ی کتابخانه',
+      exhausted_fa: 'سقف رایگانِ مقاله‌های این ماه پر شده است.',
+      remaining_fa: 'این ماه {n} مقاله‌ی رایگان مانده',
     },
   },
   previews: {

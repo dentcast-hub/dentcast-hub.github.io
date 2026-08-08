@@ -222,3 +222,85 @@ describe('withUserLock', () => {
     expect(started).toHaveLength(2);
   });
 });
+
+describe('library papers — the resource, not the search', () => {
+  async function open(id: string) {
+    return app.inject({ method: 'GET', url: `/library/paper/${id}`, headers: { cookie } });
+  }
+
+  it('needs a signed-in reader; a guest gets 401, never a link', async () => {
+    const res = await app.inject({ method: 'GET', url: '/library/paper/P0003' });
+    expect(res.statusCode).toBe(401);
+    expect(res.body).not.toContain('drive.google.com');
+  });
+
+  it('hands a free reader a real link and counts it', async () => {
+    const res = await open('P0003');
+    expect(res.statusCode).toBe(200);
+    const body = res.json();
+    expect(body.view).toContain('drive.google.com');
+    expect(body.quota.used).toBe(1);
+  });
+
+  it('re-opening the same paper is free', async () => {
+    await open('P0003');
+    await open('P0003');
+    const again = await open('P0003');
+    expect(again.statusCode).toBe(200);
+    expect(again.json().quota.used).toBe(1); // one paper, however many opens
+  });
+
+  it('refuses the paper past the monthly allowance', async () => {
+    const limit = getQuotaConfig().quotas.library_papers.limit;
+    // Distinct papers up to the limit, all admitted; the next one is refused.
+    const catalogue = ['P0003', 'P0004', 'P0005', 'P0006', 'P0007', 'P0008', 'P0009'];
+    let opened = 0;
+    for (const id of catalogue) {
+      const res = await open(id);
+      if (res.statusCode === 200) opened += 1;
+      else {
+        expect(res.statusCode).toBe(402);
+        expect(res.json().error).toBe('quota_exhausted');
+        break;
+      }
+    }
+    expect(opened).toBe(limit);
+  });
+
+  it('does not cap a premium reader', async () => {
+    await pool.query(`update profiles set tier = 'premium' where phone = $1`, [phone]);
+    for (const id of ['P0003', 'P0004', 'P0005', 'P0006', 'P0007', 'P0008', 'P0009']) {
+      const res = await open(id);
+      if (res.statusCode === 404) continue; // not every id exists in the catalogue
+      expect(res.statusCode).toBe(200);
+      expect(res.json().quota.limit).toBeNull();
+    }
+  });
+
+  it('answers an unknown id the same way as one with no file — no enumeration', async () => {
+    const res = await open('P999999');
+    expect(res.statusCode).toBe(404);
+    expect(res.json().error).toBe('unknown_paper');
+  });
+
+  it('rejects a malformed id before it reaches the map', async () => {
+    const res = await app.inject({ method: 'GET', url: '/library/paper/..%2F..%2Fetc', headers: { cookie } });
+    expect([400, 404]).toContain(res.statusCode);
+  });
+});
+
+describe('the published index leaks no link', () => {
+  it('plus/library-index.json carries no Drive URL', async () => {
+    const { readFileSync } = await import('node:fs');
+    const { fileURLToPath } = await import('node:url');
+    const { dirname, resolve } = await import('node:path');
+    const here = dirname(fileURLToPath(import.meta.url));
+    const text = readFileSync(resolve(here, '..', '..', 'plus', 'library-index.json'), 'utf8');
+    // The whole point of the split: this file is public, so a single Drive
+    // handle in it would undo the gate for all 2200 papers at once.
+    expect(text).not.toContain('drive.google.com');
+    expect(text).not.toContain('drive_id');
+    expect(text).not.toContain('local_path');
+    expect(JSON.parse(text).papers.length).toBeGreaterThan(2000);
+  });
+});

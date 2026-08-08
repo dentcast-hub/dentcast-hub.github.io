@@ -531,6 +531,11 @@ export const config = {
   // feature). Same story again: repo default in dev, explicit in the container.
   quotaPath: process.env.QUOTA_PATH || '',
 
+  // Path to the paper cabinet's MASTER catalogue. The API reads only the
+  // id -> Drive link map out of it (src/library.ts); the browser gets
+  // plus/library-index.json instead, which carries no link at all.
+  libraryCatalogPath: process.env.LIBRARY_CATALOG_PATH || '',
+
   // Where to re-fetch those files from at runtime (content-refresh.ts).
   // The paths above are the boot value and the permanent fallback; these URLs
   // are what stop every publish from needing an image rebuild. Comma-separated
@@ -541,6 +546,7 @@ export const config = {
     pathwaysUrls: list('PATHWAYS_URL', []),
     badgesUrls: list('BADGES_URL', []),
     quotaUrls: list('QUOTA_URL', []),
+    libraryUrls: list('LIBRARY_CATALOG_URL', []),
     refreshSeconds: int('CONTENT_REFRESH_SECONDS', 300),
   },
 };

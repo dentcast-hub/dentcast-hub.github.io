@@ -3,6 +3,7 @@ import { applyRemoteIndex, indexSource } from './content-index.js';
 import { applyRemotePathways, pathwaysSource } from './pathways.js';
 import { applyRemoteBadges, badgesSource } from './badges.js';
 import { applyRemoteQuota, quotaSource } from './quota.js';
+import { applyRemoteLibrary, librarySource, libraryEtag } from './library.js';
 
 /**
  * Keeps the taxonomy index and the pathway definitions current WITHOUT a
@@ -61,6 +62,7 @@ let lastIndexSource = '';
 let lastPathwaysSource = '';
 let lastBadgesSource = '';
 let lastQuotaSource = '';
+let lastLibrarySource = '';
 
 export async function refreshOnce(): Promise<void> {
   if (config.content.indexUrls.length) {
@@ -124,6 +126,38 @@ export async function refreshOnce(): Promise<void> {
       console.log(`[content-refresh] quota now served from ${src}`);
     }
   }
+
+  // The paper cabinet's link map. Unlike the four above this file is ~6 MB, so
+  // it is the one refresh that asks "only if it changed": an If-None-Match with
+  // the ETag we already hold makes an unchanged poll a headers-only 304 instead
+  // of six megabytes every few minutes. Without this the API would only learn
+  // about a newly filed paper on the next image build, and a publish that adds
+  // one would leave its button 404ing until then.
+  if (config.content.libraryUrls.length) {
+    for (const url of config.content.libraryUrls) {
+      try {
+        const headers: Record<string, string> = { accept: 'application/json' };
+        const tag = libraryEtag();
+        if (tag) headers['if-none-match'] = tag;
+        const res = await fetch(url, { headers, signal: AbortSignal.timeout(30_000) });
+        if (res.status === 304) break;      // current; nothing to do
+        if (!res.ok) continue;              // try the other mirror
+        if (!applyRemoteLibrary(await res.json(), res.headers.get('etag') || '')) {
+          // eslint-disable-next-line no-console
+          console.warn('[content-refresh] library: payload rejected by shape check; keeping the current copy');
+        }
+        break;
+      } catch (_err) {
+        continue;
+      }
+    }
+    const src = librarySource();
+    if (src !== lastLibrarySource) {
+      lastLibrarySource = src;
+      // eslint-disable-next-line no-console
+      console.log(`[content-refresh] library links now served from ${src}`);
+    }
+  }
 }
 
 /**
@@ -134,7 +168,8 @@ export async function refreshOnce(): Promise<void> {
  */
 export function startContentRefresh(): () => void {
   if (!config.content.indexUrls.length && !config.content.pathwaysUrls.length
-      && !config.content.badgesUrls.length && !config.content.quotaUrls.length) {
+      && !config.content.badgesUrls.length && !config.content.quotaUrls.length
+      && !config.content.libraryUrls.length) {
     return () => { /* not configured: the baked files are the whole story */ };
   }
   // Fetch once at boot rather than waiting out the first interval, so a

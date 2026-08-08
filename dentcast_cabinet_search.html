@@ -69,10 +69,10 @@ main#list{padding:0.375rem 0 1.25rem}
 #list .tag{font-size:.74rem;color:var(--ac);cursor:pointer}
 #list .tag:hover{text-decoration:underline}
 /* #list-scoped so these win over dc-theme's .card a / main a link rules */
-#list .act a{display:inline-block;font-size:.78rem;text-decoration:none;border:1px solid var(--border);border-radius:var(--r-sm);padding:0.375rem 0.875rem;margin-right:0.5rem;color:var(--txt);background:var(--surface);transition:all var(--tr)}
-#list .act a:hover{background:var(--surface2);text-decoration:none}
-#list .act a.dl{background:var(--ac);color:#fff;border-color:var(--ac)}
-#list .act a.dl:hover{background:var(--ac);opacity:.9}
+#list .act a,#list .act button{display:inline-block;font-family:inherit;cursor:pointer;font-size:.78rem;text-decoration:none;border:1px solid var(--border);border-radius:var(--r-sm);padding:0.375rem 0.875rem;margin-right:0.5rem;color:var(--txt);background:var(--surface);transition:all var(--tr)}
+#list .act a:hover,#list .act button:hover{background:var(--surface2);text-decoration:none}
+#list .act a.dl,#list .act button.dl{background:var(--ac);color:#fff;border-color:var(--ac)}
+#list .act a.dl:hover,#list .act button.dl:hover{background:var(--ac);opacity:.9}
 #list .act a.nolink{opacity:.4;pointer-events:none}
 .more{display:block;margin:1.25rem auto;background:var(--surface);border:1px solid var(--border);color:var(--txt2);border-radius:var(--r-sm);padding:0.5625rem 1.125rem;cursor:pointer;font-family:inherit;font-size:.82rem}
 .more:hover{background:var(--surface2)}
@@ -209,8 +209,13 @@ main#list{padding:0.375rem 0 1.25rem}
 <script src="/global-search.js?v=9" defer></script>
 <script src="/dc-nav.js?v=54" defer></script>
 <script>
-// JSON lives next to this file in the repo. Relative path works on any domain.
-const SRC="dentcast_cabinet_full_catalog.json";
+// The PUBLIC index: title/journal/type/topic/tags/id and nothing else. It is
+// built from the master catalogue by tools/build_library_index.py and carries
+// no Drive link at all — 721 KB instead of the 6 MB the page used to pull, and,
+// more to the point, the URLs are no longer handed to every visitor. A paper's
+// link is resolved one at a time by GET /library/paper/:id, which is where the
+// subscription check and the free allowance live (plus-api/src/routes/library.ts).
+const SRC="/plus/library-index.json";
 let DATA=[],active=new Set(),shown=0;const PAGE=80;
 const q=document.getElementById('q'),topic=document.getElementById('topic'),type=document.getElementById('type'),sort=document.getElementById('sort');
 const nm=s=>(s||'').toLowerCase();
@@ -218,177 +223,101 @@ const nm=s=>(s||'').toLowerCase();
 fetch(SRC).then(r=>{if(!r.ok)throw new Error(r.status);return r.json();}).then(j=>{
   const papers=Array.isArray(j)?j:(j.papers||[]);
   DATA=papers.map(p=>({
-    t:p.display_title||p.real_title||p.title||"",
-    tp:p.topic||"",ty:p.type||"",tg:p.tags||[],
-    d:p.drive_download||"",v:p.drive_view||"",j:p.journal||""
+    id:p.id||"",t:p.t||"",tp:p.tp||"",ty:p.ty||"",tg:p.tg||[],j:p.j||"",
+    /* whether a file EXISTS is public, so the button can be drawn; where it is
+       is not, and only the API knows. */
+    f:!!p.f
   }));
   document.getElementById('total').textContent='\u00b7 '+DATA.length+' papers';
   fill(topic,[...new Set(DATA.map(p=>p.tp).filter(x=>x&&x!=='(root)'))].sort());
   fill(type,[...new Set(DATA.map(p=>p.ty).filter(Boolean))].sort());
   [q,topic,type].forEach(el=>el.disabled=false);
-  [topic,type,sort].forEach(el=>el.addEventListener('input',()=>render(true)));
-  q.addEventListener('input',onQueryInput);
+  [q,topic,type,sort].forEach(el=>el.addEventListener('input',()=>render(true)));
   document.getElementById('state').remove();render(true);
-  Quota.start();
+  Paper.start();
 }).catch(e=>{
   document.getElementById('state').innerHTML='Could not load <b>'+SRC+'</b> ('+e.message+').<br>Make sure the JSON sits in the same folder as this page in the repo.';
 });
 
-/* ── SEARCH ALLOWANCE ──────────────────────────────────────────────────────
-   Three searches a day, then the list stays and the TOOL is what premium buys.
+/* ── PAPER ACCESS ──────────────────────────────────────────────────────────
+   Searching, filtering, sorting and browsing all 2200 papers is FREE and
+   always was meant to be. What premium buys is the paper.
 
-   WHY THE TOOL AND NOT THE PAPERS. Every other allowance on this site is
-   enforced by the API, because the API owns the data. This page has no API in
-   its path at all: it is a static file that fetches a public JSON and does all
-   its searching, filtering and sorting in the browser. So a device-local
-   counter is the honest limit of what is enforceable here, and pretending
-   otherwise — obfuscating the catalogue, faking a server check — would buy
-   nothing but a page that breaks offline.
+   The earlier version of this block metered SEARCH with a localStorage
+   counter, and it was the wrong boundary twice over. It was unenforceable —
+   a counter on the reader's own machine, on a static page — and it sold the
+   wrong thing: the ability to look, rather than the thing being looked for.
 
-   That is a deliberate trade, not an oversight. Anyone who opens devtools can
-   have the JSON; what is being sold is the ability to SEARCH 2200 papers from
-   inside the site, which is the only thing that makes 2200 papers usable. When
-   the allowance is spent the full list is still right there to scroll — «از اول
-   نگاه کن» — so nothing is taken away, only the shortcut.
+   Now the page never receives a Drive URL at all. `/plus/library-index.json`
+   carries titles and tags and an `id`; the URL for one paper is produced by
+   `GET /library/paper/:id`, which checks the subscription and the allowance
+   first. So the limit is enforced where the resource is, and the counter is
+   the server's — nothing here can be edited to get a paper.
 
-   Three rules it follows:
-   • It FAILS OPEN. If /me cannot be reached (offline, API down, adblocker) the
-     page stays unmetered. A subscriber locked out of search by a network blip
-     is far worse than an anonymous visitor getting a fourth query.
-   • DISTINCT queries are counted, not keystrokes. Typing narrows a search —
-     "کامپوزیت" then "کامپوزیت خلفی" is one person refining one question — so
-     the counter commits on a debounce and never charges twice for the same
-     text. Retyping something already spent is free.
-   • Sorting and filtering ride along with the search allowance rather than
-     having one of their own. Over 2200 papers they are the same tool: sorting
-     a corpus you cannot search is how you find things without searching. */
-const Quota = (function(){
-  const LIMIT_DEFAULT = 3;
-  const DEBOUNCE_MS = 700;
-  let limit = LIMIT_DEFAULT;
-  let metered = false;          // stays false until /me confirms a non-premium reader
-  let spent = new Set();
-  let locked = false;
+   The tab is opened SYNCHRONOUSLY on the click and its location is set when
+   the answer arrives. Opening it inside the promise instead would be a popup
+   the browser blocks, which on a phone looks exactly like a broken button. */
+const Paper = (function(){
   const box = document.getElementById('cabQuota');
+  let apiPromise = null;
+  const apiMod = () => (apiPromise || (apiPromise = import('/plus/js/api.js')));
 
-  /* The same Tehran day boundary the streak engine and every allowance on the
-     API use, so "امروز" means one thing across the whole product. */
-  function today(){
-    try {
-      return new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Tehran',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
-    } catch(e){ return new Date().toISOString().slice(0,10); }
-  }
-  const key = () => 'dc.cab.q.' + today();
-
-  function load(){
-    try {
-      const raw = localStorage.getItem(key());
-      spent = new Set(raw ? JSON.parse(raw) : []);
-      /* Yesterday's keys are dropped on the first visit of a new day, so the
-         allowance cannot accumulate a year of dead entries in storage. */
-      for (let i = localStorage.length - 1; i >= 0; i--) {
-        const k = localStorage.key(i);
-        if (k && k.startsWith('dc.cab.q.') && k !== key()) localStorage.removeItem(k);
-      }
-    } catch(e){ spent = new Set(); }
-  }
-  function save(){ try { localStorage.setItem(key(), JSON.stringify([...spent])); } catch(e){} }
-
-  const norm = (s) => String(s||'').trim().toLowerCase().replace(/\s+/g,' ');
-  const remaining = () => Math.max(0, limit - spent.size);
-
-  function paint(){
-    if (!metered || !box) return;
+  function notice(html, spent){
+    if (!box) return;
     box.hidden = false;
-    box.className = 'cab-quota' + (locked ? ' is-spent' : '');
-    box.replaceChildren();
-    const p = document.createElement('div');
-    if (locked) {
-      p.innerHTML = '<b>سه جستجوی امروزت تمام شد.</b> فهرست کامل مقاله‌ها همچنان باز است و می‌توانی مرورش کنی؛ جستجو و مرتب‌سازی با پریمیوم.';
-    } else {
-      p.innerHTML = 'کتابخانه رایگان قابل مرور است. <b>' + remaining() + ' جستجوی رایگان</b> امروز برایت مانده.';
+    box.className = 'cab-quota' + (spent ? ' is-spent' : '');
+    box.innerHTML = html;
+  }
+
+  function buyRow(from){
+    return '<div class="cab-quota-row"><a class="cab-buy" href="/plus/pricing.html?from='
+      + from + '">تهیه‌ی اشتراک پریمیوم</a></div>';
+  }
+
+  async function open(id, mode){
+    /* Claimed before the await; filled or closed after. */
+    const tab = window.open('', '_blank');
+    try {
+      const m = await apiMod();
+      const res = await m.api.libraryPaper(id);
+      const url = (mode === 'view' ? res.view : res.download) || res.view || res.download;
+      if (!url) { if (tab) tab.close(); return; }
+      if (tab) tab.location = url; else window.location.href = url;
+      if (res.quota && res.quota.limit !== null && res.quota.remaining !== null) {
+        notice('<div>' + (res.quota.remaining_fa || '') + '</div>' + buyRow('library-paper'), false);
+      }
+    } catch (e) {
+      if (tab) tab.close();
+      const body = (e && e.body) || {};
+      if (e && e.status === 401) {
+        notice('<div><b>برای باز کردنِ مقاله وارد شوید.</b> جستجو و مرور کتابخانه همیشه رایگان است.</div>'
+          + '<div class="cab-quota-row"><a class="cab-buy" href="/plus/">ورود به حساب</a></div>', true);
+      } else if (e && e.status === 402) {
+        notice('<div><b>' + (body.message || 'سقف رایگانِ این ماه پر شده است.') + '</b></div>'
+          + buyRow('library-paper-spent'), true);
+      } else if (e && e.status === 404) {
+        notice('<div>فایلِ این مقاله در دسترس نیست.</div>', false);
+      } else {
+        /* Fails CLOSED here, unlike everything else — but it fails closed on a
+           MESSAGE, not on a lock: there is no link to hand over when the API
+           cannot be reached, so the honest answer is "try again". */
+        notice('<div>ارتباط با سرور برقرار نشد؛ چند لحظه بعد دوباره تلاش کن.</div>', false);
+      }
+      if (box) box.scrollIntoView({ block: 'nearest' });
     }
-    box.appendChild(p);
-    const row = document.createElement('div');
-    row.className = 'cab-quota-row';
-    if (locked) {
-      const browse = document.createElement('button');
-      browse.type = 'button'; browse.className = 'cab-browse'; browse.textContent = 'دیدن فهرست کامل';
-      browse.addEventListener('click', clearFilters);
-      row.appendChild(browse);
-    }
-    const buy = document.createElement('a');
-    buy.className = 'cab-buy';
-    buy.href = '/plus/pricing.html?from=' + (locked ? 'library-search-spent' : 'library-search');
-    buy.textContent = 'جستجوی نامحدود با پریمیوم';
-    row.appendChild(buy);
-    box.appendChild(row);
-  }
-
-  /* Back to the whole corpus, unsorted and unfiltered — literally "look from
-     the beginning". The controls stay disabled; this is the fallback, not a
-     way back into the tool. */
-  function clearFilters(){
-    q.value = ''; topic.value = ''; type.value = ''; sort.value = 't';
-    active.clear(); chips(); render(true);
-  }
-
-  function lock(){
-    if (locked) return;
-    locked = true;
-    [q,topic,type,sort].forEach(el=>{ el.disabled = true; });
-    paint();
-  }
-
-  /* Commit one query against the allowance. Returns whether the search may run. */
-  function charge(raw){
-    if (!metered || locked) return !locked;
-    const t = norm(raw);
-    if (!t) return true;                 // clearing the box is not a search
-    if (spent.has(t)) return true;       // already paid for this exact question
-    if (remaining() <= 0) { lock(); return false; }
-    spent.add(t); save();
-    if (remaining() <= 0) lock(); else paint();
-    return true;
   }
 
   return {
-    charge,
-    debounceMs: DEBOUNCE_MS,
-    isLocked: () => locked,
-    /* Ask who this is, and only then start metering. Until the answer arrives
-       the page is unmetered, so a subscriber never sees a counter flash. */
     start(){
-      load();
-      import('/plus/js/api.js')
-        .then((m) => m.currentUser().then((user) => {
-          if (m.meStatus() === 'error') return;            // fail open
-          if (user && user.tier === 'premium') return;     // nothing to meter
-          metered = true;
-          fetch('/plus/quota.json', { credentials: 'omit' })
-            .then((r) => (r.ok ? r.json() : null))
-            .then((c) => {
-              const n = c && c.previews && c.previews.library_searches_per_day;
-              if (Number.isInteger(n) && n >= 0) limit = n;
-            })
-            .catch(() => {})
-            .then(() => { if (remaining() <= 0) lock(); else paint(); });
-        }))
-        .catch(() => { /* unreachable API leaves the page unmetered */ });
+      document.addEventListener('click', (e) => {
+        const btn = e.target.closest && e.target.closest('[data-open]');
+        if (!btn) return;
+        e.preventDefault();
+        open(btn.getAttribute('data-open'), btn.getAttribute('data-mode'));
+      });
     },
   };
 })();
-
-let qTimer = null;
-/* Typing re-renders immediately (the filter is local and instant), but only the
-   settled text is charged. Rendering first and charging second is what keeps a
-   search that gets refused from also blanking the results the reader can see. */
-function onQueryInput(){
-  if (Quota.isLocked()) return;
-  render(true);
-  clearTimeout(qTimer);
-  qTimer = setTimeout(() => { Quota.charge(q.value); }, Quota.debounceMs);
-}
 
 function fill(sel,arr){for(const v of arr){const o=document.createElement('option');o.textContent=v;sel.appendChild(o);}}
 function match(p){const t=nm(q.value).trim();
@@ -401,8 +330,8 @@ function render(reset){if(reset){shown=0;document.getElementById('list').innerHT
  const list=document.getElementById('list');
  for(const p of res.slice(shown,shown+PAGE)){const d=document.createElement('div');d.className='card';
   const tags=p.tg.map(t=>'<span class="tag" data-t="'+t+'">#'+t+'</span>').join(' ');
-  const dl=p.d?'<a class="dl" href="'+p.d+'" target="_blank">Download</a>':'<a class="dl nolink">No link</a>';
-  const vw=p.v?'<a href="'+p.v+'" target="_blank">View</a>':'';
+  const dl=p.f?'<button class="dl" type="button" data-open="'+p.id+'" data-mode="download">Download</button>':'<a class="dl nolink">No link</a>';
+  const vw=p.f?'<button type="button" data-open="'+p.id+'" data-mode="view">View</button>':'';
   const jr=p.j?'<p class="jr">'+p.j+'</p>':'';
   d.innerHTML='<p class="title">'+p.t+'</p>'+jr+'<div class="meta"><span class="badge">'+p.ty+'</span><span class="badge">'+p.tp+'</span></div><div class="tags">'+tags+'</div><div class="act">'+dl+vw+'</div>';
   list.appendChild(d);}

@@ -58,13 +58,15 @@ const PITCH = {
  */
 const EXTRA_PERKS = [
   // The cabinet was missing from this list entirely, which mattered the moment
-  // it stopped being a locked door: a free reader now gets three searches a day
-  // over 2200 papers, so «جستجوی نامحدود» is a real thing being sold and the
-  // price page said nothing about it. It has no dashboard section of its own —
-  // it is a static page, not a PREMIUM_FEATURES entry — so it belongs here.
+  // it became something with a real boundary. Note what is being sold: not the
+  // search — that is free for everyone, over the whole 2200-paper catalogue —
+  // but the PAPERS, which the API hands out one at a time. Selling the search
+  // would have been selling the ability to look; this sells what people came
+  // to look for. It has no dashboard section of its own (a static page, not a
+  // PREMIUM_FEATURES entry), so it belongs here.
   {
-    title: 'جستجوی نامحدود در کتابخانه',
-    hint: 'بیش از ۲۲۰۰ مقالهٔ دسته‌بندی‌شده، بدون سقفِ جستجوی روزانه و با مرتب‌سازی.',
+    title: 'کتابخانهٔ ۲۲۰۰ مقاله',
+    hint: 'جستجو در کتابخانه برای همه باز است؛ با پریمیوم، خودِ مقاله‌ها هم بدون سقف باز می‌شوند.',
   },
   { title: 'بدون تبلیغ', hint: 'هیچ تبلیغی، در هیچ صفحه‌ای.' },
   { title: 'اطلاع فوری از مطلب تازه', hint: 'نوتیفیکیشن مطلب تازه بلافاصله پس از انتشار می‌رسد.' },

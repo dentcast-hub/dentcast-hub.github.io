@@ -781,6 +781,21 @@ socket`, `GBR`, `periimplantitis`, `biomimetic`, with nested paths like
    logic applies: never fix one and leave the others. (No version bump: the
    claim is `index.html`'s own copy, not a shared asset.)
 
+   **Then rebuild the public index — this is not optional:**
+
+   ```bash
+   python3 tools/build_library_index.py
+   ```
+
+   The cabinet page no longer reads the master catalog. It reads
+   `plus/library-index.json`, which this builder derives from it and which
+   deliberately carries **no Drive link** — the link for one paper is produced
+   by `GET /library/paper/:id` in plus-api, where the subscription check lives.
+   Skip the rebuild and the paper you just filed is invisible on the site: the
+   catalog has it, the page does not. The builder refuses to write if a Drive
+   handle ever reaches its output, so a mistake here fails loudly rather than
+   quietly republishing 2200 URLs. Commit both files together.
+
 #### Part 3 — Find the DOI on the web and add a first-author → DOI credit on the page (ShareHub style)
 
 **Runs only when a page is being published** (text-bearing publish, any type). On
