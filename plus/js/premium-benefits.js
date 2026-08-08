@@ -57,6 +57,15 @@ const PITCH = {
  * score is ever spent on — the number means nothing without what it buys.
  */
 const EXTRA_PERKS = [
+  // The cabinet was missing from this list entirely, which mattered the moment
+  // it stopped being a locked door: a free reader now gets three searches a day
+  // over 2200 papers, so «جستجوی نامحدود» is a real thing being sold and the
+  // price page said nothing about it. It has no dashboard section of its own —
+  // it is a static page, not a PREMIUM_FEATURES entry — so it belongs here.
+  {
+    title: 'جستجوی نامحدود در کتابخانه',
+    hint: 'بیش از ۲۲۰۰ مقالهٔ دسته‌بندی‌شده، بدون سقفِ جستجوی روزانه و با مرتب‌سازی.',
+  },
   { title: 'بدون تبلیغ', hint: 'هیچ تبلیغی، در هیچ صفحه‌ای.' },
   { title: 'اطلاع فوری از مطلب تازه', hint: 'نوتیفیکیشن مطلب تازه بلافاصله پس از انتشار می‌رسد.' },
   {

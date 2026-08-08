@@ -5,9 +5,16 @@ import { sendCapped } from './notify-policy.js';
 import type { NotificationMessage } from '../providers/notifications/types.js';
 
 /**
- * "Your review cards are due" — PREMIUM only, because the Leitner SCHEDULE is the
- * premium half of the feature (routes/review.ts is requirePremium; the card form
- * itself is free). Free users therefore have no due-date to be reminded about.
+ * "Your review cards are due" — PREMIUM only, and it stays that way even though
+ * the review engine itself no longer is.
+ *
+ * A free reader now gets the first few due cards every day (plus/quota.json), so
+ * they DO have a queue — but a notification is a claim on someone's attention
+ * that we make on our own initiative, and «۳ کارت آماده است» is a poor thing to
+ * put on a lock screen when the answer to using them up is a purchase. The
+ * daily allowance is discovered by opening the app; the reminder is for people
+ * whose whole queue is actually waiting for them. The `tier = 'premium'` filter
+ * in the query below is the enforcement, not this comment.
  *
  * Unlike the league outcome this has no instantaneous event: a card becomes due
  * by the clock passing next_review_at, which for a box-5 card is 03:00 on some
