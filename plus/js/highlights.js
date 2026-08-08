@@ -22,6 +22,7 @@ import { api } from './api.js';
 import { FOLDER_EN } from './content-index.js';
 import { openCollectionPicker } from './collections.js';
 import { LABELS, PALETTE } from './config.js';
+import { lockedNote } from './quota.js';
 import {
   foldFa, highlightHref, hlMark, noteBlock, labelChip, actionBtn, asText,
   copyToClipboard, toast, skeleton, confirmStrip, inlineEditor,
@@ -175,6 +176,16 @@ export async function renderHighlightLibrary(container) {
     ]));
     return;
   }
+
+  // `total` means two different things on the two sides of this call. The API
+  // sends the size of the WHOLE library (a free reader needs the real number —
+  // "you have 340 of these" is the entire argument), while every counter,
+  // filter and jump list below counts what is actually on this page. Splitting
+  // them here keeps the rest of the file working on the loaded set exactly as
+  // it always has, instead of teaching thirty call sites the difference.
+  const libraryTotal = data.total;
+  const truncated = !!data.preview_truncated;
+  if (data.shown != null) data.total = data.shown;
 
   const state = readState();
 
@@ -455,6 +466,16 @@ export async function renderHighlightLibrary(container) {
 
   // Mount BEFORE the first render: the infinite-scroll sentinel has to be in
   // the document when the observer starts watching it.
-  container.replaceChildren(top, controls, jumpPanel, list, sentinel);
+  // The note goes UNDER the twenty highlights, never over them: the reader
+  // came here to read their own notes, and the count it quotes is only an
+  // argument because they have just scrolled past the ones they do have.
+  const moreNote = truncated
+    ? lockedNote(
+      faNum(libraryTotal - data.total) + ' هایلایت دیگر هم داری. ' + (data.locked_message || ''),
+      'highlights-library',
+    )
+    : null;
+
+  container.replaceChildren(...[top, controls, jumpPanel, list, sentinel, moreNote].filter(Boolean));
   render();
 }

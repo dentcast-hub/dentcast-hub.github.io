@@ -10,6 +10,7 @@
 import { el, faNum } from './util.js';
 import { api, ApiError } from './api.js';
 import { FOLDER_EN, getModel } from './content-index.js';
+import { quotaStrip, quotaWall, isQuotaError, quotaOf } from './quota.js';
 
 function sparkAvatar(isSmall) {
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
@@ -245,8 +246,18 @@ export function renderCaseAssistant(container) {
       const body = await api.assistantNext(description, history);
       if (body.done) doneScreen(body);
       else optionsScreen(body.question, body.options);
+      // Only ever after a delivered round, and only for a metered reader. The
+      // count is of CASES, not rounds — narrowing the case in hand is free, so
+      // showing it mid-wizard would otherwise read as a countdown on the
+      // questions being asked right now.
+      const strip = quotaStrip(body.quota, 'assistant-quota');
+      if (strip) container.prepend(strip);
     } catch (e) {
-      if (e instanceof ApiError && e.status === 429) {
+      if (isQuotaError(e)) {
+        // Out of free cases. Whatever the reader already reached stays where it
+        // is — this replaces the wizard, not the answers above it.
+        container.replaceChildren(quotaWall(quotaOf(e), 'assistant-quota'));
+      } else if (e instanceof ApiError && e.status === 429) {
         errorScreen('در این ساعت بیش از حد استفاده شده؛ کمی بعد دوباره امتحان کن.');
       } else {
         errorScreen('مشکلی پیش اومد؛ دوباره امتحان کن.');

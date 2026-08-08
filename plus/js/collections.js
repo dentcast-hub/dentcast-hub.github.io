@@ -8,8 +8,8 @@
 // /plus/collections.html, /plus/collection.html, the workbench's two
 // single-purpose collection buttons, and the dashboard.
 import { el, faNum } from './util.js';
-import { openSheet, closeSheet, gateCard } from './sheet.js';
-import { premiumCta } from './premium-cta.js';
+import { openSheet, closeSheet } from './sheet.js';
+import { isQuotaError, quotaOf, quotaWall } from './quota.js';
 import { api, currentUser } from './api.js';
 import { openLoginModal } from './login-modal.js';
 import { FOLDER_EN } from './content-index.js';
@@ -119,7 +119,13 @@ function chooserCard({ title, hint, onPick, exclude = null, okText = 'اضافه
     try {
       const { collection } = await api.createCollection(t);
       await pick(collection);
-    } catch (_) {
+    } catch (e) {
+      if (isQuotaError(e)) {
+        // Out of free boards. The sheet keeps the boards they DO have listed
+        // above this, so the offer sits beside the thing it is selling more of.
+        msg.replaceChildren(quotaWall(quotaOf(e), 'collection-sheet-quota'));
+        return;
+      }
       msg.textContent = 'ساختِ کالکشن ناموفق بود؛ دوباره تلاش کنید.';
       newBtn.disabled = false;
     }
@@ -209,10 +215,15 @@ export function openCollectionMove(item, fromCollectionId, removeFromHere) {
 
 /**
  * Open the "add to collection" flow for one item: a highlight (`highlightId`)
- * or a whole page (`contentId`) — pass exactly one. Handles all three states
- * itself (anon -> login, free -> premium upsell, premium -> the real picker),
- * so every call site (the two workbench buttons, the dashboard row button)
- * behaves identically without repeating the gate logic.
+ * or a whole page (`contentId`) — pass exactly one. Handles the two states
+ * itself (anon -> login, signed in -> the real picker), so every call site (the
+ * two workbench buttons, the dashboard row button) behaves identically.
+ *
+ * There is no longer a tier check here. A free reader gets a whole board, so
+ * the picker opens for everybody and the allowance is discovered — if at all —
+ * at the moment they try to create a SECOND one, which the API refuses and the
+ * sheet turns into the offer. Checking the tier here instead would have put the
+ * wall in front of the free board too.
  */
 export async function openCollectionPicker({ highlightId, contentId } = {}) {
   const user = await currentUser();
@@ -220,14 +231,6 @@ export async function openCollectionPicker({ highlightId, contentId } = {}) {
     const res = await openLoginModal({ returnTo: location.pathname + location.search });
     if (!res || !res.user) return;
     return openCollectionPicker({ highlightId, contentId });
-  }
-  if (user.tier !== 'premium') {
-    openSheet(gateCard({
-      title: 'کالکشن‌ها ویژه‌ی پریمیوم است',
-      sub: 'هایلایت‌ها و مطالعه‌ی شما همین حالا هم ثبت می‌شود؛ با پریمیوم، می‌توانید آن‌ها را در پوشه‌های دلخواهِ خودتان دسته‌بندی کنید.',
-      cta: premiumCta('gate-collection-sheet'),
-    }));
-    return;
   }
   openSheet(pickerCard({ highlight_id: highlightId, content_id: contentId }));
 }
@@ -429,6 +432,11 @@ export async function renderCollectionsList(container) {
   sortSel.addEventListener('change', renderGrid);
   renderGrid();
 
+  // Where the "out of free boards" card lands: directly under the create row,
+  // so it answers the button that was just pressed. The catalog of boards the
+  // reader already owns stays on screen below it — that is the argument.
+  const quotaHost = el('div', {});
+
   createBtn.addEventListener('click', async () => {
     const title = titleInput.value.trim();
     if (!title) return;
@@ -437,11 +445,14 @@ export async function renderCollectionsList(container) {
       const { collection } = await api.createCollection(title);
       titleInput.value = '';
       location.href = '/plus/collection.html?id=' + encodeURIComponent(collection.id);
+    } catch (e) {
+      if (isQuotaError(e)) quotaHost.replaceChildren(quotaWall(quotaOf(e), 'collections-quota'));
+      else throw e;
     } finally { createBtn.disabled = false; }
   });
   titleInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') createBtn.click(); });
 
-  container.replaceChildren(top, createRow, tools, grid);
+  container.replaceChildren(top, createRow, quotaHost, tools, grid);
 }
 
 /** GET /plus/collection.html?id=... — one board's masonry pin grid, rename/delete. */

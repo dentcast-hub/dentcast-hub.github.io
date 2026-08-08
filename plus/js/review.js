@@ -1,4 +1,4 @@
-// Premium Leitner review (Phase 2). Cards are the user's own highlights, shown
+// Leitner review (Phase 2). Cards are the user's own highlights, shown
 // EXACTLY as they look in the article (same `mark.dcp-hl[data-color]` the
 // workbench applies) — always in full. Cloze-hiding a chunk of the user's own
 // highlight was confusing (prototype feedback, 2026-07-30): you cannot recall
@@ -10,6 +10,7 @@ import { api } from './api.js';
 import { getModel, contentInfo } from './content-index.js';
 import { flashcard, sourceHref } from './archive.js';
 import { LABELS } from './config.js';
+import { quotaStrip, quotaWall, isQuotaError, quotaOf, isMetered } from './quota.js';
 
 const labelFa = (k) => (LABELS.find((l) => l.key === k) || {}).fa || '';
 
@@ -36,7 +37,21 @@ function emptyState(container) {
   ]));
 }
 
-function renderCard(h, model) {
+/**
+ * The queue ran out because today's free cards are spent — NOT because there is
+ * nothing to review.
+ *
+ * A distinct state from emptyState() on purpose: telling somebody with two
+ * hundred due cards «هنوز چیزی برای مرور نداری» would be false, and telling
+ * somebody with no highlights to buy a subscription would be useless. The two
+ * situations look identical in the payload (an empty `due`) and are told apart
+ * by the allowance, which is the only thing that knows why.
+ */
+function exhaustedState(container, quota) {
+  container.replaceChildren(quotaWall(quota, 'cards-quota'));
+}
+
+function renderCard(h, model, onQuota) {
   const info = contentInfo(model, h.content_id);
   const head = el('div', { class: 'dcp-rv-head' }, [
     el('span', { class: 'dcp-rv-badge' }, [
@@ -74,11 +89,20 @@ function renderCard(h, model) {
     forgotBtn.disabled = true;
     gotItBtn.disabled = true;
     try {
-      await api.reviewAnswer(h.highlight_id, result);
+      const res = await api.reviewAnswer(h.highlight_id, result);
       signalStreakActivity(); // review_finished counts for today's streak
       gradedTag.textContent = result === 'remembered' ? 'بلد بودی ✓' : 'باشه، دوباره میاد ✓';
       card.classList.add('is-graded');
-    } catch (_) {
+      // The answer that spends the last card is still accepted and still shown
+      // as graded — the offer arrives after the work, never instead of it.
+      if (res && res.quota) onQuota(res.quota);
+    } catch (e) {
+      if (isQuotaError(e)) {
+        // The server refused it, so nothing was graded. Say so where the
+        // buttons were, rather than letting them silently re-enable.
+        actions.replaceWith(quotaWall(quotaOf(e), 'cards-quota'));
+        return;
+      }
       forgotBtn.disabled = false;
       gotItBtn.disabled = false;
     }
@@ -103,13 +127,30 @@ export async function renderReview(container, { topic } = {}) {
   }
 
   const due = data.due || [];
-  if (!due.length) { emptyState(container); return; }
+  const quota = data.quota || null;
+
+  if (!due.length) {
+    // Nothing to review, or nothing left FOR TODAY — see exhaustedState.
+    if (isMetered(quota) && quota.remaining <= 0) exhaustedState(container, quota);
+    else emptyState(container);
+    return;
+  }
 
   const top = el('div', { class: 'dcp-rv-top' }, [
     el('h2', { class: 'dcp-rv-title' }, 'مرور امروز'),
     el('span', { class: 'dcp-rv-count' }, faNum(due.length) + ' کارت'),
   ]);
-  const list = el('div', { class: 'dcp-rv-list' }, due.map((h) => renderCard(h, model)));
 
-  container.replaceChildren(top, list);
+  // The remaining-count line is live: it is replaced after every graded card,
+  // so the number on screen is always the one the server just reported.
+  const stripHost = el('div', {});
+  const paintStrip = (q) => {
+    const strip = quotaStrip(q, 'cards-quota');
+    stripHost.replaceChildren(...(strip ? [strip] : []));
+  };
+  paintStrip(quota);
+
+  const list = el('div', { class: 'dcp-rv-list' }, due.map((h) => renderCard(h, model, paintStrip)));
+
+  container.replaceChildren(top, stripHost, list);
 }

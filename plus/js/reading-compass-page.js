@@ -2,21 +2,27 @@
 // anonymous visitors see the same premium-upsell shape pathways.html/cards.html
 // use; signed-in premium users get the real report (reading-compass.js).
 import { el } from './util.js';
-import { premiumCta, lapsedNote, guestPremiumExtras, unreachableGate } from './premium-cta.js';
+import { lapsedNote, guestPremiumExtras, unreachableGate } from './premium-cta.js';
 import { currentUser, meStatus } from './api.js';
 import { openLoginModal } from './login-modal.js';
 import { renderReadingCompass } from './reading-compass.js';
 import { registerSW } from './pwa.js';
 
-function comingSoonGate(root, me) {
-  root.replaceChildren(el('div', { class: 'dcp-gate' }, [
-    lapsedNote(me) ? el('p', { class: 'dcp-gate-lapsed' }, lapsedNote(me)) : null,
-    el('p', {}, 'قطب‌نمای مطالعه، ویژه‌ی دنت‌کست پریمیوم است.'),
-    el('p', { class: 'dcp-muted' },
-      'با پریمیوم می‌بینید چند درصد از هر پیلار را خوانده‌اید، بیشترین مطالعه‌تان کجا بوده، و چه چیزی هنوز از دیدتان دور مانده — با دو دسته پیشنهاد: ادامه‌ی همان حیطه، یا کاوش حوزه‌ای تازه.'),
-    premiumCta('gate-compass'),
-    el('a', { class: 'dcp-btn dcp-btn-ghost', href: '/plus/' }, 'رفتن به پیشخوان'),
-  ].filter(Boolean)));
+/**
+ * A lapsed subscriber's reassurance, kept as a BANNER above the working feature
+ * rather than as the wall it used to be part of.
+ *
+ * The sentence exists because somebody whose subscription ended and somebody who
+ * never had one are standing in the same doorway with different questions: the
+ * second is asking what this is, the first is asking what happened to their
+ * work. Now that the feature itself is open to both, the answer belongs over the
+ * top of it — and it matters more here than it did on the wall, because a
+ * reader looking at a truncated view of their own library is exactly the person
+ * who might conclude something was taken away.
+ */
+function lapsedBanner(me) {
+  const note = lapsedNote(me);
+  return note ? el('p', { class: 'dcp-gate-lapsed' }, note) : null;
 }
 
 async function main() {
@@ -43,9 +49,10 @@ async function main() {
     return;
   }
 
-  if (user.tier !== 'premium') { comingSoonGate(root, user); return; }
-
-  await renderReadingCompass(root);
+  const banner = lapsedBanner(user);
+  const host = el('div', {});
+  root.replaceChildren(...(banner ? [banner, host] : [host]));
+  await renderReadingCompass(host);
 }
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', main);

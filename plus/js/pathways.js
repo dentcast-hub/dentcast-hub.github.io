@@ -7,6 +7,7 @@
 import { el, faNum } from './util.js';
 import { api } from './api.js';
 import { FOLDER_EN } from './content-index.js';
+import { lockedNote } from './quota.js';
 
 function progressBar(completed, total) {
   const pct = total > 0 ? Math.max(0, Math.min(100, Math.round((completed / total) * 100))) : 0;
@@ -20,10 +21,14 @@ function pathwayCard(p) {
       ? el('span', { class: 'dcp-pw-tag is-active' }, 'ادامه')
       : null;
 
+  // A locked pathway is still a LINK to its own page, still titled, still
+  // described, still showing how long it is. It is not blurred and not disabled:
+  // the cover is the whole pitch, and the page it opens explains the rest. What
+  // is missing is only the ordered step list, which the API never sent.
   return el('a', { class: 'dcp-pw-card', href: '/plus/pathway.html?id=' + encodeURIComponent(p.id) }, [
     el('div', { class: 'dcp-pw-card-top' }, [
       el('h3', { class: 'dcp-pw-card-title' }, p.title_fa),
-      tag,
+      p.locked ? el('span', { class: 'dcp-locked-badge' }, '🔒 پریمیوم') : tag,
     ]),
     el('p', { class: 'dcp-pw-card-desc' }, p.description_fa),
     progressBar(p.completed_steps, p.total_steps),
@@ -49,7 +54,14 @@ export async function renderPathwaysList(container) {
       'هر مسیر مجموعه‌ای از مقاله‌ها، اپیزودها و ویدیوهاست که به ترتیبِ منطقیِ یادگیری چیده شده؛ یک مطلب می‌تواند در چند مسیر مختلف هم باشد. با خواندن، گوش‌دادن یا هایلایت‌کردن، پیشرفتِ هر مسیر خودش جلو می‌رود.'),
   ]);
   const grid = el('div', { class: 'dcp-pw-grid' }, pathways.map(pathwayCard));
-  container.replaceChildren(top, grid);
+  // One note under the whole grid rather than one per locked card: with
+  // fourteen of fifteen locked, a per-card CTA would be the page.
+  const anyLocked = pathways.some((p) => p.locked);
+  container.replaceChildren(...[
+    top,
+    grid,
+    anyLocked ? lockedNote(data.locked_message || '', 'pathways-locked') : null,
+  ].filter(Boolean));
 }
 
 function stepRow(step, idx, currentStep) {
@@ -104,13 +116,30 @@ export async function renderPathwayDetail(container, id) {
     return;
   }
 
-  const milestoneCount = data.steps.filter((s) => s.milestone).length;
-  const pct = data.total_steps > 0 ? Math.round((data.completed_steps / data.total_steps) * 100) : 0;
-
   const head = el('div', { class: 'dcp-pw-detail-head' }, [
     el('h2', { class: 'dcp-pw-detail-title' }, data.title_fa),
     el('p', { class: 'dcp-sec-hint' }, data.description_fa),
   ]);
+
+  // A locked pathway's own page: everything except the one thing being sold.
+  // The length is stated plainly — «۹ مرحله» is what makes the offer legible —
+  // but the ordered list itself never arrived from the API, so there is nothing
+  // here to reveal by inspecting the page.
+  if (data.locked) {
+    container.replaceChildren(
+      head,
+      el('div', { class: 'dcp-pw-detail-meta' }, [
+        el('span', {}, faNum(data.total_steps) + ' مرحله'),
+        data.milestone_count ? el('span', {}, '🏁 ' + faNum(data.milestone_count) + ' نقطه‌عطف') : null,
+      ].filter(Boolean)),
+      lockedNote(data.locked_message || '', 'pathway-locked'),
+      el('a', { class: 'dcp-btn dcp-btn-ghost', href: '/plus/pathways.html' }, 'بازگشت به مسیرها'),
+    );
+    return;
+  }
+
+  const milestoneCount = data.steps.filter((s) => s.milestone).length;
+  const pct = data.total_steps > 0 ? Math.round((data.completed_steps / data.total_steps) * 100) : 0;
 
   const progressWrap = el('div', { class: 'dcp-pw-detail-progress' }, [
     progressBar(data.completed_steps, data.total_steps),

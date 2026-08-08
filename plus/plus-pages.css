@@ -1103,3 +1103,55 @@ a.dcp-progress-row:hover { text-decoration: none; }
 }
 
 [data-theme="dark"] .dcp-nt.is-unread { background: rgba(var(--ac-rgb, 91,156,246), .10); }
+
+/* ── free-tier allowance (plus/js/quota.js) ───────────────────────────────
+   Three states, and they are deliberately not the same weight. The strip is a
+   quiet line above a feature someone is USING and must not compete with it;
+   the wall replaces the action once the allowance is spent; the locked note
+   sits beside a preview that is working fine. Only the wall is allowed to look
+   like an offer. */
+.dcp-quota-strip {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  flex-wrap: wrap; margin: 0 0 12px; padding: 7px 12px; border-radius: 999px;
+  background: var(--surface2, #f4f6fb);
+  border: 1px solid rgba(var(--ac-rgb, 11,95,255), .16);
+  font-size: .82rem; color: var(--txt2, #4a5f85);
+}
+.dcp-quota-count { font-weight: 700; }
+/* The strip's own button never shouts — it sits above content being read. */
+.dcp-quota-strip .dcp-btn { padding: 4px 12px; font-size: .78rem; }
+
+.dcp-quota-wall {
+  display: flex; flex-direction: column; align-items: center; gap: 11px;
+  margin: 16px auto 0; padding: 20px 16px; max-width: 44ch; border-radius: 16px;
+  text-align: center;
+  background: rgba(var(--ac-rgb, 11,95,255), .06);
+  border: 1px solid rgba(var(--ac-rgb, 11,95,255), .22);
+}
+.dcp-quota-wall-msg { margin: 0; font-size: .95rem; font-weight: 700; color: var(--txt, #0a1a33); }
+.dcp-quota-reset { margin: 0; font-size: .82rem; color: var(--txt2, #4a5f85); }
+
+.dcp-quota-locked {
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  margin: 14px auto 0; padding: 16px 14px; max-width: 46ch; border-radius: 14px;
+  text-align: center;
+  background: var(--surface2, #f4f6fb);
+  border: 1px dashed rgba(var(--ac-rgb, 11,95,255), .30);
+}
+.dcp-quota-locked p { margin: 0; font-size: .88rem; color: var(--txt2, #4a5f85); }
+.dcp-quota-locked-sm { padding: 11px 12px; gap: 7px; }
+.dcp-quota-locked-sm p { font-size: .82rem; }
+
+/* A locked pathway card: readable, obviously not open, never a grey blur —
+   the title and length are the pitch and must stay legible. */
+.dcp-locked-badge {
+  display: inline-flex; align-items: center; gap: 4px; padding: 2px 9px;
+  border-radius: 999px; font-size: .7rem; font-weight: 700;
+  background: rgba(var(--ac-rgb, 11,95,255), .10);
+  color: var(--ac, #0b5fff);
+}
+
+@media (prefers-color-scheme: dark) {
+  .dcp-quota-strip { background: rgba(255,255,255,.04); }
+  .dcp-quota-locked { background: rgba(255,255,255,.04); }
+}

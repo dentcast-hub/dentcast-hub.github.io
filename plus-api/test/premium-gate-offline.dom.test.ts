@@ -67,12 +67,16 @@ describe('a premium gate when the API cannot be reached', () => {
     expect(text).not.toContain('ارتباط با سرور برقرار نشد');
   });
 
-  it('still shows the upsell to a real free account', async () => {
+  // A free account now reaches the SAME renderer a subscriber does — the
+  // allowance is applied inside it, by the API, not by a gate on the door. This
+  // used to assert a wall; asserting the absence of one is the point now, and
+  // the "unreachable" cases above are what this file is really guarding.
+  it('lets a real free account through to the feature itself', async () => {
     meResult = { ok: true, status: 200, body: { id: 'u1', tier: 'free', settings: {} } };
 
     const text = await runGate();
 
-    expect(text).toContain('ویژه‌ی دنت‌کست پریمیوم است');
+    expect(text).toBe('LIBRARY');
     expect(text).not.toContain('ارتباط با سرور برقرار نشد');
   });
 
@@ -82,5 +86,22 @@ describe('a premium gate when the API cannot be reached', () => {
     const text = await runGate();
 
     expect(text).toBe('LIBRARY');
+  });
+
+  // The unreachable case must stay distinguishable from BOTH of the above, and
+  // that is the one thing tier no longer separates: free and premium now look
+  // identical here, so "did we manage to ask at all" is the only distinction
+  // this page still draws.
+  it('tells the two apart even though free and premium now render the same', async () => {
+    meResult = 'network-error';
+    const offline = await runGate();
+
+    document.body.innerHTML = '<div id="dcp-root"></div>';
+    vi.resetModules();
+    meResult = { ok: true, status: 200, body: { id: 'u1', tier: 'free', settings: {} } };
+    const free = await runGate();
+
+    expect(offline).not.toBe(free);
+    expect(free).toBe('LIBRARY');
   });
 });

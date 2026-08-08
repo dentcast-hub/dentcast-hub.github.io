@@ -204,9 +204,18 @@ async function recentBlock(model, isPremium) {
 // nothing beside it says "no" and offers nothing. Five of these sit down this
 // page, so the buy link is the quiet ghost variant — five loud buttons would
 // read as a dashboard that is mostly advertisement.
+/**
+ * The dashboard's teaser for a feature a free reader has not opened yet.
+ *
+ * It used to be a padlock, which was accurate while the link led to a wall. It
+ * no longer does — every one of these five works on the free plan up to a
+ * bounded point — so the padlock would now be turning people away from a door
+ * that is open. The invitation replaces it, and the buy button stays: the
+ * offer belongs here, the LOCK does not.
+ */
 function lockedFeatureCard(href, from) {
   return el('div', { class: 'dcp-locked-card' }, [
-    el('a', { class: 'dcp-locked-link', href }, el('span', { class: 'dcp-soon-badge' }, '🔒 ویژه‌ی پریمیوم')),
+    el('a', { class: 'dcp-locked-link', href }, el('span', { class: 'dcp-soon-badge' }, 'رایگان امتحان کن ›')),
     premiumCta(from, { ghost: true }),
   ]);
 }

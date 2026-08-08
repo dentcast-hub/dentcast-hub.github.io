@@ -78,16 +78,20 @@ function icon(path) {
 }
 
 /**
- * The right-hand chip. For a free or signed-out reader it is the lock the rest
- * of the site uses; for a subscriber it is the feature's own live state, or a
- * plain «باز کردن» where there is no honest number to show.
+ * The right-hand chip. For a subscriber it is the feature's own live state, or
+ * a plain «باز کردن» where there is no honest number to show.
+ *
+ * For everyone else it now says «امتحان کن» rather than 🔒. The lock was true
+ * when the card led to a wall; it is a lie now that every one of these six
+ * opens and works. It was also the wrong invitation — a padlock is a reason not
+ * to tap, on the one row of the homepage whose whole job is to get tapped.
  */
 function stateChip(text, live) {
   return el('span', { class: 'dcp-hf-state' + (live ? ' is-live' : '') }, text);
 }
 
 function featureCard(c, isPremium) {
-  const state = stateChip(isPremium ? 'باز کردن' : '🔒', isPremium);
+  const state = stateChip(isPremium ? 'باز کردن' : 'امتحان کن', isPremium);
   const card = el('a', { class: 'dc-list-card dcp-hf-card', href: c.href }, [
     icon(c.ico),
     el('div', { class: 'dc-list-card-main' }, [

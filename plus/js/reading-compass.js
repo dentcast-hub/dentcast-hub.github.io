@@ -7,6 +7,7 @@
 import { el, faNum } from './util.js';
 import { api } from './api.js';
 import { FOLDER_EN } from './content-index.js';
+import { lockedNote } from './quota.js';
 
 // The badge and the percent next to it answer two DIFFERENT questions: the
 // badge ranks pillars by the raw NUMBER of items read (service's sort on
@@ -102,13 +103,26 @@ export async function renderReadingCompass(container) {
       data.clusters.map((c) => coverageRow(c, data.top_cluster && c.key === data.top_cluster.key))),
   ));
 
+  // A free reader gets the diagnosis (every percentage above) but not the
+  // prescription: the API strips the two item lists and sends their SIZE
+  // instead. Naming the count is what makes the offer concrete — "۷ مقاله" is
+  // an argument, an empty section is a bug report.
+  const locked = !!data.blind_spots_locked;
+  const lockedBody = (n) => lockedNote(
+    (n ? faNum(n) + ' مقاله اینجا هست. ' : '') + (data.locked_message || ''),
+    'compass-blindspots',
+    { compact: true },
+  );
+
   if (data.top_cluster) {
     children.push(section(
       'ادامه در «' + data.top_cluster.fa + '»',
       'بیشترین مطالعه‌تان همین‌جا بوده؛ این‌ها را هنوز نخوانده‌اید.',
-      data.same_area.length
-        ? el('div', { class: 'dcp-pw-steps' }, data.same_area.map(itemRow))
-        : el('div', { class: 'dcp-muted' }, 'همه‌ی این پیلار را خوانده‌اید.'),
+      locked
+        ? lockedBody(data.same_area_count)
+        : (data.same_area.length
+          ? el('div', { class: 'dcp-pw-steps' }, data.same_area.map(itemRow))
+          : el('div', { class: 'dcp-muted' }, 'همه‌ی این پیلار را خوانده‌اید.')),
       'is-spotlight',
     ));
   }
@@ -116,9 +130,11 @@ export async function renderReadingCompass(container) {
   children.push(section(
     'حوزه‌هایی که از دیدتان دور مانده',
     'اگر بخواهید دیدتان را گسترش دهید، این‌ها هنوز اصلاً سراغشان نرفته‌اید.',
-    data.unexplored.length
-      ? el('div', { class: 'dcp-pw-steps' }, data.unexplored.map(itemRow))
-      : el('div', { class: 'dcp-muted' }, 'در همه‌ی حوزه‌ها ردی از مطالعه‌ی شما هست.'),
+    locked
+      ? lockedBody(data.unexplored_count)
+      : (data.unexplored.length
+        ? el('div', { class: 'dcp-pw-steps' }, data.unexplored.map(itemRow))
+        : el('div', { class: 'dcp-muted' }, 'در همه‌ی حوزه‌ها ردی از مطالعه‌ی شما هست.')),
     'is-unexplored',
   ));
 
