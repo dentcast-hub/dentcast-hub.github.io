@@ -469,7 +469,7 @@ describe('GET /league — the scoring table the explainer shows', () => {
   // The premium block goes to free readers too. If it ever stops doing so, the
   // four premium lines become invisible to exactly the people who need to be
   // able to check that they are extra WAYS to earn and not a better price on
-  // the same acts — which is the whole claim migration 0029 rests on.
+  // the same acts — which is the whole claim migration 0030 rests on.
   it('sends the premium earning paths to a FREE reader as well', async () => {
     const cookie = await loginAs(app, '09121299004');
     const res = await app.inject({ method: 'GET', url: '/league', headers: { cookie } });

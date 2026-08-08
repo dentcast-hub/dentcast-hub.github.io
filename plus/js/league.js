@@ -103,7 +103,7 @@ function buildCard(data, onClose) {
   const n = (v, fallback) => faNum(typeof v === 'number' ? v : fallback);
 
   /**
-   * The premium earning paths (migration 0029). Extra WAYS to earn — never a
+   * The premium earning paths (migration 0030). Extra WAYS to earn — never a
    * better price on an act a free reader also performs — so the copy names the
    * feature every time («مسیر یادگیری», «کالکشن») rather than saying "premium
    * gets more", which would read as exactly the multiplier this is not.

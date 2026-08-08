@@ -5,7 +5,7 @@ import { pool } from '../src/db.js';
 import { getPathways } from '../src/pathways.js';
 
 /**
- * The premium earning paths (migration 0029): MORE WAYS to earn league XP, never
+ * The premium earning paths (migration 0030): MORE WAYS to earn league XP, never
  * a multiplier on an act a free reader also performs.
  *
  * That distinction is the entire design, and it is not self-enforcing — every
