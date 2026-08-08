@@ -101,6 +101,39 @@ function buildCard(data, onClose) {
   // defaults only if an older API answers without the table.
   const xp = data.xp || {};
   const n = (v, fallback) => faNum(typeof v === 'number' ? v : fallback);
+
+  /**
+   * The premium earning paths (migration 0029). Extra WAYS to earn — never a
+   * better price on an act a free reader also performs — so the copy names the
+   * feature every time («مسیر یادگیری», «کالکشن») rather than saying "premium
+   * gets more", which would read as exactly the multiplier this is not.
+   *
+   * Returns an array so an older API (or all four paths switched off) simply
+   * contributes nothing to the explainer.
+   */
+  function premiumHowto(p) {
+    const line = (weight, text, cap, capText) => {
+      if (!(Number(weight) > 0)) return null;
+      return el('li', {}, text + ': +' + faNum(weight)
+        + (Number(cap) > 0 ? ' (' + capText.replace('{n}', faNum(cap)) + ')' : ''));
+    };
+    const items = [
+      line(p.pathway_step, 'خواندن یا شنیدنِ مطلبی که قدمِ یکی از مسیرهای یادگیریِ توست',
+        p.pathway_step_cap, 'تا {n} مطلب در هفته'),
+      line(p.pathway_enrolled, 'شروعِ یک مسیر یادگیری',
+        p.pathway_enrolled_cap, 'تا {n} مسیر در هفته'),
+      line(p.collection_created, 'ساختنِ یک کالکشن',
+        p.collection_created_cap, 'تا {n} کالکشن در هفته'),
+      line(p.collection_item, 'افزودنِ یک هایلایت یا صفحه به کالکشن',
+        p.collection_item_cap, 'تا {n} مطلب در هفته'),
+    ].filter(Boolean);
+    if (!items.length) return [];
+    return [
+      el('p', {}, 'با پریمیوم، راه‌های بیشتری هم برای امتیاز گرفتن باز می‌شود '
+        + '— امتیازِ کارهای بالا برای همه یکسان است:'),
+      el('ul', { class: 'dcp-lg-howto-list' }, items),
+    ];
+  }
   const howto = () => el('details', { class: 'dcp-lg-howto' }, [
     el('summary', {}, 'چطور امتیازِ لیگ می‌گیرم؟'),
     el('ul', { class: 'dcp-lg-howto-list' }, [
@@ -122,6 +155,13 @@ function buildCard(data, onClose) {
       el('li', {}, 'اشتراک‌گذاریِ مطلبی که تا آخر خوانده‌ای: +' + n(xp.share, 1)
         + (Number(xp.share_cap) > 0 ? ' (تا ' + n(xp.share_cap, 5) + ' مطلب در هفته)' : '')),
     ]),
+    // The premium block. Shown to EVERYONE — a free reader has to be able to see
+    // exactly what the four extra lines are, otherwise a premium neighbour with a
+    // higher number reads as a hidden multiplier on the five lines above, which
+    // is the one thing this design is built not to be. Each line renders only
+    // while its weight is above zero, so switching a path off from the admin
+    // config removes the promise instead of advertising «+۰».
+    ...premiumHowto(xp.premium || {}),
     el('p', {}, 'فقط فعالیتِ همین هفته در لیگ حساب می‌شود و شنبه از نو صفر می‌شود.'),
   ]);
 

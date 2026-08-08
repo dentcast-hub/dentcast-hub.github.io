@@ -453,7 +453,28 @@ describe('GET /league — the scoring table the explainer shows', () => {
       active_bonus: cfg.xp_active_bonus,
       share: cfg.xp_share,
       share_cap: cfg.xp_share_weekly_cap,
+      premium: {
+        pathway_step: cfg.xp_pathway_step,
+        pathway_step_cap: cfg.xp_pathway_step_weekly_cap,
+        pathway_enrolled: cfg.xp_pathway_enrolled,
+        pathway_enrolled_cap: cfg.xp_pathway_enrolled_weekly_cap,
+        collection_created: cfg.xp_collection_created,
+        collection_created_cap: cfg.xp_collection_created_weekly_cap,
+        collection_item: cfg.xp_collection_item,
+        collection_item_cap: cfg.xp_collection_item_weekly_cap,
+      },
     });
+  });
+
+  // The premium block goes to free readers too. If it ever stops doing so, the
+  // four premium lines become invisible to exactly the people who need to be
+  // able to check that they are extra WAYS to earn and not a better price on
+  // the same acts — which is the whole claim migration 0029 rests on.
+  it('sends the premium earning paths to a FREE reader as well', async () => {
+    const cookie = await loginAs(app, '09121299004');
+    const res = await app.inject({ method: 'GET', url: '/league', headers: { cookie } });
+    expect(res.json().xp.premium.pathway_step).toBeTypeOf('number');
+    expect(res.json().xp.premium.collection_item).toBeTypeOf('number');
   });
 
   it('follows a retune through the admin endpoint', async () => {

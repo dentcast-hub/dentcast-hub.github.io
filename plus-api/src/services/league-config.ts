@@ -27,6 +27,17 @@ export interface LeagueConfig {
   xp_review: number;         // manual card review
   xp_share: number;          // passing on an article you finished (once per article/week)
   xp_share_weekly_cap: number; // ...and at most this many articles a week
+  // Premium earning paths (0029). Extra WAYS to earn, never a multiplier on an
+  // existing weight — see that migration for why the league must stay plan-blind
+  // in its per-action prices. Every one is capped per week.
+  xp_pathway_step: number;              // consumed item that is a step of an enrolled pathway
+  xp_pathway_step_weekly_cap: number;
+  xp_pathway_enrolled: number;          // starting a pathway
+  xp_pathway_enrolled_weekly_cap: number;
+  xp_collection_created: number;        // opening a board
+  xp_collection_created_weekly_cap: number;
+  xp_collection_item: number;           // pinning to a board (once per page/week)
+  xp_collection_item_weekly_cap: number;
   // Weekly premium prize (0016). Winners are the top of every VALID group.
   prize_days: number;             // how long a granted premium lasts
   prize_cooldown_weeks: number;   // a winner sits out this many weeks
@@ -47,6 +58,10 @@ export const NUMERIC_KEYS: Array<keyof LeagueConfig> = [
   'promotion_min_weekly_xp', 'cooldown_weeks', 'max_active_tier_order',
   'xp_active_bonus', 'xp_read', 'xp_listen', 'xp_highlight', 'xp_highlight_cap', 'xp_review',
   'xp_share', 'xp_share_weekly_cap',
+  'xp_pathway_step', 'xp_pathway_step_weekly_cap',
+  'xp_pathway_enrolled', 'xp_pathway_enrolled_weekly_cap',
+  'xp_collection_created', 'xp_collection_created_weekly_cap',
+  'xp_collection_item', 'xp_collection_item_weekly_cap',
   'prize_days', 'prize_cooldown_weeks', 'prize_winners_per_group', 'prize_min_group_size',
   'xp_per_active_day', 'xp_per_highlight',
 ];

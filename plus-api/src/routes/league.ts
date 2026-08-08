@@ -85,6 +85,23 @@ export async function leagueRoutes(app: FastifyInstance): Promise<void> {
         active_bonus: cfg.xp_active_bonus,
         share: cfg.xp_share,
         share_cap: cfg.xp_share_weekly_cap,
+        // The premium earning paths (migration 0029), under their own key so the
+        // explainer can render them as a separate, labelled block. They are sent
+        // to EVERY reader, free included, and that is deliberate: these are extra
+        // ways to earn rather than a better price on the same act, which is only
+        // a fair rule if it is a published one. A free reader who cannot see them
+        // has no way to tell that the four premium lines are not a secret
+        // multiplier on the five they can see.
+        premium: {
+          pathway_step: cfg.xp_pathway_step,
+          pathway_step_cap: cfg.xp_pathway_step_weekly_cap,
+          pathway_enrolled: cfg.xp_pathway_enrolled,
+          pathway_enrolled_cap: cfg.xp_pathway_enrolled_weekly_cap,
+          collection_created: cfg.xp_collection_created,
+          collection_created_cap: cfg.xp_collection_created_weekly_cap,
+          collection_item: cfg.xp_collection_item,
+          collection_item_cap: cfg.xp_collection_item_weekly_cap,
+        },
       },
       // Same reason as `xp` above: the weekly top-of-group prize length is a
       // league_config value a founder can retune, so the "stayed" nudge (asking

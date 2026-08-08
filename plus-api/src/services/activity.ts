@@ -44,6 +44,10 @@ async function insertAndScore(
   }
   // League weekly_xp (per-action model). No-op for non-scoring actions. Same
   // transaction so weekly_xp and the activity row commit together.
+  //
+  // Note it is NOT passed `premium` — the row stamp above answers "was this
+  // earned on a PAID plan", which is the right question for the all-time score
+  // and the wrong one for the league. See awardLeagueXp for why the two differ.
   await awardLeagueXp(client, userId, action, contentId, row.created_at);
   return { id: row.id };
 }
