@@ -106,6 +106,7 @@ export function broadcastMessage(b: {
  */
 export async function releaseHeldBroadcastPushes(
   now: Date = new Date(),
+  opts: { awaitDelivery?: boolean } = {},
 ): Promise<{ released: number; stale: number }> {
   const fresh = await pendingBroadcastPushes(HELD_PUSH_MAX_AGE_HOURS);
   const all = await pendingBroadcastPushes(24 * 365);
@@ -126,7 +127,15 @@ export async function releaseHeldBroadcastPushes(
   for (const b of fresh) {
     const claimed = await claimBroadcastPush(b.id);
     if (!claimed) continue; // somebody else got it
-    await deliverBroadcast(claimed.id, claimed.audience, broadcastMessage(claimed), now);
+    const delivery = deliverBroadcast(claimed.id, claimed.audience, broadcastMessage(claimed), now);
+    // The fan-out is serial and per-user, so its duration is a function of the
+    // audience. An HTTP caller must NOT wait for it — that is the shape that
+    // produced the 504 on the broadcast route, and it repeated here on
+    // 2026-08-08: the release request timed out client-side while the server
+    // carried on, so the operator could not tell whether anything had been sent.
+    // The scheduler DOES wait (nobody is holding a connection open, and awaiting
+    // keeps the four morning jobs in a predictable order).
+    if (opts.awaitDelivery) await delivery; else void delivery;
     released += 1;
   }
   return { released, stale };
