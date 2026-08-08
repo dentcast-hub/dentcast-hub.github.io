@@ -489,7 +489,7 @@ describe('a push the awake window held', () => {
   it('is released by the morning sweep, without a second inbox row', async () => {
     const id = await heldBroadcast();
 
-    const out = await releaseHeldBroadcastPushes(new Date());
+    const out = await releaseHeldBroadcastPushes(new Date(), { awaitDelivery: true });
 
     expect(out.released).toBe(1);
     // The whole point: one announcement, one row — the reader is not told twice.
@@ -499,8 +499,8 @@ describe('a push the awake window held', () => {
 
   it('is claimed, so a second sweep sends nothing', async () => {
     await heldBroadcast();
-    expect((await releaseHeldBroadcastPushes(new Date())).released).toBe(1);
-    expect((await releaseHeldBroadcastPushes(new Date())).released).toBe(0);
+    expect((await releaseHeldBroadcastPushes(new Date(), { awaitDelivery: true })).released).toBe(1);
+    expect((await releaseHeldBroadcastPushes(new Date(), { awaitDelivery: true })).released).toBe(0);
   });
 
   it('can be released by hand, and the sweep then finds nothing left', async () => {
@@ -513,7 +513,7 @@ describe('a push the awake window held', () => {
     expect(res.statusCode).toBe(200);
     expect(res.json().pushed).toBe(true);
     // The manual button and the sweep claim the same row, so they cannot both send.
-    expect((await releaseHeldBroadcastPushes(new Date())).released).toBe(0);
+    expect((await releaseHeldBroadcastPushes(new Date(), { awaitDelivery: true })).released).toBe(0);
   });
 
   it('pressing the manual button twice sends once, and says so without erroring', async () => {
@@ -547,7 +547,7 @@ describe('a push the awake window held', () => {
       config.notify.awakeEndHour = end;
     }
     // It claimed its own push on the way out, so the sweep must not re-send it.
-    expect((await releaseHeldBroadcastPushes(new Date())).released).toBe(0);
+    expect((await releaseHeldBroadcastPushes(new Date(), { awaitDelivery: true })).released).toBe(0);
   });
 
   it('requires admin credentials on the manual button', async () => {

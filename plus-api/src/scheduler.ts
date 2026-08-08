@@ -201,7 +201,7 @@ export function startHeldNotificationsScheduler(): () => void {
         // The founder's own announcements, held overnight by the same window.
         // Last of the four on purpose: a broadcast is `system` and uncapped, so
         // it cannot eat a slot the three above still need.
-        const held = await releaseHeldBroadcastPushes(new Date());
+        const held = await releaseHeldBroadcastPushes(new Date(), { awaitDelivery: true });
         if (held.released > 0 || held.stale > 0) {
           // eslint-disable-next-line no-console
           console.log(`[broadcast] released ${held.released} held push(es), dropped ${held.stale} stale`);
