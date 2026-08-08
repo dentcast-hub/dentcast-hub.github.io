@@ -1,8 +1,9 @@
 import type pg from 'pg';
 import { pool } from '../db.js';
 import { dayInTz, weekStartSaturday, nextDay } from './time.js';
-import { SCORING_ACTIONS, SHARE_ACTION } from './score.js';
-import { getLeagueConfig } from './league-config.js';
+import { SCORING_ACTIONS, SHARE_ACTION, CONSUMPTION_ACTIONS } from './score.js';
+import { getLeagueConfig, type LeagueConfig } from './league-config.js';
+import { getPathways } from '../pathways.js';
 
 /**
  * League core: week boundaries, tier lookup, weekly-group placement, and the XP
@@ -163,6 +164,98 @@ async function shareXp(
 }
 
 /**
+ * The premium-only actions that pay league XP (migration 0029). None of them is
+ * a scoring action — they touch neither the streak nor the all-time score, and
+ * that separation is the point: these buy a place in a WEEKLY ranking, not a
+ * claim about having studied.
+ *
+ * Each is a real act performed on a `requirePremium` route, so the gate is
+ * structural. `compass_viewed` and `assistant_step` are deliberately absent —
+ * see migration 0029 for why (a page load, and our own inference bill).
+ */
+export const PREMIUM_XP_ACTIONS = ['pathway_enrolled', 'collection_created', 'collection_item_added'];
+
+/**
+ * Does this account have premium ACCESS right now — the same question
+ * `requirePremium` asks, answered from the same column.
+ *
+ * Deliberately NOT `user_activity.premium`, the stamp activity.ts writes beside
+ * every row, even though that is the newer and more precise-looking signal. The
+ * stamp reads `subscriptions`, so it means "was this earned on a PAID plan",
+ * which is exactly right for the all-time score (score.ts calls its multiplier
+ * "the subscription perk") and exactly wrong here. A league prize winner holds
+ * premium through `premium_grants`, with no subscription row at all: gating on
+ * the stamp would hand them the pathways and the boards for two days — the
+ * routes read `profiles.tier` — and then pay nothing for using either. A perk
+ * that silently earns zero is worse than a perk that is not offered.
+ *
+ * `profiles.tier` is the projection of every way to hold premium (subscription,
+ * prize, founder override; the three sanctioned writers are listed atop
+ * services/subscription.ts) and the daily sweep reconciles it against the
+ * calendar, so a lapsed subscriber stops earning here within the day.
+ */
+async function hasPremiumAccess(client: pg.PoolClient, userId: string): Promise<boolean> {
+  const r = await client.query<{ tier: string }>('select tier from profiles where id = $1', [userId]);
+  return r.rows[0]?.tier === 'premium';
+}
+
+/**
+ * Is this consumed page a step of a pathway the reader is ENROLLED in, and if
+ * so is there room under the weekly ceiling? Returns the bonus, or nothing.
+ *
+ * Paid ON TOP of xp_read/xp_listen and only from inside their once-per-(content,
+ * week) guard, so the bonus inherits that rule for free — re-reading a step
+ * pays neither the read nor the bonus a second time.
+ *
+ * Enrolment is required even though `computeProgress` gives browsing credit for
+ * items consumed before enrolling (routes/pathways.ts). Progress is a generous
+ * display; XP is a claim against other people's ranking, and "an article that
+ * happens to sit in some pathway" is most of the library. What is being paid
+ * for here is following a curriculum you chose.
+ *
+ * The ceiling counts distinct (action, content) pairs, NOT distinct contents:
+ * a NoteCast that is both read and heard pays xp_read and xp_listen separately,
+ * so it earns the bonus twice, and a ceiling that collapsed the pair would let
+ * the reader take a third payment it had already counted as one.
+ */
+async function pathwayStepXp(
+  client: pg.PoolClient, cfg: LeagueConfig,
+  userId: string, contentId: string, tz: string, weekStart: string, weekEnd: string,
+): Promise<number> {
+  if (cfg.xp_pathway_step <= 0) return 0;
+
+  const enrolled = await client.query<{ pathway_id: string }>(
+    'select pathway_id from user_pathways where user_id = $1', [userId],
+  );
+  if (enrolled.rows.length === 0) return 0;
+
+  const ids = new Set(enrolled.rows.map((r) => r.pathway_id));
+  const steps = new Set<string>();
+  for (const p of getPathways()) {
+    if (ids.has(p.id)) for (const s of p.steps) steps.add(s.content_id);
+  }
+  if (!steps.has(contentId)) return 0;
+  // Checked last of the cheap-to-narrow conditions: most readers are enrolled in
+  // nothing and never reach it, and it is one query where the two above are a
+  // query and a set lookup.
+  if (!(await hasPremiumAccess(client, userId))) return 0;
+
+  if (cfg.xp_pathway_step_weekly_cap > 0) {
+    // Every consumption this week, deduplicated the same way it was paid. The
+    // just-inserted row is in here, so `paid` counts this bonus too.
+    const r = await client.query<{ action: string; content_id: string }>(
+      `select distinct action, content_id from user_activity
+        where user_id = $1 and action = any($2) and content_id is not null
+          and (created_at at time zone $3)::date between $4::date and $5::date`,
+      [userId, CONSUMPTION_ACTIONS, tz, weekStart, weekEnd],
+    );
+    const paid = r.rows.filter((x) => steps.has(x.content_id)).length;
+    if (paid > cfg.xp_pathway_step_weekly_cap) return 0;
+  }
+  return cfg.xp_pathway_step;
+}
+
+/**
  * XP hook, called from recordActivity for every SCORING action in the SAME
  * transaction. Per-action weekly_xp (rewards depth, resists highlight-farming);
  * ALL weights live in league_config. Separate from the all-time score (score.ts),
@@ -177,19 +270,38 @@ async function shareXp(
  *   xp_review        — card_reviewed_manual / review_finished
  *   xp_share         — content_shared, gated + capped (shareXp above)
  *
- * `content_shared` is the ONE action that reaches here without being a scoring
- * action (see SHARE_ACTION in score.ts for why it must never join that set), so
- * every step below that speaks for "a study action happened" is guarded on
- * `isScoring`. In particular the daily active bonus: it counts SCORING rows for
- * the day, so an unguarded share on an otherwise-idle day would find a count of
- * zero, read that as "first action of the day", and hand out xp_active_bonus for
- * a tap — buying with one second what the bonus exists to pay for showing up.
+ * and the premium earning paths (migration 0029), each capped per week:
+ *
+ *   xp_pathway_step       — a consumed page that is a step of an ENROLLED pathway,
+ *                           added on top of xp_read/xp_listen (pathwayStepXp above)
+ *   xp_pathway_enrolled   — starting a pathway
+ *   xp_collection_created — opening a board
+ *   xp_collection_item    — pinning to a board, ONCE per (page, week)
+ *
+ * `content_shared` and the three PREMIUM_XP_ACTIONS are the actions that reach
+ * here without being scoring actions (see SHARE_ACTION in score.ts for why the
+ * share must never join that set; the premium three stay out for the same
+ * reason — none of them is an act of study). So every step below that speaks
+ * for "a study action happened" is guarded on `isScoring`. In particular the
+ * daily active bonus: it counts SCORING rows for the day, so an unguarded share
+ * on an otherwise-idle day would find a count of zero, read that as "first
+ * action of the day", and hand out xp_active_bonus for a tap — buying with one
+ * second what the bonus exists to pay for showing up.
+ *
+ * Every 0029 payment is gated on hasPremiumAccess (see it for which notion of
+ * "premium" that is, and why it is not the row stamp). For the three premium
+ * actions the check is near-redundant — their routes are `requirePremium` — but
+ * recordActivity is a public function and the gate belongs where the payment
+ * is. What it really decides is the pathway bonus, which rides on
+ * `article_completed`, an action free readers perform constantly.
  */
 export async function awardLeagueXp(
   client: pg.PoolClient, userId: string, action: string, contentId: string | null, createdAt: Date,
 ): Promise<void> {
   const isScoring = SCORING_ACTIONS.includes(action);
-  if (!isScoring && action !== SHARE_ACTION) return;
+  const isPremiumPath = PREMIUM_XP_ACTIONS.includes(action);
+  if (!isScoring && action !== SHARE_ACTION && !isPremiumPath) return;
+  if (isPremiumPath && !(await hasPremiumAccess(client, userId))) return;
   const cfg = await getLeagueConfig(client);
   const tz = cfg.timezone;
   const day = dayInTz(createdAt, tz);
@@ -221,10 +333,64 @@ export async function awardLeagueXp(
     return r.rows[0]?.n ?? 0;
   };
 
+  /**
+   * How many times this action happened this week REGARDLESS of content — the
+   * unit the 0029 ceilings are counted in. Separate from weekCount() because
+   * the two ask different questions of the same log: `collection_item_added`
+   * needs both ("once for this page" AND "at most five pages a week"), and
+   * `collection_created` carries no content at all, so weekCount's
+   * `is not distinct from null` would answer the per-week question by accident
+   * rather than by intent.
+   */
+  const weekActionCount = async (act: string, distinctContent = false): Promise<number> => {
+    const r = await client.query<{ n: number }>(
+      `select ${distinctContent ? 'count(distinct content_id)' : 'count(*)'}::int as n
+         from user_activity
+        where user_id = $1 and action = $2
+          and (created_at at time zone $3)::date between $4::date and $5::date`,
+      [userId, act, tz, week_start, week_end],
+    );
+    return r.rows[0]?.n ?? 0;
+  };
+
+  /**
+   * A 0029 weight, if its weekly ceiling still has room. Zero cap = no cap.
+   *
+   * `distinctContent` has to match how the action is PAID, or the ceiling
+   * counts rows that earned nothing. `collection_item_added` is the case: it is
+   * written on the idempotent re-pin too, so ten rows for one page is one
+   * payment — counted flat, a reader who re-pinned a single article would
+   * exhaust their week without having been given a thing.
+   */
+  const capped = async (act: string, weight: number, cap: number, distinctContent = false): Promise<number> => {
+    if (weight <= 0) return 0;
+    if (cap > 0 && (await weekActionCount(act, distinctContent)) > cap) return 0;
+    return weight;
+  };
+
   if (action === 'article_completed') {
-    if (contentId && (await weekCount(action)) <= 1) xpDelta += cfg.xp_read;
+    if (contentId && (await weekCount(action)) <= 1) {
+      xpDelta += cfg.xp_read;
+      xpDelta += await pathwayStepXp(client, cfg, userId, contentId, tz, week_start, week_end);
+    }
   } else if (action === 'episode_listened') {
-    if (contentId && (await weekCount(action)) <= 1) xpDelta += cfg.xp_listen;
+    if (contentId && (await weekCount(action)) <= 1) {
+      xpDelta += cfg.xp_listen;
+      xpDelta += await pathwayStepXp(client, cfg, userId, contentId, tz, week_start, week_end);
+    }
+  } else if (action === 'pathway_enrolled') {
+    xpDelta += await capped(action, cfg.xp_pathway_enrolled, cfg.xp_pathway_enrolled_weekly_cap);
+  } else if (action === 'collection_created') {
+    xpDelta += await capped(action, cfg.xp_collection_created, cfg.xp_collection_created_weekly_cap);
+  } else if (action === 'collection_item_added') {
+    // Two guards, and both are load-bearing. POST /collections/:id/items records
+    // an activity row on the idempotent-replay path too (it upserts so RETURNING
+    // still yields a row), and the same highlight can be pinned to many boards —
+    // so without the per-content check, re-pinning would print XP. The ceiling
+    // then bounds the honest version of the same act: pinning is one tap.
+    if (contentId && (await weekCount(action)) <= 1) {
+      xpDelta += await capped(action, cfg.xp_collection_item, cfg.xp_collection_item_weekly_cap, true);
+    }
   } else if (action === 'highlight_created') {
     if (contentId && (await weekCount(action)) <= cfg.xp_highlight_cap) xpDelta += cfg.xp_highlight;
   } else if (action === 'card_reviewed_manual' || action === 'review_finished') {
