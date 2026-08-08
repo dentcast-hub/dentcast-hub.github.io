@@ -7,6 +7,7 @@ import { clearBaleLinkStore } from '../src/services/bale-link.js';
 import { clearKeywordCache } from '../src/services/case-assistant.js';
 import { drainAchievementSyncs } from '../src/services/achievement-sync.js';
 import { drainPillarWelcomes } from '../src/services/pillar-notify.js';
+import { drainBroadcasts } from '../src/services/broadcast.js';
 
 /** Truncate all data tables and reset in-process stores. Call in beforeEach. */
 export async function resetDb(): Promise<void> {
@@ -15,7 +16,11 @@ export async function resetDb(): Promise<void> {
   // top of it deadlocks against the row locks it still holds — wait it out
   // rather than making production code behave differently under test.
   // The «ستون» welcome is the same shape and can itself schedule a sync, so
-  // it drains first.
+  // it drains first. The founder broadcast's fan-out is the third of these: it
+  // was detached from its request on 2026-08-08 so a large audience could not
+  // outlive the gateway, and an undrained fan-out writing notification_log is
+  // what a truncate here deadlocks against.
+  await drainBroadcasts();
   await drainPillarWelcomes();
   await drainAchievementSyncs();
   await pool.query(`
@@ -25,6 +30,7 @@ export async function resetDb(): Promise<void> {
       subscriptions, payments, gift_redemptions, certificates, anon_events,
       push_subscriptions, articles, auth_identities, spot_stats, view_stats,
       notification_log, achievement_announcements, notice_broadcasts,
+      discount_grants, discount_redemptions,
       assistant_rounds, assistant_tag_scores,
       leagues, league_members, league_weekly_stats, league_audit_log
     restart identity cascade
