@@ -50,10 +50,22 @@ const FROM = 'firstvisit';
 const SS_WELCOME = 'dcp:welcome:shown';
 const SS_NOTIF = 'dcp:notifprompt:shown';
 
-/** Pages where a "buy premium" card would be arguing with the page itself. */
+/**
+ * Pages where a "buy premium" card would be arguing with the page itself.
+ *
+ * The cabinet is here for a slightly different reason than the two purchase
+ * pages: it makes its own, better-targeted offer inline (three free searches,
+ * then «جستجو و مرتب‌سازی با پریمیوم»), and it is a page people arrive at to
+ * DO something. Covering a search result with a general pitch would interrupt
+ * the exact task that pitch depends on — and it only became reachable by free
+ * readers at all when the tap gate came off, so this modal had never met them
+ * here before.
+ */
 function onPurchaseSurface() {
   const p = location.pathname;
-  return p.indexOf('/plus/pricing') === 0 || p.indexOf('/plus/pay-result') === 0;
+  return p.indexOf('/plus/pricing') === 0
+    || p.indexOf('/plus/pay-result') === 0
+    || p.indexOf('/dentcast_cabinet_search') === 0;
 }
 
 // Storage may be blocked (private mode, embedded webview). Every read below

@@ -3794,7 +3794,7 @@ a.dc-list-card--pillar {
         <div class="dc-radar-hero-main">
           <div class="dc-radar-hero-txt">کتابخانهٔ دنت‌کست</div>
           <div class="dc-radar-hero-sub">بیش از ۲۲۰۰ مقاله، دسته‌بندی‌شده و قابل جستجو</div>
-          <span class="dcp-soon-badge" id="card-library-lock">🔒 ویژه‌ی پریمیوم</span>
+          <span class="dcp-soon-badge" id="card-library-lock">۳ جستجوی رایگان در روز</span>
         </div>
         <span class="dc-radar-hero-btn">جستجو</span>
       </div>
@@ -4645,23 +4645,22 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 </script>
 
 <script>
-/* ── LIBRARY CARD (premium) ──
+/* ── LIBRARY CARD ──
    The cabinet used to be reachable only from the hamburger's tool tray, which
    is why 2200 curated papers were the least-known thing on the site.
 
-   Three rules this follows:
-   • The lock badge is drawn from a HINT, never from a guess. spot.js already
-     records this device's last CONFIRMED viewer class in localStorage, so a
-     premium user's first paint does not flash a lock while /me is in flight —
-     the same trick that keeps a premium user from seeing an ad appear and then
-     vanish. The hint only decides the BADGE; the tap always waits for /me.
-   • It fails OPEN, never closed. If /me cannot be asked at all (meStatus()
-     'error' — offline, API down), the tap goes through. A subscriber locked
-     out by a network blip is a far worse outcome than an anonymous visitor
-     getting in, and this is a product gate, not access control: the cabinet is
-     a static page and the catalogue is public.
-   • The message is the shared gateCard + premiumCta, so the wording and the
-     ?from= tracking live where every other premium gate's do. */
+   THE TAP NO LONGER GATES. It used to open a "this is premium" sheet for
+   anyone who was not a subscriber, which meant the 2200 papers were still
+   invisible — the card advertised something nobody could look at. The cabinet
+   now opens for everybody and meters SEARCH instead (see the ALLOWANCE block in
+   dentcast_cabinet_search.html): three queries a day, after which the full list
+   is still there to browse but the search and sort controls are what premium
+   buys. Selling the tool over a corpus you can see beats selling a locked door.
+
+   The badge is still drawn from a HINT rather than a guess — spot.js records
+   this device's last CONFIRMED viewer class in localStorage, so a subscriber's
+   first paint does not flash a line about free searches while /me is in
+   flight. It only ever decides the BADGE; nothing here decides access. */
 (function(){
   var card = document.getElementById('card-library');
   if (!card) return;
@@ -4671,43 +4670,20 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
   function setBadge(isPremium){ if (badge) badge.style.display = isPremium ? 'none' : ''; }
   try { if (localStorage.getItem('dcAds.vc') === 'premium') setBadge(true); } catch(e){}
 
-  /* Resolved the same way spot.js resolves it: the answer AND why it answered,
-     because "confirmed anonymous" and "could not ask" must not behave alike. */
-  function probe(){
-    return import('/plus/js/api.js')
-      .then(function(m){ return m.currentUser().then(function(user){ return { user: user, status: m.meStatus() }; }); })
-      .catch(function(){ return { user: null, status: 'error' }; });
-  }
-
-  function openGate(){
-    return Promise.all([import('/plus/js/sheet.js'), import('/plus/js/premium-cta.js')])
-      .then(function(mods){
-        mods[0].openSheet(mods[0].gateCard({
-          title: 'کتابخانهٔ دنت‌کست ویژه‌ی پریمیوم است',
-          sub: 'بیش از ۲۲۰۰ مقالهٔ دندان‌پزشکی، دسته‌بندی‌شده و قابل جستجو — با کلید یافته و خط پایانی بالینیِ هر مقاله.',
-          cta: mods[1].premiumCta('gate-library-archive'),
-        }));
-      })
-      .catch(function(){ window.location.href = '/plus/pricing.html?from=gate-library-archive'; });
-  }
-
-  function open(){
-    probe().then(function(p){
-      var isPremium = !!(p.user && p.user.tier === 'premium');
-      if (p.status !== 'error') setBadge(isPremium);
-      if (isPremium || p.status === 'error') { window.location.href = CABINET; return; }
-      openGate();
-    });
-  }
-
+  function open(){ window.location.href = CABINET; }
   card.addEventListener('click', open);
   card.addEventListener('keydown', function(e){
     if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') { e.preventDefault(); open(); }
   });
 
   /* Settle the badge without waiting for a tap, so a subscriber is never left
-     looking at a lock that isn't theirs. */
-  probe().then(function(p){ if (p.status !== 'error') setBadge(!!(p.user && p.user.tier === 'premium')); });
+     looking at a free-tier line that isn't theirs. Failure leaves the badge
+     exactly as the hint drew it. */
+  import('/plus/js/api.js')
+    .then(function(m){ return m.currentUser().then(function(user){
+      if (m.meStatus() !== 'error') setBadge(!!(user && user.tier === 'premium'));
+    }); })
+    .catch(function(){ /* the badge is cosmetic; never let it throw */ });
 })();
 </script>
 

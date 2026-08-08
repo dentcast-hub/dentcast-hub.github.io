@@ -46,6 +46,19 @@ input#q{flex:1;min-width:13.75rem}
 .chips{display:flex;gap:0.375rem;flex-wrap:wrap;margin-top:0.625rem}
 .chip.x{background:var(--ac);color:#fff;border:1px solid var(--ac);border-radius:var(--r-f);padding:0.25rem 0.75rem;font-size:.78rem;cursor:pointer}
 .count{color:var(--txt3);font-size:.78rem;margin:0.875rem 0 0}
+/* Free-tier search allowance. RTL on an otherwise dir="ltr" page, because it is
+   the only prose here — everything else is a paper title or a control label. */
+.cab-quota{direction:rtl;margin:0.75rem 0 0;padding:0.6rem 0.9rem;border-radius:var(--r-md);
+  background:var(--surface2);border:1px solid var(--border);font-size:.8rem;color:var(--txt2)}
+.cab-quota.is-spent{background:rgba(var(--ac-rgb),.06);border-color:rgba(var(--ac-rgb),.24)}
+.cab-quota b{color:var(--txt)}
+.cab-quota-row{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;margin-top:.5rem}
+.cab-quota a.cab-buy,.cab-quota button.cab-browse{
+  border-radius:var(--r-f);padding:.32rem .9rem;font-size:.78rem;font-family:inherit;cursor:pointer;
+  text-decoration:none;border:1px solid var(--ac)}
+.cab-quota a.cab-buy{background:var(--ac);color:#fff}
+.cab-quota button.cab-browse{background:transparent;color:var(--ac)}
+.row input:disabled,.row select:disabled{opacity:.55;cursor:not-allowed}
 main#list{padding:0.375rem 0 1.25rem}
 .card{border-radius:var(--r-md);padding:0.875rem 1rem;margin:0.75rem 0}
 .title{font-size:.95rem;font-weight:600;margin:0 0 0.3125rem;color:var(--txt)}
@@ -154,6 +167,7 @@ main#list{padding:0.375rem 0 1.25rem}
     <select id="type" disabled><option value="">all types</option></select>
     <select id="sort"><option value="t">sort: title</option><option value="ty">sort: type</option><option value="tp">sort: topic</option></select></div>
     <div class="chips" id="active"></div>
+    <div class="cab-quota" id="cabQuota" hidden></div>
   </div>
   <div class="count" id="count"></div>
   <main id="list"><div class="state" id="state">Loading catalog...</div></main>
@@ -212,11 +226,169 @@ fetch(SRC).then(r=>{if(!r.ok)throw new Error(r.status);return r.json();}).then(j
   fill(topic,[...new Set(DATA.map(p=>p.tp).filter(x=>x&&x!=='(root)'))].sort());
   fill(type,[...new Set(DATA.map(p=>p.ty).filter(Boolean))].sort());
   [q,topic,type].forEach(el=>el.disabled=false);
-  [q,topic,type,sort].forEach(el=>el.addEventListener('input',()=>render(true)));
+  [topic,type,sort].forEach(el=>el.addEventListener('input',()=>render(true)));
+  q.addEventListener('input',onQueryInput);
   document.getElementById('state').remove();render(true);
+  Quota.start();
 }).catch(e=>{
   document.getElementById('state').innerHTML='Could not load <b>'+SRC+'</b> ('+e.message+').<br>Make sure the JSON sits in the same folder as this page in the repo.';
 });
+
+/* ── SEARCH ALLOWANCE ──────────────────────────────────────────────────────
+   Three searches a day, then the list stays and the TOOL is what premium buys.
+
+   WHY THE TOOL AND NOT THE PAPERS. Every other allowance on this site is
+   enforced by the API, because the API owns the data. This page has no API in
+   its path at all: it is a static file that fetches a public JSON and does all
+   its searching, filtering and sorting in the browser. So a device-local
+   counter is the honest limit of what is enforceable here, and pretending
+   otherwise — obfuscating the catalogue, faking a server check — would buy
+   nothing but a page that breaks offline.
+
+   That is a deliberate trade, not an oversight. Anyone who opens devtools can
+   have the JSON; what is being sold is the ability to SEARCH 2200 papers from
+   inside the site, which is the only thing that makes 2200 papers usable. When
+   the allowance is spent the full list is still right there to scroll — «از اول
+   نگاه کن» — so nothing is taken away, only the shortcut.
+
+   Three rules it follows:
+   • It FAILS OPEN. If /me cannot be reached (offline, API down, adblocker) the
+     page stays unmetered. A subscriber locked out of search by a network blip
+     is far worse than an anonymous visitor getting a fourth query.
+   • DISTINCT queries are counted, not keystrokes. Typing narrows a search —
+     "کامپوزیت" then "کامپوزیت خلفی" is one person refining one question — so
+     the counter commits on a debounce and never charges twice for the same
+     text. Retyping something already spent is free.
+   • Sorting and filtering ride along with the search allowance rather than
+     having one of their own. Over 2200 papers they are the same tool: sorting
+     a corpus you cannot search is how you find things without searching. */
+const Quota = (function(){
+  const LIMIT_DEFAULT = 3;
+  const DEBOUNCE_MS = 700;
+  let limit = LIMIT_DEFAULT;
+  let metered = false;          // stays false until /me confirms a non-premium reader
+  let spent = new Set();
+  let locked = false;
+  const box = document.getElementById('cabQuota');
+
+  /* The same Tehran day boundary the streak engine and every allowance on the
+     API use, so "امروز" means one thing across the whole product. */
+  function today(){
+    try {
+      return new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Tehran',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
+    } catch(e){ return new Date().toISOString().slice(0,10); }
+  }
+  const key = () => 'dc.cab.q.' + today();
+
+  function load(){
+    try {
+      const raw = localStorage.getItem(key());
+      spent = new Set(raw ? JSON.parse(raw) : []);
+      /* Yesterday's keys are dropped on the first visit of a new day, so the
+         allowance cannot accumulate a year of dead entries in storage. */
+      for (let i = localStorage.length - 1; i >= 0; i--) {
+        const k = localStorage.key(i);
+        if (k && k.startsWith('dc.cab.q.') && k !== key()) localStorage.removeItem(k);
+      }
+    } catch(e){ spent = new Set(); }
+  }
+  function save(){ try { localStorage.setItem(key(), JSON.stringify([...spent])); } catch(e){} }
+
+  const norm = (s) => String(s||'').trim().toLowerCase().replace(/\s+/g,' ');
+  const remaining = () => Math.max(0, limit - spent.size);
+
+  function paint(){
+    if (!metered || !box) return;
+    box.hidden = false;
+    box.className = 'cab-quota' + (locked ? ' is-spent' : '');
+    box.replaceChildren();
+    const p = document.createElement('div');
+    if (locked) {
+      p.innerHTML = '<b>سه جستجوی امروزت تمام شد.</b> فهرست کامل مقاله‌ها همچنان باز است و می‌توانی مرورش کنی؛ جستجو و مرتب‌سازی با پریمیوم.';
+    } else {
+      p.innerHTML = 'کتابخانه رایگان قابل مرور است. <b>' + remaining() + ' جستجوی رایگان</b> امروز برایت مانده.';
+    }
+    box.appendChild(p);
+    const row = document.createElement('div');
+    row.className = 'cab-quota-row';
+    if (locked) {
+      const browse = document.createElement('button');
+      browse.type = 'button'; browse.className = 'cab-browse'; browse.textContent = 'دیدن فهرست کامل';
+      browse.addEventListener('click', clearFilters);
+      row.appendChild(browse);
+    }
+    const buy = document.createElement('a');
+    buy.className = 'cab-buy';
+    buy.href = '/plus/pricing.html?from=' + (locked ? 'library-search-spent' : 'library-search');
+    buy.textContent = 'جستجوی نامحدود با پریمیوم';
+    row.appendChild(buy);
+    box.appendChild(row);
+  }
+
+  /* Back to the whole corpus, unsorted and unfiltered — literally "look from
+     the beginning". The controls stay disabled; this is the fallback, not a
+     way back into the tool. */
+  function clearFilters(){
+    q.value = ''; topic.value = ''; type.value = ''; sort.value = 't';
+    active.clear(); chips(); render(true);
+  }
+
+  function lock(){
+    if (locked) return;
+    locked = true;
+    [q,topic,type,sort].forEach(el=>{ el.disabled = true; });
+    paint();
+  }
+
+  /* Commit one query against the allowance. Returns whether the search may run. */
+  function charge(raw){
+    if (!metered || locked) return !locked;
+    const t = norm(raw);
+    if (!t) return true;                 // clearing the box is not a search
+    if (spent.has(t)) return true;       // already paid for this exact question
+    if (remaining() <= 0) { lock(); return false; }
+    spent.add(t); save();
+    if (remaining() <= 0) lock(); else paint();
+    return true;
+  }
+
+  return {
+    charge,
+    debounceMs: DEBOUNCE_MS,
+    isLocked: () => locked,
+    /* Ask who this is, and only then start metering. Until the answer arrives
+       the page is unmetered, so a subscriber never sees a counter flash. */
+    start(){
+      load();
+      import('/plus/js/api.js')
+        .then((m) => m.currentUser().then((user) => {
+          if (m.meStatus() === 'error') return;            // fail open
+          if (user && user.tier === 'premium') return;     // nothing to meter
+          metered = true;
+          fetch('/plus/quota.json', { credentials: 'omit' })
+            .then((r) => (r.ok ? r.json() : null))
+            .then((c) => {
+              const n = c && c.previews && c.previews.library_searches_per_day;
+              if (Number.isInteger(n) && n >= 0) limit = n;
+            })
+            .catch(() => {})
+            .then(() => { if (remaining() <= 0) lock(); else paint(); });
+        }))
+        .catch(() => { /* unreachable API leaves the page unmetered */ });
+    },
+  };
+})();
+
+let qTimer = null;
+/* Typing re-renders immediately (the filter is local and instant), but only the
+   settled text is charged. Rendering first and charging second is what keeps a
+   search that gets refused from also blanking the results the reader can see. */
+function onQueryInput(){
+  if (Quota.isLocked()) return;
+  render(true);
+  clearTimeout(qTimer);
+  qTimer = setTimeout(() => { Quota.charge(q.value); }, Quota.debounceMs);
+}
 
 function fill(sel,arr){for(const v of arr){const o=document.createElement('option');o.textContent=v;sel.appendChild(o);}}
 function match(p){const t=nm(q.value).trim();
