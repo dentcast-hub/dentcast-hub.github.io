@@ -38,7 +38,34 @@ const HELD_PUSH_MAX_AGE_HOURS = 36;
  * and then vanished. So every send is caught per user, the whole run is caught
  * again, and it always ends with one summary line naming the broadcast id.
  */
-export async function deliverBroadcast(
+export function deliverBroadcast(
+  id: string,
+  audience: NoticeAudience,
+  message: NotificationMessage,
+  now: Date,
+): Promise<void> {
+  const p = runDelivery(id, audience, message, now);
+  inFlight.add(p);
+  void p.finally(() => inFlight.delete(p));
+  return p;
+}
+
+/**
+ * In-flight fan-outs. A detached delivery outlives the request that started it
+ * and keeps writing notification_log rows — so a caller that then truncates
+ * (every test's resetDb) collides with the row locks it still holds and
+ * Postgres kills one of them with `deadlock detected`. Exactly the shape, and
+ * exactly the reason, behind drainAchievementSyncs and drainPillarWelcomes; the
+ * fan-out grew the same need on 2026-08-08 when it stopped being awaited.
+ */
+const inFlight = new Set<Promise<unknown>>();
+
+/** Wait for every in-flight fan-out. For tests and clean shutdown. */
+export async function drainBroadcasts(): Promise<void> {
+  while (inFlight.size) await Promise.all([...inFlight]);
+}
+
+async function runDelivery(
   id: string,
   audience: NoticeAudience,
   message: NotificationMessage,
