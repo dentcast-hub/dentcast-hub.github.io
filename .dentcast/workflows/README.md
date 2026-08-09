@@ -1177,18 +1177,71 @@ keeps the pathway data correct as content grows, ready for activation. It does
 **not** touch the brain, the page, capsules, or links (those are steps 4.7–4.9
 and 5). Do not add pathway data to the brain entry (Hard Rule 6).
 
-**Bundles are out of scope for this step — never auto-join one.** Alongside
-the 15 full pathways, `plus/pathways.json` also carries a handful of **starter
-bundles** (`kind: "bundle"` entries — short, curated subsets of a pathway's
-steps; see `.dentcast/bundles-handoff.md` for the catalog and doctrine). This
-step places a new `content_id` into full pathways only. A new publish is
-**never** automatically added to a bundle, no matter how STRONG its match to
-that bundle's topic reads — bundle membership is an editorial judgment about
-whether the item is core enough to belong in a 5–8-step "just the essentials"
-subset, which is a different question from pathway relevance and is decided
-**only** through an explicit conversation with the founder. If a new item
-looks like an obvious fit for an existing bundle, say so in the report and ask
-— do not place it.
+### 5.6-ب. Bundle check (runs after every full-pathway placement)
+
+Alongside the 15 full pathways, `plus/pathways.json` carries **starter
+bundles** (`kind: "bundle"` entries — 5–8-step "just the core" subsets of a
+pathway; catalog + doctrine in `.dentcast/bundles-handoff.md`). After the
+item's full-pathway placements are done, run this check. It is written as a
+**gate chain**: every gate is a yes/no question answerable from the item's
+folder, title, and the bundle's current step list alone — no taste, no
+"feels core". **The default is NO.** An item enters a bundle automatically
+ONLY when every gate below passes with a confident yes; one uncertain answer
+anywhere = ASK the founder («اگر شک داشتی سوال کن، عمل نکن») — asking is
+never wrong, silently adding is.
+
+**Candidates.** Check only bundles whose `continues_pathway` is one of the
+full pathways the item just joined in 5.6 (nothing else can be relevant).
+Zero candidates → write «باندل: بدون کاندید» in the report and stop.
+
+**The gates — walk them in order, stop at the first NO:**
+
+1. **GATE ۱ — Type (mechanical).** The item's folder is `episodes/`,
+   `notecast/`, `sharehub/` or `dentai/`. Anything else — `insight/`,
+   `chairside/`, `metanotes/`, `photocast/`, `dentcast-plus/`, `litecast/` —
+   is **NO, always**: those types are by construction نکته/کیس/جستار, exactly
+   what a bundle excludes. No judgment may override this gate.
+2. **GATE ۲ — Shape (from the title alone).** The title names a whole
+   concept a beginner must learn (اصول X، طبقه‌بندی X، راهنمای جامع X،
+   مقدمه‌ای بر X، انتخاب X، «X — قسمت اول»). It is **NO** if the title
+   describes one situation or patient («وقتی…», «چرا برای این بیمار…»,
+   «بیمار با…»), a trick/pearl (راهکار، ترفند، نکته), an exception or
+   complication, or a deep continuation («قسمت سوم» of a series whose قسمت
+   اول is not in the bundle).
+3. **GATE ۳ — Coverage (against the bundle's current steps).** Read the
+   bundle's step titles. The item must cover a core sub-topic that **no
+   existing step covers** — i.e. a beginner finishing the bundle today would
+   have a hole where this item goes. If it adds depth/detail/an update to a
+   concept already represented, it is **NO** — its home is the full pathway.
+   (An item that looks like a **better replacement** for an existing step is
+   never automatic — that is an ASK.)
+4. **GATE ۴ — Twin (mechanical).** If the bundle already contains this
+   item's twin — the episode of this notecast, the notecast of this episode,
+   or any same-numbered sibling — it is **NO** (قانون «یک مفهوم = یک قدم»).
+5. **GATE ۵ — Size (mechanical).** After insertion the bundle must have
+   **≤ 8 steps**. 9 or more = ASK (something must leave first, and removal
+   is founder-only).
+
+**If all five gates pass — insert, with two hard mechanics:**
+
+- Anchor semantically and insert **mid-list only**:
+  ```bash
+  python3 tools/pathway_place.py --insert <content_id> --pathway <bundle-id> --after <anchor_id>
+  ```
+  where `<anchor_id>` is the existing step the item most directly follows.
+  **Never `--at-end` on a bundle and never place after the current final
+  step**: the final step carries `milestone: true` (the finish flag 🏁), and
+  appending would strand the flag mid-list. If the only right position seems
+  to be at the very end, that is an ASK, not an insert.
+- **Sweep the two hand-maintained mirrors in the same commit** (a bundle
+  edit that skips these ships a lie): the bundle's step count in
+  `plus/js/home-bundles.js`'s `BUNDLES` array, then
+  `python3 tools/asset_version.py --bump`.
+
+**Report — mandatory either way.** The publish report names every candidate
+bundle with one of exactly three verdicts: «وارد شد (بعد از کدام قدم)»,
+«رد شد (گیت N)», or «سوال شد». Silence about a candidate bundle is a
+workflow violation — a NO must be as visible as a YES.
 
 ### 6. Pulse update
 
@@ -1415,6 +1468,7 @@ fix on its own, never a pattern to copy forward.
   - **4.9 (related links on the new page):** for episodes, confirm this targeted the **«محتوای مرتبط»** block (not skipped due to the naming difference); the related brain entries considered (sibling series parts first), how many slots were free under the 5-cap, which links were auto-applied vs. presented to the user (Hard Rule 14) and which of those were approved/added, and the remaining-budget math. An empty result is acceptable **only** as a documented "at cap" / "0 qualifying entries".
   - Explicitly confirm that **none** of 4.7/4.8/4.9 was skipped on the grounds that the cloned/previous/sibling page lacked such links (a Hard-Rule-11 violation).
 - Pillar/subtopic verification (step 5.5): confirmation that the recorded `pillar.primary` and `pillar.subtopic` are **identical** to what was confirmed in step 2.4 (untouched by steps 5/5.5); resulting `pillar.subtopic` (slug if structured, `null` if not); confirmation that no new keys were added to the `pillar` object or as siblings, that the `subtopic` key is present in every case, and that the step-2.5 capsule / episode pillar link is consistent with `pillar.primary`
+- **Pathways & bundles (steps 5.6 + 5.6-ب)** — or the documented "skipped — LiteCast" line: every full pathway the item joined (pathway id + anchor + milestone flag), the `--coverage` line confirming membership in ≥1 pathway (or the explicit deliberate-orphan note); then, for **every candidate bundle** (each bundle whose `continues_pathway` is a pathway just joined — or «باندل: بدون کاندید»), exactly one verdict: «وارد شد (بعد از کدام قدم)» with confirmation the bundle's last step still carries the only `milestone: true` and that `plus/js/home-bundles.js`'s step count was updated in the same commit, «رد شد (گیت N)», or «سوال شد». A candidate bundle with no verdict = incomplete publish.
 - Builder runs: each command + full stdout/stderr (`python tools/update-homepage-counters.py`, `python tools/build_pillar.py all`, `python tools/build_episodes.py` for episode publishes, `node tools/build_flashcards_index.mjs` unless step 4.11 was skipped, `node tools/build_plus_index.mjs` for the میز کار nav-tree unless paper-only, and `python tools/stamp-version.py` LAST); confirmation that the new content appears in the regenerated pillar page when a structured pillar was assigned, **and (for episodes) that the new episode now appears in the regenerated `episodes.html`** with no feature regression.
 - **Phase D (English mirror & toggle — Hard Rule 12; REQUIRED unless LiteCast):** the en page path created (`/{type}/en/{file}.html`); confirmation the body was translated structure-faithfully from THIS type (not rendered as a metanote) with GA4 once and `lang`/`inLanguage`/`og:locale` all `en`; both toggle targets (exact inverses, no meta-1 hardcode) and that the fa page got both the `.lang-btn` markup **and** its CSS; `inject_hreflang.py` pairing confirmation (fa page gained its `en` alternate); chrome standard `metanotes/en/meta-1.html` hash unchanged. For LiteCast, the documented skip line instead.
 - **Phase E (new-article push marker — REQUIRED unless paper-only/LiteCast/glossary):**

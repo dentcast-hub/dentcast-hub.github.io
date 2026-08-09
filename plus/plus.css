@@ -850,7 +850,19 @@ a.dcb-card {
 .dcb-band-more { font-size: .8rem; font-weight: 700; color: var(--dcp-gold); text-decoration: none; white-space: nowrap; }
 .dcb-band-hint { margin: 4px 0 0; font-size: .8rem; color: var(--dcp-muted); }
 
-.dcb-railwrap { display: flex; gap: 10px; overflow-x: auto; padding: 12px 2px 14px; scrollbar-width: none; }
+/* overscroll-behavior-x keeps a rail swipe from chaining to the page once the
+   rail hits its edge. Snap is PROXIMITY, deliberately not the homepage rails'
+   mandatory: with only ~2.2 of these heavier cards in view, mandatory snap
+   yanks every sub-half-card drag straight back to where it started — on an
+   RTL touch screen that reads as "the rail won't move at all" (founder
+   report, 2026-08-09). Proximity keeps the tidy card alignment on a real
+   fling but never fights a small drag. The tab-swipe protection itself is
+   JS: index.html's touchstart exclusion + the rail's own stopPropagation
+   guard in home-bundles.js — CSS alone cannot stop those listeners. */
+.dcb-railwrap {
+  display: flex; gap: 10px; overflow-x: auto; padding: 12px 2px 14px;
+  scrollbar-width: none; overscroll-behavior-x: contain; scroll-snap-type: x proximity;
+}
 .dcb-railwrap::-webkit-scrollbar { display: none; }
 a.dcb-railcard {
   flex: 0 0 168px; scroll-snap-align: start; border-radius: 16px; padding: 13px;
