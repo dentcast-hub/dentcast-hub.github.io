@@ -41,22 +41,26 @@ function pathwayCard(p) {
   ]);
 }
 
-/** A bundle's compact catalog card — glyph + title + step count + progress, no
- * description (its name is the pitch). See .dentcast/bundles-handoff.md §1. */
-function bundleCard(p) {
-  const tag = p.is_complete
-    ? el('span', { class: 'dcp-pw-tag is-done' }, 'تکمیل شد')
-    : (p.enrolled || p.completed_steps > 0)
-      ? el('span', { class: 'dcp-pw-tag is-active' }, 'ادامه')
-      : null;
+/** A bundle's rail card — glyph + title + step meta, same compact shape as the
+ * homepage's "از کجا شروع کنم؟" rail (one visual identity for bundles
+ * everywhere). Deliberately NO .dcp-progress-track inside: that class carries
+ * `flex: 0 0 100%` from plus-pages.css (written for the dashboard's flex-ROW
+ * progress rows), and inside a stretched flex COLUMN card that basis resolves
+ * against the card's HEIGHT — a ~100px gray pill (founder report,
+ * 2026-08-09). Started/completed state rides the meta text + tag instead. */
+function bundleRailCard(p) {
+  const started = p.enrolled || p.completed_steps > 0;
+  const meta = started
+    ? faNum(p.completed_steps) + ' از ' + faNum(p.total_steps) + ' قدم'
+    : faNum(p.total_steps) + ' قدم';
+  const tag = p.is_complete ? 'تکمیل شد' : started ? 'ادامه' : null;
 
-  return el('a', { class: 'dcb-card', href: '/plus/pathway.html?id=' + encodeURIComponent(p.id) }, [
-    el('span', { class: 'dcb-card-glyph' }, icon(p.glyph || 'icon-lightning')),
-    el('h4', { class: 'dcb-card-title' }, p.title_fa),
-    progressBar(p.completed_steps, p.total_steps),
-    el('div', { class: 'dcb-card-foot' }, [
-      el('span', {}, faNum(p.total_steps) + ' قدم'),
-      tag,
+  return el('a', { class: 'dcb-railcard', href: '/plus/pathway.html?id=' + encodeURIComponent(p.id) }, [
+    el('span', { class: 'dcb-railcard-glyph' }, icon(p.glyph || 'icon-lightning')),
+    el('p', { class: 'dcb-railcard-title' }, p.title_fa),
+    el('div', { class: 'dcb-railcard-foot' }, [
+      el('span', { class: 'dcb-railcard-meta' }, meta),
+      tag ? el('span', { class: 'dcb-railcard-tag' }, tag) : null,
     ]),
   ]);
 }
@@ -82,17 +86,23 @@ export async function renderPathwaysList(container) {
 
   const sections = [top];
 
+  // Bundles as one compact amber band with a horizontal rail — the same
+  // small, contained strip they are on the homepage, never a stack of ten
+  // full-width cards pushing the real catalog below the fold («یه جای مشخص
+  // کوچیک، نه وسط بازار» — founder, 2026-08-09).
   if (bundles.length) {
-    sections.push(el('div', { class: 'dcb-sec-head' }, [
-      el('h3', { class: 'dcb-sec-title' }, 'باندل‌های شروع'),
-      boltChip('فشرده'),
+    sections.push(el('div', { class: 'dcb-band' }, [
+      el('div', { class: 'dcb-band-row' }, [
+        el('h3', { class: 'dcb-band-title' }, [
+          icon('icon-lightning'),
+          ' باندل‌های شروع',
+          el('span', { class: 'dcb-band-count' }, faNum(bundles.length) + ' باندل'),
+        ]),
+      ]),
+      el('p', { class: 'dcb-band-hint' }, 'هسته‌ی هر موضوع در چند قدم — بدون نکته‌های حاشیه‌ای.'),
+      el('div', { class: 'dcb-railwrap' }, bundles.map(bundleRailCard)),
     ]));
-    sections.push(el('p', { class: 'dcp-sec-hint' },
-      'فقط هسته‌ی هر موضوع، در چند قدم — بدون نکته‌های حاشیه‌ای. برای وقتی که می‌خواهید از همین امروز شروع کنید.'));
-    sections.push(el('div', { class: 'dcb-grid' }, bundles.map(bundleCard)));
   }
-
-  if (bundles.length && full.length) sections.push(el('hr', { class: 'dcb-divider' }));
 
   if (full.length) {
     sections.push(el('div', { class: 'dcb-sec-head' }, [el('h3', { class: 'dcb-sec-title' }, 'مسیرهای کامل')]));
