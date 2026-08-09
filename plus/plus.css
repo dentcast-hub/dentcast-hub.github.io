@@ -850,7 +850,15 @@ a.dcb-card {
 .dcb-band-more { font-size: .8rem; font-weight: 700; color: var(--dcp-gold); text-decoration: none; white-space: nowrap; }
 .dcb-band-hint { margin: 4px 0 0; font-size: .8rem; color: var(--dcp-muted); }
 
-.dcb-railwrap { display: flex; gap: 10px; overflow-x: auto; padding: 12px 2px 14px; scrollbar-width: none; }
+/* overscroll-behavior-x keeps a rail swipe from chaining to the page once the
+   rail hits its edge, and the snap type matches the homepage's own rails
+   (#panel-studio .dc-rail) so the two feel identical under the finger. The
+   panel-swipe exclusion itself lives in index.html's touchstart handler
+   (.dc-rail, .dcb-railwrap) — this CSS alone cannot stop that JS. */
+.dcb-railwrap {
+  display: flex; gap: 10px; overflow-x: auto; padding: 12px 2px 14px;
+  scrollbar-width: none; overscroll-behavior-x: contain; scroll-snap-type: x mandatory;
+}
 .dcb-railwrap::-webkit-scrollbar { display: none; }
 a.dcb-railcard {
   flex: 0 0 168px; scroll-snap-align: start; border-radius: 16px; padding: 13px;

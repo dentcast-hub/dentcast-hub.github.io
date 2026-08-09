@@ -4408,8 +4408,11 @@ let sx=0,sy=0,st=0,isH=false,ig=false;
 const scrollBody = document.getElementById('mobile-body');
 scrollBody.addEventListener('touchstart',e=>{
   const t=e.touches[0]; sx=t.clientX; sy=t.clientY; st=Date.now(); isH=false;
-  /* gestures that start inside a horizontal rail belong to the rail, never to panel switching */
-  ig = !!(e.target.closest && e.target.closest('.dc-rail'));
+  /* gestures that start inside a horizontal rail belong to the rail, never to
+     panel switching. .dcb-railwrap is the bundles rail ("از کجا شروع کنم؟",
+     plus/js/home-bundles.js) — its own class rather than .dc-rail because of
+     the #panel-studio CSS scoping, so it must be excluded here by name. */
+  ig = !!(e.target.closest && e.target.closest('.dc-rail, .dcb-railwrap'));
 },{passive:true});
 scrollBody.addEventListener('touchmove',e=>{
   const dx=e.touches[0].clientX-sx;
@@ -4518,7 +4521,7 @@ scrollBody.addEventListener('touchend',e=>{
 </script>
 
 <!-- Theme toggle behavior moved to /dc-nav.js (single source) -->
-<script src="/dc-nav.js?v=57" defer></script>
+<script src="/dc-nav.js?v=58" defer></script>
 
 <!-- Toolbar drawer toggle is handled by /dc-nav.js (single source) -->
 
