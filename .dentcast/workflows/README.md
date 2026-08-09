@@ -760,26 +760,31 @@ socket`, `GBR`, `periimplantitis`, `biomimetic`, with nested paths like
    present, and the paper now appears/filters correctly in
    `dentcast_cabinet_search.html` (title, topic, tags, View/Download links).
    **Open that page directly** — from the site the library is premium-gated
-   (`#card-library` on `index.html`'s archive tab opens it only for
-   `tier === 'premium'`), so tapping the card is not a way to check your work.
+   (`plus/js/library-gate.js`, installed from `plus/js/header.js` on every page,
+   gates the *destination*: the archive card, the desktop topbar icon and the
+   hamburger's «کتابخانه» all open only for `tier === 'premium'`), so tapping
+   any of the three doors is not a way to check your work.
    The page itself is still a plain static file and opens for anyone who knows
    the URL; the gate is a product gate, not access control.
-7. **The paper-count claim.** `index.html` advertises the library with a
-   number — «بیش از ۲۲۰۰ مقاله» on the `#card-library` card and the same figure
-   in the premium gate sheet below it. It is a hand-written claim, not a count
-   read from the catalog, so it drifts as papers are added. After adding the
-   entry, count, then find every place the number lives:
+7. **The paper-count claim.** The library is advertised with a number — «بیش از
+   ۲۲۰۰ مقاله» on the `#card-library` card (`index.html`) and the same figure in
+   the premium gate sheet, whose copy lives in `plus/js/library-gate.js`. It is
+   a hand-written claim, not a count read from the catalog, so it drifts as
+   papers are added. After adding the entry, count, then find every place the
+   number lives — **two files, not one**:
 
    ```bash
    python3 -c "import json;print(len(json.load(open('dentcast_cabinet_full_catalog.json'))['papers']))"
-   grep -n '۲۲۰۰' index.html      # card copy, gate-sheet copy, and the card's own comment
+   grep -rn '۲۲۰۰' index.html plus/js/library-gate.js   # card copy + gate-sheet copy
    ```
 
    While the total is still under the next round hundred the claim stands and
    nothing changes. Once it crosses one, update **every** hit in the same
    commit — one sentence living on several surfaces, so Hard Rule 17's sweep
-   logic applies: never fix one and leave the others. (No version bump: the
-   claim is `index.html`'s own copy, not a shared asset.)
+   logic applies: never fix one and leave the others. One version bump is now
+   needed with it: `index.html`'s copy is its own, but the gate sheet's text is
+   in a shared module, so run `python3 tools/asset_version.py --bump` in the same
+   commit (see the cache-buster rule) or returning browsers keep the old figure.
 
 #### Part 3 — Find the DOI on the web and add a first-author → DOI credit on the page (ShareHub style)
 
