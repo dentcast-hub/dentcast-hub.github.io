@@ -43,12 +43,13 @@ function pathwayCard(p) {
 
 /** A bundle's rail card — glyph + title + step meta, same compact shape as the
  * homepage's "از کجا شروع کنم؟" rail (one visual identity for bundles
- * everywhere). Deliberately NO .dcp-progress-track inside: that class carries
+ * everywhere; the dashboard's «از کجا شروع کنم؟» block imports this too).
+ * Deliberately NO .dcp-progress-track inside: that class carries
  * `flex: 0 0 100%` from plus-pages.css (written for the dashboard's flex-ROW
  * progress rows), and inside a stretched flex COLUMN card that basis resolves
  * against the card's HEIGHT — a ~100px gray pill (founder report,
  * 2026-08-09). Started/completed state rides the meta text + tag instead. */
-function bundleRailCard(p) {
+export function bundleRailCard(p) {
   const started = p.enrolled || p.completed_steps > 0;
   const meta = started
     ? faNum(p.completed_steps) + ' از ' + faNum(p.total_steps) + ' قدم'
