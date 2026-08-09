@@ -74,10 +74,21 @@ export async function leagueAdminRoutes(app: FastifyInstance): Promise<void> {
       };
     });
 
+    // The SAME rule finalizeWeek decides outcomes by: below the floor AND not
+    // full. Reporting only the floor here would have been an observability lie
+    // arriving at the worst moment — a group that holds its whole tier is valid
+    // from this week on (see league-finalize.ts), so a dashboard still filing it
+    // under «below validity» would say the fix had not worked on exactly the
+    // screen someone opens to check whether it had.
+    //
+    // `capacity` rides along because without it the row states a fact and hides
+    // its reason: 5 of a possible 6 and 5 of a possible 15 are the same size and
+    // no longer the same situation.
     const belowValidity = groups
-      .filter((g) => g.size < cfg.min_valid_group_size)
+      .filter((g) => g.size < cfg.min_valid_group_size && g.size < g.capacity_at_creation)
       .map((g) => ({
         league_id: g.id, size: g.size, min_valid: cfg.min_valid_group_size,
+        capacity: g.capacity_at_creation,
         tier: tiers.find((t) => t.id === g.tier_id)?.slug ?? null,
       }));
 
