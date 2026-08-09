@@ -13,6 +13,13 @@ let phone: string;
 const PATHWAY_ID = 'occlusion';
 const [STEP_0, STEP_1, STEP_2] = getPathways().find((p) => p.id === PATHWAY_ID)!.steps;
 
+// Two real bundles: "bonding" has no prereq and continues into "biomimetic";
+// "laminate" points to "bonding" as its prereq and continues into "esthetic".
+// Exercises kind/glyph/prereq_bundle/continues_pathway end to end.
+const BUNDLE_ID = 'bundle-laminate';
+const PREREQ_BUNDLE_ID = 'bundle-bonding';
+const [BUNDLE_STEP_0] = getPathways().find((p) => p.id === BUNDLE_ID)!.steps;
+
 beforeEach(async () => {
   await resetDb();
   if (!app) app = await makeApp();
@@ -67,6 +74,13 @@ describe('GET /pathways', () => {
     expect(occlusion.current_step).toBe(0);
     expect(occlusion.completed_steps).toBe(0);
     expect(occlusion.is_complete).toBe(false);
+
+    // A full pathway carries no kind/glyph; a bundle carries both.
+    expect(occlusion.kind).toBeNull();
+    expect(occlusion.glyph).toBeNull();
+    const bundle = list.find((p) => p.id === BUNDLE_ID)!;
+    expect(bundle.kind).toBe('bundle');
+    expect(bundle.glyph).toBe('🦷');
   });
 
   it('gives progress credit for content consumed before enrolling', async () => {
@@ -101,6 +115,12 @@ describe('GET /pathways/:id', () => {
     expect(typeof step0.url).toBe('string');
     expect(body.steps[1].completed).toBe(false);
     expect(body.current_step).toBe(1);
+
+    // A full pathway resolves kind/glyph/prereq_bundle/continues_pathway to null.
+    expect(body.kind).toBeNull();
+    expect(body.glyph).toBeNull();
+    expect(body.prereq_bundle).toBeNull();
+    expect(body.continues_pathway).toBeNull();
   });
 
   it('stops current_step at the first gap even if a later step was consumed', async () => {
@@ -111,6 +131,34 @@ describe('GET /pathways/:id', () => {
     const body = res.json();
     expect(body.current_step).toBe(1); // stuck behind the STEP_1 gap
     expect(body.completed_steps).toBe(2); // but both consumed steps count toward the total
+  });
+});
+
+describe('GET /pathways/:id — bundles', () => {
+  it('resolves kind/glyph and a prereq_bundle referral to its title', async () => {
+    await makePremium();
+    const res = await app.inject({ method: 'GET', url: `/pathways/${BUNDLE_ID}`, headers: { cookie } });
+    expect(res.statusCode).toBe(200);
+    const body = res.json();
+    expect(body.kind).toBe('bundle');
+    expect(body.glyph).toBe('🦷');
+    expect(body.prereq_bundle).toEqual({ id: PREREQ_BUNDLE_ID, title_fa: 'باندینگ و ادهزیو: شروع کن' });
+    expect(body.continues_pathway).toEqual({ id: 'esthetic', title_fa: expect.any(String) });
+  });
+
+  it('resolves prereq_bundle to null for a bundle with none', async () => {
+    await makePremium();
+    const res = await app.inject({ method: 'GET', url: `/pathways/${PREREQ_BUNDLE_ID}`, headers: { cookie } });
+    expect(res.json().prereq_bundle).toBeNull();
+    expect(res.json().continues_pathway).toEqual({ id: 'biomimetic', title_fa: expect.any(String) });
+  });
+
+  it('only the last step of a bundle carries milestone: true', async () => {
+    await makePremium();
+    const res = await app.inject({ method: 'GET', url: `/pathways/${BUNDLE_ID}`, headers: { cookie } });
+    const steps = res.json().steps as Array<{ milestone: boolean }>;
+    expect(steps.slice(0, -1).every((s) => !s.milestone)).toBe(true);
+    expect(steps.at(-1)!.milestone).toBe(true);
   });
 });
 
@@ -147,6 +195,14 @@ describe('POST /pathways/:id/enroll', () => {
     await makePremium();
     const res = await app.inject({ method: 'POST', url: '/pathways/does-not-exist/enroll', headers: { cookie } });
     expect(res.statusCode).toBe(404);
+  });
+
+  it('enrolls in a bundle the same way as a full pathway', async () => {
+    await makePremium();
+    await createHighlight(BUNDLE_STEP_0.content_id);
+    const res = await app.inject({ method: 'POST', url: `/pathways/${BUNDLE_ID}/enroll`, headers: { cookie } });
+    expect(res.statusCode).toBe(200);
+    expect(res.json().current_step).toBe(1);
   });
 
   it('keeps the current_step cache in sync on later reads (lazy write-back)', async () => {
@@ -187,5 +243,33 @@ describe('GET /me active_pathway', () => {
   it('is absent for a free user with no premium history', async () => {
     const res = await app.inject({ method: 'GET', url: '/me', headers: { cookie } });
     expect(res.json().active_pathway).toBeNull();
+  });
+
+  it('surfaces kind: "bundle" when the active enrollment is a bundle', async () => {
+    await makePremium();
+    await app.inject({ method: 'POST', url: `/pathways/${BUNDLE_ID}/enroll`, headers: { cookie } });
+    const res = await app.inject({ method: 'GET', url: '/me', headers: { cookie } });
+    expect(res.json().active_pathway.id).toBe(BUNDLE_ID);
+    expect(res.json().active_pathway.kind).toBe('bundle');
+  });
+
+  it('omits kind for a full pathway (no key, not null)', async () => {
+    await makePremium();
+    await app.inject({ method: 'POST', url: `/pathways/${PATHWAY_ID}/enroll`, headers: { cookie } });
+    const res = await app.inject({ method: 'GET', url: '/me', headers: { cookie } });
+    expect('kind' in res.json().active_pathway).toBe(false);
+  });
+
+  it('prefers an in-progress bundle over an in-progress full pathway, even when the pathway was started later', async () => {
+    await makePremium();
+    // Bundle enrolled FIRST (older) — if this test only proved "most recent
+    // wins" it would prove nothing about the bundle-priority rule. Enrolling
+    // the full pathway SECOND (newer) is what makes the assertion below
+    // actually test the tie-break, not just recency.
+    await app.inject({ method: 'POST', url: `/pathways/${BUNDLE_ID}/enroll`, headers: { cookie } });
+    await app.inject({ method: 'POST', url: `/pathways/${PATHWAY_ID}/enroll`, headers: { cookie } });
+
+    const res = await app.inject({ method: 'GET', url: '/me', headers: { cookie } });
+    expect(res.json().active_pathway.id).toBe(BUNDLE_ID);
   });
 });

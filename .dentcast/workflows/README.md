@@ -1177,6 +1177,19 @@ keeps the pathway data correct as content grows, ready for activation. It does
 **not** touch the brain, the page, capsules, or links (those are steps 4.7–4.9
 and 5). Do not add pathway data to the brain entry (Hard Rule 6).
 
+**Bundles are out of scope for this step — never auto-join one.** Alongside
+the 15 full pathways, `plus/pathways.json` also carries a handful of **starter
+bundles** (`kind: "bundle"` entries — short, curated subsets of a pathway's
+steps; see `.dentcast/bundles-handoff.md` for the catalog and doctrine). This
+step places a new `content_id` into full pathways only. A new publish is
+**never** automatically added to a bundle, no matter how STRONG its match to
+that bundle's topic reads — bundle membership is an editorial judgment about
+whether the item is core enough to belong in a 5–8-step "just the essentials"
+subset, which is a different question from pathway relevance and is decided
+**only** through an explicit conversation with the founder. If a new item
+looks like an obvious fit for an existing bundle, say so in the report and ask
+— do not place it.
+
 ### 6. Pulse update
 
 Use the sentence + hyperlink word from intake Question 5. **No spoilers (see Question 5): the line names the piece by its title and never narrates its decision/mechanism/finding/conclusion.** If the drafted sentence describes content beyond the title, rewrite it before inserting — never ship a Pulse line that summarizes the article.

@@ -198,8 +198,10 @@ a.dcp-progress-row:hover { text-decoration: none; }
 
 /* ---- pathway (dashboard "مسیر یادگیری" block) ----------------------------- */
 .dcp-pw-dash { display: flex; flex-direction: column; gap: 10px; }
+.dcp-pw-dash-title-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 .dcp-pw-dash-title { font-weight: 700; color: var(--txt) !important; }
 .dcp-pw-dash-foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; font-size: .85rem; color: var(--txt2, #4a5f85); }
+.dcp-pw-dash-next { font-size: .82rem; color: var(--txt2, #4a5f85); }
 .dcp-pw-alllink { color: var(--ac, #0b5fff) !important; font-weight: 600; white-space: nowrap; }
 
 /* A free user's teaser for a LIVE premium feature (Leitner review, pathways,

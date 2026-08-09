@@ -9,6 +9,7 @@ import { openCollectionPicker } from './js/collections.js';
 import { el } from './js/util.js';
 import { initHomeCard } from './js/home-card.js';
 import { initHomeFeatures } from './js/home-features.js';
+import { initHomeBundles } from './js/home-bundles.js';
 import { initHeader } from './js/header.js';
 import { initTourAutostart } from './js/tour.js';
 import { initReadingTracker } from './js/reading.js';
@@ -360,6 +361,7 @@ function boot() {
     initListening(); // episode-page audio → episode_listened
     initHomeCard(); // homepage personal card on all viewports (desktop + mobile)
     initHomeFeatures(); // homepage premium section, under the ad card (both layouts)
+    initHomeBundles(); // homepage "از کجا شروع کنم؟" starter-bundle rail (both layouts)
     markViewed(detectContentId()); // mark THIS content page seen on open (any folder, incl. episodes)
     // Credit shares of THIS page. Wired at boot rather than inside the article
     // path on purpose: dc-nav.js puts its share chip on every page built on the
