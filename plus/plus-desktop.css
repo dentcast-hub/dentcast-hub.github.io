@@ -45,13 +45,7 @@
   a.dcp-pw-card:hover { border-color: var(--chip-bd, rgba(11,95,255,.20)); transform: translateY(-2px); }
   .dcp-pw-step:hover .dcp-pw-step-title { color: var(--ac, #0b5fff); }
 
-  /* Starter bundles: smaller cards than a pathway card, so they run three-up
-     on desktop instead of two (same reasoning as the collections board grid
-     below going three-up). */
-  .dcb-grid { grid-template-columns: repeat(3, 1fr); }
-  a.dcb-card:hover { border-color: color-mix(in srgb, var(--dcp-gold, #b7791f) 35%, transparent); transform: translateY(-2px); }
-
-  /* Homepage bundle rail cards. */
+  /* Bundle rail cards (homepage strip + the catalog's «باندل‌های شروع» band). */
   a.dcb-railcard:hover { transform: translateY(-2px); }
 
   /* Collections: board grid runs three-up, pin masonry runs two columns,

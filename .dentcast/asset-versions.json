@@ -4,8 +4,8 @@
     "hash": "1397aa3320ff2918"
   },
   "/dc-nav.js": {
-    "v": 59,
-    "hash": "0feff29a270dcbe2"
+    "v": 60,
+    "hash": "dfc5ae66e184997b"
   },
   "/global-search-ui.js": {
     "v": 5,
@@ -48,12 +48,12 @@
     "hash": "d81192e4c33e1683"
   },
   "/plus/js/pathway-page.js": {
-    "v": 12,
-    "hash": "f6d0df51367ed87c"
+    "v": 13,
+    "hash": "b7c0d02d71ef5318"
   },
   "/plus/js/pathways-page.js": {
-    "v": 12,
-    "hash": "a6fbbdada887aa33"
+    "v": 13,
+    "hash": "e17bd0227c4961d8"
   },
   "/plus/js/pay-result-page.js": {
     "v": 9,
@@ -72,15 +72,15 @@
     "hash": "d108f3f3cc7366d1"
   },
   "/plus/plus-desktop.css": {
-    "v": 6,
-    "hash": "580a8b01da0c4967"
+    "v": 7,
+    "hash": "fb9348a5cf72e5f3"
   },
   "/plus/plus-pages.css": {
     "v": 12,
     "hash": "a78727d9937039b8"
   },
   "/plus/plus.css": {
-    "v": 14,
-    "hash": "e72de0971e370b24"
+    "v": 15,
+    "hash": "f859d267eb724572"
   }
 }
