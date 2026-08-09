@@ -6,7 +6,8 @@ import { finalizeWeek } from '../src/services/league-finalize.js';
 import { getLeagueConfig } from '../src/services/league-config.js';
 import { config } from '../src/config.js';
 import { resetRateLimits } from '../src/services/rate-limit.js';
-import { tierCapacity } from '../src/services/league.js';
+import { tierCapacity, leagueWeek } from '../src/services/league.js';
+import { dayInTz } from '../src/services/time.js';
 
 const WEEK = '2026-01-03';       // opaque week key for finalize unit tests
 let seq = 0;
@@ -802,6 +803,47 @@ describe('validity — the floor OR a full group', () => {
     );
     const full = await app.inject({ method: 'GET', url: '/league', headers: { cookie } });
     expect(full.json().neutral_mode).toBe(false);
+    await app.close();
+  });
+});
+
+describe('GET /admin/league — validity reported the way it is decided', () => {
+  const auth = 'Basic ' + Buffer.from(
+    `${config.admin.user}:${config.admin.password}`,
+  ).toString('base64');
+
+  it('does not file a FULL group under groups_below_validity', async () => {
+    // The dashboard used to apply the floor alone. Once a group holding its
+    // whole tier became valid (league-finalize.ts), that made this screen say
+    // the fix had not worked — on the screen someone opens to check it had.
+    const app = await makeApp();
+    await seedGroup('composite', 5, [
+      { xp: 90, at: T(1) }, { xp: 70, at: T(2) }, { xp: 50, at: T(3) },
+      { xp: 30, at: T(4) }, { xp: 10, at: T(5) },
+    ], leagueWeek(dayInTz(new Date(), 'Asia/Tehran')).week_start);
+
+    const res = await app.inject({
+      method: 'GET', url: '/admin/league', headers: { authorization: auth },
+    });
+    expect(res.statusCode).toBe(200);
+    expect(res.json().groups_below_validity, 'full = valid, whatever its size').toEqual([]);
+    await app.close();
+  });
+
+  it('still files a group that left room, and says how much room', async () => {
+    const app = await makeApp();
+    await seedGroup('composite', 15, [
+      { xp: 90, at: T(1) }, { xp: 70, at: T(2) }, { xp: 50, at: T(3) },
+      { xp: 30, at: T(4) }, { xp: 10, at: T(5) },
+    ], leagueWeek(dayInTz(new Date(), 'Asia/Tehran')).week_start);
+
+    const res = await app.inject({
+      method: 'GET', url: '/admin/league', headers: { authorization: auth },
+    });
+    const [row] = res.json().groups_below_validity;
+    expect(row.size).toBe(5);
+    expect(row.capacity, 'the reason, not just the fact').toBe(15);
+    expect(row.tier).toBe('composite');
     await app.close();
   });
 });
