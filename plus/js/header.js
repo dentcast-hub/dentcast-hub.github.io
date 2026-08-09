@@ -19,6 +19,7 @@ import { maybeShowPremiumPopup } from './premium-popup.js';
 import { renderNotices, NOTICES_SEEN_EVENT } from './notices.js';
 import { maybeCelebrate, ACHIEVEMENTS_SEEN_EVENT } from './achievements.js';
 import { subscriptionMenuLabel, pricingHref } from './premium-cta.js';
+import { installLibraryGate } from './library-gate.js';
 
 // Inlined so it can never 404. Built via innerHTML on an HTML button (not
 // createElement('svg')) so the parser creates properly namespaced SVG nodes;
@@ -178,6 +179,13 @@ function buildUserPerson(user) {
 }
 
 export async function initHeader() {
+  // BEFORE the early returns below, and deliberately so: the cabinet's premium
+  // gate has to be armed on every page, including ones where this function
+  // finds no topbar to enhance or has already run. It is idempotent and
+  // delegated from `document`, so it does not care when dc-nav.js injects
+  // #btn-cabinet or when moveToDrawer relocates it a few lines further down.
+  try { installLibraryGate(); } catch (_) { /* non-fatal — the gate fails open */ }
+
   // The homepage ships TWO topbars: the mobile one (inside #mobile-shell, which
   // is display:none on the desktop UI) and the desktop one (inside the
   // .dcd-col-c header). A plain querySelector always returns the first (mobile)

@@ -4507,7 +4507,7 @@ scrollBody.addEventListener('touchend',e=>{
 </script>
 
 <!-- Theme toggle behavior moved to /dc-nav.js (single source) -->
-<script src="/dc-nav.js?v=54" defer></script>
+<script src="/dc-nav.js?v=55" defer></script>
 
 <!-- Toolbar drawer toggle is handled by /dc-nav.js (single source) -->
 
@@ -4646,69 +4646,17 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 
 <script>
 /* ── LIBRARY CARD (premium) ──
-   The cabinet used to be reachable only from the hamburger's tool tray, which
-   is why 2200 curated papers were the least-known thing on the site.
+   The logic moved to /plus/js/library-gate.js and is installed from
+   plus/js/header.js, which runs on every page. It used to live here, bound to
+   #card-library alone — so the gate held on this card and nowhere else, while
+   the desktop topbar icon (#dcd-hdr-cabinet, a plain link a few hundred lines
+   up) and the hamburger's «کتابخانه» tool (#btn-cabinet, injected by dc-nav.js
+   into EVERY page) walked straight in. See that module for the three rules the
+   gate keeps: hint-then-confirm for the badge, fail-open on a dead /me, and the
+   shared gateCard/premiumCta wording.
 
-   Three rules this follows:
-   • The lock badge is drawn from a HINT, never from a guess. spot.js already
-     records this device's last CONFIRMED viewer class in localStorage, so a
-     premium user's first paint does not flash a lock while /me is in flight —
-     the same trick that keeps a premium user from seeing an ad appear and then
-     vanish. The hint only decides the BADGE; the tap always waits for /me.
-   • It fails OPEN, never closed. If /me cannot be asked at all (meStatus()
-     'error' — offline, API down), the tap goes through. A subscriber locked
-     out by a network blip is a far worse outcome than an anonymous visitor
-     getting in, and this is a product gate, not access control: the cabinet is
-     a static page and the catalogue is public.
-   • The message is the shared gateCard + premiumCta, so the wording and the
-     ?from= tracking live where every other premium gate's do. */
-(function(){
-  var card = document.getElementById('card-library');
-  if (!card) return;
-  var badge = document.getElementById('card-library-lock');
-  var CABINET = '/dentcast_cabinet_search.html';
-
-  function setBadge(isPremium){ if (badge) badge.style.display = isPremium ? 'none' : ''; }
-  try { if (localStorage.getItem('dcAds.vc') === 'premium') setBadge(true); } catch(e){}
-
-  /* Resolved the same way spot.js resolves it: the answer AND why it answered,
-     because "confirmed anonymous" and "could not ask" must not behave alike. */
-  function probe(){
-    return import('/plus/js/api.js')
-      .then(function(m){ return m.currentUser().then(function(user){ return { user: user, status: m.meStatus() }; }); })
-      .catch(function(){ return { user: null, status: 'error' }; });
-  }
-
-  function openGate(){
-    return Promise.all([import('/plus/js/sheet.js'), import('/plus/js/premium-cta.js')])
-      .then(function(mods){
-        mods[0].openSheet(mods[0].gateCard({
-          title: 'کتابخانهٔ دنت‌کست ویژه‌ی پریمیوم است',
-          sub: 'بیش از ۲۲۰۰ مقالهٔ دندان‌پزشکی، دسته‌بندی‌شده و قابل جستجو — با کلید یافته و خط پایانی بالینیِ هر مقاله.',
-          cta: mods[1].premiumCta('gate-library-archive'),
-        }));
-      })
-      .catch(function(){ window.location.href = '/plus/pricing.html?from=gate-library-archive'; });
-  }
-
-  function open(){
-    probe().then(function(p){
-      var isPremium = !!(p.user && p.user.tier === 'premium');
-      if (p.status !== 'error') setBadge(isPremium);
-      if (isPremium || p.status === 'error') { window.location.href = CABINET; return; }
-      openGate();
-    });
-  }
-
-  card.addEventListener('click', open);
-  card.addEventListener('keydown', function(e){
-    if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') { e.preventDefault(); open(); }
-  });
-
-  /* Settle the badge without waiting for a tap, so a subscriber is never left
-     looking at a lock that isn't theirs. */
-  probe().then(function(p){ if (p.status !== 'error') setBadge(!!(p.user && p.user.tier === 'premium')); });
-})();
+   Nothing is left here on purpose: a second copy of the decision is how the
+   three doors came to disagree in the first place. */
 </script>
 
 <script>
