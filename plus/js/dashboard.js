@@ -1,7 +1,7 @@
 // Reusable dashboard renderer. Used by the /plus/ page AND the header overlay, so
 // the dashboard opens the same way from anywhere. Site design language (light),
 // not a separate dark theme (prototype-feedback override).
-import { el, faNum, streakIsActiveToday } from './util.js';
+import { el, faNum, streakIsActiveToday, icon } from './util.js';
 import { api } from './api.js';
 import { getModel, contentInfo, FOLDER_EN } from './content-index.js';
 import { leagueEntryButton } from './league.js';
@@ -286,7 +286,7 @@ function pathwayBlock(me) {
     el: el('div', { class: 'dcp-pw-dash' }, [
       el('div', { class: 'dcp-pw-dash-title-row' }, [
         el('a', { class: 'dcp-pw-dash-title', href: '/plus/pathway.html?id=' + encodeURIComponent(p.id) }, p.title_fa),
-        p.kind === 'bundle' ? el('span', { class: 'dcb-chip' }, '⚡ باندل') : null,
+        p.kind === 'bundle' ? el('span', { class: 'dcb-chip' }, [icon('icon-lightning'), ' باندل']) : null,
       ]),
       el('div', { class: 'dcp-progress-track' }, el('div', { class: 'dcp-progress-fill', style: 'width:' + pct + '%' })),
       el('div', { class: 'dcp-pw-dash-foot' }, [

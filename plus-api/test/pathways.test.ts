@@ -80,7 +80,7 @@ describe('GET /pathways', () => {
     expect(occlusion.glyph).toBeNull();
     const bundle = list.find((p) => p.id === BUNDLE_ID)!;
     expect(bundle.kind).toBe('bundle');
-    expect(bundle.glyph).toBe('🦷');
+    expect(bundle.glyph).toBe('icon-tooth');
   });
 
   it('gives progress credit for content consumed before enrolling', async () => {
@@ -141,8 +141,8 @@ describe('GET /pathways/:id — bundles', () => {
     expect(res.statusCode).toBe(200);
     const body = res.json();
     expect(body.kind).toBe('bundle');
-    expect(body.glyph).toBe('🦷');
-    expect(body.prereq_bundle).toEqual({ id: PREREQ_BUNDLE_ID, title_fa: 'باندینگ و ادهزیو: شروع کن' });
+    expect(body.glyph).toBe('icon-tooth');
+    expect(body.prereq_bundle).toEqual({ id: PREREQ_BUNDLE_ID, title_fa: 'باندینگ و ادهزیو: شروع کن', glyph: 'icon-droplet' });
     expect(body.continues_pathway).toEqual({ id: 'esthetic', title_fa: expect.any(String) });
   });
 

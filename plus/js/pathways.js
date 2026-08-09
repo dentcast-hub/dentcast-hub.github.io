@@ -4,9 +4,16 @@
 // complete" button here. "شروع مسیر" only starts the API tracking a
 // current_step cache so GET /me can headline it on the dashboard; browsing a
 // pathway before that still shows real credit for content already consumed.
-import { el, faNum } from './util.js';
+import { el, faNum, icon } from './util.js';
 import { api } from './api.js';
 import { FOLDER_EN } from './content-index.js';
+
+/** A "lightning + label" chip — a leading icon from the shared sprite
+ * (assets/icons/icons.svg), never a raw emoji. Used for every .dcb-chip
+ * in this module. */
+function boltChip(label) {
+  return el('span', { class: 'dcb-chip' }, [icon('icon-lightning'), ' ' + label]);
+}
 
 function progressBar(completed, total) {
   const pct = total > 0 ? Math.max(0, Math.min(100, Math.round((completed / total) * 100))) : 0;
@@ -44,7 +51,7 @@ function bundleCard(p) {
       : null;
 
   return el('a', { class: 'dcb-card', href: '/plus/pathway.html?id=' + encodeURIComponent(p.id) }, [
-    el('span', { class: 'dcb-card-glyph', 'aria-hidden': 'true' }, p.glyph || '⚡'),
+    el('span', { class: 'dcb-card-glyph' }, icon(p.glyph || 'icon-lightning')),
     el('h4', { class: 'dcb-card-title' }, p.title_fa),
     progressBar(p.completed_steps, p.total_steps),
     el('div', { class: 'dcb-card-foot' }, [
@@ -78,7 +85,7 @@ export async function renderPathwaysList(container) {
   if (bundles.length) {
     sections.push(el('div', { class: 'dcb-sec-head' }, [
       el('h3', { class: 'dcb-sec-title' }, 'باندل‌های شروع'),
-      el('span', { class: 'dcb-chip' }, '⚡ فشرده'),
+      boltChip('فشرده'),
     ]));
     sections.push(el('p', { class: 'dcp-sec-hint' },
       'فقط هسته‌ی هر موضوع، در چند قدم — بدون نکته‌های حاشیه‌ای. برای وقتی که می‌خواهید از همین امروز شروع کنید.'));
@@ -141,7 +148,7 @@ function enrollArea(id, enrolled) {
 function prereqCard(prereq) {
   if (!prereq) return null;
   return el('a', { class: 'dcb-prereq', href: '/plus/pathway.html?id=' + encodeURIComponent(prereq.id) }, [
-    el('span', { 'aria-hidden': 'true' }, '🧲'),
+    icon(prereq.glyph || 'icon-lightning'),
     el('span', {}, [
       'پیش‌نیاز: اگر با این موضوع آشنا نیستید، اول باندل «',
       el('b', {}, prereq.title_fa),
@@ -182,7 +189,7 @@ export async function renderPathwayDetail(container, id) {
   const pct = data.total_steps > 0 ? Math.round((data.completed_steps / data.total_steps) * 100) : 0;
 
   const head = el('div', { class: 'dcp-pw-detail-head' }, [
-    isBundle ? el('span', { class: 'dcb-chip' }, '⚡ باندل شروع') : null,
+    isBundle ? boltChip('باندل شروع') : null,
     el('h2', { class: 'dcp-pw-detail-title' }, data.title_fa),
     el('p', { class: 'dcp-sec-hint' }, data.description_fa),
     isBundle ? prereqCard(data.prereq_bundle) : null,

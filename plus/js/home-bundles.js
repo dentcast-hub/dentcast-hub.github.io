@@ -9,23 +9,25 @@
 // signed-out or free visitor — most of this page's audience — could never see
 // it. Keep this list in step with the bundle entries in plus/pathways.json,
 // same convention as home-features.js's CARDS staying in step with
-// PREMIUM_FEATURES.
-import { el, faNum } from './util.js';
+// PREMIUM_FEATURES. `glyph` is a symbol id from the shared icon sprite
+// (assets/icons/icons.svg — the single source of truth for every icon on the
+// site; see assets/icons/README.md), never a raw emoji.
+import { el, faNum, icon } from './util.js';
 import { currentUser, api } from './api.js';
 import { pricingHref, premiumCta } from './premium-cta.js';
 import { openSheet, gateCard } from './sheet.js';
 
 const BUNDLES = [
-  { id: 'bundle-laminate', glyph: '🦷', title: 'لمینیت: شروع کن', steps: 6 },
-  { id: 'bundle-bonding', glyph: '🧲', title: 'باندینگ و ادهزیو: شروع کن', steps: 5 },
-  { id: 'bundle-ceramic-select', glyph: '🏺', title: 'انتخاب سرامیک: شروع کن', steps: 6 },
-  { id: 'bundle-ceramic-cement', glyph: '🧪', title: 'آماده‌سازی سطح و سمان سرامیک: شروع کن', steps: 7 },
-  { id: 'bundle-post-core', glyph: '🪛', title: 'پست و کور: شروع کن', steps: 7 },
-  { id: 'bundle-implant-parts', glyph: '🔩', title: 'اجزای پروتز ایمپلنت: شروع کن', steps: 7 },
-  { id: 'bundle-implant-surgery', glyph: '🗡️', title: 'تصمیم‌های جراحی ایمپلنت: شروع کن', steps: 6 },
-  { id: 'bundle-occlusion-rehab', glyph: '⚖️', title: 'اکلوژن در بازسازی: شروع کن', steps: 7 },
-  { id: 'bundle-biomimetic', glyph: '🌿', title: 'بیومیمتیک: شروع کن', steps: 6 },
-  { id: 'bundle-crown-prep', glyph: '⚙️', title: 'تراش و قالب‌گیری: شروع کن', steps: 6 },
+  { id: 'bundle-laminate', glyph: 'icon-tooth', title: 'لمینیت: شروع کن', steps: 6 },
+  { id: 'bundle-bonding', glyph: 'icon-droplet', title: 'باندینگ و ادهزیو: شروع کن', steps: 5 },
+  { id: 'bundle-ceramic-select', glyph: 'icon-ceramic', title: 'انتخاب سرامیک: شروع کن', steps: 6 },
+  { id: 'bundle-ceramic-cement', glyph: 'icon-flask', title: 'آماده‌سازی سطح و سمان سرامیک: شروع کن', steps: 7 },
+  { id: 'bundle-post-core', glyph: 'icon-post', title: 'پست و کور: شروع کن', steps: 7 },
+  { id: 'bundle-implant-parts', glyph: 'icon-implant', title: 'اجزای پروتز ایمپلنت: شروع کن', steps: 7 },
+  { id: 'bundle-implant-surgery', glyph: 'icon-scalpel', title: 'تصمیم‌های جراحی ایمپلنت: شروع کن', steps: 6 },
+  { id: 'bundle-occlusion-rehab', glyph: 'icon-occlusion', title: 'اکلوژن در بازسازی: شروع کن', steps: 7 },
+  { id: 'bundle-biomimetic', glyph: 'icon-sprout', title: 'بیومیمتیک: شروع کن', steps: 6 },
+  { id: 'bundle-crown-prep', glyph: 'icon-tooth-restoration', title: 'تراش و قالب‌گیری: شروع کن', steps: 6 },
 ];
 
 const SLOT_IDS = ['dcHomeBundles', 'dcdHomeBundles'];
@@ -34,7 +36,7 @@ function bundleHref(id) { return '/plus/pathway.html?id=' + encodeURIComponent(i
 
 function bundleRailCard(b) {
   const card = el('a', { class: 'dcb-railcard', href: bundleHref(b.id) }, [
-    el('span', { class: 'dcb-railcard-glyph', 'aria-hidden': 'true' }, b.glyph),
+    el('span', { class: 'dcb-railcard-glyph' }, icon(b.glyph)),
     el('p', { class: 'dcb-railcard-title' }, b.title),
     el('div', { class: 'dcb-railcard-foot' }, [
       el('span', { class: 'dcb-railcard-meta' }, faNum(b.steps) + ' قدم'),
@@ -52,7 +54,8 @@ function section(isPremium) {
   return el('div', { class: 'dcb-band-inner' }, [
     el('div', { class: 'dcb-band-row' }, [
       el('h2', { class: 'dcb-band-title' }, [
-        '⚡ از کجا شروع کنم؟',
+        icon('icon-lightning'),
+        ' از کجا شروع کنم؟',
         el('span', { class: 'dcb-band-count' }, faNum(BUNDLES.length) + ' باندل'),
       ]),
       more,

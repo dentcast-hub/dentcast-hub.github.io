@@ -158,7 +158,7 @@ append می‌شوند (ترتیب مسیرهای موجود دست نمی‌خ�
 {
   "id": "bundle-laminate",
   "kind": "bundle",
-  "glyph": "🦷",
+  "glyph": "icon-tooth",
   "title_fa": "لمینیت: شروع کن",
   "description_fa": "هسته‌ی لمینیت سرامیکی — تراش، آماده‌سازی، اکلوژن و سمان در ۶ قدم.",
   "premium": true,
@@ -171,6 +171,17 @@ append می‌شوند (ترتیب مسیرهای موجود دست نمی‌خ�
 
 - `kind` غایب = مسیر کامل (سازگاری عقب‌رو). شناسه‌ها هم پیشوند `bundle-`
   دارند تا برای ابزارهایی که `kind` نمی‌فهمند هم خوانا باشد.
+- `glyph` یک **symbol id از کتابخانه‌ی مشترک آیکون سایت** است
+  (`assets/icons/icons.svg` — منبع واحد هر آیکون؛ ببین
+  `assets/icons/README.md`)، هرگز ایموجی خام. رندر با `icon()` در
+  `plus/js/util.js` (`<svg class="dc-icon"><use href="…"/></svg>`). چهار
+  آیکون تازه برای این فیچر ساخته شد (`icon-droplet`، `icon-ceramic`،
+  `icon-post`، `icon-scalpel`) — بقیه از کتابخانه‌ی موجود انتخاب شدند
+  (`icon-tooth`، `icon-flask`، `icon-implant`، `icon-occlusion`،
+  `icon-sprout`، `icon-tooth-restoration`). آیکون جدید لازم شد؟ اول کتابخانه
+  را بگرد، بعد طبق «Adding a new icon» در همان README یک `<symbol>` تازه
+  اضافه کن و به فهرست README هم اضافه‌اش کن — هیچ آیکونی جای دیگری تعریف
+  نمی‌شود.
 - `prereq_bundle` / `continues_pathway` اختیاری‌اند؛ ارجاع به id موجود در
   همین فایل. UI پیش‌نیاز را فقط به‌صورت کارت ارجاعی نشان می‌دهد (هیچ
   قفل‌کردنی بر اساس پیش‌نیاز وجود ندارد).

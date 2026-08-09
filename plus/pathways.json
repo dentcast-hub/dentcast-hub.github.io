@@ -2529,7 +2529,7 @@
   {
     "id": "bundle-bonding",
     "kind": "bundle",
-    "glyph": "🧲",
+    "glyph": "icon-droplet",
     "title_fa": "باندینگ و ادهزیو: شروع کن",
     "description_fa": "زبان مشترک همه‌ی درمان‌های ادهزیو — نسل‌ها، IDS و سایلان در ۵ قدم.",
     "premium": true,
@@ -2561,7 +2561,7 @@
   {
     "id": "bundle-laminate",
     "kind": "bundle",
-    "glyph": "🦷",
+    "glyph": "icon-tooth",
     "title_fa": "لمینیت: شروع کن",
     "description_fa": "هسته‌ی لمینیت سرامیکی — تراش، آماده‌سازی، اکلوژن و سمان در ۶ قدم.",
     "premium": true,
@@ -2598,7 +2598,7 @@
   {
     "id": "bundle-ceramic-select",
     "kind": "bundle",
-    "glyph": "🏺",
+    "glyph": "icon-ceramic",
     "title_fa": "انتخاب سرامیک: شروع کن",
     "description_fa": "کدام سرامیک برای کدام کار — از طبقه‌بندی تا ایمکس و زیرکونیا در ۶ قدم.",
     "premium": true,
@@ -2634,7 +2634,7 @@
   {
     "id": "bundle-ceramic-cement",
     "kind": "bundle",
-    "glyph": "🧪",
+    "glyph": "icon-flask",
     "title_fa": "آماده‌سازی سطح و سمان سرامیک: شروع کن",
     "description_fa": "از آماده‌سازی سطح تا انتخاب سمان — هر آنچه بین رستوریشن و دندان می‌نشیند، در ۷ قدم.",
     "premium": true,
@@ -2675,7 +2675,7 @@
   {
     "id": "bundle-post-core",
     "kind": "bundle",
-    "glyph": "🪛",
+    "glyph": "icon-post",
     "title_fa": "پست و کور: شروع کن",
     "description_fa": "بازسازی دندان اندوشده — فایبر پست، فرول و باند به ریشه در ۷ قدم.",
     "premium": true,
@@ -2715,7 +2715,7 @@
   {
     "id": "bundle-implant-parts",
     "kind": "bundle",
-    "glyph": "🔩",
+    "glyph": "icon-implant",
     "title_fa": "اجزای پروتز ایمپلنت: شروع کن",
     "description_fa": "کانکشن، اباتمنت و پیچ — الفبای قطعات پروتز ایمپلنت در ۷ قدم.",
     "premium": true,
@@ -2755,7 +2755,7 @@
   {
     "id": "bundle-implant-surgery",
     "kind": "bundle",
-    "glyph": "🗡️",
+    "glyph": "icon-scalpel",
     "title_fa": "تصمیم‌های جراحی ایمپلنت: شروع کن",
     "description_fa": "شش تصمیم پایه‌ی جراحی — از سینوس‌لیفت تا زمان لود و شکست زودهنگام.",
     "premium": true,
@@ -2791,7 +2791,7 @@
   {
     "id": "bundle-occlusion-rehab",
     "kind": "bundle",
-    "glyph": "⚖️",
+    "glyph": "icon-occlusion",
     "title_fa": "اکلوژن در بازسازی: شروع کن",
     "description_fa": "الگوی طرفی، بعد عمودی و کانسپت دال — ستون‌های اکلوژن بازسازی در ۷ قدم.",
     "premium": true,
@@ -2831,7 +2831,7 @@
   {
     "id": "bundle-biomimetic",
     "kind": "bundle",
-    "glyph": "🌿",
+    "glyph": "icon-sprout",
     "title_fa": "بیومیمتیک: شروع کن",
     "description_fa": "فلسفه و چهار تکنیک ستون بیومیمتیک — IDS، DME، DWT و PSZ در ۶ قدم.",
     "premium": true,
@@ -2868,7 +2868,7 @@
   {
     "id": "bundle-crown-prep",
     "kind": "bundle",
-    "glyph": "⚙️",
+    "glyph": "icon-tooth-restoration",
     "title_fa": "تراش و قالب‌گیری: شروع کن",
     "description_fa": "اصول Goodacre، فرم مقاومت و قالب‌گیری دومرحله‌ای — پایه‌ی پروتز ثابت در ۶ قدم.",
     "premium": true,

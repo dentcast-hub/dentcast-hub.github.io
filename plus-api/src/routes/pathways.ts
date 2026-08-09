@@ -80,9 +80,9 @@ export async function pathwayRoutes(app: FastifyInstance): Promise<void> {
     // completed_at current for enrolled users without a separate "advance" call.
     if (enrolled) await syncEnrollmentCache(userId, id, progress);
 
-    // Bundle-only referral links, resolved to a title so the card needs no
-    // second lookup. Dangling ids (a referenced bundle/pathway later removed)
-    // resolve to null rather than a broken link.
+    // Bundle-only referral links, resolved to a title + icon so the card
+    // needs no second lookup. Dangling ids (a referenced bundle/pathway later
+    // removed) resolve to null rather than a broken link.
     const prereq = pathway.prereq_bundle ? getPathwayById(pathway.prereq_bundle) : null;
     const continuesInto = pathway.continues_pathway ? getPathwayById(pathway.continues_pathway) : null;
 
@@ -92,7 +92,7 @@ export async function pathwayRoutes(app: FastifyInstance): Promise<void> {
       glyph: pathway.glyph ?? null,
       title_fa: pathway.title_fa,
       description_fa: pathway.description_fa,
-      prereq_bundle: prereq ? { id: prereq.id, title_fa: prereq.title_fa } : null,
+      prereq_bundle: prereq ? { id: prereq.id, title_fa: prereq.title_fa, glyph: prereq.glyph ?? null } : null,
       continues_pathway: continuesInto ? { id: continuesInto.id, title_fa: continuesInto.title_fa } : null,
       enrolled,
       started_at: e.rows[0]?.started_at ?? null,

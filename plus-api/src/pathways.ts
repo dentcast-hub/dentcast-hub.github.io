@@ -20,7 +20,8 @@ export interface Pathway {
   id: string;
   /** Absent = a full pathway (v1 default). 'bundle' = a short, curated starter subset. */
   kind?: 'bundle';
-  /** Bundle-only: one emoji shown on its cards. */
+  /** Bundle-only: a symbol id from the shared sprite (assets/icons/icons.svg,
+   * e.g. 'icon-tooth'), rendered on its cards via plus/js/util.js's icon(). */
   glyph?: string;
   title_fa: string;
   description_fa: string;

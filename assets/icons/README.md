@@ -213,6 +213,15 @@ Added for migrating in-body emoji like <svg class="dc-svg-icon" viewBox="0 0 24 
 | `icon-microscope` | Microscope body + arm + lens      | Research / lab / evidence / science      |
 | `icon-article`    | Page outline + text lines         | Research article / paper / document      |
 
+### Bundle catalog (added 2026-08-09, for the starter-bundle glyphs)
+
+| Symbol id       | Visual                              | Intent                                        |
+|-----------------|--------------------------------------|-----------------------------------------------|
+| `icon-droplet`  | Teardrop                             | Bonding / adhesive / resin                     |
+| `icon-ceramic`  | Narrow-necked vase                   | Ceramic material / pottery                     |
+| `icon-post`     | Capped peg tapering into a root      | Post-and-core                                  |
+| `icon-scalpel`  | Angled blade + handle                | Surgery / surgical procedure                   |
+
 ### Editorial — direction
 
 These are **physical-direction** glyphs. The library does not auto-mirror — pick the visual you want.
