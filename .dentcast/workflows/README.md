@@ -207,7 +207,9 @@ Phase 0 — Parts 1 & 2 only, no publish.)
 
 ### Question 5 — Pulse sentence
 
-Per **Hard Rule 14**: if this category has an established Pulse phrasing convention (previous entries of this type follow a consistent pattern), draft the sentence yourself in that pattern — including which word gets hyperlinked — and state it directly rather than asking an open question; the hyperlink target is the new content's page URL in its own category's directory. Report the drafted line plainly so the user can correct it if they want something different.
+**No spoilers — the Pulse line names the piece, it never narrates it.** A Pulse line announces that something new was published; it is not a summary and must never reveal the content's decision, mechanism, finding, or conclusion. Reference the **title only** (verbatim or near-verbatim as the link text, optionally inside a short announcement frame like «یک اینسایت بالینی با عنوانِ «…» منتشر شد») — never a clause describing *what the piece is about* beyond its own title («درباره‌ی تصمیمِ …», «راهکاری برای …» that paraphrases the finding, etc.). If the title itself is the natural link text, that is sufficient and preferred. This applies to every category and every future publish — it is not a one-off preference.
+
+Per **Hard Rule 14**: if this category has an established Pulse phrasing convention (previous entries of this type follow a consistent pattern), draft the sentence yourself in that pattern — including which word gets hyperlinked — and state it directly rather than asking an open question; the hyperlink target is the new content's page URL in its own category's directory. Report the drafted line plainly so the user can correct it if they want something different. **Older Pulse lines that describe content beyond the title are a backlog, not a pattern to copy forward (Hard Rule 11's spirit)** — always draft the new line to the no-spoiler standard above, even where precedent doesn't.
 
 Only ask when there is genuine ambiguity — no established convention to follow, or the category's Pulse phrasing varies enough that a pick isn't obvious:
 
@@ -1177,7 +1179,7 @@ and 5). Do not add pathway data to the brain entry (Hard Rule 6).
 
 ### 6. Pulse update
 
-Use the sentence + hyperlink word from intake Question 5.
+Use the sentence + hyperlink word from intake Question 5. **No spoilers (see Question 5): the line names the piece by its title and never narrates its decision/mechanism/finding/conclusion.** If the drafted sentence describes content beyond the title, rewrite it before inserting — never ship a Pulse line that summarizes the article.
 
 - Locate the Pulse section in `index.html` (or its data source if data-driven).
 - Insert the new sentence at the **absolute top** of the Pulse section — it becomes the first (highest) line, above every existing line.
