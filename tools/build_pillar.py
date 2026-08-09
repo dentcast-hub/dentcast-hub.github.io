@@ -1262,7 +1262,7 @@ def render_page(slug, cfg, intro_html, flat_ordered):
         '<!-- Theme toggle behavior moved to /dc-nav.js (single source) -->\n'
         '<script src="/global-search.js?v=9"></script>\n'
         '<script src="/global-search-ui.js?v=5"></script>\n'
-        '<script src="/dc-nav.js?v=51" defer></script>\n'
+        '<script src="/dc-nav.js?v=55" defer></script>\n'
         + PREMIUM_SCRIPT_TAG +
         '\n'
         '</body>\n'
@@ -1853,7 +1853,7 @@ def _render_index_page(pillars_info, cards_html):
         '<!-- Theme toggle behavior moved to /dc-nav.js (single source) -->\n'
         '<script src="/global-search.js?v=9"></script>\n'
         '<script src="/global-search-ui.js?v=5"></script>\n'
-        '<script src="/dc-nav.js?v=51" defer></script>\n'
+        '<script src="/dc-nav.js?v=55" defer></script>\n'
         + PREMIUM_SCRIPT_TAG +
         '\n'
         '</body>\n'
@@ -2567,7 +2567,7 @@ _GLOSSARY_TAIL = """<div class="dc-global-filter-box" id="dcGlobalBox">
   <div class="dc-results-box" id="dcResults"></div>
 </div>
 <script src="/global-search.js?v=9" defer></script>
-<script src="/dc-nav.js?v=51" defer></script>
+<script src="/dc-nav.js?v=55" defer></script>
 </body>
 </html>
 """

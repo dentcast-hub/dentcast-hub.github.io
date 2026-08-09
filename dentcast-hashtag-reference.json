@@ -364,7 +364,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 81,
+   "count": 82,
    "content_ids": [
     "episodes/episode-122-1",
     "episodes/episode-122-2",
@@ -446,7 +446,8 @@
     "insight/insight-59",
     "insight/insight-60",
     "insight/insight-61",
-    "insight/insight-62"
+    "insight/insight-62",
+    "insight/insight-63"
    ]
   },
   {
@@ -967,6 +968,52 @@
    ]
   },
   {
+   "key": "روکش_ایمپلنت",
+   "tag": "#روکش_ایمپلنت",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "روکشِ متکی بر ایمپلنت، در تمایز با روکش روی دندان طبیعی.",
+   "use_when": "مقاله تصمیمش مختص روکش ایمپلنت باشد.",
+   "aliases": [
+    "implant crown",
+    "روکش روی ایمپلنت",
+    "روکش ایمپلنتی",
+    "کراون ایمپلنت"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 27,
+   "content_ids": [
+    "episodes/episode-125-1",
+    "episodes/episode-139",
+    "episodes/episode-147",
+    "episodes/episode-148-2",
+    "insight/insight-9",
+    "insight/insight-10",
+    "litecast/lite-CAST10",
+    "litecast/lite-CAST12",
+    "litecast/lite-CAST16",
+    "litecast/lite-CAST18",
+    "dentcast-plus/video-4",
+    "sharehub/share-4",
+    "dentcast-plus/video-5",
+    "metanotes/meta-10",
+    "insight/insight-30",
+    "insight/insight-33",
+    "chairside/chairside-12",
+    "chairside/chairside-17",
+    "insight/insight-46",
+    "insight/insight-47",
+    "insight/insight-50",
+    "insight/insight-52",
+    "insight/insight-53",
+    "insight/insight-57",
+    "chairside/chairside-28",
+    "insight/insight-62",
+    "insight/insight-63"
+   ]
+  },
+  {
    "key": "پست_و_کور",
    "tag": "#پست_و_کور",
    "domain": "clinical",
@@ -1055,51 +1102,6 @@
     "dentai/dentai-18",
     "dentai/dentai-19",
     "notecast/episode-36"
-   ]
-  },
-  {
-   "key": "روکش_ایمپلنت",
-   "tag": "#روکش_ایمپلنت",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "روکشِ متکی بر ایمپلنت، در تمایز با روکش روی دندان طبیعی.",
-   "use_when": "مقاله تصمیمش مختص روکش ایمپلنت باشد.",
-   "aliases": [
-    "implant crown",
-    "روکش روی ایمپلنت",
-    "روکش ایمپلنتی",
-    "کراون ایمپلنت"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 26,
-   "content_ids": [
-    "episodes/episode-125-1",
-    "episodes/episode-139",
-    "episodes/episode-147",
-    "episodes/episode-148-2",
-    "insight/insight-9",
-    "insight/insight-10",
-    "litecast/lite-CAST10",
-    "litecast/lite-CAST12",
-    "litecast/lite-CAST16",
-    "litecast/lite-CAST18",
-    "dentcast-plus/video-4",
-    "sharehub/share-4",
-    "dentcast-plus/video-5",
-    "metanotes/meta-10",
-    "insight/insight-30",
-    "insight/insight-33",
-    "chairside/chairside-12",
-    "chairside/chairside-17",
-    "insight/insight-46",
-    "insight/insight-47",
-    "insight/insight-50",
-    "insight/insight-52",
-    "insight/insight-53",
-    "insight/insight-57",
-    "chairside/chairside-28",
-    "insight/insight-62"
    ]
   },
   {
@@ -2696,6 +2698,36 @@
    ]
   },
   {
+   "key": "روکش_موقت",
+   "tag": "#روکش_موقت",
+   "domain": null,
+   "words": 2,
+   "definition": "پروویژنالی که فقط یک مرحله‌ی گذرا نیست، بلکه مرجعِ طراحیِ نهایی است.",
+   "use_when": "مقاله نقشِ موقتی را در تعیینِ کارِ نهایی جدی بگیرد.",
+   "aliases": [
+    "provisional",
+    "موقتی",
+    "temporary crown",
+    "پروویژنال",
+    "تمپ",
+    "موقت"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 9,
+   "content_ids": [
+    "episodes/episode-125-2",
+    "insight/insight-2",
+    "insight/insight-12",
+    "insight/insight-19",
+    "insight/insight-21",
+    "chairside/chairside-2",
+    "insight/insight-42",
+    "insight/insight-55",
+    "insight/insight-63"
+   ]
+  },
+  {
    "key": "زیبایی_قدامی",
    "tag": "#زیبایی_قدامی",
    "domain": null,
@@ -2956,35 +2988,6 @@
     "chairside/chairside-27",
     "chairside/chairside-28",
     "chairside/chairside-29"
-   ]
-  },
-  {
-   "key": "روکش_موقت",
-   "tag": "#روکش_موقت",
-   "domain": null,
-   "words": 2,
-   "definition": "پروویژنالی که فقط یک مرحله‌ی گذرا نیست، بلکه مرجعِ طراحیِ نهایی است.",
-   "use_when": "مقاله نقشِ موقتی را در تعیینِ کارِ نهایی جدی بگیرد.",
-   "aliases": [
-    "provisional",
-    "موقتی",
-    "temporary crown",
-    "پروویژنال",
-    "تمپ",
-    "موقت"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 8,
-   "content_ids": [
-    "episodes/episode-125-2",
-    "insight/insight-2",
-    "insight/insight-12",
-    "insight/insight-19",
-    "insight/insight-21",
-    "chairside/chairside-2",
-    "insight/insight-42",
-    "insight/insight-55"
    ]
   },
   {
@@ -3864,6 +3867,34 @@
    ]
   },
   {
+   "key": "مدیریت_بافت_نرم",
+   "tag": "#مدیریت_بافت_نرم",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "حفظ و شکل‌دهی بافت نرم اطراف ایمپلنت.",
+   "use_when": "مقاله بافت نرم را هدفِ تصمیم بداند، نه صرفاً ذکرش کند.",
+   "aliases": [
+    "مدیریت لثه",
+    "فرم دهی بافت نرم",
+    "soft tissue"
+   ],
+   "variants": [
+    "#بافت_نرم"
+   ],
+   "co_tags": [
+    "#Soft_Tissue_Management"
+   ],
+   "count": 6,
+   "content_ids": [
+    "episodes/episode-111",
+    "episodes/episode-122-6",
+    "episodes/episode-140",
+    "episodes/episode-158",
+    "insight/insight-50",
+    "insight/insight-63"
+   ]
+  },
+  {
    "key": "هوش_مصنوعی_دندانپزشکی",
    "tag": "#هوش_مصنوعی_دندانپزشکی",
    "domain": "ai",
@@ -4569,30 +4600,29 @@
    ]
   },
   {
-   "key": "مدیریت_بافت_نرم",
-   "tag": "#مدیریت_بافت_نرم",
+   "key": "مارجین_روکش",
+   "tag": "#مارجین_روکش",
    "domain": "clinical",
-   "words": 3,
-   "definition": "حفظ و شکل‌دهی بافت نرم اطراف ایمپلنت.",
-   "use_when": "مقاله بافت نرم را هدفِ تصمیم بداند، نه صرفاً ذکرش کند.",
+   "words": 2,
+   "definition": "لبه‌ی رستوریشن و انطباقش با خط ختم.",
+   "use_when": "مقاله دقت یا موقعیتِ مارجین را مسئله بداند.",
    "aliases": [
-    "مدیریت لثه",
-    "فرم دهی بافت نرم",
-    "soft tissue"
+    "مرجین",
+    "مارژین",
+    "مرجین سرامیکی",
+    "مارژین دقیق",
+    "margin",
+    "لبه روکش"
    ],
-   "variants": [
-    "#بافت_نرم"
-   ],
-   "co_tags": [
-    "#Soft_Tissue_Management"
-   ],
+   "variants": [],
+   "co_tags": [],
    "count": 5,
    "content_ids": [
-    "episodes/episode-111",
-    "episodes/episode-122-6",
-    "episodes/episode-140",
-    "episodes/episode-158",
-    "insight/insight-50"
+    "insight/insight-32",
+    "chairside/chairside-12",
+    "chairside/chairside-18",
+    "insight/insight-50",
+    "insight/insight-63"
    ]
   },
   {
@@ -5435,31 +5465,6 @@
     "dentcast-plus/video-3",
     "insight/insight-54",
     "sharehub/share-10"
-   ]
-  },
-  {
-   "key": "مارجین_روکش",
-   "tag": "#مارجین_روکش",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "لبه‌ی رستوریشن و انطباقش با خط ختم.",
-   "use_when": "مقاله دقت یا موقعیتِ مارجین را مسئله بداند.",
-   "aliases": [
-    "مرجین",
-    "مارژین",
-    "مرجین سرامیکی",
-    "مارژین دقیق",
-    "margin",
-    "لبه روکش"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 4,
-   "content_ids": [
-    "insight/insight-32",
-    "chairside/chairside-12",
-    "chairside/chairside-18",
-    "insight/insight-50"
    ]
   },
   {
@@ -9836,6 +9841,28 @@
    ]
   },
   {
+   "key": "نخ_زیرلثه",
+   "tag": "#نخ_زیرلثه",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "نخِ ریترکشن، تنها یا آغشته به هموستاتیک.",
+   "use_when": "مقاله نخ را ابزارِ کنارزدنِ لثه یا کنترلِ خون بداند.",
+   "aliases": [
+    "retraction cord",
+    "نخ رترکشن",
+    "نخ زیر لثه",
+    "دابل کورد",
+    "double cord"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "insight/insight-40",
+    "insight/insight-63"
+   ]
+  },
+  {
    "key": "نسبت_تاج_به_ایمپلنت",
    "tag": "#نسبت_تاج_به_ایمپلنت",
    "domain": "clinical",
@@ -10275,6 +10302,27 @@
    "content_ids": [
     "insight/insight-7",
     "insight/insight-13"
+   ]
+  },
+  {
+   "key": "کنترل_خونریزی",
+   "tag": "#کنترل_خونریزی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "پایدارسازیِ میدان پیش از ثبت — شرطِ دیده شدنِ مارجین.",
+   "use_when": "مقاله خونریزی را مانعِ ثبتِ دقیق بداند.",
+   "aliases": [
+    "hemostasis",
+    "کنترل خونریزی",
+    "هموستاتیک",
+    "بند آوردن خون"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "insight/insight-40",
+    "insight/insight-63"
    ]
   },
   {
@@ -16402,27 +16450,6 @@
    ]
   },
   {
-   "key": "نخ_زیرلثه",
-   "tag": "#نخ_زیرلثه",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "نخِ ریترکشن، تنها یا آغشته به هموستاتیک.",
-   "use_when": "مقاله نخ را ابزارِ کنارزدنِ لثه یا کنترلِ خون بداند.",
-   "aliases": [
-    "retraction cord",
-    "نخ رترکشن",
-    "نخ زیر لثه",
-    "دابل کورد",
-    "double cord"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "insight/insight-40"
-   ]
-  },
-  {
    "key": "نسل_باندینگ",
    "tag": "#نسل_باندینگ",
    "domain": "clinical",
@@ -17592,26 +17619,6 @@
    "count": 1,
    "content_ids": [
     "insight/insight-57"
-   ]
-  },
-  {
-   "key": "کنترل_خونریزی",
-   "tag": "#کنترل_خونریزی",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "پایدارسازیِ میدان پیش از ثبت — شرطِ دیده شدنِ مارجین.",
-   "use_when": "مقاله خونریزی را مانعِ ثبتِ دقیق بداند.",
-   "aliases": [
-    "hemostasis",
-    "کنترل خونریزی",
-    "هموستاتیک",
-    "بند آوردن خون"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "insight/insight-40"
    ]
   },
   {
