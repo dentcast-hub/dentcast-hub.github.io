@@ -51,6 +51,24 @@ function section(isPremium) {
     ? el('a', { class: 'dcb-band-more', href: '/plus/pathways.html' }, 'همه‌ی باندل‌ها ›')
     : el('a', { class: 'dcb-band-more', href: pricingHref('home-bundles') }, 'پریمیوم چیست؟ ›');
 
+  const rail = el('div', { class: 'dcb-railwrap' }, BUNDLES.map(bundleRailCard));
+
+  // The homepage's tab-swipe state machine lives on #mobile-body
+  // (touchstart records the start point, touchend decides and switches
+  // panels). index.html excludes gestures that start inside
+  // '.dc-rail, .dcb-railwrap' — but that exclusion ships in the HTML, and a
+  // returning phone can hold a cached index.html from before this rail
+  // existed, where a flick on it "swipes the whole page" (founder report,
+  // 2026-08-09). So the rail defends its own gestures too: stop every touch
+  // phase from bubbling to #mobile-body. All three phases, not just
+  // touchstart — a stopped touchstart with leaked touchmove/touchend would
+  // feed the panel handler a STALE start point from some earlier gesture and
+  // make it fire on garbage deltas. Passive: nothing here prevents native
+  // scrolling; it only keeps the page's own listeners out of it.
+  ['touchstart', 'touchmove', 'touchend'].forEach((t) => {
+    rail.addEventListener(t, (e) => e.stopPropagation(), { passive: true });
+  });
+
   return el('div', { class: 'dcb-band-inner' }, [
     el('div', { class: 'dcb-band-row' }, [
       el('h2', { class: 'dcb-band-title' }, [
@@ -61,7 +79,7 @@ function section(isPremium) {
       more,
     ]),
     el('p', { class: 'dcb-band-hint' }, 'هسته‌ی هر موضوع در چند قدم — بدون نکته‌های حاشیه‌ای.'),
-    el('div', { class: 'dcb-railwrap' }, BUNDLES.map(bundleRailCard)),
+    rail,
   ]);
 }
 
