@@ -245,31 +245,25 @@ describe('GET /me active_pathway', () => {
     expect(res.json().active_pathway).toBeNull();
   });
 
-  it('surfaces kind: "bundle" when the active enrollment is a bundle', async () => {
+  it('excludes bundles: a bundle-only enrollment leaves active_pathway null', async () => {
+    // The dashboard's «مسیر یادگیری» block shows full pathways only; bundles
+    // live in their own «از کجا شروع کنم؟» block fed by GET /pathways.
     await makePremium();
     await app.inject({ method: 'POST', url: `/pathways/${BUNDLE_ID}/enroll`, headers: { cookie } });
     const res = await app.inject({ method: 'GET', url: '/me', headers: { cookie } });
-    expect(res.json().active_pathway.id).toBe(BUNDLE_ID);
-    expect(res.json().active_pathway.kind).toBe('bundle');
+    expect(res.json().active_pathway).toBeNull();
   });
 
-  it('omits kind for a full pathway (no key, not null)', async () => {
+  it('a newer bundle enrollment never displaces the active full pathway', async () => {
     await makePremium();
+    // Full pathway FIRST (older), bundle SECOND (newer) — if recency alone
+    // decided, the bundle would win; the kind filter is what keeps the
+    // pathway on top.
     await app.inject({ method: 'POST', url: `/pathways/${PATHWAY_ID}/enroll`, headers: { cookie } });
+    await app.inject({ method: 'POST', url: `/pathways/${BUNDLE_ID}/enroll`, headers: { cookie } });
+
     const res = await app.inject({ method: 'GET', url: '/me', headers: { cookie } });
+    expect(res.json().active_pathway.id).toBe(PATHWAY_ID);
     expect('kind' in res.json().active_pathway).toBe(false);
-  });
-
-  it('prefers an in-progress bundle over an in-progress full pathway, even when the pathway was started later', async () => {
-    await makePremium();
-    // Bundle enrolled FIRST (older) — if this test only proved "most recent
-    // wins" it would prove nothing about the bundle-priority rule. Enrolling
-    // the full pathway SECOND (newer) is what makes the assertion below
-    // actually test the tie-break, not just recency.
-    await app.inject({ method: 'POST', url: `/pathways/${BUNDLE_ID}/enroll`, headers: { cookie } });
-    await app.inject({ method: 'POST', url: `/pathways/${PATHWAY_ID}/enroll`, headers: { cookie } });
-
-    const res = await app.inject({ method: 'GET', url: '/me', headers: { cookie } });
-    expect(res.json().active_pathway.id).toBe(BUNDLE_ID);
   });
 });

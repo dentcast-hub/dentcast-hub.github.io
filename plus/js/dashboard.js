@@ -1,11 +1,12 @@
 // Reusable dashboard renderer. Used by the /plus/ page AND the header overlay, so
 // the dashboard opens the same way from anywhere. Site design language (light),
 // not a separate dark theme (prototype-feedback override).
-import { el, faNum, streakIsActiveToday, icon } from './util.js';
+import { el, faNum, streakIsActiveToday } from './util.js';
 import { api } from './api.js';
 import { getModel, contentInfo, FOLDER_EN } from './content-index.js';
 import { leagueEntryButton } from './league.js';
 import { openCollectionPicker, boardCover } from './collections.js';
+import { bundleRailCard } from './pathways.js';
 import { LABELS, PALETTE, PREMIUM_FEATURES } from './config.js';
 import { renewalBanner } from './renewal-banner.js';
 import { premiumCta } from './premium-cta.js';
@@ -261,44 +262,49 @@ function reviewDueBlock(me) {
 }
 
 // Premium "مسیر یادگیری" block: /me already carries active_pathway (the most
-// recently started still-in-progress enrollment — a bundle before a full
-// pathway when both are active, see active-pathway.ts — or the last completed
-// one), so no extra request is needed for the block itself. current_step
-// doubles as a plain count of steps done — "قدم ۳ از ۲۰" reads naturally
-// either way. A bundle gets its own type chip next to the title, and, when
-// there's a step left, a "قدم بعدی" line filled in separately below (that one
-// DOES need a request — /me has no per-step titles — so it goes through the
-// same lazy-fill pattern as collectionsWrap/compassWrap rather than blocking
-// the dashboard's first paint).
+// recently started still-in-progress FULL-pathway enrollment, or the last
+// completed one — bundles are excluded server-side, they have their own
+// «از کجا شروع کنم؟» block below), so no extra request is needed here.
+// current_step doubles as a plain count of steps done — "قدم ۳ از ۲۰" reads
+// naturally either way.
 function pathwayBlock(me) {
   const p = me.active_pathway;
   const allLink = el('a', { class: 'dcp-pw-alllink', href: '/plus/pathways.html' }, 'همه مسیرها');
   if (!p) {
-    return { el: el('div', { class: 'dcp-pw-dash' }, [
+    return el('div', { class: 'dcp-pw-dash' }, [
       el('div', { class: 'dcp-muted' }, 'هنوز مسیری را شروع نکرده‌اید.'),
       allLink,
-    ]), pathwayId: null, stepIndex: null, nextLine: null };
+    ]);
   }
   const pct = p.total_steps > 0 ? Math.round((p.current_step / p.total_steps) * 100) : 0;
-  const hasNextStep = !p.is_complete && p.current_step < p.total_steps;
-  const nextLine = hasNextStep ? el('div', { class: 'dcp-pw-dash-next' }) : null;
-  return {
-    el: el('div', { class: 'dcp-pw-dash' }, [
-      el('div', { class: 'dcp-pw-dash-title-row' }, [
-        el('a', { class: 'dcp-pw-dash-title', href: '/plus/pathway.html?id=' + encodeURIComponent(p.id) }, p.title_fa),
-        p.kind === 'bundle' ? el('span', { class: 'dcb-chip' }, [icon('icon-lightning'), ' باندل']) : null,
-      ]),
-      el('div', { class: 'dcp-progress-track' }, el('div', { class: 'dcp-progress-fill', style: 'width:' + pct + '%' })),
-      el('div', { class: 'dcp-pw-dash-foot' }, [
-        el('span', {}, p.is_complete ? 'این مسیر را کامل کرده‌اید 🎉' : ('قدم ' + faNum(p.current_step) + ' از ' + faNum(p.total_steps))),
-        allLink,
-      ]),
-      nextLine,
+  return el('div', { class: 'dcp-pw-dash' }, [
+    el('a', { class: 'dcp-pw-dash-title', href: '/plus/pathway.html?id=' + encodeURIComponent(p.id) }, p.title_fa),
+    el('div', { class: 'dcp-progress-track' }, el('div', { class: 'dcp-progress-fill', style: 'width:' + pct + '%' })),
+    el('div', { class: 'dcp-pw-dash-foot' }, [
+      el('span', {}, p.is_complete ? 'این مسیر را کامل کرده‌اید 🎉' : ('قدم ' + faNum(p.current_step) + ' از ' + faNum(p.total_steps))),
+      allLink,
     ]),
-    pathwayId: p.id,
-    stepIndex: p.current_step,
-    nextLine,
-  };
+  ]);
+}
+
+// Premium «از کجا شروع کنم؟» block — the bundles, in their own section so
+// they never mix into the مسیر یادگیری block again (founder, 2026-08-09):
+// the same compact amber rail as the homepage and the catalog, with live
+// progress from GET /pathways. Costs one request, so it goes through the
+// same lazy-fill pattern as collectionsBlock (never blocks first paint).
+async function bundlesBlock() {
+  const data = await api.pathways().catch(() => null);
+  const bundles = ((data && data.pathways) || []).filter((p) => p.kind === 'bundle');
+  if (!bundles.length) {
+    return el('div', { class: 'dcp-muted' }, [
+      'هسته‌ی هر موضوع در چند قدم — ',
+      el('a', { href: '/plus/pathways.html' }, 'دیدن باندل‌ها'),
+    ]);
+  }
+  return el('div', { class: 'dcp-pw-dash' }, [
+    el('div', { class: 'dcb-railwrap' }, bundles.map(bundleRailCard)),
+    el('a', { class: 'dcp-pw-alllink', href: '/plus/pathways.html' }, 'همه‌ی باندل‌ها'),
+  ]);
 }
 
 // Premium "کالکشن‌ها" block: the same Pinterest board-cover strip as the
@@ -377,6 +383,7 @@ export async function renderDashboard(root, { me: preMe } = {}) {
   const recentWrap = el('div', {}, el('div', { class: 'dcp-loading' }, '...'));
   const collectionsWrap = el('div', {}, el('div', { class: 'dcp-loading' }, '...'));
   const compassWrap = el('div', {}, el('div', { class: 'dcp-loading' }, '...'));
+  const bundlesWrap = el('div', {}, el('div', { class: 'dcp-loading' }, '...'));
   const children = [];
   // Unmissable, above even the hello line — see premiumGrantBanner().
   if (me.pending_premium_grant) children.push(premiumGrantBanner(me.pending_premium_grant));
@@ -420,13 +427,22 @@ export async function renderDashboard(root, { me: preMe } = {}) {
     isPremium ? reviewDueBlock(me) : lockedFeatureCard('/plus/cards.html', 'dash-cards'),
     'هایلایت‌هایی که تو مطالبِ مختلف زده‌اید، طبقِ زمان‌بندیِ علمیِ لایتنر، دقیقاً همون وقتی که وقتِ فراموش‌شدنشونه دوباره بهتان نشان داده می‌شود — همین باعث می‌شود واقعاً تو ذهنتان بماند.',
   ));
-  const pathwayInfo = isPremium ? pathwayBlock(me) : null;
   children.push(section(
     PREMIUM_FEATURES[1].title,
     PREMIUM_FEATURES[1].hint,
-    isPremium ? pathwayInfo.el : lockedFeatureCard('/plus/pathways.html', 'dash-pathways'),
+    isPremium ? pathwayBlock(me) : lockedFeatureCard('/plus/pathways.html', 'dash-pathways'),
     'دیگر لازم نیست فکر کنید چه چیزی را بعد از چه چیزی بخوانید — خودمان مسیرِ یادگیریِ هر موضوع را قدم‌به‌قدم نشانتان می‌دهیم، تا در آن موضوع کاملاً مسلط شوید و مهارتِ واقعی پیدا کنید.',
   ));
+  // Bundles get their own entry right under the pathways — premium only: the
+  // free reader already has the pathways locked-card above, and a second
+  // locked teaser for the same destination would read as a billboard.
+  if (isPremium) {
+    children.push(section(
+      'از کجا شروع کنم؟',
+      'هسته‌ی هر موضوع در چند قدم — بدون نکته‌های حاشیه‌ای.',
+      bundlesWrap,
+    ));
+  }
   children.push(section(
     PREMIUM_FEATURES[2].title,
     PREMIUM_FEATURES[2].hint,
@@ -455,12 +471,5 @@ export async function renderDashboard(root, { me: preMe } = {}) {
   recentWrap.replaceChildren(await recentBlock(model, isPremium));
   if (isPremium) collectionsWrap.replaceChildren(await collectionsBlock());
   if (isPremium) compassWrap.replaceChildren(await compassBlock());
-  if (isPremium && pathwayInfo && pathwayInfo.nextLine) {
-    api.pathway(pathwayInfo.pathwayId)
-      .then((d) => {
-        const step = d && d.steps && d.steps[pathwayInfo.stepIndex];
-        if (step) pathwayInfo.nextLine.textContent = 'قدم بعدی: ' + step.title;
-      })
-      .catch(() => { /* leave the line empty rather than guess */ });
-  }
+  if (isPremium) bundlesWrap.replaceChildren(await bundlesBlock());
 }
