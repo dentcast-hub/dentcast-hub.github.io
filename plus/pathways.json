@@ -2525,5 +2525,380 @@
       }
     ],
     "reserved": {}
+  },
+  {
+    "id": "bundle-bonding",
+    "kind": "bundle",
+    "glyph": "icon-droplet",
+    "title_fa": "باندینگ و ادهزیو: شروع کن",
+    "description_fa": "زبان مشترک همه‌ی درمان‌های ادهزیو — نسل‌ها، IDS و سایلان در ۵ قدم.",
+    "premium": true,
+    "continues_pathway": "biomimetic",
+    "steps": [
+      {
+        "content_id": "episodes/episode-4",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-5",
+        "milestone": false
+      },
+      {
+        "content_id": "dentai/dentai-16",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-6",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-10",
+        "milestone": true
+      }
+    ],
+    "reserved": {}
+  },
+  {
+    "id": "bundle-laminate",
+    "kind": "bundle",
+    "glyph": "icon-tooth",
+    "title_fa": "لمینیت: شروع کن",
+    "description_fa": "هسته‌ی لمینیت سرامیکی — تراش، آماده‌سازی، اکلوژن و سمان در ۶ قدم.",
+    "premium": true,
+    "prereq_bundle": "bundle-bonding",
+    "continues_pathway": "esthetic",
+    "steps": [
+      {
+        "content_id": "episodes/episode-37",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-38",
+        "milestone": false
+      },
+      {
+        "content_id": "sharehub/share-8",
+        "milestone": false
+      },
+      {
+        "content_id": "sharehub/share-6",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-148",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-149",
+        "milestone": true
+      }
+    ],
+    "reserved": {}
+  },
+  {
+    "id": "bundle-ceramic-select",
+    "kind": "bundle",
+    "glyph": "icon-ceramic",
+    "title_fa": "انتخاب سرامیک: شروع کن",
+    "description_fa": "کدام سرامیک برای کدام کار — از طبقه‌بندی تا ایمکس و زیرکونیا در ۶ قدم.",
+    "premium": true,
+    "continues_pathway": "ceramics",
+    "steps": [
+      {
+        "content_id": "episodes/episode-8",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-30",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-69",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-17",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-18",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-107",
+        "milestone": true
+      }
+    ],
+    "reserved": {}
+  },
+  {
+    "id": "bundle-ceramic-cement",
+    "kind": "bundle",
+    "glyph": "icon-flask",
+    "title_fa": "آماده‌سازی سطح و سمان سرامیک: شروع کن",
+    "description_fa": "از آماده‌سازی سطح تا انتخاب سمان — هر آنچه بین رستوریشن و دندان می‌نشیند، در ۷ قدم.",
+    "premium": true,
+    "prereq_bundle": "bundle-bonding",
+    "continues_pathway": "ceramics",
+    "steps": [
+      {
+        "content_id": "episodes/episode-9",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-136",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-11",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-12",
+        "milestone": false
+      },
+      {
+        "content_id": "notecast/episode-2",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-148",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-149",
+        "milestone": true
+      }
+    ],
+    "reserved": {}
+  },
+  {
+    "id": "bundle-post-core",
+    "kind": "bundle",
+    "glyph": "icon-post",
+    "title_fa": "پست و کور: شروع کن",
+    "description_fa": "بازسازی دندان اندوشده — فایبر پست، فرول و باند به ریشه در ۷ قدم.",
+    "premium": true,
+    "continues_pathway": "post-and-core",
+    "steps": [
+      {
+        "content_id": "episodes/episode-128",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-129",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-125-3",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-47",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-48",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-49",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-101",
+        "milestone": true
+      }
+    ],
+    "reserved": {}
+  },
+  {
+    "id": "bundle-implant-parts",
+    "kind": "bundle",
+    "glyph": "icon-implant",
+    "title_fa": "اجزای پروتز ایمپلنت: شروع کن",
+    "description_fa": "کانکشن، اباتمنت و پیچ — الفبای قطعات پروتز ایمپلنت در ۷ قدم.",
+    "premium": true,
+    "continues_pathway": "implant-prosthetic",
+    "steps": [
+      {
+        "content_id": "episodes/episode-80",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-81",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-82",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-84",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-102",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-103",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-108",
+        "milestone": true
+      }
+    ],
+    "reserved": {}
+  },
+  {
+    "id": "bundle-implant-surgery",
+    "kind": "bundle",
+    "glyph": "icon-scalpel",
+    "title_fa": "تصمیم‌های جراحی ایمپلنت: شروع کن",
+    "description_fa": "شش تصمیم پایه‌ی جراحی — از سینوس‌لیفت تا زمان لود و شکست زودهنگام.",
+    "premium": true,
+    "continues_pathway": "implant-surgical",
+    "steps": [
+      {
+        "content_id": "episodes/episode-25",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-26",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-45",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-150",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-59",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-130-1",
+        "milestone": true
+      }
+    ],
+    "reserved": {}
+  },
+  {
+    "id": "bundle-occlusion-rehab",
+    "kind": "bundle",
+    "glyph": "icon-occlusion",
+    "title_fa": "اکلوژن در بازسازی: شروع کن",
+    "description_fa": "الگوی طرفی، بعد عمودی و کانسپت دال — ستون‌های اکلوژن بازسازی در ۷ قدم.",
+    "premium": true,
+    "continues_pathway": "occlusion",
+    "steps": [
+      {
+        "content_id": "episodes/episode-131",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-132",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-14",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-154",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-155",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-34",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-35",
+        "milestone": true
+      }
+    ],
+    "reserved": {}
+  },
+  {
+    "id": "bundle-biomimetic",
+    "kind": "bundle",
+    "glyph": "icon-sprout",
+    "title_fa": "بیومیمتیک: شروع کن",
+    "description_fa": "فلسفه و چهار تکنیک ستون بیومیمتیک — IDS، DME، DWT و PSZ در ۶ قدم.",
+    "premium": true,
+    "prereq_bundle": "bundle-bonding",
+    "continues_pathway": "biomimetic",
+    "steps": [
+      {
+        "content_id": "episodes/episode-53",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-54",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-6",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-7",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-72",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-65",
+        "milestone": true
+      }
+    ],
+    "reserved": {}
+  },
+  {
+    "id": "bundle-crown-prep",
+    "kind": "bundle",
+    "glyph": "icon-tooth-restoration",
+    "title_fa": "تراش و قالب‌گیری: شروع کن",
+    "description_fa": "اصول Goodacre، فرم مقاومت و قالب‌گیری دومرحله‌ای — پایه‌ی پروتز ثابت در ۶ قدم.",
+    "premium": true,
+    "continues_pathway": "fixed-pros",
+    "steps": [
+      {
+        "content_id": "episodes/episode-113",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-114",
+        "milestone": false
+      },
+      {
+        "content_id": "sharehub/share-10",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-95",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-20",
+        "milestone": false
+      },
+      {
+        "content_id": "episodes/episode-21",
+        "milestone": true
+      }
+    ],
+    "reserved": {}
   }
 ]

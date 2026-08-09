@@ -23,6 +23,25 @@ export function faNum(x) {
   return String(x).replace(/\d/g, (d) => FA_DIGITS[Number(d)]);
 }
 
+const SVG_NS = 'http://www.w3.org/2000/svg';
+
+/**
+ * A reference into the site's shared icon sprite (assets/icons/icons.svg —
+ * the single source of truth for every icon; see assets/icons/README.md).
+ * `id` is a symbol id from that file, e.g. 'icon-tooth'. Real SVG-namespace
+ * nodes (not the HTML el() helper above), because document.createElement
+ * produces an HTMLUnknownElement for 'svg'/'use' and <use> never resolves.
+ */
+export function icon(id, { class: cls = 'dc-icon' } = {}) {
+  const svg = document.createElementNS(SVG_NS, 'svg');
+  svg.setAttribute('class', cls);
+  svg.setAttribute('aria-hidden', 'true');
+  const use = document.createElementNS(SVG_NS, 'use');
+  use.setAttribute('href', '/assets/icons/icons.svg#' + id);
+  svg.appendChild(use);
+  return svg;
+}
+
 export function debounce(fn, ms) {
   let t;
   return (...args) => {

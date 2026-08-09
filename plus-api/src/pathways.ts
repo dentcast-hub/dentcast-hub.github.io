@@ -18,9 +18,18 @@ export interface PathwayStep {
 
 export interface Pathway {
   id: string;
+  /** Absent = a full pathway (v1 default). 'bundle' = a short, curated starter subset. */
+  kind?: 'bundle';
+  /** Bundle-only: a symbol id from the shared sprite (assets/icons/icons.svg,
+   * e.g. 'icon-tooth'), rendered on its cards via plus/js/util.js's icon(). */
+  glyph?: string;
   title_fa: string;
   description_fa: string;
   premium: boolean;
+  /** Bundle-only: another bundle's id to point to as "do this first" (referral, not a lock). */
+  prereq_bundle?: string;
+  /** Bundle-only: the full pathway id its closing card invites the reader into. */
+  continues_pathway?: string;
   steps: PathwayStep[];
   reserved: Record<string, unknown>;
 }

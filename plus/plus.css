@@ -17,7 +17,32 @@
   --dcp-radius-pill: var(--r-f, 999px);
   --dcp-shadow: var(--card-sh2, 0 8px 30px rgba(0, 0, 0, .15));
   --dcp-chip-bg: var(--chip-bg, rgba(11, 95, 255, .08));
+  /* Bundle "type" accent (amber) — kept distinct from --dcp-accent (blue),
+     which the pathway UI already uses for STATE (ادامه / اینجا هستید). A
+     second hue lets a bundle read as its own kind of thing at a glance,
+     never confused with a state pill. Not in dc-theme.css: unique to the
+     bundle surfaces (pathways catalog/detail + the homepage rail), not a
+     site-wide token. */
+  --dcp-gold: #b7791f;
+  --dcp-gold-bg: rgba(183, 121, 31, .10);
 }
+[data-theme="dark"] {
+  --dcp-gold: #e2b366;
+  --dcp-gold-bg: rgba(226, 179, 102, .12);
+}
+
+/* Sprite icon reference — assets/icons/icons.svg is the site's single source
+   of truth for every icon (see assets/icons/README.md); plus/js/util.js's
+   icon() helper builds `<svg class="dc-icon"><use href="…"/></svg>` against
+   this class. Unprefixed (not .dcp-) because the icon library itself is
+   site-wide, not plus-specific — this file just happens to be the one
+   confirmed loaded on every surface that currently uses it (all /plus/*
+   pages via a static <link>, and index.html via dc-nav.js's dynamic
+   injection — see the "DentCast Plus loader" in dc-nav.js). Color comes from
+   currentColor (never set fill/stroke here); size from width/height on the
+   call site, never a class-level default, so one icon can be a 14px eyebrow
+   glyph in one place and a 32px hero glyph in another. */
+.dc-icon { display: inline-block; flex-shrink: 0; color: currentColor; }
 
 /* ---- workbench entry button ---------------------------------------------- */
 .dcp-wb-bar { margin: 10px 0 4px; }
@@ -755,6 +780,94 @@ a.dcp-pw-card {
 .dcp-pw-step.is-current { border-inline-start-color: var(--dcp-accent); background: color-mix(in srgb, var(--dcp-accent) 8%, transparent); }
 .dcp-pw-step.is-current .dcp-pw-step-marker { background: var(--dcp-accent); border-color: var(--dcp-accent); color: #fff; }
 .dcp-pw-steps .dcp-pw-step:last-child { border-bottom: none; }
+
+/* ---- starter bundles (curated subset of a pathway's steps), same catalog +
+   detail pages as pathways above — see .dentcast/bundles-handoff.md. Bundle
+   cards stay visually smaller than a pathway card (glyph + title + step
+   count, no description) on purpose: the name is the whole pitch. */
+.dcb-sec-head { display: flex; align-items: center; gap: 8px; margin: 22px 0 2px; }
+.dcb-sec-title { font-size: 1.05rem; font-weight: 800; margin: 0; }
+.dcb-chip {
+  display: inline-flex; align-items: center; gap: 4px; font-size: .72rem; font-weight: 800;
+  color: var(--dcp-gold); background: var(--dcp-gold-bg);
+  border: 1px solid color-mix(in srgb, var(--dcp-gold) 35%, transparent);
+  border-radius: 999px; padding: 2px 10px; white-space: nowrap;
+}
+.dcb-chip .dc-icon { width: 12px; height: 12px; }
+.dcb-divider { border: none; border-top: 1px solid var(--dcp-line); margin: 26px 0 6px; }
+
+.dcb-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px; }
+a.dcb-card {
+  display: flex; flex-direction: column; gap: 8px; background: var(--dcp-surface);
+  border: 1px solid var(--dcp-line); border-radius: var(--dcp-radius); padding: 14px;
+  box-shadow: var(--dcp-shadow); color: inherit; text-decoration: none;
+}
+.dcb-card-glyph { color: var(--dcp-gold); }
+.dcb-card-glyph .dc-icon { width: 22px; height: 22px; }
+.dcb-card-title { font-size: .95rem; font-weight: 800; line-height: 1.55; margin: 0; color: var(--dcp-ink); }
+.dcb-card-foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: .78rem; color: var(--dcp-muted); margin-top: auto; }
+
+/* bundle chip on the detail page, and its two referral cards */
+.dcp-pw-detail-head .dcb-chip { margin-bottom: 8px; }
+.dcb-prereq {
+  display: flex; align-items: center; gap: 8px; font-size: .84rem;
+  background: var(--dcp-surface-2); border: 1px solid var(--dcp-line); border-radius: var(--dcp-radius);
+  padding: 10px 14px; margin-top: 14px; color: var(--dcp-muted);
+}
+.dcb-prereq .dc-icon { width: 18px; height: 18px; flex: none; color: var(--dcp-gold); }
+.dcb-prereq b { color: var(--dcp-ink); font-weight: 700; }
+.dcb-continue {
+  margin: 18px 0 0; border-radius: var(--dcp-radius); padding: 14px 16px; font-size: .88rem;
+  background: color-mix(in srgb, var(--dcp-accent) 6%, transparent);
+  border: 1px solid color-mix(in srgb, var(--dcp-accent) 22%, transparent);
+  color: var(--dcp-muted);
+}
+.dcb-continue b { display: block; margin-bottom: 3px; color: var(--dcp-ink); }
+.dcb-continue a { color: var(--dcp-accent); font-weight: 800; text-decoration: none; }
+
+@media (max-width: 480px) { .dcb-grid { grid-template-columns: 1fr; } }
+
+/* ---- homepage bundle rail ("از کجا شروع کنم؟"), plus/js/home-bundles.js —
+   the one deliberate warm moment on an otherwise cool/blue homepage. Its
+   classes are entirely self-contained (not the homepage's own .dc-rail /
+   .dc-home-sec-*): plus.css is injected by dc-nav.js on every page including
+   index.html, which already defines those names scoped under #panel-studio —
+   reusing them here would fight that scope's specificity depending on
+   injection order, so this rail gets its own names instead. */
+.dcb-band {
+  border-radius: 20px; padding: 14px 14px 4px; margin: 18px 0;
+  background: linear-gradient(150deg, var(--dcp-gold-bg), transparent 60%);
+  border: 1px solid color-mix(in srgb, var(--dcp-gold) 26%, transparent);
+}
+.dcb-band[hidden] { display: none; }
+.dcb-band-row { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.dcb-band-title { display: flex; align-items: center; gap: 8px; font-size: 1.05rem; font-weight: 800; margin: 0; color: var(--dcp-ink); }
+.dcb-band-title .dc-icon { width: 20px; height: 20px; flex: none; color: var(--dcp-gold); }
+.dcb-band-count {
+  font-size: .68rem; font-weight: 800; color: var(--dcp-gold); background: var(--dcp-gold-bg);
+  border-radius: 999px; padding: 2px 9px; white-space: nowrap;
+}
+.dcb-band-more { font-size: .8rem; font-weight: 700; color: var(--dcp-gold); text-decoration: none; white-space: nowrap; }
+.dcb-band-hint { margin: 4px 0 0; font-size: .8rem; color: var(--dcp-muted); }
+
+.dcb-railwrap { display: flex; gap: 10px; overflow-x: auto; padding: 12px 2px 14px; scrollbar-width: none; }
+.dcb-railwrap::-webkit-scrollbar { display: none; }
+a.dcb-railcard {
+  flex: 0 0 168px; scroll-snap-align: start; border-radius: 16px; padding: 13px;
+  display: flex; flex-direction: column; gap: 7px; text-decoration: none; color: inherit;
+  border: 1px solid transparent;
+  background:
+    linear-gradient(var(--dcp-surface), var(--dcp-surface)) padding-box,
+    linear-gradient(165deg, var(--dcp-gold) 0%, color-mix(in srgb, var(--dcp-gold) 25%, transparent) 45%, var(--dcp-accent) 100%) border-box;
+  box-shadow: 0 8px 22px color-mix(in srgb, var(--dcp-gold) 14%, transparent);
+  transition: transform .15s ease;
+}
+.dcb-railcard-glyph { color: var(--dcp-gold); }
+.dcb-railcard-glyph .dc-icon { width: 24px; height: 24px; }
+.dcb-railcard-title { font-size: .88rem; font-weight: 800; line-height: 1.6; margin: 0; min-height: 2.85em; color: var(--dcp-ink); }
+.dcb-railcard-foot { display: flex; align-items: center; justify-content: space-between; gap: 6px; margin-top: auto; }
+.dcb-railcard-meta { font-size: .7rem; color: var(--dcp-muted); font-weight: 600; }
+.dcb-railcard-tag { font-size: .68rem; font-weight: 800; color: var(--dcp-gold); }
 
 /* ---- collections (Phase 3), Pinterest-shaped: boards -> pins, localized to
    the site's own tokens/RTL. /plus/collections.html (board grid) +

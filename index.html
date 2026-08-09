@@ -3615,6 +3615,14 @@ a.dc-list-card--pillar {
         </a>
       </div>
 
+      <!-- Starter bundles entry point. Empty until /plus/js/home-bundles.js fills
+           it — same SLOT_IDS pattern as #dcPlusFeatures above (two slots, one per
+           shell, only the visible one is ever unhidden). Placed right after
+           "تازه‌های دنت‌کست" on purpose: a visitor's eye is already in rail-scanning
+           mode there, and "از کجا شروع کنم؟" is the natural next question. See
+           .dentcast/bundles-handoff.md §4. -->
+      <div id="dcHomeBundles" class="dcb-band" aria-label="باندل‌های شروع" hidden></div>
+
       <div class="dc-home-sec"><h2 class="dc-home-sec-label">سری‌های موضوعی</h2><a class="dc-home-more" href="/pillar/">همه ←</a></div>
       <div class="dc-rail">
         <a class="dc-pillar-card" href="/pillar/implantology/">
@@ -4231,6 +4239,9 @@ a.dc-list-card--pillar {
             <div class="dcd-latest-grid" id="dcdLatest"></div>
           </div>
 
+          <!-- Same slot, the desktop layout's copy — see #dcHomeBundles above. -->
+          <div id="dcdHomeBundles" class="dcb-band" aria-label="باندل‌های شروع" hidden></div>
+
         </div>
       </div>
 
@@ -4507,7 +4518,7 @@ scrollBody.addEventListener('touchend',e=>{
 </script>
 
 <!-- Theme toggle behavior moved to /dc-nav.js (single source) -->
-<script src="/dc-nav.js?v=55" defer></script>
+<script src="/dc-nav.js?v=57" defer></script>
 
 <!-- Toolbar drawer toggle is handled by /dc-nav.js (single source) -->
 

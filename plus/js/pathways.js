@@ -4,9 +4,16 @@
 // complete" button here. "شروع مسیر" only starts the API tracking a
 // current_step cache so GET /me can headline it on the dashboard; browsing a
 // pathway before that still shows real credit for content already consumed.
-import { el, faNum } from './util.js';
+import { el, faNum, icon } from './util.js';
 import { api } from './api.js';
 import { FOLDER_EN } from './content-index.js';
+
+/** A "lightning + label" chip — a leading icon from the shared sprite
+ * (assets/icons/icons.svg), never a raw emoji. Used for every .dcb-chip
+ * in this module. */
+function boltChip(label) {
+  return el('span', { class: 'dcb-chip' }, [icon('icon-lightning'), ' ' + label]);
+}
 
 function progressBar(completed, total) {
   const pct = total > 0 ? Math.max(0, Math.min(100, Math.round((completed / total) * 100))) : 0;
@@ -34,7 +41,28 @@ function pathwayCard(p) {
   ]);
 }
 
-/** GET /plus/pathways.html — the catalog of every pathway, own progress overlaid. */
+/** A bundle's compact catalog card — glyph + title + step count + progress, no
+ * description (its name is the pitch). See .dentcast/bundles-handoff.md §1. */
+function bundleCard(p) {
+  const tag = p.is_complete
+    ? el('span', { class: 'dcp-pw-tag is-done' }, 'تکمیل شد')
+    : (p.enrolled || p.completed_steps > 0)
+      ? el('span', { class: 'dcp-pw-tag is-active' }, 'ادامه')
+      : null;
+
+  return el('a', { class: 'dcb-card', href: '/plus/pathway.html?id=' + encodeURIComponent(p.id) }, [
+    el('span', { class: 'dcb-card-glyph' }, icon(p.glyph || 'icon-lightning')),
+    el('h4', { class: 'dcb-card-title' }, p.title_fa),
+    progressBar(p.completed_steps, p.total_steps),
+    el('div', { class: 'dcb-card-foot' }, [
+      el('span', {}, faNum(p.total_steps) + ' قدم'),
+      tag,
+    ]),
+  ]);
+}
+
+/** GET /plus/pathways.html — the catalog: bundles (short, curated starters) above
+ * full pathways (unchanged), own progress overlaid on both. */
 export async function renderPathwaysList(container) {
   container.replaceChildren(el('div', { class: 'dcp-loading' }, 'در حال بارگذاری...'));
   const data = await api.pathways().catch(() => null);
@@ -43,13 +71,36 @@ export async function renderPathwaysList(container) {
   const pathways = data.pathways || [];
   if (!pathways.length) { container.replaceChildren(el('div', { class: 'dcp-empty' }, 'هنوز مسیری تعریف نشده.')); return; }
 
+  const bundles = pathways.filter((p) => p.kind === 'bundle');
+  const full = pathways.filter((p) => p.kind !== 'bundle');
+
   const top = el('div', { class: 'dcp-pw-top' }, [
     el('h2', { class: 'dcp-pw-heading' }, 'مسیرهای یادگیری'),
     el('p', { class: 'dcp-sec-hint' },
       'هر مسیر مجموعه‌ای از مقاله‌ها، اپیزودها و ویدیوهاست که به ترتیبِ منطقیِ یادگیری چیده شده؛ یک مطلب می‌تواند در چند مسیر مختلف هم باشد. با خواندن، گوش‌دادن یا هایلایت‌کردن، پیشرفتِ هر مسیر خودش جلو می‌رود.'),
   ]);
-  const grid = el('div', { class: 'dcp-pw-grid' }, pathways.map(pathwayCard));
-  container.replaceChildren(top, grid);
+
+  const sections = [top];
+
+  if (bundles.length) {
+    sections.push(el('div', { class: 'dcb-sec-head' }, [
+      el('h3', { class: 'dcb-sec-title' }, 'باندل‌های شروع'),
+      boltChip('فشرده'),
+    ]));
+    sections.push(el('p', { class: 'dcp-sec-hint' },
+      'فقط هسته‌ی هر موضوع، در چند قدم — بدون نکته‌های حاشیه‌ای. برای وقتی که می‌خواهید از همین امروز شروع کنید.'));
+    sections.push(el('div', { class: 'dcb-grid' }, bundles.map(bundleCard)));
+  }
+
+  if (bundles.length && full.length) sections.push(el('hr', { class: 'dcb-divider' }));
+
+  if (full.length) {
+    sections.push(el('div', { class: 'dcb-sec-head' }, [el('h3', { class: 'dcb-sec-title' }, 'مسیرهای کامل')]));
+    sections.push(el('p', { class: 'dcp-sec-hint' }, 'از پایه تا پیشرفته، با همه‌ی نکته‌ها و کیس‌ها.'));
+    sections.push(el('div', { class: 'dcp-pw-grid' }, full.map(pathwayCard)));
+  }
+
+  container.replaceChildren(...sections);
 }
 
 function stepRow(step, idx, currentStep) {
@@ -92,7 +143,36 @@ function enrollArea(id, enrolled) {
   return wrap;
 }
 
-/** GET /plus/pathway.html?id=... — one pathway's full step list + progress. */
+/** Bundle-only: a referral card to the prereq bundle — never a lock, just a
+ * pointer, per .dentcast/bundles-handoff.md §1 ("پیش‌نیاز ارجاعی، نه تکراری"). */
+function prereqCard(prereq) {
+  if (!prereq) return null;
+  return el('a', { class: 'dcb-prereq', href: '/plus/pathway.html?id=' + encodeURIComponent(prereq.id) }, [
+    icon(prereq.glyph || 'icon-lightning'),
+    el('span', {}, [
+      'پیش‌نیاز: اگر با این موضوع آشنا نیستید، اول باندل «',
+      el('b', {}, prereq.title_fa),
+      '» را بردارید.',
+    ]),
+  ]);
+}
+
+/** Bundle-only: after its steps, invite the reader into the full pathway the
+ * bundle was drawn from — the notes/cases trimmed out of the bundle live
+ * there. Per .dentcast/bundles-handoff.md §1 ("پایان باندل، دعوت به مسیر است"). */
+function continueCard(continuesInto) {
+  if (!continuesInto) return null;
+  return el('div', { class: 'dcb-continue' }, [
+    el('b', {}, 'هسته را تمام کردید — حالا عمق:'),
+    'نکته‌ها و کیس‌های تکمیلیِ این موضوع در مسیر کامل هستند. ',
+    el('a', { href: '/plus/pathway.html?id=' + encodeURIComponent(continuesInto.id) },
+      'ادامه در مسیر «' + continuesInto.title_fa + '» ›'),
+  ]);
+}
+
+/** GET /plus/pathway.html?id=... — one pathway's full step list + progress.
+ * Same view for a bundle, plus its type chip, prereq referral, and closing
+ * invite into the full pathway it was drawn from. */
 export async function renderPathwayDetail(container, id) {
   container.replaceChildren(el('div', { class: 'dcp-loading' }, 'در حال بارگذاری...'));
   const data = await api.pathway(id).catch(() => null);
@@ -104,12 +184,15 @@ export async function renderPathwayDetail(container, id) {
     return;
   }
 
+  const isBundle = data.kind === 'bundle';
   const milestoneCount = data.steps.filter((s) => s.milestone).length;
   const pct = data.total_steps > 0 ? Math.round((data.completed_steps / data.total_steps) * 100) : 0;
 
   const head = el('div', { class: 'dcp-pw-detail-head' }, [
+    isBundle ? boltChip('باندل شروع') : null,
     el('h2', { class: 'dcp-pw-detail-title' }, data.title_fa),
     el('p', { class: 'dcp-sec-hint' }, data.description_fa),
+    isBundle ? prereqCard(data.prereq_bundle) : null,
   ]);
 
   const progressWrap = el('div', { class: 'dcp-pw-detail-progress' }, [
@@ -117,7 +200,7 @@ export async function renderPathwayDetail(container, id) {
     el('div', { class: 'dcp-pw-detail-meta' }, [
       el('span', {}, data.is_complete
         ? 'این مسیر را کامل کرده‌اید 🎉'
-        : (faNum(data.completed_steps) + ' از ' + faNum(data.total_steps) + ' مرحله ' + '(٪' + faNum(pct) + ')')),
+        : (faNum(data.completed_steps) + ' از ' + faNum(data.total_steps) + (isBundle ? ' قدم ' : ' مرحله ') + '(٪' + faNum(pct) + ')')),
       milestoneCount ? el('span', {}, '🏁 ' + faNum(milestoneCount) + ' نقطه‌عطف') : null,
     ]),
   ]);
@@ -125,5 +208,8 @@ export async function renderPathwayDetail(container, id) {
   const steps = el('div', { class: 'dcp-pw-steps' },
     data.steps.map((s, i) => stepRow(s, i, data.current_step)));
 
-  container.replaceChildren(head, progressWrap, enrollArea(data.id, data.enrolled), steps);
+  container.replaceChildren(...[
+    head, progressWrap, enrollArea(data.id, data.enrolled), steps,
+    isBundle ? continueCard(data.continues_pathway) : null,
+  ].filter(Boolean));
 }
