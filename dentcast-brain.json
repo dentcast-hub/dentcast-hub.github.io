@@ -12959,5 +12959,38 @@
       "secondary": [],
       "subtopic": "shade-and-whitening"
     }
+  },
+  {
+    "type": "clinical",
+    "id": "clinical-63",
+    "title": "چرا برای این بیمار قبل از اسکن نخ‌گذاری نکردم؟",
+    "caption": "بیماری از فرم و کانتور دو روکش قدامی خود ناراضی بود و همزمان لثه‌ی اطراف ایمپلنت‌هایش ملتهب بود. به‌جای رویکرد معمولِ تراشِ فوری، بدون نخ‌گذاری و بدون کنترل مایعات پیش رفتم تا لابراتوار روکش‌های موقت را با مارجین کوتاه‌تر بسازد؛ این عقب‌نشینیِ استراتژیک به لثه فرصت داد در کنار بررسی کانتور جدید، به‌خوبی بهبود پیدا کند. برای مرحله‌ی نهایی اما، تراش، کنترل مایعات، نخ‌گذاریِ اصولی و یک اسکنِ مجدد برای ثبتِ دقیقِ مارجین‌ها الزامی خواهد بود.",
+    "hashtags": [
+      "#اینسایت",
+      "#نخ_زیرلثه",
+      "#کنترل_خونریزی",
+      "#روکش_موقت",
+      "#مدیریت_بافت_نرم",
+      "#مارجین_روکش",
+      "#روکش_ایمپلنت"
+    ],
+    "keywords": [
+      "delayed retraction cord placement before intraoral scan",
+      "peri-implant soft tissue inflammation management",
+      "provisional crown shorter margin technique",
+      "chairside decision to skip fluid control",
+      "subgingival margin registration accuracy",
+      "digital scan timing around inflamed gingiva",
+      "implant crown contour adjustment provisional",
+      "strategic retreat from routine tissue management",
+      "final impression cord packing and hemostasis",
+      "same-session provisional margin correction without cord"
+    ],
+    "page_url": "/insight/insight-63.html",
+    "pillar": {
+      "primary": "fixed-pros",
+      "secondary": [],
+      "subtopic": "impression"
+    }
   }
 ]

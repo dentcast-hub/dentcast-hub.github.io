@@ -3555,10 +3555,10 @@ a.dc-list-card--pillar {
           </div>
         </div>
         <ul class="dc-pulse-list">
+          <li>یک <a href="/insight/insight-63.html">اینسایت بالینی</a> درباره‌ی تصمیمِ به‌تعویق‌انداختنِ نخ‌گذاری پیش از اسکن، برای حفظِ بافتِ نرمِ ملتهبِ اطرافِ ایمپلنت منتشر شد · ۱۸ مرداد</li>
           <li>راهکار <a href="/insight/insight-62.html">هم‌رنگ کردن دو روکش زیرکونیای مجاور</a> با یک ترفند چیرساید منتشر شد · ۱۶ مرداد</li>
           <li>یک <a href="/insight/insight-61.html">اینسایت بالینی</a> درباره‌ی خطای دید روی کست و تنظیم طول روکش تک‌واحدیِ سانترال بر اساس تقارن امبراژورها منتشر شد · ۱۵ مرداد</li>
           <li>قسمت ۴ از فصل ۴ <a href="/dentai/promptologist/prompt4-4.html">پرامپتولوژیست</a> درباره‌ی روشِ کار با مدل — شکستنِ کارِ بزرگ و ایست پیش از نتیجه‌گیری — منتشر شد · ۱۴ مرداد</li>
-          <li>یک <a href="/sharehub/share-13.html">مطلب Share Hub</a> درباره‌ی دیابت و ایمپلنت دندانی، از تصمیم قبل از جراحی تا نگهداری بلندمدت منتشر شد · ۱۳ مرداد</li>
         </ul>
       </div>
 
@@ -3573,9 +3573,9 @@ a.dc-list-card--pillar {
 
       <div class="dc-home-sec"><h2 class="dc-home-sec-label">تازه‌های دنت‌کست</h2></div>
       <div class="dc-rail" id="dcLatestRail">
-        <a class="dc-rail-card" data-cat="clinical" href="/insight/insight-62.html">
+        <a class="dc-rail-card" data-cat="clinical" href="/insight/insight-63.html">
           <span class="dc-type-chip t-insight">Insight</span>
-          <p class="dc-rail-title">هم‌رنگ کردن دو روکش زیرکونیای مجاور؛ یک راه‌حل خلاقانه و سریع سر یونیت</p>
+          <p class="dc-rail-title">چرا برای این بیمار قبل از اسکن نخ‌گذاری نکردم؟</p>
           <span class="dc-rail-meta">تازه‌ترین مطلب</span>
         </a>
         <a class="dc-rail-card" data-cat="notecast" href="/notecast/episode-38.html">
@@ -3725,7 +3725,7 @@ a.dc-list-card--pillar {
           <span class="k">ساعت محتوای صوتی</span>
         </div>
         <div class="hero-stat" role="listitem">
-          <span class="v"><!-- COUNTER:CONTENT:START -->۵۷۸<!-- COUNTER:CONTENT:END --></span>
+          <span class="v"><!-- COUNTER:CONTENT:START -->۵۷۹<!-- COUNTER:CONTENT:END --></span>
           <span class="k">مطلب و مدخل آموزشی</span>
         </div>
       </div>
@@ -4430,7 +4430,7 @@ scrollBody.addEventListener('touchend',e=>{
     if(p) p.textContent=title;
     a.href=url;
   }
-  fetch('/dentcast-brain.json?v=b0fbdca977',{cache:'no-store'}).then(function(r){return r.json();}).then(function(arr){
+  fetch('/dentcast-brain.json?v=3230472898',{cache:'no-store'}).then(function(r){return r.json();}).then(function(arr){
     if(!Array.isArray(arr)) return;
     var latest={}, pool=[];
     arr.forEach(function(e){
@@ -4777,7 +4777,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 <script>
 /* ── LAST 30 UPDATES ── */
 (function(){
-  const FEED_URL='/dentcast-brain.json?v=b0fbdca977';
+  const FEED_URL='/dentcast-brain.json?v=3230472898';
   const el=document.getElementById('dcLast3Updates');
   if(!el) return;
   function extractArray(json){if(Array.isArray(json))return json;const cands=[json?.items,json?.data,json?.entries,json?.feed].filter(Boolean);for(const c of cands)if(Array.isArray(c))return c;for(const k in(json||{})){const v=json[k];if(Array.isArray(v))return v;if(v&&typeof v==='object'&&Array.isArray(v.items))return v.items;}return[];}
@@ -5033,7 +5033,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 
   function getBrain(){
     if(brainCache) return Promise.resolve(brainCache);
-    return fetch('/dentcast-brain.json?v=b0fbdca977', {cache:'no-store'})
+    return fetch('/dentcast-brain.json?v=3230472898', {cache:'no-store'})
       .then(r => r.ok ? r.json() : [])
       .then(d => { brainCache = Array.isArray(d) ? d : []; return brainCache; })
       .catch(() => { brainCache = []; return []; });
