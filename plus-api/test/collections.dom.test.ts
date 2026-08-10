@@ -494,8 +494,8 @@ describe('reference pins («رفرنس»)', () => {
   });
 });
 
-// «خروجی» — a plain navigation to the export endpoint, not fetch+blob. Only
-// the docx option ships here (pptx is gated behind Phase E's manual check).
+// «خروجی» — a plain navigation to the export endpoint, not fetch+blob. Both
+// formats ship since the founder's Phase E real-file check passed (2026-08-10).
 describe('board export', () => {
   beforeEach(() => {
     document.body.innerHTML = '<div id="root"></div>';
@@ -504,13 +504,14 @@ describe('board export', () => {
     board = { id: 'c1', title: 'امتحان بورد', created_at: '2026-07-01T10:00:00Z', items: [hlItem()] };
   });
 
-  it('«خروجی» opens a sheet with only the docx option (pptx is not shipped yet)', async () => {
+  it('«خروجی» opens a sheet with the docx and pptx options', async () => {
     await renderCollectionDetail(document.getElementById('root')!, 'c1');
     ([...document.querySelectorAll('button')].find((b) => b.textContent!.includes('خروجی')) as HTMLElement).click();
 
     const opts = [...document.querySelectorAll('.dcp-cl-addopt')];
-    expect(opts).toHaveLength(1);
+    expect(opts).toHaveLength(2);
     expect(opts[0].textContent).toContain('Word');
+    expect(opts[1].textContent).toContain('اسکلت اسلاید');
     expect(document.body.textContent).toContain('چیدمانِ دستی برد');
   });
 

@@ -90,7 +90,16 @@ window unless `force: true`; there is a form for it on the `GET /admin` page),
 `POST /admin/articles/backfill` (one-time go-live: record all existing pages as
 already-notified), and `GET /admin/notify/health` (can the channels actually
 deliver right now — config + reachability, sends nothing).
-`requirePremium` is wired but no premium endpoint ships in Phase 1.
+Collections (`requirePremium`): `GET/POST /collections`,
+`GET/PATCH/DELETE /collections/:id`, `POST /collections/:id/items`
+(`highlight_id` | `content_id` | `snippet_id`, idempotent),
+`DELETE /collections/:id/items/:itemId` (orphan rule: a snippet's last pin
+deletes the snippet), `PUT /collections/:id/items/order`,
+`POST /collections/:id/snippets` (create a «متن خودم»/«رفرنس» snippet AND pin
+it, atomically), `PATCH/DELETE /snippets/:id`, and
+`GET /collections/:id/export?format=docx|pptx` (in-memory Word handout /
+slide skeleton, board order). `GET /export/highlights` also carries the
+user's `snippets`, on any plan.
 
 ## New-article notifications
 

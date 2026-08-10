@@ -218,9 +218,12 @@ export function openCollectionMove(item, fromCollectionId, removeFromHere) {
 }
 
 /**
- * The «خروجی» sheet: a Word handout, in the board's own چیدمانِ دستی order.
- * pptx is gated behind a manual real-PowerPoint RTL check (handoff §4.3) and
- * isn't offered yet — only the docx option card ships here.
+ * The «خروجی» sheet: a Word handout or a slide skeleton, in the board's own
+ * چیدمانِ دستی order. pptx passed the handoff §4.3 gate on 2026-08-10: the
+ * founder opened a mixed fa/en deck and ruled the letters/word order intact
+ * («حروف به هم نریختن») — the one known blemish is that GOOGLE's viewers
+ * ignore the per-paragraph rtl flag (bullets render on the left there), which
+ * real PowerPoint honors, and was judged not worth pulling the feature over.
  *
  * A plain navigation (not fetch+blob): the session cookie rides along on the
  * cross-origin GET the same way any other API call does (SameSite=None in
@@ -228,24 +231,27 @@ export function openCollectionMove(item, fromCollectionId, removeFromHere) {
  * download-complete event to hook, so the sheet just closes on click.
  */
 function exportSheetCard(collectionId, itemCount) {
-  const docxOpt = el('button', { class: 'dcp-cl-addopt', type: 'button' }, [
-    el('span', { class: 'dcp-cl-addopt-ico blue' }, '📄'),
-    el('span', { class: 'dcp-cl-addopt-txt' }, [
-      el('b', {}, 'جزوه‌ی Word (docx)'),
-      el('small', {}, 'هایلایت‌ها با یادداشت‌هایشان، متن‌های خودتان، و فهرست منابع در انتها — آماده‌ی ویرایش.'),
-    ]),
-  ]);
-  docxOpt.addEventListener('click', async () => {
-    toast('در حال آماده شدن…');
-    const base = await apiBase();
-    location.href = base + '/collections/' + encodeURIComponent(collectionId) + '/export?format=docx';
-    closeSheet();
-  });
+  function formatOption(format, ico, icoClass, name, desc) {
+    const opt = el('button', { class: 'dcp-cl-addopt', type: 'button' }, [
+      el('span', { class: 'dcp-cl-addopt-ico ' + icoClass }, ico),
+      el('span', { class: 'dcp-cl-addopt-txt' }, [el('b', {}, name), el('small', {}, desc)]),
+    ]);
+    opt.addEventListener('click', async () => {
+      toast('در حال آماده شدن…');
+      const base = await apiBase();
+      location.href = base + '/collections/' + encodeURIComponent(collectionId) + '/export?format=' + format;
+      closeSheet();
+    });
+    return opt;
+  }
 
   return el('div', { class: 'dcp-sheet-card' }, [
     el('div', { class: 'dcp-sheet-top' }, [el('h2', { class: 'dcp-sheet-title' }, '⬇ خروجی از این برد')]),
     el('p', { class: 'dcp-sheet-sub' }, faNum(itemCount) + ' پین، به همان ترتیبی که چیده‌اید.'),
-    docxOpt,
+    formatOption('docx', '📄', 'blue', 'جزوه‌ی Word (docx)',
+      'هایلایت‌ها با یادداشت‌هایشان، متن‌های خودتان، و فهرست منابع در انتها — آماده‌ی ویرایش.'),
+    formatOption('pptx', '🎞', 'gold', 'اسکلت اسلاید (pptx)',
+      'هر پین یک اسلاید: تیتر + متن. طراحی و عکس با خودتان — ساختار با ما.'),
     el('div', { class: 'dcp-cl-order-note' }, [
       el('span', { 'aria-hidden': 'true' }, '⇅'),
       el('span', {}, 'ترتیب خروجی = چیدمانِ دستی برد. قبل از خروجی، برد را همان‌طور بچینید که می‌خواهید ارائه پیش برود.'),

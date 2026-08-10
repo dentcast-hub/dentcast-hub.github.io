@@ -38,12 +38,12 @@ import { getContentInfo } from '../content-index.js';
 // becomes the export's order: the existing چیدمانِ دستی feature IS the
 // slide/handout order, no separate step.
 //
-// pptx (Phase E) is FULLY IMPLEMENTED here but the UI still offers docx only:
-// the handoff's acceptance gate — open a mixed fa/en deck in real PowerPoint
-// and verify word order, bullet direction and mixed-direction lines — needs a
-// human with PowerPoint, which this endpoint's own tests cannot be. The slide
-// XML is verified mechanically (per-paragraph rtl="1" + algn="r", LTR Latin
-// citations); the founder's verdict decides whether the UI ever exposes it.
+// pptx passed the handoff §4.3 acceptance gate on 2026-08-10: the founder
+// opened a mixed fa/en sample deck and ruled the text intact («حروف به هم
+// نریختن»). Known blemish, accepted: Google's Docs/Slides viewers ignore the
+// per-paragraph rtl flag (bullets render on the left there); real PowerPoint
+// honors it. The slide XML is also verified mechanically in tests
+// (per-paragraph rtl="1" + algn="r", LTR Latin citations).
 
 const SITE_ORIGIN = 'https://dentcast.ir';
 
