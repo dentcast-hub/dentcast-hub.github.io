@@ -13053,5 +13053,37 @@
       "secondary": [],
       "subtopic": "smile-design"
     }
+  },
+  {
+    "type": "clinical",
+    "id": "clinical-64",
+    "title": "اینجوری هم میشه به فرول نگاه کرد،یه استفاده ی معکوس از مقاله معروف در مورد فرول",
+    "caption": "دندان خلفیِ اندوشده‌ای که برای افزایش طول تاج ارجاع می‌شود: به‌جای فرولِ کاملِ ۳۶۰ درجه، برای جراح می‌نویسم تمرکز روی باکال و لینگوال باشد و در پروگزیمال‌ها حدود ۱ میلی‌متر کافی است. مبنای این اغماض، خواندنِ معکوسِ مقاله‌ی Rethinking Ferrule است — معیارِ پذیرشِ یک وضعیتِ باقی‌مانده را هدفِ جراحی گذاشتن، تا استخوانِ اینترپروگزیمال و پاپیلا حفظ شود.",
+    "hashtags": [
+      "#اینسایت",
+      "#فرول",
+      "#افزایش_طول_تاج",
+      "#دندان_اندوشده",
+      "#بیومکانیک",
+      "#طرح_درمان"
+    ],
+    "keywords": [
+      "posterior endodontically treated tooth insufficient ferrule",
+      "crown lengthening surgical prescription ferrule height",
+      "proximal versus buccolingual ferrule wall",
+      "360 degree ferrule not always the surgical goal",
+      "Rethinking ferrule Jotkowitz Samet clinical application",
+      "interproximal bone preservation during crown lengthening",
+      "vertical load resistance buccal and lingual walls",
+      "ferrule acceptance criteria used as surgical target",
+      "papilla and crown to root ratio after crown lengthening",
+      "lateral force group function parafunction ferrule decision"
+    ],
+    "page_url": "/insight/insight-64.html",
+    "pillar": {
+      "primary": "fixed-pros",
+      "secondary": [],
+      "subtopic": "post-and-core"
+    }
   }
 ]
