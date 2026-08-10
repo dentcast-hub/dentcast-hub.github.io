@@ -142,6 +142,47 @@
   ]
 }
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "DefinedTermSet",
+  "@id": "https://dentcast.org/dentai/promptologist/prompt2-1.html#flashcards",
+  "hasDefinedTerm": [
+    {
+      "@type": "DefinedTerm",
+      "@id": "https://dentcast.org/dentai/promptologist/prompt2-1.html#flashcards-c1",
+      "name": "چرایی لحن مطمئن مدل مستقل از درستی پاسخ",
+      "description": "لحن مطمئن هیچ ربطی به راستی‌آزمایی ندارد: روانی جمله و درستی جمله هر دو از یک فرایندِ واحد بیرون می‌آیند، یعنی حدس ادامه‌ی محتمل. مدل از متن‌هایی آموزش دیده که پر از نوشته‌ی محکمِ آدم‌های مطمئن است و از آن‌ها آموخته که یک پاسخ خوب باید قاطع و روان به نظر برسد. به بیان دقیق‌تر، صدای تخصص را آموخته است نه خودِ تخصص را.",
+      "source": "faq",
+      "sourceFaqIndex": 0
+    },
+    {
+      "@type": "DefinedTerm",
+      "@id": "https://dentcast.org/dentai/promptologist/prompt2-1.html#flashcards-c2",
+      "name": "کانفابیولیشن به‌جای «دروغ» برای توصیف خطای مدل",
+      "description": "دروغ به دو چیز نیاز دارد که مدل هیچ‌کدام را ندارد: نیت فریب و آگاهی از حقیقتِ خلاف. نام دقیق‌تر این پدیده کانفابیولیشن (confabulation) است — شبیه بیمار نورولوژیکی که جای خالی حافظه‌اش را با روایتی منسجم پر می‌کند بی‌آنکه بداند خلائی وجود دارد. این تفکیک صرفاً لفظی نیست: نشان می‌دهد انتظار «صداقت» از مدل انتظار از قوه‌ای است که وجود ندارد.",
+      "source": "faq",
+      "sourceFaqIndex": 1
+    },
+    {
+      "@type": "DefinedTerm",
+      "@id": "https://dentcast.org/dentai/promptologist/prompt2-1.html#flashcards-c3",
+      "name": "چرا قاطعیت مدل در حوزه‌های ناآشنای کاربر خطرناک‌تر است",
+      "description": "چون لحن از درستی جدا شده است، مدل در همه‌ی موضوعات با یک اندازه قاطعیت حرف می‌زند. در محدوده‌ی تخصص خودتان خطا را فوری می‌گیرید، اما وقتی همان مدل با همان لحن بی‌نقص درباره‌ی چیزی مثل یک تداخل دارویی پاسخ می‌دهد که باید به منبع رجوع کرد، هیچ سنجه‌ی دم‌دستی برای ارزیابی ندارید. یعنی خطر دقیقاً در نقطه‌ای بیشینه است که توان راستی‌آزمایی کاربر کمینه است.",
+      "source": "faq",
+      "sourceFaqIndex": 2
+    },
+    {
+      "@type": "DefinedTerm",
+      "@id": "https://dentcast.org/dentai/promptologist/prompt2-1.html#flashcards-c4",
+      "name": "حدّ حفاظتی مقیدکردن مدل به یک منبع مشخص",
+      "description": "ابزارهایی که مدل را به سند مشخصی مقید می‌کنند (مانند NotebookLM) فقط جلوی جعل رفرنس را می‌گیرند، چون مدل ناچار است از سند واقعی بردارد. اما خواندن و خلاصه‌کردن همان سند هنوز کار ماشینی است که نمی‌فهمد و صرفاً بازتولید می‌کند؛ می‌تواند یافته‌ای را که فقط در یک شرط خاص برقرار بوده بی‌صدا قطعی جا بزند. در چنین حالتی سند واقعی است اما حرف همچنان غلط.",
+      "source": "faq",
+      "sourceFaqIndex": 3
+    }
+  ]
+}
+</script>
   <script>(function(){var s=localStorage.getItem('dc-theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme','dark');})();</script>
   <link rel="preload" as="font" href="/fonts/Vazirmatn[wght].woff2" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/dc-theme.css">
