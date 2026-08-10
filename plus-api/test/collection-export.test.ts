@@ -92,7 +92,7 @@ describe('GET /collections/:id/export', () => {
   it('400s an unsupported format', async () => {
     await makePremium();
     const id = await createCollection();
-    const res = await app.inject({ method: 'GET', url: `/collections/${id}/export?format=pptx`, headers: { cookie } });
+    const res = await app.inject({ method: 'GET', url: `/collections/${id}/export?format=xlsx`, headers: { cookie } });
     expect(res.statusCode).toBe(400);
   });
 
@@ -181,5 +181,75 @@ describe('GET /collections/:id/export', () => {
     const xml = await documentXml(res.rawPayload);
     expect(xml.indexOf('دوم ساخته شد'), 'the manually-reordered item comes first')
       .toBeLessThan(xml.indexOf('اول ساخته شد'));
+  });
+});
+
+// pptx (Phase E): fully implemented server-side, but the UI stays docx-only
+// until the founder's real-PowerPoint check passes — these tests are the
+// mechanical half of that gate (the OOXML the deck actually carries), not a
+// substitute for the human half.
+describe('GET /collections/:id/export?format=pptx', () => {
+  async function slideXmls(buffer: Buffer): Promise<string[]> {
+    const zip = await JSZip.loadAsync(buffer);
+    const names = Object.keys(zip.files)
+      .filter((n) => /^ppt\/slides\/slide\d+\.xml$/.test(n))
+      .sort((a, b) => Number(a.match(/\d+/)![0]) - Number(b.match(/\d+/)![0]));
+    return Promise.all(names.map((n) => zip.file(n)!.async('string')));
+  }
+
+  it('200s with the pptx content-type and a valid zip', async () => {
+    await makePremium();
+    const id = await createCollection('برد اسلاید');
+    await addTextSnippet(id, 'یک متن برای اسلاید');
+
+    const res = await app.inject({ method: 'GET', url: `/collections/${id}/export?format=pptx`, headers: { cookie } });
+    expect(res.statusCode).toBe(200);
+    expect(res.headers['content-type']).toBe(
+      'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+    );
+    expect((res.headers['content-disposition'] as string)).toContain(`.pptx`);
+    expect(res.rawPayload.subarray(0, 2).toString()).toBe('PK');
+  });
+
+  it('one slide per non-reference pin, title first, «منابع» last', async () => {
+    await makePremium();
+    const id = await createCollection('ژورنال کلاب');
+    await addTextSnippet(id, 'بدنه‌ی اسلاید دوم', 'تیتر اسلاید دوم');
+    await addHighlight(id, 'insight/insight-1', 'هایلایت برای اسلاید سوم');
+    await addReference(id, 'Dentin bonding systems', { authors: 'Breschi L, et al.', year: 2018 });
+
+    const res = await app.inject({ method: 'GET', url: `/collections/${id}/export?format=pptx`, headers: { cookie } });
+    const slides = await slideXmls(res.rawPayload);
+    // title + 2 pins + منابع (the reference never gets a pin slide of its own)
+    expect(slides).toHaveLength(4);
+    expect(slides[0]).toContain('ژورنال کلاب');
+    expect(slides[slides.length - 1]).toContain('منابع');
+    expect(slides[slides.length - 1]).toContain('Dentin bonding systems');
+    const midSlides = slides.slice(1, -1).join('');
+    expect(midSlides).toContain('تیتر اسلاید دوم');
+    expect(midSlides).toContain('هایلایت برای اسلاید سوم');
+    expect(midSlides, 'the reference is only in منابع').not.toContain('Dentin bonding systems');
+  });
+
+  it('Persian paragraphs carry per-paragraph rtl + right alignment; a Latin citation stays LTR', async () => {
+    await makePremium();
+    const id = await createCollection('برد RTL');
+    await addTextSnippet(id, 'کامپوزیت Bulk-fill در کلاس II به باند dentin وابسته است.\nخط دوم فارسی', 'تیتر فارسی');
+    await addReference(id, 'Dentin bonding systems', { authors: 'Breschi L, et al.', year: 2018 });
+
+    const res = await app.inject({ method: 'GET', url: `/collections/${id}/export?format=pptx`, headers: { cookie } });
+    const slides = await slideXmls(res.rawPayload);
+
+    const pinSlide = slides[1];
+    expect(pinSlide).toContain('rtl="1"');
+    expect(pinSlide).toContain('algn="r"');
+    // Each body line is its own paragraph (breakLine), so bullets stack
+    // instead of running together on one line.
+    const paragraphs = pinSlide.match(/<a:p>/g) || [];
+    expect(paragraphs.length).toBeGreaterThanOrEqual(3); // heading + 2 body lines
+
+    const refSlide = slides[slides.length - 1];
+    const citation = refSlide.slice(refSlide.indexOf('Breschi') - 400, refSlide.indexOf('Breschi'));
+    expect(citation, 'the Latin citation paragraph is left-aligned, not RTL').toContain('algn="l"');
   });
 });
