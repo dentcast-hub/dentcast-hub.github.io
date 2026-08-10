@@ -24,6 +24,13 @@ export function foldFa(s) {
     .trim();
 }
 
+/** True when a string has no Persian/Arabic letters — a reference title pulled
+ *  from Crossref is almost always this, and needs dir=ltr + left alignment or
+ *  it renders reversed inside the page's RTL flow. */
+export function looksLatin(s) {
+  return !/[؀-ۿ]/.test(String(s || ''));
+}
+
 /** The article link that lands ON the highlight: plus.js reads ?dcphl=, enters
  *  study mode and scrolls to the mark, so you never arrive at an article that
  *  shows none of your own marks. */

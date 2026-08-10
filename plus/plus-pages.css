@@ -614,6 +614,38 @@ a.dcp-progress-row:hover { text-decoration: none; }
 .dcp-sheet-card > .dcp-input,
 .dcp-hlib-editor > .dcp-input { display: block; width: 100%; box-sizing: border-box; }
 
+/* ---- reference pin («رفرنس») card -------------------------------------- */
+.dcp-cl-pin-ref { border-inline-start: 3px solid var(--dcp-ref); }
+.dcp-cl-ref-title { margin: 0 0 4px; font-size: .9rem; font-weight: 700; line-height: 1.7; color: var(--txt, #0a1a33); }
+.dcp-cl-ref-en { direction: ltr; text-align: left; }
+.dcp-cl-ref-meta { margin: 0 0 9px; font-size: .8rem; color: var(--txt2, #4a5f85); }
+.dcp-cl-doi {
+  display: inline-block; direction: ltr; font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: .74rem; color: var(--dcp-ref); background: var(--dcp-ref-bg);
+  border: 1px solid color-mix(in srgb, var(--dcp-ref) 30%, transparent);
+  border-radius: 7px; padding: 1px 8px; margin-bottom: 9px; text-decoration: none;
+}
+.dcp-cl-doi:hover { filter: brightness(1.1); }
+
+/* ---- «رفرنس» composer: DOI fetch + manual fallback --------------------- */
+.dcp-cl-doi-row { display: flex; gap: 8px; }
+.dcp-cl-doi-row .dcp-input { flex: 1 1 auto; width: auto; }
+.dcp-cl-fetch-state { margin: 4px 0 10px; font-size: .84rem; color: var(--txt2, #4a5f85); }
+.dcp-cl-ref-preview {
+  border: 1px solid color-mix(in srgb, var(--dcp-ref) 30%, transparent); background: var(--dcp-ref-bg);
+  border-radius: var(--dcp-radius, 14px); padding: 12px 15px; margin-bottom: 10px;
+}
+.dcp-cl-ref-preview-ok { margin: 0 0 6px; font-size: .76rem; font-weight: 700; color: #0f7b4d; }
+.dcp-cl-ref-preview .dcp-cl-ref-title, .dcp-cl-ref-preview .dcp-cl-ref-meta { margin-bottom: 0; }
+.dcp-cl-ref-preview .dcp-cl-ref-meta { margin-top: 4px; }
+.dcp-cl-manual-toggle {
+  display: block; border: 0; background: transparent; color: var(--ac, #0b5fff);
+  font-size: .8rem; padding: 2px 0; margin-bottom: 10px; text-decoration: underline;
+  text-underline-offset: 4px; cursor: pointer;
+}
+.dcp-cl-ref-manual[hidden] { display: none; }
+.dcp-cl-ref-manual > .dcp-input { display: block; width: 100%; box-sizing: border-box; }
+
 /* Dashboard entry point into the library (dashboard.js recentBlock). */
 .dcp-recent-foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; padding-top: 10px; font-size: .85rem; color: var(--txt2, #4a5f85); }
 
