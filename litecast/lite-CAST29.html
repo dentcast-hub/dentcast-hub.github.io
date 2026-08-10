@@ -81,6 +81,19 @@ article {
   line-height: 2;
 }
 
+/* ===== تم تیره ===== */
+/* dc-theme.css بعد از این استایل لود می‌شود و --text را روشن می‌کند،
+   اما پس‌زمینه‌ی article اینجا سفت‌کد سفید است → متن روی کارت محو می‌شد. */
+[data-theme="dark"] article {
+  background: var(--card-bg, #1e2c3a);
+  border-color: var(--card-border, rgba(255,255,255,.07));
+  box-shadow: var(--card-sh, 0 1px 3px rgba(0,0,0,.22), 0 4px 14px rgba(0,0,0,.14));
+  color: var(--txt, #e8f0ff);
+}
+[data-theme="dark"] strong {
+  color: var(--ac, #5b9cf6);
+}
+
 /* تاکیدها */
 strong {
   color: var(--blue);
