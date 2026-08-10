@@ -1242,7 +1242,14 @@ a.dcp-progress-row:hover { text-decoration: none; }
 }
 .dcp-nt-body { min-width: 0; }
 .dcp-nt-title { margin: 0 0 3px; font-size: .93rem; font-weight: 700; line-height: 1.6; }
-.dcp-nt-text { margin: 0; font-size: .85rem; line-height: 1.8; color: var(--txt2, #4a5f85); }
+/* pre-line, because a founder broadcast is WRITTEN with its line breaks — a
+   list of two new features collapses into one grey paragraph without it, and
+   the body is set as textContent so there is no markup to carry the shape. The
+   generated notices have no newlines at all, so nothing else changes. */
+.dcp-nt-text {
+  margin: 0; font-size: .85rem; line-height: 1.8; color: var(--txt2, #4a5f85);
+  white-space: pre-line;
+}
 .dcp-nt-meta {
   display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
   margin-top: 6px; font-size: .74rem; color: var(--txt3, #62779a);
