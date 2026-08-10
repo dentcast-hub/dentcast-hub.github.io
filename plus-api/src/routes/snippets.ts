@@ -204,7 +204,7 @@ export async function snippetRoutes(app: FastifyInstance): Promise<void> {
   });
 
   // DELETE /snippets/:id - delete the snippet itself; its pins cascade
-  // (migration 0035's `on delete cascade` on collection_items.snippet_id).
+  // (migration 0036's `on delete cascade` on collection_items.snippet_id).
   app.delete('/snippets/:id', async (request, reply) => {
     const { id } = request.params as { id: string };
     const res = await pool.query(`delete from snippets where id = $1 and user_id = $2`, [id, request.user!.id]);

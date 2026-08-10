@@ -355,7 +355,7 @@ export async function collectionRoutes(app: FastifyInstance): Promise<void> {
   // - add one of the user's own highlights, a whole page (no highlight_id), or
   // one of the user's own snippets, to the collection. Idempotent: adding the
   // same thing twice just returns the existing row (the partial unique
-  // indexes from migration 0012, plus the snippet one from 0035, back this).
+  // indexes from migration 0012, plus the snippet one from 0036, back this).
   // This is also what «انتقال» (move) and the pin picker use for snippets.
   app.post('/collections/:id/items', {
     schema: {
