@@ -5,6 +5,10 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { applyRemoteIndex, getIndex, indexSource, resetRemoteIndex, getTags } from '../src/content-index.js';
 import { applyRemotePathways, getPathways, resetRemotePathways } from '../src/pathways.js';
+import {
+  applyRemoteFlashcards, flashcardsSource, resetRemoteFlashcards,
+  getCardsFor, getCard, contentIdsWithCards,
+} from '../src/flashcards.js';
 
 const GOOD_INDEX = {
   version: 42,
@@ -17,8 +21,15 @@ const GOOD_INDEX = {
 
 const GOOD_PATHWAYS = [{ id: 'p1', title_fa: 'یک', description_fa: '', premium: true, steps: [{ content_id: 'nc-1', milestone: false }], reserved: {} }];
 
-beforeEach(() => { resetRemoteIndex(); resetRemotePathways(); });
-afterEach(() => { resetRemoteIndex(); resetRemotePathways(); vi.restoreAllMocks(); });
+const GOOD_FLASHCARDS = {
+  version: 7,
+  byContent: {
+    'nc-1': { cards: [{ id: 'flashcards-c1', front: 'جلو', back: 'پشت', source: 'faq', source_faq_index: 0 }] },
+  },
+};
+
+beforeEach(() => { resetRemoteIndex(); resetRemotePathways(); resetRemoteFlashcards(); });
+afterEach(() => { resetRemoteIndex(); resetRemotePathways(); resetRemoteFlashcards(); vi.restoreAllMocks(); });
 
 describe('a published index replaces the baked one', () => {
   it('adopts a well-formed payload and serves it', () => {
@@ -78,6 +89,48 @@ describe('pathways follow the same rules', () => {
     expect(applyRemotePathways([{ id: 'p2' }]), 'no steps array').toBe(false);
     expect(applyRemotePathways([{ steps: [] }]), 'no id').toBe(false);
     expect(getPathways()[0].id, 'the previous copy must still be served').toBe('p1');
+  });
+});
+
+describe('flashcards follow the same rules', () => {
+  it('adopts a well-formed payload and serves it', () => {
+    expect(flashcardsSource()).toBe('image/disk');
+    expect(applyRemoteFlashcards(GOOD_FLASHCARDS)).toBe(true);
+    expect(flashcardsSource()).toBe('published (version 7)');
+    expect(getCardsFor('nc-1')).toHaveLength(1);
+    expect(getCard('nc-1', 'flashcards-c1')?.front).toBe('جلو');
+  });
+
+  const rejected: Array<[string, unknown]> = [
+    ['an HTML error page', '<!doctype html><title>404</title>'],
+    ['null', null],
+    ['an array where an object belongs', []],
+    ['no byContent', { version: 1 }],
+    ['byContent as an array', { version: 1, byContent: [] }],
+    ['a structurally valid but EMPTY byContent', { version: 99, byContent: {} }],
+    ['a card missing front', { version: 1, byContent: { a: { cards: [{ id: 'x', back: 'y' }] } } }],
+    ['a card with an empty id', { version: 1, byContent: { a: { cards: [{ id: '', front: 'x', back: 'y' }] } } }],
+    ['an entry whose cards is not an array', { version: 1, byContent: { a: { cards: 'nope' } } }],
+  ];
+
+  for (const [label, payload] of rejected) {
+    it(`refuses ${label}`, () => {
+      applyRemoteFlashcards(GOOD_FLASHCARDS); // a good copy is already in service
+      expect(applyRemoteFlashcards(payload)).toBe(false);
+      expect(flashcardsSource(), 'the previous copy must still be served').toBe('published (version 7)');
+    });
+  }
+
+  it('falls back to the on-disk index when nothing was ever adopted', () => {
+    expect(flashcardsSource()).toBe('image/disk');
+    expect(contentIdsWithCards().length).toBeGreaterThan(0);
+  });
+
+  it('getCardsFor / getCard are tolerant of unknown content or card ids', () => {
+    expect(getCardsFor('does/not-exist')).toEqual([]);
+    expect(getCard('does/not-exist', 'nope')).toBeNull();
+    const known = contentIdsWithCards()[0];
+    expect(getCard(known, 'nope')).toBeNull();
   });
 });
 
