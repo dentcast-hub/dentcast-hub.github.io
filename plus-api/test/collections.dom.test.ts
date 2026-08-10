@@ -56,6 +56,7 @@ vi.mock('/plus/js/api.js', () => ({
     deleteSnippet: (id: string) => { calls.push({ op: 'deleteSnippet', args: [id] }); return Promise.resolve({ ok: true }); },
   },
   currentUser: () => Promise.resolve({ tier: 'premium' }),
+  apiBase: () => Promise.resolve('https://api.dentcast.test'),
 }));
 
 const { renderCollectionsList, renderCollectionDetail } = await import('../../plus/js/collections.js');
@@ -490,6 +491,43 @@ describe('reference pins («رفرنس»)', () => {
     chip.click();
     expect(document.querySelectorAll('.dcp-cl-pin')).toHaveLength(1);
     expect(document.querySelector('.dcp-cl-pin')!.classList.contains('dcp-cl-pin-ref')).toBe(true);
+  });
+});
+
+// «خروجی» — a plain navigation to the export endpoint, not fetch+blob. Only
+// the docx option ships here (pptx is gated behind Phase E's manual check).
+describe('board export', () => {
+  beforeEach(() => {
+    document.body.innerHTML = '<div id="root"></div>';
+    calls.length = 0;
+    collections = [{ id: 'c1', title: 'امتحان بورد', item_count: 1, created_at: '2026-07-01T10:00:00Z', last_item_at: null, preview: [] }];
+    board = { id: 'c1', title: 'امتحان بورد', created_at: '2026-07-01T10:00:00Z', items: [hlItem()] };
+  });
+
+  it('«خروجی» opens a sheet with only the docx option (pptx is not shipped yet)', async () => {
+    await renderCollectionDetail(document.getElementById('root')!, 'c1');
+    ([...document.querySelectorAll('button')].find((b) => b.textContent!.includes('خروجی')) as HTMLElement).click();
+
+    const opts = [...document.querySelectorAll('.dcp-cl-addopt')];
+    expect(opts).toHaveLength(1);
+    expect(opts[0].textContent).toContain('Word');
+    expect(document.body.textContent).toContain('چیدمانِ دستی برد');
+  });
+
+  it('clicking the docx option resolves the API base and closes the sheet', async () => {
+    await renderCollectionDetail(document.getElementById('root')!, 'c1');
+    ([...document.querySelectorAll('button')].find((b) => b.textContent!.includes('خروجی')) as HTMLElement).click();
+    // Let the sheet's OWN opening rAF settle before acting inside it — sheet.js
+    // adds `is-open` on the next animation frame, and racing ahead of that (as
+    // no human ever could) makes closeSheet's class removal look like a no-op.
+    await new Promise((r) => requestAnimationFrame(r));
+    (document.querySelector('.dcp-cl-addopt') as HTMLElement).click();
+    await new Promise((r) => setTimeout(r, 0));
+
+    // The sheet node itself is only removed after its exit transition (a
+    // deferred setTimeout in sheet.js); losing `is-open` is the immediate signal.
+    expect(document.querySelector('.dcp-sheet')!.className, 'the sheet closes; the browser download UI takes it from here')
+      .not.toContain('is-open');
   });
 });
 

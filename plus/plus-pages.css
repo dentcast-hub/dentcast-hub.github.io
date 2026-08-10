@@ -646,6 +646,12 @@ a.dcp-progress-row:hover { text-decoration: none; }
 .dcp-cl-ref-manual[hidden] { display: none; }
 .dcp-cl-ref-manual > .dcp-input { display: block; width: 100%; box-sizing: border-box; }
 
+/* ---- «خروجی» export sheet ----------------------------------------------- */
+.dcp-cl-order-note {
+  display: flex; gap: 8px; align-items: flex-start; font-size: .78rem; color: var(--txt2, #4a5f85);
+  background: var(--surface2, #f4f6fb); border-radius: 10px; padding: 8px 12px; margin-top: 4px;
+}
+
 /* Dashboard entry point into the library (dashboard.js recentBlock). */
 .dcp-recent-foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; padding-top: 10px; font-size: .85rem; color: var(--txt2, #4a5f85); }
 

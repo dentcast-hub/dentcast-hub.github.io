@@ -16,6 +16,7 @@ import { achievementRoutes } from './routes/achievements.js';
 import { noticeRoutes } from './routes/notices.js';
 import { collectionRoutes } from './routes/collections.js';
 import { snippetRoutes } from './routes/snippets.js';
+import { collectionExportRoutes } from './routes/collection-export.js';
 import { readingCompassRoutes } from './routes/reading-compass.js';
 import { caseAssistantRoutes } from './routes/case-assistant.js';
 import { premiumGrantRoutes } from './routes/premium-grant.js';
@@ -88,6 +89,7 @@ export async function buildServer(): Promise<FastifyInstance> {
   await app.register(noticeRoutes);
   await app.register(collectionRoutes);
   await app.register(snippetRoutes);
+  await app.register(collectionExportRoutes);
   await app.register(readingCompassRoutes);
   await app.register(caseAssistantRoutes);
   await app.register(premiumGrantRoutes);

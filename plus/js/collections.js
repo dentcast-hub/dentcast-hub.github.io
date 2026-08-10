@@ -10,7 +10,7 @@
 import { el, faNum } from './util.js';
 import { openSheet, closeSheet, gateCard } from './sheet.js';
 import { premiumCta } from './premium-cta.js';
-import { api, currentUser } from './api.js';
+import { api, currentUser, apiBase } from './api.js';
 import { openLoginModal } from './login-modal.js';
 import { FOLDER_EN } from './content-index.js';
 import { PALETTE } from './config.js';
@@ -215,6 +215,42 @@ export function openCollectionMove(item, fromCollectionId, removeFromHere) {
       await removeFromHere(item.id);
     },
   }));
+}
+
+/**
+ * The «خروجی» sheet: a Word handout, in the board's own چیدمانِ دستی order.
+ * pptx is gated behind a manual real-PowerPoint RTL check (handoff §4.3) and
+ * isn't offered yet — only the docx option card ships here.
+ *
+ * A plain navigation (not fetch+blob): the session cookie rides along on the
+ * cross-origin GET the same way any other API call does (SameSite=None in
+ * prod), and the browser's own download UI takes it from there — there is no
+ * download-complete event to hook, so the sheet just closes on click.
+ */
+function exportSheetCard(collectionId, itemCount) {
+  const docxOpt = el('button', { class: 'dcp-cl-addopt', type: 'button' }, [
+    el('span', { class: 'dcp-cl-addopt-ico blue' }, '📄'),
+    el('span', { class: 'dcp-cl-addopt-txt' }, [
+      el('b', {}, 'جزوه‌ی Word (docx)'),
+      el('small', {}, 'هایلایت‌ها با یادداشت‌هایشان، متن‌های خودتان، و فهرست منابع در انتها — آماده‌ی ویرایش.'),
+    ]),
+  ]);
+  docxOpt.addEventListener('click', async () => {
+    toast('در حال آماده شدن…');
+    const base = await apiBase();
+    location.href = base + '/collections/' + encodeURIComponent(collectionId) + '/export?format=docx';
+    closeSheet();
+  });
+
+  return el('div', { class: 'dcp-sheet-card' }, [
+    el('div', { class: 'dcp-sheet-top' }, [el('h2', { class: 'dcp-sheet-title' }, '⬇ خروجی از این برد')]),
+    el('p', { class: 'dcp-sheet-sub' }, faNum(itemCount) + ' پین، به همان ترتیبی که چیده‌اید.'),
+    docxOpt,
+    el('div', { class: 'dcp-cl-order-note' }, [
+      el('span', { 'aria-hidden': 'true' }, '⇅'),
+      el('span', {}, 'ترتیب خروجی = چیدمانِ دستی برد. قبل از خروجی، برد را همان‌طور بچینید که می‌خواهید ارائه پیش برود.'),
+    ]),
+  ]);
 }
 
 /**
@@ -807,10 +843,12 @@ export async function renderCollectionDetail(container, id) {
       renderItems();
     },
   })));
+  const exportBtn = el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button' }, '⬇ خروجی');
+  exportBtn.addEventListener('click', () => openSheet(exportSheetCard(id, data.items.length)));
   const editBtn = el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button' }, 'ویرایشِ کالکشن');
   const deleteBtn = el('button', { class: 'dcp-btn dcp-btn-danger', type: 'button' }, 'حذفِ کالکشن');
   const titleWrap = el('div', { class: 'dcp-cl-title-wrap' }, [titleEl, descEl]);
-  const actionsRow = el('div', { class: 'dcp-cl-detail-actions' }, [addPinBtn, editBtn, deleteBtn]);
+  const actionsRow = el('div', { class: 'dcp-cl-detail-actions' }, [addPinBtn, exportBtn, editBtn, deleteBtn]);
 
   function repaintHead() {
     titleEl.replaceChildren(...[
