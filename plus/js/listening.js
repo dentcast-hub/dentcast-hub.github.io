@@ -1,6 +1,9 @@
-// Listening-completion tracker — the audio twin of reading.js. Fires a single
+// Listening-completion tracker — the audio twin of reading.js. Fires an
 // `episode_listened` activity once a signed-in listener has actually heard
-// LISTEN_FRACTION of an episode's real duration (clamped LISTEN_MIN_S..MAX_S).
+// LISTEN_FRACTION of an episode's real duration (clamped LISTEN_MIN_S..MAX_S),
+// and fires it AGAIN on a later day if they listen again: re-hearing an episode
+// pays (once per league week — see score.ts / league.ts, which price it; this
+// file only decides when a listen HAPPENED, never what it is worth).
 //
 // Why this exists: reading.js closed the "plain reading earns nothing" gap for
 // text, but for a podcast-first site LISTENING was still invisible — a user who
@@ -13,7 +16,9 @@
 // negative delta and is discarded), so seeking to the finish cannot fake it.
 import { api } from './api.js';
 import { signalStreakActivity } from './util.js';
-import { LISTEN_FRACTION, LISTEN_MIN_S, LISTEN_MAX_S, SS_LISTEN_DONE } from './config.js';
+import {
+  LISTEN_FRACTION, LISTEN_MIN_S, LISTEN_MAX_S, LS_LISTEN_AT, LISTEN_REPEAT_MS,
+} from './config.js';
 
 // Headroom on the wall-clock ceiling below, for tick jitter and for a playback
 // rate that changes part-way through a tick.
@@ -22,11 +27,17 @@ const RATE_TOLERANCE = 1.5;
 export function initListeningTracker({ contentId, audioEl }) {
   if (!contentId || !audioEl) return null;
 
-  // Once per episode per browser session (same rule as reading). A repeat within
-  // the same Tehran day changes neither score nor active-day server-side, but
-  // there is no reason to send it twice.
-  const doneKey = SS_LISTEN_DONE + contentId;
-  if (sessionStorage.getItem(doneKey)) return null;
+  // At most one post per episode per LISTEN_REPEAT_MS — not once per session,
+  // because a re-listen is now worth something (once per league week, priced
+  // server-side). 20h rather than 24 so a daily listener who starts a little
+  // earlier each day is never silently skipped by their own habit.
+  //
+  // The window only suppresses duplicate posts; the payment rules live on the
+  // server, so being generous here costs nothing but a log row — and that row
+  // is what keeps a re-listener's streak alive on the day they hear it again.
+  const atKey = LS_LISTEN_AT + contentId;
+  const lastAt = Number(localStorage.getItem(atKey) || 0);
+  if (lastAt && Date.now() - lastAt < LISTEN_REPEAT_MS) return null;
 
   let playedS = 0;       // accumulated seconds of REAL forward playback
   let lastTime = null;   // audioEl.currentTime at the previous credited tick
@@ -80,7 +91,7 @@ export function initListeningTracker({ contentId, audioEl }) {
   function complete() {
     fired = true;
     cleanup();
-    sessionStorage.setItem(doneKey, '1');
+    try { localStorage.setItem(atKey, String(Date.now())); } catch (_) { /* private mode */ }
     // Fire-and-forget: requireAuth rejects an anonymous caller quietly; this is
     // a silent background signal, exactly like reading's article_completed.
     api.activity('episode_listened', contentId).catch(() => {});

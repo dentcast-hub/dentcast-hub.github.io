@@ -251,7 +251,16 @@ export const READ_MAX_MS = 240000;   // cap: a very long article never demands >
 // and LISTEN_MAX_S. Only ACTUAL played seconds count (seeking to the end does
 // not) — measured from real playback progress, so it is the audio twin of the
 // visible-dwell rule for reading.
-export const LISTEN_FRACTION = 0.5;  // must hear at least half the episode
+//
+// Deliberately LOWER than READ_FRACTION (0.2 vs 0.5, changed 2026-08-10). The
+// two look like the same knob and are not: a reader's dwell is continuous, but
+// a podcast is listened to in pieces — every ±15s button and every scrub is a
+// seek, which credits nothing, and playedS is not carried across page loads.
+// At half an episode (median 21 min → 10.5 min of unbroken forward play) a
+// listener who skipped the intro could not reach the threshold at all, however
+// long they listened. A fifth is what an interrupted, skipping listener
+// actually accumulates.
+export const LISTEN_FRACTION = 0.2;  // must hear at least a fifth of the episode
 export const LISTEN_MIN_S = 60;      // floor: even a short clip needs 60s of real play
 export const LISTEN_MAX_S = 1200;    // cap: a very long episode never demands > 20 min
 
@@ -260,7 +269,15 @@ export const LISTEN_MAX_S = 1200;    // cap: a very long episode never demands >
 export const SS_MODE = 'dcp:mode:'; // + contentId -> 'study'
 export const SS_RETURN_STUDY = 'dcp:return-study'; // path to auto-enter after login
 export const SS_READ_DONE = 'dcp:read:'; // + contentId -> '1' once article_completed fired this session
-export const SS_LISTEN_DONE = 'dcp:listen:'; // + contentId -> '1' once episode_listened fired this session
+// Listening is the one signal that REPEATS: re-hearing an episode pays again
+// (once per league week, decided server-side in score.ts / league.ts). So its
+// key is a localStorage TIMESTAMP, not a session flag — a session flag both
+// forgot too early (a new tab re-posts the same listen the same day) and
+// remembered too long (a pinned mobile tab keeps one session alive for weeks,
+// which is exactly the reader who re-listens and is told they earned nothing).
+// The client only de-duplicates; what a repeat is WORTH is the server's call.
+export const LS_LISTEN_AT = 'dcp:listen:'; // + contentId -> epoch ms of the last episode_listened
+export const LISTEN_REPEAT_MS = 20 * 3600 * 1000; // don't re-post the same episode within 20h
 
 // One-sentence invitation shown to anonymous users at the workbench button.
 export const INVITE_LINE =

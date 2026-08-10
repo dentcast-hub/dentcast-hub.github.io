@@ -138,7 +138,7 @@ function buildCard(data, onClose) {
     el('summary', {}, 'چطور امتیازِ لیگ می‌گیرم؟'),
     el('ul', { class: 'dcp-lg-howto-list' }, [
       el('li', {}, 'خواندنِ کاملِ یک مقاله (تا آخر): +' + n(xp.read, 5)),
-      el('li', {}, 'گوش‌دادنِ نصفِ یک پادکست: +' + n(xp.listen, 5)),
+      el('li', {}, 'گوش‌دادنِ یک‌پنجمِ یک پادکست: +' + n(xp.listen, 5) + ' (هر هفته دوباره)'),
       el('li', {}, 'هر هایلایت: +' + n(xp.highlight, 1) + ' (تا ' + n(xp.highlight_cap, 3) + ' هایلایت در هر مقاله)'),
       el('li', {}, 'مرورِ کارت: +' + n(xp.review, 2)),
       el('li', {}, 'اولین فعالیتِ هر روز: +' + n(xp.active_bonus, 5)),

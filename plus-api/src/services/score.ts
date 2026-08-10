@@ -10,12 +10,22 @@ import { config } from '../config.js';
  * (activity-log derived, monotonic), except that a day earned while the account
  * was premium pays PREMIUM_POINTS_PER_ACTIVE_DAY (12) instead of 10.
  *
- * `content_completed` counts each (action, content) pair ONCE FOR ALL TIME, so
- * every new episode heard or article finished pays, while replaying the same
- * file does not — otherwise leaving one episode on loop would beat working
- * through twenty. Reading and listening are counted separately for the same
- * page (a NoteCast that is both read and heard pays twice), which is exactly
- * how the league already treats xp_read vs xp_listen.
+ * `content_completed` counts each (action, content) pair ONCE FOR ALL TIME —
+ * except listening, which pays again ONCE PER LEAGUE WEEK (2026-08-10). Reading
+ * and listening are counted separately for the same page (a NoteCast that is
+ * both read and heard pays twice), which is exactly how the league already
+ * treats xp_read vs xp_listen.
+ *
+ * Why listening repeats and reading does not: an episode is re-listened to on
+ * purpose — in the car, on the second pass, while the hands are busy — and
+ * being told "you already heard this one" is being told the second hour did not
+ * count. Re-READING a page is mostly a revisit, which the workbench and the
+ * review queue already pay for. The weekly window is what keeps that from
+ * becoming a farm: it is the SAME window the league prices xp_listen in
+ * (league.ts, once per (content, week)), so there is one rule to explain rather
+ * than two, and one episode left on loop is worth 5 points a week, not 5 points
+ * a play. The bucket is the Iranian week (Saturday, Tehran) for the same
+ * reason — a second definition of "week" here would drift from the league's.
  *
  * Before this component existed, consumption only ever bought the day's first
  * +10: a second podcast on the same day moved the number by nothing, and since
@@ -164,6 +174,26 @@ export function combineScore(p: ScoreParts): { score: number; premium_bonus: num
  * user saw would silently disagree with the rank they were given for it.
  * Callers pass their own placeholder numbers since each query binds differently.
  */
+/**
+ * The bucket a consumption row is counted in, as SQL. NULL for everything that
+ * pays once for all time, and the row's league week (Saturday start, in `tz`)
+ * for `episode_listened`, which pays again every week — so
+ * `count(distinct (action, content_id, bucket))` expresses both rules at once.
+ *
+ * `(dow + 1) % 7` is the number of days back to Saturday: Sat(6)→0, Sun(0)→1,
+ * … Fri(5)→6. It matches weekStartSaturday() in services/time.ts, which is what
+ * the league buckets XP by; the two must not drift, or a listen could pay in
+ * the league's week and not in the score's.
+ *
+ * `tz` is the caller's own placeholder (`$2`, `$3`, …), not a value.
+ */
+export function consumptionBucketSql(tz: string): string {
+  return `case when action = 'episode_listened'
+               then (created_at at time zone ${tz})::date
+                    - ((extract(dow from (created_at at time zone ${tz})::date)::int + 1) % 7)
+          end`;
+}
+
 export function scoreSelectSql(p: { tz: string; scoring: string; consumption: string }): string {
   // `count(distinct …) filter (where premium)` is the SQL mirror of combineScore's
   // subset rule. A day touched even once while premium counts as a premium day in
@@ -183,7 +213,8 @@ export function scoreSelectSql(p: { tz: string; scoring: string; consumption: st
                 from user_activity where action = any(${p.scoring}) group by user_id
             ) ad on ad.user_id = p.id
             left join (
-              select user_id, count(distinct (action, content_id)) as n
+              select user_id,
+                     count(distinct (action, content_id, ${consumptionBucketSql(p.tz)})) as n
                 from user_activity
                where action = any(${p.consumption}) and content_id is not null
                group by user_id
@@ -202,13 +233,14 @@ export async function computeScore(db: Db, userId: string): Promise<ScoreBreakdo
        from user_activity where user_id = $1 and action = any($3)`,
     [userId, config.streakTimezone, SCORING_ACTIONS],
   );
-  // count(distinct (action, content_id)): the row constructor keeps reading and
-  // listening to the SAME page as two engagements, and collapses replays of one.
+  // count(distinct (action, content_id, bucket)): the row constructor keeps
+  // reading and listening to the SAME page as two engagements, collapses replays
+  // of one, and — via the bucket — lets a re-listen pay once more each week.
   const cc = await db.query<{ n: number }>(
-    `select count(distinct (action, content_id))::int as n
+    `select count(distinct (action, content_id, ${consumptionBucketSql('$3')}))::int as n
        from user_activity
       where user_id = $1 and action = any($2) and content_id is not null`,
-    [userId, CONSUMPTION_ACTIONS],
+    [userId, CONSUMPTION_ACTIONS, config.streakTimezone],
   );
   const hl = await db.query<{ n: number }>(
     `select count(*)::int as n from highlights where user_id = $1`,

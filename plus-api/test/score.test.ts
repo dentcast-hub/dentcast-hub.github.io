@@ -61,13 +61,41 @@ describe('per-content score', () => {
     expect((await score()) - afterSecond).toBe(POINTS_PER_CONTENT);
   });
 
-  it('replaying the SAME episode never pays twice, however many times', async () => {
+  it('replaying the SAME episode never pays twice inside one week', async () => {
     await listen('episodes/episode-1');
     const once = await score();
 
     for (let i = 0; i < 5; i += 1) await listen('episodes/episode-1');
 
     expect(await score()).toBe(once); // a loop must not beat working through the catalogue
+  });
+
+  // Re-listening pays again, but only once a week — the same window league.ts
+  // prices xp_listen in. Rows are written straight to the log with explicit
+  // dates because the rule is about the calendar, not about the request.
+  it('the SAME episode pays again in a later week, and only once per week', async () => {
+    // 2026-08-08 is a Saturday: week A = 08-08..08-14, week B = 08-15..08-21.
+    await pool.query(
+      `insert into user_activity (user_id, action, content_id, created_at) values
+         ($1,'episode_listened','episodes/episode-1','2026-08-09T08:00:00Z'),
+         ($1,'episode_listened','episodes/episode-1','2026-08-11T08:00:00Z'),
+         ($1,'episode_listened','episodes/episode-1','2026-08-17T08:00:00Z')`,
+      [userId],
+    );
+    // Two distinct weeks, three listens: two payments, not three and not one.
+    expect((await computeScore(pool, userId)).content_completed).toBe(2);
+  });
+
+  // The asymmetry is deliberate (see score.ts): a podcast is re-heard on
+  // purpose, a re-opened article is a revisit the workbench already pays for.
+  it('re-READING the same article in a later week still pays only once', async () => {
+    await pool.query(
+      `insert into user_activity (user_id, action, content_id, created_at) values
+         ($1,'article_completed','insight/insight-20','2026-08-09T08:00:00Z'),
+         ($1,'article_completed','insight/insight-20','2026-08-17T08:00:00Z')`,
+      [userId],
+    );
+    expect((await computeScore(pool, userId)).content_completed).toBe(1);
   });
 
   it('reading and listening to the same page are two engagements', async () => {
