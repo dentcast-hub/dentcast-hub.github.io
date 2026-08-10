@@ -709,6 +709,27 @@ body.dcp-study { padding-bottom: 90px; }
 .dcp-rv-card.is-graded .dcp-rv-actions { display: none; }
 .dcp-rv-card.is-graded .dcp-rv-graded-tag { display: block; }
 
+/* AI review cards ("نکته هوش مصنوعی") — amber accent via the existing
+   --dcp-gold token pair, so nothing AI-generated is ever shown without a
+   visible label distinguishing it from the reader's own highlight cards. */
+.dcp-rv-card-ai {
+  border-color: color-mix(in srgb, var(--dcp-gold) 45%, var(--dcp-line));
+  background: linear-gradient(150deg, var(--dcp-gold-bg), var(--dcp-surface) 55%);
+}
+.dcp-rv-badge-ai { color: var(--dcp-gold); }
+.dcp-rv-reveal {
+  display: block; width: 100%; margin-top: 14px; font: inherit; font-weight: 700;
+  padding: 13px 10px; border-radius: 14px; cursor: pointer;
+  background: var(--dcp-gold-bg); color: var(--dcp-gold);
+  border: 1px solid color-mix(in srgb, var(--dcp-gold) 35%, transparent);
+  transition: transform .15s ease, opacity .15s ease;
+}
+.dcp-rv-reveal:active { transform: scale(.97); }
+.dcp-rv-ai-back {
+  margin-top: 14px; padding-top: 14px; font-size: 1.08rem; line-height: 2.3; color: var(--dcp-ink);
+  border-top: 1px dashed color-mix(in srgb, var(--dcp-gold) 35%, transparent);
+}
+
 /* ---- learning pathways (Phase 3), /plus/pathways.html + /plus/pathway.html --
    Progress is derived server-side from the user's own highlights/reading —
    there is no manual "mark step complete"; see plus-api/src/pathways.ts. The

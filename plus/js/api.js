@@ -192,6 +192,8 @@ export const api = {
   // premium: Leitner scheduled review
   reviewDue: (topic, limit) => request('/review/due', { query: { topic, limit } }),
   reviewAnswer: (highlight_id, result) => request('/review/answer', { method: 'POST', body: { highlight_id, result } }),
+  reviewAnswerAi: (content_id, card_id, result) =>
+    request('/review/answer-ai', { method: 'POST', body: { content_id, card_id, result } }),
 
   // premium: learning pathways (Phase 3)
   pathways: () => request('/pathways'),
