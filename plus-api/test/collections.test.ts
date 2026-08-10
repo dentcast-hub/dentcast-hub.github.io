@@ -38,6 +38,16 @@ async function createHighlight(contentId = 'insight/insight-1'): Promise<string>
   return res.json().highlight.id as string;
 }
 
+async function createSnippet(
+  collectionId: string,
+  payload: Record<string, unknown>,
+  useCookie = cookie,
+): Promise<{ statusCode: number; json: () => any }> {
+  return app.inject({
+    method: 'POST', url: `/collections/${collectionId}/snippets`, headers: { cookie: useCookie }, payload,
+  });
+}
+
 describe('requirePremium gate', () => {
   it('blocks a free user with 402 on every collections route', async () => {
     const list = await app.inject({ method: 'GET', url: '/collections', headers: { cookie } });
@@ -410,5 +420,284 @@ describe('PUT /collections/:id/items/order', () => {
       payload: { item_ids: itemIds },
     });
     expect(res.statusCode).toBe(404);
+  });
+});
+
+// «متن خودم» and «رفرنس» pins: a snippet is created AND pinned to the board in
+// one call, atomically. See .dentcast/collections-pins-export-handoff.md.
+describe('POST /collections/:id/snippets', () => {
+  it('creates a text snippet, pinned to the board', async () => {
+    await makePremium();
+    const id = await createCollection();
+    const res = await createSnippet(id, { kind: 'text', title: 'یادداشت من', body: 'متنی که خودم نوشتم' });
+    expect(res.statusCode).toBe(201);
+    const { item } = res.json();
+    expect(item.kind).toBe('text');
+    expect(item.title).toBe('یادداشت من');
+    expect(item.body).toBe('متنی که خودم نوشتم');
+    expect(item.snippet_id).toBeTruthy();
+    expect(item.content_id).toBeNull();
+
+    const detail = await app.inject({ method: 'GET', url: `/collections/${id}`, headers: { cookie } });
+    expect(detail.json().items).toHaveLength(1);
+    expect(detail.json().items[0].kind).toBe('text');
+  });
+
+  it('creates a reference snippet, normalizing a doi.org URL to a bare DOI', async () => {
+    await makePremium();
+    const id = await createCollection();
+    const res = await createSnippet(id, {
+      kind: 'reference', title: 'یک مقاله معتبر', doi: 'https://doi.org/10.1016/j.dental.2017.11.005',
+    });
+    expect(res.statusCode).toBe(201);
+    expect(res.json().item.doi).toBe('10.1016/j.dental.2017.11.005');
+  });
+
+  it('400s a reference with no title', async () => {
+    await makePremium();
+    const id = await createCollection();
+    const res = await createSnippet(id, { kind: 'reference' });
+    expect(res.statusCode).toBe(400);
+    expect(res.json().error).toBe('title_required');
+  });
+
+  it('400s a text snippet with no body', async () => {
+    await makePremium();
+    const id = await createCollection();
+    const res = await createSnippet(id, { kind: 'text', title: 'فقط عنوان' });
+    expect(res.statusCode).toBe(400);
+    expect(res.json().error).toBe('body_required');
+  });
+
+  it('400s a bad year, a malformed doi, and a non-http url', async () => {
+    await makePremium();
+    const id = await createCollection();
+    const badYear = await createSnippet(id, { kind: 'reference', title: 'ت', year: 42 });
+    expect(badYear.statusCode).toBe(400);
+    const badDoi = await createSnippet(id, { kind: 'reference', title: 'ت', doi: 'not-a-doi' });
+    expect(badDoi.statusCode).toBe(400);
+    expect(badDoi.json().error).toBe('invalid_doi');
+    const badUrl = await createSnippet(id, { kind: 'reference', title: 'ت', url: 'ftp://example.com' });
+    expect(badUrl.statusCode).toBe(400);
+    expect(badUrl.json().error).toBe('invalid_url');
+  });
+
+  it('404s on a board that is not yours', async () => {
+    await makePremium();
+    const id = await createCollection();
+    const otherCookie = await loginAs(app, '09121200011');
+    await pool.query(`update profiles set tier = 'premium' where phone = '09121200011'`);
+    const res = await createSnippet(id, { kind: 'text', body: 'x' }, otherCookie);
+    expect(res.statusCode).toBe(404);
+  });
+
+  it('402s a free user before the board is even looked up', async () => {
+    const res = await createSnippet('00000000-0000-0000-0000-000000000000', { kind: 'text', body: 'x' });
+    expect(res.statusCode).toBe(402);
+  });
+});
+
+// A snippet can be pinned to several boards, same as a highlight. This is what
+// «انتقال» (move) and the pin picker use to re-pin an existing snippet.
+describe('re-pinning a snippet via POST /collections/:id/items', () => {
+  it('is idempotent: pinning the same snippet to the same board twice yields one pin', async () => {
+    await makePremium();
+    const id = await createCollection();
+    const created = await createSnippet(id, { kind: 'text', body: 'متن' });
+    const snippetId = created.json().item.snippet_id;
+
+    await app.inject({
+      method: 'POST', url: `/collections/${id}/items`, headers: { cookie }, payload: { snippet_id: snippetId },
+    });
+    const detail = await app.inject({ method: 'GET', url: `/collections/${id}`, headers: { cookie } });
+    expect(detail.json().items).toHaveLength(1);
+  });
+
+  it('pins the same snippet to a second board: two pins, one snippet row', async () => {
+    await makePremium();
+    const id1 = await createCollection('برد یک');
+    const id2 = await createCollection('برد دو');
+    const created = await createSnippet(id1, { kind: 'text', body: 'متن' });
+    const snippetId = created.json().item.snippet_id;
+
+    const add2 = await app.inject({
+      method: 'POST', url: `/collections/${id2}/items`, headers: { cookie }, payload: { snippet_id: snippetId },
+    });
+    expect(add2.statusCode).toBe(201);
+
+    const snippetRows = await pool.query('select count(*)::int as n from snippets where id = $1', [snippetId]);
+    expect(snippetRows.rows[0].n).toBe(1);
+    const pinRows = await pool.query('select count(*)::int as n from collection_items where snippet_id = $1', [snippetId]);
+    expect(pinRows.rows[0].n).toBe(2);
+  });
+
+  it('404s re-pinning a snippet that belongs to someone else', async () => {
+    await makePremium();
+    const id = await createCollection();
+    const otherCookie = await loginAs(app, '09121200012');
+    await pool.query(`update profiles set tier = 'premium' where phone = '09121200012'`);
+    const otherBoard = await app.inject({
+      method: 'POST', url: '/collections', headers: { cookie: otherCookie }, payload: { title: 'برد دیگری' },
+    });
+    const otherSnippet = await createSnippet(otherBoard.json().collection.id, { kind: 'text', body: 'x' }, otherCookie);
+
+    const res = await app.inject({
+      method: 'POST', url: `/collections/${id}/items`, headers: { cookie },
+      payload: { snippet_id: otherSnippet.json().item.snippet_id },
+    });
+    expect(res.statusCode).toBe(404);
+    expect(res.json().error).toBe('snippet_not_found');
+  });
+});
+
+// There is no snippets library page, so a snippet with no pins anywhere would
+// be invisible-but-alive forever — the API deletes it instead.
+describe('orphan rule on DELETE /collections/:id/items/:itemId', () => {
+  it('deletes the snippet row when its only pin is removed', async () => {
+    await makePremium();
+    const id = await createCollection();
+    const created = await createSnippet(id, { kind: 'text', body: 'متن' });
+    const { snippet_id: snippetId, id: itemId } = created.json().item;
+
+    const del = await app.inject({ method: 'DELETE', url: `/collections/${id}/items/${itemId}`, headers: { cookie } });
+    expect(del.statusCode).toBe(200);
+
+    const row = await pool.query('select 1 from snippets where id = $1', [snippetId]);
+    expect(row.rowCount).toBe(0);
+  });
+
+  it('keeps the snippet alive when it still has a pin on another board', async () => {
+    await makePremium();
+    const id1 = await createCollection('برد یک');
+    const id2 = await createCollection('برد دو');
+    const created = await createSnippet(id1, { kind: 'text', body: 'متن' });
+    const { snippet_id: snippetId, id: itemId1 } = created.json().item;
+    await app.inject({
+      method: 'POST', url: `/collections/${id2}/items`, headers: { cookie }, payload: { snippet_id: snippetId },
+    });
+
+    await app.inject({ method: 'DELETE', url: `/collections/${id1}/items/${itemId1}`, headers: { cookie } });
+
+    const row = await pool.query('select 1 from snippets where id = $1', [snippetId]);
+    expect(row.rowCount).toBe(1);
+  });
+});
+
+describe('DELETE /snippets/:id', () => {
+  it('deletes the snippet and cascades its pins off every board', async () => {
+    await makePremium();
+    const id1 = await createCollection('برد یک');
+    const id2 = await createCollection('برد دو');
+    const created = await createSnippet(id1, { kind: 'text', body: 'متن' });
+    const snippetId = created.json().item.snippet_id;
+    await app.inject({
+      method: 'POST', url: `/collections/${id2}/items`, headers: { cookie }, payload: { snippet_id: snippetId },
+    });
+
+    const del = await app.inject({ method: 'DELETE', url: `/snippets/${snippetId}`, headers: { cookie } });
+    expect(del.statusCode).toBe(200);
+
+    const detail1 = await app.inject({ method: 'GET', url: `/collections/${id1}`, headers: { cookie } });
+    const detail2 = await app.inject({ method: 'GET', url: `/collections/${id2}`, headers: { cookie } });
+    expect(detail1.json().items).toHaveLength(0);
+    expect(detail2.json().items).toHaveLength(0);
+  });
+
+  it('404s deleting someone else\'s snippet', async () => {
+    await makePremium();
+    const id = await createCollection();
+    const created = await createSnippet(id, { kind: 'text', body: 'متن' });
+    const snippetId = created.json().item.snippet_id;
+    const otherCookie = await loginAs(app, '09121200013');
+    await pool.query(`update profiles set tier = 'premium' where phone = '09121200013'`);
+
+    const res = await app.inject({ method: 'DELETE', url: `/snippets/${snippetId}`, headers: { cookie: otherCookie } });
+    expect(res.statusCode).toBe(404);
+  });
+
+  it('402s a free user', async () => {
+    const res = await app.inject({
+      method: 'DELETE', url: '/snippets/00000000-0000-0000-0000-000000000000', headers: { cookie },
+    });
+    expect(res.statusCode).toBe(402);
+  });
+});
+
+describe('PATCH /snippets/:id', () => {
+  it('edits body and title of a text snippet', async () => {
+    await makePremium();
+    const id = await createCollection();
+    const created = await createSnippet(id, { kind: 'text', body: 'نسخه اول' });
+    const snippetId = created.json().item.snippet_id;
+
+    const res = await app.inject({
+      method: 'PATCH', url: `/snippets/${snippetId}`, headers: { cookie },
+      payload: { title: 'عنوان جدید', body: 'نسخه دوم' },
+    });
+    expect(res.statusCode).toBe(200);
+    expect(res.json().snippet.title).toBe('عنوان جدید');
+    expect(res.json().snippet.body).toBe('نسخه دوم');
+  });
+
+  it('400s an attempt to change kind', async () => {
+    await makePremium();
+    const id = await createCollection();
+    const created = await createSnippet(id, { kind: 'text', body: 'x' });
+    const snippetId = created.json().item.snippet_id;
+
+    const res = await app.inject({
+      method: 'PATCH', url: `/snippets/${snippetId}`, headers: { cookie }, payload: { kind: 'reference' },
+    });
+    expect(res.statusCode).toBe(400);
+    expect(res.json().error).toBe('kind_immutable');
+  });
+
+  it('400s clearing the body of a text snippet to empty', async () => {
+    await makePremium();
+    const id = await createCollection();
+    const created = await createSnippet(id, { kind: 'text', body: 'x' });
+    const snippetId = created.json().item.snippet_id;
+
+    const res = await app.inject({
+      method: 'PATCH', url: `/snippets/${snippetId}`, headers: { cookie }, payload: { body: '   ' },
+    });
+    expect(res.statusCode).toBe(400);
+    expect(res.json().error).toBe('body_required');
+  });
+
+  it('404s patching someone else\'s snippet', async () => {
+    await makePremium();
+    const id = await createCollection();
+    const created = await createSnippet(id, { kind: 'text', body: 'x' });
+    const snippetId = created.json().item.snippet_id;
+    const otherCookie = await loginAs(app, '09121200014');
+    await pool.query(`update profiles set tier = 'premium' where phone = '09121200014'`);
+
+    const res = await app.inject({
+      method: 'PATCH', url: `/snippets/${snippetId}`, headers: { cookie: otherCookie }, payload: { body: 'دستکاری' },
+    });
+    expect(res.statusCode).toBe(404);
+  });
+
+  it('402s a free user', async () => {
+    const res = await app.inject({
+      method: 'PATCH', url: '/snippets/00000000-0000-0000-0000-000000000000', headers: { cookie }, payload: { body: 'x' },
+    });
+    expect(res.statusCode).toBe(402);
+  });
+});
+
+describe('GET /collections preview includes snippet pins', () => {
+  it('carries the snippet kind (text/reference), no bodies', async () => {
+    await makePremium();
+    const id = await createCollection();
+    await createSnippet(id, { kind: 'text', body: 'متن برای پیش‌نمایش' });
+    await createSnippet(id, { kind: 'reference', title: 'مقاله‌ی مرجع' });
+
+    const res = await app.inject({ method: 'GET', url: '/collections', headers: { cookie } });
+    const preview = res.json().collections[0].preview;
+    const kinds = preview.map((p: { kind: string }) => p.kind).sort();
+    expect(kinds).toEqual(['reference', 'text']);
+    expect(preview.every((p: Record<string, unknown>) => !('body' in p))).toBe(true);
   });
 });
