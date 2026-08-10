@@ -128,9 +128,11 @@ variables** on the container:
 | `CONTENT_INDEX_PATH` | leave unset — baked into the image at `/app/content-index.json` |
 | `PATHWAYS_PATH` | leave unset — baked into the image at `/app/pathways.json` |
 | `BADGES_PATH` | leave unset — baked into the image at `/app/badges.json` |
+| `FLASHCARDS_PATH` | leave unset — baked into the image at `/app/flashcards-index.json` |
 | `CONTENT_INDEX_URL` | leave unset — the Dockerfile points it at the `.ir`/`.org` mirrors |
 | `PATHWAYS_URL` | leave unset — same |
 | `BADGES_URL` | leave unset — same |
+| `FLASHCARDS_URL` | leave unset — same |
 | `CONTENT_REFRESH_SECONDS` | leave unset — defaults to 300 |
 
 > **Publishing content no longer needs a redeploy** (changed 2026-08-04). All
