@@ -15,6 +15,11 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
 const payPlans = vi.fn();
+// Who the page thinks is looking. Signed out by default — most of the ladder
+// tests are about the public price — and set per-render where it matters,
+// because "the server personalised these prices" and "nobody is signed in" are
+// not a state that can occur together outside a mock.
+let viewer: unknown = null;
 
 vi.mock('../../plus/js/api.js', () => ({
   api: {
@@ -22,15 +27,16 @@ vi.mock('../../plus/js/api.js', () => ({
     payStart: vi.fn(),
     giftStatus: vi.fn().mockRejectedValue(new Error('no')),
   },
-  currentUser: vi.fn().mockResolvedValue(null),
+  currentUser: () => Promise.resolve(viewer),
 }));
 vi.mock('../../plus/js/login-modal.js', () => ({ openLoginModal: vi.fn() }));
 vi.mock('../../plus/js/pwa.js', () => ({ registerSW: vi.fn() }));
 
 /** Load the page against a given /pay/plans answer and hand back its DOM. */
-async function renderPricing(plansAnswer: unknown): Promise<HTMLElement> {
+async function renderPricing(plansAnswer: unknown, user: unknown = null): Promise<HTMLElement> {
   vi.resetModules();
   document.body.innerHTML = '<div id="dcp-root"></div>';
+  viewer = user;
   payPlans.mockReset();
   if (plansAnswer === null) payPlans.mockRejectedValue(new Error('offline'));
   else payPlans.mockResolvedValue(plansAnswer);
@@ -135,8 +141,12 @@ describe('the «ستون» seat-holder view', () => {
     ],
   };
 
+  // A seat is held by an ACCOUNT: the server can only have personalised these
+  // prices for a request that carried a session, so the viewer is signed in.
+  const SEAT_HOLDER = { id: 'u1', display_name: 'خریدارِ اول' };
+
   it('shows the discounted price as THE price, with the list struck through beside it', async () => {
-    const root = await renderPricing(PILLAR);
+    const root = await renderPricing(PILLAR, SEAT_HOLDER);
     const six = cards(root)[2].querySelector('.dcp-plan-price')!;
 
     // What will actually be charged is the number that reads as the price…
@@ -148,16 +158,49 @@ describe('the «ستون» seat-holder view', () => {
   });
 
   it('says why the prices are down, once, above the ladder', async () => {
-    const root = await renderPricing(PILLAR);
+    const root = await renderPricing(PILLAR, SEAT_HOLDER);
     const noticeText = root.querySelector('.dcp-price-notice.is-ok')!.textContent!;
     expect(noticeText).toContain('ستون');
     expect(noticeText).toContain('٪۲۰');
   });
 
-  it('adds no strikethrough for everyone else — the public ladder is untouched', async () => {
-    const root = await renderPricing(LIVE);
+  it('adds no strikethrough for a signed-in reader without a seat', async () => {
+    const root = await renderPricing(LIVE, { id: 'u2' });
     expect(root.querySelectorAll('.dcp-plan-list')).toHaveLength(0);
     expect(root.querySelector('.dcp-price-notice.is-ok')).toBeNull();
+  });
+});
+
+/**
+ * The failure this covers has no error and no empty state: an anonymous
+ * /pay/plans answers with both discount fields null, so the page shows the list
+ * price and says nothing — which reads exactly like "you have no discount". A
+ * reader holding a one-time credit is quoted the full price and never learns
+ * otherwise, and the two mirrors keep separate sessions, so following a
+ * dentcast.ir link while signed in on .org lands precisely here.
+ */
+describe('a visitor we could not identify', () => {
+  it('says the prices are the public ones, and offers the way to fix that', async () => {
+    const root = await renderPricing(LIVE);
+    const notices = Array.from(root.querySelectorAll('.dcp-price-notice.is-ok'));
+    const text = notices.map((n) => n.textContent).join(' ');
+
+    expect(text).toContain('عمومی');
+    expect(text).toContain('یک‌بارمصرف');
+    expect(root.querySelector('.dcp-price-login')).toBeTruthy();
+  });
+
+  it('says nothing of the sort once someone is signed in', async () => {
+    const root = await renderPricing(LIVE, { id: 'u2' });
+    expect(root.querySelector('.dcp-price-login')).toBeNull();
+  });
+
+  // When the API could not be reached we did not fail to identify the reader,
+  // we failed to ask at all — and the page already says so. A second notice
+  // blaming their sign-in state would be a guess presented as a diagnosis.
+  it('stays quiet when the API could not be reached at all', async () => {
+    const root = await renderPricing(null);
+    expect(root.querySelector('.dcp-price-login')).toBeNull();
   });
 });
 

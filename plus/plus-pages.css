@@ -780,6 +780,11 @@ a.dcp-progress-row:hover { text-decoration: none; }
 .dcp-price-notice { border-radius: 14px; padding: 12px 13px; font-size: .88rem; border: 1px solid; }
 .dcp-price-notice b { display: block; font-size: .93rem; margin-bottom: 2px; }
 .dcp-price-notice p { margin: 4px 0 0; }
+/* The one notice that asks for something back (sign in, so your own discounts
+   can be applied) rather than only reporting. Sized down and left in the flow:
+   it sits inside a notice, not beside the pay button, and must not compete
+   with it. */
+.dcp-price-login { margin-top: 9px; font-size: .82rem; padding: 7px 14px; }
 .dcp-price-notice.is-warn { background: rgba(154,98,6,.10); border-color: rgba(154,98,6,.26); }
 .dcp-price-notice.is-warn b { color: #9a6206; }
 .dcp-price-notice.is-ok { background: rgba(15,122,77,.10); border-color: rgba(15,122,77,.26); }

@@ -249,10 +249,11 @@ function giftStatus(r) {
   return null;
 }
 
-function notice(kind, title, body) {
+function notice(kind, title, body, action) {
   return el('div', { class: `dcp-price-notice is-${kind}` }, [
     el('b', {}, title),
     body ? el('p', {}, body) : null,
+    action || null,
   ].filter(Boolean));
 }
 
@@ -431,6 +432,35 @@ async function main() {
   } else if (info.plans.some((p) => !p.available)) {
     notices.push(notice('warn', 'ظرفیت این ماه رو به پایان است',
       'طرح‌های بلندتر در سقف این ماه جا نمی‌شوند؛ طرح‌های کوتاه‌تر در دسترس‌اند.'));
+  }
+
+  // EVERY discount on this page is personal, and an anonymous /pay/plans carries
+  // none of them: `pillar_discount` and `onetime_discount` are both null, the
+  // prices are the list prices, and the page says nothing. On screen that is
+  // indistinguishable from "you have no discount" — so a reader holding a
+  // one-time credit sees the full price, believes it, and the credit is never
+  // spent. Nothing else on the site would tell them otherwise: the badge wall
+  // is behind the same login.
+  //
+  // It is not only the signed-out visitor. The two mirrors keep SEPARATE
+  // sessions (the API sets a host-only cookie, and config.js points each site
+  // at its own api host), so a reader signed in on .org who follows a
+  // dentcast.ir link — which is what the اطلاعیه sends — arrives anonymous and
+  // is quoted the public price with no hint that it is not theirs.
+  //
+  // Silence is the bug; this is the fix. `offline` is excluded because then we
+  // did not fail to identify them, we failed to ask at all, and the page
+  // already says so.
+  if (!user && !info.offline) {
+    const signIn = el('button', { class: 'dcp-btn dcp-btn-ghost dcp-price-login', type: 'button' }, 'ورود به حساب');
+    signIn.addEventListener('click', async () => {
+      const res = await openLoginModal({ returnTo: location.pathname + location.search });
+      if (res && res.user) location.reload();
+    });
+    notices.push(notice('ok', 'این قیمت‌ها قیمتِ عمومی است',
+      'تخفیف‌ها شخصی‌اند و فقط بعد از ورود اعمال می‌شوند: نشان‌هایی که گرفته‌اید و '
+      + 'تخفیف دائمی «ستون». اگر تخفیف یک‌بارمصرفی داشته باشید، بعد از ورود روی '
+      + 'همین قیمت‌ها می‌نشیند و همین‌جا نوشته می‌شود.', signIn));
   }
 
   // A «ستون» seat-holder's prices are already 20% down, silently — and a
