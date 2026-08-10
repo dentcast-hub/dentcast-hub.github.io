@@ -16,6 +16,7 @@ alwaysApply: false
 | Plus/Premium | فلش‌کارت Leitner | `4.11` — `DefinedTermSet` روی خودِ صفحه | `node tools/build_flashcards_index.mjs` → `plus/flashcards-index.json` |
 | Plus/Premium | کوییز نمره‌دار | `4.12` — `FAQPage` روی خودِ صفحه | `node tools/build_quiz_index.mjs` → `plus/quiz-index.json` |
 | Premium | مسیر یادگیری | `5.6` | `python3 tools/pathway_place.py --insert …` → `plus/pathways.json` |
+| Premium | باندلِ شروع (`kind: "bundle"`) | `5.6-ب` (زنجیرهٔ پنج‌گیتی) | همان ابزار، `--pathway <bundle-id>` + جاروی دستیِ `plus/js/home-bundles.js` + `asset_version.py --bump` |
 | Plus/Premium | نوتیف مطلب جدید | فاز E | `<meta name="dc-notify" content="true">` در `<head>` |
 | Premium | کالکشن‌ها | — | مالِ کاربر است؛ publish کاری با آن ندارد |
 | Premium | کتابخانهٔ کابینت | `4.10` (فقط با پیپر پیوست) | ندارد — `dentcast_cabinet_full_catalog.json` دستی طبق گام ۴.۱۰ |
@@ -37,6 +38,19 @@ alwaysApply: false
   ```
   ویرایش `plus/pathways.json` دیگر redeploy API نمی‌خواهد — `content-refresh.ts`
   فایل منتشرشده را در حال اجرا دوباره می‌گیرد.
+- **باندل ≠ مسیر.** باندل‌های شروع (`kind: "bundle"`) در همان `pathways.json`
+  می‌نشینند ولی زیرمجموعه‌ای ۵ تا ۸ قدمیِ «فقط هستهٔ» یک مسیرند، نه مسیرِ تازه.
+  گام ۵.۶ آیتم را در **مسیرهای کامل** جا می‌دهد؛ ورود به باندل کارِ گام
+  **5.6-ب** است: پنج گیتِ مکانیکی با **پیش‌فرضِ «نه»** (نوع پوشه ∈ episodes/
+  notecast/sharehub/dentai · عنوان یک مفهومِ کامل، نه کیس/نکته · پرکردنِ حفره‌ای
+  که هیچ قدمِ فعلی نمی‌پوشاند · نبودنِ دوقلو · ≤ ۸ قدم بعد از درج). هر ابهامی =
+  **سوال از بنیان‌گذار**. درج فقط **وسطِ لیست** با `--after <anchor>` — هرگز
+  `--at-end`، چون قدمِ آخرِ باندل تنها حاملِ `milestone: true` (پرچمِ 🏁) است.
+  دو آینهٔ دستی که هر ویرایشِ باندل باید در همان کامیت جارو کند: شمارهٔ قدم در
+  `plus/js/home-bundles.js` و بعدش `python3 tools/asset_version.py --bump`.
+  کاتالوگ و دکترینِ «چه چیزی وارد باندل می‌شود»: `.dentcast/bundles-handoff.md`.
+  حکمِ هر باندلِ کاندید (وارد شد / رد شد با شمارهٔ گیت / سوال شد) در گزارشِ
+  انتشار می‌آید.
 - **فلش‌کارت یک مفهوم است، نه یک سوال.** `DefinedTerm` اتمی؛ کپیِ کلمه‌به‌کلمهٔ
   FAQ ممنوع؛ سوال‌های مقایسه‌ای/تصمیمی کارت نمی‌شوند (و اسکیپشان گزارش می‌شود).
   `@id`ها بعد از انتشار **پایدار**اند (رکوردهای `card_state` به همان fragment
