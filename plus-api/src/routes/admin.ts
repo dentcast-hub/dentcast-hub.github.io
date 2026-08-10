@@ -27,7 +27,7 @@ import {
 } from '../services/spot-stats.js';
 import { withPageViews } from '../services/view-stats.js';
 import {
-  recordBroadcast, claimBroadcastPush, pendingBroadcastPushes, type NoticeAudience,
+  recordBroadcast, claimBroadcastPush, pendingBroadcastPushes, mirrorPath, type NoticeAudience,
 } from '../services/notices.js';
 import { sendCapped, inAwakeWindow } from '../services/notify-policy.js';
 import {
@@ -330,17 +330,20 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
     const title = (b.title || '').trim();
     if (!title) return reply.code(400).send({ error: 'empty_title' });
     const audience: NoticeAudience = b.audience ?? 'all';
+    const body = (b.body || '').trim() || null;
+    // Normalised HERE, not only inside recordBroadcast, because the push is
+    // built from this value too — and the push is the half that opens on the
+    // reader's own mirror only if the link is a path. Pasting a full
+    // https://dentcast.ir/... into the admin form is the natural thing to do
+    // and must not be able to sign .org readers out (see mirrorPath).
+    const url = mirrorPath((b.url || '').trim() || null);
 
     const now = new Date();
     const wantsPush = Boolean(b.push);
     const sendingNow = wantsPush && (inAwakeWindow(now) || Boolean(b.force));
 
     const id = await recordBroadcast({
-      kind: 'system',
-      title,
-      body: (b.body || '').trim() || null,
-      url: (b.url || '').trim() || null,
-      audience,
+      kind: 'system', title, body, url, audience,
     }, {
       // `push_requested` is what makes HOLDING different from dropping. Without
       // it the only way to get a held push out was to broadcast again, which
@@ -363,7 +366,7 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
         // committed above and is what every reader actually reads, so there is
         // nothing for the caller to wait for.
         void deliverBroadcast(id, audience, broadcastMessage({
-          id, title, body: (b.body || '').trim() || null, url: (b.url || '').trim() || null,
+          id, title, body, url,
         }), now);
       }
     }

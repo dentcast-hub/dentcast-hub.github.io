@@ -365,6 +365,39 @@ describe('the founder broadcast', () => {
     expect(after.unread_notices).toBe(0);
   });
 
+  /**
+   * The mirrors keep separate sessions, so a broadcast that names one of them
+   * by its full URL signs out every reader of the other for the page it opens.
+   * The collections announcement (2026-08-10) linked the .ir pricing page and
+   * readers on .org landed anonymous on a price list whose discounts are
+   * personal — quoted the public price as if it were theirs. Pasting a full URL
+   * into the admin form is the natural thing to do, so the store is what has to
+   * be safe.
+   */
+  it('stores a link to our own site as a path, so it opens on the reader\'s own mirror', async () => {
+    const res = await app.inject({
+      method: 'POST', url: '/admin/notices/broadcast',
+      headers: { authorization: auth },
+      payload: { title: 'کالکشن', url: 'https://dentcast.ir/plus/pricing.html?from=notice' },
+    });
+    expect(res.statusCode).toBe(200);
+
+    const rows = (await app.inject({ method: 'GET', url: '/notices', headers: { cookie } })).json();
+    expect(rows.notices[0].url).toBe('/plus/pricing.html?from=notice');
+  });
+
+  it('leaves a link that is not ours exactly as it was given', async () => {
+    const res = await app.inject({
+      method: 'POST', url: '/admin/notices/broadcast',
+      headers: { authorization: auth },
+      payload: { title: 'مقاله', url: 'https://doi.org/10.1016/j.prosdent.2020.01.001' },
+    });
+    expect(res.statusCode).toBe(200);
+
+    const rows = (await app.inject({ method: 'GET', url: '/notices', headers: { cookie } })).json();
+    expect(rows.notices[0].url).toBe('https://doi.org/10.1016/j.prosdent.2020.01.001');
+  });
+
   it('refuses an empty title rather than posting a blank row', async () => {
     const res = await app.inject({
       method: 'POST', url: '/admin/notices/broadcast',

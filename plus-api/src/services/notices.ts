@@ -72,6 +72,40 @@ export interface BroadcastInput {
  * means it cannot half-send, cannot be retried into duplicates, and does not
  * grow the table by the size of the audience every time an article is published.
  */
+/** The two sites we serve. A link naming either one is a link to "us". */
+const MIRROR_HOSTS = new Set([
+  'dentcast.ir', 'www.dentcast.ir', 'dentcast.org', 'www.dentcast.org',
+]);
+
+/**
+ * A link to one of our mirrors, stored as a bare PATH.
+ *
+ * A broadcast's url is used in two places that must both land on the reader's
+ * OWN mirror: the اطلاعیه row, and the push — whose notificationclick resolves
+ * a path against the origin that reader subscribed on. The mirrors keep
+ * SEPARATE sessions (the API sets a host-only cookie and each site talks to its
+ * own api host), so an absolute `https://dentcast.ir/...` in a broadcast signs
+ * out every reader of the other site for the page it opens.
+ *
+ * That is not hypothetical: the 2026-08-10 collections announcement linked the
+ * .ir pricing page, and readers on .org arrived anonymous at a price list whose
+ * discounts are personal — quoted the public price as if it were their own.
+ * Writing the path is what makes the link mean "this page, on your site".
+ *
+ * Only OUR hosts are rewritten. An external link (a DOI, a Drive folder) has no
+ * mirror to stay on and is stored exactly as it was given.
+ */
+export function mirrorPath(url: string | null | undefined): string | null {
+  if (!url) return null;
+  try {
+    const u = new URL(url, 'https://dentcast.ir');
+    if (!MIRROR_HOSTS.has(u.hostname)) return url;
+    return u.pathname + u.search + u.hash;
+  } catch {
+    return url; // not a URL we can parse: keep it rather than lose the link
+  }
+}
+
 export async function recordBroadcast(
   input: BroadcastInput,
   opts: { pushRequested?: boolean; pushedAt?: Date | null } = {},
@@ -79,7 +113,7 @@ export async function recordBroadcast(
   const row = await one<{ id: string }>(
     `insert into notice_broadcasts (kind, title, body, url, audience, push_requested, pushed_at)
      values ($1, $2, $3, $4, $5, $6, $7) returning id`,
-    [input.kind, input.title, input.body ?? null, input.url ?? null, input.audience ?? 'all',
+    [input.kind, input.title, input.body ?? null, mirrorPath(input.url), input.audience ?? 'all',
       opts.pushRequested ?? false, opts.pushedAt ?? null],
   );
   return row!.id;

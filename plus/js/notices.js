@@ -1,5 +1,6 @@
 import { el, faNum } from './util.js';
 import { api } from './api.js';
+import { sameMirrorUrl } from './config.js';
 
 /**
  * اطلاعیه — the in-app inbox, opened from the account menu.
@@ -85,7 +86,12 @@ function noticeRow(n) {
         el('span', {}, whenFa(n.created_at)),
         // Only where there is somewhere worth going. A row whose link is the
         // page you are already on is a button that does nothing.
-        n.url ? el('a', { class: 'dcp-nt-go', href: n.url }, 'باز کن ›') : null,
+        //
+        // sameMirrorUrl, because a stored row outlives the mistake that wrote
+        // it: an announcement that named one mirror by its full URL would sign
+        // out every reader of the other one, and rewriting it here repairs the
+        // rows already in people's inboxes as well as everything sent later.
+        n.url ? el('a', { class: 'dcp-nt-go', href: sameMirrorUrl(n.url) }, 'باز کن ›') : null,
       ]),
     ]),
   ];

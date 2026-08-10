@@ -78,6 +78,33 @@ describe('the inbox', () => {
       .toBe('/plus/profile.html');
   });
 
+  /**
+   * A stored row outlives the mistake that wrote it. The collections
+   * announcement went out with a full https://dentcast.ir/... link, and the
+   * mirrors keep separate sessions — so for a reader signed in on .org that
+   * link was a way out of their own account, on the one page (pricing) whose
+   * content is personal. Rewriting at render time repairs the rows already
+   * sitting in people's inboxes, not only the ones written afterwards.
+   */
+  it('keeps a link to our own site on the mirror the reader is already on', async () => {
+    state.notices = [notice({ id: 'c', url: 'https://dentcast.ir/plus/pricing.html' })];
+    const root = document.createElement('div');
+    await renderNotices(root);
+
+    const href = root.querySelector('a.dcp-nt-go')?.getAttribute('href');
+    expect(href).toBe(location.origin + '/plus/pricing.html');
+    expect(href).not.toContain('dentcast.ir');
+  });
+
+  it('does not touch a link that is not ours', async () => {
+    const doi = 'https://doi.org/10.1016/j.prosdent.2020.01.001';
+    state.notices = [notice({ id: 'd', url: doi })];
+    const root = document.createElement('div');
+    await renderNotices(root);
+
+    expect(root.querySelector('a.dcp-nt-go')?.getAttribute('href')).toBe(doi);
+  });
+
   it('moves the watermark as soon as the list is on screen', async () => {
     state.notices = [notice()];
     state.unread = 1;

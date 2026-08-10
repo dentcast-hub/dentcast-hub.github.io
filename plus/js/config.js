@@ -43,6 +43,36 @@ export function irMirrorUrl() {
   return 'https://dentcast.ir' + location.pathname + location.search + location.hash;
 }
 
+// --- never cross the mirror boundary ----------------------------------------
+// The two sites are mirrors of the same content with SEPARATE sessions: the API
+// sets a host-only cookie and each site talks to its own api host (see
+// defaultBases above). So a link naming the OTHER mirror does not merely change
+// the domain, it signs the reader out for the page it lands on.
+//
+// 2026-08-10 is why this exists. An اطلاعیه linked
+// https://dentcast.ir/plus/pricing.html; every reader signed in on .org who
+// followed it arrived anonymous, and the pricing page's discounts are personal
+// — so they were quoted the public price with nothing on screen saying it was
+// not theirs. The founder found it on their own announcement.
+//
+// Any link pointing at either mirror is therefore re-aimed at the mirror the
+// reader is already on; path, query and hash are preserved. Anything else — a
+// DOI, a Drive folder, any external site — is returned untouched. The point is
+// not to rewrite links, it is to never throw somebody across a session
+// boundary without telling them.
+const MIRROR_HOSTS = ['dentcast.ir', 'www.dentcast.ir', 'dentcast.org', 'www.dentcast.org'];
+
+export function sameMirrorUrl(url) {
+  if (!url) return url;
+  try {
+    const u = new URL(url, location.href);
+    if (MIRROR_HOSTS.indexOf(u.hostname) === -1) return url;
+    return location.origin + u.pathname + u.search + u.hash;
+  } catch (_) {
+    return url; // not parseable as a URL: hand it back rather than lose the link
+  }
+}
+
 // The price list, mirrored client-side.
 //
 // The server is the authority and its answer always wins — but the page must be
