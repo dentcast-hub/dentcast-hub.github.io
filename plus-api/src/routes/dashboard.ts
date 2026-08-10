@@ -234,6 +234,8 @@ export async function dashboardRoutes(app: FastifyInstance): Promise<void> {
 
   // GET /export/highlights - full dump of the user's own data. Any plan, any
   // time. The concrete embodiment of principle 2 (ownership is the user's).
+  // Snippets (text/reference collection pins) ride along here too, any-plan,
+  // for the same reason: a lapsed premium user still owns what they wrote.
   app.get('/export/highlights', async (request, reply) => {
     const rows = await pool.query(
       `select content_id, exact, prefix, suffix, color, underline, cloze_markers,
@@ -242,12 +244,19 @@ export async function dashboardRoutes(app: FastifyInstance): Promise<void> {
         order by content_id asc, created_at asc`,
       [request.user!.id],
     );
+    const snippets = await pool.query(
+      `select kind, title, body, authors, venue, year, doi, url, created_at, updated_at
+         from snippets where user_id = $1
+        order by created_at asc`,
+      [request.user!.id],
+    );
     reply.header('content-disposition', 'attachment; filename="dentcast-highlights.json"');
     return reply.send({
       exported_at: new Date().toISOString(),
       display_name: request.user!.display_name,
       count: rows.rowCount,
       highlights: rows.rows,
+      snippets: snippets.rows,
     });
   });
 }

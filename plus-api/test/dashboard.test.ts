@@ -149,6 +149,28 @@ describe('GET /export/highlights', () => {
     expect(body.count).toBe(1);
     expect(body.highlights[0].exact).toBe('برای اکسپورت');
   });
+
+  // Data ownership (principle 2) applies to snippets too: the dump carries
+  // them for ANY plan, even after premium lapses — there is no other way to
+  // get your own text/reference pins back out.
+  it('carries the user\'s snippets, on any plan', async () => {
+    await pool.query(`update profiles set tier = 'premium' where phone = '09121400001'`);
+    const board = await app.inject({
+      method: 'POST', url: '/collections', headers: { cookie }, payload: { title: 'برد' },
+    });
+    await app.inject({
+      method: 'POST', url: `/collections/${board.json().collection.id}/snippets`, headers: { cookie },
+      payload: { kind: 'text', title: 'یادداشت', body: 'متن اکسپورت‌شدنی' },
+    });
+    await pool.query(`update profiles set tier = 'free' where phone = '09121400001'`);
+
+    const res = await app.inject({ method: 'GET', url: '/export/highlights', headers: { cookie } });
+    expect(res.statusCode).toBe(200);
+    const { snippets } = res.json();
+    expect(snippets).toHaveLength(1);
+    expect(snippets[0].kind).toBe('text');
+    expect(snippets[0].body).toBe('متن اکسپورت‌شدنی');
+  });
 });
 
 describe('GET /highlights/recent', () => {

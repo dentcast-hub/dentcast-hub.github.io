@@ -24,6 +24,13 @@ export function foldFa(s) {
     .trim();
 }
 
+/** True when a string has no Persian/Arabic letters — a reference title pulled
+ *  from Crossref is almost always this, and needs dir=ltr + left alignment or
+ *  it renders reversed inside the page's RTL flow. */
+export function looksLatin(s) {
+  return !/[؀-ۿ]/.test(String(s || ''));
+}
+
 /** The article link that lands ON the highlight: plus.js reads ?dcphl=, enters
  *  study mode and scrolls to the mark, so you never arrive at an article that
  *  shows none of your own marks. */
@@ -47,6 +54,14 @@ export function noteBlock(note) {
 
 export function labelChip(label) {
   return label ? el('span', { class: 'dcp-card-label' }, labelFa(label)) : null;
+}
+
+// A collection pin's kind badge — only for the kinds that carry no other visual
+// tell (a highlight already reads as itself via its coloured mark, a page via
+// its type icon/colour; a text or reference pin has neither, so it needs one).
+const SNIPPET_KIND_LABEL = { text: '✍️ متن خودم', reference: '🔗 رفرنس' };
+export function kindChip(kind) {
+  return el('span', { class: 'dcp-cl-pin-kind dcp-cl-pin-kind-' + kind }, SNIPPET_KIND_LABEL[kind] || kind);
 }
 
 /** One small pill action. `href` makes it a link, otherwise a button. */
@@ -184,6 +199,56 @@ export function inlineEditor(h, { onSaved, onClose }) {
     }
   });
   // Ctrl/⌘+Enter saves — the shortcut every note field on the web has.
+  ta.addEventListener('keydown', (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') save.click();
+    if (e.key === 'Escape') cancel.click();
+  });
+  setTimeout(() => ta.focus(), 0);
+  return box;
+}
+
+/**
+ * Edit a text snippet («متن خودم») WHERE YOU FOUND IT — title + body, one
+ * save. Same shape as inlineEditor above, but PATCHes /snippets/:id: `s` is
+ * `{ id, title, body }` (the snippet's own id, not the pin's).
+ */
+export function snippetInlineEditor(s, { onSaved, onClose }) {
+  const titleInput = el('input', {
+    type: 'text', class: 'dcp-input', maxlength: '200',
+    placeholder: 'مثلاً: نکته‌ی بحث پایانی', 'aria-label': 'عنوان (اختیاری)',
+  });
+  titleInput.value = s.title || '';
+  const ta = el('textarea', {
+    class: 'dcp-hlib-ta', rows: '5', placeholder: 'بنویسید یا پیست کنید…', 'aria-label': 'متن',
+  });
+  ta.value = s.body || '';
+
+  const msg = el('span', { class: 'dcp-hlib-msg', role: 'status' });
+  const save = el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button' }, 'ذخیره');
+  const cancel = el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button' }, 'انصراف');
+
+  const box = el('div', { class: 'dcp-hlib-editor' }, [
+    titleInput,
+    ta,
+    el('div', { class: 'dcp-hlib-erow dcp-hlib-esave' }, [save, cancel, msg]),
+  ]);
+
+  cancel.addEventListener('click', () => { box.remove(); if (onClose) onClose(); });
+  save.addEventListener('click', async () => {
+    const body = ta.value.trim();
+    if (!body) { msg.textContent = 'متن نمی‌تواند خالی باشد.'; return; }
+    save.disabled = true;
+    msg.textContent = '';
+    try {
+      const { snippet } = await api.updateSnippet(s.id, { title: titleInput.value.trim() || null, body });
+      box.remove();
+      onSaved(snippet);
+      toast('ذخیره شد');
+    } catch (_) {
+      save.disabled = false;
+      msg.textContent = 'ذخیره نشد؛ دوباره تلاش کن.';
+    }
+  });
   ta.addEventListener('keydown', (e) => {
     if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') save.click();
     if (e.key === 'Escape') cancel.click();

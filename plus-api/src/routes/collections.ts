@@ -16,10 +16,10 @@ import { getContentInfo } from '../content-index.js';
 // 0012's partial unique indexes) so the "افزودن به کالکشن" button is always
 // safe to click again.
 
-interface ItemRow {
+export interface ItemRow {
   id: string;
   highlight_id: string | null;
-  content_id: string;
+  content_id: string | null;
   created_at: string;
   position: number | null;
   exact: string | null;
@@ -29,7 +29,32 @@ interface ItemRow {
   underline: boolean | null;
   note: string | null;
   label: string | null;
+  // snippet_id null => a highlight or page pin; set => the pin's shape and
+  // fields come from the joined `snippets` row instead of `highlights`.
+  snippet_id: string | null;
+  snippet_kind: 'text' | 'reference' | null;
+  snippet_title: string | null;
+  snippet_body: string | null;
+  authors: string | null;
+  venue: string | null;
+  year: number | null;
+  doi: string | null;
+  snippet_url: string | null;
 }
+
+// Shared by every read path (GET /collections/:id, the order PUT, POST
+// /collections/:id/items, and snippets.ts's POST /collections/:id/snippets)
+// so a pin's resolved shape can never drift between where it was created and
+// where it is read back. Callers append their own `where`/`order by`.
+export const ITEM_SELECT = `
+  select ci.id, ci.highlight_id, ci.content_id, ci.created_at, ci.position,
+         h.exact, h.prefix, h.suffix, h.color, h.underline, h.note, h.label,
+         ci.snippet_id, s.kind as snippet_kind, s.title as snippet_title, s.body as snippet_body,
+         s.authors, s.venue, s.year, s.doi, s.url as snippet_url
+    from collection_items ci
+    left join highlights h on h.id = ci.highlight_id
+    left join snippets s on s.id = ci.snippet_id
+`;
 
 // A board's own colour, chosen by its owner. A closed set, because these are
 // rendered as real surfaces on the client and a free-text colour would let a
@@ -47,8 +72,40 @@ function emojiOk(value: string): boolean {
 
 const COLLECTION_COLS = 'id, title, description, emoji, color, created_at';
 
-function resolveItem(row: ItemRow) {
-  const info = getContentInfo(row.content_id);
+export function resolveItem(row: ItemRow) {
+  // A snippet pin (text/reference) has no content page — its shape comes from
+  // the joined `snippets` row, not `highlights`/`getContentInfo`. `url` here is
+  // repurposed from "link to the DentCast page this pin is about" (which does
+  // not exist for a snippet) to "the reference's own web link", null for a
+  // text pin or a reference with none given.
+  if (row.snippet_id) {
+    return {
+      id: row.id,
+      kind: row.snippet_kind,
+      highlight_id: null,
+      content_id: null,
+      snippet_id: row.snippet_id,
+      position: row.position,
+      title: row.snippet_title,
+      url: row.snippet_url,
+      type: null,
+      exact: null,
+      prefix: null,
+      suffix: null,
+      color: null,
+      underline: false,
+      note: null,
+      label: null,
+      body: row.snippet_body,
+      authors: row.authors,
+      venue: row.venue,
+      year: row.year,
+      doi: row.doi,
+      created_at: row.created_at,
+    };
+  }
+
+  const info = getContentInfo(row.content_id!);
   return {
     id: row.id,
     kind: row.highlight_id ? 'highlight' : 'page',
@@ -57,10 +114,11 @@ function resolveItem(row: ItemRow) {
     // an article that shows none of the reader's marks yet.
     highlight_id: row.highlight_id,
     content_id: row.content_id,
+    snippet_id: null,
     position: row.position,
     title: info?.title ?? row.content_id,
     url: info?.url ?? `/${row.content_id}.html`,
-    type: info?.type ?? row.content_id.split('/')[0],
+    type: info?.type ?? row.content_id!.split('/')[0],
     exact: row.exact,
     prefix: row.prefix,
     suffix: row.suffix,
@@ -84,7 +142,10 @@ export async function collectionRoutes(app: FastifyInstance): Promise<void> {
     const res = await pool.query<{
       id: string; title: string; description: string | null; emoji: string | null;
       color: string | null; created_at: string; last_item_at: string | null;
-      items: Array<{ highlight_id: string | null; content_id: string; color: string | null }>;
+      items: Array<{
+        highlight_id: string | null; content_id: string | null; color: string | null;
+        snippet_id: string | null; snippet_kind: 'text' | 'reference' | null;
+      }>;
     }>(
       // last_item_at is DERIVED (max of the items' created_at), never stored:
       // "which board did I last add to" is the question a shelf of boards has
@@ -94,7 +155,10 @@ export async function collectionRoutes(app: FastifyInstance): Promise<void> {
               max(ci.created_at) as last_item_at,
               coalesce(
                 json_agg(
-                  json_build_object('highlight_id', ci.highlight_id, 'content_id', ci.content_id, 'color', h.color)
+                  json_build_object(
+                    'highlight_id', ci.highlight_id, 'content_id', ci.content_id, 'color', h.color,
+                    'snippet_id', ci.snippet_id, 'snippet_kind', s.kind
+                  )
                   order by ci.created_at desc
                 ) filter (where ci.id is not null),
                 '[]'
@@ -102,6 +166,7 @@ export async function collectionRoutes(app: FastifyInstance): Promise<void> {
          from collections c
          left join collection_items ci on ci.collection_id = c.id
          left join highlights h on h.id = ci.highlight_id
+         left join snippets s on s.id = ci.snippet_id
         where c.user_id = $1
         group by c.id
         order by c.created_at desc`,
@@ -117,9 +182,9 @@ export async function collectionRoutes(app: FastifyInstance): Promise<void> {
       last_item_at: r.last_item_at,
       item_count: r.items.length,
       preview: r.items.slice(0, 3).map((it) => ({
-        kind: it.highlight_id ? 'highlight' : 'page',
+        kind: it.snippet_id ? it.snippet_kind : (it.highlight_id ? 'highlight' : 'page'),
         color: it.color,
-        type: getContentInfo(it.content_id)?.type ?? it.content_id.split('/')[0],
+        type: it.snippet_id ? null : (getContentInfo(it.content_id!)?.type ?? it.content_id!.split('/')[0]),
       })),
     }));
     return reply.send({ collections });
@@ -163,12 +228,8 @@ export async function collectionRoutes(app: FastifyInstance): Promise<void> {
     // never placed, newest-first (`nulls last` is what keeps an unarranged
     // board behaving exactly as it always did).
     const items = await pool.query<ItemRow>(
-      `select ci.id, ci.highlight_id, ci.content_id, ci.created_at, ci.position,
-              h.exact, h.prefix, h.suffix, h.color, h.underline, h.note, h.label
-         from collection_items ci
-         left join highlights h on h.id = ci.highlight_id
-        where ci.collection_id = $1
-        order by ci.position asc nulls last, ci.created_at desc`,
+      `${ITEM_SELECT} where ci.collection_id = $1
+       order by ci.position asc nulls last, ci.created_at desc`,
       [id],
     );
 
@@ -269,12 +330,8 @@ export async function collectionRoutes(app: FastifyInstance): Promise<void> {
         );
       }
       const res = await client.query<ItemRow>(
-        `select ci.id, ci.highlight_id, ci.content_id, ci.created_at, ci.position,
-                h.exact, h.prefix, h.suffix, h.color, h.underline, h.note, h.label
-           from collection_items ci
-           left join highlights h on h.id = ci.highlight_id
-          where ci.collection_id = $1
-          order by ci.position asc nulls last, ci.created_at desc`,
+        `${ITEM_SELECT} where ci.collection_id = $1
+         order by ci.position asc nulls last, ci.created_at desc`,
         [id],
       );
       return res.rows;
@@ -294,10 +351,12 @@ export async function collectionRoutes(app: FastifyInstance): Promise<void> {
     return reply.send({ ok: true });
   });
 
-  // POST /collections/:id/items { highlight_id } | { content_id } - add either
-  // one of the user's own highlights, or a whole page (no highlight_id), to
-  // the collection. Idempotent: adding the same thing twice just returns the
-  // existing row (the partial unique indexes from migration 0012 back this).
+  // POST /collections/:id/items { highlight_id } | { content_id } | { snippet_id }
+  // - add one of the user's own highlights, a whole page (no highlight_id), or
+  // one of the user's own snippets, to the collection. Idempotent: adding the
+  // same thing twice just returns the existing row (the partial unique
+  // indexes from migration 0012, plus the snippet one from 0035, back this).
+  // This is also what «انتقال» (move) and the pin picker use for snippets.
   app.post('/collections/:id/items', {
     schema: {
       body: {
@@ -305,19 +364,21 @@ export async function collectionRoutes(app: FastifyInstance): Promise<void> {
         properties: {
           highlight_id: { type: 'string' },
           content_id: { type: 'string' },
+          snippet_id: { type: 'string' },
         },
       },
     },
   }, async (request, reply) => {
     const { id } = request.params as { id: string };
-    const b = request.body as { highlight_id?: string; content_id?: string };
+    const b = request.body as { highlight_id?: string; content_id?: string; snippet_id?: string };
     const userId = request.user!.id;
 
     const col = await pool.query(`select 1 from collections where id = $1 and user_id = $2`, [id, userId]);
     if (col.rowCount === 0) return reply.code(404).send({ error: 'not_found' });
 
     let highlightId: string | null = null;
-    let contentId: string;
+    let snippetId: string | null = null;
+    let contentId: string | null = null;
     if (b.highlight_id) {
       const hl = await pool.query<{ content_id: string }>(
         `select content_id from highlights where id = $1 and user_id = $2`,
@@ -326,6 +387,10 @@ export async function collectionRoutes(app: FastifyInstance): Promise<void> {
       if (hl.rowCount === 0) return reply.code(404).send({ error: 'highlight_not_found' });
       highlightId = b.highlight_id;
       contentId = hl.rows[0].content_id;
+    } else if (b.snippet_id) {
+      const sn = await pool.query(`select 1 from snippets where id = $1 and user_id = $2`, [b.snippet_id, userId]);
+      if (sn.rowCount === 0) return reply.code(404).send({ error: 'snippet_not_found' });
+      snippetId = b.snippet_id;
     } else if (b.content_id) {
       contentId = b.content_id;
     } else {
@@ -334,38 +399,63 @@ export async function collectionRoutes(app: FastifyInstance): Promise<void> {
 
     // ON CONFLICT DO UPDATE (a no-op SET) rather than DO NOTHING purely so
     // RETURNING still yields a row on the idempotent-replay path; the actual
-    // item body (highlight fields) is re-selected below with the join.
-    const res = await pool.query<{ id: string }>(
-      `insert into collection_items (collection_id, highlight_id, content_id)
-       values ($1, $2, $3)
-       on conflict (collection_id, ${highlightId ? 'highlight_id' : 'content_id'})
-         where highlight_id is ${highlightId ? 'not null' : 'null'}
-       do update set collection_id = excluded.collection_id
-       returning id`,
-      [id, highlightId, contentId],
-    );
-    const full = await pool.query<ItemRow>(
-      `select ci.id, ci.highlight_id, ci.content_id, ci.created_at,
-              h.exact, h.prefix, h.suffix, h.color, h.underline, h.note, h.label
-         from collection_items ci
-         left join highlights h on h.id = ci.highlight_id
-        where ci.id = $1`,
-      [res.rows[0].id],
-    );
-    await recordActivity(userId, 'collection_item_added', contentId, { collection_id: id, highlight_id: highlightId });
+    // item body is re-selected below with the join.
+    const res = snippetId
+      ? await pool.query<{ id: string }>(
+        `insert into collection_items (collection_id, snippet_id)
+         values ($1, $2)
+         on conflict (collection_id, snippet_id) where snippet_id is not null
+         do update set collection_id = excluded.collection_id
+         returning id`,
+        [id, snippetId],
+      )
+      : await pool.query<{ id: string }>(
+        `insert into collection_items (collection_id, highlight_id, content_id)
+         values ($1, $2, $3)
+         on conflict (collection_id, ${highlightId ? 'highlight_id' : 'content_id'})
+           where highlight_id is ${highlightId ? 'not null' : 'null'}
+         do update set collection_id = excluded.collection_id
+         returning id`,
+        [id, highlightId, contentId],
+      );
+    const full = await pool.query<ItemRow>(`${ITEM_SELECT} where ci.id = $1`, [res.rows[0].id]);
+    await recordActivity(userId, 'collection_item_added', contentId, {
+      collection_id: id, highlight_id: highlightId, snippet_id: snippetId,
+    });
     scheduleAchievementSync(userId);
     return reply.code(201).send({ item: resolveItem(full.rows[0]) });
   });
 
-  // DELETE /collections/:id/items/:itemId - remove one item.
+  // DELETE /collections/:id/items/:itemId - remove one pin. When the removed
+  // pin was a snippet AND it was the snippet's last pin anywhere, the snippet
+  // row itself is deleted in the same transaction — there is no snippets
+  // library page, so an unpinned snippet would otherwise be invisible but
+  // still alive forever. «انتقال» (move) never triggers this: it adds to the
+  // target board BEFORE removing from the source, so the snippet always has
+  // at least one pin at the moment this check runs.
   app.delete('/collections/:id/items/:itemId', async (request, reply) => {
     const { id, itemId } = request.params as { id: string; itemId: string };
-    const res = await pool.query(
-      `delete from collection_items ci using collections c
-        where ci.collection_id = c.id and c.user_id = $1 and c.id = $2 and ci.id = $3`,
-      [request.user!.id, id, itemId],
-    );
-    if (res.rowCount === 0) return reply.code(404).send({ error: 'not_found' });
+    const userId = request.user!.id;
+
+    const removed = await withTransaction(async (client) => {
+      const del = await client.query<{ snippet_id: string | null }>(
+        `delete from collection_items ci using collections c
+          where ci.collection_id = c.id and c.user_id = $1 and c.id = $2 and ci.id = $3
+          returning ci.snippet_id`,
+        [userId, id, itemId],
+      );
+      if (del.rowCount === 0) return false;
+      const snippetId = del.rows[0].snippet_id;
+      if (snippetId) {
+        const remaining = await client.query(`select 1 from collection_items where snippet_id = $1 limit 1`, [snippetId]);
+        if (remaining.rowCount === 0) {
+          await client.query(`delete from snippets where id = $1`, [snippetId]);
+        }
+      }
+      return true;
+    });
+
+    if (!removed) return reply.code(404).send({ error: 'not_found' });
     return reply.send({ ok: true });
   });
 }
