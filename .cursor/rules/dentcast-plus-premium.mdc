@@ -37,7 +37,11 @@ alwaysApply: false
   python3 tools/pathway_place.py --coverage                # تأیید
   ```
   ویرایش `plus/pathways.json` دیگر redeploy API نمی‌خواهد — `content-refresh.ts`
-  فایل منتشرشده را در حال اجرا دوباره می‌گیرد.
+  فایل منتشرشده را هر چند دقیقه در حال اجرا دوباره می‌گیرد (validated، فقط
+  upgrade، و در هر خطا آخرین نسخهٔ سالم). ولی «بدون redeploy» یعنی **زنده**، نه
+  «موقت»: `/plus/pathways.html`، `/plus/pathway.html?id=` و بلوکِ «مسیر یادگیری»
+  پیشخوان همین فایل را رندر می‌کنند، پس جای‌گذاریِ غلط را مشترکِ واقعی می‌بیند.
+  قبل از commit حتماً `python3 -m json.tool plus/pathways.json > /dev/null`.
 - **باندل ≠ مسیر.** باندل‌های شروع (`kind: "bundle"`) در همان `pathways.json`
   می‌نشینند ولی زیرمجموعه‌ای ۵ تا ۸ قدمیِ «فقط هستهٔ» یک مسیرند، نه مسیرِ تازه.
   گام ۵.۶ آیتم را در **مسیرهای کامل** جا می‌دهد؛ ورود به باندل کارِ گام
