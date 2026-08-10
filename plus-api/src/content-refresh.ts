@@ -2,6 +2,7 @@ import { config } from './config.js';
 import { applyRemoteIndex, indexSource } from './content-index.js';
 import { applyRemotePathways, pathwaysSource } from './pathways.js';
 import { applyRemoteBadges, badgesSource } from './badges.js';
+import { applyRemoteFlashcards, flashcardsSource } from './flashcards.js';
 
 /**
  * Keeps the taxonomy index and the pathway definitions current WITHOUT a
@@ -59,6 +60,7 @@ async function fetchJson(urls: string[], label: string): Promise<unknown | null>
 let lastIndexSource = '';
 let lastPathwaysSource = '';
 let lastBadgesSource = '';
+let lastFlashcardsSource = '';
 
 export async function refreshOnce(): Promise<void> {
   if (config.content.indexUrls.length) {
@@ -102,6 +104,20 @@ export async function refreshOnce(): Promise<void> {
       console.log(`[content-refresh] badges now served from ${src}`);
     }
   }
+
+  if (config.content.flashcardsUrls.length) {
+    const raw = await fetchJson(config.content.flashcardsUrls, 'flashcards');
+    if (raw !== null && !applyRemoteFlashcards(raw)) {
+      // eslint-disable-next-line no-console
+      console.warn('[content-refresh] flashcards: payload rejected by shape check; keeping the current copy');
+    }
+    const src = flashcardsSource();
+    if (src !== lastFlashcardsSource) {
+      lastFlashcardsSource = src;
+      // eslint-disable-next-line no-console
+      console.log(`[content-refresh] flashcards now served from ${src}`);
+    }
+  }
 }
 
 /**
@@ -112,7 +128,7 @@ export async function refreshOnce(): Promise<void> {
  */
 export function startContentRefresh(): () => void {
   if (!config.content.indexUrls.length && !config.content.pathwaysUrls.length
-      && !config.content.badgesUrls.length) {
+      && !config.content.badgesUrls.length && !config.content.flashcardsUrls.length) {
     return () => { /* not configured: the baked files are the whole story */ };
   }
   // Fetch once at boot rather than waiting out the first interval, so a

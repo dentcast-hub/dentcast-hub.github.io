@@ -549,6 +549,11 @@ export const config = {
   // container.
   badgesPath: process.env.BADGES_PATH || '',
 
+  // Path to plus/flashcards-index.json (AI review card text — versioned in the
+  // repo, no DB). Same story as pathwaysPath: repo default in dev, explicit in
+  // the container.
+  flashcardsPath: process.env.FLASHCARDS_PATH || '',
+
   // Where to re-fetch those files from at runtime (content-refresh.ts).
   // The paths above are the boot value and the permanent fallback; these URLs
   // are what stop every publish from needing an image rebuild. Comma-separated
@@ -558,6 +563,7 @@ export const config = {
     indexUrls: list('CONTENT_INDEX_URL', []),
     pathwaysUrls: list('PATHWAYS_URL', []),
     badgesUrls: list('BADGES_URL', []),
+    flashcardsUrls: list('FLASHCARDS_URL', []),
     refreshSeconds: int('CONTENT_REFRESH_SECONDS', 300),
   },
 };
