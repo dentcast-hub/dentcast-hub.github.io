@@ -197,7 +197,7 @@ select content_id, min(created_at) as first_at from (
 3. یک کوئری state:
    `select content_id, card_id, box, next_review_at, reviewed_count from
    ai_card_state where user_id = $1` → `Map` با کلید
-   `content_id + ' ' + card_id`.
+   `content_id + ' ' + card_id`.
 4. دو لیست بساز، فقط از contentهای مصرف‌شده‌ی topic-پاس:
    - **state‌دار due:** ردیف state دارد و `next_review_at <= now`. مرتب بر
      `next_review_at` صعودی.
