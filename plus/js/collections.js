@@ -17,6 +17,7 @@ import { PALETTE } from './config.js';
 import {
   foldFa, highlightHref, hlMark, noteBlock, labelChip, actionBtn, asText,
   copyToClipboard, toast, skeleton, confirmStrip, inlineEditor,
+  kindChip, snippetInlineEditor,
 } from './hl-view.js';
 
 const hlColorCss = (key) => (PALETTE.find((p) => p.key === key) || {}).css || '#eaecf5';
@@ -33,13 +34,21 @@ const TYPE_ICON = {
   episodes: '🎙️', notecast: '📝', insight: '📄', dentai: '🤖', chairside: '🦷',
   metanotes: '🔬', sharehub: '🔗', photocast: '📷', 'dentcast-plus': '🎬', glossary: '📖',
 };
-const coverColorOf = (p) => (p.kind === 'highlight' ? hlColorCss(p.color) : (TYPE_COVER_COLOR[p.type] || '#8aaac8'));
+// A snippet pin (text/reference) has no highlight colour and no content type —
+// its cover tile borrows the same accent its card uses, so a board's collage
+// stays legible the moment its first «متن خودم»/«رفرنس» pin lands.
+const SNIPPET_COVER_COLOR = { text: 'var(--dcp-gold)', reference: 'var(--dcp-ref)' };
+const SNIPPET_COVER_ICON = { text: '✍️', reference: '🔗' };
+const coverColorOf = (p) => (
+  p.kind === 'highlight' ? hlColorCss(p.color)
+    : SNIPPET_COVER_COLOR[p.kind] || TYPE_COVER_COLOR[p.type] || '#8aaac8'
+);
 
 function coverTile(p) {
   if (p.kind === 'highlight') return el('span', { class: 'dcp-cl-cover-tile', style: 'background:' + coverColorOf(p) });
   return el('span', {
     class: 'dcp-cl-cover-tile dcp-cl-cover-tile-page', style: 'background:' + coverColorOf(p),
-  }, TYPE_ICON[p.type] || '📄');
+  }, SNIPPET_COVER_ICON[p.kind] || TYPE_ICON[p.type] || '📄');
 }
 
 // A board's own colour (chosen by its owner; the API validates the same six).
@@ -199,12 +208,91 @@ export function openCollectionMove(item, fromCollectionId, removeFromHere) {
     okText: 'منتقل شد',
     exclude: fromCollectionId,
     onPick: async (c) => {
-      await api.addToCollection(c.id, item.highlight_id
-        ? { highlight_id: item.highlight_id }
-        : { content_id: item.content_id });
+      const target = item.snippet_id ? { snippet_id: item.snippet_id }
+        : item.highlight_id ? { highlight_id: item.highlight_id }
+          : { content_id: item.content_id };
+      await api.addToCollection(c.id, target);
       await removeFromHere(item.id);
     },
   }));
+}
+
+/**
+ * The «افزودن پین» chooser: what kind of thing gets added to this board.
+ * «هایلایت» stays disabled here — that path is unchanged (select text inside
+ * an article, «افزودن به کالکشن»); this sheet is only for the two kinds a
+ * board can originate itself.
+ */
+function addPinChooserCard(collectionId, { onAdded }) {
+  const noteOpt = el('button', { class: 'dcp-cl-addopt', type: 'button' }, [
+    el('span', { class: 'dcp-cl-addopt-ico gold' }, '✍️'),
+    el('span', { class: 'dcp-cl-addopt-txt' }, [
+      el('b', {}, ['متن خودم', el('span', { class: 'dcp-cl-addopt-tag' }, 'جدید')]),
+      el('small', {}, 'هر متنی که می‌خواهید — جمع‌بندی، نکته‌ی کلاس، پاراگرافی از هر جا. مثل هایلایت‌ها قابل پین به چند برد.'),
+    ]),
+  ]);
+  noteOpt.addEventListener('click', () => openSheet(noteComposerCard(collectionId, { onAdded })));
+
+  const hlOpt = el('button', { class: 'dcp-cl-addopt', type: 'button', disabled: '' }, [
+    el('span', { class: 'dcp-cl-addopt-ico blue' }, '🖍'),
+    el('span', { class: 'dcp-cl-addopt-txt' }, [
+      el('b', {}, 'هایلایت'),
+      el('small', {}, 'از داخل مقاله: متن را انتخاب کنید و «افزودن به کالکشن» را بزنید — همان مسیر فعلی.'),
+    ]),
+  ]);
+
+  return el('div', { class: 'dcp-sheet-card' }, [
+    el('div', { class: 'dcp-sheet-top' }, [el('h2', { class: 'dcp-sheet-title' }, 'چه چیزی به این برد اضافه شود؟')]),
+    el('p', { class: 'dcp-sheet-sub' }, 'هایلایت‌ها مثل همیشه از داخل خود مقاله اضافه می‌شوند.'),
+    noteOpt,
+    hlOpt,
+  ]);
+}
+
+/** The «متن خودم» composer: title (optional) + body, pinned to the board on save. */
+function noteComposerCard(collectionId, { onAdded }) {
+  const titleInput = el('input', {
+    type: 'text', class: 'dcp-input', maxlength: '200',
+    placeholder: 'مثلاً: نکته‌ی بحث پایانی', 'aria-label': 'عنوان (اختیاری)',
+  });
+  const ta = el('textarea', {
+    class: 'dcp-hlib-ta', rows: '6', maxlength: '10000',
+    placeholder: 'بنویسید یا پیست کنید…', 'aria-label': 'متن',
+  });
+  const MAX = 10000;
+  const count = el('p', { class: 'dcp-cl-note-count' }, faNum(0) + ' / ' + faNum(MAX) + ' حرف');
+  ta.addEventListener('input', () => { count.textContent = faNum(ta.value.length) + ' / ' + faNum(MAX) + ' حرف'; });
+
+  const msg = el('span', { class: 'dcp-hlib-msg', role: 'status' });
+  const save = el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button' }, 'پین کن');
+  const cancel = el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button' }, 'انصراف');
+  cancel.addEventListener('click', () => closeSheet());
+
+  save.addEventListener('click', async () => {
+    const body = ta.value.trim();
+    if (!body) { msg.textContent = 'متن خالی است.'; return; }
+    save.disabled = true;
+    msg.textContent = '';
+    try {
+      const { item } = await api.createSnippet(collectionId, { kind: 'text', title: titleInput.value.trim() || undefined, body });
+      closeSheet();
+      onAdded(item);
+      toast('پین شد ✓');
+    } catch (_) {
+      save.disabled = false;
+      msg.textContent = 'ذخیره نشد؛ دوباره تلاش کن.';
+    }
+  });
+
+  return el('div', { class: 'dcp-sheet-card' }, [
+    el('div', { class: 'dcp-sheet-top' }, [el('h2', { class: 'dcp-sheet-title' }, '✍️ متن خودم')]),
+    el('label', { class: 'dcp-editor-label' }, 'عنوان (اختیاری)'),
+    titleInput,
+    el('label', { class: 'dcp-editor-label' }, 'متن'),
+    ta,
+    count,
+    el('div', { class: 'dcp-hlib-erow dcp-hlib-esave' }, [cancel, save, msg]),
+  ]);
 }
 
 /**
@@ -245,7 +333,7 @@ export async function openCollectionPicker({ highlightId, contentId } = {}) {
  */
 function pinCard(item, collectionId, { onRemove, onChanged, arrange = null }) {
   const kindLabel = FOLDER_EN[item.type] || item.type;
-  const pin = el('div', { class: 'dcp-cl-pin' });
+  const pin = el('div', { class: 'dcp-cl-pin' + (item.kind === 'text' ? ' dcp-cl-pin-note' : '') });
 
   // While the board is being arranged, the pin's own actions step aside for
   // the two that matter — up and down. Position is shown as «۲ از ۷» so the
@@ -267,7 +355,62 @@ function pinCard(item, collectionId, { onRemove, onChanged, arrange = null }) {
     ]);
   }
 
+  // Shared by every kind: انتقال is always the same "add there, remove here"
+  // flow, and حذف is always the same inline confirm — never a native confirm().
+  function moveAction() {
+    return actionBtn('انتقال', {
+      title: 'انتقال به کالکشنِ دیگر',
+      onClick: () => openCollectionMove(item, collectionId, onRemove),
+    });
+  }
+  function deleteAction() {
+    return actionBtn('حذف', {
+      danger: true,
+      onClick: () => {
+        if (pin.querySelector('.dcp-recent-confirm')) return;
+        pin.appendChild(confirmStrip('از این کالکشن حذف شود؟', async () => {
+          await onRemove(item.id);
+          toast('از کالکشن حذف شد');
+        }));
+      },
+    });
+  }
+
+  function paintNote() {
+    const body = el('div', { class: 'dcp-cl-pin-body' }, [
+      kindChip('text'),
+      item.title ? el('h3', { class: 'dcp-cl-pin-note-title' }, item.title) : null,
+      el('p', { class: 'dcp-cl-pin-note-body' }, item.body),
+    ].filter(Boolean));
+
+    const actions = [
+      actionBtn('✎ ویرایش', {
+        onClick: () => {
+          if (pin.querySelector('.dcp-hlib-editor')) return;
+          pin.appendChild(snippetInlineEditor({ id: item.snippet_id, title: item.title, body: item.body }, {
+            onSaved: (updated) => {
+              Object.assign(item, { title: updated.title, body: updated.body });
+              paint();
+              if (onChanged) onChanged(item);
+            },
+          }));
+        },
+      }),
+      actionBtn('کپی', {
+        onClick: (e) => copyToClipboard(item.title ? item.title + '\n' + item.body : item.body, e.currentTarget),
+      }),
+      moveAction(),
+      deleteAction(),
+    ];
+
+    pin.replaceChildren(body, arrange ? arrangeBar() : el('div', { class: 'dcp-hlib-actions dcp-cl-pin-actions' }, actions));
+  }
+
   function paint() {
+    // A snippet pin (text/reference) has no content page and no highlight
+    // fields — a wholly different shape from the highlight/page pin below.
+    if (item.kind === 'text') { paintNote(); return; }
+
     // A highlight-pin shows the SAME solid pastel the article's own mark.dcp-hl
     // uses (never flattened to plain text); a page-pin gets its type color + icon.
     const band = item.exact
@@ -295,24 +438,12 @@ function pinCard(item, collectionId, { onRemove, onChanged, arrange = null }) {
         onClick: (e) => copyToClipboard(asText({ exact: item.exact, note: item.note }), e.currentTarget),
       }));
     }
-    actions.push(actionBtn('انتقال', {
-      title: 'انتقال به کالکشنِ دیگر',
-      onClick: () => openCollectionMove(item, collectionId, onRemove),
-    }));
+    actions.push(moveAction());
     // A highlight-item opens ON its highlight (?dcphl=); a page-item opens the page.
     actions.push(actionBtn(item.highlight_id ? 'متنِ مقاله ›' : 'بازکردن ›', {
       href: highlightHref(item.url, item.highlight_id),
     }));
-    actions.push(actionBtn('حذف', {
-      danger: true,
-      onClick: () => {
-        if (pin.querySelector('.dcp-recent-confirm')) return;
-        pin.appendChild(confirmStrip('از این کالکشن حذف شود؟', async () => {
-          await onRemove(item.id);
-          toast('از کالکشن حذف شد');
-        }));
-      },
-    }));
+    actions.push(deleteAction());
 
     const foot = el('div', { class: 'dcp-cl-pin-foot' }, [
       el('a', { class: 'dcp-cl-pin-src', href: item.url }, [
@@ -462,10 +593,17 @@ export async function renderCollectionDetail(container, id) {
   ].filter(Boolean));
   const descEl = el('p', { class: 'dcp-cl-detail-desc' }, data.description || '');
   descEl.hidden = !data.description;
+  const addPinBtn = el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button' }, '+ افزودن پین');
+  addPinBtn.addEventListener('click', () => openSheet(addPinChooserCard(id, {
+    onAdded: (item) => {
+      data.items = [item, ...data.items];
+      renderItems();
+    },
+  })));
   const editBtn = el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button' }, 'ویرایشِ کالکشن');
   const deleteBtn = el('button', { class: 'dcp-btn dcp-btn-danger', type: 'button' }, 'حذفِ کالکشن');
   const titleWrap = el('div', { class: 'dcp-cl-title-wrap' }, [titleEl, descEl]);
-  const actionsRow = el('div', { class: 'dcp-cl-detail-actions' }, [editBtn, deleteBtn]);
+  const actionsRow = el('div', { class: 'dcp-cl-detail-actions' }, [addPinBtn, editBtn, deleteBtn]);
 
   function repaintHead() {
     titleEl.replaceChildren(...[
@@ -581,7 +719,10 @@ export async function renderCollectionDetail(container, id) {
     type: 'search', class: 'dcp-input dcp-hlib-search',
     placeholder: 'جستجو در این کالکشن…', 'aria-label': 'جستجو در این کالکشن',
   });
-  const KINDS = [{ key: '', fa: 'همه' }, { key: 'highlight', fa: 'هایلایت‌ها' }, { key: 'page', fa: 'صفحه‌ها' }];
+  const KINDS = [
+    { key: '', fa: 'همه' }, { key: 'highlight', fa: 'هایلایت‌ها' }, { key: 'page', fa: 'صفحه‌ها' },
+    { key: 'text', fa: 'متن من' }, { key: 'reference', fa: 'رفرنس' },
+  ];
   let kind = '';
   const kindChips = el('div', { class: 'dcp-hlib-chips' });
   // A board that the owner has arranged by hand opens in THAT order, and says
@@ -683,8 +824,8 @@ export async function renderCollectionDetail(container, id) {
       return;
     }
 
-    const counts = { '': data.items.length, highlight: 0, page: 0 };
-    for (const it of data.items) counts[it.highlight_id ? 'highlight' : 'page'] += 1;
+    const counts = { '': data.items.length, highlight: 0, page: 0, text: 0, reference: 0 };
+    for (const it of data.items) counts[it.kind] = (counts[it.kind] || 0) + 1;
     kindChips.replaceChildren(...KINDS.map((k) => {
       const b = el('button', { class: 'dcp-hlib-chip' + (k.key === kind ? ' is-on' : ''), type: 'button' },
         [k.fa, el('span', { class: 'dcp-hlib-chipn' }, faNum(counts[k.key]))]);
@@ -702,10 +843,10 @@ export async function renderCollectionDetail(container, id) {
     const q = arranging ? '' : foldFa(search.value);
     let rows = data.items.filter((it) => {
       if (arranging) return true;
-      if (kind === 'highlight' && !it.highlight_id) return false;
-      if (kind === 'page' && it.highlight_id) return false;
+      if (kind && it.kind !== kind) return false;
       if (!q) return true;
-      return foldFa(it.exact).includes(q) || foldFa(it.note).includes(q) || foldFa(it.title).includes(q);
+      return foldFa(it.exact).includes(q) || foldFa(it.note).includes(q)
+        || foldFa(it.title).includes(q) || foldFa(it.body).includes(q);
     });
     // `data.items` already arrives in the board's own display order (manual
     // placement first, then newest), so 'manual'/'recent' need no client sort.

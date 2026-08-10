@@ -20,67 +20,67 @@
     "hash": "bd50932cb1d75571"
   },
   "/pillar/premium-index.js": {
-    "v": 7,
-    "hash": "659e8078f980b502"
+    "v": 8,
+    "hash": "8fe510df4b6948d8"
   },
   "/plus/js/assistant-page.js": {
-    "v": 11,
-    "hash": "680cda0d4011c0f7"
+    "v": 12,
+    "hash": "6166bc0c3e1ac36b"
   },
   "/plus/js/cards-page.js": {
-    "v": 11,
-    "hash": "92cc5773abe77144"
+    "v": 12,
+    "hash": "800a43116efb97b0"
   },
   "/plus/js/collection-page.js": {
-    "v": 13,
-    "hash": "18df9b0bc612ddf6"
+    "v": 14,
+    "hash": "de5c30d5e8d33f69"
   },
   "/plus/js/collections-page.js": {
-    "v": 13,
-    "hash": "22005144f3f0a5f8"
+    "v": 14,
+    "hash": "e3c8ac6bae35ede9"
   },
   "/plus/js/dashboard-page.js": {
-    "v": 23,
-    "hash": "cfbd54066cfe4dff"
+    "v": 24,
+    "hash": "23031d1a2269476a"
   },
   "/plus/js/highlights-page.js": {
-    "v": 12,
-    "hash": "d81192e4c33e1683"
+    "v": 13,
+    "hash": "d9c64b85f636b085"
   },
   "/plus/js/pathway-page.js": {
-    "v": 14,
-    "hash": "2d98af1311f2afef"
+    "v": 15,
+    "hash": "5e6cd6d879be1648"
   },
   "/plus/js/pathways-page.js": {
-    "v": 14,
-    "hash": "72bfa395085f3bf2"
+    "v": 15,
+    "hash": "901c5a7eb045cfd7"
   },
   "/plus/js/pay-result-page.js": {
-    "v": 9,
-    "hash": "b9e2110fe1fef56d"
+    "v": 10,
+    "hash": "9b4d16a555c71222"
   },
   "/plus/js/pricing-page.js": {
-    "v": 17,
-    "hash": "f65fb097245c6612"
+    "v": 18,
+    "hash": "ba76db9e04c46553"
   },
   "/plus/js/profile-page.js": {
-    "v": 20,
-    "hash": "acaf9ca278c15b5d"
+    "v": 21,
+    "hash": "4dd9d3d8c51f2c17"
   },
   "/plus/js/reading-compass-page.js": {
-    "v": 12,
-    "hash": "d108f3f3cc7366d1"
+    "v": 13,
+    "hash": "b67532248fe46ea7"
   },
   "/plus/plus-desktop.css": {
     "v": 7,
     "hash": "fb9348a5cf72e5f3"
   },
   "/plus/plus-pages.css": {
-    "v": 12,
-    "hash": "a78727d9937039b8"
+    "v": 13,
+    "hash": "6b87976352a6f98c"
   },
   "/plus/plus.css": {
-    "v": 15,
-    "hash": "f859d267eb724572"
+    "v": 16,
+    "hash": "07f743babe8adaa4"
   }
 }

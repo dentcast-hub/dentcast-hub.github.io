@@ -25,10 +25,17 @@
      site-wide token. */
   --dcp-gold: #b7791f;
   --dcp-gold-bg: rgba(183, 121, 31, .10);
+  /* Reference-pin accent (Collections «رفرنس» pins) — a second hue beside
+     --dcp-gold so a reference pin reads as its own kind of thing next to a
+     text pin, never confused with it. */
+  --dcp-ref: #6d28d9;
+  --dcp-ref-bg: rgba(109, 40, 217, .07);
 }
 [data-theme="dark"] {
   --dcp-gold: #e2b366;
   --dcp-gold-bg: rgba(226, 179, 102, .12);
+  --dcp-ref: #b79df5;
+  --dcp-ref-bg: rgba(183, 157, 245, .10);
 }
 
 /* Sprite icon reference — assets/icons/icons.svg is the site's single source

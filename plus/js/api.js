@@ -243,6 +243,13 @@ export const api = {
   addToCollection: (id, item) => request('/collections/' + encodeURIComponent(id) + '/items', { method: 'POST', body: item }),
   removeCollectionItem: (id, itemId) =>
     request('/collections/' + encodeURIComponent(id) + '/items/' + encodeURIComponent(itemId), { method: 'DELETE' }),
+  // Collection pins: «متن خودم» / «رفرنس». Creating one pins it to the board in
+  // the same call; editing/deleting a snippet is by its own id (independent of
+  // which board(s) it is pinned to).
+  createSnippet: (collectionId, payload) =>
+    request('/collections/' + encodeURIComponent(collectionId) + '/snippets', { method: 'POST', body: payload }),
+  updateSnippet: (id, patch) => request('/snippets/' + encodeURIComponent(id), { method: 'PATCH', body: patch }),
+  deleteSnippet: (id) => request('/snippets/' + encodeURIComponent(id), { method: 'DELETE' }),
 
   // dashboard (later milestones)
   tree: () => request('/tree'),

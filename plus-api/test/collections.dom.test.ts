@@ -39,6 +39,21 @@ vi.mock('/plus/js/api.js', () => ({
         : board.items.map((i: any) => ({ ...i, position: null }));
       return Promise.resolve({ items });
     },
+    createSnippet: (collectionId: string, payload: any) => {
+      calls.push({ op: 'createSnippet', args: [collectionId, payload] });
+      return Promise.resolve({
+        item: {
+          id: 'new-item', kind: payload.kind, snippet_id: 'new-snippet', highlight_id: null, content_id: null,
+          title: payload.title || null, body: payload.body || null, url: null, position: null,
+          created_at: '2026-08-05T10:00:00Z',
+        },
+      });
+    },
+    updateSnippet: (id: string, patch: any) => {
+      calls.push({ op: 'updateSnippet', args: [id, patch] });
+      return Promise.resolve({ snippet: { id, ...patch } });
+    },
+    deleteSnippet: (id: string) => { calls.push({ op: 'deleteSnippet', args: [id] }); return Promise.resolve({ ok: true }); },
   },
   currentUser: () => Promise.resolve({ tier: 'premium' }),
 }));
@@ -56,6 +71,11 @@ const pageItem = (over: any = {}) => ({
   title: 'اپیزود ۴۰', url: '/episodes/episode-40.html', type: 'episodes',
   exact: null, note: null, label: null, color: null, underline: false,
   created_at: '2026-08-03T10:00:00Z', ...over,
+});
+const noteItem = (over: any = {}) => ({
+  id: 'i3', kind: 'text', highlight_id: null, content_id: null, snippet_id: 'sn-1',
+  title: 'جمع‌بندی مقدمه', body: 'سه نسل آخر ادهیزیوها عملاً به یک نقطه رسیده‌اند.', url: null,
+  created_at: '2026-08-02T10:00:00Z', ...over,
 });
 
 const actNamed = (fa: string, root: ParentNode = document) => [...root.querySelectorAll('.dcp-hlib-act')]
@@ -195,6 +215,118 @@ describe('one collection board', () => {
 
     expect(calls.find((c) => c.op === 'remove')!.args).toEqual(['c1', 'i1']);
     expect(document.querySelectorAll('.dcp-cl-pin')).toHaveLength(1);
+  });
+});
+
+// «متن خودم» — a board can originate its own text pin, not only save one from
+// an article. The chooser sheet, the composer, and the resulting card.
+describe('text pins («متن خودم»)', () => {
+  beforeEach(() => {
+    document.body.innerHTML = '<div id="root"></div>';
+    calls.length = 0;
+    collections = [
+      { id: 'c1', title: 'امتحان بورد', item_count: 1, created_at: '2026-07-01T10:00:00Z', last_item_at: null, preview: [] },
+      { id: 'c2', title: 'کیس خانم ر.', item_count: 0, created_at: '2026-06-01T10:00:00Z', last_item_at: null, preview: [] },
+    ];
+    board = { id: 'c1', title: 'امتحان بورد', created_at: '2026-07-01T10:00:00Z', items: [noteItem()] };
+  });
+
+  it('«افزودن پین» opens a chooser with a متن خودم option and a disabled هایلایت row', async () => {
+    await renderCollectionDetail(document.getElementById('root')!, 'c1');
+    ([...document.querySelectorAll('button')].find((b) => b.textContent!.includes('افزودن پین')) as HTMLElement).click();
+
+    const opts = [...document.querySelectorAll('.dcp-cl-addopt')];
+    expect(opts).toHaveLength(2);
+    expect(opts[0].textContent).toContain('متن خودم');
+    expect(opts[1].textContent).toContain('هایلایت');
+    expect((opts[1] as HTMLButtonElement).disabled, 'highlight stays the existing in-article flow').toBe(true);
+  });
+
+  it('the composer posts a text snippet and prepends its card', async () => {
+    await renderCollectionDetail(document.getElementById('root')!, 'c1');
+    ([...document.querySelectorAll('button')].find((b) => b.textContent!.includes('افزودن پین')) as HTMLElement).click();
+    ([...document.querySelectorAll('.dcp-cl-addopt')][0] as HTMLElement).click();
+
+    const inputs = [...document.querySelectorAll('input.dcp-input')] as HTMLInputElement[];
+    const title = inputs.find((i) => (i.placeholder || '').includes('نکته‌ی بحث پایانی'))!;
+    const body = document.querySelector('.dcp-hlib-ta') as HTMLTextAreaElement;
+    title.value = 'عنوان تست';
+    body.value = 'متن تازه‌ی پین‌شده';
+    ([...document.querySelectorAll('button')].find((b) => b.textContent === 'پین کن') as HTMLElement).click();
+    await new Promise((r) => setTimeout(r, 0));
+
+    const created = calls.find((c) => c.op === 'createSnippet')!;
+    expect(created.args).toEqual(['c1', { kind: 'text', title: 'عنوان تست', body: 'متن تازه‌ی پین‌شده' }]);
+
+    const cards = [...document.querySelectorAll('.dcp-cl-pin')];
+    expect(cards).toHaveLength(2);
+    expect(cards[0].textContent).toContain('متن تازه‌ی پین‌شده');
+  });
+
+  it('refuses an empty body without calling the API', async () => {
+    await renderCollectionDetail(document.getElementById('root')!, 'c1');
+    ([...document.querySelectorAll('button')].find((b) => b.textContent!.includes('افزودن پین')) as HTMLElement).click();
+    ([...document.querySelectorAll('.dcp-cl-addopt')][0] as HTMLElement).click();
+    ([...document.querySelectorAll('button')].find((b) => b.textContent === 'پین کن') as HTMLElement).click();
+    await new Promise((r) => setTimeout(r, 0));
+    expect(calls.find((c) => c.op === 'createSnippet')).toBeUndefined();
+  });
+
+  it('renders a text pin as its own card: kind chip, title, body — and no متنِ مقاله link', async () => {
+    await renderCollectionDetail(document.getElementById('root')!, 'c1');
+    const pin = document.querySelector('.dcp-cl-pin') as HTMLElement;
+    expect(pin.classList.contains('dcp-cl-pin-note')).toBe(true);
+    expect(pin.querySelector('.dcp-cl-pin-kind-text')!.textContent).toContain('متن خودم');
+    expect(pin.textContent).toContain('جمع‌بندی مقدمه');
+    expect(pin.textContent).toContain('سه نسل آخر ادهیزیوها');
+    expect(actNamed('متنِ مقاله', pin), 'a text pin has no article to link to').toBeUndefined();
+  });
+
+  it('edits a text pin in place via PATCH /snippets/:id', async () => {
+    await renderCollectionDetail(document.getElementById('root')!, 'c1');
+    const pin = document.querySelector('.dcp-cl-pin') as HTMLElement;
+    actNamed('ویرایش', pin).click();
+
+    const inputs = [...pin.querySelectorAll('.dcp-input')] as HTMLInputElement[];
+    inputs[0].value = 'عنوانِ تازه';
+    (pin.querySelector('.dcp-hlib-ta') as HTMLTextAreaElement).value = 'متنِ تازه';
+    ([...pin.querySelectorAll('button')].find((b) => b.textContent === 'ذخیره') as HTMLElement).click();
+    await new Promise((r) => setTimeout(r, 0));
+
+    const patch = calls.find((c) => c.op === 'updateSnippet')!;
+    expect(patch.args).toEqual(['sn-1', { title: 'عنوانِ تازه', body: 'متنِ تازه' }]);
+    expect(pin.textContent).toContain('متنِ تازه');
+  });
+
+  it('moves a text pin to another board by snippet_id, not highlight/content id', async () => {
+    await renderCollectionDetail(document.getElementById('root')!, 'c1');
+    const pin = document.querySelector('.dcp-cl-pin') as HTMLElement;
+    actNamed('انتقال', pin).click();
+    await new Promise((r) => setTimeout(r, 0));
+    (document.querySelector('.dcp-cl-pick-row') as HTMLElement).click();
+    await new Promise((r) => setTimeout(r, 0));
+
+    expect(calls.map((c) => c.op)).toEqual(['add', 'remove']);
+    expect(calls[0].args).toEqual(['c2', { snippet_id: 'sn-1' }]);
+  });
+
+  it('removing a text pin uses the same DELETE .../items/:itemId as any other pin', async () => {
+    await renderCollectionDetail(document.getElementById('root')!, 'c1');
+    const pin = document.querySelector('.dcp-cl-pin') as HTMLElement;
+    actNamed('حذف', pin).click();
+    ([...pin.querySelectorAll('button')].find((b) => b.textContent === 'حذف' && b.classList.contains('dcp-btn-danger')) as HTMLElement).click();
+    await new Promise((r) => setTimeout(r, 0));
+    expect(calls.find((c) => c.op === 'remove')!.args).toEqual(['c1', 'i3']);
+  });
+
+  it('the «متن من» filter chip narrows the board to text pins', async () => {
+    board = { ...board, items: [noteItem(), hlItem(), pageItem()] };
+    await renderCollectionDetail(document.getElementById('root')!, 'c1');
+    const chip = [...document.querySelectorAll('.dcp-hlib-chip')].find((c) => (c.textContent || '').startsWith('متن من')) as HTMLElement;
+    expect(chip.textContent).toContain('۱');
+    chip.click();
+    expect(document.querySelectorAll('.dcp-cl-pin')).toHaveLength(1);
+    expect(document.querySelector('.dcp-cl-pin')!.classList.contains('dcp-cl-pin-note')).toBe(true);
   });
 });
 
