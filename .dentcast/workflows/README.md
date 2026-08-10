@@ -321,6 +321,36 @@ If the category has no on-disk page (data-only), skip this and go to step 4.
 
 **Google Analytics tag (every page).** The deferred GA4 snippet (measurement ID `G-GMM0WC8X3M`) must be present in the new page's `<head>`. Because you cloned the previous same-category page — which already carries it — it should come across automatically; **verify it survived the clone and appears exactly once**. If it's missing (e.g. an older template), run `python3 .github/scripts/inject_ga.py` to backfill it (idempotent — it skips pages that already have it). It is the lazy-loaded pattern (loads `gtag.js` only on the `load` event) — never swap in Google's default async snippet. The `.org`/`.ir` mirrors share this tag; no per-domain logic. If you ever introduce a Content-Security-Policy, it must allow `script-src https://www.googletagmanager.com` and `connect-src https://*.google-analytics.com https://*.analytics.google.com`.
 
+**API preconnect (every page).** The new page's `<head>` must open with the two
+preconnect links — `<link rel="preconnect" href="https://api.dentcast.ir" crossorigin>`
+and the same for `https://api.dentcast.org` — at the very top, before anything
+else. Like GA4 this rides in on the clone, so **verify it survived and appears
+exactly once per host**; if it's missing (older template), backfill with
+`python3 .github/scripts/inject_preconnect.py` (idempotent; `--check` fails on
+any page missing it). Three things that are not optional and are easy to
+"clean up" by mistake: **`crossorigin` is required** — the API is called with
+credentials and a connection opened anonymously is not reused for a
+credentialed CORS request, so dropping the attribute silently undoes the whole
+thing; **both hosts are listed on every page on purpose** (the `.org`/`.ir`
+codebases are mirrors and per-domain logic is forbidden — the unused socket is
+idle and the browser drops it); and this is a **paid-sponsor correctness**
+matter, not a micro-optimisation — the Spot card cannot render until `/me`
+answers, so without preconnect the cold DNS+TLS handshake sits directly in
+front of the sponsor's impression (measured 2.7–3.0s to first card vs.
+70–170ms warm).
+
+**E-NAMAD seal — never clone it onto a content page.** The trust seal
+(نماد اعتماد الکترونیکی) lives on exactly three surfaces (`index.html`'s footer,
+`index.html`'s col-A sidebar row, `about.html`'s contact box) and is **not** a
+per-page element. If a template or an edit ever drags `.dc-trustseal` markup
+onto a content page, remove it — every copy is a request to enamad's server for
+zero trust value on an article page. It is also **the one deliberate exception
+to "no per-domain logic"** (the seal is issued for `dentcast.ir` and renders as
+*invalid* off the `.org` mirror, which is why the `dc-no-seal` guard and the
+`dc-nav.js` removal block exist): never "fix" that guard, and never rewrite the
+`referrerpolicy`/`id`/`Code`/`code` attributes enamad verifies. Details in
+`AGENTS.md` §۸.
+
 **Opening paragraph before any list (body-structure requirement).** The body must
 open with at least one real `<p>` of prose **before** the first `<ul>`/`<ol>`. This is
 not a style preference — it is load-bearing for ad placement. The in-article Spot card
@@ -1170,12 +1200,24 @@ new content's actual subject against what a learner of each pathway needs.
    user deliberately left it out — a meta/equipment/orphan piece — state that
    explicitly, never silently). Report every pathway it joined and where.
 
-**Scope / non-effects.** This step edits **only** `plus/pathways.json`. Pathways
-are still **inert** (no page or builder reads them yet), so there is **no**
-rebuild, no version bump, and no user-visible change from this step — it purely
-keeps the pathway data correct as content grows, ready for activation. It does
-**not** touch the brain, the page, capsules, or links (those are steps 4.7–4.9
-and 5). Do not add pathway data to the brain entry (Hard Rule 6).
+**Scope / non-effects.** This step edits **only** `plus/pathways.json` — no
+builder, no rebuild, no version bump. It does **not** touch the brain, the page,
+capsules, or links (those are steps 4.7–4.9 and 5). Do not add pathway data to
+the brain entry (Hard Rule 6).
+
+**Pathways are LIVE — this edit is user-visible, it is not staging.** (The
+"pathways are inert, nothing reads them yet" note that used to sit here was
+true only before the premium Phase 3 launch; it is not true now.) `/plus/pathways.html`,
+`/plus/pathway.html?id=`, and the «مسیر یادگیری» block on the `/plus/` dashboard
+all render this file, and `GET /me`'s `active_pathway` reads through it. It
+still needs **no API redeploy** — `plus-api/src/content-refresh.ts` re-fetches
+the published `plus/pathways.json` from the live site every few minutes
+(validated, upgrade-only, last-good-copy on failure), so the baked copy is only
+a boot value. Two practical consequences: a wrong placement is visible to real
+subscribers rather than parked for later, so the **«اگر شک داشتی سوال کن»**
+guard above is about live UI, not about data hygiene; and the file must be
+valid JSON at commit time (`python3 -m json.tool plus/pathways.json > /dev/null`),
+because a broken publish is what the API's last-good fallback would be holding.
 
 ### 5.6-ب. Bundle check (runs after every full-pathway placement)
 
