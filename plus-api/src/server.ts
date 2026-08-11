@@ -8,6 +8,7 @@ import { leagueRoutes } from './routes/league.js';
 import { leagueAdminRoutes } from './routes/league-admin.js';
 import { anonRoutes } from './routes/anon.js';
 import { activityRoutes } from './routes/activity.js';
+import { playerRoutes } from './routes/player.js';
 import { highlightRoutes } from './routes/highlights.js';
 import { articleNoteRoutes } from './routes/article-note.js';
 import { reviewRoutes } from './routes/review.js';
@@ -97,6 +98,7 @@ export async function buildServer(): Promise<FastifyInstance> {
   await app.register(adminRoutes);
   await app.register(pushRoutes);
   await app.register(payRoutes);
+  await app.register(playerRoutes);
 
   return app;
 }

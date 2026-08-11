@@ -783,6 +783,53 @@ const RESUME_KEY = "dc-resume-state";
 let lastResumeSave = 0;   /* برای throttle کردن نوشتن روی localStorage */
 let restoring = false;    /* جلوگیری از بازنویسی رکورد ذخیره‌شده در حین خودِ بازیابی */
 
+/* ── ادامهٔ پخش روی حساب (فقط برای کاربر واردشده) ─────────────────────────
+   مهمان: همان localStorage همیشگی، صفر تماس شبکه. واردشده: همان رکورد،
+   موازی روی حساب هم ذخیره می‌شود (PUT /player/state) و در mount تازه از
+   سرور خوانده می‌شود — پس از هر دستگاهی که پلیر باز شود، از همان‌جا ادامه
+   می‌دهد. تشخیص ورود از نشانهٔ dcp:signed-in است (همان که plus.js می‌نویسد):
+   همگام، بدون درخواست، و روی خطای شبکه حالت قبلی را نگه می‌دارد. رکورد
+   محلی همیشه نوشته می‌شود (آفلاین/فالبک)؛ در mount، تازه‌ترِ محلی/سروری
+   برنده است تا دستگاه آفلاین با ردیف کهنهٔ سرور له نشود. */
+const DC_API_BASE = (location.hostname.indexOf('dentcast.org') !== -1)
+  ? 'https://api.dentcast.org' : 'https://api.dentcast.ir';
+function dcSignedIn(){
+  try { return localStorage.getItem('dcp:signed-in') === '1'; } catch (e) { return false; }
+}
+let lastServerSave = 0;
+function pushServerState(force){
+  if (!dcSignedIn() || currentEpisodeNum == null) return;
+  const now = Date.now();
+  if (!force && now - lastServerSave < 15000) return;   /* موج PUT ممنوع */
+  lastServerSave = now;
+  try {
+    fetch(DC_API_BASE + '/player/state', {
+      method: 'PUT',
+      credentials: 'include',
+      keepalive: !!force,   /* روی pause/hidden حتی وسط ترک صفحه هم برسد */
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        episode:  currentEpisodeNum,
+        position: audio.currentTime || 0,
+        anchor:   anchorEpisode == null ? null : Number(anchorEpisode),
+        speed:    speeds[speedIndex]
+      })
+    }).catch(function(){ /* بی‌صدا — رکورد محلی به‌هرحال هست */ });
+  } catch (e) { /* بی‌صدا */ }
+}
+function fetchServerState(){
+  if (!dcSignedIn()) return Promise.resolve(null);
+  const ctrl = ('AbortController' in window) ? new AbortController() : null;
+  const timer = setTimeout(function(){ if (ctrl) ctrl.abort(); }, 2500);
+  return fetch(DC_API_BASE + '/player/state', {
+    credentials: 'include',
+    signal: ctrl ? ctrl.signal : undefined
+  })
+    .then(function(r){ return r.ok ? r.json() : null; })
+    .then(function(j){ clearTimeout(timer); return j && j.state ? j.state : null; })
+    .catch(function(){ clearTimeout(timer); return null; });
+}
+
 function saveResumeState(){
   if (currentEpisodeNum == null) return;
   try {
@@ -792,10 +839,13 @@ function saveResumeState(){
       anchor:   anchorEpisode,
       /* مقدارِ سرعت ذخیره می‌شود نه اندیسش: اگر روزی آرایهٔ speeds عوض شود،
          اندیسِ ذخیره‌شده بی‌صدا به سرعتِ دیگری اشاره می‌کند. */
-      speed:    speeds[speedIndex]
+      speed:    speeds[speedIndex],
+      /* مهر زمان برای داوریِ محلی/سرور در mount؛ رکوردهای قدیمی بدونش = 0 */
+      t:        Date.now()
     }));
   } catch (e) { /* localStorage پر/غیرفعال — بی‌صدا رد شو */ }
   lastResumeSave = Date.now();
+  pushServerState(false);   /* واردشده: همان رکورد، throttle‌شده، روی حساب */
 }
 
 /* بازیابی فقط در mount تازه؛ اگر رکورد معتبر بود true برمی‌گرداند. */
@@ -1100,8 +1150,16 @@ audio.addEventListener("timeupdate", ()=>{
   if (Date.now() - lastResumeSave >= 5000) saveResumeState();
 });
 
-/* روی pause فوراً ذخیره کن (ارزان و کم‌تکرار) */
+/* روی pause فوراً ذخیره کن (ارزان و کم‌تکرار) — و برای واردشده، فوراً روی حساب */
 audio.addEventListener("pause", saveResumeState);
+audio.addEventListener("pause", function(){ pushServerState(true); });
+/* ترک/مخفی‌شدن صفحه: آخرین موقعیت با keepalive به حساب برسد */
+document.addEventListener("visibilitychange", function(){
+  if (document.visibilityState === "hidden" && currentEpisodeNum != null){
+    saveResumeState();
+    pushServerState(true);
+  }
+});
 
 /* اکولایزر کاشیِ ردیف در حال پخش فقط وقتی صدا واقعاً پخش می‌شود حرکت کند */
 audio.addEventListener("play",  () => listEl.classList.remove("dc-paused"));
@@ -1162,12 +1220,37 @@ fetch(JSON_URL)
   episodesRaw = data;
   epCountEl.textContent = faNum(episodesRaw.length) + " اپیزود";
   applySorting();
-  /* فقط در mount تازه: اگر رکورد resume معتبر بود همان را بارگذاری کن (paused)،
-     وگرنه به اپیزود پیش‌فرض برگرد. */
-  if (!restoreResumeState()) {
-    loadEpisode(0);
-    anchorEpisode = episodes[0] ? episodes[0].episode : null;   /* لنگر اولیه = اپیزود پیش‌فرض */
-  }
+  /* فقط در mount تازه. برای واردشده اول رکورد حساب را می‌گیریم (تایم‌اوت ۲.۵ث،
+     شکست = بی‌صدا محلی)؛ تازه‌ترِ سرور/محلی داخل همان RESUME_KEY مادی می‌شود و
+     مسیر بازیابیِ همیشگی بدون تغییر اجرا می‌شود. مهمان: fetchServerState فوراً
+     null برمی‌گرداند و رفتار، بیت‌به‌بیت رفتار قبلی است. */
+  fetchServerState().then(function(srv){
+    if (srv && srv.episode != null){
+      let local = null;
+      try { local = JSON.parse(localStorage.getItem(RESUME_KEY)); } catch (e) { local = null; }
+      const localT = local && local.t ? Number(local.t) || 0 : 0;
+      const srvT   = srv.updated_at ? (Date.parse(srv.updated_at) || 0) : 0;
+      if (srvT >= localT){
+        try {
+          localStorage.setItem(RESUME_KEY, JSON.stringify({
+            episode:  srv.episode,
+            position: Number(srv.position) || 0,
+            anchor:   srv.anchor,
+            speed:    srv.speed == null ? undefined : Number(srv.speed),
+            t:        srvT
+          }));
+        } catch (e) { /* بی‌صدا */ }
+        /* سرعتِ حساب (IIFEی سرعت قبل از این fetch از رکورد محلی خوانده بود) */
+        const si = srv.speed == null ? -1 : speeds.indexOf(Number(srv.speed));
+        if (si !== -1) applySpeed(si);
+      }
+    }
+    /* اگر رکورد resume معتبر بود همان را بارگذاری کن (paused)، وگرنه پیش‌فرض. */
+    if (!restoreResumeState()) {
+      loadEpisode(0);
+      anchorEpisode = episodes[0] ? episodes[0].episode : null;   /* لنگر اولیه = اپیزود پیش‌فرض */
+    }
+  });
 });
 
 fetch(BRAIN_URL)
