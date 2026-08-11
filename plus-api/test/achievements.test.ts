@@ -104,8 +104,14 @@ describe('the catalog and the service cannot drift apart', () => {
   it('names only metrics the service computes', () => {
     const catalog = getBadgeCatalog();
     expect(catalog.badges.length).toBeGreaterThan(0);
+    // The granted class registers itself by convention: a metric of
+    // `grant:<the badge's own key>` is computed generically from badge_grants
+    // rows (services/achievements.ts folds each row in), so it is "computed"
+    // exactly when the key matches — `grant:companion` on a badge whose key is
+    // anything else would silently never light, which is what this catches.
+    const computed = (b: Badge) => COMPUTED.has(b.metric) || b.metric === `grant:${b.key}`;
     const unknown = catalog.badges
-      .filter((b) => !COMPUTED.has(b.metric))
+      .filter((b) => !computed(b))
       .map((b) => `${b.key}:${b.metric}`);
     expect(unknown).toEqual([]);
     const unknownLevels = catalog.badges.flatMap((b) => (b.levels ?? [])

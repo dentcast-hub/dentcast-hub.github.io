@@ -70,6 +70,12 @@ const ICONS = {
   // «سلطان». The one badge that is above the metal ladder rather than on it, so
   // it is drawn as the one object nothing else here could be mistaken for.
   crown: '<path d="M3.6 8.2 7.3 11 12 4.8 16.7 11l3.7-2.8-1.7 9.6H5.3z"/><path d="M5.3 20.6h13.4"/>',
+  // A puzzle piece — «همراه», the founder-granted badge. The story is "you
+  // filled a gap we could not see", and a puzzle piece says that in one shape.
+  // The two obvious alternatives failed at the 25px the wall draws these: a
+  // handshake collapses into a knot, and a heart reads as a like button, not a
+  // thank-you. One path, two knobs (top and side) — a third knob turned to mush.
+  companion: '<path d="M5 5.5h4.2a2 2 0 1 1 4 0h4.3v4.2a2 2 0 1 1 0 4v4.4H5z"/>',
 };
 
 const METAL_PIP = { bronze: 'b', silver: 's', gold: 'g' };
