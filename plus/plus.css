@@ -254,28 +254,60 @@ html.dcp-pp-open, html.dcp-pp-open body { overflow: hidden; }
 }
 [data-theme="dark"] .dcp-person-pill { background: #ff6f61; color: #17212b; }
 
-/* ---- homepage personal card ---------------------------------------------- */
+/* ---- homepage personal card (variant-1 redesign, 2026-08-11) --------------
+   Flat, Examine-language card: full-bleed rows separated by hairlines —
+   stat strip / league row / continue row / tinted channels bar. */
 .dc-plus-home-card { margin: 0 0 14px; }
 .dc-plus-home-inner {
-  display: flex; flex-direction: column; align-items: stretch; gap: 10px;
-  padding: 14px 16px; border: 1px solid var(--dcp-line); border-radius: var(--dcp-radius);
-  background: var(--dcp-surface);
+  display: flex; flex-direction: column; align-items: stretch; gap: 0;
+  padding: 0; border: 1px solid var(--dcp-line); border-radius: var(--dcp-radius);
+  background: var(--dcp-surface); overflow: hidden;
 }
-/* row 1: glanceable stat rail with hairline dividers + a small ؟ info */
-.dc-plus-statrail { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; }
-.dc-plus-div { width: 1px; align-self: stretch; min-height: 20px; background: var(--dcp-line); }
-.dc-plus-info { width: 20px; height: 20px; border-radius: 50%; border: 1px solid var(--dcp-line);
+/* row 1: three equal stat columns, hairline-divided */
+.dc-plus-statrail { display: flex; align-items: stretch; padding: 13px 6px 11px; }
+.dc-plus-stat {
+  flex: 1; min-width: 0; position: relative;
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  color: inherit; text-decoration: none;
+}
+.dc-plus-stat + .dc-plus-stat::after {
+  content: ""; position: absolute; inset-inline-start: 0; top: 50%;
+  transform: translateY(-50%); width: 1px; height: 58%; background: var(--dcp-line);
+}
+.dc-plus-stat-v {
+  display: flex; align-items: center; gap: 5px;
+  font-size: 1.08rem; font-weight: 800; font-variant-numeric: tabular-nums;
+  line-height: 1.4;
+}
+.dc-plus-stat-v svg { width: 15px; height: 15px; display: block; }
+.dc-plus-stat-k { font-size: .68rem; color: var(--dcp-muted); font-weight: 600; }
+/* row 2: league on its own hairline row, «؟» at the far end */
+.dc-plus-leaguerow {
+  display: flex; align-items: center; gap: 8px;
+  border-top: 1px solid var(--dcp-line); padding: 9px 14px;
+}
+.dc-plus-leaguerow .dcp-lg-chip {
+  background: none; border: none; box-shadow: none; padding: 0;
+  font-size: .84rem; gap: 7px; cursor: pointer;
+}
+.dc-plus-info { width: 22px; height: 22px; border-radius: 50%; border: 1px solid var(--dcp-line);
   background: transparent; color: var(--dcp-muted); font-weight: 700; font-size: .78rem; line-height: 1;
   cursor: pointer; margin-inline-start: auto; flex: 0 0 auto; }
 .dc-plus-info:hover { color: var(--dcp-ink); border-color: var(--dcp-muted); }
-.dc-plus-scorecap { margin: 0; font-size: .82rem; color: var(--dcp-muted); line-height: 1.8; }
+.dc-plus-scorecap { margin: 0; font-size: .82rem; color: var(--dcp-muted); line-height: 1.8;
+  padding: 8px 14px 10px; border-top: 1px solid var(--dcp-line); }
 /* one caption line per topic (score, then سپر) — a paragraph each, not a wall */
 .dc-plus-capline { display: block; }
 .dc-plus-capline + .dc-plus-capline { margin-top: 5px; }
-/* row 3: connection chips demoted under a divider */
-.dc-plus-connrow { border-top: 1px solid var(--dcp-line); padding-top: 10px; }
-.dc-plus-connrow .dc-plus-chips { margin-top: 0; }
-.dc-plus-connrow .dc-plus-chip { font-size: .8rem; }
+/* row 4: channels on a tinted bottom bar with a quiet label */
+.dc-plus-connrow {
+  display: flex; align-items: center; gap: 8px;
+  border-top: 1px solid var(--dcp-line); background: var(--dcp-chip-bg);
+  padding: 8px 14px;
+}
+.dc-plus-conn-lbl { font-size: .72rem; color: var(--dcp-muted); font-weight: 600; flex: 0 0 auto; }
+.dc-plus-connrow .dc-plus-chips { margin-top: 0; flex: 1 1 auto; gap: 6px; }
+.dc-plus-connrow .dc-plus-chip { font-size: .74rem; padding: 2px 10px; background: var(--dcp-surface); }
 .dc-plus-anon { justify-content: space-between; }
 .dc-plus-anon-line { margin: 0; line-height: 1.9; flex: 1 1 240px; }
 /* ---- signed-out promo card (login teaser, "variant B") ------------------- */
@@ -342,13 +374,28 @@ html.dcp-pp-open, html.dcp-pp-open body { overflow: hidden; }
   .dc-plus-promo-bottom { align-items: stretch; }
   .dcp-btn.dc-plus-cta { width: 100%; justify-content: center; }
 }
-.dc-plus-streak { display: inline-flex; align-items: center; gap: 6px; text-decoration: none; color: inherit; font-weight: 700; }
-.dc-plus-flame { filter: grayscale(1); opacity: .5; }
-.dc-plus-flame.is-active { filter: none; opacity: 1; }
-.dc-plus-streak-n { font-size: 1.2rem; }
-.dc-plus-streak-lbl { font-weight: 400; opacity: .8; font-size: .9rem; }
-.dc-plus-material { color: var(--dcp-accent); text-decoration: none; font-weight: 600; }
-.dc-plus-material-lead { opacity: .75; font-weight: 400; }
+/* flame follows currentColor now (line icon): muted when cold, ember when lit */
+.dc-plus-flame { display: inline-flex; color: var(--dcp-muted); opacity: .55; }
+.dc-plus-flame.is-active { color: #c2410c; opacity: 1; }
+[data-theme="dark"] .dc-plus-flame.is-active { color: #fb923c; }
+.dc-plus-streak-n { font-size: inherit; }
+/* continue row: label over a one-line title, chevron at the end */
+.dc-plus-material {
+  display: flex; align-items: center; gap: 10px;
+  border-top: 1px solid var(--dcp-line); padding: 11px 14px;
+  color: inherit; text-decoration: none;
+}
+.dc-plus-material-txt { flex: 1; min-width: 0; }
+.dc-plus-material-lead {
+  display: block; font-size: .68rem; font-weight: 800;
+  color: var(--dcp-accent); letter-spacing: .2px; opacity: 1;
+}
+.dc-plus-material-title {
+  display: block; font-size: .9rem; font-weight: 700; line-height: 1.8;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.dc-plus-material-chev { display: inline-flex; color: var(--dcp-muted); flex: 0 0 auto; }
+.dc-plus-material-chev svg { width: 15px; height: 15px; display: block; }
 .dc-plus-due { color: var(--dcp-accent); font-weight: 700; text-decoration: none; }
 .dc-plus-premium-line { margin-inline-start: auto; color: inherit; opacity: .6; font-size: .88rem; text-decoration: none; }
 /* «قطب‌نمای مطالعه» homepage entry (home-card.js) — same shape as دc-plus-due,
@@ -358,19 +405,15 @@ html.dcp-pp-open, html.dcp-pp-open body { overflow: hidden; }
 .dc-plus-compass.is-locked { color: inherit; opacity: .8; font-weight: 600; }
 
 /* score badge (inline beside the streak) */
-.dc-plus-score { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; }
-.dc-plus-score-n { font-size: 1.2rem; }
-.dc-plus-score-lbl { font-weight: 400; opacity: .8; font-size: .9rem; }
+.dc-plus-score-ico { display: inline-flex; color: var(--dcp-muted); }
+.dc-plus-score-n { font-size: inherit; }
 
 /* streak shields (سپر) — identical typography to the streak/score badges beside
    it (same color, weight and label opacity); only the ICONS carry the
    filled/empty state, never the text, so the rail reads as one row. */
-.dc-plus-shield { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; color: inherit; }
-.dc-plus-shield-icos { display: inline-flex; gap: 2px; }
-.dc-plus-shield-ico { font-size: 1.05rem; line-height: 1; }
-.dc-plus-shield-ico.is-empty { filter: grayscale(1); opacity: .3; }
-.dc-plus-shield-n { font-size: 1.2rem; }
-.dc-plus-shield-lbl { font-weight: 400; opacity: .8; font-size: .9rem; }
+.dc-plus-shield-icos { display: inline-flex; color: var(--dcp-muted); }
+.dc-plus-shield-icos.is-empty { opacity: .35; }
+.dc-plus-shield-n { font-size: inherit; }
 
 /* ---- homepage premium section (home-features.js) ------------------------- */
 /* Sits under the Spot card, in the homepage's OWN card grammar. The list-card
