@@ -1,10 +1,35 @@
 {
-  "version": 1,
-  "note": "SHA-256 of each hand-maintained instruction file as of the last time they were declared reconciled. These files are written independently — nothing generates one from another — so this records a human judgement, not a build output. The keys below ARE the tracked list. Checked by scripts/check-workflow-sync.mjs (wired into .githooks/pre-commit); update with: node scripts/check-workflow-sync.mjs --ack",
-  "acknowledged_at": "2026-08-11T06:41:41.211Z",
-  "files": {
-    "CLAUDE.md": "e04efef8cb89381a4487515b07affadefa5be750e10fcaaad036d52bf64dc316",
-    "AGENTS.md": "294630fc4d03f3ae8a5e79c982d841a61145b98c577bb4db541d7efddaede845",
-    ".cursor/rules/dentcast-router.mdc": "51145d54c0adc7ecfa3e0b698bdb9736c7b44104aa7ea1436254d9ed40a96474"
+  "version": 2,
+  "note": "Two hand-written instruction SIDES that must say the same thing, so that publishing via Cursor matches publishing via Claude. Neither side is generated from the other — this file records a human judgement ('I reviewed both; they agree now'), not a build output. Drift = exactly one side moved. `.dentcast/workflows/*.md` is intentionally absent: it is shared canon both sides read, so editing it implies no Cursor edit. Checked by scripts/check-workflow-sync.mjs (wired into .githooks/pre-commit); update with: node scripts/check-workflow-sync.mjs --ack",
+  "acknowledged_at": "2026-08-11T07:15:39.190Z",
+  "acknowledged_commit": "6a1e5bfcbb35dcbb5a6a98c3fcff19effae6a36d",
+  "sides": {
+    "claude": {
+      "label": "Claude",
+      "patterns": [
+        "CLAUDE.md",
+        "AGENTS.md"
+      ],
+      "files": {
+        "AGENTS.md": "294630fc4d03f3ae8a5e79c982d841a61145b98c577bb4db541d7efddaede845",
+        "CLAUDE.md": "e04efef8cb89381a4487515b07affadefa5be750e10fcaaad036d52bf64dc316"
+      }
+    },
+    "cursor": {
+      "label": "Cursor",
+      "patterns": [
+        ".cursor/rules/*.mdc"
+      ],
+      "files": {
+        ".cursor/rules/dentcast-ads.mdc": "317ab58086e6340f9a2ec764f2d59da0275c8ed7c24fae0327c246a4bfdfca39",
+        ".cursor/rules/dentcast-en-version.mdc": "b3bdd4be0541a9ca3495612fb1cedcf799b730acd483a1cf95bb499844f1f7e3",
+        ".cursor/rules/dentcast-glossary.mdc": "4fcbd8bf51573b026b59ed6f224c34cf3f907d1005d7dd24114522cbb8aca31e",
+        ".cursor/rules/dentcast-operating-protocol.mdc": "3a34b024521349c1aee81ca8b49a221d0ca98efdcd1aadc5506a152c9e7b00ec",
+        ".cursor/rules/dentcast-plus-premium.mdc": "546027cf4900436d904f209d55683718919b7b70d8d18c15e2ee1469006a1510",
+        ".cursor/rules/dentcast-publishing.mdc": "d326f86e68ecfe47d52e48840435e05438a0bd1f0be81d843da76395872528f5",
+        ".cursor/rules/dentcast-router.mdc": "51145d54c0adc7ecfa3e0b698bdb9736c7b44104aa7ea1436254d9ed40a96474",
+        ".cursor/rules/dentcast-spot-report.mdc": "1ef2ce3202581027760b8a021979dea0747e380683b5eb1c2b8ba4624bd2735c"
+      }
+    }
   }
 }

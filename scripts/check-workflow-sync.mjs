@@ -1,16 +1,30 @@
 #!/usr/bin/env node
 /**
- * check-workflow-sync.mjs — drift detector for the hand-maintained instruction files.
+ * check-workflow-sync.mjs — drift detector for the two instruction SIDES.
  *
- * CLAUDE.md, AGENTS.md and .cursor/rules/dentcast-router.mdc are written
- * INDEPENDENTLY — none is generated from another, and that is deliberate. So
- * nothing here can prove they agree; only a human can. What a machine *can*
- * notice is the reliable smell: one of them moved and the others did not.
+ *   claude side  →  CLAUDE.md, AGENTS.md
+ *   cursor side  →  .cursor/rules/*.mdc
  *
- * .workflow-sync.json stores the SHA-256 of each tracked file as of the last
- * time you declared them reconciled. Its `files` keys ARE the tracked list —
- * to start tracking another file, add a key with a null value and run --ack.
- * There is no config file and no dependencies; node stdlib only.
+ * They are written INDEPENDENTLY — neither is generated from the other, and that
+ * stays true. The point is that Cursor must be able to publish at the same
+ * quality as Claude, which only holds while both sides say the same thing.
+ *
+ * `.dentcast/workflows/*.md` is deliberately NOT tracked: it is shared canon that
+ * both sides read (the .mdc files point straight into it), so editing a workflow
+ * implies no Cursor edit. The asymmetry this guards is narrower — Claude Code gets
+ * CLAUDE.md in context on every turn, while Cursor only gets its own rule files.
+ *
+ * A side "moved" if any of its files changed, appeared, or disappeared. Drift is
+ * exactly one side moving. Both moved = a reconciled edit; neither = nothing to do.
+ *
+ * The report exists so you never have to open the files to decide: it names the
+ * changed files, prints the actual diff, and lists concrete tokens (`paths.py`,
+ * «trigger phrases») the edit introduced that the other side has never heard of.
+ *
+ * .workflow-sync.json stores the SHA-256 of every file on each side as of the last
+ * time you declared them reconciled, plus each side's glob patterns — so a new
+ * .mdc file is picked up automatically instead of being silently untracked.
+ * No config framework, no dependencies; node stdlib only.
  *
  * Usage:
  *   node scripts/check-workflow-sync.mjs             check the working tree
@@ -19,28 +33,34 @@
  *   node scripts/check-workflow-sync.mjs --ack --staged
  *
  * Exit codes:
- *   0  no drift (all tracked files changed together, or none changed)
- *   1  drift — some moved, some did not
- *   2  cannot check (missing/unreadable state file, missing tracked file, bad usage)
+ *   0  no drift (both sides moved, or neither did)
+ *   1  drift — exactly one side moved
+ *   2  cannot check (missing/unreadable state file, bad usage)
  */
 
 import { createHash } from 'node:crypto';
-import { readFileSync, writeFileSync } from 'node:fs';
+import { readFileSync, writeFileSync, readdirSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import { dirname, join, resolve } from 'node:path';
+import { dirname, join, resolve, posix } from 'node:path';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const STATE_PATH = join(ROOT, '.workflow-sync.json');
 const STATE_REL = '.workflow-sync.json';
 const SELF_REL = 'scripts/check-workflow-sync.mjs';
 
-// ── output helpers ──────────────────────────────────────────────────────────
-// Declared before any use: fail() is hoisted, but these consts are not.
+/** Most diff lines shown per file — a big edit must not flood a commit hook. */
+const MAX_DIFF_LINES = 24;
+/** Most "the other side never mentions this" tokens listed. */
+const MAX_TOKENS = 12;
+
+// ── output helpers (before any use: fail() is hoisted, these consts are not) ──
 
 const COLOR = process.stderr.isTTY && !process.env.NO_COLOR;
 const bold = (s) => (COLOR ? `\x1b[1m${s}\x1b[0m` : s);
 const yellow = (s) => (COLOR ? `\x1b[33m${s}\x1b[0m` : s);
+const green = (s) => (COLOR ? `\x1b[32m${s}\x1b[0m` : s);
+const red = (s) => (COLOR ? `\x1b[31m${s}\x1b[0m` : s);
 const dim = (s) => (COLOR ? `\x1b[2m${s}\x1b[0m` : s);
 
 function fail(msg) {
@@ -50,29 +70,106 @@ function fail(msg) {
 
 // ── argv ────────────────────────────────────────────────────────────────────
 
-const argv = process.argv.slice(2);
-const flags = new Set(argv);
+const flags = new Set(process.argv.slice(2));
 const ACK = flags.delete('--ack');
 const STAGED = flags.delete('--staged');
 const HELP = flags.delete('--help') || flags.delete('-h');
-
-if (HELP) {
-  process.stdout.write(usage());
-  process.exit(0);
-}
-if (flags.size) {
-  fail(`unknown argument(s): ${[...flags].join(', ')}\n\n${usage()}`);
-}
 
 function usage() {
   return [
     'Usage:',
     `  node ${SELF_REL}                 check the working tree`,
     `  node ${SELF_REL} --staged        check staged content (pre-commit)`,
-    `  node ${SELF_REL} --ack           record current hashes as reconciled`,
-    `  node ${SELF_REL} --ack --staged  record staged hashes as reconciled`,
+    `  node ${SELF_REL} --ack           record both sides as reconciled`,
+    `  node ${SELF_REL} --ack --staged  record staged content as reconciled`,
     '',
   ].join('\n');
+}
+
+if (HELP) {
+  process.stdout.write(usage());
+  process.exit(0);
+}
+if (flags.size) fail(`unknown argument(s): ${[...flags].join(', ')}\n\n${usage()}`);
+
+// ── git + fs helpers ────────────────────────────────────────────────────────
+
+const sha256 = (buf) => createHash('sha256').update(buf).digest('hex');
+
+function git(args, { allowFail = false } = {}) {
+  try {
+    return execFileSync('git', ['-C', ROOT, ...args], {
+      maxBuffer: 64 * 1024 * 1024,
+      encoding: 'utf8',
+      stdio: ['ignore', 'pipe', 'ignore'],
+    });
+  } catch (err) {
+    if (allowFail) return null;
+    throw err;
+  }
+}
+
+/** Exact bytes that would enter the commit (--staged) or sit on disk (default). */
+function readTracked(rel) {
+  if (STAGED) {
+    return execFileSync('git', ['-C', ROOT, 'show', `:${rel}`], {
+      maxBuffer: 64 * 1024 * 1024,
+      stdio: ['ignore', 'pipe', 'ignore'],
+    });
+  }
+  return readFileSync(join(ROOT, rel));
+}
+
+/**
+ * Expand a side's patterns. Supports a literal path or a single-directory
+ * `dir/*.ext` glob — enough for these two sides, and no glob dependency.
+ * In --staged mode the file list comes from the index, so a newly staged rule
+ * file is seen and a staged deletion is not resurrected from disk.
+ */
+let indexFiles = null;
+function expand(patterns) {
+  const found = new Set();
+  for (const pattern of patterns) {
+    if (!pattern.includes('*')) {
+      found.add(pattern);
+      continue;
+    }
+    const dir = posix.dirname(pattern);
+    const base = posix.basename(pattern);
+    const re = new RegExp('^' + base.replace(/[.+^${}()|[\]\\]/g, '\\$&').replace(/\*/g, '[^/]*') + '$');
+    if (STAGED) {
+      if (indexFiles === null) {
+        indexFiles = (git(['ls-files', '--cached'], { allowFail: true }) ?? '').split('\n').filter(Boolean);
+      }
+      for (const f of indexFiles) {
+        if (posix.dirname(f) === dir && re.test(posix.basename(f))) found.add(f);
+      }
+    } else {
+      let listing = [];
+      try {
+        listing = readdirSync(join(ROOT, dir), { withFileTypes: true });
+      } catch {
+        listing = [];
+      }
+      for (const d of listing) if (d.isFile() && re.test(d.name)) found.add(posix.join(dir, d.name));
+    }
+  }
+  return [...found].sort();
+}
+
+/**
+ * Concrete, language-independent tokens worth cross-checking: `code/paths.py`
+ * and «quoted trigger phrases». Prose is deliberately NOT extracted — only
+ * things that would be copied verbatim from one side to the other.
+ */
+function tokensIn(text) {
+  const out = new Set();
+  for (const m of text.matchAll(/`([^`\n]{3,80})`/g)) {
+    const tok = m[1].trim();
+    if (/[/._]/.test(tok) && !/\s{2,}/.test(tok)) out.add(tok);
+  }
+  for (const m of text.matchAll(/«([^»\n]{2,60})»/g)) out.add(m[1].trim());
+  return out;
 }
 
 // ── state file ──────────────────────────────────────────────────────────────
@@ -83,127 +180,187 @@ try {
 } catch (err) {
   fail(
     `cannot read ${STATE_REL} (${err.code === 'ENOENT' ? 'not found' : err.message}).\n` +
-      `  Create it with the tracked files, then run:  node ${SELF_REL} --ack`
+      `  Recreate it with the two sides, then run:  node ${SELF_REL} --ack`
   );
 }
-
-if (!state || typeof state.files !== 'object' || state.files === null || Array.isArray(state.files)) {
-  fail(`${STATE_REL} has no "files" object. Expected { "files": { "<path>": "<sha256>|null" } }.`);
+if (!state || typeof state.sides !== 'object' || state.sides === null || Array.isArray(state.sides)) {
+  fail(`${STATE_REL} has no "sides" object. Expected two sides, each with "patterns" and "files".`);
 }
 
-const tracked = Object.keys(state.files);
-if (tracked.length < 2) {
-  fail(`${STATE_REL} tracks ${tracked.length} file(s); drift detection needs at least 2.`);
+const sideKeys = Object.keys(state.sides);
+if (sideKeys.length !== 2) {
+  fail(`${STATE_REL} defines ${sideKeys.length} side(s); this check compares exactly 2.`);
 }
 
-// ── hashing ─────────────────────────────────────────────────────────────────
+// ── read both sides ─────────────────────────────────────────────────────────
 
-const sha256 = (buf) => createHash('sha256').update(buf).digest('hex');
-
-/** Exact bytes that would enter the commit (--staged) or sit on disk (default). */
-function readTracked(rel) {
-  if (STAGED) {
-    // `git show :path` reads the index — the bytes the commit will actually carry.
-    return execFileSync('git', ['-C', ROOT, 'show', `:${rel}`], {
-      maxBuffer: 64 * 1024 * 1024,
-      stdio: ['ignore', 'pipe', 'ignore'],
-    });
+const sides = sideKeys.map((key) => {
+  const def = state.sides[key];
+  if (!def || !Array.isArray(def.patterns) || !def.patterns.length) {
+    fail(`side "${key}" in ${STATE_REL} has no "patterns" array.`);
   }
-  return readFileSync(join(ROOT, rel));
-}
+  const storedFiles = def.files && typeof def.files === 'object' ? def.files : null;
+  const paths = expand(def.patterns);
+  if (!paths.length) fail(`side "${key}" matched no files (patterns: ${def.patterns.join(', ')}).`);
 
-const entries = tracked.map((rel) => {
-  const stored = state.files[rel];
-  let current = null;
-  let unreadable = null;
-  try {
-    current = sha256(readTracked(rel));
-  } catch (err) {
-    unreadable = STAGED ? 'not in the git index' : (err.code === 'ENOENT' ? 'not found on disk' : err.message);
+  const files = new Map();
+  for (const rel of paths) {
+    try {
+      files.set(rel, readTracked(rel));
+    } catch {
+      // A pattern match that cannot be read (staged deletion mid-expansion) is
+      // simply absent from this side's snapshot — the file-set diff reports it.
+    }
   }
+  const now = Object.fromEntries([...files].map(([rel, buf]) => [rel, sha256(buf)]));
+
   let status;
-  if (unreadable) status = 'unreadable';
-  else if (stored === null || stored === undefined) status = 'new';
-  else if (stored === current) status = 'same';
-  else status = 'changed';
-  return { rel, stored, current, status, unreadable };
+  let changed = [];
+  let added = [];
+  let removed = [];
+  if (!storedFiles) {
+    status = 'new';
+  } else {
+    for (const [rel, h] of Object.entries(now)) {
+      if (!(rel in storedFiles)) added.push(rel);
+      else if (storedFiles[rel] !== h) changed.push(rel);
+    }
+    for (const rel of Object.keys(storedFiles)) if (!(rel in now)) removed.push(rel);
+    status = changed.length || added.length || removed.length ? 'moved' : 'same';
+  }
+  return {
+    key,
+    label: def.label || key,
+    patterns: def.patterns,
+    paths,
+    text: [...files.values()].map((b) => b.toString('utf8')).join('\n'),
+    now,
+    status,
+    changed,
+    added,
+    removed,
+  };
 });
-
-const unreadable = entries.filter((e) => e.status === 'unreadable');
-if (unreadable.length) {
-  fail(
-    `tracked file(s) could not be read:\n` +
-      unreadable.map((e) => `      ${e.rel} — ${e.unreadable}`).join('\n') +
-      `\n  Fix the path in ${STATE_REL}, or restore the file.`
-  );
-}
 
 // ── --ack ───────────────────────────────────────────────────────────────────
 
 if (ACK) {
+  const head = git(['rev-parse', 'HEAD'], { allowFail: true });
   const next = {
     ...state,
+    version: 2,
     acknowledged_at: new Date().toISOString(),
-    files: Object.fromEntries(entries.map((e) => [e.rel, e.current])),
+    // Diff baseline for the next run's "what changed" report. Hashes stay the
+    // authority on WHETHER something moved; this only makes it SHOWABLE.
+    acknowledged_commit: head ? head.trim() : null,
+    sides: Object.fromEntries(
+      sides.map((s) => [s.key, { ...state.sides[s.key], label: s.label, patterns: s.patterns, files: s.now }])
+    ),
   };
   writeFileSync(STATE_PATH, `${JSON.stringify(next, null, 2)}\n`);
 
-  const moved = entries.filter((e) => e.status !== 'same');
+  const movedSides = sides.filter((s) => s.status !== 'same');
   process.stdout.write(
-    `\n  ${bold('workflow-sync:')} reconciled — recorded ${entries.length} hash(es)` +
-      `${STAGED ? ' from the git index' : ''}.\n` +
-      (moved.length
-        ? moved.map((e) => `      updated  ${e.rel}`).join('\n') + '\n'
+    `\n  ${bold('workflow-sync:')} reconciled${STAGED ? ' from the git index' : ''} — ` +
+      `${sides.map((s) => `${s.label} (${s.paths.length})`).join(' + ')}.\n` +
+      (movedSides.length
+        ? movedSides.map((s) => `      updated  ${s.label}`).join('\n') + '\n'
         : `      ${dim('(nothing had moved since the last reconcile)')}\n`) +
       `\n  Commit ${STATE_REL} alongside the instruction files.\n\n`
   );
   process.exit(0);
 }
 
-// ── check ───────────────────────────────────────────────────────────────────
+// ── drift rule: exactly one side moved ──────────────────────────────────────
 
-// A never-acknowledged entry counts as moved: it has no baseline to agree with.
-const moved = entries.filter((e) => e.status === 'changed' || e.status === 'new');
-const still = entries.filter((e) => e.status === 'same');
+const movedSides = sides.filter((s) => s.status === 'moved' || s.status === 'new');
 
-// Bootstrap: nothing has a baseline yet. Not drift — there is nothing to drift from.
-if (moved.length === entries.length && moved.every((e) => e.status === 'new')) {
+if (movedSides.length === 2 && sides.every((s) => s.status === 'new')) {
   process.stdout.write(
-    `\n  ${bold('workflow-sync:')} no baseline recorded yet for any tracked file.\n` +
-      `  Review them, then run:  node ${SELF_REL} --ack\n\n`
+    `\n  ${bold('workflow-sync:')} no baseline recorded yet.\n` +
+      `  Review both sides, then run:  node ${SELF_REL} --ack\n\n`
   );
   process.exit(0);
 }
 
-// No drift: everything moved together, or nothing moved at all.
-if (moved.length === 0 || still.length === 0) {
-  const what = moved.length === 0 ? 'unchanged since the last reconcile' : 'all moved together';
-  process.stdout.write(
-    `  ${bold('workflow-sync:')} ok — ${entries.length} tracked file(s), ${what}.\n`
-  );
+if (movedSides.length !== 1) {
+  const what = movedSides.length === 0 ? 'neither side moved' : 'both sides moved together';
+  process.stdout.write(`  ${bold('workflow-sync:')} ok — ${what}.\n`);
   process.exit(0);
 }
 
-// Drift: some moved, some did not.
-const label = (e) => (e.status === 'new' ? `${e.rel}  ${dim('(never reconciled)')}` : e.rel);
-const ackCmd = `node ${SELF_REL} --ack${STAGED ? ' --staged' : ''} && git add ${STATE_REL}`;
+// ── drift: report it ────────────────────────────────────────────────────────
 
-process.stderr.write(
-  [
-    '',
-    `  ${yellow(bold('INSTRUCTION FILES OUT OF SYNC'))}`,
-    '',
-    `  Moved since the last reconcile:`,
-    ...moved.map((e) => `      ${bold(label(e))}`),
-    '',
-    `  Did NOT move — now suspect, does the same edit belong here?`,
-    ...still.map((e) => `      ${e.rel}`),
-    '',
-    `  These files are maintained by hand, so this is a prompt to look, not a verdict.`,
-    `  Once you have reviewed them and they say the same thing:`,
-    '',
-    `      ${bold(ackCmd)}`,
-    '',
-  ].join('\n') + '\n'
-);
+const from = movedSides[0];
+const to = sides.find((s) => s !== from);
+
+/** Real diff hunks since the acknowledged commit — best effort, display only. */
+function diffLines(rel) {
+  const base = state.acknowledged_commit;
+  if (!base) return null;
+  if (git(['cat-file', '-e', `${base}^{commit}`], { allowFail: true }) === null) return null;
+  const args = ['diff', '--unified=0', '--no-color'];
+  if (STAGED) args.push('--cached');
+  args.push(base, '--', rel);
+  const out = git(args, { allowFail: true });
+  if (out === null) return null;
+  return out
+    .split('\n')
+    .filter((l) => /^[+-]/.test(l) && !/^(\+\+\+|---)/.test(l))
+    .filter((l) => l.slice(1).trim() !== '');
+}
+
+const out = [];
+out.push('');
+out.push(`  ${yellow(bold('ONE SIDE MOVED, THE OTHER DID NOT'))}`);
+out.push('');
+out.push(`  ${bold(from.label)} changed:`);
+for (const rel of from.changed) out.push(`      ${yellow('~')} ${rel}`);
+for (const rel of from.added) out.push(`      ${green('+')} ${rel}  ${dim('(new file)')}`);
+for (const rel of from.removed) out.push(`      ${red('-')} ${rel}  ${dim('(gone)')}`);
+
+const addedLines = [];
+for (const rel of [...from.changed, ...from.added]) {
+  const lines = diffLines(rel);
+  if (!lines || !lines.length) continue;
+  addedLines.push(...lines.filter((l) => l.startsWith('+')).map((l) => l.slice(1)));
+  out.push('');
+  out.push(`  ${dim(`what changed in ${rel}:`)}`);
+  for (const l of lines.slice(0, MAX_DIFF_LINES)) {
+    const clipped = l.length > 160 ? l.slice(0, 160) + '…' : l;
+    out.push(`      ${l.startsWith('+') ? green(clipped) : red(clipped)}`);
+  }
+  if (lines.length > MAX_DIFF_LINES) {
+    out.push(`      ${dim(`… ${lines.length - MAX_DIFF_LINES} more — git diff ${String(state.acknowledged_commit).slice(0, 8)} -- ${rel}`)}`);
+  }
+}
+
+out.push('');
+out.push(`  ${bold(to.label)} did NOT change:`);
+for (const rel of to.paths) out.push(`      ${dim(rel)}`);
+
+// Concrete tokens the edit introduced that the untouched side has never heard of.
+const source = addedLines.length ? addedLines.join('\n') : from.text;
+const missing = [...tokensIn(source)].filter((t) => !to.text.includes(t));
+if (missing.length) {
+  out.push('');
+  out.push(`  ${bold(`Nothing on the ${to.label} side mentions:`)}`);
+  for (const t of missing.slice(0, MAX_TOKENS)) out.push(`      ${t}`);
+  if (missing.length > MAX_TOKENS) out.push(`      ${dim(`… and ${missing.length - MAX_TOKENS} more`)}`);
+  out.push(`  ${dim('  (concrete paths/triggers only — prose is never compared)')}`);
+}
+
+out.push('');
+out.push(`  ${bold(`Should this change apply to ${to.label} too?`)}`);
+out.push(`  ${dim('The two sides are hand-written, so only you can answer. If yes, the prompt is:')}`);
+out.push('');
+out.push(`      ${dim(`"${from.label} changed — see the diff. Apply the same change to`)}`);
+out.push(`      ${dim(`${to.patterns.join(', ')}, conceptually not verbatim."`)}`);
+out.push('');
+out.push(`  If it does NOT concern ${to.label}, record that and move on:`);
+out.push('');
+out.push(`      ${bold(`node ${SELF_REL} --ack${STAGED ? ' --staged' : ''} && git add ${STATE_REL}`)}`);
+out.push('');
+
+process.stderr.write(out.join('\n') + '\n');
 process.exit(1);

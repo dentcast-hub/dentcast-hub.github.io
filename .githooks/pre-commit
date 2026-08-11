@@ -45,25 +45,81 @@ if ((${#bad[@]})); then
   exit 1
 fi
 
-# ── 2. Instruction-file drift ───────────────────────────────────────────────
+# ── 2. Instruction-side drift ───────────────────────────────────────────────
 #
-# CLAUDE.md, AGENTS.md and .cursor/rules/dentcast-router.mdc are written by hand
-# and must stay conceptually in sync. Nothing can prove they agree — but one of
-# them moving ALONE means the others were probably forgotten. The check reads the
-# STAGED bytes, so a commit that doesn't touch them can never be blocked by them.
+# Two hand-written sides — Claude (CLAUDE.md + AGENTS.md) and Cursor
+# (.cursor/rules/*.mdc) — must say the same thing, so publishing via Cursor
+# matches publishing via Claude. One side moving ALONE means the other was
+# probably forgotten. The check reads STAGED bytes, so a commit that doesn't
+# touch either side can never be blocked by them.
 #
-# Exit 1 = drift, block. Exit 2 = the check itself couldn't run; warn, don't block
-# a commit over a broken guard.
+# On drift this ASKS, because only a human knows whether an edit concerns the
+# other side. The question needs a terminal: git gives a hook no stdin, so it is
+# read from /dev/tty. Without one (CI, GUI client, piped input) it falls back to
+# blocking with the report, which is the safe direction.
+#
+# Exit 1 = drift. Exit 2 = the check itself couldn't run; warn, don't block a
+# commit over a broken guard.
 if command -v node >/dev/null 2>&1 && [ -f scripts/check-workflow-sync.mjs ]; then
   set +e
   sync_out=$(node scripts/check-workflow-sync.mjs --staged 2>&1)
   sync_rc=$?
   set -e
+
   if [ "$sync_rc" -eq 1 ]; then
     printf '%s\n' "$sync_out" >&2
+
+    # Testing -e/-r is not enough: /dev/tty exists as a node but opening it fails
+    # with ENXIO when the process has no controlling terminal (CI, piped input).
+    # Only a real open proves there is someone to ask.
+    # The probe runs in a SUBSHELL: on the same command line bash applies
+    # `3</dev/tty` before `2>/dev/null`, so a failed open still prints its error.
+    # Wrapping it means the subshell's stderr — error included — is what gets
+    # discarded, and its exit status tells us whether the open would succeed.
+    if ( : </dev/tty ) 2>/dev/null; then
+      exec 3</dev/tty
+      printf '  [y] بله، باید اعمال شود   → کامیت متوقف می‌شود تا الان انجامش بدهی\n' >&2
+      printf '  [n] نه، ربطی ندارد        → همین الان reconciled ثبت می‌شود و کامیت ادامه پیدا می‌کند\n' >&2
+      printf '  [s] بعداً تصمیم می‌گیرم   → کامیت متوقف می‌شود، چیزی ثبت نمی‌شود\n' >&2
+      printf '\n  اعمال شود روی سمت دیگر؟ [y/n/s] ' >&2
+      read -r answer <&3 || answer=s
+      exec 3<&-
+
+      case "$answer" in
+        n | N)
+          # "This edit does not concern the other side." Record it and let the
+          # commit carry the updated state file, so the same question is not
+          # asked again on the next commit.
+          if node scripts/check-workflow-sync.mjs --ack --staged >/dev/null 2>&1 &&
+            git add .workflow-sync.json; then
+            echo "  ✓ ثبت شد (.workflow-sync.json به کامیت اضافه شد) — ادامه." >&2
+            echo "" >&2
+            exit 0
+          fi
+          echo "  ✗ ثبت نشد؛ کامیت متوقف شد." >&2
+          echo "" >&2
+          exit 1
+          ;;
+        y | Y)
+          echo "" >&2
+          echo "  کامیت متوقف شد. سمت دیگر را به‌روز کن، بعد هر دو را با هم کامیت کن." >&2
+          echo "" >&2
+          exit 1
+          ;;
+        *)
+          echo "" >&2
+          echo "  کامیت متوقف شد. Override (فقط اگر مطمئنی):  git commit --no-verify" >&2
+          echo "" >&2
+          exit 1
+          ;;
+      esac
+    fi
+
+    # No terminal to ask on — block with the report.
     echo "  Override (only if certain):  git commit --no-verify" >&2
     echo "" >&2
     exit 1
+
   elif [ "$sync_rc" -ne 0 ]; then
     printf '%s\n' "$sync_out" >&2
     echo "  (workflow-sync check skipped; commit allowed)" >&2
