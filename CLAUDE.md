@@ -43,10 +43,12 @@ router. Instead read `.dentcast/workflows/en-version.md` and follow it
 strictly. That workflow mirrors one existing page into
 `/{type}/en/{same-filename}.html`: English chrome cloned from
 `metanotes/en/meta-1.html`, body/schema inherited and translated from the
-source's own type, a real per-document fa↔en toggle on both sides, and
-disk-discovered hreflang pairing. en pages are standalone translations — they
-get **no** `dentcast-brain.json` entry, **no** Pulse line, and **no**
-specialist cross-linking.
+source's own type, and a real per-document fa↔en toggle on both sides. en
+pages are standalone translations AND a reader-only surface: they ship
+**noindexed** (`noindex, follow`, zero hreflang, out of the sitemap — they
+are unreviewed AI translations; 2026-08-11 SEO audit) and get **no**
+`dentcast-brain.json` entry, **no** Pulse line, and **no** specialist
+cross-linking.
 
 **Note — the publishing router already invokes this workflow automatically.**
 Every normal `.org` publish ends with **Phase D** of
