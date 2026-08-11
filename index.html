@@ -3464,6 +3464,183 @@ a.dc-list-card--pillar {
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"رادار دنت کست چیست و چه کمکی می کند؟","acceptedAnswer":{"@type":"Answer","text":"رادار دنت کست یک ابزار جستجوی اختصاصی برای پیدا کردن وب‌سایت رسمی شرکت‌های دندانپزشکی در ایران است."}},{"@type":"Question","name":"دنت‌کست چیست؟","acceptedAnswer":{"@type":"Answer","text":"پادکست علمی دندان‌پزشکی با روایت دکتر فواد شهابیان؛ مرور ساده و تحلیلی تازه‌ترین مقالات حوزهٔ پروتز، ایمپلنت و دندان‌پزشکی ترمیمی."}}]}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"رادار دنت‌کست","url":"https://dentcast.org/#radar","applicationCategory":"UtilitiesApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"IRR"}}</script>
   <script>window.addEventListener('load',function(){!function(t,e,n){t.yektanetAnalyticsObject=n,t[n]=t[n]||function(){t[n].q.push(arguments)},t[n].q=t[n].q||[];var a=new Date,r=a.getFullYear().toString()+"0"+a.getMonth()+"0"+a.getDate()+"0"+a.getHours(),c=e.getElementsByTagName("script")[0],s=e.createElement("script");s.id="ua-script-nzlddHSQ";s.dataset.analyticsobject=n;s.async=1;s.type="text/javascript";s.src="https://cdn.yektanet.com/rg_woebegone/scripts_v3/nzlddHSQ/rg.complete.js?v="+r,c.parentNode.insertBefore(s,c)}(window,document,"yektanet");});</script>
+
+  <style id="dcExamineSkin">
+/* =====================================================
+   EXAMINE SKIN — mobile only (approved catalog, 2026-08-11).
+   Appearance-only restyle of #panel-studio + #panel-sharehub
+   after the Examine.com-style mockup: white ground, hairline
+   borders, no gradients/shadows, one accent, gold = Plus.
+   Scope is deliberately narrow: the topbar, toolbar drawer,
+   bottom nav, footer, patients panel, search overlay, Spot ad
+   card and every JS-filled widget (#dcPlusHomeCard,
+   #dcPlusFeatures, #dcHomeBundles) keep their own CSS — no
+   DOM, no JS, no token changes outside these two panels.
+===================================================== */
+@media (max-width:1023px){
+  html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:#ffffff; }
+}
+#mobile-shell{ font-family:'Vazirmatn',-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; }
+#panel-studio,#panel-sharehub{
+  --exa-gold:#9a6b15;
+  --exa-gold-bg:rgba(154,107,21,.10);
+  --exa-gold-bd:rgba(154,107,21,.28);
+}
+[data-theme="dark"] #panel-studio,[data-theme="dark"] #panel-sharehub{
+  --exa-gold:#e0b25f;
+  --exa-gold-bg:rgba(224,178,95,.12);
+  --exa-gold-bd:rgba(224,178,95,.30);
+}
+
+/* ── identity: small centered line → right-aligned statement ── */
+#panel-studio .dc-identity-card{ padding:1rem 0.25rem 0.25rem; }
+#panel-studio .dc-identity-main{
+  font-size:1.3rem; line-height:1.75; text-align:right;
+  white-space:normal; text-wrap:balance; color:var(--txt);
+}
+
+/* ── hero episode card: flat, hairline, quiet badge ── */
+#panel-studio .dc-home-hero{
+  border-radius:0.875rem; box-shadow:none;
+  border:1px solid var(--card-border); padding:1rem;
+}
+#panel-studio .dc-home-hero-badge{
+  background:none; border:none; padding:0; margin-bottom:0.25rem;
+  font-size:.7rem; letter-spacing:.2px;
+}
+#panel-studio .dc-home-hero-title{ font-size:1.02rem; line-height:1.7; }
+#panel-studio .dc-home-hero-cover{ border-radius:0.625rem; }
+#panel-studio .dc-home-hero-row{
+  background:transparent; border:none; border-top:1px solid var(--border2);
+  border-radius:0; padding:0.75rem 0 0; margin-top:0.875rem;
+}
+#panel-studio .dc-home-hero-play{ box-shadow:none; width:2.5rem; height:2.5rem; }
+#panel-studio .dc-home-hero-prog{ bottom:auto; top:-1px; }
+
+/* ── pulse: amber news box → quiet bordered list ── */
+#panel-studio .dc-pulse{
+  border:1px solid var(--card-border); border-right:1px solid var(--card-border);
+  border-radius:0.875rem; box-shadow:none; padding:0.875rem 1rem;
+}
+#panel-studio .dc-pulse-title{ font-size:.84rem; }
+#panel-studio .dc-pulse-list li{ font-size:.79rem; }
+#panel-studio .dc-pulse-list li::before{ color:var(--ac); }
+
+/* ── section labels: bar removed, plain bold ── */
+#panel-studio .dc-home-sec-label,
+#panel-sharehub .dc-home-sec-label{
+  border-right:0; padding-right:0; font-size:1.02rem;
+}
+#panel-studio .dc-home-sec,
+#panel-sharehub .dc-home-sec{ margin:1.75rem 0 0.5rem; }
+
+/* ── «تازه‌های دنت‌کست»: horizontal card rail → vertical text rows
+      (same links, same order — pure typography like the mockup) ── */
+#panel-studio #dcLatestRail{
+  flex-direction:column; gap:0; overflow-x:visible;
+  padding:0; margin:0; scroll-snap-type:none;
+}
+#panel-studio #dcLatestRail .dc-rail-card{
+  flex:none; width:100%;
+  background:transparent; border:0; border-bottom:1px solid var(--border2);
+  border-radius:0; box-shadow:none;
+  padding:0.8rem 0; gap:0.25rem;
+}
+#panel-studio #dcLatestRail .dc-rail-card:last-child{ border-bottom:0; }
+#panel-studio #dcLatestRail .dc-rail-title{
+  min-height:0; -webkit-line-clamp:2;
+  font-size:.92rem; font-weight:750; line-height:1.8;
+}
+#panel-studio #dcLatestRail .dc-rail-meta{ margin-top:0.125rem; }
+/* one accent for every type label — Plus keeps its gold */
+#panel-studio #dcLatestRail .dc-type-chip{
+  background:none; border:none; padding:0; border-radius:0;
+  font-size:.68rem; color:var(--ac);
+}
+#panel-studio #dcLatestRail .t-plus{ color:var(--exa-gold); background:none; }
+
+/* ── pillar + duo cards: flat and hairline ── */
+#panel-studio .dc-pillar-card{
+  box-shadow:none; border:1px solid var(--card-border); border-radius:0.75rem;
+}
+#panel-studio .dc-pillar-ico{
+  background:var(--surface2); border:1px solid var(--border2); color:var(--txt2);
+}
+#panel-studio .dc-duo-card{
+  box-shadow:none; border:1px solid var(--card-border); border-radius:0.875rem;
+}
+
+/* ── archive: search-engine pair (Radar + Library) ── */
+#panel-sharehub .dc-radar-hero{
+  background:var(--card-bg);
+  border:1px solid var(--card-border); border-top:1px solid var(--card-border);
+  border-radius:0.875rem; box-shadow:none;
+}
+#panel-sharehub .radar-shine-card::after{ display:none; }
+#panel-sharehub .dc-radar-hero-ico{
+  background:var(--surface2); border:1px solid var(--border2); box-shadow:none;
+}
+#panel-sharehub .dc-radar-hero-txt{ color:var(--txt); }
+#panel-sharehub .dc-radar-hero-btn{ box-shadow:none; border:none; border-radius:0.625rem; }
+/* premium badge on the library card — gold, like the mockup's Plus chip */
+#panel-sharehub #card-library .dcp-soon-badge{
+  background:var(--exa-gold-bg); color:var(--exa-gold);
+  border:1px solid var(--exa-gold-bd); border-radius:0.375rem; font-weight:800;
+}
+
+/* ── archive: list cards / featured pair / grid — flat ── */
+#panel-sharehub .dc-list-card{
+  background:var(--card-bg);
+  border:1px solid var(--card-border);
+  border-right:1px solid var(--card-border);
+  border-radius:0.75rem; box-shadow:none;
+}
+#panel-sharehub .dc-list-card--insight,
+#panel-sharehub .dc-list-card--chairside,
+#panel-sharehub .dc-list-card--meta{
+  background:var(--card-bg);
+  border-right:1px solid var(--card-border);
+}
+#panel-sharehub .dc-list-card.featured,
+#panel-sharehub .dc-list-card.featured:first-child,
+#panel-sharehub .dc-card-pair > #card-glossary,
+#panel-sharehub .dc-list-card.featured.dc-list-card--pillar{
+  background:var(--card-bg) !important;
+  border:1px solid var(--card-border) !important;
+  border-right:1px solid var(--card-border) !important;
+  box-shadow:none !important;
+}
+#panel-sharehub #card-pillar,
+#panel-sharehub #card-glossary{
+  border-top:1px solid var(--card-border) !important;
+}
+#panel-sharehub .gls-title{ color:var(--txt); }
+#panel-sharehub .gls-ico{ color:var(--txt2); }
+#panel-sharehub .dc-list-card--pillar .gls-ico,
+#panel-sharehub .dc-list-card--pillar .gls-title{ color:var(--txt); }
+#panel-sharehub .dc-list-card--pillar .gls-ico{ color:var(--txt2); }
+#panel-sharehub .dc-chip{
+  background:var(--surface2); border:1px solid var(--border2); color:var(--txt2);
+}
+#panel-sharehub .dc-grid-card{
+  border:1px solid var(--card-border); border-top:1px solid var(--card-border);
+  border-radius:0.75rem; box-shadow:none;
+}
+#panel-sharehub .dc-grid-ico{ background:var(--surface2); border:1px solid var(--border2); }
+
+/* ── archive: «تازه‌ترین مطالب» monitor — pill rows → hairline rows ── */
+#panel-sharehub .dc-monitor{
+  box-shadow:none; border:1px solid var(--card-border);
+  border-right:1px solid var(--card-border); border-radius:0.875rem;
+}
+#panel-sharehub .dc-monitor-list a{
+  background:none; border:0; border-bottom:1px solid var(--border2);
+  border-radius:0; color:var(--txt); font-weight:600;
+  padding:0.4rem 0.125rem;
+}
+#panel-sharehub .dc-monitor-list a:last-child{ border-bottom:0; }
+#panel-sharehub .dc-monitor-list a:active{ background:var(--surface2); }
+  </style>
 </head>
 <body>
 
