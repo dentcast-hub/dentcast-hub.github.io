@@ -13,8 +13,8 @@ alwaysApply: false
 | سطح | آرتیفکت | گامِ ورکفلو | بیلدر (تنها نویسنده) |
 |---|---|---|---|
 | Plus | درخت ناوبریِ «میز کار» | همیشه (brain تغییر کرده) | `node tools/build_plus_index.mjs` → `plus/content-index.json` |
-| Plus/Premium | فلش‌کارت Leitner | `4.11` — `DefinedTermSet` روی خودِ صفحه | `node tools/build_flashcards_index.mjs` → `plus/flashcards-index.json` |
-| Plus/Premium | کوییز نمره‌دار | `4.12` — `FAQPage` روی خودِ صفحه | `node tools/build_quiz_index.mjs` → `plus/quiz-index.json` |
+| Plus/Premium | فلش‌کارت Leitner | `4.11` — `DefinedTermSet` در `plus/faq-corpus.json` (نه روی خودِ صفحه) | `node tools/build_flashcards_index.mjs` → `plus/flashcards-index.json` |
+| Plus/Premium | کوییز نمره‌دار | `4.12` — `FAQPage` در `plus/faq-corpus.json` (نه روی خودِ صفحه) | `node tools/build_quiz_index.mjs` → `plus/quiz-index.json` |
 | Premium | مسیر یادگیری | `5.6` | `python3 tools/pathway_place.py --insert …` → `plus/pathways.json` |
 | Premium | باندلِ شروع (`kind: "bundle"`) | `5.6-ب` (زنجیرهٔ پنج‌گیتی) | همان ابزار، `--pathway <bundle-id>` + جاروی دستیِ `plus/js/home-bundles.js` + `asset_version.py --bump` |
 | Plus/Premium | نوتیف مطلب جدید | فاز E | `<meta name="dc-notify" content="true">` در `<head>` |

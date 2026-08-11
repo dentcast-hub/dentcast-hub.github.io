@@ -53,6 +53,13 @@ in `CLAUDE.md`.)
    دانشنامه/فهرست موضوعی capsules and no brain «کاوش بیشتر» links — matching
    the `en/meta-1` reference, which has none.) The **only** brain-adjacent
    effect is that the source fa page gains a toggle + an `en` hreflang.
+   Same rule for FAQ/flashcards: an en page never carries a `FAQPage` or
+   `DefinedTermSet` block, on the page or anywhere else — `plus/quiz-index.json`
+   and `plus/flashcards-index.json` both skip `/en/` content ids by
+   construction. Any pre-existing en-page entries left over in
+   `plus/faq-corpus.json` from before FAQ/flashcards were removed from page
+   markup (`.dentcast/faq-schema-removal-handoff.md`) are archive only —
+   never re-authored, never re-added to an en page.
 9. **Two pages are mutated, both verified by before/after hash:** the **new
    en page** (created) and the **source fa page** (toggle added, `inLanguage`
    asymmetry fixed, en hreflang gained on the next injector run). No third

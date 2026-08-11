@@ -101,90 +101,11 @@
           "item": "https://dentcast.org/dentai/promptologist/prompt4-2.html"
         }
       ]
-    },
-    {
-      "@type": "FAQPage",
-      "@id": "https://dentcast.org/dentai/promptologist/prompt4-2.html#faq",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "آیا فهرست‌کردنِ کارهایی که مدل نباید بکند («فهرستِ نکن‌ها») بهترین راه برای تمیزترکردنِ خروجی است؟",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "خیر؛ هر «نکن» فقط می‌گوید مدل کجا نرود و یک جای خالی می‌سازد که مدل باید با حدس پُرش کند — و حدسش لزوماً حدسِ شما نیست. دستورِ مثبت («چه بکن») همان جای خالی را با خواسته‌ی روشن پر می‌کند و تقریباً همیشه دقیق‌تر است."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "چطور یک جمله‌ی منع («نکن») را به دستورِ مثبت ترجمه کنیم؟",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "هر جا در حالِ نوشتنِ «نکن» هستید بایستید و بپرسید «پس به‌جایش چه بکند؟»؛ جوابِ همین سؤال دستورِ شماست. «بیمار را نترسان» می‌شود «با لحنِ مطمئن و آرام بنویس»، «طولانی نشود» می‌شود «چهار پنج جمله»، و «اصطلاح تخصصی نگو» می‌شود «به زبانِ ساده‌ی روزمره بنویس». هیچ خواسته‌ای حذف نمی‌شود؛ فقط از زبانِ منع به زبانِ دستور برمی‌گردد."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "آیا نوشتنِ یک جمله‌ی منع مثلِ «بیمار را از عوارض نترسان» می‌تواند نتیجه‌ی معکوس بدهد؟",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "بله؛ خودِ منع کلمه‌ی «عوارض» را وسطِ درخواست می‌آورد و توجهِ مدل را به آن جمع می‌کند، طوری که مدل برای «نترساندن» شروع می‌کند به اطمینان‌دادن درباره‌ی همان عوارض («نگرانِ خونریزی نباشید، عفونت به‌ندرت پیش می‌آید...») و همین بیمار را می‌ترساند. دستورِ مثبت مثلِ «روی روندِ کار و مراقبتِ بعدش تمرکز کن» اصلاً نمی‌گذارد پای آن کلمه‌ها وسط بیاید."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "آیا جمله‌ی «فقط بر اساسِ همین مقاله جواب بده» هم یک «نکنِ» مشکل‌ساز است؟",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "خیر؛ این تعیینِ محدوده است، نه منع — دارید می‌گویید مدل از کجا بگوید، نه چه نگوید، پس از جنسِ دستورِ مثبت است. مثلِ تعیینِ شکلِ خروجی، این هم گفتنِ «چه بکن» است؛ هر بار که مقاله‌ای می‌دهید و می‌خواهید مدل پایش را از آن بیرون نگذارد، همین یک جمله محدوده را می‌بندد."
-          }
-        }
-      ]
     }
   ]
 }
 </script>
-  <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "DefinedTermSet",
-  "@id": "https://dentcast.org/dentai/promptologist/prompt4-2.html#flashcards",
-  "hasDefinedTerm": [
-    {
-      "@type": "DefinedTerm",
-      "@id": "https://dentcast.org/dentai/promptologist/prompt4-2.html#flashcards-c1",
-      "name": "چرا هر «نکن» در پرامپت یک «جای خالی» می‌سازد؟",
-      "description": "چون منع فقط می‌گوید مدل کجا نرود، نه کجا برود؛ مدل مجبور می‌شود خودش حدس بزند به‌جای آن چه بگذارد، و حدسش لزوماً حدسِ شما نیست. دستورِ مثبت آن جای خالی را با خواسته‌ی روشن پر می‌کند.",
-      "source": "faq",
-      "sourceFaqIndex": 0
-    },
-    {
-      "@type": "DefinedTerm",
-      "@id": "https://dentcast.org/dentai/promptologist/prompt4-2.html#flashcards-c2",
-      "name": "قاعده‌ی تبدیلِ «نکن» به دستورِ مثبت",
-      "description": "هر جا در حالِ نوشتنِ «نکن» هستید بپرسید «پس به‌جایش چه بکند؟»؛ جوابِ همان سؤال دستورِ شماست — «نترسان» → «لحنِ مطمئن و آرام»، «طولانی نشود» → «چهار پنج جمله»، «تخصصی نگو» → «زبانِ ساده‌ی روزمره».",
-      "source": "faq",
-      "sourceFaqIndex": 1
-    },
-    {
-      "@type": "DefinedTerm",
-      "@id": "https://dentcast.org/dentai/promptologist/prompt4-2.html#flashcards-c3",
-      "name": "اثرِ معکوسِ جمله‌های منع",
-      "description": "منع، کلمه‌ی ناخواسته را وسطِ درخواست می‌آورد و توجهِ مدل را به آن جمع می‌کند؛ مدل ممکن است برای «نترساندن» درباره‌ی همان عوارض اطمینان بدهد و دقیقاً اثرِ عکس بگذارد.",
-      "source": "faq",
-      "sourceFaqIndex": 2
-    },
-    {
-      "@type": "DefinedTerm",
-      "@id": "https://dentcast.org/dentai/promptologist/prompt4-2.html#flashcards-c4",
-      "name": "چرا «فقط بر اساسِ این مقاله جواب بده» یک منع نیست",
-      "description": "چون محدوده‌بندی می‌گوید مدل از کجا بگوید، نه چه نگوید؛ مثلِ تعیینِ شکلِ خروجی، این هم از جنسِ دستورِ مثبت («چه بکن») است و پاسخِ مدل را به منبعِ داده‌شده محدود می‌کند.",
-      "source": "faq",
-      "sourceFaqIndex": 3
-    }
-  ]
-}
-</script>
-  <script>(function(){var s=localStorage.getItem('dc-theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme','dark');})();</script>
+    <script>(function(){var s=localStorage.getItem('dc-theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme','dark');})();</script>
   <link rel="preload" as="font" href="/fonts/Vazirmatn[wght].woff2" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/dc-theme.css">
   <link rel="stylesheet" href="/dc-nav.css?v=17">
