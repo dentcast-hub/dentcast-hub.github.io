@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "note": "SHA-256 of each hand-maintained instruction file as of the last time they were declared reconciled. These files are written independently — nothing generates one from another — so this records a human judgement, not a build output. The keys below ARE the tracked list. Checked by scripts/check-workflow-sync.mjs (wired into .githooks/pre-commit); update with: node scripts/check-workflow-sync.mjs --ack",
+  "acknowledged_at": "2026-08-11T06:41:41.211Z",
+  "files": {
+    "CLAUDE.md": "e04efef8cb89381a4487515b07affadefa5be750e10fcaaad036d52bf64dc316",
+    "AGENTS.md": "294630fc4d03f3ae8a5e79c982d841a61145b98c577bb4db541d7efddaede845",
+    ".cursor/rules/dentcast-router.mdc": "51145d54c0adc7ecfa3e0b698bdb9736c7b44104aa7ea1436254d9ed40a96474"
+  }
+}

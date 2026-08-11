@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
-# Reject staged TEXT files containing NUL bytes.
+# Pre-commit guards. Two independent checks, in order:
+#   1. Reject staged TEXT files containing NUL bytes.
+#   2. Warn when the hand-maintained instruction files drift apart.
+#
+# ── 1. NUL bytes ────────────────────────────────────────────────────────────
 #
 # NUL bytes in text files are corruption — the write/sync layer in some editing
 # environments appends NUL padding after a file's real content (and has, on
@@ -40,4 +44,30 @@ if ((${#bad[@]})); then
   echo "" >&2
   exit 1
 fi
+
+# ── 2. Instruction-file drift ───────────────────────────────────────────────
+#
+# CLAUDE.md, AGENTS.md and .cursor/rules/dentcast-router.mdc are written by hand
+# and must stay conceptually in sync. Nothing can prove they agree — but one of
+# them moving ALONE means the others were probably forgotten. The check reads the
+# STAGED bytes, so a commit that doesn't touch them can never be blocked by them.
+#
+# Exit 1 = drift, block. Exit 2 = the check itself couldn't run; warn, don't block
+# a commit over a broken guard.
+if command -v node >/dev/null 2>&1 && [ -f scripts/check-workflow-sync.mjs ]; then
+  set +e
+  sync_out=$(node scripts/check-workflow-sync.mjs --staged 2>&1)
+  sync_rc=$?
+  set -e
+  if [ "$sync_rc" -eq 1 ]; then
+    printf '%s\n' "$sync_out" >&2
+    echo "  Override (only if certain):  git commit --no-verify" >&2
+    echo "" >&2
+    exit 1
+  elif [ "$sync_rc" -ne 0 ]; then
+    printf '%s\n' "$sync_out" >&2
+    echo "  (workflow-sync check skipped; commit allowed)" >&2
+  fi
+fi
+
 exit 0
