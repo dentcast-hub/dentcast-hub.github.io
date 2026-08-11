@@ -237,12 +237,54 @@ export function detectContentId() {
 // "seen" tick, not the workbench).
 export const PROSE_SELECTORS = ['.text-box', '.glass-box', '.content-box', '.ep-box'];
 
-export function findProseRoot() {
+// The FIRST prose box, in document order — what findProseRoot() used to return
+// on its own. It stays exported because it is still the right ANCHOR: the
+// میز کار bar goes immediately above the article's opening box, which is not
+// necessarily the same element as the article's body (see findProseRoot below).
+// `scope` is a container on the desktop shell, where the article is injected
+// into the homepage and a document-wide query would find the homepage's own
+// boxes first.
+export function findProseBox(scope = document) {
   for (const sel of PROSE_SELECTORS) {
-    const el = document.querySelector('main ' + sel + ', ' + sel);
+    const el = scope === document ? document.querySelector('main ' + sel + ', ' + sel) : scope.querySelector(sel);
     if (el) return el;
   }
   return null;
+}
+
+// The readable body of the article, as ONE element — the scope every reading
+// feature measures itself against (the workbench's selections and anchors, the
+// reading tracker's length + end-of-article test, the sponsor card's placement).
+//
+// Most pages wrap their whole body in a single box, so that box IS the article.
+// But the legacy NoteCast template splits the body across SIBLING boxes — one
+// `<div class="glass-box">` per section, eight of them on notecast/episode-6 —
+// and returning just the first of those made the other seven invisible to every
+// one of those features. The workbench drops any selection whose range is not
+// inside its root, silently (workbench.js _captureSelection), so on 26 NoteCast
+// pages selecting text and pressing «هایلایت» did nothing at all, with no error
+// to explain it: on episode-6 only 7% of the article could be highlighted, and
+// on episode-23/24 the one reachable box is «منبع و اعتبار», so none of the body
+// could (user report, 2026-08-11).
+//
+// So: when the first box has SIBLINGS of its own kind, the article is the parent
+// that holds them. The widening is deliberately confined to that one shape —
+// same selector, same parent, and never past the article shell — so a page whose
+// body is a single box resolves to exactly the element it always did, which is
+// every page on the site but those 26.
+export function findProseRoot(scope = document) {
+  const first = findProseBox(scope);
+  if (!first) return null;
+  const parent = first.parentElement;
+  if (!parent) return first;
+  // Never widen out of the article: on a document-wide lookup that bound is the
+  // article shell (no shell → no widening at all), and in the shell it is the
+  // container the article was injected into.
+  const limit = scope === document ? document.querySelector('main.article-content-wrap') : scope;
+  if (!limit || !limit.contains(parent)) return first;
+  const sel = PROSE_SELECTORS.find((s) => first.matches(s));
+  const siblings = Array.from(parent.children).filter((c) => c.matches(sel)).length;
+  return siblings > 1 ? parent : first;
 }
 
 // --- Highlighter palette + labels (Persian) ---------------------------------

@@ -10,7 +10,7 @@ const { Workbench } = await import('../../plus/js/workbench.js');
 // The toolbar renders one swatch per palette entry, so assert against the
 // palette itself. A hardcoded count silently rots the day a colour is added —
 // which is exactly what happened when `red` landed (6850acd8).
-const { PALETTE } = await import('../../plus/js/config.js');
+const { PALETTE, findProseRoot, findProseBox } = await import('../../plus/js/config.js');
 
 function setArticle() {
   document.body.innerHTML =
@@ -63,6 +63,76 @@ describe('workbench builds its study-mode UI', () => {
     // pressing the button again CLOSES it (toggle)
     wb._noteButton();
     expect(document.querySelector('.dcp-editor'), 'article note closed by the button').toBeNull();
+  });
+});
+
+// A page whose body is split across SIBLING prose boxes — the legacy NoteCast
+// template, 26 pages of it. findProseRoot() returned the first box, and
+// _captureSelection drops any selection outside its root SILENTLY, so on
+// notecast/episode-6 seven of the eight sections could not be highlighted at all
+// and pressing «هایلایت» did nothing with no error to explain it (user report,
+// 2026-08-11). These pin the resolution itself, not the symptom: a root that is
+// "the first thing matching a class" is one legacy page away from being wrong
+// again.
+describe('a body split across sibling prose boxes is ONE article', () => {
+  beforeEach(() => { document.body.className = ''; document.body.innerHTML = ''; });
+
+  function setSplitArticle() {
+    document.body.innerHTML =
+      '<main class="article-content-wrap"><h1>t</h1>' +
+      '<div class="glass-box"><h4>یک</h4><ul><li>بخش اول.</li></ul></div>' +
+      '<div class="glass-box"><h4>دو</h4><ul><li>بخش دوم.</li></ul></div>' +
+      '<div class="glass-box"><h4>سه</h4><ul><li>بخش سوم و آخر.</li></ul></div>' +
+      '</main>';
+    return Array.from(document.querySelectorAll('.glass-box')) as HTMLElement[];
+  }
+
+  // The selection is what the reader actually makes; assert on that, not on
+  // which element the resolver happened to pick.
+  function selectInside(el: HTMLElement) {
+    const range = document.createRange();
+    range.selectNodeContents(el.querySelector('li') as HTMLElement);
+    const sel = window.getSelection() as Selection;
+    sel.removeAllRanges();
+    sel.addRange(range);
+  }
+
+  it('captures a selection in EVERY box, not just the first', () => {
+    const boxes = setSplitArticle();
+    const wb: any = new Workbench({ contentId: 'notecast/episode-6', proseRoot: findProseRoot() });
+    wb.active = true; // enter() is network-bound; only the capture path is under test
+
+    for (const box of boxes) {
+      selectInside(box);
+      wb._pendingQuote = null;
+      wb._captureSelection();
+      expect(wb._pendingQuote, 'selection captured in ' + (box.querySelector('h4') as HTMLElement).textContent).not.toBeNull();
+    }
+    expect(wb._pendingQuote.exact).toContain('بخش سوم');
+  });
+
+  it('measures the WHOLE body, so the reading tracker is not sized off one section', () => {
+    setSplitArticle();
+    const root = findProseRoot() as HTMLElement;
+    expect(root).toBe(document.querySelector('main.article-content-wrap'));
+    expect(root.textContent).toContain('بخش سوم و آخر');
+  });
+
+  // The میز کار bar hangs off the opening box, which on this layout is NOT the
+  // root. Anchoring it to the root would put it outside <main>, above the title.
+  it('still anchors the workbench bar on the opening box, inside <main>', () => {
+    const boxes = setSplitArticle();
+    const anchor = findProseBox() as HTMLElement;
+    expect(anchor).toBe(boxes[0]);
+    expect((document.querySelector('main.article-content-wrap') as HTMLElement).contains(anchor)).toBe(true);
+  });
+
+  // The widening is confined to that one legacy shape: a page whose body is a
+  // single box must resolve to exactly the element it always did.
+  it('leaves a single-box page resolving exactly as before', () => {
+    const box = setArticle();
+    expect(findProseRoot()).toBe(box);
+    expect(findProseBox()).toBe(box);
   });
 });
 

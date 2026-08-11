@@ -66,7 +66,7 @@
 // user-select:none + hidden entirely in study mode (body.dcp-study) so the
 // میز کار experience stays clean.
 
-import { findProseRoot, PROSE_SELECTORS } from '/plus/js/config.js';
+import { findProseRoot } from '/plus/js/config.js';
 
 const CONFIG_URL = '/spot/spot-config.json';
 const SPOT_V = new URL(import.meta.url).search; // carry ?v= from the loader onto the config fetch
@@ -800,18 +800,6 @@ function placeArticleCard(slot, prose, card) {
   return true;
 }
 
-// findProseRoot() scoped to one container. The document-wide version is wrong in
-// the shell: the injected article sits inside #dcd-content-area while the
-// homepage around it has boxes of its own, and a document query would find one
-// of those first and drop the card outside the article entirely.
-function proseRootIn(container) {
-  for (const sel of PROSE_SELECTORS) {
-    const el = container.querySelector(sel);
-    if (el) return el;
-  }
-  return null;
-}
-
 /**
  * Desktop shell (index.html), the article slot's second entry point.
  *
@@ -838,7 +826,11 @@ function setupShellArticleSlot(cfg, audienceNow) {
     if (adsKilled || !container) return false;
     if (!slotAllows(cfg, 'article', audienceNow())) return false;
     if (container.querySelector('.dc-spot--article')) return false; // already seated
-    const prose = proseRootIn(container);
+    // Scoped to the injected article. The document-wide lookup is wrong here: the
+    // article sits inside #dcd-content-area while the homepage around it has
+    // boxes of its own, and a document query would find one of those first and
+    // drop the card outside the article entirely.
+    const prose = findProseRoot(container);
     if (!prose) return false; // no prose box: the mobile path would show nothing here either
     const creative = pickCreative(cfg, 'article', audienceNow());
     if (!creative) return false;

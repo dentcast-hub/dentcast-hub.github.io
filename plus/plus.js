@@ -2,7 +2,7 @@
 // enhancement. It decides the page type and wires only what belongs there. For
 // anonymous visitors the page must look exactly as before except the two
 // invitation points (spec 2.3): the workbench button and the homepage card.
-import { detectContentId, findProseRoot, PROSE_SELECTORS, INVITE_LINE, SS_MODE, SS_RETURN_STUDY, isOrgHost } from './js/config.js';
+import { detectContentId, findProseRoot, findProseBox, INVITE_LINE, SS_MODE, SS_RETURN_STUDY, isOrgHost } from './js/config.js';
 import { currentUser, api } from './js/api.js';
 import { openLoginModal, openOrgNotice } from './js/login-modal.js';
 import { openCollectionPicker } from './js/collections.js';
@@ -46,7 +46,11 @@ function injectCollectionButton(contentId) {
   return { btn, info, cap };
 }
 
-function injectWorkbenchButton(proseRoot, contentId, shareTarget) {
+// `anchorEl` is the article's opening prose box, NOT its body root: on the
+// legacy NoteCast template those differ (the root is the container holding the
+// section boxes), and hanging the bar off the root would put it outside <main>,
+// above the article's own title.
+function injectWorkbenchButton(anchorEl, contentId, shareTarget) {
   const btn = el('button', { class: 'dcp-wb-button', type: 'button', 'aria-pressed': 'false' }, 'میز کار');
   const { btn: collectBtn, info: collectInfo, cap: collectCap } = injectCollectionButton(contentId);
   // Share sits in this row on ONE surface only: the desktop shell, where
@@ -61,7 +65,7 @@ function injectWorkbenchButton(proseRoot, contentId, shareTarget) {
     collectCap,
   ]);
   // Place it at the top of the article, just before the readable prose.
-  proseRoot.parentNode.insertBefore(bar, proseRoot);
+  anchorEl.parentNode.insertBefore(bar, anchorEl);
   return btn;
 }
 
@@ -81,13 +85,13 @@ function showInvitation(anchorBtn, onProceed) {
 
 // Wire the میز کار button + study mode onto a prose root. Shared by standalone
 // article pages (initArticle) and the desktop 3-column viewer (mountArticleWorkbench).
-async function setupWorkbench({ proseRoot, contentId, shareTarget }) {
+async function setupWorkbench({ proseRoot, proseAnchor, contentId, shareTarget }) {
   const Workbench = await loadWorkbench();
   // onChange keeps the button below in sync with the mode no matter WHO changed
   // it. The toolbar's own ✕ خروج calls wb.exit() directly, so without this the
   // article button kept saying «خروج از میز کار» after the workbench had closed.
   const wb = new Workbench({ contentId, proseRoot, onChange: () => updateBtn() });
-  const btn = injectWorkbenchButton(proseRoot, contentId, shareTarget);
+  const btn = injectWorkbenchButton(proseAnchor || proseRoot, contentId, shareTarget);
 
   // Reading-completion signal: started only for a signed-in reader (the /activity
   // endpoint requires auth) and only once. Guarded so a mid-page login does not
@@ -171,7 +175,7 @@ async function initArticle() {
   if (document.getElementById('ep-audio')) return;
 
   const contentId = detectContentId();
-  const { wb, updateBtn } = await setupWorkbench({ proseRoot, contentId });
+  const { wb, updateBtn } = await setupWorkbench({ proseRoot, proseAnchor: findProseBox(), contentId });
 
   // Post-login return-to-study (the funnel) or a remembered choice this session.
   // Never auto-enters on a fresh visit: sessionStorage is empty then.
@@ -203,8 +207,9 @@ let desktopWb = null;
 async function mountArticleWorkbench(root, url) {
   if (desktopWb) { try { desktopWb.exit(); } catch (_) { /* ignore */ } desktopWb = null; }
   if (!root || !url) return;
-  let proseRoot = null;
-  for (const sel of PROSE_SELECTORS) { const found = root.querySelector(sel); if (found) { proseRoot = found; break; } }
+  // Scoped to the injected article: the homepage around it has boxes of its own,
+  // so a document-wide lookup would find one of those first.
+  const proseRoot = findProseRoot(root);
   if (!proseRoot) return; // not an article (e.g. a viewer / patients panel)
   // The url may carry ?dcphl=<id> (a highlight deep link) and/or a hash; neither
   // is part of the content_id.
@@ -222,6 +227,7 @@ async function mountArticleWorkbench(root, url) {
   const shareUrl = new URL(path, location.origin).href;
   const { wb, updateBtn } = await setupWorkbench({
     proseRoot,
+    proseAnchor: findProseBox(root),
     contentId,
     shareTarget: () => ({
       title: (root.querySelector('h1')?.textContent || document.title).trim(),
