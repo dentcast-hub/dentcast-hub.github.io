@@ -10,7 +10,9 @@ import { ensurePushSubscription, removePushSubscription } from './push.js';
 import { leagueChip, maybeAnnounceOutcome } from './league.js';
 
 function flame(active) {
-  return el('span', { class: 'dc-plus-flame' + (active ? ' is-active' : ''), 'aria-hidden': 'true' }, '🔥');
+  const s = el('span', { class: 'dc-plus-flame' + (active ? ' is-active' : ''), 'aria-hidden': 'true' });
+  s.innerHTML = IC_FLAME; // static, trusted markup
+  return s;
 }
 
 // Crafted inline icons for the signed-out promo feature chips (cleaner than
@@ -18,6 +20,12 @@ function flame(active) {
 const IC_FLAME = '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M13 2s1 3-1.5 5.5S8 12 8 14a4 4 0 0 0 8 .3c.2-2.3-1.3-3.8-1-5.8 1.6.8 2.4 2 2.6 3.9A6.5 6.5 0 1 1 8.7 6.3 12 12 0 0 0 13 2z"/></svg>';
 const IC_STAR = '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2l2.9 6.3 6.9.7-5.1 4.7 1.4 6.8L12 17.8 5.9 21.2l1.4-6.8L2.2 9.7l6.9-.7z"/></svg>';
 const IC_BELL = '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 22a2.3 2.3 0 0 0 2.3-2.3H9.7A2.3 2.3 0 0 0 12 22zm7-6.3-1.7-2v-3.2a5.4 5.4 0 0 0-4.2-5.3V4.5a1.1 1.1 0 1 0-2.2 0v.7A5.4 5.4 0 0 0 6.7 10.5v3.2L5 15.7a.9.9 0 0 0 .7 1.5h12.6a.9.9 0 0 0 .7-1.5z"/></svg>';
+// Line icons for the signed-in stat strip (variant-1 redesign, 2026-08-11):
+// stroke-based so they follow currentColor in both themes, replacing the
+// 🔥⭐🛡️ emojis that clashed with the flat homepage language.
+const IC_SHIELD = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 5 6v5c0 4.5 3 8 7 10 4-2 7-5.5 7-10V6z"/></svg>';
+const IC_STAR_LINE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1L3.2 9.4l6.1-.9z"/></svg>';
+const IC_CHEV = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m14 6-6 6 6 6"/></svg>';
 // The «؟» caption's shield line. Plain language, short sentences, and every
 // number from the server (`first_cost`, `step`, `next_in`) so the copy can never
 // disagree with the ladder the API actually applies.
@@ -41,15 +49,12 @@ function shieldTitle(available, fz) {
   return t;
 }
 
-// Streak-shield row, identical to the پیشخوان's: one icon per shield in hand.
-// There is no cap, so there are no empty slots to draw — when the user holds
-// none, a single dimmed shield stands in as the "not yet" state.
+// Streak-shield icon. The stat strip shows ONE line-icon plus the count (the
+// count is the number; repeating the glyph per shield fought the flat layout).
+// Zero in hand = the same icon, dimmed — the "not yet" state.
 function paintShields(host, available) {
-  const icons = [];
-  for (let i = 0; i < Math.max(1, available); i += 1) {
-    icons.push(el('span', { class: 'dc-plus-shield-ico' + (i < available ? '' : ' is-empty') }, '🛡️'));
-  }
-  host.replaceChildren(...icons);
+  host.innerHTML = IC_SHIELD; // static, trusted markup
+  host.classList.toggle('is-empty', available < 1);
 }
 
 function renderAnon(card) {
@@ -110,10 +115,9 @@ async function renderLoggedIn(card, user) {
   // place, without re-rendering the whole card.
   const flameEl = flame(streakIsActiveToday(me.last_active_day));
   const streakNumEl = el('span', { class: 'dc-plus-streak-n' }, faNum(me.current_streak || 0));
-  const streakLine = el('a', { class: 'dc-plus-streak', href: '/plus/' }, [
-    flameEl,
-    streakNumEl,
-    el('span', { class: 'dc-plus-streak-lbl' }, 'روز پیاپی'),
+  const streakLine = el('a', { class: 'dc-plus-stat dc-plus-streak', href: '/plus/' }, [
+    el('span', { class: 'dc-plus-stat-v' }, [flameEl, streakNumEl]),
+    el('span', { class: 'dc-plus-stat-k' }, 'روز پیاپی'),
   ]);
 
   // Score (⭐) sits inline beside the streak: the all-time total from score.ts
@@ -125,13 +129,15 @@ async function renderLoggedIn(card, user) {
   // never call a shield "bought": the «؟» caption spells both out.
   const scoreNumEl = (typeof progress.score === 'number')
     ? el('span', { class: 'dc-plus-score-n' }, faNum(progress.score)) : null;
-  const scoreBadge = scoreNumEl
-    ? el('span', { class: 'dc-plus-score', title: 'امتیاز شما' }, [
-        el('span', { class: 'dc-plus-score-ico', 'aria-hidden': 'true' }, '⭐'),
-        scoreNumEl,
-        el('span', { class: 'dc-plus-score-lbl' }, 'امتیاز'),
-      ])
-    : null;
+  let scoreBadge = null;
+  if (scoreNumEl) {
+    const starIco = el('span', { class: 'dc-plus-score-ico', 'aria-hidden': 'true' });
+    starIco.innerHTML = IC_STAR_LINE; // static, trusted markup
+    scoreBadge = el('span', { class: 'dc-plus-stat dc-plus-score', title: 'امتیاز شما' }, [
+      el('span', { class: 'dc-plus-stat-v' }, [starIco, scoreNumEl]),
+      el('span', { class: 'dc-plus-stat-k' }, 'امتیاز'),
+    ]);
+  }
 
   // Streak shields (سپر) — the very same value the پیشخوان shows, read from the
   // same `progress.freezes` payload, so the two never disagree: filled 🛡️ for a
@@ -146,8 +152,11 @@ async function renderLoggedIn(card, user) {
     paintShields(shieldIconsEl, available);
     shieldNumEl = el('span', { class: 'dc-plus-shield-n' }, faNum(available));
     shieldBadge = el('span', {
-      class: 'dc-plus-shield', title: shieldTitle(available, fz),
-    }, [shieldIconsEl, shieldNumEl, el('span', { class: 'dc-plus-shield-lbl' }, 'سپر')]);
+      class: 'dc-plus-stat dc-plus-shield', title: shieldTitle(available, fz),
+    }, [
+      el('span', { class: 'dc-plus-stat-v' }, [shieldIconsEl, shieldNumEl]),
+      el('span', { class: 'dc-plus-stat-k' }, 'سپر'),
+    ]);
   }
 
   // League chip (opens the weekly-league overlay). Present whenever /league
@@ -163,15 +172,12 @@ async function renderLoggedIn(card, user) {
   const lastId = progress.last_content_id || recentId;
   const last = lastId ? contentInfo(model, lastId) : null;
 
-  // Row 1 — the glanceable STAT RAIL: streak · score · سپر · league, tidy with
-  // hairline dividers between whatever is present. A small «؟» reveals a one-line
-  // scoring caption on demand (kept out of the way so the rail stays glanceable).
-  const stats = [streakLine, scoreBadge, shieldBadge, leagueChipEl].filter(Boolean);
-  const rail = el('div', { class: 'dc-plus-statrail' });
-  stats.forEach((s, i) => {
-    if (i) rail.appendChild(el('span', { class: 'dc-plus-div', 'aria-hidden': 'true' }));
-    rail.appendChild(s);
-  });
+  // Row 1 — the glanceable STAT STRIP (variant-1 redesign): streak · score ·
+  // سپر as three equal columns, hairline-divided in CSS (::after), numbers
+  // tabular. The league moved to its own row below so this strip stays purely
+  // "my numbers".
+  const stats = [streakLine, scoreBadge, shieldBadge].filter(Boolean);
+  const rail = el('div', { class: 'dc-plus-statrail' }, stats);
   // The «؟» caption: how the score is earned, plus — now that the rail carries
   // سپر — what a streak shield is and how it charges. The shield line is built
   // from the same `freezes` payload (never hardcoded numbers) and says the same
@@ -197,16 +203,25 @@ async function renderLoggedIn(card, user) {
     class: 'dc-plus-info', type: 'button', title: capTitle, 'aria-label': capTitle,
   }, '؟');
   info.addEventListener('click', () => { scoreCap.hidden = !scoreCap.hidden; });
-  rail.appendChild(info);
 
-  const rows = [rail, scoreCap];
+  // Row 2 — the league on its own hairline row, with the «؟» at its far end.
+  // The chip element itself (and its click → league overlay) is unchanged.
+  const leagueRow = el('div', { class: 'dc-plus-leaguerow' },
+    [leagueChipEl, info].filter(Boolean));
 
-  // Row 2 — the one primary action: continue where you left off.
+  const rows = [rail, leagueRow, scoreCap];
+
+  // Row 3 — the one primary action: continue where you left off.
   if (last) {
-    const lead = last.type === 'episodes' ? 'ادامه گوش دادن: ' : 'ادامه خواندن: ';
+    const lead = last.type === 'episodes' ? 'ادامه گوش دادن' : 'ادامه خواندن';
+    const chev = el('span', { class: 'dc-plus-material-chev', 'aria-hidden': 'true' });
+    chev.innerHTML = IC_CHEV; // static, trusted markup
     rows.push(el('a', { class: 'dc-plus-material', href: last.url }, [
-      el('span', { class: 'dc-plus-material-lead' }, lead),
-      el('span', {}, last.title),
+      el('span', { class: 'dc-plus-material-txt' }, [
+        el('span', { class: 'dc-plus-material-lead' }, lead),
+        el('span', { class: 'dc-plus-material-title' }, last.title),
+      ]),
+      chev,
     ]));
   }
   // NOTE — no premium rows here any more. The due-card line and the locked
@@ -216,8 +231,11 @@ async function renderLoggedIn(card, user) {
   // to. This card is now only the reader's own material, and it is one row
   // SHORTER than it was — never add a premium teaser back into it.
 
-  // Row 3 — connection chips, demoted to a lighter row under a divider.
-  rows.push(el('div', { class: 'dc-plus-connrow' }, [connectionsRow(me)]));
+  // Row 4 — connection chips on a tinted bottom bar, with a quiet label.
+  rows.push(el('div', { class: 'dc-plus-connrow' }, [
+    el('span', { class: 'dc-plus-conn-lbl' }, 'اعلان‌ها'),
+    connectionsRow(me),
+  ]));
 
   card.replaceChildren(el('div', { class: 'dc-plus-home-inner' }, rows));
 
