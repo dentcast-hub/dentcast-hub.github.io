@@ -14,8 +14,8 @@ import {
 } from '../services/subscription.js';
 import { getCapacity } from '../services/payment-capacity.js';
 import { reconcilePendingPayments } from '../services/payment-reconcile.js';
-import { pillarRoster } from '../services/pillar.js';
-import { pillarWelcomeBackfill } from '../services/pillar-notify.js';
+import { pillarRoster, grantPillarSeat, revokePillarSeat } from '../services/pillar.js';
+import { pillarWelcomeBackfill, schedulePillarWelcome } from '../services/pillar-notify.js';
 import {
   availableCredits, creditPercent, pickCredits, CREDIT_CAP_PERCENT,
 } from '../services/discount-credits.js';
@@ -27,9 +27,11 @@ import {
 } from '../services/spot-stats.js';
 import { withPageViews } from '../services/view-stats.js';
 import {
-  recordBroadcast, claimBroadcastPush, pendingBroadcastPushes, mirrorPath, type NoticeAudience,
+  recordBroadcast, claimBroadcastPush, pendingBroadcastPushes, mirrorPath,
+  recordInAppNotice, type NoticeAudience,
 } from '../services/notices.js';
 import { sendCapped, inAwakeWindow } from '../services/notify-policy.js';
+import { dayInTz } from '../services/time.js';
 import {
   deliverBroadcast, broadcastMessage, releaseHeldBroadcastPushes,
 } from '../services/broadcast.js';
@@ -407,6 +409,86 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
     }
     void deliverBroadcast(row.id, row.audience, broadcastMessage(row), new Date());
     return reply.send({ ok: true, pushed: true, broadcast_id: row.id, push: 'queued' });
+  });
+
+  /**
+   * POST /admin/notices/user { user|phone, title, body?, url?, push?, force? }
+   * — one message to ONE reader.
+   *
+   * The broadcast above is for everybody and its narrowest audience is a whole
+   * tier, so thanking one person with it would have told every premium reader
+   * they had been thanked. This goes through the same door every other
+   * notification does (sendCapped), which is what gives the message an اطلاعیه
+   * row carrying its own text, and it uses the `system` kind, which is uncapped:
+   * a personal note from the founder never spends a reader's daily push budget.
+   *
+   * The اطلاعیه row ALWAYS lands, instantly, whatever the hour — that half is a
+   * row in a table nobody's phone can be woken by. Only `push` is an
+   * interruption, so it respects the awake window unless `force`, exactly as the
+   * broadcast does. Unlike a broadcast there is no HOLD: the morning release
+   * sweep walks `notice_broadcasts`, which a personal notice has no row in, so
+   * an out-of-hours push is reported as skipped and the founder decides whether
+   * to force it or send it again later — rather than being silently queued into
+   * machinery that would never pick it up.
+   */
+  // The schema is spelled out rather than built with userBody() below: this
+  // route registers before that helper's declaration is reached, and moving the
+  // endpoint away from the other notice routes to borrow it would cost more in
+  // readability than the six lines it saves.
+  app.post('/admin/notices/user', {
+    schema: {
+      body: {
+        type: 'object',
+        required: ['title'],
+        properties: {
+          user: { type: 'string' },
+          phone: { type: 'string' },
+          title: { type: 'string' },
+          body: { type: 'string' },
+          url: { type: 'string' },
+          push: { type: 'boolean' },
+          force: { type: 'boolean' },
+        },
+      },
+    },
+  }, async (request, reply) => {
+    const b = request.body as {
+      user?: string; phone?: string; title: string;
+      body?: string; url?: string; push?: boolean; force?: boolean;
+    };
+    const who = await resolveUser(pick(b), reply);
+    if (!who) return reply;
+    const title = (b.title || '').trim();
+    if (!title) return reply.code(400).send({ error: 'empty_title' });
+
+    const now = new Date();
+    const message: NotificationMessage = {
+      title,
+      body: (b.body || '').trim() || '',
+      // Same normalisation as the broadcast, for the same reason: a full
+      // https://dentcast.ir/... pasted into the form must not open .org readers
+      // on the wrong mirror and sign them out (see mirrorPath).
+      url: mirrorPath((b.url || '').trim() || null) ?? undefined,
+      tag: 'admin_notice',
+    };
+    const travels = Boolean(b.push) && (inAwakeWindow(now) || Boolean(b.force));
+
+    if (travels) {
+      await sendCapped(who.id, message, 'system', now, { inbox: true });
+    } else {
+      // Inbox-only: written with delivered = false, which is the same shape a
+      // capped-out message takes — in the panel, never counted as sent.
+      await recordInAppNotice(who.id, 'system', message, dayInTz(now, config.streakTimezone));
+    }
+
+    return reply.send({
+      ok: true,
+      user_id: who.id,
+      display_name: who.display_name,
+      notice: 'delivered',
+      push: travels ? 'queued' : 'off',
+      push_skipped: !travels && b.push ? 'outside_awake_window' : null,
+    });
   });
 
   // POST /admin/notices/release-held — run the morning release now (the cron does
@@ -1072,6 +1154,63 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
   // the hour a batch of phones buzzes.
   app.post('/admin/pillar/welcome', async (_request, reply) => {
     return reply.send({ ok: true, ...await pillarWelcomeBackfill(new Date()) });
+  });
+
+  /**
+   * POST /admin/pillar/grant { user|phone, note?, welcome? } — seat somebody the
+   * gateway will never seat.
+   *
+   * The seat is derived from claims, and until now the only claim was money
+   * (services/pillar.ts). A person who helped build this and is never going to
+   * appear in a payments ledger had no way in that did not involve forging a
+   * payment — which would lie to revenue, to the gateway's monthly ceiling and
+   * to the discount-credit join. So the grant is stored as a decision, beside
+   * the ledger, and ranked in the same one query.
+   *
+   * `seated: false` in the response is not an error and must be read: the grant
+   * row is real, but the seats were already gone, so it bought nothing. The
+   * count never grows to make room — a granted seat SPENDS one of the fifty.
+   *
+   * `welcome` (default true) sends the same «تو ستون شدی» message a purchased
+   * seat gets, once ever per account. It is on by default here and off by
+   * default in the backfill above for the same reason: this is one person at a
+   * moment the founder chose, not a batch of phones.
+   */
+  app.post('/admin/pillar/grant', userBody({
+    note: { type: 'string', maxLength: 200 },
+    welcome: { type: 'boolean' },
+  }), async (request, reply) => {
+    const b = request.body as {
+      user?: string; phone?: string; note?: string; welcome?: boolean;
+    };
+    const who = await resolveUser(pick(b), reply);
+    if (!who) return reply;
+    const result = await grantPillarSeat(who.id, (b.note || '').trim() || null);
+    if (result.seated && b.welcome !== false) schedulePillarWelcome(who.id);
+    return reply.send({
+      ok: true,
+      user_id: who.id,
+      display_name: who.display_name,
+      ...result,
+      welcome: result.seated && b.welcome !== false ? 'queued' : 'off',
+    });
+  });
+
+  /**
+   * POST /admin/pillar/revoke { user|phone } — take a granted seat back.
+   *
+   * Deletes the grant row and nothing else, so a seat somebody PAID for cannot
+   * be revoked here however the endpoint is called: `removed: false` with a
+   * non-null seat is exactly that case, and it is the honest answer rather than
+   * a 400. The response's `seat` is what the account holds afterwards.
+   */
+  app.post('/admin/pillar/revoke', userBody(), async (request, reply) => {
+    const who = await resolveUser(pick(request.body as { user?: string; phone?: string }), reply);
+    if (!who) return reply;
+    return reply.send({
+      ok: true, user_id: who.id, display_name: who.display_name,
+      ...await revokePillarSeat(who.id),
+    });
   });
 
   // --- one-time discount credits --------------------------------------------
