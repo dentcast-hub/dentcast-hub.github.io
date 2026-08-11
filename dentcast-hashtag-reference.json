@@ -364,7 +364,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 82,
+   "count": 83,
    "content_ids": [
     "episodes/episode-122-1",
     "episodes/episode-122-2",
@@ -447,7 +447,8 @@
     "insight/insight-60",
     "insight/insight-61",
     "insight/insight-62",
-    "insight/insight-63"
+    "insight/insight-63",
+    "insight/insight-64"
    ]
   },
   {
@@ -648,7 +649,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 33,
+   "count": 34,
    "content_ids": [
     "episodes/episode-14",
     "episodes/episode-25",
@@ -682,7 +683,8 @@
     "chairside/chairside-24",
     "chairside/chairside-26",
     "chairside/chairside-28",
-    "chairside/chairside-29"
+    "chairside/chairside-29",
+    "insight/insight-64"
    ]
   },
   {
@@ -734,6 +736,105 @@
    ]
   },
   {
+   "key": "چیرساید",
+   "tag": "#چیرساید",
+   "domain": "brand",
+   "words": 1,
+   "definition": "نام سری چیرساید — یادداشت کوتاه از یک ویزیت واقعی، با تصمیمی که سر یونیت گرفته شد.",
+   "use_when": "روی هر مدخل چیرساید، و هیچ‌جای دیگر.",
+   "aliases": [
+    "chairside",
+    "چیر ساید"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 30,
+   "content_ids": [
+    "chairside/chairside-1",
+    "chairside/chairside-2",
+    "chairside/chairside-3",
+    "chairside/chairside-4",
+    "chairside/chairside-5",
+    "chairside/chairside-6",
+    "chairside/chairside-7",
+    "chairside/chairside-8",
+    "chairside/chairside-9",
+    "chairside/chairside-10",
+    "chairside/chairside-11",
+    "chairside/chairside-12",
+    "chairside/chairside-13",
+    "chairside/chairside-14",
+    "chairside/chairside-15",
+    "chairside/chairside-16",
+    "chairside/chairside-17",
+    "chairside/chairside-18",
+    "chairside/chairside-19",
+    "chairside/chairside-20",
+    "chairside/chairside-21",
+    "chairside/chairside-22",
+    "chairside/chairside-23",
+    "chairside/chairside-24",
+    "chairside/chairside-25",
+    "chairside/chairside-26",
+    "chairside/chairside-27",
+    "chairside/chairside-28",
+    "chairside/chairside-29",
+    "chairside/chairside-30"
+   ]
+  },
+  {
+   "key": "کیس_بالینی",
+   "tag": "#کیس_بالینی",
+   "domain": "brand",
+   "words": 2,
+   "definition": "گزارش یک کیس واقعی، از شرح مراجعه تا تصمیم.",
+   "use_when": "روی مدخل‌هایی که ساختارشان گزارش کیس است.",
+   "aliases": [
+    "ویزیت کلینیکی",
+    "گزارش کیس",
+    "کیس ریپورت",
+    "case report"
+   ],
+   "variants": [
+    "#ویزیت_کلینیکی",
+    "#گزارش_کیس"
+   ],
+   "co_tags": [],
+   "count": 30,
+   "content_ids": [
+    "chairside/chairside-1",
+    "chairside/chairside-2",
+    "chairside/chairside-3",
+    "chairside/chairside-4",
+    "chairside/chairside-5",
+    "chairside/chairside-6",
+    "chairside/chairside-7",
+    "chairside/chairside-8",
+    "chairside/chairside-9",
+    "chairside/chairside-10",
+    "chairside/chairside-11",
+    "chairside/chairside-12",
+    "chairside/chairside-13",
+    "chairside/chairside-14",
+    "chairside/chairside-15",
+    "chairside/chairside-16",
+    "chairside/chairside-17",
+    "chairside/chairside-18",
+    "chairside/chairside-19",
+    "chairside/chairside-20",
+    "chairside/chairside-21",
+    "chairside/chairside-22",
+    "chairside/chairside-23",
+    "chairside/chairside-24",
+    "chairside/chairside-25",
+    "chairside/chairside-26",
+    "chairside/chairside-27",
+    "chairside/chairside-28",
+    "chairside/chairside-29",
+    "chairside/chairside-30"
+   ]
+  },
+  {
    "key": "دنتوپدیا",
    "tag": "#دنتوپدیا",
    "domain": "brand",
@@ -776,103 +877,6 @@
     "episodes/episode-150-1",
     "episodes/episode-150-2",
     "episodes/episode-159-1"
-   ]
-  },
-  {
-   "key": "چیرساید",
-   "tag": "#چیرساید",
-   "domain": "brand",
-   "words": 1,
-   "definition": "نام سری چیرساید — یادداشت کوتاه از یک ویزیت واقعی، با تصمیمی که سر یونیت گرفته شد.",
-   "use_when": "روی هر مدخل چیرساید، و هیچ‌جای دیگر.",
-   "aliases": [
-    "chairside",
-    "چیر ساید"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 29,
-   "content_ids": [
-    "chairside/chairside-1",
-    "chairside/chairside-2",
-    "chairside/chairside-3",
-    "chairside/chairside-4",
-    "chairside/chairside-5",
-    "chairside/chairside-6",
-    "chairside/chairside-7",
-    "chairside/chairside-8",
-    "chairside/chairside-9",
-    "chairside/chairside-10",
-    "chairside/chairside-11",
-    "chairside/chairside-12",
-    "chairside/chairside-13",
-    "chairside/chairside-14",
-    "chairside/chairside-15",
-    "chairside/chairside-16",
-    "chairside/chairside-17",
-    "chairside/chairside-18",
-    "chairside/chairside-19",
-    "chairside/chairside-20",
-    "chairside/chairside-21",
-    "chairside/chairside-22",
-    "chairside/chairside-23",
-    "chairside/chairside-24",
-    "chairside/chairside-25",
-    "chairside/chairside-26",
-    "chairside/chairside-27",
-    "chairside/chairside-28",
-    "chairside/chairside-29"
-   ]
-  },
-  {
-   "key": "کیس_بالینی",
-   "tag": "#کیس_بالینی",
-   "domain": "brand",
-   "words": 2,
-   "definition": "گزارش یک کیس واقعی، از شرح مراجعه تا تصمیم.",
-   "use_when": "روی مدخل‌هایی که ساختارشان گزارش کیس است.",
-   "aliases": [
-    "ویزیت کلینیکی",
-    "گزارش کیس",
-    "کیس ریپورت",
-    "case report"
-   ],
-   "variants": [
-    "#ویزیت_کلینیکی",
-    "#گزارش_کیس"
-   ],
-   "co_tags": [],
-   "count": 29,
-   "content_ids": [
-    "chairside/chairside-1",
-    "chairside/chairside-2",
-    "chairside/chairside-3",
-    "chairside/chairside-4",
-    "chairside/chairside-5",
-    "chairside/chairside-6",
-    "chairside/chairside-7",
-    "chairside/chairside-8",
-    "chairside/chairside-9",
-    "chairside/chairside-10",
-    "chairside/chairside-11",
-    "chairside/chairside-12",
-    "chairside/chairside-13",
-    "chairside/chairside-14",
-    "chairside/chairside-15",
-    "chairside/chairside-16",
-    "chairside/chairside-17",
-    "chairside/chairside-18",
-    "chairside/chairside-19",
-    "chairside/chairside-20",
-    "chairside/chairside-21",
-    "chairside/chairside-22",
-    "chairside/chairside-23",
-    "chairside/chairside-24",
-    "chairside/chairside-25",
-    "chairside/chairside-26",
-    "chairside/chairside-27",
-    "chairside/chairside-28",
-    "chairside/chairside-29"
    ]
   },
   {
@@ -1295,7 +1299,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 21,
+   "count": 22,
    "content_ids": [
     "episodes/episode-48",
     "episodes/episode-49",
@@ -1317,7 +1321,8 @@
     "metanotes/meta-18",
     "insight/insight-57",
     "insight/insight-58",
-    "chairside/chairside-26"
+    "chairside/chairside-26",
+    "insight/insight-64"
    ]
   },
   {
@@ -1433,6 +1438,40 @@
    ]
   },
   {
+   "key": "فرول",
+   "tag": "#فرول",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "حلقه‌ی دیواره‌ی سالمِ دندان که روکش رویش می‌نشیند.",
+   "use_when": "مقاله فرول را شرطِ تصمیم بداند.",
+   "aliases": [
+    "ferrule"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 18,
+   "content_ids": [
+    "episodes/episode-47",
+    "episodes/episode-48",
+    "episodes/episode-49",
+    "episodes/episode-147-7",
+    "insight/insight-4",
+    "insight/insight-7",
+    "insight/insight-13",
+    "chairside/chairside-5",
+    "chairside/chairside-6",
+    "chairside/chairside-9",
+    "dentai/dentai-27",
+    "metanotes/meta-15",
+    "metanotes/meta-19",
+    "insight/insight-58",
+    "chairside/chairside-27",
+    "chairside/chairside-28",
+    "insight/insight-64",
+    "chairside/chairside-30"
+   ]
+  },
+  {
    "key": "انتخاب_متریال",
    "tag": "#انتخاب_متریال",
    "domain": "clinical",
@@ -1538,38 +1577,6 @@
     "insight/insight-36",
     "dentai/dentai-27",
     "insight/insight-59"
-   ]
-  },
-  {
-   "key": "فرول",
-   "tag": "#فرول",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "حلقه‌ی دیواره‌ی سالمِ دندان که روکش رویش می‌نشیند.",
-   "use_when": "مقاله فرول را شرطِ تصمیم بداند.",
-   "aliases": [
-    "ferrule"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 16,
-   "content_ids": [
-    "episodes/episode-47",
-    "episodes/episode-48",
-    "episodes/episode-49",
-    "episodes/episode-147-7",
-    "insight/insight-4",
-    "insight/insight-7",
-    "insight/insight-13",
-    "chairside/chairside-5",
-    "chairside/chairside-6",
-    "chairside/chairside-9",
-    "dentai/dentai-27",
-    "metanotes/meta-15",
-    "metanotes/meta-19",
-    "insight/insight-58",
-    "chairside/chairside-27",
-    "chairside/chairside-28"
    ]
   },
   {
@@ -2130,6 +2137,39 @@
    ]
   },
   {
+   "key": "پروگنوز_دندان",
+   "tag": "#پروگنوز_دندان",
+   "domain": null,
+   "words": 2,
+   "definition": "پیش‌بینیِ سرنوشت یک دندانِ مشخص پیش از سرمایه‌گذاری روی آن.",
+   "use_when": "مقاله پیش از درمان قطعی پروگنوز را بسنجد.",
+   "aliases": [
+    "پروگنوز",
+    "prognosis",
+    "پیش آگهی دندان"
+   ],
+   "variants": [
+    "#پروگنوز",
+    "#ارزیابی_دندان"
+   ],
+   "co_tags": [],
+   "count": 12,
+   "content_ids": [
+    "episodes/episode-150-2",
+    "episodes/episode-151",
+    "insight/insight-7",
+    "insight/insight-14",
+    "episodes/episode-152",
+    "episodes/episode-153",
+    "chairside/chairside-4",
+    "chairside/chairside-9",
+    "chairside/chairside-13",
+    "chairside/chairside-14",
+    "chairside/chairside-21",
+    "chairside/chairside-30"
+   ]
+  },
+  {
    "key": "کامپوزیت",
    "tag": "#کامپوزیت",
    "domain": "clinical",
@@ -2189,6 +2229,35 @@
    ]
   },
   {
+   "key": "افزایش_طول_تاج",
+   "tag": "#افزایش_طول_تاج",
+   "domain": null,
+   "words": 3,
+   "definition": "crown lengthening — به‌دست آوردن ساختار با جابه‌جایی لثه و استخوان.",
+   "use_when": "مقاله این جراحی را تجویز، رد، یا هزینه‌اش را بسنجد.",
+   "aliases": [
+    "کراون لنتنینگ",
+    "crown lengthening",
+    "لنتنینگ"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 11,
+   "content_ids": [
+    "episodes/episode-75",
+    "episodes/episode-76",
+    "episodes/episode-77",
+    "episodes/episode-78",
+    "insight/insight-7",
+    "chairside/chairside-6",
+    "chairside/chairside-16",
+    "chairside/chairside-21",
+    "insight/insight-55",
+    "insight/insight-64",
+    "chairside/chairside-30"
+   ]
+  },
+  {
    "key": "اوردنچر",
    "tag": "#اوردنچر",
    "domain": "clinical",
@@ -2217,38 +2286,6 @@
     "notecast/episode-27",
     "chairside/chairside-8",
     "chairside/chairside-11"
-   ]
-  },
-  {
-   "key": "پروگنوز_دندان",
-   "tag": "#پروگنوز_دندان",
-   "domain": null,
-   "words": 2,
-   "definition": "پیش‌بینیِ سرنوشت یک دندانِ مشخص پیش از سرمایه‌گذاری روی آن.",
-   "use_when": "مقاله پیش از درمان قطعی پروگنوز را بسنجد.",
-   "aliases": [
-    "پروگنوز",
-    "prognosis",
-    "پیش آگهی دندان"
-   ],
-   "variants": [
-    "#پروگنوز",
-    "#ارزیابی_دندان"
-   ],
-   "co_tags": [],
-   "count": 11,
-   "content_ids": [
-    "episodes/episode-150-2",
-    "episodes/episode-151",
-    "insight/insight-7",
-    "insight/insight-14",
-    "episodes/episode-152",
-    "episodes/episode-153",
-    "chairside/chairside-4",
-    "chairside/chairside-9",
-    "chairside/chairside-13",
-    "chairside/chairside-14",
-    "chairside/chairside-21"
    ]
   },
   {
@@ -2676,30 +2713,60 @@
    ]
   },
   {
-   "key": "افزایش_طول_تاج",
-   "tag": "#افزایش_طول_تاج",
-   "domain": null,
-   "words": 3,
-   "definition": "crown lengthening — به‌دست آوردن ساختار با جابه‌جایی لثه و استخوان.",
-   "use_when": "مقاله این جراحی را تجویز، رد، یا هزینه‌اش را بسنجد.",
+   "key": "حفظ_دندان",
+   "tag": "#حفظ_دندان",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "نگه داشتنِ دندانِ questionable در برابر کشیدن و جایگزینی.",
+   "use_when": "مقاله بین حفظ و کشیدن تصمیم بگیرد.",
    "aliases": [
-    "کراون لنتنینگ",
-    "crown lengthening",
-    "لنتنینگ"
+    "tooth preservation",
+    "نگه داشتن دندان",
+    "tooth retention"
+   ],
+   "variants": [
+    "#نگهداری_دندان"
+   ],
+   "co_tags": [],
+   "count": 9,
+   "content_ids": [
+    "episodes/episode-150-2",
+    "episodes/episode-151",
+    "metanotes/meta-6",
+    "episodes/episode-152",
+    "episodes/episode-153",
+    "chairside/chairside-4",
+    "chairside/chairside-13",
+    "chairside/chairside-16",
+    "chairside/chairside-30"
+   ]
+  },
+  {
+   "key": "دکتر_شهابیان",
+   "tag": "#دکتر_شهابیان",
+   "domain": "brand",
+   "words": 2,
+   "definition": "دکتر فؤاد شهابیان — میزبانِ دنتکست و صاحبِ کانسپت‌های اختصاصی.",
+   "use_when": "روی محتوایی که کانسپتِ شخصیِ او موضوع است.",
+   "aliases": [
+    "شهابیان",
+    "کانسپت شهابیان",
+    "foad shahabian",
+    "دکتر فواد شهابیان"
    ],
    "variants": [],
    "co_tags": [],
    "count": 9,
    "content_ids": [
-    "episodes/episode-75",
-    "episodes/episode-76",
-    "episodes/episode-77",
-    "episodes/episode-78",
-    "insight/insight-7",
-    "chairside/chairside-6",
-    "chairside/chairside-16",
-    "chairside/chairside-21",
-    "insight/insight-55"
+    "episodes/episode-148-2",
+    "chairside/chairside-23",
+    "chairside/chairside-24",
+    "chairside/chairside-25",
+    "chairside/chairside-26",
+    "chairside/chairside-27",
+    "chairside/chairside-28",
+    "chairside/chairside-29",
+    "chairside/chairside-30"
    ]
   },
   {
@@ -2941,58 +3008,29 @@
    ]
   },
   {
-   "key": "حفظ_دندان",
-   "tag": "#حفظ_دندان",
-   "domain": "clinical",
+   "key": "دندان_اندوشده",
+   "tag": "#دندان_اندوشده",
+   "domain": null,
    "words": 2,
-   "definition": "نگه داشتنِ دندانِ questionable در برابر کشیدن و جایگزینی.",
-   "use_when": "مقاله بین حفظ و کشیدن تصمیم بگیرد.",
+   "definition": "دندانی که درمان ریشه شده و بازسازی می‌خواهد.",
+   "use_when": "مقاله بازسازیِ دندان اندوشده را تعیین کند.",
    "aliases": [
-    "tooth preservation",
-    "نگه داشتن دندان",
-    "tooth retention"
-   ],
-   "variants": [
-    "#نگهداری_دندان"
-   ],
-   "co_tags": [],
-   "count": 8,
-   "content_ids": [
-    "episodes/episode-150-2",
-    "episodes/episode-151",
-    "metanotes/meta-6",
-    "episodes/episode-152",
-    "episodes/episode-153",
-    "chairside/chairside-4",
-    "chairside/chairside-13",
-    "chairside/chairside-16"
-   ]
-  },
-  {
-   "key": "دکتر_شهابیان",
-   "tag": "#دکتر_شهابیان",
-   "domain": "brand",
-   "words": 2,
-   "definition": "دکتر فؤاد شهابیان — میزبانِ دنتکست و صاحبِ کانسپت‌های اختصاصی.",
-   "use_when": "روی محتوایی که کانسپتِ شخصیِ او موضوع است.",
-   "aliases": [
-    "شهابیان",
-    "کانسپت شهابیان",
-    "foad shahabian",
-    "دکتر فواد شهابیان"
+    "endodontically treated teeth",
+    "دندان اندو شده",
+    "دندان عصب کشی شده"
    ],
    "variants": [],
    "co_tags": [],
    "count": 8,
    "content_ids": [
-    "episodes/episode-148-2",
-    "chairside/chairside-23",
-    "chairside/chairside-24",
-    "chairside/chairside-25",
-    "chairside/chairside-26",
-    "chairside/chairside-27",
-    "chairside/chairside-28",
-    "chairside/chairside-29"
+    "episodes/episode-40",
+    "episodes/episode-41",
+    "episodes/episode-47",
+    "episodes/episode-122-3",
+    "insight/insight-4",
+    "insight/insight-39",
+    "dentai/dentai-27",
+    "insight/insight-64"
    ]
   },
   {
@@ -3045,6 +3083,33 @@
     "dentai/dentai-4",
     "insight/insight-4",
     "dentai/dentai-16"
+   ]
+  },
+  {
+   "key": "کشیدن_دندان",
+   "tag": "#کشیدن_دندان",
+   "domain": null,
+   "words": 2,
+   "definition": "تصمیم به خارج کردن دندان.",
+   "use_when": "مقاله بین حفظ و کشیدن انتخاب کند.",
+   "aliases": [
+    "اکستراکشن",
+    "extraction",
+    "اکسترکشن",
+    "خارج کردن دندان"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 8,
+   "content_ids": [
+    "episodes/episode-151",
+    "episodes/episode-152",
+    "episodes/episode-153",
+    "chairside/chairside-13",
+    "chairside/chairside-14",
+    "chairside/chairside-21",
+    "sharehub/share-12",
+    "chairside/chairside-30"
    ]
   },
   {
@@ -3224,31 +3289,6 @@
    ]
   },
   {
-   "key": "دندان_اندوشده",
-   "tag": "#دندان_اندوشده",
-   "domain": null,
-   "words": 2,
-   "definition": "دندانی که درمان ریشه شده و بازسازی می‌خواهد.",
-   "use_when": "مقاله بازسازیِ دندان اندوشده را تعیین کند.",
-   "aliases": [
-    "endodontically treated teeth",
-    "دندان اندو شده",
-    "دندان عصب کشی شده"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 7,
-   "content_ids": [
-    "episodes/episode-40",
-    "episodes/episode-41",
-    "episodes/episode-47",
-    "episodes/episode-122-3",
-    "insight/insight-4",
-    "insight/insight-39",
-    "dentai/dentai-27"
-   ]
-  },
-  {
    "key": "سایلان",
    "tag": "#سایلان",
    "domain": null,
@@ -3405,32 +3445,6 @@
     "episodes/episode-130",
     "episodes/episode-139",
     "episodes/episode-146"
-   ]
-  },
-  {
-   "key": "کشیدن_دندان",
-   "tag": "#کشیدن_دندان",
-   "domain": null,
-   "words": 2,
-   "definition": "تصمیم به خارج کردن دندان.",
-   "use_when": "مقاله بین حفظ و کشیدن انتخاب کند.",
-   "aliases": [
-    "اکستراکشن",
-    "extraction",
-    "اکسترکشن",
-    "خارج کردن دندان"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 7,
-   "content_ids": [
-    "episodes/episode-151",
-    "episodes/episode-152",
-    "episodes/episode-153",
-    "chairside/chairside-13",
-    "chairside/chairside-14",
-    "chairside/chairside-21",
-    "sharehub/share-12"
    ]
   },
   {
@@ -5311,6 +5325,30 @@
    ]
   },
   {
+   "key": "رشد_فک",
+   "tag": "#رشد_فک",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "رشد و تغییراتِ اسکلتیِ فک که پس از بلوغ هم ادامه دارد و موقعیتِ دندان و ایمپلنت را جابه‌جا می‌کند.",
+   "use_when": "مقاله رشدِ فکی را متغیرِ تصمیم یا ریسک بداند.",
+   "aliases": [
+    "jaw growth",
+    "رشد فکی",
+    "رشد فکین",
+    "تغییرات اسکلتی",
+    "skeletal change"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "episodes/episode-62",
+    "episodes/episode-63",
+    "episodes/episode-64",
+    "chairside/chairside-30"
+   ]
+  },
+  {
    "key": "روکش_سرامیکی",
    "tag": "#روکش_سرامیکی",
    "domain": "clinical",
@@ -6526,29 +6564,6 @@
     "episodes/episode-122-4",
     "insight/insight-3",
     "insight/insight-56"
-   ]
-  },
-  {
-   "key": "رشد_فک",
-   "tag": "#رشد_فک",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "رشد و تغییراتِ اسکلتیِ فک که پس از بلوغ هم ادامه دارد و موقعیتِ دندان و ایمپلنت را جابه‌جا می‌کند.",
-   "use_when": "مقاله رشدِ فکی را متغیرِ تصمیم یا ریسک بداند.",
-   "aliases": [
-    "jaw growth",
-    "رشد فکی",
-    "رشد فکین",
-    "تغییرات اسکلتی",
-    "skeletal change"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "episodes/episode-62",
-    "episodes/episode-63",
-    "episodes/episode-64"
    ]
   },
   {
@@ -12993,6 +13008,27 @@
    ]
   },
   {
+   "key": "بیمار_نوجوان",
+   "tag": "#بیمار_نوجوان",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "بیمارِ در حالِ رشد که رشدِ اسکلتی‌اش تمام نشده و درمان‌های نهایی — از جمله ایمپلنت — هنوز برایش مجاز نیست، پس سن خودش یکی از متغیرهای تصمیم است.",
+   "use_when": "مقاله سنِ رشدِ بیمار را در تصمیمِ درمانی دخیل کند.",
+   "aliases": [
+    "adolescent patient",
+    "growing patient",
+    "بیمار در حال رشد",
+    "نوجوان",
+    "بیمار جوان"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "chairside/chairside-30"
+   ]
+  },
+  {
    "key": "بیوفیدبک_دیداری",
    "tag": "#بیوفیدبک_دیداری",
    "domain": "clinical",
@@ -13762,6 +13798,27 @@
    "count": 1,
    "content_ids": [
     "episodes/episode-126"
+   ]
+  },
+  {
+   "key": "حفظ_ریج",
+   "tag": "#حفظ_ریج",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "نگه داشتنِ ارتفاع و عرضِ ریج آلوئولار با باقی گذاشتنِ ریشه در استخوان، به‌جای کشیدنی که ریج را در فاصله تا درمانِ نهایی دچار آتروفی می‌کند.",
+   "use_when": "مقاله حفظِ حجمِ استخوانِ ریج را هدف یا هزینهٔ یک تصمیم بداند.",
+   "aliases": [
+    "ridge preservation",
+    "حفظ حجم ریج",
+    "پرزرویشن ریج",
+    "alveolar ridge preservation",
+    "حفظ استخوان ریج"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "chairside/chairside-30"
    ]
   },
   {
@@ -18276,6 +18333,7 @@
   "american dental association": "ada",
   "internal staining chairside": "اصلاح رنگ چیرساید",
   "radiographic interpretation": "تفسیر رادیوگرافی",
+  "alveolar ridge preservation": "حفظ ریج",
   "temporomandibular disorder": "tmd",
   "interproximal contact loss": "از دست رفتن کانتکت",
   "airborne particle abrasion": "سندبلاست",
@@ -18481,10 +18539,10 @@
   "دندونپزشکی دیجیتال": "دندانپزشکی دیجیتال",
   "رستوریشن غیرمستقیم": "ترمیم غیرمستقیم",
   "بدون تحلیل استخوان": "zero تحلیل استخوان",
+  "tooth preservation": "حفظ دندان",
   "digital impression": "قالبگیری دیجیتال",
   "lithium disilicate": "لیتیوم دی سیلیکات",
   "اختلال گیجگاهی فکی": "tmd",
-  "tooth preservation": "حفظ دندان",
   "marginal bone loss": "تحلیل استخوان کرستال",
   "occlusal appliance": "اسپلینت",
   "abutment selection": "انتخاب پایه",
@@ -18531,8 +18589,10 @@
   "ایمپلنت زون زیبایی": "ایمپلنت قدامی",
   "بیمار آشنا و فامیل": "بیمار آشنا",
   "تلفیق داده دیجیتال": "بیمار مجازی",
+  "adolescent patient": "بیمار نوجوان",
   "painless injection": "تزریق بی درد",
   "حساسیت پس از درمان": "حساسیت بعد از درمان",
+  "ridge preservation": "حفظ ریج",
   "flangeless denture": "پروتز متحرک بدون فلنج",
   "staged cementation": "سمان مرحله ای",
   "task decomposition": "شکستن کار",
@@ -18554,17 +18614,17 @@
   "تصمیم گیری بالینی": "تصمیم درمانی",
   "digital dentistry": "دندانپزشکی دیجیتال",
   "ترمیم با کامپوزیت": "کامپوزیت",
+  "crown lengthening": "افزایش طول تاج",
   "میزان کردن اکلوژن": "تنظیم اکلوژن",
   "scanning accuracy": "دقت اسکن",
   "پری ایمپلنت دیزیز": "پری ایمپلنتیتیس",
   "patient awareness": "آگاهی درمانی",
   "سواد درمانی بیمار": "آگاهی درمانی",
   "intraoral scanner": "اسکنر داخل دهانی",
-  "crown lengthening": "افزایش طول تاج",
   "دکتر فواد شهابیان": "دکتر شهابیان",
+  "دندان عصب کشی شده": "دندان اندوشده",
   "restorative space": "فضای رستوریتیو",
   "implant treatment": "درمان ایمپلنت",
-  "دندان عصب کشی شده": "دندان اندوشده",
   "بالا آوردن مارجین": "dme",
   "دیپ مارژین الویشن": "dme",
   "systematic review": "متاآنالیز",
@@ -18751,6 +18811,7 @@
   "local anesthesia": "بی حسی",
   "familiar patient": "بیمار آشنا",
   "همپوشانی فایل ها": "بیمار مجازی",
+  "بیمار در حال رشد": "بیمار نوجوان",
   "ریزورپشن سرویکال": "تحلیل سرویکال",
   "تحلیل گردن دندان": "تحلیل سرویکال",
   "تخریب وسیع داخلی": "تخریب داخلی",
@@ -18808,15 +18869,15 @@
   "ترمیم کامپوزیتی": "کامپوزیت",
   "برداشتن پوسیدگی": "برداشت پوسیدگی",
   "پری ایمپلنتایتس": "پری ایمپلنتیتیس",
+  "نگه داشتن دندان": "حفظ دندان",
+  "tooth retention": "حفظ دندان",
   "temporary crown": "روکش موقت",
   "اختلال مفصل فکی": "tmd",
   "ceramic etching": "اچ سرامیک",
-  "نگه داشتن دندان": "حفظ دندان",
-  "tooth retention": "حفظ دندان",
+  "خارج کردن دندان": "کشیدن دندان",
   "ceramic bonding": "باندینگ سرامیک",
   "آماده سازی روکش": "تراش روکش",
   "silane coupling": "سایلان",
-  "خارج کردن دندان": "کشیدن دندان",
   "اپلاینس اکلوزال": "اسپلینت",
   "اکلوزال اسپلینت": "اسپلینت",
   "ایمپلنت تمام فک": "ایمپلنت بیمار بی دندان",
@@ -18837,6 +18898,7 @@
   "درمان ارتودنتیک": "ارتودنسی",
   "shade selection": "انتخاب shade",
   "ترمیم کم تهاجمی": "حداقل تهاجم",
+  "skeletal change": "رشد فک",
   "cement retained": "سمان ریتین",
   "عدم پذیرش بیمار": "شروع نکردن درمان",
   "کانتور رستوریشن": "کانتور ترمیم",
@@ -18847,7 +18909,6 @@
   "خیال پردازی مدل": "توهم هوش مصنوعی",
   "patient comfort": "راحتی بیمار",
   "راحتی حین درمان": "راحتی بیمار",
-  "skeletal change": "رشد فک",
   "antagonist wear": "سایش آنتاگونیست",
   "screw loosening": "شل شدن پیچ",
   "فالو آپ ایمپلنت": "پیگیری زمانی ایمپلنت",
@@ -18910,6 +18971,7 @@
   "پرسونال برندینگ": "برندینگ",
   "closing contact": "بستن کانتکت",
   "virtual patient": "بیمار مجازی",
+  "growing patient": "بیمار نوجوان",
   "visual feedback": "بیوفیدبک دیداری",
   "implant biology": "بیولوژی ایمپلنت",
   "دانسیته استخوان": "تراکم استخوان",
@@ -18919,6 +18981,7 @@
   "تزریق کامپیوتری": "تزریق بی درد",
   "برجستگی لینگوال": "توروس مندیبولاریس",
   "gurel technique": "تکنیک گورل",
+  "حفظ استخوان ریج": "حفظ ریج",
   "خرید سابسکریپشن": "خرید اشتراک",
   "درمان ریشه مجدد": "ریتریتمنت",
   "دسترسی به کانال": "دسترسی کانال",
@@ -18981,9 +19044,9 @@
   "anterior teeth": "دندان قدامی",
   "کانسپت شهابیان": "دکتر شهابیان",
   "foad shahabian": "دکتر شهابیان",
+  "دندان اندو شده": "دندان اندوشده",
   "باند به سرامیک": "باندینگ سرامیک",
   "تراش برای روکش": "تراش روکش",
-  "دندان اندو شده": "دندان اندوشده",
   "پروتکل باندینگ": "پروتکل باند",
   "biologic width": "بیولوژیک ویدث",
   "فاصله بیولوژیک": "بیولوژیک ویدث",
@@ -19001,6 +19064,7 @@
   "اسنپ آن اسمایل": "snap on smile",
   "باز شدن کانتکت": "از دست رفتن کانتکت",
   "posterior stop": "استاپ خلفی",
+  "تغییرات اسکلتی": "رشد فک",
   "immediate load": "زمان بارگذاری ایمپلنت",
   "رویش بیش از حد": "سوپرااراپشن",
   "food impaction": "گیر غذایی",
@@ -19015,7 +19079,6 @@
   "ثبت رابطه فکین": "ثبت رابطه",
   "درد اوروفاسیال": "درد فکی",
   "orofacial pain": "درد فکی",
-  "تغییرات اسکلتی": "رشد فک",
   "مشکلات ایمپلنت": "عوارض ایمپلنت",
   "پیگیری ایمپلنت": "پیگیری زمانی ایمپلنت",
   "retention type": "نوع ریتنشن",
@@ -19137,13 +19200,13 @@
   "دایمنشن عمودی": "بعد عمودی",
   "ساییدگی دندان": "سایش دندان",
   "promptologist": "پرامپتولوژیست",
+  "کراون لنتنینگ": "افزایش طول تاج",
   "ایمپلنت متحرک": "اوردنچر",
   "تنظیم اکلوزال": "تنظیم اکلوژن",
   "دندان های جلو": "دندان قدامی",
   "پری ایمپلنتیت": "پری ایمپلنتیتیس",
   "periodontitis": "پریودنتال",
   "اسکنر دیجیتال": "اسکنر داخل دهانی",
-  "کراون لنتنینگ": "افزایش طول تاج",
   "فینیشینگ لاین": "فینیش لاین",
   "bond strength": "قدرت باند",
   "ایمپلنت تراپی": "درمان ایمپلنت",
@@ -19482,6 +19545,7 @@
   "توروس مندیبل": "توروس مندیبولاریس",
   "حرکات لترالی": "حرکات اکسکورسیو",
   "حساسیت دندان": "حساسیت دندانی",
+  "پرزرویشن ریج": "حفظ ریج",
   "خطای لایبرری": "خطای داده",
   "خمیر ریترکشن": "خمیر کنارزننده",
   "جابجایی دیسک": "داخل کپسولی",
@@ -19686,6 +19750,7 @@
   "عمق ایمپلنت": "جایگذاری ایمپلنت",
   "رد کردن علل": "حذف گام به گام",
   "حساسیت عاجی": "حساسیت دندانی",
+  "حفظ حجم ریج": "حفظ ریج",
   "تهیه اشتراک": "خرید اشتراک",
   "نمایش دندان": "خط لب",
   "خطای میلینگ": "خطای ساخت",
@@ -19768,8 +19833,8 @@
   "بیو میمتیک": "بیومیمتیک",
   "بیومی متیک": "بیومیمتیک",
   "پلن درمانی": "طرح درمان",
-  "dentopedia": "دنتوپدیا",
   "کیس ریپورت": "کیس اینسایت",
+  "dentopedia": "دنتوپدیا",
   "پروتز فیکس": "پروتز ثابت",
   "بایومکانیک": "بیومکانیک",
   "بیو مکانیک": "بیومکانیک",
@@ -19782,10 +19847,10 @@
   "پریودونتال": "پریودنتال",
   "بیماری لثه": "پریودنتال",
   "کندگی روکش": "افتادن روکش",
+  "extraction": "کشیدن دندان",
   "غیر تهاجمی": "درمان غیرتهاجمی",
   "impression": "قالبگیری",
   "پروتز کامل": "پروتز متحرک",
-  "extraction": "کشیدن دندان",
   "دیپ مارجین": "dme",
   "سمان مناسب": "انتخاب سمان",
   "انواع سمان": "انتخاب سمان",
@@ -19807,6 +19872,7 @@
   "اختلاف رنگ": "پایداری رنگ",
   "root canal": "درمان ریشه",
   "پری اپیکال": "رادیوگرافی کنترل",
+  "jaw growth": "رشد فک",
   "early load": "زمان بارگذاری ایمپلنت",
   "سمان شونده": "سمان ریتین",
   "فرم مقاومت": "فرم رزیستنس",
@@ -19823,7 +19889,6 @@
   "ثبت اکلوژن": "ثبت رابطه",
   "رکورد گیری": "ثبت رابطه",
   "خطای اسکنر": "خطای اسکن",
-  "jaw growth": "رشد فک",
   "سمان دندان": "سمان دندانی",
   "design تاج": "طراحی روکش",
   "ماده پروتز": "متریال پروتزی",
@@ -19897,6 +19962,7 @@
   "بیسفسفونات": "لاینر فسفونات",
   "بی فسفونات": "لاینر فسفونات",
   "edentulous": "بیمار بی دندان",
+  "بیمار جوان": "بیمار نوجوان",
   "توالی تراش": "ترتیب تراش",
   "probe test": "تست سوند",
   "چک با سوند": "تست سوند",
@@ -19986,15 +20052,15 @@
   "سمان رزین": "سمان رزینی",
   "bone loss": "تحلیل استخوان",
   "attrition": "سایش دندان",
-  "composite": "کامپوزیت",
   "prognosis": "پروگنوز دندان",
+  "composite": "کامپوزیت",
   "precision": "دقت اسکن",
   "پست فایبر": "فایبر پست",
   "پریودنتیت": "پریودنتال",
   "پروویژنال": "روکش موقت",
+  "اکستراکشن": "کشیدن دندان",
   "بدون تراش": "درمان غیرتهاجمی",
   "قالب گیری": "قالبگیری",
-  "اکستراکشن": "کشیدن دندان",
   "کدام سمان": "انتخاب سمان",
   "آل آن فور": "ایمپلنت بیمار بی دندان",
   "تراش ونیر": "تراش لمینیت",
@@ -20204,8 +20270,8 @@
   "صحت اسکن": "دقت اسکن",
   "فایبرپست": "فایبر پست",
   "تی ام دی": "tmd",
-  "پرپ روکش": "تراش روکش",
   "اکسترکشن": "کشیدن دندان",
+  "پرپ روکش": "تراش روکش",
   "دی ام ای": "dme",
   "آی دی اس": "ids",
   "all on 4": "ایمپلنت بیمار بی دندان",
@@ -20227,6 +20293,7 @@
   "بروکسیزم": "براکسیسم",
   "کم تهاجم": "حداقل تهاجم",
   "رزین کوت": "رزین کوتینگ",
+  "رشد فکین": "رشد فک",
   "لود فوری": "زمان بارگذاری ایمپلنت",
   "ارلی لود": "زمان بارگذاری ایمپلنت",
   "سمان تمپ": "سمان موقت",
@@ -20246,7 +20313,6 @@
   "jaw pain": "درد فکی",
   "درد صورت": "درد فکی",
   "diastema": "دیاستم",
-  "رشد فکین": "رشد فک",
   "پی اف ام": "روکش pfm",
   "شیب کاسپ": "شیب کاسپی",
   "فوتو کست": "فوتوکست",
@@ -20379,10 +20445,10 @@
   "امبرژور": "امبراژور",
   "رابر دم": "ایزولاسیون",
   "عصب کشی": "درمان ریشه",
+  "رشد فکی": "رشد فک",
   "biobase": "بایوبیس",
   "opacity": "ترانسلوسنسی",
   "دیاستما": "دیاستم",
-  "رشد فکی": "رشد فک",
   "لقی پیچ": "شل شدن پیچ",
   "library": "لایبرری دیجیتال",
   "نوع گیر": "نوع ریتنشن",
