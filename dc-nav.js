@@ -833,6 +833,17 @@
      Top window only; sub-minute weeks stay silent. */
   (function () {
     if (window.self !== window.top) return;
+    /* Signed-in readers have the real, account-level streak (header flame,
+       the personal card, the league) — for them this device-local meter is a
+       duplicate signal that can even CONTRADICT the cross-device streak, so
+       it runs for signed-out visitors only. The hint is written by plus.js's
+       currentUser(): set on a real /me profile, cleared on a definite 401,
+       and left alone on network errors — so a transient outage never
+       re-enables the meter for a signed-in reader. One page of lag after the
+       very first login is expected and harmless. The meter's own state stays
+       in localStorage untouched, so a reader who logs out resumes where they
+       left off. */
+    try { if (localStorage.getItem('dcp:signed-in') === '1') return; } catch (e) {}
     var KEY = 'dc-tos-v2';
     var fa = function (n) { return String(n).replace(/[0-9]/g, function (d) { return '۰۱۲۳۴۵۶۷۸۹'[+d]; }); };
     function dayId(d) { return d.toISOString().slice(0, 10); }
@@ -2305,7 +2316,7 @@
 (function () {
   if (window.__dcPlusLoaded) return;
   window.__dcPlusLoaded = true;
-  var V = '72';
+  var V = '73';
 
   /* Anti-FOUC for the Plus header. Plus (mobile only) relocates the music +
      articles buttons from the topbar into the tool drawer and adds the person
