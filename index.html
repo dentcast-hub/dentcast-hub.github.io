@@ -3640,6 +3640,52 @@ a.dc-list-card--pillar {
 }
 #panel-sharehub .dc-monitor-list a:last-child{ border-bottom:0; }
 #panel-sharehub .dc-monitor-list a:active{ background:var(--surface2); }
+
+/* ── mockup layout round 2: hero search + popular + category grid ── */
+#panel-studio .dc-exa-search{
+  display:flex; align-items:center; gap:0.625rem;
+  border:1.5px solid var(--txt); border-radius:0.75rem;
+  padding:0.75rem 0.875rem; margin:0.25rem 0 0;
+  cursor:pointer; -webkit-tap-highlight-color:transparent;
+  background:var(--card-bg);
+}
+#panel-studio .dc-exa-search:active{ background:var(--surface2); }
+#panel-studio .dc-exa-search .dc-svg-icon{ width:1.0625rem; height:1.0625rem; color:var(--txt3); flex-shrink:0; }
+#panel-studio .dc-exa-search-ph{
+  flex:1; min-width:0; font-size:.84rem; color:var(--txt3);
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+#panel-studio .dc-exa-search-go{
+  flex-shrink:0; background:var(--txt); color:var(--bg);
+  font-size:.78rem; font-weight:700; border-radius:0.5rem; padding:0.3125rem 0.875rem;
+}
+#panel-studio .dc-exa-pop{
+  font-size:.74rem; color:var(--txt3); margin:0.625rem 0.125rem 0;
+}
+#panel-studio .dc-exa-pop a{ color:var(--ac); font-weight:700; }
+
+/* stats moved up under the search — compact trust strip */
+#panel-studio .hero-stats{ margin:1.375rem 0 0.25rem; padding:1rem 0; }
+#panel-studio .hero-stat::before{ margin-bottom:0.5rem; }
+#panel-studio .hero-stat .v{ font-size:clamp(1.5rem,5.5vw,2rem); font-weight:450; }
+#panel-studio .hero-stat .k{ margin-top:0.375rem; font-size:.68rem; }
+
+/* category grid */
+#panel-studio .dc-exa-cats{
+  display:grid; grid-template-columns:1fr 1fr; gap:0.5625rem;
+}
+#panel-studio .dc-exa-cat{
+  display:flex; align-items:center; justify-content:space-between; gap:0.5rem;
+  border:1px solid var(--card-border); border-radius:0.75rem;
+  background:var(--card-bg);
+  padding:0.6875rem 0.875rem;
+  -webkit-tap-highlight-color:transparent;
+}
+#panel-studio .dc-exa-cat:active{ background:var(--surface2); }
+#panel-studio .dc-exa-cat span{ min-width:0; }
+#panel-studio .dc-exa-cat b{ display:block; font-size:.84rem; font-weight:700; color:var(--txt); line-height:1.5; }
+#panel-studio .dc-exa-cat i{ font-style:normal; font-size:.68rem; color:var(--txt3); }
+#panel-studio .dc-exa-cat .dc-svg-icon{ width:0.9375rem; height:0.9375rem; color:var(--txt3); flex-shrink:0; }
   </style>
 </head>
 <body>
@@ -3700,162 +3746,19 @@ a.dc-list-card--pillar {
         <h1 class="dc-identity-main">دنت‌کست <span class="dc-shimmer-word">جامع‌ترین</span> منبع فارسی پروتز</h1>
       </div>
 
-      <!-- DentCast Plus personal card. One of exactly two anonymous invitation
-           points (spec 2.3). For guests: a quiet one-line invitation. For a
-           logged-in free user: streak + a line back into their own material +
-           one quiet premium line. No minutes target, no due-card counter.
-           Rendered by /plus/plus.js; stays empty (display:none) until it is. -->
-      <div id="dcPlusHomeCard" class="dc-plus-home-card" aria-label="یادگیری شما" hidden></div>
-
-      <!-- HERO: latest episode (showcase) -->
-      <div class="dc-home-hero" id="card-episodes" data-href="/episodes/episode-160.html" onclick="window.location.href=this.dataset.href||'episodes.html'" role="link" tabindex="0" aria-label="رفتن به صفحه‌ی تازه‌ترین قسمت">
-        <div class="dc-home-hero-top">
-          <img class="dc-home-hero-cover" src="/dentcast-cover.webp" alt="" width="84" height="84" loading="lazy" decoding="async">
-          <div class="dc-home-hero-info">
-            <span class="dc-home-hero-badge"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M3 14a9 9 0 0 1 18 0"/><path d="M5 14h3v7H5a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2z"/><path d="M19 14h-3v7h3a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2z"/></svg> قسمت ۱۶۰ · تازه‌ترین</span>
-            <h2 class="dc-home-hero-title">قوس دندانی کوتاه‌شده (Shortened Dental Arch)</h2>
-          </div>
-        </div>
-        <div class="dc-home-hero-row">
-          <button class="dc-home-hero-play" id="dcHeroPlay" type="button" aria-label="پخش تازه‌ترین قسمت" data-src="https://episodes.s3.ir-thr-at1.arvanstorage.ir/dentcast160%20.mp3?versionId="><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg></button>
-          <span class="dc-home-hero-cta">شنیدن این قسمت و آرشیو کامل اپیزودها</span>
-          <span class="dc-home-hero-prog" id="dcHeroProg" aria-hidden="true"></span>
-        </div>
+      <!-- Examine-style hero search — opens the SAME global search overlay via
+           the delegated .dcOpenSearch handler (index.html «openS»/dc-nav.js
+           openGlobalSearch). Pure entry point: no new search logic. -->
+      <div class="dc-exa-search dcOpenSearch" role="button" tabindex="0" aria-label="جستجو در دنت‌کست">
+        <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <span class="dc-exa-search-ph">جست‌وجو: فرول، زیرکونیا، SDA…</span>
+        <span class="dc-exa-search-go">جستجو</span>
       </div>
-
-      <!-- Pulse -->
-      <div class="dc-pulse" id="dcPulseCard">
-        <div class="dc-pulse-head">
-          <div class="dc-pulse-title">
-            <span class="dc-pulse-dot"></span>
-            پالس · آخرین اخبار دنتکست
-          </div>
-        </div>
-        <ul class="dc-pulse-list">
-          <li>یک <a href="/chairside/chairside-30.html">کیس چیرساید</a> با عنوانِ «سرنوشت دندان را فقط با معیارهای رستوریتیو تعیین نکنیم» منتشر شد · ۲۰ مرداد</li>
-          <li>یک <a href="/insight/insight-64.html">اینسایت بالینی</a> با عنوانِ «اینجوری هم میشه به فرول نگاه کرد،یه استفاده ی معکوس از مقاله معروف در مورد فرول» منتشر شد · ۱۹ مرداد</li>
-          <li>یک <a href="/notecast/episode-39.html">نوت‌کست</a> با عنوانِ «درمان غیرتهاجمی مثلث‌های سیاه بین‌دندانی با تزریق اسید هیالورونیک» منتشر شد · ۱۹ مرداد</li>
-          <li>یک <a href="/metanotes/meta-20.html">متانوت</a> با عنوانِ «پست و کور یک‌مرحله‌ای؛ وقتی «عدم تطابق» به نفع درمان تمام می‌شود» منتشر شد · ۱۸ مرداد</li>
-        </ul>
-      </div>
-
-      <!-- DentCast Plus premium section. Empty until /plus/js/home-features.js
-           fills it. It sits HERE, directly after the Pulse card, because that is
-           exactly where spot.js inserts the homepage ad (`pulse.nextSibling`) —
-           so the ad lands between the two and this section reads as sitting
-           under it, with no coordination between the two modules. When there is
-           no ad (a premium visitor, or the slot switched off) it simply moves up
-           under the Pulse. Keep it adjacent to #dcPulseCard. -->
-      <div id="dcPlusFeatures" class="dc-plus-features" aria-label="امکانات پریمیوم" hidden></div>
-
-      <div class="dc-home-sec"><h2 class="dc-home-sec-label">تازه‌های دنت‌کست</h2></div>
-      <div class="dc-rail" id="dcLatestRail">
-        <a class="dc-rail-card" data-cat="clinical" href="/insight/insight-64.html">
-          <span class="dc-type-chip t-insight">Insight</span>
-          <p class="dc-rail-title">اینجوری هم میشه به فرول نگاه کرد،یه استفاده ی معکوس از مقاله معروف در مورد فرول</p>
-          <span class="dc-rail-meta">تازه‌ترین مطلب</span>
-        </a>
-        <a class="dc-rail-card" data-cat="notecast" href="/notecast/episode-39.html">
-          <span class="dc-type-chip t-note">NoteCast</span>
-          <p class="dc-rail-title">درمان غیرتهاجمی مثلث‌های سیاه بین‌دندانی با تزریق اسید هیالورونیک</p>
-          <span class="dc-rail-meta">تازه‌ترین مطلب</span>
-        </a>
-        <a class="dc-rail-card" data-cat="meta" href="/metanotes/meta-20.html">
-          <span class="dc-type-chip t-meta">MetaNote</span>
-          <p class="dc-rail-title">پست و کور یک‌مرحله‌ای؛ وقتی «عدم تطابق» به نفع درمان تمام می‌شود</p>
-          <span class="dc-rail-meta">تازه‌ترین مطلب</span>
-        </a>
-        <a class="dc-rail-card" data-cat="chairside" href="/chairside/chairside-30.html">
-          <span class="dc-type-chip t-chair">Chairside</span>
-          <p class="dc-rail-title">سرنوشت دندان را فقط با معیارهای رستوریتیو تعیین نکنیم</p>
-          <span class="dc-rail-meta">تازه‌ترین مطلب</span>
-        </a>
-        <a class="dc-rail-card" data-cat="dentai" href="/dentai/dentai-28.html">
-          <span class="dc-type-chip t-ai">DentAI</span>
-          <p class="dc-rail-title">وقتی هوش مصنوعی تنها بهتر از پزشکِ مجهز به هوش مصنوعی عمل می‌کند</p>
-          <span class="dc-rail-meta">تازه‌ترین مطلب</span>
-        </a>
-        <a class="dc-rail-card" data-cat="promptologist" href="/dentai/promptologist/prompt4-4.html">
-          <span class="dc-type-chip t-ai">Promptologist</span>
-          <p class="dc-rail-title">پرامپتولوژیست — روشِ کار، نه فقط متنِ درخواست</p>
-          <span class="dc-rail-meta">تازه‌ترین مطلب</span>
-        </a>
-        <a class="dc-rail-card" data-cat="sharehub" href="/sharehub/share-13.html">
-          <span class="dc-type-chip t-share">ShareHub</span>
-          <p class="dc-rail-title">دیابت و ایمپلنت دندانی: از تصمیم قبل از جراحی تا نگهداری بلندمدت</p>
-          <span class="dc-rail-meta">تازه‌ترین مطلب</span>
-        </a>
-        <a class="dc-rail-card" data-cat="dentcast_plus" href="/dentcast-plus/video-6.html">
-          <span class="dc-type-chip t-plus">DentCast+</span>
-          <p class="dc-rail-title">تداخل کارگر در گروپ فانکشن</p>
-          <span class="dc-rail-meta">تازه‌ترین مطلب</span>
-        </a>
-      </div>
-
-      <!-- Starter bundles entry point. Empty until /plus/js/home-bundles.js fills
-           it — same SLOT_IDS pattern as #dcPlusFeatures above (two slots, one per
-           shell, only the visible one is ever unhidden). Placed right after
-           "تازه‌های دنت‌کست" on purpose: a visitor's eye is already in rail-scanning
-           mode there, and "از کجا شروع کنم؟" is the natural next question. See
-           .dentcast/bundles-handoff.md §4. -->
-      <div id="dcHomeBundles" class="dcb-band" aria-label="باندل‌های شروع" hidden></div>
-
-      <div class="dc-home-sec"><h2 class="dc-home-sec-label">سری‌های موضوعی</h2><a class="dc-home-more" href="/pillar/">همه ←</a></div>
-      <div class="dc-rail">
-        <a class="dc-pillar-card" href="/pillar/implantology/">
-          <span class="dc-pillar-ico"><svg viewBox="0 0 24 24"><path d="M9.5 3.5h5v3.5h-5z"/><path d="M8 7h8l-2 12-2 2-2-2z"/><path d="M9.3 11h5.4"/><path d="M9.7 14.5h4.6"/><path d="M10.4 18h3.2"/></svg></span>
-          <span class="dc-pillar-name">ایمپلنتولوژی</span>
-        </a>
-<a class="dc-pillar-card" href="/pillar/fixed-pros/">
-          <span class="dc-pillar-ico"><svg viewBox="0 0 24 24"><path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7z"/><path d="M5 21h14"/></svg></span>
-          <span class="dc-pillar-name">پروتز ثابت</span>
-        </a>
-<a class="dc-pillar-card" href="/pillar/occlusion/">
-          <span class="dc-pillar-ico"><svg viewBox="0 0 24 24"><path d="M4 6 q2 11 4 0 q2 11 4 0 q2 11 4 0 q2 11 4 0"/><path d="M4 18 q2 -11 4 0 q2 -11 4 0 q2 -11 4 0 q2 -11 4 0"/></svg></span>
-          <span class="dc-pillar-name">اکلوژن</span>
-        </a>
-<a class="dc-pillar-card" href="/pillar/esthetic/">
-          <span class="dc-pillar-ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8.5 14.5s1.4 2 3.5 2 3.5-2 3.5-2"/><path d="M9 9.5h.01"/><path d="M15 9.5h.01"/></svg></span>
-          <span class="dc-pillar-name">زیبایی</span>
-        </a>
-<a class="dc-pillar-card" href="/pillar/bonding/">
-          <span class="dc-pillar-ico"><svg viewBox="0 0 24 24"><path d="M8.5 3.5c1.2 0 2 .6 3.5.6s2.3-.6 3.5-.6c2 0 3.5 1.6 3.5 4 0 2.8-1.5 4.4-2.2 7.4-.7 3-1.4 5.6-3 5.6-1.2 0-1.1-3.5-1.8-3.5s-.6 3.5-1.8 3.5c-1.6 0-2.3-2.6-3-5.6C6.5 11.9 5 10.3 5 7.5c0-2.4 1.5-4 3.5-4z"/></svg></span>
-          <span class="dc-pillar-name">باندینگ</span>
-        </a>
-<a class="dc-pillar-card" href="/pillar/ceramics/">
-          <span class="dc-pillar-ico"><svg viewBox="0 0 24 24"><path d="M10 2v7.31"/><path d="M14 9.3V1.99"/><path d="M8.5 2h7"/><path d="M14 9.3a6.5 6.5 0 1 1-4 0"/><path d="M5.58 16.5h12.85"/></svg></span>
-          <span class="dc-pillar-name">سرامیک</span>
-        </a>
-<a class="dc-pillar-card" href="/pillar/treatment-planning/">
-          <span class="dc-pillar-ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m16.24 7.76-2.12 6.36-6.36 2.12 2.12-6.36 6.36-2.12z"/></svg></span>
-          <span class="dc-pillar-name">طرح درمان</span>
-        </a>
-<a class="dc-pillar-card" href="/pillar/removable-pros/">
-          <span class="dc-pillar-ico"><svg viewBox="0 0 24 24"><path d="M4 6c0 8 3.2 13 8 13s8-5 8-13"/><path d="M8 7c0 5.6 1.8 9 4 9s4-3.4 4-9"/><path d="M5.2 9.3 8 8.3"/><path d="M7.6 15.7 9.9 14.4"/><path d="M12 18.4v-2.6"/><path d="M16.4 15.7 14.1 14.4"/><path d="M18.8 9.3 16 8.3"/></svg></span>
-          <span class="dc-pillar-name">پروتز متحرک</span>
-        </a>
-<a class="dc-pillar-card" href="/pillar/operative/">
-          <span class="dc-pillar-ico"><svg viewBox="0 0 24 24"><path d="M8.5 3.5c1.2 0 2 .6 3.5.6s2.3-.6 3.5-.6c2 0 3.5 1.6 3.5 4 0 2.8-1.5 4.4-2.2 7.4-.7 3-1.4 5.6-3 5.6-1.2 0-1.1-3.5-1.8-3.5s-.6 3.5-1.8 3.5c-1.6 0-2.3-2.6-3-5.6C6.5 11.9 5 10.3 5 7.5c0-2.4 1.5-4 3.5-4z"/><circle cx="12" cy="9" r="2"/></svg></span>
-          <span class="dc-pillar-name">ترمیمی</span>
-        </a>
-<a class="dc-pillar-card" href="/pillar/digital/">
-          <span class="dc-pillar-ico"><svg viewBox="0 0 24 24"><path d="M4 7V5a1 1 0 0 1 1-1h2"/><path d="M17 4h2a1 1 0 0 1 1 1v2"/><path d="M20 17v2a1 1 0 0 1-1 1h-2"/><path d="M7 20H5a1 1 0 0 1-1-1v-2"/><path d="M5 12h14"/></svg></span>
-          <span class="dc-pillar-name">دیجیتال</span>
-        </a>
-      </div>
-
-      <div class="dc-home-sec"><h2 class="dc-home-sec-label">یک نگاه سریع</h2></div>
-      <div class="dc-duo">
-        <a class="dc-duo-card" id="dcQuickGloss" href="/glossary/abutment.html">
-          <span class="dc-duo-kicker">📖 واژه‌ای از دانشنامه</span>
-          <p class="dc-duo-title">Abutment — اباتمنت</p>
-          <span class="dc-duo-sub">واژه‌نامه‌ی تخصصی دنت‌کست</span>
-        </a>
-        <a class="dc-duo-card" id="dcQuickBrain" href="/dentai/dentai-16.html">
-          <span class="dc-duo-kicker">🎲 یک مطلب تصادفی</span>
-          <p class="dc-duo-title">سلسله‌مراتب قابلیت باند (HOB)</p>
-          <span class="dc-duo-sub">مرور با هوش مصنوعی</span>
-        </a>
+      <div class="dc-exa-pop">پرجستجو:
+        <a href="/pillar/bonding/">باندینگ</a> ·
+        <a href="/pillar/implantology/">ایمپلنت</a> ·
+        <a href="/pillar/occlusion/">اکلوژن</a> ·
+        <a href="/pillar/ceramics/">سرامیک‌ها</a>
       </div>
 
       <!-- ===== Homepage stats counters — numbers maintained by tools/update-homepage-counters.py =====
@@ -3950,6 +3853,180 @@ a.dc-list-card--pillar {
   }
 })();
       </script>
+
+      <!-- DentCast Plus personal card. One of exactly two anonymous invitation
+           points (spec 2.3). For guests: a quiet one-line invitation. For a
+           logged-in free user: streak + a line back into their own material +
+           one quiet premium line. No minutes target, no due-card counter.
+           Rendered by /plus/plus.js; stays empty (display:none) until it is. -->
+      <div id="dcPlusHomeCard" class="dc-plus-home-card" aria-label="یادگیری شما" hidden></div>
+
+      <!-- HERO: latest episode (showcase) -->
+      <div class="dc-home-hero" id="card-episodes" data-href="/episodes/episode-160.html" onclick="window.location.href=this.dataset.href||'episodes.html'" role="link" tabindex="0" aria-label="رفتن به صفحه‌ی تازه‌ترین قسمت">
+        <div class="dc-home-hero-top">
+          <img class="dc-home-hero-cover" src="/dentcast-cover.webp" alt="" width="84" height="84" loading="lazy" decoding="async">
+          <div class="dc-home-hero-info">
+            <span class="dc-home-hero-badge"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M3 14a9 9 0 0 1 18 0"/><path d="M5 14h3v7H5a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2z"/><path d="M19 14h-3v7h3a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2z"/></svg> قسمت ۱۶۰ · تازه‌ترین</span>
+            <h2 class="dc-home-hero-title">قوس دندانی کوتاه‌شده (Shortened Dental Arch)</h2>
+          </div>
+        </div>
+        <div class="dc-home-hero-row">
+          <button class="dc-home-hero-play" id="dcHeroPlay" type="button" aria-label="پخش تازه‌ترین قسمت" data-src="https://episodes.s3.ir-thr-at1.arvanstorage.ir/dentcast160%20.mp3?versionId="><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg></button>
+          <span class="dc-home-hero-cta">شنیدن این قسمت و آرشیو کامل اپیزودها</span>
+          <span class="dc-home-hero-prog" id="dcHeroProg" aria-hidden="true"></span>
+        </div>
+      </div>
+
+
+      <!-- Examine-style category grid — every cell is a plain link to a
+           directory that already exists; counts are editorial (hand-kept). -->
+      <div class="dc-home-sec"><h2 class="dc-home-sec-label">دسته‌های محتوا</h2></div>
+      <div class="dc-exa-cats">
+        <a class="dc-exa-cat" href="episodes.html"><span><b>اپیزودها</b><i>۲۰۲ قسمت</i></span><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></a>
+        <a class="dc-exa-cat" href="/insight/"><span><b>اینسایت</b><i>۶۴ تحلیل</i></span><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></a>
+        <a class="dc-exa-cat" href="/notecast/"><span><b>نوت‌کست</b><i>۳۸ مطلب</i></span><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></a>
+        <a class="dc-exa-cat" href="/chairside/"><span><b>چیرساید</b><i>۳۰ کیس</i></span><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></a>
+        <a class="dc-exa-cat" href="/dentai/"><span><b>DentAI</b><i>۲۸ مطلب</i></span><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></a>
+        <a class="dc-exa-cat" href="/metanotes/"><span><b>متانوت</b><i>۲۰ مطلب</i></span><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></a>
+        <a class="dc-exa-cat" href="/litecast/"><span><b>لایت‌کست</b><i>۱۹ مطلب</i></span><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></a>
+        <a class="dc-exa-cat" href="/sharehub/"><span><b>شیرهاب</b><i>۱۳ مرور</i></span><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></a>
+      </div>
+
+      <div class="dc-home-sec"><h2 class="dc-home-sec-label">تازه‌های دنت‌کست</h2></div>
+      <div class="dc-rail" id="dcLatestRail">
+        <a class="dc-rail-card" data-cat="clinical" href="/insight/insight-64.html">
+          <span class="dc-type-chip t-insight">Insight</span>
+          <p class="dc-rail-title">اینجوری هم میشه به فرول نگاه کرد،یه استفاده ی معکوس از مقاله معروف در مورد فرول</p>
+          <span class="dc-rail-meta">تازه‌ترین مطلب</span>
+        </a>
+        <a class="dc-rail-card" data-cat="notecast" href="/notecast/episode-39.html">
+          <span class="dc-type-chip t-note">NoteCast</span>
+          <p class="dc-rail-title">درمان غیرتهاجمی مثلث‌های سیاه بین‌دندانی با تزریق اسید هیالورونیک</p>
+          <span class="dc-rail-meta">تازه‌ترین مطلب</span>
+        </a>
+        <a class="dc-rail-card" data-cat="meta" href="/metanotes/meta-20.html">
+          <span class="dc-type-chip t-meta">MetaNote</span>
+          <p class="dc-rail-title">پست و کور یک‌مرحله‌ای؛ وقتی «عدم تطابق» به نفع درمان تمام می‌شود</p>
+          <span class="dc-rail-meta">تازه‌ترین مطلب</span>
+        </a>
+        <a class="dc-rail-card" data-cat="chairside" href="/chairside/chairside-30.html">
+          <span class="dc-type-chip t-chair">Chairside</span>
+          <p class="dc-rail-title">سرنوشت دندان را فقط با معیارهای رستوریتیو تعیین نکنیم</p>
+          <span class="dc-rail-meta">تازه‌ترین مطلب</span>
+        </a>
+        <a class="dc-rail-card" data-cat="dentai" href="/dentai/dentai-28.html">
+          <span class="dc-type-chip t-ai">DentAI</span>
+          <p class="dc-rail-title">وقتی هوش مصنوعی تنها بهتر از پزشکِ مجهز به هوش مصنوعی عمل می‌کند</p>
+          <span class="dc-rail-meta">تازه‌ترین مطلب</span>
+        </a>
+        <a class="dc-rail-card" data-cat="promptologist" href="/dentai/promptologist/prompt4-4.html">
+          <span class="dc-type-chip t-ai">Promptologist</span>
+          <p class="dc-rail-title">پرامپتولوژیست — روشِ کار، نه فقط متنِ درخواست</p>
+          <span class="dc-rail-meta">تازه‌ترین مطلب</span>
+        </a>
+        <a class="dc-rail-card" data-cat="sharehub" href="/sharehub/share-13.html">
+          <span class="dc-type-chip t-share">ShareHub</span>
+          <p class="dc-rail-title">دیابت و ایمپلنت دندانی: از تصمیم قبل از جراحی تا نگهداری بلندمدت</p>
+          <span class="dc-rail-meta">تازه‌ترین مطلب</span>
+        </a>
+        <a class="dc-rail-card" data-cat="dentcast_plus" href="/dentcast-plus/video-6.html">
+          <span class="dc-type-chip t-plus">DentCast+</span>
+          <p class="dc-rail-title">تداخل کارگر در گروپ فانکشن</p>
+          <span class="dc-rail-meta">تازه‌ترین مطلب</span>
+        </a>
+      </div>
+
+      <!-- Starter bundles entry point. Empty until /plus/js/home-bundles.js fills
+           it — same SLOT_IDS pattern as #dcPlusFeatures above (two slots, one per
+           shell, only the visible one is ever unhidden). Placed right after
+           "تازه‌های دنت‌کست" on purpose: a visitor's eye is already in rail-scanning
+           mode there, and "از کجا شروع کنم؟" is the natural next question. See
+           .dentcast/bundles-handoff.md §4. -->
+      <div id="dcHomeBundles" class="dcb-band" aria-label="باندل‌های شروع" hidden></div>
+
+      <!-- Pulse -->
+      <div class="dc-pulse" id="dcPulseCard">
+        <div class="dc-pulse-head">
+          <div class="dc-pulse-title">
+            <span class="dc-pulse-dot"></span>
+            پالس · آخرین اخبار دنتکست
+          </div>
+        </div>
+        <ul class="dc-pulse-list">
+          <li>یک <a href="/chairside/chairside-30.html">کیس چیرساید</a> با عنوانِ «سرنوشت دندان را فقط با معیارهای رستوریتیو تعیین نکنیم» منتشر شد · ۲۰ مرداد</li>
+          <li>یک <a href="/insight/insight-64.html">اینسایت بالینی</a> با عنوانِ «اینجوری هم میشه به فرول نگاه کرد،یه استفاده ی معکوس از مقاله معروف در مورد فرول» منتشر شد · ۱۹ مرداد</li>
+          <li>یک <a href="/notecast/episode-39.html">نوت‌کست</a> با عنوانِ «درمان غیرتهاجمی مثلث‌های سیاه بین‌دندانی با تزریق اسید هیالورونیک» منتشر شد · ۱۹ مرداد</li>
+          <li>یک <a href="/metanotes/meta-20.html">متانوت</a> با عنوانِ «پست و کور یک‌مرحله‌ای؛ وقتی «عدم تطابق» به نفع درمان تمام می‌شود» منتشر شد · ۱۸ مرداد</li>
+        </ul>
+      </div>
+
+      <!-- DentCast Plus premium section. Empty until /plus/js/home-features.js
+           fills it. It sits HERE, directly after the Pulse card, because that is
+           exactly where spot.js inserts the homepage ad (`pulse.nextSibling`) —
+           so the ad lands between the two and this section reads as sitting
+           under it, with no coordination between the two modules. When there is
+           no ad (a premium visitor, or the slot switched off) it simply moves up
+           under the Pulse. Keep it adjacent to #dcPulseCard. -->
+      <div id="dcPlusFeatures" class="dc-plus-features" aria-label="امکانات پریمیوم" hidden></div>
+
+      <div class="dc-home-sec"><h2 class="dc-home-sec-label">سری‌های موضوعی</h2><a class="dc-home-more" href="/pillar/">همه ←</a></div>
+      <div class="dc-rail">
+        <a class="dc-pillar-card" href="/pillar/implantology/">
+          <span class="dc-pillar-ico"><svg viewBox="0 0 24 24"><path d="M9.5 3.5h5v3.5h-5z"/><path d="M8 7h8l-2 12-2 2-2-2z"/><path d="M9.3 11h5.4"/><path d="M9.7 14.5h4.6"/><path d="M10.4 18h3.2"/></svg></span>
+          <span class="dc-pillar-name">ایمپلنتولوژی</span>
+        </a>
+<a class="dc-pillar-card" href="/pillar/fixed-pros/">
+          <span class="dc-pillar-ico"><svg viewBox="0 0 24 24"><path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7z"/><path d="M5 21h14"/></svg></span>
+          <span class="dc-pillar-name">پروتز ثابت</span>
+        </a>
+<a class="dc-pillar-card" href="/pillar/occlusion/">
+          <span class="dc-pillar-ico"><svg viewBox="0 0 24 24"><path d="M4 6 q2 11 4 0 q2 11 4 0 q2 11 4 0 q2 11 4 0"/><path d="M4 18 q2 -11 4 0 q2 -11 4 0 q2 -11 4 0 q2 -11 4 0"/></svg></span>
+          <span class="dc-pillar-name">اکلوژن</span>
+        </a>
+<a class="dc-pillar-card" href="/pillar/esthetic/">
+          <span class="dc-pillar-ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8.5 14.5s1.4 2 3.5 2 3.5-2 3.5-2"/><path d="M9 9.5h.01"/><path d="M15 9.5h.01"/></svg></span>
+          <span class="dc-pillar-name">زیبایی</span>
+        </a>
+<a class="dc-pillar-card" href="/pillar/bonding/">
+          <span class="dc-pillar-ico"><svg viewBox="0 0 24 24"><path d="M8.5 3.5c1.2 0 2 .6 3.5.6s2.3-.6 3.5-.6c2 0 3.5 1.6 3.5 4 0 2.8-1.5 4.4-2.2 7.4-.7 3-1.4 5.6-3 5.6-1.2 0-1.1-3.5-1.8-3.5s-.6 3.5-1.8 3.5c-1.6 0-2.3-2.6-3-5.6C6.5 11.9 5 10.3 5 7.5c0-2.4 1.5-4 3.5-4z"/></svg></span>
+          <span class="dc-pillar-name">باندینگ</span>
+        </a>
+<a class="dc-pillar-card" href="/pillar/ceramics/">
+          <span class="dc-pillar-ico"><svg viewBox="0 0 24 24"><path d="M10 2v7.31"/><path d="M14 9.3V1.99"/><path d="M8.5 2h7"/><path d="M14 9.3a6.5 6.5 0 1 1-4 0"/><path d="M5.58 16.5h12.85"/></svg></span>
+          <span class="dc-pillar-name">سرامیک</span>
+        </a>
+<a class="dc-pillar-card" href="/pillar/treatment-planning/">
+          <span class="dc-pillar-ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m16.24 7.76-2.12 6.36-6.36 2.12 2.12-6.36 6.36-2.12z"/></svg></span>
+          <span class="dc-pillar-name">طرح درمان</span>
+        </a>
+<a class="dc-pillar-card" href="/pillar/removable-pros/">
+          <span class="dc-pillar-ico"><svg viewBox="0 0 24 24"><path d="M4 6c0 8 3.2 13 8 13s8-5 8-13"/><path d="M8 7c0 5.6 1.8 9 4 9s4-3.4 4-9"/><path d="M5.2 9.3 8 8.3"/><path d="M7.6 15.7 9.9 14.4"/><path d="M12 18.4v-2.6"/><path d="M16.4 15.7 14.1 14.4"/><path d="M18.8 9.3 16 8.3"/></svg></span>
+          <span class="dc-pillar-name">پروتز متحرک</span>
+        </a>
+<a class="dc-pillar-card" href="/pillar/operative/">
+          <span class="dc-pillar-ico"><svg viewBox="0 0 24 24"><path d="M8.5 3.5c1.2 0 2 .6 3.5.6s2.3-.6 3.5-.6c2 0 3.5 1.6 3.5 4 0 2.8-1.5 4.4-2.2 7.4-.7 3-1.4 5.6-3 5.6-1.2 0-1.1-3.5-1.8-3.5s-.6 3.5-1.8 3.5c-1.6 0-2.3-2.6-3-5.6C6.5 11.9 5 10.3 5 7.5c0-2.4 1.5-4 3.5-4z"/><circle cx="12" cy="9" r="2"/></svg></span>
+          <span class="dc-pillar-name">ترمیمی</span>
+        </a>
+<a class="dc-pillar-card" href="/pillar/digital/">
+          <span class="dc-pillar-ico"><svg viewBox="0 0 24 24"><path d="M4 7V5a1 1 0 0 1 1-1h2"/><path d="M17 4h2a1 1 0 0 1 1 1v2"/><path d="M20 17v2a1 1 0 0 1-1 1h-2"/><path d="M7 20H5a1 1 0 0 1-1-1v-2"/><path d="M5 12h14"/></svg></span>
+          <span class="dc-pillar-name">دیجیتال</span>
+        </a>
+      </div>
+
+      <div class="dc-home-sec"><h2 class="dc-home-sec-label">یک نگاه سریع</h2></div>
+      <div class="dc-duo">
+        <a class="dc-duo-card" id="dcQuickGloss" href="/glossary/abutment.html">
+          <span class="dc-duo-kicker">📖 واژه‌ای از دانشنامه</span>
+          <p class="dc-duo-title">Abutment — اباتمنت</p>
+          <span class="dc-duo-sub">واژه‌نامه‌ی تخصصی دنت‌کست</span>
+        </a>
+        <a class="dc-duo-card" id="dcQuickBrain" href="/dentai/dentai-16.html">
+          <span class="dc-duo-kicker">🎲 یک مطلب تصادفی</span>
+          <p class="dc-duo-title">سلسله‌مراتب قابلیت باند (HOB)</p>
+          <span class="dc-duo-sub">مرور با هوش مصنوعی</span>
+        </a>
+      </div>
+
 
     </section>
 
