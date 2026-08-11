@@ -1289,3 +1289,25 @@ a.dcp-progress-row:hover { text-decoration: none; }
 }
 
 [data-theme="dark"] .dcp-nt.is-unread { background: rgba(var(--ac-rgb, 91,156,246), .10); }
+
+/* =====================================================================
+   EXAMINE FLAT PASS (2026-08-11) — sync پیشخوان / پروفایل / all /plus
+   pages and the header overlays with the flat homepage language, the
+   same way the landings were synced: at the TOKEN level, not rule by
+   rule. Every dcp surface already reads --card-sh / --r-lg / --bg, so
+   re-scoping those four tokens flattens every card at once: no shadows,
+   tighter radii, white ground in light mode. Deliberate identities are
+   untouched — the league/badge metals, selection rings and focus
+   feedback all use their own literals, not these tokens.
+   ===================================================================== */
+body.dcp-page,
+.dcp-overlay {
+  --card-sh: none;
+  --card-sh2: none;
+  --r-lg: 14px;
+  --r-xl: 16px;
+}
+html:not([data-theme="dark"]) body.dcp-page,
+html:not([data-theme="dark"]) .dcp-overlay {
+  --bg: #ffffff;
+}
