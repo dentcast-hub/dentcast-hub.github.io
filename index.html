@@ -3642,20 +3642,31 @@ a.dc-list-card--pillar {
 #panel-sharehub .dc-monitor-list a:active{ background:var(--surface2); }
 
 /* ── mockup layout round 2: hero search + popular + category grid ── */
-#panel-studio .dc-exa-search{
+#panel-sharehub .dc-exa-pagehead{ padding:0.375rem 0.125rem 0; }
+#panel-sharehub .dc-exa-pagetitle{
+  font-size:1.5rem; font-weight:800; color:var(--txt); line-height:1.5; margin:0;
+}
+#panel-sharehub .dc-exa-pagecount{ font-size:.72rem; color:var(--txt3); margin-top:0.125rem; }
+#panel-sharehub .dc-exa-search{ margin-top:0.875rem; margin-bottom:1.375rem; }
+#panel-studio .dc-exa-search,
+#panel-sharehub .dc-exa-search{
   display:flex; align-items:center; gap:0.625rem;
   border:1.5px solid var(--txt); border-radius:0.75rem;
   padding:0.75rem 0.875rem; margin:0.25rem 0 0;
   cursor:pointer; -webkit-tap-highlight-color:transparent;
   background:var(--card-bg);
 }
-#panel-studio .dc-exa-search:active{ background:var(--surface2); }
-#panel-studio .dc-exa-search .dc-svg-icon{ width:1.0625rem; height:1.0625rem; color:var(--txt3); flex-shrink:0; }
-#panel-studio .dc-exa-search-ph{
+#panel-studio .dc-exa-search:active,
+#panel-sharehub .dc-exa-search:active{ background:var(--surface2); }
+#panel-studio .dc-exa-search .dc-svg-icon,
+#panel-sharehub .dc-exa-search .dc-svg-icon{ width:1.0625rem; height:1.0625rem; color:var(--txt3); flex-shrink:0; }
+#panel-studio .dc-exa-search-ph,
+#panel-sharehub .dc-exa-search-ph{
   flex:1; min-width:0; font-size:.84rem; color:var(--txt3);
   white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
 }
-#panel-studio .dc-exa-search-go{
+#panel-studio .dc-exa-search-go,
+#panel-sharehub .dc-exa-search-go{
   flex-shrink:0; background:var(--txt); color:var(--bg);
   font-size:.78rem; font-weight:700; border-radius:0.5rem; padding:0.3125rem 0.875rem;
 }
@@ -4033,32 +4044,16 @@ a.dc-list-card--pillar {
     <!-- ── PANEL: Meta Base ── -->
     <section class="dc-panel" id="panel-sharehub">
 
-      <div class="dc-home-sec"><h2 class="dc-home-sec-label">موتور جستجوی دندانپزشکی</h2></div>
-
-      <!-- Radar hero — main tool of the site -->
-      <div class="dc-radar-hero radar-shine-card" id="btnOpenRadarMob" role="button" aria-label="رادار دنت‌کست">
-        <div class="dc-radar-hero-ico" aria-hidden="true"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="m12 12 7-7"/><path d="M12 12h.01"/></svg></div>
-        <div class="dc-radar-hero-main">
-          <div class="dc-radar-hero-txt">رادار دنت‌کست</div>
-          <div class="dc-radar-hero-sub">جایگزین تخصصی گوگل برای سایت‌های دندانپزشکی</div>
-        </div>
-        <span class="dc-radar-hero-btn">جستجو</span>
+      <!-- Examine-style archive head + search (additive; the box opens the
+           same global overlay via the delegated .dcOpenSearch handler) -->
+      <div class="dc-exa-pagehead">
+        <h2 class="dc-exa-pagetitle">آرشیو</h2>
+        <div class="dc-exa-pagecount">بیش از ۴۴۰ مطلب در ۱۲ قالب · به‌روزرسانی هفتگی</div>
       </div>
-
-      <!-- Library card — the SECOND card of this section, not a section of its
-           own. Radar searches other people's sites; the library searches ours.
-           They are one offer ("two search engines"), which is also the only
-           realistic way the radar gets looked at: the attention that arrives
-           for «۲۲۰۰ مقاله» lands on both. Premium; the gate is on the tap (see
-           the LIBRARY CARD script), never on the door of the page. -->
-      <div class="dc-radar-hero" id="card-library" role="button" tabindex="0" aria-label="کتابخانهٔ دنت‌کست">
-        <div class="dc-radar-hero-ico" aria-hidden="true"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"/></svg></div>
-        <div class="dc-radar-hero-main">
-          <div class="dc-radar-hero-txt">کتابخانهٔ دنت‌کست</div>
-          <div class="dc-radar-hero-sub">بیش از ۲۲۰۰ مقاله، دسته‌بندی‌شده و قابل جستجو</div>
-          <span class="dcp-soon-badge" id="card-library-lock">🔒 ویژه‌ی پریمیوم</span>
-        </div>
-        <span class="dc-radar-hero-btn">جستجو</span>
+      <div class="dc-exa-search dcOpenSearch" role="button" tabindex="0" aria-label="جستجو در آرشیو دنت‌کست">
+        <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <span class="dc-exa-search-ph">جست‌وجو در همهٔ بخش‌های دنت‌کست…</span>
+        <span class="dc-exa-search-go">جستجو</span>
       </div>
 
       <div class="dc-home-sec"><h2 class="dc-home-sec-label">پادکست</h2></div>
@@ -4070,35 +4065,15 @@ a.dc-list-card--pillar {
         </div>
       </div>
 
-      <div class="dc-home-sec"><h2 class="dc-home-sec-label">مرجع‌های دنت‌کست</h2></div>
+      <!-- باکس «تازه‌ترین مطالب» — منتقل‌شده از تب ابزارها، با فاصله بیشتر -->
+      <article class="dc-monitor dc-monitor-secondary" aria-label="آخرین مطالب">
+        <div class="dc-monitor-inner">
+          <div class="dc-monitor-title">تازه‌ترین مطالب دنت‌کست</div>
+          <div class="dc-monitor-hint">برای دیدن همه اسکرول کنید</div>
+          <ul class="dc-monitor-list" id="dcLast3Updates"></ul>
+        </div>
+      </article>
 
-      <div class="dc-card-pair">
-      <a class="dc-list-card featured dc-list-card--pillar" id="card-pillar" href="/pillar/">
-        <div class="gls-eyebrow-row">
-          <div class="gls-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block">
-  <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/>
-  <circle cx="12" cy="12" r="5" fill="none" stroke="currentColor" stroke-width="2"/>
-  <circle cx="12" cy="12" r="1.5" style="fill:currentColor" stroke="none"/>
-</svg></div>
-        </div>
-        <div class="gls-title">فهرست موضوعی</div>
-        <div class="gls-footer">
-          <span class="gls-sub">نقشه‌ی موضوعی دنت‌کست</span>
-          <span class="dc-chip">Pillar <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="m9 6 6 6-6 6"/></svg></span>
-        </div>
-      </a>
-
-      <div class="dc-list-card featured" id="card-glossary" onclick="window.location.href='/glossary/'">
-        <div class="gls-eyebrow-row">
-          <div class="gls-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"/></svg></div>
-        </div>
-        <div class="gls-title">دانشنامه دنت‌کست</div>
-        <div class="gls-footer">
-          <span class="gls-sub">مفاهیم تصمیم‌ساز دندان‌پزشکی</span>
-          <span class="dc-chip">Glossary <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="m9 6 6 6-6 6"/></svg></span>
-        </div>
-      </div>
-      </div>
 
       <div class="dc-home-sec"><h2 class="dc-home-sec-label"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="4.5" r="2.2"/><circle cx="4.5" cy="18.5" r="2.2"/><circle cx="19.5" cy="18.5" r="2.2"/><line x1="10.2" y1="6.2" x2="5.9" y2="16.5"/><line x1="13.8" y1="6.2" x2="18.1" y2="16.5"/><line x1="6.6" y1="18.5" x2="17.4" y2="18.5"/></svg> تولید اختصاصی دنت‌کست</h2></div>
 
@@ -4155,14 +4130,63 @@ a.dc-list-card--pillar {
         
       </div>
 
-      <!-- باکس «تازه‌ترین مطالب» — منتقل‌شده از تب ابزارها، با فاصله بیشتر -->
-      <article class="dc-monitor dc-monitor-secondary" aria-label="آخرین مطالب">
-        <div class="dc-monitor-inner">
-          <div class="dc-monitor-title">تازه‌ترین مطالب دنت‌کست</div>
-          <div class="dc-monitor-hint">برای دیدن همه اسکرول کنید</div>
-          <ul class="dc-monitor-list" id="dcLast3Updates"></ul>
+      <div class="dc-home-sec"><h2 class="dc-home-sec-label">مرجع‌های دنت‌کست</h2></div>
+
+      <div class="dc-card-pair">
+      <a class="dc-list-card featured dc-list-card--pillar" id="card-pillar" href="/pillar/">
+        <div class="gls-eyebrow-row">
+          <div class="gls-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block">
+  <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/>
+  <circle cx="12" cy="12" r="5" fill="none" stroke="currentColor" stroke-width="2"/>
+  <circle cx="12" cy="12" r="1.5" style="fill:currentColor" stroke="none"/>
+</svg></div>
         </div>
-      </article>
+        <div class="gls-title">فهرست موضوعی</div>
+        <div class="gls-footer">
+          <span class="gls-sub">نقشه‌ی موضوعی دنت‌کست</span>
+          <span class="dc-chip">Pillar <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="m9 6 6 6-6 6"/></svg></span>
+        </div>
+      </a>
+
+      <div class="dc-list-card featured" id="card-glossary" onclick="window.location.href='/glossary/'">
+        <div class="gls-eyebrow-row">
+          <div class="gls-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"/></svg></div>
+        </div>
+        <div class="gls-title">دانشنامه دنت‌کست</div>
+        <div class="gls-footer">
+          <span class="gls-sub">مفاهیم تصمیم‌ساز دندان‌پزشکی</span>
+          <span class="dc-chip">Glossary <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="m9 6 6 6-6 6"/></svg></span>
+        </div>
+      </div>
+      </div>
+
+      <div class="dc-home-sec"><h2 class="dc-home-sec-label">موتور جستجوی دندانپزشکی</h2></div>
+
+      <!-- Radar hero — main tool of the site -->
+      <div class="dc-radar-hero radar-shine-card" id="btnOpenRadarMob" role="button" aria-label="رادار دنت‌کست">
+        <div class="dc-radar-hero-ico" aria-hidden="true"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="m12 12 7-7"/><path d="M12 12h.01"/></svg></div>
+        <div class="dc-radar-hero-main">
+          <div class="dc-radar-hero-txt">رادار دنت‌کست</div>
+          <div class="dc-radar-hero-sub">جایگزین تخصصی گوگل برای سایت‌های دندانپزشکی</div>
+        </div>
+        <span class="dc-radar-hero-btn">جستجو</span>
+      </div>
+
+      <!-- Library card — the SECOND card of this section, not a section of its
+           own. Radar searches other people's sites; the library searches ours.
+           They are one offer ("two search engines"), which is also the only
+           realistic way the radar gets looked at: the attention that arrives
+           for «۲۲۰۰ مقاله» lands on both. Premium; the gate is on the tap (see
+           the LIBRARY CARD script), never on the door of the page. -->
+      <div class="dc-radar-hero" id="card-library" role="button" tabindex="0" aria-label="کتابخانهٔ دنت‌کست">
+        <div class="dc-radar-hero-ico" aria-hidden="true"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"/></svg></div>
+        <div class="dc-radar-hero-main">
+          <div class="dc-radar-hero-txt">کتابخانهٔ دنت‌کست</div>
+          <div class="dc-radar-hero-sub">بیش از ۲۲۰۰ مقاله، دسته‌بندی‌شده و قابل جستجو</div>
+          <span class="dcp-soon-badge" id="card-library-lock">🔒 ویژه‌ی پریمیوم</span>
+        </div>
+        <span class="dc-radar-hero-btn">جستجو</span>
+      </div>
 
     </section>
 
