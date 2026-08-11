@@ -1,4 +1,8 @@
 {
+  "/dc-landing.css": {
+    "v": 2,
+    "hash": "8224de2c93d44f9c"
+  },
   "/dc-nav.css": {
     "v": 16,
     "hash": "1397aa3320ff2918"
@@ -20,7 +24,7 @@
     "hash": "bd50932cb1d75571"
   },
   "/pillar/premium-index.js": {
-    "v": 12,
+    "v": 13,
     "hash": "8182a5d86649c6e4"
   },
   "/plus/js/assistant-page.js": {

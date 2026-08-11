@@ -1,0 +1,208 @@
+/* =====================================================================
+   DC-LANDING — the Examine-style skin for every internal LIST page
+   (insight / notecast / chairside / metanotes / dentai / promptologist /
+   sharehub / litecast / photocast / dentcast-plus).
+   Loaded AFTER dc-theme.css, whose page-normalization rules are prefixed
+   with `body:has(.dc-topbar)` — so every override here carries the SAME
+   prefix: equal specificity, later in the cascade, this file wins.
+   Appearance only: white ground, hairline rows, one accent, no gradients,
+   no card shadows — matching the restyled homepage (index.html
+   #dcExamineSkin). It deliberately carries its OWN token set (--dcl-*) so
+   it works even on pages whose local tokens differ (photocast).
+   Header/topbar, search overlay, radar, and all JS stay untouched.
+   ===================================================================== */
+
+@font-face{
+  font-family:'Vazirmatn';
+  src:url('/fonts/Vazirmatn[wght].woff2') format('woff2');
+  font-weight:100 900; font-display:swap;
+}
+
+:root{
+  --dcl-bg:#ffffff;
+  --dcl-ink:#0a1a33;
+  --dcl-ink2:#4a5f85;
+  --dcl-ink3:#62779a;
+  --dcl-hair:rgba(2,35,96,.10);
+  --dcl-hair2:rgba(2,35,96,.06);
+  --dcl-card:#ffffff;
+  --dcl-tint:#f4f6fb;
+  --dcl-ac:#0b5fff;
+  --dcl-pr:#022360;
+}
+[data-theme="dark"]{
+  --dcl-bg:#0e1621;
+  --dcl-ink:#e8f0ff;
+  --dcl-ink2:#8aaac8;
+  --dcl-ink3:#6f8fb0;
+  --dcl-hair:rgba(255,255,255,.09);
+  --dcl-hair2:rgba(255,255,255,.05);
+  --dcl-card:#17212b;
+  --dcl-tint:#1e2c3a;
+  --dcl-ac:#5b9cf6;
+  --dcl-pr:#5b9cf6;
+}
+
+/* ── ground + type (same prefixes dc-theme.css uses for these) ── */
+html:has(body .dc-topbar){ background:var(--dcl-bg); }
+body:has(.dc-topbar){
+  background:var(--dcl-bg);
+  color:var(--dcl-ink);
+  font-family:'Vazirmatn',-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+}
+
+/* ── page title: centered showcase → right-aligned statement ── */
+body:has(.dc-topbar) .wrap header h1,
+body:has(.dc-topbar) main h1{
+  text-align:right;
+  color:var(--dcl-ink);
+  font-size:1.35rem;
+  font-weight:800;
+  line-height:1.75;
+  letter-spacing:0;
+  margin-bottom:0;
+}
+body:has(.dc-topbar) .wrap > header{ text-align:right; padding:1.5rem 0 0.75rem; }
+body:has(.dc-topbar) main h2:first-of-type{ text-align:right; } /* photocast eyebrow */
+
+/* ── intro: neumorphic card → plain lede ── */
+body:has(.dc-topbar) .intro{
+  background:none;
+  border:0;
+  border-radius:0;
+  box-shadow:none;
+  padding:0 0 0.25rem;
+  margin-bottom:1rem;
+  color:var(--dcl-ink2);
+  font-size:.88rem;
+  line-height:1.95;
+}
+body:has(.dc-topbar) .intro strong{ color:var(--dcl-ink); }
+
+/* ── section head ── */
+body:has(.dc-topbar) .wrap h2{
+  font-size:1rem;
+  font-weight:800;
+  color:var(--dcl-ink);
+  border-bottom:1px solid var(--dcl-hair);
+  padding-bottom:0.625rem;
+  margin:1.25rem 0 0.25rem;
+}
+
+/* ── the list itself: cards → hairline text rows ─────────────────────
+   Scoped to the landing list containers so the search overlay, radar,
+   drawer and results keep their own styling. */
+body:has(.dc-topbar) .wrap > ul > li,
+body:has(.dc-topbar) main > ul > li,
+body:has(.dc-topbar) .ai-list > li,
+body:has(.dc-topbar) .ai-item{
+  background:transparent;
+  border:0;
+  border-bottom:1px solid var(--dcl-hair2);
+  border-radius:0;
+  box-shadow:none;
+  padding:0.8rem 0.125rem;
+  margin:0;
+  transition:background .15s ease;
+}
+body:has(.dc-topbar) .wrap > ul > li:last-child,
+body:has(.dc-topbar) main > ul > li:last-child,
+body:has(.dc-topbar) .ai-list > li:last-child{ border-bottom:0; }
+body:has(.dc-topbar) .wrap > ul > li:hover,
+body:has(.dc-topbar) main > ul > li:hover,
+body:has(.dc-topbar) .ai-list > li:hover,
+body:has(.dc-topbar) .ai-item:hover{
+  transform:none;
+  box-shadow:none;
+  background:transparent;
+  border-bottom-color:var(--dcl-hair2);
+}
+body:has(.dc-topbar) .wrap > ul > li:active,
+body:has(.dc-topbar) main > ul > li:active{ transform:none; background:var(--dcl-tint); }
+
+body:has(.dc-topbar) .wrap > ul a,
+body:has(.dc-topbar) main > ul a{
+  color:var(--dcl-ink);
+  font-size:.92rem;
+  font-weight:700;
+  line-height:1.9;
+}
+body:has(.dc-topbar) .wrap > ul a:hover,
+body:has(.dc-topbar) main > ul a:hover{ color:var(--dcl-ac); text-decoration:none; }
+
+/* dentai / promptologist rows (anchor-card variant) */
+body:has(.dc-topbar) .ai-item{ display:block; color:var(--dcl-ink); }
+body:has(.dc-topbar) .ai-title{
+  color:var(--dcl-ink);
+  font-size:.92rem;
+  font-weight:700;
+  line-height:1.9;
+}
+body:has(.dc-topbar) .ai-item:hover .ai-title{ color:var(--dcl-ac); }
+body:has(.dc-topbar) .ai-desc{
+  color:var(--dcl-ink3);
+  font-size:.78rem;
+  line-height:1.85;
+}
+
+/* photocast rows: gold glass chips → standard rows */
+body:has(.dc-topbar) .photo-link{
+  background:transparent;
+  border:0;
+  border-radius:0;
+  backdrop-filter:none;
+  color:var(--dcl-ink);
+  text-align:right;
+  padding:0;
+  font-weight:700;
+  font-size:.92rem;
+  line-height:1.9;
+  text-shadow:none;
+  box-shadow:none;
+}
+body:has(.dc-topbar) .photo-link:hover{ background:transparent; color:var(--dcl-ac); transform:none; box-shadow:none; }
+body:has(.dc-topbar) main h1{ margin-bottom:0.5rem; }
+
+/* dentcast-plus video cards: keep the card (thumbnails need a frame),
+   drop the lift/shadow language */
+body:has(.dc-topbar) .video-card{
+  border:1px solid var(--dcl-hair);
+  border-radius:0.75rem;
+  box-shadow:none;
+  background:var(--dcl-card);
+}
+body:has(.dc-topbar) .video-card:hover{ transform:none; box-shadow:none; border-color:var(--dcl-hair); }
+body:has(.dc-topbar) .video-title{ color:var(--dcl-ink); font-weight:700; }
+body:has(.dc-topbar) .video-meta{ color:var(--dcl-ink3); }
+
+/* ── footer actions: flat ── */
+body:has(.dc-topbar) .btn-home{
+  background:var(--dcl-pr);
+  color:#fff;
+  border-radius:0.625rem;
+  box-shadow:none;
+  font-weight:700;
+}
+body:has(.dc-topbar) .btn-home:hover{ transform:none; box-shadow:none; text-decoration:none; }
+[data-theme="dark"] body:has(.dc-topbar) .btn-home{ color:#0a1628; }
+body:has(.dc-topbar) .btn-about{
+  background:transparent;
+  border:1px solid var(--dcl-hair);
+  border-radius:0.625rem;
+  color:var(--dcl-ink2);
+}
+body:has(.dc-topbar) .btn-about:hover{ background:var(--dcl-tint); text-decoration:none; }
+body:has(.dc-topbar) .footer-copy{ color:var(--dcl-ink3); }
+body:has(.dc-topbar) .footer-copy strong{ color:var(--dcl-ac); }
+
+/* ── jump button: quiet outline ── */
+body:has(.dc-topbar) .dc-jump{
+  background:var(--dcl-card);
+  border:1px solid var(--dcl-hair);
+  box-shadow:0 2px 10px rgba(2,6,23,.10);
+}
+body:has(.dc-topbar) .dc-jump svg{ fill:var(--dcl-ink2); }
+
+/* Plus seen-ticks inside landing rows: keep the row's line rhythm */
+body:has(.dc-topbar) .wrap li .dcp-seen-tick,
+body:has(.dc-topbar) main li .dcp-seen-tick{ font-size:.9em; }
