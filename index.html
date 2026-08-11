@@ -236,7 +236,7 @@ body{
   padding:0.625rem 0.875rem 0.5rem;
   background:var(--surface);
   border-bottom:1px solid var(--border);
-  box-shadow:0 1px 8px rgba(2,35,96,.06);
+  box-shadow:none;
   transition:background var(--tr2),border-color var(--tr2);
   gap:0.625rem;
 }
@@ -247,12 +247,12 @@ body{
   text-align:right;
 }
 .dc-topbar-brand-name{
-  font-size:1.05rem; font-weight:900;
-  color:var(--pr); letter-spacing:-.3px;
+  font-size:1.05rem; font-weight:800;
+  color:var(--txt); letter-spacing:-.3px;
   transition:color var(--tr2);
 }
 .dc-topbar-brand-sub{
-  font-size:.70rem; color:var(--ac);
+  font-size:.70rem; color:var(--txt3);
   text-decoration:none;
   transition:opacity var(--tr);
   opacity:0.8;
@@ -265,8 +265,8 @@ body{
 .dc-topbar-btn{
   width:2.125rem; height:2.125rem;
   border-radius:var(--r-f);
-  background:var(--surface2);
-  border:1px solid var(--border2);
+  background:transparent;
+  border:1px solid transparent;
   display:flex; align-items:center; justify-content:center;
   font-size:1rem;
   transition:all var(--tr);
@@ -310,7 +310,7 @@ body{
   overflow:hidden;
   max-height:0;
   opacity:0;
-  background:var(--surface2);
+  background:var(--surface);
   border-bottom:1px solid var(--border);
   transition:max-height .28s cubic-bezier(.4,0,.2,1), opacity .22s ease;
   position:sticky;
