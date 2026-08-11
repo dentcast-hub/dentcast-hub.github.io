@@ -3693,10 +3693,22 @@ a.dc-list-card--pillar {
   -webkit-tap-highlight-color:transparent;
 }
 #panel-studio .dc-exa-cat:active{ background:var(--surface2); }
-#panel-studio .dc-exa-cat span{ min-width:0; }
+#panel-studio .dc-exa-cat span{ min-width:0; flex:1; order:1; }
 #panel-studio .dc-exa-cat b{ display:block; font-size:.84rem; font-weight:700; color:var(--txt); line-height:1.5; }
 #panel-studio .dc-exa-cat i{ font-style:normal; font-size:.68rem; color:var(--txt3); }
-#panel-studio .dc-exa-cat .dc-svg-icon{ width:0.9375rem; height:0.9375rem; color:var(--txt3); flex-shrink:0; }
+#panel-studio .dc-exa-cat .dc-svg-icon{ width:0.9375rem; height:0.9375rem; color:var(--txt3); flex-shrink:0; order:3; }
+/* Plus injects a per-folder seen-tick (.dcp-seen-tick) into SOME of these
+   cells; the tickless ones broke the row alignment. Every cell now reserves
+   the slot with a grey placeholder tick, hidden when the real one arrives. */
+#panel-studio .dc-exa-cat .dcp-seen-tick{
+  order:2; flex-shrink:0; margin:0; font-size:.95rem; line-height:1;
+}
+#panel-studio .dc-exa-cat::before{
+  content:"✓"; order:2; flex-shrink:0;
+  font-weight:800; font-size:.95rem; line-height:1;
+  color:var(--txt3); opacity:.28;
+}
+#panel-studio .dc-exa-cat:has(.dcp-seen-tick)::before{ display:none; }
   </style>
 </head>
 <body>
@@ -3900,7 +3912,7 @@ a.dc-list-card--pillar {
         <a class="dc-exa-cat" href="/dentai/"><span><b>DentAI</b><i>۲۸ مطلب</i></span><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></a>
         <a class="dc-exa-cat" href="/metanotes/"><span><b>متانوت</b><i>۲۰ مطلب</i></span><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></a>
         <a class="dc-exa-cat" href="/litecast/"><span><b>لایت‌کست</b><i>۱۹ مطلب</i></span><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></a>
-        <a class="dc-exa-cat" href="/sharehub/"><span><b>شیرهاب</b><i>۱۳ مرور</i></span><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></a>
+        <a class="dc-exa-cat" href="/sharehub/"><span><b>ShareHub</b><i>۱۳ مرور</i></span><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></a>
       </div>
 
       <div class="dc-home-sec"><h2 class="dc-home-sec-label">تازه‌های دنت‌کست</h2></div>
