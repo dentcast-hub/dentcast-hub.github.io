@@ -1,5 +1,6 @@
 import { pool } from '../db.js';
 import { config } from '../config.js';
+import { grantMetricOf } from '../badges.js';
 import { getFolders, folderOf } from '../content-index.js';
 import { getConsumedContentIds } from './consumption.js';
 import { getLeagueConfig } from './league-config.js';
@@ -80,7 +81,7 @@ export async function computeAchievementFacts(
   const leagueCfg = await getLeagueConfig();
 
   const [counts, clock, weekend, publishing, busiest, league, medalRows, days, frozen, consumed,
-    seat] = await Promise.all([
+    seat, granted] = await Promise.all([
       // ---- plain counters, one round trip -------------------------------------
       pool.query<{
         highlights: number; highlights_with_note: number;
@@ -281,6 +282,18 @@ export async function computeAchievementFacts(
       // the renewal discount from, so the wall and the till can never disagree
       // about who holds a seat.
       pillarSeat(userId),
+
+      // ---- granted badges («همراه», …) ----------------------------------------
+      // The founder-given class. What is written is the DECISION (one
+      // badge_grants row, POST /admin/badges/grant), never the badge — the same
+      // move «ستون» makes with the payments ledger — so the badge itself stays
+      // derived: each row becomes a `grant:<badge_key>` metric worth 1 and the
+      // evaluator's one comparison does the rest. A key nobody granted is
+      // simply absent, which reads as 0.
+      pool.query<{ badge_key: string }>(
+        'select badge_key from badge_grants where user_id = $1',
+        [userId],
+      ),
     ]);
 
   // ---- folder breadth + folder completion ---------------------------------
@@ -337,6 +350,10 @@ export async function computeAchievementFacts(
     // direction.
     pillar_seat: isPillarSeat(seat) ? 1 : 0,
   };
+  // Granted badges, folded in last: `grant:<key>` -> 1 per grant row. Namespaced
+  // with the same convention the catalog registers them under (badges.ts,
+  // grantMetricOf), so a granted key can never collide with a computed metric.
+  for (const g of granted.rows) metrics[grantMetricOf(g.badge_key)] = 1;
 
   const medals: Record<number, MedalState> = { 1: { best_tier_order: 0 }, 2: { best_tier_order: 0 } };
   for (const row of medalRows.rows) medals[row.final_rank] = { best_tier_order: row.best };

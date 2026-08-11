@@ -164,6 +164,24 @@ export function resolveThreshold(
 
 export const METALS: MetalTier[] = ['bronze', 'silver', 'gold'];
 
+/**
+ * The GRANTED class — badges the founder gives by hand («همراه» is the first).
+ *
+ * The convention is the entire registration: a badge belongs to the class iff
+ * its metric is `grant:` + its own key. services/achievements.ts folds each
+ * `badge_grants` row into a `grant:<key>` metric worth 1, so the badge stays
+ * derived (what is written is the founder's decision, not the badge — same
+ * move «ستون» makes with the payments ledger), and the admin grant endpoint
+ * refuses any key outside this class. Defined here, in the catalog module,
+ * because both of those readers need it and neither may import the other.
+ */
+export const grantMetricOf = (badgeKey: string): string => `grant:${badgeKey}`;
+
+/** Every catalog badge the founder can grant by hand. */
+export function grantableBadges(): Badge[] {
+  return getBadgeCatalog().badges.filter((b) => b.metric === grantMetricOf(b.key));
+}
+
 export interface EvaluatedBadge {
   earned: boolean;
   /** -1 = not earned. 0..2 = bronze..gold. 0 for an earned one-shot badge. */

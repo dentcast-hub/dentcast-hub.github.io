@@ -22,6 +22,8 @@ import {
 import {
   pendingRedemptions, approveRedemption, rejectRedemption,
 } from '../services/gift-redemption.js';
+import { grantBadge, revokeBadgeGrant, listBadgeGrants } from '../services/badge-grants.js';
+import { grantableBadges } from '../badges.js';
 import {
   getSpotStats, defaultRange, isCalendarDay, SPOT_HOSTS, type GroupBy,
 } from '../services/spot-stats.js';
@@ -76,7 +78,7 @@ function fmtNum(v: number | null): string {
   return v == null ? '—' : String(v);
 }
 
-function renderHtml(k: Kpis): string {
+function renderHtml(k: Kpis, grantable: { key: string; title_fa: string }[]): string {
   const d7Rows = k.d7_survival_by_tier.length
     ? k.d7_survival_by_tier
         .map((r) => `<tr><td>${r.tier}</td><td>${r.cohort}</td><td>${r.kept}</td><td>${fmtPct(r.pct)}</td></tr>`)
@@ -115,7 +117,7 @@ function renderHtml(k: Kpis): string {
   form.bc button{background:#2f7de0;color:#fff;border:0;border-radius:999px;padding:10px 22px;
     font:inherit;font-weight:800;cursor:pointer;align-self:flex-start}
   form.bc button:disabled{opacity:.55;cursor:default}
-  #bcOut{font-size:.85rem;color:#93a1b8;min-height:1.6em}
+  #bcOut,#bgOut{font-size:.85rem;color:#93a1b8;min-height:1.6em}
 </style></head><body><div class="wrap">
   <h1>پیشخوان بنیان‌گذار</h1>
   <div class="muted">تولید: ${k.generated_at} · منطقه زمانی: ${k.tz}</div>
@@ -201,6 +203,64 @@ function renderHtml(k: Kpis): string {
     });
   })();
   </script>
+
+  <h3 style="margin-top:26px">اهدای نشان</h3>
+  <div class="muted">نشان‌های کلاسِ اهدایی (مثل «همراه») را این‌جا به یک نفر بده. یک بار برای هر نفر — دوباره زدن هیچ‌چیزِ تازه‌ای نمی‌سازد. تخفیفِ اختیاری، یک اعتبارِ یک‌بارمصرفِ عادی است (سهم اعتبارها در هر خرید تا سقف ٪۱۰).</div>
+  <form class="bc" id="bgForm" onsubmit="return false">
+    <div><label for="bgUser">کاربر (موبایل، نام کاربری یا شناسه)</label><input id="bgUser" type="text"></div>
+    <div class="row">
+      <div style="flex:1 1 200px"><label for="bgBadge">نشان</label><select id="bgBadge">
+        ${grantable.map((b) => `<option value="${b.key}">${b.title_fa}</option>`).join('')}
+      </select></div>
+      <div style="flex:0 0 150px"><label for="bgPct">تخفیف ٪ (اختیاری)</label><input id="bgPct" type="text" inputmode="numeric" placeholder="مثلاً 5"></div>
+    </div>
+    <div><label for="bgNote">یادداشت (چرا؟ — فقط برای خودت)</label><input id="bgNote" type="text" maxlength="300" placeholder="مثلاً: باگ گیت‌وی پرداخت را گزارش کرد"></div>
+    <button id="bgSend" type="button" ${grantable.length ? '' : 'disabled'}>اهدا</button>
+    <div id="bgOut">${grantable.length ? '' : 'هیچ نشانِ اهدایی‌ای در کاتالوگ تعریف نشده.'}</div>
+  </form>
+  <script>
+  (function () {
+    var btn = document.getElementById('bgSend');
+    var out = document.getElementById('bgOut');
+    if (!btn) return;
+    btn.addEventListener('click', function () {
+      var user = document.getElementById('bgUser').value.trim();
+      if (!user) { out.textContent = 'کاربر را مشخص کن.'; return; }
+      var sel = document.getElementById('bgBadge');
+      var pctRaw = document.getElementById('bgPct').value.trim();
+      var pct = pctRaw ? parseInt(pctRaw, 10) : null;
+      if (pctRaw && (!pct || pct < 1 || pct > 100)) { out.textContent = 'درصد تخفیف معتبر نیست.'; return; }
+      var label = sel.options[sel.selectedIndex].text;
+      if (!confirm('نشان «' + label + '»' + (pct ? ' با ٪' + pct + ' تخفیف' : '') + ' به این کاربر اهدا شود؟')) return;
+      btn.disabled = true; out.textContent = 'در حال اهدا...';
+      fetch('/admin/badges/grant', {
+        method: 'POST', credentials: 'include',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          user: user,
+          badge: sel.value,
+          note: document.getElementById('bgNote').value.trim() || undefined,
+          discount_percent: pct || undefined
+        })
+      }).then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+        .then(function (res) {
+          btn.disabled = false;
+          if (!res.ok) { out.textContent = 'نشد: ' + (res.j.message || res.j.error || 'خطا'); return; }
+          if (res.j.already) {
+            out.textContent = 'این کاربر «' + label + '» را از قبل داشت — چیزی تغییر نکرد (تخفیفی هم ساخته نشد).';
+            return;
+          }
+          out.textContent = 'اهدا شد به ' + (res.j.display_name || res.j.user_id)
+            + (res.j.discount_grant_id ? ' — با اعتبار تخفیف.' : '.')
+            + ' جشن و اطلاعیه خودکار می‌رسد.';
+          document.getElementById('bgUser').value = '';
+          document.getElementById('bgNote').value = '';
+          document.getElementById('bgPct').value = '';
+        })
+        .catch(function () { btn.disabled = false; out.textContent = 'اهدا نشد.'; });
+    });
+  })();
+  </script>
 </div></body></html>`;
 }
 
@@ -214,7 +274,8 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
 
   app.get('/admin', async (_request, reply) => {
     const kpis = await computeKpis();
-    return reply.type('text/html; charset=utf-8').send(renderHtml(kpis));
+    const grantable = grantableBadges().map((b) => ({ key: b.key, title_fa: b.title_fa }));
+    return reply.type('text/html; charset=utf-8').send(renderHtml(kpis, grantable));
   });
 
   // GET /admin/spot/stats?from=&to=&group_by=day|week|month - the read path for
@@ -1136,6 +1197,84 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
       ready_credits: ready,
       grants: grants.rows,
       redemptions: redemptions.rows,
+    });
+  });
+
+  // --- granted badges ---------------------------------------------------------
+  // The founder-given class of the badge wall («همراه» is the first member).
+  // What these endpoints write is the DECISION — one badge_grants row — never
+  // the badge: the wall keeps deriving (services/badge-grants.ts explains the
+  // whole move). Which keys are legal is the catalog's call: a badge is
+  // grantable iff its metric is `grant:<its own key>`, so «شعله» can never be
+  // handed out by typo.
+
+  // POST /admin/badges/grant { user|phone, badge, note?, discount_percent?, discount_days? }
+  // Idempotent per (user, badge): pressing twice is `already: true` and mints
+  // nothing — including the optional one-time discount, which rides along as
+  // an ordinary discount_grants row under the same per-purchase cap.
+  app.post('/admin/badges/grant', userBody({
+    badge: { type: 'string', minLength: 1, maxLength: 40 },
+    note: { type: 'string', maxLength: 300 },
+    discount_percent: { type: 'integer', minimum: 1, maximum: 100 },
+    discount_days: { type: 'integer', minimum: 1, maximum: 3660 },
+  }, ['badge']), async (request, reply) => {
+    const body = request.body as {
+      user?: string; phone?: string; badge: string; note?: string;
+      discount_percent?: number; discount_days?: number;
+    };
+    const who = await resolveUser(pick(body), reply);
+    if (!who) return reply;
+    try {
+      const r = await grantBadge(who.id, body.badge, {
+        note: body.note,
+        discountPercent: body.discount_percent,
+        discountDays: body.discount_days,
+      });
+      return reply.send({ user_id: who.id, display_name: who.display_name, ...r });
+    } catch (err) {
+      if ((err as Error).message === 'not_grantable') {
+        return reply.code(400).send({
+          error: 'not_grantable',
+          message: 'این نشان اهدایی نیست. فقط نشان‌های کلاسِ اهدایی را می‌شود داد.',
+          grantable: grantableBadges().map((b) => b.key),
+        });
+      }
+      throw err;
+    }
+  });
+
+  // POST /admin/badges/revoke { user|phone, badge } — take a grant back. The
+  // badge goes dark on the next derive; the announcement ledger's high-water
+  // mark keeps a later re-grant silent. Any discount that rode along is NOT
+  // clawed back here (see revokeBadgeGrant's note).
+  app.post('/admin/badges/revoke', userBody({
+    badge: { type: 'string', minLength: 1, maxLength: 40 },
+  }, ['badge']), async (request, reply) => {
+    const body = request.body as { user?: string; phone?: string; badge: string };
+    const who = await resolveUser(pick(body), reply);
+    if (!who) return reply;
+    const removed = await revokeBadgeGrant(who.id, body.badge);
+    return reply.send({ ok: true, user_id: who.id, badge_key: body.badge, removed });
+  });
+
+  // GET /admin/badges/grants?user= — one account's grant list, plus the keys
+  // that are legal to grant (so the founder never has to remember them).
+  app.get('/admin/badges/grants', {
+    schema: {
+      querystring: {
+        type: 'object',
+        properties: { user: { type: 'string' }, phone: { type: 'string' } },
+      },
+    },
+  }, async (request, reply) => {
+    const who = await resolveUser(pick(request.query as { user?: string; phone?: string }), reply);
+    if (!who) return reply;
+    return reply.send({
+      ok: true,
+      user_id: who.id,
+      display_name: who.display_name,
+      grants: await listBadgeGrants(who.id),
+      grantable: grantableBadges().map((b) => ({ key: b.key, title_fa: b.title_fa })),
     });
   });
 
