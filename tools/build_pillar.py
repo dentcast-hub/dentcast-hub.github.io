@@ -642,7 +642,7 @@ PREMIUM_ARROW = (
 # NOTE: this ?v= is hardcoded here and NOT owned by tools/asset_version.py.
 # Raise it to match the live pages whenever --bump moves it, or the next
 # `build_pillar.py all` silently rolls every pillar page back to an old stamp.
-PREMIUM_SCRIPT_TAG = '<script type="module" src="/pillar/premium-index.js?v=11"></script>\n'
+PREMIUM_SCRIPT_TAG = '<script type="module" src="/pillar/premium-index.js?v=13"></script>\n'
 
 # Styles for the two things this split introduces: the premium referral
 # banner (both page types) and the flat article list (pillar pages only).
@@ -1021,6 +1021,7 @@ def render_page(slug, cfg, intro_html, flat_ordered):
         '\n'
         '  <link rel="stylesheet" href="/dc-theme.css">\n'
         '  <link rel="stylesheet" href="/dc-nav.css">\n'
+        '  <link rel="stylesheet" href="/dc-landing.css?v=2">\n'
         '  <link rel="stylesheet" href="/global-search.css?v=5">\n'
         '\n'
         '  <link rel="stylesheet" href="/pillar/bonding/bonding.css">\n'
@@ -1262,7 +1263,7 @@ def render_page(slug, cfg, intro_html, flat_ordered):
         '<!-- Theme toggle behavior moved to /dc-nav.js (single source) -->\n'
         '<script src="/global-search.js?v=9"></script>\n'
         '<script src="/global-search-ui.js?v=5"></script>\n'
-        '<script src="/dc-nav.js?v=64" defer></script>\n'
+        '<script src="/dc-nav.js?v=65" defer></script>\n'
         + PREMIUM_SCRIPT_TAG +
         '\n'
         '</body>\n'
@@ -1736,6 +1737,7 @@ def _render_index_page(pillars_info, cards_html):
         '\n'
         '  <link rel="stylesheet" href="/dc-theme.css">\n'
         '  <link rel="stylesheet" href="/dc-nav.css">\n'
+        '  <link rel="stylesheet" href="/dc-landing.css?v=2">\n'
         '  <link rel="stylesheet" href="/global-search.css?v=5">\n'
         '\n'
         '  ' + INDEX_INLINE_STYLE + '\n'
@@ -1853,7 +1855,7 @@ def _render_index_page(pillars_info, cards_html):
         '<!-- Theme toggle behavior moved to /dc-nav.js (single source) -->\n'
         '<script src="/global-search.js?v=9"></script>\n'
         '<script src="/global-search-ui.js?v=5"></script>\n'
-        '<script src="/dc-nav.js?v=64" defer></script>\n'
+        '<script src="/dc-nav.js?v=65" defer></script>\n'
         + PREMIUM_SCRIPT_TAG +
         '\n'
         '</body>\n'
@@ -2317,6 +2319,7 @@ section[id^="sec-"]{ scroll-margin-top:160px; }
   </style>
     <link rel="stylesheet" href="/dc-theme.css">
 <link rel="stylesheet" href="/dc-nav.css">
+<link rel="stylesheet" href="/dc-landing.css?v=2">
   <link rel="stylesheet" href="/global-search.css?v=5">
   <script type="application/ld+json">
 {
@@ -2567,7 +2570,7 @@ _GLOSSARY_TAIL = """<div class="dc-global-filter-box" id="dcGlobalBox">
   <div class="dc-results-box" id="dcResults"></div>
 </div>
 <script src="/global-search.js?v=9" defer></script>
-<script src="/dc-nav.js?v=64" defer></script>
+<script src="/dc-nav.js?v=65" defer></script>
 </body>
 </html>
 """
