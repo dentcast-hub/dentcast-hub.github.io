@@ -3,6 +3,10 @@ Allow: /
 # Music player track metadata/links — keep out of search results
 Disallow: /dentcast-music.json
 
+# FAQ + flashcards corpus (feeds the premium quiz/Leitner builders) — never
+# served as page markup, same reason as the music JSON above.
+Disallow: /plus/faq-corpus.json
+
 # Premium arrangement of the topical index (subtopic foldering + reading order).
 # The indexable surface is the page itself: /pillar/ and /pillar/<slug>/ each
 # serve every link once, in one flat date order. These sidecars hold the SAME
