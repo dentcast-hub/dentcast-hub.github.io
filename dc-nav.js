@@ -2305,7 +2305,7 @@
 (function () {
   if (window.__dcPlusLoaded) return;
   window.__dcPlusLoaded = true;
-  var V = '69';
+  var V = '70';
 
   /* Anti-FOUC for the Plus header. Plus (mobile only) relocates the music +
      articles buttons from the topbar into the tool drawer and adds the person
@@ -2356,7 +2356,7 @@
 (function () {
   if (window.__dcSpotLoaded) return;
   window.__dcSpotLoaded = true;
-  var SPOT_V = '27';
+  var SPOT_V = '28';
   var js = document.createElement('script');
   js.type = 'module';
   js.src = '/spot/spot.js?v=' + SPOT_V;
