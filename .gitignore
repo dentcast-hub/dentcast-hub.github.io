@@ -1,5 +1,8 @@
 .claude/*
 !.claude/skills/
+# Project hooks are part of the repo — without this they'd be ignored by the
+# line above and lost on a fresh clone.
+!.claude/settings.json
 __pycache__/
 *.pyc
 
