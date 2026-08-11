@@ -168,6 +168,23 @@ def jsonld_nodes(doc, wanted):
     return found
 
 
+_FAQ_CORPUS = None
+
+
+def faq_corpus():
+    """plus/faq-corpus.json's byContent map, cached for the life of the
+    process. FAQ/flashcards content lives here, not on the page, since the
+    hidden-schema SEO fix (.dentcast/faq-schema-removal-handoff.md) — pages
+    carry no FAQPage/DefinedTermSet of their own any more."""
+    global _FAQ_CORPUS
+    if _FAQ_CORPUS is None:
+        try:
+            _FAQ_CORPUS = json.loads(read("plus/faq-corpus.json")).get("byContent", {})
+        except (OSError, ValueError):
+            _FAQ_CORPUS = {}
+    return _FAQ_CORPUS
+
+
 def related_section(doc):
     return re.search(r'<div class="dc-related-section">.*?</div>\s*</div>', doc, re.S)
 
@@ -510,14 +527,28 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
                       "no self-link", "the section links to the page itself")
 
     # ---------------- FAQ + flashcards ----------------
-    faqs = jsonld_nodes(doc, "FAQPage")
+    # Content lives in plus/faq-corpus.json, not in the page's own JSON-LD —
+    # see .dentcast/faq-schema-removal-handoff.md. The page itself must carry
+    # neither a FAQPage node nor a #flashcards-tagged DefinedTermSet; this
+    # check runs for every page (including LiteCast) so the hidden schema can
+    # never silently come back via a future publish or clone.
+    rep.check(
+        '"FAQPage"' not in doc and "#flashcards" not in doc,
+        "4.12 no-page-schema",
+        "page carries no FAQPage/flashcards JSON-LD",
+        "page still has hidden FAQPage/DefinedTermSet schema in its own JSON-LD",
+        f"python3 tools/strip_faq_schema.py {page_rel}",
+    )
+
+    corpus_entry = faq_corpus().get(content_id, {})
+    faqs = corpus_entry.get("faqPages", [])
     questions = [q for f in faqs for q in f.get("mainEntity", [])]
     if is_lite:
         rep.skip("4.12 quiz", "LiteCast is outside the quiz ecosystem")
         rep.skip("4.11 cards", "LiteCast is outside the flashcard ecosystem")
     else:
         rep.check(bool(questions), "4.12 quiz", f"{len(questions)} FAQ questions",
-                  "no FAQPage on the page", "step 4.12")
+                  "no FAQ entry for this page in plus/faq-corpus.json", "step 4.12")
         for i, q in enumerate(questions):
             name = q.get("name", "")
             hit = [d for d in DEIXIS if d in name]
@@ -533,9 +564,10 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
                           f"it will be silently dropped from the scored bank",
                           "step 4.12(b) — reopen the answer with «بله،»/«خیر؛»")
 
-        sets = jsonld_nodes(doc, "DefinedTermSet")
+        sets = corpus_entry.get("definedTermSets", [])
         rep.check(len(sets) == 1, "4.11 cards",
-                  "one DefinedTermSet block", f"found {len(sets)} DefinedTermSet blocks", "step 4.11")
+                  "one DefinedTermSet block",
+                  f"found {len(sets)} DefinedTermSet blocks in plus/faq-corpus.json", "step 4.11")
         terms = [t for s in sets for t in s.get("hasDefinedTerm", [])]
         rep.check(bool(terms), "4.11 cards", f"{len(terms)} flashcards",
                   "DefinedTermSet has no terms")
