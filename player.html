@@ -728,11 +728,27 @@ function updatePlayingRow() {
   }
 }
 
-/* SPEED */
-speedBtn.addEventListener("click", () => {
-  speedIndex = (speedIndex + 1) % speeds.length;
+/* SPEED — تنها نقطه‌ای که سرعت عوض می‌شود.
+   هر سه چیز با هم ست می‌شوند تا هرگز از هم جدا نیفتند:
+
+   • defaultPlaybackRate — بدونِ این، ایراد اصلی برمی‌گردد. طبق استاندارد HTML،
+     هر بار که src عوض شود مرورگر «media element load algorithm» را اجرا می‌کند
+     و در آن playbackRate را برابرِ defaultPlaybackRate قرار می‌دهد. اگر فقط
+     playbackRate ست شده باشد، defaultPlaybackRate روی ۱ می‌ماند و سرعتِ واقعی
+     با هر تعویض اپیزود به ۱ برمی‌گردد — در حالی که عددِ روی دکمه (که state
+     جاوااسکریپتی ماست و کسی ریستش نمی‌کند) همان قبلی می‌ماند.
+   • playbackRate — اثر فوری روی صدای در حال پخش.
+   • متنِ دکمه — همیشه از همان speedIndex خوانده می‌شود، نه از یک شمارندهٔ جدا. */
+function applySpeed(i){
+  speedIndex = ((i % speeds.length) + speeds.length) % speeds.length;
+  audio.defaultPlaybackRate = speeds[speedIndex];
   audio.playbackRate = speeds[speedIndex];
   speedBtn.textContent = speeds[speedIndex] + "x";
+}
+
+speedBtn.addEventListener("click", () => {
+  applySpeed(speedIndex + 1);
+  saveResumeState();   /* انتخابِ سرعت فوراً ماندگار شود، نه در تیکِ بعدی */
 });
 
 /* AUTOPLAY MODE */
@@ -773,7 +789,10 @@ function saveResumeState(){
     localStorage.setItem(RESUME_KEY, JSON.stringify({
       episode:  currentEpisodeNum,
       position: audio.currentTime || 0,
-      anchor:   anchorEpisode
+      anchor:   anchorEpisode,
+      /* مقدارِ سرعت ذخیره می‌شود نه اندیسش: اگر روزی آرایهٔ speeds عوض شود،
+         اندیسِ ذخیره‌شده بی‌صدا به سرعتِ دیگری اشاره می‌کند. */
+      speed:    speeds[speedIndex]
     }));
   } catch (e) { /* localStorage پر/غیرفعال — بی‌صدا رد شو */ }
   lastResumeSave = Date.now();
@@ -827,6 +846,18 @@ function restoreResumeState(){
   return true;
 }
 
+/* بازگردانی سرعتِ ذخیره‌شده — جدا از restoreResumeState و بی‌قید به اینکه اپیزودِ
+   رکورد هنوز موجود باشد یا نه: سرعت ترجیحِ کاربر است، نه خاصیتِ یک اپیزود.
+   اینجا (و نه کنارِ خودِ دکمه) اجرا می‌شود چون به RESUME_KEY نیاز دارد و const
+   بالاتر از محلِ تعریفش در TDZ است. پیش از اولین loadEpisode اجرا می‌شود، پس
+   defaultPlaybackRate از همان اولین src درست است. */
+(function(){
+  let saved = null;
+  try { saved = JSON.parse(localStorage.getItem(RESUME_KEY)); } catch (e) { saved = null; }
+  const i = saved ? speeds.indexOf(Number(saved.speed)) : -1;
+  applySpeed(i === -1 ? 0 : i);   /* رکوردِ قدیمیِ بدون speed → همان ۱ */
+})();
+
 /* آیکون «در حال پخش» (دو میله) — مشترک بین پخش دستی و خودکار */
 function setPlayingIcon(){
   playBtn.innerHTML = '<svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
@@ -848,6 +879,10 @@ function loadEpisode(i){
   currentIndex = i;
   currentEpisodeNum = Number(ep.episode);
   audio.src = ep.audio_url;
+  /* کمربند و بند شلوار: defaultPlaybackRate بالا به‌تنهایی کافی است، ولی سافاری
+     در بازگرداندنِ نرخ بعد از load همیشه با استاندارد هم‌رفتار نیست. دوباره ست
+     کردنش اینجا بی‌هزینه است و ضمناً متنِ دکمه را هم با واقعیت هم‌گام نگه می‌دارد. */
+  applySpeed(speedIndex);
   downloadBtn.href = ep.audio_url;
 downloadBtn.setAttribute("download", "");
 
