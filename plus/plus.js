@@ -251,10 +251,19 @@ if (typeof window !== 'undefined') window.dcpMountArticleWorkbench = mountArticl
 // dentai/promptologist/… (matched by its top folder 'dentai').
 const SEEN_FOLDERS = new Set([
   'episodes', 'notecast', 'insight', 'dentai', 'chairside', 'metanotes', 'photocast', 'sharehub', 'dentcast-plus',
+  // litecast joined 2026-08-11: the homepage category grid shows a seen-tick
+  // slot on EVERY cell, so every cell must be earnable — a permanently grey
+  // tick reads as broken, not as "out of scope".
+  'litecast',
 ]);
 function isSeenContent(contentId) {
   const parts = (contentId || '').split('/');
-  return parts.length >= 2 && SEEN_FOLDERS.has(parts[0]); // a real article, in a ticked folder
+  if (!SEEN_FOLDERS.has(parts[0])) return false;
+  // a real article (folder/slug), a section index (trailing slash → ['x','']),
+  // or an archive page whose id IS the bare folder name (episodes.html →
+  // 'episodes') — that last one is what lets the اپیزودها grid cell earn its
+  // tick like every other cell.
+  return parts.length >= 2 || contentId === parts[0];
 }
 
 async function markViewed(contentId) {
