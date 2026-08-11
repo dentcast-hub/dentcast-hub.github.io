@@ -589,3 +589,81 @@ describe('a push the awake window held', () => {
     expect(res.statusCode).toBe(401);
   });
 });
+
+// A broadcast's narrowest audience is a whole tier, so the founder's note to ONE
+// person had nowhere to land: thanking somebody with a broadcast would have told
+// every premium reader they were thanked.
+describe('the founder note to one reader', () => {
+  const auth = 'Basic ' + Buffer.from(
+    `${config.admin.user}:${config.admin.password}`,
+  ).toString('base64');
+
+  it('lands in that reader\'s inbox and nobody else\'s, at any hour', async () => {
+    // Window shut on purpose: the اطلاعیه half is a row in a table and has no
+    // business waiting for morning — only a push does. Shut RELATIVE to the
+    // clock (a one-hour window starting next hour), so this passes at 03:00 in
+    // CI as well as at noon — the same trap the broadcast test documents.
+    const start = config.notify.awakeStartHour;
+    const end = config.notify.awakeEndHour;
+    const hour = Number(new Intl.DateTimeFormat('en-GB', {
+      timeZone: config.streakTimezone, hour12: false, hour: '2-digit',
+    }).format(new Date()));
+    config.notify.awakeStartHour = (hour + 1) % 24;
+    config.notify.awakeEndHour = (hour + 2) % 24;
+    try {
+      const res = await app.inject({
+        method: 'POST', url: '/admin/notices/user', headers: { authorization: auth },
+        payload: { user: await userId(), title: 'هدیه‌ی دنت‌کست', body: 'دو ماه پریمیوم.' },
+      });
+      expect(res.statusCode).toBe(200);
+      expect(res.json()).toMatchObject({ notice: 'delivered', push: 'off' });
+    } finally {
+      config.notify.awakeStartHour = start;
+      config.notify.awakeEndHour = end;
+    }
+
+    const rows = (await app.inject({ method: 'GET', url: '/notices', headers: { cookie } })).json();
+    expect(rows.notices[0]).toMatchObject({ title: 'هدیه‌ی دنت‌کست', body: 'دو ماه پریمیوم.' });
+
+    // A second account, logged in the same way, sees nothing: this is the one
+    // difference from a broadcast that matters.
+    const otherCookie = await loginAs(app, '09121200077');
+    const theirs = (await app.inject({
+      method: 'GET', url: '/notices', headers: { cookie: otherCookie },
+    })).json();
+    expect(theirs.notices).toHaveLength(0);
+  });
+
+  it('never spends the reader\'s daily push budget', async () => {
+    const uid = await userId();
+    for (let i = 0; i < 3; i += 1) {
+      // eslint-disable-next-line no-await-in-loop
+      await app.inject({
+        method: 'POST', url: '/admin/notices/user', headers: { authorization: auth },
+        payload: { user: uid, title: `یادداشت ${i}`, push: true, force: true },
+      });
+    }
+    // `system` is uncapped and excluded from the counter by kind, so three notes
+    // from the founder have taken nothing from the reminders that follow.
+    const { sentCountOn } = await import('../src/services/notify-policy.js');
+    const { dayInTz } = await import('../src/services/time.js');
+    expect(await sentCountOn(uid, dayInTz(new Date(), config.streakTimezone))).toBe(0);
+
+    const rows = (await app.inject({ method: 'GET', url: '/notices', headers: { cookie } })).json();
+    expect(rows.notices).toHaveLength(3);
+  });
+
+  it('refuses an empty title, and requires admin credentials', async () => {
+    const uid = await userId();
+    const blank = await app.inject({
+      method: 'POST', url: '/admin/notices/user', headers: { authorization: auth },
+      payload: { user: uid, title: '   ' },
+    });
+    expect(blank.statusCode).toBe(400);
+
+    const anon = await app.inject({
+      method: 'POST', url: '/admin/notices/user', payload: { user: uid, title: 'سلام' },
+    });
+    expect(anon.statusCode).toBe(401);
+  });
+});

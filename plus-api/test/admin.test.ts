@@ -452,6 +452,117 @@ describe('GET /admin/pillar — the «ستون» roster', () => {
   });
 });
 
+describe('POST /admin/pillar/grant — a seat given, not bought', () => {
+  const uid = async (phone: string) => (await pool.query(
+    'select id from profiles where phone = $1', [phone],
+  )).rows[0].id;
+
+  const seedPayment = (userId: string, order: string, at: string) => pool.query(
+    `insert into payments (user_id, amount_rial, months, gateway, order_id, status,
+                           verified_at, period_jalali, period_gregorian)
+     values ($1, 60000000, 6, 'zibal', $2, 'paid', $3,
+             to_char(now(), 'YYYY-MM'), to_char(now(), 'YYYY-MM'))`,
+    [userId, order, at],
+  );
+
+  it('requires admin auth', async () => {
+    const res = await app.inject({
+      method: 'POST', url: '/admin/pillar/grant', payload: { user: 'nobody' },
+    });
+    expect(res.statusCode).toBe(401);
+  });
+
+  it('seats the grantee after the paid seats, moving nobody', async () => {
+    await loginAs(app, '09121710011');
+    await loginAs(app, '09121710012');
+    const payer = await uid('09121710011');
+    const helper = await uid('09121710012');
+    await seedPayment(payer, 'paid-first', '2026-08-01T09:00:00Z');
+
+    const res = await app.inject({
+      method: 'POST', url: '/admin/pillar/grant', headers: { authorization: basic },
+      payload: { user: helper, note: 'کمک به گسترش سایت' },
+    });
+    // The grant is real, it sits inside the fifty, and it is new.
+    expect(res.json()).toMatchObject({ ok: true, seat: 2, seated: true, created: true });
+
+    const roster = (await app.inject({
+      method: 'GET', url: '/admin/pillar', headers: { authorization: basic },
+    })).json();
+    // The seat the money bought did not move; the gift took the next one, and
+    // the roster says which of the two is which.
+    expect(roster.seats_taken).toBe(2);
+    expect(roster.holders[0]).toMatchObject({ seat: 1, user_id: payer, granted: false });
+    expect(roster.holders[1]).toMatchObject({ seat: 2, user_id: helper, granted: true });
+
+    // The badge's own reader agrees — one definition, two callers.
+    const { pillarSeat } = await import('../src/services/pillar.js');
+    expect(await pillarSeat(helper)).toBe(2);
+
+    // And the grantee is thanked exactly like a buyer, once.
+    const { drainPillarWelcomes } = await import('../src/services/pillar-notify.js');
+    await drainPillarWelcomes();
+    const welcomed = await pool.query(
+      "select count(*)::int as n from notification_log where user_id = $1 and kind = 'pillar_seat'",
+      [helper],
+    );
+    expect(welcomed.rows[0].n).toBe(1);
+  });
+
+  it('is idempotent, and a later purchase does not mint a second seat', async () => {
+    await loginAs(app, '09121710013');
+    const helper = await uid('09121710013');
+
+    const first = await app.inject({
+      method: 'POST', url: '/admin/pillar/grant', headers: { authorization: basic },
+      payload: { user: helper, welcome: false },
+    });
+    expect(first.json()).toMatchObject({ seat: 1, created: true });
+
+    const again = await app.inject({
+      method: 'POST', url: '/admin/pillar/grant', headers: { authorization: basic },
+      payload: { user: helper, welcome: false },
+    });
+    // Same seat, and the endpoint says plainly that it wrote nothing.
+    expect(again.json()).toMatchObject({ seat: 1, seated: true, created: false });
+
+    // Paying afterwards keeps the earlier claim rather than adding a row to the
+    // roster — one account, one seat, whichever came first.
+    await seedPayment(helper, 'later', '2026-09-01T09:00:00Z');
+    const roster = (await app.inject({
+      method: 'GET', url: '/admin/pillar', headers: { authorization: basic },
+    })).json();
+    expect(roster.seats_taken).toBe(1);
+    expect(roster.holders[0]).toMatchObject({ seat: 1, user_id: helper });
+  });
+
+  it('revokes a gift, and refuses to revoke a seat money bought', async () => {
+    await loginAs(app, '09121710014');
+    await loginAs(app, '09121710015');
+    const gifted = await uid('09121710014');
+    const payer = await uid('09121710015');
+    await seedPayment(payer, 'bought', '2026-08-01T09:00:00Z');
+    await app.inject({
+      method: 'POST', url: '/admin/pillar/grant', headers: { authorization: basic },
+      payload: { user: gifted, welcome: false },
+    });
+
+    const undone = await app.inject({
+      method: 'POST', url: '/admin/pillar/revoke', headers: { authorization: basic },
+      payload: { user: gifted },
+    });
+    expect(undone.json()).toMatchObject({ removed: true, seat: null, seated: false });
+
+    // The paid seat is untouched by the same call: nothing here can delete a
+    // payments row, so the answer is "nothing to remove", not an error.
+    const paid = await app.inject({
+      method: 'POST', url: '/admin/pillar/revoke', headers: { authorization: basic },
+      payload: { user: payer },
+    });
+    expect(paid.json()).toMatchObject({ removed: false, seat: 1, seated: true });
+  });
+});
+
 describe('score forensics', () => {
   // Added 2026-08-08, when a suspected farming account could not even be looked
   // up: resolveUser matches exactly, and nothing anywhere reported where one
