@@ -110,11 +110,11 @@
      touch lighter than the old #022360); --bn-bg-glass is the translucent
      layer used with backdrop-filter so the page shows through softly. Active-
      tab neon icon glow still reads against it. */
-  --bn-bg:#0a2c6e;
-  --bn-bg-glass:rgba(7,33,82,.72);
-  --bn-border:rgba(125,160,230,.22);
-  --bn-txt:#a8bcdc;
-  --bn-active:#eef3ff;
+  --bn-bg:#ffffff;
+  --bn-bg-glass:rgba(255,255,255,.92);
+  --bn-border:rgba(2,35,96,.10);
+  --bn-txt:#62779a;
+  --bn-active:#0a1a33;
 
   --card-bg:#ffffff;
   --card-border:rgba(2,35,96,.09);
@@ -153,8 +153,8 @@
      #0e1621) the translucent --bn-bg-glass layer sits a touch lighter/bluer
      than the body so it stays its own glass zone, with a light top edge for
      separation. --bn-bg is the solid fallback when backdrop-filter is absent. */
-  --bn-bg:#0a2c6e; --bn-bg-glass:rgba(18,46,106,.58); --bn-border:rgba(125,160,230,.22);
-  --bn-txt:#a8bcdc; --bn-active:#eef3ff;
+  --bn-bg:#17212b; --bn-bg-glass:rgba(23,33,43,.88); --bn-border:rgba(255,255,255,.09);
+  --bn-txt:#6f8fb0; --bn-active:#e8f0ff;
 
   --card-bg:#1e2c3a; --card-border:rgba(255,255,255,.07);
   --card-sh:0 1px 3px rgba(0,0,0,.22),0 4px 14px rgba(0,0,0,.14);
@@ -403,7 +403,7 @@ body{
   border-top:1px solid var(--bn-border);
   /* upward cast lifts the footer off the body; inset hairline gives the
      dark zone a crisp lit top edge so it never dissolves into the page */
-  box-shadow:0 -6px 24px rgba(1,8,28,.5), inset 0 1px 0 rgba(140,170,235,.12);
+  box-shadow:none;
   padding-bottom:env(safe-area-inset-bottom);
   transition:background var(--tr2),border-color var(--tr2);
 }
@@ -1329,12 +1329,12 @@ footer{
   background:#fff;
   border:1px solid var(--border2);
   border-radius:var(--r-md);
-  box-shadow:0 2px 8px rgba(0,0,0,.07);
+  box-shadow:none;
   transition:transform var(--tr), box-shadow var(--tr);
 }
 .dc-trustseal a:hover{
   transform:translateY(-1px);
-  box-shadow:0 6px 16px rgba(0,0,0,.13);
+  box-shadow:none;
 }
 .dc-trustseal img{
   max-width:100%; max-height:100%;
@@ -2842,35 +2842,13 @@ body.dc-desktop-ui #dc-desktop-root{
    (gold ~44°, teal ~173°, coral ~352°) so every one pops on the cool navy
    frosted-glass footer — cool colors blended into the navy, so blue→teal and
    violet→coral. Only the ACTIVE tab's icon glows; inactive tabs stay muted. */
-.dc-bn-item[data-panel="panel-studio"]  { --bn-glow:196,152,32; }  /* gold  #c49820 (~44°) */
-.dc-bn-item[data-panel="panel-sharehub"]{ --bn-glow:79,209,197; }  /* teal  #4fd1c5 (~173°) */
-.dc-bn-item[data-panel="panel-patient"] { --bn-glow:245,106,121; } /* coral #f56a79 (~352°) */
-[data-theme="dark"] .dc-bn-item[data-panel="panel-studio"]  { --bn-glow:227,185,74; }  /* gold  #e3b94a */
-[data-theme="dark"] .dc-bn-item[data-panel="panel-sharehub"]{ --bn-glow:95,224,211; }  /* teal  #5fe0d3 */
-[data-theme="dark"] .dc-bn-item[data-panel="panel-patient"] { --bn-glow:255,122,138; } /* coral #ff7a8a */
-
-/* Active icon: tinted to its brand color + soft pulsing outer glow.
-   Only opacity/filter animate — never layout-triggering props. */
+/* Flat active state (Examine language, 2026-08-11): the neon per-tab glow
+   retired with the navy glass. The active tab is simply ink — icon + label
+   in --bn-active, with the existing top bar. No animation, no filter. */
 .dc-bn-item.active .dc-bn-ico{
-  color:rgb(var(--bn-glow));
-  animation:bnNeonPulse 5s ease-in-out infinite;
-}
-@keyframes bnNeonPulse{
-  /* Combined breath: the icon GLYPH and its outer glow swell and fade as one.
-     At the low point the glyph eases back to 80% opacity (a gentle dip, never
-     faded) while the glow nearly vanishes (.08); at the peak the glyph is full
-     (1) and the glow is at max. 5s ease-in-out cycle — only opacity + filter
-     animate, no layout. */
-  0%,100%{ opacity:.8; filter:drop-shadow(0 0 2px rgba(var(--bn-glow),.08)); }
-  50%    { opacity:1;  filter:drop-shadow(0 0 8px rgba(var(--bn-glow),1)); }
-}
-/* Reduced motion: steady static glow, no pulse */
-@media (prefers-reduced-motion: reduce){
-  .dc-bn-item.active .dc-bn-ico{
-    animation:none;
-    opacity:1;
-    filter:drop-shadow(0 0 5px rgba(var(--bn-glow),.55));
-  }
+  color:var(--bn-active);
+  animation:none;
+  filter:none;
 }
 
 /* =====================================================
