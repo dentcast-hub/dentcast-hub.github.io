@@ -626,6 +626,16 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
                       "en page has a «کاوش بیشتر» section (en pages stay out of the brain ecosystem)")
             rep.check("dc-notify" not in en, "E notify", "en mirror carries no notify marker",
                       "en mirror has dc-notify — only the fa page announces")
+            en_robots = meta(en, name="robots") or ""
+            rep.check("noindex" in en_robots, "D en-noindex",
+                      "en mirror is noindexed",
+                      f"en robots meta is «{en_robots}» — en mirrors are unreviewed AI "
+                      f"translations and must stay out of search",
+                      "python3 tools/noindex_en_mirrors.py")
+            rep.check("hreflang" not in en, "D en-noindex",
+                      "en mirror carries no hreflang",
+                      "en mirror still advertises itself in an hreflang cluster",
+                      "python3 .github/scripts/inject_hreflang.py")
             fa_btn = re.search(r'<a class="lang-btn"[^>]*href="([^"]+)"', doc)
             en_btn = re.search(r'<a class="lang-btn"[^>]*href="([^"]+)"', en)
             name = Path(content_id).name + ".html"
@@ -644,9 +654,10 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
                       "Phase D — same headings, same number of <li>, nothing added or dropped")
 
         alts = re.findall(r'<link rel="alternate" hreflang="([^"]+)"', doc)
-        rep.check(sorted(alts) == ["en", "fa", "fa-IR", "x-default"], "D hreflang",
-                  "4-line hreflang mirror present",
-                  f"hreflang set is {sorted(alts)}, expected en/fa/fa-IR/x-default",
+        rep.check(sorted(alts) == ["fa", "fa-IR", "x-default"], "D hreflang",
+                  "3-line hreflang block present (no en — mirrors are noindexed)",
+                  f"hreflang set is {sorted(alts)}, expected fa/fa-IR/x-default "
+                  f"(the en alternate was retired when the unreviewed en mirrors went noindex)",
                   "python3 .github/scripts/inject_hreflang.py")
 
         if etype in NO_NOTIFY_TYPES:
@@ -733,9 +744,10 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
         rep.check(f"{domain}/{page_rel}" in sm, "8 sitemap", "page is in sitemap.xml",
                   "page missing from sitemap.xml", "python3 .github/scripts/gen_sitemap.py")
         if exists(en_rel):
-            rep.check(f"https://dentcast.org/{en_rel}" in sm, "8 sitemap",
-                      "en mirror is in sitemap.xml", "en mirror missing from sitemap.xml",
-                      "python3 .github/scripts/gen_sitemap.py")
+            rep.check(f"https://dentcast.org/{en_rel}" not in sm, "8 sitemap",
+                      "en mirror stays out of sitemap.xml (noindexed)",
+                      "en mirror is in sitemap.xml — it is noindexed and must not be sitemapped",
+                      "python3 .github/scripts/gen_sitemap.py  (it drops noindexed pages itself)")
 
     if pillar.get("primary"):
         pp = f"pillar/{pillar['primary']}/index.html"
