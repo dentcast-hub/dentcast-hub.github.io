@@ -1,0 +1,17 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PROJECT_DIR:-.}/scripts/cursor-parity-notice.mjs\" 2>/dev/null || true",
+            "timeout": 10,
+            "statusMessage": "بررسی همسانی Claude/Cursor"
+          }
+        ]
+      }
+    ]
+  }
+}
