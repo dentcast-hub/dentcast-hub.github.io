@@ -642,7 +642,7 @@ PREMIUM_ARROW = (
 # NOTE: this ?v= is hardcoded here and NOT owned by tools/asset_version.py.
 # Raise it to match the live pages whenever --bump moves it, or the next
 # `build_pillar.py all` silently rolls every pillar page back to an old stamp.
-PREMIUM_SCRIPT_TAG = '<script type="module" src="/pillar/premium-index.js?v=10"></script>\n'
+PREMIUM_SCRIPT_TAG = '<script type="module" src="/pillar/premium-index.js?v=11"></script>\n'
 
 # Styles for the two things this split introduces: the premium referral
 # banner (both page types) and the flat article list (pillar pages only).

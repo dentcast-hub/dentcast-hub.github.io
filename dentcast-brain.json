@@ -13085,5 +13085,40 @@
       "secondary": [],
       "subtopic": "post-and-core"
     }
+  },
+  {
+    "type": "chairside",
+    "id": "chairside-30",
+    "title": "سرنوشت دندان را فقط با معیارهای رستوریتیو تعیین نکنیم",
+    "caption": "در این کیس Chairside بررسی می‌کنیم چرا در بیمارِ ۱۵ ساله پروگنوزِ دندان را نمی‌شود فقط با معیارهای رستوریتیو تعیین کرد؛ از نبودِ فرول و ناممکن بودنِ افزایشِ طولِ تاج تا نقشِ ریشهٔ عاری از عفونت در حفظِ ریج تا رسیدنِ بیمار به سنِ درمانِ نهایی.",
+    "hashtags": [
+      "#چیرساید",
+      "#کیس_بالینی",
+      "#دکتر_شهابیان",
+      "#پروگنوز_دندان",
+      "#حفظ_دندان",
+      "#کشیدن_دندان",
+      "#فرول",
+      "#افزایش_طول_تاج",
+      "#حفظ_ریج",
+      "#بیمار_نوجوان",
+      "#رشد_فک"
+    ],
+    "keywords": [
+      "tooth prognosis in adolescent patient",
+      "extraction versus preservation growing patient",
+      "insufficient ferrule crown lengthening not possible",
+      "alveolar ridge preservation retained roots",
+      "implant timing skeletal growth completion",
+      "root retention ridge atrophy prevention",
+      "restorative criteria versus age treatment planning",
+      "infection free retained root bone maintenance"
+    ],
+    "page_url": "/chairside/chairside-30.html",
+    "pillar": {
+      "primary": "treatment-planning",
+      "secondary": [],
+      "subtopic": "extraction-vs-preservation"
+    }
   }
 ]
