@@ -2382,7 +2382,21 @@
       ]
     },
     "dentai/dentai-1": {
-      "faqPages": [],
+      "faqPages": [
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "تفاوت اصلی خطوط ترک سنتی و داخلی چیست؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خطوط سنتی از DEJ تا سطح مینا امتداد دارند و رنگ می‌پذیرند، اما خطوط داخلی در میانه راه مینا متوقف شده و رنگ نمی‌گیرند."
+              }
+            }
+          ]
+        }
+      ],
       "definedTermSets": [
         {
           "@context": "https://schema.org",
