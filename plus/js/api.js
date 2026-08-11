@@ -300,14 +300,25 @@ let mePromise;
 let lastMeStatus = 'unknown';
 export function meStatus() { return lastMeStatus; }
 
+// Persistent signed-in hint for NON-module scripts that run before /me can
+// answer (dc-nav.js's همراهی‌سنج reads it to stay anonymous-only). Set on a
+// real profile, cleared only on a definite 401 — a network error keeps the
+// last known state, so a transient outage never flips a signed-in device.
+function rememberSignedIn(status) {
+  try {
+    if (status === 'user') localStorage.setItem('dcp:signed-in', '1');
+    else if (status === 'anon') localStorage.removeItem('dcp:signed-in');
+  } catch (_) { /* private mode */ }
+}
+
 export function currentUser({ refresh = false } = {}) {
   if (refresh) mePromise = undefined;
   if (!mePromise) {
     // Any failure (401, or the API being unreachable) means "treat as anonymous"
     // so the static site stays pristine as pure progressive enhancement.
     mePromise = api.me()
-      .then((u) => { lastMeStatus = u ? 'user' : 'anon'; return u; })
-      .catch((e) => { lastMeStatus = (e && e.status === 401) ? 'anon' : 'error'; return null; });
+      .then((u) => { lastMeStatus = u ? 'user' : 'anon'; rememberSignedIn(lastMeStatus); return u; })
+      .catch((e) => { lastMeStatus = (e && e.status === 401) ? 'anon' : 'error'; rememberSignedIn(lastMeStatus); return null; });
   }
   return mePromise;
 }
