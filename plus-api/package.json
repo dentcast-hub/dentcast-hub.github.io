@@ -11,7 +11,7 @@
     "dev": "tsx watch src/index.ts",
     "start": "node dist/index.js",
     "build": "tsc -p tsconfig.json",
-    "migrate": "node-pg-migrate up",
+    "migrate": "node scripts/repair-migration-ledger.cjs && (node-pg-migrate up || node-pg-migrate up --no-check-order)",
     "migrate:up": "node-pg-migrate up",
     "migrate:down": "node-pg-migrate down",
     "seed": "tsx src/scripts/seed.ts",

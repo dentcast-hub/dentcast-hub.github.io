@@ -47,6 +47,10 @@ RUN npm ci --omit=dev && npm cache clean --force
 # index the dashboard/topic routes read.
 COPY --from=build /app/dist ./dist
 COPY plus-api/migrations ./migrations
+# The pre-migration ledger repair the `migrate` script runs (see its header:
+# renumbering a migration that already ran leaves the ledger naming a file that
+# no longer exists, and the container cannot boot past it).
+COPY plus-api/scripts ./scripts
 COPY plus/content-index.json ./content-index.json
 COPY plus/pathways.json ./pathways.json
 COPY plus/badges.json ./badges.json
