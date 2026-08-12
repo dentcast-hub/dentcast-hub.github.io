@@ -109,8 +109,16 @@ function renderHtml(k: Kpis, grantable: { key: string; title_fa: string }[]): st
   .card h3{margin:.2rem 0;font-size:.95rem;color:#c8d4e6}
   .card .v{font-size:1.8rem;font-weight:900}
   .card .s{color:#93a1b8;font-size:.82rem}
+  .wrap{overflow-x:hidden}
   table{width:100%;border-collapse:collapse;margin-top:8px;background:#171e2d;border:1px solid #2a3448;border-radius:14px;overflow:hidden}
   th,td{padding:8px 12px;text-align:center;border-bottom:1px solid #2a3448}
+  /* Wide report tables (5 unbreakable-value columns: phone numbers, dates) can
+     exceed a phone's viewport. Scrolling THIS box, not the RTL page body, is
+     what keeps the fix local — an unconstrained overflow here shifts the whole
+     document's scroll origin and reads as the entire page being broken. */
+  .tblwrap{overflow-x:auto;margin-top:8px;border-radius:14px}
+  .tblwrap table{margin-top:0;min-width:480px}
+  .tblwrap th,.tblwrap td{white-space:nowrap}
   th{color:#93a1b8;font-weight:700}
   form.bc{background:#171e2d;border:1px solid #2a3448;border-radius:14px;padding:14px 16px;margin-top:8px;
     display:flex;flex-direction:column;gap:9px}
@@ -239,8 +247,8 @@ function renderHtml(k: Kpis, grantable: { key: string; title_fa: string }[]): st
         + card('کل تاریخِ اشتراک', num(t.ever_subscribed), 'هر کسی که حداقل یک بار خرید/هدیه گرفت')
         + '</div>'
         + '<h4 style="margin:18px 0 0">به تفکیک ماهِ شروع</h4>'
-        + '<table><thead><tr><th>ماه</th><th>مشترکِ جدید</th><th>عمرِ همیشگی</th></tr></thead>'
-        + '<tbody>' + monthRows(b.by_month) + '</tbody></table>'
+        + '<div class="tblwrap"><table><thead><tr><th>ماه</th><th>مشترکِ جدید</th><th>عمرِ همیشگی</th></tr></thead>'
+        + '<tbody>' + monthRows(b.by_month) + '</tbody></table></div>'
         + '<h4 style="margin:18px 0 0">چقدر مانده (اشتراک‌های فعالِ غیرِ همیشگی)</h4>'
         + '<div class="sp-c">'
         + bucketBar('۰ تا ۳ روز', d.d0_3, activeCounted)
@@ -249,8 +257,8 @@ function renderHtml(k: Kpis, grantable: { key: string; title_fa: string }[]): st
         + bucketBar('بیش از ۳۰ روز', d.d31_plus, activeCounted)
         + '</div>'
         + '<h4 style="margin:18px 0 0">زودتر از همه تمام می‌شود (تا ۳۰ ردیف)</h4>'
-        + '<table><thead><tr><th>کاربر</th><th>موبایل</th><th>پلن</th><th>تا</th><th>روزِ مانده</th></tr></thead>'
-        + '<tbody>' + soonestRows(b.soonest_expiring) + '</tbody></table>';
+        + '<div class="tblwrap"><table><thead><tr><th>کاربر</th><th>موبایل</th><th>پلن</th><th>تا</th><th>روزِ مانده</th></tr></thead>'
+        + '<tbody>' + soonestRows(b.soonest_expiring) + '</tbody></table></div>';
     }
 
     fetch('/admin/subscriptions/report', { credentials: 'include' })
@@ -319,12 +327,12 @@ function renderHtml(k: Kpis, grantable: { key: string; title_fa: string }[]): st
         + '</div><div class="s">کاربرِ فعالِ هموارشده</div></div>'
         + '</div>'
         + '<h4 style="margin:18px 0 0">به تفکیکِ رده (هفتهٔ جاری)</h4>'
-        + '<table><thead><tr><th>رده</th><th>تعدادِ گروه</th><th>پرشدگی</th><th>میانهٔ امتیازِ هفتگی</th></tr></thead>'
-        + '<tbody>' + tierRows(b.per_tier) + '</tbody></table>'
+        + '<div class="tblwrap"><table><thead><tr><th>رده</th><th>تعدادِ گروه</th><th>پرشدگی</th><th>میانهٔ امتیازِ هفتگی</th></tr></thead>'
+        + '<tbody>' + tierRows(b.per_tier) + '</tbody></table></div>'
         + warnings(b.groups_below_validity)
         + '<h4 style="margin:18px 0 0">روندِ ۸ هفتهٔ اخیر</h4>'
-        + '<table><thead><tr><th>هفته</th><th>کاربرِ فعال</th><th>تعدادِ گروه</th><th>میانگینِ پرشدگی</th><th>ارتقا/تنزل</th></tr></thead>'
-        + '<tbody>' + trendRows(b.weekly_trend) + '</tbody></table>';
+        + '<div class="tblwrap"><table><thead><tr><th>هفته</th><th>کاربرِ فعال</th><th>تعدادِ گروه</th><th>میانگینِ پرشدگی</th><th>ارتقا/تنزل</th></tr></thead>'
+        + '<tbody>' + trendRows(b.weekly_trend) + '</tbody></table></div>';
     }
 
     fetch('/admin/league', { credentials: 'include' })
