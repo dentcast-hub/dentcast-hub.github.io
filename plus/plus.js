@@ -212,7 +212,16 @@ async function initArticle() {
   if (document.getElementById('ep-audio')) return;
 
   const contentId = detectContentId();
-  const { wb, updateBtn } = await setupWorkbench({ proseRoot, proseAnchor: findProseBox(), contentId });
+  // A share target for the pages dc-nav.js's phase 7 never reaches — the 12
+  // پرامپتولوژیست chapters, whose shell is `.ep-box` and which load no
+  // dc-article.css, so nothing built them a share chip and they simply had none.
+  // injectActionRow uses it ONLY when it had to build the row itself, so on the
+  // 197 pages dc-nav.js does cover, the chip stays that script's and there is no
+  // second button for the same act.
+  const shareTarget = () => ({ title: document.title, url: location.href });
+  const { wb, updateBtn } = await setupWorkbench({
+    proseRoot, proseAnchor: findProseBox(), contentId, shareTarget,
+  });
 
   // Post-login return-to-study (the funnel) or a remembered choice this session.
   // Never auto-enters on a fresh visit: sessionStorage is empty then.
