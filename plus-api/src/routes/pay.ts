@@ -2,7 +2,7 @@ import type { FastifyInstance } from 'fastify';
 import { config } from '../config.js';
 import { requireAuth, loadUser } from '../middleware/auth.js';
 import { startPayment, settlePayment, getPaymentByTrackId, resultUrl } from '../services/payment.js';
-import { getCapacity } from '../services/payment-capacity.js';
+import { getCapacity, planAmountRial } from '../services/payment-capacity.js';
 import {
   pillarSeat, isPillarSeat, PILLAR_DISCOUNT_PERCENT,
 } from '../services/pillar.js';
@@ -10,7 +10,9 @@ import {
   availableCredits, pickCredits, creditPercent, discountedRial, CREDIT_CAP_PERCENT,
 } from '../services/discount-credits.js';
 import { readCallback } from '../services/zibal.js';
-import { startRedemption, latestRedemption, giftInstructions } from '../services/gift-redemption.js';
+import {
+  startRedemption, latestRedemption, giftInstructions, bankTransferInstructions,
+} from '../services/gift-redemption.js';
 import { query } from '../db.js';
 
 /**
@@ -80,6 +82,11 @@ export async function payRoutes(app: FastifyInstance): Promise<void> {
       // has no .ir constraint at all — it works on the .org mirror, where most
       // of the people it is for actually are.
       gift_card: config.giftCard.enabled ? giftInstructions() : null,
+      // The SHABA-transfer route — a second manual rail, independent of the
+      // gateway and the monthly ceiling for the same reason the gift-card rail
+      // is (see services/gift-redemption.ts). `null` when switched off, same
+      // convention as `gift_card`.
+      bank_transfer: config.bankTransfer.enabled ? bankTransferInstructions() : null,
       // The cheapest per-month rate on the list, for the «از ماهی …» line. The
       // ladder bends (a longer term is cheaper per month), so this is a FLOOR,
       // not a rate anything is priced from — every real price is in `plans`.
@@ -263,6 +270,60 @@ export async function payRoutes(app: FastifyInstance): Promise<void> {
         status: row.status, months: row.months, kind: row.kind,
         // The reason for a rejection travels back to the buyer; an internal
         // approval note does not.
+        note: row.status === 'rejected' ? row.note : null,
+        created_at: row.created_at, reviewed_at: row.reviewed_at,
+      },
+    });
+  });
+
+  // --- bank transfer (واریز به شبا) -------------------------------------------
+  // The second manual rail, same shape as the gift-card pair above. No gateway,
+  // no monthly ceiling — a human matches the transfer's «بابت» code to this
+  // claim and approves from /admin.
+  //
+  // POST /pay/bank-transfer { months } — open a claim, hand back the reference.
+  // The AMOUNT is computed here, from PLAN_PRICES_RIAL, and never taken from
+  // the client — a student's discounted price is written onto the row by the
+  // founder afterwards (routes/admin.ts), never posted by the browser.
+  app.post('/pay/bank-transfer', {
+    preHandler: requireAuth,
+    schema: {
+      body: {
+        type: 'object', required: ['months'],
+        properties: { months: { type: 'integer', minimum: 1, maximum: 60 } },
+      },
+    },
+  }, async (request, reply) => {
+    const { months } = request.body as { months: number };
+    const amountRial = planAmountRial(months);
+    if (amountRial === null) {
+      return reply.code(400).send({ error: 'unknown_plan', message: 'این مدت اشتراک تعریف نشده است.' });
+    }
+
+    const r = await startRedemption(request.user!.id, 'bank_transfer', { months, amountRial });
+
+    if (r.outcome === 'disabled') {
+      return reply.code(503).send({ error: r.outcome, message: r.message });
+    }
+    return reply.send({
+      ...bankTransferInstructions(),
+      ok: true,
+      reference: r.redemption!.reference,
+      months: r.redemption!.months,
+      amount_rial: r.redemption!.amount_rial,
+      reused: r.outcome === 'already_pending',
+    });
+  });
+
+  // Where the submitter checks back. Their own only.
+  app.get('/pay/bank-transfer', { preHandler: requireAuth }, async (request, reply) => {
+    const row = await latestRedemption(request.user!.id, 'bank_transfer');
+    return reply.send({
+      ...bankTransferInstructions(),
+      ok: true,
+      redemption: row && {
+        reference: row.reference,
+        status: row.status, months: row.months, amount_rial: row.amount_rial,
         note: row.status === 'rejected' ? row.note : null,
         created_at: row.created_at, reviewed_at: row.reviewed_at,
       },

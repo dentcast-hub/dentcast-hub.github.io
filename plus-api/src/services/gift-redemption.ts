@@ -1,43 +1,45 @@
 import { config } from '../config.js';
 import { one, query, withTransaction } from '../db.js';
 import { activateMonths, type Subscription } from './subscription.js';
+import { grantBadge, type GrantResult } from './badge-grants.js';
 import { sendCapped } from './notify-policy.js';
 import { mintReference } from './reference.js';
 
 /**
- * Paying from outside Iran, with a US Apple gift card.
+ * Two manual payment rails, one table.
  *
- * Iranian gateways cannot take a foreign card and a foreign card cannot reach an
- * Iranian gateway, so for anyone abroad there is no payment rail at all — only a
- * value they can hand over and a human who can turn it into months. That human
- * step is not a shortcoming waiting to be automated: Apple has no API that says
+ * RAIL ONE — a US Apple gift card, for anyone outside Iran. Iranian gateways
+ * cannot take a foreign card and a foreign card cannot reach an Iranian
+ * gateway, so there is no automatic rail at all — only a value the buyer can
+ * hand over and a human who turns it into months. Apple has no API that says
  * whether a code is good, and the only way to find out is to redeem it.
  *
  * THE CODE NEVER TOUCHES US. A gift-card code is a bearer instrument — whoever
  * reads it can spend it — so the flow is built so that it goes from the shop to
- * the founder's inbox without passing through our page, our API or our database.
- * What we mint instead is a REFERENCE: a short tag the buyer types into the gift
- * message when they have the card emailed over. The email arrives carrying the
- * tag, and the tag is what matches it to the person waiting.
- *
- * That inverts the usual trust problem in our favour. We are not storing
- * something valuable and hoping nobody reads it; there is nothing valuable here
- * to read. A leaked reference buys an attacker the ability to claim they sent a
- * card they did not send — which the founder discovers the moment they look for
- * an email that never arrived.
+ * the founder's inbox without passing through our page, our API or our
+ * database. What we mint instead is a REFERENCE: a short tag the buyer types
+ * into the gift message when they have the card emailed over.
  *
  * US CARDS ONLY. An Apple gift card redeems only into an Apple ID of the same
  * country, so a card bought in any other region is unusable no matter how
- * genuine it is. That is stated wherever the flow is described, because it is
- * the one mistake that costs the buyer real money and cannot be undone.
+ * genuine it is.
  *
- * NOTHING HERE TOUCHES THE MONTHLY CEILING. Gift redemptions live in their own
- * table for exactly that reason: the e-namad allowance counts rial through
- * Zibal, and spending it on a payment that never went through Zibal would stop
- * Iranian customers buying so that a foreign one could.
+ * RAIL TWO — a SHABA bank transfer, for anyone without an Iranian card
+ * accepted by the gateway, anyone abroad who would rather send rial than buy a
+ * gift card, and the student-discount path (the founder writes the discounted
+ * amount onto the pending row after seeing a student card — the discount is
+ * never computed by an engine; see `.dentcast/support-payment-handoff.md`
+ * decision 2.3). Same shape as the gift-card rail: a claim, a reference the
+ * buyer writes into the transfer's «بابت» field, manual approval.
+ *
+ * NOTHING HERE TOUCHES THE MONTHLY CEILING, on EITHER rail. Gift redemptions
+ * live in their own table for exactly that reason: the e-namad allowance
+ * counts rial through Zibal, and a manually-approved transfer never goes
+ * through Zibal.
  */
 
 export type RedemptionStatus = 'pending' | 'approved' | 'rejected';
+export type RedemptionKind = 'apple_us' | 'bank_transfer';
 
 export interface Redemption {
   id: string;
@@ -46,6 +48,7 @@ export interface Redemption {
   code: string | null;
   kind: string;
   months: number;
+  amount_rial: number | null;
   status: RedemptionStatus;
   note: string | null;
   reviewed_at: Date | null;
@@ -53,10 +56,10 @@ export interface Redemption {
 }
 
 const COLUMNS =
-  'id, user_id, reference, code, kind, months, status, note, reviewed_at, created_at';
+  'id, user_id, reference, code, kind, months, amount_rial, status, note, reviewed_at, created_at';
 
-/** The tag the buyer writes into the gift message — services/reference.ts owns the alphabet. */
-const mintGiftReference = (): string => mintReference('DC');
+/** The tag the buyer writes into the transfer/gift message — services/reference.ts owns the alphabet. */
+const mintClaimReference = (): string => mintReference('DC');
 
 export type StartOutcome = 'started' | 'disabled' | 'already_pending';
 
@@ -66,7 +69,7 @@ export interface StartResult {
   message: string;
 }
 
-/** Everything the buyer needs on screen. One source, so nothing drifts. */
+/** Everything the buyer needs on screen for the gift-card rail. */
 export function giftInstructions() {
   return {
     enabled: config.giftCard.enabled,
@@ -77,20 +80,46 @@ export function giftInstructions() {
   };
 }
 
+/** Everything the buyer needs on screen for the bank-transfer rail. */
+export function bankTransferInstructions() {
+  return {
+    enabled: config.bankTransfer.enabled,
+    iban: config.bankTransfer.iban,
+    holder: config.bankTransfer.holder,
+    bank_name: config.bankTransfer.bankName,
+    telegram: config.supportTelegram,
+  };
+}
+
 /**
- * Open a claim and hand back the reference. Nothing is granted, and no code is
- * asked for: the buyer now goes and has a card emailed over carrying this tag.
+ * Open a claim and hand back the reference. Nothing is granted yet.
+ *
+ * `kind` decides everything else: `apple_us` takes no further input (months
+ * and the reviewer's rail come from giftCard config, same as before); a
+ * `bank_transfer` claim carries the months bought and the rial amount the
+ * SERVER computed for it (routes/pay.ts — never trust a client-sent amount).
  */
-export async function startRedemption(userId: string): Promise<StartResult> {
-  if (!config.giftCard.enabled) {
+export async function startRedemption(
+  userId: string,
+  kind: RedemptionKind = 'apple_us',
+  opts: { months?: number; amountRial?: number } = {},
+): Promise<StartResult> {
+  if (kind === 'apple_us' && !config.giftCard.enabled) {
+    return { outcome: 'disabled', redemption: null, message: 'این روش پرداخت فعلاً فعال نیست.' };
+  }
+  if (kind === 'bank_transfer' && !config.bankTransfer.enabled) {
     return { outcome: 'disabled', redemption: null, message: 'این روش پرداخت فعلاً فعال نیست.' };
   }
 
-  // One open claim at a time. Two claims for one person means two references
-  // and one arriving card, and the founder guessing which to approve.
+  const months = kind === 'apple_us' ? config.giftCard.months : opts.months!;
+  const amountRial = kind === 'apple_us' ? null : opts.amountRial!;
+
+  // One open claim PER RAIL at a time — not globally: someone with a pending
+  // gift-card claim must not be refused a bank-transfer claim by the same
+  // guard, and vice versa (decision 2.1/5.2 of the handoff).
   const pending = await one<Redemption>(
-    `select ${COLUMNS} from gift_redemptions where user_id = $1 and status = 'pending'`,
-    [userId],
+    `select ${COLUMNS} from gift_redemptions where user_id = $1 and kind = $2 and status = 'pending'`,
+    [userId, kind],
   );
   if (pending) {
     return {
@@ -104,9 +133,9 @@ export async function startRedemption(userId: string): Promise<StartResult> {
   for (let attempt = 0; attempt < 5; attempt += 1) {
     try {
       const row = (await one<Redemption>(
-        `insert into gift_redemptions (user_id, reference, kind, months)
-         values ($1, $2, $3, $4) returning ${COLUMNS}`,
-        [userId, mintGiftReference(), config.giftCard.kind, config.giftCard.months],
+        `insert into gift_redemptions (user_id, reference, kind, months, amount_rial)
+         values ($1, $2, $3, $4, $5) returning ${COLUMNS}`,
+        [userId, mintClaimReference(), kind, months, amountRial],
       ))!;
       await notifyFounder(row);
       return { outcome: 'started', redemption: row, message: '' };
@@ -118,26 +147,29 @@ export async function startRedemption(userId: string): Promise<StartResult> {
 }
 
 /**
- * Tell the founder a card is on its way.
+ * Tell the founder a claim is on its way, on either rail.
  *
  * Without this the claim sits in a queue nobody is watching, and the promise
  * made on the page — that this is answered within a day — becomes a matter of
- * luck. The buyer is in another timezone and has already spent the money.
+ * luck.
  */
 async function notifyFounder(row: Redemption): Promise<void> {
-  const phone = config.giftCard.alertPhone;
+  const phone = row.kind === 'bank_transfer'
+    ? config.bankTransfer.alertPhone
+    : config.giftCard.alertPhone;
   if (!phone) {
     // eslint-disable-next-line no-console
-    console.log(`[gift] claim ${row.reference} (${row.months}mo) — no GIFTCARD_ALERT_PHONE set`);
+    console.log(`[gift] claim ${row.reference} kind=${row.kind} (${row.months}mo) — no alert phone set`);
     return;
   }
   const target = await one<{ id: string }>('select id from profiles where phone = $1', [phone]);
   if (!target) return;
+  const title = row.kind === 'bank_transfer' ? 'واریز بانکی در راه است' : 'گیفت‌کارت در راه است';
+  const body = row.kind === 'bank_transfer'
+    ? `کد پیگیری ${row.reference} — ${row.months} ماه. صورت‌حساب را بررسی کنید.`
+    : `کد پیگیری ${row.reference} — ${row.months} ماه. ایمیل را بررسی کنید.`;
   await sendCapped(target.id, {
-    title: 'گیفت‌کارت در راه است',
-    body: `کد پیگیری ${row.reference} — ${row.months} ماه. ایمیل را بررسی کنید.`,
-    url: '/admin',
-    tag: 'gift_claim',
+    title, body, url: '/admin', tag: 'gift_claim',
   }, 'system').catch(() => { /* alerting never blocks a customer */ });
 }
 
@@ -175,8 +207,55 @@ export async function approveRedemption(reference: string, note?: string): Promi
     const subscription = await activateMonths(row.user_id, row.months, {
       source: 'admin',
       meta: { gift_reference: row.reference, gift_kind: row.kind },
+      client,
     });
     return { ok: true, redemption: row, subscription, message: 'تأیید شد و اشتراک فعال است.' };
+  });
+}
+
+export interface ReviewAndGrantResult extends ReviewResult {
+  badge: GrantResult | null;
+}
+
+/**
+ * Approve a claim AND grant a badge in the SAME transaction — the admin panel's
+ * «تأیید + اهدای نشان دانشجو» button (bank-transfer queue, decision 5.5 of the
+ * handoff). Both effects share one client rather than each opening its own
+ * transaction: if the badge grant fails, the approval and the subscription
+ * extension must not have happened either, and vice versa.
+ */
+export async function approveRedemptionAndGrantBadge(
+  reference: string,
+  badgeKey: string,
+  opts: { note?: string; discountPercent?: number } = {},
+): Promise<ReviewAndGrantResult> {
+  return withTransaction(async (client) => {
+    const row = await one<Redemption>(
+      `update gift_redemptions
+          set status = 'approved', reviewed_at = now(), note = coalesce($2, note)
+        where reference = $1 and status = 'pending'
+        returning ${COLUMNS}`,
+      [reference.trim().toUpperCase(), opts.note ?? null], client,
+    );
+    if (!row) {
+      return {
+        ok: false, redemption: null, subscription: null, badge: null,
+        message: 'این کد پیگیری در صف بررسی نیست.',
+      };
+    }
+    const subscription = await activateMonths(row.user_id, row.months, {
+      source: 'admin',
+      meta: { gift_reference: row.reference, gift_kind: row.kind },
+      client,
+    });
+    const badge = await grantBadge(row.user_id, badgeKey, {
+      discountPercent: opts.discountPercent,
+      client,
+    });
+    return {
+      ok: true, redemption: row, subscription, badge,
+      message: 'تأیید شد، اشتراک فعال است و نشان اهدا شد.',
+    };
   });
 }
 
@@ -213,7 +292,7 @@ export type PendingRedemption = Redemption & {
  * auth_identities matters for the same reason the inner one on profiles is
  * safe — a profile always exists, an identity may not.
  */
-export async function pendingRedemptions(limit = 50): Promise<PendingRedemption[]> {
+export async function pendingRedemptions(limit = 50, kind?: RedemptionKind): Promise<PendingRedemption[]> {
   const res = await query<PendingRedemption>(
     `select ${COLUMNS.split(', ').map((c) => `g.${c}`).join(', ')},
             nullif(p.phone, '') as phone,
@@ -222,19 +301,40 @@ export async function pendingRedemptions(limit = 50): Promise<PendingRedemption[
        from gift_redemptions g
        join profiles p on p.id = g.user_id
        left join auth_identities ai on ai.user_id = p.id
-      where g.status = 'pending'
+      where g.status = 'pending' ${kind ? 'and g.kind = $2' : ''}
       group by ${COLUMNS.split(', ').map((c) => `g.${c}`).join(', ')}, p.phone, p.display_name
       order by g.created_at asc limit $1`,
-    [limit],
+    kind ? [limit, kind] : [limit],
   );
   return res.rows;
 }
 
-/** What the buyer sees when they come back: their own latest claim. */
-export async function latestRedemption(userId: string): Promise<Redemption | null> {
+/**
+ * Write the amount onto a pending bank-transfer claim — how the founder types
+ * in the student-discounted price after seeing the student's card. Only
+ * touches a PENDING row: once approved, the amount is history.
+ */
+export async function setRedemptionAmount(reference: string, amountRial: number): Promise<Redemption | null> {
   return one<Redemption>(
-    `select ${COLUMNS} from gift_redemptions where user_id = $1
+    `update gift_redemptions set amount_rial = $2
+      where reference = $1 and status = 'pending'
+      returning ${COLUMNS}`,
+    [reference.trim().toUpperCase(), amountRial],
+  );
+}
+
+/**
+ * What the buyer sees when they come back: their own latest claim, optionally
+ * scoped to one rail — a returning bank-transfer buyer must see THAT claim,
+ * not an older gift-card one that happens to be more recent.
+ */
+export async function latestRedemption(
+  userId: string,
+  kind?: RedemptionKind,
+): Promise<Redemption | null> {
+  return one<Redemption>(
+    `select ${COLUMNS} from gift_redemptions where user_id = $1 ${kind ? 'and kind = $2' : ''}
       order by created_at desc limit 1`,
-    [userId],
+    kind ? [userId, kind] : [userId],
   );
 }

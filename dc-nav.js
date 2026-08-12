@@ -297,7 +297,11 @@
     ['/litecast/',                 'globe',   'LiteCast'],
     ['/episodes.html',             'mic',     'اپیزودها'],
     ['/patients/cinematic.html',   'user',    'بیماران'],
-    ['/plus/',                     'sparkle', 'پلاس']
+    ['/plus/',                     'sparkle', 'پلاس'],
+    /* Reaches every page's hamburger, not just index.html's — the floating
+       control below only becomes a support shortcut on the homepage, and the
+       other 190-odd pages need a route to /plus/support.html too. */
+    ['/plus/support.html',         'headphones', 'پشتیبانی']
   ];
 
   var DC_DRAWER_MENU_HTML =
@@ -857,14 +861,27 @@
      header IIFE that injects its CSS bails out there, and the global
      search UI is Persian anyway — an unstyled raw button was leaking
      into the page flow. */
+  /* On index.html the floating control becomes a support shortcut instead of
+     search: .dc-exa-search on the home/archive tab already does search's job
+     there, so a second one is redundant, while every other page still relies
+     on this control as its one-tap search entry and keeps it unchanged (see
+     .dentcast/support-payment-handoff.md decision 2.11). Same element id and
+     CSS, so the collapse-on-scroll behavior below is shared by both variants. */
+  var dcIsHomePage = (location.pathname === '/' || location.pathname === '/index.html');
   if (!document.documentElement.hasAttribute('data-dc-no-header') &&
       !document.getElementById('dc-float-search')) {
     var floatSearch = document.createElement('button');
     floatSearch.id = 'dc-float-search';
-    floatSearch.className = 'dcOpenSearch';
     floatSearch.type = 'button';
-    floatSearch.setAttribute('aria-label', 'جستجو');
-    floatSearch.innerHTML = dcSvgIcon('search') + '<span class="dc-fs-lbl">جستجو</span>';
+    if (dcIsHomePage) {
+      floatSearch.setAttribute('aria-label', 'پشتیبانی');
+      floatSearch.innerHTML = dcSvgIcon('headphones') + '<span class="dc-fs-lbl">پشتیبانی</span>';
+      floatSearch.addEventListener('click', function () { location.href = '/plus/support.html'; });
+    } else {
+      floatSearch.className = 'dcOpenSearch';
+      floatSearch.setAttribute('aria-label', 'جستجو');
+      floatSearch.innerHTML = dcSvgIcon('search') + '<span class="dc-fs-lbl">جستجو</span>';
+    }
     document.body.appendChild(floatSearch);
     /* Extended at the top of the page (icon + «جستجو» label) so new users
        instantly read it as the site-wide search; collapses to icon-only
@@ -2379,7 +2396,7 @@
 (function () {
   if (window.__dcPlusLoaded) return;
   window.__dcPlusLoaded = true;
-  var V = '84';
+  var V = '85';
 
   /* The anti-FOUC block that used to live here is gone, along with the header
      transformation it was covering for. The music + library buttons are now

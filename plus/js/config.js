@@ -116,6 +116,15 @@ export const GIFT_CARD = {
   recipient_email: 'foad.shahabian@gmail.com',
 };
 
+// The bank-transfer rail (واریز به شبا), mirrored for the same reason as
+// GIFT_CARD above. Mirrors BANK_TRANSFER_* on the API — keep the two in step.
+export const BANK_TRANSFER = {
+  iban: 'IR110560930380000825945001',
+  holder: 'فؤاد شهابیان مقدم',
+  bank_name: 'بانک سامان',
+  telegram: 'dentcast_support',
+};
+
 // --- payments are .ir-only --------------------------------------------------
 // NOT the same question as isOrgHost() above, which gates the whole .org site
 // and is currently off. This one is a fact about the payment gateway rather

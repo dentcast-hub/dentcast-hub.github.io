@@ -76,6 +76,9 @@ const ICONS = {
   // handshake collapses into a knot, and a heart reads as a like button, not a
   // thank-you. One path, two knobs (top and side) — a third knob turned to mush.
   companion: '<path d="M5 5.5h4.2a2 2 0 1 1 4 0h4.3v4.2a2 2 0 1 1 0 4v4.4H5z"/>',
+  // A graduation cap — «دانشجو», the second founder-granted badge. The story is
+  // the student-discount claim was approved, and a cap says that in one shape.
+  student: '<path d="M12 4 2 9l10 5 10-5-10-5z"/><path d="M6 11.5V16c0 1.4 2.7 2.5 6 2.5s6-1.1 6-2.5v-4.5"/>',
 };
 
 const METAL_PIP = { bronze: 'b', silver: 's', gold: 'g' };
