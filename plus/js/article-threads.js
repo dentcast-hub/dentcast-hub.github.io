@@ -140,9 +140,11 @@ async function draw(host, contentId) {
  */
 export function mountArticleThreads(anchor, contentId) {
   if (!anchor || !contentId) return false;
-  // Episodes are audio; a thread under a podcast is fine in principle but the
-  // block is written against an article's prose column, so keep it to pages
-  // that have one (same call initArticle makes).
+  // Audio episodes carry this too, since 2026-08-12. Nothing here ever excluded
+  // them — the block is written against a content_id and the API gates on
+  // nothing else; they simply had no caller, because initArticle() (which used
+  // to be the only one) bows out at the audio player. plus.js's
+  // initEpisodeActions() is the second caller, anchored on the single `.ep-box`.
   const existing = anchor.parentNode && anchor.parentNode.querySelector('.dc-threads');
   if (existing) existing.remove();
 

@@ -224,13 +224,22 @@ async function openDeepLinkedHighlight(wb, updateBtn, id) {
 // the same reason no article page carries this markup either.
 function initEpisodeActions() {
   if (!document.getElementById('ep-audio')) return; // not an audio episode
-  if (document.getElementById('dcActionRow')) return;
   const box = findProseBox();
   if (!box) return;
-  const { aux } = ensureActionRow(box);
-  aux.appendChild(buildShareButton(() => ({ title: document.title, url: location.href })));
-  // The قلب itself is left to initHeart(), which boot() calls a line later and
-  // which is the single mounting point for every surface that has this row.
+  if (!document.getElementById('dcActionRow')) {
+    const { aux } = ensureActionRow(box);
+    aux.appendChild(buildShareButton(() => ({ title: document.title, url: location.href })));
+    // The قلب itself is left to initHeart(), which boot() calls a line later and
+    // which is the single mounting point for every surface that has this row.
+  }
+  // گفت‌وگوی زیر مطلب, for an episode too. It reached articles only because
+  // initArticle() mounts it and initArticle() bows out here — an accident of
+  // where the call sat, not a decision: the whole block is written against a
+  // content_id and the API gates on nothing else, so a podcast was never
+  // excluded, only unreachable. The anchor is the single `.ep-box`, so the
+  // conversation lands under the whole episode card and above the ‹قبلی/بعدی›
+  // nav, which is page chrome rather than the episode.
+  mountArticleThreads(box, detectContentId());
 }
 
 async function initArticle() {
@@ -316,10 +325,13 @@ async function mountArticleWorkbench(root, url) {
     // buildShareButton() was written to close, and one this feature would make
     // again for its own 210 pages.
     const box = findProseBox(root);
-    if (box && !root.querySelector('#dcActionRow')) {
-      const { main, aux } = ensureActionRow(box);
-      main.appendChild(buildHeartChip(contentId, 'dc-act dc-act-heart'));
-      aux.appendChild(buildShareButton(shellShare));
+    if (box) {
+      if (!root.querySelector('#dcActionRow')) {
+        const { main, aux } = ensureActionRow(box);
+        main.appendChild(buildHeartChip(contentId, 'dc-act dc-act-heart'));
+        aux.appendChild(buildShareButton(shellShare));
+      }
+      mountArticleThreads(box, contentId); // the conversation, on this surface too
     }
     return;
   }

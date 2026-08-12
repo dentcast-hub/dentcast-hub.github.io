@@ -240,7 +240,13 @@ guess.**
   episodes get a SHORTER row of the same kind** — قلب + اشتراک‌گذاری, no میز کار
   (there is no workbench for a podcast) — built by `initEpisodeActions()` on the
   standalone page and by `mountArticleWorkbench`'s episode branch on the desktop
-  shell. Until 2026-08-12 they were the only content on the site a reader could
+  shell — and the same two callers give an episode its **گفت‌وگوی زیر مطلب**,
+  which had reached articles only because `initArticle()` mounts it and
+  `initArticle()` bows out at the audio player. Nothing ever excluded a podcast:
+  the block is written against a `content_id` and the API gates on nothing else,
+  so it was unreachable rather than forbidden. Its anchor there is the single
+  `.ep-box`, which puts the conversation under the whole episode card and above
+  the ‹قبلی/بعدی› nav. Until 2026-08-12 they were the only content on the site a reader could
   not press پسندیدم on, while sitting in up-board's catalog like everything else
   (210 of its 444 entries) and earning engagement the score already counted
   (`episode_listened`). Nothing was added to `tools/episodes_template.html` for
