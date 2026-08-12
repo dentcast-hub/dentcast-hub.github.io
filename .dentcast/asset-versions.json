@@ -12,8 +12,8 @@
     "hash": "f045ac7d9d9e9e1d"
   },
   "/dc-nav.js": {
-    "v": 82,
-    "hash": "b3830efcc768a5fe"
+    "v": 83,
+    "hash": "e14b15163e8a14e9"
   },
   "/dc-theme.css": {
     "v": 2,
@@ -32,7 +32,7 @@
     "hash": "bd50932cb1d75571"
   },
   "/pillar/premium-index.js": {
-    "v": 18,
+    "v": 19,
     "hash": "225e18c4c9db9e95"
   },
   "/plus/js/assistant-page.js": {
@@ -102,5 +102,9 @@
   "/plus/plus.css": {
     "v": 25,
     "hash": "a0c7d3b9210c4740"
+  },
+  "dc-nav.js:V": {
+    "v": 84,
+    "hash": "34141c39be0308a8"
   }
 }

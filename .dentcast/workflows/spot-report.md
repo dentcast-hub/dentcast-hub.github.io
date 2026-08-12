@@ -136,7 +136,21 @@ engine); week buckets start **Saturday**.
 
 ## Where the numbers come from
 
-**Primary — the admin endpoint** (founder-only, HTTP Basic):
+**Easiest — the admin page itself.** `GET /admin` (the founder's KPI dashboard)
+now carries a **«گزارش تبلیغ‌ها»** section with three windows —
+**۲۴ ساعت (امروزِ تهران) / ۷ روز / ۳۰ روز** — showing totals, the viewer split
+with its page-view denominator, and **every تبلیغ with its own محل breakdown**.
+It reads the same endpoint below, so it is the same evidence, already formatted;
+prefer it whenever the window is one of those three and the founder is at a
+browser. Its warnings render themselves (partial day, the 2026-07-28 relabel,
+the pre-2026-07-26 hole, an empty window).
+
+**«۲۴ ساعت» there means the Tehran CALENDAR day, not a rolling window** — the
+counters are keyed by day and have no hour, so a true last-24-hours number does
+not exist in this data and is never to be implied. Early in the morning that
+column is genuinely small because the day is young; the page says so.
+
+**Primary (any other window) — the admin endpoint** (founder-only, HTTP Basic):
 
 ```
 GET /admin/spot/stats?from=YYYY-MM-DD&to=YYYY-MM-DD&group_by=day|week|month
@@ -146,6 +160,15 @@ Inclusive Tehran days; default window = last 30 days. Returns `totals`,
 `by_period`, `by_slot`, `by_creative`, `by_viewer`, `by_host` (each with `impressions`,
 `clicks`, `ctr_pct`) plus raw `period × slot × creative × viewer` rows — i.e.
 every split this workflow needs, already aggregated.
+
+**`by_creative_slot` is the cross-tab** — each تبلیغ with its own جایگاه
+breakdown, i.e. «این کمپین چقدر دیده شد، و چند درصدش کجا بود». It is derived
+from the same rows, so it never disagrees with `by_creative`; recompute it by
+hand for no reason. Its two `share_pct` fields have **different denominators on
+purpose**: on the creative it is the share of the window's total impressions, on
+a slot inside it the share of that creative's own — so a creative's slot
+percentages sum to 100 and its own percentage does not. Never mix them in one
+sentence.
 
 **The same response carries the denominator** — `page_views` (`totals` per
 viewer class, `by_period`, and `since` = the first day that has any data) and
