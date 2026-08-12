@@ -321,13 +321,16 @@ describe('/up-board/', () => {
     expect(document.getElementById('ubCount')!.textContent).toContain('بارگذاری نشد');
   });
 
-  // The sentence over the list names BOTH signals and their pecking order, so a
-  // reader deciding whether to trust the order is not left to guess it.
-  it('states what the ranking is made of', async () => {
-    await mount('?sort=top');
-    const lead = document.getElementById('ubLead')!.textContent!;
-    expect(lead).toContain('قلبِ خواننده‌ها');
-    expect(lead).toContain('تعامل');
+  // One short line, and it changes with the arrangement — a reader who switches
+  // tabs has to be told which of the two lists they are now looking at. The
+  // ranking RULE is not here; the شاخص chip explains itself on tap.
+  it('names the arrangement in one line, and swaps it with the tab', async () => {
+    await mount();
+    expect(document.getElementById('ubLead')!.textContent).toBe('از تازه‌ترین به قدیمی‌ترین.');
+
+    click('[data-sort="top"]');
+    await settle();
+    expect(document.getElementById('ubLead')!.textContent).toBe('بر اساس تعاملِ همهٔ کاربرها.');
   });
 
   it('shows the engagement index only where the server sent one', async () => {

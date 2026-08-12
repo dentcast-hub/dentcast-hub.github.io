@@ -45,12 +45,13 @@ const ASSET_V = new URL(import.meta.url).search; // carry ?v= onto the fetch
 // this is the same shape (plus/js/highlights.js's PAGE_CARDS).
 const PAGE = 24;
 
+// One short line per arrangement — it only has to say which of the two lists is
+// on screen. The rule BEHIND the ranking (what engagement is, what the cap does)
+// lives where the numbers are: the شاخص chip explains itself on tap. A paragraph
+// of it up here was the design conversation leaking onto the page.
 const LEAD = {
-  // Stated rather than implied, and it changes with the arrangement, because
-  // the two lists are made of different things and a reader deciding whether to
-  // trust an order deserves to know which one they are looking at.
-  new: 'همهٔ مطالب دنت‌کست، از تازه‌ترین به قدیمی‌ترین.',
-  top: 'ترتیب از قلبِ خواننده‌ها می‌آید، و شاخصِ تعامل جابه‌جایش می‌کند — ولی هیچ‌وقت از قلب جلو نمی‌زند.',
+  new: 'از تازه‌ترین به قدیمی‌ترین.',
+  top: 'بر اساس تعاملِ همهٔ کاربرها.',
 };
 
 /** «۳» / «۷٫۵» — one decimal only when it earns one. */
