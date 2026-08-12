@@ -145,7 +145,9 @@ describe('the homepage up-board doorway', () => {
     expect(tab('top').classList.contains('is-locked')).toBe(true);
     const text = document.querySelector('.dcp-sheet')!.textContent!;
     expect(text).toContain('ویژه‌ی پریمیوم');
-    expect(text).toContain('قلبِ خواننده‌ها');
+    expect(text).toContain('بیشترین بازخورد');
+    expect(text).toContain('تعاملِ همهٔ کاربرها');
+    expect(text).not.toContain('دیده شدن');
     expect(ctaFrom).toBe('home-upboard');
   });
 

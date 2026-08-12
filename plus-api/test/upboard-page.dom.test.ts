@@ -234,9 +234,12 @@ describe('/up-board/', () => {
       const sheet = document.querySelector('.dcp-sheet')!;
       const text = sheet.textContent!;
       expect(text).toContain('ویژه‌ی پریمیوم');
-      expect(text).toContain('«تازه‌ترین» برای همه باز است');  // what is NOT gated
-      expect(text).toContain('قلبِ خواننده‌ها');                 // what it is made of
-      expect(text).toContain('شاخصِ تعامل');
+      expect(text).toContain('بیشترین بازخورد');                 // what it is
+      expect(text).toContain('تعاملِ همهٔ کاربرها');              // how it is ordered
+      // «دیده شدن» would promise a per-article view count that does not exist
+      // anywhere on this site; what is counted is a page held to the end.
+      expect(text).toContain('خوانده شدن');
+      expect(text).not.toContain('دیده شدن');
       expect(ctaFrom).toBe('upboard');                          // ?from= tracking
     });
 
@@ -270,7 +273,7 @@ describe('/up-board/', () => {
       click('[data-sort="top"]');
       await settle();
       const sheet = document.querySelector('.dcp-sheet')!;
-      expect(sheet.textContent).toContain('قلبِ خواننده‌ها');      // still explains what it is
+      expect(sheet.textContent).toContain('بیشترین بازخورد');     // still explains what it is
       expect(sheet.querySelector('.dcp-btn-primary')!.textContent).toBe('ورود');
       expect(guestExtrasFrom).toBe('upboard');                     // the quieter CTA
       expect(ctaFrom).toBeNull();                                  // never the loud one

@@ -46,7 +46,7 @@ function heartIcon() {
 function gateSheet(guest) {
   const card = gateCard({
     title: 'بالاترین — ویژه‌ی پریمیوم',
-    sub: 'همهٔ مطالب در «تازه‌ترین» برای همه باز است؛ آنچه پریمیوم اضافه می‌کند چیدمانِ دوم است.',
+    sub: 'اینجا مطالبی بالاتر هستند که در سایت بیشترین بازخورد را داشته‌اند — خوانده شدن، لایک شدن، به اشتراک گذاشته شدن.',
     cta: guest
       ? el('button', {
         class: 'dcp-btn dcp-btn-primary', type: 'button',
@@ -54,13 +54,7 @@ function gateSheet(guest) {
       }, 'ورود')
       : premiumCta(FROM),
   });
-  card.insertBefore(
-    el('p', { class: 'dcp-sheet-sub' },
-      'در «بالاترین» ترتیب از قلبِ خواننده‌ها می‌آید، به‌علاوهٔ شاخصِ تعامل — '
-      + 'اینکه هر مطلب را چند نفر تا آخر خوانده‌اند، هایلایت کرده‌اند، به اشتراک گذاشته‌اند '
-      + 'یا در کالکشن پین کرده‌اند. قلب همیشه حرفِ اول را می‌زند.'),
-    card.lastChild,
-  );
+  card.insertBefore(el('p', { class: 'dcp-sheet-sub' }, 'ترتیبشان بر اساس تعاملِ همهٔ کاربرهاست.'), card.lastChild);
   if (guest) guestPremiumExtras(FROM).forEach((n) => card.appendChild(n));
   openSheet(card);
 }

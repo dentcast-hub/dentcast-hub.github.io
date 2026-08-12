@@ -89,13 +89,16 @@ function explainEngagement(pct, cap) {
  * What «بالاترین» is, and why it costs something — shown on the tap, not as a
  * locked page.
  *
- * It has to answer TWO questions in one card, and most premium gates only
- * answer the first. «این ویژه‌ی پریمیوم است» tells a reader what they cannot
- * have; it does not tell them what it IS. Nobody buys an arrangement they have
- * never seen, so the card says what the ordering is made of before it says what
- * it costs — and it opens on the honest line about the boundary: every link is
- * already here, in date order, free. What a subscription buys is the second
- * ordering of the same list, exactly as `pillar` already works.
+ * Two sentences, and that is the whole card on purpose. A gate is read standing
+ * up, by somebody who tapped a tab and wants to know in one breath whether it is
+ * for them; a paragraph about the scoring rule belongs where the numbers are
+ * (the شاخص chip explains itself on tap), not in the doorway.
+ *
+ * «خوانده شدن» rather than «دیده شدن», and the difference is not pedantry: there
+ * is no per-article view count anywhere on this site — `view_stats` is per day
+ * and viewer class, `spot_stats` per ad slot — and what the ranking actually
+ * counts is `article_completed`, a page held to the end. Promising views would
+ * be promising a number we do not have.
  *
  * A SIGNED-OUT reader gets a different bottom half, and that distinction is not
  * cosmetic: they may already be a subscriber who is simply logged out on this
@@ -106,7 +109,7 @@ function explainEngagement(pct, cap) {
 function gateSheet(guest) {
   const card = gateCard({
     title: 'بالاترین — ویژه‌ی پریمیوم',
-    sub: 'همهٔ مطالب همین‌جاست و «تازه‌ترین» برای همه باز است؛ آنچه پریمیوم اضافه می‌کند چیدمانِ دوم است.',
+    sub: 'اینجا مطالبی بالاتر هستند که در سایت بیشترین بازخورد را داشته‌اند — خوانده شدن، لایک شدن، به اشتراک گذاشته شدن.',
     cta: guest
       ? el('button', {
         class: 'dcp-btn dcp-btn-primary', type: 'button',
@@ -114,15 +117,7 @@ function gateSheet(guest) {
       }, 'ورود')
       : premiumCta(FROM),
   });
-  // gateCard is deliberately title + one sentence + CTA. The ordering rule is a
-  // third thing and belongs between them, not crammed into that one sentence.
-  card.insertBefore(
-    el('p', { class: 'dcp-sheet-sub' },
-      'در «بالاترین» ترتیب از قلبِ خواننده‌ها می‌آید، به‌علاوهٔ شاخصِ تعامل — '
-      + 'اینکه هر مطلب را چند نفر تا آخر خوانده‌اند، هایلایت کرده‌اند، به اشتراک گذاشته‌اند '
-      + 'یا در کالکشن پین کرده‌اند. قلب همیشه حرفِ اول را می‌زند و تعامل فقط تا سقفی مشخص جابه‌جا می‌کند.'),
-    card.lastChild,
-  );
+  card.insertBefore(el('p', { class: 'dcp-sheet-sub' }, 'ترتیبشان بر اساس تعاملِ همهٔ کاربرهاست.'), card.lastChild);
   if (guest) guestPremiumExtras(FROM).forEach((n) => card.appendChild(n));
   openSheet(card);
 }
