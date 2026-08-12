@@ -196,6 +196,46 @@ describe('the «ستون» seat-holder view', () => {
     expect(quoted).toContain('قیمت لیست');
   });
 
+  /**
+   * The gateway has no student concept at all — startPayment knows «ستون» and
+   * badge credits and nothing else — so a student who presses «پرداخت و
+   * فعال‌سازی» is charged full price, and the only way back is a hand-gifted
+   * month. The warning therefore has to be ABOVE the buy button, and shown to
+   * everyone: we cannot know who is a student, and the ones who are must not
+   * have to already know the rate exists in order to find it.
+   */
+  it('warns, above the buy button, that a student must not use the gateway', async () => {
+    const root = await renderPricing(
+      {
+        ...LIVE,
+        bank_transfer: {
+          enabled: true, iban: 'IR1', holder: 'ف', bank_name: 'س',
+          student_discount_percent: 15, student_months: 6,
+        },
+      },
+      { id: 'u2' },
+    );
+    const text = Array.from(root.querySelectorAll('.dcp-price-notice'))
+      .map((n) => n.textContent).join(' ');
+    expect(text).toContain('دانشجو');
+    expect(text).toContain('٪۱۵');
+    expect(text).toContain('واریز به حساب');
+    expect(text).toContain('درگاه');
+
+    // Above the plans, not below them — after the button there is nothing left
+    // to say.
+    const notice = root.querySelector('.dcp-price-notice')!;
+    const plans = root.querySelector('.dcp-plans')!;
+    expect(notice.compareDocumentPosition(plans) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  });
+
+  it('says nothing about a student rate when the bank rail is off', async () => {
+    const root = await renderPricing({ ...LIVE, bank_transfer: null }, { id: 'u2' });
+    const text = Array.from(root.querySelectorAll('.dcp-price-notice'))
+      .map((n) => n.textContent).join(' ');
+    expect(text).not.toContain('دانشجو');
+  });
+
   // A t.me link is exactly the door that fails to open for the audience this
   // rail is for, and here the cost is a buyer who cannot ask what to transfer.
   // The handle has to be on screen as text they can type into Telegram itself.

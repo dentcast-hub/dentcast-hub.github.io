@@ -669,6 +669,22 @@ async function main() {
       'مدت تازه به انتهای اشتراک فعلی اضافه می‌شود؛ روزهای باقی‌مانده از بین نمی‌رود.'));
   }
 
+  // The student rate lives ONLY on the bank rail, and this is the one place a
+  // student can lose it: the gateway has no student concept — startPayment
+  // knows «ستون» and badge credits and nothing else — so a student who presses
+  // «پرداخت و فعال‌سازی» is charged the full price, and the difference can only
+  // be handed back as a gifted month. Said ABOVE the buy button, because after
+  // it there is nothing left to say. Shown to everyone: we cannot know who is
+  // a student, and the ones who are must not have to already know this to find
+  // it.
+  if (info.bank_transfer) {
+    const bankPct = toFa(info.bank_transfer.student_discount_percent || 15);
+    const bankMonths = toFa(info.bank_transfer.student_months || 6);
+    notices.push(notice('ok', 'دانشجو هستید؟',
+      `٪${bankPct} تخفیف روی اشتراک ${bankMonths} ماهه دارید — فقط از راه «واریز به حساب» پایین همین صفحه. `
+      + 'از درگاه که بخرید، قیمت کامل حساب می‌شود. اول مبلغ را با پشتیبانی هماهنگ کنید.'));
+  }
+
   drawPlans();
   drawAction();
 

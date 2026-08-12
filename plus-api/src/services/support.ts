@@ -57,7 +57,12 @@ export const TICKET_KINDS: Record<string, TicketKindSpec> = {
   student: {
     title_fa: 'تخفیف دانشجویی',
     premium: false,
-    hint_fa: '۱۵٪ تخفیف روی اشتراک شش‌ماهه. عکس کارت دانشجویی لازم است — پایین تیک بزنید تا کد پیگیری بگیرید.',
+    // Says «از درگاه نخرید» out loud, because the gateway has no student
+    // concept at all: startPayment knows «ستون» and badge credits and nothing
+    // else, so a student who pays there is charged the full price and there is
+    // no way to give the difference back except a hand-gifted month.
+    hint_fa: '۱۵٪ تخفیف روی اشتراک شش‌ماهه، فقط از راه «واریز به حساب» — نه از درگاه. '
+      + 'عکس کارت دانشجویی لازم است: پایین تیک بزنید تا کد پیگیری بگیرید.',
   },
   bug: {
     title_fa: 'مشکل فنی',
