@@ -4,7 +4,7 @@ import { pool } from '../src/db.js';
 import { resetRateLimits } from '../src/services/rate-limit.js';
 import { clearOtpStore } from '../src/services/otp.js';
 import { clearBaleLinkStore } from '../src/services/bale-link.js';
-import { clearKeywordCache } from '../src/services/case-assistant.js';
+import { clearTagSelectionCache } from '../src/services/case-assistant.js';
 import { drainAchievementSyncs } from '../src/services/achievement-sync.js';
 import { drainPillarWelcomes } from '../src/services/pillar-notify.js';
 import { drainBroadcasts } from '../src/services/broadcast.js';
@@ -92,7 +92,7 @@ export async function resetDb(): Promise<void> {
     "update league_tiers set is_active = (tier_order <= 3), activated_at = case when tier_order <= 3 then now() else null end",
   );
   resetRateLimits();
-  clearKeywordCache();
+  clearTagSelectionCache();
   clearOtpStore();
   clearBaleLinkStore();
 }

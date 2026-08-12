@@ -1,29 +1,17 @@
-import type { AiProvider, NarrowRoundInput, NarrowRoundResult } from './types.js';
+import type { AiProvider } from './types.js';
 
 /**
- * Dev/test provider: zero network, zero cost, fully deterministic. It always
- * offers the first few catalog entries back (real keys, so downstream
- * validation always passes) and never claims `done` on its own — the actual
- * stopping logic (max rounds, running out of catalog) lives entirely in
- * services/case-assistant.ts, so that logic is testable without a real key.
+ * Dev/test provider: zero network, zero cost, fully deterministic. It never
+ * guesses — it always returns no tags, so a dev/test round falls straight
+ * through to the honest pillar-catalog fallback in
+ * services/case-assistant.ts. That keeps the whole stopping/fallback logic
+ * (max rounds, empty catalog, nothing relevant found) testable without a real
+ * key, exactly as it was before the tag round existed.
  */
 export class StubAiProvider implements AiProvider {
   readonly name = 'stub';
 
-  async narrowCase({ catalog }: NarrowRoundInput): Promise<NarrowRoundResult> {
-    if (!catalog.length) return { done: true };
-    return {
-      done: false,
-      question: 'کدام‌یک به شرایط بیمار نزدیک‌تر است؟',
-      options: catalog.slice(0, 4),
-    };
-  }
-
-  /** Never guesses: keeps the keyword-search round deterministic (and free)
-   * in dev/test — it always falls straight through to the pillar-tree
-   * fallback in services/case-assistant.ts, exactly like round 1 did before
-   * the hashtag round existed. */
-  async suggestKeywords(): Promise<string[]> {
+  async selectTags(): Promise<string[]> {
     return [];
   }
 }
