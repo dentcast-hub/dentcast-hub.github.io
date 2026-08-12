@@ -83,6 +83,12 @@
   --pr:#022360; --pr-rgb:2,35,96;
   --ac:#0b5fff; --ac-rgb:11,95,255;
 
+  /* قلبِ مقاله / up-board. Mirrored from dc-theme.css, which index.html does
+     not load — keep the two in sync. A third semantic colour on purpose:
+     amber is reserved for what a subscription buys, and a blue heart does not
+     read as a heart. */
+  --heart:#d92b52;
+
 
   --bg:#f0f2f5;
   --surface:#ffffff;
@@ -142,6 +148,9 @@
 [data-theme="dark"]{
   --pr:#5b9cf6; --pr-rgb:91,156,246;
   --ac:#5b9cf6; --ac-rgb:91,156,246;
+
+  /* Lifted for the dark ground — #d92b52 on #17212b is a dim smudge. */
+  --heart:#ff6b8a;
 
   --bg:#0e1621;
   --surface:#17212b; --surface2:#1e2c3a; --surface3:#232e3c;
@@ -944,6 +953,44 @@ body{
   font-size:.82rem; font-weight:800;
   color:var(--txt); margin:0 0 0.625rem;
 }
+/* ── up-board doorway ──
+   The title row grows a link, and the list grows two arrangements. Blue, never
+   amber: up-board is free for any signed-in reader, and amber means one thing
+   site-wide («this is what a subscription buys»). */
+.dc-monitor-head{
+  display:flex; align-items:baseline; justify-content:space-between; gap:0.75rem;
+}
+.dc-monitor-head .dc-monitor-title{ margin-bottom:0.375rem; }
+.dc-monitor-all{
+  flex:none; font-size:.72rem; font-weight:700;
+  color:var(--ac); text-decoration:none; white-space:nowrap;
+}
+.dc-monitor-all:active{ opacity:.6; }
+.dc-monitor-tabs{ display:flex; gap:0.375rem; margin:0 0 0.5rem; }
+.dc-monitor-tab{
+  font:inherit; font-size:.7rem; font-weight:700;
+  color:var(--txt3); background:transparent;
+  border:1px solid var(--border); border-radius:999px;
+  padding:0.1875rem 0.6875rem; cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+  transition:color var(--tr), background var(--tr), border-color var(--tr);
+}
+.dc-monitor-tab[aria-selected="true"]{
+  color:var(--ac); background:rgba(var(--ac-rgb),.08);
+  border-color:rgba(var(--ac-rgb),.20);
+}
+.dc-monitor-rank{
+  flex:none; min-width:1.1em; text-align:center;
+  font-size:.72rem; font-weight:800; color:var(--txt3);
+  font-variant-numeric:tabular-nums;
+}
+.dc-monitor-rank.is-top{ color:var(--ac); }
+.dc-monitor-hearts{
+  flex:none; margin-inline-start:auto; display:inline-flex; align-items:center; gap:0.1875rem;
+  font-size:.68rem; font-weight:800; color:var(--heart,#d92b52);
+  font-variant-numeric:tabular-nums;
+}
+.dc-monitor-hearts svg{ width:.85em; height:.85em; }
 .dc-monitor-hint{
   font-size:.66rem; font-weight:500;
   color:var(--txt3);
@@ -4469,11 +4516,26 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
         </div>
       </div>
 
-      <!-- باکس «تازه‌ترین مطالب» — منتقل‌شده از تب ابزارها، با فاصله بیشتر -->
-      <article class="dc-monitor dc-monitor-secondary" aria-label="آخرین مطالب">
+      <!-- باکس مطالب — منتقل‌شده از تب ابزارها، با فاصله بیشتر.
+           Since up-board it is also the doorway to /up-board/: the list itself
+           had no destination before, and its own hint told the reader to scroll
+           for more. The «همه ›» link and the two tabs ship as STATIC markup so
+           the doorway works even if plus/js/home-upboard.js never loads — the
+           tabs are then simply inert and the reader still gets the page.
+           NOTE the «دسته‌های محتوا» grid below is untouched on purpose:
+           spot.js's renderHome anchors the mobile homepage ad to
+           `.dc-exa-cats` (spot.js:858), so moving or removing it relocates
+           paid sponsor inventory. -->
+      <article class="dc-monitor dc-monitor-secondary" aria-label="مطالب دنت‌کست">
         <div class="dc-monitor-inner">
-          <div class="dc-monitor-title">تازه‌ترین مطالب دنت‌کست</div>
-          <div class="dc-monitor-hint">برای دیدن همه اسکرول کنید</div>
+          <div class="dc-monitor-head">
+            <div class="dc-monitor-title">مطالب دنت‌کست</div>
+            <a class="dc-monitor-all" href="/up-board/">همه ›</a>
+          </div>
+          <div class="dc-monitor-tabs" role="tablist" aria-label="ترتیب فهرست">
+            <button class="dc-monitor-tab" type="button" role="tab" data-monitor-sort="new" aria-selected="true">تازه‌ترین</button>
+            <button class="dc-monitor-tab" type="button" role="tab" data-monitor-sort="top" aria-selected="false">بالاترین</button>
+          </div>
           <ul class="dc-monitor-list" id="dcLast3Updates"></ul>
         </div>
       </article>
@@ -5203,7 +5265,7 @@ scrollBody.addEventListener('touchend',e=>{
 </script>
 
 <!-- Theme toggle behavior moved to /dc-nav.js (single source) -->
-<script src="/dc-nav.js?v=74" defer></script>
+<script src="/dc-nav.js?v=75" defer></script>
 
 <!-- Toolbar drawer toggle is handled by /dc-nav.js (single source) -->
 

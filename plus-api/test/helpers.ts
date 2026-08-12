@@ -8,6 +8,7 @@ import { clearTagSelectionCache } from '../src/services/case-assistant.js';
 import { drainAchievementSyncs } from '../src/services/achievement-sync.js';
 import { drainPillarWelcomes } from '../src/services/pillar-notify.js';
 import { drainBroadcasts } from '../src/services/broadcast.js';
+import { resetBoardCache } from '../src/services/votes.js';
 
 /** Truncate all data tables and reset in-process stores. Call in beforeEach. */
 export async function resetDb(): Promise<void> {
@@ -25,7 +26,7 @@ export async function resetDb(): Promise<void> {
   await drainAchievementSyncs();
   await pool.query(`
     truncate table
-      profiles, user_activity, highlights, card_state,
+      profiles, user_activity, highlights, card_state, content_votes,
       collections, collection_items, snippets, user_pathways,
       subscriptions, payments, gift_redemptions, certificates, anon_events,
       push_subscriptions, articles, auth_identities, spot_stats, view_stats,
@@ -92,6 +93,10 @@ export async function resetDb(): Promise<void> {
     "update league_tiers set is_active = (tier_order <= 3), activated_at = case when tier_order <= 3 then now() else null end",
   );
   resetRateLimits();
+  // up-board's ranking is cached in-process for a minute (services/votes.ts).
+  // Without this, a case that votes and then reads the board would be served the
+  // PREVIOUS test's ordering — and would pass or fail depending on file order.
+  resetBoardCache();
   clearTagSelectionCache();
   clearOtpStore();
   clearBaleLinkStore();
