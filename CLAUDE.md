@@ -193,6 +193,20 @@ guess.**
     mirrors and per-domain logic is forbidden. The unused socket is idle and
     the browser drops it.
 
+- **Amber is the PREMIUM colour — one colour, one meaning.** Amber/gold
+  (`#c9922b` on light, `#e3b849` on dark; the older `#c49820` is the same
+  family) marks **what a subscription buys, and nothing else**: the locked
+  feature cards under «دنت‌کست پریمیوم» on the homepage, the «🔒 ویژه‌ی
+  پریمیوم» badge, and the premium library card in the archive. Everything
+  else keeps the site's blue. Two consequences worth stating, because both
+  have already been gotten wrong once: the **Pulse** is news, not premium, so
+  it stays blue however tempting its historical amber is; and **«دنت‌کست
+  پلاس» is the FREE video section, not the paid tier** (پلاس = free
+  signed-in, پریمیوم = paid), so its chip must never wear amber. The tokens
+  live in `index.html`'s `<style id="dcDepthTheme">` (`--x-amber*`); a
+  premium surface gets a wash that fades out in its top 45% plus an amber
+  hairline — never a solid amber card, which would read as a warning.
+
 - **E-NAMAD trust seal (نماد اعتماد الکترونیکی) — three placements, dentcast.ir only.** The seal lives on exactly three surfaces and is **not** a per-page element: `index.html`'s `<footer>` (mobile shell), `index.html`'s `.dcd-a-seal` row in the col-A sidebar (desktop shell, where that footer is `display:none`), and `about.html`'s `.dc-trustseal-box` under the contact card. Do **not** clone it onto content pages — every copy is a request to enamad's server for zero trust value on an article page.
   - **This is the one deliberate exception to "no per-domain logic".** The seal is issued for a single domain (ours: `dentcast.ir`) and `trustseal.enamad.ir/logo.aspx` renders from the request's referrer, so on the `.org` mirror it answers with an *invalid seal* image. Two layers gate it: an inline `<head>` guard in both pages sets `dc-no-seal` on `<html>` off `.ir` (hides it before the body parses, no flash), and a block at the end of `dc-nav.js` removes the node outright. The images are `loading="lazy"` and both seals sit below the fold, so on `.org` the request normally never fires.
   - **The `<a>`/`<img>` attributes enamad verifies are copied verbatim and never rewritten** — `referrerpolicy='origin'`, `id`, `Code`, and the `code` attribute on the `<img>`. Only `alt`, `loading` and the wrapper are ours. The markup ships **statically in the HTML** (never JS-injected) so enamad's own crawler reads it.
