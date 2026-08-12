@@ -343,13 +343,37 @@ function connectionsRow(me) {
 export async function initHomeCard() {
   const card = document.getElementById('dcPlusHomeCard');
   if (!card) return;
+
+  // Optimistic anonymous render, BEFORE the /me round trip: renderAnon()'s
+  // markup is fixed (same title/subtitle/feature chips every time, no server
+  // data in it), so for a device with no signed-in hint — which is every
+  // crawler, since Googlebot never authenticates, and the large majority of
+  // real homepage visits — we already KNOW what belongs here. Painting it
+  // immediately instead of waiting on /me removes the late-DOM-insertion
+  // layout shift for exactly the population Core Web Vitals field data is
+  // measured against (2026-08-12 CLS review, same finding as the article ad
+  // slot). `dcp:signed-in` is the same persistent hint dc-nav.js's
+  // همراهی‌سنج already reads (see api.js's rememberSignedIn) — a device last
+  // confirmed signed-in skips this and waits for the real answer, so a
+  // returning logged-in reader never sees the anonymous card flash first.
+  let shownAnon = false;
+  let hint;
+  try { hint = localStorage.getItem('dcp:signed-in'); } catch (_) { hint = null; }
+  if (hint !== '1') {
+    renderAnon(card);
+    card.hidden = false;
+    shownAnon = true;
+  }
+
   try {
     const user = await currentUser();
     card.hidden = false;
-    if (!user) renderAnon(card);
-    else await renderLoggedIn(card, user);
+    if (user) await renderLoggedIn(card, user);
+    else if (!shownAnon) renderAnon(card);
   } catch (_) {
-    // Keep the homepage pristine if anything fails: leave the slot hidden.
-    card.hidden = true;
+    // Keep the homepage pristine if anything fails and nothing rendered yet;
+    // an already-shown optimistic anon card is a safe, correct fallback, so
+    // leave it rather than hiding good content.
+    if (!shownAnon) card.hidden = true;
   }
 }
