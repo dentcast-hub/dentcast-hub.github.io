@@ -209,6 +209,17 @@ button.dc-meta-chip:hover{
   color:var(--ac, #0b5fff);
 }
 
+/* A heart INSIDE the chip row is stale markup — hide it.
+   Until 2026-08-12 votes.js appended the button into #dcArticleMeta as a third
+   .dc-meta-chip. A reader holding that cached JS while this stylesheet is fresh
+   gets a 36×14 EMPTY PILL: .dc-meta-chip still paints the pill, but the icon has
+   no size rule any more (sizing moved to .dcp-heart-lg) and the old markup
+   carried no label. Reported from the live site the same day.
+   The rule is self-cleaning: once every cache has the new bundle nothing matches
+   it. It stays anyway, because the two stylesheets below are the reason the
+   mismatch was possible at all and this is the cheap half of the fix. */
+.dc-article-meta .dcp-heart{ display:none !important; }
+
 /* ── قلبِ مقاله (up-board) ──────────────────────────────────────────────
    Its own line under the chip row, not a chip in it. As a third
    .dc-meta-chip — small, grey, between «زمان مطالعه» and «اشتراک‌گذاری» —

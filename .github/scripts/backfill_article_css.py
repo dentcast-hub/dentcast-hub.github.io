@@ -4,7 +4,7 @@
 The latest page of each category (the clone template) was migrated by hand;
 this script brings every OLDER same-category page onto the same architecture:
 
-  1. inserts `<link rel="stylesheet" href="/dc-article.css">` before the
+  1. inserts `<link rel="stylesheet" href="/dc-article.css?v=2">` before the
      page's first inline <style> (skipped if already present), and
   2. strips from the inline <style> exactly the rule blocks that were removed
      from that category's template — a per-category kill list, so rules a
@@ -31,7 +31,7 @@ ROOT = Path(__file__).resolve().parent.parent.parent
 
 LINK_TAG = ('  <!-- Shared article layer (body/headings/lists/boxes/byline)'
             ' — page-specific rules below -->\n'
-            '  <link rel="stylesheet" href="/dc-article.css">\n')
+            '  <link rel="stylesheet" href="/dc-article.css?v=2">\n')
 
 AUTHOR = ['.author-note', '.author-note .author-link',
           '.author-note .author-link:hover', '.author-note .author-role']

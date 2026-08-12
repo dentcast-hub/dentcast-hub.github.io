@@ -1,4 +1,8 @@
 {
+  "/dc-article.css": {
+    "v": 2,
+    "hash": "508d73c27416c2e2"
+  },
   "/dc-landing.css": {
     "v": 2,
     "hash": "8224de2c93d44f9c"
@@ -10,6 +14,10 @@
   "/dc-nav.js": {
     "v": 76,
     "hash": "7e01a077e2c31d04"
+  },
+  "/dc-theme.css": {
+    "v": 2,
+    "hash": "c5abab1a4bf1051c"
   },
   "/global-search-ui.js": {
     "v": 5,
