@@ -53,6 +53,18 @@
   <link rel="stylesheet" href="/global-search.css?v=5">
 
   <style>
+    /* توکن‌های امبر — mirrored from index.html's own set. dc-theme.css does not
+       carry them (they are premium-surface only), and this page needs them for
+       the lock on «بالاترین». Keep in sync with index.html. */
+    :root{
+      --x-amber:#c9922b; --x-amber-ink:#8a6414;
+      --x-amber-wash:rgba(201,146,43,.08); --x-amber-bd:rgba(154,107,21,.22);
+    }
+    [data-theme="dark"]{
+      --x-amber:#e3b849; --x-amber-ink:#e3b849;
+      --x-amber-wash:rgba(227,184,73,.09); --x-amber-bd:rgba(227,184,73,.26);
+    }
+
     .ub-page{
       max-width:44rem;
       margin:0 auto;
@@ -93,8 +105,22 @@
     [data-theme="dark"] .ub-sort button[aria-selected="true"]{
       box-shadow:0 1px 3px rgba(0,0,0,.3);
     }
-    .ub-sort button[disabled]{ opacity:.45; cursor:not-allowed; }
     .ub-sort button:focus-visible{ outline:2px solid var(--ac); outline-offset:2px; }
+
+    /* ── قفلِ پریمیوم روی «بالاترین» ──
+       امبر، نه آبی. در کل سایت امبر یک معنا دارد: «این چیزی است که اشتراک
+       می‌خرد». تا وقتی این تب رایگان بود آبی درست بود؛ حالا که نیست، باید
+       همان رنگی را بپوشد که کارت‌های قفلِ صفحهٔ اصلی می‌پوشند — وگرنه معنیِ
+       امبر در جای دیگری خرج شده. تب حذف نمی‌شود: خواننده‌ای که نمی‌تواند
+       بازش کند هم باید بداند چیدمانِ دوم وجود دارد. */
+    .ub-sort button.is-locked{ color:var(--x-amber-ink, #8a6414); }
+    .ub-sort button.is-locked::after{
+      content:"🔒"; font-size:.72em; margin-inline-start:.3rem;
+      vertical-align:.05em;
+    }
+    .ub-sort button.is-locked[aria-selected="true"]{
+      color:var(--x-amber-ink, #8a6414); background:var(--surface);
+    }
 
     /* فیلتر نوع */
     .ub-filters{
@@ -264,7 +290,7 @@
      tools/asset_version.py, which reads stamped paths out of the page text —
      an inline import counts. -->
 <script type="module">
-  import { initUpBoard } from '/plus/js/upboard-page.js?v=3';
+  import { initUpBoard } from '/plus/js/upboard-page.js?v=4';
   initUpBoard(document.getElementById('ubRoot'));
 </script>
 

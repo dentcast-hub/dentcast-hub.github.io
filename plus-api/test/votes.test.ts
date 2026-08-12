@@ -127,14 +127,56 @@ describe('GET /votes?id=', () => {
 });
 
 describe('GET /votes/board', () => {
+  /** A paying session — the board is premium (the ARRANGEMENT, not the content). */
+  async function premiumCookie(phone = '09129999999'): Promise<string> {
+    const cookie = await loginAs(app, phone);
+    await pool.query("update profiles set tier = 'premium' where phone = $1", [phone]);
+    return cookie;
+  }
+
   const board = async () => {
     resetBoardCache();
-    return (await app.inject({ method: 'GET', url: '/votes/board' })).json();
+    const cookie = await premiumCookie();
+    return (await app.inject({ method: 'GET', url: '/votes/board', headers: { cookie } })).json();
   };
   const ids = (b: { items: Array<{ content_id: string }> }) => b.items.map((i) => i.content_id);
   const find = (b: { items: Array<{ content_id: string }> }, id: string) =>
     b.items.find((i) => i.content_id === id) as
       { content_id: string; hearts: number; score: number; engagement?: number };
+
+  it('refuses a signed-out reader', async () => {
+    const res = await app.inject({ method: 'GET', url: '/votes/board' });
+    expect(res.statusCode).toBe(401);
+  });
+
+  it('refuses a free reader — the arrangement is what premium buys', async () => {
+    const cookie = await loginAs(app, '09120000009');
+    const res = await app.inject({ method: 'GET', url: '/votes/board', headers: { cookie } });
+    expect(res.statusCode).toBe(402);
+    expect(res.json().error).toBe('premium_required');
+  });
+
+  // The gate is on the ranking only. A free reader still sees every heart count
+  // and can still cast one — otherwise we would be charging people to produce
+  // the signal the board ranks by.
+  it('leaves the heart count and the vote open to a free reader', async () => {
+    const cookie = await loginAs(app, '09120000009');
+    expect((await app.inject({
+      method: 'POST', url: '/votes', headers: { cookie }, payload: { content_id: ART },
+    })).statusCode).toBe(200);
+    expect((await app.inject({ method: 'GET', url: `/votes?id=${ART}` })).statusCode).toBe(200);
+  });
+
+  // The board's answer now depends on the reader's tier, which makes the
+  // whole-API `no-store` invariant (server.ts) load-bearing here: a CDN does not
+  // key on the session cookie, so a cacheable response is one replayed to
+  // somebody else. Pinned because a route setting its own cache-control would
+  // silently look like it worked.
+  it('is never storable by a shared cache', async () => {
+    const cookie = await premiumCookie();
+    const res = await app.inject({ method: 'GET', url: '/votes/board', headers: { cookie } });
+    expect(res.headers['cache-control']).toBe('no-store');
+  });
 
   it('is empty and honest before anything has happened', async () => {
     const b = await board();

@@ -21,6 +21,27 @@ vi.mock('/plus/js/api.js', () => ({
   api: { voteBoard: () => boardImpl() },
 }));
 
+let ctaFrom: string | null = null;
+vi.mock('/plus/js/premium-cta.js', () => ({
+  premiumCta: (from: string) => { ctaFrom = from; return document.createElement('a'); },
+  guestPremiumExtras: (from: string) => {
+    guestExtrasFrom = from;
+    const p = document.createElement('p');
+    p.textContent = 'اگر اشتراک دارید وارد شوید.';
+    return [p];
+  },
+}));
+
+let guestExtrasFrom: string | null = null;
+let loginOpened = 0;
+vi.mock('/plus/js/login-modal.js', () => ({
+  openLoginModal: () => { loginOpened += 1; return Promise.resolve(null); },
+}));
+
+/** The shapes api.js's ApiError takes for the two definite refusals. */
+const premiumRequired = () => Object.assign(new Error('premium_required'), { status: 402 });
+const signedOut = () => Object.assign(new Error('unauthorized'), { status: 401 });
+
 const CATALOG = {
   version: 1,
   count: 5,
@@ -180,7 +201,6 @@ describe('/up-board/', () => {
     boardImpl = () => Promise.reject(new Error('offline'));
     await mount();
     expect(titles()).toEqual(['پنجم', 'چهارم', 'سوم', 'دوم', 'اول']);
-    expect((document.querySelector('[data-sort="top"]') as HTMLButtonElement).disabled).toBe(true);
   });
 
   it('falls back to date order if the board dies while «بالاترین» is showing', async () => {
@@ -188,6 +208,92 @@ describe('/up-board/', () => {
     await mount('?sort=top');
     expect(document.querySelector('[data-sort="new"]')!.getAttribute('aria-selected')).toBe('true');
     expect(titles()).toEqual(['پنجم', 'چهارم', 'سوم', 'دوم', 'اول']);
+  });
+
+  // «بالاترین» is premium; «تازه‌ترین» is the list this page always was.
+  describe('the premium gate', () => {
+    beforeEach(() => { ctaFrom = null; guestExtrasFrom = null; loginOpened = 0; });
+
+    it('keeps the free list intact and locks only the ranked tab', async () => {
+      boardImpl = () => Promise.reject(premiumRequired());
+      await mount();
+      expect(titles()).toEqual(['پنجم', 'چهارم', 'سوم', 'دوم', 'اول']);
+      const top = document.querySelector('[data-sort="top"]')!;
+      expect(top.classList.contains('is-locked')).toBe(true);
+      // Not disabled and not removed: a reader who cannot open it should still
+      // see that a second arrangement exists, or there is nothing to want.
+      expect((top as HTMLButtonElement).disabled).toBe(false);
+    });
+
+    it('explains what the arrangement IS before what it costs', async () => {
+      boardImpl = () => Promise.reject(premiumRequired());
+      await mount();
+      click('[data-sort="top"]');
+      await settle();
+
+      const sheet = document.querySelector('.dcp-sheet')!;
+      const text = sheet.textContent!;
+      expect(text).toContain('ویژه‌ی پریمیوم');
+      expect(text).toContain('«تازه‌ترین» برای همه باز است');  // what is NOT gated
+      expect(text).toContain('قلبِ خواننده‌ها');                 // what it is made of
+      expect(text).toContain('شاخصِ تعامل');
+      expect(ctaFrom).toBe('upboard');                          // ?from= tracking
+    });
+
+    it('does not switch the list when it gates', async () => {
+      boardImpl = () => Promise.reject(premiumRequired());
+      await mount();
+      click('[data-sort="top"]');
+      await settle();
+      expect(document.querySelector('[data-sort="new"]')!.getAttribute('aria-selected')).toBe('true');
+      expect(document.querySelectorAll('.ub-rank').length).toBe(0);
+    });
+
+    // A ?sort=top link shared by a subscriber lands a free reader here. The
+    // locked tab is the invitation; a paywall that opens itself on arrival is
+    // the thing everybody hates.
+    it('does not pop the sheet unasked on a ?sort=top deep link', async () => {
+      boardImpl = () => Promise.reject(premiumRequired());
+      await mount('?sort=top');
+      expect(document.querySelector('.dcp-sheet')).toBeNull();
+      expect(titles()).toEqual(['پنجم', 'چهارم', 'سوم', 'دوم', 'اول']);
+    });
+
+    // A signed-out reader may ALREADY be a subscriber, just logged out on this
+    // device. Selling them a subscription they own is worse than saying nothing,
+    // so sign-in leads and the purchase link follows quieter.
+    it('offers a signed-out reader sign-in first, not a purchase', async () => {
+      boardImpl = () => Promise.reject(signedOut());
+      await mount();
+      expect(document.querySelector('[data-sort="top"]')!.classList.contains('is-locked')).toBe(true);
+
+      click('[data-sort="top"]');
+      await settle();
+      const sheet = document.querySelector('.dcp-sheet')!;
+      expect(sheet.textContent).toContain('قلبِ خواننده‌ها');      // still explains what it is
+      expect(sheet.querySelector('.dcp-btn-primary')!.textContent).toBe('ورود');
+      expect(guestExtrasFrom).toBe('upboard');                     // the quieter CTA
+      expect(ctaFrom).toBeNull();                                  // never the loud one
+
+      (sheet.querySelector('.dcp-btn-primary') as HTMLElement).click();
+      await settle();
+      expect(loginOpened).toBe(1);
+    });
+
+    // The one failure this gate must not have: telling a paying reader to buy
+    // what they own, because the API blinked.
+    it('never sells a subscription when it simply could not ask', async () => {
+      boardImpl = () => Promise.reject(new Error('offline'));
+      await mount();
+      expect(document.querySelector('[data-sort="top"]')!.classList.contains('is-locked')).toBe(false);
+
+      click('[data-sort="top"]');
+      await settle();
+      const text = document.querySelector('.dcp-sheet')!.textContent!;
+      expect(text).toContain('ارتباط با سرور برقرار نشد');
+      expect(text).toContain('نه اینکه اشتراک نداری');
+      expect(ctaFrom).toBeNull();
+    });
   });
 
   it('says so when the catalog itself fails', async () => {

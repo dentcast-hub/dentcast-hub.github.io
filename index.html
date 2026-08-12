@@ -979,6 +979,11 @@ body{
   color:var(--ac); background:rgba(var(--ac-rgb),.08);
   border-color:rgba(var(--ac-rgb),.20);
 }
+/* «بالاترین» پشت پریمیوم است، پس امبر می‌پوشد نه آبی — امبر در کل سایت
+   یک معنا دارد و این همان معناست. قفل فقط بعد از یک ۴۰۲ واقعی می‌نشیند؛
+   سروری که جواب نداده هنوز ممکن است دفعهٔ بعد باز شود. */
+.dc-monitor-tab.is-locked{ color:var(--x-amber-ink); border-color:var(--x-amber-bd); }
+.dc-monitor-tab.is-locked::after{ content:"🔒"; font-size:.8em; margin-inline-start:.25rem; }
 .dc-monitor-rank{
   flex:none; min-width:1.1em; text-align:center;
   font-size:.72rem; font-weight:800; color:var(--txt3);

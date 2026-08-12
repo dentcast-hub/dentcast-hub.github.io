@@ -14,6 +14,13 @@ vi.mock('/plus/js/api.js', () => ({
   api: { voteBoard: () => boardImpl() },
 }));
 
+let ctaFrom: string | null = null;
+vi.mock('/plus/js/premium-cta.js', () => ({
+  premiumCta: (from: string) => { ctaFrom = from; return document.createElement('a'); },
+}));
+
+const premiumRequired = () => Object.assign(new Error('premium_required'), { status: 402 });
+
 const CATALOG = {
   items: [
     { id: 'a/1', u: '/a/1.html', t: 'chairside', tf: 'چیرساید', ti: 'یک', d: '' },
@@ -123,6 +130,36 @@ describe('the homepage up-board doorway', () => {
     await settle();
     expect(list().innerHTML).toBe(FRESH);
     expect(tab('new').getAttribute('aria-selected')).toBe('true');
+  });
+
+  it('gates a free reader, locks the tab and keeps the fresh list', async () => {
+    ctaFrom = null;
+    boardImpl = () => Promise.reject(premiumRequired());
+    await mount();
+    tab('top').click();
+    await settle();
+    await settle();
+
+    expect(list().innerHTML).toBe(FRESH);
+    expect(tab('new').getAttribute('aria-selected')).toBe('true');
+    expect(tab('top').classList.contains('is-locked')).toBe(true);
+    const text = document.querySelector('.dcp-sheet')!.textContent!;
+    expect(text).toContain('ویژه‌ی پریمیوم');
+    expect(text).toContain('قلبِ خواننده‌ها');
+    expect(ctaFrom).toBe('home-upboard');
+  });
+
+  it('never sells a subscription when it simply could not ask', async () => {
+    ctaFrom = null;
+    boardImpl = () => Promise.reject(new Error('offline'));
+    await mount();
+    tab('top').click();
+    await settle();
+    await settle();
+
+    expect(tab('top').classList.contains('is-locked')).toBe(false);
+    expect(document.querySelector('.dcp-sheet')!.textContent).toContain('ارتباط با سرور برقرار نشد');
+    expect(ctaFrom).toBeNull();
   });
 
   it('survives the catalog being unreachable too', async () => {

@@ -1,6 +1,7 @@
 import type { FastifyInstance } from 'fastify';
 import { config } from '../config.js';
 import { requireAuth } from '../middleware/auth.js';
+import { requirePremium } from '../middleware/require-premium.js';
 import { readSession } from '../services/session.js';
 import { consume, HOUR_MS } from '../services/rate-limit.js';
 import {
@@ -10,12 +11,18 @@ import {
 /**
  * up-board — reading the board, and casting/withdrawing one heart.
  *
- * Reading is public on every route here, and that is a decision rather than an
- * oversight. The count is printed on the article page for anybody who opens it,
- * so gating the endpoint that produces it would only mean a signed-out reader
- * sees an empty chip where everyone else sees a number. Pressing is what needs
- * an account, because "one person, one vote" is a claim about people and the
- * only thing on this site that knows about people is the session.
+ * Three access levels, and the line between them is deliberate:
+ *
+ *   · PUBLIC — a page's heart count (`GET /votes`). It is printed on the article
+ *     for anybody who opens it, so gating the endpoint that produces it would
+ *     only mean a signed-out reader sees an empty chip where everyone else sees
+ *     a number.
+ *   · SIGNED IN — casting a heart (`POST /votes`). "One person, one vote" is a
+ *     claim about people, and the only thing on this site that knows about
+ *     people is the session. Free Plus is enough on purpose: charging for the
+ *     act would starve the board of the signal it ranks by.
+ *   · PREMIUM — the ranked board (`GET /votes/board`). The ARRANGEMENT, never
+ *     the content; see that route's own note.
  *
  * The content id travels in the body/query rather than the path — the same shape
  * `/activity` and `/anon/event` already use, and for a reason that is easy to
@@ -31,17 +38,32 @@ import {
  */
 export async function voteRoutes(app: FastifyInstance): Promise<void> {
   /**
-   * The whole ranked board. Ids and numbers only — the titles, types and URLs
-   * live in the site's own content index, which the client already has. Keeping
-   * the catalog out of this response is what lets a publish change a title
-   * without an API deploy.
+   * The whole ranked board — PREMIUM. Ids and numbers only; the titles, types
+   * and URLs live in the site's own content index, which the client already
+   * has, so a publish can change a title without an API deploy.
+   *
+   * The gate is on the ARRANGEMENT, never on the content, and that distinction
+   * is the whole reason it is defensible: /up-board/ serves every one of the 444
+   * links to everybody, newest first, and what a subscription buys is the second
+   * ordering of the same list. It is the identical split `pillar` already makes
+   * — flat date list for all, the foldered arrangement layered on for premium —
+   * so this is one rule applied twice rather than a new one.
+   *
+   * Note what stays OPEN, deliberately: `GET /votes` (a page's heart count) and
+   * `POST /votes` (casting one). The count is printed on every article for every
+   * reader, and voting is free for anyone signed in — gating either would mean
+   * charging people to produce the very signal this endpoint ranks by, and would
+   * starve the board of the votes that make it worth anything.
    */
-  app.get('/votes/board', async (_request, reply) => {
-    const board = await getBoard();
-    // Same short window the server caches it for. The board is an accumulation,
-    // not news; a minute-old order is indistinguishable from a fresh one.
-    reply.header('cache-control', 'public, max-age=60');
-    return reply.send(board);
+  app.get('/votes/board', { preHandler: [requireAuth, requirePremium] }, async (_request, reply) => {
+    // No cache-control set here on purpose. server.ts stamps `no-store` on every
+    // API response as a whole-API invariant — a CDN in front of this does not
+    // key on the session cookie, so ANY cacheable response can be replayed to a
+    // different reader (it leaked a phone number in production once). This route
+    // wants that invariant more than most now that its answer depends on tier.
+    // The 60s staleness the board is allowed lives in the server-side cache in
+    // services/votes.ts instead, where it costs nothing and leaks nothing.
+    return reply.send(await getBoard());
   });
 
   /** One page's count, plus whether the caller is one of the hearts. */

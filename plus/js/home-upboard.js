@@ -17,6 +17,11 @@
 // It is only ever the top five. The box is a doorway, not the board.
 import { api } from './api.js';
 import { el, faNum } from './util.js';
+import { openSheet, closeSheet, gateCard } from './sheet.js';
+import { premiumCta, guestPremiumExtras } from './premium-cta.js';
+import { openLoginModal } from './login-modal.js';
+
+const FROM = 'home-upboard';
 
 const TOP_N = 5;
 const INDEX_URL = '/up-board/index.json';
@@ -30,6 +35,43 @@ function heartIcon() {
   p.setAttribute('fill', 'currentColor');
   svg.appendChild(p);
   return svg;
+}
+
+/**
+ * The same two cards the page's own tab shows, because the homepage tab is the
+ * same door. Kept here rather than imported from upboard-page.js: that module is
+ * loaded only by /up-board/ and pulling it in would drag the whole 443-row
+ * renderer onto every homepage visit for two paragraphs of copy.
+ */
+function gateSheet(guest) {
+  const card = gateCard({
+    title: 'بالاترین — ویژه‌ی پریمیوم',
+    sub: 'همهٔ مطالب در «تازه‌ترین» برای همه باز است؛ آنچه پریمیوم اضافه می‌کند چیدمانِ دوم است.',
+    cta: guest
+      ? el('button', {
+        class: 'dcp-btn dcp-btn-primary', type: 'button',
+        onclick: () => { closeSheet(); openLoginModal({ returnTo: location.pathname }); },
+      }, 'ورود')
+      : premiumCta(FROM),
+  });
+  card.insertBefore(
+    el('p', { class: 'dcp-sheet-sub' },
+      'در «بالاترین» ترتیب از قلبِ خواننده‌ها می‌آید، به‌علاوهٔ شاخصِ تعامل — '
+      + 'اینکه هر مطلب را چند نفر تا آخر خوانده‌اند، هایلایت کرده‌اند، به اشتراک گذاشته‌اند '
+      + 'یا در کالکشن پین کرده‌اند. قلب همیشه حرفِ اول را می‌زند.'),
+    card.lastChild,
+  );
+  if (guest) guestPremiumExtras(FROM).forEach((n) => card.appendChild(n));
+  openSheet(card);
+}
+
+function unreachableSheet() {
+  openSheet(el('div', { class: 'dcp-sheet-card' }, [
+    el('h2', { class: 'dcp-sheet-title' }, 'ارتباط با سرور برقرار نشد'),
+    el('p', { class: 'dcp-sheet-sub' },
+      'این یعنی نتوانستیم حسابت را بخوانیم — نه اینکه اشتراک نداری. چند لحظه بعد دوباره تلاش کن.'),
+    el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button', onclick: closeSheet }, 'باشه'),
+  ]));
 }
 
 export function initHomeUpboard() {
@@ -108,11 +150,19 @@ export function initHomeUpboard() {
     select('top');
     try {
       renderTop(await buildTop());
-    } catch (_) {
+    } catch (err) {
       // Put the reader back where they were rather than leaving an empty box —
       // and leave the link, which is the part that always works.
       if (freshHtml !== null) list.innerHTML = freshHtml;
       select('new');
+      // 402 is an answer, anything else is "we could not ask". Selling a
+      // subscription to a subscriber whose API blinked is the one failure this
+      // gate must not have.
+      // 401 (signed out) and 402 (free) are both answers; anything else means
+      // we could not ask, and must not become an upsell aimed at a subscriber.
+      const st = err && err.status;
+      if (st === 401 || st === 402) { tab.classList.add('is-locked'); gateSheet(st === 401); }
+      else unreachableSheet();
     } finally {
       loading = false;
     }

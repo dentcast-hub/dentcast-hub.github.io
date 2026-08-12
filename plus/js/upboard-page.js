@@ -30,7 +30,12 @@
 //      and the back button, and is a link somebody can send.
 import { api } from '/plus/js/api.js';
 import { el, faNum } from '/plus/js/util.js';
-import { openSheet, closeSheet } from '/plus/js/sheet.js';
+import { openSheet, closeSheet, gateCard } from '/plus/js/sheet.js';
+import { premiumCta, guestPremiumExtras } from '/plus/js/premium-cta.js';
+import { openLoginModal } from '/plus/js/login-modal.js';
+
+/** Which gate sent a buyer, for the pricing page's ?from= report. */
+const FROM = 'upboard';
 
 const INDEX_URL = '/up-board/index.json';
 const ASSET_V = new URL(import.meta.url).search; // carry ?v= onto the fetch
@@ -80,6 +85,66 @@ function explainEngagement(pct, cap) {
   openSheet(card);
 }
 
+/**
+ * What «بالاترین» is, and why it costs something — shown on the tap, not as a
+ * locked page.
+ *
+ * It has to answer TWO questions in one card, and most premium gates only
+ * answer the first. «این ویژه‌ی پریمیوم است» tells a reader what they cannot
+ * have; it does not tell them what it IS. Nobody buys an arrangement they have
+ * never seen, so the card says what the ordering is made of before it says what
+ * it costs — and it opens on the honest line about the boundary: every link is
+ * already here, in date order, free. What a subscription buys is the second
+ * ordering of the same list, exactly as `pillar` already works.
+ *
+ * A SIGNED-OUT reader gets a different bottom half, and that distinction is not
+ * cosmetic: they may already be a subscriber who is simply logged out on this
+ * device, and selling a subscription to somebody who owns one is worse than
+ * saying nothing. So sign-in leads and the purchase link follows, quieter —
+ * the shape premium-cta.js's guestPremiumExtras() exists to keep consistent.
+ */
+function gateSheet(guest) {
+  const card = gateCard({
+    title: 'بالاترین — ویژه‌ی پریمیوم',
+    sub: 'همهٔ مطالب همین‌جاست و «تازه‌ترین» برای همه باز است؛ آنچه پریمیوم اضافه می‌کند چیدمانِ دوم است.',
+    cta: guest
+      ? el('button', {
+        class: 'dcp-btn dcp-btn-primary', type: 'button',
+        onclick: () => { closeSheet(); openLoginModal({ returnTo: location.pathname + location.search }); },
+      }, 'ورود')
+      : premiumCta(FROM),
+  });
+  // gateCard is deliberately title + one sentence + CTA. The ordering rule is a
+  // third thing and belongs between them, not crammed into that one sentence.
+  card.insertBefore(
+    el('p', { class: 'dcp-sheet-sub' },
+      'در «بالاترین» ترتیب از قلبِ خواننده‌ها می‌آید، به‌علاوهٔ شاخصِ تعامل — '
+      + 'اینکه هر مطلب را چند نفر تا آخر خوانده‌اند، هایلایت کرده‌اند، به اشتراک گذاشته‌اند '
+      + 'یا در کالکشن پین کرده‌اند. قلب همیشه حرفِ اول را می‌زند و تعامل فقط تا سقفی مشخص جابه‌جا می‌کند.'),
+    card.lastChild,
+  );
+  if (guest) guestPremiumExtras(FROM).forEach((n) => card.appendChild(n));
+  openSheet(card);
+}
+
+/**
+ * «We could not ask» is NOT «you are not a subscriber».
+ *
+ * The same distinction premium-cta.js's unreachableGate exists for: while the
+ * API is down — a redeploy is minutes of exactly that — a gate that guesses
+ * tells paying readers to go and buy what they already own. So a network
+ * failure gets its own message and no upsell.
+ */
+function unreachableSheet() {
+  const card = el('div', { class: 'dcp-sheet-card' }, [
+    el('h2', { class: 'dcp-sheet-title' }, 'ارتباط با سرور برقرار نشد'),
+    el('p', { class: 'dcp-sheet-sub' },
+      'این یعنی نتوانستیم حسابت را بخوانیم — نه اینکه اشتراک نداری. چند لحظه بعد دوباره تلاش کن.'),
+    el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button', onclick: closeSheet }, 'باشه'),
+  ]);
+  openSheet(card);
+}
+
 function heartIcon() {
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   svg.setAttribute('viewBox', '0 0 24 24');
@@ -102,6 +167,10 @@ export function initUpBoard(root) {
 
   let catalog = null;   // { items, types, count }
   let board = null;     // { items, engagement_cap, total_hearts } — may stay null
+  // Why the board is not here, when it is not: 'gated' (a free reader — the
+  // arrangement is what premium buys) or 'unreachable' (we could not ask). The
+  // two must never share a message; see unreachableSheet().
+  let denied = null;
   let hearts = new Map();
   let engagement = new Map(); // content_id → percentile, only where there is one
   let rank = new Map();       // content_id → position on the board
@@ -219,7 +288,16 @@ export function initUpBoard(root) {
     countEl.textContent = filter === 'all'
       ? faNum(rows.length) + ' مطلب'
       : faNum(rows.length) + ' مطلب در این دسته';
-    sortBtns.forEach((b) => b.setAttribute('aria-selected', String(b.dataset.sort === mode)));
+    sortBtns.forEach((b) => {
+      b.setAttribute('aria-selected', String(b.dataset.sort === mode));
+      // The lock rides on the TAB rather than replacing it: a reader who cannot
+      // open it should still see that the second arrangement exists, otherwise
+      // there is nothing to want. Only a real 402 locks it — an unreachable API
+      // leaves the tab looking normal, because it may well open next time.
+      if (b.dataset.sort === 'top') {
+        b.classList.toggle('is-locked', denied === 'guest' || denied === 'gated');
+      }
+    });
     Array.from(filtersEl.children).forEach((b) => {
       b.setAttribute('aria-pressed', String(b.dataset.type === filter));
     });
@@ -243,6 +321,12 @@ export function initUpBoard(root) {
   }
 
   sortBtns.forEach((b) => b.addEventListener('click', () => {
+    // «تازه‌ترین» is never gated — it is the list this page has always been.
+    if (b.dataset.sort === 'top' && denied) {
+      if (denied === 'unreachable') unreachableSheet();
+      else gateSheet(denied === 'guest');
+      return;
+    }
     mode = b.dataset.sort;
     render();
   }));
@@ -276,11 +360,22 @@ export function initUpBoard(root) {
       .map((i) => [i.content_id, i.engagement]));
     rank = new Map(b.items.map((i, idx) => [i.content_id, idx]));
     if (catalog) render();
-  }).catch(() => {
-    // The «بالاترین» tab is what breaks, so say that on the tab rather than
-    // leaving it looking like an empty ranking.
-    const top = sortBtns.find((b) => b.dataset.sort === 'top');
-    if (top) top.disabled = true;
-    if (mode === 'top') { mode = 'new'; if (catalog) render(); }
+  }).catch((err) => {
+    // 402 is an ANSWER — this reader is not a subscriber. Anything else means we
+    // could not ask, and a gate that cannot tell those apart sells a
+    // subscription to the people who already bought one, every time the API
+    // blinks (premium-cta.js's unreachableGate exists for the same reason).
+    // THREE answers, not two. 401 is "you are signed out" and 402 is "you are
+    // signed in and not a subscriber" — both are definite, and both belong
+    // behind the gate. Everything else means we could not ask, which must never
+    // reach a paying reader as an upsell.
+    const st = err && err.status;
+    denied = st === 401 ? 'guest' : st === 402 ? 'gated' : 'unreachable';
+    // A ?sort=top deep link from a subscriber's shared page lands a free reader
+    // here. Fall back to the list rather than an empty ranking — and do NOT pop
+    // the sheet unasked; the locked tab is the invitation, and a paywall that
+    // opens itself on arrival is the thing everybody hates.
+    if (mode === 'top') mode = 'new';
+    if (catalog) render();
   });
 }
