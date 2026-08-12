@@ -123,6 +123,11 @@ export const BANK_TRANSFER = {
   holder: 'فؤاد شهابیان مقدم',
   bank_name: 'بانک سامان',
   telegram: 'dentcast_support',
+  // Copy, not arithmetic: the page SAYS what the student discount is, and the
+  // founder writes the actual amount onto the claim. Mirrored so the sentence
+  // is right even on an API that predates it.
+  student_discount_percent: 15,
+  student_months: 6,
 };
 
 // --- payments are .ir-only --------------------------------------------------

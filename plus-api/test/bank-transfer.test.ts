@@ -67,6 +67,20 @@ describe('the switch', () => {
     const bank = (await app.inject({ method: 'GET', url: '/pay/plans' })).json().bank_transfer;
     expect(bank).toMatchObject({ enabled: true });
     expect(bank.iban).toMatch(/^IR\d+$/);
+    // The student terms are COPY the page prints, not arithmetic anything does:
+    // retuning ٪۱۵ has to be a config change, not an edit to a Persian sentence
+    // in a frontend module.
+    expect(bank.student_discount_percent).toBe(config.bankTransfer.studentDiscountPercent);
+    expect(bank.student_months).toBe(config.bankTransfer.studentMonths);
+  });
+
+  // The amount is announced by the founder, never computed here — so nothing on
+  // this rail may quietly apply a discount the admin panel would then have to
+  // undo. A claim opens at the list price and moves only when a human says so.
+  it('opens a seat-holder\'s claim at the LIST price, discount engine untouched', async () => {
+    const cookie = await loginAs(app, PHONE);
+    const res = await claim(cookie, 6);
+    expect(res.json().amount_rial).toBe(config.payments.planPricesRial[6]);
   });
 
   it('refuses to open a claim when switched off', async () => {

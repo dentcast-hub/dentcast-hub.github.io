@@ -80,7 +80,16 @@ export function giftInstructions() {
   };
 }
 
-/** Everything the buyer needs on screen for the bank-transfer rail. */
+/**
+ * Everything the buyer needs on screen for the bank-transfer rail.
+ *
+ * The student numbers ride along so the page can SAY what the discount is
+ * without hardcoding it: retuning ٪۱۵ is then a commit to config, not an edit
+ * to a Persian sentence in a frontend module. They are copy, not arithmetic —
+ * nothing here computes a discounted amount, because on this rail the amount
+ * is the one the founder writes onto the claim after talking to the buyer
+ * (decision 2.3 of the handoff).
+ */
 export function bankTransferInstructions() {
   return {
     enabled: config.bankTransfer.enabled,
@@ -88,6 +97,8 @@ export function bankTransferInstructions() {
     holder: config.bankTransfer.holder,
     bank_name: config.bankTransfer.bankName,
     telegram: config.supportTelegram,
+    student_discount_percent: config.bankTransfer.studentDiscountPercent,
+    student_months: config.bankTransfer.studentMonths,
   };
 }
 

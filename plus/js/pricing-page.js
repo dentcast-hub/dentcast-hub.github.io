@@ -270,6 +270,17 @@ function ibanGrouped(iban) {
 }
 
 /**
+ * What everybody pays, before any personal discount.
+ *
+ * `/pay/plans` overwrites `amount_rial` with THIS reader's price and moves the
+ * public figure to `list_amount_rial` — present only when a discount applied.
+ * The bank rail needs the public one: its amount is decided by the founder,
+ * not by the credit engine, so quoting a personalised figure there would show
+ * a number nothing downstream honours.
+ */
+const planListRial = (plan) => plan.list_amount_rial || plan.amount_rial;
+
+/**
  * The bank-transfer rail: واریز به شبا, presented for whichever rial plan is
  * currently selected above (the same `selected`/`plans` state the gateway
  * button reads — this is an ALTERNATIVE way to pay for the same plan, not a
@@ -288,14 +299,25 @@ function bankIntro(bank, plan, onStart, offline) {
     : el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button' }, 'دریافت کد پیگیری');
   if (!offline) start.addEventListener('click', () => onStart(start));
 
+  const pct = toFa(bank.student_discount_percent || 15);
+  const months = toFa(bank.student_months || 6);
+
   return el('div', { class: 'dcp-gift dcp-bank' }, [
     el('h2', { class: 'dcp-price-h2' }, 'واریز به حساب'),
     el('p', { class: 'dcp-gift-lead' },
       'برای کسی که کارت بانکی ایرانی ندارد، خارج از کشور است، یا تخفیف دانشجویی گرفته. '
       + 'با پل فوری می‌رسد، با پایا تا یک روز کاری. تأیید دستی است.'),
+    // The LIST price, and labelled as such. This card must never quote the
+    // personalised figure /pay/plans returns: the amount on this rail is set
+    // by the founder after talking to the buyer, so a discounted number here
+    // is a promise the next screen contradicts.
     el('div', { class: 'dcp-bank-plan' }, [
-      termName(plan.months), ' — ', toman(plan.amount_rial), el('span', { class: 'dcp-plan-unit' }, 'تومان'),
+      termName(plan.months), ' — ', toman(planListRial(plan)),
+      el('span', { class: 'dcp-plan-unit' }, 'تومان (قیمت لیست)'),
     ]),
+    el('p', { class: 'dcp-gift-warn' },
+      `قبل از واریز، مبلغ را با پشتیبانی هماهنگ کنید. دانشجو ٪${pct} تخفیف روی اشتراک ${months} ماهه دارد؛ `
+      + 'مبلغ نهایی را بعد از هماهنگی همین‌جا می‌بینید.'),
     el('div', { class: 'dcp-bank-iban-row' }, [iban, copyBtn]),
     el('p', { class: 'dcp-muted' }, `به نام ${bank.holder} — ${bank.bank_name}`),
     start,
@@ -305,22 +327,38 @@ function bankIntro(bank, plan, onStart, offline) {
   ]);
 }
 
-/** Once they have a tag: the four steps, in order — the exact copy from the
- *  handoff doc, with the amount and code filled in. */
+/**
+ * Once they have a tag: the steps, in order.
+ *
+ * COORDINATION IS STEP ONE, not a footnote, and that is the whole shape of
+ * this rail. The amount is decided by a human — the student's ٪۱۵, or any
+ * other adjustment — and written onto this claim from the admin panel, so a
+ * buyer who transfers before asking can transfer the wrong figure, which is
+ * the one mistake on this path that costs real money and needs a refund to
+ * undo. The number below is whatever the claim currently holds: the list
+ * price until the founder changes it, and their figure afterwards.
+ */
 function bankSteps(bank, plan, reference) {
-  const step3 = el('li', {}, [
-    'اگر اپ‌تان فیلد «بابت» ندارد: ',
-    el('a', { href: '/plus/support.html', target: '_blank', rel: 'noopener' },
-      'از صفحه‌ی پشتیبانی یک تیکت «مشکل در پرداخت» باز کنید'),
-    `، تیکِ «عکسی دارم» را بزنید، کد ${reference} را در متن بنویسید و رسید را همان‌جا با کدِ تیکت به `,
-    el('a', { href: SUPPORT_TELEGRAM_URL, target: '_blank', rel: 'noopener' }, 't.me/dentcast_support'),
-    ' بفرستید.',
-  ]);
+  const pct = toFa(bank.student_discount_percent || 15);
+  const months = toFa(bank.student_months || 6);
+
   const steps = [
-    el('li', {}, `در اپ بانکی‌تان پل (فوری) یا پایا (تا یک روز کاری) را بزنید و مبلغ `
-      + `${toman(plan.amount_rial)} تومان را به شبای بالا بفرستید.`),
-    el('li', {}, `کد ${reference} را در قسمت «بابت» یا «شرح» بنویسید.`),
-    step3,
+    el('li', {}, [
+      `مبلغ را با پشتیبانی هماهنگ کنید — با کد ${reference}. `,
+      el('a', { href: '/plus/support.html', target: '_blank', rel: 'noopener' },
+        'یک تیکت «مشکل در پرداخت» باز کنید'),
+      ' یا به ',
+      el('a', { href: SUPPORT_TELEGRAM_URL, target: '_blank', rel: 'noopener' }, 't.me/dentcast_support'),
+      ` پیام بدهید. دانشجو ٪${pct} تخفیف روی اشتراک ${months} ماهه دارد (عکس کارت دانشجویی لازم است).`,
+    ]),
+    el('li', {}, 'مبلغ تأییدشده بالا نوشته می‌شود. همین صفحه را دوباره باز کنید تا عدد نهایی را ببینید.'),
+    el('li', {}, 'در اپ بانکی‌تان پل (فوری) یا پایا (تا یک روز کاری) را بزنید و همان مبلغ را به شبای بالا بفرستید.'),
+    el('li', {}, [
+      `کد ${reference} را در قسمت «بابت» یا «شرح» بنویسید. اگر اپ‌تان این فیلد را ندارد، رسید را در همان تیکت `
+      + '(با تیکِ «عکسی دارم») به ',
+      el('a', { href: SUPPORT_TELEGRAM_URL, target: '_blank', rel: 'noopener' }, 't.me/dentcast_support'),
+      ' بفرستید.',
+    ]),
     el('li', {}, 'بعد از تأیید، اشتراک فعال می‌شود و در «اطلاعیه» خبرش را می‌گیرید.'),
   ];
   const copyBtn = el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button' }, 'کپی کد');
@@ -329,8 +367,10 @@ function bankSteps(bank, plan, reference) {
   return el('div', { class: 'dcp-gift dcp-bank' }, [
     el('h2', { class: 'dcp-price-h2' }, 'مراحل'),
     el('div', { class: 'dcp-bank-plan' }, [
-      termName(plan.months), ' — ', toman(plan.amount_rial), el('span', { class: 'dcp-plan-unit' }, 'تومان'),
+      termName(plan.months), ' — ', toman(plan.amount_rial),
+      el('span', { class: 'dcp-plan-unit' }, 'تومان'),
     ]),
+    el('p', { class: 'dcp-price-fine' }, 'تا وقتی پشتیبانی مبلغ را تأیید نکرده، این عدد قیمت لیست است.'),
     el('div', { class: 'dcp-gift-ref' }, [
       el('span', { class: 'dcp-gift-ref-label' }, 'کد پیگیری'),
       el('code', { class: 'dcp-gift-ref-code' }, reference),
@@ -655,13 +695,6 @@ async function main() {
   };
 
   drawBank(null);
-  // A returning buyer must land on their own claim, not a button that would
-  // start a second one.
-  if (bank && user) {
-    api.bankTransferStatus()
-      .then((r) => { if (r && r.redemption) drawBank(r.redemption); })
-      .catch(() => {});
-  }
 
   // --- the out-of-country rail ----------------------------------------------
   // Independent of everything above: no Zibal, no monthly ceiling, no .ir. It
@@ -708,13 +741,6 @@ async function main() {
   };
 
   drawGift(null, false);
-  // A returning buyer must land on their own tag, not on a button that would
-  // mint a second one.
-  if (gift && user) {
-    api.giftStatus()
-      .then((r) => { if (r && r.redemption) drawGift(r.redemption, true); })
-      .catch(() => {});
-  }
 
   root.replaceChildren(el('div', { class: 'dcp-pricing' }, [
     ...head, ...notices, grid, action, bankWrap, giftWrap,
@@ -723,6 +749,26 @@ async function main() {
   ]));
 
   if (from && window.gtag) window.gtag('event', 'pricing_view', { from });
+
+  // --- "do I already have a claim open?" -------------------------------------
+  // Deliberately AFTER the page is painted, and wrapped: a returning buyer must
+  // land on their own claim rather than a button that would open a second one,
+  // but that is a REFRESH of one rail — it may never be able to cost the page
+  // its render. `.catch()` alone does not cover it: if `api` is an older cached
+  // copy without these methods, the call throws SYNCHRONOUSLY, and up here that
+  // is a rail that fails to update instead of a blank price list.
+  try {
+    if (bank && user) {
+      api.bankTransferStatus()
+        .then((r) => { if (r && r.redemption) drawBank(r.redemption); })
+        .catch(() => {});
+    }
+    if (gift && user) {
+      api.giftStatus()
+        .then((r) => { if (r && r.redemption) drawGift(r.redemption, true); })
+        .catch(() => {});
+    }
+  } catch (_) { /* an un-refreshed rail is survivable; an unrendered page is not */ }
 }
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', main);
