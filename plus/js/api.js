@@ -180,6 +180,10 @@ export const api = {
   // `vote` carries the INTENT rather than toggling, so a retry after a dropped
   // connection repeats the press instead of silently undoing it.
   setVote: (content_id, vote) => request('/votes', { method: 'POST', body: { content_id, vote } }),
+  // Public: every page's heart count, for a LIST of articles. The ranked board
+  // below is premium; the counts are not, because a count belongs to the article
+  // and is printed beside it for everyone.
+  voteCounts: () => request('/votes/counts'),
   voteBoard: () => request('/votes/board'),
 
   // highlights
