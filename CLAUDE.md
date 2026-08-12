@@ -236,7 +236,16 @@ guess.**
   **زمان مطالعه is not a button**: as a `.dc-meta-chip` it was visually identical
   to the share pill beside it and a reader had to press it to learn it did
   nothing. The **ToC stays its own card**, below the row and above the prose — it
-  is the one thing in that area that is content rather than a control. **Audio
+  is the one thing in that area that is content rather than a control. And the
+  area has **three** anchors in `config.js`, not one: `findProseBox()` (the first
+  box) for what goes ABOVE the article, `findProseRoot()` (the body as one
+  element) for measuring, `findProseEnd()` (the last box) for what goes BELOW.
+  On every page whose body is a single box all three agree, which is why picking
+  the wrong one stays invisible — گفت‌وگوی زیر مطلب shipped anchored on
+  `findProseBox()` and read correctly on 400-odd pages while opening after
+  section 1 of 8 on the 26 legacy NoteCast pages. `findProseRoot()` is not the
+  fix for that either: on exactly those pages it is `main.article-content-wrap`
+  itself, so inserting after it lands outside the article shell. **Audio
   episodes get a SHORTER row of the same kind** — قلب + اشتراک‌گذاری, no میز کار
   (there is no workbench for a podcast) — built by `initEpisodeActions()` on the
   standalone page and by `mountArticleWorkbench`'s episode branch on the desktop

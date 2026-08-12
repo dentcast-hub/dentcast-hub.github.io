@@ -2,7 +2,7 @@
 // enhancement. It decides the page type and wires only what belongs there. For
 // anonymous visitors the page must look exactly as before except the two
 // invitation points (spec 2.3): the workbench button and the homepage card.
-import { detectContentId, findProseRoot, findProseBox, INVITE_LINE, SS_MODE, SS_RETURN_STUDY, isOrgHost } from './js/config.js';
+import { detectContentId, findProseRoot, findProseBox, findProseEnd, INVITE_LINE, SS_MODE, SS_RETURN_STUDY, isOrgHost } from './js/config.js';
 import { currentUser, api } from './js/api.js';
 import { openLoginModal, openOrgNotice } from './js/login-modal.js';
 import { openCollectionPicker } from './js/collections.js';
@@ -236,10 +236,10 @@ function initEpisodeActions() {
   // initArticle() mounts it and initArticle() bows out here — an accident of
   // where the call sat, not a decision: the whole block is written against a
   // content_id and the API gates on nothing else, so a podcast was never
-  // excluded, only unreachable. The anchor is the single `.ep-box`, so the
-  // conversation lands under the whole episode card and above the ‹قبلی/بعدی›
-  // nav, which is page chrome rather than the episode.
-  mountArticleThreads(box, detectContentId());
+  // excluded, only unreachable. findProseEnd() is the `.ep-box` here (an episode
+  // has exactly one), so the conversation lands under the whole episode card and
+  // above the ‹قبلی/بعدی› nav, which is page chrome rather than the episode.
+  mountArticleThreads(findProseEnd() || box, detectContentId());
 }
 
 async function initArticle() {
@@ -265,7 +265,11 @@ async function initArticle() {
   });
   // گفت‌وگوی زیر مطلب, under the prose. Draws itself lazily and removes itself
   // when there is nothing published and this reader cannot write.
-  mountArticleThreads(findProseBox() || proseRoot, contentId);
+  // findProseEnd, not findProseBox: the conversation goes UNDER the article.
+  // On the 26 legacy NoteCast pages the body is a row of sibling boxes, and
+  // anchoring on the first one put the block after section 1 of 8 — nobody
+  // talks about a piece halfway through reading it (user report, 2026-08-12).
+  mountArticleThreads(findProseEnd() || proseRoot, contentId);
 
   // Post-login return-to-study (the funnel) or a remembered choice this session.
   // Never auto-enters on a fresh visit: sessionStorage is empty then.
@@ -331,7 +335,7 @@ async function mountArticleWorkbench(root, url) {
         main.appendChild(buildHeartChip(contentId, 'dc-act dc-act-heart'));
         aux.appendChild(buildShareButton(shellShare));
       }
-      mountArticleThreads(box, contentId); // the conversation, on this surface too
+      mountArticleThreads(findProseEnd(root) || box, contentId); // the conversation, on this surface too
     }
     return;
   }
@@ -342,7 +346,7 @@ async function mountArticleWorkbench(root, url) {
     shareTarget: shellShare,
   });
   desktopWb = wb;
-  mountArticleThreads(findProseBox(root) || proseRoot, contentId);
+  mountArticleThreads(findProseEnd(root) || proseRoot, contentId); // under the article, not after its first box
   const hlId = query ? new URLSearchParams(query).get('dcphl') : null;
   if (hlId && await currentUser()) await openDeepLinkedHighlight(wb, updateBtn, hlId);
 }

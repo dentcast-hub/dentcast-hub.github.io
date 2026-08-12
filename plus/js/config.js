@@ -287,6 +287,37 @@ export function findProseRoot(scope = document) {
   return siblings > 1 ? parent : first;
 }
 
+// The LAST prose box — the element anything that belongs UNDER the article
+// hangs off. The third of a set, and the distinction between the three is the
+// whole point of having them:
+//
+//   findProseBox()  — the first box. The anchor for what goes ABOVE the article
+//                     (the action row).
+//   findProseRoot() — the readable body as one element, for measuring.
+//   findProseEnd()  — the last box. The anchor for what goes BELOW it.
+//
+// On every page whose body is a single box all three agree, which is why using
+// the wrong one was invisible for as long as it was: گفت‌وگوی زیر مطلب anchored
+// on findProseBox() and landed correctly on 400-odd pages. On the 26 legacy
+// NoteCast pages whose body is a row of SIBLING boxes it landed after box 1 of
+// 8 — a conversation halfway through the article, with seven sections of it
+// still to come.
+//
+// findProseRoot() is not the answer on those pages either: its widening returns
+// the PARENT, which there is `main.article-content-wrap` itself, so inserting
+// after it would put the block outside the article shell entirely.
+export function findProseEnd(scope = document) {
+  const first = findProseBox(scope);
+  if (!first) return null;
+  const root = findProseRoot(scope);
+  if (root === first) return first; // one box: it is both ends of the article
+  const sel = PROSE_SELECTORS.find((s) => first.matches(s));
+  // Only the boxes that are the root's own children — a box nested inside one
+  // of them is part of that section, not a section of its own.
+  const boxes = Array.from(root.children).filter((c) => c.matches(sel));
+  return boxes.length ? boxes[boxes.length - 1] : first;
+}
+
 // --- Highlighter palette + labels (Persian) ---------------------------------
 export const PALETTE = [
   { key: 'yellow', fa: 'زرد', css: '#ffe08a' },

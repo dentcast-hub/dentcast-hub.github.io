@@ -10,7 +10,7 @@ const { Workbench } = await import('../../plus/js/workbench.js');
 // The toolbar renders one swatch per palette entry, so assert against the
 // palette itself. A hardcoded count silently rots the day a colour is added —
 // which is exactly what happened when `red` landed (6850acd8).
-const { PALETTE, findProseRoot, findProseBox } = await import('../../plus/js/config.js');
+const { PALETTE, findProseRoot, findProseBox, findProseEnd } = await import('../../plus/js/config.js');
 
 function setArticle() {
   document.body.innerHTML =
@@ -133,6 +133,42 @@ describe('a body split across sibling prose boxes is ONE article', () => {
     const box = setArticle();
     expect(findProseRoot()).toBe(box);
     expect(findProseBox()).toBe(box);
+    expect(findProseEnd()).toBe(box);
+  });
+
+  // The third helper, and the reason there are three. گفت‌وگوی زیر مطلب shipped
+  // anchored on findProseBox() — the FIRST box — so on these 26 pages the
+  // conversation opened after section 1 of 8, with seven sections of the article
+  // still below it (user report, 2026-08-12). Nobody talks about a piece halfway
+  // through reading it.
+  it('anchors what goes UNDER the article on the LAST box', () => {
+    const boxes = setSplitArticle();
+    const end = findProseEnd() as HTMLElement;
+    expect(end).toBe(boxes[boxes.length - 1]);
+    expect(end).not.toBe(findProseBox());
+    expect((end.querySelector('h4') as HTMLElement).textContent).toBe('سه');
+  });
+
+  // findProseRoot() is not the fix, and this is why: on this layout it is
+  // <main> itself, so inserting after it would put the block outside the
+  // article shell entirely.
+  it('stays inside <main>, which findProseRoot() on this layout is not', () => {
+    setSplitArticle();
+    const main = document.querySelector('main.article-content-wrap') as HTMLElement;
+    expect(findProseRoot()).toBe(main);
+    expect(main.contains(findProseEnd() as HTMLElement)).toBe(true);
+    expect(findProseEnd()).not.toBe(main);
+  });
+
+  // A box nested inside a section belongs to that section; only the root's own
+  // children are the article's parts.
+  it('ignores a box nested inside another box', () => {
+    const boxes = setSplitArticle();
+    const inner = document.createElement('div');
+    inner.className = 'glass-box';
+    inner.innerHTML = '<h4>تودرتو</h4><p>داخل بخش اول.</p>';
+    boxes[0].appendChild(inner);
+    expect(findProseEnd()).toBe(boxes[boxes.length - 1]);
   });
 });
 
