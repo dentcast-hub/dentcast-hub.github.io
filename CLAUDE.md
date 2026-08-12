@@ -235,7 +235,16 @@ guess.**
   **زمان مطالعه is not a button**: as a `.dc-meta-chip` it was visually identical
   to the share pill beside it and a reader had to press it to learn it did
   nothing. The **ToC stays its own card**, below the row and above the prose — it
-  is the one thing in that area that is content rather than a control.
+  is the one thing in that area that is content rather than a control. **Audio
+  episodes get a SHORTER row of the same kind** — قلب + اشتراک‌گذاری, no میز کار
+  (there is no workbench for a podcast) — built by `initEpisodeActions()` on the
+  standalone page and by `mountArticleWorkbench`'s episode branch on the desktop
+  shell. Until 2026-08-12 they were the only content on the site a reader could
+  not press پسندیدم on, while sitting in up-board's catalog like everything else
+  (210 of its 444 entries) and earning engagement the score already counted
+  (`episode_listened`). Nothing was added to `tools/episodes_template.html` for
+  it: a row in the template would mean rebuilding 209 files for what the shared
+  module puts there for free.
 
 - **E-NAMAD trust seal (نماد اعتماد الکترونیکی) — three placements, dentcast.ir only.** The seal lives on exactly three surfaces and is **not** a per-page element: `index.html`'s `<footer>` (mobile shell), `index.html`'s `.dcd-a-seal` row in the col-A sidebar (desktop shell, where that footer is `display:none`), and `about.html`'s `.dc-trustseal-box` under the contact card. Do **not** clone it onto content pages — every copy is a request to enamad's server for zero trust value on an article page.
   - **This is the one deliberate exception to "no per-domain logic".** The seal is issued for a single domain (ours: `dentcast.ir`) and `trustseal.enamad.ir/logo.aspx` renders from the request's referrer, so on the `.org` mirror it answers with an *invalid seal* image. Two layers gate it: an inline `<head>` guard in both pages sets `dc-no-seal` on `<html>` off `.ir` (hides it before the body parses, no flash), and a block at the end of `dc-nav.js` removes the node outright. The images are `loading="lazy"` and both seals sit below the fold, so on `.org` the request normally never fires.
