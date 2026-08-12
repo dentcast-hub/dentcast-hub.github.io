@@ -3735,6 +3735,8 @@ a.dc-list-card--pillar {
   --x-sh:0 6px 20px -10px rgba(9,32,74,.18), 0 1px 3px rgba(9,32,74,.05);
   --x-sh-hero:0 24px 48px -20px rgba(9,32,74,.32), 0 4px 10px -4px rgba(9,32,74,.08);
   --x-prem:#9a6b15; --x-prem-bg:rgba(203,150,49,.13); --x-prem-bd:rgba(154,107,21,.26);
+  --x-amber:#c9922b; --x-amber-ink:#8a6414;
+  --x-amber-wash:rgba(201,146,43,.07); --x-amber-halo:rgba(201,146,43,.16);
 }
 [data-theme="dark"]{
   --x-ground:#0a1322;
@@ -3747,6 +3749,8 @@ a.dc-list-card--pillar {
   --x-sh:0 6px 20px -10px rgba(0,0,0,.55), 0 1px 3px rgba(0,0,0,.3);
   --x-sh-hero:0 24px 48px -20px rgba(0,0,0,.7);
   --x-prem:#e0b25f; --x-prem-bg:rgba(224,178,95,.13); --x-prem-bd:rgba(224,178,95,.3);
+  --x-amber:#e3b849; --x-amber-ink:#e3b849;
+  --x-amber-wash:rgba(227,184,73,.09); --x-amber-halo:rgba(227,184,73,.18);
 }
 
 /* ── ground + aura: the page opens with a faint brand glow, then calms ── */
@@ -3881,9 +3885,29 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
 #panel-studio .dc-plus-connrow{ background:var(--x-band); }
 #panel-studio .dc-plus-connrow .dc-plus-chip{ background:var(--x-card); }
 
-/* ── pulse: calm card, blue ticks ── */
-#panel-studio .dc-pulse{ border-right:1px solid var(--x-line); padding:1rem 1.15rem; }
-#panel-studio .dc-pulse-title{ color:var(--x-ink); }
+/* ── pulse: the page's ONE warm accent ─────────────────────────────
+   Amber is not decoration here, it is this site's oldest colour code:
+   the Pulse has always been amber (#c49820 dot + title, amber border)
+   and the flat pass neutralised it, which is precisely where the page
+   went cold. It comes back — but restrained, the modern way: a wash
+   that fades out in the top 40% of the card, an amber dot and label,
+   amber bullets. The card border stays neutral and the links inside
+   stay blue, so amber stays a signal ("news") instead of becoming a
+   theme. Nowhere else on this page gets amber except what already
+   owns it: the premium badges. */
+#panel-studio .dc-pulse{
+  background:linear-gradient(180deg, var(--x-amber-wash), transparent 42%), var(--x-card);
+  border:1px solid var(--x-line);
+  border-right:1px solid var(--x-line);
+  padding:1rem 1.15rem;
+}
+#panel-studio .dc-pulse-title{ color:var(--x-amber-ink); font-weight:800; }
+#panel-studio .dc-pulse-dot{
+  background:var(--x-amber);
+  box-shadow:0 0 0 3px var(--x-amber-halo);
+}
+#panel-studio .dc-pulse-list li::before{ color:var(--x-amber); }
+#panel-studio .dc-pulse-list li a{ color:var(--ac); font-weight:750; }
 
 /* ── pillars/duo: tinted gradient icon tiles ── */
 #panel-studio .dc-pillar-ico{
