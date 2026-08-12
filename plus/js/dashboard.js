@@ -462,6 +462,15 @@ export async function renderDashboard(root, { me: preMe } = {}) {
     'فقط از بین چند گزینه انتخاب می‌کنی — نه گفتگوی آزاد. هوش مصنوعی هیچ تشخیص یا توصیه‌ی درمانی نمی‌دهد؛ فقط توضیحِ تو را به دسته‌بندی‌های خودِ سایت نگاشت می‌کند تا به مقاله‌ی مرتبط برسیم.',
   ));
 
+  // Support is NOT a premium feature block — it is a door, and the reader most
+  // likely to need it is the one who is not premium yet (a payment that did not
+  // activate, a student discount). So it sits below the feature sections as a
+  // plain link on every plan; the plan only decides which KINDS the form there
+  // offers, which the server enforces per kind.
+  children.push(el('p', { class: 'dcp-muted', style: 'margin-top:18px;text-align:center' }, [
+    el('a', { href: '/plus/support.html' }, 'پشتیبانی و درخواست‌ها ›'),
+  ]));
+
   root.replaceChildren(...children.filter(Boolean));
   // The second calm surface (the profile is the other): a page the reader chose
   // to open, so the badge card is what they came to see rather than something

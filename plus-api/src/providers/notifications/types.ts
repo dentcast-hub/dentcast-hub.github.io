@@ -43,7 +43,14 @@ export type NotificationKind =
    * inbox:false, because achievement-sync writes the badge's own اطلاعیه row
    * and the same news must never sit in the inbox twice.
    */
-  | 'pillar_seat';
+  | 'pillar_seat'
+  /**
+   * The founder answered a support ticket. UNCAPPED in notify-policy.ts for the
+   * same reason as the renewal warning: this is the reply to a question the
+   * reader themselves asked, and the daily cap exists to stop us pestering
+   * people — not to drop the one message they are actually waiting for.
+   */
+  | 'support_reply';
 
 /**
  * A message may be a plain string (messenger text) or a structured payload.

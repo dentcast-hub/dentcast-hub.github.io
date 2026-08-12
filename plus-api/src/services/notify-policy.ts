@@ -46,6 +46,9 @@ const UNCAPPED: ReadonlySet<NotificationKind> = new Set<NotificationKind>([
   // person who just paid, which must not be the message a streak nudge from
   // that morning silently costs them.
   'pillar_seat',
+  // A reply to a ticket the reader opened. They asked; a streak nudge that
+  // arrived first must not be why the answer never reaches them.
+  'support_reply',
 ]);
 
 /**

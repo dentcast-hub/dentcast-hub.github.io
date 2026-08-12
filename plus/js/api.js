@@ -265,6 +265,20 @@ export const api = {
   updateSnippet: (id, patch) => request('/snippets/' + encodeURIComponent(id), { method: 'PATCH', body: patch }),
   deleteSnippet: (id) => request('/snippets/' + encodeURIComponent(id), { method: 'DELETE' }),
 
+  // support tickets. NOT premium-gated as a whole: the plan check is per KIND,
+  // server-side (a student asking for a discount is not premium yet, and the
+  // premium-only kind is the open-ended one). `ticketKinds` reports which kinds
+  // this reader may actually open, so the form can show a lock instead of
+  // taking a message it will refuse.
+  ticketKinds: () => request('/support/kinds'),
+  tickets: () => request('/support/tickets'),
+  ticket: (id) => request('/support/tickets/' + encodeURIComponent(id)),
+  openTicket: (body) => request('/support/tickets', { method: 'POST', body }),
+  replyTicket: (id, body) =>
+    request('/support/tickets/' + encodeURIComponent(id) + '/messages', { method: 'POST', body: { body } }),
+  closeTicket: (id) => request('/support/tickets/' + encodeURIComponent(id) + '/close', { method: 'POST' }),
+  reopenTicket: (id) => request('/support/tickets/' + encodeURIComponent(id) + '/reopen', { method: 'POST' }),
+
   // dashboard (later milestones)
   tree: () => request('/tree'),
   progress: () => request('/progress'),

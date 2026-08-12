@@ -43,6 +43,11 @@ import {
   type ProbeResult, type NotifyChannel,
 } from '../providers/outbound.js';
 import { telegramBreakerStatus } from '../providers/notifications/telegram.js';
+import {
+  ticketQueue, getTicket, messagesOf, addMessage, closeTicket, reopenTicket,
+  ticketByReference, kindTitle,
+} from '../services/support.js';
+import { normalizeReference } from '../services/reference.js';
 import { config } from '../config.js';
 import type { NotificationMessage } from '../providers/notifications/types.js';
 
@@ -119,7 +124,25 @@ function renderHtml(k: Kpis, grantable: { key: string; title_fa: string }[]): st
   form.bc button{background:#2f7de0;color:#fff;border:0;border-radius:999px;padding:10px 22px;
     font:inherit;font-weight:800;cursor:pointer;align-self:flex-start}
   form.bc button:disabled{opacity:.55;cursor:default}
-  #bcOut,#bgOut{font-size:.85rem;color:#93a1b8;min-height:1.6em}
+  #bcOut,#bgOut,#tkOut{font-size:.85rem;color:#93a1b8;min-height:1.6em}
+  .pill{display:inline-block;background:#0f1420;border:1px solid #2a3448;border-radius:999px;
+    padding:1px 9px;font-size:.74rem;color:#93a1b8;margin-inline-start:6px;vertical-align:middle}
+  .pill.hot{background:#3a2a12;border-color:#7a5a20;color:#e3b849}
+  .tk{background:#171e2d;border:1px solid #2a3448;border-radius:14px;padding:12px 14px;margin-top:10px;cursor:pointer}
+  .tk.need{border-color:#7a5a20}
+  .tk-h{display:flex;flex-wrap:wrap;align-items:center;gap:4px;font-size:.95rem}
+  .tk-x{color:#c8d4e6;font-size:.87rem;margin-top:6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .tk-body{cursor:auto}
+  .tk-body:not(:empty){margin-top:12px;border-top:1px solid #2a3448;padding-top:12px}
+  .thread{display:flex;flex-direction:column;gap:8px;margin-bottom:10px}
+  .msg{border-radius:12px;padding:8px 11px;font-size:.9rem;max-width:88%}
+  .msg.them{background:#0f1420;border:1px solid #2a3448;align-self:flex-start}
+  .msg.me{background:#16304f;border:1px solid #2f7de0;align-self:flex-end}
+  .tk-body textarea.reply{width:100%;box-sizing:border-box;min-height:76px;background:#0f1420;color:#e8eef7;
+    border:1px solid #2a3448;border-radius:9px;padding:9px 11px;font:inherit;font-size:.92rem;resize:vertical}
+  .tk-body button{background:#2f7de0;color:#fff;border:0;border-radius:999px;padding:8px 18px;
+    font:inherit;font-weight:800;cursor:pointer;margin-top:8px;margin-inline-end:8px}
+  .tk-out{min-height:1.4em;font-size:.85rem}
 </style></head><body><div class="wrap">
   <h1>پیشخوان بنیان‌گذار</h1>
   <div class="muted">تولید: ${k.generated_at} · منطقه زمانی: ${k.tz}</div>
@@ -261,6 +284,160 @@ function renderHtml(k: Kpis, grantable: { key: string; title_fa: string }[]): st
         })
         .catch(function () { btn.disabled = false; out.textContent = 'اهدا نشد.'; });
     });
+  })();
+  </script>
+
+  <h3 style="margin-top:26px">صندوق پشتیبانی <span id="tkWaiting" class="pill"></span></h3>
+  <div class="muted">درخواست‌های خواننده‌ها. ترتیب صف: هرکس بیشتر منتظر مانده، بالاتر. برای کارت دانشجویی، کد پیگیری را از پیام بله/تلگرام این‌جا جست‌وجو کن.</div>
+  <form class="bc" onsubmit="return false">
+    <div class="row">
+      <div style="flex:0 0 auto"><label for="tkStatus">نمایش</label><select id="tkStatus">
+        <option value="open">باز</option><option value="closed">بسته</option><option value="all">همه</option>
+      </select></div>
+      <div style="flex:1 1 220px"><label for="tkRef">جست‌وجوی کد پیگیری</label><input id="tkRef" type="text" placeholder="T-ABC-DEF"></div>
+      <div style="flex:0 0 auto;align-self:flex-end"><button id="tkFind" type="button">پیدا کن</button></div>
+    </div>
+    <div id="tkOut"></div>
+  </form>
+  <div id="tkList"></div>
+  <script>
+  (function () {
+    var list = document.getElementById('tkList');
+    var out = document.getElementById('tkOut');
+    var waiting = document.getElementById('tkWaiting');
+    if (!list) return;
+
+    function esc(s) {
+      return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+      });
+    }
+    function when(iso) {
+      try { return new Date(iso).toLocaleString('fa-IR'); } catch (e) { return iso; }
+    }
+    function who(t) {
+      return esc(t.display_name || t.phone || t.user_id)
+        + (t.tier === 'premium' ? ' · پریمیوم' : '');
+    }
+
+    function card(t) {
+      var needs = t.status === 'open' && t.awaiting === 'founder';
+      return '<div class="tk' + (needs ? ' need' : '') + '" data-id="' + esc(t.id) + '">'
+        + '<div class="tk-h"><b>' + esc(t.subject) + '</b>'
+        + '<span class="pill">' + esc(t.kind_title_fa) + '</span>'
+        + '<span class="pill">' + esc(t.reference) + '</span>'
+        + (t.status === 'closed' ? '<span class="pill">بسته</span>'
+           : (needs ? '<span class="pill hot">منتظر پاسخ توست</span>' : '<span class="pill">منتظر کاربر</span>'))
+        + '</div>'
+        + '<div class="muted">' + who(t) + ' · ' + t.message_count + ' پیام · آخرین: ' + when(t.last_at) + '</div>'
+        + '<div class="tk-x">' + esc(t.last_excerpt) + '</div>'
+        + '<div class="tk-body"></div></div>';
+    }
+
+    function render(tickets) {
+      if (!tickets.length) { list.innerHTML = '<div class="muted">چیزی این‌جا نیست.</div>'; return; }
+      list.innerHTML = tickets.map(card).join('');
+    }
+
+    function load() {
+      list.innerHTML = '<div class="muted">در حال خواندن…</div>';
+      fetch('/admin/support?status=' + document.getElementById('tkStatus').value, { credentials: 'include' })
+        .then(function (r) { return r.json(); })
+        .then(function (j) {
+          waiting.textContent = j.waiting ? j.waiting + ' منتظر پاسخ' : '';
+          render(j.tickets || []);
+        })
+        .catch(function () { list.innerHTML = '<div class="muted">خوانده نشد.</div>'; });
+    }
+
+    function thread(box, id) {
+      box.innerHTML = '<div class="muted">در حال خواندن…</div>';
+      fetch('/admin/support/' + id, { credentials: 'include' })
+        .then(function (r) { return r.json(); })
+        .then(function (j) {
+          if (!j.ok) { box.innerHTML = '<div class="muted">پیدا نشد.</div>'; return; }
+          var msgs = (j.messages || []).map(function (m) {
+            return '<div class="msg ' + (m.author === 'founder' ? 'me' : 'them') + '">'
+              + '<div class="muted">' + (m.author === 'founder' ? 'تو' : 'کاربر') + ' · ' + when(m.created_at) + '</div>'
+              + esc(m.body).replace(/\\n/g, '<br>') + '</div>';
+          }).join('');
+          var closed = j.ticket.status === 'closed';
+          box.innerHTML = '<div class="thread">' + msgs + '</div>'
+            + (closed
+              ? '<button type="button" data-act="reopen">بازکردن دوباره</button>'
+              : '<textarea class="reply" placeholder="پاسخ…"></textarea>'
+                + '<div class="row"><button type="button" data-act="reply">ارسال پاسخ</button>'
+                + '<button type="button" data-act="reply-close">ارسال و بستن</button>'
+                + '<button type="button" data-act="close">فقط بستن</button></div>')
+            + '<div class="tk-out muted"></div>';
+        })
+        .catch(function () { box.innerHTML = '<div class="muted">خوانده نشد.</div>'; });
+    }
+
+    list.addEventListener('click', function (ev) {
+      var act = ev.target.getAttribute && ev.target.getAttribute('data-act');
+      var wrap = ev.target.closest ? ev.target.closest('.tk') : null;
+      if (!wrap) return;
+      var id = wrap.getAttribute('data-id');
+      var box = wrap.querySelector('.tk-body');
+
+      if (!act) { // a tap on the card itself toggles the thread open
+        if (box.innerHTML) { box.innerHTML = ''; return; }
+        thread(box, id);
+        return;
+      }
+
+      var o = box.querySelector('.tk-out');
+      if (act === 'reopen' || act === 'close') {
+        fetch('/admin/support/' + id + '/' + (act === 'reopen' ? 'reopen' : 'close'),
+          { method: 'POST', credentials: 'include' })
+          .then(function () { load(); })
+          .catch(function () { if (o) o.textContent = 'نشد.'; });
+        return;
+      }
+
+      var ta = box.querySelector('.reply');
+      var body = ta ? ta.value.trim() : '';
+      if (!body) { if (o) o.textContent = 'متن پاسخ خالی است.'; return; }
+      if (o) o.textContent = 'در حال ارسال…';
+      fetch('/admin/support/' + id + '/reply', {
+        method: 'POST', credentials: 'include',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ body: body, close: act === 'reply-close' })
+      }).then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+        .then(function (res) {
+          if (!res.ok) { if (o) o.textContent = 'نشد: ' + (res.j.message || res.j.error); return; }
+          load();
+        })
+        .catch(function () { if (o) o.textContent = 'ارسال نشد.'; });
+    });
+
+    document.getElementById('tkStatus').addEventListener('change', load);
+    document.getElementById('tkFind').addEventListener('click', function () {
+      var ref = document.getElementById('tkRef').value.trim();
+      if (!ref) { out.textContent = 'کد پیگیری را بنویس.'; return; }
+      out.textContent = 'در حال جست‌وجو…';
+      fetch('/admin/support/by-reference/' + encodeURIComponent(ref), { credentials: 'include' })
+        .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+        .then(function (res) {
+          if (!res.ok) { out.textContent = 'کدی با این نشانی پیدا نشد.'; return; }
+          out.textContent = 'پیدا شد: ' + res.j.ticket.subject + ' — ' + who(res.j.user);
+          waiting.textContent = '';
+          render([Object.assign({}, res.j.ticket, {
+            kind_title_fa: res.j.ticket.kind_title_fa,
+            message_count: res.j.messages.length,
+            last_at: res.j.messages[res.j.messages.length - 1].created_at,
+            last_excerpt: res.j.messages[res.j.messages.length - 1].body.slice(0, 160),
+            awaiting: res.j.messages[res.j.messages.length - 1].author === 'user' ? 'founder' : 'user',
+            display_name: res.j.user && res.j.user.display_name,
+            phone: res.j.user && res.j.user.phone,
+            tier: res.j.user && res.j.user.tier
+          })]);
+        })
+        .catch(function () { out.textContent = 'جست‌وجو نشد.'; });
+    });
+
+    load();
   })();
   </script>
 </div></body></html>`;
@@ -1481,6 +1658,102 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
   // take effect immediately, the way to watch a whole lifecycle in one sitting
   // rather than across two midnights, and the recovery path if the timer ever
   // dies unnoticed. Idempotent, so it is always safe to press.
+  // --- support tickets --------------------------------------------------------
+  // The founder's side of services/support.ts. The reader's own endpoints live
+  // in routes/support.ts and are scoped to their owner; these are not scoped at
+  // all, which is the whole difference between the two files.
+
+  // GET /admin/support?status=open|closed|all&limit= — the queue, ordered so the
+  // person who has been waiting longest for a human is first.
+  app.get('/admin/support', {
+    schema: {
+      querystring: {
+        type: 'object',
+        properties: {
+          status: { type: 'string', enum: ['open', 'closed', 'all'] },
+          limit: { type: 'integer', minimum: 1, maximum: 200 },
+        },
+      },
+    },
+  }, async (request, reply) => {
+    const q = request.query as { status?: 'open' | 'closed' | 'all'; limit?: number };
+    const tickets = await ticketQueue({ status: q.status, limit: q.limit });
+    return reply.send({
+      ok: true,
+      waiting: tickets.filter((t) => t.status === 'open' && t.awaiting === 'founder').length,
+      tickets,
+    });
+  });
+
+  // GET /admin/support/:id — one whole thread, with the account it belongs to.
+  app.get('/admin/support/:id', async (request, reply) => {
+    const { id } = request.params as { id: string };
+    const ticket = await getTicket(id);
+    if (!ticket) return reply.code(404).send({ error: 'not_found' });
+    const who = await one<{ phone: string | null; display_name: string | null; tier: string }>(
+      'select phone, display_name, tier from profiles where id = $1', [ticket.user_id],
+    );
+    return reply.send({
+      ok: true,
+      ticket: { ...ticket, kind_title_fa: kindTitle(ticket.kind) },
+      user: who,
+      messages: await messagesOf(ticket.id),
+    });
+  });
+
+  // GET /admin/support/by-reference/:reference — the lookup that makes the tag
+  // worth minting: a photo arrives in a messenger with «T-ABC-DEF» typed under
+  // it, and this is how that becomes an account.
+  app.get('/admin/support/by-reference/:reference', async (request, reply) => {
+    const { reference } = request.params as { reference: string };
+    const ticket = await ticketByReference(normalizeReference(reference));
+    if (!ticket) return reply.code(404).send({ error: 'not_found' });
+    const who = await one<{ id: string; phone: string | null; display_name: string | null; tier: string }>(
+      'select id, phone, display_name, tier from profiles where id = $1', [ticket.user_id],
+    );
+    return reply.send({
+      ok: true,
+      ticket: { ...ticket, kind_title_fa: kindTitle(ticket.kind) },
+      user: who,
+      messages: await messagesOf(ticket.id),
+    });
+  });
+
+  // POST /admin/support/:id/reply { body, close? } — answer, and optionally end
+  // the thread in the same press. The reader is notified by addMessage().
+  app.post('/admin/support/:id/reply', {
+    schema: {
+      body: {
+        type: 'object', required: ['body'],
+        properties: {
+          body: { type: 'string', minLength: 1, maxLength: 4000 },
+          close: { type: 'boolean' },
+        },
+      },
+    },
+  }, async (request, reply) => {
+    const { id } = request.params as { id: string };
+    const b = request.body as { body: string; close?: boolean };
+    const r = await addMessage({ ticketId: id, author: 'founder', body: b.body });
+    if (!r.ok) return reply.code(r.ticket ? 400 : 404).send({ error: 'rejected', message: r.message });
+    const ticket = b.close ? await closeTicket(id) : r.ticket;
+    return reply.send({ ok: true, message: r.row, ticket });
+  });
+
+  app.post('/admin/support/:id/close', async (request, reply) => {
+    const { id } = request.params as { id: string };
+    const ticket = await closeTicket(id);
+    if (!ticket) return reply.code(404).send({ error: 'not_open' });
+    return reply.send({ ok: true, ticket });
+  });
+
+  app.post('/admin/support/:id/reopen', async (request, reply) => {
+    const { id } = request.params as { id: string };
+    const ticket = await reopenTicket(id);
+    if (!ticket) return reply.code(404).send({ error: 'not_closed' });
+    return reply.send({ ok: true, ticket });
+  });
+
   app.post('/admin/subscriptions/run-sweep', async (_request, reply) => {
     const result = await sweepExpiredSubscriptions(new Date());
     return reply.send({ ok: true, ...result });
