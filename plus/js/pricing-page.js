@@ -17,7 +17,7 @@ import { api, currentUser } from './api.js';
 import { openLoginModal } from './login-modal.js';
 import {
   paymentsNeedIrHost, paymentsIrUrl, PLAN_MONTHS, PLAN_PRICES_RIAL, FROM_MONTHLY_RIAL,
-  GIFT_CARD,
+  GIFT_CARD, BANK_TRANSFER,
 } from './config.js';
 import { premiumBenefits } from './premium-benefits.js';
 import { registerSW } from './pwa.js';
@@ -249,6 +249,99 @@ function giftStatus(r) {
   return null;
 }
 
+async function copyToClipboard(text, btn, okLabel) {
+  const original = btn.textContent;
+  try {
+    await navigator.clipboard.writeText(text);
+    btn.textContent = okLabel || 'کپی شد ✓';
+  } catch (_) {
+    btn.textContent = 'کپی نشد';
+  }
+  setTimeout(() => { btn.textContent = original; }, 1600);
+}
+
+/** «IR11 0560 9303 8000 0825 9450 01» — grouped for reading, never for copying. */
+function ibanGrouped(iban) {
+  return String(iban || '').replace(/(.{4})(?=.)/g, '$1 ').trim();
+}
+
+/**
+ * The bank-transfer rail: واریز به شبا, presented for whichever rial plan is
+ * currently selected above (the same `selected`/`plans` state the gateway
+ * button reads — this is an ALTERNATIVE way to pay for the same plan, not a
+ * second plan picker). Always visible — unlike the gift-card rail this needs
+ * no toggle, since it is the domestic route and works for anyone with an
+ * Iranian bank account, gateway or no gateway.
+ */
+function bankIntro(bank, plan, onStart, offline) {
+  const iban = el('span', { class: 'dcp-bank-iban', dir: 'ltr' }, ibanGrouped(bank.iban));
+  const copyBtn = el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button' }, 'کپی شبا');
+  copyBtn.addEventListener('click', () => copyToClipboard(bank.iban, copyBtn, 'کپی شد ✓'));
+
+  const start = offline
+    ? el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button', disabled: 'disabled' },
+      'در دسترس نیست')
+    : el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button' }, 'دریافت کد پیگیری');
+  if (!offline) start.addEventListener('click', () => onStart(start));
+
+  return el('div', { class: 'dcp-gift dcp-bank' }, [
+    el('h2', { class: 'dcp-price-h2' }, 'واریز به حساب'),
+    el('p', { class: 'dcp-gift-lead' },
+      'برای کسی که کارت بانکی ایرانی ندارد، خارج از کشور است، یا تخفیف دانشجویی گرفته. '
+      + 'با پل فوری می‌رسد، با پایا تا یک روز کاری. تأیید دستی است.'),
+    el('div', { class: 'dcp-bank-plan' }, [
+      termName(plan.months), ' — ', toman(plan.amount_rial), el('span', { class: 'dcp-plan-unit' }, 'تومان'),
+    ]),
+    el('div', { class: 'dcp-bank-iban-row' }, [iban, copyBtn]),
+    el('p', { class: 'dcp-muted' }, `به نام ${bank.holder} — ${bank.bank_name}`),
+    start,
+    el('p', { class: 'dcp-price-fine' },
+      'کارت لازم نیست — واریز به شبا از هر اپ بانکی ممکن است، و سقف روزانه‌ی کارت‌به‌کارت را هم '
+      + 'ندارد. این مسیر سهمیه‌ی ماهانه‌ی درگاه را مصرف نمی‌کند.'),
+  ]);
+}
+
+/** Once they have a tag: the four steps, in order — the exact copy from the
+ *  handoff doc, with the amount and code filled in. */
+function bankSteps(bank, plan, reference) {
+  const steps = [
+    [`در اپ بانکی‌تان پل (فوری) یا پایا (تا یک روز کاری) را بزنید و مبلغ `
+      + `${toman(plan.amount_rial)} تومان را به شبای بالا بفرستید.`, null],
+    [`کد ${reference} را در قسمت «بابت» یا «شرح» بنویسید.`, null],
+    ['اگر اپ‌تان فیلد «بابت» ندارد، رسید را با همان کد در تلگرام پشتیبانی بفرستید.', null],
+    ['بعد از تأیید، اشتراک فعال می‌شود و در «اطلاعیه» خبرش را می‌گیرید.', null],
+  ];
+  const copyBtn = el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button' }, 'کپی کد');
+  copyBtn.addEventListener('click', () => copyToClipboard(reference, copyBtn, 'کپی شد ✓'));
+
+  return el('div', { class: 'dcp-gift dcp-bank' }, [
+    el('h2', { class: 'dcp-price-h2' }, 'مراحل'),
+    el('div', { class: 'dcp-bank-plan' }, [
+      termName(plan.months), ' — ', toman(plan.amount_rial), el('span', { class: 'dcp-plan-unit' }, 'تومان'),
+    ]),
+    el('div', { class: 'dcp-gift-ref' }, [
+      el('span', { class: 'dcp-gift-ref-label' }, 'کد پیگیری'),
+      el('code', { class: 'dcp-gift-ref-code' }, reference),
+      copyBtn,
+    ]),
+    el('ol', { class: 'dcp-gift-steps' }, steps.map(([t]) => el('li', {}, t))),
+  ]);
+}
+
+/** After the founder has answered. */
+function bankStatus(r) {
+  if (r.status === 'approved') {
+    return el('div', { class: 'dcp-price-notice is-ok' }, [
+      el('b', {}, 'واریز شما تأیید شد'), el('p', {}, 'اشتراک شما فعال است.')]);
+  }
+  if (r.status === 'rejected') {
+    return el('div', { class: 'dcp-price-notice is-warn' }, [
+      el('b', {}, 'واریز تأیید نشد'),
+      el('p', {}, r.note || 'برای پیگیری با ما تماس بگیرید.')]);
+  }
+  return null;
+}
+
 function notice(kind, title, body, action) {
   return el('div', { class: `dcp-price-notice is-${kind}` }, [
     el('b', {}, title),
@@ -286,6 +379,10 @@ async function main() {
     // what made the whole out-of-country section vanish whenever the API was
     // unreachable — for the one group of people who have no other way to pay.
     gift_card: GIFT_CARD,
+    // Same rule as gift_card above: present in the fallback too, so the rail a
+    // domestic reader without a working card is most likely to need does not
+    // vanish the moment the API is slow.
+    bank_transfer: BANK_TRANSFER,
     offline: true,
   };
 
@@ -316,13 +413,16 @@ async function main() {
   const grid = el('div', { class: 'dcp-plans' });
 
   const base = baseRate(info.plans);
+  // Threaded through onPick below (defined further down, safe — same pattern
+  // drawAction already uses) so switching plans updates the bank rail's amount.
+  let bankClaim = null;
 
   const drawPlans = () => {
     grid.replaceChildren(...info.plans.map((p) => planCard(p, {
       featured: p.months === featured,
       selected: p.months === selected,
       base,
-      onPick: (m) => { selected = m; drawPlans(); drawAction(); },
+      onPick: (m) => { selected = m; drawPlans(); drawAction(); drawBank(bankClaim); },
     })));
   };
 
@@ -500,6 +600,57 @@ async function main() {
   drawPlans();
   drawAction();
 
+  // --- the bank-transfer rail ------------------------------------------------
+  // An ALTERNATIVE way to pay for the plan already selected above, not a
+  // second plan picker — sits right under the gateway button since it is the
+  // route most readers on this page (already choosing a rial plan) can use.
+  const bankWrap = el('div', {});
+  const bank = info.bank_transfer;
+
+  const drawBank = (claim) => {
+    bankClaim = claim;
+    if (!bank) { bankWrap.replaceChildren(); return; }
+
+    if (claim && claim.status === 'pending') {
+      bankWrap.replaceChildren(
+        bankSteps(bank, { months: claim.months, amount_rial: claim.amount_rial }, claim.reference),
+      );
+      return;
+    }
+    const done = claim ? bankStatus(claim) : null;
+    const plan = info.plans.find((p) => p.months === selected) || info.plans[0];
+    if (!plan) { bankWrap.replaceChildren(...[done].filter(Boolean)); return; }
+
+    bankWrap.replaceChildren(...[done, bankIntro(bank, plan, async (btn) => {
+      if (!user) {
+        const res = await openLoginModal({ returnTo: location.pathname + location.search });
+        if (res && res.user) location.reload();
+        return;
+      }
+      btn.disabled = true;
+      btn.textContent = 'در حال ثبت…';
+      try {
+        const r = await api.bankTransferStart(plan.months);
+        drawBank({
+          status: 'pending', reference: r.reference, months: r.months, amount_rial: r.amount_rial,
+        });
+      } catch (err) {
+        btn.disabled = false;
+        btn.textContent = 'دریافت کد پیگیری';
+        msg.textContent = (err && err.message) || 'ثبت درخواست انجام نشد.';
+      }
+    }, info.offline)].filter(Boolean));
+  };
+
+  drawBank(null);
+  // A returning buyer must land on their own claim, not a button that would
+  // start a second one.
+  if (bank && user) {
+    api.bankTransferStatus()
+      .then((r) => { if (r && r.redemption) drawBank(r.redemption); })
+      .catch(() => {});
+  }
+
   // --- the out-of-country rail ----------------------------------------------
   // Independent of everything above: no Zibal, no monthly ceiling, no .ir. It
   // sits directly under the rial plans rather than at the foot of the page,
@@ -554,7 +705,7 @@ async function main() {
   }
 
   root.replaceChildren(el('div', { class: 'dcp-pricing' }, [
-    ...head, ...notices, grid, action, giftWrap,
+    ...head, ...notices, grid, action, bankWrap, giftWrap,
     el('h2', { class: 'dcp-price-h2' }, 'با پریمیوم چه چیزی اضافه می‌شود'),
     whatYouGet(),
   ]));

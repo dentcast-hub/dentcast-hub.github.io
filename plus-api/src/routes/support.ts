@@ -98,7 +98,7 @@ export async function supportRoutes(app: FastifyInstance): Promise<void> {
       return reply.send({ ok: true, tickets: await ticketsOfUser(request.user!.id) });
     });
 
-    // POST /support/tickets { kind, subject, body }
+    // POST /support/tickets { kind, subject, body, has_photo? }
     scoped.post('/support/tickets', {
       schema: {
         body: {
@@ -108,14 +108,17 @@ export async function supportRoutes(app: FastifyInstance): Promise<void> {
             kind: { type: 'string', maxLength: 40 },
             subject: { type: 'string', minLength: 1, maxLength: 120 },
             body: { type: 'string', minLength: 1, maxLength: 4000 },
+            has_photo: { type: 'boolean' },
           },
         },
       },
     }, async (request, reply) => {
-      const b = request.body as { kind: string; subject: string; body: string };
+      const b = request.body as {
+        kind: string; subject: string; body: string; has_photo?: boolean;
+      };
       const r = await openTicket({
         userId: request.user!.id, tier: request.user!.tier,
-        kind: b.kind, subject: b.subject, body: b.body,
+        kind: b.kind, subject: b.subject, body: b.body, hasPhoto: b.has_photo,
       });
       if (r.outcome === 'opened') {
         return reply.send({

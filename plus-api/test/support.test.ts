@@ -82,10 +82,21 @@ describe('the plan gate is per kind, not per feature', () => {
     expect(r.statusCode).toBe(401);
   });
 
-  it('shows a free reader which kinds are locked instead of hiding the door', async () => {
+  it('offers billing/student/bug on the form and nothing locked — support left FORM_KINDS', async () => {
     const r = await app.inject({ method: 'GET', url: '/support/kinds', headers: { cookie } });
-    const locked = r.json().kinds.filter((k: { locked: boolean }) => k.locked);
-    expect(locked.map((k: { key: string }) => k.key)).toEqual(['support']);
+    const kinds = r.json().kinds as Array<{ key: string; locked: boolean; title_fa: string }>;
+    expect(kinds.map((k) => k.key).sort()).toEqual(['billing', 'bug', 'student']);
+    expect(kinds.some((k) => k.locked)).toBe(false);
+    expect(kinds.find((k) => k.key === 'billing')?.title_fa).toBe('مشکل در پرداخت');
+    expect(kinds.find((k) => k.key === 'bug')?.title_fa).toBe('مشکل فنی');
+  });
+
+  it('still resolves an OLD support-kind ticket\'s title even though it left the form', async () => {
+    await makePremium();
+    cookie = await loginAs(app, PHONE);
+    const r = await open({ kind: 'support', subject: 'مشاوره', body: 'سؤال.' });
+    expect(r.statusCode).toBe(200);
+    expect(r.json().ticket.kind_title_fa).toBe('پشتیبانی و مشاوره');
   });
 });
 
@@ -123,6 +134,26 @@ describe('opening a ticket', () => {
     const r = await open({ kind: 'bug', subject: '   ', body: 'توضیح.' });
     expect(r.statusCode).toBe(400);
     expect(r.json().error).toBe('empty');
+  });
+});
+
+/* ------------------------------------------------------------ has_photo --- */
+
+describe('has_photo — a claim the reader makes, not a derived fact', () => {
+  it('defaults to false when the tick is not sent', async () => {
+    const t = (await open(TICKET)).json().ticket;
+    expect(t.has_photo).toBe(false);
+  });
+
+  it('records true when the reader ticks it, and both queues see it', async () => {
+    const t = (await open({ ...TICKET, has_photo: true })).json().ticket;
+    expect(t.has_photo).toBe(true);
+
+    const mine = await app.inject({ method: 'GET', url: '/support/tickets', headers: { cookie } });
+    expect(mine.json().tickets[0].has_photo).toBe(true);
+
+    const queue = await app.inject({ method: 'GET', url: '/admin/support', headers: { authorization: auth } });
+    expect(queue.json().tickets.find((x: { id: string }) => x.id === t.id).has_photo).toBe(true);
   });
 });
 

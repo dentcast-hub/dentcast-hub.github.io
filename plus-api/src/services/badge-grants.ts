@@ -1,3 +1,4 @@
+import type pg from 'pg';
 import { pool, one, query, withTransaction, type Queryable } from '../db.js';
 import { grantMetricOf, grantableBadges } from '../badges.js';
 import { scheduleAchievementSync } from './achievement-sync.js';
@@ -78,12 +79,21 @@ export interface GrantResult {
 export async function grantBadge(
   userId: string,
   badgeKey: string,
-  opts: { note?: string; discountPercent?: number; discountDays?: number } = {},
+  opts: {
+    note?: string; discountPercent?: number; discountDays?: number;
+    /**
+     * Join an ALREADY-OPEN transaction instead of starting a new one — used
+     * where a grant has to commit atomically with something else (the admin
+     * "تأیید + اهدای نشان" action, which must not extend a subscription and
+     * then fail to grant the badge). Omit for every ordinary caller.
+     */
+    client?: pg.PoolClient;
+  } = {},
 ): Promise<GrantResult> {
   const badge = grantableBadges().find((b) => b.key === badgeKey);
   if (!badge) throw new Error('not_grantable');
 
-  const result = await withTransaction(async (client) => {
+  const run = async (client: pg.PoolClient) => {
     const inserted = await one<{ id: string }>(
       `insert into badge_grants (user_id, badge_key, note)
        values ($1, $2, $3)
@@ -111,7 +121,9 @@ export async function grantBadge(
       discountIds = rows.map((g) => g.id);
     }
     return { already: false, discountIds };
-  });
+  };
+
+  const result = opts.client ? await run(opts.client) : await withTransaction(run);
 
   if (!result.already) scheduleAchievementSync(userId);
   return {
