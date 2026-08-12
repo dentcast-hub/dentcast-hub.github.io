@@ -209,41 +209,83 @@ button.dc-meta-chip:hover{
   color:var(--ac, #0b5fff);
 }
 
+/* A heart INSIDE the chip row is stale markup — hide it.
+   Until 2026-08-12 votes.js appended the button into #dcArticleMeta as a third
+   .dc-meta-chip. A reader holding that cached JS while this stylesheet is fresh
+   gets a 36×14 EMPTY PILL: .dc-meta-chip still paints the pill, but the icon has
+   no size rule any more (sizing moved to .dcp-heart-lg) and the old markup
+   carried no label. Reported from the live site the same day.
+   The rule is self-cleaning: once every cache has the new bundle nothing matches
+   it. It stays anyway, because the two stylesheets below are the reason the
+   mismatch was possible at all and this is the cheap half of the fix. */
+.dc-article-meta .dcp-heart{ display:none !important; }
+
 /* ── قلبِ مقاله (up-board) ──────────────────────────────────────────────
-   The third chip in this row, injected by plus/js/votes.js. It borrows
-   .dc-meta-chip's shape so the row stays one object, and overrides only
-   colour and the press animation. The count is deliberately absent (not
-   zero) until at least one reader has voted — see votes.js for why. */
-.dcp-heart{
-  gap:.3rem;
-  font-variant-numeric:tabular-nums;
+   Its own line under the chip row, not a chip in it. As a third
+   .dc-meta-chip — small, grey, between «زمان مطالعه» and «اشتراک‌گذاری» —
+   it read as one more piece of metadata and nobody recognised it as a
+   control. Two things fix that and both are deliberate: it is the only
+   COLOURED thing above the prose, and it carries a WORD.
+
+   Coral at rest, red once pressed. A grey resting state is the thing that
+   made it invisible; coral is warm enough to be seen and distinct enough
+   from the pressed red that the change is unmistakable. */
+.dcp-like{
+  /* Centred like everything else in this header — the h1, the subtitle and the
+     chip row above it all are. */
+  display:flex; align-items:center; justify-content:center; flex-wrap:wrap;
+  gap:0.625rem; margin:0 0 1.125rem;
 }
-.dcp-heart .dcp-heart-icon{
-  width:1.05em; height:1.05em; display:block; flex:none;
+.dcp-heart-lg{
+  display:inline-flex; align-items:center; gap:0.4375rem;
+  font-family:inherit; font-size:0.95rem; font-weight:800;
+  padding:0.5rem 1.125rem; border-radius:62.4375rem; cursor:pointer;
+  color:var(--heart-idle, #ff7a68);
+  background:var(--heart-idle-bg, rgba(255,122,104,.09));
+  border:1.5px solid var(--heart-idle-bd, rgba(255,122,104,.40));
+  transition:color var(--tr, .17s), background var(--tr, .17s),
+             border-color var(--tr, .17s), transform var(--tr, .17s);
+  -webkit-tap-highlight-color:transparent;
+}
+.dcp-heart-lg .dcp-heart-icon{
+  width:1.375em; height:1.375em; display:block; flex:none;
   transition:transform .22s cubic-bezier(.34,1.56,.64,1);
 }
-.dcp-heart .dcp-heart-icon path{ transition:fill .18s, stroke .18s; }
-.dcp-heart .dcp-heart-num:empty{ display:none; }
+.dcp-heart-lg .dcp-heart-icon path{ transition:fill .18s, stroke .18s; }
+.dcp-heart-lg .dcp-heart-num{
+  font-variant-numeric:tabular-nums; font-weight:800;
+}
+.dcp-heart-lg .dcp-heart-num:empty{ display:none; }
+.dcp-heart-lg:hover{
+  background:var(--heart-idle-bg, rgba(255,122,104,.09));
+  border-color:var(--heart-idle, #ff7a68);
+}
+.dcp-heart-lg:active{ transform:scale(.97); }
+.dcp-heart-lg:focus-visible{
+  outline:2px solid var(--heart, #d92b52); outline-offset:2px;
+}
 
-button.dc-meta-chip.dcp-heart:hover{
-  background:var(--heart-bg, rgba(217,43,82,.10));
+/* پس از زدن: پُر و قرمز */
+.dcp-heart-lg.is-voted{
   color:var(--heart, #d92b52);
-  border-color:var(--heart-bd, rgba(217,43,82,.28));
+  background:var(--heart-bg, rgba(217,43,82,.11));
+  border-color:var(--heart-bd, rgba(217,43,82,.34));
 }
-.dcp-heart.is-voted{
-  color:var(--heart, #d92b52);
-  background:var(--heart-bg, rgba(217,43,82,.10));
-  border-color:var(--heart-bd, rgba(217,43,82,.28));
+.dcp-heart-lg.is-voted .dcp-heart-icon path{
+  fill:var(--heart, #d92b52); stroke:var(--heart, #d92b52);
 }
-.dcp-heart.is-voted .dcp-heart-icon path{
-  fill:var(--heart, #d92b52);
-  stroke:var(--heart, #d92b52);
+.dcp-heart-lg.is-pop .dcp-heart-icon{ transform:scale(1.28); }
+
+.dcp-like-count{
+  font-size:.8rem; font-weight:600; color:var(--txt3, #62779a);
+  font-variant-numeric:tabular-nums;
 }
-.dcp-heart.is-pop .dcp-heart-icon{ transform:scale(1.32); }
+.dcp-like-count:empty{ display:none; }
 
 @media (prefers-reduced-motion:reduce){
-  .dcp-heart .dcp-heart-icon{ transition:none; }
-  .dcp-heart.is-pop .dcp-heart-icon{ transform:none; }
+  .dcp-heart-lg, .dcp-heart-lg .dcp-heart-icon{ transition:none; }
+  .dcp-heart-lg.is-pop .dcp-heart-icon{ transform:none; }
+  .dcp-heart-lg:active{ transform:none; }
 }
 
 .dc-toc{

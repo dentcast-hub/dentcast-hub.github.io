@@ -72,9 +72,16 @@ body.dc-content-only main.article-page {
      buys» — and up-board is free, so an amber heart would spend that meaning.
      Brand blue is the other obvious pick and fails for a plainer reason: a
      blue heart does not read as a heart. Used on ONE element. */
+  /* Two states, two colours. IDLE is coral: warm, already visible, and reading
+     as an invitation rather than as a disabled control — the button spends most
+     of its life in this state and a muted grey one was simply not seen. PRESSED
+     is the deeper red, so the change is unmistakable at a glance. */
+  --heart-idle:    #ff7a68;
+  --heart-idle-bg: rgba(255,122,104,.09);
+  --heart-idle-bd: rgba(255,122,104,.40);
   --heart:    #d92b52;
-  --heart-bg: rgba(217,43,82,.10);
-  --heart-bd: rgba(217,43,82,.28);
+  --heart-bg: rgba(217,43,82,.11);
+  --heart-bd: rgba(217,43,82,.34);
 
   --tr:  .17s cubic-bezier(.4,0,.2,1);
   --tr2: .26s cubic-bezier(.4,0,.2,1);
@@ -134,9 +141,12 @@ body.dc-content-only main.article-page {
   /* قلب — lifted and desaturated for the dark ground, not the light hex reused.
      #d92b52 on #17212b is a dim smudge; this keeps the same hue reading as a
      heart at the same size. */
+  --heart-idle:    #ff9585;
+  --heart-idle-bg: rgba(255,149,133,.13);
+  --heart-idle-bd: rgba(255,149,133,.36);
   --heart:    #ff6b8a;
-  --heart-bg: rgba(255,107,138,.14);
-  --heart-bd: rgba(255,107,138,.32);
+  --heart-bg: rgba(255,107,138,.16);
+  --heart-bd: rgba(255,107,138,.38);
 
   /* ── Semantic role tokens (link + heading) — dark mode ── */
   --link:       #7ab4ff;        /* default link, dark mode             */

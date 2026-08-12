@@ -40,9 +40,12 @@
   /* قلبِ مقاله. Unlike the two above this IS a site-wide token (dc-theme.css
      defines --heart for the article chip row); the fallbacks are here because
      the desktop shell is index.html, which loads no shared stylesheet. */
+  --dcp-heart-idle: var(--heart-idle, #ff7a68);
+  --dcp-heart-idle-bg: var(--heart-idle-bg, rgba(255, 122, 104, .09));
+  --dcp-heart-idle-bd: var(--heart-idle-bd, rgba(255, 122, 104, .40));
   --dcp-heart: var(--heart, #d92b52);
-  --dcp-heart-bg: var(--heart-bg, rgba(217, 43, 82, .10));
-  --dcp-heart-bd: var(--heart-bd, rgba(217, 43, 82, .28));
+  --dcp-heart-bg: var(--heart-bg, rgba(217, 43, 82, .11));
+  --dcp-heart-bd: var(--heart-bd, rgba(217, 43, 82, .34));
 }
 /* @end-home-critical */
 [data-theme="dark"] {
@@ -50,9 +53,12 @@
   --dcp-gold-bg: rgba(226, 179, 102, .12);
   --dcp-ref: #b79df5;
   --dcp-ref-bg: rgba(183, 157, 245, .10);
+  --dcp-heart-idle: var(--heart-idle, #ff9585);
+  --dcp-heart-idle-bg: var(--heart-idle-bg, rgba(255, 149, 133, .13));
+  --dcp-heart-idle-bd: var(--heart-idle-bd, rgba(255, 149, 133, .36));
   --dcp-heart: var(--heart, #ff6b8a);
-  --dcp-heart-bg: var(--heart-bg, rgba(255, 107, 138, .14));
-  --dcp-heart-bd: var(--heart-bd, rgba(255, 107, 138, .32));
+  --dcp-heart-bg: var(--heart-bg, rgba(255, 107, 138, .16));
+  --dcp-heart-bd: var(--heart-bd, rgba(255, 107, 138, .38));
 }
 
 /* Sprite icon reference — assets/icons/icons.svg is the site's single source
@@ -105,33 +111,42 @@
 
 /* قلبِ مقاله on the desktop shell — the surface where dc-nav.js was stripped
    out of the fetched article, so the chip row (and the heart in it) never
-   existed. Same shape as the share button beside it; only the colour differs. */
+   existed. Same two-state colour as the article's own button: coral at rest so
+   it is actually seen, red once pressed. */
 .dcp-wb-heart {
-  font: inherit; font-weight: 600; font-size: .9rem;
-  display: inline-flex; align-items: center; gap: 5px;
-  padding: 7px 13px; border-radius: 999px; cursor: pointer;
-  color: var(--dcp-muted); background: transparent; border: 1px solid var(--dcp-line);
-  font-variant-numeric: tabular-nums;
+  font: inherit; font-weight: 800; font-size: .9rem;
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 7px 15px; border-radius: 999px; cursor: pointer;
+  color: var(--dcp-heart-idle); background: var(--dcp-heart-idle-bg);
+  border: 1.5px solid var(--dcp-heart-idle-bd);
+  transition: color .17s, background .17s, border-color .17s, transform .17s;
 }
 .dcp-wb-heart .dcp-heart-icon {
-  width: 1.05em; height: 1.05em; display: block; flex: none;
+  width: 1.3em; height: 1.3em; display: block; flex: none;
   transition: transform .22s cubic-bezier(.34, 1.56, .64, 1);
 }
+.dcp-wb-heart .dcp-heart-num { font-variant-numeric: tabular-nums; }
 .dcp-wb-heart .dcp-heart-num:empty { display: none; }
-.dcp-wb-heart:hover {
-  color: var(--dcp-heart); border-color: var(--dcp-heart-bd); background: var(--dcp-heart-bg);
-}
+.dcp-wb-heart:hover { border-color: var(--dcp-heart-idle); }
+.dcp-wb-heart:active { transform: scale(.97); }
 .dcp-wb-heart.is-voted {
-  color: var(--dcp-heart); border-color: var(--dcp-heart-bd); background: var(--dcp-heart-bg);
+  color: var(--dcp-heart); background: var(--dcp-heart-bg);
+  border-color: var(--dcp-heart-bd);
 }
 .dcp-wb-heart.is-voted .dcp-heart-icon path {
   fill: var(--dcp-heart); stroke: var(--dcp-heart);
 }
-.dcp-wb-heart.is-pop .dcp-heart-icon { transform: scale(1.32); }
-.dcp-wb-heart:focus-visible { outline: 2px solid var(--dcp-accent); outline-offset: 2px; }
+.dcp-wb-heart.is-pop .dcp-heart-icon { transform: scale(1.28); }
+.dcp-wb-heart:focus-visible { outline: 2px solid var(--dcp-heart); outline-offset: 2px; }
+/* The count rides beside the button here too; the bar is already a flex row so
+   the wrapper just joins it. */
+.dcp-wb-row .dcp-like { display: inline-flex; align-items: center; gap: 8px; }
+.dcp-wb-row .dcp-like-count { font-size: .78rem; font-weight: 600; color: var(--dcp-muted); }
+.dcp-wb-row .dcp-like-count:empty { display: none; }
 @media (prefers-reduced-motion: reduce) {
-  .dcp-wb-heart .dcp-heart-icon { transition: none; }
+  .dcp-wb-heart, .dcp-wb-heart .dcp-heart-icon { transition: none; }
   .dcp-wb-heart.is-pop .dcp-heart-icon { transform: none; }
+  .dcp-wb-heart:active { transform: none; }
 }
 /* «؟» reveal, reused by both the beside-میزکار button and the toolbar's own
    collection button - hidden by default, toggles a plain caption line. */

@@ -54,12 +54,18 @@ export function buildHeartChip(contentId, extraClass) {
     class: 'dcp-heart' + (extraClass ? ' ' + extraClass : ''),
     type: 'button',
     'aria-pressed': 'false',
-    'aria-label': 'پسندیدن این مطلب',
-    title: 'پسندیدن این مطلب',
   });
   const num = el('span', { class: 'dcp-heart-num' });
   btn.appendChild(heartIcon());
+  // The WORD is not decoration. A lone outline heart, at chip size, in the same
+  // grey as «زمان مطالعه» beside it, was read as one more piece of article
+  // metadata — nobody could tell it was a control, let alone what pressing it
+  // meant. The label says so once, and the colour keeps saying it.
+  btn.appendChild(el('span', { class: 'dcp-heart-label' }, 'پسندیدم'));
   btn.appendChild(num);
+
+  const wrap = el('div', { class: 'dcp-like' }, [btn]);
+  wrap.appendChild(el('span', { class: 'dcp-like-count' }));
 
   let hearts = 0;
   let voted = false;
@@ -78,6 +84,11 @@ export function buildHeartChip(contentId, extraClass) {
     btn.classList.toggle('is-voted', voted);
     btn.setAttribute('aria-label', voted ? 'برداشتن پسند' : 'پسندیدن این مطلب');
     btn.title = btn.getAttribute('aria-label');
+    // Spelled out beside the button rather than left as a bare number: «۹» on
+    // its own is the kind of thing a reader has to decode, and the whole
+    // complaint about the old chip was that nothing said what it counted.
+    wrap.querySelector('.dcp-like-count').textContent =
+      hearts > 0 ? faNum(hearts) + ' نفر پسندیده‌اند' : '';
   };
 
   const pop = () => {
@@ -147,7 +158,7 @@ export function buildHeartChip(contentId, extraClass) {
   });
 
   paint();
-  return btn;
+  return wrap;
 }
 
 /**
@@ -163,7 +174,12 @@ export function buildHeartChip(contentId, extraClass) {
 export function initHeart(contentId) {
   if (!contentId) return false;
   const row = document.getElementById('dcArticleMeta');
-  if (!row || row.querySelector('.dcp-heart')) return false;
-  row.appendChild(buildHeartChip(contentId, 'dc-meta-chip'));
+  if (!row || document.querySelector('.dcp-like')) return false;
+  // AFTER the chip row, not inside it. Sitting among «زمان مطالعه» and
+  // «اشتراک‌گذاری» made it the same kind of object they are — a small grey
+  // utility — and it disappeared. On its own line it is the only coloured thing
+  // above the prose, which is what a call to action has to be. Still at the top,
+  // where it was asked to be; just no longer disguised as metadata.
+  row.insertAdjacentElement('afterend', buildHeartChip(contentId, 'dcp-heart-lg'));
   return true;
 }
