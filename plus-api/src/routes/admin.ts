@@ -10,7 +10,7 @@ import { one, query } from '../db.js';
 import { normalizePhone } from '../services/phone.js';
 import {
   activateMonths, grantLifetime, revokeSubscription, getSubscription,
-  summarizeSubscription, sweepExpiredSubscriptions, type Subscription,
+  summarizeSubscription, sweepExpiredSubscriptions, subscriptionReport, type Subscription,
 } from '../services/subscription.js';
 import { getCapacity } from '../services/payment-capacity.js';
 import { reconcilePendingPayments } from '../services/payment-reconcile.js';
@@ -183,6 +183,159 @@ function renderHtml(k: Kpis, grantable: { key: string; title_fa: string }[]): st
   <h3 style="margin-top:22px">KPI 4 — ماندگاری روز هفتم بر اساس پلن</h3>
   <table><thead><tr><th>پلن</th><th>گروه</th><th>مانده</th><th>درصد</th></tr></thead><tbody>${d7Rows}</tbody></table>
   <p class="muted" style="margin-top:14px">KPI ها از user_activity و anon_events محاسبه می‌شوند. تبدیل KPI 1 تقریبی است چون رویدادهای ناشناس هویت‌محور نیستند.</p>
+
+  <h3 style="margin-top:26px">گزارش کاربران — پرمیوم و اشتراک</h3>
+  <div class="muted">«چند ماهه» یعنی ماهِ اولین شروعِ اشتراک (started_at) — تمدید ماه شروع را عوض نمی‌کند، پس هر ردیف یک کوهورتِ واقعیِ جذب است، نه شمارشِ تمدیدها. «پرمیومِ لیگی» جدا شمرده می‌شود چون جایزهٔ هفتگیِ لیگ هیچ‌وقت ردیفی در subscriptions نمی‌سازد.</div>
+  <div id="subOut" class="muted" style="margin-top:10px">در حال خواندن…</div>
+  <script>
+  (function () {
+    var out = document.getElementById('subOut');
+    function esc(s) {
+      return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+      });
+    }
+    function num(n) { return Number(n || 0).toLocaleString('en-US'); }
+
+    function monthRows(byMonth) {
+      if (!byMonth.length) return '<tr><td colspan="3">هنوز داده‌ای نیست</td></tr>';
+      return byMonth.slice().reverse().map(function (r) {
+        return '<tr><td>' + esc(r.month) + '</td><td>' + num(r.new_subscribers)
+          + '</td><td>' + num(r.founders) + '</td></tr>';
+      }).join('');
+    }
+
+    function bucketBar(label, n, total) {
+      var w = total ? Math.round((n / total) * 1000) / 10 : 0;
+      return '<div class="sp-row"><div class="lbl"><span>' + esc(label)
+        + '</span><span>' + num(n) + ' نفر</span></div>'
+        + '<div class="sp-bar"><i style="width:' + w + '%"></i></div></div>';
+    }
+
+    function soonestRows(rows) {
+      if (!rows.length) return '<tr><td colspan="5">اشتراکِ رو‌به‌اتمامی نیست</td></tr>';
+      return rows.map(function (r) {
+        return '<tr><td>' + esc(r.display_name || r.username || r.phone || r.user_id) + '</td>'
+          + '<td>' + esc(r.phone || '—') + '</td><td>' + esc(r.plan) + '</td>'
+          + '<td>' + esc(r.expires_on) + '</td><td>' + num(r.days_left) + '</td></tr>';
+      }).join('');
+    }
+
+    function card(title, value, sub) {
+      return '<div class="card"><h3>' + esc(title) + '</h3><div class="v">' + value
+        + '</div><div class="s">' + esc(sub) + '</div></div>';
+    }
+
+    function render(b) {
+      var t = b.totals;
+      var d = b.days_left_buckets;
+      var activeCounted = d.d0_3 + d.d4_7 + d.d8_30 + d.d31_plus;
+      out.className = '';
+      out.innerHTML =
+        '<div class="grid">'
+        + card('پرمیومِ الان', num(t.active_now + t.league_premium_now),
+            num(t.active_now) + ' با اشتراک · ' + num(t.league_premium_now) + ' با جایزهٔ لیگ')
+        + card('عمرِ همیشگی', num(t.lifetime_total), 'بنیان‌گذار یا نشانِ اهدایی')
+        + card('کل تاریخِ اشتراک', num(t.ever_subscribed), 'هر کسی که حداقل یک بار خرید/هدیه گرفت')
+        + '</div>'
+        + '<h4 style="margin:18px 0 0">به تفکیک ماهِ شروع</h4>'
+        + '<table><thead><tr><th>ماه</th><th>مشترکِ جدید</th><th>عمرِ همیشگی</th></tr></thead>'
+        + '<tbody>' + monthRows(b.by_month) + '</tbody></table>'
+        + '<h4 style="margin:18px 0 0">چقدر مانده (اشتراک‌های فعالِ غیرِ همیشگی)</h4>'
+        + '<div class="sp-c">'
+        + bucketBar('۰ تا ۳ روز', d.d0_3, activeCounted)
+        + bucketBar('۴ تا ۷ روز', d.d4_7, activeCounted)
+        + bucketBar('۸ تا ۳۰ روز', d.d8_30, activeCounted)
+        + bucketBar('بیش از ۳۰ روز', d.d31_plus, activeCounted)
+        + '</div>'
+        + '<h4 style="margin:18px 0 0">زودتر از همه تمام می‌شود (تا ۳۰ ردیف)</h4>'
+        + '<table><thead><tr><th>کاربر</th><th>موبایل</th><th>پلن</th><th>تا</th><th>روزِ مانده</th></tr></thead>'
+        + '<tbody>' + soonestRows(b.soonest_expiring) + '</tbody></table>';
+    }
+
+    fetch('/admin/subscriptions/report', { credentials: 'include' })
+      .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+      .then(function (res) {
+        if (!res.ok) { out.textContent = 'خوانده نشد: ' + (res.j.message || res.j.error || 'خطا'); return; }
+        render(res.j);
+      })
+      .catch(function () { out.textContent = 'خوانده نشد (شبکه).'; });
+  })();
+  </script>
+
+  <h3 style="margin-top:26px">گزارش لیگ</h3>
+  <div class="muted">«لیگ فعال» یعنی گروهی که این هفته برایش تشکیل شده — این آدم‌ها با هم رقابت می‌کنند. عددهای این بخش از همان API نظارتیِ لیگ (<code>/admin/league</code>) خوانده می‌شوند؛ اینجا فقط رندرِ آن است.</div>
+  <div id="lgOut" class="muted" style="margin-top:10px">در حال خواندن…</div>
+  <script>
+  (function () {
+    var out = document.getElementById('lgOut');
+    function esc(s) {
+      return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+      });
+    }
+    function num(n) { return Number(n || 0).toLocaleString('en-US'); }
+    function pct(v) { return v == null ? '—' : v.toFixed(1) + '٪'; }
+
+    function tierRows(perTier) {
+      if (!perTier.length) return '<tr><td colspan="5">رده‌ای نیست</td></tr>';
+      return perTier.map(function (t) {
+        return '<tr><td>' + esc(t.name_fa) + (t.is_active ? '' : ' <span class="pill">غیرفعال</span>') + '</td>'
+          + '<td>' + num(t.groups) + '</td><td>' + pct(t.fill_pct) + '</td>'
+          + '<td>' + (t.median_weekly_xp == null ? '—' : num(t.median_weekly_xp)) + '</td></tr>';
+      }).join('');
+    }
+
+    function trendRows(trend) {
+      if (!trend.length) return '<tr><td colspan="5">هنوز داده‌ای نیست</td></tr>';
+      return trend.map(function (w) {
+        return '<tr><td>' + esc(w.week_start) + '</td><td>' + num(w.active_users) + '</td>'
+          + '<td>' + num(w.groups_count) + '</td>'
+          + '<td>' + (w.avg_fill_pct == null ? '—' : pct(Number(w.avg_fill_pct))) + '</td>'
+          + '<td>' + num(w.promotions) + ' / ' + num(w.demotions) + '</td></tr>';
+      }).join('');
+    }
+
+    function warnings(below) {
+      if (!below.length) return '';
+      var rows = below.map(function (g) {
+        return '⚠️ رده «' + esc(g.tier) + '» — گروه ' + esc(g.league_id) + ': ' + num(g.size)
+          + ' از ' + num(g.capacity) + ' نفر (کف اعتبار: ' + num(g.min_valid) + ')';
+      }).join('<br>');
+      return '<div class="warn">' + rows + '</div>';
+    }
+
+    function render(b) {
+      var totalGroups = b.per_tier.reduce(function (a, t) { return a + t.groups; }, 0);
+      out.className = '';
+      out.innerHTML =
+        '<div class="muted">هفتهٔ جاری: ' + esc(b.current_week) + '</div>'
+        + '<div class="grid">'
+        + '<div class="card"><h3>لیگ‌های فعالِ این هفته</h3><div class="v">' + num(totalGroups)
+        + '</div><div class="s">جمعِ گروه‌ها روی همهٔ رده‌ها</div></div>'
+        + '<div class="card"><h3>کاربرِ فعالِ این هفته</h3><div class="v">'
+        + num(b.last_week ? b.last_week.active_users : 0) + '</div><div class="s">آخرین هفتهٔ ثبت‌شده</div></div>'
+        + '<div class="card"><h3>میانگینِ ۴ هفتهٔ اخیر</h3><div class="v">' + num(b.smoothed_active)
+        + '</div><div class="s">کاربرِ فعالِ هموارشده</div></div>'
+        + '</div>'
+        + '<h4 style="margin:18px 0 0">به تفکیکِ رده (هفتهٔ جاری)</h4>'
+        + '<table><thead><tr><th>رده</th><th>تعدادِ گروه</th><th>پرشدگی</th><th>میانهٔ امتیازِ هفتگی</th></tr></thead>'
+        + '<tbody>' + tierRows(b.per_tier) + '</tbody></table>'
+        + warnings(b.groups_below_validity)
+        + '<h4 style="margin:18px 0 0">روندِ ۸ هفتهٔ اخیر</h4>'
+        + '<table><thead><tr><th>هفته</th><th>کاربرِ فعال</th><th>تعدادِ گروه</th><th>میانگینِ پرشدگی</th><th>ارتقا/تنزل</th></tr></thead>'
+        + '<tbody>' + trendRows(b.weekly_trend) + '</tbody></table>';
+    }
+
+    fetch('/admin/league', { credentials: 'include' })
+      .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+      .then(function (res) {
+        if (!res.ok) { out.textContent = 'خوانده نشد: ' + (res.j.message || res.j.error || 'خطا'); return; }
+        render(res.j);
+      })
+      .catch(function () { out.textContent = 'خوانده نشد (شبکه).'; });
+  })();
+  </script>
 
   <h3 style="margin-top:26px">گزارش تبلیغ‌ها</h3>
   <div class="muted">هر ردیف یک <b>زمانِ چرخش</b> است — کمپینی که یکی از خانه‌های <code>rotation.sequence</code> را گرفته — و زیرش تفکیکِ جایگاه‌هایی که نمایش‌هایش آن‌جا افتاده.
@@ -1403,6 +1556,14 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
     const who = await resolveUser(pick(request.query as { user?: string; phone?: string }), reply);
     if (!who) return reply;
     return reply.send(subscriptionView(who, await getSubscription(who.id)));
+  });
+
+  // GET /admin/subscriptions/report — the aggregate the single-user lookup
+  // above cannot answer: how many became premium, by month, and how much time
+  // is left across everyone currently subscribed. Read-only, JSON; the
+  // rendered GET /admin page's «گزارش کاربران» section is a client for it.
+  app.get('/admin/subscriptions/report', async (_request, reply) => {
+    return reply.send({ ok: true, ...await subscriptionReport() });
   });
 
   // POST /admin/subscriptions/grant { phone, months } — gift N months.
