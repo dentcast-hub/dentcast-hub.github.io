@@ -50,6 +50,10 @@
         "milestone": true
       },
       {
+        "content_id": "chairside/chairside-31",
+        "milestone": false
+      },
+      {
         "content_id": "episodes/episode-14",
         "milestone": false
       },
@@ -483,6 +487,10 @@
       },
       {
         "content_id": "chairside/chairside-28",
+        "milestone": false
+      },
+      {
+        "content_id": "chairside/chairside-31",
         "milestone": false
       },
       {
@@ -951,6 +959,10 @@
       },
       {
         "content_id": "chairside/chairside-28",
+        "milestone": false
+      },
+      {
+        "content_id": "chairside/chairside-31",
         "milestone": false
       },
       {
@@ -1778,6 +1790,10 @@
       },
       {
         "content_id": "chairside/chairside-28",
+        "milestone": false
+      },
+      {
+        "content_id": "chairside/chairside-31",
         "milestone": false
       },
       {
