@@ -29,18 +29,6 @@ const PERSON_SVG =
   'style="width:1.3em;height:1.3em;display:block">' +
   '<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>';
 
-function moveToDrawer(btn, labelText) {
-  const drawer = document.querySelector('.dc-toolbar-drawer-inner');
-  if (!btn || !drawer || btn.dataset.dcpMoved) return;
-  btn.dataset.dcpMoved = '1';
-  btn.classList.add('dc-drawer-tool-seg');
-  const ico = el('span', { class: 'dc-drawer-tool-ico' });
-  while (btn.firstChild) ico.appendChild(btn.firstChild);
-  btn.appendChild(ico);
-  btn.appendChild(el('span', { class: 'dc-drawer-tool-txt' }, labelText));
-  drawer.appendChild(btn);
-}
-
 function buildFlame(user) {
   // A PASSIVE indicator only (both desktop and mobile): two states — lit (a
   // qualifying action was completed today, Asia/Tehran) or unlit. NOT a link or
@@ -201,21 +189,21 @@ export async function initHeader() {
   // survives a stale cached plus.js entry (see initTourAutostart; idempotent).
   try { initTourAutostart(); } catch (_) { /* non-fatal */ }
 
-  // Move music + articles into the hamburger drawer (independent of the API).
-  try {
-    moveToDrawer(document.getElementById('btn-music-toggle'), 'موسیقی');
-    moveToDrawer(document.getElementById('btn-cabinet'), 'کتابخانه');
-  } catch (_) { /* non-fatal */ }
+  // The music + library buttons are NOT relocated here any more: dc-nav.js
+  // emits them straight into the tool drawer in their final shape, so there is
+  // no topbar->drawer move left to make (and no `dcp-booting` rule to clear).
+  // That handoff was what made a slow connection show the old five-icon header
+  // for a moment before it rearranged itself.
 
   // Render the guest header SYNCHRONOUSLY so it is final from the first paint:
   // no waiting on /me, which is slow and cross-site on the .org hosts (where it
   // always resolves to guest anyway). This removes the post-network icon pop-in
-  // that read as a header "jump". The structure is complete now, so drop the
-  // anti-FOUC hide (set in dc-nav.js) -> the header settles in one step.
+  // that read as a header "jump". The person icon is the only thing this
+  // function still adds to the bar; the topbar's own height does not depend on
+  // it, so its arrival costs no layout shift.
   let guestPerson = null;
   try { guestPerson = buildGuestPerson(); actions.appendChild(guestPerson); }
   catch (e) { if (window.console) console.warn('[plus header] guest render failed', e); }
-  document.documentElement.classList.remove('dcp-booting');
 
   // A failed /me (API down, or cross-site on .org) leaves the guest header as
   // the final state. currentUser already swallows errors; guard anyway.

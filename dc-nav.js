@@ -163,7 +163,6 @@
 '  <div class="dc-topbar-actions">' +
 '    <a href="/" aria-label="صفحه اصلی دنت‌کست" style="display:flex;align-items:center;margin-left:8px;flex-shrink:0;"><img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;"></a>' +
 '    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="ابزارها" aria-expanded="false"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>' +
-'    <a class="dc-topbar-btn" id="btn-cabinet" href="/dentcast_cabinet_search.html" aria-label="کابینت دنت‌کست">' + dcSvgIcon('article') + '</a>' +
 /* Podcast player launcher — the icon itself is the toggle (tap to open, tap to
    close) for the global slide-down player drawer that hosts the /player.html
    iframe (see DC_PLAYER_OVERLAY_HTML + the podcast-drawer block below). The
@@ -173,12 +172,6 @@
    (same .dc-music-eq equalizer + dcGlow), driven by the iframe's audio and kept
    accurate even while the drawer is closed. */
 '    <button class="dc-topbar-btn dc-podcast-trigger" id="btn-podcast-toggle" aria-label="پادکست دنت‌کست" aria-haspopup="true" aria-expanded="false">' + dcSvgIcon('headphones') + '<span class="dc-music-eq" aria-hidden="true"><i></i><i></i><i></i></span></button>' +
-/* Music player trigger. Base icon is a simple music note (always shown). When
-   playing, the equalizer animation + a soft glow activate within the icon area
-   (the note stays); idle shows just the note. Driven by the .is-playing class.
-   The button ONLY toggles #dcMusicPanel via delegation — it never affects
-   playback (play/pause is a separate control inside the panel). */
-'    <button class="dc-topbar-btn dc-music-trigger" id="btn-music-toggle" aria-label="موسیقی" aria-expanded="false">' + dcSvgIcon('musicNote') + '<span class="dc-music-eq" aria-hidden="true"><i></i><i></i><i></i></span></button>' +
 '  </div>' +
 '  <div class="dc-topbar-brand">' +
 '    <div class="dc-topbar-brand-name">DentCast</div>' +
@@ -241,6 +234,30 @@
      Injected idempotently, mirroring the radar/search pattern. */
   var DC_DRAWER_THEME_BTN =
 '<button class="dc-drawer-tool-seg" type="button" id="btn-theme-drawer" aria-label="تغییر تم"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M20.5 14.2A8.2 8.2 0 0 1 9.8 3.5 8.8 8.8 0 1 0 20.5 14.2z"/></svg></span><span class="dc-drawer-tool-txt">تم</span></button>';
+
+  /* ── Music + Library: born in the drawer, never relocated ────────────────
+     These two used to be rendered into .dc-topbar-actions here and MOVED into
+     this drawer later by plus/js/header.js (moveToDrawer). That handoff was the
+     bug behind "the old header shows up on a slow connection": the topbar
+     painted with both buttons, an inline `html.dcp-booting` rule hid them until
+     plus.js arrived, and a 3s safety-net timeout un-hid them if it had not —
+     so on any connection slower than 3s the reader watched the OLD five-icon
+     header appear and then rearrange itself. Emitting them in their FINAL
+     drawer shape here removes the transformation entirely: one paint, no
+     anti-FOUC rule, no timeout, and nothing left to go wrong when plus.js is
+     slow or never loads at all.
+
+     The markup below is byte-for-byte what moveToDrawer used to produce (same
+     classes, same icon wrapper, same labels — «کتابخانه» for the cabinet, not
+     its aria-label), so the rendered drawer is unchanged. `data-dcp-moved="1"`
+     is the flag moveToDrawer set on a button it had already relocated; keeping
+     it here makes an older cached plus.js that still calls moveToDrawer a
+     no-op instead of a double-move. */
+  var DC_DRAWER_MUSIC_BTN =
+'<button class="dc-topbar-btn dc-music-trigger dc-drawer-tool-seg" type="button" id="btn-music-toggle" aria-label="موسیقی" aria-expanded="false" data-dcp-moved="1"><span class="dc-drawer-tool-ico">' + dcSvgIcon('musicNote') + '<span class="dc-music-eq" aria-hidden="true"><i></i><i></i><i></i></span></span><span class="dc-drawer-tool-txt">موسیقی</span></button>';
+
+  var DC_DRAWER_CABINET_BTN =
+'<a class="dc-topbar-btn dc-drawer-tool-seg" id="btn-cabinet" href="/dentcast_cabinet_search.html" aria-label="کابینت دنت‌کست" data-dcp-moved="1"><span class="dc-drawer-tool-ico">' + dcSvgIcon('article') + '</span><span class="dc-drawer-tool-txt">کتابخانه</span></a>';
 
   /* ── SITE MENU inside the tool drawer ─────────────
      The hamburger used to open a tray of TOOLS only, so from an article there
@@ -555,6 +572,20 @@
         !document.getElementById('btn-theme-drawer')) {
       var drawerInnerT = document.querySelector('#dcToolbarDrawer .dc-toolbar-drawer-inner');
       if (drawerInnerT) drawerInnerT.insertAdjacentHTML('beforeend', DC_DRAWER_THEME_BTN);
+    }
+
+    /* 3c-bis) Music + Library, appended LAST — the exact slots plus.js's
+           moveToDrawer used to drop them into, so the tray's order is
+           unchanged (…رادار، جستجو، تم، موسیقی، کتابخانه). Same idempotent
+           id check as the three above. See DC_DRAWER_MUSIC_BTN for why they
+           are emitted here rather than relocated after the fact. */
+    if (!document.getElementById('btn-music-toggle')) {
+      var drawerInnerM = document.querySelector('#dcToolbarDrawer .dc-toolbar-drawer-inner');
+      if (drawerInnerM) drawerInnerM.insertAdjacentHTML('beforeend', DC_DRAWER_MUSIC_BTN);
+    }
+    if (!document.getElementById('btn-cabinet')) {
+      var drawerInnerC = document.querySelector('#dcToolbarDrawer .dc-toolbar-drawer-inner');
+      if (drawerInnerC) drawerInnerC.insertAdjacentHTML('beforeend', DC_DRAWER_CABINET_BTN);
     }
 
     /* 3d) Inject the floating-search styling once (Change 3). Reaches every
@@ -2316,27 +2347,15 @@
 (function () {
   if (window.__dcPlusLoaded) return;
   window.__dcPlusLoaded = true;
-  var V = '75';
+  var V = '76';
 
-  /* Anti-FOUC for the Plus header. Plus (mobile only) relocates the music +
-     articles buttons from the topbar into the tool drawer and adds the person
-     icon. Without this, the base header paints WITH those buttons, then plus.js
-     moves them a moment later -> a visible header "jump". Hide them on the
-     canonical header until the enhanced header is wired (initHeader clears the
-     class). Injected inline here (not in plus.css) so the rule is active on the
-     header's first paint rather than after an async stylesheet loads. Mobile
-     only -- Plus is disabled on desktop, where the buttons must stay. The
-     timeout is a safety net: if plus.js never runs (load failure), the buttons
-     still reveal so the base header is never left broken. Remove this block if
-     the Plus header stops relocating topbar buttons. */
-  document.documentElement.classList.add('dcp-booting');
-  setTimeout(function () { document.documentElement.classList.remove('dcp-booting'); }, 3000);
-  if (!document.getElementById('dcp-antifouc-style')) {
-    var afs = document.createElement('style');
-    afs.id = 'dcp-antifouc-style';
-    afs.textContent = '@media (max-width:1099px){html.dcp-booting .dc-topbar-actions #btn-music-toggle,html.dcp-booting .dc-topbar-actions #btn-cabinet{display:none!important;}}';
-    (document.head || document.documentElement).appendChild(afs);
-  }
+  /* The anti-FOUC block that used to live here is gone, along with the header
+     transformation it was covering for. The music + library buttons are now
+     emitted directly into the tool drawer (DC_DRAWER_MUSIC_BTN /
+     DC_DRAWER_CABINET_BTN above) instead of being painted into the topbar and
+     relocated by plus.js, so there is no intermediate state left to hide — and
+     no 3s "reveal anyway" timeout that used to show the OLD header to anyone
+     whose connection was slower than that. */
   // Three stylesheets load on every page: plus.css (workbench/header/home card),
   // plus-pages.css (dashboard/profile/overlay), and plus-desktop.css (the
   // desktop/tablet polish for those same surfaces — additive, min-width only),
