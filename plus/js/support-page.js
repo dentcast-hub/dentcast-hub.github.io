@@ -75,8 +75,11 @@ function newTicketForm(kinds, onDone) {
   const photoLabel = el('label', { for: 'tk-photo', class: 'dcp-support-photo-label' }, [
     photoChk, el('span', {}, 'عکسی دارم که برای این درخواست می‌فرستم'),
   ]);
-  const photoNote = el('p', { class: 'dcp-muted dcp-support-photo-note' },
-    'بعد از ثبت، کد پیگیری می‌گیرید. عکس را با همان کد در تلگرام پشتیبانی بفرستید.');
+  const photoNote = el('p', { class: 'dcp-muted dcp-support-photo-note' }, [
+    'بعد از ثبت، کد پیگیری می‌گیرید. عکس را با همان کد به ',
+    el('a', { href: SUPPORT_TELEGRAM_URL, target: '_blank', rel: 'noopener' }, 't.me/dentcast_support'),
+    ' بفرستید.',
+  ]);
   photoNote.hidden = true;
   photoChk.addEventListener('change', () => { photoNote.hidden = !photoChk.checked; });
 
@@ -135,7 +138,11 @@ function successPanel(ticket, withPhoto) {
   ];
   if (withPhoto) {
     parts.push(
-      el('p', {}, 'عکس را همراه همین کد در تلگرام پشتیبانی بفرستید. بدون کد، عکس به درخواست شما وصل نمی‌شود.'),
+      el('p', {}, [
+        'عکس را همراه همین کد به ',
+        el('a', { href: SUPPORT_TELEGRAM_URL, target: '_blank', rel: 'noopener' }, 't.me/dentcast_support'),
+        ' بفرستید. بدون کد، عکس به درخواست شما وصل نمی‌شود.',
+      ]),
       el('a', { class: 'dcp-btn dcp-btn-primary', href: SUPPORT_TELEGRAM_URL, target: '_blank', rel: 'noopener' },
         'رفتن به تلگرام پشتیبانی'),
     );
