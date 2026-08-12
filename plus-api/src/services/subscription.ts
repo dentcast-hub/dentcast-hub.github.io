@@ -1,3 +1,4 @@
+import type pg from 'pg';
 import { config } from '../config.js';
 import { pool, one, query, withTransaction, type Queryable } from '../db.js';
 import { dayInTz, dayDiff } from './time.js';
@@ -124,14 +125,24 @@ export function isPremiumNow(sub: Subscription | null, now: Date = new Date()): 
 export async function activateMonths(
   userId: string,
   months: number,
-  opts: { source: ActivationSource; now?: Date; meta?: Record<string, unknown> },
+  opts: {
+    source: ActivationSource; now?: Date; meta?: Record<string, unknown>;
+    /**
+     * Join an ALREADY-OPEN transaction instead of starting a new one — used
+     * where an approval has to commit atomically with something else (e.g. the
+     * admin "تأیید + اهدای نشان" action in routes/admin.ts, which must not
+     * extend a subscription and then fail to grant the badge, or the reverse).
+     * Omit for every ordinary caller; withTransaction below is the default.
+     */
+    client?: pg.PoolClient;
+  },
 ): Promise<Subscription> {
   if (!Number.isInteger(months) || months < 1 || months > MAX_MONTHS) {
     throw new Error(`activateMonths: months must be an integer in 1..${MAX_MONTHS}, got ${months}`);
   }
   const now = opts.now ?? new Date();
 
-  return withTransaction(async (client) => {
+  const run = async (client: pg.PoolClient): Promise<Subscription> => {
     // Lock the row for the whole decision. Without this, two verify callbacks
     // for the same user landing together would both read the same base expiry
     // and the second would overwrite rather than extend the first — one of the
@@ -187,7 +198,9 @@ export async function activateMonths(
     }, client);
 
     return row;
-  });
+  };
+
+  return opts.client ? run(opts.client) : withTransaction(run);
 }
 
 /**

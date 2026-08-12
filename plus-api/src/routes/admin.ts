@@ -20,7 +20,8 @@ import {
   availableCredits, creditPercent, pickCredits, insertGrant, CREDIT_CAP_PERCENT,
 } from '../services/discount-credits.js';
 import {
-  pendingRedemptions, approveRedemption, rejectRedemption,
+  pendingRedemptions, approveRedemption, rejectRedemption, setRedemptionAmount,
+  approveRedemptionAndGrantBadge,
 } from '../services/gift-redemption.js';
 import { grantBadge, revokeBadgeGrant, listBadgeGrants } from '../services/badge-grants.js';
 import { grantableBadges } from '../badges.js';
@@ -164,6 +165,13 @@ function renderHtml(k: Kpis, grantable: { key: string; title_fa: string }[]): st
   .tk-body button{background:#2f7de0;color:#fff;border:0;border-radius:999px;padding:8px 18px;
     font:inherit;font-weight:800;cursor:pointer;margin-top:8px;margin-inline-end:8px}
   .tk-out{min-height:1.4em;font-size:.85rem}
+  .bt-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:8px}
+  .bt-actions input[type=text]{flex:1 1 140px;box-sizing:border-box;background:#0f1420;color:#e8eef7;
+    border:1px solid #2a3448;border-radius:9px;padding:8px 10px;font:inherit;font-size:.86rem}
+  .bt-actions button{background:#2f7de0;color:#fff;border:0;border-radius:999px;padding:7px 16px;
+    font:inherit;font-weight:800;cursor:pointer}
+  .bt-actions button.gold{background:#7a5a20}
+  .bt-actions button.danger{background:#7a2020}
 </style></head><body><div class="wrap">
   <h1>پیشخوان بنیان‌گذار</h1>
   <div class="muted">تولید: ${k.generated_at} · منطقه زمانی: ${k.tz}</div>
@@ -605,6 +613,134 @@ function renderHtml(k: Kpis, grantable: { key: string; title_fa: string }[]): st
   })();
   </script>
 
+  <h3 style="margin-top:26px">صف واریز به حساب</h3>
+  <div class="muted">درخواست‌های واریز به شبا. برای تخفیف دانشجویی، مبلغ (به تومان) را قبل از تأیید بنویس و «تأیید + اهدای نشان دانشجو» را بزن — نشان و اشتراک با هم و در یک تراکنش ثبت می‌شوند.</div>
+  <div id="btList"></div>
+  <script>
+  (function () {
+    var list = document.getElementById('btList');
+    if (!list) return;
+
+    function esc(s) {
+      return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+      });
+    }
+    function when(iso) {
+      try { return new Date(iso).toLocaleString('fa-IR'); } catch (e) { return iso; }
+    }
+    function toman(rial) {
+      return rial == null ? '—' : Math.round(rial / 10).toLocaleString('en-US') + ' ت';
+    }
+    function who(r) {
+      return esc(r.display_name || r.phone || r.username || r.user_id);
+    }
+
+    function row(r) {
+      return '<div class="tk" data-ref="' + esc(r.reference) + '" style="cursor:auto">'
+        + '<div class="tk-h"><b>' + esc(r.reference) + '</b>'
+        + '<span class="pill">' + r.months + ' ماهه</span>'
+        + '<span class="pill">' + toman(r.amount_rial) + '</span>'
+        + '</div>'
+        + '<div class="muted">' + who(r) + ' · ' + when(r.created_at) + '</div>'
+        + '<div class="bt-actions">'
+        + '<input type="text" class="btAmount" inputmode="numeric" placeholder="مبلغ تازه (تومان، اختیاری)">'
+        + '<button type="button" data-act="set-amount">ثبت مبلغ</button>'
+        + '<button type="button" data-act="approve">تأیید</button>'
+        + '<button type="button" class="gold" data-act="approve-badge">تأیید + اهدای نشان دانشجو</button>'
+        + '<button type="button" class="danger" data-act="reject">رد</button>'
+        + '</div>'
+        + '<div class="bt-out muted"></div>'
+        + '</div>';
+    }
+
+    function render(rows) {
+      if (!rows.length) { list.innerHTML = '<div class="muted">صف خالی است.</div>'; return; }
+      list.innerHTML = rows.map(row).join('');
+    }
+
+    function load() {
+      list.innerHTML = '<div class="muted">در حال خواندن…</div>';
+      fetch('/admin/bank-transfer/pending', { credentials: 'include' })
+        .then(function (r) { return r.json(); })
+        .then(function (j) { render(j.redemptions || []); })
+        .catch(function () { list.innerHTML = '<div class="muted">خوانده نشد.</div>'; });
+    }
+
+    list.addEventListener('click', function (ev) {
+      var act = ev.target.getAttribute && ev.target.getAttribute('data-act');
+      if (!act) return;
+      var wrap = ev.target.closest('.tk');
+      if (!wrap) return;
+      var ref = wrap.getAttribute('data-ref');
+      var out = wrap.querySelector('.bt-out');
+
+      if (act === 'set-amount') {
+        var raw = wrap.querySelector('.btAmount').value.trim();
+        var toman2 = raw ? parseInt(raw, 10) : NaN;
+        if (!raw || !toman2 || toman2 <= 0) { out.textContent = 'مبلغ معتبر نیست.'; return; }
+        out.textContent = 'در حال ثبت…';
+        fetch('/admin/bank-transfer/amount', {
+          method: 'POST', credentials: 'include',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ reference: ref, amount_rial: toman2 * 10 })
+        }).then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+          .then(function (res) {
+            if (!res.ok) { out.textContent = 'نشد: ' + (res.j.message || res.j.error); return; }
+            load();
+          })
+          .catch(function () { out.textContent = 'ثبت نشد.'; });
+        return;
+      }
+
+      if (act === 'reject') {
+        var reason = prompt('دلیل رد (برای کاربر فرستاده می‌شود):');
+        if (!reason) return;
+        fetch('/admin/gift/reject', {
+          method: 'POST', credentials: 'include',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ reference: ref, reason: reason })
+        }).then(function () { load(); })
+          .catch(function () { out.textContent = 'رد نشد.'; });
+        return;
+      }
+
+      if (act === 'approve') {
+        if (!confirm('واریز ' + ref + ' تأیید و اشتراک فعال شود؟')) return;
+        out.textContent = 'در حال تأیید…';
+        fetch('/admin/gift/approve', {
+          method: 'POST', credentials: 'include',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ reference: ref })
+        }).then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+          .then(function (res) {
+            if (!res.ok) { out.textContent = 'نشد: ' + (res.j.message || res.j.error); return; }
+            load();
+          })
+          .catch(function () { out.textContent = 'تأیید نشد.'; });
+        return;
+      }
+
+      if (act === 'approve-badge') {
+        if (!confirm('واریز ' + ref + ' تأیید، اشتراک فعال و نشان «دانشجو» اهدا شود؟')) return;
+        out.textContent = 'در حال تأیید…';
+        fetch('/admin/bank-transfer/approve-with-badge', {
+          method: 'POST', credentials: 'include',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ reference: ref })
+        }).then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+          .then(function (res) {
+            if (!res.ok) { out.textContent = 'نشد: ' + (res.j.message || res.j.error); return; }
+            load();
+          })
+          .catch(function () { out.textContent = 'تأیید نشد.'; });
+      }
+    });
+
+    load();
+  })();
+  </script>
+
   <h3 style="margin-top:26px">صندوق پشتیبانی <span id="tkWaiting" class="pill"></span></h3>
   <div class="muted">درخواست‌های خواننده‌ها. ترتیب صف: هرکس بیشتر منتظر مانده، بالاتر. برای کارت دانشجویی، کد پیگیری را از پیام بله/تلگرام این‌جا جست‌وجو کن.</div>
   <form class="bc" onsubmit="return false">
@@ -645,11 +781,15 @@ function renderHtml(k: Kpis, grantable: { key: string; title_fa: string }[]): st
         + '<span class="pill">' + esc(t.kind_title_fa) + '</span>'
         + (t.content_id ? '<span class="pill">' + esc(t.content_id) + '</span>' : '')
         + (t.is_public ? '<span class="pill hot">عمومی</span>' : '')
+        + (t.has_photo ? '<span class="pill hot">📎 عکس در راه</span>' : '')
         + '<span class="pill">' + esc(t.reference) + '</span>'
         + (t.status === 'closed' ? '<span class="pill">بسته</span>'
            : (needs ? '<span class="pill hot">منتظر پاسخ توست</span>' : '<span class="pill">منتظر کاربر</span>'))
         + '</div>'
         + '<div class="muted">' + who(t) + ' · ' + t.message_count + ' پیام · آخرین: ' + when(t.last_at) + '</div>'
+        + (t.has_photo
+           ? '<div class="muted">عکس را با کد <b>' + esc(t.reference) + '</b> در تلگرام پشتیبانی جست‌وجو کن.</div>'
+           : '')
         + '<div class="tk-x">' + esc(t.last_excerpt) + '</div>'
         + '<div class="tk-body"></div></div>';
     }
@@ -1995,6 +2135,60 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
     const r = await rejectRedemption(reference, reason);
     if (!r.ok) return reply.code(404).send({ error: 'not_pending', message: r.message });
     return reply.send({ ok: true });
+  });
+
+  // --- bank-transfer queue -----------------------------------------------------
+  // The manual half of واریز به شبا: read the bank statement, then say yes or
+  // no here. Approval and rejection reuse approveRedemption/rejectRedemption
+  // above — both are already kind-agnostic (keyed by reference, not by rail).
+  app.get('/admin/bank-transfer/pending', async (_request, reply) => {
+    return reply.send({ ok: true, redemptions: await pendingRedemptions(50, 'bank_transfer') });
+  });
+
+  // POST /admin/bank-transfer/amount { reference, amount_rial } — write the
+  // amount onto a still-pending claim. This is how the student-discounted
+  // price (full price × ٪85) reaches the row: the founder types it in after
+  // seeing the student's card, never an engine (handoff decision 2.3).
+  app.post('/admin/bank-transfer/amount', {
+    schema: {
+      body: {
+        type: 'object', required: ['reference', 'amount_rial'],
+        properties: {
+          reference: { type: 'string' },
+          amount_rial: { type: 'integer', minimum: 1 },
+        },
+      },
+    },
+  }, async (request, reply) => {
+    const { reference, amount_rial: amountRial } = request.body as {
+      reference: string; amount_rial: number;
+    };
+    const row = await setRedemptionAmount(reference, amountRial);
+    if (!row) return reply.code(404).send({ error: 'not_pending', message: 'این کد پیگیری در صف بررسی نیست.' });
+    return reply.send({ ok: true, redemption: row });
+  });
+
+  // POST /admin/bank-transfer/approve-with-badge { reference, note? } — the
+  // «تأیید + اهدای نشان دانشجو» button: approves the claim, activates the
+  // subscription and grants the `student` badge in ONE transaction, so a
+  // failure on any one of the three leaves none of them written.
+  app.post('/admin/bank-transfer/approve-with-badge', {
+    schema: {
+      body: {
+        type: 'object', required: ['reference'],
+        properties: { reference: { type: 'string' }, note: { type: 'string' } },
+      },
+    },
+  }, async (request, reply) => {
+    const { reference, note } = request.body as { reference: string; note?: string };
+    const r = await approveRedemptionAndGrantBadge(reference, 'student', { note });
+    if (!r.ok) return reply.code(404).send({ error: 'not_pending', message: r.message });
+    return reply.send({
+      ok: true,
+      months: r.redemption!.months,
+      expires_at: r.subscription!.expires_at,
+      badge: r.badge,
+    });
   });
 
   // POST /admin/subscriptions/run-sweep — run the nightly reconciliation now
