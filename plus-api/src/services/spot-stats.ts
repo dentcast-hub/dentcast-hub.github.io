@@ -143,6 +143,36 @@ export interface SpotRow {
   ctr_pct: number | null;
 }
 
+/**
+ * One creative, with WHERE its impressions happened. The two questions the ad
+ * business asks together — «این کمپین چقدر دیده شد» and «چند درصدش در کدام
+ * جایگاه بود» — were answerable from `rows` all along, but only by whoever
+ * re-aggregated them by hand; folding the cross-tab here makes the answer one
+ * shape, computed once, and testable.
+ *
+ * `share_pct` means two different denominators on purpose, and they are never
+ * mixed: on the creative it is the share of the window's TOTAL impressions
+ * («این زمانِ چرخش چه سهمی از کل نمایش‌ها را برد»), and on a slot inside it, the
+ * share of THAT creative's own impressions («از نمایش‌های همین کمپین، چند درصد
+ * در صفحهٔ اصلی بود»), so a creative's slot percentages always add up to 100.
+ */
+export interface SpotCreativeSlots {
+  creative: string;
+  impressions: number;
+  clicks: number;
+  ctr_pct: number | null;
+  /** Share of the window's total impressions. null when the window is empty. */
+  share_pct: number | null;
+  slots: Array<{
+    slot: string;
+    impressions: number;
+    clicks: number;
+    ctr_pct: number | null;
+    /** Share of THIS creative's impressions, not of the window's. */
+    share_pct: number | null;
+  }>;
+}
+
 export interface SpotStats {
   from: string;
   to: string;
@@ -156,11 +186,18 @@ export interface SpotStats {
   /** Which mirror delivered the inventory. 'unknown' = written before the
    *  dimension shipped (2026-07-27), never a guess. */
   by_host: Array<{ host: string; impressions: number; clicks: number; ctr_pct: number | null }>;
+  /** Each creative with its own slot breakdown — see SpotCreativeSlots. */
+  by_creative_slot: SpotCreativeSlots[];
   rows: SpotRow[];
 }
 
 function ctr(impressions: number, clicks: number): number | null {
   return impressions > 0 ? Math.round((clicks / impressions) * 1000) / 10 : null;
+}
+
+/** A percentage of `whole`, one decimal. null (never 0) when there is no whole. */
+function share(part: number, whole: number): number | null {
+  return whole > 0 ? Math.round((part / whole) * 1000) / 10 : null;
 }
 
 /** Default window: the last 30 Tehran days, ending today. */
@@ -210,16 +247,22 @@ export async function getSpotStats(opts: {
   const creatives = new Map<string, { key: string; impressions: number; clicks: number }>();
   const viewers = new Map<string, { key: SpotViewer; impressions: number; clicks: number }>();
   const hosts = new Map<string, { key: string; impressions: number; clicks: number }>();
+  // creative → slot → counters. Nested rather than keyed by "creative\0slot"
+  // because the readout is nested too, and a composite string key would have to
+  // be split back apart to render it.
+  const creativeSlots = new Map<string, Map<string, { key: string; impressions: number; clicks: number }>>();
 
   const rows: SpotRow[] = res.rows.map((r) => {
     const impressions = Number(r.impressions);
     const clicks = Number(r.clicks);
     totals.impressions += impressions;
     totals.clicks += clicks;
+    let inCreative = creativeSlots.get(r.creative);
+    if (!inCreative) { inCreative = new Map(); creativeSlots.set(r.creative, inCreative); }
     for (const e of [
       bucket(periods, r.period), bucket(slots, r.slot),
       bucket(creatives, r.creative), bucket(viewers, r.viewer),
-      bucket(hosts, r.host),
+      bucket(hosts, r.host), bucket(inCreative, r.slot),
     ]) {
       e.impressions += impressions;
       e.clicks += clicks;
@@ -248,6 +291,24 @@ export async function getSpotStats(opts: {
     by_creative: list(creatives).map(({ key, ...rest }) => ({ creative: key, ...rest })),
     by_viewer: list(viewers).map(({ key, ...rest }) => ({ viewer: key, ...rest })),
     by_host: list(hosts).map(({ key, ...rest }) => ({ host: key, ...rest })),
+    by_creative_slot: [...creativeSlots.entries()]
+      .map(([creative, inCreative]) => {
+        const own = [...inCreative.values()].reduce(
+          (acc, e) => ({ impressions: acc.impressions + e.impressions, clicks: acc.clicks + e.clicks }),
+          { impressions: 0, clicks: 0 },
+        );
+        return {
+          creative,
+          impressions: own.impressions,
+          clicks: own.clicks,
+          ctr_pct: ctr(own.impressions, own.clicks),
+          share_pct: share(own.impressions, totals.impressions),
+          slots: list(inCreative).map(({ key, ...rest }) => ({
+            slot: key, ...rest, share_pct: share(rest.impressions, own.impressions),
+          })),
+        };
+      })
+      .sort((a, b) => b.impressions - a.impressions || a.creative.localeCompare(b.creative)),
     rows,
   };
 }

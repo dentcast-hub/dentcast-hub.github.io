@@ -88,8 +88,12 @@ When the user asks for **ad numbers** — «گزارش تبلیغ بده», «آ
 `.dentcast/workflows/spot-report.md` and follow it. This is read-only: no
 config edit, no publish. Every ad render/click already reports to **our own
 API** (`spot_impression`/`spot_click` → aggregate counters, read back via
-`GET /admin/spot/stats`) **and** to GA4 as a cross-check, so the report is a
-lookup, not a build. Our API is the source of truth: adblockers drop GA but
+`GET /admin/spot/stats` — or, already formatted, the **«گزارش تبلیغ‌ها»** section
+of the `GET /admin` page, with its three windows ۲۴ ساعت/۷ روز/۳۰ روز and each
+تبلیغ broken down by محل) **and** to GA4 as a cross-check, so the report is a
+lookup, not a build. **«۲۴ ساعت» there is the Tehran calendar day, never a
+rolling window** — `spot_stats` is keyed by day and carries no hour, so a real
+last-24-hours figure does not exist in this data and must not be implied. Our API is the source of truth: adblockers drop GA but
 not a same-site subdomain. Three rules that decide whether the answer is
 right: the headline number is always **تعداد بارِ نمایش** (one person seeing
 an ad 20 times is 20 — there is deliberately no per-user attribution, so

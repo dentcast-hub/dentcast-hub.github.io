@@ -120,6 +120,19 @@ function renderHtml(k: Kpis, grantable: { key: string; title_fa: string }[]): st
     font:inherit;font-weight:800;cursor:pointer;align-self:flex-start}
   form.bc button:disabled{opacity:.55;cursor:default}
   #bcOut,#bgOut{font-size:.85rem;color:#93a1b8;min-height:1.6em}
+  .tabs{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+  .tabs button{background:#171e2d;color:#c8d4e6;border:1px solid #2a3448;border-radius:999px;
+    padding:7px 16px;font:inherit;font-weight:700;cursor:pointer}
+  .tabs button.on{background:#2f7de0;color:#fff;border-color:#2f7de0}
+  .sp-c{background:#171e2d;border:1px solid #2a3448;border-radius:14px;padding:12px 14px;margin-top:10px}
+  .sp-c h4{margin:0;font-size:1rem}
+  .sp-c .head{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline}
+  .sp-c .big{font-size:1.25rem;font-weight:900}
+  .sp-row{margin-top:9px}
+  .sp-row .lbl{display:flex;justify-content:space-between;gap:10px;font-size:.86rem;color:#c8d4e6}
+  .sp-bar{height:7px;border-radius:99px;background:#0f1420;border:1px solid #2a3448;margin-top:3px;overflow:hidden}
+  .sp-bar i{display:block;height:100%;background:#4f9cf0}
+  .warn{color:#e0b657;font-size:.83rem;margin-top:10px}
 </style></head><body><div class="wrap">
   <h1>پیشخوان بنیان‌گذار</h1>
   <div class="muted">تولید: ${k.generated_at} · منطقه زمانی: ${k.tz}</div>
@@ -147,6 +160,150 @@ function renderHtml(k: Kpis, grantable: { key: string; title_fa: string }[]): st
   <h3 style="margin-top:22px">KPI 4 — ماندگاری روز هفتم بر اساس پلن</h3>
   <table><thead><tr><th>پلن</th><th>گروه</th><th>مانده</th><th>درصد</th></tr></thead><tbody>${d7Rows}</tbody></table>
   <p class="muted" style="margin-top:14px">KPI ها از user_activity و anon_events محاسبه می‌شوند. تبدیل KPI 1 تقریبی است چون رویدادهای ناشناس هویت‌محور نیستند.</p>
+
+  <h3 style="margin-top:26px">گزارش تبلیغ‌ها</h3>
+  <div class="muted">هر ردیف یک <b>زمانِ چرخش</b> است — کمپینی که یکی از خانه‌های <code>rotation.sequence</code> را گرفته — و زیرش تفکیکِ جایگاه‌هایی که نمایش‌هایش آن‌جا افتاده.
+  واحد همه‌جا <b>تعدادِ بارِ نمایش</b> است، نه تعدادِ آدم: یک نفر که در یک مرور ۲۰ بار یک تبلیغ ببیند، ۲۰ شمرده می‌شود.
+  «نمایش» یعنی کارت دست‌کم ۵۰٪ روی صفحه، یک ثانیهٔ پیوسته، در تبِ فعال دیده شده — پس از تعداد صفحه‌هایی که تبلیغ داشته‌اند کمتر است و همین آن را برای اسپانسر قابل‌دفاع می‌کند.</div>
+  <div class="tabs" id="spWin">
+    <button type="button" data-days="1" class="on">۲۴ ساعت (امروزِ تهران)</button>
+    <button type="button" data-days="7">۷ روز</button>
+    <button type="button" data-days="30">۳۰ روز</button>
+  </div>
+  <div id="spOut" class="muted" style="margin-top:10px">در حال خواندن…</div>
+  <script>
+  (function () {
+    var SERVER_TODAY = '${dayInTz(new Date())}';
+    // Slot ids are shown in Persian, and "episode" / "episodes" are NEVER merged
+    // into one row: the first is a single episode page, the second is the
+    // episodes archive. One letter apart, two different placements.
+    // (No backticks anywhere in this script — it lives inside a TS template
+    // literal, and one would end the string mid-page.)
+    var SLOT_FA = {
+      home: 'صفحهٔ اصلی', article: 'مقاله', pillar: 'ستون موضوعی', search: 'جستجوی سراسری',
+      archive: 'تب آرشیو', player: 'پلیر', episode: 'صفحهٔ اپیزود', episodes: 'آرشیو اپیزودها',
+      dashboard: 'پیشخوان', profile: 'پروفایل'
+    };
+    var FIRST_DAY = '2026-07-26';    // nothing exists before the emitter shipped
+    var SLOT_SPLIT_DAY = '2026-07-28'; // pillar + episode arrived; article was relabelled
+    var out = document.getElementById('spOut');
+    var tabs = document.getElementById('spWin');
+
+    function esc(s) {
+      return String(s).replace(/[&<>"]/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+      });
+    }
+    // Latin digits with a thousands separator — the rest of this panel is Latin,
+    // and a section that switched to Persian numerals would not be comparable to
+    // the KPI cards above it at a glance.
+    function num(n) { return Number(n || 0).toLocaleString('en-US'); }
+    function pct(v) { return v == null ? '—' : v.toFixed(1) + '٪'; }
+    // The Tehran day, from the browser. Falls back to the day the server stamped
+    // into this page if Intl has no tz database.
+    function tehranToday() {
+      try {
+        return new Intl.DateTimeFormat('en-CA', {
+          timeZone: 'Asia/Tehran', year: 'numeric', month: '2-digit', day: '2-digit'
+        }).format(new Date());
+      } catch (e) { return SERVER_TODAY; }
+    }
+    function shift(day, n) {
+      var p = day.split('-').map(Number);
+      return new Date(Date.UTC(p[0], p[1] - 1, p[2]) + n * 86400000).toISOString().slice(0, 10);
+    }
+
+    function viewerRows(b) {
+      var pv = (b.page_views && b.page_views.totals) || { anon: 0, plus: 0, premium: 0 };
+      var ipv = b.impressions_per_view || {};
+      var seen = function (v) {
+        var e = (b.by_viewer || []).filter(function (x) { return x.viewer === v; })[0];
+        return e ? e.impressions : 0;
+      };
+      // A ratio is null (never 0) when the window has no page-view data — a
+      // missing denominator must not read as "nobody saw anything".
+      var ratio = function (v) { return ipv[v] == null ? 'داده‌ای نیست' : String(ipv[v]); };
+      return '<table><thead><tr><th>بیننده</th><th>نمایش</th><th>بازدید صفحه</th>'
+        + '<th>نمایش به ازای هر بازدید</th></tr></thead><tbody>'
+        + '<tr><td>مهمان (لاگین‌نکرده)</td><td>' + num(seen('anon')) + '</td><td>' + num(pv.anon)
+        + '</td><td>' + ratio('anon') + '</td></tr>'
+        + '<tr><td>پلاسِ رایگان</td><td>' + num(seen('plus')) + '</td><td>' + num(pv.plus)
+        + '</td><td>' + ratio('plus') + '</td></tr>'
+        // Premium is zero by DEFINITION, not by measurement — it is never shown
+        // as a measured 0, which would read as "they ignored the ads".
+        + '<tr><td>پریمیوم</td><td colspan="2">تبلیغ نمی‌بیند (طبق طراحی) · '
+        + num(pv.premium) + ' بازدید صفحه</td><td>—</td></tr>'
+        + '</tbody></table>';
+    }
+
+    function creativeCard(c) {
+      var h = '<div class="sp-c"><div class="head"><h4>' + esc(c.creative) + '</h4>'
+        + '<span class="big">' + num(c.impressions) + '</span>'
+        + '<span class="muted">نمایش · ' + pct(c.share_pct) + ' از کلِ بازه · '
+        + num(c.clicks) + ' کلیک · CTR ' + pct(c.ctr_pct) + '</span></div>';
+      if (!c.slots.length) return h + '</div>';
+      h += '<div class="muted" style="margin-top:8px;font-size:.82rem">تفکیک محل (درصدها از نمایش‌های همین تبلیغ):</div>';
+      c.slots.forEach(function (s) {
+        var w = s.share_pct == null ? 0 : s.share_pct;
+        h += '<div class="sp-row"><div class="lbl"><span>' + esc(SLOT_FA[s.slot] || s.slot)
+          + '</span><span>' + num(s.impressions) + ' نمایش · ' + pct(s.share_pct) + '</span></div>'
+          + '<div class="sp-bar"><i style="width:' + w + '%"></i></div></div>';
+      });
+      return h + '</div>';
+    }
+
+    function warnings(b, days) {
+      var w = [];
+      if (days === 1) w.push('امروز یک روزِ ناقص است — از نیمه‌شبِ تهران تا همین لحظه، نه ۲۴ ساعتِ لغزان.');
+      if (b.from < FIRST_DAY) w.push('پیش از ' + FIRST_DAY + ' هیچ دادهٔ تبلیغی وجود ندارد؛ روزهای قبلِ آن در این بازه خالی‌اند، نه صفر.');
+      if (b.from <= SLOT_SPLIT_DAY && b.to >= SLOT_SPLIT_DAY) {
+        w.push('این بازه روی ' + SLOT_SPLIT_DAY + ' افتاده: تا آن روز صفحه‌های تکِ اپیزود زیر «مقاله» شمرده می‌شدند و از آن روز زیر «صفحهٔ اپیزود». افتِ «مقاله» در این مرز برچسب‌گذاریِ دوباره است، نه ریزش.');
+      }
+      if (!b.totals.impressions) w.push('در این بازه هیچ نمایشی ثبت نشده. اگر انتظارِ ترافیک داشتی، پیش از نتیجه‌گیری رویدادِ spot_report_failed را در GA ببین.');
+      return w.length ? '<div class="warn">' + w.map(function (t) { return '⚠️ ' + esc(t); }).join('<br>') + '</div>' : '';
+    }
+
+    function render(b, days) {
+      var cs = b.by_creative_slot || [];
+      out.className = '';
+      out.innerHTML =
+        '<div class="muted">بازه: ' + esc(b.from) + ' تا ' + esc(b.to)
+        + ' (روزِ تقویمیِ ' + esc(b.tz) + ') · منبع: API خودمان</div>'
+        + '<div class="grid">'
+        + '<div class="card"><h3>کل نمایش</h3><div class="v">' + num(b.totals.impressions) + '</div><div class="s">بارِ دیده‌شدن، نه تعدادِ آدم</div></div>'
+        + '<div class="card"><h3>کل کلیک</h3><div class="v">' + num(b.totals.clicks) + '</div><div class="s">کارت‌های بدون لینک اصلاً کلیک‌پذیر نیستند</div></div>'
+        + '<div class="card"><h3>CTR</h3><div class="v">' + pct(b.totals.ctr_pct) + '</div><div class="s">کلیک تقسیم بر نمایش</div></div>'
+        + '</div>'
+        + '<h4 style="margin:18px 0 0">به تفکیک بیننده</h4>' + viewerRows(b)
+        + '<h4 style="margin:18px 0 0">هر تبلیغ (زمانِ چرخش) و محل‌هایش</h4>'
+        + (cs.length ? cs.map(creativeCard).join('') : '<div class="muted" style="margin-top:8px">هیچ تبلیغی در این بازه نمایشی نداشته.</div>')
+        + warnings(b, days);
+    }
+
+    function load(days) {
+      var to = tehranToday();
+      var from = shift(to, -(days - 1));
+      out.className = 'muted';
+      out.textContent = 'در حال خواندن…';
+      fetch('/admin/spot/stats?from=' + from + '&to=' + to + '&group_by=day', { credentials: 'include' })
+        .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+        .then(function (res) {
+          if (!res.ok) { out.textContent = 'خوانده نشد: ' + (res.j.message || res.j.error || 'خطا'); return; }
+          render(res.j, days);
+        })
+        .catch(function () { out.textContent = 'خوانده نشد (شبکه).'; });
+    }
+
+    tabs.addEventListener('click', function (ev) {
+      var btn = ev.target.closest('button[data-days]');
+      if (!btn) return;
+      [].forEach.call(tabs.querySelectorAll('button'), function (b) { b.classList.remove('on'); });
+      btn.classList.add('on');
+      load(Number(btn.getAttribute('data-days')));
+    });
+    load(1);
+  })();
+  </script>
 
   <h3 style="margin-top:26px">اطلاعیهٔ بنیان‌گذار</h3>
   <div class="muted">در «اطلاعیه‌ها»ی کاربر می‌نشیند و نقطهٔ قرمز را روشن می‌کند — همین حالا، در هر ساعتی. یک ردیف برای همه؛ چیزی برای هیچ‌کس جداگانه فرستاده نمی‌شود.</div>

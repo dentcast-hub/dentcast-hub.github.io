@@ -37,6 +37,18 @@ describe('admin auth', () => {
     expect(res.headers['content-type']).toContain('text/html');
     expect(res.body).toContain('پیشخوان بنیان‌گذار');
   });
+
+  // The Spot report used to be curl-only, so the counters accumulated where
+  // nobody looked. The page carries it now, over the three windows the ad
+  // business asks for.
+  it('carries the ad report with its three windows', async () => {
+    const res = await app.inject({ method: 'GET', url: '/admin', headers: { authorization: basic } });
+    expect(res.body).toContain('گزارش تبلیغ‌ها');
+    for (const days of ['1', '7', '30']) expect(res.body).toContain(`data-days="${days}"`);
+    // Rule 2 of the reporting workflow: premium is zero by DEFINITION. The page
+    // must never be able to print it as a measured 0.
+    expect(res.body).toContain('تبلیغ نمی‌بیند (طبق طراحی)');
+  });
 });
 
 describe('POST /admin/notify/test', () => {

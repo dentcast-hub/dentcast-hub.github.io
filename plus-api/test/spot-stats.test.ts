@@ -176,6 +176,57 @@ describe('GET /admin/spot/stats', () => {
     expect(body.rows.length).toBe(3); // home/sponsor-x/anon, home/sponsor-x/plus, article/premium/anon
   });
 
+  // The ad report's own question: each rotation beat (a creative holding one of
+  // the four steps) with WHERE its impressions landed. The two percentages have
+  // different denominators on purpose — the creative's is the window's total,
+  // the slot's is that creative's own — so a creative's slots always sum to 100.
+  it('breaks each creative down by slot, with both percentages', async () => {
+    await anonSpot('spot_impression', 'home:sponsor-x');
+    await anonSpot('spot_impression', 'home:sponsor-x');
+    await anonSpot('spot_impression', 'article:sponsor-x');
+    await anonSpot('spot_click', 'home:sponsor-x');
+    await anonSpot('spot_impression', 'home:premium');
+
+    const res = await app.inject({
+      method: 'GET', url: '/admin/spot/stats', headers: { authorization: basic },
+    });
+    const body = res.json();
+
+    expect(body.by_creative_slot).toEqual([
+      {
+        creative: 'sponsor-x',
+        impressions: 3,
+        clicks: 1,
+        ctr_pct: 33.3,
+        share_pct: 75, // 3 of the window's 4 impressions
+        slots: [
+          { slot: 'home', impressions: 2, clicks: 1, ctr_pct: 50, share_pct: 66.7 },
+          { slot: 'article', impressions: 1, clicks: 0, ctr_pct: 0, share_pct: 33.3 },
+        ],
+      },
+      {
+        creative: 'premium',
+        impressions: 1,
+        clicks: 0,
+        ctr_pct: 0,
+        share_pct: 25,
+        slots: [{ slot: 'home', impressions: 1, clicks: 0, ctr_pct: 0, share_pct: 100 }],
+      },
+    ]);
+    // The nested view must never disagree with the flat one it is derived from.
+    const flat = body.by_creative.map((c: any) => [c.creative, c.impressions, c.clicks]);
+    expect(body.by_creative_slot.map((c: any) => [c.creative, c.impressions, c.clicks])).toEqual(flat);
+  });
+
+  it('reports an empty window as no data, never as a zero share', async () => {
+    const res = await app.inject({
+      method: 'GET',
+      url: '/admin/spot/stats?from=2020-01-01&to=2020-01-31',
+      headers: { authorization: basic },
+    });
+    expect(res.json().by_creative_slot).toEqual([]);
+  });
+
   it('honours the date window', async () => {
     await anonSpot('spot_impression', 'home:premium');
     const res = await app.inject({
