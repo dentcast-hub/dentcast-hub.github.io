@@ -59,6 +59,57 @@ CSS_IMPORT_RE = re.compile(r'''@import\s+(?:url\()?['"](?P<p>[^'"]+)['"]''')
 # Directories that hold no site page (build inputs, tooling, dependencies).
 SKIP_DIRS = {'.git', 'node_modules', 'plus-api', '.dentcast', '.github', '.cursor'}
 
+# ── the assets no page references ───────────────────────────────────────────
+# Four shared assets are never written into a page's HTML: dc-nav.js appends
+# them at runtime, all behind ONE hand-written constant (`var V = '79';`). The
+# scanner above only sees `?v=` inside HTML, so for these it saw nothing — and
+# "nothing" reads exactly like "nothing to do". Changing plus.js therefore
+# shipped a file that every returning browser and the CDN kept serving from
+# cache at the old stamp: deployed, live, and invisible. That happened once
+# (2026-08-12, the article-threads block) and the only reason it was ever found
+# is that somebody said the feature was missing.
+#
+# So the constant is tracked here too. The four share one number by
+# construction, so they are fingerprinted as ONE group: if any of their import
+# graphs changed, V goes up and dc-nav.js is rewritten.
+NAV_LOADER = ROOT / 'dc-nav.js'
+NAV_V_RE = re.compile(r"""(?P<pre>var V = ')(?P<v>\d+)(?P<post>';)""")
+NAV_ASSETS = [
+    '/plus/plus.js', '/plus/plus.css', '/plus/plus-pages.css', '/plus/plus-desktop.css',
+]
+# Its own manifest key, so it cannot collide with a real asset path.
+NAV_KEY = 'dc-nav.js:V'
+
+
+def nav_version() -> int | None:
+    """The `var V` dc-nav.js stamps its injected assets with."""
+    if not NAV_LOADER.is_file():
+        return None
+    m = NAV_V_RE.search(NAV_LOADER.read_text(encoding='utf-8', errors='replace'))
+    return int(m.group('v')) if m else None
+
+
+def nav_fingerprint() -> str:
+    """One digest over all four injected assets — they share one stamp."""
+    h = hashlib.sha256()
+    for asset in NAV_ASSETS:
+        entry = ROOT / asset.lstrip('/')
+        if not entry.is_file():
+            continue
+        for f in graph(entry):
+            h.update(f.relative_to(ROOT).as_posix().encode())
+            h.update(f.read_bytes())
+    return h.hexdigest()[:16]
+
+
+def set_nav_version(v: int) -> None:
+    # newline='' for the same reason the page rewrite below uses it.
+    with open(NAV_LOADER, 'r', encoding='utf-8', newline='') as fh:
+        text = fh.read()
+    out = NAV_V_RE.sub(lambda m: f"{m.group('pre')}{v}{m.group('post')}", text, count=1)
+    with open(NAV_LOADER, 'w', encoding='utf-8', newline='') as fh:
+        fh.write(out)
+
 
 def html_pages() -> list[Path]:
     return sorted(
@@ -122,6 +173,23 @@ def load_manifest() -> dict:
     return {}
 
 
+def audit_nav() -> list[str]:
+    """The dc-nav.js constant, which no page stamps and the scanner cannot see."""
+    live = nav_version()
+    if live is None:
+        return ['dc-nav.js: `var V` not found — the injected assets are unversioned']
+    known = load_manifest().get(NAV_KEY)
+    fp = nav_fingerprint()
+    if known is None:
+        return [f'{NAV_KEY}: not in the manifest yet']
+    if known.get('hash') != fp:
+        return [f'{NAV_KEY}: {", ".join(NAV_ASSETS)} changed since V={known.get("v")} '
+                f'was stamped (fingerprint {known.get("hash")} -> {fp}) but V was not raised']
+    if known.get('v') != live:
+        return [f'{NAV_KEY}: manifest says V={known.get("v")}, dc-nav.js says V={live}']
+    return []
+
+
 def audit() -> tuple[list[str], dict]:
     """Returns (problems, state) where state[asset] = {v, hash, drift}."""
     manifest = load_manifest()
@@ -158,10 +226,40 @@ def audit() -> tuple[list[str], dict]:
     return problems, state
 
 
+def bump_nav() -> int | None:
+    """Raise dc-nav.js's `var V` if the assets it injects changed. Returns the new V.
+
+    Runs BEFORE the HTML pass on purpose: rewriting the constant changes
+    dc-nav.js's own bytes, and dc-nav.js is itself a stamped asset on every
+    page. Doing it first means the pass below sees the new bytes and raises
+    `/dc-nav.js?v=` in the same run — otherwise the loader would ship with a
+    new V that no browser ever fetches, which is the exact failure this whole
+    block exists to prevent, one level up.
+    """
+    if not audit_nav():
+        return None
+    manifest = load_manifest()
+    known = manifest.get(NAV_KEY) or {}
+    live = nav_version() or 0
+    new_v = max(live, int(known.get('v', 0))) + 1
+    set_nav_version(new_v)
+    manifest[NAV_KEY] = {'v': new_v, 'hash': nav_fingerprint()}
+    MANIFEST.parent.mkdir(parents=True, exist_ok=True)
+    with open(MANIFEST, 'w', encoding='utf-8', newline='') as fh:
+        fh.write(json.dumps(dict(sorted(manifest.items())), indent=2, ensure_ascii=False) + '\n')
+    print(f'  dc-nav.js  ->  var V = \'{new_v}\'  ({", ".join(NAV_ASSETS)})')
+    return new_v
+
+
 def bump() -> int:
+    nav_bumped = bump_nav()
+
     problems, state = audit()
     if not problems:
-        print('nothing to bump — every stamp already matches its content')
+        if nav_bumped is None:
+            print('nothing to bump — every stamp already matches its content')
+        else:
+            print('1 loader constant bumped.')
         return 0
 
     manifest = load_manifest()
@@ -211,6 +309,7 @@ def bump() -> int:
 
 def check() -> int:
     problems, _ = audit()
+    problems = audit_nav() + problems
     if problems:
         print('Stale cache-buster stamps:\n')
         for p in problems:
