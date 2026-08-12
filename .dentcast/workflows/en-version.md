@@ -39,12 +39,18 @@ in `CLAUDE.md`.)
    correct English; clinical/technical terminology preserved precisely;
    nothing added, nothing dropped, same number of sections/list-items as the
    source (Phase C step 5).
-7. **Pairing is disk-discovered, never hardcoded.** hreflang/toggle pairing
-   exists **iff** the en file is actually on disk
-   (`{type}/en/{file}` ↔ `{type}/{file}`). Enforced by
-   `.github/scripts/inject_hreflang.py` (Phase C step 7). A phantom pair —
-   an hreflang `en` alternate whose target file does not exist — is a bug,
-   and this machinery makes it self-resolve.
+7. **en pages are noindexed and OUT of the hreflang cluster.** The en
+   mirrors are AI-generated translations without editorial review — at
+   ~170 pages that is the "scaled, unreviewed content" pattern Google's
+   2026 spam updates target (2026-08-11 SEO audit) — so every en page
+   carries `<meta name="robots" content="noindex, follow">`, carries **no**
+   hreflang block, and stays out of `sitemap.xml`. fa pages emit **no**
+   `en` alternate. Enforced by `tools/noindex_en_mirrors.py` (`--check` in
+   CI/verify) and `.github/scripts/inject_hreflang.py`, which strips any
+   leftover hreflang from en pages and emits the 3-line fa block. Only the
+   fa↔en **toggle** remains disk-discovered (a toggle whose en target does
+   not exist is still a forbidden phantom), because the toggle is a reader
+   feature, not a search feature.
 8. **en pages stay OUT of the brain ecosystem.** This workflow does **not**
    append a `dentcast-brain.json` entry, does **not** add a Pulse line, and
    does **not** run the specialist cross-linking steps (README 4.7/4.8/4.9)
@@ -52,16 +58,22 @@ in `CLAUDE.md`.)
    `/metanotes/en/meta-1..5` are today. (The en page therefore carries no
    دانشنامه/فهرست موضوعی capsules and no brain «کاوش بیشتر» links — matching
    the `en/meta-1` reference, which has none.) The **only** brain-adjacent
-   effect is that the source fa page gains a toggle + an `en` hreflang.
+   effect is that the source fa page gains a toggle.
+   Same rule for FAQ/flashcards: an en page never carries a `FAQPage` or
+   `DefinedTermSet` block, on the page or anywhere else — `plus/quiz-index.json`
+   and `plus/flashcards-index.json` both skip `/en/` content ids by
+   construction. Any pre-existing en-page entries left over in
+   `plus/faq-corpus.json` from before FAQ/flashcards were removed from page
+   markup (`.dentcast/faq-schema-removal-handoff.md`) are archive only —
+   never re-authored, never re-added to an en page.
 9. **Two pages are mutated, both verified by before/after hash:** the **new
    en page** (created) and the **source fa page** (toggle added, `inLanguage`
-   asymmetry fixed, en hreflang gained on the next injector run). No third
-   page is touched.
+   asymmetry fixed). No third page is touched.
 10. **All existing injector skip rules are preserved.** LiteCast `.ir`-only
     pages (canonical on `dentcast.ir`) still get **no** hreflang; root
     pages, section hubs, and the `about.html ↔ metanotes/en/about.html`
-    special case behave exactly as before. This workflow only generalizes
-    *pairing*, it does not relax any skip.
+    special case behave exactly as before. This workflow does not relax
+    any skip.
 
 ---
 
@@ -242,12 +254,9 @@ to notice only when a source page's precedent happens to be clean.
 On the new en page:
 - `<link rel="canonical" href="https://dentcast.org/{type}/en/{file}.html">`
   — self-canonical, always `.org`.
-- hreflang block (the injector will normalize it in step 7, but write it
-  correctly now):
-  - `fa-IR` → `https://dentcast.ir/{type}/{file}.html`
-  - `fa` → `https://dentcast.org/{type}/{file}.html`
-  - `en` → `https://dentcast.org/{type}/en/{file}.html`
-  - `x-default` → `https://dentcast.org/{type}/{file}.html`
+- `<meta name="robots" content="noindex, follow">` — REQUIRED (Hard rule
+  7; en mirrors stay out of search). **No hreflang block** — the injector
+  (step 7) strips any that leaks in from a clone.
 - JSON-LD `inLanguage: "en"`; OG `og:locale: "en_US"` (and drop/replace any
   `fa_IR` locale carried over); `<html lang="en">`. All three language
   signals must agree.
@@ -257,30 +266,27 @@ On the new en page:
 
 On the **source fa page**, fix the language-signal asymmetry: ensure the fa
 JSON-LD carries `inLanguage: "fa"` (the metanote fa side currently lacks it).
-The `en` hreflang line itself is emitted by the injector (step 7) once the en
-file exists — do not also hand-maintain a parallel copy that could drift.
+The fa page keeps its standard 3-line hreflang block (fa-IR/fa/x-default)
+— it gains **no** `en` alternate (Hard rule 7); the injector (step 7)
+normalizes this.
 
-### 7. Pairing / hreflang machinery — disk-discovery (generalized)
-Pairing is driven by `.github/scripts/inject_hreflang.py`, which now pairs a
-page **iff its en counterpart exists on disk**
-(`{type}/en/{file}` ↔ `{type}/{file}`), generalized to every type — the old
-hardcoded `METANOTES_PAIRED_NS` is gone. Run the injector as part of the
-publish:
+### 7. hreflang / noindex machinery
+Run both enforcement scripts as part of the publish:
 
 ```bash
-python3 .github/scripts/inject_hreflang.py
+python3 .github/scripts/inject_hreflang.py    # en page: hreflang stripped; fa page: 3-line block, no en alternate
+python3 tools/noindex_en_mirrors.py --check   # every en page carries noindex (fix: run without --check)
 ```
 
-It is idempotent. Because the new en file now exists on disk, both the en
-page and the source fa page receive the 4-line mirror block; the source fa
-page gains its `en` alternate automatically. All existing skips
-(LiteCast `.ir`-only, root pages, hubs, the about special-case) are intact.
+Both are idempotent. The injector emits **no** hreflang on en pages and
+never emits an `en` alternate on fa pages (Hard rule 7); all existing skips
+(LiteCast `.ir`-only, root pages, hubs) are intact.
 
 ### 8. Sitemap + cache-bust + rebuild (real runs only)
 On a real invocation, finish like any publish:
 
 ```bash
-python3 .github/scripts/gen_sitemap.py     # en page is .org-canonical → enters sitemap.xml
+python3 .github/scripts/gen_sitemap.py     # no-op for the en page: gen_sitemap drops noindexed pages itself
 python3 tools/stamp-version.py             # cache-bust, run LAST
 ```
 
@@ -293,12 +299,12 @@ touched brain-derived output, which it normally does not.)
 - Recompute SHA-256 of `metanotes/en/meta-1.html` (the chrome standard) — it
   **must equal** step 1; the chrome standard is read-only.
 - Report before/after hash of the **source fa page**; the only allowed diff
-  is the added toggle, the `inLanguage` fix, and the injector's `en`
-  hreflang line.
+  is the added toggle and the `inLanguage` fix.
 - Confirm the new en page: `<html lang="en" dir="ltr" data-dc-no-header>`,
-  GA4 present exactly once, canonical self-`.org`, 4-line hreflang mirror,
-  `inLanguage`/`lang`/`og:locale` all `en`, schema `@type` identical to the
-  source type, toggle → `../{file}.html`, body structure-faithful to source.
+  GA4 present exactly once, canonical self-`.org`, robots meta
+  `noindex, follow`, **no** hreflang lines, `inLanguage`/`lang`/`og:locale`
+  all `en`, schema `@type` identical to the source type, toggle →
+  `../{file}.html`, body structure-faithful to source.
 - Confirm both toggles are exact inverses and neither points at meta-1
   (unless meta-1 is the document).
 - **No same-word gloss duplicates (step 5):** confirm the en body has no
@@ -311,8 +317,9 @@ touched brain-derived output, which it normally does not.)
 - Chrome standard hash (unchanged) + source fa page before/after hash
 - Date audit table (all OK)
 - Toggle targets on both sides (exact inverses, no meta-1 hardcode)
-- SEO head confirmation (canonical, 4-line hreflang, language-signal trio)
-- Injector run output (pairing now present for this file; skips intact)
+- SEO head confirmation (canonical, noindex, zero hreflang lines,
+  language-signal trio)
+- Injector + noindex-check run output (skips intact)
 - Explicit confirmation: no brain entry, no Pulse, no specialist
   cross-linking was added for the en page (Hard rule 8)
 - Explicit confirmation: no `word (Word)` same-word gloss duplicates left
@@ -333,36 +340,26 @@ touched brain-derived output, which it normally does not.)
 - **Phase C:** create the en page with **meta-1's English chrome** wrapping a
   **Promptologist-shaped, LTR, translated body** (same JSON-LD `@type` as the
   source, `inLanguage: "en"`, canonical
-  `https://dentcast.org/dentai/promptologist/en/prompt1-1.html`, 4-line
-  hreflang mirror, scripts/analytics copied from the *source* not meta-1).
+  `https://dentcast.org/dentai/promptologist/en/prompt1-1.html`, robots
+  `noindex, follow`, no hreflang, scripts/analytics copied from the *source*
+  not meta-1).
   Add the toggle on the en page → `../prompt1-1.html` («فارسی») and on the
   source fa page → `en/prompt1-1.html` («English»); add `inLanguage:"fa"` to
-  the fa JSON-LD. Run `inject_hreflang.py`: since
-  `dentai/promptologist/en/prompt1-1.html` now exists on disk, the new
-  general logic pairs both pages and writes the 4-line block to each — no
-  code change, no hardcoded set needed. Two files touched: the new en page +
-  `prompt1-1.html`.
+  the fa JSON-LD. Run `inject_hreflang.py` (fa page keeps its 3-line block,
+  en page gets none) and `noindex_en_mirrors.py --check`. Two files touched:
+  the new en page + `prompt1-1.html`.
 - **Series nav (step 4.5):** the bottom `ep-nav` prev/next bar is kept (it is
   type structure). Part 1 has no previous; "next" stays a disabled placeholder
   until `en/prompt1-2.html` exists, at which point translating part 2 wires
   both slots within the en tier.
 - **Not done:** no brain entry, no Pulse, no glossary back-links.
 
-### (b) meta-6 — the phantom pair (proper death)
-- meta-6 is **not** invoked here (the constraints forbid editing it). This
-  entry only states what the generalized injector **will** do on its next
-  real run, with no per-page action:
-- Today `metanotes/meta-6.html` carries an `en` hreflang to
-  `https://dentcast.org/metanotes/en/meta-6.html`, but **`metanotes/en/meta-6.html`
-  does not exist on disk**, and meta-6 has no fa-side toggle button.
-- With pairing now disk-discovered, `en_counterpart_path('metanotes/meta-6.html')`
-  → `metanotes/en/meta-6.html`, and `disk_exists(...)` → **False**. So
-  `desired_block` falls through to the **default 3-line block** (fa-IR, fa,
-  x-default) — **the `en` alternate is dropped**. No fa-side toggle is
-  emitted because none exists and this workflow only adds a toggle when it
-  actually produces the en counterpart.
-- **Result:** on the injector's first real run, the meta-6 ghost
-  self-resolves — the dangling `en`→404 alternate disappears with zero
-  bespoke handling. If meta-6 is later genuinely translated via this
-  workflow, creating `metanotes/en/meta-6.html` re-pairs it automatically by
-  the same rule.
+### (b) meta-6 — the phantom pair (historical)
+- This entry documented how disk-discovered *hreflang pairing* once made a
+  dangling `en`→404 alternate on `metanotes/meta-6.html` self-resolve. It
+  is now moot: since the en mirrors went noindex (Hard rule 7), **no** fa
+  page carries an `en` alternate at all — the injector's default 3-line
+  block covers meta-6 and every other fa page identically, en file on disk
+  or not. The disk-discovery rule survives only for the **toggle**: a
+  toggle is added exactly when this workflow actually produces the en
+  counterpart, never speculatively.

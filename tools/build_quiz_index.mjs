@@ -1,10 +1,13 @@
 // Build plus/quiz-index.json — the premium app's scored-quiz question bank.
 //
 // This file is GENERATED, never hand-written. The single source of truth for
-// quiz content is each page's OWN JSON-LD `FAQPage` block: this script walks
-// the site, collects every FAQ Question, and keeps only the BINARY (بله/خیر)
-// ones — the subset whose answers can be graded objectively without authored
-// distractors. A question qualifies only when BOTH hold:
+// quiz content is `plus/faq-corpus.json` — the FAQ/flashcards corpus
+// extracted verbatim out of page JSON-LD when the hidden-schema SEO issue
+// was fixed (see .dentcast/faq-schema-removal-handoff.md). Pages no longer
+// carry a `FAQPage` block themselves; this script reads the corpus, collects
+// every FAQ Question, and keeps only the BINARY (بله/خیر) ones — the subset
+// whose answers can be graded objectively without authored distractors. A
+// question qualifies only when BOTH hold:
 //
 //   1. the question is phrased as a yes/no question (starts with «آیا» or
 //      «مگر», or ends in a yes/no tail like «درست است؟» / «امکان دارد؟»), and
@@ -15,77 +18,41 @@
 // Anything ambiguous (both/neither polarity in the opening clause) is
 // EXCLUDED — accuracy over coverage: a scored quiz must never grade against a
 // guessed key. Authoring convention going forward (workflow step 4.12):
-// binary FAQ answers open with an explicit «بله،»/«خیر؛» verdict so new
-// questions are picked up mechanically.
+// binary FAQ answers open with an explicit «بله،»/«خیر؛» verdict, written
+// into the corpus under the new page's content id, so new questions are
+// picked up mechanically.
 //
 // content_id = page path relative to repo root, without the leading slash or
-// ".html" (matches toContentId() in build_flashcards_index.mjs) — this is the
-// article identifier the premium backend uses to map "reader finished article
-// X" → "these are X's quiz questions".
+// ".html" (matches toContentId() in build_flashcards_index.mjs and the
+// corpus extractor) — this is the article identifier the premium backend
+// uses to map "reader finished article X" → "these are X's quiz questions".
 //
 // Scope: LiteCast (patient-facing), /en/ mirrors, and the homepage are
 // excluded, same as the flashcards index.
 //
 // Run from the repo root:  node tools/build_quiz_index.mjs
-import { readFileSync, writeFileSync, readdirSync, statSync } from 'node:fs';
+import { readFileSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { dirname, resolve, relative, join } from 'node:path';
+import { dirname, resolve } from 'node:path';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 
-const SKIP_DIR_NAMES = new Set([
-  '.git', '.github', '.dentcast', '.claude', '.cursor', '.vscode',
-  'node_modules', 'assets', 'fonts', 'card', 'reports',
-  'plus', 'plus-api', 'litecast', 'en',
-]);
-
-function walk(dir, out) {
-  for (const name of readdirSync(dir)) {
-    if (SKIP_DIR_NAMES.has(name)) continue;
-    const full = join(dir, name);
-    const st = statSync(full);
-    if (st.isDirectory()) { walk(full, out); continue; }
-    if (name.toLowerCase() === 'index.html') continue; // landing/listing pages, not content
-    if (/\.html$/i.test(name)) out.push(full);
-  }
+// Same exclusions the old page-walk enforced structurally (SKIP_DIR_NAMES
+// 'litecast'/'en' + the generic "any index.html is a landing page, not
+// content" skip). The corpus carries no pillar/<slug>/index entries (pillar
+// pages have no FAQ/flashcards schema), so the old "add pillar index.html
+// back" special case is moot here — nothing to re-admit.
+function isExcludedContentId(contentId) {
+  const segments = contentId.split('/');
+  if (segments[0] === 'litecast') return true;
+  if (segments.includes('en')) return true;
+  if (segments[segments.length - 1] === 'index') return true;
+  return false;
 }
 
-const files = [];
-walk(root, files);
-
-// pillar/<slug>/index.html pages ARE content — add them back (same as the
-// flashcards builder).
-const pillarDir = resolve(root, 'pillar');
-try {
-  for (const slug of readdirSync(pillarDir)) {
-    if (SKIP_DIR_NAMES.has(slug)) continue;
-    const idx = join(pillarDir, slug, 'index.html');
-    try { if (statSync(idx).isFile()) files.push(idx); } catch (_) { /* not a topic dir */ }
-  }
-} catch (_) { /* no pillar dir */ }
-
-const toContentId = (absPath) =>
-  relative(root, absPath).replace(/\\/g, '/').replace(/\.html$/i, '');
-
-// Pull every FAQPage node, including ones nested in an @graph array.
-function extractFaqPages(html) {
-  const pages = [];
-  const re = /<script[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi;
-  let m;
-  while ((m = re.exec(html))) {
-    let parsed;
-    try { parsed = JSON.parse(m[1]); } catch (_) { continue; }
-    const tops = Array.isArray(parsed) ? parsed : [parsed];
-    for (const t of tops) {
-      if (!t || typeof t !== 'object') continue;
-      const nodes = Array.isArray(t['@graph']) ? t['@graph'] : [t];
-      for (const n of nodes) {
-        if (n && n['@type'] === 'FAQPage' && Array.isArray(n.mainEntity)) pages.push(n);
-      }
-    }
-  }
-  return pages;
-}
+const corpus = JSON.parse(
+  readFileSync(resolve(root, 'plus', 'faq-corpus.json'), 'utf8')
+);
 
 // A question counts as yes/no-form when it opens with an interrogative
 // yes/no particle («آیا»/«مگر») or ends in a Persian yes/no tail — BUT never
@@ -134,12 +101,11 @@ let totalQuestions = 0;
 let totalPages = 0;
 let scanned = 0;
 
-for (const file of files) {
-  const html = readFileSync(file, 'utf8');
-  const faqPages = extractFaqPages(html);
+for (const [contentId, entry] of Object.entries(corpus.byContent)) {
+  if (isExcludedContentId(contentId)) continue;
+  const faqPages = entry.faqPages || [];
   if (!faqPages.length) continue;
 
-  const contentId = toContentId(file);
   const questions = [];
   for (const page of faqPages) {
     page.mainEntity.forEach((q, idx) => {
@@ -168,7 +134,7 @@ for (const file of files) {
 
 const out = {
   version: 1,
-  generatedFrom: 'FAQPage JSON-LD on each page (binary subset; see workflow step 4.12)',
+  generatedFrom: 'plus/faq-corpus.json (binary subset of FAQPage questions; see workflow step 4.12)',
   contentCount: totalPages,
   questionCount: totalQuestions,
   byContent,

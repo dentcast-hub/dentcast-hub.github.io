@@ -1053,6 +1053,19 @@ function removeAllAds() {
 // ── boot ─────────────────────────────────────────────────────────────────────
 
 async function main() {
+  // Fired in parallel with the config fetch below, not after it — viewerProbe()
+  // has no dependency on cfg (it only calls /me), so starting it here instead of
+  // once cfg resolves overlaps the two network round-trips instead of stacking
+  // them. That roughly halves how long the article page has already rendered
+  // (unshifted) before the ad slot's late DOM insertion pushes content down —
+  // the biggest lever available on that Cumulative Layout Shift without
+  // reserving space ahead of a creative that isn't picked yet (2026-08-12 CLS
+  // review; card height varies too much across creative types — text card vs.
+  // image banner — to reserve accurately before targeting resolves).
+  const probe = viewerProbe();
+  classPending = probe; // impressions wait on this before they may be counted
+  probe.then(rememberClass);
+
   let cfg;
   try {
     const res = await fetch(CONFIG_URL + SPOT_V, { cache: 'no-store' });
@@ -1090,7 +1103,8 @@ async function main() {
 
   // Resolve the viewer class ONCE, before anything renders. It decides two
   // things: whether an ad may exist at all (premium: never), and which campaign
-  // is targeted (anon vs plus).
+  // is targeted (anon vs plus). `probe` was already started above, in parallel
+  // with the config fetch.
   //
   // The old rule — "assume anon after TIER_TIMEOUT_MS, undo later if premium" —
   // guessed wrong in both directions on a slow /me: a premium visitor saw an ad
@@ -1099,9 +1113,6 @@ async function main() {
   // reporting: the server labels the impression `plus` from the session cookie
   // while the client had picked an `anon` creative). The device hint fixes the
   // common case; waiting fixes the premium case.
-  const probe = viewerProbe();
-  classPending = probe; // impressions wait on this before they may be counted
-  probe.then(rememberClass);
   const hint = hintedClass();
   const premiumHides = cfg.premium_hides_ads !== false;
 

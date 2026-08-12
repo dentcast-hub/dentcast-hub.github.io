@@ -77,8 +77,10 @@
 `.dentcast/workflows/en-version.md` را بخوان و طبق آن عمل کن. آن ورکفلو یک صفحهٔ
 موجود را در `/{type}/en/{same-filename}.html` آینه می‌کند: chrome انگلیسی از
 `metanotes/en/meta-1.html`، بدنه/اسکیمای ارث‌بری‌شده از نوعِ خودِ صفحهٔ منبع، و
-تاگل واقعیِ fa↔en روی هر دو طرف. صفحه‌های en ترجمهٔ مستقل‌اند: **نه** انتریِ
-brain، **نه** خط پالس، **نه** لینک‌دهی تخصصی.
+تاگل واقعیِ fa↔en روی هر دو طرف. صفحه‌های en ترجمهٔ مستقل و صرفاً برای
+خواننده‌اند: **noindex** منتشر می‌شوند (`noindex, follow`، بدون hreflang، خارج
+از سایت‌مپ — ترجمهٔ هوش‌مصنوعیِ بازبینی‌نشده‌اند؛ ممیزی سئوی 2026-08-11) و
+**نه** انتریِ brain دارند، **نه** خط پالس، **نه** لینک‌دهی تخصصی.
 
 **نکته — روتر انتشار خودش این ورکفلو را صدا می‌زند.** هر publish عادی روی `.org`
 با **فاز D** ورکفلوی انتشار تمام می‌شود که همین ورکفلو را روی صفحهٔ تازه‌منتشرشده
@@ -243,8 +245,8 @@ Plus/Premium تبدیل می‌کند. همهٔ این‌ها گام‌های خ
 | عادی | صفحهٔ محتوا + brain + پالس + پیلار | `/{type}/`، `dentcast-brain.json`، `index.html` | هر publish |
 | عادی | آینهٔ انگلیسی + تاگل | `/{type}/en/` | فاز D — هر publish روی `.org` (جز LiteCast) |
 | Plus | درخت ناوبریِ «میز کار» | `plus/content-index.json` | `node tools/build_plus_index.mjs` — هر publish که brain را تغییر داده |
-| Plus/Premium | فلش‌کارت (Leitner) | `DefinedTermSet` روی خودِ صفحه → `plus/flashcards-index.json` | گام ۴.۱۱ + `node tools/build_flashcards_index.mjs` |
-| Plus/Premium | کوییز نمره‌دار | `FAQPage` روی خودِ صفحه → `plus/quiz-index.json` | گام ۴.۱۲ + `node tools/build_quiz_index.mjs` |
+| Plus/Premium | فلش‌کارت (Leitner) | `DefinedTermSet` در `plus/faq-corpus.json` (نه روی خودِ صفحه) → `plus/flashcards-index.json` | گام ۴.۱۱ + `node tools/build_flashcards_index.mjs` |
+| Plus/Premium | کوییز نمره‌دار | `FAQPage` در `plus/faq-corpus.json` (نه روی خودِ صفحه) → `plus/quiz-index.json` | گام ۴.۱۲ + `node tools/build_quiz_index.mjs` |
 | Premium | مسیرهای یادگیری (pathways) | `plus/pathways.json` | گام ۵.۶ — هر publish تخصصی (جز LiteCast) |
 | Premium | کالکشن‌ها | دیتابیس API (`collections`/`collection_items`) | کاربر می‌سازد؛ publish کاری ندارد |
 | Premium | دفترچهٔ هایلایت‌ها | دیتابیس API (`highlights`) → `/plus/highlights.html` | کاربر می‌سازد؛ publish کاری ندارد |

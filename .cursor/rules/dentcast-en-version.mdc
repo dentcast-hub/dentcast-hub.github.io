@@ -29,6 +29,9 @@ alwaysApply: false
   به meta-1 لینک نده. CSS مربوط به `.lang-btn` هم باید در صفحهٔ fa باشد.
 - **صفحهٔ en از اکوسیستم brain بیرون است:** نه انتری brain، نه خط پالس، نه
   کپسول «کاوش بیشتر»، نه ۴.۷/۴.۸/۴.۹.
+- **صفحهٔ en همیشه noindex است** (`noindex, follow`، بدون بلوک hreflang، خارج
+  از سایت‌مپ) — ترجمهٔ هوش‌مصنوعیِ بازبینی‌نشده فقط برای خواننده است، نه گوگل؛
+  صفحهٔ fa هم هیچ alternate انگلیسی ندارد.
 - **دقیقاً دو فایل تغییر می‌کند:** صفحهٔ en جدید + صفحهٔ fa منبع.
 - **`/dc-article.css` را به صفحهٔ en لینک نکن** (RTL است) — معادل LTR درون‌خطی.
 - **گلاسِ تکراری را حذف کن:** «اسکن‌بادی (Scanbody)» در انگلیسی نباید بشود
@@ -38,7 +41,8 @@ alwaysApply: false
 
 ```bash
 sha256sum metanotes/en/meta-1.html <source-fa-page>   # قبل و بعد
-python3 .github/scripts/inject_hreflang.py            # جفت‌سازی دیسک‌محور
+python3 .github/scripts/inject_hreflang.py            # en بدون hreflang؛ fa بلوکِ ۳خطی
+python3 tools/noindex_en_mirrors.py --check           # هر صفحهٔ en باید noindex باشد
 python3 .github/scripts/gen_sitemap.py
 python tools/stamp-version.py                         # آخر
 # چک گلاس تکراری:

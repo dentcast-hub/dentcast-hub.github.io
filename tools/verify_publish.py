@@ -168,6 +168,23 @@ def jsonld_nodes(doc, wanted):
     return found
 
 
+_FAQ_CORPUS = None
+
+
+def faq_corpus():
+    """plus/faq-corpus.json's byContent map, cached for the life of the
+    process. FAQ/flashcards content lives here, not on the page, since the
+    hidden-schema SEO fix (.dentcast/faq-schema-removal-handoff.md) — pages
+    carry no FAQPage/DefinedTermSet of their own any more."""
+    global _FAQ_CORPUS
+    if _FAQ_CORPUS is None:
+        try:
+            _FAQ_CORPUS = json.loads(read("plus/faq-corpus.json")).get("byContent", {})
+        except (OSError, ValueError):
+            _FAQ_CORPUS = {}
+    return _FAQ_CORPUS
+
+
 def related_section(doc):
     return re.search(r'<div class="dc-related-section">.*?</div>\s*</div>', doc, re.S)
 
@@ -510,14 +527,28 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
                       "no self-link", "the section links to the page itself")
 
     # ---------------- FAQ + flashcards ----------------
-    faqs = jsonld_nodes(doc, "FAQPage")
+    # Content lives in plus/faq-corpus.json, not in the page's own JSON-LD —
+    # see .dentcast/faq-schema-removal-handoff.md. The page itself must carry
+    # neither a FAQPage node nor a #flashcards-tagged DefinedTermSet; this
+    # check runs for every page (including LiteCast) so the hidden schema can
+    # never silently come back via a future publish or clone.
+    rep.check(
+        '"FAQPage"' not in doc and "#flashcards" not in doc,
+        "4.12 no-page-schema",
+        "page carries no FAQPage/flashcards JSON-LD",
+        "page still has hidden FAQPage/DefinedTermSet schema in its own JSON-LD",
+        f"python3 tools/strip_faq_schema.py {page_rel}",
+    )
+
+    corpus_entry = faq_corpus().get(content_id, {})
+    faqs = corpus_entry.get("faqPages", [])
     questions = [q for f in faqs for q in f.get("mainEntity", [])]
     if is_lite:
         rep.skip("4.12 quiz", "LiteCast is outside the quiz ecosystem")
         rep.skip("4.11 cards", "LiteCast is outside the flashcard ecosystem")
     else:
         rep.check(bool(questions), "4.12 quiz", f"{len(questions)} FAQ questions",
-                  "no FAQPage on the page", "step 4.12")
+                  "no FAQ entry for this page in plus/faq-corpus.json", "step 4.12")
         for i, q in enumerate(questions):
             name = q.get("name", "")
             hit = [d for d in DEIXIS if d in name]
@@ -533,9 +564,10 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
                           f"it will be silently dropped from the scored bank",
                           "step 4.12(b) — reopen the answer with «بله،»/«خیر؛»")
 
-        sets = jsonld_nodes(doc, "DefinedTermSet")
+        sets = corpus_entry.get("definedTermSets", [])
         rep.check(len(sets) == 1, "4.11 cards",
-                  "one DefinedTermSet block", f"found {len(sets)} DefinedTermSet blocks", "step 4.11")
+                  "one DefinedTermSet block",
+                  f"found {len(sets)} DefinedTermSet blocks in plus/faq-corpus.json", "step 4.11")
         terms = [t for s in sets for t in s.get("hasDefinedTerm", [])]
         rep.check(bool(terms), "4.11 cards", f"{len(terms)} flashcards",
                   "DefinedTermSet has no terms")
@@ -594,6 +626,16 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
                       "en page has a «کاوش بیشتر» section (en pages stay out of the brain ecosystem)")
             rep.check("dc-notify" not in en, "E notify", "en mirror carries no notify marker",
                       "en mirror has dc-notify — only the fa page announces")
+            en_robots = meta(en, name="robots") or ""
+            rep.check("noindex" in en_robots, "D en-noindex",
+                      "en mirror is noindexed",
+                      f"en robots meta is «{en_robots}» — en mirrors are unreviewed AI "
+                      f"translations and must stay out of search",
+                      "python3 tools/noindex_en_mirrors.py")
+            rep.check("hreflang" not in en, "D en-noindex",
+                      "en mirror carries no hreflang",
+                      "en mirror still advertises itself in an hreflang cluster",
+                      "python3 .github/scripts/inject_hreflang.py")
             fa_btn = re.search(r'<a class="lang-btn"[^>]*href="([^"]+)"', doc)
             en_btn = re.search(r'<a class="lang-btn"[^>]*href="([^"]+)"', en)
             name = Path(content_id).name + ".html"
@@ -612,9 +654,10 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
                       "Phase D — same headings, same number of <li>, nothing added or dropped")
 
         alts = re.findall(r'<link rel="alternate" hreflang="([^"]+)"', doc)
-        rep.check(sorted(alts) == ["en", "fa", "fa-IR", "x-default"], "D hreflang",
-                  "4-line hreflang mirror present",
-                  f"hreflang set is {sorted(alts)}, expected en/fa/fa-IR/x-default",
+        rep.check(sorted(alts) == ["fa", "fa-IR", "x-default"], "D hreflang",
+                  "3-line hreflang block present (no en — mirrors are noindexed)",
+                  f"hreflang set is {sorted(alts)}, expected fa/fa-IR/x-default "
+                  f"(the en alternate was retired when the unreviewed en mirrors went noindex)",
                   "python3 .github/scripts/inject_hreflang.py")
 
         if etype in NO_NOTIFY_TYPES:
@@ -701,9 +744,10 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
         rep.check(f"{domain}/{page_rel}" in sm, "8 sitemap", "page is in sitemap.xml",
                   "page missing from sitemap.xml", "python3 .github/scripts/gen_sitemap.py")
         if exists(en_rel):
-            rep.check(f"https://dentcast.org/{en_rel}" in sm, "8 sitemap",
-                      "en mirror is in sitemap.xml", "en mirror missing from sitemap.xml",
-                      "python3 .github/scripts/gen_sitemap.py")
+            rep.check(f"https://dentcast.org/{en_rel}" not in sm, "8 sitemap",
+                      "en mirror stays out of sitemap.xml (noindexed)",
+                      "en mirror is in sitemap.xml — it is noindexed and must not be sitemapped",
+                      "python3 .github/scripts/gen_sitemap.py  (it drops noindexed pages itself)")
 
     if pillar.get("primary"):
         pp = f"pillar/{pillar['primary']}/index.html"

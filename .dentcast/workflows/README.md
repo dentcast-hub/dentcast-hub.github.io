@@ -20,7 +20,7 @@
     - **The only valid no-op is a documented empty result.** A step may add nothing **only** when you actually performed the analysis and there were **zero genuinely-qualifying candidates** (or the section is at the 5-link cap). You must then **say so explicitly** in the report ("4.8: analyzed body, 0 qualifying glossary/episode candidates" / "4.9: section at cap, skipped"). Silence is not an allowed state.
     - **Type mapping for core episodes (no on-disk `dc-related-section`).** Episodes use the **«محتوای مرتبط»** block (`ep-related-link`), not a `dc-related-section` «کاوش بیشتر». For episodes, **step 4.9 targets the «محتوای مرتبط» block** (fill its free slots, under the Hard-Rule-9 cap, with semantically related brain entries — e.g. sibling parts of a multi-part series first), and **step 4.8 targets the «درباره این اپیزود» caption body**. The naming difference is **not** an excuse to skip; the «محتوای مرتبط» block IS the episode's related-links section for 4.9 purposes.
 
-12. **Every published page ships bilingual: the English mirror + fa↔en toggle is MANDATORY (Phase D), never an afterthought.** A `.org` publish is **incomplete** until the new page has a real English counterpart at `/{type}/en/{same-filename}.html` and a working **per-document fa↔en language toggle on both sides**. The toggle button (`.lang-btn`) is **never** added alone: a toggle whose English target does not exist on disk is a forbidden phantom pair (the `inject_hreflang.py` machinery drops it), so the en page MUST be created in the same publish. This is produced by running the **English-version workflow** (`.dentcast/workflows/en-version.md`) on the just-published page as the final phase — see **Phase D**. "The cloned template had no toggle, so I matched it" is an **explicitly forbidden** justification (same spirit as Hard Rule 11): if earlier same-type pages lack the toggle/en mirror, that is a gap, never a pattern to copy forward. **The single exception is LiteCast**, which is `.ir`-only, carries **no** hreflang, and gets **no** en mirror or toggle (Hard Rule 10) — for LiteCast, Phase D is a documented skip.
+12. **Every published page ships bilingual: the English mirror + fa↔en toggle is MANDATORY (Phase D), never an afterthought.** A `.org` publish is **incomplete** until the new page has a real English counterpart at `/{type}/en/{same-filename}.html` and a working **per-document fa↔en language toggle on both sides**. The toggle button (`.lang-btn`) is **never** added alone: a toggle whose English target does not exist on disk is a forbidden phantom pair, so the en page MUST be created in the same publish. The en mirror ships **noindexed** (`noindex, follow`, no hreflang, out of the sitemap — it is an unreviewed AI translation and a reader feature, not a search surface; see Phase D). This is produced by running the **English-version workflow** (`.dentcast/workflows/en-version.md`) on the just-published page as the final phase — see **Phase D**. "The cloned template had no toggle, so I matched it" is an **explicitly forbidden** justification (same spirit as Hard Rule 11): if earlier same-type pages lack the toggle/en mirror, that is a gap, never a pattern to copy forward. **The single exception is LiteCast**, which is `.ir`-only, carries **no** hreflang, and gets **no** en mirror or toggle (Hard Rule 10) — for LiteCast, Phase D is a documented skip.
 
 13. **Never guess — this generalizes every scattered "ask, don't guess" note elsewhere in this document into one binding rule that applies to the whole workflow, not just the paper branch.** If a fact is not (a) directly stated by the user, (b) verifiable by reading a file already in the repo, (c) verifiable by reading the live taxonomy at runtime, or (d) successfully fetched/probed from a real source (the audio file itself, a DOI lookup, a Drive listing) — **you do not know it, and you may not estimate, infer, round, or fabricate a stand-in value for it.** Stop and ask the user instead. Zero exceptions:
     - **Numeric/factual metadata — duration, file size, dates, counts, IDs — is never estimated.** If the audio host is unreachable (network policy block, missing tool, timeout, anything else) and the duration can't be probed, **ask the user for the exact duration.** Do not write a "reasonable-sounding" placeholder into the brain, `dentcast.json`, the page's visible time, or its JSON-LD `duration` — not even temporarily, not even flagged as an estimate in a later report. A wrong number silently shipped to a live page is exactly the failure this rule exists to prevent.
@@ -870,23 +870,27 @@ used for the on-page credit (with the rendered anchor), or the "Part 3 skipped �
 paper-only" note otherwise. Explicitly flag anything you had to ask the user
 about, and confirm nothing was guessed.
 
-### 4.11. Flashcards (Leitner) — semantic `DefinedTermSet` on the page itself
+### 4.11. Flashcards (Leitner) — semantic `DefinedTermSet` in the FAQ corpus
 
 **Runs for EVERY type, on EVERY publish that produces a page — LiteCast is the
 sole exception** (LiteCast stays outside the specialist ecosystem, same as the
 glossary/pillar linking it skips in step 0). A flashcard is **a concept, not a
 question** — so it lives in schema.org's real vocabulary for exactly that:
 `DefinedTermSet` → `hasDefinedTerm[]` of `DefinedTerm { name, description }`.
-This block is added to the **new page's own JSON-LD**, the same way the FAQPage
-block already lives on the page — **not** a separate hand-maintained file.
+This block is written into **`plus/faq-corpus.json`, under the new page's
+content id** — **never into the page's own JSON-LD**. FAQ/flashcards used to
+live on the page itself; that shipped hidden markup with no visible rendering
+at scale and was an SEO liability, so it was migrated into this corpus (see
+`.dentcast/faq-schema-removal-handoff.md`). `verify_publish.py` fails any page
+whose own HTML still carries a `#flashcards`-tagged `DefinedTermSet`.
 `plus/flashcards-index.json` (the premium app's Leitner-seed catalog) is
 **generated**, never edited directly: run
 `node tools/build_flashcards_index.mjs` (added to step 8's rebuild list) to
-scan every page's `DefinedTermSet` and regenerate it. **This step never
-touches `dentcast-brain.json`** — Hard Rule 6 (brain schema is sacred; never
-add a field absent from the previous same-category entry) makes the brain the
-wrong home for a feature being rolled out prospectively while older entries
-wait for a later, separate backfill pass.
+read every content id's `DefinedTermSet` out of the corpus and regenerate it.
+**This step never touches `dentcast-brain.json`** — Hard Rule 6 (brain schema
+is sacred; never add a field absent from the previous same-category entry)
+makes the brain the wrong home for a feature being rolled out prospectively
+while older entries wait for a later, separate backfill pass.
 
 **Card content must be semantic, never a mechanical FAQ dump.** Each
 `DefinedTerm` tests recall of **one concept**: `name` is a tight recall
@@ -904,9 +908,9 @@ has not been rewritten. Phase F fails the publish on a description that matches
 a FAQ answer with or without its verdict prefix, so this is enforced, not
 advisory.
 
-**FAQ → flashcard compression, but judged, not mechanical.** Where this page
-already carries a FAQPage entry, walk its `mainEntity` and classify each
-Q/A pair:
+**FAQ → flashcard compression, but judged, not mechanical.** Where this
+content's corpus entry already carries a FAQPage node, walk its `mainEntity`
+and classify each Q/A pair:
 - **Genuinely "define/explain X" shaped** (the question names one concept,
   the answer explains it) → compress it into one `DefinedTerm`: rewrite the
   question into a `name` recall prompt, rewrite the answer into a complete
@@ -927,9 +931,10 @@ accurate, or worth a card at all, stop and present it to the user rather than
 forcing a term into existence. A thin or fabricated card is worse than no
 card.
 
-Markup (placed alongside the page's existing JSON-LD block(s), same pattern
-as the FAQPage `@id` convention already in use, e.g.
-`https://dentcast.org/insight/insight-12.html#faq`):
+Written into `plus/faq-corpus.json`, under this content id's
+`definedTermSets` array (the node's own shape — including the `@id`
+convention below — is unchanged from the old on-page form; only its storage
+location moved):
 
 ```html
 <script type="application/ld+json">
@@ -963,22 +968,25 @@ as the FAQPage `@id` convention already in use, e.g.
   these two. Match this shape exactly on every future publish — this is now
   the schema template.
 
-**Verify:** confirm the `DefinedTermSet` block is present and valid JSON-LD;
-that every `DefinedTerm` has a unique `@id`; that no `name`/`description` is a
-verbatim copy of a FAQ Q/A pair; and report the count of terms written, how
-many came from `faq` vs `authored`, and which FAQ entries (if any) were
-judged comparison/decision-shaped and skipped.
+**Verify:** confirm the `DefinedTermSet` node is present in
+`plus/faq-corpus.json` and is valid JSON; that every `DefinedTerm` has a
+unique `@id`; that no `name`/`description` is a verbatim copy of a FAQ Q/A
+pair; and report the count of terms written, how many came from `faq` vs
+`authored`, and which FAQ entries (if any) were judged comparison/decision-
+shaped and skipped.
 
 ### 4.12. Quiz-ready FAQ + scored binary bank
 
 **Runs for EVERY type, on EVERY publish that produces a page — LiteCast is the
 sole exception** (same scope as flashcards: LiteCast is patient-facing and
-stays out of the specialist quiz/flashcard ecosystem). The FAQPage block that
-rides on the page (from the clone + this content's own Q/A) feeds two premium
-surfaces — the Leitner flashcards (step 4.11) **and** a scored yes/no quiz
-(`plus/quiz-index.json`, awarding premium XP). Both consume the page's FAQ, so
-FAQ questions must be authored to a **standalone-quiz standard**, not written
-as page-bound reading aids. Two hard requirements on every FAQ Question:
+stays out of the specialist quiz/flashcard ecosystem). The FAQPage node
+authored for this content — written into `plus/faq-corpus.json` under its
+content id, **never into the page's own JSON-LD** (see step 4.11) — feeds
+two premium surfaces: the Leitner flashcards (step 4.11) **and** a scored
+yes/no quiz (`plus/quiz-index.json`, awarding premium XP). Both consume the
+same corpus entry, so FAQ questions must be authored to a
+**standalone-quiz standard**, not written as page-bound reading aids. Two
+hard requirements on every FAQ Question:
 
 **(a) Self-contained — no article deixis.** Each question must be
 understandable and answerable by a dentist who read the article a month ago and
@@ -1003,7 +1011,7 @@ open with the verdict** — «خیر؛ …», «بله، …», or a short conce
 verdict («برخلافِ باورِ قدیمی، خیر؛ …»). That one word becomes the graded
 answer key. If the honest answer is genuinely "it depends" (no clean yes/no),
 that's fine — write it hedged and it is correctly **excluded** from the scored
-bank (it still serves as a flashcard / SEO FAQ). Never contort a real "it
+bank (it still serves as a flashcard / reference FAQ entry). Never contort a real "it
 depends" into a false yes/no just to get it scored: accuracy over coverage,
 the bank must never grade against a guessed key.
 
@@ -1014,15 +1022,16 @@ its quiz entry — the same identifier convention as flashcards, so the premium
 app maps "reader finished article X" → X's quiz questions and flashcards alike.
 
 **When to run — and fix, not just flag.** This is an authoring gate, not a
-report-only check: it runs on the FAQ **before** the page is finalized (right
-after the step-2 clone swaps the FAQ values in, alongside the step-4.11
-flashcard pass which reads the same FAQ). Walk every `mainEntity` question and
-**bring it into compliance in place** — a cloned/adapted question that still
-carries deixis (per (a)) gets **rewritten standalone or removed here**, and a
-yes/no-shaped question whose answer buries or omits the verdict gets its answer
-**reopened with «بله»/«خیر» (per (b))** — so the published page is already
-correct and never needs a later correction pass. Editing is confined to the
-FAQPage JSON-LD block; the answer stays grounded in the body.
+report-only check: it runs on the FAQ **before** the corpus entry is
+finalized (right after the step-2 clone establishes the new page, alongside
+the step-4.11 flashcard pass which reads the same FAQ). Walk every
+`mainEntity` question and **bring it into compliance in place** — a
+cloned/adapted question that still carries deixis (per (a)) gets
+**rewritten standalone or removed here**, and a yes/no-shaped question whose
+answer buries or omits the verdict gets its answer **reopened with
+«بله»/«خیر» (per (b))** — so the corpus entry is already correct and never
+needs a later correction pass. Editing is confined to the corpus entry's
+FAQPage node; the answer stays grounded in the body.
 
 **Ask, don't guess — same standard as steps 4.10/4.11.** Where a call is
 genuinely borderline, stop and ask the user rather than deciding silently:
@@ -1324,8 +1333,8 @@ Run the builders from the project root, in this order. Capture stdout/stderr for
 3. **Episodes landing-page builder — MANDATORY whenever the publish touched `dentcast.json` (any episode publish).** Run `python tools/build_episodes.py`. `episodes.html` is **fully static** (episode list, stats and Jalali dates baked in — **not** client-rendered, so appending to `dentcast.json` alone does NOT surface the new episode under `/episodes/`; the builder must run). The builder injects the dynamic bits — the episode `<li>` list (newest-first → top of `<ol id="episodeList">`) and the `@@EP_COUNT@@`/`@@HOURS@@`/`@@YEARS@@` stats — into the verbatim page shell stored in **`tools/episodes_template.html`**. It reads only `dentcast.json` + `dentcast-brain.json` + the template, and writes only `episodes.html`; it never touches individual `/episodes/episode-*.html` pages, so hand-added cross-links (steps 4.8/4.9) are safe. Skip this step only for non-episode types that don't write to `dentcast.json`. (`episodes/index.html` is just a redirect — never hand-edit it.)
 
    **Never hand-edit `episodes.html`** (the builder overwrites it; hand-edits silently desync from the builder — the failure that motivated this template split). To change page **chrome** (CSS/JS/layout/nav/the sort-toggle/pagination/`dc-jump`/the search filter row/asset-version bumps), edit **`tools/episodes_template.html`**, then run the builder. The template carries those features verbatim, so a normal run preserves them; the only build-to-build deltas are the new episode, the stats, and any brain-driven hashtag/caption changes.
-4. **Flashcards index builder — run whenever step 4.11 added a `DefinedTermSet` to the new page.** Run `node tools/build_flashcards_index.mjs`. It scans every page site-wide for `DefinedTermSet` JSON-LD (skipping LiteCast and `/en/` mirrors) and regenerates `plus/flashcards-index.json` from scratch — **never hand-edit that file**, this builder is its only writer. Skip only on the documented "4.11: skipped — LiteCast" publishes.
-4b. **Quiz index builder — run on every non-LiteCast publish that produced a page (step 4.12).** Run `node tools/build_quiz_index.mjs`. It scans every page's `FAQPage` JSON-LD site-wide (skipping LiteCast, `/en/` mirrors, and homepage), keeps only the binary (yes/no) questions whose answer opens with an explicit «بله»/«خیر» verdict, and regenerates `plus/quiz-index.json` from scratch — **never hand-edit that file**, this builder is its only writer. It prints `<pages>, <questions> binary questions (of <N> FAQ items scanned)`; the "scanned − kept" gap is the open/hedged questions correctly left out of the scored bank. Skip only on the documented "4.12: skipped — LiteCast" publishes.
+4. **Flashcards index builder — run whenever step 4.11 added a `DefinedTermSet` to the corpus.** Run `node tools/build_flashcards_index.mjs`. It reads `plus/faq-corpus.json` (never page HTML — pages carry no `DefinedTermSet` of their own, see step 4.11) for every content id's `DefinedTermSet`, skipping LiteCast and `/en/` entries, and regenerates `plus/flashcards-index.json` from scratch — **never hand-edit that file**, this builder is its only writer. Skip only on the documented "4.11: skipped — LiteCast" publishes.
+4b. **Quiz index builder — run on every non-LiteCast publish that produced a page (step 4.12).** Run `node tools/build_quiz_index.mjs`. It reads `plus/faq-corpus.json` (never page HTML) for every content id's `FAQPage`, skipping LiteCast, `/en/` entries, and the homepage, keeps only the binary (yes/no) questions whose answer opens with an explicit «بله»/«خیر» verdict, and regenerates `plus/quiz-index.json` from scratch — **never hand-edit that file**, this builder is its only writer. It prints `<pages>, <questions> binary questions (of <N> FAQ items scanned)`; the "scanned − kept" gap is the open/hedged questions correctly left out of the scored bank. Skip only on the documented "4.12: skipped — LiteCast" publishes.
 5. **Image attributes backfill.** Run `python3 .github/scripts/inject_img_attrs.py` (idempotent, cheap). New pages cloned in this publish may carry images without intrinsic `width`/`height` (CLS) or `alt`; this backfills them site-wide. `--check` mode exists for CI.
 5b. **Plus content-index builder — run on every publish that wrote/changed a brain entry (i.e. every non-paper-only publish).** Run `node tools/build_plus_index.mjs`. It regenerates `plus/content-index.json` from `dentcast-brain.json` (+ `glossary/glossary.json`, the pillar hub page for the categories, and **each pillar's `structure.json` for the subtopics** — it used to scrape those out of the pillar pages' HTML, which no longer contains them). **That makes step 2 a hard prerequisite of this one:** run the pillar builder first, or a missing/stale sidecar silently costs the میز کار tree its subcategories. The builder warns on a missing one rather than failing, so read its output. It is the single taxonomy model the **DentCast Plus «میز کار» dashboard navigation tree** and the homepage "last read" resolver both read (`content_id` → `{cluster, subtopic, type, title, url}`). **It also mirrors the standardized hashtag vocabulary** — every real `#tag` and the compiled **alias table** from `dentcast-hashtag-reference.json` — into `content-index.json`, which is what the AI case-assistant search folds queries and hashtags through (Hard Rule 15 / step 5.0). If step 5.0 minted or re-aliased any concept, this run is what carries it to the live search, so it must run after that. **A stale content-index silently drops the new page from the میز کار tree**, so this builder must run whenever brain content changes. It is the only writer of `plus/content-index.json` — never hand-edit that file. (Note: the `notify-new-articles` Action's sibling CI job `sitemap_only.yml` also runs this builder — and `gen_sitemap.py` — on push to `main`, so the live site self-heals even if this local step is missed; running it here keeps the committed tree correct and the local step-8 verification honest. The **«seen» ticks and study-mode/میز کار activation are separate and path-based** — they need no builder, only that the page lives under a ticked folder and appears on its landing page.)
 6. **Version stamper — always run LAST.** Run `python tools/stamp-version.py` (step 7). It must run **after** the other builders so the content hash reflects the final state and so it overwrites any version strings they emitted. Report the old → new content version.
@@ -1358,8 +1367,8 @@ After the pillar builder finishes, verify **both** outputs — the page and its 
    - **Scripts/analytics follow this type's conventions, not meta-1's extras.**
    - en page carries **no** specialist «کاوش بیشتر» capsules / glossary back-links / brain links (en pages stay out of the brain ecosystem — en-version Hard Rule 8): no brain entry, no Pulse line, no 4.7/4.8/4.9 for the en page.
 2. **Wire the toggle on BOTH sides (en-version step 4).** On the new en page: `.lang-btn` → `../{file}.html` (label «فارسی»). On the source fa page: add `.lang-btn` → `en/{file}.html` (label «English»), placed/styled per the fa-side precedent (`metanotes/meta-1.html`), and **ensure the `.lang-btn` CSS exists in the fa page's inline `<style>`** (current templates carry it, but older clones may not — adding the button without its CSS is the "missing toggle = CSS issue" failure; add both when missing). The two targets must be exact inverses and neither may point at meta-1.
-3. **Pair via disk-discovery (en-version step 7).** Run `python3 .github/scripts/inject_hreflang.py`. Because the en file now exists, both pages gain the 4-line hreflang mirror and the fa page gains its `en` alternate automatically — never hand-maintain a parallel copy. Also run `python3 .github/scripts/gen_sitemap.py` (the new `.org` en page enters the sitemap) and re-run `python tools/stamp-version.py` **last**.
-4. **Verify (en-version step 9).** Confirm: en page has `<html lang="en" dir="ltr" data-dc-no-header>`, self-canonical `.org`, the 4-line hreflang mirror, `inLanguage`/`lang`/`og:locale` all `en`, the same JSON-LD `@type` as this type, GA4 exactly once; both toggles are exact inverses; the chrome standard `metanotes/en/meta-1.html` is **untouched** (hash unchanged). Report the two file paths created/modified (new en page + the toggle/hreflang edit on the source fa page).
+3. **noindex + hreflang enforcement (en-version step 7).** The en mirrors are unreviewed AI translations and stay OUT of search (2026-08-11 SEO audit): the new en page must carry `<meta name="robots" content="noindex, follow">`, no hreflang block, and never enters the sitemap; the fa page keeps its standard 3-line hreflang block and gains **no** `en` alternate. Run `python3 .github/scripts/inject_hreflang.py` (strips/normalizes both sides, idempotent) and `python3 tools/noindex_en_mirrors.py --check` (fails if any en page is indexable — fix by running it without `--check`). Also run `python3 .github/scripts/gen_sitemap.py` (it drops noindexed pages itself) and re-run `python tools/stamp-version.py` **last**.
+4. **Verify (en-version step 9).** Confirm: en page has `<html lang="en" dir="ltr" data-dc-no-header>`, self-canonical `.org`, robots meta `noindex, follow`, **zero** hreflang lines, `inLanguage`/`lang`/`og:locale` all `en`, the same JSON-LD `@type` as this type, GA4 exactly once; both toggles are exact inverses; the chrome standard `metanotes/en/meta-1.html` is **untouched** (hash unchanged). Report the two file paths created/modified (new en page + the toggle edit on the source fa page).
 
 **Why Phase D and not a step inside Phase C:** it consumes the *finished* fa page (after all of Phase C's swaps, enrichment, and rebuild), and it deliberately reuses a **separate, already-correct workflow** rather than duplicating its logic. Keep it last so the English mirror reflects the final published state.
 
@@ -1450,8 +1459,9 @@ paragraph before the first list · one «کاوش بیشتر» section, ≤5 lin
 pillar capsule, no self-link · FAQ questions free of article deixis and binary
 answers opening with an explicit verdict · flashcards present, uniquely and
 sequentially `@id`-ed, and **not re-pasted FAQ answers** · the en mirror,
-its chrome, and both halves of the fa↔en toggle as exact inverses · the 4-line
-hreflang mirror · the `dc-notify` marker · landing page, Pulse, homepage rail,
+its chrome, its noindex + zero-hreflang state, and both halves of the fa↔en
+toggle as exact inverses · the fa page's 3-line hreflang block (no `en`
+alternate) · the `dc-notify` marker · landing page, Pulse, homepage rail,
 sitemap, pillar page · `content-index` / `flashcards-index` / `quiz-index` /
 `pathways` membership · and **the content version stamp actually matching the
 content it stamps**, which is what catches `stamp-version.py` not having run
@@ -1502,8 +1512,8 @@ fix on its own, never a pattern to copy forward.
 - For NoteCast: parent episode page path; whether the related-content block existed already or was created; before/after hash of the parent episode page; diff of the inserted markup
 - For Promptologist (step 4.6): the new part's `ep-nav` previous slot wired to `<prev-id>.html` (next slot left as the empty placeholder); the previous part's page path with before/after hash, confirming its empty «next» placeholder was converted into a link to `<new-id>.html` (only that slot changed)
 - For any publish with an attached paper file (step 4.10 — triggered by the file, any type) — or the documented "skipped — no attached paper" line otherwise: **Part 1** — the Drive subfolder the paper was filed into (chosen semantically) and its `drive_view` URL; **Part 2** — the new `dentcast_cabinet_full_catalog.json` entry's `id`, `topic`/`topic_path`, `tags` (semantic + article-name), and the Drive link, with confirmation the key set matches the enriched-entry template and the paper surfaces in `dentcast_cabinet_search.html` (opened directly — the on-site route is premium-gated), plus the new `papers` total and whether it crossed a round hundred (if it did, the two paper-count strings in `index.html` were swept together; if not, say so explicitly); **Part 3** (only when a page was published) — the DOI and first author found on the web, the rendered first-author→DOI credit anchor (ShareHub `.author` style) and any `isBasedOn` update, with before/after page hash — or the "Part 3 skipped — paper-only (no page)" note on the paper-only fast path. Explicitly list anything you asked the user about and confirm nothing (subfolder/DOI/author/tags) was guessed
-- **Flashcards (step 4.11)** — or the documented "skipped — LiteCast" line: the `DefinedTermSet` block added to the page (term count and their `@id`s); how many came from `source: "faq"` vs `"authored"`; which FAQ entries (if any) were judged comparison/decision-shaped and skipped; confirmation no `name`/`description` is a verbatim FAQ copy; anything you asked the user about; confirmation `node tools/build_flashcards_index.mjs` was re-run in step 8 so `plus/flashcards-index.json` reflects the new page
-- **Quiz (step 4.12)** — or the documented "skipped — LiteCast" line: confirmation every FAQ question `name` is standalone (no article deixis per 4.12(a)); how many of the page's FAQ questions are binary/scored vs open (and that any binary answer opens with an explicit «بله»/«خیر» verdict); confirmation `node tools/build_quiz_index.mjs` was re-run in step 8 and the new page's binary count appears in `plus/quiz-index.json`
+- **Flashcards (step 4.11)** — or the documented "skipped — LiteCast" line: the `DefinedTermSet` node written into `plus/faq-corpus.json` (term count and their `@id`s); how many came from `source: "faq"` vs `"authored"`; which FAQ entries (if any) were judged comparison/decision-shaped and skipped; confirmation no `name`/`description` is a verbatim FAQ copy; anything you asked the user about; confirmation `node tools/build_flashcards_index.mjs` was re-run in step 8 so `plus/flashcards-index.json` reflects the new page
+- **Quiz (step 4.12)** — or the documented "skipped — LiteCast" line: confirmation every FAQ question `name` is standalone (no article deixis per 4.12(a)); how many of the content's FAQ questions are binary/scored vs open (and that any binary answer opens with an explicit «بله»/«خیر» verdict); confirmation `node tools/build_quiz_index.mjs` was re-run in step 8 and the new content's binary count appears in `plus/quiz-index.json`
 - **Cross-linking completion gate (Hard Rule 11) — REQUIRED; the publish is incomplete if any of these is missing.** For **each** of steps 4.7, 4.8, 4.9, report its explicit outcome — never leave one unstated:
   - **4.7 (glossary → new content):** the candidate terms considered, which were linked (auto-applied vs. asked-and-confirmed, per Hard Rule 14, with the link text used), and which were skipped and why (at 5-cap / no section / judged unrelated / asked-and-declined). An empty result is acceptable **only** as a documented "analyzed, 0 qualifying terms".
   - **4.8 (in-body inline links on the new page):** confirmation that a **fresh** semantic analysis of *this* body was run (NOT inherited from the clone); which candidates were auto-applied at high confidence vs. presented to the user (Hard Rule 14); which of the presented ones were approved/inserted (first-occurrence) and which rejected. For episodes, confirm the «درباره این اپیزود» caption was the analyzed body. An empty result is acceptable **only** as a documented "analyzed body, 0 qualifying glossary/episode candidates".
@@ -1512,7 +1522,7 @@ fix on its own, never a pattern to copy forward.
 - Pillar/subtopic verification (step 5.5): confirmation that the recorded `pillar.primary` and `pillar.subtopic` are **identical** to what was confirmed in step 2.4 (untouched by steps 5/5.5); resulting `pillar.subtopic` (slug if structured, `null` if not); confirmation that no new keys were added to the `pillar` object or as siblings, that the `subtopic` key is present in every case, and that the step-2.5 capsule / episode pillar link is consistent with `pillar.primary`
 - **Pathways & bundles (steps 5.6 + 5.6-ب)** — or the documented "skipped — LiteCast" line: every full pathway the item joined (pathway id + anchor + milestone flag), the `--coverage` line confirming membership in ≥1 pathway (or the explicit deliberate-orphan note); then, for **every candidate bundle** (each bundle whose `continues_pathway` is a pathway just joined — or «باندل: بدون کاندید»), exactly one verdict: «وارد شد (بعد از کدام قدم)» with confirmation the bundle's last step still carries the only `milestone: true` and that `plus/js/home-bundles.js`'s step count was updated in the same commit, «رد شد (گیت N)», or «سوال شد». A candidate bundle with no verdict = incomplete publish.
 - Builder runs: each command + full stdout/stderr (`python tools/update-homepage-counters.py`, `python tools/build_pillar.py all`, `python tools/build_episodes.py` for episode publishes, `node tools/build_flashcards_index.mjs` unless step 4.11 was skipped, `node tools/build_plus_index.mjs` for the میز کار nav-tree unless paper-only, and `python tools/stamp-version.py` LAST); confirmation that the new content appears in the regenerated pillar page when a structured pillar was assigned, **and (for episodes) that the new episode now appears in the regenerated `episodes.html`** with no feature regression.
-- **Phase D (English mirror & toggle — Hard Rule 12; REQUIRED unless LiteCast):** the en page path created (`/{type}/en/{file}.html`); confirmation the body was translated structure-faithfully from THIS type (not rendered as a metanote) with GA4 once and `lang`/`inLanguage`/`og:locale` all `en`; both toggle targets (exact inverses, no meta-1 hardcode) and that the fa page got both the `.lang-btn` markup **and** its CSS; `inject_hreflang.py` pairing confirmation (fa page gained its `en` alternate); chrome standard `metanotes/en/meta-1.html` hash unchanged. For LiteCast, the documented skip line instead.
+- **Phase D (English mirror & toggle — Hard Rule 12; REQUIRED unless LiteCast):** the en page path created (`/{type}/en/{file}.html`); confirmation the body was translated structure-faithfully from THIS type (not rendered as a metanote) with GA4 once and `lang`/`inLanguage`/`og:locale` all `en`; confirmation the en page carries `noindex, follow` and zero hreflang lines and stays out of the sitemap (`inject_hreflang.py` + `noindex_en_mirrors.py --check` both run); both toggle targets (exact inverses, no meta-1 hardcode) and that the fa page got both the `.lang-btn` markup **and** its CSS; chrome standard `metanotes/en/meta-1.html` hash unchanged. For LiteCast, the documented skip line instead.
 - **Phase E (new-article push marker — REQUIRED unless paper-only/LiteCast/glossary):**
   confirmation that `<meta name="dc-notify" content="true">` is present exactly once
   in the published page's `<head>` (so the `notify-new-articles` Action fires the
