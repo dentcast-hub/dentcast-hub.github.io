@@ -42,39 +42,67 @@ function injectCollectionButton(contentId) {
     onclick: () => { cap.hidden = !cap.hidden; },
   }, '؟');
   const btn = el('button', {
-    class: 'dcp-wb-collect', type: 'button',
+    class: 'dc-act dc-act-outline', type: 'button',
     onclick: () => openCollectionPicker({ contentId }),
-  }, '🗂 افزودن به کالکشن');
+  }, 'افزودن به کالکشن');
   return { btn, info, cap };
 }
 
-// `anchorEl` is the article's opening prose box, NOT its body root: on the
-// legacy NoteCast template those differ (the root is the container holding the
-// section boxes), and hanging the bar off the root would put it outside <main>,
-// above the article's own title.
-function injectWorkbenchButton(anchorEl, contentId, shareTarget) {
-  const btn = el('button', { class: 'dcp-wb-button', type: 'button', 'aria-pressed': 'false' }, 'میز کار');
+/**
+ * Find the article's action row, or build one.
+ *
+ * dc-nav.js builds it on a standalone article page (phase 7b) and fills the
+ * quiet group; here we fill the main one. On the desktop shell that script is
+ * stripped out of the fetched article, so there is nothing to find and this
+ * module builds the whole row instead — the same two-surface split
+ * buildShareButton() already makes, expressed once for the container rather
+ * than once per button.
+ *
+ * `anchorEl` is the article's opening prose box, NOT its body root: on the
+ * legacy NoteCast template those differ (the root is the container holding the
+ * section boxes), and hanging the row off the root would put it outside <main>,
+ * above the article's own title.
+ */
+function ensureActionRow(anchorEl) {
+  const found = document.getElementById('dcActionRow');
+  if (found) {
+    return { row: found, main: found.querySelector('.dc-actions-main'), built: false };
+  }
+  const main = el('div', { class: 'dc-actions-main' });
+  const aux = el('div', { class: 'dc-actions-aux' });
+  const row = el('div', { class: 'dc-actions', id: 'dcActionRow' }, [main, aux]);
+  anchorEl.parentNode.insertBefore(row, anchorEl);
+  return { row, main, aux, built: true };
+}
+
+// The article's action row: میز کار / افزودن به کالکشن / پسندیدم together in
+// the main group, in that order — the thing this page is FOR, the thing you do
+// with it, the thing you say about it.
+function injectActionRow(anchorEl, contentId, shareTarget) {
+  const btn = el('button', { class: 'dc-act dc-act-primary', type: 'button', 'aria-pressed': 'false' }, 'میز کار');
   const { btn: collectBtn, info: collectInfo, cap: collectCap } = injectCollectionButton(contentId);
-  // Share sits in this row on ONE surface only: the desktop shell, where
-  // dc-nav.js (and with it the chip above the prose) was stripped out of the
-  // fetched article. `#dcShareBtn` is that chip; if it is on the page, this row
-  // must not grow a second button for the same act.
-  const share = shareTarget && !document.getElementById('dcShareBtn')
-    ? buildShareButton(shareTarget)
-    : null;
-  // The heart is here for exactly the same reason share is, and gated on the
-  // same fact from the other side: `#dcArticleMeta` is the chip row dc-nav.js
-  // builds above the prose, so if it exists the heart is already up there and
-  // this row must not grow a second one.
-  const heart = !document.getElementById('dcArticleMeta')
-    ? buildHeartChip(contentId, 'dcp-wb-heart')
-    : null;
-  const bar = el('div', { class: 'dcp-wb-bar' }, [
-    el('div', { class: 'dcp-wb-row' }, [btn, collectBtn, collectInfo, share, heart]),
-    collectCap,
-  ]);
-  // Place it at the top of the article, just before the readable prose.
-  anchorEl.parentNode.insertBefore(bar, anchorEl);
+  const { row, main, aux, built } = ensureActionRow(anchorEl);
+
+  // Share belongs to whoever built the row. On a standalone page dc-nav.js has
+  // already put its own chip in the quiet group (`#dcShareBtn`); only when we
+  // built the row ourselves — the desktop shell — is there none to find.
+  if (built && shareTarget && !document.getElementById('dcShareBtn')) {
+    aux.appendChild(buildShareButton(shareTarget));
+  }
+  // The heart is mounted at boot by initHeart() wherever a row already exists,
+  // which on a standalone page is before this async path gets here. So build one
+  // only if none arrived — on the shell, that is always.
+  const heart = document.querySelector('.dcp-like')
+    ? null
+    : buildHeartChip(contentId, 'dc-act dc-act-heart');
+
+  // prepend, not append: initHeart() may already have put the قلب in here, and
+  // the order this row reads in is میز کار › کالکشن › پسندیدم. Prepending the
+  // three of them in one call puts them ahead of it without caring whether it
+  // is there.
+  main.prepend(btn, collectBtn, collectInfo);
+  if (heart) main.appendChild(heart);
+  row.appendChild(collectCap); // full-width, below both groups
   return btn;
 }
 
@@ -100,7 +128,7 @@ async function setupWorkbench({ proseRoot, proseAnchor, contentId, shareTarget }
   // it. The toolbar's own ✕ خروج calls wb.exit() directly, so without this the
   // article button kept saying «خروج از میز کار» after the workbench had closed.
   const wb = new Workbench({ contentId, proseRoot, onChange: () => updateBtn() });
-  const btn = injectWorkbenchButton(proseAnchor || proseRoot, contentId, shareTarget);
+  const btn = injectActionRow(proseAnchor || proseRoot, contentId, shareTarget);
 
   // Reading-completion signal: started only for a signed-in reader (the /activity
   // endpoint requires auth) and only once. Guarded so a mid-page login does not
