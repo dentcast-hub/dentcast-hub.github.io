@@ -209,9 +209,22 @@ async function renderLoggedIn(card, user) {
   const leagueRow = el('div', { class: 'dc-plus-leaguerow' },
     [leagueChipEl, info].filter(Boolean));
 
-  const rows = [rail, leagueRow, scoreCap];
+  // Row order is INVERTED on purpose (founder, 2026-08-11): channels first,
+  // then «ادامه خواندن», then the league, and the number strip LAST. The
+  // homepage's own stat counters (۷ سال / ۷۱ ساعت / ۵۸۳ مطلب) sit directly
+  // above this card, and two big-number rails back to back read as one noisy
+  // block — putting the personal numbers at the far end of the card separates
+  // them. Rows are assembled bottom-up here; the hairline between them comes
+  // from a generic sibling rule in plus.css, so re-ordering needs no CSS.
+  const rows = [];
 
-  // Row 3 — the one primary action: continue where you left off.
+  // Row 1 — connection chips on their tinted bar, now the card's opening line.
+  rows.push(el('div', { class: 'dc-plus-connrow' }, [
+    el('span', { class: 'dc-plus-conn-lbl' }, 'اعلان‌ها'),
+    connectionsRow(me),
+  ]));
+
+  // Row 2 — the one primary action: continue where you left off.
   if (last) {
     const lead = last.type === 'episodes' ? 'ادامه گوش دادن' : 'ادامه خواندن';
     const chev = el('span', { class: 'dc-plus-material-chev', 'aria-hidden': 'true' });
@@ -231,11 +244,13 @@ async function renderLoggedIn(card, user) {
   // to. This card is now only the reader's own material, and it is one row
   // SHORTER than it was — never add a premium teaser back into it.
 
-  // Row 4 — connection chips on a tinted bottom bar, with a quiet label.
-  rows.push(el('div', { class: 'dc-plus-connrow' }, [
-    el('span', { class: 'dc-plus-conn-lbl' }, 'اعلان‌ها'),
-    connectionsRow(me),
-  ]));
+  // Row 3 — the league, with the «؟» at its end, and the caption it reveals
+  // right under it (that caption explains the numbers of the row below).
+  rows.push(leagueRow, scoreCap);
+
+  // Row 4 — the stat strip LAST: streak · score · سپر, as far as the card can
+  // put them from the homepage's own counters above it.
+  rows.push(rail);
 
   card.replaceChildren(el('div', { class: 'dc-plus-home-inner' }, rows));
 
