@@ -33,6 +33,10 @@ function toman(rial) {
 const TERM = { 1: 'یک ماهه', 3: 'سه ماهه', 6: 'شش ماهه', 12: 'دوازده ماهه' };
 const termName = (m) => TERM[m] || `${toFa(m)} ماهه`;
 
+// Fixed on purpose (same address support-page.js uses) — the only inbox the
+// Bale bot photo path does not silently swallow.
+const SUPPORT_TELEGRAM_URL = 'https://t.me/dentcast_support';
+
 /**
  * Which plan is highlighted: the longest one still buyable.
  *
@@ -304,12 +308,20 @@ function bankIntro(bank, plan, onStart, offline) {
 /** Once they have a tag: the four steps, in order — the exact copy from the
  *  handoff doc, with the amount and code filled in. */
 function bankSteps(bank, plan, reference) {
+  const step3 = el('li', {}, [
+    'اگر اپ‌تان فیلد «بابت» ندارد: ',
+    el('a', { href: '/plus/support.html', target: '_blank', rel: 'noopener' },
+      'از صفحه‌ی پشتیبانی یک تیکت «مشکل در پرداخت» باز کنید'),
+    `، تیکِ «عکسی دارم» را بزنید، کد ${reference} را در متن بنویسید و رسید را همان‌جا با کدِ تیکت به `,
+    el('a', { href: SUPPORT_TELEGRAM_URL, target: '_blank', rel: 'noopener' }, 't.me/dentcast_support'),
+    ' بفرستید.',
+  ]);
   const steps = [
-    [`در اپ بانکی‌تان پل (فوری) یا پایا (تا یک روز کاری) را بزنید و مبلغ `
-      + `${toman(plan.amount_rial)} تومان را به شبای بالا بفرستید.`, null],
-    [`کد ${reference} را در قسمت «بابت» یا «شرح» بنویسید.`, null],
-    ['اگر اپ‌تان فیلد «بابت» ندارد، رسید را با همان کد در تلگرام پشتیبانی بفرستید.', null],
-    ['بعد از تأیید، اشتراک فعال می‌شود و در «اطلاعیه» خبرش را می‌گیرید.', null],
+    el('li', {}, `در اپ بانکی‌تان پل (فوری) یا پایا (تا یک روز کاری) را بزنید و مبلغ `
+      + `${toman(plan.amount_rial)} تومان را به شبای بالا بفرستید.`),
+    el('li', {}, `کد ${reference} را در قسمت «بابت» یا «شرح» بنویسید.`),
+    step3,
+    el('li', {}, 'بعد از تأیید، اشتراک فعال می‌شود و در «اطلاعیه» خبرش را می‌گیرید.'),
   ];
   const copyBtn = el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button' }, 'کپی کد');
   copyBtn.addEventListener('click', () => copyToClipboard(reference, copyBtn, 'کپی شد ✓'));
@@ -324,7 +336,7 @@ function bankSteps(bank, plan, reference) {
       el('code', { class: 'dcp-gift-ref-code' }, reference),
       copyBtn,
     ]),
-    el('ol', { class: 'dcp-gift-steps' }, steps.map(([t]) => el('li', {}, t))),
+    el('ol', { class: 'dcp-gift-steps' }, steps),
   ]);
 }
 
