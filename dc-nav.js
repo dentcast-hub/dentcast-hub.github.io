@@ -685,33 +685,61 @@
     }
 
     /* 7) Article UX widgets — only on pages built on the shared article
-          layer (/dc-article.css): a reading-time + share chip row above
-          the content, and an auto table-of-contents for long articles.
+          layer (/dc-article.css): the article's ACTION ROW above the content,
+          and an auto table-of-contents for long articles.
           (The fa↔en language switch lives ONLY next to the article title
           itself — see .lang-btn in each page's own markup — never in the
           shared topbar, which has no room to spare.)
-          All idempotent; styles live in dc-article.css. */
+          All idempotent; styles live in plus.css (see 7b). */
     if (document.querySelector('link[href^="/dc-article.css"]')) {
 
       var dcBoxes = document.querySelectorAll('.text-box, .glass-box, .content-box');
       var firstBox = dcBoxes.length ? dcBoxes[0] : null;
 
-      /* 7b) Reading time + share row, right above the first content box. */
-      if (firstBox && !document.getElementById('dcArticleMeta')) {
+      /* 7b) THE ACTION ROW — one element, two groups, one owner.
+             Until 2026-08-12 the area above the prose was four independent
+             bands from four injectors: this script's chip row, votes.js's
+             heart, this script's ToC, and plus.js's میز کار bar — each one
+             doing `insertBefore(firstBox)`, so their ORDER was an accident of
+             script load order and their alignment (centre / centre / full /
+             right) and button sizes agreed with nothing.
+             Now there is one row. This script builds the shell and fills the
+             QUIET group (reading time, share) because it is the only thing on
+             the page that can count words before the module graph loads;
+             plus.js fills the MAIN group (میز کار, کالکشن, پسندیدم) because
+             those need the session. Either may run first — both find-or-create.
+             Its styles live in plus.css, not dc-article.css, because the
+             desktop shell strips this script but keeps plus.css, and one row
+             may not have two stylesheets. */
+      if (firstBox && !document.getElementById('dcActionRow')) {
         var dcWords = 0;
         for (var bi = 0; bi < dcBoxes.length; bi++) {
           dcWords += (dcBoxes[bi].textContent || '').trim().split(/\s+/).length;
         }
         var dcMins = Math.max(1, Math.round(dcWords / 180));
 
-        var metaRow = document.createElement('div');
-        metaRow.id = 'dcArticleMeta';
-        metaRow.className = 'dc-article-meta';
+        var actionRow = document.createElement('div');
+        actionRow.id = 'dcActionRow';
+        actionRow.className = 'dc-actions';
+        var actionMain = document.createElement('div');
+        actionMain.className = 'dc-actions-main';
+        var actionAux = document.createElement('div');
+        actionAux.className = 'dc-actions-aux';
+        actionRow.appendChild(actionMain);
+        actionRow.appendChild(actionAux);
 
+        /* Reading time is not a control, so it stopped being a pill. As a
+           .dc-meta-chip it looked exactly like the button beside it and the
+           reader had to try it to find out it did nothing. */
         var timeChip = document.createElement('span');
-        timeChip.className = 'dc-meta-chip';
-        timeChip.textContent = 'زمان مطالعه: حدود ' + dcMins + ' دقیقه';
-        metaRow.appendChild(timeChip);
+        timeChip.className = 'dc-act-time';
+        /* Persian digits. It read «حدود 2 دقیقه» for as long as this chip has
+           existed — invisible inside a grey pill, obvious the moment it became
+           plain text next to Persian prose. */
+        timeChip.textContent = 'حدود ' + String(dcMins).replace(/[0-9]/g, function (d) {
+          return '۰۱۲۳۴۵۶۷۸۹'[+d];
+        }) + ' دقیقه';
+        actionAux.appendChild(timeChip);
 
         var shareBtn = document.createElement('button');
         shareBtn.type = 'button';
@@ -719,7 +747,7 @@
                                        strips this whole script out of the article
                                        it fetches, and builds its own chip when
                                        the id is absent. */
-        shareBtn.className = 'dc-meta-chip';
+        shareBtn.className = 'dc-act dc-act-quiet';
         shareBtn.textContent = 'اشتراک‌گذاری';
         /* A share earns league XP and lights «چراغ‌دار» — but this file is a
            classic script and the session lives in the /plus/ module graph, so
@@ -744,12 +772,16 @@
             });
           }
         });
-        metaRow.appendChild(shareBtn);
+        actionAux.appendChild(shareBtn);
 
-        firstBox.parentNode.insertBefore(metaRow, firstBox);
+        firstBox.parentNode.insertBefore(actionRow, firstBox);
       }
 
-      /* 7c) Auto table of contents — long articles only (4+ sections). */
+      /* 7c) Auto table of contents — long articles only (4+ sections).
+             Inserted before firstBox AFTER the row above, so it lands between
+             the two: [action row] › [فهرست مطالب] › [prose]. The ToC is the one
+             thing in this area that is content rather than a control, which is
+             why it stays its own card instead of joining the row. */
       if (firstBox && !document.getElementById('dcToc')) {
         var tocHeads = [];
         for (var ti = 0; ti < dcBoxes.length; ti++) {
@@ -2347,7 +2379,7 @@
 (function () {
   if (window.__dcPlusLoaded) return;
   window.__dcPlusLoaded = true;
-  var V = '79';
+  var V = '81';
 
   /* The anti-FOUC block that used to live here is gone, along with the header
      transformation it was covering for. The music + library buttons are now
