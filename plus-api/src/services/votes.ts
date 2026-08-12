@@ -60,6 +60,15 @@ import { pool } from '../db.js';
  * The board hands itself over on its own schedule — no switch-over day, no
  * second commit, no announcement. `seed_weight` is returned to the client so the
  * page can say truthfully what its ordering is currently made of.
+ *
+ * ── What happens to the seed afterwards ─────────────────────────────────────
+ *
+ * It is demoted, not retired. Once the weight is small the seed adds nothing to
+ * the score, but hearts are small integers, so at that point most of the board
+ * is TIES — and a tie has to be broken by something. The seed breaks it (see the
+ * comparator in getBoard). It can never outrank a vote, because it is consulted
+ * only after hearts are equal; it just replaces the alphabetical fallback that
+ * would otherwise be deciding the order of a site's worth of tied pages.
  */
 
 // ── the vote itself ─────────────────────────────────────────────────────────
@@ -249,7 +258,29 @@ export async function getBoard(now: number = Date.now()): Promise<Board> {
 
     // Hearts break a score tie, then the id — so the order is fully determined
     // and two requests a second apart can never disagree about equal items.
-    items.sort((a, b) => (b.score - a.score) || (b.hearts - a.hearts)
+    // score → hearts → seed → id.
+    //
+    // The seed appears TWICE in this ordering, and the second appearance is the
+    // point. As a score term it fades to nothing (weight above), which is what
+    // hands the board over to the readers. But fading it out of the SORT
+    // entirely would leave equal-hearted pages to be separated by
+    // `content_id` — alphabetical order, which says nothing about anything and
+    // would quietly become the site's ranking for every tie once the weight is
+    // small. Ties are not the rare case they look like: hearts are small
+    // integers, so the moment the seed stops separating them, most of the board
+    // is ties.
+    //
+    // So the seed is DEMOTED rather than retired: it stops adding to the score
+    // and becomes the tiebreaker. Between two pages the readers rated equally,
+    // the one more of them actually read, highlighted and passed on goes first —
+    // which is the honest answer to "these are tied, now what", and it can never
+    // outrank a real vote because it is only ever consulted after hearts.
+    //
+    // Deliberately NOT exposed in the response: it is an aggregate of reader
+    // behaviour per article, and the board only owes the public a heart count.
+    items.sort((a, b) => (b.score - a.score)
+      || (b.hearts - a.hearts)
+      || ((seeds.get(b.content_id) ?? 0) - (seeds.get(a.content_id) ?? 0))
       || (a.content_id < b.content_id ? -1 : a.content_id > b.content_id ? 1 : 0));
 
     cached = {

@@ -207,6 +207,72 @@ describe('GET /votes/board', () => {
     expect(after.items.find((i: { content_id: string }) => i.content_id === OTHER).score).toBe(1.5);
   });
 
+  // The seed is demoted to a tiebreaker rather than retired. Without this, two
+  // equally-hearted pages would be ordered by content_id — alphabetically — which
+  // becomes most of the board's ordering once the weight is small.
+  it('breaks a heart tie by engagement, not alphabetically', async () => {
+    const a = await loginAs(app, '09120000001');
+    await loginAs(app, '09120000002');
+    // Same hearts on both…
+    await app.inject({ method: 'POST', url: '/votes', headers: { cookie: a }, payload: { content_id: ART } });
+    await app.inject({ method: 'POST', url: '/votes', headers: { cookie: a }, payload: { content_id: OTHER } });
+    // …and OTHER is the one people actually read. ART sorts first alphabetically
+    // ('chairside/…' < 'notecast/…'), so a passing test here means the engagement
+    // beat the alphabet.
+    await logActivity('09120000001', 'highlight_created', OTHER);
+    await logActivity('09120000002', 'highlight_created', OTHER);
+
+    // Enough site-wide hearts that the seed is worth almost nothing as a SCORE
+    // term — this is the state the tiebreaker exists for.
+    await pool.query(
+      `insert into content_votes (user_id, content_id)
+       select $1, 'filler/' || g from generate_series(1, 20000) g`,
+      [await userId('09120000001')],
+    );
+
+    resetBoardCache();
+    const body = (await app.inject({ method: 'GET', url: '/votes/board' })).json();
+    expect(body.seed_weight).toBeLessThan(0.02);
+    const ranked = body.items
+      .filter((i: { content_id: string }) => i.content_id === ART || i.content_id === OTHER)
+      .map((i: { content_id: string }) => i.content_id);
+    expect(ranked).toEqual([OTHER, ART]);
+  });
+
+  // The tiebreaker must never let engagement beat an actual vote.
+  it('never lets the tiebreaker outrank a heart', async () => {
+    const a = await loginAs(app, '09120000001');
+    const b = await loginAs(app, '09120000002');
+    // ART has one more heart; OTHER has all the engagement.
+    await app.inject({ method: 'POST', url: '/votes', headers: { cookie: a }, payload: { content_id: ART } });
+    await app.inject({ method: 'POST', url: '/votes', headers: { cookie: b }, payload: { content_id: ART } });
+    await app.inject({ method: 'POST', url: '/votes', headers: { cookie: a }, payload: { content_id: OTHER } });
+    await logActivity('09120000001', 'highlight_created', OTHER);
+    await logActivity('09120000002', 'highlight_created', OTHER);
+    await pool.query(
+      `insert into content_votes (user_id, content_id)
+       select $1, 'filler/' || g from generate_series(1, 20000) g`,
+      [await userId('09120000001')],
+    );
+
+    resetBoardCache();
+    const body = (await app.inject({ method: 'GET', url: '/votes/board' })).json();
+    const ranked = body.items
+      .filter((i: { content_id: string }) => i.content_id === ART || i.content_id === OTHER)
+      .map((i: { content_id: string }) => i.content_id);
+    expect(ranked).toEqual([ART, OTHER]);
+  });
+
+  // Engagement is an aggregate of reader behaviour per article; the public board
+  // owes nobody more than a heart count.
+  it('does not publish the engagement number it sorts by', async () => {
+    await loginAs(app, '09120000001');
+    await logActivity('09120000001', 'highlight_created', ART);
+    resetBoardCache();
+    const body = (await app.inject({ method: 'GET', url: '/votes/board' })).json();
+    expect(Object.keys(body.items[0]).sort()).toEqual(['content_id', 'hearts', 'score']);
+  });
+
   it('orders equal scores deterministically', async () => {
     const a = await loginAs(app, '09120000001');
     await app.inject({ method: 'POST', url: '/votes', headers: { cookie: a }, payload: { content_id: ART } });
