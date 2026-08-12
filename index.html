@@ -3727,6 +3727,7 @@ a.dc-list-card--pillar {
 :root{
   --x-ground:#f2f5fa;
   --x-card:#ffffff;
+  --x-band:#f5f6f8;   /* neutral in-card band — never competes with the aura */
   --x-line:#e5eaf2;
   --x-ink:#0b2a4a;
   --x-grad:linear-gradient(135deg,#0a2f6b 0%,#1257d6 100%);
@@ -3738,6 +3739,7 @@ a.dc-list-card--pillar {
 [data-theme="dark"]{
   --x-ground:#0a1322;
   --x-card:#152238;
+  --x-band:#1a2739;
   --x-line:#243651;
   --x-ink:#eaf1fb;
   --x-grad:linear-gradient(135deg,#3f74e0 0%,#6ea2ff 100%);
@@ -3870,6 +3872,14 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
 [data-theme="dark"] #panel-studio #dcLatestRail .t-chair{ color:#ffb45f; }
 [data-theme="dark"] #panel-studio #dcLatestRail .t-ai{ color:#c4b5fd; }
 [data-theme="dark"] #panel-studio #dcLatestRail .t-share{ color:#67e8f9; }
+
+/* The personal card's top row is the channels bar. Its tint used to be
+   brand-blue, which against the hero aura made the card's top edge
+   dissolve into the page (founder report, 2026-08-12). A NEUTRAL band
+   keeps its "header of the card" identity without ever competing with a
+   blue ground — and it stays neutral wherever the aura lands. */
+#panel-studio .dc-plus-connrow{ background:var(--x-band); }
+#panel-studio .dc-plus-connrow .dc-plus-chip{ background:var(--x-card); }
 
 /* ── pulse: calm card, blue ticks ── */
 #panel-studio .dc-pulse{ border-right:1px solid var(--x-line); padding:1rem 1.15rem; }
