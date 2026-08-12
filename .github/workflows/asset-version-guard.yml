@@ -25,3 +25,13 @@ jobs:
       - uses: actions/checkout@v4
       - name: Every ?v= stamp must match the content it points at
         run: python3 tools/asset_version.py --check
+
+      # index.html paints the signed-out Plus card from static markup, so the
+      # rules that size it are mirrored out of plus/plus.css into an inline
+      # <style>. plus.css stays the source of truth; the mirror is generated.
+      # Without this gate a redesign under a @home-critical marker would land
+      # in plus.css only, and the homepage would paint the card at the OLD
+      # size and then re-lay-out when the async stylesheet arrived — exactly
+      # the layout shift the static card exists to remove.
+      - name: Homepage critical CSS must mirror plus/plus.css
+        run: python3 tools/build_home_critical_css.py --check

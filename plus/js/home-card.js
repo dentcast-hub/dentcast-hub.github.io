@@ -57,11 +57,11 @@ function paintShields(host, available) {
   host.classList.toggle('is-empty', available < 1);
 }
 
-function renderAnon(card) {
-  const btn = el('button', { class: 'dcp-btn dc-plus-cta', type: 'button' }, [
-    el('span', {}, 'شروع رایگان'),
-    el('span', { class: 'dc-plus-cta-arrow', 'aria-hidden': 'true' }, '←'),
-  ]);
+// What the promo's CTA does. Shared by the built card (renderAnon) and the
+// STATIC one index.html ships, so the two can never drift in behaviour.
+function wireAnonCta(btn) {
+  if (!btn || btn.dataset.dcpWired) return;
+  btn.dataset.dcpWired = '1';
   btn.addEventListener('click', async () => {
     // .org gate (temporary): show the dentcast.ir notice instead of OTP; the
     // anon demand signal is logged inside openOrgNotice (marked org:home).
@@ -69,6 +69,14 @@ function renderAnon(card) {
     const res = await openLoginModal({ returnTo: '/plus/' });
     if (res && res.user) location.reload();
   });
+}
+
+function renderAnon(card) {
+  const btn = el('button', { class: 'dcp-btn dc-plus-cta', type: 'button' }, [
+    el('span', {}, 'شروع رایگان'),
+    el('span', { class: 'dc-plus-cta-arrow', 'aria-hidden': 'true' }, '←'),
+  ]);
+  wireAnonCta(btn);
 
   const feat = (svg, label, tone) => {
     const ico = el('span', { class: 'dc-plus-feat-ico ' + tone, 'aria-hidden': 'true' });
@@ -371,10 +379,17 @@ export async function initHomeCard() {
   // همراهی‌سنج already reads (see api.js's rememberSignedIn) — a device last
   // confirmed signed-in skips this and waits for the real answer, so a
   // returning logged-in reader never sees the anonymous card flash first.
-  let shownAnon = false;
+  // index.html ships the signed-out card as static markup (data-dcp-static-anon),
+  // so for a guest there is nothing to render at all — the browser already
+  // painted it, on the first frame, with no shift. All that is left is to give
+  // its button the behaviour that lives in this module graph.
+  const staticAnon = card.dataset.dcpStaticAnon === '1' && card.children.length > 0;
+  if (staticAnon) wireAnonCta(card.querySelector('.dc-plus-cta'));
+
+  let shownAnon = staticAnon;
   let hint;
   try { hint = localStorage.getItem('dcp:signed-in'); } catch (_) { hint = null; }
-  if (hint !== '1') {
+  if (!shownAnon && hint !== '1') {
     renderAnon(card);
     card.hidden = false;
     shownAnon = true;

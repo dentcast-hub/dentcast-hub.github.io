@@ -3442,6 +3442,110 @@ a.dc-list-card--pillar {
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"رادار دنت‌کست","url":"https://dentcast.org/#radar","applicationCategory":"UtilitiesApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"IRR"}}</script>
   <script>window.addEventListener('load',function(){!function(t,e,n){t.yektanetAnalyticsObject=n,t[n]=t[n]||function(){t[n].q.push(arguments)},t[n].q=t[n].q||[];var a=new Date,r=a.getFullYear().toString()+"0"+a.getMonth()+"0"+a.getDate()+"0"+a.getHours(),c=e.getElementsByTagName("script")[0],s=e.createElement("script");s.id="ua-script-nzlddHSQ";s.dataset.analyticsobject=n;s.async=1;s.type="text/javascript";s.src="https://cdn.yektanet.com/rg_woebegone/scripts_v3/nzlddHSQ/rg.complete.js?v="+r,c.parentNode.insertBefore(s,c)}(window,document,"yektanet");});</script>
 
+  <!-- Critical CSS for the signed-out Plus card below. GENERATED from the
+       @home-critical regions of plus/plus.css — never hand-edit; run
+       `python3 tools/build_home_critical_css.py` (CI runs --check). It is
+       inline because the card ships as static markup and must be sized on the
+       first frame: plus.css is injected asynchronously by dc-nav.js, so
+       waiting for it would re-lay-out the top of the page. -->
+  <style id="dcHomeCriticalCss">
+/* @generated from plus/plus.css — do not edit; see tools/build_home_critical_css.py */
+:root {
+  --dcp-accent: var(--ac, #0b5fff);
+  --dcp-ink: var(--txt, #0a1a33);
+  --dcp-muted: var(--txt2, #4a5f85);
+  --dcp-surface: var(--card-bg, #ffffff);
+  --dcp-surface-2: var(--surface2, #f4f6fb);
+  --dcp-line: var(--border, rgba(2, 35, 96, .12));
+  --dcp-radius: var(--r-md, 14px);
+  --dcp-radius-pill: var(--r-f, 999px);
+  --dcp-shadow: var(--card-sh2, 0 8px 30px rgba(0, 0, 0, .15));
+  --dcp-chip-bg: var(--chip-bg, rgba(11, 95, 255, .08));
+  /* Bundle "type" accent (amber) — kept distinct from --dcp-accent (blue),
+     which the pathway UI already uses for STATE (ادامه / اینجا هستید). A
+     second hue lets a bundle read as its own kind of thing at a glance,
+     never confused with a state pill. Not in dc-theme.css: unique to the
+     bundle surfaces (pathways catalog/detail + the homepage rail), not a
+     site-wide token. */
+  --dcp-gold: #b7791f;
+  --dcp-gold-bg: rgba(183, 121, 31, .10);
+  /* Reference-pin accent (Collections «رفرنس» pins) — a second hue beside
+     --dcp-gold so a reference pin reads as its own kind of thing next to a
+     text pin, never confused with it. */
+  --dcp-ref: #6d28d9;
+  --dcp-ref-bg: rgba(109, 40, 217, .07);
+}
+
+.dc-plus-home-card { margin: 0 0 14px; }
+
+/* ---- signed-out promo card (login teaser, "variant B") ------------------- */
+.dc-plus-promo {
+  position: relative; overflow: hidden;
+  color: var(--dcp-ink); background: var(--dcp-surface);
+  border: 1px solid var(--dcp-line); border-radius: var(--dcp-radius);
+  box-shadow: var(--dcp-shadow); padding: 20px 22px;
+  background-image:
+    radial-gradient(140% 120% at 92% 0%, rgba(255, 94, 58, .13), transparent 55%),
+    radial-gradient(120% 130% at 0% 100%, rgba(var(--ac-rgb, 11, 95, 255), .10), transparent 55%);
+}
+.dc-plus-promo-top { display: flex; align-items: center; gap: 14px; }
+.dc-plus-promo-h { margin: 0; font-size: 1.15rem; font-weight: 800; letter-spacing: -.01em; text-wrap: balance; }
+.dc-plus-promo-sub { margin: 3px 0 0; color: var(--dcp-muted); font-size: .9rem; line-height: 1.7; }
+.dc-plus-promo-rule { height: 1px; background: var(--dcp-line); margin: 16px 0; }
+.dc-plus-promo-bottom { display: flex; align-items: center; justify-content: space-between; gap: 12px 16px; flex-wrap: wrap; }
+
+/* warm flame medallion (the one bold, on-brand-for-streaks focal point) */
+.dc-plus-medal {
+  position: relative; flex: 0 0 auto; width: 52px; height: 52px; border-radius: 50%;
+  display: grid; place-items: center;
+  background:
+    radial-gradient(120% 120% at 30% 20%, rgba(255, 191, 71, .35), transparent 60%),
+    conic-gradient(from 210deg, #ff5e3a, #ffbf47, #ff5e3a);
+  box-shadow: 0 6px 18px rgba(255, 94, 58, .35), inset 0 0 0 1px rgba(255, 255, 255, .35);
+}
+.dc-plus-medal-fl { font-size: 1.35rem; line-height: 1; filter: drop-shadow(0 2px 4px rgba(255, 94, 58, .5)); }
+
+/* feature chips */
+.dc-plus-feats { display: flex; flex-wrap: wrap; gap: 8px; flex: 1 1 auto; }
+.dc-plus-feat {
+  display: inline-flex; align-items: center; gap: 7px; padding: 6px 12px;
+  border-radius: var(--dcp-radius-pill); font-size: .82rem; font-weight: 600;
+  color: var(--dcp-ink); background: var(--dcp-chip-bg); border: 1px solid var(--dcp-line);
+}
+.dc-plus-feat-ico { display: inline-flex; color: var(--dcp-muted); }
+.dc-plus-feat-ico svg { width: 15px; height: 15px; display: block; }
+.dc-plus-feat-ico.t-fl { color: #ff6a3d; }
+.dc-plus-feat-ico.t-st { color: #f5a300; }
+.dc-plus-feat-ico.t-bell { color: var(--dcp-accent); }
+
+/* CTA (own gradient so it never depends on --primary specificity) */
+.dcp-btn.dc-plus-cta {
+  display: inline-flex; align-items: center; gap: 6px; white-space: nowrap;
+  font: inherit; font-weight: 800; cursor: pointer; color: #fff; border: none;
+  padding: 11px 20px; border-radius: 12px;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--dcp-accent) 82%, #fff), var(--dcp-accent));
+  box-shadow: 0 8px 20px rgba(var(--ac-rgb, 11, 95, 255), .30);
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+.dcp-btn.dc-plus-cta:hover { transform: translateY(-1px); box-shadow: 0 12px 26px rgba(var(--ac-rgb, 11, 95, 255), .42); }
+.dcp-btn.dc-plus-cta:active { transform: translateY(0); }
+.dc-plus-cta-arrow { opacity: .9; font-weight: 700; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .dc-plus-medal { animation: dc-plus-pulse 3.2s ease-in-out infinite; }
+  @keyframes dc-plus-pulse {
+    0%, 100% { box-shadow: 0 6px 18px rgba(255, 94, 58, .35), inset 0 0 0 1px rgba(255, 255, 255, .35); }
+    50% { box-shadow: 0 8px 26px rgba(255, 94, 58, .6), inset 0 0 0 1px rgba(255, 255, 255, .4); }
+  }
+}
+@media (max-width: 420px) {
+  .dc-plus-promo-bottom { align-items: stretch; }
+  .dcp-btn.dc-plus-cta { width: 100%; justify-content: center; }
+}
+
+.dcp-btn { box-sizing: border-box; font: inherit; font-weight: 600; padding: 10px 16px; border-radius: 10px; cursor: pointer; border: 1px solid var(--dcp-line); background: transparent; color: var(--dcp-ink); }/* @end-generated */
+  </style>
+
   <style id="dcExamineSkin">
 /* =====================================================
    EXAMINE SKIN — mobile only (approved catalog, 2026-08-11).
@@ -4135,8 +4239,39 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
            points (spec 2.3). For guests: a quiet one-line invitation. For a
            logged-in free user: streak + a line back into their own material +
            one quiet premium line. No minutes target, no due-card counter.
-           Rendered by /plus/plus.js; stays empty (display:none) until it is. -->
-      <div id="dcPlusHomeCard" class="dc-plus-home-card" aria-label="یادگیری شما" hidden></div>
+
+           The SIGNED-OUT state is written out statically below, byte-for-byte
+           what plus/js/home-card.js's renderAnon() builds, because that state
+           is fully deterministic — it carries no reader data at all. Painting
+           it from the HTML rather than injecting it after plus.js downloads is
+           what removes the ~288px shift this card used to push the whole page
+           down by (2026-08-12 CLS review), and it is what a crawler sees.
+           Its CSS is mirrored into <style id="dcHomeCriticalCss"> above.
+
+           plus.js still owns everything dynamic: it wires the button (the
+           login modal lives in its module graph) and replaces the whole card
+           for a signed-in reader. Keep this markup and renderAnon() in step —
+           tools/verify_home_card.py --check compares them. -->
+      <div id="dcPlusHomeCard" class="dc-plus-home-card" aria-label="یادگیری شما" data-dcp-static-anon="1">
+        <div class="dc-plus-promo">
+          <div class="dc-plus-promo-top">
+            <span class="dc-plus-medal" aria-hidden="true"><span class="dc-plus-medal-fl">🔥</span></span>
+            <div>
+              <h3 class="dc-plus-promo-h">شعله‌ی یادگیری‌ات را روشن کن</h3>
+              <p class="dc-plus-promo-sub">رایگان وارد شو؛ پیشرفتت ثبت و همه‌جا همراهت می‌ماند.</p>
+            </div>
+          </div>
+          <div class="dc-plus-promo-rule"></div>
+          <div class="dc-plus-promo-bottom">
+            <div class="dc-plus-feats">
+              <span class="dc-plus-feat"><span class="dc-plus-feat-ico t-fl" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M13 2s1 3-1.5 5.5S8 12 8 14a4 4 0 0 0 8 .3c.2-2.3-1.3-3.8-1-5.8 1.6.8 2.4 2 2.6 3.9A6.5 6.5 0 1 1 8.7 6.3 12 12 0 0 0 13 2z"/></svg></span><span>استریک روزانه</span></span>
+              <span class="dc-plus-feat"><span class="dc-plus-feat-ico t-st" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2l2.9 6.3 6.9.7-5.1 4.7 1.4 6.8L12 17.8 5.9 21.2l1.4-6.8L2.2 9.7l6.9-.7z"/></svg></span><span>امتیاز</span></span>
+              <span class="dc-plus-feat"><span class="dc-plus-feat-ico t-bell" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 22a2.3 2.3 0 0 0 2.3-2.3H9.7A2.3 2.3 0 0 0 12 22zm7-6.3-1.7-2v-3.2a5.4 5.4 0 0 0-4.2-5.3V4.5a1.1 1.1 0 1 0-2.2 0v.7A5.4 5.4 0 0 0 6.7 10.5v3.2L5 15.7a.9.9 0 0 0 .7 1.5h12.6a.9.9 0 0 0 .7-1.5z"/></svg></span><span>نوتیف مطلب جدید</span></span>
+            </div>
+            <button class="dcp-btn dc-plus-cta" type="button"><span>شروع رایگان</span><span class="dc-plus-cta-arrow" aria-hidden="true">←</span></button>
+          </div>
+        </div>
+      </div>
 
       <!-- HERO: latest episode (showcase) -->
       <div class="dc-home-hero" id="card-episodes" data-href="/episodes/episode-160.html" onclick="window.location.href=this.dataset.href||'episodes.html'" role="link" tabindex="0" aria-label="رفتن به صفحه‌ی تازه‌ترین قسمت">
@@ -5068,7 +5203,7 @@ scrollBody.addEventListener('touchend',e=>{
 </script>
 
 <!-- Theme toggle behavior moved to /dc-nav.js (single source) -->
-<script src="/dc-nav.js?v=73" defer></script>
+<script src="/dc-nav.js?v=74" defer></script>
 
 <!-- Toolbar drawer toggle is handled by /dc-nav.js (single source) -->
 

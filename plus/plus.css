@@ -1,3 +1,9 @@
+/* The homepage's signed-out promo card is painted from the STATIC markup in
+   index.html, before this stylesheet loads, so the rules it needs are mirrored
+   into that file's <style id="dcHomeCriticalCss"> block. That mirror is
+   GENERATED from the regions marked `@home-critical` below — run
+   `python3 tools/build_home_critical_css.py` after touching any of them (CI
+   runs it with --check). Never hand-edit the copy in index.html. */
 /* DentCast Plus - workbench + login modal styles.
    The workbench inherits the site's typography (no font-family is set here, so
    it uses the page's own body font). Colors reference the site's CSS variables
@@ -6,6 +12,7 @@
 /* Bind to the site's real theme tokens (defined in dc-theme.css for both light
    and [data-theme="dark"]), so the workbench inherits the site's colors, radii,
    shadows and typography and follows dark mode automatically (spec 2.1). */
+/* @home-critical */
 :root {
   --dcp-accent: var(--ac, #0b5fff);
   --dcp-ink: var(--txt, #0a1a33);
@@ -31,6 +38,7 @@
   --dcp-ref: #6d28d9;
   --dcp-ref-bg: rgba(109, 40, 217, .07);
 }
+/* @end-home-critical */
 [data-theme="dark"] {
   --dcp-gold: #e2b366;
   --dcp-gold-bg: rgba(226, 179, 102, .12);
@@ -257,7 +265,9 @@ html.dcp-pp-open, html.dcp-pp-open body { overflow: hidden; }
 /* ---- homepage personal card (variant-1 redesign, 2026-08-11) --------------
    Flat, Examine-language card: full-bleed rows separated by hairlines —
    stat strip / league row / continue row / tinted channels bar. */
+/* @home-critical */
 .dc-plus-home-card { margin: 0 0 14px; }
+/* @end-home-critical */
 .dc-plus-home-inner {
   display: flex; flex-direction: column; align-items: stretch; gap: 0;
   padding: 0; border: 1px solid var(--dcp-line); border-radius: var(--dcp-radius);
@@ -315,6 +325,7 @@ html.dcp-pp-open, html.dcp-pp-open body { overflow: hidden; }
 .dc-plus-connrow .dc-plus-chip { font-size: .74rem; padding: 2px 10px; background: var(--dcp-surface); }
 .dc-plus-anon { justify-content: space-between; }
 .dc-plus-anon-line { margin: 0; line-height: 1.9; flex: 1 1 240px; }
+/* @home-critical */
 /* ---- signed-out promo card (login teaser, "variant B") ------------------- */
 .dc-plus-promo {
   position: relative; overflow: hidden;
@@ -379,6 +390,7 @@ html.dcp-pp-open, html.dcp-pp-open body { overflow: hidden; }
   .dc-plus-promo-bottom { align-items: stretch; }
   .dcp-btn.dc-plus-cta { width: 100%; justify-content: center; }
 }
+/* @end-home-critical */
 /* flame follows currentColor now (line icon): muted when cold, ember when lit */
 .dc-plus-flame { display: inline-flex; color: var(--dcp-muted); opacity: .55; }
 .dc-plus-flame.is-active { color: #c2410c; opacity: 1; }
@@ -1109,7 +1121,9 @@ a.dcp-cl-board {
    why the same page was 392px wide inside a 358px column on .org and exactly
    358px on .ir: 18px of horizontal document overflow, and in RTL that shifts
    the whole page so every box reads as out of register. */
+/* @home-critical */
 .dcp-btn { box-sizing: border-box; font: inherit; font-weight: 600; padding: 10px 16px; border-radius: 10px; cursor: pointer; border: 1px solid var(--dcp-line); background: transparent; color: var(--dcp-ink); }
+/* @end-home-critical */
 .dcp-btn-primary { background: var(--dcp-accent); color: #fff; border-color: transparent; }
 .dcp-btn-ghost { background: transparent; }
 
