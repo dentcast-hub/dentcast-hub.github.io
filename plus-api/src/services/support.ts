@@ -1,5 +1,6 @@
 import { config } from '../config.js';
 import { one, query, withTransaction, type Queryable } from '../db.js';
+import { getContentInfo } from '../content-index.js';
 import { sendCapped } from './notify-policy.js';
 import { mintReference } from './reference.js';
 
@@ -68,10 +69,20 @@ export const TICKET_KINDS: Record<string, TicketKindSpec> = {
     premium: true,
     hint_fa: 'هر سؤالی دربارهٔ محتوا، مسیرهای یادگیری و استفاده از پریمیوم.',
   },
+  // Not offered on the support form — a thread of this kind is opened by
+  // commenting under an article, and it is the one kind that can be published.
+  article: {
+    title_fa: 'گفت‌وگوی زیر مطلب',
+    premium: true,
+    hint_fa: 'زیر هر مطلب می‌توانید نظر یا سؤالتان را بنویسید.',
+  },
 };
 
+/** The kinds the support form offers — `article` is opened from an article. */
+export const FORM_KINDS = ['billing', 'student', 'bug', 'support'];
+
 export function ticketKinds(): Array<{ key: string } & TicketKindSpec> {
-  return Object.entries(TICKET_KINDS).map(([key, spec]) => ({ key, ...spec }));
+  return FORM_KINDS.map((key) => ({ key, ...TICKET_KINDS[key] }));
 }
 
 /**
@@ -96,6 +107,11 @@ export interface Ticket {
   status: TicketStatus;
   closed_at: Date | null;
   created_at: Date;
+  /** The article this thread hangs under; null for a support-page ticket. */
+  content_id: string | null;
+  /** Published to everyone by the founder. Never true unless somebody decided it. */
+  is_public: boolean;
+  made_public_at: Date | null;
 }
 
 export interface TicketMessage {
@@ -107,7 +123,8 @@ export interface TicketMessage {
 }
 
 const TICKET_COLUMNS =
-  'id, user_id, reference, kind, subject, status, closed_at, created_at';
+  'id, user_id, reference, kind, subject, status, closed_at, created_at, '
+  + 'content_id, is_public, made_public_at';
 
 /** What a reader's own surfaces call this kind — falls back to the raw key. */
 export const kindTitle = (kind: string): string => TICKET_KINDS[kind]?.title_fa ?? kind;
@@ -157,8 +174,13 @@ export async function openTicket(input: {
     return { outcome: 'empty', ticket: null, message: 'موضوع و متن پیام هر دو لازم‌اند.' };
   }
 
+  // Only support-page tickets count against the bound. An article thread is not
+  // a demand on the founder's triage in the same way — a reader may well be
+  // mid-conversation under five different pages — and counting them would mean
+  // commenting quietly locks somebody out of reporting a payment problem.
   const openNow = await one<{ n: number }>(
-    "select count(*)::int as n from support_tickets where user_id = $1 and status = 'open'",
+    `select count(*)::int as n from support_tickets
+      where user_id = $1 and status = 'open' and content_id is null`,
     [input.userId],
   );
   if ((openNow?.n ?? 0) >= MAX_OPEN_PER_USER) {
@@ -193,6 +215,178 @@ export async function openTicket(input: {
     }
   }
   throw new Error('ticket reference collision: exhausted retries');
+}
+
+/* ------------------------------------------------ threads under an article -- */
+
+export type CommentOutcome = 'posted' | 'premium_required' | 'empty' | 'unknown_content';
+
+/**
+ * Comment under an article — find the reader's thread there, or start it.
+ *
+ * Deliberately find-or-create rather than "new comment": one reader's remarks
+ * under one page are a conversation, and splitting them into parallel threads
+ * would leave the founder answering the same person in three places. A thread
+ * the reader had closed reopens on their next comment, for the same reason.
+ *
+ * Premium-only, and here that gate is simply right — unlike the support kinds,
+ * where the reader most likely to need the door is the one who has not paid yet
+ * (see the header), nobody needs to comment on an article in order to become a
+ * subscriber.
+ */
+export async function commentOnArticle(input: {
+  userId: string;
+  tier: string;
+  contentId: string;
+  body: string;
+}): Promise<{ outcome: CommentOutcome; ticket: Ticket | null; message: string }> {
+  if (input.tier !== 'premium') {
+    return {
+      outcome: 'premium_required', ticket: null,
+      message: 'نوشتن زیر مطلب‌ها ویژه‌ی اشتراک پریمیوم است.',
+    };
+  }
+  const body = input.body.trim().slice(0, BODY_MAX);
+  if (!body) return { outcome: 'empty', ticket: null, message: 'متن پیام خالی است.' };
+
+  const contentId = input.contentId.trim().replace(/^\/+/, '').replace(/\.html$/i, '');
+  if (!contentId) {
+    return { outcome: 'unknown_content', ticket: null, message: 'این مطلب شناخته نشد.' };
+  }
+
+  const existing = await one<Ticket>(
+    `select ${TICKET_COLUMNS} from support_tickets where user_id = $1 and content_id = $2`,
+    [input.userId, contentId],
+  );
+  if (existing) {
+    if (existing.status === 'closed') await reopenTicket(existing.id, input.userId);
+    const r = await addMessage({ ticketId: existing.id, author: 'user', body, userId: input.userId });
+    return { outcome: 'posted', ticket: r.ticket ?? existing, message: '' };
+  }
+
+  // The subject is the article's own title where the index knows it — the
+  // founder's queue has to say WHICH page somebody is writing under, and a raw
+  // content_id is not that. It is a snapshot on purpose: a retitled article does
+  // not rewrite the thread that was opened under the old name.
+  const subject = getContentInfo(contentId)?.title || contentId;
+
+  for (let attempt = 0; attempt < 5; attempt += 1) {
+    try {
+      const ticket = await withTransaction(async (client) => {
+        const row = (await one<Ticket>(
+          `insert into support_tickets (user_id, reference, kind, subject, content_id)
+           values ($1, $2, 'article', $3, $4) returning ${TICKET_COLUMNS}`,
+          [input.userId, mintReference('T'), subject.slice(0, SUBJECT_MAX), contentId],
+          client,
+        ))!;
+        await query(
+          "insert into ticket_messages (ticket_id, author, body) values ($1, 'user', $2)",
+          [row.id, body], client,
+        );
+        return row;
+      });
+      await notifyFounder(ticket, body);
+      return { outcome: 'posted', ticket, message: '' };
+    } catch (err) {
+      const code = (err as { code?: string }).code;
+      if (code !== '23505') throw err;
+      // A reference collision retries; a racing second tab hitting the
+      // per-(user, page) unique index means the thread now exists — fold into it
+      // rather than telling the reader their comment failed.
+      const raced = await one<Ticket>(
+        `select ${TICKET_COLUMNS} from support_tickets where user_id = $1 and content_id = $2`,
+        [input.userId, contentId],
+      );
+      if (raced) {
+        const r = await addMessage({ ticketId: raced.id, author: 'user', body, userId: input.userId });
+        return { outcome: 'posted', ticket: r.ticket ?? raced, message: '' };
+      }
+    }
+  }
+  throw new Error('thread reference collision: exhausted retries');
+}
+
+/**
+ * Publish a thread, or take it back.
+ *
+ * The founder's switch, and the only thing that ever makes a reader's words
+ * visible to anyone else. Unpublishing is a real path rather than a nicety: a
+ * thread published in the morning may need to stop being public at noon, and
+ * "delete it and ask them to write it again" is not a remedy.
+ *
+ * `made_public_at` is kept because it is NOT derivable from anything — it is a
+ * decision's own timestamp, the same reason `closed_at` exists.
+ */
+export async function setThreadPublic(ticketId: string, isPublic: boolean): Promise<Ticket | null> {
+  return one<Ticket>(
+    `update support_tickets
+        set is_public = $2,
+            made_public_at = case when $2 then coalesce(made_public_at, now()) else null end
+      where id = $1 and content_id is not null
+      returning ${TICKET_COLUMNS}`,
+    [ticketId, isPublic],
+  );
+}
+
+export interface PublicThread {
+  id: string;
+  content_id: string;
+  author_name: string;
+  made_public_at: Date | null;
+  messages: Array<{ author: TicketAuthor; body: string; created_at: Date }>;
+}
+
+/**
+ * Every published thread under one page — the ONLY read path in this service
+ * that answers without a session, because a published thread is part of the
+ * page now.
+ *
+ * The author is their `display_name`, which defaults to a generated Persian
+ * pseudonym (services/pseudonym.ts). That is what makes publishing safe to offer
+ * at all: nobody is exposed under a name they did not choose, and a reader who
+ * renamed themselves chose that too.
+ */
+export async function publicThreadsFor(contentId: string): Promise<PublicThread[]> {
+  const r = await query<{
+    id: string; content_id: string; author_name: string | null; made_public_at: Date | null;
+    author: TicketAuthor; body: string; created_at: Date;
+  }>(
+    `select t.id, t.content_id, p.display_name as author_name, t.made_public_at,
+            m.author, m.body, m.created_at
+       from support_tickets t
+       join profiles p on p.id = t.user_id
+       join ticket_messages m on m.ticket_id = t.id
+      where t.content_id = $1 and t.is_public
+      order by t.made_public_at asc, t.id, m.created_at, m.id`,
+    [contentId],
+  );
+  const out = new Map<string, PublicThread>();
+  for (const row of r.rows) {
+    let thread = out.get(row.id);
+    if (!thread) {
+      thread = {
+        id: row.id,
+        content_id: row.content_id,
+        author_name: row.author_name || 'خواننده',
+        made_public_at: row.made_public_at,
+        messages: [],
+      };
+      out.set(row.id, thread);
+    }
+    thread.messages.push({ author: row.author, body: row.body, created_at: row.created_at });
+  }
+  return [...out.values()];
+}
+
+/** This reader's own thread under one page, with its messages. */
+export async function myThreadFor(userId: string, contentId: string): Promise<
+{ ticket: Ticket; messages: TicketMessage[] } | null> {
+  const ticket = await one<Ticket>(
+    `select ${TICKET_COLUMNS} from support_tickets where user_id = $1 and content_id = $2`,
+    [userId, contentId],
+  );
+  if (!ticket) return null;
+  return { ticket, messages: await messagesOf(ticket.id) };
 }
 
 /**
@@ -280,6 +474,7 @@ export interface TicketSummary extends Ticket {
  */
 const SUMMARY_SELECT = `
   select t.id, t.user_id, t.reference, t.kind, t.subject, t.status, t.closed_at, t.created_at,
+         t.content_id, t.is_public, t.made_public_at,
          m.n::int as message_count, m.last_at, m.last_author, m.last_excerpt
     from support_tickets t
     join lateral (
@@ -366,12 +561,36 @@ export async function reopenTicket(ticketId: string, userId?: string): Promise<T
  * was never meant to produce.
  */
 async function notifyReader(ticket: Ticket, body: string): Promise<void> {
+  // An article thread sends the reader back to the ARTICLE, where the
+  // conversation actually lives — /plus/support.html would be the long way
+  // round to a page they were already on.
+  const url = ticket.content_id
+    ? `/${ticket.content_id}.html`
+    : `/plus/support.html?t=${ticket.id}`;
   await sendCapped(ticket.user_id, {
-    title: 'پاسخ پشتیبانی',
+    title: ticket.content_id ? 'پاسخ زیر مطلب' : 'پاسخ پشتیبانی',
     body: `${ticket.subject} — ${body.slice(0, 140)}`,
-    url: `/plus/support.html?t=${ticket.id}`,
+    url,
     tag: `ticket_${ticket.id}`,
   }, 'support_reply').catch(() => { /* the thread is the record; the nudge is a courtesy */ });
+}
+
+/**
+ * Tell the reader their thread was published.
+ *
+ * Not a courtesy — their words are on a public page now, under the name on
+ * their profile. Finding that out by accident is the version of this feature
+ * nobody would want to have shipped. The compose box says publishing is
+ * possible before they write; this says it happened.
+ */
+export async function notifyPublished(ticket: Ticket): Promise<void> {
+  if (!ticket.content_id) return;
+  await sendCapped(ticket.user_id, {
+    title: 'گفت‌وگوی شما عمومی شد',
+    body: `«${ticket.subject}» — حالا زیر همان مطلب برای همه دیده می‌شود.`,
+    url: `/${ticket.content_id}.html`,
+    tag: `ticket_pub_${ticket.id}`,
+  }, 'support_reply').catch(() => { /* publishing must not fail on a notification */ });
 }
 
 /**

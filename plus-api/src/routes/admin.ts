@@ -45,7 +45,7 @@ import {
 import { telegramBreakerStatus } from '../providers/notifications/telegram.js';
 import {
   ticketQueue, getTicket, messagesOf, addMessage, closeTicket, reopenTicket,
-  ticketByReference, kindTitle,
+  ticketByReference, kindTitle, setThreadPublic, notifyPublished,
 } from '../services/support.js';
 import { normalizeReference } from '../services/reference.js';
 import { config } from '../config.js';
@@ -325,6 +325,8 @@ function renderHtml(k: Kpis, grantable: { key: string; title_fa: string }[]): st
       return '<div class="tk' + (needs ? ' need' : '') + '" data-id="' + esc(t.id) + '">'
         + '<div class="tk-h"><b>' + esc(t.subject) + '</b>'
         + '<span class="pill">' + esc(t.kind_title_fa) + '</span>'
+        + (t.content_id ? '<span class="pill">' + esc(t.content_id) + '</span>' : '')
+        + (t.is_public ? '<span class="pill hot">عمومی</span>' : '')
         + '<span class="pill">' + esc(t.reference) + '</span>'
         + (t.status === 'closed' ? '<span class="pill">بسته</span>'
            : (needs ? '<span class="pill hot">منتظر پاسخ توست</span>' : '<span class="pill">منتظر کاربر</span>'))
@@ -362,6 +364,14 @@ function renderHtml(k: Kpis, grantable: { key: string; title_fa: string }[]): st
               + esc(m.body).replace(/\\n/g, '<br>') + '</div>';
           }).join('');
           var closed = j.ticket.status === 'closed';
+          // Only an article thread has a page to appear on, so only it gets the
+          // switch. Private is the default and publishing is a decision — this
+          // button IS that decision.
+          var pub = j.ticket.content_id
+            ? '<div class="row"><button type="button" class="pubbtn" data-act="'
+              + (j.ticket.is_public ? 'unpublish">خصوصی کن (الان عمومی است)' : 'publish">عمومی کن')
+              + '</button></div>'
+            : '';
           box.innerHTML = '<div class="thread">' + msgs + '</div>'
             + (closed
               ? '<button type="button" data-act="reopen">بازکردن دوباره</button>'
@@ -369,6 +379,7 @@ function renderHtml(k: Kpis, grantable: { key: string; title_fa: string }[]): st
                 + '<div class="row"><button type="button" data-act="reply">ارسال پاسخ</button>'
                 + '<button type="button" data-act="reply-close">ارسال و بستن</button>'
                 + '<button type="button" data-act="close">فقط بستن</button></div>')
+            + pub
             + '<div class="tk-out muted"></div>';
         })
         .catch(function () { box.innerHTML = '<div class="muted">خوانده نشد.</div>'; });
@@ -388,6 +399,17 @@ function renderHtml(k: Kpis, grantable: { key: string; title_fa: string }[]): st
       }
 
       var o = box.querySelector('.tk-out');
+      if (act === 'publish' || act === 'unpublish') {
+        var going = act === 'publish';
+        if (going && !confirm('این گفت‌وگو زیر همان مطلب برای همه دیده می‌شود و به نویسنده‌اش خبر می‌رسد. مطمئنی؟')) return;
+        fetch('/admin/support/' + id + '/publish', {
+          method: 'POST', credentials: 'include',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ public: going })
+        }).then(function () { thread(box, id); })
+          .catch(function () { if (o) o.textContent = 'نشد.'; });
+        return;
+      }
       if (act === 'reopen' || act === 'close') {
         fetch('/admin/support/' + id + '/' + (act === 'reopen' ? 'reopen' : 'close'),
           { method: 'POST', credentials: 'include' })
@@ -1738,6 +1760,27 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
     if (!r.ok) return reply.code(r.ticket ? 400 : 404).send({ error: 'rejected', message: r.message });
     const ticket = b.close ? await closeTicket(id) : r.ticket;
     return reply.send({ ok: true, message: r.row, ticket });
+  });
+
+  // POST /admin/support/:id/publish { public } — the founder's switch, and the
+  // only thing that ever makes a reader's words visible to anybody else. Only an
+  // article thread can be published; a support ticket has no page to appear on,
+  // which the service's `content_id is not null` guard enforces rather than
+  // trusting the caller to pass the right id.
+  app.post('/admin/support/:id/publish', {
+    schema: {
+      body: { type: 'object', properties: { public: { type: 'boolean' } } },
+    },
+  }, async (request, reply) => {
+    const { id } = request.params as { id: string };
+    const body = (request.body ?? {}) as { public?: boolean };
+    const isPublic = body.public !== false;
+    const ticket = await setThreadPublic(id, isPublic);
+    if (!ticket) return reply.code(404).send({ error: 'not_an_article_thread' });
+    // Their words are on a public page now — they hear it from us, not by
+    // stumbling on it. Fire-and-forget: publishing must not fail on a push.
+    if (isPublic) notifyPublished(ticket).catch(() => { /* logged upstream */ });
+    return reply.send({ ok: true, ticket });
   });
 
   app.post('/admin/support/:id/close', async (request, reply) => {

@@ -24,60 +24,60 @@
     "hash": "bd50932cb1d75571"
   },
   "/pillar/premium-index.js": {
-    "v": 17,
-    "hash": "f8775738e017f596"
+    "v": 18,
+    "hash": "16a16e4dc788b5bc"
   },
   "/plus/js/assistant-page.js": {
-    "v": 20,
-    "hash": "5a61717713fd90d9"
+    "v": 21,
+    "hash": "3a48a569352a18e4"
   },
   "/plus/js/cards-page.js": {
-    "v": 20,
-    "hash": "7e569c43014824c3"
+    "v": 21,
+    "hash": "17931f0eb9c439bc"
   },
   "/plus/js/collection-page.js": {
-    "v": 25,
-    "hash": "971d27cdaff1a805"
+    "v": 26,
+    "hash": "0feedecabde611b6"
   },
   "/plus/js/collections-page.js": {
-    "v": 25,
-    "hash": "5c5e4913ff77b6e8"
+    "v": 26,
+    "hash": "6e38359e7163d2e9"
   },
   "/plus/js/dashboard-page.js": {
-    "v": 36,
-    "hash": "46367c3c7272ca89"
+    "v": 37,
+    "hash": "66acec2c27ad8039"
   },
   "/plus/js/highlights-page.js": {
-    "v": 24,
-    "hash": "d1e69d5f82c36156"
+    "v": 25,
+    "hash": "b98639e9cc654196"
   },
   "/plus/js/pathway-page.js": {
-    "v": 23,
-    "hash": "316893d722742765"
+    "v": 24,
+    "hash": "a34ed9e8f11eb533"
   },
   "/plus/js/pathways-page.js": {
-    "v": 23,
-    "hash": "ee2ecea3edc18bc3"
+    "v": 24,
+    "hash": "0d53286e8048e528"
   },
   "/plus/js/pay-result-page.js": {
-    "v": 18,
-    "hash": "e83d989e7be1d162"
+    "v": 19,
+    "hash": "f5fcb584f6755cfb"
   },
   "/plus/js/pricing-page.js": {
-    "v": 27,
-    "hash": "3bcd464109c4176c"
+    "v": 28,
+    "hash": "fcfeda8025500a44"
   },
   "/plus/js/profile-page.js": {
-    "v": 30,
-    "hash": "6908049499cb760b"
+    "v": 31,
+    "hash": "8b6c72d61004752c"
   },
   "/plus/js/reading-compass-page.js": {
-    "v": 21,
-    "hash": "53fed69f4a3390ca"
+    "v": 22,
+    "hash": "a839611a3bc96e6d"
   },
   "/plus/js/support-page.js": {
-    "v": 2,
-    "hash": "fa54d2a41fa5af73"
+    "v": 3,
+    "hash": "fbf1ddc044c03dcc"
   },
   "/plus/js/upboard-page.js": {
     "v": 6,
@@ -92,7 +92,7 @@
     "hash": "a9218d384e4fd6ba"
   },
   "/plus/plus.css": {
-    "v": 22,
-    "hash": "097920ba36d99e51"
+    "v": 23,
+    "hash": "a4d9a77bbcd6880a"
   }
 }

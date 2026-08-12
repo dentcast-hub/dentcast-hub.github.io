@@ -279,6 +279,13 @@ export const api = {
   closeTicket: (id) => request('/support/tickets/' + encodeURIComponent(id) + '/close', { method: 'POST' }),
   reopenTicket: (id) => request('/support/tickets/' + encodeURIComponent(id) + '/reopen', { method: 'POST' }),
 
+  // threads under an article. `publicThreads` is the one call in this client
+  // that needs no session: a thread the founder published is part of the page.
+  // Writing is premium-only, enforced server-side.
+  publicThreads: (content_id) => request('/threads/public', { query: { content_id } }),
+  myThread: (content_id) => request('/threads/mine', { query: { content_id } }),
+  postThread: (content_id, body) => request('/threads', { method: 'POST', body: { content_id, body } }),
+
   // dashboard (later milestones)
   tree: () => request('/tree'),
   progress: () => request('/progress'),

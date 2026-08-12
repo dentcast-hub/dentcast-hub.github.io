@@ -1235,3 +1235,135 @@ html.dcp-touring #mobile-body { overflow: hidden; }
   border-bottom: 1px solid rgba(var(--ac-rgb, 11,95,255), .35);
 }
 .dc-plus-caplink:hover { border-bottom-color: currentColor; }
+
+
+/* ── گفت‌وگوی زیر مطلب ────────────────────────────────────────────────────
+   The conversation block under an article (plus/js/article-threads.js).
+
+   It lives HERE rather than in dc-article.css, where an article-surface class
+   would normally go, because the block renders on both surfaces and only this
+   stylesheet reaches both: dc-nav.js injects plus.css on every page, while
+   dc-article.css is linked by article pages alone — and the desktop shell
+   (index.html) loads no shared CSS at all, fetching the article as a fragment
+   into column C. Styling this in dc-article.css would have left the block
+   unstyled for every desktop reader, the same gap buildShareButton() closes.
+
+   Two things it deliberately is NOT: it is not amber (that colour means «this
+   is what a subscription buys» site-wide, and a published thread is free to
+   read), and it never renders at all when there is nothing published and the
+   reader cannot write — so these rules only ever paint something real.
+
+   Every colour is a theme token, so the block follows light/dark with the rest
+   of the article instead of carrying its own palette. */
+.dc-threads{
+  margin:2.5rem 0 1rem;
+  padding-top:1.5rem;
+  border-top:1px solid var(--border, rgba(2,35,96,.10));
+}
+.dc-th-skel{ min-height:1px; }
+.dc-th-title{
+  font-size:1.05rem;
+  font-weight:800;
+  margin:0 0 .25rem;
+  color:var(--txt, #0a1a33);
+}
+.dc-th-count{
+  font-size:.82rem;
+  color:var(--txt2, #4a5f85);
+  margin-bottom:.875rem;
+}
+.dc-th-pub,
+.dc-th-mine{
+  background:var(--surface2, #f4f6fb);
+  border:1px solid var(--border2, rgba(2,35,96,.06));
+  border-radius:14px;
+  padding:.875rem 1rem;
+  margin-bottom:.75rem;
+}
+.dc-th-mine{
+  background:transparent;
+  border-style:dashed;
+}
+.dc-th-mine-head{
+  font-size:.8rem;
+  font-weight:700;
+  color:var(--txt2, #4a5f85);
+  margin-bottom:.5rem;
+}
+.dc-th-msg + .dc-th-msg{
+  margin-top:.75rem;
+  padding-top:.75rem;
+  border-top:1px solid var(--border2, rgba(2,35,96,.06));
+}
+.dc-th-who{
+  font-size:.76rem;
+  color:var(--txt2, #4a5f85);
+  margin-bottom:.25rem;
+}
+.dc-th-msg-founder .dc-th-who{
+  color:var(--ac, #0b5fff);
+  font-weight:700;
+}
+.dc-th-body{
+  font-size:.92rem;
+  line-height:1.9;
+  color:var(--txt, #0a1a33);
+  white-space:pre-wrap;
+  overflow-wrap:anywhere;
+}
+.dc-th-compose{ margin-top:1rem; }
+.dc-th-input{
+  width:100%;
+  box-sizing:border-box;
+  background:var(--surface, #fff);
+  color:var(--txt, #0a1a33);
+  border:1px solid var(--border, rgba(2,35,96,.10));
+  border-radius:12px;
+  padding:.7rem .85rem;
+  font:inherit;
+  font-size:.92rem;
+  line-height:1.8;
+  resize:vertical;
+}
+.dc-th-row{
+  display:flex;
+  align-items:center;
+  gap:.75rem;
+  flex-wrap:wrap;
+  margin-top:.5rem;
+}
+.dc-th-send{
+  background:var(--ac, #0b5fff);
+  color:var(--txt-inv, #fff);
+  border:0;
+  border-radius:999px;
+  padding:.5rem 1.35rem;
+  font:inherit;
+  font-weight:800;
+  cursor:pointer;
+}
+.dc-th-send:disabled{ opacity:.55; cursor:default; }
+.dc-th-note{
+  font-size:.78rem;
+  line-height:1.8;
+  color:var(--txt2, #4a5f85);
+  margin-top:.5rem;
+}
+.dc-th-gate{
+  background:var(--surface2, #f4f6fb);
+  border:1px solid var(--border2, rgba(2,35,96,.06));
+  border-radius:14px;
+  padding:.875rem 1rem;
+  margin-top:1rem;
+}
+.dc-th-gate p{ margin:0 0 .625rem; font-size:.9rem; color:var(--txt2, #4a5f85); }
+.dc-th-cta{
+  display:inline-block;
+  background:var(--ac, #0b5fff);
+  color:var(--txt-inv, #fff);
+  border-radius:999px;
+  padding:.45rem 1.15rem;
+  font-size:.86rem;
+  font-weight:800;
+  text-decoration:none;
+}

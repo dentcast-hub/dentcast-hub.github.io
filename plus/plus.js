@@ -17,6 +17,7 @@ import { initReadingTracker } from './js/reading.js';
 import { initListeningTracker } from './js/listening.js';
 import { initShareScoring, buildShareButton } from './js/share.js';
 import { initHeart, buildHeartChip } from './js/votes.js';
+import { mountArticleThreads } from './js/article-threads.js';
 
 // Carry plus.js's own cache-busting version (?v=N, set by dc-nav.js) onto the
 // workbench module import. Article pages are OUTSIDE the /plus/ service-worker
@@ -185,6 +186,9 @@ async function initArticle() {
 
   const contentId = detectContentId();
   const { wb, updateBtn } = await setupWorkbench({ proseRoot, proseAnchor: findProseBox(), contentId });
+  // گفت‌وگوی زیر مطلب, under the prose. Draws itself lazily and removes itself
+  // when there is nothing published and this reader cannot write.
+  mountArticleThreads(findProseBox() || proseRoot, contentId);
 
   // Post-login return-to-study (the funnel) or a remembered choice this session.
   // Never auto-enters on a fresh visit: sessionStorage is empty then.
@@ -244,6 +248,7 @@ async function mountArticleWorkbench(root, url) {
     }),
   });
   desktopWb = wb;
+  mountArticleThreads(findProseBox(root) || proseRoot, contentId);
   const hlId = query ? new URLSearchParams(query).get('dcphl') : null;
   if (hlId && await currentUser()) await openDeepLinkedHighlight(wb, updateBtn, hlId);
 }

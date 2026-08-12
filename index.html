@@ -3526,6 +3526,12 @@ a.dc-list-card--pillar {
      text pin, never confused with it. */
   --dcp-ref: #6d28d9;
   --dcp-ref-bg: rgba(109, 40, 217, .07);
+  /* قلبِ مقاله. Unlike the two above this IS a site-wide token (dc-theme.css
+     defines --heart for the article chip row); the fallbacks are here because
+     the desktop shell is index.html, which loads no shared stylesheet. */
+  --dcp-heart: var(--heart, #d92b52);
+  --dcp-heart-bg: var(--heart-bg, rgba(217, 43, 82, .10));
+  --dcp-heart-bd: var(--heart-bd, rgba(217, 43, 82, .28));
 }
 
 .dc-plus-home-card { margin: 0 0 14px; }
