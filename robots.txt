@@ -17,6 +17,16 @@ Disallow: /plus/faq-corpus.json
 Disallow: /pillar/structure.json
 Disallow: /pillar/*/structure.json
 
+# up-board's catalog — the id/title/type/url/date list its two arrangements are
+# drawn from. Same reasoning as the pillar sidecars above: every link in it is
+# already indexed on its own page, its section index and its pillar, so a
+# crawler reading this file would only find duplicates of pages it has. The
+# PAGE itself (/up-board/) carries its own <meta robots="noindex, follow"> and
+# is deliberately NOT listed here — disallowing it would stop crawlers reading
+# that tag, which is what makes the noindex work (same trap as the cabinet
+# page below). Robots rules never apply to a page's own fetch of its own data.
+Disallow: /up-board/index.json
+
 # Paper-cabinet catalogue — keep out of search results, same reason as the
 # music JSON above. The cabinet PAGE is handled by its own <meta robots
 # noindex> and is deliberately NOT listed here: disallowing it would stop

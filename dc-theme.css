@@ -66,6 +66,16 @@ body.dc-content-only main.article-page {
   --chip-bd:  rgba(11,95,255,.20);
   --chip-txt: #022360;
 
+  /* ── قلبِ مقاله / up-board ──
+     A third semantic colour, and deliberately neither of the two we already
+     have. Amber means one thing site-wide — «this is what a subscription
+     buys» — and up-board is free, so an amber heart would spend that meaning.
+     Brand blue is the other obvious pick and fails for a plainer reason: a
+     blue heart does not read as a heart. Used on ONE element. */
+  --heart:    #d92b52;
+  --heart-bg: rgba(217,43,82,.10);
+  --heart-bd: rgba(217,43,82,.28);
+
   --tr:  .17s cubic-bezier(.4,0,.2,1);
   --tr2: .26s cubic-bezier(.4,0,.2,1);
 
@@ -120,6 +130,13 @@ body.dc-content-only main.article-page {
   --chip-bg:  rgba(91,156,246,.12);
   --chip-bd:  rgba(91,156,246,.24);
   --chip-txt: #8ab4f8;
+
+  /* قلب — lifted and desaturated for the dark ground, not the light hex reused.
+     #d92b52 on #17212b is a dim smudge; this keeps the same hue reading as a
+     heart at the same size. */
+  --heart:    #ff6b8a;
+  --heart-bg: rgba(255,107,138,.14);
+  --heart-bd: rgba(255,107,138,.32);
 
   /* ── Semantic role tokens (link + heading) — dark mode ── */
   --link:       #7ab4ff;        /* default link, dark mode             */
