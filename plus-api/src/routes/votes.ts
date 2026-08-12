@@ -5,7 +5,7 @@ import { requirePremium } from '../middleware/require-premium.js';
 import { readSession } from '../services/session.js';
 import { consume, HOUR_MS } from '../services/rate-limit.js';
 import {
-  addVote, removeVote, getVoteState, getBoard, isValidContentId,
+  addVote, removeVote, getVoteState, getBoard, getHeartCounts, isValidContentId,
 } from '../services/votes.js';
 
 /**
@@ -65,6 +65,16 @@ export async function voteRoutes(app: FastifyInstance): Promise<void> {
     // services/votes.ts instead, where it costs nothing and leaks nothing.
     return reply.send(await getBoard());
   });
+
+  /**
+   * Every page's heart count in one map — PUBLIC, like the single-page count.
+   *
+   * /up-board/ needs this for its FREE list: the count belongs to the article,
+   * not to the arrangement, so «تازه‌ترین» prints it exactly as the article page
+   * does. Gating it along with the board (which is what shipped first) left the
+   * free list with no signal beside any row.
+   */
+  app.get('/votes/counts', async (_request, reply) => reply.send({ hearts: await getHeartCounts() }));
 
   /** One page's count, plus whether the caller is one of the hearts. */
   app.get('/votes', async (request, reply) => {

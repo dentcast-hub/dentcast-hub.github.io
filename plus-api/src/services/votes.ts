@@ -202,6 +202,36 @@ async function seedByContent(): Promise<Map<string, number>> {
   return out;
 }
 
+// ── the counts ──────────────────────────────────────────────────────────────
+
+/**
+ * Every page's heart count, in one map. PUBLIC.
+ *
+ * The same information `GET /votes?id=` already hands out one page at a time,
+ * and it has to be reachable in bulk for the same reason it is public at all:
+ * the count is printed beside the article for everybody, so a list of articles
+ * must be able to print it too. Splitting it out of getBoard() is what lets the
+ * ranked ARRANGEMENT be premium without the counts going premium with it —
+ * which is what happened the first time the gate went on, and left the free
+ * list with no signal at all next to its rows.
+ *
+ * Its own small cache: this is on the free path, so it is asked far more often
+ * than the board and must never wait on the seed aggregate.
+ */
+let countsCache: Map<string, number> | null = null;
+let countsAt = 0;
+
+export async function getHeartCounts(now: number = Date.now()): Promise<Record<string, number>> {
+  if (!countsCache || now - countsAt >= CACHE_MS) {
+    const res = await pool.query<{ content_id: string; hearts: string }>(
+      `select content_id, count(*)::bigint as hearts from content_votes group by content_id`,
+    );
+    countsCache = new Map(res.rows.map((r) => [r.content_id, Number(r.hearts)]));
+    countsAt = now;
+  }
+  return Object.fromEntries(countsCache);
+}
+
 // ── the board ───────────────────────────────────────────────────────────────
 
 export interface BoardItem {
@@ -252,6 +282,8 @@ let cachedAt = 0;
 export function resetBoardCache(): void {
   cached = null;
   cachedAt = 0;
+  countsCache = null;
+  countsAt = 0;
 }
 
 export async function getBoard(now: number = Date.now()): Promise<Board> {

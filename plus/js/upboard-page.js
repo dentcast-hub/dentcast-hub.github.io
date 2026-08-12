@@ -347,9 +347,21 @@ export function initUpBoard(root) {
       countEl.textContent = 'فهرست مطالب بارگذاری نشد. صفحه را دوباره باز کن.';
     });
 
+  // PUBLIC, and fetched separately from the board on purpose: a heart count
+  // belongs to the article, not to the arrangement. Reading it here is what lets
+  // the FREE «تازه‌ترین» list carry the same number the article page shows —
+  // when this rode on the (premium) board, gating the arrangement silently took
+  // the counts off every row for everybody who was not a subscriber.
+  api.voteCounts().then((c) => {
+    hearts = new Map(Object.entries(c.hearts || {}));
+    if (catalog) render();
+  }).catch(() => { /* rows simply carry no count */ });
+
   api.voteBoard().then((b) => {
     board = b;
-    hearts = new Map(b.items.map((i) => [i.content_id, i.hearts]));
+    // The board's own counts are the same numbers, a minute fresher — take them
+    // when we have them so a subscriber never sees two different totals.
+    b.items.forEach((i) => hearts.set(i.content_id, i.hearts));
     engagement = new Map(b.items
       .filter((i) => typeof i.engagement === 'number')
       .map((i) => [i.content_id, i.engagement]));

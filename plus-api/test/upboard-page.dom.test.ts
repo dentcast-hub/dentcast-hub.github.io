@@ -17,8 +17,9 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 let boardImpl: () => Promise<unknown>;
 let indexImpl: () => Promise<{ ok: boolean; json: () => Promise<unknown> }>;
 
+let countsImpl: () => Promise<unknown>;
 vi.mock('/plus/js/api.js', () => ({
-  api: { voteBoard: () => boardImpl() },
+  api: { voteBoard: () => boardImpl(), voteCounts: () => countsImpl() },
 }));
 
 let ctaFrom: string | null = null;
@@ -102,6 +103,8 @@ const click = (sel: string) => (document.querySelector(sel) as HTMLElement).clic
 beforeEach(() => {
   vi.resetModules();
   boardImpl = () => Promise.resolve(BOARD);
+  // PUBLIC — every reader gets these, gate or no gate.
+  countsImpl = () => Promise.resolve({ hearts: { 'notecast/n-2': 9, 'chairside/c-1': 4 } });
   indexImpl = () => Promise.resolve({ ok: true, json: async () => CATALOG });
   globalThis.fetch = vi.fn(() => indexImpl()) as any;
   // jsdom has no IntersectionObserver; the module guards for it, but the whole
@@ -213,6 +216,19 @@ describe('/up-board/', () => {
   // «بالاترین» is premium; «تازه‌ترین» is the list this page always was.
   describe('the premium gate', () => {
     beforeEach(() => { ctaFrom = null; guestExtrasFrom = null; loginOpened = 0; });
+
+    // The regression this exists to prevent: gating the ARRANGEMENT once took
+    // the heart counts off every row too, because they rode on the same
+    // response. A count belongs to the article, not to the ordering.
+    it('still shows heart counts to a reader it just gated', async () => {
+      boardImpl = () => Promise.reject(premiumRequired());
+      await mount();
+      const rows = Array.from(document.querySelectorAll('.ub-row'));
+      const withHearts = rows.filter((r) => r.querySelector('.ub-hearts'));
+      expect(withHearts.length).toBe(2);
+      expect(document.body.textContent).toContain('۹');
+      expect(document.body.textContent).toContain('۴');
+    });
 
     it('keeps the free list intact and locks only the ranked tab', async () => {
       boardImpl = () => Promise.reject(premiumRequired());
