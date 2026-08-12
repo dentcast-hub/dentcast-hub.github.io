@@ -196,6 +196,19 @@ describe('the «ستون» seat-holder view', () => {
     expect(quoted).toContain('قیمت لیست');
   });
 
+  // A t.me link is exactly the door that fails to open for the audience this
+  // rail is for, and here the cost is a buyer who cannot ask what to transfer.
+  // The handle has to be on screen as text they can type into Telegram itself.
+  it('prints the handle, not just a word linking to it', async () => {
+    const root = await renderPricing(
+      { ...LIVE, bank_transfer: { enabled: true, iban: 'IR1', holder: 'ف', bank_name: 'س' } },
+      { id: 'u2' },
+    );
+    const warn = root.querySelector('.dcp-bank .dcp-gift-warn')!;
+    expect(warn.textContent).toContain('@dentcast_support');
+    expect(warn.querySelector('.dcp-tg-id')!.getAttribute('dir')).toBe('ltr');
+  });
+
   it('tells the buyer to agree the amount first, and what a student gets', async () => {
     const root = await renderPricing(
       {

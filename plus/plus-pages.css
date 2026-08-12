@@ -979,6 +979,22 @@ a.dcp-progress-row:hover { text-decoration: none; }
 }
 
 /* ---------------------------------------------------------------------------
+   The support Telegram handle, wherever it appears (both rails and the support
+   page). Written out as TEXT rather than hidden behind a word, because a t.me
+   link is the one door on these pages that routinely fails to open for the
+   audience it is for — and the handle is what they can still type into
+   Telegram's own search. `user-select: all` so one tap takes the whole thing;
+   isolated for the same reason the IBAN is (a Latin run in an RTL line puts
+   its «@» on the wrong end otherwise).
+--------------------------------------------------------------------------- */
+.dcp-tg-id {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  direction: ltr; unicode-bidi: isolate; user-select: all;
+  font-weight: 800; white-space: nowrap;
+}
+.dcp-tg-fallback { margin: 6px 0 0; font-size: .82rem; }
+
+/* ---------------------------------------------------------------------------
    Support page (/plus/support.html) — kind chips, the photo checkbox, the
    success panel and the per-thread code row.
 --------------------------------------------------------------------------- */

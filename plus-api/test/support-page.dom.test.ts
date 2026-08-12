@@ -156,6 +156,39 @@ describe('coming back later — the reader who left for the bank', () => {
   });
 });
 
+/**
+ * A t.me link is the one door on this page that routinely fails to open for
+ * the audience it is for — no app registered as the handler, or a redirect
+ * that does not survive filtering. When it does not open, a button labelled
+ * «رفتن به تلگرام پشتیبانی» leaves the reader holding a reference with
+ * nowhere to send it. So the ADDRESS itself has to be on screen as text.
+ */
+describe('the handle is readable, not just linked', () => {
+  it('prints @dentcast_support on the success panel, beside the button', async () => {
+    const root = await boot();
+    await submit(root, true);
+    const panel = root.querySelector('.dcp-support-success')!;
+    expect(panel.textContent).toContain('@dentcast_support');
+    // Latin in an RTL line: without the isolation the «@» renders on the wrong
+    // end and gets typed back wrong.
+    expect(panel.querySelector('.dcp-tg-id')!.getAttribute('dir')).toBe('ltr');
+  });
+
+  it('prints it again on the thread a returning reader opens', async () => {
+    tickets = [{
+      id: 't1', reference: 'T-ABC-DEF', subject: 'موضوع', kind_title_fa: 'مشکل در پرداخت',
+      status: 'open', awaiting: 'founder', message_count: 1,
+      last_at: '2026-08-12T10:00:00Z', has_photo: true,
+    }];
+    const root = await boot();
+    root.querySelector<HTMLElement>('[data-ticket="t1"]')!
+      .firstElementChild!.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    await settle();
+    await settle();
+    expect(root.querySelector('.dcp-support-code-row')!.textContent).toContain('@dentcast_support');
+  });
+});
+
 describe('the route chip is a door, not a kind', () => {
   it('links to the pricing page and never opens a ticket', async () => {
     const root = await boot();

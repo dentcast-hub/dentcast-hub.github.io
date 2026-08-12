@@ -23,6 +23,27 @@ const when = (iso) => { try { return FA_DATE.format(new Date(iso)); } catch (_) 
 // path does not silently swallow. Not read from the API: it is not a setting a
 // reader ever needs to be told is configurable.
 const SUPPORT_TELEGRAM_URL = 'https://t.me/dentcast_support';
+const SUPPORT_TELEGRAM_ID = '@dentcast_support';
+
+/**
+ * The handle as TEXT, beside every Telegram button.
+ *
+ * A t.me link is the one door on this page that routinely fails to open for
+ * the audience it is for — no app registered as the handler, or a redirect
+ * that does not survive filtering — and a button that does nothing leaves the
+ * reader holding a reference with nowhere to send it. The handle is what they
+ * type into Telegram's own search, so it has to be readable and selectable
+ * rather than hidden inside an href.
+ *
+ * Latin inside an RTL line, so it is isolated for the same reason the IBAN is:
+ * without it the «@» renders on the wrong end and gets typed back wrong.
+ */
+function telegramFallback() {
+  return el('p', { class: 'dcp-muted dcp-tg-fallback' }, [
+    'اگر دکمه باز نشد، در تلگرام این آیدی را جست‌وجو کنید: ',
+    el('code', { class: 'dcp-tg-id', dir: 'ltr' }, SUPPORT_TELEGRAM_ID),
+  ]);
+}
 
 async function copyToClipboard(text, btn) {
   const original = btn.textContent;
@@ -76,8 +97,11 @@ function newTicketForm(kinds, onDone) {
     photoChk, el('span', {}, 'عکسی دارم که برای این درخواست می‌فرستم'),
   ]);
   const photoNote = el('p', { class: 'dcp-muted dcp-support-photo-note' }, [
-    'بعد از ثبت، کد پیگیری می‌گیرید. عکس را با همان کد به ',
-    el('a', { href: SUPPORT_TELEGRAM_URL, target: '_blank', rel: 'noopener' }, 't.me/dentcast_support'),
+    'بعد از ثبت، کد پیگیری می‌گیرید. عکس را با همان کد در تلگرام به ',
+    el('a', {
+      class: 'dcp-tg-id', dir: 'ltr',
+      href: SUPPORT_TELEGRAM_URL, target: '_blank', rel: 'noopener',
+    }, SUPPORT_TELEGRAM_ID),
     ' بفرستید.',
   ]);
   photoNote.hidden = true;
@@ -143,12 +167,16 @@ function successPanel(ticket, withPhoto) {
   if (withPhoto) {
     parts.push(
       el('p', {}, [
-        'عکس را همراه همین کد به ',
-        el('a', { href: SUPPORT_TELEGRAM_URL, target: '_blank', rel: 'noopener' }, 't.me/dentcast_support'),
+        'عکس را همراه همین کد در تلگرام به ',
+        el('a', {
+          class: 'dcp-tg-id', dir: 'ltr',
+          href: SUPPORT_TELEGRAM_URL, target: '_blank', rel: 'noopener',
+        }, SUPPORT_TELEGRAM_ID),
         ' بفرستید. بدون کد، عکس به درخواست شما وصل نمی‌شود.',
       ]),
       el('a', { class: 'dcp-btn dcp-btn-primary', href: SUPPORT_TELEGRAM_URL, target: '_blank', rel: 'noopener' },
         'رفتن به تلگرام پشتیبانی'),
+      telegramFallback(),
     );
   } else {
     parts.push(el('p', {}, 'اگر بعداً عکسی لازم شد، کد از پایین همین درخواست در دسترس می‌ماند.'));
@@ -190,6 +218,8 @@ function ticketCodeRow(ticket) {
       class: 'dcp-btn dcp-btn-ghost',
       href: SUPPORT_TELEGRAM_URL, target: '_blank', rel: 'noopener',
     }, 'ارسال عکس در تلگرام'),
+    // The address itself, on the same row as the button that may not open it.
+    el('code', { class: 'dcp-tg-id', dir: 'ltr' }, SUPPORT_TELEGRAM_ID),
   ]);
 }
 

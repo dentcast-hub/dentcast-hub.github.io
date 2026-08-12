@@ -36,6 +36,23 @@ const termName = (m) => TERM[m] || `${toFa(m)} ماهه`;
 // Fixed on purpose (same address support-page.js uses) — the only inbox the
 // Bale bot photo path does not silently swallow.
 const SUPPORT_TELEGRAM_URL = 'https://t.me/dentcast_support';
+const SUPPORT_TELEGRAM_ID = '@dentcast_support';
+
+/**
+ * The handle as a link whose TEXT is the address.
+ *
+ * A t.me link routinely fails to open for the audience this rail is for (no
+ * app registered as the handler, or a redirect that does not survive
+ * filtering), and on this page the cost of that is a buyer who cannot ask what
+ * to transfer. Printing the handle rather than a word means a dead link still
+ * leaves them something to type into Telegram's own search. Isolated for the
+ * same reason the IBAN is: Latin inside an RTL line renders its «@» on the
+ * wrong end otherwise.
+ */
+const telegramId = () => el('a', {
+  class: 'dcp-tg-id', dir: 'ltr',
+  href: SUPPORT_TELEGRAM_URL, target: '_blank', rel: 'noopener',
+}, SUPPORT_TELEGRAM_ID);
 
 /**
  * Which plan is highlighted: the longest one still buyable.
@@ -315,9 +332,12 @@ function bankIntro(bank, plan, onStart, offline) {
       termName(plan.months), ' — ', toman(planListRial(plan)),
       el('span', { class: 'dcp-plan-unit' }, 'تومان (قیمت لیست)'),
     ]),
-    el('p', { class: 'dcp-gift-warn' },
-      `قبل از واریز، مبلغ را با پشتیبانی هماهنگ کنید. دانشجو ٪${pct} تخفیف روی اشتراک ${months} ماهه دارد؛ `
-      + 'مبلغ نهایی را بعد از هماهنگی همین‌جا می‌بینید.'),
+    el('p', { class: 'dcp-gift-warn' }, [
+      `قبل از واریز، مبلغ را با پشتیبانی هماهنگ کنید — در تلگرام `,
+      telegramId(),
+      ` یا از صفحه‌ی پشتیبانی. دانشجو ٪${pct} تخفیف روی اشتراک ${months} ماهه دارد؛ `
+      + 'مبلغ نهایی را بعد از هماهنگی همین‌جا می‌بینید.',
+    ]),
     el('div', { class: 'dcp-bank-iban-row' }, [iban, copyBtn]),
     el('p', { class: 'dcp-muted' }, `به نام ${bank.holder} — ${bank.bank_name}`),
     start,
@@ -348,7 +368,7 @@ function bankSteps(bank, plan, reference) {
       el('a', { href: '/plus/support.html', target: '_blank', rel: 'noopener' },
         'یک تیکت «مشکل در پرداخت» باز کنید'),
       ' یا به ',
-      el('a', { href: SUPPORT_TELEGRAM_URL, target: '_blank', rel: 'noopener' }, 't.me/dentcast_support'),
+      telegramId(),
       ` پیام بدهید. دانشجو ٪${pct} تخفیف روی اشتراک ${months} ماهه دارد (عکس کارت دانشجویی لازم است).`,
     ]),
     el('li', {}, 'مبلغ تأییدشده بالا نوشته می‌شود. همین صفحه را دوباره باز کنید تا عدد نهایی را ببینید.'),
@@ -356,7 +376,7 @@ function bankSteps(bank, plan, reference) {
     el('li', {}, [
       `کد ${reference} را در قسمت «بابت» یا «شرح» بنویسید. اگر اپ‌تان این فیلد را ندارد، رسید را در همان تیکت `
       + '(با تیکِ «عکسی دارم») به ',
-      el('a', { href: SUPPORT_TELEGRAM_URL, target: '_blank', rel: 'noopener' }, 't.me/dentcast_support'),
+      telegramId(),
       ' بفرستید.',
     ]),
     el('li', {}, 'بعد از تأیید، اشتراک فعال می‌شود و در «اطلاعیه» خبرش را می‌گیرید.'),
