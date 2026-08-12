@@ -177,7 +177,44 @@ describe('the founder queue', () => {
   });
 });
 
-describe('«تأیید + اهدای نشان دانشجو» — approve and grant, atomically', () => {
+/**
+ * The student rate is a NUMBER THE FOUNDER TYPES, and these pin the two places
+ * that make it findable — because the failure mode is silent on both sides: a
+ * student who never learns the rate exists pays full price at the gateway, and
+ * a founder doing 15% in their head types a figure somebody then transfers.
+ */
+describe('the student rate is announced, and the panel hands over the number', () => {
+  it('offers the computed student amount on a six-month row, and only there', async () => {
+    const page = await app.inject({ method: 'GET', url: '/admin', headers: { authorization: basic } });
+    expect(page.statusCode).toBe(200);
+    // The button exists and carries the terms from config, not a literal.
+    expect(page.body).toContain('data-act="student-amount"');
+    expect(page.body).toContain(`٪' + STUDENT.percent + '`);
+    // …and the rule itself travels as data, so retuning it is a config change.
+    expect(page.body).toContain(`"percent":${config.bankTransfer.studentDiscountPercent}`);
+    expect(page.body).toContain(`"months":${config.bankTransfer.studentMonths}`);
+  });
+
+  it('never calls the badge button the thing that applies the discount', async () => {
+    const page = await app.inject({ method: 'GET', url: '/admin', headers: { authorization: basic } });
+    // The badge grants nothing — months come from «تأیید» either way — so the
+    // label must not read as the button that gives the discount.
+    expect(page.body).toContain('تأیید + یادگاریِ دانشجو');
+    expect(page.body).not.toContain('تأیید + اهدای نشان دانشجو');
+  });
+
+  it('tells a student on the support form that the gateway is the wrong door', async () => {
+    const cookie = await loginAs(app, PHONE);
+    const r = await app.inject({ method: 'GET', url: '/support/kinds', headers: { cookie } });
+    const student = r.json().kinds.find((k: { key: string }) => k.key === 'student');
+    // The gateway has no student concept at all, so paying there costs them the
+    // discount with no way back except a hand-gifted month.
+    expect(student.hint_fa).toContain('واریز به حساب');
+    expect(student.hint_fa).toContain('نه از درگاه');
+  });
+});
+
+describe('«تأیید + یادگاریِ دانشجو» — approve and grant, atomically', () => {
   it('approves the claim, activates the subscription and grants the student badge together', async () => {
     const cookie = await loginAs(app, PHONE);
     const uid = await userId(cookie);

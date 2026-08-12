@@ -86,7 +86,27 @@ function fmtNum(v: number | null): string {
   return v == null ? '—' : String(v);
 }
 
-function renderHtml(k: Kpis, grantable: { key: string; title_fa: string }[]): string {
+/**
+ * What the bank-transfer queue needs to offer the student amount as a button
+ * rather than as mental arithmetic.
+ *
+ * The discount is still ANNOUNCED, not computed by the engine (decision 2.3) —
+ * this only fills the field with the figure the rule implies, and the founder
+ * still presses «ثبت مبلغ» to write it. Handing over the number rather than
+ * the multiplication is what stops the one mistake with no undo: a typo here
+ * is a price somebody transfers.
+ */
+interface StudentTerms {
+  percent: number;
+  months: number;
+  prices: Record<number, number>;
+}
+
+function renderHtml(
+  k: Kpis,
+  grantable: { key: string; title_fa: string }[],
+  student: StudentTerms,
+): string {
   const d7Rows = k.d7_survival_by_tier.length
     ? k.d7_survival_by_tier
         .map((r) => `<tr><td>${r.tier}</td><td>${r.cohort}</td><td>${r.kept}</td><td>${fmtPct(r.pct)}</td></tr>`)
@@ -614,12 +634,23 @@ function renderHtml(k: Kpis, grantable: { key: string; title_fa: string }[]): st
   </script>
 
   <h3 style="margin-top:26px">صف واریز به حساب</h3>
-  <div class="muted">درخواست‌های واریز به شبا. صفحه‌ی خرید به خریدار می‌گوید <b>قبل از واریز</b> مبلغ را با تو هماهنگ کند، و عددی که این‌جا می‌نویسی همان است که او می‌بیند — پس مبلغ را قبل از واریزِ او ثبت کن، نه بعدش. تا وقتی چیزی ننوشته‌ای، عددِ ردیف قیمتِ لیست است. برای دانشجو (٪۱۵ روی شش‌ماهه) مبلغ را بنویس و بعد «تأیید + اهدای نشان دانشجو» را بزن — نشان و اشتراک با هم و در یک تراکنش ثبت می‌شوند.</div>
+  <div class="muted">
+    درخواست‌های واریز به شبا. صفحه‌ی خرید به خریدار می‌گوید <b>قبل از واریز</b> مبلغ را با تو هماهنگ کند،
+    و عددی که این‌جا می‌نویسی همان است که او می‌بیند — پس مبلغ را قبل از واریزِ او ثبت کن، نه بعدش.
+    تا وقتی چیزی ننوشته‌ای، عددِ ردیف قیمتِ لیست است.
+    <br>
+    <b>تخفیف دانشجویی همین است و بس:</b> «مبلغ دانشجویی» را بزن تا فیلد با مبلغِ تخفیف‌خورده پر شود،
+    بعد «ثبت مبلغ». نشان هیچ نقشی در تخفیف یا فعال‌سازی ندارد — «تأیید» به‌تنهایی اشتراک را فعال می‌کند،
+    و «تأیید + یادگاریِ دانشجو» فقط همان کار را می‌کند به‌علاوه‌ی یک کاشیِ تزئینی روی دیوار افتخارات.
+  </div>
   <div id="btList"></div>
   <script>
   (function () {
     var list = document.getElementById('btList');
     if (!list) return;
+    // The announced terms, from config — so retuning ٪۱۵ stays a config change
+    // rather than an edit to arithmetic buried in this page.
+    var STUDENT = ${JSON.stringify(student)};
 
     function esc(s) {
       return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
@@ -636,7 +667,19 @@ function renderHtml(k: Kpis, grantable: { key: string; title_fa: string }[]): st
       return esc(r.display_name || r.phone || r.username || r.user_id);
     }
 
+    // The student price for a term, in TOMAN (the unit the field takes), or
+    // null where the rule does not apply. Floored, so a ragged number always
+    // rounds toward the customer rather than asking them for a toman more
+    // than the announced discount implies.
+    function studentToman(months) {
+      if (!STUDENT.percent || months !== STUDENT.months) return null;
+      var listRial = STUDENT.prices[months];
+      if (!listRial) return null;
+      return Math.floor((listRial * (100 - STUDENT.percent) / 100) / 10);
+    }
+
     function row(r) {
+      var stu = studentToman(r.months);
       return '<div class="tk" data-ref="' + esc(r.reference) + '" style="cursor:auto">'
         + '<div class="tk-h"><b>' + esc(r.reference) + '</b>'
         + '<span class="pill">' + r.months + ' ماهه</span>'
@@ -645,9 +688,18 @@ function renderHtml(k: Kpis, grantable: { key: string; title_fa: string }[]): st
         + '<div class="muted">' + who(r) + ' · ' + when(r.created_at) + '</div>'
         + '<div class="bt-actions">'
         + '<input type="text" class="btAmount" inputmode="numeric" placeholder="مبلغ تازه (تومان، اختیاری)">'
+        // Fills the field, never submits: the founder still reads the number
+        // and presses «ثبت مبلغ», so the amount stays theirs to announce.
+        + (stu
+           ? '<button type="button" data-act="student-amount" data-toman="' + stu + '">'
+             + 'مبلغ دانشجویی (٪' + STUDENT.percent + ')</button>'
+           : '')
         + '<button type="button" data-act="set-amount">ثبت مبلغ</button>'
         + '<button type="button" data-act="approve">تأیید</button>'
-        + '<button type="button" class="gold" data-act="approve-badge">تأیید + اهدای نشان دانشجو</button>'
+        // The badge grants NOTHING — months come from «تأیید» either way. The
+        // label says «یادگاری» so this never reads as the button that applies
+        // the discount; the discount is the amount above, and only that.
+        + '<button type="button" class="gold" data-act="approve-badge">تأیید + یادگاریِ دانشجو</button>'
         + '<button type="button" class="danger" data-act="reject">رد</button>'
         + '</div>'
         + '<div class="bt-out muted"></div>'
@@ -674,6 +726,12 @@ function renderHtml(k: Kpis, grantable: { key: string; title_fa: string }[]): st
       if (!wrap) return;
       var ref = wrap.getAttribute('data-ref');
       var out = wrap.querySelector('.bt-out');
+
+      if (act === 'student-amount') {
+        wrap.querySelector('.btAmount').value = ev.target.getAttribute('data-toman');
+        out.textContent = 'مبلغ دانشجویی پر شد — «ثبت مبلغ» را بزن تا برای خریدار نوشته شود.';
+        return;
+      }
 
       if (act === 'set-amount') {
         var raw = wrap.querySelector('.btAmount').value.trim();
@@ -942,7 +1000,11 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
   app.get('/admin', async (_request, reply) => {
     const kpis = await computeKpis();
     const grantable = grantableBadges().map((b) => ({ key: b.key, title_fa: b.title_fa }));
-    return reply.type('text/html; charset=utf-8').send(renderHtml(kpis, grantable));
+    return reply.type('text/html; charset=utf-8').send(renderHtml(kpis, grantable, {
+      percent: config.bankTransfer.studentDiscountPercent,
+      months: config.bankTransfer.studentMonths,
+      prices: config.payments.planPricesRial,
+    }));
   });
 
   // GET /admin/spot/stats?from=&to=&group_by=day|week|month - the read path for
@@ -2177,9 +2239,15 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
   });
 
   // POST /admin/bank-transfer/approve-with-badge { reference, note? } — the
-  // «تأیید + اهدای نشان دانشجو» button: approves the claim, activates the
+  // «تأیید + یادگاریِ دانشجو» button: approves the claim, activates the
   // subscription and grants the `student` badge in ONE transaction, so a
   // failure on any one of the three leaves none of them written.
+  //
+  // The badge is the ONLY difference from plain /admin/gift/approve, and it
+  // confers nothing: the discount is the amount written onto the claim above,
+  // and the months come from the approval either way. Named «یادگاری» on the
+  // button for exactly that reason — «اهدای نشان» read as the step that gives
+  // the student their discount, which it never was.
   app.post('/admin/bank-transfer/approve-with-badge', {
     schema: {
       body: {
