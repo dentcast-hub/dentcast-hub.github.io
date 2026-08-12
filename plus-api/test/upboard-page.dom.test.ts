@@ -40,13 +40,15 @@ const CATALOG = {
 const BOARD = {
   // Deliberately only three of the five: the other two have neither hearts nor
   // any engagement behind them, which is the normal state of most of the site.
+  // 'chairside/c-1' carries hearts but NO engagement key — the server omits it
+  // rather than sending 0, and the row must omit the chip rather than print one.
   items: [
-    { content_id: 'notecast/n-2', hearts: 9, score: 9 },
+    { content_id: 'notecast/n-2', hearts: 9, score: 11.5, engagement: 100 },
     { content_id: 'chairside/c-1', hearts: 4, score: 4 },
-    { content_id: 'chairside/c-5', hearts: 0, score: 2.5 },
+    { content_id: 'chairside/c-5', hearts: 0, score: 1.5, engagement: 50 },
   ],
   total_hearts: 13,
-  seed_weight: 0.5,
+  engagement_cap: 2.5,
   generated_at: '2026-08-12T00:00:00.000Z',
 };
 
@@ -194,15 +196,44 @@ describe('/up-board/', () => {
     expect(document.getElementById('ubCount')!.textContent).toContain('بارگذاری نشد');
   });
 
-  // The sentence over the list must not claim a pure popularity ranking while an
-  // inherited head start is still doing part of the ordering.
-  it('states what the ranking is currently made of', async () => {
+  // The sentence over the list names BOTH signals and their pecking order, so a
+  // reader deciding whether to trust the order is not left to guess it.
+  it('states what the ranking is made of', async () => {
     await mount('?sort=top');
-    expect(document.getElementById('ubLead')!.textContent).toContain('میزان تعامل');
+    const lead = document.getElementById('ubLead')!.textContent!;
+    expect(lead).toContain('قلبِ خواننده‌ها');
+    expect(lead).toContain('تعامل');
+  });
 
-    vi.resetModules();
-    boardImpl = () => Promise.resolve({ ...BOARD, seed_weight: 0.01 });
+  it('shows the engagement index only where the server sent one', async () => {
     await mount('?sort=top');
-    expect(document.getElementById('ubLead')!.textContent).toBe('ترتیب بر اساس قلبِ خواننده‌ها.');
+    const rows = Array.from(document.querySelectorAll('.ub-row'));
+    // دوم (100) and پنجم (50) have an index; اول has hearts but no engagement.
+    expect(rows[0].querySelector('.ub-engagement')!.textContent).toBe('۱۰۰');
+    expect(rows[1].querySelector('.ub-engagement')).toBeNull();
+    expect(rows[2].querySelector('.ub-engagement')!.textContent).toBe('۵۰');
+    expect(document.querySelectorAll('.ub-engagement').length).toBe(2);
+  });
+
+  // In date order the index would be decoration: nothing on that page is ranked,
+  // so a number that only explains a ranking has nothing to explain.
+  it('hides the index in date order', async () => {
+    await mount();
+    expect(document.querySelectorAll('.ub-engagement').length).toBe(0);
+  });
+
+  // «۶۲» beside a heart invites exactly one wrong reading — a percentage of the
+  // people who opened the page. The tap is what rules that out.
+  it('explains the index on tap, quoting the live cap', async () => {
+    await mount('?sort=top');
+    (document.querySelector('.ub-engagement') as HTMLElement).click();
+    await settle();
+    const sheet = document.querySelector('.dcp-sheet')!;
+    expect(sheet).toBeTruthy();
+    const text = sheet.textContent!;
+    expect(text).toContain('شاخصِ تعامل');
+    expect(text).toContain('۱۰۰٪ مطالبِ دنت‌کست');
+    expect(text).toContain('درصدِ خواننده‌ها');   // says what it is NOT
+    expect(text).toContain('۲٫۵ قلب');            // the live cap, not a constant
   });
 });

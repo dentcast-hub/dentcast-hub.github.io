@@ -29,46 +29,46 @@ import { pool } from '../db.js';
  * counting the rows would let a single enthusiastic reader install their own
  * favourite at the top of the site.
  *
- * ── Why the seed fades, and why globally ────────────────────────────────────
+ * ── How engagement enters the score, and why it is capped ───────────────────
  *
- * The seed is a starting position, not a permanent handicap. If it stayed at
- * full weight, the board would be frozen: the pages with years of accumulated
- * reading would sit on top forever, the first ten hearts would move nothing
- * visible, and a reader who presses a heart and watches nothing happen has been
- * told their vote does not matter. That is the exact failure this feature cannot
- * survive, because the vote IS the feature.
+ * Engagement is a starting position AND a permanent tie-breaking pressure — but
+ * never a way to out-shout the readers. Two mechanisms do that work together.
  *
- * So the seed's weight shrinks as real votes accumulate:
+ * FIRST, it is expressed as a PERCENTILE (1..100), not a raw total. The raw
+ * numbers are wildly skewed — one much-studied article can carry twenty times
+ * the engagement of a typical one — so any scale anchored to the maximum
+ * squashes the whole middle of the site into single digits and stops
+ * distinguishing the pages it most needs to. A percentile is uniform by
+ * construction: half the engaged pages are above 50 and half below, which is
+ * what makes the number worth printing next to a heart count at all. It is also
+ * the only 0..100 form of this that can be said out loud without lying — «از
+ * ۶۲٪ مطالب سایت تعامل بیشتری گرفته» is a fact, where «۶۲٪ تعامل» would be a
+ * percentage of nothing.
  *
- *     weight = SEED_HALF_AT / (SEED_HALF_AT + total hearts on the site)
- *     score  = hearts + weight × seed
+ * SECOND, that percentile buys at most `engagement_cap` points, and the cap is
+ * RELATIVE to the site's own heart economy rather than a constant:
  *
- * Two properties of that formula are deliberate and worth stating, because the
- * obvious alternatives get both wrong:
+ *     cap   = max(CAP_FLOOR, CAP_SHARE × mean hearts per voted page)
+ *     score = hearts + cap × (percentile / 100)
  *
- *   1. The fade is SITE-WIDE, not per item. Fading an item's own seed as its own
- *      hearts grow sounds fairer and is backwards — it would strip the seed from
- *      exactly the pages readers endorsed while leaving it under the pages
- *      nobody voted for, i.e. it would penalise being liked. A global fade moves
- *      every item at once, so the ORDER only ever changes because of votes.
+ * A fixed cap could only ever be right once. Three points is most of the
+ * ranking while the busiest page has five hearts, and it is noise once the
+ * busiest page has four hundred — so a constant would start out overbearing and
+ * end up decorative, and nobody would notice the day it crossed over. Scaling it
+ * to the mean keeps its INFLUENCE steady instead of its value: engagement is
+ * always worth about half of what an average voted page earns in hearts,
+ * whatever that number happens to be that year.
  *
- *   2. A heart is always worth exactly 1. The weight multiplies the seed and
- *      never the votes, so no reader's press is ever diluted, and the sentence
- *      "your heart is one point" stays true for the whole life of the feature.
- *      Only the inherited head start gets smaller.
+ * `CAP_FLOOR` is what makes the board work on day one. With no votes yet the
+ * relative term is zero, every score would be zero, and the board would open in
+ * arbitrary order — the exact failure the seed exists to prevent. The floor
+ * means the opening board is ordered purely by engagement, and the relative term
+ * takes over from it silently as votes arrive.
  *
- * The board hands itself over on its own schedule — no switch-over day, no
- * second commit, no announcement. `seed_weight` is returned to the client so the
- * page can say truthfully what its ordering is currently made of.
- *
- * ── What happens to the seed afterwards ─────────────────────────────────────
- *
- * It is demoted, not retired. Once the weight is small the seed adds nothing to
- * the score, but hearts are small integers, so at that point most of the board
- * is TIES — and a tie has to be broken by something. The seed breaks it (see the
- * comparator in getBoard). It can never outrank a vote, because it is consulted
- * only after hearts are equal; it just replaces the alphabetical fallback that
- * would otherwise be deciding the order of a site's worth of tied pages.
+ * What the cap guarantees, and the reason it is a cap rather than a coefficient:
+ * a page with more than `cap` hearts CANNOT be overtaken by engagement alone, no
+ * matter how much of it there is. Hearts stay the senior signal permanently,
+ * with no fade to schedule and no switch-over day.
  */
 
 // ── the vote itself ─────────────────────────────────────────────────────────
@@ -161,14 +161,22 @@ const SEED_WEIGHTS = {
 } as const;
 
 /**
- * Total site hearts at which the seed is worth half of what it started at.
+ * What engagement is worth, as a share of the mean heart count of a voted page.
  *
- * Sized against the site, not picked round: 443 pages, so a few hundred votes is
- * the point at which most of the board has heard from somebody and the readers'
- * own ordering deserves to lead. Retuning it changes only how fast the handover
- * happens, never the direction.
+ * Half: enough that a much-studied page reliably outranks a barely-voted one,
+ * never enough to reorder the top of the board on its own. Retuning it changes
+ * how loud engagement is; it can never change which signal is senior, because
+ * the cap is applied to engagement alone.
  */
-export const SEED_HALF_AT = 300;
+export const CAP_SHARE = 0.5;
+
+/**
+ * The floor under that cap, in hearts, and the reason the board is not empty on
+ * its first day. Sized as "a few hearts" deliberately: large enough to order 443
+ * pages sensibly before anybody has voted, small enough that the first handful
+ * of real votes already outrank it.
+ */
+export const CAP_FLOOR = 3;
 
 async function seedByContent(): Promise<Map<string, number>> {
   const res = await pool.query<{
@@ -196,13 +204,33 @@ async function seedByContent(): Promise<Map<string, number>> {
 
 // ── the board ───────────────────────────────────────────────────────────────
 
-export interface BoardItem { content_id: string; hearts: number; score: number }
+export interface BoardItem {
+  content_id: string;
+  hearts: number;
+  /**
+   * Engagement as a PERCENTILE among the pages that have any, 1..100 — «this
+   * page drew more study than N% of the site». Absent (undefined) for a page
+   * nothing has happened on yet, never 0: the same rule the heart count follows,
+   * because a printed zero is an announcement rather than a measurement.
+   *
+   * A percentile, not a share of the maximum, and not a "percentage of readers":
+   * we have no per-article view count anywhere (view_stats is per day and viewer
+   * class; spot_stats is per ad slot), so any denominator claiming to be readers
+   * would be invented. This one has a real referent — the rest of the site.
+   */
+  engagement?: number;
+  score: number;
+}
 export interface Board {
   items: BoardItem[];
-  /** Site-wide hearts — the thing the seed fades against. */
+  /** Site-wide hearts. */
   total_hearts: number;
-  /** Current multiplier on the seed, 1 → 0. The page states its ordering from this. */
-  seed_weight: number;
+  /**
+   * What a percentile of 100 is currently worth, in hearts. Scales with the
+   * site's own heart economy (see the header), so the page can state the rule
+   * truthfully instead of hard-coding a number that goes stale.
+   */
+  engagement_cap: number;
   generated_at: string;
 }
 
@@ -230,7 +258,7 @@ export async function getBoard(now: number = Date.now()): Promise<Board> {
   if (cached && now - cachedAt < CACHE_MS) return cached;
 
   try {
-    const [voteRows, seeds] = await Promise.all([
+    const [voteRows, weighted] = await Promise.all([
       pool.query<{ content_id: string; hearts: string }>(
         `select content_id, count(*)::bigint as hearts
            from content_votes group by content_id`,
@@ -246,47 +274,64 @@ export async function getBoard(now: number = Date.now()): Promise<Board> {
       total += n;
     }
 
-    const weight = SEED_HALF_AT / (SEED_HALF_AT + total);
+    // The cap, in hearts, that a percentile of 100 is worth right now. Relative
+    // to the MEAN of a voted page rather than to the site total: the total grows
+    // simply because the site publishes more, which would inflate the cap every
+    // month without anyone reading anything differently. The mean tracks what a
+    // page is actually worth in votes, which is the quantity engagement is being
+    // measured against.
+    const votedPages = hearts.size;
+    const meanHearts = votedPages > 0 ? total / votedPages : 0;
+    const cap = Math.max(CAP_FLOOR, CAP_SHARE * meanHearts);
 
-    const ids = new Set<string>([...hearts.keys(), ...seeds.keys()]);
+    // Engagement → percentile, over the pages that HAVE engagement. Ranking over
+    // all 443 instead would put every engaged page above the ~2/3 of the site
+    // that has never been touched, so the scale would start at 68 and say
+    // nothing about the pages it is meant to separate.
+    //
+    // Rank is by count of STRICTLY smaller values, so equal engagement gets an
+    // equal percentile — a page cannot be pushed above its twin by iteration
+    // order. Shifted by one so the range is 1..100: the least-engaged page still
+    // shows a number, and the most-engaged shows exactly 100.
+    const values = [...weighted.values()].sort((x, y) => x - y);
+    const n = values.length;
+    const percentile = (v: number): number => {
+      if (n === 0) return 0;
+      let lo = 0;
+      let hi = n;
+      while (lo < hi) { const mid = (lo + hi) >> 1; if (values[mid] < v) lo = mid + 1; else hi = mid; }
+      return Math.max(1, Math.min(100, Math.round(((lo + 1) / n) * 100)));
+    };
+
+    const ids = new Set<string>([...hearts.keys(), ...weighted.keys()]);
     const items: BoardItem[] = [];
     for (const id of ids) {
       const h = hearts.get(id) ?? 0;
-      const score = h + weight * (seeds.get(id) ?? 0);
-      items.push({ content_id: id, hearts: h, score: Math.round(score * 1000) / 1000 });
+      const raw = weighted.get(id);
+      const pct = raw === undefined ? undefined : percentile(raw);
+      const score = h + cap * ((pct ?? 0) / 100);
+      const item: BoardItem = { content_id: id, hearts: h, score: Math.round(score * 1000) / 1000 };
+      // Absent, never 0 — see the field's own note.
+      if (pct !== undefined) item.engagement = pct;
+      items.push(item);
     }
 
-    // Hearts break a score tie, then the id — so the order is fully determined
-    // and two requests a second apart can never disagree about equal items.
-    // score → hearts → seed → id.
+    // score → hearts → engagement → id.
     //
-    // The seed appears TWICE in this ordering, and the second appearance is the
-    // point. As a score term it fades to nothing (weight above), which is what
-    // hands the board over to the readers. But fading it out of the SORT
-    // entirely would leave equal-hearted pages to be separated by
-    // `content_id` — alphabetical order, which says nothing about anything and
-    // would quietly become the site's ranking for every tie once the weight is
-    // small. Ties are not the rare case they look like: hearts are small
-    // integers, so the moment the seed stops separating them, most of the board
-    // is ties.
-    //
-    // So the seed is DEMOTED rather than retired: it stops adding to the score
-    // and becomes the tiebreaker. Between two pages the readers rated equally,
-    // the one more of them actually read, highlighted and passed on goes first —
-    // which is the honest answer to "these are tied, now what", and it can never
-    // outrank a real vote because it is only ever consulted after hearts.
-    //
-    // Deliberately NOT exposed in the response: it is an aggregate of reader
-    // behaviour per article, and the board only owes the public a heart count.
-    items.sort((a, b) => (b.score - a.score)
-      || (b.hearts - a.hearts)
-      || ((seeds.get(b.content_id) ?? 0) - (seeds.get(a.content_id) ?? 0))
-      || (a.content_id < b.content_id ? -1 : a.content_id > b.content_id ? 1 : 0));
+    // Hearts break a score tie ahead of engagement so that when the two combine
+    // to the same total, the page with more real votes wins — the senior signal
+    // stays senior even inside a tie. The id is last and is only reached by two
+    // pages that agree on everything, which keeps the order fully determined:
+    // two requests a second apart can never disagree.
+    items.sort((x, y) => (y.score - x.score)
+      || (y.hearts - x.hearts)
+      || ((y.engagement ?? 0) - (x.engagement ?? 0))
+      || (x.content_id < y.content_id ? -1 : x.content_id > y.content_id ? 1 : 0));
 
     cached = {
       items,
       total_hearts: total,
-      seed_weight: Math.round(weight * 1000) / 1000,
+      engagement_cap: Math.round(cap * 100) / 100,
       generated_at: new Date(now).toISOString(),
     };
     cachedAt = now;

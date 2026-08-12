@@ -30,6 +30,7 @@
 //      and the back button, and is a link somebody can send.
 import { api } from '/plus/js/api.js';
 import { el, faNum } from '/plus/js/util.js';
+import { openSheet, closeSheet } from '/plus/js/sheet.js';
 
 const INDEX_URL = '/up-board/index.json';
 const ASSET_V = new URL(import.meta.url).search; // carry ?v= onto the fetch
@@ -44,17 +45,39 @@ const LEAD = {
   // the two lists are made of different things and a reader deciding whether to
   // trust an order deserves to know which one they are looking at.
   new: 'همهٔ مطالب دنت‌کست، از تازه‌ترین به قدیمی‌ترین.',
-  // The «بالاترین» sentence is assembled from the board's own seed_weight —
-  // see leadForTop(). It must never say «محبوب‌ترین» while an inherited head
-  // start is still doing part of the ordering.
+  top: 'ترتیب از قلبِ خواننده‌ها می‌آید، و شاخصِ تعامل جابه‌جایش می‌کند — ولی هیچ‌وقت از قلب جلو نمی‌زند.',
 };
 
-function leadForTop(board) {
-  if (!board) return 'ترتیب بر اساس قلبِ خواننده‌ها.';
-  // Below ~5% the seed moves nothing a reader could notice, so claiming it
-  // would be as misleading as hiding it.
-  if (board.seed_weight < 0.05) return 'ترتیب بر اساس قلبِ خواننده‌ها.';
-  return 'ترتیب از قلبِ خواننده‌ها می‌آید، به‌علاوهٔ میزان تعاملی که تا امروز با هر مطلب شده. مطلبِ قدیمی هم می‌تواند صدرنشین باشد.';
+/** «۳» / «۷٫۵» — one decimal only when it earns one. */
+function faNumber(x) {
+  const rounded = Math.round(x * 10) / 10;
+  return faNum(Number.isInteger(rounded) ? rounded : rounded.toFixed(1)).replace('.', '٫');
+}
+
+/**
+ * What the engagement number means, on tap.
+ *
+ * It exists because the number is otherwise unreadable: «۶۲» beside a heart
+ * invites exactly one wrong guess — that it is a percentage of the people who
+ * opened the page. It is not; we have no per-article view count anywhere on the
+ * site. Saying what it IS costs one sheet and removes the only interpretation
+ * that would be a lie.
+ *
+ * The ranking sentence quotes the LIVE cap rather than a number written into
+ * this file, because the cap moves with the site's own heart economy — a
+ * hard-coded «۳ قلب» would be wrong within a year and nobody would notice.
+ */
+function explainEngagement(pct, cap) {
+  const card = el('div', { class: 'dcp-sheet-card' }, [
+    el('h3', {}, 'شاخصِ تعامل'),
+    el('p', {}, faNum(pct) + ' یعنی این مطلب از ' + faNum(pct)
+      + '٪ مطالبِ دنت‌کست تعاملِ بیشتری گرفته — خوانده‌شدن تا آخر، هایلایت، اشتراک‌گذاری و افزودن به کالکشن.'),
+    el('p', {}, 'این «درصدِ خواننده‌ها» نیست؛ جایگاهِ این مطلب بین بقیهٔ مطالبِ سایت است.'),
+    el('p', {}, 'در رتبه‌بندی، شاخصِ ۱۰۰ حداکثر به اندازهٔ ' + faNumber(cap)
+      + ' قلب می‌ارزد — و همین سقف با بالا رفتنِ قلب‌های سایت بالا می‌رود، تا اثرش معنادار بماند. قلب همیشه حرفِ اول را می‌زند.'),
+    el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button', onclick: closeSheet }, 'باشه'),
+  ]);
+  openSheet(card);
 }
 
 function heartIcon() {
@@ -78,9 +101,10 @@ export function initUpBoard(root) {
   if (!listEl) return;
 
   let catalog = null;   // { items, types, count }
-  let board = null;     // { items, seed_weight, total_hearts } — may stay null
+  let board = null;     // { items, engagement_cap, total_hearts } — may stay null
   let hearts = new Map();
-  let rank = new Map(); // content_id → position on the board
+  let engagement = new Map(); // content_id → percentile, only where there is one
+  let rank = new Map();       // content_id → position on the board
 
   const params = new URLSearchParams(location.search);
   let mode = params.get('sort') === 'top' ? 'top' : 'new';
@@ -141,13 +165,34 @@ export function initUpBoard(root) {
     // Zero is never printed — the same rule the article chip follows, for the
     // same reason. On a list it matters more: four hundred «۰»s would read as a
     // site nobody has ever voted on.
+    const signals = el('div', { class: 'ub-signals' });
+
+    // The engagement index sits UNDER the heart rather than beside it: the two
+    // are different kinds of number — one is a count of people, the other a
+    // position among articles — and a row that puts them shoulder to shoulder
+    // invites them to be read as a pair (9 of 62?). Stacked, with only the
+    // heart in the heart's colour, they stay two facts.
+    const pct = engagement.get(item.id);
+    if (pct !== undefined && mode === 'top') {
+      signals.appendChild(el('button', {
+        class: 'ub-engagement',
+        type: 'button',
+        'aria-label': 'شاخص تعامل: ' + faNum(pct) + ' از ۱۰۰ — توضیح',
+        onclick: () => explainEngagement(pct, board ? board.engagement_cap : 0),
+      }, faNum(pct)));
+    }
+
+    // Zero is never printed — the same rule the article chip follows, for the
+    // same reason. On a list it matters more: four hundred «۰»s would read as a
+    // site nobody has ever voted on.
     const n = hearts.get(item.id) || 0;
     if (n > 0) {
       const h = el('span', { class: 'ub-hearts', title: faNum(n) + ' نفر این را پسندیده‌اند' });
       h.appendChild(heartIcon());
       h.appendChild(el('span', {}, faNum(n)));
-      li.appendChild(h);
+      signals.insertBefore(h, signals.firstChild);
     }
+    if (signals.children.length) li.appendChild(signals);
     return li;
   }
 
@@ -170,7 +215,7 @@ export function initUpBoard(root) {
     rows = compute();
     drawn = 0;
     listEl.innerHTML = '';
-    leadEl.textContent = mode === 'top' ? leadForTop(board) : LEAD.new;
+    leadEl.textContent = LEAD[mode];
     countEl.textContent = filter === 'all'
       ? faNum(rows.length) + ' مطلب'
       : faNum(rows.length) + ' مطلب در این دسته';
@@ -226,6 +271,9 @@ export function initUpBoard(root) {
   api.voteBoard().then((b) => {
     board = b;
     hearts = new Map(b.items.map((i) => [i.content_id, i.hearts]));
+    engagement = new Map(b.items
+      .filter((i) => typeof i.engagement === 'number')
+      .map((i) => [i.content_id, i.engagement]));
     rank = new Map(b.items.map((i, idx) => [i.content_id, idx]));
     if (catalog) render();
   }).catch(() => {

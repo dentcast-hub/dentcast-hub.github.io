@@ -150,13 +150,28 @@
     .ub-meta{ display:flex; flex-wrap:wrap; align-items:center; gap:.5rem; }
     .ub-type, .ub-date{ font-size:.7rem; color:var(--txt3); }
     .ub-type{ font-weight:700; }
-    .ub-hearts{
-      flex:none; display:inline-flex; align-items:center; gap:.25rem;
+    /* قلب و شاخصِ تعامل — روی هم، نه کنار هم. یکی شمارِ آدم است و دیگری
+       جایگاه بین مطالب؛ شانه‌به‌شانه خوانده می‌شوند انگار یک نسبت‌اند. */
+    .ub-signals{
+      flex:none; display:flex; flex-direction:column; align-items:flex-end; gap:.3rem;
       padding-top:.1rem;
+    }
+    .ub-hearts{
+      display:inline-flex; align-items:center; gap:.25rem;
       font-size:.8rem; font-weight:800; color:var(--heart);
       font-variant-numeric:tabular-nums;
     }
     .ub-hearts svg{ width:.95em; height:.95em; }
+    .ub-engagement{
+      font:inherit; font-size:.68rem; font-weight:800;
+      color:var(--txt3); background:var(--surface2);
+      border:1px solid var(--border2); border-radius:var(--r-f, 999px);
+      padding:.1rem .45rem; cursor:pointer; white-space:nowrap;
+      font-variant-numeric:tabular-nums;
+      transition:color .17s, border-color .17s;
+    }
+    .ub-engagement:hover{ color:var(--ac); border-color:var(--chip-bd); }
+    .ub-engagement:focus-visible{ outline:2px solid var(--ac); outline-offset:2px; }
 
     .ub-sentinel{
       text-align:center; font-size:.75rem; color:var(--txt3);
@@ -249,7 +264,7 @@
      tools/asset_version.py, which reads stamped paths out of the page text —
      an inline import counts. -->
 <script type="module">
-  import { initUpBoard } from '/plus/js/upboard-page.js?v=2';
+  import { initUpBoard } from '/plus/js/upboard-page.js?v=3';
   initUpBoard(document.getElementById('ubRoot'));
 </script>
 
