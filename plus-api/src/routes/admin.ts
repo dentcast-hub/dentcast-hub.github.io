@@ -696,13 +696,21 @@ function renderHtml(k: Kpis, grantable: { key: string; title_fa: string }[]): st
     }
 
     list.addEventListener('click', function (ev) {
-      var act = ev.target.getAttribute && ev.target.getAttribute('data-act');
+      // closest(), not getAttribute() on the target itself: a click can land on
+      // a node INSIDE a button, and reading only the target would miss the
+      // action and fall through to the toggle below.
+      var hit = ev.target.closest ? ev.target.closest('[data-act]') : null;
+      var act = hit ? hit.getAttribute('data-act') : null;
       var wrap = ev.target.closest ? ev.target.closest('.tk') : null;
       if (!wrap) return;
       var id = wrap.getAttribute('data-id');
       var box = wrap.querySelector('.tk-body');
 
-      if (!act) { // a tap on the card itself toggles the thread open
+      if (!act) { // a tap on the CARD toggles the thread open
+        // ...but never a tap INSIDE the open thread. There a click is the
+        // founder reaching for the reply box, or selecting a line the reader
+        // wrote — and emptying the body would take a half-typed answer with it.
+        if (ev.target.closest && ev.target.closest('.tk-body')) return;
         if (box.innerHTML) { box.innerHTML = ''; return; }
         thread(box, id);
         return;
