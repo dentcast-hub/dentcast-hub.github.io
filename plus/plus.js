@@ -17,6 +17,7 @@ import { initReadingTracker } from './js/reading.js';
 import { initListeningTracker } from './js/listening.js';
 import { initShareScoring, buildShareButton } from './js/share.js';
 import { initHeart, buildHeartChip } from './js/votes.js';
+import { mountArticleThreads } from './js/article-threads.js';
 
 // Carry plus.js's own cache-busting version (?v=N, set by dc-nav.js) onto the
 // workbench module import. Article pages are OUTSIDE the /plus/ service-worker
@@ -42,39 +43,72 @@ function injectCollectionButton(contentId) {
     onclick: () => { cap.hidden = !cap.hidden; },
   }, '؟');
   const btn = el('button', {
-    class: 'dcp-wb-collect', type: 'button',
+    class: 'dc-act dc-act-outline', type: 'button',
     onclick: () => openCollectionPicker({ contentId }),
-  }, '🗂 افزودن به کالکشن');
+  }, 'افزودن به کالکشن');
   return { btn, info, cap };
 }
 
-// `anchorEl` is the article's opening prose box, NOT its body root: on the
-// legacy NoteCast template those differ (the root is the container holding the
-// section boxes), and hanging the bar off the root would put it outside <main>,
-// above the article's own title.
-function injectWorkbenchButton(anchorEl, contentId, shareTarget) {
-  const btn = el('button', { class: 'dcp-wb-button', type: 'button', 'aria-pressed': 'false' }, 'میز کار');
+/**
+ * Find the article's action row, or build one.
+ *
+ * dc-nav.js builds it on a standalone article page (phase 7b) and fills the
+ * quiet group; here we fill the main one. On the desktop shell that script is
+ * stripped out of the fetched article, so there is nothing to find and this
+ * module builds the whole row instead — the same two-surface split
+ * buildShareButton() already makes, expressed once for the container rather
+ * than once per button.
+ *
+ * `anchorEl` is the article's opening prose box, NOT its body root: on the
+ * legacy NoteCast template those differ (the root is the container holding the
+ * section boxes), and hanging the row off the root would put it outside <main>,
+ * above the article's own title.
+ */
+function ensureActionRow(anchorEl) {
+  const found = document.getElementById('dcActionRow');
+  if (found) {
+    return {
+      row: found,
+      main: found.querySelector('.dc-actions-main'),
+      aux: found.querySelector('.dc-actions-aux'),
+      built: false,
+    };
+  }
+  const main = el('div', { class: 'dc-actions-main' });
+  const aux = el('div', { class: 'dc-actions-aux' });
+  const row = el('div', { class: 'dc-actions', id: 'dcActionRow' }, [main, aux]);
+  anchorEl.parentNode.insertBefore(row, anchorEl);
+  return { row, main, aux, built: true };
+}
+
+// The article's action row: میز کار / افزودن به کالکشن / پسندیدم together in
+// the main group, in that order — the thing this page is FOR, the thing you do
+// with it, the thing you say about it.
+function injectActionRow(anchorEl, contentId, shareTarget) {
+  const btn = el('button', { class: 'dc-act dc-act-primary', type: 'button', 'aria-pressed': 'false' }, 'میز کار');
   const { btn: collectBtn, info: collectInfo, cap: collectCap } = injectCollectionButton(contentId);
-  // Share sits in this row on ONE surface only: the desktop shell, where
-  // dc-nav.js (and with it the chip above the prose) was stripped out of the
-  // fetched article. `#dcShareBtn` is that chip; if it is on the page, this row
-  // must not grow a second button for the same act.
-  const share = shareTarget && !document.getElementById('dcShareBtn')
-    ? buildShareButton(shareTarget)
-    : null;
-  // The heart is here for exactly the same reason share is, and gated on the
-  // same fact from the other side: `#dcArticleMeta` is the chip row dc-nav.js
-  // builds above the prose, so if it exists the heart is already up there and
-  // this row must not grow a second one.
-  const heart = !document.getElementById('dcArticleMeta')
-    ? buildHeartChip(contentId, 'dcp-wb-heart')
-    : null;
-  const bar = el('div', { class: 'dcp-wb-bar' }, [
-    el('div', { class: 'dcp-wb-row' }, [btn, collectBtn, collectInfo, share, heart]),
-    collectCap,
-  ]);
-  // Place it at the top of the article, just before the readable prose.
-  anchorEl.parentNode.insertBefore(bar, anchorEl);
+  const { row, main, aux, built } = ensureActionRow(anchorEl);
+
+  // Share belongs to whoever built the row. On a standalone page dc-nav.js has
+  // already put its own chip in the quiet group (`#dcShareBtn`); only when we
+  // built the row ourselves — the desktop shell — is there none to find.
+  if (built && shareTarget && !document.getElementById('dcShareBtn')) {
+    aux.appendChild(buildShareButton(shareTarget));
+  }
+  // The heart is mounted at boot by initHeart() wherever a row already exists,
+  // which on a standalone page is before this async path gets here. So build one
+  // only if none arrived — on the shell, that is always.
+  const heart = document.querySelector('.dcp-like')
+    ? null
+    : buildHeartChip(contentId, 'dc-act dc-act-heart');
+
+  // prepend, not append: initHeart() may already have put the قلب in here, and
+  // the order this row reads in is میز کار › کالکشن › پسندیدم. Prepending the
+  // three of them in one call puts them ahead of it without caring whether it
+  // is there.
+  main.prepend(btn, collectBtn, collectInfo);
+  if (heart) main.appendChild(heart);
+  row.appendChild(collectCap); // full-width, below both groups
   return btn;
 }
 
@@ -100,7 +134,7 @@ async function setupWorkbench({ proseRoot, proseAnchor, contentId, shareTarget }
   // it. The toolbar's own ✕ خروج calls wb.exit() directly, so without this the
   // article button kept saying «خروج از میز کار» after the workbench had closed.
   const wb = new Workbench({ contentId, proseRoot, onChange: () => updateBtn() });
-  const btn = injectWorkbenchButton(proseAnchor || proseRoot, contentId, shareTarget);
+  const btn = injectActionRow(proseAnchor || proseRoot, contentId, shareTarget);
 
   // Reading-completion signal: started only for a signed-in reader (the /activity
   // endpoint requires auth) and only once. Guarded so a mid-page login does not
@@ -174,17 +208,64 @@ async function openDeepLinkedHighlight(wb, updateBtn, id) {
   return true;
 }
 
+// An audio episode gets an action row too — but a SHORTER one: قلب and
+// اشتراک‌گذاری, and nothing else. It bows out of initArticle() below (there is
+// no workbench for a podcast, because highlighting one makes no sense), and the
+// consequence nobody had noticed was that the 209 episode pages had no قلب at
+// all: initHeart() mounts into a row, and on these pages no script built one.
+// So they were the only content on the site a reader could not press پسندیدم on,
+// while sitting in up-board's catalog like everything else — 210 of its 444
+// entries, rankable by an engagement they earn (`episode_listened` is one of the
+// four actions the score counts) and by hearts they could not receive.
+//
+// Nothing is added to the page markup here, on purpose: the episode pages are
+// built from tools/episodes_template.html, and a row in the template would mean
+// rebuilding 209 files for something the shared module can put there for free —
+// the same reason no article page carries this markup either.
+function initEpisodeActions() {
+  if (!document.getElementById('ep-audio')) return; // not an audio episode
+  const box = findProseBox();
+  if (!box) return;
+  if (!document.getElementById('dcActionRow')) {
+    const { aux } = ensureActionRow(box);
+    aux.appendChild(buildShareButton(() => ({ title: document.title, url: location.href })));
+    // The قلب itself is left to initHeart(), which boot() calls a line later and
+    // which is the single mounting point for every surface that has this row.
+  }
+  // گفت‌وگوی زیر مطلب, for an episode too. It reached articles only because
+  // initArticle() mounts it and initArticle() bows out here — an accident of
+  // where the call sat, not a decision: the whole block is written against a
+  // content_id and the API gates on nothing else, so a podcast was never
+  // excluded, only unreachable. The anchor is the single `.ep-box`, so the
+  // conversation lands under the whole episode card and above the ‹قبلی/بعدی›
+  // nav, which is page chrome rather than the episode.
+  mountArticleThreads(box, detectContentId());
+}
+
 async function initArticle() {
   const main = document.querySelector('main.article-content-wrap');
   const proseRoot = findProseRoot();
   if (!main || !proseRoot) return; // not a standalone article page
   // Audio content (episodes) shares the .ep-box shell but gets NO workbench —
   // highlighting a podcast makes no sense; it only gets the "seen" tick (fired
-  // from boot). The audio player element is the reliable tell.
+  // from boot) and the short row initEpisodeActions() builds. The audio player
+  // element is the reliable tell.
   if (document.getElementById('ep-audio')) return;
 
   const contentId = detectContentId();
-  const { wb, updateBtn } = await setupWorkbench({ proseRoot, proseAnchor: findProseBox(), contentId });
+  // A share target for the pages dc-nav.js's phase 7 never reaches — the 12
+  // پرامپتولوژیست chapters, whose shell is `.ep-box` and which load no
+  // dc-article.css, so nothing built them a share chip and they simply had none.
+  // injectActionRow uses it ONLY when it had to build the row itself, so on the
+  // 197 pages dc-nav.js does cover, the chip stays that script's and there is no
+  // second button for the same act.
+  const shareTarget = () => ({ title: document.title, url: location.href });
+  const { wb, updateBtn } = await setupWorkbench({
+    proseRoot, proseAnchor: findProseBox(), contentId, shareTarget,
+  });
+  // گفت‌وگوی زیر مطلب, under the prose. Draws itself lazily and removes itself
+  // when there is nothing published and this reader cannot write.
+  mountArticleThreads(findProseBox() || proseRoot, contentId);
 
   // Post-login return-to-study (the funnel) or a remembered choice this session.
   // Never auto-enters on a fresh visit: sessionStorage is empty then.
@@ -229,21 +310,39 @@ async function mountArticleWorkbench(root, url) {
   // episode early-return, because a podcast can be shared too — it just gets no
   // workbench, and therefore no button of its own on this surface.
   initShareScoring(contentId);
-  if (contentId.startsWith('episodes/')) return; // audio: seen tick only, no workbench
   // The address bar still shows the homepage here, so the article's own URL has
   // to be carried in — and stripped of ?dcphl / #hash, which are this reader's
   // private position in the page, not part of what they mean to send anyone.
   const shareUrl = new URL(path, location.origin).href;
+  const shellShare = () => ({
+    title: (root.querySelector('h1')?.textContent || document.title).trim(),
+    url: shareUrl,
+  });
+  if (contentId.startsWith('episodes/')) {
+    // Audio: seen tick and the short row, never a workbench. Without this the
+    // قلب would exist for a phone reader opening an episode and not for a
+    // desktop one opening the same episode in column C — the exact split
+    // buildShareButton() was written to close, and one this feature would make
+    // again for its own 210 pages.
+    const box = findProseBox(root);
+    if (box) {
+      if (!root.querySelector('#dcActionRow')) {
+        const { main, aux } = ensureActionRow(box);
+        main.appendChild(buildHeartChip(contentId, 'dc-act dc-act-heart'));
+        aux.appendChild(buildShareButton(shellShare));
+      }
+      mountArticleThreads(box, contentId); // the conversation, on this surface too
+    }
+    return;
+  }
   const { wb, updateBtn } = await setupWorkbench({
     proseRoot,
     proseAnchor: findProseBox(root),
     contentId,
-    shareTarget: () => ({
-      title: (root.querySelector('h1')?.textContent || document.title).trim(),
-      url: shareUrl,
-    }),
+    shareTarget: shellShare,
   });
   desktopWb = wb;
+  mountArticleThreads(findProseBox(root) || proseRoot, contentId);
   const hlId = query ? new URLSearchParams(query).get('dcphl') : null;
   if (hlId && await currentUser()) await openDeepLinkedHighlight(wb, updateBtn, hlId);
 }
@@ -393,12 +492,14 @@ function boot() {
     // shared article layer, including the episode pages initArticle() bows out
     // of, and a chip whose taps nobody listens for is worse than no chip.
     initShareScoring(detectContentId());
-    // The قلب, in dc-nav.js's chip row above the prose. Wired at boot for the
-    // same reason share is: the row exists on every page built on the shared
+    initEpisodeActions(); // audio episodes: the short row (قلب + اشتراک‌گذاری)
+    // The قلب, in the article's action row above the prose. Wired at boot for
+    // the same reason share is: the row exists on every page built on the shared
     // article layer, including the audio episodes initArticle() bows out of —
-    // and an episode is as votable as an article. initHeart() no-ops wherever
-    // that row is absent (the homepage, /plus/, the desktop shell), so this is
-    // safe on every page.
+    // and an episode is as votable as an article. Called AFTER the line above,
+    // which is what puts a row on those pages for it to mount into.
+    // initHeart() no-ops wherever the row is absent (the homepage, /plus/, the
+    // desktop shell), so this is safe on every page.
     initHeart(detectContentId());
     initSeenTicks(); // landing pages: green ticks next to already-seen content
     initTourAutostart(); // /?tour=1 handoff: start the guided tour on the homepage

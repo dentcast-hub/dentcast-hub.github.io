@@ -3529,6 +3529,15 @@ a.dc-list-card--pillar {
      text pin, never confused with it. */
   --dcp-ref: #6d28d9;
   --dcp-ref-bg: rgba(109, 40, 217, .07);
+  /* قلبِ مقاله. Unlike the two above this IS a site-wide token (dc-theme.css
+     defines --heart for the article chip row); the fallbacks are here because
+     the desktop shell is index.html, which loads no shared stylesheet. */
+  --dcp-heart-idle: var(--heart-idle, #ff7a68);
+  --dcp-heart-idle-bg: var(--heart-idle-bg, rgba(255, 122, 104, .09));
+  --dcp-heart-idle-bd: var(--heart-idle-bd, rgba(255, 122, 104, .40));
+  --dcp-heart: var(--heart, #d92b52);
+  --dcp-heart-bg: var(--heart-bg, rgba(217, 43, 82, .11));
+  --dcp-heart-bd: var(--heart-bd, rgba(217, 43, 82, .34));
 }
 
 .dc-plus-home-card { margin: 0 0 14px; }
@@ -5282,7 +5291,7 @@ scrollBody.addEventListener('touchend',e=>{
 </script>
 
 <!-- Theme toggle behavior moved to /dc-nav.js (single source) -->
-<script src="/dc-nav.js?v=76" defer></script>
+<script src="/dc-nav.js?v=82" defer></script>
 
 <!-- Toolbar drawer toggle is handled by /dc-nav.js (single source) -->
 

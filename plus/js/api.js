@@ -265,6 +265,27 @@ export const api = {
   updateSnippet: (id, patch) => request('/snippets/' + encodeURIComponent(id), { method: 'PATCH', body: patch }),
   deleteSnippet: (id) => request('/snippets/' + encodeURIComponent(id), { method: 'DELETE' }),
 
+  // support tickets. NOT premium-gated as a whole: the plan check is per KIND,
+  // server-side (a student asking for a discount is not premium yet, and the
+  // premium-only kind is the open-ended one). `ticketKinds` reports which kinds
+  // this reader may actually open, so the form can show a lock instead of
+  // taking a message it will refuse.
+  ticketKinds: () => request('/support/kinds'),
+  tickets: () => request('/support/tickets'),
+  ticket: (id) => request('/support/tickets/' + encodeURIComponent(id)),
+  openTicket: (body) => request('/support/tickets', { method: 'POST', body }),
+  replyTicket: (id, body) =>
+    request('/support/tickets/' + encodeURIComponent(id) + '/messages', { method: 'POST', body: { body } }),
+  closeTicket: (id) => request('/support/tickets/' + encodeURIComponent(id) + '/close', { method: 'POST' }),
+  reopenTicket: (id) => request('/support/tickets/' + encodeURIComponent(id) + '/reopen', { method: 'POST' }),
+
+  // threads under an article. `publicThreads` is the one call in this client
+  // that needs no session: a thread the founder published is part of the page.
+  // Writing is premium-only, enforced server-side.
+  publicThreads: (content_id) => request('/threads/public', { query: { content_id } }),
+  myThread: (content_id) => request('/threads/mine', { query: { content_id } }),
+  postThread: (content_id, body) => request('/threads', { method: 'POST', body: { content_id, body } }),
+
   // dashboard (later milestones)
   tree: () => request('/tree'),
   progress: () => request('/progress'),

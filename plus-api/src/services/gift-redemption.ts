@@ -2,6 +2,7 @@ import { config } from '../config.js';
 import { one, query, withTransaction } from '../db.js';
 import { activateMonths, type Subscription } from './subscription.js';
 import { sendCapped } from './notify-policy.js';
+import { mintReference } from './reference.js';
 
 /**
  * Paying from outside Iran, with a US Apple gift card.
@@ -54,23 +55,8 @@ export interface Redemption {
 const COLUMNS =
   'id, user_id, reference, code, kind, months, status, note, reviewed_at, created_at';
 
-/**
- * The tag the buyer writes into the gift message.
- *
- * Read aloud, typed by hand into a shop's message box, and then read back off an
- * email by a human — so the alphabet excludes every pair that looks alike in a
- * sans-serif face (0/O, 1/I/L, 5/S, 8/B). Short enough to retype without
- * resentment; a mistyped tag means an arrived card nobody can match.
- */
-const TAG_ALPHABET = 'ACDEFGHJKMNPQRTUVWXY2346789';
-
-function mintReference(): string {
-  let out = '';
-  for (let i = 0; i < 6; i += 1) {
-    out += TAG_ALPHABET[Math.floor(Math.random() * TAG_ALPHABET.length)];
-  }
-  return `DC-${out.slice(0, 3)}-${out.slice(3)}`;
-}
+/** The tag the buyer writes into the gift message — services/reference.ts owns the alphabet. */
+const mintGiftReference = (): string => mintReference('DC');
 
 export type StartOutcome = 'started' | 'disabled' | 'already_pending';
 
@@ -120,7 +106,7 @@ export async function startRedemption(userId: string): Promise<StartResult> {
       const row = (await one<Redemption>(
         `insert into gift_redemptions (user_id, reference, kind, months)
          values ($1, $2, $3, $4) returning ${COLUMNS}`,
-        [userId, mintReference(), config.giftCard.kind, config.giftCard.months],
+        [userId, mintGiftReference(), config.giftCard.kind, config.giftCard.months],
       ))!;
       await notifyFounder(row);
       return { outcome: 'started', redemption: row, message: '' };

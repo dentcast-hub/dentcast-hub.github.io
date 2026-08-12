@@ -337,6 +337,14 @@ export const config = {
     password: str('ADMIN_PASSWORD', 'change-me-admin-password'),
   },
 
+  support: {
+    // Whose phone gets pinged when a ticket lands or a reader replies. Empty
+    // means the queue is only seen when somebody opens /admin — which is why
+    // the alert exists, and why its absence logs a line instead of failing the
+    // reader's write. Same arrangement as GIFTCARD_ALERT_PHONE.
+    alertPhone: str('SUPPORT_ALERT_PHONE', ''),
+  },
+
   // Payments. Prices are in RIAL everywhere in the code and the database
   // (`payments.amount_rial`, and what Zibal's API expects); the site shows toman.
   // One unit end to end, converted only at the moment of display — a system that

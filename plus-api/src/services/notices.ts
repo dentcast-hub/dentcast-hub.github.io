@@ -48,6 +48,7 @@ const KIND_TITLE_FA: Record<string, string> = {
   premium_prize: 'جایزه',
   subscription_expiry: 'اشتراک',
   achievement: 'نشانِ تازه',
+  support_reply: 'پشتیبانی',
 };
 
 /** Who a broadcast is for, resolved against the reader's tier at READ time. */

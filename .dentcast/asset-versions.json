@@ -1,7 +1,7 @@
 {
   "/dc-article.css": {
-    "v": 2,
-    "hash": "508d73c27416c2e2"
+    "v": 4,
+    "hash": "dc6c0843a05b837d"
   },
   "/dc-landing.css": {
     "v": 2,
@@ -12,8 +12,8 @@
     "hash": "f045ac7d9d9e9e1d"
   },
   "/dc-nav.js": {
-    "v": 76,
-    "hash": "7e01a077e2c31d04"
+    "v": 82,
+    "hash": "b3830efcc768a5fe"
   },
   "/dc-theme.css": {
     "v": 2,
@@ -32,56 +32,60 @@
     "hash": "bd50932cb1d75571"
   },
   "/pillar/premium-index.js": {
-    "v": 16,
-    "hash": "5327d66e388ca46c"
+    "v": 17,
+    "hash": "16a16e4dc788b5bc"
   },
   "/plus/js/assistant-page.js": {
-    "v": 19,
-    "hash": "1ebc17226006bd35"
+    "v": 20,
+    "hash": "3a48a569352a18e4"
   },
   "/plus/js/cards-page.js": {
-    "v": 19,
-    "hash": "66f63e40ea554742"
+    "v": 20,
+    "hash": "17931f0eb9c439bc"
   },
   "/plus/js/collection-page.js": {
-    "v": 24,
-    "hash": "0dd95729dbb6d27b"
+    "v": 25,
+    "hash": "0feedecabde611b6"
   },
   "/plus/js/collections-page.js": {
-    "v": 24,
-    "hash": "6ee53c0f005e8be5"
+    "v": 25,
+    "hash": "6e38359e7163d2e9"
   },
   "/plus/js/dashboard-page.js": {
-    "v": 35,
-    "hash": "65be4e86888e6579"
+    "v": 36,
+    "hash": "66acec2c27ad8039"
   },
   "/plus/js/highlights-page.js": {
-    "v": 23,
-    "hash": "f5e4a8ca5f8639c8"
+    "v": 24,
+    "hash": "b98639e9cc654196"
   },
   "/plus/js/pathway-page.js": {
-    "v": 22,
-    "hash": "0150e869a8173378"
+    "v": 23,
+    "hash": "a34ed9e8f11eb533"
   },
   "/plus/js/pathways-page.js": {
-    "v": 22,
-    "hash": "6a110b8a1265fc2c"
+    "v": 23,
+    "hash": "0d53286e8048e528"
   },
   "/plus/js/pay-result-page.js": {
-    "v": 17,
-    "hash": "9f2c1289f51bafe8"
+    "v": 18,
+    "hash": "f5fcb584f6755cfb"
   },
   "/plus/js/pricing-page.js": {
-    "v": 26,
-    "hash": "594fabe4ef7a70d0"
+    "v": 27,
+    "hash": "fcfeda8025500a44"
   },
   "/plus/js/profile-page.js": {
-    "v": 29,
-    "hash": "760ac273edadfce4"
+    "v": 30,
+    "hash": "8b6c72d61004752c"
   },
   "/plus/js/reading-compass-page.js": {
-    "v": 20,
-    "hash": "89cd64e2654632f0"
+    "v": 21,
+    "hash": "a839611a3bc96e6d"
+  },
+  "/plus/js/support-page.js": {
+    "v": 4,
+    "hash": "fbf1ddc044c03dcc"
   },
   "/plus/js/upboard-page.js": {
     "v": 7,
@@ -96,7 +100,11 @@
     "hash": "a9218d384e4fd6ba"
   },
   "/plus/plus.css": {
-    "v": 23,
-    "hash": "534aedcd548a6ef5"
+    "v": 25,
+    "hash": "a0c7d3b9210c4740"
+  },
+  "dc-nav.js:V": {
+    "v": 83,
+    "hash": "d78f2a2704f4d4a1"
   }
 }

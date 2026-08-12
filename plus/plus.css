@@ -74,82 +74,122 @@
    glyph in one place and a 32px hero glyph in another. */
 .dc-icon { display: inline-block; flex-shrink: 0; color: currentColor; }
 
-/* ---- workbench entry button ---------------------------------------------- */
-.dcp-wb-bar { margin: 10px 0 4px; }
-.dcp-wb-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-.dcp-wb-button {
-  font: inherit; font-weight: 600;
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 8px 16px; border-radius: 999px; cursor: pointer;
-  color: #fff; background: var(--dcp-accent); border: 1px solid transparent;
-}
-.dcp-wb-button.is-active { background: transparent; color: var(--dcp-accent); border-color: var(--dcp-accent); }
-.dcp-wb-button:focus-visible { outline: 2px solid var(--dcp-accent); outline-offset: 2px; }
+/* ---- the article's action row -------------------------------------------- *
+   ONE row above the prose, replacing the four bands that used to live there
+   (dc-nav.js's chip row, votes.js's heart line, plus.js's میز کار bar, each
+   inserted independently before the first prose box — so their order was an
+   accident of script load order, and their alignments and button sizes agreed
+   with nothing).
 
-/* Beside میزکار: always-visible "save the whole page" button (separate from
-   the workbench toolbar's own highlight-only collection button below). */
-.dcp-wb-collect {
-  font: inherit; font-weight: 700; font-size: .92rem;
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 7px 14px; border-radius: 999px; cursor: pointer;
-  color: var(--dcp-accent); background: transparent; border: 1.5px solid var(--dcp-accent);
-}
-.dcp-wb-collect:active { transform: scale(.97); }
-/* Share, on the desktop shell only (dc-nav.js's own chip is stripped from the
-   article the shell fetches). Quieter than the two buttons beside it — muted
-   ink, no accent border — because it is a courtesy, not one of the two things
-   this row exists to offer. */
-.dcp-wb-share {
-  font: inherit; font-weight: 600; font-size: .9rem;
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 7px 13px; border-radius: 999px; cursor: pointer;
-  color: var(--dcp-muted); background: transparent; border: 1px solid var(--dcp-line);
-}
-.dcp-wb-share:hover { color: var(--dcp-ink); border-color: var(--dcp-muted); }
-.dcp-wb-share:active { transform: scale(.97); }
-.dcp-wb-share:focus-visible { outline: 2px solid var(--dcp-accent); outline-offset: 2px; }
+   Two groups, and the split is the whole design: the MAIN group is what you can
+   DO with this page (میز کار, کالکشن, پسندیدم), the AUX group is what the page
+   tells you about itself (reading time) plus one courtesy (اشتراک‌گذاری). One
+   is why you are here; the other you glance at.
 
-/* قلبِ مقاله on the desktop shell — the surface where dc-nav.js was stripped
-   out of the fetched article, so the chip row (and the heart in it) never
-   existed. Same two-state colour as the article's own button: coral at rest so
-   it is actually seen, red once pressed. */
-.dcp-wb-heart {
-  font: inherit; font-weight: 800; font-size: .9rem;
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 7px 15px; border-radius: 999px; cursor: pointer;
-  color: var(--dcp-heart-idle); background: var(--dcp-heart-idle-bg);
-  border: 1.5px solid var(--dcp-heart-idle-bd);
+   These rules live in plus.css and not dc-article.css because the row exists on
+   two surfaces — the standalone article page and the desktop shell — and the
+   shell strips dc-nav.js and dc-article.css out of the article it fetches while
+   keeping this file. One row may not have two stylesheets. */
+.dc-actions {
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 10px 14px;
+  margin: 14px 0 18px;
+}
+.dc-actions-main { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+.dc-actions-aux {
+  display: flex; align-items: center; flex-wrap: wrap; gap: 10px;
+  margin-inline-start: auto; /* holds the far edge even when the row wraps */
+}
+
+/* One button vocabulary for the whole row. Every control is the same height and
+   the same shape; only weight and colour say which one matters more. That is
+   what «متناسب» has to mean here — three different pill sizes in one row is
+   exactly what made it read as clutter. */
+.dc-act {
+  font: inherit; font-weight: 600; font-size: .9rem; line-height: 1;
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  min-height: 38px; padding: 0 15px; border-radius: 999px; cursor: pointer;
+  color: var(--dcp-ink); background: transparent; border: 1px solid transparent;
   transition: color .17s, background .17s, border-color .17s, transform .17s;
+  -webkit-tap-highlight-color: transparent;
 }
-.dcp-wb-heart .dcp-heart-icon {
+.dc-act:active { transform: scale(.97); }
+.dc-act:focus-visible { outline: 2px solid var(--dcp-accent); outline-offset: 2px; }
+
+/* میز کار — the one filled button on the page, because it is the one thing this
+   row is really offering. */
+.dc-act-primary {
+  font-weight: 700; padding: 0 18px;
+  color: #fff; background: var(--dcp-accent); border-color: var(--dcp-accent);
+}
+.dc-act-primary.is-active { background: transparent; color: var(--dcp-accent); }
+
+/* افزودن به کالکشن — the same act, one step smaller: outlined, not filled. */
+.dc-act-outline { font-weight: 700; color: var(--dcp-accent); border-color: var(--dcp-accent); }
+
+/* اشتراک‌گذاری — a courtesy, so it wears the line colour and nothing else. */
+.dc-act-quiet { font-size: .85rem; color: var(--dcp-muted); border-color: var(--dcp-line); }
+.dc-act-quiet:hover { color: var(--dcp-ink); border-color: var(--dcp-muted); }
+
+/* پسندیدم — coral at rest, red once pressed. The only warm thing in a row of
+   blues, on purpose: a grey heart sitting among grey metadata is precisely what
+   nobody recognised as a control (user report, 2026-08-12). */
+.dc-act-heart {
+  font-weight: 800;
+  color: var(--dcp-heart-idle); background: var(--dcp-heart-idle-bg);
+  border-color: var(--dcp-heart-idle-bd);
+}
+.dc-act-heart .dcp-heart-icon {
   width: 1.3em; height: 1.3em; display: block; flex: none;
   transition: transform .22s cubic-bezier(.34, 1.56, .64, 1);
 }
-.dcp-wb-heart .dcp-heart-num { font-variant-numeric: tabular-nums; }
-.dcp-wb-heart .dcp-heart-num:empty { display: none; }
-.dcp-wb-heart:hover { border-color: var(--dcp-heart-idle); }
-.dcp-wb-heart:active { transform: scale(.97); }
-.dcp-wb-heart.is-voted {
-  color: var(--dcp-heart); background: var(--dcp-heart-bg);
-  border-color: var(--dcp-heart-bd);
+.dc-act-heart .dcp-heart-num { font-variant-numeric: tabular-nums; }
+.dc-act-heart .dcp-heart-num:empty { display: none; }
+.dc-act-heart:hover { border-color: var(--dcp-heart-idle); }
+.dc-act-heart.is-voted {
+  color: var(--dcp-heart); background: var(--dcp-heart-bg); border-color: var(--dcp-heart-bd);
 }
-.dcp-wb-heart.is-voted .dcp-heart-icon path {
-  fill: var(--dcp-heart); stroke: var(--dcp-heart);
+.dc-act-heart.is-voted .dcp-heart-icon path { fill: var(--dcp-heart); stroke: var(--dcp-heart); }
+.dc-act-heart.is-pop .dcp-heart-icon { transform: scale(1.28); }
+.dc-act-heart:focus-visible { outline: 2px solid var(--dcp-heart); outline-offset: 2px; }
+
+/* زمان مطالعه — NOT a button. It was a .dc-meta-chip, identical to the share
+   pill next to it, and a reader had to try it to discover it did nothing. */
+.dc-act-time { font-size: .8rem; font-weight: 600; color: var(--dcp-muted); white-space: nowrap; }
+
+/* The heart ships wrapped (button + spelled-out count). Inside this row the
+   wrapper is just a flex item; the sentence beside it is worth its width on a
+   wide screen and is the first thing to go on a narrow one — the button already
+   carries both the word and the number. */
+.dc-actions .dcp-like { display: inline-flex; align-items: center; gap: 8px; }
+.dc-actions .dcp-like-count { font-size: .78rem; font-weight: 600; color: var(--dcp-muted); }
+.dc-actions .dcp-like-count:empty { display: none; }
+@media (max-width: 719px) {
+  .dc-actions .dcp-like-count { display: none; }
 }
-.dcp-wb-heart.is-pop .dcp-heart-icon { transform: scale(1.28); }
-.dcp-wb-heart:focus-visible { outline: 2px solid var(--dcp-heart); outline-offset: 2px; }
-/* The count rides beside the button here too; the bar is already a flex row so
-   the wrapper just joins it. */
-.dcp-wb-row .dcp-like { display: inline-flex; align-items: center; gap: 8px; }
-.dcp-wb-row .dcp-like-count { font-size: .78rem; font-weight: 600; color: var(--dcp-muted); }
-.dcp-wb-row .dcp-like-count:empty { display: none; }
+/* Phones: the aux group takes its own line, spread edge to edge, so the main
+   group keeps a full row to itself instead of being broken across two. The
+   buttons tighten by a few pixels for the same reason — at the desktop padding
+   the three of them overflow 390px by about ten pixels, which costs a whole
+   extra line and leaves پسندیدم dangling alone on it. */
+@media (max-width: 559px) {
+  .dc-actions { gap: 8px 10px; }
+  .dc-actions-main { gap: 6px; }
+  .dc-act { font-size: .85rem; min-height: 36px; padding: 0 12px; }
+  .dc-act-primary { padding: 0 14px; }
+  .dc-actions-aux {
+    flex: 0 0 100%; margin-inline-start: 0;
+    justify-content: space-between;
+  }
+}
 @media (prefers-reduced-motion: reduce) {
-  .dcp-wb-heart, .dcp-wb-heart .dcp-heart-icon { transition: none; }
-  .dcp-wb-heart.is-pop .dcp-heart-icon { transform: none; }
-  .dcp-wb-heart:active { transform: none; }
+  .dc-act, .dc-act-heart .dcp-heart-icon { transition: none; }
+  .dc-act-heart.is-pop .dcp-heart-icon { transform: none; }
+  .dc-act:active { transform: none; }
 }
-/* «؟» reveal, reused by both the beside-میزکار button and the toolbar's own
-   collection button - hidden by default, toggles a plain caption line. */
+
+/* «؟» reveal, reused by both the کالکشن button in this row and the workbench
+   toolbar's own — hidden by default, toggles a plain caption line. */
 .dcp-wb-info {
   width: 24px; height: 24px; padding: 0; border-radius: 50%;
   display: inline-flex; align-items: center; justify-content: center;
@@ -1250,3 +1290,135 @@ html.dcp-touring #mobile-body { overflow: hidden; }
   border-bottom: 1px solid rgba(var(--ac-rgb, 11,95,255), .35);
 }
 .dc-plus-caplink:hover { border-bottom-color: currentColor; }
+
+
+/* ── گفت‌وگوی زیر مطلب ────────────────────────────────────────────────────
+   The conversation block under an article (plus/js/article-threads.js).
+
+   It lives HERE rather than in dc-article.css, where an article-surface class
+   would normally go, because the block renders on both surfaces and only this
+   stylesheet reaches both: dc-nav.js injects plus.css on every page, while
+   dc-article.css is linked by article pages alone — and the desktop shell
+   (index.html) loads no shared CSS at all, fetching the article as a fragment
+   into column C. Styling this in dc-article.css would have left the block
+   unstyled for every desktop reader, the same gap buildShareButton() closes.
+
+   Two things it deliberately is NOT: it is not amber (that colour means «this
+   is what a subscription buys» site-wide, and a published thread is free to
+   read), and it never renders at all when there is nothing published and the
+   reader cannot write — so these rules only ever paint something real.
+
+   Every colour is a theme token, so the block follows light/dark with the rest
+   of the article instead of carrying its own palette. */
+.dc-threads{
+  margin:2.5rem 0 1rem;
+  padding-top:1.5rem;
+  border-top:1px solid var(--border, rgba(2,35,96,.10));
+}
+.dc-th-skel{ min-height:1px; }
+.dc-th-title{
+  font-size:1.05rem;
+  font-weight:800;
+  margin:0 0 .25rem;
+  color:var(--txt, #0a1a33);
+}
+.dc-th-count{
+  font-size:.82rem;
+  color:var(--txt2, #4a5f85);
+  margin-bottom:.875rem;
+}
+.dc-th-pub,
+.dc-th-mine{
+  background:var(--surface2, #f4f6fb);
+  border:1px solid var(--border2, rgba(2,35,96,.06));
+  border-radius:14px;
+  padding:.875rem 1rem;
+  margin-bottom:.75rem;
+}
+.dc-th-mine{
+  background:transparent;
+  border-style:dashed;
+}
+.dc-th-mine-head{
+  font-size:.8rem;
+  font-weight:700;
+  color:var(--txt2, #4a5f85);
+  margin-bottom:.5rem;
+}
+.dc-th-msg + .dc-th-msg{
+  margin-top:.75rem;
+  padding-top:.75rem;
+  border-top:1px solid var(--border2, rgba(2,35,96,.06));
+}
+.dc-th-who{
+  font-size:.76rem;
+  color:var(--txt2, #4a5f85);
+  margin-bottom:.25rem;
+}
+.dc-th-msg-founder .dc-th-who{
+  color:var(--ac, #0b5fff);
+  font-weight:700;
+}
+.dc-th-body{
+  font-size:.92rem;
+  line-height:1.9;
+  color:var(--txt, #0a1a33);
+  white-space:pre-wrap;
+  overflow-wrap:anywhere;
+}
+.dc-th-compose{ margin-top:1rem; }
+.dc-th-input{
+  width:100%;
+  box-sizing:border-box;
+  background:var(--surface, #fff);
+  color:var(--txt, #0a1a33);
+  border:1px solid var(--border, rgba(2,35,96,.10));
+  border-radius:12px;
+  padding:.7rem .85rem;
+  font:inherit;
+  font-size:.92rem;
+  line-height:1.8;
+  resize:vertical;
+}
+.dc-th-row{
+  display:flex;
+  align-items:center;
+  gap:.75rem;
+  flex-wrap:wrap;
+  margin-top:.5rem;
+}
+.dc-th-send{
+  background:var(--ac, #0b5fff);
+  color:var(--txt-inv, #fff);
+  border:0;
+  border-radius:999px;
+  padding:.5rem 1.35rem;
+  font:inherit;
+  font-weight:800;
+  cursor:pointer;
+}
+.dc-th-send:disabled{ opacity:.55; cursor:default; }
+.dc-th-note{
+  font-size:.78rem;
+  line-height:1.8;
+  color:var(--txt2, #4a5f85);
+  margin-top:.5rem;
+}
+.dc-th-gate{
+  background:var(--surface2, #f4f6fb);
+  border:1px solid var(--border2, rgba(2,35,96,.06));
+  border-radius:14px;
+  padding:.875rem 1rem;
+  margin-top:1rem;
+}
+.dc-th-gate p{ margin:0 0 .625rem; font-size:.9rem; color:var(--txt2, #4a5f85); }
+.dc-th-cta{
+  display:inline-block;
+  background:var(--ac, #0b5fff);
+  color:var(--txt-inv, #fff);
+  border-radius:999px;
+  padding:.45rem 1.15rem;
+  font-size:.86rem;
+  font-weight:800;
+  text-decoration:none;
+}

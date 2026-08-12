@@ -43,9 +43,14 @@ const ART = 'chairside/chairside-30';
 /** Let the chip's own fetch-then-paint microtasks run. */
 const settle = () => new Promise((r) => setTimeout(r, 0));
 
+/** The row dc-nav.js builds above the prose (phase 7b), as the heart finds it. */
+const ACTION_ROW =
+  '<div id="dcActionRow" class="dc-actions">'
+  + '<div class="dc-actions-main"></div><div class="dc-actions-aux"></div></div>';
+
 async function mountRow(): Promise<HTMLElement> {
   const { initHeart } = await import('/plus/js/votes.js');
-  document.body.innerHTML = '<div id="dcArticleMeta"></div>';
+  document.body.innerHTML = ACTION_ROW;
   initHeart(ART);
   await settle();
   return document.querySelector('.dcp-heart') as HTMLElement;
@@ -67,14 +72,21 @@ beforeEach(() => {
 });
 
 describe('the heart chip', () => {
-  // AFTER the chip row, not inside it — as a third .dc-meta-chip it read as
-  // metadata and nobody saw it was a control.
-  it('mounts on its own line under the chip row', async () => {
+  // In the MAIN group of the action row, never the quiet one: پسندیدم is
+  // something the reader DOES with the page, not something the page reports
+  // about itself. Filed as metadata beside «زمان مطالعه» it was invisible.
+  it('mounts in the action row, in the group of things you can do', async () => {
     const btn = await mountRow();
     expect(btn).toBeTruthy();
-    expect(btn.closest('#dcArticleMeta')).toBeNull();
-    expect(document.querySelector('#dcArticleMeta')!.nextElementSibling!.className)
-      .toContain('dcp-like');
+    expect(btn.closest('.dc-actions-main')).toBeTruthy();
+    expect(btn.closest('.dc-actions-aux')).toBeNull();
+  });
+
+  // Its own colour is what makes it a call to action rather than a third blue
+  // pill; the class is what carries that, so it is not an implementation detail.
+  it('wears the heart class, not the row default', async () => {
+    const btn = await mountRow();
+    expect(btn.classList.contains('dc-act-heart')).toBe(true);
   });
 
   it('says what it is, in a word', async () => {
@@ -93,7 +105,7 @@ describe('the heart chip', () => {
     expect(document.querySelector('.dcp-like-count')!.textContent).toBe('');
   });
 
-  it('mounts nowhere when the page has no chip row', async () => {
+  it('mounts nowhere when the page has no action row', async () => {
     const { initHeart } = await import('/plus/js/votes.js');
     document.body.innerHTML = '<main></main>';
     expect(initHeart(ART)).toBe(false);
