@@ -848,17 +848,25 @@ function renderHome(cfg, creative) {
   // place a card in whichever exists. Only the active layout is displayed, so at
   // most one is visible.
   //
-  // Mobile shell: since the Examine redesign (2026-08-11) the card sits right
-  // under the «دسته‌های محتوا» grid — between it and «تازه‌های دنت‌کست» — per the
-  // founder's placement. The Pulse card (which moved far down the page) stays as
-  // the fallback anchor so the ad can never silently disappear.
+  // Mobile shell: the card sits ABOVE «دسته‌های محتوا» (founder placement,
+  // 2026-08-12) — i.e. right after the featured episode, higher up the page
+  // than it used to be. The anchor is the grid's own SECTION HEADING, not the
+  // grid: inserting before the grid itself would drop the card between a
+  // heading and the content it labels. The Pulse card (far down the page since
+  // the reorder) stays the fallback so the paid card can never disappear.
   let placed = false;
   const cats = document.querySelector('#panel-studio .dc-exa-cats');
-  const mobileAnchor = cats || document.querySelector('#dcPulseCard');
-  if (mobileAnchor) {
-    const card = buildCard(creative, 'home');
-    mobileAnchor.parentNode.insertBefore(card, mobileAnchor.nextSibling);
+  if (cats) {
+    const head = cats.previousElementSibling;
+    const anchor = (head && head.classList.contains('dc-home-sec')) ? head : cats;
+    anchor.parentNode.insertBefore(buildCard(creative, 'home'), anchor);
     placed = true;
+  } else {
+    const pulse = document.querySelector('#dcPulseCard');
+    if (pulse) {
+      pulse.parentNode.insertBefore(buildCard(creative, 'home'), pulse.nextSibling);
+      placed = true;
+    }
   }
   // Desktop shell: unchanged — right under its own Pulse card.
   const dPulse = document.querySelector('#dcdPulse');
