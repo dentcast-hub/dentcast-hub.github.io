@@ -67,10 +67,30 @@ beforeEach(() => {
 });
 
 describe('the heart chip', () => {
-  it('mounts into the article chip row', async () => {
+  // AFTER the chip row, not inside it — as a third .dc-meta-chip it read as
+  // metadata and nobody saw it was a control.
+  it('mounts on its own line under the chip row', async () => {
     const btn = await mountRow();
     expect(btn).toBeTruthy();
-    expect(btn.closest('#dcArticleMeta')).toBeTruthy();
+    expect(btn.closest('#dcArticleMeta')).toBeNull();
+    expect(document.querySelector('#dcArticleMeta')!.nextElementSibling!.className)
+      .toContain('dcp-like');
+  });
+
+  it('says what it is, in a word', async () => {
+    const btn = await mountRow();
+    expect(btn.querySelector('.dcp-heart-label')!.textContent).toBe('پسندیدم');
+  });
+
+  it('spells the count out instead of leaving a bare number', async () => {
+    voteState = { hearts: 9, voted: false };
+    await mountRow();
+    expect(document.querySelector('.dcp-like-count')!.textContent).toBe('۹ نفر پسندیده‌اند');
+  });
+
+  it('says nothing at all when nobody has pressed it', async () => {
+    await mountRow();
+    expect(document.querySelector('.dcp-like-count')!.textContent).toBe('');
   });
 
   it('mounts nowhere when the page has no chip row', async () => {
@@ -78,6 +98,13 @@ describe('the heart chip', () => {
     document.body.innerHTML = '<main></main>';
     expect(initHeart(ART)).toBe(false);
     expect(document.querySelector('.dcp-heart')).toBeNull();
+  });
+
+  it('does not mount twice', async () => {
+    const { initHeart } = await import('/plus/js/votes.js');
+    await mountRow();
+    expect(initHeart(ART)).toBe(false);
+    expect(document.querySelectorAll('.dcp-like').length).toBe(1);
   });
 
   it('never prints a zero', async () => {
