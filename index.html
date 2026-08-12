@@ -954,19 +954,22 @@ body{
   color:var(--txt); margin:0 0 0.625rem;
 }
 /* ── up-board doorway ──
-   The title row grows a link, and the list grows two arrangements. Blue, never
-   amber: up-board is free for any signed-in reader, and amber means one thing
-   site-wide («this is what a subscription buys»). */
-.dc-monitor-head{
-  display:flex; align-items:baseline; justify-content:space-between; gap:0.75rem;
+   The section TITLE sits outside the card, in the same `.dc-home-sec` header
+   every other section of this panel uses («پادکست», «تولید اختصاصی دنت‌کست») —
+   it lived inside the box at first, which made this one card look like a
+   different kind of object from everything around it.
+   Blue, never amber: the box and «تازه‌ترین» are free; only the «بالاترین»
+   tab is premium and only that tab wears the amber lock. */
+.dc-home-sec-sub{
+  font-size:.72rem; font-weight:500; color:var(--txt3); margin:0; line-height:1.6;
 }
-.dc-monitor-head .dc-monitor-title{ margin-bottom:0.375rem; }
 .dc-monitor-all{
   flex:none; font-size:.72rem; font-weight:700;
   color:var(--ac); text-decoration:none; white-space:nowrap;
 }
 .dc-monitor-all:active{ opacity:.6; }
-.dc-monitor-tabs{ display:flex; gap:0.375rem; margin:0 0 0.5rem; }
+.dc-monitor-tabs{ display:flex; align-items:center; gap:0.375rem; margin:0 0 0.5rem; }
+.dc-monitor-tabs .dc-monitor-all{ margin-inline-start:auto; }
 .dc-monitor-tab{
   font:inherit; font-size:.7rem; font-weight:700;
   color:var(--txt3); background:transparent;
@@ -3666,6 +3669,13 @@ a.dc-list-card--pillar {
 }
 #panel-studio .dc-home-sec,
 #panel-sharehub .dc-home-sec{ margin:1.75rem 0 0.5rem; }
+/* up-board's header carries a second line, so it stacks — and it has to say so
+   HERE: `#panel-sharehub .dc-home-sec` above sets align-items:center, which an
+   unqualified class in the shared block cannot out-rank, and the title lands
+   centred while every other section on this panel is right-aligned. */
+#panel-sharehub .dc-home-sec-upboard{
+  flex-direction:column; align-items:stretch; gap:0.125rem;
+}
 
 /* ── «تازه‌های دنت‌کست»: horizontal card rail → vertical text rows
       (same links, same order — pure typography like the mockup) ── */
@@ -4531,15 +4541,17 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
            spot.js's renderHome anchors the mobile homepage ad to
            `.dc-exa-cats` (spot.js:858), so moving or removing it relocates
            paid sponsor inventory. -->
-      <article class="dc-monitor dc-monitor-secondary" aria-label="مطالب دنت‌کست">
+      <div class="dc-home-sec dc-home-sec-upboard">
+        <h2 class="dc-home-sec-label">up-board</h2>
+        <p class="dc-home-sec-sub">همهٔ مطالب سایت، تازه‌ترین یا پربازخوردترین</p>
+      </div>
+
+      <article class="dc-monitor dc-monitor-secondary" aria-label="up-board">
         <div class="dc-monitor-inner">
-          <div class="dc-monitor-head">
-            <div class="dc-monitor-title">مطالب دنت‌کست</div>
-            <a class="dc-monitor-all" href="/up-board/">همه ›</a>
-          </div>
           <div class="dc-monitor-tabs" role="tablist" aria-label="ترتیب فهرست">
             <button class="dc-monitor-tab" type="button" role="tab" data-monitor-sort="new" aria-selected="true">تازه‌ترین</button>
             <button class="dc-monitor-tab" type="button" role="tab" data-monitor-sort="top" aria-selected="false">بالاترین</button>
+            <a class="dc-monitor-all" href="/up-board/">همه ›</a>
           </div>
           <ul class="dc-monitor-list" id="dcLast3Updates"></ul>
         </div>
