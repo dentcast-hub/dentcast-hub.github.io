@@ -4240,9 +4240,9 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
       </div>
 
       <!-- DentCast Plus premium section. Empty until /plus/js/home-features.js
-           fills it. Since 2026-08-11 the MOBILE homepage ad anchors to the
-           «دسته‌های محتوا» grid (spot.js renderHome inserts after
-           #panel-studio .dc-exa-cats, between it and «تازه‌های دنت‌کست»); the
+           fills it. Since 2026-08-12 the MOBILE homepage ad sits ABOVE
+           «دسته‌های محتوا» (spot.js renderHome inserts before that section's
+           heading, i.e. right after the featured episode card); the
            Pulse card remains spot.js's FALLBACK anchor, so keep this section
            adjacent to #dcPulseCard — if the grid ever disappears, the ad lands
            between the Pulse and this section again, with no coordination

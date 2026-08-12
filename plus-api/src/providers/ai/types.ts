@@ -1,12 +1,12 @@
 /**
- * Provider-agnostic AI narrowing step. The AI's ONLY job is classification: given
- * a free-text description and the prior Q&A history, either ask one more
- * multiple-choice question (options drawn from `catalog`, nothing else) or
- * declare it has enough to resolve. It never sees or produces article content,
- * a diagnosis, or free-form advice — see services/case-assistant.ts, which is
- * the thing that actually resolves a finished round to real DentCast articles
- * and which re-validates every option key the provider returns against the
- * same catalog before trusting it.
+ * Provider-agnostic semantic indexing step. The AI's ONLY job is understanding:
+ * given a free-text case description, bridge the speaker's own words to the
+ * site's REAL hashtags (it is shown the whole catalog) and return a subset of
+ * them. It never picks an article, never writes the question, never decides
+ * when to stop, and never gives a diagnosis or free-form advice — see
+ * services/case-assistant.ts, which owns all of that in plain code and which
+ * re-validates every string the provider returns against the live content index
+ * before any of it reaches a user.
  */
 
 export interface NarrowOption {
@@ -20,28 +20,27 @@ export interface NarrowHistoryEntry {
   answer: { key: string; label: string } | { custom: string };
 }
 
-export interface NarrowRoundInput {
+export interface SelectTagsInput {
+  /** The user's free-text description (capped at 500 chars by the route). */
   description: string;
-  history: NarrowHistoryEntry[];
-  /** The ONLY option keys valid this round — server-derived, never client-supplied. */
-  catalog: NarrowOption[];
+  /** The user's own "غیر از این‌ها" free-text refinements, in order. */
+  refinements: string[];
+  /** The Persian label of every REAL site hashtag — the full catalog. */
+  catalog: string[];
 }
-
-export type NarrowRoundResult =
-  | { done: false; question: string; options: NarrowOption[] }
-  | { done: true };
 
 export interface AiProvider {
   readonly name: string;
-  narrowCase(input: NarrowRoundInput): Promise<NarrowRoundResult>;
   /**
-   * Read a free-text case description and suggest short topic phrases in the
-   * site's own hashtag style (e.g. "زینک فسفات", "سمان ایمپلنت") — never
-   * picking real content itself. services/case-assistant.ts matches these,
-   * IN CODE, against the site's real hashtags; a suggestion that matches
-   * nothing real is simply dropped, so a hallucinated phrase can never surface
-   * as an option. Returns an empty array on anything unusable, never throws
-   * for a malformed-but-parseable answer (same philosophy as narrowCase).
+   * The model's only job: understand what the free text actually MEANS
+   * (synonyms, clinical vocabulary, the concept behind the complaint) and
+   * return the closest labels VERBATIM from `catalog` — most relevant first,
+   * at most 8, and [] when nothing is genuinely relevant. Picking articles,
+   * writing the question and deciding to stop are not this method's job.
+   *
+   * Returns an empty array on anything unusable, never throws for a
+   * malformed-but-parseable answer: a degraded round falls through to the
+   * honest pillar fallback in services/case-assistant.ts, not an error screen.
    */
-  suggestKeywords(text: string): Promise<string[]>;
+  selectTags(input: SelectTagsInput): Promise<string[]>;
 }

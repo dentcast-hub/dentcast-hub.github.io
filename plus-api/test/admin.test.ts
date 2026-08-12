@@ -395,6 +395,8 @@ describe('GET /admin/ai/health?deep=1', () => {
     expect(typeof deep.ms).toBe('number');
     // Says what it timed, so a 1ms stub result can never read as a fast model.
     expect(deep.provider).toBe('stub');
+    // How many tags came back — the stub never guesses, so zero here is right.
+    expect(deep.tags).toBe(0);
   });
 });
 

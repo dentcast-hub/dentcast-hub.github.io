@@ -821,7 +821,7 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
       max_attempts: config.ai.maxAttempts,
     };
 
-    // ?deep=1 additionally times ONE real narrowing round. The /models probe
+    // ?deep=1 additionally times ONE real tag-selection round. The /models probe
     // proves reachability and auth in a few hundred ms and says nothing about
     // GENERATION speed — which, on a reasoning model, is the number that decides
     // whether the assistant is usable. Opt-in because it costs tokens, and
@@ -834,17 +834,13 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
       if (q.deep !== '1') return null;
       const t0 = Date.now();
       try {
-        const out = await ai.narrowCase({
+        const out = await ai.selectTags({
           description: 'روکش بیمار مدام می‌افتد و سمان قبلی شسته شده',
-          history: [],
-          catalog: [
-            { key: 'probe-a', label: 'سمان' },
-            { key: 'probe-b', label: 'روکش' },
-          ],
+          refinements: [],
+          catalog: ['سمان', 'روکش'],
         });
         return {
-          ok: true, provider: ai.name, ms: Date.now() - t0,
-          done: out.done, options: out.done ? undefined : out.options.length,
+          ok: true, provider: ai.name, ms: Date.now() - t0, tags: out.length,
         };
       } catch (err) {
         return { ok: false, provider: ai.name, ms: Date.now() - t0, error: describeError(err, config.ai.timeoutMs) };

@@ -1,33 +1,25 @@
 import { config } from '../../config.js';
 import { outboundFetch, describeError } from '../outbound.js';
-import type { AiProvider, NarrowRoundInput, NarrowRoundResult } from './types.js';
+import type { AiProvider, SelectTagsInput } from './types.js';
 
-// The model is told the shape it must answer in; JSON mode (where the endpoint
-// supports it) makes that a hard guarantee instead of a request. Either way we
-// never trust the parse blindly — see the validation below.
-const NARROW_SYSTEM_PROMPT = `تو یک دسته‌بند باریک‌بین برای سایت آموزش دندانپزشکی دنت‌کست هستی، نه یک دستیار بالینی. کاربر (یک دندان‌پزشک) وضعیت یک بیمار را با متن آزاد شرح می‌دهد. کارِ تو فقط این است: بین گزینه‌های داده‌شده (فهرست catalog) کدام‌ها به شرحِ او نزدیک‌ترند را برای یک سؤالِ چندگزینه‌ای انتخاب کنی، تا مرحله‌به‌مرحله موضوع را دقیق‌تر کنی و در نهایت به مقاله‌ی درستِ سایت برسی.
+// The ONE model call a round ever makes. It shows the model the site's real
+// hashtag catalog and asks for nothing but a subset of it, because the thing
+// that was broken was exactly the semantic bridge between a dentist's own
+// words ("نسج") and the site's vocabulary ("بافت", "فرول") — and the thing
+// that was slow was asking the model twice. The model is told the shape it
+// must answer in; JSON mode (where the endpoint supports it) makes that a hard
+// guarantee instead of a request. Either way we never trust the parse blindly:
+// this file drops anything unusable, and services/case-assistant.ts then
+// re-validates every surviving string against the live content index, so a
+// hallucinated label can never reach a user.
+const SELECT_TAGS_SYSTEM_PROMPT = `تو نمایه‌سازِ معناییِ سایت آموزش دندانپزشکی دنت‌کست هستی، نه یک دستیار بالینی. کاربر (یک دندان‌پزشک) وضعیت یک بیمار یا موضوع مورد نظرش را با متن آزاد شرح می‌دهد و فهرست کامل هشتگ‌های واقعی سایت (فیلد catalog) به تو داده می‌شود.
+کارِ تو فقط این است: منظورِ واقعی متن را بفهم — مترادف‌ها و واژگان همکار را خودت پل بزن (مثلاً «نسج» یعنی «بافت»؛ «کمبود نسج برای روکش» یعنی مسئله‌ی فرول و طول تاج) — و نزدیک‌ترین هشتگ‌ها به آن منظور را از catalog انتخاب کن.
 قوانین سخت:
-- هرگز تشخیص، توصیه‌ی درمانی یا نظرِ بالینی نده. تو فقط مسیر را به محتوای منتشرشده‌ی خودِ سایت نشان می‌دهی.
-- گزینه‌هایی که برمی‌گردانی باید دقیقاً از میان کلیدهای catalog داده‌شده باشند؛ هرگز کلید یا موضوع تازه نساز.
-- اگر اطلاعات کافی برای رسیدن به یک دسته‌ی روشن داری، done را true برگردان.
-- فقط یک شیء JSON برگردان، دقیقاً به این شکل: {"done": false, "question": "...", "options": ["<یکی از کلیدهای catalog>", ...]} یا {"done": true}.`;
-
-// Asks for at most FOUR phrases, not eight. This is a reasoning model: it emits
-// a full thinking pass before its answer, so the response length is a direct
-// latency cost, and four good keywords already saturate the tag match (the
-// shortlist is capped at four options anyway).
-//
-// A separate, narrower prompt: this call never sees a catalog and never picks
-// anything — it only reads free text and proposes candidate topic phrases in
-// the site's own hashtag style. services/case-assistant.ts matches those
-// against the REAL site hashtags in code; the model itself has no way to
-// point at content that doesn't actually carry a matching tag.
-const KEYWORDS_SYSTEM_PROMPT = `تو یک استخراج‌کننده‌ی کلیدواژه برای سایت آموزش دندانپزشکی دنت‌کست هستی، نه یک دستیار بالینی. کاربر (یک دندان‌پزشک) وضعیت یک بیمار یا موضوع مورد نظرش را با متن آزاد شرح می‌دهد.
-کارِ تو فقط این است: از این متن، حداکثر ۴ عبارتِ کوتاهِ فارسیِ تخصصیِ دندان‌پزشکی (هرکدام ۱ تا ۳ کلمه) استخراج یا پیشنهاد کنی که احتمالاً به‌عنوان هشتگِ محتوای سایت به‌کار رفته باشند — دقیقاً در سبکِ هشتگ‌های خودِ سایت (مثل «زینک فسفات»، «سمان ایمپلنت»، «اکلوژن»).
-قوانین سخت:
+- فقط از میان catalog انتخاب کن و هر قلم را حرف‌به‌حرف همان‌طور که در catalog آمده برگردان؛ هرگز هشتگ تازه نساز و هیچ قلمی را بازنویسی نکن.
+- حداکثر ۸ قلم، مرتب از مرتبط‌ترین به کم‌ربط‌ترین. فقط چیزی را بیاور که واقعاً به منظور متن می‌خورد؛ هم‌ریشگیِ ظاهریِ یک کلمه (مثلاً «روکش» در متن و «تراش روکش» در catalog) به‌تنهایی ربط نیست.
+- اگر هیچ قلمِ واقعاً مرتبطی نبود، فهرست خالی برگردان؛ خالی برگرداندن بهتر از حدسِ بی‌ربط است.
 - هرگز تشخیص، توصیه‌ی درمانی یا نظرِ بالینی نده.
-- فقط عبارت‌های موضوعی/تخصصی بده، نه جمله؛ هیچ عبارتی را تکرار نکن.
-- فقط یک شیء JSON برگردان، دقیقاً به این شکل: {"keywords": ["...", "..."]}.`;
+- فقط یک شیء JSON برگردان، دقیقاً به این شکل: {"tags": ["...", "..."]}.`;
 
 interface ChatCompletionResponse {
   choices?: Array<{ message?: { content?: string } }>;
@@ -120,8 +112,6 @@ export class OpenAiCompatibleProvider implements AiProvider {
    * without the second, three 10s timeouts plus backoff would keep a user
    * staring at a spinner for half a minute. The budget is checked BEFORE
    * sleeping, so an attempt already in flight is always allowed to finish.
-   * Shared by narrowCase and suggestKeywords — both hit the same gateway with
-   * the same failure modes.
    */
   private async withRetry<T>(fn: () => Promise<T>): Promise<T> {
     const attempts = Math.max(1, config.ai.maxAttempts);
@@ -201,54 +191,25 @@ export class OpenAiCompatibleProvider implements AiProvider {
     return parsed;
   }
 
-  async narrowCase(input: NarrowRoundInput): Promise<NarrowRoundResult> {
-    return this.withRetry(() => this.narrowAttempt(input));
+  async selectTags(input: SelectTagsInput): Promise<string[]> {
+    return this.withRetry(() => this.selectTagsAttempt(input));
   }
 
-  private async narrowAttempt({ description, history, catalog }: NarrowRoundInput): Promise<NarrowRoundResult> {
-    const allowed = new Map(catalog.map((c) => [c.key, c.label]));
-    const userPayload = JSON.stringify({ description, history, catalog });
+  private async selectTagsAttempt({ description, refinements, catalog }: SelectTagsInput): Promise<string[]> {
+    const parsed = await this.chatJson(
+      SELECT_TAGS_SYSTEM_PROMPT,
+      JSON.stringify({ description, refinements, catalog }),
+    ) as { tags?: unknown };
 
-    const parsed = await this.chatJson(NARROW_SYSTEM_PROMPT, userPayload) as
-      { done?: boolean; question?: unknown; options?: unknown };
-
-    if (parsed.done) return { done: true };
-
-    // Hard safety net: an option only survives if its key is one WE offered this
-    // round. The label is always OUR label for that key, never the model's own
-    // text — so even a fully hijacked response can only ever point at a real,
-    // pre-existing catalog entry, never invent one.
-    const rawOptions = Array.isArray(parsed.options) ? parsed.options : [];
-    const options = rawOptions
-      .map((k) => (typeof k === 'string' ? k : (k as { key?: unknown })?.key))
-      .filter((k): k is string => typeof k === 'string' && allowed.has(k))
-      .slice(0, 4)
-      .map((key) => ({ key, label: allowed.get(key)! }));
-
-    if (!options.length) return { done: true }; // nothing valid survived — stop rather than guess
-
-    const question = typeof parsed.question === 'string' && parsed.question.trim()
-      ? parsed.question.trim().slice(0, 200)
-      : 'کدام‌یک به شرایط بیمار نزدیک‌تر است؟';
-
-    return { done: false, question, options };
-  }
-
-  async suggestKeywords(text: string): Promise<string[]> {
-    return this.withRetry(() => this.keywordsAttempt(text));
-  }
-
-  private async keywordsAttempt(text: string): Promise<string[]> {
-    const parsed = await this.chatJson(KEYWORDS_SYSTEM_PROMPT, JSON.stringify({ text })) as { keywords?: unknown };
-
-    // Same philosophy as narrowCase's option filter: whatever doesn't look
-    // like a short real phrase is just dropped, never thrown on — a
-    // malformed-but-parseable answer degrades to "no suggestions" (the
-    // pillar-tree fallback in case-assistant.ts), not an error screen.
-    const raw = Array.isArray(parsed.keywords) ? parsed.keywords : [];
+    // Shape cleanup only. Whatever doesn't look like a short real label is just
+    // dropped, never thrown on — a malformed-but-parseable answer degrades to
+    // "no tags" (the honest pillar fallback in case-assistant.ts), not an error
+    // screen. The REAL validation — "is this actually a site hashtag?" — is the
+    // service's job, against the live index, exactly as before.
+    const raw = Array.isArray(parsed.tags) ? parsed.tags : [];
     return raw
-      .filter((k): k is string => typeof k === 'string' && k.trim().length > 0)
-      .map((k) => k.trim().slice(0, 40))
+      .filter((t): t is string => typeof t === 'string' && t.trim().length > 0)
+      .map((t) => t.trim().slice(0, 60))
       .slice(0, 8);
   }
 }

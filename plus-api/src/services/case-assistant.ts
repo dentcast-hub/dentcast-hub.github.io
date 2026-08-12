@@ -4,60 +4,63 @@ import { ai } from '../providers/registry.js';
 import type { NarrowHistoryEntry, NarrowOption } from '../providers/ai/types.js';
 import { getConsumedContentIds } from './consumption.js';
 import {
-  hashDescription, learnedBonuses, recordRound, recordChoice, type OfferedOption,
+  hashDescription, recordRound, recordChoice, type OfferedOption,
 } from './assistant-learning.js';
 
 /**
- * «دستیار هوشمند» (premium): the AI's role is narrowing ONLY — turning a free-text
- * case description into a short multiple-choice round — never picking the final
- * article and never giving clinical advice.
+ * «دستیار هوشمند» (premium). The AI has exactly ONE job here: read the free-text
+ * description and understand what it MEANS — that «نسج» is «بافت», that "not
+ * enough tissue for a crown" is the ferrule/crown-lengthening problem — and
+ * translate that understanding into the site's OWN real hashtags. Everything
+ * after that (hashtag -> articles) is ordinary search and belongs to code,
+ * exactly like the site's own global-search.js, which answers instantly with no
+ * model at all. The model never picks an article, never invents a hashtag,
+ * never writes the question, never decides to stop, and never gives clinical
+ * advice.
  *
- * Two narrowing strategies, tried in order:
- *  1. Keyword search over the site's REAL #hashtags (nextRootCatalog/tagMatchScore
- *     below). The AI reads the free text and suggests short topic phrases; this
- *     module — not the model — matches those against every real site tag and
- *     offers the best matches. Most tags are used on a single piece of content
- *     (checked: ~75% of ~1,300 site tags), so this reaches niche content no
- *     fixed category tree could, without needing that content cross-listed under
- *     every plausible pillar.
- *  2. The original fixed pillar -> subtopic tree (nextClusterCatalog/resolve's
- *     cluster branch), kept as a fallback for whatever the tag search finds
- *     nothing for (a very generic description, an odd phrasing, or the stub/dev
- *     AI provider, which never guesses keywords on purpose).
- * Either way the level and the round cap are decided HERE, in plain code, from
- * the user's own answer keys; the AI is only ever shown the catalog this module
- * computed and can only ever return keys from it (openai-compatible.ts
- * re-validates that independently, so a compromised/hallucinating model still
- * cannot point outside real content). Entirely stateless server-side: the
- * client resends the whole history each call.
+ * That means a round that needs the model makes exactly ONE call:
+ *
+ *   description + refinements -> ai.selectTags(catalog = every real site tag)
+ *     -> validated in code against the live index (anything else is dropped)
+ *     -> dedupeByContentCoverage -> at most 4 options + a fixed question
+ *     -> the user picks -> resolve() (plain search: hashtag -> articles)
+ *
+ * The predecessor asked the model twice — once to guess topic phrases blind,
+ * once to pick 4 of 10 — and bridged the guesses to real tags with a purely
+ * lexical word-overlap score. That is what put unrelated crown tags in front of
+ * a «نبود فرول» case (no site tag and no alias contains the word «نسج» at all)
+ * and what measured 15-53s to the first question. Showing the model the real
+ * vocabulary is both the correctness fix and the latency fix.
+ *
+ * Two catalogs, in order:
+ *  1. The site's REAL #hashtags (nextRootCatalog). Most tags are used on a
+ *     single piece of content (~75% of site tags), so this reaches niche
+ *     content no fixed category tree could, without cross-listing that content
+ *     under every plausible pillar.
+ *  2. The fixed pillar -> subtopic tree (nextClusterCatalog), the honest
+ *     fallback for when the model finds nothing genuinely relevant (a very
+ *     generic description, something off-topic, or the stub/dev provider,
+ *     which never guesses on purpose) — asked with its OWN question text, so
+ *     it never pretends to be a list of relevant matches.
+ *
+ * The level, the round cap and the stopping decision are all made HERE, in
+ * plain code, from the user's own answer keys. Entirely stateless server-side:
+ * the client resends the whole history each call.
  */
 
 const ARTICLES_PER_MATCH = 4;
-// The FINAL number of options ever shown to the user (openai-compatible.ts's
-// narrowCase also enforces this independently on whatever the model returns).
+// The FINAL number of tag options ever shown to the user.
 const MAX_TAG_OPTIONS = 4;
-// How many candidate tags nextRootCatalog hands to ai.narrowCase. Wider than
-// MAX_TAG_OPTIONS on purpose: a generic word like "سمان" or "روکش" fully
-// matches dozens of near-duplicate, single-article tags (each article gets
-// its own bespoke AI-proposed hashtags at publish time - see
-// .dentcast/workflows/README.md - so ~75% of site tags are used exactly
-// once). Cutting straight to 4 there, with only a lexical score to rank by,
-// is a coin flip for whether the actually-relevant tag survives (verified:
-// it lost in 2 of 3 realistic trials for "زینک فسفات"/"گیر روکش" against
-// unrelated "___ روکش" tags). A wider pool lets narrowCase's own model use
-// its real understanding of the free-text description to pick the best 4
-// out of a reasonable spread, instead of a blunt lexical score finalizing
-// the list alone.
-const TAG_CANDIDATE_POOL = 10;
-// A real site tag is usually 1-3 words; requiring at least half of them to
-// show up among the AI's suggested phrases keeps a bare one-word coincidence
-// (e.g. a generic "دندان" hit) from outranking a tag that's actually specific
-// to the case.
-const TAG_MATCH_THRESHOLD = 0.5;
 const TAG_PREFIX = 'tag:';
-// Same generic fallback text openai-compatible.ts/stub.ts already use when a
-// provider doesn't (or, here, must not be allowed to) supply its own question.
-const DEFAULT_QUESTION = 'کدام‌یک به شرایط بیمار نزدیک‌تر است؟';
+// The question is ours, not the model's: it is the same every round, so there
+// is nothing for a model to get wrong or be steered into writing. Exported so
+// a test asserts the real string rather than a retyped copy of it.
+export const DEFAULT_QUESTION = 'کدام‌یک به شرایط بیمار نزدیک‌تر است؟';
+// Shown INSTEAD of the above when the model found no genuinely relevant tag.
+// A different sentence on purpose: the pillar list is a broad-area question,
+// not a shortlist of matches, and offering it under the usual wording would
+// claim a relevance nothing here has.
+export const FALLBACK_QUESTION = 'از توضیحت به هشتگ مستقیمی نرسیدم؛ نزدیک‌ترین حیطه‌ی کلی کدام است؟';
 
 export interface CaseArticle {
   content_id: string;
@@ -96,8 +99,8 @@ function lastConcreteKey(history: NarrowHistoryEntry[]): string | null {
 }
 
 /** Every free-text answer so far, in order — the user's own refinements
- * ("غیر از این‌ها" -> types something else) each get folded back into the
- * next keyword search, instead of being dead ends. */
+ * ("غیر از این‌ها" -> types something else) each get handed to the next tag
+ * selection, instead of being dead ends. */
 function customAnswers(history: NarrowHistoryEntry[]): string[] {
   return history.filter((h): h is NarrowHistoryEntry & { answer: { custom: string } } => 'custom' in h.answer)
     .map((h) => h.answer.custom);
@@ -113,11 +116,10 @@ const ZERO_WIDTH = /[\u200c\u200e\u200f]/g;
  * Orthographic variants of ONE word, folded together before tokenizing.
  *
  * A dentist writes "بیومیمتیک" one day and "بایومیمتیک" — or "بایو میمتیک"
- * with a space — the next. Those are three unrelated tokens to a matcher that
- * scores on exact word overlap, so two of the three miss a tag carrying the
- * third, and the article is simply never reached. Handling it here rather than
- * by putting every spelling on every article keeps one tag per concept and
- * leaves IDF undistorted.
+ * with a space — the next, and so does a model asked to echo a label back. To
+ * a plain string comparison those are three unrelated tokens, so a tag written
+ * with the third spelling is simply not found. Handling it here rather than by
+ * putting every spelling on every article keeps one tag per concept.
  *
  * Substitution is on the normalized STRING, not on tokens, because a spaced
  * spelling ("بایو میمتیک") is two tokens that must collapse into one. Longest
@@ -183,12 +185,10 @@ function normalizeFa(s: string): string {
   return out.join(' ');
 }
 
-// Common connector/filler words, dropped before matching. Without this a
-// generic word incidental to a real suggestion (e.g. "یک" in "یک عارضه‌ی
-// نادر") can spuriously fully-match a short real tag that happens to be
-// exactly that word plus one other (real example found in testing: تگ «کلاس
-// یک» matching on "یک" alone). Real site tags are specialist phrases, never
-// built from these — dropping them costs nothing.
+// Common connector/filler words, dropped before a description is tokenized
+// into the `searchWords` the learning tables record. A round logged under "و"
+// or "یک" tells a later vocabulary-gap report nothing; real site tags are
+// specialist phrases, never built from these, so dropping them costs nothing.
 const STOPWORDS = new Set([
   'و', 'یا', 'با', 'بی', 'در', 'به', 'از', 'که', 'را', 'تا', 'برای', 'روی', 'یک', 'این', 'آن',
 ]);
@@ -198,69 +198,68 @@ function words(s: string): string[] {
 }
 
 /**
- * Score one real site tag against the AI's suggested phrases: the fraction of
- * the TAG's own words that appear somewhere among the suggestions. Scoring
- * off the tag (not the suggestion) means a short, specific tag needs its
- * words fully covered to count, while a longer suggestion phrase can still
- * hit several different tags.
+ * Fold every real site tag to its normalized form, so a label the model
+ * returned survives an orthographic wobble (ي/ی, ك/ک, a ZWNJ where a space
+ * belongs) but a label that names nothing real still does not. The tag's own
+ * `key` is indexed too, since a model shown Persian labels occasionally
+ * answers with the key form of one.
+ *
+ * `fa` wins on a collision: it is what the model was actually shown, and it is
+ * the label the user will see. Cached against the exact `Tag[]` reference
+ * getTags() returns — that reference only changes when content-index.ts
+ * reloads the underlying file (a real redeploy, not per-request), so this
+ * builds once per deploy, not once per assistant round.
  */
-function tagMatchScore(tagFa: string, suggestedWords: Set<string>): number {
-  const tagWords = words(tagFa);
-  if (!tagWords.length) return 0;
-  const hits = tagWords.filter((w) => suggestedWords.has(w)).length;
-  return hits / tagWords.length;
+let lookupCacheKey: Tag[] | null = null;
+let lookupCache: Map<string, Tag> | null = null;
+
+function tagLookup(): Map<string, Tag> {
+  const tags = getTags();
+  if (lookupCacheKey === tags && lookupCache) return lookupCache;
+
+  const map = new Map<string, Tag>();
+  for (const t of tags) {
+    const k = normalizeFa(t.key);
+    if (k && !map.has(k)) map.set(k, t);
+  }
+  for (const t of tags) {
+    const fa = normalizeFa(t.fa);
+    if (fa) map.set(fa, t); // fa always wins over a key that folded the same way
+  }
+
+  lookupCacheKey = tags;
+  lookupCache = map;
+  return map;
 }
 
 /**
- * How rare is each word across the site's own tags — the ranking half of the
- * fix for a generic word ("روکش" alone sits inside 40+ distinct single-
- * article tags) drowning out a specific one ("زینک", "گیر"). A tag matched
- * only via a word every third tag shares tells you almost nothing; matched
- * via a word only one or two tags use tells you a lot. Classic smoothed IDF:
- * log((N+1)/(df+1)) + 1, always positive, never zero even for a word in
- * every tag.
- *
- * Cached against the exact `Tag[]` reference getTags() returns — that
- * reference only changes when content-index.ts reloads the underlying file
- * (a real redeploy, not per-request), so this recomputes once per deploy,
- * not once per assistant round.
+ * The safety net, unchanged in spirit: nothing the model said reaches a user
+ * until it has been matched against a tag that really exists in the index.
+ * Anything else is dropped silently — an invented hashtag simply is not an
+ * option. The model's ORDER is kept (it sorted by relevance, which is the
+ * whole thing we asked it for); duplicates collapse to the first mention.
  */
-let idfCacheKey: Tag[] | null = null;
-let idfCache: Map<string, number> | null = null;
-
-function wordIdf(): Map<string, number> {
-  const tags = getTags();
-  if (idfCacheKey === tags && idfCache) return idfCache;
-
-  const df = new Map<string, number>();
-  for (const t of tags) {
-    for (const w of new Set(words(t.fa))) df.set(w, (df.get(w) || 0) + 1);
+function validateTags(raw: string[]): Tag[] {
+  const lookup = tagLookup();
+  const seen = new Set<string>();
+  const out: Tag[] = [];
+  for (const s of raw) {
+    const tag = lookup.get(normalizeFa(s));
+    if (!tag || seen.has(tag.key)) continue;
+    seen.add(tag.key);
+    out.push(tag);
   }
-  const n = tags.length;
-  const idf = new Map<string, number>();
-  for (const [w, count] of df) idf.set(w, Math.log((n + 1) / (count + 1)) + 1);
-
-  idfCacheKey = tags;
-  idfCache = idf;
-  return idf;
-}
-
-/** Sum of a tag's own words' rarity — how specific/niche the tag reads,
- * independent of whether (or how) it matched this round's suggestions. */
-function specificityWeight(tagFa: string): number {
-  const idf = wordIdf();
-  return words(tagFa).reduce((sum, w) => sum + (idf.get(w) ?? 1), 0);
+  return out;
 }
 
 /**
  * Greedily keep only tags that bring at least one NEW content_id not already
  * covered by a higher-ranked tag. Necessary because most site tags are
  * single-article (each article gets its own bespoke AI-proposed hashtags at
- * publish time), so a generic shared word ("سمان", "روکش") fully or
- * partially matches dozens of near-duplicate tags pointing at the SAME small
- * handful of articles — without this, those duplicates alone can fill every
- * slot in the candidate pool and starve out an article that only has ONE
- * matching tag but is otherwise unrepresented.
+ * publish time), so several near-duplicate tags ("سمان دائم", "گیر روکش", ...)
+ * can all point at the SAME small handful of articles — and four options that
+ * lead to one article are one option wearing four labels. Ranking is not this
+ * function's job: the order it is handed is the model's own.
  */
 function dedupeByContentCoverage(sorted: Tag[], limit: number): Tag[] {
   const covered = new Set<string>();
@@ -275,15 +274,19 @@ function dedupeByContentCoverage(sorted: Tag[], limit: number): Tag[] {
 }
 
 /**
- * Keyword-suggestion cache. The root round costs TWO sequential model calls
- * (suggest keywords, then narrow), and on a slow day that measured 15-53s to
- * the first question — so the cheapest win is not making the first call at all
- * when we have already answered this exact text.
+ * Tag-selection cache. The root round is one model call over the whole tag
+ * catalog, and the cheapest possible round is the one that never makes it —
+ * so an exact repeat of a description we have already understood is answered
+ * from memory.
  *
  * It is safe to cache because the call is deterministic by construction:
  * temperature 0, no user identity in the input, and the result is only ever a
- * list of topic phrases that then get matched against the site's tags IN CODE.
- * Two users describing the same case should get the same candidate tags.
+ * list of the site's own tag keys. Two users describing the same case should
+ * reach the same tags.
+ *
+ * What is stored is the VALIDATED tag keys, not the model's raw strings: the
+ * validation is pure and would produce the same answer anyway, and keeping
+ * keys means a cache hit costs one Map lookup instead of re-folding text.
  *
  * In-process and bounded, the same trade-off rate-limit.ts documents: a restart
  * empties it and a second instance keeps its own copy, both of which cost at
@@ -292,96 +295,74 @@ function dedupeByContentCoverage(sorted: Tag[], limit: number): Tag[] {
  * it without limit (oldest inserted is evicted first — Map preserves insertion
  * order, and a hit refreshes an entry's position).
  */
-const KEYWORD_TTL_MS = 24 * 60 * 60 * 1000;
-const KEYWORD_MAX_ENTRIES = 500;
+const TAG_SELECTION_TTL_MS = 24 * 60 * 60 * 1000;
+const TAG_SELECTION_MAX_ENTRIES = 500;
 
-const keywordCache = new Map<string, { at: number; keywords: string[] }>();
+const tagSelectionCache = new Map<string, { at: number; keys: string[] }>();
 
 /** Same case, typed with different spacing/casing, is the same lookup. */
-function keywordCacheKey(text: string): string {
+function tagSelectionCacheKey(text: string): string {
   return text.trim().replace(/\s+/g, ' ').toLowerCase();
 }
 
-async function cachedKeywords(searchText: string): Promise<string[]> {
-  const key = keywordCacheKey(searchText);
-  const hit = keywordCache.get(key);
-  if (hit && Date.now() - hit.at < KEYWORD_TTL_MS) {
-    keywordCache.delete(key);
-    keywordCache.set(key, hit); // refresh recency
-    return hit.keywords;
+/** The one model call, validated and memoised. Returns real tag keys, in the
+ * order the model ranked them. */
+async function cachedTagSelection(description: string, refinements: string[]): Promise<string[]> {
+  const cacheKey = tagSelectionCacheKey([description, ...refinements].join('\n'));
+  const hit = tagSelectionCache.get(cacheKey);
+  if (hit && Date.now() - hit.at < TAG_SELECTION_TTL_MS) {
+    tagSelectionCache.delete(cacheKey);
+    tagSelectionCache.set(cacheKey, hit); // refresh recency
+    return hit.keys;
   }
-  if (hit) keywordCache.delete(key); // expired
+  if (hit) tagSelectionCache.delete(cacheKey); // expired
 
-  const keywords = await ai.suggestKeywords(searchText);
+  // The model sees the site's real vocabulary and nothing else about it — just
+  // the Persian labels, no counts and no definitions, which would multiply the
+  // prompt for nothing.
+  const picked = await ai.selectTags({
+    description,
+    refinements,
+    catalog: getTags().map((t) => t.fa),
+  });
+  const keys = validateTags(picked).map((t) => t.key);
 
   // Never cache an empty result: that is what a failed/degraded round looks
   // like, and pinning it for a day would keep a user on the fallback catalog.
-  if (keywords.length) {
-    keywordCache.set(key, { at: Date.now(), keywords });
-    while (keywordCache.size > KEYWORD_MAX_ENTRIES) {
-      const oldest = keywordCache.keys().next().value as string | undefined;
+  if (keys.length) {
+    tagSelectionCache.set(cacheKey, { at: Date.now(), keys });
+    while (tagSelectionCache.size > TAG_SELECTION_MAX_ENTRIES) {
+      const oldest = tagSelectionCache.keys().next().value as string | undefined;
       if (oldest === undefined) break;
-      keywordCache.delete(oldest);
+      tagSelectionCache.delete(oldest);
     }
   }
-  return keywords;
+  return keys;
 }
 
-/** Test/maintenance helper: forget every cached suggestion. */
-export function clearKeywordCache(): void {
-  keywordCache.clear();
+/** Test/maintenance helper: forget every cached tag selection. */
+export function clearTagSelectionCache(): void {
+  tagSelectionCache.clear();
 }
 
 /**
- * Round 1 (or any round reached with only free text so far): ask the AI to
- * read the case description + any "غیر از این‌ها" refinements and suggest
- * short topic phrases in the site's own hashtag style, then match those, IN
- * CODE, against every real site tag — a wide, deduplicated pool of them, not
- * a hard-final 4 (see TAG_CANDIDATE_POOL), further nudged by which (word,
- * tag) pairs have actually worked before (learnedBonuses). Falls back to the
- * original top-level pillar catalog when nothing scores above threshold (a
- * very generic description, or the stub/dev provider, which never suggests
- * anything).
+ * Round 1 (or any round reached with only free text so far): the single model
+ * call. It reads the description plus every "غیر از این‌ها" refinement, sees
+ * the site's whole tag catalog, and returns the tags it understands the text
+ * to be about; this module keeps only the ones that really exist and then
+ * thins near-duplicates by content coverage.
+ *
+ * Returns null — not the pillar list — when nothing survives, so the caller
+ * can say so honestly with its own question text.
  */
-async function nextRootCatalog(description: string, history: NarrowHistoryEntry[]): Promise<NarrowOption[]> {
-  const searchText = [description, ...customAnswers(history)].join('\n');
-  const suggestions = await cachedKeywords(searchText);
-  const suggestedWords = new Set(suggestions.flatMap((s) => words(s)));
+async function nextRootCatalog(description: string, history: NarrowHistoryEntry[]): Promise<NarrowOption[] | null> {
+  const keys = await cachedTagSelection(description, customAnswers(history));
+  const tags = keys.map(tagByKey).filter((t): t is Tag => Boolean(t));
 
-  // What past rounds on these same words ended well. BOUNDED (LEARN_CAP): it
-  // reorders near-ties, where the static score has no opinion, and can never
-  // lift a tag the words do not actually match past the threshold below.
-  const learned = suggestedWords.size
-    ? await learnedBonuses([...suggestedWords])
-    : new Map<string, number>();
-
-  const ranked = suggestedWords.size
-    ? getTags()
-      .map((t) => {
-        const match = tagMatchScore(t.fa, suggestedWords);
-        return { t, match, score: match + (learned.get(t.key) ?? 0), specificity: specificityWeight(t.fa) };
-      })
-      // Gate on the RAW match, never the learned total: eligibility is a
-      // question about the words, and learning must not smuggle a tag the case
-      // does not actually mention past the threshold. It only reorders what
-      // already qualified.
-      .filter((x) => x.match >= TAG_MATCH_THRESHOLD)
-      // A full match (score 1.0) is common to several tags at once — e.g. a
-      // case about implant-crown cementation fully matches both the broad
-      // "ایمپلنت" (85 articles) and the specific "زینک فسفات" (1 article).
-      // Break ties toward the MORE SPECIFIC tag (higher word-rarity, i.e.
-      // built from words few OTHER tags share — "زینک"/"فسفات" beat the
-      // single common word "ایمپلنت"), then the NICHER one (fewer articles)
-      // — the opposite of popularity — so a precise niche match never gets
-      // buried under a broad, popular one.
-      .sort((a, b) => b.score - a.score || b.specificity - a.specificity || a.t.contentCount - b.t.contentCount)
-      .map((x) => x.t)
-    : [];
-
-  const options = dedupeByContentCoverage(ranked, TAG_CANDIDATE_POOL)
+  const options = dedupeByContentCoverage(tags, MAX_TAG_OPTIONS)
     .map((t) => ({ key: TAG_PREFIX + t.key, label: t.fa }));
 
-  return options.length ? options : getClusters().map((c) => ({ key: c.key, label: c.fa }));
+  return options.length ? options : null;
 }
 
 /** A pillar was already picked (the tag-search fallback path): what its next
@@ -479,25 +460,23 @@ export async function nextCaseStep(
   // there is no further narrowing under a single hashtag.
   if (key?.startsWith(TAG_PREFIX)) return logged(await resolve(userId, history));
 
-  const catalog = key ? nextClusterCatalog(key) : await nextRootCatalog(description, history);
-  if (!catalog) return logged(await resolve(userId, history));
-
-  const result = await ai.narrowCase({ description, history, catalog });
-  if (result.done) {
-    // Never trust "done" on the ROOT round (no real pick made yet): there is
-    // nothing for resolve() to resolve against (lastConcreteKey would still
-    // be null -> empty result), and more importantly, a description
-    // ambiguous enough to need a first question at all ("روکش بیمارم
-    // میوفته" - an implant crown or a natural-tooth one?) must always get
-    // one, never a silent guess-and-continue. Present the very catalog we
-    // just computed as the question instead of trusting an overconfident
-    // "done" this early. Once a real pick HAS been made (key is set), the
-    // user has already answered at least one clarifying question, so a
-    // model-decided "done" there is a real resolution, not a guess.
-    if (!key) {
-      return logged({ done: false, question: DEFAULT_QUESTION, options: catalog.slice(0, MAX_TAG_OPTIONS) });
-    }
-    return logged(await resolve(userId, history));
+  // A pillar was picked: show its own subtopics. Pure tree walking — a fixed
+  // list and a fixed question, so this round costs no model call at all.
+  if (key) {
+    const catalog = nextClusterCatalog(key);
+    if (!catalog) return logged(await resolve(userId, history)); // already a leaf
+    return logged({ done: false, question: DEFAULT_QUESTION, options: catalog });
   }
-  return logged({ done: false, question: result.question, options: result.options });
+
+  // The root round (or a round the user has only answered with free text).
+  const options = await nextRootCatalog(description, history);
+  if (options) return logged({ done: false, question: DEFAULT_QUESTION, options });
+
+  // Nothing the model returned was a real site tag — say that, instead of
+  // dressing the broad pillar list up as a shortlist of matches.
+  return logged({
+    done: false,
+    question: FALLBACK_QUESTION,
+    options: getClusters().map((c) => ({ key: c.key, label: c.fa })),
+  });
 }

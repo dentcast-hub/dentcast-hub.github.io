@@ -5,6 +5,7 @@ import { pool } from '../src/db.js';
 import { config } from '../src/config.js';
 import { getClusters, getTags } from '../src/content-index.js';
 import { ai } from '../src/providers/registry.js';
+import { DEFAULT_QUESTION, FALLBACK_QUESTION } from '../src/services/case-assistant.js';
 
 let app: FastifyInstance;
 let cookie: string;
@@ -155,17 +156,12 @@ describe('POST /assistant/next', () => {
   });
 });
 
-// The keyword-search round: an AI-suggested phrase gets matched, IN CODE,
-// against every REAL site hashtag (services/case-assistant.ts's
-// nextRootCatalog), not the fixed pillar tree. «زینک فسفات» is a real,
-// single-content tag (insight/insight-59) — the motivating case: a fixed
-// 2-level pillar tree could only ever reach it via one pillar
-// (fixed-pros/cementation), never from implantology, even though the article
-// covers implant-crown cementation too. The stub AI provider used elsewhere
-// in this file never suggests keywords on purpose (deterministic, zero
-// network), so these tests mock `ai.suggestKeywords` directly to exercise
-// the matching path.
-describe('keyword-search round (real site hashtags)', () => {
+// The tag round: ONE model call per round that needs one. The model is shown
+// the site's whole hashtag catalog and returns a subset of it; this module
+// keeps only what really exists in the index. The stub AI provider used
+// elsewhere in this file returns nothing on purpose (deterministic, zero
+// network), so these tests mock `ai.selectTags` directly to exercise the path.
+describe('tag round (real site hashtags)', () => {
   const TAG = getTags().find((t) => t.key === 'زینک فسفات')!;
 
   it('«زینک فسفات» is indexed as a real single-content tag (fixture sanity check)', () => {
@@ -173,18 +169,89 @@ describe('keyword-search round (real site hashtags)', () => {
     expect(TAG.contentIds).toContain('insight/insight-59');
   });
 
-  it('an AI-suggested phrase matching a niche tag is offered as a round-1 option', async () => {
+  it('the «نبودن نسج» case: understands the words, offers the ferrule tags, in ONE model call', async () => {
+    // The motivating bug. «نسج» appears in none of the site's hashtags and in
+    // none of its aliases, so the old word-overlap matcher could only latch
+    // onto «روکش» — which sits inside 25 unrelated tags — and asked a question
+    // full of irrelevant crown options. The bridge from the speaker's word to
+    // the site's vocabulary is now the model's whole job, and the tags it
+    // needs («نبود فرول», «افزایش طول تاج») have existed all along.
     await makePremium();
-    vi.spyOn(ai, 'suggestKeywords').mockResolvedValue(['زینک فسفات']);
-    const res = await next({ description: 'دیشب مطلبی راجع به سمان کردن با زینک فسفات نوشتم' });
+    const spy = vi.spyOn(ai, 'selectTags').mockResolvedValue(['نبود فرول', 'افزایش طول تاج']);
+
+    const res = await next({ description: 'برای روکش قدامی نسج کافی ندارم' });
+
     expect(res.statusCode).toBe(200);
     const body = res.json();
     expect(body.done).toBe(false);
-    expect(body.options).toContainEqual({ key: 'tag:' + TAG.key, label: TAG.fa });
+    expect(body.question).toBe(DEFAULT_QUESTION);
+    expect(body.options).toEqual([
+      { key: 'tag:نبود فرول', label: 'نبود فرول' },
+      { key: 'tag:افزایش طول تاج', label: 'افزایش طول تاج' },
+    ]);
+    expect(spy, 'a root round costs exactly one model call').toHaveBeenCalledTimes(1);
   });
 
-  it('picking a matched tag resolves straight to its content — a leaf, no further narrowing', async () => {
+  it("shows the model the real catalog and the user's own refinements", async () => {
     await makePremium();
+    const spy = vi.spyOn(ai, 'selectTags').mockResolvedValue([]);
+    const history = [{ question: 'q', options: [], answer: { custom: 'در واقع منظورم زینک فسفات بود' } }];
+
+    await next({ description: 'یک سوال کلی درباره‌ی سمان', history });
+
+    const input = spy.mock.calls[0][0];
+    expect(input.description).toBe('یک سوال کلی درباره‌ی سمان');
+    expect(input.refinements).toEqual(['در واقع منظورم زینک فسفات بود']);
+    expect(input.catalog).toHaveLength(getTags().length);
+    expect(input.catalog).toContain(TAG.fa);
+  });
+
+  it("keeps the model's own ranking order", async () => {
+    await makePremium();
+    vi.spyOn(ai, 'selectTags').mockResolvedValue(['افزایش طول تاج', 'نبود فرول']);
+    const res = await next({ description: 'طول تاج کلینیکی کوتاه است' });
+    const keys: string[] = res.json().options.map((o: { key: string }) => o.key);
+    expect(keys).toEqual(['tag:افزایش طول تاج', 'tag:نبود فرول']);
+  });
+
+  it('drops an invented hashtag but rescues a normalisable spelling', async () => {
+    // The safety net: nothing reaches the user that is not a real site tag.
+    // An Arabic ي/ك or a stray diacritic is an orthographic wobble, not a
+    // different tag, so normalizeFa folds it back; a label naming nothing
+    // real is simply not an option.
+    await makePremium();
+    vi.spyOn(ai, 'selectTags').mockResolvedValue([
+      'هشتگ من‌درآوردی که وجود ندارد',
+      'نبودِ فرول',          // same tag, one extra diacritic
+      'مديريت بافت نرم',      // same tag, Arabic ي
+    ]);
+
+    const res = await next({ description: 'کمبود نسج و بافت نرم برای روکش' });
+    const body = res.json();
+
+    expect(body.options).toEqual([
+      { key: 'tag:نبود فرول', label: 'نبود فرول' },
+      { key: 'tag:مدیریت بافت نرم', label: 'مدیریت بافت نرم' },
+    ]);
+  });
+
+  it("always shows the INDEX's own label, never the model's text", async () => {
+    await makePremium();
+    vi.spyOn(ai, 'selectTags').mockResolvedValue(['نبودِ فرول']);
+    const res = await next({ description: 'فرول ندارم' });
+    expect(res.json().options[0].label).toBe('نبود فرول');
+  });
+
+  it('caps the round at four options', async () => {
+    await makePremium();
+    vi.spyOn(ai, 'selectTags').mockResolvedValue(getTags().slice(0, 8).map((t) => t.fa));
+    const res = await next({ description: 'یک شرح' });
+    expect(res.json().options.length).toBeLessThanOrEqual(4);
+  });
+
+  it('picking a matched tag resolves straight to its content — a leaf, no model call', async () => {
+    await makePremium();
+    const spy = vi.spyOn(ai, 'selectTags');
     const history = [{ question: 'q', options: [], answer: { key: 'tag:' + TAG.key, label: TAG.fa } }];
     const res = await next({ description: 'سمان زینک فسفات', history });
     expect(res.statusCode).toBe(200);
@@ -192,101 +259,58 @@ describe('keyword-search round (real site hashtags)', () => {
     expect(body.done).toBe(true);
     expect(body.matched_fa).toBe(TAG.fa);
     expect(body.articles.map((a: { content_id: string }) => a.content_id)).toEqual(TAG.contentIds.slice(0, 4));
+    expect(spy, 'resolving costs no model call').not.toHaveBeenCalled();
   });
 
-  it('a "غیر از این‌ها" free-text refinement feeds into the NEXT keyword search', async () => {
+  it('picking a pillar walks its subtopics with no model call', async () => {
     await makePremium();
-    const spy = vi.spyOn(ai, 'suggestKeywords').mockResolvedValue([]);
-    const history = [{ question: 'q', options: [], answer: { custom: 'در واقع منظورم زینک فسفات بود' } }];
-    await next({ description: 'یک سوال کلی درباره‌ی سمان', history });
-    expect(spy).toHaveBeenCalledWith(expect.stringContaining('زینک فسفات'));
-  });
-
-  it('a specific niche tag outranks a broad popular one on a tied score (regression)', async () => {
-    // «ایمپلنت» alone matches ~85 articles; a case about implant-crown
-    // cementation should surface «زینک فسفات» (1 article, the actual match)
-    // ahead of the generic, popular tag it's also a full-score match against
-    // — otherwise a precise niche hit gets buried under a broad one exactly
-    // like the fixed pillar tree used to bury it under the wrong pillar.
-    await makePremium();
-    vi.spyOn(ai, 'suggestKeywords').mockResolvedValue(['زینک فسفات', 'ایمپلنت']);
-    const res = await next({ description: 'سمان کردن روکش ایمپلنت با زینک فسفات' });
+    const spy = vi.spyOn(ai, 'selectTags');
+    const history = [{ question: 'q', options: [], answer: { key: CLUSTER.key, label: CLUSTER.fa } }];
+    const res = await next({ description: 'شکستگی لبه‌ی دندان قدامی', history });
     const body = res.json();
     expect(body.done).toBe(false);
-    const keys: string[] = body.options.map((o: { key: string }) => o.key);
-    expect(keys).toContain('tag:' + TAG.key);
-    const implantIdx = keys.indexOf('tag:ایمپلنت');
-    const zincIdx = keys.indexOf('tag:' + TAG.key);
-    if (implantIdx !== -1) expect(zincIdx).toBeLessThan(implantIdx);
+    expect(body.question).toBe(DEFAULT_QUESTION);
+    expect(body.options.map((o: { key: string }) => o.key)).toEqual(CLUSTER.subtopics.map((s) => s.key));
+    expect(spy, 'tree rounds cost no model call').not.toHaveBeenCalled();
   });
 
-  it('a generic shared word still surfaces a path to the niche article (regression - specificity weighting)', async () => {
-    // Real report: "افتادن سمان روکش" shares no word at all with «زینک
-    // فسفات», but DOES share "روکش" with 40+ OTHER single-article tags
-    // ("راک روکش", "ترای این روکش", ...) that are equally real but
-    // unrelated. Before weighting a tag's specificity by how RARE its words
-    // are (not just how many it has), those unrelated tags filled the whole
-    // candidate pool before insight-59's own tags ("گیر روکش", "سمان دائم",
-    // ...) got a look in — verified failing in 2 of 3 realistic trials
-    // pre-fix. Checks the CANDIDATE POOL handed to ai.narrowCase (not a
-    // specific final option), since any of several tags pointing at
-    // insight-59 surviving is enough — narrowCase's own model, reading the
-    // real description, picks which one to actually show.
+  it('falls back to the pillar catalog — and SAYS so — when nothing real matched', async () => {
+    // Honesty: the pillar list is a broad-area question, not a shortlist of
+    // matches, so it never borrows the wording that would claim relevance.
     await makePremium();
-    const narrowSpy = vi.spyOn(ai, 'narrowCase').mockResolvedValue({ done: true });
-    vi.spyOn(ai, 'suggestKeywords').mockResolvedValue(['افتادن روکش', 'سمان', 'لقی روکش', 'علت افتادن روکش']);
-    await next({ description: 'افتادن سمان روکش' });
-
-    const catalog = narrowSpy.mock.calls[0]?.[0]?.catalog as Array<{ key: string }> | undefined;
-    const tagsByKey = new Map(getTags().map((t) => [t.key, t]));
-    const reachesTarget = (catalog || []).some((o) => {
-      if (!o.key.startsWith('tag:')) return false;
-      return tagsByKey.get(o.key.slice(4))?.contentIds.includes('insight/insight-59');
-    });
-    expect(reachesTarget).toBe(true);
-  });
-
-  it('never resolves on the ROOT round even if the AI claims "done" — always asks first', async () => {
-    // Defense against a genuine ambiguity ("روکش بیمارم میوفته" - implant
-    // crown or natural-tooth crown? the description alone can't say) getting
-    // silently guessed instead of asked about: an overconfident/misbehaving
-    // model declaring done=true before the user has made a single real pick
-    // must not be trusted — there's nothing to resolve against yet anyway.
-    await makePremium();
-    vi.spyOn(ai, 'suggestKeywords').mockResolvedValue(['روکش']);
-    vi.spyOn(ai, 'narrowCase').mockResolvedValue({ done: true });
-    const res = await next({ description: 'روکش بیمارم میوفته' });
+    vi.spyOn(ai, 'selectTags').mockResolvedValue([]);
+    const res = await next({ description: 'توضیحی که هیچ ربطی به دندانپزشکی ندارد' });
     expect(res.statusCode).toBe(200);
     const body = res.json();
     expect(body.done).toBe(false);
-    expect(body.options.length).toBeGreaterThan(0);
+    expect(body.question).toBe(FALLBACK_QUESTION);
+    const clusterKeys = new Set(getClusters().map((c) => c.key));
+    for (const o of body.options) expect(clusterKeys.has(o.key)).toBe(true);
   });
 
-  it('falls back to the top-level pillar catalog when the AI suggests nothing', async () => {
+  it('falls back the same way when every tag the model named was invented', async () => {
     await makePremium();
-    vi.spyOn(ai, 'suggestKeywords').mockResolvedValue([]);
-    const res = await next({ description: 'توضیحی که هیچ کلیدواژه‌ای از آن استخراج نمی‌شود' });
-    expect(res.statusCode).toBe(200);
-    const body = res.json();
-    expect(body.done).toBe(false);
+    vi.spyOn(ai, 'selectTags').mockResolvedValue(['یک چیز کاملاً ساختگی', 'باز هم ساختگی']);
+    const body = (await next({ description: 'یک شرح مبهم' })).json();
+    expect(body.question).toBe(FALLBACK_QUESTION);
     const clusterKeys = new Set(getClusters().map((c) => c.key));
     for (const o of body.options) expect(clusterKeys.has(o.key)).toBe(true);
   });
 });
 
-describe('keyword-suggestion cache', () => {
-  // The root round costs TWO sequential model calls (suggest keywords, then
-  // narrow); this cache removes the first one for a description already seen.
-  // The stub provider returns [] by design, and an empty list is deliberately
-  // NOT cached, so these tests supply a realistic non-empty suggestion and
-  // count REAL calls through the provider registry.
+describe('tag-selection cache', () => {
+  // The root round costs one model call over the whole tag catalog; this cache
+  // removes it for a description already seen. The stub provider returns []
+  // by design, and an empty list is deliberately NOT cached, so these tests
+  // supply a realistic non-empty selection and count REAL calls through the
+  // provider registry.
   beforeEach(async () => { await makePremium(); });
 
-  const SUGGESTED = ['روکش', 'سمان'];
+  const SELECTED = ['نبود فرول', 'افزایش طول تاج'];
 
   /** One spy across the whole test, so a cache hit shows up as a missing call. */
-  function spyKeywords(result: string[] = SUGGESTED) {
-    return vi.spyOn(ai, 'suggestKeywords').mockResolvedValue(result);
+  function spySelect(result: string[] = SELECTED) {
+    return vi.spyOn(ai, 'selectTags').mockResolvedValue(result);
   }
 
   async function ask(description: string): Promise<void> {
@@ -295,7 +319,7 @@ describe('keyword-suggestion cache', () => {
   }
 
   it('asks the model once, then serves the repeat from cache', async () => {
-    const spy = spyKeywords();
+    const spy = spySelect();
     const desc = 'روکش بیمارم مدام می‌افتد و سمان قبلی شسته شده';
 
     await ask(desc);
@@ -306,7 +330,7 @@ describe('keyword-suggestion cache', () => {
   });
 
   it('treats spacing differences as the same description', async () => {
-    const spy = spyKeywords();
+    const spy = spySelect();
 
     await ask('تحلیل استخوان اطراف ایمپلنت');
     await ask('  تحلیل   استخوان  اطراف ایمپلنت  ');
@@ -315,7 +339,7 @@ describe('keyword-suggestion cache', () => {
   });
 
   it('still calls the model for a genuinely different description', async () => {
-    const spy = spyKeywords();
+    const spy = spySelect();
 
     await ask('پوسیدگی عمیق پروگزیمال مولر دوم');
     await ask('بی‌دندانی کامل فک بالا');
@@ -323,16 +347,16 @@ describe('keyword-suggestion cache', () => {
     expect(spy).toHaveBeenCalledTimes(2);
   });
 
-  it('does not cache an empty suggestion list (a degraded round must retry next time)', async () => {
+  it('does not cache an empty selection (a degraded round must retry next time)', async () => {
     const desc = 'یک شرح مبهم';
 
-    const empty = spyKeywords([]);
+    const empty = spySelect([]);
     await ask(desc);
     expect(empty).toHaveBeenCalledTimes(1);
     empty.mockRestore();
 
     // The empty answer was not pinned: the next round asks the model again.
-    const again = spyKeywords();
+    const again = spySelect();
     await ask(desc);
     expect(again, 'an empty result must not be cached').toHaveBeenCalledTimes(1);
   });
