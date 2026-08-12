@@ -69,7 +69,7 @@ export function signalShared() {
  * pay for a page the reader has not finished, rather than trusting this.
  */
 export function buildShareButton(target) {
-  const btn = el('button', { class: 'dcp-wb-share', type: 'button' }, '↗ اشتراک‌گذاری');
+  const btn = el('button', { class: 'dc-act dc-act-quiet', type: 'button' }, 'اشتراک‌گذاری');
   btn.addEventListener('click', () => {
     const { title, url } = target() || {};
     if (!url) return;

@@ -1,7 +1,7 @@
 {
   "/dc-article.css": {
-    "v": 2,
-    "hash": "508d73c27416c2e2"
+    "v": 4,
+    "hash": "dc6c0843a05b837d"
   },
   "/dc-landing.css": {
     "v": 2,
@@ -12,8 +12,8 @@
     "hash": "f045ac7d9d9e9e1d"
   },
   "/dc-nav.js": {
-    "v": 77,
-    "hash": "281eec4034f6c5d5"
+    "v": 82,
+    "hash": "b3830efcc768a5fe"
   },
   "/dc-theme.css": {
     "v": 2,
@@ -100,11 +100,11 @@
     "hash": "a9218d384e4fd6ba"
   },
   "/plus/plus.css": {
-    "v": 24,
-    "hash": "cf172eb57e08858e"
+    "v": 25,
+    "hash": "a0c7d3b9210c4740"
   },
   "dc-nav.js:V": {
-    "v": 80,
-    "hash": "df0b570d346c1916"
+    "v": 83,
+    "hash": "d78f2a2704f4d4a1"
   }
 }

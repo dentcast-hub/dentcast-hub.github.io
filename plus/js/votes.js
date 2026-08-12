@@ -2,15 +2,16 @@
 //
 // Two surfaces, same object, for the same reason share.js has two:
 //
-//   · A standalone article page gets `#dcArticleMeta`, the reading-time + share
-//     chip row dc-nav.js builds above the prose. The heart is a third chip in
-//     that row — the count is then above the fold on every article, which is the
+//   · A standalone article page gets `#dcActionRow`, the article's action row
+//     dc-nav.js builds above the prose. The heart is the last of its three main
+//     buttons — the count is then above the fold on every article, which is the
 //     whole point of printing it.
 //   · The desktop shell strips dc-nav.js out of the article it fetches
-//     (`index.html`'s chrome-removal list), so that row does not exist there at
-//     all. `buildHeartChip()` supplies one for the میز کار bar instead. Without
-//     it the feature would quietly work for phone readers and not for desktop
-//     ones — the exact gap buildShareButton() was written to close.
+//     (`index.html`'s chrome-removal list), so nothing has built that row by the
+//     time this runs. plus.js builds it there and asks `buildHeartChip()` for
+//     the button itself. Without that the feature would quietly work for phone
+//     readers and not for desktop ones — the exact gap buildShareButton() was
+//     written to close.
 //
 // Unlike share, this module owns the button on BOTH surfaces rather than
 // listening for one dc-nav.js built. A heart is not a fire-and-forget signal: it
@@ -44,10 +45,10 @@ function heartIcon() {
 /**
  * Build a heart chip for `contentId` and wire it to the API.
  *
- * `extraClass` is the surface's own class — `.dc-meta-chip` in the article's
- * chip row (dc-article.css), `.dcp-wb-heart` in the workbench bar (plus.css) —
- * so one behaviour serves two visual systems without either importing the
- * other's stylesheet.
+ * `extraClass` is the surface's own class. Since 2026-08-12 both surfaces pass
+ * the same one (`dc-act dc-act-heart`) because both surfaces are now the same
+ * row; the parameter stays because the button is also mountable somewhere that
+ * is not that row, and a builder that hardcodes its host's class cannot be.
  */
 export function buildHeartChip(contentId, extraClass) {
   const btn = el('button', {
@@ -162,24 +163,27 @@ export function buildHeartChip(contentId, extraClass) {
 }
 
 /**
- * Put the heart in the article's own chip row, if this page has one.
+ * Put the heart in the article's action row, if this page has one.
  *
- * Idempotent and safe to call on every page: `#dcArticleMeta` exists only on
+ * Idempotent and safe to call on every page: `#dcActionRow` exists only on
  * pages built on the shared article layer (dc-nav.js builds it behind a
  * `link[href^="/dc-article.css"]` check), so the homepage, the /plus/ pages and
  * anything else simply get nothing.
+ *
+ * This is the mounting point for every page the row reaches, INCLUDING the ones
+ * plus.js's initArticle() bows out of — audio episodes have no workbench and an
+ * episode is as votable as an article. plus.js builds its own only when it finds
+ * none here (the desktop shell).
  *
  * @returns true if a chip was mounted.
  */
 export function initHeart(contentId) {
   if (!contentId) return false;
-  const row = document.getElementById('dcArticleMeta');
-  if (!row || document.querySelector('.dcp-like')) return false;
-  // AFTER the chip row, not inside it. Sitting among «زمان مطالعه» and
-  // «اشتراک‌گذاری» made it the same kind of object they are — a small grey
-  // utility — and it disappeared. On its own line it is the only coloured thing
-  // above the prose, which is what a call to action has to be. Still at the top,
-  // where it was asked to be; just no longer disguised as metadata.
-  row.insertAdjacentElement('afterend', buildHeartChip(contentId, 'dcp-heart-lg'));
+  const main = document.querySelector('#dcActionRow .dc-actions-main');
+  if (!main || document.querySelector('.dcp-like')) return false;
+  // Appended, so it is the last of the main group: میز کار › کالکشن › پسندیدم.
+  // It keeps its own colour inside a row of blues — a grey heart among grey
+  // metadata is what made nobody recognise it as a control in the first place.
+  main.appendChild(buildHeartChip(contentId, 'dc-act dc-act-heart'));
   return true;
 }
