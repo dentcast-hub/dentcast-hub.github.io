@@ -3708,6 +3708,206 @@ a.dc-list-card--pillar {
 }
 #panel-studio .dc-exa-cat:has(.dcp-seen-tick)::before{ display:none; }
   </style>
+
+  <style id="dcDepthTheme">
+/* =====================================================
+   DEPTH THEME (approved mockup, 2026-08-12) — the layer that
+   takes the two mobile panels from "flat and dry" to the
+   Examine-class depth the founder approved, WITHOUT copying
+   Examine: no purple, no yellow. A navy→blue gradient used in
+   exactly four places (play, search-go, episode badge, the stat
+   numbers), one brand aura behind the hero that calms toward the
+   lists, a strict radius system (18 normal / 22 showcase) and two
+   shadow tiers. Appearance only — it moves nothing, adds no
+   element and changes no copy; the ad anchor
+   (#panel-studio .dc-exa-cats) and every JS-filled widget are
+   untouched. Kept as its own block so it can be tuned or reverted
+   in one piece.
+===================================================== */
+:root{
+  --x-ground:#f2f5fa;
+  --x-card:#ffffff;
+  --x-line:#e5eaf2;
+  --x-ink:#0b2a4a;
+  --x-grad:linear-gradient(135deg,#0a2f6b 0%,#1257d6 100%);
+  --x-grad-soft:linear-gradient(135deg,rgba(10,47,107,.06),rgba(18,87,214,.05));
+  --x-sh:0 6px 20px -10px rgba(9,32,74,.18), 0 1px 3px rgba(9,32,74,.05);
+  --x-sh-hero:0 24px 48px -20px rgba(9,32,74,.32), 0 4px 10px -4px rgba(9,32,74,.08);
+  --x-prem:#9a6b15; --x-prem-bg:rgba(203,150,49,.13); --x-prem-bd:rgba(154,107,21,.26);
+}
+[data-theme="dark"]{
+  --x-ground:#0a1322;
+  --x-card:#152238;
+  --x-line:#243651;
+  --x-ink:#eaf1fb;
+  --x-grad:linear-gradient(135deg,#3f74e0 0%,#6ea2ff 100%);
+  --x-grad-soft:linear-gradient(135deg,rgba(110,162,255,.09),rgba(63,116,224,.07));
+  --x-sh:0 6px 20px -10px rgba(0,0,0,.55), 0 1px 3px rgba(0,0,0,.3);
+  --x-sh-hero:0 24px 48px -20px rgba(0,0,0,.7);
+  --x-prem:#e0b25f; --x-prem-bg:rgba(224,178,95,.13); --x-prem-bd:rgba(224,178,95,.3);
+}
+
+/* ── ground + aura: the page opens with a faint brand glow, then calms ── */
+html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-ground); }
+#mobile-body{
+  background:
+    radial-gradient(120% 30rem at 50% -6rem, rgba(18,87,214,.10), transparent 60%),
+    var(--x-ground);
+}
+#panel-studio,#panel-sharehub{ background:transparent; }
+
+/* ── display type ── */
+#panel-studio .dc-identity-main{
+  font-size:1.7rem; line-height:1.6; font-weight:800;
+  letter-spacing:-.02em; color:var(--x-ink);
+}
+#panel-studio .dc-identity-main .dc-shimmer-word{
+  background:var(--x-grad); -webkit-background-clip:text; background-clip:text;
+  -webkit-text-fill-color:transparent; color:transparent; animation:none;
+}
+#panel-studio .dc-home-sec-label,
+#panel-sharehub .dc-home-sec-label{
+  font-size:1.24rem; font-weight:800; color:var(--x-ink); letter-spacing:-.02em;
+}
+#panel-studio .dc-home-sec,
+#panel-sharehub .dc-home-sec{ margin-top:2.1rem; }
+#panel-sharehub .dc-exa-pagetitle{ font-size:2rem; color:var(--x-ink); letter-spacing:-.03em; }
+
+/* ── card system: 18px, tier-1 shadow. Heroes: 22px, tier-2. ── */
+#panel-studio .dc-pulse,
+#panel-studio .dc-exa-cat,
+#panel-studio .dc-pillar-card,
+#panel-studio .dc-duo-card,
+#panel-sharehub .dc-list-card,
+#panel-sharehub .dc-grid-card,
+#panel-sharehub .dc-monitor,
+#panel-sharehub .dc-radar-hero{
+  background:var(--x-card);
+  border:1px solid var(--x-line);
+  border-radius:18px;
+  box-shadow:var(--x-sh);
+}
+#panel-studio .dc-home-hero,
+#panel-studio .dc-plus-home-inner{
+  background:var(--x-card);
+  border:1px solid var(--x-line);
+  border-radius:22px;
+  box-shadow:var(--x-sh-hero);
+}
+#panel-sharehub #btnOpenRadarMob{ box-shadow:var(--x-sh-hero); border-radius:22px; }
+.dc-spot{ border-radius:18px !important; box-shadow:var(--x-sh) !important; }
+
+/* ── hero episode: the jewel — soft gradient wash inside, gradient play ── */
+#panel-studio .dc-home-hero{
+  background:var(--x-grad-soft), var(--x-card);
+  padding:1.25rem;
+}
+#panel-studio .dc-home-hero-badge{
+  background:var(--x-grad); color:#fff; border:none;
+  padding:.22rem .75rem; border-radius:999px; margin-bottom:.5rem;
+  box-shadow:0 4px 12px -4px rgba(18,87,214,.5);
+}
+#panel-studio .dc-home-hero-badge .dc-svg-icon{ color:#fff; }
+#panel-studio .dc-home-hero-title{ font-size:1.14rem; color:var(--x-ink); line-height:1.75; }
+#panel-studio .dc-home-hero-cover{ border-radius:1rem; box-shadow:0 10px 22px -8px rgba(9,32,74,.45); }
+#panel-studio .dc-home-hero-row{ border-top:1px solid var(--x-line); }
+#panel-studio .dc-home-hero-play{
+  background:var(--x-grad);
+  box-shadow:0 10px 22px -8px rgba(18,87,214,.65);
+  width:2.9rem; height:2.9rem;
+}
+
+/* ── search: raised pill, gradient go ── */
+#panel-studio .dc-exa-search,
+#panel-sharehub .dc-exa-search{
+  border:1px solid var(--x-line); border-radius:16px;
+  padding:.95rem 1.05rem; background:var(--x-card); box-shadow:var(--x-sh);
+}
+#panel-studio .dc-exa-search-go,
+#panel-sharehub .dc-exa-search-go{
+  background:var(--x-grad); color:#fff; border-radius:11px; padding:.45rem 1.15rem;
+  box-shadow:0 4px 12px -4px rgba(18,87,214,.5);
+}
+#panel-studio .dc-exa-pop a{ font-weight:750; }
+
+/* ── stats: gradient display numbers, no rules around them ── */
+#panel-studio .hero-stats{ border:0; padding:1.4rem 0 .4rem; }
+#panel-studio .hero-stat::before{ display:none; }
+#panel-studio .hero-stat .v{
+  font-size:clamp(2rem,7.5vw,2.6rem); font-weight:450;
+  background:var(--x-grad); -webkit-background-clip:text; background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+#panel-studio .hero-stat .k{ font-size:.72rem; margin-top:.35rem; }
+
+/* ── category grid: roomier cells, ink names ── */
+#panel-studio .dc-exa-cats{ gap:.7rem; }
+#panel-studio .dc-exa-cat{ padding:.9rem 3.4rem .9rem 1rem; }
+#panel-studio .dc-exa-cat b{ color:var(--x-ink); font-size:.88rem; }
+
+/* ── latest: the whole rail becomes ONE floating card, rows inside ── */
+#panel-studio #dcLatestRail{
+  background:var(--x-card); border:1px solid var(--x-line);
+  border-radius:18px; box-shadow:var(--x-sh);
+  padding:.35rem 1.05rem; margin:0;
+}
+#panel-studio #dcLatestRail .dc-rail-card{ padding:.95rem 0; }
+#panel-studio #dcLatestRail .dc-rail-card{ padding-inline-end:1.9rem; }
+#panel-studio #dcLatestRail .dc-rail-title{ font-size:.95rem; color:var(--x-ink); line-height:1.85; }
+#panel-studio #dcLatestRail .dc-type-chip{
+  padding:.16rem .62rem; border-radius:8px; font-size:.66rem; font-weight:800;
+}
+#panel-studio #dcLatestRail .t-insight{ background:rgba(13,138,114,.11); color:#0d8a72; }
+#panel-studio #dcLatestRail .t-note{ background:rgba(18,87,214,.10); color:#1257d6; }
+#panel-studio #dcLatestRail .t-meta{ background:rgba(123,63,191,.10); color:#7b3fbf; }
+#panel-studio #dcLatestRail .t-chair{ background:rgba(163,90,0,.11); color:#a35a00; }
+#panel-studio #dcLatestRail .t-ai{ background:rgba(91,33,182,.10); color:#5b21b6; }
+#panel-studio #dcLatestRail .t-share{ background:rgba(14,116,144,.11); color:#0e7490; }
+#panel-studio #dcLatestRail .t-plus{ background:var(--x-prem-bg); color:var(--x-prem); }
+[data-theme="dark"] #panel-studio #dcLatestRail .t-insight{ color:#5fd0b8; }
+[data-theme="dark"] #panel-studio #dcLatestRail .t-note{ color:#8ab4f8; }
+[data-theme="dark"] #panel-studio #dcLatestRail .t-meta{ color:#c79bf2; }
+[data-theme="dark"] #panel-studio #dcLatestRail .t-chair{ color:#ffb45f; }
+[data-theme="dark"] #panel-studio #dcLatestRail .t-ai{ color:#c4b5fd; }
+[data-theme="dark"] #panel-studio #dcLatestRail .t-share{ color:#67e8f9; }
+
+/* ── pulse: calm card, blue ticks ── */
+#panel-studio .dc-pulse{ border-right:1px solid var(--x-line); padding:1rem 1.15rem; }
+#panel-studio .dc-pulse-title{ color:var(--x-ink); }
+
+/* ── pillars/duo: tinted gradient icon tiles ── */
+#panel-studio .dc-pillar-ico{
+  background:var(--x-grad-soft); border:1px solid var(--x-line); color:#1257d6;
+}
+[data-theme="dark"] #panel-studio .dc-pillar-ico{ color:#8ab4f8; }
+#panel-studio .dc-duo-kicker{ font-weight:800; }
+#panel-studio .dc-duo-title{ color:var(--x-ink); }
+
+/* ── archive ── */
+#panel-sharehub .dc-radar-hero-ico{
+  background:var(--x-grad-soft); border:1px solid var(--x-line); color:#1257d6;
+}
+[data-theme="dark"] #panel-sharehub .dc-radar-hero-ico{ color:#8ab4f8; }
+#panel-sharehub .dc-radar-hero-txt{ color:var(--x-ink); font-size:1.08rem; }
+#panel-sharehub .dc-radar-hero-btn{
+  background:var(--x-grad); border:none; border-radius:12px;
+  box-shadow:0 6px 16px -6px rgba(18,87,214,.55);
+}
+#panel-sharehub #card-library .dcp-soon-badge{
+  background:var(--x-prem-bg); color:var(--x-prem);
+  border:1px solid var(--x-prem-bd); border-radius:8px; font-weight:800;
+}
+#panel-sharehub .gls-title,
+#panel-sharehub .dc-list-card-title,
+#panel-sharehub .dc-grid-title{ color:var(--x-ink); }
+#panel-sharehub .dc-grid-ico{ background:var(--x-grad-soft); border:1px solid var(--x-line); }
+#panel-sharehub .dc-monitor-list a{ border-bottom:1px solid var(--x-line); color:var(--x-ink); }
+#panel-sharehub .dc-monitor-title{ color:var(--x-ink); font-size:.95rem; }
+
+/* ── chrome: header white, bottom nav frosted with a whisper of lift ── */
+.dc-topbar{ background:var(--x-card); border-bottom:1px solid var(--x-line); }
+.dc-bottom-nav{ box-shadow:0 -10px 30px -22px rgba(9,32,74,.5); }
+  </style>
 </head>
 <body>
 
