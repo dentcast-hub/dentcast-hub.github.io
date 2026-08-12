@@ -3736,7 +3736,8 @@ a.dc-list-card--pillar {
   --x-sh-hero:0 24px 48px -20px rgba(9,32,74,.32), 0 4px 10px -4px rgba(9,32,74,.08);
   --x-prem:#9a6b15; --x-prem-bg:rgba(203,150,49,.13); --x-prem-bd:rgba(154,107,21,.26);
   --x-amber:#c9922b; --x-amber-ink:#8a6414;
-  --x-amber-wash:rgba(201,146,43,.07); --x-amber-halo:rgba(201,146,43,.16);
+  --x-amber-wash:rgba(201,146,43,.08); --x-amber-wash-2:rgba(201,146,43,.13);
+  --x-amber-bd:rgba(154,107,21,.22); --x-amber-halo:rgba(201,146,43,.16);
 }
 [data-theme="dark"]{
   --x-ground:#0a1322;
@@ -3750,7 +3751,8 @@ a.dc-list-card--pillar {
   --x-sh-hero:0 24px 48px -20px rgba(0,0,0,.7);
   --x-prem:#e0b25f; --x-prem-bg:rgba(224,178,95,.13); --x-prem-bd:rgba(224,178,95,.3);
   --x-amber:#e3b849; --x-amber-ink:#e3b849;
-  --x-amber-wash:rgba(227,184,73,.09); --x-amber-halo:rgba(227,184,73,.18);
+  --x-amber-wash:rgba(227,184,73,.09); --x-amber-wash-2:rgba(227,184,73,.14);
+  --x-amber-bd:rgba(227,184,73,.26); --x-amber-halo:rgba(227,184,73,.18);
 }
 
 /* ── ground + aura: the page opens with a faint brand glow, then calms ── */
@@ -3885,29 +3887,49 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
 #panel-studio .dc-plus-connrow{ background:var(--x-band); }
 #panel-studio .dc-plus-connrow .dc-plus-chip{ background:var(--x-card); }
 
-/* ── pulse: the page's ONE warm accent ─────────────────────────────
-   Amber is not decoration here, it is this site's oldest colour code:
-   the Pulse has always been amber (#c49820 dot + title, amber border)
-   and the flat pass neutralised it, which is precisely where the page
-   went cold. It comes back — but restrained, the modern way: a wash
-   that fades out in the top 40% of the card, an amber dot and label,
-   amber bullets. The card border stays neutral and the links inside
-   stay blue, so amber stays a signal ("news") instead of becoming a
-   theme. Nowhere else on this page gets amber except what already
-   owns it: the premium badges. */
-#panel-studio .dc-pulse{
-  background:linear-gradient(180deg, var(--x-amber-wash), transparent 42%), var(--x-card);
-  border:1px solid var(--x-line);
-  border-right:1px solid var(--x-line);
-  padding:1rem 1.15rem;
-}
-#panel-studio .dc-pulse-title{ color:var(--x-amber-ink); font-weight:800; }
-#panel-studio .dc-pulse-dot{
-  background:var(--x-amber);
-  box-shadow:0 0 0 3px var(--x-amber-halo);
-}
-#panel-studio .dc-pulse-list li::before{ color:var(--x-amber); }
+/* ── pulse: the site's own blue, no warm accent ── */
+#panel-studio .dc-pulse{ border-right:1px solid var(--x-line); padding:1rem 1.15rem; }
+#panel-studio .dc-pulse-title{ color:var(--x-ink); }
 #panel-studio .dc-pulse-list li a{ color:var(--ac); font-weight:750; }
+
+/* ── AMBER = PREMIUM. One colour, one meaning ──────────────────────
+   Amber is reserved for what premium buys, and for nothing else on
+   this site (see CLAUDE.md → "Amber is the premium colour"). So the
+   premium block wears it: a wash that fades out in the top 45% of
+   each locked card, an amber lock chip, an amber section rule. The
+   card body stays white and the copy stays ink, so the block reads as
+   "yours once you subscribe", not as a warning. */
+#panel-studio .dcp-hf-label{ border-right:4px solid var(--x-amber); }
+#panel-studio .dcp-hf-more{ color:var(--x-amber-ink); font-weight:800; }
+#panel-studio .dcp-hf-card{
+  background:linear-gradient(180deg, var(--x-amber-wash), transparent 45%), var(--x-card);
+  border:1px solid var(--x-amber-bd);
+  border-right:1px solid var(--x-amber-bd);
+}
+#panel-studio .dcp-hf-ico{
+  background:var(--x-amber-wash-2); border:1px solid var(--x-amber-bd); color:var(--x-amber-ink);
+}
+#panel-studio .dcp-hf-state{
+  background:var(--x-amber-wash-2); color:var(--x-amber-ink);
+  border:1px solid var(--x-amber-bd);
+}
+/* a subscriber's card is unlocked: the live chip returns to brand blue,
+   because at that point the feature is simply theirs, not an offer. */
+#panel-studio .dcp-hf-state.is-live{
+  background:var(--chip-bg); color:var(--ac); border-color:var(--chip-bd);
+}
+/* the archive's premium library card gets the same wash + badge */
+#panel-sharehub #card-library{
+  background:linear-gradient(180deg, var(--x-amber-wash), transparent 45%), var(--x-card);
+  border:1px solid var(--x-amber-bd);
+}
+#panel-sharehub #card-library .dc-radar-hero-ico{
+  background:var(--x-amber-wash-2); border:1px solid var(--x-amber-bd); color:var(--x-amber-ink);
+}
+/* «دنت‌کست پلاس» is the FREE video section, not premium — it must not
+   wear the premium colour. Its chip goes back to its own hue. */
+#panel-studio #dcLatestRail .t-plus{ background:rgba(185,28,28,.10); color:#b91c1c; }
+[data-theme="dark"] #panel-studio #dcLatestRail .t-plus{ color:#fca5a5; background:rgba(185,28,28,.22); }
 
 /* ── pillars/duo: tinted gradient icon tiles ── */
 #panel-studio .dc-pillar-ico{
