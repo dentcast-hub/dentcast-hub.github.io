@@ -104,12 +104,16 @@ function newTicketForm(kinds, onDone) {
     send.disabled = true;
     out.textContent = 'در حال ثبت…';
     try {
+      // Read the tick BEFORE the form is cleared. Reading it afterwards is
+      // always false, which silently costs the reader the one thing this whole
+      // path exists for: the Telegram hand-off on the success panel.
+      const withPhoto = photoChk.checked;
       const r = await api.openTicket({
-        kind: selected, subject: s, body: b, has_photo: photoChk.checked,
+        kind: selected, subject: s, body: b, has_photo: withPhoto,
       });
       subject.value = ''; body.value = ''; photoChk.checked = false; photoNote.hidden = true;
       out.textContent = '';
-      onDone(r.ticket, photoChk.checked);
+      onDone(r.ticket, withPhoto);
     } catch (e) {
       out.textContent = (e && e.body && e.body.message) || 'ثبت نشد. دوباره تلاش کنید.';
     } finally {
@@ -166,7 +170,15 @@ function messageBubble(m) {
   ]);
 }
 
-/** The code+copy row above every open thread — for when the photo comes later. */
+/**
+ * The code+copy row above every open thread — for when the photo comes later.
+ *
+ * The Telegram link belongs HERE and not only on the success panel: the reader
+ * this row is for is the one who left (to the bank, to find their card) and
+ * came back, so the panel they were shown on submit is long gone. Without it
+ * they hold the code and have no door — which is the whole round trip broken
+ * at its last step.
+ */
 function ticketCodeRow(ticket) {
   const copyBtn = el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button' }, 'کپی');
   copyBtn.addEventListener('click', () => copyToClipboard(ticket.reference, copyBtn));
@@ -174,6 +186,10 @@ function ticketCodeRow(ticket) {
     el('span', { class: 'dcp-muted' }, 'کد پیگیری'),
     el('code', {}, ticket.reference),
     copyBtn,
+    el('a', {
+      class: 'dcp-btn dcp-btn-ghost',
+      href: SUPPORT_TELEGRAM_URL, target: '_blank', rel: 'noopener',
+    }, 'ارسال عکس در تلگرام'),
   ]);
 }
 
@@ -258,7 +274,18 @@ function ticketCard(t, refresh) {
   return card;
 }
 
-async function render(root) {
+/**
+ * `justOpened` is the ticket submitted a moment ago, if any.
+ *
+ * It is threaded THROUGH render rather than painted into the old tree: the
+ * submit callback has to refresh the list (the new ticket must appear in it),
+ * and render() rebuilds root wholesale — so a panel written before that call
+ * was detached the instant the refresh landed. It survived on screen just long
+ * enough to look like a flicker, taking the Telegram button with it.
+ */
+async function render(root, justOpened) {
+  // A refresh from a thread action carries no panel: it is not a submission,
+  // and re-showing «درخواست ثبت شد» after «بستن گفت‌وگو» would be a lie.
   const refresh = () => render(root);
   let kinds = [];
   let tickets = [];
@@ -271,19 +298,17 @@ async function render(root) {
     return;
   }
 
-  const formHost = el('div', {});
-  const successHost = el('div', {});
-  formHost.replaceChildren(newTicketForm(kinds, (ticket, withPhoto) => {
-    successHost.replaceChildren(successPanel(ticket, withPhoto));
-    refresh();
-  }));
+  const form = newTicketForm(kinds, (ticket, withPhoto) => {
+    // One render, carrying the panel — never "paint, then refresh over it".
+    render(root, { ticket, withPhoto });
+  });
 
   root.replaceChildren(
     el('h2', { class: 'dcp-pw-heading' }, 'پشتیبانی'),
     el('p', { class: 'dcp-muted' },
       'مشکل فنی، مشکل در پرداخت یا تخفیف دانشجویی را این‌جا بنویسید. پاسخ در همین صفحه و در «اطلاعیه» به شما می‌رسد.'),
-    successHost,
-    formHost,
+    justOpened ? successPanel(justOpened.ticket, justOpened.withPhoto) : el('div', {}),
+    form,
     tickets.length
       ? el('div', {}, tickets.map((t) => ticketCard(t, refresh)))
       : el('p', { class: 'dcp-muted' }, 'هنوز درخواستی ثبت نکرده‌اید.'),
