@@ -13,8 +13,8 @@ import { makeApp, resetDb, loginAs } from './helpers.js';
 import { pool } from '../src/db.js';
 import { startPayment, settlePayment } from '../src/services/payment.js';
 import {
-  availableCredits, pickCredits, creditPercent, discountedRial, CREDIT_CAP_PERCENT,
-  type DiscountCredit,
+  availableCredits, pickCredits, creditPercent, discountedRial, splitGrantPercent,
+  CREDIT_CAP_PERCENT, type DiscountCredit,
 } from '../src/services/discount-credits.js';
 import { config } from '../src/config.js';
 
@@ -74,6 +74,34 @@ describe('pickCredits — the cap', () => {
   it('is deterministic for equal percents (source tie-break upstream)', () => {
     const picked = pickCredits([c('b', 5), c('a', 5), c('c', 5)]);
     expect(creditPercent(picked)).toBe(10);
+  });
+});
+
+describe('splitGrantPercent — a gift above the cap is several credits, not a dead one', () => {
+  it('leaves anything at or under the cap as a single credit', () => {
+    expect(splitGrantPercent(1)).toEqual([1]);
+    expect(splitGrantPercent(4)).toEqual([4]);
+    expect(splitGrantPercent(CREDIT_CAP_PERCENT)).toEqual([CREDIT_CAP_PERCENT]);
+  });
+
+  it('splits a bigger gift into full parts with the remainder last', () => {
+    expect(splitGrantPercent(20)).toEqual([10, 10]);
+    expect(splitGrantPercent(25)).toEqual([10, 10, 5]);
+    expect(splitGrantPercent(11)).toEqual([10, 1]);
+  });
+
+  it('mints nothing from a value that is not a positive whole percent', () => {
+    expect(splitGrantPercent(0)).toEqual([]);
+    expect(splitGrantPercent(-5)).toEqual([]);
+    expect(splitGrantPercent(0.7)).toEqual([]); // truncates to 0, not to a free credit
+  });
+
+  it('conserves the total the founder typed, with no part above the cap', () => {
+    for (const p of [1, 9, 10, 11, 17, 20, 33, 99, 100]) {
+      const parts = splitGrantPercent(p);
+      expect(parts.reduce((s, n) => s + n, 0)).toBe(p);
+      expect(Math.max(...parts)).toBeLessThanOrEqual(CREDIT_CAP_PERCENT);
+    }
   });
 });
 
@@ -300,5 +328,54 @@ describe('admin', () => {
       method: 'GET', url: `/admin/discounts?user=${PHONE}`, headers: { authorization: auth },
     });
     expect(r.json()).toMatchObject({ ready_percent: 4, next_purchase_percent: 4, user_id: uid });
+  });
+
+  // The founder types the total they mean. A gift above the cap used to answer
+  // ok:true and then be skipped whole on every purchase, forever — the buyer
+  // paid list price and nothing said so.
+  it('accepts a gift above the cap and pays it out one cap per purchase', async () => {
+    const cookie = await loginAs(app, PHONE);
+    const uid = await userId(cookie);
+
+    const g = await app.inject({
+      method: 'POST', url: '/admin/discounts/grant',
+      headers: { authorization: auth },
+      payload: { user: PHONE, percent: 20, label: 'تخفیف دانشجویی', kind: 'student' },
+    });
+    expect(g.statusCode).toBe(200);
+    expect(g.json().parts).toEqual([10, 10]);
+    expect(g.json().total_percent).toBe(20);
+    expect(g.json().grants).toHaveLength(2);
+    expect(g.json().grant).toMatchObject({ percent: 10, label_fa: 'تخفیف دانشجویی' });
+
+    // The whole gift sits on the account; only one cap of it prices a purchase.
+    const r = await app.inject({
+      method: 'GET', url: `/admin/discounts?user=${PHONE}`, headers: { authorization: auth },
+    });
+    expect(r.json()).toMatchObject({ ready_percent: 20, next_purchase_percent: 10 });
+
+    // First purchase takes exactly one of the two credits.
+    gatewayReplies(REQUEST_OK);
+    const first = await startPayment({ userId: uid, months: 6 });
+    expect(first.payment!.amount_rial).toBe(54_000_000); // 60M − 10%
+    gatewayReplies({ result: 100, status: 1, amount: 54_000_000, refNumber: 'REF-S1' });
+    expect((await settlePayment(first.payment!.ref_id!)).outcome).toBe('activated');
+
+    // The other half survived the first purchase undiminished, and spends.
+    expect(creditPercent(await availableCredits(uid))).toBe(10);
+    gatewayReplies({ result: 100, trackId: 'TRK-D2' }); // its own ref: gateway_ref is unique
+    const second = await startPayment({ userId: uid, months: 6 });
+
+    // 60M − 30%: the first purchase minted a «ستون» seat, whose permanent 20%
+    // stacks ON TOP of this second 10% credit. The credit half is what this
+    // test is about, and the redemption row is where it is stated plainly.
+    expect(second.payment!.amount_rial).toBe(42_000_000);
+    const red = await pool.query(
+      'select percent from discount_redemptions where payment_id = $1', [second.payment!.id],
+    );
+    expect(red.rows).toEqual([{ percent: 10 }]);
+
+    // Both halves are now spent — the gift paid out in full, across two payments.
+    expect(await availableCredits(uid)).toHaveLength(0);
   });
 });

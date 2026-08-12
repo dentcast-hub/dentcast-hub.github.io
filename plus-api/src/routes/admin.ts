@@ -17,7 +17,7 @@ import { reconcilePendingPayments } from '../services/payment-reconcile.js';
 import { pillarRoster, grantPillarSeat, revokePillarSeat } from '../services/pillar.js';
 import { pillarWelcomeBackfill, schedulePillarWelcome } from '../services/pillar-notify.js';
 import {
-  availableCredits, creditPercent, pickCredits, CREDIT_CAP_PERCENT,
+  availableCredits, creditPercent, pickCredits, insertGrant, CREDIT_CAP_PERCENT,
 } from '../services/discount-credits.js';
 import {
   pendingRedemptions, approveRedemption, rejectRedemption,
@@ -1277,9 +1277,14 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
   // an apology — which become ordinary credits under the same per-purchase cap.
 
   // POST /admin/discounts/grant { user|phone, percent, label, kind?, days? }
-  // One credit for one account. `label` is what the reader's own surfaces call
+  // One gift for one account. `label` is what the reader's own surfaces call
   // it, so it is written in Persian here, once, and never assembled by code.
   // `days` bounds a seasonal credit's life; omitted means it waits forever.
+  //
+  // `percent` is the TOTAL meant, not a per-purchase figure: anything above the
+  // cap is written as several credits and spent one per purchase (20 → two 10s
+  // over two payments). Typing a number the engine could never pay out used to
+  // answer `ok: true` and hand the reader nothing — see splitGrantPercent().
   app.post('/admin/discounts/grant', userBody({
     percent: { type: 'integer', minimum: 1, maximum: 100 },
     label: { type: 'string', minLength: 1, maxLength: 120 },
@@ -1291,13 +1296,19 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
     };
     const who = await resolveUser(pick(body), reply);
     if (!who) return reply;
-    const grant = await one<{ id: string; percent: number; label_fa: string; expires_at: Date | null }>(
-      `insert into discount_grants (user_id, percent, kind, label_fa, expires_at)
-       values ($1, $2, $3, $4, case when $5::int is null then null else now() + ($5 || ' days')::interval end)
-       returning id, percent, label_fa, expires_at`,
-      [who.id, body.percent, body.kind || 'gift', body.label, body.days ?? null],
-    );
-    return reply.send({ ok: true, user_id: who.id, grant });
+    const grants = await insertGrant(who.id, {
+      percent: body.percent, label_fa: body.label, kind: body.kind, days: body.days,
+    });
+    return reply.send({
+      ok: true,
+      user_id: who.id,
+      // `grant` stays the first (largest) part, so every gift at or under the
+      // cap — which is all of them, most days — reads back exactly as before.
+      grant: grants[0] ?? null,
+      grants,
+      parts: grants.map((g) => g.percent),
+      total_percent: grants.reduce((sum, g) => sum + g.percent, 0),
+    });
   });
 
   // GET /admin/discounts?user= — what this account could spend right now, and

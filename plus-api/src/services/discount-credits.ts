@@ -17,7 +17,8 @@ import { computeAchievementFacts, type AchievementFacts } from './achievements.j
  *
  *   · 'grant:<uuid>' — a row in discount_grants: a birthday, an Eid campaign,
  *     an apology. Founder decisions cannot be derived, so they are written.
- *     POST /admin/discounts/grant inserts one; nothing else does.
+ *     POST /admin/discounts/grant inserts them; nothing else does. A gift
+ *     larger than the cap becomes SEVERAL rows — see splitGrantPercent().
  *
  * ONE RULE BOUNDS THE MONEY: the credits applied to a single purchase never
  * exceed CREDIT_CAP_PERCENT, and a credit that did not fit is NOT consumed —
@@ -95,6 +96,76 @@ export async function grantCredits(
   return r.rows.map((g) => ({
     source: `grant:${g.id}`, percent: g.percent, label_fa: g.label_fa, kind: 'grant' as const,
   }));
+}
+
+/**
+ * Split a granted percentage into parts, none larger than the per-purchase cap.
+ *
+ * A grant ABOVE the cap is not a bigger discount — it is a dead one. pickCredits()
+ * treats a credit as atomic and skips whole anything that does not fit, so a
+ * single 20% row is passed over on every purchase, forever, while the endpoint
+ * that wrote it answered `ok: true`. Nothing about that failure is visible: the
+ * row exists, the admin listing shows it, the buyer is charged list price.
+ *
+ * Grant time is the only place to fix it without touching the atomicity rule the
+ * engine rests on. The founder types the total they mean; what gets written is n
+ * ordinary credits of at most `cap` each, which the reader then spends one per
+ * purchase — «۲۰٪» is two 10% credits across two purchases, exactly as it reads.
+ *
+ * Full parts first, remainder last (25 → 10, 10, 5), so the reader always spends
+ * the largest usable credit first and the odd leftover survives to the end.
+ */
+export function splitGrantPercent(percent: number, cap: number = CREDIT_CAP_PERCENT): number[] {
+  const parts: number[] = [];
+  let left = Math.trunc(percent);
+  if (!Number.isFinite(left) || left <= 0 || cap <= 0) return parts;
+  while (left > 0) {
+    const take = Math.min(cap, left);
+    parts.push(take);
+    left -= take;
+  }
+  return parts;
+}
+
+/** One written grant row — what the founder's surfaces read back. */
+export interface GrantRow {
+  id: string;
+  percent: number;
+  label_fa: string;
+  expires_at: Date | null;
+}
+
+/**
+ * Write a granted credit as one row per part (see splitGrantPercent).
+ *
+ * ONE statement — an insert-select over unnest() — so the parts of a gift can
+ * never half-exist without an explicit transaction. That is what lets this be
+ * called both inside a caller's transaction (grantBadge) and on its own (the
+ * admin route), which is the whole reason the two writers can share it.
+ *
+ * Every part carries the gift's own label and expiry: they are one decision, and
+ * `label_fa` is what a reader surface would name the credit, so «۱ از ۲»
+ * bookkeeping has no business being in it. The founder sees the split in the
+ * grant response and in GET /admin/discounts, where it belongs.
+ */
+export async function insertGrant(
+  userId: string,
+  input: { percent: number; label_fa: string; kind?: string; days?: number | null },
+  client: Queryable = pool,
+): Promise<GrantRow[]> {
+  const parts = splitGrantPercent(input.percent);
+  if (!parts.length) return [];
+  const r = await client.query<GrantRow>(
+    `insert into discount_grants (user_id, percent, kind, label_fa, expires_at)
+     select $1, p, $3, $4,
+            case when $5::int is null then null else now() + ($5 || ' days')::interval end
+       from unnest($2::int[]) as p
+     returning id, percent, label_fa, expires_at`,
+    [userId, parts, input.kind || 'gift', input.label_fa, input.days ?? null],
+  );
+  // RETURNING order is not promised by the standard; sort so the largest part is
+  // always first and a single-part gift reads back exactly as it always did.
+  return r.rows.sort((a, b) => b.percent - a.percent);
 }
 
 /**

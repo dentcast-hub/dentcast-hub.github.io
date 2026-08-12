@@ -1,6 +1,7 @@
 import { pool, one, query, withTransaction, type Queryable } from '../db.js';
 import { grantMetricOf, grantableBadges } from '../badges.js';
 import { scheduleAchievementSync } from './achievement-sync.js';
+import { insertGrant } from './discount-credits.js';
 
 /**
  * Granted badges — the founder-given class of the wall. «همراه» is the first
@@ -55,8 +56,10 @@ export interface GrantResult {
   already: boolean;
   badge_key: string;
   title_fa: string | null;
-  /** The discount_grants row minted alongside a NEW grant, if any was asked for. */
+  /** The FIRST discount_grants row minted alongside a NEW grant, if any was asked for. */
   discount_grant_id: string | null;
+  /** Every row of that credit — more than one only when it split across the cap. */
+  discount_grant_ids: string[];
 }
 
 /**
@@ -89,25 +92,25 @@ export async function grantBadge(
       [userId, badgeKey, opts.note ?? null],
       client,
     );
-    if (!inserted) return { already: true, discountId: null as string | null };
+    if (!inserted) return { already: true, discountIds: [] as string[] };
 
-    let discountId: string | null = null;
+    let discountIds: string[] = [];
     if (typeof opts.discountPercent === 'number' && opts.discountPercent > 0) {
-      // The same row POST /admin/discounts/grant writes, under the same cap
+      // The same rows POST /admin/discounts/grant writes, under the same cap
       // and the same spent-by-join rules. `label_fa` is the badge's own name,
       // so the credit and the badge read as one gift on every reader surface.
-      const grant = await one<{ id: string }>(
-        `insert into discount_grants (user_id, percent, kind, label_fa, expires_at)
-         values ($1, $2, $3, $4,
-                 case when $5::int is null then null else now() + ($5 || ' days')::interval end)
-         returning id`,
-        [userId, opts.discountPercent, `badge:${badgeKey}`, badge.title_fa,
-          opts.discountDays ?? null],
-        client,
-      );
-      discountId = grant?.id ?? null;
+      // Above the cap it splits into one credit per purchase, exactly as the
+      // admin endpoint does — the thank-you is conventionally ٪۵, so in
+      // practice this is a single row.
+      const rows = await insertGrant(userId, {
+        percent: opts.discountPercent,
+        kind: `badge:${badgeKey}`,
+        label_fa: badge.title_fa,
+        days: opts.discountDays ?? null,
+      }, client);
+      discountIds = rows.map((g) => g.id);
     }
-    return { already: false, discountId };
+    return { already: false, discountIds };
   });
 
   if (!result.already) scheduleAchievementSync(userId);
@@ -116,7 +119,8 @@ export async function grantBadge(
     already: result.already,
     badge_key: badgeKey,
     title_fa: badge.title_fa,
-    discount_grant_id: result.discountId,
+    discount_grant_id: result.discountIds[0] ?? null,
+    discount_grant_ids: result.discountIds,
   };
 }
 
