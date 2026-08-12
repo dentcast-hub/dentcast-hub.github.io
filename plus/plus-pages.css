@@ -995,8 +995,11 @@ a.dcp-progress-row:hover { text-decoration: none; }
 }
 .dcp-support-photo-note { margin: -4px 0 0; }
 .dcp-support-success code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; direction: ltr; font-weight: 800; }
+/* Wraps: the row carries four things on a phone (label, code, کپی, and the
+   Telegram door), and an unwrapped flex row pushes the last of them off the
+   screen — which here is the one action the row exists to offer. */
 .dcp-support-code-row {
-  display: flex; align-items: center; gap: 10px; font-size: .85rem;
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-size: .85rem;
   background: var(--dcp-surface, #f4f6fb); border: 1px dashed rgba(var(--ac-rgb, 11,95,255), .4);
   border-radius: 10px; padding: 8px 12px; margin-bottom: 8px;
 }
