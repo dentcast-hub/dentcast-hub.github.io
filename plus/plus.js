@@ -10,11 +10,13 @@ import { el } from './js/util.js';
 import { initHomeCard } from './js/home-card.js';
 import { initHomeFeatures } from './js/home-features.js';
 import { initHomeBundles } from './js/home-bundles.js';
+import { initHomeUpboard } from './js/home-upboard.js';
 import { initHeader } from './js/header.js';
 import { initTourAutostart } from './js/tour.js';
 import { initReadingTracker } from './js/reading.js';
 import { initListeningTracker } from './js/listening.js';
 import { initShareScoring, buildShareButton } from './js/share.js';
+import { initHeart, buildHeartChip } from './js/votes.js';
 
 // Carry plus.js's own cache-busting version (?v=N, set by dc-nav.js) onto the
 // workbench module import. Article pages are OUTSIDE the /plus/ service-worker
@@ -60,8 +62,15 @@ function injectWorkbenchButton(anchorEl, contentId, shareTarget) {
   const share = shareTarget && !document.getElementById('dcShareBtn')
     ? buildShareButton(shareTarget)
     : null;
+  // The heart is here for exactly the same reason share is, and gated on the
+  // same fact from the other side: `#dcArticleMeta` is the chip row dc-nav.js
+  // builds above the prose, so if it exists the heart is already up there and
+  // this row must not grow a second one.
+  const heart = !document.getElementById('dcArticleMeta')
+    ? buildHeartChip(contentId, 'dcp-wb-heart')
+    : null;
   const bar = el('div', { class: 'dcp-wb-bar' }, [
-    el('div', { class: 'dcp-wb-row' }, [btn, collectBtn, collectInfo, share]),
+    el('div', { class: 'dcp-wb-row' }, [btn, collectBtn, collectInfo, share, heart]),
     collectCap,
   ]);
   // Place it at the top of the article, just before the readable prose.
@@ -377,12 +386,20 @@ function boot() {
     initHomeCard(); // homepage personal card on all viewports (desktop + mobile)
     initHomeFeatures(); // homepage premium section, under the ad card (both layouts)
     initHomeBundles(); // homepage "از کجا شروع کنم؟" starter-bundle rail (both layouts)
+    initHomeUpboard(); // homepage مطالب box: the «بالاترین» tab + /up-board/ door
     markViewed(detectContentId()); // mark THIS content page seen on open (any folder, incl. episodes)
     // Credit shares of THIS page. Wired at boot rather than inside the article
     // path on purpose: dc-nav.js puts its share chip on every page built on the
     // shared article layer, including the episode pages initArticle() bows out
     // of, and a chip whose taps nobody listens for is worse than no chip.
     initShareScoring(detectContentId());
+    // The قلب, in dc-nav.js's chip row above the prose. Wired at boot for the
+    // same reason share is: the row exists on every page built on the shared
+    // article layer, including the audio episodes initArticle() bows out of —
+    // and an episode is as votable as an article. initHeart() no-ops wherever
+    // that row is absent (the homepage, /plus/, the desktop shell), so this is
+    // safe on every page.
+    initHeart(detectContentId());
     initSeenTicks(); // landing pages: green ticks next to already-seen content
     initTourAutostart(); // /?tour=1 handoff: start the guided tour on the homepage
   } catch (e) {

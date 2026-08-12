@@ -209,6 +209,43 @@ button.dc-meta-chip:hover{
   color:var(--ac, #0b5fff);
 }
 
+/* ── قلبِ مقاله (up-board) ──────────────────────────────────────────────
+   The third chip in this row, injected by plus/js/votes.js. It borrows
+   .dc-meta-chip's shape so the row stays one object, and overrides only
+   colour and the press animation. The count is deliberately absent (not
+   zero) until at least one reader has voted — see votes.js for why. */
+.dcp-heart{
+  gap:.3rem;
+  font-variant-numeric:tabular-nums;
+}
+.dcp-heart .dcp-heart-icon{
+  width:1.05em; height:1.05em; display:block; flex:none;
+  transition:transform .22s cubic-bezier(.34,1.56,.64,1);
+}
+.dcp-heart .dcp-heart-icon path{ transition:fill .18s, stroke .18s; }
+.dcp-heart .dcp-heart-num:empty{ display:none; }
+
+button.dc-meta-chip.dcp-heart:hover{
+  background:var(--heart-bg, rgba(217,43,82,.10));
+  color:var(--heart, #d92b52);
+  border-color:var(--heart-bd, rgba(217,43,82,.28));
+}
+.dcp-heart.is-voted{
+  color:var(--heart, #d92b52);
+  background:var(--heart-bg, rgba(217,43,82,.10));
+  border-color:var(--heart-bd, rgba(217,43,82,.28));
+}
+.dcp-heart.is-voted .dcp-heart-icon path{
+  fill:var(--heart, #d92b52);
+  stroke:var(--heart, #d92b52);
+}
+.dcp-heart.is-pop .dcp-heart-icon{ transform:scale(1.32); }
+
+@media (prefers-reduced-motion:reduce){
+  .dcp-heart .dcp-heart-icon{ transition:none; }
+  .dcp-heart.is-pop .dcp-heart-icon{ transform:none; }
+}
+
 .dc-toc{
   margin:0 0 1.25rem;
   background:var(--card-bg, #ffffff);

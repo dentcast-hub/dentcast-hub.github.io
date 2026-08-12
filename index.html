@@ -83,6 +83,12 @@
   --pr:#022360; --pr-rgb:2,35,96;
   --ac:#0b5fff; --ac-rgb:11,95,255;
 
+  /* قلبِ مقاله / up-board. Mirrored from dc-theme.css, which index.html does
+     not load — keep the two in sync. A third semantic colour on purpose:
+     amber is reserved for what a subscription buys, and a blue heart does not
+     read as a heart. */
+  --heart:#d92b52;
+
 
   --bg:#f0f2f5;
   --surface:#ffffff;
@@ -142,6 +148,9 @@
 [data-theme="dark"]{
   --pr:#5b9cf6; --pr-rgb:91,156,246;
   --ac:#5b9cf6; --ac-rgb:91,156,246;
+
+  /* Lifted for the dark ground — #d92b52 on #17212b is a dim smudge. */
+  --heart:#ff6b8a;
 
   --bg:#0e1621;
   --surface:#17212b; --surface2:#1e2c3a; --surface3:#232e3c;
@@ -944,6 +953,49 @@ body{
   font-size:.82rem; font-weight:800;
   color:var(--txt); margin:0 0 0.625rem;
 }
+/* ── up-board doorway ──
+   The title row grows a link, and the list grows two arrangements. Blue, never
+   amber: up-board is free for any signed-in reader, and amber means one thing
+   site-wide («this is what a subscription buys»). */
+.dc-monitor-head{
+  display:flex; align-items:baseline; justify-content:space-between; gap:0.75rem;
+}
+.dc-monitor-head .dc-monitor-title{ margin-bottom:0.375rem; }
+.dc-monitor-all{
+  flex:none; font-size:.72rem; font-weight:700;
+  color:var(--ac); text-decoration:none; white-space:nowrap;
+}
+.dc-monitor-all:active{ opacity:.6; }
+.dc-monitor-tabs{ display:flex; gap:0.375rem; margin:0 0 0.5rem; }
+.dc-monitor-tab{
+  font:inherit; font-size:.7rem; font-weight:700;
+  color:var(--txt3); background:transparent;
+  border:1px solid var(--border); border-radius:999px;
+  padding:0.1875rem 0.6875rem; cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+  transition:color var(--tr), background var(--tr), border-color var(--tr);
+}
+.dc-monitor-tab[aria-selected="true"]{
+  color:var(--ac); background:rgba(var(--ac-rgb),.08);
+  border-color:rgba(var(--ac-rgb),.20);
+}
+/* «بالاترین» پشت پریمیوم است، پس امبر می‌پوشد نه آبی — امبر در کل سایت
+   یک معنا دارد و این همان معناست. قفل فقط بعد از یک ۴۰۲ واقعی می‌نشیند؛
+   سروری که جواب نداده هنوز ممکن است دفعهٔ بعد باز شود. */
+.dc-monitor-tab.is-locked{ color:var(--x-amber-ink); border-color:var(--x-amber-bd); }
+.dc-monitor-tab.is-locked::after{ content:"🔒"; font-size:.8em; margin-inline-start:.25rem; }
+.dc-monitor-rank{
+  flex:none; min-width:1.1em; text-align:center;
+  font-size:.72rem; font-weight:800; color:var(--txt3);
+  font-variant-numeric:tabular-nums;
+}
+.dc-monitor-rank.is-top{ color:var(--ac); }
+.dc-monitor-hearts{
+  flex:none; margin-inline-start:auto; display:inline-flex; align-items:center; gap:0.1875rem;
+  font-size:.68rem; font-weight:800; color:var(--heart,#d92b52);
+  font-variant-numeric:tabular-nums;
+}
+.dc-monitor-hearts svg{ width:.85em; height:.85em; }
 .dc-monitor-hint{
   font-size:.66rem; font-weight:500;
   color:var(--txt3);
@@ -4194,7 +4246,7 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
           <span class="k">ساعت محتوای صوتی</span>
         </div>
         <div class="hero-stat" role="listitem">
-          <span class="v"><!-- COUNTER:CONTENT:START -->۵۸۳<!-- COUNTER:CONTENT:END --></span>
+          <span class="v"><!-- COUNTER:CONTENT:START -->۵۸۴<!-- COUNTER:CONTENT:END --></span>
           <span class="k">مطلب و مدخل آموزشی</span>
         </div>
       </div>
@@ -4323,9 +4375,9 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
           <p class="dc-rail-title">پست و کور یک‌مرحله‌ای؛ وقتی «عدم تطابق» به نفع درمان تمام می‌شود</p>
           <span class="dc-rail-meta">تازه‌ترین مطلب</span>
         </a>
-        <a class="dc-rail-card" data-cat="chairside" href="/chairside/chairside-30.html">
+        <a class="dc-rail-card" data-cat="chairside" href="/chairside/chairside-31.html">
           <span class="dc-type-chip t-chair">Chairside</span>
-          <p class="dc-rail-title">سرنوشت دندان را فقط با معیارهای رستوریتیو تعیین نکنیم</p>
+          <p class="dc-rail-title">دندانی که فانکشن ندارد، صرفاً یک فضای اشغال‌شده است</p>
           <span class="dc-rail-meta">تازه‌ترین مطلب</span>
         </a>
         <a class="dc-rail-card" data-cat="dentai" href="/dentai/dentai-28.html">
@@ -4367,10 +4419,10 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
           </div>
         </div>
         <ul class="dc-pulse-list">
+          <li>یک <a href="/chairside/chairside-31.html">کیس چیرساید</a> با عنوانِ «دندانی که فانکشن ندارد، صرفاً یک فضای اشغال‌شده است» منتشر شد · ۲۱ مرداد</li>
           <li>یک <a href="/chairside/chairside-30.html">کیس چیرساید</a> با عنوانِ «سرنوشت دندان را فقط با معیارهای رستوریتیو تعیین نکنیم» منتشر شد · ۲۰ مرداد</li>
           <li>یک <a href="/insight/insight-64.html">اینسایت بالینی</a> با عنوانِ «اینجوری هم میشه به فرول نگاه کرد،یه استفاده ی معکوس از مقاله معروف در مورد فرول» منتشر شد · ۱۹ مرداد</li>
           <li>یک <a href="/notecast/episode-39.html">نوت‌کست</a> با عنوانِ «درمان غیرتهاجمی مثلث‌های سیاه بین‌دندانی با تزریق اسید هیالورونیک» منتشر شد · ۱۹ مرداد</li>
-          <li>یک <a href="/metanotes/meta-20.html">متانوت</a> با عنوانِ «پست و کور یک‌مرحله‌ای؛ وقتی «عدم تطابق» به نفع درمان تمام می‌شود» منتشر شد · ۱۸ مرداد</li>
         </ul>
       </div>
 
@@ -4469,11 +4521,26 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
         </div>
       </div>
 
-      <!-- باکس «تازه‌ترین مطالب» — منتقل‌شده از تب ابزارها، با فاصله بیشتر -->
-      <article class="dc-monitor dc-monitor-secondary" aria-label="آخرین مطالب">
+      <!-- باکس مطالب — منتقل‌شده از تب ابزارها، با فاصله بیشتر.
+           Since up-board it is also the doorway to /up-board/: the list itself
+           had no destination before, and its own hint told the reader to scroll
+           for more. The «همه ›» link and the two tabs ship as STATIC markup so
+           the doorway works even if plus/js/home-upboard.js never loads — the
+           tabs are then simply inert and the reader still gets the page.
+           NOTE the «دسته‌های محتوا» grid below is untouched on purpose:
+           spot.js's renderHome anchors the mobile homepage ad to
+           `.dc-exa-cats` (spot.js:858), so moving or removing it relocates
+           paid sponsor inventory. -->
+      <article class="dc-monitor dc-monitor-secondary" aria-label="مطالب دنت‌کست">
         <div class="dc-monitor-inner">
-          <div class="dc-monitor-title">تازه‌ترین مطالب دنت‌کست</div>
-          <div class="dc-monitor-hint">برای دیدن همه اسکرول کنید</div>
+          <div class="dc-monitor-head">
+            <div class="dc-monitor-title">مطالب دنت‌کست</div>
+            <a class="dc-monitor-all" href="/up-board/">همه ›</a>
+          </div>
+          <div class="dc-monitor-tabs" role="tablist" aria-label="ترتیب فهرست">
+            <button class="dc-monitor-tab" type="button" role="tab" data-monitor-sort="new" aria-selected="true">تازه‌ترین</button>
+            <button class="dc-monitor-tab" type="button" role="tab" data-monitor-sort="top" aria-selected="false">بالاترین</button>
+          </div>
           <ul class="dc-monitor-list" id="dcLast3Updates"></ul>
         </div>
       </article>
@@ -5126,7 +5193,7 @@ scrollBody.addEventListener('touchend',e=>{
     if(p) p.textContent=title;
     a.href=url;
   }
-  fetch('/dentcast-brain.json?v=dd7724ae35',{cache:'no-store'}).then(function(r){return r.json();}).then(function(arr){
+  fetch('/dentcast-brain.json?v=775a32d490',{cache:'no-store'}).then(function(r){return r.json();}).then(function(arr){
     if(!Array.isArray(arr)) return;
     var latest={}, pool=[];
     arr.forEach(function(e){
@@ -5203,7 +5270,7 @@ scrollBody.addEventListener('touchend',e=>{
 </script>
 
 <!-- Theme toggle behavior moved to /dc-nav.js (single source) -->
-<script src="/dc-nav.js?v=74" defer></script>
+<script src="/dc-nav.js?v=75" defer></script>
 
 <!-- Toolbar drawer toggle is handled by /dc-nav.js (single source) -->
 
@@ -5473,7 +5540,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 <script>
 /* ── LAST 30 UPDATES ── */
 (function(){
-  const FEED_URL='/dentcast-brain.json?v=dd7724ae35';
+  const FEED_URL='/dentcast-brain.json?v=775a32d490';
   const el=document.getElementById('dcLast3Updates');
   if(!el) return;
   function extractArray(json){if(Array.isArray(json))return json;const cands=[json?.items,json?.data,json?.entries,json?.feed].filter(Boolean);for(const c of cands)if(Array.isArray(c))return c;for(const k in(json||{})){const v=json[k];if(Array.isArray(v))return v;if(v&&typeof v==='object'&&Array.isArray(v.items))return v.items;}return[];}
@@ -5729,7 +5796,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 
   function getBrain(){
     if(brainCache) return Promise.resolve(brainCache);
-    return fetch('/dentcast-brain.json?v=dd7724ae35', {cache:'no-store'})
+    return fetch('/dentcast-brain.json?v=775a32d490', {cache:'no-store'})
       .then(r => r.ok ? r.json() : [])
       .then(d => { brainCache = Array.isArray(d) ? d : []; return brainCache; })
       .catch(() => { brainCache = []; return []; });

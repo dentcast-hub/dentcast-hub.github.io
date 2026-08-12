@@ -13120,5 +13120,40 @@
       "secondary": [],
       "subtopic": "extraction-vs-preservation"
     }
+  },
+  {
+    "type": "chairside",
+    "id": "chairside-31",
+    "title": "دندانی که فانکشن ندارد، صرفاً یک فضای اشغال‌شده است",
+    "caption": "در این کیس Chairside می‌بینیم چطور کوتاه ساخته‌شدنِ روکش‌های ایمپلنتِ ۵ و ۶ پایین بیمار را به جویدن روی دندانِ ۷ و لثهٔ بی‌دندانِ فکِ بالا وادار کرده، چرا دندانِ ۷ در نبودِ آنتاگونیست فضای رستوریتیوِ فکِ بالا را از بین برده، و چرا اصلاحِ این وضعیت تراشِ یک تاجِ دست‌نخورده را توجیه می‌کند.",
+    "hashtags": [
+      "#چیرساید",
+      "#کیس_بالینی",
+      "#دکتر_شهابیان",
+      "#سوپرااراپشن",
+      "#فضای_رستوریتیو",
+      "#اینفرااکلوژن",
+      "#تراش_آنتاگونیست",
+      "#روکش_ایمپلنت",
+      "#اکلوژن",
+      "#طرح_درمان",
+      "#دندان_بدون_فانکشن"
+    ],
+    "keywords": [
+      "supra eruption restorative space loss",
+      "infra occluded implant crown",
+      "missing antagonist tooth reduction",
+      "prosthetic space recovery mandibular second molar",
+      "soft tissue trauma edentulous ridge chewing",
+      "occlusal rehabilitation sequencing quadrant",
+      "non functional tooth treatment planning",
+      "implant crown occlusal height correction"
+    ],
+    "page_url": "/chairside/chairside-31.html",
+    "pillar": {
+      "primary": "treatment-planning",
+      "secondary": [],
+      "subtopic": "comprehensive-diagnosis"
+    }
   }
 ]

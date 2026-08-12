@@ -523,6 +523,63 @@
    ]
   },
   {
+   "key": "اکلوژن",
+   "tag": "#اکلوژن",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "رابطه‌ی تماسی دندان‌های دو فک و هرچه بر آن اثر می‌گذارد.",
+   "use_when": "چتر عام اکلوژن. همیشه در کنار یک مفهوم مشخص‌تر بیاید، نه به‌تنهایی.",
+   "aliases": [
+    "occlusion",
+    "اکلوزیون"
+   ],
+   "variants": [
+    "#Occlusion"
+   ],
+   "co_tags": [],
+   "count": 38,
+   "content_ids": [
+    "episodes/episode-14",
+    "episodes/episode-23",
+    "episodes/episode-35",
+    "episodes/episode-60",
+    "episodes/episode-123-2",
+    "episodes/episode-126",
+    "episodes/episode-131",
+    "episodes/episode-132",
+    "episodes/episode-142",
+    "episodes/episode-143",
+    "episodes/episode-144",
+    "episodes/episode-145",
+    "insight/insight-1",
+    "insight/insight-2",
+    "insight/insight-6",
+    "insight/insight-8",
+    "insight/insight-12",
+    "photocast/episode-2",
+    "dentcast-plus/video-2",
+    "notecast/episode-14",
+    "notecast/episode-23",
+    "notecast/episode-24",
+    "insight/insight-21",
+    "episodes/episode-154",
+    "sharehub/share-5",
+    "insight/insight-24",
+    "episodes/episode-155",
+    "dentcast-plus/video-6",
+    "insight/insight-29",
+    "chairside/chairside-11",
+    "insight/insight-37",
+    "chairside/chairside-15",
+    "sharehub/share-6",
+    "insight/insight-43",
+    "episodes/episode-160",
+    "chairside/chairside-23",
+    "insight/insight-56",
+    "chairside/chairside-31"
+   ]
+  },
+  {
    "key": "نوت_کست",
    "tag": "#نوت_کست",
    "domain": "brand",
@@ -579,62 +636,6 @@
    ]
   },
   {
-   "key": "اکلوژن",
-   "tag": "#اکلوژن",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "رابطه‌ی تماسی دندان‌های دو فک و هرچه بر آن اثر می‌گذارد.",
-   "use_when": "چتر عام اکلوژن. همیشه در کنار یک مفهوم مشخص‌تر بیاید، نه به‌تنهایی.",
-   "aliases": [
-    "occlusion",
-    "اکلوزیون"
-   ],
-   "variants": [
-    "#Occlusion"
-   ],
-   "co_tags": [],
-   "count": 37,
-   "content_ids": [
-    "episodes/episode-14",
-    "episodes/episode-23",
-    "episodes/episode-35",
-    "episodes/episode-60",
-    "episodes/episode-123-2",
-    "episodes/episode-126",
-    "episodes/episode-131",
-    "episodes/episode-132",
-    "episodes/episode-142",
-    "episodes/episode-143",
-    "episodes/episode-144",
-    "episodes/episode-145",
-    "insight/insight-1",
-    "insight/insight-2",
-    "insight/insight-6",
-    "insight/insight-8",
-    "insight/insight-12",
-    "photocast/episode-2",
-    "dentcast-plus/video-2",
-    "notecast/episode-14",
-    "notecast/episode-23",
-    "notecast/episode-24",
-    "insight/insight-21",
-    "episodes/episode-154",
-    "sharehub/share-5",
-    "insight/insight-24",
-    "episodes/episode-155",
-    "dentcast-plus/video-6",
-    "insight/insight-29",
-    "chairside/chairside-11",
-    "insight/insight-37",
-    "chairside/chairside-15",
-    "sharehub/share-6",
-    "insight/insight-43",
-    "episodes/episode-160",
-    "chairside/chairside-23",
-    "insight/insight-56"
-   ]
-  },
-  {
    "key": "طرح_درمان",
    "tag": "#طرح_درمان",
    "domain": "clinical",
@@ -649,7 +650,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 34,
+   "count": 35,
    "content_ids": [
     "episodes/episode-14",
     "episodes/episode-25",
@@ -684,7 +685,109 @@
     "chairside/chairside-26",
     "chairside/chairside-28",
     "chairside/chairside-29",
-    "insight/insight-64"
+    "insight/insight-64",
+    "chairside/chairside-31"
+   ]
+  },
+  {
+   "key": "چیرساید",
+   "tag": "#چیرساید",
+   "domain": "brand",
+   "words": 1,
+   "definition": "نام سری چیرساید — یادداشت کوتاه از یک ویزیت واقعی، با تصمیمی که سر یونیت گرفته شد.",
+   "use_when": "روی هر مدخل چیرساید، و هیچ‌جای دیگر.",
+   "aliases": [
+    "chairside",
+    "چیر ساید"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 31,
+   "content_ids": [
+    "chairside/chairside-1",
+    "chairside/chairside-2",
+    "chairside/chairside-3",
+    "chairside/chairside-4",
+    "chairside/chairside-5",
+    "chairside/chairside-6",
+    "chairside/chairside-7",
+    "chairside/chairside-8",
+    "chairside/chairside-9",
+    "chairside/chairside-10",
+    "chairside/chairside-11",
+    "chairside/chairside-12",
+    "chairside/chairside-13",
+    "chairside/chairside-14",
+    "chairside/chairside-15",
+    "chairside/chairside-16",
+    "chairside/chairside-17",
+    "chairside/chairside-18",
+    "chairside/chairside-19",
+    "chairside/chairside-20",
+    "chairside/chairside-21",
+    "chairside/chairside-22",
+    "chairside/chairside-23",
+    "chairside/chairside-24",
+    "chairside/chairside-25",
+    "chairside/chairside-26",
+    "chairside/chairside-27",
+    "chairside/chairside-28",
+    "chairside/chairside-29",
+    "chairside/chairside-30",
+    "chairside/chairside-31"
+   ]
+  },
+  {
+   "key": "کیس_بالینی",
+   "tag": "#کیس_بالینی",
+   "domain": "brand",
+   "words": 2,
+   "definition": "گزارش یک کیس واقعی، از شرح مراجعه تا تصمیم.",
+   "use_when": "روی مدخل‌هایی که ساختارشان گزارش کیس است.",
+   "aliases": [
+    "ویزیت کلینیکی",
+    "گزارش کیس",
+    "کیس ریپورت",
+    "case report"
+   ],
+   "variants": [
+    "#ویزیت_کلینیکی",
+    "#گزارش_کیس"
+   ],
+   "co_tags": [],
+   "count": 31,
+   "content_ids": [
+    "chairside/chairside-1",
+    "chairside/chairside-2",
+    "chairside/chairside-3",
+    "chairside/chairside-4",
+    "chairside/chairside-5",
+    "chairside/chairside-6",
+    "chairside/chairside-7",
+    "chairside/chairside-8",
+    "chairside/chairside-9",
+    "chairside/chairside-10",
+    "chairside/chairside-11",
+    "chairside/chairside-12",
+    "chairside/chairside-13",
+    "chairside/chairside-14",
+    "chairside/chairside-15",
+    "chairside/chairside-16",
+    "chairside/chairside-17",
+    "chairside/chairside-18",
+    "chairside/chairside-19",
+    "chairside/chairside-20",
+    "chairside/chairside-21",
+    "chairside/chairside-22",
+    "chairside/chairside-23",
+    "chairside/chairside-24",
+    "chairside/chairside-25",
+    "chairside/chairside-26",
+    "chairside/chairside-27",
+    "chairside/chairside-28",
+    "chairside/chairside-29",
+    "chairside/chairside-30",
+    "chairside/chairside-31"
    ]
   },
   {
@@ -733,105 +836,6 @@
     "insight/insight-51",
     "chairside/chairside-24",
     "chairside/chairside-25"
-   ]
-  },
-  {
-   "key": "چیرساید",
-   "tag": "#چیرساید",
-   "domain": "brand",
-   "words": 1,
-   "definition": "نام سری چیرساید — یادداشت کوتاه از یک ویزیت واقعی، با تصمیمی که سر یونیت گرفته شد.",
-   "use_when": "روی هر مدخل چیرساید، و هیچ‌جای دیگر.",
-   "aliases": [
-    "chairside",
-    "چیر ساید"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 30,
-   "content_ids": [
-    "chairside/chairside-1",
-    "chairside/chairside-2",
-    "chairside/chairside-3",
-    "chairside/chairside-4",
-    "chairside/chairside-5",
-    "chairside/chairside-6",
-    "chairside/chairside-7",
-    "chairside/chairside-8",
-    "chairside/chairside-9",
-    "chairside/chairside-10",
-    "chairside/chairside-11",
-    "chairside/chairside-12",
-    "chairside/chairside-13",
-    "chairside/chairside-14",
-    "chairside/chairside-15",
-    "chairside/chairside-16",
-    "chairside/chairside-17",
-    "chairside/chairside-18",
-    "chairside/chairside-19",
-    "chairside/chairside-20",
-    "chairside/chairside-21",
-    "chairside/chairside-22",
-    "chairside/chairside-23",
-    "chairside/chairside-24",
-    "chairside/chairside-25",
-    "chairside/chairside-26",
-    "chairside/chairside-27",
-    "chairside/chairside-28",
-    "chairside/chairside-29",
-    "chairside/chairside-30"
-   ]
-  },
-  {
-   "key": "کیس_بالینی",
-   "tag": "#کیس_بالینی",
-   "domain": "brand",
-   "words": 2,
-   "definition": "گزارش یک کیس واقعی، از شرح مراجعه تا تصمیم.",
-   "use_when": "روی مدخل‌هایی که ساختارشان گزارش کیس است.",
-   "aliases": [
-    "ویزیت کلینیکی",
-    "گزارش کیس",
-    "کیس ریپورت",
-    "case report"
-   ],
-   "variants": [
-    "#ویزیت_کلینیکی",
-    "#گزارش_کیس"
-   ],
-   "co_tags": [],
-   "count": 30,
-   "content_ids": [
-    "chairside/chairside-1",
-    "chairside/chairside-2",
-    "chairside/chairside-3",
-    "chairside/chairside-4",
-    "chairside/chairside-5",
-    "chairside/chairside-6",
-    "chairside/chairside-7",
-    "chairside/chairside-8",
-    "chairside/chairside-9",
-    "chairside/chairside-10",
-    "chairside/chairside-11",
-    "chairside/chairside-12",
-    "chairside/chairside-13",
-    "chairside/chairside-14",
-    "chairside/chairside-15",
-    "chairside/chairside-16",
-    "chairside/chairside-17",
-    "chairside/chairside-18",
-    "chairside/chairside-19",
-    "chairside/chairside-20",
-    "chairside/chairside-21",
-    "chairside/chairside-22",
-    "chairside/chairside-23",
-    "chairside/chairside-24",
-    "chairside/chairside-25",
-    "chairside/chairside-26",
-    "chairside/chairside-27",
-    "chairside/chairside-28",
-    "chairside/chairside-29",
-    "chairside/chairside-30"
    ]
   },
   {
@@ -922,6 +926,53 @@
     "dentai/dentai-26",
     "dentai/dentai-27",
     "dentai/dentai-28"
+   ]
+  },
+  {
+   "key": "روکش_ایمپلنت",
+   "tag": "#روکش_ایمپلنت",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "روکشِ متکی بر ایمپلنت، در تمایز با روکش روی دندان طبیعی.",
+   "use_when": "مقاله تصمیمش مختص روکش ایمپلنت باشد.",
+   "aliases": [
+    "implant crown",
+    "روکش روی ایمپلنت",
+    "روکش ایمپلنتی",
+    "کراون ایمپلنت"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 28,
+   "content_ids": [
+    "episodes/episode-125-1",
+    "episodes/episode-139",
+    "episodes/episode-147",
+    "episodes/episode-148-2",
+    "insight/insight-9",
+    "insight/insight-10",
+    "litecast/lite-CAST10",
+    "litecast/lite-CAST12",
+    "litecast/lite-CAST16",
+    "litecast/lite-CAST18",
+    "dentcast-plus/video-4",
+    "sharehub/share-4",
+    "dentcast-plus/video-5",
+    "metanotes/meta-10",
+    "insight/insight-30",
+    "insight/insight-33",
+    "chairside/chairside-12",
+    "chairside/chairside-17",
+    "insight/insight-46",
+    "insight/insight-47",
+    "insight/insight-50",
+    "insight/insight-52",
+    "insight/insight-53",
+    "insight/insight-57",
+    "chairside/chairside-28",
+    "insight/insight-62",
+    "insight/insight-63",
+    "chairside/chairside-31"
    ]
   },
   {
@@ -1020,52 +1071,6 @@
     "metanotes/meta-15",
     "metanotes/meta-19",
     "metanotes/meta-20"
-   ]
-  },
-  {
-   "key": "روکش_ایمپلنت",
-   "tag": "#روکش_ایمپلنت",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "روکشِ متکی بر ایمپلنت، در تمایز با روکش روی دندان طبیعی.",
-   "use_when": "مقاله تصمیمش مختص روکش ایمپلنت باشد.",
-   "aliases": [
-    "implant crown",
-    "روکش روی ایمپلنت",
-    "روکش ایمپلنتی",
-    "کراون ایمپلنت"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 27,
-   "content_ids": [
-    "episodes/episode-125-1",
-    "episodes/episode-139",
-    "episodes/episode-147",
-    "episodes/episode-148-2",
-    "insight/insight-9",
-    "insight/insight-10",
-    "litecast/lite-CAST10",
-    "litecast/lite-CAST12",
-    "litecast/lite-CAST16",
-    "litecast/lite-CAST18",
-    "dentcast-plus/video-4",
-    "sharehub/share-4",
-    "dentcast-plus/video-5",
-    "metanotes/meta-10",
-    "insight/insight-30",
-    "insight/insight-33",
-    "chairside/chairside-12",
-    "chairside/chairside-17",
-    "insight/insight-46",
-    "insight/insight-47",
-    "insight/insight-50",
-    "insight/insight-52",
-    "insight/insight-53",
-    "insight/insight-57",
-    "chairside/chairside-28",
-    "insight/insight-62",
-    "insight/insight-63"
    ]
   },
   {
@@ -2140,7 +2145,7 @@
    "key": "پروگنوز_دندان",
    "tag": "#پروگنوز_دندان",
    "domain": null,
-   "words": 2,
+   "words": 4,
    "definition": "پیش‌بینیِ سرنوشت یک دندانِ مشخص پیش از سرمایه‌گذاری روی آن.",
    "use_when": "مقاله پیش از درمان قطعی پروگنوز را بسنجد.",
    "aliases": [
@@ -2466,6 +2471,35 @@
    ]
   },
   {
+   "key": "دکتر_شهابیان",
+   "tag": "#دکتر_شهابیان",
+   "domain": "brand",
+   "words": 2,
+   "definition": "دکتر فؤاد شهابیان — میزبانِ دنتکست و صاحبِ کانسپت‌های اختصاصی.",
+   "use_when": "روی محتوایی که کانسپتِ شخصیِ او موضوع است.",
+   "aliases": [
+    "شهابیان",
+    "کانسپت شهابیان",
+    "foad shahabian",
+    "دکتر فواد شهابیان"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 10,
+   "content_ids": [
+    "episodes/episode-148-2",
+    "chairside/chairside-23",
+    "chairside/chairside-24",
+    "chairside/chairside-25",
+    "chairside/chairside-26",
+    "chairside/chairside-27",
+    "chairside/chairside-28",
+    "chairside/chairside-29",
+    "chairside/chairside-30",
+    "chairside/chairside-31"
+   ]
+  },
+  {
    "key": "فایبر_پست",
    "tag": "#فایبر_پست",
    "domain": "clinical",
@@ -2742,34 +2776,6 @@
    ]
   },
   {
-   "key": "دکتر_شهابیان",
-   "tag": "#دکتر_شهابیان",
-   "domain": "brand",
-   "words": 2,
-   "definition": "دکتر فؤاد شهابیان — میزبانِ دنتکست و صاحبِ کانسپت‌های اختصاصی.",
-   "use_when": "روی محتوایی که کانسپتِ شخصیِ او موضوع است.",
-   "aliases": [
-    "شهابیان",
-    "کانسپت شهابیان",
-    "foad shahabian",
-    "دکتر فواد شهابیان"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 9,
-   "content_ids": [
-    "episodes/episode-148-2",
-    "chairside/chairside-23",
-    "chairside/chairside-24",
-    "chairside/chairside-25",
-    "chairside/chairside-26",
-    "chairside/chairside-27",
-    "chairside/chairside-28",
-    "chairside/chairside-29",
-    "chairside/chairside-30"
-   ]
-  },
-  {
    "key": "روکش_موقت",
    "tag": "#روکش_موقت",
    "domain": null,
@@ -2823,6 +2829,33 @@
     "insight/insight-55",
     "insight/insight-61",
     "insight/insight-62"
+   ]
+  },
+  {
+   "key": "فضای_رستوریتیو",
+   "tag": "#فضای_رستوریتیو",
+   "domain": null,
+   "words": 2,
+   "definition": "فضای عمودیِ لازم برای بازسازی.",
+   "use_when": "مقاله کمبود یا اشغالِ این فضا را مسئله بداند.",
+   "aliases": [
+    "فضای بازسازی",
+    "restorative space",
+    "فضای پروتزی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 9,
+   "content_ids": [
+    "insight/insight-6",
+    "insight/insight-10",
+    "insight/insight-19",
+    "insight/insight-43",
+    "notecast/episode-34",
+    "insight/insight-46",
+    "chairside/chairside-19",
+    "insight/insight-57",
+    "chairside/chairside-31"
    ]
   },
   {
@@ -3031,32 +3064,6 @@
     "insight/insight-39",
     "dentai/dentai-27",
     "insight/insight-64"
-   ]
-  },
-  {
-   "key": "فضای_رستوریتیو",
-   "tag": "#فضای_رستوریتیو",
-   "domain": null,
-   "words": 2,
-   "definition": "فضای عمودیِ لازم برای بازسازی.",
-   "use_when": "مقاله کمبود یا اشغالِ این فضا را مسئله بداند.",
-   "aliases": [
-    "فضای بازسازی",
-    "restorative space",
-    "فضای پروتزی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 8,
-   "content_ids": [
-    "insight/insight-6",
-    "insight/insight-10",
-    "insight/insight-19",
-    "insight/insight-43",
-    "notecast/episode-34",
-    "insight/insight-46",
-    "chairside/chairside-19",
-    "insight/insight-57"
    ]
   },
   {
@@ -4594,6 +4601,30 @@
    ]
   },
   {
+   "key": "سوپرااراپشن",
+   "tag": "#سوپرااراپشن",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "رویشِ بیش‌ازحدِ دندان پس از رفتنِ آنتاگونیست.",
+   "use_when": "مقاله اشغالِ فضای رستوریتیو را مسئله بداند.",
+   "aliases": [
+    "اکستروژن",
+    "supraeruption",
+    "رویش بیش از حد",
+    "سوپرا اراپت"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 5,
+   "content_ids": [
+    "insight/insight-6",
+    "insight/insight-8",
+    "insight/insight-46",
+    "chairside/chairside-19",
+    "chairside/chairside-31"
+   ]
+  },
+  {
    "key": "شکست_ایمپلنت",
    "tag": "#شکست_ایمپلنت",
    "domain": "clinical",
@@ -5283,7 +5314,7 @@
    "key": "رادیوگرافی_تشخیصی",
    "tag": "#رادیوگرافی_تشخیصی",
    "domain": null,
-   "words": 2,
+   "words": 4,
    "definition": "انتخاب و تفسیرِ درستِ تصویر — پانورامیک در برابر پری‌اپیکال.",
    "use_when": "مقاله کفایت یا نارساییِ یک تصویر را مسئله بداند.",
    "aliases": [
@@ -5465,29 +5496,6 @@
     "insight/insight-29",
     "insight/insight-44",
     "insight/insight-59"
-   ]
-  },
-  {
-   "key": "سوپرااراپشن",
-   "tag": "#سوپرااراپشن",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "رویشِ بیش‌ازحدِ دندان پس از رفتنِ آنتاگونیست.",
-   "use_when": "مقاله اشغالِ فضای رستوریتیو را مسئله بداند.",
-   "aliases": [
-    "اکستروژن",
-    "supraeruption",
-    "رویش بیش از حد",
-    "سوپرا اراپت"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 4,
-   "content_ids": [
-    "insight/insight-6",
-    "insight/insight-8",
-    "insight/insight-46",
-    "chairside/chairside-19"
    ]
   },
   {
@@ -6507,7 +6515,7 @@
    "key": "درمان_بین_رشته_ای",
    "tag": "#درمان_بین_رشته_ای",
    "domain": null,
-   "words": 4,
+   "words": 6,
    "definition": "درمانی که تصمیمش بین دو تخصص تقسیم شده.",
    "use_when": "مقاله هماهنگی بین تخصص‌ها را مسئله بداند.",
    "aliases": [
@@ -8708,6 +8716,27 @@
    "content_ids": [
     "dentcast-plus/video-6",
     "chairside/chairside-15"
+   ]
+  },
+  {
+   "key": "تراش_آنتاگونیست",
+   "tag": "#تراش_آنتاگونیست",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "گرفتنِ فضا از دندانِ مقابل، به‌جای کوتاه کردنِ کاسپِ قابلِ رؤیت.",
+   "use_when": "مقاله جهتِ به دست آوردنِ فضا را تصمیم بداند.",
+   "aliases": [
+    "تراش آنتاگونیست",
+    "enameloplasty آنتاگونیست",
+    "اصلاح دندان مقابل",
+    "کوتاه کردن مقابل"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "insight/insight-46",
+    "chairside/chairside-31"
    ]
   },
   {
@@ -12580,7 +12609,7 @@
    "key": "اینتروژن_ارتودنسی",
    "tag": "#اینتروژن_ارتودنسی",
    "domain": null,
-   "words": 2,
+   "words": 4,
    "definition": "فرو بردنِ ارتودنتیکِ دندانِ سوپرااراپت برای بازپس‌گیریِ فضا.",
    "use_when": "مقاله اینتروژن را راه‌حل بداند.",
    "aliases": [
@@ -12593,6 +12622,28 @@
    "count": 1,
    "content_ids": [
     "chairside/chairside-19"
+   ]
+  },
+  {
+   "key": "اینفرااکلوژن",
+   "tag": "#اینفرااکلوژن",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "قرار گرفتنِ سطحِ اکلوزالِ یک ترمیم یا دندان پایین‌تر از پلنِ اکلوزال، به‌طوری که در حالتِ بستنِ فک تماسِ مؤثری برقرار نمی‌کند و آن ناحیه عملاً از سیکلِ جویدن خارج می‌شود.",
+   "use_when": "مقاله دربارهٔ ترمیم یا دندانی باشد که کوتاه‌تر از پلنِ اکلوزال ساخته/واقع شده و پیامدهای فانکشنالِ آن بررسی شود.",
+   "aliases": [
+    "infraocclusion",
+    "infra occlusion",
+    "اینفرا اکلوژن",
+    "اینفرا-اکلوژن",
+    "زیر اکلوژن",
+    "روکش کوتاه اکلوزالی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "chairside/chairside-31"
    ]
   },
   {
@@ -13146,26 +13197,6 @@
    ]
   },
   {
-   "key": "تراش_آنتاگونیست",
-   "tag": "#تراش_آنتاگونیست",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "گرفتنِ فضا از دندانِ مقابل، به‌جای کوتاه کردنِ کاسپِ قابلِ رؤیت.",
-   "use_when": "مقاله جهتِ به دست آوردنِ فضا را تصمیم بداند.",
-   "aliases": [
-    "تراش آنتاگونیست",
-    "enameloplasty آنتاگونیست",
-    "اصلاح دندان مقابل",
-    "کوتاه کردن مقابل"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "insight/insight-46"
-   ]
-  },
-  {
    "key": "تراکم_استخوان",
    "tag": "#تراکم_استخوان",
    "domain": "clinical",
@@ -13424,7 +13455,7 @@
    "key": "تفسیر_رادیوگرافی",
    "tag": "#تفسیر_رادیوگرافی",
    "domain": "clinical",
-   "words": 2,
+   "words": 4,
    "definition": "خواندنِ الگو — مرزِ صاف در برابر مرزِ منتشر — نه صرفاً دیدنِ لکه.",
    "use_when": "مقاله معیارِ تمایزِ تصویری بدهد.",
    "aliases": [
@@ -14197,6 +14228,28 @@
    ]
   },
   {
+   "key": "دندان_بدون_فانکشن",
+   "tag": "#دندان_بدون_فانکشن",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "دندانی که در اکلوژن و سیکلِ جویدن مشارکت ندارد — معمولاً به دلیلِ نبودِ آنتاگونیست — و ارزشش دیگر با سالم بودنِ تاج سنجیده نمی‌شود بلکه با نقشی که در سیستمِ جونده ایفا می‌کند.",
+   "use_when": "مقاله سرنوشتِ دندانی را بررسی کند که تاجِ سالم دارد ولی فانکشنِ اکلوزالی ندارد یا فضای پروتزیِ قوسِ مقابل را اشغال کرده.",
+   "aliases": [
+    "non functional tooth",
+    "nonfunctional tooth",
+    "دندان فاقد فانکشن",
+    "دندان بی‌فانکشن",
+    "دندان خارج از اکلوژن",
+    "tooth out of occlusion"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "chairside/chairside-31"
+   ]
+  },
+  {
    "key": "دندان_عقل_بدون_آنتاگونیست",
    "tag": "#دندان_عقل_بدون_آنتاگونیست",
    "domain": "clinical",
@@ -14431,7 +14484,7 @@
    "key": "رادیوگرافی_کنترل",
    "tag": "#رادیوگرافی_کنترل",
    "domain": "clinical",
-   "words": 2,
+   "words": 4,
    "definition": "پری‌اپیکالِ صحیح، به‌عنوان تأییدِ قطعیِ نشست.",
    "use_when": "مقاله رادیوگرافی را تأییدِ نهایی بداند، نه حس.",
    "aliases": [
@@ -16800,7 +16853,7 @@
    "key": "هوش_مصنوعی_رادیوگرافی",
    "tag": "#هوش_مصنوعی_رادیوگرافی",
    "domain": "ai",
-   "words": 3,
+   "words": 5,
    "definition": "نرم‌افزاری که روی رادیوگرافی ضایعه یا سطح استخوان را علامت می‌زند — تصویری که اغلب با ChatGPT اشتباه گرفته می‌شود.",
    "use_when": "مقاله همین دسته را موضوع یا نقطه‌ی تمایز قرار دهد.",
    "aliases": [
@@ -18399,6 +18452,7 @@
   "peri implant mucositis": "موکوزیت پری ایمپلنت",
   "additive manufacturing": "پرینت سه بعدی",
   "پیچ شکسته داخل ایمپلنت": "شکست پیچ ایمپلنت",
+  "tooth out of occlusion": "دندان بدون فانکشن",
   "deep margin elevation": "dme",
   "آماده سازی سطح سرامیک": "آماده سازی سرامیک",
   "posterior restoration": "ترمیم خلفی",
@@ -18476,6 +18530,8 @@
   "large language model": "مدل زبانی بزرگ",
   "موکوزیت پری ایمپلنتی": "موکوزیت پری ایمپلنت",
   "mechanical retention": "گیر مکانیکی",
+  "non functional tooth": "دندان بدون فانکشن",
+  "دندان خارج از اکلوژن": "دندان بدون فانکشن",
   "انتخاب جنس رستوریشن": "انتخاب متریال",
   "بالا بردن بعد عمودی": "افزایش vd",
   "انتخاب اباتمنت پایه": "انتخاب پایه",
@@ -18534,6 +18590,8 @@
   "gingival retraction": "کنترل لثه",
   "consensus statement": "کنسنسوس iti",
   "preparation quality": "کیفیت تراش",
+  "روکش کوتاه اکلوزالی": "اینفرااکلوژن",
+  "nonfunctional tooth": "دندان بدون فانکشن",
   "روکش گذاری ایمپلنت": "پروتز ایمپلنت",
   "material selection": "انتخاب متریال",
   "دندونپزشکی دیجیتال": "دندانپزشکی دیجیتال",
@@ -18712,6 +18770,7 @@
   "infection control": "کنترل عفونت",
   "retention control": "کنترل گیر",
   "anterior guidance": "گایدنس قدامی",
+  "دندان فاقد فانکشن": "دندان بدون فانکشن",
   "کلینیکال اینسایت": "اینسایت",
   "fixed prosthesis": "پروتز ثابت",
   "روکش روی ایمپلنت": "روکش ایمپلنت",
@@ -19031,6 +19090,8 @@
   "جینگوال ریترکشن": "کنترل لثه",
   "مکالمه با ای آی": "مصاحبه با هوش مصنوعی",
   "گپ پست گوتاپرکا": "گپ پست و گوتا",
+  "infra occlusion": "اینفرااکلوژن",
+  "دندان بی فانکشن": "دندان بدون فانکشن",
   "treatment plan": "طرح درمان",
   "پروتز ایمپلنتی": "پروتز ایمپلنت",
   "پست داخل کانال": "پست و کور",
@@ -19188,6 +19249,7 @@
   "composite core": "کور کامپوزیتی",
   "راهنمایی کانین": "گایدنس کانین",
   "post gutta gap": "گپ پست و گوتا",
+  "infraocclusion": "اینفرااکلوژن",
   "prosthodontics": "پروتز",
   "ویزیت کلینیکی": "کیس اینسایت",
   "post and core": "پست و کور",
@@ -19395,6 +19457,7 @@
   "راهنمای قدامی": "گایدنس قدامی",
   "canine guided": "گایدنس کانین",
   "extended scan": "گسترش اسکن",
+  "اینفرا اکلوژن": "اینفرااکلوژن",
   "تصمیم بالینی": "تصمیم درمانی",
   "تصمیم پروتزی": "تصمیم درمانی",
   "resin cement": "سمان رزینی",
@@ -20038,6 +20101,7 @@
   "light cure": "کیور",
   "سطح راهنما": "گاید پلین",
   "play store": "گوگل پلی",
+  "زیر اکلوژن": "اینفرااکلوژن",
   "کامپلیکیشن": "عوارض",
   "occlusion": "اکلوژن",
   "پلن درمان": "طرح درمان",

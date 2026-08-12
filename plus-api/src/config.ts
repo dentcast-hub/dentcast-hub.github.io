@@ -314,6 +314,16 @@ export const config = {
     maxPerUserPerHour: int('REVIEW_MAX_PER_USER_PER_HOUR', 200),
   },
 
+  // up-board's own ceiling (routes/votes.ts). Deliberately TIGHT, which is the
+  // opposite of the activity budget above and for the opposite reason: a heart is
+  // one press per page, so an honest reader tops out at a handful an hour even
+  // while browsing hard, and the vote is the one signal on the site whose whole
+  // value is that it maps to a person. A loose cap here would let one account
+  // hand-pick the public ordering of the site in an afternoon.
+  votes: {
+    maxPerUserPerHour: int('VOTES_MAX_PER_USER_PER_HOUR', 60),
+  },
+
   // Spot (ad) telemetry. Its own budget, an order of magnitude above the generic
   // anonymous-event cap: an impression fires per page view PER enabled slot, and
   // Iranian mobile networks put many readers behind one NAT address, so a 60/h

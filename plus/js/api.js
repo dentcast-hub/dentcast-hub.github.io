@@ -174,6 +174,14 @@ export const api = {
   anonEvent: (event, content_id) =>
     request('/anon/event', { method: 'POST', body: { event, content_id } }),
 
+  // up-board (قلبِ مقاله). Reading is public on both of these — the count is
+  // printed on the page for everyone, so only the pressing needs a session.
+  votes: (content_id) => request('/votes', { query: { id: content_id } }),
+  // `vote` carries the INTENT rather than toggling, so a retry after a dropped
+  // connection repeats the press instead of silently undoing it.
+  setVote: (content_id, vote) => request('/votes', { method: 'POST', body: { content_id, vote } }),
+  voteBoard: () => request('/votes/board'),
+
   // highlights
   listHighlights: (content_id) => request('/highlights', { query: { content_id } }),
   listTopic: (topic) => request('/highlights', { query: { topic } }),

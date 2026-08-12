@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <link rel="preconnect" href="https://api.dentcast.ir" crossorigin>
+  <link rel="preconnect" href="https://api.dentcast.org" crossorigin>
+  <!-- Google Analytics (deferred: loads only after the page is fully rendered) -->
+  <script>
+    window.addEventListener('load', function () {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-GMM0WC8X3M');
+      var ga = document.createElement('script');
+      ga.async = true;
+      ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-GMM0WC8X3M';
+      document.head.appendChild(ga);
+    });
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>up-board / دنت‌کست</title>
+  <meta name="description" content="همهٔ مطالب دنت‌کست در یک فهرست — به ترتیب تازه‌ترین، یا بر اساس آنچه خواننده‌ها پسندیده‌اند.">
+
+  <!-- NOINDEX, FOLLOW — and this is the whole reason the page can exist as one
+       document with two arrangements.
+
+       Every link here already has an indexed home: its own page, its section
+       index, and its pillar. This page adds no text of its own; what it adds is
+       an ORDER, and the ranked half of that order is produced by signed-in
+       reader behaviour that a crawler can neither see nor reproduce. Indexed, it
+       would be 443 links Google has already catalogued, competing with the pillar
+       pages that were split (page vs structure.json) precisely so that two
+       orderings of one link set never appear as two indexable documents.
+
+       `follow` is kept on purpose: the links are real and should still pass
+       through. Deliberately NOT in sitemap.xml, and up-board/index.json is
+       disallowed in robots.txt — the same treatment the pillar sidecars get, and
+       it costs the page nothing, because robots rules never apply to a page's
+       own fetch of its own data. -->
+  <meta name="robots" content="noindex, follow">
+
+  <link rel="icon" href="/logo-v2.png" type="image/png" sizes="512x512">
+  <link rel="apple-touch-icon" href="/logo-v2.png">
+  <meta name="theme-color" content="#F3F5F7">
+
+  <link rel="stylesheet" href="/dc-theme.css">
+  <link rel="stylesheet" href="/dc-nav.css">
+  <!-- Required by the search box below: it is a fixed bottom-sheet that is
+       CLOSED by default, and that closed state lives here. Ship the markup
+       without this stylesheet and the box renders as a plain visible div at the
+       top of the page, shoving the list down. -->
+  <link rel="stylesheet" href="/global-search.css?v=5">
+
+  <style>
+    /* توکن‌های امبر — mirrored from index.html's own set. dc-theme.css does not
+       carry them (they are premium-surface only), and this page needs them for
+       the lock on «بالاترین». Keep in sync with index.html. */
+    :root{
+      --x-amber:#c9922b; --x-amber-ink:#8a6414;
+      --x-amber-wash:rgba(201,146,43,.08); --x-amber-bd:rgba(154,107,21,.22);
+    }
+    [data-theme="dark"]{
+      --x-amber:#e3b849; --x-amber-ink:#e3b849;
+      --x-amber-wash:rgba(227,184,73,.09); --x-amber-bd:rgba(227,184,73,.26);
+    }
+
+    .ub-page{
+      max-width:44rem;
+      margin:0 auto;
+      padding:1.25rem 1rem 4rem;
+    }
+
+    .ub-head{ margin:0 0 1.25rem; }
+    .ub-title{
+      display:flex; align-items:baseline; flex-wrap:wrap; gap:.5rem;
+      margin:0 0 .4rem;
+    }
+    .ub-title h1{
+      margin:0; font-size:1.6rem; font-weight:900; letter-spacing:-.02em;
+      color:var(--txt); direction:ltr;
+    }
+    .ub-title .ub-fa{ font-size:.85rem; font-weight:700; color:var(--txt3); }
+    .ub-lead{
+      margin:0; font-size:.86rem; line-height:1.9; color:var(--txt2);
+      text-wrap:pretty; min-height:1.6em;
+    }
+
+    /* مرتب‌سازی: دو چیدمانِ یک فهرست */
+    .ub-sort{
+      display:flex; gap:0; background:var(--surface2);
+      border:1px solid var(--border); border-radius:var(--r-f, 999px);
+      padding:.2rem; margin:0 0 .75rem;
+    }
+    .ub-sort button{
+      flex:1 1 0; font:inherit; font-size:.85rem; font-weight:800;
+      color:var(--txt3); background:transparent; border:0;
+      border-radius:var(--r-f, 999px); padding:.5rem .6rem; cursor:pointer;
+      transition:background .2s, color .2s;
+    }
+    .ub-sort button[aria-selected="true"]{
+      color:var(--ac); background:var(--surface);
+      box-shadow:0 1px 3px rgba(2,35,96,.09);
+    }
+    [data-theme="dark"] .ub-sort button[aria-selected="true"]{
+      box-shadow:0 1px 3px rgba(0,0,0,.3);
+    }
+    .ub-sort button:focus-visible{ outline:2px solid var(--ac); outline-offset:2px; }
+
+    /* ── قفلِ پریمیوم روی «بالاترین» ──
+       امبر، نه آبی. در کل سایت امبر یک معنا دارد: «این چیزی است که اشتراک
+       می‌خرد». تا وقتی این تب رایگان بود آبی درست بود؛ حالا که نیست، باید
+       همان رنگی را بپوشد که کارت‌های قفلِ صفحهٔ اصلی می‌پوشند — وگرنه معنیِ
+       امبر در جای دیگری خرج شده. تب حذف نمی‌شود: خواننده‌ای که نمی‌تواند
+       بازش کند هم باید بداند چیدمانِ دوم وجود دارد. */
+    .ub-sort button.is-locked{ color:var(--x-amber-ink, #8a6414); }
+    .ub-sort button.is-locked::after{
+      content:"🔒"; font-size:.72em; margin-inline-start:.3rem;
+      vertical-align:.05em;
+    }
+    .ub-sort button.is-locked[aria-selected="true"]{
+      color:var(--x-amber-ink, #8a6414); background:var(--surface);
+    }
+
+    /* فیلتر نوع */
+    .ub-filters{
+      display:flex; gap:.375rem; overflow-x:auto;
+      padding:0 0 .625rem; margin:0; scrollbar-width:none;
+      -webkit-overflow-scrolling:touch;
+    }
+    .ub-filters::-webkit-scrollbar{ display:none; }
+    .ub-filter{
+      flex:none; font:inherit; font-size:.76rem; font-weight:700;
+      color:var(--txt3); background:var(--surface2);
+      border:1px solid var(--border2); border-radius:var(--r-f, 999px);
+      padding:.3rem .75rem; cursor:pointer; white-space:nowrap;
+      transition:color .17s, background .17s, border-color .17s;
+    }
+    .ub-filter[aria-pressed="true"]{
+      color:var(--ac); background:var(--chip-bg); border-color:var(--chip-bd);
+    }
+    .ub-filter:hover{ color:var(--ac); }
+    .ub-filter:focus-visible{ outline:2px solid var(--ac); outline-offset:2px; }
+
+    .ub-count{
+      margin:0 0 .75rem; padding:0 .15rem;
+      font-size:.75rem; color:var(--txt3);
+      font-variant-numeric:tabular-nums;
+    }
+
+    /* ردیف‌ها */
+    .ub-list{ list-style:none; margin:0; padding:0; }
+    .ub-row{
+      display:flex; align-items:flex-start; gap:.75rem;
+      padding:.8rem .75rem; margin:0 0 .5rem;
+      background:var(--card-bg); border:1px solid var(--card-border);
+      border-radius:var(--r-md, 14px);
+      transition:border-color .17s;
+    }
+    .ub-row:hover{ border-color:var(--chip-bd); }
+    .ub-rank{
+      flex:none; width:1.9em; padding-top:.05rem;
+      font-size:1rem; font-weight:900; color:var(--txt3);
+      text-align:center; line-height:1.5;
+      font-variant-numeric:tabular-nums;
+    }
+    .ub-rank.is-top{ color:var(--ac); }
+    .ub-main{ flex:1 1 auto; min-width:0; }
+    .ub-row-title{
+      display:block; margin:0 0 .35rem;
+      font-size:.9rem; font-weight:700; line-height:1.7;
+      color:var(--txt); text-decoration:none; text-wrap:pretty;
+    }
+    .ub-row-title:hover{ color:var(--ac); }
+    .ub-row-title:focus-visible{ outline:2px solid var(--ac); outline-offset:2px; border-radius:4px; }
+    .ub-meta{ display:flex; flex-wrap:wrap; align-items:center; gap:.5rem; }
+    .ub-type, .ub-date{ font-size:.7rem; color:var(--txt3); }
+    .ub-type{ font-weight:700; }
+    /* قلب و شاخصِ تعامل — روی هم، نه کنار هم. یکی شمارِ آدم است و دیگری
+       جایگاه بین مطالب؛ شانه‌به‌شانه خوانده می‌شوند انگار یک نسبت‌اند. */
+    .ub-signals{
+      flex:none; display:flex; flex-direction:column; align-items:flex-end; gap:.3rem;
+      padding-top:.1rem;
+    }
+    .ub-hearts{
+      display:inline-flex; align-items:center; gap:.25rem;
+      font-size:.8rem; font-weight:800; color:var(--heart);
+      font-variant-numeric:tabular-nums;
+    }
+    .ub-hearts svg{ width:.95em; height:.95em; }
+    .ub-engagement{
+      font:inherit; font-size:.68rem; font-weight:800;
+      color:var(--txt3); background:var(--surface2);
+      border:1px solid var(--border2); border-radius:var(--r-f, 999px);
+      padding:.1rem .45rem; cursor:pointer; white-space:nowrap;
+      font-variant-numeric:tabular-nums;
+      transition:color .17s, border-color .17s;
+    }
+    .ub-engagement:hover{ color:var(--ac); border-color:var(--chip-bd); }
+    .ub-engagement:focus-visible{ outline:2px solid var(--ac); outline-offset:2px; }
+
+    .ub-sentinel{
+      text-align:center; font-size:.75rem; color:var(--txt3);
+      padding:.9rem 0 .25rem; min-height:1.5rem;
+      font-variant-numeric:tabular-nums;
+    }
+
+    @media (min-width:40rem){
+      .ub-page{ padding:2rem 1.5rem 5rem; }
+      .ub-title h1{ font-size:1.9rem; }
+    }
+  </style>
+
+  <!-- Theme init verbatim from metanotes/index.html -->
+  <script>
+    (function(){
+      const s=localStorage.getItem('dc-theme');
+      const d=window.matchMedia('(prefers-color-scheme:dark)').matches;
+      if(s==='dark'||(s===null&&d)) document.documentElement.setAttribute('data-theme','dark');
+    })();
+  </script>
+</head>
+<body class="up-board-page">
+
+<!-- Static fallback header. dc-nav.js REPLACES this in place with the canonical
+     one (header-contract, dc-nav.js §3) and injects the toolbar drawer and radar
+     overlay if the page lacks them, so nothing else is copied here. -->
+<header class="dc-topbar">
+  <div class="dc-topbar-actions">
+    <a href="/" aria-label="صفحه اصلی دنت‌کست" style="display:flex;align-items:center;margin-left:0.5rem;flex-shrink:0;"><img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;"></a>
+    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="ابزارها" aria-expanded="false"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
+    <button class="dc-topbar-btn dcOpenSearch" aria-label="جستجو"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+  </div>
+  <div class="dc-topbar-brand">
+    <div class="dc-topbar-brand-name">DentCast</div>
+    <a href="/about.html" class="dc-topbar-brand-sub">دکتر فواد شهابیان</a>
+  </div>
+</header>
+
+<!-- 🔍 Global Search — required markup, not decoration. global-search.js binds
+     straight to #dcSearch and throws on a page that lacks it, which kills every
+     binding after it; the canonical topbar dc-nav.js injects always carries a
+     search button, so this box has to exist for it to open. Copied verbatim
+     from pillar/index.html. -->
+<div class="dc-global-filter-box" id="dcGlobalBox">
+  <button class="dc-close-results"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+  <h3 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h3>
+  <input id="dcSearch" class="dc-search-input" placeholder="جستجو در همهٔ بخش‌های دنت‌کست…">
+  <div class="dc-filter-list">
+    <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
+    <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
+    <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
+    <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
+    <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
+    <button class="dc-filter-btn active" data-type="promptologist">پرامپتولوژیست</button>
+    <button class="dc-filter-btn active" data-type="meta">metanote</button>
+    <button class="dc-filter-btn active" data-type="chairside">chairside</button>
+    <button class="dc-filter-btn active" data-type="sharehub">Share Hub</button>
+  </div>
+  <div class="dc-results-box" id="dcResults"></div>
+</div>
+
+<main class="ub-page" id="ubRoot">
+  <div class="ub-head">
+    <div class="ub-title">
+      <h1>up-board</h1>
+      <span class="ub-fa">برگزیدهٔ خواننده‌ها</span>
+    </div>
+    <p class="ub-lead" id="ubLead">همهٔ مطالب دنت‌کست، از تازه‌ترین به قدیمی‌ترین.</p>
+  </div>
+
+  <div class="ub-sort" role="tablist" aria-label="ترتیب فهرست">
+    <button type="button" role="tab" data-sort="new" aria-selected="true">تازه‌ترین</button>
+    <button type="button" role="tab" data-sort="top" aria-selected="false">بالاترین</button>
+  </div>
+
+  <div class="ub-filters" id="ubFilters" role="group" aria-label="فیلتر بر اساس نوع مطلب"></div>
+  <p class="ub-count" id="ubCount">در حال بارگذاری…</p>
+
+  <ol class="ub-list" id="ubList"></ol>
+  <p class="ub-sentinel" id="ubSentinel"></p>
+</main>
+
+<script src="/global-search.js?v=9"></script>
+<script src="/global-search-ui.js?v=5"></script>
+<script src="/dc-nav.js?v=75" defer></script>
+<!-- The ?v= is not decoration: the module carries its own stamp onto the
+     up-board/index.json fetch (ASSET_V in upboard-page.js), so one bump
+     invalidates both the code and the 443-item catalog it draws. Managed by
+     tools/asset_version.py, which reads stamped paths out of the page text —
+     an inline import counts. -->
+<script type="module">
+  import { initUpBoard } from '/plus/js/upboard-page.js?v=5';
+  initUpBoard(document.getElementById('ubRoot'));
+</script>
+
+</body>
+</html>
