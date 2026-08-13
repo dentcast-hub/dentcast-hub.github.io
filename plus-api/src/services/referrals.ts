@@ -1,7 +1,8 @@
 import { one, query, type Queryable, pool } from '../db.js';
 import { toLatinDigits } from './phone.js';
 import {
-  spentSources, pickCredits, creditPercent, CREDIT_CAP_PERCENT, type DiscountCredit,
+  spentSources, pickCredits, creditPercent, CREDIT_CAP_PERCENT,
+  REFERRAL_QUALIFIED_SQL, type DiscountCredit,
 } from './discount-credits.js';
 
 /**
@@ -160,8 +161,25 @@ export async function checkClaim(userId: string, code: string): Promise<CheckRes
   );
   if (already) return { ok: false, reason: 'already_referred' };
 
+  // "First purchase" means MONEY, from either rail — not "first gateway row".
+  // The first cut asked `payments` alone, which is the one table a manual sale
+  // never writes: somebody who had already bought six months by واریز به شبا or
+  // by gift card looked like a brand-new account, so their SECOND subscription
+  // took the newcomer's ٪۱۰ and minted their referrer a ٪۵ (founder review,
+  // 2026-08-13). gift_redemptions is where both of those rails settle.
+  //
+  // Free premium is deliberately NOT counted — a league prize or an admin gift
+  // writes a `subscriptions` row and nothing else, and testing that table
+  // instead would spend the referral eligibility of somebody who has never paid
+  // us anything, which is the exact reader this program exists to convert.
   const purchased = await one<{ x: number }>(
-    "select 1 as x from payments where user_id = $1 and status = 'paid' limit 1", [userId],
+    `select 1 as x from payments
+      where user_id = $1 and status = 'paid'
+      union all
+     select 1 from gift_redemptions
+      where user_id = $1 and status = 'approved'
+      limit 1`,
+    [userId],
   );
   if (purchased) return { ok: false, reason: 'already_purchased' };
 
@@ -246,11 +264,11 @@ export async function referralStats(userId: string): Promise<ReferralStats> {
   const [codeRow, rows, spent] = await Promise.all([
     myCode(userId),
     query<{ id: string; percent: number; qualified: boolean }>(
+      // Same definition of "has actually paid" the credit engine uses, imported
+      // rather than restated — a referrer's profile and their price at the till
+      // must not be able to disagree about which referrals have paid off.
       `select r.id, r.referrer_percent as percent,
-              exists (
-                select 1 from payments p
-                 where p.user_id = r.referred_user_id and p.status = 'paid'
-              ) as qualified
+              ${REFERRAL_QUALIFIED_SQL} as qualified
          from referrals r
         where r.referrer_user_id = $1`,
       [userId],
