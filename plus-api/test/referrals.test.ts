@@ -462,6 +462,95 @@ describe('next_purchase_percent parity', () => {
   });
 });
 
+/* ------------------------------------------ کد معرف on the bank-transfer rail */
+
+// Founder's call, 2026-08-13: there is no gateway on this rail to apply a
+// percentage later, so the figure the buyer is told to transfer has to BE the
+// discounted one — a buyer who sends the list price has simply overpaid, and
+// getting it back is a conversation. The referrer collects their ٪۵ on
+// approval, same as the gateway.
+describe('POST /pay/bank-transfer with a referral code', () => {
+  const claimBank = (cookie: string, body: Record<string, unknown>) => app.inject({
+    method: 'POST', url: '/pay/bank-transfer', headers: { cookie }, payload: { months: 6, ...body },
+  });
+  const approve = (reference: string) =>
+    pool.query(
+      "update gift_redemptions set status = 'approved', reviewed_at = now() where reference = $1",
+      [reference],
+    );
+
+  it('quotes the DISCOUNTED amount, and hands back the list price beside it', async () => {
+    const code = await mintCodeVia(await loginAs(app, REFERRER_PHONE), 'dentmaster');
+    const buyerCookie = await loginAs(app, REFERRED_PHONE);
+
+    const res = await claimBank(buyerCookie, { referral_code: code });
+    expect(res.statusCode).toBe(200);
+    expect(res.json()).toMatchObject({
+      amount_rial: discountedRial(SIX_MONTH_RIAL, 10),
+      list_amount_rial: SIX_MONTH_RIAL,
+      referral_applied: true,
+    });
+
+    // ...and the returning buyer sees the same figure, not the list one.
+    const back = await app.inject({
+      method: 'GET', url: '/pay/bank-transfer', headers: { cookie: buyerCookie },
+    });
+    expect(back.json().redemption).toMatchObject({
+      amount_rial: discountedRial(SIX_MONTH_RIAL, 10), referral_applied: true,
+    });
+  });
+
+  it('without a code, nothing changes', async () => {
+    const res = await claimBank(await loginAs(app, REFERRED_PHONE), {});
+    expect(res.json()).toMatchObject({ amount_rial: SIX_MONTH_RIAL, referral_applied: false });
+  });
+
+  it('refuses an invalid code as a 400 instead of opening a full-price claim', async () => {
+    const buyerCookie = await loginAs(app, REFERRED_PHONE);
+    const res = await claimBank(buyerCookie, { referral_code: 'nosuchcode99' });
+    expect(res.statusCode).toBe(400);
+    expect(res.json()).toMatchObject({ error: 'referral', reason: 'unknown_code' });
+    const rows = await pool.query('select count(*)::int as n from gift_redemptions');
+    expect(rows.rows[0].n).toBe(0);
+  });
+
+  it('pays the referrer their ٪۵ once the transfer is APPROVED, and not before', async () => {
+    const referrerCookie = await loginAs(app, REFERRER_PHONE);
+    const referrerId = await userId(referrerCookie);
+    const code = await mintCodeVia(referrerCookie, 'dentmaster');
+
+    const res = await claimBank(await loginAs(app, REFERRED_PHONE), { referral_code: code });
+    // A claim in the queue is not money yet.
+    expect(creditPercent(await availableCredits(referrerId))).toBe(0);
+
+    await approve(res.json().reference);
+    expect(creditPercent(await availableCredits(referrerId))).toBe(5);
+  });
+
+  // The double-dip this rail could not otherwise close: discount_redemptions
+  // needs a payments row, and a bank transfer never writes one, so without
+  // gift_redemptions.referral_id the ٪۱۰ would come off the transfer AND still
+  // be sitting unspent for the buyer's next gateway purchase.
+  it('holds the ٪۱۰ while the claim lives, and releases it if the claim is rejected', async () => {
+    const code = await mintCodeVia(await loginAs(app, REFERRER_PHONE), 'dentmaster');
+    const buyerCookie = await loginAs(app, REFERRED_PHONE);
+    const buyerId = await userId(buyerCookie);
+
+    const res = await claimBank(buyerCookie, { referral_code: code });
+    expect(creditPercent(await availableCredits(buyerId))).toBe(0); // held by the pending claim
+
+    await approve(res.json().reference);
+    expect(creditPercent(await availableCredits(buyerId))).toBe(0); // spent for good
+
+    await pool.query(
+      "update gift_redemptions set status = 'rejected' where reference = $1",
+      [res.json().reference],
+    );
+    // A sale that never happened must not cost the buyer their one-time ٪۱۰.
+    expect(creditPercent(await availableCredits(buyerId))).toBe(10);
+  });
+});
+
 /* ------------------------------------------------------- GET /referral stats */
 
 // Founder report, 2026-08-13: the profile kept promising the full ٪۱۰ after it

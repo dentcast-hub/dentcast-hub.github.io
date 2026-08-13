@@ -236,7 +236,8 @@ export const api = {
   giftStatus: () => request('/pay/gift'),
   // Bank transfer (واریز به شبا) — second manual rail, same shape as the gift
   // card pair above. The amount is computed server-side from `months`.
-  bankTransferStart: (months) => request('/pay/bank-transfer', { method: 'POST', body: { months } }),
+  bankTransferStart: (months, referralCode) =>
+    request('/pay/bank-transfer', { method: 'POST', body: { months, referral_code: referralCode } }),
   bankTransferStatus: () => request('/pay/bank-transfer'),
 
   // کد معرف — services/referrals.ts. referralGet returns my code (or null) +

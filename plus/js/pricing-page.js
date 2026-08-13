@@ -835,9 +835,16 @@ async function main() {
       btn.disabled = true;
       btn.textContent = 'در حال ثبت…';
       try {
-        const r = await api.bankTransferStart(plan.months);
+        // The same validated code the gateway path uses. On this rail there is
+        // no gateway to apply a percentage later, so the discount has to be in
+        // the figure the buyer is told to transfer — a buyer who sends the list
+        // price has simply overpaid, and getting it back is a conversation.
+        const r = await api.bankTransferStart(
+          plan.months, info.referral?.percent ? refInputValue : undefined,
+        );
         drawBank({
           status: 'pending', reference: r.reference, months: r.months, amount_rial: r.amount_rial,
+          referral_applied: r.referral_applied,
         });
       } catch (err) {
         btn.disabled = false;

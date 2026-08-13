@@ -12,8 +12,8 @@
     "hash": "f045ac7d9d9e9e1d"
   },
   "/dc-nav.js": {
-    "v": 91,
-    "hash": "acb703c2030fdd0f"
+    "v": 92,
+    "hash": "b14fc4383535b411"
   },
   "/dc-theme.css": {
     "v": 2,
@@ -32,60 +32,60 @@
     "hash": "bd50932cb1d75571"
   },
   "/pillar/premium-index.js": {
-    "v": 23,
-    "hash": "863c49ae4637d082"
+    "v": 24,
+    "hash": "f3dbfb955ab22ef8"
   },
   "/plus/js/assistant-page.js": {
-    "v": 24,
-    "hash": "3218a32f322bfe2e"
+    "v": 25,
+    "hash": "d07c83d72537243d"
   },
   "/plus/js/cards-page.js": {
-    "v": 24,
-    "hash": "2ee3b957f622c27f"
+    "v": 25,
+    "hash": "fb3f8ea9019fff18"
   },
   "/plus/js/collection-page.js": {
-    "v": 29,
-    "hash": "b12e81c80cd89cd2"
+    "v": 30,
+    "hash": "0373634c9ba069f0"
   },
   "/plus/js/collections-page.js": {
-    "v": 29,
-    "hash": "646c806dcdff7dad"
+    "v": 30,
+    "hash": "e60a740a1a5b1586"
   },
   "/plus/js/dashboard-page.js": {
-    "v": 41,
-    "hash": "32e0bb9537586e5e"
+    "v": 42,
+    "hash": "06a668ddd9eeeb3e"
   },
   "/plus/js/highlights-page.js": {
-    "v": 28,
-    "hash": "efc78d7bdee4aae8"
+    "v": 29,
+    "hash": "70fdc079e06d7090"
   },
   "/plus/js/pathway-page.js": {
-    "v": 27,
-    "hash": "7988c3759e75351b"
+    "v": 28,
+    "hash": "4f63f423724f92bf"
   },
   "/plus/js/pathways-page.js": {
-    "v": 27,
-    "hash": "477a9f596dd3c619"
+    "v": 28,
+    "hash": "51d79dbbd2d2acbb"
   },
   "/plus/js/pay-result-page.js": {
-    "v": 22,
-    "hash": "d2a1936311e74a58"
+    "v": 23,
+    "hash": "29507ea4541a62e8"
   },
   "/plus/js/pricing-page.js": {
-    "v": 35,
-    "hash": "7303446596105525"
+    "v": 36,
+    "hash": "544d22cdf55a2b2f"
   },
   "/plus/js/profile-page.js": {
-    "v": 36,
-    "hash": "2709f316e76118b0"
+    "v": 37,
+    "hash": "8fb24861cd8d7846"
   },
   "/plus/js/reading-compass-page.js": {
-    "v": 25,
-    "hash": "d1482ab7ba93f37f"
+    "v": 26,
+    "hash": "c77135becb5c4ec8"
   },
   "/plus/js/support-page.js": {
-    "v": 11,
-    "hash": "92b1940040c273e7"
+    "v": 12,
+    "hash": "cb32ff134a3fed13"
   },
   "/plus/js/upboard-page.js": {
     "v": 11,
@@ -104,7 +104,7 @@
     "hash": "a0c7d3b9210c4740"
   },
   "dc-nav.js:V": {
-    "v": 91,
-    "hash": "55aff1e4da3a26c2"
+    "v": 92,
+    "hash": "937a10b139398f21"
   }
 }

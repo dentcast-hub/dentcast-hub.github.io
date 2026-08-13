@@ -49,6 +49,8 @@ export interface Redemption {
   kind: string;
   months: number;
   amount_rial: number | null;
+  /** The کد معرف this claim is spending, if any — migration 0045. */
+  referral_id: string | null;
   status: RedemptionStatus;
   note: string | null;
   reviewed_at: Date | null;
@@ -56,7 +58,7 @@ export interface Redemption {
 }
 
 const COLUMNS =
-  'id, user_id, reference, code, kind, months, amount_rial, status, note, reviewed_at, created_at';
+  'id, user_id, reference, code, kind, months, amount_rial, referral_id, status, note, reviewed_at, created_at';
 
 /** The tag the buyer writes into the transfer/gift message — services/reference.ts owns the alphabet. */
 const mintClaimReference = (): string => mintReference('DC');
@@ -113,7 +115,7 @@ export function bankTransferInstructions() {
 export async function startRedemption(
   userId: string,
   kind: RedemptionKind = 'apple_us',
-  opts: { months?: number; amountRial?: number } = {},
+  opts: { months?: number; amountRial?: number; referralId?: string | null } = {},
 ): Promise<StartResult> {
   if (kind === 'apple_us' && !config.giftCard.enabled) {
     return { outcome: 'disabled', redemption: null, message: 'این روش پرداخت فعلاً فعال نیست.' };
@@ -124,6 +126,9 @@ export async function startRedemption(
 
   const months = kind === 'apple_us' ? config.giftCard.months : opts.months!;
   const amountRial = kind === 'apple_us' ? null : opts.amountRial!;
+  // Only the bank rail can carry a کد معرف: a gift card's price is in dollars
+  // and set by Apple, so there is no figure here for a percentage to act on.
+  const referralId = kind === 'apple_us' ? null : opts.referralId ?? null;
 
   // One open claim PER RAIL at a time — not globally: someone with a pending
   // gift-card claim must not be refused a bank-transfer claim by the same
@@ -144,9 +149,9 @@ export async function startRedemption(
   for (let attempt = 0; attempt < 5; attempt += 1) {
     try {
       const row = (await one<Redemption>(
-        `insert into gift_redemptions (user_id, reference, kind, months, amount_rial)
-         values ($1, $2, $3, $4, $5) returning ${COLUMNS}`,
-        [userId, mintClaimReference(), kind, months, amountRial],
+        `insert into gift_redemptions (user_id, reference, kind, months, amount_rial, referral_id)
+         values ($1, $2, $3, $4, $5, $6) returning ${COLUMNS}`,
+        [userId, mintClaimReference(), kind, months, amountRial, referralId],
       ))!;
       await notifyFounder(row);
       return { outcome: 'started', redemption: row, message: '' };

@@ -13,7 +13,9 @@ import { readCallback } from '../services/zibal.js';
 import {
   startRedemption, latestRedemption, giftInstructions, bankTransferInstructions,
 } from '../services/gift-redemption.js';
-import { checkClaim, normalizeCode, REFERRED_DISCOUNT_PERCENT } from '../services/referrals.js';
+import {
+  checkClaim, claimReferral, claimRefusalMessage, normalizeCode, REFERRED_DISCOUNT_PERCENT,
+} from '../services/referrals.js';
 import { query } from '../db.js';
 
 /**
@@ -331,17 +333,51 @@ export async function payRoutes(app: FastifyInstance): Promise<void> {
     schema: {
       body: {
         type: 'object', required: ['months'],
-        properties: { months: { type: 'integer', minimum: 1, maximum: 60 } },
+        properties: {
+          months: { type: 'integer', minimum: 1, maximum: 60 },
+          referral_code: { type: 'string', maxLength: 24 },
+        },
       },
     },
   }, async (request, reply) => {
-    const { months } = request.body as { months: number };
-    const amountRial = planAmountRial(months);
-    if (amountRial === null) {
+    const { months, referral_code: referralCode } = request.body as {
+      months: number; referral_code?: string;
+    };
+    const listRial = planAmountRial(months);
+    if (listRial === null) {
       return reply.code(400).send({ error: 'unknown_plan', message: 'این مدت اشتراک تعریف نشده است.' });
     }
 
-    const r = await startRedemption(request.user!.id, 'bank_transfer', { months, amountRial });
+    // کد معرف on the manual rail (founder's call, 2026-08-13): the figure the
+    // buyer is told to transfer must ALREADY be the discounted one — there is
+    // no gateway here to apply a percentage later, and a buyer who transfers
+    // the list price has simply overpaid.
+    //
+    // Only the referral credit applies. Badge credits and «ستون» deliberately
+    // stay out: on this rail the amount is what the founder announces and can
+    // still overwrite by hand (support-payment-handoff decision 2.3), and
+    // spending a one-time badge credit here would consume it with nothing in
+    // discount_redemptions able to record that it was spent.
+    //
+    // Claimed BEFORE the amount is computed and outside any catch: an invalid
+    // code is the customer's mistake, and telling them beats opening a claim
+    // at full price that they then have to argue about.
+    let referralId: string | null = null;
+    let amountRial = listRial;
+    if (referralCode) {
+      const claim = await claimReferral(request.user!.id, referralCode);
+      if (!claim.ok) {
+        return reply.code(400).send({
+          error: 'referral', reason: claim.reason, message: claimRefusalMessage(claim.reason),
+        });
+      }
+      referralId = claim.referral.id;
+      amountRial = discountedRial(listRial, claim.referral.referred_percent);
+    }
+
+    const r = await startRedemption(request.user!.id, 'bank_transfer', {
+      months, amountRial, referralId,
+    });
 
     if (r.outcome === 'disabled') {
       return reply.code(503).send({ error: r.outcome, message: r.message });
@@ -352,6 +388,12 @@ export async function payRoutes(app: FastifyInstance): Promise<void> {
       reference: r.redemption!.reference,
       months: r.redemption!.months,
       amount_rial: r.redemption!.amount_rial,
+      // The list figure rides beside the real one so the page can strike it
+      // through — same shape /pay/plans uses. Only differs when a کد معرف
+      // priced this claim, or when `reused` handed back an older claim that
+      // one did.
+      list_amount_rial: listRial,
+      referral_applied: r.redemption!.referral_id !== null,
       reused: r.outcome === 'already_pending',
     });
   });
@@ -365,6 +407,7 @@ export async function payRoutes(app: FastifyInstance): Promise<void> {
       redemption: row && {
         reference: row.reference,
         status: row.status, months: row.months, amount_rial: row.amount_rial,
+        referral_applied: row.referral_id !== null,
         note: row.status === 'rejected' ? row.note : null,
         created_at: row.created_at, reviewed_at: row.reviewed_at,
       },

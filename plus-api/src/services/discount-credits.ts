@@ -118,6 +118,43 @@ export async function grantCredits(
  * are deliberate: two entirely separate credits with two separate
  * spent-nesses, with no extra column needed to tell them apart.
  */
+/**
+ * When a referral has earned its referrer the ٪۵: the referred account has
+ * actually paid, on EITHER rail.
+ *
+ * `payments` alone was the first cut and it is the one table a manual sale
+ * never writes — activateMonths() is called straight from the gift-card and
+ * bank-transfer approvals. Since those rails now carry the referral discount
+ * too (migration 0045), a referrer whose friend paid by واریز به شبا would
+ * otherwise watch a real, approved, discounted sale earn them nothing.
+ *
+ * Exported because services/referrals.ts's own stats must answer this exact
+ * question and two copies of it would eventually be two answers. It lives
+ * HERE rather than there only to keep the import one-way: referrals.ts already
+ * imports this module.
+ */
+export const REFERRAL_QUALIFIED_SQL = `(
+  exists (select 1 from payments p
+           where p.user_id = r.referred_user_id and p.status = 'paid')
+  or exists (select 1 from gift_redemptions g
+              where g.user_id = r.referred_user_id and g.status = 'approved')
+)`;
+
+/**
+ * A referral's own ٪۱۰ is held while a manual claim is spending it.
+ *
+ * The gateway side of this is discount_redemptions ↔ payments; the manual side
+ * is gift_redemptions.referral_id, and both decide the same way — by the
+ * status of the row that is spending it. Pending or approved holds the credit;
+ * rejected releases it with nothing to clean up. Without this the ٪۱۰ would
+ * come off the transfer AND still be sitting there, unspent, for the buyer's
+ * next gateway purchase.
+ */
+const REFERRAL_HELD_BY_CLAIM_SQL = `exists (
+  select 1 from gift_redemptions g
+   where g.referral_id = r.id and g.status in ('pending', 'approved')
+)`;
+
 export async function referralCredits(
   userId: string,
   client: Queryable = pool,
@@ -127,12 +164,12 @@ export async function referralCredits(
             'تخفیف معرفی' as label_fa
        from referrals r
       where r.referred_user_id = $1
+        and not ${REFERRAL_HELD_BY_CLAIM_SQL}
      union all
      select 'referral_bonus:' || r.id, r.referrer_percent, 'پاداش معرفی'
        from referrals r
       where r.referrer_user_id = $1
-        and exists (select 1 from payments p
-                     where p.user_id = r.referred_user_id and p.status = 'paid')`,
+        and ${REFERRAL_QUALIFIED_SQL}`,
     [userId],
   );
   return r.rows.map((row) => ({ ...row, kind: 'referral' as const }));

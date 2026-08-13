@@ -1,7 +1,8 @@
 import { one, query, type Queryable, pool } from '../db.js';
 import { toLatinDigits } from './phone.js';
 import {
-  spentSources, pickCredits, creditPercent, CREDIT_CAP_PERCENT, type DiscountCredit,
+  spentSources, pickCredits, creditPercent, CREDIT_CAP_PERCENT,
+  REFERRAL_QUALIFIED_SQL, type DiscountCredit,
 } from './discount-credits.js';
 
 /**
@@ -263,11 +264,11 @@ export async function referralStats(userId: string): Promise<ReferralStats> {
   const [codeRow, rows, spent] = await Promise.all([
     myCode(userId),
     query<{ id: string; percent: number; qualified: boolean }>(
+      // Same definition of "has actually paid" the credit engine uses, imported
+      // rather than restated — a referrer's profile and their price at the till
+      // must not be able to disagree about which referrals have paid off.
       `select r.id, r.referrer_percent as percent,
-              exists (
-                select 1 from payments p
-                 where p.user_id = r.referred_user_id and p.status = 'paid'
-              ) as qualified
+              ${REFERRAL_QUALIFIED_SQL} as qualified
          from referrals r
         where r.referrer_user_id = $1`,
       [userId],
