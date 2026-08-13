@@ -50,6 +50,7 @@ export async function achievementRoutes(app: FastifyInstance): Promise<void> {
     // and the per-level chips, never the badges.
     let spent: Set<string> | null = null;
     let readyCredits: DiscountCredit[] = [];
+    let spentCredits: DiscountCredit[] = [];
     try {
       // referralCredits() joins here too — its own doc explains why leaving
       // it out would show the profile a SMALLER number than /pay/plans
@@ -60,9 +61,15 @@ export async function achievementRoutes(app: FastifyInstance): Promise<void> {
       spent = await spentSources(user.id);
       const mine = [...badgeCredits(facts), ...grants, ...referral];
       readyCredits = mine.filter((c) => !spent!.has(c.source));
+      // The other half of the same partition. A reader looking at «تخفیف‌های
+      // من» is asking about their whole position, and "what is left" alone
+      // cannot answer it: an account that has spent everything reads
+      // identically to one that never earned anything.
+      spentCredits = mine.filter((c) => spent!.has(c.source));
     } catch {
       spent = null;
       readyCredits = [];
+      spentCredits = [];
     }
     const groupName = new Map(catalog.groups.map((g) => [g.key, g.title_fa]));
     const tierByOrder = new Map(tiers.map((t) => [t.tier_order, t]));
@@ -171,6 +178,12 @@ export async function achievementRoutes(app: FastifyInstance): Promise<void> {
     const pillarPct = (facts.metrics.pillar_seat ?? 0) > 0 ? PILLAR_DISCOUNT_PERCENT : 0;
     const discount = spent === null ? null : {
       ready_percent: creditPercent(readyCredits),
+      // What has already been consumed by a purchase — the half of the ledger
+      // «تخفیف‌های من» needs in order to be a position rather than a teaser.
+      // Counted on the same definition availableCredits() uses (a credit is
+      // spent while its payment reads pending or paid), so ready + spent is
+      // always everything this account has ever held, with no third state.
+      spent_percent: creditPercent(spentCredits),
       cap_percent: CREDIT_CAP_PERCENT,
       pillar_percent: pillarPct,
       next_purchase_percent: pillarPct + creditPercent(pickCredits(readyCredits)),

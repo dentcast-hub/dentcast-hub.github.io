@@ -6,7 +6,7 @@
 // its criterion. Both are one careless line away from breaking silently.
 import { describe, it, expect, beforeEach } from 'vitest';
 
-const { achievementsBody } = await import('/plus/js/achievements.js');
+const { achievementsBody, discountBody } = await import('/plus/js/achievements.js');
 
 /** A response shaped exactly like GET /achievements returns. */
 function payload(over: Record<string, unknown> = {}) {
@@ -236,9 +236,20 @@ describe('the tally', () => {
 describe('the discount block says what the cap governs', () => {
   const discount = (over: Record<string, unknown> = {}) => ({
     discount: {
-      pillar_percent: 20, ready_percent: 6, next_purchase_percent: 26, cap_percent: 10, ...over,
+      pillar_percent: 20, ready_percent: 6, next_purchase_percent: 26, cap_percent: 10,
+      spent_percent: 0, ...over,
     },
   });
+
+  // «تخفیف‌های من» is its own section since 2026-08-13 (it was a strip under
+  // the «افتخارات» heading, which announced a trophy shelf and showed a
+  // price). The copy rules below are unchanged; only the mount point moved.
+  function mount(data: Record<string, unknown>) {
+    document.body.replaceChildren();
+    const body = discountBody(data);
+    if (body) document.body.appendChild(body);
+    return body;
+  }
 
   it('never lets a seat-holder read the cap as covering their permanent ٪۲۰', () => {
     mount(payload(discount()));
@@ -276,5 +287,55 @@ describe('the discount block says what the cap governs', () => {
 
     expect(foot).toContain('سهم نشان‌ها');
     expect(foot).not.toContain('ستون');
+  });
+
+  // ---------------------------------------------------------- the position ---
+  //
+  // Founder report, 2026-08-13: the box has to answer «چقدر دارم، چقدرش را
+  // استفاده کرده‌ام، چقدرش مانده» — a position, not a teaser. Before this it
+  // reported only what was ready and vanished outright once that hit zero, so
+  // an account that had SPENT its credit was indistinguishable from one that
+  // never earned any, precisely when the reader was asking.
+  describe('reports the whole position, not just what is ready', () => {
+    const ledger = () => [...document.querySelectorAll('.dcp-disc-ledger b')]
+      .map((n) => n.textContent);
+
+    it('shows unspent, spent and what the next purchase takes', () => {
+      mount(payload(discount({
+        pillar_percent: 0, ready_percent: 6, spent_percent: 4, next_purchase_percent: 6,
+      })));
+      expect(ledger()).toEqual(['٪۶', '٪۴', '٪۶']);
+    });
+
+    it('still renders for an account that has spent everything', () => {
+      const body = mount(payload(discount({
+        pillar_percent: 0, ready_percent: 0, spent_percent: 10, next_purchase_percent: 0,
+      })));
+      expect(body).not.toBeNull();
+      expect(ledger()).toEqual(['٪۰', '٪۱۰', '٪۰']);
+      // ...and says so, rather than advertising a discount that is not there.
+      expect(document.querySelector('.dcp-disc-t h3')!.textContent)
+        .toContain('تخفیف آماده‌ای نداری');
+    });
+
+    it('renders nothing at all for an account with no position either way', () => {
+      expect(discountBody(payload(discount({
+        pillar_percent: 0, ready_percent: 0, spent_percent: 0, next_purchase_percent: 0,
+      })))).toBeNull();
+      expect(discountBody(payload())).toBeNull(); // no `discount` block at all
+      expect(discountBody(null)).toBeNull();
+    });
+  });
+
+  // The split itself. Without this, moving the strip back under «افتخارات»
+  // would go unnoticed until somebody looked at the profile again.
+  it('is no longer part of the «افتخارات» body', () => {
+    document.body.replaceChildren();
+    const body = achievementsBody(payload(discount()))!;
+    document.body.appendChild(body);
+    expect(document.querySelector('.dcp-disc')).toBeNull();
+    // ...while the wall itself is untouched.
+    expect(document.querySelector('.dcp-bg-wall')).not.toBeNull();
+    expect(document.querySelector('.dcp-md-row')).not.toBeNull();
   });
 });

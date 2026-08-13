@@ -288,33 +288,58 @@ function tally(s) {
 }
 
 /**
- * The money strip above the wall: what the account's next purchase is worth.
+ * «تخفیف‌های من» — the account's whole discount position, as its OWN section.
+ *
+ * It used to be a strip inside achievementsBody(), which put a money box under
+ * the heading «افتخارات» — so the profile announced a trophy shelf and then
+ * showed a price (founder report, 2026-08-13). The two are different subjects
+ * and now have one heading each; profile.js renders this one beside «پلن»,
+ * where money belongs, and «افتخارات» keeps only the tally, the medals and
+ * the wall.
  *
  * All figures come from GET /achievements' `discount` block and are derived
  * there — this only phrases them. Two shapes: a «ستون» seat-holder sees the
  * SUM their next renewal gets (permanent + one-time, e.g. ٪۲۶) with a chip
- * per part; everyone else sees their ready one-time percent. Renders nothing
- * when there is no money to speak of, so the wall predating this feature
- * looks exactly as it always did.
+ * per part; everyone else sees their ready one-time percent.
+ *
+ * It renders for a SPENT-OUT account too (next = 0, spent > 0). Hiding that
+ * case was the same mistake in miniature: somebody who has used their credit
+ * saw the identical blank as somebody who never had any, so the one question
+ * this box exists to answer — «چقدرش را استفاده کرده‌ام؟» — had no answer
+ * exactly when it was being asked. Only a genuinely empty position (nothing
+ * earned, nothing spent, no seat) renders nothing.
  */
-function discountStrip(d) {
+export function discountBody(data) {
+  const d = data && data.discount;
   if (!d) return null;
   const ready = d.ready_percent || 0;
   const pillar = d.pillar_percent || 0;
   const next = d.next_purchase_percent || 0;
-  if (next <= 0) return null;
+  const used = d.spent_percent || 0;
+  if (next <= 0 && ready <= 0 && used <= 0) return null;
 
   const kids = [
     el('div', { class: 'dcp-disc-top' }, [
       el('span', { class: 'dcp-disc-pct' + (pillar > 0 ? ' is-big' : '') }, '٪' + faNum(next)),
       el('div', { class: 'dcp-disc-t' }, [
-        el('h3', {}, pillar > 0
-          ? `تمدید بعدی تو ٪${faNum(next)} ارزان‌تر است`
-          : `٪${faNum(next)} تخفیف آمادهٔ توست`),
-        el('p', {}, pillar > 0
-          ? 'قدردانیِ همیشگی ستون، به‌اضافهٔ تخفیف یک‌بارمصرفِ نشان‌هایت.'
-          : 'نشان‌های سطح دوم و سوم، هر کدام یک تخفیف یک‌بارمصرف دارند. در خرید بعدی خودکار کم می‌شود.'),
+        el('h3', {}, next <= 0
+          ? 'الان تخفیف آماده‌ای نداری'
+          : pillar > 0
+            ? `تمدید بعدی تو ٪${faNum(next)} ارزان‌تر است`
+            : `٪${faNum(next)} تخفیف آمادهٔ توست`),
+        el('p', {}, next <= 0
+          ? 'تخفیف‌هایی که داشتی مصرف شده‌اند. نشان تازه یا معرفیِ تازه، دوباره پرش می‌کند.'
+          : pillar > 0
+            ? 'قدردانیِ همیشگی ستون، به‌اضافهٔ تخفیف یک‌بارمصرفِ نشان‌ها و معرفی‌هایت.'
+            : 'نشان‌های سطح دوم و سوم و هر معرفیِ موفق، یک تخفیف یک‌بارمصرف دارند. در خرید بعدی خودکار کم می‌شود.'),
       ]),
+    ]),
+    // The position itself, and the reason this box is not just a teaser: what
+    // is left, what is gone, and what the next purchase actually takes.
+    el('div', { class: 'dcp-disc-ledger' }, [
+      el('div', {}, [el('b', {}, '٪' + faNum(ready)), el('span', {}, 'مصرف‌نشده')]),
+      el('div', {}, [el('b', {}, '٪' + faNum(used)), el('span', {}, 'مصرف‌شده')]),
+      el('div', {}, [el('b', {}, '٪' + faNum(next)), el('span', {}, 'روی خرید بعدی')]),
     ]),
   ];
 
@@ -353,12 +378,14 @@ function discountStrip(d) {
  * The section body. Returns null when the catalog could not be loaded at all,
  * so the caller can leave the section out entirely rather than render an empty
  * card — a heading over nothing is worse than no heading.
+ *
+ * The money box is NOT here any more — see discountBody() above. «افتخارات»
+ * now heads only what it names: the tally, the medals and the wall.
  */
 export function achievementsBody(data) {
   if (!data || !Array.isArray(data.badges) || !data.badges.length) return null;
   return el('div', {}, [
     tally(data.summary),
-    discountStrip(data.discount),
     el('div', { class: 'dcp-md-row' }, (data.medals || []).map(medalTile)),
     el('div', { class: 'dcp-bg-wall' }, data.badges.map(badgeTile)),
   ].filter(Boolean));

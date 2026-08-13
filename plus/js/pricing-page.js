@@ -470,10 +470,25 @@ function referralInput(info, value, onApply) {
   applyBtn.addEventListener('click', submit);
   input.addEventListener('keydown', (e) => { if (e.key === 'Enter') submit(); });
 
+  // What the field IS, under the field. An empty box labelled «کد معرف داری؟»
+  // asks for something without ever saying what it does or where one comes
+  // from, so a buyer who has never heard of the program reads it as a coupon
+  // slot for a campaign they missed and scrolls past. Both halves are named —
+  // the ٪۱۰ here and the ٪۵ that goes to whoever gave you the code — because
+  // the second half is the whole reason the code reached them.
+  const about = el('p', { class: 'dcp-price-fine' }, [
+    `کد معرف را هر عضو دنت‌کست دارد. اگر کدِ کسی را وارد کنی، ٪${toFa(10)} از همین `
+    + `خرید کم می‌شود و ٪${toFa(5)} هم به‌عنوان اعتبارِ خریدِ بعدی برای صاحبِ کد ثبت `
+    + 'می‌شود. فقط روی اولین خرید کار می‌کند. کدِ خودت را در ',
+    el('a', { href: '/plus/profile.html#referral' }, 'پروفایلت'),
+    ' بساز.',
+  ]);
+
   return el('div', { class: 'dcp-referral' }, [
     el('label', { class: 'dcp-label' }, 'کد معرف داری؟'),
     el('div', { class: 'dcp-field-row' }, [input, applyBtn]),
     msg,
+    about,
   ]);
 }
 

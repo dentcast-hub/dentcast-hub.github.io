@@ -376,6 +376,97 @@ describe('next_purchase_percent parity', () => {
   });
 });
 
+/* ------------------------------------------------------- GET /referral stats */
+
+// Founder report, 2026-08-13: the profile kept promising the full ٪۱۰ after it
+// had already been spent. referralStats() summed every qualified
+// `referrer_percent` and reported `min(that, cap)` — the total ever EARNED —
+// while /pay/plans read through availableCredits()' `spentSources` filter and
+// quoted the truth. Two screens, two numbers, one account.
+describe('GET /referral — earned vs spent vs available', () => {
+  /** Give `code`'s owner one settled ٪۵ by having `phone` buy with it. */
+  async function referAndBuy(phone: string, code: string): Promise<void> {
+    const cookie = await loginAs(app, phone);
+    const uid = await userId(cookie);
+    const track = nextRequestOk();
+    gatewayReplies(track);
+    const start = await startPayment({ userId: uid, months: 6, referralCode: code });
+    gatewayReplies(verifyOk(track.trackId, start.payment!.amount_rial));
+    expect((await settlePayment(start.payment!.ref_id!)).outcome).toBe('activated');
+  }
+  const stats = async (cookie: string) =>
+    (await app.inject({ method: 'GET', url: '/referral', headers: { cookie } })).json();
+
+  it('closes the books: earned = spent + available, and the next purchase reads the remainder', async () => {
+    const referrerCookie = await loginAs(app, REFERRER_PHONE);
+    const referrerId = await userId(referrerCookie);
+    const code = await mintCodeVia(referrerCookie, 'dentmaster');
+
+    await referAndBuy(REFERRED_PHONE, code);
+    await referAndBuy(REFERRED2_PHONE, code);
+
+    const before = await stats(referrerCookie);
+    expect(before).toMatchObject({
+      used_count: 2, purchased_count: 2,
+      earned_percent: 10, spent_percent: 0, available_percent: 10, next_purchase_percent: 10,
+    });
+
+    // The referrer now buys, consuming both ٪۵ credits.
+    const track = nextRequestOk();
+    gatewayReplies(track);
+    const own = await startPayment({ userId: referrerId, months: 6 });
+    expect(own.payment!.amount_rial).toBe(discountedRial(SIX_MONTH_RIAL, 10));
+    gatewayReplies(verifyOk(track.trackId, own.payment!.amount_rial));
+    expect((await settlePayment(own.payment!.ref_id!)).outcome).toBe('activated');
+
+    const after = await stats(referrerCookie);
+    expect(after).toMatchObject({
+      earned_percent: 10,        // what the code has ever been worth — never walks back
+      spent_percent: 10,         // ...and all of it is now gone
+      available_percent: 0,
+      next_purchase_percent: 0,  // the bug: this used to still say ٪۱۰
+    });
+    // And it agrees with the till, which is the whole point.
+    const plans = await app.inject({ method: 'GET', url: '/pay/plans', headers: { cookie: referrerCookie } });
+    expect(plans.json().onetime_discount).toBeNull();
+  });
+
+  it('a referral that never paid earns nothing (decision 2.4)', async () => {
+    const referrerCookie = await loginAs(app, REFERRER_PHONE);
+    const code = await mintCodeVia(referrerCookie, 'dentmaster');
+    const referredCookie = await loginAs(app, REFERRED_PHONE);
+    await claimReferral(await userId(referredCookie), code);
+
+    expect(await stats(referrerCookie)).toMatchObject({
+      used_count: 1, purchased_count: 0,
+      earned_percent: 0, spent_percent: 0, available_percent: 0, next_purchase_percent: 0,
+    });
+  });
+
+  it('a pending purchase HOLDS the credit, and a failed one releases it', async () => {
+    const referrerCookie = await loginAs(app, REFERRER_PHONE);
+    const referrerId = await userId(referrerCookie);
+    const code = await mintCodeVia(referrerCookie, 'dentmaster');
+    await referAndBuy(REFERRED_PHONE, code);
+    expect((await stats(referrerCookie)).available_percent).toBe(5);
+
+    // Open a payment of their own: the ٪۵ is now held by a pending row, so it
+    // must read as spent — the same definition availableCredits() uses, which
+    // is what keeps this page and the pricing page from disagreeing.
+    const track = nextRequestOk();
+    gatewayReplies(track);
+    const own = await startPayment({ userId: referrerId, months: 6 });
+    expect((await stats(referrerCookie)).available_percent).toBe(0);
+
+    // Abandon it. Spent-ness is a join on payment status, so the credit comes
+    // back with no cleanup path to forget.
+    await pool.query("update payments set status = 'failed' where id = $1", [own.payment!.id]);
+    expect(await stats(referrerCookie)).toMatchObject({
+      spent_percent: 0, available_percent: 5, next_purchase_percent: 5,
+    });
+  });
+});
+
 /* ---------------------------------------------------------------- mergeProfiles */
 
 describe('mergeProfiles — the three referral cases (handoff section 10)', () => {
