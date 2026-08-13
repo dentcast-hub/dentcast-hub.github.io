@@ -86,14 +86,19 @@ def post_article(api_base, user, password, content_id, title, url, published_at=
         raise RuntimeError(f"{e.code} {e.reason} :: {e.read().decode('utf-8', 'replace')}") from e
     except urllib.error.URLError as e:
         raise RuntimeError(f"could not reach {endpoint} :: {e.reason}") from e
-    # A read timeout arrives as a bare TimeoutError from the socket, NOT wrapped in
-    # URLError, so the two clauses above let it through: on 2026-08-12 it escaped as
-    # an unhandled traceback that killed the whole run, and any article queued behind
-    # the slow one was never even attempted. Everything urllib can raise here is an
-    # OSError; turning it into the same RuntimeError the callers already handle keeps
-    # one failure to one article.
     except OSError as e:
-        raise RuntimeError(f"could not reach {endpoint} :: {e}") from e
+        # A timeout or reset while READING the response is not a URLError:
+        # urllib only wraps the connection phase, so a socket that dies after the
+        # request was already sent raises TimeoutError/ConnectionResetError bare
+        # and — before this — crashed the caller mid-list instead of being one
+        # item's failure (that is how chairside-31 was lost on 2026-08-12).
+        # The request may well have been PROCESSED, so say so rather than
+        # implying nothing happened; the endpoint is idempotent on content_id,
+        # which makes re-running the safe way to find out.
+        raise RuntimeError(
+            f"no response from {endpoint} :: {e!r} — the event MAY have been recorded; "
+            "re-run to check (the API dedups on content_id)"
+        ) from e
 
 
 def main() -> int:

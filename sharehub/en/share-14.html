@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<!-- data-dc-no-header: opt out of the shared (Persian/RTL) header injected by dc-nav.js; this page keeps its own English/LTR header. -->
+<html lang="en" dir="ltr" data-dc-no-header>
+<head>
+  <!-- Open the API connection while the HTML is still parsing: /me gates the
+       ad card, and on a first visit the TLS handshake was in front of it. -->
+  <link rel="preconnect" href="https://api.dentcast.ir" crossorigin>
+  <link rel="preconnect" href="https://api.dentcast.org" crossorigin>
+  <!-- Google Analytics (deferred: loads only after the page is fully rendered) -->
+  <script>
+    window.addEventListener('load', function () {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-GMM0WC8X3M');
+      var ga = document.createElement('script');
+      ga.async = true;
+      ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-GMM0WC8X3M';
+      document.head.appendChild(ga);
+    });
+  </script>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>From Diagnosis to Treatment of Gummy Smile | Share Hub – DentCast</title>
+
+<meta name="description" content="What is a gummy smile? Measuring it correctly on a full smile, the 2mm and 4mm thresholds, and five distinct causes with five distinct treatments — from Botox and lip repositioning to crown lengthening and orthognathic surgery.">
+
+<link rel="canonical" href="https://dentcast.org/sharehub/en/share-14.html">
+
+<meta name="robots" content="noindex, follow">
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="DentCast">
+<meta property="og:title" content="From Diagnosis to Treatment of Gummy Smile | Share Hub – DentCast">
+<meta property="og:description" content="What is a gummy smile? Measuring it correctly on a full smile, the 2mm and 4mm thresholds, and five distinct causes with five distinct treatments — from Botox and lip repositioning to crown lengthening and orthognathic surgery.">
+<meta property="og:url" content="https://dentcast.org/sharehub/en/share-14.html">
+<meta property="og:image" content="https://dentcast.org/sharehub/share14.webp">
+<meta property="og:image:width" content="968">
+<meta property="og:image:height" content="1212">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="From Diagnosis to Treatment of Gummy Smile | Share Hub – DentCast">
+<meta name="twitter:description" content="What is a gummy smile? Measuring it correctly on a full smile, the 2mm and 4mm thresholds, and five distinct causes with five distinct treatments — from Botox and lip repositioning to crown lengthening and orthognathic surgery.">
+<meta name="twitter:image" content="https://dentcast.org/sharehub/share14.webp">
+
+  <!-- Shared design system -->
+  <link rel="stylesheet" href="/dc-theme.css?v=2">
+  <link rel="stylesheet" href="/dc-nav.css?v=17">
+  <link rel="stylesheet" href="/global-search.css?v=5">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/favicon.png">
+  <link rel="apple-touch-icon" href="/favicon.png">
+
+  <!-- Theme init — no flash -->
+  <script>(function(){var s=localStorage.getItem('dc-theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme','dark');})()</script>
+
+  <style>
+    :root {
+      --blue:#0b5fff;
+      --lightblue:rgba(11,95,255,0.15);
+      --radius:18px;
+    }
+
+    html,body { margin:0; padding:0; }
+
+    body {
+      font-family: 'Vazirmatn', system-ui, -apple-system, sans-serif;
+      direction: ltr;
+      background: #f0f2f5;
+      color: #0a1a33;
+      max-width: 47.5rem;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 6.25rem;
+      line-height: 1.8;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizelegibility;
+    }
+
+    h1 {
+      text-align: center;
+      color: #0a1020;
+      font-weight: 800;
+      font-size: 1.7rem;
+      line-height: 1.35;
+      margin: 0 0 1.875rem;
+    }
+
+    .glass-box {
+      background: #fff;
+      border: 1px solid rgba(2,35,96,.09);
+      border-radius: var(--radius);
+      padding: 1.75rem 1.875rem;
+      box-shadow: 0 10px 30px rgba(2,35,96,.06);
+    }
+
+    p { margin: 0.875rem 0; font-size: 1.02rem; text-align: left; }
+
+    h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--blue);
+      margin: 1.5rem 0 0.625rem;
+      border-left: 4px solid #0b5fff;
+      padding-left: 0.75rem;
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 0;
+      margin: 0.875rem 0;
+    }
+
+    ul li::before {
+      content: "✦ ";
+      color: var(--blue);
+      font-weight: bold;
+    }
+
+    strong { color: var(--blue); }
+
+    .text-divider {
+      margin: 1.75rem 0;
+      border: 0;
+      height: 0.0625rem;
+      background-image: linear-gradient(
+        to right,
+        rgba(0,0,0,0),
+        rgba(11,95,255,0.4),
+        rgba(0,0,0,0)
+      );
+    }
+
+    .author {
+      text-align: center;
+      margin-top: 3.125rem;
+      color: #4a5568;
+      font-weight: 600;
+    }
+
+    /* section kicker above the title */
+    .sh-kicker {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.375rem;
+      color: var(--blue);
+      font-weight: 800;
+      font-size: 0.95rem;
+      letter-spacing: .02em;
+      margin: 0 0 0.5rem;
+    }
+
+    /* references list */
+    .sh-refs { margin-top: 0.5rem; }
+    .sh-refs li { font-size: 0.95rem; line-height: 1.9; }
+    .sh-refs a { color: var(--blue); text-decoration: none; font-weight: 600; }
+    .sh-refs a:hover { text-decoration: underline; }
+
+    /* Persian-version toggle button */
+    .lang-btn{
+      display: flex;
+      width: fit-content;
+      max-width: 100%;
+      align-items: center;
+      gap: 0.375rem;
+      margin: 0 0 1.125rem auto;
+      background: rgba(255,255,255,0.92);
+      border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 0.75rem;
+      padding: 0.375rem 0.75rem;
+      font-size: 0.8125rem;
+      font-weight: 700;
+      color: #0b5fff;
+      text-decoration: none;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      cursor: pointer;
+      transition: transform .18s ease, background .18s ease;
+    }
+    .lang-btn:hover{
+      background:#fff;
+      transform: scale(1.03);
+    }
+
+    @media (max-width:768px){
+      h1 { font-size: 1.4rem; }
+      .glass-box { padding: 1.25rem 1.375rem;}
+      p { font-size: .98rem; line-height: 1.9;}
+    }
+  </style>
+
+  <meta name="theme-color" content="#0b5fff">
+
+  <!-- Share Hub Article Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://dentcast.org/sharehub/en/share-14.html",
+      "url": "https://dentcast.org/sharehub/en/share-14.html",
+      "name": "From Diagnosis to Treatment of Gummy Smile",
+      "inLanguage": "en",
+      "isPartOf": {
+        "@id": "https://dentcast.org/#website"
+      },
+      "about": {
+        "@id": "https://dentcast.org/sharehub/en/share-14.html#creativework"
+      }
+    },
+    {
+      "@type": "CreativeWork",
+      "@id": "https://dentcast.org/sharehub/en/share-14.html#creativework",
+      "name": "From Diagnosis to Treatment of Gummy Smile",
+      "headline": "From Diagnosis to Treatment of Gummy Smile",
+      "description": "Treatment choice in a gummy smile depends on the cause, not the millimeter count. Correct measurement is taken only on a full smile, from the free gingival margin of the central incisor to the lower border of the upper lip; per Global Diagnosis, more than 2mm means a gummy smile. Five distinct causes with five distinct treatments: a hypermobile upper lip (Botox or lip repositioning), altered passive eruption (crown lengthening), vertical maxillary excess (orthognathic surgery only), a short upper lip (Botox or filler), and dentoalveolar extrusion (orthodontic intrusion). Includes the distinction between treatment and masking, and the scientific references.",
+      "inLanguage": "en",
+      "image": [
+        "https://dentcast.org/sharehub/share14.webp"
+      ],
+      "author": {
+        "@id": "https://dentcast.org/#person-foad"
+      },
+      "creator": {
+        "@id": "https://dentcast.org/#person-foad"
+      },
+      "publisher": {
+        "@id": "https://dentcast.org/#org-dentcast"
+      },
+      "mainEntityOfPage": {
+        "@id": "https://dentcast.org/sharehub/en/share-14.html"
+      },
+      "datePublished": "2026-08-13",
+      "dateModified": "2026-08-13",
+      "genre": "Dental Education",
+      "keywords": [
+        "gummy smile",
+        "excessive gingival display",
+        "botox for gummy smile",
+        "lip repositioning",
+        "crown lengthening",
+        "orthognathic surgery",
+        "vertical maxillary excess",
+        "altered passive eruption",
+        "gingival display measurement",
+        "smile analysis"
+      ]
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "DentCast", "item": "https://dentcast.org/" },
+    { "@type": "ListItem", "position": 2, "name": "Share Hub", "item": "https://dentcast.org/sharehub/" },
+    { "@type": "ListItem", "position": 3, "name": "From Diagnosis to Treatment of Gummy Smile | Share Hub – DentCast", "item": "https://dentcast.org/sharehub/en/share-14.html" }
+  ]
+}
+</script>
+</head>
+
+<body>
+<!-- DC NAV: TOP BAR -->
+<header class="dc-topbar">
+  <div class="dc-topbar-actions">
+    <a href="/" aria-label="DentCast Homepage" style="display:flex;align-items:center;margin-left:0.5rem;flex-shrink:0;"><img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;"></a>
+    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="Tools" aria-expanded="false"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
+    <button class="dc-topbar-btn" id="btn-radar-topbar" aria-label="Radar"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="m12 12 7-7"/><path d="M12 12h.01"/></svg></button>
+    <button class="dc-topbar-btn dcOpenSearch" aria-label="Search"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+  </div>
+  <div class="dc-topbar-brand">
+    <div class="dc-topbar-brand-name">DentCast</div>
+    <span class="dc-topbar-brand-sub">Dr. Foad Shahabian</span>
+  </div>
+</header>
+<div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">
+  <div class="dc-toolbar-drawer-inner">
+    <span class="dc-toolbar-drawer-label">Tools</span>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M10 18h4"/><path d="M12 7v6"/><path d="m9.5 10.5 2.5 2.5 2.5-2.5"/></svg></span><span class="dc-drawer-tool-txt">Install</span></button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-consult"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span class="dc-drawer-tool-txt">Contact</span></button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-about"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M12 3l1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></svg></span><span class="dc-drawer-tool-txt">About</span></button>
+  </div>
+</div>
+<div id="dcRadarOverlay" class="radar-overlay" aria-hidden="true">
+  <div class="radar-overlay-header">
+    <button id="dcCloseRadarOverlay" class="radar-close-btn">&times;</button>
+    <div class="radar-header-title">رادار دنت‌کست (جایگزین گوگل)</div>
+  </div>
+  <div class="radar-overlay-body">
+    <div class="radar-search-box">
+      <input type="text" id="dcRadarInput" placeholder="نام سایت، زمینه فعالیت یا کلمه کلیدی..." autocomplete="off">
+    </div>
+    <div id="dcRadarResults" class="radar-results">
+      <div class="radar-initial-msg">برای جستجو در بین سایت‌های دندانپزشکی، تایپ کنید...</div>
+    </div>
+  </div>
+</div>
+
+
+<main class="article-content-wrap">
+<div class="sh-kicker"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M19 21 12 16l-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg> Share Hub</div>
+<h1>From Diagnosis to Treatment of Gummy Smile</h1>
+
+<div class="glass-box">
+
+   <!-- 🌐 Persian Version (SEO-friendly link) -->
+  <a class="lang-btn" href="../share-14.html" rel="noopener">
+    <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20"/><path d="M12 2a15 15 0 0 0 0 20"/></svg> فارسی
+  </a>
+
+  <img src="../share14.webp" alt="Before and after Botox treatment for a gummy smile" loading="lazy" width="968" height="1212">
+
+  <p>
+  The patient sits down in the chair and says that when they smile, too much gum shows. The first thing that comes to mind is how many millimeters it is. That's the right question, but it's the second question. The first question is why the gum is showing.
+  </p>
+
+  <p>
+  Treatment choice in a gummy smile depends on the cause, not the millimeter count. The millimeter count only determines how far each method can go. If the order of these two questions is reversed, the result is either undertreatment or overtreatment.
+  </p>
+
+  <hr class="text-divider">
+
+  <h3>∆ First, Measure It Correctly</h3>
+
+  <p>
+  Many people skip this step carelessly, and then every number becomes meaningless.
+  </p>
+
+  <p>
+  <strong>In what state.</strong> Only in a full smile, not at rest. The problem is that when you tell a patient to smile, they usually clench their teeth together and give you a forced smile. You need to genuinely encourage them to laugh out loud. Another technique is having them say a drawn-out "E" sound while contracting the muscles, to bring out the maximum range of lip movement.
+  </p>
+
+  <p>
+  <strong>Above which tooth.</strong> The upper centrals. In the ideal smile, the upper lip sits exactly tangent to the gingival margin of the central incisor and canine. It's normal for the laterals and first premolars to show a bit more gum, and that shouldn't mislead you.
+  </p>
+
+  <p>
+  <strong>From where to where.</strong> From the free gingival margin (FGM) on the central incisor to the lower border of the upper lip, at the highest point of the smile.
+  </p>
+
+  <p>
+  <strong>The number.</strong> Per the Global Diagnosis book, more than 2mm means a gummy smile. Zero millimeters is the ideal state.
+  </p>
+
+  <p>
+  The number you see in journal articles isn't stricter — it's looser. Tatakis puts the threshold at more than 3mm, and Dym and Pierre consider more than 4mm unesthetic. The reason is clear: the book speaks from the standpoint of smile design and the esthetic ideal, while the articles speak from the standpoint of the threshold at which people actually find it unattractive. In practice, that means you don't act below 2mm, 2 to 4mm is a gray zone where the patient's own complaint is decisive, and above 4mm nearly everyone sees it as a problem.
+  </p>
+
+  <p>
+  You need one more number. Record the exposure at rest too — not for diagnosis, but to calculate lip mobility: smile exposure minus rest exposure. A normal lip rises 6 to 8mm. More than that means a hypermobile lip.
+  </p>
+
+  <hr class="text-divider">
+
+  <h3>∆ Five Causes, Five Different Treatments</h3>
+
+  <p>
+  Global Diagnosis separates five distinct causes. This distinction matters because the treatment for each is completely different, and confusing them means an ineffective treatment.
+  </p>
+
+  <h3>∆ 1. A Hypermobile Upper Lip</h3>
+
+  <p>
+  The lip rises more than 6 to 8mm from rest to a full smile. Lip length is normal — only its range of motion is excessive. This is also the most common cause.
+  </p>
+
+  <p>
+  The primary treatment is Botox, followed by plastic surgery on the elevator muscles and smile-behavior modification.
+  </p>
+
+  <p>
+  What does the evidence tell us: Zengiski's meta-analysis of 17 studies shows an average reduction of about 3.42mm at the second week, effectiveness clearly up to about 4mm, and a return to near baseline around week 24. Fatani puts the duration at four to six months. That means repeat injection is the rule, not the exception.
+  </p>
+
+  <p>
+  If the patient wants a more durable solution, lip repositioning is the next option. The dos Santos-Pereira meta-analysis reports a reduction of 2.87mm at 3 months, 2.71mm at 6 months, and 2.10mm at 12 months — meaning about 25 percent relapse in the first year. Myotomy improves stability. In one randomized trial, a Botox injection one to two weeks before surgery significantly reduced relapse.
+  </p>
+
+  <hr class="text-divider">
+
+  <h3>∆ 2. Altered Passive Eruption</h3>
+
+  <p>
+  The gum has not receded to its natural position and has stayed on the enamel. Two simple signs help you diagnose it: the centrals appear shorter than 10 to 11mm, and you can't reach the CEJ with a probe inside the gingival sulcus.
+  </p>
+
+  <p>
+  The treatment is esthetic crown lengthening. The alveolar bone needs to sit 2mm apical to the CEJ, and the gingival margin needs to stabilize 3mm coronal to the new bone.
+  </p>
+
+  <p>
+  Keep your expectations realistic. In one small study of six patients (Aroni et al.), crown length increased by an average of 1.6mm, and that same amount remained stable at 12 months. That means if a patient shows 5mm of gum, this method alone won't get them to zero.
+  </p>
+
+  <p>
+  One note: the 1.6mm figure comes from six patients, so it isn't a precise number. Its direction is reliable (a limited, stable correction), but it shouldn't be quoted as if it were a definitive figure.
+  </p>
+
+  <p>
+  One important warning: Fatani states explicitly that a Botox injection is not acceptable for a patient whose exposure is caused by a short crown. This is the most common mistake in this area.
+  </p>
+
+  <hr class="text-divider">
+
+  <h3>∆ 3. Vertical Maxillary Excess</h3>
+
+  <p>
+  Here the problem is neither in the gum nor in the lip — it's in the maxillary bone itself, which has grown excessively in the vertical dimension. Two signs help you diagnose it: the lower third of the face is longer than the middle third, and the patient shows excessive gum not just in front when smiling, but in the back of the mouth too.
+  </p>
+
+  <p>
+  This is the only cause that can't be corrected by working on the gum or the lip. No matter how much Botox you inject or how much crown-lengthening surgery you do, the jaw stays where it is.
+  </p>
+
+  <p>
+  The real solution is orthognathic surgery. In simple terms, the surgeon raises the upper jaw and fixes it in place. Khojasteh and Mohaghegh also consider this the best option for moderate and severe cases.
+  </p>
+
+  <p>
+  Two practical points for you as the referring dentist. First, the amount the jaw can be raised isn't unlimited, and one of its limits is a change in nasal shape, so if the patient expects the gum display to reach zero entirely, they may not get there. Second, this surgery is usually paired with orthodontics, so refer earlier rather than after trying other treatments first.
+  </p>
+
+  <p>
+  If the patient won't accept surgery, Global Diagnosis proposes Botox as a secondary treatment, for masking. We address this separately below.
+  </p>
+
+  <hr class="text-divider">
+
+  <h3>∆ 4. A Short Upper Lip</h3>
+
+  <p>
+  The average upper lip length in young women is 20 to 22mm, and in young men 22 to 24mm. Shorter than that means the gum shows excessively when smiling, even when lip movement is completely normal.
+  </p>
+
+  <p>
+  Take this point seriously, because from the outside it looks like a hypermobile lip, but it isn't. The difference shows up with a ruler: in a short lip, lip length is reduced, but its mobility stays within the 6 to 8mm range.
+  </p>
+
+  <p>
+  The treatment is Botox or filler, along with training the patient to consciously control their smile in front of a mirror.
+  </p>
+
+  <hr class="text-divider">
+
+  <h3>∆ 5. Dentoalveolar Extrusion</h3>
+
+  <p>
+  The teeth — usually due to wear or a missing opposing tooth — have erupted excessively and pulled the bone and gum down with them. The result is an asymmetric gum line, and that asymmetry is usually the first diagnostic clue.
+  </p>
+
+  <p>
+  The treatment is orthodontic intrusion. If there's also severe wear, functional crown lengthening or raising the vertical dimension of occlusion becomes necessary.
+  </p>
+
+  <hr class="text-divider">
+
+  <h3>∆ A Single-Cause Case Is Rare</h3>
+
+  <p>
+  These five causes often occur together. Peck and colleagues showed in 1992 that a gummy smile is associated with excessive vertical growth of the anterior maxilla, along with above-average muscular strength in raising the lip.
+  </p>
+
+  <p>
+  The practical takeaway is to check all five in the exam, even when one is obvious. If you only see the dominant cause and treat that alone, the patient gets partial improvement, and you won't understand why the result wasn't complete.
+  </p>
+
+  <hr class="text-divider">
+
+  <h3>∆ The Patient Who Isn't a Candidate for Jaw Surgery</h3>
+
+  <p>
+  The patient has vertical maxillary excess, but surgery isn't possible for them. Either they don't want it, or they can't afford it, or their medical condition or age doesn't allow it. Is doing Botox and accepting a partial, temporary improvement a mistake?
+  </p>
+
+  <p>
+  No — and Global Diagnosis itself proposes exactly this as a secondary treatment. But there are three things you need to make explicit with the patient.
+  </p>
+
+  <p>
+  <strong>The difference between treatment and masking.</strong> Treatment means removing the cause, which here is only possible with surgery. Masking means reducing the appearance of the problem without touching the cause. In this patient, Botox is masking. If you don't make that clear, the patient will think they've been treated, and six months later will feel you've failed them.
+  </p>
+
+  <p>
+  <strong>A realistic ceiling.</strong> When baseline exposure is 8mm, a 3mm reduction is numerically good, but the patient may still perceive themselves as having a gummy smile. Dissatisfaction in this group comes more from a mismatched expectation than from the treatment itself. A before-treatment photo and a documented measurement are the best tools for managing that expectation.
+  </p>
+
+  <p>
+  <strong>Don't raise the dose.</strong> Compensating for insufficient effect with a higher dose ends in an unnatural smile, asymmetry, and lip ptosis. Fatani identifies overdose as a cause of ptosis and of teeth being covered during a smile. You can't shift the biological ceiling with dose.
+  </p>
+
+  <p>
+  One honest note: no study was found that specifically examined Botox in patients with vertical maxillary excess who aren't surgical candidates. The closest thing is Romanos's 18-month case series of twelve multifactorial patients with an average exposure of 5.3mm who weren't orthognathic candidates and were treated with a combination of crown lengthening, Botox, and lip filler. But the etiology in those patients was passive eruption plus a hyperactive lip, not a skeletal cause, and the study had no control group. So this approach has conceptual support, but not yet trial-level evidence.
+  </p>
+
+  <hr class="text-divider">
+
+  <h3>∆ Summary</h3>
+
+  <p>
+  Measure on a full, genuine smile, from the free gingival margin of the central incisor to the lower border of the upper lip. More than 2mm means a gummy smile, and above 4mm means nearly everyone sees it as a problem.
+  </p>
+
+  <p>
+  Record the exposure at rest too, so you can calculate lip mobility. 6 to 8mm is normal.
+  </p>
+
+  <ul>
+    <li>Check all five causes, not just the dominant one.</li>
+    <li>Botox offers the best effect-to-invasiveness ratio for a hypermobile lip and exposure up to about 4mm, provided its temporary nature is accepted. It has no place at all for a short crown.</li>
+    <li>Crown lengthening for altered passive eruption, with an expected gain of about 1.5 to 2mm.</li>
+    <li>Lip repositioning is the intermediate option for a hypermobile lip, with about 25 percent relapse in the first year.</li>
+    <li>Orthognathic surgery is the only causal treatment for vertical maxillary excess. If it isn't possible, Botox is acceptable as masking, provided the patient is also told it is masking.</li>
+    <li>Don't ignore an asymmetric gum line. It usually means extrusion, and its treatment is orthodontic, not periodontal.</li>
+  </ul>
+
+  <hr class="text-divider">
+
+  <h3>∆ References</h3>
+
+  <ul class="sh-refs">
+    <li>Global Diagnosis book</li>
+    <li><a href="https://doi.org/10.4103/jisp.jisp_548_25" target="_blank" rel="noopener noreferrer">Tatakis DN. From etiology to intervention: 50 years of progress in gummy smile research and treatment. J Indian Soc Periodontol. 2025.</a></li>
+    <li><a href="https://doi.org/10.1016/j.cden.2019.12.003" target="_blank" rel="noopener noreferrer">Dym H, Pierre R. Diagnosis and Treatment Approaches to a "Gummy Smile". Dent Clin North Am. 2020.</a></li>
+    <li><a href="https://doi.org/10.1043/0003-3219(1992)062%3C0091:TGSL%3E2.0.CO;2" target="_blank" rel="noopener noreferrer">Peck S, Peck L, Kataja M. The gingival smile line. Angle Orthod. 1992.</a></li>
+    <li><a href="https://doi.org/10.1007/s00784-021-04223-w" target="_blank" rel="noopener noreferrer">Zengiski ACS, et al. Effect and longevity of botulinum toxin in the treatment of gummy smile: a meta-analysis and meta-regression. Clin Oral Investig. 2022.</a></li>
+    <li><a href="https://doi.org/10.7759/cureus.34032" target="_blank" rel="noopener noreferrer">Fatani B. An Approach for Gummy Smile Treatment Using Botulinum Toxin A: A Narrative Review of the Literature. Cureus. 2023.</a></li>
+    <li><a href="https://doi.org/10.1016/j.jdent.2023.104711" target="_blank" rel="noopener noreferrer">Tatakis DN, Silva CO. Contemporary treatment techniques for excessive gingival display caused by altered passive eruption or lip hypermobility. J Dent. 2023.</a></li>
+    <li><a href="https://doi.org/10.1111/jerd.12695" target="_blank" rel="noopener noreferrer">dos Santos-Pereira SA, et al. Effectiveness of lip repositioning surgeries in the treatment of excessive gingival display: A systematic review and meta-analysis. J Esthet Restor Dent. 2021.</a></li>
+    <li><a href="https://doi.org/10.5005/jp-journals-10024-3831" target="_blank" rel="noopener noreferrer">Ghoniem OM, Madkor GG, Darhous MS. Evaluating Lip Repositioning for the Treatment of Excess Gingival Display with and without Pretreatment with Botox: A Randomized Clinical Trial. J Contemp Dent Pract. 2025.</a></li>
+    <li><a href="https://doi.org/10.1016/j.cden.2022.02.003" target="_blank" rel="noopener noreferrer">Khojasteh A, Mohaghegh S. Orthognathic Surgery for Management of Gummy Smile. Dent Clin North Am. 2022.</a></li>
+    <li><a href="https://doi.org/10.1111/jerd.70113" target="_blank" rel="noopener noreferrer">Romanos A, et al. The Combo Strategy: Triple Approach for Gummy Smile, 18-Month Case Series. J Esthet Restor Dent. 2026.</a></li>
+    <li><a href="https://doi.org/10.1186/s40902-025-00467-8" target="_blank" rel="noopener noreferrer">Kim H, Kim S, Cho YD. Pink esthetic treatment of gingival recession, black triangle, and gummy smile: a narrative review. Maxillofac Plast Reconstr Surg. 2025.</a></li>
+    <li><a href="https://pubmed.ncbi.nlm.nih.gov/31549103/" target="_blank" rel="noopener noreferrer">Aroni MAT, et al. Esthetic crown lengthening in the treatment of gummy smile. Int J Esthet Dent. 2019. PMID: 31549103</a></li>
+    <li><a href="https://doi.org/10.1016/j.sdentj.2023.08.011" target="_blank" rel="noopener noreferrer">Dawadi A, Humagain M, Lamichhane S, Sapkota B. Clinical and psychological impact of lip repositioning surgery in the management of excessive gingival display. Saudi Dent J. 2024.</a></li>
+  </ul>
+
+</div>
+
+  <footer class="dc-site-footer">
+  <div style="margin-bottom:1.375rem;">
+    <a href="/"
+       style="
+         display:inline-block;
+         background:rgba(11,95,255,0.18);
+         color:var(--link);
+         border:1.8px solid rgba(var(--link-rgb),0.45);
+         border-radius:0.75rem;
+         padding:0.75rem 2.625rem;
+         font-weight:700;
+         text-decoration:none;
+         font-size:1rem;
+         box-shadow:0 0 14px rgba(11,95,255,0.15);
+         transition:all .25s ease;">
+      <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg> Back to DentCast
+    </a>
+  </div>
+
+  <div style="margin-top:0.375rem;">
+    © 2025 DentCast
+  </div>
+</footer>
+
+</main>
+<div class="dc-global-filter-box" id="dcGlobalBox">
+  <button class="dc-close-results"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+  <h3 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h3>
+  <input id="dcSearch" class="dc-search-input" placeholder="جستجو در همهٔ بخش‌های دنت‌کست…">
+  <div class="dc-filter-list">
+    <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
+    <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
+    <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
+    <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
+    <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
+    <button class="dc-filter-btn active" data-type="promptologist">پرامپتولوژیست</button>
+    <button class="dc-filter-btn active" data-type="meta">metanote</button>
+    <button class="dc-filter-btn active" data-type="chairside">chairside</button>
+    <button class="dc-filter-btn active" data-type="sharehub">Share Hub</button>
+  </div>
+  <div class="dc-results-box" id="dcResults"></div>
+</div>
+<script src="/global-search.js?v=9" defer></script>
+<script src="/dc-nav.js?v=88" defer></script>
+</body>
+</html>
