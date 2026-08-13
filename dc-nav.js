@@ -1766,7 +1766,7 @@
     var holder = document.getElementById('dcPlayerOverlayHolder');
     if (!holder) return;
     dcPodFrame = document.createElement('iframe');
-    dcPodFrame.src = '/player.html?v=4';   // identical src → identical resume/auto-advance
+    dcPodFrame.src = '/player.html?v=5';   // identical src → identical resume/auto-advance
     dcPodFrame.title = 'پخش‌کنندهٔ پادکست دنت‌کست';
     dcPodFrame.loading = 'lazy';
     dcPodFrame.allow = 'autoplay';
