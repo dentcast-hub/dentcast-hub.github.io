@@ -46,7 +46,11 @@
       ban: '<circle cx="12" cy="12" r="10"/><path d="m4.9 4.9 14.2 14.2"/>',
       hourglass: '<path d="M6 2h12"/><path d="M6 22h12"/><path d="M7 2v6l5 4-5 4v6"/><path d="M17 2v6l-5 4 5 4v6"/>',
       article: '<path d="M15 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7z"/><path d="M15 3v4h4"/><path d="M9 9h2"/><path d="M9 13h6"/><path d="M9 17h6"/>',
-      sliders: '<path d="M4 7h9"/><path d="M17 7h3"/><circle cx="15" cy="7" r="2"/><path d="M4 17h3"/><path d="M11 17h9"/><circle cx="9" cy="17" r="2"/>'
+      sliders: '<path d="M4 7h9"/><path d="M17 7h3"/><circle cx="15" cy="7" r="2"/><path d="M4 17h3"/><path d="M11 17h9"/><circle cx="9" cy="17" r="2"/>',
+      /* پشتیبانی. Deliberately NOT headphones (that is the podcast player's
+         glyph, equalizer and all) and NOT a speech bubble (`message` already
+         belongs to پرامپتولوژیست in the same 4x4 drawer grid). */
+      lifebuoy: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.6"/><path d="m5.6 5.6 3.9 3.9"/><path d="m14.5 14.5 3.9 3.9"/><path d="m18.4 5.6-3.9 3.9"/><path d="m9.5 14.5-3.9 3.9"/>'
     };
     if (!icons[name]) return '';
     return '<svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true">' + icons[name] + '</svg>';
@@ -301,7 +305,7 @@
     /* Reaches every page's hamburger, not just index.html's — the floating
        control below only becomes a support shortcut on the homepage, and the
        other 190-odd pages need a route to /plus/support.html too. */
-    ['/plus/support.html',         'headphones', 'پشتیبانی']
+    ['/plus/support.html',         'lifebuoy', 'پشتیبانی']
   ];
 
   var DC_DRAWER_MENU_HTML =
@@ -875,7 +879,7 @@
     floatSearch.type = 'button';
     if (dcIsHomePage) {
       floatSearch.setAttribute('aria-label', 'پشتیبانی');
-      floatSearch.innerHTML = dcSvgIcon('headphones') + '<span class="dc-fs-lbl">پشتیبانی</span>';
+      floatSearch.innerHTML = dcSvgIcon('lifebuoy') + '<span class="dc-fs-lbl">پشتیبانی</span>';
       floatSearch.addEventListener('click', function () { location.href = '/plus/support.html'; });
     } else {
       floatSearch.className = 'dcOpenSearch';
