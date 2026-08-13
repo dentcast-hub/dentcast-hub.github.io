@@ -1766,7 +1766,7 @@
     var holder = document.getElementById('dcPlayerOverlayHolder');
     if (!holder) return;
     dcPodFrame = document.createElement('iframe');
-    dcPodFrame.src = '/player.html?v=4';   // identical src → identical resume/auto-advance
+    dcPodFrame.src = '/player.html?v=7';   // identical src → identical resume/auto-advance
     dcPodFrame.title = 'پخش‌کنندهٔ پادکست دنت‌کست';
     dcPodFrame.loading = 'lazy';
     dcPodFrame.allow = 'autoplay';
@@ -2400,7 +2400,7 @@
 (function () {
   if (window.__dcPlusLoaded) return;
   window.__dcPlusLoaded = true;
-  var V = '92';
+  var V = '93';
 
   /* The anti-FOUC block that used to live here is gone, along with the header
      transformation it was covering for. The music + library buttons are now
