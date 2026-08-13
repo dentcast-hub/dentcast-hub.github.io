@@ -219,8 +219,15 @@ export const api = {
   // payPlans is PUBLIC (no session): the pricing page renders the price before
   // it knows who is looking. payStart needs one, and asks for it at the moment
   // of purchase rather than at the door.
-  payPlans: () => request('/pay/plans'),
-  payStart: (months) => request('/pay/start', { method: 'POST', body: { months } }),
+  // `ref` is a کد معرف preview (?ref= on the pricing page); `null`/`undefined`
+  // is dropped by request()'s own query-cleaning, so an ordinary call is
+  // unaffected.
+  payPlans: (ref) => request('/pay/plans', { query: { ref } }),
+  // `referralCode` is optional and, when omitted, is dropped by
+  // JSON.stringify() the same way — an existing `api.payStart(selected)` call
+  // needs no change.
+  payStart: (months, referralCode) =>
+    request('/pay/start', { method: 'POST', body: { months, referral_code: referralCode } }),
   payStatus: (order) => request('/pay/status', { query: { order } }),
   paySettle: (order) => request('/pay/settle', { method: 'POST', body: { order } }),
   // Gift card (outside Iran). No code is sent: this opens a claim and returns
@@ -231,6 +238,13 @@ export const api = {
   // card pair above. The amount is computed server-side from `months`.
   bankTransferStart: (months) => request('/pay/bank-transfer', { method: 'POST', body: { months } }),
   bankTransferStatus: () => request('/pay/bank-transfer'),
+
+  // کد معرف — services/referrals.ts. referralGet returns my code (or null) +
+  // stats; referralMint creates the one-and-only code; referralCheck is a
+  // read-only preview used while the pricing page's input is being typed.
+  referralGet: () => request('/referral'),
+  referralMint: (alias) => request('/referral', { method: 'POST', body: { alias } }),
+  referralCheck: (code) => request('/referral/check', { query: { code } }),
 
   // premium: reading compass — coverage report over the user's own reading,
   // cross-referenced against the taxonomy and pathways (no interest guessing)

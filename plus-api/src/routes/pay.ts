@@ -13,6 +13,7 @@ import { readCallback } from '../services/zibal.js';
 import {
   startRedemption, latestRedemption, giftInstructions, bankTransferInstructions,
 } from '../services/gift-redemption.js';
+import { checkClaim, normalizeCode, REFERRED_DISCOUNT_PERCENT } from '../services/referrals.js';
 import { query } from '../db.js';
 
 /**
@@ -36,7 +37,14 @@ export async function payRoutes(app: FastifyInstance): Promise<void> {
   // someone to sign up before they can see the price is how you lose them.
   // Reports availability per plan, so the page can grey out what no longer fits
   // under this month's ceiling instead of failing at the last step.
-  app.get('/pay/plans', async (request, reply) => {
+  app.get('/pay/plans', {
+    schema: {
+      querystring: {
+        type: 'object',
+        properties: { ref: { type: 'string', maxLength: 24 } },
+      },
+    },
+  }, async (request, reply) => {
     const capacity = await getCapacity();
 
     // Personalisation, not gating: the page stays public and the list is the
@@ -56,7 +64,28 @@ export async function payRoutes(app: FastifyInstance): Promise<void> {
       ? await availableCredits(user.id).then(pickCredits).catch(() => [])
       : [];
     const creditPct = creditPercent(credits);
-    const totalPct = (pillar ? PILLAR_DISCOUNT_PERCENT : 0) + creditPct;
+
+    // کد معرف preview: PREVIEW only — nothing is written (checkClaim(), never
+    // claimReferral()) — and only for a SIGNED-IN request (decision 2.15: a
+    // guest is ignored rather than checked, so this route can never be used
+    // to enumerate the code space by an anonymous script). A valid code adds
+    // its flat ٪۱۰ straight onto totalPct, same as the pillar/credit
+    // percentages above; the real, cap-combined figure is only decided once
+    // the code is actually claimed at POST /pay/start.
+    const refParam = (request.query as { ref?: string }).ref;
+    let referral: { code: string; percent: number } | { code: string; error: string } | null = null;
+    let referralPct = 0;
+    if (user && refParam) {
+      const claim = await checkClaim(user.id, refParam).catch(() => null);
+      if (claim?.ok) {
+        referralPct = REFERRED_DISCOUNT_PERCENT;
+        referral = { code: claim.code, percent: REFERRED_DISCOUNT_PERCENT };
+      } else if (claim) {
+        referral = { code: normalizeCode(refParam), error: claim.reason };
+      }
+    }
+
+    const totalPct = (pillar ? PILLAR_DISCOUNT_PERCENT : 0) + creditPct + referralPct;
     const plans = totalPct > 0
       ? capacity.plans.map((p) => ({
         ...p,
@@ -105,6 +134,10 @@ export async function payRoutes(app: FastifyInstance): Promise<void> {
       onetime_discount: creditPct > 0
         ? { percent: creditPct, cap_percent: CREDIT_CAP_PERCENT }
         : null,
+      // The کد معرف preview — echoed back so the pricing page can pre-fill and
+      // confirm the code from a `?ref=` link, without this route ever writing
+      // anything (see the comment above where it is computed).
+      referral,
       any_plan_available: capacity.any_plan_available,
       // Deliberately NOT the remaining rial figure: how close we are to a
       // regulatory ceiling is our business, and "3 seats left" is a pressure
@@ -120,11 +153,16 @@ export async function payRoutes(app: FastifyInstance): Promise<void> {
       body: {
         type: 'object',
         required: ['months'],
-        properties: { months: { type: 'integer', minimum: 1, maximum: 60 } },
+        properties: {
+          months: { type: 'integer', minimum: 1, maximum: 60 },
+          referral_code: { type: 'string', maxLength: 24 },
+        },
       },
     },
   }, async (request, reply) => {
-    const { months } = request.body as { months: number };
+    const { months, referral_code: referralCode } = request.body as {
+      months: number; referral_code?: string;
+    };
     const user = request.user!;
 
     // Checked here as well as on the pricing page: the page is static and
@@ -143,13 +181,16 @@ export async function payRoutes(app: FastifyInstance): Promise<void> {
       // Zibal shows the customer's own number on the payment page and can bind
       // the card check to it. Ours is verified at signup, so it costs nothing.
       mobile: user.phone,
+      referralCode,
     });
 
     if (!result.ok) {
       // 409, not 400: nothing is wrong with the request — it is the shop that
       // cannot serve it at this moment, and the client should say so rather
-      // than ask the customer to correct something.
-      const status = result.error === 'unknown_plan' ? 400 : 409;
+      // than ask the customer to correct something. A bad referral code IS a
+      // mistake in the request, though (a typo, an expired first-purchase
+      // window), so it stays with unknown_plan on the 400 side.
+      const status = result.error === 'unknown_plan' || result.error === 'referral' ? 400 : 409;
       return reply.code(status).send({
         error: result.error, message: result.message,
       });

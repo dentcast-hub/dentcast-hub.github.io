@@ -20,6 +20,13 @@ import { computeAchievementFacts, type AchievementFacts } from './achievements.j
  *     POST /admin/discounts/grant inserts them; nothing else does. A gift
  *     larger than the cap becomes SEVERAL rows — see splitGrantPercent().
  *
+ *   · 'referral:<id>' / 'referral_bonus:<id>' — کد معرف (services/referrals.ts).
+ *     DERIVED here, at read time, from the `referrals` row a claim wrote: the
+ *     referred side always (their ٪۱۰ from the moment they claim a code), the
+ *     referrer side only once the referred account has a REAL paid row (their
+ *     ٪۵ — the only anti-farming rule the design needs). Design ledger:
+ *     .dentcast/referral-handoff.md decisions 2.1-2.4.
+ *
  * ONE RULE BOUNDS THE MONEY: the credits applied to a single purchase never
  * exceed CREDIT_CAP_PERCENT, and a credit that did not fit is NOT consumed —
  * it waits for the next purchase. The «ستون» renewal discount is a different
@@ -43,12 +50,12 @@ import { computeAchievementFacts, type AchievementFacts } from './achievements.j
 export const CREDIT_CAP_PERCENT = 10;
 
 export interface DiscountCredit {
-  /** 'badge:<key>:<tier>' or 'grant:<uuid>' — the credit's identity, and what redemption stores. */
+  /** 'badge:<key>:<tier>', 'grant:<uuid>', 'referral:<id>' or 'referral_bonus:<id>' — the credit's identity, and what redemption stores. */
   source: string;
   percent: number;
   /** What a human surface calls this credit — the badge's name, or the grant's own label. */
   label_fa: string;
-  kind: 'badge' | 'grant';
+  kind: 'badge' | 'grant' | 'referral';
 }
 
 /**
@@ -96,6 +103,39 @@ export async function grantCredits(
   return r.rows.map((g) => ({
     source: `grant:${g.id}`, percent: g.percent, label_fa: g.label_fa, kind: 'grant' as const,
   }));
+}
+
+/**
+ * Every credit کد معرف has minted this account, spent or not — both sides of
+ * every `referrals` row this account is party to, in ONE query:
+ *
+ *   · as the REFERRED account: always, from the moment the row exists
+ *     (claimReferral() only ever writes it once, on a first purchase).
+ *   · as the REFERRER: only for rows whose referred account has a real
+ *     'paid' payment (decision 2.4 — the sole anti-farming rule).
+ *
+ * The two prefixes ('referral:' / 'referral_bonus:') on the same row `id`
+ * are deliberate: two entirely separate credits with two separate
+ * spent-nesses, with no extra column needed to tell them apart.
+ */
+export async function referralCredits(
+  userId: string,
+  client: Queryable = pool,
+): Promise<DiscountCredit[]> {
+  const r = await client.query<{ source: string; percent: number; label_fa: string }>(
+    `select 'referral:' || r.id as source, r.referred_percent as percent,
+            'تخفیف معرفی' as label_fa
+       from referrals r
+      where r.referred_user_id = $1
+     union all
+     select 'referral_bonus:' || r.id, r.referrer_percent, 'پاداش معرفی'
+       from referrals r
+      where r.referrer_user_id = $1
+        and exists (select 1 from payments p
+                     where p.user_id = r.referred_user_id and p.status = 'paid')`,
+    [userId],
+  );
+  return r.rows.map((row) => ({ ...row, kind: 'referral' as const }));
 }
 
 /**
@@ -204,11 +244,12 @@ export async function availableCredits(
       'select longest_streak from profiles where id = $1', [userId],
     ))?.longest_streak ?? 0,
   );
-  const [grants, spent] = await Promise.all([
+  const [grants, referral, spent] = await Promise.all([
     grantCredits(userId, opts.now),
+    referralCredits(userId),
     spentSources(userId),
   ]);
-  const all = [...badgeCredits(facts), ...grants].filter((c) => !spent.has(c.source));
+  const all = [...badgeCredits(facts), ...grants, ...referral].filter((c) => !spent.has(c.source));
   // Largest first so the cap is filled with the fewest credits — the reader
   // keeps the most future value. Source as tie-break keeps the pick
   // deterministic, which is what makes a retried purchase pick the same set.

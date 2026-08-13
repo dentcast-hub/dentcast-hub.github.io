@@ -9,6 +9,7 @@ import { baleEnabled, baleDeepLink } from './config.js';
 import { leagueEntryButton } from './league.js';
 import { achievementsBody, maybeCelebrate } from './achievements.js';
 import { subscriptionCta } from './premium-cta.js';
+import { copyToClipboard, confirmStrip } from './hl-view.js';
 
 const JALALI_DAY = new Intl.DateTimeFormat('fa-IR-u-ca-persian', {
   timeZone: 'Asia/Tehran', year: 'numeric', month: 'long', day: 'numeric',
@@ -412,6 +413,91 @@ function telegramLoginBlock(me) {
   ]);
 }
 
+/**
+ * کد معرف — services/referrals.ts. Two states: no code yet (a name input with
+ * a live preview of the final code, and an explicit irreversible-commit
+ * confirm — decision 2.7: this code goes out on WhatsApp/stories and can
+ * never be renamed or re-minted), or an existing code (copy + share link +
+ * counts-only stats, decision 2.13 — never who used it).
+ */
+function referralCreateBlock(me) {
+  const aliasInput = el('input', {
+    type: 'text', class: 'dcp-input', dir: 'ltr', maxlength: '16',
+    placeholder: 'مثلاً dentmaster', autocomplete: 'off',
+  });
+  const digits = me.phone ? me.phone.slice(-2) : 'XX';
+  const preview = el('p', { class: 'dcp-sec-hint' });
+  const msg = el('span', { class: 'dcp-inline-msg' });
+  const createBtn = el('button', {
+    class: 'dcp-btn dcp-btn-primary', type: 'button', disabled: 'disabled',
+  }, 'ساخت کد');
+  const confirmArea = el('div', {});
+
+  const refreshPreview = () => {
+    const alias = aliasInput.value.trim().toLowerCase();
+    const valid = /^[a-z]{4,16}$/.test(alias);
+    createBtn.disabled = !valid;
+    preview.textContent = valid ? `کد نهایی‌ات: ${alias}${digits}` : '';
+  };
+  aliasInput.addEventListener('input', refreshPreview);
+
+  createBtn.addEventListener('click', () => {
+    const alias = aliasInput.value.trim().toLowerCase();
+    if (!/^[a-z]{4,16}$/.test(alias)) return;
+    confirmArea.replaceChildren(confirmStrip(
+      `کد «${alias}${digits}» برای همیشه ثابت می‌ماند و دیگر قابل تغییر نیست. بسازم؟`,
+      async () => {
+        try {
+          await api.referralMint(alias);
+          msg.textContent = 'کد ساخته شد.';
+          setTimeout(() => location.reload(), 700);
+        } catch (e) {
+          msg.textContent = e instanceof ApiError ? e.message : 'ساخت کد ناموفق بود.';
+          throw e; // confirmStrip re-enables its own «بله» button on throw
+        }
+      },
+      { yesText: 'بله، بساز' },
+    ));
+  });
+
+  return el('div', {}, [
+    el('p', { class: 'dcp-sec-hint', style: 'margin:0 0 10px' },
+      'یک نامِ لاتینِ ۴ تا ۱۶ حرفی بساز؛ دو رقم آخر موبایلت خودکار به تهش اضافه می‌شود.'),
+    el('div', { class: 'dcp-field-row' }, [aliasInput, createBtn]),
+    preview,
+    confirmArea,
+    msg,
+  ]);
+}
+
+function referralCodeBlock(stats) {
+  const codeEl = el('code', { dir: 'ltr' }, stats.code);
+  const copyBtn = el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button' }, 'کپی کد');
+  copyBtn.addEventListener('click', (e) => copyToClipboard(stats.code, e.currentTarget, 'کپی شد ✓'));
+
+  const shareBtn = el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button' }, 'کپی لینک اشتراک‌گذاری');
+  shareBtn.addEventListener('click', (e) => copyToClipboard(
+    `https://dentcast.ir/plus/pricing.html?ref=${stats.code}`, e.currentTarget, 'کپی شد ✓',
+  ));
+
+  return el('div', {}, [
+    el('div', { class: 'dcp-referral-code-row' }, [codeEl, copyBtn, shareBtn]),
+    el('div', { class: 'dcp-records' }, [
+      el('div', {}, [el('b', {}, faNum(stats.purchased_count)), el('span', {}, 'خرید قطعی‌شده')]),
+      el('div', {}, [el('b', {}, faNum(stats.used_count)), el('span', {}, 'استفاده از کد')]),
+      el('div', {}, [el('b', {}, '٪' + faNum(stats.earned_percent)), el('span', {}, 'اعتبار کسب‌شده')]),
+    ]),
+    el('p', { class: 'dcp-sec-hint' },
+      stats.earned_percent
+        ? `از خرید بعدی‌ات ٪${faNum(stats.next_purchase_percent)} کم می‌شود (سقف هر خرید ٪۱۰).`
+        : 'هر کس با این کد در صفحه‌ی پرداخت مشترک شود، ٪۱۰ تخفیف می‌گیرد و تو ٪۵ اعتبار.'),
+  ]);
+}
+
+function referralBlock(me, referral) {
+  return referral.code ? referralCodeBlock(referral) : referralCreateBlock(me);
+}
+
 // Phone section. For an account that already has a phone, just show it. For a
 // phone-LESS account (typically Telegram-only, since Telegram never gives us the
 // phone), offer an OTP step to prove a phone and RECOVER/MERGE an older phone
@@ -488,7 +574,7 @@ function phoneBlock(me) {
 
 export async function renderProfile(root, { me: preMe } = {}) {
   root.replaceChildren(el('div', { class: 'dcp-loading' }, 'در حال بارگذاری...'));
-  const [me, stats, league, achievements] = await Promise.all([
+  const [me, stats, league, achievements, referral] = await Promise.all([
     preMe ? Promise.resolve(preMe) : api.me().catch(() => null),
     api.profileStats().catch(() => ({ week: [], month_vs_month: null, records: {} })),
     api.league().catch(() => null),
@@ -496,6 +582,8 @@ export async function renderProfile(root, { me: preMe } = {}) {
     // does too. A profile that will not load because the trophy shelf is down
     // would be a poor trade for a decoration.
     api.achievements().catch(() => null),
+    // کد معرف. Same rule: a down /referral must not cost the rest of the page.
+    api.referralGet().catch(() => null),
   ]);
   if (!me) { root.replaceChildren(el('div', { class: 'dcp-gate' }, 'برای دیدن پروفایل وارد شوید.')); return; }
 
@@ -508,6 +596,10 @@ export async function renderProfile(root, { me: preMe } = {}) {
     el('div', { class: 'dcp-dash-hello' }, 'پروفایل'),
     section('نام مستعار', pseudonymBlock(me)),
     section('پلن', planBlock(me)),
+    // Immediately after «پلن», with id:'referral' for deep links — decision
+    // 2.10's own reasoning applies here too: this is money-adjacent. A down
+    // /referral hides the whole section rather than rendering broken.
+    ...(referral ? [section('کد معرف', referralBlock(me, referral), 'referral')] : []),
     section('هفته شما', stats.week && stats.week.length ? weekStrip(stats.week) : el('div', { class: 'dcp-muted' }, '—')),
     section('رکوردها', el('div', { class: 'dcp-records' }, [
       el('div', {}, [el('b', {}, faNum(stats.records?.current_streak || 0)), el('span', {}, 'استریک فعلی')]),

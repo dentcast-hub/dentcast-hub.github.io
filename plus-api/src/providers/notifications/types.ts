@@ -50,7 +50,18 @@ export type NotificationKind =
    * reader themselves asked, and the daily cap exists to stop us pestering
    * people — not to drop the one message they are actually waiting for.
    */
-  | 'support_reply';
+  | 'support_reply'
+  /**
+   * Someone claimed this account's کد معرف and just completed their FIRST
+   * settled purchase — the exact moment services/discount-credits.ts's
+   * referralCredits() starts crediting the referrer's ٪۵ (services/referrals.ts
+   * decision 2.4). Fired once per referred account, from the same `seat ===
+   * null` vantage point services/pillar.ts already reads in settlePayment.
+   * Deliberately CAPPED (unlike 'pillar_seat'): this is good news, not a
+   * reply the reader is owed, so a busy day may drop it to اطلاعیه-only —
+   * the row still lands either way.
+   */
+  | 'referral_bonus';
 
 /**
  * A message may be a plain string (messenger text) or a structured payload.

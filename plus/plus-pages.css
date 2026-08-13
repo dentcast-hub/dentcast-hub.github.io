@@ -347,6 +347,12 @@ a.dcp-progress-row:hover { text-decoration: none; }
 .dcp-phone { font-weight: 700; }
 .dcp-switch { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; }
 
+.dcp-referral-code-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
+.dcp-referral-code-row code {
+  font-weight: 800; font-size: 1.05rem; direction: ltr; unicode-bidi: isolate;
+  background: var(--surface2, #f4f6fb); border-radius: 8px; padding: 4px 10px;
+}
+
 /* week strip: clear day cells with weekday letters + a filled dot on active days */
 /* Force RTL so the week always reads شنبه (first) on the right, جمعه on the left,
    independent of any ambient direction. */
@@ -797,6 +803,14 @@ a.dcp-progress-row:hover { text-decoration: none; }
 .dcp-price-list strong { font-size: .96rem; }
 .dcp-price-list span { font-size: .86rem; color: var(--txt2, #4a5f85); }
 
+/* کد معرف — between the plan grid and the buy button (decision 2.10). No new
+   input chrome: reuses .dcp-field-row/.dcp-input from :324-325 and
+   .dcp-input-code from plus.css. */
+.dcp-referral { display: flex; flex-direction: column; gap: 6px; margin-top: 2px; }
+.dcp-referral-msg:empty { display: none; }
+.dcp-referral-msg.is-ok-text { color: #0f7a4d; text-align: start; }
+.dcp-referral-msg.is-err-text { color: #b3261e; text-align: start; }
+
 @media (prefers-color-scheme: dark) {
   .dcp-plan-blocked, .dcp-price-notice.is-warn b { color: #e8b45f; }
   .dcp-plan-save { background: rgba(95,211,155,.14); color: #5fd39b; }
@@ -804,6 +818,8 @@ a.dcp-progress-row:hover { text-decoration: none; }
   .dcp-price-notice.is-ok { background: rgba(95,211,155,.11); border-color: rgba(95,211,155,.28); }
   .dcp-price-notice.is-ok b { color: #5fd39b; }
   .dcp-price-msg { color: #f28079; }
+  .dcp-referral-msg.is-ok-text { color: #5fd39b; }
+  .dcp-referral-msg.is-err-text { color: #f28079; }
 }
 
 /* ---------------------------------------------------------------------------

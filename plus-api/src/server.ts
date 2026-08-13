@@ -27,6 +27,7 @@ import { supportRoutes } from './routes/support.js';
 import { adminRoutes } from './routes/admin.js';
 import { pushRoutes } from './routes/push.js';
 import { payRoutes } from './routes/pay.js';
+import { referralRoutes } from './routes/referral.js';
 
 /**
  * Build the Fastify app. Exported separately from the listen() call so tests can
@@ -101,6 +102,7 @@ export async function buildServer(): Promise<FastifyInstance> {
   await app.register(adminRoutes);
   await app.register(pushRoutes);
   await app.register(payRoutes);
+  await app.register(referralRoutes);
   await app.register(playerRoutes);
   await app.register(voteRoutes);
 

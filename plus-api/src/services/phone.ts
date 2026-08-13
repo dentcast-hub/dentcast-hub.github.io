@@ -7,7 +7,8 @@
 const PERSIAN_DIGITS = '۰۱۲۳۴۵۶۷۸۹';
 const ARABIC_DIGITS = '٠١٢٣٤٥٦٧٨٩';
 
-function toLatinDigits(input: string): string {
+/** Exported for services/referrals.ts — a referral code typed from a Persian keyboard needs the same digit-folding a phone number does. Do not copy this a second time. */
+export function toLatinDigits(input: string): string {
   return input.replace(/[۰-۹٠-٩]/g, (ch) => {
     const p = PERSIAN_DIGITS.indexOf(ch);
     if (p >= 0) return String(p);
