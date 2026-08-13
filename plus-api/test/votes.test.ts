@@ -24,7 +24,33 @@ async function userId(phone: string): Promise<string> {
   return r.rows[0].id;
 }
 
-/** Put an engagement row in the log — the only source the board's seed reads. */
+/**
+ * Open a thread under a page — the reader's own comment, exactly as
+ * commentOnArticle writes it. The board reads `support_tickets` directly, so a
+ * test that faked it in `user_activity` would prove nothing.
+ */
+async function comment(phone: string, contentId: string): Promise<string> {
+  const r = await pool.query<{ id: string }>(
+    `insert into support_tickets (user_id, reference, kind, subject, content_id)
+     values ($1, $2, 'support', 'س', $3) returning id`,
+    [await userId(phone), 'T-' + Math.random().toString(36).slice(2, 8).toUpperCase(), contentId],
+  );
+  await pool.query(
+    `insert into ticket_messages (ticket_id, author, body) values ($1, 'user', 'یک پرسش')`,
+    [r.rows[0].id],
+  );
+  return r.rows[0].id;
+}
+
+/** The founder answering — a message on an existing ticket, never a new one. */
+async function founderReply(ticketId: string): Promise<void> {
+  await pool.query(
+    `insert into ticket_messages (ticket_id, author, body) values ($1, 'founder', 'پاسخ')`,
+    [ticketId],
+  );
+}
+
+/** Put an engagement row in the log — the other source the board's seed reads. */
 async function logActivity(phone: string, action: string, contentId: string): Promise<void> {
   await pool.query(
     `insert into user_activity (user_id, action, content_id) values ($1, $2, $3)`,
@@ -261,6 +287,97 @@ describe('GET /votes/board', () => {
     const b = await board();
     expect(find(b, ART).hearts).toBe(4);
     expect(ids(b)[0]).toBe(ART);
+  });
+
+  // ── گفت‌وگوی زیر مطلب in the seed ───────────────────────────────────────
+  //
+  // A comment was INVISIBLE to the score until 2026-08-12 — not underweighted,
+  // absent — because writing one produces no `user_activity` row and no XP, and
+  // the seed read that one table. It is the most expensive thing a reader does
+  // on a page (a highlight is one second and private; a question is minutes and
+  // carries their name), so it tops the ladder at 4.
+  describe('a comment counts, and counts once', () => {
+    it('reads the thread itself, not a copy in the activity log', async () => {
+      await loginAs(app, '09120000001');
+      await comment('09120000001', ART);
+
+      // One commenter = 4, and nothing was written to user_activity to say so.
+      const b = await board();
+      expect(find(b, ART).engagement).toBe(100);
+      const log = await pool.query('select 1 from user_activity');
+      expect(log.rowCount).toBe(0);
+    });
+
+    // The ladder, stated as a comparison rather than as a constant: a page one
+    // person wrote under outranks a page one person highlighted.
+    it('outranks a highlight, which is a second of private work', async () => {
+      await loginAs(app, '09120000001');
+      await loginAs(app, '09120000002');
+      await comment('09120000001', ART);
+      await logActivity('09120000002', 'highlight_created', OTHER);
+
+      expect(ids(await board())).toEqual([ART, OTHER]);
+    });
+
+    // The one that would quietly corrupt the whole board: answering a question
+    // must not raise the page it was asked on, or the ranking would measure how
+    // responsive the founder is, page by page.
+    it('never counts the founder answering', async () => {
+      await loginAs(app, '09120000001');
+      const ticket = await comment('09120000001', ART);
+      const before = find(await board(), ART).score;
+
+      for (let i = 0; i < 5; i += 1) await founderReply(ticket);
+      expect(find(await board(), ART).score).toBe(before);
+    });
+
+    // One reader is one voice, however long the conversation runs — the same
+    // rule the distinct-user count enforces everywhere else in the seed.
+    it('counts one reader once, however many messages they send', async () => {
+      await loginAs(app, '09120000001');
+      await loginAs(app, '09120000002');
+      const t = await comment('09120000001', ART);
+      await pool.query(
+        `insert into ticket_messages (ticket_id, author, body) values ($1, 'user', 'باز هم')`, [t],
+      );
+      await comment('09120000002', OTHER);
+
+      const b = await board();
+      expect(find(b, ART).score).toBe(find(b, OTHER).score);
+    });
+
+    // Writing is the signal; publishing is the founder's editorial decision, and
+    // weighting by it would put that judgment inside a reader-derived ranking.
+    it('does not care whether the thread was published', async () => {
+      await loginAs(app, '09120000001');
+      await loginAs(app, '09120000002');
+      const t = await comment('09120000001', ART);
+      await comment('09120000002', OTHER);
+      await pool.query('update support_tickets set is_public = true where id = $1', [t]);
+
+      const b = await board();
+      expect(find(b, ART).score).toBe(find(b, OTHER).score);
+    });
+
+    // A support ticket is not about a page at all; it must not seed one.
+    it('ignores a ticket with no page behind it', async () => {
+      await loginAs(app, '09120000001');
+      await pool.query(
+        `insert into support_tickets (user_id, reference, kind, subject)
+         values ($1, 'T-AAA-BBB', 'billing', 'پرداخت')`,
+        [await userId('09120000001')],
+      );
+      expect((await board()).items).toEqual([]);
+    });
+
+    // A reader who signed out, came back and asked a question leaves a thread
+    // and no activity row at all. An inner join would drop exactly that page —
+    // the most engaged kind there is.
+    it('seeds a page whose only signal is the conversation', async () => {
+      await loginAs(app, '09120000001');
+      await comment('09120000001', 'insight/insight-3');
+      expect(ids(await board())).toEqual(['insight/insight-3']);
+    });
   });
 
   // ── ranked within a class ──────────────────────────────────────────────

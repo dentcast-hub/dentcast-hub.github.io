@@ -7,12 +7,14 @@ import { pool } from '../db.js';
  *
  *   · HEARTS are state. One row per (reader, page) in `content_votes`, put there
  *     by a press and taken away by the next one. Nothing here derives them.
- *   · The SEED is derived, every time, from `user_activity` — the append-only
- *     log that has carried `content_id` since migration 0001. It is not stored,
- *     not cached in a column and not backfilled anywhere, for the same reason
- *     the badge wall stores no badges: a written copy of a derived number is a
- *     second source of truth, and the first time the two disagree the public
- *     number is wrong with nothing to notice it.
+ *   · The SEED is derived, every time, from records that already exist for their
+ *     own reasons — `user_activity`, the append-only log that has carried
+ *     `content_id` since migration 0001, and `support_tickets`, where a comment
+ *     under a page already lives. It is not stored, not cached in a column and
+ *     not backfilled anywhere, for the same reason the badge wall stores no
+ *     badges: a written copy of a derived number is a second source of truth,
+ *     and the first time the two disagree the public number is wrong with
+ *     nothing to notice it.
  *
  * ── Why a seed exists at all ────────────────────────────────────────────────
  *
@@ -21,8 +23,10 @@ import { pool } from '../db.js';
  * concludes the feature is broken, and never presses anything — so the votes
  * that would have fixed it never arrive. The seed is what makes the board
  * sensible on day one, and it costs nothing to produce because the signal is
- * already in the log: who finished a page, who highlighted it, who pinned it,
- * who passed it on.
+ * already recorded: who finished a page, who highlighted it, who pinned it, who
+ * passed it on, and — since 2026-08-12 — who wrote something under it. The
+ * first four come from `user_activity`; the fifth from `support_tickets`, where
+ * it already lives (see commentsByContent).
  *
  * It counts DISTINCT USERS per action, never rows. One reader who leaves twenty
  * highlights on one article is one person who found it worth marking up, and
@@ -172,11 +176,19 @@ export async function getVoteState(contentId: string, userId: string | null): Pr
  * What each kind of engagement is worth, in units of "one reader".
  *
  * The order is by cost to the reader, which is the only ranking of these signals
- * that is defensible: highlighting a passage and pinning a page to a board are
+ * that is defensible: writing under a page is the most expensive thing anybody
+ * does on it, highlighting a passage and pinning a page to a board are
  * deliberate acts of study, sharing is a public recommendation, and finishing is
  * the floor — it means the page held someone to the end, which is real but
  * cheap. A heart is worth 1, so these are readable against it directly: a page
  * three people highlighted starts where a page nine people hearted would be.
+ *
+ * `comment` tops the ladder on the same rule that orders the rest of it. A
+ * highlight is one second and nobody else ever sees it; a question is minutes of
+ * writing, it goes to a person, and it carries the reader's own display name.
+ * It was invisible to the score until 2026-08-12 — not underweighted, ABSENT,
+ * because گفت‌وگوی زیر مطلب writes no `user_activity` row and earns no XP, and
+ * this query read that one table.
  *
  * `article_completed` is young — the client only started emitting it when
  * reading.js shipped — so in practice the early board leans on highlights, which
@@ -184,6 +196,7 @@ export async function getVoteState(contentId: string, userId: string | null): Pr
  * grows on its own, and the whole seed is shrinking anyway.
  */
 const SEED_WEIGHTS = {
+  comment: 4,
   highlight: 3,
   pin: 3,
   share: 2,
@@ -236,19 +249,59 @@ export function contentClass(contentId: string): ContentClass {
  */
 export const MIN_CLASS_SIZE = 12;
 
-async function seedByContent(): Promise<Map<string, number>> {
-  const res = await pool.query<{
-    content_id: string; u_hl: string; u_pin: string; u_share: string; u_consumed: string;
-  }>(
-    `select content_id,
-            count(distinct user_id) filter (where action = 'highlight_created')     as u_hl,
-            count(distinct user_id) filter (where action = 'collection_item_added') as u_pin,
-            count(distinct user_id) filter (where action = 'content_shared')        as u_share,
-            count(distinct user_id) filter (where action in ('article_completed','episode_listened')) as u_consumed
-       from user_activity
+/**
+ * Distinct readers who wrote under each page.
+ *
+ * Read from `support_tickets` rather than copied into `user_activity`, for the
+ * reason everything else in this file is derived: a written duplicate of a fact
+ * is a second source of truth, and the first time the two disagree the public
+ * number is wrong with nothing to notice it. The thread IS the record.
+ *
+ * Two properties come free from the schema rather than from a filter here, and
+ * both matter enough to say out loud:
+ *
+ *   · THE FOUNDER'S REPLIES DO NOT COUNT. A ticket's `user_id` is the reader
+ *     who opened it; a founder answer is a `ticket_messages` row with
+ *     `author = 'founder'` and creates no ticket. So answering a question can
+ *     never raise the page it was asked on — which it would, page by page, in
+ *     proportion to how responsive the founder is.
+ *   · ONE READER IS ONE VOICE. `support_tickets_user_content_uniq` (migration
+ *     0042) makes a reader's comments under one page ONE conversation, so a
+ *     long back-and-forth counts once. `count(distinct user_id)` says so
+ *     explicitly anyway, so the number survives that index changing.
+ *
+ * It counts WRITING, not publishing. `is_public` is the founder's editorial
+ * decision, and weighting by it would put that judgment inside a ranking whose
+ * whole claim is that it comes from readers.
+ */
+async function commentsByContent(): Promise<Map<string, number>> {
+  const res = await pool.query<{ content_id: string; u_comment: string }>(
+    `select content_id, count(distinct user_id) as u_comment
+       from support_tickets
       where content_id is not null
       group by content_id`,
   );
+  const out = new Map<string, number>();
+  for (const r of res.rows) out.set(r.content_id, Number(r.u_comment));
+  return out;
+}
+
+async function seedByContent(): Promise<Map<string, number>> {
+  const [res, comments] = await Promise.all([
+    pool.query<{
+      content_id: string; u_hl: string; u_pin: string; u_share: string; u_consumed: string;
+    }>(
+      `select content_id,
+              count(distinct user_id) filter (where action = 'highlight_created')     as u_hl,
+              count(distinct user_id) filter (where action = 'collection_item_added') as u_pin,
+              count(distinct user_id) filter (where action = 'content_shared')        as u_share,
+              count(distinct user_id) filter (where action in ('article_completed','episode_listened')) as u_consumed
+         from user_activity
+        where content_id is not null
+        group by content_id`,
+    ),
+    commentsByContent(),
+  ]);
   const out = new Map<string, number>();
   for (const r of res.rows) {
     const seed = Number(r.u_hl) * SEED_WEIGHTS.highlight
@@ -256,6 +309,13 @@ async function seedByContent(): Promise<Map<string, number>> {
       + Number(r.u_share) * SEED_WEIGHTS.share
       + Number(r.u_consumed) * SEED_WEIGHTS.consumed;
     if (seed > 0) out.set(r.content_id, seed);
+  }
+  // Folded in after, not joined in the query above: a page can have a thread and
+  // no activity row at all — somebody who read it signed out and came back to
+  // ask a question — and an inner join on `user_activity` would drop exactly
+  // that page, which is the most engaged kind there is.
+  for (const [id, n] of comments) {
+    if (n > 0) out.set(id, (out.get(id) ?? 0) + n * SEED_WEIGHTS.comment);
   }
   return out;
 }
