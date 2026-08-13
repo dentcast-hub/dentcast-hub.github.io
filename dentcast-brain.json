@@ -13155,5 +13155,41 @@
       "secondary": [],
       "subtopic": "comprehensive-diagnosis"
     }
+  },
+  {
+    "type": "chairside",
+    "id": "chairside-32",
+    "title": "وقتی اصول رعایت نشده، بهترین سمان‌ها هم معجزه نمی‌کنند",
+    "caption": "در این کیس Chairside می‌بینیم چرا افتادنِ مکررِ یک لمینت مسئلهٔ کیفیتِ سمان نبود: از فقدانِ ساپورتِ خلفی و التهابِ لثه‌ای که ایزولاسیونِ اصولی را ناممکن می‌کند تا تراشِ رسیده به عاج و پوسیدگیِ جامانده — و چرا هم سمانِ مجددِ کارِ همکارِ قبلی رد شد و هم عصب‌کشی و روکش.",
+    "hashtags": [
+      "#چیرساید",
+      "#کیس_بالینی",
+      "#دکتر_شهابیان",
+      "#افتادن_روکش",
+      "#سمان_مجدد",
+      "#لمینیت_سرامیکی",
+      "#پروتکل_باند",
+      "#ایزولاسیون",
+      "#پوسیدگی_جامانده",
+      "#ساپورت_خلفی",
+      "#اورپرپ",
+      "#رستوریشن_همکار_قبلی"
+    ],
+    "keywords": [
+      "repeated laminate debonding cause",
+      "bonding to dentin protocol failure",
+      "isolation impossible gingival inflammation",
+      "residual caries under veneer preparation",
+      "over prepared tooth exposed dentin",
+      "missing posterior support anterior overload",
+      "declining to recement another dentist restoration",
+      "shade matching single crown adjacent veneers"
+    ],
+    "page_url": "/chairside/chairside-32.html",
+    "pillar": {
+      "primary": "treatment-planning",
+      "secondary": [],
+      "subtopic": "comprehensive-diagnosis"
+    }
   }
 ]

@@ -502,6 +502,10 @@
         "milestone": false
       },
       {
+        "content_id": "chairside/chairside-32",
+        "milestone": false
+      },
+      {
         "content_id": "insight/insight-32",
         "milestone": true
       },
@@ -1399,6 +1403,10 @@
         "milestone": false
       },
       {
+        "content_id": "chairside/chairside-32",
+        "milestone": false
+      },
+      {
         "content_id": "insight/insight-42",
         "milestone": false
       },
@@ -1537,6 +1545,10 @@
       },
       {
         "content_id": "chairside/chairside-29",
+        "milestone": false
+      },
+      {
+        "content_id": "chairside/chairside-32",
         "milestone": false
       },
       {
@@ -1774,6 +1786,10 @@
       },
       {
         "content_id": "chairside/chairside-27",
+        "milestone": false
+      },
+      {
+        "content_id": "chairside/chairside-32",
         "milestone": false
       },
       {
@@ -2293,6 +2309,10 @@
       },
       {
         "content_id": "chairside/chairside-27",
+        "milestone": false
+      },
+      {
+        "content_id": "chairside/chairside-32",
         "milestone": false
       },
       {

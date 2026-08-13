@@ -4265,7 +4265,7 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
           <span class="k">ساعت محتوای صوتی</span>
         </div>
         <div class="hero-stat" role="listitem">
-          <span class="v"><!-- COUNTER:CONTENT:START -->۵۸۴<!-- COUNTER:CONTENT:END --></span>
+          <span class="v"><!-- COUNTER:CONTENT:START -->۵۸۵<!-- COUNTER:CONTENT:END --></span>
           <span class="k">مطلب و مدخل آموزشی</span>
         </div>
       </div>
@@ -4394,9 +4394,9 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
           <p class="dc-rail-title">پست و کور یک‌مرحله‌ای؛ وقتی «عدم تطابق» به نفع درمان تمام می‌شود</p>
           <span class="dc-rail-meta">تازه‌ترین مطلب</span>
         </a>
-        <a class="dc-rail-card" data-cat="chairside" href="/chairside/chairside-31.html">
+        <a class="dc-rail-card" data-cat="chairside" href="/chairside/chairside-32.html">
           <span class="dc-type-chip t-chair">Chairside</span>
-          <p class="dc-rail-title">دندانی که فانکشن ندارد، صرفاً یک فضای اشغال‌شده است</p>
+          <p class="dc-rail-title">وقتی اصول رعایت نشده، بهترین سمان‌ها هم معجزه نمی‌کنند</p>
           <span class="dc-rail-meta">تازه‌ترین مطلب</span>
         </a>
         <a class="dc-rail-card" data-cat="dentai" href="/dentai/dentai-28.html">
@@ -4438,10 +4438,10 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
           </div>
         </div>
         <ul class="dc-pulse-list">
+          <li>یک <a href="/chairside/chairside-32.html">کیس چیرساید</a> با عنوانِ «وقتی اصول رعایت نشده، بهترین سمان‌ها هم معجزه نمی‌کنند» منتشر شد · ۲۲ مرداد</li>
           <li>یک <a href="/chairside/chairside-31.html">کیس چیرساید</a> با عنوانِ «دندانی که فانکشن ندارد، صرفاً یک فضای اشغال‌شده است» منتشر شد · ۲۱ مرداد</li>
           <li>یک <a href="/chairside/chairside-30.html">کیس چیرساید</a> با عنوانِ «سرنوشت دندان را فقط با معیارهای رستوریتیو تعیین نکنیم» منتشر شد · ۲۰ مرداد</li>
           <li>یک <a href="/insight/insight-64.html">اینسایت بالینی</a> با عنوانِ «اینجوری هم میشه به فرول نگاه کرد،یه استفاده ی معکوس از مقاله معروف در مورد فرول» منتشر شد · ۱۹ مرداد</li>
-          <li>یک <a href="/notecast/episode-39.html">نوت‌کست</a> با عنوانِ «درمان غیرتهاجمی مثلث‌های سیاه بین‌دندانی با تزریق اسید هیالورونیک» منتشر شد · ۱۹ مرداد</li>
         </ul>
       </div>
 
@@ -5214,7 +5214,7 @@ scrollBody.addEventListener('touchend',e=>{
     if(p) p.textContent=title;
     a.href=url;
   }
-  fetch('/dentcast-brain.json?v=775a32d490',{cache:'no-store'}).then(function(r){return r.json();}).then(function(arr){
+  fetch('/dentcast-brain.json?v=5195b45244',{cache:'no-store'}).then(function(r){return r.json();}).then(function(arr){
     if(!Array.isArray(arr)) return;
     var latest={}, pool=[];
     arr.forEach(function(e){
@@ -5561,7 +5561,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 <script>
 /* ── LAST 30 UPDATES ── */
 (function(){
-  const FEED_URL='/dentcast-brain.json?v=775a32d490';
+  const FEED_URL='/dentcast-brain.json?v=5195b45244';
   const el=document.getElementById('dcLast3Updates');
   if(!el) return;
   function extractArray(json){if(Array.isArray(json))return json;const cands=[json?.items,json?.data,json?.entries,json?.feed].filter(Boolean);for(const c of cands)if(Array.isArray(c))return c;for(const k in(json||{})){const v=json[k];if(Array.isArray(v))return v;if(v&&typeof v==='object'&&Array.isArray(v.items))return v.items;}return[];}
@@ -5817,7 +5817,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 
   function getBrain(){
     if(brainCache) return Promise.resolve(brainCache);
-    return fetch('/dentcast-brain.json?v=775a32d490', {cache:'no-store'})
+    return fetch('/dentcast-brain.json?v=5195b45244', {cache:'no-store'})
       .then(r => r.ok ? r.json() : [])
       .then(d => { brainCache = Array.isArray(d) ? d : []; return brainCache; })
       .catch(() => { brainCache = []; return []; });
