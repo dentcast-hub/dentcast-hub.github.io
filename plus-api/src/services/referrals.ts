@@ -160,8 +160,25 @@ export async function checkClaim(userId: string, code: string): Promise<CheckRes
   );
   if (already) return { ok: false, reason: 'already_referred' };
 
+  // "First purchase" means MONEY, from either rail — not "first gateway row".
+  // The first cut asked `payments` alone, which is the one table a manual sale
+  // never writes: somebody who had already bought six months by واریز به شبا or
+  // by gift card looked like a brand-new account, so their SECOND subscription
+  // took the newcomer's ٪۱۰ and minted their referrer a ٪۵ (founder review,
+  // 2026-08-13). gift_redemptions is where both of those rails settle.
+  //
+  // Free premium is deliberately NOT counted — a league prize or an admin gift
+  // writes a `subscriptions` row and nothing else, and testing that table
+  // instead would spend the referral eligibility of somebody who has never paid
+  // us anything, which is the exact reader this program exists to convert.
   const purchased = await one<{ x: number }>(
-    "select 1 as x from payments where user_id = $1 and status = 'paid' limit 1", [userId],
+    `select 1 as x from payments
+      where user_id = $1 and status = 'paid'
+      union all
+     select 1 from gift_redemptions
+      where user_id = $1 and status = 'approved'
+      limit 1`,
+    [userId],
   );
   if (purchased) return { ok: false, reason: 'already_purchased' };
 

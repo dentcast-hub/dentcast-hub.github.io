@@ -11,7 +11,8 @@ import { makeApp, resetDb, loginAs, sessionCookieFrom } from './helpers.js';
 import { pool, withTransaction } from '../src/db.js';
 import { startPayment, settlePayment } from '../src/services/payment.js';
 import { availableCredits, creditPercent, discountedRial } from '../src/services/discount-credits.js';
-import { normalizeCode, claimReferral } from '../src/services/referrals.js';
+import { normalizeCode, claimReferral, checkClaim } from '../src/services/referrals.js';
+import { activateMonths } from '../src/services/subscription.js';
 import { mergeProfiles } from '../src/services/merge-profiles.js';
 import { config } from '../src/config.js';
 
@@ -186,6 +187,91 @@ describe('GET /referral/check — checkClaim', () => {
       method: 'GET', url: `/referral/check?code=${code2}`, headers: { cookie: referredCookie },
     });
     expect(secondClaim.json()).toMatchObject({ ok: false, reason: 'already_referred' });
+  });
+
+  // The two rules the founder asked to see proved end-to-end (2026-08-13),
+  // rather than at the checkClaim level alone: a code is ONE-TIME for whoever
+  // spends it, and it is for a FIRST subscription only.
+  it('a code is spent once and for all: after the referred purchase settles, no code works again', async () => {
+    const referrerCookie = await loginAs(app, REFERRER_PHONE);
+    const code = await mintCodeVia(referrerCookie, 'dentmaster');
+
+    const buyerCookie = await loginAs(app, REFERRED_PHONE);
+    const buyerId = await userId(buyerCookie);
+
+    // Month one: the code works and takes ٪۱۰ off.
+    const track = nextRequestOk();
+    gatewayReplies(track);
+    const first = await startPayment({ userId: buyerId, months: 6, referralCode: code });
+    expect(first.payment!.amount_rial).toBe(discountedRial(SIX_MONTH_RIAL, 10));
+    gatewayReplies(verifyOk(track.trackId, first.payment!.amount_rial));
+    expect((await settlePayment(first.payment!.ref_id!)).outcome).toBe('activated');
+
+    // Month two: neither a DIFFERENT code nor the SAME one is accepted...
+    const other = await mintCodeVia(await loginAs(app, REFERRER2_PHONE), 'otherone');
+    for (const c of [other, code]) {
+      const res = await app.inject({
+        method: 'GET', url: `/referral/check?code=${c}`, headers: { cookie: buyerCookie },
+      });
+      expect(res.json()).toMatchObject({ ok: false, reason: 'already_referred' });
+    }
+    // ...and POST /pay/start refuses it outright rather than quietly selling at
+    // list price, so the buyer is told instead of wondering.
+    const retry = await app.inject({
+      method: 'POST', url: '/pay/start', headers: { cookie: buyerCookie },
+      payload: { months: 6, referral_code: other },
+    });
+    expect(retry.statusCode).toBe(400);
+
+    // And the credit itself is gone: the renewal carries no referral money.
+    // (It is ٪۲۰ below list because this first-ever payer took a «ستون» seat —
+    // that discount is permanent and has nothing to do with the referral.)
+    const track2 = nextRequestOk();
+    gatewayReplies(track2);
+    const second = await startPayment({ userId: buyerId, months: 6 });
+    expect(second.payment!.amount_rial).toBe(discountedRial(SIX_MONTH_RIAL, 20));
+  });
+
+  // The hole this test was written for: `payments` is the one table a MANUAL
+  // sale never writes, so an account that had already bought six months by
+  // واریز به شبا or gift card read as brand new and got the newcomer's ٪۱۰ on
+  // its second subscription.
+  it.each([
+    ['bank_transfer', 'DC-AAA-BBB'],
+    ['apple_us', 'DC-CCC-DDD'],
+  ])('refuses an account that already subscribed by %s', async (kind, reference) => {
+    const code = await mintCodeVia(await loginAs(app, REFERRER_PHONE), 'dentmaster');
+    const buyerId = await userId(await loginAs(app, REFERRED2_PHONE));
+    await pool.query(
+      `insert into gift_redemptions (user_id, reference, kind, months, status, reviewed_at)
+       values ($1, $2, $3, 6, 'approved', now())`,
+      [buyerId, reference, kind],
+    );
+    expect(await checkClaim(buyerId, code)).toMatchObject({ reason: 'already_purchased' });
+  });
+
+  it('still welcomes an account whose premium was FREE — a league prize or an admin gift', async () => {
+    const code = await mintCodeVia(await loginAs(app, REFERRER_PHONE), 'dentmaster');
+    const buyerId = await userId(await loginAs(app, REFERRED3_PHONE));
+    // What activateMonths(source:'admin'|'prize') leaves behind, and nothing
+    // else: no money anywhere. Blocking these would spend the referral
+    // eligibility of exactly the reader this program exists to convert.
+    await activateMonths(buyerId, 6, { source: 'admin' });
+    expect(await checkClaim(buyerId, code)).toMatchObject({ ok: true });
+  });
+
+  it('a pending or rejected manual claim is not a purchase', async () => {
+    const code = await mintCodeVia(await loginAs(app, REFERRER_PHONE), 'dentmaster');
+    const buyerId = await userId(await loginAs(app, REFERRED_PHONE));
+    await pool.query(
+      `insert into gift_redemptions (user_id, reference, kind, months, status)
+       values ($1, 'DC-EEE-FFF', 'bank_transfer', 6, 'pending')`,
+      [buyerId],
+    );
+    expect(await checkClaim(buyerId, code)).toMatchObject({ ok: true });
+
+    await pool.query("update gift_redemptions set status = 'rejected' where user_id = $1", [buyerId]);
+    expect(await checkClaim(buyerId, code)).toMatchObject({ ok: true });
   });
 });
 
