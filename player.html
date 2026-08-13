@@ -115,6 +115,16 @@ body {
   overflow: hidden;
 }
 
+/* شمارهٔ اپیزودِ در حال پخش، کنار عنوان — بدون این، پیدا کردن شماره فقط با
+   گشتن در لیست ممکن بود. رقم‌ها انگلیسی‌اند (مثل عنوان)، پس همیشه چپ‌به‌راست. */
+.dc-current-epnum {
+  color: var(--accent);
+  font-weight: 800;
+  unicode-bidi: isolate;
+  direction: ltr;
+}
+.dc-current-epnum:not(:empty) { margin-inline-end: 0.35rem; }
+
 #dc-current-desc {
   display: none;
   margin-top: 0.5rem;
@@ -335,12 +345,16 @@ body {
   background: var(--bg-sec);
 }
 
+/* چپ‌به‌راست عمدی: شمارهٔ اپیزود و عنوان هر دو انگلیسی‌اند، پس ردیف باید مثل
+   یک ردیفِ لاتین بچیند — کاشیِ شماره در سمتِ شروعِ خواندنِ چپ‌به‌راست (چپ)،
+   نه سمتی که جهتِ صفحه (rtl) بی‌ربط تحمیلش می‌کند. */
 .dc-ep-main {
   display: flex;
   align-items: center;
   gap: 0.7rem;
   padding: 0.65rem 1.1rem;
   cursor: pointer;
+  direction: ltr;
 }
 
 /* کاشی شماره (به‌جای کاور تکراری) */
@@ -376,7 +390,7 @@ body {
   -webkit-box-orient: vertical;
   overflow: hidden;
   unicode-bidi: plaintext;
-  text-align: right;
+  text-align: left;
 }
 
 .dc-ep-meta {
@@ -594,7 +608,7 @@ body {
     </div>
     <div>
       <div class="dc-show-label">دنت‌کست · پادکست تخصصی پروتز و ایمپلنت</div>
-      <div id="dc-current-title">در حال بارگذاری...</div>
+      <div id="dc-current-title"><span id="dc-current-epnum" class="dc-current-epnum"></span><span id="dc-current-title-text">در حال بارگذاری...</span></div>
       <div id="dc-current-desc"></div>
     </div>
   </div>
@@ -634,7 +648,8 @@ const BRAIN_URL = "/dentcast-brain.json?v=3ec6e2b8f7";
 
 const audio = document.getElementById("dc-audio");
 const listEl = document.getElementById("dc-list");
-const titleEl = document.getElementById("dc-current-title");
+const epNumEl = document.getElementById("dc-current-epnum");
+const titleEl = document.getElementById("dc-current-title-text");
 const descEl  = document.getElementById("dc-current-desc");
 const playBtn = document.getElementById("dc-play");
 const seek = document.getElementById("dc-seek");
@@ -948,6 +963,7 @@ function loadEpisode(i){
   downloadBtn.href = ep.audio_url;
 downloadBtn.setAttribute("download", "");
 
+  epNumEl.textContent = ep.episode ? "#" + ep.episode : "";
   titleEl.textContent = epDisplayTitle(ep);
   descEl.innerHTML = ep.description || "";
   descEl.style.display = "none";
@@ -1300,6 +1316,6 @@ window.addEventListener("load", sendHeight);
   <div class="dc-results-box" id="dcResults"></div>
 </div>
 <script src="/global-search.js?v=9" defer></script>
-<script src="/dc-nav.js?v=92" defer></script>
+<script src="/dc-nav.js?v=93" defer></script>
 </body>
 </html>
