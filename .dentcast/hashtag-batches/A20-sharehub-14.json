@@ -1,0 +1,63 @@
+{
+  "type": "sharehub",
+  "note": "Publish of sharehub/share-14 (لبخند لثه‌ای: از کجا اندازه بگیریم و کِی سراغ کدام درمان برویم). Mints six concepts the library genuinely lacked: gummy smile itself, botox for lip hypermobility, lip repositioning, altered passive eruption, orthognathic surgery, and vertical maxillary excess. Reuses #Share_Hub, #Curated_Content, #Global_Diagnosis (the article builds directly on the Global Diagnosis framework), #افزایش_طول_تاج (crown lengthening — exact match), and #سوپرااراپشن (dentoalveolar extrusion — alias already covers 'اکستروژن').",
+  "concepts": [
+    {
+      "tag": "#لبخند_لثه‌ای",
+      "domain": "clinical",
+      "definition": "نمایش بیش‌ازحدِ لثه در بالای دندان‌های قدامیِ بالا هنگام لبخندِ کامل؛ آستانه‌ی بالینی طبق Global Diagnosis بیش از ۲ میلی‌متر بین حاشیه‌ی آزادِ لثه‌ی سانترال و لبه‌ی پایینیِ لب.",
+      "use_when": "مقاله علتِ نمایشِ لثه، اندازه‌گیریِ آن، یا انتخابِ درمان بر اساسِ علت را موضوع قرار دهد.",
+      "aliases": ["گامی اسمایل", "gummy smile", "excessive gingival display", "نمایش بیش از حد لثه", "gingival display"]
+    },
+    {
+      "tag": "#بوتاکس",
+      "domain": "clinical",
+      "definition": "تزریقِ بوتولینوم توکسین A به عضلاتِ بالابرنده‌ی لبِ بالا برای کاهشِ نمایشِ لثه؛ اثری موقت با میانگینِ دوامِ چهار تا شش ماه.",
+      "use_when": "مقاله تزریقِ بوتاکس را برای درمان یا استتارِ لبخند لثه‌ای یا لبِ هایپرموبایل بررسی کند.",
+      "aliases": ["botox", "botulinum toxin", "بوتاکس لب", "تزریق بوتاکس", "botulinum toxin A"]
+    },
+    {
+      "tag": "#لیپ_ری‌پوزیشنینگ",
+      "domain": "clinical",
+      "definition": "جراحیِ محدودکردنِ دامنه‌ی حرکتِ لبِ بالا با محدودسازیِ عضلاتِ بالابرنده؛ راه‌حلِ پایدارتر از بوتاکس برای لبِ هایپرموبایل، با ریسکِ ریلپس در سالِ اول.",
+      "use_when": "مقاله این جراحی را برای لبِ هایپرموبایل یا لبخند لثه‌ای تجویز یا مقایسه کند.",
+      "aliases": ["lip repositioning", "lip repositioning surgery", "جراحی لب", "ری پوزیشنینگ لب"]
+    },
+    {
+      "tag": "#رویش_غیرفعال_تغییریافته",
+      "domain": "clinical",
+      "definition": "توقفِ ناقصِ عقب‌نشینیِ لثه به سمتِ CEJ پس از رویشِ دندان؛ دندان‌های قدامی کوتاه‌تر از حدِ طبیعی به نظر می‌رسند و سوند به‌راحتی به CEJ نمی‌رسد.",
+      "use_when": "مقاله کوتاهیِ ظاهریِ تاجِ بالینی به دلیلِ عدمِ عقب‌نشینیِ لثه را تشخیص یا درمان کند.",
+      "aliases": ["altered passive eruption", "APE", "رویش غیرفعال", "رویش پسیو", "passive eruption"]
+    },
+    {
+      "tag": "#جراحی_ارتوگناتیک",
+      "domain": "clinical",
+      "definition": "جراحیِ اسکلتیِ فک برای اصلاحِ موقعیتِ فکِ بالا یا پایین؛ تنها درمانِ علّیِ رشدِ عمودیِ بیش‌ازحدِ فکِ بالا.",
+      "use_when": "مقاله جراحیِ فک را به‌عنوانِ راه‌حلِ اسکلتال برای مشکلِ زیبایی یا اکلوژن مطرح کند.",
+      "aliases": ["orthognathic surgery", "جراحی فک", "ارتوگناتیک", "orthognathic"]
+    },
+    {
+      "tag": "#رشد_عمودی_فک_بالا",
+      "domain": "clinical",
+      "definition": "رشدِ بیش‌ازحدِ اسکلتیِ فکِ بالا در بعدِ عمودی که یک‌سومِ پایینیِ صورت را بلند می‌کند و نمایشِ لثه را هم در ناحیه‌ی قدامی و هم خلفی افزایش می‌دهد.",
+      "use_when": "مقاله رشدِ اسکلتیِ عمودیِ فکِ بالا را علتِ لبخند لثه‌ای یا نامتناسبیِ صورت بداند.",
+      "aliases": ["vertical maxillary excess", "VME", "رشد عمودی فک بالا", "بلندی فک بالا", "maxillary vertical excess"]
+    }
+  ],
+  "articles": {
+    "sharehub/share-14": [
+      "#Share_Hub",
+      "#Curated_Content",
+      "#لبخند_لثه‌ای",
+      "#Global_Diagnosis",
+      "#بوتاکس",
+      "#لیپ_ری‌پوزیشنینگ",
+      "#رویش_غیرفعال_تغییریافته",
+      "#افزایش_طول_تاج",
+      "#جراحی_ارتوگناتیک",
+      "#رشد_عمودی_فک_بالا",
+      "#سوپرااراپشن"
+    ]
+  }
+}
