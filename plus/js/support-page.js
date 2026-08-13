@@ -4,10 +4,10 @@
 // pages are premium features, so anonymous -> login and free -> upsell. This
 // page is a door, and the reader most likely to need it is the one who is not
 // premium yet: the student asking for a discount, the person whose payment did
-// not activate. So a signed-in reader ALWAYS gets the real view, and the plan
-// only decides which KINDS the form offers — the locked one is shown as locked
-// rather than hidden, because a door you cannot see is one you cannot decide
-// about. The server enforces the same rule per kind (services/support.ts).
+// not activate. So a signed-in reader ALWAYS gets the real view. Since
+// «پشتیبانی و مشاوره» left the form (services/support.ts FORM_KINDS — the
+// premium question path is now «گفت‌وگوی زیر مطلب», under an article), no kind
+// this form offers is ever locked, so there is nothing left to grey out here.
 import { el, faNum } from './util.js';
 import { currentUser, meStatus, api } from './api.js';
 import { unreachableGate } from './premium-cta.js';
@@ -19,43 +19,125 @@ const FA_DATE = new Intl.DateTimeFormat('fa-IR', {
 });
 const when = (iso) => { try { return FA_DATE.format(new Date(iso)); } catch (_) { return ''; } };
 
+// Fixed on purpose (handoff decision 2.6) — the only inbox the Bale bot photo
+// path does not silently swallow. Not read from the API: it is not a setting a
+// reader ever needs to be told is configurable.
+const SUPPORT_TELEGRAM_URL = 'https://t.me/dentcast_support';
+const SUPPORT_TELEGRAM_ID = '@dentcast_support';
+
+/**
+ * The handle as TEXT, beside every Telegram button.
+ *
+ * A t.me link is the one door on this page that routinely fails to open for
+ * the audience it is for — no app registered as the handler, or a redirect
+ * that does not survive filtering — and a button that does nothing leaves the
+ * reader holding a reference with nowhere to send it. The handle is what they
+ * type into Telegram's own search, so it has to be readable and selectable
+ * rather than hidden inside an href.
+ *
+ * Latin inside an RTL line, so it is isolated for the same reason the IBAN is:
+ * without it the «@» renders on the wrong end and gets typed back wrong.
+ */
+function telegramFallback() {
+  return el('p', { class: 'dcp-muted dcp-tg-fallback' }, [
+    'اگر دکمه باز نشد، در تلگرام این آیدی را جست‌وجو کنید: ',
+    el('code', { class: 'dcp-tg-id', dir: 'ltr' }, SUPPORT_TELEGRAM_ID),
+  ]);
+}
+
+async function copyToClipboard(text, btn) {
+  const original = btn.textContent;
+  try {
+    await navigator.clipboard.writeText(text);
+    btn.textContent = 'کپی شد ✓';
+  } catch (_) {
+    btn.textContent = 'کپی نشد';
+  }
+  setTimeout(() => { btn.textContent = original; }, 1600);
+}
+
 /* ------------------------------------------------------------- the form -- */
 
-function newTicketForm(kinds, onDone) {
-  const sel = el('select', { class: 'dcp-input', id: 'tk-kind' },
-    kinds.map((k) => el('option', {
-      value: k.key, disabled: k.locked ? '' : null,
-    }, k.title_fa + (k.locked ? ' — ویژه‌ی پریمیوم' : ''))));
+// «نمی‌توانم از درگاه استفاده کنم» is a DOOR, not a kind: it carries no
+// data-kind and never opens a ticket — it sends the reader to the purchase
+// page, where واریز به حساب (or the gift-card rail) actually solves this
+// (handoff decision 2.10). A ticket here has no months, no confirm button and
+// no link to a subscription; it would just get lost among bug reports.
+const ROUTE_CHIP_ICON = '🏦';
+const ROUTE_CHIP_LABEL = 'نمی‌توانم از درگاه استفاده کنم';
+const KIND_ICON = { bug: '🛠️', billing: '💳', student: '🎓' };
 
+function kindChip(k, selected, onPick) {
+  const btn = el('button', {
+    type: 'button',
+    class: 'dcp-chip dcp-support-kind' + (selected ? ' is-active' : ''),
+  }, `${KIND_ICON[k.key] || ''} ${k.title_fa}`);
+  btn.addEventListener('click', () => onPick(k.key));
+  return btn;
+}
+
+function routeChip() {
+  const a = el('a', {
+    class: 'dcp-chip dcp-support-kind dcp-support-kind-route',
+    href: '/plus/pricing.html',
+  }, `${ROUTE_CHIP_ICON} ${ROUTE_CHIP_LABEL} ›`);
+  return a;
+}
+
+function newTicketForm(kinds, onDone) {
+  let selected = (kinds.find((k) => !k.locked) || kinds[0] || {}).key || '';
+
+  const grid = el('div', { class: 'dcp-support-kinds' });
   const hint = el('p', { class: 'dcp-muted' }, '');
   const subject = el('input', { class: 'dcp-input', type: 'text', maxlength: '120', placeholder: 'موضوع' });
   const body = el('textarea', { class: 'dcp-input', rows: '5', maxlength: '4000', placeholder: 'توضیح بدهید…' });
+
+  const photoChk = el('input', { type: 'checkbox', id: 'tk-photo' });
+  const photoLabel = el('label', { for: 'tk-photo', class: 'dcp-support-photo-label' }, [
+    photoChk, el('span', {}, 'عکسی دارم که برای این درخواست می‌فرستم'),
+  ]);
+  const photoNote = el('p', { class: 'dcp-muted dcp-support-photo-note' }, [
+    'بعد از ثبت، کد پیگیری می‌گیرید. عکس را با همان کد در تلگرام به ',
+    el('a', {
+      class: 'dcp-tg-id', dir: 'ltr',
+      href: SUPPORT_TELEGRAM_URL, target: '_blank', rel: 'noopener',
+    }, SUPPORT_TELEGRAM_ID),
+    ' بفرستید.',
+  ]);
+  photoNote.hidden = true;
+  photoChk.addEventListener('change', () => { photoNote.hidden = !photoChk.checked; });
+
   const out = el('div', { class: 'dcp-muted' }, '');
   const send = el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button' }, 'ثبت درخواست');
 
-  const syncHint = () => {
-    const k = kinds.find((x) => x.key === sel.value);
+  const drawGrid = () => {
+    grid.replaceChildren(
+      ...kinds.map((k) => kindChip(k, k.key === selected, (key) => { selected = key; drawGrid(); })),
+      routeChip(),
+    );
+    const k = kinds.find((x) => x.key === selected);
     hint.textContent = k ? k.hint_fa : '';
   };
-  sel.addEventListener('change', syncHint);
-
-  // Land on the first kind this reader can actually use, so the form does not
-  // open pre-refused.
-  const firstOpen = kinds.find((k) => !k.locked);
-  if (firstOpen) sel.value = firstOpen.key;
-  syncHint();
+  drawGrid();
 
   send.addEventListener('click', async () => {
     const s = subject.value.trim();
     const b = body.value.trim();
+    if (!selected) { out.textContent = 'یک دسته را انتخاب کنید.'; return; }
     if (!s || !b) { out.textContent = 'موضوع و متن هر دو لازم‌اند.'; return; }
     send.disabled = true;
     out.textContent = 'در حال ثبت…';
     try {
-      const r = await api.openTicket({ kind: sel.value, subject: s, body: b });
-      subject.value = ''; body.value = '';
+      // Read the tick BEFORE the form is cleared. Reading it afterwards is
+      // always false, which silently costs the reader the one thing this whole
+      // path exists for: the Telegram hand-off on the success panel.
+      const withPhoto = photoChk.checked;
+      const r = await api.openTicket({
+        kind: selected, subject: s, body: b, has_photo: withPhoto,
+      });
+      subject.value = ''; body.value = ''; photoChk.checked = false; photoNote.hidden = true;
       out.textContent = '';
-      onDone(r.ticket);
+      onDone(r.ticket, withPhoto);
     } catch (e) {
       out.textContent = (e && e.body && e.body.message) || 'ثبت نشد. دوباره تلاش کنید.';
     } finally {
@@ -63,11 +145,43 @@ function newTicketForm(kinds, onDone) {
     }
   });
 
-  return el('details', { class: 'dcp-card', style: 'margin-bottom:14px' }, [
+  return el('details', { class: 'dcp-card', style: 'margin-bottom:14px', open: '' }, [
     el('summary', {}, 'درخواست تازه'),
     el('div', { style: 'display:flex;flex-direction:column;gap:10px;margin-top:10px' },
-      [sel, hint, subject, body, send, out]),
+      [grid, hint, subject, body, photoLabel, photoNote, send, out]),
   ]);
+}
+
+/** The panel shown right after a ticket is opened — the reference, and the
+ *  Telegram hand-off only when the reader said a photo is coming. */
+function successPanel(ticket, withPhoto) {
+  const copyBtn = el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button' }, 'کپی کد پیگیری');
+  copyBtn.addEventListener('click', () => copyToClipboard(ticket.reference, copyBtn));
+
+  const parts = [
+    el('b', {}, '✅ درخواست ثبت شد'),
+    el('p', { style: 'display:flex;align-items:center;gap:8px;flex-wrap:wrap' }, [
+      el('code', {}, ticket.reference), copyBtn,
+    ]),
+  ];
+  if (withPhoto) {
+    parts.push(
+      el('p', {}, [
+        'عکس را همراه همین کد در تلگرام به ',
+        el('a', {
+          class: 'dcp-tg-id', dir: 'ltr',
+          href: SUPPORT_TELEGRAM_URL, target: '_blank', rel: 'noopener',
+        }, SUPPORT_TELEGRAM_ID),
+        ' بفرستید. بدون کد، عکس به درخواست شما وصل نمی‌شود.',
+      ]),
+      el('a', { class: 'dcp-btn dcp-btn-primary', href: SUPPORT_TELEGRAM_URL, target: '_blank', rel: 'noopener' },
+        'رفتن به تلگرام پشتیبانی'),
+      telegramFallback(),
+    );
+  } else {
+    parts.push(el('p', {}, 'اگر بعداً عکسی لازم شد، کد از پایین همین درخواست در دسترس می‌ماند.'));
+  }
+  return el('div', { class: 'dcp-card dcp-support-success' }, parts);
 }
 
 /* ----------------------------------------------------------- one thread -- */
@@ -84,6 +198,31 @@ function messageBubble(m) {
   ]);
 }
 
+/**
+ * The code+copy row above every open thread — for when the photo comes later.
+ *
+ * The Telegram link belongs HERE and not only on the success panel: the reader
+ * this row is for is the one who left (to the bank, to find their card) and
+ * came back, so the panel they were shown on submit is long gone. Without it
+ * they hold the code and have no door — which is the whole round trip broken
+ * at its last step.
+ */
+function ticketCodeRow(ticket) {
+  const copyBtn = el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button' }, 'کپی');
+  copyBtn.addEventListener('click', () => copyToClipboard(ticket.reference, copyBtn));
+  return el('div', { class: 'dcp-support-code-row' }, [
+    el('span', { class: 'dcp-muted' }, 'کد پیگیری'),
+    el('code', {}, ticket.reference),
+    copyBtn,
+    el('a', {
+      class: 'dcp-btn dcp-btn-ghost',
+      href: SUPPORT_TELEGRAM_URL, target: '_blank', rel: 'noopener',
+    }, 'ارسال عکس در تلگرام'),
+    // The address itself, on the same row as the button that may not open it.
+    el('code', { class: 'dcp-tg-id', dir: 'ltr' }, SUPPORT_TELEGRAM_ID),
+  ]);
+}
+
 async function openThread(host, ticket, refresh) {
   host.replaceChildren(el('p', { class: 'dcp-muted' }, 'در حال خواندن…'));
   let data;
@@ -95,7 +234,7 @@ async function openThread(host, ticket, refresh) {
   const thread = el('div', { style: 'display:flex;flex-direction:column;gap:8px;margin:10px 0' },
     data.messages.map(messageBubble));
 
-  const parts = [thread];
+  const parts = [ticketCodeRow(data.ticket), thread];
 
   if (closed) {
     const reopen = el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button' }, 'بازکردن دوباره');
@@ -144,10 +283,11 @@ function ticketCard(t, refresh) {
     el('b', {}, t.subject),
     badge(t.kind_title_fa),
     badge(t.reference),
+    t.has_photo ? badge('📎 عکس در راه', true) : null,
     t.status === 'closed'
       ? badge('بسته')
       : badge(t.awaiting === 'user' ? 'پاسخ آمد' : 'در انتظار پاسخ', t.awaiting === 'user'),
-  ]);
+  ].filter(Boolean));
 
   const card = el('div', { class: 'dcp-card', style: 'margin-bottom:10px', dataset: { ticket: t.id } }, [
     head,
@@ -164,7 +304,18 @@ function ticketCard(t, refresh) {
   return card;
 }
 
-async function render(root) {
+/**
+ * `justOpened` is the ticket submitted a moment ago, if any.
+ *
+ * It is threaded THROUGH render rather than painted into the old tree: the
+ * submit callback has to refresh the list (the new ticket must appear in it),
+ * and render() rebuilds root wholesale — so a panel written before that call
+ * was detached the instant the refresh landed. It survived on screen just long
+ * enough to look like a flicker, taking the Telegram button with it.
+ */
+async function render(root, justOpened) {
+  // A refresh from a thread action carries no panel: it is not a submission,
+  // and re-showing «درخواست ثبت شد» after «بستن گفت‌وگو» would be a lie.
   const refresh = () => render(root);
   let kinds = [];
   let tickets = [];
@@ -177,11 +328,17 @@ async function render(root) {
     return;
   }
 
+  const form = newTicketForm(kinds, (ticket, withPhoto) => {
+    // One render, carrying the panel — never "paint, then refresh over it".
+    render(root, { ticket, withPhoto });
+  });
+
   root.replaceChildren(
     el('h2', { class: 'dcp-pw-heading' }, 'پشتیبانی'),
     el('p', { class: 'dcp-muted' },
-      'سؤال، مشکل پرداخت، گزارش باگ یا درخواست تخفیف دانشجویی را این‌جا بنویسید. پاسخ در همین صفحه و در «اطلاعیه» به شما می‌رسد.'),
-    newTicketForm(kinds, () => refresh()),
+      'مشکل فنی، مشکل در پرداخت یا تخفیف دانشجویی را این‌جا بنویسید. پاسخ در همین صفحه و در «اطلاعیه» به شما می‌رسد.'),
+    justOpened ? successPanel(justOpened.ticket, justOpened.withPhoto) : el('div', {}),
+    form,
     tickets.length
       ? el('div', {}, tickets.map((t) => ticketCard(t, refresh)))
       : el('p', { class: 'dcp-muted' }, 'هنوز درخواستی ثبت نکرده‌اید.'),

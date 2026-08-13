@@ -960,6 +960,67 @@ a.dcp-progress-row:hover { text-decoration: none; }
   background: var(--surface, #fff);
 }
 
+/* ---------------------------------------------------------------------------
+   Bank transfer (واریز به شبا) — reuses the gift-card rail's card look
+   (.dcp-gift), plus its own IBAN row. The IBAN is a Latin string inside an
+   RTL page: without dir=ltr the digit groups render out of order and a reader
+   mistypes them by hand — see .dentcast/support-payment-handoff.md §3.
+--------------------------------------------------------------------------- */
+.dcp-bank-plan { font-weight: 700; font-size: .96rem; }
+.dcp-bank-iban-row {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;
+  background: var(--surface, #fff); border: 1px dashed rgba(var(--ac-rgb, 11,95,255), .5);
+  border-radius: 12px; padding: 12px 14px;
+}
+.dcp-bank-iban {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  unicode-bidi: isolate; font-size: 1rem; font-weight: 800; letter-spacing: .03em;
+  color: var(--ac, #0b5fff); user-select: all;
+}
+
+/* ---------------------------------------------------------------------------
+   The support Telegram handle, wherever it appears (both rails and the support
+   page). Written out as TEXT rather than hidden behind a word, because a t.me
+   link is the one door on these pages that routinely fails to open for the
+   audience it is for — and the handle is what they can still type into
+   Telegram's own search. `user-select: all` so one tap takes the whole thing;
+   isolated for the same reason the IBAN is (a Latin run in an RTL line puts
+   its «@» on the wrong end otherwise).
+--------------------------------------------------------------------------- */
+.dcp-tg-id {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  direction: ltr; unicode-bidi: isolate; user-select: all;
+  font-weight: 800; white-space: nowrap;
+}
+.dcp-tg-fallback { margin: 6px 0 0; font-size: .82rem; }
+
+/* ---------------------------------------------------------------------------
+   Support page (/plus/support.html) — kind chips, the photo checkbox, the
+   success panel and the per-thread code row.
+--------------------------------------------------------------------------- */
+.dcp-support-kinds { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+@media (max-width: 400px) { .dcp-support-kinds { grid-template-columns: 1fr; } }
+.dcp-support-kind { width: 100%; box-sizing: border-box; text-align: start; }
+/* The route chip is a door, not a choice — dashed border + a trailing › say
+   so before it is ever pressed, so it never reads as a fourth selectable kind. */
+.dcp-support-kind-route {
+  border-style: dashed; text-decoration: none; color: var(--dcp-ink, inherit);
+}
+.dcp-support-photo-label {
+  display: flex; align-items: center; gap: 8px; font-size: .9rem; cursor: pointer;
+}
+.dcp-support-photo-note { margin: -4px 0 0; }
+.dcp-support-success code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; direction: ltr; font-weight: 800; }
+/* Wraps: the row carries four things on a phone (label, code, کپی, and the
+   Telegram door), and an unwrapped flex row pushes the last of them off the
+   screen — which here is the one action the row exists to offer. */
+.dcp-support-code-row {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-size: .85rem;
+  background: var(--dcp-surface, #f4f6fb); border: 1px dashed rgba(var(--ac-rgb, 11,95,255), .4);
+  border-radius: 10px; padding: 8px 12px; margin-bottom: 8px;
+}
+.dcp-support-code-row code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; direction: ltr; font-weight: 800; }
+
 /* ===== profile: «افتخارات» ================================================
    Two metal scales meet in this one section — the league's seven dental
    materials (the medals) and the badges' bronze/silver/gold. They are kept

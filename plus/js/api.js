@@ -227,6 +227,10 @@ export const api = {
   // the reference tag the buyer puts in the gift message.
   giftStart: () => request('/pay/gift', { method: 'POST' }),
   giftStatus: () => request('/pay/gift'),
+  // Bank transfer (واریز به شبا) — second manual rail, same shape as the gift
+  // card pair above. The amount is computed server-side from `months`.
+  bankTransferStart: (months) => request('/pay/bank-transfer', { method: 'POST', body: { months } }),
+  bankTransferStatus: () => request('/pay/bank-transfer'),
 
   // premium: reading compass — coverage report over the user's own reading,
   // cross-referenced against the taxonomy and pathways (no interest guessing)

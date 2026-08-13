@@ -50,20 +50,29 @@ export interface TicketKindSpec {
  */
 export const TICKET_KINDS: Record<string, TicketKindSpec> = {
   billing: {
-    title_fa: 'خرید و پرداخت',
+    title_fa: 'مشکل در پرداخت',
     premium: false,
-    hint_fa: 'مشکل در پرداخت، فاکتور، یا فعال‌نشدن اشتراک.',
+    hint_fa: 'پرداخت کردید ولی اشتراک فعال نشد، یا فاکتور می‌خواهید.',
   },
   student: {
     title_fa: 'تخفیف دانشجویی',
     premium: false,
-    hint_fa: 'بعد از ثبت درخواست، کد پیگیری می‌گیرید؛ عکس کارت دانشجویی را با همان کد بفرستید.',
+    // Says «از درگاه نخرید» out loud, because the gateway has no student
+    // concept at all: startPayment knows «ستون» and badge credits and nothing
+    // else, so a student who pays there is charged the full price and there is
+    // no way to give the difference back except a hand-gifted month.
+    hint_fa: '۱۵٪ تخفیف روی اشتراک شش‌ماهه، فقط از راه «واریز به حساب» — نه از درگاه. '
+      + 'عکس کارت دانشجویی لازم است: پایین تیک بزنید تا کد پیگیری بگیرید.',
   },
   bug: {
-    title_fa: 'گزارش مشکل',
+    title_fa: 'مشکل فنی',
     premium: false,
-    hint_fa: 'چیزی درست کار نمی‌کند یا اشتباه نمایش داده می‌شود.',
+    hint_fa: 'چه‌کاری کردید و چه پیش‌آمد. اگر اسکرین‌شات دارید، پایین تیک بزنید.',
   },
+  // Not on the form — پشتیبانی و مشاوره is still a valid kind for OLD tickets
+  // opened before this change (kindTitle() must keep resolving it), but the
+  // form no longer offers it: «گفت‌وگوی زیر مطلب» is the premium question path
+  // now (see .dentcast/support-payment-handoff.md decision 2.9).
   support: {
     title_fa: 'پشتیبانی و مشاوره',
     premium: true,
@@ -78,8 +87,8 @@ export const TICKET_KINDS: Record<string, TicketKindSpec> = {
   },
 };
 
-/** The kinds the support form offers — `article` is opened from an article. */
-export const FORM_KINDS = ['billing', 'student', 'bug', 'support'];
+/** The kinds the support form offers — `support` and `article` are not. */
+export const FORM_KINDS = ['billing', 'student', 'bug'];
 
 export function ticketKinds(): Array<{ key: string } & TicketKindSpec> {
   return FORM_KINDS.map((key) => ({ key, ...TICKET_KINDS[key] }));
@@ -112,6 +121,12 @@ export interface Ticket {
   /** Published to everyone by the founder. Never true unless somebody decided it. */
   is_public: boolean;
   made_public_at: Date | null;
+  /**
+   * The reader ticked «عکسی دارم که برای این درخواست می‌فرستم» — a claim they
+   * made, not a derived fact (same kind of column as `status`). Lets the admin
+   * queue show a «📎 عکس در راه» flag instead of the photo being a surprise.
+   */
+  has_photo: boolean;
 }
 
 export interface TicketMessage {
@@ -124,7 +139,7 @@ export interface TicketMessage {
 
 const TICKET_COLUMNS =
   'id, user_id, reference, kind, subject, status, closed_at, created_at, '
-  + 'content_id, is_public, made_public_at';
+  + 'content_id, is_public, made_public_at, has_photo';
 
 /** What a reader's own surfaces call this kind — falls back to the raw key. */
 export const kindTitle = (kind: string): string => TICKET_KINDS[kind]?.title_fa ?? kind;
@@ -155,6 +170,7 @@ export async function openTicket(input: {
   kind: string;
   subject: string;
   body: string;
+  hasPhoto?: boolean;
 }): Promise<OpenResult> {
   const spec = TICKET_KINDS[input.kind];
   if (!spec) {
@@ -197,9 +213,9 @@ export async function openTicket(input: {
     try {
       const ticket = await withTransaction(async (client) => {
         const row = (await one<Ticket>(
-          `insert into support_tickets (user_id, reference, kind, subject)
-           values ($1, $2, $3, $4) returning ${TICKET_COLUMNS}`,
-          [input.userId, mintReference('T'), input.kind, subject],
+          `insert into support_tickets (user_id, reference, kind, subject, has_photo)
+           values ($1, $2, $3, $4, $5) returning ${TICKET_COLUMNS}`,
+          [input.userId, mintReference('T'), input.kind, subject, !!input.hasPhoto],
           client,
         ))!;
         await query(
@@ -474,7 +490,7 @@ export interface TicketSummary extends Ticket {
  */
 const SUMMARY_SELECT = `
   select t.id, t.user_id, t.reference, t.kind, t.subject, t.status, t.closed_at, t.created_at,
-         t.content_id, t.is_public, t.made_public_at,
+         t.content_id, t.is_public, t.made_public_at, t.has_photo,
          m.n::int as message_count, m.last_at, m.last_author, m.last_excerpt
     from support_tickets t
     join lateral (

@@ -10,7 +10,7 @@ import { one, query } from '../db.js';
 import { normalizePhone } from '../services/phone.js';
 import {
   activateMonths, grantLifetime, revokeSubscription, getSubscription,
-  summarizeSubscription, sweepExpiredSubscriptions, type Subscription,
+  summarizeSubscription, sweepExpiredSubscriptions, subscriptionReport, type Subscription,
 } from '../services/subscription.js';
 import { getCapacity } from '../services/payment-capacity.js';
 import { reconcilePendingPayments } from '../services/payment-reconcile.js';
@@ -20,7 +20,8 @@ import {
   availableCredits, creditPercent, pickCredits, insertGrant, CREDIT_CAP_PERCENT,
 } from '../services/discount-credits.js';
 import {
-  pendingRedemptions, approveRedemption, rejectRedemption,
+  pendingRedemptions, approveRedemption, rejectRedemption, setRedemptionAmount,
+  approveRedemptionAndGrantBadge,
 } from '../services/gift-redemption.js';
 import { grantBadge, revokeBadgeGrant, listBadgeGrants } from '../services/badge-grants.js';
 import { grantableBadges } from '../badges.js';
@@ -85,7 +86,27 @@ function fmtNum(v: number | null): string {
   return v == null ? '—' : String(v);
 }
 
-function renderHtml(k: Kpis, grantable: { key: string; title_fa: string }[]): string {
+/**
+ * What the bank-transfer queue needs to offer the student amount as a button
+ * rather than as mental arithmetic.
+ *
+ * The discount is still ANNOUNCED, not computed by the engine (decision 2.3) —
+ * this only fills the field with the figure the rule implies, and the founder
+ * still presses «ثبت مبلغ» to write it. Handing over the number rather than
+ * the multiplication is what stops the one mistake with no undo: a typo here
+ * is a price somebody transfers.
+ */
+interface StudentTerms {
+  percent: number;
+  months: number;
+  prices: Record<number, number>;
+}
+
+function renderHtml(
+  k: Kpis,
+  grantable: { key: string; title_fa: string }[],
+  student: StudentTerms,
+): string {
   const d7Rows = k.d7_survival_by_tier.length
     ? k.d7_survival_by_tier
         .map((r) => `<tr><td>${r.tier}</td><td>${r.cohort}</td><td>${r.kept}</td><td>${fmtPct(r.pct)}</td></tr>`)
@@ -109,8 +130,16 @@ function renderHtml(k: Kpis, grantable: { key: string; title_fa: string }[]): st
   .card h3{margin:.2rem 0;font-size:.95rem;color:#c8d4e6}
   .card .v{font-size:1.8rem;font-weight:900}
   .card .s{color:#93a1b8;font-size:.82rem}
+  .wrap{overflow-x:hidden}
   table{width:100%;border-collapse:collapse;margin-top:8px;background:#171e2d;border:1px solid #2a3448;border-radius:14px;overflow:hidden}
   th,td{padding:8px 12px;text-align:center;border-bottom:1px solid #2a3448}
+  /* Wide report tables (5 unbreakable-value columns: phone numbers, dates) can
+     exceed a phone's viewport. Scrolling THIS box, not the RTL page body, is
+     what keeps the fix local — an unconstrained overflow here shifts the whole
+     document's scroll origin and reads as the entire page being broken. */
+  .tblwrap{overflow-x:auto;margin-top:8px;border-radius:14px}
+  .tblwrap table{margin-top:0;min-width:480px}
+  .tblwrap th,.tblwrap td{white-space:nowrap}
   th{color:#93a1b8;font-weight:700}
   form.bc{background:#171e2d;border:1px solid #2a3448;border-radius:14px;padding:14px 16px;margin-top:8px;
     display:flex;flex-direction:column;gap:9px}
@@ -156,6 +185,13 @@ function renderHtml(k: Kpis, grantable: { key: string; title_fa: string }[]): st
   .tk-body button{background:#2f7de0;color:#fff;border:0;border-radius:999px;padding:8px 18px;
     font:inherit;font-weight:800;cursor:pointer;margin-top:8px;margin-inline-end:8px}
   .tk-out{min-height:1.4em;font-size:.85rem}
+  .bt-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:8px}
+  .bt-actions input[type=text]{flex:1 1 140px;box-sizing:border-box;background:#0f1420;color:#e8eef7;
+    border:1px solid #2a3448;border-radius:9px;padding:8px 10px;font:inherit;font-size:.86rem}
+  .bt-actions button{background:#2f7de0;color:#fff;border:0;border-radius:999px;padding:7px 16px;
+    font:inherit;font-weight:800;cursor:pointer}
+  .bt-actions button.gold{background:#7a5a20}
+  .bt-actions button.danger{background:#7a2020}
 </style></head><body><div class="wrap">
   <h1>پیشخوان بنیان‌گذار</h1>
   <div class="muted">تولید: ${k.generated_at} · منطقه زمانی: ${k.tz}</div>
@@ -183,6 +219,159 @@ function renderHtml(k: Kpis, grantable: { key: string; title_fa: string }[]): st
   <h3 style="margin-top:22px">KPI 4 — ماندگاری روز هفتم بر اساس پلن</h3>
   <table><thead><tr><th>پلن</th><th>گروه</th><th>مانده</th><th>درصد</th></tr></thead><tbody>${d7Rows}</tbody></table>
   <p class="muted" style="margin-top:14px">KPI ها از user_activity و anon_events محاسبه می‌شوند. تبدیل KPI 1 تقریبی است چون رویدادهای ناشناس هویت‌محور نیستند.</p>
+
+  <h3 style="margin-top:26px">گزارش کاربران — پرمیوم و اشتراک</h3>
+  <div class="muted">«چند ماهه» یعنی ماهِ اولین شروعِ اشتراک (started_at) — تمدید ماه شروع را عوض نمی‌کند، پس هر ردیف یک کوهورتِ واقعیِ جذب است، نه شمارشِ تمدیدها. «پرمیومِ لیگی» جدا شمرده می‌شود چون جایزهٔ هفتگیِ لیگ هیچ‌وقت ردیفی در subscriptions نمی‌سازد.</div>
+  <div id="subOut" class="muted" style="margin-top:10px">در حال خواندن…</div>
+  <script>
+  (function () {
+    var out = document.getElementById('subOut');
+    function esc(s) {
+      return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+      });
+    }
+    function num(n) { return Number(n || 0).toLocaleString('en-US'); }
+
+    function monthRows(byMonth) {
+      if (!byMonth.length) return '<tr><td colspan="3">هنوز داده‌ای نیست</td></tr>';
+      return byMonth.slice().reverse().map(function (r) {
+        return '<tr><td>' + esc(r.month) + '</td><td>' + num(r.new_subscribers)
+          + '</td><td>' + num(r.founders) + '</td></tr>';
+      }).join('');
+    }
+
+    function bucketBar(label, n, total) {
+      var w = total ? Math.round((n / total) * 1000) / 10 : 0;
+      return '<div class="sp-row"><div class="lbl"><span>' + esc(label)
+        + '</span><span>' + num(n) + ' نفر</span></div>'
+        + '<div class="sp-bar"><i style="width:' + w + '%"></i></div></div>';
+    }
+
+    function soonestRows(rows) {
+      if (!rows.length) return '<tr><td colspan="5">اشتراکِ رو‌به‌اتمامی نیست</td></tr>';
+      return rows.map(function (r) {
+        return '<tr><td>' + esc(r.display_name || r.username || r.phone || r.user_id) + '</td>'
+          + '<td>' + esc(r.phone || '—') + '</td><td>' + esc(r.plan) + '</td>'
+          + '<td>' + esc(r.expires_on) + '</td><td>' + num(r.days_left) + '</td></tr>';
+      }).join('');
+    }
+
+    function card(title, value, sub) {
+      return '<div class="card"><h3>' + esc(title) + '</h3><div class="v">' + value
+        + '</div><div class="s">' + esc(sub) + '</div></div>';
+    }
+
+    function render(b) {
+      var t = b.totals;
+      var d = b.days_left_buckets;
+      var activeCounted = d.d0_3 + d.d4_7 + d.d8_30 + d.d31_plus;
+      out.className = '';
+      out.innerHTML =
+        '<div class="grid">'
+        + card('پرمیومِ الان', num(t.active_now + t.league_premium_now),
+            num(t.active_now) + ' با اشتراک · ' + num(t.league_premium_now) + ' با جایزهٔ لیگ')
+        + card('عمرِ همیشگی', num(t.lifetime_total), 'بنیان‌گذار یا نشانِ اهدایی')
+        + card('کل تاریخِ اشتراک', num(t.ever_subscribed), 'هر کسی که حداقل یک بار خرید/هدیه گرفت')
+        + '</div>'
+        + '<h4 style="margin:18px 0 0">به تفکیک ماهِ شروع</h4>'
+        + '<div class="tblwrap"><table><thead><tr><th>ماه</th><th>مشترکِ جدید</th><th>عمرِ همیشگی</th></tr></thead>'
+        + '<tbody>' + monthRows(b.by_month) + '</tbody></table></div>'
+        + '<h4 style="margin:18px 0 0">چقدر مانده (اشتراک‌های فعالِ غیرِ همیشگی)</h4>'
+        + '<div class="sp-c">'
+        + bucketBar('۰ تا ۳ روز', d.d0_3, activeCounted)
+        + bucketBar('۴ تا ۷ روز', d.d4_7, activeCounted)
+        + bucketBar('۸ تا ۳۰ روز', d.d8_30, activeCounted)
+        + bucketBar('بیش از ۳۰ روز', d.d31_plus, activeCounted)
+        + '</div>'
+        + '<h4 style="margin:18px 0 0">زودتر از همه تمام می‌شود (تا ۳۰ ردیف)</h4>'
+        + '<div class="tblwrap"><table><thead><tr><th>کاربر</th><th>موبایل</th><th>پلن</th><th>تا</th><th>روزِ مانده</th></tr></thead>'
+        + '<tbody>' + soonestRows(b.soonest_expiring) + '</tbody></table></div>';
+    }
+
+    fetch('/admin/subscriptions/report', { credentials: 'include' })
+      .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+      .then(function (res) {
+        if (!res.ok) { out.textContent = 'خوانده نشد: ' + (res.j.message || res.j.error || 'خطا'); return; }
+        render(res.j);
+      })
+      .catch(function () { out.textContent = 'خوانده نشد (شبکه).'; });
+  })();
+  </script>
+
+  <h3 style="margin-top:26px">گزارش لیگ</h3>
+  <div class="muted">«لیگ فعال» یعنی گروهی که این هفته برایش تشکیل شده — این آدم‌ها با هم رقابت می‌کنند. عددهای این بخش از همان API نظارتیِ لیگ (<code>/admin/league</code>) خوانده می‌شوند؛ اینجا فقط رندرِ آن است.</div>
+  <div id="lgOut" class="muted" style="margin-top:10px">در حال خواندن…</div>
+  <script>
+  (function () {
+    var out = document.getElementById('lgOut');
+    function esc(s) {
+      return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+      });
+    }
+    function num(n) { return Number(n || 0).toLocaleString('en-US'); }
+    function pct(v) { return v == null ? '—' : v.toFixed(1) + '٪'; }
+
+    function tierRows(perTier) {
+      if (!perTier.length) return '<tr><td colspan="5">رده‌ای نیست</td></tr>';
+      return perTier.map(function (t) {
+        return '<tr><td>' + esc(t.name_fa) + (t.is_active ? '' : ' <span class="pill">غیرفعال</span>') + '</td>'
+          + '<td>' + num(t.groups) + '</td><td>' + pct(t.fill_pct) + '</td>'
+          + '<td>' + (t.median_weekly_xp == null ? '—' : num(t.median_weekly_xp)) + '</td></tr>';
+      }).join('');
+    }
+
+    function trendRows(trend) {
+      if (!trend.length) return '<tr><td colspan="5">هنوز داده‌ای نیست</td></tr>';
+      return trend.map(function (w) {
+        return '<tr><td>' + esc(w.week_start) + '</td><td>' + num(w.active_users) + '</td>'
+          + '<td>' + num(w.groups_count) + '</td>'
+          + '<td>' + (w.avg_fill_pct == null ? '—' : pct(Number(w.avg_fill_pct))) + '</td>'
+          + '<td>' + num(w.promotions) + ' / ' + num(w.demotions) + '</td></tr>';
+      }).join('');
+    }
+
+    function warnings(below) {
+      if (!below.length) return '';
+      var rows = below.map(function (g) {
+        return '⚠️ رده «' + esc(g.tier) + '» — گروه ' + esc(g.league_id) + ': ' + num(g.size)
+          + ' از ' + num(g.capacity) + ' نفر (کف اعتبار: ' + num(g.min_valid) + ')';
+      }).join('<br>');
+      return '<div class="warn">' + rows + '</div>';
+    }
+
+    function render(b) {
+      var totalGroups = b.per_tier.reduce(function (a, t) { return a + t.groups; }, 0);
+      out.className = '';
+      out.innerHTML =
+        '<div class="muted">هفتهٔ جاری: ' + esc(b.current_week) + '</div>'
+        + '<div class="grid">'
+        + '<div class="card"><h3>لیگ‌های فعالِ این هفته</h3><div class="v">' + num(totalGroups)
+        + '</div><div class="s">جمعِ گروه‌ها روی همهٔ رده‌ها</div></div>'
+        + '<div class="card"><h3>کاربرِ فعالِ این هفته</h3><div class="v">'
+        + num(b.last_week ? b.last_week.active_users : 0) + '</div><div class="s">آخرین هفتهٔ ثبت‌شده</div></div>'
+        + '<div class="card"><h3>میانگینِ ۴ هفتهٔ اخیر</h3><div class="v">' + num(b.smoothed_active)
+        + '</div><div class="s">کاربرِ فعالِ هموارشده</div></div>'
+        + '</div>'
+        + '<h4 style="margin:18px 0 0">به تفکیکِ رده (هفتهٔ جاری)</h4>'
+        + '<div class="tblwrap"><table><thead><tr><th>رده</th><th>تعدادِ گروه</th><th>پرشدگی</th><th>میانهٔ امتیازِ هفتگی</th></tr></thead>'
+        + '<tbody>' + tierRows(b.per_tier) + '</tbody></table></div>'
+        + warnings(b.groups_below_validity)
+        + '<h4 style="margin:18px 0 0">روندِ ۸ هفتهٔ اخیر</h4>'
+        + '<div class="tblwrap"><table><thead><tr><th>هفته</th><th>کاربرِ فعال</th><th>تعدادِ گروه</th><th>میانگینِ پرشدگی</th><th>ارتقا/تنزل</th></tr></thead>'
+        + '<tbody>' + trendRows(b.weekly_trend) + '</tbody></table></div>';
+    }
+
+    fetch('/admin/league', { credentials: 'include' })
+      .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+      .then(function (res) {
+        if (!res.ok) { out.textContent = 'خوانده نشد: ' + (res.j.message || res.j.error || 'خطا'); return; }
+        render(res.j);
+      })
+      .catch(function () { out.textContent = 'خوانده نشد (شبکه).'; });
+  })();
+  </script>
 
   <h3 style="margin-top:26px">گزارش تبلیغ‌ها</h3>
   <div class="muted">هر ردیف یک <b>زمانِ چرخش</b> است — کمپینی که یکی از خانه‌های <code>rotation.sequence</code> را گرفته — و زیرش تفکیکِ جایگاه‌هایی که نمایش‌هایش آن‌جا افتاده.
@@ -444,6 +633,172 @@ function renderHtml(k: Kpis, grantable: { key: string; title_fa: string }[]): st
   })();
   </script>
 
+  <h3 style="margin-top:26px">صف واریز به حساب</h3>
+  <div class="muted">
+    درخواست‌های واریز به شبا. صفحه‌ی خرید به خریدار می‌گوید <b>قبل از واریز</b> مبلغ را با تو هماهنگ کند،
+    و عددی که این‌جا می‌نویسی همان است که او می‌بیند — پس مبلغ را قبل از واریزِ او ثبت کن، نه بعدش.
+    تا وقتی چیزی ننوشته‌ای، عددِ ردیف قیمتِ لیست است.
+    <br>
+    <b>تخفیف دانشجویی همین است و بس:</b> «مبلغ دانشجویی» را بزن تا فیلد با مبلغِ تخفیف‌خورده پر شود،
+    بعد «ثبت مبلغ». نشان هیچ نقشی در تخفیف یا فعال‌سازی ندارد — «تأیید» به‌تنهایی اشتراک را فعال می‌کند،
+    و «تأیید + یادگاریِ دانشجو» فقط همان کار را می‌کند به‌علاوه‌ی یک کاشیِ تزئینی روی دیوار افتخارات.
+  </div>
+  <div id="btList"></div>
+  <script>
+  (function () {
+    var list = document.getElementById('btList');
+    if (!list) return;
+    // The announced terms, from config — so retuning ٪۱۵ stays a config change
+    // rather than an edit to arithmetic buried in this page.
+    var STUDENT = ${JSON.stringify(student)};
+
+    function esc(s) {
+      return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+      });
+    }
+    function when(iso) {
+      try { return new Date(iso).toLocaleString('fa-IR'); } catch (e) { return iso; }
+    }
+    function toman(rial) {
+      return rial == null ? '—' : Math.round(rial / 10).toLocaleString('en-US') + ' ت';
+    }
+    function who(r) {
+      return esc(r.display_name || r.phone || r.username || r.user_id);
+    }
+
+    // The student price for a term, in TOMAN (the unit the field takes), or
+    // null where the rule does not apply. Floored, so a ragged number always
+    // rounds toward the customer rather than asking them for a toman more
+    // than the announced discount implies.
+    function studentToman(months) {
+      if (!STUDENT.percent || months !== STUDENT.months) return null;
+      var listRial = STUDENT.prices[months];
+      if (!listRial) return null;
+      return Math.floor((listRial * (100 - STUDENT.percent) / 100) / 10);
+    }
+
+    function row(r) {
+      var stu = studentToman(r.months);
+      return '<div class="tk" data-ref="' + esc(r.reference) + '" style="cursor:auto">'
+        + '<div class="tk-h"><b>' + esc(r.reference) + '</b>'
+        + '<span class="pill">' + r.months + ' ماهه</span>'
+        + '<span class="pill">' + toman(r.amount_rial) + '</span>'
+        + '</div>'
+        + '<div class="muted">' + who(r) + ' · ' + when(r.created_at) + '</div>'
+        + '<div class="bt-actions">'
+        + '<input type="text" class="btAmount" inputmode="numeric" placeholder="مبلغ تازه (تومان، اختیاری)">'
+        // Fills the field, never submits: the founder still reads the number
+        // and presses «ثبت مبلغ», so the amount stays theirs to announce.
+        + (stu
+           ? '<button type="button" data-act="student-amount" data-toman="' + stu + '">'
+             + 'مبلغ دانشجویی (٪' + STUDENT.percent + ')</button>'
+           : '')
+        + '<button type="button" data-act="set-amount">ثبت مبلغ</button>'
+        + '<button type="button" data-act="approve">تأیید</button>'
+        // The badge grants NOTHING — months come from «تأیید» either way. The
+        // label says «یادگاری» so this never reads as the button that applies
+        // the discount; the discount is the amount above, and only that.
+        + '<button type="button" class="gold" data-act="approve-badge">تأیید + یادگاریِ دانشجو</button>'
+        + '<button type="button" class="danger" data-act="reject">رد</button>'
+        + '</div>'
+        + '<div class="bt-out muted"></div>'
+        + '</div>';
+    }
+
+    function render(rows) {
+      if (!rows.length) { list.innerHTML = '<div class="muted">صف خالی است.</div>'; return; }
+      list.innerHTML = rows.map(row).join('');
+    }
+
+    function load() {
+      list.innerHTML = '<div class="muted">در حال خواندن…</div>';
+      fetch('/admin/bank-transfer/pending', { credentials: 'include' })
+        .then(function (r) { return r.json(); })
+        .then(function (j) { render(j.redemptions || []); })
+        .catch(function () { list.innerHTML = '<div class="muted">خوانده نشد.</div>'; });
+    }
+
+    list.addEventListener('click', function (ev) {
+      var act = ev.target.getAttribute && ev.target.getAttribute('data-act');
+      if (!act) return;
+      var wrap = ev.target.closest('.tk');
+      if (!wrap) return;
+      var ref = wrap.getAttribute('data-ref');
+      var out = wrap.querySelector('.bt-out');
+
+      if (act === 'student-amount') {
+        wrap.querySelector('.btAmount').value = ev.target.getAttribute('data-toman');
+        out.textContent = 'مبلغ دانشجویی پر شد — «ثبت مبلغ» را بزن تا برای خریدار نوشته شود.';
+        return;
+      }
+
+      if (act === 'set-amount') {
+        var raw = wrap.querySelector('.btAmount').value.trim();
+        var toman2 = raw ? parseInt(raw, 10) : NaN;
+        if (!raw || !toman2 || toman2 <= 0) { out.textContent = 'مبلغ معتبر نیست.'; return; }
+        out.textContent = 'در حال ثبت…';
+        fetch('/admin/bank-transfer/amount', {
+          method: 'POST', credentials: 'include',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ reference: ref, amount_rial: toman2 * 10 })
+        }).then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+          .then(function (res) {
+            if (!res.ok) { out.textContent = 'نشد: ' + (res.j.message || res.j.error); return; }
+            load();
+          })
+          .catch(function () { out.textContent = 'ثبت نشد.'; });
+        return;
+      }
+
+      if (act === 'reject') {
+        var reason = prompt('دلیل رد (برای کاربر فرستاده می‌شود):');
+        if (!reason) return;
+        fetch('/admin/gift/reject', {
+          method: 'POST', credentials: 'include',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ reference: ref, reason: reason })
+        }).then(function () { load(); })
+          .catch(function () { out.textContent = 'رد نشد.'; });
+        return;
+      }
+
+      if (act === 'approve') {
+        if (!confirm('واریز ' + ref + ' تأیید و اشتراک فعال شود؟')) return;
+        out.textContent = 'در حال تأیید…';
+        fetch('/admin/gift/approve', {
+          method: 'POST', credentials: 'include',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ reference: ref })
+        }).then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+          .then(function (res) {
+            if (!res.ok) { out.textContent = 'نشد: ' + (res.j.message || res.j.error); return; }
+            load();
+          })
+          .catch(function () { out.textContent = 'تأیید نشد.'; });
+        return;
+      }
+
+      if (act === 'approve-badge') {
+        if (!confirm('واریز ' + ref + ' تأیید، اشتراک فعال و نشان «دانشجو» اهدا شود؟')) return;
+        out.textContent = 'در حال تأیید…';
+        fetch('/admin/bank-transfer/approve-with-badge', {
+          method: 'POST', credentials: 'include',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ reference: ref })
+        }).then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+          .then(function (res) {
+            if (!res.ok) { out.textContent = 'نشد: ' + (res.j.message || res.j.error); return; }
+            load();
+          })
+          .catch(function () { out.textContent = 'تأیید نشد.'; });
+      }
+    });
+
+    load();
+  })();
+  </script>
+
   <h3 style="margin-top:26px">صندوق پشتیبانی <span id="tkWaiting" class="pill"></span></h3>
   <div class="muted">درخواست‌های خواننده‌ها. ترتیب صف: هرکس بیشتر منتظر مانده، بالاتر. برای کارت دانشجویی، کد پیگیری را از پیام بله/تلگرام این‌جا جست‌وجو کن.</div>
   <form class="bc" onsubmit="return false">
@@ -484,11 +839,15 @@ function renderHtml(k: Kpis, grantable: { key: string; title_fa: string }[]): st
         + '<span class="pill">' + esc(t.kind_title_fa) + '</span>'
         + (t.content_id ? '<span class="pill">' + esc(t.content_id) + '</span>' : '')
         + (t.is_public ? '<span class="pill hot">عمومی</span>' : '')
+        + (t.has_photo ? '<span class="pill hot">📎 عکس در راه</span>' : '')
         + '<span class="pill">' + esc(t.reference) + '</span>'
         + (t.status === 'closed' ? '<span class="pill">بسته</span>'
            : (needs ? '<span class="pill hot">منتظر پاسخ توست</span>' : '<span class="pill">منتظر کاربر</span>'))
         + '</div>'
         + '<div class="muted">' + who(t) + ' · ' + t.message_count + ' پیام · آخرین: ' + when(t.last_at) + '</div>'
+        + (t.has_photo
+           ? '<div class="muted">عکس را با کد <b>' + esc(t.reference) + '</b> در تلگرام پشتیبانی جست‌وجو کن.</div>'
+           : '')
         + '<div class="tk-x">' + esc(t.last_excerpt) + '</div>'
         + '<div class="tk-body"></div></div>';
     }
@@ -543,13 +902,21 @@ function renderHtml(k: Kpis, grantable: { key: string; title_fa: string }[]): st
     }
 
     list.addEventListener('click', function (ev) {
-      var act = ev.target.getAttribute && ev.target.getAttribute('data-act');
+      // closest(), not getAttribute() on the target itself: a click can land on
+      // a node INSIDE a button, and reading only the target would miss the
+      // action and fall through to the toggle below.
+      var hit = ev.target.closest ? ev.target.closest('[data-act]') : null;
+      var act = hit ? hit.getAttribute('data-act') : null;
       var wrap = ev.target.closest ? ev.target.closest('.tk') : null;
       if (!wrap) return;
       var id = wrap.getAttribute('data-id');
       var box = wrap.querySelector('.tk-body');
 
-      if (!act) { // a tap on the card itself toggles the thread open
+      if (!act) { // a tap on the CARD toggles the thread open
+        // ...but never a tap INSIDE the open thread. There a click is the
+        // founder reaching for the reply box, or selecting a line the reader
+        // wrote — and emptying the body would take a half-typed answer with it.
+        if (ev.target.closest && ev.target.closest('.tk-body')) return;
         if (box.innerHTML) { box.innerHTML = ''; return; }
         thread(box, id);
         return;
@@ -633,7 +1000,11 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
   app.get('/admin', async (_request, reply) => {
     const kpis = await computeKpis();
     const grantable = grantableBadges().map((b) => ({ key: b.key, title_fa: b.title_fa }));
-    return reply.type('text/html; charset=utf-8').send(renderHtml(kpis, grantable));
+    return reply.type('text/html; charset=utf-8').send(renderHtml(kpis, grantable, {
+      percent: config.bankTransfer.studentDiscountPercent,
+      months: config.bankTransfer.studentMonths,
+      prices: config.payments.planPricesRial,
+    }));
   });
 
   // GET /admin/spot/stats?from=&to=&group_by=day|week|month - the read path for
@@ -1405,6 +1776,14 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
     return reply.send(subscriptionView(who, await getSubscription(who.id)));
   });
 
+  // GET /admin/subscriptions/report — the aggregate the single-user lookup
+  // above cannot answer: how many became premium, by month, and how much time
+  // is left across everyone currently subscribed. Read-only, JSON; the
+  // rendered GET /admin page's «گزارش کاربران» section is a client for it.
+  app.get('/admin/subscriptions/report', async (_request, reply) => {
+    return reply.send({ ok: true, ...await subscriptionReport() });
+  });
+
   // POST /admin/subscriptions/grant { phone, months } — gift N months.
   // Extends an existing subscription rather than replacing it, so gifting a
   // month to an unhappy paying subscriber adds a month instead of costing them
@@ -1826,6 +2205,66 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
     const r = await rejectRedemption(reference, reason);
     if (!r.ok) return reply.code(404).send({ error: 'not_pending', message: r.message });
     return reply.send({ ok: true });
+  });
+
+  // --- bank-transfer queue -----------------------------------------------------
+  // The manual half of واریز به شبا: read the bank statement, then say yes or
+  // no here. Approval and rejection reuse approveRedemption/rejectRedemption
+  // above — both are already kind-agnostic (keyed by reference, not by rail).
+  app.get('/admin/bank-transfer/pending', async (_request, reply) => {
+    return reply.send({ ok: true, redemptions: await pendingRedemptions(50, 'bank_transfer') });
+  });
+
+  // POST /admin/bank-transfer/amount { reference, amount_rial } — write the
+  // amount onto a still-pending claim. This is how the student-discounted
+  // price (full price × ٪85) reaches the row: the founder types it in after
+  // seeing the student's card, never an engine (handoff decision 2.3).
+  app.post('/admin/bank-transfer/amount', {
+    schema: {
+      body: {
+        type: 'object', required: ['reference', 'amount_rial'],
+        properties: {
+          reference: { type: 'string' },
+          amount_rial: { type: 'integer', minimum: 1 },
+        },
+      },
+    },
+  }, async (request, reply) => {
+    const { reference, amount_rial: amountRial } = request.body as {
+      reference: string; amount_rial: number;
+    };
+    const row = await setRedemptionAmount(reference, amountRial);
+    if (!row) return reply.code(404).send({ error: 'not_pending', message: 'این کد پیگیری در صف بررسی نیست.' });
+    return reply.send({ ok: true, redemption: row });
+  });
+
+  // POST /admin/bank-transfer/approve-with-badge { reference, note? } — the
+  // «تأیید + یادگاریِ دانشجو» button: approves the claim, activates the
+  // subscription and grants the `student` badge in ONE transaction, so a
+  // failure on any one of the three leaves none of them written.
+  //
+  // The badge is the ONLY difference from plain /admin/gift/approve, and it
+  // confers nothing: the discount is the amount written onto the claim above,
+  // and the months come from the approval either way. Named «یادگاری» on the
+  // button for exactly that reason — «اهدای نشان» read as the step that gives
+  // the student their discount, which it never was.
+  app.post('/admin/bank-transfer/approve-with-badge', {
+    schema: {
+      body: {
+        type: 'object', required: ['reference'],
+        properties: { reference: { type: 'string' }, note: { type: 'string' } },
+      },
+    },
+  }, async (request, reply) => {
+    const { reference, note } = request.body as { reference: string; note?: string };
+    const r = await approveRedemptionAndGrantBadge(reference, 'student', { note });
+    if (!r.ok) return reply.code(404).send({ error: 'not_pending', message: r.message });
+    return reply.send({
+      ok: true,
+      months: r.redemption!.months,
+      expires_at: r.subscription!.expires_at,
+      badge: r.badge,
+    });
   });
 
   // POST /admin/subscriptions/run-sweep — run the nightly reconciliation now

@@ -451,6 +451,34 @@ export const config = {
     alertPhone: str('GIFTCARD_ALERT_PHONE', ''),
   },
 
+  // Paying by SHABA bank transfer — the second rail on `gift_redemptions`
+  // (kind='bank_transfer', beside giftCard's 'apple_us'). ON by default: unlike
+  // the Zibal gateway, this needs no merchant registration and no e-namad — it
+  // is a human reading a bank statement, so it can go live the day this ships.
+  //
+  // studentDiscountPercent/studentMonths describe the ONE plan this rail
+  // publishes a special price for (the six-month student plan). The discount
+  // itself is never computed by this service — see gift-redemption.ts and
+  // routes/pay.ts — the founder types the actual amount onto the pending row
+  // after seeing a student card, and these two numbers only feed the copy that
+  // tells a student what to expect before they transfer.
+  bankTransfer: {
+    enabled: bool('BANK_TRANSFER_ENABLED', true),
+    iban: str('BANK_TRANSFER_IBAN', 'IR110560930380000825945001'),
+    holder: str('BANK_TRANSFER_HOLDER', 'فؤاد شهابیان مقدم'),
+    bankName: str('BANK_TRANSFER_BANK_NAME', 'بانک سامان'),
+    studentDiscountPercent: int('BANK_TRANSFER_STUDENT_DISCOUNT_PERCENT', 15),
+    studentMonths: int('BANK_TRANSFER_STUDENT_MONTHS', 6),
+    // Whose phone hears "a transfer is on its way". Empty = console only, same
+    // arrangement as GIFTCARD_ALERT_PHONE and SUPPORT_ALERT_PHONE.
+    alertPhone: str('BANK_TRANSFER_ALERT_PHONE', ''),
+  },
+
+  // The support Telegram the reader sends a photo to (student card, a
+  // screenshot for a ticket). No `@` and no `https://` — the frontend builds
+  // the link itself, the same way it builds every other outbound URL.
+  supportTelegram: str('SUPPORT_TELEGRAM', 'dentcast_support'),
+
   // Zibal IPG (درگاه پرداخت زیبال).
   zibal: {
     // 'zibal' is Zibal's own SANDBOX merchant: it drives the full request ->

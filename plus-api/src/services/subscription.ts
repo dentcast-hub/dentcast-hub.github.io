@@ -1,3 +1,4 @@
+import type pg from 'pg';
 import { config } from '../config.js';
 import { pool, one, query, withTransaction, type Queryable } from '../db.js';
 import { dayInTz, dayDiff } from './time.js';
@@ -124,14 +125,24 @@ export function isPremiumNow(sub: Subscription | null, now: Date = new Date()): 
 export async function activateMonths(
   userId: string,
   months: number,
-  opts: { source: ActivationSource; now?: Date; meta?: Record<string, unknown> },
+  opts: {
+    source: ActivationSource; now?: Date; meta?: Record<string, unknown>;
+    /**
+     * Join an ALREADY-OPEN transaction instead of starting a new one — used
+     * where an approval has to commit atomically with something else (e.g. the
+     * admin "تأیید + اهدای نشان" action in routes/admin.ts, which must not
+     * extend a subscription and then fail to grant the badge, or the reverse).
+     * Omit for every ordinary caller; withTransaction below is the default.
+     */
+    client?: pg.PoolClient;
+  },
 ): Promise<Subscription> {
   if (!Number.isInteger(months) || months < 1 || months > MAX_MONTHS) {
     throw new Error(`activateMonths: months must be an integer in 1..${MAX_MONTHS}, got ${months}`);
   }
   const now = opts.now ?? new Date();
 
-  return withTransaction(async (client) => {
+  const run = async (client: pg.PoolClient): Promise<Subscription> => {
     // Lock the row for the whole decision. Without this, two verify callbacks
     // for the same user landing together would both read the same base expiry
     // and the second would overwrite rather than extend the first — one of the
@@ -187,7 +198,9 @@ export async function activateMonths(
     }, client);
 
     return row;
-  });
+  };
+
+  return opts.client ? run(opts.client) : withTransaction(run);
 }
 
 /**
@@ -428,6 +441,125 @@ export async function sweepExpiredSubscriptions(now: Date = new Date()): Promise
     expired: expired.rowCount ?? 0,
     demoted: demoted.rowCount ?? 0,
     promoted: promoted.rowCount ?? 0,
+  };
+}
+
+export interface SubscriptionMonthCohort {
+  /** 'YYYY-MM' in the streak timezone. */
+  month: string;
+  new_subscribers: number;
+  founders: number;
+}
+
+export interface SubscriptionReport {
+  generated_at: string;
+  tz: string;
+  totals: {
+    ever_subscribed: number;
+    active_now: number;
+    lifetime_total: number;
+    /** Premium right now via the weekly league prize, not via a subscriptions row. */
+    league_premium_now: number;
+  };
+  by_month: SubscriptionMonthCohort[];
+  days_left_buckets: { d0_3: number; d4_7: number; d8_30: number; d31_plus: number };
+  soonest_expiring: {
+    user_id: string; display_name: string | null; phone: string | null; username: string | null;
+    plan: string; expires_on: string; days_left: number;
+  }[];
+}
+
+/**
+ * Aggregate view of who is premium and for how long — GET /admin/subscriptions
+ * only ever answers for ONE user, and nothing else in the admin surface counts
+ * across all of them. `by_month` groups by `started_at`, which activateMonths()
+ * deliberately never touches on a renewal (see the contract above), so each row
+ * is a genuine acquisition cohort, not a count of renewals. `league_premium_now`
+ * is reported separately because a `premium_grants` row never creates a
+ * `subscriptions` row (see the tier contract above) — folding it into
+ * `active_now` would silently undercount who is actually premium right now.
+ */
+export async function subscriptionReport(now: Date = new Date()): Promise<SubscriptionReport> {
+  const tz = config.streakTimezone;
+  const nowIso = now.toISOString();
+
+  const totals = (await one<{ ever_subscribed: number; active_now: number; lifetime_total: number }>(
+    `select count(*)::int as ever_subscribed,
+            count(*) filter (where status = 'active' and (expires_at is null or expires_at > $1))::int as active_now,
+            count(*) filter (where is_founder)::int as lifetime_total
+       from subscriptions`,
+    [nowIso],
+  ))!;
+
+  const leaguePremium = (await one<{ n: number }>(
+    `select count(*)::int as n from premium_grants where revoked_at is null and expires_at > $1`,
+    [nowIso],
+  ))!;
+
+  const byMonth = (await query<{ month: string; new_subscribers: number; founders: number }>(
+    `select to_char(date_trunc('month', started_at at time zone $1), 'YYYY-MM') as month,
+            count(*)::int as new_subscribers,
+            count(*) filter (where is_founder)::int as founders
+       from subscriptions
+      group by 1
+      order by 1`,
+    [tz],
+  )).rows;
+
+  const buckets = (await one<{ d0_3: number; d4_7: number; d8_30: number; d31_plus: number }>(
+    `with active as (
+       select (expires_at at time zone $1)::date - (($2::timestamptz) at time zone $1)::date as days_left
+         from subscriptions
+        where status = 'active' and expires_at is not null and expires_at > $2
+     )
+     select count(*) filter (where days_left <= 3)::int as d0_3,
+            count(*) filter (where days_left between 4 and 7)::int as d4_7,
+            count(*) filter (where days_left between 8 and 30)::int as d8_30,
+            count(*) filter (where days_left > 30)::int as d31_plus
+       from active`,
+    [tz, nowIso],
+  ))!;
+
+  // One username per user even if a profile holds several auth identities
+  // (resolveUser in admin.ts hits the same shape) — a plain join would
+  // duplicate the subscription row per identity.
+  const soonest = (await query<{
+    user_id: string; display_name: string | null; phone: string | null; username: string | null;
+    plan: string; expires_at: string; days_left: number;
+  }>(
+    `select s.user_id, p.display_name, nullif(p.phone, '') as phone, ai.username, s.plan, s.expires_at,
+            (s.expires_at at time zone $1)::date - (($2::timestamptz) at time zone $1)::date as days_left
+       from subscriptions s
+       join profiles p on p.id = s.user_id
+       left join lateral (
+         select username from auth_identities a where a.user_id = s.user_id and username is not null limit 1
+       ) ai on true
+      where s.status = 'active' and s.expires_at is not null and s.expires_at > $2
+      order by s.expires_at asc
+      limit 30`,
+    [tz, nowIso],
+  )).rows;
+
+  return {
+    generated_at: nowIso,
+    tz,
+    totals: {
+      ever_subscribed: Number(totals.ever_subscribed),
+      active_now: Number(totals.active_now),
+      lifetime_total: Number(totals.lifetime_total),
+      league_premium_now: Number(leaguePremium.n),
+    },
+    by_month: byMonth.map((r) => ({
+      month: r.month, new_subscribers: Number(r.new_subscribers), founders: Number(r.founders),
+    })),
+    days_left_buckets: {
+      d0_3: Number(buckets.d0_3), d4_7: Number(buckets.d4_7),
+      d8_30: Number(buckets.d8_30), d31_plus: Number(buckets.d31_plus),
+    },
+    soonest_expiring: soonest.map((r) => ({
+      user_id: r.user_id, display_name: r.display_name, phone: r.phone, username: r.username,
+      plan: r.plan, expires_on: dayInTz(new Date(r.expires_at), tz), days_left: Number(r.days_left),
+    })),
   };
 }
 
