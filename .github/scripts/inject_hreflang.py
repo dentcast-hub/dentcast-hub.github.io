@@ -24,6 +24,9 @@ Rules (see SEO audit / task brief):
     hreflang cluster (2026-08-11 SEO audit). Running this script REMOVES
     any leftover hreflang lines from them, and fa pages no longer emit an
     `en` alternate. The fa↔en toggle is untouched (reader feature).
+  - Any page that noindexes itself (its own `<meta name="robots">` says
+    noindex, e.g. /up-board/): skipped — a noindexed page must not be
+    advertised as an alternate, same reasoning as the en mirrors.
   - Default (everything else): 3-line block (fa-IR, fa, x-default)
     using the canonical path verbatim
 """
@@ -126,6 +129,9 @@ def desired_block(rel_path: str, canonical_path: str, indent: str) -> list:
 CANONICAL_RE = re.compile(
     r'(?im)<link[^>]*\brel\s*=\s*"canonical"[^>]*\bhref\s*=\s*"([^"]+)"[^>]*>'
 )
+NOINDEX_RE = re.compile(
+    r'(?is)<meta[^>]*\bname\s*=\s*"robots"[^>]*\bcontent\s*=\s*"[^"]*noindex'
+)
 HREFLANG_LINE_RE = re.compile(
     r'^[ \t]*<link[^>]*\brel\s*=\s*"alternate"[^>]*\bhreflang\s*=\s*"[^"]+"[^>]*>\s*$'
 )
@@ -189,6 +195,15 @@ def process_file(file_path: str, rel_path: str):
     # the canonical DOMAIN only — never on a path/section name.
     if canonical_url and re.match(r"https?://(?:www\.)?dentcast\.ir(?:[/?#]|$)", canonical_url):
         return ("skipped", "canonical on dentcast.ir (no hreflang)")
+
+    # Signal-keyed guard: a page that noindexes itself must not be advertised as
+    # anyone's alternate (same reasoning as the en-mirror rule above). Keyed on
+    # the page's own robots meta — never on a path or section name — so a new
+    # noindexed page needs no edit here. This only stops the injector from
+    # ADDING a block; pages that already carry one keep it until they are fixed
+    # on their own (Hard Rule 11).
+    if NOINDEX_RE.search(content):
+        return ("skipped", "page is noindex (no hreflang)")
 
     # Compute desired block (lines, no trailing newline).
     expected_block = desired_block(rel_path, canonical_path, canonical_indent)
