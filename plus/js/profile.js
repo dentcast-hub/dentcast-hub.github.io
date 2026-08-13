@@ -500,6 +500,35 @@ function referralCodeBlock(stats) {
 }
 
 /**
+ * What the code IS and what it is worth — shown in BOTH states, above the
+ * form and above the code alike.
+ *
+ * Neither state said it before: the create form explained only how to spell a
+ * code («یک نامِ لاتینِ ۴ تا ۱۶ حرفی بساز») and the minted state jumped
+ * straight to counters. So the one question a reader actually has — «این به
+ * چه دردم می‌خورد؟» — went unanswered on the only surface that could answer
+ * it, and a person with no answer does not go and share a code.
+ *
+ * All four lines matter and none is decoration: the ٪۱۰ is what makes the
+ * code worth sending, the ٪۵ is what makes it worth YOUR while, the cap is
+ * the thing that would otherwise read as a broken promise the first time ٪۲۵
+ * of credit took ٪۱۰ off a purchase, and the last line is the one most
+ * readers get wrong — a free account earns and banks credit exactly like a
+ * paid one, which is precisely the reader this program needs to reach.
+ */
+function referralAbout() {
+  return el('div', { class: 'dcp-referral-about' }, [
+    el('p', {}, 'کد معرف، کدِ شخصیِ توست برای دعوتِ همکارها و دوستانت.'),
+    el('ul', {}, [
+      el('li', {}, `هر کس کدت را در صفحهٔ پرداخت وارد کند، ٪${faNum(10)} از اولین خریدش کم می‌شود.`),
+      el('li', {}, `به‌ازای هر کسی که با کدت واقعاً مشترک شود، ٪${faNum(5)} اعتبار برای تو ثبت می‌شود.`),
+      el('li', {}, `اعتبارت سقفِ جمع‌شدن ندارد؛ فقط در هر خرید تا ٪${faNum(10)} از آن اعمال می‌شود و باقی‌اش برای خریدهای بعد می‌ماند.`),
+      el('li', {}, 'لازم نیست خودت پریمیوم باشی — اعتبار می‌مانَد تا روزی که خودت خرید کنی.'),
+    ]),
+  ]);
+}
+
+/**
  * The section always renders, even when /referral could not be reached.
  *
  * It used to be dropped entirely on any failure (`referral ? [section] : []`
@@ -515,7 +544,10 @@ function referralBlock(me, referral) {
     return el('p', { class: 'dcp-sec-hint', style: 'margin:0' },
       'کد معرف فعلاً در دسترس نیست. کمی بعد دوباره سر بزن.');
   }
-  return referral.code ? referralCodeBlock(referral) : referralCreateBlock(me);
+  return el('div', {}, [
+    referralAbout(),
+    referral.code ? referralCodeBlock(referral) : referralCreateBlock(me),
+  ]);
 }
 
 // Phone section. For an account that already has a phone, just show it. For a

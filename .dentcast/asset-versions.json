@@ -12,8 +12,8 @@
     "hash": "f045ac7d9d9e9e1d"
   },
   "/dc-nav.js": {
-    "v": 90,
-    "hash": "2a415547ed5a901a"
+    "v": 91,
+    "hash": "acb703c2030fdd0f"
   },
   "/dc-theme.css": {
     "v": 2,
@@ -72,12 +72,12 @@
     "hash": "d2a1936311e74a58"
   },
   "/plus/js/pricing-page.js": {
-    "v": 34,
-    "hash": "e6d52e2c68b1e6f9"
+    "v": 35,
+    "hash": "7303446596105525"
   },
   "/plus/js/profile-page.js": {
-    "v": 35,
-    "hash": "eefaf44785c35566"
+    "v": 36,
+    "hash": "2709f316e76118b0"
   },
   "/plus/js/reading-compass-page.js": {
     "v": 25,
@@ -96,15 +96,15 @@
     "hash": "fb9348a5cf72e5f3"
   },
   "/plus/plus-pages.css": {
-    "v": 23,
-    "hash": "625eb363a9770209"
+    "v": 24,
+    "hash": "bcfa25307e85ae73"
   },
   "/plus/plus.css": {
     "v": 25,
     "hash": "a0c7d3b9210c4740"
   },
   "dc-nav.js:V": {
-    "v": 90,
-    "hash": "9e39dcfa3cba6680"
+    "v": 91,
+    "hash": "55aff1e4da3a26c2"
   }
 }

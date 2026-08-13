@@ -347,6 +347,16 @@ a.dcp-progress-row:hover { text-decoration: none; }
 .dcp-phone { font-weight: 700; }
 .dcp-switch { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; }
 
+/* «کد معرف» — what it is and what it pays, above both states of the section.
+   Padded-inline-start on the list rather than default markers so the numbers
+   line up under an RTL bullet instead of hanging off the edge. */
+.dcp-referral-about { margin: 0 0 12px; }
+.dcp-referral-about p { margin: 0 0 6px; font-size: .82rem; font-weight: 700; }
+.dcp-referral-about ul {
+  margin: 0; padding-inline-start: 18px;
+  font-size: .78rem; color: var(--txt2, #4a5f85); line-height: 1.95;
+}
+
 .dcp-referral-code-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
 .dcp-referral-code-row code {
   font-weight: 800; font-size: 1.05rem; direction: ltr; unicode-bidi: isolate;
