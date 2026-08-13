@@ -59,6 +59,36 @@ import { pool } from '../db.js';
  * always worth about half of what an average voted page earns in hearts,
  * whatever that number happens to be that year.
  *
+ * ── Why the percentile is taken WITHIN a class ──────────────────────────────
+ *
+ * An audio episode cannot earn most of the seed. `highlight` and `pin` are
+ * three points each and neither door exists on a podcast — not because nobody
+ * walks through it but because there is no workbench to open. So a podcast's
+ * reachable ceiling is `share` + `consumed`, a fraction of an article's, and
+ * ranking the two against one shared scale does not measure that a podcast drew
+ * less interest. It measures that it had fewer ways to show it.
+ *
+ * The fix is the argument that made engagement a percentile in the first place,
+ * applied one level deeper. Up there, raw totals were not comparable across
+ * pages, so we compared RANKS. Here the two classes' totals are not comparable
+ * either, so each page is ranked among its own kind: the top podcast reaches
+ * 100 exactly as the top article does, and a quiet podcast still sits below a
+ * busy one, which is the distinction the board exists to draw.
+ *
+ * Deliberately NOT a weight — «a listen is worth ten» was the obvious other
+ * answer and it is the same mistake the cap above avoids. Ten is calibrated to
+ * this year's mix: it makes podcasts dominate the day they get busy and does
+ * nothing the day they go quiet, and it lifts all 210 of them together rather
+ * than telling them apart. Ranking within a class needs no constant at all and
+ * stays right on its own, whatever happens to the volume or the mix of actions.
+ *
+ * The class is DERIVED from the content_id, like everything else here — there is
+ * no column and nothing to keep in step. `MIN_CLASS_SIZE` is the one guard: a
+ * percentile over a handful of pages is noise (three items can only ever say 33,
+ * 67 or 100), so a class too small to rank internally is ranked against the
+ * whole site instead. Same shape as the league's `min_valid_group_size`, and for
+ * the same reason: a scale needs a population before it means anything.
+ *
  * `CAP_FLOOR` is what makes the board work on day one. With no votes yet the
  * relative term is zero, every score would be zero, and the board would open in
  * arbitrary order — the exact failure the seed exists to prevent. The floor
@@ -178,6 +208,34 @@ export const CAP_SHARE = 0.5;
  */
 export const CAP_FLOOR = 3;
 
+/**
+ * The two kinds of page the board ranks. Audio is everything under `episodes/`
+ * — the one folder whose pages carry no workbench, which is exactly what makes
+ * its seed incomparable with the rest of the site (see the header).
+ *
+ * Derived from the content_id and nowhere else. A column would be one more
+ * thing that can disagree with the URL it describes, and the folder already
+ * decides every other audio behaviour in the codebase (plus.js's episode
+ * branch, the streak's `episode_listened`, the seen-tick folders).
+ */
+export type ContentClass = 'audio' | 'readable';
+
+export function contentClass(contentId: string): ContentClass {
+  return /^episodes\//.test(contentId) ? 'audio' : 'readable';
+}
+
+/**
+ * How many ENGAGED pages a class needs before it is ranked internally.
+ *
+ * Below this, a within-class percentile says less than a site-wide one: over
+ * three pages the only values it can produce are 33, 67 and 100, which reads as
+ * a measurement and is really just a sort order. Twelve is small enough that
+ * both of today's classes clear it many times over (210 audio, 234 readable)
+ * and large enough that a class arriving with a handful of pages falls back to
+ * the whole site until it has a population of its own.
+ */
+export const MIN_CLASS_SIZE = 12;
+
 async function seedByContent(): Promise<Map<string, number>> {
   const res = await pool.query<{
     content_id: string; u_hl: string; u_pin: string; u_share: string; u_consumed: string;
@@ -261,6 +319,17 @@ export interface Board {
    * truthfully instead of hard-coding a number that goes stale.
    */
   engagement_cap: number;
+  /**
+   * The classes whose engagement was ranked among THEMSELVES this run; anything
+   * absent was ranked against the whole site (see MIN_CLASS_SIZE).
+   *
+   * Published because the page has to say what the number means, and the two
+   * regimes mean different things: «more than ۶۲٪ of podcasts» and «more than
+   * ۶۲٪ of the site» are different claims and only one of them is true at a
+   * time. The fallback is not hypothetical — audio needs twelve engaged pages
+   * before it can be ranked internally, and early on it will not have them.
+   */
+  engagement_scope: ContentClass[];
   generated_at: string;
 }
 
@@ -325,9 +394,8 @@ export async function getBoard(now: number = Date.now()): Promise<Board> {
     // equal percentile — a page cannot be pushed above its twin by iteration
     // order. Shifted by one so the range is 1..100: the least-engaged page still
     // shows a number, and the most-engaged shows exactly 100.
-    const values = [...weighted.values()].sort((x, y) => x - y);
-    const n = values.length;
-    const percentile = (v: number): number => {
+    const rankIn = (values: number[], v: number): number => {
+      const n = values.length;
       if (n === 0) return 0;
       let lo = 0;
       let hi = n;
@@ -335,12 +403,33 @@ export async function getBoard(now: number = Date.now()): Promise<Board> {
       return Math.max(1, Math.min(100, Math.round(((lo + 1) / n) * 100)));
     };
 
+    // …and ranked within the page's own class, because a podcast has fewer ways
+    // to earn a seed than an article does (see the header). The site-wide array
+    // stays, as the fallback for a class too small to rank inside.
+    const allValues = [...weighted.values()].sort((x, y) => x - y);
+    const byClass = new Map<ContentClass, number[]>();
+    for (const [id, v] of weighted) {
+      const c = contentClass(id);
+      const arr = byClass.get(c);
+      if (arr) arr.push(v); else byClass.set(c, [v]);
+    }
+    for (const arr of byClass.values()) arr.sort((x, y) => x - y);
+
+    const rankedInternally = (c: ContentClass): boolean =>
+      (byClass.get(c)?.length ?? 0) >= MIN_CLASS_SIZE;
+
+    const percentile = (id: string, v: number): number => {
+      const c = contentClass(id);
+      const own = byClass.get(c);
+      return rankIn(rankedInternally(c) && own ? own : allValues, v);
+    };
+
     const ids = new Set<string>([...hearts.keys(), ...weighted.keys()]);
     const items: BoardItem[] = [];
     for (const id of ids) {
       const h = hearts.get(id) ?? 0;
       const raw = weighted.get(id);
-      const pct = raw === undefined ? undefined : percentile(raw);
+      const pct = raw === undefined ? undefined : percentile(id, raw);
       const score = h + cap * ((pct ?? 0) / 100);
       const item: BoardItem = { content_id: id, hearts: h, score: Math.round(score * 1000) / 1000 };
       // Absent, never 0 — see the field's own note.
@@ -364,6 +453,7 @@ export async function getBoard(now: number = Date.now()): Promise<Board> {
       items,
       total_hearts: total,
       engagement_cap: Math.round(cap * 100) / 100,
+      engagement_scope: (['audio', 'readable'] as ContentClass[]).filter(rankedInternally),
       generated_at: new Date(now).toISOString(),
     };
     cachedAt = now;

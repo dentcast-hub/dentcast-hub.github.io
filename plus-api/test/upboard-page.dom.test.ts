@@ -59,6 +59,16 @@ const CATALOG = {
   ],
 };
 
+/** A catalog of one podcast, for the two cases about audio's own scale. */
+const EPISODE_CATALOG = {
+  version: 1,
+  count: 1,
+  types: [{ key: 'dentcast', fa: 'اپیزود' }],
+  items: [
+    { id: 'episodes/episode-160', u: '/episodes/episode-160.html', t: 'dentcast', tf: 'اپیزود', ti: 'یک اپیزود', d: '۱۹ تیر ۱۴۰۵' },
+  ],
+};
+
 const BOARD = {
   // Deliberately only three of the five: the other two have neither hearts nor
   // any engagement behind them, which is the normal state of most of the site.
@@ -71,6 +81,10 @@ const BOARD = {
   ],
   total_hearts: 13,
   engagement_cap: 2.5,
+  // Both classes had enough engaged pages to be ranked among themselves, so the
+  // sheet may name the population. The fixture below flips this to test the
+  // other regime.
+  engagement_scope: ['audio', 'readable'],
   generated_at: '2026-08-12T00:00:00.000Z',
 };
 
@@ -360,8 +374,47 @@ describe('/up-board/', () => {
     expect(sheet).toBeTruthy();
     const text = sheet.textContent!;
     expect(text).toContain('شاخصِ تعامل');
-    expect(text).toContain('۱۰۰٪ مطالبِ دنت‌کست');
+    // 100 is phrased as a superlative — «از ۱۰۰٪ … بیشتر» claims the page beat itself.
+    expect(text).toContain('بیشترین تعامل را بین مطالبِ خواندنیِ دنت‌کست داشته');
     expect(text).toContain('درصدِ خواننده‌ها');   // says what it is NOT
     expect(text).toContain('۲٫۵ قلب');            // the live cap, not a constant
+  });
+
+  // A podcast is ranked among podcasts, so the sheet has to name THAT
+  // population. On one shared scale its index measured how few doors an audio
+  // page has rather than how much interest it drew, and a reader looking at
+  // «۱۰۰» on an episode with no marks is owed the clause that explains it.
+  it('names podcasts as the population when the row is a podcast', async () => {
+    boardImpl = () => Promise.resolve({
+      ...BOARD,
+      items: [{ content_id: 'episodes/episode-160', hearts: 2, score: 4, engagement: 100 }],
+    });
+    indexImpl = () => Promise.resolve({ ok: true, json: async () => EPISODE_CATALOG });
+    await mount('?sort=top');
+    (document.querySelector('.ub-engagement') as HTMLElement).click();
+    await settle();
+    const text = document.querySelector('.dcp-sheet')!.textContent!;
+    expect(text).toContain('بیشترین تعامل را بین پادکست‌های دنت‌کست داشته');
+    expect(text).not.toContain('هایلایت، اشتراک‌گذاری و افزودن به کالکشن');
+    expect(text).toContain('جدا از مطلبِ خواندنی مقایسه می‌شود');
+  });
+
+  // Until a class has twelve engaged pages the API ranks it against the whole
+  // site — and says so in `engagement_scope`. The copy has to follow that, or it
+  // states the wrong population for exactly as long as the fallback lasts.
+  it('says «مطالبِ دنت‌کست» while the class is still ranked site-wide', async () => {
+    boardImpl = () => Promise.resolve({
+      ...BOARD,
+      engagement_scope: ['readable'], // audio not yet populous enough
+      items: [{ content_id: 'episodes/episode-160', hearts: 2, score: 4, engagement: 40 }],
+    });
+    indexImpl = () => Promise.resolve({ ok: true, json: async () => EPISODE_CATALOG });
+    await mount('?sort=top');
+    (document.querySelector('.ub-engagement') as HTMLElement).click();
+    await settle();
+    const text = document.querySelector('.dcp-sheet')!.textContent!;
+    expect(text).toContain('۴۰٪ مطالبِ دنت‌کست');
+    expect(text).not.toContain('پادکست‌های دنت‌کست');
+    expect(text).not.toContain('جدا از مطلبِ خواندنی مقایسه می‌شود');
   });
 });

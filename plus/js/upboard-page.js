@@ -61,6 +61,14 @@ function faNumber(x) {
 }
 
 /**
+ * Audio or readable — the same split the API ranks by (`contentClass` in
+ * services/votes.ts). Mirrored here rather than published per item because it is
+ * one regex over an id the page already has, and 444 rows do not need a field
+ * each to carry a fact derivable from their own URL.
+ */
+const isAudio = (id) => /^episodes\//.test(id || '');
+
+/**
  * What the engagement number means, on tap.
  *
  * It exists because the number is otherwise unreadable: «۶۲» beside a heart
@@ -69,20 +77,50 @@ function faNumber(x) {
  * site. Saying what it IS costs one sheet and removes the only interpretation
  * that would be a lie.
  *
+ * Since 2026-08-12 a podcast is ranked among podcasts, so the sentence names the
+ * population the number is actually about. That is not a nicety: a podcast can
+ * never earn a highlight or a pin, so on one shared scale its index measured how
+ * few doors it had rather than how much interest it drew — and a reader looking
+ * at «۱۰۰» on an episode with no marks deserves the one clause that explains it.
+ *
+ * `scope` is the API's own answer for which classes it ranked internally this
+ * run. A class needs twelve engaged pages before it can be, and early on audio
+ * will not have them — so the copy follows the server rather than assuming, or
+ * it would state the wrong population for exactly as long as that lasts.
+ *
  * The ranking sentence quotes the LIVE cap rather than a number written into
  * this file, because the cap moves with the site's own heart economy — a
  * hard-coded «۳ قلب» would be wrong within a year and nobody would notice.
  */
-function explainEngagement(pct, cap) {
+function explainEngagement(pct, cap, id, scope) {
+  const audio = isAudio(id);
+  const own = (scope || []).indexOf(audio ? 'audio' : 'readable') !== -1;
+  const among = own
+    ? (audio ? 'پادکست‌های دنت‌کست' : 'مطالبِ خواندنیِ دنت‌کست')
+    : 'مطالبِ دنت‌کست';
+  const from = audio
+    ? 'شنیده‌شدن و اشتراک‌گذاری'
+    : 'خوانده‌شدن تا آخر، هایلایت، اشتراک‌گذاری و افزودن به کالکشن';
   const card = el('div', { class: 'dcp-sheet-card' }, [
     el('h3', {}, 'شاخصِ تعامل'),
-    el('p', {}, faNum(pct) + ' یعنی این مطلب از ' + faNum(pct)
-      + '٪ مطالبِ دنت‌کست تعاملِ بیشتری گرفته — خوانده‌شدن تا آخر، هایلایت، اشتراک‌گذاری و افزودن به کالکشن.'),
-    el('p', {}, 'این «درصدِ خواننده‌ها» نیست؛ جایگاهِ این مطلب بین بقیهٔ مطالبِ سایت است.'),
-    el('p', {}, 'در رتبه‌بندی، شاخصِ ۱۰۰ حداکثر به اندازهٔ ' + faNumber(cap)
-      + ' قلب می‌ارزد — و همین سقف با بالا رفتنِ قلب‌های سایت بالا می‌رود، تا اثرش معنادار بماند. قلب همیشه حرفِ اول را می‌زند.'),
-    el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button', onclick: closeSheet }, 'باشه'),
+    // 100 is said differently, because «از ۱۰۰٪ … بیشتر» is not a sentence — it
+    // claims the page beat itself. Rare enough to overlook before; now that each
+    // class has a top of its own, twice as many rows reach it.
+    el('p', {}, pct >= 100
+      ? 'بیشترین تعامل را بین ' + among + ' داشته — ' + from + '.'
+      : faNum(pct) + ' یعنی این ' + (audio ? 'پادکست' : 'مطلب') + ' از ' + faNum(pct)
+        + '٪ ' + among + ' تعاملِ بیشتری گرفته — ' + from + '.'),
+    // Says what it is NOT. It used to restate the population positively too,
+    // which the line above now does — and naming it twice made the sheet longer
+    // without making it clearer.
+    el('p', {}, 'این «درصدِ خواننده‌ها» نیست؛ ما شمارِ بازدیدِ هر صفحه را نداریم.'),
   ]);
+  if (own) {
+    card.appendChild(el('p', {}, 'پادکست جدا از مطلبِ خواندنی مقایسه می‌شود، چون روی پادکست هایلایت و کالکشن معنا ندارد.'));
+  }
+  card.appendChild(el('p', {}, 'در رتبه‌بندی، شاخصِ ۱۰۰ حداکثر به اندازهٔ ' + faNumber(cap)
+    + ' قلب می‌ارزد — و همین سقف با بالا رفتنِ قلب‌های سایت بالا می‌رود، تا اثرش معنادار بماند. قلب همیشه حرفِ اول را می‌زند.'));
+  card.appendChild(el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button', onclick: closeSheet }, 'باشه'));
   openSheet(card);
 }
 
@@ -243,7 +281,9 @@ export function initUpBoard(root) {
         class: 'ub-engagement',
         type: 'button',
         'aria-label': 'شاخص تعامل: ' + faNum(pct) + ' از ۱۰۰ — توضیح',
-        onclick: () => explainEngagement(pct, board ? board.engagement_cap : 0),
+        onclick: () => explainEngagement(
+          pct, board ? board.engagement_cap : 0, item.id, board ? board.engagement_scope : [],
+        ),
       }, faNum(pct)));
     }
 

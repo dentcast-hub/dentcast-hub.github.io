@@ -263,6 +263,101 @@ describe('GET /votes/board', () => {
     expect(ids(b)[0]).toBe(ART);
   });
 
+  // ── ranked within a class ──────────────────────────────────────────────
+  //
+  // A podcast cannot earn most of the seed: `highlight` and `pin` are three
+  // points each and neither door exists on an audio page, so its reachable
+  // ceiling is a fraction of an article's. Ranked on one shared scale it would
+  // read as "drew less interest" when the truth is "had fewer ways to show it"
+  // (founder, 2026-08-12). These pin the resolution rather than the symptom: a
+  // weight — «a listen is worth ten» — would have moved the same numbers today
+  // and been wrong the first year the mix changed.
+  describe('engagement is ranked among a page\'s own kind', () => {
+    const READABLE = (n: number) => `insight/insight-${n}`;
+    const AUDIO = (n: number) => `episodes/episode-${n}`;
+
+    /** Twelve engaged pages per class — enough for each to clear MIN_CLASS_SIZE. */
+    async function twoPopulatedClasses(): Promise<void> {
+      await loginAs(app, '09120000001');
+      await loginAs(app, '09120000002');
+      for (let i = 1; i <= 12; i += 1) {
+        // Readable: two people highlighted AND pinned it → 12 apiece, and every
+        // one of them out-scores every podcast on the site. The last also gets
+        // shared, so each class has ONE clear top rather than a flat tie.
+        for (const phone of ['09120000001', '09120000002']) {
+          await logActivity(phone, 'highlight_created', READABLE(i));
+          await logActivity(phone, 'collection_item_added', READABLE(i));
+          if (i === 12) await logActivity(phone, 'content_shared', READABLE(i)); // 16
+        }
+        // Audio: one listener each — 1 apiece — except episode-12, the one
+        // podcast anybody passed on (2 listeners + 2 sharers → 6).
+        await logActivity('09120000001', 'episode_listened', AUDIO(i));
+        if (i === 12) {
+          await logActivity('09120000002', 'episode_listened', AUDIO(i));
+          for (const phone of ['09120000001', '09120000002']) {
+            await logActivity(phone, 'content_shared', AUDIO(i));
+          }
+        }
+      }
+    }
+
+    it('lets the busiest podcast reach 100, as the busiest article does', async () => {
+      await twoPopulatedClasses();
+      const b = await board();
+      // Its seed is 6 against every article's 12+, so ranked over all 24 engaged
+      // pages this podcast sits at 50 — a ceiling it can never pass, because the
+      // two actions worth three points each do not exist on an audio page.
+      // Among podcasts it is the top one, and says so.
+      expect(find(b, AUDIO(12)).engagement).toBe(100);
+      expect(find(b, READABLE(12)).engagement).toBe(100);
+    });
+
+    it('still tells one podcast from another', async () => {
+      await twoPopulatedClasses();
+      const b = await board();
+      // The distinction the board exists to draw survives the normalisation: a
+      // quiet podcast does not ride up with the busy one.
+      expect(find(b, AUDIO(1)).engagement).toBeLessThan(find(b, AUDIO(12)).engagement!);
+    });
+
+    // Normalising the SCALE must not hand audio the board. Hearts stay senior,
+    // and the cap is still applied to engagement alone.
+    it('does not let a normalised podcast outrank a page with hearts', async () => {
+      await twoPopulatedClasses();
+      const cookie = await loginAs(app, '09120000003');
+      for (let i = 0; i < 4; i += 1) {
+        const c = await loginAs(app, `0912000001${i}`);
+        await app.inject({ method: 'POST', url: '/votes', headers: { cookie: c }, payload: { content_id: ART } });
+      }
+      void cookie;
+      const b = await board();
+      expect(find(b, ART).hearts).toBe(4);
+      expect(ids(b)[0]).toBe(ART);
+    });
+
+    // A class too small to rank inside falls back to the whole site — a
+    // percentile over three pages can only say 33, 67 or 100, which is a sort
+    // order wearing a measurement's clothes.
+    it('ranks a class site-wide until it has a population of its own', async () => {
+      await loginAs(app, '09120000001');
+      await loginAs(app, '09120000002');
+      for (let i = 1; i <= 12; i += 1) {
+        for (const phone of ['09120000001', '09120000002']) {
+          await logActivity(phone, 'highlight_created', READABLE(i));
+          if (i === 12) await logActivity(phone, 'collection_item_added', READABLE(i));
+        }
+      }
+      // One lone podcast: below MIN_CLASS_SIZE, so it is ranked against all 13.
+      await logActivity('09120000001', 'episode_listened', AUDIO(1));
+
+      const b = await board();
+      // Bottom of a 13-page site-wide ranking. A class of one would have called
+      // this same page the best podcast on the site.
+      expect(find(b, AUDIO(1)).engagement).toBe(8);
+      expect(find(b, READABLE(12)).engagement).toBe(100);
+    });
+  });
+
   // The whole point of the relative cap: its INFLUENCE stays steady as the site
   // grows, instead of a constant that is overbearing now and decorative later.
   it('scales the cap with the mean hearts of a voted page', async () => {
