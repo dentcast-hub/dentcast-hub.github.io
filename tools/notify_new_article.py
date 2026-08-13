@@ -51,7 +51,18 @@ def content_id_from_path(path: str) -> str:
     return cid or "index"
 
 
-def post_article(api_base, user, password, content_id, title, url, published_at=None, pulse=None, timeout=20):
+# The endpoint does the whole premium fan-out synchronously before it answers, so
+# the wait scales with the subscriber list, not with the request. Measured on the
+# 2026-08-11 publish: 19.1s to notify 22 premium users — against what was then a
+# 20-second budget, which is why the very next publish (chairside-31, 2026-08-12)
+# died on a read timeout with the article never announced. This is a CI step with
+# nothing waiting on it, so the budget is generous on purpose; the only thing a
+# short one buys is losing an announcement that the server went on to make anyway.
+DEFAULT_TIMEOUT = 120
+
+
+def post_article(api_base, user, password, content_id, title, url, published_at=None, pulse=None,
+                 timeout=DEFAULT_TIMEOUT):
     """POST the article_published event. Returns the parsed JSON response dict.
     Raises RuntimeError on any HTTP/network failure. Shared by the single-page CLI
     and the git-range detector (tools/notify_new_articles.py)."""
@@ -75,6 +86,14 @@ def post_article(api_base, user, password, content_id, title, url, published_at=
         raise RuntimeError(f"{e.code} {e.reason} :: {e.read().decode('utf-8', 'replace')}") from e
     except urllib.error.URLError as e:
         raise RuntimeError(f"could not reach {endpoint} :: {e.reason}") from e
+    # A read timeout arrives as a bare TimeoutError from the socket, NOT wrapped in
+    # URLError, so the two clauses above let it through: on 2026-08-12 it escaped as
+    # an unhandled traceback that killed the whole run, and any article queued behind
+    # the slow one was never even attempted. Everything urllib can raise here is an
+    # OSError; turning it into the same RuntimeError the callers already handle keeps
+    # one failure to one article.
+    except OSError as e:
+        raise RuntimeError(f"could not reach {endpoint} :: {e}") from e
 
 
 def main() -> int:

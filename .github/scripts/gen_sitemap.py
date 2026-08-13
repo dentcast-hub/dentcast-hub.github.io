@@ -5,7 +5,7 @@ DentCast Sitemap Generator
 - فایل‌های مُرده/قدیمی را skip می‌کند
 - canonical را از خود HTML می‌خواند و در sitemap همان را قرار می‌دهد
 - صفحاتی که <meta name="robots" content="…noindex…"> دارند skip می‌شوند
-- lastmod از آخرین git commit هر فایل
+- lastmod از تاریخِ خودِ محتوا (JSON-LD)، و برای صفحاتِ بی‌تاریخ از آخرین git commit
 - priority و changefreq بر اساس نوع صفحه (path-based)
 - در پایان: گزارش هشدارها (no-canonical, off-domain, duplicates)
 """
@@ -24,7 +24,25 @@ EXCLUDE_PATTERNS = [
     r".*\(.*\).*\.html$",
 ]
 
-# lastmod is derived from each file's git history below. A shallow clone (e.g. the
+# ---------------------------------------------------------------------------
+# lastmod: the page's OWN content date first, git only as the fallback.
+#
+# `lastmod` answers "when did this page's content last change". Git cannot
+# answer that in this repo: a site-wide chrome sweep (a header icon, an asset
+# stamp) touches every page without changing a word of any of them, so
+# latest-commit semantics stamps all ~556 URLs with one date — measured
+# 2026-08-13: 555 of 556 came out as the same day, which is exactly the noise
+# Google learns to distrust. The page's JSON-LD `dateModified` is the only
+# thing in the tree that tracks the content itself, and the publish workflow
+# stamps it on every content page.
+#
+# So: `dateModified` (else `datePublished`) when the page has one — 5xx of them
+# do — and the git history only for the handful of hubs/landing pages that
+# carry no JSON-LD date at all (index.html, {type}/index.html, pillar/*, the
+# dentcast-plus videos). Those are also the pages a chrome sweep legitimately
+# changes, so latest-commit is the right semantic exactly where it is used.
+#
+# The git map below is still needed for that fallback. A shallow clone (e.g. the
 # publish environment) truncates that history and yields wrong dates, which then
 # differ from the full-history sitemap CI regenerates — causing a corrective second
 # commit/push that races the GitHub Pages deployment ("Deployment failed, try again
@@ -45,7 +63,12 @@ for line in result.stdout.splitlines():
     line = line.strip()
     if re.match(r"^\d{4}-\d{2}-\d{2}$", line):
         current_date = line
-    elif line.endswith(".html") and line not in dates:
+    # `git log` streams newest -> oldest, so the FIRST time a path appears is its
+    # latest commit. The membership test must use the same "/"-prefixed key the
+    # map is stored under: testing the bare path never matched, so every older
+    # commit overwrote the newer one and each file ended up with its FIRST-ever
+    # commit date (found 2026-08-13; dentcast.org itself read 2025-11-02).
+    elif line.endswith(".html") and "/" + line not in dates:
         dates["/" + line] = current_date
 
 
@@ -59,6 +82,10 @@ TODAY = datetime.date.today().strftime("%Y-%m-%d")
 # GitHub Pages deployments -> "Deployment failed, try again later"). Treating dirty
 # .html as today makes the locally generated sitemap match the one CI regenerates
 # post-commit, so no second push is needed.
+#
+# This applies ONLY to the git-fallback pages now. A dirty page that carries its
+# own JSON-LD date already has, in the working tree, the exact date CI will read
+# after the commit — guessing TODAY on top of that could only disagree with it.
 _status = subprocess.run(["git", "status", "--porcelain"], capture_output=True, text=True)
 _dirty = set()
 for _line in _status.stdout.splitlines():
@@ -70,7 +97,15 @@ for _line in _status.stdout.splitlines():
         _dirty.add("/" + _p)
 
 
-def get_date(path):
+def get_date(path, content_date=None):
+    """lastmod for one page: its own content date, else its git history.
+
+    `content_date` is the page's JSON-LD dateModified/datePublished (None for the
+    hubs and landing pages, which carry no JSON-LD date). The _dirty = TODAY
+    fallback belongs to the git branch alone — see the note above it.
+    """
+    if content_date:
+        return content_date
     if path in _dirty:
         return TODAY
     return dates.get(path, TODAY)
@@ -129,6 +164,13 @@ ROBOTS_RE = re.compile(
     r'(?:"([^"]*)"|\'([^\']*)\'|([^\s>]+))[^>]*>',
     re.IGNORECASE,
 )
+# The page's own content date, from its JSON-LD. `dateModified` is the one that
+# means what lastmod means; `datePublished` is the fallback for a page that
+# carries only that. Both live inside <head> on every page that has them
+# (verified across the tree), so the existing head slice is enough — same
+# read-the-page-itself approach as tools/build_pillar.py's page_date().
+DATE_MODIFIED_RE = re.compile(r'"dateModified"\s*:\s*"(\d{4}-\d{2}-\d{2})')
+DATE_PUBLISHED_RE = re.compile(r'"datePublished"\s*:\s*"(\d{4}-\d{2}-\d{2})')
 
 
 def _first_group(m):
@@ -140,13 +182,14 @@ def _first_group(m):
     return None
 
 
-def read_canonical_and_robots(file_path):
+def read_page_meta(file_path):
+    """(canonical, robots, content_date) read from one page's <head>."""
     try:
         with open(file_path, "rb") as f:
             raw = f.read()
         text = raw.decode("utf-8", errors="replace")
     except OSError:
-        return None, None
+        return None, None, None
     end = text.lower().find("</head>")
     head = text if end == -1 else text[:end]
     canon_m = CANONICAL_RE.search(head)
@@ -154,9 +197,11 @@ def read_canonical_and_robots(file_path):
         canon_m = CANONICAL_RE_REVERSE.search(head)
     canon = _first_group(canon_m)
     robots = _first_group(ROBOTS_RE.search(head))
+    date_m = DATE_MODIFIED_RE.search(head) or DATE_PUBLISHED_RE.search(head)
     return (
         canon.strip() if canon else None,
         robots.strip().lower() if robots else None,
+        date_m.group(1) if date_m else None,
     )
 
 
@@ -180,10 +225,11 @@ warn_no_canonical = []
 warn_off_domain = []
 warn_duplicates = {}
 skipped_noindex = []
+git_dated = []          # emitted pages with no JSON-LD date (the git fallback)
 
 for rel in html_files:
     file_path = "." + rel
-    canon, robots = read_canonical_and_robots(file_path)
+    canon, robots, content_date = read_page_meta(file_path)
 
     if robots and "noindex" in robots:
         skipped_noindex.append(rel)
@@ -205,12 +251,14 @@ for rel in html_files:
     if canon in seen:
         continue
     seen.add(canon)
-    bucket.append((rel, canon))
+    if not content_date:
+        git_dated.append(rel)
+    bucket.append((rel, canon, content_date))
 
 
 def write_sitemap(filename, bucket, home_url):
     def _sort_key(item):
-        path, url = item
+        path, url, _date = item
         is_home = (url == home_url)
         return (0 if is_home else 1, url)
 
@@ -220,8 +268,8 @@ def write_sitemap(filename, bucket, home_url):
         '<?xml version="1.0" encoding="UTF-8"?>',
         '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
     ]
-    for path, url in bucket:
-        d = get_date("/index.html" if path == "/index.html" else path)
+    for path, url, content_date in bucket:
+        d = get_date(path, content_date)
         lines += [
             "  <url>",
             f"    <loc>{url}</loc>",
@@ -250,6 +298,14 @@ print(f"  Skipped: no canonical                   : {len(warn_no_canonical)}")
 print(f"  Skipped: off-domain canonical           : {len(warn_off_domain)}")
 print(f"  URLs emitted (sitemap.xml / .org)       : {len(entries)}")
 print(f"  URLs emitted (sitemap-ir.xml / .ir)     : {len(entries_ir)}")
+print(f"  lastmod from the page's own JSON-LD     : "
+      f"{len(entries) + len(entries_ir) - len(git_dated)}")
+print(f"  lastmod from git history (no JSON-LD)   : {len(git_dated)}")
+
+if git_dated:
+    print("\nlastmod from git history (page carries no JSON-LD date):")
+    for r in git_dated:
+        print(f"  {r}")
 
 if skipped_noindex:
     print("\nSkipped (noindex):")
