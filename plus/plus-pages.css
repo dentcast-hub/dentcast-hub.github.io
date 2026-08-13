@@ -1243,6 +1243,18 @@ a.dcp-progress-row:hover { text-decoration: none; }
   color: var(--txt2, #4a5f85);
 }
 .dcp-disc-op { font-size: .8rem; font-weight: 800; color: var(--txt3, #62779a); }
+/* The position: unspent / spent / what the next purchase takes. Three equal
+   columns rather than prose, because the reader is comparing them. */
+.dcp-disc-ledger {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 12px;
+}
+.dcp-disc-ledger > div {
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  padding: 9px 4px; border-radius: var(--r-sm, 10px);
+  background: var(--card-bg, #fff); border: 1px solid var(--border, rgba(2,35,96,.10));
+}
+.dcp-disc-ledger b { font-size: .95rem; font-weight: 800; font-variant-numeric: tabular-nums; }
+.dcp-disc-ledger span { font-size: .68rem; color: var(--txt3, #62779a); text-align: center; }
 .dcp-disc-foot { margin: 9px 2px 0; font-size: .72rem; color: var(--txt3, #62779a); line-height: 1.8; }
 .dcp-disc-link {
   display: inline-block; margin-top: 6px; font-size: .78rem; font-weight: 800;

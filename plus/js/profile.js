@@ -7,7 +7,7 @@ import { ensurePushSubscription, removePushSubscription, pushSupported } from '.
 import { telegramLoginEnabled, telegramCallbackUrl, telegramBotUsername } from './config.js';
 import { baleEnabled, baleDeepLink } from './config.js';
 import { leagueEntryButton } from './league.js';
-import { achievementsBody, maybeCelebrate } from './achievements.js';
+import { achievementsBody, discountBody, maybeCelebrate } from './achievements.js';
 import { subscriptionCta } from './premium-cta.js';
 import { copyToClipboard, confirmStrip } from './hl-view.js';
 
@@ -485,16 +485,36 @@ function referralCodeBlock(stats) {
     el('div', { class: 'dcp-records' }, [
       el('div', {}, [el('b', {}, faNum(stats.purchased_count)), el('span', {}, 'خرید قطعی‌شده')]),
       el('div', {}, [el('b', {}, faNum(stats.used_count)), el('span', {}, 'استفاده از کد')]),
+      // Earned, not available: the two differ the moment a purchase spends
+      // some, and the sentence below is what reports what is left.
       el('div', {}, [el('b', {}, '٪' + faNum(stats.earned_percent)), el('span', {}, 'اعتبار کسب‌شده')]),
     ]),
     el('p', { class: 'dcp-sec-hint' },
-      stats.earned_percent
-        ? `از خرید بعدی‌ات ٪${faNum(stats.next_purchase_percent)} کم می‌شود (سقف هر خرید ٪۱۰).`
-        : 'هر کس با این کد در صفحه‌ی پرداخت مشترک شود، ٪۱۰ تخفیف می‌گیرد و تو ٪۵ اعتبار.'),
+      !stats.earned_percent
+        ? 'هر کس با این کد در صفحه‌ی پرداخت مشترک شود، ٪۱۰ تخفیف می‌گیرد و تو ٪۵ اعتبار.'
+        : stats.available_percent
+          ? `٪${faNum(stats.available_percent)} هنوز مصرف‌نشده است و از خرید بعدی‌ات `
+            + `٪${faNum(stats.next_purchase_percent)} کم می‌شود (سقف هر خرید ٪۱۰).`
+          : 'همهٔ اعتبارِ معرفی‌ات مصرف شده. معرفیِ بعدی دوباره پرش می‌کند.'),
   ]);
 }
 
+/**
+ * The section always renders, even when /referral could not be reached.
+ *
+ * It used to be dropped entirely on any failure (`referral ? [section] : []`
+ * over a `.catch(() => null)`), which is how the whole feature stayed
+ * invisible after it shipped: the API container had not been rebuilt, every
+ * call 404'd, and the profile said nothing at all — so «ساخته نشده» and
+ * «سرویس بالا نیست» looked identical from the outside, including to the
+ * founder. Same argument as premium-cta.js's `unreachableGate`: "we could not
+ * ask" is a third answer and must never be rendered as one of the other two.
+ */
 function referralBlock(me, referral) {
+  if (!referral) {
+    return el('p', { class: 'dcp-sec-hint', style: 'margin:0' },
+      'کد معرف فعلاً در دسترس نیست. کمی بعد دوباره سر بزن.');
+  }
   return referral.code ? referralCodeBlock(referral) : referralCreateBlock(me);
 }
 
@@ -588,6 +608,7 @@ export async function renderProfile(root, { me: preMe } = {}) {
   if (!me) { root.replaceChildren(el('div', { class: 'dcp-gate' }, 'برای دیدن پروفایل وارد شوید.')); return; }
 
   const achBody = achievementsBody(achievements);
+  const discBody = discountBody(achievements);
 
   const logoutBtn = el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button' }, 'خروج از حساب');
   logoutBtn.addEventListener('click', async () => { await api.logout().catch(() => {}); location.href = '/'; });
@@ -595,11 +616,18 @@ export async function renderProfile(root, { me: preMe } = {}) {
   root.replaceChildren(
     el('div', { class: 'dcp-dash-hello' }, 'پروفایل'),
     section('نام مستعار', pseudonymBlock(me)),
+    // Directly under the pseudonym (founder's call, 2026-08-13): the code is
+    // built FROM a name the reader chooses, so it reads as the second half of
+    // the same act. id:'referral' is the deep-link anchor. Never conditional —
+    // see referralBlock().
+    section('کد معرف', referralBlock(me, referral), 'referral'),
     section('پلن', planBlock(me)),
-    // Immediately after «پلن», with id:'referral' for deep links — decision
-    // 2.10's own reasoning applies here too: this is money-adjacent. A down
-    // /referral hides the whole section rather than rendering broken.
-    ...(referral ? [section('کد معرف', referralBlock(me, referral), 'referral')] : []),
+    // «تخفیف‌های من» is its own section and no longer a strip inside
+    // «افتخارات» — a money box under a trophy heading was announcing one
+    // subject and showing another. It sits beside «پلن» because that is the
+    // question it answers, and it renders only when there is a position to
+    // report (discountBody returns null otherwise).
+    ...(discBody ? [section('تخفیف‌های من', discBody, 'discounts')] : []),
     section('هفته شما', stats.week && stats.week.length ? weekStrip(stats.week) : el('div', { class: 'dcp-muted' }, '—')),
     section('رکوردها', el('div', { class: 'dcp-records' }, [
       el('div', {}, [el('b', {}, faNum(stats.records?.current_streak || 0)), el('span', {}, 'استریک فعلی')]),

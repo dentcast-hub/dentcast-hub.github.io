@@ -1,5 +1,8 @@
 import { one, query, type Queryable, pool } from '../db.js';
 import { toLatinDigits } from './phone.js';
+import {
+  spentSources, pickCredits, creditPercent, CREDIT_CAP_PERCENT, type DiscountCredit,
+} from './discount-credits.js';
 
 /**
  * کد معرف — referral codes. Design ledger: .dentcast/referral-handoff.md.
@@ -209,44 +212,74 @@ export interface ReferralStats {
   used_count: number;
   /** How many of those actually completed a paid purchase — decision 2.13: only the count is shown, never who. */
   purchased_count: number;
-  /** Total ٪ earned across every settled referral. No accumulation cap (decision 2.14 — never expires). */
+  /** Total ٪ this code has ever earned. No accumulation cap (decision 2.14 — never expires). */
   earned_percent: number;
-  /** What a purchase started right now would actually apply from this source alone — availableCredits()/pickCredits() decide the real, cap-combined figure at purchase time; this is this source's own contribution. */
+  /** The part of `earned_percent` already consumed by a purchase. */
+  spent_percent: number;
+  /** The part still to spend. Always `earned_percent - spent_percent`. */
+  available_percent: number;
+  /** What a purchase started right now would apply from this source alone — availableCredits()/pickCredits() decide the real, cap-combined figure at purchase time; this is this source's own contribution. */
   next_purchase_percent: number;
 }
 
-const CREDIT_CAP_PERCENT = 10; // mirrors discount-credits.ts's own constant — informational only, see the field's doc above
-
-/** This account's code + how it has paid off — count only, never names (decision 2.13). */
+/**
+ * This account's code + how it has paid off — counts only, never names
+ * (decision 2.13).
+ *
+ * SPENT-NESS COMES FROM discount-credits.ts, NOT FROM A SECOND QUERY HERE.
+ * The first cut summed every qualified `referrer_percent` and reported
+ * `min(that, cap)` as the next purchase's discount — which is the total ever
+ * EARNED, not what is left. A referrer who had already spent their ٪۱۰ was
+ * still promised ٪۱۰ on the profile while /pay/plans, reading through
+ * availableCredits()' `spentSources` filter, quoted the true figure. Two
+ * screens, two numbers, for the same account — exactly what pay.ts:52-54
+ * swears must never happen. So the one definition of "spent" is imported and
+ * the arithmetic is closed here: earned = spent + available, always.
+ *
+ * `next_purchase_percent` runs the REAL pick rather than `min(available, cap)`
+ * because a credit is atomic: three ٪۷ credits are ٪۲۱ available but only ٪۷
+ * spendable, and min() would say ٪۱۰. Today every referral credit is ٪۵ and
+ * the two agree; they stop agreeing the day REFERRER_DISCOUNT_PERCENT is
+ * re-tuned, which is precisely when nobody will remember to look.
+ */
 export async function referralStats(userId: string): Promise<ReferralStats> {
-  const [codeRow, counts] = await Promise.all([
+  const [codeRow, rows, spent] = await Promise.all([
     myCode(userId),
-    one<{ used: number; purchased: number; earned: number }>(
-      `select
-         count(*)::int as used,
-         count(*) filter (
-           where exists (
-             select 1 from payments p
-              where p.user_id = r.referred_user_id and p.status = 'paid'
-           )
-         )::int as purchased,
-         coalesce(sum(r.referrer_percent) filter (
-           where exists (
-             select 1 from payments p
-              where p.user_id = r.referred_user_id and p.status = 'paid'
-           )
-         ), 0)::int as earned
+    query<{ id: string; percent: number; qualified: boolean }>(
+      `select r.id, r.referrer_percent as percent,
+              exists (
+                select 1 from payments p
+                 where p.user_id = r.referred_user_id and p.status = 'paid'
+              ) as qualified
          from referrals r
         where r.referrer_user_id = $1`,
       [userId],
     ),
+    spentSources(userId),
   ]);
-  const earned = counts?.earned ?? 0;
+
+  // Only a settled referral has earned anything (decision 2.4).
+  const qualified = rows.rows.filter((r) => r.qualified);
+  const earned = qualified.reduce((sum, r) => sum + r.percent, 0);
+
+  const available: DiscountCredit[] = qualified
+    .filter((r) => !spent.has(`referral_bonus:${r.id}`))
+    .map((r) => ({
+      source: `referral_bonus:${r.id}`, percent: r.percent,
+      label_fa: 'پاداش معرفی', kind: 'referral' as const,
+    }))
+    // pickCredits() does not sort — availableCredits() is what normally hands
+    // it an ordered list, so the order has to be reproduced here.
+    .sort((a, b) => b.percent - a.percent || (a.source < b.source ? -1 : 1));
+  const availablePercent = creditPercent(available);
+
   return {
     code: codeRow?.code ?? null,
-    used_count: counts?.used ?? 0,
-    purchased_count: counts?.purchased ?? 0,
+    used_count: rows.rows.length,
+    purchased_count: qualified.length,
     earned_percent: earned,
-    next_purchase_percent: Math.min(earned, CREDIT_CAP_PERCENT),
+    spent_percent: earned - availablePercent,
+    available_percent: availablePercent,
+    next_purchase_percent: creditPercent(pickCredits(available)),
   };
 }
