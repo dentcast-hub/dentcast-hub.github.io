@@ -422,6 +422,61 @@ function notice(kind, title, body, action) {
   ].filter(Boolean));
 }
 
+const REFERRAL_ERROR_FA = {
+  unknown_code: 'این کد معرف معتبر نیست.',
+  own_code: 'نمی‌توانید کد خودتان را وارد کنید.',
+  already_referred: 'قبلاً از یک کد معرف استفاده کرده‌اید.',
+  already_purchased: 'کد معرف فقط برای اولین خرید قابل استفاده است.',
+};
+
+/**
+ * The کد معرف box: between the plan grid and the buy button (decision 2.10 —
+ * `pricing-page.js`'s own rule that anything touching the price sits above
+ * the pay button). `info.referral` — echoed back by GET /pay/plans, never
+ * computed here (decision 2.11: the server is the only source of the price) —
+ * drives the ✓/✗ state; `onApply` re-fetches the whole price list with the
+ * new code, exactly the pattern login-modal.js's code step (dcp-input-code)
+ * and collections.js's found/not-found preview already use.
+ */
+function referralInput(info, value, onApply) {
+  const input = el('input', {
+    type: 'text', inputmode: 'text', class: 'dcp-input dcp-input-code',
+    placeholder: 'کد معرف (اختیاری)', dir: 'ltr', maxlength: '24', value: value || '',
+  });
+  const applyBtn = el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button' }, 'اعمال');
+  const msg = el('p', { class: 'dcp-price-fine dcp-referral-msg', role: 'status' }, [
+    info?.referral?.percent
+      ? `✓ کد «${info.referral.code}» فعال شد — ٪${toFa(info.referral.percent)} تخفیف روی این خرید`
+      : info?.referral?.error
+        ? `✗ ${REFERRAL_ERROR_FA[info.referral.error] || 'این کد معرف قابل استفاده نیست.'}`
+        : '',
+  ]);
+  msg.classList.toggle('is-ok-text', !!info?.referral?.percent);
+  msg.classList.toggle('is-err-text', !!info?.referral?.error);
+
+  async function submit() {
+    const code = input.value.trim();
+    if (!code) return;
+    applyBtn.disabled = true;
+    const original = applyBtn.textContent;
+    applyBtn.textContent = 'در حال بررسی…';
+    try {
+      await onApply(code);
+    } finally {
+      applyBtn.disabled = false;
+      applyBtn.textContent = original;
+    }
+  }
+  applyBtn.addEventListener('click', submit);
+  input.addEventListener('keydown', (e) => { if (e.key === 'Enter') submit(); });
+
+  return el('div', { class: 'dcp-referral' }, [
+    el('label', { class: 'dcp-label' }, 'کد معرف داری؟'),
+    el('div', { class: 'dcp-field-row' }, [input, applyBtn]),
+    msg,
+  ]);
+}
+
 async function main() {
   registerSW();
   const root = document.getElementById('dcp-root');
@@ -435,6 +490,9 @@ async function main() {
   // find the choice reset to the default is how a two-host purchase starts
   // feeling like two purchases.
   const asked = Number(params.get('plan'));
+  // A کد معرف carried in from a shared link (?ref=dens61) or typed into the
+  // box below — read once here, mutated as the reader types (decision 2.12).
+  let refInputValue = params.get('ref') || '';
 
   // What we can say without asking anyone. The API refines this below; it does
   // not gate it. A page whose entire content sits behind a network call shows an
@@ -455,16 +513,19 @@ async function main() {
     // domestic reader without a working card is most likely to need does not
     // vanish the moment the API is slow.
     bank_transfer: BANK_TRANSFER,
+    // Same rule again, a third time: a کد معرف box that vanishes offline
+    // would silently drop the one field this API answer usually carries.
+    referral: null,
     offline: true,
   };
 
   const [live, user] = await Promise.all([
-    api.payPlans().catch(() => null),
+    api.payPlans(refInputValue || undefined).catch(() => null),
     currentUser().catch(() => null),
   ]);
   // The server's answer wins wherever it exists; where it does not, the page is
   // still the page.
-  const info = live ? { ...live, offline: false } : fallback;
+  let info = live ? { ...live, offline: false } : fallback;
 
   // A founder has nothing to buy here; say so and send them back rather than
   // showing a price list that means nothing to them.
@@ -477,14 +538,14 @@ async function main() {
   }
 
   const needIr = paymentsNeedIrHost();
-  const featured = pickFeatured(info.plans);
+  let featured = pickFeatured(info.plans);
   let selected = info.plans.some((p) => p.months === asked && p.available) ? asked : featured;
 
   const msg = el('p', { class: 'dcp-price-msg' });
   const action = el('div', { class: 'dcp-price-action' });
   const grid = el('div', { class: 'dcp-plans' });
 
-  const base = baseRate(info.plans);
+  let base = baseRate(info.plans);
   // Threaded through onPick below (defined further down, safe — same pattern
   // drawAction already uses) so switching plans updates the bank rail's amount.
   let bankClaim = null;
@@ -503,6 +564,10 @@ async function main() {
     const qs = new URLSearchParams();
     if (from) qs.set('from', from);
     if (selected) qs.set('plan', String(selected));
+    // Carried across the org->ir jump the same as from/plan — the two hosts
+    // keep SEPARATE sessions, so a code typed on .org would otherwise vanish
+    // the moment the reader lands on .ir to actually pay.
+    if (refInputValue) qs.set('ref', refInputValue);
     const tail = qs.toString();
     return paymentsIrUrl('/plus/pricing.html' + (tail ? `?${tail}` : ''));
   };
@@ -513,6 +578,10 @@ async function main() {
     // so the interruption is one they understand the reason for.
     let who = user;
     if (!who) {
+      // A typed کد معرف lives only in this closure's `refInputValue` — the
+      // reload two lines down would burn it to nothing unless it is written
+      // into the URL FIRST, so the page reads it straight back out of ?ref=.
+      persistReferralInUrl();
       const res = await openLoginModal({ returnTo: location.pathname + location.search });
       if (!res || !res.user) return;
       location.reload();
@@ -521,7 +590,7 @@ async function main() {
     const btn = action.querySelector('button');
     if (btn) { btn.disabled = true; btn.textContent = 'در حال اتصال به درگاه…'; }
     try {
-      const res = await api.payStart(selected);
+      const res = await api.payStart(selected, info.referral?.percent ? refInputValue : undefined);
       // Leave for the bank. No success message here — nothing has happened yet.
       location.href = res.redirect_url;
     } catch (err) {
@@ -529,6 +598,14 @@ async function main() {
       msg.textContent = (err && err.message) || 'ارتباط با درگاه برقرار نشد.';
     }
   };
+
+  /** Write the currently-typed کد معرف into `?ref=`, without a navigation. */
+  function persistReferralInUrl() {
+    if (!refInputValue) return;
+    const url = new URL(location.href);
+    url.searchParams.set('ref', refInputValue);
+    history.replaceState(null, '', url);
+  }
 
   const drawAction = () => {
     // The rial gateway is registered to dentcast.ir and cannot complete a
@@ -688,6 +765,31 @@ async function main() {
   drawPlans();
   drawAction();
 
+  // --- کد معرف ----------------------------------------------------------------
+  // Between the plan grid and the buy button (decision 2.10). Applying a code
+  // re-fetches the WHOLE price list from the server (decision 2.11 — never
+  // multiply a percentage in this file) and redraws only the plans and the
+  // action, exactly as the handoff specifies; the notices built above are not
+  // rebuilt, which is why the referral box carries its own ✓/✗ line.
+  const referralWrap = el('div', {});
+  const onReferralApply = async (code) => {
+    refInputValue = code;
+    const live2 = await api.payPlans(code).catch(() => null);
+    if (live2) {
+      info = { ...live2, offline: false };
+      base = baseRate(info.plans);
+      featured = pickFeatured(info.plans);
+      if (!info.plans.some((p) => p.months === selected && p.available)) selected = featured;
+    }
+    drawPlans();
+    drawAction();
+    drawReferral();
+  };
+  const drawReferral = () => {
+    referralWrap.replaceChildren(referralInput(info, refInputValue, onReferralApply));
+  };
+  drawReferral();
+
   // --- the bank-transfer rail ------------------------------------------------
   // An ALTERNATIVE way to pay for the plan already selected above, not a
   // second plan picker — sits right under the gateway button since it is the
@@ -779,7 +881,7 @@ async function main() {
   drawGift(null, false);
 
   root.replaceChildren(el('div', { class: 'dcp-pricing' }, [
-    ...head, ...notices, grid, action, bankWrap, giftWrap,
+    ...head, ...notices, grid, referralWrap, action, bankWrap, giftWrap,
     el('h2', { class: 'dcp-price-h2' }, 'با پریمیوم چه چیزی اضافه می‌شود'),
     whatYouGet(),
   ]));

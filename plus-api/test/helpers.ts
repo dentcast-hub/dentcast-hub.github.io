@@ -7,6 +7,7 @@ import { clearBaleLinkStore } from '../src/services/bale-link.js';
 import { clearTagSelectionCache } from '../src/services/case-assistant.js';
 import { drainAchievementSyncs } from '../src/services/achievement-sync.js';
 import { drainPillarWelcomes } from '../src/services/pillar-notify.js';
+import { drainReferralNotifies } from '../src/services/referral-notify.js';
 import { drainBroadcasts } from '../src/services/broadcast.js';
 import { resetBoardCache } from '../src/services/votes.js';
 
@@ -23,6 +24,7 @@ export async function resetDb(): Promise<void> {
   // what a truncate here deadlocks against.
   await drainBroadcasts();
   await drainPillarWelcomes();
+  await drainReferralNotifies();
   await drainAchievementSyncs();
   await pool.query(`
     truncate table
@@ -32,6 +34,7 @@ export async function resetDb(): Promise<void> {
       push_subscriptions, articles, auth_identities, spot_stats, view_stats,
       notification_log, achievement_announcements, notice_broadcasts,
       discount_grants, discount_redemptions, badge_grants,
+      referral_codes, referrals,
       support_tickets, ticket_messages,
       assistant_rounds, assistant_tag_scores,
       leagues, league_members, league_weekly_stats, league_audit_log

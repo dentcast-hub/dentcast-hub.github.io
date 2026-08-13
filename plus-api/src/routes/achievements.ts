@@ -8,7 +8,7 @@ import {
   syncAchievements, pendingAnnouncements, markAnnouncementsSeen,
 } from '../services/achievement-sync.js';
 import {
-  badgeCredits, grantCredits, spentSources, creditPercent, pickCredits,
+  badgeCredits, grantCredits, referralCredits, spentSources, creditPercent, pickCredits,
   CREDIT_CAP_PERCENT, type DiscountCredit,
 } from '../services/discount-credits.js';
 import { PILLAR_DISCOUNT_PERCENT } from '../services/pillar.js';
@@ -51,9 +51,14 @@ export async function achievementRoutes(app: FastifyInstance): Promise<void> {
     let spent: Set<string> | null = null;
     let readyCredits: DiscountCredit[] = [];
     try {
-      const grants = await grantCredits(user.id);
+      // referralCredits() joins here too — its own doc explains why leaving
+      // it out would show the profile a SMALLER number than /pay/plans
+      // quotes for the exact same account (pay.ts:52-54's own promise).
+      const [grants, referral] = await Promise.all([
+        grantCredits(user.id), referralCredits(user.id),
+      ]);
       spent = await spentSources(user.id);
-      const mine = [...badgeCredits(facts), ...grants];
+      const mine = [...badgeCredits(facts), ...grants, ...referral];
       readyCredits = mine.filter((c) => !spent!.has(c.source));
     } catch {
       spent = null;

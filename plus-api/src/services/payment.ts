@@ -5,6 +5,8 @@ import { activateMonths, type Subscription } from './subscription.js';
 import { canSellPlan, planAmountRial, periodStamps, capacityMessage } from './payment-capacity.js';
 import { pillarSeat, isPillarSeat, PILLAR_DISCOUNT_PERCENT } from './pillar.js';
 import { schedulePillarWelcome } from './pillar-notify.js';
+import { scheduleReferralNotify } from './referral-notify.js';
+import { claimReferral, claimRefusalMessage } from './referrals.js';
 import {
   availableCredits, pickCredits, creditPercent, discountedRial,
   recordRedemptions, redemptionsForPayment, type DiscountCredit,
@@ -77,7 +79,7 @@ export interface StartResult {
   /** Where to send the customer's browser. Present only when ok. */
   redirectUrl: string | null;
   payment: Payment | null;
-  error: 'capacity' | 'gateway' | 'unknown_plan' | null;
+  error: 'capacity' | 'gateway' | 'unknown_plan' | 'referral' | null;
   message: string;
 }
 
@@ -95,6 +97,7 @@ export async function startPayment(params: {
   userId: string;
   months: number;
   mobile?: string;
+  referralCode?: string;
   now?: Date;
 }): Promise<StartResult> {
   const now = params.now ?? new Date();
@@ -111,6 +114,23 @@ export async function startPayment(params: {
         ? 'این طرح موجود نیست.'
         : capacityMessage(fit.capacity),
     };
+  }
+
+  // کد معرف: written HERE, deliberately outside the credit engine's own
+  // try/catch below — an invalid code is a mistake in the CUSTOMER's request
+  // (400, not a silent full-price sale), unlike a credit-engine failure,
+  // which must never be allowed to take the shop down. Written before
+  // availableCredits() so the referred side's own ٪۱۰ (services/discount-
+  // credits.ts's referralCredits()) is visible to the very purchase that
+  // just claimed it.
+  if (params.referralCode) {
+    const claim = await claimReferral(params.userId, params.referralCode);
+    if (!claim.ok) {
+      return {
+        ok: false, redirectUrl: null, payment: null, error: 'referral',
+        message: claimRefusalMessage(claim.reason),
+      };
+    }
   }
 
   // Non-null: canSellPlan() above already refused every term without a price
@@ -361,6 +381,13 @@ export async function settlePayment(trackId: string, now: Date = new Date()): Pr
   // the moved ledger and says nothing if the last one was already gone; a
   // renewal reads a non-null seat here and never enters at all.
   if (seat === null) schedulePillarWelcome(existing.user_id, now);
+
+  // کد معرف: the same `seat === null` vantage point also marks the ONLY
+  // instant a referral bonus can be earned, since claimReferral() only ever
+  // lets an account claim a code before its first paid payment (decision
+  // 2.5) — a renewal never re-enters this either. Self-contained: it no-ops
+  // quietly if this account was never referred.
+  if (seat === null) scheduleReferralNotify(existing.user_id, now);
 
   return {
     outcome: 'activated',

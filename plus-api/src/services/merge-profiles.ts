@@ -46,6 +46,47 @@ export async function mergeProfiles(
   );
   await client.query('update article_notes set user_id = $2 where user_id = $1', [fromId, toId]);
 
+  // --- کد معرف (services/referrals.ts). Both tables cascade-delete off
+  //     profiles, so skipping them here would silently erase real referral
+  //     history and financial credit the moment a merge runs — see the
+  //     handoff's own warning (.dentcast/referral-handoff.md section 10).
+  //
+  //     referral_codes: user_id is the PRIMARY KEY, so a collision means BOTH
+  //     accounts minted one. Same pattern as user_pathways above: drop the
+  //     source's row when the target already has one, then repoint. The
+  //     source's code is NOT freed for re-minting — it may already be shared
+  //     — it simply stops resolving to anyone.
+  await client.query(
+    `delete from referral_codes
+      where user_id = $1 and exists (select 1 from referral_codes where user_id = $2)`,
+    [fromId, toId],
+  );
+  await client.query('update referral_codes set user_id = $2 where user_id = $1', [fromId, toId]);
+
+  // referrals.referred_user_id is UNIQUE (decision 2.6: one referral per
+  // lifetime) — a collision means both accounts were separately referred;
+  // keep the target's own row, drop the source's.
+  await client.query(
+    `delete from referrals
+      where referred_user_id = $1 and exists (select 1 from referrals where referred_user_id = $2)`,
+    [fromId, toId],
+  );
+
+  // Either account may have referred the OTHER one (A referred B, or B
+  // referred A) — repointing just one of the two id columns below would then
+  // produce a row referring itself, which `check (referrer_user_id <>
+  // referred_user_id)` refuses. Postgres enforces a CHECK constraint per row,
+  // immediately, mid-statement — there is no fixing it up afterwards — so the
+  // would-be self-referential row is removed FIRST, before either repoint.
+  await client.query(
+    `delete from referrals
+      where (referrer_user_id = $1 and referred_user_id = $2)
+         or (referrer_user_id = $2 and referred_user_id = $1)`,
+    [fromId, toId],
+  );
+  await client.query('update referrals set referred_user_id = $2 where referred_user_id = $1', [fromId, toId]);
+  await client.query('update referrals set referrer_user_id = $2 where referrer_user_id = $1', [fromId, toId]);
+
   // --- Plain repoints. No per-user unique key can collide here: card_state's
   //     (user_id, highlight_id) is safe because the highlights themselves move
   //     too; push_subscriptions.endpoint and auth_identities(provider, id) are
