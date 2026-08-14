@@ -4306,6 +4306,120 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
 })();
       </script>
 
+      <!-- DentCast Evidence Score (DES) — site-wide explainer box.
+           Placed here on purpose: after the trust strip (hero-stats), before
+           the sign-up card, and nowhere near #panel-studio .dc-exa-cats (the
+           ad anchor spot.js targets) or the search hero. Mobile-shell only
+           for now — #mobile-shell is display:none on desktop, and the
+           desktop welcome column (#dcd-welcome) has no equivalent trust-strip
+           slot to mirror this into yet. Self-contained: its own CSS/JS below,
+           no dependency on plus.js or the sheet.js bottom-sheet component. -->
+      <style>
+        .dc-des-legend-wrap{ margin:1.1rem 0; }
+        .dc-des-legend{
+          display:flex; align-items:center; gap:.7rem;
+          background:var(--card-bg); border:1px solid var(--card-border); border-radius:.875rem;
+          padding:.75rem .9rem; cursor:pointer; box-shadow:var(--card-sh);
+          font-family:inherit; text-align:right; width:100%;
+        }
+        .dc-des-legend .dc-des-ico{ width:2rem; height:2rem; border-radius:50%; background:var(--surface2);
+          border:1px solid var(--border); display:flex; align-items:center; justify-content:center;
+          flex-shrink:0; color:var(--ac); }
+        .dc-des-legend .dc-des-ico svg{ width:1.05rem; height:1.05rem; }
+        .dc-des-legend .dc-des-body{ flex:1; min-width:0; }
+        .dc-des-legend .dc-des-ttl{ font-size:.82rem; font-weight:700; color:var(--txt); }
+        .dc-des-legend .dc-des-ttl b{ color:var(--ac); }
+        .dc-des-legend .dc-des-sub{ font-size:.72rem; color:var(--txt3); margin-top:.15rem; line-height:1.7; }
+        .dc-des-legend .dc-des-bar-group{ display:flex; direction:ltr; border-radius:5px; overflow:hidden;
+          flex-shrink:0; border:1px solid var(--border); margin-inline-start:.3rem; }
+        .dc-des-legend .dc-des-bar-group span{ width:1.15rem; height:1.15rem; display:flex; align-items:center;
+          justify-content:center; font-size:.56rem; font-weight:800; color:#fff; }
+        .dc-des-band-E{ background:#78808f; } .dc-des-band-D{ background:#5f8a63; }
+        .dc-des-band-C{ background:#3f9a49; } .dc-des-band-B{ background:#2f8f3f; }
+        .dc-des-band-A{ background:#1f7a34; }
+        [data-theme="dark"] .dc-des-band-E{ background:#8b93a3; } [data-theme="dark"] .dc-des-band-D{ background:#89a68c; }
+        [data-theme="dark"] .dc-des-band-C{ background:#6fae74; } [data-theme="dark"] .dc-des-band-B{ background:#4f9d5c; }
+        [data-theme="dark"] .dc-des-band-A{ background:#2f8f52; }
+
+        #dcDesPop{ position:absolute; z-index:100; max-width:320px; background:var(--card-bg);
+          border:1px solid var(--border); border-radius:10px; padding:.9rem 1.05rem; box-shadow:var(--card-sh2);
+          font-size:.8rem; color:var(--txt2); direction:rtl; text-align:right; line-height:1.85; }
+        #dcDesPop.dc-hidden{ display:none; }
+        #dcDesPop .dc-des-pop-title{ font-weight:700; color:var(--txt); margin-bottom:.5rem; font-size:.88rem; }
+        #dcDesPop .dc-des-pop-close{ position:absolute; top:.4rem; left:.55rem; background:none; border:none;
+          color:var(--txt3); cursor:pointer; font-size:.9rem; line-height:1; }
+        #dcDesPop p{ margin:0 0 .7rem; }
+        #dcDesPop p:last-child{ margin-bottom:0; }
+        #dcDesPop .dc-des-mini-legend{ display:flex; direction:ltr; gap:.3rem; margin:.15rem 0 .7rem; }
+        #dcDesPop .dc-des-mini-legend div{ flex:1; text-align:center; padding:.35rem 0; border-radius:6px;
+          font-size:.68rem; font-weight:800; color:#fff; }
+      </style>
+
+      <div class="dc-des-legend-wrap">
+        <button type="button" class="dc-des-legend" id="dcDesLegendBtn" aria-haspopup="true" aria-expanded="false">
+          <span class="dc-des-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="2.5" y="13" width="5.5" height="8.5" rx="1.1" fill="currentColor"/>
+              <rect x="9.25" y="7" width="5.5" height="14.5" rx="1.1" fill="currentColor"/>
+              <rect x="16" y="10.5" width="5.5" height="11" rx="1.1" fill="currentColor"/>
+            </svg>
+          </span>
+          <span class="dc-des-body">
+            <span class="dc-des-ttl"><b>DentCast Evidence Score</b> چیست؟</span>
+            <span class="dc-des-sub">روشی که دنت‌کست با آن اعتبار شواهد علمی محتوا را نشان می‌دهد.</span>
+          </span>
+          <span class="dc-des-bar-group" aria-hidden="true">
+            <span class="dc-des-band-E">E</span><span class="dc-des-band-D">D</span><span class="dc-des-band-C">C</span><span class="dc-des-band-B">B</span><span class="dc-des-band-A">A</span>
+          </span>
+        </button>
+      </div>
+
+      <div id="dcDesPop" class="dc-hidden" role="dialog" aria-label="توضیح DentCast Evidence Score"></div>
+
+      <script>
+      (function(){
+        var btn = document.getElementById('dcDesLegendBtn');
+        var pop = document.getElementById('dcDesPop');
+        if (!btn || !pop) return;
+        var body =
+          '<button type="button" class="dc-des-pop-close" aria-label="بستن">✕</button>' +
+          '<div class="dc-des-pop-title">DentCast Evidence Score (DES) یعنی چه؟</div>' +
+          '<p>روشی که دنت‌کست با آن نشان می‌دهد هر مطلب علمی چقدر روی طراحی قوی و اجرای دقیق ایستاده — نه اینکه چقدر برای شما کاربردی است؛ آن قضاوت جای دیگری نوشته می‌شود.</p>' +
+          '<p>نتیجه یک باند است، نه یک عدد ساده:</p>' +
+          '<div class="dc-des-mini-legend">' +
+            '<div style="background:#78808f">E</div><div style="background:#5f8a63">D</div>' +
+            '<div style="background:#3f9a49">C</div><div style="background:#2f8f3f">B</div>' +
+            '<div style="background:#1f7a34">A</div>' +
+          '</div>' +
+          '<p>از E (پایه‌ترین سطح) تا A (قوی‌ترین شواهد ممکن) — و A فقط از بهترین طراحی‌ها به‌دست می‌آید، مثل مرور نظام‌مند یا کارآزمایی بالینی. طراحی‌های ضعیف‌تر، حتی در بهترین اجرا، هیچ‌وقت به A نمی‌رسند.</p>' +
+          '<p>یک نکته‌ی مهم: A فقط داخل یک نوع سؤال معنی دارد. A در یک مطالعه‌ی آزمایشگاهی یعنی بهترین شواهد ممکن از یک بنچ‌تست، نه اینکه همان ماده در دهان واقعی هم به همین اندازه قابل‌اعتماد است. A در یک مطالعه‌ی بالینی یعنی داده‌ی واقعی از بیمار — این دو با هم برابر نیستند.</p>' +
+          '<p>محتوایی که خودِ دنت‌کست نوشته، نه خلاصه‌ی یک مقاله، میله‌ی باند نمی‌گیرد؛ به‌جایش یک نشان «تجربه‌ی بالینی» با امتیاز شفافیت دارد.</p>';
+        function openPop(){
+          pop.innerHTML = body;
+          var r = btn.getBoundingClientRect();
+          var top = window.scrollY + r.bottom + 8;
+          var left = window.scrollX + r.left;
+          var maxLeft = window.scrollX + document.documentElement.clientWidth - 336;
+          if (left > maxLeft) left = Math.max(12, maxLeft);
+          pop.style.top = top + 'px'; pop.style.left = left + 'px';
+          pop.classList.remove('dc-hidden');
+          btn.setAttribute('aria-expanded', 'true');
+          pop.querySelector('.dc-des-pop-close').addEventListener('click', closePop);
+        }
+        function closePop(){
+          pop.classList.add('dc-hidden');
+          btn.setAttribute('aria-expanded', 'false');
+        }
+        btn.addEventListener('click', function(e){
+          e.stopPropagation();
+          if (pop.classList.contains('dc-hidden')) openPop(); else closePop();
+        });
+        document.addEventListener('click', function(e){
+          if (!pop.classList.contains('dc-hidden') && !e.target.closest('#dcDesPop') && !e.target.closest('#dcDesLegendBtn')) closePop();
+        });
+      })();
+      </script>
+
       <!-- DentCast Plus personal card. One of exactly two anonymous invitation
            points (spec 2.3). For guests: a quiet one-line invitation. For a
            logged-in free user: streak + a line back into their own material +
