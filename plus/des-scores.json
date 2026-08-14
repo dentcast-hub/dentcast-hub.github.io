@@ -14,7 +14,10 @@
           "journal": "Journal of Prosthodontics",
           "doi": "10.1111/jopr.13358"
         },
-        "journal_quartile": { "value": "NR", "source": "NR" },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
         "s_design": {
           "value": 65,
           "anchor": "in-vitro with non-standard but fully described protocol",
@@ -28,20 +31,41 @@
               "rating": "low",
               "evidence_quote": "To assess the influence of liquid attached on the tooth surfaces on the accuracy (trueness and precision) of intraoral scanners"
             },
-            { "domain": "sample size justification", "rating": "NR", "evidence_quote": "" },
-            { "domain": "randomization / allocation of specimens", "rating": "NR", "evidence_quote": "" },
-            { "domain": "operator and assessor blinding", "rating": "NR", "evidence_quote": "" },
+            {
+              "domain": "sample size justification",
+              "rating": "NR",
+              "evidence_quote": ""
+            },
+            {
+              "domain": "randomization / allocation of specimens",
+              "rating": "NR",
+              "evidence_quote": ""
+            },
+            {
+              "domain": "operator and assessor blinding",
+              "rating": "NR",
+              "evidence_quote": ""
+            },
             {
               "domain": "appropriate statistical analysis",
               "rating": "low",
               "evidence_quote": "The 3-way ANOVA (condition, intraoral scanner, liquid) followed by the Tukey test were used to assess precision and trueness."
             },
-            { "domain": "conflict of interest / funding", "rating": "NR", "evidence_quote": "" }
+            {
+              "domain": "conflict of interest / funding",
+              "rating": "NR",
+              "evidence_quote": ""
+            }
           ],
           "multiplier": 0.55
         },
         "penalties": [
-          { "item": "CoI not disclosed", "points": 0, "evidence_quote": "", "note": "not assessable in abstract" },
+          {
+            "item": "CoI not disclosed",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
           {
             "item": "no sample size justification (in-vitro, <10 per group)",
             "points": 0,
@@ -73,7 +97,10 @@
           "journal": "",
           "doi": ""
         },
-        "journal_quartile": { "value": "NR", "source": "NR" },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
         "s_design": null,
         "q_method": null,
         "penalties": null,
@@ -104,6 +131,202 @@
         "provisional": false,
         "fact_fa": "این یادداشت تألیفی امتیاز شفافیت ۱۷ از ۱۹ گرفت و مثل هر محتوای تألیفی در باند E است.",
         "interpretation_fa": "متن مکانیسم خطا را روشن توضیح می‌دهد، ادعایش را به «بسیاری از موارد» محدود می‌کند و خودش را تجربه‌ی کاربران می‌نامد نه استاندارد سازنده. همین صراحت است که امتیاز شفافیت را بالا می‌برد. باند E نمره‌ی کیفیت نیست، جایگاه ساختاری هر محتوای تألیفی است."
+      }
+    ]
+  },
+  "episodes/episode-161": {
+    "scored_at": "2026-08-14",
+    "sources": [
+      {
+        "des_version": "1.3",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "A systematic review of the survival and complication rates of implant supported fixed dental prostheses with cantilever extensions after an observation period of at least 5 years",
+          "authors": "Aglietta M, Iorio Siciliano V, Zwahlen M, Brägger U, Pjetursson BE, Lang NP, Salvi GE",
+          "year": 2009,
+          "journal": "Clinical Oral Implants Research",
+          "doi": "10.1111/j.1600-0501.2009.01706.x"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 100,
+          "anchor": "SR/meta-analysis (of cohort studies, not RCTs — see interpretation)",
+          "evidence_quote": "An electronic MEDLINE search supplemented by manual searching was conducted to identify prospective or retrospective cohort studies reporting data of at least 5 years on ICFDPs."
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "comprehensive literature search",
+              "rating": "some_concerns",
+              "evidence_quote": "An electronic MEDLINE search supplemented by manual searching was conducted"
+            },
+            {
+              "domain": "a priori protocol registration",
+              "rating": "NR",
+              "evidence_quote": ""
+            },
+            {
+              "domain": "risk-of-bias assessment of included studies",
+              "rating": "NR",
+              "evidence_quote": ""
+            },
+            {
+              "domain": "appropriate meta-analytic method",
+              "rating": "low",
+              "evidence_quote": "Five- and 10-year estimates for failure and complication rates were calculated using standard or random-effect Poisson regression analysis."
+            },
+            {
+              "domain": "publication bias assessed",
+              "rating": "NR",
+              "evidence_quote": ""
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "CoI not disclosed",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 55,
+        "band": "C",
+        "provisional": true,
+        "fact_fa": "این مرور نظام‌مند در نوع سؤال درمانی امتیاز ۵۵ از ۱۰۰ و باند C گرفت.",
+        "interpretation_fa": "بهترین شواهد تجمیعی موجود دربارهٔ بقای پروتز کانتی‌لور روی ایمپلنت است و نشان می‌دهد بقای پنج و ده ساله بالاست. جست‌وجو به یک پایگاه داده محدود بوده و ارزیابی کیفیت مطالعات ورودی در چکیده نیامده. مرور مطالعات کوهورت است نه کارآزمایی تصادفی."
+      },
+      {
+        "des_version": "1.3",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Clinical and radiographic outcomes of implant-supported fixed dental prostheses with cantilever extension. A retrospective cohort study with a follow-up of at least 10 years",
+          "authors": "Schmid E, Morandini M, Roccuzzo A, Ramseier CA, Sculean A, Salvi GE",
+          "year": 2020,
+          "journal": "Clinical Oral Implants Research",
+          "doi": "10.1111/clr.13672"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 50,
+          "anchor": "retrospective cohort",
+          "evidence_quote": "A retrospective cohort study with a follow‐up of at least 10 years"
+        },
+        "q_method": {
+          "tool": "NOS",
+          "domains": [
+            {
+              "domain": "comparability / control for the exposure",
+              "rating": "low",
+              "evidence_quote": "compared between implant surfaces adjacent to and distant from the cantilever extension"
+            },
+            {
+              "domain": "outcome ascertainment",
+              "rating": "low",
+              "evidence_quote": "Mesial and distal radiographic marginal bone levels (mBLs) from baseline (i.e. delivery of FDPC) to the follow‐up examination were calculated"
+            },
+            {
+              "domain": "selection of the cohort",
+              "rating": "NR",
+              "evidence_quote": ""
+            },
+            {
+              "domain": "adequacy of follow-up / attrition",
+              "rating": "NR",
+              "evidence_quote": ""
+            }
+          ],
+          "multiplier": 0.75
+        },
+        "penalties": [
+          {
+            "item": "CoI not disclosed",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 38,
+        "band": "D",
+        "provisional": true,
+        "fact_fa": "این کوهورت گذشته‌نگر در نوع سؤال درمانی امتیاز ۳۸ از ۱۰۰ و باند D گرفت.",
+        "interpretation_fa": "با میانگین پیگیری ۱۳ سال نشان می‌دهد تفاوت معنادار در تحلیل استخوان بین سطح مجاور و دور از کانتی‌لور دیده نمی‌شود. مقایسه درون همان بیمار انجام شده که نقطهٔ قوت آن است. طراحی گذشته‌نگر و نبود گزارش افت نمونه اطمینان را محدود می‌کند."
+      },
+      {
+        "des_version": "1.3",
+        "content_type": "RESEARCH",
+        "question_type": "ETIOLOGY",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Bone level changes at implants supporting crowns or fixed partial dentures with or without cantilevers",
+          "authors": "Hälg GA, Schmid J, Hämmerle CHF",
+          "year": 2008,
+          "journal": "Clinical Oral Implants Research",
+          "doi": "10.1111/j.1600-0501.2008.01556.x"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 60,
+          "anchor": "controlled comparison (prospective enrolment not stated — lower anchor taken per no-guessing)",
+          "evidence_quote": "Twenty‐seven FDPs were with cantilever and 27 FDPs were without cantilever (control group)."
+        },
+        "q_method": {
+          "tool": "ROBINS-I",
+          "domains": [
+            {
+              "domain": "confounding",
+              "rating": "low",
+              "evidence_quote": "Regression analyses were carried out to evaluate the influence of confounding factors on the peri‐implant bone level change."
+            },
+            {
+              "domain": "appropriate statistical analysis",
+              "rating": "low",
+              "evidence_quote": "Statistical analysis was carried out with Student's t ‐test."
+            },
+            {
+              "domain": "selection of participants into groups",
+              "rating": "NR",
+              "evidence_quote": ""
+            },
+            {
+              "domain": "measurement of the outcome",
+              "rating": "NR",
+              "evidence_quote": ""
+            }
+          ],
+          "multiplier": 0.75
+        },
+        "penalties": [
+          {
+            "item": "CoI not disclosed",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 45,
+        "band": "C",
+        "provisional": true,
+        "fact_fa": "این مطالعهٔ مقایسه‌ای در نوع سؤال علت‌شناسی امتیاز ۴۵ از ۱۰۰ و باند C گرفت.",
+        "interpretation_fa": "با گروه کنترل نشان می‌دهد وجود کانتی‌لور به‌تنهایی تحلیل استخوان پری‌ایمپلنت را به‌طور معنادار افزایش نمی‌دهد. عوامل مخدوش‌کننده با رگرسیون تعدیل شده‌اند. نحوهٔ تخصیص بیماران به دو گروه در چکیده روشن نیست."
       }
     ]
   }
