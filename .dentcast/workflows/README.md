@@ -205,6 +205,64 @@ en mirror) runs in full; step 4.10 only adds the three paper-specific actions.
 (For a paper file with **no** متن at all, see the **paper-only fast path** in
 Phase 0 — Parts 1 & 2 only, no publish.)
 
+### Question 4.8 — DES evidence basis (what text will the score be computed from?)
+
+**Runs for EVERY type, on EVERY publish that produces a page.** This arms the **DES
+scoring step (Phase C step 4.13)**. The question is *not* "how good is this
+content" — it is the purely factual one of **what text the scoring model will be
+given**, because that model never fetches anything (DES spec Core Rule 4: "You score
+ONLY what is inside `source_text` … A DOI is an identifier, never a source of
+content").
+
+Classify the publish into exactly one of three baskets. Per **Hard Rule 14**,
+baskets 1 and 2 are normally unambiguous — state the classification plainly and move
+on. Basket 3 always stops and asks.
+
+**1. COMMENTARY — DentCast's own authored piece.** The متن is the founder's (or a
+guest specialist's) own clinical reasoning, case narration, or reflection, not a
+write-up of one identifiable external study. **Chairside, MetaNote and ShareHub are
+COMMENTARY by definition** — the DES spec names all three explicitly. Insight,
+NoteCast and most episodes are COMMENTARY too, unless the متن is built around a
+specific named paper. No DOI is needed and none is asked for: the **content's own
+text is the `source_text`**, and step 4.13 runs the COMMENTARY track on it.
+
+**2. RESEARCH with a determinate source.** The publish writes up one or more
+identifiable studies, **and** each is pinned down well enough to retrieve its
+abstract. It qualifies when any of these holds:
+- a **paper file was attached** (Question 4.7 → step 4.10 already resolves its DOI);
+- the **متن or the page names the paper and carries its DOI** (the DentAI
+  citation-card precedent, e.g. `dentai/dentai-21.html`);
+- the page carries a **references list with DOIs** (the episode precedent, e.g.
+  `episodes/episode-161.html`'s «منابع» — three DOIs, therefore three separately
+  scored sources).
+
+Record the DOI(s) and carry them to step 4.13, which resolves each into its own
+`source_text` and scores each one separately — **one DES record per cited source,
+never one blended score for the page.**
+
+**3. INDETERMINATE — research-shaped content with no identified paper. ASK.**
+The content plainly rests on the literature but no specific study is pinned down:
+an episode with only a caption and audio and no «منابع» block, a NoteCast
+summarizing "the studies" without naming one, a متن that reports findings with no
+DOI anywhere. **This case never resolves itself and never gets a guessed answer**
+(Hard Rule 13 — a DOI you did not receive or verify is not a fact you have). Stop
+and ask, as a two-option menu:
+
+> این مطلب به مقالهٔ مشخصی وصل نیست. یکی از این دو رو انتخاب کن:
+> ۱) DOI مقاله (یا مقاله‌ها) رو می‌دم تا امتیاز DES حساب بشه.
+> ۲) این مطلب بدون DES منتشر بشه.
+
+- **User supplies DOI(s)** → the publish becomes basket 2; carry them to step 4.13.
+- **User picks «بدون DES»** → the publish carries **no DES record at all**, and step
+  4.13 is a documented skip ("4.13: skipped — کاربر انتخاب کرد بدون DES منتشر شود").
+  It does **not** quietly fall back to the COMMENTARY track: scoring a
+  research-derived piece as though it were the author's own opinion is a false
+  statement about what the page is, and a band E on a paper summary is worse than no
+  band at all.
+- **There is no third option.** Do not go hunting for "probably this paper", do not
+  score the caption as commentary just to have *something*, and do not defer the
+  question to the final report.
+
 ### Question 5 — Pulse sentence
 
 **No spoilers — the Pulse line names the piece, it never narrates it.** A Pulse line announces that something new was published; it is not a summary and must never reveal the content's decision, mechanism, finding, or conclusion. Reference the **title only** (verbatim or near-verbatim as the link text, optionally inside a short announcement frame like «یک اینسایت بالینی با عنوانِ «…» منتشر شد») — never a clause describing *what the piece is about* beyond its own title («درباره‌ی تصمیمِ …», «راهکاری برای …» that paraphrases the finding, etc.). If the title itself is the natural link text, that is sufficient and preferred. This applies to every category and every future publish — it is not a one-off preference.
@@ -1050,6 +1108,177 @@ open/comparison-shaped); confirm no question `name` on the page contains a
 deictic reference per (a); and list any question you rewrote/dropped for
 compliance and anything you asked the user about.
 
+### 4.13. DES — DentCast Evidence Score (run the scoring prompt, store the record)
+
+**Runs for EVERY type, on EVERY publish that produced a page**, in the basket
+decided at **Phase B Question 4.8**. Two documented skips and no others:
+**LiteCast** (outside the specialist ecosystem, Hard Rule 10 — report "4.13:
+skipped — LiteCast") and a publish whose Question 4.8 answer was **«بدون DES»**.
+Everything else scores.
+
+**Order matters: this runs after 4.10 on purpose.** When a paper file was attached,
+step 4.10 Part 3 has already found and cross-checked the DOI — reuse it rather than
+looking it up a second time and risking a different answer.
+
+**The one rule this entire step rests on: the model never fetches, so `source_text`
+must exist before the prompt runs.** DES spec Core Rule 4 is absolute. A DOI whose
+abstract you could not retrieve is **not scorable** and must end in
+`INSUFFICIENT_TEXT` — never a score assembled from the DentCast متن about the paper,
+from the paper's title, or from what you happen to know about the study.
+
+#### Part 1 — Resolve `source_text` (never skipped, never improvised)
+
+**COMMENTARY basket:** `source_text` is the page's **own body text** — the متن of
+record from Question 3.5 (the post-decision text, edited if rewrites were approved),
+exactly as it will ship. `text_basis` is `FULL_TEXT`. No DOI, no lookup, done.
+
+**RESEARCH basket:** resolve **each** DOI through this ladder, stopping at the first
+real hit:
+
+1. **The local cabinet first** — `dentcast_cabinet_full_catalog.json` already holds
+   abstracts for a large share of the library, and a local hit is free and cannot
+   fail. Look the DOI up directly:
+   ```bash
+   python3 -c "
+   import json,sys
+   doi=sys.argv[1].strip().lower()
+   d=json.load(open('dentcast_cabinet_full_catalog.json'))
+   m=[p for p in d['papers'] if (p.get('doi') or '').strip().lower()==doi]
+   print(json.dumps(m[0], ensure_ascii=False, indent=2) if m else 'NOT IN CABINET')
+   " "10.1111/clr.13849"
+   ```
+   A hit hands you `abstract`, `real_title`, `journal`, `crossref_year` and
+   `authors` in one read. **Compare DOIs case-insensitively** — the catalog stores
+   them as found, so `episode-161`'s reference `10.1111/CLR.13672` lives there as
+   `10.1111/clr.13672` and an exact-match lookup misses it.
+2. **PubMed / article-lookup MCP** — `get_article_metadata`, `search_articles`,
+   `lookup_article_by_citation`, `convert_article_ids`.
+3. **The DOI/publisher page via `WebFetch`** — last resort, and only to read the
+   abstract text.
+
+**If none of the three yields a real abstract, that source is not scorable.** The
+spec's own error output is the correct result, and it is what gets recorded:
+```json
+{"des_version":"1.3","error":"INSUFFICIENT_TEXT"}
+```
+Per the capability protocol (`agent-parity.md` §2), when the blocker is a **missing
+tool** rather than a missing abstract, **ask the user to paste the abstract** —
+never downgrade the result silently.
+
+**`text_basis` is a fact, not a formality.** It is `ABSTRACT_ONLY` whenever what you
+resolved is an abstract — the normal case for every cabinet and lookup hit — and
+`FULL_TEXT` only when you genuinely hold the paper's body. Getting this wrong is not
+cosmetic: `ABSTRACT_ONLY` caps the methodology multiplier at 0.75 and forces
+`provisional: true`, so labelling an abstract as full text silently inflates every
+score built on it.
+
+#### Part 2 — Run the prompt file
+
+**Load `.dentcast/dentcast-evidence-score-v1.3.md` as the system prompt — the whole
+file, verbatim, minus the appendix.** The appendix says so itself ("NOT part of the
+model instruction … Do not include this appendix if the file is loaded verbatim as a
+system prompt"): those checks are yours to run in Part 3, not the model's.
+
+The user turn is the spec's Step 0 input block, **one block per source**:
+
+```
+doi:               <the DOI, or empty for COMMENTARY>
+source_text:       <the text resolved in Part 1>
+text_basis:        FULL_TEXT | ABSTRACT_ONLY
+metadata:          title / authors / year / journal (from the cabinet hit or the lookup)
+clinical_question: <omit unless this publish explicitly answers one>
+```
+
+- **`journal_quartile` has no source anywhere in this repo.** Neither the cabinet nor
+  any other file carries a Scopus/JCR quartile, so leave it out of `metadata` and
+  expect `{"value":"NR","source":"NR"}` back. Never fill it from memory: it is
+  barred from influencing any rating anyway, but a fabricated Q1 is still a false
+  claim shipped on a page.
+- **One run per source, never merged.** A page citing three papers produces three
+  input blocks and three DES objects. Never concatenate sources into one block and
+  never average their scores.
+
+#### Part 3 — Validate the output mechanically (the appendix's contract)
+
+The prompt returns a single raw JSON object. Before anything is stored, run the
+appendix's checks yourself — an output that fails these is not a score:
+
+1. **Quote verification.** Every `evidence_quote` must be a **verbatim substring** of
+   the `source_text` you supplied, after normalizing both sides (collapse whitespace
+   runs, strip soft hyphens and line-break hyphenation, expand fi/fl ligatures,
+   straighten curly quotes, nbsp → space, Unicode NFKC). A failure is **flagged for
+   manual review, not silently dropped** — the appendix notes that recurrent failures
+   usually mean bad PDF text extraction rather than model fabrication.
+2. **Arithmetic recomputation.** RESEARCH:
+   `des_score == round(s_design.value × q_method.multiplier) − Σ penalty points`,
+   floored at 0. COMMENTARY: `des_score == 5 + Σ checklist points`. A mismatch
+   invalidates the record — re-run it, never hand-patch the number.
+3. **Band agreement.** `band` must be the one `des_score` actually falls into
+   (A 80–100 · B 60–79 · C 40–59 · D 20–39 · E 0–19). For COMMENTARY the band is
+   **always `E`** with a score in 5–19; anything else means the model took the wrong
+   track and the run is void.
+4. **Schema.** Exactly the spec's key set, no extras. `question_type` is the literal
+   `null` (unquoted) for COMMENTARY; `s_design` / `q_method` / `penalties` are `null`
+   for COMMENTARY; `commentary_checklist` is `null` for RESEARCH.
+
+**Reproducibility check (appendix §6) on the first score of any new question type:**
+score the same input three times. A one- or two-point drift in the number is
+acceptable; **a band change is not** — it means the anchors were read loosely and the
+run is unusable.
+
+#### Part 4 — Store the record
+
+**The score does NOT go in `dentcast-brain.json`.** Hard Rule 5 forbids adding a
+field previous same-category entries do not have, and no brain entry has ever
+carried one. It lives in its own versioned file, exactly as `plus/pathways.json` and
+`plus/badges.json` do:
+
+**`plus/des-scores.json`** — a JSON object keyed by `content_id` (the page path
+without the leading `/` and without `.html` — the same id Phase F takes):
+
+```json
+{
+  "episodes/episode-161": {
+    "scored_at": "2026-08-14",
+    "sources": [ { "des_version": "1.3", "content_type": "RESEARCH", "...": "..." } ]
+  }
+}
+```
+
+Two invariants and nothing else. **`sources` holds the spec's output objects
+verbatim** — the spec owns that shape, so never reshape, rename, reorder or trim it.
+And **nothing derivable is stored beside them**: no wrapper-level `band`, no `track`,
+no display strings. `content_type`, `band`, `question_type` and `provisional` already
+live inside each object, and a second copy is a second source of truth that can drift
+out of agreement with the first. `scored_at` is stored precisely because nothing else
+can derive it.
+
+For a skipped publish, write **no key at all** — an absent `content_id` is how the
+display knows there is nothing to show. Never write an empty or placeholder entry.
+
+#### Part 5 — The display is a shared module, never page markup
+
+**No page carries DES markup.** This is the same rule the article action row already
+runs on: zero article pages carry that markup either, which is exactly why changing
+it costs no page edits. The renderer reads `plus/des-scores.json` by `content_id` and
+draws the band chip above the prose and the evaluation card after the body — the full
+display contract (placements, the five discrete band blocks, the «تجربهٔ بالینی»
+commentary variant, the colour rule) lives in **CLAUDE.md § "DES display"**.
+
+**This step's obligation ends at the record.** It writes data; it does not edit the
+page. Status as of 2026-08-14: the record format and this step are live, the shared
+renderer is not built yet — which costs nothing, because every record written now
+lights up the moment that module ships. Do **not** compensate by inlining markup or
+CSS into the published page.
+
+#### Verify & report
+
+Per source: the DOI (or «متنِ خودِ مطلب» for COMMENTARY); where `source_text` came
+from (cabinet hit / MCP lookup / WebFetch / pasted by the user); the `text_basis` and
+why; the resulting `des_score`, `band`, `question_type` and whether `provisional` is
+true; and the outcome of each of the four Part-3 checks. For a skip, the documented
+reason line. Explicitly confirm that no DOI, abstract, or quartile was guessed.
+
 ### 5.0. Hashtag standardization against the reference library (Hard Rule 15)
 
 The entry's `hashtags` are a **standardized vocabulary** governed by `dentcast-hashtag-reference.json` — the canonical library the AI case-assistant search reads (mirrored into `plus/content-index.json`, which the live API loads with auto-reload). Settle the **final canonical hashtag list here**, before it is consumed by the brain write (step 5) and the page's visible chips. This runs on **every publish that writes a brain entry** — LiteCast included (its brain is `litecast/lite-glossary.json`; run the same discipline against the library). The `dentcast_cabinet_full_catalog.json` paper `tags` are a **separate** kebab-style system and are **out of scope here** (step 4.10 owns them).
@@ -1516,6 +1745,7 @@ fix on its own, never a pattern to copy forward.
 - For any publish with an attached paper file (step 4.10 — triggered by the file, any type) — or the documented "skipped — no attached paper" line otherwise: **Part 1** — the Drive subfolder the paper was filed into (chosen semantically) and its `drive_view` URL; **Part 2** — the new `dentcast_cabinet_full_catalog.json` entry's `id`, `topic`/`topic_path`, `tags` (semantic + article-name), and the Drive link, with confirmation the key set matches the enriched-entry template and the paper surfaces in `dentcast_cabinet_search.html` (opened directly — the on-site route is premium-gated), plus the new `papers` total and whether it crossed a round hundred (if it did, the two paper-count strings in `index.html` were swept together; if not, say so explicitly); **Part 3** (only when a page was published) — the DOI and first author found on the web, the rendered first-author→DOI credit anchor (ShareHub `.author` style) and any `isBasedOn` update, with before/after page hash — or the "Part 3 skipped — paper-only (no page)" note on the paper-only fast path. Explicitly list anything you asked the user about and confirm nothing (subfolder/DOI/author/tags) was guessed
 - **Flashcards (step 4.11)** — or the documented "skipped — LiteCast" line: the `DefinedTermSet` node written into `plus/faq-corpus.json` (term count and their `@id`s); how many came from `source: "faq"` vs `"authored"`; which FAQ entries (if any) were judged comparison/decision-shaped and skipped; confirmation no `name`/`description` is a verbatim FAQ copy; anything you asked the user about; confirmation `node tools/build_flashcards_index.mjs` was re-run in step 8 so `plus/flashcards-index.json` reflects the new page
 - **Quiz (step 4.12)** — or the documented "skipped — LiteCast" line: confirmation every FAQ question `name` is standalone (no article deixis per 4.12(a)); how many of the content's FAQ questions are binary/scored vs open (and that any binary answer opens with an explicit «بله»/«خیر» verdict); confirmation `node tools/build_quiz_index.mjs` was re-run in step 8 and the new content's binary count appears in `plus/quiz-index.json`
+- **DES (Question 4.8 + step 4.13)** — or one of the two documented skip lines ("skipped — LiteCast" / "skipped — کاربر انتخاب کرد بدون DES منتشر شود"): which **basket** Question 4.8 landed in (COMMENTARY / RESEARCH / INDETERMINATE-then-asked) and, when it was asked, which of the two options the user picked; then **per source**: the DOI (or «متنِ خودِ مطلب» for COMMENTARY), where `source_text` was resolved from (cabinet hit / MCP lookup / WebFetch / pasted by the user), the `text_basis` with its justification, and the resulting `des_score` + `band` + `question_type` + `provisional`; the outcome of all four Part-3 validation checks (quote verification, arithmetic recomputation, band agreement, schema) and the reproducibility run when one was required; confirmation the record was written to `plus/des-scores.json` under the correct `content_id` with the spec objects **verbatim** and **no** derivable wrapper fields, that nothing was added to the brain entry (Hard Rule 5), and that **no page markup or CSS was inlined** (Part 5); explicit confirmation that no DOI, abstract, or journal quartile was guessed, and that any unscorable source is recorded as `INSUFFICIENT_TEXT` rather than scored from the DentCast متن about it
 - **Cross-linking completion gate (Hard Rule 11) — REQUIRED; the publish is incomplete if any of these is missing.** For **each** of steps 4.7, 4.8, 4.9, report its explicit outcome — never leave one unstated:
   - **4.7 (glossary → new content):** the candidate terms considered, which were linked (auto-applied vs. asked-and-confirmed, per Hard Rule 14, with the link text used), and which were skipped and why (at 5-cap / no section / judged unrelated / asked-and-declined). An empty result is acceptable **only** as a documented "analyzed, 0 qualifying terms".
   - **4.8 (in-body inline links on the new page):** confirmation that a **fresh** semantic analysis of *this* body was run (NOT inherited from the clone); which candidates were auto-applied at high confidence vs. presented to the user (Hard Rule 14); which of the presented ones were approved/inserted (first-occurrence) and which rejected. For episodes, confirm the «درباره این اپیزود» caption was the analyzed body. An empty result is acceptable **only** as a documented "analyzed body, 0 qualifying glossary/episode candidates".
