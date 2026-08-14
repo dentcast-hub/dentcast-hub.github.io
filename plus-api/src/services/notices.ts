@@ -172,6 +172,7 @@ export async function pendingBroadcastPushes(maxAgeHours: number): Promise<Pendi
 }
 
 export interface NoticeRow {
+  /** `log:<uuid>` or `bcast:<uuid>` — the notice_reads key, not a bare table id. */
   id: string;
   kind: string;
   title: string;
@@ -249,21 +250,39 @@ export async function recordInAppNotice(
  * `created_at > p.created_at`: a reader is never shown news from before they
  * existed, which is what stops a fresh signup opening the inbox onto sixty days
  * of publishes.
+ *
+ * `id` is prefixed by source (`log:`/`bcast:`) rather than the bare table id:
+ * it doubles as the notice_reads key, and the two source tables' uuids are not
+ * guaranteed distinct from each other.
  */
 const VISIBLE_NOTICES = `
-  select n.id::text as id, n.kind, n.title, n.body, n.url, n.created_at
+  select 'log:' || n.id::text as id, n.kind, n.title, n.body, n.url, n.created_at
     from notification_log n
    where n.user_id = p.id
      and n.title is not null
      and n.created_at > now() - ($2 || ' days')::interval
   union all
-  select b.id::text as id, b.kind, b.title, b.body, b.url, b.created_at
+  select 'bcast:' || b.id::text as id, b.kind, b.title, b.body, b.url, b.created_at
     from notice_broadcasts b
    where b.created_at > p.created_at
      and b.created_at > now() - ($2 || ' days')::interval
      and (b.audience = 'all'
           or (b.audience = 'premium' and p.tier = 'premium')
           or (b.audience = 'free' and p.tier <> 'premium'))
+`;
+
+/**
+ * A notice is unread only when it is BOTH newer than the watermark AND absent
+ * from notice_reads — the watermark still covers everything that predates
+ * per-notice tracking (no backfill needed), while a row past the watermark can
+ * now be acknowledged individually instead of dragging every other unread row
+ * down with it (see markNoticeSeen).
+ */
+const UNREAD_EXPR = `
+  t.created_at > coalesce(p.notices_seen_at, to_timestamp(0))
+  and not exists (
+    select 1 from notice_reads r where r.user_id = p.id and r.notice_key = t.id
+  )
 `;
 
 /**
@@ -279,7 +298,7 @@ const VISIBLE_NOTICES = `
 export async function listNotices(userId: string): Promise<NoticeRow[]> {
   const res = await query<NoticeRow>(
     `select t.id, t.kind, t.title, t.body, t.url, t.created_at,
-            (t.created_at > coalesce(p.notices_seen_at, to_timestamp(0))) as unread
+            (${UNREAD_EXPR}) as unread
        from profiles p
        cross join lateral (${VISIBLE_NOTICES}) t
       where p.id = $1
@@ -297,7 +316,7 @@ export async function unreadNoticeCount(userId: string): Promise<number> {
        from profiles p
        cross join lateral (${VISIBLE_NOTICES}) t
       where p.id = $1
-        and t.created_at > coalesce(p.notices_seen_at, to_timestamp(0))`,
+        and (${UNREAD_EXPR})`,
     [userId, String(WINDOW_DAYS)],
   );
   return row?.n ?? 0;
@@ -306,10 +325,25 @@ export async function unreadNoticeCount(userId: string): Promise<number> {
 /**
  * Move the watermark to now. Idempotent by construction — there is no per-row
  * state to get half-written, so a retry, a double click and two open tabs all
- * end in the same place.
+ * end in the same place. Still available as an explicit "mark everything"
+ * write; the panel itself no longer calls this on open (see markNoticeSeen).
  */
 export async function markNoticesSeen(userId: string): Promise<void> {
   await query('update profiles set notices_seen_at = now() where id = $1', [userId]);
+}
+
+/**
+ * Acknowledge exactly ONE notice — the fix for the watermark's blind spot: a
+ * reader who opens one card must not have every other unread card go dark with
+ * it. `on conflict do nothing` because a double click, two open tabs, or a
+ * retried request all end up wanting the same single row to exist.
+ */
+export async function markNoticeSeen(userId: string, noticeKey: string): Promise<void> {
+  await query(
+    `insert into notice_reads (user_id, notice_key) values ($1, $2)
+     on conflict (user_id, notice_key) do nothing`,
+    [userId, noticeKey],
+  );
 }
 
 /**
@@ -328,7 +362,7 @@ export async function noticeCounters(
     `select
        (select count(*)::int
           from (${VISIBLE_NOTICES}) t
-         where t.created_at > coalesce(p.notices_seen_at, to_timestamp(0))) as unread,
+         where ${UNREAD_EXPR}) as unread,
        (select count(*)::int from achievement_announcements a
          where a.user_id = p.id and a.seen_at is null) as pending
      from profiles p where p.id = $1`,

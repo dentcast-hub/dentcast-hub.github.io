@@ -75,6 +75,27 @@ function whenFa(iso) {
   }
 }
 
+/**
+ * Acknowledge exactly the one card the reader opened. Optimistic: the tint
+ * comes off immediately and the request is fire-and-forget, the same
+ * tolerance the old mark-all write already had ("the dot clears next load").
+ *
+ * This is the fix for the 2026-08-14 support ticket: the panel used to move a
+ * single per-user watermark the instant it rendered, which marked every
+ * unread card seen at once — opening one made all of them stop being
+ * coloured. Per-card acknowledgement (POST /notices/:id/seen) is what lets an
+ * unopened card stay coloured next to one that was just opened.
+ */
+function markOneSeen(card, id) {
+  if (!card.classList.contains('is-unread')) return;
+  card.classList.remove('is-unread');
+  card.removeAttribute('role');
+  card.removeAttribute('tabindex');
+  api.noticeSeen(id)
+    .then(() => { document.dispatchEvent(new CustomEvent(NOTICES_SEEN_EVENT)); })
+    .catch(() => { /* the card is readable either way; the dot corrects on next /me */ });
+}
+
 function noticeRow(n) {
   const kids = [
     el('span', { class: 'dcp-nt-ico', 'aria-hidden': 'true' }, KIND_ICON[n.kind] || '•'),
@@ -95,7 +116,16 @@ function noticeRow(n) {
       ]),
     ]),
   ];
-  return el('div', { class: 'dcp-nt' + (n.unread ? ' is-unread' : '') }, kids);
+  const attrs = { class: 'dcp-nt' + (n.unread ? ' is-unread' : '') };
+  if (n.unread) {
+    attrs.role = 'button';
+    attrs.tabindex = '0';
+    attrs.onclick = (e) => markOneSeen(e.currentTarget, n.id);
+    attrs.onkeydown = (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); markOneSeen(e.currentTarget, n.id); }
+    };
+  }
+  return el('div', attrs, kids);
 }
 
 function emptyState() {
@@ -109,11 +139,11 @@ function emptyState() {
 /**
  * Render the inbox into `root` (an overlay body).
  *
- * The watermark is moved as soon as the list is on screen, not when the overlay
- * is closed: the reader has now seen these, and asking them to close the panel
- * "properly" to clear a dot would be a rule only we know about. The celebration
- * queue is untouched by this — it has its own acknowledgement, so opening the
- * inbox can never silently spend a badge card the reader was never shown.
+ * Each unread card acknowledges itself when opened (see markOneSeen) — the
+ * panel no longer moves a blanket watermark on render, which used to mark
+ * every unread card seen the instant the list appeared. The celebration queue
+ * is untouched by this either way — it has its own acknowledgement, so opening
+ * the inbox can never silently spend a badge card the reader was never shown.
  */
 export async function renderNotices(root) {
   root.replaceChildren(el('div', { class: 'dcp-loading' }, 'در حال بارگذاری...'));
@@ -133,12 +163,6 @@ export async function renderNotices(root) {
       ? el('div', { class: 'dcp-nt-list' }, rows.map(noticeRow))
       : emptyState(),
   );
-
-  if (data && data.unread > 0) {
-    api.noticesSeen()
-      .then(() => { document.dispatchEvent(new CustomEvent(NOTICES_SEEN_EVENT)); })
-      .catch(() => { /* the list is readable either way; the dot clears next load */ });
-  }
 }
 
 /** Fired once the watermark has moved, so the header dot can go out live. */

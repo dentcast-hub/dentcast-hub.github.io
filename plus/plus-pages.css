@@ -1334,7 +1334,7 @@ a.dcp-progress-row:hover { text-decoration: none; }
 /* Unread is a tinted ground plus a rail, not a bold title: the title is the
    message, and bolding it would make the same sentence look like two different
    sentences before and after the watermark moves. */
-.dcp-nt.is-unread { background: rgba(var(--ac-rgb, 11,95,255), .05); border-color: var(--border, rgba(2,35,96,.12)); }
+.dcp-nt.is-unread { background: rgba(var(--ac-rgb, 11,95,255), .05); border-color: var(--border, rgba(2,35,96,.12)); cursor: pointer; }
 .dcp-nt.is-unread::before {
   content: ""; position: absolute; inset-inline-start: 0; top: 0; bottom: 0;
   width: 3px; background: var(--ac, #0b5fff);
