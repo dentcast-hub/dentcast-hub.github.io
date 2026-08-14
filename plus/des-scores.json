@@ -3,7 +3,7 @@
     "scored_at": "2026-08-14",
     "sources": [
       {
-        "des_version": "1.3",
+        "des_version": "1.4",
         "content_type": "RESEARCH",
         "question_type": "MATERIAL",
         "text_basis": "ABSTRACT_ONLY",
@@ -86,7 +86,7 @@
     "scored_at": "2026-08-14",
     "sources": [
       {
-        "des_version": "1.3",
+        "des_version": "1.4",
         "content_type": "COMMENTARY",
         "question_type": null,
         "text_basis": "FULL_TEXT",
@@ -138,7 +138,7 @@
     "scored_at": "2026-08-14",
     "sources": [
       {
-        "des_version": "1.3",
+        "des_version": "1.4",
         "content_type": "RESEARCH",
         "question_type": "THERAPY",
         "text_basis": "FULL_TEXT",
@@ -162,49 +162,49 @@
           "tool": "AMSTAR-2",
           "domains": [
             {
-              "domain": "comprehensive literature search (critical)",
+              "domain": "protocol registered before commencement",
+              "rating": "high",
+              "evidence_quote": ""
+            },
+            {
+              "domain": "adequacy of the literature search",
               "rating": "high",
               "evidence_quote": "Searching was performed using an electronic database (Medline, PubMed)."
             },
             {
-              "domain": "a priori protocol registration (critical)",
-              "rating": "high",
-              "evidence_quote": ""
-            },
-            {
-              "domain": "risk-of-bias assessment of included studies (critical)",
-              "rating": "high",
-              "evidence_quote": ""
-            },
-            {
-              "domain": "publication bias assessed (critical)",
-              "rating": "high",
-              "evidence_quote": ""
-            },
-            {
-              "domain": "duplicate study selection",
+              "domain": "justification for excluding individual studies",
               "rating": "low",
-              "evidence_quote": "Titles and abstracts were initially screened by two independent reviewers"
+              "evidence_quote": "Ninety-four publications were excluded because of the following reasons"
             },
             {
-              "domain": "duplicate data extraction",
-              "rating": "low",
-              "evidence_quote": "Data for the meta-analysis were extracted by two independent reviewers"
+              "domain": "risk of bias assessment of included studies",
+              "rating": "high",
+              "evidence_quote": ""
             },
             {
-              "domain": "appropriate meta-analytic method",
+              "domain": "appropriateness of meta-analytical methods",
               "rating": "low",
               "evidence_quote": "If the goodness-of-fit P-value was <0.05, indicating heterogeneity, random-effects Poisson regression"
+            },
+            {
+              "domain": "consideration of risk of bias when interpreting results",
+              "rating": "high",
+              "evidence_quote": ""
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "high",
+              "evidence_quote": ""
             }
           ],
           "multiplier": 0.3
         },
         "penalties": [
           {
-            "item": "CoI not disclosed",
+            "item": "no CoI statement / manufacturer funding",
             "points": 0,
             "evidence_quote": "Conflicts of interest : none declared.",
-            "note": "disclosed; funded by the Clinical Research Foundation and the first author holds an ITI scholarship, both stated openly"
+            "note": "CoI declared and funders named (Clinical Research Foundation; an ITI Foundation scholarship). Under v1.4 a non-profit academic foundation is not a manufacturer, and this review tests no single company's product, so 0 — the funder is named here rather than penalised."
           }
         ],
         "commentary_checklist": null,
@@ -212,10 +212,10 @@
         "band": "D",
         "provisional": false,
         "fact_fa": "این مرور نظام‌مند در نوع سؤال درمانی امتیاز ۳۰ از ۱۰۰ و باند D گرفت.",
-        "interpretation_fa": "با متن کامل روشن شد که این مرور هیچ ارزیابی کیفیتی روی مطالعات ورودی انجام نداده، جست‌وجویش به یک پایگاه داده و زبان انگلیسی محدود بوده، و پروتکل ثبت‌شده و بررسی سوگیری انتشار ندارد. یافته‌اش دربارهٔ بقای کانتی‌لور همچنان جامع‌ترین جمع‌بندی موجود است، ولی تجمیع مطالعاتی که کیفیتشان سنجیده نشده اطمینان را پایین می‌آورد."
+        "interpretation_fa": "متن کامل نشان می‌دهد این مرور هیچ ارزیابی کیفیتی روی مطالعات ورودی‌اش انجام نداده، جست‌وجویش یک پایگاه داده و فقط انگلیسی بوده، و پروتکل ثبت‌شده و بررسی سوگیری انتشار ندارد. پنج دامنه از هفت دامنهٔ حیاتی AMSTAR-2 رد می‌شوند، که یعنی اعتماد در سطح critically low. جمع‌بندی‌اش دربارهٔ بقای کانتی‌لور همچنان جامع‌ترین موجود است."
       },
       {
-        "des_version": "1.3",
+        "des_version": "1.4",
         "content_type": "RESEARCH",
         "question_type": "THERAPY",
         "text_basis": "FULL_TEXT",
@@ -239,7 +239,7 @@
           "tool": "ROBINS-I",
           "domains": [
             {
-              "domain": "confounding / comparability of the contrast",
+              "domain": "confounding",
               "rating": "low",
               "evidence_quote": "compared between implant surfaces adjacent to and distant from the cantilever extension"
             },
@@ -249,14 +249,19 @@
               "evidence_quote": "were invited to participate in the follow-up examination"
             },
             {
-              "domain": "measurement of the outcome",
-              "rating": "some_concerns",
-              "evidence_quote": "by one experienced examiner (E.S.)"
+              "domain": "classification of interventions/exposures",
+              "rating": "low",
+              "evidence_quote": "implant-supported fixed dental prostheses with cantilever extension"
             },
             {
               "domain": "missing data",
               "rating": "high",
               "evidence_quote": "the authors were unable to provide reasons and numbers of subjects lost to follow-up and acknowledge that this may represent a major limitation of the present study"
+            },
+            {
+              "domain": "measurement of the outcome",
+              "rating": "some_concerns",
+              "evidence_quote": "by one experienced examiner (E.S.)"
             }
           ],
           "multiplier": 0.55
@@ -283,7 +288,7 @@
         "interpretation_fa": "متن کامل نشان می‌دهد نویسندگان خودشان نتوانسته‌اند تعداد و دلیل خروج بیماران از پیگیری را گزارش کنند و آن را محدودیت عمده می‌دانند. مقایسهٔ درون همان بیمار نقطهٔ قوت آن است و پیگیری ۱۰ تا ۱۸ سال طولانی است. با این حال نامعلوم‌بودن ریزش نمونه و نبود محاسبهٔ حجم نمونه، وزن یافته را کم می‌کند."
       },
       {
-        "des_version": "1.3",
+        "des_version": "1.4",
         "content_type": "RESEARCH",
         "question_type": "ETIOLOGY",
         "text_basis": "FULL_TEXT",
@@ -312,17 +317,22 @@
               "evidence_quote": "Regression analyses were carried out to evaluate the influence of confounding factors on the peri-implant bone level change."
             },
             {
-              "domain": "appropriate statistical analysis",
-              "rating": "low",
-              "evidence_quote": "Statistical analysis was carried out with Student's t -test."
-            },
-            {
-              "domain": "selection of participants into groups",
+              "domain": "selection of participants",
               "rating": "some_concerns",
               "evidence_quote": "For the present study patients were taken from the patient pool treated in a private dental practice"
             },
             {
-              "domain": "measurement of the outcome (unblinded)",
+              "domain": "classification of interventions/exposures",
+              "rating": "low",
+              "evidence_quote": "Twenty-seven FDPs were with cantilever and 27 FDPs were without cantilever (control group)."
+            },
+            {
+              "domain": "missing data",
+              "rating": "low",
+              "evidence_quote": "One FDP on two implants could not be assessed because the patient passed away."
+            },
+            {
+              "domain": "measurement of the outcome",
               "rating": "some_concerns",
               "evidence_quote": "Two examiners performed the measurements."
             }
@@ -348,7 +358,7 @@
         "band": "C",
         "provisional": false,
         "fact_fa": "این مطالعهٔ مقایسه‌ای در نوع سؤال علت‌شناسی امتیاز ۴۰ از ۱۰۰ و باند C گرفت.",
-        "interpretation_fa": "با گروه کنترل و تعدیل رگرسیونی عوامل مخدوش‌کننده نشان می‌دهد کانتی‌لور به‌تنهایی تحلیل استخوان را به‌طور معنادار زیاد نمی‌کند، و توان آماری‌اش را هم گزارش کرده است. در مقابل هیچ اظهارنظری دربارهٔ تعارض منافع یا منبع مالی ندارد، در حالی که همهٔ ایمپلنت‌ها از یک سازنده بوده‌اند."
+        "interpretation_fa": "با گروه کنترل و تعدیل رگرسیونی عوامل مخدوش‌کننده نشان می‌دهد کانتی‌لور به‌تنهایی تحلیل استخوان را به‌طور معنادار زیاد نمی‌کند. ریزش نمونه کامل توضیح داده شده و توان آماری هم گزارش شده است. در مقابل هیچ اظهارنظری دربارهٔ تعارض منافع یا منبع مالی ندارد، در حالی که همهٔ ایمپلنت‌ها از یک سازنده بوده‌اند."
       }
     ]
   }
