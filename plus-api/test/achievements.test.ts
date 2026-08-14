@@ -15,6 +15,7 @@ import {
   getBadgeCatalog, evaluateBadge, applyRemoteBadges, badgesSource, resetRemoteBadges,
   type Badge,
 } from '../src/badges.js';
+import { grantBadge } from '../src/services/badge-grants.js';
 
 let app: FastifyInstance;
 let cookie: string;
@@ -360,6 +361,51 @@ describe('GET /achievements', () => {
     await share('insight/insight-8', 'article_completed');
     for (let i = 0; i < 4; i += 1) await share('insight/insight-8');
     expect(badgeOf(await get(), 'lamplighter').value).toBe(1);
+  });
+});
+
+// ------------------------------------------------- the itemized discount position ---
+//
+// Founder report, 2026-08-14: «تخفیف‌های من» only ever spoke in totals («٪۳
+// نشان‌ها یک‌بارمصرف»). A founder-granted badge like «همراه» mints a real
+// discount_grants row with its own label_fa ('همراه'), and that name — always
+// stored, per badge-grants.test.ts — never left this route, so the reader
+// could never see which of their credits it was.
+describe('GET /achievements names every credit in `discount.items`', () => {
+  it('names a founder-granted badge credit, and marks it ready', async () => {
+    const me = await userId();
+    await grantBadge(me, 'companion', { discountPercent: 5 });
+
+    const body = await get();
+    expect(body.discount.ready_percent).toBe(5);
+    const item = body.discount.items.find((i: { label_fa: string }) => i.label_fa === 'همراه');
+    expect(item).toEqual({ label_fa: 'همراه', percent: 5, kind: 'grant', state: 'ready' });
+  });
+
+  it('flips a credit to spent once a payment has actually consumed it', async () => {
+    const me = await userId();
+    const grant = await grantBadge(me, 'companion', { discountPercent: 5 });
+
+    await pool.query(
+      `insert into payments (user_id, amount_rial, months, gateway, order_id, status,
+                             verified_at, period_jalali, period_gregorian)
+       values ($1, 60000000, 6, 'zibal', 'disc_test', 'paid', now(),
+               to_char(now(), 'YYYY-MM'), to_char(now(), 'YYYY-MM'))
+       returning id`,
+      [me],
+    );
+    const payment = await pool.query<{ id: string }>(
+      "select id from payments where order_id = 'disc_test'",
+    );
+    await pool.query(
+      `insert into discount_redemptions (user_id, source, percent, payment_id) values ($1, $2, $3, $4)`,
+      [me, `grant:${grant.discount_grant_id}`, 5, payment.rows[0].id],
+    );
+
+    const body = await get();
+    const item = body.discount.items.find((i: { label_fa: string }) => i.label_fa === 'همراه');
+    expect(item.state).toBe('spent');
+    expect(body.discount.spent_percent).toBeGreaterThanOrEqual(5);
   });
 });
 

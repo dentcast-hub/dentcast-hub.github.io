@@ -1252,6 +1252,18 @@ a.dcp-progress-row:hover { text-decoration: none; }
   color: var(--txt2, #4a5f85);
 }
 .dcp-disc-op { font-size: .8rem; font-weight: 800; color: var(--txt3, #62779a); }
+/* The itemized position — one row per credit (a badge, a founder grant, a
+   کد معرف), named. Reuses .dcp-ach-lv-val for the percent pill so a spent
+   credit reads exactly as it does on the badge wall's own level chips. */
+.dcp-disc-items {
+  display: flex; flex-direction: column; gap: 6px; margin-top: 11px;
+}
+.dcp-disc-item {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  padding: 7px 10px; border-radius: var(--r-sm, 10px);
+  background: var(--card-bg, #fff); border: 1px solid var(--border, rgba(2,35,96,.10));
+}
+.dcp-disc-item-label { font-size: .8rem; font-weight: 700; color: var(--txt2, #4a5f85); min-width: 0; }
 /* The position: unspent / spent / what the next purchase takes. Three equal
    columns rather than prose, because the reader is comparing them. */
 .dcp-disc-ledger {

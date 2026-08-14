@@ -351,6 +351,22 @@ export function discountBody(data) {
     ]));
   }
 
+  // The itemized position — every credit this account holds, by name. The
+  // ledger above answers "how much"; this answers "from what": a badge
+  // (leveled or founder-granted), a گیفت founder gave, or a کد معرف. Without
+  // it a founder-granted badge like «همراه» minted real money that never
+  // showed up as its own line anywhere a reader could see.
+  if (Array.isArray(d.items) && d.items.length) {
+    kids.push(el('div', { class: 'dcp-disc-items' }, d.items.map((it) => el('div', {
+      class: 'dcp-disc-item',
+    }, [
+      el('span', { class: 'dcp-disc-item-label' }, it.label_fa),
+      el('span', {
+        class: 'dcp-ach-lv-val' + (it.state === 'spent' ? ' is-spent' : ''),
+      }, '٪' + faNum(it.percent)),
+    ]))));
+  }
+
   if (ready > 0) {
     // The cap belongs to the BADGE credits and to nothing else — payment.ts adds
     // the «ستون» percent on top of it (`pillar + creditPercent(credits)`), so a
