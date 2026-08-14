@@ -15,3 +15,9 @@ scripts-dev/*.png
 # Stray root-level node_modules (a tool run from the repo root instead of
 # plus-api/); the real dependency tree lives in plus-api/node_modules.
 node_modules/
+
+# Agent scratch space — design mockups, feasibility write-ups, and the
+# screenshots taken while checking a change renders. Same rule as
+# scripts-dev/*.png above: the work these produce lands in the site or in a
+# published Artifact, so the scratch copies are disposable and never committed.
+tmp/
