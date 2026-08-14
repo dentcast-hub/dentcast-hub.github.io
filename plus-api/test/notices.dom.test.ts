@@ -27,6 +27,7 @@ vi.mock('/plus/js/api.js', () => ({
   api: {
     notices: async () => { apiCalls.push('notices'); return { notices: state.notices, unread: state.unread }; },
     noticesSeen: async () => { apiCalls.push('noticesSeen'); return { ok: true }; },
+    noticeSeen: async (id: string) => { apiCalls.push('noticeSeen:' + id); return { ok: true }; },
     achievementsPending: async () => { apiCalls.push('pending'); return { items: state.pending }; },
     achievementsSeen: async () => { apiCalls.push('achievementsSeen'); return { ok: true }; },
   },
@@ -105,22 +106,51 @@ describe('the inbox', () => {
     expect(root.querySelector('a.dcp-nt-go')?.getAttribute('href')).toBe(doi);
   });
 
-  it('moves the watermark as soon as the list is on screen', async () => {
+  /**
+   * 2026-08-14 support ticket (T-MCF-VN2): opening one اطلاعیه used to move a
+   * single per-user watermark the instant the panel rendered, marking every
+   * unread card seen at once. Acknowledgement is now per card, on click, so an
+   * unopened card next to an opened one stays coloured.
+   */
+  it('does not acknowledge anything just from rendering', async () => {
     state.notices = [notice()];
     state.unread = 1;
     await renderNotices(document.createElement('div'));
     await new Promise((r) => setTimeout(r, 0));
-    // Not on close: asking a reader to dismiss the panel "properly" to clear a
-    // dot is a rule only we would know about.
-    expect(apiCalls).toContain('noticesSeen');
+    expect(apiCalls).not.toContain('noticesSeen');
+    expect(apiCalls.some((c) => c.startsWith('noticeSeen:'))).toBe(false);
   });
 
-  it('does not write a watermark when there was nothing unread', async () => {
+  it('acknowledges only the card that is opened, leaving the other coloured', async () => {
+    state.notices = [notice({ id: 'a' }), notice({ id: 'b' })];
+    state.unread = 2;
+    const root = document.createElement('div');
+    await renderNotices(root);
+
+    const rows = root.querySelectorAll('.dcp-nt');
+    expect(rows).toHaveLength(2);
+    expect(rows[0].classList.contains('is-unread')).toBe(true);
+    expect(rows[1].classList.contains('is-unread')).toBe(true);
+
+    rows[0].dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    await new Promise((r) => setTimeout(r, 0));
+
+    expect(apiCalls).toContain('noticeSeen:a');
+    expect(rows[0].classList.contains('is-unread')).toBe(false);
+    // …the other stays exactly as unread as it was.
+    expect(rows[1].classList.contains('is-unread')).toBe(true);
+    expect(apiCalls).not.toContain('noticeSeen:b');
+  });
+
+  it('does not write anything when there was nothing unread', async () => {
     state.notices = [notice({ unread: false })];
     state.unread = 0;
-    await renderNotices(document.createElement('div'));
+    const root = document.createElement('div');
+    await renderNotices(root);
+    root.querySelector('.dcp-nt')!.dispatchEvent(new MouseEvent('click', { bubbles: true }));
     await new Promise((r) => setTimeout(r, 0));
     expect(apiCalls).not.toContain('noticesSeen');
+    expect(apiCalls.some((c) => c.startsWith('noticeSeen:'))).toBe(false);
   });
 
   it('says something useful when the inbox is empty', async () => {

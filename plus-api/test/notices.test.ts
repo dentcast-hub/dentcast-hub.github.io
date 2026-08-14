@@ -221,6 +221,54 @@ describe('GET /notices', () => {
   });
 });
 
+// 2026-08-14 support ticket (T-MCF-VN2): opening one اطلاعیه marked every
+// unread one seen at once, because the whole inbox shared one watermark.
+// POST /notices/:id/seen acknowledges a single card without moving it.
+describe('POST /notices/:id/seen', () => {
+  it('leaves the other unread notice coloured', async () => {
+    await setStreak(7);
+    await sync();                     // at least two rows: پیشگام + شعله
+    const before = (await app.inject({ method: 'GET', url: '/notices', headers: { cookie } })).json();
+    expect(before.notices.length).toBeGreaterThan(1);
+    expect(before.unread).toBe(before.notices.length);
+
+    const opened = before.notices[0];
+    const seen = await app.inject({
+      method: 'POST', url: `/notices/${encodeURIComponent(opened.id)}/seen`, headers: { cookie },
+    });
+    expect(seen.statusCode).toBe(200);
+
+    const after = (await app.inject({ method: 'GET', url: '/notices', headers: { cookie } })).json();
+    const afterOpened = after.notices.find((n: { id: string }) => n.id === opened.id)!;
+    expect(afterOpened.unread).toBe(false);
+    // every OTHER row is exactly as unread as it was before
+    const others = after.notices.filter((n: { id: string }) => n.id !== opened.id);
+    expect(others.every((n: { unread: boolean }) => n.unread)).toBe(true);
+    expect(after.unread).toBe(before.unread - 1);
+  });
+
+  it('is idempotent — a repeat call changes nothing further', async () => {
+    await setStreak(7);
+    await sync();
+    const id = (await app.inject({ method: 'GET', url: '/notices', headers: { cookie } })).json().notices[0].id;
+    await app.inject({ method: 'POST', url: `/notices/${encodeURIComponent(id)}/seen`, headers: { cookie } });
+    const second = await app.inject({ method: 'POST', url: `/notices/${encodeURIComponent(id)}/seen`, headers: { cookie } });
+    expect(second.statusCode).toBe(200);
+  });
+
+  it('rejects a key that is not one of our own notice ids', async () => {
+    const res = await app.inject({
+      method: 'POST', url: '/notices/not-a-real-id/seen', headers: { cookie },
+    });
+    expect(res.statusCode).toBe(400);
+  });
+
+  it('requires a session', async () => {
+    const res = await app.inject({ method: 'POST', url: '/notices/log:00000000-0000-0000-0000-000000000000/seen' });
+    expect(res.statusCode).toBe(401);
+  });
+});
+
 // ---------------------------------------------------------- celebration -----
 
 describe('the celebration is acknowledged separately from the inbox', () => {

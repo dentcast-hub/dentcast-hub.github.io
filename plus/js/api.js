@@ -329,6 +329,7 @@ export const api = {
   // push permission.
   notices: () => request('/notices'),
   noticesSeen: () => request('/notices/seen', { method: 'POST' }),
+  noticeSeen: (id) => request('/notices/' + encodeURIComponent(id) + '/seen', { method: 'POST' }),
 
   league: () => request('/league'),
   leagueOutcomeSeen: () => request('/league/outcome/seen', { method: 'POST' }),

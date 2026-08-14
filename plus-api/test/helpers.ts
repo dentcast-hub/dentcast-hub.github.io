@@ -32,7 +32,7 @@ export async function resetDb(): Promise<void> {
       collections, collection_items, snippets, user_pathways,
       subscriptions, payments, gift_redemptions, certificates, anon_events,
       push_subscriptions, articles, auth_identities, spot_stats, view_stats,
-      notification_log, achievement_announcements, notice_broadcasts,
+      notification_log, achievement_announcements, notice_broadcasts, notice_reads,
       discount_grants, discount_redemptions, badge_grants,
       referral_codes, referrals,
       support_tickets, ticket_messages,

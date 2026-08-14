@@ -100,10 +100,17 @@ function buildUserPerson(user) {
   btn.setAttribute('aria-label', 'حساب شما');
   btn.setAttribute('aria-haspopup', 'true');
   paintPersonDot(btn, user.unread_notices || 0);
-  // The dot goes out the moment the inbox or the celebration is acknowledged —
+  // The dot updates the moment the inbox or the celebration is acknowledged —
   // both fire their own event so this does not have to poll /me or wait for a
-  // reload to stop claiming there is something unread.
-  document.addEventListener(NOTICES_SEEN_EVENT, () => paintPersonDot(btn, 0));
+  // reload to stop claiming there is something unread. NOTICES_SEEN_EVENT now
+  // fires per acknowledged card, not once for the whole inbox, so the count is
+  // re-read from /me rather than forced to zero — other unopened cards may
+  // still be unread.
+  document.addEventListener(NOTICES_SEEN_EVENT, () => {
+    currentUser({ refresh: true })
+      .then((m) => paintPersonDot(btn, (m && m.unread_notices) || 0))
+      .catch(() => { /* leave the dot as it is rather than lie in either direction */ });
+  });
   document.addEventListener(ACHIEVEMENTS_SEEN_EVENT, () => {
     currentUser({ refresh: true })
       .then((m) => paintPersonDot(btn, (m && m.unread_notices) || 0))
