@@ -28,6 +28,7 @@ import html
 import json
 import re
 import sys
+import unicodedata
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -279,6 +280,61 @@ def normalize(s):
     space — losing a ZWNJ is exactly the class of silent corruption this gate
     exists to catch (see Hard Rule 16)."""
     return re.sub(r"[ \t\r\n]+", " ", s or "").strip()
+
+
+# --------------------------------------------------------------------------
+# DES (step 4.13)
+# --------------------------------------------------------------------------
+
+DES_BANDS = {"A": (80, 100), "B": (60, 79), "C": (40, 59), "D": (20, 39), "E": (0, 19)}
+
+
+def des_norm(s):
+    """The appendix's quote-comparison normalization: NFKC, collapse whitespace
+    runs, strip soft hyphens and line-break hyphenation, straighten curly
+    quotes, nbsp to space. Unlike normalize() above this DOES fold typographic
+    variants, because here the two sides came from different extractions of the
+    same text rather than from an author's keystrokes."""
+    s = unicodedata.normalize("NFKC", s or "")
+    s = s.replace("­", "").replace(" ", " ")
+    s = s.replace("‐", "-").replace("‑", "-").replace("–", "-").replace("—", "-")
+    s = s.replace("‘", "'").replace("’", "'").replace("“", '"').replace("”", '"')
+    s = re.sub(r"-\s*\n\s*", "", s)
+    return re.sub(r"\s+", " ", s).strip()
+
+
+_cabinet_by_doi = None
+
+
+def des_source_text(source, doc):
+    """The text a source's evidence_quotes must be substrings of, or None when
+    the gate cannot see it.
+
+    COMMENTARY was scored on the page's own body, which is right here.
+    RESEARCH was scored on a paper's abstract, which lives in the repo only if
+    that paper is in the local cabinet — the same lookup step 4.13 Part 1 does,
+    including its case-insensitive DOI compare (the catalog stores DOIs as
+    found, so episode-161's `10.1111/CLR.13672` is filed as `…/clr.13672`).
+    Composed as the spec defines source_text: title, then abstract.
+    """
+    global _cabinet_by_doi
+    if source.get("content_type") == "COMMENTARY":
+        return des_norm(text_of(article_region(doc)))
+    doi = ((source.get("citation") or {}).get("doi") or "").strip().lower()
+    if not doi:
+        return None
+    if _cabinet_by_doi is None:
+        _cabinet_by_doi = {}
+        if exists("dentcast_cabinet_full_catalog.json"):
+            for p in json.loads(read("dentcast_cabinet_full_catalog.json")).get("papers", []):
+                d = (p.get("doi") or "").strip().lower()
+                if d:
+                    _cabinet_by_doi[d] = p
+    paper = _cabinet_by_doi.get(doi)
+    if not paper or not paper.get("abstract"):
+        return None
+    title = paper.get("real_title") or paper.get("display_title") or paper.get("title") or ""
+    return des_norm(title + "\n\n" + paper["abstract"])
 
 
 # --------------------------------------------------------------------------
@@ -599,6 +655,121 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
                       f"card {n} name is a recall prompt",
                       f"card {n} name is the FAQ question verbatim",
                       "step 4.11")
+
+    # ---------------- DES (step 4.13) ----------------
+    # Every check here mirrors step 4.13 Part 3, which is the appendix's own
+    # pipeline contract. It exists because that contract is arithmetic and
+    # arithmetic is exactly what prose cannot enforce: the first three records
+    # written by hand shipped two sources at multiplier 0.80 while marked
+    # ABSTRACT_ONLY, which the spec caps at 0.75 — a mistake that moved one
+    # paper from band C to band D and was invisible to re-reading.
+    #
+    # ABSENCE IS A WARN, NEVER A FAIL. The workflow allows two documented
+    # skips — LiteCast, and the founder answering «بدون DES» at Question 4.8 —
+    # and an audio episode that is only a caption legitimately has no record at
+    # all. The gate cannot tell those apart from a forgotten step, so it says
+    # so out loud instead of guessing in either direction.
+    if is_lite:
+        rep.skip("4.13 DES", "LiteCast is outside the DES ecosystem (Hard Rule 10)")
+    else:
+        des_all = json.loads(read("plus/des-scores.json")) if exists("plus/des-scores.json") else {}
+        rec = des_all.get(content_id)
+        if not rec:
+            rep.warn("4.13 DES", "no DES record — confirm this is «بدون DES» or an unsourced episode, "
+                                 "not a forgotten step 4.13",
+                     "step 4.13 / Question 4.8 — score it, or record why it has none")
+        else:
+            rep.check(set(rec) == {"scored_at", "sources"}, "4.13 DES",
+                      "record carries only scored_at + sources",
+                      f"record has extra wrapper keys {sorted(set(rec) - {'scored_at', 'sources'})} — "
+                      f"band/content_type/question_type live INSIDE each source and a second copy "
+                      f"is a second source of truth",
+                      "step 4.13 Part 4 — nothing derivable is stored beside the sources")
+            for i, s in enumerate(rec.get("sources") or []):
+                tag = f"src{i}"
+                if s.get("error"):
+                    rep.ok("4.13 DES", f"{tag} recorded as {s['error']} (correctly not scored)")
+                    continue
+                rep.check(s.get("des_version"), "4.13 DES", f"{tag} carries des_version",
+                          f"{tag} has no des_version — old scores must never be silently compared "
+                          f"with new ones", "spec §Versioning")
+                is_comm = s.get("content_type") == "COMMENTARY"
+
+                # 2 — arithmetic recomputation
+                if is_comm:
+                    calc = 5 + sum(int(c.get("points", 0)) for c in (s.get("commentary_checklist") or []))
+                else:
+                    pen = sum(int(p.get("points", 0)) for p in (s.get("penalties") or []))
+                    sd = (s.get("s_design") or {}).get("value", 0)
+                    mult = (s.get("q_method") or {}).get("multiplier", 0)
+                    calc = max(0, round(sd * mult) - pen)
+                rep.check(calc == s.get("des_score"), "4.13 DES",
+                          f"{tag} arithmetic checks out ({s.get('des_score')})",
+                          f"{tag} des_score is {s.get('des_score')} but recomputes to {calc}",
+                          "step 4.13 Part 3(2) — re-run the score, never hand-patch the number")
+
+                # 3 — band agreement, and COMMENTARY is always E
+                lo, hi = DES_BANDS.get(s.get("band"), (None, None))
+                rep.check(lo is not None and lo <= s.get("des_score", -1) <= hi, "4.13 DES",
+                          f"{tag} band {s.get('band')} matches its score",
+                          f"{tag} score {s.get('des_score')} does not fall in band {s.get('band')}",
+                          "step 4.13 Part 3(3)")
+                if is_comm:
+                    rep.check(s.get("band") == "E" and 5 <= s.get("des_score", -1) <= 19,
+                              "4.13 DES", f"{tag} commentary is band E in 5–19",
+                              f"{tag} is COMMENTARY but scored {s.get('des_score')}/{s.get('band')} — "
+                              f"the model took the wrong track",
+                              "COMMENTARY track — fixed band E, score 5–19")
+
+                # 4 — schema: the null-ing is what says which track this is
+                if is_comm:
+                    bad = [k for k in ("s_design", "q_method", "penalties") if s.get(k) is not None]
+                    rep.check(not bad and s.get("question_type") is None, "4.13 DES",
+                              f"{tag} commentary nulls are correct",
+                              f"{tag} is COMMENTARY but {bad or ['question_type']} is not null",
+                              "spec §Output format")
+                else:
+                    rep.check(s.get("commentary_checklist") is None and s.get("question_type"),
+                              "4.13 DES", f"{tag} research shape is correct",
+                              f"{tag} is RESEARCH but carries a commentary_checklist or no question_type",
+                              "spec §Output format")
+
+                # the abstract-only rule, which is load-bearing and was got wrong once
+                if s.get("text_basis") == "ABSTRACT_ONLY":
+                    mult = (s.get("q_method") or {}).get("multiplier")
+                    rep.check(mult is None or mult <= 0.75, "4.13 DES",
+                              f"{tag} abstract-only multiplier is capped ({mult})",
+                              f"{tag} is ABSTRACT_ONLY but its multiplier is {mult} — the spec caps it "
+                              f"at 0.75, so this score is inflated",
+                              "step 4.13 Part 1 — recompute with 0.75")
+                    rep.check(s.get("provisional") is True, "4.13 DES",
+                              f"{tag} abstract-only is marked provisional",
+                              f"{tag} is ABSTRACT_ONLY but provisional is {s.get('provisional')}",
+                              "spec Step 0 — ABSTRACT_ONLY forces provisional: true")
+
+                # 1 — quote verification, wherever the source text is reachable.
+                # COMMENTARY quotes come from this page's own body, so they are
+                # always checkable. RESEARCH quotes come from an abstract, which
+                # the gate can only see when the paper is in the local cabinet.
+                quotes = [q for q in (
+                    [(s.get("s_design") or {}).get("evidence_quote")]
+                    + [d.get("evidence_quote") for d in ((s.get("q_method") or {}).get("domains") or [])]
+                    + [c.get("evidence_quote") for c in (s.get("commentary_checklist") or [])]
+                    + [p.get("evidence_quote") for p in (s.get("penalties") or [])]
+                ) if q]
+                haystack = des_source_text(s, doc) if quotes else None
+                if haystack is None:
+                    rep.skip("4.13 DES", f"{tag} quotes not checkable (source text not in the repo)")
+                else:
+                    bad = [q for q in quotes if des_norm(q) not in haystack]
+                    # rep.check builds both messages eagerly, so the failure text
+                    # has to be safe to construct on the passing path too.
+                    sample = repr(bad[0][:60]) if bad else ""
+                    rep.check(not bad, "4.13 DES",
+                              f"{tag} all {len(quotes)} evidence quotes are verbatim",
+                              f"{tag} has {len(bad)} evidence_quote(s) that are NOT a substring of the "
+                              f"source text, e.g. {sample}",
+                              "step 4.13 Part 3(1) — quote the source, never reconstruct it")
 
     # ---------------- Phase D / E ----------------
     en_rel = f"{Path(content_id).parent}/en/{Path(content_id).name}.html"
