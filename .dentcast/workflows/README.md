@@ -1174,17 +1174,26 @@ score built on it.
 
 #### Part 2 — Run the prompt file
 
-**Load `.dentcast/dentcast-evidence-score-v1.4.md` as the system prompt — the whole
+**Load `.dentcast/dentcast-evidence-score-v1.5.md` as the system prompt — the whole
 file, verbatim, minus the appendix.**
 
-**v1.4 is the current spec and it is deliberately deterministic.** Every place
+**v1.5 is the current spec and it is deliberately deterministic.** Two of its
+rules exist because a blind reproducibility run found them missing, so do not
+treat them as pedantry: **quality judgment is out of the domain rating**
+(present-vs-absent, plus the closed threshold table in 3b-i — if you are arguing
+that a described method is *bad enough* to count as absent, the answer is
+`some_concerns`), and **an absence-based `high` must name the sections you
+actually read** (3b-ii). Do not decide absence by keyword search alone: a paper
+can appraise its studies without ever writing the word "quality", and a grep
+that misses that produces a confidently wrong `high`. Phase F fails any
+absence-based `high` that carries no note. Every place
 v1.3 left a decision to the scorer is now decided: one tool per design, a fixed
 domain list, an explicit rating rule (under `FULL_TEXT`, silence about a
 safeguard is `high`, not `NR`), routing for the designs that matched no anchor,
 a narrowed funding penalty, and round-half-up on exact decimals. Follow the
 rules even where your own judgment differs — **a score everyone reproduces is
 worth more than a slightly better score nobody can.** Any record still stamped
-`des_version: "1.3"` predates this and must be regenerated before its number is
+`des_version` below `1.5` predates this and must be regenerated before its number is
 compared with a new one. The appendix says so itself ("NOT part of the
 model instruction … Do not include this appendix if the file is loaded verbatim as a
 system prompt"): those checks are yours to run in Part 3, not the model's.

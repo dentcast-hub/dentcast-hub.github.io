@@ -85,7 +85,7 @@ alwaysApply: true
   ورود خودکار وسطِ باندل، هر ابهام = سؤال، و حکم هر باندلِ کاندید در گزارش
   صریح می‌آید).
 - هر publish (جز LiteCast) در **گام ۴.۱۳** امتیازِ **DES** می‌گیرد: پرامپتِ
-  `.dentcast/dentcast-evidence-score-v1.4.md` به‌عنوان system prompt اجرا می‌شود
+  `.dentcast/dentcast-evidence-score-v1.5.md` به‌عنوان system prompt اجرا می‌شود
   (بدون appendix) و خروجی **عیناً** در `plus/des-scores.json` می‌نشیند — **نه**
   در brain (Hard Rule 5) و **نه** به‌صورت مارک‌آپ روی صفحه (رندرر ماژولِ مشترک
   است). مدلِ امتیازده **هرگز fetch نمی‌کند**، پس `source_text` باید قبلش resolve

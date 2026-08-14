@@ -763,6 +763,27 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
                               f"{tag} is ABSTRACT_ONLY but provisional is {s.get('provisional')}",
                               "spec Step 0 — ABSTRACT_ONLY forces provisional: true")
 
+                # Absence protocol (spec v1.5 Step 3b-ii). An empty
+                # evidence_quote is legal in exactly one place — a domain rated
+                # `high` because the safeguard is absent, which by definition has
+                # nothing to quote — and there it must carry a note naming what
+                # was read. Without that, "absent" is an assertion rather than a
+                # finding, and nobody downstream can check it.
+                for dom in ((s.get("q_method") or {}).get("domains") or []):
+                    if dom.get("evidence_quote"):
+                        continue
+                    label = dom.get("domain", "?")
+                    if dom.get("rating") == "high":
+                        rep.check(bool((dom.get("note") or "").strip()), "4.13 DES",
+                                  f"{tag} absence-based high on «{label}» is documented",
+                                  f"{tag} rates «{label}» high with no quote and no note — "
+                                  f"an absence claim has to say what was read",
+                                  "spec Step 3b-ii — name the sections searched in `note`")
+                    elif dom.get("rating") in ("low", "some_concerns"):
+                        rep.fail("4.13 DES",
+                                 f"{tag} rates «{label}» {dom['rating']} with an empty quote",
+                                 "Core Rule 2 — only an absence-based `high` may omit the quote")
+
                 # 1 — quote verification, wherever the source text is reachable.
                 # COMMENTARY quotes come from this page's own body, so they are
                 # always checkable. RESEARCH quotes come from an abstract, which
