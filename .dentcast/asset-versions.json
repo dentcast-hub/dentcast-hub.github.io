@@ -12,8 +12,8 @@
     "hash": "f045ac7d9d9e9e1d"
   },
   "/dc-nav.js": {
-    "v": 97,
-    "hash": "cc64a47605a1cad3"
+    "v": 98,
+    "hash": "6b4909f1ba7d17b6"
   },
   "/dc-theme.css": {
     "v": 2,
@@ -52,8 +52,8 @@
     "hash": "5841ea37ec885b1e"
   },
   "/plus/js/dashboard-page.js": {
-    "v": 44,
-    "hash": "4057d361095f2b9f"
+    "v": 45,
+    "hash": "e766f26fea50b4ef"
   },
   "/plus/js/highlights-page.js": {
     "v": 31,
@@ -96,15 +96,15 @@
     "hash": "fb9348a5cf72e5f3"
   },
   "/plus/plus-pages.css": {
-    "v": 25,
-    "hash": "2ce777d1af004386"
+    "v": 26,
+    "hash": "667c352953cffdfe"
   },
   "/plus/plus.css": {
     "v": 25,
     "hash": "a0c7d3b9210c4740"
   },
   "dc-nav.js:V": {
-    "v": 95,
-    "hash": "e3cbbeea139ffed0"
+    "v": 96,
+    "hash": "7ce8f200d0746d91"
   }
 }

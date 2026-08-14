@@ -54,11 +54,14 @@ function streakDetail(me) {
   ]);
 }
 
+// Not a "resume" pointer — last_content_id is just the most recent qualifying
+// activity row (highlight/completed/listened/card-reviewed), with no signal
+// for whether that content was actually finished. See home-card.js's matching
+// row for the same reasoning.
 function continueBlock(progress, model) {
   const info = progress.last_content_id ? contentInfo(model, progress.last_content_id) : null;
-  if (!info) return el('div', { class: 'dcp-muted' }, 'هنوز مطلبی را شروع نکرده‌اید.');
+  if (!info) return el('div', { class: 'dcp-muted' }, 'هنوز جایی نبوده‌اید.');
   return el('a', { class: 'dcp-continue', href: info.url }, [
-    el('span', { class: 'dcp-continue-lead' }, 'ادامه: '),
     el('span', {}, info.title),
   ]);
 }
@@ -409,7 +412,7 @@ export async function renderDashboard(root, { me: preMe } = {}) {
   children.push(
     section('استریک', 'هر روز که بخوانید، هایلایت کنید یا مرور کنید، یک روز به زنجیره‌تان اضافه می‌شود. رکورد شما بیشترین زنجیره‌ای است که تا حالا ساخته‌اید و هیچ‌وقت پاک نمی‌شود.', streakDetail(me)),
     league ? section('لیگ من', 'رتبه‌ات در گروهِ رقابتیِ این هفته؛ برای صعود به لیگِ بالاتر تلاش کن.', leagueEntryButton(league)) : null,
-    section('ادامه مطالعه', null, continueBlock(progress, model)),
+    section('آخرین جایی که بودی', null, continueBlock(progress, model)),
     section('پیشرفت هر پوشه', 'برای هر پوشه، چند درصد از کل مطالب آن را خوانده‌اید (۰ تا ۱۰۰). هر بار پیشخوان باز شود به‌روز می‌شود.', progressBars(progress, model)),
     // NOTE: امتیاز (all-time, unlocks shields at thresholds, never spent) and XP
     // هفتگی (ranks the league, resets weekly) are two separate quantities in the

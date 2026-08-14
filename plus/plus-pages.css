@@ -72,9 +72,8 @@ body.dcp-page a.dcp-btn-danger { color: #fff; }
 .dcp-streak-record b { font-size: 1.3rem; display: block; }
 .dcp-streak-record span { color: var(--txt2, #4a5f85); font-size: .85rem; }
 
-/* ---- continue reading ---------------------------------------------------- */
+/* ---- last place you were --------------------------------------------------- */
 .dcp-continue { color: var(--ac, #0b5fff) !important; font-weight: 700; }
-.dcp-continue-lead { color: var(--txt2, #4a5f85); font-weight: 400; }
 
 /* ---- folder tree --------------------------------------------------------- */
 .dcp-folders { display: flex; flex-direction: column; }
