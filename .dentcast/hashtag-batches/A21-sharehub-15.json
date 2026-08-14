@@ -1,0 +1,26 @@
+{
+  "type": "sharehub",
+  "note": "Publish of sharehub/share-15 (چرا اسکنر روی روکش‌های خیلی براق یا کامپوزیت/رزین‌های خیلی سفید خوب اسکن نمی‌کنه؟). Mints one concept the library genuinely lacked: the accuracy failure of intraoral scanners on very glossy or very white/translucent surfaces (overexposure + AI confidence-scoring weighting). Reuses #Share_Hub, #Curated_Content, #اسکنر_داخل_دهانی، #دقت_اسکن، #هوش_مصنوعی، #قالب‌گیری_دیجیتال، #روکش، #کامپوزیت — all exact conceptual matches already in the library.",
+  "concepts": [
+    {
+      "tag": "#اسکن_سطح_براق",
+      "domain": "clinical",
+      "definition": "افت دقت و کیفیت اسکن داخل‌دهانی روی سطوح خیلی براق یا خیلی سفید و ترانسلوسنت (مثل برخی روکش‌ها یا کامپوزیت/رزین‌های روشن) به‌دلیل بازتاب بیش‌ازحد نور (overexposure) و خطای نرم‌افزار در تطبیق نقاط مرجع.",
+      "use_when": "مقاله علت افت دقت یا ناقص‌ماندن اسکن داخل‌دهانی روی سطوح بسیار براق، سفید یا ترانسلوسنت (روکش، کامپوزیت، رزین) و راهکارهای آن را بررسی کند.",
+      "aliases": ["overexposure اسکن", "اسکن روکش براق", "اسکن کامپوزیت سفید", "بازتاب نور اسکنر"]
+    }
+  ],
+  "articles": {
+    "sharehub/share-15": [
+      "#Share_Hub",
+      "#Curated_Content",
+      "#اسکنر_داخل_دهانی",
+      "#دقت_اسکن",
+      "#هوش_مصنوعی",
+      "#قالب‌گیری_دیجیتال",
+      "#روکش",
+      "#کامپوزیت",
+      "#اسکن_سطح_براق"
+    ]
+  }
+}
