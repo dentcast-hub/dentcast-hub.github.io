@@ -1422,3 +1422,100 @@ html.dcp-touring #mobile-body { overflow: hidden; }
   font-weight:800;
   text-decoration:none;
 }
+
+/* ============================================================================
+   DentCast Evidence Score (DES) — chip + evaluation card
+   Rendered by plus/js/des.js from plus/des-scores.json. NO PAGE CARRIES THIS
+   MARKUP, same rule as the action row above, which is why this lives here in
+   plus.css and not in dc-article.css: the desktop shell keeps the former and
+   strips the latter, and one feature may not be defined in two stylesheets.
+
+   Colour is its own third scale — grey → dark green, never through red. E is
+   grey rather than red because a low band is not a failing grade and must not
+   read as «رد شده»; it is never amber (that means «this is what a subscription
+   buys») and never brand blue.
+   ========================================================================= */
+:root {
+  --des-E: #78808f; --des-D: #5f8a63; --des-C: #3f9a49; --des-B: #2f8f3f; --des-A: #1f7a34;
+}
+[data-theme="dark"] {
+  --des-E: #8b93a3; --des-D: #89a68c; --des-C: #6fae74; --des-B: #4f9d5c; --des-A: #2f8f52;
+}
+.dc-des-band-A { --des-cur: var(--des-A); } .dc-des-band-B { --des-cur: var(--des-B); }
+.dc-des-band-C { --des-cur: var(--des-C); } .dc-des-band-D { --des-cur: var(--des-D); }
+.dc-des-band-E { --des-cur: var(--des-E); }
+
+/* the chip — in .dc-actions-aux, because the band is something the page says
+   ABOUT ITSELF (like زمان مطالعه), not an action you take on it. */
+.dc-act-des { font-size: .85rem; font-weight: 700; color: var(--des-cur); border-color: var(--des-cur); }
+.dc-act-des .dc-des-dot {
+  width: 20px; height: 20px; border-radius: 50%; flex: none;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--des-cur); color: #fff; font-size: .74rem; font-weight: 800;
+}
+.dc-act-des .dc-des-chip-txt { font-weight: 700; }
+
+/* the card */
+.dc-des-card {
+  background: var(--dcp-surface); border: 1px solid var(--dcp-line);
+  border-radius: var(--dcp-radius); padding: 16px 18px 18px; margin: 18px 0;
+}
+.dc-des-card-h {
+  font-size: .98rem; font-weight: 700; color: var(--dcp-accent);
+  border-right: 4px solid var(--dcp-accent); padding-right: 10px;
+  margin: 0 0 14px; text-align: right;
+}
+.dc-des-src + .dc-des-src { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--dcp-line); }
+.dc-des-srctitle { font-size: .82rem; color: var(--dcp-muted); margin-bottom: 8px; line-height: 1.7; }
+.dc-des-head { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 10px; }
+
+/* five discrete blocks, only the current one coloured — never a gauge: the
+   output is not continuous and a needle would give a two-point difference a
+   meaning it does not have. */
+.dc-des-bar { display: inline-flex; direction: ltr; border-radius: 7px; overflow: hidden; border: 1px solid var(--dcp-line); flex: none; }
+.dc-des-blk {
+  width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;
+  font-size: .78rem; font-weight: 800; background: var(--dcp-surface-2); color: var(--dcp-muted);
+  border-left: 1px solid var(--dcp-line);
+}
+.dc-des-blk:first-child { border-left: 0; }
+.dc-des-b-A.is-on { background: var(--des-A); color: #fff; }
+.dc-des-b-B.is-on { background: var(--des-B); color: #fff; }
+.dc-des-b-C.is-on { background: var(--des-C); color: #fff; }
+.dc-des-b-D.is-on { background: var(--des-D); color: #fff; }
+.dc-des-b-E.is-on { background: var(--des-E); color: #fff; }
+
+.dc-des-meta { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.dc-des-bandname { font-weight: 700; font-size: .95rem; color: var(--des-cur); }
+/* welded to the band: bands compare only inside one question type */
+.dc-des-qtype { font-size: .78rem; color: var(--dcp-muted); }
+/* the audit layer — small and quiet, never the headline */
+.dc-des-score {
+  margin-inline-start: auto; font-size: .8rem; color: var(--dcp-muted);
+  background: var(--dcp-surface-2); border: 1px solid var(--dcp-line);
+  border-radius: 7px; padding: 3px 9px; font-variant-numeric: tabular-nums;
+}
+.dc-des-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--dcp-chip-bg); border: 1px solid var(--dcp-line);
+  color: var(--dcp-accent); border-radius: 999px; padding: 5px 14px;
+  font-weight: 700; font-size: .9rem;
+}
+/* abstract-only: hatched, not solid — the uncertainty is visible, not a footnote */
+.dc-des-prov {
+  display: inline-block; font-size: .74rem; color: #a67a1f; margin-bottom: 10px;
+  background: repeating-linear-gradient(45deg, rgba(227,184,73,.13), rgba(227,184,73,.13) 4px, transparent 4px, transparent 8px);
+  border: 1px dashed rgba(227,184,73,.5); border-radius: 999px; padding: 3px 11px;
+}
+.dc-des-calc { border: 1px solid var(--dcp-line); border-radius: 9px; background: var(--dcp-surface-2); overflow: hidden; }
+.dc-des-calc > summary { cursor: pointer; padding: 8px 12px; font-size: .82rem; font-weight: 600; color: var(--dcp-muted); }
+.dc-des-calc-body { padding: 2px 12px 11px; font-size: .78rem; color: var(--dcp-muted); line-height: 1.85; }
+.dc-des-calc-line { padding: 2px 0; }
+.dc-des-doms { margin: 5px 0; padding-inline-start: 18px; }
+.dc-des-doms li { margin: 2px 0; }
+.dc-des-calc-final { margin-top: 7px; padding-top: 7px; border-top: 1px solid var(--dcp-line); font-weight: 700; color: var(--dcp-ink); }
+/* the interpretation is separated by a rule and never sits inside the article
+   body — a reader must not read it as the article's own voice */
+.dc-des-rule { border: 0; border-top: 1px solid var(--dcp-line); margin: 13px 0 10px; }
+.dc-des-interp { margin: 0; font-size: .88rem; color: var(--dcp-ink); line-height: 1.95; }
+.dc-des-foot { margin: 14px 0 0; font-size: .74rem; color: var(--dcp-muted); line-height: 1.8; }

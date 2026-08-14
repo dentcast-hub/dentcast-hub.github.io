@@ -18,6 +18,7 @@ import { initListeningTracker } from './js/listening.js';
 import { initShareScoring, buildShareButton } from './js/share.js';
 import { initHeart, buildHeartChip } from './js/votes.js';
 import { mountArticleThreads } from './js/article-threads.js';
+import { mountDes } from './js/des.js';
 
 // Carry plus.js's own cache-busting version (?v=N, set by dc-nav.js) onto the
 // workbench module import. Article pages are OUTSIDE the /plus/ service-worker
@@ -79,6 +80,17 @@ function ensureActionRow(anchorEl) {
   const row = el('div', { class: 'dc-actions', id: 'dcActionRow' }, [main, aux]);
   anchorEl.parentNode.insertBefore(row, anchorEl);
   return { row, main, aux, built: true };
+}
+
+// DES, on whichever surface is calling. Four call sites need the same two
+// things — the row's aux group for the chip, the end of the prose for the card —
+// so they get one line each rather than four copies of this lookup. `scope` is
+// the container on the desktop shell, where a document-wide query would find the
+// homepage's own row. Fire-and-forget: a missing/failed score file must never
+// take an article down, and a page with no record simply gets nothing.
+function mountDesHere(anchor, contentId, scope = document) {
+  const row = scope.querySelector('#dcActionRow .dc-actions-aux');
+  mountDes(row, anchor, contentId).catch(() => {});
 }
 
 // The article's action row: میز کار / افزودن به کالکشن / پسندیدم together in
@@ -232,6 +244,12 @@ function initEpisodeActions() {
     // The قلب itself is left to initHeart(), which boot() calls a line later and
     // which is the single mounting point for every surface that has this row.
   }
+  // DES, for an episode too — and NOT because episodes are special. The badge is
+  // driven entirely by whether plus/des-scores.json has a record: an episode that
+  // cites papers (episode-161 cites three) is scored and shown; one that is only
+  // a caption and an audio file has no identified paper, gets no record at
+  // Question 4.8, and therefore draws nothing here. No audio test is needed.
+  mountDesHere(findProseEnd() || box, detectContentId());
   // گفت‌وگوی زیر مطلب, for an episode too. It reached articles only because
   // initArticle() mounts it and initArticle() bows out here — an accident of
   // where the call sat, not a decision: the whole block is written against a
@@ -270,6 +288,9 @@ async function initArticle() {
   // anchoring on the first one put the block after section 1 of 8 — nobody
   // talks about a piece halfway through reading it (user report, 2026-08-12).
   mountArticleThreads(findProseEnd() || proseRoot, contentId);
+  // ارزیابی شواهد, above that conversation. Draws only if this content_id has a
+  // record in plus/des-scores.json — no record, no badge, no apology on screen.
+  mountDesHere(findProseEnd() || proseRoot, contentId);
 
   // Post-login return-to-study (the funnel) or a remembered choice this session.
   // Never auto-enters on a fresh visit: sessionStorage is empty then.
@@ -336,6 +357,7 @@ async function mountArticleWorkbench(root, url) {
         aux.appendChild(buildShareButton(shellShare));
       }
       mountArticleThreads(findProseEnd(root) || box, contentId); // the conversation, on this surface too
+      mountDesHere(findProseEnd(root) || box, contentId, root);  // and the score, on this surface too
     }
     return;
   }
@@ -347,6 +369,7 @@ async function mountArticleWorkbench(root, url) {
   });
   desktopWb = wb;
   mountArticleThreads(findProseEnd(root) || proseRoot, contentId); // under the article, not after its first box
+  mountDesHere(findProseEnd(root) || proseRoot, contentId, root);  // the score, above that conversation
   const hlId = query ? new URLSearchParams(query).get('dcphl') : null;
   if (hlId && await currentUser()) await openDeepLinkedHighlight(wb, updateBtn, hlId);
 }
