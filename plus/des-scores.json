@@ -141,7 +141,7 @@
         "des_version": "1.3",
         "content_type": "RESEARCH",
         "question_type": "THERAPY",
-        "text_basis": "ABSTRACT_ONLY",
+        "text_basis": "FULL_TEXT",
         "citation": {
           "title": "A systematic review of the survival and complication rates of implant supported fixed dental prostheses with cantilever extensions after an observation period of at least 5 years",
           "authors": "Aglietta M, Iorio Siciliano V, Zwahlen M, Brägger U, Pjetursson BE, Lang NP, Salvi GE",
@@ -155,60 +155,70 @@
         },
         "s_design": {
           "value": 100,
-          "anchor": "SR/meta-analysis (of cohort studies, not RCTs — see interpretation)",
-          "evidence_quote": "An electronic MEDLINE search supplemented by manual searching was conducted to identify prospective or retrospective cohort studies reporting data of at least 5 years on ICFDPs."
+          "anchor": "SR/meta-analysis (of cohort studies, not RCTs)",
+          "evidence_quote": "A systematic review of the English literature was conducted for selected articles published up to December 2007."
         },
         "q_method": {
           "tool": "AMSTAR-2",
           "domains": [
             {
-              "domain": "comprehensive literature search",
-              "rating": "some_concerns",
-              "evidence_quote": "An electronic MEDLINE search supplemented by manual searching was conducted"
+              "domain": "comprehensive literature search (critical)",
+              "rating": "high",
+              "evidence_quote": "Searching was performed using an electronic database (Medline, PubMed)."
             },
             {
-              "domain": "a priori protocol registration",
-              "rating": "NR",
+              "domain": "a priori protocol registration (critical)",
+              "rating": "high",
               "evidence_quote": ""
             },
             {
-              "domain": "risk-of-bias assessment of included studies",
-              "rating": "NR",
+              "domain": "risk-of-bias assessment of included studies (critical)",
+              "rating": "high",
               "evidence_quote": ""
+            },
+            {
+              "domain": "publication bias assessed (critical)",
+              "rating": "high",
+              "evidence_quote": ""
+            },
+            {
+              "domain": "duplicate study selection",
+              "rating": "low",
+              "evidence_quote": "Titles and abstracts were initially screened by two independent reviewers"
+            },
+            {
+              "domain": "duplicate data extraction",
+              "rating": "low",
+              "evidence_quote": "Data for the meta-analysis were extracted by two independent reviewers"
             },
             {
               "domain": "appropriate meta-analytic method",
               "rating": "low",
-              "evidence_quote": "Five- and 10-year estimates for failure and complication rates were calculated using standard or random-effect Poisson regression analysis."
-            },
-            {
-              "domain": "publication bias assessed",
-              "rating": "NR",
-              "evidence_quote": ""
+              "evidence_quote": "If the goodness-of-fit P-value was <0.05, indicating heterogeneity, random-effects Poisson regression"
             }
           ],
-          "multiplier": 0.55
+          "multiplier": 0.3
         },
         "penalties": [
           {
             "item": "CoI not disclosed",
             "points": 0,
-            "evidence_quote": "",
-            "note": "not assessable in abstract"
+            "evidence_quote": "Conflicts of interest : none declared.",
+            "note": "disclosed; funded by the Clinical Research Foundation and the first author holds an ITI scholarship, both stated openly"
           }
         ],
         "commentary_checklist": null,
-        "des_score": 55,
-        "band": "C",
-        "provisional": true,
-        "fact_fa": "این مرور نظام‌مند در نوع سؤال درمانی امتیاز ۵۵ از ۱۰۰ و باند C گرفت.",
-        "interpretation_fa": "بهترین شواهد تجمیعی موجود دربارهٔ بقای پروتز کانتی‌لور روی ایمپلنت است و نشان می‌دهد بقای پنج و ده ساله بالاست. جست‌وجو به یک پایگاه داده محدود بوده و ارزیابی کیفیت مطالعات ورودی در چکیده نیامده. مرور مطالعات کوهورت است نه کارآزمایی تصادفی."
+        "des_score": 30,
+        "band": "D",
+        "provisional": false,
+        "fact_fa": "این مرور نظام‌مند در نوع سؤال درمانی امتیاز ۳۰ از ۱۰۰ و باند D گرفت.",
+        "interpretation_fa": "با متن کامل روشن شد که این مرور هیچ ارزیابی کیفیتی روی مطالعات ورودی انجام نداده، جست‌وجویش به یک پایگاه داده و زبان انگلیسی محدود بوده، و پروتکل ثبت‌شده و بررسی سوگیری انتشار ندارد. یافته‌اش دربارهٔ بقای کانتی‌لور همچنان جامع‌ترین جمع‌بندی موجود است، ولی تجمیع مطالعاتی که کیفیتشان سنجیده نشده اطمینان را پایین می‌آورد."
       },
       {
         "des_version": "1.3",
         "content_type": "RESEARCH",
         "question_type": "THERAPY",
-        "text_basis": "ABSTRACT_ONLY",
+        "text_basis": "FULL_TEXT",
         "citation": {
           "title": "Clinical and radiographic outcomes of implant-supported fixed dental prostheses with cantilever extension. A retrospective cohort study with a follow-up of at least 10 years",
           "authors": "Schmid E, Morandini M, Roccuzzo A, Ramseier CA, Sculean A, Salvi GE",
@@ -223,54 +233,60 @@
         "s_design": {
           "value": 50,
           "anchor": "retrospective cohort",
-          "evidence_quote": "A retrospective cohort study with a follow‐up of at least 10 years"
+          "evidence_quote": "A retrospective cohort study with a follow-up of at least 10 years"
         },
         "q_method": {
-          "tool": "NOS",
+          "tool": "ROBINS-I",
           "domains": [
             {
-              "domain": "comparability / control for the exposure",
+              "domain": "confounding / comparability of the contrast",
               "rating": "low",
               "evidence_quote": "compared between implant surfaces adjacent to and distant from the cantilever extension"
             },
             {
-              "domain": "outcome ascertainment",
-              "rating": "low",
-              "evidence_quote": "Mesial and distal radiographic marginal bone levels (mBLs) from baseline (i.e. delivery of FDPC) to the follow‐up examination were calculated"
+              "domain": "selection of participants",
+              "rating": "some_concerns",
+              "evidence_quote": "were invited to participate in the follow-up examination"
             },
             {
-              "domain": "selection of the cohort",
-              "rating": "NR",
-              "evidence_quote": ""
+              "domain": "measurement of the outcome",
+              "rating": "some_concerns",
+              "evidence_quote": "by one experienced examiner (E.S.)"
             },
             {
-              "domain": "adequacy of follow-up / attrition",
-              "rating": "NR",
-              "evidence_quote": ""
+              "domain": "missing data",
+              "rating": "high",
+              "evidence_quote": "the authors were unable to provide reasons and numbers of subjects lost to follow-up and acknowledge that this may represent a major limitation of the present study"
             }
           ],
-          "multiplier": 0.75
+          "multiplier": 0.55
         },
         "penalties": [
           {
+            "item": "no sample size justification / power analysis",
+            "points": 5,
+            "evidence_quote": "",
+            "note": "no power or sample-size calculation anywhere in the paper; not covered by ROBINS-I, so no double jeopardy"
+          },
+          {
             "item": "CoI not disclosed",
             "points": 0,
-            "evidence_quote": "",
-            "note": "not assessable in abstract"
+            "evidence_quote": "The authors do not report any conflicts of interest related to the present study.",
+            "note": "disclosed; funded by the authors' own institution"
           }
         ],
         "commentary_checklist": null,
-        "des_score": 38,
+        "des_score": 23,
         "band": "D",
-        "provisional": true,
-        "fact_fa": "این کوهورت گذشته‌نگر در نوع سؤال درمانی امتیاز ۳۸ از ۱۰۰ و باند D گرفت.",
-        "interpretation_fa": "با میانگین پیگیری ۱۳ سال نشان می‌دهد تفاوت معنادار در تحلیل استخوان بین سطح مجاور و دور از کانتی‌لور دیده نمی‌شود. مقایسه درون همان بیمار انجام شده که نقطهٔ قوت آن است. طراحی گذشته‌نگر و نبود گزارش افت نمونه اطمینان را محدود می‌کند."
+        "provisional": false,
+        "fact_fa": "این کوهورت گذشته‌نگر در نوع سؤال درمانی امتیاز ۲۳ از ۱۰۰ و باند D گرفت.",
+        "interpretation_fa": "متن کامل نشان می‌دهد نویسندگان خودشان نتوانسته‌اند تعداد و دلیل خروج بیماران از پیگیری را گزارش کنند و آن را محدودیت عمده می‌دانند. مقایسهٔ درون همان بیمار نقطهٔ قوت آن است و پیگیری ۱۰ تا ۱۸ سال طولانی است. با این حال نامعلوم‌بودن ریزش نمونه و نبود محاسبهٔ حجم نمونه، وزن یافته را کم می‌کند."
       },
       {
         "des_version": "1.3",
         "content_type": "RESEARCH",
         "question_type": "ETIOLOGY",
-        "text_basis": "ABSTRACT_ONLY",
+        "text_basis": "FULL_TEXT",
         "citation": {
           "title": "Bone level changes at implants supporting crowns or fixed partial dentures with or without cantilevers",
           "authors": "Hälg GA, Schmid J, Hämmerle CHF",
@@ -284,8 +300,8 @@
         },
         "s_design": {
           "value": 60,
-          "anchor": "controlled comparison (prospective enrolment not stated — lower anchor taken per no-guessing)",
-          "evidence_quote": "Twenty‐seven FDPs were with cantilever and 27 FDPs were without cantilever (control group)."
+          "anchor": "retrospective controlled comparison from an existing patient pool",
+          "evidence_quote": "For the present study patients were taken from the patient pool treated in a private dental practice between October 1990 and December 2000."
         },
         "q_method": {
           "tool": "ROBINS-I",
@@ -293,40 +309,46 @@
             {
               "domain": "confounding",
               "rating": "low",
-              "evidence_quote": "Regression analyses were carried out to evaluate the influence of confounding factors on the peri‐implant bone level change."
+              "evidence_quote": "Regression analyses were carried out to evaluate the influence of confounding factors on the peri-implant bone level change."
             },
             {
               "domain": "appropriate statistical analysis",
               "rating": "low",
-              "evidence_quote": "Statistical analysis was carried out with Student's t ‐test."
+              "evidence_quote": "Statistical analysis was carried out with Student's t -test."
             },
             {
               "domain": "selection of participants into groups",
-              "rating": "NR",
-              "evidence_quote": ""
+              "rating": "some_concerns",
+              "evidence_quote": "For the present study patients were taken from the patient pool treated in a private dental practice"
             },
             {
-              "domain": "measurement of the outcome",
-              "rating": "NR",
-              "evidence_quote": ""
+              "domain": "measurement of the outcome (unblinded)",
+              "rating": "some_concerns",
+              "evidence_quote": "Two examiners performed the measurements."
             }
           ],
-          "multiplier": 0.75
+          "multiplier": 0.8
         },
         "penalties": [
           {
             "item": "CoI not disclosed",
-            "points": 0,
+            "points": 8,
             "evidence_quote": "",
-            "note": "not assessable in abstract"
+            "note": "the paper carries no conflict-of-interest or funding statement of any kind, while the implants studied are a single manufacturer's (Institut Straumann AG)"
+          },
+          {
+            "item": "no sample size justification / power analysis",
+            "points": 0,
+            "evidence_quote": "a post hoc power analysis based on assessed differences between the groups and variances in the samples 17 patients in each group were required",
+            "note": "a power analysis is reported, though post hoc rather than a priori"
           }
         ],
         "commentary_checklist": null,
-        "des_score": 45,
+        "des_score": 40,
         "band": "C",
-        "provisional": true,
-        "fact_fa": "این مطالعهٔ مقایسه‌ای در نوع سؤال علت‌شناسی امتیاز ۴۵ از ۱۰۰ و باند C گرفت.",
-        "interpretation_fa": "با گروه کنترل نشان می‌دهد وجود کانتی‌لور به‌تنهایی تحلیل استخوان پری‌ایمپلنت را به‌طور معنادار افزایش نمی‌دهد. عوامل مخدوش‌کننده با رگرسیون تعدیل شده‌اند. نحوهٔ تخصیص بیماران به دو گروه در چکیده روشن نیست."
+        "provisional": false,
+        "fact_fa": "این مطالعهٔ مقایسه‌ای در نوع سؤال علت‌شناسی امتیاز ۴۰ از ۱۰۰ و باند C گرفت.",
+        "interpretation_fa": "با گروه کنترل و تعدیل رگرسیونی عوامل مخدوش‌کننده نشان می‌دهد کانتی‌لور به‌تنهایی تحلیل استخوان را به‌طور معنادار زیاد نمی‌کند، و توان آماری‌اش را هم گزارش کرده است. در مقابل هیچ اظهارنظری دربارهٔ تعارض منافع یا منبع مالی ندارد، در حالی که همهٔ ایمپلنت‌ها از یک سازنده بوده‌اند."
       }
     ]
   }

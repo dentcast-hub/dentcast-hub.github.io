@@ -320,6 +320,14 @@ def des_source_text(source, doc):
     global _cabinet_by_doi
     if source.get("content_type") == "COMMENTARY":
         return des_norm(text_of(article_region(doc)))
+    # A FULL_TEXT research score was read off the paper's PDF, which is not in
+    # this repo and must not be — those are copyrighted articles, and the
+    # cabinet deliberately stores only metadata plus the publisher's abstract.
+    # So the abstract is the wrong haystack here: a quote pulled from the
+    # Methods section is correctly absent from it, and checking against it
+    # would fail every honest full-text score. Skip instead, and say why.
+    if source.get("text_basis") == "FULL_TEXT":
+        return None
     doi = ((source.get("citation") or {}).get("doi") or "").strip().lower()
     if not doi:
         return None
