@@ -171,10 +171,10 @@ async function renderLoggedIn(card, user) {
   // answered — even "not joined this week" shows the tier with a gentle nudge.
   let leagueChipEl = league ? leagueChip(league) : null;
 
-  // A line back into the user's own material: ONLY the LAST article they read,
-  // as a link. Prefer the server's activity-derived last_content_id; fall back to
-  // the most recent highlight's article. If neither resolves, show nothing here —
-  // never a "your highlights" line.
+  // A line back into the user's own material: ONLY the LAST content they engaged
+  // with, as a link. Prefer the server's activity-derived last_content_id; fall
+  // back to the most recent highlight's article. If neither resolves, show
+  // nothing here — never a "your highlights" line.
   const recentId = (recent && recent.highlights && recent.highlights[0])
     ? recent.highlights[0].content_id : null;
   const lastId = progress.last_content_id || recentId;
@@ -218,7 +218,7 @@ async function renderLoggedIn(card, user) {
     [leagueChipEl, info].filter(Boolean));
 
   // Row order is INVERTED on purpose (founder, 2026-08-11): channels first,
-  // then «ادامه خواندن», then the league, and the number strip LAST. The
+  // then «آخرین جایی که بودی», then the league, and the number strip LAST. The
   // homepage's own stat counters (۷ سال / ۷۱ ساعت / ۵۸۳ مطلب) sit directly
   // above this card, and two big-number rails back to back read as one noisy
   // block — putting the personal numbers at the far end of the card separates
@@ -232,9 +232,14 @@ async function renderLoggedIn(card, user) {
     connectionsRow(me),
   ]));
 
-  // Row 2 — the one primary action: continue where you left off.
+  // Row 2 — the one primary action: back to the last thing the reader engaged
+  // with. Deliberately NOT "continue" — last_content_id is the most recent
+  // qualifying user_activity row (highlight/completed/listened/card-reviewed),
+  // with no check for whether that content was finished, so a just-completed
+  // article can legitimately be "last". "آخرین جایی که بودی" is honest either
+  // way and, unlike the old per-type wording, needs no last.type branch.
   if (last) {
-    const lead = last.type === 'episodes' ? 'ادامه گوش دادن' : 'ادامه خواندن';
+    const lead = 'آخرین جایی که بودی';
     const chev = el('span', { class: 'dc-plus-material-chev', 'aria-hidden': 'true' });
     chev.innerHTML = IC_CHEV; // static, trusted markup
     rows.push(el('a', { class: 'dc-plus-material', href: last.url }, [
