@@ -4341,22 +4341,32 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
         [data-theme="dark"] .dc-des-band-C{ background:#6fae74; } [data-theme="dark"] .dc-des-band-B{ background:#4f9d5c; }
         [data-theme="dark"] .dc-des-band-A{ background:#2f8f52; }
 
-        #dcDesPop{ position:absolute; z-index:100; max-width:320px; background:var(--card-bg);
-          border:1px solid var(--border); border-radius:10px; padding:.9rem 1.05rem; box-shadow:var(--card-sh2);
-          font-size:.8rem; color:var(--txt2); direction:rtl; text-align:right; line-height:1.85; }
-        #dcDesPop.dc-hidden{ display:none; }
-        #dcDesPop .dc-des-pop-title{ font-weight:700; color:var(--txt); margin-bottom:.5rem; font-size:.88rem; }
-        #dcDesPop .dc-des-pop-close{ position:absolute; top:.4rem; left:.55rem; background:none; border:none;
-          color:var(--txt3); cursor:pointer; font-size:.9rem; line-height:1; }
-        #dcDesPop p{ margin:0 0 .7rem; }
-        #dcDesPop p:last-child{ margin-bottom:0; }
-        #dcDesPop .dc-des-mini-legend{ display:flex; direction:ltr; gap:.3rem; margin:.15rem 0 .7rem; }
-        #dcDesPop .dc-des-mini-legend div{ flex:1; text-align:center; padding:.35rem 0; border-radius:6px;
+        /* The explanation is an INLINE disclosure joined to the box, not a floating
+           popover. A popover was wrong twice here: this shell scrolls inside
+           #mobile-body rather than on window, so an absolutely-positioned panel
+           stayed put while the page moved under it; and having no height budget it
+           ran off the bottom with no way to reach its own end. In flow, both are
+           gone by construction — it scrolls with the box and is as tall as it needs.
+           Type follows the «؟» caption reveal (plus.css .dc-plus-scorecap). */
+        #dcDesPanel{
+          border:1px solid var(--card-border); border-top:0;
+          border-radius:0 0 .875rem .875rem; background:var(--card-bg);
+          box-shadow:var(--card-sh);
+          padding:.2rem 1rem .9rem; margin:0;
+          font-size:.82rem; color:var(--txt2); line-height:1.8;
+        }
+        #dcDesPanel[hidden]{ display:none; }
+        /* open state: the button gives up its bottom rounding so the two read as one card */
+        .dc-des-legend[aria-expanded="true"]{ border-radius:.875rem .875rem 0 0; }
+        .dc-des-capline{ display:block; }
+        .dc-des-capline + .dc-des-capline{ margin-top:.55rem; }
+        #dcDesPanel .dc-des-mini-legend{ display:flex; direction:ltr; gap:.3rem; margin:.7rem 0; }
+        #dcDesPanel .dc-des-mini-legend div{ flex:1; text-align:center; padding:.35rem 0; border-radius:6px;
           font-size:.68rem; font-weight:800; color:#fff; }
       </style>
 
       <div class="dc-des-legend-wrap">
-        <button type="button" class="dc-des-legend" id="dcDesLegendBtn" aria-haspopup="true" aria-expanded="false">
+        <button type="button" class="dc-des-legend" id="dcDesLegendBtn" aria-expanded="false" aria-controls="dcDesPanel">
           <span class="dc-des-ico" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <rect x="2.5" y="13" width="5.5" height="8.5" rx="1.1" fill="currentColor"/>
@@ -4372,50 +4382,28 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
             <span class="dc-des-band-E">E</span><span class="dc-des-band-D">D</span><span class="dc-des-band-C">C</span><span class="dc-des-band-B">B</span><span class="dc-des-band-A">A</span>
           </span>
         </button>
-      </div>
 
-      <div id="dcDesPop" class="dc-hidden" role="dialog" aria-label="توضیح DentCast Evidence Score"></div>
+        <div id="dcDesPanel" hidden>
+          <span class="dc-des-capline">روشی که دنت‌کست با آن نشان می‌دهد هر مطلب علمی چقدر روی طراحی قوی و اجرای دقیق ایستاده — نه اینکه چقدر برای شما کاربردی است؛ آن قضاوت جای دیگری نوشته می‌شود.</span>
+          <span class="dc-des-capline">نتیجه یک باند است، نه یک عدد ساده:</span>
+          <div class="dc-des-mini-legend" aria-hidden="true">
+            <div style="background:#78808f">E</div><div style="background:#5f8a63">D</div><div style="background:#3f9a49">C</div><div style="background:#2f8f3f">B</div><div style="background:#1f7a34">A</div>
+          </div>
+          <span class="dc-des-capline">از E (پایه‌ترین سطح) تا A (قوی‌ترین شواهد ممکن) — و A فقط از بهترین طراحی‌ها به‌دست می‌آید، مثل مرور نظام‌مند یا کارآزمایی بالینی. طراحی‌های ضعیف‌تر، حتی در بهترین اجرا، هیچ‌وقت به A نمی‌رسند.</span>
+          <span class="dc-des-capline">یک نکته‌ی مهم: A فقط داخل یک نوع سؤال معنی دارد. A در یک مطالعه‌ی آزمایشگاهی یعنی بهترین شواهد ممکن از یک بنچ‌تست، نه اینکه همان ماده در دهان واقعی هم به همین اندازه قابل‌اعتماد است. A در یک مطالعه‌ی بالینی یعنی داده‌ی واقعی از بیمار — این دو با هم برابر نیستند.</span>
+          <span class="dc-des-capline">محتوایی که خودِ دنت‌کست نوشته، نه خلاصه‌ی یک مقاله، میله‌ی باند نمی‌گیرد؛ به‌جایش یک نشان «تجربه‌ی بالینی» با امتیاز شفافیت دارد.</span>
+        </div>
+      </div>
 
       <script>
       (function(){
         var btn = document.getElementById('dcDesLegendBtn');
-        var pop = document.getElementById('dcDesPop');
-        if (!btn || !pop) return;
-        var body =
-          '<button type="button" class="dc-des-pop-close" aria-label="بستن">✕</button>' +
-          '<div class="dc-des-pop-title">DentCast Evidence Score (DES) یعنی چه؟</div>' +
-          '<p>روشی که دنت‌کست با آن نشان می‌دهد هر مطلب علمی چقدر روی طراحی قوی و اجرای دقیق ایستاده — نه اینکه چقدر برای شما کاربردی است؛ آن قضاوت جای دیگری نوشته می‌شود.</p>' +
-          '<p>نتیجه یک باند است، نه یک عدد ساده:</p>' +
-          '<div class="dc-des-mini-legend">' +
-            '<div style="background:#78808f">E</div><div style="background:#5f8a63">D</div>' +
-            '<div style="background:#3f9a49">C</div><div style="background:#2f8f3f">B</div>' +
-            '<div style="background:#1f7a34">A</div>' +
-          '</div>' +
-          '<p>از E (پایه‌ترین سطح) تا A (قوی‌ترین شواهد ممکن) — و A فقط از بهترین طراحی‌ها به‌دست می‌آید، مثل مرور نظام‌مند یا کارآزمایی بالینی. طراحی‌های ضعیف‌تر، حتی در بهترین اجرا، هیچ‌وقت به A نمی‌رسند.</p>' +
-          '<p>یک نکته‌ی مهم: A فقط داخل یک نوع سؤال معنی دارد. A در یک مطالعه‌ی آزمایشگاهی یعنی بهترین شواهد ممکن از یک بنچ‌تست، نه اینکه همان ماده در دهان واقعی هم به همین اندازه قابل‌اعتماد است. A در یک مطالعه‌ی بالینی یعنی داده‌ی واقعی از بیمار — این دو با هم برابر نیستند.</p>' +
-          '<p>محتوایی که خودِ دنت‌کست نوشته، نه خلاصه‌ی یک مقاله، میله‌ی باند نمی‌گیرد؛ به‌جایش یک نشان «تجربه‌ی بالینی» با امتیاز شفافیت دارد.</p>';
-        function openPop(){
-          pop.innerHTML = body;
-          var r = btn.getBoundingClientRect();
-          var top = window.scrollY + r.bottom + 8;
-          var left = window.scrollX + r.left;
-          var maxLeft = window.scrollX + document.documentElement.clientWidth - 336;
-          if (left > maxLeft) left = Math.max(12, maxLeft);
-          pop.style.top = top + 'px'; pop.style.left = left + 'px';
-          pop.classList.remove('dc-hidden');
-          btn.setAttribute('aria-expanded', 'true');
-          pop.querySelector('.dc-des-pop-close').addEventListener('click', closePop);
-        }
-        function closePop(){
-          pop.classList.add('dc-hidden');
-          btn.setAttribute('aria-expanded', 'false');
-        }
-        btn.addEventListener('click', function(e){
-          e.stopPropagation();
-          if (pop.classList.contains('dc-hidden')) openPop(); else closePop();
-        });
-        document.addEventListener('click', function(e){
-          if (!pop.classList.contains('dc-hidden') && !e.target.closest('#dcDesPop') && !e.target.closest('#dcDesLegendBtn')) closePop();
+        var panel = document.getElementById('dcDesPanel');
+        if (!btn || !panel) return;
+        btn.addEventListener('click', function(){
+          var open = panel.hidden;
+          panel.hidden = !open;
+          btn.setAttribute('aria-expanded', open ? 'true' : 'false');
         });
       })();
       </script>
