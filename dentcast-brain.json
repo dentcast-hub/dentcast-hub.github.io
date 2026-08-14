@@ -13267,5 +13267,35 @@
       "secondary": [],
       "subtopic": "intraoral-scanning"
     }
+  },
+  {
+    "type": "dentcast",
+    "episode": "161",
+    "title": "Cantilever in Implant Dentistry :part1",
+    "caption": "توی این اپیزود از دنت‌کست، پرونده استفاده از کنتی‌لور روی ایمپلنت رو باز می‌کنیم. قراره ببینیم این ترس بیومکانیکی درباره تحلیل استخوان چقدر واقعیت داره، در درازمدت با چه عوارضی روبه‌رو می‌شیم، و خط قرمز حیاتی در انتخاب ایمپلنت چیه. اگر می‌خواید بدونید چه زمانی می‌شه به جای جراحی‌های وسیع به کنتی‌لورها اعتماد کرد، این قسمت برای شماست.",
+    "hashtags": [
+      "#دنتکست",
+      "#کانتی_لیور",
+      "#ایمپلنت",
+      "#پروتز_ایمپلنت",
+      "#تحلیل_استخوان_کرستال",
+      "#بیومکانیک",
+      "#طرح_درمان",
+      "#عوارض_ایمپلنت"
+    ],
+    "keywords": [
+      "ICFDP",
+      "Cantilever Extension",
+      "Marginal Bone Level",
+      "Non-Axial Loading",
+      "بیومکانیک کانتی‌لور ایمپلنت"
+    ],
+    "audio_url": "https://episodes.s3.ir-thr-at1.arvanstorage.ir/dentcast161%20.mp3?versionId=",
+    "page_url": "/episodes/episode-161.html",
+    "pillar": {
+      "primary": "implantology",
+      "secondary": [],
+      "subtopic": "peri-implant-health"
+    }
   }
 ]

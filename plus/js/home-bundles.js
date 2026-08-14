@@ -24,7 +24,7 @@ const BUNDLES = [
   { id: 'bundle-ceramic-cement', glyph: 'icon-flask', title: 'آماده‌سازی سطح و سمان سرامیک: شروع کن', steps: 7 },
   { id: 'bundle-post-core', glyph: 'icon-post', title: 'پست و کور: شروع کن', steps: 7 },
   { id: 'bundle-implant-parts', glyph: 'icon-implant', title: 'اجزای پروتز ایمپلنت: شروع کن', steps: 7 },
-  { id: 'bundle-implant-surgery', glyph: 'icon-scalpel', title: 'تصمیم‌های جراحی ایمپلنت: شروع کن', steps: 6 },
+  { id: 'bundle-implant-surgery', glyph: 'icon-scalpel', title: 'تصمیم‌های جراحی ایمپلنت: شروع کن', steps: 7 },
   { id: 'bundle-occlusion-rehab', glyph: 'icon-occlusion', title: 'اکلوژن در بازسازی: شروع کن', steps: 7 },
   { id: 'bundle-biomimetic', glyph: 'icon-sprout', title: 'بیومیمتیک: شروع کن', steps: 6 },
   { id: 'bundle-crown-prep', glyph: 'icon-tooth-restoration', title: 'تراش و قالب‌گیری: شروع کن', steps: 6 },

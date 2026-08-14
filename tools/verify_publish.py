@@ -503,7 +503,10 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
 
     # ---------------- کاوش بیشتر ----------------
     n_sections = doc.count('<div class="dc-related-section">')
-    if is_lite or etype == "episode":
+    # Core episodes carried no `type` field for their first 202 entries; more
+    # recent ones (154+) write "type": "dentcast" instead (same category,
+    # schema drift — see Hard Rule 6). Both must hit the episode branch.
+    if is_lite or etype in ("episode", "dentcast"):
         rep.skip("2.5 related", f"{etype} uses its own related-links convention")
     else:
         rep.check(n_sections == 1, "2.5 related",
