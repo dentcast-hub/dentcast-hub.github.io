@@ -1,4 +1,5 @@
 import 'dotenv/config';
+import { normalizePhone } from './services/phone.js';
 
 function str(name: string, fallback?: string): string {
   const v = process.env[name];
@@ -7,6 +8,22 @@ function str(name: string, fallback?: string): string {
     throw new Error(`Missing required env var: ${name}`);
   }
   return v;
+}
+
+/**
+ * A phone-number env var, in the same canonical `09XXXXXXXXX` form
+ * `profiles.phone` is stored in. The *_ALERT_PHONE vars are matched against
+ * that column with a plain equality (`services/support.ts`,
+ * `services/gift-redemption.ts`) — an unnormalized value (`+98…`, `0098…`,
+ * spaces) would never match and would fail silently, with nothing logging
+ * why the alert never arrived. Falls back to the raw string on an invalid
+ * number so a real typo still shows up as "configured but never matches"
+ * rather than disappearing into "not configured".
+ */
+function phoneEnv(name: string): string {
+  const raw = str(name, '');
+  if (!raw) return raw;
+  return normalizePhone(raw) ?? raw;
 }
 
 function int(name: string, fallback: number): number {
@@ -342,7 +359,7 @@ export const config = {
     // means the queue is only seen when somebody opens /admin — which is why
     // the alert exists, and why its absence logs a line instead of failing the
     // reader's write. Same arrangement as GIFTCARD_ALERT_PHONE.
-    alertPhone: str('SUPPORT_ALERT_PHONE', ''),
+    alertPhone: phoneEnv('SUPPORT_ALERT_PHONE'),
   },
 
   // Payments. Prices are in RIAL everywhere in the code and the database
@@ -448,7 +465,7 @@ export const config = {
     /** Where the shop emails the card. Shown to the buyer. */
     recipientEmail: str('GIFTCARD_RECIPIENT_EMAIL', 'foad.shahabian@gmail.com'),
     /** Whose phone hears "a card is on its way". Empty = console only. */
-    alertPhone: str('GIFTCARD_ALERT_PHONE', ''),
+    alertPhone: phoneEnv('GIFTCARD_ALERT_PHONE'),
   },
 
   // Paying by SHABA bank transfer — the second rail on `gift_redemptions`
@@ -471,7 +488,7 @@ export const config = {
     studentMonths: int('BANK_TRANSFER_STUDENT_MONTHS', 6),
     // Whose phone hears "a transfer is on its way". Empty = console only, same
     // arrangement as GIFTCARD_ALERT_PHONE and SUPPORT_ALERT_PHONE.
-    alertPhone: str('BANK_TRANSFER_ALERT_PHONE', ''),
+    alertPhone: phoneEnv('BANK_TRANSFER_ALERT_PHONE'),
   },
 
   // The support Telegram the reader sends a photo to (student card, a
