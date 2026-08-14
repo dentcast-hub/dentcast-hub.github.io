@@ -3,7 +3,7 @@
     "scored_at": "2026-08-14",
     "sources": [
       {
-        "des_version": "1.4",
+        "des_version": "1.5",
         "content_type": "RESEARCH",
         "question_type": "MATERIAL",
         "text_basis": "ABSTRACT_ONLY",
@@ -86,7 +86,7 @@
     "scored_at": "2026-08-14",
     "sources": [
       {
-        "des_version": "1.4",
+        "des_version": "1.5",
         "content_type": "COMMENTARY",
         "question_type": null,
         "text_basis": "FULL_TEXT",
@@ -138,7 +138,7 @@
     "scored_at": "2026-08-14",
     "sources": [
       {
-        "des_version": "1.4",
+        "des_version": "1.5",
         "content_type": "RESEARCH",
         "question_type": "THERAPY",
         "text_basis": "FULL_TEXT",
@@ -155,7 +155,7 @@
         },
         "s_design": {
           "value": 100,
-          "anchor": "SR/meta-analysis (of cohort studies, not RCTs)",
+          "anchor": "SR/meta-analysis of cohort studies (THERAPY SR/MA row, 100, via Step 2 routing)",
           "evidence_quote": "A systematic review of the English literature was conducted for selected articles published up to December 2007."
         },
         "q_method": {
@@ -164,22 +164,26 @@
             {
               "domain": "protocol registered before commencement",
               "rating": "high",
-              "evidence_quote": ""
+              "evidence_quote": "",
+              "note": "no protocol or registration anywhere: Methods runs search strategy → study selection → excluded studies → data extraction → statistics, with no registration statement, and none appears in the abstract or discussion"
             },
             {
               "domain": "adequacy of the literature search",
               "rating": "high",
-              "evidence_quote": "Searching was performed using an electronic database (Medline, PubMed)."
+              "evidence_quote": "Searching was performed using an electronic database (Medline, PubMed).",
+              "note": "present but fails the 3b-i threshold: one bibliographic database (<2). English-only, hand-search limited to 2005–2007"
             },
             {
               "domain": "justification for excluding individual studies",
-              "rating": "low",
-              "evidence_quote": "Ninety-four publications were excluded because of the following reasons"
+              "rating": "high",
+              "evidence_quote": "Ninety-four publications were excluded because of the following reasons",
+              "note": "present but fails the 3b-i threshold: aggregate reasons only, no list of the 94 excluded studies"
             },
             {
               "domain": "risk of bias assessment of included studies",
               "rating": "high",
-              "evidence_quote": ""
+              "evidence_quote": "",
+              "note": "no appraisal step exists in Methods (read in full); no quality/bias/appraisal/validity wording anywhere in the text"
             },
             {
               "domain": "appropriateness of meta-analytical methods",
@@ -187,14 +191,10 @@
               "evidence_quote": "If the goodness-of-fit P-value was <0.05, indicating heterogeneity, random-effects Poisson regression"
             },
             {
-              "domain": "consideration of risk of bias when interpreting results",
-              "rating": "high",
-              "evidence_quote": ""
-            },
-            {
               "domain": "assessment of publication bias",
               "rating": "high",
-              "evidence_quote": ""
+              "evidence_quote": "",
+              "note": "never addressed; the goodness-of-fit heterogeneity test is not a publication-bias assessment"
             }
           ],
           "multiplier": 0.3
@@ -204,7 +204,25 @@
             "item": "no CoI statement / manufacturer funding",
             "points": 0,
             "evidence_quote": "Conflicts of interest : none declared.",
-            "note": "CoI declared and funders named (Clinical Research Foundation; an ITI Foundation scholarship). Under v1.4 a non-profit academic foundation is not a manufacturer, and this review tests no single company's product, so 0 — the funder is named here rather than penalised."
+            "note": "CoI declared and funders named (Clinical Research Foundation; an ITI Foundation scholarship). Both are non-profit foundations, not manufacturers under Step 4, and this review tests no single company's product."
+          },
+          {
+            "item": "clinical trial not prospectively registered",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "RCTs only; not applicable to a systematic review"
+          },
+          {
+            "item": "no sample size justification / power analysis",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study"
+          },
+          {
+            "item": "follow-up shorter than the outcome requires",
+            "points": 0,
+            "evidence_quote": "reporting data of at least 5 years on ICFDPs",
+            "note": "inclusion required a mean follow-up of at least 5 years, adequate for the stated 5-year survival outcome"
           }
         ],
         "commentary_checklist": null,
@@ -212,10 +230,10 @@
         "band": "D",
         "provisional": false,
         "fact_fa": "این مرور نظام‌مند در نوع سؤال درمانی امتیاز ۳۰ از ۱۰۰ و باند D گرفت.",
-        "interpretation_fa": "متن کامل نشان می‌دهد این مرور هیچ ارزیابی کیفیتی روی مطالعات ورودی‌اش انجام نداده، جست‌وجویش یک پایگاه داده و فقط انگلیسی بوده، و پروتکل ثبت‌شده و بررسی سوگیری انتشار ندارد. پنج دامنه از هفت دامنهٔ حیاتی AMSTAR-2 رد می‌شوند، که یعنی اعتماد در سطح critically low. جمع‌بندی‌اش دربارهٔ بقای کانتی‌لور همچنان جامع‌ترین موجود است."
+        "interpretation_fa": "متن کامل نشان می‌دهد این مرور هیچ ارزیابی کیفیتی روی مطالعات ورودی‌اش انجام نداده، جست‌وجویش یک پایگاه داده و فقط انگلیسی بوده، و پروتکل ثبت‌شده و بررسی سوگیری انتشار ندارد. چهار دامنه از شش دامنهٔ حیاتی AMSTAR-2 رد می‌شوند، یعنی اعتماد در سطح critically low. جمع‌بندی‌اش دربارهٔ بقای کانتی‌لور همچنان جامع‌ترین موجود است."
       },
       {
-        "des_version": "1.4",
+        "des_version": "1.5",
         "content_type": "RESEARCH",
         "question_type": "THERAPY",
         "text_basis": "FULL_TEXT",
@@ -288,7 +306,7 @@
         "interpretation_fa": "متن کامل نشان می‌دهد نویسندگان خودشان نتوانسته‌اند تعداد و دلیل خروج بیماران از پیگیری را گزارش کنند و آن را محدودیت عمده می‌دانند. مقایسهٔ درون همان بیمار نقطهٔ قوت آن است و پیگیری ۱۰ تا ۱۸ سال طولانی است. با این حال نامعلوم‌بودن ریزش نمونه و نبود محاسبهٔ حجم نمونه، وزن یافته را کم می‌کند."
       },
       {
-        "des_version": "1.4",
+        "des_version": "1.5",
         "content_type": "RESEARCH",
         "question_type": "ETIOLOGY",
         "text_basis": "FULL_TEXT",
@@ -344,7 +362,7 @@
             "item": "CoI not disclosed",
             "points": 8,
             "evidence_quote": "",
-            "note": "the paper carries no conflict-of-interest or funding statement of any kind, while the implants studied are a single manufacturer's (Institut Straumann AG)"
+            "note": "read in full: no conflict-of-interest, funding, grant or acknowledgement statement anywhere in the paper, while every implant studied is one manufacturer's (Institut Straumann AG)"
           },
           {
             "item": "no sample size justification / power analysis",
