@@ -1159,7 +1159,7 @@ real hit:
 **If none of the three yields a real abstract, that source is not scorable.** The
 spec's own error output is the correct result, and it is what gets recorded:
 ```json
-{"des_version":"1.3","error":"INSUFFICIENT_TEXT"}
+{"des_version":"1.4","error":"INSUFFICIENT_TEXT"}
 ```
 Per the capability protocol (`agent-parity.md` §2), when the blocker is a **missing
 tool** rather than a missing abstract, **ask the user to paste the abstract** —
@@ -1174,8 +1174,18 @@ score built on it.
 
 #### Part 2 — Run the prompt file
 
-**Load `.dentcast/dentcast-evidence-score-v1.3.md` as the system prompt — the whole
-file, verbatim, minus the appendix.** The appendix says so itself ("NOT part of the
+**Load `.dentcast/dentcast-evidence-score-v1.4.md` as the system prompt — the whole
+file, verbatim, minus the appendix.**
+
+**v1.4 is the current spec and it is deliberately deterministic.** Every place
+v1.3 left a decision to the scorer is now decided: one tool per design, a fixed
+domain list, an explicit rating rule (under `FULL_TEXT`, silence about a
+safeguard is `high`, not `NR`), routing for the designs that matched no anchor,
+a narrowed funding penalty, and round-half-up on exact decimals. Follow the
+rules even where your own judgment differs — **a score everyone reproduces is
+worth more than a slightly better score nobody can.** Any record still stamped
+`des_version: "1.3"` predates this and must be regenerated before its number is
+compared with a new one. The appendix says so itself ("NOT part of the
 model instruction … Do not include this appendix if the file is loaded verbatim as a
 system prompt"): those checks are yours to run in Part 3, not the model's.
 
@@ -1246,7 +1256,7 @@ without the leading `/` and without `.html` — the same id Phase F takes):
 {
   "episodes/episode-161": {
     "scored_at": "2026-08-14",
-    "sources": [ { "des_version": "1.3", "content_type": "RESEARCH", "...": "..." } ]
+    "sources": [ { "des_version": "1.4", "content_type": "RESEARCH", "...": "..." } ]
   }
 }
 ```

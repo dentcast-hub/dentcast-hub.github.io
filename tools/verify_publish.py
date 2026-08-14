@@ -29,6 +29,7 @@ import json
 import re
 import sys
 import unicodedata
+from decimal import Decimal, ROUND_HALF_UP
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -710,7 +711,14 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
                     pen = sum(int(p.get("points", 0)) for p in (s.get("penalties") or []))
                     sd = (s.get("s_design") or {}).get("value", 0)
                     mult = (s.get("q_method") or {}).get("multiplier", 0)
-                    calc = max(0, round(sd * mult) - pen)
+                    # Spec v1.4 Step 5: exact decimals, round HALF UP, then subtract.
+                    # Not Python's round(), which is half-to-even — round(22.5) is 22
+                    # while round(27.5) is 28, and JS disagrees with both. On this
+                    # scale 65 × 0.30 = 19.5 sits exactly on the E/D boundary, so the
+                    # rounding rule alone would decide that paper's band.
+                    prod = (Decimal(str(sd)) * Decimal(str(mult))).quantize(
+                        Decimal("1"), rounding=ROUND_HALF_UP)
+                    calc = max(0, int(prod) - pen)
                 rep.check(calc == s.get("des_score"), "4.13 DES",
                           f"{tag} arithmetic checks out ({s.get('des_score')})",
                           f"{tag} des_score is {s.get('des_score')} but recomputes to {calc}",
