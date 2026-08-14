@@ -4265,7 +4265,7 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
           <span class="k">ساعت محتوای صوتی</span>
         </div>
         <div class="hero-stat" role="listitem">
-          <span class="v"><!-- COUNTER:CONTENT:START -->۵۸۵<!-- COUNTER:CONTENT:END --></span>
+          <span class="v"><!-- COUNTER:CONTENT:START -->۵۸۷<!-- COUNTER:CONTENT:END --></span>
           <span class="k">مطلب و مدخل آموزشی</span>
         </div>
       </div>
@@ -4409,9 +4409,9 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
           <p class="dc-rail-title">پرامپتولوژیست — روشِ کار، نه فقط متنِ درخواست</p>
           <span class="dc-rail-meta">تازه‌ترین مطلب</span>
         </a>
-        <a class="dc-rail-card" data-cat="sharehub" href="/sharehub/share-13.html">
+        <a class="dc-rail-card" data-cat="sharehub" href="/sharehub/share-15.html">
           <span class="dc-type-chip t-share">ShareHub</span>
-          <p class="dc-rail-title">دیابت و ایمپلنت دندانی: از تصمیم قبل از جراحی تا نگهداری بلندمدت</p>
+          <p class="dc-rail-title">چرا اسکنر روی روکش‌های خیلی براق یا کامپوزیت/رزین‌های خیلی سفید خوب اسکن نمی‌کنه؟</p>
           <span class="dc-rail-meta">تازه‌ترین مطلب</span>
         </a>
         <a class="dc-rail-card" data-cat="dentcast_plus" href="/dentcast-plus/video-6.html">
@@ -4438,10 +4438,10 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
           </div>
         </div>
         <ul class="dc-pulse-list">
+          <li>یک <a href="/sharehub/share-15.html">مطلب Share Hub</a> با عنوانِ «چرا اسکنر روی روکش‌های خیلی براق یا کامپوزیت/رزین‌های خیلی سفید خوب اسکن نمی‌کنه؟» منتشر شد · ۲۳ مرداد</li>
           <li>یک <a href="/sharehub/share-14.html">مطلب Share Hub</a> با عنوانِ «از تشخیص تا درمان لبخند لثه‌ای» منتشر شد · ۲۲ مرداد</li>
           <li>یک <a href="/chairside/chairside-32.html">کیس چیرساید</a> با عنوانِ «وقتی اصول رعایت نشده، بهترین سمان‌ها هم معجزه نمی‌کنند» منتشر شد · ۲۲ مرداد</li>
           <li>یک <a href="/chairside/chairside-31.html">کیس چیرساید</a> با عنوانِ «دندانی که فانکشن ندارد، صرفاً یک فضای اشغال‌شده است» منتشر شد · ۲۱ مرداد</li>
-          <li>یک <a href="/chairside/chairside-30.html">کیس چیرساید</a> با عنوانِ «سرنوشت دندان را فقط با معیارهای رستوریتیو تعیین نکنیم» منتشر شد · ۲۰ مرداد</li>
         </ul>
       </div>
 
@@ -5214,7 +5214,7 @@ scrollBody.addEventListener('touchend',e=>{
     if(p) p.textContent=title;
     a.href=url;
   }
-  fetch('/dentcast-brain.json?v=3ec6e2b8f7',{cache:'no-store'}).then(function(r){return r.json();}).then(function(arr){
+  fetch('/dentcast-brain.json?v=1dcb38a143',{cache:'no-store'}).then(function(r){return r.json();}).then(function(arr){
     if(!Array.isArray(arr)) return;
     var latest={}, pool=[];
     arr.forEach(function(e){
@@ -5561,7 +5561,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 <script>
 /* ── LAST 30 UPDATES ── */
 (function(){
-  const FEED_URL='/dentcast-brain.json?v=3ec6e2b8f7';
+  const FEED_URL='/dentcast-brain.json?v=1dcb38a143';
   const el=document.getElementById('dcLast3Updates');
   if(!el) return;
   function extractArray(json){if(Array.isArray(json))return json;const cands=[json?.items,json?.data,json?.entries,json?.feed].filter(Boolean);for(const c of cands)if(Array.isArray(c))return c;for(const k in(json||{})){const v=json[k];if(Array.isArray(v))return v;if(v&&typeof v==='object'&&Array.isArray(v.items))return v.items;}return[];}
@@ -5817,7 +5817,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 
   function getBrain(){
     if(brainCache) return Promise.resolve(brainCache);
-    return fetch('/dentcast-brain.json?v=3ec6e2b8f7', {cache:'no-store'})
+    return fetch('/dentcast-brain.json?v=1dcb38a143', {cache:'no-store'})
       .then(r => r.ok ? r.json() : [])
       .then(d => { brainCache = Array.isArray(d) ? d : []; return brainCache; })
       .catch(() => { brainCache = []; return []; });

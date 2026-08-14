@@ -1641,7 +1641,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 16,
+   "count": 17,
    "content_ids": [
     "episodes/episode-109",
     "episodes/episode-109-2",
@@ -1658,7 +1658,73 @@
     "dentai/promptologist/prompt4-2",
     "dentai/dentai-28",
     "dentai/promptologist/prompt4-3",
-    "dentai/promptologist/prompt4-4"
+    "dentai/promptologist/prompt4-4",
+    "sharehub/share-15"
+   ]
+  },
+  {
+   "key": "curated_content",
+   "tag": "#Curated_Content",
+   "domain": "brand",
+   "words": 2,
+   "definition": "نشانه‌ی اینکه محتوا گلچین‌شده از منبع دیگری است، نه تولید اصلی.",
+   "use_when": "روی مدخل‌های بازنشر.",
+   "aliases": [
+    "محتوای گلچین شده",
+    "کیوریتد",
+    "بازنشر محتوا"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 15,
+   "content_ids": [
+    "sharehub/share-1",
+    "sharehub/share-2",
+    "sharehub/share-3",
+    "sharehub/share-4",
+    "sharehub/share-5",
+    "sharehub/share-6",
+    "sharehub/share-7",
+    "sharehub/share-8",
+    "sharehub/share-9",
+    "sharehub/share-10",
+    "sharehub/share-11",
+    "sharehub/share-12",
+    "sharehub/share-13",
+    "sharehub/share-14",
+    "sharehub/share-15"
+   ]
+  },
+  {
+   "key": "share_hub",
+   "tag": "#Share_Hub",
+   "domain": "brand",
+   "words": 2,
+   "definition": "نام سریِ Share Hub — بازنشر و مرور محتوای دیگران.",
+   "use_when": "روی هر مدخل شیرهاب، و هیچ‌جای دیگر.",
+   "aliases": [
+    "شیرهاب",
+    "شر هاب"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 15,
+   "content_ids": [
+    "sharehub/share-1",
+    "sharehub/share-2",
+    "sharehub/share-3",
+    "sharehub/share-4",
+    "sharehub/share-5",
+    "sharehub/share-6",
+    "sharehub/share-7",
+    "sharehub/share-8",
+    "sharehub/share-9",
+    "sharehub/share-10",
+    "sharehub/share-11",
+    "sharehub/share-12",
+    "sharehub/share-13",
+    "sharehub/share-14",
+    "sharehub/share-15"
    ]
   },
   {
@@ -1731,69 +1797,6 @@
     "notecast/episode-38",
     "chairside/chairside-29",
     "notecast/episode-39"
-   ]
-  },
-  {
-   "key": "curated_content",
-   "tag": "#Curated_Content",
-   "domain": "brand",
-   "words": 2,
-   "definition": "نشانه‌ی اینکه محتوا گلچین‌شده از منبع دیگری است، نه تولید اصلی.",
-   "use_when": "روی مدخل‌های بازنشر.",
-   "aliases": [
-    "محتوای گلچین شده",
-    "کیوریتد",
-    "بازنشر محتوا"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 14,
-   "content_ids": [
-    "sharehub/share-1",
-    "sharehub/share-2",
-    "sharehub/share-3",
-    "sharehub/share-4",
-    "sharehub/share-5",
-    "sharehub/share-6",
-    "sharehub/share-7",
-    "sharehub/share-8",
-    "sharehub/share-9",
-    "sharehub/share-10",
-    "sharehub/share-11",
-    "sharehub/share-12",
-    "sharehub/share-13",
-    "sharehub/share-14"
-   ]
-  },
-  {
-   "key": "share_hub",
-   "tag": "#Share_Hub",
-   "domain": "brand",
-   "words": 2,
-   "definition": "نام سریِ Share Hub — بازنشر و مرور محتوای دیگران.",
-   "use_when": "روی هر مدخل شیرهاب، و هیچ‌جای دیگر.",
-   "aliases": [
-    "شیرهاب",
-    "شر هاب"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 14,
-   "content_ids": [
-    "sharehub/share-1",
-    "sharehub/share-2",
-    "sharehub/share-3",
-    "sharehub/share-4",
-    "sharehub/share-5",
-    "sharehub/share-6",
-    "sharehub/share-7",
-    "sharehub/share-8",
-    "sharehub/share-9",
-    "sharehub/share-10",
-    "sharehub/share-11",
-    "sharehub/share-12",
-    "sharehub/share-13",
-    "sharehub/share-14"
    ]
   },
   {
@@ -1896,6 +1899,67 @@
     "dentai/promptologist/prompt4-2",
     "dentai/promptologist/prompt4-3",
     "dentai/promptologist/prompt4-4"
+   ]
+  },
+  {
+   "key": "روکش",
+   "tag": "#روکش",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "چترِ عامِ روکش.",
+   "use_when": "همراه یک تگ مشخص‌تر بیاید، نه به‌تنهایی.",
+   "aliases": [
+    "crown",
+    "کراون"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 13,
+   "content_ids": [
+    "episodes/episode-2",
+    "episodes/episode-8",
+    "dentcast-plus/video-6",
+    "metanotes/meta-12",
+    "chairside/chairside-6",
+    "chairside/chairside-9",
+    "chairside/chairside-15",
+    "insight/insight-49",
+    "chairside/chairside-22",
+    "chairside/chairside-27",
+    "chairside/chairside-29",
+    "insight/insight-61",
+    "sharehub/share-15"
+   ]
+  },
+  {
+   "key": "کامپوزیت",
+   "tag": "#کامپوزیت",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "کامپوزیت رزینی به‌عنوان متریال ترمیمی.",
+   "use_when": "همراه یک تگ مشخص‌تر بیاید.",
+   "aliases": [
+    "composite",
+    "ترمیم کامپوزیتی",
+    "ترمیم با کامپوزیت"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 13,
+   "content_ids": [
+    "episodes/episode-44",
+    "episodes/episode-122",
+    "episodes/episode-123-3",
+    "episodes/episode-128-2",
+    "episodes/episode-147-3",
+    "episodes/episode-147-4",
+    "dentai/dentai-6",
+    "litecast/lite-CAST7",
+    "dentai/dentai-8",
+    "dentai/dentai-9",
+    "insight/insight-23",
+    "dentai/dentai-22",
+    "sharehub/share-15"
    ]
   },
   {
@@ -2057,35 +2121,6 @@
    ]
   },
   {
-   "key": "روکش",
-   "tag": "#روکش",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "چترِ عامِ روکش.",
-   "use_when": "همراه یک تگ مشخص‌تر بیاید، نه به‌تنهایی.",
-   "aliases": [
-    "crown",
-    "کراون"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 12,
-   "content_ids": [
-    "episodes/episode-2",
-    "episodes/episode-8",
-    "dentcast-plus/video-6",
-    "metanotes/meta-12",
-    "chairside/chairside-6",
-    "chairside/chairside-9",
-    "chairside/chairside-15",
-    "insight/insight-49",
-    "chairside/chairside-22",
-    "chairside/chairside-27",
-    "chairside/chairside-29",
-    "insight/insight-61"
-   ]
-  },
-  {
    "key": "سایش_دندان",
    "tag": "#سایش_دندان",
    "domain": "clinical",
@@ -2180,7 +2215,7 @@
    "key": "پروگنوز_دندان",
    "tag": "#پروگنوز_دندان",
    "domain": null,
-   "words": 2,
+   "words": 4,
    "definition": "پیش‌بینیِ سرنوشت یک دندانِ مشخص پیش از سرمایه‌گذاری روی آن.",
    "use_when": "مقاله پیش از درمان قطعی پروگنوز را بسنجد.",
    "aliases": [
@@ -2207,36 +2242,6 @@
     "chairside/chairside-14",
     "chairside/chairside-21",
     "chairside/chairside-30"
-   ]
-  },
-  {
-   "key": "کامپوزیت",
-   "tag": "#کامپوزیت",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "کامپوزیت رزینی به‌عنوان متریال ترمیمی.",
-   "use_when": "همراه یک تگ مشخص‌تر بیاید.",
-   "aliases": [
-    "composite",
-    "ترمیم کامپوزیتی",
-    "ترمیم با کامپوزیت"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 12,
-   "content_ids": [
-    "episodes/episode-44",
-    "episodes/episode-122",
-    "episodes/episode-123-3",
-    "episodes/episode-128-2",
-    "episodes/episode-147-3",
-    "episodes/episode-147-4",
-    "dentai/dentai-6",
-    "litecast/lite-CAST7",
-    "dentai/dentai-8",
-    "dentai/dentai-9",
-    "insight/insight-23",
-    "dentai/dentai-22"
    ]
   },
   {
@@ -2297,6 +2302,36 @@
     "notecast/episode-27",
     "chairside/chairside-8",
     "chairside/chairside-11"
+   ]
+  },
+  {
+   "key": "دقت_اسکن",
+   "tag": "#دقت_اسکن",
+   "domain": null,
+   "words": 2,
+   "definition": "دقتِ نهاییِ اسکن و آنچه آن را خراب می‌کند.",
+   "use_when": "مقاله دقت را بسنجد یا بهبود دهد.",
+   "aliases": [
+    "scanning accuracy",
+    "trueness",
+    "precision",
+    "صحت اسکن"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 11,
+   "content_ids": [
+    "episodes/episode-122-2",
+    "episodes/episode-128-1",
+    "episodes/episode-133",
+    "episodes/episode-144-2",
+    "sharehub/share-2",
+    "insight/insight-33",
+    "insight/insight-40",
+    "dentai/dentai-21",
+    "insight/insight-51",
+    "metanotes/meta-16",
+    "sharehub/share-15"
    ]
   },
   {
@@ -2386,6 +2421,40 @@
     "episodes/episode-141",
     "episodes/episode-146",
     "episodes/episode-147"
+   ]
+  },
+  {
+   "key": "اسکنر_داخل_دهانی",
+   "tag": "#اسکنر_داخل_دهانی",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "اسکنرِ داخل‌دهانی که قالبِ دیجیتالِ مستقیم می‌گیرد.",
+   "use_when": "مقاله اسکنر داخل‌دهانی را موضوع داشته باشد.",
+   "aliases": [
+    "intraoral scanner",
+    "اسکنر دیجیتال",
+    "IOS",
+    "اسکنر"
+   ],
+   "variants": [
+    "#اسکن_داخل_دهانی",
+    "#Intraoral_Scanner"
+   ],
+   "co_tags": [
+    "#Intraoral_Scanner"
+   ],
+   "count": 10,
+   "content_ids": [
+    "episodes/episode-106-2",
+    "episodes/episode-122-2",
+    "episodes/episode-128-1",
+    "episodes/episode-149-2",
+    "sharehub/share-2",
+    "insight/insight-33",
+    "insight/insight-40",
+    "dentai/dentai-21",
+    "metanotes/meta-16",
+    "sharehub/share-15"
    ]
   },
   {
@@ -2483,35 +2552,6 @@
    ]
   },
   {
-   "key": "دقت_اسکن",
-   "tag": "#دقت_اسکن",
-   "domain": null,
-   "words": 2,
-   "definition": "دقتِ نهاییِ اسکن و آنچه آن را خراب می‌کند.",
-   "use_when": "مقاله دقت را بسنجد یا بهبود دهد.",
-   "aliases": [
-    "scanning accuracy",
-    "trueness",
-    "precision",
-    "صحت اسکن"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 10,
-   "content_ids": [
-    "episodes/episode-122-2",
-    "episodes/episode-128-1",
-    "episodes/episode-133",
-    "episodes/episode-144-2",
-    "sharehub/share-2",
-    "insight/insight-33",
-    "insight/insight-40",
-    "dentai/dentai-21",
-    "insight/insight-51",
-    "metanotes/meta-16"
-   ]
-  },
-  {
    "key": "دندان_قدامی",
    "tag": "#دندان_قدامی",
    "domain": "clinical",
@@ -2568,6 +2608,36 @@
     "metanotes/meta-7",
     "insight/insight-28",
     "notecast/episode-36"
+   ]
+  },
+  {
+   "key": "قالب_گیری_دیجیتال",
+   "tag": "#قالب‌گیری_دیجیتال",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "ثبتِ دیجیتالِ آرچ با اسکنر، به‌جای قالب سنتی.",
+   "use_when": "مقاله دقت یا پروتکلِ ثبت دیجیتال را بررسی کند.",
+   "aliases": [
+    "قالب گیری دیجیتال",
+    "digital impression",
+    "اسکن دیجیتال",
+    "digital scan",
+    "دیجیتال اسکن"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 10,
+   "content_ids": [
+    "insight/insight-3",
+    "insight/insight-19",
+    "insight/insight-26",
+    "insight/insight-31",
+    "insight/insight-33",
+    "insight/insight-38",
+    "insight/insight-40",
+    "dentai/dentai-21",
+    "insight/insight-51",
+    "sharehub/share-15"
    ]
   },
   {
@@ -2692,39 +2762,6 @@
     "litecast/lite-CAST17",
     "litecast/lite-CAST18",
     "litecast/lite-CAST19"
-   ]
-  },
-  {
-   "key": "اسکنر_داخل_دهانی",
-   "tag": "#اسکنر_داخل_دهانی",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "اسکنرِ داخل‌دهانی که قالبِ دیجیتالِ مستقیم می‌گیرد.",
-   "use_when": "مقاله اسکنر داخل‌دهانی را موضوع داشته باشد.",
-   "aliases": [
-    "intraoral scanner",
-    "اسکنر دیجیتال",
-    "IOS",
-    "اسکنر"
-   ],
-   "variants": [
-    "#اسکن_داخل_دهانی",
-    "#Intraoral_Scanner"
-   ],
-   "co_tags": [
-    "#Intraoral_Scanner"
-   ],
-   "count": 9,
-   "content_ids": [
-    "episodes/episode-106-2",
-    "episodes/episode-122-2",
-    "episodes/episode-128-1",
-    "episodes/episode-149-2",
-    "sharehub/share-2",
-    "insight/insight-33",
-    "insight/insight-40",
-    "dentai/dentai-21",
-    "metanotes/meta-16"
    ]
   },
   {
@@ -2893,35 +2930,6 @@
     "chairside/chairside-12",
     "insight/insight-40",
     "notecast/episode-37"
-   ]
-  },
-  {
-   "key": "قالب_گیری_دیجیتال",
-   "tag": "#قالب‌گیری_دیجیتال",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "ثبتِ دیجیتالِ آرچ با اسکنر، به‌جای قالب سنتی.",
-   "use_when": "مقاله دقت یا پروتکلِ ثبت دیجیتال را بررسی کند.",
-   "aliases": [
-    "قالب گیری دیجیتال",
-    "digital impression",
-    "اسکن دیجیتال",
-    "digital scan",
-    "دیجیتال اسکن"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 9,
-   "content_ids": [
-    "insight/insight-3",
-    "insight/insight-19",
-    "insight/insight-26",
-    "insight/insight-31",
-    "insight/insight-33",
-    "insight/insight-38",
-    "insight/insight-40",
-    "dentai/dentai-21",
-    "insight/insight-51"
    ]
   },
   {
@@ -5326,7 +5334,7 @@
    "key": "رادیوگرافی_تشخیصی",
    "tag": "#رادیوگرافی_تشخیصی",
    "domain": null,
-   "words": 2,
+   "words": 4,
    "definition": "انتخاب و تفسیرِ درستِ تصویر — پانورامیک در برابر پری‌اپیکال.",
    "use_when": "مقاله کفایت یا نارساییِ یک تصویر را مسئله بداند.",
    "aliases": [
@@ -6527,7 +6535,7 @@
    "key": "درمان_بین_رشته_ای",
    "tag": "#درمان_بین_رشته_ای",
    "domain": null,
-   "words": 4,
+   "words": 6,
    "definition": "درمانی که تصمیمش بین دو تخصص تقسیم شده.",
    "use_when": "مقاله هماهنگی بین تخصص‌ها را مسئله بداند.",
    "aliases": [
@@ -12230,6 +12238,26 @@
    ]
   },
   {
+   "key": "اسکن_سطح_براق",
+   "tag": "#اسکن_سطح_براق",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "افت دقت و کیفیت اسکن داخل‌دهانی روی سطوح خیلی براق یا خیلی سفید و ترانسلوسنت (مثل برخی روکش‌ها یا کامپوزیت/رزین‌های روشن) به‌دلیل بازتاب بیش‌ازحد نور (overexposure) و خطای نرم‌افزار در تطبیق نقاط مرجع.",
+   "use_when": "مقاله علت افت دقت یا ناقص‌ماندن اسکن داخل‌دهانی روی سطوح بسیار براق، سفید یا ترانسلوسنت (روکش، کامپوزیت، رزین) و راهکارهای آن را بررسی کند.",
+   "aliases": [
+    "overexposure اسکن",
+    "اسکن روکش براق",
+    "اسکن کامپوزیت سفید",
+    "بازتاب نور اسکنر"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "sharehub/share-15"
+   ]
+  },
+  {
    "key": "اسکن_فول_آرچ",
    "tag": "#اسکن_فول_آرچ",
    "domain": "clinical",
@@ -12705,7 +12733,7 @@
    "key": "اینتروژن_ارتودنسی",
    "tag": "#اینتروژن_ارتودنسی",
    "domain": null,
-   "words": 2,
+   "words": 4,
    "definition": "فرو بردنِ ارتودنتیکِ دندانِ سوپرااراپت برای بازپس‌گیریِ فضا.",
    "use_when": "مقاله اینتروژن را راه‌حل بداند.",
    "aliases": [
@@ -13572,7 +13600,7 @@
    "key": "تفسیر_رادیوگرافی",
    "tag": "#تفسیر_رادیوگرافی",
    "domain": "clinical",
-   "words": 2,
+   "words": 4,
    "definition": "خواندنِ الگو — مرزِ صاف در برابر مرزِ منتشر — نه صرفاً دیدنِ لکه.",
    "use_when": "مقاله معیارِ تمایزِ تصویری بدهد.",
    "aliases": [
@@ -14621,7 +14649,7 @@
    "key": "رادیوگرافی_کنترل",
    "tag": "#رادیوگرافی_کنترل",
    "domain": "clinical",
-   "words": 2,
+   "words": 4,
    "definition": "پری‌اپیکالِ صحیح، به‌عنوان تأییدِ قطعیِ نشست.",
    "use_when": "مقاله رادیوگرافی را تأییدِ نهایی بداند، نه حس.",
    "aliases": [
@@ -16214,7 +16242,7 @@
    "key": "لبخند_لثه_ای",
    "tag": "#لبخند_لثه‌ای",
    "domain": "clinical",
-   "words": 2,
+   "words": 3,
    "definition": "نمایش بیش‌ازحدِ لثه در بالای دندان‌های قدامیِ بالا هنگام لبخندِ کامل؛ آستانه‌ی بالینی طبق Global Diagnosis بیش از ۲ میلی‌متر بین حاشیه‌ی آزادِ لثه‌ی سانترال و لبه‌ی پایینیِ لب.",
    "use_when": "مقاله علتِ نمایشِ لثه، اندازه‌گیریِ آن، یا انتخابِ درمان بر اساسِ علت را موضوع قرار دهد.",
    "aliases": [
@@ -17052,7 +17080,7 @@
    "key": "هوش_مصنوعی_رادیوگرافی",
    "tag": "#هوش_مصنوعی_رادیوگرافی",
    "domain": "ai",
-   "words": 3,
+   "words": 5,
    "definition": "نرم‌افزاری که روی رادیوگرافی ضایعه یا سطح استخوان را علامت می‌زند — تصویری که اغلب با ChatGPT اشتباه گرفته می‌شود.",
    "use_when": "مقاله همین دسته را موضوع یا نقطه‌ی تمایز قرار دهد.",
    "aliases": [
@@ -18857,6 +18885,7 @@
   "failure prediction": "پیش بینی شکست",
   "زمان به عنوان داده": "پیگیری زمانی",
   "flowable composite": "کامپوزیت فلو",
+  "اسکن کامپوزیت سفید": "اسکن سطح براق",
   "پروتز روی ایمپلنت": "پروتز ایمپلنت",
   "تصمیم گیری درمانی": "تصمیم درمانی",
   "تصمیم گیری بالینی": "تصمیم درمانی",
@@ -18963,6 +18992,7 @@
   "infection control": "کنترل عفونت",
   "retention control": "کنترل گیر",
   "anterior guidance": "گایدنس قدامی",
+  "overexposure اسکن": "اسکن سطح براق",
   "کلینیکال اینسایت": "اینسایت",
   "روکش روی ایمپلنت": "روکش ایمپلنت",
   "fixed prosthesis": "پروتز ثابت",
@@ -19117,6 +19147,7 @@
   "هدایت طرفی کانین": "گایدنس کانین",
   "چت با هوش مصنوعی": "مصاحبه با هوش مصنوعی",
   "فاصله پست و گوتا": "گپ پست و گوتا",
+  "بازتاب نور اسکنر": "اسکن سطح براق",
   "لامینیت سرامیکی": "لمینیت سرامیکی",
   "veneer laminate": "لمینیت سرامیکی",
   "تغییرات استخوان": "تحلیل استخوان",
@@ -19449,6 +19480,7 @@
   "composite core": "کور کامپوزیتی",
   "راهنمایی کانین": "گایدنس کانین",
   "post gutta gap": "گپ پست و گوتا",
+  "اسکن روکش براق": "اسکن سطح براق",
   "prosthodontics": "پروتز",
   "ویزیت کلینیکی": "کیس اینسایت",
   "implant crown": "روکش ایمپلنت",
