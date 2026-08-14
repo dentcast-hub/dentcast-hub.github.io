@@ -187,6 +187,18 @@ export async function achievementRoutes(app: FastifyInstance): Promise<void> {
       cap_percent: CREDIT_CAP_PERCENT,
       pillar_percent: pillarPct,
       next_purchase_percent: pillarPct + creditPercent(pickCredits(readyCredits)),
+      // The itemized position: every credit this account holds, named. Before
+      // this the strip only ever spoke in totals ("٪۳ نشان‌ها یک‌بارمصرف") —
+      // label_fa was always stored (badgeCredits/grantCredits/referralCredits
+      // all set it) but never left this route, so a founder-granted badge like
+      // «همراه» minted real money that no reader surface ever named as theirs.
+      items: [...readyCredits, ...spentCredits]
+        .map((c) => ({
+          label_fa: c.label_fa, percent: c.percent, kind: c.kind,
+          state: (spent!.has(c.source) ? 'spent' : 'ready') as 'ready' | 'spent',
+        }))
+        .sort((a, b) => (a.state === b.state ? 0 : a.state === 'ready' ? -1 : 1)
+          || b.percent - a.percent || a.label_fa.localeCompare(b.label_fa, 'fa')),
     };
 
     return reply.send({

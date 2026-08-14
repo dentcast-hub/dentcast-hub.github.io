@@ -338,4 +338,34 @@ describe('the discount block says what the cap governs', () => {
     expect(document.querySelector('.dcp-bg-wall')).not.toBeNull();
     expect(document.querySelector('.dcp-md-row')).not.toBeNull();
   });
+
+  // -------------------------------------------------------- the itemized position ---
+  //
+  // Founder report, 2026-08-14: the strip only ever spoke in totals («٪۳
+  // نشان‌ها یک‌بارمصرف») — a founder-granted badge like «همراه» mints a real
+  // discount_grants row with its own label_fa ('همراه'), but that name never
+  // left the API, so a reader could never tell which of their credits it was.
+  describe('names every credit it counts', () => {
+    it('lists ready and spent credits by their own label, ready first', () => {
+      mount(payload(discount({
+        ready_percent: 5, spent_percent: 10, next_purchase_percent: 5,
+        items: [
+          { label_fa: 'همراه', percent: 5, kind: 'grant', state: 'ready' },
+          { label_fa: 'پاداش معرفی', percent: 10, kind: 'referral', state: 'spent' },
+        ],
+      })));
+      const rows = [...document.querySelectorAll('.dcp-disc-item')];
+      expect(rows).toHaveLength(2);
+      expect(rows[0].querySelector('.dcp-disc-item-label')!.textContent).toBe('همراه');
+      expect(rows[0].querySelector('.dcp-ach-lv-val')!.classList.contains('is-spent')).toBe(false);
+      expect(rows[1].querySelector('.dcp-disc-item-label')!.textContent).toBe('پاداش معرفی');
+      expect(rows[1].querySelector('.dcp-ach-lv-val')!.classList.contains('is-spent')).toBe(true);
+    });
+
+    it('renders no itemized list when the route sends none, without breaking the rest', () => {
+      const body = mount(payload(discount()));
+      expect(body).not.toBeNull();
+      expect(document.querySelectorAll('.dcp-disc-item')).toHaveLength(0);
+    });
+  });
 });
