@@ -1221,6 +1221,12 @@ appendix's checks yourself — an output that fails these is not a score:
    `null` (unquoted) for COMMENTARY; `s_design` / `q_method` / `penalties` are `null`
    for COMMENTARY; `commentary_checklist` is `null` for RESEARCH.
 
+**These four are also enforced mechanically.** Phase F re-runs all of them over
+every record in `plus/des-scores.json` (rows tagged `4.13 DES`), so a mistake
+here fails the publish rather than shipping. Running them yourself first is
+still the job — the gate tells you *that* something is wrong, not what the
+right score was.
+
 **Reproducibility check (appendix §6) on the first score of any new question type:**
 score the same input three times. A one- or two-point drift in the number is
 acceptable; **a band change is not** — it means the anchors were read loosely and the
@@ -1694,9 +1700,22 @@ its chrome, its noindex + zero-hreflang state, and both halves of the fa↔en
 toggle as exact inverses · the fa page's 3-line hreflang block (no `en`
 alternate) · the `dc-notify` marker · landing page, Pulse, homepage rail,
 sitemap, pillar page · `content-index` / `flashcards-index` / `quiz-index` /
-`pathways` membership · and **the content version stamp actually matching the
+`pathways` membership · **every DES record's arithmetic, band agreement, track
+shape, `ABSTRACT_ONLY` multiplier cap and verbatim quotes** (step 4.13 Part 3,
+run mechanically) · and **the content version stamp actually matching the
 content it stamps**, which is what catches `stamp-version.py` not having run
 last.
+
+**On the DES rows specifically:** a record that exists is validated hard, but a
+**missing** record is a `warn`, never a `FAIL`. The workflow allows two
+documented skips — LiteCast and the founder's own «بدون DES» — and an episode
+that is only a caption legitimately has no record at all; the gate cannot tell
+those from a forgotten step 4.13, so it says so out loud instead of guessing in
+either direction. Read the warn and confirm which case it is. The checks that
+*do* fail hard are the ones prose cannot enforce: the first three records
+written by hand shipped two sources at multiplier `0.80` while marked
+`ABSTRACT_ONLY`, which the spec caps at `0.75` — an error that moved one paper
+from band C to band D and was invisible to re-reading.
 
 LiteCast, glossary and episode branches are handled: rows that do not apply to
 a type report `--` with the reason, so a documented skip is visible rather than
