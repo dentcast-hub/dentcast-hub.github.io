@@ -5240,5 +5240,1216 @@
         "interpretation_fa": "مرور روایتی است، پس امتیاز ساختاری‌اش پایین می‌ماند، اما همان عددی را می‌دهد که برنامه‌ی ریکال به آن نیاز دارد: هر سه تا شش ماه برای ریسک متوسط و بالا، تا دوازده ماه برای کم‌خطر. دو پیش‌بینی‌کننده‌ی عود را هم نام می‌برد: عدم پایبندی بیمار و پاکت باقی‌مانده‌ی پنج تا شش میلی‌متر."
       }
     ]
+  },
+  "sharehub/share-14": {
+    "scored_at": "2026-08-15",
+    "sources": [
+      {
+        "des_version": "1.8",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "From etiology to intervention: 50 years of progress in gummy smile research and treatment.",
+          "authors": "Tatakis DN",
+          "year": 2025,
+          "journal": "Journal of Indian Society of Periodontology",
+          "doi": "10.4103/jisp.jisp_548_25"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 15,
+          "anchor": "narrative historical review of five decades of gummy smile research and treatment (THERAPY narrative review row, 15)",
+          "evidence_quote": "Over the past five decades, significant progress has been made in understanding the etiology, diagnosis, and treatment of this condition."
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده به ثبت پروتکل یا شماره‌ی رجیستری اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است، نه high."
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده نام هیچ دیتابیس یا استراتژی جست‌وجویی نمی‌آورد؛ تحت ABSTRACT_ONLY این NR است."
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "فهرست مطالعات کنارگذاشته‌شده در چکیده نمی‌آید؛ تحت ABSTRACT_ONLY این NR است."
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده هیچ ابزار ارزیابی سوگیری مطالعات واردشده را نام نمی‌برد؛ تحت ABSTRACT_ONLY سکوت NR است."
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده هیچ سنتز کمی گزارش نمی‌کند و درباره‌ی روش ترکیب ساکت است؛ تحت ABSTRACT_ONLY این NR است."
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده به سوگیری انتشار، فانل پلات یا آزمون Egger اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است."
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "بیانیه‌ی تعارض منافع وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "فقط برای RCT اعمال می‌شود؛ این مطالعه ثانویه است."
+          },
+          {
+            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study"
+          },
+          {
+            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "این مطالعه ثانویه است و ادعای بقای مبتنی بر پیگیری خودش ندارد؛ این بند موضوعیت ندارد."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 8,
+        "band": "E",
+        "provisional": true,
+        "fact_fa": "این مقاله در نوع پرسش THERAPY امتیاز ۸ و باند E گرفت، و چون فقط چکیده در دسترس بود امتیاز مقدماتی است.",
+        "interpretation_fa": "مروری روایتی و تاریخی است، پس نه عددی می‌دهد نه شواهد را وزن می‌کند. کاری که می‌کند جای هر درمان را در نقشه روشن می‌کند: جراحی‌های اولیه از ۱۹۷۵ تا ۲۰۰۰ و بعد گزینه‌های کم‌تهاجم و غیرجراحی. تعریف بیش از سه میلی‌متر نمایش لثه هم از همین‌جاست."
+      },
+      {
+        "des_version": "1.8",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Diagnosis and Treatment Approaches to a \"Gummy Smile\".",
+          "authors": "Dym H, Pierre R",
+          "year": 2020,
+          "journal": "Dental Clinics of North America",
+          "doi": "10.1016/j.cden.2019.12.003"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 15,
+          "anchor": "narrative review of etiology, diagnosis and surgical approaches (THERAPY narrative review row, 15)",
+          "evidence_quote": "The purpose of this article is to review the etiology, diagnosis, and surgical approaches in treating the gummy smile."
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده به ثبت پروتکل یا شماره‌ی رجیستری اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است، نه high."
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده نام هیچ دیتابیس یا استراتژی جست‌وجویی نمی‌آورد؛ تحت ABSTRACT_ONLY این NR است."
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "فهرست مطالعات کنارگذاشته‌شده در چکیده نمی‌آید؛ تحت ABSTRACT_ONLY این NR است."
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده هیچ ابزار ارزیابی سوگیری مطالعات واردشده را نام نمی‌برد؛ تحت ABSTRACT_ONLY سکوت NR است."
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده هیچ سنتز کمی گزارش نمی‌کند و درباره‌ی روش ترکیب ساکت است؛ تحت ABSTRACT_ONLY این NR است."
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده به سوگیری انتشار، فانل پلات یا آزمون Egger اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است."
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "بیانیه‌ی تعارض منافع وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "فقط برای RCT اعمال می‌شود؛ این مطالعه ثانویه است."
+          },
+          {
+            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study"
+          },
+          {
+            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "این مطالعه ثانویه است و ادعای بقای مبتنی بر پیگیری خودش ندارد؛ این بند موضوعیت ندارد."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 8,
+        "band": "E",
+        "provisional": true,
+        "fact_fa": "این مقاله در نوع پرسش THERAPY امتیاز ۸ و باند E گرفت، و چون فقط چکیده در دسترس بود امتیاز مقدماتی است.",
+        "interpretation_fa": "مرور روایتی است و ارزشش در فهرست علت‌هاست، نه در وزن شواهد. همان چیزی را می‌گوید که تشخیص افتراقی لبخند لثه‌ای بر آن سوار است: رویش غیرفعال، طول لب، هایپرموبیلیتی لب، سایش لبه انسیزال و رشد عمودی فک بالا. تأکیدش بر این است که تشخیص دقیق درمان را تعیین می‌کند."
+      },
+      {
+        "des_version": "1.8",
+        "content_type": "RESEARCH",
+        "question_type": "ETIOLOGY",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "The gingival smile line.",
+          "authors": "Peck S, Peck L, Kataja M",
+          "year": 1992,
+          "journal": "The Angle Orthodontist",
+          "doi": "10.1043/0003-3219(1992)062<0091:TGSL>2.0.CO;2"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 60,
+          "anchor": "comparative study of a gingival-smile-line sample against a reference sample (ETIOLOGY case-control row, 60)",
+          "evidence_quote": "A comparative study was performed to examine the nature of the gingival smile line (GSL), a specific dentolabial configuration characterized by the exposure of maxillary anterior gingiva during a full smile."
+        },
+        "q_method": {
+          "tool": "ROBINS-I",
+          "domains": [
+            {
+              "domain": "confounding",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده هیچ تطبیق، محدودسازی یا تعدیلی برای مخدوش‌گرها گزارش نمی‌کند و درباره‌اش ساکت است؛ تحت ABSTRACT_ONLY این NR است، نه high."
+            },
+            {
+              "domain": "selection of participants",
+              "rating": "low",
+              "evidence_quote": "both consisting of North American white orthodontic patients with a median age of 14.4 years"
+            },
+            {
+              "domain": "classification of interventions/exposures",
+              "rating": "low",
+              "evidence_quote": "Five soft-tissue, three dental and three skeletal variables were selected, measured and reported"
+            },
+            {
+              "domain": "missing data",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده درباره‌ی داده‌های ازدست‌رفته یا ریزش نمونه چیزی نمی‌گوید؛ تحت ABSTRACT_ONLY سکوت NR است."
+            },
+            {
+              "domain": "measurement of the outcome",
+              "rating": "low",
+              "evidence_quote": "a specific dentolabial configuration characterized by the exposure of maxillary anterior gingiva during a full smile"
+            }
+          ],
+          "multiplier": 0.75
+        },
+        "penalties": [
+          {
+            "item": "بیانیه‌ی تعارض منافع وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "فقط برای RCT اعمال می‌شود؛ این مطالعه تصادفی‌سازی‌شده نیست."
+          },
+          {
+            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 45,
+        "band": "C",
+        "provisional": true,
+        "fact_fa": "این مقاله در نوع پرسش ETIOLOGY امتیاز ۴۵ و باند C گرفت، و چون فقط چکیده در دسترس بود امتیاز مقدماتی است.",
+        "interpretation_fa": "مقاله‌ی پایه‌ای است که دو عامل اصلی لبخند لثه‌ای را از هم جدا کرد: رشد عمودی قدامی فک بالا و توان عضلانی بالا بردن لب. به همان اندازه مهم است که چه چیزهایی ارتباط نداشتند، از جمله طول لب بالا و ارتفاع تاج کلینیکی. نمونه بیست‌وهفت نفر و از جمعیت ارتودنسی است."
+      },
+      {
+        "des_version": "1.8",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Effect and longevity of botulinum toxin in the treatment of gummy smile: a meta-analysis and meta-regression.",
+          "authors": "Zengiski ACS, Basso IB, Cavalcante-Leão BL, Stechman-Neto J, Santos RS, Guariza-Filho O, Zeigelboim BS, Taveira KVM, de Araujo CM",
+          "year": 2022,
+          "journal": "Clinical Oral Investigations",
+          "doi": "10.1007/s00784-021-04223-w"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 100,
+          "anchor": "systematic review with random-effects meta-analysis and meta-regression of randomized and non-randomized studies (THERAPY SR/meta-analysis row, 100, via Step 2 routing)",
+          "evidence_quote": "The aim of this systematic review is to synthesize the evidence on the effectiveness and longevity of the botulinum toxin in the treatment of individuals with excessive gingival exposure."
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده به ثبت پروتکل یا شماره‌ی رجیستری اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است، نه high."
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "low",
+              "evidence_quote": "The search was adapted to six electronic databases and gray literature.",
+              "note": "شش دیتابیس به‌علاوه‌ی ادبیات خاکستری، بالاتر از آستانه‌ی دو دیتابیسِ بند 3b-i."
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "فهرست مطالعات کنارگذاشته‌شده در چکیده نمی‌آید؛ تحت ABSTRACT_ONLY این NR است."
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "low",
+              "evidence_quote": "The risk of bias was assessed using the Cochrane Risk of Bias Assessment Tool for Non-Randomized and Randomized Studies of Interventions."
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "low",
+              "evidence_quote": "Meta-analyses and meta-regression were performed using random effects models."
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده به سوگیری انتشار، فانل پلات یا آزمون Egger اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است."
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "بیانیه‌ی تعارض منافع وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "فقط برای RCT اعمال می‌شود؛ این مطالعه ثانویه است."
+          },
+          {
+            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study"
+          },
+          {
+            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "این مطالعه ثانویه است و ادعای بقای مبتنی بر پیگیری خودش ندارد؛ این بند موضوعیت ندارد."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 55,
+        "band": "C",
+        "provisional": true,
+        "fact_fa": "این مقاله در نوع پرسش THERAPY امتیاز ۵۵ و باند C گرفت، و چون فقط چکیده در دسترس بود امتیاز مقدماتی است.",
+        "interpretation_fa": "این منبعِ عددهایی است که تصمیم بوتاکس را عملی می‌کند: کاهش میانگین ۳٫۴ میلی‌متری در دو هفته، اثر پایدار دست‌کم دوازده هفته و بازگشت به نزدیک خط پایه در بیست‌وچهار هفته. مؤثرترین حالتش لبخند لثه‌ای تا چهار میلی‌متر است. ناهمگنی مطالعات بسیار بالاست."
+      },
+      {
+        "des_version": "1.8",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "An Approach for Gummy Smile Treatment Using Botulinum Toxin A: A Narrative Review of the Literature.",
+          "authors": "Fatani B",
+          "year": 2023,
+          "journal": "Cureus",
+          "doi": "10.7759/cureus.34032"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 15,
+          "anchor": "narrative review of botulinum toxin for gummy smile (THERAPY narrative review row, 15)",
+          "evidence_quote": "A literature review was conducted involving relevant studies discussing gummy smile treatment using botulinum toxin with no time restriction."
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده به ثبت پروتکل یا شماره‌ی رجیستری اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است، نه high."
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "low",
+              "evidence_quote": "The PubMed and Google Scholar databases were used to gather the most relevant studies.",
+              "note": "دو منبع نام‌برده. طبق بند 3b-i آنچه شمرده نمی‌شود دست‌جست‌وجوی مجلات و مرور فهرست منابع است؛ Google Scholar نمایه‌ی مستقلی است و راهِ دسترسی به MEDLINE نیست، پس شمرده شد و آستانه رد می‌شود."
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "فهرست مطالعات کنارگذاشته‌شده در چکیده نمی‌آید؛ تحت ABSTRACT_ONLY این NR است."
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده هیچ ابزار ارزیابی سوگیری مطالعات واردشده را نام نمی‌برد؛ تحت ABSTRACT_ONLY سکوت NR است."
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده هیچ سنتز کمی گزارش نمی‌کند و درباره‌ی روش ترکیب ساکت است؛ تحت ABSTRACT_ONLY این NR است."
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده به سوگیری انتشار، فانل پلات یا آزمون Egger اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است."
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "بیانیه‌ی تعارض منافع وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "فقط برای RCT اعمال می‌شود؛ این مطالعه ثانویه است."
+          },
+          {
+            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study"
+          },
+          {
+            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "این مطالعه ثانویه است و ادعای بقای مبتنی بر پیگیری خودش ندارد؛ این بند موضوعیت ندارد."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 8,
+        "band": "E",
+        "provisional": true,
+        "fact_fa": "این مقاله در نوع پرسش THERAPY امتیاز ۸ و باند E گرفت، و چون فقط چکیده در دسترس بود امتیاز مقدماتی است.",
+        "interpretation_fa": "مرور روایتی روی بیست‌وهشت مطالعه است و عددهایش نقل‌شده‌اند نه تجمیع‌شده. دو نکته‌ی عملی دارد: شروع اثر بین یک تا دو هفته، و دوام چهار تا شش ماه که یعنی تزریق مجدد معمولاً لازم می‌شود. کاندید مناسبش لبخند لثه‌ای با منشأ دینامیک لب است."
+      },
+      {
+        "des_version": "1.8",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Contemporary treatment techniques for excessive gingival display caused by altered passive eruption or lip hypermobility.",
+          "authors": "Tatakis DN, Silva CO",
+          "year": 2023,
+          "journal": "Journal of Dentistry",
+          "doi": "10.1016/j.jdent.2023.104711"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 15,
+          "anchor": "state-of-the-art narrative review of treatment modalities (THERAPY narrative review row, 15)",
+          "evidence_quote": "This state-of-the art narrative review explores current concepts regarding soft tissue EGD etiologies and the contemporary modalities available for APE or HUL treatment."
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده به ثبت پروتکل یا شماره‌ی رجیستری اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است، نه high."
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "low",
+              "evidence_quote": "Searching for articles was carried out in PubMed and Google Scholar.",
+              "note": "دو منبع نام‌برده و هیچ‌کدام راهِ دسترسی به دیگری نیست، پس آستانه‌ی بند 3b-i رد می‌شود."
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "فهرست مطالعات کنارگذاشته‌شده در چکیده نمی‌آید؛ تحت ABSTRACT_ONLY این NR است."
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده هیچ ابزار ارزیابی سوگیری مطالعات واردشده را نام نمی‌برد؛ تحت ABSTRACT_ONLY سکوت NR است."
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده هیچ سنتز کمی گزارش نمی‌کند و درباره‌ی روش ترکیب ساکت است؛ تحت ABSTRACT_ONLY این NR است."
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده به سوگیری انتشار، فانل پلات یا آزمون Egger اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است."
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "بیانیه‌ی تعارض منافع وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "فقط برای RCT اعمال می‌شود؛ این مطالعه ثانویه است."
+          },
+          {
+            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study"
+          },
+          {
+            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "این مطالعه ثانویه است و ادعای بقای مبتنی بر پیگیری خودش ندارد؛ این بند موضوعیت ندارد."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 8,
+        "band": "E",
+        "provisional": true,
+        "fact_fa": "این مقاله در نوع پرسش THERAPY امتیاز ۸ و باند E گرفت، و چون فقط چکیده در دسترس بود امتیاز مقدماتی است.",
+        "interpretation_fa": "نگاشت درمان به علت را صریح می‌کند: کراون لنتنینگ زیبایی برای رویش غیرفعال و جراحی لیپ ری‌پوزیشنینگ برای لب هایپرموبایل. همان‌جا هم هشدار می‌دهد که شواهد بسیاری از تکنیک‌های تازه در حد گزارش مورد است و اندیکاسیون دقیقشان هنوز تعریف نشده."
+      },
+      {
+        "des_version": "1.8",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Effectiveness of lip repositioning surgeries in the treatment of excessive gingival display: A systematic review and meta-analysis.",
+          "authors": "Dos Santos-Pereira SA, Cicareli ÁJ, Idalgo FA, Nunes AG, Kassis EN, Castanha Henriques JF, Bellini-Pereira SA",
+          "year": 2021,
+          "journal": "Journal of Esthetic and Restorative Dentistry",
+          "doi": "10.1111/jerd.12695"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 100,
+          "anchor": "systematic review with random-effects meta-analysis of non-randomized intervention studies (THERAPY SR/meta-analysis row, 100, via Step 2 routing)",
+          "evidence_quote": "To synthesize the available evidence regarding lip repositioning surgery (LRS) and quantify the short- and long-term reduction in excessive gingival display (EGD) with the procedure."
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده به ثبت پروتکل یا شماره‌ی رجیستری اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است، نه high."
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "low",
+              "evidence_quote": "Seven electronic databases were searched up to May 2020 by two independent reviewers.",
+              "note": "هفت دیتابیس با دو مرورگر مستقل، بالاتر از آستانه‌ی دو دیتابیسِ بند 3b-i."
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "فهرست مطالعات کنارگذاشته‌شده در چکیده نمی‌آید؛ تحت ABSTRACT_ONLY این NR است."
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "low",
+              "evidence_quote": "After risk of bias assessment, the data were quantitatively evaluated with random-effects meta-analysis.",
+              "note": "انجام ارزیابی سوگیری صریحاً اعلام شده؛ نام ابزار نیامده، اما رتبه‌ی این دامنه بر حضور یا نبود سنجه است نه بر کیفیت آن."
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "low",
+              "evidence_quote": "The random effects model exhibited an EGD reduction of 2.87 mm (95% CI: 1.91-3.82) after 3 months of LRS."
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده به سوگیری انتشار، فانل پلات یا آزمون Egger اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است."
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "بیانیه‌ی تعارض منافع وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "فقط برای RCT اعمال می‌شود؛ این مطالعه ثانویه است."
+          },
+          {
+            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study"
+          },
+          {
+            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "این مطالعه ثانویه است و ادعای بقای مبتنی بر پیگیری خودش ندارد؛ این بند موضوعیت ندارد."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 55,
+        "band": "C",
+        "provisional": true,
+        "fact_fa": "این مقاله در نوع پرسش THERAPY امتیاز ۵۵ و باند C گرفت، و چون فقط چکیده در دسترس بود امتیاز مقدماتی است.",
+        "interpretation_fa": "منبعِ عددِ ریلپس است و همان چیزی را می‌دهد که باید قبل از عمل به بیمار گفته شود: کاهش حدود ۲٫۹ میلی‌متر در سه ماه که تا دوازده ماه به حدود ۲٫۱ می‌رسد، یعنی نزدیک بیست‌وپنج درصد بازگشت. میوتومی پایداری شش‌ماهه را بهتر می‌کند. فقط هشت مطالعه وارد شده‌اند."
+      },
+      {
+        "des_version": "1.8",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Evaluating Lip Repositioning for the Treatment of Excess Gingival Display with and without Pretreatment with Botox: A Randomized Clinical Trial.",
+          "authors": "Ghoniem OM, Madkor GG, Darhous MS",
+          "year": 2025,
+          "journal": "The Journal of Contemporary Dental Practice",
+          "doi": "10.5005/jp-journals-10024-3831"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 85,
+          "anchor": "randomized clinical trial of lip repositioning surgery with and without pre-surgical Botox (THERAPY RCT row, 85)",
+          "evidence_quote": "Evaluating Lip Repositioning for the Treatment of Excess Gingival Display with and without Pretreatment with Botox: A Randomized Clinical Trial."
+        },
+        "q_method": {
+          "tool": "RoB2",
+          "domains": [
+            {
+              "domain": "randomization process",
+              "rating": "some_concerns",
+              "evidence_quote": "Twenty-two periodontally healthy patients with EGD were recruited and allocated into two equal groups.",
+              "note": "تخصیص به دو گروه گزارش شده اما نه روش تولید توالی و نه پنهان‌سازی تخصیص؛ چون هیچ روش آشکارا غیرتصادفی هم اعلام نشده، آستانه‌ی بند 3b-i شلیک نمی‌کند و رتبه some_concerns می‌ماند."
+            },
+            {
+              "domain": "deviations from intended interventions",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده درباره‌ی انحراف از مداخله‌ی برنامه‌ریزی‌شده یا پایبندی به پروتکل چیزی نمی‌گوید؛ تحت ABSTRACT_ONLY سکوت NR است."
+            },
+            {
+              "domain": "missing outcome data",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده درباره‌ی داده‌های ازدست‌رفته یا ریزش نمونه چیزی نمی‌گوید؛ تحت ABSTRACT_ONLY سکوت NR است."
+            },
+            {
+              "domain": "measurement of the outcome",
+              "rating": "some_concerns",
+              "evidence_quote": "Participants were assessed for changes in gingival display and lip length at 3, 6, 9, and 12 months, as well as for pain and satisfaction.",
+              "note": "پیامدها و زمان‌بندی سنجش آمده اما کورسازی ارزیاب ذکر نشده؛ دامنه‌ای که توصیف شده ولی یک عنصرش غایب است، طبق 3b برابر some_concerns است."
+            },
+            {
+              "domain": "selection of the reported result",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده به پروتکل از پیش تعیین‌شده یا برنامه‌ی آنالیز ارجاع نمی‌دهد؛ تحت ABSTRACT_ONLY سکوت NR است."
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "بیانیه‌ی تعارض منافع وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract — نبودِ شماره‌ی ثبت در چکیده طبق قاعده‌ی ABSTRACT_ONLY شاهدِ نقص نیست."
+          },
+          {
+            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 47,
+        "band": "C",
+        "provisional": true,
+        "fact_fa": "این مقاله در نوع پرسش THERAPY امتیاز ۴۷ و باند C گرفت، و چون فقط چکیده در دسترس بود امتیاز مقدماتی است.",
+        "interpretation_fa": "تنها کارآزمایی تصادفی‌شده‌ی صفحه است و مستقیم به مسئله‌ی ریلپس می‌پردازد. در گروه فقط جراحی، نمایش لثه در ماه نهم و دوازدهم به خط پایه برگشت، اما با تزریق بوتاکس یک تا دو هفته پیش از جراحی نتیجه تا یک سال پایدار ماند. درد بیست‌وچهار ساعت اول هم کمتر بود. نمونه بیست‌ودو نفر است."
+      },
+      {
+        "des_version": "1.8",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Orthognathic Surgery for Management of Gummy Smile.",
+          "authors": "Khojasteh A, Mohaghegh S",
+          "year": 2022,
+          "journal": "Dental Clinics of North America",
+          "doi": "10.1016/j.cden.2022.02.003"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 15,
+          "anchor": "narrative review of orthognathic management of vertical maxillary excess (THERAPY narrative review row, 15)",
+          "evidence_quote": "Orthognathic surgery is the optimal treatment option for patients with moderate and severe vertical maxillary excess."
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده به ثبت پروتکل یا شماره‌ی رجیستری اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است، نه high."
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده نام هیچ دیتابیس یا استراتژی جست‌وجویی نمی‌آورد؛ تحت ABSTRACT_ONLY این NR است."
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "فهرست مطالعات کنارگذاشته‌شده در چکیده نمی‌آید؛ تحت ABSTRACT_ONLY این NR است."
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده هیچ ابزار ارزیابی سوگیری مطالعات واردشده را نام نمی‌برد؛ تحت ABSTRACT_ONLY سکوت NR است."
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده هیچ سنتز کمی گزارش نمی‌کند و درباره‌ی روش ترکیب ساکت است؛ تحت ABSTRACT_ONLY این NR است."
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده به سوگیری انتشار، فانل پلات یا آزمون Egger اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است."
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "بیانیه‌ی تعارض منافع وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "فقط برای RCT اعمال می‌شود؛ این مطالعه ثانویه است."
+          },
+          {
+            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study"
+          },
+          {
+            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "این مطالعه ثانویه است و ادعای بقای مبتنی بر پیگیری خودش ندارد؛ این بند موضوعیت ندارد."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 8,
+        "band": "E",
+        "provisional": true,
+        "fact_fa": "این مقاله در نوع پرسش THERAPY امتیاز ۸ و باند E گرفت، و چون فقط چکیده در دسترس بود امتیاز مقدماتی است.",
+        "interpretation_fa": "مرور روایتی است اما همان جمله‌ای را دارد که مرز ارجاع را می‌کشد: در رشد عمودی متوسط و شدید فک بالا، ارتوگناتیک درمان علت است. محدودکننده‌ی میزان ایمپکشن هم ساختارهای مجاور و تغییر مورفولوژی بینی است، که گاهی استئوتومی هورس‌شو یا توربینکتومی نسبی را لازم می‌کند."
+      },
+      {
+        "des_version": "1.8",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "The Combo Strategy: Triple Approach for Gummy Smile-18-Month Case Series.",
+          "authors": "Romanos A, Semaan LB, Malak C, Basma H, Romanos GE",
+          "year": 2026,
+          "journal": "Journal of Esthetic and Restorative Dentistry",
+          "doi": "10.1111/jerd.70113"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 30,
+          "anchor": "prospective single-arm case series of twelve patients (THERAPY case series row, 30)",
+          "evidence_quote": "This prospective case series evaluates a minimally invasive, interdisciplinary approach integrating periodontal and cosmetic techniques for managing multifactorial gingival excess."
+        },
+        "q_method": {
+          "tool": "ROBINS-I",
+          "domains": [
+            {
+              "domain": "confounding",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "مطالعه تک‌بازویی است و تحلیل مقایسه‌ای بین‌گروهی ندارد، پس آستانه‌ی «تحلیل مقایسه‌ای بدون هیچ تعدیلی» در بند 3b-i شلیک نمی‌کند؛ چکیده هم درباره‌ی مخدوش‌گر ساکت است، پس NR."
+            },
+            {
+              "domain": "selection of participants",
+              "rating": "low",
+              "evidence_quote": "Twelve systemically healthy adult patients (mean gingival display: 5.3 mm) diagnosed with both altered passive eruption and hyperactive upper lip were treated in a private practice using a combined single-session protocol."
+            },
+            {
+              "domain": "classification of interventions/exposures",
+              "rating": "low",
+              "evidence_quote": "The \"combo technique\" involved esthetic crown lengthening, botulinum toxin-A (Botox) injections, and hyaluronic acid-based lip augmentation."
+            },
+            {
+              "domain": "missing data",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده درباره‌ی داده‌های ازدست‌رفته یا ریزش نمونه چیزی نمی‌گوید؛ تحت ABSTRACT_ONLY سکوت NR است."
+            },
+            {
+              "domain": "measurement of the outcome",
+              "rating": "some_concerns",
+              "evidence_quote": "Outcome measures included gingival display reduction, patient satisfaction, and postoperative discomfort, evaluated at 6 and 18 months.",
+              "note": "پیامدها و زمان‌بندی نام برده شده اما ابزار سنجش و کورسازی ارزیاب نیامده."
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "بیانیه‌ی تعارض منافع وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "فقط برای RCT اعمال می‌شود؛ این مطالعه تصادفی‌سازی‌شده نیست."
+          },
+          {
+            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 17,
+        "band": "E",
+        "provisional": true,
+        "fact_fa": "این مقاله در نوع پرسش THERAPY امتیاز ۱۷ و باند E گرفت، و چون فقط چکیده در دسترس بود امتیاز مقدماتی است.",
+        "interpretation_fa": "سری موردی دوازده‌نفره است، پس گزارش تجربه‌ی یک مطب است نه شاهدی برای برتری. چیزی که نشان می‌دهد این است که ترکیب کراون لنتنینگ، بوتاکس و فیلر در یک جلسه در بیمار با دو علت هم‌زمان اجراشدنی است و تا هجده ماه پایدار مانده. بدون گروه کنترل، ادعای برتری بر ارتوگناتیک از آن درنمی‌آید."
+      },
+      {
+        "des_version": "1.8",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Pink esthetic treatment of gingival recession, black triangle, and gummy smile: a narrative review.",
+          "authors": "Kim H, Kim S, Cho YD",
+          "year": 2025,
+          "journal": "Maxillofacial Plastic and Reconstructive Surgery",
+          "doi": "10.1186/s40902-025-00467-8"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 15,
+          "anchor": "narrative review of biomaterial-based pink esthetic treatment (THERAPY narrative review row, 15)",
+          "evidence_quote": "This study aimed to review minimally invasive and simplified approaches for pink esthetic enhancement using biomaterials such as collagen matrix, hyaluronic acid dermal fillers, and botulinum toxin."
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده به ثبت پروتکل یا شماره‌ی رجیستری اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است، نه high."
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده نام هیچ دیتابیس یا استراتژی جست‌وجویی نمی‌آورد؛ تحت ABSTRACT_ONLY این NR است."
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "فهرست مطالعات کنارگذاشته‌شده در چکیده نمی‌آید؛ تحت ABSTRACT_ONLY این NR است."
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده هیچ ابزار ارزیابی سوگیری مطالعات واردشده را نام نمی‌برد؛ تحت ABSTRACT_ONLY سکوت NR است."
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده هیچ سنتز کمی گزارش نمی‌کند و درباره‌ی روش ترکیب ساکت است؛ تحت ABSTRACT_ONLY این NR است."
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده به سوگیری انتشار، فانل پلات یا آزمون Egger اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است."
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "بیانیه‌ی تعارض منافع وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "فقط برای RCT اعمال می‌شود؛ این مطالعه ثانویه است."
+          },
+          {
+            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study"
+          },
+          {
+            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "این مطالعه ثانویه است و ادعای بقای مبتنی بر پیگیری خودش ندارد؛ این بند موضوعیت ندارد."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 8,
+        "band": "E",
+        "provisional": true,
+        "fact_fa": "این مقاله در نوع پرسش THERAPY امتیاز ۸ و باند E گرفت، و چون فقط چکیده در دسترس بود امتیاز مقدماتی است.",
+        "interpretation_fa": "لبخند لثه‌ای را کنار دو مسئله‌ی دیگر زیبایی صورتی می‌گذارد و نگاهش به مواد است: ماتریکس کلاژن، فیلر هیالورونیک اسید و بوتاکس. سهم مستقیمش برای این صفحه محدود است و همان توصیه‌ی آشناست: لبخند لثه‌ای با منشأ هایپرفعالیت عضلات بالابر لب با بوتاکس مدیریت می‌شود."
+      },
+      {
+        "des_version": "1.8",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Esthetic crown lengthening in the treatment of gummy smile.",
+          "authors": "Aroni MAT, Pigossi SC, Pichotano EC, de Oliveira GJPL, Marcantonio RAC",
+          "year": 2019,
+          "journal": "The International Journal of Esthetic Dentistry",
+          "doi": ""
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 30,
+          "anchor": "single-arm case series of six patients followed one year (THERAPY case series row, 30)",
+          "evidence_quote": "Six female patients aged 18 to 22 years were diagnosed with APE type 1B."
+        },
+        "q_method": {
+          "tool": "ROBINS-I",
+          "domains": [
+            {
+              "domain": "confounding",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "مطالعه تک‌بازویی است و تحلیل مقایسه‌ای بین‌گروهی ندارد، پس آستانه‌ی «تحلیل مقایسه‌ای بدون هیچ تعدیلی» در بند 3b-i شلیک نمی‌کند؛ چکیده هم درباره‌ی مخدوش‌گر ساکت است، پس NR."
+            },
+            {
+              "domain": "selection of participants",
+              "rating": "low",
+              "evidence_quote": "Six female patients aged 18 to 22 years were diagnosed with APE type 1B."
+            },
+            {
+              "domain": "classification of interventions/exposures",
+              "rating": "low",
+              "evidence_quote": "Surgical crown lengthening with flap surgery and bone recontouring was performed to achieve the biologic width."
+            },
+            {
+              "domain": "missing data",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده درباره‌ی داده‌های ازدست‌رفته یا ریزش نمونه چیزی نمی‌گوید؛ تحت ABSTRACT_ONLY سکوت NR است."
+            },
+            {
+              "domain": "measurement of the outcome",
+              "rating": "some_concerns",
+              "evidence_quote": "Photographic images were analyzed to evaluate the stable improvement of crown length before the procedure (baseline), immediately after surgery (immediate postoperative), and at 3 and 12 months postsurgery.",
+              "note": "روش و زمان‌بندی سنجش آمده اما کالیبراسیون و کورسازی ارزیابِ تصاویر ذکر نشده."
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "بیانیه‌ی تعارض منافع وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "فقط برای RCT اعمال می‌شود؛ این مطالعه تصادفی‌سازی‌شده نیست."
+          },
+          {
+            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 17,
+        "band": "E",
+        "provisional": true,
+        "fact_fa": "این مقاله در نوع پرسش THERAPY امتیاز ۱۷ و باند E گرفت، و چون فقط چکیده در دسترس بود امتیاز مقدماتی است.",
+        "interpretation_fa": "شش بیمار با رویش غیرفعال نوع 1B، و همان عددی را می‌دهد که انتظار از کراون لنتنینگ را واقعی می‌کند: افزایش میانگین ۱٫۶ میلی‌متری ارتفاع تاج در دوازده ماه. مهم‌تر اینکه فاصله‌ی بین بلافاصله بعد از جراحی و یک سال کم بود، یعنی مارجین لثه پایدار ماند."
+      },
+      {
+        "des_version": "1.8",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Clinical and psychological impact of lip repositioning surgery in the management of excessive gingival display.",
+          "authors": "Dawadi A, Humagain M, Lamichhane S, Sapkota B",
+          "year": 2024,
+          "journal": "The Saudi Dental Journal",
+          "doi": "10.1016/j.sdentj.2023.08.011"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 30,
+          "anchor": "single-arm before-and-after interventional study of fourteen patients, no comparator (THERAPY case series row, 30)",
+          "evidence_quote": "This experimental study enrolled 14 patients with EGD who had undergone a modified lip repositioning technique"
+        },
+        "q_method": {
+          "tool": "ROBINS-I",
+          "domains": [
+            {
+              "domain": "confounding",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "مطالعه تک‌بازویی است و تحلیل مقایسه‌ای بین‌گروهی ندارد، پس آستانه‌ی «تحلیل مقایسه‌ای بدون هیچ تعدیلی» در بند 3b-i شلیک نمی‌کند؛ چکیده هم درباره‌ی مخدوش‌گر ساکت است، پس NR."
+            },
+            {
+              "domain": "selection of participants",
+              "rating": "low",
+              "evidence_quote": "This experimental study enrolled 14 patients with EGD who had undergone a modified lip repositioning technique"
+            },
+            {
+              "domain": "classification of interventions/exposures",
+              "rating": "low",
+              "evidence_quote": "which comprised moving two strips of mucosa bilaterally to the maxillary labial frenum and repositioning the new mucosal margin coronally"
+            },
+            {
+              "domain": "missing data",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده درباره‌ی داده‌های ازدست‌رفته یا ریزش نمونه چیزی نمی‌گوید؛ تحت ABSTRACT_ONLY سکوت NR است."
+            },
+            {
+              "domain": "measurement of the outcome",
+              "rating": "low",
+              "evidence_quote": "The pre-operative psychological assessment was conducted using the social appearance anxiety scale (SAAS) scores, whereas the postoperative assessment was conducted using SAAS and visual analog scale (VAS) scores at 1 week, 3 months, and 6 months postoperatively.",
+              "note": "پیامدهای بالینی با اندازه‌گیری مستقیم و پیامد روانی با یک مقیاس اعتبارسنجی‌شده و در سه زمان مشخص سنجیده شده‌اند."
+            }
+          ],
+          "multiplier": 0.75
+        },
+        "penalties": [
+          {
+            "item": "بیانیه‌ی تعارض منافع وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "فقط برای RCT اعمال می‌شود؛ این مطالعه تصادفی‌سازی‌شده نیست."
+          },
+          {
+            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 23,
+        "band": "D",
+        "provisional": true,
+        "fact_fa": "این مقاله در نوع پرسش THERAPY امتیاز ۲۳ و باند D گرفت، و چون فقط چکیده در دسترس بود امتیاز مقدماتی است.",
+        "interpretation_fa": "چیزی را اندازه می‌گیرد که بقیه‌ی منابع صفحه اندازه نمی‌گیرند: اضطراب ظاهر اجتماعی، با یک مقیاس اعتبارسنجی‌شده، که در شش ماه افت چشمگیری داشت. کاهش نمایش لثه هم حدود ۳٫۱ میلی‌متر بود. خودش تأکید می‌کند نتیجه به‌شدت به انتخاب سخت‌گیرانه‌ی کیس وابسته است. چهارده بیمار و بدون گروه کنترل."
+      }
+    ]
   }
 }
