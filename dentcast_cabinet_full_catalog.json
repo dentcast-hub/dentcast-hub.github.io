@@ -136952,6 +136952,48 @@
       "drive_id": "1_rrmf0ebiIvyR5Jhwv1_hXAy-YXyMRK9",
       "drive_view": "https://drive.google.com/file/d/1_rrmf0ebiIvyR5Jhwv1_hXAy-YXyMRK9/view",
       "drive_download": "https://drive.google.com/uc?export=download&id=1_rrmf0ebiIvyR5Jhwv1_hXAy-YXyMRK9"
+    },
+    {
+      "id": "P2890",
+      "title": "Immediate Dentin Sealing: A Fundamental Procedure for Indirect Bonded Restorations",
+      "file_name": "IDS Procedure.pdf",
+      "topic": "adhesive dentistry",
+      "topic_path": "adhesive dentistry",
+      "type": "narrative review",
+      "local_path": "",
+      "file_size": 632248,
+      "key_finding": "",
+      "clinical_bottom_line": "",
+      "linked_episodes": [
+        "episode-6"
+      ],
+      "drive_link": "https://drive.google.com/file/d/1YnKy022sMa6YBAIYZxULjd9bAASiAjkH/view?usp=drivesdk",
+      "status": "linked",
+      "tags": [
+        "immediate-dentin-sealing",
+        "dentin-bonding",
+        "dentin-bonding-agent",
+        "indirect-bonded-restorations",
+        "porcelain-veneers",
+        "biomimetic-dentistry",
+        "total-etch-adhesive",
+        "narrative-review",
+        "topic:adhesive-dentistry",
+        "immediate-dentin-sealing-a-fundamental-procedure-for-indirect-bonded-restorations"
+      ],
+      "name_bucket": "meaningful",
+      "semantic_tagged": true,
+      "display_title": "Immediate Dentin Sealing: A Fundamental Procedure for Indirect Bonded Restorations",
+      "doi": "10.1111/j.1708-8240.2005.tb00103.x",
+      "authors": [
+        "Pascal Magne"
+      ],
+      "journal": "Journal of Esthetic and Restorative Dentistry",
+      "crossref_year": 2005,
+      "abstract": "The purpose of this article is to review evidence-based principles that could help optimize dentin bonding for indirect composite and porcelain restorations. More than 30 articles were reviewed, most of them addressing the specific situation of dentin bonding for indirect restorations. It appears that the combined results of this data plus clinical experience suggest the need for a revision in the dentin bonding procedure. Immediate application and polymerization of the dentin bonding agent to the freshly cut dentin, prior to impression taking, is recommended. This new application procedure, the so-called immediate dentin sealing (IDS), appears to achieve improved bond strength, fewer gap formations, decreased bacterial leakage, and reduced dentin sensitivity. The use of filled adhesive resins (low elastic modulus liner) facilitates the clinical and technical aspects of IDS. This rational approach to adhesion also has a positive influence on tooth structure preservation, patient comfort, and long-term survival of indirect bonded restorations.",
+      "drive_id": "1YnKy022sMa6YBAIYZxULjd9bAASiAjkH",
+      "drive_view": "https://drive.google.com/file/d/1YnKy022sMa6YBAIYZxULjd9bAASiAjkH/view",
+      "drive_download": "https://drive.google.com/uc?export=download&id=1YnKy022sMa6YBAIYZxULjd9bAASiAjkH"
     }
   ],
   "drive_matched": 2845,
@@ -137476,5 +137518,5 @@
     "note": "682 content-unidentified papers moved to private quarantine file",
     "quarantined_unidentified": 682
   },
-  "total_papers": 2205
+  "total_papers": 2206
 }
