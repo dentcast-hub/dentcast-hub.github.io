@@ -4315,20 +4315,34 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
            slot to mirror this into yet. Self-contained: its own CSS/JS below,
            no dependency on plus.js or the sheet.js bottom-sheet component. -->
       <style>
-        .dc-des-legend-wrap{ margin:1.1rem 0; }
+        /* DES chrome — the SAME fourth colour the article card wears
+           (plus.css --des-chrome). index.html loads no shared CSS, so the two
+           tokens are repeated here and must be kept in sync with plus.css.
+           It is neither amber (premium), nor brand blue (the site's own
+           content), nor the grey→green band scale — which is the whole point:
+           a reader meets the non-content colour here first, then recognises it
+           on an article. This box used to be --card-bg with a brand-blue icon,
+           i.e. an ordinary homepage card, which is the same mistake the
+           article card made one level up. */
+        .dc-des-legend-wrap{ margin:1.1rem 0; --des-chrome:#6455a6; --des-chrome-rgb:100,85,166; }
+        [data-theme="dark"] .dc-des-legend-wrap{ --des-chrome:#a99ce0; --des-chrome-rgb:169,156,224; }
         .dc-des-legend{
           display:flex; align-items:center; gap:.7rem;
-          background:var(--card-bg); border:1px solid var(--card-border); border-radius:.875rem;
+          background:rgba(var(--des-chrome-rgb),.045);
+          border:1px solid rgba(var(--des-chrome-rgb),.22);
+          border-right:3px solid var(--des-chrome);
+          border-radius:.875rem;
           padding:.75rem .9rem; cursor:pointer; box-shadow:var(--card-sh);
           font-family:inherit; text-align:right; width:100%;
         }
-        .dc-des-legend .dc-des-ico{ width:2rem; height:2rem; border-radius:50%; background:var(--surface2);
-          border:1px solid var(--border); display:flex; align-items:center; justify-content:center;
-          flex-shrink:0; color:var(--ac); }
+        .dc-des-legend .dc-des-ico{ width:2rem; height:2rem; border-radius:50%;
+          background:rgba(var(--des-chrome-rgb),.10);
+          border:1px solid rgba(var(--des-chrome-rgb),.28); display:flex; align-items:center; justify-content:center;
+          flex-shrink:0; color:var(--des-chrome); }
         .dc-des-legend .dc-des-ico svg{ width:1.05rem; height:1.05rem; }
         .dc-des-legend .dc-des-body{ flex:1; min-width:0; }
         .dc-des-legend .dc-des-ttl{ font-size:.82rem; font-weight:700; color:var(--txt); }
-        .dc-des-legend .dc-des-ttl b{ color:var(--ac); }
+        .dc-des-legend .dc-des-ttl b{ color:var(--des-chrome); }
         .dc-des-legend .dc-des-sub{ font-size:.72rem; color:var(--txt3); margin-top:.15rem; line-height:1.7; }
         .dc-des-legend .dc-des-bar-group{ display:flex; direction:ltr; border-radius:5px; overflow:hidden;
           flex-shrink:0; border:1px solid var(--border); margin-inline-start:.3rem; }
@@ -4349,8 +4363,9 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
            gone by construction — it scrolls with the box and is as tall as it needs.
            Type follows the «؟» caption reveal (plus.css .dc-plus-scorecap). */
         #dcDesPanel{
-          border:1px solid var(--card-border); border-top:0;
-          border-radius:0 0 .875rem .875rem; background:var(--card-bg);
+          border:1px solid rgba(var(--des-chrome-rgb),.22); border-top:0;
+          border-right:3px solid var(--des-chrome);
+          border-radius:0 0 .875rem .875rem; background:rgba(var(--des-chrome-rgb),.045);
           box-shadow:var(--card-sh);
           padding:.2rem 1rem .9rem; margin:0;
           font-size:.82rem; color:var(--txt2); line-height:1.8;
