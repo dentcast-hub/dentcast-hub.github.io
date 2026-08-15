@@ -49,11 +49,27 @@ MANIFEST = ROOT / '.dentcast' / 'asset-versions.json'
 # A stamped reference in a page: href/src="/dc-nav.js?v=39".
 REF_RE = re.compile(r'(?P<path>/[A-Za-z0-9_./-]+\.(?:js|css))\?v=(?P<v>\d+)')
 
-# Static and dynamic ES-module imports, plus CSS @import. Enough for this repo's
-# modules, which import each other by plain relative path and nothing else.
-JS_IMPORT_RE = re.compile(
-    r'''(?:import|export)\s[^;'"]*?from\s*['"](?P<p>\.{1,2}/[^'"]+)['"]'''
-    r'''|import\s*\(\s*['"](?P<d>\.{1,2}/[^'"]+)['"]\s*\)''')
+# An import specifier inside an ES module, in the two forms this repo uses:
+# static `… from '…'` (import and export alike) and dynamic `import('…')`. The
+# path is either relative (`./js/des.js`) or site-absolute (`/plus/js/api.js`) —
+# both occur, and an earlier version of this regex matched only the relative
+# form, so `library-gate.js`'s dynamic `import('/plus/js/premium-cta.js')` was
+# outside every fingerprint it should have been inside.
+#
+# `stamp` is optional because this same regex both READS specifiers (for the
+# graph) and REWRITES them (for the module stamp below), and it has to match a
+# specifier that already carries one.
+#
+# The trailing lookahead skips a specifier that is CONCATENATED with something
+# (`import('./js/workbench.js' + PLUS_V)`). That form is a hand-built url, and
+# stamping the literal half of it would produce `…?v=1?v=102`. There is no such
+# line left in the repo — the one that existed was this same fix applied by hand
+# to a single module — but the guard stays, because the next one would be
+# silently mangled rather than caught.
+SPEC_RE = re.compile(
+    r'''(?P<head>\bfrom\s*|\bimport\s*\(\s*)'''
+    r'''(?P<q>['"])(?P<spec>(?:\.{1,2}/|/)[^'"?\s]+\.js)(?P<stamp>\?v=\d+)?(?P=q)'''
+    r'''(?!\s*\+)''')
 CSS_IMPORT_RE = re.compile(r'''@import\s+(?:url\()?['"](?P<p>[^'"]+)['"]''')
 
 # Directories that hold no site page (build inputs, tooling, dependencies).
@@ -98,7 +114,7 @@ def nav_fingerprint() -> str:
             continue
         for f in graph(entry):
             h.update(f.relative_to(ROOT).as_posix().encode())
-            h.update(f.read_bytes())
+            h.update(hashable(f))
     return h.hexdigest()[:16]
 
 
@@ -111,11 +127,140 @@ def set_nav_version(v: int) -> None:
         fh.write(out)
 
 
+# ── the modules nothing stamps at all ───────────────────────────────────────
+# The two blocks above stamp ENTRY points: the url in a page's HTML, and the
+# four assets dc-nav.js injects. Nothing stamped what those entries IMPORT.
+# `/plus/plus.js?v=101` is a fresh url on every bump, but the very first line
+# inside it is `import … from './js/config.js'`, and THAT url never changes. So
+# the browser refetched the entry and then satisfied all 50-odd of its imports
+# from cache, and a change confined to a module — which is where nearly all of
+# this codebase's behaviour lives — shipped invisibly for as long as the CDN
+# felt like it. That is the same failure as the `var V` block above, one level
+# deeper, and it was found the same way: somebody said a feature was missing
+# (2026-08-15, the DES card's provenance line).
+#
+# ONE number for every module, not one per entry. The same module is imported
+# by several entries and by two different spellings of its own path, and an
+# import specifier is a url: two spellings carrying two different stamps are
+# two urls, which the browser instantiates as two separate module objects with
+# separate state. A per-entry stamp would therefore have traded a caching bug
+# for a much worse aliasing bug. One number means every specifier for a given
+# file is byte-identical, whoever wrote it.
+MODULES_KEY = 'modules:M'
+
+# Module entry points this tool does not otherwise know about. spot.js is loaded
+# by its own hand-written constant (`var SPOT_V`, three copies, guarded by its
+# own CI workflow) rather than by a `?v=` in any page, so nothing here would
+# have found it — yet it imports `/plus/js/api.js` and `/plus/js/config.js`,
+# the same two modules plus.js imports. Leaving it out did not merely miss a
+# stamp: api.js would then be fetched at two different urls in one page, which
+# the browser instantiates as two module objects with two separate session
+# caches. Caught in a browser run, not by reading the code.
+EXTRA_MODULE_ENTRIES = ['/spot/spot.js']
+
+
+def module_files() -> list[Path]:
+    """The module GRAPH: files connected to a stamped entry by an import.
+
+    A stamped `.js` that neither imports nor is imported is not part of it and
+    is deliberately left out — `dc-nav.js` is the case that matters. It is a
+    plain script, so there is nothing in it to stamp; including it anyway put
+    the `var V` constant that bump_nav() writes inside this fingerprint, and the
+    two passes then took turns invalidating each other, so `--bump` raised M on
+    every run forever. This tool must never hash a number it writes itself —
+    the same rule that keeps service-worker.js out of stamp-version.py.
+    """
+    entries = [ROOT / a.lstrip('/') for a in NAV_ASSETS + EXTRA_MODULE_ENTRIES]
+    entries += [ROOT / a.lstrip('/') for a in stamped()]
+    seen: dict[str, Path] = {}
+    for e in entries:
+        if not e.is_file():
+            continue
+        g = graph(e)
+        if len(g) < 2:  # an island: no imports, nothing importing it
+            continue
+        for f in g:
+            if f.suffix == '.js' and not any(
+                    part in SKIP_DIRS for part in f.relative_to(ROOT).parts):
+                seen[f.relative_to(ROOT).as_posix()] = f
+    return [seen[k] for k in sorted(seen)]
+
+
+def modules_fingerprint() -> str:
+    h = hashlib.sha256()
+    for f in module_files():
+        h.update(f.relative_to(ROOT).as_posix().encode())
+        h.update(hashable(f))
+    return h.hexdigest()[:16]
+
+
+def live_module_version() -> tuple[int | None, set[int]]:
+    """(the stamp in use, every distinct stamp found). More than one is drift."""
+    found: set[int] = set()
+    for f in module_files():
+        for m in SPEC_RE.finditer(f.read_text(encoding='utf-8', errors='replace')):
+            if m.group('stamp'):
+                found.add(int(m.group('stamp')[3:]))
+    return (max(found) if found else None), found
+
+
+def set_module_version(v: int) -> int:
+    """Stamp every internal import specifier. Returns the number of files touched."""
+    touched = 0
+    for f in module_files():
+        # newline='' on both sides, same reason as the HTML pass below.
+        with open(f, 'r', encoding='utf-8', newline='') as fh:
+            text = fh.read()
+        out = apply_stamps(text, v)
+        if out != text:
+            with open(f, 'w', encoding='utf-8', newline='') as fh:
+                fh.write(out)
+            touched += 1
+    return touched
+
+
+def audit_modules() -> list[str]:
+    live, found = live_module_version()
+    known = load_manifest().get(MODULES_KEY)
+    fp = modules_fingerprint()
+    if len(found) > 1:
+        return [f'{MODULES_KEY}: import specifiers disagree on the version — '
+                f'{sorted(found)}. Whichever module carries the lower stamp keeps '
+                f'serving the old file, and two stamps on one file load it twice']
+    if live is None:
+        return [f'{MODULES_KEY}: no import specifier carries ?v= — every module is '
+                f'unversioned and a returning browser can keep serving the old one']
+    if known is None:
+        return [f'{MODULES_KEY}: not in the manifest yet']
+    if known.get('hash') != fp:
+        return [f'{MODULES_KEY}: a module changed since M={known.get("v")} was stamped '
+                f'(fingerprint {known.get("hash")} -> {fp}) but M was not raised']
+    if known.get('v') != live:
+        return [f'{MODULES_KEY}: manifest says M={known.get("v")}, the imports say {live}']
+    return []
+
+
 def html_pages() -> list[Path]:
     return sorted(
         p for p in ROOT.rglob('*.html')
         if not any(part in SKIP_DIRS for part in p.relative_to(ROOT).parts)
     )
+
+
+def resolve_spec(src: Path, spec: str) -> Path:
+    """Where an import specifier written inside `src` actually points.
+
+    A site-absolute specifier is resolved from the site root, not from the file
+    — which is also why one global module stamp is the only safe scheme: the
+    same module is imported both ways (`./api.js` from plus.js, `/plus/js/api.js`
+    from upboard-page.js) and both must keep resolving to ONE url. Two different
+    stamps on those two lines would instantiate api.js twice, giving the two
+    halves of the page separate module state.
+    """
+    spec = spec.split('?')[0]
+    if spec.startswith('/'):
+        return (ROOT / spec.lstrip('/')).resolve()
+    return (src.parent / spec).resolve()
 
 
 def graph(entry: Path) -> list[Path]:
@@ -128,15 +273,42 @@ def graph(entry: Path) -> list[Path]:
             continue
         seen.append(f)
         text = f.read_text(encoding='utf-8', errors='replace')
-        rx = CSS_IMPORT_RE if f.suffix == '.css' else JS_IMPORT_RE
-        for m in rx.finditer(text):
-            rel = m.group('p') or m.groupdict().get('d')
-            if rel:
-                queue.append((f.parent / rel.split('?')[0]).resolve())
+        if f.suffix == '.css':
+            for m in CSS_IMPORT_RE.finditer(text):
+                queue.append(resolve_spec(f, m.group('p')))
+        else:
+            for m in SPEC_RE.finditer(text):
+                queue.append(resolve_spec(f, m.group('spec')))
     # Sort by the POSIX string, not by Path: Path ordering is platform-normalised
     # (case-folded on Windows), so two machines could hash the same graph in two
     # different orders. On Linux this is the identical order it always produced.
     return sorted(seen, key=lambda p: p.relative_to(ROOT).as_posix())
+
+
+def hashable(f: Path) -> bytes:
+    """A file's bytes with the module stamps taken back out.
+
+    Every hash in this tool runs through here, and it has to: the module stamp
+    below is WRITTEN INTO the same files these fingerprints are computed from,
+    so hashing the raw bytes would make each bump change the fingerprint that
+    justified it, and --bump would never reach a fixed point. Stripping the
+    stamps means a fingerprint moves when the CODE moves and at no other time.
+    """
+    raw = f.read_bytes()
+    if f.suffix != '.js':
+        return raw
+    text = raw.decode('utf-8', errors='replace')
+    return strip_stamps(text).encode('utf-8', errors='replace')
+
+
+def strip_stamps(text: str) -> str:
+    return SPEC_RE.sub(
+        lambda m: f"{m.group('head')}{m.group('q')}{m.group('spec')}{m.group('q')}", text)
+
+
+def apply_stamps(text: str, v: int) -> str:
+    return SPEC_RE.sub(
+        lambda m: f"{m.group('head')}{m.group('q')}{m.group('spec')}?v={v}{m.group('q')}", text)
 
 
 def fingerprint(asset: str) -> str:
@@ -151,7 +323,7 @@ def fingerprint(asset: str) -> str:
         # runner, and --check could never pass from Windows. On Linux the two are
         # the same string, so this changes no existing fingerprint.
         h.update(f.relative_to(ROOT).as_posix().encode())
-        h.update(f.read_bytes())
+        h.update(hashable(f))
     return h.hexdigest()[:16]
 
 
@@ -251,15 +423,41 @@ def bump_nav() -> int | None:
     return new_v
 
 
+def bump_modules() -> int | None:
+    """Raise the shared module stamp if any module changed. Returns the new M.
+
+    Runs FIRST, for the same reason bump_nav runs before the HTML pass: this
+    writes into the module files, and those files are inside the import graphs
+    the two passes after it fingerprint. It is safe only because every hash goes
+    through hashable(), which takes the stamps back out — otherwise this write
+    would move the very fingerprints the later passes are about to read.
+    """
+    if not audit_modules():
+        return None
+    manifest = load_manifest()
+    known = manifest.get(MODULES_KEY) or {}
+    live, _ = live_module_version()
+    new_v = max(live or 0, int(known.get('v', 0))) + 1
+    touched = set_module_version(new_v)
+    manifest[MODULES_KEY] = {'v': new_v, 'hash': modules_fingerprint()}
+    MANIFEST.parent.mkdir(parents=True, exist_ok=True)
+    with open(MANIFEST, 'w', encoding='utf-8', newline='') as fh:
+        fh.write(json.dumps(dict(sorted(manifest.items())), indent=2, ensure_ascii=False) + '\n')
+    print(f'  module imports  ->  ?v={new_v}  ({touched} file(s) rewritten)')
+    return new_v
+
+
 def bump() -> int:
+    modules_bumped = bump_modules()
     nav_bumped = bump_nav()
 
     problems, state = audit()
     if not problems:
-        if nav_bumped is None:
+        done = [x for x in (modules_bumped, nav_bumped) if x is not None]
+        if not done:
             print('nothing to bump — every stamp already matches its content')
         else:
-            print('1 loader constant bumped.')
+            print(f'{len(done)} loader constant(s) bumped.')
         return 0
 
     manifest = load_manifest()
@@ -309,7 +507,7 @@ def bump() -> int:
 
 def check() -> int:
     problems, _ = audit()
-    problems = audit_nav() + problems
+    problems = audit_modules() + audit_nav() + problems
     if problems:
         print('Stale cache-buster stamps:\n')
         for p in problems:

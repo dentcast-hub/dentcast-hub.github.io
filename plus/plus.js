@@ -2,32 +2,33 @@
 // enhancement. It decides the page type and wires only what belongs there. For
 // anonymous visitors the page must look exactly as before except the two
 // invitation points (spec 2.3): the workbench button and the homepage card.
-import { detectContentId, findProseRoot, findProseBox, findProseEnd, INVITE_LINE, SS_MODE, SS_RETURN_STUDY, isOrgHost } from './js/config.js';
-import { currentUser, api } from './js/api.js';
-import { openLoginModal, openOrgNotice } from './js/login-modal.js';
-import { openCollectionPicker } from './js/collections.js';
-import { el } from './js/util.js';
-import { initHomeCard } from './js/home-card.js';
-import { initHomeFeatures } from './js/home-features.js';
-import { initHomeBundles } from './js/home-bundles.js';
-import { initHomeUpboard } from './js/home-upboard.js';
-import { initHeader } from './js/header.js';
-import { initTourAutostart } from './js/tour.js';
-import { initReadingTracker } from './js/reading.js';
-import { initListeningTracker } from './js/listening.js';
-import { initShareScoring, buildShareButton } from './js/share.js';
-import { initHeart, buildHeartChip } from './js/votes.js';
-import { mountArticleThreads } from './js/article-threads.js';
-import { mountDes } from './js/des.js';
+import { detectContentId, findProseRoot, findProseBox, findProseEnd, INVITE_LINE, SS_MODE, SS_RETURN_STUDY, isOrgHost } from './js/config.js?v=2';
+import { currentUser, api } from './js/api.js?v=2';
+import { openLoginModal, openOrgNotice } from './js/login-modal.js?v=2';
+import { openCollectionPicker } from './js/collections.js?v=2';
+import { el } from './js/util.js?v=2';
+import { initHomeCard } from './js/home-card.js?v=2';
+import { initHomeFeatures } from './js/home-features.js?v=2';
+import { initHomeBundles } from './js/home-bundles.js?v=2';
+import { initHomeUpboard } from './js/home-upboard.js?v=2';
+import { initHeader } from './js/header.js?v=2';
+import { initTourAutostart } from './js/tour.js?v=2';
+import { initReadingTracker } from './js/reading.js?v=2';
+import { initListeningTracker } from './js/listening.js?v=2';
+import { initShareScoring, buildShareButton } from './js/share.js?v=2';
+import { initHeart, buildHeartChip } from './js/votes.js?v=2';
+import { mountArticleThreads } from './js/article-threads.js?v=2';
+import { mountDes } from './js/des.js?v=2';
 
-// Carry plus.js's own cache-busting version (?v=N, set by dc-nav.js) onto the
-// workbench module import. Article pages are OUTSIDE the /plus/ service-worker
-// scope, so their module requests hit the plain browser HTTP cache — an
-// unversioned import would keep serving a stale workbench.js even after V is
-// bumped. Versioning the URL forces the fresh module. Bump V in dc-nav.js when
-// workbench.js (or a module it pulls in) changes.
-const PLUS_V = new URL(import.meta.url).search; // e.g. '?v=12'
-const loadWorkbench = () => import('./js/workbench.js' + PLUS_V).then((m) => m.Workbench);
+// The workbench is the one module still loaded lazily, and its import is
+// stamped like every other one in this file — by tools/asset_version.py, from
+// the single shared module version. It used to carry a hand-built stamp
+// (`import('./js/workbench.js' + PLUS_V)`, PLUS_V read off import.meta.url)
+// because article pages sit OUTSIDE the /plus/ service-worker scope and their
+// module requests hit the plain browser HTTP cache, so an unversioned import
+// kept serving a stale workbench.js. That reasoning was right and applied to
+// every import in this file; it had simply been fixed for one of them.
+const loadWorkbench = () => import('./js/workbench.js?v=2').then((m) => m.Workbench);
 
 // Beside میزکار (always visible - no need to enter study mode) sits a second,
 // single-purpose button that saves the WHOLE page to a collection. This is
