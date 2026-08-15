@@ -1,7 +1,7 @@
 // DentCast Evidence Score — the reader-facing display.
 //
 // The score itself is produced at publish time by workflow step 4.13 (the
-// scoring prompt in .dentcast/dentcast-evidence-score-v1.3.md) and stored in
+// scoring prompt in .dentcast/dentcast-evidence-score-v1.6.md) and stored in
 // plus/des-scores.json, keyed by content_id. Nothing here computes, judges, or
 // re-derives anything: this module renders what that file already says.
 //

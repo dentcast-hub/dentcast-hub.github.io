@@ -1159,7 +1159,7 @@ real hit:
 **If none of the three yields a real abstract, that source is not scorable.** The
 spec's own error output is the correct result, and it is what gets recorded:
 ```json
-{"des_version":"1.4","error":"INSUFFICIENT_TEXT"}
+{"des_version":"1.6","error":"INSUFFICIENT_TEXT"}
 ```
 Per the capability protocol (`agent-parity.md` §2), when the blocker is a **missing
 tool** rather than a missing abstract, **ask the user to paste the abstract** —
@@ -1174,10 +1174,10 @@ score built on it.
 
 #### Part 2 — Run the prompt file
 
-**Load `.dentcast/dentcast-evidence-score-v1.5.md` as the system prompt — the whole
+**Load `.dentcast/dentcast-evidence-score-v1.6.md` as the system prompt — the whole
 file, verbatim, minus the appendix.**
 
-**v1.5 is the current spec and it is deliberately deterministic.** Two of its
+**v1.6 is the current spec and it is deliberately deterministic.** Two of its
 rules exist because a blind reproducibility run found them missing, so do not
 treat them as pedantry: **quality judgment is out of the domain rating**
 (present-vs-absent, plus the closed threshold table in 3b-i — if you are arguing
@@ -1192,9 +1192,24 @@ domain list, an explicit rating rule (under `FULL_TEXT`, silence about a
 safeguard is `high`, not `NR`), routing for the designs that matched no anchor,
 a narrowed funding penalty, and round-half-up on exact decimals. Follow the
 rules even where your own judgment differs — **a score everyone reproduces is
-worth more than a slightly better score nobody can.** Any record still stamped
-`des_version` below `1.5` predates this and must be regenerated before its number is
-compared with a new one. The appendix says so itself ("NOT part of the
+worth more than a slightly better score nobody can.** Any RESEARCH record still
+stamped `des_version` below `1.5` predates this and must be regenerated before its
+number is compared with a new one; v1.6 changed nothing on the RESEARCH side, so
+`1.5` and `1.6` research scores are directly comparable.
+
+**v1.6's one change is on the COMMENTARY side, and it is the reason a Chairside
+or MetaNote page now scores 3 higher than it did.** Checklist item 4 («صریحاً
+تجربه/دیدگاه نامیده شده») can be earned from the section's own published
+declaration rather than a sentence inside the page — for `chairside/` and
+`metanotes/` only, because those two landing pages carry such a declaration and
+the spec quotes both verbatim in a closed table. When you use it, the
+`evidence_quote` is that declaration copied from the landing page and the item's
+`note` is MANDATORY and names the file it came from. `insight/` does NOT qualify
+however much it resembles the other two: its landing page says the series covers
+«تجربه‌های بالینی **و** یافته‌های علمی», which is exactly why it cannot tell a
+reader which of the two the page in front of them is. Any COMMENTARY record in
+those two folders stamped `des_version` below `1.6` is scoring low by 3 and must
+be regenerated. The appendix says so itself ("NOT part of the
 model instruction … Do not include this appendix if the file is loaded verbatim as a
 system prompt"): those checks are yours to run in Part 3, not the model's.
 
@@ -1228,6 +1243,10 @@ appendix's checks yourself — an output that fails these is not a score:
    straighten curly quotes, nbsp → space, Unicode NFKC). A failure is **flagged for
    manual review, not silently dropped** — the appendix notes that recurrent failures
    usually mean bad PDF text extraction rather than model fabrication.
+   **One quote is checked against a different file:** a `chairside/` or `metanotes/`
+   COMMENTARY item 4 earned from the section-level declaration (v1.6) quotes that
+   section's `index.html`, not the article, and must carry a `note` saying so.
+   Phase F knows both haystacks and refuses the note-less version.
 2. **Arithmetic recomputation.** RESEARCH:
    `des_score == round(s_design.value × q_method.multiplier) − Σ penalty points`,
    floored at 0. COMMENTARY: `des_score == 5 + Σ checklist points`. A mismatch
@@ -1265,7 +1284,7 @@ without the leading `/` and without `.html` — the same id Phase F takes):
 {
   "episodes/episode-161": {
     "scored_at": "2026-08-14",
-    "sources": [ { "des_version": "1.4", "content_type": "RESEARCH", "...": "..." } ]
+    "sources": [ { "des_version": "1.6", "content_type": "RESEARCH", "...": "..." } ]
   }
 }
 ```
