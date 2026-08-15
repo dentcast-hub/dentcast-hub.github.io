@@ -4,32 +4,24 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>ماکت — ترازوی شواهد</title>
-<style>
-@font-face{font-family:Vazirmatn;src:url('/fonts/Vazirmatn[wght].woff2') format('woff2');font-weight:100 900;font-display:swap}
-/* ── tokens copied verbatim from dc-theme.css ── */
+<title>ماکت — مطالب دنت‌کست بر اساس قوت شواهد</title>
+<style>@font-face{font-family:Vazirmatn;src:url('/fonts/Vazirmatn[wght].woff2') format('woff2');font-weight:100 900;font-display:swap}
+/* ── tokens copied verbatim from dc-theme.css + plus.css's DES block ── */
 :root{
-  --pr:#022360; --ac:#0b5fff; --ac-rgb:11,95,255;
-  --bg:#f0f2f5; --surface:#fff; --surface2:#f4f6fb; --surface3:#eaecf5;
+  --ac:#0b5fff; --bg:#f0f2f5; --surface:#fff; --surface2:#f4f6fb; --surface3:#eaecf5;
   --border:rgba(2,35,96,.10); --border2:rgba(2,35,96,.06);
   --txt:#0a1a33; --txt2:#4a5f85; --txt3:#62779a;
   --card-bg:#fff; --card-border:rgba(2,35,96,.09);
   --card-sh:0 1px 3px rgba(2,35,96,.07),0 4px 14px rgba(2,35,96,.04);
   --chip-bg:rgba(11,95,255,.08); --chip-bd:rgba(11,95,255,.20);
-  --r-sm:10px; --r-md:14px; --r-lg:18px; --r-xl:22px; --r-f:999px;
-  --tr:.17s cubic-bezier(.4,0,.2,1);
-  --seg-sh:0 1px 3px rgba(2,35,96,.09);
-  --prov-ink:#8a6414; --prov-bd:rgba(201,146,43,.55);
+  --r-sm:10px; --r-md:14px; --r-lg:18px; --r-f:999px; --tr:.17s cubic-bezier(.4,0,.2,1);
   --des-E:#78808f; --des-D:#5f8a63; --des-C:#3f9a49; --des-B:#2f8f3f; --des-A:#1f7a34;
   --des-chrome:#6455a6; --des-chrome-rgb:100,85,166;
+  --seg-sh:0 1px 3px rgba(2,35,96,.09);
+  --prov-ink:#8a6414; --prov-bd:rgba(201,146,43,.5); --prov-bg:rgba(201,146,43,.10);
 }
-/* Three theme states, not two. An explicit choice stamps data-theme on the root;
-   the default "system" setting stamps NOTHING, so the un-stamped document needs
-   prefers-color-scheme of its own — guarded so an explicit light choice still
-   beats a dark OS. Tokens are redefined; components only ever read them. */
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --pr:#5b9cf6; --ac:#5b9cf6; --ac-rgb:91,156,246;
-  --bg:#0e1621; --surface:#17212b; --surface2:#1e2c3a; --surface3:#232e3c;
+  --ac:#5b9cf6; --bg:#0e1621; --surface:#17212b; --surface2:#1e2c3a; --surface3:#232e3c;
   --border:rgba(255,255,255,.08); --border2:rgba(255,255,255,.04);
   --txt:#e8f0ff; --txt2:#8aaac8; --txt3:#6f8fb0;
   --card-bg:#1e2c3a; --card-border:rgba(255,255,255,.07);
@@ -38,11 +30,10 @@
   --des-E:#8b93a3; --des-D:#89a68c; --des-C:#6fae74; --des-B:#4f9d5c; --des-A:#2f8f52;
   --des-chrome:#a99ce0; --des-chrome-rgb:169,156,224;
   --seg-sh:0 1px 3px rgba(0,0,0,.3);
-  --prov-ink:#e3b849; --prov-bd:rgba(227,184,73,.5);
+  --prov-ink:#e3b849; --prov-bd:rgba(227,184,73,.5); --prov-bg:rgba(227,184,73,.10);
 }}
 :root[data-theme="dark"]{
-  --pr:#5b9cf6; --ac:#5b9cf6; --ac-rgb:91,156,246;
-  --bg:#0e1621; --surface:#17212b; --surface2:#1e2c3a; --surface3:#232e3c;
+  --ac:#5b9cf6; --bg:#0e1621; --surface:#17212b; --surface2:#1e2c3a; --surface3:#232e3c;
   --border:rgba(255,255,255,.08); --border2:rgba(255,255,255,.04);
   --txt:#e8f0ff; --txt2:#8aaac8; --txt3:#6f8fb0;
   --card-bg:#1e2c3a; --card-border:rgba(255,255,255,.07);
@@ -51,197 +42,146 @@
   --des-E:#8b93a3; --des-D:#89a68c; --des-C:#6fae74; --des-B:#4f9d5c; --des-A:#2f8f52;
   --des-chrome:#a99ce0; --des-chrome-rgb:169,156,224;
   --seg-sh:0 1px 3px rgba(0,0,0,.3);
-  --prov-ink:#e3b849; --prov-bd:rgba(227,184,73,.5);
+  --prov-ink:#e3b849; --prov-bd:rgba(227,184,73,.5); --prov-bg:rgba(227,184,73,.10);
 }
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
-body{background:var(--bg);color:var(--txt);direction:rtl;-webkit-text-size-adjust:100%;
-  font-family:Vazirmatn,system-ui,'Segoe UI',Tahoma,sans-serif;line-height:1.85}
+body{background:var(--bg);color:var(--txt);direction:rtl;line-height:1.9;
+  -webkit-text-size-adjust:100%;font-family:Vazirmatn,system-ui,'Segoe UI',Tahoma,sans-serif}
 .bd-A{--bc:var(--des-A)} .bd-B{--bc:var(--des-B)} .bd-C{--bc:var(--des-C)}
 .bd-D{--bc:var(--des-D)} .bd-E{--bc:var(--des-E)}
+a{color:inherit}
+.wrap{max-width:46rem;margin:0 auto;padding:1.15rem .85rem 5rem}
 
 /* ── topbar ── */
 .tb{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;
-  gap:.6rem;padding:.55rem .9rem;background:color-mix(in srgb,var(--surface) 88%,transparent);
-  backdrop-filter:saturate(1.6) blur(12px);border-bottom:1px solid var(--border)}
+  padding:.5rem .9rem;background:var(--surface);border-bottom:1px solid var(--border)}
 .tb-l{display:flex;align-items:center;gap:.5rem}
-.tb-logo{width:34px;height:34px;border-radius:9px;background:var(--pr);color:#fff;display:grid;
-  place-items:center;font-weight:900;font-size:.8rem;letter-spacing:-.03em}
-.tb-n{font-weight:900;font-size:.95rem;letter-spacing:-.02em}
-.tb-s{display:block;font-size:.66rem;font-weight:600;color:var(--txt3);margin-top:-4px}
-.tb-btn{width:34px;height:34px;border-radius:9px;border:1px solid var(--border);background:var(--surface);
-  color:var(--txt2);font-size:.95rem;cursor:pointer;display:grid;place-items:center}
-
-.wrap{max-width:52rem;margin:0 auto;padding:1.15rem .85rem 5rem}
+.tb-logo{width:32px;height:32px;border-radius:9px;background:#022360;color:#fff;display:grid;
+  place-items:center;font-weight:900;font-size:.72rem}
+[data-theme="dark"] .tb-logo{background:#5b9cf6;color:#0e1621}
+.tb-n{font-weight:900;font-size:.92rem;letter-spacing:-.02em;display:block}
+.tb-s{display:block;font-size:.64rem;font-weight:600;color:var(--txt3);margin-top:-5px}
+.tb-btn{width:32px;height:32px;border-radius:9px;border:1px solid var(--border);
+  background:var(--surface2);color:var(--txt2);font-size:.9rem;cursor:pointer}
 
 /* ── hero ── */
-.hero{margin:0 0 1.15rem}
-.eyebrow{display:inline-flex;align-items:center;gap:.4rem;font-size:.68rem;font-weight:800;
-  color:var(--des-chrome);background:rgba(var(--des-chrome-rgb),.10);
-  border:1px solid rgba(var(--des-chrome-rgb),.28);border-radius:var(--r-f);padding:.2rem .7rem}
-.hero h1{margin:.55rem 0 .1rem;font-size:1.75rem;font-weight:900;letter-spacing:-.03em}
-.hero .en{font-size:.78rem;font-weight:700;color:var(--txt3);direction:ltr;display:block;margin-bottom:.5rem}
-.hero p{margin:0;font-size:.85rem;line-height:1.95;color:var(--txt2);text-wrap:pretty;max-width:40rem}
-.hero code{font-family:ui-monospace,monospace;font-size:.9em;background:var(--surface2);
-  border:1px solid var(--border2);border-radius:5px;padding:.05rem .3rem}
+h1{margin:.4rem 0 .5rem;font-size:1.6rem;font-weight:900;letter-spacing:-.03em;text-wrap:balance}
+.lead{margin:0;font-size:.9rem;line-height:2;color:var(--txt2);text-wrap:pretty}
+.lead b{color:var(--txt)}
 
-/* ── composition bar ── */
-.comp{margin:1rem 0 0}
-.comp-bar{display:flex;height:12px;border-radius:var(--r-f);overflow:hidden;border:1px solid var(--border)}
-.comp-bar span{display:block}
-.c-res{background:linear-gradient(90deg,var(--des-C),var(--des-B))}
-.c-com{background:rgba(var(--des-chrome-rgb),.55)}
-.c-na{background:var(--surface3)}
-.comp-lg{display:flex;flex-wrap:wrap;gap:.15rem 1rem;margin-top:.6rem}
-.comp-lg span{display:inline-flex;align-items:center;gap:.4rem;font-size:.74rem;color:var(--txt3)}
-.comp-lg i{width:9px;height:9px;border-radius:3px;flex:none}
-.comp-lg b{color:var(--txt);font-weight:800;font-variant-numeric:tabular-nums}
+/* ── the warning: the single most important block on the page ── */
+.warn{margin:1.15rem 0 0;background:var(--card-bg);border:1px solid var(--card-border);
+  border-radius:var(--r-lg);box-shadow:var(--card-sh);overflow:hidden}
+.warn-h{margin:0;padding:.8rem .95rem;font-size:.98rem;font-weight:900;background:var(--surface2);
+  border-bottom:1px solid var(--border2)}
+.warn-b{padding:.85rem .95rem .95rem;display:grid;gap:.9rem}
+.wpt{display:flex;gap:.65rem;align-items:flex-start}
+.wpt-i{flex:none;width:1.6rem;height:1.6rem;border-radius:8px;display:grid;place-items:center;
+  background:var(--surface2);border:1px solid var(--border2);font-size:.8rem;font-weight:900;color:var(--txt3)}
+.wpt p{margin:0;font-size:.83rem;line-height:1.95;color:var(--txt2);text-wrap:pretty}
+.wpt b{color:var(--txt)}
+/* the two-C illustration — the abstract rule made concrete in one glance */
+.vs{display:flex;align-items:center;justify-content:center;gap:.7rem;margin:.15rem 0 .1rem;
+  padding:.6rem .4rem;background:var(--surface2);border:1px solid var(--border2);border-radius:var(--r-md)}
+.vs-c{display:flex;align-items:center;gap:.4rem}
+.vs-g{width:1.75rem;height:1.75rem;border-radius:8px;background:var(--bc);color:#fff;
+  display:grid;place-items:center;font-weight:900;font-size:.85rem}
+.vs-l{font-size:.72rem;font-weight:700;color:var(--txt2);line-height:1.4}
+.vs-x{font-size:1.05rem;font-weight:900;color:var(--txt3)}
+.vs-cap{margin:.5rem 0 0;font-size:.76rem;line-height:1.9;color:var(--txt3);text-align:center;text-wrap:pretty}
 
-/* ── segmented ── */
-.seg{display:flex;gap:0;background:var(--surface2);border:1px solid var(--border);
-  border-radius:var(--r-f);padding:.2rem;margin:1.25rem 0 .8rem}
-.seg button{flex:1 1 0;font:inherit;font-size:.85rem;font-weight:800;color:var(--txt3);
-  background:transparent;border:0;border-radius:var(--r-f);padding:.5rem .5rem;cursor:pointer;
-  transition:background var(--tr),color var(--tr);display:flex;flex-direction:column;gap:0;line-height:1.5}
-.seg button i{font-style:normal;font-size:.66rem;font-weight:600;opacity:.85}
+/* ── tabs ── */
+.seg{display:flex;background:var(--surface2);border:1px solid var(--border);
+  border-radius:var(--r-f);padding:.2rem;margin:1.5rem 0 1rem}
+.seg button{flex:1;font:inherit;font-size:.84rem;font-weight:800;color:var(--txt3);background:none;
+  border:0;border-radius:var(--r-f);padding:.5rem .4rem;cursor:pointer;line-height:1.5;
+  display:flex;flex-direction:column;transition:background var(--tr),color var(--tr)}
+.seg button i{font-style:normal;font-size:.65rem;font-weight:600;opacity:.85}
 .seg button[aria-selected="true"]{color:var(--ac);background:var(--surface);box-shadow:var(--seg-sh)}
 
-/* ── the matrix ── */
-.mx-wrap{background:var(--card-bg);border:1px solid var(--card-border);border-radius:var(--r-lg);
-  box-shadow:var(--card-sh);padding:.9rem .8rem .75rem;margin:0 0 1rem}
-.mx-h{display:flex;align-items:baseline;gap:.5rem;margin:0 0 .1rem;padding:0 .15rem}
-.mx-h h2{margin:0;font-size:.95rem;font-weight:800}
-.mx-h span{font-size:.7rem;color:var(--txt3)}
-.mx-note{margin:.15rem .15rem .7rem;font-size:.73rem;line-height:1.85;color:var(--txt3);text-wrap:pretty}
-.db-mx{display:grid;grid-template-columns:minmax(4.4rem,1fr) repeat(4,minmax(2.6rem,1fr));gap:3px;
-  overflow-x:auto;font-variant-numeric:tabular-nums}
-.db-mx-r{display:contents}
-.db-mx-c{display:flex;align-items:center;justify-content:center;border-radius:8px;min-height:2.5rem;
-  font-size:.8rem;font-weight:800}
-.db-mx-corner{font-size:.68rem;font-weight:700;color:var(--txt3)}
-.db-mx-h{flex-direction:column;gap:1px;background:var(--surface2);border:1px solid var(--border2);
-  color:var(--txt2);font:inherit;cursor:pointer;padding:.3rem .1rem;transition:all var(--tr)}
-.db-mx-h b{font-size:.72rem;font-weight:800;line-height:1.3}
-.db-mx-h i{font-style:normal;font-size:.6rem;font-weight:600;color:var(--txt3)}
-.db-mx-h.thin{opacity:.62}
-.db-mx-h:hover,.db-mx-h[aria-pressed="true"]{border-color:var(--chip-bd);background:var(--chip-bg);color:var(--ac)}
-.db-mx-b{justify-content:flex-start;gap:.45rem;padding-inline-start:.35rem;font-size:.68rem;
-  font-weight:700;color:var(--txt3)}
-.db-mx-b i{font-style:normal}
-.db-mx-dot{width:1.5rem;height:1.5rem;border-radius:6px;background:var(--bc);color:#fff;
-  display:grid;place-items:center;font-size:.72rem;font-weight:900;flex:none}
-.db-mx-v{background:color-mix(in srgb,var(--bc) calc(var(--a,.2)*100%),transparent);
-  color:var(--bc);font-weight:900}
-.db-mx-v.on-dark{color:#fff}
-.db-mx-v.empty{background:var(--surface2);color:var(--txt3);font-weight:600;opacity:.5}
-/* the column rule: comparison is vertical, and the geometry says so */
-.db-mx-c:not(:first-child){box-shadow:inset 1px 0 0 var(--border2),inset -1px 0 0 var(--border2)}
+/* ── group header ── */
+.grp{margin:0 0 1.75rem}
+.gh{display:flex;align-items:center;gap:.65rem;margin:0 0 .7rem}
+.gh div{flex:1;min-width:0}
+.gh h3{margin:0;font-size:1rem;font-weight:900;letter-spacing:-.02em}
+.gh p{margin:0;font-size:.75rem;line-height:1.75;color:var(--txt3);text-wrap:pretty}
+.gh-g{flex:none;width:2.1rem;height:2.1rem;border-radius:10px;background:var(--bc);color:#fff;
+  display:grid;place-items:center;font-size:.95rem;font-weight:900}
+.gh-own{background:rgba(var(--des-chrome-rgb),.12);border:1px solid rgba(var(--des-chrome-rgb),.3);
+  color:var(--des-chrome);font-size:.8rem}
+.gh-n{flex:none;font-size:.7rem;color:var(--txt3);font-variant-numeric:tabular-nums;align-self:flex-start}
 
-/* ── toolbar ── */
-.tools{display:flex;flex-wrap:wrap;gap:.4rem;align-items:center;margin:0 0 .9rem}
-.chip{font:inherit;font-size:.75rem;font-weight:700;color:var(--txt3);background:var(--surface2);
-  border:1px solid var(--border2);border-radius:var(--r-f);padding:.32rem .8rem;cursor:pointer;
-  white-space:nowrap;transition:all var(--tr)}
-.chip[aria-pressed="true"]{color:var(--ac);background:var(--chip-bg);border-color:var(--chip-bd)}
-.chip:hover{color:var(--ac)}
+/* ── the page card: the DentCast article is the object, papers are its evidence ── */
+.pl{list-style:none;margin:0;padding:0;display:grid;gap:.65rem}
+.pc{background:var(--card-bg);border:1px solid var(--card-border);border-radius:var(--r-lg);
+  box-shadow:var(--card-sh);padding:.85rem .9rem;position:relative;overflow:hidden;
+  transition:border-color var(--tr)}
+.pc::before{content:"";position:absolute;inset-block:0;inset-inline-start:0;width:3px;background:var(--bc)}
+.pc-own::before{background:var(--des-chrome);opacity:.4}
+.pc:hover{border-color:var(--chip-bd)}
+.pc-t{display:block;font-size:1.02rem;font-weight:800;line-height:1.7;color:var(--txt);
+  text-decoration:none;text-wrap:pretty;letter-spacing:-.01em}
+.pc-t:hover{color:var(--ac)}
+.pc-t:focus-visible{outline:2px solid var(--ac);outline-offset:3px;border-radius:5px}
+.pc-m{margin:.25rem 0 .65rem;font-size:.72rem;color:var(--txt3)}
+.chipx{font-size:.64rem;font-weight:800;color:var(--txt3);background:var(--surface2);
+  border:1px solid var(--border2);border-radius:5px;padding:.05rem .45rem;margin-inline-end:.4rem}
+.pc-e{display:flex;align-items:center;gap:.55rem;margin:0 0 .55rem}
+.pc-g{flex:none;width:2rem;height:2rem;border-radius:9px;background:var(--bc);color:#fff;
+  display:grid;place-items:center;font-size:.88rem;font-weight:900}
+.pc-gown{background:rgba(var(--des-chrome-rgb),.12);border:1px solid rgba(var(--des-chrome-rgb),.3);
+  color:var(--des-chrome);font-size:.8rem;flex-direction:column;line-height:1;gap:0;width:2.3rem}
+.pc-gown i{font-style:normal;font-size:.5rem;font-weight:600;opacity:.8}
+.pc-gm{min-width:0}
+.pc-gm b{display:block;font-size:.82rem;font-weight:800;color:var(--txt)}
+.pc-gm i{display:block;font-style:normal;font-size:.71rem;color:var(--txt3);line-height:1.7}
 
-/* ── groups + rows ── */
-.db-grp{margin:0 0 1.5rem}
-.db-gh{display:flex;align-items:baseline;gap:.5rem;margin:0 0 .5rem;padding:0 .15rem}
-.db-gh h2{margin:0;font-size:1.02rem;font-weight:900;letter-spacing:-.02em}
-.db-gn{font-size:.72rem;color:var(--txt3);font-variant-numeric:tabular-nums}
-.db-gnote{margin:0 .15rem .7rem;font-size:.75rem;line-height:1.9;color:var(--txt3);text-wrap:pretty}
-.db-gnote code{font-family:ui-monospace,monospace;background:var(--surface2);border-radius:4px;padding:.05rem .3rem}
-.db-gnote b{color:var(--txt2)}
-.db-list{list-style:none;margin:0;padding:0;display:grid;gap:.5rem}
-.db-row{display:flex;gap:.65rem;padding:.75rem .8rem;background:var(--card-bg);
-  border:1px solid var(--card-border);border-radius:var(--r-md);position:relative;
-  overflow:hidden;transition:border-color var(--tr),transform var(--tr)}
-.db-row::before{content:"";position:absolute;inset-block:0;inset-inline-start:0;width:3px;background:var(--bc)}
-/* provisional = a DASHED edge, running with the edge rather than across it.
-   The 45° candy stripe read as a warning and shouted over the band colour it
-   was supposed to qualify; ABSTRACT_ONLY is a caveat, not an alarm. */
-.db-row.prov::before{background:repeating-linear-gradient(180deg,var(--bc) 0 7px,transparent 7px 13px)}
-.db-row.na::before{background:var(--border)}
-.db-row:hover{border-color:var(--chip-bd)}
-.db-rank{flex:none;width:1.5rem;text-align:center;font-size:.92rem;font-weight:900;color:var(--txt3);
-  font-variant-numeric:tabular-nums;padding-top:.2rem}
-.norank .db-rank{display:none}
-.db-main{flex:1;min-width:0}
-/* nowrap, and the Persian band name is the one thing allowed to shrink — the
-   number wrapping onto its own line was the row's worst tell that it was built
-   out of pills rather than laid out. */
-.db-top{display:flex;align-items:center;flex-wrap:nowrap;gap:.4rem;margin-bottom:.45rem}
-.db-bname{font-size:.85rem;font-weight:900;color:var(--bc);flex:none}
-.db-bfa{font-size:.7rem;color:var(--txt3);flex:1 1 auto;min-width:0;
-  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.db-num{margin-inline-start:auto;font-size:.72rem;font-weight:800;color:var(--txt2);
-  background:var(--surface2);border:1px solid var(--border2);border-radius:7px;padding:.1rem .45rem;
-  font-variant-numeric:tabular-nums;flex:none}
-.db-num i{font-style:normal;font-weight:600;font-size:.85em;color:var(--txt3)}
-.db-prov{flex:none;font-size:.62rem;font-weight:800;color:var(--prov-ink);
-  border:1px dashed var(--prov-bd);border-radius:var(--r-f);padding:.02rem .42rem;cursor:help;
-  background:repeating-linear-gradient(45deg,rgba(201,146,43,.12),rgba(201,146,43,.12) 4px,transparent 4px,transparent 8px)}
-.db-nab{font-size:.68rem;font-weight:800;color:var(--txt3);background:var(--surface2);
-  border:1px solid var(--border);border-radius:var(--r-f);padding:.15rem .6rem}
-.db-cit{margin:0;font-size:.85rem;font-weight:600;line-height:1.65;direction:ltr;text-align:left;color:var(--txt)}
-/* the journal line is Latin, so it is set LTR — left in the RTL row it lives in.
-   Left to inherit RTL, the trailing DOI link jumped to the head of the line and
-   the ↗ glyph broke onto a line of its own. */
-.db-sub{margin:.25rem 0 0;font-size:.71rem;color:var(--txt3);direction:ltr;text-align:left}
-.db-doi{color:var(--ac);text-decoration:none;font-weight:700}
-.db-sub.fa{direction:rtl;text-align:right}
-.db-in{display:flex;align-items:center;gap:.4rem;margin-top:.55rem;padding-top:.5rem;
-  border-top:1px solid var(--border2);font-size:.75rem;color:var(--txt2);text-decoration:none}
-.db-in::after{content:"›";margin-inline-start:auto;color:var(--txt3);font-size:1rem}
-.db-in:hover .db-int{color:var(--ac)}
-.db-int{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
-.db-sec{flex:none;font-size:.63rem;font-weight:800;color:var(--txt3);background:var(--surface2);
-  border:1px solid var(--border2);border-radius:5px;padding:.05rem .4rem;margin-inline-end:.35rem}
-.db-ptitle{display:block;font-size:.9rem;font-weight:700;color:var(--txt);text-decoration:none;
-  line-height:1.7;text-wrap:pretty}
-.db-ptitle:hover{color:var(--ac)}
-.db-qtl{margin:-.25rem 0 0;padding-inline-start:.9rem;font-size:.68rem;color:var(--txt3)}
-.db-more{margin:.55rem 0 0;font-size:.74rem;color:var(--txt3);text-align:center}
+/* the spectrum — one block per cited paper, strongest first */
+.sp{display:flex;gap:2px;margin:0 0 .6rem;direction:rtl}
+.sp-b{flex:1 1 0;height:7px;border-radius:2px;background:var(--bc);max-width:2.2rem}
+.sp-na{background:var(--surface3);border:1px solid var(--border2)}
 
-/* the five blocks — verbatim behaviour from plus.css */
-.db-bar{display:inline-flex;direction:ltr;border-radius:6px;overflow:hidden;border:1px solid var(--border);flex:none}
-.db-blk{width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:.62rem;
-  font-weight:800;background:var(--surface2);color:var(--txt3);border-left:1px solid var(--border2)}
-.db-blk:first-child{border-left:0}
-.db-b-A.on{background:var(--des-A);color:#fff} .db-b-B.on{background:var(--des-B);color:#fff}
-.db-b-C.on{background:var(--des-C);color:#fff} .db-b-D.on{background:var(--des-D);color:#fff}
-.db-b-E.on{background:var(--des-E);color:#fff}
+/* the sources, folded away — present but never in front of the article title */
+.pc-d{border-top:1px solid var(--border2);margin-top:.1rem}
+.pc-d>summary{list-style:none;cursor:pointer;padding:.55rem 0 .1rem;font-size:.79rem;
+  font-weight:700;color:var(--ac);display:flex;align-items:center;gap:.4rem}
+.pc-d>summary::-webkit-details-marker{display:none}
+.pc-d>summary::after{content:"▾";font-size:.7rem;transition:transform var(--tr)}
+.pc-d[open]>summary::after{transform:rotate(180deg)}
+.pc-dn{font-size:.68rem;font-weight:800;color:var(--txt3);background:var(--surface2);
+  border:1px solid var(--border2);border-radius:var(--r-f);padding:0 .45rem;
+  font-variant-numeric:tabular-nums;margin-inline-start:auto}
+.sl{list-style:none;margin:.5rem 0 .2rem;padding:0;display:grid;gap:.5rem}
+.sr{display:flex;gap:.55rem;padding:.55rem .6rem;background:var(--surface2);
+  border:1px solid var(--border2);border-radius:var(--r-md)}
+.sr-g{flex:none;width:1.6rem;height:1.6rem;border-radius:7px;background:var(--bc);color:#fff;
+  display:grid;place-items:center;font-size:.74rem;font-weight:900}
+.sr-gna{background:var(--surface3);color:var(--txt3);border:1px solid var(--border2);font-size:.6rem}
+.sr-m{min-width:0;flex:1}
+.sr-t{margin:0;font-size:.79rem;font-weight:600;line-height:1.6;direction:ltr;text-align:left;color:var(--txt)}
+.sr-s{margin:.2rem 0 0;font-size:.68rem;color:var(--txt3);direction:ltr;text-align:left}
+.sr-s.fa{direction:rtl;text-align:right;display:flex;flex-wrap:wrap;gap:.3rem}
+.sr-doi{color:var(--ac);font-weight:700;text-decoration:none}
+.sr-tag{font-size:.65rem;font-weight:700;color:var(--txt3);background:var(--surface);
+  border:1px solid var(--border2);border-radius:var(--r-f);padding:.02rem .5rem}
+.sr-prov{color:var(--prov-ink);border:1px dashed var(--prov-bd);background:var(--prov-bg)}
+.more{margin:.6rem 0 0;font-size:.75rem;color:var(--txt3);text-align:center}
 
-/* ── commentary ── */
-.db-cs{flex:none;width:2.7rem;height:2.7rem;border-radius:10px;display:flex;flex-direction:column;
-  align-items:center;justify-content:center;background:rgba(var(--des-chrome-rgb),.10);
-  border:1px solid rgba(var(--des-chrome-rgb),.26);color:var(--des-chrome);font-weight:900;
-  font-size:.95rem;font-variant-numeric:tabular-nums;line-height:1}
-.db-cs i{font-style:normal;font-size:.55rem;font-weight:600;opacity:.75;margin-top:1px}
-.crow::before{background:var(--des-chrome);opacity:.3}
-.panel-note{margin:0 0 1rem;font-size:.79rem;line-height:1.95;color:var(--txt2);background:var(--card-bg);
+.note{margin:0 0 1.1rem;font-size:.83rem;line-height:2;color:var(--txt2);background:var(--card-bg);
   border:1px solid var(--card-border);border-inline-start:3px solid var(--des-chrome);
-  border-radius:var(--r-md);padding:.75rem .85rem;text-wrap:pretty}
-.panel-note b{color:var(--txt)}
-.db-hist{display:flex;align-items:flex-end;gap:4px;margin:0 0 1.1rem;padding:.75rem .7rem .55rem;
-  background:var(--card-bg);border:1px solid var(--card-border);border-radius:var(--r-lg);box-shadow:var(--card-sh)}
-.db-hb{flex:1;display:flex;flex-direction:column;align-items:center;gap:.22rem;min-width:0}
-.db-track{width:100%;height:4rem;display:flex;align-items:flex-end}
-.db-fill{width:100%;height:var(--h);min-height:2px;border-radius:5px 5px 0 0;background:var(--surface3)}
-.db-fill.hi{background:linear-gradient(180deg,rgba(var(--des-chrome-rgb),.9),rgba(var(--des-chrome-rgb),.42))}
-.db-hb i{font-style:normal;font-size:.62rem;font-weight:800;color:var(--des-chrome);
-  font-variant-numeric:tabular-nums;min-height:1em}
-.db-hb b{font-size:.62rem;font-weight:700;color:var(--txt3);font-variant-numeric:tabular-nums}
-.foot{margin:2rem 0 0;padding-top:1rem;border-top:1px solid var(--border);font-size:.72rem;
-  line-height:1.9;color:var(--txt3);text-wrap:pretty}
+  border-radius:var(--r-md);padding:.8rem .9rem;text-wrap:pretty}
+.note b{color:var(--txt)}
+.foot{margin:2rem 0 0;padding-top:1rem;border-top:1px solid var(--border);font-size:.73rem;
+  line-height:1.95;color:var(--txt3);text-wrap:pretty}
 [hidden]{display:none!important}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
 @media(min-width:44rem){
   .wrap{padding:1.75rem 1.5rem 5rem}
-  .hero h1{font-size:2.1rem}
-  .db-list{grid-template-columns:1fr 1fr;align-items:start}
-  .db-list .db-grp,.norank .db-qtl{grid-column:1/-1}
-  .db-mx-c{min-height:2.9rem}
+  h1{font-size:2.05rem}
+  .warn-b{grid-template-columns:1fr 1fr}
+  .warn-b .wpt-wide{grid-column:1/-1}
+  .pl{grid-template-columns:1fr 1fr;align-items:start}
 }
 </style>
 <script>(function(){var s=null;try{s=localStorage.getItem('dc-theme')}catch(e){}
@@ -253,757 +193,563 @@ if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme',
 <header class="tb">
   <div class="tb-l"><span class="tb-logo">DC</span>
     <span><span class="tb-n">DentCast</span><span class="tb-s">دکتر فواد شهابیان</span></span></div>
-  <button class="tb-btn" id="thm" aria-label="روشن / تاریک">◐</button>
+  <button class="tb-btn" id="thm" aria-label="روشن یا تاریک">◐</button>
 </header>
 
 <div class="wrap">
 
-  <div class="hero">
-    <span class="eyebrow">ماکت · ساخته‌شده از داده‌ی واقعی</span>
-    <h1>ترازوی شواهد</h1>
-    <span class="en">DentCast Evidence Board</span>
-    <p>این صفحه چیزی را نمی‌سنجد و قضاوتی نمی‌کند. فقط نمره‌هایی را مرتب می‌کند که موتور DES هنگام انتشار ثبت کرده و در <code>plus/des-scores.json</code> نشسته‌اند — نه رأی خواننده، نه بازدید. <b>باند پایین یعنی شواهد کمتر، نه مطلب بد؛</b> برای همین E خاکستری است نه قرمز.</p>
+  <h1>مطالب دنت‌کست، بر اساس قوت شواهد</h1>
+  <p class="lead">هر مطلبی که اینجا می‌خوانید روی چیزی ایستاده: یا روی <b>مقاله‌های علمی منتشرشده</b>، یا روی <b>تجربه و تحلیل بالینی خودِ نویسنده</b>. این فهرست همان را نشان می‌دهد. روی هر عنوان بزنید تا خودِ مطلب باز شود — و زیر هر عنوان می‌بینید از چه مقاله‌هایی سرچشمه گرفته و هر کدام چقدر قابل اتکا هستند.</p>
 
-    <div class="comp">
-      <div class="comp-bar" role="img" aria-label="ترکیب ۱۷۱ منبع">
-        <span class="c-res" style="width:27.5%"></span>
-        <span class="c-com" style="width:71.9%"></span>
-        <span class="c-na" style="width:0.6%"></span>
+  <div class="warn">
+    <h2 class="warn-h">قبل از اینکه شروع کنید: این نمره‌ها را با هم مقایسه نکنید</h2>
+    <div class="warn-b">
+
+      <div class="wpt">
+        <span class="wpt-i">۱</span>
+        <p><b>نمره‌ی بالاتر یعنی «مطمئن‌تر»، نه «بهتر».</b> این نمره نمی‌گوید کدام مطلب مفیدتر یا درست‌تر است. فقط می‌گوید پشتِ حرفش چقدر شواهد محکم خوابیده. یک نکته‌ی بالینی کوتاه ممکن است دقیقاً همان چیزی باشد که امروز به دردتان می‌خورد، و نمره‌ی پایینی هم داشته باشد.</p>
       </div>
-      <div class="comp-lg">
-        <span><i class="c-res"></i><b>۴۷</b> منبع پژوهشی</span>
-        <span><i class="c-com"></i><b>۱۲۳</b> نوشته‌ی دنت‌کست</span>
-        <span><i class="c-na"></i><b>۱</b> بدون امتیاز</span>
-        <span><b>۵</b> با متن کامل</span>
+
+      <div class="wpt">
+        <span class="wpt-i">۲</span>
+        <p><b>نمره‌ی پایین یعنی «هنوز قطعی نیست»، نه «غلط».</b> پایین‌ترین درجه قرمز نیست و رد نشده — یعنی موضوع هنوز به‌اندازه‌ی کافی مطالعه نشده، یا آنچه هست از جنس توصیف و دیدگاه است.</p>
       </div>
+
+      <div class="wpt wpt-wide">
+        <span class="wpt-i">۳</span>
+        <div>
+          <p><b>دو نمره‌ی مساوی هم لزوماً یک چیز نمی‌گویند.</b> هر پرسش جدولِ سنجش خودش را دارد؛ یک مقاله درباره‌ی <b>درمان</b> و یک مقاله درباره‌ی <b>علت بیماری</b> با دو خط‌کش متفاوت اندازه گرفته می‌شوند.</p>
+          <div class="vs">
+            <span class="vs-c bd-C"><span class="vs-g">C</span><span class="vs-l">پرسشِ<br>درمان</span></span>
+            <span class="vs-x">≠</span>
+            <span class="vs-c bd-C"><span class="vs-g">C</span><span class="vs-l">پرسشِ<br>علت بیماری</span></span>
+          </div>
+          <p class="vs-cap">هر دو C هستند، ولی از دو خط‌کش. کنار هم گذاشتنشان مثل مقایسه‌ی رکورد شنا با رکورد دو است — هر دو عدد دارند، یک چیز را نمی‌سنجند. برای همین روی هر منبع نوشته‌ایم پرسشش از چه جنسی است.</p>
+        </div>
+      </div>
+
+      <div class="wpt wpt-wide">
+        <span class="wpt-i">۴</span>
+        <p><b>و مطالبی که خودِ دنت‌کست نوشته اصلاً روی این مقیاس نیستند.</b> وقتی مقاله‌ای پشت متن نباشد، چیزی برای سنجیدنِ «قوت شواهد» وجود ندارد. آنجا چیز دیگری را می‌سنجیم: اینکه نویسنده چقدر صریح گفته این تجربه‌ی شخصیِ اوست و مرز ادعایش کجاست. آن عدد (از ۱۹) با این حرف‌ها (A تا E) هیچ نسبتی ندارد.</p>
+      </div>
+
     </div>
   </div>
 
   <div class="seg" role="tablist">
-    <button role="tab" aria-selected="true" data-p="res">پژوهش‌ها<i>۴۷ منبع استنادشده</i></button>
-    <button role="tab" aria-selected="false" data-p="com">نوشته‌های دنت‌کست<i>مقیاس شفافیت، از ۱۹</i></button>
+    <button role="tab" aria-selected="true" data-p="res">بر پایه‌ی مقاله<i>۱۰ مطلب، ۴۸ منبع</i></button>
+    <button role="tab" aria-selected="false" data-p="own">تجربه و تحلیل دنت‌کست<i>۱۲۳ مطلب</i></button>
   </div>
 
-  <!-- ══════════ RESEARCH ══════════ -->
   <div id="p-res">
-
-    <div class="mx-wrap">
-      <div class="mx-h"><h2>باند در برابر نوع پرسش</h2><span>۴۷ منبع</span></div>
-      <p class="mx-note">مقایسه فقط <b>در ستون</b> معنا دارد. یک C در پرسش درمانی و یک C در علت‌شناسی از دو جدول طراحیِ متفاوت آمده‌اند، پس کنار هم گذاشتنشان یک مقایسه‌ی ساختگی است. ستون‌های کم‌رنگ هنوز برای رتبه‌بندی کم‌شمارند. روی سرستون بزنید تا فهرست فیلتر شود.</p>
-      <div class="db-mx" role="table"><div class="db-mx-r db-mx-head" role="row"><span class="db-mx-c db-mx-corner">باند</span><button class="db-mx-c db-mx-h" data-qt="THERAPY" role="columnheader"><b>درمانی</b><i>۲۶ منبع</i></button><button class="db-mx-c db-mx-h" data-qt="ETIOLOGY" role="columnheader"><b>علت‌شناسی</b><i>۱۸ منبع</i></button><button class="db-mx-c db-mx-h thin" data-qt="DIAGNOSTIC" role="columnheader"><b>تشخیصی</b><i>۲ منبع</i></button><button class="db-mx-c db-mx-h thin" data-qt="MATERIAL" role="columnheader"><b>مواد</b><i>۱ منبع</i></button></div><div class="db-mx-r" role="row"><span class="db-mx-c db-mx-b bd-A"><span class="db-mx-dot">A</span><i>شواهد قوی</i></span><span class="db-mx-c db-mx-v empty">·</span><span class="db-mx-c db-mx-v empty">·</span><span class="db-mx-c db-mx-v empty">·</span><span class="db-mx-c db-mx-v empty">·</span></div><div class="db-mx-r" role="row"><span class="db-mx-c db-mx-b bd-B"><span class="db-mx-dot">B</span><i>شواهد متوسط</i></span><span class="db-mx-c db-mx-v empty">·</span><span class="db-mx-c db-mx-v bd-B" style="--a:0.25">۱</span><span class="db-mx-c db-mx-v empty">·</span><span class="db-mx-c db-mx-v empty">·</span></div><div class="db-mx-r" role="row"><span class="db-mx-c db-mx-b bd-C"><span class="db-mx-dot">C</span><i>شواهد محدود</i></span><span class="db-mx-c db-mx-v bd-C on-dark" style="--a:0.61">۶</span><span class="db-mx-c db-mx-v bd-C on-dark" style="--a:0.85">۱۶</span><span class="db-mx-c db-mx-v empty">·</span><span class="db-mx-c db-mx-v empty">·</span></div><div class="db-mx-r" role="row"><span class="db-mx-c db-mx-b bd-D"><span class="db-mx-dot">D</span><i>شواهد ضعیف</i></span><span class="db-mx-c db-mx-v bd-D on-dark" style="--a:0.54">۵</span><span class="db-mx-c db-mx-v bd-D" style="--a:0.25">۱</span><span class="db-mx-c db-mx-v empty">·</span><span class="db-mx-c db-mx-v bd-D" style="--a:0.25">۱</span></div><div class="db-mx-r" role="row"><span class="db-mx-c db-mx-b bd-E"><span class="db-mx-dot">E</span><i>سطح پایه</i></span><span class="db-mx-c db-mx-v bd-E on-dark" style="--a:0.85">۱۵</span><span class="db-mx-c db-mx-v empty">·</span><span class="db-mx-c db-mx-v bd-E" style="--a:0.32">۲</span><span class="db-mx-c db-mx-v empty">·</span></div></div>
-    </div>
-
-    <div class="tools">
-      <button class="chip" data-v="src" aria-pressed="true">به تفکیک منبع</button>
-      <button class="chip" data-v="page" aria-pressed="false">به تفکیک مطلب</button>
-      <span style="flex:1"></span>
-      <button class="chip" id="ft" aria-pressed="false">فقط متن کامل (۵)</button>
-    </div>
-
-    <div id="v-src"><section class="db-grp" data-grp="THERAPY">
-  <header class="db-gh"><h2>پرسش درمانی</h2><span class="db-gn">۲۶ منبع</span></header>
-  <ol class="db-list"><li class="db-row bd-C prov" data-qt="THERAPY" data-prov="1">
-  <span class="db-rank">۱</span>
-  <div class="db-main">
-    <div class="db-top"><span class="db-bar " aria-hidden="true"><span class="db-blk db-b-E">E</span><span class="db-blk db-b-D">D</span><span class="db-blk db-b-C on">C</span><span class="db-blk db-b-B">B</span><span class="db-blk db-b-A">A</span></span><span class="db-bname">C</span>
-      <span class="db-bfa">شواهد محدود</span>
-      <span class="db-prov" title="فقط چکیده در دسترس بود — امتیاز مقدماتی">چکیده</span>
-      <span class="db-num">۵۵<i>/۱۰۰</i></span></div>
-    <p class="db-cit">Effect and longevity of botulinum toxin in the treatment of gummy smile: a meta-analysis and meta-regression.</p>
-    <p class="db-sub">Clinical Oral Investigations · ۲۰۲۲ · <a class="db-doi" href="https://doi.org/10.1007/s00784-021-04223-w" target="_blank" rel="noopener">DOI</a></p>
-    <a class="db-in" href="/sharehub/share-14.html"><span class="db-sec">ShareHub</span><span class="db-int">از تشخیص تا درمان لبخند لثه‌ای</span></a>
-  </div></li><li class="db-row bd-C prov" data-qt="THERAPY" data-prov="1">
-  <span class="db-rank">۲</span>
-  <div class="db-main">
-    <div class="db-top"><span class="db-bar " aria-hidden="true"><span class="db-blk db-b-E">E</span><span class="db-blk db-b-D">D</span><span class="db-blk db-b-C on">C</span><span class="db-blk db-b-B">B</span><span class="db-blk db-b-A">A</span></span><span class="db-bname">C</span>
-      <span class="db-bfa">شواهد محدود</span>
-      <span class="db-prov" title="فقط چکیده در دسترس بود — امتیاز مقدماتی">چکیده</span>
-      <span class="db-num">۵۵<i>/۱۰۰</i></span></div>
-    <p class="db-cit">Effectiveness of lip repositioning surgeries in the treatment of excessive gingival display: A systematic review and meta-analysis.</p>
-    <p class="db-sub">Journal of Esthetic and Restorative Dentistry · ۲۰۲۱ · <a class="db-doi" href="https://doi.org/10.1111/jerd.12695" target="_blank" rel="noopener">DOI</a></p>
-    <a class="db-in" href="/sharehub/share-14.html"><span class="db-sec">ShareHub</span><span class="db-int">از تشخیص تا درمان لبخند لثه‌ای</span></a>
-  </div></li><li class="db-row bd-C prov" data-qt="THERAPY" data-prov="1">
-  <span class="db-rank">۳</span>
-  <div class="db-main">
-    <div class="db-top"><span class="db-bar " aria-hidden="true"><span class="db-blk db-b-E">E</span><span class="db-blk db-b-D">D</span><span class="db-blk db-b-C on">C</span><span class="db-blk db-b-B">B</span><span class="db-blk db-b-A">A</span></span><span class="db-bname">C</span>
-      <span class="db-bfa">شواهد محدود</span>
-      <span class="db-prov" title="فقط چکیده در دسترس بود — امتیاز مقدماتی">چکیده</span>
-      <span class="db-num">۵۵<i>/۱۰۰</i></span></div>
-    <p class="db-cit">European Academy of Neurology guideline on trigeminal neuralgia.</p>
-    <p class="db-sub">European Journal of Neurology · ۲۰۱۹ · <a class="db-doi" href="https://doi.org/10.1111/ene.13950" target="_blank" rel="noopener">DOI</a></p>
-    <a class="db-in" href="/sharehub/share-12.html"><span class="db-sec">ShareHub</span><span class="db-int">نورالژی تریژمینال، آنچه یک دندانپزشک عمومی باید بداند</span></a>
-  </div></li><li class="db-row bd-C prov" data-qt="THERAPY" data-prov="1">
-  <span class="db-rank">۴</span>
-  <div class="db-main">
-    <div class="db-top"><span class="db-bar " aria-hidden="true"><span class="db-blk db-b-E">E</span><span class="db-blk db-b-D">D</span><span class="db-blk db-b-C on">C</span><span class="db-blk db-b-B">B</span><span class="db-blk db-b-A">A</span></span><span class="db-bname">C</span>
-      <span class="db-bfa">شواهد محدود</span>
-      <span class="db-prov" title="فقط چکیده در دسترس بود — امتیاز مقدماتی">چکیده</span>
-      <span class="db-num">۵۵<i>/۱۰۰</i></span></div>
-    <p class="db-cit">Impact of Maintenance Therapy for the Prevention of Peri-implant Diseases: A Systematic Review and Meta-analysis.</p>
-    <p class="db-sub">Journal of Dental Research · ۲۰۱۶ · <a class="db-doi" href="https://doi.org/10.1177/0022034515622432" target="_blank" rel="noopener">DOI</a></p>
-    <a class="db-in" href="/sharehub/share-13.html"><span class="db-sec">ShareHub</span><span class="db-int">دیابت و ایمپلنت دندانی: از تصمیم قبل از جراحی تا نگهداری بلندمدت</span></a>
-  </div></li><li class="db-row bd-C prov" data-qt="THERAPY" data-prov="1">
-  <span class="db-rank">۵</span>
-  <div class="db-main">
-    <div class="db-top"><span class="db-bar " aria-hidden="true"><span class="db-blk db-b-E">E</span><span class="db-blk db-b-D">D</span><span class="db-blk db-b-C on">C</span><span class="db-blk db-b-B">B</span><span class="db-blk db-b-A">A</span></span><span class="db-bname">C</span>
-      <span class="db-bfa">شواهد محدود</span>
-      <span class="db-prov" title="فقط چکیده در دسترس بود — امتیاز مقدماتی">چکیده</span>
-      <span class="db-num">۵۵<i>/۱۰۰</i></span></div>
-    <p class="db-cit">AAN-EFNS guidelines on trigeminal neuralgia management.</p>
-    <p class="db-sub">European Journal of Neurology · ۲۰۰۸ · <a class="db-doi" href="https://doi.org/10.1111/j.1468-1331.2008.02185.x" target="_blank" rel="noopener">DOI</a></p>
-    <a class="db-in" href="/sharehub/share-12.html"><span class="db-sec">ShareHub</span><span class="db-int">نورالژی تریژمینال، آنچه یک دندانپزشک عمومی باید بداند</span></a>
-  </div></li><li class="db-row bd-C prov" data-qt="THERAPY" data-prov="1">
-  <span class="db-rank">۶</span>
-  <div class="db-main">
-    <div class="db-top"><span class="db-bar " aria-hidden="true"><span class="db-blk db-b-E">E</span><span class="db-blk db-b-D">D</span><span class="db-blk db-b-C on">C</span><span class="db-blk db-b-B">B</span><span class="db-blk db-b-A">A</span></span><span class="db-bname">C</span>
-      <span class="db-bfa">شواهد محدود</span>
-      <span class="db-prov" title="فقط چکیده در دسترس بود — امتیاز مقدماتی">چکیده</span>
-      <span class="db-num">۴۷<i>/۱۰۰</i></span></div>
-    <p class="db-cit">Evaluating Lip Repositioning for the Treatment of Excess Gingival Display with and without Pretreatment with Botox: A Randomized Clinical Trial.</p>
-    <p class="db-sub">The Journal of Contemporary Dental Practice · ۲۰۲۵ · <a class="db-doi" href="https://doi.org/10.5005/jp-journals-10024-3831" target="_blank" rel="noopener">DOI</a></p>
-    <a class="db-in" href="/sharehub/share-14.html"><span class="db-sec">ShareHub</span><span class="db-int">از تشخیص تا درمان لبخند لثه‌ای</span></a>
-  </div></li><li class="db-row bd-D prov" data-qt="THERAPY" data-prov="1">
-  <span class="db-rank">۷</span>
-  <div class="db-main">
-    <div class="db-top"><span class="db-bar " aria-hidden="true"><span class="db-blk db-b-E">E</span><span class="db-blk db-b-D on">D</span><span class="db-blk db-b-C">C</span><span class="db-blk db-b-B">B</span><span class="db-blk db-b-A">A</span></span><span class="db-bname">D</span>
-      <span class="db-bfa">شواهد ضعیف</span>
-      <span class="db-prov" title="فقط چکیده در دسترس بود — امتیاز مقدماتی">چکیده</span>
-      <span class="db-num">۳۶<i>/۱۰۰</i></span></div>
-    <p class="db-cit">Ultrasound analysis of the masseter and anterior temporalis muscles in edentulous patients rehabilitated with full-arch fixed implant-supported prostheses.</p>
-    <p class="db-sub">Clinical Oral Investigations · ۲۰۲۴ · <a class="db-doi" href="https://doi.org/10.1007/s00784-024-05676-5" target="_blank" rel="noopener">DOI</a></p>
-    <a class="db-in" href="/sharehub/share-11.html"><span class="db-sec">ShareHub</span><span class="db-int">استخوان حجیم، نشانه بروکسیسم قدیمی؟ بحثی درباره ایمپلنت فول آرچ</span></a>
-  </div></li><li class="db-row bd-D prov" data-qt="THERAPY" data-prov="1">
-  <span class="db-rank">۸</span>
-  <div class="db-main">
-    <div class="db-top"><span class="db-bar " aria-hidden="true"><span class="db-blk db-b-E">E</span><span class="db-blk db-b-D on">D</span><span class="db-blk db-b-C">C</span><span class="db-blk db-b-B">B</span><span class="db-blk db-b-A">A</span></span><span class="db-bname">D</span>
-      <span class="db-bfa">شواهد ضعیف</span>
-      <span class="db-prov" title="فقط چکیده در دسترس بود — امتیاز مقدماتی">چکیده</span>
-      <span class="db-num">۳۶<i>/۱۰۰</i></span></div>
-    <p class="db-cit">Electromyographic Evaluation of Muscle Activity in Patients Rehabilitated with Full Arch Fixed Implant-Supported Prostheses.</p>
-    <p class="db-sub">Medicina (Kaunas) · ۲۰۲۳ · <a class="db-doi" href="https://doi.org/10.3390/medicina59020299" target="_blank" rel="noopener">DOI</a></p>
-    <a class="db-in" href="/sharehub/share-11.html"><span class="db-sec">ShareHub</span><span class="db-int">استخوان حجیم، نشانه بروکسیسم قدیمی؟ بحثی درباره ایمپلنت فول آرچ</span></a>
-  </div></li><li class="db-row bd-D" data-qt="THERAPY" data-prov="0">
-  <span class="db-rank">۹</span>
-  <div class="db-main">
-    <div class="db-top"><span class="db-bar " aria-hidden="true"><span class="db-blk db-b-E">E</span><span class="db-blk db-b-D on">D</span><span class="db-blk db-b-C">C</span><span class="db-blk db-b-B">B</span><span class="db-blk db-b-A">A</span></span><span class="db-bname">D</span>
-      <span class="db-bfa">شواهد ضعیف</span>
-      
-      <span class="db-num">۳۰<i>/۱۰۰</i></span></div>
-    <p class="db-cit">A systematic review of the survival and complication rates of implant supported fixed dental prostheses with cantilever extensions after an observation period of at least 5 years</p>
-    <p class="db-sub">Clinical Oral Implants Research · ۲۰۰۹ · <a class="db-doi" href="https://doi.org/10.1111/j.1600-0501.2009.01706.x" target="_blank" rel="noopener">DOI</a></p>
-    <a class="db-in" href="/episodes/episode-161.html"><span class="db-sec">اپیزود</span><span class="db-int">Cantilever in Implant Dentistry :part1</span></a>
-  </div></li><li class="db-row bd-D" data-qt="THERAPY" data-prov="0">
-  <span class="db-rank">۱۰</span>
-  <div class="db-main">
-    <div class="db-top"><span class="db-bar " aria-hidden="true"><span class="db-blk db-b-E">E</span><span class="db-blk db-b-D on">D</span><span class="db-blk db-b-C">C</span><span class="db-blk db-b-B">B</span><span class="db-blk db-b-A">A</span></span><span class="db-bname">D</span>
-      <span class="db-bfa">شواهد ضعیف</span>
-      
-      <span class="db-num">۲۵<i>/۱۰۰</i></span></div>
-    <p class="db-cit">Clinical and radiographic outcomes of implant-supported fixed dental prostheses with cantilever extension. A retrospective cohort study with a follow-up of at least 10 years</p>
-    <p class="db-sub">Clinical Oral Implants Research · ۲۰۲۰ · <a class="db-doi" href="https://doi.org/10.1111/clr.13672" target="_blank" rel="noopener">DOI</a></p>
-    <a class="db-in" href="/episodes/episode-161.html"><span class="db-sec">اپیزود</span><span class="db-int">Cantilever in Implant Dentistry :part1</span></a>
-  </div></li><li class="db-row bd-D prov" data-qt="THERAPY" data-prov="1">
-  <span class="db-rank">۱۱</span>
-  <div class="db-main">
-    <div class="db-top"><span class="db-bar " aria-hidden="true"><span class="db-blk db-b-E">E</span><span class="db-blk db-b-D on">D</span><span class="db-blk db-b-C">C</span><span class="db-blk db-b-B">B</span><span class="db-blk db-b-A">A</span></span><span class="db-bname">D</span>
-      <span class="db-bfa">شواهد ضعیف</span>
-      <span class="db-prov" title="فقط چکیده در دسترس بود — امتیاز مقدماتی">چکیده</span>
-      <span class="db-num">۲۳<i>/۱۰۰</i></span></div>
-    <p class="db-cit">Clinical and psychological impact of lip repositioning surgery in the management of excessive gingival display.</p>
-    <p class="db-sub">The Saudi Dental Journal · ۲۰۲۴ · <a class="db-doi" href="https://doi.org/10.1016/j.sdentj.2023.08.011" target="_blank" rel="noopener">DOI</a></p>
-    <a class="db-in" href="/sharehub/share-14.html"><span class="db-sec">ShareHub</span><span class="db-int">از تشخیص تا درمان لبخند لثه‌ای</span></a>
-  </div></li><li class="db-row bd-E prov" data-qt="THERAPY" data-prov="1">
-  <span class="db-rank">۱۲</span>
-  <div class="db-main">
-    <div class="db-top"><span class="db-bar " aria-hidden="true"><span class="db-blk db-b-E on">E</span><span class="db-blk db-b-D">D</span><span class="db-blk db-b-C">C</span><span class="db-blk db-b-B">B</span><span class="db-blk db-b-A">A</span></span><span class="db-bname">E</span>
-      <span class="db-bfa">سطح پایه</span>
-      <span class="db-prov" title="فقط چکیده در دسترس بود — امتیاز مقدماتی">چکیده</span>
-      <span class="db-num">۱۷<i>/۱۰۰</i></span></div>
-    <p class="db-cit">The Combo Strategy: Triple Approach for Gummy Smile-18-Month Case Series.</p>
-    <p class="db-sub">Journal of Esthetic and Restorative Dentistry · ۲۰۲۶ · <a class="db-doi" href="https://doi.org/10.1111/jerd.70113" target="_blank" rel="noopener">DOI</a></p>
-    <a class="db-in" href="/sharehub/share-14.html"><span class="db-sec">ShareHub</span><span class="db-int">از تشخیص تا درمان لبخند لثه‌ای</span></a>
-  </div></li><li class="db-row bd-E prov" data-qt="THERAPY" data-prov="1">
-  <span class="db-rank">۱۳</span>
-  <div class="db-main">
-    <div class="db-top"><span class="db-bar " aria-hidden="true"><span class="db-blk db-b-E on">E</span><span class="db-blk db-b-D">D</span><span class="db-blk db-b-C">C</span><span class="db-blk db-b-B">B</span><span class="db-blk db-b-A">A</span></span><span class="db-bname">E</span>
-      <span class="db-bfa">سطح پایه</span>
-      <span class="db-prov" title="فقط چکیده در دسترس بود — امتیاز مقدماتی">چکیده</span>
-      <span class="db-num">۱۷<i>/۱۰۰</i></span></div>
-    <p class="db-cit">Esthetic crown lengthening in the treatment of gummy smile.</p>
-    <p class="db-sub">The International Journal of Esthetic Dentistry · ۲۰۱۹</p>
-    <a class="db-in" href="/sharehub/share-14.html"><span class="db-sec">ShareHub</span><span class="db-int">از تشخیص تا درمان لبخند لثه‌ای</span></a>
-  </div></li><li class="db-row bd-E prov" data-qt="THERAPY" data-prov="1">
-  <span class="db-rank">۱۴</span>
-  <div class="db-main">
-    <div class="db-top"><span class="db-bar " aria-hidden="true"><span class="db-blk db-b-E on">E</span><span class="db-blk db-b-D">D</span><span class="db-blk db-b-C">C</span><span class="db-blk db-b-B">B</span><span class="db-blk db-b-A">A</span></span><span class="db-bname">E</span>
-      <span class="db-bfa">سطح پایه</span>
-      <span class="db-prov" title="فقط چکیده در دسترس بود — امتیاز مقدماتی">چکیده</span>
-      <span class="db-num">۸<i>/۱۰۰</i></span></div>
-    <p class="db-cit">Long-term periodontal and peri-implant tissue stability under supportive therapy.</p>
-    <p class="db-sub">Periodontology 2000 · ۲۰۲۶ · <a class="db-doi" href="https://doi.org/10.1111/prd.70038" target="_blank" rel="noopener">DOI</a></p>
-    <a class="db-in" href="/sharehub/share-13.html"><span class="db-sec">ShareHub</span><span class="db-int">دیابت و ایمپلنت دندانی: از تصمیم قبل از جراحی تا نگهداری بلندمدت</span></a>
-  </div></li><li class="db-row bd-E prov" data-qt="THERAPY" data-prov="1">
-  <span class="db-rank">۱۵</span>
-  <div class="db-main">
-    <div class="db-top"><span class="db-bar " aria-hidden="true"><span class="db-blk db-b-E on">E</span><span class="db-blk db-b-D">D</span><span class="db-blk db-b-C">C</span><span class="db-blk db-b-B">B</span><span class="db-blk db-b-A">A</span></span><span class="db-bname">E</span>
-      <span class="db-bfa">سطح پایه</span>
-      <span class="db-prov" title="فقط چکیده در دسترس بود — امتیاز مقدماتی">چکیده</span>
-      <span class="db-num">۸<i>/۱۰۰</i></span></div>
-    <p class="db-cit">Bruxism in implant-supported rehabilitations: a narrative review of clinical complications and management strategies.</p>
-    <p class="db-sub">BMC Oral Health · ۲۰۲۵ · <a class="db-doi" href="https://doi.org/10.1186/s12903-025-07005-y" target="_blank" rel="noopener">DOI</a></p>
-    <a class="db-in" href="/sharehub/share-11.html"><span class="db-sec">ShareHub</span><span class="db-int">استخوان حجیم، نشانه بروکسیسم قدیمی؟ بحثی درباره ایمپلنت فول آرچ</span></a>
-  </div></li><li class="db-row bd-E prov" data-qt="THERAPY" data-prov="1">
-  <span class="db-rank">۱۶</span>
-  <div class="db-main">
-    <div class="db-top"><span class="db-bar " aria-hidden="true"><span class="db-blk db-b-E on">E</span><span class="db-blk db-b-D">D</span><span class="db-blk db-b-C">C</span><span class="db-blk db-b-B">B</span><span class="db-blk db-b-A">A</span></span><span class="db-bname">E</span>
-      <span class="db-bfa">سطح پایه</span>
-      <span class="db-prov" title="فقط چکیده در دسترس بود — امتیاز مقدماتی">چکیده</span>
-      <span class="db-num">۸<i>/۱۰۰</i></span></div>
-    <p class="db-cit">From etiology to intervention: 50 years of progress in gummy smile research and treatment.</p>
-    <p class="db-sub">Journal of Indian Society of Periodontology · ۲۰۲۵ · <a class="db-doi" href="https://doi.org/10.4103/jisp.jisp_548_25" target="_blank" rel="noopener">DOI</a></p>
-    <a class="db-in" href="/sharehub/share-14.html"><span class="db-sec">ShareHub</span><span class="db-int">از تشخیص تا درمان لبخند لثه‌ای</span></a>
-  </div></li><li class="db-row bd-E prov" data-qt="THERAPY" data-prov="1">
-  <span class="db-rank">۱۷</span>
-  <div class="db-main">
-    <div class="db-top"><span class="db-bar " aria-hidden="true"><span class="db-blk db-b-E on">E</span><span class="db-blk db-b-D">D</span><span class="db-blk db-b-C">C</span><span class="db-blk db-b-B">B</span><span class="db-blk db-b-A">A</span></span><span class="db-bname">E</span>
-      <span class="db-bfa">سطح پایه</span>
-      <span class="db-prov" title="فقط چکیده در دسترس بود — امتیاز مقدماتی">چکیده</span>
-      <span class="db-num">۸<i>/۱۰۰</i></span></div>
-    <p class="db-cit">Pink esthetic treatment of gingival recession, black triangle, and gummy smile: a narrative review.</p>
-    <p class="db-sub">Maxillofacial Plastic and Reconstructive Surgery · ۲۰۲۵ · <a class="db-doi" href="https://doi.org/10.1186/s40902-025-00467-8" target="_blank" rel="noopener">DOI</a></p>
-    <a class="db-in" href="/sharehub/share-14.html"><span class="db-sec">ShareHub</span><span class="db-int">از تشخیص تا درمان لبخند لثه‌ای</span></a>
-  </div></li><li class="db-row bd-E prov" data-qt="THERAPY" data-prov="1">
-  <span class="db-rank">۱۸</span>
-  <div class="db-main">
-    <div class="db-top"><span class="db-bar " aria-hidden="true"><span class="db-blk db-b-E on">E</span><span class="db-blk db-b-D">D</span><span class="db-blk db-b-C">C</span><span class="db-blk db-b-B">B</span><span class="db-blk db-b-A">A</span></span><span class="db-bname">E</span>
-      <span class="db-bfa">سطح پایه</span>
-      <span class="db-prov" title="فقط چکیده در دسترس بود — امتیاز مقدماتی">چکیده</span>
-      <span class="db-num">۸<i>/۱۰۰</i></span></div>
-    <p class="db-cit">Guidelines for the management of trigeminal neuralgia.</p>
-    <p class="db-sub">Cleveland Clinic Journal of Medicine · ۲۰۲۳ · <a class="db-doi" href="https://doi.org/10.3949/ccjm.90a.22052" target="_blank" rel="noopener">DOI</a></p>
-    <a class="db-in" href="/sharehub/share-12.html"><span class="db-sec">ShareHub</span><span class="db-int">نورالژی تریژمینال، آنچه یک دندانپزشک عمومی باید بداند</span></a>
-  </div></li><li class="db-row bd-E prov" data-qt="THERAPY" data-prov="1">
-  <span class="db-rank">۱۹</span>
-  <div class="db-main">
-    <div class="db-top"><span class="db-bar " aria-hidden="true"><span class="db-blk db-b-E on">E</span><span class="db-blk db-b-D">D</span><span class="db-blk db-b-C">C</span><span class="db-blk db-b-B">B</span><span class="db-blk db-b-A">A</span></span><span class="db-bname">E</span>
-      <span class="db-bfa">سطح پایه</span>
-      <span class="db-prov" title="فقط چکیده در دسترس بود — امتیاز مقدماتی">چکیده</span>
-      <span class="db-num">۸<i>/۱۰۰</i></span></div>
-    <p class="db-cit">An Approach for Gummy Smile Treatment Using Botulinum Toxin A: A Narrative Review of the Literature.</p>
-    <p class="db-sub">Cureus · ۲۰۲۳ · <a class="db-doi" href="https://doi.org/10.7759/cureus.34032" target="_blank" rel="noopener">DOI</a></p>
-    <a class="db-in" href="/sharehub/share-14.html"><span class="db-sec">ShareHub</span><span class="db-int">از تشخیص تا درمان لبخند لثه‌ای</span></a>
-  </div></li><li class="db-row bd-E prov" data-qt="THERAPY" data-prov="1">
-  <span class="db-rank">۲۰</span>
-  <div class="db-main">
-    <div class="db-top"><span class="db-bar " aria-hidden="true"><span class="db-blk db-b-E on">E</span><span class="db-blk db-b-D">D</span><span class="db-blk db-b-C">C</span><span class="db-blk db-b-B">B</span><span class="db-blk db-b-A">A</span></span><span class="db-bname">E</span>
-      <span class="db-bfa">سطح پایه</span>
-      <span class="db-prov" title="فقط چکیده در دسترس بود — امتیاز مقدماتی">چکیده</span>
-      <span class="db-num">۸<i>/۱۰۰</i></span></div>
-    <p class="db-cit">Contemporary treatment techniques for excessive gingival display caused by altered passive eruption or lip hypermobility.</p>
-    <p class="db-sub">Journal of Dentistry · ۲۰۲۳ · <a class="db-doi" href="https://doi.org/10.1016/j.jdent.2023.104711" target="_blank" rel="noopener">DOI</a></p>
-    <a class="db-in" href="/sharehub/share-14.html"><span class="db-sec">ShareHub</span><span class="db-int">از تشخیص تا درمان لبخند لثه‌ای</span></a>
-  </div></li><li class="db-row bd-E prov" data-qt="THERAPY" data-prov="1">
-  <span class="db-rank">۲۱</span>
-  <div class="db-main">
-    <div class="db-top"><span class="db-bar " aria-hidden="true"><span class="db-blk db-b-E on">E</span><span class="db-blk db-b-D">D</span><span class="db-blk db-b-C">C</span><span class="db-blk db-b-B">B</span><span class="db-blk db-b-A">A</span></span><span class="db-bname">E</span>
-      <span class="db-bfa">سطح پایه</span>
-      <span class="db-prov" title="فقط چکیده در دسترس بود — امتیاز مقدماتی">چکیده</span>
-      <span class="db-num">۸<i>/۱۰۰</i></span></div>
-    <p class="db-cit">Orthognathic Surgery for Management of Gummy Smile.</p>
-    <p class="db-sub">Dental Clinics of North America · ۲۰۲۲ · <a class="db-doi" href="https://doi.org/10.1016/j.cden.2022.02.003" target="_blank" rel="noopener">DOI</a></p>
-    <a class="db-in" href="/sharehub/share-14.html"><span class="db-sec">ShareHub</span><span class="db-int">از تشخیص تا درمان لبخند لثه‌ای</span></a>
-  </div></li><li class="db-row bd-E prov" data-qt="THERAPY" data-prov="1">
-  <span class="db-rank">۲۲</span>
-  <div class="db-main">
-    <div class="db-top"><span class="db-bar " aria-hidden="true"><span class="db-blk db-b-E on">E</span><span class="db-blk db-b-D">D</span><span class="db-blk db-b-C">C</span><span class="db-blk db-b-B">B</span><span class="db-blk db-b-A">A</span></span><span class="db-bname">E</span>
-      <span class="db-bfa">سطح پایه</span>
-      <span class="db-prov" title="فقط چکیده در دسترس بود — امتیاز مقدماتی">چکیده</span>
-      <span class="db-num">۸<i>/۱۰۰</i></span></div>
-    <p class="db-cit">Trigeminal neuralgia: a practical guide.</p>
-    <p class="db-sub">Practical Neurology · ۲۰۲۱ · <a class="db-doi" href="https://doi.org/10.1136/practneurol-2020-002782" target="_blank" rel="noopener">DOI</a></p>
-    <a class="db-in" href="/sharehub/share-12.html"><span class="db-sec">ShareHub</span><span class="db-int">نورالژی تریژمینال، آنچه یک دندانپزشک عمومی باید بداند</span></a>
-  </div></li><li class="db-row bd-E prov" data-qt="THERAPY" data-prov="1">
-  <span class="db-rank">۲۳</span>
-  <div class="db-main">
-    <div class="db-top"><span class="db-bar " aria-hidden="true"><span class="db-blk db-b-E on">E</span><span class="db-blk db-b-D">D</span><span class="db-blk db-b-C">C</span><span class="db-blk db-b-B">B</span><span class="db-blk db-b-A">A</span></span><span class="db-bname">E</span>
-      <span class="db-bfa">سطح پایه</span>
-      <span class="db-prov" title="فقط چکیده در دسترس بود — امتیاز مقدماتی">چکیده</span>
-      <span class="db-num">۸<i>/۱۰۰</i></span></div>
-    <p class="db-cit">Diagnosis and Treatment Approaches to a &quot;Gummy Smile&quot;.</p>
-    <p class="db-sub">Dental Clinics of North America · ۲۰۲۰ · <a class="db-doi" href="https://doi.org/10.1016/j.cden.2019.12.003" target="_blank" rel="noopener">DOI</a></p>
-    <a class="db-in" href="/sharehub/share-14.html"><span class="db-sec">ShareHub</span><span class="db-int">از تشخیص تا درمان لبخند لثه‌ای</span></a>
-  </div></li><li class="db-row bd-E prov" data-qt="THERAPY" data-prov="1">
-  <span class="db-rank">۲۴</span>
-  <div class="db-main">
-    <div class="db-top"><span class="db-bar " aria-hidden="true"><span class="db-blk db-b-E on">E</span><span class="db-blk db-b-D">D</span><span class="db-blk db-b-C">C</span><span class="db-blk db-b-B">B</span><span class="db-blk db-b-A">A</span></span><span class="db-bname">E</span>
-      <span class="db-bfa">سطح پایه</span>
-      <span class="db-prov" title="فقط چکیده در دسترس بود — امتیاز مقدماتی">چکیده</span>
-      <span class="db-num">۸<i>/۱۰۰</i></span></div>
-    <p class="db-cit">Resistance form in tooth preparation.</p>
-    <p class="db-sub">Dental Clinics of North America · ۲۰۰۴ · <a class="db-doi" href="https://doi.org/10.1016/j.cden.2003.12.009" target="_blank" rel="noopener">DOI</a></p>
-    <a class="db-in" href="/sharehub/share-10.html"><span class="db-sec">ShareHub</span><span class="db-int">Resistance Form در روکش‌ها؛ تعریف و ارزیابی بالینی</span></a>
-  </div></li><li class="db-row bd-E prov" data-qt="THERAPY" data-prov="1">
-  <span class="db-rank">۲۵</span>
-  <div class="db-main">
-    <div class="db-top"><span class="db-bar " aria-hidden="true"><span class="db-blk db-b-E on">E</span><span class="db-blk db-b-D">D</span><span class="db-blk db-b-C">C</span><span class="db-blk db-b-B">B</span><span class="db-blk db-b-A">A</span></span><span class="db-bname">E</span>
-      <span class="db-bfa">سطح پایه</span>
-      <span class="db-prov" title="فقط چکیده در دسترس بود — امتیاز مقدماتی">چکیده</span>
-      <span class="db-num">۸<i>/۱۰۰</i></span></div>
-    <p class="db-cit">The effect of bruxism on treatment planning for dental implants.</p>
-    <p class="db-sub">Dentistry Today · ۲۰۰۲</p>
-    <a class="db-in" href="/sharehub/share-11.html"><span class="db-sec">ShareHub</span><span class="db-int">استخوان حجیم، نشانه بروکسیسم قدیمی؟ بحثی درباره ایمپلنت فول آرچ</span></a>
-  </div></li><li class="db-row bd-E" data-qt="THERAPY" data-prov="0">
-  <span class="db-rank">۲۶</span>
-  <div class="db-main">
-    <div class="db-top"><span class="db-bar " aria-hidden="true"><span class="db-blk db-b-E on">E</span><span class="db-blk db-b-D">D</span><span class="db-blk db-b-C">C</span><span class="db-blk db-b-B">B</span><span class="db-blk db-b-A">A</span></span><span class="db-bname">E</span>
-      <span class="db-bfa">سطح پایه</span>
-      
-      <span class="db-num">۴<i>/۱۰۰</i></span></div>
-    <p class="db-cit">Rethinking ferrule - a new approach to an old dilemma</p>
-    <p class="db-sub">British Dental Journal · ۲۰۱۰ · <a class="db-doi" href="https://doi.org/10.1038/sj.bdj.2010.580" target="_blank" rel="noopener">DOI</a></p>
-    <a class="db-in" href="/insight/insight-64.html"><span class="db-sec">Clinical Insight</span><span class="db-int">اینجوری هم میشه به فرول نگاه کرد،یه استفاده ی معکوس از مقاله معروف در مورد فرول</span></a>
-  </div></li></ol></section><section class="db-grp" data-grp="ETIOLOGY">
-  <header class="db-gh"><h2>پرسش علت‌شناسی</h2><span class="db-gn">۱۸ منبع</span></header>
-  <ol class="db-list"><li class="db-row bd-B prov" data-qt="ETIOLOGY" data-prov="1">
-  <span class="db-rank">۱</span>
-  <div class="db-main">
-    <div class="db-top"><span class="db-bar " aria-hidden="true"><span class="db-blk db-b-E">E</span><span class="db-blk db-b-D">D</span><span class="db-blk db-b-C">C</span><span class="db-blk db-b-B on">B</span><span class="db-blk db-b-A">A</span></span><span class="db-bname">B</span>
-      <span class="db-bfa">شواهد متوسط</span>
-      <span class="db-prov" title="فقط چکیده در دسترس بود — امتیاز مقدماتی">چکیده</span>
-      <span class="db-num">۷۵<i>/۱۰۰</i></span></div>
-    <p class="db-cit">Bruxism and dental implants: A systematic review and meta-analysis.</p>
-    <p class="db-sub">Journal of Oral Rehabilitation · ۲۰۲۴ · <a class="db-doi" href="https://doi.org/10.1111/joor.13567" target="_blank" rel="noopener">DOI</a></p>
-    <a class="db-in" href="/sharehub/share-11.html"><span class="db-sec">ShareHub</span><span class="db-int">استخوان حجیم، نشانه بروکسیسم قدیمی؟ بحثی درباره ایمپلنت فول آرچ</span></a>
-  </div></li><li class="db-row bd-C prov" data-qt="ETIOLOGY" data-prov="1">
-  <span class="db-rank">۲</span>
-  <div class="db-main">
-    <div class="db-top"><span class="db-bar " aria-hidden="true"><span class="db-blk db-b-E">E</span><span class="db-blk db-b-D">D</span><span class="db-blk db-b-C on">C</span><span class="db-blk db-b-B">B</span><span class="db-blk db-b-A">A</span></span><span class="db-bname">C</span>
-      <span class="db-bfa">شواهد محدود</span>
-      <span class="db-prov" title="فقط چکیده در دسترس بود — امتیاز مقدماتی">چکیده</span>
-      <span class="db-num">۵۸<i>/۱۰۰</i></span></div>
-    <p class="db-cit">The effects of elevated hemoglobin A(1c) in patients with type 2 diabetes mellitus on dental implants: Survival and stability at one year.</p>
-    <p class="db-sub">Journal of the American Dental Association · ۲۰۱۴ · <a class="db-doi" href="https://doi.org/10.14219/jada.2014.93" target="_blank" rel="noopener">DOI</a></p>
-    <a class="db-in" href="/sharehub/share-13.html"><span class="db-sec">ShareHub</span><span class="db-int">دیابت و ایمپلنت دندانی: از تصمیم قبل از جراحی تا نگهداری بلندمدت</span></a>
-  </div></li><li class="db-row bd-C prov" data-qt="ETIOLOGY" data-prov="1">
-  <span class="db-rank">۳</span>
-  <div class="db-main">
-    <div class="db-top"><span class="db-bar " aria-hidden="true"><span class="db-blk db-b-E">E</span><span class="db-blk db-b-D">D</span><span class="db-blk db-b-C on">C</span><span class="db-blk db-b-B">B</span><span class="db-blk db-b-A">A</span></span><span class="db-bname">C</span>
-      <span class="db-bfa">شواهد محدود</span>
-      <span class="db-prov" title="فقط چکیده در دسترس بود — امتیاز مقدماتی">چکیده</span>
-      <span class="db-num">۵۵<i>/۱۰۰</i></span></div>
-    <p class="db-cit">Success Rates of Dental Implants in Patients With Diabetes: A Systematic Review.</p>
-    <p class="db-sub">Cureus · ۲۰۲۴ · <a class="db-doi" href="https://doi.org/10.7759/cureus.76361" target="_blank" rel="noopener">DOI</a></p>
-    <a class="db-in" href="/sharehub/share-13.html"><span class="db-sec">ShareHub</span><span class="db-int">دیابت و ایمپلنت دندانی: از تصمیم قبل از جراحی تا نگهداری بلندمدت</span></a>
-  </div></li><li class="db-row bd-C prov" data-qt="ETIOLOGY" data-prov="1">
-  <span class="db-rank">۴</span>
-  <div class="db-main">
-    <div class="db-top"><span class="db-bar " aria-hidden="true"><span class="db-blk db-b-E">E</span><span class="db-blk db-b-D">D</span><span class="db-blk db-b-C on">C</span><span class="db-blk db-b-B">B</span><span class="db-blk db-b-A">A</span></span><span class="db-bname">C</span>
-      <span class="db-bfa">شواهد محدود</span>
-      <span class="db-prov" title="فقط چکیده در دسترس بود — امتیاز مقدماتی">چکیده</span>
-      <span class="db-num">۵۵<i>/۱۰۰</i></span></div>
-    <p class="db-cit">Dental caries and salivary alterations in patients with type 2 diabetes: A systematic review and meta-analysis.</p>
-    <p class="db-sub">Journal of Dentistry · ۲۰۲۴ · <a class="db-doi" href="https://doi.org/10.1016/j.jdent.2024.105321" target="_blank" rel="noopener">DOI</a></p>
-    <a class="db-in" href="/sharehub/share-7.html"><span class="db-sec">ShareHub</span><span class="db-int">دیابت و پوسیدگی؛ رابطه‌ای که آن‌قدرها مستقیم نیست</span></a>
-  </div></li><li class="db-row bd-C prov" data-qt="ETIOLOGY" data-prov="1">
-  <span class="db-rank">۵</span>
-  <div class="db-main">
-    <div class="db-top"><span class="db-bar " aria-hidden="true"><span class="db-blk db-b-E">E</span><span class="db-blk db-b-D">D</span><span class="db-blk db-b-C on">C</span><span class="db-blk db-b-B">B</span><span class="db-blk db-b-A">A</span></span><span class="db-bname">C</span>
-      <span class="db-bfa">شواهد محدود</span>
-      <span class="db-prov" title="فقط چکیده در دسترس بود — امتیاز مقدماتی">چکیده</span>
-      <span class="db-num">۵۵<i>/۱۰۰</i></span></div>
-    <p class="db-cit">Systematic review on diabetes mellitus and dental implants: an update.</p>
-    <p class="db-sub">International Journal of Implant Dentistry · ۲۰۲۲ · <a class="db-doi" href="https://doi.org/10.1186/s40729-021-00399-8" target="_blank" rel="noopener">DOI</a></p>
-    <a class="db-in" href="/sharehub/share-13.html"><span class="db-sec">ShareHub</span><span class="db-int">دیابت و ایمپلنت دندانی: از تصمیم قبل از جراحی تا نگهداری بلندمدت</span></a>
-  </div></li><li class="db-row bd-C prov" data-qt="ETIOLOGY" data-prov="1">
-  <span class="db-rank">۶</span>
-  <div class="db-main">
-    <div class="db-top"><span class="db-bar " aria-hidden="true"><span class="db-blk db-b-E">E</span><span class="db-blk db-b-D">D</span><span class="db-blk db-b-C on">C</span><span class="db-blk db-b-B">B</span><span class="db-blk db-b-A">A</span></span><span class="db-bname">C</span>
-      <span class="db-bfa">شواهد محدود</span>
-      <span class="db-prov" title="فقط چکیده در دسترس بود — امتیاز مقدماتی">چکیده</span>
-      <span class="db-num">۵۵<i>/۱۰۰</i></span></div>
-    <p class="db-cit">Impact of hyperglycemia on the rate of implant failure and peri-implant parameters in patients with type 2 diabetes mellitus: Systematic review and meta-analysis.</p>
-    <p class="db-sub">Journal of the American Dental Association · ۲۰۲۱ · <a class="db-doi" href="https://doi.org/10.1016/j.adaj.2020.11.015" target="_blank" rel="noopener">DOI</a></p>
-    <a class="db-in" href="/sharehub/share-13.html"><span class="db-sec">ShareHub</span><span class="db-int">دیابت و ایمپلنت دندانی: از تصمیم قبل از جراحی تا نگهداری بلندمدت</span></a>
-  </div></li><li class="db-row bd-C prov" data-qt="ETIOLOGY" data-prov="1">
-  <span class="db-rank">۷</span>
-  <div class="db-main">
-    <div class="db-top"><span class="db-bar " aria-hidden="true"><span class="db-blk db-b-E">E</span><span class="db-blk db-b-D">D</span><span class="db-blk db-b-C on">C</span><span class="db-blk db-b-B">B</span><span class="db-blk db-b-A">A</span></span><span class="db-bname">C</span>
-      <span class="db-bfa">شواهد محدود</span>
-      <span class="db-prov" title="فقط چکیده در دسترس بود — امتیاز مقدماتی">چکیده</span>
-      <span class="db-num">۵۵<i>/۱۰۰</i></span></div>
-    <p class="db-cit">Association between signs and symptoms of bruxism and presence of tori: a systematic review.</p>
-    <p class="db-sub">Clinical Oral Investigations · ۲۰۱۷ · <a class="db-doi" href="https://doi.org/10.1007/s00784-017-2081-7" target="_blank" rel="noopener">DOI</a></p>
-    <a class="db-in" href="/sharehub/share-11.html"><span class="db-sec">ShareHub</span><span class="db-int">استخوان حجیم، نشانه بروکسیسم قدیمی؟ بحثی درباره ایمپلنت فول آرچ</span></a>
-  </div></li><li class="db-row bd-C prov" data-qt="ETIOLOGY" data-prov="1">
-  <span class="db-rank">۸</span>
-  <div class="db-main">
-    <div class="db-top"><span class="db-bar " aria-hidden="true"><span class="db-blk db-b-E">E</span><span class="db-blk db-b-D">D</span><span class="db-blk db-b-C on">C</span><span class="db-blk db-b-B">B</span><span class="db-blk db-b-A">A</span></span><span class="db-bname">C</span>
-      <span class="db-bfa">شواهد محدود</span>
-      <span class="db-prov" title="فقط چکیده در دسترس بود — امتیاز مقدماتی">چکیده</span>
-      <span class="db-num">۵۵<i>/۱۰۰</i></span></div>
-    <p class="db-cit">Association between diabetes mellitus/hyperglycaemia and peri-implant diseases: Systematic review and meta-analysis.</p>
-    <p class="db-sub">Journal of Clinical Periodontology · ۲۰۱۷ · <a class="db-doi" href="https://doi.org/10.1111/jcpe.12724" target="_blank" rel="noopener">DOI</a></p>
-    <a class="db-in" href="/sharehub/share-13.html"><span class="db-sec">ShareHub</span><span class="db-int">دیابت و ایمپلنت دندانی: از تصمیم قبل از جراحی تا نگهداری بلندمدت</span></a>
-  </div></li><li class="db-row bd-C prov" data-qt="ETIOLOGY" data-prov="1">
-  <span class="db-rank">۹</span>
-  <div class="db-main">
-    <div class="db-top"><span class="db-bar " aria-hidden="true"><span class="db-blk db-b-E">E</span><span class="db-blk db-b-D">D</span><span class="db-blk db-b-C on">C</span><span class="db-blk db-b-B">B</span><span class="db-blk db-b-A">A</span></span><span class="db-bname">C</span>
-      <span class="db-bfa">شواهد محدود</span>
-      <span class="db-prov" title="فقط چکیده در دسترس بود — امتیاز مقدماتی">چکیده</span>
-      <span class="db-num">۵۵<i>/۱۰۰</i></span></div>
-    <p class="db-cit">Dental implants and diabetes mellitus-a systematic review.</p>
-    <p class="db-sub">International Journal of Implant Dentistry · ۲۰۱۶ · <a class="db-doi" href="https://doi.org/10.1186/s40729-016-0038-2" target="_blank" rel="noopener">DOI</a></p>
-    <a class="db-in" href="/sharehub/share-13.html"><span class="db-sec">ShareHub</span><span class="db-int">دیابت و ایمپلنت دندانی: از تصمیم قبل از جراحی تا نگهداری بلندمدت</span></a>
-  </div></li><li class="db-row bd-C prov" data-qt="ETIOLOGY" data-prov="1">
-  <span class="db-rank">۱۰</span>
-  <div class="db-main">
-    <div class="db-top"><span class="db-bar " aria-hidden="true"><span class="db-blk db-b-E">E</span><span class="db-blk db-b-D">D</span><span class="db-blk db-b-C on">C</span><span class="db-blk db-b-B">B</span><span class="db-blk db-b-A">A</span></span><span class="db-bname">C</span>
-      <span class="db-bfa">شواهد محدود</span>
-      <span class="db-prov" title="فقط چکیده در دسترس بود — امتیاز مقدماتی">چکیده</span>
-      <span class="db-num">۵۵<i>/۱۰۰</i></span></div>
-    <p class="db-cit">Does a higher glycemic level lead to a higher rate of dental implant failure?: A meta-analysis.</p>
-    <p class="db-sub">Journal of the American Dental Association · ۲۰۱۶ · <a class="db-doi" href="https://doi.org/10.1016/j.adaj.2016.06.011" target="_blank" rel="noopener">DOI</a></p>
-    <a class="db-in" href="/sharehub/share-13.html"><span class="db-sec">ShareHub</span><span class="db-int">دیابت و ایمپلنت دندانی: از تصمیم قبل از جراحی تا نگهداری بلندمدت</span></a>
-  </div></li><li class="db-row bd-C prov" data-qt="ETIOLOGY" data-prov="1">
-  <span class="db-rank">۱۱</span>
-  <div class="db-main">
-    <div class="db-top"><span class="db-bar " aria-hidden="true"><span class="db-blk db-b-E">E</span><span class="db-blk db-b-D">D</span><span class="db-blk db-b-C on">C</span><span class="db-blk db-b-B">B</span><span class="db-blk db-b-A">A</span></span><span class="db-bname">C</span>
-      <span class="db-bfa">شواهد محدود</span>
-      <span class="db-prov" title="فقط چکیده در دسترس بود — امتیاز مقدماتی">چکیده</span>
-      <span class="db-num">۵۵<i>/۱۰۰</i></span></div>
-    <p class="db-cit">Diabetes and oral implant failure: a systematic review.</p>
-    <p class="db-sub">Journal of Dental Research · ۲۰۱۴ · <a class="db-doi" href="https://doi.org/10.1177/0022034514538820" target="_blank" rel="noopener">DOI</a></p>
-    <a class="db-in" href="/sharehub/share-13.html"><span class="db-sec">ShareHub</span><span class="db-int">دیابت و ایمپلنت دندانی: از تصمیم قبل از جراحی تا نگهداری بلندمدت</span></a>
-  </div></li><li class="db-row bd-C prov" data-qt="ETIOLOGY" data-prov="1">
-  <span class="db-rank">۱۲</span>
-  <div class="db-main">
-    <div class="db-top"><span class="db-bar " aria-hidden="true"><span class="db-blk db-b-E">E</span><span class="db-blk db-b-D">D</span><span class="db-blk db-b-C on">C</span><span class="db-blk db-b-B">B</span><span class="db-blk db-b-A">A</span></span><span class="db-bname">C</span>
-      <span class="db-bfa">شواهد محدود</span>
-      <span class="db-prov" title="فقط چکیده در دسترس بود — امتیاز مقدماتی">چکیده</span>
-      <span class="db-num">۵۵<i>/۱۰۰</i></span></div>
-    <p class="db-cit">Epidemiology of bruxism in adults: a systematic review of the literature.</p>
-    <p class="db-sub">Journal of Orofacial Pain · ۲۰۱۳ · <a class="db-doi" href="https://doi.org/10.11607/jop.921" target="_blank" rel="noopener">DOI</a></p>
-    <a class="db-in" href="/sharehub/share-11.html"><span class="db-sec">ShareHub</span><span class="db-int">استخوان حجیم، نشانه بروکسیسم قدیمی؟ بحثی درباره ایمپلنت فول آرچ</span></a>
-  </div></li><li class="db-row bd-C prov" data-qt="ETIOLOGY" data-prov="1">
-  <span class="db-rank">۱۳</span>
-  <div class="db-main">
-    <div class="db-top"><span class="db-bar " aria-hidden="true"><span class="db-blk db-b-E">E</span><span class="db-blk db-b-D">D</span><span class="db-blk db-b-C on">C</span><span class="db-blk db-b-B">B</span><span class="db-blk db-b-A">A</span></span><span class="db-bname">C</span>
-      <span class="db-bfa">شواهد محدود</span>
-      <span class="db-prov" title="فقط چکیده در دسترس بود — امتیاز مقدماتی">چکیده</span>
-      <span class="db-num">۴۵<i>/۱۰۰</i></span></div>
-    <p class="db-cit">Bruxism and dental implant treatment complications: a retrospective comparative study of 98 bruxer patients and a matched group.</p>
-    <p class="db-sub">Clinical Oral Implants Research · ۲۰۱۷ · <a class="db-doi" href="https://doi.org/10.1111/clr.12844" target="_blank" rel="noopener">DOI</a></p>
-    <a class="db-in" href="/sharehub/share-11.html"><span class="db-sec">ShareHub</span><span class="db-int">استخوان حجیم، نشانه بروکسیسم قدیمی؟ بحثی درباره ایمپلنت فول آرچ</span></a>
-  </div></li><li class="db-row bd-C prov" data-qt="ETIOLOGY" data-prov="1">
-  <span class="db-rank">۱۴</span>
-  <div class="db-main">
-    <div class="db-top"><span class="db-bar " aria-hidden="true"><span class="db-blk db-b-E">E</span><span class="db-blk db-b-D">D</span><span class="db-blk db-b-C on">C</span><span class="db-blk db-b-B">B</span><span class="db-blk db-b-A">A</span></span><span class="db-bname">C</span>
-      <span class="db-bfa">شواهد محدود</span>
-      <span class="db-prov" title="فقط چکیده در دسترس بود — امتیاز مقدماتی">چکیده</span>
-      <span class="db-num">۴۵<i>/۱۰۰</i></span></div>
-    <p class="db-cit">Sleep bruxism in individuals with and without attrition-type tooth wear: An exploratory matched case-control electromyographic study.</p>
-    <p class="db-sub">Journal of Dentistry · ۲۰۱۵ · <a class="db-doi" href="https://doi.org/10.1016/j.jdent.2015.10.002" target="_blank" rel="noopener">DOI</a></p>
-    <a class="db-in" href="/sharehub/share-11.html"><span class="db-sec">ShareHub</span><span class="db-int">استخوان حجیم، نشانه بروکسیسم قدیمی؟ بحثی درباره ایمپلنت فول آرچ</span></a>
-  </div></li><li class="db-row bd-C prov" data-qt="ETIOLOGY" data-prov="1">
-  <span class="db-rank">۱۵</span>
-  <div class="db-main">
-    <div class="db-top"><span class="db-bar " aria-hidden="true"><span class="db-blk db-b-E">E</span><span class="db-blk db-b-D">D</span><span class="db-blk db-b-C on">C</span><span class="db-blk db-b-B">B</span><span class="db-blk db-b-A">A</span></span><span class="db-bname">C</span>
-      <span class="db-bfa">شواهد محدود</span>
-      <span class="db-prov" title="فقط چکیده در دسترس بود — امتیاز مقدماتی">چکیده</span>
-      <span class="db-num">۴۵<i>/۱۰۰</i></span></div>
-    <p class="db-cit">The gingival smile line.</p>
-    <p class="db-sub">The Angle Orthodontist · ۱۹۹۲ · <a class="db-doi" href="https://doi.org/10.1043/0003-3219(1992)062&lt;0091:TGSL&gt;2.0.CO;2" target="_blank" rel="noopener">DOI</a></p>
-    <a class="db-in" href="/sharehub/share-14.html"><span class="db-sec">ShareHub</span><span class="db-int">از تشخیص تا درمان لبخند لثه‌ای</span></a>
-  </div></li><li class="db-row bd-C prov" data-qt="ETIOLOGY" data-prov="1">
-  <span class="db-rank">۱۶</span>
-  <div class="db-main">
-    <div class="db-top"><span class="db-bar " aria-hidden="true"><span class="db-blk db-b-E">E</span><span class="db-blk db-b-D">D</span><span class="db-blk db-b-C on">C</span><span class="db-blk db-b-B">B</span><span class="db-blk db-b-A">A</span></span><span class="db-bname">C</span>
-      <span class="db-bfa">شواهد محدود</span>
-      <span class="db-prov" title="فقط چکیده در دسترس بود — امتیاز مقدماتی">چکیده</span>
-      <span class="db-num">۴۴<i>/۱۰۰</i></span></div>
-    <p class="db-cit">Glycemic control and implant stabilization in type 2 diabetes mellitus.</p>
-    <p class="db-sub">Journal of Dental Research · ۲۰۰۹ · <a class="db-doi" href="https://doi.org/10.1177/0022034509334203" target="_blank" rel="noopener">DOI</a></p>
-    <a class="db-in" href="/sharehub/share-13.html"><span class="db-sec">ShareHub</span><span class="db-int">دیابت و ایمپلنت دندانی: از تصمیم قبل از جراحی تا نگهداری بلندمدت</span></a>
-  </div></li><li class="db-row bd-C" data-qt="ETIOLOGY" data-prov="0">
-  <span class="db-rank">۱۷</span>
-  <div class="db-main">
-    <div class="db-top"><span class="db-bar " aria-hidden="true"><span class="db-blk db-b-E">E</span><span class="db-blk db-b-D">D</span><span class="db-blk db-b-C on">C</span><span class="db-blk db-b-B">B</span><span class="db-blk db-b-A">A</span></span><span class="db-bname">C</span>
-      <span class="db-bfa">شواهد محدود</span>
-      
-      <span class="db-num">۴۳<i>/۱۰۰</i></span></div>
-    <p class="db-cit">Bone level changes at implants supporting crowns or fixed partial dentures with or without cantilevers</p>
-    <p class="db-sub">Clinical Oral Implants Research · ۲۰۰۸ · <a class="db-doi" href="https://doi.org/10.1111/j.1600-0501.2008.01556.x" target="_blank" rel="noopener">DOI</a></p>
-    <a class="db-in" href="/episodes/episode-161.html"><span class="db-sec">اپیزود</span><span class="db-int">Cantilever in Implant Dentistry :part1</span></a>
-  </div></li><li class="db-row bd-D prov" data-qt="ETIOLOGY" data-prov="1">
-  <span class="db-rank">۱۸</span>
-  <div class="db-main">
-    <div class="db-top"><span class="db-bar " aria-hidden="true"><span class="db-blk db-b-E">E</span><span class="db-blk db-b-D on">D</span><span class="db-blk db-b-C">C</span><span class="db-blk db-b-B">B</span><span class="db-blk db-b-A">A</span></span><span class="db-bname">D</span>
-      <span class="db-bfa">شواهد ضعیف</span>
-      <span class="db-prov" title="فقط چکیده در دسترس بود — امتیاز مقدماتی">چکیده</span>
-      <span class="db-num">۳۳<i>/۱۰۰</i></span></div>
-    <p class="db-cit">Bruxism and dental implant failures: a multilevel mixed effects parametric survival analysis approach.</p>
-    <p class="db-sub">Journal of Oral Rehabilitation · ۲۰۱۶ · <a class="db-doi" href="https://doi.org/10.1111/joor.12431" target="_blank" rel="noopener">DOI</a></p>
-    <a class="db-in" href="/sharehub/share-11.html"><span class="db-sec">ShareHub</span><span class="db-int">استخوان حجیم، نشانه بروکسیسم قدیمی؟ بحثی درباره ایمپلنت فول آرچ</span></a>
-  </div></li></ol></section><section class="db-grp" data-grp="SMALL">
-  <header class="db-gh"><h2>دسته‌های کم‌شمار</h2><span class="db-gn">۳ منبع</span></header>
-  <p class="db-gnote">بدون شماره‌ی رتبه. یک فهرست دوتایی فقط می‌تواند بگوید «اول» و «دوم»، که هیچ حرفی نیست — همان قاعده‌ای که <code>MIN_CLASS_SIZE</code> در up-board اجرا می‌کند.</p>
-  <ol class="db-list norank"><li class="db-row bd-D prov" data-qt="MATERIAL" data-prov="1">
-  <span class="db-rank">·</span>
-  <div class="db-main">
-    <div class="db-top"><span class="db-bar " aria-hidden="true"><span class="db-blk db-b-E">E</span><span class="db-blk db-b-D on">D</span><span class="db-blk db-b-C">C</span><span class="db-blk db-b-B">B</span><span class="db-blk db-b-A">A</span></span><span class="db-bname">D</span>
-      <span class="db-bfa">شواهد ضعیف</span>
-      <span class="db-prov" title="فقط چکیده در دسترس بود — امتیاز مقدماتی">چکیده</span>
-      <span class="db-num">۳۶<i>/۱۰۰</i></span></div>
-    <p class="db-cit">Influence of Liquid on the Tooth Surface on the Accuracy of Intraoral Scanners: An In Vitro Study</p>
-    <p class="db-sub">Journal of Prosthodontics · ۲۰۲۱ · <a class="db-doi" href="https://doi.org/10.1111/jopr.13358" target="_blank" rel="noopener">DOI</a></p>
-    <a class="db-in" href="/dentai/dentai-21.html"><span class="db-sec">DentAI</span><span class="db-int">تاثیر مایع روی سطح دندان بر دقت اسکنر داخل‌دهانی</span></a>
-  </div></li><p class="db-qtl">پرسش مواد</p><li class="db-row bd-E prov" data-qt="DIAGNOSTIC" data-prov="1">
-  <span class="db-rank">·</span>
-  <div class="db-main">
-    <div class="db-top"><span class="db-bar " aria-hidden="true"><span class="db-blk db-b-E on">E</span><span class="db-blk db-b-D">D</span><span class="db-blk db-b-C">C</span><span class="db-blk db-b-B">B</span><span class="db-blk db-b-A">A</span></span><span class="db-bname">E</span>
-      <span class="db-bfa">سطح پایه</span>
-      <span class="db-prov" title="فقط چکیده در دسترس بود — امتیاز مقدماتی">چکیده</span>
-      <span class="db-num">۸<i>/۱۰۰</i></span></div>
-    <p class="db-cit">International consensus on the assessment of bruxism: Report of a work in progress.</p>
-    <p class="db-sub">Journal of Oral Rehabilitation · ۲۰۱۸ · <a class="db-doi" href="https://doi.org/10.1111/joor.12663" target="_blank" rel="noopener">DOI</a></p>
-    <a class="db-in" href="/sharehub/share-11.html"><span class="db-sec">ShareHub</span><span class="db-int">استخوان حجیم، نشانه بروکسیسم قدیمی؟ بحثی درباره ایمپلنت فول آرچ</span></a>
-  </div></li><p class="db-qtl">پرسش تشخیصی</p><li class="db-row bd-E" data-qt="DIAGNOSTIC" data-prov="0">
-  <span class="db-rank">·</span>
-  <div class="db-main">
-    <div class="db-top"><span class="db-bar " aria-hidden="true"><span class="db-blk db-b-E on">E</span><span class="db-blk db-b-D">D</span><span class="db-blk db-b-C">C</span><span class="db-blk db-b-B">B</span><span class="db-blk db-b-A">A</span></span><span class="db-bname">E</span>
-      <span class="db-bfa">سطح پایه</span>
-      
-      <span class="db-num">۴<i>/۱۰۰</i></span></div>
-    <p class="db-cit">Guide to Optimizing the Accuracy of Intraoral Implant Scans: A Review Article</p>
-    <p class="db-sub">Cyprus Journal of Medical Sciences · ۲۰۲۵ · <a class="db-doi" href="https://doi.org/10.4274/cjms.2024.2024-31" target="_blank" rel="noopener">DOI</a></p>
-    <a class="db-in" href="/sharehub/share-2.html"><span class="db-sec">ShareHub</span><span class="db-int">بهینه‌سازی دقت اسکن داخل دهانی ایمپلنت</span></a>
-  </div></li><p class="db-qtl">پرسش تشخیصی</p></ol></section><section class="db-grp" data-grp="NA">
-  <header class="db-gh"><h2>بدون امتیاز</h2><span class="db-gn">۱ منبع</span></header>
-  <p class="db-gnote">کتاب مرجع ادبیات ثالثیه است: نه پروتکل دارد، نه راهبرد جست‌وجو، نه ارزیابیِ تورشِ آنچه خلاصه می‌کند — پس AMSTAR-2 و RoB 2 چیزی برای اندازه‌گیری ندارند. این نمره‌ی پایین نیست، پاسخِ سوم است. حذفش همان باگی بود که <code>share-14</code> را ۱۳ منبع نشان داد به‌جای ۱۴.</p>
-  <ol class="db-list norank"><li class="db-row na"><span class="db-rank">·</span><div class="db-main">
-    <div class="db-top"><span class="db-nab">کتاب مرجع</span><span class="db-bfa">امتیازدهی نمی‌شود</span></div>
-    <p class="db-cit">Global Diagnosis book</p>
-    <a class="db-in" href="/sharehub/share-14.html"><span class="db-sec">ShareHub</span><span class="db-int">از تشخیص تا درمان لبخند لثه‌ای</span></a>
-  </div></li></ol></section></div>
-    <div id="v-page" hidden><section class="db-grp">
-  <p class="db-gnote">هر مطلب با <b>قوی‌ترین</b> منبعی که به آن استناد کرده می‌آید — همان قاعده‌ای که چیپِ بالای مقاله از قبل اجرا می‌کند. منابع پشتیبان‌های مستقل‌اند، نه حلقه‌های یک زنجیر: افزودن یک منبع ضعیف نباید متاآنالیزی را که همان‌جا استناد شده کم‌ارزش کند. بازه کنار حرف می‌آید تا چیزی پنهان نماند.</p>
-  <ol class="db-list"><li class="db-row bd-B prov">
-  <span class="db-rank">۱</span>
-  <div class="db-main">
-    <div class="db-top"><span class="db-bar " aria-hidden="true"><span class="db-blk db-b-E">E</span><span class="db-blk db-b-D">D</span><span class="db-blk db-b-C">C</span><span class="db-blk db-b-B on">B</span><span class="db-blk db-b-A">A</span></span><span class="db-bname">B–E</span>
-      <span class="db-bfa">پرسش علت‌شناسی</span>
-      <span class="db-num">۱۱<i> منبع</i></span></div>
-    <a class="db-ptitle" href="/sharehub/share-11.html">استخوان حجیم، نشانه بروکسیسم قدیمی؟ بحثی درباره ایمپلنت فول آرچ</a>
-    <p class="db-sub fa"><span class="db-sec">ShareHub</span>۴ مرداد ۱۴۰۵ · قوی‌ترین منبع ۷۵ از ۱۰۰</p>
-  </div></li><li class="db-row bd-C prov">
-  <span class="db-rank">۲</span>
-  <div class="db-main">
-    <div class="db-top"><span class="db-bar " aria-hidden="true"><span class="db-blk db-b-E">E</span><span class="db-blk db-b-D">D</span><span class="db-blk db-b-C on">C</span><span class="db-blk db-b-B">B</span><span class="db-blk db-b-A">A</span></span><span class="db-bname">C–E</span>
-      <span class="db-bfa">پرسش علت‌شناسی</span>
-      <span class="db-num">۱۱<i> منبع</i></span></div>
-    <a class="db-ptitle" href="/sharehub/share-13.html">دیابت و ایمپلنت دندانی: از تصمیم قبل از جراحی تا نگهداری بلندمدت</a>
-    <p class="db-sub fa"><span class="db-sec">ShareHub</span>۱۳ مرداد ۱۴۰۵ · قوی‌ترین منبع ۵۸ از ۱۰۰</p>
-  </div></li><li class="db-row bd-C prov">
-  <span class="db-rank">۳</span>
-  <div class="db-main">
-    <div class="db-top"><span class="db-bar " aria-hidden="true"><span class="db-blk db-b-E">E</span><span class="db-blk db-b-D">D</span><span class="db-blk db-b-C on">C</span><span class="db-blk db-b-B">B</span><span class="db-blk db-b-A">A</span></span><span class="db-bname">C</span>
-      <span class="db-bfa">پرسش علت‌شناسی</span>
-      <span class="db-num">۱<i> منبع</i></span></div>
-    <a class="db-ptitle" href="/sharehub/share-7.html">دیابت و پوسیدگی؛ رابطه‌ای که آن‌قدرها مستقیم نیست</a>
-    <p class="db-sub fa"><span class="db-sec">ShareHub</span>۹ خرداد ۱۴۰۵ · قوی‌ترین منبع ۵۵ از ۱۰۰</p>
-  </div></li><li class="db-row bd-C prov">
-  <span class="db-rank">۴</span>
-  <div class="db-main">
-    <div class="db-top"><span class="db-bar " aria-hidden="true"><span class="db-blk db-b-E">E</span><span class="db-blk db-b-D">D</span><span class="db-blk db-b-C on">C</span><span class="db-blk db-b-B">B</span><span class="db-blk db-b-A">A</span></span><span class="db-bname">C–E</span>
-      <span class="db-bfa">پرسش درمانی</span>
-      <span class="db-num">۱۳<i> منبع</i></span></div>
-    <a class="db-ptitle" href="/sharehub/share-14.html">از تشخیص تا درمان لبخند لثه‌ای</a>
-    <p class="db-sub fa"><span class="db-sec">ShareHub</span>۲۲ مرداد ۱۴۰۵ · قوی‌ترین منبع ۵۵ از ۱۰۰</p>
-  </div></li><li class="db-row bd-C prov">
-  <span class="db-rank">۵</span>
-  <div class="db-main">
-    <div class="db-top"><span class="db-bar " aria-hidden="true"><span class="db-blk db-b-E">E</span><span class="db-blk db-b-D">D</span><span class="db-blk db-b-C on">C</span><span class="db-blk db-b-B">B</span><span class="db-blk db-b-A">A</span></span><span class="db-bname">C–E</span>
-      <span class="db-bfa">پرسش درمانی</span>
-      <span class="db-num">۴<i> منبع</i></span></div>
-    <a class="db-ptitle" href="/sharehub/share-12.html">نورالژی تریژمینال، آنچه یک دندانپزشک عمومی باید بداند</a>
-    <p class="db-sub fa"><span class="db-sec">ShareHub</span>۱۲ مرداد ۱۴۰۵ · قوی‌ترین منبع ۵۵ از ۱۰۰</p>
-  </div></li><li class="db-row bd-C">
-  <span class="db-rank">۶</span>
-  <div class="db-main">
-    <div class="db-top"><span class="db-bar " aria-hidden="true"><span class="db-blk db-b-E">E</span><span class="db-blk db-b-D">D</span><span class="db-blk db-b-C on">C</span><span class="db-blk db-b-B">B</span><span class="db-blk db-b-A">A</span></span><span class="db-bname">C–D</span>
-      <span class="db-bfa">پرسش علت‌شناسی</span>
-      <span class="db-num">۳<i> منبع</i></span></div>
-    <a class="db-ptitle" href="/episodes/episode-161.html">Cantilever in Implant Dentistry :part1</a>
-    <p class="db-sub fa"><span class="db-sec">اپیزود</span>۲۳ مرداد ۱۴۰۵ · قوی‌ترین منبع ۴۳ از ۱۰۰</p>
-  </div></li><li class="db-row bd-D prov">
-  <span class="db-rank">۷</span>
-  <div class="db-main">
-    <div class="db-top"><span class="db-bar " aria-hidden="true"><span class="db-blk db-b-E">E</span><span class="db-blk db-b-D on">D</span><span class="db-blk db-b-C">C</span><span class="db-blk db-b-B">B</span><span class="db-blk db-b-A">A</span></span><span class="db-bname">D</span>
-      <span class="db-bfa">پرسش مواد</span>
-      <span class="db-num">۱<i> منبع</i></span></div>
-    <a class="db-ptitle" href="/dentai/dentai-21.html">تاثیر مایع روی سطح دندان بر دقت اسکنر داخل‌دهانی</a>
-    <p class="db-sub fa"><span class="db-sec">DentAI</span>۲۶ خرداد ۱۴۰۵ · قوی‌ترین منبع ۳۶ از ۱۰۰</p>
-  </div></li><li class="db-row bd-E prov">
-  <span class="db-rank">۸</span>
-  <div class="db-main">
-    <div class="db-top"><span class="db-bar " aria-hidden="true"><span class="db-blk db-b-E on">E</span><span class="db-blk db-b-D">D</span><span class="db-blk db-b-C">C</span><span class="db-blk db-b-B">B</span><span class="db-blk db-b-A">A</span></span><span class="db-bname">E</span>
-      <span class="db-bfa">پرسش درمانی</span>
-      <span class="db-num">۱<i> منبع</i></span></div>
-    <a class="db-ptitle" href="/sharehub/share-10.html">Resistance Form در روکش‌ها؛ تعریف و ارزیابی بالینی</a>
-    <p class="db-sub fa"><span class="db-sec">ShareHub</span>۳۰ تیر ۱۴۰۵ · قوی‌ترین منبع ۸ از ۱۰۰</p>
-  </div></li><li class="db-row bd-E">
-  <span class="db-rank">۹</span>
-  <div class="db-main">
-    <div class="db-top"><span class="db-bar " aria-hidden="true"><span class="db-blk db-b-E on">E</span><span class="db-blk db-b-D">D</span><span class="db-blk db-b-C">C</span><span class="db-blk db-b-B">B</span><span class="db-blk db-b-A">A</span></span><span class="db-bname">E</span>
-      <span class="db-bfa">پرسش تشخیصی</span>
-      <span class="db-num">۱<i> منبع</i></span></div>
-    <a class="db-ptitle" href="/sharehub/share-2.html">بهینه‌سازی دقت اسکن داخل دهانی ایمپلنت</a>
-    <p class="db-sub fa"><span class="db-sec">ShareHub</span>۱۲ دی ۱۴۰۳ · قوی‌ترین منبع ۴ از ۱۰۰</p>
-  </div></li><li class="db-row bd-E">
-  <span class="db-rank">۱۰</span>
-  <div class="db-main">
-    <div class="db-top"><span class="db-bar " aria-hidden="true"><span class="db-blk db-b-E on">E</span><span class="db-blk db-b-D">D</span><span class="db-blk db-b-C">C</span><span class="db-blk db-b-B">B</span><span class="db-blk db-b-A">A</span></span><span class="db-bname">E</span>
-      <span class="db-bfa">پرسش درمانی</span>
-      <span class="db-num">۱<i> منبع</i></span></div>
-    <a class="db-ptitle" href="/insight/insight-64.html">اینجوری هم میشه به فرول نگاه کرد،یه استفاده ی معکوس از مقاله معروف در مورد فرول</a>
-    <p class="db-sub fa"><span class="db-sec">Clinical Insight</span>۱۹ مرداد ۱۴۰۵ · قوی‌ترین منبع ۴ از ۱۰۰</p>
-  </div></li></ol></section></div>
+    <p class="note">این مطالب به مقاله‌های منتشرشده استناد می‌کنند. درجه‌ای که کنار هر مطلب می‌بینید مربوط به <b>قوی‌ترین</b> منبعی است که به آن تکیه کرده. نوار رنگی زیرش، هر مقاله‌ای را که آن مطلب به آن استناد کرده یک بلوک نشان می‌دهد — پس یک نگاه می‌گوید مطلب روی یک ستون محکم ایستاده یا روی چند ستون سبک.</p>
+    <section class="grp">
+  <header class="gh"><span class="gh-g bd-B">B</span>
+    <div><h3>شواهد متوسط</h3><p>مطالعه‌ی خوبی پشتش هست، ولی بی‌عیب نیست.</p></div>
+    <span class="gh-n">۱ مطلب</span></header>
+  <ul class="pl"><li class="pc bd-B">
+  <a class="pc-t" href="/sharehub/share-11.html">استخوان حجیم، نشانه بروکسیسم قدیمی؟ بحثی درباره ایمپلنت فول آرچ</a>
+  <p class="pc-m"><span class="chipx">ShareHub</span>۴ مرداد ۱۴۰۵</p>
+  <div class="pc-e">
+    <span class="pc-g">B</span>
+    <div class="pc-gm"><b>شواهد متوسط</b>
+      <i>بر پایه‌ی ۱۱ منبع (از B تا E) · پرسشِ علت بیماری</i></div>
+  </div>
+  <span class="sp" aria-hidden="true"><span class="sp-b bd-B" title="شواهد متوسط"></span><span class="sp-b bd-C" title="شواهد محدود"></span><span class="sp-b bd-C" title="شواهد محدود"></span><span class="sp-b bd-C" title="شواهد محدود"></span><span class="sp-b bd-C" title="شواهد محدود"></span><span class="sp-b bd-D" title="شواهد ضعیف"></span><span class="sp-b bd-D" title="شواهد ضعیف"></span><span class="sp-b bd-D" title="شواهد ضعیف"></span><span class="sp-b bd-E" title="سطح پایه"></span><span class="sp-b bd-E" title="سطح پایه"></span><span class="sp-b bd-E" title="سطح پایه"></span></span>
+  <details class="pc-d"><summary>این مطلب از چه مقاله‌هایی آمده؟ <span class="pc-dn">۱۱</span></summary>
+    <ul class="sl"><li class="sr bd-B">
+      <span class="sr-g">B</span>
+      <div class="sr-m"><p class="sr-t">Bruxism and dental implants: A systematic review and meta-analysis.</p>
+      <p class="sr-s">Journal of Oral Rehabilitation · ۲۰۲۴ · <a class="sr-doi" href="https://doi.org/10.1111/joor.13567" target="_blank" rel="noopener">DOI</a></p>
+      <p class="sr-s fa"><span class="sr-tag">پرسشِ علت بیماری</span><span class="sr-tag sr-prov">فقط چکیده در دسترس بود</span></p>
+      </div></li><li class="sr bd-C">
+      <span class="sr-g">C</span>
+      <div class="sr-m"><p class="sr-t">Association between signs and symptoms of bruxism and presence of tori: a systematic review.</p>
+      <p class="sr-s">Clinical Oral Investigations · ۲۰۱۷ · <a class="sr-doi" href="https://doi.org/10.1007/s00784-017-2081-7" target="_blank" rel="noopener">DOI</a></p>
+      <p class="sr-s fa"><span class="sr-tag">پرسشِ علت بیماری</span><span class="sr-tag sr-prov">فقط چکیده در دسترس بود</span></p>
+      </div></li><li class="sr bd-C">
+      <span class="sr-g">C</span>
+      <div class="sr-m"><p class="sr-t">Bruxism and dental implant treatment complications: a retrospective comparative study of 98 bruxer patients and a matched group.</p>
+      <p class="sr-s">Clinical Oral Implants Research · ۲۰۱۷ · <a class="sr-doi" href="https://doi.org/10.1111/clr.12844" target="_blank" rel="noopener">DOI</a></p>
+      <p class="sr-s fa"><span class="sr-tag">پرسشِ علت بیماری</span><span class="sr-tag sr-prov">فقط چکیده در دسترس بود</span></p>
+      </div></li><li class="sr bd-C">
+      <span class="sr-g">C</span>
+      <div class="sr-m"><p class="sr-t">Sleep bruxism in individuals with and without attrition-type tooth wear: An exploratory matched case-control electromyographic study.</p>
+      <p class="sr-s">Journal of Dentistry · ۲۰۱۵ · <a class="sr-doi" href="https://doi.org/10.1016/j.jdent.2015.10.002" target="_blank" rel="noopener">DOI</a></p>
+      <p class="sr-s fa"><span class="sr-tag">پرسشِ علت بیماری</span><span class="sr-tag sr-prov">فقط چکیده در دسترس بود</span></p>
+      </div></li><li class="sr bd-C">
+      <span class="sr-g">C</span>
+      <div class="sr-m"><p class="sr-t">Epidemiology of bruxism in adults: a systematic review of the literature.</p>
+      <p class="sr-s">Journal of Orofacial Pain · ۲۰۱۳ · <a class="sr-doi" href="https://doi.org/10.11607/jop.921" target="_blank" rel="noopener">DOI</a></p>
+      <p class="sr-s fa"><span class="sr-tag">پرسشِ علت بیماری</span><span class="sr-tag sr-prov">فقط چکیده در دسترس بود</span></p>
+      </div></li><li class="sr bd-D">
+      <span class="sr-g">D</span>
+      <div class="sr-m"><p class="sr-t">Ultrasound analysis of the masseter and anterior temporalis muscles in edentulous patients rehabilitated with full-arch fixed implant-supported prostheses.</p>
+      <p class="sr-s">Clinical Oral Investigations · ۲۰۲۴ · <a class="sr-doi" href="https://doi.org/10.1007/s00784-024-05676-5" target="_blank" rel="noopener">DOI</a></p>
+      <p class="sr-s fa"><span class="sr-tag">پرسشِ درمان</span><span class="sr-tag sr-prov">فقط چکیده در دسترس بود</span></p>
+      </div></li><li class="sr bd-D">
+      <span class="sr-g">D</span>
+      <div class="sr-m"><p class="sr-t">Electromyographic Evaluation of Muscle Activity in Patients Rehabilitated with Full Arch Fixed Implant-Supported Prostheses.</p>
+      <p class="sr-s">Medicina (Kaunas) · ۲۰۲۳ · <a class="sr-doi" href="https://doi.org/10.3390/medicina59020299" target="_blank" rel="noopener">DOI</a></p>
+      <p class="sr-s fa"><span class="sr-tag">پرسشِ درمان</span><span class="sr-tag sr-prov">فقط چکیده در دسترس بود</span></p>
+      </div></li><li class="sr bd-D">
+      <span class="sr-g">D</span>
+      <div class="sr-m"><p class="sr-t">Bruxism and dental implant failures: a multilevel mixed effects parametric survival analysis approach.</p>
+      <p class="sr-s">Journal of Oral Rehabilitation · ۲۰۱۶ · <a class="sr-doi" href="https://doi.org/10.1111/joor.12431" target="_blank" rel="noopener">DOI</a></p>
+      <p class="sr-s fa"><span class="sr-tag">پرسشِ علت بیماری</span><span class="sr-tag sr-prov">فقط چکیده در دسترس بود</span></p>
+      </div></li><li class="sr bd-E">
+      <span class="sr-g">E</span>
+      <div class="sr-m"><p class="sr-t">Bruxism in implant-supported rehabilitations: a narrative review of clinical complications and management strategies.</p>
+      <p class="sr-s">BMC Oral Health · ۲۰۲۵ · <a class="sr-doi" href="https://doi.org/10.1186/s12903-025-07005-y" target="_blank" rel="noopener">DOI</a></p>
+      <p class="sr-s fa"><span class="sr-tag">پرسشِ درمان</span><span class="sr-tag sr-prov">فقط چکیده در دسترس بود</span></p>
+      </div></li><li class="sr bd-E">
+      <span class="sr-g">E</span>
+      <div class="sr-m"><p class="sr-t">International consensus on the assessment of bruxism: Report of a work in progress.</p>
+      <p class="sr-s">Journal of Oral Rehabilitation · ۲۰۱۸ · <a class="sr-doi" href="https://doi.org/10.1111/joor.12663" target="_blank" rel="noopener">DOI</a></p>
+      <p class="sr-s fa"><span class="sr-tag">پرسشِ تشخیص</span><span class="sr-tag sr-prov">فقط چکیده در دسترس بود</span></p>
+      </div></li><li class="sr bd-E">
+      <span class="sr-g">E</span>
+      <div class="sr-m"><p class="sr-t">The effect of bruxism on treatment planning for dental implants.</p>
+      <p class="sr-s">Dentistry Today · ۲۰۰۲</p>
+      <p class="sr-s fa"><span class="sr-tag">پرسشِ درمان</span><span class="sr-tag sr-prov">فقط چکیده در دسترس بود</span></p>
+      </div></li></ul>
+  </details></li></ul></section><section class="grp">
+  <header class="gh"><span class="gh-g bd-C">C</span>
+    <div><h3>شواهد محدود</h3><p>شواهدی هست، اما برای یک نتیجه‌ی قطعی کافی نیست.</p></div>
+    <span class="gh-n">۵ مطلب</span></header>
+  <ul class="pl"><li class="pc bd-C">
+  <a class="pc-t" href="/sharehub/share-13.html">دیابت و ایمپلنت دندانی: از تصمیم قبل از جراحی تا نگهداری بلندمدت</a>
+  <p class="pc-m"><span class="chipx">ShareHub</span>۱۳ مرداد ۱۴۰۵</p>
+  <div class="pc-e">
+    <span class="pc-g">C</span>
+    <div class="pc-gm"><b>شواهد محدود</b>
+      <i>بر پایه‌ی ۱۱ منبع (از C تا E) · پرسشِ علت بیماری</i></div>
+  </div>
+  <span class="sp" aria-hidden="true"><span class="sp-b bd-C" title="شواهد محدود"></span><span class="sp-b bd-C" title="شواهد محدود"></span><span class="sp-b bd-C" title="شواهد محدود"></span><span class="sp-b bd-C" title="شواهد محدود"></span><span class="sp-b bd-C" title="شواهد محدود"></span><span class="sp-b bd-C" title="شواهد محدود"></span><span class="sp-b bd-C" title="شواهد محدود"></span><span class="sp-b bd-C" title="شواهد محدود"></span><span class="sp-b bd-C" title="شواهد محدود"></span><span class="sp-b bd-C" title="شواهد محدود"></span><span class="sp-b bd-E" title="سطح پایه"></span></span>
+  <details class="pc-d"><summary>این مطلب از چه مقاله‌هایی آمده؟ <span class="pc-dn">۱۱</span></summary>
+    <ul class="sl"><li class="sr bd-C">
+      <span class="sr-g">C</span>
+      <div class="sr-m"><p class="sr-t">Dental implants and diabetes mellitus-a systematic review.</p>
+      <p class="sr-s">International Journal of Implant Dentistry · ۲۰۱۶ · <a class="sr-doi" href="https://doi.org/10.1186/s40729-016-0038-2" target="_blank" rel="noopener">DOI</a></p>
+      <p class="sr-s fa"><span class="sr-tag">پرسشِ علت بیماری</span><span class="sr-tag sr-prov">فقط چکیده در دسترس بود</span></p>
+      </div></li><li class="sr bd-C">
+      <span class="sr-g">C</span>
+      <div class="sr-m"><p class="sr-t">Systematic review on diabetes mellitus and dental implants: an update.</p>
+      <p class="sr-s">International Journal of Implant Dentistry · ۲۰۲۲ · <a class="sr-doi" href="https://doi.org/10.1186/s40729-021-00399-8" target="_blank" rel="noopener">DOI</a></p>
+      <p class="sr-s fa"><span class="sr-tag">پرسشِ علت بیماری</span><span class="sr-tag sr-prov">فقط چکیده در دسترس بود</span></p>
+      </div></li><li class="sr bd-C">
+      <span class="sr-g">C</span>
+      <div class="sr-m"><p class="sr-t">Association between diabetes mellitus/hyperglycaemia and peri-implant diseases: Systematic review and meta-analysis.</p>
+      <p class="sr-s">Journal of Clinical Periodontology · ۲۰۱۷ · <a class="sr-doi" href="https://doi.org/10.1111/jcpe.12724" target="_blank" rel="noopener">DOI</a></p>
+      <p class="sr-s fa"><span class="sr-tag">پرسشِ علت بیماری</span><span class="sr-tag sr-prov">فقط چکیده در دسترس بود</span></p>
+      </div></li><li class="sr bd-C">
+      <span class="sr-g">C</span>
+      <div class="sr-m"><p class="sr-t">Impact of Maintenance Therapy for the Prevention of Peri-implant Diseases: A Systematic Review and Meta-analysis.</p>
+      <p class="sr-s">Journal of Dental Research · ۲۰۱۶ · <a class="sr-doi" href="https://doi.org/10.1177/0022034515622432" target="_blank" rel="noopener">DOI</a></p>
+      <p class="sr-s fa"><span class="sr-tag">پرسشِ درمان</span><span class="sr-tag sr-prov">فقط چکیده در دسترس بود</span></p>
+      </div></li><li class="sr bd-C">
+      <span class="sr-g">C</span>
+      <div class="sr-m"><p class="sr-t">Does a higher glycemic level lead to a higher rate of dental implant failure?: A meta-analysis.</p>
+      <p class="sr-s">Journal of the American Dental Association · ۲۰۱۶ · <a class="sr-doi" href="https://doi.org/10.1016/j.adaj.2016.06.011" target="_blank" rel="noopener">DOI</a></p>
+      <p class="sr-s fa"><span class="sr-tag">پرسشِ علت بیماری</span><span class="sr-tag sr-prov">فقط چکیده در دسترس بود</span></p>
+      </div></li><li class="sr bd-C">
+      <span class="sr-g">C</span>
+      <div class="sr-m"><p class="sr-t">Impact of hyperglycemia on the rate of implant failure and peri-implant parameters in patients with type 2 diabetes mellitus: Systematic review and meta-analysis.</p>
+      <p class="sr-s">Journal of the American Dental Association · ۲۰۲۱ · <a class="sr-doi" href="https://doi.org/10.1016/j.adaj.2020.11.015" target="_blank" rel="noopener">DOI</a></p>
+      <p class="sr-s fa"><span class="sr-tag">پرسشِ علت بیماری</span><span class="sr-tag sr-prov">فقط چکیده در دسترس بود</span></p>
+      </div></li><li class="sr bd-C">
+      <span class="sr-g">C</span>
+      <div class="sr-m"><p class="sr-t">Diabetes and oral implant failure: a systematic review.</p>
+      <p class="sr-s">Journal of Dental Research · ۲۰۱۴ · <a class="sr-doi" href="https://doi.org/10.1177/0022034514538820" target="_blank" rel="noopener">DOI</a></p>
+      <p class="sr-s fa"><span class="sr-tag">پرسشِ علت بیماری</span><span class="sr-tag sr-prov">فقط چکیده در دسترس بود</span></p>
+      </div></li><li class="sr bd-C">
+      <span class="sr-g">C</span>
+      <div class="sr-m"><p class="sr-t">Glycemic control and implant stabilization in type 2 diabetes mellitus.</p>
+      <p class="sr-s">Journal of Dental Research · ۲۰۰۹ · <a class="sr-doi" href="https://doi.org/10.1177/0022034509334203" target="_blank" rel="noopener">DOI</a></p>
+      <p class="sr-s fa"><span class="sr-tag">پرسشِ علت بیماری</span><span class="sr-tag sr-prov">فقط چکیده در دسترس بود</span></p>
+      </div></li><li class="sr bd-C">
+      <span class="sr-g">C</span>
+      <div class="sr-m"><p class="sr-t">The effects of elevated hemoglobin A(1c) in patients with type 2 diabetes mellitus on dental implants: Survival and stability at one year.</p>
+      <p class="sr-s">Journal of the American Dental Association · ۲۰۱۴ · <a class="sr-doi" href="https://doi.org/10.14219/jada.2014.93" target="_blank" rel="noopener">DOI</a></p>
+      <p class="sr-s fa"><span class="sr-tag">پرسشِ علت بیماری</span><span class="sr-tag sr-prov">فقط چکیده در دسترس بود</span></p>
+      </div></li><li class="sr bd-C">
+      <span class="sr-g">C</span>
+      <div class="sr-m"><p class="sr-t">Success Rates of Dental Implants in Patients With Diabetes: A Systematic Review.</p>
+      <p class="sr-s">Cureus · ۲۰۲۴ · <a class="sr-doi" href="https://doi.org/10.7759/cureus.76361" target="_blank" rel="noopener">DOI</a></p>
+      <p class="sr-s fa"><span class="sr-tag">پرسشِ علت بیماری</span><span class="sr-tag sr-prov">فقط چکیده در دسترس بود</span></p>
+      </div></li><li class="sr bd-E">
+      <span class="sr-g">E</span>
+      <div class="sr-m"><p class="sr-t">Long-term periodontal and peri-implant tissue stability under supportive therapy.</p>
+      <p class="sr-s">Periodontology 2000 · ۲۰۲۶ · <a class="sr-doi" href="https://doi.org/10.1111/prd.70038" target="_blank" rel="noopener">DOI</a></p>
+      <p class="sr-s fa"><span class="sr-tag">پرسشِ درمان</span><span class="sr-tag sr-prov">فقط چکیده در دسترس بود</span></p>
+      </div></li></ul>
+  </details></li><li class="pc bd-C">
+  <a class="pc-t" href="/sharehub/share-12.html">نورالژی تریژمینال، آنچه یک دندانپزشک عمومی باید بداند</a>
+  <p class="pc-m"><span class="chipx">ShareHub</span>۱۲ مرداد ۱۴۰۵</p>
+  <div class="pc-e">
+    <span class="pc-g">C</span>
+    <div class="pc-gm"><b>شواهد محدود</b>
+      <i>بر پایه‌ی ۴ منبع (از C تا E) · پرسشِ درمان</i></div>
+  </div>
+  <span class="sp" aria-hidden="true"><span class="sp-b bd-C" title="شواهد محدود"></span><span class="sp-b bd-C" title="شواهد محدود"></span><span class="sp-b bd-E" title="سطح پایه"></span><span class="sp-b bd-E" title="سطح پایه"></span></span>
+  <details class="pc-d"><summary>این مطلب از چه مقاله‌هایی آمده؟ <span class="pc-dn">۴</span></summary>
+    <ul class="sl"><li class="sr bd-C">
+      <span class="sr-g">C</span>
+      <div class="sr-m"><p class="sr-t">European Academy of Neurology guideline on trigeminal neuralgia.</p>
+      <p class="sr-s">European Journal of Neurology · ۲۰۱۹ · <a class="sr-doi" href="https://doi.org/10.1111/ene.13950" target="_blank" rel="noopener">DOI</a></p>
+      <p class="sr-s fa"><span class="sr-tag">پرسشِ درمان</span><span class="sr-tag sr-prov">فقط چکیده در دسترس بود</span></p>
+      </div></li><li class="sr bd-C">
+      <span class="sr-g">C</span>
+      <div class="sr-m"><p class="sr-t">AAN-EFNS guidelines on trigeminal neuralgia management.</p>
+      <p class="sr-s">European Journal of Neurology · ۲۰۰۸ · <a class="sr-doi" href="https://doi.org/10.1111/j.1468-1331.2008.02185.x" target="_blank" rel="noopener">DOI</a></p>
+      <p class="sr-s fa"><span class="sr-tag">پرسشِ درمان</span><span class="sr-tag sr-prov">فقط چکیده در دسترس بود</span></p>
+      </div></li><li class="sr bd-E">
+      <span class="sr-g">E</span>
+      <div class="sr-m"><p class="sr-t">Trigeminal neuralgia: a practical guide.</p>
+      <p class="sr-s">Practical Neurology · ۲۰۲۱ · <a class="sr-doi" href="https://doi.org/10.1136/practneurol-2020-002782" target="_blank" rel="noopener">DOI</a></p>
+      <p class="sr-s fa"><span class="sr-tag">پرسشِ درمان</span><span class="sr-tag sr-prov">فقط چکیده در دسترس بود</span></p>
+      </div></li><li class="sr bd-E">
+      <span class="sr-g">E</span>
+      <div class="sr-m"><p class="sr-t">Guidelines for the management of trigeminal neuralgia.</p>
+      <p class="sr-s">Cleveland Clinic Journal of Medicine · ۲۰۲۳ · <a class="sr-doi" href="https://doi.org/10.3949/ccjm.90a.22052" target="_blank" rel="noopener">DOI</a></p>
+      <p class="sr-s fa"><span class="sr-tag">پرسشِ درمان</span><span class="sr-tag sr-prov">فقط چکیده در دسترس بود</span></p>
+      </div></li></ul>
+  </details></li><li class="pc bd-C">
+  <a class="pc-t" href="/sharehub/share-14.html">از تشخیص تا درمان لبخند لثه‌ای</a>
+  <p class="pc-m"><span class="chipx">ShareHub</span>۲۲ مرداد ۱۴۰۵</p>
+  <div class="pc-e">
+    <span class="pc-g">C</span>
+    <div class="pc-gm"><b>شواهد محدود</b>
+      <i>بر پایه‌ی ۱۴ منبع (از C تا E) · پرسشِ درمان</i></div>
+  </div>
+  <span class="sp" aria-hidden="true"><span class="sp-b bd-C" title="شواهد محدود"></span><span class="sp-b bd-C" title="شواهد محدود"></span><span class="sp-b bd-C" title="شواهد محدود"></span><span class="sp-b bd-C" title="شواهد محدود"></span><span class="sp-b bd-D" title="شواهد ضعیف"></span><span class="sp-b bd-E" title="سطح پایه"></span><span class="sp-b bd-E" title="سطح پایه"></span><span class="sp-b bd-E" title="سطح پایه"></span><span class="sp-b bd-E" title="سطح پایه"></span><span class="sp-b bd-E" title="سطح پایه"></span><span class="sp-b bd-E" title="سطح پایه"></span><span class="sp-b bd-E" title="سطح پایه"></span><span class="sp-b bd-E" title="سطح پایه"></span><span class="sp-b sp-na" title="کتاب مرجع — امتیازدهی نمی‌شود"></span></span>
+  <details class="pc-d"><summary>این مطلب از چه مقاله‌هایی آمده؟ <span class="pc-dn">۱۴</span></summary>
+    <ul class="sl"><li class="sr bd-C">
+      <span class="sr-g">C</span>
+      <div class="sr-m"><p class="sr-t">The gingival smile line.</p>
+      <p class="sr-s">The Angle Orthodontist · ۱۹۹۲ · <a class="sr-doi" href="https://doi.org/10.1043/0003-3219(1992)062&lt;0091:TGSL&gt;2.0.CO;2" target="_blank" rel="noopener">DOI</a></p>
+      <p class="sr-s fa"><span class="sr-tag">پرسشِ علت بیماری</span><span class="sr-tag sr-prov">فقط چکیده در دسترس بود</span></p>
+      </div></li><li class="sr bd-C">
+      <span class="sr-g">C</span>
+      <div class="sr-m"><p class="sr-t">Effect and longevity of botulinum toxin in the treatment of gummy smile: a meta-analysis and meta-regression.</p>
+      <p class="sr-s">Clinical Oral Investigations · ۲۰۲۲ · <a class="sr-doi" href="https://doi.org/10.1007/s00784-021-04223-w" target="_blank" rel="noopener">DOI</a></p>
+      <p class="sr-s fa"><span class="sr-tag">پرسشِ درمان</span><span class="sr-tag sr-prov">فقط چکیده در دسترس بود</span></p>
+      </div></li><li class="sr bd-C">
+      <span class="sr-g">C</span>
+      <div class="sr-m"><p class="sr-t">Effectiveness of lip repositioning surgeries in the treatment of excessive gingival display: A systematic review and meta-analysis.</p>
+      <p class="sr-s">Journal of Esthetic and Restorative Dentistry · ۲۰۲۱ · <a class="sr-doi" href="https://doi.org/10.1111/jerd.12695" target="_blank" rel="noopener">DOI</a></p>
+      <p class="sr-s fa"><span class="sr-tag">پرسشِ درمان</span><span class="sr-tag sr-prov">فقط چکیده در دسترس بود</span></p>
+      </div></li><li class="sr bd-C">
+      <span class="sr-g">C</span>
+      <div class="sr-m"><p class="sr-t">Evaluating Lip Repositioning for the Treatment of Excess Gingival Display with and without Pretreatment with Botox: A Randomized Clinical Trial.</p>
+      <p class="sr-s">The Journal of Contemporary Dental Practice · ۲۰۲۵ · <a class="sr-doi" href="https://doi.org/10.5005/jp-journals-10024-3831" target="_blank" rel="noopener">DOI</a></p>
+      <p class="sr-s fa"><span class="sr-tag">پرسشِ درمان</span><span class="sr-tag sr-prov">فقط چکیده در دسترس بود</span></p>
+      </div></li><li class="sr bd-D">
+      <span class="sr-g">D</span>
+      <div class="sr-m"><p class="sr-t">Clinical and psychological impact of lip repositioning surgery in the management of excessive gingival display.</p>
+      <p class="sr-s">The Saudi Dental Journal · ۲۰۲۴ · <a class="sr-doi" href="https://doi.org/10.1016/j.sdentj.2023.08.011" target="_blank" rel="noopener">DOI</a></p>
+      <p class="sr-s fa"><span class="sr-tag">پرسشِ درمان</span><span class="sr-tag sr-prov">فقط چکیده در دسترس بود</span></p>
+      </div></li><li class="sr bd-E">
+      <span class="sr-g">E</span>
+      <div class="sr-m"><p class="sr-t">From etiology to intervention: 50 years of progress in gummy smile research and treatment.</p>
+      <p class="sr-s">Journal of Indian Society of Periodontology · ۲۰۲۵ · <a class="sr-doi" href="https://doi.org/10.4103/jisp.jisp_548_25" target="_blank" rel="noopener">DOI</a></p>
+      <p class="sr-s fa"><span class="sr-tag">پرسشِ درمان</span><span class="sr-tag sr-prov">فقط چکیده در دسترس بود</span></p>
+      </div></li><li class="sr bd-E">
+      <span class="sr-g">E</span>
+      <div class="sr-m"><p class="sr-t">Diagnosis and Treatment Approaches to a &quot;Gummy Smile&quot;.</p>
+      <p class="sr-s">Dental Clinics of North America · ۲۰۲۰ · <a class="sr-doi" href="https://doi.org/10.1016/j.cden.2019.12.003" target="_blank" rel="noopener">DOI</a></p>
+      <p class="sr-s fa"><span class="sr-tag">پرسشِ درمان</span><span class="sr-tag sr-prov">فقط چکیده در دسترس بود</span></p>
+      </div></li><li class="sr bd-E">
+      <span class="sr-g">E</span>
+      <div class="sr-m"><p class="sr-t">An Approach for Gummy Smile Treatment Using Botulinum Toxin A: A Narrative Review of the Literature.</p>
+      <p class="sr-s">Cureus · ۲۰۲۳ · <a class="sr-doi" href="https://doi.org/10.7759/cureus.34032" target="_blank" rel="noopener">DOI</a></p>
+      <p class="sr-s fa"><span class="sr-tag">پرسشِ درمان</span><span class="sr-tag sr-prov">فقط چکیده در دسترس بود</span></p>
+      </div></li><li class="sr bd-E">
+      <span class="sr-g">E</span>
+      <div class="sr-m"><p class="sr-t">Contemporary treatment techniques for excessive gingival display caused by altered passive eruption or lip hypermobility.</p>
+      <p class="sr-s">Journal of Dentistry · ۲۰۲۳ · <a class="sr-doi" href="https://doi.org/10.1016/j.jdent.2023.104711" target="_blank" rel="noopener">DOI</a></p>
+      <p class="sr-s fa"><span class="sr-tag">پرسشِ درمان</span><span class="sr-tag sr-prov">فقط چکیده در دسترس بود</span></p>
+      </div></li><li class="sr bd-E">
+      <span class="sr-g">E</span>
+      <div class="sr-m"><p class="sr-t">Orthognathic Surgery for Management of Gummy Smile.</p>
+      <p class="sr-s">Dental Clinics of North America · ۲۰۲۲ · <a class="sr-doi" href="https://doi.org/10.1016/j.cden.2022.02.003" target="_blank" rel="noopener">DOI</a></p>
+      <p class="sr-s fa"><span class="sr-tag">پرسشِ درمان</span><span class="sr-tag sr-prov">فقط چکیده در دسترس بود</span></p>
+      </div></li><li class="sr bd-E">
+      <span class="sr-g">E</span>
+      <div class="sr-m"><p class="sr-t">The Combo Strategy: Triple Approach for Gummy Smile-18-Month Case Series.</p>
+      <p class="sr-s">Journal of Esthetic and Restorative Dentistry · ۲۰۲۶ · <a class="sr-doi" href="https://doi.org/10.1111/jerd.70113" target="_blank" rel="noopener">DOI</a></p>
+      <p class="sr-s fa"><span class="sr-tag">پرسشِ درمان</span><span class="sr-tag sr-prov">فقط چکیده در دسترس بود</span></p>
+      </div></li><li class="sr bd-E">
+      <span class="sr-g">E</span>
+      <div class="sr-m"><p class="sr-t">Pink esthetic treatment of gingival recession, black triangle, and gummy smile: a narrative review.</p>
+      <p class="sr-s">Maxillofacial Plastic and Reconstructive Surgery · ۲۰۲۵ · <a class="sr-doi" href="https://doi.org/10.1186/s40902-025-00467-8" target="_blank" rel="noopener">DOI</a></p>
+      <p class="sr-s fa"><span class="sr-tag">پرسشِ درمان</span><span class="sr-tag sr-prov">فقط چکیده در دسترس بود</span></p>
+      </div></li><li class="sr bd-E">
+      <span class="sr-g">E</span>
+      <div class="sr-m"><p class="sr-t">Esthetic crown lengthening in the treatment of gummy smile.</p>
+      <p class="sr-s">The International Journal of Esthetic Dentistry · ۲۰۱۹</p>
+      <p class="sr-s fa"><span class="sr-tag">پرسشِ درمان</span><span class="sr-tag sr-prov">فقط چکیده در دسترس بود</span></p>
+      </div></li><li class="sr sr-na">
+      <span class="sr-g sr-gna">کتاب</span>
+      <div class="sr-m"><p class="sr-t">Global Diagnosis book</p>
+      <p class="sr-s fa">کتاب مرجع است، نه مطالعه — روشی ندارد که بشود ارزیابی کرد، پس نمره نمی‌گیرد.</p></div></li></ul>
+  </details></li><li class="pc bd-C">
+  <a class="pc-t" href="/sharehub/share-7.html">دیابت و پوسیدگی؛ رابطه‌ای که آن‌قدرها مستقیم نیست</a>
+  <p class="pc-m"><span class="chipx">ShareHub</span>۹ خرداد ۱۴۰۵</p>
+  <div class="pc-e">
+    <span class="pc-g">C</span>
+    <div class="pc-gm"><b>شواهد محدود</b>
+      <i>بر پایه‌ی ۱ منبع · پرسشِ علت بیماری</i></div>
+  </div>
+  <span class="sp" aria-hidden="true"><span class="sp-b bd-C" title="شواهد محدود"></span></span>
+  <details class="pc-d"><summary>این مطلب از چه مقاله‌هایی آمده؟ <span class="pc-dn">۱</span></summary>
+    <ul class="sl"><li class="sr bd-C">
+      <span class="sr-g">C</span>
+      <div class="sr-m"><p class="sr-t">Dental caries and salivary alterations in patients with type 2 diabetes: A systematic review and meta-analysis.</p>
+      <p class="sr-s">Journal of Dentistry · ۲۰۲۴ · <a class="sr-doi" href="https://doi.org/10.1016/j.jdent.2024.105321" target="_blank" rel="noopener">DOI</a></p>
+      <p class="sr-s fa"><span class="sr-tag">پرسشِ علت بیماری</span><span class="sr-tag sr-prov">فقط چکیده در دسترس بود</span></p>
+      </div></li></ul>
+  </details></li><li class="pc bd-C">
+  <a class="pc-t" href="/episodes/episode-161.html">Cantilever in Implant Dentistry :part1</a>
+  <p class="pc-m"><span class="chipx">اپیزود</span>۲۳ مرداد ۱۴۰۵</p>
+  <div class="pc-e">
+    <span class="pc-g">C</span>
+    <div class="pc-gm"><b>شواهد محدود</b>
+      <i>بر پایه‌ی ۳ منبع (از C تا D) · پرسشِ علت بیماری</i></div>
+  </div>
+  <span class="sp" aria-hidden="true"><span class="sp-b bd-C" title="شواهد محدود"></span><span class="sp-b bd-D" title="شواهد ضعیف"></span><span class="sp-b bd-D" title="شواهد ضعیف"></span></span>
+  <details class="pc-d"><summary>این مطلب از چه مقاله‌هایی آمده؟ <span class="pc-dn">۳</span></summary>
+    <ul class="sl"><li class="sr bd-C">
+      <span class="sr-g">C</span>
+      <div class="sr-m"><p class="sr-t">Bone level changes at implants supporting crowns or fixed partial dentures with or without cantilevers</p>
+      <p class="sr-s">Clinical Oral Implants Research · ۲۰۰۸ · <a class="sr-doi" href="https://doi.org/10.1111/j.1600-0501.2008.01556.x" target="_blank" rel="noopener">DOI</a></p>
+      <p class="sr-s fa"><span class="sr-tag">پرسشِ علت بیماری</span></p>
+      </div></li><li class="sr bd-D">
+      <span class="sr-g">D</span>
+      <div class="sr-m"><p class="sr-t">A systematic review of the survival and complication rates of implant supported fixed dental prostheses with cantilever extensions after an observation period of at least 5 years</p>
+      <p class="sr-s">Clinical Oral Implants Research · ۲۰۰۹ · <a class="sr-doi" href="https://doi.org/10.1111/j.1600-0501.2009.01706.x" target="_blank" rel="noopener">DOI</a></p>
+      <p class="sr-s fa"><span class="sr-tag">پرسشِ درمان</span></p>
+      </div></li><li class="sr bd-D">
+      <span class="sr-g">D</span>
+      <div class="sr-m"><p class="sr-t">Clinical and radiographic outcomes of implant-supported fixed dental prostheses with cantilever extension. A retrospective cohort study with a follow-up of at least 10 years</p>
+      <p class="sr-s">Clinical Oral Implants Research · ۲۰۲۰ · <a class="sr-doi" href="https://doi.org/10.1111/clr.13672" target="_blank" rel="noopener">DOI</a></p>
+      <p class="sr-s fa"><span class="sr-tag">پرسشِ درمان</span></p>
+      </div></li></ul>
+  </details></li></ul></section><section class="grp">
+  <header class="gh"><span class="gh-g bd-D">D</span>
+    <div><h3>شواهد ضعیف</h3><p>شواهد اولیه است؛ با احتیاط بخوانید.</p></div>
+    <span class="gh-n">۱ مطلب</span></header>
+  <ul class="pl"><li class="pc bd-D">
+  <a class="pc-t" href="/dentai/dentai-21.html">تاثیر مایع روی سطح دندان بر دقت اسکنر داخل‌دهانی</a>
+  <p class="pc-m"><span class="chipx">DentAI</span>۲۶ خرداد ۱۴۰۵</p>
+  <div class="pc-e">
+    <span class="pc-g">D</span>
+    <div class="pc-gm"><b>شواهد ضعیف</b>
+      <i>بر پایه‌ی ۱ منبع · پرسشِ مواد و آزمایشگاه</i></div>
+  </div>
+  <span class="sp" aria-hidden="true"><span class="sp-b bd-D" title="شواهد ضعیف"></span></span>
+  <details class="pc-d"><summary>این مطلب از چه مقاله‌هایی آمده؟ <span class="pc-dn">۱</span></summary>
+    <ul class="sl"><li class="sr bd-D">
+      <span class="sr-g">D</span>
+      <div class="sr-m"><p class="sr-t">Influence of Liquid on the Tooth Surface on the Accuracy of Intraoral Scanners: An In Vitro Study</p>
+      <p class="sr-s">Journal of Prosthodontics · ۲۰۲۱ · <a class="sr-doi" href="https://doi.org/10.1111/jopr.13358" target="_blank" rel="noopener">DOI</a></p>
+      <p class="sr-s fa"><span class="sr-tag">پرسشِ مواد و آزمایشگاه</span><span class="sr-tag sr-prov">فقط چکیده در دسترس بود</span></p>
+      </div></li></ul>
+  </details></li></ul></section><section class="grp">
+  <header class="gh"><span class="gh-g bd-E">E</span>
+    <div><h3>سطح پایه</h3><p>پایه‌ی مقدماتی — بیشتر توصیف یا دیدگاه تا اثبات.</p></div>
+    <span class="gh-n">۳ مطلب</span></header>
+  <ul class="pl"><li class="pc bd-E">
+  <a class="pc-t" href="/sharehub/share-10.html">Resistance Form در روکش‌ها؛ تعریف و ارزیابی بالینی</a>
+  <p class="pc-m"><span class="chipx">ShareHub</span>۳۰ تیر ۱۴۰۵</p>
+  <div class="pc-e">
+    <span class="pc-g">E</span>
+    <div class="pc-gm"><b>سطح پایه</b>
+      <i>بر پایه‌ی ۱ منبع · پرسشِ درمان</i></div>
+  </div>
+  <span class="sp" aria-hidden="true"><span class="sp-b bd-E" title="سطح پایه"></span></span>
+  <details class="pc-d"><summary>این مطلب از چه مقاله‌هایی آمده؟ <span class="pc-dn">۱</span></summary>
+    <ul class="sl"><li class="sr bd-E">
+      <span class="sr-g">E</span>
+      <div class="sr-m"><p class="sr-t">Resistance form in tooth preparation.</p>
+      <p class="sr-s">Dental Clinics of North America · ۲۰۰۴ · <a class="sr-doi" href="https://doi.org/10.1016/j.cden.2003.12.009" target="_blank" rel="noopener">DOI</a></p>
+      <p class="sr-s fa"><span class="sr-tag">پرسشِ درمان</span><span class="sr-tag sr-prov">فقط چکیده در دسترس بود</span></p>
+      </div></li></ul>
+  </details></li><li class="pc bd-E">
+  <a class="pc-t" href="/insight/insight-64.html">اینجوری هم میشه به فرول نگاه کرد،یه استفاده ی معکوس از مقاله معروف در مورد فرول</a>
+  <p class="pc-m"><span class="chipx">Clinical Insight</span>۱۹ مرداد ۱۴۰۵</p>
+  <div class="pc-e">
+    <span class="pc-g">E</span>
+    <div class="pc-gm"><b>سطح پایه</b>
+      <i>بر پایه‌ی ۱ منبع · پرسشِ درمان</i></div>
+  </div>
+  <span class="sp" aria-hidden="true"><span class="sp-b bd-E" title="سطح پایه"></span></span>
+  <details class="pc-d"><summary>این مطلب از چه مقاله‌هایی آمده؟ <span class="pc-dn">۱</span></summary>
+    <ul class="sl"><li class="sr bd-E">
+      <span class="sr-g">E</span>
+      <div class="sr-m"><p class="sr-t">Rethinking ferrule - a new approach to an old dilemma</p>
+      <p class="sr-s">British Dental Journal · ۲۰۱۰ · <a class="sr-doi" href="https://doi.org/10.1038/sj.bdj.2010.580" target="_blank" rel="noopener">DOI</a></p>
+      <p class="sr-s fa"><span class="sr-tag">پرسشِ درمان</span></p>
+      </div></li></ul>
+  </details></li><li class="pc bd-E">
+  <a class="pc-t" href="/sharehub/share-2.html">بهینه‌سازی دقت اسکن داخل دهانی ایمپلنت</a>
+  <p class="pc-m"><span class="chipx">ShareHub</span>۱۲ دی ۱۴۰۳</p>
+  <div class="pc-e">
+    <span class="pc-g">E</span>
+    <div class="pc-gm"><b>سطح پایه</b>
+      <i>بر پایه‌ی ۱ منبع · پرسشِ تشخیص</i></div>
+  </div>
+  <span class="sp" aria-hidden="true"><span class="sp-b bd-E" title="سطح پایه"></span></span>
+  <details class="pc-d"><summary>این مطلب از چه مقاله‌هایی آمده؟ <span class="pc-dn">۱</span></summary>
+    <ul class="sl"><li class="sr bd-E">
+      <span class="sr-g">E</span>
+      <div class="sr-m"><p class="sr-t">Guide to Optimizing the Accuracy of Intraoral Implant Scans: A Review Article</p>
+      <p class="sr-s">Cyprus Journal of Medical Sciences · ۲۰۲۵ · <a class="sr-doi" href="https://doi.org/10.4274/cjms.2024.2024-31" target="_blank" rel="noopener">DOI</a></p>
+      <p class="sr-s fa"><span class="sr-tag">پرسشِ تشخیص</span></p>
+      </div></li></ul>
+  </details></li></ul></section>
   </div>
 
-  <!-- ══════════ COMMENTARY ══════════ -->
-  <div id="p-com" hidden>
-    <p class="panel-note">این‌ها متن‌های خودِ دنت‌کست‌اند و <b>روی نردبان باند نمی‌آیند</b>. مقیاسشان چیز دیگری است — <b>شفافیتِ استدلال از ۱۹</b>: زنجیره‌ی استدلال، نسبتش با شواهد منتشرشده، محدودبودن دامنه‌ی ادعا، و صراحتِ «این تجربه است». یک ۱۹ اینجا با یک B آن‌طرف قابل مقایسه نیست، چون واحدشان یکی نیست.</p>
-    <div class="db-hist"><span class="db-hb"><i>۱</i><span class="db-track"><span class="db-fill hi" style="--h:1.2%"></span></span><b>۱۱</b></span><span class="db-hb"><i>۳</i><span class="db-track"><span class="db-fill hi" style="--h:3.8%"></span></span><b>۱۲</b></span><span class="db-hb"><i></i><span class="db-track"><span class="db-fill" style="--h:0.0%"></span></span><b>۱۳</b></span><span class="db-hb"><i></i><span class="db-track"><span class="db-fill" style="--h:0.0%"></span></span><b>۱۴</b></span><span class="db-hb"><i>۸۰</i><span class="db-track"><span class="db-fill hi" style="--h:100.0%"></span></span><b>۱۵</b></span><span class="db-hb"><i>۳</i><span class="db-track"><span class="db-fill hi" style="--h:3.8%"></span></span><b>۱۶</b></span><span class="db-hb"><i>۲</i><span class="db-track"><span class="db-fill hi" style="--h:2.5%"></span></span><b>۱۷</b></span><span class="db-hb"><i></i><span class="db-track"><span class="db-fill" style="--h:0.0%"></span></span><b>۱۸</b></span><span class="db-hb"><i>۳۴</i><span class="db-track"><span class="db-fill hi" style="--h:42.5%"></span></span><b>۱۹</b></span></div>
-    <p class="panel-note">و اینجا <b>رتبه‌ی شماره‌دار نیست، قفسه است.</b> نمودار بالا دلیلش است: ۸۰ نوشته دقیقاً روی ۱۵ ایستاده‌اند و ۳۴ تا روی ۱۹. نردبانی که ۸۰ پله‌اش هم‌ارتفاع است نردبان نیست.</p>
-    <section class="db-grp">
-  <header class="db-gh"><h2>شفافیت کامل</h2><span class="db-gn">۱۹ از ۱۹ · ۳۴ نوشته</span></header>
-  <ul class="db-list norank db-cl"><li class="db-row crow">
-    <span class="db-cs">۱۹<i>/۱۹</i></span>
-    <div class="db-main"><a class="db-ptitle" href="/sharehub/share-15.html">چرا اسکنر روی روکش‌های خیلی براق یا کامپوزیت/رزین‌های خیلی سفید خوب اسکن نمی‌کنه؟</a>
-    <p class="db-sub fa"><span class="db-sec">ShareHub</span>۲۳ مرداد ۱۴۰۵</p></div></li><li class="db-row crow">
-    <span class="db-cs">۱۹<i>/۱۹</i></span>
-    <div class="db-main"><a class="db-ptitle" href="/metanotes/meta-20.html">پست و کور یک‌مرحله‌ای؛ وقتی «عدم تطابق» به نفع درمان تمام می‌شود</a>
-    <p class="db-sub fa"><span class="db-sec">MetaNote</span>۱۸ مرداد ۱۴۰۵</p></div></li><li class="db-row crow">
-    <span class="db-cs">۱۹<i>/۱۹</i></span>
-    <div class="db-main"><a class="db-ptitle" href="/insight/insight-63.html">چرا برای این بیمار قبل از اسکن نخ‌گذاری نکردم؟</a>
-    <p class="db-sub fa"><span class="db-sec">Clinical Insight</span>۱۸ مرداد ۱۴۰۵</p></div></li><li class="db-row crow">
-    <span class="db-cs">۱۹<i>/۱۹</i></span>
-    <div class="db-main"><a class="db-ptitle" href="/insight/insight-62.html">هم‌رنگ کردن دو روکش زیرکونیای مجاور؛ یک راه‌حل خلاقانه و سریع سر یونیت</a>
-    <p class="db-sub fa"><span class="db-sec">Clinical Insight</span>۱۶ مرداد ۱۴۰۵</p></div></li><li class="db-row crow">
-    <span class="db-cs">۱۹<i>/۱۹</i></span>
-    <div class="db-main"><a class="db-ptitle" href="/chairside/chairside-26.html">وقتی طرحِ درمانِ آسان‌تر، بیومکانیکِ سیستم را تهدید می‌کند</a>
-    <p class="db-sub fa"><span class="db-sec">چیرساید</span>۶ مرداد ۱۴۰۵</p></div></li><li class="db-row crow">
-    <span class="db-cs">۱۹<i>/۱۹</i></span>
-    <div class="db-main"><a class="db-ptitle" href="/metanotes/meta-19.html">کور باید روی دندان را بپوشاند؟ بازخوانی یک قاعده‌ی جاافتاده</a>
-    <p class="db-sub fa"><span class="db-sec">MetaNote</span>۵ مرداد ۱۴۰۵</p></div></li><li class="db-row crow">
-    <span class="db-cs">۱۹<i>/۱۹</i></span>
-    <div class="db-main"><a class="db-ptitle" href="/metanotes/meta-18.html">چرا می‌گوییم دندان‌های اسپلینت‌شده باید قدرت مشابهی داشته باشند؟</a>
-    <p class="db-sub fa"><span class="db-sec">MetaNote</span>۲۸ تیر ۱۴۰۵</p></div></li><li class="db-row crow">
-    <span class="db-cs">۱۹<i>/۱۹</i></span>
-    <div class="db-main"><a class="db-ptitle" href="/metanotes/meta-17.html">آیا مفهوم قوس کوتاه‌شده در بازسازی کامل با ایمپلنت هم معتبر است؟</a>
-    <p class="db-sub fa"><span class="db-sec">MetaNote</span>۱۹ تیر ۱۴۰۵</p></div></li></ul>
-  <p class="db-more">… و ۲۶ نوشته‌ی دیگر روی همین قفسه</p></section><section class="db-grp">
-  <header class="db-gh"><h2>نزدیک به کامل</h2><span class="db-gn">۱۶ تا ۱۸ · ۵ نوشته</span></header>
-  <ul class="db-list norank db-cl"><li class="db-row crow">
-    <span class="db-cs">۱۶<i>/۱۹</i></span>
-    <div class="db-main"><a class="db-ptitle" href="/sharehub/share-8.html">اصول علمی آماده‌سازی دندان برای لمینت‌های سرامیکی</a>
-    <p class="db-sub fa"><span class="db-sec">ShareHub</span>۱۲ خرداد ۱۴۰۵</p></div></li><li class="db-row crow">
-    <span class="db-cs">۱۷<i>/۱۹</i></span>
-    <div class="db-main"><a class="db-ptitle" href="/metanotes/meta-11.html">در باره ی اهمیت گپ بین گوتای باقیمانده و پست   </a>
-    <p class="db-sub fa"><span class="db-sec">MetaNote</span>۲۳ اسفند ۱۴۰۴</p></div></li><li class="db-row crow">
-    <span class="db-cs">۱۶<i>/۱۹</i></span>
-    <div class="db-main"><a class="db-ptitle" href="/sharehub/share-4.html">راه‌ها و تکنیک‌های جلوگیری از باقی ماندن بقایای سمان در روکش‌های سمان‌شونده</a>
-    <p class="db-sub fa"><span class="db-sec">ShareHub</span>۲۰ دی ۱۴۰۴</p></div></li><li class="db-row crow">
-    <span class="db-cs">۱۶<i>/۱۹</i></span>
-    <div class="db-main"><a class="db-ptitle" href="/sharehub/share-1.html">پیچ هرز شده در پروتزهای متکی بر ایمپلنت</a>
-    <p class="db-sub fa"><span class="db-sec">ShareHub</span>۱۲ دی ۱۴۰۳</p></div></li><li class="db-row crow">
-    <span class="db-cs">۱۷<i>/۱۹</i></span>
-    <div class="db-main"><a class="db-ptitle" href="/metanotes/meta-6.html">Meta Decision Method — چطور تصمیم بگیریم؟</a>
-    <p class="db-sub fa"><span class="db-sec">MetaNote</span>۲۰ آذر ۱۴۰۴</p></div></li></ul>
-  </section><section class="db-grp">
-  <header class="db-gh"><h2>پایه</h2><span class="db-gn">۱۵ · ۸۰ نوشته</span></header>
-  <ul class="db-list norank db-cl"><li class="db-row crow">
-    <span class="db-cs">۱۵<i>/۱۹</i></span>
-    <div class="db-main"><a class="db-ptitle" href="/chairside/chairside-32.html">وقتی اصول رعایت نشده، بهترین سمان‌ها هم معجزه نمی‌کنند</a>
-    <p class="db-sub fa"><span class="db-sec">چیرساید</span>۲۲ مرداد ۱۴۰۵</p></div></li><li class="db-row crow">
-    <span class="db-cs">۱۵<i>/۱۹</i></span>
-    <div class="db-main"><a class="db-ptitle" href="/chairside/chairside-31.html">دندانی که فانکشن ندارد، صرفاً یک فضای اشغال‌شده است</a>
-    <p class="db-sub fa"><span class="db-sec">چیرساید</span>۲۱ مرداد ۱۴۰۵</p></div></li><li class="db-row crow">
-    <span class="db-cs">۱۵<i>/۱۹</i></span>
-    <div class="db-main"><a class="db-ptitle" href="/chairside/chairside-30.html">سرنوشت دندان را فقط با معیارهای رستوریتیو تعیین نکنیم</a>
-    <p class="db-sub fa"><span class="db-sec">چیرساید</span>۲۰ مرداد ۱۴۰۵</p></div></li><li class="db-row crow">
-    <span class="db-cs">۱۵<i>/۱۹</i></span>
-    <div class="db-main"><a class="db-ptitle" href="/insight/insight-61.html">فریب خطای دید روی کست؛ راهکاری برای تنظیم روکش تک‌واحدی سانترال</a>
-    <p class="db-sub fa"><span class="db-sec">Clinical Insight</span>۱۵ مرداد ۱۴۰۵</p></div></li><li class="db-row crow">
-    <span class="db-cs">۱۵<i>/۱۹</i></span>
-    <div class="db-main"><a class="db-ptitle" href="/chairside/chairside-29.html">تغییر رنگِ دندانِ اندو‌شده و روکشی که هنوز لازم نبود</a>
-    <p class="db-sub fa"><span class="db-sec">چیرساید</span>۱۳ مرداد ۱۴۰۵</p></div></li><li class="db-row crow">
-    <span class="db-cs">۱۵<i>/۱۹</i></span>
-    <div class="db-main"><a class="db-ptitle" href="/chairside/chairside-28.html">درد مبهم در دندان اندو‌شده و سهل انگاری متخصص پریو</a>
-    <p class="db-sub fa"><span class="db-sec">چیرساید</span>۱۲ مرداد ۱۴۰۵</p></div></li><li class="db-row crow">
-    <span class="db-cs">۱۵<i>/۱۹</i></span>
-    <div class="db-main"><a class="db-ptitle" href="/insight/insight-60.html">راهکاری مدیریت عدم قطعیت VD و رابطه‌ی فکی در بیماران تمام فک</a>
-    <p class="db-sub fa"><span class="db-sec">Clinical Insight</span>۹ مرداد ۱۴۰۵</p></div></li><li class="db-row crow">
-    <span class="db-cs">۱۵<i>/۱۹</i></span>
-    <div class="db-main"><a class="db-ptitle" href="/chairside/chairside-27.html">وقتی توصیهٔ همکارِ قبلی، خودش یک دادهٔ تشخیصی است</a>
-    <p class="db-sub fa"><span class="db-sec">چیرساید</span>۸ مرداد ۱۴۰۵</p></div></li></ul>
-  <p class="db-more">… و ۷۲ نوشته‌ی دیگر روی همین قفسه</p></section><section class="db-grp">
-  <header class="db-gh"><h2>زیر پایه</h2><span class="db-gn">کمتر از ۱۵ · ۴ نوشته</span></header>
-  <ul class="db-list norank db-cl"><li class="db-row crow">
-    <span class="db-cs">۱۱<i>/۱۹</i></span>
-    <div class="db-main"><a class="db-ptitle" href="/sharehub/share-9.html">دخانیات و شکست زودرس ایمپلنت دندانی؛ از سازوکار زیستی تا مدیریت بیمار سیگاری</a>
-    <p class="db-sub fa"><span class="db-sec">ShareHub</span>۲۲ خرداد ۱۴۰۵</p></div></li><li class="db-row crow">
-    <span class="db-cs">۱۲<i>/۱۹</i></span>
-    <div class="db-main"><a class="db-ptitle" href="/sharehub/share-6.html">نحوه تنظیم اکلوژن در لامینیت‌های سرامیکی</a>
-    <p class="db-sub fa"><span class="db-sec">ShareHub</span>۳۰ اردیبهشت ۱۴۰۵</p></div></li><li class="db-row crow">
-    <span class="db-cs">۱۲<i>/۱۹</i></span>
-    <div class="db-main"><a class="db-ptitle" href="/sharehub/share-5.html">چرا گاهی اصلاح فضا به قیمت از دست رفتن رابطه کانینی کلاس I انجام نمی‌شود؟</a>
-    <p class="db-sub fa"><span class="db-sec">ShareHub</span>۱ اسفند ۱۴۰۴</p></div></li><li class="db-row crow">
-    <span class="db-cs">۱۲<i>/۱۹</i></span>
-    <div class="db-main"><a class="db-ptitle" href="/sharehub/share-3.html">ایمپلنت در ناحیه قدام: جای دندان ۱ یا ۲؟</a>
-    <p class="db-sub fa"><span class="db-sec">ShareHub</span>۱۰ دی ۱۴۰۴</p></div></li></ul>
+  <div id="p-own" hidden>
+    <p class="note">این‌ها متن‌های خودِ دکتر شهابیان‌اند: تجربه‌ی بالینی، مشاهده و تحلیل. مقاله‌ای پشتشان نیست که بشود قوتش را سنجید، پس <b>درجه‌ی A تا E نمی‌گیرند</b>. چیزی که اینجا سنجیده می‌شود شفافیت است — اینکه نویسنده صریح گفته باشد این تجربه‌ی اوست، ادعایش را بزرگ‌تر از آنچه دیده نکرده باشد، و گفته باشد حرفش با مقاله‌های موجود چه نسبتی دارد.</p>
+    <section class="grp">
+  <header class="gh"><span class="gh-g gh-own">۱۹</span>
+    <div><h3>کاملاً شفاف</h3><p>نویسنده صریح گفته این تجربه‌ی اوست، مرز ادعایش را روشن کرده و نسبتش با مقاله‌های موجود را گفته.</p></div>
+    <span class="gh-n">۳۴ مطلب</span></header>
+  <ul class="pl"><li class="pc pc-own">
+    <a class="pc-t" href="/sharehub/share-15.html">چرا اسکنر روی روکش‌های خیلی براق یا کامپوزیت/رزین‌های خیلی سفید خوب اسکن نمی‌کنه؟</a>
+    <p class="pc-m"><span class="chipx">ShareHub</span>۲۳ مرداد ۱۴۰۵</p>
+    <div class="pc-e"><span class="pc-g pc-gown">۱۹<i>/۱۹</i></span>
+      <div class="pc-gm"><b>تجربه و تحلیل دنت‌کست</b><i>نمره‌ی شفافیت، نه قوت شواهد</i></div></div>
+  </li><li class="pc pc-own">
+    <a class="pc-t" href="/metanotes/meta-20.html">پست و کور یک‌مرحله‌ای؛ وقتی «عدم تطابق» به نفع درمان تمام می‌شود</a>
+    <p class="pc-m"><span class="chipx">MetaNote</span>۱۸ مرداد ۱۴۰۵</p>
+    <div class="pc-e"><span class="pc-g pc-gown">۱۹<i>/۱۹</i></span>
+      <div class="pc-gm"><b>تجربه و تحلیل دنت‌کست</b><i>نمره‌ی شفافیت، نه قوت شواهد</i></div></div>
+  </li><li class="pc pc-own">
+    <a class="pc-t" href="/insight/insight-63.html">چرا برای این بیمار قبل از اسکن نخ‌گذاری نکردم؟</a>
+    <p class="pc-m"><span class="chipx">Clinical Insight</span>۱۸ مرداد ۱۴۰۵</p>
+    <div class="pc-e"><span class="pc-g pc-gown">۱۹<i>/۱۹</i></span>
+      <div class="pc-gm"><b>تجربه و تحلیل دنت‌کست</b><i>نمره‌ی شفافیت، نه قوت شواهد</i></div></div>
+  </li><li class="pc pc-own">
+    <a class="pc-t" href="/insight/insight-62.html">هم‌رنگ کردن دو روکش زیرکونیای مجاور؛ یک راه‌حل خلاقانه و سریع سر یونیت</a>
+    <p class="pc-m"><span class="chipx">Clinical Insight</span>۱۶ مرداد ۱۴۰۵</p>
+    <div class="pc-e"><span class="pc-g pc-gown">۱۹<i>/۱۹</i></span>
+      <div class="pc-gm"><b>تجربه و تحلیل دنت‌کست</b><i>نمره‌ی شفافیت، نه قوت شواهد</i></div></div>
+  </li><li class="pc pc-own">
+    <a class="pc-t" href="/chairside/chairside-26.html">وقتی طرحِ درمانِ آسان‌تر، بیومکانیکِ سیستم را تهدید می‌کند</a>
+    <p class="pc-m"><span class="chipx">چیرساید</span>۶ مرداد ۱۴۰۵</p>
+    <div class="pc-e"><span class="pc-g pc-gown">۱۹<i>/۱۹</i></span>
+      <div class="pc-gm"><b>تجربه و تحلیل دنت‌کست</b><i>نمره‌ی شفافیت، نه قوت شواهد</i></div></div>
+  </li><li class="pc pc-own">
+    <a class="pc-t" href="/metanotes/meta-19.html">کور باید روی دندان را بپوشاند؟ بازخوانی یک قاعده‌ی جاافتاده</a>
+    <p class="pc-m"><span class="chipx">MetaNote</span>۵ مرداد ۱۴۰۵</p>
+    <div class="pc-e"><span class="pc-g pc-gown">۱۹<i>/۱۹</i></span>
+      <div class="pc-gm"><b>تجربه و تحلیل دنت‌کست</b><i>نمره‌ی شفافیت، نه قوت شواهد</i></div></div>
+  </li></ul>
+  <p class="more">… و ۲۸ مطلب دیگر با همین وضعیت</p></section><section class="grp">
+  <header class="gh"><span class="gh-g gh-own">۱۸</span>
+    <div><h3>شفاف</h3><p>بیشتر همان کارها را کرده، با یکی دو مورد کمتر.</p></div>
+    <span class="gh-n">۵ مطلب</span></header>
+  <ul class="pl"><li class="pc pc-own">
+    <a class="pc-t" href="/sharehub/share-8.html">اصول علمی آماده‌سازی دندان برای لمینت‌های سرامیکی</a>
+    <p class="pc-m"><span class="chipx">ShareHub</span>۱۲ خرداد ۱۴۰۵</p>
+    <div class="pc-e"><span class="pc-g pc-gown">۱۶<i>/۱۹</i></span>
+      <div class="pc-gm"><b>تجربه و تحلیل دنت‌کست</b><i>نمره‌ی شفافیت، نه قوت شواهد</i></div></div>
+  </li><li class="pc pc-own">
+    <a class="pc-t" href="/metanotes/meta-11.html">در باره ی اهمیت گپ بین گوتای باقیمانده و پست   </a>
+    <p class="pc-m"><span class="chipx">MetaNote</span>۲۳ اسفند ۱۴۰۴</p>
+    <div class="pc-e"><span class="pc-g pc-gown">۱۷<i>/۱۹</i></span>
+      <div class="pc-gm"><b>تجربه و تحلیل دنت‌کست</b><i>نمره‌ی شفافیت، نه قوت شواهد</i></div></div>
+  </li><li class="pc pc-own">
+    <a class="pc-t" href="/sharehub/share-4.html">راه‌ها و تکنیک‌های جلوگیری از باقی ماندن بقایای سمان در روکش‌های سمان‌شونده</a>
+    <p class="pc-m"><span class="chipx">ShareHub</span>۲۰ دی ۱۴۰۴</p>
+    <div class="pc-e"><span class="pc-g pc-gown">۱۶<i>/۱۹</i></span>
+      <div class="pc-gm"><b>تجربه و تحلیل دنت‌کست</b><i>نمره‌ی شفافیت، نه قوت شواهد</i></div></div>
+  </li><li class="pc pc-own">
+    <a class="pc-t" href="/sharehub/share-1.html">پیچ هرز شده در پروتزهای متکی بر ایمپلنت</a>
+    <p class="pc-m"><span class="chipx">ShareHub</span>۱۲ دی ۱۴۰۳</p>
+    <div class="pc-e"><span class="pc-g pc-gown">۱۶<i>/۱۹</i></span>
+      <div class="pc-gm"><b>تجربه و تحلیل دنت‌کست</b><i>نمره‌ی شفافیت، نه قوت شواهد</i></div></div>
+  </li><li class="pc pc-own">
+    <a class="pc-t" href="/metanotes/meta-6.html">Meta Decision Method — چطور تصمیم بگیریم؟</a>
+    <p class="pc-m"><span class="chipx">MetaNote</span>۲۰ آذر ۱۴۰۴</p>
+    <div class="pc-e"><span class="pc-g pc-gown">۱۷<i>/۱۹</i></span>
+      <div class="pc-gm"><b>تجربه و تحلیل دنت‌کست</b><i>نمره‌ی شفافیت، نه قوت شواهد</i></div></div>
+  </li></ul>
+  </section><section class="grp">
+  <header class="gh"><span class="gh-g gh-own">۱۵</span>
+    <div><h3>شفافیت پایه</h3><p>استدلالش روشن است و ادعای بزرگ‌تر از تجربه‌اش نمی‌کند.</p></div>
+    <span class="gh-n">۸۰ مطلب</span></header>
+  <ul class="pl"><li class="pc pc-own">
+    <a class="pc-t" href="/chairside/chairside-32.html">وقتی اصول رعایت نشده، بهترین سمان‌ها هم معجزه نمی‌کنند</a>
+    <p class="pc-m"><span class="chipx">چیرساید</span>۲۲ مرداد ۱۴۰۵</p>
+    <div class="pc-e"><span class="pc-g pc-gown">۱۵<i>/۱۹</i></span>
+      <div class="pc-gm"><b>تجربه و تحلیل دنت‌کست</b><i>نمره‌ی شفافیت، نه قوت شواهد</i></div></div>
+  </li><li class="pc pc-own">
+    <a class="pc-t" href="/chairside/chairside-31.html">دندانی که فانکشن ندارد، صرفاً یک فضای اشغال‌شده است</a>
+    <p class="pc-m"><span class="chipx">چیرساید</span>۲۱ مرداد ۱۴۰۵</p>
+    <div class="pc-e"><span class="pc-g pc-gown">۱۵<i>/۱۹</i></span>
+      <div class="pc-gm"><b>تجربه و تحلیل دنت‌کست</b><i>نمره‌ی شفافیت، نه قوت شواهد</i></div></div>
+  </li><li class="pc pc-own">
+    <a class="pc-t" href="/chairside/chairside-30.html">سرنوشت دندان را فقط با معیارهای رستوریتیو تعیین نکنیم</a>
+    <p class="pc-m"><span class="chipx">چیرساید</span>۲۰ مرداد ۱۴۰۵</p>
+    <div class="pc-e"><span class="pc-g pc-gown">۱۵<i>/۱۹</i></span>
+      <div class="pc-gm"><b>تجربه و تحلیل دنت‌کست</b><i>نمره‌ی شفافیت، نه قوت شواهد</i></div></div>
+  </li><li class="pc pc-own">
+    <a class="pc-t" href="/insight/insight-61.html">فریب خطای دید روی کست؛ راهکاری برای تنظیم روکش تک‌واحدی سانترال</a>
+    <p class="pc-m"><span class="chipx">Clinical Insight</span>۱۵ مرداد ۱۴۰۵</p>
+    <div class="pc-e"><span class="pc-g pc-gown">۱۵<i>/۱۹</i></span>
+      <div class="pc-gm"><b>تجربه و تحلیل دنت‌کست</b><i>نمره‌ی شفافیت، نه قوت شواهد</i></div></div>
+  </li><li class="pc pc-own">
+    <a class="pc-t" href="/chairside/chairside-29.html">تغییر رنگِ دندانِ اندو‌شده و روکشی که هنوز لازم نبود</a>
+    <p class="pc-m"><span class="chipx">چیرساید</span>۱۳ مرداد ۱۴۰۵</p>
+    <div class="pc-e"><span class="pc-g pc-gown">۱۵<i>/۱۹</i></span>
+      <div class="pc-gm"><b>تجربه و تحلیل دنت‌کست</b><i>نمره‌ی شفافیت، نه قوت شواهد</i></div></div>
+  </li><li class="pc pc-own">
+    <a class="pc-t" href="/chairside/chairside-28.html">درد مبهم در دندان اندو‌شده و سهل انگاری متخصص پریو</a>
+    <p class="pc-m"><span class="chipx">چیرساید</span>۱۲ مرداد ۱۴۰۵</p>
+    <div class="pc-e"><span class="pc-g pc-gown">۱۵<i>/۱۹</i></span>
+      <div class="pc-gm"><b>تجربه و تحلیل دنت‌کست</b><i>نمره‌ی شفافیت، نه قوت شواهد</i></div></div>
+  </li></ul>
+  <p class="more">… و ۷۴ مطلب دیگر با همین وضعیت</p></section><section class="grp">
+  <header class="gh"><span class="gh-g gh-own">۱۴</span>
+    <div><h3>کمتر از پایه</h3><p>یکی از موارد بالا در متن صریح نیامده.</p></div>
+    <span class="gh-n">۴ مطلب</span></header>
+  <ul class="pl"><li class="pc pc-own">
+    <a class="pc-t" href="/sharehub/share-9.html">دخانیات و شکست زودرس ایمپلنت دندانی؛ از سازوکار زیستی تا مدیریت بیمار سیگاری</a>
+    <p class="pc-m"><span class="chipx">ShareHub</span>۲۲ خرداد ۱۴۰۵</p>
+    <div class="pc-e"><span class="pc-g pc-gown">۱۱<i>/۱۹</i></span>
+      <div class="pc-gm"><b>تجربه و تحلیل دنت‌کست</b><i>نمره‌ی شفافیت، نه قوت شواهد</i></div></div>
+  </li><li class="pc pc-own">
+    <a class="pc-t" href="/sharehub/share-6.html">نحوه تنظیم اکلوژن در لامینیت‌های سرامیکی</a>
+    <p class="pc-m"><span class="chipx">ShareHub</span>۳۰ اردیبهشت ۱۴۰۵</p>
+    <div class="pc-e"><span class="pc-g pc-gown">۱۲<i>/۱۹</i></span>
+      <div class="pc-gm"><b>تجربه و تحلیل دنت‌کست</b><i>نمره‌ی شفافیت، نه قوت شواهد</i></div></div>
+  </li><li class="pc pc-own">
+    <a class="pc-t" href="/sharehub/share-5.html">چرا گاهی اصلاح فضا به قیمت از دست رفتن رابطه کانینی کلاس I انجام نمی‌شود؟</a>
+    <p class="pc-m"><span class="chipx">ShareHub</span>۱ اسفند ۱۴۰۴</p>
+    <div class="pc-e"><span class="pc-g pc-gown">۱۲<i>/۱۹</i></span>
+      <div class="pc-gm"><b>تجربه و تحلیل دنت‌کست</b><i>نمره‌ی شفافیت، نه قوت شواهد</i></div></div>
+  </li><li class="pc pc-own">
+    <a class="pc-t" href="/sharehub/share-3.html">ایمپلنت در ناحیه قدام: جای دندان ۱ یا ۲؟</a>
+    <p class="pc-m"><span class="chipx">ShareHub</span>۱۰ دی ۱۴۰۴</p>
+    <div class="pc-e"><span class="pc-g pc-gown">۱۲<i>/۱۹</i></span>
+      <div class="pc-gm"><b>تجربه و تحلیل دنت‌کست</b><i>نمره‌ی شفافیت، نه قوت شواهد</i></div></div>
+  </li></ul>
   </section>
   </div>
 
-  <p class="foot">ماکت — چیزی از این صفحه هنوز منتشر نشده. اعداد از <code>plus/des-scores.json</code> و عنوان‌ها از <code>up-board/index.json</code> خوانده شده‌اند؛ هیچ داده‌ی تازه‌ای ساخته یا ذخیره نشده است.</p>
+  <p class="foot">این یک ماکت است و هنوز منتشر نشده. عنوان‌ها و درجه‌ها همان چیزی است که همین حالا برای این مطالب ثبت شده؛ چیزی برای این صفحه ساخته یا حدس زده نشده.</p>
 </div>
 
 <script>
-var qs=function(s,r){return (r||document).querySelectorAll(s)};
-qs('.seg button').forEach(function(t){t.onclick=function(){
-  qs('.seg button').forEach(function(x){x.setAttribute('aria-selected',x===t?'true':'false')});
-  document.getElementById('p-res').hidden=t.dataset.p!=='res';
-  document.getElementById('p-com').hidden=t.dataset.p!=='com';
-  window.scrollTo({top:0,behavior:'smooth'});
+document.querySelectorAll('.seg button').forEach(function(t){t.onclick=function(){
+  document.querySelectorAll('.seg button').forEach(function(x){
+    x.setAttribute('aria-selected', x===t?'true':'false'); });
+  document.getElementById('p-res').hidden = t.dataset.p!=='res';
+  document.getElementById('p-own').hidden = t.dataset.p!=='own';
 }});
-qs('.chip[data-v]').forEach(function(b){b.onclick=function(){
-  qs('.chip[data-v]').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false')});
-  document.getElementById('v-src').hidden=b.dataset.v!=='src';
-  document.getElementById('v-page').hidden=b.dataset.v!=='page';
-}});
-var qtF=null, ftF=false;
-function apply(){
-  qs('#v-src .db-grp').forEach(function(g){
-    var k=g.dataset.grp, on=!qtF||k===qtF||(qtF==='SMALL'&&k==='SMALL');
-    g.hidden=!on;
-  });
-  qs('#v-src .db-row').forEach(function(r){
-    r.hidden = ftF && r.dataset.prov==='1';
-  });
-}
-qs('.db-mx-h').forEach(function(h){h.onclick=function(){
-  var q=h.dataset.qt, small=h.classList.contains('thin');
-  var key=small?'SMALL':q;
-  qtF = (qtF===key)?null:key;
-  qs('.db-mx-h').forEach(function(x){
-    var xk=x.classList.contains('thin')?'SMALL':x.dataset.qt;
-    x.setAttribute('aria-pressed', (qtF&&xk===qtF)?'true':'false');
-  });
-  apply();
-}});
-document.getElementById('ft').onclick=function(){
-  ftF=!ftF; this.setAttribute('aria-pressed',ftF?'true':'false'); apply();
-};
 document.getElementById('thm').onclick=function(){
   var d=document.documentElement.getAttribute('data-theme')==='dark';
   document.documentElement.setAttribute('data-theme',d?'light':'dark');
