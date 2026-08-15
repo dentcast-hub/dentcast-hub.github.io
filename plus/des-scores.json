@@ -2682,52 +2682,304 @@
     "scored_at": "2026-08-15",
     "sources": [
       {
-        "des_version": "1.8",
-        "content_type": "COMMENTARY",
-        "question_type": null,
+        "des_version": "2.0",
+        "content_type": "RESEARCH",
+        "question_type": "MATERIAL",
         "text_basis": "FULL_TEXT",
         "citation": {
-          "title": "دخانیات و شکست زودرس ایمپلنت دندانی؛ از سازوکار زیستی تا مدیریت بیمار سیگاری",
-          "authors": "دکتر نرگس شجاعی",
-          "year": 2026,
-          "journal": "",
-          "doi": ""
+          "title": "Changes in Implant Surface Characteristics and Wettability Induced by Smoking In Vitro: A Preliminary Investigation",
+          "authors": "Ohana D, Anderson NK, Delgado-Ruiz R, Romanos GE",
+          "year": 2025,
+          "journal": "Materials",
+          "doi": "10.3390/ma18122844"
         },
         "journal_quartile": {
           "value": "NR",
           "source": "NR"
         },
-        "s_design": null,
-        "q_method": null,
-        "penalties": null,
-        "commentary_checklist": [
+        "s_design": {
+          "value": 30,
+          "anchor": "exploratory in-vitro bench study of implant-disk wettability after simulated tobacco-smoke exposure, named a preliminary investigation in its own title and built on an internal pilot arm (MATERIAL pilot / exploratory bench study row, 30)",
+          "evidence_quote": "The present study aimed to explore the effect of smoking on implant surface chemistry and wettability in vitro."
+        },
+        "q_method": {
+          "tool": "QUIN",
+          "domains": [
+            {
+              "domain": "clearly stated aims",
+              "rating": "low",
+              "evidence_quote": "The aim of this study was to expand on this need, and address how the wetting behavior and the contact angles of implant surfaces, both ceramic and titanium, changes in response to exposure to tobacco smoke.",
+              "note": ""
+            },
+            {
+              "domain": "sample size justification",
+              "rating": "high",
+              "evidence_quote": "Additional limitations include the small sample size included, as the statistical power was diminished.",
+              "note": "هیچ محاسبه یا توجیه حجم نمونه‌ای در متن نیست. بخش‌های خوانده‌شده: چکیده، Introduction، Materials and Methods (۲٫۱ Materials تا ۲٫۶ CRIS Guidelines)، Results (۳٫۱ تا ۳٫۳)، Discussion با پاراگراف محدودیت‌ها، Conclusions، Vendor List، Author Contributions، Funding، Institutional Review Board / Informed Consent / Data Availability Statement، Conflicts of Interest و فهرست ۲۷ منبع. بخش ۲٫۶ ادعای پیروی از CRIS را دارد و خودِ CRIS گزارش sample size calculation را ارزیابی می‌کند، اما هیچ محاسبه‌ای گزارش نشده؛ n = 15 صرفاً اعلام شده و توجیه نشده. نویسندگان خودشان کوچک‌بودن نمونه و کاهش توان آماری را در محدودیت‌ها تأیید می‌کنند، پس این «گفته شده که انجام نشده» است نه سکوت."
+            },
+            {
+              "domain": "randomization / allocation of specimens",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "غایب است. بخش‌های خوانده‌شده: چکیده، Introduction، Materials and Methods (۲٫۱ Materials تا ۲٫۶ CRIS Guidelines)، Results (۳٫۱ تا ۳٫۳)، Discussion با پاراگراف محدودیت‌ها، Conclusions، Vendor List، Author Contributions، Funding، Institutional Review Board / Informed Consent / Data Availability Statement، Conflicts of Interest و فهرست ۲۷ منبع. در بخش ۲٫۱ فقط coding و برچسب‌گذاری استاندارد برای کاهش سوگیری اپراتور توصیف شده و در ۲٫۲ تا ۲٫۴ آمده که هر اندازه‌گیری روی یک دیسک استفاده‌نشده انجام شده، اما هیچ‌جا نگفته که تخصیص دیسک‌ها به گروه‌ها تصادفی بوده. واژه‌های random، randomization، randomly و allocation sequence در کل متن نیستند. روش تخصیصِ آشکارا غیرتصادفی هم اعلام نشده، پس آستانه‌ی 3b-i فعال نمی‌شود و این high از شاخه‌ی غیاب است."
+            },
+            {
+              "domain": "operator and assessor blinding",
+              "rating": "high",
+              "evidence_quote": "Lastly, the study possesses a moderate risk of bias, with a lack of blinded assessments.",
+              "note": "متن صریحاً می‌گوید کور کردن انجام نشده، و در همان پاراگراف اضافه می‌کند که یک مدل ارزیابی کور نتایج را تقویت می‌کرد. این «گفته شده که انجام نشده» است، پس نقل‌قول دارد و از سکوت نتیجه‌گیری نشده."
+            },
+            {
+              "domain": "appropriate statistical analysis",
+              "rating": "some_concerns",
+              "evidence_quote": "Comparisons were completed with the paired T-test.",
+              "note": "آزمون و سطح معناداری نام برده شده‌اند، اما مقایسه‌ها روی پانزده ترکیب دیسک×محلول اجرا شده‌اند بدون هیچ اشاره‌ای به تصحیح چندگانگی، و آزمون paired برای دیسک‌های مستقل انتخاب شده در حالی که متن خودش می‌گوید هر اندازه‌گیری روی یک دیسک استفاده‌نشده انجام شده. این «توصیف‌شده اما ناقص» است، نه غایب و نه کامل؛ طبق 3b بند ۴ اینجا می‌نشیند. این دامنه در ضریب اثری ندارد: شرط ≥۲ دامنه‌ی high پیش‌تر با سه high برقرار است."
+            },
+            {
+              "domain": "conflict of interest / funding",
+              "rating": "low",
+              "evidence_quote": "Conflicts of Interest: The authors declare no conflicts of interest.",
+              "note": "بیانیه‌ی تعارض منافع و بیانیه‌ی تأمین مالی («This research received no external funding») هر دو صریحاً در متن آمده‌اند."
+            }
+          ],
+          "multiplier": 0.3
+        },
+        "penalties": [
           {
-            "item": "زنجیره‌ی استدلال صریح است",
-            "points": 4,
-            "evidence_quote": "اینکه دود سیگار پیش از هر اتفاق بالینی روی سطح خودِ ایمپلنت و ترشوندگی آن اثر می‌گذارد و همین مرحله‌ی نخست استئواینتگریشن را مختل می‌کند."
-          },
-          {
-            "item": "نسبتش با شواهد منتشرشده بیان شده است",
-            "points": 2,
-            "evidence_quote": "در بخش پایانی، صحبت به موادی می‌رسد که کمتر در این زمینه بررسی می‌شوند: قلیان، ویپ و سیگار الکترونیک، و حشیش",
-            "note": "فقط کمبود شواهد را اعلام می‌کند و متن را نسبت به یافته‌ی منتشرشده‌ای موضع‌گیری نمی‌کند، پس طبق انکر این بند ۲ می‌گیرد نه ۴."
-          },
-          {
-            "item": "دامنه‌ی ادعا محدود شده است",
+            "item": "بیانیه‌ی تعارض منافع وجود ندارد",
+            "base_points": 8,
             "points": 0,
-            "evidence_quote": ""
+            "evidence_quote": "Funding: This research received no external funding.",
+            "note": "بیانیه هست، پس ردیف فعال نمی‌شود. ضمناً covered in Q_method — همین موضوع در دامنه‌ی ششم QUIN رتبه‌بندی شده است."
           },
           {
-            "item": "صریحاً تجربه/دیدگاه نامیده شده، نه شواهد",
+            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "base_points": 5,
             "points": 0,
-            "evidence_quote": ""
+            "evidence_quote": "",
+            "note": "فقط برای RCT اعمال می‌شود؛ این یک مطالعه‌ی in-vitro است."
+          },
+          {
+            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "Results are representative of the mean of 15 trials for each group (n = 15).",
+            "note": "برای in-vitro این ردیف وقتی فعال می‌شود که تعداد نمونه در هر گروه کمتر از ۱۰ و بدون توجیه باشد؛ اینجا n = 15 در هر گروه است، پس آستانه رد نمی‌شود. ضمناً covered in Q_method — نبودِ توجیه حجم نمونه در دامنه‌ی دوم QUIN رتبه‌ی high گرفته است."
+          },
+          {
+            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "مطالعه‌ی آزمایشگاهی روی دیسک است و پیامد بالینی با پیگیری ندارد."
           }
         ],
-        "des_score": 11,
+        "commentary_checklist": null,
+        "des_score": 9,
         "band": "E",
         "provisional": false,
-        "fact_fa": "این یادداشت تألیفی امتیاز شفافیت ۱۱ از ۱۹ گرفت و مثل هر محتوای تألیفی در باند E است.",
-        "interpretation_fa": "متن معرفی یک گفت‌وگوی تخصصی است و مسیر اثر دخانیات را از ترشوندگی سطح ایمپلنت تا هیپوکسی و پری‌ایمپلنتیتیس روشن می‌گوید. پرسش‌های بالینی مثل بازه‌ی قطع سیگار و آسیب‌پذیری فک بالا را نام می‌برد اما پاسخشان در فایل صوتی است. ادعاهایش دامنه‌بندی عددی ندارند و متن خودش را تجربه نمی‌نامد."
+        "fact_fa": "این مطالعه در نوع پرسش MATERIAL امتیاز ۹ و باند E گرفت، و چون متن کامل در دسترس بود امتیاز نهایی است نه مقدماتی.",
+        "interpretation_fa": "این بررسی مقدماتی in-vitro نشان می‌دهد دود توتون شیمی سطح و wettability را تغییر می‌دهد، با جهت متفاوت در تیتانیوم و زیرکونیا. سازوکار آلودگی سطح ایمپلنت را مستند می‌کند اما پیامد بالینی نمی‌سنجد. حجم نمونه توجیه نشده، تخصیص تصادفی گزارش نشده و ارزیابی کور انجام نشده. نویسندگان خودشان آن را دارای risk of bias متوسط می‌دانند."
+      },
+      {
+        "des_version": "2.0",
+        "content_type": "RESEARCH",
+        "question_type": "ETIOLOGY",
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "Smoking and Dental Implants: A Systematic Review and Meta-Analysis",
+          "authors": "Mustapha AD, Salame Z, Chrcanovic BR",
+          "year": 2022,
+          "journal": "Medicina",
+          "doi": "10.3390/medicina58010039"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 100,
+          "anchor": "systematic review with meta-analysis of 292 clinical studies on smoking as a risk factor for implant failure and marginal bone loss (ETIOLOGY SR/meta-analysis row, 100)",
+          "evidence_quote": "The present review aimed to evaluate the influence of smoking on\n\ndental implant failure rates and marginal bone loss (MBL)."
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "low",
+              "evidence_quote": "Registry in PROS-\n\nPERO was undertaken with the registration number CRD42021240682.",
+              "note": "پروتکل پیش از اجرا در PROSPERO ثبت شده و شماره‌ی ثبت در بخش Materials and Methods آمده است."
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "low",
+              "evidence_quote": "in the following databases: PubMed/Medline,\n\nWeb of Science, and Science Direct.",
+              "note": "سه دیتابیس کتاب‌شناختی مستقل جست‌وجو شده (PubMed/Medline یکی شمرده می‌شود)، بالاتر از آستانه‌ی دوتاییِ 3b-i؛ به‌علاوه جست‌وجوی دستی ۱۴ مجله و بررسی فهرست منابع، که خودشان دیتابیس شمرده نمی‌شوند اما مکمل‌اند."
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "فهرست مطالعات کنارگذاشته‌شده ارائه نشده است. بخش‌های خوانده‌شده: Materials and Methods (۲٫۱ تا ۲٫۶)، Results ۳٫۱ Literature Search، Figure 1 (نمودار غربالگری) و فهرست Supplementary Materials. معیارهای ورود و خروج نوشته شده و شمارش اولیه‌ی ۴۴۵۰ رکورد گزارش شده، اما آنچه در Supplementary آمده «Reference list of the included articles» است؛ هیچ فهرستی از مقالات تمام‌متنِ کنارگذاشته‌شده و هیچ دلیلِ به‌ازای مطالعه‌ای وجود ندارد. طبق 3b-i همین نبودِ فهرست، این دامنه‌ی بحرانی را high می‌کند."
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "low",
+              "evidence_quote": "Quality assessment of the studies was executed by the three authors of the review,\n\naccording to the Quality Assessment Tool of the National Institutes of Health",
+              "note": "ارزیابی کیفیت با ابزار NIH توسط هر سه نویسنده و به‌صورت مستقل انجام و نتیجه‌ی آن در Table S2 گزارش شده است."
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "low",
+              "evidence_quote": "A random-effects model was used to evaluate the comparison of the implant failure\n\nbetween the two groups, due to heterogeneity",
+              "note": "مدل اثرات تصادفی با استناد به ناهمگنی انتخاب شده و متارگرسیون، آنالیز زیرگروه و آنالیز حساسیت هم گزارش شده‌اند."
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "low",
+              "evidence_quote": "A funnel plot did not show a clear asymmetry",
+              "note": "سوگیری انتشار با funnel plot ارزیابی و نتیجه‌اش در متن بحث شده است."
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "بیانیه‌ی تعارض منافع وجود ندارد",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "This research received no external funding.",
+            "note": "هم بیانیه‌ی تأمین مالی و هم «Conflicts of Interest: The authors declare no conflict of interest» در متن هست، پس ردیف فعال نمی‌شود."
+          },
+          {
+            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "فقط برای RCT اعمال می‌شود؛ این یک مرور نظام‌مند است. (پروتکل خودِ مرور در PROSPERO ثبت شده و در Q_method رتبه‌بندی شده است.)"
+          },
+          {
+            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study."
+          },
+          {
+            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "مطالعه‌ی ثانویه است و پیگیریِ خودش را ندارد؛ ضمناً اثر طول پیگیری را صریحاً با متارگرسیون آزموده است."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 55,
+        "band": "C",
+        "provisional": false,
+        "fact_fa": "این مرور نظام‌مند در نوع پرسش ETIOLOGY امتیاز ۵۵ و باند C گرفت، و چون متن کامل در دسترس بود امتیاز نهایی است نه مقدماتی.",
+        "interpretation_fa": "این مرور روی ۲۹۲ مطالعه و بیش از ۱۵۰ هزار ایمپلنت، خطر شکست در سیگاری‌ها را حدود ۲٫۴ برابر و اختلاف MBL را حدود ۰٫۵۸ میلی‌متر گزارش می‌کند. تفکیک فک بالا و پایین و بی‌اثری طول پیگیری بر اندازه‌ی اثر هم در آن آمده. پروتکل ثبت‌شده و ارزیابی کیفیت دارد اما فهرست مطالعات کنارگذاشته‌شده را منتشر نکرده است."
+      },
+      {
+        "des_version": "2.0",
+        "content_type": "RESEARCH",
+        "question_type": "ETIOLOGY",
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "Smoking in relation to early dental implant failure: A systematic review and meta-analysis",
+          "authors": "Fan YY, Li S, Cai YJ, Wei T, Ye P",
+          "year": 2024,
+          "journal": "Journal of Dentistry",
+          "doi": "10.1016/j.jdent.2024.105396"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 100,
+          "anchor": "systematic review with meta-analysis of 32 observational studies on smoking as a risk factor for early implant failure (ETIOLOGY SR/meta-analysis row, 100)",
+          "evidence_quote": "Objective: To assess the association between smoking and early dental implant failure by conducting a systematic review and meta-analysis of observational studies."
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "low",
+              "evidence_quote": "and meta-analysis was registered at the PROSPERO database",
+              "note": "پروتکل پیش از اجرا در PROSPERO با شماره‌ی CRD42024561240 ثبت شده است."
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "low",
+              "evidence_quote": "Data sources: PubMed, Embase, Scopus, Web of Science, and Cochrane Central Register of Controlled Trials were systematically searched",
+              "note": "پنج دیتابیس کتاب‌شناختی مستقل، بسیار بالاتر از آستانه‌ی دوتاییِ 3b-i؛ بدون محدودیت زبان، از ابتدای دیتابیس تا ژوئن ۲۰۲۴، با راهبرد کامل جست‌وجو در Material S1 و جست‌وجوی دستی فهرست منابع."
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "فهرست مطالعات کنارگذاشته‌شده ارائه نشده است. بخش‌های خوانده‌شده: ۲٫۱ Research design تا ۲٫۵ Data synthesis، ۳٫۱ Literature search، Fig. 1 (نمودار PRISMA)، و بخش Supplementary materials. نمودار PRISMA گزارش می‌کند که از ۷۹ مقاله‌ی تمام‌متن ۲۹ مقاله وارد شده، یعنی حدود پنجاه مقاله‌ی تمام‌متن کنار گذاشته شده، اما نه فهرستشان آمده و نه دلیلِ به‌ازای مطالعه. مواد تکمیلی S1 تا S4 راهبرد جست‌وجو، NOS، مشخصات مطالعات واردشده و نمرات کیفیت‌اند، نه فهرست کنارگذاشته‌ها. طبق 3b-i همین نبودِ فهرست، این دامنه‌ی بحرانی را high می‌کند؛ شمارش تجمعی جایگزین آن نیست."
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "low",
+              "evidence_quote": "Using the NOS scale, methodology quality assessment was conducted",
+              "note": "ارزیابی کیفیت با Newcastle-Ottawa Scale و به‌صورت مستقل توسط دو نویسنده انجام و نمرات ۶ تا ۹ گزارش شده است."
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "low",
+              "evidence_quote": "generic random effect meta-analysis with inverse-variance weighting.",
+              "note": "روش تجمیع، وزن‌دهی، سنجش ناهمگنی با I²، آنالیز زیرگروه و آنالیز حساسیت leave-one-out همگی توصیف شده‌اند."
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "low",
+              "evidence_quote": "The risk of publication bias was evaluated using funnel plot for the included studies and we found relative symmetry in all the funnel plots for the comparisons, indicating no publication bias among the eligible",
+              "note": "سوگیری انتشار هم با آزمون Egger و هم با funnel plot ارزیابی و نتیجه‌اش گزارش شده است."
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "بیانیه‌ی تعارض منافع وجود ندارد",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "The authors declare no conflict of interest, financial or otherwise.",
+            "note": "بیانیه هست، پس ردیف فعال نمی‌شود. تأمین مالی هم صریحاً اعلام شده: National High Level Hospital Clinical Research Funding، Natural Science Foundation of Beijing Municipality و Capital's Funds for Health Improvement and Research. هر سه نهاد پژوهشی عمومی‌اند، نه سازنده‌ی تجاریِ محصولِ تحت آزمون، پس بند دوم این ردیف هم فعال نمی‌شود. ضمناً مرور خودش گزارش می‌کند که هیچ‌یک از مطالعات واردشده تأمین مالی صنعتی اعلام نکرده‌اند."
+          },
+          {
+            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "فقط برای RCT اعمال می‌شود؛ این یک مرور نظام‌مند است."
+          },
+          {
+            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study."
+          },
+          {
+            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "پیامد مورد بررسی early implant failure است که طبق تعریف پیش از abutment connection رخ می‌دهد، پس پیگیری بلندمدت لازم ندارد."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 55,
+        "band": "C",
+        "provisional": false,
+        "fact_fa": "این مرور نظام‌مند در نوع پرسش ETIOLOGY امتیاز ۵۵ و باند C گرفت، و چون متن کامل در دسترس بود امتیاز نهایی است نه مقدماتی.",
+        "interpretation_fa": "این مرور تازه‌ترین برآورد از شکست زودرس ایمپلنت است و روی ۳۲ مطالعه‌ی مشاهده‌ای نشان می‌دهد خطر در سیگاری‌ها حدود ۲٫۶ برابر است، با تفاوت چشمگیر بین فک بالا و پایین. پروتکل ثبت‌شده، پنج دیتابیس و ارزیابی NOS دارد اما فهرست مطالعات کنارگذاشته‌شده را منتشر نکرده. همه‌ی مطالعات واردشده مشاهده‌ای‌اند، پس رابطه‌ی علّی قطعی نیست."
       }
     ]
   },
