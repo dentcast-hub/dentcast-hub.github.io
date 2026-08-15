@@ -6,6 +6,46 @@
 <meta name="robots" content="noindex, nofollow">
 <title>ماکت — مطالب دنت‌کست بر اساس قوت شواهد</title>
 <style>@font-face{font-family:Vazirmatn;src:url('/fonts/Vazirmatn[wght].woff2') format('woff2');font-weight:100 900;font-display:swap}
+/* ══ the door: index.html's own DES box, restyled from an expander into a link.
+   Its CSS is copied from index.html (which loads no shared stylesheet), so the
+   mockup shows the real object rather than an impression of it. ══ */
+.door{margin:0 0 1.6rem;border:1px dashed var(--border);border-radius:var(--r-lg);
+  padding:.75rem .8rem .85rem;background:var(--surface2)}
+.door-l{margin:0 0 .1rem;font-size:.68rem;font-weight:800;color:var(--txt3);letter-spacing:.02em}
+.door-n{margin:0 0 .7rem;font-size:.76rem;line-height:1.85;color:var(--txt3);text-wrap:pretty}
+.door-n b{color:var(--txt2)}
+.dc-des-legend-wrap{--des-chrome:#6455a6;--des-chrome-rgb:100,85,166}
+[data-theme="dark"] .dc-des-legend-wrap{--des-chrome:#a99ce0;--des-chrome-rgb:169,156,224}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .dc-des-legend-wrap{
+  --des-chrome:#a99ce0;--des-chrome-rgb:169,156,224}}
+.dc-des-legend{display:flex;align-items:center;gap:.7rem;
+  background:rgba(var(--des-chrome-rgb),.045);
+  border:1px solid rgba(var(--des-chrome-rgb),.22);
+  border-right:3px solid var(--des-chrome);border-radius:.875rem;
+  padding:.75rem .9rem;cursor:pointer;box-shadow:var(--card-sh);
+  font-family:inherit;text-align:right;width:100%;text-decoration:none;
+  transition:border-color var(--tr),background var(--tr)}
+.dc-des-legend:hover{background:rgba(var(--des-chrome-rgb),.085)}
+.dc-des-legend:focus-visible{outline:2px solid var(--des-chrome);outline-offset:2px}
+.dc-des-ico{width:2rem;height:2rem;border-radius:50%;background:rgba(var(--des-chrome-rgb),.10);
+  border:1px solid rgba(var(--des-chrome-rgb),.28);display:flex;align-items:center;
+  justify-content:center;flex-shrink:0;color:var(--des-chrome)}
+.dc-des-ico svg{width:1.05rem;height:1.05rem}
+.dc-des-body{flex:1;min-width:0}
+.dc-des-ttl{font-size:.82rem;font-weight:700;color:var(--txt);display:block}
+.dc-des-ttl b{color:var(--des-chrome)}
+.dc-des-sub{display:block;font-size:.72rem;color:var(--txt3);margin-top:.15rem;line-height:1.7}
+.dc-des-bar-group{display:flex;direction:ltr;border-radius:5px;overflow:hidden;flex-shrink:0;
+  border:1px solid var(--border);margin-inline-start:.3rem}
+.dc-des-bar-group span{width:1.15rem;height:1.15rem;display:flex;align-items:center;
+  justify-content:center;font-size:.56rem;font-weight:800;color:#fff}
+.dc-des-band-E{background:var(--des-E)} .dc-des-band-D{background:var(--des-D)}
+.dc-des-band-C{background:var(--des-C)} .dc-des-band-B{background:var(--des-B)}
+.dc-des-band-A{background:var(--des-A)}
+/* the one visual change: a chevron where the disclosure caret used to be, so the
+   box announces that it LEADS somewhere instead of that it opens */
+.dc-des-go{font-weight:900;color:var(--des-chrome);font-size:.95rem;vertical-align:-.05em}
+
 /* ── tokens copied verbatim from dc-theme.css + plus.css's DES block ── */
 :root{
   --ac:#0b5fff; --bg:#f0f2f5; --surface:#fff; --surface2:#f4f6fb; --surface3:#eaecf5;
@@ -197,6 +237,32 @@ if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme',
 </header>
 
 <div class="wrap">
+
+
+  <div class="door">
+    <p class="door-l">۱ — ورودی، در صفحه‌ی اول</p>
+    <p class="door-n">همین کارتِ الانِ صفحه‌ی اول، ولی به‌جای اینکه توضیحش زیرش باز شود، <b>در می‌شود به این صفحه</b>. توضیح‌ها هم از زیر کارت برداشته می‌شوند و بالای همین صفحه می‌آیند — یعنی خواننده توضیح را همان‌جایی می‌خواند که نمونه‌هایش جلوی چشمش است، نه در خلأ.</p>
+    <div class="dc-des-legend-wrap">
+      <a class="dc-des-legend" href="#top">
+        <span class="dc-des-ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="2.5" y="13" width="5.5" height="8.5" rx="1.1" fill="currentColor"/>
+            <rect x="9.25" y="7" width="5.5" height="14.5" rx="1.1" fill="currentColor"/>
+            <rect x="16" y="10.5" width="5.5" height="11" rx="1.1" fill="currentColor"/>
+          </svg>
+        </span>
+        <span class="dc-des-body">
+          <span class="dc-des-ttl"><b>DentCast Evidence Score</b> چیست؟</span>
+          <span class="dc-des-sub">ببینید هر مطلب روی چه شواهدی ایستاده، و این نمره‌ها یعنی چه <span class="dc-des-go">›</span></span>
+        </span>
+        <span class="dc-des-bar-group" aria-hidden="true">
+          <span class="dc-des-band-E">E</span><span class="dc-des-band-D">D</span><span class="dc-des-band-C">C</span><span class="dc-des-band-B">B</span><span class="dc-des-band-A">A</span>
+        </span>
+      </a>
+    </div>
+  </div>
+
+  <p class="door-l" id="top" style="margin:0 0 .3rem">۲ — صفحه‌ای که باز می‌شود</p>
 
   <h1>مطالب دنت‌کست، بر اساس قوت شواهد</h1>
   <p class="lead">هر مطلبی که اینجا می‌خوانید روی چیزی ایستاده: یا روی <b>مقاله‌های علمی منتشرشده</b>، یا روی <b>تجربه و تحلیل بالینی خودِ نویسنده</b>. این فهرست همان را نشان می‌دهد. روی هر عنوان بزنید تا خودِ مطلب باز شود — و زیر هر عنوان می‌بینید از چه مقاله‌هایی سرچشمه گرفته و هر کدام چقدر قابل اتکا هستند.</p>
@@ -611,7 +677,7 @@ if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme',
   </div>
 
   <div id="p-own" hidden>
-    <p class="note">این‌ها متن‌های خودِ دکتر شهابیان‌اند: تجربه‌ی بالینی، مشاهده و تحلیل. مقاله‌ای پشتشان نیست که بشود قوتش را سنجید، پس <b>درجه‌ی A تا E نمی‌گیرند</b>. چیزی که اینجا سنجیده می‌شود شفافیت است — اینکه نویسنده صریح گفته باشد این تجربه‌ی اوست، ادعایش را بزرگ‌تر از آنچه دیده نکرده باشد، و گفته باشد حرفش با مقاله‌های موجود چه نسبتی دارد.</p>
+    <p class="note">این‌ها متن‌هایی‌اند که در خودِ دنت‌کست نوشته شده‌اند — تجربه‌ی بالینی، مشاهده و تحلیل، از دکتر شهابیان و از مهمان‌های دنت‌کست. زیر هر عنوان اسم نویسنده‌اش آمده. مقاله‌ای پشتشان نیست که بشود قوتش را سنجید، پس <b>درجه‌ی A تا E نمی‌گیرند</b>. چیزی که اینجا سنجیده می‌شود شفافیت است — اینکه نویسنده صریح گفته باشد این تجربه‌ی اوست، ادعایش را بزرگ‌تر از آنچه دیده نکرده باشد، و گفته باشد حرفش با مقاله‌های موجود چه نسبتی دارد.</p>
     <section class="grp">
   <header class="gh"><span class="gh-g gh-own">۱۹</span>
     <div><h3>کاملاً شفاف</h3><p>نویسنده صریح گفته این تجربه‌ی اوست، مرز ادعایش را روشن کرده و نسبتش با مقاله‌های موجود را گفته.</p></div>
@@ -620,32 +686,32 @@ if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme',
     <a class="pc-t" href="/sharehub/share-15.html">چرا اسکنر روی روکش‌های خیلی براق یا کامپوزیت/رزین‌های خیلی سفید خوب اسکن نمی‌کنه؟</a>
     <p class="pc-m"><span class="chipx">ShareHub</span>۲۳ مرداد ۱۴۰۵</p>
     <div class="pc-e"><span class="pc-g pc-gown">۱۹<i>/۱۹</i></span>
-      <div class="pc-gm"><b>تجربه و تحلیل دنت‌کست</b><i>نمره‌ی شفافیت، نه قوت شواهد</i></div></div>
+      <div class="pc-gm"><b>تجربه و تحلیل بالینی</b><i>دکتر فواد شهابیان</i></div></div>
   </li><li class="pc pc-own">
     <a class="pc-t" href="/metanotes/meta-20.html">پست و کور یک‌مرحله‌ای؛ وقتی «عدم تطابق» به نفع درمان تمام می‌شود</a>
     <p class="pc-m"><span class="chipx">MetaNote</span>۱۸ مرداد ۱۴۰۵</p>
     <div class="pc-e"><span class="pc-g pc-gown">۱۹<i>/۱۹</i></span>
-      <div class="pc-gm"><b>تجربه و تحلیل دنت‌کست</b><i>نمره‌ی شفافیت، نه قوت شواهد</i></div></div>
+      <div class="pc-gm"><b>تجربه و تحلیل بالینی</b><i>دکتر فواد شهابیان</i></div></div>
   </li><li class="pc pc-own">
     <a class="pc-t" href="/insight/insight-63.html">چرا برای این بیمار قبل از اسکن نخ‌گذاری نکردم؟</a>
     <p class="pc-m"><span class="chipx">Clinical Insight</span>۱۸ مرداد ۱۴۰۵</p>
     <div class="pc-e"><span class="pc-g pc-gown">۱۹<i>/۱۹</i></span>
-      <div class="pc-gm"><b>تجربه و تحلیل دنت‌کست</b><i>نمره‌ی شفافیت، نه قوت شواهد</i></div></div>
+      <div class="pc-gm"><b>تجربه و تحلیل بالینی</b><i>دکتر فواد شهابیان</i></div></div>
   </li><li class="pc pc-own">
     <a class="pc-t" href="/insight/insight-62.html">هم‌رنگ کردن دو روکش زیرکونیای مجاور؛ یک راه‌حل خلاقانه و سریع سر یونیت</a>
     <p class="pc-m"><span class="chipx">Clinical Insight</span>۱۶ مرداد ۱۴۰۵</p>
     <div class="pc-e"><span class="pc-g pc-gown">۱۹<i>/۱۹</i></span>
-      <div class="pc-gm"><b>تجربه و تحلیل دنت‌کست</b><i>نمره‌ی شفافیت، نه قوت شواهد</i></div></div>
+      <div class="pc-gm"><b>تجربه و تحلیل بالینی</b><i>دکتر فواد شهابیان</i></div></div>
   </li><li class="pc pc-own">
     <a class="pc-t" href="/chairside/chairside-26.html">وقتی طرحِ درمانِ آسان‌تر، بیومکانیکِ سیستم را تهدید می‌کند</a>
     <p class="pc-m"><span class="chipx">چیرساید</span>۶ مرداد ۱۴۰۵</p>
     <div class="pc-e"><span class="pc-g pc-gown">۱۹<i>/۱۹</i></span>
-      <div class="pc-gm"><b>تجربه و تحلیل دنت‌کست</b><i>نمره‌ی شفافیت، نه قوت شواهد</i></div></div>
+      <div class="pc-gm"><b>تجربه و تحلیل بالینی</b><i>دکتر فواد شهابیان</i></div></div>
   </li><li class="pc pc-own">
     <a class="pc-t" href="/metanotes/meta-19.html">کور باید روی دندان را بپوشاند؟ بازخوانی یک قاعده‌ی جاافتاده</a>
     <p class="pc-m"><span class="chipx">MetaNote</span>۵ مرداد ۱۴۰۵</p>
     <div class="pc-e"><span class="pc-g pc-gown">۱۹<i>/۱۹</i></span>
-      <div class="pc-gm"><b>تجربه و تحلیل دنت‌کست</b><i>نمره‌ی شفافیت، نه قوت شواهد</i></div></div>
+      <div class="pc-gm"><b>تجربه و تحلیل بالینی</b><i>دکتر فواد شهابیان</i></div></div>
   </li></ul>
   <p class="more">… و ۲۸ مطلب دیگر با همین وضعیت</p></section><section class="grp">
   <header class="gh"><span class="gh-g gh-own">۱۸</span>
@@ -655,27 +721,27 @@ if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme',
     <a class="pc-t" href="/sharehub/share-8.html">اصول علمی آماده‌سازی دندان برای لمینت‌های سرامیکی</a>
     <p class="pc-m"><span class="chipx">ShareHub</span>۱۲ خرداد ۱۴۰۵</p>
     <div class="pc-e"><span class="pc-g pc-gown">۱۶<i>/۱۹</i></span>
-      <div class="pc-gm"><b>تجربه و تحلیل دنت‌کست</b><i>نمره‌ی شفافیت، نه قوت شواهد</i></div></div>
+      <div class="pc-gm"><b>تجربه و تحلیل بالینی</b><i>دکتر ساسان رسایی‌پور</i></div></div>
   </li><li class="pc pc-own">
     <a class="pc-t" href="/metanotes/meta-11.html">در باره ی اهمیت گپ بین گوتای باقیمانده و پست   </a>
     <p class="pc-m"><span class="chipx">MetaNote</span>۲۳ اسفند ۱۴۰۴</p>
     <div class="pc-e"><span class="pc-g pc-gown">۱۷<i>/۱۹</i></span>
-      <div class="pc-gm"><b>تجربه و تحلیل دنت‌کست</b><i>نمره‌ی شفافیت، نه قوت شواهد</i></div></div>
+      <div class="pc-gm"><b>تجربه و تحلیل بالینی</b><i>دکتر فواد شهابیان</i></div></div>
   </li><li class="pc pc-own">
     <a class="pc-t" href="/sharehub/share-4.html">راه‌ها و تکنیک‌های جلوگیری از باقی ماندن بقایای سمان در روکش‌های سمان‌شونده</a>
     <p class="pc-m"><span class="chipx">ShareHub</span>۲۰ دی ۱۴۰۴</p>
     <div class="pc-e"><span class="pc-g pc-gown">۱۶<i>/۱۹</i></span>
-      <div class="pc-gm"><b>تجربه و تحلیل دنت‌کست</b><i>نمره‌ی شفافیت، نه قوت شواهد</i></div></div>
+      <div class="pc-gm"><b>تجربه و تحلیل بالینی</b><i>دکتر مهدی جوان</i></div></div>
   </li><li class="pc pc-own">
     <a class="pc-t" href="/sharehub/share-1.html">پیچ هرز شده در پروتزهای متکی بر ایمپلنت</a>
     <p class="pc-m"><span class="chipx">ShareHub</span>۱۲ دی ۱۴۰۳</p>
     <div class="pc-e"><span class="pc-g pc-gown">۱۶<i>/۱۹</i></span>
-      <div class="pc-gm"><b>تجربه و تحلیل دنت‌کست</b><i>نمره‌ی شفافیت، نه قوت شواهد</i></div></div>
+      <div class="pc-gm"><b>تجربه و تحلیل بالینی</b><i>دکتر مهدی جوان</i></div></div>
   </li><li class="pc pc-own">
     <a class="pc-t" href="/metanotes/meta-6.html">Meta Decision Method — چطور تصمیم بگیریم؟</a>
     <p class="pc-m"><span class="chipx">MetaNote</span>۲۰ آذر ۱۴۰۴</p>
     <div class="pc-e"><span class="pc-g pc-gown">۱۷<i>/۱۹</i></span>
-      <div class="pc-gm"><b>تجربه و تحلیل دنت‌کست</b><i>نمره‌ی شفافیت، نه قوت شواهد</i></div></div>
+      <div class="pc-gm"><b>تجربه و تحلیل بالینی</b><i>دکتر فواد شهابیان</i></div></div>
   </li></ul>
   </section><section class="grp">
   <header class="gh"><span class="gh-g gh-own">۱۵</span>
@@ -685,32 +751,32 @@ if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme',
     <a class="pc-t" href="/chairside/chairside-32.html">وقتی اصول رعایت نشده، بهترین سمان‌ها هم معجزه نمی‌کنند</a>
     <p class="pc-m"><span class="chipx">چیرساید</span>۲۲ مرداد ۱۴۰۵</p>
     <div class="pc-e"><span class="pc-g pc-gown">۱۵<i>/۱۹</i></span>
-      <div class="pc-gm"><b>تجربه و تحلیل دنت‌کست</b><i>نمره‌ی شفافیت، نه قوت شواهد</i></div></div>
+      <div class="pc-gm"><b>تجربه و تحلیل بالینی</b><i>دکتر فواد شهابیان</i></div></div>
   </li><li class="pc pc-own">
     <a class="pc-t" href="/chairside/chairside-31.html">دندانی که فانکشن ندارد، صرفاً یک فضای اشغال‌شده است</a>
     <p class="pc-m"><span class="chipx">چیرساید</span>۲۱ مرداد ۱۴۰۵</p>
     <div class="pc-e"><span class="pc-g pc-gown">۱۵<i>/۱۹</i></span>
-      <div class="pc-gm"><b>تجربه و تحلیل دنت‌کست</b><i>نمره‌ی شفافیت، نه قوت شواهد</i></div></div>
+      <div class="pc-gm"><b>تجربه و تحلیل بالینی</b><i>دکتر فواد شهابیان</i></div></div>
   </li><li class="pc pc-own">
     <a class="pc-t" href="/chairside/chairside-30.html">سرنوشت دندان را فقط با معیارهای رستوریتیو تعیین نکنیم</a>
     <p class="pc-m"><span class="chipx">چیرساید</span>۲۰ مرداد ۱۴۰۵</p>
     <div class="pc-e"><span class="pc-g pc-gown">۱۵<i>/۱۹</i></span>
-      <div class="pc-gm"><b>تجربه و تحلیل دنت‌کست</b><i>نمره‌ی شفافیت، نه قوت شواهد</i></div></div>
+      <div class="pc-gm"><b>تجربه و تحلیل بالینی</b><i>دکتر فواد شهابیان</i></div></div>
   </li><li class="pc pc-own">
     <a class="pc-t" href="/insight/insight-61.html">فریب خطای دید روی کست؛ راهکاری برای تنظیم روکش تک‌واحدی سانترال</a>
     <p class="pc-m"><span class="chipx">Clinical Insight</span>۱۵ مرداد ۱۴۰۵</p>
     <div class="pc-e"><span class="pc-g pc-gown">۱۵<i>/۱۹</i></span>
-      <div class="pc-gm"><b>تجربه و تحلیل دنت‌کست</b><i>نمره‌ی شفافیت، نه قوت شواهد</i></div></div>
+      <div class="pc-gm"><b>تجربه و تحلیل بالینی</b><i>دکتر فواد شهابیان</i></div></div>
   </li><li class="pc pc-own">
     <a class="pc-t" href="/chairside/chairside-29.html">تغییر رنگِ دندانِ اندو‌شده و روکشی که هنوز لازم نبود</a>
     <p class="pc-m"><span class="chipx">چیرساید</span>۱۳ مرداد ۱۴۰۵</p>
     <div class="pc-e"><span class="pc-g pc-gown">۱۵<i>/۱۹</i></span>
-      <div class="pc-gm"><b>تجربه و تحلیل دنت‌کست</b><i>نمره‌ی شفافیت، نه قوت شواهد</i></div></div>
+      <div class="pc-gm"><b>تجربه و تحلیل بالینی</b><i>دکتر فواد شهابیان</i></div></div>
   </li><li class="pc pc-own">
     <a class="pc-t" href="/chairside/chairside-28.html">درد مبهم در دندان اندو‌شده و سهل انگاری متخصص پریو</a>
     <p class="pc-m"><span class="chipx">چیرساید</span>۱۲ مرداد ۱۴۰۵</p>
     <div class="pc-e"><span class="pc-g pc-gown">۱۵<i>/۱۹</i></span>
-      <div class="pc-gm"><b>تجربه و تحلیل دنت‌کست</b><i>نمره‌ی شفافیت، نه قوت شواهد</i></div></div>
+      <div class="pc-gm"><b>تجربه و تحلیل بالینی</b><i>دکتر فواد شهابیان</i></div></div>
   </li></ul>
   <p class="more">… و ۷۴ مطلب دیگر با همین وضعیت</p></section><section class="grp">
   <header class="gh"><span class="gh-g gh-own">۱۴</span>
@@ -720,22 +786,22 @@ if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme',
     <a class="pc-t" href="/sharehub/share-9.html">دخانیات و شکست زودرس ایمپلنت دندانی؛ از سازوکار زیستی تا مدیریت بیمار سیگاری</a>
     <p class="pc-m"><span class="chipx">ShareHub</span>۲۲ خرداد ۱۴۰۵</p>
     <div class="pc-e"><span class="pc-g pc-gown">۱۱<i>/۱۹</i></span>
-      <div class="pc-gm"><b>تجربه و تحلیل دنت‌کست</b><i>نمره‌ی شفافیت، نه قوت شواهد</i></div></div>
+      <div class="pc-gm"><b>تجربه و تحلیل بالینی</b><i>دکتر نرگس شجاعی</i></div></div>
   </li><li class="pc pc-own">
     <a class="pc-t" href="/sharehub/share-6.html">نحوه تنظیم اکلوژن در لامینیت‌های سرامیکی</a>
     <p class="pc-m"><span class="chipx">ShareHub</span>۳۰ اردیبهشت ۱۴۰۵</p>
     <div class="pc-e"><span class="pc-g pc-gown">۱۲<i>/۱۹</i></span>
-      <div class="pc-gm"><b>تجربه و تحلیل دنت‌کست</b><i>نمره‌ی شفافیت، نه قوت شواهد</i></div></div>
+      <div class="pc-gm"><b>تجربه و تحلیل بالینی</b><i>دکتر عمار نشاطی</i></div></div>
   </li><li class="pc pc-own">
     <a class="pc-t" href="/sharehub/share-5.html">چرا گاهی اصلاح فضا به قیمت از دست رفتن رابطه کانینی کلاس I انجام نمی‌شود؟</a>
     <p class="pc-m"><span class="chipx">ShareHub</span>۱ اسفند ۱۴۰۴</p>
     <div class="pc-e"><span class="pc-g pc-gown">۱۲<i>/۱۹</i></span>
-      <div class="pc-gm"><b>تجربه و تحلیل دنت‌کست</b><i>نمره‌ی شفافیت، نه قوت شواهد</i></div></div>
+      <div class="pc-gm"><b>تجربه و تحلیل بالینی</b><i>دکتر مرتضی گوران</i></div></div>
   </li><li class="pc pc-own">
     <a class="pc-t" href="/sharehub/share-3.html">ایمپلنت در ناحیه قدام: جای دندان ۱ یا ۲؟</a>
     <p class="pc-m"><span class="chipx">ShareHub</span>۱۰ دی ۱۴۰۴</p>
     <div class="pc-e"><span class="pc-g pc-gown">۱۲<i>/۱۹</i></span>
-      <div class="pc-gm"><b>تجربه و تحلیل دنت‌کست</b><i>نمره‌ی شفافیت، نه قوت شواهد</i></div></div>
+      <div class="pc-gm"><b>تجربه و تحلیل بالینی</b><i>دکتر فرزاد ستایش</i></div></div>
   </li></ul>
   </section>
   </div>
