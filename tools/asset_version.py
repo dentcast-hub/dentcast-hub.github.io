@@ -96,6 +96,95 @@ NAV_ASSETS = [
 # Its own manifest key, so it cannot collide with a real asset path.
 NAV_KEY = 'dc-nav.js:V'
 
+# ── the same story a second time, for spot.js ───────────────────────────────
+# spot/spot.js is loaded by THREE hand-written copies of one constant, because
+# the two standalone Plus views do not pull in dc-nav.js. Nothing derived that
+# number from spot.js's contents, so it had both failure modes at once: it went
+# stale when spot.js changed, and the three copies drifted apart from each
+# other. Both happened. The drift (dc-nav.js on 30, the two Plus views on 28
+# since 2026-08-12) meant the dashboard and the profile executed a four-version
+# old spot.js, which is what the CI guard in .github/workflows was written to
+# catch after that cost a sponsor campaign once already.
+#
+# So the tool owns all three, exactly as it owns `var V`: one fingerprint over
+# spot.js's import graph, one number written to every copy. The CI guard stays
+# — it is a second, independent pair of eyes on a constant that is duplicated
+# by necessity, and it is the thing that would notice if this block ever missed
+# a fourth copy.
+SPOT_LOADERS = [ROOT / 'dc-nav.js', ROOT / 'plus' / 'index.html', ROOT / 'plus' / 'profile.html']
+SPOT_V_RE = re.compile(r"""(?P<pre>var SPOT_V = ')(?P<v>\d+)(?P<post>';)""")
+SPOT_ASSET = '/spot/spot.js'
+SPOT_KEY = 'spot.js:SPOT_V'
+
+
+def spot_versions() -> dict[Path, int]:
+    out: dict[Path, int] = {}
+    for f in SPOT_LOADERS:
+        if not f.is_file():
+            continue
+        m = SPOT_V_RE.search(f.read_text(encoding='utf-8', errors='replace'))
+        if m:
+            out[f] = int(m.group('v'))
+    return out
+
+
+def set_spot_version(v: int) -> None:
+    for f in SPOT_LOADERS:
+        if not f.is_file():
+            continue
+        with open(f, 'r', encoding='utf-8', newline='') as fh:
+            text = fh.read()
+        out = SPOT_V_RE.sub(lambda m: f"{m.group('pre')}{v}{m.group('post')}", text)
+        if out != text:
+            with open(f, 'w', encoding='utf-8', newline='') as fh:
+                fh.write(out)
+
+
+def audit_spot() -> list[str]:
+    live = spot_versions()
+    missing = [f.relative_to(ROOT).as_posix() for f in SPOT_LOADERS
+               if f.is_file() and f not in live]
+    if missing:
+        return [f'{SPOT_KEY}: no `var SPOT_V` in {", ".join(missing)} — a loader was '
+                f'renamed or removed']
+    if not live:
+        return [f'{SPOT_KEY}: no loader found at all']
+    if len(set(live.values())) > 1:
+        where = ', '.join(f'{f.relative_to(ROOT).as_posix()}={v}' for f, v in live.items())
+        return [f'{SPOT_KEY}: the loaders disagree — {where}. Whichever view carries the '
+                f'lower one keeps executing an old spot.js']
+    known = load_manifest().get(SPOT_KEY)
+    fp = fingerprint(SPOT_ASSET)
+    cur = next(iter(live.values()))
+    if known is None:
+        return [f'{SPOT_KEY}: not in the manifest yet']
+    if known.get('hash') != fp:
+        return [f'{SPOT_KEY}: {SPOT_ASSET} changed since SPOT_V={known.get("v")} was '
+                f'stamped (fingerprint {known.get("hash")} -> {fp}) but SPOT_V was not raised']
+    if known.get('v') != cur:
+        return [f'{SPOT_KEY}: manifest says SPOT_V={known.get("v")}, the loaders say {cur}']
+    return []
+
+
+def bump_spot() -> int | None:
+    """Raise SPOT_V in all three loaders if spot.js changed or they drifted."""
+    if not audit_spot():
+        return None
+    manifest = load_manifest()
+    known = manifest.get(SPOT_KEY) or {}
+    live = spot_versions()
+    # max over every copy AND the manifest: after a drift the highest number has
+    # already been served, and a stamp that has been served must never come back
+    # pointing at different bytes.
+    new_v = max([*live.values(), int(known.get('v', 0))] or [0]) + 1
+    set_spot_version(new_v)
+    manifest[SPOT_KEY] = {'v': new_v, 'hash': fingerprint(SPOT_ASSET)}
+    MANIFEST.parent.mkdir(parents=True, exist_ok=True)
+    with open(MANIFEST, 'w', encoding='utf-8', newline='') as fh:
+        fh.write(json.dumps(dict(sorted(manifest.items())), indent=2, ensure_ascii=False) + '\n')
+    print(f'  spot.js  ->  var SPOT_V = \'{new_v}\'  (all {len(SPOT_LOADERS)} loaders)')
+    return new_v
+
 
 def nav_version() -> int | None:
     """The `var V` dc-nav.js stamps its injected assets with."""
@@ -449,11 +538,14 @@ def bump_modules() -> int | None:
 
 def bump() -> int:
     modules_bumped = bump_modules()
+    # Before the HTML pass, like bump_nav and for the same reason: this writes
+    # SPOT_V into dc-nav.js, and dc-nav.js is itself stamped on every page.
+    spot_bumped = bump_spot()
     nav_bumped = bump_nav()
 
     problems, state = audit()
     if not problems:
-        done = [x for x in (modules_bumped, nav_bumped) if x is not None]
+        done = [x for x in (modules_bumped, spot_bumped, nav_bumped) if x is not None]
         if not done:
             print('nothing to bump — every stamp already matches its content')
         else:
@@ -507,7 +599,7 @@ def bump() -> int:
 
 def check() -> int:
     problems, _ = audit()
-    problems = audit_modules() + audit_nav() + problems
+    problems = audit_modules() + audit_spot() + audit_nav() + problems
     if problems:
         print('Stale cache-buster stamps:\n')
         for p in problems:

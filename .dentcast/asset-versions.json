@@ -12,8 +12,8 @@
     "hash": "f045ac7d9d9e9e1d"
   },
   "/dc-nav.js": {
-    "v": 104,
-    "hash": "8d4014d99affe5ba"
+    "v": 105,
+    "hash": "72c0f32a74e0ad56"
   },
   "/dc-theme.css": {
     "v": 2,
@@ -110,5 +110,9 @@
   "modules:M": {
     "v": 2,
     "hash": "435fa9889f576955"
+  },
+  "spot.js:SPOT_V": {
+    "v": 31,
+    "hash": "2e00ef2709452967"
   }
 }
