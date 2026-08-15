@@ -958,12 +958,33 @@ function setPlayingIcon(){
   playBtn.innerHTML = '<svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
 }
 
-/* پخش اپیزود بارگذاری‌شده با الگوی یک‌بارمصرف canplay (بدون انباشت لیسنر) */
+/* پخش اپیزودِ تازه‌بارگذاری‌شده.
+
+   play() عمداً همین‌جا و هم‌زمان (synchronous) صدا زده می‌شود — نه داخل canplay.
+   دلیلش گوشیِ قفل است: بین «ended» و «canplay»ِ فایل بعدی یک رفت‌وبرگشت شبکه
+   فاصله است و در آن فاصله هیچ صدایی پخش نمی‌شود. سیستم‌عامل همان‌جا media
+   session را برمی‌چیند و صفحه‌ای را که نه صدا دارد نه نمایشگرِ روشن، freeze
+   می‌کند؛ پس canplay هرگز نمی‌رسد و زنجیرهٔ اتوپلی تا آنلاکِ بعدی می‌ایستد
+   (گزارش کاربر: «باید بعد از هر اپیزود گوشی آنلاک بشه تا اتوپلی عمل کنه»).
+   play() روی عنصری که هنوز داده ندارد کاملاً مجاز است: مرورگر Promise را نگه
+   می‌دارد تا داده برسد، و در همان حال session زنده و صفحه بیدار می‌ماند.
+
+   مسیر انتخاب دستی هم از همین سود می‌برد: آنجا play() حالا داخل خودِ کلیک
+   می‌افتد، پس user-activation را می‌سوزاند نه از دست می‌دهد.
+
+   fallbackِ canplay فقط برای حالتی می‌ماند که مرورگر play() را رد کند (سیاست
+   autoplay). آنجا آیکون دست‌نخورده می‌ماند، چون loadEpisode آن را روی «پخش»
+   گذاشته و setPlayingIcon فقط بعد از موفقیتِ واقعی اجرا می‌شود. */
 function playLoadedEpisode(){
-  audio.addEventListener("canplay", function handler(){
-    audio.removeEventListener("canplay", handler);
-    audio.play();
-    setPlayingIcon();
+  const p = audio.play();
+  if (!p || typeof p.then !== "function") { setPlayingIcon(); return; }   /* مرورگرِ قدیمی: play() چیزی برنمی‌گرداند */
+  p.then(setPlayingIcon).catch(function(){
+    audio.addEventListener("canplay", function handler(){
+      audio.removeEventListener("canplay", handler);
+      const q = audio.play();
+      if (!q || typeof q.then !== "function") { setPlayingIcon(); return; }
+      q.then(setPlayingIcon).catch(function(){ /* بی‌صدا: آیکون همان «پخش» می‌ماند */ });
+    });
   });
 }
 
@@ -1304,6 +1325,122 @@ fetch(BRAIN_URL)
 .then(data=>{
   brainData = data;
 });
+
+/* MEDIA SESSION -----------------------------------------------------------
+   کنترل‌های بیرونِ صفحه: لاک‌اسکرین، شِیدِ نوتیفیکیشن، ساعت، هدست، خودرو.
+
+   کاملاً افزودنی است و عمداً هیچ تابع موجودی را دست نمی‌زند: به‌جای صدا زدن از
+   داخل loadEpisode، به رویدادهای خودِ عنصر audio گوش می‌دهد. loadstart دقیقاً
+   یک‌بار در هر تعویضِ src شلیک می‌شود و تا آن لحظه currentIndex ست شده است، پس
+   همان اطلاعات در دسترس است بدون یک خط تغییر در مسیر بارگذاری.
+
+   دکمه‌های OS هم به‌جای تکرارِ منطق، دکمه‌های خودِ صفحه را click می‌کنند — پس
+   آیکونِ روی صفحه هرگز با وضعیت واقعی واگرا نمی‌شود و «۱۵ ثانیه» یک تعریف
+   بیشتر ندارد. اکشن‌هندلرِ media session در مرورگرها user-activation حساب
+   می‌شود، پس این کلیکِ برنامه‌ای مثل کلیک واقعی مجازِ پخش است.
+
+   progressive enhancement: نبودِ API، نبودِ MediaMetadata، یا اکشنی که مرورگر
+   نمی‌شناسد (setActionHandler آنجا TypeError می‌دهد) هیچ‌کدام نباید پلیر را
+   بشکنند، پس همه‌چیز feature-detect و try شده است. */
+(function(){
+  const ms = navigator.mediaSession;
+  if (!ms) return;
+
+  /* همان دو PNGِ مربعِ خودِ سایت. مسیرِ ریشه‌ای است تا روی .ir و .org یکسان
+     resolve شود (منطق per-domain ممنوع) و داخل iframe هم درست بماند. */
+  const ARTWORK = [
+    { src: "/favicon-192.png", sizes: "192x192", type: "image/png" },
+    { src: "/favicon-512.png", sizes: "512x512", type: "image/png" }
+  ];
+
+  /* اگر اپیزود تمام شد و هیچ اپیزودی جای آن را نگرفت، وضعیت باید «paused» شود.
+     عمداً مستقیم روی ended ست نمی‌شود: وقتی اتوپلی روشن است، فرستادنِ «paused»
+     در همان شکافِ بینِ دو فایل دقیقاً همان سیگنالی است که session را می‌خواباند
+     — همان چیزی که تازه رفعش کرده‌ایم. پس یک تایمرِ کوتاه می‌گذاریم که با اولین
+     نشانهٔ ادامه (loadstart یا play) لغو می‌شود. */
+  let idleTimer = null;
+  const cancelIdle = function(){ clearTimeout(idleTimer); idleTimer = null; };
+  const state = function(v){ try { ms.playbackState = v; } catch (e) { /* بی‌صدا */ } };
+
+  audio.addEventListener("loadstart", function(){
+    cancelIdle();
+    const ep = episodes[currentIndex];
+    if (!ep || !window.MediaMetadata) return;
+    try {
+      ms.metadata = new MediaMetadata({
+        title:   epDisplayTitle(ep),
+        artist:  "دکتر فواد شهابیان",
+        album:   "دنت‌کست",
+        artwork: ARTWORK
+      });
+    } catch (e) { /* بی‌صدا */ }
+  });
+
+  audio.addEventListener("play",  function(){ cancelIdle(); state("playing"); });
+  audio.addEventListener("pause", function(){ state("paused"); });
+  audio.addEventListener("ended", function(){
+    cancelIdle();
+    idleTimer = setTimeout(function(){ if (audio.paused) state("paused"); }, 2000);
+  });
+
+  /* نوارِ پیشرفت روی لاک‌اسکرین. setPositionState روی عددِ نامعتبر throw می‌کند
+     (duration نامعلوم یا صفر، position بزرگ‌تر از duration، نرخِ ناصفر)، پس هم
+     گارد دارد هم try. روی timeupdate ثانیه‌ای یک‌بار، نه چهار بار در ثانیه. */
+  let lastPush = 0;
+  function pushPosition(force){
+    if (typeof ms.setPositionState !== "function") return;
+    const d = audio.duration;
+    if (!isFinite(d) || d <= 0) return;
+    if (!force && Date.now() - lastPush < 1000) return;
+    lastPush = Date.now();
+    try {
+      ms.setPositionState({
+        duration: d,
+        position: Math.min(Math.max(audio.currentTime || 0, 0), d),
+        playbackRate: audio.playbackRate > 0 ? audio.playbackRate : 1
+      });
+    } catch (e) { /* بی‌صدا */ }
+  }
+  audio.addEventListener("loadedmetadata", function(){ pushPosition(true);  });
+  audio.addEventListener("seeked",         function(){ pushPosition(true);  });
+  audio.addEventListener("ratechange",     function(){ pushPosition(true);  });
+  audio.addEventListener("timeupdate",     function(){ pushPosition(false); });
+
+  function on(action, fn){
+    try { ms.setActionHandler(action, fn); } catch (e) { /* این مرورگر این اکشن را ندارد */ }
+  }
+
+  /* پخش/مکث: دکمهٔ خودِ صفحه زده می‌شود تا آیکون و صدا یک منبع حقیقت داشته باشند */
+  on("play",  function(){ if (audio.paused)  playBtn.click(); });
+  on("pause", function(){ if (!audio.paused) playBtn.click(); });
+
+  /* ±۱۵ ثانیه: همان دکمه‌های صفحه. seekOffsetِ پیشنهادیِ مرورگر (معمولاً ۱۰)
+     عمداً نادیده گرفته می‌شود تا پرشِ لاک‌اسکرین با چیزی که روی دکمه نوشته
+     شده یکی باشد. */
+  on("seekbackward", function(){ backBtn.click(); });
+  on("seekforward",  function(){ fwdBtn.click();  });
+
+  on("seekto", function(d){
+    if (!d || d.seekTime == null || !isFinite(audio.duration)) return;
+    const t = Math.min(Math.max(Number(d.seekTime) || 0, 0), audio.duration);
+    if (d.fastSeek && typeof audio.fastSeek === "function") audio.fastSeek(t);
+    else audio.currentTime = t;
+  });
+
+  /* قبلی/بعدی = همان زنجیرهٔ اپیزودِ auto-advance، با همان قواعد wrap و لنگر.
+     لنگر عمداً عوض نمی‌شود: این یک کنترلِ transport است، نه انتخابِ دستی از
+     لیست — تنها جایی که لنگر را جابه‌جا می‌کند. */
+  function jump(direction){
+    const n = resolveNextEpisode(direction);
+    if (n == null) return;
+    const i = episodes.findIndex(e => Number(e.episode) === n);
+    if (i === -1) return;
+    loadEpisode(i);
+    playLoadedEpisode();
+  }
+  on("nexttrack",     function(){ jump("forward"); });
+  on("previoustrack", function(){ jump("reverse"); });
+})();
 </script>
 
 <script>
