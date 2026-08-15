@@ -24,9 +24,24 @@
   border-radius:var(--r-f);border:1px solid var(--border);background:var(--surface);color:var(--txt3)}
 .modesw button[aria-pressed="true"]{background:var(--ac);border-color:var(--ac);color:#fff}
 
-.seg button.lock{color:var(--x-amber-ink)}
-.seg button.lock[aria-selected="true"]{color:var(--x-amber-ink);background:var(--x-amber-wash);
-  box-shadow:none;border:1px solid var(--x-amber-bd)}
+/* the single tab. Amber, because amber means «this is what a subscription buys»
+   site-wide — and it is shown to everyone, in the same place, whether or not they
+   can open it. */
+.onetab{width:100%;display:flex;align-items:center;gap:.65rem;margin:1.5rem 0 1rem;
+  padding:.85rem .9rem;border-radius:var(--r-lg);font:inherit;text-align:right;cursor:pointer;
+  background:var(--x-amber-wash);border:1px solid var(--x-amber-bd);color:var(--txt);
+  box-shadow:var(--card-sh);transition:background var(--tr)}
+.onetab:hover{background:color-mix(in srgb,var(--x-amber) 12%,transparent)}
+.onetab:focus-visible{outline:2px solid var(--x-amber);outline-offset:2px}
+.onetab-l{flex:none;font-size:1rem;line-height:1}
+.onetab-m{flex:1;min-width:0}
+.onetab-m b{display:block;font-size:.92rem;font-weight:900;line-height:1.6;letter-spacing:-.01em}
+.onetab-m i{display:block;font-style:normal;font-size:.71rem;font-weight:700;
+  color:var(--x-amber-ink);margin-top:.1rem}
+.onetab-c{flex:none;font-size:1.15rem;font-weight:900;color:var(--x-amber-ink)}
+/* premium: it is the section heading rather than a locked door */
+body.is-prem .onetab-l{display:none}
+body.is-prem .onetab-c{transform:rotate(90deg)}
 
 /* the gate card: what the arrangement IS, before what it costs */
 .gate{background:var(--card-bg);border:1px solid var(--x-amber-bd);border-radius:var(--r-lg);
@@ -364,12 +379,22 @@ if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme',
     </div>
   </div>
 
+  <!-- ONE tab under the explanation. It is the only thing a free reader is shown
+       besides the explanation itself, and its whole job is to name the thing that
+       exists and say who it is for — a reader who cannot open it must still know
+       it is there, or there is nothing to want. -->
+  <button class="onetab" id="oneTab">
+    <span class="onetab-l" aria-hidden="true">🔒</span>
+    <span class="onetab-m"><b>طبقه‌بندی مقالات دنت‌کست بر اساس قدرت شواهد</b>
+      <i>ویژه‌ی دنت‌کست پریمیوم</i></span>
+    <span class="onetab-c" aria-hidden="true">›</span>
+  </button>
+
+  <div id="v-prem">
   <div class="seg" role="tablist">
     <button role="tab" aria-selected="true" data-p="res">بر پایه‌ی مقاله<i>۱۰ مطلب، ۴۸ منبع</i></button>
     <button role="tab" aria-selected="false" data-p="own">تجربه و تحلیل دنت‌کست<i>۱۲۳ مطلب</i></button>
   </div>
-
-  <div id="v-prem">
   <div id="p-res">
     <p class="note">این مطالب به مقاله‌های منتشرشده استناد می‌کنند. درجه‌ای که کنار هر مطلب می‌بینید مربوط به <b>قوی‌ترین</b> منبعی است که به آن تکیه کرده. نوار رنگی زیرش، هر مقاله‌ای را که آن مطلب به آن استناد کرده یک بلوک نشان می‌دهد — پس یک نگاه می‌گوید مطلب روی یک ستون محکم ایستاده یا روی چند ستون سبک.</p>
     <section class="grp">
@@ -872,63 +897,10 @@ if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme',
   </div>
 
   <div id="v-free" hidden>
-    <div class="seg" role="tablist">
-      <button role="tab" aria-selected="true" data-f="all">همه‌ی مطالب امتیازدهی‌شده<i>۱۳۳ مطلب</i></button>
-      <button role="tab" aria-selected="false" class="lock" data-f="grp">🔒 بر اساس قوت شواهد<i>ویژه‌ی پریمیوم</i></button>
-    </div>
-
-    <div id="f-all">
-      <p class="note">هر مطلبی که تا امروز ارزیابی شده، از تازه‌ترین. درجه‌ی هر کدام کنارش هست و روی عنوان که بزنید خودِ مطلب باز می‌شود. <b>چیدنِ این‌ها بر اساس قوت شواهد</b> — که مطالب هم‌درجه را کنار هم می‌گذارد — بخش پریمیوم است.</p>
-      <ul class="fll"><li class="fl bd-C">
-    <span class="fl-g bd-C">C</span>
-    <div class="fl-m"><a class="fl-t" href="/episodes/episode-161.html">Cantilever in Implant Dentistry :part1</a>
-      <p class="fl-s"><span class="chipx">اپیزود</span>۲۳ مرداد ۱۴۰۵ · بر پایه‌ی ۳ منبع · پرسشِ علت بیماری</p></div></li><li class="fl fl-own">
-    <span class="fl-g fl-gown">۱۹</span>
-    <div class="fl-m"><a class="fl-t" href="/sharehub/share-15.html">چرا اسکنر روی روکش‌های خیلی براق یا کامپوزیت/رزین‌های خیلی سفید خوب اسکن نمی‌کنه؟</a>
-      <p class="fl-s"><span class="chipx">ShareHub</span>۲۳ مرداد ۱۴۰۵ · تجربه و تحلیل بالینی · دکتر فواد شهابیان</p></div></li><li class="fl bd-C">
-    <span class="fl-g bd-C">C</span>
-    <div class="fl-m"><a class="fl-t" href="/sharehub/share-14.html">از تشخیص تا درمان لبخند لثه‌ای</a>
-      <p class="fl-s"><span class="chipx">ShareHub</span>۲۲ مرداد ۱۴۰۵ · بر پایه‌ی ۱۴ منبع · پرسشِ درمان</p></div></li><li class="fl fl-own">
-    <span class="fl-g fl-gown">۱۵</span>
-    <div class="fl-m"><a class="fl-t" href="/chairside/chairside-32.html">وقتی اصول رعایت نشده، بهترین سمان‌ها هم معجزه نمی‌کنند</a>
-      <p class="fl-s"><span class="chipx">چیرساید</span>۲۲ مرداد ۱۴۰۵ · تجربه و تحلیل بالینی · دکتر فواد شهابیان</p></div></li><li class="fl fl-own">
-    <span class="fl-g fl-gown">۱۵</span>
-    <div class="fl-m"><a class="fl-t" href="/chairside/chairside-31.html">دندانی که فانکشن ندارد، صرفاً یک فضای اشغال‌شده است</a>
-      <p class="fl-s"><span class="chipx">چیرساید</span>۲۱ مرداد ۱۴۰۵ · تجربه و تحلیل بالینی · دکتر فواد شهابیان</p></div></li><li class="fl fl-own">
-    <span class="fl-g fl-gown">۱۵</span>
-    <div class="fl-m"><a class="fl-t" href="/chairside/chairside-30.html">سرنوشت دندان را فقط با معیارهای رستوریتیو تعیین نکنیم</a>
-      <p class="fl-s"><span class="chipx">چیرساید</span>۲۰ مرداد ۱۴۰۵ · تجربه و تحلیل بالینی · دکتر فواد شهابیان</p></div></li><li class="fl bd-E">
-    <span class="fl-g bd-E">E</span>
-    <div class="fl-m"><a class="fl-t" href="/insight/insight-64.html">اینجوری هم میشه به فرول نگاه کرد،یه استفاده ی معکوس از مقاله معروف در مورد فرول</a>
-      <p class="fl-s"><span class="chipx">Clinical Insight</span>۱۹ مرداد ۱۴۰۵ · بر پایه‌ی ۱ منبع · پرسشِ درمان</p></div></li><li class="fl fl-own">
-    <span class="fl-g fl-gown">۱۹</span>
-    <div class="fl-m"><a class="fl-t" href="/metanotes/meta-20.html">پست و کور یک‌مرحله‌ای؛ وقتی «عدم تطابق» به نفع درمان تمام می‌شود</a>
-      <p class="fl-s"><span class="chipx">MetaNote</span>۱۸ مرداد ۱۴۰۵ · تجربه و تحلیل بالینی · دکتر فواد شهابیان</p></div></li><li class="fl fl-own">
-    <span class="fl-g fl-gown">۱۹</span>
-    <div class="fl-m"><a class="fl-t" href="/insight/insight-63.html">چرا برای این بیمار قبل از اسکن نخ‌گذاری نکردم؟</a>
-      <p class="fl-s"><span class="chipx">Clinical Insight</span>۱۸ مرداد ۱۴۰۵ · تجربه و تحلیل بالینی · دکتر فواد شهابیان</p></div></li><li class="fl fl-own">
-    <span class="fl-g fl-gown">۱۹</span>
-    <div class="fl-m"><a class="fl-t" href="/insight/insight-62.html">هم‌رنگ کردن دو روکش زیرکونیای مجاور؛ یک راه‌حل خلاقانه و سریع سر یونیت</a>
-      <p class="fl-s"><span class="chipx">Clinical Insight</span>۱۶ مرداد ۱۴۰۵ · تجربه و تحلیل بالینی · دکتر فواد شهابیان</p></div></li><li class="fl fl-own">
-    <span class="fl-g fl-gown">۱۵</span>
-    <div class="fl-m"><a class="fl-t" href="/insight/insight-61.html">فریب خطای دید روی کست؛ راهکاری برای تنظیم روکش تک‌واحدی سانترال</a>
-      <p class="fl-s"><span class="chipx">Clinical Insight</span>۱۵ مرداد ۱۴۰۵ · تجربه و تحلیل بالینی · دکتر فواد شهابیان</p></div></li><li class="fl bd-C">
-    <span class="fl-g bd-C">C</span>
-    <div class="fl-m"><a class="fl-t" href="/sharehub/share-13.html">دیابت و ایمپلنت دندانی: از تصمیم قبل از جراحی تا نگهداری بلندمدت</a>
-      <p class="fl-s"><span class="chipx">ShareHub</span>۱۳ مرداد ۱۴۰۵ · بر پایه‌ی ۱۱ منبع · پرسشِ علت بیماری</p></div></li><li class="fl fl-own">
-    <span class="fl-g fl-gown">۱۵</span>
-    <div class="fl-m"><a class="fl-t" href="/chairside/chairside-29.html">تغییر رنگِ دندانِ اندو‌شده و روکشی که هنوز لازم نبود</a>
-      <p class="fl-s"><span class="chipx">چیرساید</span>۱۳ مرداد ۱۴۰۵ · تجربه و تحلیل بالینی · دکتر فواد شهابیان</p></div></li><li class="fl bd-C">
-    <span class="fl-g bd-C">C</span>
-    <div class="fl-m"><a class="fl-t" href="/sharehub/share-12.html">نورالژی تریژمینال، آنچه یک دندانپزشک عمومی باید بداند</a>
-      <p class="fl-s"><span class="chipx">ShareHub</span>۱۲ مرداد ۱۴۰۵ · بر پایه‌ی ۴ منبع · پرسشِ درمان</p></div></li></ul><p class="more">… و ۱۱۹ مطلب دیگر در همین فهرست</p>
-    </div>
-
-    <div id="f-grp" hidden>
-      <div class="gate">
-        <h2 class="gate-h">چیدمان بر اساس قوت شواهد</h2>
-        <p class="gate-p">همین ۱۳۳ مطلب، ولی مرتب‌شده روی قفسه‌های زیر — هر مطلب می‌رود سرِ قفسه‌ای که قوی‌ترین منبعش تعیین می‌کند. این‌طور می‌شود پرسید «چه چیزی در دنت‌کست روی محکم‌ترین شواهد ایستاده؟» و جواب را در یک نگاه دید، به‌جای اینکه مطلب‌به‌مطلب چک کنید.</p>
-        <ul class="gsl"><li class="gs bd-B"><span class="gs-g">B</span>
+    <div class="gate">
+      <h2 class="gate-h">طبقه‌بندی بر اساس قدرت شواهد</h2>
+      <p class="gate-p">همه‌ی مطالبی که تا امروز ارزیابی شده‌اند، چیده‌شده روی قفسه‌هایی از قوی به پایه — هر مطلب سرِ قفسه‌ای می‌رود که قوی‌ترین منبعش تعیین می‌کند. این‌طور می‌شود پرسید «چه چیزی در دنت‌کست روی محکم‌ترین شواهد ایستاده؟» و جواب را یک‌جا دید، به‌جای اینکه مطلب‌به‌مطلب بگردید.</p>
+      <ul class="gsl"><li class="gs bd-B"><span class="gs-g">B</span>
     <span class="gs-n">شواهد متوسط</span><span class="gs-c">۱ مطلب</span></li><li class="gs bd-C"><span class="gs-g">C</span>
     <span class="gs-n">شواهد محدود</span><span class="gs-c">۵ مطلب</span></li><li class="gs bd-D"><span class="gs-g">D</span>
     <span class="gs-n">شواهد ضعیف</span><span class="gs-c">۱ مطلب</span></li><li class="gs bd-E"><span class="gs-g">E</span>
@@ -937,11 +909,10 @@ if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme',
     <span class="gs-n">شفاف</span><span class="gs-c">۵ مطلب</span></li><li class="gs gs-own"><span class="gs-g">۱۵</span>
     <span class="gs-n">شفافیت پایه</span><span class="gs-c">۸۰ مطلب</span></li><li class="gs gs-own"><span class="gs-g">زیر ۱۵</span>
     <span class="gs-n">کمتر از پایه</span><span class="gs-c">۴ مطلب</span></li></ul>
-        <div class="gate-f">
-          <p>قفسه‌ها و تعدادشان را همین حالا می‌بینید؛ آنچه پریمیوم باز می‌کند این است که <b>کدام مطلب روی کدام قفسه است</b> و بشود بین آن‌ها جابه‌جا شد.</p>
-          <a class="gate-b" href="#">دنت‌کست پریمیوم</a>
-          <span class="gate-s">درجه‌ی هر مطلب همیشه رایگان است و روی خودِ همان مطلب نوشته می‌شود — این بخش فقط چیدمان است.</span>
-        </div>
+      <div class="gate-f">
+        <p>اسم قفسه‌ها و تعدادشان را همین حالا می‌بینید؛ آنچه پریمیوم باز می‌کند این است که <b>کدام مطلب روی کدام قفسه است</b>.</p>
+        <a class="gate-b" href="#">دنت‌کست پریمیوم</a>
+        <span class="gate-s">درجه‌ی هر مطلب همیشه رایگان است و روی خودِ همان مطلب نوشته می‌شود — پریمیوم فقط این چیدمان است.</span>
       </div>
     </div>
   </div>
@@ -950,25 +921,30 @@ if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme',
 </div>
 
 <script>
-document.querySelectorAll('.seg button').forEach(function(t){t.onclick=function(){
-  document.querySelectorAll('.seg button').forEach(function(x){
+document.querySelectorAll('.seg button[data-p]').forEach(function(t){t.onclick=function(){
+  document.querySelectorAll('.seg button[data-p]').forEach(function(x){
     x.setAttribute('aria-selected', x===t?'true':'false'); });
   document.getElementById('p-res').hidden = t.dataset.p!=='res';
   document.getElementById('p-own').hidden = t.dataset.p!=='own';
 }});
 
-document.querySelectorAll('.modesw button').forEach(function(b){b.onclick=function(){
+function setMode(m){
+  var prem = m==='prem';
+  document.body.classList.toggle('is-prem', prem);
+  document.getElementById('v-prem').hidden = !prem;
+  document.getElementById('v-free').hidden = prem;
   document.querySelectorAll('.modesw button').forEach(function(x){
-    x.setAttribute('aria-pressed', x===b?'true':'false'); });
-  document.getElementById('v-prem').hidden = b.dataset.m!=='prem';
-  document.getElementById('v-free').hidden = b.dataset.m!=='free';
-}});
-document.querySelectorAll('.seg button[data-f]').forEach(function(t){t.onclick=function(){
-  document.querySelectorAll('.seg button[data-f]').forEach(function(x){
-    x.setAttribute('aria-selected', x===t?'true':'false'); });
-  document.getElementById('f-all').hidden = t.dataset.f!=='all';
-  document.getElementById('f-grp').hidden = t.dataset.f!=='grp';
-}});
+    x.setAttribute('aria-pressed', x.dataset.m===m?'true':'false'); });
+}
+document.querySelectorAll('.modesw button').forEach(function(b){
+  b.onclick = function(){ setMode(b.dataset.m); };
+});
+setMode('prem');
+document.getElementById('oneTab').onclick = function(){
+  var t = document.body.classList.contains('is-prem')
+    ? document.getElementById('v-prem') : document.getElementById('v-free');
+  t.scrollIntoView({behavior:'smooth', block:'start'});
+};
 document.getElementById('thm').onclick=function(){
   var d=document.documentElement.getAttribute('data-theme')==='dark';
   document.documentElement.setAttribute('data-theme',d?'light':'dark');
