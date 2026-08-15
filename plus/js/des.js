@@ -23,7 +23,7 @@
 // is deliberately no "podcast" test in this file — an episode that DOES cite
 // papers (episodes/episode-161 cites three) is scored and shown like anything
 // else. The rule is "no record, no badge", never "no audio, no badge".
-import { el, faNum } from './util.js?v=3';
+import { el, faNum } from './util.js?v=4';
 
 /* ------------------------------------------------------------ the data -- */
 
@@ -76,23 +76,46 @@ function bandBar(band) {
     }, b)));
 }
 
+// The chip for a page citing SEVERAL papers shows the RANGE, and its colour is
+// the strongest band in it.
+//
+// It used to show the weakest, on the reasoning that the weakest is the honest
+// one-letter summary of what a page rests on. That holds for three sources and
+// breaks completely at thirteen: sharehub/share-14 cites two meta-analyses and
+// an RCT alongside a couple of narrative reviews, and the minimum rule printed
+// «۱۳ منبع · از E» — a page standing on the best evidence in its field, labelled
+// weak because of the weakest thing it happened to also cite. Past a handful of
+// citations the minimum is almost always E, so the chip stopped carrying any
+// information and only ever read as bad news.
+//
+// The minimum is not merely pessimistic, it is wrong about what a citation list
+// IS. Sources are independent supports, not links in a chain: adding a narrative
+// review to a page does not weaken the meta-analysis already cited there. A rule
+// under which adding evidence can only ever lower the score is backwards.
+//
+// The maximum alone would be the opposite error — it reads as cherry-picking and
+// hides that the page also leans on weak material. The range says both in the
+// same breath and hides nothing, and the card below lists every source with its
+// own band anyway.
 function chipFor(rec) {
   const src = rec.sources[0];
   const multi = rec.sources.length > 1;
   const band = src.band;
-  // With several cited papers the chip carries the WEAKEST band, not an average.
-  // Averaging bands would invent a value no source has; the weakest is the one
-  // honest single-letter summary of "what is this page resting on".
-  const worst = rec.sources.reduce((w, s) => (BANDS.indexOf(s.band) < BANDS.indexOf(w) ? s.band : w), band);
+  const idx = (b) => BANDS.indexOf(b);
+  const best = rec.sources.reduce((w, s) => (idx(s.band) > idx(w) ? s.band : w), band);
+  const worst = rec.sources.reduce((w, s) => (idx(s.band) < idx(w) ? s.band : w), band);
+  const spread = best !== worst ? best + '–' + worst : best;
   const label = multi
-    ? faNum(rec.sources.length) + ' منبع · از ' + worst
+    ? faNum(rec.sources.length) + ' منبع · ' + spread
     : BAND_FA[band] || band;
   return el('button', {
-    class: 'dc-act dc-act-des dc-des-band-' + (multi ? worst : band),
+    class: 'dc-act dc-act-des dc-des-band-' + (multi ? best : band),
     type: 'button',
-    'aria-label': 'ارزیابی شواهد این مطلب',
+    'aria-label': multi
+      ? 'ارزیابی شواهد این مطلب — ' + faNum(rec.sources.length) + ' منبع، از باند ' + best + ' تا ' + worst
+      : 'ارزیابی شواهد این مطلب',
   }, [
-    el('span', { class: 'dc-des-dot' }, multi ? worst : band),
+    el('span', { class: 'dc-des-dot' }, multi ? best : band),
     el('span', { class: 'dc-des-chip-txt' }, label),
   ]);
 }
