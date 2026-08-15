@@ -4334,10 +4334,7 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
           border-radius:.875rem;
           padding:.75rem .9rem; cursor:pointer; box-shadow:var(--card-sh);
           font-family:inherit; text-align:right; width:100%;
-          text-decoration:none; color:inherit;
         }
-        .dc-des-legend .dc-des-go{ font-weight:900; color:var(--des-chrome);
-          font-size:.95rem; vertical-align:-.05em; }
         .dc-des-legend .dc-des-ico{ width:2rem; height:2rem; border-radius:50%;
           background:rgba(var(--des-chrome-rgb),.10);
           border:1px solid rgba(var(--des-chrome-rgb),.28); display:flex; align-items:center; justify-content:center;
@@ -4358,10 +4355,51 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
         [data-theme="dark"] .dc-des-band-C{ background:#6fae74; } [data-theme="dark"] .dc-des-band-B{ background:#4f9d5c; }
         [data-theme="dark"] .dc-des-band-A{ background:#2f8f52; }
 
+        /* The explanation is an INLINE disclosure joined to the box, not a floating
+           popover. A popover was wrong twice here: this shell scrolls inside
+           #mobile-body rather than on window, so an absolutely-positioned panel
+           stayed put while the page moved under it; and having no height budget it
+           ran off the bottom with no way to reach its own end. In flow, both are
+           gone by construction — it scrolls with the box and is as tall as it needs.
+           Type follows the «؟» caption reveal (plus.css .dc-plus-scorecap). */
+        #dcDesPanel{
+          border:1px solid rgba(var(--des-chrome-rgb),.22); border-top:0;
+          border-right:3px solid var(--des-chrome);
+          border-radius:0 0 .875rem .875rem; background:rgba(var(--des-chrome-rgb),.045);
+          box-shadow:var(--card-sh);
+          padding:.2rem 1rem .9rem; margin:0;
+          font-size:.82rem; color:var(--txt2); line-height:1.8;
+        }
+        #dcDesPanel[hidden]{ display:none; }
+        /* open state: the button gives up its bottom rounding so the two read as one card */
+        .dc-des-legend[aria-expanded="true"]{ border-radius:.875rem .875rem 0 0; }
+        .dc-des-capline{ display:block; }
+        .dc-des-capline + .dc-des-capline{ margin-top:.55rem; }
+        #dcDesPanel .dc-des-mini-legend{ display:flex; direction:ltr; gap:.3rem; margin:.7rem 0; }
+        #dcDesPanel .dc-des-mini-legend div{ flex:1; text-align:center; padding:.35rem 0; border-radius:6px;
+          font-size:.68rem; font-weight:800; color:#fff; }
+        /* The capsule — the door to /des-board/. Amber because amber means «this
+           is what a subscription buys» site-wide, and this is the one thing in
+           this box that a subscription buys; the box above it stays chrome,
+           because explaining DES costs nothing. Deliberately a pill and not a
+           second card: it is a way OUT of this box, not more of it. */
+        .dc-des-cap{
+          display:flex; align-items:center; gap:.5rem; margin:.5rem 0 0;
+          padding:.5rem .85rem; border-radius:999px; text-decoration:none;
+          background:var(--x-amber-wash); border:1px solid var(--x-amber-bd);
+          font-size:.78rem; font-weight:800; color:var(--txt);
+          transition:background .17s cubic-bezier(.4,0,.2,1);
+        }
+        .dc-des-cap:hover{ background:var(--x-amber-wash-2); }
+        .dc-des-cap-t{ flex:1; min-width:0; }
+        .dc-des-cap-b{ flex:none; font-size:.66rem; font-weight:800;
+          color:var(--x-amber-ink); background:var(--x-amber-wash-2);
+          border:1px solid var(--x-amber-bd); border-radius:999px; padding:.05rem .55rem; }
+        .dc-des-cap-c{ flex:none; font-size:1rem; font-weight:900; color:var(--x-amber-ink); }
       </style>
 
       <div class="dc-des-legend-wrap">
-        <a class="dc-des-legend" id="dcDesLegendBtn" href="/des-board/">
+        <button type="button" class="dc-des-legend" id="dcDesLegendBtn" aria-expanded="false" aria-controls="dcDesPanel">
           <span class="dc-des-ico" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <rect x="2.5" y="13" width="5.5" height="8.5" rx="1.1" fill="currentColor"/>
@@ -4371,15 +4409,43 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
           </span>
           <span class="dc-des-body">
             <span class="dc-des-ttl"><b>DentCast Evidence Score</b> چیست؟</span>
-            <span class="dc-des-sub">ببینید هر مطلب روی چه شواهدی ایستاده، و این نمره‌ها یعنی چه <span class="dc-des-go">›</span></span>
+            <span class="dc-des-sub">روشی که دنت‌کست با آن اعتبار شواهد علمی محتوا را نشان می‌دهد.</span>
           </span>
           <span class="dc-des-bar-group" aria-hidden="true">
             <span class="dc-des-band-E">E</span><span class="dc-des-band-D">D</span><span class="dc-des-band-C">C</span><span class="dc-des-band-B">B</span><span class="dc-des-band-A">A</span>
           </span>
-        </a>
+        </button>
 
+        <div id="dcDesPanel" hidden>
+          <span class="dc-des-capline">روشی که دنت‌کست با آن نشان می‌دهد هر مطلب علمی چقدر روی طراحی قوی و اجرای دقیق ایستاده — نه اینکه چقدر برای شما کاربردی است؛ آن قضاوت جای دیگری نوشته می‌شود.</span>
+          <span class="dc-des-capline">نتیجه یک باند است، نه یک عدد ساده:</span>
+          <div class="dc-des-mini-legend" aria-hidden="true">
+            <div style="background:#78808f">E</div><div style="background:#5f8a63">D</div><div style="background:#3f9a49">C</div><div style="background:#2f8f3f">B</div><div style="background:#1f7a34">A</div>
+          </div>
+          <span class="dc-des-capline">از E (پایه‌ترین سطح) تا A (قوی‌ترین شواهد ممکن) — و A فقط از بهترین طراحی‌ها به‌دست می‌آید، مثل مرور نظام‌مند یا کارآزمایی بالینی. طراحی‌های ضعیف‌تر، حتی در بهترین اجرا، هیچ‌وقت به A نمی‌رسند.</span>
+          <span class="dc-des-capline">یک نکته‌ی مهم: A فقط داخل یک نوع سؤال معنی دارد. A در یک مطالعه‌ی آزمایشگاهی یعنی بهترین شواهد ممکن از یک بنچ‌تست، نه اینکه همان ماده در دهان واقعی هم به همین اندازه قابل‌اعتماد است. A در یک مطالعه‌ی بالینی یعنی داده‌ی واقعی از بیمار — این دو با هم برابر نیستند.</span>
+          <span class="dc-des-capline">محتوایی که خودِ دنت‌کست نوشته، نه خلاصه‌ی یک مقاله، میله‌ی باند نمی‌گیرد؛ به‌جایش یک نشان «تجربه‌ی بالینی» با امتیاز شفافیت دارد.</span>
+        </div>
+
+        <a class="dc-des-cap" href="/des-board/">
+          <span class="dc-des-cap-t">طبقه‌بندی مطالب بر اساس قدرت شواهد</span>
+          <span class="dc-des-cap-b">پریمیوم</span>
+          <span class="dc-des-cap-c" aria-hidden="true">›</span>
+        </a>
       </div>
 
+      <script>
+      (function(){
+        var btn = document.getElementById('dcDesLegendBtn');
+        var panel = document.getElementById('dcDesPanel');
+        if (!btn || !panel) return;
+        btn.addEventListener('click', function(){
+          var open = panel.hidden;
+          panel.hidden = !open;
+          btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+      })();
+      </script>
 
       <!-- DentCast Plus personal card. One of exactly two anonymous invitation
            points (spec 2.3). For guests: a quiet one-line invitation. For a

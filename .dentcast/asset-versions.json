@@ -56,8 +56,8 @@
     "hash": "3319fd4d09f70261"
   },
   "/plus/js/desboard-page.js": {
-    "v": 2,
-    "hash": "23eeb1a2b9d6caab"
+    "v": 3,
+    "hash": "86796f62d49923c7"
   },
   "/plus/js/highlights-page.js": {
     "v": 31,
@@ -112,8 +112,8 @@
     "hash": "a5637074be1a638d"
   },
   "modules:M": {
-    "v": 6,
-    "hash": "8279d52cf40f6781"
+    "v": 7,
+    "hash": "8378384d389e1e1d"
   },
   "spot.js:SPOT_V": {
     "v": 31,
