@@ -11158,5 +11158,215 @@
         "interpretation_fa": "این مرور روایتی یک نویسنده درباره‌ی IDS است، نه مطالعه‌ای اولیه یا مرور نظام‌مند. ارزش آن در جمع‌بندی بالینی و توجیه گام‌به‌گام روش سیلینگ فوری عاج است، نه در وزن آماری شواهد. جست‌وجوی ادبیات، فهرست مطالعات کنارگذاشته‌شده و ارزیابی سوگیری انتشار در متن گزارش نشده‌اند. توصیه‌های آن بر پایه‌ی تفسیر نویسنده از بیش از سی مقاله و تجربه‌ی بالینی اوست."
       }
     ]
+  },
+  "episodes/episode-7": {
+    "scored_at": "2026-08-15",
+    "sources": [
+      {
+        "des_version": "2.0",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "Deep Margin Elevation: A Paradigm Shift",
+          "authors": "Magne P, Spreafico RC",
+          "year": 2012,
+          "journal": "The American Journal of Esthetic Dentistry",
+          "doi": ""
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 15,
+          "anchor": "narrative review of the clinical approaches to subgingival margins that proposes and describes the deep margin elevation technique, illustrated with clinical cases (THERAPY narrative review row, 15)",
+          "evidence_quote": "This article proposes a technique involving placement of a modified Tofflemire matrix followed by immediate dentin sealing and coronal elevation of the deep margin to a supra- gingival position using a direct bonded composite resin base. The deep margin elevation technique may be a useful noninvasive al- ternative to surgical crown lengthening. This technique may also facilitate the placement of large direct composite resin restorations. The fundamental principles of deep margin elevation are presented."
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "غایب است. چکیده، بلوک Correspondence، مقدمه‌ی بدون عنوان، THE DME TECHNIQUE، فهرست یازده‌گانه‌ی «The following elements are fundamental for successful DME»، شرح شکل‌های ۱ تا ۸، بخش «DME and direct composite resin restorations»، CONCLUSIONS و فهرست ۱۴ منبع خوانده شد. هیچ اشاره‌ای به protocol، registration، PROSPERO یا هر ثبت پیشینی در کل متن نیست و مقاله بخش Methods هم ندارد."
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "غایب است (شاخه‌ی ۱، نه آستانه‌ی 3b-i). چکیده، بلوک Correspondence، مقدمه‌ی بدون عنوان، THE DME TECHNIQUE، فهرست یازده‌گانه‌ی «The following elements are fundamental for successful DME»، شرح شکل‌های ۱ تا ۸، بخش «DME and direct composite resin restorations»، CONCLUSIONS و فهرست ۱۴ منبع خوانده شد؛ هیچ توصیفی از جست‌وجوی ادبیات وجود ندارد — نه نام هیچ دیتابیس کتاب‌شناختی (Medline، PubMed، Embase، Scopus، Cochrane، Web of Science)، نه بازه‌ی زمانی، نه کلیدواژه، و نه حتی گزارش تعداد مقالات مرورشده. تنها واژه‌ی هم‌ریشه‌ی search در متن، «More research is needed» در CONCLUSIONS است که درخواست پژوهش آینده است نه شرح جست‌وجو. چون هیچ جست‌وجویی توصیف نشده، چیزی برای نقل‌قول وجود ندارد."
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "غایب است. چکیده، بلوک Correspondence، مقدمه‌ی بدون عنوان، THE DME TECHNIQUE، فهرست یازده‌گانه‌ی «The following elements are fundamental for successful DME»، شرح شکل‌های ۱ تا ۸، بخش «DME and direct composite resin restorations»، CONCLUSIONS و فهرست ۱۴ منبع خوانده شد؛ نه فهرست مطالعات کنارگذاشته‌شده هست، نه معیار ورود یا خروج، و نه گزارش تعداد رکوردهای یافت‌شده و غربال‌شده. ۱۴ منبع مقاله در متن استناد شده‌اند بدون آنکه گفته شود از میان چه مجموعه‌ای انتخاب شده‌اند."
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "غایب است. چکیده، بلوک Correspondence، مقدمه‌ی بدون عنوان، THE DME TECHNIQUE، فهرست یازده‌گانه‌ی «The following elements are fundamental for successful DME»، شرح شکل‌های ۱ تا ۸، بخش «DME and direct composite resin restorations»، CONCLUSIONS و فهرست ۱۴ منبع خوانده شد. واژه‌های bias، risk of bias، appraisal، quality assessment و GRADE اصلاً در متن نیستند؛ تنها رخداد quality در جمله‌ی «may improve the quality and performance of large direct restorations» است که درباره‌ی کیفیت ترمیم است نه ارزیابی مطالعات. یافته‌های منابع صرفاً گزارش شده‌اند (نمونه: نتیجه‌ی gresnigt و همکاران و نتیجه‌ی منبع ۱۰ درباره‌ی وضعیت پریودنتال) بدون هیچ نقد روش‌شناختی. جمله‌ی «More research is needed to validate the deep margin elevation technique» اعلام ناکافی‌بودن کل بدنه‌ی شواهد است، نه ارزیابی سوگیری مطالعات واردشده. استخراج متن هیچ لیگاتور fi/fl ندارد (واژه‌های flowable، flash، first، fit و benefit به‌صورت عادی در متن‌اند)، پس این غیاب حاصل artifact استخراج PDF نیست."
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "غایب است. چکیده، بلوک Correspondence، مقدمه‌ی بدون عنوان، THE DME TECHNIQUE، فهرست یازده‌گانه‌ی «The following elements are fundamental for successful DME»، شرح شکل‌های ۱ تا ۸، بخش «DME and direct composite resin restorations»، CONCLUSIONS و فهرست ۱۴ منبع خوانده شد؛ هیچ سنتز کمّی، هیچ pooling، هیچ آزمون ناهمگنی و هیچ توصیفی از روشِ ترکیب یافته‌های منابع وجود ندارد. مقاله ادعای متاآنالیز هم ندارد و توصیه‌های یازده‌گانه‌اش را بدون بیان روشِ رسیدن از منابع به توصیه ارائه می‌کند. توجه: این دامنه حتی اگر some_concerns گرفته می‌شد ضریب را تغییر نمی‌داد، چون شرط ≥۲ دامنه‌ی high پیش‌تر برقرار است."
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "غایب است. چکیده، بلوک Correspondence، مقدمه‌ی بدون عنوان، THE DME TECHNIQUE، فهرست یازده‌گانه‌ی «The following elements are fundamental for successful DME»، شرح شکل‌های ۱ تا ۸، بخش «DME and direct composite resin restorations»، CONCLUSIONS و فهرست ۱۴ منبع خوانده شد؛ هیچ اشاره‌ای به publication bias، funnel plot یا آزمون Egger نیست و هیچ سنتز کمّی‌ای هم گزارش نشده که چنین ارزیابی‌ای در آن معنا داشته باشد."
+            }
+          ],
+          "multiplier": 0.3
+        },
+        "penalties": [
+          {
+            "item": "بیانیه‌ی تعارض منافع وجود ندارد",
+            "base_points": 8,
+            "points": 1,
+            "evidence_quote": "",
+            "note": "غایب است. کل سند خوانده شد: بلوک Correspondence، یادداشت کپی‌رایت ناشر، CONCLUSIONS و فهرست منابع. برای conflict، competing، interest، disclosure، declaration، financial، grant، sponsor و funding جست‌وجو شد؛ تنها رخدادها «interesting» و «fundamental/funda- mental» بودند. مقاله اصلاً بخش Acknowledgment یا Disclosure ندارد. استخراج متن هیچ لیگاتور fi/fl ندارد (واژه‌های flowable، flash، first، fit و benefit به‌صورت عادی در متن‌اند)، پس این غیاب حاصل artifact استخراج PDF نیست. توجه: متن نام محصولات تجاری را می‌برد (Optibond FL و Belleglass از Kerr، Calset از AdDent، تیپ‌های KaVo)، اما جریمه به‌خاطر نبودِ خودِ بیانیه اعمال می‌شود نه به‌خاطر گمانه‌زنی درباره‌ی حمایت مالی. این نقص در هیچ‌یک از شش دامنه‌ی AMSTAR-2 پوشش داده نشده، پس double jeopardy رخ نمی‌دهد."
+          },
+          {
+            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "فقط برای RCT اعمال می‌شود؛ این یک مرور روایتی و شرح تکنیک است."
+          },
+          {
+            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study (مرور روایتی)؛ مقاله نمونه‌ی خودش را ندارد که توان آماری داشته باشد."
+          },
+          {
+            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "Figures 7 and 8 show the long- term follow-up of two sample cases at 9 and 12 years.",
+            "note": "این مطالعه ثانویه است و پیگیری خودش را مبنای ادعای پیامد قرار نمی‌دهد؛ دو کیس ۹ و ۱۲ ساله فقط نمونه‌ی تصویری تکنیک‌اند نه شاهد اصلی مقاله. ضمناً این طول پیگیری برای ادعای بقا کوتاه هم نیست."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 4,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "این مقاله در نوع پرسش THERAPY امتیاز ۴ و باند E گرفت، و چون متن کامل در دسترس بود امتیاز نهایی است نه مقدماتی.",
+        "interpretation_fa": "این مقاله شرح تکنیک روایتی Magne و Spreafico درباره‌ی DME است، نه مطالعه‌ای اولیه با داده‌ی پیامد. ارزش آن در تعریف اصول اجرایی و اندیکاسیون‌های margin elevation و مرز آن با crown lengthening است. روش جست‌وجوی ادبیات، معیار ورود مطالعات و ارزیابی کیفیت آن‌ها گزارش نشده‌اند. خود مقاله تصریح می‌کند اعتبارسنجی این تکنیک به پژوهش بیشتر نیاز دارد."
+      }
+    ]
+  },
+  "notecast/episode-7": {
+    "scored_at": "2026-08-15",
+    "sources": [
+      {
+        "des_version": "2.0",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "Deep Margin Elevation: A Paradigm Shift",
+          "authors": "Magne P, Spreafico RC",
+          "year": 2012,
+          "journal": "The American Journal of Esthetic Dentistry",
+          "doi": ""
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 15,
+          "anchor": "narrative review of the clinical approaches to subgingival margins that proposes and describes the deep margin elevation technique, illustrated with clinical cases (THERAPY narrative review row, 15)",
+          "evidence_quote": "This article proposes a technique involving placement of a modified Tofflemire matrix followed by immediate dentin sealing and coronal elevation of the deep margin to a supra- gingival position using a direct bonded composite resin base. The deep margin elevation technique may be a useful noninvasive al- ternative to surgical crown lengthening. This technique may also facilitate the placement of large direct composite resin restorations. The fundamental principles of deep margin elevation are presented."
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "غایب است. چکیده، بلوک Correspondence، مقدمه‌ی بدون عنوان، THE DME TECHNIQUE، فهرست یازده‌گانه‌ی «The following elements are fundamental for successful DME»، شرح شکل‌های ۱ تا ۸، بخش «DME and direct composite resin restorations»، CONCLUSIONS و فهرست ۱۴ منبع خوانده شد. هیچ اشاره‌ای به protocol، registration، PROSPERO یا هر ثبت پیشینی در کل متن نیست و مقاله بخش Methods هم ندارد."
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "غایب است (شاخه‌ی ۱، نه آستانه‌ی 3b-i). چکیده، بلوک Correspondence، مقدمه‌ی بدون عنوان، THE DME TECHNIQUE، فهرست یازده‌گانه‌ی «The following elements are fundamental for successful DME»، شرح شکل‌های ۱ تا ۸، بخش «DME and direct composite resin restorations»، CONCLUSIONS و فهرست ۱۴ منبع خوانده شد؛ هیچ توصیفی از جست‌وجوی ادبیات وجود ندارد — نه نام هیچ دیتابیس کتاب‌شناختی (Medline، PubMed، Embase، Scopus، Cochrane، Web of Science)، نه بازه‌ی زمانی، نه کلیدواژه، و نه حتی گزارش تعداد مقالات مرورشده. تنها واژه‌ی هم‌ریشه‌ی search در متن، «More research is needed» در CONCLUSIONS است که درخواست پژوهش آینده است نه شرح جست‌وجو. چون هیچ جست‌وجویی توصیف نشده، چیزی برای نقل‌قول وجود ندارد."
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "غایب است. چکیده، بلوک Correspondence، مقدمه‌ی بدون عنوان، THE DME TECHNIQUE، فهرست یازده‌گانه‌ی «The following elements are fundamental for successful DME»، شرح شکل‌های ۱ تا ۸، بخش «DME and direct composite resin restorations»، CONCLUSIONS و فهرست ۱۴ منبع خوانده شد؛ نه فهرست مطالعات کنارگذاشته‌شده هست، نه معیار ورود یا خروج، و نه گزارش تعداد رکوردهای یافت‌شده و غربال‌شده. ۱۴ منبع مقاله در متن استناد شده‌اند بدون آنکه گفته شود از میان چه مجموعه‌ای انتخاب شده‌اند."
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "غایب است. چکیده، بلوک Correspondence، مقدمه‌ی بدون عنوان، THE DME TECHNIQUE، فهرست یازده‌گانه‌ی «The following elements are fundamental for successful DME»، شرح شکل‌های ۱ تا ۸، بخش «DME and direct composite resin restorations»، CONCLUSIONS و فهرست ۱۴ منبع خوانده شد. واژه‌های bias، risk of bias، appraisal، quality assessment و GRADE اصلاً در متن نیستند؛ تنها رخداد quality در جمله‌ی «may improve the quality and performance of large direct restorations» است که درباره‌ی کیفیت ترمیم است نه ارزیابی مطالعات. یافته‌های منابع صرفاً گزارش شده‌اند (نمونه: نتیجه‌ی gresnigt و همکاران و نتیجه‌ی منبع ۱۰ درباره‌ی وضعیت پریودنتال) بدون هیچ نقد روش‌شناختی. جمله‌ی «More research is needed to validate the deep margin elevation technique» اعلام ناکافی‌بودن کل بدنه‌ی شواهد است، نه ارزیابی سوگیری مطالعات واردشده. استخراج متن هیچ لیگاتور fi/fl ندارد (واژه‌های flowable، flash، first، fit و benefit به‌صورت عادی در متن‌اند)، پس این غیاب حاصل artifact استخراج PDF نیست."
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "غایب است. چکیده، بلوک Correspondence، مقدمه‌ی بدون عنوان، THE DME TECHNIQUE، فهرست یازده‌گانه‌ی «The following elements are fundamental for successful DME»، شرح شکل‌های ۱ تا ۸، بخش «DME and direct composite resin restorations»، CONCLUSIONS و فهرست ۱۴ منبع خوانده شد؛ هیچ سنتز کمّی، هیچ pooling، هیچ آزمون ناهمگنی و هیچ توصیفی از روشِ ترکیب یافته‌های منابع وجود ندارد. مقاله ادعای متاآنالیز هم ندارد و توصیه‌های یازده‌گانه‌اش را بدون بیان روشِ رسیدن از منابع به توصیه ارائه می‌کند. توجه: این دامنه حتی اگر some_concerns گرفته می‌شد ضریب را تغییر نمی‌داد، چون شرط ≥۲ دامنه‌ی high پیش‌تر برقرار است."
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "غایب است. چکیده، بلوک Correspondence، مقدمه‌ی بدون عنوان، THE DME TECHNIQUE، فهرست یازده‌گانه‌ی «The following elements are fundamental for successful DME»، شرح شکل‌های ۱ تا ۸، بخش «DME and direct composite resin restorations»، CONCLUSIONS و فهرست ۱۴ منبع خوانده شد؛ هیچ اشاره‌ای به publication bias، funnel plot یا آزمون Egger نیست و هیچ سنتز کمّی‌ای هم گزارش نشده که چنین ارزیابی‌ای در آن معنا داشته باشد."
+            }
+          ],
+          "multiplier": 0.3
+        },
+        "penalties": [
+          {
+            "item": "بیانیه‌ی تعارض منافع وجود ندارد",
+            "base_points": 8,
+            "points": 1,
+            "evidence_quote": "",
+            "note": "غایب است. کل سند خوانده شد: بلوک Correspondence، یادداشت کپی‌رایت ناشر، CONCLUSIONS و فهرست منابع. برای conflict، competing، interest، disclosure، declaration، financial، grant، sponsor و funding جست‌وجو شد؛ تنها رخدادها «interesting» و «fundamental/funda- mental» بودند. مقاله اصلاً بخش Acknowledgment یا Disclosure ندارد. استخراج متن هیچ لیگاتور fi/fl ندارد (واژه‌های flowable، flash، first، fit و benefit به‌صورت عادی در متن‌اند)، پس این غیاب حاصل artifact استخراج PDF نیست. توجه: متن نام محصولات تجاری را می‌برد (Optibond FL و Belleglass از Kerr، Calset از AdDent، تیپ‌های KaVo)، اما جریمه به‌خاطر نبودِ خودِ بیانیه اعمال می‌شود نه به‌خاطر گمانه‌زنی درباره‌ی حمایت مالی. این نقص در هیچ‌یک از شش دامنه‌ی AMSTAR-2 پوشش داده نشده، پس double jeopardy رخ نمی‌دهد."
+          },
+          {
+            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "فقط برای RCT اعمال می‌شود؛ این یک مرور روایتی و شرح تکنیک است."
+          },
+          {
+            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study (مرور روایتی)؛ مقاله نمونه‌ی خودش را ندارد که توان آماری داشته باشد."
+          },
+          {
+            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "Figures 7 and 8 show the long- term follow-up of two sample cases at 9 and 12 years.",
+            "note": "این مطالعه ثانویه است و پیگیری خودش را مبنای ادعای پیامد قرار نمی‌دهد؛ دو کیس ۹ و ۱۲ ساله فقط نمونه‌ی تصویری تکنیک‌اند نه شاهد اصلی مقاله. ضمناً این طول پیگیری برای ادعای بقا کوتاه هم نیست."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 4,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "این مقاله در نوع پرسش THERAPY امتیاز ۴ و باند E گرفت، و چون متن کامل در دسترس بود امتیاز نهایی است نه مقدماتی.",
+        "interpretation_fa": "این مقاله شرح تکنیک روایتی Magne و Spreafico درباره‌ی DME است، نه مطالعه‌ای اولیه با داده‌ی پیامد. ارزش آن در تعریف اصول اجرایی و اندیکاسیون‌های margin elevation و مرز آن با crown lengthening است. روش جست‌وجوی ادبیات، معیار ورود مطالعات و ارزیابی کیفیت آن‌ها گزارش نشده‌اند. خود مقاله تصریح می‌کند اعتبارسنجی این تکنیک به پژوهش بیشتر نیاز دارد."
+      }
+    ]
   }
 }
