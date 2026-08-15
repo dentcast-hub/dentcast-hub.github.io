@@ -1,4 +1,4 @@
-import { el } from './util.js?v=5';
+import { el } from './util.js?v=6';
 
 /**
  * The bottom sheet — one implementation, for every surface that needs to ask
