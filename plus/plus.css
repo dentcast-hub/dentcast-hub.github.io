@@ -1434,12 +1434,25 @@ html.dcp-touring #mobile-body { overflow: hidden; }
    grey rather than red because a low band is not a failing grade and must not
    read as «رد شده»; it is never amber (that means «this is what a subscription
    buys») and never brand blue.
+
+   TWO COLOUR SYSTEMS LIVE HERE, and keeping them apart is the point.
+   --des-A…E is the BAND: it carries meaning and only ever paints the five
+   blocks and the band's own name. --des-chrome is the CARD: it carries no
+   meaning at all, and its whole job is to say "a machine wrote this panel, the
+   author did not". It has to be a fourth colour because the other three are
+   taken — amber is premium, brand blue is the site's own content (which is
+   exactly what made this card read as section 9 of the article), and the
+   grey→green scale belongs to the band, so chroming the card in it would give
+   a band-E page green chrome above a grey band. Indigo-violet is the modern
+   convention for computed-not-authored, and it collides with nothing here.
    ========================================================================= */
 :root {
   --des-E: #78808f; --des-D: #5f8a63; --des-C: #3f9a49; --des-B: #2f8f3f; --des-A: #1f7a34;
+  --des-chrome: #6455a6; --des-chrome-rgb: 100, 85, 166;
 }
 [data-theme="dark"] {
   --des-E: #8b93a3; --des-D: #89a68c; --des-C: #6fae74; --des-B: #4f9d5c; --des-A: #2f8f52;
+  --des-chrome: #a99ce0; --des-chrome-rgb: 169, 156, 224;
 }
 .dc-des-band-A { --des-cur: var(--des-A); } .dc-des-band-B { --des-cur: var(--des-B); }
 .dc-des-band-C { --des-cur: var(--des-C); } .dc-des-band-D { --des-cur: var(--des-D); }
@@ -1455,15 +1468,37 @@ html.dcp-touring #mobile-body { overflow: hidden; }
 }
 .dc-act-des .dc-des-chip-txt { font-weight: 700; }
 
-/* the card */
+/* the card — deliberately NOT an article box.
+   It used to be `--dcp-surface` + `--dcp-line` + a blue accent bar on its
+   heading, which is character-for-character the vocabulary of a section box in
+   the prose, so readers took it for a section the author had written called
+   «ارزیابی شواهد» (reported 2026-08-15). Every signal below exists to break
+   that reading: a tinted fill the article never uses, a chrome-coloured border
+   in a hue nothing else on the page wears, one solid edge, and a real gap plus
+   a rule above it so the article visibly ENDS first. */
 .dc-des-card {
-  background: var(--dcp-surface); border: 1px solid var(--dcp-line);
-  border-radius: var(--dcp-radius); padding: 16px 18px 18px; margin: 18px 0;
+  background: rgba(var(--des-chrome-rgb), .045);
+  border: 1px solid rgba(var(--des-chrome-rgb), .22);
+  border-inline-start: 3px solid var(--des-chrome);
+  border-radius: var(--dcp-radius); padding: 15px 17px 17px;
+  margin: 2.25rem 0 1rem; position: relative;
+}
+/* the seam — a hairline in the gap ABOVE the card, not inside it. The article
+   has to visibly end before the apparatus starts; a margin alone reads as
+   paragraph spacing. */
+.dc-des-card::before {
+  content: ""; position: absolute; inset-inline: 0; top: -1.15rem;
+  height: 1px; background: var(--dcp-line);
 }
 .dc-des-card-h {
-  font-size: .98rem; font-weight: 700; color: var(--dcp-accent);
-  border-right: 4px solid var(--dcp-accent); padding-right: 10px;
-  margin: 0 0 14px; text-align: right;
+  font-size: .95rem; font-weight: 700; color: var(--des-chrome);
+  margin: 0; text-align: right; letter-spacing: -.1px;
+}
+/* provenance, ABOVE the content rather than in a footnote — by the time a
+   reader reaches the bottom of the card they have already misread the top. */
+.dc-des-prov-note {
+  margin: 5px 0 14px; font-size: .76rem; line-height: 1.8;
+  color: var(--dcp-muted);
 }
 .dc-des-src + .dc-des-src { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--dcp-line); }
 .dc-des-srctitle { font-size: .82rem; color: var(--dcp-muted); margin-bottom: 8px; line-height: 1.7; }
@@ -1495,10 +1530,15 @@ html.dcp-touring #mobile-body { overflow: hidden; }
   background: var(--dcp-surface-2); border: 1px solid var(--dcp-line);
   border-radius: 7px; padding: 3px 9px; font-variant-numeric: tabular-nums;
 }
+/* The COMMENTARY badge is the apparatus's own label, so it wears the card's
+   chrome. It was brand blue, which is the one colour this card had to stop
+   using — a blue pill inside the panel put the "site content" signal straight
+   back into the object we had just taken it out of. */
 .dc-des-badge {
   display: inline-flex; align-items: center; gap: 6px;
-  background: var(--dcp-chip-bg); border: 1px solid var(--dcp-line);
-  color: var(--dcp-accent); border-radius: 999px; padding: 5px 14px;
+  background: rgba(var(--des-chrome-rgb), .10);
+  border: 1px solid rgba(var(--des-chrome-rgb), .30);
+  color: var(--des-chrome); border-radius: 999px; padding: 5px 14px;
   font-weight: 700; font-size: .9rem;
 }
 /* abstract-only: hatched, not solid — the uncertainty is visible, not a footnote */
@@ -1517,5 +1557,18 @@ html.dcp-touring #mobile-body { overflow: hidden; }
 /* the interpretation is separated by a rule and never sits inside the article
    body — a reader must not read it as the article's own voice */
 .dc-des-rule { border: 0; border-top: 1px solid var(--dcp-line); margin: 13px 0 10px; }
-.dc-des-interp { margin: 0; font-size: .88rem; color: var(--dcp-ink); line-height: 1.95; }
+/* the interpretation was the longest thing in the card and was set in the
+   article's own typography (--dcp-ink at .88rem), which made it the single
+   biggest contributor to the "this is the next section" reading. It is now
+   labelled and set apart: smaller, muted, on a chrome-tinted ground. */
+.dc-des-interp-lbl {
+  display: block; margin: 0 0 5px;
+  font-size: .7rem; font-weight: 800; letter-spacing: .2px;
+  color: var(--des-chrome);
+}
+.dc-des-interp {
+  margin: 0; font-size: .82rem; color: var(--dcp-muted); line-height: 1.9;
+  background: rgba(var(--des-chrome-rgb), .05);
+  border-radius: 9px; padding: 9px 11px;
+}
 .dc-des-foot { margin: 14px 0 0; font-size: .74rem; color: var(--dcp-muted); line-height: 1.8; }

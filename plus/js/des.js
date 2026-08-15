@@ -172,6 +172,10 @@ function sourceBlock(src, index, total) {
   parts.push(calcBlock(src));
   if (src.interpretation_fa) {
     parts.push(el('hr', { class: 'dc-des-rule' }));
+    // Labelled, so the paragraph announces what it is before it is read. It is
+    // the longest block in the card and used to be set in the article's own
+    // typography, which is most of why the card read as the next section.
+    parts.push(el('span', { class: 'dc-des-interp-lbl' }, 'تفسیر امتیاز'));
     parts.push(el('p', { class: 'dc-des-interp' }, src.interpretation_fa));
   }
   return el('div', { class: 'dc-des-src' }, parts);
@@ -181,7 +185,14 @@ function card(rec) {
   const scored = rec.sources.filter((s) => !s.error);
   if (!scored.length) return null;
   return el('section', { class: 'dc-des-card', id: 'dcDesCard' }, [
-    el('h2', { class: 'dc-des-card-h' }, 'ارزیابی شواهد'),
+    // The heading names the MACHINE, not a topic. «ارزیابی شواهد» alone is a
+    // section title an author could plausibly have written, and readers took it
+    // for one; «ارزیابی خودکار شواهد» cannot be mistaken for authored prose.
+    el('h2', { class: 'dc-des-card-h' }, 'ارزیابی خودکار شواهد'),
+    // Provenance first. The footnote below says what the score MEASURES, which
+    // is a different claim and arrives too late to stop the misreading.
+    el('p', { class: 'dc-des-prov-note' },
+      'این بخش را دنت‌کست به‌صورت خودکار محاسبه می‌کند و بخشی از متنِ نویسنده نیست.'),
     ...scored.map((s, i) => sourceBlock(s, i, scored.length)),
     el('p', { class: 'dc-des-foot' },
       'این امتیاز ساختار مطالعه را می‌سنجد، نه اینکه یافته‌اش برای بیمار شما مناسب است یا نه.'),
