@@ -10803,5 +10803,106 @@
         "interpretation_fa": "متن رویکرد معمول اصلاح کانتور را نقل می‌کند و بعد می‌گوید چرا در التهاب بافت نرم از آن فاصله گرفته است. مارجین کوتاه‌تر روکش موقت هم‌زمان دو کار می‌کند، بررسی کانتور و آزاد شدن لثه. حد این عقب‌نشینی را هم صریح می‌گذارد، فاز نهایی تراش و اسکن مجدد لازم دارد."
       }
     ]
+  },
+  "insight/insight-64": {
+    "scored_at": "2026-08-15",
+    "sources": [
+      {
+        "des_version": "1.9",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Rethinking ferrule--a new approach to an old dilemma.",
+          "authors": "Jotkowitz A, Samet N",
+          "year": 2010,
+          "journal": "British Dental Journal",
+          "doi": "10.1038/sj.bdj.2010.580"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 15,
+          "anchor": "narrative review of the ferrule effect with a derived risk-assessment classification (THERAPY narrative review row, 15)",
+          "evidence_quote": "A review of the literature based on a search in PubMed was performed looking at the various components of the ferrule effect"
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده به ثبت پروتکل یا شماره‌ی رجیستری اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است، نه high."
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "high",
+              "evidence_quote": "A review of the literature based on a search in PubMed was performed",
+              "note": "آستانه‌ی 3b-i: کمتر از دو دیتابیس کتاب‌شناختی. تنها PubMed نام برده شده که یک دیتابیس است، پس این high از شاخه‌ی دوم است و نقلِ روشِ ناکافی را دارد."
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "فهرست مطالعات کنارگذاشته‌شده در چکیده نمی‌آید؛ تحت ABSTRACT_ONLY این NR است."
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "«risk assessment» در چکیده به ریسک شکستِ دندان برمی‌گردد نه ارزیابی سوگیری مطالعات واردشده؛ چکیده درباره‌ی ارزیابی مطالعات ساکت است و تحت ABSTRACT_ONLY سکوت NR است."
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده هیچ سنتز کمی گزارش نمی‌کند و درباره‌ی روش ترکیب ساکت است؛ تحت ABSTRACT_ONLY این NR است."
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده به سوگیری انتشار، فانل پلات یا آزمون Egger اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است."
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "بیانیه‌ی تعارض منافع وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "فقط برای RCT اعمال می‌شود؛ این مطالعه ثانویه است."
+          },
+          {
+            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study"
+          },
+          {
+            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "این مطالعه ثانویه است و پیگیری خودش را گزارش نمی‌کند؛ این بند موضوعیت ندارد."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 8,
+        "band": "E",
+        "provisional": true,
+        "fact_fa": "این مقاله در نوع پرسش THERAPY امتیاز ۸ و باند E گرفت، و چون فقط چکیده در دسترس بود امتیاز مقدماتی است.",
+        "interpretation_fa": "مرور روایتی است و ارزشش در بازتعریف فرول است نه در وزن شواهد. می‌گوید کارآمدی فرول به محل دیواره‌ها و بار لترال بستگی دارد، نه فقط به قاعده‌ی دو میلی‌متر و حلقه‌ی کامل، و از همان‌جا یک طبقه‌بندی ریسک بیرون می‌کشد. خودش هم اعلام می‌کند شواهدِ ترمیم دندان اندوشده‌ی با تخریب وسیع ناکافی است."
+      }
+    ]
   }
 }
