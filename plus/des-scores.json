@@ -3809,5 +3809,394 @@
         "interpretation_fa": "متنی آموزشی از سال ۲۰۰۲ است و پشتوانه‌اش استدلال بیومکانیکی است نه داده‌ی تجمیع‌شده. کاری که می‌کند ترجمه‌ی نیرو به تصمیم طراحی است: ایمپلنت بیشتر و پهن‌تر، حذف کانتی‌لیور، گاید قدامی و سطح اکلوزال فلزی. همین فهرست هنوز چارچوب طرح درمان بیمار پرنیرو را می‌سازد."
       }
     ]
+  },
+  "sharehub/share-12": {
+    "scored_at": "2026-08-15",
+    "sources": [
+      {
+        "des_version": "1.8",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "European Academy of Neurology guideline on trigeminal neuralgia.",
+          "authors": "Bendtsen L, Zakrzewska JM, Abbott J, Braschinsky M, Di Stefano G, Donnet A, Eide PK, Leal PRL, Maarbjerg S, May A, Nurmikko T, Obermann M, Jensen TS, Cruccu G",
+          "year": 2019,
+          "journal": "European Journal of Neurology",
+          "doi": "10.1111/ene.13950"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 100,
+          "anchor": "clinical practice guideline built on a systematic review of the literature with GRADE (THERAPY SR/meta-analysis row, 100, via Step 2 routing for a review of non-randomized evidence)",
+          "evidence_quote": "A systematic review of the literature was performed and recommendations was developed based on GRADE, where feasible; if not, a good practice statement was given."
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده به ثبت پروتکل یا شماره‌ی رجیستری اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است، نه high."
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "some_concerns",
+              "evidence_quote": "A systematic review of the literature was performed",
+              "note": "جست‌وجوی سیستماتیک اعلام شده اما نام هیچ دیتابیسی در چکیده نیست، پس آستانه‌ی «کمتر از دو دیتابیس» بند 3b-i قابل احراز نیست و رتبه some_concerns می‌ماند."
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "فهرست مطالعات کنارگذاشته‌شده در چکیده نمی‌آید؛ تحت ABSTRACT_ONLY این NR است."
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "some_concerns",
+              "evidence_quote": "recommendations was developed based on GRADE, where feasible",
+              "note": "GRADE نام برده شده و محدودیت مطالعات یکی از دامنه‌های آن است، اما چکیده نمی‌گوید تک‌تک مطالعات واردشده ارزیابی سوگیری شده‌اند؛ پرداخته‌شده اما مبهم."
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده هیچ سنتز کمی گزارش نمی‌کند و درباره‌ی روش ترکیب ساکت است؛ تحت ABSTRACT_ONLY این NR است."
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده به سوگیری انتشار، فانل پلات یا آزمون Egger اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است."
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "بیانیه‌ی تعارض منافع وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "فقط برای RCT اعمال می‌شود؛ این مطالعه ثانویه است."
+          },
+          {
+            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study"
+          },
+          {
+            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "این مطالعه ثانویه است و ادعای بقای مبتنی بر پیگیری خودش ندارد؛ این بند موضوعیت ندارد."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 55,
+        "band": "C",
+        "provisional": true,
+        "fact_fa": "این مقاله در نوع پرسش THERAPY امتیاز ۵۵ و باند C گرفت، و چون فقط چکیده در دسترس بود امتیاز مقدماتی است.",
+        "interpretation_fa": "گایدلاین مرجع اروپا برای نورالژی تریژمینال است و همان چیزی را می‌دهد که یک دندانپزشک عمومی لازم دارد: کاربامازپین یا اکسکاربازپین خط اول، MRI با سه سکانس در بررسی اولیه، و ارجاع جراحی وقتی درد با دارو کنترل نمی‌شود. صریحاً می‌گوید هیچ ویژگی بالینی نمی‌تواند نوع ثانویه را رد کند."
+      },
+      {
+        "des_version": "1.8",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "AAN-EFNS guidelines on trigeminal neuralgia management.",
+          "authors": "Cruccu G, Gronseth G, Alksne J, Argoff C, Brainin M, Burchiel K, Nurmikko T, Zakrzewska JM",
+          "year": 2008,
+          "journal": "European Journal of Neurology",
+          "doi": "10.1111/j.1468-1331.2008.02185.x"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 100,
+          "anchor": "joint task-force clinical practice guideline built on a systematic review of the literature (THERAPY SR/meta-analysis row, 100, via Step 2 routing for a review of non-randomized evidence)",
+          "evidence_quote": "After systematic review of the literature the Task Force came to a series of evidence-based recommendations."
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده به ثبت پروتکل یا شماره‌ی رجیستری اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است، نه high."
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "some_concerns",
+              "evidence_quote": "After systematic review of the literature the Task Force came to a series of evidence-based recommendations.",
+              "note": "جست‌وجوی سیستماتیک اعلام شده اما نام هیچ دیتابیسی نمی‌آید، پس آستانه‌ی بند 3b-i قابل احراز نیست و رتبه some_concerns می‌ماند."
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "فهرست مطالعات کنارگذاشته‌شده در چکیده نمی‌آید؛ تحت ABSTRACT_ONLY این NR است."
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده هیچ ابزار ارزیابی سوگیری مطالعات واردشده را نام نمی‌برد؛ تحت ABSTRACT_ONLY سکوت NR است."
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده هیچ سنتز کمی گزارش نمی‌کند و درباره‌ی روش ترکیب ساکت است؛ تحت ABSTRACT_ONLY این NR است."
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده به سوگیری انتشار، فانل پلات یا آزمون Egger اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است."
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "بیانیه‌ی تعارض منافع وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "فقط برای RCT اعمال می‌شود؛ این مطالعه ثانویه است."
+          },
+          {
+            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study"
+          },
+          {
+            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "این مطالعه ثانویه است و ادعای بقای مبتنی بر پیگیری خودش ندارد؛ این بند موضوعیت ندارد."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 55,
+        "band": "C",
+        "provisional": true,
+        "fact_fa": "این مقاله در نوع پرسش THERAPY امتیاز ۵۵ و باند C گرفت، و چون فقط چکیده در دسترس بود امتیاز مقدماتی است.",
+        "interpretation_fa": "نسخه‌ی مشترک AAN و EFNS است که گایدلاین اروپایی ۲۰۱۹ جایگزینش شد، پس ارزشش امروز تاریخی و تطبیقی است. دو نکته‌اش هنوز پابرجاست: کاربامازپین شواهد قوی‌تر و اکسکاربازپین تحمل بهتر دارد، و دکمپرشن میکروواسکولار طولانی‌ترین دوره‌ی بی‌دردی را می‌دهد."
+      },
+      {
+        "des_version": "1.8",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Trigeminal neuralgia: a practical guide.",
+          "authors": "Lambru G, Zakrzewska J, Matharu M",
+          "year": 2021,
+          "journal": "Practical Neurology",
+          "doi": "10.1136/practneurol-2020-002782"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 15,
+          "anchor": "narrative practical review of diagnosis and management (THERAPY narrative review row, 15)",
+          "evidence_quote": "Trigeminal neuralgia (TN) is a highly disabling disorder characterised by very severe, brief and electric shock like recurrent episodes of facial pain."
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده به ثبت پروتکل یا شماره‌ی رجیستری اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است، نه high."
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده نام هیچ دیتابیس یا استراتژی جست‌وجویی نمی‌آورد؛ تحت ABSTRACT_ONLY این NR است."
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "فهرست مطالعات کنارگذاشته‌شده در چکیده نمی‌آید؛ تحت ABSTRACT_ONLY این NR است."
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده هیچ ابزار ارزیابی سوگیری مطالعات واردشده را نام نمی‌برد؛ تحت ABSTRACT_ONLY سکوت NR است."
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده هیچ سنتز کمی گزارش نمی‌کند و درباره‌ی روش ترکیب ساکت است؛ تحت ABSTRACT_ONLY این NR است."
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده به سوگیری انتشار، فانل پلات یا آزمون Egger اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است."
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "بیانیه‌ی تعارض منافع وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "فقط برای RCT اعمال می‌شود؛ این مطالعه ثانویه است."
+          },
+          {
+            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study"
+          },
+          {
+            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "این مطالعه ثانویه است و ادعای بقای مبتنی بر پیگیری خودش ندارد؛ این بند موضوعیت ندارد."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 8,
+        "band": "E",
+        "provisional": true,
+        "fact_fa": "این مقاله در نوع پرسش THERAPY امتیاز ۸ و باند E گرفت، و چون فقط چکیده در دسترس بود امتیاز مقدماتی است.",
+        "interpretation_fa": "مرور روایتی است، پس امتیاز ساختاری‌اش پایین می‌ماند، اما همان توصیه‌های گایدلاین اروپا را در قالبی کوتاه و قابل استفاده در مطب می‌گذارد. تفکیک بیمار بر اساس وجود کانفلیکت نوروواسکولار، همان چیزی است که مسیر ارجاع را تعیین می‌کند."
+      },
+      {
+        "des_version": "1.8",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Guidelines for the management of trigeminal neuralgia.",
+          "authors": "Chong MS, Bahra A, Zakrzewska JM",
+          "year": 2023,
+          "journal": "Cleveland Clinic Journal of Medicine",
+          "doi": "10.3949/ccjm.90a.22052"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 15,
+          "anchor": "narrative summary of the UK trigeminal neuralgia guidelines (THERAPY narrative review row, 15)",
+          "evidence_quote": "Guidelines for the diagnosis and treatment of patients with trigeminal neuralgia (TN) advocate for a multidisciplinary team approach to improve the care of patients with acute and chronic TN."
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده به ثبت پروتکل یا شماره‌ی رجیستری اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است، نه high."
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده نام هیچ دیتابیس یا استراتژی جست‌وجویی نمی‌آورد؛ تحت ABSTRACT_ONLY این NR است."
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "فهرست مطالعات کنارگذاشته‌شده در چکیده نمی‌آید؛ تحت ABSTRACT_ONLY این NR است."
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده هیچ ابزار ارزیابی سوگیری مطالعات واردشده را نام نمی‌برد؛ تحت ABSTRACT_ONLY سکوت NR است."
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده هیچ سنتز کمی گزارش نمی‌کند و درباره‌ی روش ترکیب ساکت است؛ تحت ABSTRACT_ONLY این NR است."
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده به سوگیری انتشار، فانل پلات یا آزمون Egger اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است."
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "بیانیه‌ی تعارض منافع وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "فقط برای RCT اعمال می‌شود؛ این مطالعه ثانویه است."
+          },
+          {
+            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study"
+          },
+          {
+            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "این مطالعه ثانویه است و ادعای بقای مبتنی بر پیگیری خودش ندارد؛ این بند موضوعیت ندارد."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 8,
+        "band": "E",
+        "provisional": true,
+        "fact_fa": "این مقاله در نوع پرسش THERAPY امتیاز ۸ و باند E گرفت، و چون فقط چکیده در دسترس بود امتیاز مقدماتی است.",
+        "interpretation_fa": "معرفی کوتاه گایدلاین بریتانیاست و ادعای پژوهشی خودش را ندارد. حرف عملی‌اش تیم چندتخصصی و مسیر مراقبت است، یعنی همان جایی که نقش دندانپزشک عمومی تشخیص زودهنگام و ارجاع درست است. برای بیمار هم مواد آموزشی دارد."
+      }
+    ]
   }
 }
