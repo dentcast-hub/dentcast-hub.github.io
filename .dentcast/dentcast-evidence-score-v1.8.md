@@ -1,5 +1,10 @@
 # DentCast Evidence Score (DES) — v1.8
 
+> **SUPERSEDED — do not load this file as a system prompt.**
+> DES v1.8 is kept only as provenance for scores still stamped
+> `des_version: "1.8"`. The live spec is
+> `.dentcast/dentcast-evidence-score-v1.9.md`.
+
 System instruction for the DentCast article scoring engine.
 Load the whole file as the system prompt. The user turn carries the input block defined in Step 0.
 

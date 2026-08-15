@@ -5246,6 +5246,33 @@
     "scored_at": "2026-08-15",
     "sources": [
       {
+        "des_version": "1.9",
+        "content_type": "NOT_APPRAISABLE",
+        "source_kind": "book",
+        "question_type": null,
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Global Diagnosis book",
+          "authors": "",
+          "year": null,
+          "journal": "",
+          "doi": ""
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": null,
+        "q_method": null,
+        "penalties": null,
+        "commentary_checklist": null,
+        "des_score": null,
+        "band": null,
+        "provisional": false,
+        "fact_fa": "این منبع یک کتاب مرجع است و امتیاز شواهد نمی‌گیرد؛ کتاب پروتکل، استراتژی جست‌وجو و ارزیابی سوگیری ندارد، پس چیزی برای سنجیدن باقی نمی‌ماند.",
+        "interpretation_fa": "کتاب مرجعِ آموزشیِ این حوزه است و چارچوب تشخیصی متن را می‌سازد، ولی جایگاهش در سلسله‌مراتب شواهد ادبیات ثالثیه است نه مطالعه‌ی اولیه. امتیاز ندادن به آن از عددِ ساختگی دادن صادقانه‌تر است."
+      },
+      {
         "des_version": "1.8",
         "content_type": "RESEARCH",
         "question_type": "THERAPY",

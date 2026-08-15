@@ -11,11 +11,11 @@
 // prompt on page load: a "Block" is permanent, and a drive-by prompt on the very
 // first login would burn the channel for good (Safari refuses it without a
 // gesture, Chrome demotes it to quiet UI).
-import { el, tehranDay } from './util.js?v=4';
-import { api, currentUser } from './api.js?v=4';
-import { openOverlay } from './overlay.js?v=4';
-import { renderProfile } from './profile.js?v=4';
-import { ensurePushSubscription, pushSupported } from './push.js?v=4';
+import { el, tehranDay } from './util.js?v=5';
+import { api, currentUser } from './api.js?v=5';
+import { openOverlay } from './overlay.js?v=5';
+import { renderProfile } from './profile.js?v=5';
+import { ensurePushSubscription, pushSupported } from './push.js?v=5';
 
 const SS_SHOWN = 'dcp:notifprompt:shown'; // once per browser session
 const MAX = 2;                            // account-scoped, total appearances

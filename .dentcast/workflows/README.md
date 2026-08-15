@@ -1194,7 +1194,7 @@ score built on it.
 
 #### Part 2 — Run the prompt file
 
-**Load `.dentcast/dentcast-evidence-score-v1.8.md` as the system prompt — the whole
+**Load `.dentcast/dentcast-evidence-score-v1.9.md` as the system prompt — the whole
 file, verbatim, minus the appendix.**
 
 **v1.6 is the current spec and it is deliberately deterministic.** Two of its

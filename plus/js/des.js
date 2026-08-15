@@ -1,7 +1,7 @@
 // DentCast Evidence Score — the reader-facing display.
 //
 // The score itself is produced at publish time by workflow step 4.13 (the
-// scoring prompt in .dentcast/dentcast-evidence-score-v1.8.md) and stored in
+// scoring prompt in .dentcast/dentcast-evidence-score-v1.9.md) and stored in
 // plus/des-scores.json, keyed by content_id. Nothing here computes, judges, or
 // re-derives anything: this module renders what that file already says.
 //
@@ -23,7 +23,7 @@
 // is deliberately no "podcast" test in this file — an episode that DOES cite
 // papers (episodes/episode-161 cites three) is scored and shown like anything
 // else. The rule is "no record, no badge", never "no audio, no badge".
-import { el, faNum } from './util.js?v=4';
+import { el, faNum } from './util.js?v=5';
 
 /* ------------------------------------------------------------ the data -- */
 
@@ -64,6 +64,8 @@ const QTYPE_FA = {
   ETIOLOGY: 'علت‌شناسی',
 };
 
+const SOURCE_KIND_FA = { book: 'کتاب مرجع' };
+
 /* ------------------------------------------------------------- pieces --- */
 
 // Five discrete blocks, only the current one coloured. Deliberately not a gauge
@@ -102,8 +104,14 @@ function chipFor(rec) {
   const multi = rec.sources.length > 1;
   const band = src.band;
   const idx = (b) => BANDS.indexOf(b);
-  const best = rec.sources.reduce((w, s) => (idx(s.band) > idx(w) ? s.band : w), band);
-  const worst = rec.sources.reduce((w, s) => (idx(s.band) < idx(w) ? s.band : w), band);
+  // A NOT_APPRAISABLE source (a textbook) has no band, so it defines no end of
+  // the range — but it IS a source the page cites, so it still counts. Dropping
+  // it from the count would put the chip and the card in disagreement about how
+  // many references the page has.
+  const banded = rec.sources.filter((s) => idx(s.band) >= 0);
+  const seed = (banded[0] || {}).band;
+  const best = banded.reduce((w, s) => (idx(s.band) > idx(w) ? s.band : w), seed);
+  const worst = banded.reduce((w, s) => (idx(s.band) < idx(w) ? s.band : w), seed);
   const spread = best !== worst ? best + '–' + worst : best;
   const label = multi
     ? faNum(rec.sources.length) + ' منبع · ' + spread
@@ -170,6 +178,19 @@ function commentaryCard(src) {
   ]);
 }
 
+// A source that is real, correctly cited, and has no method to appraise — a
+// textbook. It gets no band bar and no number, because the machinery below a
+// band measures study method and a textbook has none; inventing a number here
+// would give it the shape of a measurement and none of the substance. Saying
+// «cited, not scored» is the honest third answer, and it beats the alternative
+// this replaced: the source was dropped from the record silently.
+function notAppraisableHead(src) {
+  return el('div', { class: 'dc-des-head' }, [
+    el('span', { class: 'dc-des-badge dc-des-badge-na' }, SOURCE_KIND_FA[src.source_kind] || 'منبع'),
+    el('span', { class: 'dc-des-score' }, 'امتیازدهی نمی‌شود'),
+  ]);
+}
+
 function researchHead(src) {
   return el('div', { class: 'dc-des-head dc-des-band-' + src.band }, [
     bandBar(src.band),
@@ -188,11 +209,13 @@ function sourceBlock(src, index, total) {
     parts.push(el('div', { class: 'dc-des-srctitle' },
       faNum(index + 1) + '. ' + (cite.title || cite.doi || 'منبع')));
   }
-  parts.push(src.content_type === 'COMMENTARY' ? commentaryCard(src) : researchHead(src));
+  const na = src.content_type === 'NOT_APPRAISABLE';
+  parts.push(na ? notAppraisableHead(src)
+    : src.content_type === 'COMMENTARY' ? commentaryCard(src) : researchHead(src));
   if (src.provisional) {
     parts.push(el('span', { class: 'dc-des-prov' }, 'امتیاز مقدماتی — فقط از روی چکیده'));
   }
-  parts.push(calcBlock(src));
+  if (!na) parts.push(calcBlock(src)); // nothing was calculated, so there is no calculation to show
   if (src.interpretation_fa) {
     parts.push(el('hr', { class: 'dc-des-rule' }));
     // Labelled, so the paragraph announces what it is before it is read. It is

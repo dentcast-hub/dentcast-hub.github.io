@@ -727,6 +727,30 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
                 rep.check(s.get("des_version"), "4.13 DES", f"{tag} carries des_version",
                           f"{tag} has no des_version — old scores must never be silently compared "
                           f"with new ones", "spec §Versioning")
+                # A NOT_APPRAISABLE source (spec v1.9) has no arithmetic, no
+                # band and no track — only the claim that it was cited and why
+                # it carries no score. Check exactly that and skip the rest;
+                # running the band/arithmetic rows on it would fail every one.
+                if s.get("content_type") == "NOT_APPRAISABLE":
+                    nulls = [k for k in ("des_score", "band", "question_type", "s_design",
+                                         "q_method", "penalties", "commentary_checklist")
+                             if s.get(k) is not None]
+                    rep.check(not nulls, "4.13 DES",
+                              f"{tag} not-appraisable source carries no score",
+                              f"{tag} is NOT_APPRAISABLE but {nulls} is not null — a source with "
+                              f"no method to appraise must carry no number at all",
+                              "spec v1.9 — des_score/band/question_type and every track field are null")
+                    rep.check(s.get("source_kind") == "book", "4.13 DES",
+                              f"{tag} names why it is not appraisable",
+                              f"{tag} is NOT_APPRAISABLE with source_kind={s.get('source_kind')!r} — "
+                              f"the list is closed and has one member",
+                              "spec v1.9 — source_kind must be \"book\"")
+                    rep.check(((s.get("citation") or {}).get("title") or "").strip(), "4.13 DES",
+                              f"{tag} not-appraisable source names the work",
+                              f"{tag} is NOT_APPRAISABLE with no citation.title — an unscored source "
+                              f"is only honest if the reader can see WHAT was cited",
+                              "spec v1.9 — fill citation from the reference line")
+                    continue
                 is_comm = s.get("content_type") == "COMMENTARY"
 
                 # 2 — arithmetic recomputation

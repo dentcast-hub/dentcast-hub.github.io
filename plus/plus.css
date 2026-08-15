@@ -1572,3 +1572,10 @@ html.dcp-touring #mobile-body { overflow: hidden; }
   border-radius: 9px; padding: 9px 11px;
 }
 .dc-des-foot { margin: 14px 0 0; font-size: .74rem; color: var(--dcp-muted); line-height: 1.8; }
+
+/* A cited source with no method to appraise (a textbook). It wears the card's
+   chrome like the COMMENTARY badge, but hollow — there is no score behind it. */
+.dc-des-badge-na {
+  background: transparent;
+  border-style: dashed;
+}
