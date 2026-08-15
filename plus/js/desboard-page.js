@@ -20,10 +20,10 @@
 // tools/build_upboard_index.py on every publish). There is no endpoint, no
 // migration, and no third copy of a page's title that could drift from the other
 // two — the API is asked exactly one question, «is this reader premium».
-import { el, faNum } from './util.js?v=6';
-import { currentUser, meStatus } from './api.js?v=6';
-import { premiumCta, guestPremiumExtras, lapsedNote, unreachableGate } from './premium-cta.js?v=6';
-import { openLoginModal } from './login-modal.js?v=6';
+import { el, faNum } from './util.js?v=7';
+import { currentUser, meStatus } from './api.js?v=7';
+import { premiumCta, guestPremiumExtras, lapsedNote, unreachableGate } from './premium-cta.js?v=7';
+import { openLoginModal } from './login-modal.js?v=7';
 
 /** Which gate sent a buyer, for the pricing page's ?from= report. */
 const FROM = 'gate-desboard';
@@ -44,16 +44,6 @@ const BAND_FA = {
   D: 'شواهد ضعیف', E: 'سطح پایه',
 };
 
-// The band letter alone means nothing to a reader meeting it for the first time,
-// and this page is where they meet it.
-const BAND_PLAIN = {
-  A: 'می‌شود با اطمینان زیاد به آن تکیه کرد.',
-  B: 'مطالعه‌ی خوبی پشتش هست، ولی بی‌عیب نیست.',
-  C: 'شواهدی هست، اما برای یک نتیجه‌ی قطعی کافی نیست.',
-  D: 'شواهد اولیه است؛ با احتیاط بخوانید.',
-  E: 'پایه‌ی مقدماتی — بیشتر توصیف یا دیدگاه تا اثبات.',
-};
-
 // Deliberately plainer than des.js's own labels: «مواد (آزمایشگاهی)» is the
 // spec's word for the question type, «مواد» is what a reader scanning a list
 // needs. The welding rule is unchanged — the type is printed with every band.
@@ -66,10 +56,10 @@ const QT_FA = {
 // not a ranking: 80 of these pages score exactly 15 and 34 score exactly 19, so a
 // numbered ladder over them would be 80 rungs at one height.
 const SHELVES = [
-  [19, 19, '۱۹', 'کاملاً شفاف', 'نویسنده صریح گفته این تجربه‌ی اوست، مرز ادعایش را روشن کرده و نسبتش با مقاله‌های موجود را گفته.'],
-  [16, 18, '۱۸', 'شفاف', 'بیشتر همان کارها را کرده، با یکی دو مورد کمتر.'],
-  [15, 15, '۱۵', 'شفافیت پایه', 'استدلالش روشن است و ادعای بزرگ‌تر از تجربه‌اش نمی‌کند.'],
-  [0, 14, 'زیر ۱۵', 'کمتر از پایه', 'یکی از موارد بالا در متن صریح نیامده.'],
+  [19, 19, '۱۹', 'کاملاً شفاف'],
+  [16, 18, '۱۸', 'شفاف'],
+  [15, 15, '۱۵', 'شفافیت پایه'],
+  [0, 14, 'زیر ۱۵', 'کمتر از پایه'],
 ];
 
 const bandIdx = (b) => LADDER.indexOf(b);
@@ -223,12 +213,41 @@ function ownCard(p) {
   ]);
 }
 
-function groupHeader(badge, title, plain, count, ownStyle) {
+function groupHeader(badge, title, count, ownStyle) {
   return el('header', { class: 'gh' }, [
     el('span', { class: 'gh-g' + (ownStyle ? ' gh-own' : '') }, badge),
-    el('div', {}, [el('h3', {}, title), el('p', {}, plain)]),
+    el('div', {}, [el('h3', {}, title)]),
     el('span', { class: 'gh-n' }, faNum(count) + ' مطلب'),
   ]);
+}
+
+/**
+ * The distribution in one line — the page's only summary, and its index.
+ *
+ * `cells` is [key, badge, count]. An empty shelf is drawn dimmed rather than
+ * dropped: «no page on this site reaches A» is the single most informative thing
+ * the scale can say, and a rail that silently omits A would hide it.
+ *
+ * `jump` is passed only where the shelves exist to be scrolled to. Inside the
+ * gate they do not, so the same rail renders as a static preview — which is the
+ * point of it being one component: the summary a subscriber reads and the
+ * preview a visitor is shown can never disagree about what is on the site.
+ */
+function bandRail(cells, ownStyle, jump) {
+  return el('div', { class: 'rail' + (ownStyle ? ' rail-own' : ''), role: 'group' },
+    cells.map(([key, badge, n]) => {
+      const cell = el('button', {
+        class: 'rail-c' + (ownStyle ? '' : ' bd-' + key),
+        type: 'button',
+        disabled: n && jump ? null : 'disabled',
+        'aria-label': badge + ' — ' + faNum(n) + ' مطلب',
+      }, [
+        el('span', { class: 'rail-g' }, badge),
+        el('span', { class: 'rail-n' }, faNum(n)),
+      ]);
+      if (n && jump) cell.addEventListener('click', () => jump(key));
+      return cell;
+    }));
 }
 
 /* ------------------------------------------------------ the arrangement --- */
@@ -241,33 +260,34 @@ function buildArrangement(pages) {
   const own = pages.filter((p) => p.kind === 'own').sort((a, b) => a.ord - b.ord);
 
   const resPanel = el('div', { id: 'dbRes' }, [
-    el('p', { class: 'note' }, [
-      'این مطالب به مقاله‌های منتشرشده استناد می‌کنند. درجه‌ای که کنار هر مطلب می‌بینید مربوط به ',
-      el('b', {}, 'قوی‌ترین'),
-      ' منبعی است که به آن تکیه کرده. نوار رنگی زیرش، هر مقاله‌ای را که آن مطلب به آن استناد کرده یک بلوک نشان می‌دهد — پس یک نگاه می‌گوید مطلب روی یک ستون محکم ایستاده یا روی چند ستون سبک.',
-    ]),
+    bandRail(['A', 'B', 'C', 'D', 'E'].map((b) => [b, b, research.filter((p) => p.band === b).length]),
+      false, (b) => {
+        const t = resPanel.querySelector('[data-shelf="' + b + '"]');
+        if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }),
   ]);
   ['A', 'B', 'C', 'D', 'E'].forEach((b) => {
     const grp = research.filter((p) => p.band === b);
     if (!grp.length) return;
-    resPanel.appendChild(el('section', { class: 'grp' }, [
-      groupHeader(b, BAND_FA[b], BAND_PLAIN[b], grp.length, false),
+    resPanel.appendChild(el('section', { class: 'grp', 'data-shelf': b }, [
+      groupHeader(b, BAND_FA[b], grp.length, false),
       el('ul', { class: 'pl' }, grp.map(researchCard)),
     ]));
   });
 
   const ownPanel = el('div', { id: 'dbOwn', hidden: true }, [
-    el('p', { class: 'note' }, [
-      'این‌ها متن‌هایی‌اند که در خودِ دنت‌کست نوشته شده‌اند — تجربه‌ی بالینی، مشاهده و تحلیل، از دکتر شهابیان و از مهمان‌های دنت‌کست. زیر هر عنوان اسم نویسنده‌اش آمده. مقاله‌ای پشتشان نیست که بشود قوتش را سنجید، پس ',
-      el('b', {}, 'درجه‌ی A تا E نمی‌گیرند'),
-      '. چیزی که اینجا سنجیده می‌شود شفافیت است — اینکه نویسنده صریح گفته باشد این تجربه‌ی اوست، ادعایش را بزرگ‌تر از آنچه دیده نکرده باشد، و گفته باشد حرفش با مقاله‌های موجود چه نسبتی دارد.',
-    ]),
+    bandRail(SHELVES.map(([lo, hi, badge]) =>
+      [String(lo), badge, own.filter((p) => (p.score || 0) >= lo && (p.score || 0) <= hi).length]),
+    true, (k) => {
+      const t = ownPanel.querySelector('[data-shelf="' + k + '"]');
+      if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }),
   ]);
-  SHELVES.forEach(([lo, hi, badge, name, desc]) => {
+  SHELVES.forEach(([lo, hi, badge, name]) => {
     const rows = own.filter((p) => (p.score || 0) >= lo && (p.score || 0) <= hi);
     if (!rows.length) return;
-    ownPanel.appendChild(el('section', { class: 'grp' }, [
-      groupHeader(badge, name, desc, rows.length, true),
+    ownPanel.appendChild(el('section', { class: 'grp', 'data-shelf': String(lo) }, [
+      groupHeader(badge, name, rows.length, true),
       el('ul', { class: 'pl' }, rows.map(ownCard)),
     ]));
   });
@@ -292,34 +312,10 @@ function buildArrangement(pages) {
 
 /* --------------------------------------------------------------- gates --- */
 
-// Every shelf and how full it is, with only the membership withheld. This is the
-// «say what the arrangement IS before what it costs» rule made literal: a reader
-// can see the shape of what a subscription opens.
-function shelfPreview(pages) {
-  const research = pages.filter((p) => p.kind === 'research');
-  const own = pages.filter((p) => p.kind === 'own');
-  const rows = [];
-  ['A', 'B', 'C', 'D', 'E'].forEach((b) => {
-    const n = research.filter((p) => p.band === b).length;
-    if (n) rows.push([b, BAND_FA[b], n, false]);
-  });
-  SHELVES.forEach(([lo, hi, badge, name]) => {
-    const n = own.filter((p) => (p.score || 0) >= lo && (p.score || 0) <= hi).length;
-    if (n) rows.push([badge, name, n, true]);
-  });
-  return el('ul', { class: 'gsl' }, rows.map(([badge, name, n, isOwn]) => el('li', {
-    class: 'gs' + (isOwn ? ' gs-own' : ' bd-' + badge),
-  }, [
-    el('span', { class: 'gs-g' }, badge),
-    el('span', { class: 'gs-n' }, name),
-    el('span', { class: 'gs-c' }, faNum(n) + ' مطلب'),
-  ])));
-}
-
 function gateView(pages, user, guest) {
   const foot = el('div', { class: 'gate-f' }, [
     lapsedNote(user) ? el('p', {}, lapsedNote(user)) : null,
-    el('p', {}, ['اسم قفسه‌ها و تعدادشان را همین حالا می‌بینید؛ آنچه پریمیوم باز می‌کند این است که ',
+    el('p', {}, ['قفسه‌ها را می‌بینید؛ پریمیوم نشان می‌دهد ',
       el('b', {}, 'کدام مطلب روی کدام قفسه است'), '.']),
     // A signed-out reader may already be a subscriber who is simply logged out on
     // this device, and selling a subscription to somebody who owns one is worse
@@ -334,15 +330,22 @@ function gateView(pages, user, guest) {
       }, 'ورود')
       : premiumCta(FROM),
     el('span', { class: 'gate-s' },
-      'درجه‌ی هر مطلب همیشه رایگان است و روی خودِ همان مطلب نوشته می‌شود — پریمیوم فقط این چیدمان است.'),
+      'درجه‌ی هر مطلب روی خودِ همان مطلب، برای همه، رایگان است.'),
   ].filter(Boolean));
   if (guest) guestPremiumExtras(FROM).forEach((n) => foot.appendChild(n));
 
+  const research = pages.filter((p) => p.kind === 'research');
+  const own = pages.filter((p) => p.kind === 'own');
   return el('div', { class: 'gate' }, [
     el('h2', { class: 'gate-h' }, 'طبقه‌بندی بر اساس قدرت شواهد'),
     el('p', { class: 'gate-p' },
-      'همه‌ی مطالبی که تا امروز ارزیابی شده‌اند، چیده‌شده روی قفسه‌هایی از قوی به پایه — هر مطلب سرِ قفسه‌ای می‌رود که قوی‌ترین منبعش تعیین می‌کند. این‌طور می‌شود پرسید «چه چیزی در دنت‌کست روی محکم‌ترین شواهد ایستاده؟» و جواب را یک‌جا دید، به‌جای اینکه مطلب‌به‌مطلب بگردید.'),
-    shelfPreview(pages),
+      'هر مطلب سرِ قفسه‌ای می‌رود که قوی‌ترین منبعش تعیین می‌کند.'),
+    // The same rail a subscriber sees, with only the membership withheld: the
+    // shape of the arrangement is shown before it is priced, because nobody
+    // buys an ordering they have never seen.
+    bandRail(['A', 'B', 'C', 'D', 'E'].map((b) => [b, b, research.filter((p) => p.band === b).length]), false, null),
+    bandRail(SHELVES.map(([lo, hi, badge]) =>
+      [String(lo), badge, own.filter((p) => (p.score || 0) >= lo && (p.score || 0) <= hi).length]), true, null),
     foot,
   ]);
 }
@@ -395,9 +398,17 @@ export async function initDesBoard(root) {
     return;
   }
 
+  const subEl = root.querySelector('#dbSub');
+  if (subEl) {
+    const nRes = pages.filter((p) => p.kind === 'research').length;
+    const nSrc = pages.reduce((n, p) => n + p.res.length + p.na.length, 0);
+    subEl.textContent = faNum(pages.length) + ' مطلب ارزیابی‌شده · '
+      + faNum(nRes) + ' مورد بر پایه‌ی ' + faNum(nSrc) + ' مقاله‌ی منتشرشده';
+  }
+
   if (premium) {
     lock.hidden = true;
-    sub.textContent = faNum(pages.length) + ' مطلب ارزیابی‌شده';
+    sub.hidden = true;
   }
 
   let built = false;

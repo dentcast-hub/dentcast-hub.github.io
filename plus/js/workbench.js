@@ -1,11 +1,11 @@
 // Study mode controller. A mode of the article page, not a separate page. It
 // inherits the site's typography (styles live in plus.css and reference the
 // site's own CSS variables). Never auto-enters; the caller decides when.
-import { el, faNum, debounce, signalStreakActivity, renderNoteLines } from './util.js?v=6';
-import { api } from './api.js?v=6';
-import { PALETTE, LABELS, SS_MODE } from './config.js?v=6';
-import { serializeRange, anchorQuote, wrapRange, unwrapMarks, fullText, hashText } from './anchor.js?v=6';
-import { openCollectionPicker } from './collections.js?v=6';
+import { el, faNum, debounce, signalStreakActivity, renderNoteLines } from './util.js?v=7';
+import { api } from './api.js?v=7';
+import { PALETTE, LABELS, SS_MODE } from './config.js?v=7';
+import { serializeRange, anchorQuote, wrapRange, unwrapMarks, fullText, hashText } from './anchor.js?v=7';
+import { openCollectionPicker } from './collections.js?v=7';
 
 export class Workbench {
   // onChange fires on EVERY enter/exit, including the toolbar's own ✕ خروج. The

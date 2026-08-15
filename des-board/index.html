@@ -80,16 +80,9 @@
 .gate{background:var(--card-bg);border:1px solid var(--x-amber-bd);border-radius:var(--r-lg);
   box-shadow:var(--card-sh);overflow:hidden;margin:0 0 1.2rem}
 .gate-h{margin:0;padding:.85rem .95rem .1rem;font-size:1.02rem;font-weight:900}
-.gate-p{margin:.3rem 0 0;padding:0 .95rem;font-size:.83rem;line-height:1.95;color:var(--txt2);text-wrap:pretty}
-.gsl{list-style:none;margin:.9rem 0 0;padding:0 .95rem;display:grid;gap:.4rem}
-.gs{display:flex;align-items:center;gap:.6rem;padding:.5rem .6rem;border-radius:var(--r-md);
-  background:var(--surface2);border:1px solid var(--border2)}
-.gs-g{flex:none;min-width:1.7rem;height:1.7rem;padding:0 .35rem;border-radius:8px;background:var(--bc);
-  color:#fff;display:grid;place-items:center;font-size:.78rem;font-weight:900;white-space:nowrap}
-.gs-own .gs-g{background:rgba(var(--des-chrome-rgb),.12);color:var(--des-chrome);
-  border:1px solid rgba(var(--des-chrome-rgb),.3);font-size:.68rem}
-.gs-n{flex:1;font-size:.83rem;font-weight:700;color:var(--txt)}
-.gs-c{flex:none;font-size:.72rem;color:var(--txt3);font-variant-numeric:tabular-nums}
+.gate-p{margin:.3rem 0 .85rem;padding:0 .95rem;font-size:.83rem;line-height:1.95;color:var(--txt2);text-wrap:pretty}
+.gate .rail{margin:0 .95rem .5rem}
+.gate .rail + .rail{margin-bottom:.2rem}
 .gate-f{margin:1rem 0 0;padding:.8rem .95rem .95rem;background:var(--x-amber-wash);
   border-top:1px solid var(--x-amber-bd)}
 .gate-f p{margin:0 0 .6rem;font-size:.8rem;line-height:1.9;color:var(--txt2)}
@@ -124,31 +117,35 @@ a{color:inherit}
 
 .db-page{max-width:46rem;margin:0 auto;padding:1.15rem .85rem 5rem}
 
-/* ── hero ── */
-h1{margin:.4rem 0 .5rem;font-size:1.6rem;font-weight:900;letter-spacing:-.03em;text-wrap:balance}
-.lead{margin:0;font-size:.9rem;line-height:2;color:var(--txt2);text-wrap:pretty}
-.lead b{color:var(--txt)}
+/* ── hero: three lines, and the rail below carries the rest. The page opens on
+   the arrangement, not on an essay about it — the explanation lives in the box
+   on the homepage that this page is reached from. ── */
+.db-hero{margin:.2rem 0 1.1rem}
+.db-eyebrow{display:block;font-size:.68rem;font-weight:800;letter-spacing:.04em;
+  color:var(--des-chrome);text-transform:uppercase}
+.db-hero h1{margin:.15rem 0 .3rem;font-size:2rem;font-weight:900;letter-spacing:-.04em;
+  line-height:1.25;text-wrap:balance}
+.db-sub{margin:0;font-size:.82rem;color:var(--txt3);font-variant-numeric:tabular-nums}
 
-/* ── the warning: the single most important block on the page ── */
-.warn{margin:1.15rem 0 0;background:var(--card-bg);border:1px solid var(--card-border);
-  border-radius:var(--r-lg);box-shadow:var(--card-sh);overflow:hidden}
-.warn-h{margin:0;padding:.8rem .95rem;font-size:.98rem;font-weight:900;background:var(--surface2);
-  border-bottom:1px solid var(--border2)}
-.warn-b{padding:.85rem .95rem .95rem;display:grid;gap:.9rem}
-.wpt{display:flex;gap:.65rem;align-items:flex-start}
-.wpt-i{flex:none;width:1.6rem;height:1.6rem;border-radius:8px;display:grid;place-items:center;
-  background:var(--surface2);border:1px solid var(--border2);font-size:.8rem;font-weight:900;color:var(--txt3)}
-.wpt p{margin:0;font-size:.83rem;line-height:1.95;color:var(--txt2);text-wrap:pretty}
-.wpt b{color:var(--txt)}
-/* the two-C illustration — the abstract rule made concrete in one glance */
-.vs{display:flex;align-items:center;justify-content:center;gap:.7rem;margin:.15rem 0 .1rem;
-  padding:.6rem .4rem;background:var(--surface2);border:1px solid var(--border2);border-radius:var(--r-md)}
-.vs-c{display:flex;align-items:center;gap:.4rem}
-.vs-g{width:1.75rem;height:1.75rem;border-radius:8px;background:var(--bc);color:#fff;
-  display:grid;place-items:center;font-weight:900;font-size:.85rem}
-.vs-l{font-size:.72rem;font-weight:700;color:var(--txt2);line-height:1.4}
-.vs-x{font-size:1.05rem;font-weight:900;color:var(--txt3)}
-.vs-cap{margin:.5rem 0 0;font-size:.76rem;line-height:1.9;color:var(--txt3);text-align:center;text-wrap:pretty}
+/* ── the rail: the whole distribution in one line, and the page's only summary.
+   It is a scale, so it is drawn as one — five cells in band order, each sized to
+   nothing but its own count. Tapping a cell scrolls to that shelf. ── */
+.rail{display:flex;gap:.3rem;margin:0 0 1.15rem;direction:ltr}
+.rail-c{flex:1;display:flex;flex-direction:column;align-items:center;gap:.3rem;
+  padding:.55rem .2rem .5rem;border-radius:var(--r-md);background:var(--card-bg);
+  border:1px solid var(--card-border);cursor:pointer;font:inherit;
+  transition:border-color var(--tr),transform var(--tr)}
+.rail-c:hover{border-color:var(--bc);transform:translateY(-1px)}
+.rail-c:disabled{opacity:.4;cursor:default;transform:none}
+.rail-c:focus-visible{outline:2px solid var(--bc);outline-offset:2px}
+.rail-g{width:1.55rem;height:1.55rem;border-radius:7px;background:var(--bc);color:#fff;
+  display:grid;place-items:center;font-size:.78rem;font-weight:900;white-space:nowrap;
+  padding:0 .3rem;min-width:1.55rem}
+.rail-own .rail-g{background:rgba(var(--des-chrome-rgb),.13);color:var(--des-chrome);
+  border:1px solid rgba(var(--des-chrome-rgb),.3);font-size:.62rem}
+.rail-n{font-size:1.05rem;font-weight:900;color:var(--txt);
+  font-variant-numeric:tabular-nums;line-height:1}
+.rail-c:disabled .rail-n{color:var(--txt3)}
 
 /* ── tabs ── */
 .seg{display:flex;background:var(--surface2);border:1px solid var(--border);
@@ -160,11 +157,10 @@ h1{margin:.4rem 0 .5rem;font-size:1.6rem;font-weight:900;letter-spacing:-.03em;t
 .seg button[aria-selected="true"]{color:var(--ac);background:var(--surface);box-shadow:var(--seg-sh)}
 
 /* ── group header ── */
-.grp{margin:0 0 1.75rem}
+.grp{margin:0 0 1.75rem;scroll-margin-top:4.5rem}
 .gh{display:flex;align-items:center;gap:.65rem;margin:0 0 .7rem}
 .gh div{flex:1;min-width:0}
 .gh h3{margin:0;font-size:1rem;font-weight:900;letter-spacing:-.02em}
-.gh p{margin:0;font-size:.75rem;line-height:1.75;color:var(--txt3);text-wrap:pretty}
 .gh-g{flex:none;width:2.1rem;height:2.1rem;border-radius:10px;background:var(--bc);color:#fff;
   display:grid;place-items:center;font-size:.95rem;font-weight:900}
 .gh-own{background:rgba(var(--des-chrome-rgb),.12);border:1px solid rgba(var(--des-chrome-rgb),.3);
@@ -235,14 +231,23 @@ h1{margin:.4rem 0 .5rem;font-size:1.6rem;font-weight:900;letter-spacing:-.03em;t
   line-height:1.95;color:var(--txt3);text-wrap:pretty}
 [hidden]{display:none!important}
 
-/* dc-theme.css styles every <a> inside <main> as prose link
+/* dc-theme.css styles every <a> inside <main> as a prose link
    (`body:has(.dc-topbar) main a -> var(--ac)`), which outranks a bare class
-   selector. These three ARE links, but they are cards and controls rather than
-   links in a sentence, so the page re-asserts its own colours at a specificity
-   that beats it. Scoped to #dbRoot so nothing outside this page is affected. */
+   selector. These are links, but they are cards and controls rather than links
+   in a sentence, so the page re-asserts their colours at a specificity that
+   beats it. Scoped to #dbRoot so nothing outside this page is affected.
+
+   The .dcp-btn pair is not cosmetic: premium-cta.js renders an <a>, and the
+   plus/ pages that normally host it carry no .dc-topbar, so plus.css has never
+   had to outrank this rule before. Inside this page's <main> it did — the
+   purchase button rendered #0b5fff text on its own #0b5fff background, an
+   invisible label on the one surface that exists to convert. Values mirror
+   plus.css's .dcp-btn-primary / .dcp-btn. */
 #dbRoot .pc-t{color:var(--txt)}
 #dbRoot .pc-t:hover{color:var(--ac)}
 #dbRoot .sr-doi{color:var(--ac)}
+#dbRoot .dcp-btn{color:var(--dcp-ink);text-decoration:none}
+#dbRoot .dcp-btn-primary{color:#fff}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 @media(min-width:44rem){
   .db-page{padding:1.75rem 1.5rem 5rem}
@@ -307,49 +312,16 @@ h1{margin:.4rem 0 .5rem;font-size:1.6rem;font-weight:900;letter-spacing:-.03em;t
        every reader gets, so it must not depend on a module resolving, on /me
        answering, or on the reader's tier. Only the arrangement below is built by
        JS. This is the text that used to expand under the homepage box. -->
-  <h1>مطالب دنت‌کست، بر اساس قوت شواهد</h1>
-  <p class="lead">هر مطلبی که اینجا می‌خوانید روی چیزی ایستاده: یا روی <b>مقاله‌های علمی منتشرشده</b>، یا روی <b>تجربه و تحلیل بالینی نویسنده</b>. <b>DentCast Evidence Score</b> همان را اندازه می‌گیرد و کنار هر مطلب نشان می‌دهد — روی خودِ آن مطلب، برای همه، رایگان.</p>
+  <header class="db-hero">
+    <span class="db-eyebrow">DentCast Evidence Score</span>
+    <h1>بر اساس قدرت شواهد</h1>
+    <p class="db-sub" id="dbSub">&nbsp;</p>
+  </header>
 
-  <div class="warn">
-    <h2 class="warn-h">قبل از هر چیز: این نمره‌ها را با هم مقایسه نکنید</h2>
-    <div class="warn-b">
-
-      <div class="wpt">
-        <span class="wpt-i">۱</span>
-        <p><b>نمره‌ی بالاتر یعنی «مطمئن‌تر»، نه «بهتر».</b> این نمره نمی‌گوید کدام مطلب مفیدتر یا درست‌تر است. فقط می‌گوید پشتِ حرفش چقدر شواهد محکم خوابیده. یک نکته‌ی بالینی کوتاه ممکن است دقیقاً همان چیزی باشد که امروز به دردتان می‌خورد، و نمره‌ی پایینی هم داشته باشد.</p>
-      </div>
-
-      <div class="wpt">
-        <span class="wpt-i">۲</span>
-        <p><b>نمره‌ی پایین یعنی «هنوز قطعی نیست»، نه «غلط».</b> پایین‌ترین درجه قرمز نیست و رد نشده — یعنی موضوع هنوز به‌اندازه‌ی کافی مطالعه نشده، یا آنچه هست از جنس توصیف و دیدگاه است.</p>
-      </div>
-
-      <div class="wpt wpt-wide">
-        <span class="wpt-i">۳</span>
-        <div>
-          <p><b>دو نمره‌ی مساوی هم لزوماً یک چیز نمی‌گویند.</b> هر پرسش جدولِ سنجش خودش را دارد؛ یک مقاله درباره‌ی <b>درمان</b> و یک مقاله درباره‌ی <b>علت بیماری</b> با دو خط‌کش متفاوت اندازه گرفته می‌شوند.</p>
-          <div class="vs">
-            <span class="vs-c bd-C"><span class="vs-g">C</span><span class="vs-l">پرسشِ<br>درمان</span></span>
-            <span class="vs-x">≠</span>
-            <span class="vs-c bd-C"><span class="vs-g">C</span><span class="vs-l">پرسشِ<br>علت بیماری</span></span>
-          </div>
-          <p class="vs-cap">هر دو C هستند، ولی از دو خط‌کش. کنار هم گذاشتنشان مثل مقایسه‌ی رکورد شنا با رکورد دو است — هر دو عدد دارند، یک چیز را نمی‌سنجند. برای همین روی هر منبع نوشته‌ایم پرسشش از چه جنسی است.</p>
-        </div>
-      </div>
-
-      <div class="wpt wpt-wide">
-        <span class="wpt-i">۴</span>
-        <p><b>و مطالبی که خودِ دنت‌کست نوشته اصلاً روی این مقیاس نیستند.</b> وقتی مقاله‌ای پشت متن نباشد، چیزی برای سنجیدنِ «قوت شواهد» وجود ندارد. آنجا چیز دیگری را می‌سنجیم: اینکه نویسنده چقدر صریح گفته این تجربه‌ی شخصیِ اوست و مرز ادعایش کجاست. آن عدد (از ۱۹) با این حرف‌ها (A تا E) هیچ نسبتی ندارد.</p>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- ONE tab under the explanation, and it is shown to EVERY reader in the same
-       place whether or not they can open it. A reader who cannot open it must
-       still know the arrangement exists, or there is nothing to want — the rule
-       up-board's «بالاترین» tab already runs on. Its lock and its target are
-       decided by /me in desboard-page.js, never here. -->
+  <!-- Shown to EVERY reader in the same place, whether or not they can open it:
+       a reader who cannot open it must still know the arrangement exists, or
+       there is nothing to want — the rule up-board's «بالاترین» tab runs on. Its
+       lock and its target are decided by /me in desboard-page.js, never here. -->
   <button class="onetab" id="dbTab" type="button" aria-expanded="false">
     <span class="onetab-l" id="dbTabLock" aria-hidden="true">🔒</span>
     <span class="onetab-m"><b>طبقه‌بندی مقالات دنت‌کست بر اساس قدرت شواهد</b>
@@ -369,7 +341,7 @@ h1{margin:.4rem 0 .5rem;font-size:1.6rem;font-weight:900;letter-spacing:-.03em;t
      the code and the data together. Managed by tools/asset_version.py, which
      reads stamped paths out of the page text — an inline import counts. -->
 <script type="module">
-  import { initDesBoard } from '/plus/js/desboard-page.js?v=2';
+  import { initDesBoard } from '/plus/js/desboard-page.js?v=3';
   initDesBoard(document.getElementById('dbRoot'));
 </script>
 
