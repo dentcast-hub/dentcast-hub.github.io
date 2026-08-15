@@ -2387,5 +2387,105 @@
         "interpretation_fa": "متن یک پروتکل تنظیم اکلوژن بعد از سمنتیشن لامینیت را مرحله به مرحله می‌دهد و برای فک پایین دلیل فانکشنالش را هم می‌گوید. حالت‌های کانین رایز، گروپ فانکشن خلفی و قدامی جدا شده‌اند، که همان دامنه‌بندی ادعاست. ارجاعی به شواهد منتشرشده ندارد و خودش را تجربه نمی‌نامد."
       }
     ]
+  },
+  "sharehub/share-7": {
+    "scored_at": "2026-08-15",
+    "sources": [
+      {
+        "des_version": "1.8",
+        "content_type": "RESEARCH",
+        "question_type": "ETIOLOGY",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Dental caries and salivary alterations in patients with type 2 diabetes: A systematic review and meta-analysis.",
+          "authors": "Zhou G, Shu X, Long Y, Cao Y, Wang J, Liao G, Zou L",
+          "year": 2024,
+          "journal": "Journal of Dentistry",
+          "doi": "10.1016/j.jdent.2024.105321"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 100,
+          "anchor": "systematic review with meta-analysis of observational studies (ETIOLOGY SR/meta-analysis row, 100)",
+          "evidence_quote": "This systematic review evaluated the caries status and salivary alterations in adults with T2D."
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده هیچ اشاره‌ای به ثبت پروتکل یا PROSPERO ندارد؛ تحت ABSTRACT_ONLY سکوت NR است، نه high."
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "low",
+              "evidence_quote": "Systematic searches of PubMed/Medline, Web of Science, Embase, and the Cochrane Library for relevant literature published up to January 2024 were performed.",
+              "note": "چهار دیتابیس، بالاتر از آستانه‌ی دو دیتابیسِ بند 3b-i."
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده فقط شمارش غربالگری را می‌دهد و فهرست مطالعات کنارگذاشته‌شده در آن نمی‌آید؛ تحت ABSTRACT_ONLY این NR است."
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده هیچ ابزار یا مرحله‌ای برای ارزیابی سوگیری مطالعات واردشده نام نمی‌برد؛ تحت ABSTRACT_ONLY سکوت NR است."
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "some_concerns",
+              "evidence_quote": "The meta-analysis showed that compared to non-diabetic individuals, type 2 diabetic individuals had higher DMFT (mean difference: 2.27; 95 % CI, 1.31 to 3.22; P < 0.00001)."
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "چکیده به سوگیری انتشار، فانل پلات یا آزمون Egger اشاره نمی‌کند؛ تحت ABSTRACT_ONLY سکوت NR است."
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "بیانیه‌ی تعارض منافع وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "فقط برای RCT اعمال می‌شود؛ این مطالعه مرور سیستماتیک است."
+          },
+          {
+            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study"
+          },
+          {
+            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "پیامدها مقطعی‌اند و ادعای بقا در کار نیست؛ این بند موضوعیت ندارد."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 55,
+        "band": "C",
+        "provisional": true,
+        "fact_fa": "این مقاله در نوع پرسش ETIOLOGY امتیاز ۵۵ و باند C گرفت، و چون فقط چکیده در دسترس بود امتیاز مقدماتی است.",
+        "interpretation_fa": "متاآنالیز روی بیست‌وهشت مطالعه نشان می‌دهد دیابت نوع ۲ با DMFT بالاتر و افت جریان، pH و ظرفیت بافری بزاق همراه است. بین دیابت کنترل‌شده و کنترل‌نشده تفاوت معناداری در DMFT دیده نشد. داده‌ها مشاهده‌ای‌اند، پس همراهی نشان می‌دهند نه علیت. امتیاز مقدماتی است چون فقط چکیده در دسترس بود."
+      }
+    ]
   }
 }
