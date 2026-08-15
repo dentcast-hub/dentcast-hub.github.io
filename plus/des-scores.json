@@ -11053,5 +11053,110 @@
         "interpretation_fa": "این مرور روایتی یک نویسنده درباره‌ی IDS است، نه مطالعه‌ای اولیه یا مرور نظام‌مند. ارزش آن در جمع‌بندی بالینی و توجیه گام‌به‌گام روش سیلینگ فوری عاج است، نه در وزن آماری شواهد. جست‌وجوی ادبیات، فهرست مطالعات کنارگذاشته‌شده و ارزیابی سوگیری انتشار در متن گزارش نشده‌اند. توصیه‌های آن بر پایه‌ی تفسیر نویسنده از بیش از سی مقاله و تجربه‌ی بالینی اوست."
       }
     ]
+  },
+  "notecast/episode-6": {
+    "scored_at": "2026-08-15",
+    "sources": [
+      {
+        "des_version": "2.0",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "Immediate dentin sealing: a fundamental procedure for indirect bonded restorations",
+          "authors": "Magne P",
+          "year": 2005,
+          "journal": "Journal of Esthetic and Restorative Dentistry",
+          "doi": "10.1111/j.1708-8240.2005.tb00103.x"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 15,
+          "anchor": "narrative review of evidence-based principles for optimizing dentin bonding in indirect restorations, illustrated with one clinical case (THERAPY narrative review row, 15)",
+          "evidence_quote": "The purpose of this article is to review evidence-based principles that could help optimize dentin bonding for indirect composite and porcelain restorations. More than 30 articles were reviewed, most of them addressing the specific situation of dentin bonding for indirect restorations."
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "غایب است. کل متن هفت‌صفحه‌ای خوانده شد: ABSTRACT، DENTINOENAMEL JUNCTION AS A MODEL FOR DENTIN BONDING OPTIMIZATION، EVIDENCE-BASED CLINICAL APPLICATION OF DBA (چهار motive شماره‌گذاری‌شده)، PRACTICAL AND CLINICAL FACTS، PRACTICAL CONSIDERATIONS (Dentin Identification / Preparation / Adhesive Technique / Caution with Provisionalization / Adhesive Resins: Final Restoration Placement / Universal Approach)، CONCLUSION، ACKNOWLEDGMENT و فهرست ۳۸ منبع. هیچ اشاره‌ای به protocol، registration یا PROSPERO در کل متن نیست."
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "high",
+              "evidence_quote": "More than 30 articles were reviewed, most of them addressing the specific situation of dentin bonding for indirect restorations.",
+              "note": "present but fails the 3b-i threshold: روش جست‌وجو توصیف نشده — هیچ دیتابیس کتاب‌شناختی (Medline، PubMed، Embase، Scopus، Cochrane، Web of Science) در متن نام برده نشده، یعنی صفر دیتابیس، کمتر از آستانه‌ی دو. بخش Methods یا معیار ورود/خروج هم در متن نیست؛ فقط تعداد کلی مقالات مرورشده گزارش شده."
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "غایب است. کل متن از ABSTRACT تا منبع شماره‌ی ۳۸ خوانده شد؛ هیچ فهرست یا معیار ورود/خروجی از مقالات کنارگذاشته‌شده نیست — تنها «More than 30 articles were reviewed» آمده، بدون گزارش تعداد یافت‌شده در جست‌وجوی اولیه یا دلیل کنار گذاشتن هرکدام."
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "some_concerns",
+              "evidence_quote": "They did not simulate additional contamination sources such as saliva and bacterial leakage, which will be discussed later.",
+              "note": "مقاله واژه‌ی quality، bias یا risk of bias را به‌کار نمی‌برد، اما دست‌کم یک بار محدودیت یک مطالعه‌ی واردشده (مطالعات Paul و همکاران درباره‌ی آلودگی سمان موقت) را صریحاً نقد می‌کند. این نقد موردی است و ابزار یکنواختی روی کل ۳۸ منبع اعمال نشده، پس نه high (کاملاً غایب) و نه low (ارزیابی نظام‌مند)."
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "some_concerns",
+              "evidence_quote": "the combined results of this data plus clinical experience suggest the need for a revision in the dentin bonding procedure.",
+              "note": "هیچ سنتز کمّی یا متاآنالیز آماری وجود ندارد و مقاله چنین ادعایی هم ندارد، اما چکیده صراحتاً می‌گوید یافته‌های ادبیات را با تجربه‌ی بالینی «ترکیب» کرده تا به توصیه برسد؛ روش این ترکیب توضیح داده نشده، پس توصیف‌شده‌ی مبهم است نه غایب کامل."
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "غایب است. کل متن جست‌وجو و خوانده شد؛ هیچ اشاره‌ای به publication bias، funnel plot یا آزمون Egger نیست، و هیچ سنتز کمّی هم گزارش نشده که چنین ارزیابی‌ای در آن معنا داشته باشد."
+            }
+          ],
+          "multiplier": 0.3
+        },
+        "penalties": [
+          {
+            "item": "بیانیه‌ی تعارض منافع وجود ندارد",
+            "base_points": 8,
+            "points": 1,
+            "evidence_quote": "",
+            "note": "غیاب است. متن از ACKNOWLEDGMENT تا انتهای REFERENCES خوانده شد؛ برای conflict، competing، interest، disclosure، financial، grant، sponsor و funding صفر نتیجه‌ی مرتبط یافت شد. بخش ACKNOWLEDGMENT فقط از سه همکار برای کمک تشکر می‌کند و بیانیه‌ی تعارض منافع یا منبع مالی نیست."
+          },
+          {
+            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "فقط برای RCT اعمال می‌شود؛ این یک مرور روایتی است."
+          },
+          {
+            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study (مرور روایتی)."
+          },
+          {
+            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "The 1-year follow-up radiographs show perfectly stable situation.",
+            "note": "این مطالعه ثانویه (مرور روایتی) است و پیگیری خودش را به‌عنوان مبنای ادعای پیامد گزارش نمی‌کند؛ پیگیری یک‌ساله فقط توضیح یک کیس نمایشی در شکل ۱ است، نه شاهد اصلی مقاله برای بقای بلندمدت."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 4,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "این مقاله در نوع پرسش THERAPY امتیاز ۴ و باند E گرفت، و چون متن کامل در دسترس بود امتیاز نهایی است نه مقدماتی.",
+        "interpretation_fa": "این مرور روایتی یک نویسنده درباره‌ی IDS است، نه مطالعه‌ای اولیه یا مرور نظام‌مند. ارزش آن در جمع‌بندی بالینی و توجیه گام‌به‌گام روش سیلینگ فوری عاج است، نه در وزن آماری شواهد. جست‌وجوی ادبیات، فهرست مطالعات کنارگذاشته‌شده و ارزیابی سوگیری انتشار در متن گزارش نشده‌اند. توصیه‌های آن بر پایه‌ی تفسیر نویسنده از بیش از سی مقاله و تجربه‌ی بالینی اوست."
+      }
+    ]
   }
 }
