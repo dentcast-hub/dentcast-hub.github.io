@@ -346,6 +346,31 @@ def des_source_text(source, doc):
     return des_norm(title + "\n\n" + paper["abstract"])
 
 
+# DES v1.6: COMMENTARY checklist item 4 may be earned from a section's own
+# published declaration instead of a sentence inside the page. Only these
+# sections carry such a declaration, and the spec's table is closed — the one
+# way in is that the section's landing page gets an explicit declaration first
+# and the spec version bumps after, never resemblance to a section already
+# listed. `insight/` is the precedent: it did NOT qualify under v1.6, when its
+# landing page said the series covers clinical experience AND scientific
+# findings and so could not tell a reader which one a given page was; v1.7
+# added it after that page was rewritten.
+DES_TYPE_LABEL_SECTIONS = ("chairside", "metanotes", "insight")
+DES_TYPE_LABEL_ITEM = "صریحاً تجربه/دیدگاه نامیده شده، نه شواهد"
+
+
+def des_section_declaration(content_id):
+    """The landing-page text a section-level item-4 quote must come from, or
+    None when this content_id's section has no such declaration."""
+    section = content_id.split("/")[0]
+    if section not in DES_TYPE_LABEL_SECTIONS:
+        return None
+    path = f"{section}/index.html"
+    if not exists(path):
+        return None
+    return des_norm(text_of(read(path)))
+
+
 # --------------------------------------------------------------------------
 # entry lookup
 # --------------------------------------------------------------------------
@@ -784,6 +809,45 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
                                  f"{tag} rates «{label}» {dom['rating']} with an empty quote",
                                  "Core Rule 2 — only an absence-based `high` may omit the quote")
 
+                # 1b — the v1.6 section-level carve-out on checklist item 4.
+                # A `note` on that item is what says "this quote is not from the
+                # article", so the note is the discriminator, not a guess: with
+                # one, the quote is checked against the section's landing page
+                # and the section must be on the spec's closed list; without
+                # one, it is an ordinary in-page label and falls through to the
+                # normal check below.
+                section_quotes = []
+                for c in (s.get("commentary_checklist") or []):
+                    if c.get("item") != DES_TYPE_LABEL_ITEM or not c.get("points"):
+                        continue
+                    note = (c.get("note") or "").strip()
+                    if not note:
+                        continue
+                    decl = des_section_declaration(content_id)
+                    if rep.check(decl is not None, "4.13 DES",
+                                 f"{tag} item 4 cites a section declaration from a section that has one",
+                                 f"{tag} earns checklist item 4 from a section-level declaration, but "
+                                 f"«{content_id.split('/')[0]}/» is not on the spec's closed list "
+                                 f"{list(DES_TYPE_LABEL_SECTIONS)}",
+                                 "spec v1.6 COMMENTARY track — the qualifying list is closed; "
+                                 "insight/ is deliberately excluded"):
+                        section_quotes.append(c.get("evidence_quote") or "")
+                        rep.check(content_id.split("/")[0] in note, "4.13 DES",
+                                  f"{tag} item 4's note names the file the declaration came from",
+                                  f"{tag} earns item 4 from a section declaration but its note "
+                                  f"({note!r}) does not name the section it was read from",
+                                  "spec v1.6 — the note is mandatory and names the landing page")
+                if section_quotes:
+                    decl = des_section_declaration(content_id)
+                    bad_s = [q for q in section_quotes if not q or des_norm(q) not in decl]
+                    sample_s = repr((bad_s[0] or "")[:60]) if bad_s else ""
+                    rep.check(not bad_s, "4.13 DES",
+                              f"{tag} item 4's declaration quote is verbatim from "
+                              f"{content_id.split('/')[0]}/index.html",
+                              f"{tag} item 4 quotes a declaration that is NOT on that section's "
+                              f"landing page, e.g. {sample_s}",
+                              "spec v1.6 — copy the declaration verbatim, never paraphrase it")
+
                 # 1 — quote verification, wherever the source text is reachable.
                 # COMMENTARY quotes come from this page's own body, so they are
                 # always checkable. RESEARCH quotes come from an abstract, which
@@ -793,7 +857,7 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
                     + [d.get("evidence_quote") for d in ((s.get("q_method") or {}).get("domains") or [])]
                     + [c.get("evidence_quote") for c in (s.get("commentary_checklist") or [])]
                     + [p.get("evidence_quote") for p in (s.get("penalties") or [])]
-                ) if q]
+                ) if q and q not in section_quotes]
                 haystack = des_source_text(s, doc) if quotes else None
                 if haystack is None:
                     rep.skip("4.13 DES", f"{tag} quotes not checkable (source text not in the repo)")
