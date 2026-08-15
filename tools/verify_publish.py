@@ -347,13 +347,15 @@ def des_source_text(source, doc):
 
 
 # DES v1.6: COMMENTARY checklist item 4 may be earned from a section's own
-# published declaration instead of a sentence inside the page. Only these two
-# sections carry such a declaration, and the spec's table is closed — a section
-# is added here only by a spec version bump, never by resemblance. (`insight/`
-# is the near miss and is deliberately absent: its landing page says the series
-# covers clinical experience AND scientific findings, which is exactly why it
-# cannot tell a reader which one a given page is.)
-DES_TYPE_LABEL_SECTIONS = ("chairside", "metanotes")
+# published declaration instead of a sentence inside the page. Only these
+# sections carry such a declaration, and the spec's table is closed — the one
+# way in is that the section's landing page gets an explicit declaration first
+# and the spec version bumps after, never resemblance to a section already
+# listed. `insight/` is the precedent: it did NOT qualify under v1.6, when its
+# landing page said the series covers clinical experience AND scientific
+# findings and so could not tell a reader which one a given page was; v1.7
+# added it after that page was rewritten.
+DES_TYPE_LABEL_SECTIONS = ("chairside", "metanotes", "insight")
 DES_TYPE_LABEL_ITEM = "صریحاً تجربه/دیدگاه نامیده شده، نه شواهد"
 
 

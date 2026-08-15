@@ -1174,7 +1174,7 @@ score built on it.
 
 #### Part 2 — Run the prompt file
 
-**Load `.dentcast/dentcast-evidence-score-v1.6.md` as the system prompt — the whole
+**Load `.dentcast/dentcast-evidence-score-v1.7.md` as the system prompt — the whole
 file, verbatim, minus the appendix.**
 
 **v1.6 is the current spec and it is deliberately deterministic.** Two of its
@@ -1197,19 +1197,24 @@ stamped `des_version` below `1.5` predates this and must be regenerated before i
 number is compared with a new one; v1.6 changed nothing on the RESEARCH side, so
 `1.5` and `1.6` research scores are directly comparable.
 
-**v1.6's one change is on the COMMENTARY side, and it is the reason a Chairside
-or MetaNote page now scores 3 higher than it did.** Checklist item 4 («صریحاً
-تجربه/دیدگاه نامیده شده») can be earned from the section's own published
-declaration rather than a sentence inside the page — for `chairside/` and
-`metanotes/` only, because those two landing pages carry such a declaration and
-the spec quotes both verbatim in a closed table. When you use it, the
+**The COMMENTARY track's one carve-out is why a Chairside, MetaNote or Insight
+page now scores 3 higher than it did.** Checklist item 4 («صریحاً تجربه/دیدگاه
+نامیده شده») can be earned from the section's own published declaration rather
+than a sentence inside the page — for `chairside/`, `metanotes/` and `insight/`
+only, because those three landing pages carry such a declaration and the spec
+quotes all three verbatim in a closed table. When you use it, the
 `evidence_quote` is that declaration copied from the landing page and the item's
-`note` is MANDATORY and names the file it came from. `insight/` does NOT qualify
-however much it resembles the other two: its landing page says the series covers
-«تجربه‌های بالینی **و** یافته‌های علمی», which is exactly why it cannot tell a
-reader which of the two the page in front of them is. Any COMMENTARY record in
-those two folders stamped `des_version` below `1.6` is scoring low by 3 and must
-be regenerated. The appendix says so itself ("NOT part of the
+`note` is MANDATORY and names the file it came from.
+
+**The list is closed and has exactly one entrance, which `insight/` is the
+precedent for: the section's landing page gets an explicit declaration first,
+and the spec version bumps after.** Never add a section because it resembles one
+already listed. `insight/` did not qualify under v1.6, when its page said the
+series covers «تجربه‌های بالینی **و** یافته‌های علمی» and therefore could not
+tell a reader which of the two the page in front of them was; v1.7 added it
+because that page was rewritten to declare the section. Any COMMENTARY record in
+`chairside/` or `metanotes/` stamped `des_version` below `1.6`, or in `insight/`
+below `1.7`, is scoring low by 3 and must be regenerated. The appendix says so itself ("NOT part of the
 model instruction … Do not include this appendix if the file is loaded verbatim as a
 system prompt"): those checks are yours to run in Part 3, not the model's.
 
@@ -1243,9 +1248,9 @@ appendix's checks yourself — an output that fails these is not a score:
    straighten curly quotes, nbsp → space, Unicode NFKC). A failure is **flagged for
    manual review, not silently dropped** — the appendix notes that recurrent failures
    usually mean bad PDF text extraction rather than model fabrication.
-   **One quote is checked against a different file:** a `chairside/` or `metanotes/`
-   COMMENTARY item 4 earned from the section-level declaration (v1.6) quotes that
-   section's `index.html`, not the article, and must carry a `note` saying so.
+   **One quote is checked against a different file:** a `chairside/`, `metanotes/`
+   or `insight/` COMMENTARY item 4 earned from the section-level declaration quotes
+   that section's `index.html`, not the article, and must carry a `note` saying so.
    Phase F knows both haystacks and refuses the note-less version.
 2. **Arithmetic recomputation.** RESEARCH:
    `des_score == round(s_design.value × q_method.multiplier) − Σ penalty points`,

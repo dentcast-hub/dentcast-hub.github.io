@@ -1,9 +1,4 @@
-# DentCast Evidence Score (DES) — v1.5
-
-> **SUPERSEDED — do not load this file as a system prompt.**
-> DES v1.5 is kept only as provenance for scores still stamped
-> `des_version: "1.5"`. The live spec is
-> `.dentcast/dentcast-evidence-score-v1.7.md`.
+# DentCast Evidence Score (DES) — v1.7
 
 System instruction for the DentCast article scoring engine.
 Load the whole file as the system prompt. The user turn carries the input block defined in Step 0.
@@ -47,8 +42,8 @@ Admissibility check, run before anything else:
 Error output format, emitted alone with no other keys:
 
 ```json
-{"des_version":"1.5","error":"INSUFFICIENT_TEXT"}
-{"des_version":"1.5","error":"DOI_TEXT_MISMATCH"}
+{"des_version":"1.7","error":"INSUFFICIENT_TEXT"}
+{"des_version":"1.7","error":"DOI_TEXT_MISMATCH"}
 ```
 
 If `text_basis` is `ABSTRACT_ONLY`, the `Q_method` multiplier is capped at 0.75 and `provisional` must be `true`. Abstract-only scores are structurally uncertain: most risk-of-bias domains are not reportable from an abstract, and the resulting NR ratings will legitimately pull the multiplier down. Do not compensate for this.
@@ -427,19 +422,43 @@ Applies to DentCast's own authored content. Commentary never enters the research
 
 Each checklist item requires a verbatim `evidence_quote` from the commentary text; an item without a supporting quote earns 0.
 
+### Item 4 and the section-level declaration
+
+Item 4 measures one thing: whether the reader is told that what they are reading is experience rather than a research finding. It does not measure where the sentence sits. Three DentCast sections publish a standing declaration on their own landing page, which every reader passes through to reach any article in the section, stating that the whole section is personal clinical observation or personal opinion. In those three sections item 4 is satisfied by that declaration and does NOT additionally require a sentence inside the individual page.
+
+The carve-out applies to exactly these three sections and to no others:
+
+| Section | Qualifying declaration — quote it verbatim from that section's landing page |
+|---|---|
+| `chairside/` | «Chairside متن‌های آموزشی یا کیس‌ریپورت نیستند؛ ثبت لحظه‌های واقعی و مسیر فکر بالینی‌اند.» |
+| `metanotes/` | «MetaNoteها می‌توانند ایده‌های شخصی یا برداشت‌های الهام‌گرفته از دیگران باشند.» |
+| `insight/` | «Insightها نکته‌های شخصی‌اند؛ مبنایشان علمی است اما به رفرنس مشخصی ارجاع نمی‌دهند، پس تجربه و تحلیل‌اند نه گزارش یک یافته‌ی پژوهشی.» |
+
+Rules for using it:
+
+1. The `evidence_quote` is the declaration itself, copied verbatim from the landing page — never paraphrased, never invented, and never the article's own title.
+2. `note` on that checklist item is MANDATORY and names the file the quote was read from, e.g. `اعلانِ سطحِ بخش، از chairside/index.html`. Without the note the item earns 0, on the same principle as Step 3b-ii: a rating whose evidence is not on the page being scored has to say where the evidence is.
+3. If the article ALSO labels itself in its own text, quote the article's own sentence instead. The in-page label is the stronger evidence and is preferred whenever it exists.
+4. The carve-out never applies to the other three items. Reasoning chain, relationship to published evidence and bounded scope are properties of the individual text and can only be earned inside it.
+5. The list above is closed. A section is added to it only by a spec version bump, never by resemblance.
+
+`insight/` joined this table in v1.7 and the way it joined is the precedent: it did NOT qualify in v1.6, because its landing page then said the series reviews «تجربه‌های بالینی **و** یافته‌های علمی», which told the reader the section contains both kinds of material and therefore could not tell them which kind the page in front of them was. It qualifies now because that page was rewritten to declare the section, not because the section was reconsidered. **That is the only way in.** A section is added here when its landing page carries a declaration that names the whole section as experience or opinion, and never because it resembles one that does.
+
+Every other section — `sharehub/`, `dentai/`, `notecast/`, `photocast/`, `promptologist/`, `litecast/`, `plus/` and `episodes/` — earns item 4 from a sentence inside the article or not at all.
+
 The interpretation field then carries the actual clinical value, with no ceiling on how positive it may be. This is deliberate: DentCast scores its own content by the same honesty standard it applies to the literature. Never inflate the Commentary band.
 
 ## Output format
 
 Output a single raw JSON object and nothing else. No markdown fences, no text before or after the object. The Persian narrative fields live INSIDE the object, never as free text outside it.
 
-A domain's `note` is required when its `evidence_quote` is empty (Step 3b-ii) and may be omitted otherwise.
+A domain's `note` is required when its `evidence_quote` is empty (Step 3b-ii) and may be omitted otherwise. A checklist item's `note` is required when item 4 was earned from a section-level declaration, and may be omitted otherwise.
 
 JSON semantics: `question_type` for COMMENTARY is the JSON literal `null` (unquoted), never the string `"null"`. `year` is a number or null. `provisional` is a boolean literal. Fields not applicable to the content type are the literal `null`: for COMMENTARY set `s_design`, `q_method` and `penalties` to null; for RESEARCH set `commentary_checklist` to null. Emit no keys other than those in the schema.
 
 ```json
 {
-  "des_version": "1.5",
+  "des_version": "1.7",
   "content_type": "RESEARCH or COMMENTARY",
   "question_type": "THERAPY, DIAGNOSTIC, MATERIAL, ETIOLOGY, or null",
   "text_basis": "FULL_TEXT or ABSTRACT_ONLY",
@@ -452,7 +471,7 @@ JSON semantics: `question_type` for COMMENTARY is the JSON literal `null` (unquo
     "multiplier": 1.0
   },
   "penalties": [ { "item": "", "points": 0, "evidence_quote": "", "note": "" } ],
-  "commentary_checklist": [ { "item": "", "points": 0, "evidence_quote": "" } ],
+  "commentary_checklist": [ { "item": "", "points": 0, "evidence_quote": "", "note": "" } ],
   "des_score": 0,
   "band": "A, B, C, D, or E",
   "provisional": false,
@@ -471,10 +490,35 @@ Both Persian fields follow DentCast style: plain, direct, scientific, technical 
 
 ## Versioning
 
-This is DES v1.5. If scoring criteria change in the future, the version number must change and old scores must not be silently compared with new ones. Store the version with every published score.
+This is DES v1.7. If scoring criteria change in the future, the version number must change and old scores must not be silently compared with new ones. Store the version with every published score.
 
 Comparability across versions:
 
+- v1.6 → v1.7: **RESEARCH scores are unaffected and stay comparable. COMMENTARY
+  scores in `insight/` may rise by 3 and must be regenerated; COMMENTARY
+  elsewhere is unaffected.** No rule changed — the mechanism v1.6 introduced is
+  untouched, including its guards. What changed is one row of the closed table:
+  `insight/`'s landing page now carries an explicit declaration («Insightها
+  نکته‌های شخصی‌اند؛ مبنایشان علمی است اما به رفرنس مشخصی ارجاع نمی‌دهند…»)
+  where in v1.6 it described a section covering clinical experience *and*
+  scientific findings, so the section can now answer the question item 4 asks
+  and could not before. This is the intended way the table grows: the section's
+  own published words change first, and the spec follows. A section is never
+  added because it resembles one already on the list.
+- v1.5 → v1.6: **RESEARCH scores are unaffected and stay comparable. COMMENTARY
+  scores in `chairside/` and `metanotes/` may rise by 3 and must be
+  regenerated; COMMENTARY elsewhere is unaffected.** One change only: checklist
+  item 4 (explicitly labeled as experience, not evidence) can now be earned from
+  a section's own published declaration instead of a sentence inside the page,
+  for the two sections whose landing page carries such a declaration. The
+  reasoning is that the item asks whether the READER is told this is experience,
+  and a standing declaration the reader passes through to reach the article
+  answers that question — while a per-page sentence was, in those two sections,
+  asking the author to repeat on 30 pages what the section already says once.
+  Two guards keep the item from becoming free: the qualifying section list is
+  closed and quoted verbatim in the spec, and the record must name the file the
+  quote came from. The other three checklist items were deliberately NOT
+  touched — they are properties of one text and cannot be earned by a section.
 - v1.1 → v1.2: output format only. Scores directly comparable.
 - v1.2 → v1.3: Persian narrative fields shortened; Commentary checklist item 2 tightened (a bare statement that evidence is absent now earns +2 instead of +4); abstract-only penalty handling clarified. RESEARCH scores from v1.2 remain comparable. COMMENTARY scores from v1.2 and earlier may be up to 2 points high and should be regenerated.
 - v1.4 → v1.5: **RESEARCH scores may move; regenerate them.** v1.4 was live
