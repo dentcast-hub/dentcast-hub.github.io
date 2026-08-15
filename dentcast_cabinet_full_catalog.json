@@ -19801,31 +19801,47 @@
     },
     {
       "id": "P0396",
-      "title": "Deep Margin Elevation A Paradigm Shift",
+      "title": "Deep Margin Elevation: A Paradigm Shift",
       "file_name": "Deep Margin Elevation A Paradigm Shift.pdf",
       "topic": "biomimetic",
       "topic_path": "biomimetic/DME",
-      "type": "primary/other",
+      "type": "narrative review",
       "local_path": "E:\\Paper farzad\\biomimetic\\DME\\Deep Margin Elevation A Paradigm Shift.pdf",
       "file_size": 1008435,
       "key_finding": "",
       "clinical_bottom_line": "",
-      "linked_episodes": [],
+      "linked_episodes": [
+        "episode-7"
+      ],
       "drive_link": "",
       "status": "linked",
-      "drive_download": "https://drive.google.com/uc?export=download&id=1WhajzurVJbQbAc6URlbnz-6Api-rOMkR",
-      "drive_view": "https://drive.google.com/file/d/1WhajzurVJbQbAc6URlbnz-6Api-rOMkR/view",
-      "drive_id": "1WhajzurVJbQbAc6URlbnz-6Api-rOMkR",
       "tags": [
         "deep-margin-elevation",
-        "primary-other",
+        "coronal-margin-relocation",
+        "subgingival-margin",
+        "immediate-dentin-sealing",
+        "crown-lengthening",
+        "inlay-onlay",
+        "biomimetic-dentistry",
+        "narrative-review",
         "topic:biomimetic",
         "topic:dme",
-        "biomimetic-dentistry"
+        "deep-margin-elevation-a-paradigm-shift"
       ],
       "name_bucket": "meaningful",
       "semantic_tagged": true,
-      "display_title": "Deep Margin Elevation A Paradigm Shift"
+      "display_title": "Deep Margin Elevation: A Paradigm Shift",
+      "doi": "",
+      "authors": [
+        "Pascal Magne",
+        "Roberto C. Spreafico"
+      ],
+      "journal": "The American Journal of Esthetic Dentistry",
+      "crossref_year": 2012,
+      "abstract": "Localized subgingival margins can complicate the use of indirect adhesive restorations (isolation, impression taking, and delivery) and subsequently hinder their durability and relationship with the periodontal tissues. This article proposes a technique involving placement of a modified Tofflemire matrix followed by immediate dentin sealing and coronal elevation of the deep margin to a supragingival position using a direct bonded composite resin base. The deep margin elevation technique may be a useful noninvasive alternative to surgical crown lengthening. This technique may also facilitate the placement of large direct composite resin restorations. The fundamental principles of deep margin elevation are presented.",
+      "drive_id": "1WhajzurVJbQbAc6URlbnz-6Api-rOMkR",
+      "drive_view": "https://drive.google.com/file/d/1WhajzurVJbQbAc6URlbnz-6Api-rOMkR/view",
+      "drive_download": "https://drive.google.com/uc?export=download&id=1WhajzurVJbQbAc6URlbnz-6Api-rOMkR"
     },
     {
       "id": "P0397",
@@ -39910,33 +39926,6 @@
           "score": 0.4175
         }
       ]
-    },
-    {
-      "id": "P0803",
-      "title": "deep margin elevation a paradigm shift",
-      "file_name": "deep_margin_elevation_a_paradigm_shift.pdf",
-      "topic": "endocrown",
-      "topic_path": "endocrown",
-      "type": "primary/other",
-      "local_path": "E:\\Paper farzad\\endocrown\\deep_margin_elevation_a_paradigm_shift.pdf",
-      "file_size": 902161,
-      "key_finding": "",
-      "clinical_bottom_line": "",
-      "linked_episodes": [],
-      "drive_link": "",
-      "status": "linked",
-      "drive_download": "https://drive.google.com/uc?export=download&id=1pW3NwA3zUDqZ2GS9L0IkZYv13DPsyYTv",
-      "drive_view": "https://drive.google.com/file/d/1pW3NwA3zUDqZ2GS9L0IkZYv13DPsyYTv/view",
-      "drive_id": "1pW3NwA3zUDqZ2GS9L0IkZYv13DPsyYTv",
-      "tags": [
-        "deep-margin-elevation",
-        "primary-other",
-        "topic:endocrown",
-        "endocrown"
-      ],
-      "name_bucket": "meaningful",
-      "semantic_tagged": true,
-      "display_title": "deep margin elevation a paradigm shift"
     },
     {
       "id": "P0804",
@@ -136994,6 +136983,142 @@
       "drive_id": "1YnKy022sMa6YBAIYZxULjd9bAASiAjkH",
       "drive_view": "https://drive.google.com/file/d/1YnKy022sMa6YBAIYZxULjd9bAASiAjkH/view",
       "drive_download": "https://drive.google.com/uc?export=download&id=1YnKy022sMa6YBAIYZxULjd9bAASiAjkH"
+    },
+    {
+      "id": "P2891",
+      "title": "Changes in Implant Surface Characteristics and Wettability Induced by Smoking In Vitro: A Preliminary Investigation",
+      "file_name": "Changes-in-Implant-Surface-Characteristics-and-Wettability-Induced-bySmoking-In-Vitro-A-Preliminary-Investigation.pdf",
+      "topic": "Cigar and implant",
+      "topic_path": "Cigar and implant",
+      "type": "primary/other",
+      "local_path": "",
+      "file_size": 1163804,
+      "key_finding": "",
+      "clinical_bottom_line": "",
+      "linked_episodes": [
+        "share-9"
+      ],
+      "drive_link": "https://drive.google.com/file/d/1lNkR2ClbpJuI7NSvRqaq87DfgNSZyTiw/view?usp=drivesdk",
+      "status": "linked",
+      "tags": [
+        "smoking",
+        "tobacco-smoke",
+        "wettability",
+        "implant-surface-chemistry",
+        "surface-treatment",
+        "zirconia",
+        "osseointegration",
+        "peri-implantitis",
+        "in-vitro",
+        "topic:cigar-and-implant",
+        "changes-in-implant-surface-characteristics-and-wettability-induced-by-smoking-in-vitro-a-preliminary-investigation"
+      ],
+      "name_bucket": "meaningful",
+      "semantic_tagged": true,
+      "display_title": "Changes in Implant Surface Characteristics and Wettability Induced by Smoking In Vitro: A Preliminary Investigation",
+      "doi": "10.3390/ma18122844",
+      "authors": [
+        "Danielle Ohana",
+        "Nina K. Anderson",
+        "Rafael Delgado-Ruiz",
+        "Georgios E. Romanos"
+      ],
+      "journal": "Materials",
+      "crossref_year": 2025,
+      "abstract": "The biologic response following the insertion of dental implants is a widely studied process. Recent research has highlighted the importance of implant surface topography and chemistry as highly influential factors in consolidating the dental implant with the surrounding biological environment. The hydrophilicity, or wettability, of dental implants plays a pivotal role in these interactions and successful osseointegration. A more wellestablished factor that can also influence the development of the tissue–implant interface is exposure to tobacco smoke. While the negative impact of smoking on the biological response of the tissue is clear, there has been no research evaluating the impact that tobacco smoke can have directly on the surface chemistry of dental implants. The present study aimed to explore the effect of smoking on implant surface chemistry and wettability in vitro. Five different implant disks (Ti-Mach, Ti-SLA, Ti-Alloy, Zirc-1 and Zirc-2) were subjected to contamination with tobacco smoke using a portable smoke infuser with dome enclosure. Occasional smoking (5×/day 10 min each for 3 days) and heavy smoking (20×/day for 10 min each for 10 days) were simulated. The wettability of the implant disks was evaluated via the contact angle technique using artificial blood and albumin, as well as saline as a control. It was determined that the contamination of implant surfaces due to smoking produces changes in the surface chemistry and wettability. Changes in the surface hydrophilicity differed based on the implant material. Within the constraints of this investigation, tobacco smoke improved the hydrophilicity of titanium surfaces but worsened that of ceramic surfaces when utilizing the testing solutions. Different implant Published: 17 June 2025 surfaces exhibit different wetting behavior following contamination with nicotine smoke. This might have an impact on the treatment of peri-implantitis in smokers due to changes Delgado-Ruiz, R.; Romanos, G.E. in implant surface hydrophilicity, which can affect the re-osseointegration process. Changes in Implant Surface",
+      "drive_id": "1lNkR2ClbpJuI7NSvRqaq87DfgNSZyTiw",
+      "drive_view": "https://drive.google.com/file/d/1lNkR2ClbpJuI7NSvRqaq87DfgNSZyTiw/view",
+      "drive_download": "https://drive.google.com/uc?export=download&id=1lNkR2ClbpJuI7NSvRqaq87DfgNSZyTiw"
+    },
+    {
+      "id": "P2892",
+      "title": "Smoking and Dental Implants: A Systematic Review and Meta-Analysis",
+      "file_name": "Smoking-and-Dental-Implants-A-Systematic-Review-and-Meta-Analysis.pdf",
+      "topic": "Cigar and implant",
+      "topic_path": "Cigar and implant",
+      "type": "systematic review + meta-analysis",
+      "local_path": "",
+      "file_size": 3198268,
+      "key_finding": "",
+      "clinical_bottom_line": "",
+      "linked_episodes": [
+        "share-9"
+      ],
+      "drive_link": "https://drive.google.com/file/d/1ue9Mv3khHGsoaYsySp2WtOGnGcYSs4a8/view?usp=drivesdk",
+      "status": "linked",
+      "tags": [
+        "smoking",
+        "implant-failure",
+        "implant-survival",
+        "marginal-bone-loss",
+        "bone-loss",
+        "maxilla",
+        "systematic-review",
+        "meta-analysis",
+        "topic:cigar-and-implant",
+        "smoking-and-dental-implants-a-systematic-review-and-meta-analysis"
+      ],
+      "name_bucket": "meaningful",
+      "semantic_tagged": true,
+      "display_title": "Smoking and Dental Implants: A Systematic Review and Meta-Analysis",
+      "doi": "10.3390/medicina58010039",
+      "authors": [
+        "Abir Dunia Mustapha",
+        "Zainab Salame",
+        "Bruno Ramos Chrcanovic"
+      ],
+      "journal": "Medicina",
+      "crossref_year": 2022,
+      "abstract": "Background and Objectives: Tobacco is today the single most preventable cause of death, being associated with countless diseases, including cancer and neurological, cardiovascular, and respiratory diseases. Smoking also brings negative consequences to oral health, potentially impairing treatment with dental implants. The present review aimed to evaluate the influence of smoking on dental implant failure rates and marginal bone loss (MBL). Materials and Methods: Electronic search was undertaken in three databases, plus a manual search of journals. Meta-analyses were performed, in addition to meta-regressions, in order to verify how the odds ratio (OR) and MBL were associated with follow-up time. Results: The review included 292 publications. Altogether, there were 35,511 and 114,597 implants placed in smokers and in non-smokers, respectively. Pairwise meta-analysis showed that implants in smokers had a higher failure risk in comparison with non-smokers (OR 2.402, p \\< 0.001). The difference in implant failure between the groups was statistically significant in the maxilla (OR 2.910, p \\< 0.001), as well as in the mandible (OR 2.866, p \\< 0.001). The MBL mean difference (MD) between the groups was 0.580 mm (p \\< 0.001). There was an estimated decrease of 0.001 in OR (p = 0.566) and increase of 0.004 mm (p = 0.279) in the MBL MD between groups for every additional month of follow-up, although without statistical significance. Therefore, there was no clear influence of the follow-up on the effect size (OR) and on MBL MD between groups. Conclusions: Implants placed in smokers present a 140.2% higher risk of failure than implants placed in non-smokers. **",
+      "drive_id": "1ue9Mv3khHGsoaYsySp2WtOGnGcYSs4a8",
+      "drive_view": "https://drive.google.com/file/d/1ue9Mv3khHGsoaYsySp2WtOGnGcYSs4a8/view",
+      "drive_download": "https://drive.google.com/uc?export=download&id=1ue9Mv3khHGsoaYsySp2WtOGnGcYSs4a8"
+    },
+    {
+      "id": "P2893",
+      "title": "Smoking in relation to early dental implant failure: A systematic review and meta-analysis",
+      "file_name": "Smoking-in-relation-to-early-dental-implant-failure-A-systematic-review-and-meta-analysis.pdf",
+      "topic": "Cigar and implant",
+      "topic_path": "Cigar and implant",
+      "type": "systematic review + meta-analysis",
+      "local_path": "",
+      "file_size": 2837287,
+      "key_finding": "",
+      "clinical_bottom_line": "",
+      "linked_episodes": [
+        "share-9"
+      ],
+      "drive_link": "https://drive.google.com/file/d/1ikuHSaPrYp3BMmPSiY74rAHZurvLfi0h/view?usp=drivesdk",
+      "status": "linked",
+      "tags": [
+        "smoking",
+        "smoking-cessation",
+        "early-implant-failure",
+        "implant-failure",
+        "osseointegration",
+        "maxilla",
+        "systematic-review",
+        "meta-analysis",
+        "topic:cigar-and-implant",
+        "smoking-in-relation-to-early-dental-implant-failure-a-systematic-review-and-meta-analysis"
+      ],
+      "name_bucket": "meaningful",
+      "semantic_tagged": true,
+      "display_title": "Smoking in relation to early dental implant failure: A systematic review and meta-analysis",
+      "doi": "10.1016/j.jdent.2024.105396",
+      "authors": [
+        "Ying-Ying Fan",
+        "Shu Li",
+        "Ye-Jun Cai",
+        "Tai Wei",
+        "Peng Ye"
+      ],
+      "journal": "Journal of Dentistry",
+      "crossref_year": 2024,
+      "abstract": "Objective: To assess the association between smoking and early dental implant failure by conducting a systematic review and meta-analysis of observational studies. Data sources: PubMed, Embase, Scopus, Web of Science, and Cochrane Central Register of Controlled Trials were systematically searched for reports of relevant studies addressing the relationship between smoking and early dental implant failure published between database inception and June 2024. Study selection: Thirty-two observational clinical studies published between 1994 and 2024 were included, with a total of 59,246 implants at implant level and 14,115 patients at individual level. At implant level, a meta-analysis of 21 included cohort studies showed that smoking was associated with increased risk of early dental implant failure compared with non-smoking (odds ratio \\[OR\\], 2.59; 95 % confidence interval \\[CI\\], 2.08–3.23). Three included studies reported that smoking was associated with higher maxillary early dental implant failure risk (OR, 5.90; 95 %CI, 2.38–14.66) than that of mandible (OR, 3.76; 95 %CI, 1.19–11.87). At individual level, metaanalysis of thirty cohort studies indicated that risk of early implant failure in smokers was 100 % higher than in non-smokers (OR, 2.00; 95 %CI, 1.43–2.80). Three case-control studies found that risk of early implant failure of smokers was 59 % higher than that of non-smokers (OR, 1.59; 95 %CI, 1.28–1.97). Conclusions: Smoking was significantly associated with early dental implant failure, particularly at the maxillary location, at both implant and individual level. These findings suggest smoking cessation is a crucial factor in reducing risk of early dental implant failure. Clinical significance: There is uncertainty about the extent to which smoking influences early dental implant failure, our meta-analysis of findings emphasize smoking was significantly associated with early dental implant failure, particularly at the maxillary location.",
+      "drive_id": "1ikuHSaPrYp3BMmPSiY74rAHZurvLfi0h",
+      "drive_view": "https://drive.google.com/file/d/1ikuHSaPrYp3BMmPSiY74rAHZurvLfi0h/view",
+      "drive_download": "https://drive.google.com/uc?export=download&id=1ikuHSaPrYp3BMmPSiY74rAHZurvLfi0h"
     }
   ],
   "drive_matched": 2845,
@@ -137518,5 +137643,5 @@
     "note": "682 content-unidentified papers moved to private quarantine file",
     "quarantined_unidentified": 682
   },
-  "total_papers": 2206
+  "total_papers": 2208
 }
