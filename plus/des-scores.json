@@ -234,7 +234,7 @@
         "interpretation_fa": "متن کامل نشان می‌دهد این مرور هیچ ارزیابی کیفیتی روی مطالعات ورودی‌اش انجام نداده، جست‌وجویش یک پایگاه داده و فقط انگلیسی بوده، و پروتکل ثبت‌شده و بررسی سوگیری انتشار ندارد. چهار دامنه از شش دامنهٔ حیاتی AMSTAR-2 رد می‌شوند، یعنی اعتماد در سطح critically low. جمع‌بندی‌اش دربارهٔ بقای کانتی‌لور همچنان جامع‌ترین موجود است."
       },
       {
-        "des_version": "1.5",
+        "des_version": "2.0",
         "content_type": "RESEARCH",
         "question_type": "THERAPY",
         "text_basis": "FULL_TEXT",
@@ -288,26 +288,28 @@
         "penalties": [
           {
             "item": "no sample size justification / power analysis",
-            "points": 5,
+            "base_points": 5,
+            "points": 3,
             "evidence_quote": "",
             "note": "no power or sample-size calculation anywhere in the paper; not covered by ROBINS-I, so no double jeopardy"
           },
           {
             "item": "CoI not disclosed",
+            "base_points": 8,
             "points": 0,
             "evidence_quote": "The authors do not report any conflicts of interest related to the present study.",
             "note": "disclosed; funded by the authors' own institution"
           }
         ],
         "commentary_checklist": null,
-        "des_score": 23,
+        "des_score": 25,
         "band": "D",
         "provisional": false,
-        "fact_fa": "این کوهورت گذشته‌نگر در نوع سؤال درمانی امتیاز ۲۳ از ۱۰۰ و باند D گرفت.",
+        "fact_fa": "این کوهورت گذشته‌نگر در نوع سؤال درمانی امتیاز ۲۵ از ۱۰۰ و باند D گرفت.",
         "interpretation_fa": "متن کامل نشان می‌دهد نویسندگان خودشان نتوانسته‌اند تعداد و دلیل خروج بیماران از پیگیری را گزارش کنند و آن را محدودیت عمده می‌دانند. مقایسهٔ درون همان بیمار نقطهٔ قوت آن است و پیگیری ۱۰ تا ۱۸ سال طولانی است. با این حال نامعلوم‌بودن ریزش نمونه و نبود محاسبهٔ حجم نمونه، وزن یافته را کم می‌کند."
       },
       {
-        "des_version": "1.5",
+        "des_version": "2.0",
         "content_type": "RESEARCH",
         "question_type": "ETIOLOGY",
         "text_basis": "FULL_TEXT",
@@ -361,22 +363,24 @@
         "penalties": [
           {
             "item": "CoI not disclosed",
-            "points": 8,
+            "base_points": 8,
+            "points": 5,
             "evidence_quote": "",
             "note": "read in full: no conflict-of-interest, funding, grant or acknowledgement statement anywhere in the paper, while every implant studied is one manufacturer's (Institut Straumann AG)"
           },
           {
             "item": "no sample size justification / power analysis",
+            "base_points": 5,
             "points": 0,
             "evidence_quote": "a post hoc power analysis based on assessed differences between the groups and variances in the samples 17 patients in each group were required",
             "note": "a power analysis is reported, though post hoc rather than a priori"
           }
         ],
         "commentary_checklist": null,
-        "des_score": 40,
+        "des_score": 43,
         "band": "C",
         "provisional": false,
-        "fact_fa": "این مطالعهٔ مقایسه‌ای در نوع سؤال علت‌شناسی امتیاز ۴۰ از ۱۰۰ و باند C گرفت.",
+        "fact_fa": "این مطالعهٔ مقایسه‌ای در نوع سؤال علت‌شناسی امتیاز ۴۳ از ۱۰۰ و باند C گرفت.",
         "interpretation_fa": "با گروه کنترل و تعدیل رگرسیونی عوامل مخدوش‌کننده نشان می‌دهد کانتی‌لور به‌تنهایی تحلیل استخوان را به‌طور معنادار زیاد نمی‌کند. ریزش نمونه کامل توضیح داده شده و توان آماری هم گزارش شده است. در مقابل هیچ اظهارنظری دربارهٔ تعارض منافع یا منبع مالی ندارد، در حالی که همهٔ ایمپلنت‌ها از یک سازنده بوده‌اند."
       }
     ]
@@ -2493,7 +2497,7 @@
     "scored_at": "2026-08-15",
     "sources": [
       {
-        "des_version": "1.8",
+        "des_version": "2.0",
         "content_type": "RESEARCH",
         "question_type": "DIAGNOSTIC",
         "text_basis": "FULL_TEXT",
@@ -2558,34 +2562,38 @@
         "penalties": [
           {
             "item": "بیانیه‌ی تعارض منافع وجود ندارد",
-            "points": 8,
+            "base_points": 8,
+            "points": 1,
             "evidence_quote": "",
             "note": "بلوک FOOTNOTES کامل خوانده شد و تنها یک خط دارد: Financial Disclosure درباره‌ی نبودِ حمایت مالی. هیچ بیانیه‌ی تعارض منافعی در آن یا هرجای دیگر متن نیست؛ متن استخراج‌شده لیگاتور fi/fl هم ندارد، پس این نتیجه از خطای استخراج نمی‌آید."
           },
           {
             "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "base_points": 5,
             "points": 0,
             "evidence_quote": "",
             "note": "فقط برای RCT اعمال می‌شود؛ این مقاله مرور است."
           },
           {
             "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "base_points": 5,
             "points": 0,
             "evidence_quote": "",
             "note": "not applicable to a secondary study"
           },
           {
             "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "base_points": 3,
             "points": 0,
             "evidence_quote": "",
             "note": "مقاله پیامد طولی و ادعای بقا ندارد؛ این بند موضوعیت ندارد."
           }
         ],
         "commentary_checklist": null,
-        "des_score": 0,
+        "des_score": 4,
         "band": "E",
         "provisional": false,
-        "fact_fa": "این مقاله در نوع پرسش DIAGNOSTIC امتیاز ۰ و باند E گرفت.",
+        "fact_fa": "این مقاله در نوع پرسش DIAGNOSTIC امتیاز ۴ و باند E گرفت.",
         "interpretation_fa": "مروری روایتی روی عوامل مؤثر بر دقت اسکن ایمپلنت است و خودش هم می‌گوید شرایط بهینه‌ی واحدی قابل تعیین نیست. فهرست عوامل و جدول‌هایش کنار یونیت به کار می‌آید. اما وزن شواهد را نمی‌سنجد، پس مبنای تصمیم قطعی نیست. نبود بیانیه‌ی تعارض منافع هم امتیازش را پایین آورد."
       }
     ]
@@ -4962,7 +4970,7 @@
         "interpretation_fa": "نقطه‌ی حداقل ثباتِ ایمپلنت در هفته‌ی دو تا شش بعد از جراحی است و در افراد با HbA1c هشت و یک‌دهم و بالاتر، افت بیشتر و بازگشت به خط پایه کندتر بود. همین عدد است که دوره‌ی healing دست‌بازتر را در بیمار دیابتیک توجیه می‌کند. نمونه کوچک است و گروه‌ها تعدیل مخدوش‌گر ندارند."
       },
       {
-        "des_version": "1.8",
+        "des_version": "2.0",
         "content_type": "RESEARCH",
         "question_type": "ETIOLOGY",
         "text_basis": "ABSTRACT_ONLY",
@@ -5018,34 +5026,38 @@
         "penalties": [
           {
             "item": "بیانیه‌ی تعارض منافع وجود ندارد",
+            "base_points": 8,
             "points": 0,
             "evidence_quote": "",
             "note": "not assessable in abstract"
           },
           {
             "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "base_points": 5,
             "points": 0,
             "evidence_quote": "",
             "note": "فقط برای RCT اعمال می‌شود؛ این مطالعه تصادفی‌سازی‌شده نیست."
           },
           {
             "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "base_points": 5,
             "points": 0,
             "evidence_quote": "",
             "note": "not assessable in abstract"
           },
           {
             "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
-            "points": 3,
+            "base_points": 3,
+            "points": 2,
             "evidence_quote": "",
             "note": "ادعای مقاله بقای ایمپلنت است و پیگیری آن یک سال بعد از لود اعلام شده، که برای ادعای بقا کوتاه‌تر از حد لازم است. این را خود چکیده صریحاً نشان می‌دهد، پس تحت ABSTRACT_ONLY هم قابل اعمال است: «followed up for an additional one year». در هیچ دامنه‌ی Step 3 لحاظ نشده، پس دوباره‌شماری نیست."
           }
         ],
         "commentary_checklist": null,
-        "des_score": 57,
+        "des_score": 58,
         "band": "C",
         "provisional": true,
-        "fact_fa": "این مقاله در نوع پرسش ETIOLOGY امتیاز ۵۷ و باند C گرفت، و چون فقط چکیده در دسترس بود امتیاز مقدماتی است.",
+        "fact_fa": "این مقاله در نوع پرسش ETIOLOGY امتیاز ۵۸ و باند C گرفت، و چون فقط چکیده در دسترس بود امتیاز مقدماتی است.",
         "interpretation_fa": "با HbA1c پایه تا یازده درصد، بقای ایمپلنت در یک سال بین گروه‌ها تفاوت معناداری نداشت. اما تثبیت اولیه در قند بالا با تأخیر همراه بود. جمله‌ی عملی همین است: قند بالا مانع بقای یک‌ساله نیست ولی ترمیم استخوانِ اولیه را کند می‌کند. یک سال برای ادعای بقا کوتاه است."
       },
       {
@@ -10808,7 +10820,7 @@
     "scored_at": "2026-08-15",
     "sources": [
       {
-        "des_version": "1.9",
+        "des_version": "2.0",
         "content_type": "RESEARCH",
         "question_type": "THERAPY",
         "text_basis": "FULL_TEXT",
@@ -10873,34 +10885,38 @@
         "penalties": [
           {
             "item": "بیانیه‌ی تعارض منافع وجود ندارد",
-            "points": 8,
+            "base_points": 8,
+            "points": 1,
             "evidence_quote": "",
             "note": "غیاب است و چیزی برای نقل ندارد. متن پس از NFKC و حذف فاصله‌ها جست‌وجو شد و برای conflict، competing، interest، declaration، disclosure، financial، grant و sponsor صفر نتیجه داد؛ دو نتیجه‌ی fund هر دو fundamental بودند. طبق 3b-ii به جست‌وجو اکتفا نشد: بلوک شناسنامه‌ی مقاله و انتهای سند پس از منبع ۱۰۲ هم خوانده شد و هیچ‌کدام بیانیه‌ای ندارند. در AMSTAR-2 دامنه‌ی تعارض منافع وجود ندارد، پس این کسر دوباره‌شماری Q_method نیست."
           },
           {
             "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "base_points": 5,
             "points": 0,
             "evidence_quote": "",
             "note": "فقط برای RCT اعمال می‌شود؛ این یک مطالعه‌ی ثانویه است."
           },
           {
             "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "base_points": 5,
             "points": 0,
             "evidence_quote": "",
             "note": "not applicable to a secondary study"
           },
           {
             "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "base_points": 3,
             "points": 0,
             "evidence_quote": "",
             "note": "این مطالعه ثانویه است و پیگیری خودش را گزارش نمی‌کند؛ این بند موضوعیت ندارد."
           }
         ],
         "commentary_checklist": null,
-        "des_score": 0,
+        "des_score": 4,
         "band": "E",
         "provisional": false,
-        "fact_fa": "این مقاله در نوع پرسش THERAPY امتیاز ۰ و باند E گرفت، و چون متن کامل در دسترس بود امتیاز نهایی است نه مقدماتی.",
+        "fact_fa": "این مقاله در نوع پرسش THERAPY امتیاز ۴ و باند E گرفت، و چون متن کامل در دسترس بود امتیاز نهایی است نه مقدماتی.",
         "interpretation_fa": "مرور روایتی است و ارزشش در بازتعریف فرول است نه در وزن شواهد. می‌گوید محل دیواره‌ها و جهت بار مهم‌تر از حلقه‌ی کامل ۳۶۰ درجه است و از همان‌جا یک طبقه‌بندی ریسک بیرون می‌کشد. خودش هم اعلام می‌کند شواهدِ ترمیم دندان اندوشده‌ی با تخریب وسیع ناکافی است."
       }
     ]

@@ -290,6 +290,34 @@ def normalize(s):
 DES_BANDS = {"A": (80, 100), "B": (60, 79), "C": (40, 59), "D": (20, 39), "E": (0, 19)}
 
 
+def des_ge_2(version):
+    """True when a record was written under spec v2.0 or later.
+
+    Compared as (major, minor) integers, never as strings: "1.10" sorts BEFORE
+    "1.9" lexically, which would silently exempt exactly the newest records from
+    the newest checks. Unparseable or missing stamps read as pre-2.0, so an old
+    record is never failed by a rule that postdates it."""
+    try:
+        major, _, minor = (version or "").partition(".")
+        return (int(major), int(minor or 0)) >= (2, 0)
+    except ValueError:
+        return False
+
+
+def des_scaled_penalty(base_points, s_design):
+    """Spec v2.0 Step 4a: max(1, round_half_up(base × S_design ÷ 100)).
+
+    Exact decimals and round-half-up for the same reason Step 5 gives, and the
+    floor at 1 because a firing penalty that rounded to 0 would be indistinguishable
+    in the record from one that was considered and dismissed."""
+    base = Decimal(str(base_points or 0))
+    if base == 0:
+        return 0
+    scaled = (base * Decimal(str(s_design or 0)) / Decimal("100")).quantize(
+        Decimal("1"), rounding=ROUND_HALF_UP)
+    return max(1, int(scaled))
+
+
 def des_norm(s):
     """The appendix's quote-comparison normalization: NFKC, collapse whitespace
     runs, strip soft hyphens and line-break hyphenation, straighten curly
@@ -772,6 +800,37 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
                           f"{tag} arithmetic checks out ({s.get('des_score')})",
                           f"{tag} des_score is {s.get('des_score')} but recomputes to {calc}",
                           "step 4.13 Part 3(2) — re-run the score, never hand-patch the number")
+
+                # 2b — spec v2.0 Step 4a: a penalty is a SHARE of the design
+                # anchor, not a flat deduction. Checked only from v2.0 on, so
+                # records stamped 1.x keep validating against the flat table
+                # they were written under — the version stamp is what makes an
+                # arithmetic change auditable instead of retroactive.
+                #
+                # `points` stores what was actually subtracted (so the sum above
+                # stays the whole story) and `base_points` stores the row's
+                # table weight, which is what makes the scaling checkable rather
+                # than asserted. Without it the gate could not tell a correctly
+                # scaled 1 from a forgotten 8.
+                if not is_comm and des_ge_2(s.get("des_version")):
+                    for p in (s.get("penalties") or []):
+                        if "base_points" not in p:
+                            rep.fail("4.13 DES",
+                                     f"{tag} penalty «{p.get('item', '?')}» has no base_points",
+                                     "spec v2.0 Step 4a — every penalty row carries its table weight")
+                            continue
+                        want = des_scaled_penalty(p.get("base_points", 0),
+                                                  (s.get("s_design") or {}).get("value", 0))
+                        got = int(p.get("points", 0))
+                        # 0 is always legal: the row was considered and dismissed.
+                        if got == 0:
+                            continue
+                        rep.check(got == want, "4.13 DES",
+                                  f"{tag} penalty «{p.get('item', '?')}» is scaled to the anchor ({got})",
+                                  f"{tag} penalty «{p.get('item', '?')}» subtracts {got}, but "
+                                  f"base_points {p.get('base_points')} at S_design "
+                                  f"{(s.get('s_design') or {}).get('value')} scales to {want}",
+                                  "spec v2.0 Step 4a — max(1, round_half_up(base × S_design ÷ 100))")
 
                 # 3 — band agreement, and COMMENTARY is always E
                 lo, hi = DES_BANDS.get(s.get("band"), (None, None))

@@ -1194,11 +1194,27 @@ score built on it.
 
 #### Part 2 — Run the prompt file
 
-**Load `.dentcast/dentcast-evidence-score-v1.9.md` as the system prompt — the whole
+**Load `.dentcast/dentcast-evidence-score-v2.0.md` as the system prompt — the whole
 file, verbatim, minus the appendix.**
 
-**v1.6 is the current spec and it is deliberately deterministic.** Two of its
-rules exist because a blind reproducibility run found them missing, so do not
+**v2.0 is the current spec, and its one change from 1.x is that a transparency
+penalty is a SHARE of the design anchor, not a flat deduction (Step 4a).** The
+table's numbers are now `base_points`, and what gets subtracted is
+`max(1, round_half_up(base_points × S_design ÷ 100))`. Every penalty object
+therefore carries **both** `base_points` (the row's table weight, always 8/5/5/3)
+and `points` (what was actually subtracted); Phase F recomputes the scaling from
+the pair and fails a mismatch, so writing the old flat value is caught rather
+than shipped. The reason is that `S_design` ceilings differ by almost seven times:
+a flat −8 was 8% of an SR's achievable range and 53% of a narrative review's, and
+below a certain anchor it exceeded the whole range, so weak-design papers piled
+up on a floored 0 and stopped being distinguishable. **Version-gated:** records
+stamped `1.x` keep validating against the flat table they were written under —
+only `2.0` and later are checked for scaling. Across the 47 RESEARCH sources on
+record only 5 carried a penalty at all and **no band moved**, so a page's
+reader-facing band is unaffected either way.
+
+**The determinism rules from v1.5/v1.6 are unchanged and still binding.** Two of
+them exist because a blind reproducibility run found them missing, so do not
 treat them as pedantry: **quality judgment is out of the domain rating**
 (present-vs-absent, plus the closed threshold table in 3b-i — if you are arguing
 that a described method is *bad enough* to count as absent, the answer is
