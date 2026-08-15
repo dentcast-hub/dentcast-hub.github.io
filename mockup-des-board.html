@@ -6,6 +6,65 @@
 <meta name="robots" content="noindex, nofollow">
 <title>ماکت — مطالب دنت‌کست بر اساس قوت شواهد</title>
 <style>@font-face{font-family:Vazirmatn;src:url('/fonts/Vazirmatn[wght].woff2') format('woff2');font-weight:100 900;font-display:swap}
+/* ══ amber = «this is what a subscription buys», site-wide. Never used for
+   anything else on this page, and never on the band scale. ══ */
+:root{--x-amber:#c9922b;--x-amber-ink:#8a6414;--x-amber-wash:rgba(201,146,43,.08);
+  --x-amber-bd:rgba(154,107,21,.22)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --x-amber:#e3b849;--x-amber-ink:#e3b849;--x-amber-wash:rgba(227,184,73,.09);
+  --x-amber-bd:rgba(227,184,73,.26)}}
+:root[data-theme="dark"]{--x-amber:#e3b849;--x-amber-ink:#e3b849;
+  --x-amber-wash:rgba(227,184,73,.09);--x-amber-bd:rgba(227,184,73,.26)}
+
+/* mockup-only device for comparing the two tiers side by side */
+.modesw{display:flex;gap:.4rem;align-items:center;margin:0 0 1rem;padding:.5rem .55rem;
+  border:1px dashed var(--border);border-radius:var(--r-md);background:var(--surface2)}
+.modesw span{font-size:.68rem;font-weight:800;color:var(--txt3);margin-inline-end:.2rem}
+.modesw button{font:inherit;font-size:.75rem;font-weight:800;padding:.3rem .8rem;cursor:pointer;
+  border-radius:var(--r-f);border:1px solid var(--border);background:var(--surface);color:var(--txt3)}
+.modesw button[aria-pressed="true"]{background:var(--ac);border-color:var(--ac);color:#fff}
+
+.seg button.lock{color:var(--x-amber-ink)}
+.seg button.lock[aria-selected="true"]{color:var(--x-amber-ink);background:var(--x-amber-wash);
+  box-shadow:none;border:1px solid var(--x-amber-bd)}
+
+/* the gate card: what the arrangement IS, before what it costs */
+.gate{background:var(--card-bg);border:1px solid var(--x-amber-bd);border-radius:var(--r-lg);
+  box-shadow:var(--card-sh);overflow:hidden;margin:0 0 1.2rem}
+.gate-h{margin:0;padding:.85rem .95rem .1rem;font-size:1.02rem;font-weight:900}
+.gate-p{margin:.3rem 0 0;padding:0 .95rem;font-size:.83rem;line-height:1.95;color:var(--txt2);text-wrap:pretty}
+.gsl{list-style:none;margin:.9rem 0 0;padding:0 .95rem;display:grid;gap:.4rem}
+.gs{display:flex;align-items:center;gap:.6rem;padding:.5rem .6rem;border-radius:var(--r-md);
+  background:var(--surface2);border:1px solid var(--border2)}
+.gs-g{flex:none;min-width:1.7rem;height:1.7rem;padding:0 .35rem;border-radius:8px;background:var(--bc);
+  color:#fff;display:grid;place-items:center;font-size:.78rem;font-weight:900;white-space:nowrap}
+.gs-own .gs-g{background:rgba(var(--des-chrome-rgb),.12);color:var(--des-chrome);
+  border:1px solid rgba(var(--des-chrome-rgb),.3);font-size:.68rem}
+.gs-n{flex:1;font-size:.83rem;font-weight:700;color:var(--txt)}
+.gs-c{flex:none;font-size:.72rem;color:var(--txt3);font-variant-numeric:tabular-nums}
+.gate-f{margin:1rem 0 0;padding:.8rem .95rem .95rem;background:var(--x-amber-wash);
+  border-top:1px solid var(--x-amber-bd)}
+.gate-f p{margin:0 0 .6rem;font-size:.8rem;line-height:1.9;color:var(--txt2)}
+.gate-b{display:inline-block;background:var(--x-amber);color:#1a1204;font-weight:800;font-size:.82rem;
+  border:0;border-radius:var(--r-f);padding:.45rem 1.1rem;text-decoration:none;cursor:pointer}
+[data-theme="dark"] .gate-b{color:#1a1204}
+.gate-s{display:block;margin:.55rem 0 0;font-size:.72rem;color:var(--txt3)}
+
+/* the free flat list */
+.fll{list-style:none;margin:0;padding:0;display:grid;gap:.45rem}
+.fl{display:flex;gap:.55rem;align-items:flex-start;padding:.6rem .7rem;background:var(--card-bg);
+  border:1px solid var(--card-border);border-radius:var(--r-md);position:relative;overflow:hidden}
+.fl::before{content:"";position:absolute;inset-block:0;inset-inline-start:0;width:3px;background:var(--bc)}
+.fl-own::before{background:var(--des-chrome);opacity:.4}
+.fl-g{flex:none;width:1.75rem;height:1.75rem;border-radius:8px;background:var(--bc);color:#fff;
+  display:grid;place-items:center;font-size:.78rem;font-weight:900;margin-top:.1rem}
+.fl-gown{background:rgba(var(--des-chrome-rgb),.12);color:var(--des-chrome);
+  border:1px solid rgba(var(--des-chrome-rgb),.3);font-size:.7rem}
+.fl-m{min-width:0;flex:1}
+.fl-t{display:block;font-size:.88rem;font-weight:700;color:var(--txt);text-decoration:none;line-height:1.65}
+.fl-t:hover{color:var(--ac)}
+.fl-s{margin:.15rem 0 0;font-size:.69rem;color:var(--txt3)}
+
 /* ══ the door: index.html's own DES box, restyled from an expander into a link.
    Its CSS is copied from index.html (which loads no shared stylesheet), so the
    mockup shows the real object rather than an impression of it. ══ */
@@ -263,6 +322,9 @@ if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme',
   </div>
 
   <p class="door-l" id="top" style="margin:0 0 .3rem">۲ — صفحه‌ای که باز می‌شود</p>
+  <div class="modesw"><span>ماکت — این را عوض کنید:</span>
+    <button data-m="prem" aria-pressed="true">پریمیوم</button>
+    <button data-m="free" aria-pressed="false">رایگان / مهمان</button></div>
 
   <h1>مطالب دنت‌کست، بر اساس قوت شواهد</h1>
   <p class="lead">هر مطلبی که اینجا می‌خوانید روی چیزی ایستاده: یا روی <b>مقاله‌های علمی منتشرشده</b>، یا روی <b>تجربه و تحلیل بالینی خودِ نویسنده</b>. این فهرست همان را نشان می‌دهد. روی هر عنوان بزنید تا خودِ مطلب باز شود — و زیر هر عنوان می‌بینید از چه مقاله‌هایی سرچشمه گرفته و هر کدام چقدر قابل اتکا هستند.</p>
@@ -307,6 +369,7 @@ if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme',
     <button role="tab" aria-selected="false" data-p="own">تجربه و تحلیل دنت‌کست<i>۱۲۳ مطلب</i></button>
   </div>
 
+  <div id="v-prem">
   <div id="p-res">
     <p class="note">این مطالب به مقاله‌های منتشرشده استناد می‌کنند. درجه‌ای که کنار هر مطلب می‌بینید مربوط به <b>قوی‌ترین</b> منبعی است که به آن تکیه کرده. نوار رنگی زیرش، هر مقاله‌ای را که آن مطلب به آن استناد کرده یک بلوک نشان می‌دهد — پس یک نگاه می‌گوید مطلب روی یک ستون محکم ایستاده یا روی چند ستون سبک.</p>
     <section class="grp">
@@ -806,6 +869,83 @@ if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme',
   </section>
   </div>
 
+  </div>
+
+  <div id="v-free" hidden>
+    <div class="seg" role="tablist">
+      <button role="tab" aria-selected="true" data-f="all">همه‌ی مطالب امتیازدهی‌شده<i>۱۳۳ مطلب</i></button>
+      <button role="tab" aria-selected="false" class="lock" data-f="grp">🔒 بر اساس قوت شواهد<i>ویژه‌ی پریمیوم</i></button>
+    </div>
+
+    <div id="f-all">
+      <p class="note">هر مطلبی که تا امروز ارزیابی شده، از تازه‌ترین. درجه‌ی هر کدام کنارش هست و روی عنوان که بزنید خودِ مطلب باز می‌شود. <b>چیدنِ این‌ها بر اساس قوت شواهد</b> — که مطالب هم‌درجه را کنار هم می‌گذارد — بخش پریمیوم است.</p>
+      <ul class="fll"><li class="fl bd-C">
+    <span class="fl-g bd-C">C</span>
+    <div class="fl-m"><a class="fl-t" href="/episodes/episode-161.html">Cantilever in Implant Dentistry :part1</a>
+      <p class="fl-s"><span class="chipx">اپیزود</span>۲۳ مرداد ۱۴۰۵ · بر پایه‌ی ۳ منبع · پرسشِ علت بیماری</p></div></li><li class="fl fl-own">
+    <span class="fl-g fl-gown">۱۹</span>
+    <div class="fl-m"><a class="fl-t" href="/sharehub/share-15.html">چرا اسکنر روی روکش‌های خیلی براق یا کامپوزیت/رزین‌های خیلی سفید خوب اسکن نمی‌کنه؟</a>
+      <p class="fl-s"><span class="chipx">ShareHub</span>۲۳ مرداد ۱۴۰۵ · تجربه و تحلیل بالینی · دکتر فواد شهابیان</p></div></li><li class="fl bd-C">
+    <span class="fl-g bd-C">C</span>
+    <div class="fl-m"><a class="fl-t" href="/sharehub/share-14.html">از تشخیص تا درمان لبخند لثه‌ای</a>
+      <p class="fl-s"><span class="chipx">ShareHub</span>۲۲ مرداد ۱۴۰۵ · بر پایه‌ی ۱۴ منبع · پرسشِ درمان</p></div></li><li class="fl fl-own">
+    <span class="fl-g fl-gown">۱۵</span>
+    <div class="fl-m"><a class="fl-t" href="/chairside/chairside-32.html">وقتی اصول رعایت نشده، بهترین سمان‌ها هم معجزه نمی‌کنند</a>
+      <p class="fl-s"><span class="chipx">چیرساید</span>۲۲ مرداد ۱۴۰۵ · تجربه و تحلیل بالینی · دکتر فواد شهابیان</p></div></li><li class="fl fl-own">
+    <span class="fl-g fl-gown">۱۵</span>
+    <div class="fl-m"><a class="fl-t" href="/chairside/chairside-31.html">دندانی که فانکشن ندارد، صرفاً یک فضای اشغال‌شده است</a>
+      <p class="fl-s"><span class="chipx">چیرساید</span>۲۱ مرداد ۱۴۰۵ · تجربه و تحلیل بالینی · دکتر فواد شهابیان</p></div></li><li class="fl fl-own">
+    <span class="fl-g fl-gown">۱۵</span>
+    <div class="fl-m"><a class="fl-t" href="/chairside/chairside-30.html">سرنوشت دندان را فقط با معیارهای رستوریتیو تعیین نکنیم</a>
+      <p class="fl-s"><span class="chipx">چیرساید</span>۲۰ مرداد ۱۴۰۵ · تجربه و تحلیل بالینی · دکتر فواد شهابیان</p></div></li><li class="fl bd-E">
+    <span class="fl-g bd-E">E</span>
+    <div class="fl-m"><a class="fl-t" href="/insight/insight-64.html">اینجوری هم میشه به فرول نگاه کرد،یه استفاده ی معکوس از مقاله معروف در مورد فرول</a>
+      <p class="fl-s"><span class="chipx">Clinical Insight</span>۱۹ مرداد ۱۴۰۵ · بر پایه‌ی ۱ منبع · پرسشِ درمان</p></div></li><li class="fl fl-own">
+    <span class="fl-g fl-gown">۱۹</span>
+    <div class="fl-m"><a class="fl-t" href="/metanotes/meta-20.html">پست و کور یک‌مرحله‌ای؛ وقتی «عدم تطابق» به نفع درمان تمام می‌شود</a>
+      <p class="fl-s"><span class="chipx">MetaNote</span>۱۸ مرداد ۱۴۰۵ · تجربه و تحلیل بالینی · دکتر فواد شهابیان</p></div></li><li class="fl fl-own">
+    <span class="fl-g fl-gown">۱۹</span>
+    <div class="fl-m"><a class="fl-t" href="/insight/insight-63.html">چرا برای این بیمار قبل از اسکن نخ‌گذاری نکردم؟</a>
+      <p class="fl-s"><span class="chipx">Clinical Insight</span>۱۸ مرداد ۱۴۰۵ · تجربه و تحلیل بالینی · دکتر فواد شهابیان</p></div></li><li class="fl fl-own">
+    <span class="fl-g fl-gown">۱۹</span>
+    <div class="fl-m"><a class="fl-t" href="/insight/insight-62.html">هم‌رنگ کردن دو روکش زیرکونیای مجاور؛ یک راه‌حل خلاقانه و سریع سر یونیت</a>
+      <p class="fl-s"><span class="chipx">Clinical Insight</span>۱۶ مرداد ۱۴۰۵ · تجربه و تحلیل بالینی · دکتر فواد شهابیان</p></div></li><li class="fl fl-own">
+    <span class="fl-g fl-gown">۱۵</span>
+    <div class="fl-m"><a class="fl-t" href="/insight/insight-61.html">فریب خطای دید روی کست؛ راهکاری برای تنظیم روکش تک‌واحدی سانترال</a>
+      <p class="fl-s"><span class="chipx">Clinical Insight</span>۱۵ مرداد ۱۴۰۵ · تجربه و تحلیل بالینی · دکتر فواد شهابیان</p></div></li><li class="fl bd-C">
+    <span class="fl-g bd-C">C</span>
+    <div class="fl-m"><a class="fl-t" href="/sharehub/share-13.html">دیابت و ایمپلنت دندانی: از تصمیم قبل از جراحی تا نگهداری بلندمدت</a>
+      <p class="fl-s"><span class="chipx">ShareHub</span>۱۳ مرداد ۱۴۰۵ · بر پایه‌ی ۱۱ منبع · پرسشِ علت بیماری</p></div></li><li class="fl fl-own">
+    <span class="fl-g fl-gown">۱۵</span>
+    <div class="fl-m"><a class="fl-t" href="/chairside/chairside-29.html">تغییر رنگِ دندانِ اندو‌شده و روکشی که هنوز لازم نبود</a>
+      <p class="fl-s"><span class="chipx">چیرساید</span>۱۳ مرداد ۱۴۰۵ · تجربه و تحلیل بالینی · دکتر فواد شهابیان</p></div></li><li class="fl bd-C">
+    <span class="fl-g bd-C">C</span>
+    <div class="fl-m"><a class="fl-t" href="/sharehub/share-12.html">نورالژی تریژمینال، آنچه یک دندانپزشک عمومی باید بداند</a>
+      <p class="fl-s"><span class="chipx">ShareHub</span>۱۲ مرداد ۱۴۰۵ · بر پایه‌ی ۴ منبع · پرسشِ درمان</p></div></li></ul><p class="more">… و ۱۱۹ مطلب دیگر در همین فهرست</p>
+    </div>
+
+    <div id="f-grp" hidden>
+      <div class="gate">
+        <h2 class="gate-h">چیدمان بر اساس قوت شواهد</h2>
+        <p class="gate-p">همین ۱۳۳ مطلب، ولی مرتب‌شده روی قفسه‌های زیر — هر مطلب می‌رود سرِ قفسه‌ای که قوی‌ترین منبعش تعیین می‌کند. این‌طور می‌شود پرسید «چه چیزی در دنت‌کست روی محکم‌ترین شواهد ایستاده؟» و جواب را در یک نگاه دید، به‌جای اینکه مطلب‌به‌مطلب چک کنید.</p>
+        <ul class="gsl"><li class="gs bd-B"><span class="gs-g">B</span>
+    <span class="gs-n">شواهد متوسط</span><span class="gs-c">۱ مطلب</span></li><li class="gs bd-C"><span class="gs-g">C</span>
+    <span class="gs-n">شواهد محدود</span><span class="gs-c">۵ مطلب</span></li><li class="gs bd-D"><span class="gs-g">D</span>
+    <span class="gs-n">شواهد ضعیف</span><span class="gs-c">۱ مطلب</span></li><li class="gs bd-E"><span class="gs-g">E</span>
+    <span class="gs-n">سطح پایه</span><span class="gs-c">۳ مطلب</span></li><li class="gs gs-own"><span class="gs-g">۱۹</span>
+    <span class="gs-n">کاملاً شفاف</span><span class="gs-c">۳۴ مطلب</span></li><li class="gs gs-own"><span class="gs-g">۱۸</span>
+    <span class="gs-n">شفاف</span><span class="gs-c">۵ مطلب</span></li><li class="gs gs-own"><span class="gs-g">۱۵</span>
+    <span class="gs-n">شفافیت پایه</span><span class="gs-c">۸۰ مطلب</span></li><li class="gs gs-own"><span class="gs-g">زیر ۱۵</span>
+    <span class="gs-n">کمتر از پایه</span><span class="gs-c">۴ مطلب</span></li></ul>
+        <div class="gate-f">
+          <p>قفسه‌ها و تعدادشان را همین حالا می‌بینید؛ آنچه پریمیوم باز می‌کند این است که <b>کدام مطلب روی کدام قفسه است</b> و بشود بین آن‌ها جابه‌جا شد.</p>
+          <a class="gate-b" href="#">دنت‌کست پریمیوم</a>
+          <span class="gate-s">درجه‌ی هر مطلب همیشه رایگان است و روی خودِ همان مطلب نوشته می‌شود — این بخش فقط چیدمان است.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <p class="foot">این یک ماکت است و هنوز منتشر نشده. عنوان‌ها و درجه‌ها همان چیزی است که همین حالا برای این مطالب ثبت شده؛ چیزی برای این صفحه ساخته یا حدس زده نشده.</p>
 </div>
 
@@ -815,6 +955,19 @@ document.querySelectorAll('.seg button').forEach(function(t){t.onclick=function(
     x.setAttribute('aria-selected', x===t?'true':'false'); });
   document.getElementById('p-res').hidden = t.dataset.p!=='res';
   document.getElementById('p-own').hidden = t.dataset.p!=='own';
+}});
+
+document.querySelectorAll('.modesw button').forEach(function(b){b.onclick=function(){
+  document.querySelectorAll('.modesw button').forEach(function(x){
+    x.setAttribute('aria-pressed', x===b?'true':'false'); });
+  document.getElementById('v-prem').hidden = b.dataset.m!=='prem';
+  document.getElementById('v-free').hidden = b.dataset.m!=='free';
+}});
+document.querySelectorAll('.seg button[data-f]').forEach(function(t){t.onclick=function(){
+  document.querySelectorAll('.seg button[data-f]').forEach(function(x){
+    x.setAttribute('aria-selected', x===t?'true':'false'); });
+  document.getElementById('f-all').hidden = t.dataset.f!=='all';
+  document.getElementById('f-grp').hidden = t.dataset.f!=='grp';
 }});
 document.getElementById('thm').onclick=function(){
   var d=document.documentElement.getAttribute('data-theme')==='dark';
