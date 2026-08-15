@@ -958,12 +958,33 @@ function setPlayingIcon(){
   playBtn.innerHTML = '<svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
 }
 
-/* پخش اپیزود بارگذاری‌شده با الگوی یک‌بارمصرف canplay (بدون انباشت لیسنر) */
+/* پخش اپیزودِ تازه‌بارگذاری‌شده.
+
+   play() عمداً همین‌جا و هم‌زمان (synchronous) صدا زده می‌شود — نه داخل canplay.
+   دلیلش گوشیِ قفل است: بین «ended» و «canplay»ِ فایل بعدی یک رفت‌وبرگشت شبکه
+   فاصله است و در آن فاصله هیچ صدایی پخش نمی‌شود. سیستم‌عامل همان‌جا media
+   session را برمی‌چیند و صفحه‌ای را که نه صدا دارد نه نمایشگرِ روشن، freeze
+   می‌کند؛ پس canplay هرگز نمی‌رسد و زنجیرهٔ اتوپلی تا آنلاکِ بعدی می‌ایستد
+   (گزارش کاربر: «باید بعد از هر اپیزود گوشی آنلاک بشه تا اتوپلی عمل کنه»).
+   play() روی عنصری که هنوز داده ندارد کاملاً مجاز است: مرورگر Promise را نگه
+   می‌دارد تا داده برسد، و در همان حال session زنده و صفحه بیدار می‌ماند.
+
+   مسیر انتخاب دستی هم از همین سود می‌برد: آنجا play() حالا داخل خودِ کلیک
+   می‌افتد، پس user-activation را می‌سوزاند نه از دست می‌دهد.
+
+   fallbackِ canplay فقط برای حالتی می‌ماند که مرورگر play() را رد کند (سیاست
+   autoplay). آنجا آیکون دست‌نخورده می‌ماند، چون loadEpisode آن را روی «پخش»
+   گذاشته و setPlayingIcon فقط بعد از موفقیتِ واقعی اجرا می‌شود. */
 function playLoadedEpisode(){
-  audio.addEventListener("canplay", function handler(){
-    audio.removeEventListener("canplay", handler);
-    audio.play();
-    setPlayingIcon();
+  const p = audio.play();
+  if (!p || typeof p.then !== "function") { setPlayingIcon(); return; }   /* مرورگرِ قدیمی: play() چیزی برنمی‌گرداند */
+  p.then(setPlayingIcon).catch(function(){
+    audio.addEventListener("canplay", function handler(){
+      audio.removeEventListener("canplay", handler);
+      const q = audio.play();
+      if (!q || typeof q.then !== "function") { setPlayingIcon(); return; }
+      q.then(setPlayingIcon).catch(function(){ /* بی‌صدا: آیکون همان «پخش» می‌ماند */ });
+    });
   });
 }
 
