@@ -219,12 +219,32 @@ baskets 1 and 2 are normally unambiguous — state the classification plainly an
 on. Basket 3 always stops and asks.
 
 **1. COMMENTARY — DentCast's own authored piece.** The متن is the founder's (or a
-guest specialist's) own clinical reasoning, case narration, or reflection, not a
-write-up of one identifiable external study. **Chairside, MetaNote and ShareHub are
-COMMENTARY by definition** — the DES spec names all three explicitly. Insight,
-NoteCast and most episodes are COMMENTARY too, unless the متن is built around a
-specific named paper. No DOI is needed and none is asked for: the **content's own
-text is the `source_text`**, and step 4.13 runs the COMMENTARY track on it.
+guest specialist's) own clinical reasoning, case narration, or reflection, and the
+page names **no retrievable paper**. No DOI is needed and none is asked for: the
+**content's own text is the `source_text`**, and step 4.13 runs the COMMENTARY
+track on it.
+
+**The CONTENT TYPE never decides the basket — what the page CITES does.** Until
+2026-08-15 this step said Chairside, MetaNote and ShareHub were COMMENTARY *by
+definition*, and ShareHub is the section that proves that wrong. Its fifteen pages
+are three different things: eight short practical notes with no citation at all
+(`share-1…7`, `share-15`, 1.2–3.2k chars), two carrying audio, and five that are
+literature reviews standing on real DOIs — `share-11` on **eleven**, `share-14` on
+**twelve**. Calling those five COMMENTARY scores the founder's transparency on a
+page whose actual basis is a dozen published studies, and hides all twelve from
+the reader. The same trap is waiting in every other section, which is why the rule
+is now about the page rather than the folder.
+
+**The test is mechanical, and it is the one `episodes/episode-161` already
+passed:** does the page carry a **retrievable identifier** — a DOI, a `doi.org`
+link, a PubMed id, or a «منابع» block listing them? If yes it is basket 2, whatever
+type the page is. If no, and the متن is the author's own reasoning, it is basket 1.
+Naming a study in prose without an identifier is **not** basket 2 and does not
+trigger basket 3 either: `metanotes/meta-14` quotes one figure from «مطالعه
+Morimoto» and then argues from it under its own heading «تحلیل و تفکر خارج از
+چارچوب» — the page is a write-up of the author's analysis, not of the review, and
+it scores COMMENTARY. Basket 3 is only for a page that plainly IS a write-up of a
+study while naming no way to retrieve it.
 
 **2. RESEARCH with a determinate source.** The publish writes up one or more
 identifiable studies, **and** each is pinned down well enough to retrieve its
@@ -1174,7 +1194,7 @@ score built on it.
 
 #### Part 2 — Run the prompt file
 
-**Load `.dentcast/dentcast-evidence-score-v1.7.md` as the system prompt — the whole
+**Load `.dentcast/dentcast-evidence-score-v1.8.md` as the system prompt — the whole
 file, verbatim, minus the appendix.**
 
 **v1.6 is the current spec and it is deliberately deterministic.** Two of its

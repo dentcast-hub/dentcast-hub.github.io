@@ -1,7 +1,7 @@
 // DentCast Evidence Score — the reader-facing display.
 //
 // The score itself is produced at publish time by workflow step 4.13 (the
-// scoring prompt in .dentcast/dentcast-evidence-score-v1.7.md) and stored in
+// scoring prompt in .dentcast/dentcast-evidence-score-v1.8.md) and stored in
 // plus/des-scores.json, keyed by content_id. Nothing here computes, judges, or
 // re-derives anything: this module renders what that file already says.
 //
@@ -23,7 +23,7 @@
 // is deliberately no "podcast" test in this file — an episode that DOES cite
 // papers (episodes/episode-161 cites three) is scored and shown like anything
 // else. The rule is "no record, no badge", never "no audio, no badge".
-import { el, faNum } from './util.js?v=2';
+import { el, faNum } from './util.js?v=3';
 
 /* ------------------------------------------------------------ the data -- */
 

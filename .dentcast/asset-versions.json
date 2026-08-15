@@ -12,8 +12,8 @@
     "hash": "f045ac7d9d9e9e1d"
   },
   "/dc-nav.js": {
-    "v": 105,
-    "hash": "72c0f32a74e0ad56"
+    "v": 106,
+    "hash": "df26a521a3e7b7f4"
   },
   "/dc-theme.css": {
     "v": 2,
@@ -104,12 +104,12 @@
     "hash": "681931efc3605abf"
   },
   "dc-nav.js:V": {
-    "v": 102,
-    "hash": "914e6b19d42ba708"
+    "v": 103,
+    "hash": "6fbb77b0b729000d"
   },
   "modules:M": {
-    "v": 2,
-    "hash": "435fa9889f576955"
+    "v": 3,
+    "hash": "b4d5d143f32970a0"
   },
   "spot.js:SPOT_V": {
     "v": 31,
