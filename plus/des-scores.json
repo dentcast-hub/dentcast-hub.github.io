@@ -2487,5 +2487,106 @@
         "interpretation_fa": "متاآنالیز روی بیست‌وهشت مطالعه نشان می‌دهد دیابت نوع ۲ با DMFT بالاتر و افت جریان، pH و ظرفیت بافری بزاق همراه است. بین دیابت کنترل‌شده و کنترل‌نشده تفاوت معناداری در DMFT دیده نشد. داده‌ها مشاهده‌ای‌اند، پس همراهی نشان می‌دهند نه علیت. امتیاز مقدماتی است چون فقط چکیده در دسترس بود."
       }
     ]
+  },
+  "sharehub/share-2": {
+    "scored_at": "2026-08-15",
+    "sources": [
+      {
+        "des_version": "1.8",
+        "content_type": "RESEARCH",
+        "question_type": "DIAGNOSTIC",
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "Guide to Optimizing the Accuracy of Intraoral Implant Scans: A Review Article",
+          "authors": "Özal Ç",
+          "year": 2025,
+          "journal": "Cyprus Journal of Medical Sciences",
+          "doi": "10.4274/cjms.2024.2024-31"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 15,
+          "anchor": "narrative review of factors affecting intraoral scanner accuracy (DIAGNOSTIC narrative review row, 15)",
+          "evidence_quote": "The purpose of this review is to summarize the knowledge of the factors and highlight the points that should be considered to ensure maximum accuracy."
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "کل مقاله خوانده شد (Abstract، Introduction، بخش‌های Operator-Related و Patient-Related، MAIN POINTS، FOOTNOTES)؛ هیچ بخش Methods وجود ندارد و واژه‌های protocol registration، PROSPERO یا هر شماره‌ی ثبتی در متن نیست. تنها کاربرد «protocol» در متن به scan protocol برمی‌گردد."
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "مقاله هیچ بخش Methods و هیچ استراتژی جست‌وجویی ندارد؛ نام هیچ دیتابیسی (PubMed، MEDLINE، Embase، Scopus، Cochrane) و هیچ بازه‌ی زمانی جست‌وجویی در متن نیامده. مرور روایتی است."
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "نه فهرست مطالعات کنارگذاشته‌شده هست و نه معیار ورود و خروجی؛ واژه‌های inclusion/exclusion criteria در هیچ‌جای متن نیست."
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "جدول‌های ۱ تا ۶ مطالعات را فقط توصیف می‌کنند (نوع مطالعه، حجم نمونه، IOS، نتیجه) و هیچ ستون یا مرحله‌ای برای ارزیابی کیفیت ندارند؛ واژه‌ی bias در کل متن صفر بار آمده و «quality» فقط درباره‌ی mesh quality است."
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "هیچ سنتز کمی انجام نشده؛ واژه‌ی meta-analysis در متن نیست و تنها اشاره‌ی آماری، نقلِ نتیجه‌ی یک مطالعه‌ی دیگر است. یافته‌ها فقط به‌صورت روایتی و جدولی کنار هم آمده‌اند."
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "هیچ اشاره‌ای به سوگیری انتشار، فانل پلات یا آزمون Egger در متن نیست؛ چون سنتز کمی وجود ندارد، چنین ارزیابی‌ای هم انجام نشده."
+            }
+          ],
+          "multiplier": 0.3
+        },
+        "penalties": [
+          {
+            "item": "بیانیه‌ی تعارض منافع وجود ندارد",
+            "points": 8,
+            "evidence_quote": "",
+            "note": "بلوک FOOTNOTES کامل خوانده شد و تنها یک خط دارد: Financial Disclosure درباره‌ی نبودِ حمایت مالی. هیچ بیانیه‌ی تعارض منافعی در آن یا هرجای دیگر متن نیست؛ متن استخراج‌شده لیگاتور fi/fl هم ندارد، پس این نتیجه از خطای استخراج نمی‌آید."
+          },
+          {
+            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "فقط برای RCT اعمال می‌شود؛ این مقاله مرور است."
+          },
+          {
+            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study"
+          },
+          {
+            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "مقاله پیامد طولی و ادعای بقا ندارد؛ این بند موضوعیت ندارد."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 0,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "این مقاله در نوع پرسش DIAGNOSTIC امتیاز ۰ و باند E گرفت.",
+        "interpretation_fa": "مروری روایتی روی عوامل مؤثر بر دقت اسکن ایمپلنت است و خودش هم می‌گوید شرایط بهینه‌ی واحدی قابل تعیین نیست. فهرست عوامل و جدول‌هایش کنار یونیت به کار می‌آید. اما وزن شواهد را نمی‌سنجد، پس مبنای تصمیم قطعی نیست. نبود بیانیه‌ی تعارض منافع هم امتیازش را پایین آورد."
+      }
+    ]
   }
 }
